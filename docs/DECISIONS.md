@@ -86,9 +86,62 @@ est idempotente (comparaison des empreintes MD5 avant tout transfert) : un doubl
 coûte rien. Cette redondance est volontaire : elle couvre le cas d'un hook absent (clone
 frais), désactivé ou contourné.
 
+## Décisions de la v0.3 (D14–D16, 25 octobre 2026)
+
+| ID | Décision | Choix retenu | Alternatives rejetées |
+|---|---|---|---|
+| D14 | Universalité | Profils de cible : le cœur du protocole est indépendant de la cible ; chaque plateforme est une instanciation vérifiable de sept éléments (ISA/types, ABI, format, interface système, patch à chaud, notation, padding) ; Windows 11 x86-64 reste le profil primaire de validation | Cibles multiples codées en dur dans le protocole ; couche d'abstraction logicielle « portable » (trahit la fonction objectif Performance) ; rester mono-cible (D10 initial, amendé) |
+| D15 | Suite cryptographique | Paramétrable : `algo_hachage` (défaut sha256), `algo_signature` (défaut ed25519), `algo_chiffrement` (défaut xchacha20poly1305) — modifiables par le développeur dans des listes blanches ; choix consigné dans l'en-tête signé de la carte ; empreintes au format préfixé ; changement en cours de projet = re-cryptage atomique | SHA-256 et suite figés ; liberté totale sans liste blanche (affaiblissement possible, contraire à la fonction objectif) |
+| D16 | Récupération de la carte | Export de continuité : conteneur unique chiffré (AEAD + Argon2id) et signé, regroupant I, B, C et un manifeste autodescriptif ; procédure d'import en cinq étapes ; l'oracle, éphémère, n'est jamais exporté ; précise R1 — l'interdiction porte sur la livraison avec l'artefact, pas sur la propriété du développeur | Carte non exportable (enfermement de l'agent et du projet) ; export en clair ; export non signé ; export incluant l'oracle |
+
+### Développements
+
+**D14 — Universalité par profils.** L'universalité exigée est structurelle, pas
+opportuniste. Le cœur du protocole (règles R1-R10, boucle de mise à jour, vérification) ne
+mentionne aucune plateforme — la v0.2 le savait déjà, mais liait la cible au protocole par
+D10. D14 amende D10 : la cible Windows 11 x86-64 reste le profil primaire de validation
+(l'application pentest y court, jalons M0-M5), mais cesse d'être une limite du protocole.
+Exiger sept éléments par profil rend l'extension vérifiable plutôt que déclarative : un
+profil incomplet est refusé, exactement comme un build sans carte. La couche I, indépendante
+de la cible, s'écrit une fois ; la carte indexe par profil ; chaque profil possède son
+binaire et ses empreintes de build. Conséquence sur la feuille de route : M6 change l'OS à
+ISA constante, M7 change d'ISA — l'ordre isole chaque variable, et l'oracle, dérivé de I,
+valide les blocs de tous les profils sans coût supplémentaire. L'alternative d'une couche
+d'abstraction logicielle (bytecode portable, machine virtuelle) est rejetée parce qu'elle
+réintroduirait précisément la couche d'exécution intermédiaire que le protocole existe pour
+supprimer.
+
+**D15 — Cryptographie paramétrable sous seuil.** La demande de modifiabilité est légitime
+— conformité réglementaire (FIPS 140-3, CNSA), résistance anticipée (SHA-3, BLAKE3),
+performance (BLAKE3 sur les très gros blocs) — mais une liberté totale ouvrirait la porte
+à un affaiblissement contraire à la fonction objectif : un développeur pressé choisissant
+MD5 casserait le verrou croisé pour tous les agents qui suivraient. La liste blanche
+réconcilie les deux exigences : la volonté du développeur s'exerce entre algorithmes
+conformes au seuil (128 bits minimum, collision-résistants, AEAD authentifiés, signatures
+déterministes ou hedged). Le choix est consigné dans l'en-tête de la carte, signé avec
+elle, et les empreintes sont préfixées (`sha256:…`) : la carte reste autodescriptive pour
+tout agent, présent ou futur, et une migration reste lisible par les outils antérieurs. Le
+changement en cours de projet est possible par re-cryptage complet — atomique, journalisé,
+avec archivage de l'ancienne carte. La dérivation Argon2id n'est pas paramétrable : ses
+paramètres de coût sont des planchers, ajustables à la hausse seulement.
+
+**D16 — Export de continuité.** L'interdiction de livraison visait l'artefact destiné aux
+tiers, pas la propriété du développeur sur son état de travail. Sans mécanisme de
+récupération, la règle créait un enfermement : le projet ne survivrait ni au changement
+d'agent, ni au changement de poste — une dépendance inacceptable envers l'outil qui a
+généré la carte. L'export de continuité rétablit l'équilibre : chiffré intégralement, il
+peut être stocké n'importe où sans exposer la carte ; signé, il est vérifiable à l'import ;
+autodescriptif (manifeste : version, suite cryptographique, profils, empreinte racine), il
+ne requiert aucune connaissance extérieure. L'oracle est volontairement exclu : éphémère
+par conception (D1), il est régénéré depuis I à l'arrivée — l'export n'embarque ainsi aucun
+artefact empoisonnable persistant. La procédure d'import en cinq étapes (déchiffrement,
+signature, verrou croisé, oracle, reprise) applique au transfert les mêmes garde-fous qu'à
+l'édition : rien n'est interprété avant vérification, et l'échec d'une étape est terminal.
+
 ## Mode de gouvernance
 
-Une nouvelle décision reçoit l'ID suivant la séquence (D14, D15, ...), la date, le choix
+Une nouvelle décision reçoit l'ID suivant la séquence (D17, D18, ...), la date, le choix
 retenu, les alternatives rejetées et un développement si elle engage l'architecture. Une
 décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
-d'invalidation explicite référençant la décision qui la supplante.
+d'invalidation explicite référençant la décision qui la supplante — D14 (amende D10) et
+D15 (amende D5) illustrent la procédure.

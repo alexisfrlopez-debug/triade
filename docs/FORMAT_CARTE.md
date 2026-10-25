@@ -1,52 +1,98 @@
 # FORMAT DE LA CARTE — Couche C, spécification détaillée
 
-> Ce document détaille le format de la carte TRIADE : fragments, format d'entrée de bloc,
-> procédure du verrou croisé, cycle de vie et budgets. La carte est le cœur opérationnel du
-> protocole : elle rend le binaire navigable pour l'agent, porte les preuves et concentre la
-> valeur intellectuelle du projet.
+> Ce document détaille le format de la carte TRIADE : en-tête normalisé, fragments, format
+> d'entrée de bloc, procédure du verrou croisé, cycle de vie, budgets, export de continuité
+> et migration cryptographique. La carte est le cœur opérationnel du protocole : elle rend
+> le binaire navigable pour l'agent, porte les preuves et concentre la valeur intellectuelle
+> du projet.
 
 ## 1. Contraintes de conception
 
 Trois contraintes tirées de la fonction objectif structurent le format : **compacité**
 (coût en tokens — chapitre 9 de la spécification), **intégrité** (verrou croisé D5) et
-**résilience** face à la compromission (sharding et chiffrement D4). Chaque contrainte se
-traduit par un mécanisme précis : syntaxe ASCII ligne-par-ligne à budgets serrés,
-signature Ed25519 de l'ensemble, chiffrement séparé des fragments.
+**résilience** face à la compromission (sharding et chiffrement D4). La v0.3 en ajoute une
+quatrième : **autodescription** — la carte porte elle-même sa version, sa suite
+cryptographique et ses profils actifs, de sorte qu'aucun agent n'ait besoin de connaissance
+extérieure pour la vérifier (D15, D16). Chaque contrainte se traduit par un mécanisme
+précis : syntaxe ASCII ligne-par-ligne à budgets serrés, signature de l'ensemble,
+chiffrement séparé des fragments, en-tête normalisé.
 
 ## 2. Les quatre fragments
 
 | Fragment | Contenu | Raison d'être de la séparation |
 |---|---|---|
-| `frag-loc` | Identifiants, noms, adresses, tailles, états, dépendances | Localisation : le plus lu, le moins sensible — peut être chargé seul |
+| `frag-loc` | Identifiants, profils, adresses, tailles, états, dépendances | Localisation : le plus lu, le moins sensible — peut être chargé seul |
 | `frag-con` | Signatures, pré/post-conditions, invariants, conventions d'appel | Contrats : diffés à chaque changement (R2), lus à chaque édition |
 | `frag-prf` | Vecteurs dorés hachés, compteurs de cristallisation, seuils | Preuves : volumineux, rarement lu en entier après cristallisation |
-| `frag-bld` | SHA-256 des blocs, manifestes de build, registre des variantes | Verrou croisé et traçage (D5, D6) — ne quitte jamais le poste de développement |
+| `frag-bld` | Empreintes des blocs par profil, manifestes de build, registre des variantes | Verrou croisé et traçage (D5, D6) — ne quitte jamais le poste de développement |
 
-Chaque fragment est chiffré avec sa propre clé dérivée de la clé maîtresse
-(XChaCha20-Poly1305, nonce aléatoire de 192 bits). Un compromis partiel — la fuite d'un
-fragment isolé — n'est jamais une perte totale : les contrats sans les adresses, ou les
-preuves sans les contrats, ne reconstituent pas la carte.
+Chaque fragment est chiffré avec sa propre clé dérivée de la clé maîtresse (AEAD selon
+l'algorithme de l'en-tête, nonce aléatoire de 192 bits pour XChaCha20). Un compromis
+partiel — la fuite d'un fragment isolé — n'est jamais une perte totale : les contrats sans
+les adresses, ou les preuves sans les contrats, ne reconstituent pas la carte.
 
-## 3. Chaîne cryptographique
+## 3. Suite cryptographique — paramètres et en-tête
 
-- **Dérivation** : phrase secrète maîtresse → Argon2id (mémoire au moins 64 Mio, au moins
-  3 itérations, parallélisme unitaire) → clé maîtresse.
-- **Clés de fragments** : dérivation HKDF depuis la clé maîtresse, avec un contexte
-  distinct par fragment et par génération.
-- **Chiffrement au repos** : XChaCha20-Poly1305 par fragment.
-- **Signature** : Ed25519 calculée sur le concaténé des empreintes de chaque fragment —
-  toute substitution d'un seul fragment invalide la signature globale (R9).
-- **Escrow** : partage de secret deux-sur-trois possible pour la clé maîtresse ;
-  sauvegardes 3-2-1 chiffrées ; rotation = re-signature complète atomique et journalisée.
+### 3.1 Paramètres modifiables (D15)
+
+La suite cryptographique est paramétrable par le développeur et consignée dans l'en-tête
+de la carte. Trois paramètres, chacun avec sa valeur par défaut et sa liste blanche :
+
+| Paramètre | Défaut | Liste blanche | Exigences communes |
+|---|---|---|---|
+| `algo_hachage` | `sha256` | `sha256`, `sha384`, `sha512`, `sha3-256`, `sha3-512`, `blake2b-256`, `blake2b-512`, `blake3` | Au moins 128 bits de sécurité ; résistance à la collision |
+| `algo_signature` | `ed25519` | `ed25519`, `ed448`, `ecdsa-p256-rfc6979`, `ecdsa-p384-rfc6979` | Signatures déterministes ou randomisation hedged |
+| `algo_chiffrement` | `xchacha20poly1305` | `xchacha20poly1305`, `chacha20poly1305`, `aes-256-gcm` | Authentifié (AEAD) uniquement |
+
+Tout algorithme hors liste blanche est refusé au chargement de la carte. La liste est un
+seuil, pas une contrainte de goût : MD5, SHA-1 et toute fonction cassée ou sous-dimensionnée
+sont irrecevables, car un affaiblissement choisi casserait le verrou croisé pour tous les
+agents qui suivraient — contraire à la fonction objectif. L'ajout d'un algorithme à la
+liste blanche relève de la gouvernance du protocole (révision de D15), jamais d'un choix
+local de projet.
+
+La dérivation de clés reste Argon2id (mémoire au moins 64 Mio, au moins 3 itérations,
+parallélisme unitaire) — elle n'est pas paramétrable : ses paramètres de coût sont des
+planchers, ajustables à la hausse par le développeur. Les clés de chaque fragment sont
+dérivées de la clé maîtresse par HKDF, avec un contexte distinct par fragment et par
+génération.
+
+### 3.2 En-tête normalisé
+
+L'en-tête est la première section de la carte, signée avec les fragments dont il fait
+partie intégrante. Syntaxe identique au format d'entrée — ASCII, ligne par ligne :
+
+```
+[carte] version=0.3
+  algo_hachage     : sha256
+  algo_signature   : ed25519
+  algo_chiffrement : xchacha20poly1305
+  profils          : x86-64-win11-pe, x86-64-linux-elf64
+  empreinte_racine : sha256:9f3c…e21a
+```
+
+| Champ | Signification |
+|---|---|
+| `version` | Version du protocole à laquelle la carte est conforme |
+| `algo_hachage` | Algorithme des empreintes de blocs et de la racine (liste blanche D15) |
+| `algo_signature` | Algorithme de signature de la carte (liste blanche D15) |
+| `algo_chiffrement` | Algorithme AEAD du chiffrement des fragments (liste blanche D15) |
+| `profils` | Liste des profils de cible actifs du projet (identifiants `<isa>-<os>-<format>`) |
+| `empreinte_racine` | Empreinte de l'ensemble des fragments, au format préfixé |
+
+Tout agent vérifie le verrou croisé **avec l'algorithme de l'en-tête**, jamais avec un
+algorithme supposé : c'est la condition de l'autodescription. Les empreintes portées par
+frag-bld sont toutes au format `<algo>:<hexadécimal>` — par exemple `sha256:ab12…` — si
+bien qu'une migration future reste lisible par les outils présents.
 
 ## 4. Format d'entrée de bloc
 
 Syntaxe volontairement ASCII et ligne-par-ligne : tokenisation non ambiguë, diff lisible,
-aucun caractère Unicode exotique ne pouvant corrompre l'encodage en transit. Exemple de
+aucun caractère Unicode exotique ne pouvant corromdre l'encodage en transit. Exemple de
 référence (bloc utilisé tout au long de la spécification) :
 
 ```
-[bloc] id=b7f3a9 addr=0x4012A0 size=212 v=4 etat=scelle
+[bloc] id=b7f3a9 cible=x86-64-win11-pe addr=0x4012A0 size=212 v=4 etat=scelle
   sig     : (ptr u8, usize) -> usize
   pre     : ptr != 0 && len <= MAX_LEN
   post    : ret <= len
@@ -59,9 +105,9 @@ référence (bloc utilisé tout au long de la spécification) :
 
 ### 4.1 Répartition des champs
 
-- **Première ligne** — identifiant, adresse, taille, version, état : c'est à elle seule
-  l'entrée de localisation portée par `frag-loc`. C'est la seule partie lue pour situer un
-  bloc. Budget : 40 tokens maximum.
+- **Première ligne** — identifiant, profil, adresse, taille, version, état : c'est à elle
+  seule l'entrée de localisation portée par `frag-loc`. C'est la seule partie lue pour
+  situer un bloc. Budget : 40 tokens maximum.
 - **Lignes suivantes** — signature, pré/post-conditions, registres préservés, invariants,
   dépendances, preuves, tests : entrée détaillée portée par `frag-con` et `frag-prf`,
   chargée uniquement quand le bloc est effectivement édité. Budget de l'entrée complète :
@@ -72,15 +118,16 @@ référence (bloc utilisé tout au long de la spécification) :
 | Champ | Signification |
 |---|---|
 | `id` | Identifiant stable du bloc sur six hexadécimaux ; référencé par les dépendances d'autres blocs |
-| `addr` | Adresse virtuelle du point d'entrée — stable une fois scellé (R7) |
+| `cible` | Profil de cible du bloc (identifiant `<isa>-<os>-<format>`) ; un même contrat I peut être instancié sur plusieurs profils |
+| `addr` | Adresse virtuelle du point d'entrée — stable une fois scellé (R7), au sein du binaire du profil |
 | `size` | Taille en octets, padding inclus |
 | `v` | Version du bloc ; une correction crée une nouvelle version, pas une réécriture |
-| `etat` | `brouillon`, `verifie`, `scelle`, `cristallise`, `deprecie` (voir § 6) |
+| `etat` | `brouillon`, `verifie`, `scelle`, `cristallise`, `deprecie` (voir § 7) |
 | `sig` | Signature typée de la fonction — la partie de I embarquée dans C |
 | `pre` / `post` | Pré-conditions et post-conditions du contrat |
-| `regs` | Registres non volatils sauvegardés ; convention d'appel (`msx64` sur la cible Windows) |
+| `regs` | Registres non volatils sauvegardés ; convention d'appel effective du profil (`msx64`, `sysv`, `lp64r`…) |
 | `inv` | Invariants internes maintenus pendant l'exécution du bloc |
-| `deps` | Dépendances : autres blocs (par id) et extensions CPU requises |
+| `deps` | Dépendances : autres blocs (par id) et extensions ou instructions ISA requises |
 | `preuves` | Résultats des preuves : sûreté mémoire, bornes, terminaison |
 | `tests` | Volume de tests différentiels, référence de l'oracle, compteur de cristallisation |
 
@@ -89,12 +136,12 @@ référence (bloc utilisé tout au long de la spécification) :
 Exécutée avant chaque édition et avant chaque chargement. Tout échec interrompt la
 session : jamais de contournement, jamais de reprise forcée.
 
-1. Vérifier la signature Ed25519 de la carte sur les quatre fragments ; une carte non
-   signée ou à signature invalide est refusée (R9).
-2. Recalculer le SHA-256 de chaque bloc scellé visé par l'édition, ainsi que de l'ensemble
-   de ses dépendances directes.
-3. Comparer les empreintes obtenues à celles portées par `frag-bld` ; tout écart signifie
-   que binaire et carte ont divergé.
+1. Vérifier la signature de la carte — avec `algo_signature` de l'en-tête — sur les quatre
+   fragments ; une carte non signée ou à signature invalide est refusée (R9).
+2. Recalculer l'empreinte de chaque bloc scellé visé par l'édition — avec
+   `algo_hachage` de l'en-tête — ainsi que de l'ensemble de ses dépendances directes.
+3. Comparer les empreintes obtenues à celles portées par `frag-bld` (format préfixé) ;
+   tout écart signifie que binaire et carte ont divergé.
 4. En cas d'écart : blocage de la session, journal de l'incident, état conservé pour
    audit — la reprise passe obligatoirement par une réconciliation manuelle documentée.
 
@@ -112,13 +159,13 @@ livré.
 |---|---|---|
 | `brouillon` | Bloc en cours d'écriture, non vérifié, non adressé | Création par l'agent ; adresse provisoire |
 | `verifie` | Oracle passé une fois, round-trip conforme | Après une session de vérification complète (R5) |
-| `scelle` | Commité : adresse stable, SHA-256 dans frag-bld | Commit atomique (étape 6 de la boucle) |
+| `scelle` | Commité : adresse stable, empreinte dans frag-bld | Commit atomique (étape 6 de la boucle) |
 | `cristallise` | Immuable : dix vérifications réussies consécutives | Seuil atteint (R6) ; modification = procédure lourde |
 | `deprecie` | Remplacé par une version plus récente | Conservé pour l'audit et le traçage des variantes |
 
 La cristallisation est le mécanisme d'économie structurelle : un bloc cristallisé n'est
-plus jamais rechargé ni re-vérifié en session — seul son SHA-256 est contrôlé, ce qui
-coûte une comparaison de 64 caractères. La modification d'un bloc cristallisé reste
+plus jamais rechargé ni re-vérifié en session — seule son empreinte est contrôlée, ce qui
+coûte une comparaison de chaîne courte. La modification d'un bloc cristallisé reste
 possible mais relève d'une procédure délibérément lourde : justification sur la couche I,
 double vérification par oracle, et création d'un nouveau bloc plutôt qu'une réécriture —
 l'ancien passant à l'état déprécié. Cette asymétrie de coût est volontaire : elle rend
@@ -131,8 +178,91 @@ d'exploitation protège ses parties les plus éprouvées.
 |---|---|---|
 | Localiser un bloc | frag-loc — une entrée | 40 tokens max |
 | Éditer simplement un bloc | frag-loc + frag-con du bloc + notation | 3 000 tokens max |
-| Ajouter un bloc | frag-loc + frag-con + seuils frag-prf | 6 000 tokens max |
+| Ajouter un bloc (profil existant) | frag-loc + frag-con + notation | 6 000 tokens max |
+| Instancier un profil nouveau pour un contrat existant | I partagée + frag-con + notation du profil | 6 000 tokens max par bloc |
 | Audit complet (rare) | Carte entière déchiffrée | Non budgété — opération exceptionnelle |
 
 L'agent ne lit jamais le binaire en entier : la carte est son unique index, et elle est
 conçue pour être lue parcellairement (compacité, chargement paresseux, cristallisation).
+Le multi-profils n'alourdit pas la localisation : l'entrée de frag-loc porte le profil, et
+l'instanciation d'un contrat sur un profil nouveau est budgété comme un ajout — la couche
+I, elle, n'est jamais dupliquée.
+
+## 8. Export de continuité (D16)
+
+### 8.1 Contenu et sécurité
+
+L'export de continuité est l'unique forme sous laquelle l'état protocole quitte le poste de
+développement. C'est un conteneur unique regroupant :
+
+- la **couche I** complète — contrats, pré/post-conditions, invariants ;
+- la **couche B** — le binaire scellé de chaque profil actif ;
+- la **couche C** — les quatre fragments et l'en-tête de la carte ;
+- un **manifeste autodescriptif** : version du protocole, suite cryptographique (les trois
+  algorithmes de l'en-tête), profils actifs, empreinte racine, date, liste des contrôles
+  effectués à l'export.
+
+Le conteneur est chiffré intégralement (AEAD de l'en-tête, clé dérivée de la phrase
+maîtresse par Argon2id — les mêmes paramètres que la carte au repos) et signé
+(`algo_signature`). Chiffré, il peut être stocké n'importe où — y compris un stockage
+cloud — sans exposer la carte, ce qui satisfait la règle de sauvegarde 3-2-1 ; signé, il
+est vérifiable à l'import ; autodescriptif, il ne requiert aucune connaissance extérieure
+à lui-même.
+
+L'oracle est volontairement exclu du conteneur : éphémère par conception (D1), il est
+régénéré depuis I à l'arrivée. L'export n'embarque ainsi aucun artefact empoisonnable
+persistant — un export falsifié est détecté par la signature, un export volé est
+indéchiffrable sans la phrase maîtresse.
+
+### 8.2 Procédure d'import — cinq étapes
+
+Exécutée par tout agent conforme TRIADE sur un poste ou un agent nouveau :
+
+1. **Déchiffrement** du conteneur par la phrase maîtresse (escrow deux-sur-trois si le
+   contexte est organisationnel). Un échec de déchiffrement est terminal : rien n'est
+   interprété.
+2. **Vérification de la signature** du conteneur et de la carte qu'il contient. Un export
+   non signé ou à signature invalide est refusé (R9) — sans exception, même si son
+   contenu paraît sain.
+3. **Vérification du verrou croisé** : recalcul des empreintes de B avec l'algorithme de
+   l'en-tête, comparaison à frag-bld. Tout écart bloque la reprise (R8).
+4. **Régénération de l'oracle** depuis la couche I — l'oracle n'est jamais importé.
+5. **Reprise normale** : la boucle de mise à jour s'applique à l'identique.
+
+Cette procédure garantit l'anti-enfermement : le développeur peut changer d'agent, de
+poste ou de fournisseur à tout moment, sans perte et sans dépendance envers l'agent qui
+l'a précédé. Elle garantit aussi la traçabilité : le manifeste conserve la date, la suite
+cryptographique et les contrôles de l'export, ce qui l'inscrit dans la chaîne de confiance
+du scellage.
+
+### 8.3 Statut de l'interdiction de livraison
+
+La règle R1, précisée par D16, s'entend ainsi : la carte, la couche I et les vecteurs de
+test ne sont **jamais livrés avec l'artefact ni communiqués à des tiers**. L'export de
+continuité est l'unique exception — réservé au développeur, exclusivement sous forme
+chiffrée et signée. Un export en clair est une violation du protocole ; sa production,
+son acceptation ou sa diffusion constituent des interdits absolus pour l'agent (voir le
+manuel agent, § 9).
+
+## 9. Migration cryptographique — le re-cryptage
+
+Le changement d'un paramètre de la suite cryptographique en cours de projet est possible ;
+c'est une opération de migration complète, dite **re-cryptage**, jamais un basculement
+silencieux :
+
+1. Justification consignée sur le journal des décisions du projet (conformité, résistance
+   anticipée, performance).
+2. Recalcul de toutes les empreintes des blocs scellés avec le nouvel algorithme ;
+   réécriture de frag-bld au format préfixé.
+3. Re-chiffrement des quatre fragments avec les nouvelles clés dérivées ; mise à jour de
+   l'en-tête.
+4. Re-signature complète de la carte ; régénération de l'empreinte racine.
+5. Archivage de l'ancienne carte — dépréciée, jamais détruite : l'audit doit pouvoir
+   remonter la chaîne des suites successives.
+6. Un nouvel export de continuité est produit dès la migration achevée : la version
+   chiffrée avec l'ancienne suite devient obsolète et doit être retirée des stockages.
+
+L'opération est atomique — elle réussit entièrement ou laisse l'ancienne carte en place —
+et journalisée. Le round-trip de vérification s'exécute immédiatement après : la première
+édition suivant un re-cryptage vérifie l'intégralité des empreintes, pas seulement les
+blocs visés.

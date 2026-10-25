@@ -6,20 +6,24 @@
 > agent IA chargé de continuer le travail.
 
 - Dernière mise à jour : 25 octobre 2026
-- Version de la spécification : v0.2 (figée pour le démarrage du jalon M0)
-- État général : conception terminée, infrastructure de sauvegarde opérationnelle, implémentation non commencée
+- Version de la spécification : v0.3 (figée pour le démarrage du jalon M0)
+- État général : conception terminée (dont universalité par profils), infrastructure de sauvegarde opérationnelle, implémentation non commencée
 
 ---
 
 ## 1. Le projet en 30 secondes
 
 TRIADE est un protocole permettant à un agent IA de développer, vérifier et mettre à jour du
-code machine x86-64 pur — sans compilateur ni langage de programmation — pour Windows 11
-(exécutables PE32+ écrits à la main). Le principe repose sur trois couches indissociables :
-la couche I (Intention) porte les contrats et spécifications ; la couche B (Binaire) porte
-les octets scellés réellement exécutés ; la couche C (Carte) est l'index signé, chiffré et
-fragmenté qui lie les deux et sert d'unique interface de développement à l'agent. Le livrable
-est 100 % code machine ; la Carte reste strictement privée, détenue côté développeur.
+**code machine natif pur** — sans compilateur ni langage de programmation — guidé par une
+carte de balises. Depuis la v0.3, le protocole est **universel** : toute plateforme/OS/
+architecture est un profil de cible vérifiable, et le profil primaire de validation est
+x86-64 / Windows 11 (exécutables PE32+ écrits à la main). Le principe repose sur trois
+couches indissociables : la couche I (Intention) porte les contrats et spécifications,
+indépendants de la cible ; la couche B (Binaire) porte les octets scellés réellement
+exécutés, un binaire par profil ; la couche C (Carte) est l'index signé, chiffré et
+fragmenté qui lie les deux et sert d'unique interface de développement à l'agent. Le
+livrable est 100 % code machine ; la Carte reste strictement privée, détenue côté
+développeur — mais récupérable et transférable grâce à l'export de continuité chiffré.
 
 L'application de validation est un outil de pentest de type intercepteur MITM (tests
 autorisés en environnement de laboratoire uniquement, machine virtuelle isolée). Les
@@ -30,14 +34,34 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 
 | Domaine | État | Détail |
 |---|---|---|
-| Spécification v0.2 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.2_Specification.pdf` (document formel, 18 pages) |
-| Journal des décisions | Terminé | D1 à D13 consignées dans `docs/DECISIONS.md` |
-| Feuille de route | Terminée | Jalons M0 à M5 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
-| Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — quatre fragments, verrou croisé, budgets en tokens |
+| Spécification v0.3 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail faisant autorité pour la v0.3) ; le PDF v0.2 reste l'archive formelle de la version précédente |
+| Journal des décisions | Terminé | D1 à D16 consignées dans `docs/DECISIONS.md` |
+| Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
+| Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Implémentation | Non commencée | La prochaine étape est le jalon M0 (voir section 7) |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique |
 
 Aucun bloc machine n'a encore été écrit : le projet entre dans sa phase de réalisation.
+
+## Nouveautés de la v0.3
+
+Trois évolutions demandées par le développeur, consignées en D14–D16 :
+
+1. **Universalité totale** (D14) : le protocole ne dépend plus d'aucune plateforme. Chaque
+cible est un profil — ISA, ABI, format d'exécutable, interface système, patch à chaud,
+notation, padding — défini par sept éléments vérifiables. La couche I s'écrit une fois, la
+carte indexe par profil, chaque profil a son binaire. Validation par jalons : M6
+(Linux x86-64 — portabilité inter-OS) et M7 (RISC-V 64 — portabilité inter-ISA).
+2. **Cryptographie paramétrable** (D15) : SHA-256 reste le hachage par défaut, mais le
+   développeur peut changer d'algorithme — hachage, signature, chiffrement — dans des
+listes blanches garantissant le seuil de sécurité. Le choix est consigné dans l'en-tête
+signé de la carte, les empreintes sont préfixées (`sha256:…`), et changer en cours de
+projet est une migration atomique et journalisée (re-cryptage).
+3. **Export de continuité** (D16) : le développeur peut sauvegarder et transférer
+l'intégralité de son état de développement — couches I, B, C et manifeste autodescriptif —
+sous forme d'un conteneur chiffré et signé, afin de reprendre le projet avec n'importe
+quel agent conforme TRIADE. Procédure d'import en cinq étapes ; l'oracle, éphémère, est
+régénéré à l'arrivée et jamais exporté.
 
 ## 3. Où tout se trouve
 
@@ -57,11 +81,11 @@ triade/
 ├── REPRISE_PROJET.md                  Ce fichier — reprise rapide
 ├── PROTOCOLE_TRIADE_AGENT.md          Manuel d'utilisation pour un agent IA (nouveau projet)
 ├── docs/
-│   ├── PROTOCOLE_TRIADE.md            Spécification v0.2 — source de travail
-│   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — document formel
+│   ├── PROTOCOLE_TRIADE.md            Spécification v0.3 — source de travail
+│   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle
 │   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C)
-│   ├── DECISIONS.md                   Journal des décisions D1–D13
-│   └── PLAN_MILESTONES.md             Feuille de route M0–M5
+│   ├── DECISIONS.md                   Journal des décisions D1–D16
+│   └── PLAN_MILESTONES.md             Feuille de route M0–M7
 ├── scripts/
 │   ├── sync_backup.sh                 Sauvegarde complète : commit + Drive + GitHub
 │   ├── drive_sync.py                  Synchronisation Google Drive (fichiers + bundle)
@@ -129,11 +153,14 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D6 | Empreintes par build | Variante unique par livraison (réordonnancement, nops, encodages) |
 | D7 | Appels système | API Windows via IAT (kernel32, ws2_32, Schannel) — pas de syscalls directs |
 | D8 | Granularité des blocs | 32 à 512 instructions, un bloc = une responsabilité, padding 16 octets |
-| D9 | TLS | Schannel (SSPI) au jalon M4 ; TLS 1.3 pur reporté après M5 |
-| D10 | Cible | x86-64, Windows 11, PE32+ à la main, DEP/ASLR/CFG respectés |
+| D9 | TLS | Schannel (SSPI) au jalon M4 ; TLS 1.3 pur reporté après M7 |
+| D10 | Cible | x86-64, Windows 11, PE32+ à la main, DEP/ASLR/CFG — profil primaire (amendée par D14) |
 | D11 | Architecture de sauvegarde | Git local (vérité) + Drive (miroir fichiers + bundle) + GitHub privé |
 | D12 | Gestion des jetons | `.gdrive/` local, chmod 600, jamais commités ni synchronisés |
 | D13 | Sauvegarde systématique | `sync_backup.sh` après chaque modification + hook post-commit |
+| D14 | Universalité | Profils de cible à sept éléments vérifiables ; Win11 x86-64 reste le profil primaire de validation |
+| D15 | Suite cryptographique | Paramétrable (hachage SHA-256 par défaut, signature, chiffrement) — listes blanches, en-tête signé, re-cryptage atomique |
+| D16 | Récupération de la carte | Export de continuité chiffré et signé (I+B+C+manifeste), import en cinq étapes, oracle jamais exporté |
 
 ## 7. Prochaine étape : le jalon M0
 
@@ -152,8 +179,10 @@ entier est remis en question avant tout investissement supplémentaire.
 5. Construire le PE32+ à la main : en-têtes DOS/COFF/PE32+, `.text` RX, `.rdata` imports +
    relocations, IAT kernel32 (WriteFile, GetStdHandle, ExitProcess), moins de 4 Kio.
 6. Exécuter sur Windows 11 et observer la sortie console.
-7. Créer la carte v0 : trois blocs, quatre fragments, signature Ed25519 (R9).
-8. Vérifier le verrou croisé bout en bout (R8) : SHA-256 des blocs dans frag-bld, re-vérification.
+7. Créer la carte v0 : en-tête normalisé v0.3, trois blocs, quatre fragments, signature
+   Ed25519 (R9).
+8. Vérifier le verrou croisé bout en bout (R8) : empreintes des blocs dans frag-bld,
+   re-vérification.
 9. Après chaque avancée : `bash scripts/sync_backup.sh "M0 : <étape>"`.
 
 ### 7.3 Critères de sortie
