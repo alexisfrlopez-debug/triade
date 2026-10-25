@@ -109,7 +109,9 @@ def api(method, url, body=None, retry=True):
         if e.code == 401 and retry:
             get_access_token(force=True)
             return api(method, url, body, retry=False)
-        raise
+        detail = e.read()[:200]
+        raise SyncError(
+            f"appel API {method} {url[:80]}… échoué (HTTP {e.code}) : {detail!r}")
 
 
 def list_folder(folder_id):
@@ -162,10 +164,14 @@ def md5_of(path):
     return h.hexdigest()
 
 
-def resumable_upload(init_url, metadata, path):
-    """Téléversement résumable en une requête (taille quelconque)."""
+def resumable_upload(init_url, metadata, path, init_method="POST"):
+    """Téléversement résumable en une requête (taille quelconque).
+
+    init_method : POST pour créer un fichier, PATCH pour mettre à jour
+    (exigé par l'API Drive pour les fichiers existants).
+    """
     size = path.stat().st_size
-    st, body, headers = api("POST", init_url, body=metadata)
+    st, body, headers = api(init_method, init_url, body=metadata)
     if st not in (200, 201):
         raise SyncError(f"initialisation upload impossible ({st}) : {body[:200]!r}")
     session_uri = headers.get("Location")
@@ -189,7 +195,7 @@ def upload_create(parent_id, name, path):
 
 def upload_update(file_id, path):
     return resumable_upload(f"{UPLOAD}/files/{file_id}?uploadType=resumable",
-                            {}, path)
+                            {}, path, init_method="PATCH")
 
 
 # ---------------------------------------------------------------- fichiers locaux
