@@ -23,9 +23,9 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.3, source de travail) — `docs/Protocole_TRIADE_v0.2_Specification.pdf` (archive formelle v0.2) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.3, source de travail) — `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle v0.3, 27 p.) — `docs/Protocole_TRIADE_v0.2_Specification.pdf` (archive v0.2) |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D16) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D17) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -36,7 +36,9 @@ Règle absolue — après **chaque** modification du projet :
 bash scripts/sync_backup.sh "description courte de la modification"
 ```
 
-Le script committe, synchronise le miroir Google Drive (fichiers + bundle d'historique)
+Le script régénère d'abord le PDF formel si les sources du protocole ont changé (D17 :
+`scripts/build_pdf.sh`, empreinte des sources comparée au stamp du dernier build),
+committe, synchronise le miroir Google Drive (fichiers + bundle d'historique)
 et pousse vers le repo GitHub privé. Le hook `post-commit` synchronise le Drive à chaque
 commit. Vérification des jetons : `python3 scripts/check_auth.py`.
 

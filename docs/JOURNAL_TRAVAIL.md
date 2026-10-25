@@ -53,3 +53,27 @@ Stage Summary:
 - L'anti-enfermement est garanti : l'export de continuité (I+B+C+manifeste, chiffré, signé, autodescriptif) permet au développeur de changer d'agent ou de poste ; l'oracle, éphémère, est régénéré depuis I et jamais exporté.
 - Précision terminologique consignée : SHA-256 est un algorithme de hachage (empreintes du verrou croisé), pas un chiffrement ; le chiffrement au repos reste XChaCha20-Poly1305 — les trois sont paramétrables dans leurs listes respectives.
 - Prochaine étape inchangée : jalon M0 sur le profil primaire ; le PDF v0.3 sera généré à la stabilisation (scripts/triade_v02_spec.py sert de modèle).
+
+---
+Task ID: 3
+Agent: main (Z.ai, agent principal)
+Task: Générer le PDF formel v0.3 de la spécification et mettre en place la régénération systématique du PDF à chaque mise à jour du protocole (demande explicite du développeur).
+
+Work Log:
+- Reconstitué le contexte : lecture du worklog, des quatre sources v0.3 (PROTOCOLE_TRIADE.md, FORMAT_CARTE.md, DECISIONS.md, PLAN_MILESTONES.md) et du générateur v0.2 complet (1276 lignes) ; lecture de la chaîne du skill PDF (SKILL.md, brief report, fonts, cover, palette, overflow, pagination).
+- Écrit scripts/triade_v03_spec.py (1603 lignes) sur le modèle v0.2 : mêmes fonte/palette/géométrie (continuité visuelle), contenu étendu aux mécanismes v0.3 — tableau des décisions D1–D16, en-tête normalisé de la carte (§4.2 + bloc de code + table des champs), §8.3 suite cryptographique paramétrable avec table des listes blanches, §8.4 export de continuité (conteneur, import en cinq étapes, statut de R1), chapitre 10 « Profils de cible » (sept éléments, table des cinq profils, ABI msx64, différences inter-profils), feuille de route M0–M7, glossaire 16 termes, journal des versions à trois lignes — 17 tableaux, 4 blocs de code, 2 figures réutilisées.
+- Écrit la couverture v0.3 (triade_v03_cover.html, gabarit 01 HUD inchangé) : kicker « Version 0.3 », résumé et méta actualisés (universalité, cryptographie paramétrable, export de continuité, profil primaire).
+- Chemins du générateur rendus restaurables : tout dérive de TRIADE_BASE (défaut /home/z/my-project) et du dépôt triade/ — le script vit dans le dépôt et écrit ses artefacts dans le dépôt (corps, couverture, PDF final) + copie livrable dans download/.
+- Découvert et corrigé un défaut latent de numérotation hérité du générateur v0.2 : les pieds de page sont dessinés au DÉBUT de chaque page, or le marqueur de début de corps mettait à jour BODY_START en cours de passe — avec un sommaire sur deux pages, la séquence devenait i, 1, 2, 2 (le « ii » manquait, doublon de « 2 »). Correctif : gel effectif de la valeur en phase 2 (drapeau BODY_FROZEN) ; le commentaire « valeur gelée » du v0.2 n'était pas appliqué réellement.
+- Erratum v0.2 : même correctif appliqué au générateur v0.2, archive régénérée à l'identique (21 pages, contenu inchangé, seuls les numéros de pied de page des pages i/ii/1 sont corrigés) — documenté dans D17 et le présent journal.
+- Pipeline de qualité exécuté sur les deux PDF : poster_validate + cover_validate (0 chevauchement), rendu vectoriel html2poster 794px, code.sanitize, meta.brand, pages.clean (0 page blanche), font.check (0 glyphe manquant), pdf_qa 12/12 PASS, vérification programmatique de la concordance sommaire ↔ pages réelles et de la séquence complète des pieds de page (i, ii, 1–24).
+- Mis en place la régénération systématique (D17) : scripts/build_pdf.sh — empreinte SHA-256 des six sources (4 markdown + générateur + couverture) comparée au stamp .pdf_build.stamp suivi par git ; toute divergence déclenche la reconstruction complète avec contrôles ; intégré à sync_backup.sh en étape 0.5, AVANT le commit. Testé de bout en bout : idempotence (2e appel sans action), détection d'une modification réelle de contenu (--check → code 2), reconstruction + QA, sémantique de retour arrière (rebuild après revert).
+- Mise à jour documentaire : D17 consignée dans docs/DECISIONS.md (choix, alternatives rejetées, développement) ; note d'en-tête de PROTOCOLE_TRIADE.md réécrite (PDF v0.3 généré + règle de régénération) ; REPRISE_PROJET.md (tableau d'état, arborescence avec build_pdf.sh et fichiers v0.3, description du flux de sauvegarde étendu, ligne D17) ; README.md (pointeurs de spécification, D1–D17, description du sync).
+- Captures QA archivées dans scripts/assets/ (qa_v03_p01_couverture, p02_sommaire, p07_decisions, p23_profils, p25_jalons).
+- Sauvegarde systématique finale (D13) : le sync a régénéré le PDF (sources DECISIONS/PROTOCOLE modifiées — démonstration en conditions réelles de D17), commit + synchro Drive + push GitHub ; livrables download/ rafraîchis (PDF v0.3, zip de sauvegarde regénéré).
+
+Stage Summary:
+- PDF formel v0.3 livré : docs/Protocole_TRIADE_v0.3_Specification.pdf (27 pages : couverture + sommaire i-ii + corps 1-24), QA 12/12, sommaire cliquable concordant, numérotation i, ii, 1-24 sans doublon.
+- D17 opérationnelle : le PDF est un artefact dérivé, régénéré automatiquement avant chaque commit dès qu'une source du protocole change ; un clone frais ne reconstruit pas inutilement (stamp suivi par git) ; un échec de build est signalé sans bloquer la sauvegarde des sources.
+- Erratum v0.2 consigné et appliqué : numérotation des pieds de page corrigée sur l'archive (défaut latent du générateur, révélé par le sommaire v0.3 sur deux pages).
+- Prochaine étape inchangée : jalon M0 sur le profil primaire (checklist dans REPRISE_PROJET.md § 7).

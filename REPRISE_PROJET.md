@@ -34,8 +34,8 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 
 | Domaine | État | Détail |
 |---|---|---|
-| Spécification v0.3 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail faisant autorité pour la v0.3) ; le PDF v0.2 reste l'archive formelle de la version précédente |
-| Journal des décisions | Terminé | D1 à D16 consignées dans `docs/DECISIONS.md` |
+| Spécification v0.3 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle, 27 pages) ; le PDF v0.2 reste l'archive de la version précédente |
+| Journal des décisions | Terminé | D1 à D17 consignées dans `docs/DECISIONS.md` |
 | Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Implémentation | Non commencée | La prochaine étape est le jalon M0 (voir section 7) |
@@ -82,16 +82,20 @@ triade/
 ├── PROTOCOLE_TRIADE_AGENT.md          Manuel d'utilisation pour un agent IA (nouveau projet)
 ├── docs/
 │   ├── PROTOCOLE_TRIADE.md            Spécification v0.3 — source de travail
-│   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle
+│   ├── Protocole_TRIADE_v0.3_Specification.pdf   Spécification v0.3 — archive formelle (27 p.)
+│   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle (erratum : numérotation corrigée)
 │   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C)
-│   ├── DECISIONS.md                   Journal des décisions D1–D16
+│   ├── DECISIONS.md                   Journal des décisions D1–D17
 │   └── PLAN_MILESTONES.md             Feuille de route M0–M7
 ├── scripts/
-│   ├── sync_backup.sh                 Sauvegarde complète : commit + Drive + GitHub
+│   ├── sync_backup.sh                 Sauvegarde complète : PDF à jour + commit + Drive + GitHub
+│   ├── build_pdf.sh                   Régénération systématique du PDF formel (D17)
 │   ├── drive_sync.py                  Synchronisation Google Drive (fichiers + bundle)
 │   ├── check_auth.py                  Vérification des jetons d'accès
-│   ├── triade_v02_spec.py             Générateur du PDF de spécification (ReportLab)
-│   ├── triade_cover.html              Source HTML de la couverture du PDF
+│   ├── triade_v03_spec.py             Générateur du PDF v0.3 (ReportLab, TOC auto)
+│   ├── triade_v03_cover.html          Source HTML de la couverture v0.3
+│   ├── triade_v02_spec.py             Générateur du PDF v0.2 (erratum appliqué)
+│   ├── triade_cover.html              Source HTML de la couverture v0.2
 │   ├── triade_diagram_arch.html       Source HTML du diagramme d'architecture
 │   ├── triade_diagram_loop.html       Source HTML du diagramme de la boucle de mise à jour
 │   └── assets/                        Images référencées par la spécification
@@ -131,13 +135,15 @@ régénérer, puis valider avec `python3 scripts/check_auth.py`.
 cd /home/z/my-project/triade && bash scripts/sync_backup.sh "description courte de la modification"
 ```
 
-Ce script exécute, dans l'ordre : commit git (message passé en argument, sinon horodatage
+Ce script exécute, dans l'ordre : régénération du PDF formel si les sources du protocole
+ont changé (D17 — `scripts/build_pdf.sh`, empreinte SHA-256 des sources comparée au stamp
+du dernier build), commit git (message passé en argument, sinon horodatage
 automatique), synchro Google Drive (miroir des fichiers + régénération du bundle
 d'historique + copie des fichiers d'instruction à la racine du Drive), puis push GitHub si
 la remote `origin` est configurée. Le hook `post-commit` déclenche en outre une synchro Drive
 à chaque commit, même manuel. Un agent IA travaillant sur ce projet DOIT exécuter cette
 commande à chaque modification — c'est une exigence du protocole d'infrastructure,
-consignée en D13 dans `docs/DECISIONS.md` et rappelée au § 11 du manuel agent.
+consignée en D13 et D17 dans `docs/DECISIONS.md` et rappelée au § 11 du manuel agent.
 
 ## 6. Décisions structurantes — résumé
 
@@ -161,6 +167,7 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D14 | Universalité | Profils de cible à sept éléments vérifiables ; Win11 x86-64 reste le profil primaire de validation |
 | D15 | Suite cryptographique | Paramétrable (hachage SHA-256 par défaut, signature, chiffrement) — listes blanches, en-tête signé, re-cryptage atomique |
 | D16 | Récupération de la carte | Export de continuité chiffré et signé (I+B+C+manifeste), import en cinq étapes, oracle jamais exporté |
+| D17 | PDF formel | Régénération systématique : `build_pdf.sh` compare l'empreinte des sources au stamp du dernier build et reconstruit avant chaque commit |
 
 ## 7. Prochaine étape : le jalon M0
 

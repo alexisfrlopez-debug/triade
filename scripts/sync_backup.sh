@@ -20,6 +20,18 @@ if [ -d .git ] && [ ! -x .git/hooks/post-commit ] && [ -f git-hooks/post-commit 
   echo "[sync] hook post-commit réinstallé"
 fi
 
+# 0.5) PDF formel : régénération systématique quand les sources du protocole ont
+#      changé (D17) — AVANT le commit, pour que la sauvegarde embarque un PDF à jour.
+if [ -f scripts/build_pdf.sh ]; then
+  if bash scripts/build_pdf.sh; then
+    :
+  else
+    echo "[sync] AVERTISSEMENT : échec de la régénération du PDF formel (non bloquant)"
+  fi
+else
+  echo "[sync] AVERTISSEMENT : scripts/build_pdf.sh introuvable"
+fi
+
 # 1) Commit git — le hook post-commit déclenche la synchro Drive à chaque commit
 if git rev-parse --git-dir >/dev/null 2>&1; then
   git add -A

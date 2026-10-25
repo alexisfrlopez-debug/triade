@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 794px 1123px; margin: 0; }
+  :root {
+    /* Cascade palette — intent cold / mode minimal / seed 7 (continuité v0.2) */
+    --c-bg: #eff0f1;
+    --c-accent: #3681a6;
+    --c-text: #1a1b1c;
+    --c-muted: #6f7578;
+    --c-mid: #334650;
+    --c-surface: #e4e7e8;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    width: 794px; height: 1123px;
+    background: var(--c-bg);
+    font-family: 'Inter', 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    color: var(--c-text);
+  }
+  @media screen {
+    html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); }
+    body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.18); }
+  }
+  .cover {
+    width: 794px; height: 1123px; position: relative;
+    border: none; outline: none; box-shadow: none;
+  }
+  /* ── Layer 1 : fond — grille HUD (2% opacité), clippée ── */
+  .layer-bg {
+    position: absolute; inset: 0; overflow: hidden; z-index: 1;
+    background-image:
+      repeating-linear-gradient(to right, rgba(51,70,80,0.05) 0, rgba(51,70,80,0.05) 0.5px, transparent 0.5px, transparent 66px),
+      repeating-linear-gradient(to bottom, rgba(51,70,80,0.05) 0, rgba(51,70,80,0.05) 0.5px, transparent 0.5px, transparent 66px);
+  }
+  /* ── Layer 2 : structure — ligne d'ancrage verticale ultra-épaisse ── */
+  .layer-structure { position: absolute; inset: 0; z-index: 2; }
+  .anchor-line {
+    position: absolute;
+    left: 95px; top: 112px; bottom: 112px;
+    width: 8px;
+    background: var(--c-accent);
+  }
+  /* ── Layer 3 : contenu ── */
+  .layer-content { position: absolute; inset: 0; z-index: 3; }
+  .kicker {
+    position: absolute; left: 190px; top: 168px;
+    font-size: 16pt; font-weight: 400;
+    letter-spacing: 3pt; text-transform: uppercase;
+    color: var(--c-mid); opacity: 0.6;
+    max-width: 540px;
+  }
+  .hero-1 {
+    position: absolute; left: 190px; top: 337px;
+    font-size: 54pt; font-weight: 900;
+    line-height: 1.15; letter-spacing: -0.5pt;
+    text-transform: uppercase;
+    color: var(--c-text);
+    max-width: 544px;
+  }
+  .hero-2 {
+    position: absolute; left: 190px; top: 424px;
+    font-size: 54pt; font-weight: 900;
+    line-height: 1.15; letter-spacing: -0.5pt;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    max-width: 544px;
+  }
+  .summary {
+    position: absolute; left: 190px; top: 562px;
+    font-size: 17pt; font-weight: 400;
+    line-height: 1.6;
+    color: var(--c-text); opacity: 0.85;
+    max-width: 476px;
+  }
+  .meta {
+    position: absolute; left: 190px; top: 842px;
+    font-size: 16pt; font-weight: 400;
+    line-height: 1.75;
+    color: var(--c-muted);
+    max-width: 500px;
+  }
+  .meta .mono {
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
+    font-size: 13pt; color: var(--c-mid); letter-spacing: 0.5pt;
+  }
+  .meta .strong { color: var(--c-text); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="cover">
+    <div class="layer-bg"></div>
+    <div class="layer-structure">
+      <div class="anchor-line"></div>
+    </div>
+    <div class="layer-content">
+      <div class="kicker">Sp&eacute;cification technique &middot; Version 0.3</div>
+      <div class="hero-1">Protocole</div>
+      <div class="hero-2">Triade</div>
+      <div class="summary">
+        D&eacute;veloppement logiciel en code machine natif par agent IA&nbsp;: une carte
+        sign&eacute;e, chiffr&eacute;e et fragment&eacute;e guide l&rsquo;agent &agrave;
+        travers des blocs scell&eacute;s &mdash; universels par profils de cible, &agrave;
+        cryptographie param&eacute;trable et r&eacute;cup&eacute;rables par export de
+        continuit&eacute;.
+      </div>
+      <div class="meta">
+        <span class="strong">Universalit&eacute; &middot; cryptographie param&eacute;trable &middot; export de continuit&eacute;</span><br>
+        25 octobre 2026<br>
+        <span class="mono">profil primaire&nbsp;: x86-64-win11-pe &middot; i/b/c</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

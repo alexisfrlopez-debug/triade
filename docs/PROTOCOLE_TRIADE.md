@@ -1,9 +1,11 @@
 # PROTOCOLE TRIADE v0.3 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.3. Le PDF
-> `docs/Protocole_TRIADE_v0.2_Specification.pdf` demeure l'archive formelle de la version
-> précédente ; la génération du PDF v0.3 interviendra à la stabilisation de la version
-> (`scripts/triade_v02_spec.py` sert de modèle).
+> Source de travail faisant autorité pour la v0.3. Le PDF formel correspondant est
+> `docs/Protocole_TRIADE_v0.3_Specification.pdf` (27 pages) ; `docs/Protocole_TRIADE_
+> v0.2_Specification.pdf` demeure l'archive formelle de la version précédente. Depuis
+> la décision D17, le PDF est **régénéré systématiquement** à chaque modification des
+> sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des sources au
+> stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
 
 - Version : v0.3 — universalité par profils de cible, suite cryptographique paramétrable, export de continuité
 - Date : 25 octobre 2026

@@ -128,6 +128,7 @@ S["toc1"] = ParagraphStyle("TOC1", fontName="FreeSerif", fontSize=9.5, leading=1
 
 # ---------------------------------------------------------------- helpers
 BODY_START = [None]           # page de debut du corps (numerotation arabe)
+BODY_FROZEN = [False]         # vrai en phase 2 : la valeur gelee ne bouge plus
 MAX_KEEP_HEIGHT = PAGE_H * 0.4
 
 
@@ -155,7 +156,12 @@ class BodyStartMarker(Flowable):
 class TocDocTemplate(SimpleDocTemplate):
     def afterFlowable(self, flowable):
         if isinstance(flowable, BodyStartMarker):
-            BODY_START[0] = self.page
+            # Erratum v0.2 : les pieds de page sont dessines au DEBUT de chaque
+            # page ; une mise a jour de BODY_START en cours de passe laissait les
+            # pages du sommaire avec la valeur de la passe anterieure (i, 1, 2, 2).
+            # En phase 2 la valeur est gelee : plus de derive.
+            if not BODY_FROZEN[0]:
+                BODY_START[0] = self.page
             return
         if hasattr(flowable, "bookmark_name"):
             level = getattr(flowable, "bookmark_level", 0)
@@ -1233,6 +1239,7 @@ frozen_body_start = BODY_START[0]
 print("phase 1 OK, body_start =", frozen_body_start)
 
 BODY_START[0] = frozen_body_start  # valeur gelee pour toute la phase 2
+BODY_FROZEN[0] = True               # interdit toute mise a jour en cours de passe
 doc = TocDocTemplate(
     BODY_PDF, pagesize=A4,
     leftMargin=MARGIN, rightMargin=MARGIN,

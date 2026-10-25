@@ -138,9 +138,31 @@ artefact empoisonnable persistant. La procédure d'import en cinq étapes (déch
 signature, verrou croisé, oracle, reprise) applique au transfert les mêmes garde-fous qu'à
 l'édition : rien n'est interprété avant vérification, et l'échec d'une étape est terminal.
 
+## Décision D17 — PDF formel régénéré systématiquement (25 octobre 2026)
+
+| ID | Décision | Choix retenu | Alternatives rejetées |
+|---|---|---|---|
+| D17 | PDF formel du protocole | `scripts/build_pdf.sh` : empreinte SHA-256 des sources (PROTOCOLE_TRIADE.md, FORMAT_CARTE.md, DECISIONS.md, PLAN_MILESTONES.md, script générateur, couverture) comparée au stamp `.pdf_build.stamp` suivi par git ; toute divergence déclenche la reconstruction complète (validation couverture, rendu vectoriel, corps ReportLab, contrôles qualité) ; intégré à `sync_backup.sh` **avant** le commit — la sauvegarde embarque toujours un PDF synchrone des sources | Régénération manuelle à la demande (risque d'oubli, PDF périmé dans le dépôt) ; génération dans le hook post-commit (trop tard : le commit contiendrait l'ancien PDF, et un échec de build bloquerait la synchro Drive) ; comparaison par dates (mtime : faux positifs au clone et faux négatifs en cas de revert) |
+
+**Développement.** Le PDF de spécification est un artefact dérivé : sa source de vérité
+est le markdown du protocole. Laissé à une régénération manuelle, il diverge
+inévitablement des sources — un agent reprendrait le projet sur une spécification
+périmée, exactement le genre de dérive silencieuse que la gouvernance du projet
+interdit. Le mécanisme retenu est volontairement simple et vérifiable : le stamp
+contient l'empreinte des sources au moment du dernier build ; il est commité avec le
+PDF, si bien qu'un clone frais ne reconstruit pas inutilement (empreintes identiques),
+tandis que toute modification réelle d'une source déclenche la reconstruction au
+prochain `sync_backup.sh`. La reconstruction échoue bruyamment (validateurs de
+couverture, contrôle `pdf_qa`) sans bloquer la sauvegarde des sources : le markdown
+est toujours sauvegardé, le PDF retardé est signalé. La même session a corrigé un
+défaut latent de numérotation hérité du générateur v0.2 (pieds de page du sommaire :
+séquence i, 1, 2, 2 au lieu de i, ii, 1, 2) — l'archive v0.2 a été régénérée à
+l'identique (erratum, contenu inchangé) et le générateur v0.3 gèle désormais la valeur
+entre les deux phases de construction.
+
 ## Mode de gouvernance
 
-Une nouvelle décision reçoit l'ID suivant la séquence (D17, D18, ...), la date, le choix
+Une nouvelle décision reçoit l'ID suivant la séquence (D18, D19, ...), la date, le choix
 retenu, les alternatives rejetées et un développement si elle engage l'architecture. Une
 décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante — D14 (amende D10) et
