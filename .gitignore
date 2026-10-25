@@ -1,0 +1,25 @@
+# Secrets — JAMAIS committer ni synchroniser
+.gdrive/
+*.token
+token_*.txt
+client_secret*.json
+*_sa.json
+service_account*.json
+credentials*.json
+git-credentials
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Journaux et temporaires
+*.log
+tmp/

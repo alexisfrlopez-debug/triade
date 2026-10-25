@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  :root {
+    --accent: #3681a6;
+    --mid: #334650;
+    --border: #b8c8cf;
+    --tint: #eef3f6;
+    --text: #1a1b1c;
+    --muted: #6f7578;
+    --err: #92453e;
+  }
+  #diagram {
+    width: 820px; box-sizing: border-box;
+    font-family: 'Inter', 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    color: var(--text);
+    padding: 16px 16px 18px 16px;
+    background: #ffffff;
+  }
+  .cols { display: flex; align-items: stretch; gap: 0; }
+  .phase { flex: 1 1 0; min-width: 0; }
+  .phase-title {
+    font-size: 19px; font-weight: 800; color: #ffffff;
+    background: var(--mid); border-radius: 5px;
+    padding: 7px 14px; margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+  .rail { position: relative; padding-left: 40px; }
+  .rail::before {
+    content: ''; position: absolute; left: 13px; top: 20px; bottom: 20px;
+    width: 0; border-left: 2px solid var(--border);
+  }
+  .step { position: relative; padding: 5px 0; }
+  .step::before {
+    content: ''; position: absolute; left: -34px; top: 15px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #ffffff; border: 2.5px solid var(--accent);
+  }
+  .step.final::before { background: var(--accent); }
+  .card {
+    border: 1.5px solid var(--border);
+    background: var(--tint);
+    border-radius: 6px;
+    padding: 8px 13px;
+    box-sizing: border-box;
+  }
+  .step-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .step-num {
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+    font-size: 13px; font-weight: 700; color: #ffffff;
+    background: var(--accent); border-radius: 3px; padding: 0 7px;
+  }
+  .step-title { font-size: 19px; font-weight: 800; color: var(--mid); }
+  .step-desc { font-size: 15px; line-height: 1.4; color: var(--muted); margin-top: 2px; }
+  .step-desc .mono {
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+    font-size: 13.5px; color: var(--mid);
+  }
+  .rollback {
+    margin-top: 5px; display: inline-block;
+    border: 1.5px dashed var(--err); border-radius: 5px;
+    background: #ffffff; padding: 4px 10px;
+    font-size: 14px; color: var(--err); font-weight: 500;
+  }
+  .bridge {
+    flex: 0 0 64px; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .bridge .arrow { position: relative; width: 44px; height: 0; border-top: 3px solid var(--accent); }
+  .bridge .arrow::after {
+    content: ''; position: absolute; right: -2px; top: -7px;
+    border-top: 6px solid transparent; border-bottom: 6px solid transparent;
+    border-left: 9px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+<div id="diagram">
+  <div class="cols">
+    <div class="phase">
+      <div class="phase-title">Phase A &mdash; &Eacute;dition</div>
+      <div class="rail">
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">1</span><span class="step-title">Diff d&rsquo;intention</span></div>
+            <div class="step-desc">Le changement se traduit en diff minimal sur la couche I (R2)&nbsp;: le <i>quoi</i> avant le <i>comment</i>.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">2</span><span class="step-title">Localisation par la carte</span></div>
+            <div class="step-desc"><span class="mono">frag-loc</span> identifie les blocs impact&eacute;s &mdash; aucun scan du binaire (R3).</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">3</span><span class="step-title">Verrou crois&eacute;</span></div>
+            <div class="step-desc">SHA-256 des blocs + signature Ed25519 de la carte&nbsp;; tout &eacute;cart bloque la session (R8, R9).</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">4</span><span class="step-title">R&eacute;g&eacute;n&eacute;ration cibl&eacute;e</span></div>
+            <div class="step-desc">Seuls les blocs impact&eacute;s sont r&eacute;&eacute;crits (keystone &rarr; octets, round-trip capstone). Contrats stables (R4, R7).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bridge"><div class="arrow"></div></div>
+    <div class="phase">
+      <div class="phase-title">Phase B &mdash; Validation &amp; commit</div>
+      <div class="rail">
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">5</span><span class="step-title">V&eacute;rifie-puis-&eacute;crit</span></div>
+            <div class="step-desc">Oracle &eacute;ph&eacute;m&egrave;re + tests diff&eacute;rentiels par propri&eacute;t&eacute;s + vecteurs dor&eacute;s (R5).</div>
+            <div class="rollback">&eacute;chec &rarr; rollback copy-on-write</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="card">
+            <div class="step-head"><span class="step-num">6</span><span class="step-title">Commit atomique</span></div>
+            <div class="step-desc">Patch B + mise &agrave; jour de C + scellage en une seule transaction&nbsp;: tout ou rien.</div>
+          </div>
+        </div>
+        <div class="step final">
+          <div class="card">
+            <div class="step-head"><span class="step-num">7</span><span class="step-title">Re-scellage &amp; cristallisation</span></div>
+            <div class="step-desc">Au seuil de 10 v&eacute;rifications r&eacute;ussies, le bloc devient cristallis&eacute; et immuable (R6).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

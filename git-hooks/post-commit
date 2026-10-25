@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# TRIADE — après chaque commit : synchro Google Drive (best effort, jamais bloquant).
+# Installé dans .git/hooks/post-commit ; le modèle vit dans git-hooks/post-commit
+# et scripts/sync_backup.sh le réinstalle automatiquement s'il manque.
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+[ -f "$ROOT/.gdrive/oauth_token_relais.json" ] || exit 0
+[ -f "$ROOT/scripts/drive_sync.py" ] || exit 0
+python3 "$ROOT/scripts/drive_sync.py" --quiet >/dev/null 2>&1 || true
+exit 0

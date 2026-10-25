@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  :root {
+    --accent: #3681a6;
+    --mid: #334650;
+    --border: #b8c8cf;
+    --card: #e4e7e8;
+    --tint: #eef3f6;
+    --text: #1a1b1c;
+    --muted: #6f7578;
+    --err: #92453e;
+  }
+  #diagram {
+    width: 800px; box-sizing: border-box;
+    font-family: 'Inter', 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    color: var(--text);
+    padding: 18px 20px 20px 20px;
+    background: #ffffff;
+  }
+  .band {
+    border: 1.5px solid var(--border);
+    border-left: 5px solid var(--accent);
+    background: var(--tint);
+    border-radius: 6px;
+    padding: 14px 20px 14px 18px;
+    box-sizing: border-box;
+  }
+  .band-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 7px; }
+  .band-title { font-size: 21px; font-weight: 800; color: var(--mid); letter-spacing: 0.2px; }
+  .band-tag {
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    background: #ffffff; border: 1px solid var(--border);
+    border-radius: 3px; padding: 2px 8px;
+  }
+  .band-desc { font-size: 16px; line-height: 1.45; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; max-width: 100%; }
+  .chip {
+    flex: 0 1 auto; min-width: 100px; max-width: 100%;
+    background: #ffffff; border: 1.5px solid var(--border);
+    border-radius: 5px; padding: 7px 12px; text-align: center;
+    overflow-wrap: break-word;
+  }
+  .chip b {
+    display: block;
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+    font-size: 14.5px; font-weight: 700; color: var(--mid);
+  }
+  .chip span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .link { display: flex; align-items: center; gap: 14px; padding: 6px 0 6px 46px; }
+  .link .stem { width: 0; height: 42px; border-left: 2.5px solid var(--accent); position: relative; }
+  .link .stem::after {
+    content: ''; position: absolute; bottom: -1px; left: -6px;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-top: 8px solid var(--accent);
+  }
+  .link .stem.bidir::before {
+    content: ''; position: absolute; top: -1px; left: -6px;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-bottom: 8px solid var(--accent);
+  }
+  .link-label {
+    font-size: 14.5px; color: var(--mid); line-height: 1.35;
+    font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+  }
+  .link-label b { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="diagram">
+  <div class="band">
+    <div class="band-head">
+      <span class="band-title">Couche I &mdash; Intention</span>
+      <span class="band-tag">priv&eacute;e</span>
+    </div>
+    <div class="band-desc">Sp&eacute;cifications, contrats typ&eacute;s (pr&eacute;/post), invariants logiques &mdash; le &laquo;&nbsp;quoi&nbsp;&raquo; et le &laquo;&nbsp;pourquoi&nbsp;&raquo;. Fine, stable, diffable&nbsp;: toute modification commence ici (R2).</div>
+  </div>
+
+  <div class="link">
+    <div class="stem"></div>
+    <div class="link-label">diff d&rsquo;intention &rarr; mise &agrave; jour des contrats <b>(frag-con)</b></div>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-title">Couche C &mdash; Carte</span>
+      <span class="band-tag">priv&eacute;e &middot; sign&eacute;e &middot; chiffr&eacute;e</span>
+    </div>
+    <div class="band-desc">Index naviguable liant I &harr; B&nbsp;: l&rsquo;unique interface de d&eacute;veloppement de l&rsquo;agent. D&eacute;coup&eacute;e en quatre fragments chiffr&eacute;s s&eacute;par&eacute;ment (compromis partiel &ne; perte totale)&nbsp;:</div>
+    <div class="chips">
+      <div class="chip"><b>frag-loc</b><span>localisation</span></div>
+      <div class="chip"><b>frag-con</b><span>contrats</span></div>
+      <div class="chip"><b>frag-prf</b><span>preuves &middot; tests</span></div>
+      <div class="chip"><b>frag-bld</b><span>builds &middot; SHA-256</span></div>
+    </div>
+  </div>
+
+  <div class="link">
+    <div class="stem bidir"></div>
+    <div class="link-label">verrou crois&eacute; <b>(R8)</b>&nbsp;: SHA-256 des blocs scell&eacute;s &harr; signature Ed25519 de la carte</div>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-title">Couche B &mdash; Binaire</span>
+      <span class="band-tag">livr&eacute;e</span>
+    </div>
+    <div class="band-desc">Code machine x86-64 scell&eacute; et versionn&eacute;&nbsp;: blocs &agrave; adresses stables (R7), padding inter-blocs, checksums v&eacute;rifi&eacute;s au chargement &mdash; &eacute;chec = arr&ecirc;t <i>fail-closed</i> (R10). S&eacute;mantiquement muet&nbsp;: z&eacute;ro symbole, z&eacute;ro structure expos&eacute;s.</div>
+  </div>
+</div>
+</body>
+</html>

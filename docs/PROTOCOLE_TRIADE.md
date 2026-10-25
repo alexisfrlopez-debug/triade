@@ -1,0 +1,378 @@
+# PROTOCOLE TRIADE v0.2 — Spécification technique
+
+> Source de travail (markdown, diffable). Le document formel est
+> `docs/Protocole_TRIADE_v0.2_Specification.pdf`. En cas d'écart, le PDF fait foi pour la
+> v0.2 ; toute évolution ultérieure se fait ici puis est re-générée en PDF via
+> `scripts/triade_v02_spec.py`.
+
+- Version : v0.2 — brouillon de travail figé pour le démarrage de M0
+- Date : 25 octobre 2026
+- Cible : x86-64 · Windows 11 · PE32+ · couches I/B/C
+
+---
+
+## 1. Vision et objectifs
+
+Le développement logiciel est entré dans l'ère agent-first : une part croissante du code est
+écrite, relue et modifiée par des modèles de langage plutôt que par des humains. Cette
+bascule remet en question une hypothèse centrale de nos outils — que le code source est
+optimisé pour la lecture humaine. Compilateurs, systèmes de build et langages ont été conçus
+autour de cette hypothèse ; si le lecteur principal devient une machine, l'empilement
+complet mérite un réexamen systématique plutôt qu'une révision marginale.
+
+TRIADE est la réponse disciplinée à ce réexamen. Plutôt que de supprimer les langages — une
+impossibilité de principe, puisqu'un modèle de langage manipule des symboles textuels et que
+tout format binaire rendu lisible par un agent constitue de facto un langage —, TRIADE
+déplace le langage vers une fine couche de spécification maintenue par l'agent, tandis que
+l'artefact livré est du code machine x86-64 pur. Le compilateur disparaît du pipeline de
+production : il n'existe plus aucune couche de traduction entre ce que l'agent écrit et les
+octets exécutés. Ce que l'agent écrit est ce qui s'exécute — et rien d'autre.
+
+Le nom encode l'architecture : trois couches indissociables — Intention (I), Binaire (B),
+Carte (C) — unies par un verrou croisé cryptographique. La couche I contient le quoi et le
+pourquoi : contrats typés, pré et post-conditions, invariants. La couche B contient le
+comment : des octets scellés, versionnés, à adresses stables. La couche C — la
+formalisation du système de balises décrit au départ du projet — est l'index naviguable qui
+lie les deux et sert d'unique interface de développement à l'agent.
+
+### 1.1 Fonction objectif hiérarchisée
+
+**Sécurité > Performance > Optimisation > Coût en tokens** — arbitrage lexicographique : un
+objectif n'est jamais sacrifié au profit d'un objectif de rang inférieur.
+
+| Objectif | Signification concrète | Métrique de validation |
+|---|---|---|
+| Sécurité | Sûreté mémoire validée par oracle, intégrité carte ↔ binaire, durcissement au chargement | 0 corruption détectée par l'oracle ; tout échec de verrou bloque la session |
+| Performance | 100 % code machine, zéro abstraction intermédiaire entre l'écriture et l'exécution | Comparaison par bloc scellé face à une référence compilée (clang -O2) |
+| Optimisation | Descente à l'ISA sur les hot paths identifiés par profilage | Gain mesuré et journalisé pour chaque bloc optimisé |
+| Coût en tokens | Édition ciblée via la carte, jamais de lecture intégrale du binaire | Budgets par type d'édition (chapitre 9) |
+
+### 1.2 Périmètre et non-objectifs
+
+Trois non-objectifs posés d'emblée. Premièrement, TRIADE ne prétend pas remplacer les
+langages dans l'industrie : c'est une architecture de laboratoire, conçue pour être validée
+sur une application réelle complète. Deuxièmement, la furtivité face aux EDR n'est pas
+recherchée : l'outil cible est un utilitaire de pentest destiné à des tests autorisés en
+environnement de laboratoire, et les API du système sont appelées via la table d'imports
+standard. Troisièmement, seule l'architecture x86-64 est visée à ce stade ; une extension
+RISC-V est prévue après M5 comme validation de la portabilité du protocole lui-même.
+
+## 2. Journal des décisions (D1–D13)
+
+Chaque décision structurante est consignée avec ses alternatives rejetées et sa
+justification rattachée à la fonction objectif — voir `docs/DECISIONS.md` pour le journal
+complet (D1–D10 issues de la v0.2, D11–D13 issues de l'infrastructure de sauvegarde). Toute
+révision future du protocole doit soit respecter ces décisions, soit expliciter précisément
+ce qui les invalide. Cette discipline évite la dérive progressive qui transforme un
+protocole propre en accumulation d'exceptions incohérentes.
+
+Quatre décisions engagent l'architecture entière. **D1** : l'oracle éphémère est le pivot du
+compromis entre le « 100 % code machine » exigé pour l'artefact et la sûreté d'exécution ;
+l'implémentation de référence ne sort jamais du laboratoire, ce qui préserve performance et
+pureté du livrable tout en attrapant les corruptions mémoire avant scellage. **D2** :
+keystone + capstone forment le couple d'assemblage et de désassemblage ; la nuance capitale
+est que cette notation n'est pas un compilateur — aucune optimisation ni réécriture ne
+s'intercale entre ce que l'agent écrit et les octets produits (principe WYSIWYG). **D5** :
+le verrou croisé répond à la menace d'empoisonnement de carte — falsifier les métadonnées
+ferait travailler l'agent sur des informations fausses et pourrait lui faire introduire une
+porte dérobée en croyant respecter les contrats. **D7** : les syscalls directs exigeraient
+une table de numéros par build de Windows — une carte cachée supplémentaire, fragile — pour
+un gain relevant de la furtivité, hors périmètre.
+
+## 3. Architecture TRIADE
+
+L'architecture repose sur une séparation stricte entre ce que l'artefact contient, ce que
+l'agent manipule et ce que le destinataire reçoit. Le diff d'intention descend de I vers C,
+le verrou croisé relie C et B dans les deux sens, et la couche B seule quitte le
+laboratoire. Aucune couche n'est optionnelle : privé de I, le système perd son ancrage
+sémantique ; privé de C, l'agent devient aveugle ; privé de B, il n'y a plus rien à exécuter.
+
+### 3.1 Les trois couches
+
+| Couche | Contenu | Visibilité | Rôle |
+|---|---|---|---|
+| I | Spécifications, contrats typés pré/post, invariants logiques | Privée | Compression de l'intention — le quoi et le pourquoi |
+| C | Index des blocs, adresses, signatures, preuves, manifestes de build | Privée, signée, chiffrée | Unique interface de développement de l'agent |
+| B | Code machine scellé, padding inter-blocs, checksums runtime | Livrée | Le comment — exécution pure, sémantiquement muette |
+
+Le flux de travail découle de cette séparation : pour toute évolution, l'agent produit
+d'abord un diff sur la couche I ; il localise les blocs concernés au travers de la carte,
+sans jamais scanner le binaire ; il régénère les seuls blocs impactés, les fait vérifier
+par l'oracle, puis commite l'ensemble de façon atomique — patch du binaire, mise à jour de
+la carte et scellage ne font qu'un.
+
+### 3.2 Invariants structurels
+
+Quatre invariants non négociables, vérifiés à chaque cycle de build — leur violation est un
+refus de build : B n'est jamais nu (R1) ; les adresses exposées sont stables (R7) ; la
+signature couvre la carte entière (R9) ; B est auto-vérifiant au chargement (R10).
+
+## 4. La carte (couche C)
+
+La carte est le cœur opérationnel du protocole : c'est elle qui rend le binaire navigable
+pour l'agent, qui porte les preuves et qui concentre la valeur intellectuelle du projet.
+Elle est compacte (coût en tokens), intègre (verrou croisé) et résiliente face à la
+compromission (sharding et chiffrement). La spécification détaillée — fragments, format
+d'entrée, procédure du verrou croisé, cycle de vie — fait l'objet de `docs/FORMAT_CARTE.md`.
+
+## 5. Règles du protocole v0.2
+
+R1 à R7 proviennent de la v0.1 ; R8 à R10 sont les ajouts de la v0.2, consacrés à
+l'intégrité de la chaîne carte vers binaire. Les règles sont peu nombreuses, vérifiables
+mécaniquement et sanctionnées par des effets concrets — refus de build, refus de commit ou
+blocage de session — plutôt que par des recommandations.
+
+| # | Règle | Énoncé | Violation et sanction |
+|---|---|---|---|
+| R1 | Jamais de binaire nu | Tout artefact B est accompagné de I et C à jour | Build refusé |
+| R2 | Intention d'abord | Toute modification commence par un diff sur I | Édition rejetée par la boucle |
+| R3 | Balisage obligatoire | Chaque bloc est décrit dans C | Build refusé |
+| R4 | Patch à contrat stable | Le remplacement préserve signature et contrats ; les appelants ne sont jamais invalidés | Échec de vérification |
+| R5 | Vérifie-puis-écrit | Aucun commit sans oracle, vecteurs dorés et round-trip | Commit impossible |
+| R6 | Cristallisation | Dix vérifications réussies rendent le bloc immuable ; le modifier exige la procédure lourde | Nouvelle version du bloc |
+| R7 | Adresses stables | Les points d'entrée sont garantis par padding ; patcher ne déplace rien | Re-liage forcé — interdit |
+| R8 | Verrou croisé | SHA-256 des blocs et signature de la carte vérifiés avant chaque édition | Session bloquée |
+| R9 | Carte signée obligatoire | L'agent refuse toute carte non signée | Refus de démarrage |
+| R10 | Fail-closed au chargement | Checksums vérifiés au lancement ; écart = arrêt propre | Arrêt de l'exécution |
+
+R4 signifie qu'un bloc remplaçant honore les contrats publiés de son prédécesseur — mêmes
+signatures, mêmes pré et post-conditions, mêmes invariants visibles — condition de
+possibilité du patch à chaud. R7 n'interdit pas d'ajouter du code : elle interdit de
+déplacer l'existant ; le padding inter-blocs de 16 octets et l'alignement sur 16
+maintiennent des zones de croissance.
+
+## 6. Boucle de mise à jour
+
+La boucle de mise à jour est le battement de cœur du protocole : c'est la seule voie par
+laquelle le logiciel évolue. Elle se déroule en sept étapes réparties en deux phases —
+l'édition, puis la validation et le commit — séparées par un point de non-retour : rien
+n'est écrit dans le binaire avant que l'oracle n'ait rendu son verdict.
+
+| N | Étape | Entrées | Sorties | Règles |
+|---|---|---|---|---|
+| 1 | Diff d'intention | Requête de changement, couche I | Diff minimal sur I | R2 |
+| 2 | Localisation | frag-loc | Liste des blocs impactés | R3 |
+| 3 | Verrou croisé | frag-bld, binaire | Verdict go / no-go | R8, R9 |
+| 4 | Régénération ciblée | frag-con, notation du bloc | Octets candidats | R4, R7 |
+| 5 | Vérification | Candidats, oracle, vecteurs dorés | Verdict, journal | R5 |
+| 6 | Commit atomique | Verdict favorable | Patch B, carte à jour, scellage | R1 |
+| 7 | Cristallisation | Compteur de vérifications | Bloc immuable | R6 |
+
+### 6.1 Patch à chaud sur x86-64
+
+Le patch à chaud — modifier un logiciel en cours d'exécution — est l'un des deux objectifs
+fondateurs du projet avec la performance. Sur x86-64, il se heurte à la cohérence du cache
+d'instructions et à l'atomicité de la bascule. La méthode retenue contourne les deux en
+n'écrivant jamais un bloc pendant qu'il s'exécute : le nouveau bloc est d'abord écrit dans
+une zone de croissance libre ; ensuite, et seulement ensuite, un trampoline de 12 à 16
+octets est installé à l'ancien point d'entrée et basculé par une écriture alignée unique,
+atomique pour le processeur.
+
+```
+; trampoline de bascule atomique (aligné sur 16 octets)
+; forme courte : saut relatif 32 bits
+  E9 xx xx xx xx                ; jmp rel32 -> nouveau bloc
+; forme longue : saut absolu 64 bits
+  48 B8 xx xx xx xx xx xx xx xx ; mov rax, addr_new
+  FF E0                         ; jmp rax
+```
+
+L'ancien trampoline est conservé : le rollback copy-on-write de l'étape 5 consiste à
+rebasculer vers lui, et la carte référence les deux versions tant que la nouvelle n'a pas
+atteint son seuil de cristallisation. Les adresses stables garantissent qu'aucun appelant
+ne référence l'intérieur d'un bloc : seuls les points d'entrée — promis par R7 — sont
+susceptibles d'être trampolinés, et la table de ces points est close et vérifiée par le
+verrou croisé. Le critère de sortie du jalon M2 est précisément ce scénario : remplacer le
+bloc d'écho d'un serveur TCP pendant qu'il traite des connexions, sans interruption de
+service et avec rollback démontré.
+
+## 7. Stratégie de vérification
+
+Supprimer le compilateur, c'est perdre les filets de sécurité qu'il tendait gratuitement :
+vérification de types, initialisation, analyse de flot. La stratégie de vérification
+reconstruit une confiance équivalente — voire supérieure — sans réintroduire de couche de
+traduction dans l'artefact. Elle repose sur trois piliers.
+
+**L'oracle éphémère** : implémentation de référence de chaque bloc — triviale,
+volontairement lente, écrite dans un langage sûr et dérivant directement de la couche I. Il
+est généré au début de chaque session, utilisé pour des tests différentiels par propriétés,
+puis détruit : jamais livré, jamais archivé dans la carte ; seuls ses vecteurs de test
+dorés — hachés — y survivent. Le protocole de test est différentiel : l'oracle et le bloc
+machine reçoivent des entrées aléatoires contraintes par les pré-conditions du contrat, et
+leurs sorties sont comparées octet par octet. Volume de référence : douze mille cas par
+bloc critique. Trois propriétés rendent l'oracle fiable : il dérive de I et non de B (il ne
+peut pas hériter d'un bug du code machine) ; il est régénéré à chaque session (jamais en
+désaccord avec les contrats courants) ; sa régénération coûte moins que le diagnostic d'une
+corruption découverte après scellage.
+
+**Le round-trip de notation** : chaque bloc assemblé par keystone est désassemblé par
+capstone, et les instructions obtenues sont comparées à la notation d'origine. Tout
+désaccord — une instruction, un opérande, une taille d'encodage — est un échec de build.
+Ce contrôle à coût quasi nul attrape la classe d'erreurs la plus insidieuse : l'écart
+silencieux entre ce que l'agent croit avoir écrit et les octets réellement produits.
+
+**La cristallisation** ferme la boucle économique : plus un bloc fait ses preuves, moins il
+coûte à vérifier, ce qui libère le budget pour les blocs jeunes et les zones actives. La
+chaîne de confiance du scellage résume le parcours d'une preuve : verdict de l'oracle →
+vecteurs dorés hachés dans frag-prf → SHA-256 du bloc dans frag-bld → signature Ed25519 de
+la carte entière → immuabilité à dix vérifications.
+
+## 8. Sécurité et anti-rétro-ingénierie
+
+La question qui a motivé la v0.2 — détenir la cartographie uniquement côté développeur
+pour coder en binaire pur et freiner la rétro-ingénierie — reçoit ici sa réponse
+systématique. Le principe directeur est la séparation de deux budgets souvent confondus :
+l'obfuscation, qui protège la propriété intellectuelle (le comment), et le durcissement,
+qui protège l'exécution (le où ça casse). La carte privée relève du premier ; la sûreté
+mémoire, les contrats et le fuzzing relèvent du second. Conformément au principe de
+Kerckhoffs, la sécurité du système ne repose jamais sur le secret de la carte : elle
+survivrait à sa divulgation.
+
+### 8.1 Modèle de menace
+
+| Menace | Acteur | Cible | Contre-mesure | Résiduel |
+|---|---|---|---|---|
+| Rétro-ingénierie de l'IP | Concurrent, pirate | Binaire livré | Carte privée ; binaire sémantiquement muet ; variantes par build | Temps acheté — s'érode avec les LLM de décompilation |
+| Empoisonnement de carte | Attaquant supply-chain | Fragments | Signature Ed25519 ; refus de carte non signée ; verrou croisé | Détecté — session bloquée (fail-closed) |
+| Fuite de la carte | Initié, poste compromis | Fragments au repos | Chiffrement XChaCha20 ; sharding ; escrow | Perte partielle limitée à un fragment |
+| Fuzzing boîte noire | Attaquant externe | Runtime | Contrats, oracle, tests par propriétés, fail-closed | Indépendant du secret de la carte |
+| Redistribution frauduleuse | Pirate | Binaire livré | Empreintes par build — canary trap | Fuite traçable à son destinataire |
+| Instrumentation dynamique | Analyste | Exécution | Anti-debug léger par mesure de temps (rdtsc) | Assumé — l'obscurité n'est pas la sécurité |
+
+La rétro-ingénierie est traitée comme un objectif d'économie, pas d'impossibilité : rendre
+le coût de l'analyse supérieur à la valeur de ce qu'on obtient. Un binaire strippé, sans
+structure ni symboles, dont chaque exemplaire diffère, coûte sensiblement plus cher à
+analyser qu'un binaire compilé standard — mais les modèles de langage appliqués à la
+décompilation progressent, et l'avantage doit être réévalué à chaque génération de modèles.
+
+### 8.2 Empreintes par build
+
+Puisque la régénération du code machine est quasi gratuite dans ce paradigme, chaque
+livraison porte une variante unique sans coût marginal : réordonnancement des blocs scellés
+indépendants, insertion de nops multioctets, choix parmi les encodages équivalents que
+l'ISA offre pour une même instruction (`89 C0` / `8B C0` pour `mov eax, eax` — ni le sens
+ni les effets ne changent, seule la signature binaire change). Le registre des variantes
+est conservé dans frag-bld, côté développeur : toute fuite du binaire devient traçable
+jusqu'à son destinataire.
+
+### 8.3 Gestion des clés
+
+La phrase secrète maîtresse traverse Argon2id — mémoire d'au moins 64 Mio, au moins trois
+itérations, parallélisme unitaire — pour produire la clé maîtresse ; les clés de chaque
+fragment en sont dérivées par HKDF avec un contexte distinct par fragment et par
+génération. Les sauvegardes suivent la règle 3-2-1 chiffrée, et l'escrow de la clé
+maîtresse peut recourir à un partage de secret deux-sur-trois pour éliminer le point de
+défaillance unique. La rotation des clés entraîne une re-signature complète de la carte —
+opération atomique, journalisée, vérifiable après coup.
+
+## 9. Optimisation du coût en tokens
+
+Le coût en tokens est le seul des quatre objectifs spécifique à l'ère agent-first. Il est
+traité comme une contrainte d'ingénierie — budgets, mécanismes, instrumentation — toujours
+subordonnée aux trois objectifs supérieurs : aucune économie de tokens ne justifie de
+sauter une vérification. Le principe directeur : l'agent ne lit jamais le binaire en
+entier ; la carte est son unique index, conçue pour être lue parcellairement (compacité du
+format, chargement paresseux par fragment, cristallisation).
+
+| Opération | Fragments et données lus | Budget |
+|---|---|---|
+| Localiser un bloc | frag-loc — une entrée | 40 tokens max |
+| Éditer simplement un bloc | frag-loc + frag-con du bloc + notation du bloc | 3 000 tokens max |
+| Ajouter un bloc | frag-loc + frag-con + seuils frag-prf | 6 000 tokens max |
+| Audit complet (rare) | Carte entière déchiffrée | Non budgété — opération exceptionnelle |
+
+Indicateurs de santé : précision de localisation (cible 95 % au jalon M0), coût moyen
+d'une édition simple (cible 5 000 tokens), taux de régression post-patch (cible zéro,
+rollback exclu).
+
+## 10. Cible x86-64 / Windows 11
+
+Le choix de la cible (D10) fixe trois corps de contraintes : l'ABI d'appel Microsoft x64,
+le format d'exécutable PE32+, et les protections du système d'exploitation. « Sans
+compilateur » ne signifie pas « sans système d'exploitation » — les API sont appelées via
+la table d'imports, comme tout binaire natif légitime.
+
+### 10.1 ABI Microsoft x64
+
+| Convention | Règle |
+|---|---|
+| Passation des arguments | RCX, RDX, R8, R9, puis la pile — de droite à gauche |
+| Valeur de retour | RAX (RDX pour une valeur de 128 bits) |
+| Shadow space | 32 octets réservés par l'appelant avant chaque CALL |
+| Registres volatils | RAX, RCX, RDX, R8 à R11 — détruits par l'appelé |
+| Registres non volatils | RBX, RBP, RDI, RSI, R12 à R15 — préservés par l'appelé |
+| Registres flottants | XMM0 à XMM5 volatils, XMM6 à XMM15 préservés |
+| Alignement de pile | RSP multiple de 16 au point d'appel |
+| Zone rouge | Aucune — contrairement à System V : stocker sous RSP sans allocation préalable est interdit |
+
+L'absence de zone rouge est le piège classique pour qui vient de System V. La convention
+interne du projet en tire les conséquences : R10 et R11 sont désignés registres de travail
+internes — volatils selon l'ABI, donc jamais promis à un appelant ; aucune donnée vivante
+ne séjourne entre RSP et RSP+32 au moment d'un appel ; tout bloc qui appelle une API
+alloue son cadre avant d'y toucher. Ces règles internes sont portées par frag-con.
+
+### 10.2 Format PE32+ minimal
+
+L'exécutable est écrit à la main par l'agent, sans outil de liaison — preuve de maîtrise
+du pipeline artefact exigée au jalon M0. Structure minimale : en-tête DOS et stub,
+signature PE, en-tête COFF (machine 0x8664, quatre sections au maximum), en-tête optionnel
+PE32+ (magic 0x20B, alignement de section 0x1000, caractéristiques DYNAMICBASE,
+HIGH_ENTROPY_VA et NX_COMPAT activées), section `.text` en lecture-exécution, section
+`.rdata` portant les imports et les relocations, table d'imports et table `.reloc` rendant
+l'ASLR possible. Objectif de taille pour M0 : moins de 4 Kio.
+
+### 10.3 Appels via IAT et protections du système
+
+Les dépendances système se limitent à trois ensembles : kernel32 pour les entrées-sorties,
+les threads et le tas ; ws2_32 pour le réseau à partir du jalon M2 ; et Schannel via SSPI
+pour TLS au jalon M4. Les adresses ne sont jamais codées en dur : chaque appel transite
+par la table d'imports, résolue par le chargeur — compatibilité entre builds de Windows et
+ASLR respectés. Les protections du système sont honorées par construction : DEP, puisque
+aucun code n'est jamais généré en pile ; ASLR, grâce aux relocations ; Control Flow Guard,
+par la déclaration des cibles d'appel indirect valides. L'objectif est assumé : un outil
+légitime par construction, dont la transparence vis-à-vis du système est totale.
+
+## 11. Feuille de route M0–M5
+
+Six jalons, chacun couvrant une capacité nouvelle et se terminant par des critères de
+sortie mesurables — détail dans `docs/PLAN_MILESTONES.md`. Aucun jalon n'est franchi sans
+que la carte soit signée, le verrou croisé vérifié et l'oracle passé. L'application cible —
+un outil de pentest de type intercepteur MITM pour Windows 11 — est choisie comme stress
+test : réseau, concurrence, parsing d'entrées non fiables et chiffrement, soit un large
+éventail de blocs aux contrats très différents. Son usage est encadré : tests autorisés en
+environnement de laboratoire, machine virtuelle isolée, autorité de certification de test
+installée localement.
+
+M0 est le jalon existentiel : il prouve que la chaîne notation, octets, exécutable,
+exécution fonctionne de bout en bout sans compilateur. M2 est le jalon de vérité du
+protocole : le patch à chaud sur code en cours d'exécution est la capacité qui a motivé
+l'architecture de balises depuis la première discussion.
+
+## 12. Glossaire et journal des versions
+
+| Terme | Définition |
+|---|---|
+| Carte | Couche C : index signé et chiffré liant intention et binaire, unique interface de développement de l'agent |
+| Bloc | Unité de code machine de 32 à 512 instructions, une responsabilité, un point d'entrée stable |
+| Scellage | Acte atomique d'engagement : écriture du bloc, mise à jour de la carte, inscription du SHA-256 |
+| Cristallisation | Immuabilité d'un bloc après dix vérifications réussies ; modification dès lors soumise à procédure lourde |
+| Oracle éphémère | Implémentation de référence triviale dérivée de la couche I, générée par session et détruite après usage |
+| Verrou croisé | Contrôle bilatéral d'intégrité : SHA-256 des blocs dans la carte, signature Ed25519 de la carte, checksums au chargement |
+| Contrat | Signature typée, pré et post-conditions et invariants publiés d'un bloc — la partie de I embarquée dans C |
+| Fragment | Quart de carte chiffré séparément : localisation, contrats, preuves, builds |
+| Empreinte de build | Variante binaire unique par livraison rendant toute fuite traçable |
+| Vecteurs dorés | Jeu de tests de référence d'un bloc, conservé haché dans frag-prf |
+| Notation | Représentation textuelle des instructions assemblées par keystone — un média, jamais un langage compilé |
+| Round-trip | Contrôle de fidélité : assemblage puis désassemblage d'un bloc, comparaison exacte |
+
+| Version | Date | Contenu |
+|---|---|---|
+| v0.1 | 25 oct. 2026 | Première ébauche : couches I/B/C, règles R1 à R7, boucle en sept étapes, feuille de route M0–M5 |
+| v0.2 | 25 oct. 2026 | Décisions D1 à D10 ; sharding en quatre fragments chiffrés ; suite cryptographique (Ed25519, XChaCha20-Poly1305, Argon2id) ; règles R8 à R10 ; empreintes par build ; budgets en tokens ; spécification de la cible x86-64 / Windows 11 ; critères de sortie mesurables |
+
+La présente version fige les arbitrages nécessaires au démarrage du jalon M0. Les
+évolutions prévisibles — extension RISC-V après M5, bloc optionnel de syscalls directs,
+TLS 1.3 pur en blocs scellés — sont volontairement hors du périmètre courant afin que
+chaque addition s'appuie sur des résultats mesurés et non sur des anticipations. La règle
+de gouvernance reste celle du journal des décisions : toute évolution invalide
+explicitement ce qu'elle remplace, et rien ne se change en silence.
