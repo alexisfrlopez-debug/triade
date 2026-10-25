@@ -22,6 +22,7 @@ Work Log:
 - Première sauvegarde Drive déclenchée automatiquement par le hook post-commit au moment du commit ; vérifiée par listing API : racine = REPRISE_PROJET.md + PROTOCOLE_TRIADE_AGENT.md + TRIADE/ + Tokens/ ; TRIADE/ = miroir complet + triade-history.bundle (1,9 Mo) ; idempotence confirmée (2e passage : 28 inchangés, 0 erreur).
 - Créé le repo GitHub privé alexisfrlopez-debug/triade (HTTP 201) ; configuré le credential helper vers .gdrive/git-credentials (600) ; poussé main (tracking origin/main).
 - Copié les livrables dans download/ (fichiers d'instruction + archive zip avec bundle) ; test final de sync_backup.sh de bout en bout.
+- Découvert et corrigé un bug lors du test de bout en bout : l'initiation de session résumable pour la mise à jour d'un fichier Drive existant exige la méthode PATCH (POST renvoyait 404 — chemin jamais exercé avant, car la première synchro ne faisait que des créations) ; au passage, toutes les erreurs HTTP sont converties en SyncError, donc un échec par fichier ne bloque plus la synchro complète (commit 574e686). Re-test de bout en bout : 29 inchangés, 0 erreur, push GitHub OK.
 
 Stage Summary:
 - Architecture de continuité en place (D11) : dépôt git local = source de vérité ; Google Drive « Triade » = miroir lisible + bundle d'historique restaurable (git clone triade-history.bundle) ; GitHub privé = miroir distant.
