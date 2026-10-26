@@ -1,0 +1,206 @@
+demo.exe : 15360 octets, sha256 vérifié par ailleurs
+machine=0x8664 sections=4 base=0x140000000 imports=0x2030+120
+  .text      VA=0x1000 VS=0x1000 OFF=0x0200 RS=0x1000
+  .rdata     VA=0x2000 VS=0x1000 OFF=0x1200 RS=0x1000
+  .data      VA=0x3000 VS=0x1000 OFF=0x2200 RS=0x0a00
+  .text2     VA=0x4000 VS=0x1000 OFF=0x2c00 RS=0x1000
+
+Descripteurs d'imports (vue chargeur) :
+  kernel32.dll FT=0x20b0 : [0x20b0]=GetStdHandle, [0x20b8]=WriteFile, [0x20c0]=ExitProcess, [0x20c8]=CreateThread, [0x20d0]=VirtualProtect, [0x20d8]=InitializeCriticalSection, [0x20e0]=EnterCriticalSection, [0x20e8]=LeaveCriticalSection, [0x20f0]=ReadFile, [0x20f8]=CloseHandle, [0x2100]=GetModuleHandleW
+  ws2_32.dll   FT=0x2300 : [0x2300]=WSAStartup, [0x2308]=socket, [0x2310]=bind, [0x2318]=listen, [0x2320]=accept, [0x2328]=recv, [0x2330]=send, [0x2338]=closesocket, [0x2340]=WSAGetLastError, [0x2348]=WSACleanup, [0x2350]=connect
+  user32.dll   FT=0x2800 : [0x2800]=RegisterClassExW, [0x2808]=CreateWindowExW, [0x2810]=DefWindowProcW, [0x2818]=GetMessageW, [0x2820]=TranslateMessage, [0x2828]=DispatchMessageW, [0x2830]=PostQuitMessage, [0x2838]=DestroyWindow, [0x2840]=SendMessageW, [0x2848]=LoadCursorW, [0x2850]=EnableWindow, [0x2858]=MoveWindow, [0x2860]=GetClientRect, [0x2868]=MessageBoxW
+  gdi32.dll    FT=0x2980 : [0x2980]=GetStockObject
+  kernel32.dll FT=0x2e80 : [0x2e80]=GetModuleFileNameA, [0x2e88]=CreateFileA, [0x2e90]=FlushFileBuffers, [0x2e98]=GetLastError
+
+58 appels indirects IAT, 82 appels directs de blocs
+
+== Vue par slot : chargeur VS appelants (ET conformité sémantique) ==
+  [0x20b0] kernel32.dll!GetStdHandle          x2   depuis win-09:scenario  ok
+  [0x20b8] kernel32.dll!WriteFile             x2   depuis io-01:print,win-11:journal-fichier  ok
+  [0x20c0] kernel32.dll!ExitProcess           x1   depuis io-02:exit  ok
+  [0x20c8] kernel32.dll!CreateThread          x1   depuis tcp-06:spawn  ok
+  [0x20d0] kernel32.dll!VirtualProtect        x1   depuis tcp-07:patch  ok
+  [0x20e0] kernel32.dll!EnterCriticalSection  x1   depuis tcp-11:ligne-journal  ok
+  [0x20e8] kernel32.dll!LeaveCriticalSection  x1   depuis tcp-11:ligne-journal  ok
+  [0x20f8] kernel32.dll!CloseHandle           x3   depuis win-04:procedure,win-08:serveur,win-09:scenario  ok
+  [0x2100] kernel32.dll!GetModuleHandleW      x2   depuis win-02:fenetre,win-04:procedure  ok
+  [0x2300] ws2_32.dll!WSAStartup              x1   depuis tcp-01:init  ok
+  [0x2308] ws2_32.dll!socket                  x2   depuis tcp-01:init,win-07:client  ok
+  [0x2310] ws2_32.dll!bind                    x1   depuis tcp-01:init  ok
+  [0x2318] ws2_32.dll!listen                  x1   depuis tcp-01:init  ok
+  [0x2320] ws2_32.dll!accept                  x1   depuis tcp-02:accept  ok
+  [0x2328] ws2_32.dll!recv                    x2   depuis tcp-03:recv,win-10:echange  ok
+  [0x2330] ws2_32.dll!send                    x2   depuis tcp-04:send,win-10:echange  ok
+  [0x2338] ws2_32.dll!closesocket             x3   depuis tcp-01:init,tcp-05:close,win-07:client  ok
+  [0x2348] ws2_32.dll!WSACleanup              x1   depuis tcp-01:init  ok
+  [0x2350] ws2_32.dll!connect                 x1   depuis win-07:client  ok
+  [0x2800] user32.dll!RegisterClassExW        x1   depuis win-02:fenetre  ok
+  [0x2808] user32.dll!CreateWindowExW         x3   depuis win-02:fenetre,win-04:procedure  ok
+  [0x2810] user32.dll!DefWindowProcW          x1   depuis win-04:procedure  ok
+  [0x2818] user32.dll!GetMessageW             x1   depuis win-03:boucle  ok
+  [0x2820] user32.dll!TranslateMessage        x1   depuis win-03:boucle  ok
+  [0x2828] user32.dll!DispatchMessageW        x1   depuis win-03:boucle  ok
+  [0x2830] user32.dll!PostQuitMessage         x1   depuis win-04:procedure  ok
+  [0x2838] user32.dll!DestroyWindow           x1   depuis win-04:procedure  ok
+  [0x2840] user32.dll!SendMessageW            x4   depuis win-04:procedure,win-05:journal  ok
+  [0x2848] user32.dll!LoadCursorW             x1   depuis win-02:fenetre  ok
+  [0x2850] user32.dll!EnableWindow            x2   depuis win-04:procedure  ok
+  [0x2858] user32.dll!MoveWindow              x2   depuis win-04:procedure  ok
+  [0x2860] user32.dll!GetClientRect           x1   depuis win-04:procedure  ok
+  [0x2868] user32.dll!MessageBoxW             x1   depuis win-02:fenetre  ok
+  [0x2980] gdi32.dll!GetStockObject           x1   depuis win-04:procedure  ok
+  [0x2e80] kernel32.dll!GetModuleFileNameA    x1   depuis win-11:journal-fichier  ok
+  [0x2e88] kernel32.dll!CreateFileA           x1   depuis win-11:journal-fichier  ok
+  [0x2e90] kernel32.dll!FlushFileBuffers      x1   depuis win-11:journal-fichier  ok
+  [0x2e98] kernel32.dll!GetLastError          x4   depuis win-02:fenetre,win-04:procedure  ok
+
+== win-03:boucle (RVA 0x15C0) — notation attendue ==
+  GetMessageW / TranslateMessage / DispatchMessageW dans cet ordre, MSG sur pile, filtre (NULL,0,0), boucle tant que eax > 0
+
+== win-04:.commande (RVA 0x1894) — notation attendue ==
+  cmp r13d,1 ; jne .zero / drapeau 0x3878 nul / trace L03 (win-11 r8=0) /
+  EnableWindow / spawn tcp-06 / CloseHandle
+
+== Listing intégral des appels ( .text + .text2 ) ==
+  0x1050 [io-01:print             ] call [0x20b8] -> kernel32.dll!WriteFile
+  0x1084 [io-02:exit              ] call [0x20c0] -> kernel32.dll!ExitProcess
+  0x1404 [win-01:principal        ] call 0x1440 -> win-02:fenetre
+  0x140e [win-01:principal        ] call 0x15c0 -> win-03:boucle
+  0x1415 [win-01:principal        ] call 0x1080 -> io-02:exit
+  0x141f [win-01:principal        ] call 0x1080 -> io-02:exit
+  0x145c [win-02:fenetre          ] call 0x1e00 -> win-11:journal-fichier
+  0x1488 [win-02:fenetre          ] call [0x2100] -> kernel32.dll!GetModuleHandleW
+  0x14a4 [win-02:fenetre          ] call [0x2848] -> user32.dll!LoadCursorW
+  0x14d4 [win-02:fenetre          ] call [0x2800] -> user32.dll!RegisterClassExW
+  0x1538 [win-02:fenetre          ] call [0x2808] -> user32.dll!CreateWindowExW
+  0x1559 [win-02:fenetre          ] call 0x1e00 -> win-11:journal-fichier
+  0x1560 [win-02:fenetre          ] call [0x2e98] -> kernel32.dll!GetLastError
+  0x157b [win-02:fenetre          ] call 0x1e00 -> win-11:journal-fichier
+  0x1596 [win-02:fenetre          ] call [0x2868] -> user32.dll!MessageBoxW
+  0x15dd [win-03:boucle           ] call [0x2818] -> user32.dll!GetMessageW
+  0x15ea [win-03:boucle           ] call [0x2820] -> user32.dll!TranslateMessage
+  0x15f3 [win-03:boucle           ] call [0x2828] -> user32.dll!DispatchMessageW
+  0x168c [win-04:procedure        ] call [0x2100] -> kernel32.dll!GetModuleHandleW
+  0x16e7 [win-04:procedure        ] call [0x2808] -> user32.dll!CreateWindowExW
+  0x16f9 [win-04:procedure        ] call [0x2e98] -> kernel32.dll!GetLastError
+  0x1714 [win-04:procedure        ] call 0x1e00 -> win-11:journal-fichier
+  0x1777 [win-04:procedure        ] call [0x2808] -> user32.dll!CreateWindowExW
+  0x1789 [win-04:procedure        ] call [0x2e98] -> kernel32.dll!GetLastError
+  0x17a4 [win-04:procedure        ] call 0x1e00 -> win-11:journal-fichier
+  0x17ba [win-04:procedure        ] call [0x2980] -> gdi32.dll!GetStockObject
+  0x17d8 [win-04:procedure        ] call [0x2840] -> user32.dll!SendMessageW
+  0x17f3 [win-04:procedure        ] call [0x2840] -> user32.dll!SendMessageW
+  0x1808 [win-04:procedure        ] call 0x1e00 -> win-11:journal-fichier
+  0x181c [win-04:procedure        ] call [0x2860] -> user32.dll!GetClientRect
+  0x1857 [win-04:procedure        ] call [0x2858] -> user32.dll!MoveWindow
+  0x1887 [win-04:procedure        ] call [0x2858] -> user32.dll!MoveWindow
+  0x18c6 [win-04:procedure        ] call 0x1e00 -> win-11:journal-fichier
+  0x18d4 [win-04:procedure        ] call [0x2850] -> user32.dll!EnableWindow
+  0x18e3 [win-04:procedure        ] call 0x4300 -> tcp-06:spawn
+  0x18ed [win-04:procedure        ] call [0x2e98] -> kernel32.dll!GetLastError
+  0x1908 [win-04:procedure        ] call 0x1e00 -> win-11:journal-fichier
+  0x1924 [win-04:procedure        ] call [0x2850] -> user32.dll!EnableWindow
+  0x192f [win-04:procedure        ] call [0x20f8] -> kernel32.dll!CloseHandle
+  0x193c [win-04:procedure        ] call [0x2838] -> user32.dll!DestroyWindow
+  0x1948 [win-04:procedure        ] call [0x2830] -> user32.dll!PostQuitMessage
+  0x195e [win-04:procedure        ] call [0x2810] -> user32.dll!DefWindowProcW
+  0x19e7 [win-05:journal          ] call [0x2840] -> user32.dll!SendMessageW
+  0x1a02 [win-05:journal          ] call [0x2840] -> user32.dll!SendMessageW
+  0x1a14 [win-05:journal          ] call 0x1e00 -> win-11:journal-fichier
+  0x1b42 [win-06:autotest         ] call 0x1100 -> libc-01:memcpy
+  0x1b59 [win-06:autotest         ] call 0x1180 -> libc-02:memcmp
+  0x1b79 [win-06:autotest         ] call 0x1180 -> libc-02:memcmp
+  0x1b99 [win-06:autotest         ] call 0x1180 -> libc-02:memcmp
+  0x1bad [win-06:autotest         ] call 0x1200 -> libc-03:strlen
+  0x1bc5 [win-06:autotest         ] call 0x1280 -> libc-04:itoa
+  0x1bdc [win-06:autotest         ] call 0x1180 -> libc-02:memcmp
+  0x1c76 [win-07:client           ] call [0x2308] -> ws2_32.dll!socket
+  0x1c93 [win-07:client           ] call [0x2350] -> ws2_32.dll!connect
+  0x1ca5 [win-07:client           ] call [0x2338] -> ws2_32.dll!closesocket
+  0x1d0d [win-08:serveur          ] call 0x4000 -> tcp-01:init
+  0x1d30 [win-08:serveur          ] call 0x4100 -> tcp-02:accept
+  0x1d47 [win-08:serveur          ] call 0x4300 -> tcp-06:spawn
+  0x1d54 [win-08:serveur          ] call [0x20f8] -> kernel32.dll!CloseHandle
+  0x1d73 [win-08:serveur          ] call 0x19c0 -> win-05:journal
+  0x1e3f [win-11:journal-fichier  ] call [0x2e80] -> kernel32.dll!GetModuleFileNameA
+  0x1e86 [win-11:journal-fichier  ] call 0x1100 -> libc-01:memcpy
+  0x1eb9 [win-11:journal-fichier  ] call [0x2e88] -> kernel32.dll!CreateFileA
+  0x1ee9 [win-11:journal-fichier  ] call 0x1100 -> libc-01:memcpy
+  0x1efb [win-11:journal-fichier  ] call 0x1280 -> libc-04:itoa
+  0x1f03 [win-11:journal-fichier  ] call 0x1200 -> libc-03:strlen
+  0x1f33 [win-11:journal-fichier  ] call [0x20b8] -> kernel32.dll!WriteFile
+  0x1f44 [win-11:journal-fichier  ] call [0x2e90] -> kernel32.dll!FlushFileBuffers
+  0x4033 [tcp-01:init             ] call [0x2300] -> ws2_32.dll!WSAStartup
+  0x404d [tcp-01:init             ] call [0x2308] -> ws2_32.dll!socket
+  0x406a [tcp-01:init             ] call [0x2310] -> ws2_32.dll!bind
+  0x407c [tcp-01:init             ] call [0x2318] -> ws2_32.dll!listen
+  0x408e [tcp-01:init             ] call [0x2338] -> ws2_32.dll!closesocket
+  0x4094 [tcp-01:init             ] call [0x2348] -> ws2_32.dll!WSACleanup
+  0x4109 [tcp-02:accept           ] call [0x2320] -> ws2_32.dll!accept
+  0x4147 [tcp-03:recv             ] call [0x2328] -> ws2_32.dll!recv
+  0x4187 [tcp-04:send             ] call [0x2330] -> ws2_32.dll!send
+  0x41c4 [tcp-05:close            ] call [0x2338] -> ws2_32.dll!closesocket
+  0x4320 [tcp-06:spawn            ] call [0x20c8] -> kernel32.dll!CreateThread
+  0x4474 [tcp-07:patch            ] call 0x4531 -> tcp-07:patch
+  0x449c [tcp-07:patch            ] call 0x1100 -> libc-01:memcpy
+  0x44d0 [tcp-07:patch            ] call 0x4531 -> tcp-07:patch
+  0x4500 [tcp-07:patch            ] call 0x4531 -> tcp-07:patch
+  0x4519 [tcp-07:patch            ] call 0x4531 -> tcp-07:patch
+  0x454b [tcp-07:patch            ] call [0x20d0] -> kernel32.dll!VirtualProtect
+  0x4821 [tcp-09:connexion        ] call 0x4140 -> tcp-03:recv
+  0x483b [tcp-09:connexion        ] call 0x4600 -> echo:v1(c30008)
+  0x485f [tcp-09:connexion        ] call 0x4b00 -> tcp-11:ligne-journal
+  0x4878 [tcp-09:connexion        ] call 0x4180 -> tcp-04:send
+  0x488f [tcp-09:connexion        ] call 0x41c0 -> tcp-05:close
+  0x48b2 [tcp-09:connexion        ] call 0x4b00 -> tcp-11:ligne-journal
+  0x49ac [win-10:echange          ] call [0x2330] -> ws2_32.dll!send
+  0x49d8 [win-10:echange          ] call [0x2328] -> ws2_32.dll!recv
+  0x49fb [win-10:echange          ] call 0x1180 -> libc-02:memcmp
+  0x4b28 [tcp-11:ligne-journal    ] call [0x20e0] -> kernel32.dll!EnterCriticalSection
+  0x4b39 [tcp-11:ligne-journal    ] call 0x1100 -> libc-01:memcpy
+  0x4b52 [tcp-11:ligne-journal    ] call 0x1280 -> libc-04:itoa
+  0x4b5a [tcp-11:ligne-journal    ] call 0x1200 -> libc-03:strlen
+  0x4b73 [tcp-11:ligne-journal    ] call 0x1100 -> libc-01:memcpy
+  0x4b96 [tcp-11:ligne-journal    ] call 0x1040 -> io-01:print
+  0x4ba5 [tcp-11:ligne-journal    ] call [0x20e8] -> kernel32.dll!LeaveCriticalSection
+  0x4c14 [win-09:scenario         ] call [0x20b0] -> kernel32.dll!GetStdHandle
+  0x4c26 [win-09:scenario         ] call [0x20b0] -> kernel32.dll!GetStdHandle
+  0x4c3f [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4c50 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4c55 [win-09:scenario         ] call 0x1ac0 -> win-06:autotest
+  0x4c6e [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4c84 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4c9b [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4cb1 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4cc8 [win-09:scenario         ] call 0x4600 -> echo:v1(c30008)
+  0x4cdf [win-09:scenario         ] call 0x1180 -> libc-02:memcmp
+  0x4cee [win-09:scenario         ] call 0x4400 -> tcp-07:patch
+  0x4d0d [win-09:scenario         ] call 0x4600 -> echo:v1(c30008)
+  0x4d24 [win-09:scenario         ] call 0x1180 -> libc-02:memcmp
+  0x4d36 [win-09:scenario         ] call 0x4400 -> tcp-07:patch
+  0x4d55 [win-09:scenario         ] call 0x4600 -> echo:v1(c30008)
+  0x4d6c [win-09:scenario         ] call 0x1180 -> libc-02:memcmp
+  0x4d85 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4d93 [win-09:scenario         ] call 0x4300 -> tcp-06:spawn
+  0x4da4 [win-09:scenario         ] call [0x20f8] -> kernel32.dll!CloseHandle
+  0x4dd5 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4deb [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4df0 [win-09:scenario         ] call 0x1c40 -> win-07:client
+  0x4e0d [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4e1c [win-09:scenario         ] call 0x4980 -> win-10:echange
+  0x4e35 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4e3c [win-09:scenario         ] call 0x4400 -> tcp-07:patch
+  0x4e53 [win-09:scenario         ] call 0x4980 -> win-10:echange
+  0x4e6c [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4e76 [win-09:scenario         ] call 0x4400 -> tcp-07:patch
+  0x4e89 [win-09:scenario         ] call 0x4980 -> win-10:echange
+  0x4e9e [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4ea6 [win-09:scenario         ] call 0x41c0 -> tcp-05:close
+  0x4ec4 [win-09:scenario         ] call 0x41c0 -> tcp-05:close
+  0x4ed5 [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4eea [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4efd [win-09:scenario         ] call 0x19c0 -> win-05:journal
+  0x4f0a [win-09:scenario         ] call 0x41c0 -> tcp-05:close
+  0x4f28 [win-09:scenario         ] call 0x41c0 -> tcp-05:close
+
+VERDICT : aucun slot appelé hors descripteur ; correspondance chargeur/appelants conforme

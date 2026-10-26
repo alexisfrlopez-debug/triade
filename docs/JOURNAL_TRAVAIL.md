@@ -1105,3 +1105,64 @@ Stage Summary:
   complète + clic + journal fichier) → scellage 0.3.0 si vert ; l'évaluation
   du protocole D34 s'enrichit d'un nouveau motif : « divergences
   notation/spec de classe champ/slot » (W[i-7], RECT.top, nHeight/bRepaint).
+
+## Journal 24 — Terrain demo.2 : journal fichier reçu, démarrage VALIDÉ ; audit octet intégral — le clic seul manque
+
+**Constat terrain (le premier journal de l'histoire du projet lu depuis le terrain réel)** :
+`demo_journal.txt` (111 octets, CRLF) reçu du développeur après exécution de
+demo.2 sous Windows 11 :
+```
+L00 demarrage demonstration 0.3.0-demo.2
+L02 controles crees (journal, bouton)
+L01 fenetre principale creee
+```
+Lecture en trois temps :
+- c'est la séquence de démarrage COMPLÈTE et dans l'ordre EXACT que l'oracle
+  durci exige (L00 avant tout appel GUI, puis L02 dans WM_CREATE — donc
+  AVANT le retour de CreateWindowExW — puis L01 après création) ;
+- donc **D36 est confirmé corrigé sur le terrain réel** : la fenêtre, le
+  journal EDIT et le bouton sont créés (plus de fenêtre vide) — premier
+  démarrage GUI complet constaté depuis l'extérieur ;
+- et le journal s'arrête là : ni L03 (tracée AVANT EnableWindow et le spawn,
+  au tout début du chemin du clic), ni aucun LKO. Comme win-11 rouvre le
+  fichier en CREATE_ALWAYS à chaque lancement, ce fichier ne garde que le
+  DERNIER lancement : lors de celui-ci, le bouton n'a pas été cliqué (fenêtre
+  fermée avant, ou journal capturé avant le clic).
+
+**Audit octet intégral (méthode D36 généralisée, sans Windows)** :
+nouvel outil durable `scripts/audit_demo_iat.py` — modèle EXACT du chargeur
+PE (chaque descripteur d'import : l'entrée i de OriginalFirstThunk remplit le
+slot FirstThunk+8·i), désassemblage linéaire annoté de .text ET .text2,
+frontières de blocs exactes (27 blocs M0/M1/M2/démo), table de conformité
+sémantique slot→appelants attendus. Résultats sur demo.exe 0.3.0-demo.2 :
+- 5 descripteurs (kernel32, ws2_32, user32, gdi32, kernel32#2) — 58 appels
+  IAT + 82 appels directs de blocs, **zéro slot appelé hors descripteur**
+  (la classe de défaut D35 est éliminée) ;
+- boucle de messages conforme octet par octet : GetMessageW [0x2818] /
+  TranslateMessage [0x2820] / DispatchMessageW [0x2828], filtre (NULL,0,0),
+  boucle tant que eax > 0 — la fenêtre n'est PAS gelée ;
+- chemin du clic conforme : cmp wParam,1 → drapeau 0x3878 → L03 via win-11
+  (r8=0, même routage fichier que L02 qui est dans le journal) → EnableWindow
+  [0x2850] → tcp-06 spawn [0x4300] → CreateThread [0x20c8] → CloseHandle ;
+- chaîne du scénario complète : win-09 → win-05×16 (miroir écran→fichier
+  vérifié : EM_SETSEL/EM_REPLACESEL puis win-11 mode 2), win-06 autotest →
+  libc-01/02/03/04, écho v1 appelé et vérifié memcmp entre CHAQUE bascule
+  tcp-07 (VirtualProtect), serveur (win-08→tcp-01/02/06), client
+  (win-07→socket/connect), win-10 send/recv/memcmp, patch en production,
+  rollback, tcp-05×5, arrêt propre ;
+- trois faux positifs de ma table d'attente corrigés par la lecture : tcp-03/
+  04 appellent recv/send par définition, tcp-11 sérialise le journal console
+  par section critique — l'outil a appris la topologie réelle du graphe.
+
+**Enseignement protocolaire (D36 achevée)** : le journal fichier a transformé
+un « ça ne fonctionne pas » indiagnosticable (demo.1, fenêtre vide muette)
+en constat PRÉCIS sans nouvel aller-retour : démarrage OK au terrain, défaut
+corrigé confirmé, événement manquant identifié (le clic). La boucle
+terrain → diagnostic est fermée : le terrain a une voix, et cette voix a
+parlé. Un lancement complet + clic doit maintenant produire L03 puis ~16
+lignes de scénario miroir jusqu'à « boucle § 5 complète — DÉMO OK » :
+si cette trace arrive verte, le scellage final 0.3.0 est acquis.
+
+Livrables : rapport d'audit `scripts/audit_demo_iat_rapport.txt` ;
+LISEZMOI-demo.txt corrigé (l'empreinte citée était restée celle de demo.1 ;
+ajout du paragraphe journal fichier + attente du clic).
