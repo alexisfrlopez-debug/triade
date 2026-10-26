@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "OK. Aucun texte tronqué ou chevauchant, accents corrects, tableau bien dans les marges et sommaire lisible avec numéros de page alignés.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792990592,
+  "id": "202610261256301a4e5f4496864aa1",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610261256301a4e5f4496864aa1",
+  "usage": {
+    "completion_tokens": 40,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1823,
+    "prompt_tokens_details": {
+      "cached_tokens": 91
+    },
+    "total_tokens": 1863
+  }
+}

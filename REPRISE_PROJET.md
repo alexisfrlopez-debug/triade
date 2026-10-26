@@ -6,8 +6,8 @@
 > agent IA chargé de continuer le travail.
 
 - Dernière mise à jour : 26 octobre 2026
-- Version de la spécification : v0.3 (figée pour le démarrage du jalon M0)
-- État général : conception terminée (dont universalité par profils), infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), implémentation non commencée
+- Version de la spécification : v0.4.0 (gouvernance vérifiée — figée pour le démarrage du jalon M0)
+- État général : conception terminée (universalité par profils + gouvernance normalisée née de la démonstration RoomEq), infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), implémentation non commencée
 
 ---
 
@@ -34,8 +34,8 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 
 | Domaine | État | Détail |
 |---|---|---|
-| Spécification v0.3 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle, 27 pages) ; le PDF v0.2 reste l'archive de la version précédente |
-| Journal des décisions | Terminé | D1 à D18 consignées dans `docs/DECISIONS.md` |
+| Spécification v0.4.0 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (archive formelle, chaîne LaTeX/Tectonic — D25) ; révision de gouvernance née des pratiques du recodage RoomEq : couche I normalisée (gabarit), taxonomie T1–T6, R10 renforcée, R11 (optimisation mesurée), conformité par profil, traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord ; vérification interne : `docs/VERIFICATION_v0.4.0.md` (64 contrôles PASS / 0 FAIL) ; les archives v0.3 (27 p.) et v0.2 sont conservées |
+| Journal des décisions | Terminé | D1 à D25 consignées dans `docs/DECISIONS.md` (format normalisé depuis D24) |
 | Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
@@ -83,21 +83,28 @@ triade/
 ├── REPRISE_PROJET.md                  Ce fichier — reprise rapide
 ├── PROTOCOLE_TRIADE_AGENT.md          Manuel d'utilisation pour un agent IA (nouveau projet)
 ├── docs/
-│   ├── PROTOCOLE_TRIADE.md            Spécification v0.3 — source de travail
-│   ├── Protocole_TRIADE_v0.3_Specification.pdf   Spécification v0.3 — archive formelle (27 p.)
+│   ├── PROTOCOLE_TRIADE.md            Spécification v0.4.0 — source de travail
+│   ├── Protocole_TRIADE_v0.4.0_Specification.pdf   Spécification v0.4.0 — archive formelle (LaTeX/Tectonic, D25)
+│   ├── VERIFICATION_v0.4.0.md         Rapport de vérification interne de la v0.4.0 (64 contrôles PASS)
+│   ├── Protocole_TRIADE_v0.3_Specification.pdf   Spécification v0.3 — archive conservée (27 p.)
 │   ├── Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf   Démonstration v0.3 — étude de cas RoomEq (22 p.)
 │   ├── Protocole_TRIADE_v0.4_Article_Recherche.pdf   Édition académique v0.4 — article de recherche IMRAD (12 p.)
 │   ├── VERIFICATION_v0.4_Article.md   Rapport de vérification interne de l'article (avant empaquetage)
 │   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle (erratum : numérotation corrigée)
-│   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C)
-│   ├── DECISIONS.md                   Journal des décisions D1–D18
-│   └── PLAN_MILESTONES.md             Feuille de route M0–M7
+│   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C) — à jour v0.4.0
+│   ├── DECISIONS.md                   Journal des décisions D1–D25
+│   └── PLAN_MILESTONES.md             Feuille de route M0–M7 — à jour v0.4.0 (conditions transverses)
 ├── scripts/
 │   ├── sync_backup.sh                 Sauvegarde complète : PDF à jour + commit + Drive + GitHub
-│   ├── build_pdf.sh                   Régénération systématique du PDF formel (D17)
+│   ├── build_pdf.sh                   Régénération systématique du PDF formel (D17/D25 — chaîne LaTeX/Tectonic v0.4.0)
 │   ├── drive_sync.py                  Synchronisation Google Drive (fichiers + bundle)
 │   ├── check_auth.py                  Vérification des jetons d'accès
-│   ├── triade_v03_spec.py             Générateur du PDF v0.3 (ReportLab, TOC auto)
+│   ├── spec_v040/                     Sources de la spécification v0.4.0 (LaTeX/Tectonic, D25)
+│   │   ├── main.tex + sec-a…d.tex     Corps monocolonne avec sommaire (5 fichiers)
+│   │   ├── cover.html                 Couverture (Template 03, validée)
+│   │   ├── merge_cover.py             Fusion couverture + corps, normalisation A4, métadonnées
+│   │   └── verify_spec.py             Contrôles mécaniques pré-empaquetage (64 contrôles)
+│   ├── triade_v03_spec.py             Générateur du PDF v0.3 (ReportLab — archive, remplacé par la chaîne v0.4.0)
 │   ├── triade_v03_cover.html          Source HTML de la couverture v0.3
 │   ├── triade_v03_demo_roomeq.py      Générateur du PDF de démonstration RoomEq (édition, régénération manuelle)
 │   ├── triade_v03_demo_cover.html     Source HTML de la couverture de la démonstration
@@ -181,6 +188,13 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D16 | Récupération de la carte | Export de continuité chiffré et signé (I+B+C+manifeste), import en cinq étapes, oracle jamais exporté |
 | D17 | PDF formel | Régénération systématique : `build_pdf.sh` compare l'empreinte des sources au stamp du dernier build et reconstruit avant chaque commit |
 | D18 | Édition académique v0.4 | Article de recherche IMRAD (12 p.) : formalisation, travaux connexes, menaces sur la validité ; noyau normatif v0.3 inchangé, régénération manuelle (`scripts/article_v04/`) |
+| D19 | Invariants de révision | La hiérarchie Sécurité > Performance > Optimisation > Coût en tokens devient invariant : aucune révision ne peut la modifier sans invalider explicitement le protocole |
+| D20 | Couche I normalisée | Gabarit de spécification (identifiants stables, cas d'échec, vecteurs dorés, fixtures, provenance) + taxonomie T1–T6 des défauts de contrat non écrit |
+| D21 | R11 — optimisation mesurée | Hot path identifié par mesure + mesures avant/après au journal d'optimisation + contrat stable ; l'optimisation prématurée est interdite (sanction : refus de commit) |
+| D22 | Conformité par profil | Suite de conformité exécutable par profil (§ 8.2) + parité inter-profils vérifiée par exécution (§ 8.3) — critères d'acceptation explicites de M6/M7 |
+| D23 | Pratiques officialisées | Reverse-specs (statut prête/validée), pré-versions dev.N/rc.N/X.Y.Z (balises immuables, monotonie anti-rollback), fixtures contractuelles à copie unique référencée (défaut T5 sinon) |
+| D24 | Traçabilité et gouvernance | Table I↔C↔B↔tests obligatoire (champ `spec=`, refus de build si maillon manquant), journal des décisions normalisé (append-only, pas de rétrodatage), tableau de bord de conformité (11 métriques) ; norme de fragmentation et localisation par intention consolidées |
+| D25 | PDF formel v0.4.0 | Chaîne LaTeX/Tectonic (`scripts/spec_v040/`) remplace le générateur ReportLab v0.3 ; archives v0.2/v0.3 conservées, non régénérées |
 
 ## 7. Prochaine étape : le jalon M0
 
@@ -193,14 +207,15 @@ entier est remis en question avant tout investissement supplémentaire.
 ### 7.2 Checklist de démarrage
 
 1. Installer les dépendances de notation : `pip install keystone-engine capstone`.
-2. Définir la couche I du « hello » : contrat du bloc principal, du bloc d'écriture, du bloc de sortie.
+2. Définir la couche I du « hello » selon le gabarit v0.4.0 (§ 2 de la spécification) :
+   contrat du bloc principal, du bloc d'écriture, du bloc de sortie.
 3. Écrire la notation des trois blocs initiaux (granularité D8).
 4. Assembler via keystone ; vérifier le round-trip via capstone (fidélité exacte, R5).
 5. Construire le PE32+ à la main : en-têtes DOS/COFF/PE32+, `.text` RX, `.rdata` imports +
    relocations, IAT kernel32 (WriteFile, GetStdHandle, ExitProcess), moins de 4 Kio.
 6. Exécuter sur Windows 11 et observer la sortie console.
-7. Créer la carte v0 : en-tête normalisé v0.3, trois blocs, quatre fragments, signature
-   Ed25519 (R9).
+7. Créer la carte v0 : en-tête normalisé v0.4.0, trois blocs avec champ `spec=` (traçabilité),
+   quatre fragments, signature Ed25519 (R9).
 8. Vérifier le verrou croisé bout en bout (R8) : empreintes des blocs dans frag-bld,
    re-vérification.
 9. Après chaque avancée : `bash scripts/sync_backup.sh "M0 : <étape>"`.
@@ -208,7 +223,9 @@ entier est remis en question avant tout investissement supplémentaire.
 ### 7.3 Critères de sortie
 
 Exécution constatée sur Windows 11 ; round-trip à 100 % ; carte signée et vérifiée ;
-exécutable de moins de 4 Kio ; règles R1–R3 et R8–R9 respectées.
+exécutable de moins de 4 Kio ; règles R1–R3 et R8–R9 respectées ; conditions transverses
+v0.4.0 (§ 16) : oracle vert, journal à jour (décisions, optimisations, classification
+T1–T6), tableau de bord conforme avec métriques cible explicitement annotées.
 
 ## 8. Avertissement sécurité — jetons
 

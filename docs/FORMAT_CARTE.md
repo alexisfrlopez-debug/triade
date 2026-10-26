@@ -4,7 +4,8 @@
 > d'entrée de bloc, procédure du verrou croisé, cycle de vie, budgets, export de continuité
 > et migration cryptographique. La carte est le cœur opérationnel du protocole : elle rend
 > le binaire navigable pour l'agent, porte les preuves et concentre la valeur intellectuelle
-> du projet.
+> du projet. Mis à jour pour la v0.4.0 : champ de traçabilité `spec=` dans l'entrée de bloc
+> (spécification § 4.2), norme de fragmentation, audit de traçabilité et tableau de bord.
 
 ## 1. Contraintes de conception
 
@@ -30,6 +31,12 @@ Chaque fragment est chiffré avec sa propre clé dérivée de la clé maîtresse
 l'algorithme de l'en-tête, nonce aléatoire de 192 bits pour XChaCha20). Un compromis
 partiel — la fuite d'un fragment isolé — n'est jamais une perte totale : les contrats sans
 les adresses, ou les preuves sans les contrats, ne reconstituent pas la carte.
+
+**Norme de fragmentation (v0.4.0, spécification § 12).** Aucune opération de la boucle de
+mise à jour n'exige la lecture de plus d'un fragment ; aucune opération n'exige la lecture
+intégrale du binaire — la carte est l'unique index, le balayage est interdit (localisation
+par intention, spécification § 7). L'audit complet — carte entière déchiffrée — est une
+opération exceptionnelle, non budgétée et journalisée.
 
 ## 3. Suite cryptographique — paramètres et en-tête
 
@@ -63,7 +70,7 @@ L'en-tête est la première section de la carte, signée avec les fragments dont
 partie intégrante. Syntaxe identique au format d'entrée — ASCII, ligne par ligne :
 
 ```
-[carte] version=0.3
+[carte] version=0.4.0
   algo_hachage     : sha256
   algo_signature   : ed25519
   algo_chiffrement : xchacha20poly1305
@@ -92,7 +99,7 @@ aucun caractère Unicode exotique ne pouvant corromdre l'encodage en transit. Ex
 référence (bloc utilisé tout au long de la spécification) :
 
 ```
-[bloc] id=b7f3a9 cible=x86-64-win11-pe addr=0x4012A0 size=212 v=4 etat=scelle
+[bloc] id=b7f3a9 spec=hex:R4 cible=x86-64-win11-pe addr=0x4012A0 size=212 v=4 etat=scelle
   sig     : (ptr u8, usize) -> usize
   pre     : ptr != 0 && len <= MAX_LEN
   post    : ret <= len
@@ -105,9 +112,9 @@ référence (bloc utilisé tout au long de la spécification) :
 
 ### 4.1 Répartition des champs
 
-- **Première ligne** — identifiant, profil, adresse, taille, version, état : c'est à elle
-  seule l'entrée de localisation portée par `frag-loc`. C'est la seule partie lue pour
-  situer un bloc. Budget : 40 tokens maximum.
+- **Première ligne** — identifiant, spécification, profil, adresse, taille, version, état :
+  c'est à elle seule l'entrée de localisation portée par `frag-loc`. C'est la seule partie
+  lue pour situer un bloc. Budget : 40 tokens maximum.
 - **Lignes suivantes** — signature, pré/post-conditions, registres préservés, invariants,
   dépendances, preuves, tests : entrée détaillée portée par `frag-con` et `frag-prf`,
   chargée uniquement quand le bloc est effectivement édité. Budget de l'entrée complète :
@@ -118,6 +125,7 @@ référence (bloc utilisé tout au long de la spécification) :
 | Champ | Signification |
 |---|---|
 | `id` | Identifiant stable du bloc sur six hexadécimaux ; référencé par les dépendances d'autres blocs |
+| `spec` | **Traçabilité v0.4.0 (spécification § 4.2)** : spécification I d'origine au format `<DOM>-<NN>:R` (identifiant + révision) ; une reverse-spec en attente porte son statut (`prête`/`validée`) |
 | `cible` | Profil de cible du bloc (identifiant `<isa>-<os>-<format>`) ; un même contrat I peut être instancié sur plusieurs profils |
 | `addr` | Adresse virtuelle du point d'entrée — stable une fois scellé (R7), au sein du binaire du profil |
 | `size` | Taille en octets, padding inclus |
@@ -266,3 +274,21 @@ L'opération est atomique — elle réussit entièrement ou laisse l'ancienne ca
 et journalisée. Le round-trip de vérification s'exécute immédiatement après : la première
 édition suivant un re-cryptage vérifie l'intégralité des empreintes, pas seulement les
 blocs visés.
+
+## 10. Audit de traçabilité et tableau de bord (v0.4.0)
+
+La **commande d'audit de traçabilité** parcourt la carte et vérifie les chaînes complètes
+I ↔ C ↔ B ↔ tests (spécification § 4.2) : chaque entrée porte son champ `spec=<DOM>-<NN>:R` ;
+chaque spécification référencée existe à la révision indiquée ; chaque bloc scellé a une
+empreinte dans frag-bld ; chaque vecteur de frag-prf se rattache à une exigence numérotée
+de la spécification. Trois propriétés attendues, dont la violation est un refus de build :
+aucune spécification sans entrée de carte (hors reverse-specs en statut « prête », visibles
+comme telles) ; aucun bloc scellé sans spécification référencée ; aucun vecteur orphelin.
+
+Le même audit produit le **tableau de bord de conformité** (spécification § 15.2) :
+métriques mesurables avec leurs cibles — spécifications à jour, chaînes complètes,
+construction, tests, empreintes des données embarquées, défauts ouverts par classe de
+taxonomie T1-T6, optimisations sans mesure, budgets tokens (une fois instrumentés, M1),
+suite de conformité par profil actif, changements hors journal des décisions, balisage
+correct des pré-versions. Le tableau est archivé avec la carte à chaque cristallisation :
+la conformité s'inspecte a posteriori, elle ne se déclare pas.

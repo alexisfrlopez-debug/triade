@@ -5,7 +5,9 @@
 > n'est franchi sans que la carte soit signée, le verrou croisé vérifié et l'oracle passé :
 > la discipline protocolaire s'applique dès le premier octet. Les jalons M0-M5 s'exécutent
 > sur le profil primaire `x86-64-win11-pe` ; M6 et M7, ajoutés par la v0.3, valident
-> l'universalité (D14).
+> l'universalité (D14). Mis à jour pour la v0.4.0 : conditions transverses d'acceptation
+> (oracle vert, suite de conformité, tableau de bord conforme — spécification § 16) et
+> critères de parité inter-profils (spécification § 8.3).
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées
@@ -18,13 +20,27 @@ isolée, autorité de certification de test installée localement.
 | Jalon | Objectif | Livrables | Critères de sortie |
 |---|---|---|---|
 | M0 | Prouver la chaîne artefact | Éditeur PE32+ minimal ; hello.exe via WriteFile ; carte v0 à trois blocs ; vérificateur de round-trip | Exécution sur Windows 11 ; round-trip 100 % ; carte signée et vérifiée ; moins de 4 Kio. Règles : R1–R3, R8–R9 |
-| M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone | Oracle à 100 % ; première cristallisation ; adresses stables démontrées. Règles : R5–R7 |
+| M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone ; **instrumentation des budgets tokens** | Oracle à 100 % ; première cristallisation ; adresses stables démontrées ; première mesure effective des budgets (localiser/éditer/ajouter). Règles : R5–R7 |
 | M2 | Code actif et patch à chaud | Serveur TCP écho ; thread par connexion ; journal console | Patch du bloc écho pendant exécution, sans interruption ; rollback démontré. Boucle complète |
 | M3 | Entrées non fiables | Proxy HTTP ; parseur à contrats renforcés ; threading du tunnel | Un million de requêtes fuzzées sans crash ; proxy transparent pour curl. Contrats renforcés |
 | M4 | Tunnel chiffré | Contexte SSPI / Schannel ; poignée de main TLS ; relais chiffré | HTTPS en transit ; échec propre sur certificat invalide. Contrats cryptographiques |
 | M5 | L'outil complet | Autorité de test locale ; interception et re-chiffrement ; journal des flux ; interface en ligne de commande | Interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build activées. Intégralité du protocole |
-| M6 | Portabilité inter-OS | Profil `x86-64-linux-elf64` complet : même couche I réutilisée sans modification ; mini-libc re-scellée pour le profil ; hello et serveur écho sur Linux | Diff nul sur la couche I ; carte multi-profils signée et vérifiée ; le même oracle passe sur les deux profils |
-| M7 | Portabilité inter-ISA | Profil `riscv64-linux-elf64` : blocs re-générés pour une ISA à instructions de taille fixe ; patch à chaud adapté (registre scratch + `fence.i`) | Round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme au profil ; verrou croisé multi-profils ; export de continuité multi-profils vérifié |
+| M6 | Portabilité inter-OS | Profil `x86-64-linux-elf64` complet : même couche I réutilisée sans modification ; mini-libc re-scellée pour le profil ; hello et serveur écho sur Linux ; **suite de conformité du profil** | **Suite de conformité verte (§ 8.2)** ; diff nul sur la couche I ; carte multi-profils signée et vérifiée ; le même oracle passe sur les deux profils ; **parité inter-profils vérifiée (§ 8.3)** |
+| M7 | Portabilité inter-ISA | Profil `riscv64-linux-elf64` : blocs re-générés pour une ISA à instructions de taille fixe ; patch à chaud adapté (registre scratch + `fence.i`) ; **suite de conformité du profil** | Round-trip 100 % sur la nouvelle ISA ; **suite de conformité verte** ; patch à chaud conforme au profil ; verrou croisé multi-profils ; **parité inter-profils vérifiée** ; export de continuité multi-profils vérifié |
+
+## Conditions transverses d'acceptation (v0.4.0)
+
+Ajoutées par la v0.4.0 (spécification § 16), elles s'appliquent à **chaque** jalon, en sus
+des critères propres :
+
+1. **Oracle vert** — 100 % des tests différentiels de la couche I concernée (R5).
+2. **Suite de conformité verte** pour les éléments du profil couverts par le jalon (§ 8.2).
+3. **Tableau de bord conforme** (§ 15.2) — aucune métrique au rouge, les métriques « cible »
+   explicitement annotées comme telles tant que l'outillage n'est pas déployé (budgets
+   tokens : première mesure effective à M1).
+4. **Carte signée, verrou croisé vérifié** — inchangé depuis la v0.1 : dès le premier octet.
+5. **Journal à jour** — décisions, optimisations (R11) et classification taxonomique des
+   défauts corrigés dans le périmètre du jalon.
 
 ## Jalons charnières
 

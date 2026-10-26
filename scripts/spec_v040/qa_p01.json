@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "OK. Aucun texte tronqué, accents corrects (vérifiable, assisté), mise en page aérée et lisible, pas de chevauchement ni de débordement visible sur cette couverture.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792990588,
+  "id": "202610261256267b846eb30ba747af",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610261256267b846eb30ba747af",
+  "usage": {
+    "completion_tokens": 48,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1823,
+    "prompt_tokens_details": {
+      "cached_tokens": 2
+    },
+    "total_tokens": 1871
+  }
+}

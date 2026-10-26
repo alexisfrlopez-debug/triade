@@ -1,4 +1,4 @@
-# PROTOCOLE TRIADE v0.3 — MANUEL DE L'AGENT IA
+# PROTOCOLE TRIADE v0.4.0 — MANUEL DE L'AGENT IA
 
 > Mode d'emploi : ce fichier enseigne le protocole TRIADE à un agent IA. Il s'utilise au
 > démarrage de tout nouveau projet de développement logiciel selon TRIADE. Lis-le
@@ -58,7 +58,7 @@ sept éléments ci-dessus, écrits et vérifiés — jamais d'instanciation appr
 de doute sur un élément de profil, bloque et demande la fiche : un profil incomplet est un
 refus de build, exactement comme une carte manquante.
 
-## 3. Les dix règles — non négociables
+## 3. Les onze règles — non négociables
 
 | # | Règle | Énoncé | Sanction |
 |---|---|---|---|
@@ -71,7 +71,8 @@ refus de build, exactement comme une carte manquante.
 | R7 | Adresses stables | Les points d'entrée sont garantis par padding ; patcher ne déplace rien | Re-liage interdit |
 | R8 | Verrou croisé | Empreintes des blocs et signature de la carte vérifiés avant chaque édition | Session bloquée |
 | R9 | Carte signée obligatoire | Tu refuses toute carte non signée | Refus de démarrage |
-| R10 | Fail-closed au chargement | Checksums vérifiés au lancement ; tout écart = arrêt propre | Arrêt de l'exécution |
+| R10 | Échec contrôlé intégré (renforcée v0.4.0) | Au lancement — avant toute entrée dans le chemin d'exécution — l'artefact vérifie les checksums de ses blocs scellés, la signature du manifeste de build, la monotonie de version (anti-rollback) et la conformité minimale de l'environnement au profil ; tout écart = arrêt propre immédiat, fail-closed explicite | Arrêt avant tout effet |
+| R11 | Optimisation mesurée (nouvelle v0.4.0) | Toute optimisation exige un hot path identifié par mesure, une mesure avant/après consignée au journal d'optimisation et un contrat stable (R4) ; l'optimisation prématurée est interdite — demande refusée et consignée | Refus de commit |
 
 Trois précisions fréquentes. R4 n'interdit pas de changer le comportement d'un bloc : elle
 impose qu'un bloc remplaçant honore les contrats publiés de son prédécesseur — mêmes
@@ -88,7 +89,7 @@ chiffré et signé (§ 6).
 Toute carte commence par un en-tête signé qui la rend autodescriptive :
 
 ```
-[carte] version=0.3
+[carte] version=0.4.0
   algo_hachage     : sha256
   algo_signature   : ed25519
   algo_chiffrement : xchacha20poly1305
@@ -118,7 +119,7 @@ Syntaxe ASCII, ligne par ligne. Première ligne = localisation (budget 40 tokens
 complète (budget 200 tokens) :
 
 ```
-[bloc] id=b7f3a9 cible=x86-64-win11-pe addr=0x4012A0 size=212 v=4 etat=scelle
+[bloc] id=b7f3a9 spec=hex:R4 cible=x86-64-win11-pe addr=0x4012A0 size=212 v=4 etat=scelle
   sig     : (ptr u8, usize) -> usize
   pre     : ptr != 0 && len <= MAX_LEN
   post    : ret <= len
@@ -128,6 +129,11 @@ complète (budget 200 tokens) :
   preuves : memsafe:ok bornes:ok term:ok
   tests   : 12400 cas ; ref=oracle_v9 ; crist=10/10
 ```
+
+Le champ `spec=` (traçabilité v0.4.0) relie chaque bloc à sa spécification I d'origine au
+format `<DOM>-<NN>:R` — identifiant et révision ; l'audit de traçabilité refuse le build si
+un maillon manque (un bloc scellé sans spécification référencée, une spécification sans
+entrée de carte, un vecteur orphelin).
 
 Cycle de vie : `brouillon` → `verifie` → `scelle` → `cristallise` (immuable, dix
 vérifications) — ou `deprecie`. Un bloc cristallisé n'est plus jamais rechargé : seule son
@@ -162,7 +168,7 @@ n'est écrit dans le binaire avant le verdict de l'oracle.
 | 1 | Diff d'intention | Requête de changement, couche I | Diff minimal sur I | R2 |
 | 2 | Localisation | frag-loc | Liste des blocs impactés | R3 |
 | 3 | Verrou croisé | frag-bld, binaire | Verdict go / no-go | R8, R9 |
-| 4 | Régénération ciblée | frag-con, notation du bloc | Octets candidats | R4, R7 |
+| 4 | Régénération ciblée | frag-con, notation du bloc | Octets candidats | R4, R7, R11 |
 | 5 | Vérification | Candidats, oracle, vecteurs dorés | Verdict, journal | R5 |
 | 6 | Commit atomique | Verdict favorable | Patch B, carte à jour, scellage | R1 |
 | 7 | Cristallisation | Compteur de vérifications | Bloc immuable | R6 |
@@ -211,6 +217,33 @@ Autres obligations : **empreintes par build** (variante unique par livraison et 
 binaire vérifie ses checksums avant sa boucle principale) ; **gestion des clés** (phrase
 maîtresse → Argon2id ≥ 64 Mio, ≥ 3 itérations → HKDF par fragment ; sauvegardes 3-2-1
 chiffrées ; escrow deux-sur-trois possible).
+
+**Gouvernance v0.4.0 — les normes opérationnelles** (détail : spécification § 2, § 9–§ 16) :
+
+- **Couche I normalisée** : toute spécification suit le gabarit § 2 — identifiant stable
+  `<DOM>-<NN>`, intention, contrat (pré/post, invariants), cas d'échec, vecteurs dorés,
+  fixtures, provenance. Le gabarit est auditable mécaniquement.
+- **Traçabilité I↔C↔B↔tests** : champ `spec=` dans chaque entrée de carte ; la commande
+  d'audit refuse le build si un maillon manque.
+- **Taxonomie T1–T6 des défauts de contrat non écrit** : classe chaque défaut corrigé ;
+  alimente le tableau de bord.
+- **Pré-versions** : `dev.N` (oracle vert, sans validation terrain), `rc.N` (candidate —
+  suite de conformité du profil verte requise), `X.Y.Z` (validée terrain). Balises
+  immuables ; un changement de contrat progresse par `X.(Y+1).0` ; la monotonie alimente
+  l'anti-rollback de R10.
+- **Reverse-specs** : pour reprendre un binaire scellé hérité, extrais d'abord sa
+  spécification (statut « prête », puis « validée » après vérification) — jamais de
+  recodage sans reverse-spec validée.
+- **Fixtures contractuelles** : portées par la spécification I, copie unique référencée —
+  toute copie privée est un défaut T5.
+- **Journal d'optimisation** (R11) : format OPT-NN, hot path identifié par mesure,
+  mesures avant/après consignées **avant** le commit.
+- **Localisation par intention** : le balayage du binaire est interdit — la carte est ton
+  unique index ; aucune opération n'exige la lecture intégrale d'un fragment ou du binaire.
+- **Journal des décisions normalisé** (D24) : ID, date, statut, contexte, choix, alternatives
+  rejetées, développement ; append-only, pas de rétrodatage.
+- **Tableau de bord de conformité** : généré par l'audit à chaque commit et cristallisation,
+  archivé avec la carte — la conformité s'inspecte, elle ne se déclare pas.
 
 ## 7. Le profil primaire — x86-64 / Windows 11
 
@@ -304,8 +337,10 @@ entier — la carte est ton unique index.
 10. Rechercher la furtivité face aux EDR — hors périmètre, l'outil est légitime par
     construction.
 11. Commiter des secrets (jetons, clés, phrases secrètes) dans le dépôt.
-12. Modifier en silence une décision du journal D1–D16 : toute évolution invalide
-    explicitement ce qu'elle remplace.
+12. Modifier en silence une décision du journal (append-only, D1–D25) : toute évolution
+    invalide explicitement ce qu'elle remplace.
+13. Optimiser sans hot path identifié ni mesure avant/après consignée (R11) — ou balayer
+    le binaire au lieu de localiser par intention via la carte.
 
 ## 10. Jalons — vue condensée
 

@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**OK.** Aucun texte tronqué ou chevauchant, accents corrects, sommaire parfaitement lisible avec numéros de page alignés à droite et points de suite cohérents.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792990590,
+  "id": "202610261256284e3cad400fc94941",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610261256284e3cad400fc94941",
+  "usage": {
+    "completion_tokens": 46,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1823,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1869
+  }
+}

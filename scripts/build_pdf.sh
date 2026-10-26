@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
-# TRIADE — Régénération systématique du PDF formel du protocole (décision D17).
+# TRIADE — Régénération systématique du PDF formel du protocole (décisions D17, D25).
 #
-# Le PDF docs/Protocole_TRIADE_v0.3_Specification.pdf est un artefact DÉRIVÉ des
-# sources markdown du protocole. Ce script garantit qu'il ne devient jamais périmé :
-# il compare l'empreinte SHA-256 des sources (4 documents + script + couverture) à
-# celle du dernier build (.pdf_build.stamp, suivi par git) et reconstruit tout si
-# elles divergent. Intégré à sync_backup.sh, il s'exécute AVANT chaque commit —
-# la sauvegarde embarque donc toujours un PDF synchrone des sources.
+# Depuis la v0.4.0, le PDF formel de la version courante est
+# docs/Protocole_TRIADE_v0.4.0_Specification.pdf, produit par la chaîne
+# LaTeX/Tectonic (scripts/spec_v040/, D25) : corps monocolonne avec sommaire,
+# couverture académique Template 03 fusionnée par pypdf. Les archives des
+# versions précédentes (v0.2, v0.3) demeurent dans docs/ et ne sont plus
+# régénérées. Le présent script garantit que le PDF courant ne devient jamais
+# périmé : il compare l'empreinte SHA-256 des sources (4 documents markdown +
+# sources LaTeX + couverture + scripts de fusion) à celle du dernier build
+# (.pdf_build.stamp, suivi par git) et reconstruit tout si elles divergent.
+# Intégré à sync_backup.sh, il s'exécute AVANT chaque commit.
 #
 # Usage :
 #   bash scripts/build_pdf.sh            # reconstruit si les sources ont changé
 #   bash scripts/build_pdf.sh --force    # reconstruit toujours
 #   bash scripts/build_pdf.sh --check    # ne construit pas ; code 2 si rebuild requis
 #
-# Dépendances (poste de génération) : python3 + reportlab + pypdf + PIL, node,
-# et le répertoire skills/pdf de l'espace de travail (validateurs + html2poster).
+# Dépendances (poste de génération) : python3 + pypdf + pdfplumber, tectonic,
+# node, et le répertoire skills/pdf de l'espace de travail (validateurs,
+# html2poster, pdf.py).
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -22,15 +27,18 @@ cd "$ROOT"
 BASE="${TRIADE_BASE:-/home/z/my-project}"
 SKILL="$BASE/skills/pdf"
 
-SPEC=scripts/triade_v03_spec.py
-COVER_HTML=scripts/triade_v03_cover.html
-COVER_PDF=scripts/triade_v03_cover.pdf
-FINAL_PDF=docs/Protocole_TRIADE_v0.3_Specification.pdf
+SPEC_DIR=scripts/spec_v040
+COVER_HTML="$SPEC_DIR/cover.html"
+COVER_PDF="$SPEC_DIR/cover.pdf"
+FINAL_PDF=docs/Protocole_TRIADE_v0.4.0_Specification.pdf
 STAMP=.pdf_build.stamp
 
 # Sources dont la modification déclenche la reconstruction.
 SOURCES=(docs/PROTOCOLE_TRIADE.md docs/FORMAT_CARTE.md docs/DECISIONS.md
-         docs/PLAN_MILESTONES.md "$SPEC" "$COVER_HTML")
+         docs/PLAN_MILESTONES.md
+         "$SPEC_DIR/main.tex" "$SPEC_DIR/sec-a.tex" "$SPEC_DIR/sec-b.tex"
+         "$SPEC_DIR/sec-c.tex" "$SPEC_DIR/sec-d.tex"
+         "$SPEC_DIR/cover.html" "$SPEC_DIR/merge_cover.py")
 
 hash_sources() {
   for f in "${SOURCES[@]}"; do
@@ -57,7 +65,7 @@ if [ "$CHECK" -eq 1 ]; then
   exit 2
 fi
 
-echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel"
+echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel v0.4.0"
 
 # 1) Validation de la couverture (HTML puis chevauchements au rendu réel)
 if [ ! -d "$SKILL" ]; then
@@ -73,26 +81,32 @@ node "$SKILL/scripts/cover_validate.js" "$COVER_HTML" || {
 node "$SKILL/scripts/html2poster.js" "$COVER_HTML" --output "$COVER_PDF" --width 794px || {
   echo "[pdf] ERREUR : rendu de la couverture en échec" >&2; exit 1; }
 
-# 3) Corps + fusion (le script écrit $FINAL_PDF et copie dans BASE/download/)
-python3 "$SKILL/scripts/pdf.py" code.sanitize "$SPEC" || true
-python3 "$SPEC" || { echo "[pdf] ERREUR : génération du corps en échec" >&2; exit 1; }
+# 3) Corps LaTeX (Tectonic via le wrapper du skill) + fusion couverture/corps
+( cd "$SPEC_DIR" && \
+  PDF_SKILL_DIR="$SKILL" python3 "$SKILL/scripts/pdf.py" convert.latex main.tex --runs 2 ) \
+  || { echo "[pdf] ERREUR : compilation LaTeX du corps en échec" >&2; exit 1; }
+python3 "$SPEC_DIR/merge_cover.py" || {
+  echo "[pdf] ERREUR : fusion couverture + corps en échec" >&2; exit 1; }
 
-# 4) Qualité : métadonnées, pages blanches, glyphes, TOC, scan global
-python3 "$SKILL/scripts/pdf.py" meta.brand "$FINAL_PDF" >/dev/null || true
-python3 "$SKILL/scripts/pdf.py" pages.clean "$FINAL_PDF" -o "$FINAL_PDF.clean" >/dev/null 2>&1
-if [ -f "$FINAL_PDF.clean" ]; then
-  if ! cmp -s "$FINAL_PDF" "$FINAL_PDF.clean"; then
-    mv "$FINAL_PDF.clean" "$FINAL_PDF"
+# 4) Qualité : pages blanches, glyphes, scan global
+python3 "$SKILL/scripts/pdf.py" pages.clean "$SPEC_DIR/final.pdf" -o "$SPEC_DIR/final.pdf.clean" >/dev/null 2>&1
+if [ -f "$SPEC_DIR/final.pdf.clean" ]; then
+  if ! cmp -s "$SPEC_DIR/final.pdf" "$SPEC_DIR/final.pdf.clean"; then
+    mv "$SPEC_DIR/final.pdf.clean" "$SPEC_DIR/final.pdf"
     echo "[pdf] pages blanches supprimées"
   else
-    rm -f "$FINAL_PDF.clean"
+    rm -f "$SPEC_DIR/final.pdf.clean"
   fi
 fi
-python3 "$SKILL/scripts/pdf.py" font.check "$FINAL_PDF" 2>/dev/null \
+python3 "$SKILL/scripts/pdf.py" font.check "$SPEC_DIR/final.pdf" 2>/dev/null \
   | grep -q '"total_issues": 0' || echo "[pdf] AVERTISSEMENT : glyphes manquants"
-python3 "$SKILL/scripts/pdf_qa.py" --skip-cover "$FINAL_PDF" || {
+python3 "$SKILL/scripts/pdf_qa.py" --skip-cover "$SPEC_DIR/final.pdf" || {
   echo "[pdf] ERREUR : contrôle qualité pdf_qa en échec" >&2; exit 1; }
 
-# 5) Consignation de l'empreinte (suivie par git : un clone frais ne rebuild pas)
+# 5) Publication du PDF formel + consignation de l'empreinte
+cp "$SPEC_DIR/final.pdf" "$FINAL_PDF"
+if [ -d "$BASE/download" ]; then
+  cp "$FINAL_PDF" "$BASE/download/" || true
+fi
 echo "$CURRENT" > "$STAMP"
-echo "[pdf] PDF formel régénéré -> $FINAL_PDF"
+echo "[pdf] PDF formel v0.4.0 régénéré -> $FINAL_PDF"

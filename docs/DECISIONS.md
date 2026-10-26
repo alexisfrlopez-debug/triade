@@ -192,3 +192,170 @@ retenu, les alternatives rejetées et un développement si elle engage l'archite
 décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante — D14 (amende D10) et
 D15 (amende D5) illustrent la procédure.
+
+## Décisions de la v0.4.0 (D19–D24, 26 octobre 2026) — format normalisé § 15.1 de la spécification
+
+> La révision v0.4.0 est une révision de gouvernance vérifiée : elle convertit en normes les
+> pratiques nées de la démonstration RoomEq, étend le modèle de menace et renforce R10, sans
+> toucher à la hiérarchie de la fonction objectif ni affaiblir une seule règle. Les entrées
+> ci-dessous appliquent le format normalisé défini par D24 (elles font foi pour les entrées
+> futures ; les entrées D1–D18 restent au format historique, valide).
+
+### D19 — Couche I normalisée et taxonomie des défauts ; hiérarchie verrouillée
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : la v0.3 décrivait la couche I comme « contrats légers » sans gabarit ; la
+  démonstration RoomEq a fixé une pratique (44 spécifications avant le code) et révélé une
+  classe récurrente de défauts (contrat non écrit) méritant une taxonomie. Le cahier de
+  révision exige par ailleurs que la hiérarchie de la fonction objectif ne soit pas modifiée.
+- **Choix retenu** : gabarit normalisé de spécification I (identifiants stables `<DOM>-<NN>`,
+  intention, contrat pre/post/inv, cas d'échec nommés, vecteurs de vérification, fixtures,
+  provenance, décisions) ; taxonomie T1–T6 des défauts de contrat non écrit avec détecteurs
+  et verrous ; la hiérarchie Sécurité > Performance > Optimisation > Coût en tokens devient
+  un **invariant de révision** — aucune révision future ne peut la modifier sans invalider
+  le protocole entier.
+- **Alternatives rejetées** : spécification formelle lourde (TLA+, Alloy — déjà rejetée par
+  D3, la légèreté est maintenue) ; gabarit libre par projet (l'expérience montre que sans
+  structure, les cas d'échec et les vecteurs ne sont pas écrits) ; modification de la
+  hiérarchie (interdite par le cahier de révision, et contraire à l'identité du protocole).
+- **Développement** : le gabarit est diffable par construction (une exigence par phrase
+  numérotée), ce qui sert directement R2 ; la taxonomie alimente le tableau de bord
+  (métrique « défauts ouverts par classe ») et la liste de contrôle de rédaction. Les
+  occurrences de référence viennent de la démonstration : seuil 8 (T1+T6), SP_DEVINFO_DATA
+  (T2), sanitisation dépendante de l'hôte (T3), parsing pnputil (T4+T5).
+
+### D20 — Menace étendue et R10 renforcée
+
+- **Statut** : active (renforce R10 sans l'amender : l'énoncé v0.3 est un cas particulier
+  du nouvel énoncé) · **Date** : 26 octobre 2026
+- **Contexte** : le cahier de révision exige un threat model minimal couvrant binaire
+  altéré, carte corrompue, rollback non autorisé, agent défaillant, données embarquées
+  modifiées et environnement non conforme — et un renforcement de R10 (checksums,
+  signature, anti-rollback, fail-closed explicite).
+- **Choix retenu** : six menaces ajoutées au modèle (les sept de la v0.3 sont conservées) ;
+  R10 devient « échec contrôlé intégré » : checksums par bloc, signature du manifeste de
+  build couvrant code et données embarquées, monotonie de version (anti-rollback),
+  contrôles de conformité de l'environnement — tout avant l'entrée en exécution, arrêt
+  propre immédiat, aucun chemin dégradé. La vérification est strictement locale.
+- **Alternatives rejetées** : anti-rollback par contrôle en ligne (le chargement doit
+  échouer proprement hors ligne — dépendance réseau interdite) ; exécution en mode dégradé
+  après avertissement (violerait fail-closed et la fonction objectif Sécurité) ; extension
+  du modèle aux menaces physiques (hors périmètre d'un protocole logiciel).
+- **Développement** : la politique précise anti-rollback (registre des versions acceptées,
+  stockage du plancher) appartient au profil — c'est le huitième livrable du profil (§ 14).
+  Les données embarquées étaient déjà couvertes en pratique par la démonstration (empreintes
+  md5 des bibliothèques) : la norme généralise la pratique.
+
+### D21 — R11 optimisation mesurée et journal d'optimisation
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : l'ordre lexicographique place l'optimisation au troisième rang, mais la
+  v0.3 n'interdisait pas explicitement l'optimisation prématurée ; la démonstration a
+  éprouvé le cas (demande d'« optimisation maximale », honorée par la mesure puis refusée
+  comme transformation — décision D15 du dépôt RoomEq).
+- **Choix retenu** : règle R11 — toute optimisation exige un hot path identifié par mesure,
+  une mesure avant/après consignée et un contrat stable ; l'optimisation prématurée est
+  interdite, sa demande refusée et consignée. Instrument : journal d'optimisation au format
+  OPT-NN, versionné avec la couche I.
+- **Alternatives rejetées** : laisser l'interdiction implicite (l'ordre lexicographique ne
+  dit pas quand mesurer) ; autoriser l'optimisation sans mesure sur les blocs cristallisés
+  (un bloc cristallisé est précisément celui qu'on ne touche pas sans procédure lourde) ;
+  journal facultatif (une exigence non tracée est une exigence affaiblie).
+- **Développement** : R11 sanctionne le commit, pas l'intention — la demande peut être
+  examinée et refusée sans coût, c'est son écriture permanente qui est gardée. L'entrée de
+  référence est la mesure RoomEq : 152× le temps réel, zéro allocation par bloc —
+  l'absence de problème de performance est un résultat, pas un échec de l'optimisation.
+
+### D22 — Suite de conformité par profil et parité inter-profils
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : la v0.3 rend l'extension vérifiable (sept éléments par profil, D14) mais
+  ne fixe ni suite de tests par profil ni définition formelle de la parité inter-profils —
+  les critères M6/M7 étaient dispersés dans la feuille de route.
+- **Choix retenu** : chaque profil embarque une suite de conformité vérifiant ses sept
+  éléments (ISA/types, ABI, format et protections, interface système, patch à chaud,
+  notation, padding) ; un profil sans suite verte n'est pas déclarable supporté. La parité
+  inter-profils se définit à contrat constant : même spécification I (à la paramétrisation
+  près), oracle mutualisé vert sur les deux profils, verdicts équivalents sur les vecteurs,
+  différences documentées dans frag-con — elle se vérifie par exécution, jamais par
+  déduction.
+- **Alternatives rejetées** : couche d'abstraction pour obtenir la parité « gratuitement »
+  (bytecode portable, machine virtuelle — trahirait la fonction objectif Performance,
+  déjà rejetée par D14) ; déclaration de support sur inspection (une propriété non
+  exécutée n'est pas une propriété) ; parité au niveau octet (les profils diffèrent par
+  construction — la parité est au niveau des verdicts).
+- **Développement** : la suite est exécutée à chaque cristallisation rc et finale sur le
+  profil concerné ; elle devient le critère d'acceptation explicite de M6 et M7 (critères
+  de sortie mis à jour dans PLAN_MILESTONES.md, conditions transverses ajoutées).
+
+### D23 — Officialisation des pratiques nées de la démonstration
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : trois pratiques inventées pendant le recodage RoomEq n'existaient pas dans
+  la spécification : les reverse-specs (spécifications extraites de l'installateur scellé,
+  décision D11 du dépôt), les pré-versions de cristallisation (`-dev.1` pour distinguer
+  « vérifié par l'oracle » de « validé terrain ») et le partage de fixtures entre
+  consommateurs d'un même contrat externe (parsing pnputil).
+- **Choix retenu** : officialisation intégrale — reverse-specs (gabarit § 2.2 + provenance
+  + statut « prête »/« validée » ; le recodage d'un binaire scellé ne peut partir que de sa
+  reverse-spec validée) ; pré-versions dev.N / rc.N / X.Y.Z avec monotonie (alimente
+  l'anti-rollback de R10), immuabilité des balises et progression de contrat par X.(Y+1).0 ;
+  fixtures contractuelles portées par la spécification I, toute copie privée étant un défaut
+  T5.
+- **Alternatives rejetées** : laisser ces pratiques au rang d'usages (un usage non normé
+  diverge d'un projet à l'autre — la démonstration elle-même a dû les inventer faute de
+  norme) ; exiger le recodage des binaires hérités (contraire à l'esprit : figer la
+  connaissance avant de décider) ; pré-versions rc sans suite de conformité (une candidate
+  non conforme à son profil n'est pas une candidate).
+- **Développement** : la numérotation du protocole passe à trois segments à partir de la
+  présente révision, alignée sur le schéma qu'elle définit ; la séquence RoomEq
+  (v3.0.0-dev.1 → v3.0.0 → v3.0.1 → v3.0.2) devient l'occurrence de référence du
+  mécanisme « échec honoré, balise immuable, patch à contrat stable ».
+
+### D24 — Traçabilité, journal des décisions normalisé et tableau de bord
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : la traçabilité exigence → bloc → test était implicite ; le journal des
+  décisions suivait un format de facto sans être normé ; les indicateurs de santé étaient
+  dispersés entre la spécification et la feuille de route.
+- **Choix retenu** : table de traçabilité I ↔ C ↔ B ↔ tests obligatoire (champ `spec=` dans
+  chaque entrée de carte, audit mécanique, refus de build si maillon manquant — l'exception
+  visible étant la reverse-spec « prête ») ; format normalisé du journal des décisions
+  (ID, date, statut, contexte, choix, alternatives rejetées, amendements, développement ;
+  append-only, pas de rétrodatage) ; tableau de bord de conformité unifié — onze métriques
+  mesurables avec cibles et sources, généré par l'audit à chaque commit et cristallisation,
+  archivé avec la carte. La norme de fragmentation (« aucune opération ne lit tout ») et la
+  localisation par intention (interdiction du balayage) sont consolidées au passage.
+- **Alternatives rejetées** : traçabilité par balises de code source (duplication de la
+  connaissance — défaut T5) ; journal des décisions en prose libre (le format est la
+  condition de l'audit automatique) ; tableau de bord déclaratif (une métrique sans source
+  de mesure est une opinion).
+- **Développement** : la commande d'audit de traçabilité et le tableau de bord sont
+  spécifiés dans FORMAT_CARTE.md § 10 ; les budgets tokens (40 / 3 000 / 6 000) restent
+  inchangés et passent du statut de cible à celui de métrique instrumentée dès M1. Les
+  entrées D19–D24 appliquent le format normalisé et font foi pour les entrées futures.
+
+### D25 — PDF formel v0.4.0 : chaîne LaTeX/Tectonic
+
+- **Statut** : active (amende D17 sur la mise en œuvre, pas sur le principe) · **Date** :
+  26 octobre 2026
+- **Contexte** : la v0.4.0 étant une révision majeure de la spécification, le PDF formel de
+  la version courante doit être régénéré depuis les nouvelles sources ; la chaîne
+  ReportLab du générateur v0.3 (1 603 lignes à adapter) doit être remplacée ou portée.
+  L'espace de travail dispose depuis l'édition académique (D18) d'une chaîne
+  LaTeX/Tectonic éprouvée (polices Liberation, babel français, listings, fusion pypdf,
+  QA complète).
+- **Choix retenu** : `scripts/spec_v040/` — manuscrit LaTeX monocolonne avec sommaire
+  (main.tex + 4 fichiers de sections), couverture académique Template 03 fusionnée par
+  pypdf ; `build_pdf.sh` bascule sur cette chaîne et produit
+  `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (archives v0.2/v0.3 conservées, non
+  régénérées) ; la liste des sources du stamp couvre les 4 markdown + les 5 .tex + la
+  couverture + le script de fusion.
+- **Alternatives rejetées** : portage du générateur ReportLab v0.3 (coût élevé, risque de
+  régression, bénéfice nul — la source de vérité reste le markdown) ; génération du PDF
+  depuis le markdown par conversion automatique (perte du contrôle typographique :
+  sommaire cliquable, tableaux normatifs, listings encadrés) ; abandon du PDF formel
+  (contr contraire à D17 : un clone frais doit disposer d'un PDF synchrone des sources).
+- **Développement** : le principe de D17 est inchangé — empreinte SHA-256 des sources
+  comparée au stamp suivi par git, reconstruction intégrale avant chaque commit, échec
+  signalé sans bloquer la sauvegarde des sources. Seule la chaîne de production change.

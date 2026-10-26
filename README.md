@@ -23,11 +23,11 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.3, source de travail) — `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle v0.3, 27 p.) — `docs/Protocole_TRIADE_v0.2_Specification.pdf` (archive v0.2) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.4.0, source de travail) — `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (archive formelle v0.4.0, gouvernance vérifiée) — archives conservées : v0.3 (27 p.), v0.2 ; vérification interne : `docs/VERIFICATION_v0.4.0.md` (64 contrôles PASS) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D18) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D25, format normalisé depuis D24) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -46,11 +46,12 @@ commit. Vérification des jetons : `python3 scripts/check_auth.py`.
 
 ## État du projet
 
-Conception terminée (spécification v0.3 figée : universalité par profils, cryptographie
-paramétrable, export de continuité), infrastructure de sauvegarde opérationnelle,
-implémentation non commencée. **Prochaine étape : jalon M0** — preuve de la chaîne
-notation → octets → PE32+ → exécution sur Windows 11 (hello.exe < 4 Kio, carte v0
-signée).
+Conception terminée et **gouvernance vérifiée** (spécification v0.4.0 : couche I normalisée,
+taxonomie des défauts T1–T6, R10 renforcée, R11 ajoutée, conformité par profil, traçabilité
+I↔C↔B↔tests et tableau de bord — née des pratiques du recodage RoomEq), infrastructure de
+sauvegarde opérationnelle, implémentation non commencée. **Prochaine étape : jalon M0** —
+preuve de la chaîne notation → octets → PE32+ → exécution sur Windows 11 (hello.exe < 4 Kio,
+carte v0 signée).
 
 ## Avertissement
 

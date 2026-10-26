@@ -1,0 +1,280 @@
+% =====================================================================
+%  CH 12-16 : Gouvernance · Menaces et limites · Jalons · Correspondance · Décisions
+% =====================================================================
+\section{Gouvernance}\label{sec:gouvernance}
+
+\subsection{Journal des décisions — format normalisé}\label{sec:journal}
+
+Le protocole ne se révisant jamais en silence, chaque décision structurante est consignée
+dans un journal. La v0.4.0 normalise le format (D24) :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Format normalisé d'une entrée du journal des décisions.}
+\label{tab:formatdecisions}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Champ} & \textbf{Exigence} \\
+\midrule
+ID & \code{DNNN}, séquentiel, jamais réutilisé \\
+Date & date de consignation \\
+Statut & active · amendée par Dxx · invalidée par Dxx \\
+Contexte & exigence, incident ou évaluation qui motive la décision \\
+Choix retenu & décision en une phrase, rattachée à la fonction objectif \\
+Alternatives rejetées & au moins une, avec motif \\
+Amendements & référence explicite à la décision remplacée, le cas échéant \\
+Développement & argumentaire détaillé si la décision engage l'architecture \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Trois règles : le journal est \textbf{append-only} (une entrée ne s'efface jamais) ; une
+révision \textbf{invalide explicitement} ce qu'elle remplace ; aucune entrée n'est
+rétrodatée. La conformité du journal — présence des champs, unicité des ID, chaînage des
+amendements — est contrôlée mécaniquement par l'audit de gouvernance.
+
+\subsection{Tableau de bord de conformité}\label{sec:tableaudebord}
+
+La v0.4.0 unifie les indicateurs de santé en un \textbf{tableau de bord} (D24), généré par
+la commande d'audit à chaque commit et à chaque cristallisation, archivé avec la carte :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Tableau de bord de conformité : métriques, cibles, sources.}
+\label{tab:dashboard}
+\begin{tabularx}{\textwidth}{@{}Y l Y@{}}
+\toprule
+\textbf{Métrique} & \textbf{Cible} & \textbf{Source de mesure} \\
+\midrule
+Blocs avec spécification I à jour & 100 \% & audit de traçabilité \\
+Chaînes de traçabilité complètes I $\leftrightarrow$ C $\leftrightarrow$ B
+$\leftrightarrow$ tests & 100 \% & audit de traçabilité \\
+Construction & 0 / 0 & build \\
+Tests différentiels & 100 \% verts & oracle \\
+Empreintes des données embarquées & conformes & hachage vs carte \\
+Défauts ouverts par classe T1–T6 & 0 & journal des décisions \\
+Optimisations sans mesure (R11) & 0 & journal d'optimisation \\
+Budgets tokens (localiser / éditer / ajouter) & $\leq$ 40 / 3 000 / 6 000 &
+instrumentation (dès M1) \\
+Suite de conformité par profil actif & verte & suite du profil \\
+Changements hors journal des décisions & 0 & diff vs journal \\
+Pré-versions correctement balisées (dev / rc / final) & 100 \% & registre des balises \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Le tableau de bord est la contrepartie mesurable de la gouvernance : chaque affirmation du
+protocole s'y retrouve sous forme de métrique avec sa cible et sa source — aucune ne
+s'appuie sur une déclaration non vérifiable. Les métriques dépendantes de l'outillage
+affichent leur statut « cible » jusqu'à leur premier mesurage.
+
+\subsection{Continuité et anti-enfermement}
+
+L'export de continuité (D16) demeure l'unique forme de transfert de l'état de
+développement : conteneur chiffré et signé regroupant I, B, C et un manifeste
+autodescriptif ; oracle régénéré depuis I à l'arrivée, jamais exporté ; import en cinq
+étapes dont l'échec d'une seule est terminal. Sauvegarde 3-2-1 chiffrée et escrow de la
+clé maîtresse inchangés.
+
+\section{Menaces et limites}\label{sec:menaces}
+
+Le principe directeur demeure : séparer l'obfuscation, qui protège la propriété
+intellectuelle, du durcissement, qui protège l'exécution. Conformément au principe de
+Kerckhoffs, la sécurité ne repose jamais sur le secret de la carte : elle survivrait à sa
+divulgation.
+
+\subsection{Modèle de menace (étendu en v0.4.0, D20)}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Modèle de menace v0.4.0 — les six ajouts en gras.}
+\label{tab:menaces}
+\begin{tabularx}{\textwidth}{@{}Y Y Y@{}}
+\toprule
+\textbf{Menace} & \textbf{Contre-mesure} & \textbf{Résiduel} \\
+\midrule
+Rétro-ingénierie de l'IP & carte privée ; binaire sémantiquement muet ; variantes par
+build & temps acheté — s'érode avec les LLM de décompilation \\
+Empoisonnement de carte & signature ; refus de carte non signée ; verrou croisé (R8, R9)
+& détecté — session bloquée \\
+Corruption de carte (accidentelle) & AEAD par fragment + signature + verrou & détecté au
+chargement \\
+Fuite de la carte & chiffrement ; sharding ; escrow & perte limitée à un fragment \\
+Vol de l'export de continuité & chiffrement intégral + signature & indéchiffrable sans
+la phrase \\
+\textbf{Binaire altéré} & checksums par bloc + signature du manifeste au lancement
+(R10 a, b) & détecté — arrêt avant tout effet \\
+\textbf{Rollback non autorisé} & monotonie de version signée, plancher anti-rollback
+(R10 c) & détecté — refus \\
+\textbf{Agent défaillant} & R2 ; R5 ; oracle dérivé de I ; budgets & l'erreur ne devient
+jamais permanente sans vérification \\
+\textbf{Données embarquées modifiées} & empreintes dans la carte ; vérification au
+lancement (R10 b) & détecté — arrêt propre \\
+\textbf{Environnement non conforme} & contrôles de conformité au profil (R10 d) ;
+fail-closed & refus propre avant exécution \\
+Fuzzing boîte noire & contrats, oracle, tests par propriétés & indépendant du secret de
+la carte \\
+Redistribution frauduleuse & empreintes par build — canary trap & fuite traçable \\
+Instrumentation dynamique & anti-debug léger par mesure de temps & assumé \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Les six menaces en gras sont les additions de la v0.4.0 ; toutes sont neutralisées par des
+mécanismes \textbf{locaux et vérifiables} — la contre-mesure anti-rollback ne dépend
+d'aucun service en ligne (le chargement doit échouer proprement hors ligne), et les
+vérifications de R10 s'exécutent avant toute entrée dans le chemin d'exécution.
+
+\subsection{Limites assumées}\label{sec:limites}
+
+La rétro-ingénierie est un objectif d'économie, pas d'impossibilité : le coût de l'analyse
+d'un binaire strippé, sans structure, dont chaque exemplaire diffère, reste supérieur à sa
+valeur — mais les modèles de langage appliqués à la décompilation progressent, et
+l'avantage doit être réévalué à chaque génération. L'anti-debug reste léger et assumé.
+La furtivité face aux EDR est hors périmètre : un outil légitime par construction, dont
+la transparence vis-à-vis du système est totale. Enfin, la gouvernance du protocole a été
+validée sur un cas unique (N = 1) — l'étude de cas RoomEq, dont les limites sont
+documentées dans l'édition académique (D18) : la généralité reste à établir par
+réplication, le cœur natif par les jalons M0 à M7.
+
+\section{Critères d'acceptation des jalons M0 à M7}\label{sec:jalons}
+
+Huit jalons, chacun avec des critères de sortie mesurables (détail dans
+\code{PLAN\_MILESTONES.md}). \textbf{Conditions transverses} (v0.4.0) : aucun jalon n'est
+franchi sans oracle vert, suite de conformité verte pour les éléments couverts, tableau de
+bord conforme et carte signée.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Critères d'acceptation des jalons.}
+\label{tab:jalons}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Jalon} & \textbf{Critères de sortie mesurables} \\
+\midrule
+M0 — chaîne artefact & exécution sur Windows 11 ; round-trip 100 \% ; carte v0 signée ;
+exécutable $<$ 4 Kio ; R1–R3, R8–R9 dès le premier octet \\
+M1 — blocs réutilisables & oracle 100 \% sur la mini-libc ; première cristallisation ;
+adresses stables démontrées ; première mesure effective des budgets tokens \\
+M2 — patch à chaud & remplacement du bloc d'écho en exécution, sans interruption ;
+rollback démontré ; régression post-patch nulle \\
+M3 — entrées non fiables & un million de requêtes fuzzées sans crash ; proxy
+transparent ; contrats renforcés \\
+M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide \\
+M5 — outil complet & interception d'un flux navigateur en VM isolée ; patch à chaud du
+journal en production ; empreintes par build actives \\
+M6 — portabilité inter-OS & suite de conformité verte ; \textbf{diff nul sur la couche
+I} ; parité inter-profils vérifiée ; même oracle vert sur les deux profils \\
+M7 — portabilité inter-ISA & round-trip 100 \% sur la nouvelle ISA ; suite de conformité
+verte ; patch à chaud conforme (scratch + \code{fence.i}) ; verrou multi-profils ; export
+multi-profils vérifié \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutable, exécution
+sans compilateur. M2 est le jalon de vérité — le patch à chaud a motivé l'architecture.
+M6 et M7 transforment la portabilité de promesse en propriété démontrée, en isolant chaque
+variable ; la suite de conformité par profil en est désormais le critère d'acceptation
+explicite.
+
+\section{Correspondance v0.3 $\to$ v0.4.0}\label{sec:correspondance}
+
+\subsection{Traçabilité des évolutions}\label{sec:evolutions}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les dix-sept évolutions de la v0.4.0, tracées depuis la v0.3.}
+\label{tab:correspondance}
+\begin{tabularx}{\textwidth}{@{}l Y Y l@{}}
+\toprule
+\textbf{Évolution} & \textbf{En v0.3} & \textbf{En v0.4.0} & \textbf{Statut} \\
+\midrule
+Couche I normalisée & « contrats légers » sans gabarit & gabarit complet
+(§\ref{sec:coucheI}) & renforcé (D19) \\
+Taxonomie des défauts & absente & classes T1–T6 (§\ref{sec:taxonomie}) & nouveau (D19) \\
+Threat model & 7 menaces & 13, dont 6 nouvelles & étendu (D20) \\
+R10 & checksums au lancement & + signature, anti-rollback, conformité, fail-closed
+explicite & renforcé (D20) \\
+Optimisation prématurée & interdite implicitement & interdiction normative R11 &
+explicité (D21) \\
+Journal d'optimisation & pratique de démonstration & format OPT-NN & officialisé (D21) \\
+Fragmentation & 4 fragments & + norme « aucune lecture totale » & consolidé (D24) \\
+Localisation par intention & étape 2 implicite & balayage interdit, formalisé &
+renforcé (D24) \\
+Budgets tokens & 40 / 3 000 / 6 000 & inchangés, instrumentés & consolidé (D24) \\
+Suite de conformité profil & implicite & suite obligatoire (§\ref{sec:conformite}) &
+nouveau (D22) \\
+Parité inter-profils & critères dispersés & définition formelle (§\ref{sec:parite}) &
+formalisé (D22) \\
+Reverse-specs & absente (pratique démo) & officialisées (§\ref{sec:reversespecs}) &
+officialisé (D23) \\
+Pré-versions & absente (pratique \code{-dev.1}) & dev / rc / final & officialisé (D23) \\
+Fixtures partagées & absente (pratique installateur) & contractuelles & officialisé
+(D23) \\
+Traçabilité I–C–B–tests & implicite & table normative + audit & formalisé (D24) \\
+Journal des décisions & pratique & format normalisé & normalisé (D24) \\
+Tableau de bord & indicateurs dispersés & métriques unifiées & nouveau (D24) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Modifications explicitement rejetées}\label{sec:rejets}
+
+Conformément au cahier de révision, les modifications suivantes ont été examinées et
+\textbf{rejetées, donc non appliquées} :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Modifications examinées et rejetées.}
+\label{tab:rejets}
+\begin{tabularx}{\textwidth}{@{}Y Y@{}}
+\toprule
+\textbf{Modification} & \textbf{Motif du rejet} \\
+\midrule
+Modifier la hiérarchie Sécurité $>$ Performance $>$ Optimisation $>$ Coût en tokens &
+invariant de révision (D19) — condition même de l'arbitrage \\
+Introduire une couche d'abstraction à l'exécution (bytecode, VM) & trahit la fonction
+objectif Performance ; la parité s'obtient par vérification, pas par couche \\
+Promettre la portabilité universelle immédiate & la portabilité se vérifie par profil
+(M6/M7), elle ne se déclare pas \\
+Introduire des mécanismes de furtivité face aux EDR & hors périmètre assumé —
+transparence totale de l'outil \\
+Affaiblir R5, R8, R9 ou R10 & la révision ne contient que des renforcements ; R1–R9
+repris à l'identique \\
+Anti-rollback par contrôle en ligne au chargement & R10 doit échouer proprement hors
+ligne — aucune dépendance réseau \\
+Optimisation validée sans mesure & R11 : hot path + mesure avant/après + contrat stable \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Journal des décisions}\label{sec:decisions}
+
+Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. Synthèse :
+D1–D10 (v0.2) fixent l'oracle éphémère, la notation, les contrats légers, la
+cryptographie, le verrou croisé, les variantes par build, l'interface système et la
+granularité ; D11–D13 (infrastructure) la sauvegarde triple et systématique ; D14–D16
+(v0.3) l'universalité par profils, la cryptographie paramétrable et l'export de
+continuité ; D17 la régénération systématique du PDF formel ; D18 l'édition académique
+(présentation IMRAD du noyau v0.3, sans valeur normative) ; D19–D24 (v0.4.0, format
+normalisé) la présente révision :
+
+\begin{itemize}
+\item \textbf{D19} : couche I normalisée, taxonomie T1–T6, hiérarchie de la fonction
+objectif verrouillée comme invariant de révision ;
+\item \textbf{D20} : menace étendue (binaire altéré, carte corrompue, rollback,
+agent défaillant, données embarquées, environnement) et R10 renforcée (checksums,
+signature, anti-rollback, fail-closed explicite, vérification locale) ;
+\item \textbf{D21} : R11 optimisation mesurée et journal d'optimisation OPT-NN ;
+\item \textbf{D22} : suite de conformité par profil et parité inter-profils à contrat
+constant ;
+\item \textbf{D23} : officialisation des reverse-specs, des pré-versions dev / rc /
+final et des fixtures partagées ; numérotation à trois segments ;
+\item \textbf{D24} : traçabilité I $\leftrightarrow$ C $\leftrightarrow$ B
+$\leftrightarrow$ tests, journal des décisions normalisé, tableau de bord de conformité.
+\end{itemize}
+
+Une décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
+d'invalidation explicite référençant la décision qui la supplante. La gouvernance
+s'applique à elle-même — la présente révision en est la démonstration.
