@@ -38,7 +38,7 @@ BLOCS = [
      "écran+fichier, entrée trace) ; procédure @0x1640 ; chaînes UTF-16 + ASCII"),
     ("win-03-boucle", "d40003", "win-03:R1", 0x15C0, 0x80,
      "IAT user32 : GetMessageW, TranslateMessage, DispatchMessageW"),
-    ("win-04-procedure", "d40004", "win-04:R3", 0x1640, 0x380,
+    ("win-04-procedure", "d40004", "win-04:R4", 0x1640, 0x380,
      "IAT user32 : CreateWindowExW, SendMessageW, GetStockObject (gdi32), "
      "GetClientRect, MoveWindow, EnableWindow, DestroyWindow, PostQuitMessage, "
      "DefWindowProcW, GetModuleHandleW ; IAT kernel32 : CloseHandle, "

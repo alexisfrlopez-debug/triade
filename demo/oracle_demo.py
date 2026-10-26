@@ -28,7 +28,14 @@ Dérivé de la couche I de la démo (demo/I/*.md). Cinq familles :
   5. FALSIFICATION : (a) octets de chaque bloc embarqué corrompus -> la porte
      R10 (win-06) les détecte tous — zéro silence ; (b) FALSIFICATION RECT :
      l'octet de déplacement de la lecture RECT.right (0x28) réécrit en 0x24
-     — le défaut D36 originel — la coquille GUI doit ÉCHOUER (V4 de win-04).
+     — le défaut D36 originel — la coquille GUI doit ÉCHOUER (V4 de win-04) ;
+     (c) FALSIFICATION D37 : la trace L01 re-ciblée vers win-11 en direct
+     (fichier seul, écran muet — le défaut demo.2) fait ÉCHOUER le contrôle
+     écran ; (d) FALSIFICATION D38 : les usages callee-saved r14d/r15d du
+     second MoveWindow réécrits en r10d/r11d volatiles (le défaut demo.3 :
+     bouton invisible, L4D=1) font ÉCHOUER l'invariant géométrique — les
+     shims clobbent rcx/rdx/r8-r11 à chaque retour IAT depuis D38 (un
+     retour kernel écrit RFLAGS dans r11 par matériel).
 """
 
 from __future__ import annotations
@@ -84,6 +91,20 @@ REGS_CONTEXTE = (UC_X86_REG_RAX, UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX,
 
 class EchecOracle(Exception):
     pass
+
+
+def clobber_volatils(uc_):
+    """D38 : un appel IAT détruit les registres caller-saved (msx64).
+    Retour kernel réaliste : l'instruction syscall écrit RFLAGS dans r11
+    (0x246 typiquement) et r10 ne survit pas ; rcx/rdx/r8/r9 reçoivent des
+    sentinelles. Tout code relisant un volatile après un appel — le défaut
+    du bouton invisible demo.3 — diverge immédiatement."""
+    uc_.reg_write(UC_X86_REG_RCX, 0xCCCCCCCCCCCCCCCC)
+    uc_.reg_write(UC_X86_REG_RDX, 0xCCCCCCCCCCCCCCCC)
+    uc_.reg_write(UC_X86_REG_R8, 0xCCCCCCCCCCCCCCCC)
+    uc_.reg_write(UC_X86_REG_R9, 0xCCCCCCCCCCCCCCCC)
+    uc_.reg_write(UC_X86_REG_R10, 0)
+    uc_.reg_write(UC_X86_REG_R11, 0x246)
 
 
 def latin1(texte: str) -> bytes:
@@ -207,6 +228,7 @@ class Emulateur:
             adr = struct.unpack("<Q", uc_.mem_read(rsp, 8))[0]
             uc_.reg_write(UC_X86_REG_RSP, rsp + 8)
             uc_.reg_write(UC_X86_REG_RIP, adr)
+            clobber_volatils(uc_)      # D38 : les volatiles meurent au retour
 
         def arg_pile(uc_, n, taille=8):
             """n-ième argument (5+) : [rsp + 0x28 + 8*(n-5)] au moment du crochet."""
@@ -449,6 +471,7 @@ class Emulateur:
                 uc.reg_write(UC_X86_REG_RSP, rsp_c + 8)
                 uc.reg_write(UC_X86_REG_RIP, retadr)
                 uc.reg_write(UC_X86_REG_RAX, rax)
+                clobber_volatils(uc)    # D38 : retour d'API simulé — volatiles détruits
                 debut = retadr
                 continue
             debut = rip                                   # budget de pas épuisé
@@ -728,7 +751,7 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     total += detectees
 
     # --- falsification RECT (V4 win-04:R2) : 0x28 -> 0x24 = le défaut D36 ---
-    motif = bytes.fromhex("448b5424")           # mov r10d, dword ptr [rsp + ??]
+    motif = bytes.fromhex("448b7424")           # mov r14d, dword ptr [rsp + ??] (R4/D38 : callee-saved)
     base_fichier = _fichier_rva(RVA_WIN["win-04"])
     tranche = exe[base_fichier:base_fichier + 0x380]
     pos = tranche.find(motif + b"\x28")
@@ -781,6 +804,39 @@ def executer(exe: bytes, graine: int = 1) -> dict:
         raise EchecOracle(f"falsification D37 : fichier altéré {em.journal_fichier!r} "
                           "— la mutation devait être chirurgicale (L01 au fichier, "
                           "absente de l'écran uniquement)")
+    total += 1
+
+    # --- falsification D38 (V5 win-04:R4) : relire r10/r11 après l'appel ----
+    # MoveWindow = le défaut demo.3 exact (bouton invisible : L4D=1, contrôle
+    # déplacé hors client avec retour VRAI) — les usages r15d/r14d du SECOND
+    # MoveWindow réécrits en r11d/r10d : au retour du premier appel, les
+    # shims D38 ont posé r10=0, r11=0x246 → largeur = 0-16 = -16 →
+    # l'invariant géométrique ÉCHOUE (y = 0x246-44 = 538 : hors client).
+    # keystone encode les mov reg,reg en opcode 89 : 45 89 F8 = mov r8d,r15d,
+    # 45 89 F1 = mov r9d,r14d (cibles de retour : 45 89 D8/D1 = r11d/r10d).
+    tranche04 = exe[base_fichier:base_fichier + 0x380]
+    pos_r8 = tranche04.find(bytes.fromhex("4589f8"))     # mov r8d, r15d
+    occurrences_f1 = []
+    for i in range(len(tranche04) - 2):
+        if tranche04[i:i + 3] == bytes.fromhex("4589f1"):   # mov r9d, r14d
+            occurrences_f1.append(i)
+    if pos_r8 < 0 or len(occurrences_f1) != 2:
+        raise EchecOracle(f"falsification D38 : motifs absents de win-04 "
+                          f"(mov r8d,r15d={'ok' if pos_r8 >= 0 else 'ABSENT'}, "
+                          f"mov r9d,r14d x{len(occurrences_f1)}/2)")
+    mutant = bytearray(exe)
+    mutant[base_fichier + pos_r8 + 2] = 0xD8                # mov r8d, r11d
+    mutant[base_fichier + occurrences_f1[1] + 2] = 0xD1     # mov r9d, r10d (2e)
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    try:
+        em.appeler(RVA_WIN["win-01"])
+        raise EchecOracle("falsification D38 : coquille GUI VERTE avec r10/r11 "
+                          "relus après l'appel — le bouton invisible demo.3 "
+                          "serait réintroduisible en silence (V5 win-04:R4)")
+    except EchecOracle as exc:
+        if "géométrie invalide" not in str(exc):
+            raise
     total += 1
 
     empreinte = hashlib.sha256(

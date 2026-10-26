@@ -90,7 +90,7 @@ def blocs_demo() -> list[tuple]:
         ("d40001", "win-01:R1", "win-01-principal", 0x1400, 0x40),
         ("d40002", "win-02:R3", "win-02-fenetre", 0x1440, 0x180),
         ("d40003", "win-03:R1", "win-03-boucle", 0x15C0, 0x80),
-        ("d40004", "win-04:R3", "win-04-procedure", 0x1640, 0x380),
+        ("d40004", "win-04:R4", "win-04-procedure", 0x1640, 0x380),
         ("d40005", "win-05:R3", "win-05-journal", 0x5000, 0x200),
         ("d40006", "win-06:R1", "win-06-autotest", 0x1AC0, 0x180),
         ("d40007", "win-07:R1", "win-07-client", 0x1C40, 0xC0),
@@ -424,7 +424,7 @@ def composer_sections(code: dict, blocs: list[tuple]):
 
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO3))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO4))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIXTURES, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -748,7 +748,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  suite_conformite_profil       : heritee M2 (124/124, rc.2) + porte D35 verifiee par oracle",
         f"  changements_hors_journal      : 0 : D35 consignee",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee demo, "
-        f"u64 0x{L.VERSION_U64_DEMO3:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_DEMO4:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  patch_a_chaud                 : boucle 5 complete en production "
         f"(patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)",
         f"  artefact                      : {len(exe)} octets ; "
@@ -782,7 +782,7 @@ def assembler_tout():
 def construire(graine: int) -> int:
     print("=== démo : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_DEMO3
+    version = L.VERSION_DEMO4
     texte, rdata, data, text2, staging = composer_sections(code, blocs)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
     valider_pe(exe)
@@ -843,7 +843,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=demo.exe" in l), L.VERSION_DEMO3)
+                    if "artefact=demo.exe" in l), L.VERSION_DEMO4)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

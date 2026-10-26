@@ -1217,3 +1217,85 @@ contenant la capture d'écran du 26/10/2026 20:56 et demo_journal.txt
 démarrage (L02/L4C/L4D/L01) dès le lancement ; le bouton visible OU
 L4D=0 (échec MoveWindow expliqué par gle au run suivant) ; clic =
 scénario complet écran+fichier. Puis scellage final 0.3.0.
+
+## Journal 26 — D38 : terrain demo.3 parle (journal + capture) — bouton invisible diagnostiqué à l'ABI près, demo.4
+
+**Contexte** : le développeur repartage le lien du dossier Drive « test ».
+Diagnostic immédiat du dossier (scripts/diag_dossier_test.py) : demo.3 y
+est bien livrée (md5 conforme — la livraison de la veille a fonctionné)
+ET deux fichiers NOUVEAUX y sont déposés — demo_journal.txt frais
+(150 o, 22:11:08) et une capture d'écran (22:13:52). Le terrain vient
+de parler.
+
+**Déroulé** :
+1. Rapatriement (scripts/drive_recuperer.py, outil tracké complémentaire
+   de drive_livraison.py — le dossier test devient une voie de livraison
+   bidirectionnelle). Journal : L00 → L02 → L4C move journal=1 →
+   L4D move bouton=1 → L01 — séquence EXACTE attendue, zéro LKO :
+   D37 VALIDÉ sur terrain réel et Windows déclare placer le bouton.
+   Pas de L03 : pas de clic (bouton invisible → impossible de cliquer).
+2. Capture (957×691, fenêtre ~955×689 non maximisée) : VLM + forensique
+   pixel. La fenêtre AFFICHE ses 4 lignes de démarrage (largeurs
+   213/113/117/162 px proportionnelles à L02/L4C/L4D/L01), scrollbar de
+   l'edit avec flèches y 58-62 / 617-621 → géométrie edit (8,8,w-16,h-56)
+   CONFIRMÉE au pixel près (client 764×516 logique ; taille physique
+   uniforme ×1,25 = écran du développeur à 125 % de DPI). La bande basse
+   y 631-680 où le bouton devrait être : UNIFORMÉMENT grise — aucun
+   bord, aucun texte, 2 px parasites par ligne. Le bouton est absent du
+   rendu alors que L4D=1.
+3. Audit octet du coupable présumé (scripts/audit_demo_bouton.py réécrit
+   pour win-04 + scripts/audit_demo_slots.py sur la table d'imports
+   réelle) : styles 0x50000001 (WS_CHILD|WS_VISIBLE), "BUTTON",
+   "TOUT DÉMARRER", parent/id/handles corrects, chaque slot IAT appelé
+   par win-04 désigne la bonne fonction. Le binaire est — encore —
+   irréprochable. En relisant le désassemblage WM_SIZE instruction par
+   instruction : w/h chargés en r10d/r11d (VOLATILES), consommés par le
+   premier MoveWindow (avant l'appel : correct), RELUS par le second
+   (après l'appel : détruits — syscall écrit RFLAGS dans r11 par
+   matériel). Le bouton reçoit (8, 538, -16, 36) dans un client de
+   516 de haut : hors fenêtre, retour VRAI. L4D=1 et l'invisibilité
+   étaient COMPATIBLES — c'est le diagnostic complet.
+4. Pourquoi l'oracle était vert : les shims posent rax et ne touchent
+   rien d'autre — l'ABI caller-saved n'était pas modélisée. Classe de
+   défaut nouvelle (la 4e invisible sans exécution : collisions masquées,
+   porte court-circuitée, cache TCG menteur, et maintenant volatiles
+   survivant à l'appel dans l'émulation).
+5. demo.4 (écrit-avant-code) : spec win-04:R4 (invariant I6 : aucun
+   volatile ne survit à un appel IAT ; w/h en r14d/r15d callee-saved —
+   r14=lParam mort dans WM_SIZE, r15 libre hors WM_CREATE, taille
+   identique, slot intact) ; brouillon corrigé, notation régénérée
+   (auteur), layout 0.3.0-demo.4 (u64 0x00030104, bannière L00).
+6. Oracle durci — le vrai correctif : clobber des volatiles à chaque
+   retour IAT (rcx/rdx/r8/r9 sentinelles, r10=0, r11=0x246 — retour
+   kernel réaliste) y compris au retour simulé du dispatch imbriqué ;
+   falsification V5 : réécrire les usages callee-saved du second
+   MoveWindow en r10d/r10d (45 89 F8→D8, F1→D1) fait échouer l'invariant
+   géométrique. Trois itérations de build : motifs de falsification
+   corrigés deux fois (keystone encode les mov reg,reg en opcode 89 :
+   45 89 F1 = mov r9d,r14d — mon 45 8B CE initial était un autre calcul
+   ModRM ; 45 89 E1 = mov r9d,r12d, la trace L4C, d'où l'occurrence
+   unique). Le fail-closed a bloqué chaque build fautif AVANT écriture
+   de l'artefact — discipline vérifiée en conditions réelles.
+7. Verdict : oracle 78 cas verts (+1 D38) AVEC clobber actif (aucun
+   autre bloc ne relit de volatils après appel — la lignée est saine),
+   structurel 559 verrous, falsification 28/28 + RECT + D37 + D38,
+   héritage R7 octet-identique, reproductibilité vérifiée (2 builds,
+   sha256 identique), --verifier graine 7 vert, carte génération 4
+   re-scellée, demo.exe 0.3.0-demo.4 (16384 o)
+   sha256:7e4e9105949dac8a6e079c857b3b4fc4d386f9947d905c113717909e098de502.
+8. Défaut latent de même classe trouvé par scan systématique
+   (scripts/scan_abi_volatile.py) : libc-09-zone-alloc-ts (M2, non
+   embarqué, scellé dans la carte) porte le défaut deux fois (r10/r11 à
+   travers EnterCriticalSection, r10 à travers LeaveCriticalSection).
+   DIFFÉRÉ à la prochaine révision M2 (notation scellée, aucun appelant
+   vivant) — consigné D38.
+9. Livraison : demo.4 + LISEZMOI réécrit (explication du diagnostic au
+   développeur, consignes inchangées : ne pas maximiser d'abord, cliquer,
+   renvoyer journal + capture) — coffre racine Drive + dossier « test »
+   du développeur + download/ (2/2 vérifiés md5 MATCH aux deux cibles ;
+   drive_livraison.py gagne l'option --dossier-test).
+
+**Suivi** : validation terrain demo.4 — bouton VISIBLE sous la zone
+journal, clic = démonstration intégrale (miroir ~16 lignes + « boucle § 5
+complète — DÉMO OK ») au fichier ET à l'écran. Si vert : scellage final
+0.3.0 (M2) — il ne manque que ce clic.

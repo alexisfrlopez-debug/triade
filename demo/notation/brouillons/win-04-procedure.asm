@@ -1,4 +1,5 @@
 ; procedure de fenetre : controles (fail-closed D36), taille RECT.right corrigee, clic unique
+; R4 (D38) : w/h en r14d/r15d callee-saved — r10d/r11d volatiles ne survivent pas a l'appel MoveWindow
 push rbx
 push r12
 push r13
@@ -97,23 +98,23 @@ jmp .sortie
 mov rcx, rbx
 lea rdx, [rsp + 0x20]
 call qword ptr [rip + IAT_GETCLIENTRECT]
-mov r10d, dword ptr [rsp + 0x28]
-mov r11d, dword ptr [rsp + 0x2C]
+mov r14d, dword ptr [rsp + 0x28]
+mov r15d, dword ptr [rsp + 0x2C]
 mov rcx, qword ptr [rip + HWND_JOURNAL]
 mov edx, 8
 mov r8d, 8
-mov r9d, r10d
+mov r9d, r14d
 sub r9d, 16
-mov dword ptr [rsp + 0x20], r11d
+mov dword ptr [rsp + 0x20], r15d
 sub dword ptr [rsp + 0x20], 56
 mov dword ptr [rsp + 0x28], 1
 call qword ptr [rip + IAT_MOVEWINDOW]
 mov r12d, eax
 mov rcx, qword ptr [rip + HWND_BOUTON]
 mov edx, 8
-mov r8d, r11d
+mov r8d, r15d
 sub r8d, 44
-mov r9d, r10d
+mov r9d, r14d
 sub r9d, 16
 mov dword ptr [rsp + 0x20], 36
 mov dword ptr [rsp + 0x28], 1

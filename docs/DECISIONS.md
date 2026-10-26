@@ -979,3 +979,103 @@ D15 (amende D5) illustrent la procédure.
   été convertie en preuve : forensique pixel (cartographie des 2 114
   pixels non-fond — scrollbar seule, zéro texte, zéro bouton) + VLM sur
   l'image brute.
+
+### D38 — demo.3 bouton invisible malgré L4D=1 : registres volatiles relus après l'appel (win-04:R4), oracle durci sur l'ABI caller-saved
+
+- **Constat** (terrain Windows 11, dossier Drive « test », 26/10/2026
+  22:11-22:13) : le journal demo.3 (150 o) livre la séquence complète
+  L00→L02→L4C=1→L4D=1→L01 — D37 VALIDÉ sur terrain réel (la fenêtre affiche
+  son démarrage : 4 lignes lues par VLM, largeurs 213/113/117/162 px
+  proportionnelles aux textes) et Windows déclare placer le bouton avec
+  succès (L4D=1). Or la capture (957×691) montre, sous l'edit dont la
+  scrollbar prouve la géométrie exacte (flèches y 58-62 / 617-621 = h-56,
+  soit client 764×516 logique), une bande basse (y 631-680) UNIFORMÉMENT
+  grise : le bouton n'est pas « discret », il est ABSENT du rendu. DPI
+  déduit de la taille physique : écran du développeur à 125 % (780×560
+  logique → ~975×700 physique, uniforme).
+- **Diagnostic (le binaire trahi par l'ABI, pas par la logique)** : audit
+  octet du fautif présumé — styles 0x50000001 (WS_CHILD|WS_VISIBLE),
+  classe "BUTTON", libellé "TOUT DÉMARRER" UTF-16, parent rbx, id 1,
+  handles 0x3868/0x3870 distincts, table d'imports vérifiée slot par slot
+  (chaque appel win-04 désigne la bonne fonction : la divergence 0x2850
+  était dans ma table d'attente, pas dans le binaire) — TOUT est correct,
+  encore. Le coupable est dans WM_SIZE : w = RECT.right et h =
+  RECT.bottom étaient chargés dans r10d/r11d, REGISTRES VOLATILES
+  (caller-saved), puis RELUS après le premier `call MoveWindow` pour
+  positionner le bouton. Le premier appel consomme w/h avant l'appel
+  (correct : l'edit est géométriquement parfait), le second les relit
+  APRÈS : détruits par l'appel — l'instruction `syscall` écrit RFLAGS
+  dans r11 PAR MATÉRIEL (r11 ≈ 0x246) et r10 ne survit pas. Le bouton
+  reçoit alors (8, 0x246-44=538, 0-16=-16, 36) : y=538 dans un client de
+  516 → HORS FENÊTRE. Win32 accepte un enfant hors zone parent et
+  retourne VRAI : L4D=1 était VRAI et le bouton invisible — les deux
+  faits, contradictoires en apparence, s'expliquent ensemble. La spec
+  win-04:R3 I5 avait raisonné la volatilité de rax (retours capturés en
+  r12d/r13d callee-saved) mais oublié r10d/r11d : la discipline avait le
+  bon réflexe à moitié appliqué.
+- **Pourquoi toute la chaîne était verte** : notation (le flux sur le
+  papier est correct : chargé, consommé, relu), round-trip (les octets
+  sont ce que la notation dit), audit IAT (les appels sont bons), oracle
+  (les shims Python posent rax et ne TOUCHENT AUCUN autre registre : les
+  r10/r11 de la CPU émulée survivent à l'appel — l'ABI caller-saved
+  n'était PAS modélisée). Classe de défaut nouvelle : le contrat
+  d'ABI lui-même, invisible à toute vérification qui ne détruit pas les
+  volatiles au retour des appels.
+- **Correctif (demo.4, 0.3.0-demo.4, u64 0x00030104)** : win-04:R4 — w/h
+  chargés UNE fois dans r14d/r15d (callee-saved) avant le premier appel,
+  relus tels quels par les DEUX MoveWindow. r14 portait lParam d'entrée
+  (seule la branche DefWindowProc — jamais atteinte depuis WM_SIZE — en
+  a besoin) et r15 est libre hors WM_CREATE : zéro conflit, taille
+  identique (encodages 44 8B 74/7C 24 …, 45 89 F1/F8), le slot ne bouge
+  pas. Invariant I6 écrit AVANT le code : « aucun registre volatile ne
+  survit à un appel IAT ».
+- **Oracle durci (78 cas verts, +1) — le vrai correctif** : les shims
+  CLOBBENT désormais rcx/rdx/r8/r9 (sentinelles 0xCC…) et r10=0,
+  r11=0x246 (un retour kernel réaliste : RFLAGS dans r11) à CHAQUE
+  retour IAT, y compris le retour simulé du dispatch imbriqué
+  CreateWindowExW. Le code correct ne le remarque pas (aucun bloc ne
+  relit un volatile après un appel — vérifié par le passage à 78/78),
+  le défaut D38 meurt immédiatement : falsification V5 — réécrire les
+  deux usages callee-saved du second MoveWindow en r10d/r11d (45 89
+  F8→D8, 45 89 F1→D1 : le défaut demo.3 exact) fait ÉCHOUER l'invariant
+  géométrique (largeur = -16) — le bouton invisible est impossible à
+  réintroduire silencieusement. Poétique : c'est l'invariant D36 (géométrie)
+  qui attrape le défaut D38 (ABI).
+- **Défaut latent de même classe, DIFFÉRÉ** : libc-09-zone-alloc-ts (M2,
+  c30012, indexé par la carte mais NON embarqué dans echo.exe ni demo.exe)
+  sauvegarde ses arguments dans r10/r11 à travers EnterCriticalSection et
+  son retour dans r10 à travers LeaveCriticalSection — deux sites. Non
+  corrigé ici : la notation est scellée dans la carte M2 (R4, contrat
+  stable) et le bloc n'a aucun appelant vivant ; le correctif partira
+  avec la prochaine révision M2. Garde posée : scripts/scan_abi_volatile.py
+  (scanner statique persisté, 220 alertes brutes dont les deux vraies
+  positives — win-04 terrain-démontré, libc-09 latent — extraites par
+  revue manuelle ; le scanner reste volontairement conservateur).
+- **Enseignements protocolaires** : (a) un retour BOOL VRAI de l'API ne
+  prouve pas le résultat VISIBLE — Win32 accepte des coordonnées hors
+  zone parent : la preuve d'exécution (L4D) et la preuve de rendu
+  (capture) sont deux faits distincts qu'il faut demander tous les deux ;
+  (b) un émulateur à shims doit modéliser le contrat d'ABI (destruction
+  des volatiles au retour), pas seulement les effets fonctionnels —
+  sinon il bénit une classe entière de défauts ; (c) la volatilité est
+  une propriété SILENCIEUSE en statique : la discipline « captured AVANT
+  tout appel suivant » de I5 devait s'appliquer à TOUT ce qui vit à
+  travers un appel, pas seulement aux valeurs de retour ; (d) la
+  résolution du mystère est venue de la CONFRONTATION de trois preuves
+  indépendantes (journal L4D=1, géométrie scrollbar au pixel, capture
+  VLM) — jamais de l'octet seul.
+- **Alternatives rejetées** : relire w/h depuis la pile RECT après le
+  premier appel (les slots [rsp+0x20/0x28] SERVENT d'arguments 5/6 aux
+  MoveWindow : le RECT y est détruit par le premier appel — c'est
+  précisément pourquoi les valeurs vivaient en registres) ; recalculer
+  via GetClientRect deux fois (deux appels de plus pour rien : les
+  callee-saved règlent la question gratuitement) ; clobber aléatoire
+  des volatiles au shim (non reproductible : le sentinel D38 — r10=0,
+  r11=0x246 — est déterministe ET réaliste, la falsification V5 repose
+  dessus).
+- **Développement** : entrée 26 du journal de travail. Validation terrain
+  attendue : bouton « TOUT DÉMARRER » VISIBLE sous la zone journal dès le
+  lancement (éventuellement après rétablissement de la fenêtre), clic =
+  démonstration intégrale (miroir 16 lignes + « boucle § 5 complète —
+  DÉMO OK »), journal + capture à renvoyer. Si vert : scellage final
+  0.3.0 (M2).

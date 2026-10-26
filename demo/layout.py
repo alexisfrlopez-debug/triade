@@ -104,6 +104,8 @@ VERSION_DEMO2 = "0.3.0-demo.2"     # D36 : correctif WM_SIZE + journal fichier
 VERSION_U64_DEMO2 = 0x00030102     # monotonie : au-dessus de demo.1
 VERSION_DEMO3 = "0.3.0-demo.3"     # D37 : miroir écran universel + L4C/L4D
 VERSION_U64_DEMO3 = 0x00030103     # monotonie : au-dessus de demo.2
+VERSION_DEMO4 = "0.3.0-demo.4"     # D38 : w/h WM_SIZE en r14d/r15d callee-saved (bouton invisible demo.3 : r10d/r11d volatiles relus après l'appel)
+VERSION_U64_DEMO4 = 0x00030104     # monotonie : au-dessus de demo.3
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -115,7 +117,7 @@ BLOCS_WIN = [
     ("d40001", "win-01:R1", 0x1400, 0x40, "demo.3", 1),    # principal — point d'entrée
     ("d40002", "win-02:R3", 0x1440, 0x180, "demo.3", 1),   # fenêtre (classe + création + trace miroir)
     ("d40003", "win-03:R1", 0x15C0, 0x80, "demo.3", 1),    # boucle de messages
-    ("d40004", "win-04:R3", 0x1640, 0x380, "demo.3", 1),   # procédure (RECT corrigé + miroir + L4C/L4D)
+    ("d40004", "win-04:R4", 0x1640, 0x380, "demo.4", 1),   # procédure (RECT corrigé + miroir + L4C/L4D + D38 : w/h en callee-saved)
     ("d40005", "win-05:R3", 0x5000, 0x200, "demo.3", 1),   # miroir universel écran + fichier (.text2 étendue 0x1400 — D37 : le code R3 ne tient ni dans le slot .text 0x19C0-0x1ABF (LIBRE depuis), ni dans 0x4700-0x47FF)
     ("d40006", "win-06:R1", 0x1AC0, 0x180, "demo.3", 1),   # autotest (porte R10 + libc)
     ("d40007", "win-07:R1", 0x1C40, 0xC0, "demo.3", 1),    # client TCP
@@ -301,7 +303,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.3"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.4"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),

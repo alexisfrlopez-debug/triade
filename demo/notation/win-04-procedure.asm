@@ -1,4 +1,4 @@
-; win-04-procedure · bloc démo · spec win-04:R3 · bloc carte d40004
+; win-04-procedure · bloc démo · spec win-04:R4 · bloc carte d40004
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x1640, taille 896 octets
 ; Dépendances : IAT user32 : CreateWindowExW, SendMessageW, GetStockObject (gdi32), GetClientRect, MoveWindow, EnableWindow, DestroyWindow, PostQuitMessage, DefWindowProcW, GetModuleHandleW ; IAT kernel32 : CloseHandle, GetLastError ; bloc win-05 (miroir écran+fichier + diagnostics L4C/L4D) ; tcp-06 spawn @0x4300 ; scénario @0x4C00 ; état .data
 ; Notation explicite générée par outils/auteur.py depuis brouillons/win-04-procedure.asm
@@ -141,23 +141,23 @@ jmp 0x199e
 mov rcx, rbx
 lea rdx, [rsp + 0x20]
 call qword ptr [rip + 0x103e]
-mov r10d, dword ptr [rsp + 0x28]
-mov r11d, dword ptr [rsp + 0x2C]
+mov r14d, dword ptr [rsp + 0x28]
+mov r15d, dword ptr [rsp + 0x2C]
 mov rcx, qword ptr [rip + 0x2035]
 mov edx, 8
 mov r8d, 8
-mov r9d, r10d
+mov r9d, r14d
 sub r9d, 16
-mov dword ptr [rsp + 0x20], r11d
+mov dword ptr [rsp + 0x20], r15d
 sub dword ptr [rsp + 0x20], 56
 mov dword ptr [rsp + 0x28], 1
 call qword ptr [rip + 0xffb]
 mov r12d, eax
 mov rcx, qword ptr [rip + 0x2009]
 mov edx, 8
-mov r8d, r11d
+mov r8d, r15d
 sub r8d, 44
-mov r9d, r10d
+mov r9d, r14d
 sub r9d, 16
 mov dword ptr [rsp + 0x20], 36
 mov dword ptr [rsp + 0x28], 1

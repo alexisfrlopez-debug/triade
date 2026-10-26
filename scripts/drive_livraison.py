@@ -21,6 +21,9 @@ Propriétés :
 Usage :
   python3 scripts/drive_livraison.py FICHIER [FICHIER...]   pousser des livrables
   python3 scripts/drive_livraison.py --verifier             état du coffre racine
+  python3 scripts/drive_livraison.py --dossier-test FICHIER pousser dans le dossier
+                                                            « test » du développeur
+                                                            (1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0)
 Code de sortie : 0 = succès, 1 = erreurs partielles, 2 = erreur fatale.
 """
 
@@ -32,11 +35,13 @@ REPO = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 import drive_sync as ds  # noqa: E402
 
+TEST_ID = "1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0"   # dossier « test » du développeur
+
 
 def verifier():
     """Liste la racine du Drive et vérifie les livrables locaux de même nom."""
     try:
-        entries = ds.list_folder(ds.DRIVE_ROOT_ID)
+        entries = ds.list_folder(CIBLE[0])
     except ds.SyncError as e:
         print(f"[Livraison] ERREUR FATALE : {e}", file=sys.stderr)
         return 2
@@ -65,7 +70,7 @@ def pousser(chemins):
         fichiers.append(p)
 
     try:
-        racine = ds.list_folder(ds.DRIVE_ROOT_ID)
+        racine = ds.list_folder(CIBLE[0])
     except ds.SyncError as e:
         print(f"[Livraison] ERREUR FATALE : {e}", file=sys.stderr)
         return 2
@@ -88,7 +93,7 @@ def pousser(chemins):
                 ds.upload_update(r["id"], p)
                 print(f"[Livraison] mis à jour : {nom} ({md5})")
             else:
-                ds.upload_create(ds.DRIVE_ROOT_ID, nom, p)
+                ds.upload_create(CIBLE[0], nom, p)
                 print(f"[Livraison] téléversé : {nom} ({md5})")
         except ds.SyncError as e:
             print(f"[Livraison] ERREUR {nom} : {e}", file=sys.stderr)
@@ -96,7 +101,7 @@ def pousser(chemins):
 
     # vérification post-téléversement (re-listing, empreinte contre re-épreuve)
     try:
-        apres = ds.list_folder(ds.DRIVE_ROOT_ID)
+        apres = ds.list_folder(CIBLE[0])
         for p in fichiers:
             r = apres.get(p.name)
             if not r or r.get("md5Checksum") != ds.md5_of(p):
@@ -110,18 +115,23 @@ def pousser(chemins):
               file=sys.stderr)
 
     print(f"[Livraison] bilan : {len(fichiers) - erreurs}/{len(fichiers)} "
-          f"au coffre racine, {erreurs} erreur(s)")
+          f"vers {CIBLE[1]}, {erreurs} erreur(s)")
     return 1 if erreurs else 0
 
 
 def main():
     ap = argparse.ArgumentParser(
         description="Livraison terrain à la racine du dossier Drive « Triade »")
+    ap.add_argument("--dossier-test", action="store_true",
+                    help="viser le dossier « test » du développeur (pas la racine)")
     ap.add_argument("fichiers", nargs="*",
                     help="fichiers à pousser (leur basename devient le nom Drive)")
     ap.add_argument("--verifier", action="store_true",
                     help="lister la racine du Drive et comparer aux fichiers locaux")
     args = ap.parse_args()
+    global CIBLE
+    CIBLE = (TEST_ID, "dossier test") if args.dossier_test \
+        else (ds.DRIVE_ROOT_ID, "racine du coffre")
     if args.verifier:
         sys.exit(verifier())
     if not args.fichiers:
