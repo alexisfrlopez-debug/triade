@@ -7,7 +7,7 @@
 
 - Dernière mise à jour : 26 octobre 2026
 - Version de la spécification : v0.4.0 (gouvernance vérifiée — figée pour le démarrage du jalon M0)
-- État général : conception terminée (universalité par profils + gouvernance normalisée née de la démonstration RoomEq), infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), implémentation non commencée
+- État général : conception terminée, infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), **implémentation engagée : jalon M0 au stade M0-dev** (oracle vert, artefact `hello.exe` 1 536 o, carte v0 signée — validation terrain Windows 11 en attente)
 
 ---
 
@@ -40,10 +40,11 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
 | Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
-| Implémentation | Non commencée | La prochaine étape est le jalon M0 (voir section 7) |
+| Implémentation | **M0-dev** | `m0/` — chaîne artefact complète : 3 specs I, notation keystone, éditeur PE32+ à la main, oracle (round-trip 100 % + 31 verrous structurels), carte v0 chiffrée/signée, verrou croisé fail-closed ; artefact `hello.exe` (1 536 o, balise `0.1.0-dev.1`) ; reste l'exécution sur Windows 11 (voir section 7) |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique |
 
-Aucun bloc machine n'a encore été écrit : le projet entre dans sa phase de réalisation.
+Aucune chaîne de build extérieure : les octets viennent de la notation. Le projet est
+entré dans sa phase de réalisation — le jalon M0 est au stade M0-dev.
 
 ## Nouveautés de la v0.3
 
@@ -196,7 +197,7 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D24 | Traçabilité et gouvernance | Table I↔C↔B↔tests obligatoire (champ `spec=`, refus de build si maillon manquant), journal des décisions normalisé (append-only, pas de rétrodatage), tableau de bord de conformité (11 métriques) ; norme de fragmentation et localisation par intention consolidées |
 | D25 | PDF formel v0.4.0 | Chaîne LaTeX/Tectonic (`scripts/spec_v040/`) remplace le générateur ReportLab v0.3 ; archives v0.2/v0.3 conservées, non régénérées |
 
-## 7. Prochaine étape : le jalon M0
+## 7. Étape en cours : le jalon M0 (stade M0-dev)
 
 ### 7.1 Objectif
 
@@ -204,28 +205,34 @@ Prouver la chaîne artefact de bout en bout sans compilateur : notation → octe
 exécution sur Windows 11. M0 est le jalon existentiel du projet — s'il échoue, le paradigme
 entier est remis en question avant tout investissement supplémentaire.
 
-### 7.2 Checklist de démarrage
+### 7.2 État de la checklist (mise à jour après la session du 26 octobre 2026, D26)
 
-1. Installer les dépendances de notation : `pip install keystone-engine capstone`.
-2. Définir la couche I du « hello » selon le gabarit v0.4.0 (§ 2 de la spécification) :
-   contrat du bloc principal, du bloc d'écriture, du bloc de sortie.
-3. Écrire la notation des trois blocs initiaux (granularité D8).
-4. Assembler via keystone ; vérifier le round-trip via capstone (fidélité exacte, R5).
-5. Construire le PE32+ à la main : en-têtes DOS/COFF/PE32+, `.text` RX, `.rdata` imports +
-   relocations, IAT kernel32 (WriteFile, GetStdHandle, ExitProcess), moins de 4 Kio.
-6. Exécuter sur Windows 11 et observer la sortie console.
-7. Créer la carte v0 : en-tête normalisé v0.4.0, trois blocs avec champ `spec=` (traçabilité),
-   quatre fragments, signature Ed25519 (R9).
-8. Vérifier le verrou croisé bout en bout (R8) : empreintes des blocs dans frag-bld,
-   re-vérification.
-9. Après chaque avancée : `bash scripts/sync_backup.sh "M0 : <étape>"`.
+1. **Fait** — dépendances de notation installées (`keystone-engine`, `capstone`, plus
+   `pefile`, `pynacl`, `argon2-cffi` pour la carte).
+2. **Fait** — couche I du hello : `m0/I/hello-01/02/03` au gabarit § 2.2.
+3. **Fait** — notation des trois blocs : `m0/notation/` (layout fixe, D8).
+4. **Fait** — assemblage keystone + round-trip capstone : **100 %** (18/18 instructions).
+5. **Fait** — PE32+ construit à la main : `m0/build_m0.py` → `hello.exe` **1 536 octets**,
+   validé par capstone + pefile + objdump.
+6. **En attente (validation terrain)** — exécuter sur Windows 11 : récupérer `hello.exe`
+   (Drive `TRIADE/m0/` ou `download/`), lancer, attendre la ligne
+   `TRIADE M0 : Hello, Windows 11 !` et le code de sortie 0. Consigner le verdict.
+7. **Fait** — carte v0 : en-tête v0.4.0, trois blocs avec champ `spec=`, quatre fragments
+   chiffrés, signature Ed25519 (R9) — `m0/carte/`.
+8. **Fait** — verrou croisé vérifié bout en bout (R8), fail-closed constaté sur
+   falsification ; ré-exécution : `python3 m0/build_m0.py --verifier`.
+9. **Après chaque avancée** : `bash scripts/sync_backup.sh "M0 : <étape>"`.
+
+La phrase maîtresse de la carte (affichée une seule fois à sa génération) doit être mise
+en coffre par le développeur — voir `m0/README.md` § Clés et continuité.
 
 ### 7.3 Critères de sortie
 
-Exécution constatée sur Windows 11 ; round-trip à 100 % ; carte signée et vérifiée ;
-exécutable de moins de 4 Kio ; règles R1–R3 et R8–R9 respectées ; conditions transverses
-v0.4.0 (§ 16) : oracle vert, journal à jour (décisions, optimisations, classification
-T1–T6), tableau de bord conforme avec métriques cible explicitement annotées.
+Exécution constatée sur Windows 11 ; round-trip à 100 % (acquis) ; carte signée et
+vérifiée (acquis) ; exécutable de moins de 4 Kio (acquis : 1 536 o) ; règles R1–R3 et
+R8–R9 respectées (acquises) ; conditions transverses v0.4.0 (§ 16) : oracle vert
+(acquis : round-trip + 31 verrous structurels), journal à jour (D26 consignée),
+tableau de bord conforme (`m0/carte/tableau-de-bord.txt`, métriques cible annotées).
 
 ## 8. Avertissement sécurité — jetons
 

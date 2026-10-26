@@ -359,3 +359,48 @@ D15 (amende D5) illustrent la procédure.
 - **Développement** : le principe de D17 est inchangé — empreinte SHA-256 des sources
   comparée au stamp suivi par git, reconstruction intégrale avant chaque commit, échec
   signalé sans bloquer la sauvegarde des sources. Seule la chaîne de production change.
+
+### D26 — Jalon M0 : chaîne artefact implémentée (M0-dev, oracle vert)
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : la révision v0.4.0 étant scellée, la feuille de route désigne M0 comme
+  prochaine étape — prouver la chaîne notation → octets → PE32+ → exécution sans
+  compilateur sur le profil primaire `x86-64-win11-pe`, avec carte v0 signée et verrou
+  croisé dès le premier octet (R1-R3, R8-R9).
+- **Choix retenu** : mise en œuvre complète dans `m0/` — trois spécifications I au
+  gabarit § 2.2 (hello-01/02/03, provenance écrite-avant-code), notation x86-64
+  keystone à layout fixe documenté (slots de 64 octets alignés 16, padding inter-blocs
+  ≥ 16, déplacements RIP calculés une fois pour toutes puis vérifiés
+  **sémantiquement** — aucun post-patching, WYSIWYG intégral), éditeur PE32+ écrit à la
+  main (DYNAMICBASE + HIGH_ENTROPY_VA + NX_COMPAT, BASERELOC minimal, imports kernel32
+  par IAT : GetStdHandle, WriteFile, ExitProcess, 1 536 octets < 4 Kio, déterministe),
+  oracle M0 à deux volets régénéré depuis I (round-trip keystone→capstone→keystone
+  100 % + 31 verrous structurels : discipline msx64, appels IAT uniquement, frames
+  équilibrés, ud2 défensif, cibles RIP exactes), carte v0 complète (en-tête v0.4.0,
+  quatre fragments XChaCha20-Poly1305 par Argon2id 64 Mio/3 it + HKDF par fragment et
+  génération, signature Ed25519, empreinte racine), verrou croisé en relecture
+  indépendante (fail-closed constaté sur falsification d'octet). Balise d'artefact
+  `0.1.0-dev.1` consignée au manifeste frag-bld (schéma § 9 : oracle vert, validation
+  terrain en attente).
+- **Alternatives rejetées** : post-patching des déplacements après assemblage (casserait
+  le WYSIWYG et le round-trip — la notation doit être ce qui s'exécute) ; omettre la
+  table de relocalisation (DYNAMICBASE sans BASERELOC : ASLR non honoré, contraire au
+  profil) ; exécution locale sous émulation wine (pas le critère M0 — la sortie exige
+  Windows 11 réel ; la validation locale multi-outils capstone/pefile/objdump suffit à
+  la préparation) ; tag git `v0.1.0-dev.1` (une pré-version de développement est un
+  usage interne, la balise d'artefact vit dans frag-bld) ; export de continuité dès M0
+  (aucune reprise inter-agents à ce stade — première génération).
+- **Développement** : résultats mesurés — round-trip 18/18 instructions (100 %),
+  oracle structurel 31 verrous PASS, construction 0 erreur/0 avertissement, artefact
+  1 536 octets reproductible (sha256 c89e330cd16f3fd48558ed4fdb6708fb671e6d907547d5c1ee28075ffd6507f2),
+  concordance de trois validateurs indépendants (capstone, pefile, objdump),
+  falsification d'un octet de `.text` détectée par le verrou croisé (exit 1).
+  Gestion des clés : phrase maîtresse 128 bits générée et mise en coffre côté
+  développeur, graine Ed25519 locale, sel Argon2id déterministe documenté (la
+  dérivation reste reproductible depuis la seule phrase). Limites assumées : CFG
+  différé à M1+ (exige LOAD_CONFIG/GFIDS conçus pour les appels IAT indirects) ;
+  oracle différentiel complet reporté à M1 avec la mini-libc (premier terrain de
+  cristallisation) ; perte de phrase = reconstruction de carte possible depuis I+B
+  (le projet survit, pas l'historique chiffré). Le jalon M0 sera franchi après
+  exécution constatée sur Windows 11 (critère de sortie) ; tout écart se corrige en
+  `0.1.0+1` à contrat stable (R4).

@@ -23,3 +23,6 @@ desktop.ini
 # Journaux et temporaires
 *.log
 tmp/
+
+# M0 : secrets de la carte (D12) — jamais committes
+m0/.keys/
