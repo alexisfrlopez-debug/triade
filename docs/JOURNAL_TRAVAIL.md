@@ -452,8 +452,12 @@ Work Log:
 - Complété le présent journal : entrées 13 et 14 consignées a posteriori
   (les sessions correspondantes n'avaient pas étendu le journal — écart de
   gouvernance corrigé, mentions « a posteriori » explicites).
+- Complété la synthèse du journal des décisions dans le PDF formel
+  (scripts/spec_v040/sec-d.tex) : D25 (chaîne LaTeX/Tectonic) et D26 (jalon M0
+  franchi) désormais mentionnées — l'archive formelle reflète son propre état.
 - Sauvegarde systématique finale (D13/D17) : régénération du PDF formel
-  (DECISIONS.md modifiée), commit, synchro Drive, push GitHub.
+  (DECISIONS.md modifiée + synthèse .tex), commits 12ee6d8 et 68e62f7,
+  synchro Drive, push GitHub.
 
 Stage Summary:
 - M0 FRANCHI le 26 octobre 2026 : notation -> octets -> PE32+ -> exécution
