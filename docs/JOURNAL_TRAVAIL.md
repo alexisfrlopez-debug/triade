@@ -1445,3 +1445,67 @@ mort → correctif ciblé + retrait des sondes (R3) → scellage final
 
 **Suivi** : validation terrain demo.6 — journal avec sondes (14 lignes
 nominales attendues si tout passe, sinon : la coupure EST le diagnostic).
+
+## Journal 29 — D41 : terrain demo.6 parle (journal + fenêtre disparue) — les sondes ont localisé la mort : .protger appelait VirtualProtect sans zone d'accueil ABI ; tcp-07:R3, M2 rc.4, demo.7
+
+**Contexte** : « logs envoyés, fenêtre disparue (crash) » — le
+développeur a lancé demo.6 (instrumentée D40) et déposé demo_journal.txt
+(317 o) dans son dossier « test ». Sixième lecture terrain : la mort
+est localisée, il reste à la nommer.
+
+**Déroulé** :
+1. Rapatriement (drive_recuperer.py --forcer) et lecture : 12 lignes —
+   L00 « 0.3.0-demo.6 », démarrage complet, clic L03, porte R10 VERTE,
+   libc 4/4 verts, « sonde1 avant echo » (écriture COMPLÈTE, CRLF final
+   présent — pas de troncature) — puis plus rien. « Fenêtre disparue » =
+   MORT DU PROCESSUS (pas un blocage). L'instrumentation a fait son
+   office : la mort est dans l'intervalle écho#1 | memcmp#1 | POSE.
+2. Élimination statique : écho v1 (@0x4600) = 11 instructions de copie
+   octet pure, aucun appel, aucune pile — ne peut pas fauter ; memcmp
+   (libc-02) exécuté avec succès sur le terrain au sceau (4/4) quelques
+   microsecondes plus tôt. Restait la pose — coupable par élimination.
+3. Défaut trouvé byte-exact : `.protger` (tcp-07 @0x4531) appelait
+   VirtualProtect avec `sub rsp, 8` — alignement PARFAIT mais PAS de
+   zone d'accueil ABI (shadow space 0x20). kernel32 (compilé
+   /homeparams) range rdx = 0x700 sur l'ADRESSE DE RETOUR de .protger ;
+   le ret saute à 0x700 → violation d'accès → processus mort. 7e classe
+   de défaut invisible sans exécution : obligation ABI côté appelant,
+   hors de portée du shim Python. D39 (DEP) masquait ce défaut (la
+   faute NX survenait avant le ret empoisonné).
+4. Audit systémique (scripts/audit_shadow_space.py, nouveau, tracké) :
+   58 sites d'appel IAT/pointeur audités — 57 sains, 1 défaillant (le
+   seul : VirtualProtect dans .protger). Les appels ws2_32 jamais
+   exécutés au terrain sont conformes : la correction ouvre toute la
+   démonstration.
+5. Correctif écrit-avant-code — tcp-07:R3 : I4/I5 précisés, I7 (réserve
+   0x28 : 0x20 accueil + 0x8 alignement, old-protect déménagé [rsp+0x20],
+   l'adresse de retour jamais recouverte), V8 (falsification 0x28→0x08 =
+   le défaut exact → l'émulation DOIT fauter), V2 amendé. Brouillon +
+   notation : sub rsp 8→0x28, lea r9 [rsp+0x38]→[rsp+0x20], add rsp
+   8→0x28 — 3 octets, zéro déplacement déplacé.
+6. Oracles durcis (M2 + démo) : le shim VirtualProtect range ses 4
+   arguments dans la zone d'accueil de l'appelant (modélisation
+   /homeparams) — rejouer le défaut démo.6 fait FAUTER l'émulation au
+   ret. V8 falsification ajoutée des deux côtés.
+7. Cascade M2 : rc.4 reconstruite (anti-rollback amendé D41 :
+   EXACTEMENT rc.3→rc.4), oracle 50 533 cas verts (+1 V8),
+   falsification 18/18, cristallisation 10/10 (graines 1-10),
+   conformité 124/124 VERTE → **0.3.0-rc.4 scellée** (echo.exe
+   sha256:da4a6ca2…fdb2 — même défaut corrigé dans le serveur console).
+8. demo.7 : build héritage rc.4 — round-trip 192/192, 565 verrous,
+   héritage R7 intact, oracle 80 cas verts (+1 V8), falsification
+   28/28, carte re-scellée. demo.exe 16 384 o, sha256:1917c9af…ffff
+   (md5 89cf9e23…). Sondes CONSERVÉES : le run terrain doit lire
+   sonde1 → sonde2 → sonde3 → … → « boucle § 5 complète — DÉMO OK ».
+9. Audit final (scripts/audit_demo7.py, nouveau, tracké) : sondes 3/3,
+   L00 demo.7, u64 0x00030107, DEP intact, séquence .protger EXACTE,
+   diff demo.6→demo.7 chirurgical : 7 octets (3 code + u64 + L00 +
+   2 somme R10). shadow space 58/58 sain.
+10. Livraison : racine Drive + dossier test + download/ (md5 MATCH
+    partout), LISEZMOI réécrit pour demo.7 (les 3 sondes désormais
+    attendues VERTES avant la suite). Docs : D41 (DECISIONS), REPRISE
+    aligné. Commit + GitHub + miroir Drive.
+
+**Suivi** : validation terrain demo.7 — 14 lignes attendues jusqu'à
+« boucle § 5 complète — DÉMO OK » → retrait des sondes (R3 final) +
+scellage final 0.3.0 (M2).

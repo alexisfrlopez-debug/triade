@@ -1,6 +1,6 @@
-; tcp-07-patch · bloc moteur de patch à chaud · spec tcp-07:R2 · bloc carte c30007
+; tcp-07-patch · bloc moteur de patch à chaud · spec tcp-07:R3 · bloc carte c30007
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x4400, taille 512 octets
-; Dépendances : IAT kernel32 : VirtualProtect ; bloc libc-01 memcpy @0x1100 ; données : echo @0x4600, croissance @0x4680, staging, table, état .data ; D39 : phases d'écriture en PAGE_EXECUTE_READWRITE (0x40), jamais RW
+; Dépendances : IAT kernel32 : VirtualProtect ; bloc libc-01 memcpy @0x1100 ; données : echo @0x4600, croissance @0x4680, staging, table, état .data ; D39 : phases d'écriture en PAGE_EXECUTE_READWRITE (0x40), jamais RW ; D41 : .protger réserve 0x28 avant l'appel IAT (zone d'accueil ABI)
 ; Notation explicite générée par outils/auteur.py depuis brouillons/tcp-07-patch.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
 ; Code : 389 o · padding : 123 o (NOP)
@@ -89,13 +89,13 @@ test eax, eax
 je 0x44eb
 xor eax, eax
 jmp 0x4577
-sub rsp, 8
+sub rsp, 0x28
 mov rcx, r15
 and rcx, 0xfffffffffffff000
 mov rdx, 0x700
-lea r9, [rsp + 0x38]
+lea r9, [rsp + 0x20]
 call qword ptr [rip - 0x2481]
-add rsp, 8
+add rsp, 0x28
 ret
 mov eax, 1
 jmp 0x4577

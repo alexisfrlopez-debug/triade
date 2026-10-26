@@ -47,10 +47,11 @@ BLOCS = [
      "IAT ws2_32 : closesocket"),
     ("tcp-06-spawn", "c30006", "tcp-06:R1", 0x4300, 0x40,
      "IAT kernel32 : CreateThread"),
-    ("tcp-07-patch", "c30007", "tcp-07:R2", 0x4400, 0x200,
+    ("tcp-07-patch", "c30007", "tcp-07:R3", 0x4400, 0x200,
      "IAT kernel32 : VirtualProtect ; bloc libc-01 memcpy @0x1100 ; "
      "données : echo @0x4600, croissance @0x4680, staging, table, état .data ; "
-     "D39 : phases d'écriture en PAGE_EXECUTE_READWRITE (0x40), jamais RW"),
+     "D39 : phases d'écriture en PAGE_EXECUTE_READWRITE (0x40), jamais RW ; "
+     "D41 : .protger réserve 0x28 avant l'appel IAT (zone d'accueil ABI)"),
     ("tcp-08-echo", "c30008", "tcp-08:R1", 0x4600, 0x40,
      "bloc feuille ; aucun accès extérieur (cible du patch à chaud)"),
     ("tcp-09-conn", "c30009", "tcp-09:R1", 0x4800, 0x180,

@@ -1,7 +1,10 @@
-; tcp-07-patch · brouillon · moteur de patch à chaud · (rcx mode) -> rax code · tcp-07:R2 · c30007
+; tcp-07-patch · brouillon · moteur de patch à chaud · (rcx mode) -> rax code · tcp-07:R3 · c30007
 ; mode 0 : vérifier somme staging -> protéger RWX (D39 : jamais RW — la page contient
 ; ce bloc lui-même, DEP permanent en x64) -> sauver entrée -> copier en croissance ->
 ; basculer par UN qword aligné (E9 rel32 + NOP x3) -> restaurer RX
+; D41 : .protger réserve 0x28 avant l'appel IAT (0x20 zone d'accueil ABI msx64
+; — le code système /homeparams y range rcx/rdx/r8/r9 — + 0x8 alignement) ; la loge
+; old-protect vit à [rsp+0x20], hors zone d'accueil, jamais sous rsp
 ; mode 1 : protéger RWX -> réécrire le qword original sauvegardé -> restaurer RX
 ; codes : 0 ok · 1 mode · 2 staging absent · 3 intégrité · 4 état · 5 protection
 ; r15 = entrée echo (calculée une fois) ; .protger = bascule locale de protection
@@ -79,13 +82,13 @@ je .protection_tardive
 xor eax, eax
 jmp .fin
 .protger:
-sub rsp, 8
+sub rsp, 0x28
 mov rcx, r15
 and rcx, 0xfffffffffffff000
 mov rdx, 0x700
-lea r9, [rsp + 0x38]
+lea r9, [rsp + 0x20]
 call qword ptr [rip + IAT_VPROTECT]
-add rsp, 8
+add rsp, 0x28
 ret
 .mode_invalide:
 mov eax, 1

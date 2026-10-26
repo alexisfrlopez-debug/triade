@@ -1250,3 +1250,83 @@ D15 (amende D5) illustrent la procédure.
 - **Développement** : entrée 28 du journal de travail. Validation terrain
   attendue : journal demo.6 avec sondes → l'intervalle mort identifié →
   correctif ciblé + retrait des sondes (R3) → scellage final 0.3.0.
+
+### D41 — terrain demo.6 parle : mort après sonde1 localisée à la POSE — .protger appelait VirtualProtect SANS zone d'accueil ABI (ret empoisonné vers 0x700) ; tcp-07:R3, 7e classe de défaut invisible
+
+- **Constat terrain** : journal demo.6 rapatrié (dossier test Drive,
+  317 o, 12 lignes, md5 0d4cd4d1…) + état de la fenêtre rapporté par
+  le développeur : « fenêtre disparue (crash) » = MORT DU PROCESSUS,
+  pas un blocage. L00 confirme demo.6 ; démarrage complet, clic L03,
+  porte R10 VERTE, libc 4/4 verts — puis « sonde1 avant echo »
+  (écriture COMPLÈTE, CRLF final présent) et plus RIEN. L'instrumentation
+  D40 a fonctionné exactement comme conçue : la mort est dans
+  l'intervalle écho#1 | memcmp#1 | POSE tcp-07.
+- **Élimination statique** : (a) écho v1 (@0x4600) désassemblé — 11
+  instructions, boucle de copie octet par octet pure (mov r10b,[rdx+r9] /
+  mov [rcx+r9],r10b), aucun appel, aucune pile, bornes exactes (dest =
+  pile, src = .rdata, 14 o) — NE PEUT PAS fauter ; (b) memcmp (libc-02)
+  déjà EXÉCUTÉ AVEC SUCCÈS sur le terrain quelques µs plus tôt (sceau
+  4/4 verts) — restait la POSE.
+- **Défaut trouvé (byte-exact)** : `.protger` (tcp-07 @0x4531) appelait
+  VirtualProtect par IAT avec `sub rsp, 8` — l'alignement était PARFAIT
+  (rsp ≡ 0 mod 16 au call) mais les **0x20 octets de zone d'accueil ABI
+  msx64 (shadow space) n'étaient PAS réservés**. Le code système Windows
+  est compilé `/homeparams` : kernel32!VirtualProtect range ses 4
+  arguments dans la zone d'accueil de l'appelant — rdx (0x700, la taille
+  de page) atterrit EXACTEMENT sur l'adresse de retour de .protger ;
+  son `ret` saute à l'adresse 0x700 → violation d'accès → processus
+  mort, fenêtre disparue, journal gelé après sonde1. Correspondance
+  EXACTE avec le terrain. **7e classe de défaut invisible sans
+  exécution** : obligation ABI CÔTÉ APPELANT que le shim Python de
+  l'oracle ne modélisait pas (il n'écrit jamais dans la zone d'accueil).
+  Le correctif D39 (DEP) MASQUAIT celui-ci : la faute NX survenait au
+  retour du premier VirtualProtect, AVANT le ret empoisonné.
+- **Audit systémique** (scripts/audit_shadow_space.py, tracké) : les
+  58 sites d'appel IAT/pointeur du binaire audités un par un — 57 sains,
+  EXACTEMENT 1 défaillant (le call VirtualProtect de .protger) ; les
+  appels ws2_32 jamais exécutés au terrain (serveur/client) sont
+  ABI-conformes : la correction ouvre la route jusqu'au bout de la
+  démonstration, pas d'un cran.
+- **Correctif écrit-avant-code — tcp-07:R3** : I4/I5 précisés, **I7**
+  ajouté (.protger réserve 0x28 = 0x20 accueil + 0x8 alignement ; la
+  zone d'accueil ne peut jamais recouvrir l'adresse de retour ni la
+  loge old-protect, déménagée à [rsp+0x20]) ; **V8** ajouté (falsification
+  shadow space : 0x28→0x08 aux deux sites = le défaut terrain exact →
+  l'émulation DOIT fauter au ret) ; V2 amendé. Diff limité à .protger :
+  sub rsp 8→0x28, lea r9 [rsp+0x38]→[rsp+0x20], add rsp 8→0x28 —
+  3 octets, AUCUN déplacement déplacé (le call [rip-0x2481] est
+  inchangé), signature/codes/effets inchangés (R4).
+- **Oracles durcis (M2 + démo)** : le shim VirtualProtect modélise
+  désormais /homeparams — il range les 4 arguments dans la zone
+  d'accueil de l'appelant AVANT tout effet : le défaut démo.6 rejoué en
+  émulation FAUTE au ret (saut vers 0x700 non mappé). L'oracle M2
+  passe à 50 533 cas (+1 V8), l'oracle démo à 80 cas (+1 V8).
+- **Cascade M2** : layout 0.3.0-rc.4 (u64 0x00030005), amendement
+  anti-rollback D41 (reconstruction autorisée EXACTEMENT rc.3→rc.4),
+  cristallisation 10/10 (graines 1-10), conformité 124/124 re-exécutée
+  VERTE → **0.3.0-rc.4 scellée** (echo.exe sha256:da4a6ca2…fdb2 — le
+  serveur console portait le même défaut, il est corrigé).
+- **demo.7** : build héritage rc.4 — round-trip 192/192, 565 verrous
+  structurels, héritage R7 intact (16 blocs + staging octet-identiques
+  echo rc.4), 80 cas verts, falsification 28/28, carte re-scellée.
+  demo.exe 16 384 o, sha256:1917c9af…ffff (md5 89cf9e23…). **Sondes
+  CONSERVÉES** (D40) : le run terrain doit maintenant montrer
+  sonde1 → sonde2 → sonde3 → mécanique → … → « boucle § 5 complète —
+  DÉMO OK » — la lecture du correctif est elle-même une preuve ; le
+  retrait des sondes (R3 final) suivra le constat.
+- **Audit final** (scripts/audit_demo7.py, tracké) : sondes 3/3
+  conformes, L00 demo.7, u64 0x00030107, DEP intact (2× 0x40, 0
+  résiduel), séquence .protger EXACTE (I7), diff demo.6→demo.7
+  CHIRURGICAL : 7 octets (3 code + version u64 + L00 + 2 somme R10).
+  audit_shadow_space.py : 58/58 sites sains, .protger D41 conforme.
+- **Alternatives rejetées** : homeparams dans TOUS les shims (les 57
+  autres sites sont prouvés sains — statique + terrain — le durcissement
+  ciblé VP + l'audit systémique couvrent la classe sans risque de
+  régression) ; ajouter une 4e sonde entre memcmp et la pose (l'élimination
+  statique rendait la fenètre déjà monotonique : la pose était le seul
+  suspect restant) ; reconstruire .protger avec push/pop (diff plus
+  large, aucun bénéfice).
+- **Développement** : entrée 29 du journal de travail. Validation
+  terrain attendue : journal demo.7 complet 14 lignes jusqu'à
+  « boucle § 5 complète — DÉMO OK » → scellage final 0.3.0 (M2) + retrait
+  des sondes.

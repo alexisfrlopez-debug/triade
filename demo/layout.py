@@ -116,6 +116,12 @@ VERSION_DEMO6 = "0.3.0-demo.6"     # D40 : instrumentation mécanique — le jou
                                    # malgré le correctif DEP : 3 sondes de trace
                                    # encadrent la frontière mécanique (win-09:R2)
 VERSION_U64_DEMO6 = 0x00030106     # monotonie : au-dessus de demo.5
+VERSION_DEMO7 = "0.3.0-demo.7"     # D41 : héritage tcp-07:R3 (echo 0.3.0-rc.4) —
+                                   # .protger réserve 0x28 avant l'appel IAT
+                                   # (zone d'accueil ABI msx64 : le défaut démo.6
+                                   # faisait sauter le ret vers rdx=0x700 — sondes
+                                   # CONSERVÉES pour la lecture terrain du correctif)
+VERSION_U64_DEMO7 = 0x00030107     # monotonie : au-dessus de demo.6
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -313,7 +319,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.6"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.7"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),

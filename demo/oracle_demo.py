@@ -289,6 +289,19 @@ class Emulateur:
             elif nom == "VirtualProtect":
                 prot = r8 & 0xFFFFFFFF
                 self.appels_vp.append((rcx, rdx, prot))
+                # D41 : modélisation /homeparams — le code système Windows
+                # range ses 4 arguments dans la zone d'accueil de l'appelant
+                # ([rsp+8..rsp+0x27] au crochet = l'ombre ABI msx64), AVANT
+                # tout effet. Un appelant qui n'a pas réservé 0x28 octets voit
+                # son adresse de retour écrasée (défaut terrain démo.6 :
+                # .protger sub rsp,8 → rdx=0x700 sur l'adresse de retour →
+                # ret vers 0x700, processus mort, fenêtre disparue, journal
+                # gelé après sonde1).
+                rsp_ = uc_.reg_read(UC_X86_REG_RSP)
+                uc_.mem_write(rsp_ + 0x8, struct.pack("<Q", rcx))
+                uc_.mem_write(rsp_ + 0x10, struct.pack("<Q", rdx))
+                uc_.mem_write(rsp_ + 0x18, struct.pack("<Q", r8))
+                uc_.mem_write(rsp_ + 0x20, struct.pack("<Q", r9))
                 perms = PROTECTIONS.get(prot)
                 if perms is None or not self.retour_vp:
                     # valeur de protection invalide ou refus piloté : échec,
@@ -810,6 +823,39 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     if em.appels_vp != [(IMAGE + 0x4000, 0x700, 0x04)]:
         raise EchecOracle(f"falsification D39 : appels {em.appels_vp} — le premier "
                           f"VirtualProtect (RW sans execute) devait être le dernier")
+    total += 1
+
+    # --- falsification D41 (V8 tcp-07:R3) : réserve .protger 0x28 -> 0x08 ---
+    # le défaut terrain démo.6 EXACT — .protger aligné mais SANS zone
+    # d'accueil ABI : le shim /homeparams range rdx (0x700) sur l'adresse de
+    # retour de .protger, le ret saute à 0x700 (non mappé) — processus mort,
+    # fenêtre disparue, journal gelé après sonde1. L'émulation DOIT fauter.
+    # (Appel DIRECT de tcp-07 : par le scénario, la porte R10 détecterait
+    # l'octet corrompu AVANT la mécanique — la falsification vise la
+    # sémantique ABI, pas l'intégrité.)
+    pos_sub07 = tranche07.find(bytes.fromhex("4883ec28"))   # sub rsp, 0x28
+    pos_add07 = tranche07.find(bytes.fromhex("4883c428"))   # add rsp, 0x28
+    if pos_sub07 < 0 or pos_add07 < 0:
+        raise EchecOracle("falsification D41 : sites sub/add rsp,0x28 introuvables "
+                          "dans tcp-07 (héritage divergent)")
+    mutant = bytearray(exe)
+    mutant[base07 + pos_sub07 + 3] = 0x08                   # sub rsp, 8
+    mutant[base07 + pos_add07 + 3] = 0x08                   # add rsp, 8
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    abi_faute = False
+    try:
+        em.appeler(0x4400, (0,))                            # tcp-07 mode appliquer
+    except UcError:
+        abi_faute = True
+    if not abi_faute:
+        raise EchecOracle("falsification D41 : tcp-07 a SURVÉCU à un appel IAT "
+                          "sans zone d'accueil ABI — le défaut terrain démo.6 "
+                          "(ret empoisonné vers 0x700, processus mort, "
+                          "fenêtre disparue) serait indétectable (V8 tcp-07:R3)")
+    if not em.appels_vp or em.appels_vp[0][2] != 0x40:
+        raise EchecOracle(f"falsification D41 : appels {em.appels_vp} — le premier "
+                          f"VirtualProtect (RWX) devait précéder la mort au ret")
     total += 1
 
     # --- falsification : octets corrompus -> porte R10 détecte tout (zéro silence)

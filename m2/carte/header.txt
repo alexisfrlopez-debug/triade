@@ -3,4 +3,4 @@
   algo_signature   : ed25519
   algo_chiffrement : xchacha20poly1305
   profils          : x86-64-win11-pe
-  empreinte_racine : sha256:c69a7e76cf7f3fe2c6b735c419a5f76b25b0a3b0b8927e4803133fae729776da
+  empreinte_racine : sha256:9cac7a425fa91a2578fc1a40257895b0f73805fec130adc16cef4a0993ba93be

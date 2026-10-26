@@ -343,6 +343,18 @@ class Emulateur:
             elif nom == "VirtualProtect":
                 prot = r8 & 0xFFFFFFFF
                 self.appels_vp.append((rcx, rdx, prot))
+                # D41 : modélisation /homeparams — le code système Windows
+                # range ses 4 arguments dans la zone d'accueil de l'appelant
+                # ([rsp+8..rsp+0x27] au crochet = l'ombre ABI msx64), AVANT
+                # tout effet. Un appelant qui n'a pas réservé 0x28 octets voit
+                # son adresse de retour écrasée (défaut terrain démo.6 :
+                # .protger sub rsp,8 → rdx=0x700 sur l'adresse de retour →
+                # ret vers 0x700, processus mort, journal gelé après sonde1).
+                rsp_ = uc_.reg_read(UC_X86_REG_RSP)
+                uc_.mem_write(rsp_ + 0x8, struct.pack("<Q", rcx))
+                uc_.mem_write(rsp_ + 0x10, struct.pack("<Q", rdx))
+                uc_.mem_write(rsp_ + 0x18, struct.pack("<Q", r8))
+                uc_.mem_write(rsp_ + 0x20, struct.pack("<Q", r9))
                 perms = PROTECTIONS.get(prot)
                 if perms is None or not self.retour_vp:
                     # valeur de protection invalide ou refus piloté : échec,
@@ -736,6 +748,36 @@ def suite_patch(em: Emulateur, exe: bytes, phase: int) -> int:
                           "serait indétectable (V7 tcp-07:R2)")
     except UcError:
         pass                                             # faute DEP : détectée ✓
+    cas += 1
+
+    # j. falsification shadow space (V8, D41) : la réserve de .protger
+    #    réécrite 0x28 -> 0x08 aux DEUX sites (sub ET add — le défaut
+    #    terrain démo.6 EXACT : sous-réserve alignée mais sans zone
+    #    d'accueil). Le shim /homeparams range rdx (0x700) sur l'adresse
+    #    de retour de .protger : le ret saute à 0x700 (non mappé) —
+    #    l'émulation DOIT fauter. Septième classe de défaut invisible
+    #    sans exécution : obligation ABI côté appelant.
+    tranche = _octets_fichier(exe, 0x4400, 0x200)
+    pos_sub = tranche.find(bytes.fromhex("4883ec28"))    # sub rsp, 0x28
+    pos_add = tranche.find(bytes.fromhex("4883c428"))    # add rsp, 0x28
+    if pos_sub < 0 or pos_add < 0:
+        raise EchecOracle("falsification D41 : sites sub/add rsp,0x28 "
+                          "introuvables dans tcp-07 (notation divergente)")
+    mutant = bytearray(exe)
+    mutant[_base_fichier(0x4400) + pos_sub + 3] = 0x08   # sub rsp, 8
+    mutant[_base_fichier(0x4400) + pos_add + 3] = 0x08   # add rsp, 8
+    em3 = Emulateur(bytes(mutant))
+    em3.installer_shims()
+    em3.poser_etat()
+    try:
+        em3.appeler(0x4400, (0,))
+        raise EchecOracle("falsification D41 : tcp-07 a survécu à un appel "
+                          "IAT sans zone d'accueil ABI — le défaut terrain "
+                          "démo.6 (ret empoisonné vers 0x700, processus "
+                          "mort, fenêtre disparue) serait indétectable "
+                          "(V8 tcp-07:R3)")
+    except UcError:
+        pass                                             # ret vers 0x700 : détectée ✓
     cas += 1
     return cas
 
