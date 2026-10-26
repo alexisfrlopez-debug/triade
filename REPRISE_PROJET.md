@@ -73,7 +73,7 @@ régénéré à l'arrivée et jamais exporté.
 | Emplacement | Rôle | Contenu |
 |---|---|---|
 | `/home/z/my-project/triade` | Source de vérité | Dépôt git complet (fichiers + historique) |
-| Google Drive, dossier « Triade » | Sauvegarde | Sous-dossier `TRIADE/` (miroir des fichiers) + `TRIADE/triade-history.bundle` (historique git complet) + les deux fichiers d'instruction à la racine |
+| Google Drive, dossier « Triade » | Sauvegarde + livraison | Sous-dossier `TRIADE/` (miroir des fichiers) + `TRIADE/triade-history.bundle` (historique git complet) + à la racine : les deux fichiers d'instruction, les conteneurs de continuité (D16) et les **livrables terrain** (`demo.exe`, `LISEZMOI-demo.txt` — via `scripts/drive_livraison.py`) |
 | GitHub `alexisfrlopez-debug/triade` | Miroir distant | Repo privé, poussé à chaque sauvegarde |
 
 ### 3.2 Arborescence du dépôt
@@ -99,6 +99,7 @@ triade/
 │   ├── sync_backup.sh                 Sauvegarde complète : PDF à jour + commit + Drive + GitHub
 │   ├── build_pdf.sh                   Régénération systématique du PDF formel (D17/D25 — chaîne LaTeX/Tectonic v0.4.0)
 │   ├── drive_sync.py                  Synchronisation Google Drive (fichiers + bundle)
+│   ├── drive_livraison.py             Livraison terrain au coffre racine Drive (idempotente, vérifiée)
 │   ├── check_auth.py                  Vérification des jetons d'accès
 │   ├── spec_v040/                     Sources de la spécification v0.4.0 (LaTeX/Tectonic, D25)
 │   │   ├── main.tex + sec-a…d.tex     Corps monocolonne avec sommaire (5 fichiers)
@@ -299,6 +300,7 @@ fichier synchronisé.
 | `pdf.py convert.latex scripts/article_v04/main.tex --runs 3` puis `python3 scripts/article_v04/merge_cover.py` | Régénère le corps de l'article v0.4 puis fusionne couverture + corps (couverture : `html2poster.js` sur `cover.html` — voir l'en-tête de `merge_cover.py`) |
 | `python3 scripts/article_v04/verify_article.py` | Contrôles pré-empaquetage de l'article (terminologie, IMRAD, références, flottants) |
 | `python3 scripts/drive_sync.py` | Synchronisation Drive seule (idempotente) |
+| `python3 scripts/drive_livraison.py F…` | Pousse des livrables terrain à la racine du Drive (idempotent, vérification md5 après téléversement ; `--verifier` = état du coffre) |
 | `python3 scripts/check_auth.py` | Vérifie les jetons Drive et GitHub sans les afficher |
 | `git log --oneline` | Historique des modifications |
 | `git bundle verify triade-history.bundle` | Vérifie l'intégrité du bundle de sauvegarde |
