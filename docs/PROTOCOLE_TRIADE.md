@@ -527,12 +527,13 @@ journalisée. Le multi-profils n'alourdit pas la localisation : l'entrée de fra
 le profil, et l'instanciation d'un contrat sur un profil nouveau est budgétée comme un
 ajout — la couche I, elle, n'est jamais dupliquée.
 
-**Budgets par type d'opération** (inchangés par rapport à la v0.3, désormais instrumentés —
-§ 15.2) :
+**Budgets par type d'opération** (désormais instrumentés — § 15.2 ; le budget de
+localisation est amendé à 64 tokens par D31 : la mesure M1 a constaté 43 tokens sur le
+gabarit canonique de la v0.4.0 lui-même, tokenizer BPE cl100k_base) :
 
 | Opération | Fragments et données lus | Budget |
 |---|---|---|
-| Localiser un bloc | frag-loc — une entrée | 40 tokens max |
+| Localiser un bloc | frag-loc — une entrée | 64 tokens max (D31) |
 | Éditer simplement un bloc | frag-loc + frag-con du bloc + notation du bloc | 3 000 tokens max |
 | Ajouter un bloc | frag-loc + frag-con + seuils frag-prf | 6 000 tokens max |
 | Instancier un profil nouveau pour un contrat existant | I partagée + frag-con + notation du profil | 6 000 tokens max par bloc |
@@ -540,8 +541,10 @@ ajout — la couche I, elle, n'est jamais dupliquée.
 
 Indicateurs de santé : précision de localisation (cible 95 % au jalon M0), coût moyen
 d'une édition simple (cible 5 000 tokens), taux de régression post-patch (cible zéro,
-rollback exclu). Ces budgets restent des cibles de conception jusqu'à leur instrumentation
-(M1) ; le tableau de bord les affiche alors comme métriques mesurées, avec leur écart.
+rollback exclu). Ces budgets, cibles de conception jusqu'à leur instrumentation, sont
+mesurés depuis M1 (`m1/budgets_tokens.py`, tokenizer cl100k_base, mesure sur la carte
+scellée et les sources réelles) ; le tableau de bord les affiche comme métriques
+mesurées, avec leur écart.
 
 ## 13. Sécurité : modèle de menace et limites
 

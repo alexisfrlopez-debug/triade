@@ -6,8 +6,8 @@
 > agent IA chargé de continuer le travail.
 
 - Dernière mise à jour : 26 octobre 2026
-- Version de la spécification : v0.4.0 (gouvernance vérifiée — figée pour le démarrage du jalon M0)
-- État général : conception terminée, infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), **jalon M0 franchi le 26 octobre 2026** — chaîne notation → octets → PE32+ → exécution prouvée sans compilateur (hello.exe 1 536 o, carte v0 signée, validation terrain Windows 11 constatée) ; prochaine étape : **M1** (mini-libc scellée)
+- Version de la spécification : v0.4.0 (gouvernance vérifiée — figée pour le démarrage du jalon M0 ; budget de localisation amendé à 64 tokens par D31)
+- État général : conception terminée, infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), **jalon M0 franchi** (validation terrain Windows 11 constatée) ; **jalon M1 à un critère de la fermeture : `0.2.0-rc.1` scellée** (cristallisation 11×10/10, suite de conformité verte 68/68, budgets tokens mesurés, adresses stables démontrées) — reste le constat terrain Windows 11 de `selftest.exe` (21 lignes `minilibc … OK`, code 0) pour basculer en `0.2.0` finale ; ensuite **M2** (patch à chaud)
 
 ---
 
@@ -40,8 +40,8 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
 | Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
-| Implémentation | **M0 franchi** | `m0/` — chaîne artefact complète : 3 specs I, notation keystone, éditeur PE32+ à la main, oracle (round-trip 100 % + 31 verrous structurels), carte v0 chiffrée/signée, verrou croisé fail-closed ; artefact `hello.exe` (1 536 o, balise `0.1.0-dev.1`) **exécuté avec succès sur Windows 11 le 26/10/2026** (amendement D26) ; prochaine étape M1 (voir section 7) |
-| Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique |
+| Implémentation | **M1 rc.1** | `m0/` franchi (hello.exe validé terrain, D26) et `m1/` scellé `0.2.0-rc.1` : mini-libc de 7 blocs + autotest, oracle différentiel Unicorn 76 010 cas/exécution + 134 verrous, cristallisation 11×10/10, conformité profil verte 68/68, budgets mesurés (D31), démonstration R7, export de continuité (D16) généré ; **reste la validation terrain** de `selftest.exe` (section 7) |
+| Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique ; export de continuité chiffré au coffre Drive (racine) |
 
 Aucune chaîne de build extérieure : les octets viennent de la notation. Le projet a
 franchi son jalon existentiel — la phase de réalisation se poursuit avec M1.
@@ -120,6 +120,16 @@ triade/
 │   ├── triade_diagram_loop.html       Source HTML du diagramme de la boucle de mise à jour
 │   └── assets/                        Images référencées par la spécification
 ├── m0/                                 Jalon M0 (franchi) — chaîne artefact : I + notation + éditeur PE32+ + carte v0 + hello.exe
+├── m1/                                 Jalon M1 (rc.1 scellée) — mini-libc + autotest + carte projet + conformité + budgets + export
+│   ├── README.md                       Carte d'identité du jalon (résultats, validation terrain)
+│   ├── I/ · notation/ · layout.py      8 specs libc, notation x86-64, plan d'adressage D28
+│   ├── build_m1.py                     Chaîne : assemblage, oracles, PE32+, carte, verrou croisé
+│   ├── oracle_differentiel.py          Oracle éphémère (D1) sur Unicorn (D29)
+│   ├── conformite_profil.py            Suite de conformité profil § 8.2 (68 contrôles)
+│   ├── budgets_tokens.py               Instrumentation des budgets (D31) → budgets.json
+│   ├── demo_r7.py                      Démonstration des adresses stables (R7)
+│   ├── export_continuite.py            Export de continuité chiffré + signé (D16)
+│   └── selftest.exe · carte/           Artefact 9 216 o + carte projet multi-artefacts
 ├── git-hooks/
 │   └── post-commit                    Hook : synchro Drive après chaque commit
 └── .gdrive/                           Jetons d'accès — LOCAUX, jamais commités (voir § 8)
@@ -198,50 +208,59 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D24 | Traçabilité et gouvernance | Table I↔C↔B↔tests obligatoire (champ `spec=`, refus de build si maillon manquant), journal des décisions normalisé (append-only, pas de rétrodatage), tableau de bord de conformité (11 métriques) ; norme de fragmentation et localisation par intention consolidées |
 | D25 | PDF formel v0.4.0 | Chaîne LaTeX/Tectonic (`scripts/spec_v040/`) remplace le générateur ReportLab v0.3 ; archives v0.2/v0.3 conservées, non régénérées |
 | D26 | Jalon M0 (amendée) | Chaîne artefact implémentée dans `m0/` (I gabarit 2.2, notation keystone layout fixe, éditeur PE32+ à la main, oracle round-trip + 31 verrous, carte v0 signée, verrou croisé fail-closed) ; **validée sur le terrain le 26/10/2026 — M0 franchi** (hello.exe 1 536 o exécuté sur Windows 11, sortie exacte du contrat) |
+| D27 | Continuité des clés | Régénération + centralisation dans `triade/.keys/` après réinitialisation du bac à sable ; la carte se reconstruit depuis I + notation, preuve par artefact byte-identique |
+| D28 | Plan d'adressage M1 | Zones io/libc/app (R7), carte projet multi-artefacts (11 blocs, 2 exécutables), mini-libc, structures PE héritées aux RVA exactes |
+| D29 | Substrat d'oracle | Unicorn (émulation x86-64) : oracle différentiel local, shims IAT, falsification systématique — le terrain reste la preuve d'environnement |
+| D30 | Troisième réinitialisation | D27 réappliquée : rebuilds byte-identiques hello.exe/selftest.exe, lignée régénérée ; premier export de continuité généré (le coffre préserve désormais la lignée scellée) |
+| D31 | Budget localiser amendé | Mesure M1 (cl100k_base) : le gabarit canonique v0.4.0 mesurait déjà 43 tokens — budget 40 → 64 et format frag-loc allégé (51 tok mesurés) ; éditer 719/3 000, ajouter 1 086/6 000 |
 
-## 7. Étape en cours : le jalon M1 (M0 est franchi)
+## 7. Étape en cours : le jalon M1 (rc.1 scellée — reste le terrain)
 
-### 7.1 Le jalon M0 — procès-verbal
+### 7.1 Jalons M0 et M1 — procès-verbaux
 
-**Franchi le 26 octobre 2026** (D26 et son amendement). La chaîne existentielle
+**M0 franchi le 26 octobre 2026** (D26 et son amendement). La chaîne existentielle
 notation → octets → PE32+ → exécution est prouvée de bout en bout **sans
-compilateur** : round-trip 100 % (18/18 instructions), oracle structurel 31 verrous
-PASS, construction 0 erreur/0 avertissement, artefact `hello.exe` de 1 536 octets
-déterministe (sha256 `c89e330c…507f2`), carte v0 signée Ed25519, verrou croisé
-fail-closed, et **exécution constatée sur Windows 11** (machine du développeur,
-sortie exacte `TRIADE M0 : Hello, Windows 11 !`). Les neuf points de la checklist
-M0 sont intégralement acquis (détail des mesures : `m0/README.md`). Cristallisation
-éventuelle : tag git `v0.1.0` sur demande du développeur (R6).
+compilateur** : round-trip 100 %, 31 verrous, `hello.exe` 1 536 o déterministe,
+carte v0 signée, exécution constatée sur Windows 11. Détail : `m0/README.md`.
 
-### 7.2 Prochaine étape — M1 : blocs réutilisables
+**M1 scellé `0.2.0-rc.1` le 26 octobre 2026** (après dev.1, dev.2 et la session de
+cristallisation — D27-D31). Les quatre critères de sortie sont acquis :
 
-Objectif (feuille de route) : mini-libc scellée — `memcpy`, `memcmp`, `strlen`,
-`itoa`, allocateur par zone — avec l'oracle différentiel complet (~12 000 cas par
-bloc critique), la première cristallisation (R6), les adresses stables démontrées
-(R7) et la première mesure effective des budgets tokens (localiser/éditer/ajouter).
-C'est aussi le premier terrain de vérifie-puis-écrit (R5) sur du code réutilisé.
+1. **Oracle à 100 %** : 76 010 cas différentiels verts par exécution (Unicorn,
+   D29 — entrées contraintes par les pré-conditions, référence dérivée de I,
+   falsification 10/10) + 134 verrous structurels + émulation du binaire entier
+   (sortie exacte, code 0) ; ~1,04 M cas cumulés sur la lignée (graines 3-14).
+2. **Première cristallisation (R6)** : 11/11 blocs à 10/10 — immuables.
+3. **Adresses stables démontrées (R7)** : `demo_r7.py` — memset entré en dev.2
+   exclusivement dans la réserve int3, aucun octet scellé déplacé, blocs io
+   octet-identiques à `hello.exe` dans les deux artefacts.
+4. **Première mesure effective des budgets (D31)** : localiser 51 (cible 64),
+   éditer 719 (cible 3 000), ajouter 1 086 (cible 6 000) — `budgets_tokens.py`,
+   la mesure a révélé l'estimation v0.4.0 inatteignable et le budget amendé.
 
-Checklist de démarrage :
+Suite de conformité du profil (§ 8.2, D22) : **verte, 68/68 contrôles** (éléments
+1-4 et 6-7 ; l'élément 5 — patch à chaud — est le jalon M2). Détail complet :
+`m1/README.md`. La continuité ne dépend plus du poste : l'export de continuité
+chiffré et signé (D16) est au coffre (racine du Drive).
 
-1. Décision de continuité de clés : réutiliser la carte M0 (restaurer
-   `m0/.keys/` depuis le coffre du développeur — phrase maîtresse et graine
-   Ed25519 sont locales et non commitées) ou régénérer (D26 : la carte se
-   reconstruit depuis I + notation). Consigner le choix au journal.
-2. Écrire les specs I de chaque fonction de la mini-libc (gabarit § 2.2)
-   **avant** la notation (R2), avec vecteurs dorés et cas d'échec.
-3. Notation x86-64 bloc par bloc (granularité D8, layout fixe étendu),
-   round-trip keystone/capstone à 100 % (R5).
-4. Étendre l'éditeur PE32+ : adresses stables des nouveaux blocs (R7),
-   relocations le cas échéant.
-5. Oracle différentiel complet sur chaque bloc, puis cristallisation de la
-   mini-libc (R6).
-6. Instrumenter les budgets tokens — première mesure effective (tableau de
-   bord : la métrique passe de « cible » à mesurée).
-7. Après chaque avancée : `bash scripts/sync_backup.sh "M1 : <étape>"`.
+### 7.2 Reste à faire pour fermer M1 — validation terrain
 
-Règles au premier plan : R5–R7 (vérifie-puis-écrit, cristallisation, adresses
-stables) ; conditions transverses v0.4.0 inchangées (oracle vert, tableau de bord
-conforme, journal à jour).
+1. Récupérer `selftest.exe` (miroir Drive `TRIADE/m1/` ou copie `download/`).
+2. Sur Windows 11 : `.\selftest.exe` (PowerShell) ou `selftest.exe` (cmd).
+3. Attendu : 21 lignes `TRIADE M1 : minilibc <bloc> OK`, code de sortie 0
+   (`echo %ERRORLEVEL%` ; empreinte `certutil -hashfile selftest.exe SHA256`
+   → `8038585b…f3c0`).
+4. Consigner le constat au journal des décisions → `0.2.0-rc.1` devient `0.2.0`
+   (balise finale immuable) ; écart → `0.2.1` à contrat stable (R4).
+
+### 7.3 Ensuite — M2 : patch à chaud (le jalon de vérité)
+
+Serveur TCP écho, thread par connexion, journal console ; patch du bloc écho
+**pendant l'exécution** (trampoline 12-16 o, bascule atomique), sans interruption,
+rollback démontré. La boucle de mise à jour complète (§ 5) s'exécute pour la
+première fois sur du code vivant. Règles au premier plan : R4 (contrat stable),
+R7 (points d'entrée seuls trampolinables), R10 (fail-closed au chargement) ;
+l'élément 5 de la suite de conformité passe au vert avec M2.
 
 ## 8. Avertissement sécurité — jetons
 
@@ -258,7 +277,13 @@ fichier synchronisé.
 
 | Commande | Effet |
 |---|---|
-| `bash scripts/sync_backup.sh "msg"` | Sauvegarde complète (commit + Drive + GitHub) |
+| `bash scripts/sync_backup.sh "msg"` | Sauvegarde complète (PDF formel si sources changées + commit + Drive + GitHub) |
+| `python3 m1/build_m1.py --verifier --graine N` | Ré-vérification complète M1 (R5/R8) + cristallisation (R6) |
+| `python3 m1/conformite_profil.py` | Suite de conformité du profil § 8.2 (68 contrôles, éléments 1-4 et 6-7) |
+| `python3 m1/budgets_tokens.py` | Mesure des budgets tokens (écrit `m1/budgets.json`) |
+| `python3 m1/demo_r7.py` | Démonstration des adresses stables (R7, lit l'historique git) |
+| `python3 m1/export_continuite.py` | Export de continuité chiffré + signé (D16) avec auto-vérification d'import |
+| `python3 m1/export_continuite.py --verifier F` | Procédure d'import à sec sur un conteneur F (FORMAT_CARTE § 8.2) |
 | `python3 scripts/triade_v03_demo_roomeq.py` | Régénère le PDF de démonstration RoomEq (couverture rendue au préalable via `html2poster.js` — voir en-tête du script) |
 | `pdf.py convert.latex scripts/article_v04/main.tex --runs 3` puis `python3 scripts/article_v04/merge_cover.py` | Régénère le corps de l'article v0.4 puis fusionne couverture + corps (couverture : `html2poster.js` sur `cover.html` — voir l'en-tête de `merge_cover.py`) |
 | `python3 scripts/article_v04/verify_article.py` | Contrôles pré-empaquetage de l'article (terminologie, IMRAD, références, flottants) |

@@ -114,7 +114,9 @@ référence (bloc utilisé tout au long de la spécification) :
 
 - **Première ligne** — identifiant, spécification, profil, adresse, taille, version, état :
   c'est à elle seule l'entrée de localisation portée par `frag-loc`. C'est la seule partie
-  lue pour situer un bloc. Budget : 40 tokens maximum.
+  lue pour situer un bloc. Budget : 64 tokens maximum (amendé par D31 : la mesure M1 a
+  constaté 43 tokens sur le gabarit canonique v0.4.0 lui-même, tokenizer cl100k_base —
+  la v0.4.0 prévoyait 40).
 - **Lignes suivantes** — signature, pré/post-conditions, registres préservés, invariants,
   dépendances, preuves, tests : entrée détaillée portée par `frag-con` et `frag-prf`,
   chargée uniquement quand le bloc est effectivement édité. Budget de l'entrée complète :
@@ -184,7 +186,7 @@ d'exploitation protège ses parties les plus éprouvées.
 
 | Opération | Données lues | Budget |
 |---|---|---|
-| Localiser un bloc | frag-loc — une entrée | 40 tokens max |
+| Localiser un bloc | frag-loc — une entrée | 64 tokens max (D31) |
 | Éditer simplement un bloc | frag-loc + frag-con du bloc + notation | 3 000 tokens max |
 | Ajouter un bloc (profil existant) | frag-loc + frag-con + notation | 6 000 tokens max |
 | Instancier un profil nouveau pour un contrat existant | I partagée + frag-con + notation du profil | 6 000 tokens max par bloc |

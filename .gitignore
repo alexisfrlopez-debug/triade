@@ -28,3 +28,6 @@ tmp/
 /.keys/
 m0/.keys/
 m1/.keys/
+
+# Export de continuité (D16) — conteneur de coffre, jamais commite
+m1/export/

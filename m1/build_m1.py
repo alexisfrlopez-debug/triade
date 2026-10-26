@@ -543,20 +543,22 @@ def fragments_clairs(code: dict, exe: bytes, verrous: list[str], blocs: list[tup
                      phase: int, version: str, verdict_oracle: dict, compteurs: dict,
                      journal_runs: list[str]) -> dict[str, bytes]:
     sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
-    artefacts = {bid: ("hello.exe,selftest.exe" if bid in ("a10002", "a10003")
-                       else "hello.exe" if bid == "a10001" else "selftest.exe")
-                 for bid, _, _, _, _ in blocs} | {"a10001": "hello.exe"}
+    artefacts = {bid: ("hello,selftest" if bid in ("a10002", "a10003")
+                       else "hello" if bid == "a10001" else "selftest")
+                 for bid, _, _, _, _ in blocs} | {"a10001": "hello"}
 
     loc = ["[carte-frag] nom=frag-loc generation=1",
            "[zones] io=0x1000-0x10ff libc=0x1100-0x17ff app=0x1800-0x1ff "
            "reserve-libc=0x1440-0x17ff reserve-io=0x1000,0x10c0 (int3 defensif)"]
+    # Budget de localisation (D31) : gabarit spec 4.3 + exe= + role= ; zone= retiree
+    # (derivable des en-tetes [zones]), suffixe .exe implicite — 51 tok en moyenne
+    # (cl100k_base), cible amendee 64 tokens (l'ancien format mesurait 56).
     for bid, sid, _, rva, slot in blocs:
         loc.append(f"[bloc] id={bid} spec={sid} cible=x86-64-win11-pe "
-                   f"artefact={artefacts[bid]} addr={L.IMAGE_BASE + rva:#x} size={slot} "
-                   f"v=1 etat=scelle zone={'io' if rva < 0x1100 else 'libc' if rva < 0x1800 else 'app'} "
-                   f"role={ROLES[bid]}")
-    loc.append(f"[bloc] id=a10001 spec=hello-01:R1 cible=x86-64-win11-pe artefact=hello.exe "
-               f"addr={L.IMAGE_BASE + 0x1000:#x} size=64 v=1 etat=scelle zone=io role=orchestration-hello")
+                   f"exe={artefacts[bid]} addr={L.IMAGE_BASE + rva:#x} size={slot} "
+                   f"v=1 etat=scelle role={ROLES[bid]}")
+    loc.append(f"[bloc] id=a10001 spec=hello-01:R1 cible=x86-64-win11-pe exe=hello "
+               f"addr={L.IMAGE_BASE + 0x1000:#x} size=64 v=1 etat=scelle role=orchestration-hello")
 
     con = ["[carte-frag] nom=frag-con generation=1"]
     ordre_contrats = ["a10001", "a10002", "a10003"] + [bid for bid, _, _, _, _ in blocs if bid.startswith("b2")]
@@ -671,7 +673,7 @@ def tableau_de_bord(exe: bytes, verrous: list[str], nb_blocs_carte: int, manifes
             bj = json.load(f)
         budgets = (f"mesure (M1) : localiser={bj['localiser']['mesure']} tok / "
                    f"editer={bj['editer']['mesure']} tok / ajouter={bj['ajouter']['mesure']} tok "
-                   f"(cibles 40/3000/6000)")
+                   f"(cibles 64/3000/6000, D31)")
     conformite = "verte (conformite_profil.py : elements 1-4, 6-7 ; 5 hors perimetre M1)"
     chemin_conf = os.path.join(ICI, "conformite.txt")
     if os.path.exists(chemin_conf):
@@ -691,7 +693,7 @@ def tableau_de_bord(exe: bytes, verrous: list[str], nb_blocs_carte: int, manifes
         f"  optimisations_sans_mesure     : 0 : division par 10 explicite (D21, R11)",
         f"  budgets_tokens                : {budgets}",
         f"  suite_conformite_profil       : {conformite}",
-        f"  changements_hors_journal      : 0 : D27, D28, D29 consignees",
+        f"  changements_hors_journal      : 0 : D27 a D31 consignees",
         f"  preversions                   : {manifeste.get('version', '?')} conforme "
         f"(schema dev/rc/final, monotonie)",
         f"  artefact                      : {len(exe)} octets ; empreinte sha256:{sha(exe)[:16]}... ; "

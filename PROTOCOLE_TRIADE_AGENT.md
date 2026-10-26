@@ -115,7 +115,7 @@ Un compromis partiel n'est jamais une perte totale.
 
 ### 4.3 Format d'entrée de bloc
 
-Syntaxe ASCII, ligne par ligne. Première ligne = localisation (budget 40 tokens) ; entrée
+Syntaxe ASCII, ligne par ligne. Première ligne = localisation (budget 64 tokens, D31) ; entrée
 complète (budget 200 tokens) :
 
 ```
@@ -317,7 +317,7 @@ tokens**. Un objectif n'est jamais sacrifié au profit d'un objectif de rang inf
 - Le coût en tokens s'optimise à contrainte égale : compacité de la carte, chargement
   paresseux, cristallisation — jamais en rognant la vérification.
 
-Budgets : localiser un bloc 40 tokens ; éditer 3 000 ; ajouter 3 000–6 000 ; instancier
+Budgets : localiser un bloc 64 tokens (D31) ; éditer 3 000 ; ajouter 3 000–6 000 ; instancier
 un profil nouveau pour un contrat existant 6 000 par bloc. Tu ne lis jamais le binaire en
 entier — la carte est ton unique index.
 

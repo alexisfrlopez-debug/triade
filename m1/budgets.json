@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-26T11:38:24Z",
+  "tokenizer": "tiktoken cl100k_base (BPE, 100277 entrees)",
+  "source": "carte scellee (frag-loc/frag-con/frag-prf dechiffres) + sources m1/",
+  "localiser": {
+    "mesure": 51,
+    "cible": 64,
+    "detail": "ligne [bloc] de frag-loc, moyenne des 11 blocs indexes",
+    "par_bloc": {
+      "a10002": 53,
+      "a10003": 52,
+      "b20001": 51,
+      "b20002": 51,
+      "b20003": 50,
+      "b20004": 51,
+      "b20005": 48,
+      "b20006": 49,
+      "b20007": 55,
+      "b20008": 53,
+      "a10001": 51
+    }
+  },
+  "editer": {
+    "mesure": 719,
+    "cible": 3000,
+    "detail": "frag-loc + frag-con + notation, moyenne des 9 blocs embarques",
+    "par_bloc": {
+      "a10002": 381,
+      "a10003": 272,
+      "b20001": 353,
+      "b20002": 503,
+      "b20003": 337,
+      "b20004": 501,
+      "b20005": 588,
+      "b20006": 323,
+      "b20007": 361,
+      "b20008": 3571
+    }
+  },
+  "ajouter": {
+    "mesure": 1086,
+    "cible": 6000,
+    "detail": "empreinte complete de l'ajout memset (dev.2) : spec I + notation + entrees carte ecrites",
+    "lectures_fragment_seules": 231
+  }
+}

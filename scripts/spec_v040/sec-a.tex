@@ -258,13 +258,13 @@ une opération exceptionnelle, non budgétée, journalisée.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Budgets en tokens par opération (inchangés depuis la v0.3, instrumentés dès M1).}
+\caption{Budgets en tokens par opération (localiser amendé à 64 tokens par D31 après la mesure M1 — le gabarit canonique v0.4.0 mesurait 43 tokens en cl100k\_base ; autres budgets inchangés depuis la v0.3).}
 \label{tab:budgets}
 \begin{tabularx}{\textwidth}{@{}Y Y l@{}}
 \toprule
 \textbf{Opération} & \textbf{Données lues} & \textbf{Budget} \\
 \midrule
-Localiser un bloc & frag-loc — une entrée & 40 tokens max \\
+Localiser un bloc & frag-loc — une entrée & 64 tokens max (D31) \\
 Éditer simplement un bloc & frag-loc + frag-con + notation & 3 000 tokens max \\
 Ajouter un bloc & frag-loc + frag-con + seuils frag-prf & 6 000 tokens max \\
 Instancier un profil nouveau & I partagée + frag-con + notation du profil & 6 000 tokens

@@ -27,7 +27,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D26, format normalisé depuis D24) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D31, format normalisé depuis D24) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -52,9 +52,15 @@ I↔C↔B↔tests et tableau de bord — née des pratiques du recodage RoomEq),
 sauvegarde opérationnelle. **Jalon M0 franchi le 26 octobre 2026** (D26) : chaîne
 notation → octets → PE32+ → exécution prouvée sans compilateur — hello.exe (1 536 o,
 sha256 c89e330c…), carte v0 signée Ed25519, verrou croisé fail-closed, exécution
-constatée sur Windows 11. **Prochaine étape : jalon M1** — mini-libc scellée
-(memcpy, memcmp, strlen, itoa, allocateur par zone), première cristallisation,
-adresses stables, première mesure des budgets tokens.
+constatée sur Windows 11. **Jalon M1 : `0.2.0-rc.1` scellée le 26 octobre 2026**
+(D27–D31) — mini-libc de sept blocs + autotest dans `selftest.exe` (9 216 o,
+sha256 8038585b…), réutilisation inter-artefacts octet-identique des blocs io M0
+(R7 démontrée), oracle différentiel Unicorn 76 010 cas/exécution, cristallisation
+11×10/10, suite de conformité du profil verte (68 contrôles), budgets tokens
+mesurés (localiser 51/64, éditer 719/3 000, ajouter 1 086/6 000 — D31), export
+de continuité chiffré au coffre (D16). **Reste : validation terrain Windows 11 de
+`selftest.exe`** (21 lignes `minilibc … OK`, code 0) pour la balise finale `0.2.0`.
+**Ensuite : jalon M2** — patch à chaud sur serveur TCP écho (le jalon de vérité).
 
 ## Avertissement
 

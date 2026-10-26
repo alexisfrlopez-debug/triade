@@ -473,3 +473,80 @@ Stage Summary:
   (reconstruction documentée, D26) ; consigner le choix.
 - Prochaine étape : jalon M1 (mini-libc scellée, première cristallisation,
   adresses stables, première mesure des budgets tokens).
+
+---
+Task ID: 16
+Agent: main (Z.ai, agent principal)
+Task: Terminer le jalon M1 — cristallisation, suite de conformité, instrumentation
+des budgets, scellage rc.1 et export de continuité — après reprise sur troisième
+réinitialisation du bac à sable.
+
+Work Log:
+- Restauré l'état complet depuis la sauvegarde D11 : clone du bundle Drive
+  (méthode A de REPRISE 4.1), jetons .gdrive/ (dossier Tokens), remote GitHub
+  reconfigurée (dépôt synchronisé à c003ea3), environnement Python recréé
+  (keystone, capstone, unicorn, pynacl, argon2, cryptography, pefile, tiktoken).
+- Corrigé demo_r7.py (bug d'offset : le .rdata de hello.exe vit à 0x400 en M0,
+  pas 0x1200 — la comparaison lisait hors bornes) ; la démonstration R7 passe
+  alors intégralement : blocs dev.1 octet-identiques à la même adresse en dev.2,
+  io hérités octet-identiques à hello.exe, memset entré exclusivement dans la
+  réserve int3, structures PE inchangées — verdict R7 DÉMONTRÉ.
+- D30 consignée (troisième réinitialisation, D27 réappliquée) : régénération de
+  triade/.keys/, rebuild M0 et M1 — hello.exe byte-identique (c89e330c…507f2) et
+  selftest.exe byte-identique (8038585b…f3c0), preuve que les secrets perdus
+  n'étaient que l'enveloppe chiffrée ; compteurs de cristallisation repartis à 1.
+- Écrit conformite_profil.py (suite de conformité du profil § 8.2, D22) :
+  68 contrôles constatés depuis l'artefact scellé — ISA/boutisme (structures
+  .rdata décodées little-endian), ABI msx64 (non-volatils poussés avant écriture,
+  shadow space >= 0x28, aucune référence sous RSP, piles équilibrées, args
+  volatils), PE32+ (protections, sections, BASERELOC, entrée zone app), interface
+  IAT (imports exacts, appels indirects vers les 3 slots uniquement, zéro
+  syscall, zéro movabs hors image), notation (round-trip + identité WYSIWYG +
+  corpus M0 exact) et granularité/padding (slots D28, NOP intra-slot, réserve
+  int3, démo R7 dynamique). Élément 5 (patch à chaud) rapporté hors périmètre M1.
+  Verdict : VERTE 68/68.
+- Écrit budgets_tokens.py (critère de sortie M1 : première mesure effective) :
+  mesure sur la carte scellée déchiffrée et les sources réelles, tokenizer
+  tiktoken cl100k_base. Première mesure : localiser 56 tokens — le budget
+  normatif de 40 (spec § 4.3/§ 12) est INATTEIGNABLE : le gabarit canonique
+  v0.4.0 lui-même mesure 43 tokens. Décision soumise au développeur.
+- D31 consignée sur choix du développeur (amender à 64 + alléger) : budget
+  localiser 40 -> 64 tokens dans spec/FORMAT_CARTE/manuel agent/sources LaTeX/
+  verify_spec ; format frag-loc allégé au gabarit § 4.3 + exe= + role= (zone=
+  retiré, dérivable des en-têtes [zones] ; suffixe .exe implicite). Mesure
+  finale : localiser 51 / éditer 719 / ajouter 1 086 — conformes (64/3000/6000) ;
+  budgets.json consigné avec composition et mesures par bloc.
+- Cristallisation R6 exécutée : vérifications graines 4 à 12 (la build graine 3
+  ayant posé le premier compteur) — 10/10 sur les onze blocs, chaque exécution
+  à 76 010 cas différentiels verts (~1,04 M cas cumulés sur la lignée), oracle
+  structurel 134 verrous PASS à chaque passage.
+- Scellé 0.2.0-rc.1 (build_m1.py --sceller-rc) : cristallisation complète +
+  suite de conformité re-exécutée verte ; tableau de bord final régénéré à rc.1
+  (vérification graine 14) avec les trois budgets mesurés.
+- Implémenté export_continuite.py (D16, FORMAT_CARTE § 8) : conteneur TRIADE-EXP1
+  chiffré XChaCha20-Poly1305 (clé Argon2id+HKDF, contexte distinct de la carte)
+  et signé Ed25519 (lignée du projet, vérifiable par la clé publique committée) ;
+  contenu I+B+C+manifeste autodescriptif (contrôles d'export consignés) ; oracle
+  exclu (D1). Auto-verification d'import (5 étapes § 8.2) au vert ; copie de
+  coffre téléversée au racine du dossier Drive + copie download/. m1/export/
+  ajouté au .gitignore.
+- Documentation alignée : m1/README.md créé (carte d'identité du jalon, résultats,
+  procédure de validation terrain rc.1 -> 0.2.0) ; DECISIONS.md D30-D31 ;
+  PROTOCOLE_TRIADE.md, FORMAT_CARTE.md, PROTOCOLE_TRIADE_AGENT.md, sources
+  spec_v040 (budget amendé) ; REPRISE_PROJET.md et PLAN_MILESTONES.md mis à jour ;
+  PDF formel régénéré par la chaîne D17 lors de la sauvegarde systématique.
+
+Stage Summary:
+- M1 est à un critère de la fermeture : 0.2.0-rc.1 scellée (cristallisation
+  11x10/10, conformité 68/68 verte, budgets mesurés conformes, R7 démontré,
+  verrou croisé vert) — reste le constat terrain Windows 11 de selftest.exe
+  (21 lignes minilibc OK, code 0) pour basculer la balise en 0.2.0 finale.
+- L'instrumentation a fait son travail de révélateur : le budget de localisation
+  v0.4.0 était une estimation inatteignable (43 tokens sur le gabarit canonique
+  même) — amendé à 64 avec allègement du format (D31, choix développeur).
+- La continuité du projet ne dépend plus du poste : l'export de continuité
+  chiffré/signé préserve désormais la lignée scellée (compteurs de cristallisation
+  compris) dans le coffre Drive — la perte du bac à sable (D30, troisième
+  occurrence) ne remettra plus les compteurs à zéro.
+- Prochaine étape : validation terrain selftest.exe (développeur), puis M2 —
+  patch à chaud sur serveur TCP écho (le jalon de vérité du protocole).

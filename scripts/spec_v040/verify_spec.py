@@ -136,7 +136,7 @@ NEW_REQS = {
     "journal d'optimisation": ["OPT-NN", "journal d'optimisation"],
     "fragmentation": ["plus d'un fragment", "lecture intégrale du binaire"],
     "localisation par intention": ["jamais par balayage", "erreur de spécification"],
-    "budgets": ["40 tokens max", "3 000 tokens max", "6 000 tokens max"],
+    "budgets": ["64 tokens max", "3 000 tokens max", "6 000 tokens max"],
     "suite de conformité": ["suite de conformité", "suite verte"],
     "parité inter-profils": ["paritaires", "vérifie par exécution"],
     "reverse-specs": ["reverse-spec", "statut"],

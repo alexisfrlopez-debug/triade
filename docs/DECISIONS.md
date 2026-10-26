@@ -421,7 +421,7 @@ D15 (amende D5) illustrent la procédure.
   optionnel laissé au choix du développeur : `echo %ERRORLEVEL%` après exécution
   (attendu : 0).
 
-## Décisions du jalon M1 (D27–D29, 26 octobre 2026)
+## Décisions du jalon M1 (D27–D31, 26 octobre 2026)
 
 ### D27 — Continuité des clés après réinitialisation du bac à sable : régénération et centralisation
 
@@ -526,3 +526,63 @@ D15 (amende D5) illustrent la procédure.
   baseline d'intégrité de l'image est prise APRÈS résolution de l'IAT (le chargeur
   légitime réécrit l'IAT — mesurer avant produirait un faux positif, découvert et
   documenté pendant la mise au point).
+
+### D30 — Troisième réinitialisation du bac à sable : D27 réappliquée, preuves byte-identiques
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : troisième réinitialisation du poste de développement depuis la création
+  du dépôt ; `triade/.keys/` (phrase maîtresse, graine Ed25519 de la lignée D27) est
+  perdu, les cartes M0 et M1 du dépôt redeviennent indéchiffrables — le scénario D27 à
+  l'identique. La reprise s'est faite par la méthode A (clone du bundle Drive), jetons
+  restaurés depuis le dossier « Tokens », remote GitHub reconfigurée.
+- **Choix retenu** : réappliquer D27 telle quelle — régénérer la lignée (`triade/.keys/`)
+  et reconstruire les cartes depuis I + notation. Les preuves de continuité sont
+  constatées : `hello.exe` régénéré byte-identique (sha256 `c89e330c…507f2`) et
+  `selftest.exe` régénéré byte-identique (sha256 `8038585b…f3c0`) — les octets scellés
+  n'ont jamais dépendu des secrets perdus. Les compteurs de cristallisation repartent
+  de 1 (l'ancien frag-prf est indéchiffrable), le protocole R6 exigeant dix
+  vérifications de la nouvelle lignée de toute façon.
+- **Alternatives rejetées** : restaurer la phrase D27 depuis le coffre du développeur
+  (elle ne suffirait pas : la graine Ed25519, jamais confiée, est perdue avec le poste
+  — la signature de la carte aurait dû être régénérée dans tous les cas, et l'attente
+  bloque le jalon, exactement l'alternative déjà rejetée en D27) ; conserver des cartes
+  illisibles dans le dépôt (tableau de bord au rouge, contraire au fail-closed).
+- **Développement** : la nouvelle phrase maîtresse est réaffichée une seule fois au
+  développeur en fin de session, avec l'instruction de coffre immédiat (D27). Le
+  premier **export de continuité** chiffré et signé (D16) est généré dans la même
+  session : c'est le mécanisme prévu pour que la perte du poste n'entraîne plus jamais
+  celle de la lignée — l'export, conservé dans le coffre, restaure l'état complet sur
+  n'importe quel poste conforme.
+
+### D31 — Budget de localisation amendé à 64 tokens : la mesure M1 invalide l'estimation v0.4.0
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : l'instrumentation des budgets (critère de sortie M1, `m1/budgets_tokens.py`,
+  tokenizer de référence tiktoken cl100k_base) mesure la ligne de localisation frag-loc
+  à 56 tokens en moyenne — au-delà du budget normatif de 40 (spec § 4.3, § 12,
+  FORMAT_CARTE § 4.1/§ 7). L'analyse attribue la cause aux deux niveaux : la dérive du
+  format M1 (champs `artefact=`, `zone=` ajoutés par D28 sans mesure) ET, plus
+  fondamentalement, l'estimation v0.4.0 elle-même — le gabarit canonique du § 4.3,
+  pris à la lettre, mesure déjà 43 tokens en cl100k_base : le budget de 40 n'était
+  pas atteignable, même avec une conformité parfaite au gabarit.
+- **Choix retenu** : **amender le budget à 64 tokens** (spec § 12, FORMAT_CARTE § 4.1/§ 7,
+  manuel agent § 4.3/§ 8, PDF formel via D17) ET **alléger le format frag-loc** au
+  gabarit § 4.3 strict + `exe=` + `role=` : `zone=` est retiré (dérivable de l'en-tête
+  `[zones]`), le suffixe `.exe` devient implicite. Ligne mesurée : 48–55 tokens
+  (moyenne 51), marge 13 tokens sous le budget amendé. Les budgets éditer (3 000,
+  mesuré 724) et ajouter (6 000, mesuré 1 091) sont inchangés — l'estimation y était
+  saine.
+- **Alternatives rejetées** : conserver le budget 40 en l'état (inatteignable même par
+  le gabarit canonique : une norme que personne ne peut suivre est une non-norme) ;
+  raccourcir la ligne sous 40 en retirant `role=` ou `cible=` (la localisation par
+  intention exige le nom sémantique, le multi-profils exige le champ profil — rogner
+  la sémantique pour 11 tokens inverse la hiérarchie des priorités au profit du coût
+  en tokens, dernier des quatre objectifs) ; laisser la non-conformité au tableau de
+  bord en attendant la validation terrain (bloque le scellage rc.1 sans apporter
+  d'information nouvelle).
+- **Développement** : le budget amendé reste un plafond, pas une licence : la mesure
+  est consignée dans `m1/budgets.json` (composition détaillée, mesures par bloc) et le
+  tableau de bord affiche désormais les trois métriques mesurées avec leurs cibles.
+  Le tokenizer de référence (cl100k_base) est documenté dans l'outil et le budgets.json
+  pour reproductibilité ; toute future dérive du format frag-loc sera constatée par
+  la même instrumentation, désormais obligatoire à chaque scellage rc/final (§ 8.2).

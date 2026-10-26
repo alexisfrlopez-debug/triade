@@ -55,6 +55,16 @@ def slot(exe: bytes, rva: int, taille: int) -> bytes:
     return exe[L.TEXT_FILE + (rva - L.TEXT_RVA): L.TEXT_FILE + (rva - L.TEXT_RVA) + taille]
 
 
+# hello.exe (M0) et selftest.exe (M1) partagent les RVA (.text 0x1000, .rdata 0x2000)
+# mais PAS les pointeurs fichiers : .rdata @ 0x400 en M0 (m0/build_m0.py),
+# @ 0x1200 en M1 (layout.py). L.RDATA_FILE ne s'applique qu'à selftest.exe.
+RDATA_FILE_M0 = 0x400
+
+
+def slot_rdata_m0(exe: bytes, rva: int, taille: int) -> bytes:
+    return exe[RDATA_FILE_M0 + (rva - L.RDATA_RVA): RDATA_FILE_M0 + (rva - L.RDATA_RVA) + taille]
+
+
 def main() -> int:
     print("=== Démonstration R7 : adresses stables (dev.1 -> dev.2, et héritage M0) ===")
     # Révision dev.1 = le commit qui a introduit m1/selftest.exe
@@ -105,7 +115,7 @@ def main() -> int:
     zone_pe = (L.R_DESC_IMPORT, 0x20D0 - L.R_DESC_IMPORT + 12)
     pe1 = exe1[L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA): L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA) + zone_pe[1]]
     pe2 = exe2[L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA): L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA) + zone_pe[1]]
-    pe0 = hello[L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA): L.RDATA_FILE + (zone_pe[0] - L.RDATA_RVA) + zone_pe[1]]
+    pe0 = slot_rdata_m0(hello, *zone_pe)
     stable_pe = pe1 == pe2 == pe0
     tous_stables &= stable_pe
     print(f"    0x{zone_pe[0]:04x}-0x{zone_pe[0] + zone_pe[1]:04x} : "
