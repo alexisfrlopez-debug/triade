@@ -133,7 +133,9 @@ R_DESC_WS2 = 0x2044         # descripteur ws2_32 (M2) — CONTIGU : le marche d'
                             # (kernel32, ws2_32, terminateur 0x2058) doit etre d'un seul
                             # tenant, le terminateur M1 a 0x2044 est demenage (D33)
 R_NOM_DLL = 0x206C          # "kernel32.dll\0" (demenage de 0x2058, donnee pure)
-R_HN_GSH, R_HN_WF, R_HN_EP = 0x2078, 0x2088, 0x2094   # hints herites demenages (donnee pure)
+R_HN_GSH, R_HN_WF, R_HN_EP = 0x2079, 0x2088, 0x2094   # hints herites demenages
+                            # (donnee pure) — GSH deplacee de 0x2078 (collision
+                            # NUL de 1 octet avec R_NOM_DLL, garde-fou journal 18)
 R_NOM_WS2 = 0x20A4          # "ws2_32.dll\0" (M2)
 R_IAT = 0x20B0              # IAT kernel32 — SCELLÉE : les 3 premiers slots sont
                             # cuits dans a10002/a10003 (R7), l'ordre GSH/WF/EP figé
@@ -177,21 +179,24 @@ WS2_IMPORTS = ["WSAStartup", "socket", "bind", "listen", "accept", "recv",
 
 # --- .rdata : chaînes du serveur (journal + commandes console) ------------------
 
+# Longueurs = octets réels (LF compté) — l'erratum C1 (journal 18) a corrigé
+# l'arithmétique « caractères + CR » qui oubliait le LF ; le garde-fou de
+# chevauchement de build_m2.py (poser) garantit désormais le non-recouvrement.
 R_MSG_BANNIERE = 0x2620     # "TRIADE M2 : serveur echo demarre (port 25000)\r\n" (47)
-R_MSG_CONNEXION = 0x2650    # "connexion entrante\r\n" (19)
-R_MSG_ECHO = 0x2664         # "echo " (5)
-R_MSG_CRLF = 0x266A         # "\r\n" (2)
-R_MSG_PATCH_OK = 0x2670     # "patch applique (majuscules)\r\n" (28)
-R_MSG_RB_OK = 0x2690        # "retour arriere (identite)\r\n" (26)
+R_MSG_CONNEXION = 0x2650    # "connexion entrante\r\n" (20) — fin NUL à 0x2665
+R_MSG_CRLF = 0x2665         # "\r\n" (2) — trou de 3 octets, accès octets (memcpy)
+R_MSG_ECHO = 0x2668         # "echo " (5) — déplacée de 0x2664 (collision NUL, journal 18)
+R_MSG_PATCH_OK = 0x2670     # "patch applique (majuscules)\r\n" (29)
+R_MSG_RB_OK = 0x2690        # "retour arriere (identite)\r\n" (27)
 R_MSG_INCONNU = 0x26B0      # "commande inconnue\r\n" (19)
-R_MSG_REFUS = 0x26C4        # "commande refusee\r\n" (17)
+R_MSG_REFUS = 0x26C4        # "commande refusee\r\n" (18)
 R_MSG_FIN = 0x26D8          # "fin connexion\r\n" (15)
-R_MSG_ARRET = 0x26E8        # "arret\r\n" (6)
-R_MSG_ERREUR = 0x26F0       # "erreur reseau, arret\r\n" (21)
+R_MSG_ARRET = 0x26E8        # "arret\r\n" (7)
+R_MSG_ERREUR = 0x26F0       # "erreur reseau, arret\r\n" (22)
 R_MSG_KO = 0x2708           # "TRIADE M2 : integrite KO, arret\r\n" (33)
-R_CMD_PATCH = 0x2730        # "patch\r\n" (6+CR)
-R_CMD_RB = 0x2738           # "rollback\r\n" (8+CR)
-R_CMD_QUIT = 0x2742         # "quit\r\n" (5+CR)
+R_CMD_PATCH = 0x2730        # "patch\r\n" (5+CR+LF = 7)
+R_CMD_RB = 0x2738           # "rollback\r\n" (8+CR+LF = 10) — fin NUL à 0x2743
+R_CMD_QUIT = 0x2748         # "quit\r\n" (4+CR+LF = 6) — déplacée de 0x2742 (collision NUL, journal 18)
 
 BANNIERE = b"TRIADE M2 : serveur echo demarre (port 25000)\r\n"
 PORT_ECOUTE = 25000         # 0x61A8 — stocké en ordre réseau dans sockaddr

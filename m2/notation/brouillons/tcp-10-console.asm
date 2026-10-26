@@ -29,11 +29,11 @@ call TCP_PATCH
 test eax, eax
 jne .refus
 lea rcx, [rip + MSG_PATCH_OK]
-mov edx, 28
+mov edx, 29
 jmp .journal_statique
 .refus:
 lea rcx, [rip + MSG_REFUS]
-mov edx, 17
+mov edx, 18
 .journal_statique:
 mov r8d, 0xFFFFFFFF
 xor r9d, r9d
@@ -41,11 +41,11 @@ mov qword ptr [rsp + 0x20], 0
 call TCP_JOURNAL
 jmp .boucle
 .pas_patch:
-cmp r12, 9
+cmp r12, 10
 jne .pas_rollback
 lea rcx, [rsp + 0x30]
 lea rdx, [rip + CMD_RB]
-mov r8d, 9
+mov r8d, 10
 call MEMCMP
 test eax, eax
 jne .pas_rollback
@@ -54,7 +54,7 @@ call TCP_PATCH
 test eax, eax
 jne .refus
 lea rcx, [rip + MSG_RB_OK]
-mov edx, 26
+mov edx, 27
 jmp .journal_statique
 .pas_rollback:
 cmp r12, 6

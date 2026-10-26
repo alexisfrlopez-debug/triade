@@ -480,10 +480,20 @@ def composer_sections(code: dict, blocs: list[tuple], phase: int):
     table = b"".join(struct.pack("<IIQ", r, t, s) for r, t, s in entrees)
 
     rdata = bytearray(b"\x00" * L.RDATA_VSIZE)
+    _poses = []          # garde-fou de chevauchement (leçon C1, journal 18) :
+                         # le NUL terminal de MSG_CONNEXION écrasait MSG_ECHO[0]
+                         # — masqué par l'ordre des poser ; désormais refusé.
 
-    def poser(rva: int, donnees: bytes):
+    def poser(rva: int, donnees: bytes, nom: str = ""):
+        fin = rva + len(donnees)
         if rva - L.RDATA_RVA + len(donnees) > L.RDATA_VSIZE:
             raise EchecBuild(f".rdata débordante à {rva:#x} (D33)")
+        for rva_p, fin_p, nom_p in _poses:
+            if rva < fin_p and rva_p < fin:
+                raise EchecBuild(
+                    f"chevauchement .rdata : {nom or hex(rva)} [{rva:#x}, {fin:#x})"
+                    f" recouvre {nom_p} [{rva_p:#x}, {fin_p:#x})")
+        _poses.append((rva, fin, nom or hex(rva)))
         rdata[rva - L.RDATA_RVA: rva - L.RDATA_RVA + len(donnees)] = donnees
 
     hn = lambda nom: struct.pack("<H", 0) + nom.encode("ascii") + b"\x00"
@@ -527,22 +537,22 @@ def composer_sections(code: dict, blocs: list[tuple], phase: int):
     poser(L.R_TAB_SUM, table)
     poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEV2 if phase >= 2 else L.VERSION_U64_DEV1))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
-    for rva, chaine in ((L.R_MSG_BANNIERE, L.BANNIERE),
-                        (L.R_MSG_CONNEXION, b"connexion entrante\r\n"),
-                        (L.R_MSG_ECHO, b"echo "),
-                        (L.R_MSG_CRLF, b"\r\n"),
-                        (L.R_MSG_PATCH_OK, b"patch applique (majuscules)\r\n"),
-                        (L.R_MSG_RB_OK, b"retour arriere (identite)\r\n"),
-                        (L.R_MSG_INCONNU, b"commande inconnue\r\n"),
-                        (L.R_MSG_REFUS, b"commande refusee\r\n"),
-                        (L.R_MSG_FIN, b"fin connexion\r\n"),
-                        (L.R_MSG_ARRET, b"arret\r\n"),
-                        (L.R_MSG_ERREUR, b"erreur reseau, arret\r\n"),
-                        (L.R_MSG_KO, b"TRIADE M2 : integrite KO, arret\r\n"),
-                        (L.R_CMD_PATCH, b"patch\r\n"),
-                        (L.R_CMD_RB, b"rollback\r\n"),
-                        (L.R_CMD_QUIT, b"quit\r\n")):
-        poser(rva, chaine + b"\x00")
+    for rva, chaine, nom in ((L.R_MSG_BANNIERE, L.BANNIERE, "MSG_BANNIERE"),
+                        (L.R_MSG_CONNEXION, b"connexion entrante\r\n", "MSG_CONNEXION"),
+                        (L.R_MSG_ECHO, b"echo ", "MSG_ECHO"),
+                        (L.R_MSG_CRLF, b"\r\n", "MSG_CRLF"),
+                        (L.R_MSG_PATCH_OK, b"patch applique (majuscules)\r\n", "MSG_PATCH_OK"),
+                        (L.R_MSG_RB_OK, b"retour arriere (identite)\r\n", "MSG_RB_OK"),
+                        (L.R_MSG_INCONNU, b"commande inconnue\r\n", "MSG_INCONNU"),
+                        (L.R_MSG_REFUS, b"commande refusee\r\n", "MSG_REFUS"),
+                        (L.R_MSG_FIN, b"fin connexion\r\n", "MSG_FIN"),
+                        (L.R_MSG_ARRET, b"arret\r\n", "MSG_ARRET"),
+                        (L.R_MSG_ERREUR, b"erreur reseau, arret\r\n", "MSG_ERREUR"),
+                        (L.R_MSG_KO, b"TRIADE M2 : integrite KO, arret\r\n", "MSG_KO"),
+                        (L.R_CMD_PATCH, b"patch\r\n", "CMD_PATCH"),
+                        (L.R_CMD_RB, b"rollback\r\n", "CMD_RB"),
+                        (L.R_CMD_QUIT, b"quit\r\n", "CMD_QUIT")):
+        poser(rva, chaine + b"\x00", nom)
     poser(L.R_RELOC, struct.pack("<II", L.TEXT_RVA, 12) + struct.pack("<HH", 0, 0))
 
     data = bytearray(b"\x00" * L.DATA_RAW)    # état serveur nul au chargement
@@ -875,22 +885,25 @@ def fragments_clairs(code: dict, exe: bytes, verrous: list[str], blocs: list[tup
                           L.RDATA_FILE + (L.R_STAGING - L.RDATA_RVA) + 0x80]
             empreinte = sha(tranche)
         else:
-            # blocs hérités non embarqués dans echo.exe : empreinte = tranche
-            # de LEUR artefact scellé (hello.exe / selftest.exe) ; libc-09,
-            # sans artefact hôte, contre sa notation
-            tranche_art = {"a10001": (os.path.join(M0_DIR, "hello.exe"), 0x1000, 0x40),
-                           "b20005": (os.path.join(M1_DIR, "selftest.exe"), 0x1300, 0x80),
-                           "b20006": (os.path.join(M1_DIR, "selftest.exe"), 0x1380, 0x40),
-                           "b20007": (os.path.join(M1_DIR, "selftest.exe"), 0x13C0, 0x80),
-                           "b20008": (os.path.join(M1_DIR, "selftest.exe"), 0x1800, 0x800)}[bid]
-            with open(tranche_art[0], "rb") as f:
-                artefact = f.read()
-            tranche = artefact[L.TEXT_FILE + (tranche_art[1] - L.TEXT_RVA):
-                               L.TEXT_FILE + (tranche_art[1] - L.TEXT_RVA) + tranche_art[2]]
-            empreinte = sha(tranche)
+            # blocs indexés NON embarqués dans echo.exe : libc-09 (aucun
+            # appelant à M2) contre sa notation ; les autres (héritage non
+            # embarqué) contre une tranche de LEUR artefact scellé.
+            # Ordre corrigé (journal 18) : le cas libc-09 précède la recherche
+            # dans tranche_art — sinon KeyError, le dictionnaire ne le porte pas.
             if bid == "c30012":
                 with open(chemin_notation("libc-09-zone-alloc-ts"), "rb") as f:
                     empreinte = "notation:" + sha(f.read())[7:]
+            else:
+                tranche_art = {"a10001": (os.path.join(M0_DIR, "hello.exe"), 0x1000, 0x40),
+                               "b20005": (os.path.join(M1_DIR, "selftest.exe"), 0x1300, 0x80),
+                               "b20006": (os.path.join(M1_DIR, "selftest.exe"), 0x1380, 0x40),
+                               "b20007": (os.path.join(M1_DIR, "selftest.exe"), 0x13C0, 0x80),
+                               "b20008": (os.path.join(M1_DIR, "selftest.exe"), 0x1800, 0x800)}[bid]
+                with open(tranche_art[0], "rb") as f:
+                    artefact = f.read()
+                tranche = artefact[L.TEXT_FILE + (tranche_art[1] - L.TEXT_RVA):
+                                   L.TEXT_FILE + (tranche_art[1] - L.TEXT_RVA) + tranche_art[2]]
+                empreinte = sha(tranche)
         bld.append(f"[bloc] id={bid} addr={L.IMAGE_BASE + rva:#x} empreinte={empreinte}")
     bld += [
         f"[build] artefact=echo.exe version={version} profil=x86-64-win11-pe "
@@ -1117,7 +1130,9 @@ def construire(phase: int, volume: str, graine: int) -> int:
     print(f"[R8] verrou croise : signature OK, racine OK, {nb} empreintes reverifiees, "
           f"artefact {manifeste.get('version')}")
 
-    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="ascii") as f:
+    # UTF-8 (journal 18) : le tableau contient des accents — ascii refusait
+    # l'écriture après un build pourtant vert.
+    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="utf-8") as f:
         f.write(tableau_de_bord(exe, verrous, nb, manifeste, verdict, phase))
     print("[tableau] tableau de bord ecrit (carte/tableau-de-bord.txt)")
     print(f"[B] echo.exe scelle : sha256:{hashlib.sha256(exe).hexdigest()}")
@@ -1172,7 +1187,9 @@ def verifier(graine: int, volume: str) -> int:
     print("[R6] cristallisation : " + ", ".join(f"{b}={n}/10" for b, n in list(crist.items())[:6])
           + (", …" if len(crist) > 6 else ""))
     print(f"[R8] verrou croise : {nb} empreintes conformes ; artefact {manifeste.get('version')}")
-    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="ascii") as f:
+    # UTF-8 (journal 18) : le tableau contient des accents — ascii refusait
+    # l'écriture après un build pourtant vert.
+    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="utf-8") as f:
         f.write(tableau_de_bord(exe, verrous, nb, manifeste, verdict, phase))
     return 0
 

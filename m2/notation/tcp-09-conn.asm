@@ -6,8 +6,8 @@
 ; Code : 200 o · padding : 184 o (NOP)
 ; Étiquettes résolues : .boucle=0x4813, .envoyer=0x4867, .fin=0x488c
 ; Déplacements RIP (cible = adresse + taille + disp) :
-;   0x4840 + 0x7 - 0x21e3 = 0x2664
-;   0x484f + 0x7 - 0x21ec = 0x266a
+;   0x4840 + 0x7 - 0x21df = 0x2668
+;   0x484f + 0x7 - 0x21f1 = 0x2665
 ;   0x4894 + 0x7 - 0x21c3 = 0x26d8
 push rbx
 push r12
@@ -27,10 +27,10 @@ lea rcx, [rsp + 0x30]
 lea rdx, [rsp + 0x30]
 mov r8, r12
 call 0x4600
-lea rcx, [rip - 0x21e3]
+lea rcx, [rip - 0x21df]
 mov edx, 5
 mov r8d, r12d
-lea r9, [rip - 0x21ec]
+lea r9, [rip - 0x21f1]
 mov qword ptr [rsp + 0x20], 2
 call 0x4b00
 xor r13, r13

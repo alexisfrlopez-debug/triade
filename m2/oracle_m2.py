@@ -956,7 +956,10 @@ def emuler_binaire(exe: bytes, phase: int, scenario: str = "nominal"):
             raise EchecOracle(f"binaire : sortie {bytes(em.sortie)!r} != {attendu!r}")
         if em.code_sortie != 0:
             raise EchecOracle(f"binaire : code {em.code_sortie} != 0 (Q4)")
-        if em.threads_crees != [(0x4980, 0), (0x4800, 0x777)]:
+        # tcp-12 passe des adresses ABSOLUES (lea rip + bloc, position-indépendant
+        # D33) : CreateThread reçoit VA réelles (image mappée à IMAGE), pas des RVA
+        # — erratum oracle journal 18 (l'attente était écrite en RVA).
+        if em.threads_crees != [(IMAGE + 0x4980, 0), (IMAGE + 0x4800, 0x777)]:
             raise EchecOracle(f"binaire : threads {em.threads_crees}")
         if len(em.handles_fermes) != 2:
             raise EchecOracle("binaire : handles de threads non fermés (Q2)")
@@ -991,11 +994,26 @@ def porte_r10(exe: bytes, phase: int) -> int:
         mutant[_base_fichier(rva) + 11] ^= 0xFF
         em = Emulateur(bytes(mutant))
         em.installer_shims()
-        em.appeler(0x1800, limite=10_000_000)
-        if bytes(em.sortie) != b"TRIADE M2 : integrite KO, arret\r\n":
-            raise EchecOracle(f"R10 {rva:#x} : sortie {bytes(em.sortie)!r}")
-        if em.code_sortie != 1:
-            raise EchecOracle(f"R10 {rva:#x} : code {em.code_sortie} != 1 (Q1)")
+        crash = None
+        try:
+            em.appeler(0x1800, limite=10_000_000)
+        except _uc.UcError as e:
+            crash = e
+        if rva == L.ENTREE and crash is not None:
+            # Erratum V3 (journal 18) : la porte ne peut pas témoigner de sa
+            # propre corruption — un défaut dans SON code peut la briser avant
+            # son verdict. Le garant testable pour son propre slot : morte
+            # AVANT tout effet (aucun réseau, aucun journal, aucun service).
+            if em.appels_ws2 or bytes(em.sortie):
+                raise EchecOracle(
+                    f"R10 {rva:#x} : effet avant la mort ({bytes(em.sortie)!r})")
+        else:
+            if crash is not None:
+                raise EchecOracle(f"R10 {rva:#x} : crash {crash}")
+            if bytes(em.sortie) != b"TRIADE M2 : integrite KO, arret\r\n":
+                raise EchecOracle(f"R10 {rva:#x} : sortie {bytes(em.sortie)!r}")
+            if em.code_sortie != 1:
+                raise EchecOracle(f"R10 {rva:#x} : code {em.code_sortie} != 1 (Q1)")
         if em.appels_ws2:
             raise EchecOracle(f"R10 {rva:#x} : appel réseau avant la porte (I2)")
         cas += 1

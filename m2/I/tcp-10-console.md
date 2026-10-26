@@ -12,7 +12,7 @@ Contrat :
          P5 la pile du thread est vierge et alignée.
   post : Q1 pour chaque ligne lue (n octets > 0) : « patch\r\n » (n=7) →
              tcp-07 mode 0, journal « patch applique (majuscules) » si
-             code 0, sinon « commande refusee » ; « rollback\r\n » (n=9) →
+             code 0, sinon « commande refusee » ; « rollback\r\n » (n=10) →
              tcp-07 mode 1, journal « retour arriere (identite) » si code 0,
              sinon « commande refusee » ; « quit\r\n » (n=6) → drapeau
              d'arrêt .data (R_QUIT) posé à 1, socket d'écoute fermée
@@ -55,5 +55,8 @@ Vecteurs :
 Fixtures    : chaînes de commandes .rdata (« patch\r\n », « rollback\r\n »,
               « quit\r\n ») et chaînes de journal associées — copie unique
               référencée (D20).
-Provenance  : écrite-avant-code.
+Provenance  : écrite-avant-code. Erratum avant premier build : « rollback\r\n »
+              comptait n=9 (LF oublié) — la fixture D20 « rollback\r\n » fait
+              10 octets ; corrigé après l'échec fail-closed de l'oracle C1
+              sur le premier build dev.1 (journal, tâche 18).
 Décisions   : D7, D8, D20, D33.

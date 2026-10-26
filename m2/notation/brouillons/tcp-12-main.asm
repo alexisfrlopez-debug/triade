@@ -13,9 +13,11 @@ sub r14, 0x2610
 lea rbx, [rip + TAB_SUM]
 .verif:
 mov edx, dword ptr [rbx]
+test edx, edx
+je .verif_ok
 mov r13d, dword ptr [rbx + 4]
 test r13d, r13d
-je .verif_ok
+je .entree_suivante
 mov r12, r14
 add r12, rdx
 xor eax, eax
@@ -27,6 +29,7 @@ cmp rcx, r13
 jb .somme
 cmp rax, qword ptr [rbx + 8]
 jne .integrite_ko
+.entree_suivante:
 add rbx, 16
 jmp .verif
 .verif_ok:
@@ -65,7 +68,7 @@ mov r12, rax
 test rax, rax
 js .accept_echec
 lea rcx, [rip + MSG_CONNEXION]
-mov edx, 19
+mov edx, 20
 mov r8d, 0xFFFFFFFF
 xor r9d, r9d
 mov qword ptr [rsp + 0x20], 0
@@ -83,7 +86,7 @@ cmp qword ptr [rip + QUIT], 0
 jne .arret
 .erreur_reseau:
 lea rcx, [rip + MSG_ERREUR]
-mov edx, 21
+mov edx, 22
 mov r8d, 0xFFFFFFFF
 xor r9d, r9d
 mov qword ptr [rsp + 0x20], 0
@@ -92,7 +95,7 @@ mov ecx, 2
 call EXIT
 .arret:
 lea rcx, [rip + MSG_ARRET]
-mov edx, 6
+mov edx, 7
 mov r8d, 0xFFFFFFFF
 xor r9d, r9d
 mov qword ptr [rsp + 0x20], 0

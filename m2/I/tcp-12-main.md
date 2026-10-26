@@ -73,6 +73,10 @@ Vecteurs :
   V3 : porte R10 : corruption d'UN octet quelconque d'un bloc embarqué →
        sortie « integrite KO » et code 1, AUCUN appel ws2_32 constaté ;
        version < plancher → idem (couvre Q1, E1 — falsification R10).
+       Erratum (journal 18) : pour le slot de LA PORTE ELLE-MÊME, le garant
+       est « morte avant tout effet » (aucun appel réseau, aucun journal) —
+       une porte brisée dans son propre code ne peut pas témoigner de sa
+       corruption ; le verdict formel reste porté par l'oracle externe (D1).
   V4 : test de rejet : toute notation du bloc touchant ws2_32 avant la
        porte R10, ou chargeant une adresse absolue, est refusée (couvre I2,
        I5).

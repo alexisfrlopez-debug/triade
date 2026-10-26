@@ -604,3 +604,82 @@ Stage Summary:
 - Prochaine étape : M2 — patch à chaud sur serveur TCP écho (le jalon de
   vérité) ; premier chantier : specs I des blocs réseau/threads/trampoline,
   écrites avant notation, plan d'adressage étendu (D28).
+
+---
+Task ID: 18
+Agent: main (Z.ai, agent principal)
+Task: Exécuter le premier build M2 (dev.1) laissé en attente par D33 — consigner
+les verdicts réels de la chaîne build/oracle/carte, corriger ce que l'oracle
+refuse, sceller dev.1.
+
+Work Log:
+- Exécuté `build_m2.py --phase 1` sur l'état commité e7c5bb8 : ÉCHEC fail-closed
+  sur l'oracle C1 (console) — journal `commande refusee\r` sans LF + rollback
+  non reconnu. La chaîne avait fonctionné exactement comme prévu : round-trips
+  R5 19/19 à 100 %, oracle structurel 304 verrous verts, PE composé — puis
+  l'émulation a refusé le comportement. Premier verdict réel du jalon de vérité.
+- Audit systématique des chaînes .rdata (scripts/audit_rdata_m2.py) : cause
+  racine = arithmétique « caractères + CR » oubliant le LF. HUIT constantes
+  fausses (tcp-10 : PATCH_OK 28→29, REFUS 17→18, CMD_RB r8d 9→10, cmp r12
+  9→10, RB_OK 26→27 ; tcp-12 : CONNEXION 19→20, ERREUR 21→22, ARRET 6→7) et
+  l'erreur remontait à la couche I : la spec tcp-10:R1 elle-même portait
+  « rollback\r\n » (n=9) — erratum consigné dans la spec (n=10, fixture D20
+  inchangée, aucun contrat scellé touché).
+- Deuxièmes et troisièmes défauts découverts par le garde-fou : les écarts RVA
+  du layout avaient été dimensionnés avec les longueurs fausses — le NUL
+  terminal de MSG_CONNEXION écrasait MSG_ECHO[0], celui de CMD_RB écrasait
+  CMD_QUIT[0] (masqués par l'ordre des `poser` : exactitude accidentelle).
+  Correction : MSG_CRLF 0x266A→0x2665, MSG_ECHO 0x2664→0x2668, CMD_QUIT
+  0x2742→0x2748 ; l'ajout du garde-fou de chevauchement dans `poser` (toute
+  pose recouvrante désormais refusée) a ensuite attrapé une TROISIÈME
+  collision préexistante : R_HN_GSH 0x2078→0x2079 (NUL de "kernel32.dll\0").
+  Notations tcp-09/tcp-10/tcp-12 régénérées par outils/auteur.py.
+- Quatrième défaut (oracle, erratum) : le test binaire attendait les threads
+  console/connexion en RVA (0x4980, 0x4800) alors que tcp-12 passe des
+  adresses ABSOLUES (lea rip + bloc, position-indépendance D33) — CreateThread
+  reçoit des VA réelles sous Windows. Attente corrigée (IMAGE + RVA).
+- Cinquième défaut (le plus grave, couche C) : la porte R10 de tcp-12
+  confondait l'entrée staging (taille 0 en dev.1) avec le terminateur de la
+  table — LA PORTE NE VÉRIFIAIT AUCUN BLOC. Corrigé selon le contrat Q1
+  (« pour chaque entrée de taille non nulle ») : terminaison sur RVA=0,
+  saut des entrées de taille nulle (.entree_suivante), boucle de somme
+  gardée. tcp-12 : 464→468 o.
+- Sixième défaut (oracle, erratum de portée physique) : le test R10 cible
+  0x1800 (la porte elle-même) et exige le message KO — mais une porte brisée
+  dans son propre prologue ne peut pas témoigner (le flip transformait
+  `sub rsp,0x60` en `add [rbx],0x60`, mort avant tout effet). Erratum V3
+  consigné dans la spec tcp-12 : pour son propre slot, le garant testable est
+  « morte avant tout effet » (aucun ws2, aucun journal) ; le verdict formel
+  reste porté par l'oracle externe (D1). Les cinq autres cibles produisent
+  toutes KO + code 1 + zéro appel ws2.
+- Septième et huitième défauts (outils) : KeyError c30012 dans fragments_clairs
+  (le cas libc-09-non-embarqué était codé APRÈS la recherche dans le
+  dictionnaire des artefacts hérités — inatteignable ; ordre inversé) ;
+  tableau de bord écrit en ascii alors qu'il contient des accents (UTF-8).
+- Rebuild final : VERTE. Oracle différentiel 38 522 cas verts, mécanique de
+  patch vérifiée (remplaçant en attente, refus 2 en session), falsification
+  18/18 corruptions détectées, porte R10 6/6 cibles + version < plancher
+  refusée, 305 verrous structurels, R7 : 6 blocs hérités octet-identiques.
+  Carte génération 2 écrite (4 fragments chiffrés, signature Ed25519, 25
+  blocs sur 3 artefacts), verrou croisé OK (24 empreintes).
+- Artefact scellé : echo.exe 15 360 o, sha256
+  c214bf68fd44aca8d80481cebe21fe0a331e49ce35e75d176650213bd5815bc7,
+  version 0.3.0-dev.1.
+
+Stage Summary:
+- M2 dev.1 ACQUIS : le premier build du jalon de vérité a refusé l'état
+  commité, forcé huit corrections traçables (1 erratum de spec, 8 constantes,
+  3 RVA, 1 porte R10 réparée, 2 errata d'oracle, 2 corrections d'outils) puis
+  rendu son verdict vert — la boucle de mise à jour § 5 a fonctionné sur du
+  code vivant dès sa première exécution.
+- Leçon protocole (matière d'évaluation D34) : trois des huit défauts étaient
+  invisibles sans exécution (ordre des poser masquant les collisions, porte
+  court-circuitée, self-corruption de porte) — « le protocole ne promet pas,
+  il vérifie » s'applique aussi au vérificateur : l'oracle a dû corriger ses
+  propres attentes (RVA vs VA, self-test de porte) là où la physique
+  l'exigeait.
+- Garde-fou ajouté : chevauchement .rdata refusé au build (poser) — la classe
+  de défaut « NUL débordant » ne peut plus se reproduire silencieusement.
+- Prochaine étape : dev.2 — diff I tcp-08:R1→R2 (majuscules), brouillon
+  echo-01-v2, `--phase 2` (boucle § 5 : AUCUN octet de code ne bouge, R7),
+  puis cristallisation R8 multi-graines.
