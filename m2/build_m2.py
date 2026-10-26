@@ -1171,7 +1171,13 @@ def verifier(graine: int, volume: str) -> int:
         elif ligne.startswith("  run "):
             journal.append(ligne.strip())
     tous = [bid for bid, _, _, _, _ in blocs] + ["a10001", "c30012"] \
+        + ["b20005", "b20006", "b20007", "b20008"] \
         + (["c30014"] if phase >= 2 else [])
+    # journal 18 : l'héritage non embarqué (b20005-08) était absent de la
+    # liste d'incrémentation — leurs empreintes SONT re-vérifiées à chaque
+    # run par le verrou croisé (R8, tranches hello.exe/selftest.exe) : le
+    # compteur R6 doit suivre, sinon le scellage est bloqué à 1/10 pour
+    # des blocs pourtant reverifiés (asymétrie avec a10001, présent lui).
     for bid in tous:
         compteurs[bid] = min(compteurs.get(bid, 0) + 1, 10)
     journal.append(f"run graine={graine} volume={volume} verdict={verdict['empreinte']} "

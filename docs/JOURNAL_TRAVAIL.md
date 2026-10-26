@@ -683,3 +683,80 @@ Stage Summary:
 - Prochaine étape : dev.2 — diff I tcp-08:R1→R2 (majuscules), brouillon
   echo-01-v2, `--phase 2` (boucle § 5 : AUCUN octet de code ne bouge, R7),
   puis cristallisation R8 multi-graines.
+
+---
+Task ID: 19
+Agent: main (Z.ai, agent principal)
+Task: Boucle § 5 sur code vivant (dev.2), cristallisation R8, conformité 1-7
+(élément 5 dans le périmètre), scellage 0.3.0-rc.1.
+
+Work Log:
+- Diff I matérialisé : tcp-08 révée en révision 2 (Q2 : R2 majuscules
+  courante, R1 identité historique ; Historique documenté — diff limité à la
+  transformation déclarée, contrat stable R4). Brouillon tcp-08-echo-v2
+  écrit (44 o, assemblé POUR la croissance 0x4680, feuille, volatils
+  uniquement, aucune cible de saut dans les 8 premiers octets).
+- Quatre défauts supplémentaires corrigés pendant dev.2, tous consignés :
+  (1) `_octets_fichier` appelé avec 4 args (signature 3) — scénario echo_v2
+  jamais exécuté avant ; (2) scénario g de suite_patch : la falsification
+  staging de l'ORACLE déclenchait le contrôle d'image de l'oracle lui-même —
+  l'octet falsifié est désormais restauré avant verifier_enveloppe ;
+  (3) journal S6 : attente « echo 4/echo 5 » comptée sans le LF (« deux\n »
+  = 5 o, « trois\n » = 6 o) — même arithmétique fautive que C1, côté oracle
+  cette fois ; (4) suite_console : la commande « patch » pilote le VRAI
+  tcp-07 en phase 2 — régions patchables désormais déclarées (en dev.1 le
+  refus n'écrivait rien, le défaut était invisible).
+- DÉCOUVERTE MAJEURE (évaluation du protocole) : le cache de traduction TCG
+  d'Unicorn survit à uc_mem_write — après un patch exécuté (trampoline
+  0x4600 -> v2 0x4680), la restauration d'image par l'API ne réexécute PAS
+  le code restauré : S6 servait les majuscules d'un v2 FANTÔME alors que la
+  mémoire contenait le v1 authentique (constaté octet par octet au
+  débogage). Les écritures faites PAR le code émulé invalident correctement
+  (le rollback passait), seulement celles de l'API mentent. Correction :
+  invalidation systématique des régions exécutables (ctl_remove_cache) dans
+  _ecrire_image. Leçon : un émulateur peut faire mentir un oracle de patch
+  à chaud dans les DEUX sens — le vérificateur doit invalider son propre
+  cache, sinon il teste ses souvenirs et non la mémoire.
+- Build dev.2 VERT : oracle différentiel 50 531 cas verts (contre 38 522 en
+  dev.1), « bascule atomique + rollback EFFECTIFS en émulation (sessions
+  continues) » — la boucle § 5 du protocole est démontrée sur du code
+  vivant : AUCUN octet de code existant ne bouge (R7), le remplaçant vit en
+  staging .rdata et n'atteint .text2 qu'au runtime par tcp-07. echo.exe
+  15 360 o, sha256 fdf89ea8c4165348a1d285e622e1a9a67d40d6cfb27e37f0a66a7bc3d024d4aa,
+  carte génération 2 (26 blocs, 3 artefacts), falsification 18/18.
+- Cristallisation R6 : graines 2-20 — 50 531 cas verts constants, artefact
+  byte-identique, 10/10 sur les 26 blocs. Défaut d'outil corrigé au
+  passage : l'héritage non embarqué (b20005-08) était absent de la liste
+  d'incrémentation R6 — leurs empreintes sont re-vérifiées à chaque run par
+  le verrou croisé (asymétrie avec a10001, présent lui) ; 9 runs
+  complémentaires exécutés.
+- Suite de conformité M2 écrite (conformite_profil.py, 470 o) : les SEPT
+  éléments évalués, l'élément 5 (patch à chaud) ENTRANT dans le périmètre —
+  staging = notation v2 WYSIWYG pour 0x4680, croissance livrée int3,
+  entrée v1 trampolinable (aucune cible de saut dans les 8 premiers
+  octets), table R10 reconstituée égale aux sommes posées (porte honnête),
+  version >= plancher, porte en tête de tcp-12, base par ancre. Deux
+  corrections de la suite elle-même pendant la mise au vert (parseur
+  « rip - » : les appels ws2_32 depuis .text2 sont à déplacement négatif,
+  cas inexistant en M1 ; carte des réserves .text2 : 0x4500 est DANS le
+  slot 0x200 de tcp-07).
+- VERDICT : 124/124 contrôles PASS — VERTE. Balise 0.3.0-rc.1 scellée
+  (immuable § 9 ; défaut -> 0.3.1 à contrat stable R4).
+
+Stage Summary:
+- M2 à un critère de la fermeture : 0.3.0-rc.1 scellée (cristallisation
+  10/10, conformité 124/124, oracle 50 531 cas, boucle § 5 démontrée) —
+  reste la validation terrain Windows 11 de echo.exe par le développeur
+  (serveur écho + console patch/rollback/quit + porte R10).
+- Le jalon de vérité a tenu sa réputation : treize défauts au total
+  (dev.1 + dev.2), dont trois invisibles sans exécution et un piège
+  d'émulateur (cache TCG) qui auraient produit un oracle MENTEUR sans le
+  débogage octet par octet — la discipline fail-closed a transformé chacun
+  en correction traçable.
+- Matière d'évaluation D34 riche : le vérificateur lui-même porte des
+  défauts d'attente (arithmetic LF, RVA vs VA, self-test de porte,
+  régions non déclarées, cache TCG) — « l'oracle aussi doit être vérifié »
+  est une leçon protocole à consigner dans l'évaluation.
+- Prochaine étape : chantier hachoir (m6, D34 échelon 1) — SHA-256 natif
+  ELF64 écrit à la main, parité sha256sum, l'agent utilise TRIADE pour son
+  propre travail.

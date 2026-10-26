@@ -1,4 +1,4 @@
-tcp-08 · écho du serveur (transformation par octet) · révision 1
+tcp-08 · écho du serveur (transformation par octet) · révision 2
 Intention : transformer le tampon reçu en tampon émis, octet par octet, même
 longueur — le cœur métier du serveur écho ET la cible du patch à chaud : le
 bloc est conçu dès R1 pour être remplacé à chaud (entrée alignée 16, contrat
@@ -15,9 +15,10 @@ Contrat :
              comportement) ;
          Q2 les r8 octets de la destination contiennent la transformation
              déclarée de la version active appliquée aux r8 octets de la
-             source : R1 (v1) — transformation identité, dst[i] = src[i] ;
-             R2 (v2) — majuscules ASCII : tout octet dans [0x61, 0x7A] est
-             émis diminué de 0x20, tout autre octet est émis tel quel ;
+             source : R2 (v2, courante) — majuscules ASCII : tout octet dans
+             [0x61, 0x7A] est émis diminué de 0x20, tout autre octet est émis
+             tel quel ; R1 (v1, historique) — transformation identité,
+             dst[i] = src[i] ;
          Q3 aucun octet au-delà de dst+r8 n'est écrit ; la source n'est
              jamais écrite ;
          Q4 r8 = 0 : rax = 0, aucune écriture, aucun accès mémoire.
@@ -55,3 +56,10 @@ Fixtures    : néant (tampons fournis par l'appelant ; l'oracle génère les
               entrées contraintes).
 Provenance  : écrite-avant-code.
 Décisions   : D7, D8, D33 ; R4 (contrat stable), R7 (entrée trampolinable).
+Historique  : R1 (dev.1, identité) révisée en R2 (dev.2) pour la boucle de
+              mise à jour § 5 — le diff se limite à la transformation
+              déclarée en Q2 (identité -> majuscules) ; signature, clauses
+              et invariants inchangés (R4) ; le remplaçant est assemblé POUR
+              la croissance 0x4680, servi par staging .rdata et basculé à
+              chaud par tcp-07 — AUCUN octet de code existant ne bouge
+              (démonstration R7 sur code vivant).

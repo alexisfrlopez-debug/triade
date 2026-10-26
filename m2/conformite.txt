@@ -1,0 +1,1 @@
+verte (conformite_profil.py : elements 1-7 : 124 controles PASS ; element 5 patch a chaud : DANS LE PERIMETRE M2, constate)

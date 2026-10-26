@@ -184,6 +184,14 @@ class Emulateur:
         uc.mem_write(IMAGE + L.RDATA_RVA, exe[L.RDATA_FILE:L.RDATA_FILE + L.RDATA_VSIZE])
         uc.mem_write(IMAGE + L.DATA_RVA, exe[L.DATA_FILE:L.DATA_FILE + L.DATA_RAW])
         uc.mem_write(IMAGE + L.TEXT2_RVA, exe[L.TEXT2_FILE:L.TEXT2_FILE + L.TEXT2_VSIZE])
+        # Journal 18 : uc_mem_write n'invalide PAS les blocs de traduction TCG —
+        # un patch exécuté (trampoline 0x4600 -> v2 0x4680) survivait en cache
+        # à la restauration d'image : le code exécuté n'était plus le code en
+        # mémoire (S6 servait les majuscules d'un v2 fantôme). Invalidation
+        # systématique des régions exécutables après toute écriture d'image
+        # hors exécution (ctl_remove_cache : flush ciblé documenté).
+        uc.ctl_remove_cache(IMAGE + L.TEXT_RVA, IMAGE + L.TEXT_RVA + L.TEXT_VSIZE)
+        uc.ctl_remove_cache(IMAGE + L.TEXT2_RVA, IMAGE + L.TEXT2_RVA + L.TEXT2_VSIZE)
 
     def image_courante(self) -> bytes:
         uc = self.uc
@@ -487,7 +495,7 @@ def suite_echo_v2(em: Emulateur, rng: random.Random, cas: int, exe: bytes):
     l'appel de la croissance produit les majuscules (bornes, sur place)."""
     attendu_notation = assembler_notation(
         os.path.join(ICI, "notation", "tcp-08-echo-v2.asm"), L.ECHO_CROISSANCE)
-    staging = _octets_fichier(exe, L.R_STAGING, 128, "rdata")
+    staging = _octets_fichier(exe, L.R_STAGING, 128)
     if staging != attendu_notation + b"\x90" * (128 - len(attendu_notation)):
         raise EchecOracle("staging .rdata != notation tcp-08-echo-v2 (R5)")
     em.regions_patchables = [(L.ECHO_CROISSANCE, L.ECHO_CROISSANCE + 0x80)]
@@ -536,7 +544,7 @@ def suite_patch(em: Emulateur, exe: bytes, phase: int) -> int:
             raise EchecOracle("dev.1 : entrée echo modifiée sans staging (Q5)")
         return cas + 2
 
-    staging = _octets_fichier(exe, L.R_STAGING, 128, "rdata")
+    staging = _octets_fichier(exe, L.R_STAGING, 128)
 
     # b. application : copie, bascule, protection appariée, état
     em.reinitialiser_donnees()
@@ -594,8 +602,12 @@ def suite_patch(em: Emulateur, exe: bytes, phase: int) -> int:
     # g. staging corrompu -> refus 3 AVANT toute écriture, service v1 préservé
     em.reinitialiser_donnees()
     em.poser_etat()
-    em.uc.mem_write(IMAGE + L.R_STAGING + 7, bytes([staging[7] ^ 0xFF]))
+    # la falsification est le fait de L'ORACLE : restaurée avant le contrôle
+    # d'enveloppe, sinon celui-ci s'alarme de notre propre écriture (journal 18)
+    octet_orig = staging[7]
+    em.uc.mem_write(IMAGE + L.R_STAGING + 7, bytes([octet_orig ^ 0xFF]))
     em.appeler(0x4400, (0,))
+    em.uc.mem_write(IMAGE + L.R_STAGING + 7, bytes([octet_orig]))
     em.verifier_enveloppe(3)
     if bytes(em.uc.mem_read(IMAGE + L.ECHO_ENTREE, 8)) != entree_orig:
         raise EchecOracle("falsification staging : entrée modifiée malgré le refus (Q5)")
@@ -849,7 +861,10 @@ def suite_conn(em: Emulateur, exe: bytes, phase: int) -> int:
         em.verifier_enveloppe()
         if em.envois != [b"un\n", b"DEUX\n", b"trois\n"]:
             raise EchecOracle(f"S6 : cycle patch/rollback en session {em.envois}")
-        if bytes(em.sortie) != b"echo 3\r\necho 4\r\necho 5\r\nfin connexion\r\n":
+        if bytes(em.sortie) != b"echo 3\r\necho 5\r\necho 6\r\nfin connexion\r\n":
+            # journal 18 : longueurs réelles des charges utiles S6 — "deux\n" = 5 o,
+            # "trois\n" = 6 o (l'attente comptait sans le LF, même arithmétique
+            # fautive que le défaut C1).
             raise EchecOracle(f"S6 : journal {bytes(em.sortie)!r}")
         cas += 1
     else:
@@ -875,6 +890,12 @@ def suite_conn(em: Emulateur, exe: bytes, phase: int) -> int:
 def suite_console(em: Emulateur, exe: bytes, phase: int) -> int:
     """tcp-10 — commandes, refus, approximations, quit, fin de flux."""
     em.installer_shims()
+    # journal 18 : en phase 2, la commande « patch » pilote le VRAI tcp-07 —
+    # l'entrée echo et la croissance sont légitimement écrites (régions
+    # déclarées ; en dev.1 le refus n'écrivait rien, le défaut était invisible).
+    if phase >= 2:
+        em.regions_patchables = [(L.ECHO_ENTREE, L.ECHO_ENTREE + 8),
+                                 (L.ECHO_CROISSANCE, L.ECHO_CROISSANCE + 0x80)]
     cas = 0
 
     # C1 : séquence nominale
