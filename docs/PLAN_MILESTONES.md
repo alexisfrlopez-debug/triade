@@ -8,6 +8,9 @@
 > l'universalité (D14). Mis à jour pour la v0.4.0 : conditions transverses d'acceptation
 > (oracle vert, suite de conformité, tableau de bord conforme — spécification § 16) et
 > critères de parité inter-profils (spécification § 8.3).
+>
+> **État : M0 franchi le 26 octobre 2026** (D26 amendée — validation terrain Windows 11
+> constatée). Prochain jalon : **M1**.
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées
@@ -19,7 +22,7 @@ isolée, autorité de certification de test installée localement.
 
 | Jalon | Objectif | Livrables | Critères de sortie |
 |---|---|---|---|
-| M0 | Prouver la chaîne artefact | Éditeur PE32+ minimal ; hello.exe via WriteFile ; carte v0 à trois blocs ; vérificateur de round-trip | Exécution sur Windows 11 ; round-trip 100 % ; carte signée et vérifiée ; moins de 4 Kio. Règles : R1–R3, R8–R9 |
+| M0 | Prouver la chaîne artefact | Éditeur PE32+ minimal ; hello.exe via WriteFile ; carte v0 à trois blocs ; vérificateur de round-trip | Exécution sur Windows 11 ; round-trip 100 % ; carte signée et vérifiée ; moins de 4 Kio. Règles : R1–R3, R8–R9. **Franchi le 26/10/2026** |
 | M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone ; **instrumentation des budgets tokens** | Oracle à 100 % ; première cristallisation ; adresses stables démontrées ; première mesure effective des budgets (localiser/éditer/ajouter). Règles : R5–R7 |
 | M2 | Code actif et patch à chaud | Serveur TCP écho ; thread par connexion ; journal console | Patch du bloc écho pendant exécution, sans interruption ; rollback démontré. Boucle complète |
 | M3 | Entrées non fiables | Proxy HTTP ; parseur à contrats renforcés ; threading du tunnel | Un million de requêtes fuzzées sans crash ; proxy transparent pour curl. Contrats renforcés |
@@ -44,15 +47,15 @@ des critères propres :
 
 ## Jalons charnières
 
-**M0 est le jalon existentiel.** Il prouve que la chaîne notation, octets, exécutable,
-exécution fonctionne de bout en bout sans compilateur, et que la carte rend le résultat
-vérifiable — s'il échoue, le paradigme entier est remis en question avant tout
-investissement supplémentaire. Livrables détaillés : éditeur PE32+ minimal (écriture des
+**M0 est le jalon existentiel — il est franchi.** Il prouvait que la chaîne notation,
+octets, exécutable, exécution fonctionne de bout en bout sans compilateur, et que la
+carte rend le résultat vérifiable. Validation acquise le 26 octobre 2026 (D26 amendée) :
+round-trip 100 %, 31 verrous structurels PASS, artefact `hello.exe` de 1 536 octets
+déterministe, carte v0 signée Ed25519, verrou croisé fail-closed, exécution constatée
+sur Windows 11 (sortie exacte du contrat). Livrables : éditeur PE32+ minimal (écriture des
 en-têtes DOS/COFF/PE32+ et des sections `.text`/`.rdata` par le script de build),
 hello.exe affiché via WriteFile, carte v0 décrivant les trois blocs initiaux, et le
-vérificateur de round-trip keystone/capstone. Critères : exécution constatée sur
-Windows 11, fidélité de round-trip à 100 %, carte signée Ed25519 et verrou croisé vérifié,
-exécutable de moins de 4 Kio.
+vérificateur de round-trip keystone/capstone — le tout dans `m0/`.
 
 **M2 est le jalon de vérité du protocole.** Le patch à chaud sur code en cours d'exécution
 est la capacité qui a motivé l'architecture de balises depuis la première discussion. Sa

@@ -499,7 +499,7 @@ def tableau_de_bord(code: dict, exe: bytes, verrous: list[str], nb_blocs: int, m
         f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D26",
         f"  optimisations_sans_mesure     : 0 : aucun journal d'optimisation a M0 (R11)",
         f"  budgets_tokens                : cible (instrumentation a partir de M1)",
-        f"  suite_conformite_profil       : elements 1,3,4,6,7 verts ; 2 structurel (execution terrain attendue) ; 5 hors perimetre M0",
+        f"  suite_conformite_profil       : elements 1,3,4,6,7 verts ; 2 vert (execution terrain constatee le 2026-10-26, amendement D26) ; 5 hors perimetre M0",
         f"  changements_hors_journal      : 0 : D26 consignee",
         f"  preversions                   : {VERSION_ARTIFACT} conforme (schema dev/rc/final, securite 9)",
         f"  artefact                      : {len(exe)} octets (< 4096) ; empreinte sha256:{sha(exe)[:16]}...",

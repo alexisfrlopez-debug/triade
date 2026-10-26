@@ -5,10 +5,11 @@
 > M0 est le jalon existentiel : s'il échoue, le paradigme entier est remis en
 > question avant tout investissement supplémentaire (PLAN_MILESTONES).
 
-**Statut : M0-dev atteint** (oracle vert, construction 0/0, artefact
-`0.1.0-dev.1` au sens du schéma § 9 de la spécification). La validation terrain
-Windows 11 — exécuter `hello.exe` — reste le critère de sortie qui cloût le
-jalon ; voir « Procédure de validation terrain » ci-dessous.
+**Statut : M0 franchi** — validation terrain Windows 11 constatée le 26 octobre 2026
+(sortie `TRIADE M0 : Hello, Windows 11 !` à l'identique du contrat, amendement D26).
+L'artefact `0.1.0-dev.1` (schéma § 9 de la spécification) est candidat à la
+cristallisation (tag git `v0.1.0` sur demande du développeur, R6) ; voir
+« Procédure de validation terrain » ci-dessous pour le procès-verbal.
 
 ## Résultats mesurés (session du 26 octobre 2026)
 
@@ -22,6 +23,7 @@ jalon ; voir « Procédure de validation terrain » ci-dessous.
 | Carte v0 (R9) | 4 fragments chiffrés XChaCha20-Poly1305, signature Ed25519, empreinte racine consignée |
 | Verrou croisé (R8) | signature + racine + 3 empreintes de blocs revérifiées en relecture indépendante |
 | Falsification | un octet modifié dans `.text` → **échec immédiat** (exit 1, fail-closed) |
+| **Validation terrain Windows 11** | **PASS (26/10/2026)** — machine du développeur, `cmd` : sortie exacte `TRIADE M0 : Hello, Windows 11 !`, retour au prompt sans incident |
 
 ## Structure
 
@@ -118,6 +120,15 @@ fixe) : deux exécutions produisent le même `hello.exe`.
 4. Consigner le résultat au journal des décisions → la balise `0.1.0-dev.1`
    devient candidate à la cristallisation M0 (écart éventuel → patch `0.1.0+1`
    à contrat stable, R4).
+
+**Procès-verbal (26 octobre 2026) : PASS.** Exécuté depuis `cmd` sur la machine
+Windows 11 du développeur (copie `hello.exe` du miroir Drive `TRIADE/m0/`) :
+la ligne `TRIADE M0 : Hello, Windows 11 !` s'affiche à l'identique du contrat,
+retour au prompt sans incident. Empreinte de l'artefact exécuté conforme au
+manifeste frag-bld (sha256 `c89e330c…507f2`, revérifiée localement). Les quatre
+critères de sortie sont acquis ; verdict consigné en amendement à D26. Contrôles
+optionnels au choix du développeur : `echo %ERRORLEVEL%` (attendu 0) et
+`certutil -hashfile hello.exe SHA256` (attendu `c89e330c…507f2`).
 
 ## Limites assumées (consignées D26)
 

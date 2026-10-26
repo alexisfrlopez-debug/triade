@@ -360,9 +360,9 @@ D15 (amende D5) illustrent la procédure.
   comparée au stamp suivi par git, reconstruction intégrale avant chaque commit, échec
   signalé sans bloquer la sauvegarde des sources. Seule la chaîne de production change.
 
-### D26 — Jalon M0 : chaîne artefact implémentée (M0-dev, oracle vert)
+### D26 — Jalon M0 : chaîne artefact implémentée, validée sur le terrain (M0 franchi)
 
-- **Statut** : active · **Date** : 26 octobre 2026
+- **Statut** : active · **Date** : 26 octobre 2026 · **Amendée le** : 26 octobre 2026 (validation terrain)
 - **Contexte** : la révision v0.4.0 étant scellée, la feuille de route désigne M0 comme
   prochaine étape — prouver la chaîne notation → octets → PE32+ → exécution sans
   compilateur sur le profil primaire `x86-64-win11-pe`, avec carte v0 signée et verrou
@@ -404,3 +404,19 @@ D15 (amende D5) illustrent la procédure.
   (le projet survit, pas l'historique chiffré). Le jalon M0 sera franchi après
   exécution constatée sur Windows 11 (critère de sortie) ; tout écart se corrige en
   `0.1.0+1` à contrat stable (R4).
+- **Amendement — validation terrain (26 octobre 2026)** : le développeur a exécuté
+  `hello.exe` sur sa machine Windows 11 (interpréteur `cmd`, copie issue du miroir
+  Drive `TRIADE/m0/`) ; sortie constatée à l'identique du contrat :
+  `TRIADE M0 : Hello, Windows 11 !`, retour au prompt sans incident. Empreinte de
+  l'artefact revérifiée localement après restauration du dépôt : sha256
+  `c89e330cd16f3fd48558ed4fdb6708fb671e6d907547d5c1ee28075ffd6507f2`, conforme au
+  manifeste frag-bld. Les quatre critères de sortie de M0 sont donc acquis —
+  exécution constatée sur Windows 11, round-trip à 100 %, carte signée Ed25519 et
+  verrou croisé vérifié, exécutable de 1 536 octets < 4 Kio. **Le jalon M0 est
+  franchi** : la chaîne notation → octets → PE32+ → exécution fonctionne de bout en
+  bout sans compilateur, le paradigme tient. La balise `0.1.0-dev.1` devient
+  candidate à la cristallisation M0 (tag git `v0.1.0` sur demande du développeur,
+  R6) ; l'étape suivante est M1 — mini-libc scellée, première cristallisation,
+  adresses stables, première mesure effective des budgets tokens. Contrôle
+  optionnel laissé au choix du développeur : `echo %ERRORLEVEL%` après exécution
+  (attendu : 0).

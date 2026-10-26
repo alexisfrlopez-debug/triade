@@ -352,3 +352,120 @@ Stage Summary:
   programmatiques PASS, QA PDF 0 erreur, 5/5 pages validées visuellement,
   audit des affirmations du document original consigné.
 - Prochaine étape inchangée : jalon M0 sur le profil primaire.
+
+---
+Task ID: 13
+Agent: main (Z.ai, agent principal)
+Task: Réviser le protocole en v0.4.0 « gouvernance vérifiée » — intégrer les pratiques
+nées du recodage RoomEq dans le noyau normatif (entrée consignée a posteriori le
+26/10/2026 depuis le commit 28b245c ; la session n'avait pas étendu le journal).
+
+Work Log:
+- Conduit la révision D19-D25 : invariants de révision (D19, la hiérarchie
+  Sécurité > Performance > Optimisation > Coût en tokens devient invariante),
+  couche I normalisée avec gabarit de spécification et taxonomie T1-T6 des
+  défauts de contrat non écrit (D20), R11 optimisation mesurée (D21),
+  conformité par profil avec critères d'acceptation M6/M7 (D22),
+  officialisation des pratiques reverse-specs / pré-versions / fixtures (D23),
+  traçabilité I-C-B-tests + journal des décisions normalisé + tableau de bord
+  (D24).
+- Remplacé la chaîne PDF formelle : LaTeX/Tectonic (scripts/spec_v040/) à la
+  place du générateur ReportLab (D25) ; PDF v0.4.0 régénéré avec 64 contrôles
+  PASS (docs/VERIFICATION_v0.4.0.md) ; archives v0.2/v0.3 conservées.
+- Aligné manuel agent (v0.4.0), README et REPRISE ; build_pdf.sh étendu à la
+  nouvelle chaîne.
+
+Stage Summary:
+- Spécification v0.4.0 scellée : la gouvernance validée par l'étude de cas
+  RoomEq est désormais normative ; REPRISE et manuel agent alignés.
+- Dernier état avant passage à l'implémentation (M0).
+
+---
+Task ID: 14
+Agent: main (Z.ai, agent principal)
+Task: Implémenter le jalon M0 — prouver la chaîne artefact notation -> octets ->
+PE32+ -> exécution sans compilateur (entrée consignée a posteriori le 26/10/2026
+depuis le commit 3a9b47a ; la session n'avait pas étendu le journal).
+
+Work Log:
+- Écrit la couche I du hello (m0/I/hello-01/02/03 au gabarit § 2.2,
+  écrite-avant-code R2) puis la notation x86-64 des trois blocs
+  (m0/notation/, layout fixe à slots de 64 octets, déplacements RIP calculés
+  une fois pour toutes — WYSIWYG intégral, aucun post-patching).
+- Implémenté l'éditeur PE32+ à la main (m0/build_m0.py, 571 lignes) :
+  en-têtes DOS/COFF/PE32+, .text RX / .rdata R, imports kernel32 par IAT
+  (GetStdHandle, WriteFile, ExitProcess), BASERELOC minimal,
+  DYNAMICBASE + HIGH_ENTROPY_VA + NX_COMPAT, artefact déterministe de
+  1 536 octets (sha256 c89e330cd16f3fd48558ed4fdb6708fb671e6d907547d5c1ee28075ffd6507f2).
+- Construit l'oracle M0 : round-trip keystone -> capstone -> keystone à 100 %
+  (18/18 instructions) + 31 verrous structurels générés depuis les contrats I
+  (discipline msx64, appels IAT uniquement, frames équilibrés, cibles RIP
+  sémantiques, ud2 défensif, padding).
+- Implémenté la carte v0 (m0/carte_m0.py) : quatre fragments chiffrés
+  XChaCha20-Poly1305 par dérivation Argon2id 64 Mio/3 it + HKDF, signature
+  Ed25519, empreinte racine ; verrou croisé en relecture indépendante,
+  fail-closed constaté sur falsification d'un octet de .text (exit 1).
+- Validation PE par trois outils indépendants concordants (capstone, pefile,
+  objdump) ; D26 consignée avec alternatives rejetées (post-patching,
+  émulation wine, tag git prématuré) et limites assumées (CFG différé,
+  relocalisations ABSOLUTE, oracle différentiel reporté à M1).
+- Sauvegarde systématique exécutée ; état consigné « M0-dev » en attente de
+  la validation terrain Windows 11 (hello.exe transmis via le miroir Drive).
+
+Stage Summary:
+- Chaîne artefact complète implémentée dans m0/ : le paradigme est
+  opérationnel à échelle hello-world, dans les règles R1-R3 et R8-R9 dès le
+  premier octet.
+- Clés locales (phrase maîtresse, graine Ed25519) gardées hors dépôt
+  (m0/.keys/, jamais commité) ; phrase maîtresse confiée au coffre du
+  développeur.
+- Restait le critère de sortie terrain : exécuter hello.exe sur Windows 11.
+
+---
+Task ID: 15
+Agent: main (Z.ai, agent principal)
+Task: Consigner la validation terrain du jalon M0 — le développeur a exécuté
+hello.exe sur sa machine Windows 11 (cmd : « TRIADE M0 : Hello, Windows 11 ! »)
+— et restaurer le dépôt local après réinitialisation du bac à sable.
+
+Work Log:
+- Reçu le compte rendu terrain du développeur : sortie exacte du contrat
+  affichée (« TRIADE M0 : Hello, Windows 11 ! »), retour au prompt sans
+  incident — quatrième et dernier critère de sortie de M0 acquis.
+- Détecté que le bac à sable local avait été restauré à un état périmé
+  (dernier commit local : 927c4cd, PDF v0.3) alors que GitHub et le Drive
+  portaient l'état réel (v0.4.0 + M0) — le scénario de reprise après sinistre
+  de D11 en conditions réelles.
+- Restauré le dépôt : git fetch origin (927c4cd..3a9b47a) puis reset --hard
+  origin/main ; arbre M0 complet récupéré (m0/, spec_v040/, article_v04/) ;
+  vérifié l'empreinte de l'artefact local : sha256 c89e330c...507f2, conforme
+  au manifeste frag-bld (l'exécutable exécuté par le développeur est bien
+  l'octet scellé).
+- Consigné le verdict : amendement à D26 (validation terrain, M0 franchi,
+  26 octobre 2026) ; m0/README.md (statut, ligne de résultat, procès-verbal
+  de la procédure de validation) ; tableau de bord (élément 2 de la suite de
+  conformité : execution terrain constatee) + gabarit générateur aligné.
+- Mis à jour la documentation d'état : REPRISE_PROJET.md (M0 franchi,
+  arborescence avec m0/, table D1-D26, section 7 réécrite : procès-verbal M0
+  + checklist de démarrage M1 avec décision de continuité des clés) ;
+  PLAN_MILESTONES.md (état M0 franchi) ; README.md (D1-D26, état du projet).
+- Complété le présent journal : entrées 13 et 14 consignées a posteriori
+  (les sessions correspondantes n'avaient pas étendu le journal — écart de
+  gouvernance corrigé, mentions « a posteriori » explicites).
+- Sauvegarde systématique finale (D13/D17) : régénération du PDF formel
+  (DECISIONS.md modifiée), commit, synchro Drive, push GitHub.
+
+Stage Summary:
+- M0 FRANCHI le 26 octobre 2026 : notation -> octets -> PE32+ -> exécution
+  prouvée de bout en bout sans compilateur, carte signée, verrou croisé
+  fail-closed, 1 536 octets < 4 Kio. Le jalon existentiel est acquis — le
+  paradigme tient.
+- L'architecture de continuité D11 a fonctionné en conditions réelles :
+  GitHub + Drive ont survécu à la perte du bac à sable, restauration complète
+  par fetch/reset, empreinte d'artefact vérifiée.
+- Point d'attention pour M1 : m0/.keys/ (phrase maîtresse, graine Ed25519)
+  est local par conception et absent du dépôt — au démarrage de M1, choisir
+  entre restauration depuis le coffre du développeur ou régénération
+  (reconstruction documentée, D26) ; consigner le choix.
+- Prochaine étape : jalon M1 (mini-libc scellée, première cristallisation,
+  adresses stables, première mesure des budgets tokens).
