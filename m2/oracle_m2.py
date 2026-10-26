@@ -199,13 +199,65 @@ class Emulateur:
                 + bytes(uc.mem_read(IMAGE + L.RDATA_RVA, L.RDATA_VSIZE))
                 + bytes(uc.mem_read(IMAGE + L.TEXT2_RVA, L.TEXT2_VSIZE)))
 
+    def _resoudre_iat_chargeur(self):
+        """D35 — modèle du CHARGEUR RÉEL : les adresses résolues sont écrites
+        aux FirstThunk des descripteurs d'import, exactement comme Windows —
+        et non directement aux slots appelés. Le verrou exige ensuite que
+        CHAQUE slot appelé par la notation (IAT_SLOTS) ait reçu son shim :
+        la divergence FirstThunk/slots (défaut rc.1 — le chargeur résolvait
+        à 0x22A0, la notation appelait 0x2300, premier ws2 = call 0 après la
+        bannière) est désormais attrapée par l'oracle, pas par le terrain."""
+        rdata = self.exe[L.RDATA_FILE:L.RDATA_FILE + L.RDATA_VSIZE]
+
+        def cstr(rva: int) -> str:
+            fin = rdata.index(b"\x00", rva - L.RDATA_RVA)
+            return rdata[rva - L.RDATA_RVA:fin].decode("ascii")
+
+        descripteurs = []
+        for rva_desc in (L.R_DESC_IMPORT, L.R_DESC_WS2):
+            oft, _, _, nom_dll, ft = struct.unpack_from(
+                "<IIIII", rdata, rva_desc - L.RDATA_RVA)
+            if oft or ft:
+                descripteurs.append((oft, nom_dll, ft))
+        if not descripteurs:
+            # Image synthétique sans imports (ex. image_libc09 : blocs seuls,
+            # pas un artefact livré) — aucun chargeur à modéliser : pose directe
+            # aux slots appelés, comportement de l'ancien modèle.
+            for nom, faux in FAUX.items():
+                self.uc.mem_write(IMAGE + L.IAT_SLOTS[nom], struct.pack("<Q", faux))
+            return
+        slots_attendus = {}
+        for oft, nom_dll, ft in descripteurs:
+            i = 0
+            while True:
+                hint_rva = struct.unpack_from(
+                    "<Q", rdata, oft - L.RDATA_RVA + 8 * i)[0]
+                if hint_rva == 0:
+                    break
+                nom = cstr(hint_rva + 2)
+                if nom not in FAUX:
+                    raise EchecOracle(
+                        f"chargeur : import inconnu des shims : {nom_dll}!{nom}")
+                self.uc.mem_write(IMAGE + ft + 8 * i, struct.pack("<Q", FAUX[nom]))
+                slots_attendus[nom] = ft + 8 * i
+                i += 1
+        # verrou : chaque slot appelé par la notation est résolu, À SA PLACE
+        # (le descripteur doit viser les slots appelés — divergence = T3, D35)
+        for nom, rva in L.IAT_SLOTS.items():
+            if nom not in slots_attendus:
+                continue          # DLL absente de l'image : slot jamais appelé
+            val = struct.unpack("<Q", self.uc.mem_read(IMAGE + rva, 8))[0]
+            if val != FAUX[nom] or slots_attendus[nom] != rva:
+                raise EchecOracle(
+                    f"chargeur/D35 : slot {nom} @{rva:#x} non résolu ({val:#x}) — "
+                    "FirstThunk divergent des slots appelés par la notation (T3)")
+
     def reinitialiser_donnees(self):
-        """Image restaurée depuis l'exe, .data vierge, IAT sur les shims,
-        journaux et scripts remis à zéro."""
+        """Image restaurée depuis l'exe, .data vierge, IAT résolue PAR LE
+        MODÈLE CHARGEUR (D35), journaux et scripts remis à zéro."""
         self._ecrire_image(self.exe)
         self.uc.mem_write(IMAGE + L.DATA_RVA, b"\x00" * L.DATA_VSIZE)
-        for nom, faux in FAUX.items():
-            self.uc.mem_write(IMAGE + L.IAT_SLOTS[nom], struct.pack("<Q", faux))
+        self._resoudre_iat_chargeur()
         self.sortie = bytearray()          # stdout (WriteFile)
         self.envois: list[bytes] = []      # socket (send)
         self.code_sortie = None

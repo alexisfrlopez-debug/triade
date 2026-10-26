@@ -26,6 +26,16 @@ EXTENSION M2 (quatrième section, D33) :
     entrée sauvegardée, section critique) — la zone 0x3000-0x37FF (curseur +
     arène) reste à l'identique.
 
+CORRECTIF rc.2 (D35) :
+  - le descripteur ws2_32 portait FirstThunk = 0x22A0 alors que la notation
+    appelle les slots 0x2300-0x2348 : sur le terrain, le chargeur résolvait
+    les adresses à 0x22A0 et le premier appel WSAStartup lisait un slot NUL
+    (call 0 — crash juste après la bannière, invisible à l'oracle dont les
+    shims écrivaient directement aux slots). R_IAT_WS2 devient 0x2300 (la
+    pré-IAT est posée aux slots appelés, convention kernel32), les hints
+    ws2_32 déménagent 0x2310 -> 0x2360 (données pures) ; aucun octet de
+    code ne bouge (R7), version u64 0x00030002 -> 0x00030003 (monotonie).
+
 PATCH À CHAUD (§ 7.4, jalon M2) :
   - le bloc echo-01 (cible) @ 0x4600 : entrée alignée 16 — 8 premiers octets
     remplaçables par E9 rel32 + NOP×3, un qword aligné unique, écriture
@@ -72,10 +82,12 @@ DLL_CHARACTERISTICS = L1.DLL_CHARACTERISTICS   # DYNAMICBASE | HEVA | NX
 VERSION_DEV1 = "0.3.0-dev.1"   # serveur + patch mécanique, staging vide
 VERSION_DEV2 = "0.3.0-dev.2"   # boucle § 5 : echo-01:R2 (majuscules) en staging
 VERSION_RC1 = "0.3.0-rc.1"     # cristallisation + conformité 1-7 verte
+VERSION_RC2 = "0.3.0-rc.2"     # correctif D35 : FirstThunk ws2_32 -> slots appelés
 VERSION_FINALE = "0.3.0"       # validation terrain constatée — balise immuable § 9
 
 VERSION_U64_DEV1 = 0x00030001  # R10 : monotonie de version (anti-rollback)
 VERSION_U64_DEV2 = 0x00030002
+VERSION_U64_RC2 = 0x00030003   # D35 : génération corrigée (u64 monotone)
 VERSION_U64_MIN = 0x00030000   # plancher accepté par la porte R10
 
 # --- Blocs embarqués dans echo.exe (couche C, génération 2) --------------------
@@ -150,8 +162,12 @@ R_HN_LCS = 0x21C3
 R_HN_RF = 0x21DA
 R_HN_CH = 0x21E5
 R_INT_WS2 = 0x2240          # INT ws2_32 (11 qwords)
-R_IAT_WS2 = 0x22A0          # IAT ws2_32 (11 qwords)
-R_HN_WS2 = 0x2310           # hints ws2_32 (10 entrées)
+R_IAT_WS2 = 0x2300          # IAT ws2_32 (FirstThunk — D35 : les slots appelés
+                            # par la notation, pré-remplis des RVA de hints
+                            # puis réécrits par le chargeur ; l'ancienne
+                            # pré-IAT morte de 0x22A0 disparaît)
+R_HN_WS2 = 0x2360           # hints ws2_32 (10 entrées) — déménagés de 0x2310
+                            # (D35 : la pré-IAT occupe désormais 0x2300-0x2358)
 R_STAGING = 0x23D0          # staging du remplaçant echo-01:R2 (128 o ; int3 si absent)
 R_TAB_SUM = 0x2450          # porte R10 : (rva u32, taille u32, somme u64)* + terme
 R_VERSION = 0x2600          # qword version (R10, monotonie)

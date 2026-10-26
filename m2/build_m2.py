@@ -535,7 +535,11 @@ def composer_sections(code: dict, blocs: list[tuple], phase: int):
     # Staging, porte R10, version, ancre, chaînes
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEV2 if phase >= 2 else L.VERSION_U64_DEV1))
+    # D35 : la génération courante de phase 2 est le correctif rc.2 — la
+    # version u64 monte (0x00030002 -> 0x00030003, monotonie R10) et le
+    # descripteur ws2_32 est réaligné sur les slots appelés (R_IAT_WS2,
+    # posé plus haut aux slots 0x2300+ avec sa pré-IAT).
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEV1 if phase < 2 else L.VERSION_U64_RC2))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     for rva, chaine, nom in ((L.R_MSG_BANNIERE, L.BANNIERE, "MSG_BANNIERE"),
                         (L.R_MSG_CONNEXION, b"connexion entrante\r\n", "MSG_CONNEXION"),
@@ -632,6 +636,13 @@ def valider_pe(exe: bytes, phase: int):
     for entree in pe.DIRECTORY_ENTRY_IMPORT:
         imports[entree.dll.decode().lower()] = [i.name.decode() for i in entree.imports]
     assert imports == {"kernel32.dll": L.KERNEL32_IMPORTS, "ws2_32.dll": L.WS2_IMPORTS}, imports
+    # D35 — verrou chargeur réel : chaque descripteur doit porter son FirstThunk
+    # sur les slots que la notation appelle (fail-closed sur la divergence qui
+    # rendait rc.1 inutilisable sur le terrain).
+    for entree in pe.DIRECTORY_ENTRY_IMPORT:
+        ft_attendu = L.R_IAT if entree.dll.decode().lower() == "kernel32.dll" else L.R_IAT_WS2
+        assert entree.struct.FirstThunk == ft_attendu, \
+            f"FirstThunk {entree.dll.decode()} = {entree.struct.FirstThunk:#x} != {ft_attendu:#x} (D35)"
     assert len(exe) == L.TAILLE_FICHIER, "taille de fichier inattendue"
     # Zone trampolinable et croissance : int3 dans l'image livrée
     assert exe[L.TEXT_FILE] == 0xCC                                    # 0x1000 réservé
@@ -1090,14 +1101,20 @@ def construire(phase: int, volume: str, graine: int) -> int:
              if "artefact=echo.exe" in l), None)
         if version_existante and ("-rc" in version_existante
                                   or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
-            raise EchecBuild(
-                f"carte scellée ({version_existante}) : reconstruction interdite — "
-                f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+            # Amendement D35 : la reconstruction est autorisée EXACTEMENT pour
+            # le correctif rc.1 -> rc.2 (FirstThunk ws2_32, diff .rdata pur) —
+            # toute autre reconstruction d'une balise scellée reste interdite.
+            if not (version_existante == L.VERSION_RC1):
+                raise EchecBuild(
+                    f"carte scellée ({version_existante}) : reconstruction interdite — "
+                    f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+            print(f"[D35] reconstruction autorisée : {version_existante} -> {L.VERSION_RC2} "
+                  f"(correctif FirstThunk ws2_32, contrat stable R4, diff .rdata pur)")
     except (cm.ErreurCarte, FileNotFoundError):
         pass
 
     blocs, specs, code, verrous = assembler_tout(phase)
-    version = L.VERSION_DEV1 if phase == 1 else L.VERSION_DEV2
+    version = L.VERSION_DEV1 if phase == 1 else L.VERSION_RC2   # D35 : génération corrigée
 
     texte, rdata, data, text2, staging = composer_sections(code, blocs, phase)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
@@ -1223,12 +1240,12 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
         raise EchecBuild(f"suite de conformite non verte — {nouvelle_version} refuse")
 
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("ascii")
-    ancienne = (L.VERSION_DEV1 + "|" + L.VERSION_DEV2 + "|" + L.VERSION_RC1) \
+    ancienne = (L.VERSION_DEV1 + "|" + L.VERSION_DEV2 + "|" + L.VERSION_RC1 + "|" + L.VERSION_RC2) \
         if nouvelle_version == L.VERSION_FINALE else (L.VERSION_DEV1 + "|" + L.VERSION_DEV2)
     occurrences = sum(bld.count(f"version={v}") for v in ancienne.split("|"))
-    if nouvelle_version == L.VERSION_FINALE and occurrences != 1:
-        raise EchecBuild(f"balise {L.VERSION_RC1} attendue une fois dans frag-bld "
-                         f"({occurrences} occurrence(s)) — scellage final refuse (fail-closed)")
+    if nouvelle_version == L.VERSION_FINALE and bld.count(f"version={L.VERSION_RC2}") != 1:
+        raise EchecBuild(f"balise {L.VERSION_RC2} attendue une fois dans frag-bld "
+                         f"({bld.count(f'version={L.VERSION_RC2}')} occurrence(s)) — scellage final refuse (fail-closed)")
     for v in ancienne.split("|"):
         bld = bld.replace(f"version={v}", f"version={nouvelle_version}")
     clairs = {"frag-bld": bld.encode("ascii")}
@@ -1252,7 +1269,7 @@ if __name__ == "__main__":
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
             sys.exit(verifier(graine, volume))
         if "--sceller-rc" in args:
-            sys.exit(_sceller(L.VERSION_RC1, "cristallisation R6 + conformite 1-7"))
+            sys.exit(_sceller(L.VERSION_RC2, "cristallisation R6 + conformite 1-7 + correctif D35"))
         if "--sceller-final" in args:
             sys.exit(_sceller(L.VERSION_FINALE, "R6 + conformite + constat terrain"))
         phase = int(args[args.index("--phase") + 1]) if "--phase" in args else 1

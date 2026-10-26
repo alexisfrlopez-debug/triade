@@ -946,3 +946,67 @@ Stage Summary:
   puis courbe (dev.3) et vérification Ed25519 complète (rc.1) : sceau
   vérifiera alors les cartes du projet par du code machine nu —
   l'échelon 2 complet, pynacl rétrogradé au rôle de contre-vérificateur.
+
+## Journal 22 — D35 : défaut IAT ws2_32 découvert et corrigé (rc.2) ; jalon démo posé (demo.exe GUI, un clic)
+
+- DÉFAUT DÉCOUVERT PAR REVUE CROISÉE avant toute réutilisation des blocs
+  scellés (R7) : le descripteur d'import ws2_32 d'echo.exe 0.3.0-rc.1 portait
+  FirstThunk = 0x22A0 alors que la notation appelle les slots 0x2300-0x2348 —
+  dans le binaire livré ces slots contiennent des ZÉROS : sur Windows réel le
+  chargeur résout à 0x22A0 et le premier WSAStartup exécute call [0x2300] =
+  call 0 → crash JUSTE APRÈS la bannière (qui s'imprime avant tcp-01). Le
+  constat terrain du 26/10 était donc partiel au sens strict. L'oracle ne
+  pouvait pas le voir : ses shims écrivaient directement aux slots appelés —
+  un modèle du chargeur divergent, invisible différentiellement (T3 + défaut
+  d'oracle). Taxonomie et correctif consignés en D35.
+- CORRECTIF rc.2 : FirstThunk ws2_32 -> 0x2300 (pré-IAT posée aux slots
+  appelés, convention kernel32), hints ws2 déménagés 0x2310 -> 0x2360,
+  version u64 0x00030002 -> 0x00030003. Diff 100 % .rdata : AUCUN octet de
+  code ne bouge (R7). L'oracle gagne le verrou « modèle chargeur réel »
+  (résolution aux FirstThunk + couverture exacte des slots appelés) — test
+  négatif : rc.1 est attrapé immédiatement. Reconstruction + cristallisation
+  10/10 (graines 2-10) + conformité 124/124 VERTE : 0.3.0-rc.2 scellée,
+  sha256:085c1fb1136fc7c38b8132e49e8c1055d3d8c5ae62cc62aef1dca2b75f960730.
+- JALON DÉMO posé (demo/, lignée 0.3.0-demo.1, génération carte 4) :
+  demo.exe, PE32+ WINDOWS_GUI écrit à la main, 15 360 o, sous-système
+  graphique, imports kernel32 x11 (+GetModuleHandleW), ws2_32 x11 (+connect,
+  FT = slots appelés, correctif D35 intégré dès la première génération),
+  user32 x14, gdi32 x1. Couche I d'abord (R1-R3) : 10 specs win-01..win-10
+  écrites-avant-code (gabarit v0.4). Notation : 10 blocs d4xxxx (2 694 o de
+  code) — fenêtre, boucle de messages, procédure, journal graphique UTF-16,
+  autotest (porte R10 + 4 vecteurs libc), client TCP, serveur d'acceptation,
+  échange vérifié, scénario complet. Héritage embarqué octet-identique
+  (R7 prouvé contre les 3 artefacts scellés) : io M0, libc M1, tcp-01..09,
+  tcp-11, staging echo-01:R2 — la boucle § 5 RÉUTILISÉE telle quelle.
+- LA DÉMONSTRATION EN UN CLIC : fenêtre + journal + bouton unique → porte
+  R10, vecteurs libc, mécanique patch v1→v2→v1 (memcmp à chaque étape),
+  serveur réel sur 127.0.0.1:25000 (thread), client, échange exact, patch EN
+  PRODUCTION pendant le trafic (réponse MAJUSCULES reçue en direct),
+  rollback réseau, arrêt propre (fermetures + R_QUIT) — 11 lignes de preuve.
+- ORACLE DÉMO (Unicorn, modèle chargeur D35) : 49 cas verts — win-05/06/07/08
+  ciblés + scénario win-09 COMPLET (journal exact ligne à ligne, patch
+  RÉELLEMENT exécuté en émulation : bascule du qword 0x4600, trampoline vers
+  0x4680, rollback, entrée restaurée, arrêt propre constaté) + falsification
+  27/27 blocs (octets 11/23, zéro silence). L'oracle a attrapé un VRAI défaut
+  d'appelant pendant le développement : le scénario comparait eax (volatile)
+  après un appel au journal qui le détruisait — verdict désormais sauvé en
+  r12d ; c'est exactement le rôle de l'oracle.
+- VERROUS : structurel 467 PASS (autorisations PAR BLOC I1/I2, pile alignée,
+  padding, pas de syscall, zones trampolinables héritées). Carte génération 4
+  (sel Argon2id lignée démo distincte, clés projet D27) : 27 empreintes,
+  signature Ed25519, verrou croisé R8 vert ; re-vérification --verifier
+  graine 2 VERTE (cristallisation 2/10 enclenchée).
+- Livraison : demo.exe + echo-0.3.0-rc2.exe + LISEZMOI au téléchargement.
+  demo.exe : sha256:dbf7dd6f1e44d17767a14ac4f0cbd04b4d40aca34d7830c9365bfc9769f1a29a
+
+Stage Summary:
+- D35 : défaut livrable rc.1 (call 0 après bannière) découvert, consigné,
+  corrigé en rc.2 scellée — l'oracle modélise désormais le chargeur RÉEL
+  (divergence oracle/terrain désormais attrapée, pas seulement les octets).
+- La démonstration complète M2 existe EN UN CLIC, 100 % TRIADE (specs
+  d'abord, notation à la main, PE32+ à la main, héritage octet-identique,
+  carte signée, oracle vert, falsification zéro silence).
+- Prochaine étape : validation terrain de demo.exe sur Windows 11 (elle
+  fournit le constat complet écho+patch+rollback attendu pour le scellage
+  final 0.3.0) ; puis M3 (entrées non fiables) et, en parallèle D34, sceau
+  dev.2 (f25519).

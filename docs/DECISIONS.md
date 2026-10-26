@@ -740,3 +740,68 @@ D15 (amende D5) illustrent la procédure.
   RFC 8032) sont POSÉES écrite-avant-code — dev.2+ : notations, oracle
   contre Python rétrogradé en RÉFÉRENCE, puis vérification des cartes du
   projet par code machine nu.
+
+### D35 — Défaut champ IAT ws2_32 dans echo.exe 0.3.0-rc.1 : correctif rc.2 et démonstration graphique en un clic
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : demande du développeur : un `.exe` à interface graphique réalisant
+  la démonstration complète M2 « en un clic », TRIADE utilisé partout où possible,
+  chaque expérience servant à améliorer le protocole en continu. La revue croisée
+  préalable à toute réutilisation des blocs scellés (discipline R7 : vérifier les
+  octets avant de les embarquer) a exposé un défaut livrable dans `echo.exe`
+  0.3.0-rc.1 : le descripteur d'import ws2_32 porte `FirstThunk = 0x22A0` alors que
+  la notation scellée appelle les slots `0x2300-0x2348` — dans le binaire livré,
+  ces slots contiennent des zéros. Le chargeur Windows résout les adresses à
+  l'adresse pointée par `FirstThunk` : au premier appel `WSAStartup` (tcp-01),
+  l'exécutable effectue `call qword ptr [0x2300]` = `call 0` et se termine sur
+  violation d'accès — immédiatement APRÈS la bannière, qui s'imprime avant
+  l'initialisation réseau. Le constat terrain du 26/10 était donc PARTIEL au sens
+  strict : il prouvait la bannière et la porte R10 (kernel32 : descripteur FT
+  0x20B0 correct), pas le service. L'oracle ne pouvait pas attraper le défaut :
+  ses shims écrivaient directement aux adresses `IAT_SLOTS` (0x2300+), modélisant
+  un chargeur qui écrit là où le code appelle — une hypothèse d'environnement
+  fausse, invisible différentiellement puisque partagée par l'oracle et le défaut.
+- **Taxonomie (T1-T6)** : défaut de type **T3** (contrat incohérent entre couches) —
+  la couche I du profil déclare l'IAT ws2_32 aux slots 0x2300+ (I1 de tcp-01) mais
+  le binaire livré ne satisfait pas la pré-condition de résolution du chargeur
+  (FirstThunk ≠ slots appelés) ; aggravé d'un **défaut d'oracle** (modèle
+  d'environnement non dérivé de I : la correspondance descripteur→slots n'était
+  vérifiée par personne — la leçon D34 « l'écart ne se ferme que par l'exécution »
+  s'applique aussi au modèle du chargeur).
+- **Choix retenu** : (1) correctif `0.3.0-rc.2` à contrat stable (R4) —
+  `FirstThunk` ws2_32 réaligné sur 0x2300, pré-IAT posée aux slots appelés
+  (convention kernel32), hints ws2_32 déménagés 0x2310 → 0x2360 et version u64
+  0x00030002 → 0x00030003 (monotonie R10) : le diff est intégralement en `.rdata`,
+  données pures, AUCUN octet de code ne bouge (R7 préservé, tranches tcp
+  octet-identiques) ; le garde-fou anti-rollback est amendé pour autoriser
+  exactement rc.1 → rc.2 (toute autre reconstruction reste interdite) ; l'oracle
+  gagne un verrou « chargeur réel » : chaque descripteur d'import doit avoir son
+  `FirstThunk` sur les slots que la notation appelle (fail-closed sur la
+  divergence oracle/terrain). (2) La démonstration demandée devient le véhicule de
+  validation du correctif : `demo.exe` (jalon démo, `demo/`), exécutable
+  WINDOWS_GUI PE32+ à la main embarquant les blocs scellés M0/M1/M2
+  octet-identiques (io, libc, tcp-01..09, tcp-11, staging echo v2) + neuf blocs
+  nouveaux `win-01..win-09` (fenêtre, boucle de messages, procédure, journal
+  graphique, autotest porte R10+libc, client TCP, serveur d'acceptation,
+  scénario complet) — un clic exécute : porte R10 → vecteurs libc → mécanique
+  patch/rollback hors réseau → serveur écho local → client → boucle § 5 complète
+  (patch EN PRODUCTION pendant le trafic, retour arrière, vérifications byte à
+  byte) → arrêt propre. Sous-système WINDOWS_GUI (le journal TCP hérité échoue
+  proprement sans console ; handles stdout/stdin mis en cache si une console
+  existe). Imports étendus : user32 ×14, gdi32 ×1, kernel32 ×11 (+GetModuleHandleW),
+  ws2_32 ×11 (+connect) — l'IAT ws2_32 de la démo porte le correctif D35 dès la
+  première génération.
+- **Alternatives rejetées** : garder 0x22A0 comme FirstThunk et réécrire la
+  notation des six blocs tcp vers 0x22A0 (interdit : R7 — déplacer les cibles
+  d'appels IAT des blocs scellés ; et le désordre table/slots serait persistant) ;
+  corriger seulement la démo et laisser rc.1 en référence (rejeté : la balise de
+  référence du jalon de vérité ne peut pas porter un artefact qui crash au premier
+  appel réseau — la correction est précisément le mécanisme prévu par R4) ;
+  rétrograder le défaut en « note » sans nouvelle pré-version (rejeté : le scellage
+  final 0.3.0 exige un artefact sain ; toute balise est immuable mais la lignée
+  avance — dev.1 → dev.2 → rc.1 → rc.2).
+- **Développement** : le correctif et la démo sont consignés au journal de travail
+  (entrées 22-23) ; la cristallisation rc.2 repart à zéro (10/10 exigés avant
+  scellage, R6) ; la suite de conformité est re-exécutée au scellage. La preuve
+  terrain complète (écho + patch + rollback + console) sera fournie par la
+  démonstration graphique elle-même, en un clic, sur la machine du développeur.
