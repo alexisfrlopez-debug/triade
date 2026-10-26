@@ -12,8 +12,13 @@
 > **État : M0 franchi le 26 octobre 2026** (D26 amendée — validation terrain Windows 11
 > constatée). **Jalon M1 franchi le 26 octobre 2026** (D32 — validation terrain
 > Windows 11 constatée : ligne unique `TRIADE M1 : minilibc 21/21 OK`, contrat
-> libc-08 Q2 ; balise finale **`0.2.0`** scellée, immuable § 9). Jalon en cours :
-> **M2** (patch à chaud — le jalon de vérité).
+> libc-08 Q2 ; balise finale **`0.2.0`** scellée, immuable § 9). **M2 à la balise
+> 0.3.0-rc.1** (boucle § 5 démontrée, conformité 124/124 ; constat terrain PARTIEL
+> du 26/10 : bannière exacte et porte R10 vivantes sous Windows 11 — le scellement
+> final attend la démonstration écho + console). En parallèle (D34, anticipation
+> restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir, `m6/`),
+> échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de nommage,
+> les jalons M6/M7 du plan restent inchangés).
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées

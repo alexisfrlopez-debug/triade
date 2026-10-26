@@ -7,7 +7,7 @@
 
 - Dernière mise à jour : 26 octobre 2026
 - Version de la spécification : v0.4.0 (gouvernance vérifiée — figée pour le démarrage du jalon M0 ; budget de localisation amendé à 64 tokens par D31)
-- État général : conception terminée, infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), **jalons M0 et M1 franchis** (validations terrain Windows 11 constatées) — M1 clos à la **balise finale `0.2.0`** (D32 : ligne unique `TRIADE M1 : minilibc 21/21 OK`, cristallisation 11×10/10, conformité 68/68, budgets mesurés, adresses stables démontrées) ; **étape en cours : M2** (patch à chaud sur serveur TCP écho — le jalon de vérité)
+- État général : conception terminée, infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), **jalons M0 et M1 franchis** (validations terrain Windows 11 constatées) — M1 clos à la **balise finale `0.2.0`** (D32 : ligne unique `TRIADE M1 : minilibc 21/21 OK`, cristallisation 11×10/10, conformité 68/68, budgets mesurés, adresses stables démontrées) ; **M2 à la balise 0.3.0-rc.1** (boucle § 5 démontrée, conformité 124/124 ; constat terrain PARTIEL : bannière et porte R10 vivantes sous Windows 11, démonstration écho/console attendue pour le scellement final 0.3.0) ; **chantier lignée sceau `m7/` : échelon 2 de l'échelle d'auto-hébergement D34** (vérification native — SHA-512 natif scellé 0.8.0-dev.1, Ed25519 en cours ; NB : `m7/` est un emprunt de nommage au sens D34/m6, le jalon M7 RISC-V du plan reste inchangé)
 
 ---
 

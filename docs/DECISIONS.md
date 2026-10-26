@@ -721,3 +721,22 @@ D15 (amende D5) illustrent la procédure.
   digest faux partout ; jbe/jb : crash sur toute taille multiple de 64) que
   l'œil de l'auteur avait ratés — l'écart « intention écrite vs octets exécutés »
   ne se ferme que par l'exécution, jamais par la relecture.
+  **Échelon 2, PHASE 1 le 26/10/2026 (journal 21)** : sceau 0.8.0-dev.1 scellé
+  (m7, 8 blocs notés dont 3 héritages hachoir OCTET-IDENTIQUES aux mêmes
+  adresses, 355 instructions, 1 411 o de code, 16 384 o d'ELF64, oracle natif
+  21 cas + falsification 28/28 zéro silence, cristallisation enclenchée,
+  carte génération 1 au sel lignée sceau). SHA-512 natif écrit à la main —
+  le moteur de hachage d'Ed25519 — et mode diagnostic --hacher (ligne
+  sha512sum exacte). Mesures : sceau 0,0031 s vs sha512sum 0,0034 s sur
+  1 Mo (ratio 0,91, PLUS RAPIDE que l'outil système : les 80 rondes u64
+  occupent exactement les registres 64 bits) ; budgets mesurés : specs 17
+  blocs 16 081 tok, lignée phase 1 9 171 tok. Usage auto-référentiel 512
+  bits : empreintes des cinq artefacts par sceau, parité exacte. Trois
+  défauts corrigés (offset structurel W[i-7] lu en W[i-11] — la leçon C1
+  étendue aux constantes d'adressage ; étiquette de boucle déplacée —
+  les ADRESSES du savoir-faire font foi, pas sa lecture ; ombre de
+  variable dans l'outil de falsification). Les specs des 12 blocs restants
+  (corps f25519 radix 2^51, edwards25519 projective complète, vérificateur
+  RFC 8032) sont POSÉES écrite-avant-code — dev.2+ : notations, oracle
+  contre Python rétrogradé en RÉFÉRENCE, puis vérification des cartes du
+  projet par code machine nu.

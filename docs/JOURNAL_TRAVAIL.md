@@ -837,3 +837,112 @@ Stage Summary:
 - Prochaine étape : échelon 2 (vérification native — hachage/signature par
   des blocs TRIADE) et l'usage systématique de hachoir dans la chaîne de
   l'agent ; M2 attend la validation terrain echo.exe (développeur).
+---
+Task ID: 21
+Agent: main (Z.ai, agent principal)
+Task: Consigner le constat terrain M2 (echo.exe sous Windows 11, partiel)
+et franchir la phase 1 de l'échelon 2 de D34 : sceau, SHA-512 natif écrit à
+la main (m7).
+
+Work Log:
+- CONSTAT TERRAIN M2 (partiel) : le développeur a exécuté echo.exe sur sa
+  machine Windows 11 (cmd, C:\Users\Alek\Downloads) : la bannière « TRIADE
+  M2 : serveur echo demarre (port 25000) » s'affiche EXACTEMENT comme le
+  contrat tcp-12 Q2 l'exige — et la bannière n'est émise qu'APRÈS la porte
+  R10 (Q1) : sur le terrain réel, les 26 blocs embarqués ont passé la
+  vérification d'intégrité (sommes 64 bits, ancre RIP) et la monotonie de
+  version ; GetStdHandle et la section critique ont suivi. La démonstration
+  interactive (round-trip écho, console patch/rollback/quit) n'est PAS
+  rapportée dans le constat : le scellement final 0.3.0 reste EN ATTENTE
+  du critère complet (le protocole ne scelle pas sur une preuve partielle —
+  la bannière prouve la porte vivante, pas le service rendu).
+- M7 OUVERT : lignée sceau, échelon 2 de l'échelle D34 (vérification
+  native). Couche I COMPLÈTE posée d'un trait (R2 écrite-avant-code) :
+  17 specs du domaine nouveau av (authentification-vérifiée) — av-01..04
+  SHA-512, av-05..11 corps f25519 radix 2^51 (charger/propager/add/sub/mul/
+  freeze/exp — les contrats de bornes sont démontrés dans les specs :
+  sortie < p par propager+freeze, entrées membres < 2^52), av-12..15
+  edwards25519 projective (addition unifiée COMPLETE — le neutre (0:1:1)
+  à coordonnées finies élimine les cas Z=0, mul scalaire 512 bits sans
+  réduction de h, decompresser par (p-5)/8 avec correction sqrt(-1),
+  egal projective par multiplications croisées), av-16 v-verifier RFC
+  8032 (S<L stricte, [S]B = R' + [h]A), av-17 principal (CLI deux modes).
+- HÉRITAGE m6 OCTET-IDENTIQUE : ah-01-ecrire, ah-03-sortir, ah-08-hex
+  embarqués aux MÊMES adresses que hachoir (0x1000/0x1080/0x1600) — la
+  preuve est double : notations m7 == m6 par comparaison de fichiers (cmp,
+  verrou du build), et le lea RIP de ah-08 impose HEXCHARS @ 0x2100
+  (intangible, garde-fou du builder). ah-02-lire NON embarqué : le
+  principal lit par read direct (I1, miroir ah-09) ; l'outil auteur m7 ne
+  régénère JAMAIS les héritages (copies conformes, jamais retouchées).
+- DÉFAUT n°1 (offset d'extension W) : dans av-02, l'adresse de W[i-7] était
+  écrite [rsp + r15*8 - 0x38] au lieu de [rsp + r15*8 - 0x18] (l'offset
+  est 0x20 - 7*8 : l'addition du +0x20 de base avait été omise) — le code
+  lisait W[i-11]. Symptôme : digest du message vide divergent dès la ronde
+  23 ; diagnostiqué sous Unicorn par trace ronde par ronde contre modèle
+  Python (les rondes 0-22 exactes, W[23] natif = 0 au lieu de 2^63), puis
+  par re-simulation de l'hypothèse : l'extension avec lecture W[i-11]
+  reproduit EXACTEMENT tous les W natifs erronés (W[23]=0, W[25]=0,
+  W[27]=2^63, W[29]=σ1(W[27])…). La leçon C1 s'étend aux offsets
+  STRUCTURELS : une constante d'adressage est une affirmation d'auteur —
+  seule la confrontation différentielle la vérifie.
+- DÉFAUT n°2 (étiquette de boucle déplacée) : dans av-03, la transposition
+  avait posé « .boucle » APRÈS le test d'arrêt « test r13/r13 ; je .fin »
+  au lieu d'avant — dans ah-06 l'étiquette ENGLOBE le test (preuve par les
+  adresses : .boucle = 0x1412 = le test) : chaque retour de boucle
+  repasse par le test. Symptôme : timeout sur « abc » (3 < 128 : chemin
+  .court, r13 = 0, retour .boucle sans test → répétition éternelle du
+  chemin court). Le code sentinel -99 du harnais (timeout = divergence)
+  a fonctionné comme prévu : un mutant qui pend est attrapé, pas ignoré.
+- DÉFAUT n°3 (ombre de variable, outil) : la falsification testait
+  « bid not in code » où code était l'ENTIER de retour du dernier lancer
+  (l'ombre du dict des blocs notés) — le paramètre longueurs porte
+  l'information correcte ; corrigé avant toute exécution de batterie.
+- BUILD VERT (dev.1) : 8 blocs notés (3 héritages + av-01..04 + av-17),
+  355 instructions, 1411 o de code ; oracle structurel 101 verrous +
+  25 symboles @ vérifiés contre layout/réel/longueurs de messages/magic
+  « --hacher » (le mot de 8 octets 0x7265686361682d2d confronté à la
+  valeur machine, I6) ; ELF64 16 384 o écrit à la main (RX 0x4000 +
+  bss 0x12000) ; oracle différentiel NATIF 21 cas verts (4 vecteurs
+  dorés FIPS 180-4 SHA-512 dont le million de 'a', 11 tailles de
+  transition 128/112 — 0, 1, 111, 112, 127, 128, 129, 1000, 65535,
+  65536, 65537, 131072 —, 6 chemins d'échec et modes : usage, préfixe
+  long « --hacherx » rejeté par le test du 9e octet, inexistant,
+  répertoire, chantier exit 2) ; falsification 28/28 (chaque octet de
+  code des 8 blocs, batterie de 7 scénarios, zéro silence).
+- PREMIER USAGE AUTO-RÉFÉRENTIEL 512 BITS : les empreintes SHA-512 des
+  CINQ artefacts du projet (hello.exe, selftest.exe, echo.exe, hachoir,
+  sceau) produites PAR sceau, octet-identiques à sha512sum — l'agent
+  dispose désormais des deux profondeurs (256 par hachoir, 512 par
+  sceau), produites par SES propres blocs.
+- MESURE D34 : sceau 0,0031 s vs sha512sum 0,0034 s sur 1 Mo — sceau est
+  PLUS RAPIDE que l'outil système (ratio 0,91 : les 80 rondes en mots 64
+  bits se mappent exactement sur les 8 registres généralistes, aucune
+  perte de moitié de registre comme en SHA-256). Sans SHA-NI des deux
+  côtés (R11 futur).
+- Carte génération 1 (sel Argon2id lignée sceau distinct, clés projet
+  D27), signature Ed25519, verrou croisé 8/8 ; re-vérification --verifier
+  VERTE (R5 notation==artefact, R8, cristallisation 2/10 enclenchée).
+  sceau scellé : sha256:1d3507d17ec8192ebc8d8ceb0186ef65709bf48fbb59a
+  03492a936da19255823, version 0.8.0-dev.1. Budgets MESURÉS (tiktoken
+  cl100k_base, D31) : specs av (17) 16 081 tok, brouillons (5) 4 194 tok,
+  notations livrées (5) 4 977 tok — lignée phase 1 : 9 171 tok.
+
+Stage Summary:
+- ÉCHELON 2 DE D34, PHASE 1 FRANCHIE : SHA-512 natif écrit à la main,
+  oracle vert, falsification zéro silence, usage auto-référentiel sur les
+  cinq artefacts du projet. L'agent possède maintenant DEUX hacheurs
+  natifs (256 + 512 bits) — et le SHA-512 est le moteur d'Ed25519 :
+  la fondation de la vérification native est posée.
+- Trois défauts corrigés et traçables dont un profond (offset structurel
+  W[i-7] : l'arithmétique d'adresse de l'auteur vérifiée par la machine,
+  la leçon C1 étendue aux constantes d'adressage) et un miroir (l'étiquette
+  de boucle : la structure du savoir-faire ah-06 n'était pas où l'œil la
+  croyait — les ADRESSES font foi, pas la lecture).
+- Le constat terrain M2 est PARTIEL (porte R10 vivante constatée sur
+  Windows 11 ; service écho et console non rapportés) : 0.3.0 final attend
+  la démonstration complète ; 0.3.0-rc.1 reste la balise de référence.
+- Prochaine étape : dev.2 — notations f25519 (av-05..11) et oracle
+  différentiel natif contre Python (le berceau devient la RÉFÉRENCE),
+  puis courbe (dev.3) et vérification Ed25519 complète (rc.1) : sceau
+  vérifiera alors les cartes du projet par du code machine nu —
+  l'échelon 2 complet, pynacl rétrogradé au rôle de contre-vérificateur.
