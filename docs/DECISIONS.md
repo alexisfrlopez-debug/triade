@@ -626,3 +626,85 @@ D15 (amende D5) illustrent la procédure.
   coffre (racine Drive, D16/D30). Prochaine étape : **M2** — patch à chaud sur
   serveur TCP écho, le jalon de vérité du protocole (élément 5 de la suite de
   conformité § 8.2).
+
+### D33 — Ouverture M2 : plan d'adressage étendu, couche I et notation posées
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : reprise du jalon M2 (patch à chaud, serveur TCP écho). La session
+  d'ouverture a produit la couche I complète (quatorze spécifications : tcp-01 à
+  tcp-12 + tcp-08:R2 en croissance + libc-09 dans la réserve prévue) et la notation
+  des treize blocs embarqués plus libc-09, avec la chaîne build/oracle/carte — sans
+  encore exécuter la construction (interruption de session). La présente décision
+  sécurise l'état intermédiaire et consigne le plan d'adressage sur lequel la
+  couche I s'appuie déjà.
+- **Choix retenu** : étendre le plan D28 par une quatrième section `.text2` RX
+  @ 0x4000-0x4FFF (zones net 0x4000, thr 0x4300, tramp 0x4400, echo 0x4600 avec
+  croissance 0x4680, srv 0x4800) ; l'ensemble d'imports kernel32 passe de 3 à 10
+  entrées et ws2_32 rejoint les imports (D7) — l'INT kernel32 déménage de 0x2090 à
+  0x2110 (donnée pure, aucun octet de code ne la référence : relocation sans effet
+  R7) ; l'état serveur vit en .data @ 0x3800+, la zone curseur+arène (0x3000-0x37FF)
+  restant à l'identique. Carte génération 2 : 14 blocs nouveaux c30001-c30014,
+  artefact #3 echo.exe, blocs M0/M1 réembarqués octet-identiques à leurs adresses
+  historiques (R7). Discipline M2 : composition sur pile privée par thread (zéro
+  état partagé hors section critique du journal), libc-09 livrée comme primitive
+  scellée pour M3+ (aucun appelant dans echo.exe).
+- **Alternatives rejetées** : étaler .text (impossible : 0x1000-0x1FFF scellé M1,
+  R7 interdit tout déplacement) ; créer un domaine nouveau par bloc réseau (le
+  registre figé § 2.1 étend le domaine `tcp` réservé M2 — un domaine unique garde
+  la traçabilité I↔C lisible) ; committer la couche I sans décision (le journal
+  d'abord : l'état intermédiaire est consigné AVANT la sauvegarde, pas après).
+- **Développement** : la construction dev.1, l'oracle et le scellage restent à
+  exécuter — la présente décision borne l'état : couche I et notation posées,
+  construction non encore exécutée, aucun verdict émis. La session suivante
+  exécute `build_m2.py --phase 1` et consigne les verdicts réels.
+
+### D34 — Auto-hébergement de l'agent : profil Linux ouvert, échelle d'auto-hébergement
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : demande du développeur : l'agent utilise TRIADE pour son propre
+  travail et pousse l'expérience « jusqu'à remplacer Python », « au plus bas niveau
+  possible avec l'architecture matérielle », en créant sa propre méthode si
+  nécessaire — l'expérience nourrissant l'évaluation du protocole. Fait terrain
+  déterminant : l'environnement d'exécution de l'agent est une machine Linux
+  x86-64 sur laquelle l'agent peut écrire et exécuter des ELF64 natifs (sonde
+  validée : ELF minimal de 159 octets, en-têtes écrits à la main, appels système
+  directs, exécution constatée sortie exacte) — l'agent est donc SON PROPRE
+  TERRAIN sur ce profil, capacité qu'aucun jalon du plan actuel n'exploite avant
+  M6. Le CPU expose par ailleurs SHA-NI et AVX2 (optimisation future, R11).
+- **Choix retenu** : ouvrir le profil `x86-64-linux-elf64` par anticipation
+  restreinte sur M6 (la demande du développeur prime sur l'ordre des jalons ; les
+  critères de sortie M6 complets — diff nul sur la couche I, parité inter-profils —
+  restent soumis à l'achèvement de M2-M5 : le présent périmètre est l'auto-hébergement
+  de l'agent, pas le jalon M6). Méthode créée : **l'échelle d'auto-hébergement** —
+  échelon 1, exécution native (les outils de l'agent tournent en code machine nu
+  sur son propre terrain) ; échelon 2, vérification native (hachage et signature
+  vérifiés par des blocs TRIADE) ; échelon 3, assemblage natif (un assembleur en
+  notation remplace keystone pour le sous-ensemble du projet) ; échelon 4, fermeture
+  de boucle (l'assembleur natif assemble ses propres blocs, byte-identique — le
+  berceau Python devient vérificateur externe optionnel). Premier artefact :
+  `hachoir` (m6/), hacheur SHA-256 natif conforme FIPS 180-4 — neuf blocs, domaine
+  nouveau `ah` (registre figé étendu), sortie au format sha256sum (remplaçant
+  direct), lignée carte propre (génération 1 auto-hôte, sel de dérivation distinct,
+  clés projet partagées D27), ABI SysV + interface noyau (le piège miroir de msx64 :
+  4e argument syscall en r10, rcx/r11 détruits — spécifié dans la couche I). La
+  preuve d'environnement du profil Linux est produite par l'agent et vérifiable par
+  le développeur par re-exécution.
+- **Alternatives rejetées** : attendre M6 dans l'ordre strict (l'expérience
+  d'évaluation demandée par le développeur produirait ses données après quatre
+  jalons : la boucle de rétroaction du protocole serait allongée pour rien) ;
+  écrire l'outillage de l'agent en scripts non balisés (viole R1-R3 : chaque octet
+  produit par l'agent doit vivre dans la carte — l'auto-hébergement n'est pas une
+  exception à la discipline, c'est son terrain d'épreuve le plus strict) ; utiliser
+  un compilateur pour l'outillage (un compilateur est précisément ce que TRIADE
+  n'utilise pas : le berceau Python reste toléré comme outil d'amorce, il sera
+  rétrogradé échelon par échelon, jamais remplacé par un autre traducteur opaque).
+- **Développement** : l'échelle est le protocole d'évaluation de l'expérience :
+  chaque échelon franchi doit être mesuré (budgets tokens D31, temps d'exécution,
+  lignes de notation) et consigné — l'expérience alimente la spécification (les
+  budgets « ajouter » seront mesurés sur des blocs réellement écrits par l'agent
+  pour lui-même, première mesure auto-référentielle du projet). Le plancher
+  d'accès matériel de l'agent est documenté sans détour : ring 3, appels système
+  bruts, ELF écrit à la main — l'anneau 0 (MSR, tables de pages, firmware) n'est
+  pas accessible depuis le bac à sable et le protocole ne le prétend pas
+  (« le protocole ne promet pas, il vérifie » — réciproquement, il n'imagine pas,
+  il constate).
