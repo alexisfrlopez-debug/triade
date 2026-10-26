@@ -289,7 +289,12 @@ D29 (substrat d'émulation Unicorn pour l'oracle différentiel local), D30 (troi
 réinitialisation : D27 réappliquée, premier export de continuité généré) et D31
 (budget de localisation amendé à 64 tokens : la mesure M1 a constaté que le gabarit
 canonique de la présente révision mesurait déjà 43 tokens en cl100k\_base —
-l'instrumentation a fait son travail de révélateur).
+l'instrumentation a fait son travail de révélateur). D32 clôt le jalon : la
+validation terrain de \code{selftest.exe} sur Windows 11 est constatée (ligne unique
+du contrat libc-08 rendue à l'identique, 21 vecteurs sur 21), la balise devient
+\code{0.2.0} finale — immuable — et le contrôle anti-rollback de la reconstruction
+est étendu aux balises finales ; le jalon de vérité M2 (patch à chaud) peut
+commencer.
 
 Une décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante. La gouvernance

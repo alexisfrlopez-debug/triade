@@ -6,11 +6,13 @@
 > à volume de référence (R5, D29) et les budgets tokens passent de cibles de
 > conception à **métriques mesurées** (D31). Profil primaire `x86-64-win11-pe`.
 
-**Statut : `0.2.0-rc.1` scellée** (26 octobre 2026) — cristallisation 10/10 sur les
-onze blocs, suite de conformité du profil verte (68 contrôles, éléments 1-4 et 6-7),
-budgets mesurés conformes. Candidate à la validation terrain Windows 11 (§ 9 du
-protocole : rc → version finale `0.2.0` sur constat terrain) — voir « Procédure de
-validation terrain » ci-dessous.
+**Statut : `0.2.0` finale — jalon M1 franchi** (26 octobre 2026, D32). Validation
+terrain Windows 11 constatée : ligne unique `TRIADE M1 : minilibc 21/21 OK` à
+l'identique du contrat libc-08 Q2 (vecteur doré V2). Cristallisation 10/10 sur les
+onze blocs, suite de conformité du profil verte (68 contrôles, éléments 1-4 et
+6-7), budgets mesurés conformes — balise **immuable** (§ 9) : tout défaut
+ultérieur se corrige en `0.2.1` à contrat stable (R4). Jalon suivant : **M2**
+(patch à chaud sur serveur TCP écho).
 
 ## Résultats mesurés (session du 26 octobre 2026)
 
@@ -22,11 +24,12 @@ validation terrain » ci-dessous.
 | Cristallisation (R6) | **11/11 blocs à 10/10** — immuables ; toute modification exige la procédure lourde |
 | Adresses stables (R7) | **DÉMONTRÉ** par `demo_r7.py` : dev.1 → dev.2, 0 octet déplacé, memset entré exclusivement dans la réserve int3, io hérités octet-identiques à `hello.exe` |
 | Suite de conformité profil (§ 8.2, D22) | **VERTE — 68/68 contrôles** (éléments 1-4, 6-7 ; élément 5 = patch à chaud, jalon M2) |
-| Budgets tokens (D31, mesurés) | **localiser 51** (cible 64) / **éditer 719** (cible 3 000) / **ajouter 1 086** (cible 6 000) — `budgets_tokens.py`, tokenizer cl100k_base |
+| Budgets tokens (D31, mesurés) | **localiser 51** (cible 64) / **éditer 719** (cible 3 000) / **ajouter 1 088** (cible 6 000) — `budgets_tokens.py`, tokenizer cl100k_base, re-mesurés au scellage final (D31/D32) |
 | Construction | 0 erreur / 0 avertissement ; artefact déterministe |
 | Artefact | **selftest.exe, 9 216 octets** (sha256 `8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0`), réutilisation M0 : a10002/a10003 octet-identiques |
 | Carte projet (D28) | génération 1, multi-artefacts : 11 blocs indexés sur 2 exécutables, 4 fragments chiffrés, signature Ed25519, verrou croisé R8 fail-closed |
-| Export de continuité (D16) | généré et auto-vérifié : conteneur chiffré + signé, import 5 étapes OK (`export_continuite.py`) |
+| Export de continuité (D16) | généré et auto-vérifié : conteneur chiffré + signé, import 5 étapes OK (`export_continuite.py`) — lignée `0.2.0` au coffre Drive |
+| **Validation terrain Windows 11 (D32)** | **PASS — 26/10/2026** : `C:\Users\Alek\Downloads>selftest.exe` → ligne unique `TRIADE M1 : minilibc 21/21 OK` (contrat Q2, vecteur doré V2), retour au prompt sans incident ; ré-vérification post-scellage graine 15/16 verte (76 010 cas, sortie exacte, code 0) |
 
 ## Structure
 
@@ -79,7 +82,12 @@ par `demo_r7.py` sur l'historique git lui-même.
 
 Conditions transverses : oracle vert ✓, suite de conformité verte ✓, tableau de
 bord conforme sans métrique au rouge ✓, carte signée + verrou croisé ✓, journal à
-jour (D27-D31) ✓.
+jour (D27-D32) ✓.
+
+**Fermeture du jalon : validation terrain Windows 11 constatée le 26 octobre 2026
+(D32)** — procès-verbal ci-dessous ; balise finale `0.2.0` scellée par
+`build_m1.py --sceller-final` (cristallisation 10/10 + conformité 68/68
+re-exécutées, manifeste frag-bld basculé, carte re-signée).
 
 ## Utilisation
 
@@ -88,6 +96,7 @@ cd m1
 python3 build_m1.py --phase 2          # construction dev.2 (déterministe, byte-identique)
 python3 build_m1.py --verifier --graine N   # R5/R8 : ré-vérification + cristallisation (R6)
 python3 build_m1.py --sceller-rc       # rc.1 : exige 10/10 + conformité verte
+python3 build_m1.py --sceller-final  # 0.2.0 finale : exige 10/10 + conformité verte + constat terrain consigné (D32)
 python3 conformite_profil.py           # suite de conformité du profil (§ 8.2)
 python3 budgets_tokens.py              # mesure des budgets (écrit budgets.json)
 python3 demo_r7.py                     # démonstration des adresses stables
@@ -96,23 +105,35 @@ python3 export_continuite.py           # export de continuité chiffré + signé
 
 Dépendances : celles de M0 + `unicorn`, `tiktoken` (instrumentation).
 
-## Procédure de validation terrain (rc.1 → 0.2.0 finale)
+## Procédure de validation terrain (rc.1 → 0.2.0 finale) — CLOSE
 
 1. Récupérer `selftest.exe` (miroir Drive `TRIADE/m1/` ou copie `download/`).
 2. Sur Windows 11 : `cd` vers le dossier, puis `.\selftest.exe` (PowerShell) ou
    `selftest.exe` (cmd). Defender peut demander confirmation (exécutable non
    signé — chantier séparé).
-3. Attendu : 21 lignes `TRIADE M1 : minilibc <bloc> OK` (zones, memcmp, memcpy,
-   strlen, itoa, zone_alloc, memset — 21 auto-tests), code de sortie 0.
+3. Attendu : la ligne unique `TRIADE M1 : minilibc 21/21 OK` (contrat libc-08
+   Q2 : « N/21 » suivi de « OK »/« KO »), code de sortie 0. *Erratum (D32) : ce
+   document annonçait initialement « 21 lignes » — erreur de formulation ; le
+   contrat et l'artefact font foi.*
 4. Contrôles optionnels : `echo %ERRORLEVEL%` (attendu 0) et
    `certutil -hashfile selftest.exe SHA256` (attendu `8038585b…f3c0`).
 5. Consigner le constat au journal des décisions → la balise `0.2.0-rc.1`
    devient `0.2.0` (version finale, balise immuable) ; écart éventuel →
    `0.2.1` à contrat stable (R4).
 
-**Procès-verbal : en attente** — l'émulation du binaire (shims IAT) donne la
-sortie exacte attendue et le code 0 à chaque exécution de l'oracle (dernière :
-graine 14) ; seul le constat terrain manque pour fermer M1.
+**Procès-verbal (26 octobre 2026) : PASS — balise `0.2.0` finale scellée (D32).**
+Exécuté depuis `cmd` sur la machine Windows 11 du développeur
+(`C:\Users\Alek\Downloads>selftest.exe`) : la ligne unique
+`TRIADE M1 : minilibc 21/21 OK` s'affiche à l'identique du contrat Q2 (vecteur
+doré V2 — N = 21 vecteurs dorés réussis), retour au prompt sans incident.
+L'auto-test a rendu son verdict embarqué ; le code de sortie 0 est la
+post-condition Q3, reconfirmée par l'oracle en émulation après scellage
+(graines 15 et 16 : 76 010 cas verts, sortie exacte, code 0). Empreinte de
+l'artefact scellé : sha256 `8038585b…ff3c0` (manifeste frag-bld, revérifiée
+localement). La balise `0.2.0` est immuable (§ 9) ; tout défaut découvert après
+coup se corrige en `0.2.1` à contrat stable (R4). Contrôles optionnels au choix
+du développeur : `echo %ERRORLEVEL%` (attendu 0), `certutil -hashfile
+selftest.exe SHA256` (attendu `8038585b…f3c0`).
 
 ## Limites assumées (consignées D28-D31)
 

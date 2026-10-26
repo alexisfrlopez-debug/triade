@@ -550,3 +550,57 @@ Stage Summary:
   occurrence) ne remettra plus les compteurs à zéro.
 - Prochaine étape : validation terrain selftest.exe (développeur), puis M2 —
   patch à chaud sur serveur TCP écho (le jalon de vérité du protocole).
+
+---
+Task ID: 17
+Agent: main (Z.ai, agent principal)
+Task: Fermer le jalon M1 : consigner le constat terrain Windows 11 de selftest.exe
+(D32), sceller la balise finale 0.2.0, aligner la documentation et sauvegarder.
+
+Work Log:
+- Constat terrain reçu du développeur : `C:\Users\Alek\Downloads>selftest.exe` →
+  ligne unique `TRIADE M1 : minilibc 21/21 OK` — exactement la sortie dorée du
+  contrat libc-08 Q2 (vecteur V2, N = 21). Erratum détecté au passage :
+  REPRISE § 7.2 et m1/README annonçaient « 21 lignes » ; le contrat exige une
+  ligne unique « N/21 » — l'artefact fait foi, les documents corrigés (D32).
+- D32 consignée au journal des décisions (format normalisé D24) : constat,
+  scellage final, anti-rollback étendu, erratum.
+- Implémenté `build_m1.py --sceller-final` (modèle de sceller_rc) : exige
+  cristallisation 10/10 + conformité § 8.2 verte + balise rc.1 exactement une
+  fois dans frag-bld (fail-closed), bascule version → 0.2.0, re-scellage des
+  quatre fragments, re-signature Ed25519. VERSION_FINALE ajoutée à layout.py.
+- Corrigé l'angle mort anti-rollback de construire() : la reconstruction était
+  refusée pour les balises -rc.N mais pas pour une balise finale X.Y.Z — le
+  contrôle refuse désormais toute balise scellée (rc ou finale).
+- Scellage final exécuté : conformité re-exécutée VERTE 68/68, balise 0.2.0
+  scellée. Budgets re-mesurés (obligation D31 à chaque scellage) : localiser 51
+  / éditer 719 / ajouter 1 088 (cibles 64/3000/6000) — CONFORME (dérive +2 tok
+  sur ajouter, marge inchangée).
+- Ré-vérifications post-scellage : graines 15 et 16 — oracle différentiel
+  76 010 cas verts, binaire émulé sortie exacte + code 0 (Q3 reconfirmé),
+  134 verrous, cristallisation 10/10 partout, verrou croisé : 11 empreintes
+  conformes, artefact 0.2.0. Tableau de bord régénéré (version=0.2.0, D27 à
+  D32 consignées, graine 16).
+- Export de continuité régénéré sur la lignée 0.2.0 : conteneur
+  TRIADE-continuite-0.2.0-20261026T121243Z.bin (81 109 o, chiffré + signé),
+  import 5 étapes auto-vérifié OK ; coffre téléversé au racine du Drive +
+  copie download/.
+- Documentation alignée : DECISIONS.md (D32), m1/README.md (statut 0.2.0,
+  PV PASS, erratum), REPRISE_PROJET.md (état, § 2/3.2/6/7/9 — M2 devient
+  l'étape en cours), PLAN_MILESTONES.md (M1 franchi), README.md racine,
+  sec-d.tex (synthèse D32 — PDF formel régénéré par la chaîne D17 à la
+  sauvegarde).
+- Sauvegarde systématique : sync_backup.sh (commit + Drive + GitHub).
+
+Stage Summary:
+- M1 FRANCHI le 26/10/2026 : balise finale 0.2.0 scellée et immuable (§ 9).
+  Les quatre critères + conditions transverses + validation terrain sont
+  acquis ; défaut ultérieur → 0.2.1 à contrat stable (R4).
+- La sortie terrain correspondait au contrat à la lettre (ligne unique 21/21
+  OK) ; l'écart était dans la documentation (« 21 lignes »), corrigé et
+  consigné — le contrat et l'artefact font foi.
+- Bonus du scellage final : trou anti-rollback comblé (les balises finales
+  sont désormais refusées à la reconstruction, fail-closed).
+- Prochaine étape : M2 — patch à chaud sur serveur TCP écho (le jalon de
+  vérité) ; premier chantier : specs I des blocs réseau/threads/trampoline,
+  écrites avant notation, plan d'adressage étendu (D28).

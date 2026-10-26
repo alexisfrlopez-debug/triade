@@ -421,7 +421,7 @@ D15 (amende D5) illustrent la procédure.
   optionnel laissé au choix du développeur : `echo %ERRORLEVEL%` après exécution
   (attendu : 0).
 
-## Décisions du jalon M1 (D27–D31, 26 octobre 2026)
+## Décisions du jalon M1 (D27–D32, 26 octobre 2026)
 
 ### D27 — Continuité des clés après réinitialisation du bac à sable : régénération et centralisation
 
@@ -586,3 +586,43 @@ D15 (amende D5) illustrent la procédure.
   Le tokenizer de référence (cl100k_base) est documenté dans l'outil et le budgets.json
   pour reproductibilité ; toute future dérive du format frag-loc sera constatée par
   la même instrumentation, désormais obligatoire à chaque scellage rc/final (§ 8.2).
+
+### D32 — Jalon M1 franchi : validation terrain Windows 11 constatée, balise finale 0.2.0
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : dernier critère de fermeture M1 — le constat terrain de
+  `selftest.exe` (9 216 o, sha256 8038585b…ff3c0, balise 0.2.0-rc.1, distribué par le
+  miroir Drive `TRIADE/m1/`). Le développeur a exécuté l'artefact sur sa machine
+  Windows 11 (cmd, `C:\Users\Alek\Downloads>selftest.exe`) : la ligne unique
+  `TRIADE M1 : minilibc 21/21 OK` s'affiche à l'identique du contrat libc-08 Q2 —
+  c'est le vecteur doré V2 (sortie exacte attendue, N = 21 vecteurs réussis) — puis
+  retour au prompt sans incident. Erratum de documentation consigné à cette
+  occasion : REPRISE_PROJET § 7.2 et m1/README § validation annonçaient « 21 lignes »
+  de sortie ; le contrat Q2 exige une ligne unique « N/21 » suivie de « OK »/« KO » —
+  l'artefact et le contrat font foi, les deux documents sont corrigés.
+- **Choix retenu** : consigner le constat (présente décision) et sceller la
+  **balise finale `0.2.0`** — nouveau mode `build_m1.py --sceller-final` : exige
+  cristallisation 10/10 (R6) ET suite de conformité § 8.2 verte, vérifie que la
+  balise courante est exactement `0.2.0-rc.1` (fail-closed), bascule la version du
+  manifeste frag-bld vers `0.2.0`, re-scelle les quatre fragments et re-signe la
+  carte (Ed25519), instrumentation des budgets re-exécutée (D31), tableau de bord
+  régénéré. Balise immuable (§ 9) : tout défaut découvert après coup se corrige en
+  `0.2.1` à contrat stable (R4). Les quatre critères de sortie M1 et les conditions
+  transverses (§ 16) sont acquis — **jalon M1 franchi le 26 octobre 2026**.
+- **Alternatives rejetées** : exiger les contrôles optionnels ERRORLEVEL/certutil
+  avant le scellage (le verdict est porté par la ligne de sortie elle-même :
+  l'auto-test a compté N = 21 et affiché OK ; le code 0 est la post-condition Q3,
+  vérifiée par l'oracle à chaque exécution en émulation — reconfirmée à la graine 15
+  post-scellage) ; reconstruire l'artefact sous balise 0.2.0 (interdit : la carte
+  cristallisée refuse la reconstruction — R6/R10 ; le scellage final ne touche que
+  la balise du manifeste, aucun octet du binaire) ; poser un tag git `v0.2.0` sans
+  demande du développeur (précédent M0 : la balise d'artefact vit dans frag-bld, le
+  tag git viendra sur demande).
+- **Développement** : l'écriture du scellage final a révélé un angle mort du
+  contrôle anti-rollback de `construire()` : la reconstruction était refusée pour
+  une balise `-rc.N` mais autorisée pour une balise finale `X.Y.Z` — corrigé dans la
+  même décision : le contrôle refuse désormais toute balise scellée (rc ou finale),
+  fail-closed. Export de continuité régénéré sur la lignée 0.2.0 et poussé au
+  coffre (racine Drive, D16/D30). Prochaine étape : **M2** — patch à chaud sur
+  serveur TCP écho, le jalon de vérité du protocole (élément 5 de la suite de
+  conformité § 8.2).

@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-26T11:38:24Z",
+  "date": "2026-10-26T12:11:24Z",
   "tokenizer": "tiktoken cl100k_base (BPE, 100277 entrees)",
   "source": "carte scellee (frag-loc/frag-con/frag-prf dechiffres) + sources m1/",
   "localiser": {
@@ -38,9 +38,9 @@
     }
   },
   "ajouter": {
-    "mesure": 1086,
+    "mesure": 1088,
     "cible": 6000,
     "detail": "empreinte complete de l'ajout memset (dev.2) : spec I + notation + entrees carte ecrites",
-    "lectures_fragment_seules": 231
+    "lectures_fragment_seules": 233
   }
 }

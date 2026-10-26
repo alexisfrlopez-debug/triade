@@ -23,6 +23,7 @@ Usage :
   python3 build_m1.py --phase 2        # construction dev.2 (+ memset, autotest 21)
   python3 build_m1.py --verifier [--graine N]   # R8 : re-vérification + cristallisation
   python3 build_m1.py --sceller-rc     # cristallisation atteinte -> balise rc.1
+  python3 build_m1.py --sceller-final  # constat terrain consigne (D32) -> balise 0.2.0 finale
 
 Déterminisme : selftest.exe est byte-identique à phase et sources constantes.
 """
@@ -693,7 +694,7 @@ def tableau_de_bord(exe: bytes, verrous: list[str], nb_blocs_carte: int, manifes
         f"  optimisations_sans_mesure     : 0 : division par 10 explicite (D21, R11)",
         f"  budgets_tokens                : {budgets}",
         f"  suite_conformite_profil       : {conformite}",
-        f"  changements_hors_journal      : 0 : D27 a D31 consignees",
+        f"  changements_hors_journal      : 0 : D27 a D32 consignees",
         f"  preversions                   : {manifeste.get('version', '?')} conforme "
         f"(schema dev/rc/final, monotonie)",
         f"  artefact                      : {len(exe)} octets ; empreinte sha256:{sha(exe)[:16]}... ; "
@@ -747,9 +748,10 @@ def construire(phase: int, volume: str, graine: int) -> int:
         version_existante = next(
             (dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
              if "artefact=selftest.exe" in l), None)
-        if version_existante and "-rc" in version_existante:
+        if version_existante and ("-rc" in version_existante
+                                   or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
             raise EchecBuild(
-                f"carte cristallisee ({version_existante}) : reconstruction interdite — "
+                f"carte scellee ({version_existante}) : reconstruction interdite — "
                 f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
     except (cm.ErreurCarte, FileNotFoundError):
         pass  # pas de carte lisible : première construction
@@ -889,6 +891,50 @@ def sceller_rc() -> int:
     return 0
 
 
+def sceller_final() -> int:
+    """Bascule la balise rc.1 -> 0.2.0 finale (constat terrain consigne, D32) :
+    exige cristallisation 10/10 + suite de conformite verte + balise rc.1 courante.
+    Ne touche aucun octet du binaire, seule la version du manifeste frag-bld change."""
+    print("=== M1 : scellage final 0.2.0 (R6 + conformite § 8.2 + constat terrain D32) ===")
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode("ascii")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplete : {incomplets} — 10 verifications requises (R6)")
+
+    import conformite_profil as cp
+    ok, lignes = cp.executer()
+    print("\n".join(lignes))
+    if not ok:
+        raise EchecBuild("suite de conformite non verte — 0.2.0 refuse")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("ascii")
+    occurrences = bld.count(f"version={L.VERSION_RC1}")
+    if occurrences != 1:
+        raise EchecBuild(f"balise {L.VERSION_RC1} attendue une fois dans frag-bld "
+                         f"({occurrences} occurrence(s)) — scellage final refuse (fail-closed)")
+    bld = bld.replace(f"version={L.VERSION_RC1}", f"version={L.VERSION_FINALE}")
+    clairs = {"frag-bld": bld.encode("ascii")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = cm.empreinte_racine(nouveaux)
+    entete = cm.construire_entete(racine)
+    _, graine_cles = cm.charger_secrets(interactif=False)
+    prive, pub = cm.paire_cles(graine_cles)
+    cm.ecrire_carte(entete, nouveaux, cm.signer(prive, entete, nouveaux), pub)
+    print(f"[balise] {L.VERSION_FINALE} : version finale immuable (§ 9) — "
+          f"defaut ulterieur -> 0.2.1 a contrat stable (R4)")
+    return 0
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     try:
@@ -898,6 +944,8 @@ if __name__ == "__main__":
             sys.exit(verifier(graine, volume))
         if "--sceller-rc" in args:
             sys.exit(sceller_rc())
+        if "--sceller-final" in args:
+            sys.exit(sceller_final())
         phase = int(args[args.index("--phase") + 1]) if "--phase" in args else 2
         volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
         graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 1

@@ -41,6 +41,7 @@ DLL_CHARACTERISTICS = 0x0040 | 0x0020 | 0x0100   # DYNAMICBASE | HEVA | NX
 VERSION_DEV1 = "0.2.0-dev.1"   # six blocs libc + autotest 18/18
 VERSION_DEV2 = "0.2.0-dev.2"   # + memset, autotest 21/21
 VERSION_RC1 = "0.2.0-rc.1"     # cristallisation (10 vérifications) + conformité verte
+VERSION_FINALE = "0.2.0"        # validation terrain constatée (D32) — balise immuable § 9
 
 # --- Blocs (couche C) ---------------------------------------------------------
 # (id carte, spec, rva slot, taille slot, scellé-dès, phase d'entrée)

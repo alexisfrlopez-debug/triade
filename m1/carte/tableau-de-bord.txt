@@ -1,14 +1,14 @@
-[tableau] jalon=M1 artefact=selftest.exe version=0.2.0-rc.1
+[tableau] jalon=M1 artefact=selftest.exe version=0.2.0
   blocs_avec_spec_a_jour        : 11/11 : audit de tracabilite I->C->B
   chaines_I_C_B_tests           : 11/11 : specs, carte, exe, vecteurs (a10001 via hello.exe)
   construction                  : 0 erreur / 0 avertissement : build script
-  tests_differentiels           : 76010 cas verts (complet, graine 14) ; oracle structurel 134 verrous PASS ; emulation binaire : sortie exacte, code 0 (phase 2)
+  tests_differentiels           : 76010 cas verts (complet, graine 16) ; oracle structurel 134 verrous PASS ; emulation binaire : sortie exacte, code 0 (phase 2)
   empreintes_donnees_embarquees : conforme (frag-bld : motifs, chaines, curseur nul)
   defauts_T1_T6_ouverts         : 0 : journal des decisions D28
   optimisations_sans_mesure     : 0 : division par 10 explicite (D21, R11)
-  budgets_tokens                : mesure (M1) : localiser=51 tok / editer=719 tok / ajouter=1086 tok (cibles 64/3000/6000, D31)
+  budgets_tokens                : mesure (M1) : localiser=51 tok / editer=719 tok / ajouter=1088 tok (cibles 64/3000/6000, D31)
   suite_conformite_profil       : verte (conformite_profil.py : elements 1-4, 6-7 : 68 controles PASS ; 5 hors perimetre M1, jalon M2)
-  changements_hors_journal      : 0 : D27 a D31 consignees
-  preversions                   : 0.2.0-rc.1 conforme (schema dev/rc/final, monotonie)
+  changements_hors_journal      : 0 : D27 a D32 consignees
+  preversions                   : 0.2.0 conforme (schema dev/rc/final, monotonie)
   artefact                      : 9216 octets ; empreinte sha256:8038585b7af83c9f... ; reutilisation M0 : a10002/a10003 octet-identiques (R7)
   verrou_croise                 : 11 blocs reverifies (2 artefacts) + signature Ed25519 + racine (R8/R9)

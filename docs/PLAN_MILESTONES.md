@@ -10,10 +10,10 @@
 > critères de parité inter-profils (spécification § 8.3).
 >
 > **État : M0 franchi le 26 octobre 2026** (D26 amendée — validation terrain Windows 11
-> constatée). **Jalon M1 : `0.2.0-rc.1` scellée le 26 octobre 2026** (D27-D31) — les
-> quatre critères de sortie sont acquis (oracle, cristallisation, R7, budgets
-> mesurés) ; reste le constat terrain Windows 11 de `selftest.exe` pour la balise
-> finale `0.2.0`. Prochain jalon : **M2**.
+> constatée). **Jalon M1 franchi le 26 octobre 2026** (D32 — validation terrain
+> Windows 11 constatée : ligne unique `TRIADE M1 : minilibc 21/21 OK`, contrat
+> libc-08 Q2 ; balise finale **`0.2.0`** scellée, immuable § 9). Jalon en cours :
+> **M2** (patch à chaud — le jalon de vérité).
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées
@@ -26,7 +26,7 @@ isolée, autorité de certification de test installée localement.
 | Jalon | Objectif | Livrables | Critères de sortie |
 |---|---|---|---|
 | M0 | Prouver la chaîne artefact | Éditeur PE32+ minimal ; hello.exe via WriteFile ; carte v0 à trois blocs ; vérificateur de round-trip | Exécution sur Windows 11 ; round-trip 100 % ; carte signée et vérifiée ; moins de 4 Kio. Règles : R1–R3, R8–R9. **Franchi le 26/10/2026** |
-| M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone, memset ; **instrumentation des budgets tokens** ; suite de conformité § 8.2 ; export de continuité D16 | Oracle à 100 % ; première cristallisation ; adresses stables démontrées ; première mesure effective des budgets (localiser/éditer/ajouter). Règles : R5–R7. **rc.1 scellée le 26/10/2026 — en attente validation terrain** |
+| M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone, memset ; **instrumentation des budgets tokens** ; suite de conformité § 8.2 ; export de continuité D16 | Oracle à 100 % ; première cristallisation ; adresses stables démontrées ; première mesure effective des budgets (localiser/éditer/ajouter). Règles : R5–R7. **Franchi le 26/10/2026 — balise finale `0.2.0` (D32)** |
 | M2 | Code actif et patch à chaud | Serveur TCP écho ; thread par connexion ; journal console | Patch du bloc écho pendant exécution, sans interruption ; rollback démontré. Boucle complète |
 | M3 | Entrées non fiables | Proxy HTTP ; parseur à contrats renforcés ; threading du tunnel | Un million de requêtes fuzzées sans crash ; proxy transparent pour curl. Contrats renforcés |
 | M4 | Tunnel chiffré | Contexte SSPI / Schannel ; poignée de main TLS ; relais chiffré | HTTPS en transit ; échec propre sur certificat invalide. Contrats cryptographiques |
