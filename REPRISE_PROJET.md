@@ -35,10 +35,11 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Domaine | État | Détail |
 |---|---|---|
 | Spécification v0.3 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle, 27 pages) ; le PDF v0.2 reste l'archive de la version précédente |
-| Journal des décisions | Terminé | D1 à D17 consignées dans `docs/DECISIONS.md` |
+| Journal des décisions | Terminé | D1 à D18 consignées dans `docs/DECISIONS.md` |
 | Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
-| Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé au tag `v3.0.0-dev.1` |
+| Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
+| Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Implémentation | Non commencée | La prochaine étape est le jalon M0 (voir section 7) |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique |
 
@@ -85,9 +86,11 @@ triade/
 │   ├── PROTOCOLE_TRIADE.md            Spécification v0.3 — source de travail
 │   ├── Protocole_TRIADE_v0.3_Specification.pdf   Spécification v0.3 — archive formelle (27 p.)
 │   ├── Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf   Démonstration v0.3 — étude de cas RoomEq (22 p.)
+│   ├── Protocole_TRIADE_v0.4_Article_Recherche.pdf   Édition académique v0.4 — article de recherche IMRAD (12 p.)
+│   ├── VERIFICATION_v0.4_Article.md   Rapport de vérification interne de l'article (avant empaquetage)
 │   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle (erratum : numérotation corrigée)
 │   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C)
-│   ├── DECISIONS.md                   Journal des décisions D1–D17
+│   ├── DECISIONS.md                   Journal des décisions D1–D18
 │   └── PLAN_MILESTONES.md             Feuille de route M0–M7
 ├── scripts/
 │   ├── sync_backup.sh                 Sauvegarde complète : PDF à jour + commit + Drive + GitHub
@@ -98,6 +101,11 @@ triade/
 │   ├── triade_v03_cover.html          Source HTML de la couverture v0.3
 │   ├── triade_v03_demo_roomeq.py      Générateur du PDF de démonstration RoomEq (édition, régénération manuelle)
 │   ├── triade_v03_demo_cover.html     Source HTML de la couverture de la démonstration
+│   ├── article_v04/                   Sources de l'article v0.4 (LaTeX/Tectonic, D18 — régénération manuelle)
+│   │   ├── main.tex + sec-*.tex + refs.bib   Corps IMRAD (8 fichiers) et bibliographie (29 réf.)
+│   │   ├── cover.html                 Couverture académique (Template 03, validée)
+│   │   ├── merge_cover.py             Fusion couverture + corps, normalisation A4, métadonnées
+│   │   └── verify_article.py          Contrôles programmatiques pré-empaquetage (44 contrôles)
 │   ├── triade_v02_spec.py             Générateur du PDF v0.2 (erratum appliqué)
 │   ├── triade_cover.html              Source HTML de la couverture v0.2
 │   ├── triade_diagram_arch.html       Source HTML du diagramme d'architecture
@@ -172,6 +180,7 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D15 | Suite cryptographique | Paramétrable (hachage SHA-256 par défaut, signature, chiffrement) — listes blanches, en-tête signé, re-cryptage atomique |
 | D16 | Récupération de la carte | Export de continuité chiffré et signé (I+B+C+manifeste), import en cinq étapes, oracle jamais exporté |
 | D17 | PDF formel | Régénération systématique : `build_pdf.sh` compare l'empreinte des sources au stamp du dernier build et reconstruit avant chaque commit |
+| D18 | Édition académique v0.4 | Article de recherche IMRAD (12 p.) : formalisation, travaux connexes, menaces sur la validité ; noyau normatif v0.3 inchangé, régénération manuelle (`scripts/article_v04/`) |
 
 ## 7. Prochaine étape : le jalon M0
 
@@ -218,6 +227,8 @@ fichier synchronisé.
 |---|---|
 | `bash scripts/sync_backup.sh "msg"` | Sauvegarde complète (commit + Drive + GitHub) |
 | `python3 scripts/triade_v03_demo_roomeq.py` | Régénère le PDF de démonstration RoomEq (couverture rendue au préalable via `html2poster.js` — voir en-tête du script) |
+| `pdf.py convert.latex scripts/article_v04/main.tex --runs 3` puis `python3 scripts/article_v04/merge_cover.py` | Régénère le corps de l'article v0.4 puis fusionne couverture + corps (couverture : `html2poster.js` sur `cover.html` — voir l'en-tête de `merge_cover.py`) |
+| `python3 scripts/article_v04/verify_article.py` | Contrôles pré-empaquetage de l'article (terminologie, IMRAD, références, flottants) |
 | `python3 scripts/drive_sync.py` | Synchronisation Drive seule (idempotente) |
 | `python3 scripts/check_auth.py` | Vérifie les jetons Drive et GitHub sans les afficher |
 | `git log --oneline` | Historique des modifications |

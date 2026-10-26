@@ -1,0 +1,293 @@
+% =====================================================================
+%  4. ÉTUDE DE CAS — RECODAGE DE ROOMEQ
+% =====================================================================
+\section{Étude de cas : recodage de RoomEq}\label{sec:etude}
+
+\subsection{Contexte et protocole expérimental}\label{sec:protocole-etude}
+
+RoomEq est un égaliseur acoustique temps réel pour Windows et macOS~: il
+mesure la réponse d’une pièce par balayage logarithmique, calcule une
+correction, l’applique en temps réel sur le son du système, et offre une
+console de mixage complète — pistes, égaliseur par piste, routage par carte
+son virtuelle, pont ASIO vers les stations de travail audio. La base de
+départ est la version 2.2.2, \emph{scellée} au sens du protocole~: balise
+git \code{deff25c}, 82 fichiers C\#, 14\,891 lignes de code, 228 tests
+unitaires, trois ans de développement intermittent par le développeur et
+ses prédécesseurs d’agents. Le candidat cumule les attributs d’un cas
+exigeant~: temps réel audio, interactions noyau (pilote de carte virtuelle,
+installateur), multi-plateforme, et un patrimoine de défauts d’installation
+documentés.
+
+L’étude poursuit trois questions de recherche. \textbf{RQ1}~: la discipline
+des trois couches est-elle applicable de bout en bout à une application
+réelle complète, sans exception ni accommodement~? \textbf{RQ2}~: quel est
+l’effet mesurable de cette discipline sur la défense (tests, avertissements)
+et la structure (taille des unités, testabilité) du code~?
+\textbf{RQ3}~: que révèle la vérification de l’oracle que le
+développement classique ne révèle pas~? Le design est une \emph{étude de
+cas unique} au sens de Yin \cite{yin2018}, conduite et rapportée selon les
+recommandations de Runeson et H{\"o}st \cite{runeson2009}~; l’unité
+d’analyse est le recodage complet, de la base scellée au cristal final. Les
+limites inhérentes à ce design — absence de condition témoin, validité
+externe — sont traitées en section~\ref{sec:menaces} plutôt que tues.
+
+L’instrumentation est triple. Premièrement, une intégration continue
+exécutant construction et tests sur trois systèmes d’exploitation (Linux,
+Windows, macOS), activée à partir de la cristallisation finale.
+Deuxièmement, des empreintes cryptographiques des données embarquées
+(bibliothèques de profils), reproductibles par quiconque exécute la
+commande de hachage sur les deux dépôts. Troisièmement, un audit de parité
+conduisant famille par famille — les quatorze familles de fonctionnalités
+du fichier de lecture de la base scellée — avec, pour chacune, les modules
+correspondants, la méthode de vérification et le verdict. Aucune de ces
+mesures n’a été conçue après coup~: elles procèdent de la règle R5 elle-même,
+appliquée à chaque vague.
+
+\subsection{Application de la méthode}\label{sec:application}
+
+Le recodage s’est déroulé en sept vagues, chacune close par une sauvegarde
+complète (dépôt git local comme source de vérité, miroir chiffré Drive avec
+bundle d’historique restaurable, miroir GitHub privé) et par la vérification
+complète~: construction à 0 erreur et 0 avertissement, 100~\% des tests
+verts. L’instanciation des couches est directe~: la couche $\IB$ est
+constituée de 44 spécifications en texte structuré, une par module, écrites
+\emph{avant} le code~; la couche $\BB$ est le code source versionné, scellé
+par balises~; la couche $\CB$ est la carte du dépôt — un index à adresses
+stables \code{M-<DOM>-NN}, un statut par module~; le journal $\DB$ du dépôt
+compte quinze décisions, chacune avec ses alternatives rejetées. L’oracle
+est la suite de tests \emph{portée puis étendue}~: la suite 2.2.2 encode le
+comportement réellement validé du terrain, et chaque constante numérique de
+référence (tolérances, amplitudes, fréquences) en a été extraite — la
+décision D5 du dépôt pose explicitement que les tests sont le contrat
+exécutable de la couche I.
+
+Le tableau~\ref{tab:regles} (section~\ref{sec:regles}) a servi de table de
+correspondance normative tout au long des vagues~: chaque règle du
+protocole y trouvait son homologue concret dans le dépôt. Deux incidents
+méritent d’être consignés car ils éprouvent la gouvernance plutôt que le
+code. D’une part, l’environnement d’exécution a été \emph{réinitialisé} en
+cours de projet — répertoires de travail et journal effacés~; la
+restauration complète depuis les sauvegardes n’a coûté aucune perte de
+travail, validant en conditions réelles la redondance exigée par la
+gouvernance. D’autre part, une demande du développeur en fin de
+démonstration — fusionner les modules et réécrire « en natif machine » —
+a été refusée par décision motivée D15 après mesure~: l’analyse a établi
+que la fusion détruirait les adresses stables et les spécifications par
+responsabilité sans aucun gain d’exécution, le fil audio tourne déjà à
+152~$\times$ le temps réel avec zéro allocation par bloc
+(section~\ref{sec:resultats}). Ce refus est l’illustration la plus directe
+de la fonction objectif lexicographique (définition~\ref{def:lex})~: la
+demande promettait un gain d’\emph{optimisation} au prix d’une perte de
+\emph{sécurité} de gouvernance — inadmissible quel que soit le gain.
+
+\subsection{Observations qualitatives~: trois comparatifs
+avant/après}\label{sec:comparatifs}
+
+\subsubsection{Le seuil magique}\label{sec:seuil}
+
+L’analyseur de balayage de la base scellée rejetait les captures invalides
+au-dessus d’un seuil pic/médiane de~8 — un littéral sans nom, dupliqué dans
+le message d’erreur, sans justification ni test. Le défaut était réel~: la
+déconvolution divise par le spectre du balayage au carré, ce qui agit
+comme un différenciateur hors bande~; une capture de \emph{bruit seul}
+produit un faux pic à rapport mesuré d’environ 186 — largement au-dessus
+de~8. Concrètement, un utilisateur ayant mal routé sa capture se voyait
+attribuer une « correction » aléatoire au lieu du message d’aide. Le
+protocole ne s’est pas contenté de corriger~: il a d’abord établi les faits
+par diagnostic empirique (bruit blanc pur~: rapport 186~; bruit passe-bas
+réaliste~: 9,2~; balayage réel même atténué~: au-delà de $10^{5}$, mesuré à
+$1{,}2 \times 10^{7}$), puis consigné la décision D8 — un seuil de 1000
+rejette le bruit seul avec quatre décades de marge et conserve quatre
+décades de marge aux balayages faibles.
+
+Le listing~\ref{lst:seuil} montre la conversion. Le défaut est désormais
+verrouillé à quatre niveaux~: constante nommée dans le code, justification
+documentée, contrat dans la spécification I du module, test exécutable qui
+rejette le bruit seul.
+
+\begin{lstlisting}[float=t, caption={Le seuil de détection, avant (haut) et
+après (bas). Extraits abrégés des deux dépôts.}, label={lst:seuil}]
+// AVANT — v2.2.2 : seuil littéral, sans nom, sans test :
+if (peakMag < Math.Max(median * 8.0, 1e-9)) {
+    throw new InvalidOperationException(
+        "Balayage non détecté ... rapport ... < 8 ...");
+}
+// APRÈS — v3 : constante nommée, rationale, message dérivé :
+/// Seuil pic/médiane. v2.2.2 : 8 laissait passer le bruit
+/// seul (ratio ~186, effet différenciateur du 1/|X|^2) ;
+/// balayage réel mesuré ~1,2e7 -> seuil 1000 : quatre
+/// décades de marge de chaque côté.
+public const double DetectionSnr = 1000.0;
+if (peakMag < Math.Max(median * DetectionSnr, 1e-9)) {
+    ... // message dérivé de la constante
+}
+\end{lstlisting}
+
+\subsubsection{Le monolithe}\label{sec:monolithe}
+
+Le modèle-vue de la table de mixage concentrait cinq responsabilités —
+routage de la carte virtuelle, synchronisation des volumes, installation du
+pilote, persistance, politique de préréglages — entrelacées sur 1\,075
+lignes~; 39 propriétés observables et commandes y côtoyaient les
+dictionnaires de routage et les minuteries. Aucun test ne peut s’approcher
+d’une telle classe sans périphérique audio réel. La spécification I de
+l’onglet mixage exigeait la décomposition \emph{avant} que le code
+n’existe~; le recodage l’a réalisée en cinq fichiers à responsabilité
+unique (399~+ 224~+ 209~+ 160~+ 138 lignes) et extrait la politique de
+préréglages vers une classe dédiée derrière deux interfaces étroites.
+
+Le gain n’est pas cosmétique. La décomposition a rendus visibles — et
+donc corrigeables — deux défauts fonctionnels que le monolithe masquait~:
+le message d’aide ASIO n’était jamais affiché sans pilote (la propriété
+concernée restait nulle, aucun changement n’était notifié)~; le garde-fou
+de liaison d’un préréglage à une sortie laissait passer le préréglage plat
+par défaut, déclenchant une demande de nom puis un refus en cascade. Les
+deux correctifs sont couverts par des tests, et la politique extraite est
+vérifiée \emph{sans périphérique} — ce qui était impensable sur le
+monolithe est devenu une suite de tests ordinaire. C’est la règle R3 — le
+balisage — appliquée à l’architecture~: un module, une responsabilité, une
+adresse stable dans la carte.
+
+\subsubsection{Le caractère invisible}\label{sec:caractere}
+
+Les magasins de réglages sécurisent les noms de fichiers avant d’écrire sur
+disque. La base scellée déléguait cette sécurité au système hôte~: la liste
+renvoyée par \code{Path.GetInvalidFileNameChars()} est celle de l’OS qui
+exécute le code. Le défaut est invisible sur la machine de
+développement Windows — et c’est précisément le problème~: un nom sécurisé
+sous Linux, où les deux-points sont légaux, peut produire un fichier
+invalide s’il est copié sous Windows. Il n’a été révélé que parce que la
+vérification R5 de la démonstration exécute les tests sous Linux~:
+l’oracle a fait son travail. Le correctif fige l’union des caractères
+interdits sur au moins une plateforme cible, indépendamment de l’hôte~; le
+contrat « un nom sécurisé est portable » est désormais écrit dans
+la spécification I et dans le code. Trois leçons générales s’en
+dégagent~: la vérification doit s’exécuter dans l’environnement qui révèle
+le défaut~; un défaut de portabilité est un défaut de contrat~; et la
+taille du correctif (six lignes remplacées par quinze) est sans rapport
+avec son changement de classe — d’un comportement dépendant de l’hôte à
+une garantie multi-plateformes par construction.
+
+\subsection{Résultats quantitatifs}\label{sec:resultats}
+
+Le tableau~\ref{tab:mesures} confronte les deux révisions sur les mesures
+structurelles, défensives et de gouvernance. Le volume de code est
+volontairement resté comparable — le recodage n’a pas gonflé
+l’application, il a déplacé l’effort vers la spécification et la
+vérification.
+
+\begin{table}[t]
+\centering\small
+\caption{Confrontation des deux révisions.}
+\label{tab:mesures}
+\begin{tabularx}{\columnwidth}{@{}Y l l@{}}
+\toprule
+\textbf{Mesure} & \textbf{v2.2.2} & \textbf{v3} \\
+\midrule
+Fichiers C\# (\code{src/}) & 82 & 93 \\
+Lignes de code (\code{src/}) & 14\,891 & 15\,438 \\
+Lignes de tests & 4\,032 & 5\,963 \\
+Tests unitaires & 228 & \textbf{437} \\
+Plus gros fichier & 1\,075 l. & \textbf{497} l. \\
+Plus gros modèle-vue & 1\,075 l. & \textbf{399} l. \\
+Avertissements construction & tolérés & \textbf{0 / 0} \\
+Spécifications d’intention & 0 & \textbf{44} \\
+Modules cartographiés & 0 & \textbf{42} \\
+Décisions journalisées & aucune & \textbf{D1–D15} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La suite de tests mérite le détail, car elle est le cœur de la
+vérification. Les 228 tests de la base ont été portés intégralement —
+c’était l’oracle — puis étendus~: la couche cœur passe de 150 à 220 tests
+(parité des données embarquées, comportements aux limites, diagnostics
+injectables), la couche audio de 78 à 142 (fournisseurs, bus principal,
+anti-larsen vérifiable sous Linux, rognage exact), et une suite
+applicative de 75 tests apparaît, rendue possible par la décomposition des
+modèles-vues. La non-régression se démontre famille par famille~: les
+quatorze familles de fonctionnalités du fichier de lecture de la base
+scellée ont été auditées point par point — parité intégrale, 14/14. Les
+données embarquées sont contrôlées par empreintes~: la bibliothèque de
+corrections casques (321 modèles, 58 marques) et les profils de mesure
+micro (36 entrées) sont identiques octet pour octet à la base scellée,
+avec des sommes md5 reproductibles sur les deux dépôts. Trois écarts
+volontaires subsistent — le seuil D8 (défaut connu corrigé par décision
+journalisée), des correctifs de défauts de la base chacun couvert par un
+test, et la décomposition structurelle sans changement de comportement
+observable — et leur existence même est une propriété du protocole~:
+aucun n’est silencieux.
+
+La séquence de \emph{publication} du cristal final éprouve le mécanisme
+d’échec honnête du protocole. La balise v3.0.0 a échoué en intégration
+continue~: trois tests relisaient un journal vivant avec un verrouillage de
+fichier incompatibles avec l’écriture sous Windows — défaut invisible sous
+Linux et macOS, hérité d’une connaissance de portage perdue entre les
+versions. Le correctif v3.0.1, limité aux tests, a rendu la vérification
+verte sur les trois systèmes mais échoué à l’empaquetage (un outil absent
+des exécutants de la CI, et une archive source trop inclusive). La version
+v3.0.2 a porté l’outillage d’empaquetage sur un socle portable et ajouté
+un reproducteur permanent exécuté \emph{avant} toute publication. Trois
+balises, aucune déplacée~: chaque échec a été corrigé en patch à contrat
+stable, conformément à la gouvernance — premier exemple complet du
+mécanisme « échec de CI $\to$ patch honnête » que la règle R5 rend
+obligatoire.
+
+Enfin, la performance a été mesurée après une demande d’optimisation
+« maximale » (décision D15 du dépôt)~: sur une machine à 2~vCPU partagés,
+à 48~kHz stéréo par blocs de 10~ms, la chaîne d’égalisation à 30 bandes et
+2 canaux traite un bloc en 66~µs — 152~$\times$ le temps réel — avec
+\emph{zéro} octet alloué sur 100\,000 blocs consécutifs (1\,000~s de son)~;
+le tampon circulaire producteur-consommateur coûte 0,18~µs par bloc~; la
+régénération d’un balayage de 12~s prend 10,7~ms. Il n’existait aucun
+problème de performance à corriger — conclusion qui fonde le refus motivé
+de la réécriture « native machine » évoqué en
+section~\ref{sec:application}.
+
+\subsection{Reverse-specs de l’installateur scellé}\label{sec:reverse}
+
+L’histoire du produit est marquée par trois défauts d’installateur
+consécutifs (versions 2.2.0 à 2.2.2), dont l’analyse des journaux et des
+commits révèle la classe commune~: des contrats non écrits, dupliqués en
+plusieurs exemplaires. Plutôt que de recoder l’installateur (ce qui
+ajouterait un chantier non validé à un chantier en attente de validation),
+la démonstration a écrit ses \emph{spécifications rétro-actives}
+(\emph{reverse-specs})~: huit modules M-INS rédigés en relisant ligne à
+ligne le code source scellé. Le binaire reste la référence
+exploitable~; le contrat, lui, devient diffable, versionné et testable. La
+règle R2 — l’intention d’abord — s’applique à l’envers du temps~: le
+contrat précède même la décision de recoder.
+
+\begin{table}[t]
+\centering\small
+\caption{Les trois défauts historiques de l’installateur et les verrous
+posés par les reverse-specs.}
+\label{tab:reverse}
+\begin{tabularx}{\columnwidth}{@{}Y Y@{}}
+\toprule
+\textbf{Défaut historique} & \textbf{Verrou posé} \\
+\midrule
+Structure Win32 déclarée de mémoire — 424 octets au lieu de 32 sur x64,
+échec \code{0x6F8} (2 copies) & invariant de taille testé, contrat complet
+SetupAPI / newdev / cfgmgr32 \\
+Signature INF erronée (\code{\$Windows NT\$} au lieu de
+\code{\$CHICAGO\$}), échec \code{0xE0000205} & validateur bloquant à la
+construction et à l’installation \\
+Analyse de la sortie pnputil sur libellés localisés français (3 copies) &
+fragments indépendants des libellés, décodage CP850, repli par balayage,
+fixtures partagées \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Formellement, la reverse-spec est une \emph{extraction de spécification
+sonore}~: étant donné un artefact scellé $\BB_{\mathrm{scellé}}$, on
+construit $\IB'$ telle que le comportement observable de l’artefact
+satisfait $\IB'$ ($\mathrm{Obs}(\BB_{\mathrm{scellé}}) \models \IB'$),
+sans exiger la couverture exhaustive des comportements non observés. La
+technique étend la couche I au patrimoine existant — situations que la
+spécification du protocole n’avait pas prévues — et fige la connaissance~
+: les spécifications dérivent du code relu, pas d’une mémoire de session.
+Si la vague de recodage de l’installateur est un jour lancée, elle partira
+de contrats déjà testés~; si elle ne l’est jamais, le comportement validé
+reste spécifié pour quiconque viendra après.

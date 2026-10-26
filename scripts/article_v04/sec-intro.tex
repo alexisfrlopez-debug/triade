@@ -1,0 +1,82 @@
+% =====================================================================
+%  1. INTRODUCTION
+% =====================================================================
+\section{Introduction}\label{sec:intro}
+
+Le développement logiciel est entré dans l’ère \emph{agent-first} : une part
+croissante du code est écrite, relue et modifiée par des modèles de langage
+plutôt que par des humains. Les études empiriques convergent sur l’ampleur du
+phénomène (gains de productivité mesurés ou déclarés chez les utilisateurs
+d’assistants de complétion \cite{ziegler2022,peng2023}, adoption massive et
+réorganisation des pratiques de lecture et de vérification du code généré
+\cite{vaithilingam2022,barke2023}) tandis que les revues systématiques
+recensent déjà plusieurs centaines de travaux sur les modèles de langage
+appliqués au génie logiciel \cite{hou2024,fan2023}. Cette bascule remet en
+question une hypothèse implicite de nos outils : que le code source est optimisé
+pour la \emph{lecture humaine}. Compilateurs, systèmes de construction et
+langages ont été conçus autour de cette hypothèse ; si le lecteur principal
+devient une machine, l’empilement mérite un réexamen systématique plutôt qu’une
+révision marginale.
+
+Or la question qui se pose au praticien n’est pas celle que mesurent la
+plupart de ces travaux. La littérature évalue des \emph{capacités} (le modèle
+peut-il produire un code correct pour une tâche donnée~?
+\cite{chen2021,austin2021}) ou des \emph{effets} (la productivité change-t-elle~?
+\cite{peng2023}). Elle documente aussi les modes d’échec : code plausible mais
+inexact, dépendances hallucinées, conformité superficielle à la demande
+\cite{hou2024}. Mais entre le modèle et le produit livré s’étend un territoire
+peu exploré~: le \emph{processus} — l’ensemble des règles qui déterminent ce
+qu’un agent a le droit d’écrire, quand une écriture devient permanente, et
+comment un projet survit au changement d’agent. C’est ce territoire que
+TRIADE se propose de gouverner.
+
+TRIADE (\emph{Intention, Binaire, Carte}) est un protocole de gouvernance du
+développement logiciel conçu pour un monde où l’exécutant est un agent. Son
+principe est simple à énoncer~: \emph{aucune écriture n’est permanente sans
+vérification, et aucune évolution ne commence sans intention écrite}. Toute
+modification traverse trois artefacts versionnés — la couche I
+(spécifications d’intention diffables), la couche B (l’artefact exécutable
+scellé), la couche C (une carte indexée, signée, qui relie les deux) — et dix
+règles à sanction mécanique (refus de construction, refus de commit, blocage
+de session) plutôt qu’à recommandation. Un verrou croisé cryptographique relie
+la carte et le binaire dans les deux sens ; une fonction objectif
+lexicographique (sécurité $>$ performance $>$ optimisation $>$ coût en tokens)
+arbitre tout conflit sans compensation possible entre rangs. Le protocole
+existe en version~0.3, spécifié dans le dépôt du projet avec son journal de
+décisions.
+
+Cet article restructure cette spécification selon les standards d’un article de
+recherche en génie logiciel et la confronte à sa première validation à
+l’échelle~: le recodage complet de RoomEq, un égaliseur acoustique temps réel
+d’environ 15~kloc C\#/.NET~8, exécuté en sept vagues depuis une base scellée
+v2.2.2. Nos contributions sont les suivantes~:
+\begin{itemize}
+\item \textbf{C1 — Formalisation.} Nous donnons au protocole une présentation
+formalisée~: état du projet comme quadruplet, prédicat de cohérence du verrou
+croisé, règles de transformation en système de transitions, oracle
+différentiel, fonction objectif lexicographique
+(section~\ref{sec:methode}).
+\item \textbf{C2 — Étude de cas à l’échelle.} Nous rapportons le recodage
+complet d’une application réelle sous gouvernance TRIADE, avec ses métriques
+(structure, défense, gouvernance), ses comparatifs de code avant/après et sa
+séquence de publication — y compris deux échecs d’intégration continue honorés
+puis corrigés (section~\ref{sec:etude}).
+\item \textbf{C3 — Reverse-specs.} Nous introduisons la technique de
+spécification rétro-active de binaires scellés hérités, qui étend la couche I
+au patrimoine existant sans le recoder (section~\ref{sec:reverse}).
+\item \textbf{C4 — Auto-évaluation critique.} Nous délimitons explicitement ce
+que la démonstration établit et ne prouve pas, selon le cadre des menaces sur
+la validité de Wohlin et al. \cite{wohlin2012} — notamment la validité externe
+d’un cas unique et l’écart entre refactorisation source et génération binaire
+native (section~\ref{sec:menaces}).
+\end{itemize}
+
+L’article suit l’ordre attendu~: la section~\ref{sec:connexes} situe TRIADE
+par rapport à la dette technique, à la conception par contrat et au génie
+logiciel assisté par IA~; la section~\ref{sec:methode} formalise le
+protocole~; la section~\ref{sec:etude} présente l’étude de cas~; les
+sections~\ref{sec:discussion} et~\ref{sec:menaces} discutent les résultats et
+leurs limites~; la section~\ref{sec:conclusion} conclut. Le lecteur pressé
+trouvera en tableau~\ref{tab:regles} la traduction de chaque règle dans le
+dépôt de l’étude de cas — c’est la table qui a gouverné sept vagues de
+recodage.

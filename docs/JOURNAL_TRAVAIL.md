@@ -79,58 +79,276 @@ Stage Summary:
 - Prochaine étape inchangée : jalon M0 sur le profil primaire (checklist dans REPRISE_PROJET.md § 7).
 
 ---
-Task ID: 9
+Task ID: 8
 Agent: main (Z.ai, agent principal)
-Task: Rédiger le PDF du protocole v0.3 en utilisant le recodage de RoomEq
-comme démonstration, avec comparatifs de code avant/après (demande du
-développeur ; fait suite à la validation des reverse-specs installateur).
+Task: (a) Restaurer l'environnement après réinitialisation du bac à sable ;
+(b) rédiger les specs I de contrat de l'installateur scellé v2.2.2
+(demande du développeur : « on fait ça » après analyse des avantages du
+recodage TRIADE de l'installateur et du pilote).
 
 Work Log:
-- Reconstitué le contexte : spécification v0.3 intégrale, FORMAT_CARTE,
-  DECISIONS (protocole D1-D17 / RoomEq D1-D11), CARTE RoomEq, PARITE-v2.2.2,
-  WORKLOG du recodage, générateur v0.3 complet (continuité visuelle).
-- Collecté les métriques réelles des deux dépôts : legacy @ deff25c
-  (82 fichiers, 14 891 lignes, 228 tests, MixerViewModel 1 075 lignes) vs
-  v3 @ v3.0.0-dev.1 (93 fichiers, 15 438 lignes, 437 tests, plus gros
-  ViewModel 399 lignes en 5 partiels) ; empreintes md5 complètes des données
-  embarquées recalculées.
-- Écrit scripts/triade_v03_demo_roomeq.py (générateur ReportLab complet,
-  même fonte/palette/géométrie que la spécification) : 12 chapitres —
-  synthèse du protocole (couches avec colonne d'instanciation RoomEq,
-  dix règles traduites, boucle, profils), candidat et dette, adaptation D4,
-  sept vagues, TROIS comparatifs de code avant/après extraits verbatim
-  (D8 seuil 8→1000 mesuré + spec I + test PureNoise ; monolithe
-  MixerViewModel → 5 partiels + OutputPresetCoordinator ; SanitizeFileName
-  multi-plateformes), résultats mesurés, reverse-specs D11, portée de la
-  preuve, feuille de route — 14 tableaux, 9 blocs de code, figure
-  d'architecture réutilisée.
-- Écrit la couverture (triade_v03_demo_cover.html, gabarit 01 HUD) :
-  kicker « étude de démonstration », héros « Recodage / RoomEq ».
-- Pipeline de qualité : poster_validate + cover_validate (0 chevauchement),
-  rendu vectoriel html2poster 794px, code.sanitize, meta.brand,
-  pages.clean (0 page blanche), font.check (0 glyphe manquant),
-  pdf_qa PASS intégral ; vérificateur dédié
-  (scripts/verify_demo_pdf.py hors dépôt) : séquence des pieds i, 1-20 ;
-  concordance sommaire ↔ pages réelles ↔ destinations des liens 12/12 ;
-  présence des éléments clés (extraits, test D8, empreintes complètes).
-- Correctifs en cours de route : cellules « — » isolées remplacées
-  (avertissements de ponctuation), colonne empreintes élargie (hash md5
-  sur une ligne), association liens du vérificateur recalibrée.
-- Régénération MANUELLE (choix documenté dans l'en-tête du script) : le
-  PDF de démonstration est une édition, contrairement au PDF formel
-  (D17 s'applique aux seules sources du protocole).
-- Documentation : REPRISE_PROJET.md (état, arborescence, commandes),
-  README.md (ligne « Consulter la démonstration »), présent journal.
-- Sauvegarde systématique (D13) : commit + synchro Drive + push GitHub ;
-  copie livrable dans download/.
+- NOTE DE RESTAURATION : le bac à sable a été réinitialisé entre deux
+  messages (roomeq/, roomeq-git-ref/, roomeq-legacy/ effacés ; worklog
+  principal remis à un instantané antérieur aux tâches 4-7bis ; SDK absent).
+  Restauré depuis les sources de vérité : GitHub (roomeq @ 431f78b,
+  branche v3-recodage + tags v1.8.1→v3.0.0-dev.1 ; roomeq-git-ref @ deff25c
+  = v2.2.2), Drive/Livrables (3 zips restitués, md5 conformes), jetons
+  triade/.gdrive/ intacts, SDK .NET 8.0.427 réinstallé. Le détail des
+  sessions 1-4 (vagues 1-7 du recodage) vit dans roomeq/WORKLOG.md —
+  ce fichier avait perdu ces entrées, le dépôt les conserve.
+- Analyse des incidents d'installation (worklogs legacy + commits v2.2.1 /
+  v2.2.2 relus) : défauts de code = contrats non écrits (SP_DEVINFO_DATA
+  0x6F8 en 2 copies ; INF $Windows NT$ 0xE0000205 ; parsing pnputil
+  libellés FR en 3 copies) ; le pilote .sys hors de cause ; les blocages
+  v2.0.x = signature de test (CFA/SmartScreen/Secure Boot), hors code.
+- Lecture intégrale des sources scellées (Program.cs 1455 lignes,
+  GuiRunner.cs, Ui.cs, InstallActions.cs MSI, roomeqvad.inx) et du
+  DriverSetupManager v3.
+- 8 specs I écrites dans roomeq/I/installateur/ (M-INS-01..08, « ⬜ spec
+  prête ») : séquence 6 étapes, contrat Win32 (verrou SizeOf==32), contrat
+  INF (validateur $CHICAGO$), contrat outils (publi/orig, CP850, repli
+  scan, fixtures partagées app), consentement mode test, désinstallation +
+  mode normal, charge utile + ASIO (CLSID), affichage rebranchable.
+- Gouvernance : D11 (reverse-specs, conditions de lancement : validation v3
+  + décision signature + environnement Windows R5 ; alternatives rejetées),
+  CARTE (section modules installateur), PLAN_RECODAGE (vague 8 préparée),
+  REPRISE, WORKLOG dépôt (session 5).
+- Vérification R5 : aucun code source modifié ; tests re-confirmés par le
+  sync (437/437 verts, build 0/0 après réinstallation du SDK).
+- Sauvegarde D7 : commit 431f78b (13 fichiers, 901 insertions), push GitHub
+  v3-recodage + tags, miroir Drive (8 specs créées, 5 docs mis à jour,
+  livrables inchangés), bundle git.
 
 Stage Summary:
-- PDF de démonstration livré : docs/Protocole_TRIADE_v0.3_Demonstration_
-  RoomEq.pdf (22 pages : couverture + sommaire i + corps 1-20), QA PASS,
-  sommaire cliquable concordant, numérotation i, 1-20 sans doublon.
-- Le protocole dispose désormais de deux volets documentaires : la
-  spécification normative (27 p.) et sa démonstration à échelle réelle
-  (22 p.) — même série visuelle, faits vérifiables (empreintes, tests,
-  dépôts scellés).
-- Prochaine étape inchangée : jalon M0 sur le profil primaire ; côté
-  RoomEq, validation Windows puis v3.0.0 finale.
+- Les contrats de l'installateur scellé v2.2.2 sont figés en 8 specs I
+  diffables et versionnées : toute future vague 8 part de contrats testés,
+  et les trois défauts historiques (0x6F8, 0xE0000205, libellés pnputil FR)
+  sont verrouillés par des critères de test explicites.
+- Le pilote noyau reste scellé dans tous les cas (stable, jamais en cause,
+  invérifiable sans WDK — R5).
+- Prochaine étape inchangée : validation utilisateur Windows réelle de la
+  v3.0.0-dev.1 → ouverture v3.0.0 ; la vague 8 attend aussi la décision de
+  signature (phase A : certificat EV + attestation Microsoft).
+
+---
+Task ID: 9
+Agent: main (Z.ai, agent principal)
+Task: Rédiger le PDF du protocole TRIADE v0.3 en utilisant le recodage de
+l'application RoomEq comme démonstration, avec comparatifs de code
+avant/après (demande du développeur ; « c'est validé » = validation des
+reverse-specs installateur de la tâche 8).
+
+Work Log:
+- Reconstitué le contexte complet (spécification v0.3, décisions des deux
+  dépôts, audit de parité, worklog du recodage, générateur de la
+  spécification) ; collecté les métriques réelles et recalculé les
+  empreintes md5 complètes des données embarquées.
+- Écrit le générateur scripts/triade_v03_demo_roomeq.py + couverture
+  (triade/scripts/triade_v03_demo_cover.html) : 12 chapitres, 14 tableaux,
+  9 blocs de code dont 3 comparatifs avant/après verbatim (D8, monolithe
+  ViewModel, SanitizeFileName), même série visuelle que la spécification.
+- Pipeline de qualité complet (validateurs, rendu vectoriel, pdf_qa PASS,
+  font.check 0) + vérificateur dédié /home/z/my-project/scripts/
+  verify_demo_pdf.py : pieds i,1-20 ; concordance sommaire ↔ réél ↔
+  liens 12/12 ; éléments clés présents.
+- Documentation dépôt triade mise à jour (REPRISE_PROJET, README,
+  JOURNAL_TRAVAIL) ; régénération du PDF de démonstration documentée
+  comme manuelle (édition, hors D17).
+- Sauvegarde systématique : commit + Drive + GitHub + livrable download/.
+
+Stage Summary:
+- docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf livré (22 pages,
+  QA PASS) : le protocole v0.3 démontré par le recodage RoomEq — 42
+  modules, 437 tests, parité v2.2.2, comparatifs avant/après sur pièces.
+- Note d'interprétation consignée : la cristallisation v3.0.0 finale de
+  RoomEq attend toujours la validation Windows explicite ; si « c'est
+  validé » la visait, le retrait du suffixe -dev.1 + tag restent à faire.
+- Prochaine étape : validation Windows → v3.0.0 ; jalon M0 côté protocole.
+
+---
+Task ID: 10
+Agent: main (Z.ai, agent principal)
+Task: Cristalliser la v3.0.0 de RoomEq (ordre du développeur :
+« cristallise la v3.0.0 ») — retrait du suffixe -dev.1, tag, livrables,
+sauvegarde complète. S'est prolongée en publication v3.0.1 puis v3.0.2
+après deux échecs CI consécutifs, honorés puis corrigés selon le
+protocole.
+
+Work Log:
+- v3.0.0 (D12, commit bb40fb5) : suffixe -dev.1 retiré des 3 fichiers
+  prévus (Directory.Build.props, LISEZMOI.txt, package_v3.sh) ;
+  D12 consignée (écarts terrain → patchs 3.0.x à contrat stable, tags
+  immuables) ; docs d'état ré-alignés (CARTE, REPRISE, README, PARITE,
+  PLAN_RECODAGE, WORKLOG session 6) ; R5 locale verte (build 0/0, 437/437)
+  ; tag annoté v3.0.0 ; packaging local (télémétrie réelle régénérée via
+  gen_telemetrie.py) ; push GitHub + miroir Drive + 3 zips 3.0.0.
+- Incident 1 : le run CI du tag v3.0.0 ÉCHOUE sur windows-latest — 3 tests
+  DiagnosticsTests en IOException « being used by another process ».
+  Recensement : la CI v3 n'avait JAMAIS été verte (6 runs rouges depuis
+  D10). Cause : tests relisant le journal vivant via File.ReadAllText
+  (FileShare.Read) contre le writer DiagnosticsLog (FileAccess.Write) —
+  verrouillage obligatoire Windows, invisible Linux/macOS. La legacy
+  v2.2.2 portait déjà la solution (ReadLogShared, FileShare.ReadWrite,
+  avec commentaire) — perdue au portage v3. Production saine (portage à
+  l'identique de la v2.2.2 validée terrain).
+- v3.0.1 (D13, commit ab2ec86) : correctif TESTS-ONLY (ReadLogShared
+  re-porté, assertions inchangées, zéro fichier de production modifié) ;
+  tag v3.0.0 conservé (D12c : immuabilité) ; CI v3.0.1 : tests verts sur
+  les 3 OS ✓ mais job Packaging rouge.
+- Incident 2 : rg (ripgrep) absent des runners GitHub (13 × « command not
+  found », contrôles vides → « contenu du zip TEST incorrect ») + zip
+  source avalant artifacts/ (OUT interne en CI — 84 Mo au lieu de 488 Ko).
+- v3.0.2 (D14, commit f6cb92c) : package_v3.sh porté au socle POSIX
+  (rg → grep/grep -E, sémantique identique ; --exclude artifacts
+  --exclude download au rsync du zip source) ; reproducteur permanent
+  /home/z/my-project/scripts/simulate_ci_packaging.sh (copie type
+  checkout, PATH sandbox sans ripgrep, OUT interne) exécuté AVANT push :
+  12/12 contrôles verts, source 488 Ko, 437 tests.
+- Publication v3.0.2 : packaging local (télémétrie réelle dans le zip
+  test) ; sync_backup (push branche + tags, miroir Drive 12 zips,
+  bundle) ; **CI VERTE** (branche + tag, 3 OS + packaging) ; **release
+  GitHub v3.0.2 publiée** (draft, 3 zips — placeholder télémétrie en CI
+  par design, télémétrie réelle uniquement via les livrables Drive).
+
+Stage Summary:
+- **RoomEq v3.0.2 est la version cristallisée et publiée** : 42 modules
+  🔒, 437 tests verts (CI 3 OS), build 0/0, parité v2.2.2, release
+  GitHub + livrables Drive (test 41,7 Mo / public 41,6 Mo / source
+  0,5 Mo).
+- La séquence D12→D13→D14 documente trois tags : v3.0.0 (tests Windows
+  rouges), v3.0.1 (packaging rouge), v3.0.2 (verte) — aucun déplacé,
+  chaque échec corrigé en patch à contrat stable (R4). Premier exemple
+  complet du mécanisme « échec CI → patch honnête » du protocole.
+- Outils durables : simulate_ci_packaging.sh (à exécuter avant tout push
+  de tag) ; connaissance Windows re-portée avec son commentaire.
+- Prochaines étapes : validation terrain Windows (écarts → 3.0.x) ;
+  vague 8 installateur (specs M-INS prêtes, conditions D11) ; décision
+  signature phase A (EV/attestation).
+
+---
+Task ID: 11
+Agent: main (Z.ai, agent principal)
+Task: « Optimiser au max le code de RoomEq en fusionnant les modules et en
+modifiant directement le code en natif machine » (présenté comme validation
+de la démonstration du protocole TRIADE).
+
+Work Log:
+- Analyse littérale de la demande composante par composante, confrontée au
+  protocole : (a) fusion des modules = destruction des adresses stables et
+  des specs par concern (R2/R4, couche C), gain d'exécution nul (EqChain
+  matérialise ses filtres en interne, aucune frontière de module sur le
+  thread audio) ; (b) natif machine = trois sens, tous morts : assembleur
+  main invérifiable sous R5 (Linux, cible Windows) et perd macOS,
+  réécriture C/Rust = recodage v4 sans besoin mesuré (natifs déjà scellés
+  D1), et le JIT .NET 8 émet déjà du code machine optimisé.
+- Équivalent conforme exécuté : MESURER D'ABORD (précédent D8 : analyse
+  avant action). Harnais perf/ créé — console autonome volontairement hors
+  gouvernance des modules (pas dans src/, pas dans RoomEq.sln, outillage
+  comme scripts/ ; bash perf/run.sh, Release). Faux départ corrigé :
+  GC.GetAllocatedBytesForCurrentThread (pluriel).
+- Mesures (2 vCPU partagés, 48 kHz stéréo, blocs 10 ms, best-of-5) :
+  EqChain 30 bandes × 2 canaux 66 µs/bloc → 152× temps réel ;
+  0 octet alloué sur 100 000 blocs (1 000 s de son) ; RingBuffer SPSC
+  0,18 µs/bloc → 56 461× ; ESS 12 s régénéré en 10,7 ms → 1 121× ;
+  FFT 4096 en 165 µs (517×) ; FFT 1 048 576 en 38,2 ms (572×).
+- D15 consignée dans docs/DECISIONS.md (refus motivé, table de mesures,
+  conditions de réexamen : SIMD uniquement sur profilage d'un scénario
+  réel, NativeAOT seulement si un besoin de démarrage mesuré). README
+  (structure + D1-D15) et REPRISE (D15 + perf/ dans l'environnement)
+  alignés. CARTE.md volontairement INCHANGÉE : aucun module touché.
+- R5 re-vérifiée : build 0/0, 437/437 verts ; commit fe40d99 ; sauvegarde
+  D7 (push GitHub + miroir Drive + bundle).
+
+Stage Summary:
+- Réponse à la demande : REFUS documenté des deux transformations (elles
+  détruiraient la démonstration qu'elles prétendent valider), intention
+  honorée par la mesure : le thread audio tourne à 152× temps réel avec
+  zéro allocation sur une machine 2 vCPU partagée — il n'existe aucun
+  problème de performance à corriger.
+- La validation de la démonstration est le refus lui-même : D12→D15 forme
+  le corpus complet (cristallisation, échec CI honoré, portabilité
+  outillage, refus motivé d'une transformation destructrice) — quatre
+  tensions, zéro dérive du cristal, zéro ligne de src/ modifiée.
+- Outil durable : perf/run.sh — toute future optimisation part de mesures.
+- Prochaines étapes inchangées : validation terrain Windows (écarts →
+  3.0.x) ; vague 8 installateur (conditions D11) ; signature phase A.
+
+---
+Task ID: 12
+Agent: main (Z.ai, agent principal)
+Task: Exécuter les quatre recommandations d'une évaluation externe du PDF
+de démonstration v0.3 pour la prochaine version du document : (1)
+restructuration IMRAD aux standards d'un article de recherche de premier
+plan en génie logiciel, (2) formalisation académique des concepts TRIADE
+(couches I/B/C, verrou croisé, reverse-specs, invariants, règles, fonction
+objectif lexicographique), (3) rédaction des travaux connexes (dette
+technique, Design by Contract, AISE) et des menaces sur la validité (N=1,
+écart refactoring source / génération binaire native), (4) rapport de
+vérification interne avant empaquetage.
+
+Work Log:
+- Chaîne skill pdf (voie académique) lue intégralement : SKILL.md,
+  briefs/academic.md, configs/fonts.md, typesetting/overflow.md,
+  typesetting/cover.md ; sources du projet relues (spécification v0.3,
+  DECISIONS D1-D17, générateur de la démonstration v0.3 pour les
+  comparatifs avant/après verbatim et les métriques).
+- Environnement LaTeX validé par test de fumée : Tectonic 0.15 Linux,
+  fontspec + Liberation Serif/Sans/Mono, babel français, algorithm2e
+  (Entrées/Sorties), listings UTF-8 (accents et guillemets français
+  vérifiés dans le PDF), TikZ, natbib. Conflit algorithm2e x unicode-math
+  isolé par débogage binaire → mathématiques Computer Modern retenues.
+- Article rédigé en 8 fichiers LaTeX (main.tex + 7 sections) + refs.bib
+  (29 références réelles et canoniques, toutes citées) : résumé 246 mots,
+  contributions C1-C4, RQ1-RQ3, formalisation (définitions 3.1-3.4,
+  prédicat de cohérence kappa à cinq conjoints, ordre lexicographique,
+  règles en système de transitions, oracle différentiel), étude de cas
+  RoomEq (tableau de correspondance des règles, trois comparatifs
+  avant/après, résultats quantitatifs, séquence v3.0.0→v3.0.2, mesures
+  D15), discussion, menaces sur la validité (Wohlin : construction,
+  interne, externe, conclusion, écart conceptuel §6.5), conclusion.
+- Compilation itérative jusqu'à 0 erreur / 0 overfull : correctifs
+  (\end{defn}, colonnes tabularx raggedright Y, équation (iii)
+  raccourcie, \raggedbottom, titres reformulés, incises en
+  parenthèses) ; étiquettes françaises (Tableau, Algorithme) alignées
+  sur la prose ; citation lattner2004 réintégrée (29/29 réf. citées).
+- Couverture Template 03 (académique, arXiv-like) : écart texte-ligne
+  corrigé (23,5 px → 42,5 px ≥ 1U), check-html PASS, cover_validate.js
+  PASS, rendu vectoriel html2poster.js ; fusion pypdf avec normalisation
+  A4 stricte (0,5 pt) et métadonnées complètes.
+- QA finale : pdf_qa 11 contrôles passés / 0 erreur (avertissements
+  résiduels analysés : faux positifs bicolonne et typographie française,
+  consignés) ; pages.clean 0 page blanche ; font.check 0 glyphe manquant ;
+  inspection visuelle VLM sur 5 pages (couverture, titre, méthodologie,
+  listing, bibliographie) : 5/5 sans défaut.
+- Vérification pré-empaquetage scriptée : scripts/article_v04/
+  verify_article.py — 44 contrôles PASS / 0 FAIL (terminologie pivot,
+  variantes interdites, ordre IMRAD, RQ/contributions, références
+  croisées, clés de citation, flottants légendés et référencés,
+  anglicismes hors liste blanche) ; rapport interne rédigé :
+  docs/VERIFICATION_v0.4_Article.md (audit affirmation par affirmation
+  du document v0.3 : reprise sourcée / reformulation / nuance).
+- Gouvernance : D18 consignée (édition académique, noyau normatif v0.3
+  inchangé, régénération manuelle hors D17) ; REPRISE_PROJET.md (état,
+  arborescence, tableau D, commandes — et correction de la ligne d'état
+  RoomEq : cristal v3.0.2, plus -dev.1) ; README.md ; note d'en-tête de
+  PROTOCOLE_TRIADE.md ; captures QA archivées dans scripts/assets/.
+- Livrables : docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf (12
+  pages A4) + copie download/ ; sauvegarde systématique (D13/D17 — la
+  modification de DECISIONS.md et PROTOCOLE_TRIADE.md déclenche la
+  régénération du PDF formel v0.3, comportement attendu de D17).
+
+Stage Summary:
+- Édition académique v0.4 livrée : le protocole TRIADE et son étude de
+  cas RoomEq restructurés en article de recherche IMRAD de 12 pages
+  (LaTeX/Tectonic, bicolonne, 29 références), avec formalisation
+  (kappa, ordre lexicographique, transitions, oracle), travaux connexes
+  et menaces sur la validité selon Wohlin.
+- Changement de niveau de preuve verrouillé : la v0.4 distingue
+  explicitement la couche de gouvernance validée par l'étude de cas du
+  cœur natif non validé (M0-M7 ouverts, budgets tokens = cibles non
+  mesurées) — la lecture « le protocole v0.3 démontré » de la version
+  précédente n'est plus possible.
+- Vérification interne complète avant empaquetage : 44 contrôles
+  programmatiques PASS, QA PDF 0 erreur, 5/5 pages validées visuellement,
+  audit des affirmations du document original consigné.
+- Prochaine étape inchangée : jalon M0 sur le profil primaire.

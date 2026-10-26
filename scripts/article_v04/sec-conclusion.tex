@@ -1,0 +1,37 @@
+% =====================================================================
+%  7. CONCLUSION
+% =====================================================================
+\section{Conclusion et perspectives}\label{sec:conclusion}
+
+Nous avons présenté TRIADE, un protocole de gouvernance du développement
+logiciel pensé pour des exécutants agentiques~: trois artefacts versionnés
+(intention, binaire, carte), dix règles à sanction mécanique, un verrou
+croisé cryptographique, une fonction objectif lexicographique, et une
+boucle de mise à jour dont le commit est gardé par la vérification.
+L’article en a donné une présentation formalisée et l’a confrontée à sa
+première validation à l’échelle~: le recodage complet de l’application
+RoomEq — 44 spécifications avant le code, 42 modules cartographiés, 437
+tests contre 228, zéro avertissement, parité fonctionnelle vérifiée,
+séquence de publication incluant deux échecs d’intégration continue honorés
+— avec une technique au passage~: les spécifications rétro-actives de
+l’installateur scellé. Les menaces sur la validité ont été traitées comme
+une contribution à part entière~: cas unique sans témoin,
+auto-vérification par l’agent auteur, et écart assumé entre la
+refactorisation source démontrée et la génération binaire native promise.
+
+Trois perspectives découlent directement de ces limites.
+Premièrement, la \emph{réplication}~: appliquer le protocole à d’autres
+projets, piles et agents, idéalement par des équipes indépendantes, pour
+convertir la plausibilité en généralité. Deuxièmement, la
+\emph{réalisation}~: franchir les jalons M0–M7 de la feuille de route —
+chaîne notation-octets-exécutable sans compilateur, patch à chaud sur code
+en exécution, portabilité inter-OS puis inter-ISA — qui seuls valideront
+le cœur natif du protocole. Troisièmement, l’\emph{instrumentation}~:
+mesurer ce que l’étude a seulement ciblé — coût réel en tokens par
+édition, couverture de code, coût total de la discipline comparé à un
+développement non gouverné. Le fil conducteur reste celui de
+l’introduction~: développer avec un agent exige de l’agent qu’il prouve
+ce qu’il affirme, et du projet qu’il survive à l’agent. La démonstration
+RoomEq établit que la première moitié de cette exigence est tenable à
+l’échelle d’une application réelle~; la seconde est, par construction, en
+travail permanent.

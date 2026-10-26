@@ -1,0 +1,204 @@
+% =====================================================================
+%  Le protocole TRIADE — édition académique v0.4 (article de recherche)
+%  Corps du document : compilation via pdf.py convert.latex (Tectonic).
+%  La couverture est générée séparément (cover.html, Template 03) et
+%  fusionnée en amont du fichier final — AUCUNE page de titre ici.
+% =====================================================================
+\documentclass[10pt,a4paper,twocolumn]{article}
+
+% ---------- Polices (système, via fontspec/XeTeX) ----------
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}          % texte — métrique Times
+\setsansfont{Liberation Sans}           % titres de section
+\setmonofont{Liberation Mono}           % code
+\usepackage[french]{babel}
+\addto\captionsfrench{\renewcommand{\tablename}{Tableau}}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,amsthm}
+
+% ---------- Mise en page ----------
+\usepackage{geometry}
+\geometry{a4paper, top=2.3cm, bottom=2.2cm, left=1.9cm, right=1.9cm, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{liaison}{HTML}{3681A6}     % accent série TRIADE (froid)
+\definecolor{grisdoux}{HTML}{555F66}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=2pt, leftmargin=1.4em}
+\usepackage{microtype}
+
+% ---------- Théorèmes ----------
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[section]
+\newtheorem{invariant}[defn]{Invariant}
+\theoremstyle{plain}
+\newtheorem{prop}[defn]{Proposition}
+
+% ---------- Algorithmes ----------
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlgorithmName{Algorithme}{algorithme}{Liste des algorithmes}
+\SetKwInput{KwIn}{Entrées}
+\SetKwInput{KwOut}{Sorties}
+\SetKw{KwTo}{à}
+
+% ---------- Listings (code C#) ----------
+\usepackage{listings}
+\definecolor{codekeyword}{HTML}{1F3A54}
+\definecolor{codecomment}{HTML}{5A7055}
+\definecolor{codestring}{HTML}{7A4A1F}
+\lstdefinelanguage{cs3}{
+  morekeywords={public,const,double,var,new,if,throw,return,foreach,for,in,
+    static,string,char,bool,void,class,private,readonly,int,float,using,
+    namespace,partial,summary},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[l]{///},
+  morestring=[b]",
+}
+\lstset{
+  language=cs3,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{codekeyword},
+  commentstyle=\itshape\color{codecomment},
+  stringstyle=\color{codestring},
+  numbers=none,
+  breaklines=true,
+  breakatwhitespace=true,
+  postbreak=\mbox{\textcolor{grisdoux}{$\hookrightarrow$}\space},
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{black!25},
+  xleftmargin=4pt, xrightmargin=4pt,
+  aboveskip=6pt, belowskip=6pt,
+}
+
+% ---------- Bibliographie ----------
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+\setlength{\bibsep}{2pt}
+
+% ---------- TikZ ----------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+
+% ---------- En-têtes / pieds ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Le protocole TRIADE — édition académique v0.4}
+\fancyhead[R]{\small\itshape}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% ---------- Divers ----------
+\raggedbottom
+\widowpenalty=10000
+\clubpenalty=10000
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\sffamily\bfseries\color{liaison}}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\normalsize\sffamily\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+
+% hyperref : TOUJOURS en dernier
+\usepackage[colorlinks=true, linkcolor=liaison, citecolor=grisdoux,
+            urlcolor=liaison, bookmarks=true, bookmarksnumbered=true,
+            unicode=true]{hyperref}
+
+\hypersetup{
+  pdftitle={Le protocole TRIADE : gouvernance vérifiable du développement
+            logiciel assisté par IA — édition académique v0.4},
+  pdfauthor={Alexis FR-LOPEZ ; Agent Z.ai (GLM)},
+  pdfsubject={Gouvernance du développement logiciel assisté par IA ;
+              étude de cas RoomEq},
+  pdfkeywords={développement assisté par IA, dette technique, conception
+               par contrat, gouvernance logicielle, étude de cas}
+}
+
+% ---------- Raccourcis ----------
+\newcommand{\IB}{\ensuremath{\mathcal{I}}}
+\newcommand{\BB}{\ensuremath{\mathcal{B}}}
+\newcommand{\CB}{\ensuremath{\mathcal{C}}}
+\newcommand{\DB}{\ensuremath{\mathcal{D}}}
+\newcommand{\lexsucc}{\ensuremath{\succ_{\mathrm{lex}}}}
+\newcommand{\lexsucceq}{\ensuremath{\succeq_{\mathrm{lex}}}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+
+% =====================================================================
+%  BLOC DE TITRE (pleine largeur) — aucun \maketitle
+% =====================================================================
+\twocolumn[{%
+\begin{center}
+  {\footnotesize\sffamily\color{grisdoux}\MakeUppercase{Article de recherche
+   \,·\, Édition académique du protocole \textsc{Triade} \,·\, Document v0.4
+   (noyau normatif v0.3)}}\\[10pt]
+  {\LARGE\bfseries Le protocole TRIADE : gouvernance vérifiable\\[3pt]
+   du développement logiciel assisté par IA}\\[9pt]
+  {\normalsize Alexis FR-LOPEZ\textsuperscript{1}
+   \,·\, Agent Z.ai (GLM)\textsuperscript{1}}\\[3pt]
+  {\small\itshape\textsuperscript{1}Projet TRIADE — développement agent-first,
+   dépôts privés du développeur}\\[8pt]
+  {\small 26 octobre 2026}
+\end{center}
+\vspace{2pt}
+\begin{center}
+\begin{minipage}{0.88\textwidth}
+  \small
+  \textbf{Résumé} — Le développement assisté par modèles de langage déplace le
+  problème de la qualité du code vers celui de la gouvernance du processus :
+  l’agent qui écrit le code n’est pas l’agent qui le relira dans six mois, et
+  rien ne garantit naturellement qu’une évolution respecte les intentions
+  passées. Nous présentons TRIADE, un protocole qui contraint toute évolution
+  d’un projet logiciel à s’exprimer à travers trois artefacts versionnés —
+  spécifications d’intention diffables (couche I), artefact exécutable scellé
+  (couche B), carte indexée et signée (couche C) — unis par un verrou croisé
+  cryptographique, dix règles à sanction mécanique et une fonction objectif
+  lexicographique. Nous formalisons ces concepts : invariants de cohérence,
+  règles de transformation, oracle différentiel dérivé des contrats. Nous
+  rapportons une étude de cas monocasale (N = 1) : le recodage complet d’une
+  application audio temps réel (RoomEq, environ 15~kloc C\#/.NET~8) depuis une
+  base scellée v2.2.2, en sept vagues gouvernées par le protocole —
+  44 spécifications écrites avant le code, 42 modules cartographiés, 437 tests
+  contre 228, zéro avertissement de compilation, parité fonctionnelle de 14
+  familles sur 14 et empreintes reproductibles. Trois comparatifs de code
+  avant/après illustrent la conversion systématique de la classe de défauts
+  « contrat non écrit » en contrats nommés, testés et journalisés. Les menaces
+  sur la validité sont traitées explicitement : cas unique sans condition
+  témoin, auto-vérification par l’agent auteur, et écart conceptuel entre la
+  refactorisation source démontrée et la génération binaire native promise par
+  la spécification, dont la validation reste ouverte (jalons M0–M7).
+  \par\vspace{5pt}
+  \textbf{Mots-clés} : développement assisté par IA~; dette technique~;
+  conception par contrat~; gouvernance logicielle~; vérification~;
+  étude de cas.
+\end{minipage}
+\end{center}
+\vspace{16pt}
+}]
+
+\input{sec-intro}
+\input{sec-related}
+\input{sec-method}
+\input{sec-case}
+\input{sec-discussion}
+\input{sec-threats}
+\input{sec-conclusion}
+
+\bibliography{refs}
+
+\end{document}

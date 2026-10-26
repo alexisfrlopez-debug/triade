@@ -1,0 +1,388 @@
+% =====================================================================
+%  3. MÉTHODOLOGIE — LE PROTOCOLE TRIADE
+% =====================================================================
+\section{Le protocole TRIADE}\label{sec:methode}
+
+Cette section formalise le protocole tel que spécifié en version~0.3. La
+présentation suit l’ordre des dépendances~: artefacts et état
+(section~\ref{sec:artefacts}), fonction objectif
+(section~\ref{sec:objectif}), invariants de cohérence
+(section~\ref{sec:verrou}), règles et boucle de mise à jour
+(section~\ref{sec:regles}), stratégie de vérification
+(section~\ref{sec:verification}), extension aux cibles multiples et
+gouvernance (section~\ref{sec:profils}).
+
+\subsection{Artefacts et état du projet}\label{sec:artefacts}
+
+\begin{defn}[État du projet]\label{def:etat}
+Un projet TRIADE à l’instant $t$ est un quadruplet
+\begin{equation}\label{eq:etat}
+S_t \;=\; \langle\, \IB_t,\ \BB_t,\ \CB_t,\ \DB_t \,\rangle
+\end{equation}
+où $\IB_t$ est un ensemble fini de \emph{spécifications d’intention}
+$\sigma = (\mathit{nom},\ \mathit{pre},\ \mathit{post},\ \mathit{inv},\
+\mathit{adr})$~; $\BB_t$ l’artefact exécutable, décomposé en blocs
+versionnés~; $\CB_t$ la \emph{carte}, index signé liant chaque adresse à ses
+spécifications, empreintes et preuves~; $\DB_t$ le \emph{journal des
+décisions}, append-only. Le couple $(\IB, \BB)$ est régi par deux
+principes~: $\IB$ est écrit \emph{avant} $\BB$ (règle R2), et $\BB$ n’est
+jamais livré sans $\IB$ et $\CB$ à jour (règle R1).
+\end{defn}
+
+\begin{defn}[Adresse stable]\label{def:adresse}
+Soit $A$ l’espace des adresses. Une adresse $a \in A$ est \emph{stable} si
+sa dénotation — le point d’entrée qu’elle désigne dans $\BB$ — ne change pas
+d’une révision à l’autre (règle R7). La carte maintient une relation
+d’indexation $\CB_{\mathrm{loc}} \subseteq A \times \BB$ telle que chaque
+bloc soit décrit (règle R3) et chaque spécification indexée. La stabilité
+des adresses est la condition de possibilité du \emph{patch à contrat
+stable}~: remplacer le bloc dénoté par $a$ sans invalider aucun appelant.
+\end{defn}
+
+La figure~\ref{fig:arch} montre l’architecture~: le diff d’intention
+descend de $\IB$ vers $\CB$, le verrou croisé relie $\CB$ et $\BB$ dans les
+deux sens, et seule la couche $\BB$ quitte le laboratoire. Aucune couche
+n’est optionnelle~: privé de $\IB$, le système perd son ancrage
+sémantique~; privé de $\CB$, l’agent devient aveugle~; privé de $\BB$, il
+n’y a plus rien à exécuter.
+
+\begin{figure}[t]
+\centering
+\resizebox{0.86\columnwidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, text width=4.6cm,
+              minimum height=1.05cm, align=center,
+              font=\small\sffamily},
+  arr/.style={-{Stealth[length=5pt]}, thick, gray!65},
+  note/.style={font=\scriptsize\sffamily, text=gray!80!black}
+]
+  \node[box, fill=blue!7]  (i) at (0,3.0)
+    {\textbf{Couche I — Intention}\\spécifications diffables :\\contrats, pré/post, invariants};
+  \node[box, fill=green!8] (c) at (0,1.5)
+    {\textbf{Couche C — Carte}\\index signé, chiffré, fragmenté :\\adresses, preuves, manifestes};
+  \node[box, fill=orange!9] (b) at (0,0)
+    {\textbf{Couche B — Binaire}\\blocs scellés, adresses stables,\\checksums au chargement};
+  \draw[arr] (i) -- node[right, note] {diff d’intention} (c);
+  \draw[arr] (c) -- node[right, note] {localisation, régénération} (b);
+  \draw[arr] (b.west) .. controls (-2.5,0.9) and (-2.5,2.1) .. node[left, note] {empreintes} (c.west);
+  \draw[arr] (c.east) .. controls (2.5,2.1) and (2.5,0.9) .. node[right, note] {signature, scellage} (b.east);
+  \draw[arr] (b.south) -- (0,-0.85) node[below, note] {livraison (B seul)};
+\end{tikzpicture}}
+\caption{Architecture TRIADE. Le verrou croisé relie C et B dans les deux
+sens~: empreintes des blocs portées par la carte (gauche), signature de la
+carte et scellage du binaire (droite). Seule la couche B est livrée.}
+\label{fig:arch}
+\end{figure}
+
+\subsection{Fonction objectif lexicographique}\label{sec:objectif}
+
+Le protocole arbitre toute évolution par un ordre de priorité non
+compensatoire~: sécurité $>$ performance $>$ optimisation $>$ coût en
+tokens. La formalisation naturelle est l’ordre lexicographique.
+
+\begin{defn}[Admissibilité d’une évolution]\label{def:lex}
+Soit une évolution $e : S \to S'$. On lui associe le vecteur de variations
+\begin{equation}\label{eq:delta}
+\Delta(e) = \bigl(\Delta_{\mathrm{sec}},\ \Delta_{\mathrm{perf}},\
+\Delta_{\mathrm{opt}},\ \Delta_{\mathrm{tok}}\bigr) \in \mathbb{R}^4
+\end{equation}
+où chaque composante quantifie l’effet de $e$ sur le critère correspondant,
+le coût en tokens étant compté négativement (un coût moindre est un gain).
+L’évolution $e$ est \emph{admissible} si et seulement si
+\begin{equation}\label{eq:lex}
+\mathit{adm}(e) \;\Longleftrightarrow\; \Delta(e)\ \lexsucceq\ \mathbf{0}.
+\end{equation}
+\end{defn}
+
+L’ordre lexicographique $\lexsucceq$ compare les vecteurs composante par
+composante dans l’ordre des priorités~: $\Delta \lexsucc \mathbf{0}$ dès que
+la première composante non nulle est strictement positive. La propriété
+décisive est l’\emph{absence de compensation}~: aucun gain, si grand soit-il,
+sur un critère de rang inférieur ne rachète une perte, si petite soit-elle,
+sur un critère de rang supérieur. Concrètement~: aucune économie de tokens
+ne justifie de sauter une vérification (sécurité)~; aucun raffinement
+d’optimisation ne justifie une couche d’abstraction qui dégraderait les
+performances de l’artefact. La définition~\ref{def:lex} jouera un rôle
+d’oracle de gouvernance dans l’étude de cas~: c’est elle qui a motivé le
+refus, mesuré à l’appui, d’une demande de fusion de modules et de
+réécriture « en natif machine » (section~\ref{sec:resultats}).
+
+\subsection{Verrou croisé et invariants}\label{sec:verrou}
+
+Le verrou croisé répond à une menace précise~: l’empoisonnement de la
+carte. Un attaquant — ou une dérive de l’agent — qui falsifierait les
+métadonnées ferait travailler l’agent sur des informations fausses, et
+pourrait lui faire introduire une porte dérobée en croyant respecter les
+contrats. La contre-mesure est bilatérale et se formalise par un prédicat
+de cohérence.
+
+\begin{defn}[Cohérence du verrou croisé]\label{def:kappa}
+L’état $S = \langle \IB, \BB, \CB, \DB \rangle$ est \emph{cohérent}, noté
+$\kappa(S) = 1$, si et seulement si les cinq conjoints suivants
+tiennent~:
+\begin{align}
+&\text{(i)}\quad \forall \sigma \in \IB :\ \mathit{adr}(\sigma) \in
+\mathrm{dom}\,\CB_{\mathrm{loc}}
+\label{eq:k1}\\
+&\text{(ii)}\quad \forall b \in \BB :\ H(b) \in \CB_{\mathrm{bld}}
+\label{eq:k2}\\
+&\text{(iii)}\quad \CB.h_{\BB} = H(\BB) \;\wedge\;
+\CB.h_{\IB} = H(\IB)
+\label{eq:k3}\\
+&\text{(iv)}\quad \mathrm{Verify}\bigl(pk_{\mathrm{dev}},\ H(\CB),\
+\CB.\sigma\bigr) = 1
+\label{eq:k4}\\
+&\text{(v)}\quad \mathcal{O}_{\IB}(\BB) = \top
+\label{eq:k5}
+\end{align}
+c’est-à-dire~: toute spécification est indexée~\eqref{eq:k1}, tout bloc est
+empreinté~\eqref{eq:k2}, les empreintes portées par la carte correspondent
+aux artefacts réels~\eqref{eq:k3}, la carte est signée par la clé du
+développeur~\eqref{eq:k4}, et l’oracle dérivé des contrats accepte
+l’artefact~\eqref{eq:k5}.
+\end{defn}
+
+Quatre \emph{invariants structurels}, vérifiés à chaque cycle de
+construction, en spécialisent la portée~:
+
+\begin{invariant}[Jamais de binaire nu — R1]\label{inv:r1}
+Tout artefact $\BB$ est accompagné de $\IB$ et $\CB$ à jour. Violation~:
+refus de construction.
+\end{invariant}
+
+\begin{invariant}[Adresses stables — R7]\label{inv:r7}
+Les points d’entrée exposés ne se déplacent pas~; un remplacement préserve
+la dénotation de chaque adresse, par profil de cible. Violation~:
+re-liage forcée, interdite.
+\end{invariant}
+
+\begin{invariant}[Carte signée — R9]\label{inv:r9}
+L’agent refuse toute carte non signée~; la signature couvre la carte
+entière, en-tête compris. Violation~: refus de démarrage de session.
+\end{invariant}
+
+\begin{invariant}[Échec contrôlé au chargement — R10]\label{inv:r10}
+L’artefact vérifie ses propres checksums au lancement~; tout écart
+provoque un arrêt propre. Violation~: arrêt de l’exécution.
+\end{invariant}
+
+La sécurité du dispositif ne repose jamais sur le secret de la carte —
+principe de Kerckhoffs \cite{kerckhoffs1883} — mais sur la difficulté de
+falsifier simultanément les deux directions du verrou. La conception
+s’apparente aux métadonnées de provenance signées des chaînes
+d’approvisionnement \cite{torresarias2019} et aux constructions
+reproductibles \cite{lamb2021}, appliquées à une relation inédite~: celle
+entre l’index de développement privé et l’artefact livré.
+
+\subsection{Règles et boucle de mise à jour}\label{sec:regles}
+
+Le protocole compte dix règles (R1–R10), héritées des versions 0.1 et 0.2
+et inchangées depuis. Elles sont peu nombreuses, vérifiables
+mécaniquement, et sanctionnées par des effets concrets — refus de
+construction, refus de commit, blocage de session — plutôt que par des
+recommandations. Le tableau~\ref{tab:regles} les énonce avec leur
+traduction dans le dépôt de l’étude de cas
+(section~\ref{sec:etude})~; la présente sous-section en donne la lecture
+formelle.
+
+\begin{table*}[t]
+\centering\small
+\caption{Les dix règles du protocole et leur instanciation dans le dépôt de
+l’étude de cas RoomEq (section~\ref{sec:etude}).}
+\label{tab:regles}
+\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
+\toprule
+\textbf{\#} & \textbf{Règle} & \textbf{Énoncé (spécification)} &
+\textbf{Traduction RoomEq} \\
+\midrule
+R1 & Jamais de binaire nu & Tout artefact B est accompagné de I et C à jour
+& Aucun fichier de \code{src/} sans module cartographié ni spécification I \\
+R2 & Intention d’abord & Toute modification commence par un diff sur I &
+La spécification du module est écrite avant le code (44 spécifications) \\
+R3 & Balisage obligatoire & Chaque bloc est décrit dans C & Chaque commit
+porte son module~; la carte est tenue à jour \\
+R4 & Patch à contrat stable & Le remplacement préserve signatures et
+contrats~; les appelants ne sont jamais invalidés & L’API publique d’un
+module ne change pas sans révision de sa spécification \\
+R5 & Vérifie-puis-écrit & Aucun commit sans oracle, vecteurs dorés et
+round-trip & Construction 0 erreur / 0 avertissement et 100~\% des tests
+verts avant chaque commit \\
+R6 & Cristallisation & Dix vérifications réussies rendent le bloc
+immuable~; le modifier exige la procédure lourde & Balises de version~;
+42 modules verrouillés au cristal final \\
+R7 & Adresses stables & Les points d’entrée sont garantis par padding~;
+patcher ne déplace rien & Identifiants de module \code{M-<DOM>-NN}
+immuables dans la carte \\
+R8 & Verrou croisé & Empreintes des blocs et signature de la carte
+vérifiées avant chaque édition & Empreintes SHA-256 des données critiques~;
+parité md5 vérifiée \\
+R9 & Carte signée obligatoire & L’agent refuse toute carte non signée &
+Historique git intégral~; base de référence scellée (\code{deff25c}) \\
+R10 & Échec contrôlé au chargement & Checksums vérifiés au lancement~;
+écart = arrêt propre & Tests d’échec explicites (fragments courts, bruit
+seul, etc.) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Formellement, les règles définissent un \emph{système de transitions
+étiquetées}~: $S \xrightarrow{\;r_i\;} S'$ n’est licite que si la
+pré-condition de $r_i$ est satisfaite dans $S$ et sa post-condition
+établissable dans $S'$. Les deux règles les plus chargées sont R5 et R6.
+R5 (vérifie-puis-écrit) fait de la vérification une \emph{garde de commit}~:
+\begin{equation}\label{eq:r5}
+\mathit{commit}(S') \;\Rightarrow\; \kappa(S') \,\wedge\,
+\mathcal{O}_{\IB'}(\BB') = \top \,\wedge\, \mathit{build}(\BB') = (0,0)
+\end{equation}
+autrement dit, aucune écriture n’est permanente sans cohérence du verrou,
+verdict favorable de l’oracle et construction propre. R6
+(cristallisation) associe à chaque bloc un compteur de vérifications
+réussies $v(b) \in \mathbb{N}$, croissant~; lorsque $v(b) \geq 10$, le bloc
+devient immuable et toute modification exige une \emph{nouvelle version} —
+l’ancienne restant archivée, jamais détruite en silence. Les balises de
+version du dépôt jouent exactement ce rôle dans l’étude de cas, avec la
+nuance des pré-versions \code{-dev.N}, inventées pendant la démonstration
+pour distinguer « vérifié par l’oracle » de « validé sur machine
+réelle ».
+
+L’algorithme~\ref{alg:boucle} décrit la boucle de mise à jour — l’unique
+voie par laquelle le logiciel évolue. Elle se déroule en sept étapes
+réparties en deux phases, l’édition puis la validation et le commit,
+séparées par un point de non-retour~: rien n’est écrit dans l’artefact
+avant que l’oracle n’ait rendu son verdict.
+
+\begin{algorithm}[t]
+\SetAlgoLined
+\KwIn{état cohérent $S = \langle \IB, \BB, \CB, \DB \rangle$, requête de
+changement $r$}
+\KwOut{état cohérent $S'$ incorporant $r$, ou refus motivé}
+\tcp{Phase d’édition}
+$\delta \leftarrow$ diff minimal sur $\IB$ satisfaisant $r$
+\quad\textnormal{(R2)}\;
+$X \leftarrow \CB_{\mathrm{loc}}.\mathit{localiser}(\delta)$
+\quad\textnormal{(R3)}\;
+\If{$\kappa(S) = 0$}{\textbf{refuser} — session bloquée
+\textnormal{(R8, R9)}\;}
+$\BB^{*} \leftarrow$ régénérer les blocs de $X$ sous contrats stables
+\textnormal{(R4, R7)}\;
+\tcp{Point de non-retour}
+\tcp{Phase de validation}
+\If{$\mathcal{O}_{\IB'}(\BB^{*}) = \top$ \textnormal{et}
+$\mathit{build}(\BB^{*}) = (0,0)$}{
+  $S' \leftarrow \mathit{commit}(\IB', \BB^{*}, \CB', \DB')$ — patch,
+  carte, scellage atomiques \textnormal{(R1, R5)}\;
+  $\forall b \in X : v(b) \leftarrow v(b) + 1$~;
+  \If{$v(b) \geq 10$}{cristalliser $b$ \textnormal{(R6)}\;}
+}
+\Else{\textbf{refuser} — candidats rejetés, journal consigné\;}
+\caption{Boucle de mise à jour TRIADE.}
+\label{alg:boucle}
+\end{algorithm}
+
+Le coût en tokens — seul des quatre objectifs spécifique à l’ère agent-first
+— est traité comme une contrainte d’ingénierie~: l’agent ne lit jamais
+l’artefact en entier, la carte est son unique index, conçue pour être lue
+parcellairement. Les budgets normatifs s’expriment en inégalités~:
+localiser un bloc $\leq 40$ tokens, éditer simplement $\leq 3\,000$,
+ajouter $\leq 6\,000$~; l’audit complet de la carte est une opération
+exceptionnelle, non budgétée. Ces bornes sont des \emph{cibles de
+conception} de la carte fragmentée, pas encore des mesures — point
+repris dans les menaces sur la validité (section~\ref{sec:menaces}).
+
+\subsection{Stratégie de vérification}\label{sec:verification}
+
+Supprimer le compilateur du pipeline — l’objectif à long terme du
+protocole — revient à perdre les filets de sécurité qu’il tendait
+gratuitement~: vérification de types, initialisation, analyse de flot. La
+stratégie de vérification reconstruit une confiance équivalente sans
+réintroduire de couche de traduction dans l’artefact. Elle repose sur
+trois piliers.
+
+\paragraph{Oracle éphémère.}
+L’oracle est une implémentation de référence de chaque bloc — triviale,
+volontairement lente, écrite dans un langage sûr et \emph{dérivée de la
+couche I}, générée au début de chaque session puis détruite après usage~:
+jamais livrée, jamais archivée. Le test est différentiel par
+propriétés~:
+\begin{equation}\label{eq:oracle}
+\forall x \models \mathit{pre}(\sigma) :\quad
+\mathrm{Obs}\bigl(b(x)\bigr) = \mathrm{Obs}\bigl(\mathcal{O}_{\IB}(x)\bigr)
+\end{equation}
+où $x$ parcourt des entrées aléatoires contraintes par les pré-conditions
+du contrat, à la manière de QuickCheck \cite{claessen2000}, avec un volume
+de référence de douze mille cas par bloc critique. Trois propriétés
+rendent l’oracle fiable~: il dérive de $\IB$ et non de $\BB$ (il ne peut
+pas hériter d’un défaut du code)~; il est régénéré à chaque session (jamais
+en désaccord avec les contrats courants)~; sa régénération coûte moins que
+le diagnostic d’une corruption découverte après scellage. L’oracle étant
+dérivé de la couche I — indépendante de la cible — le même oracle valide
+les blocs de tous les profils~: la portabilité ne divise pas le coût de
+vérification, elle le mutualise.
+
+\paragraph{Round-trip de notation.}
+Chaque bloc assemblé par le moteur de notation du profil est désassemblé
+par le vérificateur correspondant, et les instructions obtenues sont
+comparées à la notation d’origine. Tout désaccord — une instruction, un
+opérande, une taille d’encodage — est un échec de construction. Ce contrôle
+à coût quasi nul attrape la classe d’erreurs la plus insidieuse~: l’écart
+silencieux entre ce que l’agent croit avoir écrit et les octets réellement
+produits. La nuance capitale est que la notation n’est \emph{pas} un
+compilateur — là où une chaîne moderne applique ses passes d’optimisation
+entre la représentation d’entrée et le code machine \cite{lattner2004},
+aucune réécriture ne s’intercale ici entre l’écriture et les octets
+(principe WYSIWYG).
+
+\paragraph{Cristallisation.}
+Plus un bloc fait ses preuves, moins il coûte à vérifier~: le compteur
+$v(b)$ déplace le budget de vérification vers les blocs jeunes et les
+zones actives. La chaîne de confiance du scellage résume le parcours d’une
+preuve~: verdict de l’oracle $\to$ vecteurs dorés hachés dans la carte
+$\to$ empreinte du bloc $\to$ signature de la carte entière $\to$
+immuabilité à dix vérifications.
+
+\subsection{Profils de cible, gouvernance, continuité}\label{sec:profils}
+
+Depuis la version 0.3, le cœur du protocole — couches, règles, boucle,
+vérification — est indépendant de la cible par construction~: tout ce qui
+dépend de la cible est regroupé dans un \emph{profil} défini par sept
+éléments vérifiables (ISA et types, ABI, format d’exécutable et
+protections, interface système, mécanisme de patch à chaud, moteur de
+notation, granularité et padding). Instancier une plateforme nouvelle
+revient à écrire un profil, jamais à modifier le protocole. Le
+tableau~\ref{tab:profils} résume les cinq profils déclarés~; le profil
+primaire (Windows~11, x86-64, PE32+) porte la feuille de route M0–M5, et
+les jalons M6/M7 valideront l’universalité en isolant chaque variable —
+changement d’OS à ISA constante, puis changement d’ISA.
+
+\begin{table}[t]
+\centering\small
+\caption{Profils de cible déclarés en v0.3.}
+\label{tab:profils}
+\begin{tabularx}{\columnwidth}{@{}l l Y@{}}
+\toprule
+\textbf{Profil} & \textbf{Format} & \textbf{Statut} \\
+\midrule
+\code{x86-64-win11-pe} & PE32+ & primaire, jalons M0–M5 \\
+\code{x86-64-linux-elf64} & ELF64 & M6 — inter-OS \\
+\code{riscv64-linux-elf64} & ELF64 & M7 — inter-ISA \\
+\code{aarch64-macos-macho} & Mach-O & réservé \\
+\code{wasm32-wasi} & Wasm & réservé, étude \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La gouvernance complète le dispositif. Le journal des décisions $\DB$
+consigne toute décision structurante avec ses alternatives rejetées et sa
+justification rattachée à la fonction objectif~; une révision doit soit
+respecter les décisions passées, soit expliciter précisément ce qu’elle
+invalide — rien ne se change en silence, dans l’esprit des enregistrements
+de décisions d’architecture \cite{nygard2011} étendus à un registre
+normatif. Enfin, l’\emph{export de continuité} garantit l’anti-enfermement~:
+un conteneur unique, chiffré et signé, regroupe les couches $\IB$, $\BB$,
+$\CB$ complètes et un manifeste autodescriptif~; l’oracle, éphémère par
+conception, y est volontairement exclu et régénéré depuis $\IB$ à
+l’arrivée. La procédure d’import en cinq étapes — déchiffrement,
+vérification de signature, vérification du verrou croisé, régénération de
+l’oracle, reprise — applique au transfert les mêmes garde-fous qu’à
+l’édition~: rien n’est interprété avant vérification, et l’échec d’une
+étape est terminal.

@@ -1,0 +1,105 @@
+% =====================================================================
+%  6. MENACES SUR LA VALIDITÉ
+% =====================================================================
+\section{Menaces sur la validité}\label{sec:menaces}
+
+Nous suivons la classification de Wohlin et al. \cite{wohlin2012},
+complétée par les recommandations de reporting des études de cas de
+Runeson et H{\"o}st \cite{runeson2009}. Aucune de ces menaces n’est
+résolue~; toutes sont déclarées.
+
+\subsection{Validité de construction}\label{sec:construction}
+
+Les métriques mobilisées — nombre de modules, de tests, d’avertissements,
+taille du plus gros fichier — sont des \emph{indicateurs} de structure et
+de défense, pas des mesures directes de qualité. Le compte de tests ne
+mesure ni la couverture ni la force des tests~: \emph{aucune mesure de
+couverture de code n’a été collectée} durant l’étude, et l’appréciation
+qualitative des extensions (« parité des données embarquées »,
+« comportements aux limites ») est celle de l’agent auteur. Le compte de
+modules dépend de la discipline de cartographie elle-même — l’instrument
+et l’objet mesuré sont partiellement confondus. Enfin, la « parité
+fonctionnelle 14/14 » est une audit de familles de fonctionnalités guidé
+par le fichier de lecture de la base, pas une équivalence formelle~; elle
+ne couvre ni les comportements non documentés, ni les caractéristiques non
+fonctionnelles au-delà des tests.
+
+\subsection{Validité interne}\label{sec:interne}
+
+Il n’existe \emph{pas de condition témoin}~: aucun recodage parallèle de la
+même base sans la discipline TRIADE n’a été conduit, et l’attribution des
+améliorations au protocole plutôt qu’à l’attention renouvelée portée au
+code est un jugement, non une mesure. La structure de l’étude est
+auto-référentielle~: l’agent qui a écrit les spécifications a aussi écrit
+le code, les tests, l’audit et le présent article — un biais
+d’auto-confirmation que seule une évaluation indépendante pourrait
+lever. Les trois comparatifs avant/après ont été \emph{sélectionnés}
+comme les plus illustratifs~; les vagues ont aussi produit des
+conversions moins spectaculaires, non rapportées. Les mesures de
+performance ont été prises sur une infrastructure partagée à 2~vCPU, dans
+des conditions favorables au meilleur cas (meilleur de cinq essais).
+
+\subsection{Validité externe}\label{sec:externe}
+
+C’est la menace majeure~: l’étude est \emph{monocasale} (N~$=$~1). Un
+projet, un domaine (audio temps réel), une pile technologique
+(C\#/.NET~8/Avalonia), un agent (un unique modèle, dans un unique
+environnement), un développeur, et — pour le protocole lui-même — ses
+propres auteurs, puisque la démonstration a servi à valider la méthode
+qui l’encadrait. Aucun claim de généralisation n’est avancé~: les
+mécanismes rapportés sont \emph{plausibles} dans d’autres contextes, pas
+\emph{établis}. La réplication sur d’autres projets, piles et agents,
+conduite par des tiers, est la condition de toute montée en généralité
+\cite{runeson2009}. De même, l’applicabilité à des équipes humaines
+nombreuses — dont les incitations, contrairement à celles d’un agent,
+comprennent la vitesse de livraison individuelle — est une question
+ouverte que le protocole n’a pas encore affrontée.
+
+\subsection{Validité de conclusion}\label{sec:conclusion-val}
+
+Les affirmations de performance reposent sur des micro-benchmarks en
+meilleur cas sur infrastructure partagée~; elles établissent l’\emph{absence
+d’un problème de performance à corriger}, pas des performances
+représentatives de déploiements réels. Le « zéro régression » est borné
+par l’étendue de la suite de tests et de l’audit de familles~; il ne
+préjuge pas des comportements non couverts — l’épisode du verrouillage de
+journal sous Windows (invisible sous Linux/macOS) rappelle qu’une suite
+verte est une \emph{preuve conditionnelle}, conditionnelle à
+l’environnement d’exécution. L’épisode v3.0.0~$\to$~v3.0.2, présenté comme
+validation du mécanisme d’échec honnête, est un événement unique~; sa
+généralité n’est pas démontrée.
+
+\subsection{L’écart conceptuel~: refactorisation source ou génération
+binaire native~?}\label{sec:ecart}
+
+Une menace spécifique mérite un traitement distinct, car elle touche au
+rapport entre la démonstration et l’objet annoncé du protocole. La
+spécification TRIADE v0.3 promet, à terme, un développement \emph{direct
+en code machine natif scellé} — la couche B comme suite d’octets écrits
+via une notation assemblée et vérifiée par round-trip, le compilateur
+disparaissant du pipeline. L’étude de cas n’a rien démontré de tel~: la
+couche B y est instanciée comme \emph{code source managé}, compilé par une
+chaîne standard (compilation .NET, exécution avec compilation à la volée),
+et les mécanismes spécifiques au natif — notation, round-trip, verrou
+croisé cryptographique par empreintes d’octets, patch à chaud par
+trampoline, adresses garanties par remplissage — n’ont pas été exercés.
+
+L’étude valide donc la \emph{couche de gouvernance} du protocole — les
+trois artefacts, les dix règles, la boucle, la vérification-puis-écriture,
+la cristallisation, l’arbitrage lexicographique — appliquée à une
+instanciation source de la couche B. Elle ne valide ni la forme de
+l’artefact, ni les mécanismes natifs, ni l’argument de performance qui
+les motive~; ces points restent la charge des jalons M0 à M7, non
+encore franchis. Symétriquement, la motivation \emph{agent-first} du
+protocole — l’économie de contexte par édition ciblée via la carte —
+repose sur des budgets cibles (40 / 3\,000 / 6\,000 tokens) qui sont des
+\emph{objectifs de conception}, pas des mesures~: aucune instrumentation
+du coût réel en tokens n’a été conduite durant l’étude. Nous posons ces
+limites d’autant plus clairement que la tentation symétrique existe~:
+conclure de l’étude à la validité du programme natif serait aussi
+infondé que conclure de son cadre à l’inutilité de la gouvernance. Ce
+que l’étude établit tient en une phrase~: \emph{la discipline de
+gouvernance est applicable de bout en bout, à coût documenté, à une
+application réelle complète, et les défauts qu’elle a convertis en
+contrats sont ceux-là mêmes qui survivaient depuis trois ans à la
+maintenance classique}.

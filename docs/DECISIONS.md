@@ -160,6 +160,31 @@ séquence i, 1, 2, 2 au lieu de i, ii, 1, 2) — l'archive v0.2 a été régén�
 l'identique (erratum, contenu inchangé) et le générateur v0.3 gèle désormais la valeur
 entre les deux phases de construction.
 
+## Décision D18 — Édition académique du protocole : article de recherche v0.4 (26 octobre 2026)
+
+| ID | Décision | Choix retenu | Alternatives rejetées |
+|---|---|---|---|
+| D18 | Restructuration académique du document du protocole | Réécrire la présentation du protocole en article de recherche IMRAD (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`, 12 p.) : formalisation des couches I/B/C, du verrou croisé (prédicat de cohérence κ), de la fonction objectif lexicographique (ordre ≻_lex) et des règles en système de transitions ; section travaux connexes (dette technique, Design by Contract, AISE) ; étude de cas RoomEq reprise avec questions de recherche et design monocasal déclaré ; menaces sur la validité (Wohlin) dont l'écart conceptuel refactorisation source / génération binaire native ; rapport de vérification interne avant empaquetage (`docs/VERIFICATION_v0.4_Article.md`). Sources LaTeX conservées dans `scripts/article_v04/` (main.tex + 7 sections + refs.bib + cover.html Template 03 + merge_cover.py + verify_article.py) ; régénération manuelle, hors D17. Le noyau normatif du protocole est inchangé — la numérotation v0.4 désigne l'édition du document, le contenu normatif reste celui de la v0.3 | Réviser la spécification v0.3 elle-même (aucun mécanisme nouveau à spécifier : la formalisation est une présentation, pas un changement de règles) ; publier en anglais (la série documentaire du projet est francophone ; les équivalents académiques sont donnés aux premières occurrences) ; intégrer l'article au périmètre D17 (le PDF formel régénéré automatiquement reste la spécification ; l'article, comme la démonstration, se régénère manuellement) |
+
+**Développement.** L'édition académique répond à une évaluation externe du
+PDF de démonstration v0.3, qui recommandait de porter le document aux
+standards d'un article de recherche de premier plan. La réécriture
+restructure sans changer les faits : chaque affirmation de la démonstration
+est soit reprise avec sa source (tableaux de mesures), soit explicitement
+nuancée dans les menaces sur la validité — le changement de niveau de preuve
+le plus important étant la distinction désormais verrouillée entre ce que
+l'étude de cas établit (la couche de gouvernance du protocole appliquée à
+une instanciation source de la couche B) et ce qu'elle ne prouve pas (le
+cœur natif : notation, round-trip, patch à chaud, jalons M0–M7 ouverts ;
+les budgets en tokens restent des cibles, pas des mesures). Deux
+enseignements issus de la démonstration entrent dans le corps du texte
+comme contributions : la cristallisation à pré-versions (-dev.N) et les
+reverse-specs. La vérification préalable à l'empaquetage est scriptée
+(`verify_article.py` : 44 contrôles — terminologie, structure IMRAD,
+références croisées, flottants, anglicismes) et consignée dans
+`docs/VERIFICATION_v0.4_Article.md` ; les avertissements résiduels y sont
+justifiés un par un (faux positifs bicolonne, typographie française).
+
 ## Mode de gouvernance
 
 Une nouvelle décision reçoit l'ID suivant la séquence (D18, D19, ...), la date, le choix

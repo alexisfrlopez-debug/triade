@@ -25,8 +25,9 @@ sacrifié au profit d'un objectif de rang inférieur.
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
 | Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.3, source de travail) — `docs/Protocole_TRIADE_v0.3_Specification.pdf` (archive formelle v0.3, 27 p.) — `docs/Protocole_TRIADE_v0.2_Specification.pdf` (archive v0.2) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
+| Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D17) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D18) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité

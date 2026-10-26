@@ -1,0 +1,93 @@
+% =====================================================================
+%  5. DISCUSSION
+% =====================================================================
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Ce que l’étude établit}
+
+Un protocole se juge à ce qu’il rend impossible. Sur les trois comparatifs
+comme sur l’extension rétro-active, l’étude établit que la classe de
+défauts « contrat non écrit » — valeur-seuil enfouie, structure déclarée de
+mémoire, comportement dépendant de l’hôte, analyse de libellés localisés —
+est systématiquement convertie en contrat nommé, documenté, testé et
+journalisé. Les règles ont opéré sans exception sur un périmètre réel et
+complet~: 42 modules cartographiés, 44 spécifications écrites avant le
+code, dix commits tous précédés de la vérification complète, sept vagues
+closes par une sauvegarde systématique. L’oracle a joué son rôle jusque
+dans la révélation de défauts invisibles sur la machine de développement
+(le caractère interdit dépendant de l’hôte,
+section~\ref{sec:caractere}~; le verrouillage de journal révélé par la CI
+Windows, section~\ref{sec:resultats}). La parité est démontrable par des
+tiers — empreintes reproductibles, quatorze familles auditées, écarts
+documentés — et la structure s’est améliorée sans gonflement~: à volume de
+code comparable, la défense double (228~$\to$~437 tests, avertissements
+tolérés~$\to$~zéro) et le plus gros fichier applicatif passe de 1\,075 à
+399~lignes.
+
+La démonstration valide aussi, indirectement, la \emph{gouvernance}. Le
+journal des décisions — quinze entrées en cinq sessions, chacune avec ses
+alternatives rejetées — a servi de mémoire d’arbitrage effectivement
+consultée~: aucune révision silencieuse, aucun accommodement improvisé, y
+compris sous la pression d’une réinitialisation d’environnement en cours
+de projet. L’anti-enfermement n’est pas théorique~: l’historique, les
+contrats et l’état sont récupérables par un agent neuf depuis les seuls
+artefacts du dépôt. Et la séquence v3.0.0~$\to$~v3.0.2 (deux échecs de CI
+honorés puis corrigés en patchs à contrat stable) montre que la
+discipline tient \emph{dans l’échec}, ce qui est sa véritable épreuve.
+
+\subsection{Implications pour le génie logiciel assisté par IA}
+
+Pour l’AISE, l’étude suggère un déplacement du regard~: à capacité du
+modèle constante, la qualité du résultat agent-first dépend du
+\emph{processus} qui encadre l’agent. Les modes d’échec documentés de la
+littérature — code plausible mais inexact, dérive silencieuse hors
+périmètre, dépendances hallucinées \cite{hou2024} — ne sont pas que des
+propriétés des modèles~; ce sont des propriétés de \emph{couples}
+modèle-processus, et le second terme est actionnable dès aujourd’hui. Les
+trois mécanismes que l’étude a éprouvés se transposent à tout
+outillage~: (i)~la spécification écrite avant le code, qui force
+l’intention à précéder l’exécution et rend chaque évolution
+\emph{explicable}~; (ii)~le vérifie-puis-écrit (R5), qui transforme la
+confiance dans le modèle en vérification de l’artefact — l’agent peut
+halluciner, le commit reste propre~; (iii)~la cristallisation à
+pré-versions explicites, qui distingue « vérifié par l’oracle » de
+« validé sur le terrain » et interdit la confusion des niveaux de preuve.
+La reverse-spec, enfin, adresse le problème de l’\emph{embarquement} de
+patrimoine~: face à un legs sans documentation, l’agent ne repart pas de
+zéro — il extrait d’abord le contrat du code relu, puis le fait valider.
+
+\subsection{Coûts et frictions observés}
+
+L’honnêteté impose de chiffrer la contrepartie. La discipline a un coût
+d’écriture~: 44 spécifications et un journal de quinze décisions
+représentent un investissement documentaire significatif, supérieur à ce
+qu’un développement humain classique consent — l’étude de cas l’a payé
+parce qu’il s’agissait précisément de valider la discipline. Elle a un
+coût de tempo~: aucune écriture n’est permanente sans vérification
+complète, ce qui rend les itérations plus lentes qu’en édition libre — le
+prix payé pour que la régression soit impossible \emph{par construction}
+plutôt que rare en pratique. Elle a enfin un coût d’infrastructure~:
+intégration continue multi-OS, triple sauvegarde, reproducteur
+d’empaquetage. L’argument économique du protocole est que ces coûts sont
+des \emph{investissements anti-dette}~: dans l’étude de cas, le diagnostic
+complet du seuil D8 — mesure, décision, spécification, tests — a coûté une
+fraction de ce qu’aurait coûté le seul dépannage du défaut en production~;
+et le défaut existait depuis trois ans parce que rien ne l’avait rendu
+visible. Ces observations restent qualitatives~; aucune mesure
+comparative du coût total n’a été tentée (section~\ref{sec:menaces}).
+
+\subsection{Enseignements pour le protocole lui-même}
+
+L’étude renvoie au protocole trois enseignements concrets, que la
+prochaine révision pourra instruire. Premièrement, la notion de
+\emph{pré-version de cristallisation} (\code{-dev.N})~: la démonstration a
+distingué « vérifié par l’oracle » de « validé sur le terrain », nuance
+que la spécification ne prévoyait pas. Deuxièmement, la \emph{reverse-spec}
+elle-même, qui étend la couche I aux binaires scellés hérités. Troisièmement,
+la valeur du \emph{partage de fixtures} entre consommateurs d’un même
+contrat externe — les spécifications de l’installateur et l’application
+partagent contractuellement leurs jeux de test d’analyse de sortie, ce qui
+élimine par construction la duplication qui laisse vivre les défauts en
+trois exemplaires. Chacun de ces enseignements est entré au journal des
+décisions du dépôt~; aucun n’a été appliqué en silence — la gouvernance
+s’applique à elle-même.

@@ -6,6 +6,12 @@
 > la décision D17, le PDF est **régénéré systématiquement** à chaque modification des
 > sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des sources au
 > stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
+> La série documentaire compte également la démonstration RoomEq
+> (`docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf`) et, depuis la décision D18,
+> une **édition académique v0.4** (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`)
+> — restructuration IMRAD et formalisation de la présente spécification, sans
+> changement du noyau normatif ; sa vérification interne est consignée dans
+> `docs/VERIFICATION_v0.4_Article.md`.
 
 - Version : v0.3 — universalité par profils de cible, suite cryptographique paramétrable, export de continuité
 - Date : 25 octobre 2026

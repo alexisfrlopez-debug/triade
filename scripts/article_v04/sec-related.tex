@@ -1,0 +1,123 @@
+% =====================================================================
+%  2. TRAVAUX CONNEXES
+% =====================================================================
+\section{Travaux connexes}\label{sec:connexes}
+
+TRIADE emprunte à trois traditions~: la gestion de la dette technique, la
+conception par contrat et, plus récemment, le génie logiciel assisté par IA
+(AISE). Cette section les passe en revue successivement, puis positionne le
+protocole par rapport à chacune.
+
+\subsection{Dette technique}\label{sec:connexes-dette}
+
+La métaphore de la dette technique, introduite par Cunningham, décrit la
+conséquence d’un choix de conception opportun~: une facilité immédiate qui se
+rembourse, avec intérêts, dans la maintenance future \cite{cunningham1992}.
+Kruchten et al. en ont fait un objet de recherche à part entière, en
+identifiant notamment la dimension \emph{sociale} et documentaire de la dette
+— la perte de contexte des décisions passées \cite{kruchten2012}. La revue
+systématique de Li et al. classe les activités de gestion en trois
+familles~: identification, mesure et remboursement \cite{li2015}, et des
+méthodes comme SQALE proposent d’évaluer le montant de la dette sur le code
+existant \cite{letouzey2012}. Un courant connexe formalise la mémoire des
+décisions elles-mêmes — les \emph{architecture decision records} de Nygard
+\cite{nygard2011} — en réaction à la même perte de contexte.
+
+Ces approches partagent un trait~: elles interviennent \emph{a posteriori},
+sur un code dont la dette est déjà contractée. TRIADE inverse la perspective~:
+la dette est traitée à la source, en rendant son principal explicite avant
+l’écriture. La couche I est précisément l’artefact qui empêche la classe la
+plus insidieuse de dette — le \emph{contrat non écrit} (valeur-seuil enfouie,
+convention d’interface implicite, comportement dépendant de l’hôte) — d’être
+contractée en silence~: ce qui n’est pas spécifié n’est pas codé, et ce qui
+est codé renvoie à sa spécification. Le journal des décisions, requis par la
+gouvernance du protocole, généralise les enregistrements de Nygard en les
+rattachant à une fonction objectif explicite.
+
+\subsection{Conception par contrat et spécification}\label{sec:connexes-dbc}
+
+La lignée remonte à la logique axiomatique de Hoare, qui attache des
+pré-conditions et post-conditions aux programmes \cite{hoare1969}, et à la
+discipline de la programmation vérifiée de Dijkstra \cite{dijkstra1976}.
+Meyer a popularisé la \emph{conception par contrat}~: chaque routine publie
+ses obligations mutuelles — pré-conditions, post-conditions, invariants —
+vérifiées à l’exécution \cite{meyer1992}~; Findler et Felleisen ont étendu la
+notion aux fonctions d’ordre supérieur avec un contrôle dynamique des
+violations \cite{findler2002}. Sur le plan de la vérification, QuickCheck a
+établi que des propriétés déclaratives et des tests aléatoires contraints
+formaient un oracle bon marché et redoutable \cite{claessen2000}. Pour le
+code hérité, Feathers définit les \emph{characterization tests}~: figer le
+comportement existant sous des tests avant d’y toucher \cite{feathers2004},
+dans la tradition du remaniement contrôlé \cite{fowler1999}. Enfin, les
+méthodes formelles légères (Alloy \cite{jackson2006}) ou lourdes (TLA+
+\cite{lamport2002}) offrent des langages de spécification vérifiables par
+model checking.
+
+TRIADE se distingue des deux manières. D’une part, ses contrats sont
+\emph{légers par décision explicite} (D3 du journal du projet)~: signatures
+typées, pré/post-conditions en prose contrainte et invariants — pas de
+sémantique formelle exécutable, au prix d’une vérification par tests plutôt
+que par preuve. D’autre part et surtout, le contrat change de plan~: dans la
+conception par contrat classique, le contrat est une annotation \emph{dans} le
+code, surveillée à l’exécution~; dans TRIADE, le contrat est un artefact
+\emph{extérieur} au code — diffable, versionné, antérieur à l’écriture — qui
+\emph{conditionne le droit même de commiter} (règle R5). Le contrat n’est
+plus une assertion runtime mais un instrument de gouvernance du processus.
+
+\subsection{Génie logiciel assisté par IA}\label{sec:connexes-aise}
+
+L’évaluation des modèles de code a d’abord mesuré des capacitudes~: réussite
+sur des bancs d’essai comme HumanEval \cite{chen2021} ou la synthèse de
+programmes à partir de spécifications en langage naturel \cite{austin2021}.
+Un second courant mesure les effets sur les développeurs~: évaluations de
+productivité sur des tâches contrôlées \cite{ziegler2022}, essai randomisé en
+entreprise \cite{peng2023}, études d’utilisabilité mettant en évidence
+l’écart entre attentes et expérience \cite{vaithilingam2022}, et analyses
+fine-grained des modes d’interaction \cite{barke2023}. Les revues
+systématiques agrègent ce corpus et y relèvent des angles morts récurrents~:
+mesures de qualité au-delà des bancs d’essai, maintenance à long terme,
+et confiance \cite{hou2024,fan2023}. Enfin, l’intégrité de la chaîne
+d’approvisionnement a produit ses propres instruments~: constructions
+reproductibles bit à bit \cite{lamb2021} et métadonnées de provenance signées
+(in-toto) \cite{torresarias2019}.
+
+À notre connaissance, la littérature AISE ne propose pas de protocole de
+gouvernance du \emph{processus de développement} lui-même. Les travaux
+existentants supposent l’outillage standard (répertoire versionné, revue de
+code, intégration continue) et évaluent l’agent dans ce cadre hérité de
+l’ère humaine. TRIADE suppose au contraire l’agent acquis et redessine le
+cadre~: l’agent n’accède à l’artefact que par la carte (économie de
+contexte), n’écrit qu’après vérification (R5), et voit ses évolutions
+arbitrées par une fonction objectif explicite. Les verrouillages
+cryptographiques s’inspirent des approches de provenance
+\cite{torresarias2019,lamb2021}, mais protègent une relation inédite~: celle
+entre l’\emph{index de développement} privé et l’artefact livré.
+
+\subsection{Positionnement}\label{sec:connexes-position}
+
+Le tableau~\ref{tab:position} résume le positionnement. Les approches de
+dette technique mesurent un état et recommandent~; la conception par contrat
+instrumente le code~; l’AISE évalue des modèles et des effets. TRIADE est le
+seul des quatre à définir un \emph{protocole de processus}~: un ensemble
+d’artefacts obligatoires, de règles à sanction mécanique et d’un ordre de
+priorité non compensatoire, applicable à tout exécutant — humain ou agent.
+Cette généralité est aussi sa limite~: rien, dans l’état actuel, ne prouve
+que le protocole survive au contact d’équipes humaines nombreuses, dont les
+incitations diffèrent de celles d’un agent (section~\ref{sec:menaces}).
+
+\begin{table}[t]
+\centering\small
+\caption{Positionnement de TRIADE parmi les approches connexes.}
+\label{tab:position}
+\begin{tabularx}{\columnwidth}{@{}l Y Y@{}}
+\toprule
+Approche & Moment & Instrument pivot \\
+\midrule
+Dette technique \cite{li2015} & après coup & mesures, tableaux \\
+Contrat (DbC) \cite{meyer1992} & à l’exécution & assertions dans le code \\
+AISE \cite{hou2024} & évaluation & modèles, bancs d’essai \\
+\textbf{TRIADE} (cet art.) & \textbf{avant écriture} & \textbf{specs + règles
+à sanction} \\
+\bottomrule
+\end{tabularx}
+\end{table}
