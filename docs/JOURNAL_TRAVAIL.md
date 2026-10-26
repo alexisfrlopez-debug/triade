@@ -760,3 +760,80 @@ Stage Summary:
 - Prochaine étape : chantier hachoir (m6, D34 échelon 1) — SHA-256 natif
   ELF64 écrit à la main, parité sha256sum, l'agent utilise TRIADE pour son
   propre travail.
+
+---
+Task ID: 20
+Agent: main (Z.ai, agent principal)
+Task: Franchir l'échelon 1 de l'échelle d'auto-hébergement (D34) : construire
+hachoir — hacheur SHA-256 natif ELF64, écrit à la main, l'agent l'utilisant
+pour son propre travail.
+
+Work Log:
+- Notation complétée : trois brouillons écrits (ah-07 finalisation
+  bourrage-longueur-extraction 49 instr/156 o, ah-08 encodage hexa 17 instr/
+  57 o feuille, ah-09 orchestration _start 79 instr/337 o — aucun push,
+  appels 16-alignés nativement, facteur .erreur commun aux quatre échecs).
+  Longueurs de messages calculées PAR MACHINE dès l'écriture (27 pour
+  « lecture » — la main aurait dit 26 : la leçon C1 est devenue réflexe).
+- Deux défauts de l'outil auteur (jamais exécuté avant cette session) :
+  clés d'étiquettes stockées AVEC le point mais recherchées SANS (résolution
+  impossible) ; round-trip textuel strict refusant « 60 » vs « 0x3c » —
+  corrigé par CANONISATION : le rendu capstone, vérifié byte-identique par
+  ré-assemblage, devient le texte de la notation (le WYSIWYG est l'identité
+  OCTETS, la graphie est canonique).
+- Troisième défaut (le plus profond, notation ah-05) : les DIX rotations
+  FIPS écrites `rol` au lieu de `ror` (Σ0/Σ1/σ0/σ1 sont des rotations À
+  DROITE) — l'init passait, la compression produisait des digest faux.
+  Diagnostiqué sous Unicorn (harnais dédié, constat H par H) : vecteur vide
+  et « abc » exacts après inversion. La spec était juste, la notation fausse.
+- Quatrième défaut (frontière d'absorption, notation ah-06) : `jbe` au lieu
+  de `jb` au test n == espace restant — le tampon rempli EXACTEMENT n'était
+  pas comprimé (violation Q1 : ⌊(remplissage+n)/64⌋ compressions ; Q2 :
+  remplissage' = (remplissage+n) mod 64). Symptôme natif : segfault (code
+  -11) sur TOUTE taille multiple de 64 (ah-07 recevait remplissage=64,
+  écrivait 0x80 dans le champ remplissage lui-même et lançait rep stosb
+  avec ecx = 63-64 = -1 — quatre milliards d'octets). Défaut D'UN OCTET
+  (76→72), trouvé par motif de tailles crashantes (T ≡ 0 mod 64, T > 0).
+- Cinquième défaut (couverture de falsification) : d40002 (ah-02-lire)
+  n'est JAMAIS appelé par hachoir (ah-09 I1 : read direct) — indétectable
+  par l'artefat PAR CONSTRUCTION. Complément protocole : falsification
+  BLOC-NIVEAU sous Unicorn (crochet syscall, chaque octet de code du bloc,
+  divergence = crash/mauvais numéro/non-retour). Au passage : un mutant qui
+  PEND (boucle infinie) est traité comme divergence (code sentinel -99).
+- BUILD VERT : 9 blocs, 323 instructions, 1149 o de code ; oracle
+  structurel 95 verrous + 21 symboles @ vérifiés contre layout/réel (la
+  leçon C1 institutionalisée dans le build) ; ELF64 de 12 288 o écrit à la
+  main (ehdr 64 o + 2 phdr 56 o, RX RVA==offset, bss pur filesz 0) ;
+  oracle différentiel NATIF 20 cas verts (4 vecteurs dorés FIPS dont le
+  million de 'a', 13 tailles de transition, 3 chemins d'échec exacts) ;
+  falsification 27/27 (zéro silence). Cristallisation 10/10 (dix runs).
+- PREMIER USAGE AUTO-RÉFÉRENTIEL : les empreintes des artefacts du projet
+  (hello.exe, selftest.exe, echo.exe, hachoir lui-même) produites PAR
+  hachoir, contre-vérifiées sha256sum — octet-identiques, et conformes aux
+  scellages historiques (c89e330c…, 8038585b…, fdf89ea8…, 1d56640a…).
+  L'agent utilise désormais son propre outil pour son propre travail.
+- Mesures D34 (échelon 1) : hachoir 0,0048 s vs sha256sum 0,0025 s sur
+  1 Mo (ratio 1,9 — SHA-NI de l'outil système non implémenté, R11 futur) ;
+  build + oracle natif complet 30,5 s ; budgets tokens : specs 8 774,
+  brouillons 3 973, notations livrées 5 099 (total lignée 13 873 tok).
+- Carte génération 1 auto-hôte : 4 fragments chiffrés (sel Argon2id
+  DISTINCT D34, clés projet partagées D27), signature Ed25519, verrou
+  croisé 9/9. hachoir scellé : sha256:1d56640afd8d71ee1fd866e9e97d33868ec6
+  cdfa6c98edf7665a7f8d7389c8f9, version 0.7.0-dev.1.
+
+Stage Summary:
+- ÉCHELON 1 DE D34 FRANCHI : exécution native — les outils de l'agent
+  tournent en code machine nu sur son propre terrain. hachoir est un
+  remplaçant direct de sha256sum (format identique, diff exact), premier
+  artefact du profil x86-64-linux-elf64, premier bloc du domaine ah.
+- Le berceau Python reste l'assembleur et le vérificateur (keystone pour
+  l'assemblage, Python pour l'oracle) — c'est le plan de l'échelle : les
+  échelons 2-4 le rétrograderont (vérification native, assembleur natif,
+  fermeture de boucle).
+- Cinq défauts corrigés et consignés, dont deux qui auraient livré un
+  hacheur FAUX sans l'oracle différentiel (rol/ror : digest erronés ;
+  jbe/jb : crash sur multiples de 64) — le protocole a attrapé ce que
+  l'œil de l'auteur avait raté, sur SON PROPRE OUTIL cette fois.
+- Prochaine étape : échelon 2 (vérification native — hachage/signature par
+  des blocs TRIADE) et l'usage systématique de hachoir dans la chaîne de
+  l'agent ; M2 attend la validation terrain echo.exe (développeur).

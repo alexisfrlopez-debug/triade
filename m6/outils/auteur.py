@@ -61,7 +61,7 @@ def charger_brouillon(chemin: str):
             symboles[m.group(1)] = int(m.group(2), 0)
             continue
         if l.startswith(".") and l.endswith(":"):
-            lignes.append(("label", l[:-1]))
+            lignes.append(("label", l[1:-1]))   # sans le point (clé = nom nu)
             continue
         lignes.append(("instr", l))
     return symboles, lignes
@@ -155,7 +155,10 @@ def generer(bid: str, spec: str, fichier: str, rva: int, slot: int,
         raise EchecAuteur(f"{fichier} : padding {slot - code} < 16 (D8)")
 
     # Round-trip intégré : chaque texte explicite ré-assemble en ses octets,
-    # et le désassemblage capstone rend le même texte (canon du build).
+    # et le désassemblage capstone rend un texte qui ré-assemble en les MÊMES
+    # octets — le rendu capstone est ALORS ADOPTÉ comme texte canonique de la
+    # notation (le brouillon peut écrire 60, la notation porte 0x3c — le
+    # WYSIWYG est l'identité OCTETS, la graphie est canonique capstone).
     for r in resolues:
         enc, _ = ks.asm(r["texte"], r["adresse"])
         if bytes(enc) != r["octets"]:
@@ -164,10 +167,13 @@ def generer(bid: str, spec: str, fichier: str, rva: int, slot: int,
         if len(insns) != 1:
             raise EchecAuteur(f"{fichier} @ {r['adresse']:#x} : pas une instruction")
         texte_cs = f"{insns[0].mnemonic} {insns[0].op_str}".strip()
-        if texte_cs != r["texte"]:
+        enc_cs, _ = ks.asm(texte_cs, r["adresse"])
+        if bytes(enc_cs) != r["octets"]:
             raise EchecAuteur(
-                f"{fichier} @ {r['adresse']:#x} : écart texte/capstone\n"
+                f"{fichier} @ {r['adresse']:#x} : le rendu capstone diverge en octets\n"
                 f"  auteur   : {r['texte']}\n  capstone : {texte_cs}")
+        if texte_cs != r["texte"]:
+            r["texte"] = texte_cs          # canonisation (graphie capstone)
 
     # Déplacements RIP : extraits du BROUILLON (le texte substitué ne porte
     # plus les @nom) — correspondance par ordre des lignes d'instructions.
@@ -189,7 +195,7 @@ def generer(bid: str, spec: str, fichier: str, rva: int, slot: int,
         f"; Code : {code} o · padding : {slot - code} o (NOP)",
     ]
     if adresses:
-        etiquettes = ", ".join(f"{n}={adresses[n]:#x}" for n in sorted(adresses))
+        etiquettes = ", ".join(f".{n}={adresses[n]:#x}" for n in sorted(adresses))
         entete.append(f"; Étiquettes résolues : {etiquettes}")
     if displacements:
         entete.append("; Déplacements RIP (cible = adresse + taille + disp) :")

@@ -17,7 +17,11 @@ mov r14d, dword ptr [rbx + 96]
 mov r15d, 64
 sub r15d, r14d
 cmp r13, r15
-jbe .court
+jb .court
+; journal 20 : égalité stricte (n == espace restant) → chemin PLEIN : copier,
+; remplissage=64, comprimer, reset — jbe laissait remplissage=64 SANS
+; compression (violation Q1/Q2) : ah-07 recevait un tampon plein et
+; déclenchait rep stosb avec ecx = -1 (segfault sur tout multiple de 64).
 lea rdi, [rbx + r14 + 32]
 mov rsi, r12
 mov rcx, r15

@@ -25,17 +25,17 @@ jl .charger
 .etendre:
 mov eax, dword ptr [rsp + r15*4 + 0x18]
 mov edx, eax
-rol edx, 17
+ror edx, 17
 mov ecx, eax
-rol ecx, 19
+ror ecx, 19
 xor edx, ecx
 shr eax, 10
 xor edx, eax
 mov r12d, dword ptr [rsp + r15*4 - 0x1c]
 mov r13d, r12d
-rol r13d, 7
+ror r13d, 7
 mov eax, r12d
-rol eax, 18
+ror eax, 18
 xor r13d, eax
 shr r12d, 3
 xor r13d, r12d
@@ -58,12 +58,12 @@ mov r9d, dword ptr [r14 + 28]
 xor r15d, r15d
 .tour:
 mov r10d, esi
-rol r10d, 6
+ror r10d, 6
 mov r11d, esi
-rol r11d, 11
+ror r11d, 11
 xor r10d, r11d
 mov r11d, esi
-rol r11d, 25
+ror r11d, 25
 xor r10d, r11d
 add r10d, r9d
 mov r11d, esi
@@ -77,12 +77,12 @@ add r10d, dword ptr [rbp + r15*4]
 mov r12d, dword ptr [rsp + r15*4 + 0x20]
 add r10d, r12d
 mov r11d, eax
-rol r11d, 2
+ror r11d, 2
 mov r12d, eax
-rol r12d, 13
+ror r12d, 13
 xor r11d, r12d
 mov r12d, eax
-rol r12d, 22
+ror r12d, 22
 xor r11d, r12d
 mov r12d, eax
 and r12d, ebx

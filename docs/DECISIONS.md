@@ -708,3 +708,16 @@ D15 (amende D5) illustrent la procédure.
   pas accessible depuis le bac à sable et le protocole ne le prétend pas
   (« le protocole ne promet pas, il vérifie » — réciproquement, il n'imagine pas,
   il constate).
+  **Échelon 1 FRANCHI le 26/10/2026 (journal 20)** : hachoir 0.7.0-dev.1 scellé
+  (9 blocs, 1 149 o de code, 12 288 o d'ELF64 écrit à la main, oracle natif
+  20 cas + falsification 27/27, cristallisation 10/10, carte génération 1 au
+  sel distinct). Mesures : hachoir 0,0048 s vs sha256sum 0,0025 s sur 1 Mo
+  (ratio 1,9, SHA-NI non implémenté — R11) ; budgets tokens 8 774 (specs) +
+  5 099 (notations livrées) ; build + oracle natif 30,5 s. Premier usage
+  auto-référentiel effectif : les empreintes des artefacts du projet sont
+  désormais produites par hachoir (parité sha256sum octet-identique constatée
+  sur hello.exe/selftest.exe/echo.exe). Leçons versées à l'évaluation : la
+  discipline a attrapé sur l'outil de l'agent DEUX défauts livrables (rol/ror :
+  digest faux partout ; jbe/jb : crash sur toute taille multiple de 64) que
+  l'œil de l'auteur avait ratés — l'écart « intention écrite vs octets exécutés »
+  ne se ferme que par l'exécution, jamais par la relecture.
