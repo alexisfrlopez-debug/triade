@@ -40,7 +40,7 @@ jmp 0x1d29
 mov qword ptr [rip + 0x1b19], 2
 lea rcx, [rip + 0xefe]
 mov edx, 37
-call 0x19c0
+call 0x5100
 xor eax, eax
 add rsp, 0x30
 pop r15

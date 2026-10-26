@@ -464,6 +464,15 @@ TRACE_L00 = L.CHAINES_ASCII["L00"][1] + b"\r\n"
 TRACE_L01 = L.CHAINES_ASCII["L01"][1] + b"\r\n"
 TRACE_L02 = L.CHAINES_ASCII["L02"][1] + b"\r\n"
 TRACE_L03 = L.CHAINES_ASCII["L03"][1] + b"\r\n"
+TRACE_L4C = L.CHAINES_ASCII["L4C"][1] + b"1\r\n"     # shim MoveWindow → 1 (D37)
+TRACE_L4D = L.CHAINES_ASCII["L4D"][1] + b"1\r\n"
+# Écran attendu au démarrage (miroir D37) : L02 puis L4C/L4D (WM_SIZE imbriqué
+# dans CreateWindowExW) puis L01 — L00 sautée (HWND_JOURNAL encore nul, E1 win-05)
+ECRAN_DEMARRAGE = [L.CHAINES_ASCII["L02"][1].decode("ascii") + "\r\n",
+                   L.CHAINES_ASCII["L4C"][1].decode("ascii") + "1\r\n",
+                   L.CHAINES_ASCII["L4D"][1].decode("ascii") + "1\r\n",
+                   L.CHAINES_ASCII["L01"][1].decode("ascii") + "\r\n"]
+FAKE_HWND_EDIT = 0x9988
 
 
 def _fichier_rva(rva: int) -> int:
@@ -507,19 +516,41 @@ def executer(exe: bytes, graine: int = 1) -> dict:
         raise EchecOracle("win-06 : version sous plancher non détectée (E2)")
     total += 1
 
-    # --- win-05 : texte exact, écran ET fichier ---
+    # --- win-05 : miroir universel — entrée scénario (mode 2) ET entrée trace ---
     em = Emulateur(exe)
     em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     adr, txt, n = L.CHAINES_UTF16["J_ENTETE"]
-    em.appeler(RVA_WIN["win-05"], (IMAGE + adr, n))
+    em.appeler(L.JOURNAL_GUI, (IMAGE + adr, n))   # entrée scénario (shim mode 2)
     if em.journal != [txt]:
         raise EchecOracle(f"win-05 : journal {em.journal!r} != [{txt!r}]")
     if em.journal_fichier != [latin1(txt)]:
         raise EchecOracle(f"win-05 : miroir fichier {em.journal_fichier!r} != "
-                          f"[{latin1(txt)!r}] (Q2 R2)")
-    verdicts["d40005"] = {"cas": 2, "detail": "EM_SETSEL + EM_REPLACESEL + miroir "
-                                               "fichier Latin-1, texte exact"}
-    total += 2
+                          f"[{latin1(txt)!r}] (Q2 R3)")
+    # entrée trace (JOURNAL_TRACE 0x5008) : mode 0 puis mode 1 (valeur)
+    a01, o01, _ = L.CHAINES_ASCII["L01"]
+    em.appeler(L.JOURNAL_TRACE, (IMAGE + a01, len(o01), 0, 0))
+    if em.journal[-1] != o01.decode("ascii") + "\r\n":
+        raise EchecOracle(f"win-05 trace mode 0 : écran {em.journal[-1]!r} != "
+                          f"{o01.decode('ascii') + chr(13) + chr(10)!r} (Q1 R3)")
+    ako, oko, _ = L.CHAINES_ASCII["LKO_GUI"]
+    em.appeler(L.JOURNAL_TRACE, (IMAGE + ako, len(oko), 1, 87))
+    attendu_ko = oko.decode("ascii") + "87\r\n"
+    if em.journal[-1] != attendu_ko:
+        raise EchecOracle(f"win-05 trace mode 1 : écran {em.journal[-1]!r} != "
+                          f"{attendu_ko!r} (valeur itoa appendée, Q1 R3)")
+    if em.journal_fichier[-2:] != [o01 + b"\r\n", oko + b"87\r\n"]:
+        raise EchecOracle(f"win-05 trace : fichier {em.journal_fichier[-2:]!r} "
+                          f"— relais win-11 (ptr, len, mode, valeur) altéré")
+    # garde E1 : HWND_JOURNAL nul → miroir écran sauté, fichier intact
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", 0))
+    avant = len(em.journal)
+    em.appeler(L.JOURNAL_TRACE, (IMAGE + a01, len(o01), 0, 0))
+    if len(em.journal) != avant or em.journal_fichier[-1] != o01 + b"\r\n":
+        raise EchecOracle("win-05 : garde HWND nul ineffective (E1 R3)")
+    verdicts["d40005"] = {"cas": 5, "detail": "entrée scénario + entrée trace "
+                                               "(modes 0/1/valeur), écran+fichier, garde E1"}
+    total += 5
 
     # --- win-11 : journal fichier (modes, chemin, paresse, re-tentative) ---
     em = Emulateur(exe)
@@ -593,9 +624,13 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     if em.movewindow != [(hwnd_j, 8, 8, 764, 504), (hwnd_b, 8, 516, 764, 36)]:
         raise EchecOracle(f"coquille GUI : géométrie {em.movewindow} — attendu "
                           f"journal (8,8,764,504), bouton (8,516,764,36) (V3 D36)")
-    if em.journal_fichier != [TRACE_L00, TRACE_L02, TRACE_L01]:
+    if em.journal_fichier != [TRACE_L00, TRACE_L02, TRACE_L4C, TRACE_L4D, TRACE_L01]:
         raise EchecOracle(f"coquille GUI : fichier {em.journal_fichier!r} != "
-                          f"[L00, L02, L01] (ordre démarrage/WM_CREATE/fenêtre)")
+                          f"[L00, L02, L4C, L4D, L01] (ordre démarrage/WM_CREATE/"
+                          f"WM_SIZE diagnostics/fenêtre — D37)")
+    if em.journal != ECRAN_DEMARRAGE:
+        raise EchecOracle(f"coquille GUI : ÉCRAN {em.journal!r} != {ECRAN_DEMARRAGE!r} "
+                          f"— le miroir D37 n'a pas reçu les lignes de démarrage")
     if len(em.messageboxes) != 0:
         raise EchecOracle("coquille GUI : MessageBoxW inattendue")
     # clic unique (Q3) : thread scénario lancé une fois, second clic ignoré
@@ -608,8 +643,11 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     em.appeler(RVA_WIN["win-04"], (hwnd_p, 0x111, 1, 0))
     if len(em.threads) != 1:
         raise EchecOracle("clic : second WM_COMMAND a relancé le scénario (Q3)")
-    if em.journal_fichier != [TRACE_L00, TRACE_L02, TRACE_L01, TRACE_L03]:
+    if em.journal_fichier != [TRACE_L00, TRACE_L02, TRACE_L4C, TRACE_L4D,
+                              TRACE_L01, TRACE_L03]:
         raise EchecOracle(f"clic : trace L03 absente du fichier ({em.journal_fichier!r})")
+    if em.journal != ECRAN_DEMARRAGE + [L.CHAINES_ASCII["L03"][1].decode("ascii") + "\r\n"]:
+        raise EchecOracle(f"clic : ÉCRAN {em.journal!r} — L03 absente du miroir (D37)")
     verdicts["d40001"] = {"cas": 4, "detail": "entrée -> fenêtre -> WM_CREATE/WM_SIZE "
                                               "réels -> boucle -> sortie 0"}
     verdicts["d40002"] = {"cas": 2, "detail": "classe validée + fenêtre + traces "
@@ -633,8 +671,11 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     total += 2
 
     # --- win-09 : scénario complet (serveur simulé prêt, patch RÉEL) ---
+    # HWND_JOURNAL factice : sur le terrain le scénario tourne TOUJOURS avec le
+    # GUI vivant (lancé par le clic) — le miroir D37 doit vivre (garde E1 franchie)
     em = Emulateur(exe)
     em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     em.uc.mem_write(IMAGE + L.DRAPEAU_SRV, struct.pack("<Q", 1))
     em.uc.mem_write(IMAGE + L.R_LISTEN, struct.pack("<Q", FAKE_SOCK))
     em.appeler(RVA_WIN["win-09"])
@@ -705,6 +746,41 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     except EchecOracle as exc:
         if "géométrie invalide" not in str(exc):
             raise
+    total += 1
+
+    # --- falsification D37 (anti-régression miroir) : re-cibler la trace L01
+    # de win-02 vers win-11 en direct (le défaut demo.2 : fichier seul, écran
+    # muet) → la coquille GUI doit ÉCHOUER sur le contrôle écran ---
+    base02 = _fichier_rva(RVA_WIN["win-02"])
+    tranche02 = exe[base02:base02 + 0x180]
+    cibles = []
+    for i in range(len(tranche02) - 5):
+        if tranche02[i] == 0xE8:
+            disp = struct.unpack_from("<i", tranche02, i + 1)[0]
+            if RVA_WIN["win-02"] + i + 5 + disp == L.JOURNAL_TRACE:
+                cibles.append(i)
+    if len(cibles) != 3:
+        raise EchecOracle(f"falsification D37 : {len(cibles)} appels trace dans "
+                          f"win-02 (attendu 3 : L00/L01/LKO)")
+    mutant = bytearray(exe)
+    i_l01 = cibles[1]                        # le 2e appel = trace L01
+    disp = RVA_WIN["win-11"] - (RVA_WIN["win-02"] + i_l01 + 5)
+    struct.pack_into("<i", mutant, base02 + i_l01 + 1, disp)
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    # le contrôle écran est INLINE ici (les vérifications de la coquille vivent
+    # dans executer(), pas dans appeler() — la falsification RECT, elle, est
+    # détectée par un shim PENDANT l'exécution)
+    em.appeler(RVA_WIN["win-01"])
+    if em.journal == ECRAN_DEMARRAGE:
+        raise EchecOracle("falsification D37 : l'ÉCRAN a tout reçu malgré L01 "
+                          "re-ciblée vers win-11 — l'anti-régression ne garde "
+                          "rien (V4 win-02:R3) : le défaut demo.2 (écran muet) "
+                          "serait réintroduisible en silence")
+    if em.journal_fichier != [TRACE_L00, TRACE_L02, TRACE_L4C, TRACE_L4D, TRACE_L01]:
+        raise EchecOracle(f"falsification D37 : fichier altéré {em.journal_fichier!r} "
+                          "— la mutation devait être chirurgicale (L01 au fichier, "
+                          "absente de l'écran uniquement)")
     total += 1
 
     empreinte = hashlib.sha256(

@@ -13,6 +13,20 @@ Demo.2 corrige (win-04:R2 lit RECT.right), ajoute le journal FICHIER
 durcit l'oracle (coquille GUI exécutée, géométrie MoveWindow vérifiée,
 falsification anti-régression de l'octet RECT).
 
+DÉMO.3 (D37 — écran vivant + preuves d'exécution) : la capture terrain de
+demo.2 (26/10/2026 20:56, fenêtre maximisée) montre un écran VIDE au
+démarrage : les traces L00/L02/L01 appelaient win-11 EN DIRECT (fichier
+seul — la spec win-02:R2 l'exigeait : « jumeau silencieux »), et l'edit est
+créé avec un texte initial vide — la vitrine paraissait morte alors que le
+fichier prouvait le contraire. ET le bouton « TOUT DÉMARRER » n'est pas
+rendu — alors que notation, octets et oracle sont corrects (styles,
+positions, cibles vérifiés par audit) : preuves d'exécution requises.
+Demo.3 : win-05:R3 devient le point de passage UNIVERSEL (miroir écran
+PUIS fichier, deux entrées — scénario inchangé @0x19C0, trace 4 args
+@0x19C8) ; win-02:R3/win-04:R3 re-ciblent leurs traces (JOURNAL_TRACE) ;
+WM_SIZE journalise les retours BOOL des MoveWindow (L4C/L4D — le bouton
+sera jugé par ses retours réels au prochain run terrain).
+
 HÉRITAGE M2 (R7 — jamais déplacé) : les blocs scellés embarqués vivent à leurs
 adresses historiques, octets identiques à echo.exe 0.3.0-rc.2 :
   - io M0 @ 0x1040/0x1080, libc M1 @ 0x1100-0x12FF ;
@@ -28,13 +42,16 @@ adresses historiques, octets identiques à echo.exe 0.3.0-rc.2 :
 NOUVEAUTÉS DÉMO (génération 4, d4xxxx) — REPORTEES DEMO.2 (win-09 déménage
 en .text2, win-11 nouveau, R_VERSION 0x2610→0x2628 : la table R10 passe à
 29 entrées ; R_ANCRE 0x2620 inchangé, l'ancre de win-06 reste stable) :
-  - .text @ 0x1400-0x1FFF : win-01 0x1400, win-02:R2 0x1440 (slot 0x180),
-    win-03 0x15C0, win-04:R2 0x1640 (slot 0x380), win-05:R2 0x19C0
-    (slot 0x100), win-06 0x1AC0, win-07 0x1C40, win-08 0x1D00,
-    win-11:R1 journal-fichier 0x1E00 (slot 0x200) ;
-  - .text2 : win-09 0x4C00 (slot 0x380 — déménagé de .text, octets
-    ré-assemblés aux nouvelles adresses RIP ; spec R1 inchangée),
-    win-10 0x4980 inchangé ;
+  - .text @ 0x1400-0x1FFF : win-01 0x1400, win-02:R3 0x1440 (slot 0x180),
+    win-03 0x15C0, win-04:R3 0x1640 (slot 0x380), win-06 0x1AC0, win-07
+    0x1C40, win-08 0x1D00, win-11:R1 journal-fichier 0x1E00 (slot 0x200) ;
+    le slot 0x19C0-0x1ABF (win-05 R1/R2) est LIBRE depuis demo.3 ;
+  - .text2 ÉTENDUE (D37) : 0x4000-0x53FF (VSIZE 0x1400, image 0x6000,
+    fichier 0x4000) : héritage tcp inchangé, win-10 0x4980, win-09 0x4C00,
+    win-05:R3 0x5000 (slot 0x200 — déménagé de .text : le code miroir
+    universel (252 o) ne tenait ni dans son slot historique 256 o, ni dans
+    la zone libre 0x4700-0x47FF ; 0x5000 est hors des pages VirtualProtect
+    du patch 0x4000-0x4FFF) ; le slot .text 0x19C0-0x1ABF est LIBRE ;
   - imports kernel32#2 (descripteur 0x2080 — l'ancien terminateur, le marché
     s'étend en place ; terminateur 0x2094) : GetModuleFileNameA, CreateFileA,
     FlushFileBuffers, GetLastError — INT @ 0x2720, FT (slots appelés, D35)
@@ -67,18 +84,26 @@ IMAGE_BASE = L2.IMAGE_BASE
 TEXT_RVA, RDATA_RVA, DATA_RVA = L2.TEXT_RVA, L2.RDATA_RVA, L2.DATA_RVA
 TEXT2_RVA = L2.TEXT2_RVA
 FILE_ALIGN, SECT_ALIGN = L2.FILE_ALIGN, L2.SECT_ALIGN
-TEXT_VSIZE, RDATA_VSIZE, DATA_VSIZE, TEXT2_VSIZE = (L2.TEXT_VSIZE, L2.RDATA_VSIZE,
-                                                    L2.DATA_VSIZE, L2.TEXT2_VSIZE)
-SIZE_OF_IMAGE = L2.SIZE_OF_IMAGE
+# D37 — extension .text2 : win-05:R3 (337 o puis 252 o restructuré) ne tient
+# ni dans son slot .text historique (0x19C0-0x1ABF, 256 o) ni dans la zone
+# libre 0x4700-0x47FF : .text2 passe à 0x1400 (image 0x6000, fichier 0x4000).
+# win-05 vit à 0x5000 — hors de l'étendue VirtualProtect du patch (pages
+# 0x4000-0x4FFF, ETENDUE_PROTECT 0x700) : le moteur de patch ne l'atteint pas.
+TEXT_VSIZE, RDATA_VSIZE, DATA_VSIZE = (L2.TEXT_VSIZE, L2.RDATA_VSIZE,
+                                       L2.DATA_VSIZE)
+TEXT2_VSIZE = 0x1400                     # 0x4000-0x53FF (héritage + win-05:R3)
+SIZE_OF_IMAGE = 0x6000                   # aligné SectionAlignment (0x5400 -> 0x6000)
 TEXT_FILE, RDATA_FILE, DATA_FILE, TEXT2_FILE = (L2.TEXT_FILE, L2.RDATA_FILE,
                                                 L2.DATA_FILE, L2.TEXT2_FILE)
 DATA_RAW = L2.DATA_RAW
-TAILLE_FICHIER = L2.TAILLE_FICHIER
+TAILLE_FICHIER = 0x4000                   # 0x2C00 + 0x1400
 DLL_CHARACTERISTICS = L2.DLL_CHARACTERISTICS
 
 VERSION_DEMO1 = "0.3.0-demo.1"     # première génération de la lignée démo
 VERSION_DEMO2 = "0.3.0-demo.2"     # D36 : correctif WM_SIZE + journal fichier
 VERSION_U64_DEMO2 = 0x00030102     # monotonie : au-dessus de demo.1
+VERSION_DEMO3 = "0.3.0-demo.3"     # D37 : miroir écran universel + L4C/L4D
+VERSION_U64_DEMO3 = 0x00030103     # monotonie : au-dessus de demo.2
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -87,17 +112,17 @@ SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
 # d4xxxx = démo. Tous les slots multiples de 64 (D8), alignés 16, padding >= 16.
 
 BLOCS_WIN = [
-    ("d40001", "win-01:R1", 0x1400, 0x40, "demo.2", 1),    # principal — point d'entrée
-    ("d40002", "win-02:R2", 0x1440, 0x180, "demo.2", 1),   # fenêtre (classe + création + trace)
-    ("d40003", "win-03:R1", 0x15C0, 0x80, "demo.2", 1),    # boucle de messages
-    ("d40004", "win-04:R2", 0x1640, 0x380, "demo.2", 1),   # procédure (RECT corrigé + traces)
-    ("d40005", "win-05:R2", 0x19C0, 0x100, "demo.2", 1),   # journal écran + fichier
-    ("d40006", "win-06:R1", 0x1AC0, 0x180, "demo.2", 1),   # autotest (porte R10 + libc)
-    ("d40007", "win-07:R1", 0x1C40, 0xC0, "demo.2", 1),    # client TCP
-    ("d40008", "win-08:R1", 0x1D00, 0x100, "demo.2", 1),   # serveur d'acceptation
-    ("d40011", "win-11:R1", 0x1E00, 0x200, "demo.2", 1),   # journal fichier (trace terrain)
-    ("d40010", "win-10:R1", 0x4980, 0x180, "demo.2", 1),   # échange vérifié (inchangé)
-    ("d40009", "win-09:R1", 0x4C00, 0x380, "demo.2", 1),   # scénario complet (déménagé .text2)
+    ("d40001", "win-01:R1", 0x1400, 0x40, "demo.3", 1),    # principal — point d'entrée
+    ("d40002", "win-02:R3", 0x1440, 0x180, "demo.3", 1),   # fenêtre (classe + création + trace miroir)
+    ("d40003", "win-03:R1", 0x15C0, 0x80, "demo.3", 1),    # boucle de messages
+    ("d40004", "win-04:R3", 0x1640, 0x380, "demo.3", 1),   # procédure (RECT corrigé + miroir + L4C/L4D)
+    ("d40005", "win-05:R3", 0x5000, 0x200, "demo.3", 1),   # miroir universel écran + fichier (.text2 étendue 0x1400 — D37 : le code R3 ne tient ni dans le slot .text 0x19C0-0x1ABF (LIBRE depuis), ni dans 0x4700-0x47FF)
+    ("d40006", "win-06:R1", 0x1AC0, 0x180, "demo.3", 1),   # autotest (porte R10 + libc)
+    ("d40007", "win-07:R1", 0x1C40, 0xC0, "demo.3", 1),    # client TCP
+    ("d40008", "win-08:R1", 0x1D00, 0x100, "demo.3", 1),   # serveur d'acceptation
+    ("d40011", "win-11:R1", 0x1E00, 0x200, "demo.3", 1),   # journal fichier (inchangé, D36)
+    ("d40010", "win-10:R1", 0x4980, 0x180, "demo.3", 1),   # échange vérifié (inchangé)
+    ("d40009", "win-09:R1", 0x4C00, 0x380, "demo.3", 1),   # scénario complet (inchangé)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = win-01
 
@@ -211,6 +236,16 @@ BUF_CONV = 0x3890           # tampon de composition (128 o : ligne + CRLF)
 BUF_CHEMIN = 0x3910         # chemin complet du journal (304 o, MAX_PATH+marge)
 SCRATCH_ECRIT = 0x3A40      # qword écrit (WriteFile lpNumberOfBytesWritten)
 
+# --- État win-05:R3 (miroir écran, D37) ------------------------------------------
+
+BUF_MIROIR = 0x3A50         # tampon UTF-16 du miroir écran (128 o) — ligne
+                            # la plus longue : 43 o texte + 11 chiffres +
+                            # CRLF + NUL = 57 chars = 114 o ≤ 128
+JOURNAL_TRACE = 0x5000      # entrée trace de win-05 (4 args ASCII, prologue
+                            # à l'instruction 0 — verrou pile-alignee)
+JOURNAL_GUI = 0x5100        # entrée scénario (utf16, nchars) : force mode 2 (shim
+                            # en fin de slot, saute au début du bloc)
+
 # --- Chaînes TCP héritées (adresses figées par tcp-09 scellé) -------------------
 
 MSG_ECHO = b"echo "
@@ -266,7 +301,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.2"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.3"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),
@@ -275,6 +310,8 @@ _SEQ_ASCII = [
     ("LKO_BOUTON", b"LKO creation du bouton echouee gle="),
     ("LKO_SPAWN", b"LKO lancement thread scenario echoue gle="),
     ("NOM_FICHIER", b"demo_journal.txt\x00"),
+    ("L4C", b"L4C move journal="),
+    ("L4D", b"L4D move bouton="),
 ]
 CHAINES_ASCII = {}
 _cur = R_ASCII

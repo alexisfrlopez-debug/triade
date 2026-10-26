@@ -891,3 +891,91 @@ D15 (amende D5) illustrent la procédure.
   complète (L00…« boucle § 5 complète — DÉMO OK ») — ou, en cas d'échec,
   la dernière étape franchie AVEC son code GetLastError : le terrain ne
   pourra plus jamais être muet.
+
+### D37 — demo.2 écran vide au démarrage : miroir écran universel (win-05:R3), diagnostics MoveWindow (L4C/L4D) et extension .text2
+
+- **Constat** (terrain Windows 11, capture 1920×1080 du 26/10/2026 20:56,
+  déposée dans le dossier Drive « test » avec le journal fichier) : la
+  fenêtre demo.2 maximisée affiche le bon titre, une zone client
+  uniformément grise avec SEULE trace visible une scrollbar verticale
+  (x≈1888-1904, flèches y≈39-63 et y≈992-1019 — le contrôle journal,
+  correctement dimensionné par le correctif D36) — mais AUCUN texte et
+  AUCUN bouton « TOUT DÉMARRER ». Le journal fichier, lui, est complet
+  (L00/L02/L01, zéro LKO).
+- **Diagnostic écran vide (défaut CONÇU, pas subi)** : les traces de
+  démarrage (L00/L01/L02/L03/LKO) appelaient win-11 EN DIRECT (modes 0/1
+  — fichier seul) : la spec win-02:R2 l'exigeait explicitement (« le
+  fichier est le jumeau SILENCIEUX de MessageBoxW »). Combiné à l'edit
+  créé avec un texte initial VIDE (chaîne "" @0x2A52), la vitrine restait
+  muette tant que personne ne cliquait — et le bouton, seul élément
+  visible attendu, ne s'affichait pas (voir ci-dessous). La cause
+  fonctionnelle : 17 appels au miroir écran win-05 existaient bien
+  (scénario ×16 + serveur ×1) mais AUCUN pour le démarrage.
+- **Bouton invisible (mystère ouvert, instrumenté)** : audit octet
+  intégral (styles 0x50000001 avec WS_VISIBLE, positions (8,396,716,36)
+  puis (8,h-44,w-16,36), handles distincts 0x3868/0x3870, IAT MoveWindow
+  réelle, chaînes "EDIT"/"BUTTON"/"TOUT DÉMARRER" NUL-terminées,
+  WM_CREATE→WM_SIZE confirmé par la géométrie mesurée de la scrollbar) :
+  TOUT est correct — notation, octets, oracle. Aucune explication
+  statique ne tient. Décision : ne PAS deviner — INSTRUMENTER. WM_SIZE
+  journalise désormais les RETOURS BOOL des deux MoveWindow (L4C/L4D,
+  win-11 mode 1) : le prochain run terrain dira si MoveWindow(bouton)
+  réussit (1) ou échoue (0), fenêtre maximisée OU NON.
+- **Correctif (demo.3, 0.3.0-demo.3, u64 0x00030103)** :
+  1. win-05:R3 — miroir UNIVERSEL, point de passage unique de toutes les
+     lignes (D37) : écran d'abord PUIS fichier, deux entrées — trace
+     (0x5000 : contrat 4 args de win-11, drop-in pour win-02/win-04 :
+     re-ciblage pur des 8 sites) et scénario (0x5100 : shim
+     `mov r8d,2 ; jmp` — les 17 appelants historiques ne bougent pas) ;
+     conversion ASCII→UTF-16 sur place (BUF_MIROIR .data 128 o, itoa
+     libc-04 scellé pour les valeurs, CRLF+NUL en une écriture dword+word),
+     garde HWND_JOURNAL nul (avant WM_CREATE : L00 reste au fichier —
+     il n'y a rien à peindre), relais fichier en QUEUE (`jmp win-11` :
+     comportement fichier inchangé octet par octet) ;
+  2. win-02:R3/win-04:R3 — traces via JOURNAL_TRACE ; WM_SIZE capture
+     les retours MoveWindow AVANT tout appel suivant (I5, r12d/r13d
+     libres : uMsg/wParam consommés à ce point) ;
+  3. extension .text2 : le win-05:R3 (258 o) ne tient ni dans son slot
+     .text historique (256 o — slot 0x19C0-0x1ABF désormais LIBRE) ni
+     dans la zone 0x4700-0x47FF → .text2 passe à 0x1400 (VSIZE), image
+     0x6000 (alignement SectionAlignment — 0x5400 nu aurait été refusé
+     par le chargeur ET unicorn), fichier 0x4000 (16384 o) ; win-05 vit
+     à 0x5000, hors des pages VirtualProtect du patch (0x4000-0x4FFF) ;
+  4. l'entrée trace porte le prologue à l'INSTRUCTION 0 (le verrou
+     pile-alignée M2 compte les pushes depuis la première instruction —
+     fonction scellée non modifiable : c'est le shim qui vit en fin de
+     slot, pas l'inverse).
+- **Oracle durci (77 cas verts, +4)** : win-05 testé par ses DEUX
+  entrées (scénario utf16 ; trace modes 0/1/valeur + garde E1) ; la
+  coquille GUI vérifie désormais l'ÉCRAN au démarrage (ECRAN_DEMARRAGE :
+  L02→L4C→L4D→L01 — l'ordre prouve le dispatch imbriqué WM_CREATE+WM_SIZE
+  de CreateWindowExW) et après clic (L03) ; le test win-09 pose un
+  HWND_JOURNAL factice (sur le terrain, le scénario tourle TOUJOURS avec
+  le GUI vivant) ; falsification D37 : re-cibler la trace L01 de win-02
+  vers win-11 (le défaut demo.2 exact) doit ôter L01 de l'ÉCRAN sans
+  altérer le fichier — sinon l'anti-régression ne garde rien.
+- **Enseignements protocolaires** : (a) une spécification peut EXIGER le
+  défaut — win-02:R2 demandait un fichier silencieux : le retour terrain
+  (capture) a jugé la CONCEPTION, pas seulement l'implémentation ; (b)
+  l'oracle vérifiait le journal fichier de la coquille mais pas son
+  ÉCRAN : toute sortie observable du terrain doit avoir son témoin ;
+  (c) une falsification « post-appel » doit porter son contrôle INLINE —
+  les vérifications de la coquille vivent dans executer(), pas dans
+  appeler() : envelopper seul l'appel ne teste rien (la falsification
+  RECT, elle, est détectée par un shim PENDANT l'exécution — deux
+  mécaniques différentes) ; (d) quand le statique est épuisé et
+  irréprochable, la réponse n'est pas la spéculation mais
+  l'INSTRUMENTATION ciblée (L4C/L4D : 2 lignes, 60 octets).
+- **Alternatives rejetées** : raser 12 octets du win-05:R3 pour le
+  faire tenir en 240 (factoring des SendMessage — compte ±2 non
+  démontrable à la main : la marge de confiance était nulle) ; placer
+  win-05 dans le padding d'un autre bloc (violation D8 un-bloc-un-slot) ;
+  attacher l'écran AVANT le fichier dans win-11 lui-même (win-11:R1
+  aurait bougé — la chaîne fichier devait rester octet-identique).
+- **Développement** : entrée 25 du journal de travail. Validation terrain
+  attendue : la fenêtre affiche DÈS LE LANCEMENT L02, L4C, L4D puis L01
+  (miroir vivant), le bouton est visible OU L4D=0 l'explique ; clic =
+  démonstration intégrale à l'écran ET au fichier. La capture terrain a
+  été convertie en preuve : forensique pixel (cartographie des 2 114
+  pixels non-fond — scrollbar seule, zéro texte, zéro bouton) + VLM sur
+  l'image brute.

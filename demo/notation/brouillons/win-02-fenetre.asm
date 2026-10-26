@@ -8,7 +8,7 @@ sub rsp, 0x70
 lea rcx, [rip + L00]
 mov edx, LEN_L00
 xor r8d, r8d
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 lea rbx, [rsp + 0x20]
 mov dword ptr [rbx], 0x50
 mov dword ptr [rbx + 4], 3
@@ -52,7 +52,7 @@ mov qword ptr [rip + HWND_PRINCIPAL], rax
 lea rcx, [rip + L01]
 mov edx, LEN_L01
 xor r8d, r8d
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 jmp .fin
 .echec:
 call qword ptr [rip + IAT_GLE]
@@ -60,7 +60,7 @@ mov r9d, eax
 lea rcx, [rip + LKO_GUI]
 mov edx, LEN_LKO_GUI
 mov r8d, 1
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 xor ecx, ecx
 lea rdx, [rip + MSG_ECHEC_GUI]
 lea r8, [rip + TITRE]

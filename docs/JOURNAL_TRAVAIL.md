@@ -1166,3 +1166,54 @@ si cette trace arrive verte, le scellage final 0.3.0 est acquis.
 Livrables : rapport d'audit `scripts/audit_demo_iat_rapport.txt` ;
 LISEZMOI-demo.txt corrigé (l'empreinte citée était restée celle de demo.1 ;
 ajout du paragraphe journal fichier + attente du clic).
+
+## Journal 25 — D37 : capture terrain demo.2 reçue (dossier Drive « test ») — écran vide diagnostiqué, miroir universel demo.3
+
+**Contexte** : le développeur partage le lien d'un dossier Drive « test »
+contenant la capture d'écran du 26/10/2026 20:56 et demo_journal.txt
+(md5 identique au journal déjà analysé — 3 lignes, démarrage complet).
+
+**Déroulé** :
+1. Capture téléchargée et analysée (VLM + forensique pixel : 1920×1080,
+   fenêtre maximisée, titre exact, zone client grise uniforme, scrollbar
+   verticale seule visible x≈1888-1904 y≈39-1019 = le contrôle journal
+   correctement dimensionné par D36 ; ZÉRO pixel de texte, ZÉRO bouton).
+2. Audit octet ciblé (audit_demo_bouton.py) : routage des traces —
+   17 appels à win-05 (miroir écran) tous dans le scénario/serveur,
+   9 appels à win-11 (fichier seul) dont TOUTES les traces de démarrage ;
+   l'edit est créé avec un texte initial vide → l'écran restait muet
+   jusqu'au clic PAR CONCEPTION (spec win-02:R2 « jumeau silencieux »).
+   Le bouton : styles, positions, handles, IAT, chaînes, ordre des
+   messages — tout est correct. Mystère non résoluble en statique.
+3. demo.3 construite (specs écrites avant code) :
+   - win-05:R3 miroir universel (écran PUIS fichier, deux entrées :
+     trace 4 args @0x5000, scénario shim @0x5100), BUF_MIROIR .data ;
+   - win-02:R3/win-04:R3 : 8 appels re-ciblés + diagnostics L4C/L4D
+     (retours BOOL des MoveWindow — le bouton sera jugé par ses preuves
+     d'exécution au prochain run terrain) ;
+   - extension .text2 (0x1400, image 0x6000, fichier 16384 o) ; slot
+     .text 0x19C0-0x1ABF libéré.
+4. Défauts de développement corrigés : jz→je (round-trip capstone),
+   or r8,-1 → mov imm64 (rendu capstone), taille win-05 (337 o : slot
+   historique 256 dépassé → restructuration garde unique/paire d'envoi
+   commune → 258 o + déménagement .text2), prologue à l'instruction 0
+   (verrou pile-alignée : inversion des entrées, shim en fin de slot),
+   NOP de calage .scenario=0x5100, SIZE_OF_IMAGE 0x5400→0x6000
+   (alignement SectionAlignment, refusé par unicorn), assert echo.exe
+   sur le plan M2 (bm.L.TAILLE_FICHIER), entrée scénario du test win-05
+   (0x5100 pas 0x5000 : mode garbage avalait l'UTF-16 — 'T' seul),
+   APPELS_DIRECTS/DONNEES_RIP (JOURNAL_TRACE/JOURNAL_GUI/L4C/L4D/
+   BUF_MIROIR), jmp externe autorisé au verrou structurel (premier
+   relais de queue de la lignée), falsification D37 INLINE (les
+   contrôles de coquille vivent dans executer(), pas dans appeler()).
+5. Verdict : oracle 77 cas verts (73 en demo.2), structurel 559 verrous,
+   falsification 28/28 + RECT + D37, héritage R7 octet-identique,
+   --verifier graine 7 vert, carte génération 4 re-scellée (28
+   empreintes, Ed25519, R8), demo.exe 0.3.0-demo.3 scellé
+   sha256:933e216e… (16384 o). Audit octet du binaire frais : appels,
+   shim, relais, version 0x00030103, chaînes — 100 % conformes.
+
+**Suivi** : validation terrain demo.3 — la fenêtre doit MONTRER son
+démarrage (L02/L4C/L4D/L01) dès le lancement ; le bouton visible OU
+L4D=0 (échec MoveWindow expliqué par gle au run suivant) ; clic =
+scénario complet écran+fichier. Puis scellage final 0.3.0.

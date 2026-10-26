@@ -86,12 +86,12 @@ def blocs_demo() -> list[tuple]:
         ("c30008", "tcp-08:R1", "tcp-08-echo", 0x4600, 0x40),
         ("c30009", "tcp-09:R1", "tcp-09-conn", 0x4800, 0x180),
         ("c30011", "tcp-11:R1", "tcp-11-journal", 0x4B00, 0x100),
-        # génération démo.2 (D36 : correctif WM_SIZE + journal fichier)
+        # génération démo.3 (D37 : miroir écran universel + diagnostics L4C/L4D)
         ("d40001", "win-01:R1", "win-01-principal", 0x1400, 0x40),
-        ("d40002", "win-02:R2", "win-02-fenetre", 0x1440, 0x180),
+        ("d40002", "win-02:R3", "win-02-fenetre", 0x1440, 0x180),
         ("d40003", "win-03:R1", "win-03-boucle", 0x15C0, 0x80),
-        ("d40004", "win-04:R2", "win-04-procedure", 0x1640, 0x380),
-        ("d40005", "win-05:R2", "win-05-journal", 0x19C0, 0x100),
+        ("d40004", "win-04:R3", "win-04-procedure", 0x1640, 0x380),
+        ("d40005", "win-05:R3", "win-05-journal", 0x5000, 0x200),
         ("d40006", "win-06:R1", "win-06-autotest", 0x1AC0, 0x180),
         ("d40007", "win-07:R1", "win-07-client", 0x1C40, 0xC0),
         ("d40008", "win-08:R1", "win-08-serveur", 0x1D00, 0x100),
@@ -194,14 +194,14 @@ IAT_PAR_BLOC = {
 APPELS_DIRECTS = {
     **bm.APPELS_DIRECTS,
     "d40001": {0x1440, 0x15C0, 0x1080},
-    "d40002": {0x1E00},
+    "d40002": {L.JOURNAL_TRACE},                 # D37 : traces via win-05 (miroir)
     "d40003": set(),
-    "d40004": {0x4300, 0x1E00, 0x4C00},
-    "d40005": {0x1E00},
+    "d40004": {0x4300, L.JOURNAL_TRACE, 0x4C00},
+    "d40005": {0x1E00, 0x1280},                 # relais queue win-11 + itoa (D37)
     "d40006": {0x1100, 0x1180, 0x1200, 0x1280},
     "d40007": set(),
-    "d40008": {0x4000, 0x4100, 0x4300, 0x19C0},
-    "d40009": {0x19C0, 0x1AC0, 0x1C40, 0x1D00, 0x41C0, 0x4400, 0x4600, 0x1180, 0x4980, 0x4300},
+    "d40008": {0x4000, 0x4100, 0x4300, L.JOURNAL_GUI},
+    "d40009": {L.JOURNAL_GUI, 0x1AC0, 0x1C40, 0x1D00, 0x41C0, 0x4400, 0x4600, 0x1180, 0x4980, 0x4300},
     "d40010": {0x1180},
     "d40011": {0x1100, 0x1200, 0x1280},
 }
@@ -217,8 +217,9 @@ DONNEES_RIP = {
                L.CHAINES_UTF16["TXT_BOUTON"][0], L.CHAINES_UTF16["CHAINE_VIDE"][0],
                L.CHAINES_ASCII["L02"][0], L.CHAINES_ASCII["L03"][0],
                L.CHAINES_ASCII["LKO_EDIT"][0], L.CHAINES_ASCII["LKO_BOUTON"][0],
-               L.CHAINES_ASCII["LKO_SPAWN"][0]},
-    "d40005": {L.HWND_JOURNAL},
+               L.CHAINES_ASCII["LKO_SPAWN"][0],
+               L.CHAINES_ASCII["L4C"][0], L.CHAINES_ASCII["L4D"][0]},
+    "d40005": {L.HWND_JOURNAL, L.BUF_MIROIR, L.BUF_CONV},
     "d40006": {L.R_ANCRE, L.R_TAB_SUM, L.R_VERSION, 0x2630, 0x2640, 0x2644,
                0x2648, 0x264C, 0x265A},
     "d40007": set(),
@@ -248,7 +249,15 @@ def oracle_structurel(specs: dict, code: dict, blocs: list[tuple]) -> list[str]:
     for bid, _, _, rva, slot in tous:
         insns = code[bid]["insns"]
         for i in insns:
-            if i.mnemonic.startswith("j"):
+            if i.mnemonic == "jmp" and i.op_str.startswith("0x"):
+                # relais en queue vers un autre bloc (D37 : win-05 → win-11)
+                # — autorisé s'il est déclaré, comme un appel
+                cible = int(i.op_str, 16)
+                verrou(f"{bid}:jmp-autorise@{i.address:#x}",
+                       cible in APPELS_DIRECTS.get(bid, set())
+                       or cible in adresses_insns[bid],
+                       f"cible {cible:#x} hors blocs déclarés (I1)")
+            elif i.mnemonic.startswith("j"):
                 verrou(f"{bid}:saut-interne@{i.address:#x}",
                        int(i.op_str, 16) in adresses_insns[bid])
             if i.mnemonic == "call":
@@ -415,7 +424,7 @@ def composer_sections(code: dict, blocs: list[tuple]):
 
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO2))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO3))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIXTURES, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -532,7 +541,9 @@ def preuve_reutilisation(exe: bytes) -> dict:
         echo = f.read()
     global SHA_ECHO
     SHA_ECHO = hashlib.sha256(echo).hexdigest()
-    assert len(echo) == L.TAILLE_FICHIER, "echo.exe rc.2 de taille inattendue"
+    # D37 : la démo étend .text2 (image 0x5400, fichier 0x4000) — echo.exe garde
+    # la taille M2 ; l'assertion porte sur le plan M2, plus sur le plan démo.
+    assert len(echo) == bm.L.TAILLE_FICHIER, "echo.exe rc.2 de taille inattendue"
     tranche = lambda buf, rva, slot, base_rva, base_file: (
         buf[base_file + (rva - base_rva): base_file + (rva - base_rva) + slot])
     heritage = ([("a10002", hello, 0x1040, 0x40), ("a10003", hello, 0x1080, 0x40),
@@ -737,7 +748,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  suite_conformite_profil       : heritee M2 (124/124, rc.2) + porte D35 verifiee par oracle",
         f"  changements_hors_journal      : 0 : D35 consignee",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee demo, "
-        f"u64 0x{L.VERSION_U64_DEMO2:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_DEMO3:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  patch_a_chaud                 : boucle 5 complete en production "
         f"(patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)",
         f"  artefact                      : {len(exe)} octets ; "
@@ -771,7 +782,7 @@ def assembler_tout():
 def construire(graine: int) -> int:
     print("=== démo : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_DEMO2
+    version = L.VERSION_DEMO3
     texte, rdata, data, text2, staging = composer_sections(code, blocs)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
     valider_pe(exe)
@@ -832,7 +843,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=demo.exe" in l), L.VERSION_DEMO2)
+                    if "artefact=demo.exe" in l), L.VERSION_DEMO3)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

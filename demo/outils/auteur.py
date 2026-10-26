@@ -32,21 +32,22 @@ SORTIE = os.path.join(ICI, "..", "notation")
 BLOCS = [
     ("win-01-principal", "d40001", "win-01:R1", 0x1400, 0x40,
      "blocs win-02, win-03, io-02 exit @0x1080"),
-    ("win-02-fenetre", "d40002", "win-02:R2", 0x1440, 0x180,
+    ("win-02-fenetre", "d40002", "win-02:R3", 0x1440, 0x180,
      "IAT user32 : RegisterClassExW, CreateWindowExW, LoadCursorW, MessageBoxW ; "
-     "IAT kernel32 : GetModuleHandleW, GetLastError ; bloc win-11 (trace) ; "
-     "procédure @0x1640 ; chaînes UTF-16 + ASCII trace"),
+     "IAT kernel32 : GetModuleHandleW, GetLastError ; bloc win-05 (miroir "
+     "écran+fichier, entrée trace) ; procédure @0x1640 ; chaînes UTF-16 + ASCII"),
     ("win-03-boucle", "d40003", "win-03:R1", 0x15C0, 0x80,
      "IAT user32 : GetMessageW, TranslateMessage, DispatchMessageW"),
-    ("win-04-procedure", "d40004", "win-04:R2", 0x1640, 0x380,
+    ("win-04-procedure", "d40004", "win-04:R3", 0x1640, 0x380,
      "IAT user32 : CreateWindowExW, SendMessageW, GetStockObject (gdi32), "
      "GetClientRect, MoveWindow, EnableWindow, DestroyWindow, PostQuitMessage, "
      "DefWindowProcW, GetModuleHandleW ; IAT kernel32 : CloseHandle, "
-     "GetLastError ; bloc win-11 (trace) ; tcp-06 spawn @0x4300 ; "
-     "scénario @0x4C00 ; état .data"),
-    ("win-05-journal", "d40005", "win-05:R2", 0x19C0, 0x100,
-     "IAT user32 : SendMessageW ; bloc win-11 (miroir fichier) ; "
-     "état .data (HWND_JOURNAL)"),
+     "GetLastError ; bloc win-05 (miroir écran+fichier + diagnostics L4C/L4D) ; "
+     "tcp-06 spawn @0x4300 ; scénario @0x4C00 ; état .data"),
+    ("win-05-journal", "d40005", "win-05:R3", 0x5000, 0x200,
+     "IAT user32 : SendMessageW ; blocs libc-03/04 ; bloc win-11 (miroir "
+     "fichier) ; état .data (HWND_JOURNAL, BUF_MIROIR, BUF_CONV) ; deux "
+     "entrées : scénario @0x5000 (force mode 2), trace @0x5008 (4 args)"),
     ("win-06-autotest", "d40006", "win-06:R1", 0x1AC0, 0x180,
      "blocs libc-01/02/03/04 ; table R10 + version + ancre .rdata ; fixtures"),
     ("win-07-client", "d40007", "win-07:R1", 0x1C40, 0xC0,
@@ -75,7 +76,7 @@ SYMBOLES = {
     "TCP_JOURNAL": 0x4B00,
     # blocs démo
     "FENETRE": 0x1440, "BOUCLE": 0x15C0, "PROCEDURE": 0x1640,
-    "JOURNAL_GUI": 0x19C0, "AUTOTEST": 0x1AC0, "CLIENT": 0x1C40,
+    "JOURNAL_GUI": L.JOURNAL_GUI, "AUTOTEST": 0x1AC0, "CLIENT": 0x1C40,
     "SERVEUR": 0x1D00, "JOURNAL_FICHIER": 0x1E00, "SCENARIO": 0x4C00,
     "ECHANGE": 0x4980,
     # IAT (kernel32, kernel32#2, ws2_32, user32, gdi32)
@@ -117,6 +118,7 @@ SYMBOLES = {
     "HWND_BOUTON": L.HWND_BOUTON,
     "JOURNAL_HANDLE": L.R_JOURNAL_HANDLE, "BUF_CONV": L.BUF_CONV,
     "BUF_CHEMIN": L.BUF_CHEMIN, "SCRATCH_ECRIT": L.SCRATCH_ECRIT,
+    "BUF_MIROIR": L.BUF_MIROIR, "JOURNAL_TRACE": L.JOURNAL_TRACE,
 }
 for _nom, (_adr, _txt, _n) in L.CHAINES_UTF16.items():
     SYMBOLES[_nom] = _adr
@@ -125,7 +127,7 @@ for _nom, (_adr, _octets, _n) in L.CHAINES_ASCII.items():
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
 RE_OPERANDE_ETIQUETTE = re.compile(r"^(j\w+|loop\w*|call)\s+\.(\w+)$")
-RE_OPERANDE_SYMBOLE = re.compile(r"^(call)\s+(\w+)$")
+RE_OPERANDE_SYMBOLE = re.compile(r"^(call|jmp)\s+(\w+)$")
 RE_RIP_SYMBOLE = re.compile(r"^(.*?\[rip\s*\+\s*)(\w+)(\s*\].*)$")
 RE_LONGUEUR = re.compile(r"^mov\s+([er]\w+d?),\s+LEN_(\w+)$")
 

@@ -57,30 +57,30 @@ call qword ptr [rip - 0x2b7c]
 mov qword ptr [rip - 0x142b], rax
 lea rcx, [rip - 0x21a8]
 mov edx, 27
-call 0x19c0
+call 0x5100
 lea rcx, [rip - 0x2181]
 mov edx, 29
-call 0x19c0
+call 0x5100
 call 0x1ac0
 mov r12d, eax
 cmp eax, 0xFFFFFFFF
 jne 0x4c78
 lea rcx, [rip - 0x2127]
 mov edx, 24
-call 0x19c0
+call 0x5100
 jmp 0x4f02
 lea rcx, [rip - 0x2179]
 mov edx, 29
-call 0x19c0
+call 0x5100
 cmp r12d, 4
 je 0x4ca5
 lea rcx, [rip - 0x20e6]
 mov edx, 25
-call 0x19c0
+call 0x5100
 jmp 0x4f02
 lea rcx, [rip - 0x2138]
 mov edx, 29
-call 0x19c0
+call 0x5100
 lea rcx, [rsp + 0x30]
 lea rdx, [rip - 0x25da]
 mov r8d, 14
@@ -121,7 +121,7 @@ test eax, eax
 jne 0x4ede
 lea rcx, [rip - 0x219c]
 mov edx, 32
-call 0x19c0
+call 0x5100
 lea rcx, [rip - 0x3091]
 xor edx, edx
 call 0x4300
@@ -140,18 +140,18 @@ cmp r12d, 0x20000000
 jb 0x4dad
 lea rcx, [rip - 0x2164]
 mov edx, 37
-call 0x19c0
+call 0x5100
 jmp 0x4f02
 lea rcx, [rip - 0x21c0]
 mov edx, 34
-call 0x19c0
+call 0x5100
 call 0x1c40
 test rax, rax
 je 0x4ef1
 mov rbx, rax
 lea rcx, [rip - 0x2150]
 mov edx, 19
-call 0x19c0
+call 0x5100
 mov rcx, rbx
 lea rdx, [rip - 0x2734]
 call 0x4980
@@ -159,7 +159,7 @@ test eax, eax
 je 0x4ef1
 lea rcx, [rip - 0x2150]
 mov edx, 34
-call 0x19c0
+call 0x5100
 xor ecx, ecx
 call 0x4400
 test eax, eax
@@ -171,7 +171,7 @@ test eax, eax
 je 0x4ef1
 lea rcx, [rip - 0x2141]
 mov edx, 34
-call 0x19c0
+call 0x5100
 mov ecx, 1
 call 0x4400
 test eax, eax
@@ -183,7 +183,7 @@ test eax, eax
 je 0x4ef1
 lea rcx, [rip - 0x212d]
 mov edx, 37
-call 0x19c0
+call 0x5100
 mov rcx, rbx
 call 0x41c0
 xor ebx, ebx
@@ -194,16 +194,16 @@ je 0x4ec9
 call 0x41c0
 lea rcx, [rip - 0x2118]
 mov edx, 31
-call 0x19c0
+call 0x5100
 xor eax, eax
 jmp 0x4f2f
 lea rcx, [rip - 0x20b5]
 mov edx, 32
-call 0x19c0
+call 0x5100
 jmp 0x4f02
 lea rcx, [rip - 0x2100]
 mov edx, 27
-call 0x19c0
+call 0x5100
 test rbx, rbx
 je 0x4f11
 mov rcx, rbx

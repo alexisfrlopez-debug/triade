@@ -1,6 +1,6 @@
-; win-02-fenetre · bloc démo · spec win-02:R2 · bloc carte d40002
+; win-02-fenetre · bloc démo · spec win-02:R3 · bloc carte d40002
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x1440, taille 384 octets
-; Dépendances : IAT user32 : RegisterClassExW, CreateWindowExW, LoadCursorW, MessageBoxW ; IAT kernel32 : GetModuleHandleW, GetLastError ; bloc win-11 (trace) ; procédure @0x1640 ; chaînes UTF-16 + ASCII trace
+; Dépendances : IAT user32 : RegisterClassExW, CreateWindowExW, LoadCursorW, MessageBoxW ; IAT kernel32 : GetModuleHandleW, GetLastError ; bloc win-05 (miroir écran+fichier, entrée trace) ; procédure @0x1640 ; chaînes UTF-16 + ASCII
 ; Notation explicite générée par outils/auteur.py depuis brouillons/win-02-fenetre.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
 ; Code : 364 o · padding : 20 o (NOP)
@@ -31,7 +31,7 @@ sub rsp, 0x70
 lea rcx, [rip + 0x1a54]
 mov edx, 40
 xor r8d, r8d
-call 0x1e00
+call 0x5000
 lea rbx, [rsp + 0x20]
 mov dword ptr [rbx], 0x50
 mov dword ptr [rbx + 4], 3
@@ -75,14 +75,14 @@ mov qword ptr [rip + 0x2316], rax
 lea rcx, [rip + 0x197f]
 mov edx, 28
 xor r8d, r8d
-call 0x1e00
+call 0x5000
 jmp 0x159e
 call qword ptr [rip + 0x1932]
 mov r9d, eax
 lea rcx, [rip + 0x197c]
 mov edx, 36
 mov r8d, 1
-call 0x1e00
+call 0x5000
 xor ecx, ecx
 lea rdx, [rip + 0x14cb]
 lea r8, [rip + 0x1448]

@@ -45,7 +45,7 @@ mov r9d, eax
 lea rcx, [rip + LKO_EDIT]
 mov edx, LEN_LKO_EDIT
 mov r8d, 1
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 mov rax, 0xFFFFFFFFFFFFFFFF
 jmp .sortie
 .edit_ok:
@@ -70,7 +70,7 @@ mov r9d, eax
 lea rcx, [rip + LKO_BOUTON]
 mov edx, LEN_LKO_BOUTON
 mov r8d, 1
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 mov rax, 0xFFFFFFFFFFFFFFFF
 jmp .sortie
 .bouton_ok:
@@ -90,7 +90,7 @@ call qword ptr [rip + IAT_SENDMESSAGE]
 lea rcx, [rip + L02]
 mov edx, LEN_L02
 xor r8d, r8d
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 xor eax, eax
 jmp .sortie
 .taille:
@@ -108,6 +108,7 @@ mov dword ptr [rsp + 0x20], r11d
 sub dword ptr [rsp + 0x20], 56
 mov dword ptr [rsp + 0x28], 1
 call qword ptr [rip + IAT_MOVEWINDOW]
+mov r12d, eax
 mov rcx, qword ptr [rip + HWND_BOUTON]
 mov edx, 8
 mov r8d, r11d
@@ -117,6 +118,17 @@ sub r9d, 16
 mov dword ptr [rsp + 0x20], 36
 mov dword ptr [rsp + 0x28], 1
 call qword ptr [rip + IAT_MOVEWINDOW]
+mov r13d, eax
+lea rcx, [rip + L4C]
+mov edx, LEN_L4C
+mov r8d, 1
+mov r9d, r12d
+call JOURNAL_TRACE
+lea rcx, [rip + L4D]
+mov edx, LEN_L4D
+mov r8d, 1
+mov r9d, r13d
+call JOURNAL_TRACE
 xor eax, eax
 jmp .sortie
 .commande:
@@ -128,7 +140,7 @@ mov qword ptr [rip + DRAPEAU_WORKER], 1
 lea rcx, [rip + L03]
 mov edx, LEN_L03
 xor r8d, r8d
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 mov rcx, qword ptr [rip + HWND_BOUTON]
 xor edx, edx
 call qword ptr [rip + IAT_ENABLEWINDOW]
@@ -142,7 +154,7 @@ mov r9d, eax
 lea rcx, [rip + LKO_SPAWN]
 mov edx, LEN_LKO_SPAWN
 mov r8d, 1
-call JOURNAL_FICHIER
+call JOURNAL_TRACE
 mov qword ptr [rip + DRAPEAU_WORKER], 0
 mov rcx, qword ptr [rip + HWND_BOUTON]
 mov edx, 1
