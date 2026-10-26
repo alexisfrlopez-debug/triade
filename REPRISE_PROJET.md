@@ -274,6 +274,20 @@ signée, journal à jour). Premier chantier : spécifications I des nouveaux blo
 (réseau ws2_32, threads, trampoline) écrites **avant** la notation (R1-R3), plan
 d'adressage étendu aux zones réseau/thread dans la continuité de D28.
 
+**État M2 (terrain au 27/10/2026, journal 30)** : M2 est scellé côté atelier
+(0.3.0-rc.4, echo.exe et demo.exe livrés au coffre) et la cascade terrain a
+progressé de demo.1 à demo.7 en sept lectures de journal. **demo.7 franchit
+pour la première fois la mécanique complète** : sondes 3/3 vertes, patch à
+chaud v1→v2→v1 constaté par memcmp sur machine réelle (correctif D41 validé),
+serveur en écoute et client connecté — des premières terrain. La mort a migré
+dans le **premier échange réseau** (win-10-echange côté client — statiquement
+propre — et fil d'écho @0x4800 côté serveur, jamais exécuté au terrain
+auparavant) : 8e classe de défaut, mort violente sans ligne d'échec. Prochaine
+étape : demo.8 instrumentée des deux côtés (sondes client S4/S5 + traces dans
+le fil d'écho), puis à « DÉMO OK » : retrait des sondes (R3 final) et scellage
+final 0.3.0. Détail complet : `docs/JOURNAL_TRAVAIL.md` (journaux 22 à 30),
+archives terrain `demo/journal_terrain_demo*.txt`.
+
 ## 8. Avertissement sécurité — jetons
 
 Les jetons d'accès ont été stockés dans un dossier Drive partagé par lien. Toute personne

@@ -1,0 +1,16 @@
+L00 demarrage demonstration 0.3.0-demo.7
+L02 controles crees (journal, bouton)
+L4C move journal=1
+L4D move bouton=1
+L01 fenetre principale creee
+L03 clic : lancement du scenario
+TRIADE M2 - démonstration
+I > B > C, zéro compilateur
+porte R10 : intégrité VERTE
+libc M1 scellée : 4/4 verts
+sonde1 avant echo
+sonde2 patch pose
+sonde3 v2 ok
+mécanique : v1>v2>v1 confirmés
+serveur : écoute 127.0.0.1:25000
+client : connecté

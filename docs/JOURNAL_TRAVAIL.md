@@ -1509,3 +1509,72 @@ est localisée, il reste à la nommer.
 **Suivi** : validation terrain demo.7 — 14 lignes attendues jusqu'à
 « boucle § 5 complète — DÉMO OK » → retrait des sondes (R3 final) +
 scellage final 0.3.0 (M2).
+
+## Journal 30 — Terrain demo.7 : sondes 3/3 VERTES, mécanique franchie (D41 validé), serveur et client vivants — la mort a migré dans le premier échange réseau ; 8e classe de défaut
+
+**Contexte** : « logs envoyés, fenêtre disparue » — le développeur a lancé
+demo.7 (correctif D41) et déposé demo_journal.txt (435 o, 16 lignes) dans son
+dossier « test » à 23:41, quatre minutes après la livraison. Septième lecture
+terrain : pour la première fois, la démonstration est entrée dans la boucle § 5.
+
+**Déroulé** :
+1. Rapatriement (drive_recuperer.py --forcer) et lecture (archive :
+   `demo/journal_terrain_demo7.txt`) : L00 « 0.3.0-demo.7 », démarrage
+   complet (L02/L4C/L4D/L01/L03), porte R10 VERTE, libc 4/4 verts, puis
+   **sonde1 → sonde2 → sonde3** — les TROIS sondes passent — puis
+   « mécanique : v1>v2>v1 confirmés » (patch à chaud et rollback EXÉCUTÉS
+   ET CONSTATÉS sur machine réelle), « serveur : écoute 127.0.0.1:25000 »,
+   « client : connecté » — puis plus rien. Dernière ligne complète (é 0xE9
+   CP1252 + CRLF finaux présents — pas de troncature). « Fenêtre
+   disparue » = MORT DU PROCESSUS, comme en demo.6.
+2. **Validation D41 confirmée** : le défaut zone d'accueil ABI de .protger
+   (VirtualProtect sans shadow space, adresse de retour écrasée par 0x700)
+   est corrigé — la séquence entière qui tuait demo.1 à demo.6 (pose du
+   patch, écho patché, rollback, re-vérification) est franchie. Le serveur
+   en écoute et le client connecté sont des PREMIÈRES terrain. La
+   frontière mécanique est définitivement traversée.
+3. Localisation précise : après « client : connecté », le scénario appelle
+   win-10-echange (0x4980) — send boucle cumulative → recv boucle
+   cumulative → memcmp scellé — et ne journalise « écho réseau :
+   aller-retour exact » qu'après vérification. AUCUNE ligne d'échec E5
+   (réseau) n'a été écrite : la mort n'est pas un échec propre (eax = 0 →
+   ligne dédiée), c'est une mort VIOLENTE sans possibilité de journaliser.
+   Les 4 lignes attendues manquent : écho réseau, patch en production,
+   retour arrière, « boucle § 5 complète — DÉMO OK » (le LISEZMOI
+   annonçait 19 lignes complètes ; le décompte par lecture du code en donne
+   20 — écart de comptage mineur, sans effet sur la lecture).
+4. Élimination statique côté client — win-10-echange relu à la main :
+   alignement CONFORME (5 pushes + sub rsp, 0x40 → rsp ≡ 0 mod 16 aux deux
+   appels IAT), zone d'accueil CONFORME ([rsp, rsp+0x20) réservée, tampon
+   de réception [rsp+0x20, rsp+0x40) = 32 o ≥ 14 requis), boucles
+   cumulatives bornées, échecs propres (jle → eax = 0). L'audit D41
+   (58/58 sites d'appel) avait déjà couvert ces deux appels ws2_32. Rien à
+   reprocher côté client en statique.
+5. Le suspect est CONCURRENT : au moment de l'échange, trois fils vivent —
+   GUI, scénario (client) et le fil d'écho serveur lancé par win-08-serveur
+   (accept → tcp-06-spawn du fil @0x4800). Ce fil d'écho (recv serveur →
+   écho 0x4600 → send serveur) exécute pour la PREMIÈRE FOIS au terrain.
+   Sous Windows, une exception non gérée dans N'IMPORTE QUEL fil tue tout
+   le processus — le crash peut venir du fil serveur sans que le client
+   puisse journaliser. « Fenêtre disparue » + aucune ligne E5 = mort
+   violente quelque part dans : send client / accept+spawn+recv serveur /
+   écho v1 restauré (octets d'origine memcpy par le rollback quelques
+   instructions plus tôt — permissions de page après double VirtualProtect
+   ?) / send serveur / recv client.
+6. Hypothèses de travail pour demo.8, par ordre de priorité : (a) le fil
+   d'écho @0x4800 — point d'entrée de fil, prologue, appels recv/send IAT,
+   appel du bloc écho restauré ; (b) l'entrée de fil tcp-06-spawn
+   (alignement de pile au démarrage — le scénario vit dans un tel fil, mais
+   l'écho est le deuxième spawn, avec argument socket) ; (c) la
+   concurrence sur win-05 (journal) si le fil serveur journalise (tcp-11,
+   stdout hérité — en GUI, WriteFile sur handle invalide « échoue
+   silencieusement » par conception, à re-vérifier à l'octet près).
+7. demo.8 (prochaine session) : instrumentation BILATÉRALE de l'échange —
+   sonde4 (client, après send avant recv), sonde5 (client, après recv
+   avant memcmp) et sondes S1-S3 dans le fil d'écho (entrée du fil, après
+   recv serveur, après send serveur) — la méthodologie D40 qui a localisé
+   demo.6 en un seul run.
+
+**Suivi** : lecture terrain demo.8 après instrumentation bilatérale de
+l'échange ; à « DÉMO OK » → retrait des sondes (R3 final) + scellage final
+0.3.0 (M2).
