@@ -77,3 +77,60 @@ Stage Summary:
 - D17 opérationnelle : le PDF est un artefact dérivé, régénéré automatiquement avant chaque commit dès qu'une source du protocole change ; un clone frais ne reconstruit pas inutilement (stamp suivi par git) ; un échec de build est signalé sans bloquer la sauvegarde des sources.
 - Erratum v0.2 consigné et appliqué : numérotation des pieds de page corrigée sur l'archive (défaut latent du générateur, révélé par le sommaire v0.3 sur deux pages).
 - Prochaine étape inchangée : jalon M0 sur le profil primaire (checklist dans REPRISE_PROJET.md § 7).
+
+---
+Task ID: 9
+Agent: main (Z.ai, agent principal)
+Task: Rédiger le PDF du protocole v0.3 en utilisant le recodage de RoomEq
+comme démonstration, avec comparatifs de code avant/après (demande du
+développeur ; fait suite à la validation des reverse-specs installateur).
+
+Work Log:
+- Reconstitué le contexte : spécification v0.3 intégrale, FORMAT_CARTE,
+  DECISIONS (protocole D1-D17 / RoomEq D1-D11), CARTE RoomEq, PARITE-v2.2.2,
+  WORKLOG du recodage, générateur v0.3 complet (continuité visuelle).
+- Collecté les métriques réelles des deux dépôts : legacy @ deff25c
+  (82 fichiers, 14 891 lignes, 228 tests, MixerViewModel 1 075 lignes) vs
+  v3 @ v3.0.0-dev.1 (93 fichiers, 15 438 lignes, 437 tests, plus gros
+  ViewModel 399 lignes en 5 partiels) ; empreintes md5 complètes des données
+  embarquées recalculées.
+- Écrit scripts/triade_v03_demo_roomeq.py (générateur ReportLab complet,
+  même fonte/palette/géométrie que la spécification) : 12 chapitres —
+  synthèse du protocole (couches avec colonne d'instanciation RoomEq,
+  dix règles traduites, boucle, profils), candidat et dette, adaptation D4,
+  sept vagues, TROIS comparatifs de code avant/après extraits verbatim
+  (D8 seuil 8→1000 mesuré + spec I + test PureNoise ; monolithe
+  MixerViewModel → 5 partiels + OutputPresetCoordinator ; SanitizeFileName
+  multi-plateformes), résultats mesurés, reverse-specs D11, portée de la
+  preuve, feuille de route — 14 tableaux, 9 blocs de code, figure
+  d'architecture réutilisée.
+- Écrit la couverture (triade_v03_demo_cover.html, gabarit 01 HUD) :
+  kicker « étude de démonstration », héros « Recodage / RoomEq ».
+- Pipeline de qualité : poster_validate + cover_validate (0 chevauchement),
+  rendu vectoriel html2poster 794px, code.sanitize, meta.brand,
+  pages.clean (0 page blanche), font.check (0 glyphe manquant),
+  pdf_qa PASS intégral ; vérificateur dédié
+  (scripts/verify_demo_pdf.py hors dépôt) : séquence des pieds i, 1-20 ;
+  concordance sommaire ↔ pages réelles ↔ destinations des liens 12/12 ;
+  présence des éléments clés (extraits, test D8, empreintes complètes).
+- Correctifs en cours de route : cellules « — » isolées remplacées
+  (avertissements de ponctuation), colonne empreintes élargie (hash md5
+  sur une ligne), association liens du vérificateur recalibrée.
+- Régénération MANUELLE (choix documenté dans l'en-tête du script) : le
+  PDF de démonstration est une édition, contrairement au PDF formel
+  (D17 s'applique aux seules sources du protocole).
+- Documentation : REPRISE_PROJET.md (état, arborescence, commandes),
+  README.md (ligne « Consulter la démonstration »), présent journal.
+- Sauvegarde systématique (D13) : commit + synchro Drive + push GitHub ;
+  copie livrable dans download/.
+
+Stage Summary:
+- PDF de démonstration livré : docs/Protocole_TRIADE_v0.3_Demonstration_
+  RoomEq.pdf (22 pages : couverture + sommaire i + corps 1-20), QA PASS,
+  sommaire cliquable concordant, numérotation i, 1-20 sans doublon.
+- Le protocole dispose désormais de deux volets documentaires : la
+  spécification normative (27 p.) et sa démonstration à échelle réelle
+  (22 p.) — même série visuelle, faits vérifiables (empreintes, tests,
+  dépôts scellés).
+- Prochaine étape inchangée : jalon M0 sur le profil primaire ; côté
+  RoomEq, validation Windows puis v3.0.0 finale.

@@ -5,9 +5,9 @@
 > mentionne est présent dans la sauvegarde. Il s'adresse autant au développeur qu'à un
 > agent IA chargé de continuer le travail.
 
-- Dernière mise à jour : 25 octobre 2026
+- Dernière mise à jour : 26 octobre 2026
 - Version de la spécification : v0.3 (figée pour le démarrage du jalon M0)
-- État général : conception terminée (dont universalité par profils), infrastructure de sauvegarde opérationnelle, implémentation non commencée
+- État général : conception terminée (dont universalité par profils), infrastructure de sauvegarde opérationnelle, **méthode démontrée à échelle réelle** (recodage RoomEq v3), implémentation non commencée
 
 ---
 
@@ -38,6 +38,7 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Journal des décisions | Terminé | D1 à D17 consignées dans `docs/DECISIONS.md` |
 | Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
+| Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé au tag `v3.0.0-dev.1` |
 | Implémentation | Non commencée | La prochaine étape est le jalon M0 (voir section 7) |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique |
 
@@ -83,6 +84,7 @@ triade/
 ├── docs/
 │   ├── PROTOCOLE_TRIADE.md            Spécification v0.3 — source de travail
 │   ├── Protocole_TRIADE_v0.3_Specification.pdf   Spécification v0.3 — archive formelle (27 p.)
+│   ├── Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf   Démonstration v0.3 — étude de cas RoomEq (22 p.)
 │   ├── Protocole_TRIADE_v0.2_Specification.pdf   Spécification v0.2 — archive formelle (erratum : numérotation corrigée)
 │   ├── FORMAT_CARTE.md                Format détaillé de la Carte (couche C)
 │   ├── DECISIONS.md                   Journal des décisions D1–D17
@@ -94,6 +96,8 @@ triade/
 │   ├── check_auth.py                  Vérification des jetons d'accès
 │   ├── triade_v03_spec.py             Générateur du PDF v0.3 (ReportLab, TOC auto)
 │   ├── triade_v03_cover.html          Source HTML de la couverture v0.3
+│   ├── triade_v03_demo_roomeq.py      Générateur du PDF de démonstration RoomEq (édition, régénération manuelle)
+│   ├── triade_v03_demo_cover.html     Source HTML de la couverture de la démonstration
 │   ├── triade_v02_spec.py             Générateur du PDF v0.2 (erratum appliqué)
 │   ├── triade_cover.html              Source HTML de la couverture v0.2
 │   ├── triade_diagram_arch.html       Source HTML du diagramme d'architecture
@@ -213,6 +217,7 @@ fichier synchronisé.
 | Commande | Effet |
 |---|---|
 | `bash scripts/sync_backup.sh "msg"` | Sauvegarde complète (commit + Drive + GitHub) |
+| `python3 scripts/triade_v03_demo_roomeq.py` | Régénère le PDF de démonstration RoomEq (couverture rendue au préalable via `html2poster.js` — voir en-tête du script) |
 | `python3 scripts/drive_sync.py` | Synchronisation Drive seule (idempotente) |
 | `python3 scripts/check_auth.py` | Vérifie les jetons Drive et GitHub sans les afficher |
 | `git log --oneline` | Historique des modifications |
