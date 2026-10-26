@@ -34,12 +34,14 @@ TEST_ID = "1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0"  # dossier « test » du développ
 # Empreintes md5 des livrables connus (historique des versions demo)
 MD5_CONNUS = {
     "demo.exe": {
-        "fa50bf6af53a3e412b346f9f24d68f01": "demo.3 (16 384 o, sha256 933e216e…) — ACTUELLE",
+        "221f4578a6f6059dacf94dd66ea242db": "demo.5 (16 384 o, sha256 dc5215c5…) — ACTUELLE",
+        "bdac45e062f873890b06b4b781760bf0": "demo.4 (16 384 o, sha256 7e4e9105…) — OBSOLÈTE",
+        "fa50bf6af53a3e412b346f9f24d68f01": "demo.3 (16 384 o, sha256 933e216e…) — OBSOLÈTE",
         "9b857b0b30b4e5da07eb49d98c2f4497": "demo.2 (15 360 o, sha256 1fed2a52…) — OBSOLÈTE",
     },
     "demo_journal.txt": {
-        # journal demo.2 déjà analysé (L00/L02/L01, 111 o) — tout autre contenu est NOUVEAU
-        "inconnu": "contenu à analyser",
+        # journaux déjà analysés — tout autre contenu est NOUVEAU
+        "8012661fc0db…": "journal demo.4 (10 lignes, gelé après J_LIBC_OK — D39)",
     },
 }
 
@@ -156,8 +158,8 @@ def main():
             else:
                 marq = ""
                 if name == "demo.exe":
-                    marq = ("  → demo.3 ACTUELLE"
-                            if f.get("md5Checksum") == "fa50bf6af53a3e412b346f9f24d68f01"
+                    marq = ("  → demo.5 ACTUELLE"
+                            if f.get("md5Checksum") == "221f4578a6f6059dacf94dd66ea242db"
                             else f"  → md5={f.get('md5Checksum', '-')[:12]}…")
                 print(f"  {name}  ({octets(f.get('size'))})  md5={f.get('md5Checksum', '-')[:12]}…{marq}")
     except ds.SyncError as e:
@@ -170,10 +172,10 @@ def main():
         print("[Verdict] demo.exe ABSENT du dossier test")
     else:
         m = demo.get("md5Checksum")
-        if m == "fa50bf6af53a3e412b346f9f24d68f01":
-            print("[Verdict] demo.exe = demo.3 (ACTUELLE) PRÉSENTE dans le dossier test — livraison confirmée")
-        elif m == "9b857b0b30b4e5da07eb49d98c2f4497":
-            print("[Verdict] demo.exe = demo.2 (OBSOLÈTE) dans le dossier test — à remplacer")
+        if m == "221f4578a6f6059dacf94dd66ea242db":
+            print("[Verdict] demo.exe = demo.5 (ACTUELLE) PRÉSENTE dans le dossier test — livraison confirmée")
+        elif m in MD5_CONNUS["demo.exe"]:
+            print(f"[Verdict] demo.exe = {MD5_CONNUS['demo.exe'][m]} dans le dossier test — à remplacer")
         else:
             print(f"[Verdict] demo.exe de version inconnue (md5 {m})")
     if nouveaux:

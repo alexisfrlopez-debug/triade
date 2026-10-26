@@ -1,7 +1,8 @@
-; tcp-07-patch · brouillon · moteur de patch à chaud · (rcx mode) -> rax code · tcp-07:R1 · c30007
-; mode 0 : vérifier somme staging -> protéger RW -> sauver entrée -> copier en
-; croissance -> basculer par UN qword aligné (E9 rel32 + NOP x3) -> restaurer RX
-; mode 1 : protéger RW -> réécrire le qword original sauvegardé -> restaurer RX
+; tcp-07-patch · brouillon · moteur de patch à chaud · (rcx mode) -> rax code · tcp-07:R2 · c30007
+; mode 0 : vérifier somme staging -> protéger RWX (D39 : jamais RW — la page contient
+; ce bloc lui-même, DEP permanent en x64) -> sauver entrée -> copier en croissance ->
+; basculer par UN qword aligné (E9 rel32 + NOP x3) -> restaurer RX
+; mode 1 : protéger RWX -> réécrire le qword original sauvegardé -> restaurer RX
 ; codes : 0 ok · 1 mode · 2 staging absent · 3 intégrité · 4 état · 5 protection
 ; r15 = entrée echo (calculée une fois) ; .protger = bascule locale de protection
 push rbx
@@ -32,7 +33,7 @@ jb .somme
 mov r13, qword ptr [rip + TAB_SOMME]
 cmp rax, r13
 jne .integrite
-mov r8d, 4
+mov r8d, 0x40
 call .protger
 test eax, eax
 je .protection
@@ -64,7 +65,7 @@ jmp .fin
 .rollback:
 test rax, rax
 je .incoherent
-mov r8d, 4
+mov r8d, 0x40
 call .protger
 test eax, eax
 je .protection

@@ -58,7 +58,8 @@ else:
     _spec.loader.exec_module(L)
     sys.modules["layout_demo"] = L
 
-from unicorn import Uc, UC_ARCH_X86, UC_MODE_64, UC_HOOK_CODE
+from unicorn import (Uc, UC_ARCH_X86, UC_MODE_64, UC_HOOK_CODE, UcError,
+                     UC_PROT_READ, UC_PROT_WRITE, UC_PROT_EXEC, UC_PROT_ALL)
 from unicorn.x86_const import (
     UC_X86_REG_RSP, UC_X86_REG_RAX, UC_X86_REG_RCX, UC_X86_REG_RDX,
     UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RIP, UC_X86_REG_EFLAGS,
@@ -91,6 +92,17 @@ REGS_CONTEXTE = (UC_X86_REG_RAX, UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX,
 
 class EchecOracle(Exception):
     pass
+
+
+# D39 : constantes de protection Win32 -> permissions Unicorn. Le shim
+# VirtualProtect les APPLIQUE réellement : fetch depuis une page sans bit
+# execute = faute (DEP permanent x64 — le défaut tcp-07:R1 tuait le processus
+# au retour du premier VirtualProtect, journal terrain gelé après J_LIBC_OK).
+PROTECTIONS = {
+    0x04: UC_PROT_READ | UC_PROT_WRITE,        # PAGE_READWRITE (sans execute)
+    0x20: UC_PROT_READ | UC_PROT_EXEC,         # PAGE_EXECUTE_READ
+    0x40: UC_PROT_ALL,                         # PAGE_EXECUTE_READWRITE
+}
 
 
 def clobber_volatils(uc_):
@@ -145,6 +157,11 @@ class Emulateur:
 
     def _ecrire_image(self):
         uc = self.uc
+        # D39 : un appel antérieur peut avoir laissé des pages de code en RX
+        # (le shim VirtualProtect APPLIQUE désormais les permissions) —
+        # déverrouiller l'image entière avant réécriture, sinon l'écriture
+        # hôte fauterait (WRITE_PROT) sur la page 0x4000 restée RX.
+        uc.mem_protect(IMAGE, L.SIZE_OF_IMAGE, UC_PROT_ALL)
         uc.mem_write(IMAGE + L.TEXT_RVA, self.exe[L.TEXT_FILE:L.TEXT_FILE + L.TEXT_VSIZE])
         uc.mem_write(IMAGE + L.RDATA_RVA, self.exe[L.RDATA_FILE:L.RDATA_FILE + L.RDATA_VSIZE])
         uc.mem_write(IMAGE + L.DATA_RVA, self.exe[L.DATA_FILE:L.DATA_FILE + L.DATA_RAW])
@@ -193,6 +210,8 @@ class Emulateur:
         self.file_accept = [0x777, -1]
         self.retour_connect = 0
         self.retour_socket = FAKE_SOCK
+        self.appels_vp: list[tuple] = []      # D39 : (page, étendue, protection)
+        self.retour_vp = 1                    # D39 : refus piloté = 0
         # GUI (D36)
         self.classes: dict[str, tuple] = {}     # nom -> (wndproc, hInstance)
         self.movewindow: list[tuple] = []
@@ -268,7 +287,23 @@ class Emulateur:
                 self.threads.append((r8, r9))
                 uc_.reg_write(UC_X86_REG_RAX, 0x100 + 8 * len(self.threads))
             elif nom == "VirtualProtect":
-                uc_.reg_write(UC_X86_REG_RAX, 1)
+                prot = r8 & 0xFFFFFFFF
+                self.appels_vp.append((rcx, rdx, prot))
+                perms = PROTECTIONS.get(prot)
+                if perms is None or not self.retour_vp:
+                    # valeur de protection invalide ou refus piloté : échec,
+                    # AUCUN effet (sémantique VirtualProtect réelle)
+                    uc_.reg_write(UC_X86_REG_RAX, 0)
+                else:
+                    # D39 : APPLIQUER réellement les permissions — un fetch
+                    # depuis une page sans bit execute est une faute (DEP
+                    # permanent x64 : le défaut tcp-07:R1 tuait le processus
+                    # au retour du premier VirtualProtect, journal gelé).
+                    page = rcx & ~0xFFF
+                    fin = (rcx + rdx + 0xFFF) & ~0xFFF
+                    uc_.mem_protect(page, max(fin - page, 0x1000), perms)
+                    uc_.ctl_remove_cache(page, max(fin, page + 0x1000))
+                    uc_.reg_write(UC_X86_REG_RAX, 1)
             elif nom == "GetLastError":
                 uc_.reg_write(UC_X86_REG_RAX, self.gle & 0xFFFFFFFF)
             elif nom == "GetModuleFileNameA":
@@ -718,11 +753,52 @@ def executer(exe: bytes, graine: int = 1) -> dict:
         raise EchecOracle("win-09 : arrêt propre absent (Q4)")
     if len(em.envois) != 3 or any(e != L.PHRASE for e in em.envois):
         raise EchecOracle("win-09 : émissions inattendues (I2 de win-10)")
+    # D39 : les 8 VirtualProtect du scénario (mécanique + trafic) doivent être
+    # appariés RWX puis RX sur la page 0x4000 — jamais une protection sans
+    # bit execute pendant l'écriture (défaut tcp-07:R1).
+    if len(em.appels_vp) != 8 or any(
+            a != (IMAGE + 0x4000, 0x700, (0x40, 0x20)[i % 2])
+            for i, a in enumerate(em.appels_vp)):
+        raise EchecOracle(f"win-09 : VirtualProtect non appariés RWX/RX (D39) : "
+                          f"{em.appels_vp}")
     verdicts["d40009"] = {"cas": 5, "detail": "journal écran exact (11 lignes) + "
                                               "fichier miroir, rollback, arrêt, 3 échanges"}
     verdicts["d40010"] = {"cas": 3, "detail": "échanges vérifiés identité/MAJUSCULES/identité"}
-    verdicts["c30007"] = {"cas": 3, "detail": "bascule+effet+rollback réels (héritage)"}
+    verdicts["c30007"] = {"cas": 3, "detail": "bascule+effet+rollback réels, "
+                                              "appariement RWX/RX 8/8 (héritage, D39)"}
     total += 11
+
+    # --- falsification D39 (V7 tcp-07:R2) : PAGE_READWRITE au lieu de RWX ---
+    # le défaut terrain démo.4 EXACT — processus mort au premier VirtualProtect,
+    # journal gelé après J_LIBC_OK. Le shim APPLIQUE les permissions : le fetch
+    # de reprise (0x4551, page 0x4000 devenue RW sans execute) DOIT fauter.
+    # (Appel DIRECT de tcp-07 : par le scénario, la porte R10 détecterait
+    # l'octet corrompu AVANT la mécanique — la falsification vise la
+    # sémantique DEP, pas l'intégrité.)
+    base07 = _fichier_rva(0x4400)
+    tranche07 = exe[base07:base07 + 0x200]
+    pos07 = tranche07.find(bytes.fromhex("41b840000000"))   # mov r8d, 0x40
+    if pos07 < 0:
+        raise EchecOracle("falsification D39 : site mov r8d,0x40 introuvable "
+                          "dans tcp-07 (héritage divergent)")
+    mutant = bytearray(exe)
+    mutant[base07 + pos07 + 2] = 0x04                       # mov r8d, 4 — défaut D39
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    dep_faute = False
+    try:
+        em.appeler(0x4400, (0,))                            # tcp-07 mode appliquer
+    except UcError:
+        dep_faute = True
+    if not dep_faute:
+        raise EchecOracle("falsification D39 : tcp-07 a SURVÉCU à une phase "
+                          "d'écriture PAGE_READWRITE sans execute — le défaut "
+                          "terrain démo.4 (processus mort au premier "
+                          "VirtualProtect) serait indétectable (V7 tcp-07:R2)")
+    if em.appels_vp != [(IMAGE + 0x4000, 0x700, 0x04)]:
+        raise EchecOracle(f"falsification D39 : appels {em.appels_vp} — le premier "
+                          f"VirtualProtect (RW sans execute) devait être le dernier")
+    total += 1
 
     # --- falsification : octets corrompus -> porte R10 détecte tout (zéro silence)
     detectees = 0

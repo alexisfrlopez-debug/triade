@@ -43,7 +43,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import layout as L
 
 import unicorn as _uc
-from unicorn import Uc, UC_ARCH_X86, UC_MODE_64, UC_HOOK_CODE
+from unicorn import (Uc, UC_ARCH_X86, UC_MODE_64, UC_HOOK_CODE, UcError,
+                     UC_PROT_READ, UC_PROT_WRITE, UC_PROT_EXEC, UC_PROT_ALL)
 from unicorn.x86_const import (
     UC_X86_REG_RSP, UC_X86_REG_RIP, UC_X86_REG_RAX, UC_X86_REG_RCX,
     UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RBX,
@@ -54,6 +55,14 @@ from unicorn.x86_const import (
 
 from keystone import Ks, KS_ARCH_X86, KS_MODE_64
 
+# D39 : constantes de protection Win32 -> permissions Unicorn. Le shim
+# VirtualProtect les APPLIQUE réellement : fetch depuis une page sans bit
+# execute = faute (DEP permanent x64), écriture émulée en page RX = faute.
+PROTECTIONS = {
+    0x04: UC_PROT_READ | UC_PROT_WRITE,        # PAGE_READWRITE (sans execute)
+    0x20: UC_PROT_READ | UC_PROT_EXEC,         # PAGE_EXECUTE_READ
+    0x40: UC_PROT_ALL,                         # PAGE_EXECUTE_READWRITE
+}
 ICI = os.path.dirname(os.path.abspath(__file__))
 M1_DIR = os.path.join(os.path.dirname(ICI), "m1")
 IMAGE = L.IMAGE_BASE
@@ -180,6 +189,11 @@ class Emulateur:
 
     def _ecrire_image(self, exe: bytes):
         uc = self.uc
+        # D39 : un test antérieur peut avoir laissé des pages de code en RX
+        # (le shim VirtualProtect APPLIQUE désormais les permissions) —
+        # déverrouiller l'image entière avant réécriture, sinon l'écriture
+        # hôte fauterait (WRITE_PROT) sur la page 0x4000 restée RX.
+        uc.mem_protect(IMAGE, L.SIZE_OF_IMAGE, UC_PROT_ALL)
         uc.mem_write(IMAGE + L.TEXT_RVA, exe[L.TEXT_FILE:L.TEXT_FILE + L.TEXT_VSIZE])
         uc.mem_write(IMAGE + L.RDATA_RVA, exe[L.RDATA_FILE:L.RDATA_FILE + L.RDATA_VSIZE])
         uc.mem_write(IMAGE + L.DATA_RVA, exe[L.DATA_FILE:L.DATA_FILE + L.DATA_RAW])
@@ -327,8 +341,23 @@ class Emulateur:
                 self.threads_crees.append((r8, r9))
                 uc_.reg_write(UC_X86_REG_RAX, 0x100 + 8 * len(self.threads_crees))
             elif nom == "VirtualProtect":
-                self.appels_vp.append((rcx, rdx, r8 & 0xFFFFFFFF))
-                uc_.reg_write(UC_X86_REG_RAX, self.retour_vp)
+                prot = r8 & 0xFFFFFFFF
+                self.appels_vp.append((rcx, rdx, prot))
+                perms = PROTECTIONS.get(prot)
+                if perms is None or not self.retour_vp:
+                    # valeur de protection invalide ou refus piloté : échec,
+                    # AUCUN effet (sémantique VirtualProtect réelle)
+                    uc_.reg_write(UC_X86_REG_RAX, 0)
+                else:
+                    # D39 : APPLIQUER réellement les permissions — un fetch
+                    # depuis une page sans bit execute est une faute (DEP
+                    # permanent x64 : le défaut tcp-07:R1 tuait le processus
+                    # au retour du premier VirtualProtect, journal gelé).
+                    page = rcx & ~0xFFF
+                    fin = (rcx + rdx + 0xFFF) & ~0xFFF
+                    uc_.mem_protect(page, max(fin - page, 0x1000), perms)
+                    uc_.ctl_remove_cache(page, max(fin, page + 0x1000))
+                    uc_.reg_write(UC_X86_REG_RAX, 1)
             elif nom == "InitializeCriticalSection":
                 pass
             elif nom == "EnterCriticalSection":
@@ -603,8 +632,8 @@ def suite_patch(em: Emulateur, exe: bytes, phase: int) -> int:
     em.poser_etat()
     em.appeler(0x4400, (0,))
     em.verifier_enveloppe(0)
-    if len(em.appels_vp) != 2 or em.appels_vp[0][2] != 4 or em.appels_vp[1][2] != 0x20:
-        raise EchecOracle(f"patch : VirtualProtect non appariés RW/RX : {em.appels_vp}")
+    if len(em.appels_vp) != 2 or em.appels_vp[0][2] != 0x40 or em.appels_vp[1][2] != 0x20:
+        raise EchecOracle(f"patch : VirtualProtect non appariés RWX/RX (D39) : {em.appels_vp}")
     if (em.appels_vp[0][0] != IMAGE + 0x4000 or em.appels_vp[0][1] != 0x700):
         raise EchecOracle("patch : page/étendue de protection inattendues (Q4)")
     if bytes(em.uc.mem_read(IMAGE + L.ECHO_CROISSANCE, 128)) != staging:
@@ -682,6 +711,31 @@ def suite_patch(em: Emulateur, exe: bytes, phase: int) -> int:
         raise EchecOracle("protection refusée : entrée modifiée (Q5)")
     if em.lire_qword(L.R_ETAT_PATCH) != 0:
         raise EchecOracle("protection refusée : état changé (Q5)")
+    cas += 1
+
+    # i. falsification DEP (V7, D39) : la constante de phase d'écriture
+    #    réécrite 0x40 -> 0x04 — le défaut terrain démo.4 EXACT. La page
+    #    0x4000 (qui contient tcp-07 lui-même) passe en PAGE_READWRITE sans
+    #    bit execute : l'émulation DOIT fauter au retour du VirtualProtect
+    #    (fetch depuis page non exécutable) — zéro silence.
+    base = _octets_fichier(exe, 0x4400, 0x200)
+    pos = base.find(bytes.fromhex("41b840000000"))   # mov r8d, 0x40
+    if pos < 0:
+        raise EchecOracle("falsification D39 : site mov r8d,0x40 introuvable "
+                          "dans tcp-07 (notation divergente)")
+    mutant = bytearray(exe)
+    mutant[_base_fichier(0x4400) + pos + 2] = 0x04      # mov r8d, 4
+    em2 = Emulateur(bytes(mutant))
+    em2.installer_shims()
+    em2.poser_etat()
+    try:
+        em2.appeler(0x4400, (0,))
+        raise EchecOracle("falsification D39 : tcp-07 a survécu à une phase "
+                          "d'écriture PAGE_READWRITE sans execute — le défaut "
+                          "terrain (processus mort au premier VirtualProtect) "
+                          "serait indétectable (V7 tcp-07:R2)")
+    except UcError:
+        pass                                             # faute DEP : détectée ✓
     cas += 1
     return cas
 

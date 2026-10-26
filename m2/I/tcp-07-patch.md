@@ -1,4 +1,4 @@
-tcp-07 · moteur de patch à chaud · révision 1
+tcp-07 · moteur de patch à chaud · révision 2
 Intention : basculer le bloc echo-01 entre sa version installée (v1, entrée
 0x4600) et son remplaçant en zone de croissance (0x4680), SANS JAMAIS écrire
 un bloc pendant qu'il s'exécute — le remplaçant est d'abord intégralement
@@ -35,8 +35,10 @@ Contrat :
              seule écriture alignée de qword à l'entrée echo (atomicité
              x86-64) — jamais deux écritures partielles observables ;
          Q4 pendant les écritures, la page 0x4000 est passée en
-             PAGE_READWRITE (VirtualProtect), puis restaurée en
-             PAGE_EXECUTE_READ après la bascule — l'image redevient RX ;
+             PAGE_EXECUTE_READWRITE (0x40, VirtualProtect), puis restaurée
+             en PAGE_EXECUTE_READ (0x20) après la bascule — l'image reste
+             exécutable en continu (I6, D39 : la page protégée contient le
+             présent bloc lui-même, slot 0x4400) ;
          Q5 refus fail-closed (rax = code, AUCUN octet de .text/.text2
              modifié, état inchangé) : code 1 mode invalide ; code 2
              staging absent (taille 0) ; code 3 somme du staging divergente
@@ -46,7 +48,7 @@ Contrat :
              code 5 VirtualProtect refusé (avant toute écriture) ;
          Q6 en cas d'échec de la restauration de protection APRÈS bascule
              réussie (mode 0), rax = 5 mais la bascule est effective et
-             l'état est mis à jour (défaut documenté : image laissée RW —
+             l'état est mis à jour (défaut documenté : image laissée RWX —
              le processus est dans un état incohérent, l'appelant journalise
              le refus).
   inv  : I1 appels système : IAT kernel32 VirtualProtect exclusivement
@@ -60,7 +62,14 @@ Contrat :
          I4 le prologue alloue 0x40 octets (shadow + qword old-protect) et
              sauvegarde rbx, r12-r15 ; l'épilogue restaure symétriquement ;
          I5 aucun stockage sous rsp ; la loge [rsp+0x30] sert de qword
-             old-protect pour les deux VirtualProtect.
+             old-protect pour les deux VirtualProtect ;
+         I6 D39 (R2) : toute protection appliquée à une page contenant du
+             code en cours d'exécution RETIENT le bit execute — les phases
+             d'écriture passent par PAGE_EXECUTE_READWRITE (0x40), jamais
+             PAGE_READWRITE (4) : en x86-64 le DEP est permanent (image
+             NX_COMPAT), une page sans bit execute faute à l'instruction
+             suivante et tue le processus (constat terrain démo.4 : journal
+             gelé après J_LIBC_OK, mort au retour du premier VirtualProtect).
 Échecs :
   E1 : staging absent ou corrompu → refus AVANT toute écriture (Q5) : le
        serveur continue de servir en v1 — la disponibilité prime (ordre
@@ -70,13 +79,15 @@ Contrat :
        est idempotent par refus.
 Vecteurs :
   V1 : round-trip de notation 100 %.
-  V2 : scénario d'émulation complet (oracle, shims VirtualProtect) :
-       appliquer → croissance = staging octet pour octet, entrée = E9
-       rel32 + NOP x3 (cible exacte 0x4680), original sauvegardé, état 1,
-       appels VirtualProtect appariés RW puis RX ; l'entrée APPELÉE
-       retourne le comportement du remplaçant (majuscules) — LE PATCH EST
-       EFFECTIF ; rollback → entrée restaurée octet pour octet, état 0,
-       comportement v1 (identité) de retour (couvre Q1-Q4).
+  V2 : scénario d'émulation complet (oracle, shims VirtualProtect qui
+       APPLIQUENT les permissions réelles — D39 : un fetch depuis une page
+       sans bit execute est une faute) : appliquer → croissance = staging
+       octet pour octet, entrée = E9 rel32 + NOP x3 (cible exacte 0x4680),
+       original sauvegardé, état 1, appels VirtualProtect appariés RWX puis
+       RX ; l'entrée APPELÉE retourne le comportement du remplaçant
+       (majuscules) — LE PATCH EST EFFECTIF ; rollback → entrée restaurée
+       octet pour octet, état 0, comportement v1 (identité) de retour
+       (couvre Q1-Q4, I6).
   V3 : falsification du staging (un octet corrompu) → code 3, entrée
        inchangée, comportement v1 préservé (couvre Q5, E1, R10).
   V4 : états incohérents (appliquer x2, rollback x2, rollback sans
@@ -88,8 +99,25 @@ Vecteurs :
   V6 : test de rejet : toute notation écrivant ailleurs que l'entrée/la
        croissance pendant la bascule, ou basculant par écritures
        partielles, est refusée par l'oracle structurel (couvre I2, I3).
+  V7 : falsification DEP (D39, R2) : la constante de phase d'écriture
+       réécrite de 0x40 en 0x04 (le défaut terrain exact) → l'émulation
+       FAUTE (fetch depuis page non exécutable au retour du VirtualProtect)
+       — zéro silence ; le journal s'arrête après J_LIBC_OK, signature
+       identique au constat terrain (couvre I6).
 Fixtures    : staging et table d'intégrité .rdata (dev.2 : bloc echo-01:R2
               assemblé pour 0x4680 ; dev.1 : taille 0).
 Provenance  : écrite-avant-code.
-Décisions   : D7, D8, D33 (croissance/staging), R4 (contrat stable echo),
-              R7 (entrée seule trampolinable), R10 (somme avant effet).
+Décisions   : D7, D8, D33 (croissance/staging), D39 (protection RWX : DEP
+              permanent x64), R4 (contrat stable echo), R7 (entrée seule
+              trampolinable), R10 (somme avant effet).
+Historique  : R1 (dev.1) révisée en R2 (terrain démo.4, D39) : les phases
+              d'écriture passaient la page 0x4000 — qui contient le présent
+              bloc — en PAGE_READWRITE (4), valeur sans bit execute : au
+              retour du premier VirtualProtect, le fetch de l'instruction
+              suivante violait DEP/NX et tuait le processus (cinquième
+              classe de défaut invisible sans exécution : protection non
+              modélisée par l'oracle). Le diff se limite aux constantes de
+              protection 4 → 0x40 aux deux sites (application et rollback)
+              et à Q4/I6/V2/V7 ; signature, codes d'échec et effets
+              inchangés (R4). L'oracle applique désormais réellement les
+              permissions (D39).

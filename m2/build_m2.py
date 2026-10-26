@@ -81,7 +81,7 @@ def blocs_phase(phase: int) -> list[tuple]:
         ("c30004", "tcp-04:R1", "tcp-04-send", 0x4180, 0x40),
         ("c30005", "tcp-05:R1", "tcp-05-close", 0x41C0, 0x40),
         ("c30006", "tcp-06:R1", "tcp-06-spawn", 0x4300, 0x40),
-        ("c30007", "tcp-07:R1", "tcp-07-patch", 0x4400, 0x200),
+        ("c30007", "tcp-07:R2", "tcp-07-patch", 0x4400, 0x200),
         ("c30008", "tcp-08:R1", "tcp-08-echo", 0x4600, 0x40),
         ("c30009", "tcp-09:R1", "tcp-09-conn", 0x4800, 0x180),
         ("c30010", "tcp-10:R1", "tcp-10-console", 0x4980, 0x180),
@@ -539,7 +539,7 @@ def composer_sections(code: dict, blocs: list[tuple], phase: int):
     # version u64 monte (0x00030002 -> 0x00030003, monotonie R10) et le
     # descripteur ws2_32 est réaligné sur les slots appelés (R_IAT_WS2,
     # posé plus haut aux slots 0x2300+ avec sa pré-IAT).
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEV1 if phase < 2 else L.VERSION_U64_RC2))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEV1 if phase < 2 else L.VERSION_U64_RC3))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     for rva, chaine, nom in ((L.R_MSG_BANNIERE, L.BANNIERE, "MSG_BANNIERE"),
                         (L.R_MSG_CONNEXION, b"connexion entrante\r\n", "MSG_CONNEXION"),
@@ -1101,20 +1101,22 @@ def construire(phase: int, volume: str, graine: int) -> int:
              if "artefact=echo.exe" in l), None)
         if version_existante and ("-rc" in version_existante
                                   or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
-            # Amendement D35 : la reconstruction est autorisée EXACTEMENT pour
-            # le correctif rc.1 -> rc.2 (FirstThunk ws2_32, diff .rdata pur) —
-            # toute autre reconstruction d'une balise scellée reste interdite.
-            if not (version_existante == L.VERSION_RC1):
+            # Amendement D39 : la reconstruction est autorisée EXACTEMENT pour
+            # le correctif rc.2 -> rc.3 (tcp-07:R2 : phases d'écriture en
+            # PAGE_EXECUTE_READWRITE — défaut DEP/NX constaté terrain démo.4,
+            # diff .text2 limité aux deux constantes de protection) — toute
+            # autre reconstruction d'une balise scellée reste interdite.
+            if not (version_existante == L.VERSION_RC2):
                 raise EchecBuild(
                     f"carte scellée ({version_existante}) : reconstruction interdite — "
                     f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
-            print(f"[D35] reconstruction autorisée : {version_existante} -> {L.VERSION_RC2} "
-                  f"(correctif FirstThunk ws2_32, contrat stable R4, diff .rdata pur)")
+            print(f"[D39] reconstruction autorisée : {version_existante} -> {L.VERSION_RC3} "
+                  f"(correctif tcp-07:R2 RWX/DEP, contrat stable R4, diff constantes pures)")
     except (cm.ErreurCarte, FileNotFoundError):
         pass
 
     blocs, specs, code, verrous = assembler_tout(phase)
-    version = L.VERSION_DEV1 if phase == 1 else L.VERSION_RC2   # D35 : génération corrigée
+    version = L.VERSION_DEV1 if phase == 1 else L.VERSION_RC3   # D39 : tcp-07:R2 RWX/DEP
 
     texte, rdata, data, text2, staging = composer_sections(code, blocs, phase)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
@@ -1240,12 +1242,13 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
         raise EchecBuild(f"suite de conformite non verte — {nouvelle_version} refuse")
 
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("ascii")
-    ancienne = (L.VERSION_DEV1 + "|" + L.VERSION_DEV2 + "|" + L.VERSION_RC1 + "|" + L.VERSION_RC2) \
+    ancienne = (L.VERSION_DEV1 + "|" + L.VERSION_DEV2 + "|" + L.VERSION_RC1 + "|"
+                + L.VERSION_RC2 + "|" + L.VERSION_RC3) \
         if nouvelle_version == L.VERSION_FINALE else (L.VERSION_DEV1 + "|" + L.VERSION_DEV2)
     occurrences = sum(bld.count(f"version={v}") for v in ancienne.split("|"))
-    if nouvelle_version == L.VERSION_FINALE and bld.count(f"version={L.VERSION_RC2}") != 1:
-        raise EchecBuild(f"balise {L.VERSION_RC2} attendue une fois dans frag-bld "
-                         f"({bld.count(f'version={L.VERSION_RC2}')} occurrence(s)) — scellage final refuse (fail-closed)")
+    if nouvelle_version == L.VERSION_FINALE and bld.count(f"version={L.VERSION_RC3}") != 1:
+        raise EchecBuild(f"balise {L.VERSION_RC3} attendue une fois dans frag-bld "
+                         f"({bld.count(f'version={L.VERSION_RC3}')} occurrence(s)) — scellage final refuse (fail-closed)")
     for v in ancienne.split("|"):
         bld = bld.replace(f"version={v}", f"version={nouvelle_version}")
     clairs = {"frag-bld": bld.encode("ascii")}
@@ -1269,7 +1272,7 @@ if __name__ == "__main__":
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
             sys.exit(verifier(graine, volume))
         if "--sceller-rc" in args:
-            sys.exit(_sceller(L.VERSION_RC2, "cristallisation R6 + conformite 1-7 + correctif D35"))
+            sys.exit(_sceller(L.VERSION_RC3, "cristallisation R6 + conformite 1-7 + correctif D39 (tcp-07:R2 RWX/DEP)"))
         if "--sceller-final" in args:
             sys.exit(_sceller(L.VERSION_FINALE, "R6 + conformite + constat terrain"))
         phase = int(args[args.index("--phase") + 1]) if "--phase" in args else 1

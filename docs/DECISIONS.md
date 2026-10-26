@@ -1079,3 +1079,111 @@ D15 (amende D5) illustrent la procédure.
   démonstration intégrale (miroir 16 lignes + « boucle § 5 complète —
   DÉMO OK »), journal + capture à renvoyer. Si vert : scellage final
   0.3.0 (M2).
+
+### D39 — demo.4 mort au premier VirtualProtect : tcp-07:R2 (protection RWX), oracle durci sur le DEP réel
+
+- **Constat** (terrain Windows 11, dossier Drive « test », 26/10/2026
+  21:53 — journal 298 o reçu 10 min après livraison) : le journal demo.4
+  livre la séquence la plus avancée jamais vue sur terrain réel — L00
+  (0.3.0-demo.4), L02, L4C=1, L4D=1, L01 (D37/D38 confirmés), **L03 clic :
+  lancement du scenario** (LE BOUTON A ÉTÉ CLIQUÉ — D38 validé), J_ENTETE,
+  J_PROTO, « porte R10 : intégrité VERTE », « libc M1 scellée : 4/4 verts »
+  (porte + libc scellées M1 exécutées sur machine réelle) — puis RIEN :
+  ni J_MEC_OK, ni J_SRV_OK, ni aucun chemin d'échec tracé (J_DEF_KO
+  absent). Le scénario est entré dans la phase mécanique et n'en est
+  jamais ressorti. L'écart de 10 lignes est EXACTEMENT à la frontière
+  J_LIBC_OK → mécanique : un arrêt utilisateur aléatoire n'aurait pour ainsi
+  dire jamais coupé dans un intervalle de quelques microsecondes.
+- **Diagnostic (audit octet scripts/audit_demo_dep.py, sans Windows)** :
+  la phase mécanique appelle tcp-07 (patch à chaud) pour la PREMIÈRE FOIS
+  sur machine réelle. Le bloc passait la page 0x4000 — qui contient
+  tcp-07 LUI-MÊME (slot 0x4400), l'écho (0x4600) et la croissance
+  (0x4680) — en PAGE_READWRITE (constante 4, sites 0x446E application et
+  0x44FA rollback) pour écrire le remplaçant, puis la restaurait en
+  PAGE_EXECUTE_READ (0x20). Or demo.exe est PE32+ AMD64 avec NX_COMPAT
+  explicite : en 64 bits le DEP est PERMANENT et PAGE_READWRITE est SANS
+  bit execute. Au retour du premier VirtualProtect, l'instruction
+  suivante (`add rsp, 8` @ 0x4551, dans la page devenue non exécutable)
+  est fetchée → violation DEP/NX → exception non gérée → MORT DU
+  PROCESSUS, nette et silencieuse. Le journal gèle à la dernière ligne
+  flushée : J_LIBC_OK — correspondance EXACTE avec le terrain. Cinquième
+  classe de défaut invisible sans exécution : **la sémantique de
+  protection mémoire du système, non modélisée par l'oracle** (le shim
+  VirtualProtect renvoyait 1 sans appliquer les permissions — mensonge
+  par omission).
+- **Pourquoi toute la chaîne était verte** : notation et round-trip (les
+  octets sont exactement la spec), porte R10 (les octets scellés sont les
+  octets embarqués — le code était FAUX mais fidèle à lui-même),
+  cristallisation et conformité 124/124 (aucun contrôle ne raisonne la
+  sémantique DEP de VirtualProtect), oracle M2/démo (le shim admettait
+  TOUTE valeur de protection et n'appliquait RIEN : la page restait RWX
+  en Unicorn, le fetch post-retour survivait). La spec tcp-07:R1 Q4
+  exigeait elle-même PAGE_READWRITE : le défaut vivait DANS le contrat
+  écrit — la révision devait corriger la SPEC d'abord (écrite-avant-code,
+  y compris pour la réparation).
+- **Correctif (tcp-07:R2, diff de DEUX constantes)** : les phases
+  d'écriture passent en **PAGE_EXECUTE_READWRITE (0x40)** — écriture ET
+  exécution, la page reste exécutable en continu — les restaurations
+  restent en PAGE_EXECUTE_READ (0x20). Q4 réécrite, invariant nouveau I6 :
+  « toute protection appliquée à une page contenant du code en cours
+  d'exécution RETIENT le bit execute ». Signature, codes, effets et
+  atomicité inchangés (R4). Cascade de scellage exécutée intégralement :
+  spec R2 écrite avant code → brouillon + notation régénérés (diff
+  chirurgical : 2 octets + en-têtes) → echo.exe reconstruit →
+  **0.3.0-rc.3 scellée** (oracle 50 532 cas verts AVEC permissions
+  réelles, cristallisation 10/10 graines 1-10, conformité 124/124
+  re-exécutée VERTE, amendement anti-rollback D39 : reconstruction
+  autorisée EXACTEMENT pour rc.2 → rc.3) → demo.5 construite sur
+  l'héritage rc.3 (16 blocs + staging octet-identiques, R7).
+- **Oracle durci (M2 50 532 cas +1 ; démo 79 cas +1) — le vrai
+  correctif** : le shim VirtualProtect APPLIQUE désormais les permissions
+  (mem_protect + invalidation TCG ciblée, granularité page fidèle :
+  0x04 → RW sans execute, 0x20 → RX, 0x40 → RWX ; valeur inconnue ou
+  refus piloté → échec SANS effet, comme le vrai Windows). Fidélité
+  vérifiée expérimentalement AVANT d'écrire le durcissement
+  (scripts/test_unicorn_dep.py, 5 scénarios) : fetch depuis page RW =
+  faute ; écriture émulée en page RW = permise ; re-protection RWX =
+  l'exécution revient. Conséquences : (a) le code défaillant R1 FAUT
+  maintenant en émulation exactement là où il mourait sur terrain ;
+  (b) `_ecrire_image` déverrouille l'image avant réécriture (un test
+  antérieur peut laisser la page 0x4000 en RX) ; (c) falsification V7
+  des deux côtés : la constante 0x40 réécrite en 0x04 (le défaut
+  terrain exact) DOIT faire fauter l'émulation — la falsification démo
+  appelle tcp-07 DIRECTEMENT car par le scénario, la porte R10
+  détecterait l'octet corrompu AVANT la mécanique (la falsification vise
+  la sémantique DEP, pas l'intégrité) ; (d) l'oracle démo vérifie
+  désormais l'appariement RWX/RX des 8 VirtualProtect du scénario
+  complet (mécanique + trafic).
+- **Portée** : echo.exe portait le même défaut (sa commande console
+  « patch » se serait écrasée pareillement) — le terrain n'avait jamais
+  exécuté le patch (constat M2 partiel : bannière seule). echo-0.3.0-rc.3
+  livré au coffre avec la demo.5. Le défaut était INVISIBLE à la porte
+  R10 par construction : R10 garantit que les octets embarqués sont les
+  octets scellés, pas que les octets scellés sont sémantiquement justes
+  vis-à-vis du système — seule l'exécution fidèle peut trancher.
+- **Enseignements protocolaires** : (a) un shim système qui ne fait
+  qu'acquitter un appel ment par omission — chaque argument d'une API a
+  une sémantique que l'oracle doit appliquer, pas seulement le code de
+  retour ; (b) l'auto-référence rend les défauts de protection
+  systemiques : tcp-07 protège la page qui le contient, donc TOUTE
+  valeur sans bit execute est fatale — le patcheur fait partie des
+  patchés ; (c) la frontière du journal (couper entre deux lignes
+  d'intervalles de durée très différentes : µs pour la mécanique, ms
+  pour le réseau) est elle-même une preuve — l'analyse d'un journal gelé
+  doit commencer par localiser l'intervalle mort ; (d) la révision
+  écrite-avant-code s'applique aussi aux RÉPARATIONS : la spec R1 était
+  fausse, c'est elle qu'il fallait réviser d'abord.
+- **Alternatives rejetées** : PAGE_READWRITE + exécution depuis une autre
+  page (le helper .protger vit DANS la page protégée : il faudrait
+  déménager tcp-07 hors page 0x4000 — révolution d'adressage pour une
+  constante) ; VirtualProtect par BYTE (granularité page : impossible,
+  et l'étendue 0x700 couvre déjà le minimum vital) ; laisser la page RWX
+  en permanence (violation W^X permanente de l'image : la restauration
+  RX après chaque écriture reste exigée par Q4/I2) ; modéliser le DEP
+  par simple vérification statique des constantes (sans application
+  réelle, un futur bloc utilisant une protection invalide passerait
+  encore).
+- **Développement** : entrée 27 du journal de travail. Validation terrain
+  attendue : run demo.5 → journal complet 17 lignes jusqu'à « boucle § 5
+  complète — DÉMO OK » → si vert : scellage final 0.3.0 (M2) sur
+  preuve intégrale.

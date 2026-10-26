@@ -106,6 +106,11 @@ VERSION_DEMO3 = "0.3.0-demo.3"     # D37 : miroir écran universel + L4C/L4D
 VERSION_U64_DEMO3 = 0x00030103     # monotonie : au-dessus de demo.2
 VERSION_DEMO4 = "0.3.0-demo.4"     # D38 : w/h WM_SIZE en r14d/r15d callee-saved (bouton invisible demo.3 : r10d/r11d volatiles relus après l'appel)
 VERSION_U64_DEMO4 = 0x00030104     # monotonie : au-dessus de demo.3
+VERSION_DEMO5 = "0.3.0-demo.5"     # D39 : héritage tcp-07:R2 (echo 0.3.0-rc.3) —
+                                   # phases d'écriture en PAGE_EXECUTE_READWRITE :
+                                   # le défaut R1 (PAGE_READWRITE, sans execute)
+                                   # tuait le processus au 1er VirtualProtect (DEP)
+VERSION_U64_DEMO5 = 0x00030105     # monotonie : au-dessus de demo.4
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -303,7 +308,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.4"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.5"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),

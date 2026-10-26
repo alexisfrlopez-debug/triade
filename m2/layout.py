@@ -83,11 +83,15 @@ VERSION_DEV1 = "0.3.0-dev.1"   # serveur + patch mécanique, staging vide
 VERSION_DEV2 = "0.3.0-dev.2"   # boucle § 5 : echo-01:R2 (majuscules) en staging
 VERSION_RC1 = "0.3.0-rc.1"     # cristallisation + conformité 1-7 verte
 VERSION_RC2 = "0.3.0-rc.2"     # correctif D35 : FirstThunk ws2_32 -> slots appelés
+VERSION_RC3 = "0.3.0-rc.3"     # correctif D39 : tcp-07:R2 — phases d'écriture en
+                               # PAGE_EXECUTE_READWRITE (DEP permanent x64 : le
+                               # défaut R1 tuait le processus au 1er VirtualProtect)
 VERSION_FINALE = "0.3.0"       # validation terrain constatée — balise immuable § 9
 
 VERSION_U64_DEV1 = 0x00030001  # R10 : monotonie de version (anti-rollback)
 VERSION_U64_DEV2 = 0x00030002
 VERSION_U64_RC2 = 0x00030003   # D35 : génération corrigée (u64 monotone)
+VERSION_U64_RC3 = 0x00030004   # D39 : tcp-07:R2 (u64 monotone)
 VERSION_U64_MIN = 0x00030000   # plancher accepté par la porte R10
 
 # --- Blocs embarqués dans echo.exe (couche C, génération 2) --------------------

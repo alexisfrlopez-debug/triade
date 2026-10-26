@@ -74,7 +74,7 @@ def blocs_demo() -> list[tuple]:
         ("b20002", "libc-02:R1", "libc-02-memcmp", 0x1180, 0x80),
         ("b20003", "libc-03:R1", "libc-03-strlen", 0x1200, 0x80),
         ("b20004", "libc-04:R1", "libc-04-itoa", 0x1280, 0x80),
-        # héritage M2 (octets identiques à echo.exe 0.3.0-rc.2) — tcp-10/tcp-12
+        # héritage M2 (octets identiques à echo.exe 0.3.0-rc.3) — tcp-10/tcp-12
         # NON embarqués (console et point d'entrée console remplacés par win-*)
         ("c30001", "tcp-01:R1", "tcp-01-init", 0x4000, 0x100),
         ("c30002", "tcp-02:R1", "tcp-02-accept", 0x4100, 0x40),
@@ -82,7 +82,7 @@ def blocs_demo() -> list[tuple]:
         ("c30004", "tcp-04:R1", "tcp-04-send", 0x4180, 0x40),
         ("c30005", "tcp-05:R1", "tcp-05-close", 0x41C0, 0x40),
         ("c30006", "tcp-06:R1", "tcp-06-spawn", 0x4300, 0x40),
-        ("c30007", "tcp-07:R1", "tcp-07-patch", 0x4400, 0x200),
+        ("c30007", "tcp-07:R2", "tcp-07-patch", 0x4400, 0x200),
         ("c30008", "tcp-08:R1", "tcp-08-echo", 0x4600, 0x40),
         ("c30009", "tcp-09:R1", "tcp-09-conn", 0x4800, 0x180),
         ("c30011", "tcp-11:R1", "tcp-11-journal", 0x4B00, 0x100),
@@ -424,7 +424,7 @@ def composer_sections(code: dict, blocs: list[tuple]):
 
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO4))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO5))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIXTURES, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -745,10 +745,10 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  defauts_T1_T6_ouverts         : 0 : D35 consignee (correctif rc.2 + demo)",
         f"  optimisations_sans_mesure     : 0 : aucune (R11)",
         f"  budgets_tokens                : cible (instrumentation a executer)",
-        f"  suite_conformite_profil       : heritee M2 (124/124, rc.2) + porte D35 verifiee par oracle",
+        f"  suite_conformite_profil       : heritee M2 (124/124, rc.3) + porte D35 verifiee par oracle",
         f"  changements_hors_journal      : 0 : D35 consignee",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee demo, "
-        f"u64 0x{L.VERSION_U64_DEMO4:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_DEMO5:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  patch_a_chaud                 : boucle 5 complete en production "
         f"(patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)",
         f"  artefact                      : {len(exe)} octets ; "
@@ -782,7 +782,7 @@ def assembler_tout():
 def construire(graine: int) -> int:
     print("=== démo : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_DEMO4
+    version = L.VERSION_DEMO5
     texte, rdata, data, text2, staging = composer_sections(code, blocs)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
     valider_pe(exe)
@@ -790,7 +790,7 @@ def construire(graine: int) -> int:
     print(f"[PE] demo.exe : {len(exe)} octets, 4 sections, kernel32 x11 + ws2_32 x11 + "
           f"user32 x14 + gdi32 x1, WINDOWS_GUI, entree 0x{L.ENTREE:x}, FT=slots (D35)")
     print(f"[R7] réutilisation : {len(heritage['blocs_reutilises'])} blocs + staging "
-          f"octet-identiques aux artefacts scellés M0/M1/M2 (echo 0.3.0-rc.2)")
+          f"octet-identiques aux artefacts scellés M0/M1/M2 (echo 0.3.0-rc.3)")
 
     verdict = od.executer(exe, graine=graine)
     print(f"[oracle] différentiel : {verdict['total_cas']} cas verts ; "
@@ -843,7 +843,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=demo.exe" in l), L.VERSION_DEMO4)
+                    if "artefact=demo.exe" in l), L.VERSION_DEMO5)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

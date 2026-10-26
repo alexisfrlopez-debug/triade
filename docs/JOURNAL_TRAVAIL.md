@@ -1299,3 +1299,82 @@ de parler.
 journal, clic = démonstration intégrale (miroir ~16 lignes + « boucle § 5
 complète — DÉMO OK ») au fichier ET à l'écran. Si vert : scellage final
 0.3.0 (M2) — il ne manque que ce clic.
+
+## Journal 27 — D39 : terrain demo.4 parle (journal) — le clic a eu lieu, le patch à chaud tuait le processus (DEP), tcp-07:R2 + M2 rc.3 + demo.5
+
+**Contexte** : « log envoyé » — le développeur a lancé demo.4 ~10 min
+après réception (21:43) et déposé demo_journal.txt (298 o, 21:53) dans
+son dossier « test ». Le terrain vient de parler une quatrième fois —
+et cette fois jusqu'au cœur de M2.
+
+**Déroulé** :
+1. Rapatriement (drive_recuperer.py) et lecture : 10 lignes — L00
+   (0.3.0-demo.4), L02, L4C=1, L4D=1, L01 (D37/D38 confirmés), **L03
+   clic : lancement du scenario** (le bouton de demo.4 a été VU et
+   CLIQUÉ — D38 validé sur terrain réel), J_ENTETE, J_PROTO, porte R10
+   VERTE, libc M1 scellée 4/4 verts — puis RIEN. Ni J_MEC_OK ni aucun
+   LKO : le scénario est entré dans la phase mécanique (écho ×3,
+   memcmp, tcp-07 ×2) et n'en est jamais ressorti. La coupure entre
+   J_LIBC_OK et J_MEC_OK tombe dans un intervalle de MICROSECONDES (tout
+   le réseau qui suit se compte en millisecondes) : ce n'est pas un
+   arrêt utilisateur, c'est une exécution morte là.
+2. Audit octet (scripts/audit_demo_dep.py — nouveau, tracké) : PE32+
+   AMD64, NX_COMPAT explicite (0x0160), sections .text/.text2 RX. tcp-07
+   @0x4400 porte `mov r8d, 4` (PAGE_READWRITE — SANS bit execute) aux
+   deux sites (application 0x446E, rollback 0x44FA) et appelle
+   VirtualProtect(page 0x4000, 0x700) — or cette page contient tcp-07
+   LUI-MÊME. En x64 le DEP est permanent : au retour du premier appel,
+   le fetch de `add rsp, 8` @0x4551 depuis la page devenue non
+   exécutable FAUTE (violation DEP) → processus mort, journal gelé à la
+   dernière ligne flushée. Correspondance EXACTE avec le terrain, y
+   compris l'absence de tout chemin d'échec tracé.
+3. Pourquoi toute la chaîne était verte (5e classe de défaut invisible
+   sans exécution) : le shim VirtualProtect des oracles renvoyait 1
+   sans APPLIQUER les permissions — mensonge par omission. La spec
+   R1 elle-même exigeait PAGE_READWRITE (Q4) : le défaut vivait dans le
+   contrat écrit. La porte R10 ne pouvait rien voir : les octets
+   embarqués ÉTAIENT les octets scellés — scellés faux vis-à-vis de la
+   sémantique Windows.
+4. Fidélité d'Unicorn testée AVANT le durcissement
+   (scripts/test_unicorn_dep.py, 5 scénarios, pile corrigée après un
+   premier faux négatif de mes tests) : fetch depuis page RW = faute
+   (UC_ERR_FETCH_PROT) ; écriture émulée en page RW = permise ;
+   re-protection RWX = l'exécution revient ; le scénario exact de
+   tcp-07 (shim hooké re-protège la page du code en cours, retour au
+   code) FAUTE au fetch de reprise. L'oracle peut être honnête.
+5. Correctif écrit-avant-code : spec tcp-07:R2 (Q4 : PAGE_EXECUTE_
+   READWRITE pendant les écritures ; invariant I6 : jamais de phase non
+   exécutable pour une page contenant le code en cours ; V7 :
+   falsification DEP) ; brouillon corrigé (0x40 aux deux sites) ;
+   notation régénérée — diff chirurgical : 2 octets + en-têtes.
+6. Cascade de scellage M2 : layout 0.3.0-rc.3 (u64 0x00030004),
+   amendement anti-rollback D39 (reconstruction autorisée EXACTEMENT
+   pour rc.2 → rc.3), oracles durcis (shim qui APPLIQUE les
+   permissions, granularité page ; _ecrire_image déverrouille l'image
+   avant réécriture ; appariement RWX/RX ; falsification D39 par appel
+   direct de tcp-07 : 0x40 → 0x04 doit FAIRE FAUTER l'émulation).
+   Verdict M2 : round-trips 100 %, structurel 318, oracle 50 532 cas
+   verts (+1 D39), falsification 18/18, cristallisation 10/10 (graines
+   1-10), conformité 124/124 re-exécutée VERTE → **0.3.0-rc.3 scellée**
+   (echo.exe 15360 o, sha256:21a97358…4f4f).
+7. demo.5 : layout 0.3.0-demo.5 (u64 0x00030105, L00 actualisée),
+   build sur héritage rc.3. Oracle démo durci pareillement + V7 D39
+   (l'appel direct : par le scénario, la porte R10 détecterait l'octet
+   corrompu AVANT la mécanique — la falsification vise la sémantique
+   DEP, pas l'intégrité) + appariement RWX/RX des 8 VirtualProtect du
+   scénario complet. Verdict : 79 cas verts (+1), structurel 559,
+   falsification 28/28, héritage R7 octet-identique (16 blocs +
+   staging, echo rc.3), --verifier graine 7 vert, carte re-scellée,
+   audit DEP du binaire frais : les 4 constantes correctes, ZÉRO
+   `mov r8d, 4` dans tout le binaire. demo.exe 0.3.0-demo.5 (16384 o)
+   sha256:dc5215c57e771f69c605a9f4b854b2c09955659e35bac24b2887c060d6ea22b9.
+8. Livraison : demo.5 + LISEZMOI réécrit (explication DEP au
+   développeur, journal complet attendu = 17 lignes) + echo-0.3.0-rc.3
+   (le serveur console portait le même défaut — sa commande « patch »
+   se serait écrasée) → coffre racine Drive (3/3) + dossier « test »
+   (2/2) + download/, md5 MATCH vérifiés partout.
+
+**Suivi** : validation terrain demo.5 — journal complet 17 lignes
+jusqu'à « boucle § 5 complète — DÉMO OK » (chaque étape du scénario a
+déjà été exécutée au moins une fois sur la machine réelle). Si vert :
+scellage final 0.3.0 (M2) sur preuve intégrale.

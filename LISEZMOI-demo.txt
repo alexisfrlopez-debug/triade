@@ -1,0 +1,65 @@
+TRIADE M2 — démonstration complète en un clic (demo.5)
+======================================================
+
+demo.exe  (16 384 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
+version 0.3.0-demo.5 — le moteur de patch à chaud réparable (D39)
+
+NOUVEAUTÉ demo.5 : LE CRASH DE LA PHASE « MÉCANIQUE » EST CORRIGÉ. Votre
+journal demo.4 était excellent — démarrage complet, contrôles créés, clic
+enregistré (le bouton fonctionne !), porte R10 VERTE, 4 vecteurs libc verts…
+puis silence après « libc M1 scellée : 4/4 verts ». Diagnostic : à l'étape
+suivante (le patch à chaud), le moteur demandait à Windows de rendre SA
+PROPRE page de code accessible en écriture — mais avec la valeur
+PAGE_READWRITE, qui retire AUSSI le droit d'exécution. Or le DEP (Data
+Execution Prevention), permanent en 64 bits, interdit d'exécuter une page
+sans ce droit : le processus mourait instantanément au retour de l'appel,
+sans pouvoir tracer quoi que ce soit. Corrigé : la page passe en
+PAGE_EXECUTE_READWRITE (écriture ET exécution) pendant les modifications,
+puis revient en lecture-exécution stricte. L'oracle applique désormais les
+protections réelles : ce défaut est devenu impossible à réintroduire.
+
+1. Double-cliquez demo.exe — NE maximisez pas la fenêtre pour l'instant.
+   La fenêtre doit immédiatement afficher dans la zone journal :
+     L02 controles crees (journal, bouton)
+     L4C move journal=1
+     L4D move bouton=1
+     L01 fenetre principale creee
+   et le bouton « TOUT DÉMARRER » doit être VISIBLE sous la zone journal
+   (pleine largeur, en bas de la fenêtre) — comme en demo.4.
+2. Cliquez « TOUT DÉMARRER ». La démonstration complète s'exécute et se
+   journalise ligne à ligne DANS LA FENÊTRE :
+     - porte R10 (intégrité des sommes + version) ;
+     - 4 vecteurs libc scellés M1 (memcpy, memcmp, strlen, itoa) ;
+     - mécanique de patch à chaud : écho v1 -> v2 (MAJUSCULES) -> retour v1,
+       chaque étape vérifiée octet par octet ;
+     - serveur écho TCP réel (127.0.0.1:25000) lancé dans son thread ;
+     - client qui s'y connecte : aller-retour exact ;
+     - patch appliqué EN PRODUCTION pendant le trafic : réponse en MAJUSCULES ;
+     - retour arrière réseau : identité confirmée ;
+     - arrêt propre — « boucle § 5 complète — DÉMO OK ».
+3. SI LA DÉMONSTRATION S'ARRÊTE EN COURS DE ROUTE (improbable) : notez la
+   DERNIÈRE ligne affichée et envoyez journal + capture. Chaque étape
+   s'étant déjà exécutée au moins une fois sur votre machine, une nouvelle
+   interruption serait une information précieuse et localisée.
+
+DANS TOUS LES CAS, envoyez-moi ensuite le fichier demo_journal.txt (posé à
+côté de demo.exe, régénéré à chaque lancement) — idéalement accompagné d'une
+capture d'écran de la fenêtre après la fin du scénario. Le journal complet
+attendu fait 17 lignes (5 de démarrage + L03 + 11 de scénario) et se
+termine par « boucle § 5 complète — DÉMO OK ». Chaque échec y est tracé
+avec son code GetLastError (lignes LKO).
+
+Remarques :
+ - fermez tout echo.exe encore lancé avant la démo (port 25000 partagé) ;
+ - la fenêtre se ferme normalement quand vous voulez ; le serveur s'arrête
+   proprement à la fin du scénario ;
+ - le bouton se désactive pendant l'exécution (clic unique).
+
+echo-0.3.0-rc.3.exe : le serveur écho console, CORRIGÉ DU MÊME DÉFAUT (sa
+commande « patch » se serait écrasée pareillement). Usage inchangé :
+lancement, puis « telnet 127.0.0.1 25000 » ; commandes console :
+patch / rollback / quit.
+
+Chaîne : notation (keystone) -> octets -> PE32+ à la main, sans compilateur.
+Empreintes : demo.exe (demo.5) sha256:dc5215c57e771f69c605a9f4b854b2c09955659e35bac24b2887c060d6ea22b9
+             echo-0.3.0-rc.3.exe sha256:21a9735898bb1de02f84eb91f100a189eff9e2bb6642b74b262fd37234a43f4f
