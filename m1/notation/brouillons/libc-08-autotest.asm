@@ -1,5 +1,5 @@
-; Auto-test de la mini-libc — point d'entrée de selftest.exe (libc-08:R1)
-; 18 vecteurs dorés : zone 4, memcmp 4, memcpy 3, strlen 3, itoa 4.
+; Auto-test de la mini-libc — point d'entrée de selftest.exe (libc-08:R2)
+; 21 vecteurs dorés : zone 4, memcmp 4, memcpy 3, strlen 3, itoa 4, memset 3.
 sub rsp, 0x40
 push rbx
 push r12
@@ -212,6 +212,62 @@ test eax, eax
 jne .v18ko
 inc r15
 .v18ko:
+; ===== memset (libc-07) — 3 vecteurs =====
+; v19 : memset(dst, 0, 16) -> zeros
+mov ecx, 16
+mov edx, 8
+call ZONE_ALLOC
+mov r14, rax
+mov rcx, r14
+xor edx, edx
+mov r8d, 16
+call MEMSET
+mov rcx, r14
+lea rdx, [rip + ZERO16]
+mov r8d, 16
+call MEMCMP
+test eax, eax
+jne .v19ko
+inc r15
+.v19ko:
+; v20 : memset(dst, 0xFF, 33)
+mov ecx, 48
+mov edx, 8
+call ZONE_ALLOC
+mov r14, rax
+mov rcx, r14
+mov edx, 0xFF
+mov r8d, 33
+call MEMSET
+mov rcx, r14
+lea rdx, [rip + FF33]
+mov r8d, 33
+call MEMCMP
+test eax, eax
+jne .v20ko
+inc r15
+.v20ko:
+; v21 : memset(dst, 'A', 0) -> sentinelle intacte
+mov ecx, 16
+mov edx, 8
+call ZONE_ALLOC
+mov r14, rax
+mov rcx, r14
+lea rdx, [rip + SENT16]
+mov r8d, 16
+call MEMCPY
+mov rcx, r14
+mov edx, 65
+xor r8d, r8d
+call MEMSET
+mov rcx, r14
+lea rdx, [rip + SENT16]
+mov r8d, 16
+call MEMCMP
+test eax, eax
+jne .v21ko
+inc r15
+.v21ko:
 ; ===== verdict (auto-hebergee : itoa + memcpy + strlen + write) =====
 mov ecx, 64
 mov edx, 8
@@ -240,7 +296,7 @@ lea rdx, [rip + SLASH]
 mov r8d, 1
 call MEMCPY
 inc r12
-mov ecx, 18
+mov ecx, 21
 lea rdx, [rsp + 0x30]
 call ITOA
 lea rcx, [rsp + 0x30]
@@ -252,7 +308,7 @@ lea rdx, [rsp + 0x30]
 mov r8, r14
 call MEMCPY
 add r12, r14
-cmp r15, 18
+cmp r15, 21
 jne .ko
 lea rdx, [rip + OK]
 jmp .verdict
@@ -268,7 +324,7 @@ mov rcx, r13
 mov rdx, rbx
 mov r8, r12
 call WRITE
-cmp r15, 18
+cmp r15, 21
 jne .ko_sortie
 xor ecx, ecx
 jmp .fin
