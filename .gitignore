@@ -24,5 +24,7 @@ desktop.ini
 *.log
 tmp/
 
-# M0 : secrets de la carte (D12) — jamais committes
+# Secrets de la carte (D12/D27) — centralisés au racine, jamais committes
+/.keys/
 m0/.keys/
+m1/.keys/

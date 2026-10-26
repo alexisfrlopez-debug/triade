@@ -420,3 +420,109 @@ D15 (amende D5) illustrent la procédure.
   adresses stables, première mesure effective des budgets tokens. Contrôle
   optionnel laissé au choix du développeur : `echo %ERRORLEVEL%` après exécution
   (attendu : 0).
+
+## Décisions du jalon M1 (D27–D29, 26 octobre 2026)
+
+### D27 — Continuité des clés après réinitialisation du bac à sable : régénération et centralisation
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : deuxième réinitialisation du bac à sable depuis la création du dépôt ;
+  les secrets locaux `m0/.keys/` (phrase maîtresse 128 bits, graine Ed25519) sont perdus
+  et la carte M0 devient indéchiffrable — le verrou croisé constate l'échec en
+  fail-closed, exactement comme prévu. La checklist M1 (REPRISE § 7.2, point 1) exige
+  une décision explicite : restaurer depuis le coffre du développeur ou régénérer.
+- **Choix retenu** : **régénérer** (option prévue par D26 : « la carte se reconstruit
+  depuis I + notation ») et **centraliser** les secrets du projet dans `triade/.keys/`
+  (chmod 700/600, `.gitignore`), partagés par toutes les générations de la carte — la
+  carte M0 est reconstruite avec la nouvelle lignée et `hello.exe` régénéré
+  **byte-identique** à l'artefact scellé (sha256 `c89e330c…507f2` vérifié, preuve que
+  la valeur perdue n'était que l'enveloppe chiffrée, jamais le projet). La carte M1
+  (génération 1) dérive ses clés de la même phrase par contexte HKDF distinct.
+- **Alternatives rejetées** : attendre la restauration depuis le coffre du développeur
+  (bloque M1, et rien ne garantit que le coffre a été alimenté avant la perte) ;
+  conserver une carte M0 illisible (tableau de bord au rouge, contraire au fail-closed) ;
+  dériver les clés d'une phrase mémorisable (entropie affaiblie — les 128 bits
+  aléatoires sont conservés) ; modifier le sel Argon2id de M0 (la constante documentée
+  reste la référence de la génération 0).
+- **Développement** : la nouvelle phrase maîtresse est réaffichée une fois au
+  développeur (fin de session M1) avec l'instruction de coffre immédiat — les
+  réinitialisations répétées du bac à sable en font la seule protection réelle de la
+  continuité chiffrée. L'export de continuité (D16) reste le mécanisme prévu pour tout
+  transfert de poste ; sa génération est à la demande du développeur. Le point
+  d'attention « clés » de la reprise M0 est levé : `carte_m0.py` est patché pour lire
+  `triade/.keys/` (KEYS_DIR), unique modification du module M0 — l'artefact et la
+  notation restent intouchés.
+
+### D28 — Jalon M1 : plan d'adressage par zones, carte projet multi-artefacts, mini-libc
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : M1 exige des blocs réutilisables — c'est le premier jalon où un
+  binaire (`selftest.exe`) embarque des blocs scellés par un autre (`hello.exe`), où
+  la bibliothèque grandit (memset entre en dev.2) et où la carte doit indexer des
+  blocs vivant dans plusieurs artefacts.
+- **Choix retenu** : un **plan d'adressage par zones** documenté dans `m1/layout.py`
+  (source unique partagée par le builder, l'outil d'auteur et l'oracle) — zone io
+  0x1000-0x10FF (write@0x1040 et exit@0x1080 réutilisés octet-identiques de M0 ;
+  0x1000 et 0x10C0 réservés), zone libc 0x1100-0x17FF (six blocs M1 + réserve pour
+  libc-08+, memset y entre en dev.2 sans rien déplacer — démonstration R7 en
+  conditions réelles), zone app 0x1800-0x1FFF (autotest, point d'entrée, non scellée) ;
+  structures PE héritées de M0 à positions immuables (descripteurs, hint/names, INT,
+  IAT@0x20B0, BASERELOC) car les déplacements RIP des blocs scellés l'exigent ; slots
+  réservés remplis d'`int3` défensif (R10 à l'échelle du layout). La **carte projet
+  génération 1** indexe les blocs des deux artefacts (champ `artefact=` par entrée,
+  `role=` pour la localisation par intention) avec numérotation a1xxxx (M0) /
+  b2xxxx (M1). Le balisage suit § 9 : `0.2.0-dev.1` (six blocs + autotest 18/18) →
+  `0.2.0-dev.2` (+ memset, 21/21) → `0.2.0-rc.1` à la cristallisation.
+- **Alternatives rejetées** : déplacer write/exit vers une zone io unifiée (re-liage
+  forcée, interdite par R7) ; une carte par artefact (fragmente l'interface unique de
+  développement et doublerait le coût de localisation) ; réserver la zone libc à sa
+  seule taille initiale (toute croissance déplacerait des blocs scellés) ; IAT
+  relocalisée (casserait les octets scellés de M0).
+- **Développement** : la démonstration R7 s'appuie sur l'historique git — dev.1 scelle
+  six blocs libc + les deux blocs io réutilisés ; dev.2 ajoute memset dans la réserve
+  et étend l'autotest (libc-08:R1 → R2, 18 → 21 vecteurs) ; la preuve compare les
+  octets des slots scellés entre les deux commits et contre `hello.exe`. L'outil
+  d'auteur `outils/auteur.py` fait l'arithmétique d'adresses de l'auteur (étiquettes,
+  symboles, déplacements RIP) et émet la notation explicite WYSIWYG — keystone assemble
+  seul, le round-trip s'applique à la sortie ; l'outil n'est jamais dans la chaîne de
+  build. Trois défauts ont été attrapés par la chaîne de vérification AVANT scellage :
+  (1) sémantique d'arrêt de `repe cmpsb` — un désaccord sur le dernier octet laisse
+  rcx=0 et ZF=0, le test `test rcx, rcx` concluait à tort à l'égalité (corrigé :
+  branchement direct sur ZF) — classe T4 (contrat de l'instruction mal cerné) ;
+  (2) clause Q4 de libc-04 irréalisable pour une génération en place — révision du
+  contrat à R2 avant scellage (borne dure de douze octets, espace de travail non
+  spécifié au-delà du NUL) — classe T2 (contrat écrit impossible) ; (3) constante de
+  longueur du préfixe de verdict (22 au lieu de 21 octets) — détectée par l'émulation
+  binaire complète — classe T3 (désynchronisation intention/notation). Aucun de ces
+  défauts n'a survécu au scellage : l'oracle a payé son coût.
+
+### D29 — Substrat d'émulation de l'oracle différentiel (Unicorn)
+
+- **Statut** : active · **Date** : 26 octobre 2026
+- **Contexte** : le protocole exige un oracle différentiel à volume de référence de
+  douze mille cas par bloc critique (§ 8), exécuté à chaque session depuis I — mais
+  les blocs ciblent Windows 11 : sans substrat d'exécution local, la boucle
+  vérifie-puis-écrit (R5) exigerait la machine cible à chaque édition.
+- **Choix retenu** : **Unicorn** (émulation x86-64) comme substrat de l'oracle M1 —
+  exécution des blocs chargés depuis l'artefat scellé avec entrées aléatoires
+  contraintes par les pré-conditions, comparaison à la référence Python dérivée de I
+  (valeur de retour, mémoire de destination, curseur d'arène, registres non volatils,
+  RSP, intégrité de l'image hors régions autorisées, canari de pile) ; émulation du
+  binaire entier avec shim IAT (GetStdHandle/WriteFile/ExitProcess interceptés :
+  sortie exacte et code de sortie vérifiés) ; falsification systématique (corruption
+  d'octet de code → détection obligatoire, zéro silence). Les graines différencient
+  les exécutions : dix vérifications cristallisent un bloc (R6) sans jamais répéter
+  les mêmes entrées.
+- **Alternatives rejetées** : attendre Windows pour chaque vérification (pas de boucle
+  locale, R5 inapplicable, le développeur devient goulot d'étranglement) ; interpréteur
+  x86-64 maison (surface d'erreur disproportionnée — l'oracle deviendrait moins fiable
+  que le code qu'il vérifie) ; wine (dépendance extérieure non contrôlée, sémantique
+  des API divergente, échec silencieux possible) ; QEMU process-level (lourd, pilotage
+  complexe pour des appels de fonction isolés).
+- **Développement** : l'émulation ne remplace pas la validation terrain (D26) — elle
+  la précède et la prépare : l'oracle prouve la sémantique des blocs à chaque session,
+  le terrain prouve l'environnement une fois par balise. Les verdicts hachés survivent
+  seuls dans frag-prf (D1 : l'oracle est éphémère, régénéré, jamais archivé). La
+  baseline d'intégrité de l'image est prise APRÈS résolution de l'IAT (le chargeur
+  légitime réécrit l'IAT — mesurer avant produirait un faux positif, découvert et
+  documenté pendant la mise au point).

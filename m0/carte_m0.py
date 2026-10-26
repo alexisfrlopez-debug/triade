@@ -36,7 +36,10 @@ from nacl.bindings import (
 
 # --- Constantes du projet (M0) ----------------------------------------------
 
-KEYS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".keys")
+# D27 : les secrets du projet sont centralisés à la racine du dépôt (triade/.keys/)
+# et partagés par toutes les générations de la carte (M0 = génération 0, M1 = 1…).
+_RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
