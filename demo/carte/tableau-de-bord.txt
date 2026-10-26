@@ -1,15 +1,15 @@
-[tableau] jalon=demo artefact=demo.exe version=0.3.0-demo.1
-  blocs_avec_spec_a_jour        : 27/27 : tracabilite I->C->B (heritage M0/M1/M2 + win)
-  chaines_I_C_B_tests           : 27/27
+[tableau] jalon=demo artefact=demo.exe version=0.3.0-demo.2
+  blocs_avec_spec_a_jour        : 28/28 : tracabilite I->C->B (heritage M0/M1/M2 + win)
+  chaines_I_C_B_tests           : 28/28
   construction                  : 0 erreur / 0 avertissement
-  tests_differentiels           : 49 cas verts (graine 2) ; oracle structurel 467 verrous PASS
+  tests_differentiels           : 73 cas verts (graine 7) ; oracle structurel 541 verrous PASS
   empreintes_donnees_embarquees : conforme (staging, table R10, UTF-16, fixtures)
   defauts_T1_T6_ouverts         : 0 : D35 consignee (correctif rc.2 + demo)
   optimisations_sans_mesure     : 0 : aucune (R11)
   budgets_tokens                : cible (instrumentation a executer)
   suite_conformite_profil       : heritee M2 (124/124, rc.2) + porte D35 verifiee par oracle
   changements_hors_journal      : 0 : D35 consignee
-  preversions                   : 0.3.0-demo.1 (lignee demo, u64 0x30101, plancher 0x30000)
+  preversions                   : 0.3.0-demo.2 (lignee demo, u64 0x30102, plancher 0x30000)
   patch_a_chaud                 : boucle 5 complete en production (patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)
   artefact                      : 15360 octets ; reutilisation : 16 blocs + staging octet-identiques (R7)
-  verrou_croise                 : 27 empreintes reverifiees + signature Ed25519 (R8/R9)
+  verrou_croise                 : 28 empreintes reverifiees + signature Ed25519 (R8/R9)

@@ -32,30 +32,37 @@ SORTIE = os.path.join(ICI, "..", "notation")
 BLOCS = [
     ("win-01-principal", "d40001", "win-01:R1", 0x1400, 0x40,
      "blocs win-02, win-03, io-02 exit @0x1080"),
-    ("win-02-fenetre", "d40002", "win-02:R1", 0x1440, 0x140,
+    ("win-02-fenetre", "d40002", "win-02:R2", 0x1440, 0x180,
      "IAT user32 : RegisterClassExW, CreateWindowExW, LoadCursorW, MessageBoxW ; "
-     "IAT kernel32 : GetModuleHandleW ; procédure @0x15E0 ; chaînes UTF-16"),
-    ("win-03-boucle", "d40003", "win-03:R1", 0x1580, 0x80,
+     "IAT kernel32 : GetModuleHandleW, GetLastError ; bloc win-11 (trace) ; "
+     "procédure @0x1640 ; chaînes UTF-16 + ASCII trace"),
+    ("win-03-boucle", "d40003", "win-03:R1", 0x15C0, 0x80,
      "IAT user32 : GetMessageW, TranslateMessage, DispatchMessageW"),
-    ("win-04-procedure", "d40004", "win-04:R1", 0x1600, 0x2c0,
+    ("win-04-procedure", "d40004", "win-04:R2", 0x1640, 0x380,
      "IAT user32 : CreateWindowExW, SendMessageW, GetStockObject (gdi32), "
      "GetClientRect, MoveWindow, EnableWindow, DestroyWindow, PostQuitMessage, "
-     "DefWindowProcW, GetModuleHandleW ; IAT kernel32 : CloseHandle ; "
-     "tcp-06 spawn @0x4300 ; scénario @0x1C40 ; état .data"),
-    ("win-05-journal", "d40005", "win-05:R1", 0x18c0, 0x80,
-     "IAT user32 : SendMessageW ; état .data (HWND_JOURNAL)"),
-    ("win-06-autotest", "d40006", "win-06:R1", 0x1940, 0x180,
+     "DefWindowProcW, GetModuleHandleW ; IAT kernel32 : CloseHandle, "
+     "GetLastError ; bloc win-11 (trace) ; tcp-06 spawn @0x4300 ; "
+     "scénario @0x4C00 ; état .data"),
+    ("win-05-journal", "d40005", "win-05:R2", 0x19C0, 0x100,
+     "IAT user32 : SendMessageW ; bloc win-11 (miroir fichier) ; "
+     "état .data (HWND_JOURNAL)"),
+    ("win-06-autotest", "d40006", "win-06:R1", 0x1AC0, 0x180,
      "blocs libc-01/02/03/04 ; table R10 + version + ancre .rdata ; fixtures"),
-    ("win-07-client", "d40007", "win-07:R1", 0x1ac0, 0xc0,
+    ("win-07-client", "d40007", "win-07:R1", 0x1C40, 0xC0,
      "IAT ws2_32 : socket, connect, closesocket"),
-    ("win-08-serveur", "d40008", "win-08:R1", 0x1b80, 0x100,
+    ("win-08-serveur", "d40008", "win-08:R1", 0x1D00, 0x100,
      "blocs tcp-01/02/06, win-05 ; IAT kernel32 : CloseHandle ; état .data"),
     ("win-10-echange", "d40010", "win-10:R1", 0x4980, 0x180,
      "IAT ws2_32 : send, recv ; bloc libc-02 memcmp ; phrase .rdata"),
-    ("win-09-scenario", "d40009", "win-09:R1", 0x1c80, 0x380,
+    ("win-09-scenario", "d40009", "win-09:R1", 0x4C00, 0x380,
      "blocs win-05/06/07/08, tcp-05/07, écho @0x4600, libc-02 ; "
      "IAT kernel32 : GetStdHandle, CloseHandle ; IAT ws2_32 : send, recv ; "
      "état .data + chaînes UTF-16"),
+    ("win-11-journal", "d40011", "win-11:R1", 0x1E00, 0x200,
+     "IAT kernel32#2 : GetModuleFileNameA, CreateFileA, WriteFile (commune), "
+     "FlushFileBuffers, GetLastError ; blocs libc-01/03/04 ; "
+     "état .data (handle, tampons) ; NOM_FICHIER .rdata"),
 ]
 
 SYMBOLES = {
@@ -67,12 +74,18 @@ SYMBOLES = {
     "TCP_PATCH": 0x4400, "ECHO": 0x4600, "CONN": 0x4800,
     "TCP_JOURNAL": 0x4B00,
     # blocs démo
-    "FENETRE": 0x1440, "BOUCLE": 0x1580, "PROCEDURE": 0x1600,
-    "JOURNAL_GUI": 0x18C0, "AUTOTEST": 0x1940, "CLIENT": 0x1AC0,
-    "SERVEUR": 0x1B80, "SCENARIO": 0x1C80, "ECHANGE": 0x4980,
-    # IAT (kernel32, ws2_32, user32, gdi32)
+    "FENETRE": 0x1440, "BOUCLE": 0x15C0, "PROCEDURE": 0x1640,
+    "JOURNAL_GUI": 0x19C0, "AUTOTEST": 0x1AC0, "CLIENT": 0x1C40,
+    "SERVEUR": 0x1D00, "JOURNAL_FICHIER": 0x1E00, "SCENARIO": 0x4C00,
+    "ECHANGE": 0x4980,
+    # IAT (kernel32, kernel32#2, ws2_32, user32, gdi32)
     "IAT_GSH": L.IAT_SLOTS["GetStdHandle"], "IAT_CH": L.IAT_SLOTS["CloseHandle"],
     "IAT_GMH": L.IAT_SLOTS["GetModuleHandleW"],
+    "IAT_WF": L.IAT_SLOTS["WriteFile"],
+    "IAT_GMFA": L.IAT_SLOTS["GetModuleFileNameA"],
+    "IAT_CREATEFILE": L.IAT_SLOTS["CreateFileA"],
+    "IAT_FLUSH": L.IAT_SLOTS["FlushFileBuffers"],
+    "IAT_GLE": L.IAT_SLOTS["GetLastError"],
     "IAT_SOCKET": L.IAT_SLOTS["socket"], "IAT_CONNECT": L.IAT_SLOTS["connect"],
     "IAT_CLOSESOCK": L.IAT_SLOTS["closesocket"],
     "IAT_SEND": L.IAT_SLOTS["send"], "IAT_RECV": L.IAT_SLOTS["recv"],
@@ -96,20 +109,25 @@ SYMBOLES = {
     "FIX_MEMCPY": 0x2630, "FIX_MEMCMP_A": 0x2640, "FIX_MEMCMP_B": 0x2644,
     "FIX_MEMCMP_C": 0x2648, "FIX_STRLEN": 0x264C, "FIX_ITOA": 0x265A,
     "PHRASE": L.R_PHRASE, "PHRASE_MAJ": L.R_PHRASE_MAJ,
-    # état .data (héritage M2 + GUI)
+    # état .data (héritage M2 + GUI + journal fichier D36)
     "STDOUT": L.R_STDOUT, "STDIN": L.R_STDIN, "LISTEN": L.R_LISTEN,
     "QUIT": L.R_QUIT, "ETAT_PATCH": L.R_ETAT_PATCH,
     "DRAPEAU_WORKER": L.DRAPEAU_WORKER, "DRAPEAU_SRV": L.DRAPEAU_SRV,
     "HWND_PRINCIPAL": L.HWND_PRINCIPAL, "HWND_JOURNAL": L.HWND_JOURNAL,
     "HWND_BOUTON": L.HWND_BOUTON,
+    "JOURNAL_HANDLE": L.R_JOURNAL_HANDLE, "BUF_CONV": L.BUF_CONV,
+    "BUF_CHEMIN": L.BUF_CHEMIN, "SCRATCH_ECRIT": L.SCRATCH_ECRIT,
 }
 for _nom, (_adr, _txt, _n) in L.CHAINES_UTF16.items():
+    SYMBOLES[_nom] = _adr
+for _nom, (_adr, _octets, _n) in L.CHAINES_ASCII.items():
     SYMBOLES[_nom] = _adr
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
 RE_OPERANDE_ETIQUETTE = re.compile(r"^(j\w+|loop\w*|call)\s+\.(\w+)$")
 RE_OPERANDE_SYMBOLE = re.compile(r"^(call)\s+(\w+)$")
 RE_RIP_SYMBOLE = re.compile(r"^(.*?\[rip\s*\+\s*)(\w+)(\s*\].*)$")
+RE_LONGUEUR = re.compile(r"^mov\s+([er]\w+d?),\s+LEN_(\w+)$")
 
 
 class ErreurAuteur(Exception):
@@ -139,6 +157,12 @@ def taille_ligne(ks: Ks, ligne: str, adresse: int, etiquettes: dict, base: int) 
 
 
 def substituer(ligne: str, adresse: int, etiquettes: dict, base: int, taille: int = 0) -> str:
+    m = RE_LONGUEUR.match(ligne)
+    if m:
+        reg, nom = m.groups()
+        if nom not in L.LONGUEURS_ASCII:
+            raise ErreurAuteur(f"symbole de longueur inconnu : LEN_{nom}")
+        return f"mov {reg}, {L.LONGUEURS_ASCII[nom]}"
     m = RE_OPERANDE_ETIQUETTE.match(ligne)
     if m:
         mnemo, nom = m.groups()
@@ -183,7 +207,7 @@ def resoudre_bloc(ks: Ks, fichier: str, bid: str, spec: str, rva: int, slot: int
         raise ErreurAuteur(f"{fichier} : brouillon vide")
 
     etiquettes = {nom: rva + 0x800 for nom, _ in etiquettes_lignes}
-    for _ in range(4):
+    for _ in range(16):
         tailles, adresse = [], rva
         for ligne, _ in instructions:
             t = taille_ligne(ks, ligne, adresse, etiquettes, rva)
@@ -196,7 +220,7 @@ def resoudre_bloc(ks: Ks, fichier: str, bid: str, spec: str, rva: int, slot: int
             break
         etiquettes = nouvelles
     else:
-        raise ErreurAuteur(f"{fichier} : pas de point fixe en 4 passes")
+        raise ErreurAuteur(f"{fichier} : pas de point fixe en 16 passes")
 
     lignes_sortie, adresse = [], rva
     for ligne, _ in instructions:
@@ -241,14 +265,15 @@ def resoudre_bloc(ks: Ks, fichier: str, bid: str, spec: str, rva: int, slot: int
 
 NOMS_COURTS = {
     "win-01-principal": "principal — point d'entrée graphique",
-    "win-02-fenetre": "fenêtre principale (classe + création)",
+    "win-02-fenetre": "fenêtre principale (classe + création + trace)",
     "win-03-boucle": "boucle de messages",
-    "win-04-procedure": "procédure de fenêtre",
-    "win-05-journal": "journal graphique (ajout de ligne)",
+    "win-04-procedure": "procédure de fenêtre (géométrie corrigée D36)",
+    "win-05-journal": "journal écran + fichier",
     "win-06-autotest": "autotest (porte R10 + vecteurs libc)",
     "win-07-client": "client TCP (connexion locale)",
     "win-08-serveur": "serveur d'acceptation (thread)",
     "win-09-scenario": "scénario complet (thread de démonstration)",
+    "win-11-journal": "journal fichier (trace terrain D36)",
 }
 
 

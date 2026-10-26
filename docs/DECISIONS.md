@@ -805,3 +805,89 @@ D15 (amende D5) illustrent la procédure.
   scellage, R6) ; la suite de conformité est re-exécutée au scellage. La preuve
   terrain complète (écho + patch + rollback + console) sera fournie par la
   démonstration graphique elle-même, en un clic, sur la machine du développeur.
+
+### D36 — demo.1 fenêtre vide : divergence notation/spec WM_SIZE, correctif demo.2 et trace terrain (journal fichier)
+
+- **Constat** (terrain Windows 11) : demo.exe 0.3.0-demo.1 s'exécute sans
+  erreur mais la fenêtre paraît VIDE — ni journal ni bouton, la démonstration
+  en un clic est inopérante et MUETTE : aucune trace d'exécution n'existe
+  (« il faudrait que tu puisses obtenir les logs de l'exécution de demo.exe »).
+- **Diagnostic** : win-04 (WM_SIZE) lisait `RECT.top` (`[rsp+0x24]`,
+  toujours 0 côté client) comme LARGEUR au lieu de `RECT.right`
+  (`[rsp+0x28]`) → MoveWindow(largeur = -16) sur journal et bouton →
+  contrôles créés puis rendus invisibles au premier redimensionnement (WM_SIZE
+  est envoyé PENDANT CreateWindowExW). La spec win-04:R1 exigeait déjà
+  « (8, 8, w-16, h-56) » : la spécification était JUSTE, les octets étaient
+  faux — troisième divergence de la classe « mauvais champ / mauvais slot »
+  (après W[i-7] du SHA-512 m7 et l'offset .rdata M0). L'oracle durci en a
+  révélé une QUATRIÈME sur le même gestionnaire : nHeight recevait `bottom`
+  et bRepaint `bottom-56` (slots intervertis — la hauteur du journal
+  débordait sous le bouton).
+- **Pourquoi l'oracle R1 est resté vert** : (1) la coquille GUI (win-01..04)
+  n'était JAMAIS exécutée — seuls win-05..win-10 l'étaient, le scénario étant
+  appelé directement : l'écart « blocs de preuve testés / habillage non
+  testé » était structurel ; (2) le shim MoveWindow retournait 1 sans
+  examiner les arguments — un témoin muot ne prouve que l'appel, pas la
+  géométrie ; (3) le shim GetClientRect écrivait le RECT dans rcx (hwnd) au
+  lieu de rdx (lpRect) — défaut latent jamais déclenché faute d'exécution.
+- **Correctif (demo.2, 0.3.0-demo.2, u64 0x00030102)** :
+  1. win-04:R2 — lecture `RECT.right`, nHeight = h-56, bRepaint = 1 ;
+     création de contrôle nulle → fail-closed tracé (retour -1 : une vitrine
+     sans contrôle est un mensonge muet, R1 la tolérait, D36 la refuse) ;
+  2. win-11:R1 (nouveau bloc) — journal FICHIER `demo_journal.txt` posé à
+     côté de l'exécutable : init paresseuse (GetModuleFileNameA + scan
+     arrière du séparateur + memcpy libc-01 scellé + CreateFileA
+     FILE_APPEND_DATA | CREATE_ALWAYS), trois modes (ligne ASCII ; préfixe +
+     décimal via itoa libc-04 scellé ; UTF-16 → Latin-1 avec 0x2192→'>' et
+     ≥0x100→'-', CRLF idempotent), FlushFileBuffers à chaque ligne (trace
+     survivant à un crash), échec → handle -1 puis re-tentative, append
+     atomique multi-threads ;
+  3. win-05:R2 — miroir fichier de chaque ligne d'écran (l'écran D'ABORD :
+     la démonstration reste regardable même si le fichier est impossible) ;
+  4. win-02:R2 — L00 « demarrage » AVANT tout appel GUI (le fichier existe
+     dès la première seconde : un crash précoce laisse une trace), L01 après
+     création, LKO…gle=NN à l'échec (GetLastError AVANT MessageBoxW) ;
+  5. imports kernel32#2 — descripteur dédié @0x2080 (l'ancien terminateur,
+     le marché s'étend en place), FT 0x2E80 (slots appelés, D35), hints dans
+     les interstices libres : l'IAT kernel32 historique 0x20B0 reste INTACTE
+     (R7, zéro octet scellé déplacé) ;
+  6. re-planification — win-09 déménagé en .text2 @0x4C00 (ré-assemblé, spec
+     R1 inchangée), table R10 à 29 entrées, R_VERSION 0x2610→0x2628, R_ANCRE
+     0x2620 inchangé (l'ancre de win-06 reste stable).
+- **Oracle durci (l'acquis principal)** : la coquille GUI est exécutée du
+  point d'entrée à ExitProcess — RegisterClassExW VALIDÉ (cbSize, wndproc
+  dans l'image, nom de classe), CreateWindowExW top-niveau dispatche
+  RÉELLEMENT WM_CREATE puis WM_SIZE à la procédure (appels imbriqués :
+  sauvegarde/restauration du contexte complet, pile séparée), invariant
+  géométrique MoveWindow (x, y ≥ 0 et largeur, hauteur > 0, rejet sinon) +
+  géométrie exacte (journal (8, 8, 764, 504), bouton (8, 516, 764, 36)),
+  journal fichier exact dans l'ordre L00→L02→L01, clic unique (spawn UNE
+  fois, EnableWindow FALSE, L03, second clic ignoré), échec piloté (classe
+  en échec → MessageBoxW + LKO gle=87 + sortie 1), FALSIFICATION RECT :
+  l'octet 0x28 réécrit en 0x24 (le défaut originel) DOIT faire échouer
+  l'oracle. Verdict : 73 cas verts (49 avant), structurel 541, falsification
+  28/28, carte re-scellée + verrou croisé R8 vert.
+- **Enseignements protocolaires (boucle d'amélioration continue)** :
+  (a) un shim sans invariant est un témoin muet — toute API simulée doit
+  REJETER les arguments impossibles, pas seulement constater l'appel ;
+  (b) l'oracle doit exécuter la chaîne COMPLÈTE du point d'entrée à la
+  sortie, pas seulement les blocs porteurs de preuve ;
+  (c) les divergences notation/spec « mauvais champ/mauvais slot » se
+  détectent par les DONNÉES traversant les frontières (le RECT lu doit
+  redevenir la géométrie attendue), jamais par le seul flux d'appels ;
+  (d) l'outil auteur gagne les symboles LEN_* (longueurs dérivées du plan :
+  zéro comptage manuel) et 16 passes de point fixe (frontière rel8 des
+  sauts courts).
+- **Alternatives rejetées** : attacher une console (AllocConsole) pour la
+  trace — contredit la démonstration graphique et ne survit pas à un crash
+  du processus ; journal dans %TEMP% — introuvable pour l'utilisateur, le
+  fichier à côté de l'exe est immédiatement visible ; tracer seulement
+  depuis le scénario (win-09) — les échecs PRÉCOCES (création de fenêtre)
+  précèdent tout clic, le journal doit exister dès la première seconde ;
+  GetModuleFileNameW + conversion — GetModuleFileNameA suffit (chemin ASCII).
+- **Développement** : entrée 23 du journal de travail. Validation terrain
+  attendue : fenêtre complète (journal + bouton), clic = démonstration
+  intégrale, et demo_journal.txt à côté de l'exe contenant la trace
+  complète (L00…« boucle § 5 complète — DÉMO OK ») — ou, en cas d'échec,
+  la dernière étape franchie AVEC son code GetLastError : le terrain ne
+  pourra plus jamais être muet.

@@ -1010,3 +1010,98 @@ Stage Summary:
   fournit le constat complet écho+patch+rollback attendu pour le scellage
   final 0.3.0) ; puis M3 (entrées non fiables) et, en parallèle D34, sceau
   dev.2 (f25519).
+
+---
+
+## Journal 23 — D36 : demo.1 s'ouvrait fenêtre vide — diagnostic par les octets, correctif demo.2 + journal fichier terrain
+
+Date : 27/10/2026 (session de reprise)
+
+**Constat terrain** (développeur) : « ça ne fonctionne pas » — demo.exe
+(0.3.0-demo.1) s'exécute sans message d'erreur mais la fenêtre paraît VIDE :
+aucun journal, aucun bouton, donc aucun clic possible. Demande associée :
+« il faudrait que tu puisses obtenir les logs de l'exécution de demo.exe ».
+
+**Diagnostic (lecture d'octets, sans exécuter Windows)** :
+- win-04 (procédure), gestionnaire WM_SIZE : `mov r10d, dword ptr [rsp+0x24]`
+  lit RECT.**top** — TOUJOURS 0 après GetClientRect — comme largeur, au lieu
+  de `[rsp+0x28]` = RECT.**right** → MoveWindow(journal/bouton, largeur = -16)
+  → contrôles invisibles. La spec win-04:R1 exigeait déjà « (8, 8, w-16,
+  h-56) » : DIVERGENCE NOTATION/SPEC (la spec était juste, les octets faux).
+- Second défaut de la même famille, découvert par l'oracle durci pendant le
+  correctif : nHeight recevait `bottom` (560) et bRepaint `bottom-56` — slots
+  intervertis ; la spec exige h-56 pour la hauteur. Corrigé également.
+- Pourquoi l'oracle R1 (49 cas verts) n'a rien vu : (1) la coquille GUI
+  (win-01..04) n'était JAMAIS exécutée — le scénario win-09 était appelé
+  directement, les blocs GUI n'étaient validés que structurellement ;
+  (2) le shim MoveWindow retournait 1 sans regarder les arguments ;
+  (3) le shim GetClientRect écrivait le RECT dans rcx (hwnd) au lieu de rdx
+  (lpRect) — défaut latent jamais déclenché faute d'exécution.
+
+**Correctif demo.2 (0.3.0-demo.2, u64 0x00030102, scellée ce jour)** :
+- win-04:R2 — lecture RECT.right ; nHeight = h-56, bRepaint = 1 ; création
+  de contrôle échouée → fail-closed (trace gle + retour -1, la fenêtre est
+  avortée, win-02 explique par MessageBoxW).
+- win-11:R1 (NOUVEAU) — journal FICHIER : demo_journal.txt posé à CÔTÉ de
+  l'exe (GetModuleFileNameA + scan arrière du séparateur + memcpy libc-01
+  scellé + CreateFileA FILE_APPEND_DATA/CREATE_ALWAYS). Trois modes : ligne
+  ASCII / préfixe + valeur décimale (itoa libc-04 scellé) / UTF-16 → Latin-1
+  (0x2192 → '>', ≥ 0x100 → '-', CRLF idempotent). FlushFileBuffers à chaque
+  ligne (la trace survit à un crash) ; échec → handle -1, re-tentative au
+  appel suivant ; appelable de tout thread (append atomique).
+- win-05:R2 — chaque ligne du journal écran est MIRROIRÉE au fichier (l'écran
+  d'abord, le fichier ensuite — la démonstration reste regardable même si le
+  fichier est impossible).
+- win-02:R2 — L00 « demarrage » AVANT tout appel GUI (le fichier existe dès
+  la première seconde, donc un crash précoce laisse une trace) ; L01 après
+  création ; LKO…gle=NN (GetLastError AVANT MessageBoxW) à l'échec.
+- Imports kernel32#2 : descripteur dédié @0x2080 (l'ancien terminateur),
+  FT 0x2E80, hints dans les interstices libres (0x22C0, 0x2704) :
+  GetModuleFileNameA, CreateFileA, FlushFileBuffers, GetLastError — l'IAT
+  kernel32 historique 0x20B0 INTACTE (R7 respecté : zéro octet scellé déplacé).
+- Re-planification : win-09 déménagé en .text2 @0x4C00 (ré-assemblé, spec R1
+  inchangée), table R10 à 29 entrées, R_VERSION 0x2610→0x2628, R_ANCRE
+  0x2620 inchangé (l'ancre de win-06 reste stable), buffers win-11 en .data
+  au-delà de la zone committée (zéro-filled, .data VSIZE intact).
+- Outil auteur : symboles LEN_* (longueurs de chaînes dérivées du plan —
+  l'outil fait l'arithmétique, plus de comptage manuel) et 16 passes de
+  point fixe (sauts courts/near à la frontière rel8).
+
+**Oracle durci (le vrai gain protocolaire)** :
+- COQUILLE GUI EXÉCUTÉE du point d'entrée à ExitProcess : RegisterClassExW
+  VALIDÉ (cbSize, wndproc dans l'image, nom de classe), CreateWindowExW
+  top-niveau dispatche RÉELLEMENT WM_CREATE puis WM_SIZE à la procédure —
+  appels imbriqués pilotés par le moteur (sauvegarde/restauration du contexte
+  complet 18 registres, pile séparée), contrôles enfants créés, sortie 0.
+- INVARIANT GÉOMÉTRIQUE : MoveWindow rejette x<0, y<0, largeur≤0, hauteur≤0 —
+  et la géométrie est vérifiée EXACTE : journal (8, 8, 764, 504), bouton
+  (8, 516, 764, 36) pour un client 780×560.
+- Journal fichier exact : ordre L00 → L02 (WM_CREATE) → L01 ; clic unique
+  (WM_COMMAND → spawn scénario UNE fois, EnableWindow(FALSE), L03, second
+  clic ignoré) ; échec piloté (RegisterClassExW=0, gle=87 → MessageBoxW +
+  « LKO creation fenetre impossible gle=87 » + sortie 1).
+- FALSIFICATION RECT (V4 de win-04:R2) : l'octet de déplacement 0x28 réécrit
+  en 0x24 (le défaut originel) dans le binaire → l'oracle DOIT échouer — le
+  défaut D36 est impossible à réintroduire silencieusement.
+- Verdict : 73 cas verts (contre 49), structurel 541 verrous, falsification
+  28/28 blocs (octets 11/23), re-vérification --verifier graine 7 VERTE,
+  carte génération 4 re-scellée (28 empreintes, Ed25519, verrou croisé R8).
+
+**Livraison** : demo.exe 0.3.0-demo.2 (15360 octets,
+sha256:1fed2a52229db1f406466bdf457519b8ac23f06e24ddf7808309bfb395f86fb6)
+au téléchargement. Sur le terrain : la fenêtre doit afficher journal+bouton ;
+le clic exécute la démonstration complète ; et NOUVEAU — demo_journal.txt
+apparaît à côté de l'exe avec la trace complète (L00…J_FINAL), y compris en
+cas d'échec, avec les codes GetLastError.
+
+Stage Summary:
+- D36 consignée : un défaut de notation invisible à l'oracle R1 (shims sans
+  invariants + coquille GUI jamais exécutée) devient impossible à
+  réintroduire (invariant géométrique + falsification dédiée).
+- Le terrain a désormais une VOIX : demo_journal.txt, écrit par les blocs
+  TRIADE eux-mêmes (libc scellée réutilisée : memcpy/itoa/strlen), avec
+  re-tentative et flush à chaque ligne.
+- Prochaine étape : validation terrain de demo.2 sur Windows 11 (fenêtre
+  complète + clic + journal fichier) → scellage 0.3.0 si vert ; l'évaluation
+  du protocole D34 s'enrichit d'un nouveau motif : « divergences
+  notation/spec de classe champ/slot » (W[i-7], RECT.top, nHeight/bRepaint).

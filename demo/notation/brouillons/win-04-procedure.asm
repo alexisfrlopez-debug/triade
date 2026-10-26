@@ -1,4 +1,4 @@
-; procedure de fenetre : creation des controles, taille, clic unique -> scenario
+; procedure de fenetre : controles (fail-closed D36), taille RECT.right corrigee, clic unique
 push rbx
 push r12
 push r13
@@ -38,6 +38,17 @@ mov qword ptr [rsp + 0x50], r15
 mov qword ptr [rsp + 0x58], 0
 call qword ptr [rip + IAT_CREATEWINDOW]
 mov qword ptr [rip + HWND_JOURNAL], rax
+test rax, rax
+jne .edit_ok
+call qword ptr [rip + IAT_GLE]
+mov r9d, eax
+lea rcx, [rip + LKO_EDIT]
+mov edx, LEN_LKO_EDIT
+mov r8d, 1
+call JOURNAL_FICHIER
+mov rax, 0xFFFFFFFFFFFFFFFF
+jmp .sortie
+.edit_ok:
 xor ecx, ecx
 lea rdx, [rip + CLASSE_BOUTON]
 lea r8, [rip + TXT_BOUTON]
@@ -52,6 +63,17 @@ mov qword ptr [rsp + 0x50], r15
 mov qword ptr [rsp + 0x58], 0
 call qword ptr [rip + IAT_CREATEWINDOW]
 mov qword ptr [rip + HWND_BOUTON], rax
+test rax, rax
+jne .bouton_ok
+call qword ptr [rip + IAT_GLE]
+mov r9d, eax
+lea rcx, [rip + LKO_BOUTON]
+mov edx, LEN_LKO_BOUTON
+mov r8d, 1
+call JOURNAL_FICHIER
+mov rax, 0xFFFFFFFFFFFFFFFF
+jmp .sortie
+.bouton_ok:
 mov ecx, 17
 call qword ptr [rip + IAT_GETSTOCK]
 mov r12, rax
@@ -65,13 +87,17 @@ mov edx, 0x30
 mov r8, r12
 mov r9d, 1
 call qword ptr [rip + IAT_SENDMESSAGE]
+lea rcx, [rip + L02]
+mov edx, LEN_L02
+xor r8d, r8d
+call JOURNAL_FICHIER
 xor eax, eax
 jmp .sortie
 .taille:
 mov rcx, rbx
 lea rdx, [rsp + 0x20]
 call qword ptr [rip + IAT_GETCLIENTRECT]
-mov r10d, dword ptr [rsp + 0x24]
+mov r10d, dword ptr [rsp + 0x28]
 mov r11d, dword ptr [rsp + 0x2C]
 mov rcx, qword ptr [rip + HWND_JOURNAL]
 mov edx, 8
@@ -79,9 +105,8 @@ mov r8d, 8
 mov r9d, r10d
 sub r9d, 16
 mov dword ptr [rsp + 0x20], r11d
-mov dword ptr [rsp + 0x28], r11d
-sub dword ptr [rsp + 0x28], 56
-mov dword ptr [rsp + 0x30], 1
+sub dword ptr [rsp + 0x20], 56
+mov dword ptr [rsp + 0x28], 1
 call qword ptr [rip + IAT_MOVEWINDOW]
 mov rcx, qword ptr [rip + HWND_BOUTON]
 mov edx, 8
@@ -100,6 +125,10 @@ jne .zero
 cmp qword ptr [rip + DRAPEAU_WORKER], 0
 jne .zero
 mov qword ptr [rip + DRAPEAU_WORKER], 1
+lea rcx, [rip + L03]
+mov edx, LEN_L03
+xor r8d, r8d
+call JOURNAL_FICHIER
 mov rcx, qword ptr [rip + HWND_BOUTON]
 xor edx, edx
 call qword ptr [rip + IAT_ENABLEWINDOW]
@@ -108,6 +137,12 @@ xor edx, edx
 call TCP_SPAWN
 test rax, rax
 jne .thread_ok
+call qword ptr [rip + IAT_GLE]
+mov r9d, eax
+lea rcx, [rip + LKO_SPAWN]
+mov edx, LEN_LKO_SPAWN
+mov r8d, 1
+call JOURNAL_FICHIER
 mov qword ptr [rip + DRAPEAU_WORKER], 0
 mov rcx, qword ptr [rip + HWND_BOUTON]
 mov edx, 1

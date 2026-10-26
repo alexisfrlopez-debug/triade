@@ -9,7 +9,7 @@ sub rsp, 0x28
 call 0x1440
 test rax, rax
 je 0x141a
-call 0x1580
+call 0x15c0
 xor ecx, ecx
 call 0x1080
 mov ecx, 1

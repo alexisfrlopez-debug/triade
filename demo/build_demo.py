@@ -86,16 +86,17 @@ def blocs_demo() -> list[tuple]:
         ("c30008", "tcp-08:R1", "tcp-08-echo", 0x4600, 0x40),
         ("c30009", "tcp-09:R1", "tcp-09-conn", 0x4800, 0x180),
         ("c30011", "tcp-11:R1", "tcp-11-journal", 0x4B00, 0x100),
-        # génération démo
+        # génération démo.2 (D36 : correctif WM_SIZE + journal fichier)
         ("d40001", "win-01:R1", "win-01-principal", 0x1400, 0x40),
-        ("d40002", "win-02:R1", "win-02-fenetre", 0x1440, 0x140),
-        ("d40003", "win-03:R1", "win-03-boucle", 0x1580, 0x80),
-        ("d40004", "win-04:R1", "win-04-procedure", 0x1600, 0x2C0),
-        ("d40005", "win-05:R1", "win-05-journal", 0x18C0, 0x80),
-        ("d40006", "win-06:R1", "win-06-autotest", 0x1940, 0x180),
-        ("d40007", "win-07:R1", "win-07-client", 0x1AC0, 0xC0),
-        ("d40008", "win-08:R1", "win-08-serveur", 0x1B80, 0x100),
-        ("d40009", "win-09:R1", "win-09-scenario", 0x1C80, 0x380),
+        ("d40002", "win-02:R2", "win-02-fenetre", 0x1440, 0x180),
+        ("d40003", "win-03:R1", "win-03-boucle", 0x15C0, 0x80),
+        ("d40004", "win-04:R2", "win-04-procedure", 0x1640, 0x380),
+        ("d40005", "win-05:R2", "win-05-journal", 0x19C0, 0x100),
+        ("d40006", "win-06:R1", "win-06-autotest", 0x1AC0, 0x180),
+        ("d40007", "win-07:R1", "win-07-client", 0x1C40, 0xC0),
+        ("d40008", "win-08:R1", "win-08-serveur", 0x1D00, 0x100),
+        ("d40011", "win-11:R1", "win-11-journal", 0x1E00, 0x200),
+        ("d40009", "win-09:R1", "win-09-scenario", 0x4C00, 0x380),
         ("d40010", "win-10:R1", "win-10-echange", 0x4980, 0x180),
     ]
 
@@ -109,6 +110,7 @@ FICHIERS_I_DEMO = {
     "win-05": "win-05-journal.md", "win-06": "win-06-autotest.md",
     "win-07": "win-07-client.md", "win-08": "win-08-serveur.md",
     "win-09": "win-09-scenario.md", "win-10": "win-10-echange.md",
+    "win-11": "win-11-journal.md",
 }
 
 
@@ -174,48 +176,59 @@ IAT_PAR_BLOC = {
     **bm.IAT_PAR_BLOC,
     "d40001": set(),
     "d40002": {"GetModuleHandleW", "LoadCursorW", "RegisterClassExW",
-               "CreateWindowExW", "MessageBoxW"},
+               "CreateWindowExW", "MessageBoxW", "GetLastError"},
     "d40003": {"GetMessageW", "TranslateMessage", "DispatchMessageW"},
     "d40004": {"GetModuleHandleW", "CreateWindowExW", "GetStockObject",
                "SendMessageW", "GetClientRect", "MoveWindow", "EnableWindow",
                "DestroyWindow", "PostQuitMessage", "DefWindowProcW",
-               "CloseHandle"},
+               "CloseHandle", "GetLastError"},
     "d40005": {"SendMessageW"},
     "d40006": set(),
     "d40007": {"socket", "connect", "closesocket"},
     "d40008": {"CloseHandle"},
     "d40009": {"GetStdHandle", "CloseHandle", "send", "recv"},
     "d40010": {"send", "recv"},
+    "d40011": {"GetModuleFileNameA", "CreateFileA", "WriteFile",
+               "FlushFileBuffers"},
 }
 APPELS_DIRECTS = {
     **bm.APPELS_DIRECTS,
-    "d40001": {0x1440, 0x1580, 0x1080},
-    "d40002": set(), "d40003": set(),
-    "d40004": {0x4300, 0x1C40},
-    "d40005": set(),
+    "d40001": {0x1440, 0x15C0, 0x1080},
+    "d40002": {0x1E00},
+    "d40003": set(),
+    "d40004": {0x4300, 0x1E00, 0x4C00},
+    "d40005": {0x1E00},
     "d40006": {0x1100, 0x1180, 0x1200, 0x1280},
     "d40007": set(),
-    "d40008": {0x4000, 0x4100, 0x4300, 0x18C0},
-    "d40009": {0x18C0, 0x1940, 0x1AC0, 0x1B80, 0x41C0, 0x4400, 0x4600, 0x1180, 0x4980, 0x4300},
+    "d40008": {0x4000, 0x4100, 0x4300, 0x19C0},
+    "d40009": {0x19C0, 0x1AC0, 0x1C40, 0x1D00, 0x41C0, 0x4400, 0x4600, 0x1180, 0x4980, 0x4300},
     "d40010": {0x1180},
+    "d40011": {0x1100, 0x1200, 0x1280},
 }
 DONNEES_RIP = {
     **{k: v for k, v in bm.DONNEES_RIP.items()
        if k in {"c30007", "c30009", "c30011"}},   # blocs M2 embarqués (démo : héritage)
     "d40002": {L.CHAINES_UTF16["CLASSE"][0], L.CHAINES_UTF16["TITRE"][0],
-               L.CHAINES_UTF16["MSG_ECHEC_GUI"][0], 0x1600, L.HWND_PRINCIPAL},
-    "d40004": {L.HWND_JOURNAL, L.HWND_BOUTON, L.DRAPEAU_WORKER, 0x1C80,
+               L.CHAINES_UTF16["MSG_ECHEC_GUI"][0], 0x1640, L.HWND_PRINCIPAL,
+               L.CHAINES_ASCII["L00"][0], L.CHAINES_ASCII["L01"][0],
+               L.CHAINES_ASCII["LKO_GUI"][0]},
+    "d40004": {L.HWND_JOURNAL, L.HWND_BOUTON, L.DRAPEAU_WORKER, 0x4C00,
                L.CHAINES_UTF16["CLASSE_EDIT"][0], L.CHAINES_UTF16["CLASSE_BOUTON"][0],
-               L.CHAINES_UTF16["TXT_BOUTON"][0], L.CHAINES_UTF16["CHAINE_VIDE"][0]},
+               L.CHAINES_UTF16["TXT_BOUTON"][0], L.CHAINES_UTF16["CHAINE_VIDE"][0],
+               L.CHAINES_ASCII["L02"][0], L.CHAINES_ASCII["L03"][0],
+               L.CHAINES_ASCII["LKO_EDIT"][0], L.CHAINES_ASCII["LKO_BOUTON"][0],
+               L.CHAINES_ASCII["LKO_SPAWN"][0]},
     "d40005": {L.HWND_JOURNAL},
     "d40006": {L.R_ANCRE, L.R_TAB_SUM, L.R_VERSION, 0x2630, 0x2640, 0x2644,
                0x2648, 0x264C, 0x265A},
     "d40007": set(),
     "d40008": {L.R_LISTEN, L.DRAPEAU_SRV, 0x4800, L.CHAINES_UTF16["J_SRV_KO"][0]},
     "d40009": {L.R_STDOUT, L.R_STDIN, L.R_QUIT, L.R_LISTEN, L.R_PHRASE,
-               L.R_PHRASE_MAJ, 0x1B80,
+               L.R_PHRASE_MAJ, 0x1D00,
                *[L.CHAINES_UTF16[n][0] for n in L.CHAINES_UTF16 if n.startswith("J_")] + [L.DRAPEAU_SRV]},
     "d40010": {L.R_PHRASE},
+    "d40011": {L.R_JOURNAL_HANDLE, L.BUF_CONV, L.BUF_CHEMIN, L.SCRATCH_ECRIT,
+               L.CHAINES_ASCII["NOM_FICHIER"][0]},
 }
 FEUILLES_DEMO = set()   # les blocs win appellent tous (IAT ou blocs) — pas de feuilles démo
 
@@ -274,7 +287,7 @@ def oracle_structurel(specs: dict, code: dict, blocs: list[tuple]) -> list[str]:
 
     s = code["d40009"]["insns"]
     verrou("d40009:autotest-present",
-           any(canon_(i) == "call 0x1940" for i in s))
+           any(canon_(i) == f"call 0x{L.BLOCS_WIN[[b[1] for b in L.BLOCS_WIN].index('win-06:R1')][2]:x}" for i in s))
     verrou("d40009:arret-propre",
            any(canon_(i).startswith("mov qword ptr [rip") for i in s))
 
@@ -329,11 +342,14 @@ def composer_sections(code: dict, blocs: list[tuple]):
 
     hn = lambda nom: struct.pack("<H", 0) + nom.encode("ascii") + b"\x00"
 
-    # Marché des imports : kernel32, ws2_32, user32, gdi32 + terminateur (D35)
+    # Marché des imports : kernel32, ws2_32, user32, gdi32, kernel32#2 (D36)
+    # + terminateur. Le descripteur k32#2 (imports du journal fichier) occupe
+    # l'ancien terminateur — l'IAT kernel32 historique 0x20B0 reste intacte (R7).
     poser(L.R_DESC_IMPORT, struct.pack("<IIIII", L.R_INT_KERNEL32, 0, 0, L.R_NOM_DLL, L.R_IAT))
     poser(L.R_DESC_WS2, struct.pack("<IIIII", L.R_INT_WS2, 0, 0, L.R_NOM_WS2, L.R_IAT_WS2))
     poser(L.R_DESC_USER32, struct.pack("<IIIII", L.R_INT_USER32, 0, 0, L.R_NOM_USER32, L.R_IAT_USER32))
     poser(L.R_DESC_GDI32, struct.pack("<IIIII", L.R_INT_GDI32, 0, 0, L.R_NOM_GDI32, L.R_IAT_GDI32))
+    poser(L.R_DESC_K32B, struct.pack("<IIIII", L.R_INT_K32B, 0, 0, L.R_NOM_DLL, L.R_IAT_K32B))
     poser(L.R_DESC_TERM, b"\x00" * 20)
 
     poser(L.R_NOM_DLL, b"kernel32.dll\x00")
@@ -386,9 +402,20 @@ def composer_sections(code: dict, blocs: list[tuple]):
     poser(L.R_IAT_GDI32, struct.pack("<Q", L.R_HN_GDI32) + struct.pack("<Q", 0))
     poser(L.R_HN_GDI32, hn("GetStockObject"))
 
+    # kernel32#2 (D36 — journal fichier) : hints dans les interstices libres,
+    # INT/FT dédiées (FT = slots appelés par win-11, correctif D35 appliqué).
+    hints_k32b = {"GetModuleFileNameA": L.R_HN_K32B_GMFA, "CreateFileA": L.R_HN_K32B_CFA,
+                  "FlushFileBuffers": L.R_HN_K32B_FFB, "GetLastError": L.R_HN_K32B_GLE}
+    for nom, rva_h in hints_k32b.items():
+        poser(rva_h, hn(nom))
+    poser(L.R_INT_K32B, b"".join(struct.pack("<Q", hints_k32b[n]) for n in L.KERNEL32B_IMPORTS)
+          + struct.pack("<Q", 0))
+    poser(L.R_IAT_K32B, b"".join(struct.pack("<Q", hints_k32b[n]) for n in L.KERNEL32B_IMPORTS)
+          + struct.pack("<Q", 0))
+
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO1))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO2))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIXTURES, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -400,6 +427,8 @@ def composer_sections(code: dict, blocs: list[tuple]):
     poser(L.R_RELOC, struct.pack("<II", L.TEXT_RVA, 12) + struct.pack("<HH", 0, 0))
     for nom, (adr, txt, n) in L.CHAINES_UTF16.items():
         poser(adr, txt.encode("utf-16-le") + b"\x00\x00", nom)
+    for nom, (adr, octets, n) in L.CHAINES_ASCII.items():
+        poser(adr, octets, "ASCII:" + nom)
 
     data = bytearray(b"\x00" * L.DATA_RAW)
     return bytes(texte), bytes(rdata), bytes(data), bytes(text2), staging
@@ -428,7 +457,7 @@ def ecrire_pe32plus(texte, rdata, data, text2) -> bytes:
         0, 16,
     )
     dirs = [(0, 0)] * 16
-    dirs[1] = (L.R_DESC_IMPORT, 100)         # 5 descripteurs (4 dll + terminateur)
+    dirs[1] = (L.R_DESC_IMPORT, 120)        # 6 descripteurs (5 dll + terminateur)
     dirs[5] = (L.R_RELOC, 12)
     dirs[12] = (L.R_IAT, 96)                 # IAT kernel32 (11 slots + terme)
     opt = bytes(opt_fixe) + b"".join(struct.pack("<II", *d) for d in dirs)
@@ -465,17 +494,23 @@ def valider_pe(exe: bytes):
     assert noms == [".text", ".rdata", ".data", ".text2"], noms
     imports = {}
     for entree in pe.DIRECTORY_ENTRY_IMPORT:
-        imports[entree.dll.decode().lower()] = [i.name.decode() for i in entree.imports]
-    attendu = {"kernel32.dll": L.KERNEL32_IMPORTS, "ws2_32.dll": L.WS2_IMPORTS,
-               "user32.dll": L.USER32_IMPORTS, "gdi32.dll": L.GDI32_IMPORTS}
+        dll = entree.dll.decode().lower()
+        imports.setdefault(dll, []).extend(i.name.decode() for i in entree.imports)
+    imports = {dll: sorted(noms) for dll, noms in imports.items()}
+    attendu = {"kernel32.dll": sorted(L.KERNEL32_IMPORTS + L.KERNEL32B_IMPORTS),
+               "ws2_32.dll": sorted(L.WS2_IMPORTS),
+               "user32.dll": sorted(L.USER32_IMPORTS),
+               "gdi32.dll": sorted(L.GDI32_IMPORTS)}
     assert imports == attendu, {k: set(v) ^ set(attendu.get(k, [])) for k, v in imports.items()}
     # D35 : verrou chargeur réel — FT = slots appelés par la notation
-    ft_attendus = {"kernel32.dll": L.R_IAT, "ws2_32.dll": L.R_IAT_WS2,
-                   "user32.dll": L.R_IAT_USER32, "gdi32.dll": L.R_IAT_GDI32}
+    # (kernel32 apparaît DEUX fois : IAT historique + IAT k32#2, D36)
+    ft_attendus = {"kernel32.dll": {L.R_IAT, L.R_IAT_K32B},
+                   "ws2_32.dll": {L.R_IAT_WS2},
+                   "user32.dll": {L.R_IAT_USER32}, "gdi32.dll": {L.R_IAT_GDI32}}
     for entree in pe.DIRECTORY_ENTRY_IMPORT:
         dll = entree.dll.decode().lower()
-        assert entree.struct.FirstThunk == ft_attendus[dll], \
-            f"FirstThunk {dll} != {ft_attendus[dll]:#x} (D35)"
+        assert entree.struct.FirstThunk in ft_attendus[dll], \
+            f"FirstThunk {dll} != {ft_attendus[dll]} (D35)"
     assert len(exe) == L.TAILLE_FICHIER
     assert exe[L.TEXT2_FILE + (L.ECHO_CROISSANCE - L.TEXT2_RVA)] == 0xCC   # croissance int3
     assert exe[L.TEXT_FILE + (0x1300 - L.TEXT_RVA)] == 0xCC                # réserve libc int3
@@ -526,26 +561,31 @@ CONTRATS = {
                "appels win-02/win-03/io-02 uniquement ; aucun état",
                "[d40002] [d40003] [a10003]"),
     "d40002": ("() -> ptr|0", "IAT résolue (D35) ; pile alignée",
-               "rax = hwnd ; HWND_PRINCIPAL posé ; échec -> MessageBoxW + 0",
+               "rax = hwnd ; HWND_PRINCIPAL posé ; échec -> MessageBoxW + 0 ; "
+               "trace fichier L00/L01/LKO (win-11, D36)",
                "WNDCLASSEXW sur pile ; aucune adresse absolue (PI)",
                "[ext user32:RegisterClassExW,CreateWindowExW,LoadCursorW,MessageBoxW] "
-               "[ext kernel32:GetModuleHandleW] [rdata:UTF-16]"),
+               "[ext kernel32:GetModuleHandleW,GetLastError] [d40011] [rdata:UTF-16,ASCII]"),
     "d40003": ("() -> u32", "fenêtre existante ; pile alignée",
                "file drainée ; rax = 0 après WM_QUIT ou erreur",
                "MSG sur pile ; aucune donnée .data",
                "[ext user32:GetMessageW,TranslateMessage,DispatchMessageW]"),
     "d40004": ("(hwnd, msg u32, wParam, lParam) -> lresult",
                "callback msx64 ; WM_CREATE précède tout ; IAT résolue",
-               "contrôles créés au WM_CREATE ; clic unique -> spawn(win-09) ; "
-               "défaut -> DefWindowProcW",
+               "contrôles créés au WM_CREATE (nul -> -1 fail-closed D36) ; "
+               "WM_SIZE lit RECT.right (correctif D36) ; clic unique -> "
+               "spawn(win-09) ; défaut -> DefWindowProcW",
                "wParam/lParam sauvegardés avant appels ; spawn PAR tcp-06 scellé",
-               "[c30006] [d40009] [ext user32:*] [ext gdi32:GetStockObject] "
-               "[ext kernel32:GetModuleHandleW,CloseHandle] [donnees .data:hwnds,drapeau]"),
+               "[c30006] [d40009] [d40011] [ext user32:*] [ext gdi32:GetStockObject] "
+               "[ext kernel32:GetModuleHandleW,CloseHandle,GetLastError] "
+               "[donnees .data:hwnds,drapeau] [rdata:ASCII trace]"),
     "d40005": ("(ptr UTF-16, nchars u64) -> u32",
                "HWND_JOURNAL posé par win-04 ; pile alignée",
-               "ligne ajoutée en fin de journal (EM_SETSEL + EM_REPLACESEL)",
-               "exactement deux SendMessageW ; appelable de tout thread",
-               "[ext user32:SendMessageW] [donnees .data:hwnd_journal]"),
+               "ligne ajoutée en fin de journal (EM_SETSEL + EM_REPLACESEL) "
+               "PUIS miroir fichier (win-11 mode 2, D36)",
+               "exactement deux SendMessageW puis un appel win-11 ; "
+               "appelable de tout thread",
+               "[d40011] [ext user32:SendMessageW] [donnees .data:hwnd_journal]"),
     "d40006": ("() -> i32", "image cohérente avec la table R10 ; pile alignée",
                "eax = -1 (porte KO) | 0..4 (vecteurs libc verts)",
                "porte AVANT tout appel (R10) ; lecture seule .rdata",
@@ -573,15 +613,26 @@ CONTRATS = {
                "eax = 1 si émission complète + 14 reçus == attendu (memcmp) ; 0 sinon",
                "socket laissée ouverte (politique de l'appelant) ; tampon sur pile",
                "[b20002] [ext ws2_32:send,recv] [rdata:PHRASE]"),
+    "d40011": ("(ptr, len u64, mode u32, valeur u32) -> u32",
+               "bornes win-11 P4 (len ≤ 100 / nchars ≤ 60) ; pile alignée",
+               "ligne + CRLF append au fichier (FILE_APPEND_DATA atomique) ; "
+               "init paresseuse : chemin exe + demo_journal.txt, CREATE_ALWAYS ; "
+               "rax = 1 écrit, 0 échec (handle -1, re-tentative)",
+               "réutilisation libc scellée (memcpy/itoa/strlen) ; "
+               "conversion UTF-16 -> Latin-1 inline (mode 2)",
+               "[b20001] [b20003] [b20004] "
+               "[ext kernel32#2:GetModuleFileNameA,CreateFileA,WriteFile,"
+               "FlushFileBuffers] [donnees .data:handle,tampons] "
+               "[rdata:NOM_FICHIER]"),
 }
 
 
 def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, journal_runs):
     sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
     loc = ["[carte-frag] nom=frag-loc generation=4",
-           "[zones] io=0x1000-0x10ff libc=0x1100-0x12ff app-win=0x1400-0x1fbf "
+           "[zones] io=0x1000-0x10ff libc=0x1100-0x12ff app-win=0x1400-0x1fff "
            "net=0x4000-0x42ff thr=0x4300-0x43ff tramp=0x4400-0x45ff "
-           "echo=0x4600-0x46ff croissance=0x4680 srv=0x4800-0x4fff"]
+           "echo=0x4600-0x46ff croissance=0x4680 srv=0x4800-0x4fff scenario=0x4c00"]
     spec_map = {bid: sid for bid, sid, _, _, _ in blocs}
     for bid, _, _, rva, slot in blocs + [("c30014", "tcp-08:R2", None, L.ECHO_CROISSANCE, 0x80)]:
         etat = "verifie" if bid == "c30014" else "scelle"
@@ -619,7 +670,7 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
         f"graine={verdict.get('graine', '-')}",
         f"  heritage : hello.exe + selftest.exe + echo.exe 0.3.0-rc.2 "
         f"(io/libc/tcp + staging reutilises octet-identiques, R7 ; D35)",
-        f"[zones] app-win=0x1400-0x1fbf srv-win10=0x4980",
+        f"[zones] app-win=0x1400-0x1fff srv-win10=0x4980 scenario-win09=0x4c00",
     ]
     retour = {}
     for nom, lignes in (("frag-loc", loc), ("frag-con", con), ("frag-prf", prf), ("frag-bld", bld)):
@@ -686,7 +737,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  suite_conformite_profil       : heritee M2 (124/124, rc.2) + porte D35 verifiee par oracle",
         f"  changements_hors_journal      : 0 : D35 consignee",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee demo, "
-        f"u64 0x{L.VERSION_U64_DEMO1:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_DEMO2:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  patch_a_chaud                 : boucle 5 complete en production "
         f"(patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)",
         f"  artefact                      : {len(exe)} octets ; "
@@ -720,7 +771,7 @@ def assembler_tout():
 def construire(graine: int) -> int:
     print("=== démo : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_DEMO1
+    version = L.VERSION_DEMO2
     texte, rdata, data, text2, staging = composer_sections(code, blocs)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
     valider_pe(exe)
@@ -781,7 +832,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=demo.exe" in l), L.VERSION_DEMO1)
+                    if "artefact=demo.exe" in l), L.VERSION_DEMO2)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "
