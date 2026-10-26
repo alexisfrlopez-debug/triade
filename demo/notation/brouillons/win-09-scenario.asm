@@ -41,6 +41,11 @@ jmp .fin
 lea rcx, [rip + J_LIBC_OK]
 mov edx, 29
 call JOURNAL_GUI
+; D40 : sonde 1/3 — entrée de mécanique (avant le premier appel écho)
+lea rcx, [rip + SONDE_1]
+mov edx, 17
+xor r8d, r8d
+call JOURNAL_TRACE
 lea rcx, [rsp + 0x30]
 lea rdx, [rip + PHRASE]
 mov r8d, 14
@@ -55,6 +60,11 @@ xor ecx, ecx
 call TCP_PATCH
 test eax, eax
 jne .defaut
+; D40 : sonde 2/3 — tcp-07 pose complète (retour 0 vérifié), avant l'écho patché
+lea rcx, [rip + SONDE_2]
+mov edx, 17
+xor r8d, r8d
+call JOURNAL_TRACE
 lea rcx, [rsp + 0x30]
 lea rdx, [rip + PHRASE]
 mov r8d, 14
@@ -65,6 +75,11 @@ mov r8d, 14
 call MEMCMP
 test eax, eax
 jne .defaut
+; D40 : sonde 3/3 — écho patché v2 confirmé par memcmp, avant le rollback
+lea rcx, [rip + SONDE_3]
+mov edx, 12
+xor r8d, r8d
+call JOURNAL_TRACE
 mov ecx, 1
 call TCP_PATCH
 test eax, eax

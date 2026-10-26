@@ -111,6 +111,11 @@ VERSION_DEMO5 = "0.3.0-demo.5"     # D39 : héritage tcp-07:R2 (echo 0.3.0-rc.3)
                                    # le défaut R1 (PAGE_READWRITE, sans execute)
                                    # tuait le processus au 1er VirtualProtect (DEP)
 VERSION_U64_DEMO5 = 0x00030105     # monotonie : au-dessus de demo.4
+VERSION_DEMO6 = "0.3.0-demo.6"     # D40 : instrumentation mécanique — le journal
+                                   # terrain demo.5 gèle ENCORE après J_LIBC_OK
+                                   # malgré le correctif DEP : 3 sondes de trace
+                                   # encadrent la frontière mécanique (win-09:R2)
+VERSION_U64_DEMO6 = 0x00030106     # monotonie : au-dessus de demo.5
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -129,7 +134,7 @@ BLOCS_WIN = [
     ("d40008", "win-08:R1", 0x1D00, 0x100, "demo.3", 1),   # serveur d'acceptation
     ("d40011", "win-11:R1", 0x1E00, 0x200, "demo.3", 1),   # journal fichier (inchangé, D36)
     ("d40010", "win-10:R1", 0x4980, 0x180, "demo.3", 1),   # échange vérifié (inchangé)
-    ("d40009", "win-09:R1", 0x4C00, 0x380, "demo.3", 1),   # scénario complet (inchangé)
+    ("d40009", "win-09:R2", 0x4C00, 0x3C0, "demo.6", 1),   # scénario complet — D40 : sondes mécanique (slot 0x380→0x3C0, trou libre 0x4F80-0x4FFF)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = win-01
 
@@ -308,7 +313,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.5"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.6"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),
@@ -330,6 +335,20 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 ECHO_ENTREE = L2.ECHO_ENTREE            # 0x4600 — cible du patch (héritage)
 ECHO_CROISSANCE = L2.ECHO_CROISSANCE    # 0x4680 — zone de croissance
+
+# --- Sondes de trace mécanique (D40 — instrumentation TEMPORAIRE win-09:R2) -------
+# Trois chaînes ASCII posées dans les interstices libres de .rdata (jamais
+# lus par le chargeur : hors INT/IAT/hints/reloc). La zone UTF-16 (14 o
+# restants) et la zone ASCII (2 o restants) sont PLEINES — d'où les
+# interstices. Adresses fixes, longueurs pilotées par edx (mode 0 win-05).
+R_SONDE_1 = 0x2748   # interstice INT kernel32#2 (fin 0x2748) → reloc 0x2760
+R_SONDE_2 = 0x276C   # interstice reloc (fin 0x276C) → INT user32 0x2780
+R_SONDE_3 = 0x22F1   # interstice hint FlushFileBuffers (hn = 2+18 o, fin 0x22F1) → IAT ws2 0x2300
+CHAINES_SONDES = {
+    "SONDE_1": (R_SONDE_1, b"sonde1 avant echo", 17),   # avant le 1er appel écho
+    "SONDE_2": (R_SONDE_2, b"sonde2 patch pose", 17),   # après tcp-07 mode 0 = 0
+    "SONDE_3": (R_SONDE_3, b"sonde3 v2 ok", 12),        # après memcmp v2 (écho patché)
+}
 
 # --- Jetons de retour d'émulation (oracle, hors binaire) ------------------------
 

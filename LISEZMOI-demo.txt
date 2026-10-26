@@ -1,65 +1,60 @@
-TRIADE M2 — démonstration complète en un clic (demo.5)
-======================================================
+TRIADE M2 — démonstration complète en un clic (demo.6, INSTRUMENTÉE)
+====================================================================
 
 demo.exe  (16 384 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
-version 0.3.0-demo.5 — le moteur de patch à chaud réparable (D39)
+version 0.3.0-demo.6 — diagnostic de la frontière « mécanique » (D40)
 
-NOUVEAUTÉ demo.5 : LE CRASH DE LA PHASE « MÉCANIQUE » EST CORRIGÉ. Votre
-journal demo.4 était excellent — démarrage complet, contrôles créés, clic
-enregistré (le bouton fonctionne !), porte R10 VERTE, 4 vecteurs libc verts…
-puis silence après « libc M1 scellée : 4/4 verts ». Diagnostic : à l'étape
-suivante (le patch à chaud), le moteur demandait à Windows de rendre SA
-PROPRE page de code accessible en écriture — mais avec la valeur
-PAGE_READWRITE, qui retire AUSSI le droit d'exécution. Or le DEP (Data
-Execution Prevention), permanent en 64 bits, interdit d'exécuter une page
-sans ce droit : le processus mourait instantanément au retour de l'appel,
-sans pouvoir tracer quoi que ce soit. Corrigé : la page passe en
-PAGE_EXECUTE_READWRITE (écriture ET exécution) pendant les modifications,
-puis revient en lecture-exécution stricte. L'oracle applique désormais les
-protections réelles : ce défaut est devenu impossible à réintroduire.
+POURQUOI CETTE VERSION : votre journal demo.5 a montré le démarrage complet
+(L00 demo.5), le clic, la porte R10 VERTE, les 4 vecteurs libc verts — puis
+à nouveau le silence après « libc M1 scellée : 4/4 verts ». Le correctif DEP
+(demo.5) était nécessaire mais pas suffisant : la démonstration meurt encore
+dans la phase « mécanique » (patch à chaud), sans un seul code d'erreur —
+alors que l'émulation de vérification exécute TOUTE cette phase sans défaut
+et que l'audit octet par octet est irréprochable. C'est un défaut invisible
+sans exécution sur machine réelle : pour le localiser, demo.6 embarque TROIS
+SONDES qui écrivent le journal fichier juste avant/après chaque étape à
+risque. La dernière sonde visible dans votre journal dira EXACTEMENT entre
+quelles instructions la démonstration meurt.
 
 1. Double-cliquez demo.exe — NE maximisez pas la fenêtre pour l'instant.
-   La fenêtre doit immédiatement afficher dans la zone journal :
-     L02 controles crees (journal, bouton)
-     L4C move journal=1
-     L4D move bouton=1
-     L01 fenetre principale creee
-   et le bouton « TOUT DÉMARRER » doit être VISIBLE sous la zone journal
-   (pleine largeur, en bas de la fenêtre) — comme en demo.4.
-2. Cliquez « TOUT DÉMARRER ». La démonstration complète s'exécute et se
-   journalise ligne à ligne DANS LA FENÊTRE :
-     - porte R10 (intégrité des sommes + version) ;
-     - 4 vecteurs libc scellés M1 (memcpy, memcmp, strlen, itoa) ;
-     - mécanique de patch à chaud : écho v1 -> v2 (MAJUSCULES) -> retour v1,
-       chaque étape vérifiée octet par octet ;
-     - serveur écho TCP réel (127.0.0.1:25000) lancé dans son thread ;
-     - client qui s'y connecte : aller-retour exact ;
-     - patch appliqué EN PRODUCTION pendant le trafic : réponse en MAJUSCULES ;
-     - retour arrière réseau : identité confirmée ;
-     - arrêt propre — « boucle § 5 complète — DÉMO OK ».
-3. SI LA DÉMONSTRATION S'ARRÊTE EN COURS DE ROUTE (improbable) : notez la
-   DERNIÈRE ligne affichée et envoyez journal + capture. Chaque étape
-   s'étant déjà exécutée au moins une fois sur votre machine, une nouvelle
-   interruption serait une information précieuse et localisée.
+   Comme en demo.4/demo.5, la zone journal doit afficher les 5 lignes de
+   démarrage (L02, L4C, L4D, L01 — L00 n'apparaît qu'au fichier) et le
+   bouton « TOUT DÉMARRER » doit être VISIBLE sous la zone journal.
+2. Cliquez « TOUT DÉMARRER ». Après « libc M1 scellée : 4/4 verts », trois
+   lignes NOUVELLES doivent apparaître, en clair :
+     sonde1 avant echo        (entrée dans la mécanique)
+     sonde2 patch pose        (le patch à chaud a été posé et vérifié)
+     sonde3 v2 ok             (l'écho patché a répondu MAJUSCULES, vérifié)
+   puis la suite attendue : mécanique, serveur, client, patch en production,
+   retour arrière, et « boucle § 5 complète — DÉMO OK ».
+3. QUEL QUE SOIT L'ENDROIT OÙ LA DÉMONSTRATION S'ARRÊTE, envoyez-moi :
+   a) le fichier demo_journal.txt (posé à côté de demo.exe, régénéré à
+      chaque lancement) — C'EST L'ÉVIDENCE CLÉ : la dernière ligne visible
+      localise l'instruction mortelle à quelques octets près ;
+   b) SI POSSIBLE, UNE CAPTURE D'ÉCRAN de la fenêtre telle quelle après
+      l'arrêt — l'écran et le fichier peuvent diverger d'une ligne, cette
+      divergence serait elle-même une information ;
+   c) un mot sur l'état de la fenêtre après l'arrêt : fenêtre encore
+      affichée ? bouton réactivé ou grisé ? disparition brutale ?
+      (fenêtre disparue = mort du processus ; fenêtre figée = blocage).
 
-DANS TOUS LES CAS, envoyez-moi ensuite le fichier demo_journal.txt (posé à
-côté de demo.exe, régénéré à chaque lancement) — idéalement accompagné d'une
-capture d'écran de la fenêtre après la fin du scénario. Le journal complet
-attendu fait 17 lignes (5 de démarrage + L03 + 11 de scénario) et se
-termine par « boucle § 5 complète — DÉMO OK ». Chaque échec y est tracé
-avec son code GetLastError (lignes LKO).
+Interprétation des sondes (pour votre curiosité — le journal me suffit) :
+ - s'arrête AVANT « sonde1 » → la mort est dans le premier appel écho ou sa
+   vérification memcmp (jamais exécutés sur votre machine avant demo.4) ;
+ - s'arrête après « sonde1 » → la mort est dans la POSE du patch
+   (VirtualProtect + écriture du détour) ;
+ - s'arrête après « sonde2 » → la mort est dans l'EXÉCUTION du code patché
+   (l'écho v2, MAJUSCULES) ou sa vérification — le suspect n° 1 ;
+ - s'arrête après « sonde3 » → la mort est dans le RETOUR ARRIÈRE ;
+ - les 3 sondes passent puis arrêt → la mort est dans la fermeture de la
+   mécanique ou le démarrage du serveur.
 
 Remarques :
  - fermez tout echo.exe encore lancé avant la démo (port 25000 partagé) ;
- - la fenêtre se ferme normalement quand vous voulez ; le serveur s'arrête
-   proprement à la fin du scénario ;
+ - les sondes seront retirées une fois le défaut corrigé (version finale) ;
  - le bouton se désactive pendant l'exécution (clic unique).
 
-echo-0.3.0-rc.3.exe : le serveur écho console, CORRIGÉ DU MÊME DÉFAUT (sa
-commande « patch » se serait écrasée pareillement). Usage inchangé :
-lancement, puis « telnet 127.0.0.1 25000 » ; commandes console :
-patch / rollback / quit.
-
 Chaîne : notation (keystone) -> octets -> PE32+ à la main, sans compilateur.
-Empreintes : demo.exe (demo.5) sha256:dc5215c57e771f69c605a9f4b854b2c09955659e35bac24b2887c060d6ea22b9
-             echo-0.3.0-rc.3.exe sha256:21a9735898bb1de02f84eb91f100a189eff9e2bb6642b74b262fd37234a43f4f
+Empreintes : demo.exe (demo.6) sha256:1ad1b7df4254e6b4fee1ed2837c91cf916ba5e8d912a729e3325c1da8ac88ad7
+             md5 3f3067a32cc3d098b404643f8fae6a98
+echo-0.3.0-rc.3.exe : inchangé (sha256:21a9735898bb1de02f84eb91f100a189eff9e2bb6642b74b262fd37234a43f4f).

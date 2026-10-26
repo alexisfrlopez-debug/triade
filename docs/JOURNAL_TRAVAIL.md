@@ -1378,3 +1378,70 @@ et cette fois jusqu'au cœur de M2.
 jusqu'à « boucle § 5 complète — DÉMO OK » (chaque étape du scénario a
 déjà été exécutée au moins une fois sur la machine réelle). Si vert :
 scellage final 0.3.0 (M2) sur preuve intégrale.
+
+## Journal 28 — D40 : terrain demo.5 parle (journal) — le correctif DEP ne suffisait pas, la mort est plus loin dans la mécanique ; demo.6 instrumentée (3 sondes)
+
+**Contexte** : « logs envoyés » — le développeur a lancé demo.5 et déposé
+demo_journal.txt (298 o, 22:34) dans son dossier « test ». Cinquième
+lecture terrain, même frontière : le mystère se déplace vers l'intérieur.
+
+**Déroulé** :
+1. Rapatriement (drive_recuperer.py --forcer) et lecture : 10 lignes —
+   L00 affiche « 0.3.0-demo.5 » : c'est BIEN le binaire corrigé qui a
+   tourné. L02, L4C=1, L4D=1, L01, L03 (clic), J_ENTETE, J_PROTO, porte
+   R10 VERTE, libc 4/4 verts — puis silence, NI J_MEC_OK NI LKO. Le
+   défaut DEP (D39) était nécessaire mais pas suffisant : le scénario
+   meurt encore entre J_LIBC_OK et J_MEC_OK, sans trace.
+2. Audit exhaustif de la frontière (scripts/audit_frontiere_mecanique.py,
+   nouveau, tracké) : .protger octet-par-octet correct (and rcx,~0xFFF en
+   encodage 64 sign-étendu, r9 = slot pile valide, alignement exact,
+   retour vérifié) ; payload v2 (staging) TOTALEMENT
+   position-indépendant (hypothèse ASLR-payload éliminée) ; PE
+   DYNAMIC_BASE+HIGH_ENTROPY_VA mais .reloc VIDE (0xC o) : chargement à
+   la base préférée 0x140000000 — identique à l'oracle ; chaînes
+   v1/v2 (« salut triade »/« SALUT TRIADE ») cohérentes ; checksum
+   staging conforme (mon premier calcul omettait le wrapping 64 bits) ;
+   IAT 0x20D0 = VirtualProtect confirmée par table d'imports.
+3. Oracle re-exécuté sur demo.5 : 79 cas VERTS (patch réel, permissions
+   appliquées, clobber actif, falsifications 28/28). Conclusion : le
+   défaut est de la 6e classe invisible — l'écart environnement
+   réel/émulation ne se révèle qu'à l'exécution terrain (les classes
+   précédentes : géométrie D36, écran mort D37, ABI volatiles D38,
+   protection système D39).
+4. Décision (D40) : INSTRUMENTER — la méthode qui a résolu D36/D37.
+   win-09:R2 : trois sondes de trace (win-05 entrée trace mode 0, r8d
+   explicitement nul) : sonde1 « avant echo » (entrée mécanique), sonde2
+   « patch pose » (tcp-07 mode 0 complet, retour 0 vérifié), sonde3
+   « v2 ok » (écho patché + memcmp passés). La dernière sonde visible
+   localise l'intervalle mort : écho#1/memcmp | pose tcp-07 | écho
+   patché/memcmp | rollback | fermeture.
+5. Ingénierie sous contraintes : slot win-09 0x380→0x3C0 (trou libre
+   0x4F80-0x4FFF, aucun bloc déplacé, D8 respecté, padding 71 o) ;
+   .rdata PLEINE (UTF-16 : 14 o libres, ASCII : 2 o) → sondes posées
+   dans trois interstices jamais lus par le chargeur (0x2748, 0x276C,
+   0x22F1 — après correction : hn() préfixe 2 o, le hint FFB finit à
+   0x22F1, pas 0x22EF — le verrou de chevauchement du build l'a
+   attrapé, fail-closed) ; entrée trace 0x5000 déclarée dans les appels
+   autorisés (le verrou structurel l'a exigée, fail-closed aussi).
+6. Oracle durci : journal nominal attendu 14 lignes (11 + 3 sondes,
+   écran ET fichier) ; build 0.3.0-demo.6 : round-trip 192/192, 565
+   verrous structurels, héritage R7 intact (16 blocs + staging
+   octet-identiques), 79 cas verts, falsification 28/28, carte
+   re-scellée génération 4. demo.exe 16 384 o,
+   sha256:1ad1b7df…88ad7 (md5 3f3067a3…).
+7. Audit final (scripts/audit_demo6.py, tracké) : 3 sondes conformes
+   aux interstices, 3 séquences complètes aux adresses exactes
+   (0x4cb6/0x4d0f/0x4d59), L00 demo.6, u64 0x00030106, héritage DEP
+   intact (2× mov r8d,0x40, 0× résiduel), pages inchangées.
+8. Livraison : racine Drive + dossier test + download/ (md5 MATCH
+   partout), LISEZMOI réécrit — il demande le journal + UNE CAPTURE
+   D'ÉCRAN + l'état de la fenêtre (disparue = crash, figée = blocage) :
+   trois lectures indépendantes du même événement.
+
+**État** : demo.6 (instrumentée) livrée partout. En attente du run
+terrain : la dernière sonde visible du journal identifie l'intervalle
+mort → correctif ciblé + retrait des sondes (R3) → scellage final
+0.3.0 (M2).
+
+**Suivi** : validation terrain demo.6 — journal avec sondes (14 lignes
+nominales attendues si tout passe, sinon : la coupure EST le diagnostic).

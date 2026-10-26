@@ -1187,3 +1187,66 @@ D15 (amende D5) illustrent la procédure.
   attendue : run demo.5 → journal complet 17 lignes jusqu'à « boucle § 5
   complète — DÉMO OK » → si vert : scellage final 0.3.0 (M2) sur
   preuve intégrale.
+
+### D40 — demo.5 meurt encore à la frontière mécanique après correctif DEP : instrumentation par sondes (win-09:R2), 6e classe de défaut invisible
+
+- **Constat terrain** : journal demo.5 (298 o, 10 lignes, md5 49671b8e…) —
+  L00 confirme « 0.3.0-demo.5 » : c'est BIEN le binaire corrigé DEP qui a
+  tourné. Démarrage complet, clic (L03), porte R10 VERTE, 4/4 libc verts —
+  puis silence après J_LIBC_OK, NI J_MEC_OK NI ligne d'échec (tous les
+  chemins d'échec du scénario journalisent : la mort est un crash
+  silencieux, pas un arrêt propre). Même frontière que demo.4, mais le
+  défaut DEP (D39) est corrigé : la mort est ailleurs, DANS la mécanique.
+- **Audit exhaustif SANS DÉFAUT TROUVÉ** : (a) binaire fidèle à la
+  notation (and rcx,~0xFFF encodé 64 bits sign-étendu, VirtualProtect
+  apparié RWX/RX, retour vérifié, alignement pile exact) ; (b) payload v2
+  (staging c30014) TOTALEMENT position-indépendant — hypothèse ASLR du
+  payload morte ; (c) PE DYNAMIC_BASE+HIGH_ENTROPY_VA mais .reloc vide
+  (0xC o) : chargement à la base préférée 0x140000000, comme l'oracle ;
+  (d) chaînes v1/v2 cohérentes, checksum staging conforme (wrapping 64) ;
+  (e) IAT 0x20D0 = VirtualProtect confirmée ; (f) oracle différentiel
+  re-exécuté VERT (79 cas, permissions réellement appliquées, clobber
+  actif, falsifications 28/28). Le défaut appartient à une classe que
+  NI l'audit statique NI l'émulation ne peuvent voir : 6e classe
+  (après géométrie D36, ABI volatiles D38, DEP D39…) — l'écart
+  environnement réel/émulation ne se révèle qu'à l'exécution terrain.
+- **Décision** : INSTRUMENTER (méthode D36/D37 qui a résolu le bouton
+  invisible). win-09:R2 ajoute TROIS sondes de trace (entrée trace
+  win-05, mode 0, ASCII) qui encadrent chaque étape jamais exécutée sur
+  le terrain : sonde1 avant le premier appel écho (entrée mécanique),
+  sonde2 après le retour 0 du patch pose (tcp-07 mode 0 COMPLET),
+  sonde3 après le memcmp de l'écho patché (v2 confirmé). Chaque sonde
+  écrit le fichier journal AVANT l'étape suivante : la dernière sonde
+  visible localise l'instruction mortelle. Sondes TEMPORAIRES (retirées
+  en R3 après correction).
+- **Contraintes d'ingénierie résolues** : (a) budget code : 3 sondes ×
+  20 o = 60 o > padding win-09 (67-16) → slot win-09 élargi 0x380→0x3C0
+  dans le trou libre 0x4F80-0x4FFF (aucun bloc déplacé, D8 respecté,
+  padding final 71 o) ; (b) budget .rdata : zones UTF-16 (14 o) et ASCII
+  (2 o) PLEINES → sondes posées dans les interstices libres jamais lus
+  par le chargeur (0x2748 INT k32#2→reloc, 0x276C reloc→INT user32,
+  0x22F1 hint FFB→IAT ws2 — précédent : les hints D36 vivent déjà en
+  interstices) ; (c) sondes en mode 0 avec r8d explicitement mis à zéro
+  (le mode est passé tel quel à win-11 : garbage ≠ déterministe interdit).
+- **Oracle durci en conséquence** : le journal nominal attendu du
+  scénario passe à 14 lignes (11 + 3 sondes intercalées après J_LIBC_OK,
+  écran et fichier) — l'oracle exécute les sondes et vérifie leur texte
+  exact ; verrou structurel : entrée trace win-05 (0x5000) déclarée dans
+  les appels autorisés de win-09 ; sondes ajoutées aux données RIP
+  autorisées. Build 0.3.0-demo.6 : 79 cas verts, falsification 28/28,
+  héritage R7 intact (16 blocs + staging), carte re-scellée génération 4.
+- **Valeur de preuve croisées** : le LISEZMOI demande en plus du journal
+  (a) une capture d'écran de la fenêtre après l'arrêt (l'écran et le
+  fichier peuvent diverger d'une ligne — divergence = information : mort
+  dans l'écriture journal elle-même) et (b) l'état de la fenêtre
+  (disparue = mort processus ; figée = blocage). Trois lectures
+  indépendantes du même événement.
+- **Alternatives rejetées** : instrumenter tcp-07 (casserait l'héritage
+  octet-identique R7 — le bloc est scellé M2) ; instrumenter via l'entrée
+  scénario UTF-16 (zone .rdata pleine) ; deux sondes au lieu de trois
+  (laissait l'écho#1/memcmp#1 sans encadrement — jamais exécutés sur
+  terrain avant demo.4) ; rapatrier un crash dump Windows (outillage
+  lourd côté développeur, le journal suffit à localiser l'intervalle).
+- **Développement** : entrée 28 du journal de travail. Validation terrain
+  attendue : journal demo.6 avec sondes → l'intervalle mort identifié →
+  correctif ciblé + retrait des sondes (R3) → scellage final 0.3.0.

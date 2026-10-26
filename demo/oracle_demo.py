@@ -515,8 +515,20 @@ class Emulateur:
 
 # --- Références dérivées de la couche I ----------------------------------------------
 
-LIGNES_NOMINALES = ["J_ENTETE", "J_PROTO", "J_PORTE_OK", "J_LIBC_OK", "J_MEC_OK",
-                    "J_SRV_OK", "J_CLI_OK", "J_ECHO_OK", "J_PROD_OK", "J_RB_OK", "J_FINAL"]
+# D40 : séquence nominale du journal scénario — 11 lignes nominales + les 3
+# sondes d'instrumentation R2 intercalées après J_LIBC_OK (retirées en R3).
+LIGNES_NOMINALES = ["J_ENTETE", "J_PROTO", "J_PORTE_OK", "J_LIBC_OK",
+                    "SONDE_1", "SONDE_2", "SONDE_3",
+                    "J_MEC_OK", "J_SRV_OK", "J_CLI_OK", "J_ECHO_OK",
+                    "J_PROD_OK", "J_RB_OK", "J_FINAL"]
+
+
+def _ligne_nom(nom: str) -> str:
+    """Ligne attendue : UTF-16 du scénario, ou sonde ASCII + CRLF (win-05
+    entrée trace mode 0 ajoute le CRLF à l'écran comme win-11 au fichier)."""
+    if nom in L.CHAINES_UTF16:
+        return L.CHAINES_UTF16[nom][1]
+    return L.CHAINES_SONDES[nom][1].decode("ascii") + "\r\n"
 
 TRACE_L00 = L.CHAINES_ASCII["L00"][1] + b"\r\n"
 TRACE_L01 = L.CHAINES_ASCII["L01"][1] + b"\r\n"
@@ -737,7 +749,7 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     em.uc.mem_write(IMAGE + L.DRAPEAU_SRV, struct.pack("<Q", 1))
     em.uc.mem_write(IMAGE + L.R_LISTEN, struct.pack("<Q", FAKE_SOCK))
     em.appeler(RVA_WIN["win-09"])
-    attendu = [L.CHAINES_UTF16[n][1] for n in LIGNES_NOMINALES]
+    attendu = [_ligne_nom(n) for n in LIGNES_NOMINALES]
     if em.journal != attendu:
         manquantes = [l for l in attendu if l not in em.journal]
         raise EchecOracle(f"win-09 : journal divergent ({len(em.journal)} lignes, "

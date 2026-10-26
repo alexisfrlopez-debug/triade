@@ -56,10 +56,11 @@ BLOCS = [
      "blocs tcp-01/02/06, win-05 ; IAT kernel32 : CloseHandle ; état .data"),
     ("win-10-echange", "d40010", "win-10:R1", 0x4980, 0x180,
      "IAT ws2_32 : send, recv ; bloc libc-02 memcmp ; phrase .rdata"),
-    ("win-09-scenario", "d40009", "win-09:R1", 0x4C00, 0x380,
+    ("win-09-scenario", "d40009", "win-09:R2", 0x4C00, 0x3C0,
      "blocs win-05/06/07/08, tcp-05/07, écho @0x4600, libc-02 ; "
      "IAT kernel32 : GetStdHandle, CloseHandle ; IAT ws2_32 : send, recv ; "
-     "état .data + chaînes UTF-16"),
+     "état .data + chaînes UTF-16 ; D40 : sondes trace mécanique "
+     "(win-05 entrée trace, interstices .rdata)"),
     ("win-11-journal", "d40011", "win-11:R1", 0x1E00, 0x200,
      "IAT kernel32#2 : GetModuleFileNameA, CreateFileA, WriteFile (commune), "
      "FlushFileBuffers, GetLastError ; blocs libc-01/03/04 ; "
@@ -123,6 +124,8 @@ SYMBOLES = {
 for _nom, (_adr, _txt, _n) in L.CHAINES_UTF16.items():
     SYMBOLES[_nom] = _adr
 for _nom, (_adr, _octets, _n) in L.CHAINES_ASCII.items():
+    SYMBOLES[_nom] = _adr
+for _nom, (_adr, _octets, _n) in L.CHAINES_SONDES.items():   # D40 : sondes R2
     SYMBOLES[_nom] = _adr
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
