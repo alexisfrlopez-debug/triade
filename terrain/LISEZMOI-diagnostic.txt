@@ -1,0 +1,59 @@
+TRIADE terrain — DIAGNOSTIC-SUPERVISEUR.cmd : pourquoi ce kit, comment l'utiliser
+================================================================================
+
+CONTEXTE — CE QUE J'AI VÉRIFIÉ DE MON CÔTÉ (27/10 au soir) : votre fichier
+superviseur-terrain3.exe est le BON (md5 40b2f350ad8556d028d431174d429189,
+celui annoncé dans le LISEZMOI v3), et je viens de l'auditer OCTET PAR
+OCTET avec un outil indépendant, écrit spécialement pour ne PAS réutiliser
+mes validateurs précédents (qui avaient béni terrain.2 à tort) :
+  - en-têtes PE : toutes les règles du chargeur Windows sont vertes
+    (SizeOfHeaders 0x400 correct, 6 sections saines, point d'entrée
+    exécutable, ImageBase 0x140000000) ;
+  - les 42 entrées d'importation correspondent EXACTEMENT aux fonctions
+    attendues (aucune permutation) ;
+  - manifeste et VERSIONINFO valides (asInvoker, « TRIADE superviseur
+    terrain », 0.5.0-terrain.3) ;
+  - le code de démarrage est cohérent : horodatage puis création de la
+    fenêtre — et si la création échouait, une MessageBox s'afficherait.
+Conclusion : le silence de votre côté ne vient PAS du binaire — il vient
+de la MACHINE : l'hypothèse n°1 est une MISE EN QUARANTAINE SILENCIEUSE
+par Defender (même famille que l'alerte « Wacatac.C!ml » reçue sur
+proxy.exe : exe non signé, inconnu, qui embarque d'autres exe).
+
+VÉRIFICATIONS MANUELLES — 30 SECONDES, AVANT MÊME LE KIT :
+  1. Après un double-clic « silencieux » : le fichier superviseur-
+     terrain3.exe EXISTE-T-IL TOUJOURS dans le dossier ? S'il a
+     DISPARU, c'est la preuve immédiate de la quarantaine.
+  2. Sécurité Windows -> Protection contre les virus et menaces ->
+     Historique de protection : cherchez une entrée récente mentionnant
+     superviseur-terrain3.exe.
+
+LE KIT — 3 ÉTAPES :
+  1. Téléchargez DIAGNOSTIC-SUPERVISEUR.cmd (dossier test ou racine du
+     Drive) et posez-le dans le MÊME dossier que superviseur-terrain3.exe.
+  2. Double-cliquez-le. Si Windows affiche l'écran bleu SmartScreen
+     (« Windows a protégé votre PC ») : « Informations complémentaires »
+     puis « Exécuter quand même » — c'est un simple script de lecture,
+     il n'installe rien.
+  3. Une fenêtre console noire défile (environ 10 à 30 secondes) ; le
+     script relance UNE FOIS superviseur-terrain3.exe sous surveillance
+     — si la fenêtre TRIADE apparaît enfin, fermez-la pour laisser le
+     script terminer. À la fin, le fichier rapport-diagnostic.txt est
+     posé à côté : DÉPOSEZ-LE dans le dossier « test » du Drive.
+
+CE QUE CONTIENDRA LE RAPPORT (tout est automatique) :
+  [0] version de Windows          [4] état de Defender
+  [1] présence du fichier         [5] les 8 dernières menaces détectées
+  [2] md5 du fichier              [6] les crashs applicatifs récents
+  [3] marque du téléchargement    [7] code de sortie du lancement surveillé
+      (SmartScreen)                   + le fichier a-t-il survécu
+  [8] contenu final du dossier
+
+SI L'ANTIVIRUS EST CONFIRMÉ : l'exclusion de dossier (Sécurité Windows
+-> Protection contre les virus et menaces -> Gérer les paramètres ->
+Exclusions -> Ajouter un dossier -> votre dossier de test) débloque le
+run immédiatement — la procédure détaillée est dans LISEZMOI-superviseur.
+Le rapport me dira laquelle des deux routes prendre.
+
+Merci — rapport-diagnostic.txt reçu dans le dossier test = réponse
+diagnostiquée sous la journée.

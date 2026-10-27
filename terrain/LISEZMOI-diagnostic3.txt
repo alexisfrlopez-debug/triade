@@ -1,0 +1,69 @@
+TRIADE — DIAGNOSTIC 3 DU SUPERVISEUR (D53)
+==========================================
+
+OU EN EST-ON
+------------
+Les 15 rapports WER de votre machine disent tous la meme chose :
+le superviseur meurt d'un "BEX64" (tentative d'execution d'une page
+non-executable, code c0000005, donnee 8), avec un module fautif
+"StackHash" et un decalage "+0x0". Cela correspond a un appel qui
+saute sur l'adresse 0 — typiquement un slot d'import jamais rempli
+par le chargeur de votre Windows 11 build 26300 (Insider).
+
+Le suspect : les deux tables d'import NOUVELLES du superviseur
+(kernel32#3 et user32#2) sont rangees dans une section de CODE
+(.text2) alors que demo.exe, qui marche, les range dans la zone
+de donnees classique. Votre chargeur semble ignorer ces deux
+descripteurs : le slot de GetLocalTime reste a ZERO, et le tout
+premier appel (avant la fenetre) saute sur 0 -> mort immediate.
+
+CE QUI EST LIVRE
+----------------
+superviseur-terrain4.exe          LE CORRECTIF (md5 283895db...)
+  - les tables d'import demenagent dans une vraie section .idata
+    (classique, inscrite en lecture/ecriture) ;
+  - GetLocalTime passe par le descripteur kernel32 eprouve depuis
+    le M0 (comme demo.exe) ;
+  - aucun octet de code scelle n'a bouge ; la porte d'integrite
+    R10 reste VERTE (27/27 sommes verifiees).
+
+superviseur-p4-messagebox.exe     sonde : affiche une MessageBox
+                                  des le demarrage (teste chargeur+IAT)
+superviseur-p1-sans-horodatage.exe sonde : saute l'appel GetLocalTime
+superviseur-p3-defwndproc.exe      sonde : fenetre vide, sans wndproc
+superviseur-terrain3-temoin.exe    le binaire qui plante (temoin)
+demo.exe                           la reference qui marche (temoin)
+DIAGNOSTIC3-SUPERVISEUR.cmd        le script de diagnostic complet
+
+QUOI FAIRE (2 minutes)
+----------------------
+1. DOUBLE-CLIQUEZ SUR superviseur-terrain4.exe
+   - La fenetre "TRIADE superviseur terrain" apparait ? GAGNE.
+     Cliquez "TOUT DEMARRER", puis deposez le fichier terrain_*.txt
+     ( cree a cote de l'exe ) dans le dossier test du Drive.
+   - Toujours rien ? passez au point 2.
+
+2. CLIC DROIT sur DIAGNOSTIC3-SUPERVISEUR.cmd -> "Executer en tant
+   qu'administrateur". Attendez la fin (environ 1 minute).
+   Le script :
+   - relit les plantages enregistres par Windows (module fautif et
+     offset EXACTS de chaque crash passe — la donnee qui manquait) ;
+   - lance chaque sonde 6 secondes et note VIVANT/MORT ;
+   - active les dumps memoire au prochain crash ;
+   - ecrit rapport-diagnostic3.txt.
+
+3. DEPOSEZ dans le dossier test du Drive :
+   - rapport-diagnostic3.txt
+   - terrain_*.txt s'il existe
+   - les fichiers .dmp de %LOCALAPPDATA%\CrashDumps s'il y en a
+     ( clic droit sur le dossier -> Envoyer vers -> Dossier compresse )
+
+LECTURE DES RESULTATS
+---------------------
+terrain4 VIVANT            -> corrige, on avance sur les tests T1/T2/T3
+p4 MORT                    -> meme MessageBox echoue : chargeur/IAT global
+p4 VIVANT + p1 VIVANT      -> l'appel GetLocalTime etait bien le tueur
+p1 MORT + p3 VIVANT        -> le crash est dans le wndproc/le journal
+p3 MORT                    -> le crash est dans la creation de fenetre
+demo MORT                  -> votre machine casse aussi la reference :
+                             le probleme n'est pas le superviseur

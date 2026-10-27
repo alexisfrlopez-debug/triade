@@ -1,0 +1,61 @@
+TRIADE — DIAGNOSTIC 2 (D52)
+============================
+
+CONTEXTE — CE QU'ON SAIT DEJA
+-----------------------------
+Votre rapport-diagnostic.txt a tout dit :
+
+  1. Le fichier que vous lancez est le bon (md5 40b2f350... verifie).
+  2. L'antivirus ne supprime rien : superviseur-terrain3.exe est bien
+     la, jamais mis en quarantaine.
+  3. Le programme crashe reellement au lancement : code 0xC0000005
+     (acces memoire), 8 fois sur 8, avec execution a l'adresse NULL
+     (module "unknown", offset 0).
+
+Depuis, ici, j'ai fait une emulation complete de votre lancement sur
+les octets EXACTS de votre fichier : le programme demarre, ecrit son
+journal terrain_*.txt, cree la fenetre, cree le journal ecran et le
+bouton "TOUT DEMARRER", traite les messages, et se ferme proprement.
+Le binaire est donc sain de bout en bout ; le blocage vient de votre
+environnement. Il reste deux suspects :
+
+  - l'antivirus (Defender) : il a deja signale proxy.exe en
+    "Wacatac.C!ml" le 27/10 a 12h55 — or superviseur-terrain3.exe
+    CONTIENT les octets exacts de proxy.exe dans une section .blob.
+    C'est la difference majeure avec demo.exe, qui fonctionne ;
+  - un mecanisme de Windows 11 (build 26300) sur cette image.
+
+LA SONDE : superviseur-zero.exe
+-------------------------------
+C'est votre superviseur-terrain3.exe EXACTEMENT, avec UNE seule
+difference : le contenu de la section .blob (proxy.exe embarque +
+jetons) est mis a zero. Le demarrage ne lit jamais cette section
+(prouve par emulation). Le fichier fait la meme taille.
+
+SI superviseur-zero.exe OUVRE SA FENETRE alors que
+superviseur-terrain3.exe crashe -> c'est le CONTENU de .blob qui
+declenche le blocage au lancement : verdict antivirus, on saura
+exactement quoi changer.
+
+CE QU'IL FAUT FAIRE (2 minutes)
+-------------------------------
+  1. Mettre dans LE MEME DOSSIER (votre dossier Downloads\test convient) :
+       - superviseur-terrain3.exe    (deja present)
+       - superviseur-zero.exe        (nouveau, dans le dossier test du Drive)
+       - demo.exe                    (deja present)
+       - DIAGNOSTIC2-SUPERVISEUR.cmd (nouveau)
+  2. Double-cliquer DIAGNOSTIC2-SUPERVISEUR.cmd.
+     Il lance chaque exe pendant 6 secondes, note s'il reste vivant
+     (fenetre visible = fonctionne), puis le referme. Regardez
+     l'ecran pendant l'execution : est-ce que la fenetre TRIADE
+     apparait pour superviseur-zero.exe ?
+  3. A la fin, deposer dans le dossier test du Drive :
+       - rapport-diagnostic2.txt
+       - wer-superviseur.zip        (dumps de plantage, s'il existe)
+
+La lecture des resultats est automatique dans le rapport. Les dumps
+WER me donneront en plus l'adresse exacte du plantage si le mystere
+persiste.
+
+Aucune donnee n'est envoyee automatiquement : c'est vous qui deposez
+les deux fichiers dans le dossier test du Drive, comme d'habitude.

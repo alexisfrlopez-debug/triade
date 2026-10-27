@@ -56,9 +56,18 @@ def _liste_trois(blocs):
 
 
 def _git_precedent() -> bytes:
+    """terrain.2 scellé : HEAD tant que terrain.3 n'est pas commité, puis le
+    commit D49 (7c6b082, dernier état terrain.2 de l'historique)."""
     retour = subprocess.run(["git", "-C", ICI, "show", "HEAD:terrain/superviseur.exe"],
                             capture_output=True, check=True)
-    return retour.stdout
+    d = retour.stdout
+    soh = struct.unpack_from("<I", d, struct.unpack_from("<I", d, 0x3C)[0] + 4 + 20 + 60)[0]
+    if soh == L.SIZE_HEADERS:          # HEAD est déjà terrain.3 — remonter au D49
+        retour = subprocess.run(
+            ["git", "-C", ICI, "show", "7c6b082:terrain/superviseur.exe"],
+            capture_output=True, check=True)
+        return retour.stdout
+    return d
 
 
 def _bloc(exe: bytes, rva: int, taille: int) -> bytes:
@@ -161,7 +170,8 @@ def main() -> int:
     verif("C/D50 terrain.2 reproductible en échec",
           (struct.unpack_from("<I", PRECEDENT, opt + 60)[0] == 0x200
            and struct.unpack_from("<H", PRECEDENT, e_lfanew + 6)[0] == 6),
-          "le prédécesseur portait bien le défaut (0x200 déclarés, 6 sections)")
+          "le scellé terrain.2 (commit D49) portait le défaut : 0x200 déclarés, "
+          "6 sections, table 0x238 — le chargeur refusait l'image")
 
     # --- C2. DIFF chirurgical terrain.2 -> terrain.3 ----------------------------------
     blocs_inchanges, blocs_revise = [], []

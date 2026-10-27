@@ -2188,3 +2188,303 @@ fichier.
 dans le dossier test — la fenêtre doit maintenant S'OUVRIR au
 double-clic ; tout le reste (T1/T2/T3, S00…S90) est la mécanique déjà
 éprouvée.
+
+## Entrée 40 — D51 : terrain.3 « ne fait toujours rien » — le binaire blanchi par un audit INDÉPENDANT, le kit diagnostic part sur le terrain (27/10 au soir)
+
+**Le constat.** Le développeur relance « superviseur-terrain3.exe »
+(nom local du livrable du dossier test, md5 40b2f350… = la livraison
+terrain.3, la bonne empreinte) : toujours RIEN. Or D50 avait corrigé
+SizeOfHeaders — le refus du chargeur était la cause certaine du
+premier silence. Deux silences successifs pour deux causes
+potentiellement différentes : re-diagnostiquer à zéro, sans réutiliser
+UN SEUL de mes validateurs précédents (D50 venait de prouver qu'ils
+pouvaient bénir un fichier refusé par Windows).
+
+**L'audit indépendant (scripts/audit_pe2.py).** Un parseur PE écrit
+from scratch, ne connaissant que les règles du chargeur Windows
+documentées : DOS, COFF, PE32+, alignements, SizeOfHeaders vs fin
+RÉELLE des en-têtes recalculée depuis le fichier, SizeOfImage vs fin
+virtuelle réelle, chevauchements de sections, données brutes dans le
+fichier, point d'entrée dans une section exécutable, parcours COMPLET
+des descripteurs d'import (chaque nom de DLL, chaque thunk, chaque
+hint/name résolu), arbre des ressources recursif (manifeste inclus),
+TLS, LoadConfig. Résultat : les DEUX builds (publique 2fb19c0f…,
+livraison 40b2f350…) sont CHARGEABLES — 29 contrôles verts chacun,
+zéro refus. L'unique « refus » provisoire (proxy.exe Subsystem 3) était
+un défaut de MON auditeur (règle « GUI seul » trop stricte — un proxy
+console est Subsystem 3 par conception) : corrigé, leçon retenue —
+l'outil neuf a ses propres classes de faux positifs.
+
+**La dixième classe de défaut invisible — dans mes propres mains.**
+La première version de l'auditeur (audit_pe_superviseur.py) est morte
+d'un NameError absurde : mes identifiants Python contenaient des
+HOMOGLYPHES (des « е » cyrilliques dans fin_entetes — visuellement
+parfaits, invisibles à la lecture, indétectables en relecture). Le
+script de remplacement porte un AUTO-CONTRÔLE : il vérifie AVANT de
+tourner qu'il ne contient aucun octet non-ASCII. Taxonomie ironique :
+le projet chasse les défauts invisibles à l'émulation, et mon propre
+outil d'audit en a produit un — classe X10 « l'outil de mesure menteur
+par construction ».
+
+**La vérification croisée IAT (scripts/verifie_iat.py).** Les slots
+NOUVEAU de terrain (kernel32#3 @0x2300 : CreateProcessA..Sleep ;
+user32#2 @0x2360 : FindWindowW..SendMessageTimeoutW) n'avaient JAMAIS
+tourné sur machine réelle — seule la coquille démo (slots #1) était
+éprouvée. Vérifié nom par nom : 42/42 slots du fichier correspondent
+EXACTEMENT au layout (aucune permutation — un swap GetLocalTime/
+TerminateProcess aurait été un crash silencieux parfait).
+
+**Chaîne de démarrage relue à la main.** sup-01 @0x1400 : horodatage
+AVANT fenêtre (sup-21 @0x1c40 : GetLocalTime + mise en forme, buffers
+en .data RW) ; sup-02 @0x1440 : WNDCLASSEX complet (cbSize 0x50,
+classe « TRIADE_superviseur », titre « TRIADE superviseur terrain »,
+IDC_ARROW, CreateWindowExW WS_VISIBLE 780x560) — et tout échec de
+RegisterClassExW/CreateWindowExW passe par une MessageBoxW VISIBLE.
+Un silence total n'est donc PAS explicable par le code : soit le
+processus ne démarre jamais, soit il est tué avant la première fenêtre.
+
+**État des livraisons constaté.** Racine du coffre : superviseur.exe =
+la PUBLIQUE (2fb19c0f…) — divergence avec le LISEZMOI v3 qui annonce
+la livraison (40b2f350…) ; dossier test : superviseur.exe ET
+superviseur-terrain3.exe = tous deux la LIVRAISON (le développeur a
+donc le bon fichier). La publique ne diffère de la livraison que par
+245 octets @0xf010 : l'annexe de jetons (zéros vs OAuth réel) — même
+code, même scellement propre. Aucun journal terrain_*.txt reçu : le
+processus n'atteint jamais T3.
+
+**Verdict et action.** Binaire blanchi sur toute la ligne statique ;
+l'hypothèse n°1 devient ENVIRONNEMENTALE : mise en quarantaine
+SILENCIEUSE par Defender (lignée Wacatac.C!ml de proxy.exe : exe non
+signé, inconnu, qui embarque deux exe et des jetons), puis copie
+locale abîmée, puis politique système. Kit DIAGNOSTIC-SUPERVISEUR.cmd
+livré (racine + dossier test, md5 vérifiés MATCH) : 8 sections
+automatiques — présence du fichier AVANT/APRÈS (une disparition après
+lancement = quarantaine prouvée), md5, marque du web, état Defender,
+historique de protection, crashs récents, lancement surveillé avec
+code de sortie, contenu final — le tout écrit dans
+rapport-diagnostic.txt que le développeur déposera dans le dossier
+test. LISEZMOI-diagnostic.txt joint : les deux vérifications manuelles
+de 30 secondes (le fichier existe-t-il encore ? l'historique de
+protection dit quoi ?) et la route de l'exclusion si l'antivirus est
+confirmé.
+
+**En attente** : rapport-diagnostic.txt dans le dossier test — il
+tranchera entre exclusion de dossier (AV confirmé) et re-livraison
+(copie abîmée). Le premier terrain_*.txt de la lignée terrain.3 reste
+l'objectif.
+
+## Entrée 41 — D52 : le rapport du terrain est tombé — crash 0xC0000005 à RIP=0, binaire BLANCHI par émulation forensique, la sonde .blob part trancher l'hypothèse antivirus (27/10 après-midi)
+
+**Le rapport-diagnostic.txt arrive (dossier test, 8 992 o).** Il répond
+aux trois questions du kit D51 : (1) le fichier du développeur EST le
+bon — md5 40b2f350… conforme, CertUtil à l'appui ; (2) l'antivirus ne
+supprime RIEN — superviseur jamais touché, seule proxy.exe a un
+historique (Wacatac.C!ml, 27/10 12h55, dans le zip téléchargé) ; (3)
+le lancement surveillé capture le coupable : **CODE DE SORTIE
+-1073741819 = 0xC0000005**, et l'Observateur d'événements livre 8
+plantages identiques — « module défaillant : unknown, offset 0x0 » —
+autant pour terrain.2 (5.0.0.2, 13h43-13h48) que terrain.3 (5.0.0.3,
+14h23-15h03). Exécution à l'adresse NULL, hors de tout module.
+
+**Conséquence immédiate : D50 avait tort de croire que
+SizeOfHeaders bloquait le lancement.** demo.exe a SizeOfHeaders=0x200
+et FONCTIONNE — Windows mappe la page d'en-tête complète quoi qu'il
+arrive ; et terrain.2 a planté avec la MÊME signature runtime que
+terrain.3. La cause du crash silencieux est donc COMMUNE aux deux
+builds et INDEPENDANTE de l'octet D50 (qui restait un vrai défaut,
+corrigé pour de bon).
+
+**Autopsie en cinq vagues (scripts/autopsie_*.py, capstone).**
+IAT : 6 descripteurs, 42 slots, aucun recouvrement, noms sains — et
+les 94+59 références [rip±disp] de .text/.text2 tombent TOUTES sur
+des slots couverts et 8-alignés (mes premières alertes « slot impair »
+étaient des bugs de MES scripts — signe moins mal parsé, capstone
+arrêté au premier octet indécodable ; leçons notées). sup-21 @0x1c40
+(horodatage) relu ligne à ligne : GetLocalTime@[0x2328] couvert,
+arithmétique pure, écritures .data bornées. Entrée et win-02 :
+octet-identiques à demo (preuve terrain). En-têtes : champ à champ
+identiques à demo hors tailles. .rsrc : arbre, bornes, manifeste
+(asInvoker/dpiAware/GUID Win10) et VERSIONINFO revalidés par mon
+propre parseur strict (mon premier parseur lisait les compteurs dans
+les champs version — artefact corrigé). Relocations : padding pur,
+identique à demo.
+
+**L'émulation forensique (scripts/emulation_forensique*.py, unicorn)
+— le juge de paix.** Différences avec l'oracle D35 : base RELOGÉE
+(0x7FF6A0000000, ASLR réaliste), IAT remplie UNIQUEMENT par la marche
+des six descripteurs, et surtout le wndproc RAPPELÉ comme le vrai
+user32 — WM_NCCREATE, WM_NCCALCSIZE, WM_CREATE (création EDIT +
+bouton « TOUT DÉMARRER », WM_SETFONT, EM_SETSEL/EM_REPLACESEL, ligne
+L02), puis WM_SIZE/WM_MOVE/WM_SHOWWINDOW pendant la création
+(GetClientRect + MoveWindow, lignes L4C/L4D), puis boucle de messages
+complète (WM_PAINT, WM_MOUSEMOVE, WM_COMMAND) jusqu'à WM_QUIT et
+ExitProcess(0). Sur les octets EXACTS de la livraison : **départ
+propre, 76 appels d'API journalisés, aucun crash.** Le chemin que
+l'oracle n'avait JAMAIS exercé (callbacks wndproc) est propre lui
+aussi. Trois crashes apparents pendant la mise au point venaient de
+MON harnais (lpClassName lu à [rsp+0x28] au lieu de RDX ; RSP non
+restauré après callback ; RECT écrit dans rcx=hwnd au lieu de
+rdx=lpRect) — chaque fois la faute était dans l'outil de mesure, pas
+dans le binaire.
+
+**Verdict : le binaire livré est INNOCENT du crash RIP=0.** Restent
+les causes environnementales, et une domine : Defender
+(BehaviorMonitorEnabled=True) a classé proxy.exe en Wacatac.C!ml — or
+superviseur embarque les octets EXACTS de proxy.exe dans .blob (245
+octets de jetons en plus), et demo.exe (qui marche) n'a PAS de .blob.
+Deuxième suspect : un mécanisme du build 26300 sur cette image.
+
+**La sonde superviseur-zero.exe (scripts/build_sonde_zero.py).** Les
+octets exacts de la livraison, .blob mis à zéro (23 567 octets non
+nuls effacés, tout le reste strictement identique — 0 octet modifié
+hors .blob, audit de chargeabilité OK), md5 4205ba7f… L'émulation la
+juge identique au démarrage (mêmes 76 appels, sortie propre). Si elle
+OUVRE SA FENÊTRE sur le terrain pendant que terrain.3 crashe :
+verdict antivirus, contenu .blob = déclencheur. Si elle crashe aussi :
+le déclencheur est ailleurs — les dumps WER trancheront.
+
+**Kit DIAGNOSTIC2-SUPERVISEUR.cmd livré (dossier test, 3/3 md5
+MATCH)** : échelle de sondes (terrain.3 / zero / démo — lancés 6 s
+chacun, vivant = fenêtre visible), collecte des rapports WER
+(ReportArchive + ReportQueue, système et utilisateur) dans
+wer-superviseur.zip, marque du web, empreintes, historique Defender.
+ASCII pur + CRLF cette fois (le kit D51 avait vu sa section [3]
+cassée par les accents du .cmd). LISEZMOI-diagnostic2.txt joint :
+matrice d'interprétation et geste attendu (déposer
+rapport-diagnostic2.txt + wer-superviseur.zip dans le dossier test).
+
+**En attente** : les deux fichiers du diagnostic 2. Le premier
+terrain_*.txt de terrain.3 reste l'objectif ; si la sonde innocentée
+le .blob, les minidumps WER donneront l'adresse exacte du défaut.
+
+## Entrée 42 — D53 : les 15 WER disent BEX64 « exécution sur la pile » — l'IAT kernel32#3/user32#2 (OFT en .text2) désignée, terrain.4 corrige et l'échelle de sondes part trancher (27/10 soir)
+
+**rapport-diagnostic2.txt + wer-superviseur.zip rapatriés (dossier
+test).** La sonde zero répond : **MORT avant 6 s** — l'hypothèse
+« contenu .blob/Defender » de D52 est MORTE (le probe à .blob zéroé
+crashe pareil). Les 15 rapports WER (tous builds : 0.0.0.0, 5.0.0.2,
+terrain.3 ×5, zero ×1) portent la MÊME signature : **EventType
+BEX64, c0000005, Données d'exception = 8 (tentative d'exécution d'une
+page NX), module défaillant StackHash_XXXX, décalage
+PCH_84_FROM_unknown+0x0** — l'exécution a sauté sur une adresse qui
+n'est dans AUCUN module, à 0 ou sur la pile, AVANT toute fenêtre
+(IMM32/win32u chargés = resolution d'imports passée). terrain.1 (sans
+.rsrc, sans .blob, sans manifeste) crashe identiquement : le
+différenciateur est dans le noyau terrain.1.
+
+**Ce que demo a et que superviseur n'a pas — et réciproquement.**
+Audit shadow space superviseur (jamais fait, l'outil D41 n'avait tourné
+que sur demo) : 4 défauts D=0x8 trouvés… tous post-clic (sup-31, sup-34
+×3) — réels mais PAS le tueur pré-fenêtre. Blocs scellés : diff octet à
+octet, 11/12 IDENTIQUES (seul sup-01 diffère, de son appel sup-21 en
+plus — attendu). sup-02 ≈ win-02, sup-11 = win-11 au nom de fichier
+près. Chemin de démarrage entier re-désassemblé, émulé avec HOMING
+d'arguments réel des fausses API (v3 — les DLL /homeparams écrivent
+rcx/rdx/r8/r9 dans le shadow space de l'appelant, mécanisme qui tua
+demo.6) et file de messages Win11 complète (IME compris) : **101
+appels, ExitProcess(0) PROPRE — le code est dynamiquement sain.**
+Pile PE (stack/heap), relocations (padding), attributs de sections :
+identiques à demo.
+
+**Le seul différenciateur structurel restant : les DEUX descripteurs
+d'import nouveaux (kernel32#3 @FT 0x2300, user32#2 @FT 0x2360) dont
+les tables OFT/hints vivent en .text2 RX @0x6490/0x64E0 — placement
+unique au superviseur, jamais éprouvé sur machine réelle.** Leur
+slots FT sont à ZÉRO dans le fichier (contrairement à kernel32#1/#2,
+user32#1, ws2_32 de demo qui contiennent des RVA hints) : si le
+chargeur du Windows 11 26300 (Insider ge_release) saute ces
+descripteurs, `call [0x2328]` (GetLocalTime, appelé AVANT la
+fenêtre par sup-21) = **call 0 = BEX64 c0000005 code 8, module
+inconnu → StackHash, +0x0 — la signature WER EXACTE, 15/15.**
+
+**terrain.4 (patch chirurgical du binaire livré, md5 283895db…) :
+double assurance.** (a) Les OFT/hints de kernel32#3 et user32#2
+déménagent dans une NOUVELLE section .idata @0x11000 (RW, classique,
+7e section, SizeOfImage 0x12000) — descripteurs retargetés, slots FT
+et code TOUCHÉS EN RIEN ; (b) GetLocalTime devient le 5e import du
+descripteur kernel32#2 éprouvé depuis M0 (slot @0x2EA0 dans
+l'interstice libre, hint @0x2750) et sup-21 appelle ce slot (un
+disp32 patché, somme R10[9] ajustée du delta exact). Vérifié : audit
+PE indépendant CHARGEABLE (7 sections), résolution d'imports DEPUIS
+L'IMAGE MAPPÉE 0 défaut (43 slots — la sémantique du chargeur, pas
+celle du fichier), porte R10 27/27 VERTE (recalcul complet avant et
+après), émulation v3 homing 101 appels ExitProcess(0), VERSIONINFO
+bumpé 5.0.0.4 (4 champs) pour traçabilité WER.
+
+**Échelle de sondes sur les octets exacts de terrain.3 (un site
+patché chacune) + témoins :** p4 « MessageBoxW d'abord » (chargeur +
+IAT kernrel32#1/user32#1 + entrée), p1 « sans sup-21 » (saute
+GetLocalTime), p3 « DefWindowProcW » (fenêtre vide, isole la chaîne
+wndproc win-04→win-05→sup-11), terrain3-temoin (le crash connu) et
+demo.exe (la référence — ABSENT du dossier du développeur au moment
+des sondes D52, il redevient témoin obligatoire). DIAGNOSTIC3-
+SUPERVISEUR.cmd (ASCII+CRLF, 8 sections) capture ENFIN la donnée qui
+manquait : **les événements « Application Error » ID 1000 — module
+fautif et offset EXACTS de chaque crash déjà subi** — plus l'échelle
+de sondes 6 s, l'activation LocalDumps (dump complet au prochain
+crash), l'état Defender, et les journaux terrain_*.txt. Livraison
+dossier test : **8/8 md5 MATCH** (terrain.4, p1/p3/p4, terrain3-
+temoin, demo.exe, DIAGNOSTIC3, LISEZMOI-diagnostic3).
+
+**Lecture attendue :** terrain.4 VIVANT = correctif validé, la
+fenêtre existe enfin, le journal terrain_*.txt débloque la suite
+(T1/T2/T3). Sinon, la matrice p4/p1/p3 localise l'étage fautif en un
+seul aller-retour — et si même demo.exe est MORT, le problème est la
+machine, pas le superviseur.
+
+## Entrée 43 — D54 : la fenêtre de terrain.4 s'ouvre enfin, S00-S03 passent, puis MORT sur le 1er appel kernel32#3 — terrain.5 réplique le motif .rdata de demo (INT + FT pré-remplies), zéro octet de code touché (27/10 soir)
+
+**terrain_20261027_162717.txt rapatrié (dossier test) : le premier
+journal du superviseur JAMAIS produit sur machine réelle.**
+L00→L03 (démarrage, contrôles, moves L4C/L4D, fenêtre, clic) : la
+chaîne graphique entière fonctionne — le correctif .idata+GetLocalTime
+de D53 a bel et bien tué le crash pré-fenêtre. S00 bannière, S01 date
+(GetLocalTime via kernel32#2 ✓), S02 porte R10 VERTE (27/27), S03 libc
+M1 4/4 — puis RIEN. Le développeur : « la fenêtre s'ouvre mais se
+ferme avant de terminer ».
+
+**La mort est à l'octet près là où la théorie D53 la plaçait.** Après
+S03, sup-09 appelle sup-37-extraction ; le PREMIER appel externe du
+chemin est DeleteFileA @FT 0x2330 (kernel32#3) — suppression de
+l'ancienne annexe terrain_jetons.bin (chaine @0x6300, len 19 ✓
+relue dans le binaire). Aucune ligne S04 : le processus meurt AVANT
+même le retour de sup-36. Kernel32#3/user32#2 restent NON RÉSOLUS par
+le chargeur 26300 : terrain.4 avait déplacé le témoin (GetLocalTime),
+pas la cause.
+
+**La preuve par demo.exe, dans le même audit :** la référence qui
+MARCHE porte 5 descripteurs (kernel32×2 DUPLIQUÉS, ws2_32, user32,
+gdi32) — le compte et les doublons sont donc INNOCENTS — tous avec
+INT dans .rdata et FT PRÉ-REMPLIES des RVA hints. Le superviseur
+fonctionne pour [0]-[3] (même motif), crashe pour [4]/[5] (OFT en
+.idata, FT à ZÉRO dans le fichier). Deux variables résiduelles,
+terrain.5 les change TOUTES DEUX.
+
+**terrain.5 (patch chirurgical data-only, md5 6ddfe8c2…,
+sha256 e6435436…) :** INT kernel32#3 (10 qwords) et user32#2 (4)
+déménagent de .idata vers .rdata @0x2B40/0x2B90 (zone libre 832 o
+vérifiée à zéro), hints 0xCB octets @0x2BB0, lookups réécrits ;
+FT @0x2300/0x2360 PRÉ-REMPLIES de la copie exacte des INT (double
+chemin de résolution : OFT ou FT) ; descripteurs [4]/[5] retargetés ;
+.idata vidée (section conservée) ; VERSIONINFO 0.5.4.0→0.5.5.0
+(4 champs). 416 octets modifiés, TOUS bornés aux zones autorisées.
+
+**Vérifications fail-closed (scripts/patch_terrain5.py) :** zones R10
+(.text/.text2/.blob) byte-identiques à terrain.4 — la porte reste
+VERTE sans re-scellage ; re-parse PE complet depuis l'image mappée :
+6 descripteurs, tous OFT+FT dans .rdata, motif demo 6/6 ; les 13
+slots appelés résolvent par nom exact (DeleteFileA@0x2330,
+CreateProcessA@0x2300, FindWindowW@0x2360, GetLocalTime@0x2ea0…) ;
+FT==INT vérifié qword par qword ; **audit des 93 call-sites indirects
+FF15/FF25 des deux sections de code : 100% sur des slots couverts**
+(l'inventaire complet — WaitForSingleObject×8, GetExitCodeProcess×6,
+Sleep×3, SendMessageTimeoutW×2… — correspond aux blocs sup-31/33/34/
+36/37) ; audit indépendant (audit_terrain4_imports.py) : slot 0x2330
+= 0x2c20 pré-rempli (demo : 0x2396) — le motif est IDENTIQUE.
+
+**Livraison :** superviseur-terrain5.exe + LISEZMOI-terrain5.txt au
+dossier test (2/2 md5 MATCH) + download/. Si terrain.5 meurt encore
+après S03, le LISEZMOI renvoie au DIAGNOSTIC3 déjà en main (rapport
+WER + LocalDumps) — l'offset EXACT tranchera ce qui resterait.
+Prochaine étape après VIVANT : le journal complet S00→S07 + T1/T2/T3,
+puis la reprise de la chaîne de clôture M2.

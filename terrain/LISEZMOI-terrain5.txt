@@ -1,0 +1,72 @@
+TRIADE — SUPERVISEUR TERRAIN.5 (D54)
+====================================
+
+CE QUI S'EST PASSE AVEC TERRAIN.4
+----------------------------------
+Votre journal terrain_20261027_162717.txt a tout dit :
+la fenetre s'ouvre, le clic lance le scenario, S00 a S03
+passent (banniere, date, porte R10 VERTE, libc 4/4) —
+puis le superviseur MEURT au premier appel d'une table
+d'import que votre chargeur ne remplit toujours pas :
+
+  S03 libc M1 scellee : 4/4 verts
+  << ICI : suppression de l'ancienne annexe (DeleteFileA,
+     table kernel32#3) = saut sur l'adresse 0 = crash,
+     la fenetre se ferme avant S04 >>
+
+Terrain.4 avait deplace GetLocalTime (le crash d'avant
+la fenetre) mais laisse les DEUX tables neuves
+(kernel32#3 et user32#2) avec leurs emplacements de
+remplacement A ZERO dans le fichier, ranges dans une
+section .idata. Votre chargeur (Windows 11 build 26300,
+Insider) saute encore ces deux descripteurs.
+
+LA PREUVE DANS VOS PROPRES FICHIERS
+-----------------------------------
+demo.exe, qui marche chez vous, a 5 tables d'import
+toutes construites pareil : ranges dans .rdata ET
+pre-remplies dans le fichier. Les 4 premieres tables
+du superviseur suivent ce motif et marchent. Les 2
+dernieres ne le suivaient pas.
+
+CE QUE TERRAIN.5 CORRIGE
+------------------------
+Les tables kernel32#3 et user32#2 sont reconstruites
+A L'IDENTIQUE du motif de demo.exe (et des 4 tables
+qui marchent deja) :
+  - tables de recherche rangees dans .rdata ;
+  - emplacements de remplacement PRE-REMPLIS dans le
+    fichier (resolution possible par les deux chemins) ;
+  - la section .idata est videe (plus rien n'y vit).
+AUCUN OCTET DE CODE n'a bouge : la porte R10 reste
+VERTE (les zones scellees sont byte-identiques a
+terrain.4), les 93 appels indirects du programme sont
+reverifies couverts. Version 0.5.5.0.
+
+md5  6ddfe8c2f9413031d792ec30bb9a0b9c
+sha256 e64354366602f1ad87c4c9a793455c11fc0cf4c262e2a3f318f62a2078079da6
+
+QUOI FAIRE (2 minutes)
+----------------------
+1. Remplacez superviseur-terrain4.exe par
+   superviseur-terrain5.exe dans votre dossier de test.
+2. DOUBLE-CLIQUEZ superviseur-terrain5.exe.
+   - La fenetre s'ouvre ? Cliquez "TOUT DEMARRER".
+   - Cette fois le scenario doit PASSER S04-S07
+     (extraction de demo.exe, proxy.exe, annexe), puis
+     T1 (demo rejoue tout seul), T2 (proxy traverse par
+     curl), T3 (journal televerse dans le dossier test
+     du Drive). La fenetre reste ouverte jusqu'au
+     verdict final. Comptez 1 a 2 minutes.
+3. DEPOSEZ le nouveau fichier terrain_*.txt (cree a
+   cote de l'exe) dans le dossier test du Drive.
+
+SI TERRAIN.5 MEURT ENCORE APRES S03
+-----------------------------------
+Clic droit sur DIAGNOSTIC3-SUPERVISEUR.cmd -> "Executer
+en tant qu'administrateur", puis deposez
+rapport-diagnostic3.txt et les fichiers .dmp de
+%LOCALAPPDATA%\CrashDumps dans le dossier test.
+Le rapport donnera le module fautif et l'offset EXACTS
+du crash, et le dump complet l'adresse precise — cette
+fois la donnee manquante sera capturee.
