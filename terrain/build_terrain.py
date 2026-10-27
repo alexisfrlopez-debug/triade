@@ -458,7 +458,7 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
         raise EchecBuild(f"table R10 déborde sur la version "
                          f"({len(entrees)} entrées, {len(table)} octets)")
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN2))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN3))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -520,19 +520,19 @@ def composer_rsrc() -> tuple[bytes, int]:
     ffi = struct.pack("<13I",
                       0xFEEF04BD,      # signature
                       0x00010000,      # version de structure 1.0
-                      0x00050000, 0x00000002,   # version fichier 0.5.0.2
-                      0x00050000, 0x00000002,   # version produit 0.5.0.2
+                      0x00050000, 0x00000003,   # version fichier 0.5.0.3
+                      0x00050000, 0x00000003,   # version produit 0.5.0.3
                       0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
                       0x00040004,      # VOS_NT_WINDOWS32
                       0x00000001,      # VFT_APP
                       0x00000000, 0x00000000, 0x00000000)
     chaines = b"".join([
         _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
-        _chaine_vsi("FileVersion", "0.5.0.2"),
+        _chaine_vsi("FileVersion", "0.5.0.3"),
         _chaine_vsi("InternalName", "superviseur"),
         _chaine_vsi("OriginalFilename", "superviseur.exe"),
         _chaine_vsi("ProductName", "Protocole TRIADE"),
-        _chaine_vsi("ProductVersion", "0.5.0-terrain.2"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.3"),
         _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
     ])
     table = _noeud_vsi(1, "040904B0", enfants=chaines)
@@ -544,7 +544,7 @@ def composer_rsrc() -> tuple[bytes, int]:
     manifeste = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
         '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
-        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.2"/>'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.3"/>'
         '<description>TRIADE : superviseur terrain de tests</description>'
         '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
         '<requestedPrivileges>'
@@ -614,7 +614,10 @@ def ecrire_pe32plus(texte, rdata, data, text2, rsrc, blob) -> bytes:
         L.IMAGE_BASE,
         L.SECT_ALIGN, L.FILE_ALIGN,
         6, 0, 0, 1, 6, 0, 0,
-        L.SIZE_OF_IMAGE, L.FILE_ALIGN, 0,
+        L.SIZE_OF_IMAGE, L.SIZE_HEADERS, 0,   # D50 : la vraie taille d'en-têtes
+                                               # (0x400) — PLUS L.FILE_ALIGN, qui
+                                               # ne coïncidait avec la bonne valeur
+                                               # que pour quatre sections ou moins
         L.SUBSYSTEM_GUI,                     # WINDOWS_GUI — le superviseur est graphique
         L.DLL_CHARACTERISTICS,
         0x100000, 0x1000, 0x100000, 0x1000,
@@ -672,7 +675,23 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
                     for k, v in table.entries.items():
                         if k == b"FileVersion":
                             fic = v.decode("ascii")
-    assert fic == "0.5.0.2", f"FileVersion ressources = {fic!r}"
+    assert fic == "0.5.0.3", f"FileVersion ressources = {fic!r}"
+    # D50 : règle du chargeur RÉEL — la table des sections doit tenir DANS
+    # SizeOfHeaders (aligné FILE_ALIGN). Le terrain.2 violait cette règle
+    # (0x238 d'en-têtes réels pour 0x200 déclarés) : Windows refusait de
+    # lancer l'exécutable — pefile et l'oracle, plus tolérants, restaient
+    # verts (défaut de classe « oracle aveugle au chargeur »).
+    fin_reelle = (pe.DOS_HEADER.e_lfanew + 4 + 20
+                  + pe.FILE_HEADER.SizeOfOptionalHeader
+                  + pe.FILE_HEADER.NumberOfSections * 40)
+    soh = pe.OPTIONAL_HEADER.SizeOfHeaders
+    assert soh == L.SIZE_HEADERS, f"SizeOfHeaders {soh:#x} != plan {L.SIZE_HEADERS:#x}"
+    assert soh >= fin_reelle, (f"table des sections ({fin_reelle:#x}) hors "
+                               f"SizeOfHeaders ({soh:#x}) — chargeur KO")
+    assert soh % pe.OPTIONAL_HEADER.FileAlignment == 0, "SizeOfHeaders non aligné"
+    for s in pe.sections:
+        assert s.PointerToRawData >= soh, (f"{s.Name.decode().rstrip(chr(0))} : "
+                                           f"brute à {s.PointerToRawData:#x} < en-têtes")
     # kit embarqué (D49) : les octets .blob SONT les artefacts scellés
     with open(os.path.join(DEMO_DIR, "demo.exe"), "rb") as f:
         demo = f.read()
@@ -966,7 +985,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  reutilisation_R7              : {herit} blocs octet-identiques "
         f"(hello/selftest/echo/demo.9)",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee terrain, "
-        f"u64 0x{L.VERSION_U64_TERRAIN2:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_TERRAIN3:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit "
         f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 + annexe jetons), "
         f"extraction verifiee par relecture octet a octet, nettoyage apres run ; "
@@ -1002,7 +1021,7 @@ def assembler_tout():
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN2
+    version = L.VERSION_TERRAIN3
     blob_public = composer_blob(None)
     rsrc, taille_rsrc = composer_rsrc()
     texte, rdata, data, text2 = composer_sections(code, blocs, blob_public)
@@ -1087,7 +1106,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN2)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN3)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

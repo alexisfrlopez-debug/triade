@@ -2131,3 +2131,60 @@ sha256 4a139cc7…. Livraison : md5 45ca7292…, sha256 35fce4b7….
 LISEZMOI-superviseur réécrit : UN fichier, procédure 2 clics, section
 ANTIVIRUS complète (pourquoi la détection est une fausse alerte
 vérifiable, comment exclure le dossier si besoin, les md5 de confiance).
+
+## Entrée 39 — terrain.3 : l'octet qui tuait le lancement (D50, 27/10 au soir)
+
+Le développeur revient avec un constat sec : « il ne se passe rien quand
+je lance superviseur.exe ». Pas de fenêtre, pas de message, pas de
+journal : terrain.2 (D49) est mort AU CHARGEMENT — avant le premier
+octet de code, avant la porte R10, avant tout.
+
+**Autopsie comparative.** La méthode qui a payé : décoder champ par champ
+l'en-tête PE de superviseur.exe contre demo.exe, le seul artefact de la
+lignée ÉPROUVÉ au lancement sur la machine cible (demo.8). Machines
+identiques (0x8664), bases identiques, alignements identiques, sous-
+système identique, DllCharacteristics identiques — UN écart délétère :
+SizeOfHeaders = 0x200 chez l'un comme chez l'autre, MAIS demo.exe a
+quatre sections (en-têtes réels 0x1E8, ça tient) quand superviseur.exe
+en a six (0x238 réels : ça déborde). Le header de .rsrc est coupé en
+deux à la frontière 0x200, celui de .blob vit entièrement au-delà :
+l'image déclarait ses propres sections en dehors de sa zone d'en-têtes.
+Windows refuse, silencieusement pour l'utilisateur, AVANT tout code.
+L'origine est un péché de lisibilité vieux comme la lignée : le champ
+était écrit `L.FILE_ALIGN` — qui valait exactement la bonne réponse pour
+tous les artefacts précédents. Quatre sections ou moins : 0x1E8 réels →
+0x200 arrondi. Six sections : la coïncidence meurt, l'exécutable aussi.
+
+**Pourquoi toute la chaîne était verte.** L'oracle mappe les sections
+par le PLAN (offsets connus), jamais par l'en-tête du fichier — il
+émule le code d'une image qu'il suppose déjà chargée. pefile, parser
+tolérant, lit la table des sections dans le fichier sans appliquer la
+règle du chargeur. Neuvìeme classe de défaut invisible à l'émulation :
+l'enveloppe n'était vérifiée par personne. (Les classes précédentes :
+IAT, DEP, homeparams, volatiles, sections critiques… chaque run terrain
+a enseigné une leçon ; celle-ci enseigne que le chargeur est aussi un
+juge.)
+
+**Le correctif, chirurgical à un octet.** SIZE_HEADERS = 0x400 dérivé au
+plan avec ses asserts ; le champ écrit depuis le plan ; la règle du
+chargeur imposée en fail-closed au build (valider_pe), à l'oracle
+(Emulateur valide désormais l'en-tête du FICHIER avant tout mappage —
+falsifiabilité prouvée : l'ancien terrain.2 est rejeté avec le
+diagnostic exact) et à l'audit (61 contrôles, dont : le prédécesseur
+portait bien le défaut, et AUCUNE zone R10 ne couvre les IAT que le
+chargeur mute à la résolution). Re-scellage 0.5.0-terrain.3 (u64
+0x00050103) : 23/23 blocs intacts — AUCUN code ne bouge — .rdata
+limité à L00 + table R10 + u64 (3 octets), .text2 à S00 (1 octet), la
+page d'en-têtes au champ SizeOfHeaders lui-même (1 octet : 0x02 → 0x04
+à l'offset 0x95). Oracle 10 102 cas verts, falsification 27/27 + 5
+mutations, carte génération 5 re-scellée (23 empreintes), cristallisa-
+tion 10/10 (graines 22-31). Publique : md5 2fb19c0f…, sha256 3a080af6….
+Livraison : md5 40b2f350…, sha256 7f9a31ec…. LISEZMOI v3 avec la
+section « POURQUOI IL NE SE PASSAIT RIEN » — l'explication honnête de
+l'octet fautif, le md5 de confiance, la consigne de remplacer l'ancien
+fichier.
+
+**En attente** : le premier journal terrain_*.txt de la lignée terrain.3
+dans le dossier test — la fenêtre doit maintenant S'OUVRIR au
+double-clic ; tout le reste (T1/T2/T3, S00…S90) est la mécanique déjà
+éprouvée.

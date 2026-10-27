@@ -2,11 +2,29 @@ TRIADE terrain — superviseur : TOUS les tests en 1 clic, 1 SEUL exe
 ====================================================================
 
 superviseur.exe  (61 952 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
-version 0.5.0-terrain.2 — le kit embarqué (D49)
+version 0.5.0-terrain.3 — correction chargeur (D50)
 
-CE QUI CHANGE (réponse à votre demande « fais moi 1 seul exe qui
-contient tout ») : fini le kit de QUATRE fichiers à poser côte à
-côte. demo.exe (jalon M2 scellé), proxy.exe (jalon M3 scellé) et
+POURQUOI « IL NE SE PASSAIT RIEN » AVEC LA VERSION PRÉCÉDENTE : ce
+n'était ni un blocage antivirus, ni votre machine — c'était UN OCTET
+de ma faute dans l'en-tête du fichier. Explication honnête : le champ
+PE « SizeOfHeaders » (la taille annoncée des en-têtes) valait 0x200 ;
+avec SIX sections, mes en-têtes réels en mesurent 0x238 — la table des
+sections débordait de la zone annoncée, et Windows refusait de lancer
+l'image AVANT MÊME LE PREMIER OCTET DE CODE : aucun message, aucune
+fenêtre, rien. Pourquoi mes contrôles ne l'avaient pas vu : tous les
+artefacts précédents (quatre sections ou moins) remplissaient leurs
+en-têtes en 0x1E8 — la valeur 0x200 que j'écrivais était juste PAR
+COÏNCIDENCE ; l'émulateur et les analyseurs PE, plus tolérants que le
+chargeur réel, restaient verts. La correction : SizeOfHeaders passe de
+0x200 à 0x400 (un octet : 0x02 -> 0x04 à l'offset 0x95), la règle est
+désormais vérifiée à la construction, par l'oracle (à qui j'ai appris
+à refuser ce que Windows refuse) et par l'audit — 61 contrôles verts,
+la correction est chirurgicale : aucun bloc de code ne bouge. ACTION :
+supprimez l'ancien superviseur.exe, prenez celui-ci — son empreinte de
+confiance : md5 40b2f350ad8556d028d431174d429189 (sha256 7f9a31ecf311…).
+
+CE QUE FAIT CE LOGICIEL (votre demande « fais moi 1 seul exe qui contient
+tout ») : demo.exe (jalon M2 scellé), proxy.exe (jalon M3 scellé) et
 l'annexe de jetons Drive vivent DANS superviseur.exe (section .blob,
 lecture seule). Un double-clic, un clic sur « TOUT DÉMARRER », c'est
 tout : le superviseur pose les artefacts sur disque, les RELIT octet
@@ -35,19 +53,18 @@ petit exécutable sans éditeur, sans ressources, sans signature
 numérique — écrit OCTET PAR OCTET à la main, ce qui est le cœur du
 projet TRIADE (zéro compilateur) — qui écoute sur un port et relaie
 des connexions : c'est le MÉTIER d'un proxy HTTP, et aussi le portrait
-robot des proxys malveillants. Le fichier que vous avez reçu est
-strictement celui que j'ai scellé : md5 8740e1ca0dbd5967c27cf92bdf713be4
-(vérifiable : PowerShell, « Get-FileHash -Algorithm MD5 proxy.exe »),
-chaque octet est auditable dans le dépôt (m3/notation/*.asm). Depuis
-cette version, les artefacts voyagent EMBARQUÉS dans superviseur.exe,
-qui porte maintenant une VERSION de ressource et un manifeste légitimes
-(FileDescription « TRIADE superviseur terrain », asInvoker) — de quoi
-rassurer les heuristiques. Si Defender bloque malgré tout l'extraction
-(ligne S04D/S05D « echec ecriture »), ajoutez une EXCLUSION de dossier
-avant le run : Sécurité Windows -> Protection contre les virus et
-menaces -> Gérer les paramètres -> Exclusions -> Ajouter un dossier
--> le dossier de test. C'est votre machine : l'exclusion est un choix
-de confiance, et le md5 ci-dessus est l'outil de cette confiance.
+robot des proxys malveillants. Le fichier embarqué ici est strictement
+celui que j'ai scellé : md5 8740e1ca0dbd5967c27cf92bdf713be4, chaque
+octet est auditable dans le dépôt (m3/notation/*.asm). Les artefacts
+voyagent EMBARQUÉS dans superviseur.exe, qui porte une VERSION de
+ressource et un manifeste légitimes (FileDescription « TRIADE
+superviseur terrain », asInvoker) — de quoi rassurer les heuristiques.
+Si Defender bloque malgré tout l'extraction (ligne S04D/S05D « echec
+ecriture »), ajoutez une EXCLUSION de dossier avant le run :
+Sécurité Windows -> Protection contre les virus et menaces -> Gérer
+les paramètres -> Exclusions -> Ajouter un dossier -> le dossier de
+test. C'est votre machine : l'exclusion est un choix de confiance, et
+les md5 affichés à l'écran sont l'outil de cette confiance.
 
 PRÉPARATION : AUCUNE. Posez superviseur.exe où vous voulez (idéalement
 un dossier dédié). curl.exe n'est PAS à installer (composant de
@@ -56,7 +73,9 @@ T2 (neverssl.com, example.com) et T3 (Google Drive).
 
 PROCÉDURE :
   1. Double-cliquez superviseur.exe. La fenêtre « TRIADE superviseur
-     terrain » s'ouvre, le bouton « TOUT DÉMARRER » est en bas.
+     terrain » s'ouvre (si elle ne s'ouvre pas : vérifiez le md5 du
+     fichier téléchargé — un transfert abîmé est le seul autre
+     cas possible), le bouton « TOUT DÉMARRER » est en bas.
   2. Un clic sur « TOUT DÉMARRER ». C'est tout.
   3. Attendez la fin (comptez ~30 s à 3 minutes : T1 ~15 s, T2 ~10 s
      à 2 min selon le réseau, T3 ~10 s ; chaque attente est bornée).
@@ -69,6 +88,7 @@ PROCÉDURE :
      Je le récupérerai de là — vous n'avez RIEN à m'envoyer.
 
 LECTURE DE L'ÉCRAN (lignes S principales) :
+- S00 vous dit « 0.5.0-terrain.3 » — c'est la version corrigée.
 - S02 porte R10 : OK / KO — l'intégrité du binaire ET du kit embarqué
   (un KO = transfert abîmé : re-télécharger superviseur.exe).
 - S03 libc M1 scellée : 4/4 verts — l'autotest interne.
@@ -99,8 +119,9 @@ EMBARQUÉS dans cette version de livraison (l'annexe D48 intégrée) —
 gardez l'exécutable et le dossier de test privés ; supprimez l'exe
 après vos runs si vous préférez (je peux en relivrer un à tout
 moment). Le journal ne contient AUCUN octet des clés (interdit du
-projet). Le md5 de CE fichier : 45ca729227867394236ba0fb82efcac5
-(sha256 35fce4b7239569c…) — vérifiez-le après téléchargement.
+projet). Le md5 de CE fichier : 40b2f350ad8556d028d431174d429189
+(sha256 7f9a31ecf311ca30…) — vérifiez-le après téléchargement
+(PowerShell : Get-FileHash -Algorithm MD5 superviseur.exe).
 
 Merci — le premier journal reçu dans le Drive valide la lignée
-terrain 0.5.0-terrain.2 (D49).
+terrain 0.5.0-terrain.3 (D50).

@@ -145,6 +145,32 @@ class Emulateur:
 
     def __init__(self, exe: bytes):
         self.exe = bytes(exe)
+        # D50 : le modèle chargeur valide l'en-tête comme Windows — SizeOfHeaders
+        # DOIT couvrir la table des sections (aligné FILE_ALIGN). terrain.2 est
+        # mort de cette règle (0x238 réels pour 0x200 déclarés : lancement
+        # refusé au terrain) alors que l'oracle mappait les sections par le
+        # plan, aveugle à l'en-tête du fichier lui-même.
+        d = self.exe
+        if len(d) < 0x100 or d[:2] != b"MZ":
+            raise EchecOracle("chargeur : pas un fichier PE")
+        e_lfanew = struct.unpack_from("<I", d, 0x3C)[0]
+        if d[e_lfanew:e_lfanew + 4] != b"PE\x00\x00":
+            raise EchecOracle("chargeur : signature PE absente")
+        nb_sec, = struct.unpack_from("<H", d, e_lfanew + 6)
+        taille_opt, = struct.unpack_from("<H", d, e_lfanew + 20)
+        fin_reelle = e_lfanew + 4 + 20 + taille_opt + nb_sec * 40
+        opt = e_lfanew + 4 + 20
+        fal, = struct.unpack_from("<I", d, opt + 36)
+        soh, = struct.unpack_from("<I", d, opt + 60)
+        soi, = struct.unpack_from("<I", d, opt + 56)
+        if soh < fin_reelle:
+            raise EchecOracle(
+                f"chargeur : SizeOfHeaders {soh:#x} ne couvre pas la table des "
+                f"sections ({fin_reelle:#x}) — Windows refuserait l'image (D50)")
+        if soh % fal:
+            raise EchecOracle(f"chargeur : SizeOfHeaders {soh:#x} non aligné FILE_ALIGN")
+        if soi < L.SIZE_OF_IMAGE:
+            raise EchecOracle(f"chargeur : SizeOfImage {soi:#x} < plan {L.SIZE_OF_IMAGE:#x}")
         self.uc = Uc(UC_ARCH_X86, UC_MODE_64)
         uc = self.uc
         uc.mem_map(IMAGE, L.SIZE_OF_IMAGE)

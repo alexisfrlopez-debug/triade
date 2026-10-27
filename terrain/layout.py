@@ -108,7 +108,23 @@ VERSION_TERRAIN1 = "0.5.0-terrain.1"      # première génération de la lignée
 VERSION_U64_TERRAIN1 = 0x00050101         # monotonie : au-dessus de proxy 0.4.0
 VERSION_TERRAIN2 = "0.5.0-terrain.2"      # kit embarqué (D49) : 1 seul exe
 VERSION_U64_TERRAIN2 = 0x00050102
+VERSION_TERRAIN3 = "0.5.0-terrain.3"      # correction chargeur (D50)
+VERSION_U64_TERRAIN3 = 0x00050103
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
+
+# --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
+# En-têtes réels : DOS 64 + PE 24 + opt 240 + 6 × sections 40 = 568 o (0x238).
+# Le chargeur Windows exige que SizeOfHeaders COUVRE toute la table des
+# sections et soit aligné sur FILE_ALIGN : 0x238 -> 0x400. Le terrain.2
+# écrivait L.FILE_ALIGN (0x200) — valeur qui ne coïncidait avec la bonne
+# que pour QUATRE sections ou moins (cas de tous les artefacts scellés
+# précédents : 0x1E8 réels -> 0x200) : avec six sections, la table débordait
+# des en-têtes déclarés et Windows refusait de lancer superviseur.exe
+# (« il ne se passe rien » au double-clic, constat développeur 27/10).
+SIZE_HEADERS = 0x400
+assert 64 + 4 + 20 + 240 + 6 * 40 <= SIZE_HEADERS, "table des sections hors SizeOfHeaders"
+assert SIZE_HEADERS % FILE_ALIGN == 0, "SizeOfHeaders non aligné FILE_ALIGN"
+assert SIZE_HEADERS <= TEXT_FILE, "SizeOfHeaders déborde sur la première section brute"
 
 # --- Blocs embarqués dans superviseur.exe (couche C, génération 5) ----------------
 # a1xxxx = M0 ; b2xxxx = M1 ; c3xxxx = M2 ; d4xxxx = démo ; f6xxxx = terrain.
@@ -343,7 +359,7 @@ _SEQ_ASCII = [
 # lignes J_* de la démo (après CLASSE_DEMO, avant l'IAT kernel32#2).
 R_ASCII_LIBRE = 0x2AAA
 _SEQ_ASCII_LIBRE = [
-    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain.2"),   # 49 o
+    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain.3"),   # 49 o
     ("L01", b"L01 fenetre principale creee"),                        # 28 o
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),            # 36 o
     ("NOM_DEMO", b"demo.exe\x00"),                                   # 9 o (cmdline T1)
@@ -375,7 +391,7 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 _SEQ_SUP_1 = [
     # en-tête scénario
-    ("S00", b"S00 superviseur terrain 0.5.0-terrain.2"),
+    ("S00", b"S00 superviseur terrain 0.5.0-terrain.3"),
     ("S01_PREFIXE", b"S01 date "),
     ("S02A", b"S02 porte R10 : integrite VERTE"),
     ("S02B", b"S02 porte R10 : KO - arret"),

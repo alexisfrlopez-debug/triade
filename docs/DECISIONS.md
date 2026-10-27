@@ -1952,3 +1952,69 @@ l'emplacement à la livraison (deux builds déterministes = même résultat,
 zéro patch binaire, oracle vert sur les deux chemins).
 
 **Développement** : entrée 38 du journal de travail.
+
+### D50 — terrain.3 : le défaut d'un octet qui empêchait tout lancement — SizeOfHeaders doit couvrir la table des sections (règle du chargeur réel, apprise du terrain)
+
+**Constat développeur (27/10 soir)** : « il ne se passe rien quand je lance
+superviseur.exe » — double-clic, aucun message, aucune fenêtre, aucun
+processus. terrain.2 (D49) était donc MORT AU CHARGEMENT sur la machine
+cible, alors que toute la chaîne interne était verte (oracle 10 102 cas,
+audit 53 contrôles, cristallisation 10/10).
+
+**Diagnostic (autopsie PE comparative)** : décodage champ par champ de
+superviseur.exe contre demo.exe (éprouvé terrain, demo.8) — un SEUL écart
+délétère : `SizeOfHeaders = 0x200` alors que l'image a SIX sections, dont
+les en-têtes réels (DOS 64 + PE 24 + opt 240 + 6×40) mesurent **0x238** :
+la table des sections — le pied droit du header .rsrc et TOUT le header
+.blob — déborde de la zone d'en-têtes déclarée. Le chargeur Windows
+refuse l'image avant d'exécuter le moindre octet : « il ne se passe
+rien ». Origine du défaut : `ecrire_pe32plus` écrivait `L.FILE_ALIGN`
+dans le champ SizeOfHeaders — valeur qui, pour TOUS les artefacts
+précédents (quatre sections ou moins, en-têtes réels 0x1E8), coïncidait
+PAR HASARD avec la taille arrondie correcte. La coïncidence a vécu
+jusqu'à la première image à six sections.
+
+**Classement** : 9e classe de défaut invisible à l'émulation (taxonomie
+§ 8.5) — l'oracle aveugle au chargeur réel : l'émulateur mappe les
+sections PAR LE PLAN (offsets L.TEXT_FILE etc.), jamais par l'en-tête du
+fichier lui-même ; pefile, de son côté, parse sans valider cette règle.
+Le vert de l'oracle était sincère : le code est irréprochable, c'est
+l'ENVELOPPE que le chargeur refusait.
+
+**Décision** :
+1. `SIZE_HEADERS = 0x400` dérivé au plan (asserts : couvre la table,
+   aligné FILE_ALIGN, avant la première section brute) — le champ est
+   écrit depuis le plan, plus jamais depuis FILE_ALIGN.
+2. `valider_pe` applique la règle du chargeur RÉEL en fail-closed :
+   SizeOfHeaders couvre la table des sections, aligné, égal au plan,
+   et toute section brute commence après les en-têtes.
+3. L'oracle apprend à refuser ce que Windows refuse : `Emulateur.__init__`
+   valide l'en-tête du FICHIER (pas du plan) avant tout mappage.
+   Falsifiabilité prouvée : l'oracle rejette l'ancien terrain.2 avec le
+   diagnostic exact (« SizeOfHeaders 0x200 ne couvre pas la table des
+   sections 0x238 ») et accepte terrain.3.
+4. Audit étendu à 61 contrôles : règle chargeur, reproductibilité du
+   défaut chez le prédécesseur, diff chirurgical borné octet par octet,
+   et preuve qu'AUCUNE zone R10 ne couvre les IAT (mutées par le
+   chargeur à la résolution — la porte reste verte après résolution).
+5. Re-scellage 0.5.0-terrain.3 (u64 0x00050103, FileVersion 0.5.0.3,
+   manifeste 0.5.0.3) : 23/23 blocs intacts, .rdata limité à
+   L00/table R10/u64 (3 octets), .text2 à S00 (1 octet), page d'en-têtes
+   au champ SizeOfHeaders LUI-MÊME (1 octet : 0x02→0x04 à l'offset
+   0x95) ; oracle 10 102 cas verts + falsification 27/27 ; carte
+   génération 5 re-scellée, cristallisation 10/10 (graines 22-31).
+   Publique : md5 2fb19c0f…, sha256 3a080af6…. Livraison : md5
+   40b2f350…, sha256 7f9a31ec…. LISEZMOI v3 : section « POURQUOI IL
+   NE SE PASSAIT RIEN » (explication honnête, md5 de confiance,
+   consigne de supprimer l'ancien fichier).
+
+**Alternatives rejetées** : rebâtir en quatre sections (le kit exige
+.blob/.rsrc — six sections est la bonne structure) ; patcher le binaire
+livré à la main (zéro patch binaire : rebuild déterministe de la chaîne
+complète) ; écrire un CheckSum non nul (le chargeur l'ignore en mode
+utilisateur ; demo/proxy éprouvés à 0 — ne pas toucher) ; retirer
+DYNAMIC_BASE (aucun lien : la relocation est ABSOLUTE-only, l'ASLR ne
+touche pas la page d'en-tête ici) ; corriger sans re-sceller (la
+discipline R10 exige version + carte à chaque image nouvelle).
+
+**Développement** : entrée 39 du journal de travail.
