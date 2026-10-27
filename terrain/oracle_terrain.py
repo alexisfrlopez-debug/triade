@@ -724,12 +724,31 @@ JETONS = (b"client-id-test.apps.googleusercontent.com\x00"
           b"//test-refresh-token-789\x00"
           b"https://oauth2.googleapis.com/token\x00")
 JETON_OAUTH = b"ya29.test-jeton-superviseur-terrain-0123456789"
-REPONSE_OAUTH = (b'{"access_token":"' + JETON_OAUTH +
-                 b'","expires_in":3600,"token_type":"Bearer"}')
+# D69 : le format RÉEL de oauth2.googleapis.com/token, constaté deux fois le
+# 2026-10-27 (json du run terrain.14 + rafraîchissement frais du bac,
+# byte-identiques) : JSON INDENTÉ, 2 espaces, séparateur « ": " », LF,
+# 5 champs. L'ancienne fixture compacte — idéalisée — a masqué la panne
+# d'étiquette des terrains 9 à 14 (un espace manquant).
+REPONSE_OAUTH = (b'{\n  "access_token": "' + JETON_OAUTH +
+                 b'",\n  "expires_in": 3599,\n'
+                 b'  "scope": "https://www.googleapis.com/auth/drive",\n'
+                 b'  "token_type": "Bearer",\n'
+                 b'  "refresh_token_expires_in": 117314\n}')
+# D69 : URL de session à la LONGUEUR RÉELLE constatée (286 car. — le bac a
+# extrait et utilisé celle du run de preuve ; TAMPON_JETON 480 o la couvre).
 URL_SESSION = (b"https://www.googleapis.com/upload/drive/v3/files"
-               b"?uploadType=resumable&upload_id=ABCdef123456")
-REPONSE_SESSION = (b"HTTP/1.1 200 OK\r\nContent-Length: 0\r\nLocation: "
-                   + URL_SESSION + b"\r\nX-Goog-Upload-Status: active\r\n\r\n")
+               b"?uploadType=resumable&upload_id=" + b"S" * 206)
+# D69 : en-têtes HTTP/1.1 réalistes (sonde bac contre le vrai endpoint) :
+# « Location: » en casse classique, tôt dans le dump — la session du
+# superviseur force --http1.1 précisément pour garantir cette casse (en
+# HTTP/2, curl -D écrit « location: » en minuscules).
+REPONSE_SESSION = (b"HTTP/1.1 200 OK\r\n"
+                   b"Content-Type: text/plain; charset=utf-8\r\n"
+                   b"X-GUploader-UploadID: SYNTH-oracle-d69\r\n"
+                   b"Location: " + URL_SESSION + b"\r\n"
+                   b"Cache-Control: no-cache, no-store, max-age=0, must-revalidate\r\n"
+                   b"Date: Wed, 28 Oct 2026 00:00:00 GMT\r\n"
+                   b"Server: ESF\r\nContent-Length: 0\r\n\r\n")
 CHEMIN_JOURNAL = b"C:\\sup\\" + NOM_RUN
 REQ_OAUTH_ATTENDUE = (b"client_id=client-id-test.apps.googleusercontent.com"
                       b"&client_secret=GOCSPX-test-secret-456"
@@ -743,15 +762,30 @@ def _cmd(nom: str) -> str:
     return L.CHAINES_SUP[nom][1].rstrip(b"\x00").decode("ascii")
 
 
-CMD_JETON_ATTENDU = ("curl.exe -s --fail --max-time 30 -o terrain_jeton.json "
+# D69 : formes composées terrain.13/15 — sans --fail (D65), gabarit session
+# --http1.1 -m 30 (D69) ; les trains d'espaces sont ceux des gabarits
+# (comparaison cmdline EXACTE, octet par octet).
+CMD_JETON_ATTENDU = ("curl.exe -s        --max-time 30 -o terrain_jeton.json "
                      "--data @terrain_req.txt https://oauth2.googleapis.com/token")
-CMD_SESSION_ATTENDU = ("curl.exe -s --fail --max-time 30 -o NUL -D terrain_session.txt "
+CMD_SESSION_ATTENDU = ("curl.exe -s --http1.1 -m 30      -o NUL -D terrain_session.txt "
                        "-X POST -H \"Content-Type: application/json\" "
                        "-H \"Authorization: Bearer " + JETON_OAUTH.decode() + "\" "
                        "--data @terrain_meta.json "
                        "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable")
 CMD_PUT_ATTENDU = ("curl.exe -s --fail --max-time 120 -o NUL -X PUT --data-binary @"
                    + CHEMIN_JOURNAL.decode() + " " + URL_SESSION.decode())
+
+
+def variante_publique(exe: bytes) -> bytes:
+    """Image de test « publique » (D69) : l'emplacement annexe est VIDÉ
+    (longueur u64 nulle + data zéroée) — pour un exe de LIVRAISON (annexe
+    réelle embarquée), cela reconstitue la variante publique de la MÊME
+    génération ; pour l'exe de base (slot déjà vide), c'est un no-op.
+    L'oracle redevient indépendant de la génération testée."""
+    img = bytearray(exe)
+    off = L.BLOB_FILE + (L.SLOT_JETONS - L.BLOB_RVA)
+    img[off:off + L.TAILLE_SLOT_JETONS] = b"\x00" * L.TAILLE_SLOT_JETONS
+    return bytes(img)
 
 
 def variante_livraison(exe: bytes, jetons: bytes | None = None) -> bytes:
@@ -1073,7 +1107,10 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
     total = 0
 
     # --- variante PUBLIQUE : le kit vit, T3 sauté non compté, TOUT OK ---
-    em = Emulateur(exe)
+    # (D69 : via variante_publique — l'exe sous test peut être une LIVRAISON
+    # dont l'annexe est réellement embarquée ; on vide le slot pour jouer la
+    # variante publique de la même génération)
+    em = Emulateur(variante_publique(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17)
@@ -1170,7 +1207,7 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("sup-34 : quit non écrit avant l'attente du proxy (V5)")
 
     # sup-35 : requêtes composées octet par octet (V2 — le miroir d'écriture
-    # survit au nettoyage qui supprime les 5 temporaires)
+    # survit au nettoyage qui supprime les 4 temporaires, D68)
     if em.fichiers_ecrits.get("C:\\sup\\terrain_req.txt") != REQ_OAUTH_ATTENDUE:
         raise EchecOracle(f"sup-35 : requête OAuth {em.fichiers_ecrits.get('C:\\sup\\terrain_req.txt')!r} "
                           f"!= composition attendue (Q2)")
@@ -1183,15 +1220,19 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle(f"sup-35 : PUT {put and put['cmdline']!r} != "
                           f"--data-binary @<BUF_CHEMIN> <URL session> (Q7/I2)")
 
-    # nettoyage : 2 pages (T2) + 5 temporaires (T3) + 3 kit (sup-37) — zéro fuite
+    # nettoyage : 2 pages (T2) + 4 temporaires (T3 — D68 : terrain_jeton.json
+    # SURVIT désormais, la preuve doit rester sur disque) + 3 kit (sup-37)
     supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
     for nom in ("terrain_page_http.txt", "terrain_page_https.txt",
-                "terrain_req.txt", "terrain_jeton.json", "terrain_meta.json",
+                "terrain_req.txt", "terrain_meta.json",
                 "terrain_session.txt", "terrain_rep.json",
                 "demo.exe", "proxy.exe", "terrain_jetons.bin"):
         if nom not in supprimees:
             raise EchecOracle(f"nettoyage : {nom} non supprimé "
                               f"(Q8 sup-34/Q9 sup-35/Q6 sup-37 — zéro résidu)")
+    if "terrain_jeton.json" in supprimees:
+        raise EchecOracle("nettoyage : terrain_jeton.json supprimé (D68 — la "
+                          "réponse de Google doit SURVIVRE au run)")
     if PIPE_IN_WR not in em.handles_fermes or PIPE_OUT_RD not in em.handles_fermes:
         raise EchecOracle("sup-34 : extrémités parent des tuyaux non fermées (Q8)")
 
@@ -1244,7 +1285,8 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
     total += 3
 
     # (c) journal démo non conforme : 16 lignes, marqueur absent (E3 sup-33)
-    em = Emulateur(exe)
+    # (D69 : variante_publique — l'exe sous test peut être une livraison)
+    em = Emulateur(variante_publique(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     demo16 = demo17[:-1]                      # J_FINAL retiré
@@ -1300,7 +1342,9 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("annexe non posable : un curl Drive a été lancé (E1)")
     total += 3
 
-    # (f) réponse OAuth muette -> S33B, session non tentée (E2 sup-35)
+    # (f) réponse OAuth muette -> S33B (forme terrain.14+ : « jeton KO
+    # code=NN », curl sort 0 mais le json n'a pas d'access_token), session
+    # non tentée (E2 sup-35)
     em = Emulateur(variante_livraison(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
@@ -1309,8 +1353,8 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
     if r != 0:
         raise EchecOracle("OAuth muet : verdict final != 0")
     brut = b"".join(em.journal_fichier)
-    if S("S33B") + b"\r\n" not in brut or S("S36B") + b"\r\n" not in brut:
-        raise EchecOracle("OAuth muet : S33B/S36B absents (E2 sup-35)")
+    if S("S33B") + b"0" + b"\r\n" not in brut or S("S36B") + b"\r\n" not in brut:
+        raise EchecOracle("OAuth muet : S33 jeton KO code=0 / S36B absents (E2 sup-35)")
     spawns = [d for (_, e, d) in em.sequence if e == "spawn"]
     if any("Authorization" in s or "PUT" in s for s in spawns):
         raise EchecOracle("OAuth muet : session/PUT tentés sans jeton (I5)")
@@ -1318,7 +1362,8 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
 
     # (g) extraction demo.exe impossible (public) -> S04D, T1 sauté COMPTÉ
     #     ÉCHEC, T2 vit, nettoyage quand même (E1 sup-37 + E3 sup-09)
-    em = Emulateur(exe)
+    # (D69 : variante_publique — l'exe sous test peut être une livraison)
+    em = Emulateur(variante_publique(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17)
@@ -1453,18 +1498,20 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
             raise
     total += 1
 
-    # M4 : nettoyage 5 -> 4 dans sup-35 (V5) — un temporaire survit
-    mutant = muter(bytes.fromhex("41bd05000000"), bytes.fromhex("41bd04000000"),
-                   L.ZONE_T3, "nettoyage 5")
+    # M4 : nettoyage 4 -> 3 dans sup-35 (V5, forme terrain.14+ — D68 a fait
+    # passer la constante de 5 à 4 : req/meta/session/rep supprimés,
+    # terrain_jeton.json SURVIT) — un temporaire supplémentaire survit
+    mutant = muter(bytes.fromhex("41bd04000000"), bytes.fromhex("41bd03000000"),
+                   L.ZONE_T3, "nettoyage 4")
     em = Emulateur(mutant)
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17)
     em.appeler(RVA_SUP["sup-35"])
     supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
-    if len([s for s in supprimees if s.startswith("terrain_")]) >= 5:
-        raise EchecOracle("falsification nettoyage : 5 suppressions malgré la "
-                          "constante corrompue — le verrou zéro résidu est muet")
+    if len([s for s in supprimees if s.startswith("terrain_")]) >= 4:
+        raise EchecOracle("falsification nettoyage : 4 suppressions malgré la "
+                          "constante corrompue à 3 — le verrou zéro résidu est muet")
     total += 1
 
     # M5 : quit raccourci (6 -> 0) dans sup-34 (V5) — rien sur stdin

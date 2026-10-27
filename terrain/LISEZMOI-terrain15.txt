@@ -1,0 +1,110 @@
+TRIADE — TERRAIN.15 : VOTRE JSON ÉTAIT LA BONNE PIÈCE. GOOGLE AVAIT RÉPONDU
+« OUI ». NOUS CHERCHIONS... UN ESPACE. (CORRIGÉ — ET UNE SECONDE PANNE
+DÉSAMORCÉE AVANT QU'ELLE NE VOUS ARRIVE.)
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre terrain_jeton.json du run 00:20 a TOUT TRANCHÉ, et ce qu'il dit
+est magnifique : il contient un jeton d'accès VALIDE. Google a répondu
+« oui » à la requête de votre superviseur. Le réseau de votre machine
+va jusqu'à Google, les identifiants sont bons, la réponse est arrivée
+ENTIÈRE sur votre disque. T3 n'a échoué que pour UNE raison — la
+nôtre, encore : le superviseur cherchait dans la réponse la séquence
+"access_token":"   (le tout collé), alors que Google écrit son json
+AÉRÉ :   "access_token": "ya29…"   — UN ESPACE après les deux-points.
+Un espace. Notre recherche trop serrée ne le trouvait pas : « jeton KO
+code=0 » — code=0, c'est-à-dire curl avait RÉUSSI.
+
+1) CE QUE VOTRE PIÈCE A PROUVÉ (comparaison octet par octet, depuis le
+   bac) : votre json de 416 octets est EXACTEMENT le format d'un
+   rafraîchissement frais ; le jeton qu'il contient était VIVANT
+   (testé : HTTP 200) ; et sa date d'émission (par compte à rebours
+   refresh_token_expires_in) est LA SECONDE MÊME de votre run. C'est
+   bien la réponse reçue par votre machine, pas une autre. La chaîne
+   marchait déjà — il ne restait que notre espace.
+
+2) UNE SECONDE PANNE, DÉSAMORCÉE AVANT QU'ELLE NE VOUS ARRIVE. Pendant
+   que nous y étions, nous avons sondé l'étape SUIVANTE de la chaîne
+   (l'ouverture de la session d'envoi, S34). En HTTP/2 — le défaut des
+   curl modernes, dont celui de Windows — curl écrit les en-têtes en
+   MINUSCULES (« location: »), et notre recherche « Location: » aurait
+   raté à son tour : T3 aurait échoué UN cran plus loin, demain.
+   terrain.15 FORCE la session en HTTP/1.1 (option --http1.1 dans la
+   commande, même longueur au total) : Google répond alors « Location: »
+   en casse classique, la recherche matche — quel que soit le curl de
+   votre machine.
+
+3) LA PREUVE AVANT LIVRAISON : le bac a rejoué VOTRE chaîne avec les
+   TROIS commandes exactes que terrain.15 composera (jeton avec
+   l'espace, session en HTTP/1.1, PUT). Les trois ont réussi contre le
+   VRAI Google ; un fichier témoin est apparu dans le dossier test puis
+   a été retiré. Le binaire livré a de plus passé l'oracle complet du
+   projet — 10 102 cas — avec des réponses simulées désormais COPIÉES
+   sur les vraies réponses de Google (c'est la leçon de cette panne :
+   nos simulations étaient trop belles).
+
+4) UNE ACTION DE NOTRE PART, À SAVOIR : votre terrain_jeton.json déposé
+   contenait un jeton d'accès VIVANT (valable une heure). Notre
+   LISEZMOI-terrain14 vous demandait de le déposer « si code=0 » en
+   croyant qu'il ne contiendrait qu'un message d'erreur — erreur de
+   protocole nôtre, encore. Nous l'avons SUPPRIMÉ du dossier test
+   nous-mêmes (copie conservée au laboratoire ; il expirait de toute
+   façon dans l'heure). Vous n'avez rien à faire.
+
+TERRAIN.15 : CE QUI CHANGE (46 OCTETS, TOUT LE RESTE EST INCHANGÉ)
+-------------------------------------------------------------------
+a) L'étiquette de recherche : "access_token":"  ->  access_token": "
+   (même longueur, 16 octets — le code qui l'utilise ne bouge pas).
+b) La commande de session force HTTP/1.1 (--http1.1 -m 30, même
+   longueur totale de commande).
+c) La version passe à terrain15. Le code, la fenêtre, T1, T2, la démo
+   et le proxy embarqués : IDENTIQUES. Porte d'intégrité R10 : 27/27
+   verte.
+
+PROTOCOLE (LE PLUS COURT DEPUIS LE DÉBUT)
+-----------------------------------------
+ÉTAPE 0 — Dans votre dossier de travail, SUPPRIMEZ tous les anciens
+   superviseur-terrain*.exe (5, 9, 10, 11, 12, 13, 14). Le dossier test
+   Drive ne contient déjà plus QUE terrain15 — nous avons retiré
+   terrain14 à la livraison : la confusion d'exes est désormais
+   impossible côté livraison.
+ÉTAPE 1 — Double-cliquez superviseur-terrain15.exe, attendez le
+   verdict (~2 minutes). PREUVE du bon binaire : le journal commence
+   par « S00 superviseur terrain 0.5.0-terrain15 ».
+ÉTAPE 2 — C'est tout. Si T3 passe, le journal partira TOUT SEUL dans le
+   dossier test — ce serait la PREMIÈRE FOIS de l'histoire du projet.
+   Le verdict final affichera quand même « SUPERVISEUR : ECHEC » tant
+   que T1 (la démo — panne connue D57, diagnostic en préparation de
+   notre côté) reste KO : c'est l'honnêteté du superviseur, pas un
+   échec de l'envoi. Les lignes qui comptent : S33 « jeton OAuth
+   obtenu », S34 « session upload ouverte », S35 « journal televerse :
+   OK », S36 « VERDICT OK ».
+ÉTAPE 3 (APRÈS LE RUN, 10 SECONDES) — SUPPRIMEZ le terrain_jeton.json
+   resté à côté de l'exécutable : après un T3 RÉUSSI, il contient un
+   jeton d'accès valable une heure. Ne le déposez plus jamais — cette
+   fois, si vous le voyez, c'est BON SIGNE : effacez-le simplement.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S00 « terrain15 » ;
+- S33/S34/S35/S36 : les quatre lignes OK ci-dessus, et le journal
+  déposé TOUT SEUL dans le dossier test ;
+- T2 : 6e vert consécutif attendu (stable depuis terrain.11) ;
+- T1 : inchangé — l'échec d'échange de la démo est connu (D57), son
+  diagnostic avance de notre côté (adresse de plantage à capturer),
+  ce run n'y changerait rien.
+
+RÉCAPITULATIF DES EMPREINTES
+----------------------------
+md5 superviseur-terrain15.exe  e1240f834e6e2e9878097805eb48efb6
+sha256                         7e50fbbc08d157e11212d1e05d7cacceeebdb0d8125062d8dd0f0caa829b5489
+taille                         62 464 octets
+md5 démo embarquée             73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué             dd12b64948e64153ff1dd7a66f367ff3 (inchangé)
+
+Le superviseur est INCHANGÉ à 46 octets près : l'étiquette (l'espace),
+la commande de session (HTTP/1.1), la version. La chaîne T3 a été
+prouvée en direct contre le vrai Google avec les octets exacts de ce
+binaire, puis le binaire entier a repassé l'oracle du projet. Il ne
+manquait qu'un espace — il ne manque plus rien.

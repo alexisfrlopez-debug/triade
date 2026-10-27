@@ -359,7 +359,7 @@ _SEQ_ASCII = [
 # lignes J_* de la démo (après CLASSE_DEMO, avant l'IAT kernel32#2).
 R_ASCII_LIBRE = 0x2AAA
 _SEQ_ASCII_LIBRE = [
-    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain.3"),   # 49 o
+    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain15"),   # 49 o
     ("L01", b"L01 fenetre principale creee"),                        # 28 o
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),            # 36 o
     ("NOM_DEMO", b"demo.exe\x00"),                                   # 9 o (cmdline T1)
@@ -391,7 +391,7 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 _SEQ_SUP_1 = [
     # en-tête scénario
-    ("S00", b"S00 superviseur terrain 0.5.0-terrain.3"),
+    ("S00", b"S00 superviseur terrain 0.5.0-terrain15"),
     ("S01_PREFIXE", b"S01 date "),
     ("S02A", b"S02 porte R10 : integrite VERTE"),
     ("S02B", b"S02 porte R10 : KO - arret"),
@@ -430,7 +430,11 @@ _SEQ_SUP_1 = [
     ("S31", b"S31 T3 jetons absents - envoi saute"),
     ("S32", b"S32 T3 requete OAuth composee"),
     ("S33A", b"S33 T3 jeton OAuth obtenu"),
-    ("S33B", b"S33 T3 jeton OAuth ECHEC"),
+    # D68 (terrain.14+) : l'échec jeton se journalise via le relais mode 1 —
+    # « S33 T3 jeton KO code=NN » (NN = code de sortie curl, lu @0x3B50).
+    # L'ancienne chaîne « jeton OAuth ECHEC » survit comme orpheline dans les
+    # binaires de livraison (handler @0x6113 remplacé par jmp -> relais 0x628A).
+    ("S33B", b"S33 T3 jeton KO code="),
     ("S34A", b"S34 T3 session upload ouverte"),
     ("S34B", b"S34 T3 session upload ECHEC"),
     ("S35A", b"S35 T3 journal televerse : OK"),
@@ -447,7 +451,13 @@ _SEQ_SUP_1 = [
     ("FIX_ARRET", b"arret\r\n"),
     ("FIX_FINAL_DEMO", "boucle § 5 complète - DÉMO OK\r\n".encode("cp1252")),
     # étiquettes du balayeur (sup-22)
-    ("ETIQ_TOKEN", b"\"access_token\":\""),
+    # D69 : Google répond en JSON INDENTÉ — "access_token": "ya29…" (un
+    # espace après les deux-points ; preuve : le json du run terrain.14 et un
+    # rafraîchissement frais du bac, byte-identiques). L'étiquette se termine
+    # sur le guillemet OUVRANT de la valeur ; 16 o — même longueur que
+    # l'ancienne forme compacte, l'immédiat r9d=0x10 du site d'appel reste
+    # exact.
+    ("ETIQ_TOKEN", b"access_token\": \""),
     ("ETIQ_LOCATION", b"Location: "),
     ("ETIQ_ID", b"\"id\""),
     # URLs et constantes Drive (voie drive_sync.py, D48)
@@ -461,11 +471,20 @@ _SEQ_SUP_1 = [
     ("GABARIT_OAUTH",
      b"client_id=\x01&client_secret=\x02&refresh_token=\x03&grant_type=refresh_token\x00"),
     ("GABARIT_META", b"{\"name\":\"\x04\",\"parents\":[\"\x05\"]}\x00"),
+    # D65 : --fail retiré des 2 requêtes Google (une erreur HTTP doit ÉCRIRE
+    # sa réponse — la preuve survit) ; 8 espaces, longueur 81 o inchangée.
     ("GABARIT_JETON",
-     b"curl.exe -s --fail --max-time 30 -o terrain_jeton.json --data @terrain_req.txt \x08\x00"),
+     b"curl.exe -s        --max-time 30 -o terrain_jeton.json "
+     b"--data @terrain_req.txt \x08\x00"),
+    # D69 : HTTP/1.1 FORCÉE + -m 30 (forme courte) : en HTTP/2, curl -D
+    # écrit les en-têtes en minuscules (location:) et l'étiquette
+    # « Location: » raterait ; en HTTP/1.1 Google répond « Location: » (casse
+    # classique — sonde bac D69, octet ~194 d'un dump ~846 o, sous la limite
+    # de lecture 600 o). 6 espaces de bourrage, longueur 232 o inchangée.
     ("GABARIT_SESSION",
-     b"curl.exe -s --fail --max-time 30 -o NUL -D terrain_session.txt -X POST "
-     b"-H \"Content-Type: application/json\" -H \"Authorization: Bearer \x07\" "
+     b"curl.exe -s --http1.1 -m 30      -o NUL -D terrain_session.txt "
+     b"-X POST -H \"Content-Type: application/json\" "
+     b"-H \"Authorization: Bearer \x07\" "
      b"--data @terrain_meta.json "
      b"https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable\x00"),
     ("GABARIT_PUT",
@@ -513,7 +532,8 @@ assert FIN_SUP_2 <= ZONE_DATA_SUP_2[1] + 1, "zone données sup 2 débordante"
 # cohérence avec les artefacts scellés avant d'embarquer les octets.
 
 MD5_DEMO_HEXA = b"73c064fbaf4610a167bc6434dee400e4"
-MD5_PROXY_HEXA = b"8740e1ca0dbd5967c27cf92bdf713be4"
+# D63 (terrain.11+) : proxy re-scellé après le correctif de pile http-10:R3.
+MD5_PROXY_HEXA = b"dd12b64948e64153ff1dd7a66f367ff3"
 LONGUEUR_DEMO = 16384                     # demo.exe 0.3.0 (M2 scellé)
 LONGUEUR_PROXY = 19456                    # proxy.exe 0.4.0-dev.1 (M3 scellé)
 LONGUEUR_ANNEXE = 248                     # terrain_jetons.bin (D48)

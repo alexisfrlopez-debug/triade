@@ -24,18 +24,26 @@ Contrat :
          "&grant_type=refresh_token" (les valeurs OAuth sont sûres pour
          urlencoded : alphanumériques, tirets, points — aucun encodage
          requis) -> terrain_req.txt (CREATE_ALWAYS) -> S32 ; Q3 curl
-         jeton : "-s --fail --max-time 30 -o terrain_jeton.json --data
-         @terrain_req.txt <uri>" -> code (35 s) ; code != 0 -> S33
-         ECHEC + S36 KO + nettoyage + rax = 0 ; Q4 terrain_jeton.json lu
-         (<= 600 o) -> sup-22("\"access_token\":\"", '"') -> TAMPON_JETON
-         (NUL posé, longueur > 0) -> S33 ; introuvable/vide -> S33 ECHEC
-         + KO ; Q5 métadonnées composées : {"name":"<TAMPON_NOM>",
+         jeton : "-s --max-time 30 -o terrain_jeton.json --data
+         @terrain_req.txt <uri>" (--fail retiré, D65 : une erreur HTTP
+         doit écrire sa réponse — la preuve survit) -> code (35 s) ; code
+         != 0 -> S33 KO code=NN + S36 KO + nettoyage + rax = 0 ; Q4
+         terrain_jeton.json lu (<= 600 o) -> sup-22("access_token": \"",
+         '"') -> TAMPON_JETON (NUL posé, longueur > 0) -> S33 ; introuvable/
+         vide -> S33 KO code=NN + KO. [D69 : le format RÉEL de Google est
+         INDENTÉ — « \"access_token\": \" » avec un espace — constaté sur le
+         run terrain.14 et un rafraîchissement bac byte-identiques ; la
+         forme compacte d'origine a masqué la panne des terrains 9-14.] ; Q5 métadonnées composées : {"name":"<TAMPON_NOM>",
          "parents":["<ID dossier test>"]} -> terrain_meta.json ; Q6 curl
-         session : "-s --fail --max-time 30 -o NUL -D terrain_session.txt
+         session : "-s --http1.1 -m 30 -o NUL -D terrain_session.txt
          -X POST -H \"Content-Type: application/json\" -H
          \"Authorization: Bearer <jeton>\" --data @terrain_meta.json
          https://www.googleapis.com/upload/drive/v3/files?uploadType=
-         resumable" -> code -> terrain_session.txt lu (<= 600 o) ->
+         resumable" [D69 : --http1.1 forcée + -m 30 — en HTTP/2 curl -D
+         écrit les en-têtes en minuscules (location:) et l'étiquette
+         raterait ; en HTTP/1.1 Google répond « Location: » (sonde bac,
+         octet ~194, sous la limite 600 o)] -> code -> terrain_session.txt
+         lu (<= 600 o) ->
          sup-22("Location: ", 0x0D) -> URL de session dans TAMPON_JETON
          -> S34 ; Q7 curl téléversement : "-s --fail --max-time 120 -o
          NUL -X PUT --data-binary @<BUF_CHEMIN> <URL session>" -> code
@@ -77,10 +85,10 @@ Vecteurs :
   V3 : jetons absents -> S31 + KO, AUCUN spawn curl.
   V4 : réponse OAuth sans access_token -> S33 ECHEC + KO, pas de
        session tentée (ordre des appels observé).
-  V5 : falsification — corrompre l'étiquette "\"access_token\":\""
+  V5 : falsification — corrompre l'étiquette "access_token": \""
        (un octet) fait échouer l'extraction -> V2 échoue ; omettre le
        nettoyage fait échouer le verrou « 5 DeleteFileA ».
-Fixtures    : étiquettes sup-22 (15 o, 10 o, 4 o), ID dossier test (33 o),
+Fixtures    : étiquettes sup-22 (16 o, 10 o, 4 o), ID dossier test (33 o),
               URL token OAuth, URL upload resumable, 3 gabarits cmdline,
               noms des 5 temporaires, lignes S30..S36.
 Provenance  : écrite-avant-code.

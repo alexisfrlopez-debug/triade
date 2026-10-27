@@ -3507,3 +3507,82 @@ S90 TOUT OK (première fois) → le json restant contient un jeton d'accès,
 consigne de suppression donnée. T2 : 5e vert attendu. T1 : inchangé
 (D57/D67 en préparation ici). Priorité opérateur : UN run terrain.14, le
 curl corrigé seulement si code≠0 ou json absent.
+
+## Entrée 58 — D69 (28/10, 01:00) : le json ENFIN déposé dit TOUT — Google avait répondu OUI, nous cherchions un ESPACE ; seconde panne (casse HTTP/2) désamorcée ; terrain.15, oracle réaliste 10 102 cas verts
+
+**Le run terrain.14 (00:20:20) et LA pièce.** S00 terrain14 ✓ (l'ÉTAPE 0
+guérit), S04C 73c064fb ✓, T2 **5e vert consécutif** (S28 OK), T1 inchangé
+(0xC0000005, D57), et la ligne nouvelle : **« S33 T3 jeton KO code=0 »** —
+curl a RÉUSSI. terrain_jeton.json (416 o) déposé par l'opérateur (il survit
+désormais, D68) : il contient un **jeton d'accès VALIDE** (testé about →
+HTTP 200 ; daté de la seconde même du run par compte à rebours
+refresh_token_expires_in : 117314 − 116824 = 490 s). Comparaison octet par
+octet avec un rafraîchissement frais du bac : **format identique** — Google
+répond en JSON INDENTÉ `{\n  "access_token": "ya29…"`. Régression
+documentée : l'étiquette `"access_token":"` (COMPACTE, la nôtre depuis
+terrain.5) est ABSENTE du json réel → sup-22 rend rax=0 → S33 KO code=0.
+**La chaîne réseau/identifiants/Google/curl marchait depuis le début de la
+soirée ; il ne manquait qu'un espace.** Hygiène : le json déposé contenait
+un jeton vivant — SUPPRIMÉ du dossier test par nos soins (notre
+LISEZMOI-terrain14 l'avait demandé à tort : 4e pièce « impossible », la
+nôtre encore ; copie locale conservée, jeton expiré dans l'heure).
+
+**Seconde panne désamorcée AVANT livraison (sonde bac h2/h1).** L'étape
+suivante (S34, session resumable) lit l'en-tête Location via l'étiquette
+`Location: ` — or en **HTTP/2 curl -D écrit les en-têtes en minuscules**
+(`location:`, sonde : dump 842 o, ligne à l'octet 189) : l'étiquette aurait
+raté — T3 aurait échoué un cran plus loin. En **HTTP/1.1 forcée**, Google
+répond `Location:` en casse classique (sonde : dump 848 o, octet 194, sous
+la limite de lecture 600 o). **Preuve live avant patch** : les TROIS
+commandes exactes que terrain.15 composera (jeton ; session --http1.1 ;
+PUT) exécutées depuis le bac contre le VRAI Google — exit 0 ×3, fichier
+témoin apparu dans le dossier test puis retiré (la chaîne T3 e2e avec les
+octets du futur binaire ; au passage : CreateProcess passe la ligne
+ENTIÈRE, le bac émule par shlex — un split naïf casse les -H quotés).
+
+**Le correctif terrain.15 (46 octets bornés, DONNÉES pures — zéro octet de
+code).** P1 : ETIQ_TOKEN @0x4894 `"access_token":"` → `access_token": "`
+(16 o, même longueur : guillemet ouvrant retiré, espace inséré ;
+l'étiquette se termine toujours sur le guillemet OUVRANT de la valeur,
+l'immédiat r9d=0x10 du site d'appel @0x5F2D reste exact — vérifié au
+désassemblage ; étiquette contiguë à Location:/id, allonger impossible).
+P2 : GABARIT_SESSION @0x49EF `--max-time 30` → `--http1.1 -m 30` + 6
+espaces (232 o inchangés, suffixe identique dès l'octet 32 — les 8 espaces
+libres de D65 paient). P3 : génération terrain15. P4 : R10[23] seule somme
+recalculée (L00/VERSIONINFO hors porte, comme constaté en D68). verif_terrain15
+indépendant : **71 contrôles statiques + 4 émulations unicorn du VRAI
+sup-22 du binaire patché** — E1 json indenté réel + nouvelle étiquette →
+rax=254, jeton exact, NUL posé ; E2 en-têtes h1 + `Location: ` → rax=286,
+URL exacte ; E3 json compact → rax=0, échec honnête ; E4 json indenté +
+ANCIENNE étiquette → rax=0 : **la panne de terrain.14 reproduite sur le
+même émulateur**. md5 superviseur-terrain15.exe
+**e1240f834e6e2e9878097805eb48efb6**, sha256 7e50fbbc…, 62 464 o.
+
+**La leçon systémique : les fixtures de l'oracle étaient TROP BELLES.**
+REPONSE_OAUTH compacte (idéalisée) — jamais confrontée au format réel : la
+panne des terrains 9-14 était INVISIBLE en émulation. Réalignement complet
+de la vérité côté dépôt : layout.py (ETIQ_TOKEN espace, GABARIT_JETON sans
+--fail, GABARIT_SESSION --http1.1, S33B forme relais D68, MD5_PROXY
+dd12b649 D63, L00/S00 terrain15) ; oracle (REPONSE_OAUTH indentée réelle,
+URL_SESSION 286 o, REPONSE_SESSION h1 réelle, CMD_*_ATTENDU formes
+composées 13/15, cas (f) « jeton KO code=0 », M4 nettoyage 4→3, nettoyage
+livraison : terrain_jeton.json doit SURVIVRE, **variante_publique()** —
+l'oracle redevient indépendant de la génération : il vide l'emplacement
+annexe pour jouer la variante publique d'un exe de LIVRAISON) ;
+sup-35-envoi.md et sup-22-balaye.md corrigés (Q3/Q4/Q6, étiquettes 16/10/4).
+**Oracle complet repassé sur le livré terrain.15 : 10 102 cas VERTS,
+falsification 27/27 + 5/5** — le scénario nominal livraison va jusqu'à
+S36A/S90 avec les réponses réelles de Google.
+
+**Livraison.** Dossier test Drive **mono-génération** (terrain14 retiré par
+nous — la confusion d'exes devient impossible côté livraison) : binôme
+terrain.15, md5 MATCH 2/2 + download/ + LISEZMOI-terrain15 (le plus court
+depuis le début : ÉTAPE 0 suppression, ÉTAPE 1 run, ÉTAPE 2 rien — le
+journal partira TOUT SEUL, ÉTAPE 3 effacer le json vivant ; T1/D57 signalé
+honnête). **Prédictions D70 (falsifiables)** : (a) S33A « jeton OAuth
+obtenu » + S34A + S35A + S36A + journal déposé TOUT SEUL (première fois) —
+S91 restera ÉCHEC tant que T1 est KO (honnête) ; (b) S33 KO code=N avec
+N≠0/26 → réseau/machine, grille D68 ; (c) S34 KO → session (couvert par
+--http1.1, jugé improbable) ; (d) json vivant après run réussi → l'opérateur
+l'efface (consigne donnée). T2 : 6e vert attendu. T1 : inchangé — D67
+(WER/adresse de plantage) reste la priorité laboratoire.

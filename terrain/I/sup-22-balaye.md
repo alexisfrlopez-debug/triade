@@ -4,8 +4,10 @@ borné, dans la lignée de http-04-chercher (recherche d'en-tête, M3) : dans
 un tampon d'octets NON FIABLES (réponses HTTP de l'API Drive servies par
 curl.exe), trouver la première occurrence d'une étiquette littérale, puis
 copier les octets qui la suivent jusqu'à un octet d'arrêt. Trois usages :
-"access_token":" ... " dans la réponse OAuth, "Location: " ... CR dans les
-en-têtes de session resumable, "\"id\"" ... presence test. Rien n'est
+"access_token": " ... " dans la réponse OAuth (format INDENTÉ réel de
+Google — D69 : un espace après les deux-points), "Location: " ... CR dans les
+en-têtes de session resumable (HTTP/1.1 forcée — D69), "\"id\"" ... presence
+test. Rien n'est
 interprété : ce qui n'est pas extrait ne peut pas être mal parsé (leçon
 M3 appliquée au canal Drive).
 Contrat :
