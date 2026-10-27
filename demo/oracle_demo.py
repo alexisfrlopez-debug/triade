@@ -231,6 +231,19 @@ class Emulateur:
         self.pending_retour: tuple | None = None
         self.sortie = False
         self.code_sortie: int | None = None
+        # D42 : sections critiques AVEC ÉTAT — une CS non initialisée reçue par
+        # EnterCriticalSection est le défaut terrain demo.7 (tcp-11 P5 : le devoir
+        # d'initialisation vivait dans tcp-12, NON embarqué) : sur Windows 10/11,
+        # CS vierge = LockCount 0 (« verrouillée ») + OwningThread 0 → chemin de
+        # contention de ntdll → exception non gérée → processus mort, fenêtre
+        # disparue, journal gelé après « client : connecté ». Le shim ne peut
+        # plus être un no-op : la classe de défaut doit devenir VISIBLE.
+        self.cs_init: set[int] = set()
+        # D42 : file de réception scriptée — None = comportement R2 (reflet de
+        # l'état réel du patch, réponses du client) ; liste = octets servies
+        # dans l'ordre puis valeurs de retour brutes (≤ 0 = fermeture) pour
+        # exécuter tcp-09 CÔTÉ SERVEUR pour la première fois.
+        self.file_recv: list | None = None
 
     def qword(self, rva):
         return struct.unpack("<Q", self.uc.mem_read(IMAGE + rva, 8))[0]
@@ -336,8 +349,27 @@ class Emulateur:
                 uc_.reg_write(UC_X86_REG_RAX, 1)
             elif nom == "FlushFileBuffers":
                 uc_.reg_write(UC_X86_REG_RAX, 1)
-            elif nom in ("InitializeCriticalSection", "EnterCriticalSection",
-                         "LeaveCriticalSection", "WSAStartup", "bind", "listen",
+            elif nom == "InitializeCriticalSection":
+                # D42 : l'initialisation est un ÉTAT, pas un no-op — le devoir
+                # d'héritage de tcp-12 repris par win-09:R3 (I0).
+                self.cs_init.add(rcx)
+            elif nom == "EnterCriticalSection":
+                # D42 : CS vierge = le défaut terrain demo.7 EXACT — le chemin
+                # de contention réel termine en exception non gérée ; l'oracle
+                # refuse symétriquement (zéro silence).
+                if rcx not in self.cs_init:
+                    raise EchecOracle(
+                        f"EnterCriticalSection : CS @{rcx - IMAGE:#x} jamais "
+                        f"initialisée — le défaut terrain demo.7 (P5 de tcp-11 : "
+                        f"l'hôte démo n'a pas repris le devoir de tcp-12) "
+                        f"rejoué : processus mort, fenêtre disparue, journal "
+                        f"gelé après 'client : connecté'")
+            elif nom == "LeaveCriticalSection":
+                if rcx not in self.cs_init:
+                    raise EchecOracle(
+                        f"LeaveCriticalSection : CS @{rcx - IMAGE:#x} jamais "
+                        f"initialisée (P5 de tcp-11, D42)")
+            elif nom in ("WSAStartup", "bind", "listen",
                          "WSACleanup", "WSAGetLastError", "TranslateMessage",
                          "DispatchMessageW", "PostQuitMessage", "DestroyWindow",
                          "DefWindowProcW"):
@@ -448,15 +480,30 @@ class Emulateur:
                 self.envois.append(bytes(uc_.mem_read(rdx, n)))
                 uc_.reg_write(UC_X86_REG_RAX, n)
             elif nom == "recv":
-                # Le serveur (thread simulé absent) reflète l'état RÉEL du patch :
-                # la cohérence bascule -> réponse est ainsi vérifiée de bout en
-                # bout — si le trampoline n'avait pas basculé, le scénario
-                # recevrait la minuscule et échouerait au memcmp.
+                # Réponse du CLIENT (défaut R2) : le serveur (thread simulé
+                # absent) reflète l'état RÉEL du patch — la cohérence
+                # bascule -> réponse est ainsi vérifiée de bout en bout ; si
+                # le trampoline n'avait pas basculé, le scénario recevrait la
+                # minuscule et échouerait au memcmp. D42 : file scriptée (côté
+                # SERVEUR, exécution réelle de tcp-09) — octets servis dans
+                # l'ordre, puis valeurs brutes (≤ 0 = fermeture propre).
                 n = r8 & 0xFFFFFFFF
-                etat = struct.unpack("<Q", uc_.mem_read(IMAGE + L.R_ETAT_PATCH, 8))[0]
-                reponse = L.PHRASE_MAJ if etat == 1 else L.PHRASE
-                uc_.mem_write(rdx, reponse[:n])
-                uc_.reg_write(UC_X86_REG_RAX, len(reponse[:n]))
+                if self.file_recv is not None:
+                    if not self.file_recv:
+                        uc_.reg_write(UC_X86_REG_RAX, 0xFFFFFFFFFFFFFFFF)
+                    else:
+                        item = self.file_recv.pop(0)
+                        if isinstance(item, int):
+                            uc_.reg_write(UC_X86_REG_RAX, item & 0xFFFFFFFFFFFFFFFF)
+                        else:
+                            reponse = item[:n]
+                            uc_.mem_write(rdx, reponse)
+                            uc_.reg_write(UC_X86_REG_RAX, len(reponse))
+                else:
+                    etat = struct.unpack("<Q", uc_.mem_read(IMAGE + L.R_ETAT_PATCH, 8))[0]
+                    reponse = L.PHRASE_MAJ if etat == 1 else L.PHRASE
+                    uc_.mem_write(rdx, reponse[:n])
+                    uc_.reg_write(UC_X86_REG_RAX, len(reponse[:n]))
             else:
                 raise EchecOracle(f"shim non implémenté : {nom}")
             retour(uc_)
@@ -530,10 +577,16 @@ class Emulateur:
 
 # D40 : séquence nominale du journal scénario — 11 lignes nominales + les 3
 # sondes d'instrumentation R2 intercalées après J_LIBC_OK (retirées en R3).
+# D42 : les 6 sondes d'échange (sonde4/sonde5 ×3, win-10:R2) encadrent chaque
+# boucle send/recv — S1/S2 (win-08:R2) vivent dans le CAS DIRECT du fil
+# serveur, pas ici (le scénario émulé pré-publie le drapeau, le fil serveur
+# n'y tourne pas).
 LIGNES_NOMINALES = ["J_ENTETE", "J_PROTO", "J_PORTE_OK", "J_LIBC_OK",
                     "SONDE_1", "SONDE_2", "SONDE_3",
-                    "J_MEC_OK", "J_SRV_OK", "J_CLI_OK", "J_ECHO_OK",
-                    "J_PROD_OK", "J_RB_OK", "J_FINAL"]
+                    "J_MEC_OK", "J_SRV_OK", "J_CLI_OK",
+                    "SONDE_4", "SONDE_5", "J_ECHO_OK",
+                    "SONDE_4", "SONDE_5", "J_PROD_OK",
+                    "SONDE_4", "SONDE_5", "J_RB_OK", "J_FINAL"]
 
 
 def _ligne_nom(nom: str) -> str:
@@ -683,7 +736,7 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     verdicts["d40007"] = {"cas": 2, "detail": "connect ok/échec, closesocket sur échec"}
     total += 2
 
-    # --- win-08 : écoute publiée, spawn tcp-09, arrêt propre ---
+    # --- win-08 : écoute publiée, spawn tcp-09, sondes S1/S2, arrêt propre ---
     em = Emulateur(exe)
     em.installer_shims()
     em.appeler(RVA_WIN["win-08"])
@@ -691,8 +744,16 @@ def executer(exe: bytes, graine: int = 1) -> dict:
         raise EchecOracle("win-08 : écoute/drapeau non publiés (Q2)")
     if em.threads != [(IMAGE + 0x4800, 0x777)]:
         raise EchecOracle(f"win-08 : spawn tcp-09 attendu, obtenu {em.threads}")
-    verdicts["d40008"] = {"cas": 3, "detail": "tcp-01 ok, R_LISTEN+drapeau, spawn tcp-09, arrêt"}
-    total += 3
+    # D42 : sondes S1/S2 au journal fichier (miroir écran sauté, HWND nul —
+    # garde E1 de win-05 : les FAITS passent, le verdicteur vit en aval)
+    attendu_s = [L.CHAINES_SONDES["SONDE_S1"][1] + b"\r\n",
+                 L.CHAINES_SONDES["SONDE_S2"][1] + b"\r\n"]
+    if em.journal_fichier != attendu_s:
+        raise EchecOracle(f"win-08 : sondes S1/S2 absentes du fichier "
+                          f"({em.journal_fichier!r} != {attendu_s!r} — D42, I4)")
+    verdicts["d40008"] = {"cas": 4, "detail": "tcp-01 ok, R_LISTEN+drapeau, spawn tcp-09 "
+                                               "+ sondes S1/S2 (D42), arrêt"}
+    total += 4
 
     # --- COQUILLE GUI RÉELLE (D36) : win-01 du point d'entrée à ExitProcess ---
     em = Emulateur(exe)
@@ -786,12 +847,73 @@ def executer(exe: bytes, graine: int = 1) -> dict:
             for i, a in enumerate(em.appels_vp)):
         raise EchecOracle(f"win-09 : VirtualProtect non appariés RWX/RX (D39) : "
                           f"{em.appels_vp}")
-    verdicts["d40009"] = {"cas": 5, "detail": "journal écran exact (11 lignes) + "
-                                              "fichier miroir, rollback, arrêt, 3 échanges"}
-    verdicts["d40010"] = {"cas": 3, "detail": "échanges vérifiés identité/MAJUSCULES/identité"}
+    # D42 : le correctif doit VIVRE — la section critique héritée est
+    # initialisée par le scénario (I0 win-09:R3) AVANT tout spawn ; toute
+    # régression du correctif est détectée ici (le défaut demo.7 était
+    # invisible : le scénario émulé ne touche jamais tcp-11 lui-même).
+    if IMAGE + L.R_CS not in em.cs_init:
+        raise EchecOracle("win-09 : R_CS jamais initialisée pendant le "
+                          "scénario — le correctif D42 a disparu (I0, P5 "
+                          "de tcp-11 : le fil d'écho mourrait au premier "
+                          "échange, processus mort, fenêtre disparue)")
+    if em.qword(L.R_CS) == 0 and len(em.cs_init) == 0:
+        raise EchecOracle("win-09 : aucun état CS observé (shim à état cassé)")
+    verdicts["d40009"] = {"cas": 6, "detail": "journal écran exact (20 lignes) + "
+                                              "fichier miroir, rollback, arrêt, 3 échanges "
+                                              "sondés, CS initialisée (D42)"}
+    verdicts["d40010"] = {"cas": 4, "detail": "échanges vérifiés identité/MAJUSCULES/"
+                                              "identité + sondes 4/5 ×3 (D42)"}
     verdicts["c30007"] = {"cas": 3, "detail": "bascule+effet+rollback réels, "
                                               "appariement RWX/RX 8/8 (héritage, D39)"}
-    total += 11
+    total += 13
+
+    # --- tcp-09 : fil d'écho exécuté POUR DE VRAI (D42 — première fois) ---
+    # Le défaut demo.7 était doublement invisible : shims CS sans état ET
+    # tcp-09 jamais exécuté (le recv du client « reflétait » l'état du patch
+    # en court-circuitant le serveur). Désormais le fil d'écho tourne : recv
+    # scripté → écho v1 RÉEL (bloc 0x4600) → tcp-11 RÉEL (console silencieuse,
+    # stdout nul en GUI — E3) → send observé → fermeture propre.
+    em = Emulateur(exe)
+    em.installer_shims()
+    em.cs_init.add(IMAGE + L.R_CS)          # le correctif D42 (win-09:R3)
+    em.file_recv = [L.PHRASE, 0]            # la requête client, puis fermeture
+    em.appeler(0x4800, (0x777,))            # tcp-09(socket cliente)
+    if em.envois != [L.PHRASE]:
+        raise EchecOracle(f"tcp-09 : le fil d'écho a renvoyé {em.envois!r} — "
+                          f"attendu [PHRASE] (écho v1 identité, échange exact)")
+    if em.fermetures != [0x777]:
+        raise EchecOracle(f"tcp-09 : fermetures {em.fermetures!r} — la socket "
+                          f"cliente devait être fermée (Q4 de tcp-09)")
+    if em.journal_fichier:
+        raise EchecOracle(f"tcp-09 : {len(em.journal_fichier)} lignes au journal "
+                          f"FICHIER — tcp-11 écrit sur stdout (console, silencieux "
+                          f"en GUI : E3), pas dans demo_journal.txt")
+    verdicts["c30009"] = {"cas": 3, "detail": "fil d'écho RÉEL : recv scripté, écho "
+                                              "v1 (bloc scellé), tcp-11 (CS initialisée), "
+                                              "send exact, fermeture (D42)"}
+    total += 3
+
+    # --- falsification D42 (V9) : tcp-09 sur CS VIERGE → Enter faute -------
+    # Le défaut terrain demo.7 EXACT — l'hôte démo sans le correctif : le fil
+    # d'écho journalise sa première réception via tcp-11, EnterCriticalSection
+    # reçoit une CS jamais initialisée (LockCount 0 = « verrouillée »,
+    # OwningThread 0 : état impossible) — l'exception non gérée tue le
+    # PROCESSUS ENTIER, fenêtre disparue, journal gelé après « client :
+    # connecté ». L'émulation DOIT refuser symétriquement (zéro silence).
+    em = Emulateur(exe)
+    em.installer_shims()
+    em.file_recv = [L.PHRASE, 0]
+    try:
+        em.appeler(0x4800, (0x777,))        # tcp-09 SANS initialisation de la CS
+        raise EchecOracle("falsification D42 : tcp-09 a SURVÉCU à "
+                          "EnterCriticalSection sur CS vierge — le défaut "
+                          "terrain demo.7 (processus mort au premier échange, "
+                          "fenêtre disparue) serait indétectable (V9, P5 de "
+                          "tcp-11)")
+    except EchecOracle as exc:
+        if "jamais initialisée" not in str(exc):
+            raise
+    total += 1
 
     # --- falsification D39 (V7 tcp-07:R2) : PAGE_READWRITE au lieu de RWX ---
     # le défaut terrain démo.4 EXACT — processus mort au premier VirtualProtect,

@@ -1,64 +1,93 @@
-TRIADE M2 — démonstration complète en un clic (demo.7, SONDES CONSERVÉES)
+TRIADE M2 — démonstration complète en un clic (demo.8, SONDES CONSERVÉES)
 ====================================================================
 
 demo.exe  (16 384 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
-version 0.3.0-demo.7 — correctif zone d'accueil ABI (D41)
+version 0.3.0-demo.8 — correctif section critique héritée (D42)
 
-POURQUOI CETTE VERSION : votre journal demo.6 a fait exactement son
-travail — la dernière ligne visible était « sonde1 avant echo », et la
-fenêtre a disparu (crash). Cela localisait la mort entre l'écho, le
-memcmp et la pose du patch. L'écho v1 (11 instructions de copie pure)
-et le memcmp (déjà prouvé vert par le sceau libc) étaient innocents :
-le coupable est la POSE. Le sous-programme .protger appelait
-VirtualProtect en réservant 8 octets de pile au lieu des 32 octets de
-« zone d'accueil » que l'ABI Windows 64 bits exige : Windows range ses
-arguments dans cette zone, écrasant l'adresse de retour de .protger
-avec la valeur 0x700 — au retour, le processeur sautait à l'adresse
-0x700 et le processus mourait net. C'était invisible pour l'émulateur
-(7e classe de défaut de ce genre depuis le début du jalon — chaque
-correctif précédent en a démasqué un nouveau). demo.7 réserve
-maintenant les 32 octets requis : la pose ne peut plus mourir.
+POURQUOI CETTE VERSION : votre journal demo.7 était le meilleur run de
+toute la lignée — les trois sondes sont passées, la mécanique complète
+(patch à chaud v1>v2>v1) a été franchie ET constatée sur machine réelle,
+le serveur écoutait, le client était connecté. Puis la fenêtre a
+disparu, sans aucune ligne d'échec. Le coupable a été trouvé par lecture
+des octets, sans vous demander un run supplémentaire : la SECTION
+CRITIQUE de Windows. Le fil d'écho du serveur journalise chaque réception
+via un bloc hérité de l'atelier (tcp-11) qui exige une section critique
+INITIALISÉE — dans l'artefact d'atelier echo.exe, c'est le programme
+principal (tcp-12) qui l'initialise au démarrage ; or ce bloc n'est PAS
+embarqué dans la démo (remplacé par la fenêtre graphique), et personne
+n'avait repris ce devoir. Résultat : au premier échange, Windows range
+l'état « verrouillée par personne » en erreur interne et tue TOUT le
+processus — d'où la fenêtre disparue sans un mot. demo.8 initialise la
+section critique au tout début du scénario : ce devoir est désormais
+assumé par la démo elle-même. (8e classe de défaut du jalon ; l'outil
+de vérification a été durci pour la détecter à jamais.)
 
 1. Double-cliquez demo.exe — NE maximisez pas la fenêtre pour l'instant.
-   Comme en demo.4/5/6 : zone journal avec les 5 lignes de démarrage,
+   Comme en demo.4/5/6/7 : zone journal avec les 5 lignes de démarrage,
    bouton « TOUT DÉMARRER » visible en dessous.
-2. Cliquez « TOUT DÉMARRER ». Cette fois les TROIS sondes doivent
-   passer, suivies de toute la démonstration :
-     sonde1 avant echo        (entrée dans la mécanique)
-     sonde2 patch pose        (le patch à chaud est posé — L'ANCIENNE
-                              FRONTIÈRE MORTELLE EST FRANCHIE)
-     sonde3 v2 ok             (l'écho patché répond MAJUSCULES)
+2. Cliquez « TOUT DÉMARRER ». Le journal complet attendu fait
+   MAINTENANT 28 lignes (les sondes de démo.7 + 6 nouvelles lignes
+   d'échange + 2 lignes serveur) :
+     L00..L03 (démarrage, 6 lignes avec les diagnostics)
+     TRIADE M2 — démonstration / I > B > C, zéro compilateur
+     porte R10 : intégrité VERTE
+     libc M1 scellée : 4/4 verts
+     sonde1 avant echo
+     sonde2 patch pose
+     sonde3 v2 ok
      mécanique : v1→v2→v1 confirmés
      serveur : écoute 127.0.0.1:25000
+     S1 accept ok          } ces deux lignes viennent du fil serveur :
+     S2 fil echo lance     } elles peuvent apparaître juste AVANT ou
+                           } APRÈS « client : connecté » (deux fils
+                           } vivent en parallèle — tout ordre est bon)
      client : connecté
+     sonde4 envoye ok      } la paire revient TROIS fois (une fois par
+     sonde5 recu ok        } échange : identité, MAJUSCULES, retour)
      écho réseau : aller-retour exact
+     sonde4 envoye ok
+     sonde5 recu ok
      patch en production : MAJUSCULES
+     sonde4 envoye ok
+     sonde5 recu ok
      retour arrière : identité confirmée
      boucle § 5 complète — DÉMO OK
-3. QUEL QUE SOIT LE RÉSULTAT, envoyez-moi :
-   a) le fichier demo_journal.txt (posé à côté de demo.exe, régénéré à
-      chaque lancement) — s'il est complet il fait 19 lignes et se
-      termine par « boucle § 5 complète — DÉMO OK » ;
-   b) si possible une capture d'écran de la fenêtre après la fin ;
-   c) un mot sur l'état de la fenêtre (encore affichée ? bouton grisé ?).
+3. QUEL QUE SOIT LE RÉSULTAT, envoyez-moi le fichier demo_journal.txt
+   (posé à côté de demo.exe, régénéré à chaque lancement) :
+   - s'il se termine par « boucle § 5 complète — DÉMO OK », LA BOUCLE § 5
+     EST DÉMONTRÉE SUR MACHINE RÉELLE — il ne restera qu'à retirer les
+     sondes et sceller la version finale 0.3.0 du jalon M2 ;
+   - s'il s'arrête ailleurs, la dernière ligne visible localise la mort
+     à quelques instructions près, des deux côtés de la socket :
+     * avant « S1 accept ok » → mort dans le connect/accept (jamais vu) ;
+     * S1 sans S2 → mort au lancement du fil d'écho (tcp-06) ;
+     * S2 + « client : connecté » sans « sonde4 envoye ok » → mort dans
+       l'émission du client (jamais vue) ;
+     * sonde4 sans sonde5 → mort dans la réception du client ou dans le
+       fil d'écho (la seule zone restée aveugle, à l'intérieur du bloc
+       scellé tcp-09 : elle serait instrumentée en demo.9) ;
+     * sonde5 sans « écho réseau » → mort au memcmp (invraisemblable,
+       il a vécu pendant toute la mécanique).
 
-Interprétation :
- - les 3 sondes passent PUIS arrêt → la mort serait dans la fermeture
-   de la mécanique ou le serveur (jamais exécutés au terrain) ;
- - tout passe jusqu'à « DÉMO OK » → la boucle § 5 est DÉMONTRÉE sur
-   machine réelle : il ne restera qu'à retirer les sondes et sceller
-   la version finale 0.3.0 du jalon M2.
+Interprétation rapide :
+ - tout passe jusqu'à « DÉMO OK » → constat vert, scellage final ;
+ - une seule ligne pourrie au milieu (mélange de deux lignes) → bénigne
+   : les deux fils journalisent en parallèle pendant quelques
+   microsecondes, lisez la suite, c'est documenté et sans danger.
 
 Remarques :
  - fermez tout echo.exe encore lancé avant la démo (port 25000
-   partagé) — la version corrigée echo-0.3.0-rc.4.exe est aussi au
-   coffre si vous voulez la servir à la main ;
- - les sondes seront retirées une fois le constat vert (version finale).
+   partagé) ;
+ - les sondes (1/2/3, S1/S2, 4/5) seront TOUTES retirées une fois le
+   constat vert — c'est la dernière version instrumentée prévue.
 
 Chaîne : notation (keystone) -> octets -> PE32+ à la main, sans compilateur.
-Diff demo.6 -> demo.7 : 7 octets en tout (3 de code dans .protger,
-version, ligne L00, 2 de somme de contrôle de carte).
-Empreintes : demo.exe (demo.7) sha256:1917c9af2d3597274095e3dcc33f6cde5d7cf1ba23661855aa83a863c783ffff
-             md5 89cf9e23015b054c8ed2f0e052ae53a7
+Diff demo.7 -> demo.8 : 3 blocs démo révisés (win-08 + sondes S1/S2,
+win-09 + initialisation de la section critique héritée, win-10 + sondes
+4/5), 7 chaînes de sondes en zone libre, version — les 16 blocs scellés
+M0/M1/M2 restent octet-identiques (vérifié).
+Empreintes : demo.exe (demo.8) sha256:94b9f023f6e8ef450c0dbad1c7f7df6c30b03445ff45e76c711141502d5b590b
+             md5 64ed490e4d5af77952a40a686a3ae40c
 echo-0.3.0-rc.4.exe : sha256:da4a6ca299339567be59ba5c48b1ad3de384bdc316c5a523ebd272b307d3fdb2
-             md5 28bd9863513a105a9822a16a0fb4e831
+             md5 28bd9863513a105a9822a16a0fb4e831 (inchangé — l'atelier
+             n'a pas bougé : le défaut était dans l'hôte démo)

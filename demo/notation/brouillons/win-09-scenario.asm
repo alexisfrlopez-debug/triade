@@ -6,6 +6,12 @@ push r13
 push r14
 push r15
 sub rsp, 0x60
+; D42 : devoir d'heritage de tcp-12 repris par l'hote demo — la section
+; critique R_CS doit exister AVANT tout fil journalisant via tcp-11 (P5) :
+; sur CS vierge, EnterCriticalSection leve une exception non geree et tue
+; le processus entier (le defaut demo.7, au premier echange reseau)
+lea rcx, [rip + RCS]
+call qword ptr [rip + IAT_ICS]
 xor ebx, ebx
 mov ecx, -11
 call qword ptr [rip + IAT_GSH]

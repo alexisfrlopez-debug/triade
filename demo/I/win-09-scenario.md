@@ -1,4 +1,4 @@
-win-09 · scénario complet (thread de démonstration) · révision 2
+win-09 · scénario complet (thread de démonstration) · révision 3
 Intention : LA démonstration en un clic — exécuter séquentiellement, en les
 journalisant ligne à ligne : la porte R10 et les vecteurs libc (win-06), la
 mécanique de patch à chaud hors réseau (tcp-07 bascule/rollback + effet v1→v2→v1
@@ -9,19 +9,27 @@ MAJUSCULES reçue et vérifiée, retour arrière et re-vérification, arrêt pro
 (fermeture client, R_QUIT armé, écoute fermée). Chaque étape échoue PROPREMENT
 (ligne d'échec + arrêt du scénario) : aucune fausse bannière de succès.
 
-RÉVISION 2 (D40 — instrumentation mécanique, TEMPORAIRE) : le journal terrain
-demo.5 (10 lignes) gèle encore après « libc M1 scellée : 4/4 verts » alors que
-l'audit octet (brouillons, notation, binaire) et l'oracle différentiel (79 cas
-verts, permissions réellement appliquées) sont sans défaut — la mort est une
-6e classe de défaut invisible sans exécution terrain, localisée quelque part
-entre la fin du journal libc et J_MEC_OK. R2 ajoute TROIS SONDES de trace
-(win-05 entrée trace, mode 0) qui encadrent exactement chaque étape non
-encore exécutée sur le terrain : sonde1 avant le premier appel écho (entrée
-mécanique), sonde2 après le retour 0 du patch pose (tcp-07 mode 0 COMPLET),
-sonde3 après la vérification memcmp de l'écho patché (v2 confirmé). Chaque
-sonde écrit le fichier journal AVANT l'étape suivante : la dernière sonde
-visible localise l'instruction mortelle à un intervalle de quelques octets.
-Les sondes seront retirées (R3) une fois le défaut identifié et corrigé.
+RÉVISION 3 (D42 — reprise du devoir d'héritage de tcp-12) : le journal
+terrain demo.7 franchit toute la mécanique (sondes 3/3, v1>v2>v1, serveur en
+écoute, client connecté) puis meurt VIOLEMMENT sans ligne d'échec dans le
+premier échange réseau. Diagnostic statique : la section critique R_CS
+(0x3830, .data) — exigée par la pre-condition P5 de tcp-11 (journal console,
+appelé par le fil d'écho tcp-09 à chaque réception) — est ZÉRO dans l'image
+et JAMAIS initialisée : dans echo.exe, ce devoir appartenait à tcp-12-main
+(NON embarqué dans la démo, remplacé par win-01/win-04) ; l'hôte démo a
+repris le caching des handles (P4) mais pas la section critique. Sur
+Windows 10/11, EnterCriticalSection sur une CS vierge (LockCount = 0 =
+« verrouillée » au lieu de -1 « libre », OwningThread = 0) emprunte le
+chemin de contention et termine en exception non gérée dans ntdll — le fil
+d'écho meurt, le processus ENTIER meurt avec lui, la fenêtre disparaît sans
+qu'aucune ligne n'ait pu être écrite : exactement le constat terrain. 8e
+classe de défaut : pré-condition d'état hérité non reprise par l'hôte lors
+du retrait d'un bloc orchestrateur scellé — invisible à l'oracle dont les
+shims de section critique étaient sans état (D42 durcit : Enter sur CS
+vierge DOIT fauter). R3 ajoute l'initialisation en tête de scénario, AVANT
+tout spawn : InitializeCriticalSection(R_CS) par IAT kernel32 — le miroir
+exact du devoir de tcp-12, placé le plus tôt possible du fil qui orchestre
+toute la démonstration.
 Contrat :
   pre  : P1 appelé une fois par win-04 (tcp-06, arg 0), la fenêtre et le
          journal existent ; P2 pile alignée ; P3 WSA non encore initialisé au
@@ -29,7 +37,8 @@ Contrat :
          stdout/stdin sont mis en cache en .data (R_STDOUT/R_STDIN) dès
          l'entrée — lancé depuis une console, le journal serveur hérité
          (tcp-11) y paraît ; sans console, WriteFile échoue silencieusement
-         (GUI, E3 de tcp-11).
+         (GUI, E3 de tcp-11) ; P5 la section critique R_CS est initialisée
+         AVANT tout spawn de fil journalisant via tcp-11 (I0, D42).
   post : Q1 chaque étape franchie n'est journalisée qu'après sa vérification
          (memcmp exact — jamais de succès déclaré non prouvé) ; les sondes R2
          ne journalisent que des FAITS (position d'exécution / retours
@@ -42,13 +51,18 @@ Contrat :
          sur TOUT chemin de sortie : si socket cliente ouverte → tcp-05 ;
          R_QUIT = 1 ; si écoute ouverte → tcp-05 ; le thread retourne 0 ;
          Q5 rax = 0 sur tout chemin (le verdict vit dans le journal).
-  inv  : I1 appels directs : win-05 (journal), win-06 (autotest), win-07
+  inv  : I0 (D42) InitializeCriticalSection(R_CS) est le PREMIER appel du
+         scénario — avant GetStdHandle, avant tout journal, avant tout
+         spawn : l'état hérité exigé par les blocs scellés (P5 tcp-11)
+         existe avant que quelque fil que ce soit puisse y toucher ;
+         I1 appels directs : win-05 (journal), win-06 (autotest), win-07
          (client), tcp-07 (patch), tcp-05 (close), bloc écho 0x4600,
          b20002 (memcmp) ; I2 send/recv par IAT ws2_32 directe (mêmes slots
-         que tcp-09) ; I3 GetStdHandle seule autre IAT (cache P4) ; I4
-         tampons sur pile (phrase 16 o, reçu 32 o), aucune écriture .data
-         hors slots hérités + drapeaux GUI ; I5 le poll d'attente serveur
-         est borné (40 M itérations max — pas de thread zombie bloqué).
+         que tcp-09) ; I3 GetStdHandle, InitializeCriticalSection et
+         CloseHandle seules IAT kernel32 ; I4 tampons sur pile (phrase 16 o,
+         reçu 32 o), aucune écriture .data hors slots hérités + drapeaux
+         GUI ; I5 le poll d'attente serveur est borné (40 M itérations max —
+         pas de thread zombie bloqué).
 Échecs :
   E1 : porte R10 KO (win-06 = -1) — ligne dédiée, arrêt : rien d'autre ne
        s'exécute (fail-closed au chargement, R10).
@@ -64,20 +78,34 @@ Vecteurs :
   V2 : émulation complète : shims réseau (recv scripté REFLET de l'état réel
        du patch : identité / majuscules selon R_ETAT_PATCH — la cohérence
        bascule→réponse est ainsi prouvée) ; le journal capturé doit être
-       EXACTEMENT la séquence attendue (14 lignes au nominal : 11 + les 3
-       sondes R2 intercalées après J_LIBC_OK) ; le patch
-       s'exécute RÉELLEMENT en émulation (VirtualProtect shim, memcpy scellé,
-       qword de bascule écrit à 0x4600, trampoline exécuté vers 0x4680) ;
-       rollback idem ; l'arrêt propre Q4 constaté (closesocket × 2, R_QUIT).
+       EXACTEMENT la séquence attendue (20 lignes au nominal : 14 de R2 —
+       11 nominales + les 3 sondes mécanique — plus les 6 sondes d'échange
+       sonde4/sonde5 ×3, D42) ; le patch s'exécute RÉELLEMENT en émulation
+       (VirtualProtect shim, memcpy scellé, qword de bascule écrit à 0x4600,
+       trampoline exécuté vers 0x4680) ; rollback idem ; l'arrêt propre Q4
+       constaté (closesocket × 2, R_QUIT) ; la CS initialisée est CONSTATÉE
+       par le shim à état (D42 : le scénario sans init échoue au contrôle
+       post-run).
   V3 : falsification : corruption d'un octet de chaque bloc embarqué →
        détection quelque part (porte, vecteur, divergence de journal) —
        zéro silence (batterie exhaustive de l'oracle démo).
+  V9 (D42) : tcp-09 exécuté sur CS VIERGE → EnterCriticalSection FAUTE —
+       le défaut terrain demo.7 rejoué (8e classe) ; toute régression du
+       correctif (init absente du scénario) est détectée par le contrôle
+       post-run du shim à état.
 Fixtures    : .rdata — "salut triade\r\n" (13 o), "SALUT TRIADE\r\n" (13 o),
               lignes du journal (UTF-16) ; sondes R2 en ASCII dans les
-              interstices libres (0x2748/0x276C/0x22F1, jamais lus par le
+              interstices libres (0x2748/0x276c/0x22f1, jamais lus par le
               chargeur ni les INT/IAT) : "sonde1 avant echo" (17 o),
-              "sonde2 patch pose" (17 o), "sonde3 v2 ok" (12 o).
+              "sonde2 patch pose" (17 o), "sonde3 v2 ok" (12 o) ; sondes
+              D42 dans la zone libre M2 0x266E-0x26D8 : "sonde4 envoye ok"
+              (16 o), "sonde5 recu ok" (14 o — win-10:R2), "S1 accept ok"
+              (12 o), "S2 fil echo lance" (17 o — win-08:R2).
 Provenance  : écrite-avant-code.
 Décisions   : D5, D7, D33, D35 ; R4 (contrat stable du bloc écho), boucle § 5 ;
               D40 (instrumentation temporaire — slot 0x380 → 0x3C0, trou libre
-              0x4F80-0x4FFF, aucun bloc voisin déplacé).
+              0x4F80-0x4FFF, aucun bloc voisin déplacé) ; D41 (sondes
+              conservées pour la lecture terrain du correctif) ; D42
+              (correctif : reprise du devoir P5 de tcp-11 — init CS en tête
+              de scénario ; sondes conservées, échange instrumenté des deux
+              côtés).

@@ -94,10 +94,10 @@ def blocs_demo() -> list[tuple]:
         ("d40005", "win-05:R3", "win-05-journal", 0x5000, 0x200),
         ("d40006", "win-06:R1", "win-06-autotest", 0x1AC0, 0x180),
         ("d40007", "win-07:R1", "win-07-client", 0x1C40, 0xC0),
-        ("d40008", "win-08:R1", "win-08-serveur", 0x1D00, 0x100),
+        ("d40008", "win-08:R2", "win-08-serveur", 0x1D00, 0x100),   # D42 : sondes S1/S2
         ("d40011", "win-11:R1", "win-11-journal", 0x1E00, 0x200),
-        ("d40009", "win-09:R2", "win-09-scenario", 0x4C00, 0x3C0),
-        ("d40010", "win-10:R1", "win-10-echange", 0x4980, 0x180),
+        ("d40009", "win-09:R3", "win-09-scenario", 0x4C00, 0x3C0),   # D42 : init R_CS
+        ("d40010", "win-10:R2", "win-10-echange", 0x4980, 0x180),    # D42 : sondes 4/5
     ]
 
 
@@ -186,7 +186,8 @@ IAT_PAR_BLOC = {
     "d40006": set(),
     "d40007": {"socket", "connect", "closesocket"},
     "d40008": {"CloseHandle"},
-    "d40009": {"GetStdHandle", "CloseHandle", "send", "recv"},
+    "d40009": {"GetStdHandle", "CloseHandle", "InitializeCriticalSection",
+               "send", "recv"},   # D42 : init R_CS (devoir de tcp-12)
     "d40010": {"send", "recv"},
     "d40011": {"GetModuleFileNameA", "CreateFileA", "WriteFile",
                "FlushFileBuffers"},
@@ -200,10 +201,10 @@ APPELS_DIRECTS = {
     "d40005": {0x1E00, 0x1280},                 # relais queue win-11 + itoa (D37)
     "d40006": {0x1100, 0x1180, 0x1200, 0x1280},
     "d40007": set(),
-    "d40008": {0x4000, 0x4100, 0x4300, L.JOURNAL_GUI},
+    "d40008": {0x4000, 0x4100, 0x4300, L.JOURNAL_GUI, L.JOURNAL_TRACE},
     "d40009": {L.JOURNAL_GUI, L.JOURNAL_TRACE, 0x1AC0, 0x1C40, 0x1D00, 0x41C0,
                0x4400, 0x4600, 0x1180, 0x4980, 0x4300},   # D40 : + entrée trace win-05
-    "d40010": {0x1180},
+    "d40010": {0x1180, L.JOURNAL_TRACE},   # D42 : sondes 4/5 via win-05
     "d40011": {0x1100, 0x1200, 0x1280},
 }
 DONNEES_RIP = {
@@ -224,12 +225,14 @@ DONNEES_RIP = {
     "d40006": {L.R_ANCRE, L.R_TAB_SUM, L.R_VERSION, 0x2630, 0x2640, 0x2644,
                0x2648, 0x264C, 0x265A},
     "d40007": set(),
-    "d40008": {L.R_LISTEN, L.DRAPEAU_SRV, 0x4800, L.CHAINES_UTF16["J_SRV_KO"][0]},
+    "d40008": {L.R_LISTEN, L.DRAPEAU_SRV, 0x4800, L.CHAINES_UTF16["J_SRV_KO"][0],
+               L.CHAINES_SONDES["SONDE_S1"][0], L.CHAINES_SONDES["SONDE_S2"][0]},  # D42
     "d40009": {L.R_STDOUT, L.R_STDIN, L.R_QUIT, L.R_LISTEN, L.R_PHRASE,
-               L.R_PHRASE_MAJ, 0x1D00,
+               L.R_PHRASE_MAJ, 0x1D00, L.R_CS,   # D42 : init CS (I0)
                *[L.CHAINES_UTF16[n][0] for n in L.CHAINES_UTF16 if n.startswith("J_")] + [L.DRAPEAU_SRV],
-               *[L.CHAINES_SONDES[n][0] for n in L.CHAINES_SONDES]},   # D40
-    "d40010": {L.R_PHRASE},
+               *[L.CHAINES_SONDES[n][0] for n in L.CHAINES_SONDES]},   # D40/D42
+    "d40010": {L.R_PHRASE, L.CHAINES_SONDES["SONDE_4"][0],
+               L.CHAINES_SONDES["SONDE_5"][0]},   # D42
     "d40011": {L.R_JOURNAL_HANDLE, L.BUF_CONV, L.BUF_CHEMIN, L.SCRATCH_ECRIT,
                L.CHAINES_ASCII["NOM_FICHIER"][0]},
 }
@@ -426,9 +429,9 @@ def composer_sections(code: dict, blocs: list[tuple]):
 
     poser(L.R_STAGING, staging)
     poser(L.R_TAB_SUM, table)
-    # D41 : génération courante = demo.7 (héritage tcp-07:R3 / echo rc.4,
-    # zone d'accueil ABI dans .protger — u64 0x00030107, monotonie R10)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO7))
+    # D42 : génération courante = demo.8 (win-09:R3 initialise R_CS — le
+    # devoir de tcp-12 non embarqué ; u64 0x00030108, monotonie R10)
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_DEMO8))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIXTURES, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -754,7 +757,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  suite_conformite_profil       : heritee M2 (124/124, rc.4) + porte D35 verifiee par oracle",
         f"  changements_hors_journal      : 0 : D35 consignee",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee demo, "
-        f"u64 0x{L.VERSION_U64_DEMO7:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_DEMO8:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  patch_a_chaud                 : boucle 5 complete en production "
         f"(patch pendant trafic + rollback) DEMONTREE par le scenario (oracle)",
         f"  artefact                      : {len(exe)} octets ; "
@@ -788,7 +791,7 @@ def assembler_tout():
 def construire(graine: int) -> int:
     print("=== démo : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_DEMO7
+    version = L.VERSION_DEMO8
     texte, rdata, data, text2, staging = composer_sections(code, blocs)
     exe = ecrire_pe32plus(texte, rdata, data, text2)
     valider_pe(exe)
@@ -849,7 +852,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=demo.exe" in l), L.VERSION_DEMO7)
+                    if "artefact=demo.exe" in l), L.VERSION_DEMO8)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

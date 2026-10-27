@@ -52,13 +52,16 @@ BLOCS = [
      "blocs libc-01/02/03/04 ; table R10 + version + ancre .rdata ; fixtures"),
     ("win-07-client", "d40007", "win-07:R1", 0x1C40, 0xC0,
      "IAT ws2_32 : socket, connect, closesocket"),
-    ("win-08-serveur", "d40008", "win-08:R1", 0x1D00, 0x100,
-     "blocs tcp-01/02/06, win-05 ; IAT kernel32 : CloseHandle ; état .data"),
-    ("win-10-echange", "d40010", "win-10:R1", 0x4980, 0x180,
-     "IAT ws2_32 : send, recv ; bloc libc-02 memcmp ; phrase .rdata"),
-    ("win-09-scenario", "d40009", "win-09:R2", 0x4C00, 0x3C0,
+    ("win-08-serveur", "d40008", "win-08:R2", 0x1D00, 0x100,
+     "blocs tcp-01/02/06, win-05 (entrée trace, sondes S1/S2 D42) ; "
+     "IAT kernel32 : CloseHandle ; état .data"),
+    ("win-10-echange", "d40010", "win-10:R2", 0x4980, 0x180,
+     "IAT ws2_32 : send, recv ; bloc libc-02 memcmp ; phrase .rdata ; "
+     "win-05 (entrée trace, sondes 4/5 D42)"),
+    ("win-09-scenario", "d40009", "win-09:R3", 0x4C00, 0x3C0,
      "blocs win-05/06/07/08, tcp-05/07, écho @0x4600, libc-02 ; "
-     "IAT kernel32 : GetStdHandle, CloseHandle ; IAT ws2_32 : send, recv ; "
+     "IAT kernel32 : GetStdHandle, InitializeCriticalSection (D42 : init R_CS, "
+     "le devoir de tcp-12), CloseHandle ; IAT ws2_32 : send, recv ; "
      "état .data + chaînes UTF-16 ; D40 : sondes trace mécanique "
      "(win-05 entrée trace, interstices .rdata)"),
     ("win-11-journal", "d40011", "win-11:R1", 0x1E00, 0x200,
@@ -91,6 +94,7 @@ SYMBOLES = {
     "IAT_SOCKET": L.IAT_SLOTS["socket"], "IAT_CONNECT": L.IAT_SLOTS["connect"],
     "IAT_CLOSESOCK": L.IAT_SLOTS["closesocket"],
     "IAT_SEND": L.IAT_SLOTS["send"], "IAT_RECV": L.IAT_SLOTS["recv"],
+    "IAT_ICS": L.IAT_SLOTS["InitializeCriticalSection"],   # D42 : init R_CS
     "IAT_LOADCURSOR": L.IAT_SLOTS["LoadCursorW"],
     "IAT_REGISTERCLASSEX": L.IAT_SLOTS["RegisterClassExW"],
     "IAT_CREATEWINDOW": L.IAT_SLOTS["CreateWindowExW"],
@@ -114,6 +118,7 @@ SYMBOLES = {
     # état .data (héritage M2 + GUI + journal fichier D36)
     "STDOUT": L.R_STDOUT, "STDIN": L.R_STDIN, "LISTEN": L.R_LISTEN,
     "QUIT": L.R_QUIT, "ETAT_PATCH": L.R_ETAT_PATCH,
+    "RCS": L.R_CS,   # D42 : section critique héritée M2 (P5 de tcp-11)
     "DRAPEAU_WORKER": L.DRAPEAU_WORKER, "DRAPEAU_SRV": L.DRAPEAU_SRV,
     "HWND_PRINCIPAL": L.HWND_PRINCIPAL, "HWND_JOURNAL": L.HWND_JOURNAL,
     "HWND_BOUTON": L.HWND_BOUTON,

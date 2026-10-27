@@ -1330,3 +1330,100 @@ D15 (amende D5) illustrent la procédure.
   terrain attendue : journal demo.7 complet 14 lignes jusqu'à
   « boucle § 5 complète — DÉMO OK » → scellage final 0.3.0 (M2) + retrait
   des sondes.
+
+### D42 — terrain demo.7 parle : la mécanique est franchie (sondes 3/3, serveur écoute, client connecté) mais le processus meurt au premier échange — la section critique R_CS n'a JAMAIS été initialisée dans l'hôte démo (devoir de tcp-12 non repris) ; win-09:R3, 8e classe de défaut invisible
+
+- **Constat terrain** : journal demo.7 rapatrié (dossier test Drive,
+  435 o, 16 lignes, md5 da86c16f…) + « fenêtre disparue » = MORT DU
+  PROCESSUS, comme demo.6. L00 confirme demo.7 ; démarrage complet,
+  clic L03, porte R10 VERTE, libc 4/4 verts, **sonde1 → sonde2 →
+  sonde3** (le correctif D41 VIT : la pose du patch, l'écho patché et
+  le rollback sont franchis), « mécanique : v1>v2>v1 confirmés »
+  (première terrain), « serveur : écoute » et « client : connecté »
+  (premières terrain) — puis plus RIEN, dernière ligne complète
+  (é CP1252 + CRLF finaux : pas de troncature), AUCUNE ligne d'échec
+  E5. La mort est VIOLENTE, dans le premier échange réseau ou en
+  concurrence dans le fil d'écho serveur.
+- **Élimination statique** : (a) win-10-echange relu à la main —
+  alignement conforme (5 pushes + sub rsp,0x40 → rsp ≡ 0 mod 16 aux
+  deux appels IAT), zone d'accueil conforme (tampon de réception
+  [rsp+0x20, rsp+0x40), hors de l'ombre), boucles bornées, échecs
+  propres ; l'audit D41 (58/58 sites) couvrait ses appels. (b) les
+  wrappers tcp-03/04/02 relus — sub rsp,0x28 (zone d'accueil +
+  alignement) chaque fois. (c) tcp-06-spawn relu — les 6 arguments de
+  CreateThread exacts (5e/6e aux loges [rsp+0x20]/[rsp+0x28]) ;
+  spawn#1 (win-08) avait déjà VÉCU au terrain (« serveur : écoute »
+  le prouve). (d) tcp-09-conn relu — prologue 5 pushes + sub rsp,0x460
+  (aligné), tampon [rsp+0x30] de 1072 o ≥ 1024 requis, zone d'accueil
+  libre, échecs propres. Rien à reprocher aux CODES.
+- **Défaut trouvé (byte-exact)** : **la section critique R_CS
+  (0x3830, .data) est zéro dans l'image et n'est initialisée par
+  PERSONNE dans demo.exe**. Le grep de toute la lignée ne trouve
+  qu'UN seul initialiseur : tcp-12-main (IAT 0x20D8) — or tcp-12 est
+  le bloc orchestrateur console REMPLACÉ par win-01/win-04 lors de
+  l'embarquement démo (« tcp-10 et tcp-12 NON embarqués », layout
+  démo). La pre-condition **P5 de tcp-11** (journal console, appelé
+  par tcp-09 après CHAQUE réception) exige « la section critique
+  .data (R_CS) est initialisée … par tcp-12 » : l'hôte démo a repris
+  le caching des handles (P4, win-09) mais PAS l'initialisation de
+  la CS. Au premier échange : le client envoie, le serveur accepte,
+  spawn tcp-09, recv réussit, tcp-09 appelle tcp-11 pour journaliser
+  « echo 14 » → **EnterCriticalSection sur une CS vierge** : sous
+  Windows 10/11, une CS initialisée a LockCount = -1 (libre) ; une CS
+  zéro a LockCount = 0 (« verrouillée ») et OwningThread = 0 — le
+  chemin de contention de ntdll (RtlpWaitOnCriticalSection) reçoit un
+  état impossible et lève une exception non gérée : le fil d'écho
+  meurt, Windows tue le PROCESSUS entier (une exception dans n'importe
+  quel fil est fatale), la fenêtre disparaît, et le client — bloqué
+  dans recv — n'a jamais pu écrire la moindre ligne E5.
+  Correspondance EXACTE avec le terrain, timing inclus. **8e classe
+  de défaut invisible sans exécution** : pré-condition d'état hérité
+  non reprise par l'hôte lors du retrait d'un bloc orchestrateur
+  scellé — et doublement invisible à l'oracle, dont les shims de
+  section critique étaient des no-ops sans état ET qui n'exécutait
+  JAMAIS tcp-09 (le recv du client « reflétait » l'état du patch en
+  court-circuitant le fil serveur).
+- **Correctif écrit-avant-code — win-09:R3 (couche démo, AUCUNE
+  cascade M2)** : la faute est dans l'HÔTE, pas dans les blocs scellés
+  (echo.exe est correct : tcp-12 y initialise la CS). I0 ajouté :
+  InitializeCriticalSection(R_CS) est le PREMIER appel du scénario —
+  avant GetStdHandle, avant tout journal, avant tout spawn — le
+  miroir exact du devoir de tcp-12, placé au plus tôt du fil qui
+  orchestre toute la démonstration. P5 ajouté au contrat. Diff :
+  2 instructions (lea rcx,[rip+R_CS] + call IAT 0x20D8), 13 octets.
+- **Oracle durci (démo)** : (a) shims à état — InitializeCriticalSection
+  enregistre l'adresse, EnterCriticalSection sur CS non enregistrée
+  LÈVE (le défaut demo.7 rejoué en émulation : V9) ; (b) tcp-09
+  exécuté POUR DE VRAI pour la première fois (recv scripté par file
+  d'attente, écho réel, tcp-11 réel, send observé, fermeture) ;
+  (c) contrôle post-run du scénario : la CS DOIT figurer dans l'état
+  des initialisations (toute régression du correctif est détectée) ;
+  (d) falsification V9 : tcp-09 sur CS vierge DOIT fauter.
+- **Instrumentation bilatérale conservée (D40/D41) + étendue** :
+  sondes 1-3 inchangées ; win-08:R2 ajoute S1 (accept retourné) et
+  S2 (fil écho lancé) côté serveur ; win-10:R2 ajoute sonde4 (émission
+  complète) et sonde5 (réception complète) côté client — la dernière
+  sonde visible localise toute mortalité résiduelle à l'intervalle
+  près, des deux côtés de la socket. Risque accepté et consigné :
+  le fil serveur journalise via win-05 en concurrence avec le fil
+  scénario (tampons .data non réentrants — au pire une ligne mélangée,
+  jamais un crash ; l'ordre S1/S2 autour de « client : connecté »
+  n'est pas garanti au terrain, toutes combinaisons interprétables).
+  Chaînes des 4 nouvelles sondes dans la zone libre M2 0x266E-0x26D8
+  (chaînes tcp-10/12 non posées dans la démo, jamais lues par le
+  chargeur). Journal nominal attendu au terrain : 28 lignes.
+- **Alternatives rejetées** : initialiser la CS dans win-01 (entrée
+  processus — correct mais touche le point d'entrée pour un état dont
+  le seul consommateur vit en aval du scénario ; win-09 est l'équivalent
+  structurel de tcp-12) ; initialiser la CS dans win-08 avant le
+  premier spawn (fonctionnellement suffisant mais place le devoir
+  d'héritage dans un fil de service plutôt que chez l'orchestrateur) ;
+  réviser tcp-11 pour se passer de CS (bloc M2 scellé — R6/R7 :
+  la faute est dans l'hôte) ; retirer l'appel tcp-11 de tcp-09 (idem,
+  scellé) ; poser une CS pré-initialisée dans l'image .data (l'état
+  initialisé exact d'une CRITICAL_SECTION dépend de la version de
+  Windows — l'API est la seule voie portable).
+- **Développement** : entrée 31 du journal de travail. Validation
+  terrain attendue : journal demo.8 complet 28 lignes jusqu'à
+  « boucle § 5 complète — DÉMO OK » → retrait de TOUTES les sondes
+  (R3/R4 finales) + scellage final 0.3.0 (M2).

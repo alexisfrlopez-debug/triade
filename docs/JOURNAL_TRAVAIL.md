@@ -1578,3 +1578,96 @@ terrain : pour la première fois, la démonstration est entrée dans la boucle �
 **Suivi** : lecture terrain demo.8 après instrumentation bilatérale de
 l'échange ; à « DÉMO OK » → retrait des sondes (R3 final) + scellage final
 0.3.0 (M2).
+
+## Journal 31 — D42 : diagnostic statique du run demo.7 — la 8e classe de défaut nommée SANS run supplémentaire (section critique R_CS jamais initialisée : le devoir de tcp-12 non repris par l'hôte démo) ; win-09:R3 + instrumentation bilatérale, demo.8
+
+**Contexte** : demande développeur « prepare demo8 » — le plan du journal
+30 (instrumentation bilatérale de l'échange) a d'abord été exécuté comme
+une CHASSE : avant d'instrumenter, élimination statique complète de
+l'intervalle de mort.
+
+**Déroulé** :
+1. Cartographie de l'intervalle : après « client : connecté » (écriture
+   COMPLÈTE, é 0xE9 CP1252 + CRLF — pas de troncature), win-09 appelle
+   win-10 (0x4980) et ne journalise « écho réseau » qu'après memcmp —
+   l'intervalle couvre : send client | accept+spawn serveur | fil d'écho
+   tcp-09 (recv → écho @0x4600 → tcp-11 → send) | recv client | memcmp.
+   AUCUNE ligne E5 : mort violente, pas un échec propre.
+2. Élimination statique systématique — TOUS les suspects relus à la
+   main : win-10 (alignement ✓ zone d'accueil ✓ bornes ✓, déjà audité
+   D41 58/58) ; tcp-03/04/02 wrappers (sub rsp,0x28 ✓) ; tcp-06 spawn
+   (6 arguments CreateThread exacts — et spawn#1 avait VÉCU au terrain,
+   « serveur : écoute » le prouve) ; tcp-09 (prologue 5 pushes + sub
+   0x460 aligné, tampon 1072 ≥ 1024, échecs propres). Les CODES sont
+   sains.
+3. **Défaut trouvé (byte-exact)** : la section critique R_CS (0x3830,
+   .data) est ZÉRO dans l'image et INITIALISÉE PAR PERSONNE dans
+   demo.exe. Grep de toute la lignée : un seul initialiseur, tcp-12-main
+   (IAT 0x20D8) — le bloc orchestrateur console NON embarqué (remplacé
+   par win-01/win-04). Or tcp-11 (journal console, appelé par tcp-09
+   après CHAQUE réception) exige P5 « CS initialisée par tcp-12 ».
+   L'hôte démo a repris le caching des handles (P4) mais PAS la CS.
+   Au premier échange : tcp-09 reçoit, appelle tcp-11, EnterCS sur CS
+   vierge → LockCount 0 (« verrouillée ») + OwningThread 0 = état
+   impossible → chemin de contention ntdll → exception non gérée →
+   le fil meurt, Windows tue le PROCESSUS ENTIER, fenêtre disparue,
+   aucune ligne écrite. Correspondance EXACTE avec le terrain (mort
+   violente juste après « client : connecté », timing compris : le
+   client a déjà envoyé quand le serveur journalise « echo 14 »).
+   **8e classe de défaut** : pré-condition d'état hérité non reprise
+   par l'hôte lors du retrait d'un bloc orchestrateur scellé.
+   Doublement invisible à l'oracle : shims CS no-ops ET tcp-09 jamais
+   exécuté (le recv du client « reflétait » l'état du patch en
+   court-circuitant le serveur).
+4. Correctif écrit-avant-code — win-09:R3 (couche DÉMO, aucune cascade
+   M2 : echo.exe est correct, tcp-12 y initialise) : I0 ajouté —
+   InitializeCriticalSection(R_CS) est le PREMIER appel du scénario,
+   avant GetStdHandle, avant tout journal, avant tout spawn. P5 ajouté.
+   Diff : lea rcx,[rip±] → 0x3830 + call [rip±] → IAT 0x20D8, 13 octets.
+   Specs win-08:R2 (sondes S1/S2 autour d'accept/spawn, handle sauvé en
+   r13 — les volatils meurent à tout appel, D38) et win-10:R2 (sonde4
+   entre boucles émission/réception, sonde5 entre réception et memcmp —
+   tampon [rsp+0x20) hors de portée du callee, rbx/r12/r13 préservés).
+5. Chaîne : brouillons → auteur.py (win-08 179 o, win-09 902 o, win-10
+   195 o — tailles prédites exactes) → build : round-trip 194+45+56
+   100 %, 575 verrous structurels, héritage R7 intact (16 blocs +
+   staging octet-identiques echo rc.4), PE validé (kernel32 x11 + ws2
+   x11 + user32 x14 + gdi32 x1, FT=slots D35).
+6. Oracle durci (D42) : shims à état — InitializeCriticalSection
+   enregistre, Enter/Leave sur CS non initialisée LÈVE (le défaut
+   demo.7 rejoué) ; tcp-09 exécuté POUR DE VRAI (première fois : recv
+   scripté par file, écho v1 réel, tcp-11 réel — CS initialisée, send
+   exact, fermeture) ; contrôle post-run du scénario : R_CS DOIT figurer
+   dans l'état (toute régression du correctif détectée) ; falsification
+   V9 : tcp-09 sur CS vierge DOIT fauter. LIGNES_NOMINALES passe à 20
+   lignes (sondes 4/5 ×3 intercalées). Oracle : **87 cas verts** (80+7),
+   falsification 28/28.
+7. Sondes : 4 nouvelles chaînes en zone libre M2 0x266E-0x26A9 (entre
+   « echo \0 » et « fin connexion » — chaînes tcp-10/12 non posées dans
+   la démo, jamais lues par le chargeur) : « S1 accept ok » (12),
+   « S2 fil echo lance » (17), « sonde4 envoye ok » (16), « sonde5 recu
+   ok » (14). Course bénigne documentée : le fil serveur journalise via
+   win-05 en concurrence avec le fil scénario (tampons .data non
+   réentrants — au pire une ligne mélangée, jamais un crash ; l'ordre
+   S1/S2 autour de « client : connecté » non garanti, toutes
+   combinaisons interprétables).
+8. Audit final (scripts/audit_demo8.py, tracké) : 7/7 sondes posées,
+   L00 demo.8, u64 0x00030108, correctif vérifié byte-exact (lea →
+   0x3830, call → 0x20D8, AVANT GetStdHandle), sondes aux bons
+   emplacements et dans le bon ordre (jb envoi < sonde4 < jb récep <
+   sonde5 < memcmp), héritage D41 intact, zone sondes sans collision,
+   diff demo.7→demo.8 CHIRURGICAL : 1 161 octets (1 076 code des 3
+   blocs révisés + 85 données : sondes, L00, u64, sommes R10), ZÉRO
+   hors zone autorisée.
+9. Livraison : racine Drive + dossier test + download/, LISEZMOI réécrit
+   pour demo.8 (28 lignes attendues, guide de lecture des issues — la
+   sonde manquante localise la mortalité résiduelle à quelques
+   instructions près, des deux côtés de la socket). Docs : D42
+   (DECISIONS), journal 31, REPRISE aligné. Commit + GitHub + miroir.
+
+**Suivi** : lecture terrain demo.8 — journal complet 28 lignes attendues
+jusqu'à « boucle § 5 complète — DÉMO OK » → retrait de TOUTES les sondes
++ scellage final 0.3.0 (M2). Si mort résiduelle : la dernière sonde
+visible désigne l'intervalle ; la seule zone restée aveugle serait
+l'intérieur de tcp-09 (bloc scellé — demo.9 instrumenterait via une
+révision M2).
