@@ -1,0 +1,68 @@
+TRIADE — SUPERVISEUR TERRAIN.8 (build DIAGNOSTIQUE)
+===================================================
+
+CE QUI S'EST PASSE AVEC TERRAIN.7 (excellentes nouvelles)
+---------------------------------------------------------
+Votre run de 18:00 a valide TOUTE la mecanique du superviseur :
+  S02 porte R10 : integrite VERTE     (le correctif de la porte vit)
+  S03-S06 : libc 4/4, demo.exe et proxy.exe extraits conformes, annexe OK
+  S11 : fenetre demo DETECTEE         (la recherche par classe vit)
+  S12 : clic TOUT DEMARRER envoye     (le superviseur clique tout seul)
+Puis le journal du demo s'arrete encore sur « reseau : echange en
+echec » — 2e reproduction PROPRE (la 1re etait votre clic manuel de
+16:52). Le demo ne meurt pas : il s'arrete PROPREMENT (ligne d'echec +
+nettoyage + arret du scenario, fenetre ouverte).
+
+Votre journal superviseur s'arrete a S12 : le superviseur etait dans
+son sondage du marqueur final (30 secondes de silence NORMAL) quand le
+processus a ete interrompu — probablement la fermeture de la fenetre,
+parce que la ligne « echange en echec » du demo ressemblait a un echec
+final. C'etait le moment OU IL FALLAIT ATTENDRE : le verdict S13-S16
+s'ecrit ~40 secondes apres le clic, meme quand le demo echoue.
+
+POURQUOI TERRAIN.8 : LE DEMO INSTRUMENTE
+----------------------------------------
+L'analyse binaire complete (demo.8 qui PASSAIT sur votre machine vs
+demo.9 qui echoue) montre un code reseau IDENTIQUE et sain — l'echec
+est un fait d'execution que seule la MACHINE revele. La methode qui a
+deja gagne trois fois sur ce projet (demo.5, demo.6, demo.7) :
+INSTRUMENTER. Terrain.8 embarque demo.10 = le demo.9 avec les sondes
+de demo.8 reintroduites, exactement autour de l'intervalle mort :
+
+  S1  accept ok        — le serveur a-t-il accepte la connexion ?
+  S2  fil echo lance   — le fil echo a-t-il ete cree ?
+  sonde4 envoye ok     — l'emission des 13 octets est-elle complete ?
+  sonde5 recu ok       — la reception est-elle complete ?
+  (puis le verdict memcmp)
+
+La DERNIERE sonde visible dans demo_journal.txt localisera la panne a
+l'instruction pres. demo.10 s'identifie par « 0.3.0-demo10 » dans sa
+ligne L00 (jamais plus de build anonyme).
+
+QUOI FAIRE (3 minutes, NE RIEN FERMER)
+--------------------------------------
+1. Remplacez superviseur-terrain7.exe par superviseur-terrain8.exe.
+2. DOUBLE-CLIQUEZ. Fenetre ouverte ? Cliquez « TOUT DEMARRER ».
+3. ATTENDEZ 2 A 3 MINUTES SANS FERMER AUCUNE FENETRE. Les silences
+   sont NORMAUX et ATTENDUS :
+     - ~30 secondes de silence apres S12 (le sondage du journal demo,
+       meme si le demo affiche « echange en echec » — c'est justement
+       la panne qu'on diagnostique, laissez le verdict s'ecrire) ;
+     - S13..S16 puis T2 proxy (~1 minute, deux traverses curl de
+       jusqu'a 25 s chacune) ;
+     - T3 depose AUTOMATIQUEMENT le journal dans ce dossier test.
+4. En plus du journal terrain_*.txt, DEPOSEZ AUSSI demo_journal.txt
+   (a cote du superviseur) — c'est LUI qui contient les sondes.
+
+A SAVOIR POUR LIRE LE VERDICT
+-----------------------------
+Le superviseur attend 17 lignes du demo : le build diagnostique en
+ecrit jusqu'a 28 — T1 dira donc probablement « NON CONFORME » meme en
+cas de succes. CE N'EST PAS LE PROBLEME. La preuve vit dans les sondes
+de demo_journal.txt : S1, S2, sonde4, sonde5, puis « echo reseau :
+aller-retour exact » x3 et « boucle § 5 complete - DEMO OK » si tout
+passe. Le journal terrain embarque le journal demo en plus.
+
+md5 superviseur-terrain8.exe  d64304bd1c567bfe801e6e90ad1bf67c
+sha256                        1bd73a2ac9b632178c4d9bb4d388929c8b0a1c535adc1e518853710e29773ae1
+md5 demo.10 embarque          cf72462dc130aa4753a2fe5e78f06a08

@@ -2598,3 +2598,86 @@ verdict attendu : S02 doit ENFIN passer VERT, puis S03→S06, S10/S11
 ligne à ligne du journal demo — si « réseau : échange en échec »
 revient au verdict T1, le défaut est dans le demo.9 lui-même (sondes
 retirées D43) : prochaine cible, tranchée par le journal.
+
+## Entrée 46 — terrain.8 : « fichiers terrain envoyés » — le run terrain.7 VALIDE toute la mécanique superviseur (porte VERTE, fenêtre détectée, clic envoyé) ; l'échange demo.9 échoue en 2e reproduction propre — demo.10 DIAGNOSTIQUE embarqué (les sondes de demo.8 réintroduites autour de l'intervalle mort, D57, 27/10 soir)
+
+**terrain_20261027_180007.txt + demo_journal.txt rapatriés (dossier
+test).** Le run terrain.7 de 18:00 : L00→L03, S00 « 0.5.0-terrain.7 »,
+S01 date, **S02 porte R10 : integrite VERTE** (le correctif D56 vit —
+la somme [23] recalculée passe la vraie porte), S03 libc 4/4, S04/S04C
+demo.exe extrait md5 73c064fb conforme, S05/S05C proxy.exe 8740e1ca
+conforme, S06 annexe extraite T3 actif, S10 lancement, **S11 fenetre
+demo DETECTEE** (le correctif FindWindowW par CLASSE de terrain.6 vit —
+la fenêtre trouvée en < 1 s), **S12 clic TOUT DEMARRER envoyé** (le
+BM_CLICK par le superviseur). TOUTE la mécanique superviseur VIT.
+
+**L'échec est dans le demo.9 lui-même — 2e reproduction PROPRE.** Le
+journal demo : L00 demo.9 → mécanique v1>v2>v1 confirmés → « serveur :
+écoute » → « client : connecté » → **« réseau : échange en échec »** —
+la ligne E5 de win-09 (send ≤ 0 / recv ≤ 0 / memcmp ≠ 0), puis ARRÊT
+PROPRE (E5 = ligne + nettoyage Q4 + arrêt du thread scénario, fenêtre
+ouverte — le demo ne meurt pas, il attend). Même échec que le clic
+manuel de 16:52 (terrain.5) : cette fois sans tueur, sans main humaine,
+la cause est dans le demo.9. Le journal superviseur coupe à S12 : le
+processus a été interrompu pendant le sondage 30 s du marqueur final
+(fermeture manuelle probable — l'utilisateur a reconnu la ligne
+d'échec de son run manuel et conclu ; le verdict S13-S16 serait né
+~40 s après le clic). Terrain_jetons.bin déposé aussi par
+l'utilisateur (le nettoyage sup-37 n'a jamais couru — cohérent).
+
+**Analyse statique EXHAUSTIVE avant tout geste (diag_echange_demo9,
+diag_reseau_demo9, diag_chaines_demo) :** les blocs tcp-01..09, le
+trampoline 0x4680 (int3 — patch non posé), l'écho v1 (memcpy pur), le
+fil écho tcp-09, win-07 (connect vérifié, socket valide), les wrappers
+recv/send, tcp-06, tcp-11 (EnterCS → « echo N\r\n » → WriteFile
+silencieux en GUI → LeaveCS) — **byte-identiques entre demo.8 (passait
+sur CETTE machine le 26/10) et demo.9** ; win-10 sain (5 pushes/5
+pops, boucles cumulatives 14 o, memcmp scellé) ; l'init CS D42 VIVANTE
+vérifiée au désassemblage (lea → 0x3830, call IAT 0x20D8, avant
+GetStdHandle) ; le drapeau serveur armé APRÈS bind+listen (pas de
+course au connect — et « client : connecté » le prouve) ; la théorie
+du proxy orphelin sur port 25000 ÉLIMINÉE (le bind aurait échoué →
+flag 2 → ligne E4, absente du journal). **Le diff 8→9 = UNIQUEMENT les
+sondes retirées (S1/S2 dans win-08, sonde4/5 dans win-10, sonde1/2/3
+dans win-09) — l'échec est un fait d'exécution INVISIBLE en statique.
+9e classe de défaut : la démonstration passe instrumentée et échoue
+nue sur la même machine.**
+
+**demo.10 DIAGNOSTIQUE (patch_demo10.py) : demo.8 repris BYTE POUR
+BYTE + identification.** La méthode D40-D42 (trois fois payante) :
+INSTRUMENTER — les sondes S1/S2/sonde4/sonde5 encadrent l'intervalle
+mort exact (accept ? fil écho créé ? émission complète ? réception
+complète ?), la dernière sonde visible localisera la panne à
+l'instruction près, le verdict memcmp tranchera la divergence de
+contenu. Le patch : « demo.8 » → « demo10 » @rva 0x2eca (6 octets,
+MÊME longueur — la chaîne L00 est à longueur explicite edx=0x28, les
+chaînes .rdata sont collées, AUCUN décalage) + u64 version 0x30108 →
+0x3010A @0x2628 — **3 octets au total**, porte R10 28/28 VERTE sans
+recalcul (les octets version sont hors zones couvertes),
+l'instrumentation vérifiée intacte byte pour byte. md5 cf72462d…,
+16384 o (slot .blob exact).
+
+**superviseur-terrain8 (patch_terrain8.py, base terrain.7) :** (a) le
+.blob embarque demo.10 (16 384 o @0x6410, byte-exact, proxy/annexe/en-
+tête intacts) ; (b) le md5 hex affiché S04C mis à jour (73c064fb… →
+cf72462d…, 32 o — l'affichage terrain dit la vérité ; la conformité
+S04 reste la comparaison octets extraits vs blob, inchangée) ; (c)
+L00/S00 « terrain.8 » + VERSIONINFO 0.5.8.0 ; (d) sommes R10[23]/[25]/
+[26] recalculées sur l'image finale (méthode D56 : table lue au
+terminateur, couvreurs attendus exactement {23,25,26} — vérifié).
+NON-PATCHÉ délibérément : le seuil 17 lignes et la limite 640 o du
+sondage — la limite est PHYSIQUE (TAMPON_CMD @0x3D50 = 688 o avant
+.text2 : lire plus écraserait tcp-01) ; le journal d'échec attendu
+(≤ 550 o, sondes incluses) est entièrement couvert. md5 d64304bd…,
+porte 27/27 + terminateur, FindWindowW intact, vérification croisée
+indépendante (extraction du blob + porte recalculée from scratch).
+
+**Livraison :** superviseur-terrain8.exe + LISEZMOI-terrain8.txt au
+dossier test (2/2 md5 MATCH). Le LISEZMOI change de registre sur le
+protocole du run : les 30 s de silence après S12 sont ATTENDUES même
+en cas d'échec (le verdict S13-S16 naît ~40 s après le clic — le run
+terrain.7 est mort LÀ), le full run prend 2-3 minutes (T1 + T2 proxy
++ T3 dépôt automatique), NE RIEN FERMER, et déposer AUSSI
+demo_journal.txt (LES sondes vivent là). Avertissement de lecture : T1
+dira « NON CONFORME » même en cas de succès (28 lignes ≠ 17 attendues
+— le build diagnostique écrit plus) — la preuve vit dans les sondes.
