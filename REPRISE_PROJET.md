@@ -34,7 +34,7 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 
 | Domaine | État | Détail |
 |---|---|---|
-| Spécification v0.4.0 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (archive formelle, chaîne LaTeX/Tectonic — D25) ; révision de gouvernance née des pratiques du recodage RoomEq : couche I normalisée (gabarit), taxonomie T1–T6, R10 renforcée, R11 (optimisation mesurée), conformité par profil, traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord ; vérification interne : `docs/VERIFICATION_v0.4.0.md` (64 contrôles PASS / 0 FAIL) ; les archives v0.3 (27 p.) et v0.2 sont conservées |
+| Spécification v0.5.0 | Terminée | `docs/PROTOCOLE_TRIADE.md` (source de travail) et `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (archive formelle, chaîne LaTeX/Tectonic `scripts/spec_v050/` — née spec_v040, D25) ; révision du retour du terrain (D44) : validation terrain normée — boucle d'évidence (§ 8.4), taxonomie X1–X8 des défauts invisibles à l'émulation (§ 8.5, une classe par décision D35–D42), jalons M0–M2 constatés franchis, budgets mesurés, corrections (64 tokens, typographie) ; cahier de vérification V1–V10 (`scripts/spec_v050/verify_spec.py`) ; archives v0.4.0, v0.3, v0.2 conservées |
 | Journal des décisions | Terminé | D1 à D32 consignées dans `docs/DECISIONS.md` (format normalisé depuis D24) |
 | Feuille de route | Terminée | Jalons M0 à M7 dans `docs/PLAN_MILESTONES.md`, critères de sortie mesurables |
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
@@ -300,6 +300,22 @@ final attendu si relecture : 17 lignes (6 de démarrage + 11 de preuve).
 Détail complet : `docs/JOURNAL_TRAVAIL.md` (journaux 22 à 32), décisions
 D36-D43 dans `docs/DECISIONS.md`, archives terrain
 `demo/journal_terrain_demo*.txt`.
+
+**État M3 (ouvert au 27/10/2026, journal 34 / D45)** : le jalon des entrées
+non fiables est ouvert par la MÉTHODE avant les blocs — le harnais de fuzzing
+à propriétés (`m3/fuzz.py`, tracké) est livré et calibré : cinq propriétés
+dérivées des contrats (P1 survie, P2 terminaison, P3 différentiel, P4
+fermeture unique, P5 mémoire par crochet d'écriture Unicorn), six générateurs
+nommés, rejeu sur état vierge de tout échec, graines reproductibles.
+**Campagne d'ouverture : 101 000 cas SANS CRASH** sur la surface d'entrées
+non fiables déjà scellée (tcp-09 session serveur, win-10 échange client) —
+zéro violation confirmée ; le harnais est FALSIFIABLE (auto-test : deux
+défauts d'un octet injectés, détectés 122/300 et 300/300). Leçon de
+calibration consignée : les premières divergences étaient dans le modèle du
+harnais (cap recv, sémantique du retour 0), pas dans le bloc — miroir de la
+classe X6. Prochaines étapes : spécifications http-xx (parseur à contrats
+renforcés, écrites-avant-code), blocs + proxy transparent curl, campagne
+million (débit constaté : ~39 min pour 10^6 cas).
 
 ## 8. Avertissement sécurité — jetons
 

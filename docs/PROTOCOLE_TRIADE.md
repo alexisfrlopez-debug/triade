@@ -1,7 +1,8 @@
-# PROTOCOLE TRIADE v0.4.0 — Spécification technique
+# PROTOCOLE TRIADE v0.5.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.4.0. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
+> Source de travail faisant autorité pour la v0.5.0. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
+> `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
 > `docs/Protocole_TRIADE_v0.2_Specification.pdf` (v0.2). La série documentaire compte
 > également la démonstration RoomEq (`docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf`)
 > et l'édition académique v0.4 (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`, D18 —
@@ -9,13 +10,13 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.4.0 est la première version numérotée à trois segments : la numérotation des
-> révisions du protocole s'aligne sur le schéma de pré-versions qu'elle définit elle-même
-> (§ 9) — l'édition académique « v0.4 » (D18) restait un document, le noyau normatif v0.3
-> inchangé ; la présente révision est le protocole.
+> La v0.5.0 est la révision du retour du terrain : les jalons M0, M1 et M2 sont franchis sur
+> validations terrain Windows 11 (balises finales 0.2.0 et 0.3.0), et la campagne M2 — huit
+> classes de défauts invisibles à l'émulation nommées en huit lectures de journal — devient
+> norme (§ 8.4, § 8.5).
 
-- Version : v0.4.0 — gouvernance vérifiée : couche I normalisée, menace étendue, R10 renforcée, R11 ajoutée, conformité par profil, traçabilité et tableau de bord
-- Date : 26 octobre 2026
+- Version : v0.5.0 — révision du retour du terrain : validation terrain normée (boucle d'évidence), taxonomie étendue X1–X8, jalons M0–M2 constatés, budgets mesurés
+- Date : 27 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -45,10 +46,20 @@ stables. La couche C est l'index naviguable qui lie les deux et sert d'unique in
 développement à l'agent.
 
 La v0.4.0 tire les enseignements de la première validation à l'échelle — le recodage complet
-de RoomEq (démonstration v0.3) — et les converts en normes : ce que la démonstration a
+de RoomEq (démonstration v0.3) — et les convertit en normes : ce que la démonstration a
 pratiqué (reverse-specs, pré-versions, partage de fixtures, mesure avant optimisation)
 devient exigence ; ce que son analyse des défauts a révélé devient taxonomie ; ce que son
 étude de cas a établi et ne prouve pas reste explicitement hors périmètre de preuve.
+
+La v0.5.0 est la révision du retour du terrain. Les jalons M0 (chaîne artefact), M1
+(mini-libc scellée) et M2 (patch à chaud en production, avec retour arrière) sont franchis
+— chacun sur validation terrain Windows 11, chacun scellé par une balise finale immuable
+(0.2.0, 0.3.0). La campagne M2 a coûté huit classes de défauts invisibles à l'émulation
+(§ 8.5) — le prix d'une leçon : un oracle valide un artefact contre un modèle
+d'environnement, et la complétude du modèle ne se démontre qu'en exécutant le binaire sur
+le système réel. Ce que le terrain a appris devient norme : la boucle d'évidence (§ 8.4),
+la taxonomie X, l'instrumentation contractualisée — et l'ouverture du jalon M3, contrats
+renforcés sur entrées non fiables.
 
 ### 1.1 Fonction objectif hiérarchisée — invariant de révision
 
@@ -94,6 +105,23 @@ pré-versions de cristallisation (§ 9), reverse-specs (§ 10), journal d'optimi
 (§ 11), modèle de menace étendu (§ 13), journal des décisions normalisé et tableau de bord
 de conformité (§ 15). Aucune règle existante n'est affaiblie ; aucune couche n'est ajoutée
 à l'exécution ; la hiérarchie de la fonction objectif est inchangée.
+
+### 1.4 Ce que change la v0.5.0
+
+Huit évolutions, toutes tracées dans la correspondance (§ 17.3) et le journal des versions
+(§ 19), toutes rattachées aux décisions D26 à D45 : la validation terrain devient une
+couche de vérification normée — boucle d'évidence, journal d'exécution, instrumentation
+contractualisée, diff chirurgical (§ 8.4) ; la taxonomie des défauts s'étend des classes T
+(contrat non écrit) aux classes X — défauts invisibles à l'émulation, huit classes nommées
+par la campagne M2 (§ 8.5) ; l'état des jalons est constaté — M0, M1 et M2 franchis sur
+validations terrain Windows 11, balises finales 0.2.0 et 0.3.0 posées (§ 16) ; le budget
+de localisation est corrigé à 64 tokens (D31) et les budgets affichent leurs valeurs
+mesurées (§ 12, § 15.2) ; les volumes d'oracle effectifs sont consignés ; les preuves
+terrain sont archivées brutes avec leurs empreintes ; le corpus de démonstration (huit
+itérations instrumentées) devient l'occurrence de référence de la méthode ; le jalon M3
+est ouvert — contrats renforcés sur entrées non fiables et fuzzing à propriétés (D45).
+Aucune règle n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de
+la fonction objectif est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -360,7 +388,8 @@ vérification de types, initialisation, analyse de flot. La stratégie de vérif
 reconstruit une confiance équivalente — voire supérieure — sans réintroduire de couche de
 traduction dans l'artefact. Elle repose sur trois piliers, complétés en v0.4.0 par la
 couverture des vecteurs, la suite de conformité par profil et la parité inter-profils
-(§ 8.1 à § 8.3).
+(§ 8.1 à § 8.3), puis en v0.5.0 par la validation terrain normée (§ 8.4) et la taxonomie
+des défauts invisibles à l'émulation (§ 8.5).
 
 **L'oracle éphémère** : implémentation de référence de chaque bloc — triviale,
 volontairement lente, écrite dans un langage sûr et dérivant directement de la couche I. Il
@@ -432,6 +461,84 @@ exécution**, jamais par déduction : c'est le critère de sortie de M6 (inter-O
 constante) et M7 (inter-ISA). Aucune couche d'abstraction n'est introduite pour l'obtenir —
 un bytecode portable trahirait la fonction objectif Performance (rejet consigné, D14 et
 § 17.2).
+
+### 8.4 La validation terrain — la boucle d'évidence
+
+La v0.5.0 élève la validation terrain au rang de couche de vérification normée (D43). Le
+principe est né d'un constat structurel : l'oracle différentiel exécute le binaire contre
+un **modèle** de l'environnement — chargeur, ABI, sémantique des API, protections
+mémoire. Un binaire peut donc être exact au sens du round-trip, intègre au sens de la
+porte R10, conforme au sens de la suite du profil, vert au sens de l'oracle — et mourir
+au premier appel sur machine réelle, parce que le modèle était plus pauvre que la
+réalité. Les jalons M1 et M2 en ont fourni la preuve expérimentale : huit classes de
+défauts ainsi invisibles (§ 8.5) n'ont été révélées que par l'exécution terrain.
+
+La boucle d'évidence comporte cinq éléments normés :
+
+1. **Le journal d'exécution** — l'artefact livré écrit ses preuves au fil de l'eau
+   (fichier à côté de l'exécutable, ligne par ligne). La règle d'honnêteté est absolue :
+   une ligne n'est écrite qu'après la vérification de l'étape qu'elle atteste (memcmp
+   exact) — une ligne présente vaut preuve ; la dernière ligne visible localise toute
+   mortalité à l'intervalle près.
+2. **La lecture asymétrique** — le terrain retourne son verdict par un canal à faible
+   bande passante : le journal (éventuellement complété d'une capture). L'atelier
+   n'exige du terrain que ce document, jamais un diagnostic : la charge d'analyse reste
+   à l'agent.
+3. **L'instrumentation contractualisée** — quand l'intervalle de mortalité reste
+   aveugle, l'itération suivante embarque des sondes de trace aux frontières (D40) :
+   elles journalisent des faits (positions d'exécution, retours vérifiés), jamais un
+   succès non prouvé ; leur retrait après constat vert est promis dans la spécification
+   (D43 a honoré la promesse) et vérifié par l'oracle — le journal nominal redevient
+   exactement sa séquence de preuves, toute ligne parasite est un échec.
+4. **Le diff chirurgical** — chaque itération terrain ne modifie que les blocs révisés ;
+   l'audit d'itération vérifie mécaniquement qu'aucun octet hors des zones autorisées
+   (blocs révisés, chaînes, version, sommes) n'a bougé — l'héritage scellé reste
+   octet-identique (R7).
+5. **L'archive brute** — chaque journal terrain est archivé tel quel (octets d'origine,
+   encodage et CRLF compris) avec son empreinte : la preuve est le document, pas son
+   résumé.
+
+Le protocole est ensuite économique : huit lectures de journal ont suffi à nommer huit
+classes de défauts en deux jours (demo.1 à demo.8), et le dernier diagnostic a été obtenu
+sans run supplémentaire — par lecture statique des octets appuyée sur les preuves
+accumulées (D42). La contrepartie est la garantie de progression : chaque défaut nommé
+devient un vecteur de falsification permanent de l'oracle — le modèle d'environnement
+s'enrichit de chaque lecture terrain et ne peut plus régresser en silence.
+
+### 8.5 Taxonomie étendue — les défauts invisibles à l'émulation (X1–X8)
+
+Les classes T1–T6 (§ 3) classent les défauts de contrat non écrit : lisibles dans la
+spécification, corrigeables en écrivant le contrat. La campagne M2 a révélé une seconde
+famille, structurellement différente : des défauts dont ni la spécification, ni la
+notation, ni le round-trip, ni l'oracle ne parlent — parce que le modèle d'environnement
+de l'oracle était, sur un point précis, plus pauvre que le système réel. La v0.5.0 en
+fixe la taxonomie (D35–D43) :
+
+| Classe | Décision | Dimension du modèle défaillant | Défaut de référence | Garde permanente |
+|---|---|---|---|---|
+| X1 | D35 | sémantique du chargeur | `FirstThunk` ≠ slots appelés : le chargeur réel résout ailleurs que le code n'appelle — `call 0` au premier appel réseau | verrou « chargeur réel » : FirstThunk = slots appelés, contrôlé au build et par l'oracle |
+| X2 | D36 | lecture de structure | `RECT.top` lu comme largeur : spécification juste, octets faux — bloc jamais exécuté, shim témoin muet | coquille entière exécutée + invariant géométrique + falsification de l'octet |
+| X3 | D37 | canal de vérité | jumeau silencieux : le journal fichier vivait, l'écran restait vide — le défaut vivait dans la spécification elle-même | miroir universel : chaque ligne écrite écran puis fichier, les deux canaux contrôlés |
+| X4 | D38 | ABI caller-saved | dimensions relues dans des registres volatils après l'appel : un retour de syscall écrit RFLAGS dans r11 | clobber des volatiles à chaque retour simulé + falsification |
+| X5 | D39 | protections mémoire | phase de patch `PAGE_READWRITE` sans bit execute : DEP permanent x64, le fetch suivant faute | le shim applique les permissions réelles + falsification 0x40 → 0x04 |
+| X6 | D40 | écart émulation/terrain | défaut latent qu'aucune exécution n'avait déclenché : l'audit exhaustif était vert | sondes de trace aux frontières (§ 8.4), instrumentation contractualisée |
+| X7 | D41 | obligations ABI de l'appelant | zone d'accueil msx64 absente : l'appelé (/homeparams) écrit sur l'adresse de retour — le ret saute à 0x700 | shim /homeparams + audit systémique des sites d'appel + falsification |
+| X8 | D42 | état hérité | section critique exigée par un bloc scellé (P5) mais initialisée par un bloc orchestrateur retiré de l'hôte | shims à état + exécution réelle du bloc consommateur + contrôle post-run |
+
+Trois règles d'usage, miroir de celles de la taxonomie T. Premièrement, tout défaut
+terrain corrigé est classé T ou X au journal des décisions — la métrique « défauts
+ouverts par classe » du tableau de bord (§ 15.2) couvre désormais les deux familles.
+Deuxièmement, chaque classe X est gardée par une falsification : réintroduire le défaut
+doit faire échouer l'oracle — le modèle s'enrichit mais ne régresse jamais en silence.
+Troisièmement, la taxonomie est ouverte : une neuvième classe sera nommée X9 avec sa
+décision, jamais dissimulée dans un correctif muet.
+
+La lecture académique : un oracle différentiel valide la conformité d'un artefact à un
+modèle ; la validation terrain valide le modèle lui-même. Les deux couches sont
+complémentaires, non redondantes — l'oracle couvre l'espace des entrées à coût nul, le
+terrain couvre l'espace des environnements au coût d'un run. Le protocole exige les
+deux : R5 (vérifie-puis-écrit) pour la première, la boucle d'évidence (§ 8.4) pour la
+seconde.
 
 ## 9. Cristallisation et pré-versions
 
@@ -589,7 +696,8 @@ furtivité face aux EDR est hors périmètre (§ 1.2) : un outil légitime par c
 dont la transparence vis-à-vis du système est totale. Et la gouvernance du protocole a été
 validée sur un cas unique (N = 1) — l'étude de cas RoomEq, dont les limites sont
 documentées dans l'édition académique (D18) : la généralité reste à établir par
-réplication, le cœur natif par les jalons M0 à M7.
+réplication, le cœur natif par les jalons M0 à M7 — dont M0, M1 et M2 sont désormais
+franchis (§ 16), preuves terrain archivées.
 
 ## 14. Profils de cible — universalité
 
@@ -705,7 +813,7 @@ la carte :
 | Empreintes des données embarquées | conformes à la carte | hachage |
 | Défauts ouverts par classe T1–T6 | 0 | journal des décisions (classification) |
 | Optimisations sans mesure (R11) | 0 | journal d'optimisation |
-| Budgets tokens (localiser / éditer / ajouter) | ≤ 40 / 3 000 / 6 000 | instrumentation (à partir de M1) |
+| Budgets tokens (localiser / éditer / ajouter) | ≤ 64 / 3 000 / 6 000 | instrumentation — mesurés M1 : 51 / 719 / 1 088 (D31) |
 | Suite de conformité par profil actif | verte | suite du profil (§ 8.2) |
 | Changements hors journal des décisions | 0 | diff vs journal (audit de gouvernance) |
 | Pré-versions : dev/rc/final correctement balisées | 100 % | registre des balises (§ 9) |
@@ -732,24 +840,28 @@ révision. **Conditions transverses** (v0.4.0) : aucun jalon n'est franchi sans 
 vert, suite de conformité verte pour les éléments couverts, tableau de bord conforme
 (§ 15.2) et carte signée. Les critères propres à chaque jalon :
 
-| Jalon | Capacité | Critères de sortie mesurables |
-|---|---|---|
-| M0 | Chaîne artefact | exécution sur Windows 11 ; round-trip 100 % ; carte v0 signée et vérifiée ; exécutable < 4 Kio ; R1-R3, R8-R9 dès le premier octet |
-| M1 | Blocs réutilisables | oracle 100 % sur la mini-libc ; première cristallisation ; adresses stables démontrées ; budgets tokens instrumentés (première mesure) |
-| M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul |
-| M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing |
-| M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide |
-| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives |
-| M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils |
-| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié |
+| Jalon | Capacité | Critères de sortie mesurables | Statut |
+|---|---|---|---|
+| M0 | Chaîne artefact | exécution sur Windows 11 ; round-trip 100 % ; carte v0 signée et vérifiée ; exécutable < 4 Kio ; R1-R3, R8-R9 dès le premier octet | **franchi** 26/10/2026 (D26) |
+| M1 | Blocs réutilisables | oracle 100 % sur la mini-libc ; première cristallisation ; adresses stables démontrées ; budgets tokens instrumentés (première mesure) | **franchi** 26/10/2026 — balise 0.2.0 (D32) |
+| M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul | **franchi** 27/10/2026 — balise 0.3.0, boucle § 5 démontrée sur machine réelle (D43) |
+| M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **ouvert** 27/10/2026 (D45) |
+| M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | à venir |
+| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives | à venir |
+| M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | à venir |
+| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | à venir |
 
 M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutable, exécution
-sans compilateur. M2 est le jalon de vérité — le patch à chaud sur code en exécution a
-motivé l'architecture. M6 et M7 transforment la portabilité de promesse en propriété
+sans compilateur ; il est franchi. M2 est le jalon de vérité — le patch à chaud sur code
+en exécution a motivé l'architecture ; il est franchi : la boucle complète (bascule
+pendant le trafic, vérification memcmp, retour arrière, re-vérification) a été
+démontrée sur machine réelle le 27 octobre 2026 (D43), au terme de la campagne
+d'instrumentation relatée en § 8.4 — huit itérations, huit classes de défauts nommées,
+zéro régression possible (chaque classe est gardée par une falsification). M6 et M7 transforment la portabilité de promesse en propriété
 démontrée, en isolant chaque variable ; la suite de conformité par profil (§ 8.2) en est
 désormais le critère d'acceptation explicite.
 
-## 17. Correspondance v0.3 → v0.4.0
+## 17. Correspondance des versions
 
 ### 17.1 Traçabilité des évolutions
 
@@ -788,6 +900,31 @@ envisageables — ont été examinées et **rejetées, donc non appliquées** :
 | Anti-rollback par contrôle en ligne au chargement | rejetée | R10 doit échouer proprement hors ligne — aucune dépendance réseau |
 | Optimisation validée sans mesure | rejetée | R11 : hot path + mesure avant/après + contrat stable |
 
+### 17.3 Correspondance v0.4.0 → v0.5.0
+
+| # | Évolution | En v0.4.0 | En v0.5.0 | Statut |
+|---|---|---|---|---|
+| 1 | Validation terrain | constats dispersés au journal des décisions | couche normée : boucle d'évidence, journal d'exécution, sondes contractualisées, diff chirurgical (§ 8.4) | nouveau (D43) |
+| 2 | Taxonomie des défauts | classes T1–T6 (contrat non écrit) | + classes X1–X8, défauts invisibles à l'émulation (§ 8.5) | étendu (D35–D42) |
+| 3 | État des jalons | M0 planifié, M1-M7 à venir | M0, M1, M2 franchis — preuves terrain archivées (§ 16) | constaté (D26, D32, D43) |
+| 4 | Budgets de tokens | 40 / 3 000 / 6 000 (cibles) | 64 / 3 000 / 6 000 — corrigé et mesuré : 51 / 719 / 1 088 (D31) | corrigé (D31) |
+| 5 | Suite de conformité | définie (7 éléments, 124 contrôles) | exécutée à chaque scellage rc/final — 124/124 sur le profil primaire | mesuré (D39–D43) |
+| 6 | Volume d'oracle | 12 000 cas par bloc critique (référence) | campagnes effectives consignées : M1 76 010 cas, M2 50 533 cas, démo 86 cas | consolidé |
+| 7 | Preuves terrain | non normées | archives brutes (journaux octet-exacts, empreintes) référencées au journal des décisions | officialisé (D43) |
+| 8 | Fuzzing | mentionné (menace « fuzzing boîte noire », § 13.1) | jalon M3 ouvert : fuzzing à propriétés sur la surface d'entrées non fiables (D45) | structuré |
+
+### 17.4 Modifications explicitement rejetées (v0.5.0)
+
+Conformément au cahier de révision, les modifications suivantes ont été examinées et
+**rejetées, donc non appliquées** :
+
+| Modification | Verdict | Motif |
+|---|---|---|
+| Ajouter une règle R12 « validation terrain obligatoire » | rejetée | la boucle d'évidence découle de R5 et des critères de jalon ; une règle de plus diluerait le corpus sans rien exiger de nouveau |
+| Étendre le fuzzing à tous les blocs scellés | rejetée | M3 cible la surface d'entrées non fiables ; les blocs à appelants de confiance relèvent des vecteurs existants (§ 8.1) |
+| Reconstruire les artefacts scellés 0.2.0 / 0.3.0 pour la documentation | rejetée | les balises finales sont immuables (§ 9) ; la documentation cite les empreintes |
+| Fusionner les classes X dans les classes T (T7–T14) | rejetée | les deux familles appellent des remèdes distincts : écrire le contrat (T) contre enrichir le modèle d'environnement et falsifier (X) |
+
 ## 18. Glossaire
 
 | Terme | Définition |
@@ -819,6 +956,12 @@ envisageables — ont été examinées et **rejetées, donc non appliquées** :
 | Vecteurs de vérification | Vecteurs dorés, propriétés différentielles et tests de rejet rattachés aux exigences (§ 8.1) |
 | Notation | Représentation textuelle des instructions assemblées par le moteur du profil — un média, jamais un langage compilé |
 | Round-trip | Contrôle de fidélité : assemblage puis désassemblage d'un bloc, comparaison exacte |
+| Validation terrain | Exécution de l'artefact livré sur système réel, preuve archivée — valide le modèle d'environnement de l'oracle (§ 8.4) |
+| Journal d'exécution | Fichier de preuves écrit au fil de l'eau par l'artefact ; une ligne n'est écrite qu'après vérification de l'étape qu'elle atteste |
+| Sonde de trace | Instrumentation temporaire aux frontières d'un intervalle suspect : journalise des faits vérifiés ; retrait promis dans la spécification (D40, D43) |
+| Défaut invisible à l'émulation | Défaut dont le modèle d'environnement de l'oracle ne rend pas compte — classes X1–X8 (§ 8.5) |
+| Diff chirurgical | Itération terrain dont l'audit vérifie qu'aucun octet hors des zones autorisées n'a changé |
+| Fuzzing à propriétés | Génération d'entrées aléatoires contraintes, vérifiées par propriétés (jamais de crash, domaines de retour, bornes mémoire) — cœur du jalon M3 |
 
 ## 19. Journal des versions
 
@@ -827,13 +970,15 @@ envisageables — ont été examinées et **rejetées, donc non appliquées** :
 | v0.1 | 25 oct. 2026 | Première ébauche : couches I/B/C, règles R1 à R7, boucle en sept étapes, feuille de route M0–M5 |
 | v0.2 | 25 oct. 2026 | Décisions D1 à D10 ; sharding en quatre fragments chiffrés ; suite cryptographique (Ed25519, XChaCha20-Poly1305, Argon2id) ; règles R8 à R10 ; empreintes par build ; budgets en tokens ; spécification de la cible x86-64 / Windows 11 ; critères de sortie mesurables |
 | v0.3 | 25 oct. 2026 | Universalité par profils de cible (D14, amende D10) ; suite cryptographique paramétrable (D15, amende D5) ; export de continuité chiffré et signé (D16, précise R1) ; en-tête de carte normalisé ; jalons M6-M7 |
+| v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version fige les arbitrages nécessaires au démarrage du jalon M0, qui s'effectue
-sur le profil primaire. Les évolutions prévisibles — bloc optionnel de syscalls directs,
+La présente version consigne l'état au passage de relais : jalons M0, M1 et M2 franchis
+sur validations terrain, jalon M3 ouvert (contrats renforcés sur entrées non fiables). Les évolutions prévisibles — bloc optionnel de syscalls directs,
 TLS 1.3 pur en blocs scellés, profils additionnels après M7 — restent volontairement hors
 du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle
 de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et
-rien ne se change en silence.
+rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une
+révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).
 
 

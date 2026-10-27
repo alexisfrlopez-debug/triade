@@ -54,8 +54,8 @@ Tests différentiels & 100 \% verts & oracle \\
 Empreintes des données embarquées & conformes & hachage vs carte \\
 Défauts ouverts par classe T1–T6 & 0 & journal des décisions \\
 Optimisations sans mesure (R11) & 0 & journal d'optimisation \\
-Budgets tokens (localiser / éditer / ajouter) & $\leq$ 40 / 3 000 / 6 000 &
-instrumentation (dès M1) \\
+Budgets tokens (localiser / éditer / ajouter) & $\leq$ 64 / 3 000 / 6 000 &
+instrumentation — mesurés M1 : 51 / 719 / 1 088 (D31) \\
 Suite de conformité par profil actif & verte & suite du profil \\
 Changements hors journal des décisions & 0 & diff vs journal \\
 Pré-versions correctement balisées (dev / rc / final) & 100 \% & registre des balises \\
@@ -148,26 +148,26 @@ bord conforme et carte signée.
 \centering\small
 \caption{Critères d'acceptation des jalons.}
 \label{tab:jalons}
-\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\begin{tabularx}{\textwidth}{@{}l Y >{\raggedright\arraybackslash}p{2.6cm}@{}}
 \toprule
-\textbf{Jalon} & \textbf{Critères de sortie mesurables} \\
+\textbf{Jalon} & \textbf{Critères de sortie mesurables} & \textbf{Statut} \\
 \midrule
 M0 — chaîne artefact & exécution sur Windows 11 ; round-trip 100 \% ; carte v0 signée ;
-exécutable $<$ 4 Kio ; R1–R3, R8–R9 dès le premier octet \\
+exécutable $<$ 4 Kio ; R1–R3, R8–R9 dès le premier octet & \textbf{franchi} 26/10/2026 (D26) \\
 M1 — blocs réutilisables & oracle 100 \% sur la mini-libc ; première cristallisation ;
-adresses stables démontrées ; première mesure effective des budgets tokens \\
+adresses stables démontrées ; première mesure effective des budgets tokens & \textbf{franchi} 26/10/2026, 0.2.0 (D32) \\
 M2 — patch à chaud & remplacement du bloc d'écho en exécution, sans interruption ;
-rollback démontré ; régression post-patch nulle \\
+rollback démontré ; régression post-patch nulle & \textbf{franchi} 27/10/2026, 0.3.0 (D43) \\
 M3 — entrées non fiables & un million de requêtes fuzzées sans crash ; proxy
-transparent ; contrats renforcés \\
-M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide \\
+transparent ; contrats renforcés & \textbf{ouvert} 27/10/2026 (D45) \\
+M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide & à venir \\
 M5 — outil complet & interception d'un flux navigateur en VM isolée ; patch à chaud du
-journal en production ; empreintes par build actives \\
+journal en production ; empreintes par build actives & à venir \\
 M6 — portabilité inter-OS & suite de conformité verte ; \textbf{diff nul sur la couche
-I} ; parité inter-profils vérifiée ; même oracle vert sur les deux profils \\
+I} ; parité inter-profils vérifiée ; même oracle vert sur les deux profils & à venir \\
 M7 — portabilité inter-ISA & round-trip 100 \% sur la nouvelle ISA ; suite de conformité
 verte ; patch à chaud conforme (scratch + \code{fence.i}) ; verrou multi-profils ; export
-multi-profils vérifié \\
+multi-profils vérifié & à venir \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -178,7 +178,7 @@ M6 et M7 transforment la portabilité de promesse en propriété démontrée, en
 variable ; la suite de conformité par profil en est désormais le critère d'acceptation
 explicite.
 
-\section{Correspondance v0.3 $\to$ v0.4.0}\label{sec:correspondance}
+\section{Correspondance des versions}\label{sec:correspondance}
 
 \subsection{Traçabilité des évolutions}\label{sec:evolutions}
 
@@ -249,6 +249,48 @@ Optimisation validée sans mesure & R11 : hot path + mesure avant/après + contr
 \end{tabularx}
 \end{table}
 
+
+\subsection{Correspondance v0.4.0 $\to$ v0.5.0}\label{sec:evolutions050}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les huit évolutions de la v0.5.0, tracées depuis la v0.4.0.}
+\label{tab:correspondance050}
+\begin{tabularx}{\textwidth}{@{}l Y Y l@{}}
+\toprule
+\textbf{Évolution} & \textbf{En v0.4.0} & \textbf{En v0.5.0} & \textbf{Statut} \\
+\midrule
+Validation terrain & constats dispersés au journal des décisions & couche normée :
+boucle d'évidence, journal d'exécution, sondes contractualisées, diff chirurgical
+(§\ref{sec:terrain}) & nouveau (D43) \\
+Taxonomie des défauts & classes T1--T6 & + classes X1--X8, invisibles à l'émulation
+(§\ref{sec:taxonomieX}) & étendu (D35--D42) \\
+État des jalons & M0 planifié & M0, M1, M2 franchis — preuves terrain archivées
+(§\ref{sec:jalons}) & constaté (D26, D32, D43) \\
+Budgets de tokens & 40 / 3 000 / 6 000 (cibles) & 64 / 3 000 / 6 000 — corrigé et mesuré :
+51 / 719 / 1 088 & corrigé (D31) \\
+Suite de conformité & définie (7 éléments) & exécutée à chaque scellage rc/final — 124/124
+sur le profil primaire & mesuré (D39--D43) \\
+Volume d'oracle & 12 000 cas par bloc critique (référence) & campagnes effectives
+consignées : 76 010 (M1), 50 533 (M2), 86 (démo) & consolidé \\
+Preuves terrain & non normées & archives brutes (journaux octet-exacts, empreintes)
+référencées au journal des décisions & officialisé (D43) \\
+Fuzzing & mentionné (menace « fuzzing boîte noire ») & jalon M3 ouvert : fuzzing à
+propriétés sur la surface d'entrées non fiables & structuré (D45) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Modifications explicitement rejetées (v0.5.0).} Ajouter une règle R12
+« validation terrain obligatoire » — rejetée : la boucle d'évidence découle de R5 et des
+critères de jalon, une règle de plus diluerait le corpus sans rien exiger de nouveau.
+Étendre le fuzzing à tous les blocs scellés — rejetée : M3 cible la surface d'entrées non
+fiables, les blocs à appelants de confiance relèvent des vecteurs existants. Reconstruire
+les artefacts scellés 0.2.0 / 0.3.0 pour la documentation — rejetée : les balises finales
+sont immuables, la documentation cite les empreintes. Fusionner les classes X dans les
+classes T — rejetée : les deux familles appellent des remèdes distincts, écrire le contrat
+(T) contre enrichir le modèle d'environnement et falsifier (X).
+
 \section{Journal des décisions}\label{sec:decisions}
 
 Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. Synthèse :
@@ -260,7 +302,7 @@ continuité ; D17 la régénération systématique du PDF formel ; D18 l'éditio
 (présentation IMRAD du noyau v0.3, sans valeur normative) ; D19–D24 (v0.4.0, format
 normalisé) la présente révision :
 
-\begin{itemize}
+\begin{itemize}[label={}, leftmargin=1.2em]
 \item \textbf{D19} : couche I normalisée, taxonomie T1–T6, hiérarchie de la fonction
 objectif verrouillée comme invariant de révision ;
 \item \textbf{D20} : menace étendue (binaire altéré, carte corrompue, rollback,
@@ -295,6 +337,18 @@ du contrat libc-08 rendue à l'identique, 21 vecteurs sur 21), la balise devient
 \code{0.2.0} finale — immuable — et le contrôle anti-rollback de la reconstruction
 est étendu aux balises finales ; le jalon de vérité M2 (patch à chaud) peut
 commencer.
+
+La campagne M2 alimente ensuite le journal au rythme du terrain : D33 (base préférée
+par ancre RIP-relative — image indépendante de son adresse de chargement), D34
+(échelle d’auto-hébergement : la vérification migre vers le natif, chantier m7), D35
+(sémantique du chargeur — FirstThunk : la première classe X de la taxonomie du
+§\ref{sec:taxonomieX}), D36 à D38 (les trois premières itérations de la démonstration
+graphique : lecture de structure, canal de vérité, ABI caller-saved — classes X2 à X4),
+D39 à D42 (la cascade : protections mémoire, écart émulation/terrain, zone d’accueil
+ABI, état hérité — classes X5 à X8), D43 (M2 clos : boucle § 5 démontrée sur machine
+réelle, retrait des sondes, scellage final 0.3.0 — la validation terrain devient
+couche normée). D44 consigne la présente révision v0.5.0 ; D45 ouvre le jalon M3
+(contrats renforcés sur entrées non fiables, fuzzing à propriétés).
 
 Une décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante. La gouvernance

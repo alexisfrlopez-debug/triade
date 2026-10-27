@@ -23,7 +23,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.4.0, source de travail) — `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (archive formelle v0.4.0, gouvernance vérifiée) — archives conservées : v0.3 (27 p.), v0.2 ; vérification interne : `docs/VERIFICATION_v0.4.0.md` (64 contrôles PASS) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.0, source de travail) — `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (archive formelle v0.5.0, révision du retour du terrain : validation terrain normée, taxonomie X1–X8, jalons M0–M2 constatés — D44) ; archives conservées : v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v050/verify_spec.py` (cahier V1–V10) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Vérification post-révision du protocole TRIADE v0.4.0 (tâche 4 du cahier).
+"""Vérification post-révision du protocole TRIADE v0.5.0 (cahier de révision).
 
-Neuf critères, tous vérifiés mécaniquement sur les sources et le PDF :
+Dix critères, tous vérifiés mécaniquement sur les sources et le PDF :
   V1  hiérarchie Sécurité > Performance > Optimisation > Coût en tokens intacte ;
   V2  couches I/B/C indissociables ;
   V3  aucune règle affaiblie — R1-R9 à l'identique, R10 en sur-ensemble ;
@@ -10,7 +10,9 @@ Neuf critères, tous vérifiés mécaniquement sur les sources et le PDF :
   V6  aucun mécanisme de furtivité EDR ;
   V7  chaque nouvelle exigence vérifiable (mécaniquement ou par oracle) ;
   V8  chaque évolution tracée dans le changelog ;
-  V9  modifications incompatibles explicitement rejetées.
+  V9  modifications incompatibles explicitement rejetées ;
+  V10 contenu v0.5.0 : validation terrain normée, taxonomie X1-X8, jalons
+      M0-M2 constatés, budgets mesurés, décisions D26-D45 consignées.
 Sortie : PASS/FAIL par critère, exit 1 si échec.
 """
 import re
@@ -24,8 +26,8 @@ DEC_RAW = (HERE / "docs" / "DECISIONS.md").read_text(encoding="utf-8")
 DEC = re.sub(r"\s+", " ", DEC_RAW).replace("\u2019", "'")
 
 import pdfplumber
-with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.4.0_Specification.pdf") as pdf:
-    PDF = "\n".join((p.extract_text() or "") for p in pdf.pages)
+with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.5.0_Specification.pdf") as pdf:
+    PDF = "\n".join((p.extract_text() or "") for p in pdf.pages).replace("\u2019", "'")
 
 failures = []
 
@@ -181,6 +183,30 @@ check("V9", "rejets dans le PDF formel",
       all(k in PDF for k in ("rejetées", "invariant de révision")))
 check("V9", "décisions D19-D25 consignées",
       all(f"D{i}" in DEC for i in range(19, 26)))
+
+# ---- V10 : contenu v0.5.0 (retour du terrain) ----
+check("V10", "validation terrain normée (§ 8.4)",
+      "La validation terrain" in SPEC and "boucle d'évidence" in SPEC
+      and "journal d'exécution" in SPEC)
+check("V10", "taxonomie X1-X8 présente (§ 8.5)",
+      all(f"X{i}" in SPEC for i in range(1, 9))
+      and "invisibles à l'émulation" in SPEC)
+check("V10", "les 8 classes X tracées vers leurs décisions",
+      all(d in DEC for d in ("D35", "D36", "D37", "D38", "D39", "D40", "D41", "D42")))
+check("V10", "jalons M0-M2 constatés franchis",
+      SPEC.count("**franchi**") == 3 and "balise 0.3.0" in SPEC)
+check("V10", "M3 ouvert avec critères",
+      "**ouvert** 27/10/2026" in SPEC and "fuzzing à propriétés" in SPEC)
+check("V10", "budgets corrigés et mesurés (64, D31)",
+      "≤ 64 / 3 000 / 6 000" in SPEC and "51 / 719 / 1 088" in SPEC)
+check("V10", "correspondance v0.4.0 → v0.5.0 présente",
+      "### 17.3 Correspondance v0.4.0 → v0.5.0" in SPEC)
+check("V10", "rejets v0.5.0 consignés (§ 17.4)",
+      "Ajouter une règle R12" in SPEC and "Fusionner les classes X" in SPEC)
+check("V10", "contenu v0.5.0 dans le PDF formel",
+      all(k in PDF for k in ("boucle d'évidence", "X1", "X8", "franchi", "D43")))
+check("V10", "décisions D43-D45 consignées",
+      all(f"D{i}" in DEC for i in (43, 44, 45)))
 
 print()
 print("=" * 66)

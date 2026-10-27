@@ -97,9 +97,13 @@ libre, puis un trampoline de 12 à 16 octets est installé à l’ancien point d
 bascule par une écriture alignée unique, atomique pour le processeur. L’ancien trampoline
 est conservé : le rollback copy-on-write consiste à rebasculer vers lui. Les adresses
 stables garantissent qu’aucun appelant ne référence l’intérieur d’un bloc : seuls les
-points d’entrée — promis par R7 — sont trampolinés, et leur table est close et vérifiée
+points d’entrée~— promis par R7~— sont trampolinés, et leur table est close et vérifiée
 par le verrou croisé. Le critère M2 : remplacer le bloc d’écho d’un serveur TCP pendant
-qu’il traite des connexions, sans interruption, avec rollback démontré.
+qu’il traite des connexions, sans interruption, avec rollback démontré~— \textbf{démontré
+sur machine réelle le 27 octobre 2026} (D43) : la boucle complète (bascule pendant le
+trafic, vérification memcmp, retour arrière, re-vérification) s’est terminée par le
+constat « DÉMO OK » du journal d’exécution, au terme de la campagne relatée en
+§\ref{sec:terrain}.
 
 \section{La stratégie de vérification}\label{sec:verification}
 
@@ -111,7 +115,9 @@ couche de traduction dans l’artefact.
 volontairement lente, dérivée de la couche I, générée au début de chaque session puis
 détruite. Le test est différentiel par propriétés : l’oracle et le bloc machine reçoivent
 des entrées aléatoires contraintes par les pré-conditions, leurs sorties sont comparées
-octet par octet ; volume de référence : douze mille cas par bloc critique. L’oracle dérive
+octet par octet ; volume de référence : douze mille cas par bloc critique — les campagnes
+effectives sont consignées au journal (76 010 cas en M1, 50 533 en M2, 86 pour la
+démonstration graphique). L’oracle dérive
 de I et non de B ; il est régénéré à chaque session ; sa régénération coûte moins que le
 diagnostic d’une corruption post-scellage. Dérivé de la couche I — indépendante de la
 cible — le \textbf{même} oracle valide les blocs de tous les profils : la portabilité ne
@@ -136,6 +142,103 @@ test qui exige la sanction nommée). Exigence de couverture : chaque exigence nu
 contrat et chaque cas d’échec relie au moins un vecteur — la commande d’audit de
 traçabilité vérifie ce maillon.
 
+
+\subsection{La validation terrain — la boucle d'évidence}\label{sec:terrain}
+
+La v0.5.0 élève la validation terrain au rang de couche de vérification normée (D43). Le
+principe est né d'un constat structurel : l'oracle différentiel exécute le binaire contre un
+\textbf{modèle} de l'environnement — chargeur, ABI, sémantique des API, protections mémoire.
+Un binaire peut donc être exact au sens du round-trip, intègre au sens de la porte R10,
+conforme au sens de la suite du profil, vert au sens de l'oracle — et mourir au premier appel
+sur machine réelle, parce que le modèle était plus pauvre que la réalité. Les jalons M1 et
+M2 en ont fourni la preuve expérimentale : huit classes de défauts ainsi invisibles
+(§\ref{sec:taxonomieX}) n'ont été révélées que par l'exécution terrain.
+
+La boucle d'évidence comporte cinq éléments normés :
+
+\begin{enumerate}
+\item \textbf{Le journal d'exécution} — l'artefact livré écrit ses preuves au fil de l'eau
+(fichier à côté de l'exécutable, ligne par ligne). La règle d'honnêteté est absolue : une
+ligne n'est écrite qu'après la vérification de l'étape qu'elle atteste (memcmp exact) — une
+ligne présente vaut preuve ; la dernière ligne visible localise toute mortalité à
+l'intervalle près.
+\item \textbf{La lecture asymétrique} — le terrain retourne son verdict par un canal à
+faible bande passante : le journal (éventuellement complété d'une capture). L'atelier
+n'exige du terrain que ce document, jamais un diagnostic : la charge d'analyse reste à
+l'agent.
+\item \textbf{L'instrumentation contractualisée} — quand l'intervalle de mortalité reste
+aveugle, l'itération suivante embarque des sondes de trace aux frontières (D40) : elles
+journalisent des faits (positions d'exécution, retours vérifiés), jamais un succès non
+prouvé ; leur retrait après constat vert est promis dans la spécification (D43 a honoré la
+promesse) et vérifié par l'oracle — le journal nominal redevient exactement sa séquence de
+preuves, toute ligne parasite est un échec.
+\item \textbf{Le diff chirurgical} — chaque itération terrain ne modifie que les blocs
+révisés ; l'audit d'itération vérifie mécaniquement qu'aucun octet hors des zones
+autorisées (blocs révisés, chaînes, version, sommes) n'a bougé — l'héritage scellé reste
+octet-identique (R7).
+\item \textbf{L'archive brute} — chaque journal terrain est archivé tel quel (octets
+d'origine, encodage et fins de ligne compris) avec son empreinte : la preuve est le
+document, pas son résumé.
+\end{enumerate}
+
+Le protocole est ensuite économique : huit lectures de journal ont suffi à nommer huit
+classes de défauts en deux jours (demo.1 à demo.8), et le dernier diagnostic a été obtenu
+sans run supplémentaire — par lecture statique des octets appuyée sur les preuves
+accumulées (D42). La contrepartie est la garantie de progression : chaque défaut nommé
+devient un vecteur de falsification permanent de l'oracle — le modèle d'environnement
+s'enrichit de chaque lecture terrain et ne peut plus régresser en silence.
+
+\subsection{Taxonomie étendue — les défauts invisibles à l'émulation (X1--X8)}\label{sec:taxonomieX}
+
+Les classes T1--T6 (§\ref{sec:taxonomie}) classent les défauts de contrat non écrit :
+lisibles dans la spécification, corrigeables en écrivant le contrat. La campagne M2 a
+révélé une seconde famille, structurellement différente : des défauts dont ni la
+spécification, ni la notation, ni le round-trip, ni l'oracle ne parlent — parce que le
+modèle d'environnement de l'oracle était, sur un point précis, plus pauvre que le système
+réel. La v0.5.0 en fixe la taxonomie (D35--D43) :
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Taxonomie des défauts invisibles à l'émulation (classes X).}
+\label{tab:taxonomieX}
+\begin{tabularx}{\textwidth}{@{}l l Y Y Y@{}}
+\toprule
+\textbf{Classe} & \textbf{Déc.} & \textbf{Modèle défaillant} & \textbf{Défaut de
+référence} & \textbf{Garde permanente} \\
+\midrule
+X1 & D35 & sémantique du chargeur & \code{FirstThunk} $\neq$ slots appelés : le chargeur
+résout ailleurs que le code n'appelle & verrou « chargeur réel » : FT = slots appelés \\
+X2 & D36 & lecture de structure & \code{RECT.top} lu comme largeur : spec juste, octets
+faux — bloc jamais exécuté, shim muet & coquille exécutée + invariant géométrique \\
+X3 & D37 & canal de vérité & jumeau silencieux : le fichier vivait, l'écran restait vide —
+défaut dans la spécification & miroir universel, les deux canaux contrôlés \\
+X4 & D38 & ABI caller-saved & volatils relus après l'appel : un retour de syscall écrit
+RFLAGS dans r11 & clobber des volatiles à chaque retour simulé \\
+X5 & D39 & protections mémoire & phase de patch \code{PAGE\_READWRITE} sans execute : DEP
+permanent x64 & le shim applique les permissions réelles \\
+X6 & D40 & écart émulation/terrain & défaut latent qu'aucune exécution n'avait déclenché :
+audit exhaustif vert & sondes aux frontières, instrumentation contractualisée \\
+X7 & D41 & obligations ABI de l'appelant & zone d'accueil msx64 absente : l'appelé écrit
+sur l'adresse de retour & shim \code{/homeparams} + audit systémique des sites \\
+X8 & D42 & état hérité & section critique exigée par un bloc scellé, initialisée par un
+bloc orchestrateur retiré & shims à état + exécution réelle du consommateur \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Trois règles d'usage, miroir de celles de la taxonomie T. Premièrement, tout défaut terrain
+corrigé est classé T ou X au journal des décisions — la métrique « défauts ouverts par
+classe » du tableau de bord couvre désormais les deux familles. Deuxièmement, chaque classe
+X est gardée par une falsification : réintroduire le défaut doit faire échouer l'oracle —
+le modèle s'enrichit mais ne régresse jamais en silence. Troisièmement, la taxonomie est
+ouverte : une neuvième classe sera nommée X9 avec sa décision, jamais dissimulée dans un
+correctif muet.
+
+La lecture académique : un oracle différentiel valide la conformité d'un artefact à un
+modèle ; la validation terrain valide le modèle lui-même. Les deux couches sont
+complémentaires, non redondantes — l'oracle couvre l'espace des entrées à coût nul, le
+terrain couvre l'espace des environnements au coût d'un run. Le protocole exige les deux :
+R5 (vérifie-puis-écrit) pour la première, la boucle d'évidence pour la seconde.
 \subsection{Suite de conformité par profil}\label{sec:conformite}
 
 Chaque profil embarque une \textbf{suite de conformité} vérifiant ses sept éléments

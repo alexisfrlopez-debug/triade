@@ -28,6 +28,17 @@ optimisation) devient exigence ; ce que son analyse des défauts a révélé dev
 taxonomie ; ce que son étude de cas établit et ne prouve pas reste explicitement hors
 périmètre de preuve.
 
+La v0.5.0 est la révision du retour du terrain. Les jalons M0 (chaîne artefact), M1
+(mini-libc scellée) et M2 (patch à chaud en production, avec retour arrière) sont
+franchis — chacun sur validation terrain Windows 11, chacun scellé par une balise
+finale immuable (0.2.0, 0.3.0). La campagne M2 a coûté huit classes de défauts
+invisibles à l’émulation (§\ref{sec:taxonomieX}) — le prix d’une leçon : un oracle
+valide un artefact contre un modèle d’environnement, et la complétude du modèle ne se
+démontre qu’en exécutant le binaire sur le système réel. Ce que le terrain a appris
+devient norme : la boucle d’évidence (§\ref{sec:terrain}), la taxonomie X,
+l’instrumentation contractualisée — et l’ouverture du jalon M3, contrats renforcés
+sur entrées non fiables.
+
 \subsection{Fonction objectif hiérarchisée — invariant de révision}\label{sec:objectif}
 
 \begin{center}
@@ -88,6 +99,24 @@ pré-versions, reverse-specs, journal d’optimisation, modèle de menace étend
 décisions normalisé, tableau de bord de conformité. Aucune règle existante n’est
 affaiblie ; aucune couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction
 objectif est inchangée.
+
+\subsection{Ce que change la v0.5.0}
+
+Huit évolutions, toutes tracées dans la correspondance (§\ref{sec:evolutions050}) et le
+journal des versions, toutes rattachées aux décisions D26 à D45 : la validation
+terrain devient une couche de vérification normée — boucle d’évidence, journal
+d’exécution, instrumentation contractualisée, diff chirurgical (§\ref{sec:terrain}) ;
+la taxonomie des défauts s’étend des classes T (contrat non écrit) aux classes X —
+défauts invisibles à l’émulation, huit classes nommées par la campagne M2
+(§\ref{sec:taxonomieX}) ; l’état des jalons est constaté — M0, M1 et M2 franchis sur
+validations terrain Windows 11, balises finales 0.2.0 et 0.3.0 posées
+(§\ref{sec:jalons}) ; le budget de localisation est corrigé à 64 tokens (D31) et les
+budgets affichent leurs valeurs mesurées ; les volumes d’oracle effectifs sont
+consignés ; les preuves terrain sont archivées brutes avec leurs empreintes ; le
+corpus de démonstration (huit itérations instrumentées) devient l’occurrence de
+référence de la méthode ; le jalon M3 est ouvert — contrats renforcés sur entrées non
+fiables et fuzzing à propriétés (D45). Aucune règle n’est modifiée ; aucune couche
+n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
 
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
@@ -240,8 +269,8 @@ binaire.
 \begin{sloppypar}
 La carte est le cœur opérationnel du protocole : elle rend le binaire navigable, porte les
 preuves et concentre la valeur intellectuelle. Elle est autodescriptive : un en-tête
-normalisé consigne la version du protocole, la suite cryptographique — hachage, signature,
-chiffrement, chacun dans une liste blanche (D15) — et les profils actifs. Sa spécification
+normalisé consigne la version du protocole, la suite cryptographique~— hachage, signature,
+chiffrement, chacun dans une liste blanche (D15)~— et les profils actifs. Sa spécification
 détaillée fait l’objet de \code{FORMAT\_CARTE.md} — fragments, format d’entrée, verrou,
 cycle de vie, export, re-cryptage —, mise à jour avec la présente révision : l’en-tête
 porte \code{version=0.4.0} et chaque entrée de bloc porte le champ de traçabilité
@@ -275,6 +304,7 @@ Audit complet (rare) & carte entière déchiffrée & non budgété \\
 \end{table}
 
 Indicateurs de santé : précision de localisation (cible 95 \% dès M0), coût moyen d’une
-édition simple (cible 5 000 tokens), taux de régression post-patch (cible zéro). Ces
-budgets restent des cibles de conception jusqu’à leur instrumentation (M1) ; le tableau de
-bord les affiche alors comme métriques mesurées.
+édition simple (cible 5 000 tokens), taux de régression post-patch (cible zéro).
+Instrumentés depuis M1 : la mesure effective (51 / 719 / 1 088 tokens, D31) a corrigé
+le budget de localisation à 64 et valide les deux autres ; le tableau de bord les
+affiche comme métriques mesurées, avec leur écart.

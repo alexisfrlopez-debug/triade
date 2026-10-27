@@ -1519,3 +1519,107 @@ D15 (amende D5) illustrent la procédure.
 - **Développement** : entrée 32 du journal de travail. M2 clos —
   prochain jalon M3 (contrats renforcés sur entrées non fiables,
   fuzzing systématique).
+
+### D44 — révision v0.5.0 du protocole : la validation terrain devient couche de vérification normée ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation ; jalons M0–M2 constatés ; corrections
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : demande développeur « rédige une nouvelle version, mise à jour et
+  corrigée, académique et complète du protocole Triade puis M3 ». La v0.4.0 datait
+  d'avant la cascade terrain : elle décrivait M0 comme « à démarrer » et ne disait
+  rien des huit classes de défauts que la campagne M2 venait de nommer — le
+  protocole était en retard sur ses propres leçons.
+- **Choix retenu** : révision v0.5.0 du protocole (markdown source de vérité +
+  PDF formel LaTeX/Tectonic, chaîne spec_v040 → spec_v050) : (1) § 8.4 norme la
+  VALIDATION TERRAIN — boucle d'évidence en cinq éléments (journal d'exécution
+  écrit après vérification, lecture asymétrique, instrumentation contractualisée
+  avec retrait promis, diff chirurgical audité, archive brute empreintée) ; (2)
+  § 8.5 fixe la taxonomie X1–X8 des défauts invisibles à l'émulation — une classe
+  par décision D35–D42 (chargeur, lecture de structure, canal de vérité, ABI
+  caller-saved, protections mémoire, écart émulation/terrain, obligations ABI de
+  l'appelant, état hérité), chacune gardée par une falsification permanente, la
+  taxonomie restant OUVERTE (X9 sera nommée, jamais dissimulée) ; (3) § 16
+  constate les jalons M0/M1/M2 FRANCHIS avec dates, balises et preuves ; (4)
+  corrections : budget de localisation 40 → 64 tokens dans le tableau de bord
+  (incohérence résiduelle de la v0.4.0 malgré D31), valeurs mesurées affichées
+  (51/719/1 088), coquille « converts », huit défauts typographiques du PDF
+  (ponctuation en début de ligne), apostrophes normalisées dans le vérifieur ;
+  (5) § 17.3/17.4 tracent les huit évolutions et quatre rejets de la révision ;
+  (6) le journal des décisions du protocole (§ 16 du PDF) est étendu D33 → D45.
+- **Académique** : la lecture structurante est explicitée — un oracle différentiel
+  valide la conformité d'un artefact à un MODÈLE d'environnement ; la validation
+  terrain valide le MODÈLE lui-même ; les deux couches sont complémentaires
+  (entrées à coût nul vs environnements au coût d'un run) et le protocole exige
+  les deux. C'est la formalisation de la leçon des 8 classes.
+- **Alternatives rejetées** : règle R12 « validation terrain obligatoire » (découle
+  de R5 + critères de jalon — dilution inutile) ; fuzzing étendu à tous les blocs
+  (M3 cible la surface d'entrées non fiables) ; reconstruire les artefacts 0.2.0/
+  0.3.0 pour la doc (balises finales immuables) ; fusionner X dans T (remèdes
+  distincts : écrire le contrat vs enrichir le modèle et falsifier).
+- **Vérification** : cahier de révision étendu à dix critères — V1–V9 de la v0.4.0
+  (hiérarchie intacte, règles non affaiblies, aucune couche d'abstraction, rejets
+  consignés) + V10 contenu v0.5.0. Exécution finale : 68 contrôles PASS / 0 FAIL (V1-V10) après
+  correction de la normalisation d'apostrophes du PDF dans le vérifieur ; QA PDF
+  100 % vert (0 avertissement, contre 8 en v0.4.0).
+- **Développement** : entrée 33 du journal de travail.
+
+### D45 — ouverture du jalon M3 : harnais de fuzzing à propriétés (P1-P5) — 101 000 cas SANS CRASH sur la surface d'entrées non fiables scellée ; harnais falsifiable (auto-test : défauts injectés détectés) ; prochaine étape : blocs parseur HTTP à contrats renforcés
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : suite de la demande développeur « … puis M3 ». Le critère M3 —
+  « un million de requêtes fuzzées sans crash ; proxy transparent pour curl ;
+  contrats renforcés » — exige un HARNAIS avant les blocs M3 : on ne fuzz pas
+  ce qu'on ne sait pas observer.
+- **Choix retenu** : (1) le harnais (m3/fuzz.py, ~420 lignes, tracké) calibre
+  la méthodologie sur la surface d'entrées non fiables DÉJÀ scellée — tcp-09
+  (c30009, session serveur M2 : la boucle recv/écho/send consomme des octets
+  réseau de longueur et contenu arbitraires) et win-10 (d40010, échange
+  client démo : réception cumulative d'une réponse serveur non fiable) ;
+  (2) cinq propriétés dérivées des contrats I existants, jamais au-delà :
+  P1 survie (aucune faute d'exécution), P2 terminaison bornée, P3
+  différentiel (écho == entrée pour tcp-09 ; verdict eax == modèle
+  accumulation-14 + memcmp pour win-10), P4 fermeture exactement unique
+  (Q2), P5 mémoire (crochet d'écriture Unicorn : pages de code de l'image
+  interdites — patch désactivé — et pile sous la profondeur légitime
+  interdite, I4) ; (3) architecture : lots de 50 cas par émutateur (état
+  recréé), REJEU sur état vierge de tout échec avant consignation (exclusion
+  des artefacts de réutilisation), graine maîtresse → scénarios
+  reproductibles, six générateurs nommés (aléatoire, tronquatures,
+  binaire-hostile — NUL/CRLF/format/pleine capacité —, fragmentation TCP
+  1-7 octets, fins prématurées, frontières du tampon 1023/1024/1025).
+- **Calibration = leçon D40 inversée** : les premières divergences étaient
+  dans le MODÈLE du harnais, pas dans le bloc — recv ne sert jamais plus que
+  demandé (cap 1024), et un retour 0 (y compris un item vide) = fermeture du
+  pair (Q2), pas une réception nulle à continuer. Deux corrections du modèle
+  de référence avant toute campagne — le differential ne prouve que si son
+  modèle est fidèle au contrat ; la calibration est l'endroit où cette
+  fidélité s'établit.
+- **Campagne d'ouverture** : 101 000 cas (60 500 tcp-09 à ~430 cas/s +
+  40 500 win-10 à ~4 150 cas/s, graines 1-3) — **ZÉRO échec confirmé** :
+  P1-P5 tenues sur toute la surface scellée. Aucune faute, aucune boucle
+  infinie, aucun écho divergent, aucune double fermeture, aucune écriture
+  hors zone — la surface M2 (écho brut, sans parsing) est sûre PAR
+  CONSTRUCTION, ce que la campagne quantifie.
+- **Harnais falsifiable (miroir V4-V9)** : --auto-test injecte deux défauts
+  d'un octet (tcp-09 : demande recv 1024→768 ; win-10 : longueur memcmp
+  14→13) — le harnais DOIT les détecter : 122/300 et 300/300 échecs
+  confirmés → PASS. Un harnais qui ne peut pas échouer ne vérifie rien ;
+  celui-ci peut.
+- **Chemin vers le million** : débit constaté ≈ 39 min pour 10^6 cas tcp-09
+  (+ 4 min win-10) — atteignable en une session dédiée. Le million du
+  critère M3 s'appliquera au PERIMÈTRE M3 (parseur HTTP + proxy) : le
+  harnais est prêt à les accueillir dès leurs blocs.
+- **Prochaines étapes M3** : (a) spécifications I écrites-avant-code du
+  domaine http-xx (parseur de ligne de requête, en-têtes, limites —
+  contrats renforcés : chaque entrée non fiable a un comportement défini,
+  échec propre nommé) ; (b) blocs + notation + oracle étendu ; (c) proxy
+  transparent (curl) ; (d) campagne million sur le parseur ; (e) le fuzzing
+  rejoint la suite de conformité comme contrôle permanent (défauts ouverts
+  par classe X au tableau de bord).
+- **Alternatives rejetées** : fuzzing en aveugle sans modèle différentiel
+  (ne prouve que l'absence de crash, pas la conformité au contrat) ; un
+  seul émutateur pour toute la campagne (pollution d'état non exclue — le
+  rejeu sur état vierge est la garantie) ; attendre les blocs M3 pour
+  construire le harnais (le harnais se calibre sur du scellé connu : toute
+  divergence de calibration est un bug de harnais, pas un doute sur le
+  binaire).
+- **Développement** : entrée 34 du journal de travail.
