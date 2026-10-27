@@ -1,0 +1,121 @@
+TRIADE — TERRAIN.14 : VOTRE INSTINCT ÉTAIT JUSTE. LE FICHIER TERRAIN_REQ.TXT
+ÉTAIT SUPPRIMÉ — PAR LE SUPERVISEUR LUI-MÊME. (C'EST CORRIGÉ, ET CETTE
+FOIS LA PREUVE SURVIT AU RUN.)
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre capture montre curl qui répond « Failed to open terrain_req.txt ».
+Vous écrivez : « j'ai l'impression qu'il cherche un fichier absent ».
+VOTRE IMPRESSION EST EXACTE — et la cause est encore de notre côté.
+
+1) LE FICHIER ÉTAIT ABSENT PAR CONSTRUCTION. Le superviseur, à la fin du
+   test d'envoi (T3), nettoie ses 5 fichiers temporaires sur TOUT chemin
+   de sortie — réussite OU échec. terrain_req.txt est supprimé, et
+   terrain_jeton.json l'était AUSSI. Autrement dit : la commande de
+   vérification que le LISEZMOI-terrain13 vous donnait à coller
+   référençait un fichier que notre binaire venait d'effacer. Troisième
+   pièce « impossible » en deux itérations — nos excuses, encore. Votre
+   geste n'en reste pas moins parfait : c'est LA capture qui a révélé la
+   faute.
+
+2) CE QUE VOTRE CAPTURE NE DIT PAS (et pourquoi ça reste important) :
+   curl lit son option --data AVANT toute connexion réseau. L'erreur
+   « Failed to open terrain_req.txt » ne dit donc RIEN de votre réseau.
+   Le bac à sable a de son côté revalidé la chaîne complète ce même soir
+   (jeton vivant, session, dépôt — fichier témoin dans le dossier test).
+   Le doute reste entier : réseau local, ou réponse de Google aussitôt
+   effacée ?
+
+TERRAIN.14 RÉPOND À ÇA DE DEUX FAÇONS (TOUT LE RESTE EST INCHANGÉ)
+-------------------------------------------------------------------
+a) LA LIGNE S33 DIT MAINTENANT LE CODE DE SORTIE DE CURL. Avant :
+   « S33 T3 jeton OAuth ECHEC » (quatre causes possibles, indiscernables).
+   Maintenant : « S33 T3 jeton KO code=NN » — le nombre est celui que
+   curl.exe a rendu. C'est LE discriminateur :
+     code=0   → curl a réussi : Google A répondu — la réponse exacte
+                (même refusée) est dans terrain_jeton.json (voir b) ;
+     code=6   → DNS en échec (« Could not resolve host ») ;
+     code=7   → connexion impossible (pare-feu, filtrage sortant) ;
+     code=26  → terrain_req.txt illisible (ne devrait plus jamais arriver) ;
+     code=28  → délai dépassé (30 s) ;
+     code=35/56/60 → TLS en échec (interception, certificat refusé).
+b) TERRAIN_JETON.JSON SURVIT MAINTENANT À CHAQUE RUN. Le nettoyage
+   passe de 5 fichiers à 4 : terrain_req.txt (qui contient un secret)
+   reste effacé EN PREMIER, mais la réponse de Google — même d'erreur —
+   restera sur disque à côté de l'exécutable après le run. C'est la
+   pièce que terrain.13 vous promettait et que notre nettoyage détruisit
+   aussitôt. Elle ne contient aucun secret.
+   (Seul cas où il ne faut PAS la déposer : si TOUT réussit — voir plus
+   bas, elle contient alors un jeton d'accès éphémère.)
+
+PROTOCOLE (3 ÉTAPES)
+--------------------
+ÉTAPE 0 — LE NETTOYAGE ANTI-CONFUSION (il a fait ses preuves au run
+   23:07) : dans votre dossier de travail, SUPPRIMEZ tous les anciens
+   superviseur-terrain*.exe — terrain5, 9, 10, 11, 12 ET 13 cette fois.
+   Ne gardez QUE superviseur-terrain14.exe (62 464 octets ; clic droit →
+   Propriétés → Détails → « Version du produit » finit par « terrain14 »).
+
+ÉTAPE 1 — Double-cliquez superviseur-terrain14.exe, attendez le verdict
+   (~2 minutes). PREUVE du bon binaire : le journal commence par
+   « S00 superviseur terrain 0.5.0-terrain14 ».
+
+ÉTAPE 2 — Déposez dans le dossier test :
+   - le terrain_*.txt du run (s'il ne s'y est pas déposé tout seul) ;
+   - demo_journal.txt (la preuve du côté démo) ;
+   - terrain_jeton.json S'IL EXISTE à côté du superviseur — maintenant il
+     existera dès que Google répond quoi que ce soit. Si S33 dit code=0,
+     le message exact de Google est DEDANS : c'est LA pièce qui décidera.
+   Si au contraire S33 dit code=6/7/28/35/56 (ou que le json n'existe
+   pas), passez à l'ÉTAPE 3 — deux minutes, aucun fichier requis, aucun
+   secret :
+
+ÉTAPE 3 — LE TEST RÉSEAU CORRIGÉ (la faute du LISEZMOI-terrain13 est
+   réparée : plus besoin de terrain_req.txt). Ouvrez le dossier du
+   superviseur dans l'Explorateur, cliquez dans la BARRE D'ADRESSE,
+   tapez « cmd », Entrée — puis collez cette ligne et Entrée :
+
+   curl.exe -v --max-time 30 -o terrain_jeton_reseau.txt --data "grant_type=refresh_token" https://oauth2.googleapis.com/token
+
+   Envoyez une capture d'écran de la fenêtre (elle montre DNS, connexion,
+   certificat — aucun secret) et déposez terrain_jeton_reseau.txt s'il
+   apparaît (la réponse de Google à une demande volontairement incomplète :
+   une erreur, sans aucun secret).
+   Lecture express : « Could not resolve host » → DNS ; « Failed to
+   connect » → pare-feu/blocage ; erreur de certificat → interception ;
+   une réponse JSON (même d'erreur) → le réseau va jusqu'à Google et le
+   problème est ailleurs.
+
+SI TOUT RÉUSSIT (S90 TOUT OK — ce serait la première fois)
+----------------------------------------------------------
+Le journal partira TOUT SEUL dans le dossier test (c'est le but du
+projet). Dans ce cas seulement, SUPPRIMEZ terrain_jeton.json resté à
+côté de l'exécutable : il contient alors un jeton d'accès valide une
+heure — ne le déposez surtout pas.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S00 « terrain14 » (la preuve du bon binaire) ;
+- S33 : soit « code=0 » + terrain_jeton.json déposé (le message exact de
+  Google tranche), soit « code=6/7/… » + votre capture curl -v (le réseau
+  tranche) ;
+- T2 : 5e vert consécutif attendu (stable depuis terrain.11) ;
+- T1 : inchangé — l'échec d'échange de la démo est connu (D57), son
+  diagnostic (adresse de plantage) se prépare de notre côté, ce run ne
+  changerait rien.
+
+RÉCAPITULATIF DES EMPREINTES
+----------------------------
+md5 superviseur-terrain14.exe  1958cbfb9afb3345c2381c0dc2e135f4
+sha256                         f71d81edfa32bf8042185e52818fa4e6ed7109d5894fc7b17612fa1eb10526d9
+md5 demo FINALE embarquée      73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué             dd12b64948e64153ff1dd7a66f367ff3 (inchangé)
+taille                         62 464 octets
+
+Le superviseur (fenêtre, scénario, T1/T2, verdicts, correctifs des
+terrains 10-13) est INCHANGÉ : seules la ligne S33 (code de sortie
+journalisé, même schéma que la ligne S13 de la démo) et la survie de
+terrain_jeton.json changent. 161 octets bornés, porte d'intégrité R10
+27/27 verte, chemin d'échec exécuté et vérifié instruction par
+instruction dans le bac avant cet envoi.

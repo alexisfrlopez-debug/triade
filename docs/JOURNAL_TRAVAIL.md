@@ -3442,3 +3442,68 @@ puis TLS error → interception ; (d) si le json apparaît enfin → erreur HTTP
 Google lisible (mais le bac dit qu'il n'y en aura pas). Démo : toute
 nouvelle exécution de demo.9 (autonome ou kit) = même journal 410 o + mort
 0xC0000005. T2 : vert. La priorité opérateur = la pièce curl -v (2 min).
+
+---
+
+## Entrée 57 — D68 (28/10) : la pièce impossible n° 3 — le fallback curl -v référençait terrain_req.txt que .nettoyage supprime ; terrain.14 rend la preuve survivante et journalise le code de sortie curl
+
+**Le constat (capture 23:47).** Le développeur exécute la commande fallback
+du LISEZMOI-terrain13 (barre d'adresse → cmd) :
+
+    curl.exe -v --max-time 30 -o terrain_jeton_reseau.txt
+             --data @terrain_req.txt https://oauth2.googleapis.com/token
+
+et curl répond « Failed to open terrain_req.txt ». Son intuition (« il
+cherche un fichier absent ») est EXACTE et la faute est nôtre, 3e pièce
+impossible en deux itérations : **sup-35 nettoie lui-même ses 5
+temporaires sur TOUT chemin de sortie** (.nettoyage @0x6176 : DeleteFileA
+de terrain_req.txt, terrain_jeton.json, terrain_meta.json,
+terrain_session.txt, terrain_rep.json — contrat Q9/I5, vérifié au
+désassemblage du livré terrain.13). D65 n'avait regardé que le nettoyage
+sup-37 (kit : demo/proxy/annexe) en écrivant « terrain_req.txt survit » ;
+D66 en a déduit « S33 SANS json → curl n'a reçu AUCUNE réponse HTTP » —
+inférence INVALIDE : le json était détruit même écrit (terrain.13 avait
+pourtant retiré --fail). Nota : curl lit --data AVANT toute connexion —
+la capture ne dit rien du réseau (et le bac a prouvé D66 que jeton +
+chaîne sont bons). Le doute réseau-vs-réponse-Google restait donc entier.
+
+**Le correctif terrain.14 (161 octets bornés, data + code).**
+P1 : nettoyage 5→4 fichiers (mov r13d, 5→4 @0x617F, 1 octet). P2 : bloc
+de noms réordonné [req][meta][session][rep][jeton] + 3 lea repointées
+(disp32 stables : lecture jeton 0x5EFC→0x635A, écriture meta
+0x5F83→0x6323, lecture session 0x5FF8→0x6335 ; fin de bloc 0x636D
+inchangée) → **terrain_jeton.json SURVIT à chaque run**, terrain_req.txt
+(secrets) reste effacé EN PREMIER ; scan xref : 5 sites exacts vers le
+bloc, aucun autre référent. P3 : le gestionnaire .jeton_ko (0x6113) devient
+jmp vers un relais de 32 o posé dans le padding du slot (0x628A, 54 o) :
+lea chaîne / mov edx,21 / mov r8b,1 (MODE 1 sup-11 = texte+itoa, le
+schéma exact de S13) / mov r9d,[0x3B50] (code de sortie curl) / call
+journal / jmp .ko — la ligne devient **« S33 T3 jeton KO code=NN »** ;
+les 4 branches vers 0x6113 sont INTACTES (aucun repoint), .session_ko et
+la chaîne S33 originale inchangés (donnée morte). P4 : génération
+terrain14 (L00/S00, VERSIONINFO 0.5.14.0). P5 : 3 sommes R10
+recalculées ([21,23,24]). Ambiguïté documentée : classe spawn-impossible
+→ BSS vierge → « code=0 » (cas jugé quasi impossible, T2 spawn curl ×2).
+
+**Vérification.** patch : gardes (octets anciens exacts, xref = 5 sites,
+blobs, 27/27 avant) + post (diff borné, 27/27 après, désassemblage du
+chemin, xref repointés, prologue http-10). verif_terrain14 indépendant :
+**95 contrôles statiques + 2 émulations unicorn complètes** du chemin
+d'échec depuis 0x6113 — code=26 et code=7 : ligne « S33 T3 jeton
+KO code=NN » (mode 1, valeur exacte), puis « S36 T3 VERDICT KO », puis 4
+suppressions dans l'ordre req/meta/session/rep, terrain_jeton.json
+jamais touché, arrêt propre à .fin. md5 superviseur-terrain14.exe
+**1958cbfb9afb3345c2381c0dc2e135f4**, sha256 f71d81ed…, 62 464 o.
+Livré : dossier test Drive 2/2 md5 MATCH + download/ + LISEZMOI-terrain14
+(excuses, protocole 3 étapes, grille de lecture code=N, test réseau
+CORRIGÉ sans fichier : `--data "grant_type=refresh_token"` — aucune
+secret, réponse d'erreur Google attendue si le réseau passe).
+
+**Prédictions D69 (falsifiables).** (a) S33 code=0 + terrain_jeton.json
+présent → le message exact de Google (invalid_grant/horloge/…) tranche ;
+(b) code=6/7/28/35/56 → réseau local, la capture curl -v corrigée tranche
+DNS/pare-feu/TLS ; (c) code=26 → ne doit plus jamais arriver ; (d) si
+S90 TOUT OK (première fois) → le json restant contient un jeton d'accès,
+consigne de suppression donnée. T2 : 5e vert attendu. T1 : inchangé
+(D57/D67 en préparation ici). Priorité opérateur : UN run terrain.14, le
+curl corrigé seulement si code≠0 ou json absent.
