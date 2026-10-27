@@ -3375,3 +3375,70 @@ re-frappe de l'annexe jetons ou correction de composition.
 B (réseau muet) = S33 ÉCHEC + json TOUJOURS absent → la commande de
 secours du LISEZMOI (curl -v manuel) tranchera DNS/TCP/TLS.
 C (confusion d'exe encore) = S00 ≠ « terrain13 » → relire l'ÉTAPE 0.
+
+## Entrée 56 — D66 (28/10, nuit) : terrain.12 ET terrain.13 ont tourné — le jeton est VIVANT (preuve déposée dans le dossier test), la démo publique meurt (9e classe, 4e reproduction, 1er code de sortie)
+
+**Les deux runs de la soirée, jugés.** Le message développeur « journaux
+envoyés, mais je n'ai pas le json google dans le dossier » portait sur DEUX
+runs jamais vus (le dossier test avait été nettoyé par le développeur — esprit
+ÉTAPE 0 étendu au Drive ; la corbeille a tout rendu : journal 22:45, 12
+demo_journal, historique complet). Le run 22:45 = **terrain.12** (S00
+« terrain12 », S04C 73c064fb — réfute « terrain.12 n'a jamais tourné » de
+D65 : il a tourné UNE fois, 15 min avant la livraison de terrain.13) ; le run
+23:07 = **terrain.13** (S00 « terrain13 », S04C 73c064fb, S05C dd12b649 —
+l'ÉTAPE 0 a fonctionné, la confusion d'exes est guérie).
+
+**T3 — branche B confirmée, et la cause est CLOSE par la preuve du bac.**
+terrain.13 a retiré --fail : si Google avait RÉPONDU (même refus),
+terrain_jeton.json existerait. Il est ABSENT → curl n'a reçu AUCUNE réponse
+HTTP (DNS/TCP/TLS/timeout). Et le bac a tranché ce que quatre S33 ÉCHEC ne
+pouvaient pas : (1) test_jeton_oauth.py — le refresh_token de l'annexe D48
+est **VIVANT** (HTTP 200, access_token 254 car., scope auth/drive), l'annexe
+testée byte-identique à celle embarquée @0xF018 de terrain.13 ; (2)
+preuve_chaine_t3.py — la chaîne T3 COMPLÈTE fonctionne depuis le bac (jeton
+→ session resumable 200 → PUT 200) : le fichier témoin
+« preuve-jeton-vivant-depuis-le-bac-20261027-2314.txt » (1 007 o, id Drive
+1QOJlSeb…) est déposé dans le dossier test — **première validation T3 de bout
+en bout de l'histoire du projet**. Conclusion : annexe BONNE, dossier BON,
+API BONNE — seule la machine du développeur est en cause (chemin réseau
+curl.exe → oauth2.googleapis.com ; notons qu'en T2 curl ne résout JAMAIS de
+DNS lui-même : c'est le proxy M3 qui faisait le réseau — le curl direct de
+T3 est le PREMIER exercé sur cette machine). La commande curl -v du
+LISEZMOI-terrain13 tranchera DNS/connexion/TLS. Champ 4 de l'annexe (35 o) :
+ni doublon du secret, ni préfixe 1// — non identifié, ignoré par sup-35 (la
+chaîne marche avec 3 champs), à documenter en M8.
+
+**T1 — la démo publique meurt ; D64 révisé.** Les deux runs : S13
+code=3221225477 (0xC0000005) + journal démo 14 lignes (410 o, md5 5045cb42,
+identique aux dépôts 16:52 et 18:00 Paris retrouvés en corbeille) coupé sur
+J_RESEAU_KO. Donc : l'échec d'échange de demo.9 est la défaillance CONNUE de
+D57 (2 reproductions du 27 soir, « fait d'exécution invisible en statique,
+9e classe », jamais root-causée) — ce soir en sont les **3e et 4e
+reproductions** ; demo.10 (= demo.8 INSTRUMENTÉ + 3 octets de version) la
+masque (6 runs verts). NOUVEAUTÉ du soir : le processus démo MEURT de
+0xC0000005 après la ligne d'échec — jamais observé (à 16:52/18:00 le
+superviseur mourrait avant S13 ; à 18:00 « arrêt propre, fenêtre ouverte »
+avait été noté sans code de sortie). D64 (« la démo réussissait depuis
+toujours ») est RÉVISÉ : demo.8/10 réussissait ; **demo.9 publique — l'artefact
+scellé M2 0.3.0 — n'a JAMAIS réussi sur machine réelle** (le scellage D43
+repose sur le succès de demo.8 instrumentée). Audits refaits ce soir :
+shadow-space 59 sites 0 défaut ; diff désassemblé win-08/win-10 demo.9 ↔
+demo.10 = sondes S1/S2 et 4/5 SEULES (logique identique) ; tcp-09 (ouvrier)
+propre en lecture. Le mécanisme reste invisible en statique — la prochaine
+donnée = l'ADRESSE du crash (WER/LocalDumps pour demo.exe), à capturer en
+D67 avant toute décision M2 (révision de spec tcp-XX + re-scellage, sur le
+modèle http-10:R3).
+
+**T2 — vert 4/5, anomalie transitoire notée.** 23:07 : S22/S24 code=0,
+640/577 o, 7 lignes, conforme — 4e vert CONSÉCUTIF (stable depuis
+terrain.11). 22:45 : anomalie unique — S22 code=28 (neverssl timeout 20 s),
+journal proxy 2 lignes + « tun » TRONQUÉ en plein mot (le proxy est mort en
+écrivant « tunnel »), S25/S24 https OK (577 o) — non reproduite à 23:07,
+1/5 depuis terrain.11, à surveiller (M3, file dossier).
+
+**Prédictions D67 (falsifiables).** curl -v : (a) « Could not resolve host »
+→ DNS/hosts/filtrage ; (b) connect timeout/refused → pare-feu ; (c) établi
+puis TLS error → interception ; (d) si le json apparaît enfin → erreur HTTP
+Google lisible (mais le bac dit qu'il n'y en aura pas). Démo : toute
+nouvelle exécution de demo.9 (autonome ou kit) = même journal 410 o + mort
+0xC0000005. T2 : vert. La priorité opérateur = la pièce curl -v (2 min).
