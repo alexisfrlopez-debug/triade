@@ -1852,3 +1852,70 @@ renforcés) exige un harnais avant les blocs.
 renforcés) en écriture-avant-code à la prochaine session ; le harnais est
 prêt à les accueillir (cible = tout bloc à entrée non fiable, propriétés
 déclarées par contrat).
+
+## Journal 35 — D46 : la couche I de M3 écrite avant le code — treize spécifications du domaine http (huit parseurs feuilles, une pompe, la session, la console, l'orchestrateur, tcp-13) ; la charte des contrats renforcés : chaque octet non fiable a un verdict, chaque échec a un nom, chaque constante un propriétaire
+
+**Contexte** : étape (a) de D45 — avant tout octet de notation, les
+contrats. Le critère M3 « contrats renforcés » doit être une propriété
+VÉRIFIABLE du texte des spécifications, pas une intention.
+
+**Déroulé** :
+1. Registre étendu : domaine **http créé, réservé M3** (http-01 à
+   http-12), domaine tcp prolongé côté client (tcp-13 — win-07 de la
+   lignée démo était soudé à 127.0.0.1:25000 : adresse et port cuits dans
+   ses octets, inutilisable pour une cible arbitraire ; getaddrinfo +
+   connect, nettoyage complet sur tout chemin, freeaddrinfo un-pour-un).
+2. **Décomposition en verbes uniques** — huit parseurs FEUILLES PURES
+   (aucun appel, aucun état, aucune écriture hors zone d'accueil — c'est
+   la condition de falsifiabilité par propriétés) : http-01 itérateur
+   CRLF (propriétaire T5 du balayage de ligne : personne d'autre ne
+   cherche un CRLF), http-02 ligne de requête (la table des huit
+   méthodes EST la validation — rien d'inconnu n'est jamais transmis),
+   http-03 ligne d'en-tête (OWS rognés en bornes de span, le tampon
+   jamais réécrit), http-04 recherche d'en-tête (l'UNIQUE comparaison
+   insensible à la casse du domaine — obligation RFC, propriété unique),
+   http-05 décimal borné (test de borne à CHAQUE chiffre, zéros de tête
+   rejetés — RFC 7230 §5.5.1), http-06 fin de tête (propriétaire de
+   MAX_TETE = 8192, repère RFC §3.1.1 « au moins 8000 » ; LF isolé →
+   verdict nommé), http-07 autorité (propriétaire T5 du découpage
+   hôte:port — la cible absolue ET la valeur Host passent par lui),
+   http-08 cible (formes absolue/origine/autorité, découpe SANS
+   interprétation).
+3. **Pompe et orchestration** : http-09 pompe unidirectionnelle (ne ferme
+   JAMAIS — miroir tcp-06:Q4 ; émission intégrale malgré les envois
+   partiels — miroir tcp-09:Q1) ; http-10 session (accumulation → parsing
+   → trancher → router → réécrire depuis les SPANS d'origine (aucune
+   table recopiée) → pomper ; chaque socket fermée EXACTEMENT une fois,
+   par le thread session seul ; table des réponses 400/411/431/501/502/
+   505/200-tunnel en fixture unique) ; http-11 console (quit) ;
+   http-12 orchestrateur (porte R10 plancher 0x00040000, ordre
+   d'initialisation en INVARIANT — leçon D42 : InitializeCriticalSection
+   avant tout journal).
+4. **Charte des contrats renforcés** (m3/I/README.md, liée par renvoi —
+   T5) : spans partout (aucun NUL supposé sur le réseau ; la traduction
+   span→chaîne C existe UNE fois, tcp-13:Q2) ; verdicts eax 0/nommés ;
+   constantes à propriétaire unique (MAX_TETE, MAX_CIBLE 2048, HOTE_MAX
+   255) — PAS de MAX_LIGNE : la limite de tête borne transitivement toute
+   ligne (une limite, un propriétaire) ; CRLF strict (la RFC PERMET le LF
+   nu, M3 le refuse — chaque tolérance de format est une surface de
+   contrebande) ; schéma strict minuscule ; une requête par connexion ;
+   réponse jamais parsée (ce qui n'est pas parsé ne peut pas être mal
+   parsé) ; échec avant l'entrée système (rien d'ambigu n'atteint le
+   résolveur).
+5. **Réutilisation R7 préfigurée** : proxy.exe embarque a10002/a10003,
+   b20001-04, c30001-06, c30011 (journal) aux RVA exacts ; IAT
+   inchangée + getaddrinfo/freeaddrinfo appendus (0x2350/0x2358) ;
+   tcp-13 au trou libre net 0x4200, zone http depuis 0x4C00, http-12 au
+   slot d'application 0x1800 ; tcp-07/08/09/10/12 et libc-05/06/07/09
+   non embarqués (le patch à chaud du journal revient à M5).
+6. **Surface de fuzzing délimitée par contrat** : http-01..09 + chaîne
+   d'accumulation de http-10 (les V3 de chaque spec) — le périmètre du
+   million ; les orchestrateurs relèvent de l'oracle à scénarios (V2) et
+   du terrain § 8.4 — ils n'ont pas d'entrée non fiable DIRECTE, toute
+   entrée non fiable traverse d'abord un bloc fuzzé.
+
+**Suivi** : étape (b) — m3/layout.py (plan d'adressage arrêtant la
+préfiguration), notation brouillons + auteur M3, oracle à scénarios
+(générateurs de têtes hostiles pour le harnais P1-P5), build
+proxy.exe ; puis (c) proxy transparent curl, (d) campagne million sur
+le périmètre parseur, (e) le fuzzing rejoint la suite de conformité.

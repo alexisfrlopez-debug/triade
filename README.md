@@ -27,7 +27,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D32, format normalisé depuis D24) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D46, format normalisé depuis D24) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -59,8 +59,16 @@ différentiel Unicorn 76 010 cas/exécution, cristallisation 11×10/10, suite de
 conformité du profil verte (68 contrôles), budgets tokens mesurés (localiser 51/64,
 éditer 719/3 000, ajouter 1 088/6 000 — D31), export de continuité chiffré au coffre
 (D16) ; validation terrain Windows 11 constatée (ligne unique `TRIADE M1 : minilibc
-21/21 OK`, D32) — **balise finale `0.2.0` scellée, immuable**. **Étape en cours :
-jalon M2** — patch à chaud sur serveur TCP écho (le jalon de vérité).
+21/21 OK`, D32) — **balise finale `0.2.0` scellée, immuable**. **Jalon M2 franchi
+le 27 octobre 2026** (D33–D43) — boucle § 5 (patch à chaud en production +
+rollback) DÉMONTRÉE sur machine réelle (journal terrain demo.8, 28/28 lignes
+jusqu'à « DÉMO OK »), huit classes de défauts invisibles nommées et corrigées
+(D35–D42), **balise finale `0.3.0` scellée, immuable**. **Étape en cours :
+jalon M3** — entrées non fiables : harnais de fuzzing à propriétés P1-P5
+livré et falsifiable, 101 000 cas sans crash sur la surface scellée (D45) ;
+couche I écrite avant le code — treize spécifications du domaine http
+(D46, `m3/I/`) ; prochaine étape : notation + proxy.exe + proxy transparent
+curl + campagne million.
 
 ## Avertissement
 

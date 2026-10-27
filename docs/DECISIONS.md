@@ -1623,3 +1623,84 @@ D15 (amende D5) illustrent la procédure.
   divergence de calibration est un bug de harnais, pas un doute sur le
   binaire).
 - **Développement** : entrée 34 du journal de travail.
+
+### D46 — couche I du jalon M3 : treize spécifications écrites-avant-code du domaine http (http-01 à http-12 + tcp-13) — contrats renforcés : chaque octet non fiable a un comportement défini, chaque échec est nommé, aucune tolérance de format n'est silencieuse
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : étape (a) des prochaines étapes de D45 — les blocs
+  parseur exigent leurs contrats AVANT la notation (R2, écrite-avant-code ;
+  le gabarit § 2.2 de la v0.5.0). Le critère M3 « contrats renforcés »
+  n'est pas un slogan : c'est une propriété vérifiable du texte des
+  spécifications — chaque entrée non fiable a un verdict, chaque verdict a
+  un nom, chaque constante a un propriétaire unique.
+- **Choix retenu** : (1) **décomposition en verbes uniques** : treize
+  spécifications — huit parseurs feuilles purs (http-01 itérateur CRLF
+  [propriétaire T5 du balayage de ligne], http-02 ligne de requête [la
+  table des huit méthodes EST la validation], http-03 ligne d'en-tête
+  [OWS rognés en bornes, jamais en recopie], http-04 recherche d'en-tête
+  [l'unique comparaison insensible à la casse du domaine, obligation RFC
+  7230 §3.2], http-05 décimal borné [test de borne À CHAQUE chiffre],
+  http-06 fin de tête [propriétaire de MAX_TETE], http-07 autorité
+  [propriétaire T5 du découpage hôte:port, crochets IPv6 exclus de la
+  valeur], http-08 cible [formes absolue/origine/autorité, découpe sans
+  interprétation]), une pompe (http-09 : relais unidirectionnel qui ne
+  ferme JAMAIS), la session (http-10 : orchestration complète, unique
+  propriétaire des fermetures et de la table des réponses), la console
+  (http-11 : quit), l'orchestrateur (http-12 : porte R10 + ordre
+  d'initialisation D42 en invariant), et l'extension cliente tcp-13
+  (getaddrinfo + connect sur cible arbitraire — win-07 de la lignée démo
+  était soudé à 127.0.0.1:25000, inutilisable ; la traduction span→chaîne
+  C y est propriété unique, exigée par getaddrinfo) ;
+  (2) **conventions transverses** (charte m3/I/README.md, liée par renvoi,
+  jamais recopiée — T5) : spans partout (aucune terminaison NUL supposée
+  sur le réseau), verdicts eax 0/nommés mappés par la table des réponses
+  de http-10 (400/411/431/501/502/505 + 200 tunnel), constantes à
+  propriétaire unique (MAX_TETE 8192 chez http-06 — RFC 7230 §3.1.1
+  exige ≥ 8000 ; MAX_CIBLE 2048 chez http-02 — usage navigateur ;
+  HOTE_MAX 255 chez tcp-13 — limite DNS), CRLF strict (LF isolé → 400 :
+  la RFC 7230 §3.5 PERMET le LF nu, M3 le refuse — durcissement
+  anti-contrebande), zéros de tête rejetés sur Content-Length (RFC 7230
+  §5.5.1), schéma « http:// » strict minuscule (durcissement : tous les
+  émetteurs réels émettent minuscules), une requête par connexion
+  cliente, réponse JAMAIS parsée (relais à fermeture délimitée — ce qui
+  n'est pas parsé ne peut pas être mal parsé), fermetures à propriétaire
+  unique (session seule, pompes jamais), échec avant l'entrée système
+  (rien d'ambigu n'atteint le résolveur) ;
+  (3) **réutilisation R7** : proxy.exe embarque les octets scellés
+  a10002/a10003, b20001-04, c30001-06 et c30011 (tcp-11 journal) à leurs
+  RVA exacts — l'IAT existante est inchangée, deux entrées ws2_32 sont
+  appendues (getaddrinfo 0x2350, freeaddrinfo 0x2358) ; tcp-07/08/09/10/
+  12 et libc-05/06/07/09 ne sont pas embarqués (le patch à chaud du
+  journal revient à M5) ; tcp-13 occupe le trou libre net 0x4200, la
+  zone http étend .text2 depuis 0x4C00, http-12 prend le slot
+  d'application 0x1800 ; (4) **surface de fuzzing** : http-01..09 +
+  chaîne d'accumulation de http-10 — les V3 de chaque spécification lient
+  le contrat au harnais P1-P5 de D45 ; la campagne million (étape d)
+  vise CE périmètre ; les orchestrateurs relèvent de l'oracle à
+  scénarios et du terrain (§ 8.4), pas du fuzz aveugle — ils n'ont pas
+  d'entrée non fiable directe ;
+  (5) **règles de tranchement notables** : POST/PUT sans Content-Length et
+  sans Transfer-Encoding → 411 (RFC) ; Transfer-Encoding présent → 501
+  (le relais en flux n'est pas dans le périmètre M3 — refus honnête) ;
+  forme origine sans Host → 400 (RFC 7230 §5.4) ; CONNECT sans port → 400
+  (pas de schéma, pas de base de déduction — jamais deviner) ; forme
+  absolue sans chemin → chemin « / » par DÉFINITION (fixture http-08,
+  pas une déduction d'exécution) ; la version du client est relayée
+  telle quelle (span d'origine, jamais « normalisée ») ; la réécriture
+  réutilise les SPANS et fixtures des blocs propriétaires — aucune table
+  de méthode recopiée (T5).
+- **Alternatives rejetées** : parseur monolithique dans la session (non
+  falsifiable par propriétés, non réutilisable, le fuzz exige des feuilles
+  pures) ; MAX_LIGNE séparé de MAX_TETE (deux limites pour un même
+  tampon — redondance, une seule reste) ; accepter le LF nu (chaque
+  tolérance de format est une surface de contrebande — l'histoire
+  « request smuggling » est la preuve) ; relais réponse avec parsing
+  Content-Length (M3 n'a pas besoin de cadrer ce qu'il relaie) ; keep-
+  alive et pipelining côté client (une requête par connexion — curl
+  reconnecte, la complexité est reportée) ; comparaison insensible à la
+  casse pour schéma/méthodes (une seule insensibilité obligatoire suffit —
+  celle des noms d'en-tête) ; réutiliser win-07 (démo) pour la connexion
+  amont (adresse et port cuits dans ses octets — incompatible avec une
+  cible arbitraire) ; reverse-spec de tcp-09 comme session proxy (sa
+  boucle écho est l'anti-contrat du proxy : il faut parser, pas renvoyer).
+- **Développement** : entrée 35 du journal de travail.
