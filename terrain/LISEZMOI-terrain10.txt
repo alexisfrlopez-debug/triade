@@ -1,0 +1,92 @@
+TRIADE — TERRAIN.10 : LE TUEUR A ÉTÉ TROUVÉ — C'ÉTAIT NOTRE BUG, PAS VOTRE
+MACHINE, PAS L'ANTIVIRUS. 2 OCTETS CORRIGÉS.
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre capture de l'Historique de protection (dépôt de 20:51) a fait
+basculer l'enquête. Elle prouve que DEFENDER N'A RIEN FAIT aux instants
+où le superviseur s'est fermé (19:23, 20:01, 20:47 : aucune entrée dans
+l'historique — vos seules actions Defender ce jour-là sont 12:55 et
+16:48-16:50, jamais aux moments des fermetures). Nous avions accusé
+votre antivirus à tort : il est lavé de tout soupçon pour les fermetures.
+Pardon pour le détour de la coupure — votre run de 20:47 a d'ailleurs
+tourné AVEC la protection active (vos réglages de 20:50 sont postérieurs
+à la fermeture), ce qui rend ce run précieux : la fermeture s'est
+reproduite QUATRIÈME fois antivirus actif, au même endroit, à la seconde
+près.
+
+LE COUPABLE, TROUVÉ DANS NOS PROPRES OCTETS
+-------------------------------------------
+En reprenant le binaire avec un auditeur d'ABI (la discipline d'appel
+de Windows), nous avons trouvé l'erreur, et elle est de nous : la petite
+fonction du superviseur qui ATTEND la fin d'un test curl réserve 8 octets
+de pile là où Windows en exige 40. Conséquence : au retour de l'attente,
+l'adresse où le programme doit continuer a été ÉCRASÉE — il saute vers
+une adresse invalide et Windows ferme le processus d'un coup. C'est
+deterministe : ça tue au premier curl, À CHAQUE FOIS, exactement ce que
+vivent vos quatre runs. La signature correspond aussi aux 15 plantages
+de l'après-midi de dimanche (l'époque terrain.3). Le correctif tient en
+DEUX OCTETS (réserver 40 octets au lieu de 8). C'est terrain.10.
+
+POUR VOTRE RUN DE 20:47 A ÉTÉ BIZARRE (le demo ne terminait plus)
+-----------------------------------------------------------------
+Deux explications possibles, et votre fichier demo_journal.txt départage
+(c'est pourquoi on vous le demande ci-dessous, AVANT le redémarrage) :
+un proxy orphelin du run de 20:01 restait vivant en mémoire (il survit
+à chaque fermeture — c'est prévu par sa conception) et a pu perturber le
+test réseau du demo ; ou la machine était simplement chargée pendant que
+vous manipuliez les réglages Defender en même temps que le run. Aucune
+importance pour la suite : le redémarrage ci-dessous efface tout ça.
+
+AVANT DE RELANCER : DEUX PETITES CHOSES (2 MINUTES)
+----------------------------------------------------
+1. S'il reste une fenêtre « TRIADE M2 — démonstration complète » ouverte
+   depuis le run de 20:47 : fermez-la. Puis COPIEZ le fichier
+   C:\TRIADE\demo_journal.txt dans ce dossier test (il raconte ce que le
+   demo de 20:47 a fait — la pièce qui manque à l'enquête). Si la copie
+   dit « fichier utilisé », fermez d'abord la fenêtre TRIADE M2.
+2. REDÉMARREZ le PC. C'est le grand nettoyage : chaque fermeture laisse
+   derrière elle des processus invisibles (le proxy orphelin qui tient
+   le port 25000). Sans redémarrage, ils pollueraient le prochain run.
+   Après le redémarrage, si vous aviez désactivé des réglages Defender
+   vers 20:50 (protection contre les falsifications, envoi
+   d'échantillons) : réactivez-les, tout doit être NORMAL.
+
+LE RUN (COMME D'HABITUDE, ~3 MINUTES)
+--------------------------------------
+RIEN À FAIRE CÔTÉ ANTIVIRUS cette fois : aucune exclusion, aucune
+coupure, tout reste activé. Si terrain.10 survit antivirus actif, la
+preuve sera double.
+  1. Téléchargez superviseur-terrain10.exe depuis ce dossier test et
+     placez-le dans C:\TRIADE (à la place de terrain.9).
+     Empreinte de confiance md5 : ec5995707976b227a5edbab9a766e9b4
+  2. Double-cliquez → « TOUT DEMARRER » → ne fermez rien :
+       ~40 s   la fenêtre demo se ferme toute seule (annoncé) ;
+       ensuite la fenêtre noire du proxy, puis les fenêtres noires des
+       curl vivent et meurent — POUR LA PREMIÈRE FOIS SANS QUE TOUT
+       SE REFERME ;
+       ~2-3 min le journal se dépose TOUT SEUL dans ce dossier test,
+               la fenêtre écrit S91, puis se ferme. FINI.
+
+CE QUE LA RÉUSSITE RESSEMBLE (L'INSTANT HISTORIQUE)
+----------------------------------------------------
+Le journal doit montrer — pour la première fois — les lignes interdites
+jusqu'ici : S22/S23 (curl http), S24/S25 (curl https), S26/S27/S28
+« T2 VERDICT », puis S30-S34 (le dépôt). La vraie mesure du succès reste
+UNIQUE : un nouveau terrain_*.txt APPARU TOUT SEUL dans ce dossier test
+— le cœur du livrable, jamais encore réussi. L'écran terminera quand
+même par « S91 SUPERVISEUR : ECHEC » — ATTENDU MÊME EN PLEINE RÉUSSITE
+(l'écart T1 documenté : 26 lignes lues contre 17 attendues). Si le
+journal apparaît tout seul : mission accomplie, ne déposez rien à la
+main (le demo_journal.txt du nouveau run nous intéresse aussi, comme
+d'habitude, si vous pouvez le copier après).
+
+SI TOUT SE REFERME ENCORE (improbable, mais soyons prêts)
+---------------------------------------------------------
+Ne relancez rien. Capturez l'écran, puis ouvrez le dossier
+C:\ProgramData\Microsoft\Windows\WER\ReportArchive et capturez aussi la
+liste des sous-dossiers (les dates visibles). Déposez les deux captures
+dans ce dossier test : les rapports de plantage de Windows y nommeront
+l'adresse exacte du défaut — et cette fois nous saurons la lire avant
+même que vous terminiez le dépôt.

@@ -3026,3 +3026,122 @@ d'attente, slots IAT visés). Le prochain dépôt (journal + capture +
 reponse.txt du run coupure) sera jugé en deux commandes. En attente côté
 terrain : le run superviseur-terrain9.exe AVEC protection temps réel
 coupée 3 minutes (LISEZMOI-COUPURE.txt, dossier test).
+
+## Entrée 52 — terrain.10 : « journaux envoyés, superviseur se ferme encore seul » — LE VERDICT RENVERSÉ : la capture de l'Historique de protection LAVE DEFENDER (aucune action aux instants des morts), l'audit ABI retrouve les 4 défauts shadow space D53 documentés puis oubliés — le tueur est NOTRE .curl (sub rsp,8 aux appels WaitForSingleObject/GetExitCodeProcess/CloseHandle, spill homeparams = mécanique demo.6/D41) — correctif 2 octets, porte 27/27, 20/20 contrôles verts (D62, 27/10 au soir)
+
+**Les pièces du run 20:47 (terrain_20261027_204700.txt, 884 o + « Capture
+d'écran 2026-10-27 205130.png »).** Le journal est COURT et INÉDIT : pour la
+première fois T1 échoue AVANT le verdict — S13 « termine code=259 »
+(STILL_ACTIVE : le demo VIVAIT encore à la lecture du code) et S14
+« lignes=0 » (journal verrouillé share=0 par le demo vivant — paire
+COHÉRENTE, sup-33 Q5/Q6) — puis S20/S21/bannière, et la MORT au 1er curl,
+4e fois au même point. reponse.txt ABSENT, demo_journal.txt NON redéposé
+(md5 identique au dépôt 18:30). La capture VLM-lue est
+l'« Historique de protection » : 27/10 20:50 « protection contre les
+falsifications désactivée » + « envoi automatique d'échantillons
+désactivé », 16:50 « réparation incomplète », 16:49 « menace restaurée »,
+16:48 « menace bloquée », 12:55 « menace mise en quarantaine » (proxy.exe,
+prévu), rien avant 2025.
+
+**Le renversement, preuve n° 1 — Defender lavé des morts au curl.**
+L'historique connecté ce jour-là est COMPLET (il montre tout, jusqu'aux
+2025) : entre 16:50 et 20:50 il est VIDE. Or les morts sont 19:23, 20:01,
+20:47. Si Defender avait tué le superviseur à ces instants, l'historique
+le dirait — il a bien journalisé ses actions de 16:48-16:50. De plus la
+séquence prouve que la COUPURE D60 N'A PAS EU LIEU pendant le run : les
+bascules falsifications/échantillons datent de 20:50, APRÈS la mort —
+l'utilisateur a commencé à couper APRÈS l'échec, le run a tourné
+protection ACTIVE. L'expérience D60 est caduque, et FAVORABLE : mort 4/4
+avec Defender armé et muet. Les entrées 16:48-16:50 (bloquée → restaurée
+→ réparation incomplète) encadrent le run terrain.5 de 16:52 : Defender a
+combattu nos FICHIERS ce jour-là (c'était le suspect légitime de D55),
+mais il n'a rien fait aux instants des morts suivantes.
+
+**Le renversement, preuve n° 2 — l'argument D59/D61 qui écartait le crash
+était vacuous.** « Un crash laisse un rapport WER AppCrash » : le
+wer-superviseur.zip a été collecté À 15:45 — les morts 16:52+ ne pouvaient
+PAS y figurer, « aucun après 15:45 » n'était pas une preuve. Les 15
+rapports présents (12:51-15:45, tous c0000005, PCH_84_FROM_unknown)
+prouvent juste que le superviseur a SU planter c0000005 sur cette machine
+— l'époque D53 l'attribuait aux descripteurs IAT (corrigés terrain.4),
+mais D53 avait AUSSI documenté : « 4 défauts D=0x8 trouvés… tous
+post-clic (sup-31, sup-34 ×3) — réels mais PAS le tueur pré-fenêtre ».
+Le tueur actuel est EXACTEMENT post-clic.
+
+**L'arme du crime — audit ABI refait sur le binaire livré terrain.9
+(scripts/audit_shadow_sup34.py, méthode D41).** 93 sites IAT audités,
+4 défauts confirmés à l'octet : sup-31 @0x5382 (CloseHandle du nettoyage
+tuyaux, chemin d'échec mode 1 jamais exécuté) et sup-34 .curl @0x5d3c /
+@0x5d4c / @0x5d55 — c'est-à-dire WaitForSingleObject(hproc, 25000),
+GetExitCodeProcess, CloseHandle, tous avec D=0x8 : `sub rsp,8` seul,
+AUCUN shadow space. Le sous-bloc .curl (@0x5d1e) : sub rsp,8 ; xor
+edx,edx ; call sup-31 (lance curl) ; mov edx,0x61a8 ; call
+WaitForSingleObject… ; add rsp,8 ; ret. Avec D=0x8, l'adresse de retour
+de .curl vit À [rsp+0x10] de la callee — la loge du spill rdx de
+l'ABI /homeparams : mécanique Prouvée SUR CETTE MACHINE par demo.6 (D41 :
+kernel32 range rdx=0x700 sur l'adresse de retour → ret vers 0x700 →
+c0000005). Ici rdx vaut 25000 (WaitForSingleObject) ou &ETAT_SUP
+(GetExitCodeProcess) : ret vers 0x61a8 ou une adresse .data NX → c0000005
+exécution hors module → fenêtre fermée, WER AppCrash, et le journal coupé
+AVANT S22 (journalisé après le retour de .curl) — LA SIGNATURE EXACTE des
+4/4 morts, et la famille des 15 rapports BEX64. Cohérence interne
+parfaite : TOUS les sites sains (sup-33 — 3/3 S13 atteints ; sup-35 ;
+corps de sup-34 — 4/4 S21) ont TOUJOURS survécu ; seuls les sites D=0x8
+tuent, au premier passage. Le raisonnement D61 « un curl gelé aurait rendu
+S22 en ≤25 s » reste exact : le fil N'EST PAS mort pendant l'attente mais
+AU RETOUR de .curl, après les trois appels — l'absence de S22 ne prouve
+pas un kill externe.
+
+**L'anomalie T1 du 20:47, lue proprement.** Le bind du demo a RÉUSSI
+(sinon tcp-12 E1 l'aurait terminé code 2, pas 259) : le port 25000 était
+LIBRE à 20:47 — l'orphelin du 20:01 n'était donc PAS en écoute (malgré
+tcp-11 E1 « le serveur continue » : l'utilisateur ferme probablement les
+fenêtres noires résiduelles entre les runs, variable). Restent deux
+candidats pour le demo vivant à +50 s : lenteur machine (l'utilisateur
+manipulait les réglages Defender PENDANT le run — marge T1 de seulement
+~10-15 s : sondage 30 s + WM_CLOSE 10 s + attente 10 s vs demo ~35-40 s)
+ou gel réseau réel. LA PIÈCE QUI DÉPARTAGE : le demo_journal.txt du run
+20:47, NON déposé — le LISEZMOI-terrain10 le demande AVANT le
+redémarrage. Mécanique orphelin consignée au passage : la bannière
+http-12 I2 précède l'écoute (une S21 « reçue » ne prouve PAS le port
+libre — fourche refermée par le code=259), et chaque mort laisse un proxy
+orphelin immortel sur 25000 → LE LISEZMOI IMPOSE UN REDÉMARRAGE avant le
+run (sinon T1/T2 pollués).
+
+**terrain.10 (patch_terrain10.py, base terrain.9 a59931db…).** LE
+CORRECTIF : 0x5d21 et 0x5d63, imm8 08→28 — `sub rsp,0x28` / `add
+rsp,0x28` : D=0x28 aux QUATRE appels de .curl (les 3 IAT + l'appel direct
+sup-31), alignement préservé (0x28 ≡ 8 mod 16), l'adresse de retour sort
+de la zone d'accueil, le `je 0x5d60` converge vers le nouvel épilogue.
+Génération : L00/S00 « terrain10 » (9 octets — le point saute à partir de
+la génération 10, place fixe), VERSIONINFO binaire 0.5.10.0, FileVersion
+« 0.5.10 » (6 cars, NUL dans le slot des 7, wValueLength inchangé),
+ProductVersion « …terrain10 ». Sommes R10[20] (couvre 0x5d21/0x5d63) et
+R10[23] (couvre S00) recalculées, table lue jusqu'au terminateur (méthode
+D56). Diff : 17 octets, tous bornés ; .blob byte-identique ; FindWindowW
+intact ; 27/27 + terminateur. LATENTS DOCUMENTÉS (non corrigés, une
+variable par itération) : sup-31 @0x5382 (chemin d'échec jamais exécuté)
+et sup-34 @0x5d65 (callee maison win-05, sans spill) — file d'attente M8
+notation. verif_terrain10.py : contrôle INDÉPENDANT from scratch, 20/20
+VERTS (porte, versions, kit md5, FindWindowW, .curl désassemblé — 3
+appels IAT à D=0x28, diff borné, chargeur). audit_shadow_sup34.py sur
+terrain.10 : sup-34 ZÉRO défaut (3 corrigés), ne reste que le latant
+sup-31. md5 ec5995707976b227a5edbab9a766e9b4, sha256 20610656…
+
+**Livraison et protocole.** superviseur-terrain10.exe +
+LISEZMOI-terrain10.txt au dossier test + download/. Le LISEZMOI : (1)
+AVANT tout — fermer la fenêtre TRIADE M2 si vivante et DÉPOSER
+demo_journal.txt (la pièce 20:47) ; (2) REDÉMARRER le PC (chasse aux
+orphelins) et réactiver les réglages Defender touchés à 20:50 ; (3) RIEN
+à faire côté antivirus — l'exclusion et la coupure sont ANNULÉES, tout
+reste activé (le run doit survivre Defender armé : preuve double) ; (4)
+le film annoncé jusqu'à S28 + S30-S34 + le dépôt TOUT SEUL ; (5) si mort
+encore : captures écran + listing C:\ProgramData\Microsoft\Windows\WER\
+ReportArchive — les AppCrash terrain.5/8/9 datés 16:52/19:23/20:01/20:47
+fermeraient le dossier forensiquement. **Prédictions pré-enregistrées
+(falsifiables) : A = S22/S23 (curl http), S24/S25 (https), S26/S27/S28,
+S30-S34, terrain_*.txt déposé TOUT SEUL, S91 ÉCHEC attendu (26≠17) — le
+correctif est la variable unique, la preuve par différence ; B = mort
+encore à S21 → le WER listing nommera l'adresse du défaut (0x61a8 ou une
+adresse .data = confirmation du spill ; autre adresse = nouveau coupable,
+l'instrumentation bissectrice déjà prévue par D59 devient terrain.11).**
