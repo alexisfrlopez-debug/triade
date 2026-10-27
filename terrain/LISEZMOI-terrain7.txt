@@ -1,0 +1,59 @@
+TRIADE — SUPERVISEUR TERRAIN.7
+==============================
+
+CE QUI S'EST PASSE AVEC TERRAIN.6
+----------------------------------
+Votre journal terrain_20261027_174338.txt a tout dit : fenetre ouverte,
+clic, S00 « 0.5.0-terrain.6 », S01 date — puis :
+
+  S02 porte R10 : KO - arret
+  S91 SUPERVISEUR : ECHEC
+
+Le superviseur n'est PAS mort : il a fait exactement son travail. La
+porte R10 est le verrou d'integrite du binaire (27 zones couvertes par
+des sommes, verifiees AVANT tout test — image modifiee = arret immediat,
+aucun test lance). Or le correctif terrain.6 (recherche de la fenetre
+du demo par CLASSE) avait un defaut de fabrication : en changeant la
+chaine de version « terrain.3 » -> « terrain.6 » dans le journal S00,
+il a oublie de mettre a jour la somme de la zone qui contient cette
+chaine (l'entree [23] de la table, zone 0x4340-0x4BFF). La porte a
+donc vu une image non conforme — LA Sienne — et a refuse de passer.
+Ironie du verrou : il fonctionnait parfaitement, c'est la cle qui
+etait fausse.
+
+TERRAIN.7 CORRIGE : la somme de l'entree [23] est recalculee sur
+l'image finale (7 octets au total changent par rapport a terrain.6 :
+la somme, deux octets de version « terrain.7 », quatre champs
+VERSIONINFO 0.5.7.0). La methode de verification est corrigee aussi :
+la table est maintenant lue JUSQU'A SON TERMINATEUR (27 entrees) —
+plus aucun compte en dur — et les 27 sommes sont toutes repassees
+au vert avant livraison. Le correctif FindWindowW de terrain.6 est
+conservé tel quel (fenetre du demo cherchee par CLASSE, clic envoye
+par le superviseur).
+
+CE QUE LE PROCHAIN JOURNAL DOIT MONTRER
+---------------------------------------
+  S02 porte R10 : integrite VERTE     <-- la porte passe enfin
+  S03 libc 4/4, S04-S06 extraction (md5 demo/proxy)
+  S10/S11 T1 : fenetre demo TROUVEE en < 1 s, clic BM_CLICK, scenario
+  S12..S16 : verdict ligne a ligne du journal du demo
+  S20..S28 : T2 proxy (banniere, deux traversées curl http/https)
+  S30.. : T3 depot du journal dans ce dossier test
+  S9x : verdict final
+
+ATTENTION (annonce du LISEZMOI precedent, toujours valable) : votre
+run manuel de terrain.5 avait montré « reseau : echange en echec »
+DANS le journal du demo. Si cette ligne revient au verdict T1
+(S1x demo KO), le defaut est dans le demo.9 lui-meme (sondes retirees
+en D43) — c'est la cible d'apres, le journal le dira proprement.
+
+QUOI FAIRE (2 minutes)
+----------------------
+1. Remplacez superviseur-terrain6.exe par superviseur-terrain7.exe.
+2. DOUBLE-CLIQUEZ. Fenetre ouverte ? Cliquez « TOUT DEMARRER ».
+3. ATTENDEZ 1 a 2 minutes SANS FERMER LA FENETRE (les silences curl
+   de ~25 s sont normaux).
+4. DEPOSEZ le nouveau fichier terrain_*.txt dans ce dossier test.
+
+md5    1e72811c22522901b3ca2ff2f07f73c0
+sha256 fae88f9196a035fb039c35f678833252866c909d75b645f0979844088e3ce008

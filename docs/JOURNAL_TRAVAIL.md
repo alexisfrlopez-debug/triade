@@ -2545,3 +2545,56 @@ du run : « attendez 1 à 2 minutes SANS FERMER — les silences curl de
 25 s sont NORMAUX », et le protocole d'arbitrage si mort il y a
 (DIAGNOSTIC3 + historique Defender + CrashDumps : la croix contre
 l'antivirus contre le crash, tranché en un aller-retour).
+
+## Entrée 45 — terrain.7 : « fichier terrain envoyé » — la porte R10 avait raison contre nous : le patch terrain.6 périmait la somme de l'entrée [23] (la table compte 27 entrées, pas 20) — correctif 7 octets, méthode corrigée par terminateur (D56, 27/10 soir)
+
+**terrain_20261027_174338.txt rapatrié (dossier test).** Le run
+terrain.6 de 17:43 : L00→L03, S00 « 0.5.0-terrain.6 », S01 date — puis
+« S02 porte R10 : KO - arret » et « S91 SUPERVISEUR : ECHEC ». Le
+superviseur n'est PAS mort : fenêtre, clic, scénario, verdict S91 écrit
+— c'est la PORTE qui a refusé l'image, fail-closed exactement comme
+conçu (R10 précède tout, image invalide = aucun test lancé). Le
+verrou fonctionnait parfaitement ; c'était la clé qui était fausse.
+
+**La preuve binaire (diag_r10_terrain6.py, parseur indépendant).** La
+table R10 @0x2450 compte **27 entrées + terminateur (0,0,0)** — 23
+blocs + 4 zones données (build_terrain.py l.438-455 : « 23 blocs + 4
+zones données + terminateur »). Or patch_terrain6.py codait
+N_ENTREES_R10 = 20 : il ne vérifiait/ajustait que les entrées 0..19 et
+sa garde de couverture (« aucune entrée ne couvre S00 @0x435e »)
+n'inspectait QUE ces 20 entrées. L'entrée **[23]** (rva=0x4340
+len=0x8C0 — la zone données S* de .text2) COUVRE l'octet version S00
+@0x4366 : le bump « terrain.3 »→« terrain.6 » a périmé sa somme
+(0xbfedbfef9637a937 → 0xbff0bfef9637a937, delta 3«48 = exactement
+'3'→'6' à l'octet 6 du mot @+32). Sur machine, la boucle de la porte
+(win-06 : TANT QUE rva != 0) atteint [23], somme divergente, retour
+-1, S02 KO. Triple constat d'aveuglement : le README disait « 18
+entrées », le patch « 20 », le Journal 44 lui-même écrivait « porte
+R10 27/27 » pour le RUN terrain.5 — le compte exact était CONNU, il
+n'a juste jamais atteint les constantes des outils. terrain.5 :
+0 rouge ; terrain.6 : 1 rouge ([23]) ; terrain.7 : 0 rouge.
+
+**terrain.7 (patch chirurgical 7 octets, md5 1e72811c…) :** (a) somme
+R10[23] recalculée SUR L'IMAGE FINALE ; (b) L00 @0x2ada + S00
+@0x4366 « terrain.6 »→« terrain.7 » ; (c) VERSIONINFO 0.5.7.0 (4
+champs). Le correctif FindWindowW de terrain.6 est conservé tel quel
+(sup-33 @0x544f désassemblé « lea rcx,[rip-0x29c4] ; xor edx,edx ;
+call [rip-0x30fe] » avant ET après). **Méthode corrigée (la leçon
+D56) :** la table est désormais lue JUSQU'AU TERMINATEUR rva==0 —
+plus AUCUN compte codé en dur — pré-contrôle « exactement une rouge :
+[23], delta 3«48 » (toute autre divergence = abandon), post-contrôle
+27/27 entrées + terminateur VERTS, diff 7 octets tous bornés,
+en-têtes/.blob/.idata intacts. La leçon générale : une vérification
+de couverture n'a de valeur que si elle énumère la structure QU'ELLE
+MÊME relit depuis le binaire — jamais une constante copiée d'ailleurs
+(D51 avait appris la même chose pour le chargeur : l'oracle mappait
+par le plan, pas par l'en-tête du fichier).
+
+**Livraison :** superviseur-terrain7.exe + LISEZMOI-terrain7.txt au
+dossier test (2/2 md5 MATCH). Le LISEZMOI réitère la garde du run
+(1-2 minutes sans fermer, silences curl normaux) et l'annonce du
+verdict attendu : S02 doit ENFIN passer VERT, puis S03→S06, S10/S11
+« fenetre demo TROUVEE » (FindWindow par classe), S12..S16 verdict
+ligne à ligne du journal demo — si « réseau : échange en échec »
+revient au verdict T1, le défaut est dans le demo.9 lui-même (sondes
+retirées D43) : prochaine cible, tranchée par le journal.

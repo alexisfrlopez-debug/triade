@@ -103,7 +103,7 @@ Wacatac sur proxy.exe : binaire sans signature ni ressources = bruit ML).
 | win-03 boucle | demo.exe | 0x15C0 | inchangé |
 | win-04 procédure | demo.exe | 0x1640 | TXT_BOUTON "TOUT DÉMARRER" @0x2A1E, EDIT @0x2A3A, BUTTON @0x2A44, VIDE @0x2A52, scénario @0x4C00, traces L* aux adresses démo |
 | win-05 miroir | demo.exe | 0x5000 | BUF_MIROIR @0x3A50, HWND_JOURNAL @0x3868, relais queue jmp 0x1E00 (sup-11 honore le contrat) |
-| win-06 autotest | demo.exe | 0x1AC0 | table R10 @0x2450 (18 entrées terrain), version @0x2628 (u64 0x00050101 >= plancher 0x30000 embarqué), ancre @0x2620, fixtures @0x2630-0x265A |
+| win-06 autotest | demo.exe | 0x1AC0 | table R10 @0x2450 (27 entrées terrain : 23 blocs + 4 zones données, terminateur (0,0,0) — la boucle de la porte s'arrête sur rva==0, JAMAIS sur un compte, D56), version @0x2628 (u64 0x00050103 >= plancher 0x30000 embarqué), ancre @0x2620, fixtures @0x2630-0x265A |
 
 ## Zones préfigurées du plan
 
