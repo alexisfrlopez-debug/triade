@@ -2969,3 +2969,60 @@ source de vérité de secours — recuperer_bundle.py en est l'outil dédié.
 L'incident n'est PAS une classe de défaut du binaire (les 10 classes
 documentées concernent le code) : c'est une péripétie d'OUTILLAGE, la
 première du genre — consignée pour la mémoire des sessions.
+
+## Entrée 51 — outillage du verdict : verdict_terrain.py (7/7 rétro-validé — 2 bugs de l'outil attrapés PAR la rétro-validation) + diag_timeout_curl.py (timeout .curl = 25 s au slot IAT 0x2310 CONFORME — l'hypothèse « curl zombie / attente infinie » est réfutée binairement, le kill externe D59 reste le seul mécanisme cohérent) (D61, 27/10 au soir)
+
+**verdict_terrain.py — le juge automatique des journaux.** Prédictions D58
+(terrain.8) et D60 (terrain.9 branche A : S13-S16 + S22-S28 + S30-S36 + S91
+attendu) pré-enregistrées DANS le script — leur antériorité est celle du
+commit qui les porte (l'outil EST l'instrument de pré-enregistrement).
+Morphologies connues apprises de l'archive : PORTE_KO_ARRET,
+MORT_EXTRACTION, MORT_S12_SONDAGE, MORT_S21_CURL (la signature du kill
+externe), RUN_COMPLET. La rétro-validation sur les 7 journaux 16:27→20:01
+reproduit EXACTEMENT les 7 jugements consignés (3× MORT_S21_CURL,
+2× MORT_S12_SONDAGE, 1× MORT_EXTRACTION, 1× PORTE_KO_ARRET) — et a attrapé
+DEUX bugs de l'outil lui-même : (1) le compteur L4C/L4D « post-S » comptait
+les L4C/L4D du journal demo EMBARQUÉ (entre S14 et S15 — le démarrage
+normal du demo) comme interactions post-mortem : corrigé en deux passes
+(n'on ne compte qu'après le DERNIER S du fichier) ; (2) demo_journal.txt
+est encodé CP1252 (§ = A7, é = E8), pas UTF-8 : lecture avec repli
+cp1252 — la comparaison « boucle § 5 complète - DÉMO OK » passe désormais,
+28 lignes, zéro L4C/L4D post-fin (protocole respecté, preuve maintenue).
+L'usage : `verdict_terrain.py` (dernier journal) ou `--tous` (archive +
+récurrences). Le prochain journal du run coupure sera jugé en une commande.
+
+**diag_timeout_curl.py — le timeout de l'attente .curl, lu dans le
+binaire.** Motivation : sans les L4C/L4D post-S21 (inexistants — voir
+ci-dessus), l'absence de S22 après des MINUTES admettait deux lectures :
+fil tué net (D59), OU fil gelé pour toujours dans un WaitForSingleObject
+INFINI sur un curl zombie (aucun kill nécessaire). Le diagnostic scanne
+« BA A8 61 00 00 FF 15 » (mov edx,25000 ; call [rip]) et résout la cible :
+call @rva 0x5d3c (.text2) → cible rva 0x2310 (.rdata) = le slot IAT, FT
+0x2bd0 → WaitForSingleObject, timeout 25 000 ms — CONFORME au contrat
+sup-34 Q3. Un curl gelé aurait donc rendu S22 en ≤ 25 s ; l'absence de S22
+dans un journal déposé bien après ⇒ LE FIL EST MORT AVANT LE RETOUR :
+l'hypothèse zombie est réfutée, le kill externe (D59) reste le seul
+mécanisme cohérent avec les trois morts au même point. Balayage des autres
+constantes : 10 s ×2 (arrêt proxy), 35 s ×2 (curl OAuth/session sup-35) —
+cohérent ; les 15 s de sondage sont des boucles Sleep(50)×300, pas des
+immédiats edx.
+
+**La fausse alerte instructive.** Premier passage du diagnostic : cible
+calculée en OFFSETS FICHIER → 0x1110 « dans .text » contenant
+c3 90 90 90 90 90 90 90 — semblait désigner un pointeur absurde (ret+nops)
+et donc un crash au premier appel .curl. FAUX : le calcul RIP-relatif se
+fait en ADRESSES VIRTUELLES ; l'instruction (.text2, delta file→rva
++0x1200) et la cible (.rdata, delta +0xC00) ne partagent PAS le même
+delta — la vraie cible est rva 0x2310, le slot WaitForSingleObject,
+parfaitement sain. Leçon (même famille que D56 : relire la structure
+depuis le binaire, avec SES règles) : toute résolution RIP-relative
+inter-sections DOIT passer par le mapping RVA, jamais par les offsets
+fichier — le diagnostic porte désormais l'avertissement en commentaire.
+
+**État après incident D61 :** l'outillage de jugement est double —
+verdict_terrain.py pour la forme des journaux (prédictions, morphologies,
+récurrences), diag_timeout_curl.py pour la mécanique binaire (constantes
+d'attente, slots IAT visés). Le prochain dépôt (journal + capture +
+reponse.txt du run coupure) sera jugé en deux commandes. En attente côté
+terrain : le run superviseur-terrain9.exe AVEC protection temps réel
+coupée 3 minutes (LISEZMOI-COUPURE.txt, dossier test).
