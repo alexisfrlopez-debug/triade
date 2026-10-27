@@ -2907,3 +2907,65 @@ en régime de kill externe, l'assurance-dépôt prime la pureté séquentielle ;
 le dépôt final après verdict reste la règle nominale). Terrain.10 est
 DIFFÉRÉ volontairement : une seule variable par itération, et la coupure
 est la sonde la plus forte disponible sans toucher au binaire.
+
+## Entrée 50 — incident environnemental : le bac local a été RESTAURÉ à l'ère D54 en plein tour D60 (Journal retombé à 2 490 lignes, reflog vierge de D55-D60, GitHub aussi à D54) — le coffre Drive synchronisé par le hook post-commit était resté à D60 : récupération INTÉGRALE par le bundle (git reset --hard b110b4d), l'ordre des opérations du tour avait sauvé le projet (D61, 27/10 au soir)
+
+**L'événement.** Dans le cours du tour D60 — après le commit b110b4d, la
+livraison de LISEZMOI-COUPURE.txt au dossier test (md5 MATCH vérifié) et le
+sync complet — l'environnement d'exécution local a basculé d'un coup sur un
+état antérieur : Journal à 2 490 lignes (entrées 44-49 disparues),
+LISEZMOI-COUPURE.txt absent du disque, terrain/livraison/ retombé à
+terrain.5, reflog sans AUCUNE trace des commits D55-D60 (HEAD = 31ae566,
+le commit D54 originel), et git ls-remote montrant GitHub lui-même à
+7ddb28e (auto-save 15:23). Le diagnostic a tenu en trois commandes :
+le reflog (aucun reset/checkout — le .git avait été REMPLACÉ, pas déplacé),
+git log --all (aucune branche perdue dans l'ancien .git : il n'a jamais connu
+D55+), et l'inventaire de survie (upload/ INTACT — les 7 journaux terrain
+16:27→20:01 + demo_journal, preuves intactes ; download/ et worklog.md
+retombés à l'ère terrain.5).
+
+**Ce qui a tenu, et pourquoi.** (1) Le dossier test Drive : LISEZMOI-COUPURE
+y avait été livré AVANT toute autre consignation — le développeur n'a rien
+perdu, la consigne de coupure est dans ses mains. (2) Le coffre Drive :
+le hook post-commit déclenche drive_sync à CHAQUE commit — le commit D60
+avait donc déjà poussé l'état complet (545 fichiers) Y COMPRIS
+triade-history.bundle (git bundle create --all, tête à b110b4d). Le bilan
+« 0 téléversés, 0 mis à jour » du sync explicite lancé juste après, qui
+surprenait a priori (l'entrée 49 venait d'être écrite), était la PREUVE
+a posteriori que le coffre était déjà à D60. (3) upload/ (hors dépôt) :
+les journaux preuves ont survécu — le jugement du run 20:01 reste fondé.
+
+**La récupération (une commande au fond).** scripts/recuperer_bundle.py
+(écrit pour l'occasion, réutilise drive_sync : parcours du coffre,
+téléchargement du bundle, contrôle md5) → 9 221 599 o, md5 e0425738… MATCH →
+git bundle list-heads : b110b4d en tête de main → fetch en branche témoin →
+git reset --hard. Vérifications : Journal 2 909 lignes (entrées 44-49
+retrouvées mot pour mot), LISEZMOI-terrain6/7/8/9 + RELANCE + COUPURE
+présents, scripts patch_terrain6..9 + verif_terrain9 + diag_r10_terrain6
+restaurés (trackés, donc dans le bundle), git log b110b4d → 12814a2 (D59).
+
+**Pertes résiduelles, assumées.** terrain/livraison/superviseur-terrain6/7/8.
+exe : non-trackés PAR DESIGN (.gitignore D49 — la variante livraison embarque
+l'annexe jetons, interdit 11 : les secrets ne passent JAMAIS par le dépôt ni
+le coffre). Ils ne sont ni dans git, ni dans le coffre, ni dans download/
+(retombé à terrain.5) — mais re-productibles par la chaîne des scripts
+patch_terrainN.py (tous restaurés) depuis terrain.5 (présent), et leurs md5
+sont consignés dans les messages de commit D55-D57. superviseur-terrain9.exe
+récupéré depuis le dossier test Drive : md5 a59931db4e3bfc14a29e927a79cc73ca,
+IDENTIQUE à l'empreinte de confiance du LISEZMOI — le seul exe qui compte
+(livrée à l'utilisateur) est entier. Aucun secret n'a fui vers un canal
+interdit : l'incident a respecté le périmètre de sécurité par construction.
+
+**Leçon D61 (l'ordre des opérations est une sauvegarde).** La chaîne qui a
+sauvé 6 itérations : livrer le dossier test D'ABORD, committer
+IMMÉDIATEMENT après chaque décision (le hook pousse tout), ne JAMAIS
+accumuler du travail long non-commité. Si la synchronisation n'avait été
+qu'en fin de tour, la restauration aurait effacé D55-D60 entières. Le
+point de restauration unique et suffisant était le commit — parce que le
+hook post-commit en fait automatiquement une sauvegarde complète au coffre.
+Reconduite : (a) un tour commence par la livraison utilisateur, (b) chaque
+append au Journal est suivi d'un commit, (c) le bundle du coffre est la
+source de vérité de secours — recuperer_bundle.py en est l'outil dédié.
+L'incident n'est PAS une classe de défaut du binaire (les 10 classes
+documentées concernent le code) : c'est une péripétie d'OUTILLAGE, la
+première du genre — consignée pour la mémoire des sessions.
