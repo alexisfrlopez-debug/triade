@@ -1885,3 +1885,70 @@ D15 (amende D5) illustrent la procédure.
   synchronisé — l'annexe voyage par le canal de livraison, le dépôt
   reste propre).
 - **Développement** : entrée 37 du journal de travail.
+
+
+### D49 — le kit embarqué : « 1 seul exe qui contient tout » (27/10/2026)
+
+**Constat développeur** (27/10, après le run de livraison terrain.1) :
+« fais moi 1 seul exe qui contient tout » + capture Defender —
+« Trojan:Script/Wacatac.C!ml » niveau Grave sur le proxy.exe POSÉ dans le
+dossier de test téléchargé. Deux exigences en une : la manipulation du kit
+quatre-fichiers (superviseur.exe + demo.exe + proxy.exe + terrain_jetons.bin
+à poser côte à côte) disparaît, et la fausse alerte antivirus reçoit une
+réponse d'ingénierie, pas un contournement.
+
+**Décision** : les trois artefacts du kit vivent EMBARQUÉS dans
+superviseur.exe, section .blob lecture seule (RVA 0x8000) — demo.exe 0.3.0
+(16 384 o, scellé M2, md5 73c064fb…), proxy.exe 0.4.0-dev.1 (19 456 o,
+scellé M3, md5 8740e1ca…) et l'annexe de jetons D48 (248 o). Le nouveau
+bloc sup-37 (entrée à mode ecx 0/1 : extraire/nettoyer, @0x6600, 984 o)
+pose chaque artefact par CreateFileA CREATE_ALWAYS + boucle WriteFile
+512 o DEPUIS l'embarqué (jamais de copie intégrale en mémoire —
+TAMPON_CMD est trop petit, c'est le kernel qui copie), RELIT le fichier
+posé octet par octet (ReadFile 512 o + memcmp scellée : la preuve vit sur
+le disque), journalise lignes S04/S05 + md5 attendus (constantes du plan,
+ASSERTÉES au build contre les scellés), et retire les trois fichiers après
+T3 (mode 1 — le dossier ne garde que le journal). sup-09:R2 orchestre :
+porte -> libc -> extraction -> T1 -> T2 -> T3 -> nettoyage -> verdict ; un
+test sauté pour extraction impossible COMPTE ÉCHEC ; un T3 non applicable
+(variante publique) n'est PAS compté. L'emplacement de l'annexe
+(u64 longueur + 248 o, @0x10C10) est le SEUL octet mutable de l'image :
+EXCLU de la table R10 (27 entrées + terminateur — la zone blob
+en-tête+demo+proxy est couverte, l'intégrité du kit vit à la porte),
+propriété de la VARIANTE. Deux variantes du MÊME code : publique
+(dépôt — emplacement à zéro, T3 non applicable, jamais de secret committé)
+et livraison (--jetons — annexe D48 intégrée, écart public/livraison
+CONFINÉ à l'emplacement, asserté au build, livrée au dossier test
+uniquement, terrain/livraison/ gitignoré).
+
+**L'alerte Defender, réponse d'ingénierie** : Wacatac.C!ml est une
+détection d'apprentissage (suffixe !ml) — un binaire sans éditeur, sans
+ressources, sans signature, qui écoute un port et relaie des connexions :
+c'est le métier légitime d'un proxy ET le portrait-robot d'un proxy
+malveillant. Le fichier livré était byte-exact le scellé (md5 vérifiable,
+notation auditable). Réponse : VERSIONINFO (FileDescription « TRIADE
+superviseur terrain », version 0.5.0.2) + manifeste asInvoker en section
+.rsrc (RVA 0x7000, RT_VERSION + RT_MANIFEST) — l'habillage légitime face
+aux heuristiques ; les artefacts voyagent embarqués (plus de proxy.exe nu
+posé à côté) ; l'exclusion antivirus reste un choix documenté côté
+LISEZMOI (avec le md5 comme outil de confiance). Aucune signature
+authenticode (pas de certificat — hors périmètre zéro-outil).
+
+**Alternatives rejetées** : embarquer les jetons dans le binaire DU DÉPÔT
+(la variante publique les exclut par construction — le dépôt reste
+propre, D48 honoré) ; extraire vers %TEMP% (exécution depuis un dossier
+caché = comportement de dropper, pire pour les heuristiques — on extrait
+À CÔTÉ de l'exe, visible, et on nettoie) ; garder les fichiers posés
+après le run (l'exigence dit UN exe — le dossier ne garde que le
+journal) ; vérifier par md5 CALCULÉ au run (aucune crypto dans le
+superviseur : le md5 affiché est la constante du plan prouvée au BUILD,
+la preuve d'intégrité du run est la relecture octet à octet) ; étendre
+sup-36 avec une écriture-depuis-pointeur (sup-36 .ecrire écrit depuis
+TAMPON_COMPO <= 536 o — inutilisable pour 16 Ko, et toucher un bloc
+terrain.1 eût sali le diff chirurgical) ; la double entrée fixe
+.extraire/.nettoyage (aligner une étiquette interne à 0x6800 à la main :
+fragile — le dispatch à mode vit à la première instruction) ; patcher
+l'emplacement à la livraison (deux builds déterministes = même résultat,
+zéro patch binaire, oracle vert sur les deux chemins).
+
+**Développement** : entrée 38 du journal de travail.

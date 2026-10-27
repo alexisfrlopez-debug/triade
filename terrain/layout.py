@@ -82,18 +82,32 @@ FILE_ALIGN, SECT_ALIGN = L2.FILE_ALIGN, L2.SECT_ALIGN
 TEXT_VSIZE = L2.TEXT_VSIZE                # 0x1000 (io + libc + coquille)
 RDATA_VSIZE = L2.RDATA_VSIZE              # 0x1000 (structures + chaînes scellées)
 DATA_VSIZE = L2.DATA_VSIZE                # 0x1000 (0x3000-0x3FFF, brut dès 0x3800)
-TEXT2_VSIZE = 0x2600                      # 0x4000-0x65FF (tcp-06 + zones données + sup)
-SIZE_OF_IMAGE = 0x7000                    # aligné SectionAlignment
-TEXT_FILE, RDATA_FILE, DATA_FILE = L2.TEXT_FILE, L2.RDATA_FILE, L2.DATA_FILE   # 0x200/0x1200/0x2200
-TEXT2_FILE = 0x2C00
+TEXT2_VSIZE = 0x2E00                      # 0x4000-0x6DFF (tcp-06 + zones données + sup + kit)
+SIZE_OF_IMAGE = 0x11000                  # aligné SectionAlignment (.blob compris)
+# Offsets fichier TERRAIN.2 : six sections -> 568 o d'en-têtes, la première
+# section brute recule à 0x400 (les RVA ne bougent PAS — seuls les plans
+# M2/démo gardent les anciennes valeurs scellées).
+TEXT_FILE, RDATA_FILE, DATA_FILE = 0x400, 0x1400, 0x2400
+TEXT2_FILE = 0x2E00
 DATA_RAW = L2.DATA_RAW                    # 0xA00 (données committées dès 0x3800)
-TAILLE_FICHIER = 0x5200                   # 0x2C00 + 0x2600
+
+# --- Sections .rsrc et .blob (D49 — kit embarqué + habillage ressources) ----
+
+RSRC_RVA = 0x7000                         # VERSIONINFO + manifeste (RT_MANIFEST)
+RSRC_VSIZE = 0x800                       # arbre ressources + VS_VERSIONINFO + XML
+RSRC_FILE = 0x5C00
+BLOB_RVA = 0x8000                         # kit embarqué : lecture seule
+BLOB_VSIZE = 0x8D10                      # en-tête + demo + proxy + slot annexe
+BLOB_FILE = 0x6400
+TAILLE_FICHIER = 0xF200                   # 0x6400 + 0x8E00 (blob arrondi 0x200)
 
 DLL_CHARACTERISTICS = L2.DLL_CHARACTERISTICS   # DYNAMICBASE | HEVA | NX
 SUBSYSTEM_GUI = 2                         # WINDOWS_GUI
 
 VERSION_TERRAIN1 = "0.5.0-terrain.1"      # première génération de la lignée terrain
 VERSION_U64_TERRAIN1 = 0x00050101         # monotonie : au-dessus de proxy 0.4.0
+VERSION_TERRAIN2 = "0.5.0-terrain.2"      # kit embarqué (D49) : 1 seul exe
+VERSION_U64_TERRAIN2 = 0x00050102
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- Blocs embarqués dans superviseur.exe (couche C, génération 5) ----------------
@@ -126,6 +140,7 @@ BLOCS_TERRAIN = [
     ("f60033", "sup-33:R1", 0x5400, 0x3C0, "terrain.1", 1),  # T1 démo
     ("f60034", "sup-34:R1", 0x5800, 0x5C0, "terrain.1", 1),  # T2 proxy
     ("f60035", "sup-35:R1", 0x5E00, 0x4C0, "terrain.1", 1),  # T3 envoi Drive
+    ("f60037", "sup-37:R1", 0x6600, 0x400, "terrain.2", 1),  # kit embarqué (D49)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = sup-01
 
@@ -133,7 +148,7 @@ NOMS_BLOCS = dict(LD.NOMS_BLOCS) | {   # LD fusionne déjà L2 (M2 ⊂ démo)
     "f60001": "sup-principal", "f60002": "sup-fenetre", "f60009": "sup-scenario",
     "f60011": "sup-journal", "f60021": "sup-horodatage", "f60022": "sup-balaye",
     "f60031": "sup-lanceur", "f60033": "sup-test-demo", "f60034": "sup-test-proxy",
-    "f60035": "sup-test-envoi", "f60036": "sup-fichiers",
+    "f60035": "sup-test-envoi", "f60036": "sup-fichiers", "f60037": "sup-kit",
 }
 
 # --- .text2 : zones ----------------------------------------------------------------
@@ -147,6 +162,11 @@ ZONE_LANCEUR = (0x5200, 0x53BF)      # sup-31 (0x1C0)
 ZONE_T1 = (0x5400, 0x57BF)           # sup-33
 ZONE_T2 = (0x5800, 0x5DBF)           # sup-34 (0x5C0)
 ZONE_T3 = (0x5E00, 0x62BF)           # sup-35 (0x4C0)
+ZONE_KIT = (0x6600, 0x69FF)          # sup-37 — .extraire @0x6600, .nettoyage @0x6800 (D49)
+ZONE_DATA_SUP_3 = (0x6A00, 0x6DFF)   # lignes S04-S07 + md5 attendus (D49)
+EXTRACTION = 0x6600                  # entrée publique de sup-37 (D49)
+NETTOYAGE = 0x6800                   # HISTORIQUE : le mode 1 (nettoyage) est
+                                     # dispatché à l'entrée unique 0x6600
 
 # --- Entrées de win-05 scellé (miroir écran + fichier, D37 — mêmes adresses
 # que la démo : le bloc est embarqué octet-identique, ses points d'entrée
@@ -157,6 +177,7 @@ JOURNAL_TRACE = 0x5000      # entrée trace de win-05 (4 args ASCII, prologue
 JOURNAL_GUI = 0x5100        # entrée scénario (utf16, nchars) : force mode 2 (shim
                             # en fin de slot, saute au début du bloc)
 ZONE_DATA_SUP_2 = (0x6300, 0x65FF)   # INT/hints k32#3 + u32#2 + noms + cmdlines
+ZONE_DATA_SUP_3 = (0x6A00, 0x6DFF)   # lignes S04-S07 + md5 attendus (D49)
 
 # --- .rdata : structures PE ---------------------------------------------------------
 # Le TABLEAU des descripteurs (contigu, terminé par zéros — le chargeur
@@ -322,7 +343,7 @@ _SEQ_ASCII = [
 # lignes J_* de la démo (après CLASSE_DEMO, avant l'IAT kernel32#2).
 R_ASCII_LIBRE = 0x2AAA
 _SEQ_ASCII_LIBRE = [
-    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain.1"),   # 49 o
+    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain.2"),   # 49 o
     ("L01", b"L01 fenetre principale creee"),                        # 28 o
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),            # 36 o
     ("NOM_DEMO", b"demo.exe\x00"),                                   # 9 o (cmdline T1)
@@ -354,7 +375,7 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 _SEQ_SUP_1 = [
     # en-tête scénario
-    ("S00", b"S00 superviseur terrain 0.5.0-terrain.1"),
+    ("S00", b"S00 superviseur terrain 0.5.0-terrain.2"),
     ("S01_PREFIXE", b"S01 date "),
     ("S02A", b"S02 porte R10 : integrite VERTE"),
     ("S02B", b"S02 porte R10 : KO - arret"),
@@ -471,6 +492,38 @@ for _nom, _octets in _SEQ_SUP_2:
 FIN_SUP_2 = _cur
 assert FIN_SUP_2 <= ZONE_DATA_SUP_2[1] + 1, "zone données sup 2 débordante"
 
+# --- .text2 zone données sup 3 : lignes du kit embarqué (D49, 0x6A00+) ---------
+# Les md5 affichés sont les constantes du plan — le build ASSERT leur
+# cohérence avec les artefacts scellés avant d'embarquer les octets.
+
+MD5_DEMO_HEXA = b"73c064fbaf4610a167bc6434dee400e4"
+MD5_PROXY_HEXA = b"8740e1ca0dbd5967c27cf92bdf713be4"
+LONGUEUR_DEMO = 16384                     # demo.exe 0.3.0 (M2 scellé)
+LONGUEUR_PROXY = 19456                    # proxy.exe 0.4.0-dev.1 (M3 scellé)
+LONGUEUR_ANNEXE = 248                     # terrain_jetons.bin (D48)
+
+_SEQ_SUP_3 = [
+    ("S04A", b"S04 demo.exe extrait, octets conformes"),
+    ("S04B", b"S04B demo.exe : octets ECART - T1 saute"),
+    ("S04C", b"S04C md5 demo.exe " + MD5_DEMO_HEXA),
+    ("S04D", b"S04D extraction demo.exe : echec ecriture"),
+    ("S05A", b"S05 proxy.exe extrait, octets conformes"),
+    ("S05B", b"S05B proxy.exe : octets ECART - T2 saute"),
+    ("S05C", b"S05C md5 proxy.exe " + MD5_PROXY_HEXA),
+    ("S05D", b"S05D extraction proxy.exe : echec ecriture"),
+    ("S06A", b"S06 annexe jetons extraite - T3 actif"),
+    ("S06B", b"S06 variante publique - annexe absente, T3 non applicable"),
+    ("S06C", b"S06C annexe jetons : octets ECART"),
+    ("S07A", b"S07 nettoyage kit effectue (demo, proxy, annexe)"),
+]
+
+_cur = ZONE_DATA_SUP_3[0]
+for _nom, _octets in _SEQ_SUP_3:
+    CHAINES_SUP[_nom] = (_cur, _octets, len(_octets))
+    _cur += len(_octets)
+FIN_SUP_3 = _cur
+assert FIN_SUP_3 <= ZONE_DATA_SUP_3[1] + 1, "zone données sup 3 débordante"
+
 # INT/hints des descripteurs #3 (kernel32#3, user32#2) vivent en fin de zone 2 :
 # R_INT_K32C et R_INT_U32B + les hints correspondants.
 R_INT_K32C = (FIN_SUP_2 + 0x10) & ~0xF       # INT kernel32#3 (10 qwords)
@@ -478,6 +531,24 @@ R_INT_U32B = R_INT_K32C + 0x50               # INT user32#2 (4 qwords)
 R_HN_K32C = R_INT_U32B + 0x20                # hints k32#3 (9)
 R_HN_U32B = R_HN_K32C + 0xA0                 # hints u32#2 (3)
 assert R_HN_U32B + 0x40 <= ZONE_DATA_SUP_2[1] + 1, "INT/hints #3 débordants"
+
+# --- Section .blob : kit embarqué (D49) ---------------------------------------------
+# En-tête : u64 longueur démo, u64 longueur proxy (JAMAIS codées en dur dans
+# le code — sup-37 les lit ici) ; les octets suivent ; l'emplacement annexe
+# (u64 longueur + 248 o) est le SEUL point mutable de l'image : deux
+# variantes, publiques (zéro) et livraison (annexe D48 intégrée).
+
+BLOB_LONGUEURS = BLOB_RVA               # 0x8000 : u64 longueur demo
+BLOB_LONGUEUR_PROXY = BLOB_RVA + 8      # 0x8008 : u64 longueur proxy
+BLOB_DEMO = BLOB_RVA + 0x10             # 0x8010 : demo.exe 16 384 o
+BLOB_PROXY = BLOB_DEMO + LONGUEUR_DEMO  # 0xC010 : proxy.exe 19 456 o
+SLOT_JETONS = BLOB_PROXY + LONGUEUR_PROXY   # 0x10C10 : u64 + 248 o
+TAILLE_SLOT_JETONS = 8 + LONGUEUR_ANNEXE    # u64 longueur + annexe D48
+ZONE_BLOB_INTEG = (BLOB_LONGUEURS, SLOT_JETONS - 1)   # couverte par la table R10
+assert BLOB_RVA + BLOB_VSIZE == SLOT_JETONS + TAILLE_SLOT_JETONS, "plan .blob incohérent"
+assert ZONE_BLOB_INTEG[1] < SLOT_JETONS, "l'emplacement annexe doit rester hors table R10"
+
+TAILLE_MORCEAU_KIT = 512                 # relecture de vérification (sup-37 P→Q1)
 
 LONGUEURS_ASCII.update({n: len(o) for n, (_a, o, _l) in CHAINES_SUP.items()})
 

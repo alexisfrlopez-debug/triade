@@ -1,8 +1,12 @@
-; le fil ouvrier : porte R10, libc, T1 (demo M2), T2 (proxy M3), T3 (envoi
-; Drive), verdict final — chaque test est INDEPENDANT (un KO n'arrete pas
-; les suivants : le constat veut TOUT le tableau) ; TOUTES les traces
-; passent par win-05 scelle (entree trace, mode 0/1) ; l'ordre T1->T2->T3
-; est un invariant (le port 25000 est partage, l'envoi vient en dernier)
+; le fil ouvrier (R2, D49) : porte R10, libc, EXTRACTION du kit embarque,
+; T1 (demo M2), T2 (proxy M3), T3 (envoi Drive), NETTOYAGE du kit, verdict
+; final — chaque test est INDEPENDANT (un KO n'arrete pas les suivants :
+; le constat veut TOUT le tableau) ; TOUTES les traces passent par win-05
+; scelle (entree trace, mode 0/1) ; l'ordre porte -> libc -> extraction ->
+; T1 -> T2 -> T3 -> nettoyage -> verdict est un invariant (le port 25000
+; est partage, l'envoi vient en dernier, l'annexe doit vivre le temps de
+; l'envoi) ; un test saute pour extraction impossible COMPTE ECHEC ; un T3
+; non applicable (variante publique, annexe absente) n'est PAS compte
 push rbx
 push r12
 push r13
@@ -63,14 +67,41 @@ mov edx, LEN_S03A
 xor r8d, r8d
 xor r9d, r9d
 call JOURNAL_TRACE
-; --- T1, T2, T3 dans l'ordre (I1/I2) ---
+; --- extraction du kit embarque (D49) : bit0 demo / bit1 proxy / bit2 T3 ---
+xor ecx, ecx
+call EXTRACTION
+mov r15d, eax
+; --- T1 si demo pose, sinon saute ET COMPTE ECHEC (jamais de TOUT OK usurpe) ---
+test r15d, 1
+je .sans_t1
 call TEST_DEMO
 mov r12d, eax
+jmp .apres_t1
+.sans_t1:
+xor r12d, r12d
+.apres_t1:
+; --- T2 si proxy pose ---
+test r15d, 2
+je .sans_t2
 call TEST_PROXY
 mov r13d, eax
+jmp .apres_t2
+.sans_t2:
+xor r13d, r13d
+.apres_t2:
+; --- T3 si la variante declare l'annexe (livraison) ; publique = non applicable ---
+test r15d, 4
+je .sans_t3
 call TEST_ENVOI
 mov r14d, eax
-; --- verdict final : les trois retours, jamais une impression ---
+jmp .apres_t3
+.sans_t3:
+mov r14d, 1          ; non applicable n'est pas echec (D49 — S06B a dit pourquoi)
+.apres_t3:
+; --- nettoyage du kit : TOUJOURS apres T3 (l'annexe a vécu le temps de l'envoi) ---
+mov ecx, 1
+call EXTRACTION
+; --- verdict final : les retours COMPTES, jamais une impression ---
 test r12d, r12d
 je .echec
 test r13d, r13d

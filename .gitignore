@@ -34,3 +34,6 @@ m1/export/
 
 # Témoins temporaires de l'oracle natif m6 (régénérés à chaque run)
 m6/.tmp/
+
+# Variante livraison du superviseur (annexe jetons intégrée, D49) — jamais committée
+terrain/livraison/

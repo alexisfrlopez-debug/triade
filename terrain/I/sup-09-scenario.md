@@ -1,50 +1,88 @@
-sup-09 · scénario (orchestrateur des tests) · révision 1
+sup-09 · scénario (orchestrateur des tests) · révision 2
 Intention : le fil ouvrier du superviseur — lancé par UN clic (win-04
-scellé, tcp-06 scellé), il enchaîne porte R10, libc, T1 (démo M2), T2
-(proxy M3), T3 (envoi Drive), et rend le verdict final : « SUPERVISEUR :
-TOUT OK » ou « SUPERVISEUR : ECHEC ». Chaque test est indépendant : un KO
-n'arrête pas les suivants (le constat veut TOUT le tableau, pas la
-première ligne). Le journal produit est le constat § 8.4 complet —
-prêtes à partir dans le Drive par T3.
+scellé, tcp-06 scellé), il enchaîne porte R10, libc, EXTRACTION du kit
+embarqué (sup-37, D49), T1 (démo M2), T2 (proxy M3), T3 (envoi Drive),
+NETTOYAGE du kit, et rend le verdict final : « SUPERVISEUR : TOUT OK » ou
+« SUPERVISEUR : ECHEC ». Chaque test est indépendant : un KO n'arrête pas
+les suivants (le constat veut TOUT le tableau, pas la première ligne). Le
+journal produit est le constat § 8.4 complet — prêt à partir dans le Drive
+par T3. Révision 2 (D49) : l'extraction précède les tests (T1/T2 lancent
+des fichiers qui sortent de CE superviseur), le nettoyage suit T3 (le
+journal seul reste posé), et le verdict de T3 ne compte QUE si la variante
+déclare l'annexe (variante publique du dépôt : T3 non applicable, pas
+échoué — la variante de livraison, elle, reste intégralement comptée,
+sémantique terrain.1 préservée).
 Contrat :
   pre  : P1 lancé une fois par win-04 (drapeau DRAPEAU_WORKER) ; P2
          TAMPON_NOM/TAMPON_AFF posés (sup-01) ; P3 journal opérationnel ;
          P4 pile alignée.
-  post : Q1 en-tête : S00 (bannière), S01 (date, TAMPON_AFF mode 0,
-         longueur = retour de sup-21 conservée) ; Q2 autotest win-06
-         scellé : -1 -> S02 KO + S91 + rax = 0 (arrêt immédiat — la porte
-         invalide TOUT le reste, fail-closed R10) ; 4 -> S02 VERTE +
-         S03 4/4 ; autre -> S03 KO + arrêt ; Q3 T1 (sup-33) -> verdict
-         journalisé par lui-même (S16) ; Q4 T2 (sup-34) -> S28 ; Q5 T3
-         (sup-35) -> S36 ; Q6 verdict final : les trois rax == 1 -> S90
-         « SUPERVISEUR : TOUT OK », rax = 1 ; sinon S91 « SUPERVISEUR :
-         ECHEC (voir lignes KO) », rax = 0 ; Q7 le fil se termine TOUJOURS
-         (retour) — la fenêtre reste ouverte, le journal est complet,
-         l'envoi a déjà été tenté.
-  inv  : I1 un seul appel par test, dans l'ordre T1 -> T2 -> T3 (l'envoi
-         se fait APRÈS que le journal contient tout le reste) ; I2 aucune
-         dépendance entre tests (T2 lance son proxy APRÈS la fermeture de
-         la démo : le port 25000 partagé impose la séquence — verrou
-         d'ordre dans l'oracle) ; I3 le verdict final agrège les trois
-         retours — jamais une impression ; I4 la porte R10 précède tout
-         test (héritage win-09, R10).
+  post : Q1 en-tête : S00 (bannière terrain.2), S01 (date, TAMPON_AFF
+         mode 0, longueur = retour de sup-21 conservée) ; Q2 autotest
+         win-06 scellé : -1 -> S02 KO + S91 + rax = 0 (arrêt immédiat —
+         la porte invalide TOUT le reste, fail-closed R10 ; elle couvre
+         AUSSI la zone .blob depuis D49) ; 4 -> S02 VERTE + S03 4/4 ;
+         autre -> S03 KO + arrêt ; Q3 extraction (sup-37 .extraire) ->
+         drapeaux bit 0 demo / bit 1 proxy / bit 2 T3 applicable, lignes
+         S04*/S05*/S06* journalisées par sup-37 lui-même ; Q4 T1 (sup-33)
+         si bit 0, sinon SAUTÉ (S04B/S04D déjà dit pourquoi) ; Q5 T2
+         (sup-34) si bit 1, sinon SAUTÉ ; Q6 T3 (sup-35) si bit 2, sinon
+         SAUTÉ (S06B a dit pourquoi — variante publique) ; Q7 nettoyage
+         (sup-37 .nettoyage) TOUJOURS appelé après T3 — sur les chemins
+         de succès COMME d'échec, tant que l'extraction a été tentée ;
+         ligne S07 ; Q8 verdict final : les verdicts COMPTÉS tous == 1 ->
+         S90 « SUPERVISEUR : TOUT OK », rax = 1 ; sinon S91 « SUPERVISEUR :
+         ECHEC (voir lignes KO) », rax = 0 ; un test sauté pour extraction
+         impossible (bits 0/1 = 0) COMPTE COMME ÉCHEC (jamais de TOUT OK
+         sur un test non prouvé) ; un T3 non applicable (bit 2 = 0,
+         variante publique) n'est PAS compté du tout ; Q9 le fil se
+         termine TOUJOURS (retour) — la fenêtre reste ouverte, le journal
+         est complet, l'envoi a déjà été tenté, le kit est retiré.
+  inv  : I1 ordre strict porte -> libc -> extraction -> T1 -> T2 -> T3 ->
+         nettoyage -> verdict (l'envoi se fait APRÈS que le journal
+         contient tout le reste ; le nettoyage se fait APRÈS T3 —
+         l'annexe posée doit vivre le temps de l'envoi) ; I2 aucune
+         dépendance entre tests (T2 lance son proxy APRÈS la fermeture
+         de la démo : le port 25000 partagé impose la séquence — verrou
+         d'ordre dans l'oracle) ; I3 le verdict final agrège les retours
+         comptés — jamais une impression ; I4 la porte R10 précède tout
+         test (héritage win-09, R10) ; I5 le nettoyage n'efface JAMAIS
+         le journal du run (c'est le constat — seul le kit est retiré).
 Échecs :
-  E1 : porte KO (image corrompue) -> S02 KO + S91, rax = 0, AUCUN test
-       lancé — exactement le comportement démo éprouvé.
-  E2 : tout test KO -> sa ligne KO, les suivants quand même, S91 final.
+  E1 : porte KO (image corrompue, zone .blob comprise) -> S02 KO + S91,
+       rax = 0, AUCUN test lancé, AUCUN fichier posé — exactement le
+       comportement démo éprouvé.
+  E2 : tout test KO -> sa ligne KO, les suivants quand même, nettoyage
+       quand même, S91 final.
+  E3 : extraction impossible pour un artefact -> test correspondant sauté
+       et COMPTÉ ÉCHEC au verdict (pas de TOUT OK usurpé).
 Vecteurs :
   V1 : round-trip 100 %.
-  V2 : émulation nominale COMPLÈTE (T1 vert, T2 vert, T3 vert) — journal
-       ÉCRAN + FICHIER comparés exactement à la séquence d'or dérivée des
-       constantes (l'ordre des appels observé : porte avant T1, T1 avant
-       T2, T2 avant T3), rax = 1.
-  V3 : T2 KO seul -> S91 final, rax = 0, T3 quand même exécuté.
-  V4 : porte KO (octet d'un bloc corrompu — falsification) -> arrêt
-       immédiat après S02, aucun spawn.
-  V5 : falsification — réordonner T3 avant T2 fait échouer le verrou
-       d'ordre (le journal serait téléversé incomplet).
-Fixtures    : lignes S00..S03, S90, S91 (.rdata zone données sup).
-Provenance  : écrite-avant-code.
-Décisions   : D48 ; squelette win-09:R4 (porte -> libc -> séquence) ;
-              l'indépendance des tests est le cœur du superviseur (un
-              constat partiel vaut mieux qu'un arrêt au premier échec).
+  V2 : émulation nominale COMPLÈTE livraison (extraction 3 fichiers
+       conformes, T1/T2/T3 verts, nettoyage) — journal ÉCRAN + FICHIER
+       comparés exactement à la séquence d'or (l'ordre des appels
+       observé : porte, extraction, T1, T2, T3, nettoyage, verdict),
+       rax = 1.
+  V3 : émulation nominale publique (slot annexe vide) -> S06B, T3 SAUTÉ
+       non compté, T1/T2 verts + extraction conforme -> S90, rax = 1
+       (la variante du dépôt prouve T1/T2, pas l'envoi).
+  V4 : T2 KO seul -> S91 final, rax = 0, T3 quand même, nettoyage quand
+       même.
+  V5 : extraction demo.exe en échec (bit 0 = 0) -> T1 sauté, compté
+       échec -> S91 même si T2/T3 verts.
+  V6 : porte KO (octet de la zone .blob corrompu — falsification) ->
+       arrêt immédiat après S02, aucun spawn, aucun fichier posé.
+  V7 : falsification — réordonner T3 avant T2 fait échouer le verrou
+       d'ordre ; appeler le nettoyage avant T3 fait échouer le verrou
+       (l'annexe serait retirée avant l'envoi).
+Fixtures    : lignes S00..S03, S90, S91 (.rdata zone données sup), lignes
+              S04..S07 (sup-37, zone données sup 3).
+Provenance  : écrite-avant-code ; révision 2 née de D49 (kit embarqué —
+              l'exigence développeur « 1 seul exe qui contient tout »).
+Décisions   : D48 (v1), D49 (R2) ; squelette win-09:R4 (porte -> libc ->
+              séquence) ; l'indépendance des tests est le cœur du
+              superviseur (un constat partiel vaut mieux qu'un arrêt au
+              premier échec) ; la règle du T3 non compté en variante
+              publique est la seule entorse à « tout compte » — sans
+              elle, le binaire du dépôt finirait TOUJOURS ÉCHEC (il n'a
+              pas d'annexe par construction), ce qui tuerait sa
+              lisibilité de preuve.

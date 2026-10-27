@@ -51,11 +51,25 @@ résumé.
 | f60033 | sup-33:R1 | 0x5400 | 0x3C0 | test T1 — démo M2 |
 | f60034 | sup-34:R1 | 0x5800 | 0x5C0 | test T2 — proxy M3 |
 | f60035 | sup-35:R1 | 0x5E00 | 0x4C0 | test T3 — envoi Drive |
+| f60037 | sup-37:R1 | 0x6600 | 0x400 | kit embarqué : entrée à mode ecx 0/1 — extraire / nettoyer (D49) |
 
 Héritage byte-identique (R7, preuve contre les artefacts scellés) :
 a10002/a10003 (io M0, hello.exe), b20001-04 (libc M1, selftest.exe),
 c30006 (tcp-06, echo.exe), d40003/d40004/d40005/d40006 (lignée démo,
-demo.exe 0.3.0-demo.9). Neuf blocs nouveaux.
+demo.exe 0.3.0-demo.9). Neuf blocs nouveaux + sup-37 (D49).
+
+## Le kit embarqué (D49 — « 1 seul exe qui contient tout »)
+
+Section .blob (lecture seule, RVA 0x8000) : en-tête (longueurs) +
+demo.exe 0.3.0 (16 384 o) + proxy.exe 0.4.0-dev.1 (19 456 o) + emplacement
+annexe (u64 longueur + 248 o). Deux variantes DU MÊME code : publique
+(dépôt — emplacement à zéro, T3 non applicable) et livraison (--jetons,
+annexe D48 intégrée — livrée au dossier test, JAMAIS committée). La table
+R10 couvre en-tête + démo + proxy (intégrité à la porte) et EXCLUIT
+l'emplacement annexe (seul octet mutable de l'image). Section .rsrc
+(RVA 0x7000) : VERSIONINFO + manifeste asInvoker — l'habillage légitime
+face aux heuristiques antivirus (constat Defender du 27/10, fausse alerte
+Wacatac sur proxy.exe : binaire sans signature ni ressources = bruit ML).
 
 ## Chartre des contrats renforcés (liée par renvoi à la charte m3/I)
 
@@ -94,11 +108,13 @@ demo.exe 0.3.0-demo.9). Neuf blocs nouveaux.
 ## Zones préfigurées du plan
 
 - .text 0x1400-0x1FFF : coquille + horodatage + balayeur + journal ;
-- .text2 0x4000-0x63FF : tcp-06 @0x4300, zone données sup 0x4340-0x4BFF
+- .text2 0x4000-0x6BFF : tcp-06 @0x4300, zone données sup 0x4340-0x4BFF
   (chaînes S*/URL/gabarits/étiquettes — RX, lisible, hors pages de code
   testé), scénario @0x4C00, win-05 @0x5000, lanceur 0x5200, T1/T2/T3
-  0x5400/0x5800/0x5C00, zone données sup 2 0x6000-0x63FF (INT/hints
-  kernel32#3/user32#2 + compléments) ;
+  0x5400/0x5800/0x5E00, kit embarqué sup-37 0x6600-0x69FF (entrées fixes
+  .extraire/.nettoyage), zone données sup 2 0x6300-0x65FF (INT/hints
+  kernel32#3/user32#2 + noms + cmdlines), zone données sup 3 0x6A00-0x6BFF
+  (lignes S04-S07 + md5 attendus, D49) ;
 - .data 0x3800-0x3FFF : état hérité (hwnds, drapeaux, journal) + état
   terrain (TAMPON_NOM 0x3AD0, TAMPON_AFF 0x3AF0, ETAT_SUP 0x3B10,
   TAMPON_JETON 0x3B70, TAMPON_CMD 0x3D50).

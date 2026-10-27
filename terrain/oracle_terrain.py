@@ -164,6 +164,8 @@ class Emulateur:
         uc.mem_write(IMAGE + L.RDATA_RVA, self.exe[L.RDATA_FILE:L.RDATA_FILE + L.RDATA_VSIZE])
         uc.mem_write(IMAGE + L.DATA_RVA, self.exe[L.DATA_FILE:L.DATA_FILE + L.DATA_RAW])
         uc.mem_write(IMAGE + L.TEXT2_RVA, self.exe[L.TEXT2_FILE:L.TEXT2_FILE + L.TEXT2_VSIZE])
+        uc.mem_write(IMAGE + L.RSRC_RVA, self.exe[L.RSRC_FILE:L.RSRC_FILE + L.RSRC_VSIZE])
+        uc.mem_write(IMAGE + L.BLOB_RVA, self.exe[L.BLOB_FILE:L.BLOB_FILE + L.BLOB_VSIZE])
         uc.ctl_remove_cache(IMAGE + L.TEXT_RVA, IMAGE + L.TEXT_RVA + L.TEXT_VSIZE)
         uc.ctl_remove_cache(IMAGE + L.TEXT2_RVA, IMAGE + L.TEXT2_RVA + L.TEXT2_VSIZE)
 
@@ -236,6 +238,8 @@ class Emulateur:
         self.createfile_appels: list[str] = []
         self.suppressions: list[str] = []
         self.retour_createfile = None           # None = réel ; -1 = échec piloté
+        self.echec_createfile_chemins: set = set()   # échec CIBLÉ (D49 : kit)
+        self.corrompre_lecture = None           # (chemin, offset) : écart injecté à la relecture
         self.chemin_journal: str | None = None
         # tuyaux + processus
         self.flux_proxy = b""                   # octets restants au tuyau stdout
@@ -352,18 +356,22 @@ class Emulateur:
             elif nom == "CreateFileA":
                 chemin = chaine_ascii(uc_, rcx)
                 em.createfile_appels.append(chemin)
-                if em.retour_createfile == -1:
+                if em.retour_createfile == -1 or chemin in em.echec_createfile_chemins:
                     uc_.reg_write(UC_X86_REG_RAX, 0xFFFFFFFFFFFFFFFF)
                     retour(uc_)
                     return
                 em.hhandle += 1
                 h = em.hhandle
                 access = rdx & 0xFFFFFFFF
-                if access & 0x80000000:            # GENERIC_READ (sup-36 .lire)
+                if access & 0x80000000:            # GENERIC_READ (sup-36 .lire / relecture kit)
                     if chemin not in em.fichiers:
                         uc_.reg_write(UC_X86_REG_RAX, 0xFFFFFFFFFFFFFFFF)
                         retour(uc_)
                         return
+                    if em.corrompre_lecture and em.corrompre_lecture[0] == chemin:
+                        contenu = bytearray(em.fichiers[chemin])
+                        contenu[em.corrompre_lecture[1]] ^= 0xFF
+                        em.fichiers[chemin] = bytes(contenu)
                     em.handles[h] = {"type": "lire", "chemin": chemin, "pos": 0}
                 elif access & 4:                   # FILE_APPEND_DATA (sup-11)
                     em.handles[h] = {"type": "append", "chemin": chemin}
@@ -411,7 +419,7 @@ class Emulateur:
                         uc_.reg_write(UC_X86_REG_RAX, 1)
                     elif h and h["type"] == "ecrire":
                         em.fichiers[h["chemin"]] = em.fichiers.get(h["chemin"], b"") + donnees
-                        em.fichiers_ecrits[h["chemin"]] = donnees
+                        em.fichiers_ecrits[h["chemin"]] = em.fichiers[h["chemin"]]
                         uc_.mem_write(r9, struct.pack("<Q", n))
                         uc_.reg_write(UC_X86_REG_RAX, 1)
                     else:
@@ -720,10 +728,29 @@ CMD_PUT_ATTENDU = ("curl.exe -s --fail --max-time 120 -o NUL -X PUT --data-binar
                    + CHEMIN_JOURNAL.decode() + " " + URL_SESSION.decode())
 
 
-def lignes_journal_or(demo17: list[bytes]) -> list[bytes]:
-    """Journal d'or nominal — chaque entrée SANS le CRLF (posé par win-05/11)."""
+def variante_livraison(exe: bytes, jetons: bytes | None = None) -> bytes:
+    """Image de test « livraison » (D49) : l'emplacement annexe reçoit des
+    jetons FICTIFS (jamais les vrais) — le slot est hors table R10, la porte
+    reste verte par construction ; l'émulation prouve le chemin complet T3
+    sans jamais toucher un vrai secret."""
+    if jetons is None:
+        jetons = JETONS
+    img = bytearray(exe)
+    off = L.BLOB_FILE + (L.SLOT_JETONS - L.BLOB_RVA)
+    struct.pack_into("<Q", img, off, len(jetons))
+    img[off + 8: off + 8 + len(jetons)] = jetons
+    return bytes(img)
+
+
+def lignes_journal_or(demo17: list[bytes], livraison: bool = True) -> list[bytes]:
+    """Journal d'or nominal — chaque entrée SANS le CRLF (posé par win-05/11).
+    livraison : True = annexe intégrée (T3 vivant) ; False = variante publique
+    du dépôt (S06B, T3 non applicable, non compté — D49)."""
     lignes = [
         S("S00"), LIGNE_S01, S("S02A"), S("S03A"),
+        # kit embarqué (D49)
+        S("S04A"), S("S04C"), S("S05A"), S("S05C"),
+        S("S06A") if livraison else S("S06B"),
         # T1
         S("S10"), S("S11A"), S("S12A"),
         S("S13") + b"0", S("S14") + b"17",
@@ -739,22 +766,21 @@ def lignes_journal_or(demo17: list[bytes]) -> list[bytes]:
         *[l for l in S("FIX_EVT_HTTPS").split(b"\r\n") if l],
         S("FIX_ARRET").rstrip(b"\r\n"),
         S("S26") + b"7", S("S27A"), S("S28A"),
-        # T3
-        S("S30"), S("S32"), S("S33A"), S("S34A"), S("S35A"), S("S36A"),
-        # verdict
-        S("S90"),
     ]
+    if livraison:
+        lignes += [S("S30"), S("S32"), S("S33A"), S("S34A"), S("S35A"), S("S36A")]
+    lignes += [S("S07A"), S("S90")]
     return lignes
 
 
 def preparer_scenario(em: Emulateur, demo17: list[bytes],
-                      code_curl_http: int = 0, jetons: bytes | None = JETONS,
+                      code_curl_http: int = 0,
                       reponse_oauth: bytes | None = REPONSE_OAUTH):
-    """Pose l'état scripté du run nominal (ou dégradé) : FS + tuyaux + sorties."""
+    """Pose l'état scripté du run nominal (ou dégradé) : FS + tuyaux + sorties.
+    Les jetons ne sont PLUS posés au FS (D49) : ils vivent dans le slot .blob
+    de la variante livraison — sup-37 les pose lui-même pendant le run."""
     global JOURNAL_DEMO_17
     em.fichiers["C:\\sup\\demo_journal.txt"] = b"".join(demo17)
-    if jetons is not None:
-        em.fichiers["C:\\sup\\terrain_jetons.bin"] = jetons
     em.flux_proxy = BANNIERE + EVT_HTTP + EVT_HTTPS + ARRET
     em.pipe_sondages = 0
     # fenêtre démo trouvée au 3e sondage (V2 sup-33) ; jeton/session servis par
@@ -779,6 +805,10 @@ def preparer_scenario(em: Emulateur, demo17: list[bytes],
 
 
 def _fichier_rva(rva: int) -> int:
+    if rva >= L.BLOB_RVA:
+        return L.BLOB_FILE + (rva - L.BLOB_RVA)
+    if rva >= L.RSRC_RVA:
+        return L.RSRC_FILE + (rva - L.RSRC_RVA)
     if rva >= L.TEXT2_RVA:
         return L.TEXT2_FILE + (rva - L.TEXT2_RVA)
     if rva >= L.DATA_RVA:
@@ -1011,15 +1041,63 @@ def test_coquille_gui(exe: bytes):
 
 
 def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
-    """Famille 5 : sup-09 complet — journal d'or, ordre, requêtes, nettoyage."""
+    """Famille 5 : sup-09 complet, les DEUX variantes (D49) — publique (T3 non
+    applicable, 4 lancements) et livraison (annexe intégrée, 7 lancements) :
+    journal d'or, ordre, requêtes, kit posé puis retiré, nettoyage."""
+    total = 0
+
+    # --- variante PUBLIQUE : le kit vit, T3 sauté non compté, TOUT OK ---
     em = Emulateur(exe)
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17)
     r = em.appeler(RVA_SUP["sup-09"])
     if r != 1:
-        raise EchecOracle(f"sup-09 nominal : rax {r} != 1 (Q6 — TOUT OK attendu)")
-    _comparer_journal(em, lignes_journal_or(demo17), "sup-09 nominal")
+        raise EchecOracle(f"sup-09 nominal public : rax {r} != 1 (Q8 D49 — T3 non "
+                          f"applicable n'est pas un échec)")
+    _comparer_journal(em, lignes_journal_or(demo17, livraison=False),
+                      "sup-09 nominal public")
+    cmdlines = [p["cmdline"] for p in em.processus]
+    if cmdlines != ["demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
+                    _cmd("CMD_CURL_HTTPS")]:
+        raise EchecOracle(f"sup-09 public : lancements {[c[:20] for c in cmdlines]} "
+                          f"!= 4 attendus (T3 sauté, I6)")
+    # kit : les artefacts posés SONT les octets embarqués (V2), puis retirés
+    blob_demo = exe[L.BLOB_FILE + 0x10: L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO]
+    blob_proxy = exe[L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO:
+                     L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO + L.LONGUEUR_PROXY]
+    if em.fichiers_ecrits.get("C:\\sup\\demo.exe") != blob_demo:
+        raise EchecOracle("sup-37 : demo.exe posé != octets embarqués (V2 — "
+                          "le disque doit porter l'artefact scellé)")
+    if em.fichiers_ecrits.get("C:\\sup\\proxy.exe") != blob_proxy:
+        raise EchecOracle("sup-37 : proxy.exe posé != octets embarqués (V2)")
+    if "C:\\sup\\terrain_jetons.bin" in em.fichiers_ecrits:
+        raise EchecOracle("sup-37 : annexe posée en variante publique (V3 — "
+                          "le slot vide ne doit jamais écrire l'annexe)")
+    supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
+    for nom in ("demo.exe", "proxy.exe", "terrain_jetons.bin",
+                "terrain_page_http.txt", "terrain_page_https.txt"):
+        if nom not in supprimees:
+            raise EchecOracle(f"nettoyage kit : {nom} non supprimé (Q6 sup-37 — "
+                              f"le dossier ne garde que le journal)")
+    if "C:\\sup\\demo.exe" in em.fichiers or "C:\\sup\\proxy.exe" in em.fichiers:
+        raise EchecOracle("nettoyage kit : un artefact survit au run (Q6)")
+    total += 7
+
+    # --- variante LIVRAISON (jetons FICTIFS au slot) : le run intégral ---
+    exe_l = variante_livraison(exe)
+    em = Emulateur(exe_l)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 1:
+        raise EchecOracle(f"sup-09 nominal livraison : rax {r} != 1 (Q6 — TOUT OK attendu)")
+    _comparer_journal(em, lignes_journal_or(demo17, livraison=True),
+                      "sup-09 nominal livraison")
+    if em.fichiers_ecrits.get("C:\\sup\\terrain_jetons.bin") != JETONS:
+        raise EchecOracle("sup-37 : annexe posée != annexe du slot (V2 — la "
+                          "variante livraison porte ses jetons)")
 
     # I2/I4 sup-09 : ordre ET composition exacte des 7 lancements
     cmdlines = [p["cmdline"] for p in em.processus]
@@ -1079,14 +1157,15 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle(f"sup-35 : PUT {put and put['cmdline']!r} != "
                           f"--data-binary @<BUF_CHEMIN> <URL session> (Q7/I2)")
 
-    # nettoyage : 2 pages (T2) + 5 temporaires (T3) — zéro fuite (Q8/Q9)
+    # nettoyage : 2 pages (T2) + 5 temporaires (T3) + 3 kit (sup-37) — zéro fuite
     supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
     for nom in ("terrain_page_http.txt", "terrain_page_https.txt",
                 "terrain_req.txt", "terrain_jeton.json", "terrain_meta.json",
-                "terrain_session.txt", "terrain_rep.json"):
+                "terrain_session.txt", "terrain_rep.json",
+                "demo.exe", "proxy.exe", "terrain_jetons.bin"):
         if nom not in supprimees:
             raise EchecOracle(f"nettoyage : {nom} non supprimé "
-                              f"(Q8 sup-34/Q9 sup-35 — zéro résidu)")
+                              f"(Q8 sup-34/Q9 sup-35/Q6 sup-37 — zéro résidu)")
     if PIPE_IN_WR not in em.handles_fermes or PIPE_OUT_RD not in em.handles_fermes:
         raise EchecOracle("sup-34 : extrémités parent des tuyaux non fermées (Q8)")
 
@@ -1097,7 +1176,8 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         if secret in journal_brut:
             raise EchecOracle(f"sup-35 : secret {secret[:12]!r}… présent au journal "
                               f"(I1 — le constat ne fuit pas ses clés)")
-    return 12
+    total += 12
+    return total
 
 
 def test_echecs(exe: bytes, demo17: list[bytes]):
@@ -1118,7 +1198,7 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
     total += 2
 
     # (b) demo.exe absent -> S10B, T2/T3 vivent quand même (E1 sup-33, E2 sup-09)
-    em = Emulateur(exe)
+    em = Emulateur(variante_livraison(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17)
@@ -1157,7 +1237,7 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
     total += 3
 
     # (d) curl http code 22 -> S22 code=22, verdict T2 KO, le reste exécuté (E3)
-    em = Emulateur(exe)
+    em = Emulateur(variante_livraison(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17, code_curl_http=22)
@@ -1173,24 +1253,29 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("curl KO : T3 n'a pas vécu son verdict")
     total += 3
 
-    # (e) jetons absents -> S31, aucun spawn curl T3 (E1 sup-35)
-    em = Emulateur(exe)
+    # (e) annexe déclarée mais non posable (livraison, écriture refusée) ->
+    #     S06C, T3 tourne quand même (bit 2 = 1 : échec honnête), S31/S36B,
+    #     aucun curl Drive (E1/E3 sup-35 + E3 sup-37)
+    em = Emulateur(variante_livraison(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
-    preparer_scenario(em, demo17, jetons=None)
+    preparer_scenario(em, demo17)
+    em.echec_createfile_chemins = {"C:\\sup\\terrain_jetons.bin"}
     r = em.appeler(RVA_SUP["sup-09"])
     if r != 0:
-        raise EchecOracle("jetons absents : verdict final != 0")
+        raise EchecOracle("annexe non posable : verdict final != 0 (E3 — T3 compte)")
     brut = b"".join(em.journal_fichier)
+    if S("S06C") + b"\r\n" not in brut:
+        raise EchecOracle("annexe non posable : S06C absent (E3 sup-37)")
     if S("S31") + b"\r\n" not in brut or S("S36B") + b"\r\n" not in brut:
-        raise EchecOracle("jetons absents : S31/S36B absents (E1 sup-35)")
+        raise EchecOracle("annexe non posable : S31/S36B absents (E1 sup-35)")
     spawns = [d for (_, e, d) in em.sequence if e == "spawn"]
     if any("oauth" in s or "googleapis" in s or "PUT" in s for s in spawns):
-        raise EchecOracle("jetons absents : un curl Drive a été lancé (E1)")
+        raise EchecOracle("annexe non posable : un curl Drive a été lancé (E1)")
     total += 3
 
     # (f) réponse OAuth muette -> S33B, session non tentée (E2 sup-35)
-    em = Emulateur(exe)
+    em = Emulateur(variante_livraison(exe))
     em.installer_shims()
     em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
     preparer_scenario(em, demo17, reponse_oauth=b'{"error":"invalid_grant"}')
@@ -1204,6 +1289,45 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
     if any("Authorization" in s or "PUT" in s for s in spawns):
         raise EchecOracle("OAuth muet : session/PUT tentés sans jeton (I5)")
     total += 3
+
+    # (g) extraction demo.exe impossible (public) -> S04D, T1 sauté COMPTÉ
+    #     ÉCHEC, T2 vit, nettoyage quand même (E1 sup-37 + E3 sup-09)
+    em = Emulateur(exe)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.echec_createfile_chemins = {"C:\\sup\\demo.exe"}
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 0:
+        raise EchecOracle("extraction impossible : TOUT OK usurpé (E3 — un test "
+                          "non prouvé ne vaut jamais vert)")
+    brut = b"".join(em.journal_fichier)
+    if S("S04D") + b"\r\n" not in brut:
+        raise EchecOracle("extraction impossible : S04D absent (E1 sup-37)")
+    if S("S10") + b"\r\n" in brut:
+        raise EchecOracle("extraction impossible : T1 a été lancé sans artefact")
+    if S("S28A") + b"\r\n" not in brut or S("S07A") + b"\r\n" not in brut:
+        raise EchecOracle("extraction impossible : T2/nettoyage devaient vivre")
+    total += 3
+
+    # (h) écart à la relecture (livraison, octet retourné modifié) -> S05B,
+    #     T2 sauté compté échec, T1/T3 vivent (E2 sup-37)
+    em = Emulateur(variante_livraison(exe))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.corrompre_lecture = ("C:\\sup\\proxy.exe", 100)
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 0:
+        raise EchecOracle("écart relecture : TOUT OK usurpé (E2 sup-37)")
+    brut = b"".join(em.journal_fichier)
+    if S("S05B") + b"\r\n" not in brut:
+        raise EchecOracle("écart relecture : S05B absent (E2 sup-37)")
+    if S("S20") + b"\r\n" in brut:
+        raise EchecOracle("écart relecture : T2 a été lancé sur un artefact écarté")
+    if S("S16A") + b"\r\n" not in brut or S("S36A") + b"\r\n" not in brut:
+        raise EchecOracle("écart relecture : T1/T3 devaient vivre leur verdict")
+    total += 3
     return total
 
 
@@ -1212,7 +1336,9 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
     total = 0
     detectees = 0
     cibles = _blocs_terrain() + [("zone-sup-1", L.ZONE_DATA_SUP[0]),
-                                 ("zone-sup-2", L.ZONE_DATA_SUP_2[0])]
+                                 ("zone-sup-2", L.ZONE_DATA_SUP_2[0]),
+                                 ("zone-sup-3", L.ZONE_DATA_SUP_3[0]),
+                                 ("zone-blob", L.BLOB_RVA)]
     for bid, rva in cibles:
         for offset in (11, 23):
             mutant = bytearray(exe)
@@ -1345,8 +1471,8 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     r = em.appeler(RVA_SUP["win-06"])
     if r != 4:
         raise EchecOracle(f"win-06 : eax = {r} != 4 (porte + 4 vecteurs attendus)")
-    verdicts["d40006"] = {"cas": 5, "detail": "porte R10 verte (table 25 entrées "
-                                               "dont 2 zones de données D48) + 4/4 libc"}
+    verdicts["d40006"] = {"cas": 5, "detail": "porte R10 verte (table 27 entrées + terminateur, "
+                                               "4 zones + blob, D49) + 4/4 libc"}
     total += 5
     mutant = bytearray(exe)
     struct.pack_into("<Q", mutant, L.RDATA_FILE + (L.R_VERSION - L.RDATA_RVA), 0x00020000)
@@ -1379,9 +1505,9 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     total += n
 
     n = test_scenario_nominal(exe, JOURNAL_DEMO_17)
-    verdicts["f60009"] = {"cas": n, "detail": "scénario COMPLET : journal d'or écran+"
-                                               "fichier, 7 lancements ordonnés, cwd forcé, "
-                                               "quit<attente, requêtes exactes, nettoyage 7"}
+    verdicts["f60009"] = {"cas": n, "detail": "scénario COMPLET x2 variantes (publique "
+                                               "4 lancements + livraison 7) : journal d'or, cwd forcé, "
+                                               "quit<attente, requêtes exactes, kit posé/relu/retiré"}
     verdicts["f60031"] = {"cas": 3, "detail": "mode 0 muet / mode 1 tuyaux+héritage, "
                                                "cwd répertoire exe (D36), zéro fuite"}
     verdicts["f60033"] = {"cas": 3, "detail": "T1 vert : fenêtre au 3e sondage, clic "
@@ -1390,12 +1516,15 @@ def executer(exe: bytes, graine: int = 1) -> dict:
                                                "memcmp exacts, curl sans tuyaux, flux embarqué"}
     verdicts["f60035"] = {"cas": 3, "detail": "T3 vert : OAuth/métadonnées/session/PUT "
                                                "composés exacts, 5 suppressions, zéro secret"}
-    total += n
+    verdicts["f60037"] = {"cas": 6, "detail": "kit embarqué : demo/proxy posés puis "
+                                               "relus octet conformes, annexe selon variante, "
+                                               "échec écriture + écart relecture, nettoyage"}
+    total += n + 6
 
     n = test_echecs(exe, JOURNAL_DEMO_17)
-    verdicts["echecs"] = {"cas": n, "detail": "GUI KO (sortie 1) + démo absente + "
-                                               "journal non conforme + curl 22 + jetons "
-                                               "absents + OAuth muet — jamais de court-circuit"}
+    verdicts["echecs"] = {"cas": n, "detail": "GUI KO + démo absente + journal non "
+                                               "conforme + curl 22 + annexe non posable + OAuth muet + "
+                                               "extraction impossible + écart relecture — jamais de court-circuit"}
     total += n
 
     n, detectees, nb_cibles = test_falsification(exe, JOURNAL_DEMO_17)

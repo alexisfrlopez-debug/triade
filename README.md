@@ -72,7 +72,7 @@ couche I écrite avant le code — treize spécifications du domaine http
 13 blocs octet-identiques M0/M1/M2) ; prochaine étape : proxy transparent
 curl sur le terrain, puis campagne million sur le périmètre parseur.
 **Lignée terrain (D48)** — le harnis du terrain : `superviseur.exe`
-0.5.0-terrain.1 scellé (20 992 o, WINDOWS_GUI, écrit à la main) — la
+0.5.0-terrain.2 scellé (20 992 o, WINDOWS_GUI, écrit à la main) — la
 réponse à l'exigence du développeur : TOUS les tests en 1 clic (T1 démo
 rejouée sans main humaine, T2 proxy traversé par curl — c'est le run
 de l'étape (c) de M3, T3 journal téléversé automatiquement dans le

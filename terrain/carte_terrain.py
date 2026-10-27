@@ -158,7 +158,7 @@ def verifier_signature(pub: bytes, entete: bytes, fragments: dict[str, bytes], s
 
 def construire_entete(racine: bytes) -> bytes:
     lignes = [
-        "[carte] version=0.5.0-terrain.1 generation=5",
+        "[carte] version=0.5.0-terrain.2 generation=5",
         f"  algo_hachage     : {ALGO_HACHAGE}",
         f"  algo_signature   : {ALGO_SIGNATURE}",
         f"  algo_chiffrement : {ALGO_CHIFFREMENT}",

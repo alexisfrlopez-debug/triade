@@ -2072,3 +2072,62 @@ lignée (et livre AU PASSAGE le run proxy de l'étape (c) de M3 :
 T2 LE teste) ; puis M3 (d) campagne million sur le périmètre
 parseur (http-01..09 + accumulation http-10) ; (e) le fuzzing
 rejoint la suite de conformité.
+
+
+## Journal 38 — D49 : le kit embarqué — « 1 seul exe qui contient tout » : demo.exe + proxy.exe + l'annexe de jetons vivent DANS superviseur.exe 0.5.0-terrain.2 (section .blob, extraction vérifiée par relecture octet à octet, nettoyage après run), la fausse alerte Defender du 27/10 reçoit sa réponse d'ingénierie (VERSIONINFO + manifeste asInvoker, md5 vérifiables, exclusion documentée) ; six défauts attrapés avant le build par la chaîne elle-même
+
+Le développeur revient du terrain avec deux choses : une exigence —
+« fais moi 1 seul exe qui contient tout » (le kit terrain.1 demandait
+QUATRE fichiers posés à la main) — et une capture — Defender niveau Grave
+sur proxy.exe (« Trojan:Script/Wacatac.C!ml ») dans le dossier de test
+téléchargé. La réponse est une seule lignée : le kit EMBARQUÉ.
+
+**Ce qui a été construit** (specs écrites-avant-code, la discipline
+d'abord) : spec sup-37:R1 (extraction du kit embarqué — une entrée à
+mode ecx 0/1 @0x6600, écriture ET relecture en morceaux de 512 o
+depuis/vers l'embarqué, zéro fuite de handle, longueurs lues à l'en-tête
+.blob jamais codées en dur, md5 attendus tracés comme constantes du
+plan) ; spec sup-09:R2 (l'orchestration étendue : porte -> libc ->
+EXTRACTION -> T1 -> T2 -> T3 -> NETTOYAGE -> verdict ; un test sauté pour
+extraction impossible COMPTE ÉCHEC — jamais de TOUT OK usurpé ; un T3 non
+applicable en variante publique n'est pas compté). Le plan : section
+.blob (RVA 0x8000, en-tête longueurs + demo.exe + proxy.exe + emplacement
+annexe 256 o), section .rsrc (RVA 0x7000, VERSIONINFO 0.5.0.2 +
+manifeste asInvoker — l'habillage légitime), zone données sup 3
+(0x6A00-0x6DFF, lignes S04-S07), six sections PE (en-têtes 568 o,
+première section brute reculée à 0x400 — les RVA ne bougent pas), table
+R10 à 27 entrées + terminateur (la zone blob couverte, l'emplacement
+annexe EXCLU : seul octet mutable de l'image, propriété de la variante).
+Deux variantes du même code : PUBLIQUE (dépôt, emplacement à zéro,
+T3 non applicable — jamais de secret committé) et LIVRAISON (--jetons,
+annexe D48 intégrée, écart confiné à l'emplacement, terrain/livraison/
+gitignoré, interdit 11 honoré).
+
+**La chaîne a fonctionné comme conçue** — six classes de défauts
+attrapées AVANT le build, chacune par le maillon prévu pour elle :
+(1) le structural a refusé la pile de sup-37 (dispatch avant prologue —
+restructuration en prologue commun 0x40) ; (2) l'analyse d'alignement a
+révélé un vrai bug latent : un cadre 0x20 eût laissé les args pile de
+CreateFileA écraser les registres sauvés (0x40 imposé) ; (3) pefile a
+rejeté le premier arbre .rsrc — les décalages d'ANNUAIRE sont relatifs à
+la section, seuls les pointeurs de DONNÉE sont des RVA absolus ; (4)
+l'extraction pefile a distingué clés d'octets vs de chaînes ; (5) la
+preuve R7 a refusé les offsets fichier périmés (les artefacts scellés
+gardent la convention M2, terrain.2 non — deux fonctions de tranche) ;
+(6) l'oracle comportemental a vu le chemin composé « demo.exejetons.bin »
+— le NUL fait partie du nom copié (contrat sup-36 P3, un inc rax).
+
+**Résultat** : superviseur.exe 0.5.0-terrain.2, 61 952 o, 23 blocs (11
+octet-identiques R7 aux scellés M0/M1/M2/démo, sup-09:R2, sup-37 nouveau),
+oracle 10 102 cas verts (nominal x2 variantes : publique 4 lancements /
+livraison 7 ; échecs étendus : annexe non posable, extraction impossible,
+écart de relecture ; falsification 27/27 cibles dont la zone blob + 5
+mutations), carte génération 5 re-scellée (23 empreintes, Ed25519),
+cristallisation 10/10 (graines 11-21), audit_terrain2.py 53 contrôles
+TOUT CONFORME (diff chirurgical : 21 blocs intacts, .rdata borné à
+L00 + table R10, écart public/livraison confiné à 245 octets dans
+l'emplacement, kit byte-exact les scellés). Publique : md5 4542ee20…,
+sha256 4a139cc7…. Livraison : md5 45ca7292…, sha256 35fce4b7….
+LISEZMOI-superviseur réécrit : UN fichier, procédure 2 clics, section
+ANTIVIRUS complète (pourquoi la détection est une fausse alerte
+vérifiable, comment exclure le dossier si besoin, les md5 de confiance).

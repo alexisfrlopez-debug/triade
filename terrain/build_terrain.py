@@ -63,6 +63,7 @@ from keystone import Ks, KS_ARCH_X86, KS_MODE_64
 
 M0_DIR = bm.M0_DIR
 M1_DIR = bm.M1_DIR
+M3_DIR = os.path.join(os.path.dirname(ICI), "m3")
 
 
 class EchecBuild(Exception):
@@ -85,6 +86,7 @@ NOTATION = {
     "f60011": "sup-11-journal", "f60009": "sup-09-scenario",
     "f60031": "sup-31-lancer", "f60036": "sup-36-fichiers",
     "f60033": "sup-33-demo", "f60034": "sup-34-proxy", "f60035": "sup-35-envoi",
+    "f60037": "sup-37-extraction",
 }
 
 FICHIERS_I = {
@@ -99,7 +101,7 @@ FICHIERS_I = {
     "sup-21": "sup-21-horodatage.md", "sup-22": "sup-22-balaye.md",
     "sup-31": "sup-31-lancer.md", "sup-33": "sup-33-demo.md",
     "sup-34": "sup-34-proxy.md", "sup-35": "sup-35-envoi.md",
-    "sup-36": "sup-36-fichiers.md",
+    "sup-36": "sup-36-fichiers.md", "sup-37": "sup-37-extraction.md",
 }
 
 
@@ -174,6 +176,7 @@ IAT_PAR_BLOC = {
                "Sleep", "TerminateProcess", "WaitForSingleObject", "WriteFile"},
     "f60035": {"CloseHandle", "GetExitCodeProcess", "WaitForSingleObject"},
     "f60036": {"CloseHandle", "CreateFileA", "DeleteFileA", "ReadFile", "WriteFile"},
+    "f60037": {"CloseHandle", "CreateFileA", "ReadFile", "WriteFile"},
 }
 APPELS_DIRECTS = {
     **{k: v for k, v in bd.APPELS_DIRECTS.items() if k in _HERITAGE},
@@ -182,12 +185,13 @@ APPELS_DIRECTS = {
     "f60021": {0x1100},
     "f60022": {0x1100, 0x1180},
     "f60011": {0x1100, 0x1200, 0x1280},
-    "f60009": {0x1AC0, L.JOURNAL_TRACE, 0x5400, 0x5800, 0x5E00},  # porte + trace + T1/T2/T3
+    "f60009": {0x1AC0, L.JOURNAL_TRACE, 0x5400, 0x5800, 0x5E00, L.EXTRACTION},  # porte + trace + kit + T1/T2/T3
     "f60031": set(),
     "f60033": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},          # memcmp, fichiers, trace, lanceur
     "f60034": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},
     "f60035": {0x1100, 0x1D40, 0x4E00, L.JOURNAL_TRACE, 0x5200},  # memcpy, balayeur, fichiers, trace, lanceur
     "f60036": {0x1100, 0x1200},
+    "f60037": {0x1100, 0x1180, 0x1200, 0x4E00, L.JOURNAL_TRACE},  # memcpy, memcmp, strlen, fichiers, trace
 }
 DONNEES_RIP = {
     **{k: v for k, v in bd.DONNEES_RIP.items() if k in _HERITAGE},
@@ -226,6 +230,13 @@ DONNEES_RIP = {
                SUP["NOM_JETONS"][0], SUP["NOM_REQ"][0], SUP["NOM_JETON_JSON"][0],
                SUP["NOM_META"][0], SUP["NOM_SESSION"][0]},
     "f60036": {L.BUF_CHEMIN, L.LU, L.DIR_LONG, L.TAMPON_CMD, L.TAMPON_CMD + L.ZONE_COMPO},
+    "f60037": {L.BUF_CHEMIN, L.LU, L.DIR_LONG, L.SCRATCH_ECRIT, L.TAMPON_CMD,
+               L.TAMPON_CMD + L.ZONE_COMPO, L.BLOB_LONGUEURS, L.BLOB_LONGUEUR_PROXY,
+               L.BLOB_DEMO, L.BLOB_PROXY, L.SLOT_JETONS,
+               AD["NOM_DEMO"][0], AD["NOM_PROXY"][0], SUP["NOM_JETONS"][0],
+               *[SUP[n][0] for n in ("S04A", "S04B", "S04C", "S04D",
+                                     "S05A", "S05B", "S05C", "S05D",
+                                     "S06A", "S06B", "S06C", "S07A")]},
 }
 
 
@@ -311,7 +322,7 @@ def oracle_structurel(specs: dict, code: dict, blocs: list[tuple]) -> list[str]:
 
 # --- Composition des sections -----------------------------------------------------
 
-def composer_sections(code: dict, blocs: list[tuple]):
+def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     texte = bytearray(b"\xcc" * L.TEXT_VSIZE)
     text2 = bytearray(b"\xcc" * L.TEXT2_VSIZE)
 
@@ -424,25 +435,30 @@ def composer_sections(code: dict, blocs: list[tuple]):
     poser(L.R_IAT_K32B, b"".join(struct.pack("<Q", hints_k32b[n]) for n in L.KERNEL32B_IMPORTS)
           + struct.pack("<Q", 0))
 
-    # table R10 : 22 blocs + 2 zones données sup + terminateur (D48 — la porte
-    # couvre AUSSI les gabarits/étiquettes du canal Drive)
+    # table R10 : 23 blocs + 4 zones données (sup 1/2/3 + blob intégrée) +
+    # terminateur (D48/D49 — la porte couvre AUSSI les gabarits du canal Drive
+    # et la section .blob embarquée, l'emplacement annexe EXCLU : propriété de
+    # la variante, seul octet mutable de l'image)
     entrees = []
     for bid, _, _, rva, slot in blocs:
         base = texte if rva < L.TEXT2_RVA else text2
         base_rva = L.TEXT_RVA if rva < L.TEXT2_RVA else L.TEXT2_RVA
         off = rva - base_rva
         entrees.append((rva, slot, bm._somme_qwords(bytes(base[off: off + slot]))))
-    for nom_zone in (L.ZONE_DATA_SUP, L.ZONE_DATA_SUP_2):
+    for nom_zone in (L.ZONE_DATA_SUP, L.ZONE_DATA_SUP_2, L.ZONE_DATA_SUP_3):
         debut, fin = nom_zone
         tranche = bytes(text2[debut - L.TEXT2_RVA: fin - L.TEXT2_RVA + 1])
         entrees.append((debut, fin - debut + 1, bm._somme_qwords(tranche)))
+    debut, fin = L.ZONE_BLOB_INTEG
+    tranche = blob[debut - L.BLOB_RVA: fin - L.BLOB_RVA + 1]
+    entrees.append((debut, fin - debut + 1, bm._somme_qwords(tranche)))
     entrees.append((0, 0, 0))
     table = b"".join(struct.pack("<IIQ", r, t, s) for r, t, s in entrees)
     if L.R_TAB_SUM + len(table) > L.R_VERSION:
         raise EchecBuild(f"table R10 déborde sur la version "
                          f"({len(entrees)} entrées, {len(table)} octets)")
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN1))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN2))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -457,11 +473,139 @@ def composer_sections(code: dict, blocs: list[tuple]):
     return bytes(texte), bytes(rdata), bytes(data), bytes(text2)
 
 
-# --- Éditeur PE32+ (WINDOWS_GUI) ---------------------------------------------------
+# --- Kit embarqué + habillage ressources (D49) --------------------------------------
 
-def ecrire_pe32plus(texte, rdata, data, text2) -> bytes:
+def composer_blob(jetons: bytes | None) -> bytes:
+    """Section .blob : en-tête longueurs + demo.exe + proxy.exe scellés +
+    emplacement annexe (None/248 o — les DEUX variantes du même code)."""
+    with open(os.path.join(DEMO_DIR, "demo.exe"), "rb") as f:
+        demo = f.read()
+    with open(os.path.join(M3_DIR, "proxy.exe"), "rb") as f:
+        proxy = f.read()
+    if len(demo) != L.LONGUEUR_DEMO or hashlib.md5(demo).hexdigest().encode() != L.MD5_DEMO_HEXA:
+        raise EchecBuild("demo.exe divergent du scellé M2 0.3.0 (md5/longueur)")
+    if len(proxy) != L.LONGUEUR_PROXY or hashlib.md5(proxy).hexdigest().encode() != L.MD5_PROXY_HEXA:
+        raise EchecBuild("proxy.exe divergent du scellé M3 0.4.0-dev.1 (md5/longueur)")
+    if jetons is not None and len(jetons) != L.LONGUEUR_ANNEXE:
+        raise EchecBuild(f"annexe de jetons inattendue ({len(jetons)} o != {L.LONGUEUR_ANNEXE})")
+    slot = (struct.pack("<Q", len(jetons) if jetons is not None else 0)
+            + (jetons if jetons is not None else b"\x00" * L.LONGUEUR_ANNEXE))
+    blob = struct.pack("<QQ", L.LONGUEUR_DEMO, L.LONGUEUR_PROXY) + demo + proxy + slot
+    if len(blob) != L.BLOB_VSIZE:
+        raise EchecBuild(f"section .blob de taille inattendue ({len(blob):#x} != {L.BLOB_VSIZE:#x})")
+    return blob
+
+
+def _noeud_vsi(wtype: int, cle: str, valeur: bytes = b"", enfants: bytes = b"",
+               wlen: int | None = None) -> bytes:
+    """Nœud VERSIONINFO : wLength calculé, clé UTF-16, alignement 32 bits."""
+    tete = (struct.pack("<HHH", 0, len(valeur) if wlen is None else wlen, wtype)
+            + cle.encode("utf-16-le") + b"\x00\x00")
+    tete += b"\x00" * ((4 - len(tete) % 4) % 4)
+    corps = valeur + b"\x00" * ((4 - len(valeur) % 4) % 4) + enfants
+    total = tete + corps
+    return struct.pack("<H", len(total)) + total[2:]
+
+
+def _chaine_vsi(cle: str, valeur: str) -> bytes:
+    """StringStruct : wValueLength en CARACTÈRES (NUL compris)."""
+    return _noeud_vsi(1, cle, valeur.encode("utf-16-le") + b"\x00\x00",
+                      wlen=len(valeur) + 1)
+
+
+def composer_rsrc() -> tuple[bytes, int]:
+    """Section .rsrc : arbre ressources (RT_VERSION 16 / RT_MANIFEST 24) +
+    VS_VERSIONINFO + manifeste asInvoker — l'habillage légitime du superviseur
+    face aux heuristiques antivirus (constat Defender 27/10, D49)."""
+    ffi = struct.pack("<13I",
+                      0xFEEF04BD,      # signature
+                      0x00010000,      # version de structure 1.0
+                      0x00050000, 0x00000002,   # version fichier 0.5.0.2
+                      0x00050000, 0x00000002,   # version produit 0.5.0.2
+                      0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
+                      0x00040004,      # VOS_NT_WINDOWS32
+                      0x00000001,      # VFT_APP
+                      0x00000000, 0x00000000, 0x00000000)
+    chaines = b"".join([
+        _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
+        _chaine_vsi("FileVersion", "0.5.0.2"),
+        _chaine_vsi("InternalName", "superviseur"),
+        _chaine_vsi("OriginalFilename", "superviseur.exe"),
+        _chaine_vsi("ProductName", "Protocole TRIADE"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.2"),
+        _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
+    ])
+    table = _noeud_vsi(1, "040904B0", enfants=chaines)
+    sfi = _noeud_vsi(1, "StringFileInfo", enfants=table)
+    trad = _noeud_vsi(0, "Translation", struct.pack("<HH", 0x0409, 0x04B0), wlen=4)
+    vfi = _noeud_vsi(1, "VarFileInfo", enfants=trad)
+    versioninfo = _noeud_vsi(0, "VS_VERSION_INFO", valeur=ffi, enfants=sfi + vfi)
+
+    manifeste = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
+        '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.2"/>'
+        '<description>TRIADE : superviseur terrain de tests</description>'
+        '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
+        '<requestedPrivileges>'
+        '<requestedExecutionLevel level="asInvoker" uiAccess="false"/>'
+        '</requestedPrivileges></security></trustInfo>'
+        '<compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">'
+        '<application>'
+        '<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>'
+        '</application></compatibility>'
+        '<application xmlns="urn:schemas-microsoft-com:asm.v3"><windowsSettings>'
+        '<dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true'
+        '</dpiAware></windowsSettings></application>'
+        '</assembly>\r\n'
+    ).encode("utf-8")
+
+    # arbre : racine (2 entrées) -> type -> nom -> langue -> donnée
+    def dir_entrees(entrees: list[tuple[int, int]]) -> bytes:
+        return (struct.pack("<IIHHHH", 0, 0, 4, 0, 0, len(entrees))
+                + b"".join(struct.pack("<II", nom, off) for nom, off in entrees))
+
+    off = 0
+    racine_rva = L.RSRC_RVA
+    o_racine = off; off += 16 + 2 * 8            # 32
+    o_type_v = off; off += 16 + 8                # 24
+    o_nom_v = off; off += 16 + 8                 # 24
+    o_data_v = off; off += 16                    # 16
+    o_type_m = off; off += 16 + 8
+    o_nom_m = off; off += 16 + 8
+    o_data_m = off; off += 16
+    o_version = off; off += len(versioninfo)
+    o_manifeste = off
+    rsrc = bytearray(b"\x00" * (o_manifeste + len(manifeste)))
+    # NB (format PE) : les décalages D'ANNUAIRE sont RELATIFS au début de la
+    # section .rsrc ; seul l'OffsetToData de l'entrée de DONNÉE est un RVA
+    # absolu — le premier jet confondait les deux (attrapé par pefile).
+    rsrc[o_racine:o_racine + 32] = dir_entrees([
+        (16, o_type_v | 0x80000000),
+        (24, o_type_m | 0x80000000)])
+    rsrc[o_type_v:o_type_v + 24] = dir_entrees([(1, o_nom_v | 0x80000000)])
+    rsrc[o_nom_v:o_nom_v + 24] = dir_entrees([(0x409, o_data_v)])
+    rsrc[o_data_v:o_data_v + 16] = struct.pack("<IIII", racine_rva + o_version,
+                                               len(versioninfo), 0, 0)
+    rsrc[o_type_m:o_type_m + 24] = dir_entrees([(1, o_nom_m | 0x80000000)])
+    rsrc[o_nom_m:o_nom_m + 24] = dir_entrees([(0x409, o_data_m)])
+    rsrc[o_data_m:o_data_m + 16] = struct.pack("<IIII", racine_rva + o_manifeste,
+                                               len(manifeste), 0, 0)
+    rsrc[o_version:o_version + len(versioninfo)] = versioninfo
+    rsrc[o_manifeste:o_manifeste + len(manifeste)] = manifeste
+    if len(rsrc) > L.RSRC_VSIZE:
+        raise EchecBuild(f"section .rsrc débordante ({len(rsrc):#x} > {L.RSRC_VSIZE:#x})")
+    return bytes(rsrc) + b"\x00" * (L.RSRC_VSIZE - len(rsrc)), len(rsrc)
+
+
+
+RSRC_RAW = 0x800      # tailles brutes alignées FILE_ALIGN (D49)
+BLOB_RAW = 0x8E00
+
+
+def ecrire_pe32plus(texte, rdata, data, text2, rsrc, blob) -> bytes:
     dos = b"MZ" + b"\x00" * 58 + struct.pack("<I", 0x40)
-    coff = struct.pack("<HHIIIHH", 0x8664, 4, 0, 0, 0, 0xF0, 0x0002)
+    coff = struct.pack("<HHIIIHH", 0x8664, 6, 0, 0, 0, 0xF0, 0x0002)
     opt_fixe = struct.pack(
         "<HBBIIIIIQIIHHHHHHIIIIHHQQQQII",
         0x20B, 0, 0,
@@ -478,6 +622,7 @@ def ecrire_pe32plus(texte, rdata, data, text2) -> bytes:
     )
     dirs = [(0, 0)] * 16
     dirs[1] = (L.R_DESC_IMPORT, 140)        # 7 descripteurs (6 dll + terminateur)
+    dirs[2] = (L.RSRC_RVA, RSRC_RAW)        # ressources : VERSIONINFO + manifeste
     dirs[5] = (L.R_RELOC, 12)
     dirs[12] = (L.R_IAT, 96)                # IAT kernel32#1 (11 slots + terme)
     opt = bytes(opt_fixe) + b"".join(struct.pack("<II", *d) for d in dirs)
@@ -490,28 +635,57 @@ def ecrire_pe32plus(texte, rdata, data, text2) -> bytes:
         + sh(b".rdata\x00\x00", L.RDATA_VSIZE, L.RDATA_RVA, L.RDATA_VSIZE, L.RDATA_FILE, 0x40000040)
         + sh(b".data\x00\x00\x00", L.DATA_VSIZE, L.DATA_RVA, L.DATA_RAW, L.DATA_FILE, 0xC0000040)
         + sh(b".text2\x00\x00", L.TEXT2_VSIZE, L.TEXT2_RVA, L.TEXT2_VSIZE, L.TEXT2_FILE, 0x60000020)
+        + sh(b".rsrc\x00\x00\x00", L.RSRC_VSIZE, L.RSRC_RVA, RSRC_RAW, L.RSRC_FILE, 0x40000040)
+        + sh(b".blob\x00\x00\x00", L.BLOB_VSIZE, L.BLOB_RVA, BLOB_RAW, L.BLOB_FILE, 0x40000040)
     )
     entetes = dos + b"PE\x00\x00" + coff + opt + sections
-    assert len(entetes) == 64 + 4 + 20 + 240 + 160
+    assert len(entetes) == 64 + 4 + 20 + 240 + 240, len(entetes)
+    assert len(entetes) <= L.TEXT_FILE, "en-têtes 6 sections débordent sur .text"
     exe = bytearray(b"\x00" * L.TAILLE_FICHIER)
     exe[0:len(entetes)] = entetes
     exe[L.TEXT_FILE:L.TEXT_FILE + len(texte)] = texte
     exe[L.RDATA_FILE:L.RDATA_FILE + len(rdata)] = rdata
     exe[L.DATA_FILE:L.DATA_FILE + len(data)] = data
     exe[L.TEXT2_FILE:L.TEXT2_FILE + len(text2)] = text2
+    exe[L.RSRC_FILE:L.RSRC_FILE + len(rsrc)] = rsrc
+    exe[L.BLOB_FILE:L.BLOB_FILE + len(blob)] = blob
     return bytes(exe)
 
 
-def valider_pe(exe: bytes):
+def valider_pe(exe: bytes, jetons: bytes | None = None):
     pe = pefile.PE(data=exe)
     assert pe.FILE_HEADER.Machine == 0x8664
-    assert pe.FILE_HEADER.NumberOfSections == 4
+    assert pe.FILE_HEADER.NumberOfSections == 6
     assert pe.OPTIONAL_HEADER.Magic == 0x20B
     assert pe.OPTIONAL_HEADER.AddressOfEntryPoint == L.ENTREE, "entrée != sup-01"
     assert pe.OPTIONAL_HEADER.Subsystem == L.SUBSYSTEM_GUI, "sous-système != WINDOWS_GUI"
     assert pe.OPTIONAL_HEADER.SizeOfImage == L.SIZE_OF_IMAGE
     noms = [s.Name.decode().rstrip("\x00") for s in pe.sections]
-    assert noms == [".text", ".rdata", ".data", ".text2"], noms
+    assert noms == [".text", ".rdata", ".data", ".text2", ".rsrc", ".blob"], noms
+    # ressources (D49) : VERSIONINFO lisible par l'OS, manifeste asInvoker
+    assert pe.OPTIONAL_HEADER.DATA_DIRECTORY[2].VirtualAddress == L.RSRC_RVA
+    fic = None
+    for bloc_info in pe.FileInfo:
+        for d in bloc_info:
+            if getattr(d, "Key", b"") == b"StringFileInfo":
+                for table in d.StringTable:
+                    for k, v in table.entries.items():
+                        if k == b"FileVersion":
+                            fic = v.decode("ascii")
+    assert fic == "0.5.0.2", f"FileVersion ressources = {fic!r}"
+    # kit embarqué (D49) : les octets .blob SONT les artefacts scellés
+    with open(os.path.join(DEMO_DIR, "demo.exe"), "rb") as f:
+        demo = f.read()
+    with open(os.path.join(M3_DIR, "proxy.exe"), "rb") as f:
+        proxy = f.read()
+    assert exe[L.BLOB_FILE + 0x10: L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO] == demo
+    assert exe[L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO:
+               L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO + L.LONGUEUR_PROXY] == proxy
+    attendu_slot = jetons if jetons is not None else b"\x00" * L.LONGUEUR_ANNEXE
+    off_slot = L.BLOB_FILE + (L.SLOT_JETONS - L.BLOB_RVA)
+    longueur_attendue = len(jetons) if jetons is not None else 0
+    assert struct.unpack_from("<Q", exe, off_slot)[0] == longueur_attendue
+    assert exe[off_slot + 8: off_slot + 8 + L.LONGUEUR_ANNEXE] == attendu_slot
     imports = {}
     for entree in pe.DIRECTORY_ENTRY_IMPORT:
         dll = entree.dll.decode().lower()
@@ -536,6 +710,7 @@ def valider_pe(exe: bytes):
 
 def preuve_reutilisation(exe: bytes) -> dict:
     """R7 : les blocs hérités sont octet-identiques aux artefacts scellés."""
+    LD = sys.modules["layout_demo"]        # plan démo (convention fichier M2)
     artefacts = {}
     for nom, chemin in (("hello.exe", os.path.join(M0_DIR, "hello.exe")),
                         ("selftest.exe", os.path.join(M1_DIR, "selftest.exe")),
@@ -544,7 +719,16 @@ def preuve_reutilisation(exe: bytes) -> dict:
         with open(chemin, "rb") as f:
             artefacts[nom] = f.read()
 
-    def tranche(buf, rva, slot):
+    def tranche_artefact(buf, rva, slot):
+        """Offsets fichier du PLAN DÉMO (hello/selftest/echo/demo partagent la
+        convention M2 : première section brute à 0x200 — terrain.2 NON : six
+        sections, en-têtes 568 o, première brute à 0x400, d'où les DEUX
+        fonctions de tranche, D49)."""
+        if rva >= L.TEXT2_RVA:
+            return buf[LD.TEXT2_FILE + (rva - L.TEXT2_RVA):][:slot]
+        return buf[LD.TEXT_FILE + (rva - L.TEXT_RVA):][:slot]
+
+    def tranche_terrain(buf, rva, slot):
         if rva >= L.TEXT2_RVA:
             return buf[L.TEXT2_FILE + (rva - L.TEXT2_RVA):][:slot]
         return buf[L.TEXT_FILE + (rva - L.TEXT_RVA):][:slot]
@@ -556,7 +740,7 @@ def preuve_reutilisation(exe: bytes) -> dict:
         if bid not in _HERITAGE:
             continue
         source = artefacts[sources[bid[:4] + "0"]]
-        if tranche(source, rva, slot) != tranche(exe, rva, slot):
+        if tranche_artefact(source, rva, slot) != tranche_terrain(exe, rva, slot):
             raise EchecBuild(f"réutilisation rompue : {bid} diffère de l'artefact "
                              f"scellé {sources[bid[:4] + '0']} (R7)")
         heritage.append(bid)
@@ -593,9 +777,12 @@ CONTRATS = {
                "[ext kernel32#2:GetModuleFileNameA,CreateFileA] [ext kernel32:WriteFile,"
                "FlushFileBuffers] [donnees .data:handle,tampons,TAMPON_NOM]"),
     "f60009": ("(arg u64) -> u32", "lancé une fois par win-04 ; TAMPON_* posés",
-               "porte -> libc -> T1 -> T2 -> T3 -> S90/S91 ; rax = 1 ssi les trois verts",
-               "un KO n'arrête rien ; la porte précède tout test ; l'envoi vient en dernier",
-               "[d40006] [d40005] [f60033] [f60034] [f60035] "
+               "porte -> libc -> extraction kit -> T1 -> T2 -> T3 -> nettoyage -> S90/S91 ; "
+               "rax = 1 ssi les verdicts COMPTÉS sont verts (T3 non applicable en "
+               "variante publique n'est pas compté — D49)",
+               "un KO n'arrête rien ; la porte précède tout test ; l'envoi vient en "
+               "dernier ; le nettoyage suit T3 (l'annexe vit le temps de l'envoi)",
+               "[d40006] [d40005] [f60037] [f60033] [f60034] [f60035] "
                "[donnees sup:S00..S03,S90,S91] [donnees .data:TAMPON_AFF]"),
     "f60031": ("(cmdline ptr, mode u32) -> u32", "pile alignée",
                "rax = 1 : HPROC/PID posés, hThread fermé, extrémités enfant fermées ; "
@@ -639,6 +826,17 @@ CONTRATS = {
                "[b20001] [b20003] [ext kernel32#2:CreateFileA] "
                "[ext kernel32:ReadFile,WriteFile,CloseHandle] "
                "[ext kernel32#3:DeleteFileA] [donnees .data:DIR_LONG,LU]"),
+    "f60037": ("(mode u32 ecx) -> u32", "BUF_CHEMIN valide ; pile alignée ; mode 0/1",
+               "mode 0 : bit0 demo.exe posé+relu conforme, bit1 proxy.exe idem, "
+               "bit2 T3 applicable (variante livraison) ; mode 1 : trois fichiers "
+               "retirés + S07",
+               "écriture ET relecture en morceaux 512 o depuis/vers l'embarqué ; "
+               "zéro fuite de handle ; longueurs lues à l'en-tête .blob (jamais en dur) ; "
+               "l'emplacement annexe est hors table R10 (seul octet mutable, D49)",
+               "[b20001] [b20002] [b20003] [f60036] [d40005] "
+               "[ext kernel32#2:CreateFileA] [ext kernel32:ReadFile,WriteFile,CloseHandle] "
+               "[donnees .blob:BLOB_LONGUEURS,BLOB_DEMO,BLOB_PROXY,SLOT_JETONS] "
+               "[donnees sup:S04..S07,NOM_JETONS] [rdata:NOM_DEMO,NOM_PROXY]"),
 }
 
 
@@ -647,7 +845,8 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
     loc = ["[carte-frag] nom=frag-loc generation=5",
            "[zones] io=0x1000-0x10ff libc=0x1100-0x12ff coquille=0x1400-0x1fff "
            "scenario=0x4c00 fichiers=0x4e00 miroir=0x5000 lanceur=0x5200 "
-           "t1=0x5400 t2=0x5800 t3=0x5e00 donnees-sup=0x4340-0x4bff,0x6300-0x65ff"]
+           "t1=0x5400 t2=0x5800 t3=0x5e00 kit=0x6600 "
+           "donnees-sup=0x4340-0x4bff,0x6300-0x65ff,0x6a00-0x6dff blob=0x8000"]
     spec_map = {bid: sid for bid, sid, _, _, _ in blocs}
     for bid, _, _, rva, slot in blocs:
         loc.append(f"[bloc] id={bid} spec={spec_map[bid]} cible=x86-64-win11-pe "
@@ -674,12 +873,17 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
             else (L.TEXT_RVA, L.TEXT_FILE)
         tranche = exe[base_file + (rva - base_rva): base_file + (rva - base_rva) + slot]
         bld.append(f"[bloc] id={bid} addr={L.IMAGE_BASE + rva:#x} empreinte={sha(tranche)}")
-    for nom_zone, zone in (("donnees-sup-1", L.ZONE_DATA_SUP), ("donnees-sup-2", L.ZONE_DATA_SUP_2)):
+    for nom_zone, zone in (("donnees-sup-1", L.ZONE_DATA_SUP), ("donnees-sup-2", L.ZONE_DATA_SUP_2),
+                           ("donnees-sup-3", L.ZONE_DATA_SUP_3)):
         debut, fin = zone
         tranche = exe[L.TEXT2_FILE + (debut - L.TEXT2_RVA):
                       L.TEXT2_FILE + (fin - L.TEXT2_RVA) + 1]
         bld.append(f"[zone] id={nom_zone} addr={L.IMAGE_BASE + debut:#x} "
                    f"empreinte={sha(tranche)}")
+    debut, fin = L.ZONE_BLOB_INTEG
+    tranche = exe[L.BLOB_FILE + (debut - L.BLOB_RVA): L.BLOB_FILE + (fin - L.BLOB_RVA) + 1]
+    bld.append(f"[zone] id=blob-integrite addr={L.IMAGE_BASE + debut:#x} "
+               f"empreinte={sha(tranche)}")
     bld += [
         f"[build] artefact=superviseur.exe version={version} profil=x86-64-win11-pe "
         f"taille={len(exe)} empreinte={sha(exe)}",
@@ -688,8 +892,10 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
         f"graine={verdict.get('graine', '-')}",
         f"  heritage : hello.exe + selftest.exe + echo.exe + demo.exe 0.3.0-demo.9 "
         f"(io/libc/tcp-06 + coquille win réutilisés octet-identiques, R7)",
+        f"  kit embarqué : demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 en .blob "
+        f"(md5 assertés au build, table R10 zone blob — emplacement annexe exclu, D49)",
         f"[zones] coquille=0x1400-0x1fff scenario=0x4c00 t1=0x5400 t2=0x5800 t3=0x5e00 "
-        f"donnees-sup=0x4340-0x4bff,0x6300-0x65ff",
+        f"kit=0x6600 donnees-sup=0x4340-0x4bff,0x6300-0x65ff,0x6a00-0x6dff blob=0x8000",
     ]
     retour = {}
     for nom, lignes in (("frag-loc", loc), ("frag-con", con), ("frag-prf", prf), ("frag-bld", bld)):
@@ -752,18 +958,19 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  tests_oracle                  : {verdict.get('total_cas', 0)} cas verts "
         f"(graine {verdict.get('graine', '-')}) ; oracle structurel {len(verrous)} verrous PASS ; "
         f"falsification : {verdict.get('falsification', '-')}",
-        f"  empreintes_donnees_embarquees : conforme (table R10 25 entrees dont "
-        f"2 zones de donnees sup, UTF-16 contraint, fixtures)",
+        f"  empreintes_donnees_embarquees : conforme (table R10 27 entrees + terminateur dont "
+        f"4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures)",
         f"  defauts_attrapes_avant_build  : 6 classes (constante terrain_, mode .curl, "
         f"flux banniere 39->38, mapping .champ decale, 7 traces valeur en mode 0, "
         f"SA consomme avant initialisation) — le systeme a fonctionne comme concu",
         f"  reutilisation_R7              : {herit} blocs octet-identiques "
         f"(hello/selftest/echo/demo.9)",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee terrain, "
-        f"u64 0x{L.VERSION_U64_TERRAIN1:x}, plancher 0x{L.VERSION_U64_MIN:x})",
-        f"  exigence_developpeur          : TOUS les tests en 1 clic (T1 demo 0.3.0 + "
-        f"T2 proxy 0.4.0-dev.1 + T3 envoi Drive) + journal televerse automatiquement "
-        f"dans le dossier test (curl.exe relais, resumable — voie drive_sync.py)",
+        f"u64 0x{L.VERSION_U64_TERRAIN2:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit "
+        f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 + annexe jetons), "
+        f"extraction verifiee par relecture octet a octet, nettoyage apres run ; "
+        f"variante publique (depot, slot vide) / livraison (--jetons, annexe D48)",
         f"  artefact                      : {len(exe)} octets ; "
         f"subsystem WINDOWS_GUI ; entree 0x{L.ENTREE:x}",
         f"  verrou_croise                 : {nb} empreintes reverifiees + signature "
@@ -792,15 +999,18 @@ def assembler_tout():
     return blocs, specs, code, verrous
 
 
-def construire(graine: int) -> int:
+def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN1
-    texte, rdata, data, text2 = composer_sections(code, blocs)
-    exe = ecrire_pe32plus(texte, rdata, data, text2)
+    version = L.VERSION_TERRAIN2
+    blob_public = composer_blob(None)
+    rsrc, taille_rsrc = composer_rsrc()
+    texte, rdata, data, text2 = composer_sections(code, blocs, blob_public)
+    exe = ecrire_pe32plus(texte, rdata, data, text2, rsrc, blob_public)
     valider_pe(exe)
     heritage = preuve_reutilisation(exe)
-    print(f"[PE] superviseur.exe : {len(exe)} octets, 4 sections, kernel32 x24 (3 IAT) + "
+    print(f"[PE] superviseur.exe : {len(exe)} octets, 6 sections (.rsrc {taille_rsrc} o, "
+          f".blob {L.BLOB_VSIZE:#x} — kit embarqué), kernel32 x24 (3 IAT) + "
           f"user32 x17 (2 IAT) + gdi32 x1, WINDOWS_GUI, entree 0x{L.ENTREE:x}, FT=slots (D35)")
     print(f"[R7] réutilisation : {len(heritage['blocs_reutilises'])} blocs octet-identiques "
           f"aux artefacts scellés M0/M1/M2/démo (demo.exe 0.3.0-demo.9)")
@@ -821,7 +1031,28 @@ def construire(graine: int) -> int:
     print(f"[R8] verrou croisé : signature OK, racine OK, artefact {manifeste.get('version')}")
     with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="utf-8") as f:
         f.write(tableau_de_bord(exe, verrous, nb, manifeste, verdict))
-    print(f"[B] superviseur.exe scellé : sha256:{hashlib.sha256(exe).hexdigest()}")
+    print(f"[B] superviseur.exe (publique) scellé : sha256:{hashlib.sha256(exe).hexdigest()}")
+
+    if avec_jetons:
+        chemin_jetons = os.path.join(os.path.dirname(ICI),
+                                     ".gdrive", "terrain_jetons.bin")
+        with open(chemin_jetons, "rb") as f:
+            jetons = f.read()
+        blob_livraison = composer_blob(jetons)
+        exe_livraison = ecrire_pe32plus(texte, rdata, data, text2, rsrc, blob_livraison)
+        valider_pe(exe_livraison, jetons)
+        off_slot = L.BLOB_FILE + (L.SLOT_JETONS - L.BLOB_RVA)
+        ecarts = [i for i, (a, b) in enumerate(zip(exe, exe_livraison)) if a != b]
+        if not ecarts or min(ecarts) < off_slot or max(ecarts) >= off_slot + L.TAILLE_SLOT_JETONS:
+            raise EchecBuild("variante livraison : écart hors emplacement annexe (D49)")
+        dossier = os.path.join(ICI, "livraison")
+        os.makedirs(dossier, exist_ok=True)
+        with open(os.path.join(dossier, "superviseur.exe"), "wb") as f:
+            f.write(exe_livraison)
+        print(f"[B] superviseur.exe (livraison, annexe intégrée) : "
+              f"sha256:{hashlib.sha256(exe_livraison).hexdigest()} ; "
+              f"écart public/livraison confiné au slot ({len(ecarts)} octets) ; "
+              f"livraison/superviseur.exe — JAMAIS commité (interdit 11)")
     print(f"=== terrain {version} (oracle vert) — validation terrain Windows 11 en attente ===")
     return 0
 
@@ -856,7 +1087,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN1)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN2)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "
@@ -872,7 +1103,7 @@ if __name__ == "__main__":
         graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 1
         if "--verifier" in args:
             sys.exit(verifier(graine))
-        sys.exit(construire(graine))
+        sys.exit(construire(graine, avec_jetons="--jetons" in args))
     except (EchecBuild, cm.ErreurCarte, od.EchecOracle) as exc:
         print(f"ECHEC (fail-closed) : {exc}", file=sys.stderr)
         sys.exit(1)
