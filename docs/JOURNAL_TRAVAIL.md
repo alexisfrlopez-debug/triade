@@ -2681,3 +2681,88 @@ terrain.7 est mort LÀ), le full run prend 2-3 minutes (T1 + T2 proxy
 demo_journal.txt (LES sondes vivent là). Avertissement de lecture : T1
 dira « NON CONFORME » même en cas de succès (28 lignes ≠ 17 attendues
 — le build diagnostique écrit plus) — la preuve vit dans les sondes.
+
+## Entrée 47 — terrain.8 : « fichiers terrain envoyés, les tests semblent ok » — DÉMO OK COMPLET sur machine terrain, la panne demo.9 ne se reproduit PAS avec les sondes (2/2 vs 0/2) ; le contrat T1 a divergé (journal 706 o > lecture plafonnée 640 o — NON CONFORME matériellement inévitable) ; RELANCE à binaire inchangé pour prouver T2/T3/dépôt auto (D58, 27/10 soir)
+
+**Le constat terrain (run 18:43, terrain_20261027_184312.txt + demo_journal.txt
+rapatriés du dossier test, 4/4 md5 conformes).** Côté superviseur : L00
+« 0.5.0-terrain.8 » ✓, S02 porte R10 VERTE (deuxième validation terrain du
+correctif D56), S03 libc 4/4, S04 demo extrait octets conformes avec S04C md5
+cf72462d… = demo.10 embarqué exact, S05 proxy conforme (8740e1ca… inchangé
+depuis terrain.5), S06 annexe jetons/T3 actif, S10 lancement, S11 fenêtre
+demo DETECTÉE (deuxième validation du FindWindowW par classe D55), S12 clic
+BM_CLICK envoyé. Côté demo (demo_journal.txt, 979 o) : L00
+« 0.3.0-demo10 » ✓ puis le scénario COMPLET en 28 lignes — porte R10 VERTE,
+libc 4/4, sonde1/2/3, mécanique v1>v2>v1 confirmés, serveur à l'écoute,
+client connecté, S1 accept ok, sonde4 envoyé ok, S2 fil echo lancé, sonde5
+reçu ok, « écho réseau : aller-retour exact » TROIS FOIS, « patch en
+production : MAJUSCULES », « retour arrière : identité confirmée », et la
+ligne finale « boucle § 5 complète - DÉMO OK ». **La totalité du scénario §5
+passe sur la machine terrain.** La panne « réseau : échange en échec » de
+demo.9 NE S'EST PAS REPRODUITE. Corrélation consolidée : avec sondes 2/2
+succès (demo.8 au terrain du 26/10, demo.10 à 18:43), sans sondes 0/2
+(demo.9 aux runs 16:52 et 18:00). Décision actée : les sondes RESTENT en
+production — leurs écritures journal entre connect/émission/réception font
+partie du timing qui gagne contre la course.
+
+**Le journal superviseur coupe encore à S12 — troisième fois.** Les 13 paires
+L4C/L4D post-DÉMO OK dans demo_journal.txt racontent la scène : le
+développeur a déplacé la fenêtre demo après le succès (il regardait le
+résultat de près), puis a tout fermé avant la fin du sondage 30 s. La
+machinerie de verdict T1 (S13-S16), T2 (proxy + curl) et T3 (dépôt auto) ne
+se sont JAMAIS exécutées sur le terrain — le pipeline au-delà de S12 reste
+inobservé (T2 a atteint S20/S21 une fois, à 16:52 sous terrain.5).
+
+**L'analyse binaire du contrat T1 (préparation de la prédiction, sup-33
+décodé).** Quatre conditions de verdict : code de sortie demo == 0, nombre
+de lignes == 17 (`cmp r13d, 17` @0x568b, octets 41 83 FD 11 vérifiés),
+taille lue ≥ 31, et les 31 derniers octets lus == fixture @0x4875
+(« boucle § 5 complète - DÉMO OK\r\n », 31 o, Latin-1 — vérifiée ÉGALE
+octet pour octet aux 31 derniers octets du journal 28 lignes). MAIS : le
+journal sondé sans moves fait 706 o et sup-36 lit PLAFONNÉ à 640 o
+(`mov r8d, 640` dans le ReadFile de .lire ; TAMPON_CMD 688 o physique collé
+avant .text2 — lire plus écraserait tcp-01). Le marqueur (octets 675-706)
+est donc HORS LECTURE : le sondage ne peut JAMAIS le voir, timeout 30 s
+déterministe, WM_CLOSE, relecture tronquée. Le seuil 17 lignes est
+doublement inatteignable (28 lignes réelles, 26 lisibles). **Conclusion :
+T1 CONFORME est matériellement impossible avec un demo sondé de 706 o — le
+contrat T1 (dessiné pour le journal demo.9 ≤ 550 o) et le demo instrumenté
+(nécessaire contre la course) ont divergé.** Convergence accidentelle
+vérifiée : même si le sondage ne parvient pas à lire (CreateFileA share=0
+exclusif vs écritures concurrentes du demo), le résultat terminal est
+IDENTIQUE — timeout, fermeture, le demo MORT relâche le fichier, relecture
+propre de 640 o. Le comportement de terrain.8 est déterministe dans tous
+les cas de figure de partage.
+
+**La décision D58 (une variable par aller-retour terrain).** NE PAS
+retoucher le binaire : l'image validée sur le terrain (md5 d64304bd…,
+l'exacte copie rapatriée du dossier test) est relancée TELLE QUELLE — la
+seule variable qui change est le comportement (attendre la fin). L'option
+demo.11 raccourci (retirer sonde1/2/3 + une bannière ≈ 624 o ≤ 640 o, seuil
+recalé) a été pesée et REFUSÉE pour cette itération : trois variables d'un
+coup (contenu journal demo, seuil, blob embarqué) et une attribution boueuse
+en cas d'échec ; la course n'a jamais été testée sans sonde1/2/3 et pourrait
+revenir. La relance à zéro risque prouve d'abord T2 + T3 + la machinerie
+S13-S16, et le journal embarqué (.embarque) montrera EXACTEMENT ce que la
+lecture 640 o a vu — la preuve de terrain du plafond, avant de construire
+demo.11 au tour suivant si T2/T3 passent.
+
+**Prédictions pré-enregistrées (falsifiables) :** S13 « arret code 0 » ;
+S14 « lignes journal : 26 » (26 CRLF complets dans 640 o — l'octet 640 tombe
+dans le « re » de « retour arrière », calculé sur le journal réel) ; ~26
+lignes demo embarquées dans le journal superviseur plus le fragment tronqué
+« re » ; S15 « NON CONFORME » + S16 ; S20/S21 puis les lignes curl jamais
+vues ; les lignes T3 inédites ; verdict final S91 SUPERVISEUR : ÉCHEC (T1=0
+— attendu et expliqué au développeur : le but de ce run n'est pas S92 mais
+la preuve que T2/T3/dépôt courent) ; un nouveau terrain_*.txt déposé TOUT
+SEUL dans le dossier test. Robustesse : les déplacements de fenêtre n'y
+changent rien (appends en fin de fichier, les 640 premiers octets sont
+stables — vérifié sur le journal 979 o réel).
+
+**Livraison :** LISEZMOI-RELANCE.txt seul au dossier test (aucun binaire —
+même md5 d64304bd…). Le protocole passe au registre « film du run » :
+chronologie seconde par seconde (silence 30 s ATTENDU, la fenêtre demo se
+fermera TOUTE SEULE vers T+35 s — annonce explicite pour désamorcer la
+fermeture panique), silences curl normaux, NE FERMER RIEN avant S91/S92, et
+comme but affiché le dépôt automatique du journal — plus jamais de dépôt
+manuel si T3 vit.

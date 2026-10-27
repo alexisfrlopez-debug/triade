@@ -1,0 +1,73 @@
+TRIADE — RELANCEZ TERRAIN.8 ET ATTENDEZ LA FIN (2 minutes)
+==========================================================
+
+POURQUOI CE MESSAGE, ALORS QUE « LES TESTS SEMBLENT OK »
+--------------------------------------------------------
+Ils le sont : votre run de 18:43 a vu le demo aller jusqu'au bout
+(« boucle § 5 complète - DEMO OK » — mécanique, écho réseau x3,
+patch en production, retour arrière : TOUT est passé sur votre
+machine, la panne réseau ne s'est pas reproduite). Mais le journal
+SUPERVISEUR s'arrête encore à S12 : les tests restants (T2 proxy,
+T3 dépôt automatique du journal) s'exécutent APRÈS un silence
+d'environ 30 secondes — et la fenêtre a été fermée avant, pour la
+troisième fois. Ce run-ci ne re-teste pas le demo (prouvé) : il
+teste LA CHAÎNE COMPLÈTE du superviseur, jusqu'au dépôt
+AUTOMATIQUE du journal dans ce dossier test — le cœur du livrable.
+
+RIEN À TÉLÉCHARGER — MÊME EXÉCUTABLE
+------------------------------------
+Utilisez le superviseur-terrain8.exe que vous avez déjà
+(md5 d64304bd1c567bfe801e6e90ad1bf67c — inchangé).
+Double-cliquez, cliquez « TOUT DEMARRER », puis :
+
+  NE FERMEZ AUCUNE FENÊTE PENDANT 2 MINUTES.
+  NE TOUCHEZ PAS LA FENÊTE DEMO : regardez-la autant
+  que vous voulez, mais ne la déplacez pas et ne cliquez
+  rien dedans.
+
+LE FILM DU RUN (CE QUE VOUS VERREZ, DANS L'ORDRE)
+-------------------------------------------------
+  T+0    S10, S11, S12 s'écrivent (lancement, fenêtre
+         détectée, clic envoyé) — le demo joue dans sa
+         propre fenêtre.
+  ~30 s  SILENCE NORMAL : le superviseur sonde le journal
+         du demo toutes les 200 ms. Rien ne bouge, c'est
+         prévu.
+  ~35 s  La fenêtre DEMO SE FERME TOUTE SEULE — normal,
+         c'est le superviseur qui la ferme. Puis une
+         cascade de lignes : S13, S14, le journal du demo
+         recopié dans la fenêtre, S15, S16.
+  ~1 min T2 : le proxy démarre (fenêtre noire / trace),
+         deux traversées curl jusqu'à 25 s chacune — les
+         silences sont NORMAUX.
+  ~2 min T3 : le journal se dépose TOUT SEUL dans ce
+         dossier test.
+  FIN    La DERNIÈRE ligne dit S91 (échec) ou S92 (succès).
+         C'EST LÀ, ET SEULEMENT LÀ, QUE C'EST FINI.
+
+COMMENT LIRE LE VERDICT (IMPORTANT)
+-----------------------------------
+S15 dira « T1 demo : NON CONFORME » — ATTENDU ET SANS GRAVITÉ :
+le build diagnostique écrit 28 lignes, la vérification en attend
+17 (divergence connue et documentée de ce build). La preuve du
+demo vit déjà dans votre journal de 18:43. CE QUE CE RUN DOIT
+PRODUIRE :
+  - S13 et S14 (la machinerie de verdict T1 — jamais vue
+    jusqu'ici) ;
+  - les lignes T2 (proxy + traversées curl) ;
+  - les lignes T3 (dépôt) ;
+  - un NOUVEAU terrain_*.txt apparu TOUT SEUL dans ce dossier.
+
+APRÈS LE RUN
+------------
+Attendez environ 1 minute, puis regardez ce dossier test : un
+nouveau terrain_*.txt doit y être apparu sans que vous y
+touchiez. S'il n'apparaît pas : fermez les fenêtres, puis
+déposez à la main terrain_*.txt ET demo_journal.txt comme
+d'habitude.
+
+Si la fenêtre demo restait ouverte après ~1 minute, fermez-la à
+la main et notez-le. Si une fenêtre proxy restait ouverte après
+~2 minutes, idem.
+
+DURÉE TOTALE : 2 MINUTES. NE FERMEZ RIEN AVANT S91/S92.
