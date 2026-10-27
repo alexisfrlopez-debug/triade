@@ -3145,3 +3145,94 @@ correctif est la variable unique, la preuve par différence ; B = mort
 encore à S21 → le WER listing nommera l'adresse du défaut (0x61a8 ou une
 adresse .data = confirmation du spill ; autre adresse = nouveau coupable,
 l'instrumentation bissectrice déjà prévue par D59 devient terrain.11).**
+
+## Journal 53 — D63 : terrain.10 a SURVÉCU — premier run complet de l'histoire (S91 rendu, nettoyage S07) ; le tueur suivant était dans la PILE du proxy : sub rsp,0x7100 sans probing dans un thread à commit 0x1000 → c00000fd à la première session — http-10:R3 (boucle de probing écrite à la main), proxy 0.4.0-dev.2 scellé, terrain.11 = le kit corrigé embarqué (md5 96ac3abf…, verif 33/33)
+
+**Le run 21:38 (terrain_20261027_213813.txt, 1 932 o, déposé manuellement).**
+Le verdict de D62 est CONFIRMÉ PAR L'EXPÉRIENCE : terrain.10 traverse le
+premier curl qui tuaient terrain.5/8/9 (16:52, 19:23, 20:01, 20:47) et
+exécute le scénario ENTIER — S13 demo code=0 (PREMIÈRE fois), S14
+lignes=26 + fragment « re » (cap 640 o, prédictions D58 vérifiées), S22
+rendu (code=56), S24 (code=7), S26 journal proxy lignes=1, S27/S28 KO,
+S30-S33 (OAuth ECHEC), S36 KO, S07 nettoyage, S91 ÉCHEC final. La
+fenêtre vit, rend son verdict, se ferme proprement. **Mais T2/T3 sont
+KO** : T1 KO reste la divergence documentée 26≠17 (non corrigée : une
+variable par itération).
+
+**Diagnostic T2 — le proxy meurt SANS PARLER.** S26=1 ligne (la
+bannière seule : aucun « connexion entrante », aucun « arret ») +
+curl http code=56 (RST après connexion acceptée) + curl https code=7
+(port libéré : PLUS PERSONNE n'écoute sur 25000) = le processus proxy
+entier est mort ENTRE la bannière et la première session. Audit ABI du
+proxy (audit_shadow_m3.py, méthode D41) : 0 défaut sur 33 sites
+d'appel IAT — le tueur n'est PAS un appel ABI. diag_prologue_http10.py
++ diag_cadres_m3.py le trouvent : le thread session http-10 fait
+push×5 ; sub rsp,0x7100 ; … puis écrit [rsp+0x20] — or le PE du proxy
+déclare SizeOfStackCommit=0x1000 : un thread neuf ne possède qu'UNE
+PAGE committée (guard page dessous), et la première écriture au bas du
+cadre SAUTE la guard → c00000fd, et une exception de thread tue TOUT le
+processus. Balayage complet : un SEUL bloc à grand cadre dans tout le
+proxy (http-10 0x7100 ; http-09 0x28, http-11 0x80, tcp-13 0x170 —
+sains). Pourquoi invisible jusqu'ici : l'oracle unicorn mappe la pile
+entière (pas de guard page), le fil echo M2 tournait en réel avec un
+cadre de 0x28 o, et le proxy n'a JAMAIS été exécuté en réel avant le
+terrain (étape c « sur le terrain », journaux 37/38) — le run 21:38
+était sa PREMIÈRE exécution réelle. Anomalie S23/S25=40 expliquée au
+passage : fichier page ABSENT (curl code 56 n'écrit rien) → compteur
+d'octets non réinitialisé → il garde la valeur de la bannière (40 o) ;
+défaut cosmétique du chemin d'échec, documenté, non corrigé (ne se
+manifeste que sur échec).
+
+**Correctif http-10:R3 (écrite-avant-code).** P3 réécrite (la pile
+d'un thread neuf = réserve ~1 Mio dont UNE PAGE committée + guard ;
+l'ancienne P3 « vierge ~1 Mio » était fausse), Q0 nouvelle (boucle de
+probing AVANT le sub : toucher [rsp-0x1000]…[rsp-0x7000] puis
+[rsp-0x7100] en descendant — chaque touche étend la pile d'au plus une
+page, miroir du __chkstk des compilateurs ; r10/rax volatils, rsp et
+rcx intacts), V6 (contrôle statique du probing + l'aveu : la pile
+émulée mappée d'avance est exactement pourquoi le défaut était
+invisible), historique R3 complet. Brouillon régénéré → notation 1847 o
+(385 instructions, padding 201 ≥ 16, round-trip 385/385 — le -0x1000
+immédiat s'écrit 0xfffffffffffff000 pour le round-trip keystone↔capstone),
+SEUL http-10 change. build_m3.py : oracle VERT (structurel 524 verrous,
+différentiel 153 036 cas + falsification détectée, R7 : 13 blocs
+hérités octet-identiques), carte génération 5, version 0.4.0-dev.2
+(0x00040002, monotonie R10), sha256 bf02769f…, md5 dd12b649…, taille
+INCHANGÉE 19 456 o (le probing mange le padding).
+
+**terrain.11 (patch data-only, le superviseur INCHANGÉ).** Le kit
+embarqué : proxy v1 remplacé IN-PLACE @off 0xA410 (rva 0xC010, même
+taille — aucun décalage), chaîne md5 S05C mise à jour (dd12b649…,
+@rva 0x6B0A — la chaîne vit en .text2, couverte par R10[25], pas
+R10[24] : le premier patch avait ce garde inversé, rattrapé par la
+porte ROUGE avant écriture), génération terrain11 (L00/S00),
+VERSIONINFO 0.5.11.0, sommes R10[23]/[25]/[26] recalculées. Diff 1 793
+octets bornés (proxy ~1740 + md5 32 + génération 2 + .rsrc 6 + sommes
+24). verif_terrain11.py : **33/33 verts** (empreintes, porte 27/27,
+kit octet pour octet, prologue embarqué désassemblé avec la boucle de
+probing, correctifs antérieurs intacts, .text/.rdata/.text2 du
+superviseur inchangés). audit_shadow_sup34 sur terrain.11 : seul le
+latent sup-31 reste (documenté D53/D62, jamais exécuté, file M8).
+S20 affichera encore « 0.4.0-dev.1 » (étiquette du superviseur
+inchangé) — SEUL le md5 S05C fait foi : documenté au LISEZMOI.
+
+**T3 — la cause ouverte, la pièce prévue.** sup-35:Q3 : l'OAuth passe
+par curl DIRECT (sans proxy) → S33 ÉCHEC reste indéterminé entre
+réseau sortant bloqué et jetons. Le LISEZMOI-terrain11 prévoit la
+pièce qui départage SANS secret : deux commandes curl console
+(-w %{http_code} vers http://neverssl.com et https://www.googleapis.com)
++ capture, à ne déposer QUE si S33 échoue encore.
+
+**Livraison.** superviseur-terrain11.exe (md5 96ac3abff2f7d726e1a8ac18e17d2ebb,
+sha256 3a1ba8f4…) + LISEZMOI-terrain11.txt au dossier test (2/2 md5
+MATCH) + download/. **Prédictions pré-enregistrées (falsifiables) :
+A (proxy vit + réseau terrain OK) = S05C dd12b649…, S22 code=0, S23
+octets≈1268 (>0), S24 code=0, S25 ≈1256, S26 lignes=7 (bannière +
+2×connexion entrante + fin + tunnel + arret), S27 conforme, S28 OK,
+S30-S36 OK, terrain_*.txt déposé TOUT SEUL, S91 ÉCHEC (T1 documenté) ;
+A' (proxy vit + réseau sortant bloqué) = S26 ≥ 3 lignes (le proxy
+parle ENFIN), S22 code≠0 (502→22 ou timeout 28), S27 NON conforme, T3
+S33 ÉCHEC + la pièce console curl tranche ; B (le proxy meurt encore)
+= S26=1 + S22 code=56/7 → WER ReportArchive nommera c00000fd dans
+proxy.exe cette fois (le crash est DANS le proxy, pas le superviseur).
+La mesure de succès reste UNIQUE : le journal déposé TOUT SEUL.**

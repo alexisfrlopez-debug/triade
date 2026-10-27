@@ -1,4 +1,4 @@
-http-10 · session proxy · révision 2
+http-10 · session proxy · révision 3
 Intention : servir UNE connexion cliente de bout en bout dans son thread —
 accumuler la tête, la PARSER par les blocs http-01..08 (chaque octet non
 fiable a un comportement défini), trancher (requête ordinaire ou tunnel
@@ -12,13 +12,28 @@ Contrat :
              initialisés par http-12 AVANT le premier accept (leçon D42 :
              le devoir d'initialisation de l'hôte est ici UN CONTRAT, pas
              une supposition) ;
-         P3 la pile du thread (défaut système ~1 Mio) est vierge — le
+         P3 la pile du thread (réserve ~1 Mio, dont UNE SEULE PAGE est
+             committée à la naissance du thread, guard page dessous —
+             terrain 21:38/D63 : le commit PE initial est 0x1000) — le
              cadre de session (tampon d'accumulation 16 Kio ≥ MAX_TETE+1
              de http-06, tampon de réécriture 12 Kio, zones d'accueil des
-             champs) vit entièrement dans le cadre ;
+             champs) vit entièrement dans le cadre ET doit être étendu
+             page par page par le probing de Q0 avant toute écriture ;
          P4 WSA est actif (tcp-01 a réussi dans http-12) ;
          P5 la pile est alignée à l'entrée (rsp ≡ 8 mod 16).
-  post : Q1 accumulation : boucle tcp-03 (réception, capacité restante du
+  post : Q0 prologue : AVANT le sub rsp, 0x7100, une boucle de probing
+             touche une adresse de chaque page du cadre en DESCENDANT
+             (rsp-0x1000, rsp-0x2000, …, rsp-0x7000, puis rsp-0x7100 :
+             la page du bas exact) — chaque touche étend la pile par la
+             guard page AU PLUS UNE page sous la zone déjà garantie ;
+             registres de travail volatils (r10 compteur, rax touche),
+             rsp INCHANGÉ (l'alignement ABI de la R2 est préservé),
+             rcx (socket) intact ; SANS ce probing, la première écriture
+             au bas du cadre saute la guard page et lève c00000fd —
+             mort DU PROCESSUS ENTIER (leçon terrain 21:38/D63 : la
+             bannière était sortie, puis silence total du tuyau, RST au
+             client, jamais d'« arret ») ;
+         Q1 accumulation : boucle tcp-03 (réception, capacité restante du
              tampon) jusqu'au verdict http-06 : complet → parsing ;
              incomplet → continuer ; limite (2) → réponse 431, fin ;
              LF isolé (3) → réponse 400, fin ; réception 0 ou -1 pendant
@@ -117,6 +132,15 @@ Contrat :
        contrat d'émission intégrale.
 Vecteurs :
   V1 : round-trip de notation 100 %.
+  V6 (R3, D63) : contrôle statique du probing — le prologue contient la
+      boucle (mouvements [rsp+r10] par pas de 0x1000, bornes -0x1000 à
+      -0x7000, touche finale [rsp-0x7100]) AVANT le sub rsp, 0x7100, et
+      l'émulation rejoue les sessions V2 SANS changement de comportement
+      (la pile émulée est mappée d'avance : le probing y est inoffensif —
+      c'est exactement pourquoi ce défaut était invisible à l'oracle de
+      R1/R2) ; en émulation à guard simulée (une page committée, le
+      reste marqué indisponible), SANS probing le prologue lève — AVEC,
+      il passe.
   V2 : sessions scriptées (oracle, shims réseau) : GET/POST/CONNECT
        complets, CHAQUE verdict E1-E8 injecté (réponse exacte attendue,
        octet près), corps de 0/1/2048 octets, émissions partielles,
@@ -160,4 +184,19 @@ Historique  : R1 (D46) — version initiale écrite-avant-code ; la Q4 décrivai
               fuite, miroir tcp-12:I4) ; la Q3 précise le compactage
               d'argument du thread détaché. Contrat stable au sens R4 : les
               verdicts, les réponses et les fermetures de R1 sont inchangés.
-Décisions   : D7, D8, D19, D42 (pre P2), D45, D46, D47.
+Décisions   : D7, D8, D19, D42 (pre P2), D45, D46, D47, D63 (R3).
+Historique R3 (D63, terrain 21:38) : la P3 de R2 supposait la pile du
+  thread « vierge ~1 Mio » — FAUX sous Windows : CreateThread (pile 0,
+  tcp-06:Q2) ne commet qu'UNE page (commit PE 0x1000), le reste est
+  réservé derrière une guard page. Le prologue R2 faisait sub rsp,
+  0x7100 puis écrivait directement au bas du cadre : première session
+  = c00000fd avant TOUTE journalisation, mort du processus entier
+  (RST au client → curl code 56 ; port libéré → curl suivant code 7 ;
+  tuyau muet après la bannière). L'émulation unicorn mappe la pile en
+  entier (pas de guard) : le défaut était invisible à l'oracle — le
+  proxy n'avait JAMAIS été exécuté en réel (étape c prévue « sur le
+  terrain », journal 37/38). Correctif : Q0 (boucle de probing, miroir
+  du __chkstk des compilateurs), P3 réécrite, V6 ajouté. Aucun autre
+  bloc n'a de cadre > 0x1000 (balayage D63 : http-09 0x28, http-11
+  0x80, tcp-13 0x170…). Contrat stable au sens R4 pour Q1-Q6 : les
+  verdicts, réponses et fermetures de R2 sont inchangés.

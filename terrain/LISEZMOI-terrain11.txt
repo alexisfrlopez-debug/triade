@@ -1,0 +1,115 @@
+TRIADE — TERRAIN.11 : VOTRE RUN DE 21:38 EST LE PREMIER RUN COMPLET DE
+L'HISTOIRE. LE SUPERVISEUR A SURVÉCU. IL RESTAIT UN DÉFAUT DE PILE DANS
+LE PROXY — CORRIGÉ, IL EST DANS CE TERRAIN.11.
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre run de 21:38 (terrain_20261027_213813.txt) a fait ce qu'AUCUN run
+n'avait jamais fait : le superviseur a traversé le curl qui le tuait
+depuis dimanche, exécuté le scénario ENTIER jusqu'au verdict final S91,
+nettoyé, et rendu la main. Le correctif de 2 octets était le bon. Le
+demo aussi a fini proprement (code=0) pour la première fois. Votre
+journal de 1 932 octets est la pièce la plus précieuse de l'enquête :
+tout ce qui suit en sort.
+
+MAIS IL RESTAIT UN COUPABLE DANS LA PIÈCE DU FOND
+-------------------------------------------------
+Le test T2 raconte ceci : le proxy démarre (sa bannière arrive), puis
+curl reçoit une coupure brutale (code 56), le curl suivant ne trouve
+plus personne (code 7), et le journal du proxy reste à UNE ligne — le
+proxy est MORT à l'intérieur du test, sans un mot. Nous avons relu son
+binaire octet par octet : le défaut est de nous, encore. Chaque
+connexion reçoit un « thread » de service ; à sa naissance, Windows ne
+donne qu'UNE page de pile (4 Ko) et promet le reste à la demande. Notre
+thread demandait 28 Ko D'UN COUP et écrivait directement au fond —
+Windows coupe net (débordement de pile), et un thread qui meurt tue
+TOUT le processus. C'est pourquoi le proxy mourait SANS RIEN DIRE, à la
+PREMIÈRE connexion, à chaque fois. Personne ne l'avait vu : nos tests
+automatisés donnent la pile en entier (le défaut y est invisible), et
+le proxy n'avait jamais tourné en vrai avant votre machine.
+
+LE CORRECTIF, DÉJÀ EMBARQUÉ
+---------------------------
+Le proxy apprend maintenant à descendre sa pile page par page (la
+méthode qu'utilisent tous les compilateurs — la nôtre est écrite à la
+main, comme tout le reste). Ce proxy 0.4.0-dev.2 est scellé dans
+terrain.11 avec toute la chaîne de vérification du projet (spec
+révisée, tests rejoués : 153 036 cas verts). Le superviseur, lui, est
+INCHANGÉ — une seule variable par itération.
+
+CE QUE LE RUN 21:38 NOUS A ENCORE APPRIS
+----------------------------------------
+- T1 KO : « NON conforme » sur le demo — écart DÉJÀ documenté de notre
+  côté (26 lignes lues contre 17 attendues : la table de verdict est
+  restée à l'ancien format du demo). PAS corrigé cette fois — d'abord
+  le proxy. S91 affichera encore ÉCHEC, même en pleine réussite.
+- T3 KO : « jeton OAuth ECHEC » — l'envoi Drive n'a pas réussi à se
+  faire reconnaître. Ce test passe par le réseau DIRECT de votre
+  machine (sans notre proxy). Deux causes possibles — réseau sortant
+  bloqué, ou jetons — et le run de terrain.11 les départagera.
+
+AVANT DE RELANCER (1 MINUTE)
+----------------------------
+1. REDÉMARREZ le PC (le grand nettoyage des processus orphelins — le
+   port 25000 doit être libre pour le proxy).
+2. Si vous aviez désactivé des réglages Defender vers 20:50 :
+   réactivez-les, tout doit être NORMAL. Aucune exclusion, aucune
+   coupure — plus jamais nécessaire : le tueur était dans nos octets,
+   pas dans votre machine.
+
+LE RUN (COMME D'HABITUDE, ~3 MINUTES)
+--------------------------------------
+  1. Téléchargez superviseur-terrain11.exe depuis ce dossier test et
+     placez-le dans C:\TRIADE (à la place de terrain.10).
+     Empreinte de confiance md5 : 96ac3abff2f7d726e1a8ac18e17d2ebb
+  2. Double-cliquez → « TOUT DEMARRER » → ne fermez rien :
+       ~40 s   la fenêtre demo se ferme toute seule ;
+       ensuite la fenêtre noire du proxy — cette fois IL DOIT VIVRE :
+               les deux curl doivent rapporter leur page ;
+       ~2-3 min le journal se dépose TOUT SEUL dans ce dossier test
+               (c'est le test T3 — l'instant que tout le projet
+               attend), la fenêtre écrit S91, puis se ferme. FINI.
+
+LA PREUVE QUE LE BON PROXY EST EMBARQUÉ (dans le journal)
+----------------------------------------------------------
+La ligne S05C affichera le md5 du proxy extrait :
+    dd12b64948e64153ff1dd7a66f367ff3   ← le proxy corrigé (bon)
+Si vous voyez encore 8740e1ca…, ce n'est pas terrain.11. (La ligne S20
+affichera quand même « 0.4.0-dev.1 » : c'est l'étiquette du
+superviseur, inchangée — seul le md5 fait foi.)
+
+CE QUE LA RÉUSSITE RESSEMBLE
+----------------------------
+S22/S23 (curl http : code=0 et une vraie page de plus de 1000 octets),
+S24/S25 (https pareil), S26 « journal proxy lignes=7 », S27 « conforme
+», S28 « T2 VERDICT OK » — puis S30-S36 et le journal déposé TOUT SEUL.
+Deux réserves honnêtes :
+  - si VOTRE réseau bloque les sorties directes, T2 peut encore
+    échouer MAIS AVEC UNE SIGNATURE NOUVELLE : S26 affichera 3 lignes
+    ou plus (le proxy aura parlé : « connexion entrante »…) — ça
+    prouvera que le proxy vit et que la cause est le réseau, pas nous ;
+  - si S33 affiche encore « jeton OAuth ECHEC », déposez le journal à
+    la main (voir ci-dessous) : nous saurons que tout marche sauf la
+    sortie directe vers Google.
+
+SI S33 ÉCHOUE ENCORE : LA PIÈCE QUI DÉPARTAGE (2 MINUTES, SANS SECRET)
+-----------------------------------------------------------------------
+Ouvrez une console (touche Windows, tapez cmd, Entrée) et tapez
+EXACTEMENT ces deux lignes (une par une) :
+    curl -s --fail -o NUL -w "%{http_code}" --max-time 20 http://neverssl.com
+    curl -s --fail -o NUL -w "%{http_code}" --max-time 20 https://www.googleapis.com
+Capturez l'écran du résultat (des chiffres comme 200 ou 301 = réseau
+OK ; un message « curl: (…) » = réseau bloqué) et déposez la capture
+ici. Ces commandes ne contiennent AUCUN de vos secrets — elles testent
+seulement si votre machine sait sortir sur Internet en direct.
+
+LES PIÈCES À DÉPOSER DANS CE DOSSIER TEST
+-----------------------------------------
+1. Si le dépôt automatique a marché : RIEN — le terrain_*.txt sera déjà
+   là, et le demo_journal.txt copié après le run est un bonus bienvenu.
+2. Sinon : le terrain_*.txt de C:\TRIADE (copie manuelle), et si S33 a
+   échoué : la capture console ci-dessus.
+3. Si TOUT se refermait encore (très improbable) : capture écran +
+   capture du dossier C:\ProgramData\Microsoft\Windows\WER\ReportArchive
+   (les noms des sous-dossiers avec leurs dates).

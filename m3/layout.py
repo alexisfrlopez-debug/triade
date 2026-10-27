@@ -75,8 +75,10 @@ TAILLE_FICHIER = 0x4C00                   # 0x2C00 + 0x2000
 
 DLL_CHARACTERISTICS = L2.DLL_CHARACTERISTICS   # DYNAMICBASE | HEVA | NX
 
-VERSION_DEV1 = "0.4.0-dev.1"   # proxy complet : 13 blocs M3 + réutilisation R7
-VERSION_U64_DEV1 = 0x00040001  # R10 : monotonie de version (anti-rollback)
+VERSION_DEV1 = "0.4.0-dev.2"   # proxy complet : 13 blocs M3 + réutilisation R7 ;
+                                 # dev.2 (D63) : http-10:R3 — probing de pile au
+                                 # prologue (c00000fd terrain 21:38 corrigé)
+VERSION_U64_DEV1 = 0x00040002  # R10 : monotonie de version (anti-rollback)
 VERSION_U64_MIN = 0x00040000   # plancher accepté par la porte R10 (http-12:Q1)
 
 # --- Blocs embarqués dans proxy.exe (couche C, génération 4) --------------------

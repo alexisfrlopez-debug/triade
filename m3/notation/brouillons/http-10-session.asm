@@ -1,4 +1,4 @@
-; http-10-session · brouillon · session proxy (thread par connexion) · http-10:R2 · e50010
+; http-10-session · brouillon · session proxy (thread par connexion) · http-10:R3 · e50010
 ; servir UNE connexion de bout en bout : accumulation (http-06), parsing
 ; (http-01..08 — chaque octet non fiable a un verdict), trancher (requête
 ; ordinaire ou tunnel CONNECT), router (tcp-13), réécrire la ligne de requête
@@ -15,11 +15,24 @@
 ; documenté Win64) ; handle de la pompe détachée fermé immédiatement (IAT
 ; CloseHandle — miroir tcp-12:I4, R2).
 ; entrée : rcx = socket cliente (transmise par tcp-06 depuis http-12)
+; prologue R3 (Q0, D63) : un thread neuf n'a qu'UNE page de pile
+; committée (commit PE 0x1000, guard page dessous) — le cadre 0x7100
+; est étendu page par page AVANT le sub (probing, miroir __chkstk),
+; sinon la première écriture au bas du cadre saute la guard et lève
+; c00000fd (mort du processus entier — terrain 21:38). r10/rax volatils,
+; rsp et rcx intacts.
 push rbx
 push r12
 push r13
 push r14
 push r15
+mov r10, 0xfffffffffffff000
+.probe:
+mov rax, qword ptr [rsp + r10]
+sub r10, 0x1000
+cmp r10, -0x7000
+jge .probe
+mov rax, qword ptr [rsp - 0x7100]
 sub rsp, 0x7100
 mov rbx, rcx
 xor r12d, r12d
