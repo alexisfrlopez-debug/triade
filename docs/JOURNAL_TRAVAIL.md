@@ -2766,3 +2766,82 @@ fermera TOUTE SEULE vers T+35 s — annonce explicite pour désamorcer la
 fermeture panique), silences curl normaux, NE FERMER RIEN avant S91/S92, et
 comme but affiché le dépôt automatique du journal — plus jamais de dépôt
 manuel si T3 vit.
+
+## Entrée 48 — terrain.9 : « le journal ne s'est pas déposé seul, tout s'est fermé tout seul » — le run 19:23 va PLUS LOIN QUE JAMAIS (S13-S16 vivent, 3 prédictions vérifiées à l'octet), puis MORT au 1er curl T2 : l'enquête blanchit le superviseur octet par octet et désigne DEFENDER (kill comportemental de l'arbre au moment du relais externe) — terrain.9 = même image + exclusion du dossier d'exécution (D59, 27/10 au soir)
+
+**Le verdict du run de relance (terrain_20261027_192346.txt, 1 525 o — journal
+terrain le plus long jamais produit) :** S02 porte R10 VERTE (3e validation
+D56), S03-S06 kit conforme (demo.10 cf72462d + proxy 8740e1ca + annexe jetons),
+S11 fenêtre DETECTÉE (3e validation D55), S12 clic envoyé — puis, PREMIÈRE FOIS
+sur le terrain : S13 « demo.exe termine code=0 », S14 « lignes journal demo=26 »,
+le journal demo recopié jusqu'au fragment « re » (l'octet 640 tombe dans « re »
+de « retour arrière » — calculé la veille), S15 « NON conforme » + S16 « VERDICT
+KO » (attendus). LES TROIS PRÉDICTIONS PRÉ-ENREGISTRÉES (entrée 47) SE VÉRIFIENT
+À L'OCTET PRÈS. Puis S20/S21 (proxy lancé, bannière reçue) — et le journal
+s'arrête NET à la ligne de bannière : mort pendant le premier curl de T2, 2e
+fois EXACTEMENT au même point (terrain.5, 16:52). Le demo_journal.txt (706 o)
+est PROPRE : 28 lignes complètes jusqu'à « boucle § 5 complète - DÉMO OK », et
+AUCUNE ligne L4C/L4D post-événement — le développeur n'a pas touché la fenêtre :
+le protocole a été respecté à la lettre, la fermeture n'est PAS de lui. Le dépôt
+n'a pas eu lieu : T3 ne s'est jamais exécuté.
+
+**L'enquête (élimination octet par octet).** (1) Le chemin .curl est
+statiquement sain : scripts/diag_iat_curl_terrain8.py parse les 6 descripteurs
+d'import du PE livré — 43/43 slots couverts, WaitForSingleObject (0x2310) et
+GetExitCodeProcess (0x2318) compris, pré-charges = RVAs hint normales, zéro
+call-site [rip+disp] hors couverture (l'hypothèse « IAT non résolue, classe
+D53 » est RÉFUTÉE binairement). (2) Chaque appel du chemin .curl a DÉJÀ réussi
+sur le terrain au run 19:23 par T1 : sup-33 utilise les MÊMES slots (S13
+« code=0 » sort de GetExitCodeProcess @0x2318 ; le mode-0 de sup-31 est prouvé
+par le lancement du demo ; CloseHandle @0x20f8 par chaque lancement). (3)
+L'argument décisif : pendant .curl, le fil du scénario est BLOQUÉ dans
+WaitForSingleObject(hproc, 25000) — un WM_CLOSE ne serait traité qu'au RETOUR
+du gestionnaire ; l'absence de S22A est donc MATERIELLEMENT IMPOSSIBLE par un
+chemin interne propre (ni croix, ni verdict, ni chemin d'arrêt). (4) « Tout
+s'est fermé tout seul » = arbre entier tué d'un coup : signature d'un kill
+externe, pas d'un crash (un crash laisse un rapport WER AppCrash et ne ferme
+pas les processus voisins). **Le superviseur a été TUÉ DE L'EXTÉRIEUR pendant
+le premier curl, 2/2.**
+
+**Le coupable désigné : Microsoft Defender.** Décodage des 15 rapports WER de
+l'ère terrain.1-3 (scripts/diag_wer_times.py) : tous c0000005 data=8 (DEP,
+exécution d'adresse inconnue — la classe D53, corrigée par D54), aucun après
+15:45 ; la chronologie croise le diagnostic 2 : **RealTimeProtection +
+BehaviorMonitor ACTIFS, et proxy.exe DÉTECTÉ le 27/10 à 12:55:32** (copie
+Downloads, via svchost — l'« alerte AV proxy.exe » jusqu'ici non localisée est
+maintenant datée et située). Le kill survient au moment précis où la chaîne
+curl.exe → proxy (écoute 25000) → neverssl.com s'établit : un binaire non signé
+qui dépose, lance et RELAIE du trafic externe est le motif comportemental
+classique du faux positif Wacatax. Les 3 morts à S12 (18:00, 18:43) restent
+attribuées aux fermetures manuelles (preuves L4C/L4D et déclarations d'époque).
+
+**Décision D59 : l'exclusion Defender est la SEULE variable de l'itération.**
+Falsifiable : sans exclusion, mort 2/2 au premier curl ; si le run va au bout
+avec l'exclusion, la cause est prouvée par différence unique. Le binaire ne
+change PAS fonctionnellement — patch_terrain9.py (base terrain.8 d64304bd…) :
+L00/S00 « terrain.9 » (1 o chacun), VERSIONINFO 0.5.9.0 (2 champs binaires +
+2 chaînes UTF-16), somme R10[23] recalculée (unique couvreur de S00 @0x4366 ;
+L00 et les octets .rsrc HORS couverture, vérifié par balayage). 7 octets
+modifiés, tous bornés ; porte 27/27 + terminateur ; FindWindowW intact ; .blob
+byte pour byte inchangé. Vérification indépendante verif_terrain9.py (parseur
+from scratch, 16 contrôles) : TOUT CONFORME. md5 a59931db4e3bfc14a29e927a79cc73ca
+(sha256 aff253c3…).
+
+**Livraison :** superviseur-terrain9.exe + LISEZMOI-terrain9.txt au dossier
+test (2/2 md5 MATCH) + copie download/. Le LISEZMOI fait ce qu'aucun binaire
+ne peut : il demande AVANT le run l'exclusion du dossier d'exécution (dossier
+dédié C:\TRIADE hors Téléchargements, pas à pas Sécurité Windows → Protection
+contre les virus et menaces → Exclusions → Dossier), annonce le film complet
+(y compris les fenêtres console du proxy/curl), réaffirme S15 NON CONFORME
+attendu, et prépare la falsification inverse : si tout se referme encore,
+CAPTURE de l'Historique de protection Defender à déposer avec le journal —
+cela nommera le tueur définitivement.
+
+**Prédictions pré-enregistrées (falsifiables) :** avec l'exclusion posée —
+S22A « curl http : code=0 » (neverssl.com joignable), S23 octets>0, S24 « code=0 »,
+S25 octets>0, S26 lignes proxy, S27 conforme, S28 VERDICT OK, S30-S34 dépôt,
+S91 ÉCHEC (T1 KO documenté) ; un terrain_*.txt déposé TOUT SEUL dans le dossier
+test. Si mort encore à S21/bannière : l'exclusion dossier ne suffit pas au
+BehaviorMonitor → l'Historique de protection dira le nom et l'heure, et
+terrain.10 portera les exclusions de processus + l'instrumentation bissectrice
+du .curl (lignes avant/après lancement) + le dépôt T3 anticipé avant T2.

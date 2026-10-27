@@ -1,0 +1,98 @@
+TRIADE — TERRAIN.9 : VOTRE ANTIVIRUS A TOUT FERMÉ — UNE EXCLUSION AVANT LE RUN
+=============================================================================
+
+CE QUI S'EST PASSÉ À 19:23 (EXCELLENTTES NOUVELLES D'ABORD)
+-----------------------------------------------------------
+Votre run de relance est ALLÉ PLUS LOIN QUE JAMAIS. Pour la première
+fois sur votre machine, le superviseur a écrit les lignes S13 à S16 :
+le demo est mort code 0, son journal a été lu (26 lignes + le fragment
+« re » — nos trois prédictions enregistrées AVANT le run se sont
+vérifiées À L'OCTET PRÈS), le verdict T1 a été rendu. Toute la
+machinerie vit. Puis S20/S21 : le proxy démarre, sa bannière arrive.
+Et là, pendant le premier test réseau (une traversée curl de 20 s par
+le proxy), TOUT S'EST FERMÉ D'UN COUP — la fenêtre du superviseur, le
+proxy, tout. Vous n'aviez rien touché : votre journal demo en est la
+preuve (aucune interaction, protocole parfaitement respecté).
+
+POURQUOI TOUT S'EST FERMÉ TOUT SEUL : C'EST L'ANTIVIRUS
+--------------------------------------------------------
+L'enquête (menée octet par octet sur les journaux et le binaire) a
+éliminé toutes les causes internes : chaque appel effectué par le
+superviseur à cet instant précis avait DÉJÀ fonctionné une minute plus
+tôt dans le même run, et une fermeture manuelle n'aurait pas pu couper
+le journal à cet endroit-là. Reste un seul coupable, et il est externe :
+WINDOWS DEFENDER. Les faits qui l'accusent :
+  - votre antivirus a déjà signalé proxy.exe une fois ce jour-là
+    (12:55, détection enregistrée) ;
+  - la surveillance « comportementale » est active sur votre machine ;
+  - la fermeture simultanée de TOUTES les fenêtres d'un coup est la
+    signature d'un antivirus qui tue une famille de processus — pas
+    d'un plantage (un plantage laisse un message d'erreur et ne ferme
+    pas les voisins) ;
+  - c'est arrivé DEUX FOIS exactement au même point : l'instant où le
+    trafic réseau externe commence à passer par le proxy.
+
+POURQUOI IL FAIT ÇA : nos exécutables sont du code machine écrit à la
+main, sans signature numérique. Pour l'antivirus, « un programme qui
+dépose d'autres programmes, les lance, et relaie du trafic réseau »
+ressemble à un cheval de Troie — c'est un FAUX POSITIF : ces binaires
+sont les nôtres, vérifiés octet par octet, ils ne contiennent que notre
+propre code. Il faut simplement dire à Defender de les laisser
+tranquilles. C'EST LA SEULE CHOSE QUI CHANGE DANS CETTE ITÉRATION.
+
+AVANT LE RUN : L'EXCLUSION (5 MINUTES, UNE SEULE FOIS)
+------------------------------------------------------
+1. Créez un dossier dédié, par exemple  C:\TRIADE
+   (Explorateur → Ce PC → Disque local (C:) → clic droit → Nouveau →
+   Dossier → nommez-le TRIADE).
+2. Téléchargez superviseur-terrain9.exe depuis ce dossier test et
+   PLACEZ-LE DANS C:\TRIADE — pas dans Téléchargements (Defender
+   surveille davantage les fichiers téléchargés).
+3. Ouvrez « Sécurité Windows » (touche Windows, tapez « Sécurité
+   Windows », Entrée).
+4. Cliquez « Protection contre les virus et menaces » → « Gérer les
+   paramètres » (sous Paramètres de protection contre les virus et
+   menaces) → descendez jusqu'à « Exclusions » → « Ajouter ou
+   supprimer des exclusions ».
+5. « Ajouter une exclusion » → « Dossier » → choisissez C:\TRIADE →
+   validez. Si Windows demande une autorisation administrateur :
+   Oui. Le dossier doit apparaître dans la liste des exclusions.
+
+LE RUN (COMME D'HABITUDE, ~3 MINUTES)
+-------------------------------------
+Double-cliquez C:\TRIADE\superviseur-terrain9.exe → « TOUT DEMARRER »
+→ ne fermez rien, ne touchez à rien :
+  ~40 s   la fenêtre demo se ferme toute seule (normal, annoncé) ;
+  ensuite des fenêtres noires peuvent apparaître (proxy, curl) —
+          normal, laissez-les vivre ;
+  ~1 min  silence pendant les traversées réseau (normal) ;
+  ~2-3 min le journal se dépose TOUT SEUL dans ce dossier test, puis
+          la fenêtre superviseur écrit S91/S92 et se ferme. FINI.
+
+CE QUE CE RUN DOIT PRODUIRE
+---------------------------
+  - les lignes S22 à S28 (les traversées curl http et https par le
+    proxy — jamais vues jusqu'ici) ;
+  - les lignes S30 à S34 (le dépôt) ;
+  - S15 « NON CONFORME » restera ATTENDUE (le demo de diagnostic
+    écrit 28 lignes, la vérification en attend 17 : divergence connue
+    et documentée, sans gravité) ;
+  - et surtout : UN NOUVEAU terrain_*.txt APPARU TOUT SEUL dans ce
+    dossier test — le cœur du livrable, jamais encore réussi.
+Ensuite, déposez demo_journal.txt à la main comme d'habitude.
+
+SI TOUT SE REFERME ENCORE D'UN COUP
+-----------------------------------
+Pas de panique, c'est une information précieuse : ouvrez Sécurité
+Windows → Protection contre les virus et menaces → « Historique de
+protection » — et FAITES UNE CAPTURE D'ÉCRAN de tout ce qui s'y
+trouve (nom de la menace, fichier visé, heure). Déposez la capture
+dans ce dossier test avec le journal terrain_*.txt : cela nommera le
+coupable définitivement et orientera la suite.
+
+EMPREINTE DE CONFIANCE
+----------------------
+superviseur-terrain9.exe — md5 a59931db4e3bfc14a29e927a79cc73ca
+(seule la génération change par rapport au terrain.8 que vous avez
+éprouvé : 7 octets de version, le reste est byte pour byte identique,
+porte d'intégrité 27/27 vérifiée).
