@@ -2488,3 +2488,60 @@ après S03, le LISEZMOI renvoie au DIAGNOSTIC3 déjà en main (rapport
 WER + LocalDumps) — l'offset EXACT tranchera ce qui resterait.
 Prochaine étape après VIVANT : le journal complet S00→S07 + T1/T2/T3,
 puis la reprise de la chaîne de clôture M2.
+
+## Entrée 44 — terrain.6 : « journaux envoyés » — le premier journal TERRAIN.5 complet raconte T1 : S11 « fenetre demo ABSENTE » = FindWindowW cherchait le TITRE avec le nom de CLASSE ; correctif 9 octets par la classe, version dans le journal (D55, 27/10 soir)
+
+**terrain_20261027_165217.txt + demo_journal.txt rapatriés (dossier
+test).** Le run terrain.5 de 16:52 est le PLUS LOIN JAMAIS ALLÉ :
+L00→L03, S00→S06 TOUT VERT (bannière, date, porte R10 27/27, libc 4/4,
+demo.exe md5 73c064fb conforme, proxy.exe 8740e1ca conforme, annexe
+extraite T3 actif) — le kit embarqué D48/D49/D54 fonctionne de bout en
+bout. Puis S10 lancement demo, S11 « fenetre demo ABSENTE », S20/S21
+proxy + bannière — et MORT au premier .curl (silence curl 25 s, fenêtre
+fermée « avant de terminer »).
+
+**S11 : la fenêtre était LÀ — c'est la RECHERCHE qui était fausse.**
+Le demo_journal.txt du run prouve L01 « fenetre principale creee » ET
+L03 « clic » manuel du développeur : fenêtre affichée, cliquable,
+scénario lancé à la main — pendant que le superviseur sondait
+FindWindowW(NULL, "TRIADE_demo") 200×50 ms en échec, puis TUAIT le
+demo (TerminateProcess à la 10e seconde) — le run manuel coupé net
+sur « réseau : échange en échec » (le journal du demo se termine par
+le verdict propre de win-10 : l'échange a ÉCHOUÉ avant le tueur —
+premier échec RÉEL du demo.9 sur machine, jamais rejoué sans main
+humaine — les sondes D43 restent suspectes, terrain.6 rejouera T1
+automatiquement et le dira proprement). Preuve binaire : demo.exe
+embarqué crée CLASSE="TRIADE_demo" (@0x29c0) TITRE="TRIADE M2 —
+démonstration complète" (@0x29d8) — aucune fenêtre ne porte le TITRE
+"TRIADE_demo" : 200 sondes impossibles par construction.
+
+**La mort au .curl : éliminations en cascade.** IAT blanchie (6
+descripteurs motif demo, 43 slots par nom exact, 93 call-sites
+couverts — réinventaire byte-level), .curl/sup-31 désassemblés du
+binaire RÉEL (le lanceur mode-0 SAUTE pipes et USESTDHANDLES — les
+handles périmés exclus), win-05 mode-1 et sup-11 mode-1 relus ligne à
+ligne (corrects), scénario sur FIL (tcp-06) : la fenêtre RÉPOND — la
+fermeture ne peut venir que d'un WM_QUIT (croix pendant le silence
+curl --max-time 20) ou d'une terminaison externe (Wacatax.C!ml).
+terrain.6 identifie sa génération DANS le journal (L00/S00
+« terrain.6 » — terrain.4/5 avaient omis, le 16:52 se disait
+« terrain.3 ») : le prochain run sera daté sans ambiguïté.
+
+**terrain.6 (patch chirurgical 23 octets, md5 2e582a64…) :** (a)
+sup-33 @0x544f : « xor ecx,ecx ; lea rdx,[chaine] » → « lea
+rcx,[chaine] ; xor edx,edx » — même taille, même chaîne, FindWindowW
+recherche par la CLASSE ; (b) somme R10[19] (bloc sup-33) ajustée du
+delta exact — 20/20 recalculées VERTES ; (c) L00/S00 « terrain.3 » →
+« terrain.6 » (un octet chacun, zones hors R10 vérifiées non
+couvertes) ; (d) VERSIONINFO 0.5.0.6 (4 champs). audit_terrain6.py
+INDÉPENDANT (parseur from scratch, leçon D51) : 23 contrôles TOUT
+CONFORME — règle chargeur, motif demo 6/6, FT pré-remplies 100%,
+93 call-sites, porte 20/20, désassemblage exact du correctif,
+.blob intact (demo 73c064fb + proxy 8740e1ca octet pour octet).
+
+**Livraison :** superviseur-terrain6.exe + LISEZMOI-terrain6.txt au
+dossier test (2/2 md5 MATCH) + download/. Le LISEZMOI pose la garde
+du run : « attendez 1 à 2 minutes SANS FERMER — les silences curl de
+25 s sont NORMAUX », et le protocole d'arbitrage si mort il y a
+(DIAGNOSTIC3 + historique Defender + CrashDumps : la croix contre
+l'antivirus contre le crash, tranché en un aller-retour).

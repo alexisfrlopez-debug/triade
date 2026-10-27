@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""ecrire_lisez_moi_terrain6.py — LISEZMOI-terrain6.txt (CP1252, CRLF).
+
+Le guide du run terrain.6 : ce qui a été corrigé, le déroulé attendu
+(avec ses silences NORMAUX), et quoi déposer ensuite.
+"""
+
+import pathlib
+
+CHEMIN = pathlib.Path("/home/z/my-project/triade/terrain/LISEZMOI-terrain6.txt")
+
+TEXTE = """\
+TRIADE — SUPERVISEUR TERRAIN.6
+==============================
+
+CE QUI S'EST PASSE AVEC TERRAIN.5
+----------------------------------
+Votre journal terrain_20261027_165217.txt a tout dit : la fenetre
+s'ouvre, le clic lance le scenario, S00 a S06 passent (banniere, date,
+porte R10 VERTE, libc 4/4, demo.exe et proxy.exe extraits avec les bons
+md5, annexe extraite, T3 actif) — le kit embarque FONCTIONNE. Puis :
+
+  S10 T1 demo 0.3.0 : lancement demo.exe
+  S11 T1 fenetre demo ABSENTE        <-- le bug, voir ci-dessous
+  S20/S21 T2 proxy lance, banniere recue
+  << ICI : plus rien — le superviseur meurt pendant la 1re traversée
+     curl (jusqu'a 25 secondes de silence), la fenetre se ferme >>
+
+LE BUG PROUVE DE TERRAIN.5 (une seule instruction)
+--------------------------------------------------
+Le superviseur cherchait la fenetre du demo par son TITRE en passant
+le nom de CLASSE : FindWindowW(NULL, "TRIADE_demo"). Or le demo cree
+sa fenetre avec CLASSE = "TRIADE_demo" et TITRE = "TRIADE M2 —
+demonstration complete". Aucune fenetre ne s'appelle "TRIADE_demo" :
+200 sondes x 50 ms echouent, S11, et le superviseur TUAIT le demo a
+la 10e seconde — pendant que VOUS veniez de cliquer son bouton a la
+main (votre demo_journal.txt le prouve : L03 clic, scenario lance,
+puis coupe net sur "reseau : echange en echec").
+
+TERRAIN.6 CORRIGE : la recherche se fait par la CLASSE (9 octets,
+même taille, même chaine) : FindWindowW("TRIADE_demo", NULL). La
+fenetre sera trouvee en moins d'une seconde, le clic BM_CLICK sera
+envoye PAR LE SUPERVISEUR, le demo jouera son scenario tout seul,
+son journal sera verifie ligne a ligne — plus de tueur, plus de
+clic manuel. Version 0.5.0-terrain.6 dans le journal (L00/S00) et
+dans les proprietes du fichier (0.5.0.6).
+
+LA FERMETURE « AVANT LA FIN » : LES DEUX SUSPECTS RESTANTS
+----------------------------------------------------------
+Le scenario tourne sur un FIL separes : la fenetre RESTE reactive
+pendant tout le run. Une fermeture ne peut venir que :
+  1. de la CROIX fermee pendant un silence (chaque traversée curl
+     attend jusqu'a 25 s : c'est NORMAL, ne fermez rien — comptez
+     1 a 2 minutes pour tout le scenario) ;
+  2. d'une terminaison EXTERNE (antivirus — la lignee a deja ete
+     signalee Wacatax.C!ml : ouvrez "Securite Windows > Historique
+     de protection" et notez toute entree superviseur).
+Si terrain.6 meurt encore : clic droit DIAGNOSTIC3-SUPERVISEUR.cmd
+-> "Executer en tant qu'administrateur", et deposez
+rapport-diagnostic3.txt + les .dmp de %LOCALAPPDATA%\\CrashDumps +
+une capture de l'historique Defender dans le dossier test.
+
+A REGARDER DANS LE PROCHAIN JOURNAL
+-----------------------------------
+  S11 doit maintenant dire « fenetre demo TROUVEE » (ou equivalent) ;
+  S12..S16 : le clic, l'attente de fin, le verdict ligne a ligne du
+  journal du demo. ATTENTION : votre dernier run a montre « reseau :
+  echange en echec » DANS le journal du demo — si cette ligne
+  revient (S1x verdict demo KO), le demo.9 lui-meme a un defaut de
+  sequence (les sondes retirees en D43) : c'est la prochaine cible,
+  le journal le dira proprement.
+  S22..S28 : les deux traversées curl (http puis https), le code de
+  sortie de chaque curl, les evenements du proxy, l'arret propre.
+  S30.. : le depot du journal dans le dossier test du Drive (T3).
+
+QUOI FAIRE (2 minutes)
+----------------------
+1. Remplacez superviseur-terrain5.exe par superviseur-terrain6.exe.
+2. DOUBLE-CLIQUEZ. Fenetre ouverte ? Cliquez « TOUT DEMARRER ».
+3. ATTENDEZ 1 a 2 minutes SANS FERMER LA FENETRE (les silences
+   sont normaux : chaque traversée curl va jusqu'a 25 s).
+4. DEPOSEZ le nouveau fichier terrain_*.txt dans le dossier test.
+
+md5    2e582a64b04a2acf05e874cfc97a8caa
+sha256 3b20b04600aaa13ba2fd24f8c117269ee52e0739285f83d58fd110ba20771be8
+"""
+
+def main():
+    CHEMIN.parent.mkdir(parents=True, exist_ok=True)
+    with open(CHEMIN, "w", encoding="cp1252", newline="\r\n") as f:
+        f.write(TEXTE)
+    print(f"écrit : {CHEMIN} ({len(TEXTE.encode('cp1252'))} octets CP1252)")
+
+if __name__ == "__main__":
+    main()
