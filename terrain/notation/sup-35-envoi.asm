@@ -1,0 +1,341 @@
+; sup-35-envoi · bloc terrain · spec sup-35:R1 · bloc carte f60035
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5e00, taille 1216 octets
+; Dépendances : IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, Sleep, DeleteFileA ; IAT kernel32#2 : CreateFileA ; IAT kernel32#1 : CloseHandle, ReadFile, WriteFile ; blocs sup-31, sup-22, sup-36, libc-01 ; chaînes S30..S36 + étiquettes + gabarits à marqueurs (zones données)
+; Notation explicite générée par outils/auteur.py depuis brouillons/sup-35-envoi.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 1162 o · padding : 54 o (NOP)
+; Étiquettes résolues : .envoi_ko=0x60fa, .jeton_ko=0x6113, .session_ko=0x612c, .jetons_absents=0x6145, .ko=0x615c, .nettoyage=0x6176, .nettoie=0x6183, .compte_nom=0x618e, .nom_len=0x619a, .gab=0x61b8, .gab_boucle=0x61bc, .gab_literal=0x61da, .gab_fin=0x61e5, .champ=0x61ee, .teste=0x61fa, .avance=0x61fe, .nul=0x6208, .champ_special=0x620f, .champ_jeton=0x6231, .champ_nom=0x623a, .champ_dossier=0x6243, .champ_chemin=0x624c, .champ_len=0x6253, .compte=0x6256, .champ_ptr=0x6262, .champ_fin=0x6267, .append=0x6268, .fin=0x627b
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x5e0e + 0x7 - 0x1f75 = 0x3ea0
+;   0x5e15 + 0x7 - 0x178a = 0x4692
+;   0x5e2c + 0x7 + 0x4cd = 0x6300
+;   0x5e4c + 0x7 - 0x22e3 = 0x3b70
+;   0x5e53 + 0x7 - 0x210a = 0x3d50
+;   0x5e64 + 0x7 - 0x152f = 0x493c
+;   0x5e70 + 0x7 + 0x49c = 0x6313
+;   0x5e8a + 0x7 - 0x17b9 = 0x46d8
+;   0x5ea3 + 0x7 - 0x150c = 0x499e
+;   0x5ec1 + 0x7 - 0x23b8 = 0x3b10
+;   0x5ed0 + 0x6 - 0x3bc6 = 0x2310
+;   0x5ed9 + 0x7 - 0x2390 = 0x3b50
+;   0x5ee0 + 0x6 - 0x3bce = 0x2318
+;   0x5ee9 + 0x6 - 0x3df7 = 0x20f8
+;   0x5eef + 0x7 - 0x23a6 = 0x3b50
+;   0x5efc + 0x7 + 0x420 = 0x6323
+;   0x5f1c + 0x7 - 0x21d3 = 0x3d50
+;   0x5f26 + 0x7 - 0x1699 = 0x4894
+;   0x5f3b + 0x7 - 0x23d2 = 0x3b70
+;   0x5f5e + 0x7 - 0x1870 = 0x46f5
+;   0x5f77 + 0x7 - 0x15fd = 0x4981
+;   0x5f83 + 0x7 + 0x3ac = 0x6336
+;   0x5f9f + 0x7 - 0x15b7 = 0x49ef
+;   0x5fbd + 0x7 - 0x24b4 = 0x3b10
+;   0x5fcc + 0x6 - 0x3cc2 = 0x2310
+;   0x5fd5 + 0x7 - 0x248c = 0x3b50
+;   0x5fdc + 0x6 - 0x3cca = 0x2318
+;   0x5fe5 + 0x6 - 0x3ef3 = 0x20f8
+;   0x5feb + 0x7 - 0x24a2 = 0x3b50
+;   0x5ff8 + 0x7 + 0x349 = 0x6348
+;   0x6018 + 0x7 - 0x22cf = 0x3d50
+;   0x6022 + 0x7 - 0x1785 = 0x48a4
+;   0x6037 + 0x7 - 0x24ce = 0x3b70
+;   0x605a + 0x7 - 0x193b = 0x4726
+;   0x6073 + 0x7 - 0x15a3 = 0x4ad7
+;   0x608d + 0x7 - 0x2584 = 0x3b10
+;   0x609c + 0x6 - 0x3d92 = 0x2310
+;   0x60a5 + 0x7 - 0x255c = 0x3b50
+;   0x60ac + 0x6 - 0x3d9a = 0x2318
+;   0x60b5 + 0x6 - 0x3fc3 = 0x20f8
+;   0x60bb + 0x7 - 0x2572 = 0x3b50
+;   0x60c4 + 0x7 - 0x196d = 0x475e
+;   0x60db + 0x7 - 0x194d = 0x4795
+;   0x60fa + 0x7 - 0x1986 = 0x477b
+;   0x6113 + 0x7 - 0x1a0c = 0x470e
+;   0x612c + 0x7 - 0x19f0 = 0x4743
+;   0x6145 + 0x7 - 0x1a97 = 0x46b5
+;   0x615c + 0x7 - 0x19bd = 0x47a6
+;   0x6176 + 0x7 + 0x196 = 0x6313
+;   0x61f3 + 0x7 - 0x268a = 0x3b70
+;   0x6228 + 0x7 - 0x26bf = 0x3b70
+;   0x6231 + 0x7 - 0x26c8 = 0x3b70
+;   0x623a + 0x7 - 0x2771 = 0x3ad0
+;   0x6243 + 0x7 - 0x1930 = 0x491a
+;   0x624c + 0x7 - 0x2943 = 0x3910
+push rbx
+push r12
+push r13
+push r14
+push r15
+push rbp
+sub rsp, 0x48
+lea rbx, [rip - 0x1f75]
+lea rcx, [rip - 0x178a]
+mov edx, 35
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+lea rcx, [rip + 0x4cd]
+xor edx, edx
+mov r8d, 19
+xor r9d, r9d
+call 0x4e00
+test rax, rax
+je 0x6145
+lea rcx, [rip - 0x22e3]
+lea rdx, [rip - 0x210a]
+mov r8, rax
+call 0x1100
+xor ebp, ebp
+lea r15, [rip - 0x152f]
+call 0x61b8
+lea rcx, [rip + 0x49c]
+mov edx, 1
+mov r8d, 16
+mov r9d, ebp
+call 0x4e00
+lea rcx, [rip - 0x17b9]
+mov edx, 29
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+xor ebp, ebp
+lea r15, [rip - 0x150c]
+call 0x61b8
+mov rcx, rbx
+xor edx, edx
+call 0x5200
+test eax, eax
+je 0x6113
+mov r12, qword ptr [rip - 0x23b8]
+mov rcx, r12
+mov edx, 35000
+call qword ptr [rip - 0x3bc6]
+mov rcx, r12
+lea rdx, [rip - 0x2390]
+call qword ptr [rip - 0x3bce]
+mov rcx, r12
+call qword ptr [rip - 0x3df7]
+cmp dword ptr [rip - 0x23a6], 0
+jne 0x6113
+lea rcx, [rip + 0x420]
+xor edx, edx
+mov r8d, 19
+xor r9d, r9d
+call 0x4e00
+test rax, rax
+je 0x6113
+lea rcx, [rip - 0x21d3]
+mov rdx, rax
+lea r8, [rip - 0x1699]
+mov r9d, 16
+mov dword ptr [rsp + 0x20], 0x22
+lea rax, [rip - 0x23d2]
+mov qword ptr [rsp + 0x28], rax
+mov qword ptr [rsp + 0x30], 480
+call 0x1d40
+test rax, rax
+je 0x6113
+lea rcx, [rip - 0x1870]
+mov edx, 25
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+xor ebp, ebp
+lea r15, [rip - 0x15fd]
+call 0x61b8
+lea rcx, [rip + 0x3ac]
+mov edx, 1
+mov r8d, 18
+mov r9d, ebp
+call 0x4e00
+xor ebp, ebp
+lea r15, [rip - 0x15b7]
+call 0x61b8
+mov rcx, rbx
+xor edx, edx
+call 0x5200
+test eax, eax
+je 0x612c
+mov r12, qword ptr [rip - 0x24b4]
+mov rcx, r12
+mov edx, 35000
+call qword ptr [rip - 0x3cc2]
+mov rcx, r12
+lea rdx, [rip - 0x248c]
+call qword ptr [rip - 0x3cca]
+mov rcx, r12
+call qword ptr [rip - 0x3ef3]
+cmp dword ptr [rip - 0x24a2], 0
+jne 0x612c
+lea rcx, [rip + 0x349]
+xor edx, edx
+mov r8d, 20
+xor r9d, r9d
+call 0x4e00
+test rax, rax
+je 0x612c
+lea rcx, [rip - 0x22cf]
+mov rdx, rax
+lea r8, [rip - 0x1785]
+mov r9d, 10
+mov dword ptr [rsp + 0x20], 0x0D
+lea rax, [rip - 0x24ce]
+mov qword ptr [rsp + 0x28], rax
+mov qword ptr [rsp + 0x30], 480
+call 0x1d40
+test rax, rax
+je 0x612c
+lea rcx, [rip - 0x193b]
+mov edx, 29
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+xor ebp, ebp
+lea r15, [rip - 0x15a3]
+call 0x61b8
+mov rcx, rbx
+xor edx, edx
+call 0x5200
+test eax, eax
+je 0x60fa
+mov r12, qword ptr [rip - 0x2584]
+mov rcx, r12
+mov edx, 130000
+call qword ptr [rip - 0x3d92]
+mov rcx, r12
+lea rdx, [rip - 0x255c]
+call qword ptr [rip - 0x3d9a]
+mov rcx, r12
+call qword ptr [rip - 0x3fc3]
+cmp dword ptr [rip - 0x2572], 0
+jne 0x60fa
+lea rcx, [rip - 0x196d]
+mov edx, 29
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+lea rcx, [rip - 0x194d]
+mov edx, 17
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+mov r14d, 1
+jmp 0x6176
+lea rcx, [rip - 0x1986]
+mov edx, 26
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+jmp 0x615c
+lea rcx, [rip - 0x1a0c]
+mov edx, 24
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+jmp 0x615c
+lea rcx, [rip - 0x19f0]
+mov edx, 27
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+jmp 0x615c
+lea rcx, [rip - 0x1a97]
+mov edx, 35
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+lea rcx, [rip - 0x19bd]
+mov edx, 17
+xor r8d, r8d
+xor r9d, r9d
+call 0x5000
+xor r14d, r14d
+lea r15, [rip + 0x196]
+mov r13d, 5
+mov rcx, r15
+mov edx, 2
+xor r8d, r8d
+cmp byte ptr [rcx + r8], 0
+je 0x619a
+inc r8
+jmp 0x618e
+inc r8
+mov r12, r8
+xor r9d, r9d
+call 0x4e00
+add r15, r12
+dec r13d
+jne 0x6183
+mov eax, r14d
+jmp 0x627b
+sub rsp, 8
+movzx eax, byte ptr [r15]
+test eax, eax
+je 0x61e5
+cmp eax, 8
+ja 0x61da
+dec eax
+call 0x61ee
+call 0x6268
+inc r15
+jmp 0x61bc
+mov byte ptr [rbx + rbp], al
+inc rbp
+inc r15
+jmp 0x61bc
+mov byte ptr [rbx + rbp], 0
+add rsp, 8
+ret
+cmp eax, 3
+jae 0x620f
+lea rcx, [rip - 0x268a]
+test eax, eax
+je 0x6262
+cmp byte ptr [rcx], 0
+je 0x6208
+inc rcx
+jmp 0x61fe
+inc rcx
+dec eax
+jmp 0x61fa
+cmp eax, 3
+je 0x623a
+cmp eax, 4
+je 0x6243
+cmp eax, 5
+je 0x624c
+cmp eax, 6
+je 0x6231
+mov eax, 3
+lea rcx, [rip - 0x26bf]
+jmp 0x61fa
+lea rdx, [rip - 0x26c8]
+jmp 0x6253
+lea rdx, [rip - 0x2771]
+jmp 0x6253
+lea rdx, [rip - 0x1930]
+jmp 0x6253
+lea rdx, [rip - 0x2943]
+xor r8d, r8d
+cmp byte ptr [rdx + r8], 0
+je 0x6267
+inc r8
+jmp 0x6256
+mov rdx, rcx
+jmp 0x6253
+ret
+mov rcx, rbx
+add rcx, rbp
+push r8
+call 0x1100
+pop r8
+add rbp, r8
+ret
+add rsp, 0x48
+pop rbp
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret

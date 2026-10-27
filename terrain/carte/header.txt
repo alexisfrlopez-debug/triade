@@ -1,0 +1,6 @@
+[carte] version=0.5.0-terrain.1 generation=5
+  algo_hachage     : sha256
+  algo_signature   : ed25519
+  algo_chiffrement : xchacha20poly1305
+  profils          : x86-64-win11-pe
+  empreinte_racine : sha256:4cd26a21b2a545b56503af25470f364a9297812b53ce4433708bd31b390f62af

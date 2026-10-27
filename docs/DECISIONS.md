@@ -1782,3 +1782,106 @@ D15 (amende D5) illustrent la procédure.
   carte les indexe sur leurs artefacts respectifs, le patch à chaud
   revient à M5).
 - **Développement** : entrée 36 du journal de travail.
+
+### D48 — lignée terrain : le superviseur — TOUS les tests en 1 clic par une GUI écrite à la main, journal téléversé automatiquement dans le dossier test du Drive ; curl.exe relais TLS (le superviseur ne contient NI TLS NI client HTTP), jetons en annexe hors dépôt, réutilisation maximale de la coquille démo éprouvée (R7 : 11 blocs octet-identiques)
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : exigence directe du développeur — « génère un
+  fichier .exe afin d'effectuer tous tes tests en 1 clic via une GUI,
+  et je veux que cet exe envoie directement les logs des tests
+  automatiquement dans un dossier du drive que tu pourras examiner
+  pour la suite du projet ». Le constat fondateur : la boucle terrain
+  § 8.4 restait MANUELLE à chaque maillon (LISEZMOI à écrire, runs à
+  conduire à la main, journaux à copier-coller dans le dossier test,
+  récupération au laboratoire) — chaque run terrain coûtait au
+  développeur une procédure multi-étapes, et l'étape (c) de M3
+  (proxy transparent pour curl) attendait justement un run. La
+  réponse est une NOUVELLE lignée, pas un jalon : `terrain/`
+  (blocs f6xxxx, carte génération 5) est le HARNAIS du terrain —
+  il teste les jalons, il n'est pas un jalon.
+- **Choix retenu** : (1) **lignée séparée, version au-dessus** :
+  superviseur.exe 0.5.0-terrain.1 (u64 0x00050101, plancher
+  0x00050000 — monotonie au-dessus de proxy 0x4.0), blocs f6xxxx,
+  22 blocs embarqués = 11 réutilisés R7 (io M0, libc M1, tcp-06 M2,
+  coquille win-03/04/05/06 de demo.exe 0.3.0-demo.9 — la coquille
+  GUI qui a SURVÉCU au terrain D36-D43, bouton « TOUT DÉMARRER »,
+  miroir écran+fichier) + 11 nouveaux (sup-01/02/09/11/21/22/31/
+  33/34/35/36) ; (2) **curl.exe relais TLS** : le superviseur ne
+  déchiffre rien, ne signe rien, ne parse aucun HTTP client — il
+  compose des lignes de commande et lit des fichiers de sortie ;
+  la cryptographie vit dans schannel (composant système, comme
+  ws2_32 vit le TCP) — la frontière mécanique reste au process/
+  IAT (CreateProcessA + tuyaux), zéro surface cryptographique
+  manuscrite ; (3) **l'annexe terrain_jetons.bin** : 4 champs
+  ASCII NUL-terminés contigus (client_id, client_secret,
+  refresh_token, token_uri, ≤ 480 o), lue par sup-35, posée au
+  dossier test PAR LE CANAL DE LIVRAISON uniquement — jamais dans
+  le dépôt (interdit 11), jamais un octet au journal (interdit
+  dérivé : le journal téléversé ne doit pas fuiter ses propres
+  clés) ; (4) **la voie Drive est EXACTEMENT celle de drive_sync.py**
+  (D12) : rafraîchissement OAuth (POST urlencodé), session
+  resumable (POST métadonnées, URL de session lue dans les en-têtes
+  -D), PUT --data-binary du journal — les canaux terrain et
+  laboratoire convergent, un seul comportement à faire confiance ;
+  (5) **trois tests, ordre séquentiel T1→T2→T3** (le port 25000 est
+  partagé par démo et proxy, l'envoi vient en dernier sur le journal
+  complet) : T1 rejoue demo.exe SANS main humaine (FindWindowW,
+  BM_CLICK par SendMessageTimeoutW, fin sondée par MARQUEUR de
+  journal — pas de sommeil fixe : la fin est un événement, 17 lignes
+  exactes vérifiées par memcmp, journal démo embarqué BRUT) ; T2
+  lance proxy.exe avec tuyaux (bannière memcmp 40 o, curl http
+  neverssl.com puis https example.com au travers, événements console
+  du proxy vérifiés 35 o/43 o exacts, « quit » sur stdin, exit 0,
+  flux embarqué BRUT — les pages reçues sont comptées, jamais
+  journalisées : journal d'événements, pas d'octets, discipline M3) ;
+  T3 téléverse le journal du run (nom unique
+  terrain_YYYYMMDD_HHMMSS.txt — les constats s'accumulent sans
+  jamais s'écraser) ; (6) **charte zéro gel / zéro fuite** : toute
+  attente est un événement BORNÉ (PeekNamedPipe, WaitForSingle-
+  Object, SendMessageTimeoutW, sondage de marqueur avec timeout) —
+  le superviseur ne peut jamais se bloquer sans rendre son verdict ;
+  tout handle fermé sur TOUT chemin y compris d'échec (vérifié par
+  l'oracle : liste des CloseHandle observés) ; un test KO
+  n'arrête pas les suivants (le journal embarque l'échec et
+  continue) ; (7) **l'oracle à scénarios** : 807 verrous
+  structurels (contrats I vérifiés par bloc), 10 080 cas verts
+  (différentiel sup-22 10 000 cas contraints + comportemental :
+  horloge fixée, 7 vecteurs win-11 transposés, coquelle GUI entrée
+  complète + clic unique, scénario nominal COMPLET avec spawn/pipe/
+  findwindow scriptés, 5 scénarios d'échec — démo absente, journal
+  non conforme, curl KO, jetons absents, OAuth muet), falsification
+  24/24 cibles R10 (octets 11/23) + 5 mutations ciblées (constante
+  17, longueur d'étiquette, ordre T1/T2/T3, nettoyage, timeout
+  d'arrêt) ; 6 classes de défaut attrapées AVANT build (constante
+  terrain_, mode .curl, flux bannière 39→38, mapping .champ décalé,
+  7 traces valeur en mode 0, SA consommé avant initialisation) —
+  le système a fonctionné comme conçu ; (8) **résultat** :
+  superviseur.exe — 20 992 octets, 4 sections, WINDOWS_GUI, entrée
+  0x1400 (sup-01), kernel32 x24 (3 IAT : #1/#2 héritées + #3
+  CreateProcessA/WaitForSingleObject/GetExitCodeProcess/
+  DeleteFileA/PeekNamedPipe/ReadFile/WriteFile…), user32 x17
+  (2 IAT : #1 héritée + #2 FindWindowW/FindWindowExW/
+  SendMessageTimeoutW), gdi32 x1, DYNAMICBASE+HEVA+NX ; carte
+  génération 5 (22 empreintes indexées, signature Ed25519, verrou
+  croisé 22, cristallisation 10/10 sur les 22 blocs) ; sha256
+  d73aa99cea0601de23f504d6c21b50d99fef20a28eec7aceb7d8617e5e873a10
+  (md5 21ed1ba25909b46043eaede049cd4ac1).
+- **Alternatives rejetées** : WinHTTP/WinINet dans l'exe (une
+  surface TLS manuscrite est invérifiable et infinie — curl.exe est
+  un composant système comme ws2_32, la dépendance OS est assumée
+  par contrat) ; l'upload multipart/related (fabrication manuelle
+  pénible et fragile — resumable est la voie drive_sync.py éprouvée) ;
+  des threads par test (séquentiel obligatoire : le port 25000 est
+  partagé, l'envoi vient en dernier) ; parser les pages reçues par
+  curl (ce qui traverse n'est pas à nous — journal d'événements,
+  pas d'octets) ; un exe console (l'exigence dit UNE GUI — la
+  coquille démo est éprouvée terrain, on la réutilise) ; écrire le
+  journal dans %TEMP% (journal À CÔTÉ de l'exe : le développeur le
+  VOIT, et il survive aux nettoyages) ; recomposer le chemin du
+  journal dans sup-35 (BUF_CHEMIN est la source de vérité posée par
+  sup-11 — jamais deux propriétaires) ; réutiliser win-07 démo
+  comme client (soudé à 127.0.0.1:25000 — déjà rejeté en tcp-13) ;
+  embarquer les jetons dans le binaire (le binaire est livré et
+  synchronisé — l'annexe voyage par le canal de livraison, le dépôt
+  reste propre).
+- **Développement** : entrée 37 du journal de travail.

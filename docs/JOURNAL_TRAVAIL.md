@@ -1987,3 +1987,88 @@ build — le système fonctionne comme conçu.
 (livraison proxy.exe + LISEZMOI-proxy.txt) ; puis (d) campagne million
 sur le périmètre parseur (http-01..09 + accumulation http-10, ~39
 min/10^6 cas) ; puis (e) le fuzzing rejoint la suite de conformité.
+
+## Journal 37 — D48 : la lignée terrain — le superviseur existe : TOUS les tests en 1 clic par une GUI écrite à la main (T1 démo rejouée sans main humaine, T2 proxy traversé par curl, T3 journal téléversé dans le dossier test du Drive), superviseur.exe 0.5.0-terrain.1 scellé (carte génération 5, 22 blocs dont 11 octet-identiques) ; session interrompue reprise et terminée : le KeyError de la carte (d4xxxx introuvables dans le plan M2) et le compte périmé du tableau (13→11) corrigés, cristallisation poussée à 10/10
+
+**Contexte** : l'exigence du développeur — un exe qui effectue tous
+les tests en 1 clic via une GUI et envoie les logs automatiquement
+dans un dossier du Drive. La boucle terrain § 8.4 restait manuelle à
+chaque maillon ; l'étape (c) de M3 attendait un run proxy. Réponse :
+une lignée HARNAIS (terrain/, f6xxxx) qui teste les jalons — la
+coquille GUI éprouvée par D36-D43 réutilisée octet pour octet, les
+tests enchaînés T1→T2→T3, le journal unique par run téléversé par
+curl.exe relais (voie drive_sync.py exacte).
+
+**Déroulé** :
+1. **Couche I écrite-avant-code** : onze spécifications sup-01..36
+   (principal, fenêtre, scénario, journal horodaté, horodatage,
+   balayeur étiquette→valeur, lanceur de processus, fichiers, T1
+   démo, T2 proxy, T3 envoi Drive) + README de charte (zéro gel :
+   toute attente est un événement borné ; zéro fuite : tout handle
+   fermé sur tout chemin ; zéro secret au journal ; le journal est
+   la preuve : memcmp exact et embarquement BRUT ; dépendance OS
+   assumée : curl.exe/schannel comme ws2_32 ; un run = un nom ;
+   porte R10 avant tout ; ordre séquentiel T1→T2→T3).
+2. **Plan d'adressage** (terrain/layout.py) : les slots réutilisés
+   aux adresses démo exactes (win-03 0x15C0, win-04 0x1640, win-05
+   0x5000 avec BUF_MIROIR 0x3A50 et relais queue vers sup-11
+   0x1E00, win-06 0x1AC0 avec table R10 étendue à 18 entrées
+   terrain et version u64 0x50101), zones nouvelles .text2
+   0x4000-0x65FF (tcp-06 0x4300, données sup 0x4340-0x4BFF en RX,
+   scénario 0x4C00, fichiers 0x4E00, lanceur 0x5200, T1 0x5400,
+   T2 0x5800, T3 0x5E00, zone données 2 0x6300-0x65FF : INT/hints
+   kernel32#3 + user32#2 + noms + cmdlines) ; .text2 0x2600, image
+   0x7000, fichier 0x5200 ; DIR_LONG : préfixe de répertoire calculé
+   UNE fois (sup-36), tous les chemins préfixés — jamais CWD.
+3. **Notations à la main + auteur terrain** : onze brouillons
+   résolus par outils/auteur.py (keystone assemble, round-trip
+   capstone 100 %) ; scripts/analyse_sup_notation.py dérive les
+   tables d'autorisation I1/I2 du build (appels IAT, appels
+   directs, références RIP par bloc — le garde-fou anti-dérive).
+4. **Six classes de défaut attrapées AVANT build** : constante
+   terrain_ (nom de journal), mode .curl du lanceur, flux bannière
+   39→38 o, mapping .champ décalé, 7 traces valeur en mode 0, SA
+   consommé avant initialisation — chacun corrigé à la notation,
+   aucun n'a atteint l'artefact.
+5. **Chaîne exécutée** : build (PE32+ WINDOWS_GUI 4 sections,
+   kernel32 x24 sur 3 IAT + user32 x17 sur 2 IAT + gdi32 x1, entrée
+   0x1400, FT=slots D35) → R7 prouvé : 11 blocs octet-identiques
+   aux artefacts scellés (hello.exe, selftest.exe, echo.exe,
+   demo.exe 0.3.0-demo.9) → oracle (807 verrous structurels ;
+   10 080 cas verts : différentiel sup-22 10 000 + comportemental ;
+   5 scénarios d'échec ; falsification 24/24 cibles R10 + 5
+   mutations ciblées attrapées) → carte génération 5 (4 fragments
+   chiffrés, signature Ed25519, 22 empreintes, zones de données
+   sup indexées) → verrou croisé 22.
+6. **Reprise de session interrompue** : la chaîne s'était arrêtée
+   NET à la carte — KeyError 'd40003' : NOMS_BLOCS du plan terrain
+   était construit sur m2/layout.py seul, or les blocs d4xxxx
+   (win-03/04/05/06 réutilisés) n'existent que dans demo/layout.py
+   (qui fusionne déjà M2) — correction : le plan terrain charge
+   demo/layout.py pareil (importlib sous nom distinct) et fusionne
+   LD.NOMS_BLOCS ; au passage le tableau de bord codait « 13 blocs
+   octet-identiques » en dur (chiffre périmé du plan) : le compte
+   est désormais DÉRIVÉ de _HERITAGE (11) ; cristallisation
+   enchaînée : 10 runs journaux (graines 11-20), 22/22 blocs à
+   10/10, re-vérification R5/R8 verte à chaque run.
+7. **Artéfact** : superviseur.exe 20 992 octets, version
+   0.5.0-terrain.1, sha256 d73aa99cea0601de23f504d6c21b50d99fef
+   20a28eec7aceb7d8617e5e873a10 (md5 21ed1ba25909b46043eaede049c
+   d4ac1). Fenêtre « TRIADE superviseur terrain », bouton « TOUT
+   DÉMARRER », miroir écran+fichier (contrat win-05), verdict final
+   S90 « SUPERVISEUR : TOUT OK » / S91 « SUPERVISEUR : ECHEC (voir
+   lignes KO) ».
+8. **Livraison** : annexe terrain_jetons.bin générée côté dépôt
+   depuis .gdrive (4 champs NUL, 248 o ≤ 480, interdit 11 —
+   scripts/ecrire_annexe_terrain.py, jamais committée) ;
+   LISEZMOI-superviseur.txt (CP1252, procédure 1 clic + lecture
+   des lignes S + issues) ; superviseur.exe + LISEZMOI au coffre
+   racine, superviseur.exe + LISEZMOI + annexe au dossier test
+   (demo.exe et proxy.exe y sont déjà), copies à download/.
+
+**Suivi** : le run terrain — le premier journal
+terrain_YYYYMMDD_HHMMSS.txt reçu dans le dossier test valide la
+lignée (et livre AU PASSAGE le run proxy de l'étape (c) de M3 :
+T2 LE teste) ; puis M3 (d) campagne million sur le périmètre
+parseur (http-01..09 + accumulation http-10) ; (e) le fuzzing
+rejoint la suite de conformité.

@@ -1,0 +1,12 @@
+[tableau] jalon=terrain artefact=superviseur.exe version=0.5.0-terrain.1
+  blocs_avec_spec_a_jour        : 22/22 : tracabilite I->C->B (heritage M0/M1/M2/demo + 11 blocs sup)
+  chaines_I_C_B_tests           : 22/22
+  construction                  : 0 erreur / 0 avertissement
+  tests_oracle                  : 10080 cas verts (graine 20) ; oracle structurel 807 verrous PASS ; falsification : 24/24 cibles R10 détectées (octets 11/23) + 5 mutations ciblées attrapées
+  empreintes_donnees_embarquees : conforme (table R10 25 entrees dont 2 zones de donnees sup, UTF-16 contraint, fixtures)
+  defauts_attrapes_avant_build  : 6 classes (constante terrain_, mode .curl, flux banniere 39->38, mapping .champ decale, 7 traces valeur en mode 0, SA consomme avant initialisation) — le systeme a fonctionne comme concu
+  reutilisation_R7              : 11 blocs octet-identiques (hello/selftest/echo/demo.9)
+  preversions                   : 0.5.0-terrain.1 (lignee terrain, u64 0x50101, plancher 0x50000)
+  exigence_developpeur          : TOUS les tests en 1 clic (T1 demo 0.3.0 + T2 proxy 0.4.0-dev.1 + T3 envoi Drive) + journal televerse automatiquement dans le dossier test (curl.exe relais, resumable — voie drive_sync.py)
+  artefact                      : 20992 octets ; subsystem WINDOWS_GUI ; entree 0x1400
+  verrou_croise                 : 22 empreintes reverifiees + signature Ed25519 (R8/R9)

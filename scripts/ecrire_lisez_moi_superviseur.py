@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Écrit LISEZMOI-superviseur.txt (lignée terrain, D48) en CP1252 — TRIADE."""
+
+TEXTE = """TRIADE terrain — superviseur : TOUS les tests en 1 clic
+======================================================
+
+superviseur.exe  (20 992 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
+version 0.5.0-terrain.1 — sha256 d73aa99cea0601de…
+
+POURQUOI CETTE VERSION : c'est la réponse directe à votre demande —
+« un exe qui effectue tous les tests en 1 clic via une GUI, et qui
+envoie directement les logs des tests automatiquement dans un dossier
+du Drive ». Le superviseur enchaîne TOUTE la suite de tests du projet
+sans rien copier-coller :
+
+  T1 — demo.exe 0.3.0 (jalon M2 scellé) : la démo complète est
+       rejouée SANS main humaine (le superviseur trouve la fenêtre,
+       clique le bouton à votre place, attend la fin par événement,
+       vérifie les 17 lignes exactes du journal et les embarque).
+  T2 — proxy.exe 0.4.0-dev.1 (jalon M3, étape c) : le proxy est
+       lancé, curl traverse en HTTP puis en HTTPS (tunnel), la
+       console du proxy est vérifiée événement par événement,
+       arrêt propre par « quit », tout le flux est embarqué.
+  T3 — envoi Drive : le journal de CE run part automatiquement
+       dans le dossier « test » du Drive (même voie que mes
+       synchronisations — rafraîchissement OAuth puis téléversement
+       résurable via curl.exe, composant système).
+
+La fenêtre affiche chaque étape au fur et à mesure (lignes S), et le
+journal complet (terrain_YYYYMMDD_HHMMSS.txt, un nom unique par run)
+contient les PREUVES BRUTES : le journal de la démo recopié intégra-
+lement, le flux console du proxy recopié intégralement, les codes de
+chaque curl. Un test KO n'arrête pas les suivants : tout finit dans
+le journal quoi qu'il arrive.
+
+PRÉPARATION (une seule fois) — dans UN même dossier, posez :
+  1. superviseur.exe   (ce fichier)
+  2. demo.exe          (déjà dans le dossier test du Drive)
+  3. proxy.exe         (déjà dans le dossier test du Drive)
+  4. terrain_jetons.bin (l'annexe de jetons Drive, livrée avec ce
+     fichier — SANS elle, T1 et T2 tournent quand même, seul
+     l'envoi automatique est sauté)
+  curl.exe n'est PAS à installer : c'est un composant de Windows
+  (System32, Windows 10 1803+). Une connexion Internet est requise
+  pour T2 (neverssl.com, example.com) et T3 (Google Drive).
+
+PROCÉDURE :
+  1. Double-cliquez superviseur.exe. La fenêtre « TRIADE superviseur
+     terrain » s'ouvre, le bouton « TOUT DÉMARRER » est en bas.
+  2. Un clic sur « TOUT DÉMARRER ». C'est tout.
+  3. Attendez la fin (comptez ~2 à 4 minutes : T1 ~15 s, T2 ~30 s à
+     2 min selon le réseau, T3 ~10 s ; chaque attente est bornée —
+     le superviseur ne peut pas se bloquer sans rendre son verdict).
+  4. La dernière ligne dit tout :
+       S90 SUPERVISEUR : TOUT OK
+     ou
+       S91 SUPERVISEUR : ECHEC (voir lignes KO)
+  5. Le journal terrain_YYYYMMDD_HHMMSS.txt est posé à côté de l'exe
+     ET (si T3 a réussi) téléversé dans le dossier « test » du Drive.
+     Je le récupérerai de là — vous n'avez RIEN à m'envoyer.
+
+LECTURE DE L'ÉCRAN (lignes S principales) :
+- S02 porte R10 : OK / KO — l'intégrité du binaire (un KO = transfert
+  abîmé : re-télécharger superviseur.exe).
+- S03 libc M1 scellée : 4/4 verts — l'autotest interne.
+- S10..S16 : T1 démo (lancement, fenêtre, clic, code de sortie,
+  lignes, verdict conforme, verdict final).
+- S20..S28 : T2 proxy (lancement, bannière, curl http, curl https,
+  événements, arrêt, verdict).
+- S30..S36 : T3 envoi Drive (jetons, OAuth, session, téléversement,
+  verdict).
+- S90 / S91 : le verdict global.
+
+LECTURE DES ISSUES (si quelque chose casse) :
+- S02 KO : binaire abîmé au transfert — la porte R10 a arrêté AVANT
+  tout effet. Re-télécharger.
+- S10 « demo.exe ABSENT » / S20 « proxy.exe ABSENT » : les fichiers
+  ne sont pas dans le MÊME dossier que superviseur.exe.
+- S12 puis S11 timeout : la fenêtre démo n'a jamais répondu — le
+  journal partiel (embarqué dans le nôtre) localise l'intervalle.
+- S21 « bannière ABSENTE » : le port 25000 était occupé, ou proxy.exe
+  a été bloqué par une politique système.
+- S22 « curl.exe ABSENT » : Windows plus vieux que 1803, ou curl
+  retiré du PATH — dans ce cas T2 est sauté honnêtement.
+- S23/S25 « octets=0 » avec code 0 : le réseau a répondu vide (page
+  captive ?) — le verdict T2 sera NON conforme, tout le flux capturé
+  est dans le journal pour que je diagnostique.
+- S31 « jetons absents - envoi saute » : terrain_jetons.bin n'est pas
+  à côté de l'exe. T1/T2 ont quand même tourné — posez l'annexe et
+  relancez pour l'envoi, ou copiez le journal à la main.
+- S33/S34/S35 ÉCHEC : le Drive a refusé (jeton révoqué, quota,
+  réseau) — le journal reste local, rien n'est perdu.
+
+SÉCURITÉ : terrain_jetons.bin contient les clés d'accès au dossier
+Drive du projet. Gardez le dossier de test privé ; après vos runs,
+vous pouvez supprimer l'annexe (je peux en relivrer une à tout
+moment). Le journal ne contient AUCUN octet des clés (interdit du
+projet : aucun secret au journal).
+
+Merci — le premier journal reçu dans le Drive valide la lignée
+terrain 0.5.0-terrain.1 (D48).
+"""
+
+REPO = "/home/z/my-project/triade"
+
+with open(REPO + "/LISEZMOI-superviseur.txt", "w", encoding="cp1252",
+          newline="\r\n") as f:
+    f.write(TEXTE)
+
+with open(REPO + "/LISEZMOI-superviseur.txt", encoding="cp1252") as f:
+    contenu = f.read()
+assert contenu == TEXTE, "round-trip CP1252"
+print(f"LISEZMOI-superviseur.txt : {len(TEXTE)} caracteres CP1252, "
+      f"CRLF, round-trip OK")
