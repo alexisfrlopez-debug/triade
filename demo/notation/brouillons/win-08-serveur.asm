@@ -1,5 +1,5 @@
 ; thread serveur : tcp-01, publication R_LISTEN, boucle accept -> spawn tcp-09
-; D42 : sondes S1/S2 autour d'accept/spawn — instrumentation TEMPORAIRE (R3)
+; D43 : sondes S1/S2 retirees (constat vert terrain demo.8 — orchestration nue)
 push rbx
 push r12
 push r13
@@ -17,23 +17,12 @@ call TCP_ACCEPT
 test rax, rax
 js .fin
 mov r12, rax
-; D42 : sonde S1 — connexion acceptee (retour >= 0 verifie), avant le spawn
-lea rcx, [rip + SONDE_S1]
-mov edx, 12
-xor r8d, r8d
-call JOURNAL_TRACE
 lea rcx, [rip + CONN]
 mov rdx, r12
 call TCP_SPAWN
 test rax, rax
 je .fin
 mov r13, rax
-; D42 : sonde S2 — fil d'echo lance (handle non nul verifie, sauve en r13
-; car les volatils meurent a tout appel), avant CloseHandle + nouvel accept
-lea rcx, [rip + SONDE_S2]
-mov edx, 17
-xor r8d, r8d
-call JOURNAL_TRACE
 mov rcx, r13
 call qword ptr [rip + IAT_CH]
 jmp .boucle

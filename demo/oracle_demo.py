@@ -575,26 +575,19 @@ class Emulateur:
 
 # --- Références dérivées de la couche I ----------------------------------------------
 
-# D40 : séquence nominale du journal scénario — 11 lignes nominales + les 3
-# sondes d'instrumentation R2 intercalées après J_LIBC_OK (retirées en R3).
-# D42 : les 6 sondes d'échange (sonde4/sonde5 ×3, win-10:R2) encadrent chaque
-# boucle send/recv — S1/S2 (win-08:R2) vivent dans le CAS DIRECT du fil
-# serveur, pas ici (le scénario émulé pré-publie le drapeau, le fil serveur
-# n'y tourne pas).
+# D40 : séquence nominale du journal scénario — 11 lignes de preuve, chacune
+# derrière une vérification (memcmp exact) — les sondes R2/R3 (D40/D42) ont
+# été retirées en demo.9 (D43, constat vert terrain demo.8 : 28/28 lignes,
+# « boucle § 5 complète — DÉMO OK ») : TOUTE ligne parasite fait échouer
+# l'oracle (anti-régression du retrait).
 LIGNES_NOMINALES = ["J_ENTETE", "J_PROTO", "J_PORTE_OK", "J_LIBC_OK",
-                    "SONDE_1", "SONDE_2", "SONDE_3",
                     "J_MEC_OK", "J_SRV_OK", "J_CLI_OK",
-                    "SONDE_4", "SONDE_5", "J_ECHO_OK",
-                    "SONDE_4", "SONDE_5", "J_PROD_OK",
-                    "SONDE_4", "SONDE_5", "J_RB_OK", "J_FINAL"]
+                    "J_ECHO_OK", "J_PROD_OK", "J_RB_OK", "J_FINAL"]
 
 
 def _ligne_nom(nom: str) -> str:
-    """Ligne attendue : UTF-16 du scénario, ou sonde ASCII + CRLF (win-05
-    entrée trace mode 0 ajoute le CRLF à l'écran comme win-11 au fichier)."""
-    if nom in L.CHAINES_UTF16:
-        return L.CHAINES_UTF16[nom][1]
-    return L.CHAINES_SONDES[nom][1].decode("ascii") + "\r\n"
+    """Ligne attendue : UTF-16 du scénario (win-05 entrée scénario, mode 2)."""
+    return L.CHAINES_UTF16[nom][1]
 
 TRACE_L00 = L.CHAINES_ASCII["L00"][1] + b"\r\n"
 TRACE_L01 = L.CHAINES_ASCII["L01"][1] + b"\r\n"
@@ -736,7 +729,7 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     verdicts["d40007"] = {"cas": 2, "detail": "connect ok/échec, closesocket sur échec"}
     total += 2
 
-    # --- win-08 : écoute publiée, spawn tcp-09, sondes S1/S2, arrêt propre ---
+    # --- win-08 : écoute publiée, spawn tcp-09, journal SILENCIEUX, arrêt ---
     em = Emulateur(exe)
     em.installer_shims()
     em.appeler(RVA_WIN["win-08"])
@@ -744,16 +737,17 @@ def executer(exe: bytes, graine: int = 1) -> dict:
         raise EchecOracle("win-08 : écoute/drapeau non publiés (Q2)")
     if em.threads != [(IMAGE + 0x4800, 0x777)]:
         raise EchecOracle(f"win-08 : spawn tcp-09 attendu, obtenu {em.threads}")
-    # D42 : sondes S1/S2 au journal fichier (miroir écran sauté, HWND nul —
-    # garde E1 de win-05 : les FAITS passent, le verdicteur vit en aval)
-    attendu_s = [L.CHAINES_SONDES["SONDE_S1"][1] + b"\r\n",
-                 L.CHAINES_SONDES["SONDE_S2"][1] + b"\r\n"]
-    if em.journal_fichier != attendu_s:
-        raise EchecOracle(f"win-08 : sondes S1/S2 absentes du fichier "
-                          f"({em.journal_fichier!r} != {attendu_s!r} — D42, I4)")
-    verdicts["d40008"] = {"cas": 4, "detail": "tcp-01 ok, R_LISTEN+drapeau, spawn tcp-09 "
-                                               "+ sondes S1/S2 (D42), arrêt"}
-    total += 4
+    # D43 : le chemin nominal est MUET — les sondes S1/S2 sont retirées ;
+    # toute ligne au journal (une sonde réintroduite en silence) FAIT
+    # ÉCHOUER l'oracle (I4 de win-08:R3).
+    if em.journal_fichier:
+        raise EchecOracle(f"win-08 : {len(em.journal_fichier)} ligne(s) au journal "
+                          f"fichier en chemin nominal — les sondes S1/S2 ont "
+                          f"été retirées (D43, I4 de win-08:R3) : "
+                          f"{em.journal_fichier!r}")
+    verdicts["d40008"] = {"cas": 3, "detail": "tcp-01 ok, R_LISTEN+drapeau, spawn tcp-09, "
+                                               "journal SILENCIEUX (D43), arrêt"}
+    total += 3
 
     # --- COQUILLE GUI RÉELLE (D36) : win-01 du point d'entrée à ExitProcess ---
     em = Emulateur(exe)
@@ -858,11 +852,11 @@ def executer(exe: bytes, graine: int = 1) -> dict:
                           "échange, processus mort, fenêtre disparue)")
     if em.qword(L.R_CS) == 0 and len(em.cs_init) == 0:
         raise EchecOracle("win-09 : aucun état CS observé (shim à état cassé)")
-    verdicts["d40009"] = {"cas": 6, "detail": "journal écran exact (20 lignes) + "
-                                              "fichier miroir, rollback, arrêt, 3 échanges "
-                                              "sondés, CS initialisée (D42)"}
+    verdicts["d40009"] = {"cas": 6, "detail": "journal écran exact (11 lignes, sondes "
+                                              "retirées D43) + fichier miroir, rollback, "
+                                              "arrêt, 3 échanges vérifiés, CS initialisée (D42)"}
     verdicts["d40010"] = {"cas": 4, "detail": "échanges vérifiés identité/MAJUSCULES/"
-                                              "identité + sondes 4/5 ×3 (D42)"}
+                                              "identité, bloc muet (D43)"}
     verdicts["c30007"] = {"cas": 3, "detail": "bascule+effet+rollback réels, "
                                               "appariement RWX/RX 8/8 (héritage, D39)"}
     total += 13

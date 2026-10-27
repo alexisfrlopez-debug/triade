@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Écrit LISEZMOI-demo.txt (demo.9 finale) en CP1252 — TRIADE D43."""
+
+TEXTE = """TRIADE M2 — démonstration complète en un clic (demo.9, VERSION FINALE)
+====================================================================
+
+demo.exe  (16 384 octets, PE32+ WINDOWS_GUI x86-64, écrit à la main)
+version 0.3.0-demo.9 — finale de lignée : SANS SONDES (D43)
+
+POURQUOI CETTE VERSION : votre journal demo.8 a fermé la boucle — 28
+lignes sur 28, jusqu'à « boucle § 5 complète - DÉMO OK ». Toutes les
+sondes étaient vertes, des deux côtés de la connexion : le serveur
+avait accepté (S1), le fil d'écho tournait (S2), et chacun des trois
+échanges (identité, MAJUSCULES après patch en production, retour
+arrière) était encadré par « sonde4 envoye ok » / « sonde5 recu ok ».
+La boucle § 5 — patch à chaud PENDANT le trafic, puis retour arrière,
+le tout vérifié octet par octet par memcmp — est donc DÉMONTRÉE sur
+votre machine. Conformément à la promesse faite en demo.6, toutes les
+sondes sont retirées de cette version finale : le journal ne montre
+plus que les lignes de preuve. Le jalon M2 est scellé : 0.3.0 (carte
+signée, conformité 124/124).
+
+1. Double-cliquez demo.exe — NE maximisez pas la fenêtre pour l'instant.
+   Comme toujours : zone journal avec les lignes de démarrage, bouton
+   « TOUT DÉMARRER » visible en dessous.
+2. Cliquez « TOUT DÉMARRER ». Le journal complet attendu fait
+   MAINTENANT 17 lignes (6 de démarrage + 11 de preuve) :
+     L00 demarrage demonstration 0.3.0-demo.9
+     L02 controles crees (journal, bouton)
+     L4C move journal=1
+     L4D move bouton=1
+     L01 fenetre principale creee
+     L03 clic : lancement du scenario
+     TRIADE M2 - démonstration
+     I > B > C, zéro compilateur
+     porte R10 : intégrité VERTE
+     libc M1 scellée : 4/4 verts
+     mécanique : v1>v2>v1 confirmés
+     serveur : écoute 127.0.0.1:25000
+     client : connecté
+     écho réseau : aller-retour exact
+     patch en production : MAJUSCULES
+     retour arrière : identité confirmée
+     boucle § 5 complète - DÉMO OK
+3. QUEL QUE SOIT LE RÉSULTAT, envoyez-moi le fichier demo_journal.txt
+   (posé à côté de demo.exe, régénéré à chaque lancement) :
+   - s'il se termine par « boucle § 5 complète - DÉMO OK », la
+     démonstration est relue PROPRE, sans instrumentation : c'est la
+     confirmation finale de confort (le binaire livré est exactement
+     celui que l'audit a vérifié octet par octet — 1 047 octets de
+     diff chirurgical depuis demo.8, zéro hors zone autorisée) ;
+   - s'il s'arrête ailleurs : ce serait un constat NEUF sur une
+     version audité — envoyez le journal tel quel, la dernière ligne
+     visible suffira (chaque ligne du journal est écrite APRÈS la
+     vérification memcmp de son étape : une ligne présente = une
+     étape prouvée).
+
+C'est quoi, ces 11 lignes de preuve ?
+ - porte R10 : l'image embarquée est intègre (sommes des 27 blocs,
+   version, ancre — vérifiées AVANT tout le reste) ;
+ - libc 4/4 : les quatre vecteurs scellés M1 (memcpy, memcmp, strlen,
+   itoa) exécutés sur fixtures enclines au défaut ;
+ - mécanique v1>v2>v1 : le bloc écho répond AVANT le patch, en
+   MAJUSCULES après la pose du trampoline, à l'identique après le
+   retour arrière — trois memcmp exacts ;
+ - serveur + client : écoute locale sur 127.0.0.1:25000, connexion,
+   puis TROIS échanges réseau complets : identité, MAJUSCULES (le
+   patch vit EN PRODUCTION, pendant le trafic), retour arrière.
+
+Remarques :
+ - fermez tout echo.exe encore lancé avant la démo (port 25000
+   partagé) ;
+ - il n'y a plus AUCUNE instrumentation : plus de sondes, plus de
+   course de fils, plus de lignes mêlées possibles — le journal
+   nominal est exactement les 17 lignes ci-dessus ;
+ - cette version est la DERNIÈRE de la lignée démo : rien ne bougera
+   plus (empreintes ci-dessous). Le projet passe au jalon M3.
+
+Chaîne : notation (keystone) -> octets -> PE32+ à la main, sans compilateur.
+Diff demo.8 -> demo.9 : 3 blocs démo révisés (win-08, win-09, win-10 —
+retrait des 7 sondes, 140 o de code), 7 chaînes de sondes retirées des
+zones libres .rdata (retour au zéro), L00, l'u64 version — les 16 blocs
+scellés M0/M1/M2 restent octet-identiques (vérifié) ; le correctif D42
+(initialisation de la section critique héritée en tête de scénario)
+reste VIVANT : c'est un devoir d'héritage, pas une sonde.
+Empreintes : demo.exe (demo.9) sha256:df8f2e50949b14c072f139013a6166a041e573e49b6872d826958f522495e4af
+             md5 73c064fbaf4610a167bc6434dee400e4
+echo-0.3.0.exe : balise finale 0.3.0 (scellage de carte, D43) — le
+             binaire est byte-identique à l'artefact rc.4 validé au
+             terrain : sha256:da4a6ca299339567be59ba5c48b1ad3de384bdc316c5a523ebd272b307d3fdb2
+             md5 28bd9863513a105a9822a16a0fb4e831
+"""
+
+with open("/home/z/my-project/triade/LISEZMOI-demo.txt", "wb") as f:
+    f.write(TEXTE.encode("cp1252"))
+print("LISEZMOI-demo.txt écrit (CP1252,", len(TEXTE.encode("cp1252")), "octets)")

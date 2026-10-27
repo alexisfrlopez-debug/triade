@@ -1,15 +1,15 @@
-[tableau] jalon=M2 artefact=echo.exe version=0.3.0-rc.4
+[tableau] jalon=M2 artefact=echo.exe version=0.3.0
   blocs_avec_spec_a_jour        : 25/26 : audit de tracabilite I->C->B (3 artefacts)
   chaines_I_C_B_tests           : 25/25 : specs, carte, exe, vecteurs
   construction                  : 0 erreur / 0 avertissement : build script
-  tests_differentiels           : 50533 cas verts (complet, graine 10) ; oracle structurel 318 verrous PASS ; patch : bascule atomique + rollback EFFECTIFS en émulation (sessions continues)
+  tests_differentiels           : 50533 cas verts (complet, graine 11) ; oracle structurel 318 verrous PASS ; patch : bascule atomique + rollback EFFECTIFS en émulation (sessions continues)
   empreintes_donnees_embarquees : conforme (staging, table R10, chaines, curseur nul)
   defauts_T1_T6_ouverts         : 0 : journal des decisions D33-D34
   optimisations_sans_mesure     : 0 : aucune optimisation M2 (R11)
   budgets_tokens                : cible (instrumentation a executer : budgets_tokens.py)
   suite_conformite_profil       : verte (conformite_profil.py : elements 1-7 : 124 controles PASS ; element 5 patch a chaud : DANS LE PERIMETRE M2, constate)
   changements_hors_journal      : 0 : D33 a D34 consignees
-  preversions                   : 0.3.0-rc.4 conforme (schema dev/rc/final, monotonie ; anti-rollback R10 verifie par l'oracle)
+  preversions                   : 0.3.0 conforme (schema dev/rc/final, monotonie ; anti-rollback R10 verifie par l'oracle)
   patch_a_chaud                 : bascule atomique (qword aligne) + rollback + refus fail-closed verifies ; continuite en session DEMONTREE (oracle)
   artefact                      : 15360 octets ; empreinte sha256:da4a6ca299339567... ; reutilisation M0/M1 : 6 blocs octet-identiques (R7)
   verrou_croise                 : 25 empreintes reverifiees (3 artefacts + notation libc-09) + signature Ed25519 + racine (R8/R9)

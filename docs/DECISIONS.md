@@ -1427,3 +1427,95 @@ D15 (amende D5) illustrent la procédure.
   terrain attendue : journal demo.8 complet 28 lignes jusqu'à
   « boucle § 5 complète — DÉMO OK » → retrait de TOUTES les sondes
   (R3/R4 finales) + scellage final 0.3.0 (M2).
+
+### D43 — terrain demo.8 : « boucle § 5 complète — DÉMO OK » (28/28 lignes, sondes vertes des deux côtés) — la boucle § 5 est DÉMONTRÉE sur machine réelle ; retrait de TOUTES les sondes (demo.9 finale de lignée) + scellage final M2 0.3.0
+
+- **Constat terrain** : journal demo.8 rapatrié (dossier test Drive,
+  706 o, 28 lignes exactement comme attendu, md5 84f5d58e…, CRLF
+  final propre). L00 confirme demo.8 ; démarrage complet, clic L03,
+  porte R10 VERTE, libc 4/4 verts, sondes 1→2→3, « mécanique :
+  v1>v2>v1 confirmés », « serveur : écoute 127.0.0.1:25000 »,
+  « client : connecté », puis **S1 accept ok / S2 fil echo lance**
+  (lus APRÈS « client : connecté » : la course documentée de D42,
+  résolue sans incident — aucune ligne mélangée), puis **sonde4/
+  sonde5 autour de CHACUN des trois échanges** : « écho réseau :
+  aller-retour exact » (identité), « patch en production :
+  MAJUSCULES » (patch posé PENDANT le trafic, réponse v2 vérifiée
+  par memcmp), « retour arrière : identité confirmée » (rollback,
+  re-vérification), et **« boucle § 5 complète — DÉMO OK »**.
+  Le correctif D42 est VALIDÉ au terrain : le premier échange —
+  le point de mort de demo.7 — a vécu (la CS initialisée par
+  win-09:R3 a tenu sous EnterCriticalSection réel de Windows 11).
+- **La cascade terrain close (8 classes de défauts, demo.1→demo.8)**
+  : (1) WM_SIZE lisait RECT.top comme largeur (D36, fenêtre vide) ;
+  (2) traces fichier seul, écran muet (D37, jumeau silencieux) ;
+  (3) w/h en volatiles relus après l'appel (D38, bouton invisible) ;
+  (4) phase de patch sans execute (D39, DEP) ; (5) défaut latent
+  sans exécution (D40, méthodologie des sondes) ; (6) zone d'accueil
+  ABI absente de .protger (D41, ret empoisonné vers 0x700) ; (7)
+  … (D41 : la POSE localisée par sonde) ; (8) section critique
+  héritée jamais initialisée (D42). Chaque classe a été nommée,
+  corrigée byte-exact, et rendue impossible à réintroduire
+  (falsifications V4-V9 + audits). HUIT lectures de journal terrain
+  en deux jours, zéro run supplémentaire demandé après demo.7
+  (D42 trouvé par lecture des octets).
+- **Retrait des sondes — specs écrites-avant-code (win-08:R3,
+  win-09:R4, win-10:R3)** : l'instrumentation avait un devoir
+  TEMPORAIRE (D40 : « retirées en R3 après correction ») — le
+  constat vert l'acquitte. Les 7 sondes (140 o de code : lea/mov/
+  xor/call ×7) sont retirées : win-08 retrouve son orchestration
+  nue (accept → spawn → CloseHandle, discipline r12/r13 conservée),
+  win-09 journalise EXACTEMENT ses 11 lignes de preuve (le correctif
+  D42 — init R_CS en tête — RESTE : c'est un devoir d'héritage, pas
+  une sonde), win-10 redevient muet (séquence R1 : boucle émission →
+  boucle réception → memcmp). Les 7 chaînes de sondes (105 o) sont
+  retirées des zones libres .rdata (interstices D40 + zone libre M2
+  D42) qui reviennent à zéro — CHAINES_SONDES vidé dans le plan
+  d'adressage, aucun symbole SONDE_* résoluble (une référence
+  résiduelle fait échouer la résolution d'auteur).
+- **Anti-régression du retrait (oracle durci)** : le chemin nominal
+  de win-08 est MUET (toute ligne au journal = échec) ; le journal
+  du scénario doit être EXACTEMENT 11 lignes (toute sonde
+  réintroduite = divergence) ; les falsifications V4-V9 (RECT,
+  miroir D37, volatils D38, DEP D39, zone d'accueil D41, CS vierge
+  D42) restent toutes vivantes. 86 cas verts, falsification 28/28
+  blocs détectés, oracle structurel 561 verrous.
+- **demo.9 (0.3.0-demo.9, u64 0x00030109 — FINALE de lignée)** :
+  16 384 o, md5 73c064fb…, sha256 df8f2e50…. Audit final
+  (scripts/audit_demo9.py, tracké) TOUT CONFORME : 7 zones de sondes
+  à zéro, L00 demo.9, correctif D42 vivant (lea → 0x3830, call →
+  IAT 0x20D8, AVANT GetStdHandle), 0 appel trace depuis les trois
+  blocs (win-02/04 intacts : 3+7 appels légitimes), win-10 séquence
+  R1, héritage D41 intact (0x40 ×2, sub/add rsp,0x28, lea
+  r9,[rsp+0x20], zéro résiduel), **diff demo.8→demo.9 CHIRURGICAL :
+  1 047 o (916 code des 3 blocs révisés + 131 données : sondes
+  retour zéro, L00, u64, sommes R10), 0 octet hors zones
+  autorisées**. Héritage R7 intact : 16 blocs + staging
+  octet-identiques aux artefacts scellés M0/M1/M2.
+- **Scellage final M2 0.3.0** : la conformité 1-7 ré-exécutée VERTE
+  (124/124) puis la balise basculée rc.4 → 0.3.0 dans frag-bld
+  (fail-closed : la balise rc.4 devait exister EXACTEMENT une fois),
+  carte re-chiffrée et re-signée Ed25519 — immuable § 9 (défaut →
+  0.3.1 à contrat stable, R4). echo.exe reste l'artefact rc.4
+  byte-identique (le scellage final est une opération de CARTE,
+  modèle M1 0.2.0). **Le jalon M2 est clos : boucle § 5 complète
+  (patch à chaud en production + rollback) démontrée sur machine
+  réelle, conformité 124/124, carte signée, cristallisation 10/10,
+  journal à jour.**
+- **Journal terrain final attendu (formalité)** : 17 lignes (6 de
+  démarrage GUI : L00/L02/L4C/L4D/L01/L03 + 11 de preuve) — le
+  développeur peut relire la démonstration propre, sans
+  instrumentation ; toute divergence serait un constat neuf (et le
+  binaire livré est exactement celui audité ci-dessus).
+- **Alternatives rejetées** : garder les sondes dans la finale
+  (bruit permanent + concurrence de fils documentée comme risque —
+  le retrait était promis en D40/D42) ; renuméroter la démo 0.3.0
+  (la lignée démo a son propre schéma u64 0x0003_01xx, monotone —
+  la confusion avec l'artefact atelier 0x3_0000 serait une
+  régression de lisibilité) ; reconstruire echo.exe avec la balise
+  0.3.0 dans le binaire (le scellage final est un fait de CARTE,
+  l'artefact rc.4 est l'objet validé au terrain — le reconstruire
+  invaliderait les empreintes scellées pour un cosmétique).
+- **Développement** : entrée 32 du journal de travail. M2 clos —
+  prochain jalon M3 (contrats renforcés sur entrées non fiables,
+  fuzzing systématique).

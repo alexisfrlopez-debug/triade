@@ -1,4 +1,4 @@
-win-09 · scénario complet (thread de démonstration) · révision 3
+win-09 · scénario complet (thread de démonstration) · révision 4
 Intention : LA démonstration en un clic — exécuter séquentiellement, en les
 journalisant ligne à ligne : la porte R10 et les vecteurs libc (win-06), la
 mécanique de patch à chaud hors réseau (tcp-07 bascule/rollback + effet v1→v2→v1
@@ -8,6 +8,18 @@ identité vérifié octet à octet, patch APPLIQUÉ PENDANT LE TRAFIC, réponse 
 MAJUSCULES reçue et vérifiée, retour arrière et re-vérification, arrêt propre
 (fermeture client, R_QUIT armé, écoute fermée). Chaque étape échoue PROPREMENT
 (ligne d'échec + arrêt du scénario) : aucune fausse bannière de succès.
+
+RÉVISION 4 (D43 — retrait de l'instrumentation mécanique, FINALE de lignée) :
+le journal terrain demo.8 a fermé la boucle — 28/28 lignes jusqu'à « boucle
+§ 5 complète — DÉMO OK », sondes 1/2/3 vertes, S1/S2 lues, sonde4/sonde5
+autour de chacun des trois échanges. L'instrumentation D40/D42 a rempli son
+devoir (trois défauts nommés en trois runs : DEP D39, zone d'accueil ABI D41,
+section critique D42) et est retirée : R4 enlève les 12 instructions des
+sondes 1/2/3 — le scénario journalise EXACTEMENT ses 11 lignes de preuve
+(J_ENTETE → J_FINAL), chacune derrière un memcmp. Le correctif D42 (I0, init
+R_CS en tête) RESTE : c'est un devoir d'héritage, pas une sonde — l'oracle le
+garde par contrôle post-run du shim à état et par falsification V9 (tcp-09
+sur CS vierge DOIT fauter).
 
 RÉVISION 3 (D42 — reprise du devoir d'héritage de tcp-12) : le journal
 terrain demo.7 franchit toute la mécanique (sondes 3/3, v1>v2>v1, serveur en
@@ -40,17 +52,18 @@ Contrat :
          (GUI, E3 de tcp-11) ; P5 la section critique R_CS est initialisée
          AVANT tout spawn de fil journalisant via tcp-11 (I0, D42).
   post : Q1 chaque étape franchie n'est journalisée qu'après sa vérification
-         (memcmp exact — jamais de succès déclaré non prouvé) ; les sondes R2
-         ne journalisent que des FAITS (position d'exécution / retours
-         vérifiés), jamais un succès non prouvé ; Q2 mécanique :
-         trois appels au bloc écho par SON ENTRÉE 0x4600 (avant/après
-         patch/après rollback) avec memcmp contre les attendus "salut
-         triade\r\n"/"SALUT TRIADE\r\n" ; Q3 réseau : échanges complets
-         (boucles send/recv cumulatives, miroir tcp-09), chaque réponse
-         vérifiée par memcmp avant journalisation ; Q4 arrêt propre garanti
-         sur TOUT chemin de sortie : si socket cliente ouverte → tcp-05 ;
-         R_QUIT = 1 ; si écoute ouverte → tcp-05 ; le thread retourne 0 ;
-         Q5 rax = 0 sur tout chemin (le verdict vit dans le journal).
+         (memcmp exact — jamais de succès déclaré non prouvé) ; le journal
+         nominal compte EXACTEMENT 11 lignes (R4 : les sondes sont
+         retirées — toute ligne parasite fait échouer l'oracle) ; Q2
+         mécanique : trois appels au bloc écho par SON ENTRÉE 0x4600
+         (avant/après patch/après rollback) avec memcmp contre les attendus
+         "salut triade\r\n"/"SALUT TRIADE\r\n" ; Q3 réseau : échanges
+         complets (boucles send/recv cumulatives, miroir tcp-09), chaque
+         réponse vérifiée par memcmp avant journalisation ; Q4 arrêt propre
+         garanti sur TOUT chemin de sortie : si socket cliente ouverte →
+         tcp-05 ; R_QUIT = 1 ; si écoute ouverte → tcp-05 ; le thread
+         retourne 0 ; Q5 rax = 0 sur tout chemin (le verdict vit dans le
+         journal).
   inv  : I0 (D42) InitializeCriticalSection(R_CS) est le PREMIER appel du
          scénario — avant GetStdHandle, avant tout journal, avant tout
          spawn : l'état hérité exigé par les blocs scellés (P5 tcp-11)
@@ -78,14 +91,13 @@ Vecteurs :
   V2 : émulation complète : shims réseau (recv scripté REFLET de l'état réel
        du patch : identité / majuscules selon R_ETAT_PATCH — la cohérence
        bascule→réponse est ainsi prouvée) ; le journal capturé doit être
-       EXACTEMENT la séquence attendue (20 lignes au nominal : 14 de R2 —
-       11 nominales + les 3 sondes mécanique — plus les 6 sondes d'échange
-       sonde4/sonde5 ×3, D42) ; le patch s'exécute RÉELLEMENT en émulation
-       (VirtualProtect shim, memcpy scellé, qword de bascule écrit à 0x4600,
-       trampoline exécuté vers 0x4680) ; rollback idem ; l'arrêt propre Q4
-       constaté (closesocket × 2, R_QUIT) ; la CS initialisée est CONSTATÉE
-       par le shim à état (D42 : le scénario sans init échoue au contrôle
-       post-run).
+       EXACTEMENT la séquence attendue (11 lignes au nominal — R4 : sondes
+       retirées, toute ligne parasite = échec) ; le patch s'exécute
+       RÉELLEMENT en émulation (VirtualProtect shim, memcpy scellé, qword
+       de bascule écrit à 0x4600, trampoline exécuté vers 0x4680) ;
+       rollback idem ; l'arrêt propre Q4 constaté (closesocket × 2,
+       R_QUIT) ; la CS initialisée est CONSTATÉE par le shim à état (D42 :
+       le scénario sans init échoue au contrôle post-run).
   V3 : falsification : corruption d'un octet de chaque bloc embarqué →
        détection quelque part (porte, vecteur, divergence de journal) —
        zéro silence (batterie exhaustive de l'oracle démo).
@@ -94,18 +106,17 @@ Vecteurs :
        correctif (init absente du scénario) est détectée par le contrôle
        post-run du shim à état.
 Fixtures    : .rdata — "salut triade\r\n" (13 o), "SALUT TRIADE\r\n" (13 o),
-              lignes du journal (UTF-16) ; sondes R2 en ASCII dans les
-              interstices libres (0x2748/0x276c/0x22f1, jamais lus par le
-              chargeur ni les INT/IAT) : "sonde1 avant echo" (17 o),
-              "sonde2 patch pose" (17 o), "sonde3 v2 ok" (12 o) ; sondes
-              D42 dans la zone libre M2 0x266E-0x26D8 : "sonde4 envoye ok"
-              (16 o), "sonde5 recu ok" (14 o — win-10:R2), "S1 accept ok"
-              (12 o), "S2 fil echo lance" (17 o — win-08:R2).
+              lignes du journal (UTF-16, 11 chaînes J_*) ; RIEN d'autre
+              (R4 : les chaînes de sondes D40/D42 sont retirées, les
+              interstices et la zone libre M2 qui les portaient reviennent
+              à zéro).
 Provenance  : écrite-avant-code.
 Décisions   : D5, D7, D33, D35 ; R4 (contrat stable du bloc écho), boucle § 5 ;
               D40 (instrumentation temporaire — slot 0x380 → 0x3C0, trou libre
               0x4F80-0x4FFF, aucun bloc voisin déplacé) ; D41 (sondes
               conservées pour la lecture terrain du correctif) ; D42
               (correctif : reprise du devoir P5 de tcp-11 — init CS en tête
-              de scénario ; sondes conservées, échange instrumenté des deux
-              côtés).
+              de scénario) ; D43 (constat vert terrain demo.8 : 28/28 lignes
+              « DÉMO OK » — retrait de TOUTES les sondes, R4 final ; le
+              correctif D42 reste vivant, gardé par V9 et le contrôle
+              post-run).

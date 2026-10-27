@@ -52,18 +52,17 @@ BLOCS = [
      "blocs libc-01/02/03/04 ; table R10 + version + ancre .rdata ; fixtures"),
     ("win-07-client", "d40007", "win-07:R1", 0x1C40, 0xC0,
      "IAT ws2_32 : socket, connect, closesocket"),
-    ("win-08-serveur", "d40008", "win-08:R2", 0x1D00, 0x100,
-     "blocs tcp-01/02/06, win-05 (entrée trace, sondes S1/S2 D42) ; "
+    ("win-08-serveur", "d40008", "win-08:R3", 0x1D00, 0x100,
+     "blocs tcp-01/02/06, win-05 (entrée scénario, ligne d'échec) ; "
      "IAT kernel32 : CloseHandle ; état .data"),
-    ("win-10-echange", "d40010", "win-10:R2", 0x4980, 0x180,
+    ("win-10-echange", "d40010", "win-10:R3", 0x4980, 0x180,
      "IAT ws2_32 : send, recv ; bloc libc-02 memcmp ; phrase .rdata ; "
-     "win-05 (entrée trace, sondes 4/5 D42)"),
-    ("win-09-scenario", "d40009", "win-09:R3", 0x4C00, 0x3C0,
+     "bloc muet (D43 : sondes 4/5 retirées)"),
+    ("win-09-scenario", "d40009", "win-09:R4", 0x4C00, 0x3C0,
      "blocs win-05/06/07/08, tcp-05/07, écho @0x4600, libc-02 ; "
      "IAT kernel32 : GetStdHandle, InitializeCriticalSection (D42 : init R_CS, "
-     "le devoir de tcp-12), CloseHandle ; IAT ws2_32 : send, recv ; "
-     "état .data + chaînes UTF-16 ; D40 : sondes trace mécanique "
-     "(win-05 entrée trace, interstices .rdata)"),
+     "le devoir de tcp-12 — VIVANT), CloseHandle ; IAT ws2_32 : send, recv ; "
+     "état .data + chaînes UTF-16 ; D43 : sondes retirées, 11 lignes nominales"),
     ("win-11-journal", "d40011", "win-11:R1", 0x1E00, 0x200,
      "IAT kernel32#2 : GetModuleFileNameA, CreateFileA, WriteFile (commune), "
      "FlushFileBuffers, GetLastError ; blocs libc-01/03/04 ; "
@@ -130,8 +129,9 @@ for _nom, (_adr, _txt, _n) in L.CHAINES_UTF16.items():
     SYMBOLES[_nom] = _adr
 for _nom, (_adr, _octets, _n) in L.CHAINES_ASCII.items():
     SYMBOLES[_nom] = _adr
-for _nom, (_adr, _octets, _n) in L.CHAINES_SONDES.items():   # D40 : sondes R2
-    SYMBOLES[_nom] = _adr
+# D43 : CHAINES_SONDES est vide — les sondes D40/D42 sont retirées (constat
+# vert terrain demo.8) ; aucun symbole SONDE_* n'est plus résoluble, une
+# référence résiduelle dans un brouillon fait échouer la résolution.
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
 RE_OPERANDE_ETIQUETTE = re.compile(r"^(j\w+|loop\w*|call)\s+\.(\w+)$")

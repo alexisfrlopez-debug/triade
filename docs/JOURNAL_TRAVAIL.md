@@ -1671,3 +1671,86 @@ jusqu'à « boucle § 5 complète — DÉMO OK » → retrait de TOUTES les sond
 visible désigne l'intervalle ; la seule zone restée aveugle serait
 l'intérieur de tcp-09 (bloc scellé — demo.9 instrumenterait via une
 révision M2).
+
+## Journal 32 — D43 : terrain demo.8 — « boucle § 5 complète — DÉMO OK » (28/28 lignes, sondes vertes des deux côtés, correctif D42 validé) ; retrait de TOUTES les sondes (demo.9 finale de lignée) + scellage final M2 0.3.0
+
+**Contexte** : dépôt développeur « demo_journal.txt pour demo8 importé,
+demo complète » — la lecture terrain attendue depuis le journal 31 (28
+lignes jusqu'à « DÉMO OK ») est dans le dossier test du coffre Drive.
+
+**Déroulé** :
+1. Journal demo.8 rapatrié (drive_recuperer.py --forcer demo_journal.txt :
+   706 o, md5 84f5d58e…) et lu en CP1252 : **28 lignes EXACTEMENT comme
+   le LISEZMOI les annonçait**, CRLF final propre, aucune ligne
+   mélangée. Séquence : L00 demo.8, démarrage complet, clic L03, porte
+   R10 VERTE, libc 4/4 verts, sonde1→2→3, « mécanique : v1>v2>v1
+   confirmés », « serveur : écoute 127.0.0.1:25000 », « client :
+   connecté », **S1 accept ok** / **S2 fil echo lance** (lus APRÈS le
+   connect — la course bénigne documentée en D42, résolue sans
+   incident), **sonde4/sonde5 autour de CHACUN des trois échanges** :
+   « écho réseau : aller-retour exact », « patch en production :
+   MAJUSCULES », « retour arrière : identité confirmée », **« boucle § 5
+   complète - DÉMO OK »**. Le premier échange — point de mort de
+   demo.7 — a VÉCU : la CS initialisée par win-09:R3 a tenu sous
+   EnterCriticalSection réel de Windows 11. Archivé brut :
+   demo/journal_terrain_demo8.txt (md5 identique, jamais ré-encodé).
+2. Bilan de la cascade : **8 classes de défauts nommées et corrigées en
+   8 lectures de journal** (D36 RECT, D37 jumeau silencieux, D38
+   volatiles, D39 DEP, D40 méthodologie sondes, D41 zone d'accueil ABI,
+   D41 POSE, D42 CS héritée) — chaque correction byte-exact, chaque
+   régression rendue impossible (V4-V9 + audits trackés).
+3. Retrait des sondes — specs ÉCRITES-AVANT-CODE : win-08:R3
+   (orchestration nue, journal SILENCIEUX en nominal — I4 : toute ligne
+   parasite fait échouer l'oracle), win-09:R4 (journal EXACTEMENT 11
+   lignes ; le correctif D42 — I0 init R_CS en tête — RESTE VIVANT,
+   c'est un devoir d'héritage, pas une sonde), win-10:R3 (bloc muet,
+   séquence R1 rétablie : boucle émission → boucle réception → memcmp).
+   Brouillons élagués (7 × 4 instructions = 140 o), layout :
+   CHAINES_SONDES vidé (les 7 adresses des zones libres — interstices
+   D40 + zone M2 D42 — retournent au zéro, jamais lues par le
+   chargeur), VERSION_DEMO9 = 0.3.0-demo.9 / u64 0x00030109, L00
+   actualisé.
+4. Chaîne : auteur.py — tailles prédites exactes (win-08 179→139 o,
+   win-09 902→842, win-10 195→155) ; build : round-trip 100 % partout,
+   oracle structurel 561 verrous, PE validé, héritage R7 intact (16
+   blocs + staging octet-identiques echo 0.3.0-rc.4, ex-rc.4 — voir
+   point 6) ; oracle différentiel durci pour le retrait : LIGNES_
+   NOMINALES = 11 lignes, win-08 MUET (anti-régression : une sonde
+   réintroduite = divergence immédiate), V4-V9 toutes vivantes —
+   **86 cas verts** (87−1 : le cas sondes S1/S2 devient le cas
+   silence), falsification 28/28 blocs, carte re-scellée (28
+   empreintes, signature Ed25519), verrou croisé OK, re-vérification
+   R5/R8 graine 2 verte.
+5. Audit final (scripts/audit_demo9.py, tracké) TOUT CONFORME : 7/7
+   zones de sondes à ZÉRO, L00 demo.9, u64 0x00030109, correctif D42
+   VIVANT byte-exact (lea → 0x3830, call → IAT 0x20D8, AVANT
+   GetStdHandle), 0 appel trace (0x5000) depuis win-08/09/10 (win-02/04
+   intacts : 3+7 appels légitimes), win-10 séquence R1 (préparation
+   memcmp exacte entre dernier jb et memcmp), héritage D41 intact
+   (0x40 ×2, sub/add rsp,0x28, lea r9,[rsp+0x20], zéro résiduel),
+   **diff demo.8→demo.9 CHIRURGICAL : 1 047 octets (916 code des 3
+   blocs révisés + 131 données : sondes retour zéro, L00, u64, sommes
+   R10), ZÉRO hors zone autorisée**. Empreintes demo.9 : md5
+   73c064fbaf4610a167bc6434dee400e4, sha256 df8f2e50…95e4af.
+6. **Scellage final M2 0.3.0** (build_m2.py --sceller-final, modèle
+   M1 0.2.0) : conformité 1-7 ré-exécutée VERTE (124/124), balise
+   basculée rc.4 → 0.3.0 dans frag-bld (fail-closed vérifié : balise
+   rc.4 présente EXACTEMENT une fois), fragments re-chiffrés, carte
+   re-signée Ed25519 — immuable § 9 (défaut → 0.3.1 à contrat stable,
+   R4). echo.exe reste byte-identique à l'artefact validé (le scellage
+   final est un fait de carte). **Le jalon M2 est clos : boucle § 5
+   (patch à chaud en production + rollback) démontrée sur machine
+   réelle.**
+7. Livraison finale : demo.9 (racine Drive + dossier test + download/),
+   LISEZMOI-demo.txt réécrit pour la finale (17 lignes attendues, guide
+   de lecture allégé — plus d'issues à guider, la démonstration est
+   acquise), echo-0.3.0.exe poussé au coffre, REPRISE aligné (état M2
+   clos, ligne d'état générale). Commit + GitHub + miroir Drive.
+
+**Suivi** : M2 clos (balise 0.3.0, D43). Formalité offerte au
+développeur : un dernier clic sur demo.9 relira la démonstration PROPRE
+(17 lignes attendues, sans instrumentation) — tout écart serait un
+constat neuf sur un binaire audité. Prochain jalon : M3 (contrats
+renforcés sur entrées non fiables — fuzzing systématique) ; le chantier
+m7/ (échelon 2 de l'auto-hébergement D34, SHA-512 natif scellé) se
+poursuit en parallèle.

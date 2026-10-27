@@ -129,6 +129,13 @@ VERSION_DEMO8 = "0.3.0-demo.8"     # D42 : win-09:R3 initialise R_CS en tête de
                                    # EnterCriticalSection sur CS vierge) ; sondes
                                    # bilatérales S1/S2 (win-08:R2) + 4/5 (win-10:R2)
 VERSION_U64_DEMO8 = 0x00030108     # monotonie : au-dessus de demo.7
+VERSION_DEMO9 = "0.3.0-demo.9"     # D43 : constat vert terrain demo.8 (« boucle
+                                   # § 5 complète — DÉMO OK », 28/28 lignes) —
+                                   # retrait de TOUTES les sondes (win-08:R3,
+                                   # win-09:R4, win-10:R3) : journal nominal
+                                   # exactement 11 lignes ; version FINALE de la
+                                   # lignée démo, jalon M2 scellé 0.3.0
+VERSION_U64_DEMO9 = 0x00030109     # monotonie : au-dessus de demo.8
 VERSION_U64_MIN = 0x00030000       # plancher de la porte R10 (hérité M2)
 
 SUBSYSTEM_GUI = 2                  # WINDOWS_GUI (tcp-12 était CONSOLE)
@@ -144,10 +151,10 @@ BLOCS_WIN = [
     ("d40005", "win-05:R3", 0x5000, 0x200, "demo.3", 1),   # miroir universel écran + fichier (.text2 étendue 0x1400 — D37 : le code R3 ne tient ni dans le slot .text 0x19C0-0x1ABF (LIBRE depuis), ni dans 0x4700-0x47FF)
     ("d40006", "win-06:R1", 0x1AC0, 0x180, "demo.3", 1),   # autotest (porte R10 + libc)
     ("d40007", "win-07:R1", 0x1C40, 0xC0, "demo.3", 1),    # client TCP
-    ("d40008", "win-08:R2", 0x1D00, 0x100, "demo.8", 1),   # serveur d'acceptation — D42 : sondes S1/S2 (accept/spawn)
+    ("d40008", "win-08:R3", 0x1D00, 0x100, "demo.9", 1),   # serveur d'acceptation — D43 : sondes S1/S2 retirées (orchestration nue)
     ("d40011", "win-11:R1", 0x1E00, 0x200, "demo.3", 1),   # journal fichier (inchangé, D36)
-    ("d40010", "win-10:R2", 0x4980, 0x180, "demo.8", 1),   # échange vérifié — D42 : sondes 4/5 (send/recv complets)
-    ("d40009", "win-09:R3", 0x4C00, 0x3C0, "demo.8", 1),   # scénario complet — D40 : sondes mécanique ; D42 : init R_CS (devoir tcp-12)
+    ("d40010", "win-10:R3", 0x4980, 0x180, "demo.9", 1),   # échange vérifié — D43 : sondes 4/5 retirées (bloc muet)
+    ("d40009", "win-09:R4", 0x4C00, 0x3C0, "demo.9", 1),   # scénario complet — D42 : init R_CS (devoir tcp-12) VIVANT ; D43 : sondes retirées
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = win-01
 
@@ -326,7 +333,7 @@ assert FIN_UTF16 <= R_IAT_K32B, "zone UTF-16 déborde sur l'IAT kernel32#2"
 # Le NUL n'est posé que pour NOM_FICHIER (memcpy 17 o) ; les lignes L* sont
 # pilotées par leur longueur (mode 0/1 de win-11), pas de terminaison.
 _SEQ_ASCII = [
-    ("L00", b"L00 demarrage demonstration 0.3.0-demo.8"),
+    ("L00", b"L00 demarrage demonstration 0.3.0-demo.9"),
     ("L01", b"L01 fenetre principale creee"),
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),
     ("L02", b"L02 controles crees (journal, bouton)"),
@@ -349,29 +356,16 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 ECHO_ENTREE = L2.ECHO_ENTREE            # 0x4600 — cible du patch (héritage)
 ECHO_CROISSANCE = L2.ECHO_CROISSANCE    # 0x4680 — zone de croissance
 
-# --- Sondes de trace (D40/D42 — instrumentation TEMPORAIRE) -----------------------
-# Chaînes ASCII posées dans les zones libres de .rdata (jamais lues par le
-# chargeur : hors INT/IAT/hints/reloc). Les zones UTF-16 (14 o restants) et
-# ASCII (2 o restants) sont PLEINES depuis D40 — d'où les interstices, puis
-# la zone libre M2 0x266E-0x26D8 (chaînes de tcp-10/tcp-12 NON posées dans
-# la démo : leurs utilisateurs ne sont pas embarqués). Adresses fixes,
-# longueurs pilotées par edx (mode 0 win-05).
-R_SONDE_1 = 0x2748   # interstice INT kernel32#2 (fin 0x2748) → reloc 0x2760
-R_SONDE_2 = 0x276C   # interstice reloc (fin 0x276C) → INT user32 0x2780
-R_SONDE_3 = 0x22F1   # interstice hint FlushFileBuffers (hn = 2+18 o, fin 0x22F1) → IAT ws2 0x2300
-R_SONDE_S1 = 0x266E  # zone libre M2 (fin "echo " 0x266E → "fin connexion" 0x26D8)
-R_SONDE_S2 = 0x267A  # suite de la même zone libre
-R_SONDE_4 = 0x268B   # suite de la même zone libre
-R_SONDE_5 = 0x269B   # suite de la même zone libre
-CHAINES_SONDES = {
-    "SONDE_1": (R_SONDE_1, b"sonde1 avant echo", 17),   # avant le 1er appel écho (D40)
-    "SONDE_2": (R_SONDE_2, b"sonde2 patch pose", 17),   # après tcp-07 mode 0 = 0 (D40)
-    "SONDE_3": (R_SONDE_3, b"sonde3 v2 ok", 12),        # après memcmp v2 (écho patché, D40)
-    "SONDE_S1": (R_SONDE_S1, b"S1 accept ok", 12),      # serveur : accept retourné (D42, win-08:R2)
-    "SONDE_S2": (R_SONDE_S2, b"S2 fil echo lance", 17),  # serveur : fil tcp-09 lancé (D42, win-08:R2)
-    "SONDE_4": (R_SONDE_4, b"sonde4 envoye ok", 16),    # client : émission complète (D42, win-10:R2)
-    "SONDE_5": (R_SONDE_5, b"sonde5 recu ok", 14),      # client : réception complète (D42, win-10:R2)
-}
+# --- Sondes de trace (D40/D42) — RETIRÉES en demo.9 (D43) -------------------------
+# L'instrumentation temporaire (3 sondes mécanique D40 en interstices .rdata
+# 0x2748/0x276C/0x22F1, sondes S1/S2 + 4/5 D42 en zone libre M2
+# 0x266E-0x26A9) a rempli son devoir au terrain : demo.6 a localisé la POSE
+# (D41), demo.7 a franchi la mécanique, demo.8 a fermé la boucle (28/28
+# lignes « DÉMO OK », S1/S2 + sonde4/5 lues des deux côtés). Constat vert
+# → retrait intégral (D43) : plus AUCUNE chaîne de sonde posée, les zones
+# libres qui les portaient reviennent à zéro (jamais lues par le chargeur :
+# hors INT/IAT/hints/reloc). Le journal nominal fait exactement 11 lignes.
+CHAINES_SONDES: dict[str, tuple[int, bytes, int]] = {}   # vide — D43 (retrait)
 
 # --- Jetons de retour d'émulation (oracle, hors binaire) ------------------------
 
