@@ -1,0 +1,79 @@
+TRIADE — TERRAIN.12 : LE TEST T2 EST VERT. LE TEST T1 ÉTAIT RÉUSSI
+DEPUIS LE DÉBUT — NOUS AVONS TROUVÉ POURQUOI IL AFFICHAIT « KO ».
+C'EST CORRIGÉ : LA DÉMO FINALE EST DANS CE TERRAIN.12.
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre run de 22:10 (terrain_20261027_221053.txt) a fait passer le test
+T2 pour la PREMIÈRE FOIS : le proxy corrigé a servi les deux pages
+(640 et 577 octets), son journal a 7 lignes, verdict OK. Le correctif
+de pile était le bon — votre machine vient de le prouver.
+
+Et le test T1 ? Il affichait « NON CONFORME » à chaque run. Nous avons
+trouvé pourquoi, et c'est une bonne nouvelle : LA DÉMO N'A JAMAIS
+ÉCHOUÉ. Votre demo_journal.txt déposé dimanche soir (celui du run de
+18:00) se termine par « boucle § 5 complète - DÉMO OK » — la démo va
+au bout, à chaque fois. Le « KO » venait de notre OUTIL DE MESURE, pas
+de la démo :
+
+  1. Le superviseur attend 17 lignes : c'est le journal de la démo
+     FINALE (publique), celle sans les sondes de diagnostic. Or depuis
+     une semaine, le kit embarquait la version DIAGNOSTIQUE (28
+     lignes) pour comprendre les pannes. 28 ≠ 17 : KO garanti, même en
+     réussite. Nous le savions et l'avions écrit — la preuve vivait
+     dans demo_journal.txt.
+
+  2. Plus subtil : le superviseur lit le journal par morceaux de 640
+     octets. Le journal diagnostique en fait 706. La lecture s'arrête
+     donc à 640 — pile au milieu du mot « retour arrière », dont il ne
+     reste que « re ». C'est l'origine du « re » mystérieux en fin de
+     journal de vos runs. La démo disait tout — le superviseur n'en
+     lisait que les 91 premiers pour cent.
+
+Les pannes sont derrière nous : ce terrain.12 embarque LA DÉMO FINALE
+PUBLIQUE (md5 73c064fbaf4610a167bc6434dee400e4, affiché en S04C). Son
+journal fait exactement 17 lignes et 519 octets — il tient en une
+seule lecture. Le verdict T1 devrait maintenant afficher CONFORME.
+
+CE QUI NE CHANGE PAS
+--------------------
+Le superviseur lui-même (fenêtre, scénario, tests, correctifs des
+terrains 10 et 11) est INCHANGÉ : même taille, même code, seuls les
+octets de la démo embarquée et la version changent. Le proxy est
+toujours le 0.4.0-dev.2 qui vient de réussir (md5 dd12b649…, en S05C).
+
+md5 superviseur-terrain12.exe  ee9d1072861444cb91ccfe52788bf185
+sha256                        3cc604ade9cb3d2ad02d0331b6b7d68ba241b8e3cf681cbf4e10bd7658430e73
+md5 demo FINALE embarquée     73c064fbaf4610a167bc6434dee400e4
+md5 proxy embarqué            dd12b64948e64153ff1dd7a66f367ff3
+
+PROTOCOLE (COMME D'ABORD, 3 ÉTAPES)
+-----------------------------------
+1. AVANT de lancer : si un demo_journal.txt traîne encore à côté du
+   superviseur, déposez-le dans le dossier test (c'est la preuve du
+   run précédent — le prochain run l'écrasera).
+2. Double-cliquez superviseur-terrain12.exe, attendez la fin (le
+   verdict S90/S91 s'affiche, ~2 minutes).
+3. Déposez dans le dossier test :
+   - le nouveau terrain_*.txt (s'il ne s'y est pas déposé tout seul) ;
+   - le nouveau demo_journal.txt (la preuve des 17 lignes) ;
+   - SI S33 affiche encore « jeton OAuth ÉCHEC » : le fichier
+     terrain_jeton.json qui se trouve à côté du superviseur. C'est la
+     RÉPONSE du serveur Google — elle contient le message d'erreur
+     exact qui nous dira pourquoi l'envoi échoue (jeton expiré, horloge,
+     réseau…). Il ne contient AUCUN secret — ne déposez surtout pas
+     terrain_req.txt, lui, il en contient un.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S04C md5 demo.exe 73c064fb… (la preuve que la finale est embarquée) ;
+- S13 code=0, S14 lignes=17, S15 « conforme », S16 T1 VERDICT OK ;
+- S22-S28 OK comme à 22:10 ;
+- S33 : soit « obtenu » (le journal partira TOUT SEUL), soit « ÉCHEC »
+  (et alors terrain_jeton.json nous dira tout).
+
+Si la démo finale s'arrête malgré tout (improbable : la diagnostique
+vient de faire 5 runs complets d'affilée), le journal s'arrêtera sec,
+sans sondes — c'est le prix de la version publique ; le WER de Windows
+nommera l'adresse si le pire arrive.

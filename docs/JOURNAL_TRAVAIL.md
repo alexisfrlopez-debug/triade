@@ -3236,3 +3236,68 @@ S33 ÉCHEC + la pièce console curl tranche ; B (le proxy meurt encore)
 = S26=1 + S22 code=56/7 → WER ReportArchive nommera c00000fd dans
 proxy.exe cette fois (le crash est DANS le proxy, pas le superviseur).
 La mesure de succès reste UNIQUE : le journal déposé TOUT SEUL.**
+
+## 54 — D64 : terrain.11 jugeé (T2 VERT historique, T1 expliqué : la démo réussissait depuis toujours, l'outil de mesure tronquait) ; terrain.12 livré (démo finale publique)
+
+**Le run 22:10 (terrain_20261027_221053.txt, 2 014 o).** Premier run où
+T2 passe : S22/S24 code=0, S23=640 o, S25=577 o, S26=7 lignes, S27
+conforme, **S28 T2 VERDICT OK**. Expérience contrôlée parfaite : la
+seule différence binaire terrain.10→11 était le proxy (S05C 8740e1ca →
+dd12b649), le correctif de pile http-10:R3 (D63) est CONFIRMÉ
+cause→effet. Le journal proxy embarque maintenant les événements
+(connexion entrante / tunnel / fin connexion / arret). T3 : S33 OAuth
+ÉCHEC (4e fois) — la pièce console curl demandée au LISEZMOI n'est pas
+venue ; S91 ÉCHEC (T1+T3 KO).
+
+**T1 — le KO était un artefact de mesure, doublement.** (1) La preuve
+était déjà là : demo_journal.txt du run 18:00 (déposé sur Drive) fait
+28 lignes et se termine par « retour arrière : identité confirmée » +
+« boucle § 5 complète - DÉMO OK » — la démo diagnostique va AU BOUT,
+code=0, depuis 5 runs. (2) Le verdict sup-33 exige 17 lignes (le
+journal de la démo PUBLIQUE demo.9, D43) alors que le kit embarquait
+demo10-diagnostique (28 lignes) pour les besoins du diagnostic — KO
+structurel connu (LISEZMOI-terrain8 : « T1 dira NON CONFORME même en
+cas de succès »). (3) Le mécanisme du « re » final, élucidé au byte :
+le superviseur lit via f60036 plafonné à **MAX_LECTURE = 640 o**
+(layout.py:630) ; le journal diagnostique en fait 706 ; la coupe à 640
+tombe PILE dans « retour arrière » (octets 639-640 = « re ») — les 3
+runs complets (19:23, 21:38, 22:10) montrent le même fragment,
+décisif. S14=26 = les 26 lignes complètes contenues dans 640 o.
+
+**Le contrat demo.9 vérifié statiquement de bout en bout**
+(journal_attendu_demo9.py) : journal attendu = journal réel demo10
+moins les 11 lignes de sondes (chaînes ASCII sans accents), L00
+recadré → **17 lignes, 519 o < 640, 31 derniers octets ==
+FIX_FINAL_DEMO**. La règle de conversion win-11 P2 mode 2 (≥0x100 →
+'-', 0x2192 → '>', sinon octet bas) transforme J_FINAL UTF-16 « boucle
+§ 5 complète — DÉMO OK » (em dash U+2014) en « … - DÉMO OK » cp1252 —
+exactement la fixture du superviseur @rva 0x4875 ( memcmp 31 de
+sup-33). 6 lignes L* + 11 lignes J_* (win-09:R4 « 11 lignes
+exactes ») = 17 : le compte tombe juste.
+
+**terrain.12 (data-only, une variable : la démo embarquée).**
+patch_terrain12.py : BLOB_DEMO @0x6410 demo10-diagnostique →
+**demo.9 publique** (md5 73c064fbaf4610a167bc6434dee400e4, MÊME TAILLE
+16 384 o, in-place, zéro décalage) ; chaîne md5 S04C @0x585F mise à
+jour ; génération terrain12, VERSIONINFO 0.5.12.0 ; sommes
+R10[23]/[25]/[26] recalculées. Diff 1 102 octets bornés — dont ~1 048
+dans la zone démo, cohérent avec le diff chirurgical demo.8→demo.9
+(1 047 o, D43). verif_terrain12.py : **25/25 verts** (empreintes,
+porte 27/27, kit octet pour octet, prologue probing intact, sup-34
+48 83 ec 28 vivant, J_FINAL UTF-16 extraite de la démo embarquée →
+conversion mode 2 → == fixture superviseur, sondes absentes, L00
+« 0.3.0-demo.9 »).
+
+**Livraison.** superviseur-terrain12.exe (md5
+ee9d1072861444cb91ccfe52788bf185, sha256 3cc604ad…) +
+LISEZMOI-terrain12.txt au dossier test (2/2 md5 MATCH) + download/.
+**Prédictions pré-enregistrées (falsifiables) : A (nominal) = S04C
+73c064fb…, S13 code=0, S14 lignes=17, S15 conforme, S16 T1 OK,
+S22-S28 OK, puis soit T3 OK (S36 OK, **S90 SUPERVISEUR : TOUT OK —
+première fois de l'histoire, journal déposé TOUT SEUL**), soit S33
+ÉCHEC (S36 KO, S91 ÉCHEC) et terrain_jeton.json (réponse OAuth SANS
+secret, demandée au LISEZMOI) nommera la cause ; B (démo publique
+s'arrête — improbable, la diagnostique vient d'enchaîner 5 runs
+complets) = S14 < 17 ou S13 ≠ 0, journal SEC sans sondes, WER en
+fallback.** T3 reste LA cause ouverte ; la pièce terrain_jeton.json
+la tranchera sans exposer de secret.
