@@ -1,0 +1,96 @@
+TRIADE — RELANCE TERRAIN.9 : COUPER LA PROTECTION TEMPS RÉEL
+PENDANT 3 MINUTES (+ LES 2 PIÈCES À DÉPOSER)
+=============================================================================
+
+CE QUE DIT VOTRE JOURNAL DE 20:01 (D'EXCELLENTES NOUVELLES, ENCORE)
+-------------------------------------------------------------------
+Votre journal de 20:01 est, à trois lignes près (la version et la date),
+IDENTIQUE OCTET PAR OCTET à celui de 19:23 — et c'est une bonne nouvelle :
+  - la porte d'intégrité : VERTE (4e fois) ;
+  - la fenêtre demo détectée, le clic envoyé (4e fois) ;
+  - le demo termine tout seul, code 0 ; son journal est lu (26 lignes +
+    le fragment « re ») ; le verdict T1 est rendu — nos prédictions se
+    vérifient À L'OCTET PRÈS pour la 2e fois d'affilée. La machinerie
+    est SAINTE, deux fois de suite, sur votre machine.
+  - puis le proxy démarre (S20), sa bannière arrive (S21)…
+  - et tout se referme au MÊME INSTANT que les deux fois précédentes
+    (16:52 et 19:23) : la première traversée réseau curl. C'est la 3e
+    mort EXACTEMENT au même point. Trois fois, au même endroit, à la
+    seconde près : c'est la signature d'un tueur externe répétable —
+    pas d'un hasard, pas d'un plantage.
+
+LE CHANGEMENT DE CETTE ITÉRATION : LA COUPURE (3 MINUTES, UNE SEULE)
+--------------------------------------------------------------------
+L'exclusion de dossier que le LISEZMOI précédent demandait (si vous
+l'avez posée) ne calme pas forcément le moteur COMPORTEMENTAL de
+Defender — c'est lui qui tue l'arbre entière au moment du relais
+réseau. La coupure de la protection en temps réel, elle, l'éteint
+COMPLÈTEMENT. Trois minutes suffisent. C'est la seule chose qui
+change : LE MÊME EXÉCUTABLE, RIEN À RETÉLÉCHARGER.
+
+AVANT DE COUPER : LA CAPTURE (PIÈCE N° 1, 1 MINUTE)
+----------------------------------------------------
+L'« Historique de protection » contient peut-être en ce moment la
+preuve écrite de ce qui a tué le run de 20:01 (nom de la menace,
+fichier visé, heure). Capturez-la AVANT de toucher à quoi que ce soit :
+  1. Touche Windows → tapez « Sécurité Windows » → Entrée.
+  2. « Protection contre les virus et menaces ».
+  3. Cliquez « Historique de protection ».
+  4. Capture d'écran de TOUT ce qui s'y trouve (chaque élément : nom,
+     fichier, heure). MÊME SI LA LISTE EST VIDE, capturez l'écran vide :
+     une liste vide est une preuve aussi précieuse qu'une liste pleine.
+
+LA COUPURE PUIS LE RUN (COMME D'HABITUDE, ~3 MINUTES)
+-----------------------------------------------------
+  1. « Sécurité Windows » → « Protection contre les virus et menaces »
+     → « Gérer les paramètres » (sous Paramètres de protection).
+  2. Bascule « Protection en temps réel » → Désactivé. (Si Windows
+     demande une autorisation administrateur : Oui.)
+  3. Si la bascule « Protection fournie par le cloud » existe :
+     Désactivé aussi.
+     — Si une bascule est grisée ou dit « géré par votre
+     organisation », notez-le dans reponse.txt (pièce n° 2) et
+     continuez avec ce que vous pouvez couper.
+     — Pendant la coupure, ne naviguez pas sur le web : le run prend
+     3 minutes, pas plus.
+  4. Double-cliquez C:\TRIADE\superviseur-terrain9.exe (LE MÊME —
+     empreinte de confiance md5 a59931db4e3bfc14a29e927a79cc73ca)
+     → « TOUT DEMARRER » → ne fermez rien :
+       ~40 s   la fenêtre demo se ferme toute seule (annoncé) ;
+       ensuite des fenêtres noires vivent et meurent (proxy, curl) ;
+       ~1 min  de silence pendant les traversées réseau (normal) ;
+       ~2-3 min le journal se dépose TOUT SEUL dans ce dossier test,
+               la fenêtre écrit S91, puis se ferme. FINI.
+  5. Réactivez immédiatement « Protection en temps réel » (et le cloud).
+     Note : Windows la réactive aussi tout seul au bout d'un moment —
+     c'est normal, prévu, ce n'est pas une erreur.
+
+CE QUE LA RÉUSSITE RESSEMBLE (IMPORTANT)
+----------------------------------------
+Le journal doit montrer : S22/S23 (curl http), S24/S25 (curl https),
+S26/S27/S28 « T2 VERDICT OK », S30-S34 (le dépôt). L'écran terminera
+quand même par « S91 SUPERVISEUR : ECHEC » — ATTENDU MÊME EN PLEINE
+RÉUSSITE (l'écart T1 documenté : 26 lignes lues contre 17 attendues).
+LA VRAIE MESURE DU SUCCÈS EST UNIQUE : un nouveau terrain_*.txt
+APPARU TOUT SEUL dans ce dossier test — le cœur du livrable, jamais
+encore réussi. Ensuite, déposez demo_journal.txt à la main comme
+d'habitude.
+
+LES 2 PIÈCES À DÉPOSER AVEC LE JOURNAL (DANS CE DOSSIER TEST)
+-------------------------------------------------------------
+  - Pièce n° 1 : la CAPTURE de l'« Historique de protection » (faite
+    avant la coupure, étape ci-dessus).
+  - Pièce n° 2 : un fichier texte « reponse.txt » d'UNE ligne :
+        exclusion posée avant le run de 20:01 : oui
+    ou  exclusion posée avant le run de 20:01 : non
+    (l'étape 5 du LISEZMOI précédent : dossier C:\TRIADE + exclusion
+    Defender). Ce oui/non décide si l'exclusion de dossier a échoué,
+    ou si elle n'a simplement jamais été testée.
+
+SI TOUT SE REFERME ENCORE MALGRÉ LA COUPURE
+-------------------------------------------
+Ne relancez rien. Déposez quand même le journal + la capture +
+reponse.txt. Ce résultat réfuterait Defender définitivement — et la
+réponse sera terrain.10 : un superviseur instrumenté pour piéger
+l'instant exact du kill, ligne par ligne. D'une façon ou d'une autre,
+le prochain journal nommera le coupable.

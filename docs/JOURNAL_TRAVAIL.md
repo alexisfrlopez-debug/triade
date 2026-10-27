@@ -2845,3 +2845,65 @@ test. Si mort encore à S21/bannière : l'exclusion dossier ne suffit pas au
 BehaviorMonitor → l'Historique de protection dira le nom et l'heure, et
 terrain.10 portera les exclusions de processus + l'instrumentation bissectrice
 du .curl (lignes avant/après lancement) + le dépôt T3 anticipé avant T2.
+
+## Entrée 49 — terrain.9 relance : « journaux envoyés, le superviseur s'est encore fermé tout seul » — 3e mort EXACTEMENT au même point (journal byte pour byte identique au 19:23), S13-S16 revérifiés à l'octet (2e fois), T2 vivant jusqu'à S21 — faute de capture, la fourche (exclusion posée ?) reste ouverte : la COUPURE temps réel 3 min devient la variable unique, terrain.9 INCHANGÉ (D60, 27/10 au soir)
+
+**Le verdict du run 20:01 (terrain_20261027_200129.txt, 1 525 o).** Diff formel
+avec le journal 19:23 : TROIS lignes (L00/S00 version terrain.8→terrain.9,
+S01 date) — le reste IDENTIQUE OCTET PAR OCTET. Séquence : S02 porte R10
+VERTE (4e validation D56), S03-S06 kit conforme (demo.10 cf72462d + proxy
+8740e1ca + annexe), S11 fenêtre DETECTÉE (4e validation D55), S12 clic, puis
+S13 « code=0 », S14 « lignes=26 » + recopie jusqu'au fragment « re », S15
+« NON conforme » + S16 « VERDICT KO » — LES TROIS PRÉDICTIONS DE L'ENTRÉE 47
+SE REVÉRIFIENT À L'OCTET PRÈS POUR LA 2e FOIS. Puis S20/S21 (proxy lancé,
+bannière reçue) — mort au 1er curl de T2 : 3e fois EXACTEMENT au même point
+(terrain.5 16:52, relance 19:23, terrain.9 20:01). Le demo_journal.txt du
+dossier test est byte-identique à celui du run 18:43 (md5 14cd56e6…) —
+ATTENDU : le journal demo.10 ne contient pas d'horodatage, le fichier réécrit
+est identique à chaque run ; aucune information nouvelle, cohérent. Trois
+morts déterministes au même instant (l'établissement de la chaîne curl →
+proxy:25000 → neverssl.com) = signature renforcée du kill externe répété.
+
+**La fourche non tranchée.** L'exclusion de dossier a-t-elle été posée avant
+le run de 20:01 ? L'Historique de protection contient-il une détection à
+~20:01 ? AUCUNE capture n'a été déposée (le dossier test ne contenait que le
+journal), alors que le LISEZMOI-terrain9 demandait précisément la capture
+dans ce cas. Sans le bit oui/non, « l'exclusion dossier ne suffit pas au
+BehaviorMonitor » (branche pré-enregistrée en 48) NE PEUT PAS ÊTRE CONCLU :
+l'alternative « l'exclusion n'a jamais été testée » reste ouverte. Aucune
+discrimination possible depuis le journal seul : les deux branches produisent
+le même journal byte pour byte.
+
+**Décision D60 : la COUPURE temps réel remplace l'exclusion comme variable
+unique.** Strictement plus forte (elle éteint le BehaviorMonitor ENTIER,
+là où l'exclusion dossier peut le laisser agir), elle tranche dans les DEUX
+branches de la fourche : si le run va au bout, Defender est prouvé par
+différence unique (3/3 morts protection active, 1/1 survit coupée) ; s'il
+meurt encore, Defender est réfuté comme tueur. Le binaire NE CHANGE PAS :
+superviseur-terrain9.exe (md5 a59931db4e3bfc14a29e927a79cc73ca, vérifié
+identique ce jour au dossier test — rien à retélécharger). Livré au dossier
+test : LISEZMOI-COUPURE.txt (6d9d8ef7…, md5 MATCH) — ordre des gestes :
+CAPTURE d'abord (l'Historique tient peut-être la preuve écrite du kill de
+20:01), coupure ensuite (Protection en temps réel + cloud, avec la note
+« géré par votre organisation » comme sous-cas), run, RÉACTIVATION. Deux
+pièces demandées avec le journal : la capture (MÊME VIDE — une liste vide
+est une preuve) et « reponse.txt » d'une ligne (exclusion posée avant 20:01 :
+oui/non) — ce bit décide si l'échec de l'exclusion est établi ou si elle
+n'a jamais été testée.
+
+**Prédictions pré-enregistrées (falsifiables).** Branche A (Defender =
+tueur) : S22 « curl http : code=0 », S23 octets>0, S24 « code=0 », S25
+octets>0, S26 lignes=7 (bannière + 2 événements http + 3 événements https +
+arret), S27 « conforme », S28 « T2 VERDICT OK », S30-S34 dépôt, S91 ÉCHEC
+(T1 KO documenté 26≠17 — la divergence de contrat reste ATTENDUE), et surtout
+un terrain_*.txt déposé TOUT SEUL dans le dossier test — le cœur du
+livrable, jamais encore réussi. Branche B (mort encore à la bannière malgré
+la coupure) : Defender réfuté → terrain.10 immédiat avec
+l'instrumentation bissectrice du .curl (lignes avant/après CreateProcess et
+autour de WaitForSingleObject — localise le kill à l'appel près), les
+exclusions de processus, et le dépôt T3 anticipé avant T2 — ce dernier
+exige sup-09 révision 3 (lever explicitement le verrou d'ordre I1/V7 :
+en régime de kill externe, l'assurance-dépôt prime la pureté séquentielle ;
+le dépôt final après verdict reste la règle nominale). Terrain.10 est
+DIFFÉRÉ volontairement : une seule variable par itération, et la coupure
+est la sonde la plus forte disponible sans toucher au binaire.
