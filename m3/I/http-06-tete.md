@@ -1,4 +1,4 @@
-http-06 · détection de fin de tête · révision 1
+http-06 · détection de fin de tête · révision 2
 Intention : dire si les octets accumulés contiennent une tête de requête
 COMPLÈTE — la paire CRLF CRLF terminatrice — et être LE propriétaire de la
 limite de tête MAX_TETE (8192 octets, repère RFC 7230 §3.1.1 « au moins
@@ -14,16 +14,22 @@ Contrat :
              garantie de l'appelant http-10 : la limite est testable sans
              dépassement) ;
          P4 la pile est alignée à l'entrée (rsp ≡ 8 mod 16).
-  post : Q1 tête complète (rax = 0) : rdx = longueur de la tête, CRLF CRLF
-             inclus (le corps commence exactement à cet offset — borne
-             rendue à l'appelant) ; le terminateur reconnu est la paire
-             0x0D 0x0A 0x0D 0x0A ;
+  post : Q1 tête complète (rax = 0) : longueur de la tête, CRLF CRLF
+             inclus, INFERIEURE OU ÉGALE à MAX_TETE (R2 — une tête
+             complète mais excessive est le verdict Q3, jamais un succès) ;
+             rdx porte la longueur (le corps commence exactement à cet
+             offset — borne rendue à l'appelant) ; le terminateur reconnu
+             est la paire 0x0D 0x0A 0x0D 0x0A ;
          Q2 tête incomplète (rax = 1) : pas de terminateur dans le
              remplissage, remplissage ≤ MAX_TETE — l'appelant accumule
              davantage (état nominal, pas un défaut) ;
-         Q3 limite dépassée (rax = 2) : remplissage > MAX_TETE sans
-             terminateur — la tête ne peut plus être complète dans la
-             limite ; aucune tête partielle n'est jamais parsée au-delà ;
+         Q3 limite dépassée (rax = 2) : la tête excède MAX_TETE —
+             remplissage > MAX_TETE sans terminateur (R1), OU terminateur
+             trouvé au-delà de MAX_TETE (R2 : le trou de R1 laissait
+             passer une tête complète de 8232 octets comme un succès —
+             surface de contrebande ET débordement du tampon de
+             réécriture de http-10) ; aucune tête partielle n'est jamais
+             parsée au-delà ;
          Q4 LF isolé (rax = 3) : un octet 0x0A non précédé de 0x0D dans le
              remplissage balayé — rejet strict CRLF (la RFC 7230 §3.5
              PERMET d'accepter le LF nu ; nous le refusons : durcissement
@@ -61,4 +67,15 @@ Vecteurs :
        limite est refusée (couvre Q5, I1, I3).
 Fixtures    : néant (le tampon d'accumulation appartient à http-10).
 Provenance  : écrite-avant-code.
-Décisions   : D8, D19, D45, D46.
+Historique  : R1 (D46) — version initiale. R2 (journal 36, D47) — le trou
+              du succès excessif : une tête AVEC terminateur au-delà de
+              8192 rendait verdict 0 (Q1 ne bornait pas la longueur),
+              ouvrant deux défauts réels : (a) contournement de la réponse
+              431 (une tête de 12 Kio était parsée puis réécrite), (b)
+              débordement du tampon de réécriture de http-10 (11,75 Kio
+              utiles) pour les têtes entre ~11,75 et 16 Kio — corruption
+              de la pile session. R2 borne Q1 (longueur <= MAX_TETE) et
+              étend Q3 au terminateur au-delà de la limite. Contrat stable
+              au sens R4 pour tout verdict déjà rendu à R1 (les têtes
+              conformes et les remplissages incomplets sont inchangés).
+Décisions   : D8, D19, D45, D46, D47.

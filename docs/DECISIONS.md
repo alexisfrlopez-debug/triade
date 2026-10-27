@@ -1704,3 +1704,81 @@ D15 (amende D5) illustrent la procédure.
   cible arbitraire) ; reverse-spec de tcp-09 comme session proxy (sa
   boucle écho est l'anti-contrat du proxy : il faut parser, pas renvoyer).
 - **Développement** : entrée 35 du journal de travail.
+
+### D47 — étape (b) de M3 : le proxy existe — plan d'adressage arrêté sur mesure, treize notations écrites à la main, oracle à scénarios (153 036 cas verts) et proxy.exe scellé 0.4.0-dev.1 (carte génération 5, 38 blocs sur 4 artefacts) ; deux révisions de spécification nées de l'implémentation (http-06:R2 le trou du succès excessif, http-10:R2 le relais borné) et un défaut de notation vaincu par le différentiel (http-08)
+
+- **Statut** : active · **Date** : 27 octobre 2026
+- **Contexte** : étape (b) des prochaines étapes de D45 — la couche I
+  écrite-avant-code (D46) devient du code machine : plan d'adressage
+  arrêté, brouillons de notation à la main, auteur M3 (résolution
+  d'étiquettes), oracle à scénarios, build de proxy.exe. La discipline
+  R2 s'applique à nous-mêmes : quand l'implémentation révèle un trou
+  DANS une spécification, la spécification est révisée AVANT que le
+  verdict révisé n'existe dans un artefact — contrat stable au sens R4
+  pour tout verdict déjà rendu.
+- **Choix retenu** : (1) **arrêt mesuré des zones** (m3/layout.py) : la
+  préfiguration D46 sous-estimait la réalité des notations — mesurées
+  par auteur : http-02 424 o (préfig 256), http-04 252 (192), http-07
+  307 (192), http-08 246 (256 attendus), http-10 1 746 (1 024), tcp-13
+  402 — la zone http est réarrêtée aux règles D8 (multiples de 64,
+  alignés 16, padding ≥ 16) : http-01..12 depuis 0x4C00, http-10
+  0x5580+0x800, http-12 au slot d'application 0x1800 (entrée PE) ;
+  tcp-13 occupe 0x4400-0x45BF (l'ancienne zone trampoline M2 devient
+  INT3 : aucun patch à chaud à ce jalon, le trou 0x4200 reste INT3) ;
+  l'IAT gagne TROIS entrées appendues — getaddrinfo, freeaddrinfo ET
+  connect (la préfiguration oubliait connect, exigé par tcp-13:I1) ;
+  (2) **http-06:R2 — le trou du succès excessif** : à R1, Q1 (tête
+  complète) ne bornait pas la longueur — une tête AVEC terminateur
+  au-delà de 8192 rendait le verdict succès, ouvrant deux défauts
+  réels : (a) contournement de la réponse 431 (une tête de 12 Kio était
+  parsée puis réécrite), (b) débordement du tampon de réécriture de
+  http-10 (11,75 Kio utiles) pour les têtes de ~11,75 à 16 Kio —
+  corruption de la pile session ; R2 borne Q1 (longueur ≤ MAX_TETE) et
+  étend Q3 au terminateur au-delà de la limite ; contrat stable R4 pour
+  tout verdict déjà rendu à R1 ; (3) **http-10:R2 — le relais borné** :
+  le corps de requête est relayé par des boucles tcp-03/tcp-04 INLINE
+  de la session (même discipline d'émission intégrale octet exact que
+  http-09, mais BORNÉE Content-Length — http-09, à fermeture
+  délimitée, s'arrêterait à l'EOF du client qui attend la réponse sur
+  la même connexion : interblocage documenté) ; la pompe détachée du
+  tunnel reçoit son argument compacté (amont<<32)|cliente — handles
+  Win32 significatifs sur 32 bits, handle fermé immédiatement après
+  restitution (miroir tcp-12:I4, unique entrée IAT CloseHandle de la
+  session) ; ligne « connexion entrante » déléguée par http-12:Q3 ;
+  assistants internes documentés en I5 (.emettre, .copier,
+  .pompe_amont — pile équilibrée, miroir .protger de tcp-07) ;
+  (4) **http-08 — un défaut de notation vaincu par le différentiel** :
+  le raccourci « deux-points en position 0 → verdict 3 » omettait de
+  vérifier le « // » qui suit — or la spécification Q2 est explicite :
+  une cible sans « :// » et sans « / » initial est une forme origine
+  invalide (verdict 1, ex. « :A\x18\x8b ») ; le préfixe VIDE reste
+  verdict 3 (« ://x » contient « :// », seul Q4 peut le posséder) ;
+  corrige par le chemin général (bornes + double barre), 246→241 o ;
+  (5) **le crash EST une détection** : l'oracle convertit tout crash
+  d'exécution (lecture hors bornes, INT3, opcode invalide) en échec
+  oracle nommé — un bloc qui crash viole son contrat ; la falsification
+  (un bit retourné dans http-06) se manifeste en crash : détectée ;
+  (6) **résultat** : proxy.exe 0.4.0-dev.1 — 19 456 octets, 4 sections,
+  kernel32 x10 + ws2_32 x13, DYNAMICBASE+HEVA+NX, entrée 0x1800 ;
+  oracle structurel 523 verrous + différentiel 153 036 cas verts
+  (graine 1, re-vérification graine 2 verte) + falsification détectée ;
+  R7 : 13 blocs octet-identiques aux artefacts scellés M0/M1/M2 ;
+  carte génération 5 (quatre fragments chiffrés XChaCha20-Poly1305,
+  signature Ed25519, 38 blocs indexés sur 4 artefacts — hello.exe,
+  selftest.exe, echo.exe, proxy.exe), verrou croisé 38 empreintes ;
+  sha256 85d2aa21c1532a50…af190fb52.
+- **Alternatives rejetées** : conserver http-09 pour le corps de
+  requête (interblocage : le client attend la réponse sur la même
+  connexion — la pompe s'arrêterait à son EOF) ; aligner le modèle de
+  l'oracle sur la notation fautive http-08 (le modèle suit la
+  spécification, I > B > C — jamais baisser l'oracle au niveau du bug) ;
+  traiter le crash de falsification comme un défaut du harnais (un
+  crash EST une violation de contrat, donc une détection) ; laisser
+  http-06:R1 en place (le succès excessif = contournement 431 ET
+  débordement réel de tampon) ; un coussin uniforme au lieu de l'arrêt
+  mesuré (les règles D8 imposent le multiple de 64 et le padding
+  minimal, pas l'à-peu-près) ; embarquer tcp-07/08/09/10/12 et
+  libc-05/06/07/09 dans proxy.exe (aucun appelant à ce jalon — la
+  carte les indexe sur leurs artefacts respectifs, le patch à chaud
+  revient à M5).
+- **Développement** : entrée 36 du journal de travail.

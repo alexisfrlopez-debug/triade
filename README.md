@@ -67,8 +67,10 @@ jusqu'à « DÉMO OK »), huit classes de défauts invisibles nommées et corrig
 jalon M3** — entrées non fiables : harnais de fuzzing à propriétés P1-P5
 livré et falsifiable, 101 000 cas sans crash sur la surface scellée (D45) ;
 couche I écrite avant le code — treize spécifications du domaine http
-(D46, `m3/I/`) ; prochaine étape : notation + proxy.exe + proxy transparent
-curl + campagne million.
+(D46, `m3/I/`) ; **proxy.exe scellé 0.4.0-dev.1** (D47 — étape (b) : oracle
+à scénarios 153 036 cas verts, carte génération 5 sur 4 artefacts, R7 :
+13 blocs octet-identiques M0/M1/M2) ; prochaine étape : proxy transparent
+curl sur le terrain, puis campagne million sur le périmètre parseur.
 
 ## Avertissement
 

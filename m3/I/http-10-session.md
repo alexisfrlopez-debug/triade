@@ -1,4 +1,4 @@
-http-10 · session proxy · révision 1
+http-10 · session proxy · révision 2
 Intention : servir UNE connexion cliente de bout en bout dans son thread —
 accumuler la tête, la PARSER par les blocs http-01..08 (chaque octet non
 fiable a un comportement défini), trancher (requête ordinaire ou tunnel
@@ -41,7 +41,10 @@ Contrat :
          Q3 tunnel (méthode CONNECT) : tcp-13 (hôte, port) ; échec →
              502, fin ; succès → émission de « HTTP/1.1 200 Tunnel
              etabli » au client, lancement (tcp-06) d'une pompe http-09
-             amont→cliente dans un thread détaché, puis pompe
+             amont→cliente dans un thread détaché (argument compacté
+             (amont<<32)|cliente — handles Win32 significatifs sur 32
+             bits, documenté ; le handle est fermé immédiatement après
+             restitution, miroir tcp-12:I4), puis pompe http-09
              cliente→amont DANS CE thread ; à la fin de cette pompe :
              fermeture de la socket amont PUIS de la socket cliente
              (l'ordre réveille la pompe sœur en échec nommé — http-09:Q2
@@ -56,27 +59,34 @@ Contrat :
              à la fin de tête incluse) — émission intégrale vers l'amont
              (tcp-04 en boucle) ; corps : les octets déjà au-delà de la
              longueur de tête sont émis (au plus Content-Length), puis
-             http-09 cliente→amont jusqu'à total Content-Length (sans
-             Content-Length : aucun corps — les octets excédentaires
-             reçus pendant l'accumulation sont ignorés : M3 = UNE
-             requête par connexion, documenté) ; puis relais réponse :
-             http-09 amont→cliente jusqu'à fermeture amont (le cadrage
-             de la réponse appartient au serveur amont et au client —
-             M3 ne parse AUCUNE réponse : ce qui n'est pas parsé ne peut
-             pas être mal parsé) ;
+             relais BORNÉ Content-Length par des boucles tcp-03/tcp-04
+             INLINE de la session (R2 : même discipline d'émission
+             intégrale octet exact que http-09, mais bornée — http-09,
+             à fermeture délimitée, s'arrêterait à l'EOF du client qui
+             attend la réponse sur la même connexion) jusqu'à total
+             Content-Length (sans Content-Length : aucun corps — les
+             octets excédentaires reçus pendant l'accumulation sont
+             ignorés : M3 = UNE requête par connexion, documenté) ; puis
+             relais réponse : http-09 amont→cliente jusqu'à fermeture
+             amont (le cadrage de la réponse appartient au serveur amont
+             et au client — M3 ne parse AUCUNE réponse : ce qui n'est
+             pas parsé ne peut pas être mal parsé) ;
          Q5 fermetures : sur TOUT chemin de fin, la socket amont (si
              ouverte) puis la socket cliente sont fermées (tcp-05),
              chacune EXACTEMENT une fois, par ce thread, avant tout
              journal final ; la ligne « fin » est journalisée (tcp-11)
              puis le thread rend la main par ret — jamais ExitThread
              (miroir tcp-09:I2) ;
-         Q6 journal : « connexion » à l'entrée, « tunnel » à
-             l'établissement d'un CONNECT, « fin » au départ — lignes
-             courtes, discipline tcp-11:P4.
+         Q6 journal : « connexion entrante » à l'entrée (ligne déléguée
+             par http-12:Q3), « tunnel » à l'établissement d'un CONNECT,
+             « fin » au départ — lignes courtes, discipline tcp-11:P4.
   inv  : I1 appels directs : tcp-03, tcp-04, tcp-05, tcp-06, tcp-11,
              tcp-13, http-01, http-02, http-04, http-05, http-06,
-             http-07, http-08, http-09 — AUCUN IAT direct (la surface
-             système est intégralement déléguée aux blocs scellés) ;
+             http-07, http-08, http-09 ; IAT kernel32 : CloseHandle
+             (handle de la pompe détachée du tunnel, fermé immédiatement
+             après restitution — miroir tcp-12:I4 ; unique entrée IAT de
+             la session, la surface système est intégralement déléguée
+             aux blocs scellés) ;
          I2 le cadre de pile (~0x7100) est alloué au prologue et rendu à
              l'épilogue : tampons, zones d'accueil, sauvegarde rbx,
              r12-r15 ; aucun stockage sous rsp ; les sockets vives dans
@@ -89,7 +99,10 @@ Contrat :
              aucune table de méthode n'est recopiée ici (T5) ;
          I5 la table des réponses (7 lignes d'état statiques) est la
              fixture de ce bloc — unique propriété des textes de
-             réponse.
+             réponse ; les assistants locaux (.emettre émission
+             intégrale, .copier copie d'octets, .pompe_amont proc de
+             thread) sont des étiquettes internes du bloc, pile
+             équilibrée, miroir .protger de tcp-07.
 Échecs :
   E1 : défaut de format (http-01/02/03-via-04/05/07/08 non nuls, LF
        isolé, ligne vide en tête, Host requis absent) → réponse 400 ;
@@ -120,17 +133,31 @@ Vecteurs :
        terminaison, réponse conforme au modèle de référence ou
        fin-sans-réponse documentée, aucune écriture hors cadre, aucune
        double fermeture (couvre Q1, Q5, I2, I3) ;
-  V5 : test de rejet : toute notation appelant un IAT direct, un bloc
-       hors I1, ou lisant une zone d'accueil après verdict non nul est
-       refusée (couvre I1, I3).
+  V5 : test de rejet : toute notation appelant un IAT hors CloseHandle,
+       un bloc hors I1, ou lisant une zone d'accueil après verdict non
+       nul est refusée (couvre I1, I3).
 Fixtures    : table des réponses .rdata (7 lignes statiques : « HTTP/1.1
               400 Requete mal formee », « HTTP/1.1 431 Tete trop grande »,
               « HTTP/1.1 501 Non implemente », « HTTP/1.1 411 Longueur
               requise », « HTTP/1.1 505 Version non supportee », « HTTP/1.1
               502 Passerelle inaccessible », « HTTP/1.1 200 Tunnel etabli »
-              — chacune terminée par CRLF CRLF, copie unique) ; requêtes
-              dorées partagées (GET/POST/CONNECT tels qu'émis par curl —
-              propriété de la suite, référencées par l'oracle et le
-              harnais).
+              — chacune terminée par CRLF CRLF, copie unique) ; noms
+              chercheurs « Host », « Content-Length », « Transfer-Encoding »
+              (consommateur) ; requêtes dorées partagées (GET/POST/CONNECT
+              tels qu'émis par curl — propriété de la suite, référencées par
+              l'oracle et le harnais).
 Provenance  : écrite-avant-code.
-Décisions   : D7, D8, D19, D42 (pre P2), D45, D46.
+Historique  : R1 (D46) — version initiale écrite-avant-code ; la Q4 décrivait
+              le relais du corps comme « http-09 cliente→amont jusqu'à total
+              Content-Length » : MÉCANIQUEMENT IMPOSSIBLE (http-09 s'arrête à
+              l'EOF du client, qui attend la réponse sur la même connexion —
+              la pompe bloquerait). R2 (journal 36, D47) — le corps est
+              relayé BORNÉ Content-Length par des boucles tcp-03/tcp-04
+              inline de la session (autorisées par I1, même discipline
+              d'émission intégrale) ; http-09 reste réservé aux pompes du
+              tunnel et au relais de réponse ; I1 gagne l'IAT CloseHandle
+              (handle de la pompe détachée — fermé immédiatement, sans
+              fuite, miroir tcp-12:I4) ; la Q3 précise le compactage
+              d'argument du thread détaché. Contrat stable au sens R4 : les
+              verdicts, les réponses et les fermetures de R1 sont inchangés.
+Décisions   : D7, D8, D19, D42 (pre P2), D45, D46, D47.

@@ -1919,3 +1919,71 @@ préfiguration), notation brouillons + auteur M3, oracle à scénarios
 (générateurs de têtes hostiles pour le harnais P1-P5), build
 proxy.exe ; puis (c) proxy transparent curl, (d) campagne million sur
 le périmètre parseur, (e) le fuzzing rejoint la suite de conformité.
+
+## Journal 36 — D47 : étape (b) de M3 — le proxy existe : plan d'adressage arrêté sur les mesures, treize notations à la main, oracle à scénarios 153 036 cas verts, proxy.exe 0.4.0-dev.1 scellé (carte génération 5) ; http-06:R2 le trou du succès excessif, http-10:R2 le relais borné, http-08 vaincu par le différentiel
+
+**Contexte** : étape (b) de D45 — la couche I (D46) devient du code
+machine. L'arrêt du plan d'adressage se fait sur les MESURES des
+notations réelles, pas sur la préfiguration ; l'implémentation fait
+remonté deux trous de spécification (révisés R2, discipline R2/R4) et
+un défaut de notation que l'oracle différentiel attrape au premier
+build — le système fonctionne comme conçu.
+
+**Déroulé** :
+1. **Arrêt mesuré des zones** (m3/layout.py + mesure_tailles.py) : les
+   notations réelles dépassent la préfiguration D46 (http-02 424 o pour
+   256 préfigurés, http-10 1 746 pour 1 024, tcp-13 402 pour 256) —
+   zone http réarrêtée depuis 0x4C00 aux règles D8 (multiples de 64,
+   alignés 16, padding ≥ 16) ; tcp-13 à 0x4400-0x45BF (zone trampoline
+   M2 rendue à INT3 — aucun patch à chaud à ce jalon) ; **l'IAT gagne
+   TROIS entrées** : getaddrinfo, freeaddrinfo et connect (la
+   préfiguration oubliait connect, exigé par tcp-13:I1).
+2. **http-06:R2 — le trou du succès excessif** : à R1, une tête AVEC
+   terminateur au-delà de 8192 rendait le verdict succès (Q1 ne bornait
+   pas la longueur) — deux défauts réels : contournement de la réponse
+   431 (une tête de 12 Kio parsée puis réécrite) ET débordement du
+   tampon de réécriture de http-10 pour les têtes de ~11,75 à 16 Kio.
+   R2 borne Q1 (longueur ≤ MAX_TETE) et étend Q3 au terminateur
+   au-delà de la limite ; contrat stable R4 pour tout verdict déjà
+   rendu à R1.
+3. **http-10:R2 — le relais borné** : le corps de requête est relayé
+   par des boucles tcp-03/tcp-04 INLINE (discipline d'émission
+   intégrale de http-09 mais BORNÉE Content-Length — http-09
+   s'arrêterait à l'EOF du client, qui attend la réponse sur la même
+   connexion : interblocage) ; pompe détachée du tunnel à argument
+   compacté (amont<<32)|cliente, handle fermé aussitôt (miroir
+   tcp-12:I4) ; ligne « connexion entrante » déléguée par http-12:Q3 ;
+   assistants internes en I5.
+4. **http-08 — le différentiel attrape la notation** : le raccourci
+   « deux-points en position 0 → verdict 3 » ne vérifiait pas le « // »
+   qui suit ; la spécification Q2 est explicite (sans « :// » ni « / »
+   initial → verdict 1, ex. « :A\x18\x8b ») ; le préfixe vide « ://x »
+   reste verdict 3 (seul Q4 possède le « :// »). Corrigé par le chemin
+   général : bornes + double barre, 246→241 o. Le modèle suit la
+   spécification — jamais l'inverse (I > B > C).
+5. **Le crash EST une détection** : l'oracle convertit tout crash
+   d'exécution (lecture hors bornes, INT3, opcode invalide) en échec
+   oracle nommé — la falsification (un bit retourné dans http-06)
+   crashe : détectée. Fail-closed partout.
+6. **Chaîne exécutée** : auteur M3 (résolution d'étiquettes, keystone
+   assemble, round-trip capstone 100 % sur les 26 blocs embarqués) →
+   build (PE32+ 4 sections, kernel32 x10 + ws2_32 x13, entrée 0x1800,
+   preuve de réutilisation R7 : 13 blocs octet-identiques aux
+   artefacts scellés M0/M1/M2) → oracle (structurel 523 verrous ;
+   différentiel 153 036 cas verts graine 1 ; sessions/console/principal
+   à scénarios ; falsification détectée ; re-vérification graine 2
+   verte) → carte génération 5 (4 fragments chiffrés, signature
+   Ed25519, 38 blocs sur 4 artefacts) → verrou croisé 38 empreintes →
+   tableau de bord. Correction au passage : chemin_notation route
+   libc-09 (c30012, bloc M2 d'echo.exe) vers m2/notation/.
+7. **Artéfact** : proxy.exe 19 456 octets, version 0.4.0-dev.1,
+   sha256 85d2aa21c1532a500b5f2348076fe9d209b89d683e152b9794f0382af190fb52.
+   Le proxy écoute au port 25000 (http-12:Q2), bannière
+   « TRIADE M3 : proxy demarre (port 25000) », console « quit »,
+   codes de sortie 0/1/2 (arrêt demandé / intégrité / erreur
+   structurale).
+
+**Suivi** : étape (c) — proxy transparent pour curl sur le terrain
+(livraison proxy.exe + LISEZMOI-proxy.txt) ; puis (d) campagne million
+sur le périmètre parseur (http-01..09 + accumulation http-10, ~39
+min/10^6 cas) ; puis (e) le fuzzing rejoint la suite de conformité.
