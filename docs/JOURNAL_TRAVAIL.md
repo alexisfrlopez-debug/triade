@@ -3301,3 +3301,77 @@ s'arrête — improbable, la diagnostique vient d'enchaîner 5 runs
 complets) = S14 < 17 ou S13 ≠ 0, journal SEC sans sondes, WER en
 fallback.** T3 reste LA cause ouverte ; la pièce terrain_jeton.json
 la tranchera sans exposer de secret.
+
+---
+
+## Entrée 55 — D65 (28/10, nuit) : le json Google impossible, l'exe confondu — terrain.13
+
+**Le constat du run 22:32.** Le développeur écrit « journaux envoyés,
+mais je n'ai pas le json google dans le dossier ». Le dossier test
+contient terrain_20261027_223216.txt (2 014 o), demo_journal.txt
+inchangé (md5 14cd56e6 = run 18:00), reponse.txt absent, AUCUN
+terrain_jeton.json. Le diff formel 22:10 vs 22:32 : UNE ligne (S01, la
+date) — tout le reste identique octet par octet.
+
+**Double diagnostic, les deux fautes de notre côté.**
+
+1. **Le json ne pouvait pas exister.** GABARIT_JETON (layout.py:464)
+   embarque `--fail` : curl « Fail silently (no output at all) on
+   server errors » — quand Google répond 400/401, curl sort 22 ET
+   N'ÉCRIT PAS la réponse ; terrain_jeton.json n'est jamais créé. Et
+   sur échec réseau (DNS/TCP/TLS), pas de fichier non plus. Le
+   LISEZMOI-terrain12 exigeait une pièce que le binaire ne pouvait pas
+   produire : promesse erronée, pareille en nature à la fausse alerte
+   D61 (offsets fichier vs RVA) — la sémantique d'un outil externe
+   (curl) lue trop vite.
+2. **Le run 22:32 a tourné sur terrain.11.** S00 dit
+   « 0.5.0-terrain11 » et S04C affiche cf72462d… = demo10-diagnostique,
+   pas 73c064fb… (la finale de terrain.12). Terrain.12 n'a JAMAIS tourné :
+   le développeur a double-cliqué l'ancien exe — deux fichiers quasi
+   identiques côte à côte. T1 n'est donc toujours pas validé sur
+   machine réelle ; T2 vert 3e fois (stabilité confirmée) ; S14=26 +
+   fragment « re » = l'artefact de mesure D64 revu une 4e fois, cohérent.
+
+**Mécanique du correctif (verdict-neutre, preuve-conservante).** Sans
+`--fail`, une erreur HTTP sort code 0 : le superviseur lit quand même
+terrain_jeton.json, y cherche `"access_token":"` (ETIQ_TOKEN), ne le
+trouve pas → MÊME verdict S33B ÉCHEC — mais le fichier SURVIT sur
+disque avec le message exact de Google. Symétriquement pour la session
+(`Location:` absent → S34B, terrain_session.txt conservé). Le PUT
+garde son `--fail` : sans lui, un 5xx donnerait un faux S35 OK
+(verdict-critique). T2 inchangé (définition même du périmètre).
+
+**terrain.13 (data-only, 26 octets).** patch_terrain13.py : `--fail ` →
+7 espaces dans GABARIT_JETON (@off 0x37AA, rva 0x49AA) et
+GABAR_SESSION (@0x37FB, rva 0x49FB) — longueurs totales 81/232 o
+INCHANGÉES, zéro décalage, marqueurs \x08/\x07 et NUL intacts ; les 3
+`--fail` restants (T2 ×2 + PUT) vérifiés byte-identiques à terrain.12 ;
+génération terrain13, VERSIONINFO 0.5.13.0 ; somme R10[23] seule
+recalculée (couvre les deux gabarits + S00 — couvreurs vérifiés).
+verif_terrain13.py : **27/27 verts** (compte --fail = 3, GABARIT_OAUTH
+/META intacts, porte 27/27, kit octet pour octet, démo finale
+73c064fb, proxy dd12b649 + chaîne S05C @0x590A, sup-34 sub/add rsp,0x28,
+prologue probing, chaînes de verdict T3). md5 8d1938b179d0dd8779fb8b2a82b17921,
+sha256 e71ad06e…. Sup-37 vérifié : le nettoyage ne supprime que
+demo.exe, proxy.exe, terrain_jetons.bin — terrain_req.txt survit au
+run (utilisable par la commande de secours du LISEZMOI, sans déposer
+de secret : `-v` n'imprime pas le corps).
+
+**LISEZMOI-terrain13.** ÉTAPE 0 anti-confusion (SUPPRIMER les anciens
+superviseur-terrain*.exe, ne garder que terrain13, vérifiable par
+Propriétés → « …terrain13 ») ; les 3 étapes habituelles ; la demande de
+terrain_jeton.json ENFIN produisible ; fallback réseau documenté (cmd
+dans la barre d'adresse + curl -v, capture d'écran + dépôt de
+terrain_jeton_reseau.txt). Livraison dossier test : 2/2 md5 MATCH.
+
+**Prédictions pré-enregistrées (falsifiables).**
+A (nominal complet) = S00/S04C « terrain13 »/73c064fb…, S13 code=0,
+S14 lignes=17, S15 conforme, S16 T1 OK, S22-S28 OK, S33 obtenu,
+S36 OK, **S90 TOUT OK — première fois, journal déposé TOUT SEUL**.
+A' (T3 échoue MAIS Google répond) = S33 ÉCHEC + terrain_jeton.json
+présent à côté du superviseur (première pièce Google de l'histoire) →
+son contenu (invalid_grant / invalid_client / horloge) décidera D66 :
+re-frappe de l'annexe jetons ou correction de composition.
+B (réseau muet) = S33 ÉCHEC + json TOUJOURS absent → la commande de
+secours du LISEZMOI (curl -v manuel) tranchera DNS/TCP/TLS.
+C (confusion d'exe encore) = S00 ≠ « terrain13 » → relire l'ÉTAPE 0.

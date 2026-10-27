@@ -1,0 +1,89 @@
+TRIADE — TERRAIN.13 : LE FICHIER GOOGLE ABSENT, C'ÉTAIT NOTRE FAUTE (C'EST
+CORRIGÉ). ET VOTRE DERNIER RUN A UTILISÉ L'ANCIEN SUPERVISEUR (ÇA AUSSI,
+C'EST RÉPARÉ).
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Vous écrivez : « journaux envoyés, mais je n'ai pas le json google dans le
+dossier ». Il y a DEUX explications, et les deux sont de notre côté.
+
+1) LE JSON NE POUVAIT PAS EXISTER — NOS EXCUSES.
+   La commande curl embarquée dans le superviseur portait l'option « --fail ».
+   Cette option fait précisément ceci : quand le serveur Google répond par
+   une erreur, curl s'arrête SANS ÉCRIRE LA RÉPONSE. Le fichier
+   terrain_jeton.json n'était donc jamais créé — nous vous avons demandé une
+   pièce que notre binaire ne pouvait pas produire. C'est corrigé dans ce
+   terrain.13 : l'option est retirée des deux requêtes Google. Maintenant,
+   si Google répond — même par un refus — le fichier existera, avec le
+   message d'erreur exact dedans (jeton expiré, horloge, identifiants…).
+   Il ne contient AUCUN secret.
+
+2) VOTRE RUN DE 22:32 A TOURNÉ SUR L'ANCIEN SUPERVISEUR (TERRAIN.11).
+   Son journal commence par « S00 superviseur terrain 0.5.0-terrain11 » et
+   l'empreinte de la démo (S04C cf72462d…) est celle de l'ancienne démo de
+   diagnostic — pas celle de la démo finale (73c064fb…) embarquée dans
+   terrain.12. Le terrain.12 n'a jamais tourné : deux fichiers presque
+   identiques côte à côte, la confusion est humaine. Le protocole ci-dessous
+   commence donc par un NETTOYAGE qui rend la confusion impossible.
+
+Au passage, bonne nouvelle dans ce run : le test T2 est resté VERT pour la
+3e fois d'affilée. La stabilité se confirme.
+
+PROTOCOLE (4 ÉTAPES, DONT LE NETTOYAGE)
+---------------------------------------
+ÉTAPE 0 — LE NETTOYAGE QUI EMPÊCHE TOUTE CONFUSION :
+   Dans votre dossier de travail, SUPPRIMEZ tous les anciens
+   superviseur-terrain*.exe (terrain5, 9, 10, 11, 12…). Ne gardez QUE
+   superviseur-terrain13.exe. Avant de le lancer, vous pouvez vérifier :
+   clic droit → Propriétés → Détails → « Version du produit » doit finir
+   par « terrain13 » (taille du fichier : 62 464 octets).
+
+ÉTAPE 1 — AVANT de lancer : si un demo_journal.txt traîne encore à côté du
+   superviseur, déposez-le dans le dossier test (preuve du run précédent —
+   le prochain run l'écrasera).
+
+ÉTAPE 2 — Double-cliquez superviseur-terrain13.exe, attendez la fin (le
+   verdict S90/S91 s'affiche, ~2 minutes). PREUVE que le bon binaire
+   tourne : la fenêtre/lancement affiche « terrain13 ».
+
+ÉTAPE 3 — Déposez dans le dossier test :
+   - le nouveau terrain_*.txt (s'il ne s'y est pas déposé tout seul) ;
+   - le nouveau demo_journal.txt (la preuve des 17 lignes) ;
+   - terrain_jeton.json s'il existe à côté du superviseur — MAINTENANT il
+     existera dès que Google répond. C'est LA pièce qui nous dira pourquoi
+     l'envoi échoue. Il ne contient aucun secret (ne déposez surtout pas
+     terrain_req.txt, lui, il en contient un).
+
+SI LE JSON N'APPARAÎT TOUJOURS PAS
+----------------------------------
+Alors curl n'atteint même pas Google (problème réseau). Dans ce cas :
+   1. Ouvrez le dossier du superviseur dans l'Explorateur ;
+   2. Cliquez dans la BARRE D'ADRESSE, tapez « cmd », Entrée — une fenêtre
+      noire s'ouvre directement dans le bon dossier ;
+   3. Collez cette ligne puis Entrée :
+      curl.exe -v --max-time 30 -o terrain_jeton_reseau.txt --data @terrain_req.txt https://oauth2.googleapis.com/token
+   4. Envoyez une capture d'écran de la fenêtre (elle montre les étapes
+      réseau, sans aucun secret) et déposez terrain_jeton_reseau.txt
+      s'il apparaît.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S00 « terrain13 » + S04C md5 73c064fb… (la preuve du bon binaire) ;
+- S13 code=0, S14 lignes=17, S15 « conforme », S16 T1 VERDICT OK
+  (première fois si tout va bien) ;
+- S22-S28 OK (T2 est stable depuis 3 runs) ;
+- S33 : soit « obtenu » (le journal partira TOUT SEUL et S90 dira TOUT
+  OK), soit « ÉCHEC » — et alors terrain_jeton.json existera ENFIN avec le
+  message exact de Google.
+
+RÉCAPITULATIF DES EMPREINTES
+----------------------------
+md5 superviseur-terrain13.exe  8d1938b179d0dd8779fb8b2a82b17921
+sha256                        e71ad06e8b11e8c2a6628be821ba1c4afe75a6bbabcd155206fd5ed90c570ebb
+md5 demo FINALE embarquée     73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué            dd12b64948e64153ff1dd7a66f367ff3 (inchangé)
+
+Le superviseur lui-même (fenêtre, scénario, verdicts, correctifs des
+terrains 10 et 11) est INCHANGÉ : seules les deux requêtes Google
+apprennent à garder la réponse, et la version passe à terrain13.
