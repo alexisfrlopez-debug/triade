@@ -3760,3 +3760,72 @@ le fuzzing rejoint la suite de conformité (§ 8.2). D57 continue en
 laboratoire (WER). Le dépôt automatique étant démontré, la prochaine
 session de terrain n'est plus une exigence de développement : elle ne
 reviendra que sur défaut ou à la livraison de terrain.17+.
+
+## Entrée 61 — D72 (28/10, 08:45) : la campagne million est FAITE — 1 000 000 cas SANS CRASH sur le périmètre parseur (étape (d) de M3) : harnais fuzz_million.py livré et falsifiable (deux mutations d'un octet détectées), 900 000 différentiels feuilles + 100 000 requêtes complètes http-10 à propriétés P1-P5 ; re-exécution à graine neuve : même verdict (2 × 10^6 cas cumulés, 175 s chacune)
+
+**Le harnais (m3/fuzz_million.py, 686 lignes, tracké).** Le volet FEUILLES
+est un orchestrateur pur : il réutilise INTÉGRALEMENT les suites
+différentielles et les modèles ref_httpXX de l'oracle (référence dérivée de
+I, jamais de la notation) — aucune logique de vérification copiée, zéro
+dérive modèle possible ; il découpe la campagne en tranches (une suite = un
+émulateur NEUF, graine déterministe par (cible, tranche)), rattrape tout
+échec et le CONFIRME par re-exécution de la tranche (état vierge, même
+graine : reproductible = défaut réel, non reproductible = artefact de
+réutilisation, consigné séparément). Le volet ACCUMULATION (la surface où
+les octets non fiables s'accumulent : tampon de tête MAX_TETE = 8192 et
+corps borné Content-Length) est écrit à neuf avec les propriétés : P1
+SURVIE, P2 TERMINAISON (budget 20 M instructions), P4 FERMETURES (chaque
+socket au plus une fois, cliente toujours, ordre amont→cliente Q5, jamais
+l'écoute ni l'étrangère), P5 MÉMOIRE (crochet d'écriture : pages de code
+.text/.text2 interdites, pile profonde interdite — marge 4× la plus grande
+trame légitime 0x7100 —, getaddrinfo↔freeaddrinfo appariés un-pour-un) et
+journal console borné au contrat (exactement connexion/fin ou
+connexion/tunnel/fin). Huit générateurs nommés (déchets, tête fragmentée,
+tête géante 7900-8600 — la frontière du 431, corps POST partiel/exact/
+débordant, CONNECT hostile, fins brutales, caps hostiles, lignes mutantes —
+chaque défaut nommé de la couche I y vit). Déterminisme par (graine,
+cible, indice) : le rejeu d'un cas est exact. Trois sentinelles
+différentielles canoniques tournent toutes les 500 requêtes (GET relayé
+octet près, déchet → 400 exact, tête géante → 431 exact).
+
+**La falsification du harnais (auto-test, déterministe).** Deux mutations
+D'UN OCTET du proxy scellé, sites uniques vérifiés au chargement : M1 table
+des méthodes @0x16A0 (« GET »→« AET » — la table EST la validation, D46) →
+détectée DEUX FOIS (feuille http-02 : verdict divergent ; sentinelle GET :
+le relais ne se fait pas) ; M2 réponse 400 @0x1769 (« 400 »→« 500 ») →
+détectée (sentinelle déchet : l'émission cliente diverge du modèle octet
+près). Témoin sauvage : PASS (les quatre contrôles passent sur l'artefact
+sain). Un harnais qui ne peut pas échouer ne prouve rien — celui-ci peut.
+
+**La campagne (graine 20261028 ; proxy.exe md5 dd12b649… — le scellé
+0.4.0-dev.2, embarqué au superviseur terrain).** Répartition : 900 000
+différentiels feuilles (100 000 par parseur http-01..09 — au-delà des
+entrées contraintes de l'oracle : générateurs hostiles à pleines tailles,
+frontières 2048/8192 comprises) + 100 000 requêtes complètes http-10
+(1 515 cas/s, lots de 250, 200 sentinelles). **Résultat : 1 000 000 cas
+en 175,0 s — ZÉRO échec confirmé, ZÉRO non reproductible, sentinelles
+200/200.** Rapport JSON tracké : m3/rapport_million.json (graine,
+empreintes, répartition, cadences par cible — http-06 le plus lent à
+2 387 cas/s, tails 8192-9000). Re-exécution R5 à graine neuve (20261029) :
+1 000 000 cas en 176,1 s, même verdict — reproductibilité démontrée
+(rapport de contrôle hors dépôt : seed, commandes et verdicts ci-contre
+suffisent à rejouer). L'estimation « ~39 min/10^6 » du REPRISE datait
+d'avant-harnais : la réalité mesurée est 175 s.
+
+**Ce que ça établit.** Le critère quantitatif de sortie de M3 — « un
+million de requêtes fuzzées sans crash » — est REMPLI sur le périmètre
+délimité par contrat (D46) : les neuf feuilles tiennent le différentiel
+sur 10^5 cas hostiles chacune, et la session tient P1-P5 sur 10^5 flux
+complets (chaque verdict nommé de la couche I représenté : 400/431/411/
+501/505/502, fins brutales, émissions sabotées, corps débordants). Aucune
+10e classe de défaut n'a surgi : les parseurs à contrats renforcés (D46)
+encaissent l'arbitraire exactement comme leurs contrats l'exigent — c'est
+la thèse de M3, vérifiée au volume.
+
+**Ce qui reste pour M3.** (e) le fuzzing rejoint la suite de conformité
+(§ 8.2) : le harnais devient contrôle permanent (volume réduit par
+exécution, ex. 10^4 cas), puis cristallisation et scellage final 0.4.0
+(modèle 0.2.0/0.3.0 : conformité re-exécutée, budgets mesurés, carte
+re-signée). Terrain : D57 (WER, adresse de plantage démo) reste le seul
+point ouvert — T3 ayant été démontré ce matin (D71), le circuit de constat
+est désormais réflexe.

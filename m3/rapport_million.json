@@ -1,0 +1,118 @@
+{
+  "harnais": "m3/fuzz_million.py",
+  "etape": "M3-(d) campagne million",
+  "date_utc": "2026-10-28T07:16:51Z",
+  "graine": 20261028,
+  "artefact": {
+    "fichier": "m3/proxy.exe",
+    "octets": 19456,
+    "md5": "dd12b64948e64153ff1dd7a66f367ff3",
+    "sha256": "bf02769fa324ff79b07550c5f31fe6e8f7b0611489e710d16ee07afa73c070af"
+  },
+  "perimetre": "http-01..09 + accumulation http-10 (D46)",
+  "tranche_feuilles": 2000,
+  "lot_accumulation": 250,
+  "repartition": {
+    "http-01": 100000,
+    "http-02": 100000,
+    "http-03": 100000,
+    "http-04": 100000,
+    "http-05": 100000,
+    "http-06": 100000,
+    "http-07": 100000,
+    "http-08": 100000,
+    "http-09": 100000,
+    "http-10-accumulation": 100000
+  },
+  "auto_test": {
+    "sites": {
+      "M1_table_methodes": "0x16a0",
+      "M2_reponse_400": "0x1769"
+    },
+    "temoin_sauvage": "PASS",
+    "M1_feuille_http02": "DÉTECTÉ",
+    "M1_sentinelle_get": "DÉTECTÉ",
+    "M2_sentinelle_dechet": "DÉTECTÉ",
+    "verdict": "PASS — le harnais détecte les défauts injectés"
+  },
+  "feuilles": {
+    "http-01": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 9.0,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-02": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 9.5,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-03": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 7.2,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-04": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 8.2,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-05": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 6.7,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-06": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 41.9,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-07": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 6.8,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-08": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 6.9,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    },
+    "http-09": {
+      "cas": 100000,
+      "tranches": 50,
+      "duree_s": 12.8,
+      "echecs_confirmes": 0,
+      "echecs_non_reproductibles": 0
+    }
+  },
+  "echecs_confirmes": [],
+  "echecs_non_reproductibles": [],
+  "accumulation": {
+    "cas": 100000,
+    "duree_s": 66.0,
+    "echecs_confirmes": 0,
+    "echecs_non_reproductibles": 0,
+    "sentinelles": {
+      "executions": 200,
+      "ok": 200
+    }
+  },
+  "total_cas": 1000000,
+  "duree_totale_s": 175.0,
+  "verdict": "SANS CRASH — P1-P5 tenues sur 1 000 000 cas (périmètre D46)"
+}
