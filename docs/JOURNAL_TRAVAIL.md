@@ -4164,3 +4164,88 @@ coffre-fort ; (b) VIDER la corbeille Drive par prudence (même hygiène que les 
 REPRISE § 8) ; (c) le contrôle de fidélité exhaustif miroir ↔ git rejoint désormais le
 canon des vérifications de coffre. État final : miroir FIDÈLE à git (589 = 588 trackés
 + bundle).
+
+---
+
+## Entrée 66 — D77 (28/10, 11:20) : M4 est OUVERT — le tunnel chiffré commence par sa couche I écrite-avant-code : domaine `tls` créé (huit spécifications, génération 6 g7xxxx) + charte des contrats cryptographiques + révisions http-08:R2 / http-10:R2
+
+**Contexte** : « go » du développeur (après le nettoyage D76) — le jalon M4 du plan
+(tunnel chiffré : contexte SSPI/Schannel, poignée de main TLS, relais chiffré ;
+critères : HTTPS en transit, échec propre sur certificat invalide, contrats
+cryptographiques). Le modèle M3 s'applique à la lettre (D46) : RIEN n'est codé avant
+que chaque bloc ait une spécification complète — pre/post/invariants/échecs/vecteurs,
+provenance `écrite-avant-code`. La spécification v0.5.1 prévoyait Schannel dans l'IAT
+du profil primaire dès M0-M5 (§ 14) : le jalon n'introduit aucune dépendance nouvelle
+au projet, il active celle qui était réservée.
+
+**Déroulé** :
+1. `m4/I/README.md` : décomposition du tunnel — domaine `tls` créé, réservé M4,
+   génération 6, blocs g7xxxx (terrain = f6xxxx génération 5 ; la séquence
+   a1→b2→c3→d4→e5→f6→g7 est respectée — collision de préfixe f6 détectée et corrigée
+   AVANT commit). **Charte des contrats cryptographiques** (huit conventions
+   transverses, chaque spécification y renvoie, défaut T5 sinon) : (1) fail-closed
+   intégral — tout HRESULT SSPI traverse la table UNIQUE des verdicts, le
+   non-documenté est un fatal NOMMÉ ; (2) le certificat invalide est un échec nommé
+   (502 propre, ligne console sans secret) — LE critère M4 ; (3) zéro divulgation —
+   aucun jeton/tampon/nom traduit n'est jamais journalisé ; (4) compensation exacte —
+   chaque handle acquis est libéré sur tout chemin, propriétaire unique ; (5) spans
+   partout, la traduction span → UTF-16 existe UNE fois (miroir de tcp-13:Q2) ;
+   (6) état minimal à propriétaires uniques (contexte, résidu Extra, tailles) ;
+   (7) la réponse déchiffrée n'est jamais parsée (héritage http-10:Q4) ; (8)
+   constantes nommées — MAX_JETON 16384, HOTE_MAX hérité, MAX_MESSAGE NÉGOCIÉ (la
+   source est QueryContextAttributes, jamais une constante inventée).
+2. Huit spécifications `tls-01..08` : tls-01 hôte span → UTF-16 (traduction unique,
+   refus net des octets ≥ 0x80 — IDNA hors périmètre) ; tls-02 table TOTALE des
+   verdicts SSPI (succès / continuer / incomplet / certificat invalide / fin de
+   contexte / échec négocié / fatal inconnu — la table est une fonction PURE, V2
+   inclut des voisins à un bit des codes réels : contrebande de classe) ; tls-03
+   jetons SSPI (propriétaire unique de la mise en page SecBufferDesc/SecBuffer —
+   trois types : poignée 1 tampon, émission 3 tampons, réception 4 tampons) ;
+   tls-04 poignée de main cliente (boucle InitializeSecurityContextW bornée
+   MAX_ALLERS = 16 — la boucle se termine TOUJOURS ; jetons serveur bornés
+   MAX_JETON AVANT tout appel SSPI ; échec avant l'entrée système hérité M3) ;
+   tls-05 cycle de vie des handles (Acquire / Delete / Free — pAuthData NULL =
+   validation AUTOMATIQUE conservée : l'état le plus dur, jamais désactivée) ;
+   tls-06 émission chiffrée (tailles acquises UNE fois par session — deux appels
+   QueryContextAttributes = défaut ; le clair de l'appelant reste OCTET POUR OCTET
+   intact : la copie seule est chiffrée ; découpe en chaîne d'enregistrements sous
+   la borne négociée) ; tls-07 réception déchiffrée (l'incomplet est un ÉTAT nommé
+   pas un échec ; le résidu Extra vit en tête de zone à propriétaire unique ;
+   close_notify = fin PROPRE ; zéro octet clair résiduel hors span livré) ;
+   tls-08 session TLS cliente (orchestration complète — l'unique propriétaire de la
+   socket serveur et de la compensation intégrale, ordre documenté contexte PUIS
+   credentials ; la compensation est CONSTATÉE PAR COMPTAGE des shims dans V2).
+3. Deux révisions du domaine http (modèle inter-jalons de la lignée démo —
+   l'ancêtre scellé R1 vit dans m3/I/ et ne change pas, § 9) : http-08:R2 (schéma
+   « https:// » reconnu BYTE-EXACT sur 8 octets minuscules, verdict « cible TLS »
+   distinct, port implicite 443 ; AUCUNE tolérance nouvelle — la surface de
+   contrebande n'augmente que des 8 octets exacts) ; http-10:R2 (routage de la
+   cible TLS vers tls-08 + table des réponses EXTENDUE : certificat invalide →
+   502 « certificat rejete », cible injoignable / tunnel rompu → 502 ; I6' : la
+   session n'appelle JAMAIS une entrée SSPI directement — défaut T5 ; V2 vérifie
+   l'exhaustivité CROISÉE table ↔ verdicts de tls-08 et l'anti-régression du
+   chemin M3 http octet pour octet).
+4. Périmètre de réutilisation R7 : la totalité des blocs M3 embarqués à
+   l'exception des deux révisés (http-08, http-10 — notations nouvelles, ancêtres
+   cités) ; sept entrées IAT secur32 prévues (Acquire/Free credentials,
+   InitializeSecurityContext, DeleteSecurityContext, QueryContextAttributes,
+   EncryptMessage, DecryptMessage) ; le plan d'adressage définitif (nouvelle
+   section .text3, .text2 étant complète) sera arrêté à l'étape (b) sur les
+   mesures réelles, modèle D47. Surface de vérification : feuilles et boucles à
+   shims au harnais P1-P5 (générateurs d'HRESULT hostiles), orchestrateurs à
+   l'oracle à scénarios (compensation par comptage), terrain § 8.4 (curl https://
+   par le proxy puis certificat invalide → 502 propre).
+5. Docs alignées : PLAN_MILESTONES (M4 « ouvert D77 » — source protocole, le PDF
+   formel se régénère par la chaîne D17), README, REPRISE (titre § 7 « M0 à M3
+   clos, M4 en cours », tableau d'implémentation, arborescence + m4/, suite du
+   projet détaillée) ; commit + synchro Drive + push GitHub.
+
+**Ce que ça établit** : M4 est ouvert dans la discipline — la couche I précède le
+code, les contrats cryptographiques sont UNE charte citée (jamais recopiée), le
+critère « échec propre sur certificat invalide » a son adresse exacte (tls-02
+verdict 3 → tls-04 → tls-08:E2 → http-10:R2 502) AVANT qu'un seul octet de notation
+existe. Prochaine étape : étape (b) du jalon — plan d'adressage .text3 sur mesures
+réelles, notations à la main des huit blocs + deux révisions, oracle à shims SSPI
+(modèle 153 036 cas M3), carte génération 6, proxy.exe 0.5.0-dev.1. Terrain : D57
+(WER) seul point ouvert ; côté développeur : phrase D30 au coffre-fort + vider la
+corbeille Drive (D76).

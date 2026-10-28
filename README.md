@@ -130,7 +130,11 @@ livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
 (instructions, miroir, jetons, coffre-fort, `demo.exe` + LISEZMOI à jour, dossier test).
-Suite : M4 (tunnel chiffré Schannel) ; terrain : D57 (WER) seul point ouvert.
+Suite : **M4 ouvert (D77)** — tunnel chiffré Schannel, couche I écrite-avant-code
+(`m4/I/` : domaine `tls` créé — 8 spécifications + charte des contrats
+cryptographiques [fail-closed intégral, certificat invalide = 502 propre, zéro
+divulgation, compensation exacte] + révisions http-08:R2/http-10:R2, blocs
+génération 6 g7xxxx) ; terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
 

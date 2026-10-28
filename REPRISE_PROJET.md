@@ -40,7 +40,7 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
 | Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
-| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER |
+| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER ; **M4 ouvert (D77)** : couche I écrite-avant-code (`m4/I/` — domaine `tls` : 8 spécifications [nom UTF-16, table des verdicts SSPI, jetons, poignée de main, handles, émission, réception, session] + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques : fail-closed intégral, certificat invalide = échec nommé 502 propre, zéro divulgation, compensation exacte) |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique ; coffre-fort des phrases maîtresses (D75) — conteneur chiffré TRIADE-CF1 au racine du Drive + copie développeur ; racine du coffre Drive nettoyée (D76 : livrables périmés archivés dans ARCHIVE/, courants seuls) |
 
 Aucune chaîne de build extérieure : les octets viennent de la notation. Le projet a
@@ -136,7 +136,8 @@ triade/
 │   ├── export_continuite.py            Export de continuité chiffré + signé (D16)
 │   └── selftest.exe · carte/           Artefact 9 216 o + carte projet multi-artefacts
 ├── m2/                                 Jalon M2 (clos — balise finale 0.3.0, D43) — serveur echo + patch à chaud + rollback + echo.exe
-├── m3/                                 Jalon M3 (en cours) — parseur HTTP + proxy : I (13 specs D46), notations, oracle 153 036 cas, proxy.exe 0.4.0-dev.1 (D47)
+├── m3/                                 Jalon M3 (clos — balise finale 0.4.0, D74) — parseur HTTP + proxy : I (13 specs D46), notations, oracle 153 036 cas, conformité 161/161, campagne million D72, proxy.exe 0.4.0 (md5 dd12b649…)
+├── m4/                                 Jalon M4 (ouvert D77) — tunnel chiffré Schannel : couche I écrite-avant-code (m4/I/ — 8 spécifications tls + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques)
 ├── demo/                               Lignée démo GUI (finale 0.3.0-demo.9, D43) — coquille win éprouvée terrain D36-D43 + journaux terrain archivés
 ├── m6/ · m7/                           Échelle d'auto-hébergement D34 — hachoir SHA-256, sceau SHA-512/Ed25519 (emprunts de nommage, hors plan M6/M7 nominal)
 ├── terrain/                            Lignée terrain (D48) — superviseur.exe : TOUS les tests en 1 clic (T1 démo, T2 proxy, T3 envoi Drive) + journal auto-téléversé
@@ -233,7 +234,7 @@ Le journal complet, avec alternatives rejetées et justifications, est dans `doc
 | D31 | Budget localiser amendé | Mesure M1 (cl100k_base) : le gabarit canonique v0.4.0 mesurait déjà 43 tokens — budget 40 → 64 et format frag-loc allégé (51 tok mesurés) ; éditer 719/3 000, ajouter 1 086/6 000 |
 | D32 | Jalon M1 franchi | Validation terrain Windows 11 constatée (ligne unique `21/21 OK`, contrat libc-08 Q2) → balise finale `0.2.0` immuable ; anti-rollback étendu aux balises finales ; erratum documentation (« ligne unique », pas « 21 lignes ») |
 
-## 7. Étapes de réalisation — M2 clos, M3 en cours (entrées non fiables)
+## 7. Étapes de réalisation — M0 à M3 clos, M4 en cours (tunnel chiffré)
 
 ### 7.1 Jalons M0 et M1 — procès-verbaux
 
@@ -486,10 +487,27 @@ cérémonie de clés alimente le coffre dans la même
 session (discipline § 15.3, FORMAT_CARTE § 11).
 
 **Suite du projet** : M4 — tunnel chiffré (contexte SSPI/Schannel, poignée de
-main TLS, relais chiffré ; échec propre sur certificat invalide). Terrain :
-D57 (WER, adresse de plantage de la démo) reste le seul point ouvert — le
+main TLS, relais chiffré ; échec propre sur certificat invalide) — **OUVERT le
+28/10 (D77) par sa couche I écrite-avant-code** : `m4/I/` crée le domaine `tls`
+(huit spécifications — tls-01 hôte span → UTF-16 [traduction unique, miroir
+tcp-13:Q2] ; tls-02 table TOTALE des verdicts SSPI [tout HRESULT classé, le
+non-documenté = fatal nommé — fail-closed intégral] ; tls-03 jetons/descripteurs
+[propriétaire unique de la mise en page SSPI] ; tls-04 poignée de main cliente
+[boucle InitializeSecurityContext bornée 16 allers, jetons ≤ 16 Kio] ; tls-05
+cycle de vie des handles [compensation exacte] ; tls-06 émission chiffrée
+[tailles négociées, jamais de constantes inventées, clair de l'appelant intact] ;
+tls-07 réception déchiffrée [incomplet = état nommé, résidu Extra à propriétaire
+unique, close_notify = fin propre] ; tls-08 session TLS cliente [propriétaire de
+la socket serveur et de la compensation intégrale, compensation constatée par
+comptage]) et révise le domaine http en ses DEUX seuls points de contact
+(http-08:R2 : schéma « https:// » strict minuscule, verdict TLS distinct ;
+http-10:R2 : routage vers tls-08 + table des réponses étendue — certificat
+invalide → 502 « certificat rejete », ligne console SANS secret) ; sept entrées
+IAT secur32 prévues ; le reste du parseur M3 est réutilisé octet pour octet (R7).
+Terrain : D57 (WER, adresse de plantage de la démo) reste le seul point ouvert — le
 circuit de constat est désormais réflexe (D71). Hygiène : rotation/restriction
-des jetons du dossier Tokens/ (avertissement § 8 toujours réel).
+des jetons du dossier Tokens/ (avertissement § 8 toujours réel) ; vider la
+corbeille Drive (D76 — trace de l'ancienne phrase).
 
 ## 8. Avertissement sécurité — jetons
 
