@@ -307,8 +307,12 @@ maillon que ni l'un ni l'autre ne couvrait — la phrase elle-même, jusque-là 
 seule instruction de cérémonie (D27/D30) alors que quatre réinitialisations du poste de
 développement en ont démontré la fragilité. Deux niveaux de secret, jamais confondus :
 
-- la **phrase de contrôle** ouvre le coffre ; elle est détenue par le seul développeur,
-  n'est stockée nulle part et n'est affichée qu'une seule fois, à la cérémonie (D27/D30) ;
+- la **phrase de contrôle** ouvre le coffre ; elle vit sous garde durable depuis D81 —
+  sauvegardée dès production (init, rotation, changement) dans le dépôt
+  (`PHRASE-CONTROLE-COFFRE.txt` au racine, phrase seule sur une ligne, lisible par
+  `--phrase-fichier`) et au racine du coffre Drive, AVANT toute autre action de la
+  session ; le fichier EST la remise — l'affichage unique de cérémonie (D27/D30) demeure
+  possible mais n'est plus le canal de survie ;
 - les **phrases maîtresses** stockées, une par lignée de clés et par projet, déverrouillent
   les fragments de cartes (§ 3.1) — la graine Ed25519, elle, reste hors coffre (D30).
 
@@ -347,7 +351,16 @@ Discipline consignée : (1) chaque cérémonie de clés alimente le coffre dans 
 session ; (2) l'`autotest` — falsifications d'un octet (chiffretexte, sel, nonce,
 empreinte), mauvaise phrase, anti-écrasement, témoin sauvage de randomisation — doit passer
 avant tout usage sur un poste neuf ; (3) l'export chiffré se téléverse au racine du coffre
-Drive (copie projet) et se remet au coffre du développeur (copie personnelle) ; (4) après
-une réinitialisation : importer le conteneur, puis `obtenir --vers-fichier .keys/passphrase.txt`
-— la lignée redevient opérationnelle sans cérémonie de régénération (la signature des
-cartes reste attachée à sa graine, D30/D74).
+Drive (copie projet) et se remet au coffre du développeur (copie personnelle) ; (4) toute
+production d'une phrase de contrôle neuve est sauvegardée AVANT TOUTE AUTRE ACTION —
+`PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (commit dédié, push GitHub, miroir Drive
+par le hook) + copie au racine du coffre Drive, md5 vérifiés — le fichier est la remise
+(D81) ; à chaque rotation il est remplacé et git conserve les phrases retirées du service ;
+(5) après une réinitialisation : importer le conteneur, relire la phrase de contrôle
+depuis `PHRASE-CONTROLE-COFFRE.txt` (dépôt, miroir ou racine du coffre Drive — D81), puis
+`obtenir --vers-fichier .keys/passphrase.txt` — la lignée redevient opérationnelle sans
+cérémonie de régénération (la signature des cartes reste attachée à sa graine, D30/D74).
+Contrepartie consignée (D81) : la phrase vit sur le stockage du coffre Drive partagé par
+lien — la confidentialité au repos repose sur le contrôle d'accès au dossier (restriction
+du partage par lien : mitigation première) ; une phrase entrée dans l'historique git y
+demeure à vie, la rotation reste le remède à toute exposition avérée.

@@ -79,16 +79,26 @@ clé maîtresse inchangés.
 \paragraph{Le coffre-fort des phrases maîtresses (D75).} Le composant qui centralise
 toutes les phrases maîtresses d'un projet — et de tout projet ultérieur conduit sous le
 protocole — dans un conteneur unique chiffré TRIADE-CF1 (\code{coffre\_fort.py}) :
-phrase de contrôle détenue par le seul développeur (jamais stockée), Argon2id aux
+phrase de contrôle sous garde durable (D81 — sauvegardée dès production au dépôt et au
+racine du coffre Drive, AVANT toute autre action), Argon2id aux
 planchers de la carte au repos puis HKDF à contexte dédié, XChaCha20-Poly1305 avec
 l'en-tête clair pour AAD, écriture atomique 0600, autotest de falsification exigé à
 chaque installation. Le conteneur chiffré s'exporte tel quel vers le coffre Drive du
-projet et le coffre personnel du développeur — son vol relève de la menace « sans la
-phrase, indéchiffrable ». Après une réinitialisation du poste, l'import du conteneur
-puis \code{obtenir --vers-fichier} restaurent la phrase opérationnelle sans cérémonie
-de régénération. Discipline inchangée : chaque cérémonie de clés (D27/D30) alimente le
-coffre dans la même session, la phrase de contrôle est affichée une seule fois, et la
-graine Ed25519 reste hors coffre (D30) — format normatif : FORMAT\_CARTE § 11.
+projet et le coffre personnel du développeur — son vol relève de la menace « vol du
+coffre-fort des phrases », étendue en D81. Après une réinitialisation du poste, l'import
+du conteneur, la relecture de la phrase depuis \code{PHRASE-CONTROLE-COFFRE.txt}, puis
+\code{obtenir --vers-fichier} restaurent la phrase opérationnelle sans cérémonie
+de régénération. Discipline évoluant en D81 sur un point, l'arbitrage (risque de PERTE
+vécu contre risque d'EXPOSITION théorique) étant consigné : chaque cérémonie de clés
+(D27/D30) alimente le coffre dans la même session, la phrase de contrôle est sauvegardée
+durablement AVANT TOUTE AUTRE ACTION — \code{PHRASE-CONTROLE-COFFRE.txt} au racine du
+dépôt (commit dédié, push GitHub, miroir Drive par le hook) et au racine du coffre
+Drive, md5 vérifiés : le fichier est la remise, l'affichage unique cesse d'être le canal
+de survie — et la graine Ed25519 reste hors coffre (D30). Contrepartie consignée : la
+phrase vit sur le stockage du coffre Drive partagé par lien — la confidentialité au
+repos repose sur le contrôle d'accès au dossier (restreindre le partage par lien :
+mitigation première) ; une phrase entrée dans l'historique git y demeure à vie, la
+rotation reste le remède — format normatif : FORMAT\_CARTE § 11.
 
 \section{Menaces et limites}\label{sec:menaces}
 
@@ -101,7 +111,7 @@ divulgation.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Modèle de menace — ajouts v0.4.0 en gras ; ajout v0.5.1 en gras (D75).}
+\caption{Modèle de menace — ajouts v0.4.0 en gras ; ajout v0.5.1 en gras (D75), étendu v0.5.2 (D81).}
 \label{tab:menaces}
 \begin{tabularx}{\textwidth}{@{}Y Y Y@{}}
 \toprule
@@ -116,9 +126,11 @@ chargement \\
 Fuite de la carte & chiffrement ; sharding ; escrow & perte limitée à un fragment \\
 Vol de l'export de continuité & chiffrement intégral + signature & indéchiffrable sans
 la phrase \\
-\textbf{Vol du coffre-fort des phrases} & chiffrement intégral (phrase de contrôle +
-Argon2id, contexte HKDF dédié) ; AEAD ; écriture atomique & indéchiffrable sans la
-phrase (D75) \\
+\textbf{Vol du coffre-fort des phrases} & chiffrement intégral (Argon2id, contexte
+HKDF dédié, AEAD) ; écriture atomique ; depuis D81 la phrase de contrôle vit au coffre
+Drive et au dépôt — mitigation première : restreindre le partage par lien & confidentialité
+ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — la
+rotation reste le remède (D75, étendu D81) \\
 \textbf{Binaire altéré} & checksums par bloc + signature du manifeste au lancement
 (R10 a, b) & détecté — arrêt avant tout effet \\
 \textbf{Rollback non autorisé} & monotonie de version signée, plancher anti-rollback
@@ -178,7 +190,7 @@ M2 — patch à chaud & remplacement du bloc d'écho en exécution, sans interru
 rollback démontré ; régression post-patch nulle & \textbf{franchi} 27/10/2026, 0.3.0 (D43) \\
 M3 — entrées non fiables & un million de requêtes fuzzées sans crash ; proxy
 transparent ; contrats renforcés & \textbf{franchi} 28/10/2026, 0.4.0 (D74) \\
-M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide & à venir \\
+M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide & ouvert 28/10/2026 (D77) \\
 M5 — outil complet & interception d'un flux navigateur en VM isolée ; patch à chaud du
 journal en production ; empreintes par build actives & à venir \\
 M6 — portabilité inter-OS & suite de conformité verte ; \textbf{diff nul sur la couche
@@ -338,6 +350,41 @@ rejeté : contraire à D30, jamais confiée. Confier le conteneur au seul gestio
 mots de passe du développeur sans copie de coffre projet — rejeté : la continuité exige
 les deux copies, le conteneur étant indéchiffrable sans la phrase.
 
+\subsection{Correspondance v0.5.1 $\to$ v0.5.2}\label{sec:evolutions052}
+
+\begin{table}tbp]
+\centering\small
+\caption{Les évolutions de la v0.5.2, tracées depuis la v0.5.1.}
+\label{tab:correspondance052}
+\begin{tabularx}{\textwidth}{@{}l Y Y l@{}}
+\toprule
+\textbf{Évolution} & \textbf{En v0.5.1} & \textbf{En v0.5.2} & \textbf{Statut} \\
+\midrule
+Garde de la phrase de contrôle & détenue par le seul développeur, jamais stockée,
+affichée une seule fois (D75) & sauvegardée durablement dès production :
+\code{PHRASE-CONTROLE-COFFRE.txt} au dépôt (git, GitHub, miroir Drive) et au racine du
+coffre Drive, AVANT toute autre action ; le fichier est la remise & modifié (D81) \\
+Menace « vol du coffre-fort » & sans la phrase, indéchiffrable & la phrase vit sur le
+coffre Drive partagé par lien : confidentialité au repos ramenée au contrôle d'accès au
+dossier ; une phrase commise en git y demeure à vie, la rotation reste le remède &
+étendu (D81) \\
+État des jalons & M0–M3 franchis, M4 à venir & M4 ouvert (D77 — couche I
+écrite-avant-code : huit spécifications tls, deux révisions http) ; M0–M3 inchangés &
+constaté (D77) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Modifications explicitement rejetées (v0.5.2).} Conserver la remise par
+affichage unique — rejeté : le statu quo que la session morte de D80 a démenti (la
+phrase ne vivait plus que dans le bac à sable). Sceller la phrase de contrôle sous une
+phrase antérieure — rejeté : déplace le problème, la phrase de secours exigerait sa
+propre garde. Exporter la seule copie chiffrée du coffre sans garder la phrase — rejeté :
+le conteneur indéchiffrable protège de l'exposition, pas de la perte, or c'est la perte
+qui est le risque vécu. Restreindre d'office le partage du dossier Drive — rejeté : la
+décision appartient au développeur, hors du champ de l'agent (consignée en
+recommandation).
+
 \section{Journal des décisions}\label{sec:decisions}
 
 Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. Synthèse :
@@ -405,10 +452,22 @@ réponses Google, tampon de composition — jusqu'au T3 démontré de bout en bo
 machine réelle), D72 (campagne million : 10\^6 requêtes fuzzées sans crash, reproductible),
 D73 (le fuzzing rejoint la suite de conformité — sentinelle perpétuelle), D74 (M3 clos :
 cristallisation 38/38 $\times$ 10/10, scellage de la balise finale 0.4.0, lignée de clés
-régénérée avec preuve byte-identique). D75 consigne la présente révision v0.5.1 : le
+régénérée avec preuve byte-identique). D75 consigne la révision v0.5.1 : le
 coffre-fort des phrases maîtresses — conteneur chiffré TRIADE-CF1 centralisant toutes
 les phrases par projet, sur la pile cryptographique de la carte au repos, avec autotest
 de falsification et restauration post-réinitialisation.
+
+La suite du journal couvre l'hygiène et l'ouverture de M4 : D76 (nettoyage du coffre
+Drive — douze livrables périmés archivés, miroir rendu fidèle à git, incident du reliquat
+consigné), D77 (M4 ouvert par sa couche I écrite-avant-code — huit spécifications
+tls et deux révisions http, chartre des contrats cryptographiques), D78 (le reliquat
+re-qualifié : il portait la phrase COURANTE, exposée environ 64 minutes — recommandation
+de rotation), D79 (M4 étape (b) engagée — trois feuilles pures notées, mesurées et
+prouvées par différentiel de spécification et falsification), D80 (rotation de lignée
+exécutée — la phrase exposée retirée du service, carte m3 re-scellée à faits inchangés,
+coffre-fort roté). D81 consigne la présente révision v0.5.2 : la phrase de contrôle du
+coffre-fort passe sous garde durable — sauvegardée au dépôt et au coffre Drive AVANT
+toute autre action dès sa production, le fichier étant la remise.
 
 Une décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante. La gouvernance

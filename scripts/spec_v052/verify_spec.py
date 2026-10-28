@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Vérification post-révision du protocole TRIADE v0.5.1 (cahier de révision).
+"""Vérification post-révision du protocole TRIADE v0.5.2 (cahier de révision).
 
-Onze critères, tous vérifiés mécaniquement sur les sources et le PDF :
+Douze critères, tous vérifiés mécaniquement sur les sources et le PDF :
   V1  hiérarchie Sécurité > Performance > Optimisation > Coût en tokens intacte ;
   V2  couches I/B/C indissociables ;
   V3  aucune règle affaiblie — R1-R9 à l'identique, R10 en sur-ensemble ;
@@ -15,7 +15,11 @@ Onze critères, tous vérifiés mécaniquement sur les sources et le PDF :
       mesurés, décisions D26-D45 consignées ;
   V11 contenu v0.5.1 : coffre-fort des phrases maîtresses (D75, TRIADE-CF1),
       menace du vol du coffre au modèle § 13.1, M3 franchi constaté (balise
-      0.4.0, D72-D74), correspondance v0.5.0 → v0.5.1.
+      0.4.0, D72-D74), correspondance v0.5.0 → v0.5.1 ;
+  V12 contenu v0.5.2 : garde durable de la phrase de contrôle (D81) — fichier
+      PHRASE-CONTROLE-COFFRE.txt au dépôt, OUVRANT réellement le conteneur ;
+      discipline AVANT TOUTE AUTRE ACTION, menace étendue, M4 ouvert (D77),
+      correspondance v0.5.1 → v0.5.2.
 Sortie : PASS/FAIL par critère, exit 1 si échec.
 """
 import os
@@ -31,7 +35,7 @@ DEC_RAW = (HERE / "docs" / "DECISIONS.md").read_text(encoding="utf-8")
 DEC = re.sub(r"\s+", " ", DEC_RAW).replace("\u2019", "'")
 
 import pdfplumber
-with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.5.1_Specification.pdf") as pdf:
+with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.5.2_Specification.pdf") as pdf:
     PDF = "\n".join((p.extract_text() or "") for p in pdf.pages).replace("\u2019", "'")
 
 failures = []
@@ -243,6 +247,45 @@ check("V11", "autotest de falsification de l'outil (19 contrôles)",
       "AUTOTEST" in subprocess.run(
           [sys.executable, str(HERE / "coffre_fort.py"), "autotest"],
           capture_output=True, text=True, timeout=300).stdout)
+
+# ---- V12 : contenu v0.5.2 (garde durable de la phrase de contrôle, D81) ----
+check("V12", "garde durable consignée (D81) dans la spécification",
+      "sous garde durable" in SPEC and "PHRASE-CONTROLE-COFFRE.txt" in SPEC
+      and "AVANT TOUTE AUTRE ACTION" in SPEC and "D81" in SPEC)
+check("V12", "§ 1.6 « Ce que change la v0.5.2 » présent",
+      "### 1.6 Ce que change la v0.5.2" in SPEC)
+check("V12", "arbitrage PERTE contre EXPOSITION consigné",
+      "risque de PERTE" in SPEC and "risque d'EXPOSITION" in SPEC)
+check("V12", "menace étendue : rotation reste le remède",
+      "la rotation reste le remède" in SPEC
+      and "contrôle d'accès au dossier" in SPEC)
+check("V12", "discipline § 15.3 : le fichier EST la remise",
+      "le fichier EST la remise" in SPEC)
+check("V12", "correspondance v0.5.1 → v0.5.2 présente",
+      "### 17.6 Correspondance v0.5.1 → v0.5.2" in SPEC)
+check("V12", "alternatives rejetées à D81 consignées",
+      "alternatives rejetées à D81" in SPEC)
+check("V12", "glossaire : garde durable dans l'entrée phrase de contrôle",
+      "sous garde durable depuis D81" in SPEC)
+check("V12", "journal des versions : ligne v0.5.2",
+      "| v0.5.2 | 28 oct. 2026 |" in SPEC and "garde durable" in SPEC)
+check("V12", "contenu v0.5.2 dans le PDF formel",
+      all(k in PDF for k in ("0.5.2", "D81", "PHRASE-CONTROLE-COFFRE.txt",
+                             "garde durable")))
+check("V12", "le fichier de phrase vit au racine du dépôt (33 o)",
+      os.path.exists(HERE / "PHRASE-CONTROLE-COFFRE.txt")
+      and (HERE / "PHRASE-CONTROLE-COFFRE.txt").stat().st_size == 33)
+_conteneur = HERE / ".keys" / "coffre_fort.bin"
+if _conteneur.exists():
+    _r = subprocess.run(
+        [sys.executable, str(HERE / "coffre_fort.py"), "verifier",
+         "--phrase-fichier", str(HERE / "PHRASE-CONTROLE-COFFRE.txt")],
+        capture_output=True, text=True, timeout=300)
+    check("V12", "le fichier du dépôt OUVRE le conteneur (restauration prouvée)",
+          "INTÈGRE" in _r.stdout, _r.stdout.strip()[:60])
+else:
+    check("V12", "conteneur absent (poste neuf) — fichier seul vérifié",
+          os.path.exists(HERE / "PHRASE-CONTROLE-COFFRE.txt"))
 
 print()
 print("=" * 66)

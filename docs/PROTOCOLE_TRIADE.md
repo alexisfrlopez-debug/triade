@@ -1,6 +1,6 @@
-# PROTOCOLE TRIADE v0.5.1 — Spécification technique
+# PROTOCOLE TRIADE v0.5.2 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.5.1. Les archives formelles des versions
+> Source de travail faisant autorité pour la v0.5.2. Les archives formelles des versions
 > précédentes demeurent : `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
 > `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
 > `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
@@ -11,11 +11,12 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.5.1 ajoute le coffre-fort des phrases maîtresses (D75) et consigne M3 franchi
+> La v0.5.2 consigne la garde durable de la phrase de contrôle du coffre-fort (D81) ;
+> la v0.5.1 avait ajouté le coffre-fort des phrases maîtresses (D75) et consigné M3 franchi
 > (balise finale 0.4.0) ; la v0.5.0 demeure la révision du retour du terrain (validation
 > normée, taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.5.1 — coffre-fort des phrases maîtresses (D75) ; état des jalons constaté : M0–M3 franchis (balises 0.2.0, 0.3.0, 0.4.0)
+- Version : v0.5.2 — phrase de contrôle du coffre-fort sous garde durable dépôt + coffre Drive (D81) ; état des jalons constaté : M0–M3 franchis (balises 0.2.0, 0.3.0, 0.4.0), M4 ouvert (D77)
 - Date : 28 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
@@ -135,6 +136,29 @@ M3 franchi le 28 octobre 2026 sur la campagne million (D72), la conformité perm
 (D73) et le scellage de la balise finale 0.4.0 (D74) ; le modèle de menace gagne la ligne
 du vol du coffre-fort (§ 13.1). Aucune règle n'est modifiée ; aucune couche n'est ajoutée
 à l'exécution ; la hiérarchie de la fonction objectif est inchangée.
+
+### 1.6 Ce que change la v0.5.2
+
+Une évolution de discipline, tracée dans la correspondance (§ 17.6) et le journal des
+versions (§ 19), rattachée à la décision D81 : la **phrase de contrôle du coffre-fort
+passe sous garde durable** — dès sa production (init, rotation, changement), elle est
+sauvegardée dans le dépôt git (commit dédié, push GitHub, miroir du coffre Drive par le
+hook) et au racine du coffre Drive AVANT toute autre action de la session ; le fichier
+`PHRASE-CONTROLE-COFFRE.txt` (phrase seule sur une ligne, lisible tel quel par
+`--phrase-fichier`) EST la remise — l'affichage unique de cérémonie (D27/D30) cesse
+d'être le canal de survie. Le constat fondateur : la rotation D80 avait produit une
+phrase neuve dont la remise prévue en fin de tour n'a jamais eu lieu — la session
+d'exécution est morte avant (pannes d'infrastructure récurrentes, quatre réinitialisations
+et une interruption de session déjà consignées) — et la phrase ne vivait plus que dans le
+bac à sable éphémère : un décès d'infra de plus et le coffre entier devenait
+indéchiffrable à jamais. L'arbitrage est consigné : le risque de PERTE (vécu, répété) est
+jugé supérieur au risque d'EXPOSITION (URL non devinable) ; le modèle de menace (§ 13.1)
+en tire la conséquence honnête — la confidentialité des phrases au repos repose désormais
+sur le contrôle d'accès au dossier du coffre Drive, la mitigation première devient la
+restriction du partage par lien, et une phrase entrée dans l'historique git y demeure à
+vie : on ne compte plus sur sa confidentialité, la rotation reste le remède. Aucune règle
+n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction
+objectif est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -683,7 +707,7 @@ sur le secret de la carte : elle survivrait à sa divulgation.
 | Corruption de carte (accidentelle) | Bit rot, panne de stockage | Fragments au repos | AEAD (intégrité par fragment) + signature + verrou croisé | Détecté au chargement — refus propre |
 | Fuite de la carte | Initié, poste compromis | Fragments au repos | Chiffrement (algo de l'en-tête) ; sharding ; escrow | Perte partielle limitée à un fragment |
 | Vol de l'export de continuité | Voleur, stockage cloud compromis | Conteneur exporté | Chiffrement intégral (phrase maîtresse + Argon2id) ; signature | Sans la phrase, indéchiffrable |
-| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) | Chiffrement intégral (phrase de contrôle + Argon2id, contexte HKDF dédié) ; AEAD ; écriture atomique 0600 | Sans la phrase, indéchiffrable |
+| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) ; depuis D81 la phrase de contrôle elle-même vit au coffre Drive et dans le dépôt (arbitrage PERTE > EXPOSITION) | Chiffrement intégral (Argon2id, contexte HKDF dédié, AEAD) ; écriture atomique 0600 ; mitigation première : restreindre le partage par lien du dossier (§ 15.3) | Confidentialité ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — on ne compte plus sur sa confidentialité, la rotation reste le remède |
 | **Binaire altéré** | Attaquant local, fichier modifié | Artefact livré | Checksums par bloc + signature du manifeste au lancement (R10 a, b) | Détecté — arrêt avant tout effet |
 | **Rollback non autorisé** | Rejeu d'une version ancienne vulnérable | Artefact, état | Monotonie de version signée, plancher anti-rollback (R10 c) | Détecté — refus |
 | **Agent défaillant** | Hallucination, dérive hors périmètre | Processus de développement | R2 (intention d'abord) ; R5 (vérifie-puis-écrit) ; oracle dérivé de I ; budgets (§ 12) | L'erreur ne devient jamais permanente sans vérification |
@@ -856,10 +880,20 @@ installation de l'outil. Le conteneur chiffré s'exporte tel quel vers le coffre
 projet et le coffre personnel du développeur — son vol relève de la menace « sans la
 phrase, indéchiffrable » (§ 13.1). Après une réinitialisation du poste, l'import du
 conteneur puis `obtenir --vers-fichier` restaurent la phrase opérationnelle sans cérémonie
-de régénération. La règle de discipline demeure : chaque cérémonie de clés (D27/D30)
-alimente le coffre-fort dans la même session, la phrase de contrôle est affichée une seule
-fois, et la graine Ed25519 reste hors coffre (D30) — la relève d'une lignée perdue
-resterait la cérémonie avec preuve byte-identique.
+de régénération. La règle de discipline évolue en D81 sur un point, l'arbitrage étant
+consigné : chaque cérémonie de clés (D27/D30) alimente le coffre-fort dans la même
+session, et **la phrase de contrôle est sauvegardée durablement AVANT TOUTE AUTRE
+ACTION** — `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne,
+lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive par
+le hook, copie au racine du coffre Drive — le fichier EST la remise (l'affichage unique
+de D27/D30 demeure possible mais n'est plus le canal de survie). À chaque rotation le
+fichier est remplacé et git conserve les phrases retirées du service. La graine Ed25519
+reste hors coffre (D30) — la relève d'une lignée perdue resterait la cérémonie avec
+preuve byte-identique. Contrepartie consignée : la phrase vit désormais sur le stockage
+du coffre Drive partagé par lien — la confidentialité au repos y repose sur le contrôle
+d'accès au dossier (restriction du partage par lien et vidage de corbeille sont les
+mitigations premières) ; une phrase entrée dans l'historique git y demeure, la rotation
+reste le remède à toute exposition avérée.
 
 ## 16. Critères d'acceptation des jalons M0 à M7
 
@@ -970,6 +1004,24 @@ Ed25519 dans le coffre (contraire à D30 — jamais confiée) ; confier le conte
 gestionnaire de mots de passe du développeur sans copie de coffre projet (la continuité
 exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
 
+### 17.6 Correspondance v0.5.1 → v0.5.2
+
+| # | Évolution | En v0.5.1 | En v0.5.2 | Statut |
+|---|---|---|---|---|
+| 1 | Garde de la phrase de contrôle | détenue par le seul développeur, jamais stockée, affichée une seule fois (D75) | sauvegardée durablement dès production : `PHRASE-CONTROLE-COFFRE.txt` au dépôt (git + GitHub + miroir Drive) et au racine du coffre Drive, AVANT toute autre action ; le fichier est la remise (§ 15.3, FORMAT_CARTE § 11) | modifié (D81) |
+| 2 | Menace « vol du coffre-fort » | sans la phrase, indéchiffrable | la phrase vit sur le coffre Drive partagé par lien : confidentialité au repos ramenée au contrôle d'accès du dossier ; mitigation première = restreindre le partage ; une phrase commise en git y demeure à vie, la rotation reste le remède | étendu (D81) |
+| 3 | État des jalons | M0–M3 franchis, M4 à venir | M4 ouvert (D77 — couche I écrite-avant-code : huit spécifications tls + deux révisions http) ; M0–M3 inchangés | constaté (D77) |
+
+Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée. Les
+alternatives rejetées à D81 : conserver la remise par affichage unique (le statu quo que
+la session morte de D80 a démenti — la phrase ne vivait plus que dans le bac à sable) ;
+sceller la phrase de contrôle sous une phrase antérieure (déplace le problème : la phrase
+de secours exigerait sa propre garde) ; exporter la seule copie chiffrée du coffre sans
+garder la phrase (le conteneur indéchiffrable protège de l'exposition, pas de la perte —
+or c'est la perte qui est le risque vécu) ; restreindre d'office le partage du dossier
+Drive (décision appartenant au développeur, hors du champ de l'agent — consignée en
+recommandation, § 15.3).
+
 ## 18. Glossaire
 
 | Terme | Définition |
@@ -1008,7 +1060,7 @@ exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
 | Diff chirurgical | Itération terrain dont l'audit vérifie qu'aucun octet hors des zones autorisées n'a changé |
 | Fuzzing à propriétés | Génération d'entrées aléatoires contraintes, vérifiées par propriétés (jamais de crash, domaines de retour, bornes mémoire) — cœur du jalon M3 |
 | Coffre-fort des phrases maîtresses | Conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses d'un projet (D75, § 15.3) — l'outil vit dans le dépôt, le conteneur jamais |
-| Phrase de contrôle | Secret ouvrant le coffre-fort, détenu par le seul développeur — jamais stockée, affichée une seule fois à la cérémonie |
+| Phrase de contrôle | Secret ouvrant le coffre-fort — sous garde durable depuis D81 : `PHRASE-CONTROLE-COFFRE.txt` au dépôt et au racine du coffre Drive, sauvegardé AVANT toute autre action dès production (§ 15.3) |
 
 ## 19. Journal des versions
 
@@ -1019,11 +1071,13 @@ exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
 | v0.3 | 25 oct. 2026 | Universalité par profils de cible (D14, amende D10) ; suite cryptographique paramétrable (D15, amende D5) ; export de continuité chiffré et signé (D16, précise R1) ; en-tête de carte normalisé ; jalons M6-M7 |
 | v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 15.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 13.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.5.2 | 28 oct. 2026 | Garde durable de la phrase de contrôle du coffre-fort (D81) : sauvegardée AVANT TOUTE AUTRE ACTION dès production — fichier `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne, lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive, copie au racine du coffre Drive ; le fichier est la remise, l'affichage unique de cérémonie cesse d'être le canal de survie ; restauration post-panne prouvée de bout en bout (téléchargement Drive → coffre ouvert, entrées listées) ; menace « vol du coffre-fort » étendue — la confidentialité au repos repose désormais sur le contrôle d'accès au dossier Drive (mitigation première : restriction du partage par lien), une phrase commise en git y demeure à vie ; M4 constaté ouvert (D77, couche I écrite-avant-code). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
 La présente version consigne l'état au passage de relais : jalons M0 à M3 franchis sur
 validations terrain (balises finales 0.2.0, 0.3.0, 0.4.0), coffre-fort des phrases
-maîtresses opérationnel (D75), jalon M4 (tunnel chiffré) à venir. Les évolutions prévisibles — bloc optionnel de syscalls directs,
+maîtresses opérationnel (D75) et sa phrase de contrôle sous garde durable (D81), jalon
+M4 (tunnel chiffré) ouvert — couche I écrite-avant-code (D77), étape (b) en cours. Les évolutions prévisibles — bloc optionnel de syscalls directs,
 TLS 1.3 pur en blocs scellés, profils additionnels après M7 — restent volontairement hors
 du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle
 de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et

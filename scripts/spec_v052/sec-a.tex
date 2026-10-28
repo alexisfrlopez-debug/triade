@@ -132,6 +132,31 @@ franchi le 28 octobre 2026 sur la campagne million (D72), la conformité permane
 ligne du vol du coffre-fort (§\ref{sec:menaces}). Aucune règle n’est modifiée ; aucune
 couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
 
+\subsection{Ce que change la v0.5.2}\label{sec:nouveautes052}
+
+Une évolution de discipline, tracée dans la correspondance (§\ref{sec:evolutions052}) et
+le journal des versions, rattachée à la décision D81 : la \textbf{phrase de contrôle du
+coffre-fort passe sous garde durable} — dès sa production (init, rotation,
+changement), elle est sauvegardée dans le dépôt git (commit dédié, push GitHub, miroir
+du coffre Drive par le hook) et au racine du coffre Drive \emph{avant} toute autre action
+de la session ; le fichier \code{PHRASE-CONTROLE-COFFRE.txt} (phrase seule sur une
+ligne, lisible tel quel par \code{--phrase-fichier}) \emph{est} la remise — l’affichage
+unique de cérémonie (D27/D30) cesse d’être le canal de survie. Le constat fondateur : la
+rotation D80 avait produit une phrase neuve dont la remise prévue en fin de tour n’a
+jamais eu lieu — la session d’exécution est morte avant (pannes d’infrastructure
+récurrentes) — et la phrase ne vivait plus que dans le bac à sable éphémère : un décès
+d’infra de plus et le coffre entier devenait indéchiffrable à jamais. L’arbitrage est
+consigné : le risque de \textsc{perte} (vécu, répété) est jugé supérieur au risque
+d’\textsc{exposition} (URL non devinable) ; le modèle de menace en tire la conséquence
+honnête — la confidentialité des phrases au repos repose désormais sur le contrôle
+d’accès au dossier du coffre Drive, la mitigation première devient la restriction du
+partage par lien, et une phrase entrée dans l’historique git y demeure à vie : on ne
+compte plus sur sa confidentialité, la rotation reste le remède. L’état des jalons est
+constaté — M4 ouvert le 28 octobre 2026 (D77, couche I écrite-avant-code : huit
+spécifications \code{tls} et deux révisions \code{http}). Aucune règle n’est modifiée ;
+aucune couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est
+inchangée.
+
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
 La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —
