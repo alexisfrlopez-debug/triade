@@ -198,7 +198,23 @@ chiffrement SUR PLACE dans le cadre, destruction du clair copié sur échec
 (Q2) ; harnais m4/harnais_emission.py (VRAIS octets tls-02/tls-03/tcp-04/
 libc-01/libc-07 : V2 treize scénarios cadre octet par octet, V3 5 000 cas
 fuzzés zéro écart × 2 graines, V4 six mutations attrapées + témoin 13/13) ;
-reste (b) : tls-07..08, révisions http, oracle à scénarios
+**D89 : la convention du cadre de session AMENDÉE (zone de réception
+2 × MAX_JETON, TAILLE_CADRE 0xC260 ; champs de géométrie +0x3A/+0x3C —
+longueur utile / offset résidu, tls-07 unique propriétaire : la lecture
+géométrique de « il sera écrasé » — l'écrasement du clair pompé est
+l'œuvre de l'appel SUIVANT) puis tls-07 (RÉCEPTION DÉCHIFFRÉE — le
+tunnel REÇOIT) notée-mesurée-prouvée** — 394 o, garde E2 unique sur la
+somme offset + lot (une garde redondante nommée infalsifiable par le
+différentiel : SUPPRIMÉE), descripteur type 2 (zone entière + 3 EMPTY),
+DecryptMessageW (pfQOP réécrit 0), Q1 span du tampon 0 + champs
+(lot − résidu, résidu), Q2 rien consommé, Q3 fin propre + curiosité
+consignée, AUCUNE socket ; harnais m4/harnais_reception.py (VRAIS
+octets tls-02/tls-03/libc-01 : V2 SEIZE scénarios EN CHAÎNES — le rôle
+appelant lit la géométrie au cadre et réceptionne par-dessus, le span
+d'un lot à deux enregistrements reste OCTET PAR OCTET intact : la
+preuve géométrique ; V3a 4 000 appels + V3b 1 000 chaînes fuzzés zéro
+écart × 2 graines, V4 DIX mutations attrapées + témoin 16/16) ;
+reste (b) : tls-08, révisions http, oracle à scénarios
 SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
 seul point ouvert.
 

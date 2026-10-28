@@ -25,8 +25,12 @@ ARRÊT PARTIEL étape b (D79 — mesure auteur, trois feuilles pures) :
   slots réarrêtés sur les longueurs réelles des notations (règles D8 :
   multiples de 64, alignés 16, padding >= 16). ARRÊT D81 : tls-05 0x65C0
   (0x180, mesure auteur — cycle de vie des handles, premier bloc à shims).
-  Les QUATRE blocs restants (tls-04, tls-06..08) et les DEUX révisions
-  restent PRÉFIGURÉS : leurs slots seront réarrêtés à leurs mesures.
+  Mesures suivies, slots préfigurés CONSERVÉS (padding >= 16, D8 — les
+  adresses préfigurées aval restent exactes) : tls-04 0x62C0 (0x300, 544 o,
+  D83 — la poignée de main), tls-06 0x6740 (0x300, 491 o, D88 — l'émission),
+  tls-07 0x6A40 (0x300, 394 o, D89 — la réception). Restent préfigurés :
+  tls-08 0x6D40, http-08:R2 0x7340, http-10:R2 0x7480 (réarrêt éventuel à
+  leurs mesures, fin d'étape b).
 
 EXTENSION M4 (D77, génération 6 — blocs g7xxxx) :
   - .text3 démarre à 0x6000 (alignement section) : tls-01 0x6000,
@@ -74,9 +78,16 @@ SecBufferDesc { ULONG ulVersion ; ULONG cBuffers ; void* pBuffers } (16 o) ;
 SecPkgContext_StreamSizes { cbHeader, cbTrailer, cbMaximumMessage,
 cBuffers, cbBlockSize } (5 ULONG : en-tête +0, queue +4, message max +8 —
 tls-06, unique propriétaire de l'acquisition).
+Règles DecryptMessage (D89 — contrat de la « bibliothèque », partagé modèle/
+émulation du harnais tls-07, jamais deux sources de vérité) : en succès le
+tampon 0 devient (cb = longueur claire, DATA, pv = zone + en-tête — le clair
+remplace le brut à l'offset de l'en-tête d'enregistrement) ; le tampon 1
+devient (cb = résidu Extra, EXTRA, pv = zone + consommé) ; en message
+incomplet le tampon 0 devient (cb = octets manquants, MISSING) SANS toucher
+la zone ; tout autre verdict n'écrit rien.
 
-CADRE DE SESSION TLS (arrêt D81 — convention partagée tls-04..08, citée par
-les spécifications « aux offsets documentés » ; propriété mémoire http-10:R2
+CADRE DE SESSION TLS (arrêt D81, AMENDÉ D89 — convention partagée tls-04..08, citée
+par les spécifications « aux offsets documentés » ; propriété mémoire http-10:R2
 qui le fournit VIERGE ; zone de travail complete, jamais de donnée statique) :
   +0x00 CredHandle credentials { u64 dwLower, u64 dwUpper }   (16 o, tls-05)
   +0x10 CtxtHandle contexte    { u64 dwLower, u64 dwUpper }   (16 o, tls-04
@@ -85,13 +96,27 @@ qui le fournit VIERGE ; zone de travail complete, jamais de donnée statique) :
   +0x28 pointeur nom UTF-16 (u64 — vise CADRE_NOM_ZONE ; tls-01 destination)
   +0x30 verdict poignée (u32 — tls-04:Q2) ; +0x34 HRESULT d'origine (u32,
          tls-02:Q2 — jamais un HRESULT brut sans verdict nommé à côté)
-  +0x38 allers-retours (u16 — tls-04:Q1) ; +0x3A/0x3C réservés (zéro)
+  +0x38 allers-retours (u16 — tls-04:Q1)
+  +0x3A longueur utile réception (u16 — D89, tls-07 UNIQUE propriétaire : la
+         longueur de la région vivante de la zone — résidu Extra + octets
+         reçus depuis le dernier appel ; l'appelant tls-08 réceptionne
+         PAR-DESSUS, à zone+offset+longueur, jamais ailleurs)
+  +0x3C offset résidu (u16 — D89, tls-07 : où la région vivante COMMENCE ;
+         tls-07 normalise à 0 au DéBUT de chaque appel — le clair pompé par
+         l'appelant depuis l'appel précédent est de la mémoire morte, le
+         résidu descend en tête par libc-01 AVANT le déchiffrement ; c'est
+         la lecture géométrique de tls-07:Q1 « il sera écrasé » : l'écrase-
+         ment est l'œuvre de l'appel SUIVANT, d'où « pompe AVANT tout nouvel
+         appel »). Cadre vierge : (0, 0) — tls-08 initialise depuis l'état
+         final de tls-04 à l'entrée du relais.
   +0x40 tailles de flux StreamSizes (5 x u32, 20 o — tls-06 écrit UNE fois
          par session, tls-03 type 1 lit via le pointeur passé en 5e argument)
   +0x60 zone nom UTF-16 (512 o = 2 x (HOTE_MAX + 1))
   +0x260 zone jeton ÉMISSION (MAX_JETON 16384 — poignée puis enregistrements)
-  +0x4260 zone jeton RÉCEPTION (MAX_JETON 16384 — poignée puis flux)
-  TAILLE_CADRE = 0x8260 (33376 o)
+  +0x4260 zone RÉCEPTION (2 x MAX_JETON 32768 — D89 : tls-07:R1 P1/E2, le
+         résidu Extra suivi des octets bruts récents ; tls-04 y voit une zone
+         ≥ MAX_JETON — ses gardes restent au bornage JETON, inchangées)
+  TAILLE_CADRE = 0xC260 (49760 o — 0x8260 avant D89)
 
 .rdata M4 — extension de la zone d'imports ARRÊTÉE D81 (après les fixtures
 http scellées qui finissent à 0x299C ; tout l'héritage M3 reste octet pour
@@ -232,6 +257,7 @@ VERDICT_FATAL = 6               # toute autre valeur (table TOTALE)
 
 SECBUFFER_VERSION = 0
 SECBUFFER_EMPTY, SECBUFFER_DATA, SECBUFFER_TOKEN = 0, 1, 2
+SECBUFFER_MISSING, SECBUFFER_EXTRA = 4, 5     # D89 — réponses DecryptMessage
 SECBUFFER_STREAM_TRAILER, SECBUFFER_STREAM_HEADER = 6, 7
 TAILLE_SECBUFFER = 16           # { u32 cb, u32 type, u64 pv } — x64
 TAILLE_SECBUFFERDESC = 16       # { u32 version, u32 count, u64 pBuffers }
@@ -246,11 +272,15 @@ CADRE_PTR_NOM = 0x28            # u64 — vise CADRE_NOM_ZONE (destination tls-0
 CADRE_VERDICT = 0x30            # u32 — verdict poignée (tls-04:Q2)
 CADRE_HRESULT = 0x34            # u32 — HRESULT d'origine (tls-02:Q2)
 CADRE_ALLERS = 0x38             # u16 — allers-retours (tls-04:Q1)
+CADRE_UTILE = 0x3A              # u16 — longueur utile réception (D89, tls-07)
+CADRE_OFFSET = 0x3C             # u16 — offset résidu (D89, tls-07 — normalisé
+                                # à 0 au début de CHAQUE appel tls-07)
 CADRE_TAILLES = 0x40            # 5 x u32 StreamSizes (tls-06 écrit, tls-03 lit)
 CADRE_NOM_ZONE = 0x60           # 512 o = 2 * (HOTE_MAX + 1)
 CADRE_EMISSION = 0x260          # MAX_JETON
-CADRE_RECEPTION = 0x4260        # MAX_JETON
-TAILLE_CADRE = 0x8260           # 33376 o
+CADRE_RECEPTION = 0x4260        # 2 x MAX_JETON (D89 — tls-07:R1 P1/E2)
+CAPACITE_RECEPTION = 2 * MAX_JETON   # 32768 — borne E2 de tls-07
+TAILLE_CADRE = 0xC260           # 49760 o (0x8260 avant D89)
 SECPKG_CRED_OUTBOUND = 2        # client (tls-05 op 0 — validation AUTOMATIQUE)
 
 # --- .rdata M4 : extension de la zone d'imports secur32 (ARRÊT D81) -------------

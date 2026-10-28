@@ -40,7 +40,7 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
 | Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
-| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; **carte m3 re-scellée D80 sous la lignée D80 — enveloppe neuve, faits inchangés, même cle publique** (rotation de lignée après exposition D76-D78) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER ; **M4 ouvert (D77)** : couche I écrite-avant-code (`m4/I/` — domaine `tls` : 8 spécifications [nom UTF-16, table des verdicts SSPI, jetons, poignée de main, handles, émission, réception, session] + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques : fail-closed intégral, certificat invalide = échec nommé 502 propre, zéro divulgation, compensation exacte) ; étape (b) en cours : D79 layout .text3 + tls-01..03 prouvées (165 k cas zéro écart) ; D82 cadre de session TLS + IAT secur32 arrêtés, tls-05 (premier bloc à shims) prouvée — 21 PASS × 2 graines, 5 000 cas fuzzés zéro écart, falsification 6/6 ; **D83 : tls-04 LA POIGNÉE DE MAIN (LE critère M4) notée-mesurée-prouvée — 544 o, boucle ISC bornée 16 allers, 16 scénarios cadre octet par octet + contrat d'appels complet, 10 000 cas fuzzés zéro écart (2 graines), 6/6 mutations** |
+| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; **carte m3 re-scellée D80 sous la lignée D80 — enveloppe neuve, faits inchangés, même cle publique** (rotation de lignée après exposition D76-D78) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER ; **M4 ouvert (D77)** : couche I écrite-avant-code (`m4/I/` — domaine `tls` : 8 spécifications [nom UTF-16, table des verdicts SSPI, jetons, poignée de main, handles, émission, réception, session] + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques : fail-closed intégral, certificat invalide = échec nommé 502 propre, zéro divulgation, compensation exacte) ; étape (b) en cours : D79 layout .text3 + tls-01..03 prouvées (165 k cas zéro écart) ; D82 cadre de session TLS + IAT secur32 arrêtés, tls-05 (premier bloc à shims) prouvée — 21 PASS × 2 graines, 5 000 cas fuzzés zéro écart, falsification 6/6 ; **D83 : tls-04 LA POIGNÉE DE MAIN (LE critère M4) notée-mesurée-prouvée — 544 o, boucle ISC bornée 16 allers, 16 scénarios cadre octet par octet + contrat d'appels complet, 10 000 cas fuzzés zéro écart (2 graines), 6/6 mutations** ; D88 : tls-06 ÉMISSION notée-prouvée (491 o, 34 PASS × 2 graines) ; **D89 : convention du cadre AMENDÉE (zone réception 2 × MAX_JETON → TAILLE_CADRE 0xC260, champs de géométrie +0x3A/+0x3C) puis tls-07 RÉCEPTION notée-mesurée-prouvée — 394 o, 16 scénarios EN CHAÎNES, 10 000 cas + 2 000 chaînes fuzzés zéro écart (2 graines), 10/10 mutations** — reste (b) : tls-08, révisions http, oracle SSPI, carte génération 6, proxy.exe 0.5.0-dev.1 |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique ; coffre-fort des phrases maîtresses (D75) — conteneur chiffré TRIADE-CF1 au racine du Drive + copie développeur, **roté D80 avec les DEUX lignées (D74 archive + D80 courante)** ; phrase de contrôle sous garde durable D81 (`PHRASE-CONTROLE-COFFRE.txt` dépôt + racine Drive + miroir — le fichier est la remise, restauration post-panne prouvée) ; racine du coffre Drive nettoyée (D76 : livrables périmés archivés dans ARCHIVE/, courants seuls) |
 
 Aucune chaîne de build extérieure : les octets viennent de la notation. Le projet a
@@ -583,8 +583,43 @@ graines 20261028/29 (10 000 cas cumulés), V4 six mutations
 stable-en-taille attrapées + témoin 13/13 — LE DIFFÉRENTIEL EST PASSÉ VERT
 AU PREMIER PASSAGE COMPLET (fait notable : tls-06 fut écrite sur les
 patrons prouvés de tls-04, les pièges des sessions précédentes traités
-AVANT l'écriture — les leçons capitalisent) ; reste (b) : tls-07, tls-08,
-révisions http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6
+AVANT l'écriture — les leçons capitalisent) ; **suite (b) D89 : la CONVENTION DU CADRE AMENDÉE (première fois
+depuis D81 — exigée par la spec tls-07:R1 P1/E2, AVANT la notation,
+preuve d'innocuité contre l'héritage scellé) puis tls-07 (RÉCEPTION
+DÉCHIFFRÉE — le tunnel REÇOIT) notée-mesurée-prouvée** : zone de
+réception 2 × MAX_JETON = 32 768 o (TAILLE_CADRE 0x8260 → 0xC260),
+DEUX u16 réservés revendiqués @+0x3A/+0x3C (longueur utile réception /
+offset résidu — la géométrie de la région vivante, tls-07 unique
+propriétaire ; lecture géométrique de Q1 « il sera écrasé » :
+l'écrasement est l'œuvre de l'appel SUIVANT — tls-07 normalise
+l'offset à 0 au début de chaque appel, le clair pompé est mort, le
+lot descend en tête par libc-01 ; la SEULE lecture satisfaisant
+span-dans-la-zone + pompage-après-retour + résidu-en-tête) ; aucune
+notation scellée n'écrit +0x3A/+0x3C (vérifié), tls-04 voit « ≥
+MAX_JETON », R7 intact ; tls-07 : 394 o / 79 instructions, slot
+préfiguré 0x6A40×0x300 CONSERVÉ (padding 374, D8 — l'adresse
+préfigurée de tls-08 @0x6D40 reste exacte) ; garde E2 UNIQUE sur la
+somme offset + lot AVANT tout appel et tout déplacement (une seconde
+garde sur la longueur seule fut nommée REDONDANTE par le
+différentiel — infalsifiable, donc sans preuve : SUPPRIMÉE, 407 →
+394 o) ; descripteur tls-03 type 2 (zone ENTIÈRE en DATA + 3 EMPTY),
+DecryptMessageW 4 arguments registre (pfQOP réécrit 0 avant
+l'appel), verdict tls-02 intégral, Q1 → span du tampon 0 PAR la
+bibliothèque + champs (lot − résidu, résidu), Q2 → rien consommé,
+Q3 → fin propre + curiosité « fin propre avec résidu » consignée,
+Q4 → verdict + HRESULT, AUCUNE socket (I2) ; `m4/harnais_reception.py`
+(VRAIS octets tls-02/tls-03/libc-01, règles shims D89 partagées
+modèle/émulation dans layout.py) : V2 SEIZE scénarios EN CHAÎNES (le
+rôle appelant tls-08 joué par le harnais lit la géométrie AU CADRE
+et réceptionne PAR-DESSUS — le span d'un lot à deux enregistrements
+reste OCTET PAR OCTET intact après le retour : la preuve géométrique ;
+frontière exacte 32 769 = E2, capacité exacte 32 768 = passe), V3a
+4 000 appels + V3b 1 000 chaînes × 3-4 appels fuzzés ZÉRO ÉCART ×
+graines 20261028/29, V4 DIX mutations stable-en-taille TOUTES
+ATTRAPÉES + témoin 16/16 — BILAN 34 PASS / 0 ÉCHEC × 2 graines ;
+reste (b) : tls-08 (orchestration — l'état final de tls-04 doit y
+initialiser les champs de géométrie à l'entrée du relais), révisions
+http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6
 (lignée D80), proxy.exe 0.5.0-dev.1.
 Terrain : D57 (WER, adresse de plantage de la démo) reste le seul point ouvert — le
 circuit de constat est désormais réflexe (D71). Hygiène : rotation/restriction

@@ -4965,3 +4965,154 @@ DecryptMessage, résidu Extra à propriétaire unique), tls-08
 (orchestration), révisions http-08:R2/http-10:R2, oracle à scénarios SSPI,
 carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57
 (WER) seul point ouvert.
+
+## Entrée 75 — D89 (29/10, ~01:30) : M4 étape (b) — tls-07 (RÉCEPTION DÉCHIFFRÉE) notée-mesurée-prouvée : le tunnel REÇOIT — la convention du cadre AMENDÉE (zone réception 2 × MAX_JETON + champs de géométrie +0x3A/+0x3C), 10 000 cas fuzzés zéro écart sur deux graines dont 2 000 CHAÎNES multi-appels, 10/10 mutations attrapées — et le différentiel a nommé une garde REDONDANTE, qui est partie
+
+**Contexte** : suite du « continue » — le bloc suivant la chaîne approuvée
+après D88 (tls-06, l'émission). La moitié réception du critère M4
+« HTTPS en transit » manquait ; c'est le seul appelant de
+DecryptMessageW du projet, et le bloc où la géométrie du flux EST le
+contrat (le résidu Extra, l'incomplet, la fin de contexte).
+
+1. **LA CONVENTION D81 ÉTAIT GÉOMÉTRIQUEMENT INSUFFISANTE — AMENDÉE avant
+   la notation (D89, `m4/layout.py` + `m4/I/README.md`)** : la spec
+   tls-07:R1 exige une zone de réception de capacité 2 × MAX_JETON
+   (P1/E2 : le résidu Extra suivi des octets bruts récents) alors que le
+   cadre D81 n'en offrait qu'une de MAX_JETON — la zone passe à 32 768 o,
+   TAILLE_CADRE 0x8260 → 0xC260 (49 760 o) ; et les DEUX u16 réservés
+   « (zéro) » @+0x3A/+0x3C sont REVENDIQUÉS par tls-07 (unique
+   propriétaire, charte § 6) : **longueur utile réception** (+0x3A) et
+   **offset résidu** (+0x3C) — la géométrie de la région vivante. La
+   lecture géométrique de Q1 « l'appelant pompe ce clair AVANT tout nouvel
+   appel (il sera écrasé) » y est arrêtée : l'ÉCRASEMENT est l'œuvre de
+   l'appel SUIVANT — tls-07 NORMALISE l'offset à 0 au début de chaque
+   appel (le lot vivant descend en tête par libc-01, copie en AVANT :
+   dest < src sûr même en recouvrement, pour tout résidu et tout
+   consommé), le clair pompé depuis l'appel précédent est de la mémoire
+   morte. C'est la SEULE lecture qui satisfait les trois exigences de la
+   spec à la fois : le span pointe DANS la zone, l'appelant pompe APRÈS le
+   retour, le résidu finit en tête — un déplacement DANS l'appel de
+   livraison détruirait le span chaque fois que résidu > en-tête (cas
+   banal : deux enregistrements dans un même lot). tls-04 voit la zone
+   agrandie comme « ≥ MAX_JETON » : ses gardes jeton restent exactes, aucun
+   octet scellé ne bouge (vérifié : aucune notation existante n'écrit
+   +0x3A/+0x3C). Ouvert pour tls-08 : l'état final de tls-04 (le résidu de
+   poignée, s'il existe) devra être passé aux champs à l'entrée du relais.
+
+2. **TLS-07 NOTÉE À LA MAIN** (brouillon → auteur.py : keystone assemble,
+   rien d'autre) : **394 o / 79 instructions / 5 étiquettes**, slot
+   préfiguré 0x6A40×0x300 CONSERVÉ (padding 374 ≥ 16, D8 — l'adresse
+   préfigurée de tls-08 @0x6D40 reste exacte). ARCHITECTURE : garde E2
+   UNIQUE sur la SOMME offset + lot > 2 × MAX_JETON, AVANT tout appel
+   SSPI et AVANT tout déplacement (fail-closed, zone et champs INTACTS au
+   refus — elle subsume la longueur seule, l'offset u16 étant >= 0) ;
+   normalisation libc-01 du lot vivant en tête (I1 : personne d'autre ne
+   touche la zone entre deux appels) ; descripteur tls-03 type 2 (la zone
+   ENTIÈRE en DATA + 3 EMPTY — sémantique SSPI : le descripteur reçoit le
+   lot complet à CHAQUE appel, Q2) ; DecryptMessageW à QUATRE arguments
+   registre (phContext cadre+0x10, pMessage descripteur de pile,
+   MessageSeqNo 0 [schannel suit la séquence via le contexte], pfQOP mot
+   de pile RÉÉCRIT 0 avant l'appel — aucun état résiduel, jamais
+   interprété) ; verdict tls-02 pour chaque HRESULT (charte § 1) ;
+   Q1 → span livré depuis le tampon 0 réécrit PAR la bibliothèque (cb =
+   longueur claire, pv = zone + en-tête — déchiffrement sur place), champs
+   (consommé = lot − résidu, résidu = tampon 1 cb) ; Q2 → aucun octet
+   consommé, champs (0, lot), le tampon MISSING ignoré ; Q3 → fin PROPRE,
+   résidu purgé, curiosité « fin propre avec résidu » consignée (+0x3A =
+   résidu, verdict 4 à côté — le serveur a parlé après sa fermeture, pas
+   d'interprétation) ; Q4 → verdict + HRESULT d'origine au cadre, champs
+   (0, lot) — la région normalisée ce tour est TOUJOURS décrite exactement
+   par les champs (invariant tenu sur tout chemin qui a déplacé) ;
+   AUCUNE socket, AUCUN ws2_32 (I2 — la réception tcp-03 est l'affaire de
+   l'APPELANT tls-08) ; volatils seuls (I5, sub rsp 0xE8, cadre rechargé
+   de la pile après chaque appel).
+
+3. **m4/harnais_reception.py** — harnais à shims (mécanisme M2/M3, leçon
+   D79) émulant les VRAIS octets de tls-02 + tls-03 + libc-01 (héritage
+   scellé m1, R7 — la normalisation est testée à travers les octets réels
+   de la copie). RÈGLES SHIMS PARTAGÉES modèle/émulation (jamais deux
+   sources de vérité — règles D89 dans layout.py) : DM en succès (ou fin
+   de contexte) déchiffre SUR PLACE (le clair remplace le brut à l'offset
+   de l'en-tête, motif déterministe) et réécrit le tampon 0 (cb claire,
+   DATA, pv zone+en-tête) et le tampon 1 (cb résidu, EXTRA, pv
+   zone+consommé) ; en incomplet le tampon 0 devient (octets manquants,
+   MISSING) SANS toucher la zone ; tout autre verdict n'écrit RIEN ; pfQOP
+   reçoit des drapeaux NON NULS en succès (la notation DOIT réécrire 0 —
+   falsifiable) ; descripteur invalide (notation mutée) : SEC_E_
+   INVALID_TOKEN, fail-closed, aucune écriture. **V1** round-trip 394 o +
+   trois intégrations. **V2 SEIZE scénarios, en CHAÎNES D'APPELS** (le
+   rôle appelant tls-08 est joué par le harnais : il lit la géométrie AU
+   CADRE après chaque appel — champs +0x3A/+0x3C — et réceptionne
+   PAR-DESSUS la région vivante, à zone+offset+longueur, jamais ailleurs,
+   borné par la capacité restante — la convention D89 en acte) :
+   enregistrement exact ; incomplet par un octet (Q2 puis Q1 après un
+   octet de plus) ; deux enregistrements + Extra dans un même lot (Q1 puis
+   Q1, résidu déplacé — LE SPAN DU PREMIER APPEL RESTE INTACT : la preuve
+   géométrique que la normalisation appartient à l'appel SUIVANT) ;
+   close_notify pur (Q3) ; close_notify avec résidu (E3, curiosité
+   consignée) ; altération (E1) ; densité hostile par le lot ET par
+   l'offset (E2, zone et champs INTACTS) ; LA FRONTIÈRE EXACTE de la garde
+   (offset + lot = 32 769 : E2) ; LA CAPACITÉ EXACTE (32 768 : la garde
+   passe, la région vit jusqu'au dernier octet) ; verdicts 3 et 6 (table
+   TOTALE) ; normalisation depuis un état offset non nul (recv par-dessus
+   puis Q1) ; lot vide ; enregistrement puis close_notify (la fin du
+   relais réel) ; incomplet PUIS complet PUIS résidu (trois appels, la
+   géométrie de bout en bout) — CHAQUE appel finit par l'image du cadre ET
+   de la zone 0xD000 OCTET PAR OCTET (verdict, HRESULT, champs, clair
+   déchiffré, résidu brut — Q5 : zéro clair hors span livré) + le span
+   page octet par octet (rempli UNIQUEMENT sur succès, P3 — canaris
+   intacts ailleurs) + contrat d'appels COMPLET (DM : phContext cadre+0x10,
+   pMessage/pfQOP prédicats pile alignés, MessageSeqNo 0, pfQOP pré-appel
+   = 0, descripteur type 2 exact). **V3a** 4 000 appels fuzzés ZÉRO ÉCART
+   (lots et offsets hostiles — les bornes E2 visées exprès, verdicts
+   documentés ET exotiques, géométries aléatoires) ; **V3b** 1 000 CHAÎNES
+   × 3-4 appels ZÉRO ÉCART (l'appelant réceptionne par-dessus la région
+   lue au cadre entre les appels — la convention D89 éprouvée de bout en
+   bout), reproductible graines 20261028 PUIS 20261029 (10 000 cas +
+   2 000 chaînes au total) ; I2/I3 constatées POSITIVEMENT (tout appel
+   ACH/FCH/ISC/DSC/QCA/EM/recv/send = faux pas nommé — aucun ne s'est
+   jamais produit). **V4 DIX mutations d'un point, STABLES EN TAILLE
+   (leçon D82), TOUTES ATTRAPÉES** : garde région relâchée (0x8000 →
+   0x8001 — la frontière 32 769 glisse), verdict Q2 dévié (2 → 3), offset
+   lu dévié (+0x3C → +0x3E), longueur utile écrite déviée (+0x3A →
+   +0x3E), span ptr dévié (tampon 0 → tampon 1), routage incomplet dévié
+   (cmp 2 → 3), résidu lu dévié (tampon 1 → tampon 2), pfQOP non réécrit
+   (0 → 1), descripteur tls-03 dévié (r9 +0x98), pMessage DM dévié (rdx
+   +0x98) + témoin intact VERT 16/16.
+
+4. **LE DIFFÉRENTIEL A NOMMÉ UNE GARDE REDONDANTE — ELLE EST PARTIE** (à
+   l'office du différentiel, consigné ici) : la première notation portait
+   DEUX gardes E2 (longueur seule, puis somme offset + longueur) — la
+   mutation de la garde longueur seule fut IMPOSSIBLE à attraper : la
+   garde somme la SUBSUME (offset u16 >= 0 : tout lot > capacité donne
+   somme > capacité). Une garde qu'aucune mutation ne peut distinguer est
+   une garde qu'aucune preuve ne couvre — le code infalsifiable n'a pas sa
+   place ici : la garde redondante a été SUPPRIMÉE (la notation est passée
+   de 407 à 394 o), la garde somme reste, et le harnais a gagné les DEUX
+   scénarios de frontière (32 769 exact — E2 ; 32 768 exact — passe) pour
+   que sa propre borne soit armée des deux côtés. Au passage, trois
+   scénarios du harnais ont été corrigés : ils passaient à la bibliothèque
+   un HRESULT de succès sur un lot tronqué (le chemin hostile, cohérent
+   mais pas l'histoire racontée) — l'incomplet exige son HRESULT.
+
+5. Docs : Entrée 75 du journal, PLAN (M4 (b) suite D89), REPRISE (état
+   général +D89, chronique § 7), README (état M4), worklog (Task ID 16) ;
+   aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle
+   D81 valable, conteneur 0323029a… inchangé, sentinelles intactes).
+
+**Ce que ça établit** : le tunnel REÇOIT — la moitié réception du critère
+M4 « HTTPS en transit » existe en octets prouvés : chaque enregistrement
+entrant est déchiffré sur place et livré en span intempéré (la preuve
+géométrique : le span du premier appel d'un lot à deux enregistrements
+reste OCTET POUR OCTET intact après le retour — l'écrasement est
+l'œuvre de l'appel suivant, jamais du sien), le résidu Extra vit en tête
+à l'appel suivant, l'incomplet est un état nommé qui ne consomme rien, la
+fin de contexte est propre et sa curiosité consignée, la densité hostile
+est refusée avant tout appel. La discipline des blocs à shims est répétée
+sur un TROISIÈME bloc DE boucle, et la convention de cadre a été AMENDÉE
+pour la première fois depuis D81 — par la spec elle-même, AVANT la
+notation, avec la preuve qu'aucun octet scellé n'en dépendait. Suites
+(b) : tls-08 (orchestration — l'état final de tls-04 doit y initialiser
+les champs de géométrie), révisions http-08:R2/http-10:R2, oracle à
+scénarios SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ;
+terrain : D57 (WER) seul point ouvert.

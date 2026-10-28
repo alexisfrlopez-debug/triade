@@ -2208,3 +2208,65 @@ scellage 0.5.0 de M4 — ils touchent les disciplines § 15.3 et FORMAT_CARTE
 § 11 et doivent s'intégrer aux cérémonies de rotation existantes ; l'attestation
 TEE (D85) selon disponibilité d'infrastructure.
 
+
+### D89 — M4 (b) : la convention du cadre de session TLS est AMENDÉE — zone de réception 2 × MAX_JETON, champs de géométrie +0x3A/+0x3C (tls-07 unique propriétaire) ; tls-07 notée-mesurée-prouvée
+
+**Décision** : avant la notation de tls-07 (réception déchiffrée), la
+convention du cadre arrêtée D81 est amendée sur DEUX points, exigés par la
+spécification tls-07:R1 (écrite-avant-code D77, donc antérieure et
+gouvernante) : (1) la **zone de réception passe de MAX_JETON à 2 × MAX_JETON
+(32 768 o)** — P1/E2 de la spec : « le résidu Extra suivi des octets bruts
+récents », borne E2 « longueur utile > capacité » ; TAILLE_CADRE 0x8260 →
+0xC260 (http-10:R2, futur propriétaire mémoire, fournira le cadre à cette
+taille) ; (2) les **deux u16 réservés « (zéro) » @+0x3A/+0x3C sont
+revendiqués par tls-07** (unique propriétaire — charte m4/I § 6 : le tampon
+résiduel Extra appartient à tls-07 seul) : +0x3A = longueur utile réception
+(la région vivante), +0x3C = offset résidu (où elle commence). La sémantique
+est arrêtée par la lecture géométrique de tls-07:Q1 « l'appelant pompe ce
+clair AVANT tout nouvel appel (il sera écrasé) » : **l'écrasement est
+l'œuvre de l'appel SUIVANT** — tls-07 normalise l'offset à 0 au début de
+chaque appel (le lot vivant descend en tête par libc-01, copie en avant :
+dest < src sûr même en recouvrement), le clair pompé depuis l'appel
+précédent est de la mémoire morte. Un déplacement DANS l'appel de livraison
+détruirait le span chaque fois que résidu > en-tête (le cas banal de deux
+enregistrements dans un même lot) : cette lecture est la SEULE qui satisfait
+les trois exigences à la fois (span dans la zone, pompage après le retour,
+résidu en tête). Invariant tenu : après tout appel qui a normalisé, les
+champs décrivent EXACTEMENT la région vivante physique ; au refus E2 (garde
+UNIQUE sur la somme offset + lot > capacité, AVANT tout appel et tout
+déplacement — elle subsume la longueur seule, une garde redondante ayant
+été nommée infalsifiable par le différentiel puis supprimée), zone et
+champs restent INTACTS.
+
+**Preuve d'innocuité contre l'héritage scellé** : aucune notation existante
+(tls-01..06, héritage M3) n'écrit +0x3A/+0x3C (vérifié) ; tls-04 voit la
+zone agrandie comme « ≥ MAX_JETON » — ses gardes jeton (MAX_JETON) restent
+exactes ; aucun octet scellé ne bouge (R7).
+
+**Livré avec** : tls-07 notée à la main (394 o / 79 instructions, slot
+préfiguré 0x6A40×0x300 conservé, padding 374 ≥ 16 — D8) ;
+`m4/harnais_reception.py` : V2 SEIZE scénarios EN CHAÎNES (le rôle appelant
+joué par le harnais lit la géométrie au cadre et réceptionne par-dessus —
+la convention éprouvée de bout en bout ; le span d'un lot à deux
+enregistrements reste OCTET PAR OCTET intact après le retour : la preuve
+géométrique), V3a 4 000 appels + V3b 1 000 chaînes × 3-4 appels fuzzés
+ZÉRO ÉCART, graines 20261028/20261029, V4 DIX mutations stable-en-taille
+TOUTES ATTRAPÉES + témoin 16/16 — BILAN 34 PASS / 0 ÉCHEC × 2 graines.
+
+**Reporté à tls-08** (l'orchestration, future notation) : l'état final de
+tls-04 — le résidu de poignée s'il existe — devra initialiser les champs de
+géométrie à l'entrée du relais (le cadre vierge les porte à zéro).
+
+**Alternatives rejetées** : déplacer le résidu DANS l'appel de livraison
+(détruit le span dès que résidu > en-tête — réfuté géométriquement) ;
+garder la zone à MAX_JETON et relâcher la spec (la capacité 2 × MAX_JETON
+est le contrat P1/E2 — c'est la convention qui sert la spec, jamais
+l'inverse) ; copier le clair vers la zone d'émission pour le livrer
+(tls-07:Q1 exige le span DANS la zone de réception, déchiffrement sur
+place — aucun double tampon) ; une seconde garde E2 sur la longueur seule
+(redondante face à la garde somme — infalsifiable, donc sans preuve : le
+différentiel l'a nommée, elle est partie).
+
+**Critère de sortie** : atteint — différentiel vert sur deux graines,
+falsification 10/10, convention amendée dans layout.py (source unique) et
+m4/I/README.md, entrée 75 du journal.

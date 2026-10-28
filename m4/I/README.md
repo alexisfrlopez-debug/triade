@@ -90,11 +90,20 @@ propriétaire du cycle de vie) ; socket serveur `@+0x20` (propriétaire de
 fermeture : tls-08 SEUL) ; pointeur nom UTF-16 `@+0x28` (vise la zone
 `@+0x60`, destination de tls-01) ; verdict `@+0x30` et HRESULT d'origine
 `@+0x34` (tls-04:Q2 — jamais un HRESULT brut sans verdict nommé à côté) ;
-allers-retours `@+0x38` (u16, tls-04:Q1) ; tailles de flux `@+0x40` (5×u32,
-écrites UNE fois par session par tls-06, lues par tls-03 type 1) ; zone nom
-`@+0x60` (512 o = 2×(HOTE_MAX+1)) ; zone émission `@+0x260` et zone
-réception `@+0x4260` (MAX_JETON chacune — poignée de main puis
-enregistrements) ; taille totale `0x8260`.
+allers-retours `@+0x38` (u16, tls-04:Q1) ; **longueur utile réception `@+0x3A`
+et offset résidu `@+0x3C` (u16 chacun, D89 — tls-07 unique propriétaire :
+la géométrie de la région vivante de la zone de réception ; tls-07 normalise
+l'offset à 0 au début de chaque appel — le clair pompé est de la mémoire
+morte, le résidu descend en tête par libc-01 AVANT le déchiffrement, c'est
+la lecture géométrique de tls-07:Q1 « il sera écrasé » : l'écrasement est
+l'œuvre de l'appel SUIVANT, d'où « pompe AVANT tout nouvel appel » ; tls-08
+réceptionne PAR-DESSUS, à zone+offset+longueur, jamais ailleurs)** ; tailles
+de flux `@+0x40` (5×u32, écrites UNE fois par session par tls-06, lues par
+tls-03 type 1) ; zone nom `@+0x60` (512 o = 2×(HOTE_MAX+1)) ; zone émission
+`@+0x260` (MAX_JETON) et zone **réception `@+0x4260` (2×MAX_JETON = 32768,
+D89 — tls-07:R1 P1/E2 : le résidu Extra suivi des octets bruts récents ;
+tls-04 y voit une zone ≥ MAX_JETON, ses gardes jeton restent inchangées)** ;
+taille totale `0xC260` (`0x8260` avant D89).
 
 **L'IAT secur32** (sept entrées) vit dans l'extension .rdata ARRÊTÉE à
 `0x29A0`, après les fixtures http scellées (tout l'héritage M3 reste octet

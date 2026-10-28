@@ -58,8 +58,9 @@ _FICHIERS = {
                "IAT secur32 QueryContextAttributesW / EncryptMessage ; tcp-04 ; "
                "tls-03 type 1 ; tailles négociées"),
     "g70007": ("tls-07-reception", "tls-07:R1",
-               "IAT secur32 DecryptMessage ; tcp-03 ; tls-03 type 2 ; résidu "
-               "Extra à propriétaire unique"),
+               "IAT secur32 DecryptMessage ; tls-03 type 2 ; tls-02 ; "
+               "libc-01 normalisation ; résidu Extra à propriétaire unique "
+               "(la réception tcp-03 est l'affaire de l'APPELANT tls-08)"),
     "g70008": ("tls-08-session", "tls-08:R1",
                "orchestration TLS cliente ; tls-01..07, tcp-13, tcp-03/04/05 ; "
                "compensation intégrale constatée par comptage"),
