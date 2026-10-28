@@ -125,7 +125,14 @@ des phrases maîtresses** — conteneur chiffré TRIADE-CF1 (`coffre_fort.py`, s
 v0.5.1 § 15.3 + FORMAT_CARTE § 11), autotest de falsification 19/19, phrase de contrôle
 remise au développeur par cérémonie ; la phrase courante (lignée D74) y vit, export chiffré
 au racine du coffre Drive + copie développeur ; l'ancienne phrase D30 doit y être ajoutée
-côté développeur (`ajouter TRIADE lignee-D30`). **Coffre Drive nettoyé (D76)** : douze
+côté développeur (`ajouter TRIADE lignee-D30`) — D78 : le reliquat Drive « phrase
+maitresse triade.txt » ne portait PAS D30 mais la phrase COURANTE (preuve croisée :
+octet-identique à `.keys/passphrase.txt`, déchiffre la carte m3, échoue sur m2 ;
+l'audit D76 avait comparé le fichier entier au lieu de la ligne phrase) — phrase
+active exposée ≈ 64 min sur le dossier partagé par lien (dépôt manuel 09:38:44 UTC,
+corbeille 10:42), graine Ed25519 jamais exposée, copies claires locales détruites ;
+côté développeur : VIDER la corbeille Drive (urgent) + décider de la rotation de
+lignée (recommandée, modèle D74). **Coffre Drive nettoyé (D76)** : douze
 livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants

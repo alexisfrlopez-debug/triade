@@ -4249,3 +4249,78 @@ réelles, notations à la main des huit blocs + deux révisions, oracle à shims
 (modèle 153 036 cas M3), carte génération 6, proxy.exe 0.5.0-dev.1. Terrain : D57
 (WER) seul point ouvert ; côté développeur : phrase D30 au coffre-fort + vider la
 corbeille Drive (D76).
+
+## Entrée 67 — D78 (28/10, 11:30) : le coffre-fort questionné puis armé sans écriture — l'incident D76 re-qualifié : le reliquat exposé était la phrase COURANTE (D74), pas D30 ; preuve cryptographique croisée, fenêtre d'exposition datée (~64 min), hygiène des copies en clair
+
+**Contexte** : demande développeur en ouverture de session — « dis moi comment
+fonctionne le coffre fort et s'il est protégé par mot de passe. Mets le fichier de
+phrase maitresse dans le coffre fort puis enchaine sur la suite. » Le fichier visé
+est le reliquat D76 (quarantaine `docs__phrase maitresse triade.txt`, 52 o) que le
+développeur croit porter l'ancienne phrase D30 (conclusion de l'audit D76) et qu'il
+veut voir confié au coffre. La contrainte foncière : la phrase de contrôle du coffre
+D75 vit au seul développeur (cérémonie de fin de session, fichier détruit — § 15.3) ;
+toute écriture conteneur exige soit sa coopération, soit une rotation (ré-init +
+re-scelage des entrées, équivalent conforme de changer-phrase + ajouter).
+
+**Déroulé** :
+1. `scripts/ceremonie_coffre_d78.py` : cérémonie de rotation complète et falsifiable
+   — pré-vol lecture seule (en-tête clair, extraction de la phrase candidate,
+   distinction d'avec la courante, preuve de lignée croisée), quarantaine de
+   l'ancien conteneur AVANT toute écriture (réversibilité D76), init + alimentation
+   des DEUX entrées, preuves de relève octet pour octet, export aux deux coffres,
+   restauration automatique sur incident. Le pré-vol INTERROMPT la cérémonie en
+   fail-closed : quatre contrôles échouent, un seul cause racine.
+2. **La cause racine renverse la conclusion D76** : la dernière ligne du reliquat
+   (32 hex, modèle D27 — l'étiquette de 16 caractères la précède) est la phrase
+   COURANTE D74, pas la phrase D30. Preuves consolidées `scripts/preuve_d78.py`
+   (10/10 PASS) : P2 empreinte — octet pour octet == `.keys/passphrase.txt` ; P3
+   pile des cartes — la phrase DÉCHIFFRE frag-loc de la carte m3 (génération 5,
+   scellée D74) et ÉCHOUE sur la carte m2 (génération 2, lignée D30) ; P4
+   transitivité — l'entrée `TRIADE/lignee-D74` du coffre a été alimentée D75 depuis
+   ce même `passphrase.txt` avec relève cmp prouvée, donc LA PHRASE DU FICHIER EST
+   DÉJÀ AU COFFRE-FORT. L'erreur D76 est nommée : la comparaison avait porté sur le
+   FICHIER ENTIER (52 o, étiquette comprise) contre la phrase nue (32 o) —
+   nécessairement différentes — au lieu d'extraire la ligne phrase ; la conclusion
+   « probablement D30 » était une inférence de confort, la structure étiquetée du
+   dépôt manuel la masquait.
+3. **La demande est satisfaite SANS ÉCRITURE** : le conteneur n'a pas bougé d'un
+   octet (md5 ed2de621… vérifié == copie développeur `download/` == racine Drive,
+   aller-retour) ; la phrase du fichier vit déjà à l'entrée `lignee-D74` (P4). La
+   rotation était inutile — la phrase de contrôle D75 du développeur reste valable.
+   La phrase D30, elle, n'existe NULLE PART côté assistant (le reliquat n'en était
+   pas la source) : si le développeur la conserve dans son coffre personnel, il
+   l'ajoute lui-même (`ajouter TRIADE lignee-D30 --description "ancienne lignée D30
+   — déverrouille les cartes m0/m1/m2/terrain"`) — il tient la phrase de contrôle,
+   aucune rotation n'est requise pour cela.
+4. **Fenêtre d'exposition datée** (métadonnées Drive du fichier corbeillé,
+   `scripts/dater_exposition_d78.py`) : dépôt manuel sur le miroir à
+   09:38:44 UTC — 34 minutes après la cérémonie D74 (le développeur a consigné sa
+   phrase neuve dans ce fichier et l'a déposé au Drive, croyant le lieu sûr) ;
+   corbeille à D76 vers 10:42 UTC. EXPOSITION ≈ 64 MINUTES de la phrase COURANTE
+   sur le dossier partagé par lien. Re-qualification de l'incident : il ne
+   concernait pas l'ancienne lignée mais l'ACTIVE. Limites précises du risque : le
+   graine Ed25519 n'a JAMAIS été exposé (l'intégrité signée des artefacts est
+   intacte) ; la phrase ne protège que la CONFIDENTIALITÉ des cartes au repos
+   (m3 + terrain — m0/m1/m2 sont de lignée D30 de toute façon) ; l'URL du dossier
+   est non devinable, l'exposition réaliste est faible mais non nulle, et le
+   protocole qualifie le partage par lien d'exposition réelle (D76).
+5. **Hygiène** : les copies en clair REDONDANTES de la phrase active sont détruites
+   (quarantaine D76 + `upload/reliquat_phrase_maitresse.bin`, md5 bf206dd9…,
+   52 o — consignés ici) : leur contenu vit au coffre (P4), en `.keys/passphrase.txt`
+   (opérationnel) et dans les exports chiffrés ; garder une phrase active en clair
+   ailleurs est un passif pur. RESTE au développeur : VIDER la corbeille Drive
+   (l'urgence monte d'un cran — c'est la copie de la phrase active, récupérable
+   30 jours) et DÉCIDER de la rotation de lignée : recommandée par prudence
+   (modèle D74 : cérémonie D27/D30, preuve byte-identique, re-scellage m3+terrain,
+   alimentation du coffre dans la même session), exécutable au prochain « go » ;
+   l'exposition étant brève et bornée, la décision lui appartient.
+
+**Ce que ça établit** : le coffre-fort répond à sa mission exactement comme
+spécifié — sans la phrase de contrôle, le conteneur est inaltérable (l'assistant ne
+peut pas y écrire, c'est la propriété voulue) ; avec elle, le développeur écrit
+seul. La preuve « la phrase du fichier est déjà au coffre » est transitive et
+consignée (empreintes + relève D75), sans qu'aucune phrase ne soit jamais affichée.
+L'audit D76 gagne son correctif nommé : les comparaisons de secrets se font sur le
+contenu extrait, jamais sur le document porteur. Suites : corbeille Drive à vider +
+décision de rotation (développeur) ; M4 étape (b) engagée dans la foulée (plan
+d'adressage .text3 + notations) ; terrain : D57 (WER) seul point ouvert.
