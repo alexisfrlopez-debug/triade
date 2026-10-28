@@ -217,11 +217,16 @@ TEXT2_VSIZE = L3.TEXT2_VSIZE                  # 0x2000 — complète
 TEXT3_VSIZE = 0x2000                          # 0x6000-0x7FFF (préfiguration,
                                               # réarrêt à la fin d'étape b)
 SIZE_OF_IMAGE = 0x8000
-TEXT_FILE, RDATA_FILE, DATA_FILE, TEXT2_FILE = (
-    L3.TEXT_FILE, L3.RDATA_FILE, L3.DATA_FILE, L3.TEXT2_FILE)
-TEXT3_FILE = 0x4E00                           # après .text2 (0x2C00+0x2000)
+TEXT_FILE, RDATA_FILE, DATA_FILE, TEXT2_FILE = 0x400, 0x1400, 0x2400, 0x2E00
+# Offsets FICHIER M4 (arrêt D94) : la CINQUIÈME en-tête de section porte les
+# en-têtes à 528 o — .text ne peut plus démarrer à 0x200 (M3) : tout le
+# packaging fichier glisse de +0x200 et reste CONTIGU (0x400+0x1000=0x1400,
+# +0x1000=0x2400, +0xA00=0x2E00, +0x2000=0x4E00, +0x2000=0x6E00). Les RVA
+# sont INTACTS (R7 : l'héritage mémoire ne bouge pas d'un octet) — seuls les
+# offsets fichier changent, l'artefact M3 scellé se lit à SES offsets propres.
+TEXT3_FILE = 0x4E00                           # après .text2 M4 (0x2E00+0x2000)
 DATA_RAW = L3.DATA_RAW                        # .data committée (état serveur)
-TAILLE_FICHIER = 0x6E00                       # 0x4E00 + 0x2000 (préfiguration)
+TAILLE_FICHIER = 0x6E00                       # 0x4E00 + 0x2000
 
 DLL_CHARACTERISTICS = L3.DLL_CHARACTERISTICS  # DYNAMICBASE | HEVA | NX
 

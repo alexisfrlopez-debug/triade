@@ -1,0 +1,14 @@
+[tableau] jalon=M4 artefact=proxy.exe version=0.5.0-dev.1
+  blocs_avec_spec_a_jour        : 48/48 : audit de tracabilite I->C->B (5 artefacts)
+  chaines_I_C_B_tests           : 48/48 : specs, carte, exe, vecteurs
+  construction                  : 0 erreur / 0 avertissement : build script
+  tests_differentiels           : oracle M4 30 cas verts (reduit, graine 20261031) ; oracle structurel M3 524 + M4 417 verrous PASS
+  reutilisation_heritage        : 27 blocs octet-identiques au scellé 0.4.0 (26 embarques M3 + libc-07 selftest.exe — R7, deltas .rdata documentes)
+  empreintes_donnees_embarquees : conforme (fixtures http + tls, table R10 27 entrees, table des reponses 8 entrees, secur32 x7, version 0x00050001)
+  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D93
+  optimisations_sans_mesure     : 0 : aucune optimisation M4 (R11)
+  changements_hors_journal      : 0 : D77 a D93 consignees
+  preversions                   : 0.5.0-dev.1 conforme (schema dev, monotonie R10 verifiee par la porte : 27 sommes recalculees du binaire)
+  entrees_non_fiables           : comportement defini par contrat (E1-E8 herites + table TOTALE des HRESULT, verdicts nommes, compensation par comptage) ; falsification : F4 8 mutations attrapees (D93)
+  artefact                      : 28160 octets ; empreinte sha256:43e2e40df897aad1... ; 5 sections (.text3 nouvelle 0x6000) ; secur32 x7 (Schannel)
+  verrou_croise                 : 48 empreintes reverifiees (5 artefacts + notations non embarquees) + signature Ed25519 + racine (R8/R9)

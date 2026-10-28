@@ -2631,3 +2631,75 @@ F4) × graines 20261028/29/30/31 SANS écart (~18 s l'exécution complète ;
 volume « reduit » 30 cas), falsification 8/8 + modèle falsifié + témoin,
 entrée 79 du journal. Reste (b) : carte génération 6 (lignée D80),
 proxy.exe 0.5.0-dev.1.
+
+### D94 — M4 (b) : LE BUILD livré — proxy.exe 0.5.0-dev.1 + carte génération 6 (lignée D80) : l'image M3 composée prouvée ÉGALE au scellé 0.4.0 octet par octet AVANT extension ; libc-07 embarqué ; la porte R10 gagne son entrée ; 417 verrous structurels + oracle 560 cas sur les blobs du build
+
+**Contexte** : dernière pièce de l'étape (b) promise par D77. La chaîne
+est unique et totalisante : `m4/build_m4.py` (~1 290 lignes) +
+`m4/carte_m4.py` — notation (keystone) → octets → PE32+ à la main (CINQ
+sections) → carte chiffrée/signée, chaque maillon prouvé avant le suivant.
+
+**L'héritage, re-vérifié pas re-cru** : build_m3.assembler_tout() rejoué
+sous import contrôlé (R5 26/26 round-trip 100 %, 524 verrous M3) ;
+l'image M3 composée est confrontée au proxy.exe 0.4.0 scellé (sha
+bf02769f…) **octet par octet, AVANT toute extension** — le squelette du
+0.5.0-dev EST le scellé, reproductible depuis les notations seules.
+
+**libc-07 embarqué** (b20007, memset — exigé par tls-06/tls-07) :
+slot 0x13C0 dans la zone reserve-libc (int3 en M3), octets identiques à
+selftest.exe (R7 direct). **La porte R10 gagne son entrée** : 27 blocs +
+terminateur finissent EXACTEMENT à 0x2820 = R_VERSION (la zone était
+taillée pour ça) — l'entrée appendue @0x2800, terminateur descendu à
+0x2810, le http-12 scellé garde la nouvelle entrée AU LANCEMENT sans
+qu'un octet du scellé bouge ; la validation recalcule les 27 sommes du
+binaire final, version 0x00050001 ≥ plancher scellé.
+
+**Deltas .rdata documentés (R7)** : 8e entrée de la table des réponses
+@0x2550 (l'entrée ÉTIQUETÉE D92) ; entrée R10 libc-07 ; version ;
+extension M4 @0x29A0+ (descripteurs 3 DLL — répertoire d'imports
+déplacé, les 60 o M3 restent espace mort —, secur32.dll, IAT/INT/hints
+×7, package, fixtures tunnel/cert/502). Tout octet divergent hors
+deltas = échec.
+
+**Arrêt D94 — offsets fichier** : la cinquième en-tête de section porte
+les en-têtes à 528 o — .text quitte 0x200 : packaging fichier +0x200,
+CONTIGU (0x400/0x1400/0x2400/0x2E00/0x4E00, fin 0x6E00 = 28 160 o),
+RVA INTACTS (chaque artefact lu à ses offsets propres ; la
+préfiguration D77 TEXT3_FILE=0x4E00 l'avait encodé). Le débordement
+d'en-tête (Characteristics écrasé par le int3 de .text) fut nommé par
+la validation AVANT l'écriture du fichier.
+
+**Oracle structurel M4 (417 verrous)** — tables d'autorisation extraites
+par diagnostic (scripts/diag_structure_m4.py) : IAT PAR BLOC (sept
+secur32 vérifiées ; tls-08 AUCUNE — tout wrappé ; http-10:R2 CloseHandle
+SEUL, I6'), appels directs (I1), données RIP (I2/I5), sauts internes,
+padding D8, pile alignée, syscall interdit, stockage sous RSP interdit —
+plus la CONCORDANCE des déplacements RIP DÉCLARÉS (la table d'en-tête de
+notation relue contre le désassemblage : la métadonnée est falsifiable),
+le prologue probing D63 armé sur 0x13390, et les tailles déclarées ==
+assemblées. canon() étendu (alias jcc, qualificateurs déductibles,
+complément à deux à la largeur de l'instruction, crochets, chaînes) —
+la notation reste la vérité, l'octet reste le juge.
+
+**La carte génération 6** (lignée D80 — phrase courante, MÊME graine
+Ed25519 : le témoin d'intégrité ne bouge pas) : 4 fragments
+XChaCha20-Poly1305, racine SHA-256, signature Ed25519 ; 48 blocs sur
+5 artefacts ; [build] version=0.5.0-dev.1 empreinte=43e2e40d… ;
+verrou croisé 48 empreintes ; cristallisation 3/10 en trois runs, artefact
+BYTE-STABLE. Anti-rollback R6 armé (carte scellée → reconstruction
+interdite).
+
+**Alternatives rejetées** : recomposer l'héritage M3 dans build_m4 (le
+code M3 est LA source — import sous régime contrôlé, jamais deux
+vérités) ; étendre la table R10 au-delà de 27 entrées (déborderait
+R_VERSION @0x2820 — la zone est exactement pleine, un R10 .text3
+viendra avec le câblage http-12:R2, pas en contrebande) ; retirer les
+ancêtres R1 de .text2 (R7 : la zone scellée ne bouge pas d'un octet).
+
+**Critère de sortie** : atteint — proxy.exe 0.5.0-dev.1 (28 160 o, sha
+43e2e40d…) : 37 blocs embarqués, R5 37/37 verifier-puis-écrire, oracle
+560 cas verts, carte signée, verrou croisé 48, tableau de bord conforme.
+Étape (b) CLOSE. Suite M4 : http-12:R2 (câblage du routage vers
+http-10:R2 — l'orchestrateur scellé appelle encore R1), terrain (c)
+(curl https:// par le proxy, certificat invalide → 502 propre),
+cristallisation 10/10, scellage 0.5.0. Entrée 80 du journal.

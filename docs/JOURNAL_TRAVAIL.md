@@ -5619,3 +5619,130 @@ a déjà prouvé qu'il sait nommer les fautes du modèle comme celles du
 harnais, AVANT de nommer celles de la notation le jour où il y en
 aura. Reste (b) : carte génération 6 (lignée D80), proxy.exe
 0.5.0-dev.1. Terrain : D57 (WER) seul point ouvert.
+
+## Entrée 80 — D94 (29/10, ~20:30) : M4 étape (b) — LE BUILD livré : proxy.exe 0.5.0-dev.1 + carte génération 6 (lignée D80) — l'image M3 composée est prouvée ÉGALE au scellé 0.4.0 octet par octet AVANT extension, libc-07 devient embarqué, la porte R10 gagne son entrée (recette exacte de la zone), oracle D93 vert sur les blobs du build
+
+**Contexte** : l'oracle D93 venait de livrer le juge de paix ; restaient
+les deux pièces promises par D77 — la carte génération 6 et
+proxy.exe 0.5.0-dev.1. `m4/build_m4.py` (~1 290 lignes) +
+`m4/carte_m4.py` (génération 6, lignée D80) les livrent en UNE chaîne :
+notation (keystone) → octets → PE32+ à la main (CINQ sections) → carte
+chiffrée/signée, chaque maillon prouvé avant l'écriture du suivant
+(vérifier-puis-écrire s'applique aussi à l'image entière).
+
+1. **L'HÉRITAGE RE-VÉRIFIÉ AU PASSAGE, PAS RE-CROU** : le build importe
+   build_m3 sous son propre régime de modules (le nom « layout » est
+   disputé m3/m4 — chargement importlib dans l'ordre m3/layout puis
+   build_m3 puis m4/layout à la place) et exécute
+   build_m3.assembler_tout() : R5 26/26 blocs round-trip 100 % + 524
+   verrous structurels M3 RE-JOUÉS ; puis composer_sections() et la
+   confrontation **l'image M3 composée == proxy.exe 0.4.0 scellé OCTET
+   PAR OCTET** (sha bf02769f…, .text/.rdata/.data/.text2) AVANT toute
+   extension M4 — la preuve R7 absolue : le squelette du 0.5.0-dev EST
+   le scellé, reproductible depuis les notations seules.
+
+2. **LIBC-07 (b20007, memset) DEVIENT EMBARQUÉ** : tls-06 (destruction
+   du clair copié) et tls-07 (descente du résidu en tête) l'appellent —
+   le proxy M3 ne l'embarquait pas (selftest seul). Slot 0x13C0 dans la
+   zone reserve-libc (int3 défensif en M3), **octets identiques à
+   selftest.exe @0x13C0** (R7 direct, 21 o + padding NOP, slot 0x80) ;
+   la feuille passe l'oracle structurel M4 (aucun appel, aucune donnée).
+
+3. **LA PORTE R10 GAGNE SON ENTRÉE — LA RECETTE EXACTE DE LA ZONE** :
+   26 entrées M3 + terminateur occupaient 0x2660-0x280F ; 27 blocs +
+   terminateur finissent EXACTEMENT à 0x2820 = R_VERSION — la zone était
+   taillée pour ça. L'entrée libc-07 (0x13C0, 0x80, somme qwords) est
+   APPENDUE @0x2800 (l'ancien terminateur, zéros, descend à 0x2810) :
+   le http-12 scellé marche jusqu'au terminateur — la nouvelle entrée
+   est gardée AU LANCEMENT sans qu'un octet du scellé bouge. La
+   validation RECALCULE les 27 sommes depuis le binaire final (la porte
+   passera : mêmes octets, mêmes sommes), et la version 0x00050001
+   franchit le plancher scellé 0x00040000 (monotonie R10).
+
+4. **DELTAS .rdata DOCUMENTÉS (R7)** — l'image M4 == le scellé SAUF :
+   (a) 8e entrée de la table des réponses @0x2550 (0x2CA0, 34 —
+   l'entrée ÉTIQUETÉE de D92, le trou libre de 16 o entre la table R1
+   et R_TXT_400) ; (b) entrée R10 libc-07 @0x2800 ; (c) version
+   0x00050001 @0x2820 ; (d) extension M4 @0x29A0+ (descripteurs 3 DLL —
+   le répertoire d'imports pointe là, les 60 o M3 @0x2030 restent espace
+   mort —, « secur32.dll\0 », IAT/INT/hints x7, package Schannel,
+   fixtures tunnel/certificat/502). Tout octet divergent hors deltas =
+   échec fail-closed (comparaison par section, octet localisé).
+
+5. **ARRÊT D94 — LES OFFSETS FICHIER** : la CINQUIÈME en-tête de section
+   porte les en-têtes à 528 o, .text ne peut plus démarrer à 0x200 : le
+   packaging fichier glisse de +0x200 et reste CONTIGU (0x400 / 0x1400 /
+   0x2400 / 0x2E00 / 0x4E00, fin 0x6E00 = 28 160 o). **Les RVA sont
+   INTACTS** (l'héritage mémoire ne bouge pas d'un octet — chaque
+   artefact se lit à SES offsets fichier propres). La préfiguration D77
+   l'avait encodé (TEXT3_FILE = 0x4E00, TAILLE = 0x6E00) ; layout.py
+   (source unique) déclare désormais les cinq offsets explicitement. La
+   validation vérifie SizeOfHeaders = 0x400 et les cinq
+   PointerToRawData — le débordement d'en-tête (Characteristics
+   écrasé par le int3 de .text !) fut nommé par la validation AVANT
+   l'écriture du fichier.
+
+6. **ORACLE STRUCTUREL M4 : 417 verrous** — les tables d'autorisation
+   extraites par diagnostic dédié (scripts/diag_structure_m4.py :
+   cibles d'appels et de données RIP par bloc, assemblées aux RVA
+   exacts) : IAT PAR BLOC (les SEPT secur32 vérifiées pour de vrai —
+   tls-04 ICS seul, tls-05 ACH/FCH/DSC, tls-06 QCA/EM, tls-07 DM,
+   tls-08 AUCUNE [tout wrappé], http-10:R2 CloseHandle SEUL [I6']),
+   appels directs autorisés (I1), données RIP déclarées (I2/I5),
+   sauts internes aux frontières, padding ≥ 16 + slots alignés/multiples
+   (D8), pile alignée aux appels externes, pas de syscall (D7), pas de
+   stockage sous RSP — PLUS TROIS contrôles propres à M4 : la
+   CONCORDANCE DES DÉPLACEMENTS RIP DÉCLARÉS (la table « 0x74f9 + 0x7 -
+   0x4c90 = 0x2870 » de l'en-tête de notation est RELUE et confrontée
+   au désassemblage réel — la métadonnée d'adresses est falsifiable) ;
+   le PROLOGUE probing D63 armé sur 0x13390 (touche [rsp-0x13390] AVANT
+   le sub, boucle par pages) ; les TAILLES DÉCLARÉES (« ; Code : N o »)
+   == longueurs assemblées. canon() étendu pour le round-trip : alias
+   jcc (jnz/jne), qualificateurs déductibles rabotés (un registre porte
+   la taille), complément à deux à la LARGEUR de l'instruction (r10 →
+   64 bits), espaces internes des crochets, instructions de chaîne —
+   la notation reste la vérité, l'octet reste le juge (keystone accepte
+   les deux formes, capstone n'en rend qu'une).
+
+7. **L'ORACLE D93 SUR LES BLOBS DU BUILD** : blobs dérivés de
+   l'assemblage DU build (la même table d'intégration que D92, jamais
+   deux sources) — 560 cas verts (F1-F4), fail-closed sur tout écart.
+   VERIFIER-PUIS-ÉCRIRE : 37/37 blocs notés == tranches de l'artefact
+   (26 héritage + libc-07 + 10 M4). PE validé : 5 sections, kernel32
+   ×10 + ws2_32 ×13 + secur32 ×7, DYNAMICBASE/HEVA/NX, entrée 0x1800,
+   int3 dans les zones réservées.
+
+8. **CARTE GÉNÉRATION 6 (lignée D80)** : quatre fragments
+   XChaCha20-Poly1305 (sel Argon2id propre à la génération 6, HKDF
+   « TRIADE-carte-M4 »), empreinte racine SHA-256, signature Ed25519 —
+   MÊME graine que D80 (le témoin d'intégrité du projet ne bouge pas) ;
+   48 blocs indexés sur 5 artefacts (38 M3 + 10 M4 ; b20007 passe à
+   exe=selftest,proxy), [build] artefact=proxy.exe version=0.5.0-dev.1
+   taille=28160 empreinte=43e2e40d… ; verrou croisé R8 : 48 empreintes
+   revérifiées + signature + racine. Cristallisation 3/10 en trois runs
+   (build graine 20261028 ; --verifier 20261030 complet ; --verifier
+   20261031 reduit), **l'artefact est BYTE-STABLE** (sha inchangé sur
+   les trois runs — le vérificateur re-scelle la carte à faits
+   inchangés, modèle D80).
+
+**Arbitrages** : (i) les ancêtres http-08:R1/http-10:R1 restent EMBARQUÉS
+à leurs RVA scellés (la zone .text2 == 0.4.0 octet par octet l'exige,
+R7) — les révisions vivent AUSSI en .text3 ; le câblage runtime
+(l'orchestrateur scellé http-12 appelle encore http-10:R1 @0x5580) est
+la pièce suivante : une révision http-12:R2 routant vers 0x74C0, exigée
+par le terrain (c) avant le scellage 0.5.0. (ii) La couche .text3 est
+gardée par la carte + l'oracle + le verrou croisé (le R10 runtime garde
+le squelette M0-M3 + libc-07 — 27 entrées, la zone est pleine : un
+R10 sur .text3 viendra avec le câblage, pas en contrebande). (iii)
+L'anti-rollback R6 est armé (une carte scellée rc/final interdit la
+reconstruction — dev.1 seulement aujourd'hui).
+
+**Ce que ça établit** : l'étape (b) du jalon M4 est CLOSE — les trois
+couches vivent ensemble dans UN artefact : la couche I (10
+spécifications g7xxxx auditées au chargement), la couche B (37 blocs
+embarqués, round-trip 100 %, oracle structurel 417 + 524 verrous), la
+couche C (carte génération 6 signée, lignée D80, verrou croisé 48). Le
+critère M4 « HTTPS en transit » a désormais un corps : il attend le
+terrain (c) pour respirer (curl https:// par le proxy, certificat
+invalide → 502 propre — après la révision http-12:R2). Terrain : D57
+(WER) seul point ouvert.

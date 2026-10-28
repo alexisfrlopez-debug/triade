@@ -171,11 +171,11 @@ livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
 (instructions, miroir, jetons, coffre-fort, `demo.exe` + LISEZMOI à jour, dossier test).
-Suite : **M4 ouvert (D77)** — tunnel chiffré Schannel, couche I écrite-avant-code
+Suite : **M4 ouvert (D77) — étape (b) CLOSE (D94)** — tunnel chiffré Schannel, couche I écrite-avant-code
 (`m4/I/` : domaine `tls` créé — 8 spécifications + charte des contrats
 cryptographiques [fail-closed intégral, certificat invalide = 502 propre, zéro
 divulgation, compensation exacte] + révisions http-08:R2/http-10:R2, blocs
-génération 6 g7xxxx) ; **étape (b) en cours** — D79 : layout.py (.text3 @ 0x6000,
+génération 6 g7xxxx) ; **étape (b) : D79 : layout.py (.text3 @ 0x6000,
 héritage M0-M3 réexporté, HRESULT vérifiés à la source), notations tls-01/02/03
 prouvées (différentiel de spécification 165 k cas zéro écart, falsification 6/6) ;
 D82 : CADRE DE SESSION TLS et extension .rdata/IAT secur32 ARRÊTÉS (convention
@@ -300,9 +300,39 @@ F1 0:18/3:14/5:68/6:19/7:31, relais 16, poignée ≥ 2 allers 71,
 compensation non triviale 109/150 ; F2 61 % routés ; F3 20 %
 diverge) — **560 cas × graines 20261028/29/30/31 SANS écart**
 (~18 s ; volume « reduit » 30 cas) ; executer(blobs, graine,
-volume) prêt pour build_m4.py. Reste (b) : carte génération 6
-(lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER) seul
-point ouvert.
+volume) prêt pour build_m4.py.
+**D94 : LE BUILD livré — proxy.exe 0.5.0-dev.1 (28 160 o, sha
+43e2e40d…) + carte génération 6 (lignée D80), étape (b) CLOSE** :
+`m4/build_m4.py` + `m4/carte_m4.py` — l'héritage re-vérifié
+(build_m3.assembler_tout rejoué : R5 26/26 + 524 verrous M3) et
+l'image M3 composée prouvée ÉGALE au scellé 0.4.0 OCTET PAR OCTET
+avant extension ; **libc-07 (memset) devient EMBARQUÉ** @0x13C0
+(zone reserve-libc, octets selftest.exe — R7 direct ; exigé par
+tls-06/tls-07) ; **la porte R10 gagne son entrée** (27 blocs +
+terminateur finissent EXACTEMENT à 0x2820 = R_VERSION — l'entrée
+appendue @0x2800, le http-12 scellé garde la nouvelle entrée au
+lancement sans bouger, 27 sommes recalculées du binaire, version
+0x00050001 ≥ plancher) ; deltas .rdata documentés (8e entrée de la
+table des réponses @0x2550 [l'entrée ÉTIQUETÉE D92], entrée R10,
+version, extension @0x29A0+ : descripteurs 3 DLL, secur32, package,
+fixtures) ; **ARRÊT D94 — offsets fichier** : la cinquième en-tête
+de section (528 o) pousse .text à 0x400 — packaging +0x200 CONTIGU
+(0x400/0x1400/0x2400/0x2E00/0x4E00, fin 0x6E00), RVA INTACTS
+(préfiguration D77 encodée en TEXT3_FILE=0x4E00) ; oracle
+structurel M4 **417 verrous** (IAT PAR BLOC — secur32 ×7, tls-08
+AUCUNE, http-10:R2 CloseHandle SEUL [I6'] —, appels directs,
+données RIP, CONCORDANCE des déplacements RIP déclarés contre le
+désassemblage, prologue probing D63 armé, tailles déclarées ==
+assemblées, D8, pile, syscall, RSP) ; l'oracle D93 sur les blobs du
+build : 560 cas verts ; verifier-puis-écrire 37/37 ; carte
+génération 6 signée Ed25519 (MÊME graine — le témoin d'intégrité ne
+bouge pas), 48 blocs sur 5 artefacts, verrou croisé 48 empreintes,
+cristallisation 3/10 en trois runs, artefact BYTE-STABLE ;
+anti-rollback R6 armé. Reste M4 : http-12:R2 (câblage du routage
+vers http-10:R2 — l'orchestrateur scellé appelle encore
+R1 @0x5580), terrain (c) (curl https:// par le proxy, certificat
+invalide → 502 propre), cristallisation 10/10, scellage 0.5.0.
+Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
 
