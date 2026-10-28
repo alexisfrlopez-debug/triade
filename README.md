@@ -272,9 +272,37 @@ capturé au passage de tls-08, cadre TLS VIERGE en canaris → zéro) ;
 11 mutations attrapées + témoin ; V6bis prologue étendu + rejet I6' —
 69 PASS / 0 ÉCHEC × 2 graines ; le différentiel a nommé une faute ABI
 (rdi emprunté sans reçu par le rep stosq — corrigé, leçon consignée).
-reste (b) : oracle à scénarios SSPI (terrain curl https par le proxy),
-carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57
-(WER) seul point ouvert.
+**D93 : L'ORACLE À SCÉNARIOS SSPI livré (m4/oracle_m4.py, 838 lignes —
+réutilisation stricte D90/D92/D91, jamais deux sources) — les
+orchestrateurs passent au VOLUME hostile** : F1 session tls-08
+(générateurs d'HRESULT table TOTALE, TERMINATION PAR CONSTRUCTION :
+E5 16 allers, un recv par cycle .relais, drain strictement
+décroissant, maxmsg ≥ 1 ; Modele vs émulation 18 blocs : rax +
+cadre 0xD000 octet par octet + contrat d'appels + comptes de
+compensation + paquet intact) ; F2 le MODÈLE DE ROUTAGE dérivé de I
+(P6/Q2'/Q3' — ModeleClient capture les octets effectivement émis,
+_reponse_envoyee miroir de l'achèvement E8, table 0/3/autres)
+contre l'émulation 29 blocs (réponse exacte, lignes console,
+comptes, ports, GAI, paquet P6 au passage, cadre VIERGE, requête
+intacte) + CONCORDANCE I croisée par modele_cible à CHAQUE
+scénario + arrêts contractuels D92 (CL>0 / TE / POST-PUT sans
+longueur / autorité vide / HTTPS:// / pair parti) ; F3
+différentiel d'ancêtre à VOLUME (R7 : écart zéro hors https,
+divergence exactement byte-exact — l'héritage non TLS couvert par
+l'ancêtre émulé, la référence scellée) ; F4 falsification (8
+mutations extraites D90/D92 TOUTES attrapées + modèle falsifié
+nommé + témoin 6/6 + 6/6). QUATRE fautes nommées AVANT le vert
+(layout du paquet de test D80 au-delà de 0x100 ; règle E5
+« POST/PUT » lue dans la spec R1 — la notation était correcte ;
+fragments vides = fermetures pour le shim ; échecs d'émission
+contre le 501 délivré de l'ancêtre). Couverture MESURÉE (verdicts
+F1 0:18/3:14/5:68/6:19/7:31, relais 16, poignée ≥ 2 allers 71,
+compensation non triviale 109/150 ; F2 61 % routés ; F3 20 %
+diverge) — **560 cas × graines 20261028/29/30/31 SANS écart**
+(~18 s ; volume « reduit » 30 cas) ; executer(blobs, graine,
+volume) prêt pour build_m4.py. Reste (b) : carte génération 6
+(lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER) seul
+point ouvert.
 
 ## Avertissement
 

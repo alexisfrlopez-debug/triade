@@ -2544,3 +2544,90 @@ restitution est prouvée par sentinelle).
 **Critère de sortie** : atteint — différentiel vert sur deux graines (69
 PASS × 2), falsification 11/11, héritage R1 prouvé octet pour octet hors
 https par émulation croisée à 29 blocs réels, entrée 78 du journal.
+
+### D93 — M4 (b) : L'ORACLE À SCÉNARIOS SSPI livré — les orchestrateurs passent au volume hostile : générateurs d'HRESULT (table TOTALE), modèle de routage dérivé de I, différentiel d'ancêtre à volume, compensation par comptage ; 560 cas × 4 graines sans écart
+
+**Contexte** : le plan D77 promettait « orchestrateurs à l'oracle à
+scénarios (compensation par comptage) » et layout.py annonçait oracle_m4.py
+comme consommateur du plan d'adressage. Après tls-08 (D90) et les deux
+révisions (D91/D92), l'oracle est la pièce qui reste avant la carte
+génération 6 et proxy.exe 0.5.0-dev.1 : le juge de paix du build à venir.
+
+**Architecture** (m4/oracle_m4.py, 838 lignes — réutilisation stricte :
+Modele/Emulateur/Script/comparer_traces/compter_compensation [D90],
+EmulateurSession/ScriptR2/differentiel/charger [D92], modele_cible [D91] —
+jamais deux sources de vérité). QUATRE familles :
+
+- **F1 session tls-08 à volume hostile** — le cœur générateur d'HRESULT
+  PARTAGÉ F1/F2 : poignées multi-allers (CONT à jetons variables, INCOMPLET
+  qui reçoit, terminaisons CERT/échec/exotique, E5 interminable), ACH fatal
+  6, tailles de flux négociées aléatoires (maxmsg ≥ 1 TOUJOURS : une découpe
+  à message nul mourrait), émissions fragmentées, relais à lots/drains/
+  altérations/densités « max », libérations E4 — Modele (D90) contre
+  l'émulation 18 blocs : rax, cadre 0xD000 octet par octet, contrat d'appels
+  complet, comptes de compensation, paquet INTACT ;
+- **F2 routage http-10:R2** — le MODÈLE DE ROUTAGE D93 (dérivé de I :
+  P6/Q2'/Q3') : requêtes https générées (port implicite/explicite,
+  chemin/query/fixture « / », fragmentation 1-3, POST/PUT CL:0) × SSPI
+  hostile + les arrêts contractuels D92 ; ModeleClient capture les octets
+  effectivement émis au client (le _pomper D90 repris TEL QUEL, conformité
+  au parent constatée par comparer_traces en F1), _reponse_envoyee est le
+  miroir de l'achèvement E8, la table Q3' (0 → flux pompé PAR tls-08, 3 →
+  l'entrée étiquetée, 2/4/5/6/7 → 502 R1 scellée) ; l'émulation 29 blocs
+  confrontée sur réponse exacte, lignes console, comptes (+ socket cliente
+  R1), ports, résolutions, PAQUET au passage (P6), cadre VIERGE, requête
+  intacte, hygiène — ET la concordance I croisée à CHAQUE scénario par
+  modele_cible (D91) : l'oracle vérifie l'exhaustivité croisée des
+  spécifications, pas seulement les octets ;
+- **F3 différentiel d'ancêtre à volume (R7)** — requêtes mixtes générées
+  (http absolu/origine/CONNECT/malformées/https [diverge]/https+corps [refus
+  IDENTIQUE]) : écart ZÉRO hors domaine https, divergence EXACTEMENT https
+  byte-exact ; l'héritage http non TLS n'est PAS remodélisé — l'ancêtre
+  émulé est la référence scellée (même arbitrage que l'oracle M3, prolongé
+  en volume) ;
+- **F4 falsification** — huit mutations (4 tls-08 + 4 http-10:R2) TOUTES
+  attrapées sur les sélections fixes (attendus du MODÈLE, jamais de la
+  main) ; le modèle falsifié (octets maquillés) nommé par la confrontation ;
+  témoin intact 6/6 + 6/6.
+
+**Termination par construction** (le générateur ne peut pas produire de
+boucle infinie) : la poignée est bornée par la garde E5 (16 allers) ; chaque
+cycle .relais consomme UNE entrée recv (liste finie à terminateur ≤ 0) ;
+chaque chaîne de drain fait décroître strictement le lot ; les défauts de
+listes sont bornés par les MÊMES règles côté modèle et émulation.
+
+**Les quatre fautes nommées avant le vert** (aucune dans les notations —
+l'oracle corrige l'outillage AVANT de juger le code) : (a) le layout du
+paquet de TEST D90 (hôte @0x100, requête @0x200) — un hôte de plus de 0x100
+octets y recouvre la zone requête : la garde tls-01 (HOTE_MAX, verdict 7)
+est atteinte avant, seul le préfixe est vérifié désormais (l'artefact
+appartient au harnais, jamais à la notation) ; (b) la règle E5 de la spec
+R1 dit « POST/PUT sans longueur → 411 » — le générateur ne connaissait que
+POST : notation lue CORRECTE, modèle corrigé ; (c) des coupes de
+fragmentation dupliquées produisaient un fragment VIDE — une réception à
+zéro octet, une FERMETURE pour le shim, jamais un fragment : coupes
+désormais distinctes ; (d) le différentiel D92 exige que l'ancêtre DÉLIVRE
+son 501 — les échecs d'émission l'abandonnaient honnêtement (E8) : la
+branche divergente n'en génère plus (l'abandon est couvert par F1/F2 côté
+modèle, le différentiel mesure la divergence de ROUTAGE, jamais la
+livraison).
+
+**Couverture mesurée** (diagnostic dédié, générateur non dégénéré) :
+verdicts F1 {0: 18, 3: 14, 5: 68, 6: 19, 7: 31}/150 — toutes les branches
+nommées, succès majoritaire PARCE QUE le chemin profond est là que les
+contrats vivent (relais 16, poignée ≥ 2 allers 71, compensation non triviale
+109/150) ; F2 : 61 % routés / 39 % arrêts ; F3 : 20 % divergence.
+
+**Alternatives rejetées** : remodéliser l'héritage http non TLS en Python
+(scellé 0.4.0 — l'ancêtre émulé est la référence R7, jamais deux sources) ;
+un harnais supplémentaire de scénarios écrits à la main (le volume généré
+aux graines différenciées bat la main — l'oracle M3 l'avait établi, D47) ;
+exécuter l'oracle sur le PE entier (le build viendra : l'oracle tourne sur
+les octets de notation assemblés, la même fonte que le build embarquera —
+executer(blobs, graine, volume) est l'interface).
+
+**Critère de sortie** : atteint — 560 cas (250 F1 + 150 F2 + 150 F3 + 10
+F4) × graines 20261028/29/30/31 SANS écart (~18 s l'exécution complète ;
+volume « reduit » 30 cas), falsification 8/8 + modèle falsifié + témoin,
+entrée 79 du journal. Reste (b) : carte génération 6 (lignée D80),
+proxy.exe 0.5.0-dev.1.
