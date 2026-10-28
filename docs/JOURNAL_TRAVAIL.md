@@ -4324,3 +4324,73 @@ L'audit D76 gagne son correctif nommé : les comparaisons de secrets se font sur
 contenu extrait, jamais sur le document porteur. Suites : corbeille Drive à vider +
 décision de rotation (développeur) ; M4 étape (b) engagée dans la foulée (plan
 d'adressage .text3 + notations) ; terrain : D57 (WER) seul point ouvert.
+
+## Entrée 68 — D79 (28/10, 12:35) : M4 étape (b) ENGAGÉE — les trois feuilles pures du tunnel écrites, mesurées et prouvées : plan .text3, liste blanche HRESULT vérifiée à la source (trois constantes corrigées), notations tls-01..03 à la main, harnais différentiel 165 k cas SANS écart, 6/6 mutations attrapées
+
+**Contexte** : suite de session (« puis enchaine sur la suite », après le
+dossier coffre-fort D78) — étape (b) du jalon M4 ouverte à D77 par sa couche I.
+Le modèle D46/D47 s'applique : la notation suit la spécification, les slots se
+réarrêtent sur les mesures réelles, RIEN n'est commité sans vérification.
+
+**Déroulé** :
+1. `m4/layout.py` — plan d'adressage M4 : la section NOUVELLE .text3 démarre
+   à 0x6000 (.text2 est complète), héritage M0-M3 réexporté intégralement
+   (R7 : la zone http scellée 0.4.0 ne bouge pas — les DEUX révisions vivront
+   en .text3 en citant leurs ancêtres), 7 entrées IAT secur32 prévues
+   (emplacements arrêtés au build), constantes à propriétaire unique
+   (MAX_JETON 16384, HOTE_MAX hérité, MAX_MESSAGE JAMAIS constanté — négocié).
+   **Liste blanche HRESULT VÉRIFIÉE à la source** (winerror.h / hresult.info /
+   MS Schannel Error Codes) : TROIS constantes de la mémoire étaient FAUSSES et
+   corrigées — SEC_E_DECRYPT_FAILURE = 0x80090330 (0x80090321 est
+   SEC_E_BUFFER_TOO_SMALL : la confusion exacte que tls-02 appelle
+   « contrebande de classe »), SEC_I_CONTEXT_EXPIRED = 0x00090317,
+   SEC_E_CERT_WRONG_USAGE = 0x80090349. La vérification AVANT la notation est
+   la discipline même du bloc : une liste blanche fausse aurait classé à tort
+   des HRESULT réels en « fatal inconnu ».
+2. `m4/outils/auteur.py` — l'arithmétique d'adresses de l'auteur adaptée au
+   jalon (registre des 10 blocs g7xxxx, réexports M3, symboles IAT secur32
+   déclarés QUAND leurs notations existeront — fail-closed : l'inconnu refuse).
+3. Trois brouillons à la main → notations explicites (keystone assemble, rien
+   d'autre) : `tls-01-nom-utf16` 89 o (traduction span → UTF-16 UNIQUE du
+   projet, bornes AVANT toute écriture, balayage d'encodage précède l'écriture
+   — I2), `tls-02-verdicts` 156 o (domaine = sign-étendu validé, table des 13
+   codes + fatal 6, rdx préservé), `tls-03-jetons` 284 o (mise en page
+   SecBufferDesc/SecBuffer propriétaire unique, types 0/1/2, bornes AVANT
+   toute écriture y compris l'en-tête du descripteur, convention cadre contigu
+   documentée — en-tête AVANT le clair, queue APRÈS, consommateur tls-06).
+   Slots D8 réarrêtés sur mesure : 0x80/0x100/0x140 @ 0x6000/0x6080/0x6180.
+4. `m4/harnais_feuilles.py` — vecteurs V1-V4 des spécifications :
+   V1 round-trip 6/6 (rassemblage intégral + idempotence) ; V2/V3
+   différentiel contre modèles écrits depuis les SPÉCIFICATIONS (jamais la
+   notation) avec hygiène complète — canaris mémoire, non-volatils
+   sentinelles, terminaison bornée, tampon utile jamais modifié :
+   20 009 hôtes + 125 274 HRESULT (13 codes exacts, voisins à un bit,
+   hors domaine, leurre BUFFER_TOO_SMALL) + 20 304 triplets (types hostiles,
+   bornes 16384/max ±1 exactes, tailles exotiques) — **ZÉRO écart**, reproductible
+   (graines 20261028/20261029, ~95 s par campagne) ; V4 falsification 6/6 —
+   bornes relâchées d'une unité, longueur écrite faussée, DECRYPT_FAILURE
+   confondu avec BUFFER_TOO_SMALL (attrapé sur EXACTEMENT les deux codes
+   affectés), verdict certificat dévié, MAX_JETON doublé, compte de tampons
+   erroné — chacune attrapée, témoin vert.
+5. **Leçon d'émulation consignée (D79)** : le harnais a connu trois faux
+   échecs puis un faux vert, chacun nommé — (a) la préparation réécrivait le
+   canari SUR les entrées du cas (hôte et tailles effacés avant exécution) ;
+   (b) comparaison signée contre registre non signé 64 bits ; (c) PIÈGE
+   unicorn : les blocs traduits sont CACHÉS et mem_write sur du code déjà
+   exécuté n'invalide PAS la traduction — un mutant rechargé ne tournait
+   jamais, le code témoin caché s'exécutait (faux vert V4 0/6). Correctif :
+   chaque chargement RECONSTRUIT l'émulateur. La falsification est ce qui a
+   EXPOSÉ le piège : une suite sans mutations détectées n'aurait rien prouvé.
+6. Docs alignées : PLAN (M4 (b) engagée, mesures et preuves), REPRISE
+   (arborescence m4/, chronique D79), cette entrée ; commit + synchro Drive +
+   push GitHub.
+
+**Ce que ça établit** : les contrats cryptographiques des feuilles pures
+tiennent — la table des verdicts est TOTALE sur son domaine validé (aucun
+HRESULT ne sort sans nom), la traduction d'hôte est l'unique du projet et
+n'écrit jamais hors destination, la mise en page SSPI a un seul propriétaire
+et refuse avant d'écrire. Suite (b) : tls-04..08 (boucles à shims et
+orchestration), révisions http-08:R2/http-10:R2, oracle à scénarios SSPI,
+carte génération 6, proxy.exe 0.5.0-dev.1. Terrain : D57 (WER) seul point
+ouvert ; côté développeur : corbeille Drive à VIDER (D78) + décision de
+rotation de lignée.
