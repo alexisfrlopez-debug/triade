@@ -4110,7 +4110,7 @@ miroir `m2/echo.exe`) ; `proxy.exe` dev.1 ; `superviseur.exe` terrain.3.
 4. `LISEZMOI-ARCHIVE.txt` (racine du dépôt, tracké + copie téléversée dans `ARCHIVE/`) :
 pourquoi chaque fichier y vit, où vit le courant correspondant, et la règle pour la
 suite — la racine ne porte que des courants, tout périmé part à l'archive par l'outil.
-5. Racine après nettoyage — ONZE entrées, toutes courantes : les deux fichiers
+5. Racine après nettoyage — NEUF entrées, toutes courantes : les deux fichiers
 d'instruction (REPRISE, AGENT — poussés par la synchro), `TRIADE/` (miroir + bundle),
 `Tokens/`, `coffre_fort.bin` (D75), `demo.exe` + `LISEZMOI-demo.txt` (à jour — demo.9
 finale, T1/enquête D57), `test/` (terrain.16 + journaux), `ARCHIVE/`. Le proxy et le
