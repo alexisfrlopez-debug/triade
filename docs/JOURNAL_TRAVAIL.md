@@ -3586,3 +3586,96 @@ N≠0/26 → réseau/machine, grille D68 ; (c) S34 KO → session (couvert par
 --http1.1, jugé improbable) ; (d) json vivant après run réussi → l'opérateur
 l'efface (consigne donnée). T2 : 6e vert attendu. T1 : inchangé — D67
 (WER/adresse de plantage) reste la priorité laboratoire.
+
+
+## Entrée 59 — D70 (28/10, 02:00) : « le superviseur s'est fermé tout seul » — S33 a RÉUSSI pour la première fois, il est mort 2 ms plus tard d'un manque de place : la commande session (484 o) débordait le tampon de composition (352 o) sur .text2 non inscriptible ; terrain.16 déménage le tampon (1 888 o), quote le chemin du PUT, et l'oracle apprend les protections d'écriture de Windows
+
+**Le run terrain.15 (00:56:29) et l'inventaire complet.** Pièces rapatriées
+(listage direct) : journal `terrain_20261028_005629.txt` (1 681 o,
+**TRONQUÉ après « S33 T3 jeton OAuth obtenu »** — première réussite S33 de
+l'histoire), `terrain_jeton.json` (jeton FRAIS, 254 car.), et — jamais vus
+auparavant — `terrain_meta.json` (86 o : la métadonnée multipart de l'upload
+du journal, preuve que S34 avait commencé), `terrain_req.txt` (274 o),
+`terrain_jetons.bin` + `demo_journal.txt`. **Timeline reconstituée à la
+milliseconde depuis les modifiedTime Drive** (mtimes locaux préservés — le
+dossier de travail de l'opérateur est un dossier synchronisé) :
+req .595 → json .925 (curl OAuth, 330 ms) → dernière ligne du journal .939
+→ meta .941 → **plus rien** : terrain_session.txt n'existe pas, le
+nettoyage S07 n'a jamais tourné (d'où la survie de req/jetons.bin — les
+secrets — dans le dossier synchronisé). « Fermé tout seul » = mort dans la
+fenêtre de ~2 ms après .941.
+
+**La cause, prouvée à trois niveaux.** (1) *Code* : la zone de composition
+(rbx posé par `lea rbx` @0x5E0E) vit à TAMPON_CMD+0x150 = 0x3EA0 ; .data
+finit PILE à 0x4000 → **352 o disponibles**. La commande session réelle =
+230 littéraux + jeton 254 = **484 o** : la boucle .gab (`mov [rbx+rbp],al`
+octet par octet, memcpy du champ) franchit 0x4000. (2) *PE* : la section
+suivante .text2 (VA 0x4000) a les caractéristiques 0x60000020 =
+CODE|EXECUTE|**READ sans WRITE** → violation d'écriture c0000005, mort
+instantanée. (3) *Fixtures* : l'oracle testait avec un jeton de 47 car.
+(commande 277 o : ça tenait). **Défaut latent depuis terrain.5 — le chemin
+S34 n'avait jamais été exécuté sur machine réelle avant cette nuit** ;
+même classe que D69 (fixture idéalisée). Le xref exhaustif (11 zones de
+code, capstone) donne EXACTEMENT 4 références de la base 0x3EA0 : sup-35
+@0x5E0E (composition .gab), sup-36 @0x4F5C (source WriteFile), sup-37
+@0x68D2/@0x6902 (lecture 512 o + memcmp de la vérification kit).
+
+**Deux mines de plus dans le même coup.** (a) La commande PUT composée =
+63 + chemin complet + 1 + URL 286 ≈ **372+ o > 352** : même mort un cran
+plus loin (démontrée en émulation E4). (b) Le chemin complet contient le
+plus souvent un ESPACE (« My Drive », « Jean Dupont ») :
+`--data-binary @chemin avec espace` coupe au premier espace → PUT cassé
+sans plantage. Le PUT n'a JAMAIS tourné en réel : les deux sautent ce soir.
+
+**Le correctif terrain.16 (70 octets bornés, patch_terrain16.py).** La
+région .data [0x3000, 0x3860) — **2 144 o de zéros, ZÉRO référence de
+code, AUCUNE entrée R10 couvrante** — accueille TAMPON_COMPO = 0x3100
+(1 888 o, composition + vérification kit, DÉCOUPLÉE des
+chemins/lectures de TAMPON_CMD : plus aucune contrainte de coexistence ;
+pire cas PUT 849 o). P1 : les 4 lea repointés (16 octets de déplacements).
+P2 : GABARIT_PUT @0x4AD7 — guillemets autour du chemin
+(`--data-binary @"…"`) + `--max-time 120` → `-m 120` (8 o libérés,
+longueur 67 o inchangée). P3 : version terrain16. P4 : sommes R10[18, 21,
+22, 23] recalculées — porte 27/27 verte.
+
+**La chaîne de vérification (verif_terrain16.py).** Statique : 824
+contrôles (4 lea → 0x3100, 0x3EA0 orphelin, PUT quoté unique/ancien
+absent/--fail ×3, D68/D69 intacts, kit byte-identique, diff 15→16 borné à
+70 o). Émulations unicorn du VRAI .gab (0x61B8), sections protégées
+COMME WINDOWS (.text/.text2 RX, .rsrc/.blob R) : **E1 la panne du run
+00:56 reproduite sur terrain.15 (faute d'écriture à 0x4000,
+UC_ERR_WRITE_PROT)** ; E2 terrain.16 compose les 484 o octet-exact à
+0x3100 ; E3 PUT 407 o avec chemin « My Drive » guillemets en place ; E4 la
+seconde mine démontrée sur terrain.15 ; E5 jeton 480 car. (capacité
+TAMPON_JETON entière) → 710 o sans faute.
+
+**La réforme de l'oracle (oracle_terrain.py, structurelle).**
+(1) **Protections de sections** : depuis terrain.5 l'image entière vivait
+en UC_PROT_ALL — l'écriture interdite sur .text2 était INVISIBLE en
+émulation ; reinit() protège désormais .text/.text2 (RX) et .rsrc/.blob
+(R) après la résolution IAT (.rdata reste inscriptible : le modèle
+chargeur y pose l'IAT — divergence bénigne documentée). (2) **JETON_OAUTH
+passe à 254 car.** (taille réelle constatée sur la pièce du run) — la
+fixture EST la régression. (3) CMD_PUT_ATTENDU quoté. Réalignement dépôt :
+layout.py (TAMPON_COMPO/FIN_COMPO + asserts pires cas, GABARIT_PUT, L00/
+S00 terrain16, ZONE_COMPO historisée), build_terrain.py + outils/auteur.py
+(3+1 sites), specs I/sup-35/36/37 (TAMPON_COMPO). **Oracle complet
+repassé sur le livré terrain.16 : 10 102 cas VERTS, falsification
+27/27 + 5/5.**
+
+**Livraison (livraison_terrain16.py).** Dossier test : binôme terrain.16
+déposé (md5 MATCH 2/2), binôme terrain.15 retiré (mono-génération), ET les
+pièces du crash nettoyées — terrain_req.txt + terrain_jetons.bin
+(identifiants OAuth en clair : le nettoyage S07 n'avait jamais tourné),
+terrain_jeton.json (jeton expiré), terrain_meta.json. Copie locale
+download/. LISEZMOI-terrain16 : la panne racontée (timeline ms), le
+déménagement, les guillemets, la consigne « My Drive » (journal déposé
+deux fois si sync + upload : signe de succès), l'avertissement req.txt.
+
+**Prédictions D71 (falsifiables).** (a) Nominal : S33A/S34A/S35A/S36A +
+journal déposé TOUT SEUL (première fois ; S91 restera ÉCHEC à cause de T1
+— honnête) ; (b) S34 KO → session/HTTP (couvert --http1.1 D69, jugé
+improbable) ; (c) S35 KO → chemin/PUT (couvert par les guillemets, jugé
+improbable) ; (d) journal en double (sync + upload) → signe de succès,
+l'opérateur le saura. T2 : 6e vert attendu. T1/D57 : inchangé — la capture
+WER (adresse de plantage démo) reste la priorité laboratoire.

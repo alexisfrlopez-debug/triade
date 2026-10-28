@@ -14,7 +14,8 @@ Contrat :
          données sup, ex. "demo_journal.txt") ; P2 edx = opération :
          0 = lire, 1 = écrire, 2 = supprimer ; P3 r8d = longueur du nom
          (NUL compris) ; P4 [écriture] r9d = longueur du contenu, posé à
-         TAMPON_CMD+ZONE_COMPO par l'appelant ; P5 BUF_CHEMIN valide
+         TAMPON_COMPO par l'appelant (D70 : 0x3100, 1 888 o — déplacée hors
+         TAMPON_CMD après le débordement .text2 du run terrain.15) ; P5 BUF_CHEMIN valide
          (journal ouvert au moins une fois — sup-09 trace S00/S01 avant
          tout test) ; P6 pile alignée.
   post : Q1 premier appel : balayage arrière de BUF_CHEMIN (strlen scellé
@@ -26,7 +27,7 @@ Contrat :
          (MAX_LECTURE 640 o, LU posé en .data), CloseHandle, rax = LU ;
          le contenu écrase TAMPON_CMD depuis +0 (jamais au-delà de
          MAX_LECTURE) ; Q4 écrire : CreateFileA(GENERIC_WRITE,
-         CREATE_ALWAYS) -> WriteFile(TAMPON_CMD+ZONE_COMPO, r9d),
+         CREATE_ALWAYS) -> WriteFile(TAMPON_COMPO, r9d),
          CloseHandle, rax = 1/0 ; Q5 supprimer : DeleteFileA(TAMPON_CMD),
          rax = son retour ; Q6 op inconnue -> rax = 0 (fail-closed).
   inv  : I1 zéro fuite : tout handle ouvert est fermé sur TOUT chemin,
@@ -46,16 +47,17 @@ Vecteurs :
   V1 : round-trip 100 %.
   V2 : émulation — lire "terrain_jetons.bin" servi (4 champs) -> rax = 4
        champs lisibles dans TAMPON_CMD, LU exact ; écrire "terrain_req.txt"
-       (contenu 280 o à +ZONE_COMPO) -> CreateFileA(CREATE_ALWAYS) +
+       (contenu 280 o à TAMPON_COMPO) -> CreateFileA(CREATE_ALWAYS) +
        WriteFile exact observés ; supprimer -> DeleteFileA sur le chemin
        préfixé exact.
   V3 : DIR_LONG — premier appel le calcule (balayage arrière observé :
        un seul appel strlen), second appel zéro rescan (compteur strlen).
   V4 : absent -> rax = 0, aucun ReadFile.
-  V5 : falsification — corrompre le décalage ZONE_COMPO d'un octet fait
+  V5 : falsification — corrompre la base TAMPON_COMPO d'un octet fait
        échouer le verrou d'écriture (contenu décalé).
-Fixtures    : noms de fichiers (zone données sup 2), DIR_LONG/ZONE_COMPO
-              (plan), MAX_LECTURE (64 o de marge sous TAMPON_CMD+688).
+Fixtures    : noms de fichiers (zone données sup 2), DIR_LONG (plan),
+              TAMPON_COMPO (plan, D70), MAX_LECTURE (64 o de marge sous
+              TAMPON_CMD+688).
 Provenance  : écrite-avant-code (né du dimensionnement D48 : sans
               facteur commun, les trois blocs de test débordaient leurs
               slots de cent cinquante octets chacun).

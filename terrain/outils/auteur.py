@@ -78,7 +78,7 @@ BLOCS = [
      "IAT kernel32#2 : CreateFileA ; IAT kernel32#1 : ReadFile, CloseHandle ; "
      "blocs libc-01/02/03, sup-36 (op 1 écrire / op 2 supprimer), win-05 "
      "(entrée trace) ; section .blob (BLOB_LONGUEURS/BLOB_DEMO/BLOB_PROXY/"
-     "SLOT_JETONS) ; état .data (DIR_LONG, LU) ; TAMPON_CMD+ZONE_COMPO "
+     "SLOT_JETONS) ; état .data (DIR_LONG, LU) ; TAMPON_COMPO "
      "(relecture 512 o) ; lignes S04..S07 (zone données sup 3) ; "
      "NOM_DEMO/NOM_PROXY (.rdata), NOM_JETONS (zone données sup 2) ; "
      "entrée à mode @0x6600 : ecx 0 = extraire / 1 = nettoyer (D49)"),
@@ -138,7 +138,7 @@ SYMBOLES = {
     "HWND_DEMO": L.HWND_DEMO, "HWND_BTN_DEMO": L.HWND_BTN_DEMO,
     "CODE_SORTIE": L.CODE_SORTIE, "LU": L.LU, "DISPO": L.DISPO,
     "DIR_LONG": L.DIR_LONG,
-    "TAMPON_COMPO": L.TAMPON_CMD + L.ZONE_COMPO,
+    "TAMPON_COMPO": L.TAMPON_COMPO,
     "FICHIERS": 0x4E00,
     "EXTRACTION": L.EXTRACTION, "NETTOYAGE": L.NETTOYAGE,
     "BLOB_LONGUEURS": L.BLOB_LONGUEURS, "BLOB_LONGUEUR_PROXY": L.BLOB_LONGUEUR_PROXY,

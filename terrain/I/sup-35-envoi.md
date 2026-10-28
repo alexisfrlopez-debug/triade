@@ -14,12 +14,15 @@ Contrat :
          4 champs ASCII NUL-terminés contigus, client_id, client_secret,
          refresh_token, token_uri (<= 480 o total) ; absent -> S31 «
          jetons absents » + S36 KO + rax = 0 (échec honnête, le journal
-         reste local) ; P2 curl.exe résoluble ; P3 TAMPON_JETON (480 o),
-         TAMPON_CMD (672 o) recyclables ; P4 BUF_CHEMIN contient le chemin
+         reste local) ; P2 curl.exe résoluble ; P3 TAMPON_JETON (480 o)
+         recyclable + TAMPON_COMPO (D70 : 0x3100, 1 888 o — la zone de
+         composition déménagée hors TAMPON_CMD après le débordement
+         .text2 du run terrain.15 : la commande session réelle fait 484 o,
+         l'ancienne zone 352) ; P4 BUF_CHEMIN contient le chemin
          complet du journal (posé par sup-11 à l'ouverture — le fichier
          existe donc au moins une ligne a été écrite) ; P5 pile alignée.
   post : Q1 lecture jetons (<= 480 o) + repérage des 4 champs par scan
-         NUL ; Q2 requête OAuth composée dans TAMPON_CMD : "client_id=" +
+         NUL ; Q2 requête OAuth composée dans TAMPON_COMPO : "client_id=" +
          cid + "&client_secret=" + sec + "&refresh_token=" + rt +
          "&grant_type=refresh_token" (les valeurs OAuth sont sûres pour
          urlencoded : alphanumériques, tirets, points — aucun encodage

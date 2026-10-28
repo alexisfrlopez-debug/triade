@@ -1,0 +1,129 @@
+TRIADE — TERRAIN.16 : « LE SUPERVISEUR S'EST FERMÉ TOUT SEUL » — OUI, ET NOUS
+SAVONS EXACTEMENT POURQUOI. VOTRE S33 A RÉUSSI : C'ÉTAIT LA PREMIÈRE FOIS.
+IL EST MORT D'UN MANQUE DE PLACE, PILE À LA LIGNE SUIVANTE. (CORRIGÉ.)
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Votre run de 00:56 est le plus loin que le projet ait JAMAIS été. Pour la
+première fois, S33 a réussi : « S33 T3 jeton OAuth obtenu » — le correctif
+de l'espace a marché, Google a livré un jeton VIVANT en 330 millisecondes.
+Puis la fenêtre s'est fermée toute seule. Ce n'est pas un mystère : c'est
+une faute de dimensionnement NOTRE, aussi précise qu'un rupure de
+digue. Le superviseur compose la commande d'envoi (S34) dans un tampon de
+352 octets ; avec VOTRE vrai jeton — 254 caractères, la taille réelle de
+Google — la commande en fait 484. Les 132 octets de trop sont sortis de la
+zone inscriptible et ont touché la première page du CODE (.text2), que
+Windows interdit d'écrire : le processus est mort sur place, en moins de
+deux millièmes de seconde. D'où le journal qui s'arrête net après S33,
+sans terrain_session.txt, sans nettoyage.
+
+1) CE QUE VOS PIÈCES ONT PROUVÉ (timeline reconstituée à la milliseconde,
+   depuis les dates de dépôt Drive) : terrain_req.txt à 23:57:29.595 →
+   terrain_jeton.json à .925 (votre curl OAuth, 330 ms de va-et-vient
+   jusqu'à Google) → dernière ligne du journal à .939 (« jeton OAuth
+   obtenu ») → terrain_meta.json à .941 → plus rien. La mort tient dans
+   la fenêtre de 2 ms qui suit : c'est la composition de la commande
+   session. Nous avons REPRODUIT la panne sur émulateur, octet pour
+   octet, faute d'écriture à l'adresse 0x4000 : c'est elle, rien d'autre.
+
+2) POURQUOI PERSONNE NE L'AVAIT VUE. Le défaut est là depuis terrain.5.
+   Mais S33 n'avait JAMAIS réussi avant votre run d'hier : le chemin S34
+   n'avait jamais été exécuté sur une vraie machine. Et notre oracle de
+   simulation testait avec un jeton d'essai de 47 caractères — commande
+   de 277 octets, ça tenait. Vrai jeton : 484, ça ne tient pas. C'est la
+   même famille que la panne de l'espace (terrain.15) : nos simulations
+   étaient trop petites pour la réalité. Corrigé structurellement :
+   l'oracle impose désormais les VRAIES interdictions d'écriture de
+   Windows sur les sections de code, et le jeton d'essai a la taille
+   réelle — cette classe de panne ne pourra plus se cacher.
+
+3) DEUX MINES DE PLUS, DÉSAMORCÉES DANS LE MÊME COUP. (a) La commande
+   d'envoi du journal (S35) aurait débordé AUSSI (372+ octets pour 352
+   disponibles) : même mort, un cran plus loin. (b) Le chemin complet de
+   votre journal contient un ESPACE (« My Drive », « Jean Dupont ») : la
+   commande curl l'aurait coupé au premier espace et l'envoi aurait
+   échoué proprement. Les deux sont réparées dans terrain.16 par le même
+   déménagement (voir ci-dessous) — et le point (b) par des guillemets
+   autour du chemin dans la commande.
+
+4) LA PREUVE AVANT LIVRAISON. Le tampon de composition déménage dans une
+   zone de la mémoire du superviseur qui était VIDE et inutilisée
+   (2 144 octets libres, aucune référence, hors porte d'intégrité) :
+   1 888 octets disponibles, plus AUCUNE limite en vue (la plus grosse
+   commande possible en fait 849 au pire). Sur émulateur : votre panne
+   reproduite à l'identique sur terrain.15 (faute d'écriture à 0x4000),
+   puis terrain.16 compose les commandes réelles — jeton 254 caractères,
+   chemin avec espaces, URL de session 286 caractères — octet pour octet,
+   sans faute. Puis le binaire entier a repassé l'oracle du projet :
+   10 102 cas verts, avec le jeton de taille réelle et les protections
+   d'écriture de Windows actives pendant tout le scénario.
+
+TERRAIN.16 : CE QUI CHANGE (70 OCTETS, TOUT LE RESTE EST INCHANGÉ)
+-------------------------------------------------------------------
+a) Le tampon de composition déménage : 352 octets coincés en haut de la
+   zone de données → 1 888 octets dans une zone libre (quatre adresses
+   de 4 octets chacune dans le code, rien d'autre ne bouge).
+b) La commande d'envoi du journal met le chemin ENTRE GUILLEMETS
+   (--data-binary @"…") et passe à la forme courte -m 120 : les espaces
+   du chemin ne la cassent plus.
+c) La version passe à terrain16. Le code, la fenêtre, T1, T2, la démo et
+   le proxy embarqués : IDENTIQUES. Porte d'intégrité R10 : 27/27 verte.
+
+PROTOCOLE (AUSSI COURT QU'HIER)
+-------------------------------
+ÉTAPE 0 — SUPPRIMEZ les anciens superviseur-terrain*.exe (5 à 15) de
+   votre dossier de travail. Le dossier test Drive ne contient déjà plus
+   QUE terrain16 — terrain15 a été retiré à la livraison. Un seul exe,
+   une seule version : la confusion est impossible.
+ÉTAPE 1 — Double-cliquez superviseur-terrain16.exe, attendez le verdict
+   (~2 minutes). PREUVE du bon binaire : le journal commence par
+   « S00 superviseur terrain 0.5.0-terrain16 ».
+ÉTAPE 2 — C'est tout. Si T3 passe, les lignes qui comptent sont :
+   S33 « jeton OAuth obtenu », S34 « session upload ouverte »,
+   S35 « journal televerse : OK », S36 « VERDICT OK » — et le journal
+   partira TOUT SEUL dans le dossier test, ce serait la PREMIÈRE FOIS.
+   Le verdict final affichera quand même « SUPERVISEUR : ECHEC » tant
+   que T1 (la démo — panne connue D57) reste KO : c'est l'honnêteté du
+   superviseur, pas un échec de l'envoi.
+ÉTAPE 3 (APRÈS LE RUN, 10 SECONDES) — SUPPRIMEZ le terrain_jeton.json
+   resté à côté de l'exécutable : après un T3 réussi, il contient un
+   jeton d'accès valable une heure. Si vous le voyez, c'est BON SIGNE :
+   effacez-le simplement. (Votre json d'hier est déjà expiré ; sa copie
+   de travail nous a servi de preuve, merci.)
+
+AU SUJET DE VOTRE DOSSIER DE TRAVAIL
+------------------------------------
+Vos pièces d'hier (req, json, journal, meta) sont arrivées dans le
+dossier test avec leurs dates locales exactes : votre dossier de travail
+semble être un dossier synchronisé Google Drive. C'est SANS conséquence
+pour terrain.16 — mais si l'envoi automatique (S35) et la synchronisation
+déposent tous deux le journal, vous pourriez voir le journal apparaître
+deux fois (une copie « (1) »). Pas de panique : c'est le signe que T3
+marche. Notez aussi que terrain_req.txt (dépôt d'hier) contenait vos
+identifiants OAuth en clair — le superviseur l'efface lui-même à la fin
+du run (nettoyage S07), mais évitez de le déposer manuellement : il n'a
+pas d'intérêt diagnostique et il est sensible.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S00 « terrain16 » ;
+- S33/S34/S35/S36 : les quatre lignes OK ci-dessus, et le journal déposé
+  TOUT SEUL dans le dossier test ;
+- T2 : 6e vert consécutif attendu (stable depuis terrain.11) ;
+- T1 : inchangé — l'échec d'échange de la démo est connu (D57), son
+  diagnostic avance de notre côté (adresse de plantage à capturer), ce
+  run n'y changerait rien.
+
+RÉCAPITULATIF DES EMPREINTES
+----------------------------
+md5 superviseur-terrain16.exe  34ee9f58ada0bf6cf76cc8a9c05bc869
+sha256                         c7134af57276cdcc0f72389f25ab033b32c809e6567956977399b952ebf86f9e
+taille                         62 464 octets
+md5 démo embarquée             73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué             dd12b64948e64153ff1dd7a66f367ff3 (inchangé)
+
+Le superviseur est INCHANGÉ à 70 octets près : quatre adresses de tampon,
+les guillemets d'un chemin, la version. Votre chaîne T3 est allée jusqu'au
+bout hier — jeton vivant en main — avant de manquer de place. La place est
+faite.

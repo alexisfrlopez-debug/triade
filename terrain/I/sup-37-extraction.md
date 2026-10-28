@@ -28,7 +28,7 @@ Contrat :
          WriteFile 512 o DEPUIS l'embarqué (jamais de copie intégrale en
          mémoire : TAMPON_CMD est trop petit, c'est le kernel qui copie) ;
          puis vérification : CreateFileA (GENERIC_READ, OPEN_EXISTING) ->
-         boucle ReadFile 512 o dans TAMPON_CMD+ZONE_COMPO (occupations
+         boucle ReadFile 512 o dans TAMPON_COMPO (occupations
          séquentielles, jamais concurrentes avec sup-35/36 — propriétaire
          transitoire documenté) + memcmp scellée contre l'embarqué,
          jusqu'à épuisement ; CloseHandle sur TOUT chemin ; Q2 verdicts
@@ -110,7 +110,7 @@ Provenance  : écrite-avant-code (D49 — l'exigence « 1 seul exe » arrive
 Décisions   : D49 ; sup-36 réutilisé tel quel (op 2 pour les suppressions
               et l'init DIR_LONG — l'écriture/lecture 512 o est LOCALE au
               bloc : sup-36 op 1 écrit depuis TAMPON_COMPO, trop petit
-              pour 16 Ko) ; la relecture vit dans TAMPON_CMD+ZONE_COMPO
+              pour 16 Ko) ; la relecture vit dans TAMPON_COMPO (D70 : 0x3100)
               (occupation séquentielle — propriétaire transitoire,
               charte terrain) ; jamais de md5 CALCULÉ au run (aucune
               crypto dans le superviseur, dépendance OS assumée) : le md5

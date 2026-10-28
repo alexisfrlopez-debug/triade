@@ -47,10 +47,15 @@ NOUVEAUTÉS TERRAIN (génération 5, f6xxxx) :
     (FindWindowW, FindWindowExW, SendMessageTimeoutW) — l'ancienne zone
     ws2_32, libérée (le superviseur n'a pas de sockets : le réseau vit
     dans les processus testés et dans curl.exe) ;
-  - état terrain .data : TAMPON_NOM @0x3AD0 (32), TAMPON_AFF @0x3AF0 (32),
-    ETAT_SUP @0x3B10 (96 : handles, tuyaux, pid, codes), TAMPON_JETON
-    @0x3B70 (480), TAMPON_CMD @0x3D50 (672) — la section .data se termine
-    à 0x4000 pile.
+  - état terrain .data : TAMPON_COMPO @0x3100 (1 888 o — composition
+    sup-35 + source d'écriture sup-36 + tampon de vérification kit sup-37,
+    D70 : la région .data [0x3000, 0x3860) était vide et sans référence ;
+    l'ancienne zone 0x3EA0 n'offrait que 352 o avant la frontière .text2,
+    la commande session réelle en fait 484 — le run terrain.15 est mort
+    d'une violation d'écriture à 0x4000), puis TAMPON_NOM @0x3AD0 (32),
+    TAMPON_AFF @0x3AF0 (32), ETAT_SUP @0x3B10 (96 : handles, tuyaux, pid,
+    codes), TAMPON_JETON @0x3B70 (480), TAMPON_CMD @0x3D50 (672) — la
+    section .data se termine à 0x4000 pile.
 """
 
 import importlib.util
@@ -359,7 +364,7 @@ _SEQ_ASCII = [
 # lignes J_* de la démo (après CLASSE_DEMO, avant l'IAT kernel32#2).
 R_ASCII_LIBRE = 0x2AAA
 _SEQ_ASCII_LIBRE = [
-    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain15"),   # 49 o
+    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain16"),   # 49 o
     ("L01", b"L01 fenetre principale creee"),                        # 28 o
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),            # 36 o
     ("NOM_DEMO", b"demo.exe\x00"),                                   # 9 o (cmdline T1)
@@ -391,7 +396,7 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 _SEQ_SUP_1 = [
     # en-tête scénario
-    ("S00", b"S00 superviseur terrain 0.5.0-terrain15"),
+    ("S00", b"S00 superviseur terrain 0.5.0-terrain16"),
     ("S01_PREFIXE", b"S01 date "),
     ("S02A", b"S02 porte R10 : integrite VERTE"),
     ("S02B", b"S02 porte R10 : KO - arret"),
@@ -487,8 +492,14 @@ _SEQ_SUP_1 = [
      b"-H \"Authorization: Bearer \x07\" "
      b"--data @terrain_meta.json "
      b"https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable\x00"),
+    # D70 : le chemin du journal est un CHEMIN COMPLET Windows — il contient
+    # le plus souvent un ESPACE (« My Drive », « Jean Dupont ») : sans
+    # guillemets, curl lirait --data-binary @"C:\Users\Jean" et échouerait.
+    # Guillemets ajoutés ; --max-time 120 → -m 120 (8 o libérés) : longueur
+    # totale 67 o inchangée. Le PUT n'avait JAMAIS tourné en réel avant D70.
     ("GABARIT_PUT",
-     b"curl.exe -s --fail --max-time 120 -o NUL -X PUT --data-binary @\x06 \x07\x00"),
+     b"curl.exe -s --fail -m 120 -o NUL -X PUT --data-binary @\"\x06\""
+     + b" " * 7 + b"\x07\x00"),
 ]
 
 CHAINES_SUP = {}
@@ -628,14 +639,30 @@ DIR_LONG = 0x3B68           # longueur du répertoire de l'exe (préfixe de
                             # BUF_CHEMIN, séparateur compris — posé en cache
                             # par sup-36, un seul propriétaire du calcul)
 TAMPON_JETON = 0x3B70       # 480 o : access_token puis URL de session (cycle séquentiel)
-TAMPON_CMD = 0x3D50         # 688 o : composition (cmdlines, requêtes, lectures)
+TAMPON_CMD = 0x3D50         # 688 o : chemins (sup-36) + lectures — composition DÉCOUPLÉE (D70)
 assert TAMPON_CMD + 688 == 0x4000, "TAMPON_CMD doit finir pile à 0x4000"
 
-# Zone de composition dans TAMPON_CMD (convention partagée sup-35/sup-36 :
-# chemins à +0, contenus composés à +ZONE_COMPO — les lectures .lire écrasent
-# depuis +0, jamais au-delà de MAX_LECTURE) — propriétaire : le plan.
-ZONE_COMPO = 0x150
-assert ZONE_COMPO + 336 <= 688, "zone composition + requête OAuth (280 o) débordante"
+# --- D70 : le tampon de composition déménage hors de TAMPON_CMD ------------------
+# L'ancienne convention (chemins à +0, composés à +ZONE_COMPO=+0x150) offrait
+# 352 o à la composition — la commande session RÉELLE (230 littéraux + jeton
+# 254 o constatés au run terrain.15) en fait 484 : la boucle .gab écrivait
+# au-delà de 0x4000, première page de .text2 (RX, non inscriptible) — mort
+# instantanée du superviseur, « fermé tout seul ». La région .data
+# [0x3000, 0x3860) est vierge (aucune référence de code, hors table R10) :
+# TAMPON_COMPO y offre 1 888 o, DÉCOUPLÉS des chemins/lectures — plus aucune
+# contrainte de coexistence. Quatre sites référent la base (lea 4 octets
+# chacun) : sup-35 @0x5E0E (composition .gab), sup-36 @0x4F5C (source
+# WriteFile), sup-37 @0x68D2/@0x6902 (lecture + memcmp de la vérif kit).
+TAMPON_COMPO = 0x3100       # composition + vérification kit (sup-35/36/37)
+FIN_COMPO = 0x3860          # premier octet d'état (HWND_PRINCIPAL)
+assert TAMPON_COMPO >= DATA_RVA + 0x100, "TAMPON_COMPO : marge de section"
+assert FIN_COMPO - TAMPON_COMPO == 1888, "TAMPON_COMPO : 1 888 o attendus"
+# pires cas constatés/possibles : session 230+254 = 484 ; PUT 58 + chemin
+# 304 (BUF_CHEMIN) + 7 + URL 480 (TAMPON_JETON) = 849
+assert FIN_COMPO - TAMPON_COMPO >= max(230 + 254, 58 + 304 + 7 + 480), \
+    "TAMPON_COMPO : capacité insuffisante pour les pires cas"
+# L'ancienne constante disparaît : la composition ne vit plus dans TAMPON_CMD.
+ZONE_COMPO = None           # HISTORIQUE D48-D69 — remplacée par TAMPON_COMPO (D70)
 
 # --- Jetons de retour d'émulation (oracle, hors binaire) ------------------------------
 

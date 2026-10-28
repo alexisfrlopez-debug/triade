@@ -233,6 +233,24 @@ class Emulateur:
                 raise EchecOracle(f"chargeur/D35 : slot {nom} @{rva:#x} non résolu "
                                   f"({val:#x}) — FirstThunk divergent")
 
+        # D70 : PROTECTIONS DE SECTIONS comme le vrai Windows — .text/.text2
+        # sans ÉCRITURE (RX), .rsrc/.blob en lecture seule. Depuis terrain.5
+        # l'image entière vivait en RWX : la composition .gab du run réel
+        # terrain.15 a débordé sur .text2 (violation c0000005 à 0x4000) sans
+        # que l'oracle ne voie quoi que ce soit. .rdata reste inscriptible
+        # (le modèle chargeur y pose l'IAT — divergence bénigne documentée),
+        # .data reste l'état modifiable.
+        self.uc.mem_protect(IMAGE + L.TEXT_RVA,
+                            (L.TEXT_VSIZE + 0xFFF) & ~0xFFF,
+                            UC_PROT_READ | UC_PROT_EXEC)
+        self.uc.mem_protect(IMAGE + L.TEXT2_RVA,
+                            (L.TEXT2_VSIZE + 0xFFF) & ~0xFFF,
+                            UC_PROT_READ | UC_PROT_EXEC)
+        self.uc.mem_protect(IMAGE + L.RSRC_RVA,
+                            (L.RSRC_VSIZE + 0xFFF) & ~0xFFF, UC_PROT_READ)
+        self.uc.mem_protect(IMAGE + L.BLOB_RVA,
+                            (L.BLOB_VSIZE + 0xFFF) & ~0xFFF, UC_PROT_READ)
+
         # état d'émulation
         self.journal: list[str] = []            # journal ÉCRAN (EM_REPLACESEL)
         self.journal_fichier: list[bytes] = []  # lignes WriteFile du journal
@@ -723,7 +741,15 @@ JETONS = (b"client-id-test.apps.googleusercontent.com\x00"
           b"GOCSPX-test-secret-456\x00"
           b"//test-refresh-token-789\x00"
           b"https://oauth2.googleapis.com/token\x00")
-JETON_OAUTH = b"ya29.test-jeton-superviseur-terrain-0123456789"
+# D70 : le jeton de fixture passe à la LONGUEUR RÉELLE constatée au run
+# terrain.15 (254 car. — access_token de Google, mesuré sur la pièce déposée).
+# L'ancienne fixture de 47 car. composait une commande session de 277 o :
+# elle tenait dans l'ancienne zone de composition (352 o) — la commande
+# RÉELLE en fait 484 et tuait le superviseur d'une violation d'écriture à
+# 0x4000 (.text2 RX). Même classe de panne que D69 (fixture idéalisée).
+# Avec les protections de sections (D70, _ecrire_image), l'oracle voit
+# désormais les écritures interdites : cette fixture est la régression.
+JETON_OAUTH = b"ya29." + b"A" * 249          # 254 car. — taille réelle (D70)
 # D69 : le format RÉEL de oauth2.googleapis.com/token, constaté deux fois le
 # 2026-10-27 (json du run terrain.14 + rafraîchissement frais du bac,
 # byte-identiques) : JSON INDENTÉ, 2 espaces, séparateur « ": " », LF,
@@ -772,8 +798,9 @@ CMD_SESSION_ATTENDU = ("curl.exe -s --http1.1 -m 30      -o NUL -D terrain_sessi
                        "-H \"Authorization: Bearer " + JETON_OAUTH.decode() + "\" "
                        "--data @terrain_meta.json "
                        "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable")
-CMD_PUT_ATTENDU = ("curl.exe -s --fail --max-time 120 -o NUL -X PUT --data-binary @"
-                   + CHEMIN_JOURNAL.decode() + " " + URL_SESSION.decode())
+CMD_PUT_ATTENDU = ("curl.exe -s --fail -m 120 -o NUL -X PUT "
+                   "--data-binary @\"" + CHEMIN_JOURNAL.decode() + "\""
+                   + " " * 7 + URL_SESSION.decode())   # D70 : chemin QUOTÉ
 
 
 def variante_publique(exe: bytes) -> bytes:
