@@ -4856,3 +4856,112 @@ volé ne peut ni s'ouvrir — coffre mort, ni évoluer — intention non signée
 Suites : M4 étape (b) — tls-06 (émission chiffrée), tls-07, tls-08, révisions
 http-08:R2/http-10:R2, oracle SSPI, carte génération 6, proxy.exe
 0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.
+
+## Entrée 74 — D88 (28/10, ~20:00) : M4 étape (b) — tls-06 (ÉMISSION CHIFFRÉE) notée-mesurée-prouvée : le tunnel ÉMET — deuxième bloc à shims DE boucle du jalon, 10 000 cas fuzzés zéro écart sur deux graines, 6/6 mutations attrapées
+
+Suite directe de la session D84–D87 (licence BSL + programme v0.6.0 consignés
+et committés eabb114, poussés GitHub, miroir Drive rc=0) : le « continue » du
+développeur portait sur la suite approuvée — M4 étape (b), tls-06, le bloc
+dont l'Entrée 72 disait qu'il hériterait du cadre, de l'IAT et du mécanisme
+de harnais prouvés par tls-04/tls-05.
+
+1. **CONSTANTE VÉRIFIÉE À LA SOURCE AVANT NOTATION** (discipline D79 — trois
+   HRESULT avaient été corrigés alors) : `SECPKG_ATTR_STREAM_SIZES = 4`,
+   confirmée par DEUX pages Microsoft concordantes (QueryContextAttributes
+   General et Schannel, sspi.h) — c'est l'unique constante nouvelle de tls-06
+   ; les SECBUFFER 7/1/6 et la liste blanche HRESULT étaient déjà arrêtées
+   D79/D81. NB terrain consigné au passage : la Q&A Microsoft signale un
+   cbMaximumMessage réel parfois « moins un » — la découpe au minimum
+   (restant, négocié) est insensible à cette bizarrerie, le constat va au
+   dossier terrain de M4 (étape (c)).
+2. **TLS-06 NOTÉE À LA MAIN** (brouillon → auteur.py : keystone assemble,
+   rien d'autre) : 491 o / 105 instructions / 9 étiquettes, slot préfiguré
+   0x6740×0x300 CONSERVÉ (padding 277 ≥ 16, D8 — l'adresse préfigurée de
+   tls-07 @0x6A40 reste exacte). ARCHITECTURE : (a) garde P4/I3 —
+   l'acquisition des tailles de flux (QueryContextAttributesW, attribut 4,
+   pBuffer cadre+0x40) se fait UNE fois par session, détectée par cBuffers
+   @+0x4C non nul (le cadre VIERGE de http-10:R2, convention D81, garantit le
+   zéro initial) ; sur échec E3, ZÉRO DÉFENSIF du bloc tailles (la
+   bibliothèque peut barbouiller — modèle tls-05 D82) et AUCUN enregistrement
+   entamé ; (b) boucle do-while des morceaux — longueur 0 → UN enregistrement
+   vide (P3 : légal, aucun cas spécial) ; morceau = min(restant, message
+   maximal NÉGOCIÉ) — jamais une constante (charte § 8) ; (c) copie libc-01
+   du morceau vers zone d'émission + en-tête (convention contigu tls-03 :
+   en-tête AVANT le clair, queue APRÈS), puis descripteur tls-03 type 1 SUR
+   la copie (5e argument [rsp+0x20] = adresse des tailles — P5), puis
+   EncryptMessageW à QUATRE arguments registre (phContext cadre+0x10, fQOP 0,
+   pMessage = descripteur de pile, MessageSeqNo 0) ; (d) total de
+   l'enregistrement lu des TROIS cbBuffer APRÈS l'appel — la bibliothèque
+   consigne les longueurs produites (leçon D83 (d), jamais la capacité) ;
+   (e) émission tcp-04 en boucle d'achèvement bornée — le RESTANT en
+   argument, jamais l'envoyé (leçon D83 (b)), rax ≤ 0 = E2 verdict 5 ;
+   (f) E1 (verdict tls-02 non nul d'EM) : le verdict est sauvé, le clair
+   copié est DÉTRUIT par libc-07 (empreinte en-tête + morceau + queue — Q2 :
+   aucun octet clair résiduel en zone), puis l'échec nommé remonte ; (g)
+   volatils seuls (I5 — cadre et longueurs en pile, sub rsp 0xE8, cadre
+   RECHARGÉ après chaque appel : les volatils sont morts au retour).
+3. **m4/harnais_emission.py** — harnais à shims (mécanisme M2/M3 : page
+   trampoline de ret + crochet code ; leçon D79 : chaque chargement
+   RECONSTRUIT l'émulateur) émulant les VRAIS octets de tls-02 + tls-03 +
+   tcp-04 + **libc-01 + libc-07** (l'héritage scellé lu aux dépôts m1/m2 —
+   R7 : la copie et la neutralisation sont testées à travers leurs octets
+   réels). RÈGLES SHIMS PARTAGÉES modèle/émulation : QCA en succès consigne
+   les 5 u32, en échec BARBOUILLE (le zéro défensif doit annuler —
+   falsifiable) ; EM en succès chiffre SUR PLACE (en-tête/queue motifs
+   déterministes, clair XOR flux déterministe) et RECONDUIT les trois
+   cbBuffer, en échec ne touche rien (le clair copié subsiste — la notation
+   DOIT le détruire), en descripteur invalide (notation mutée) répond
+   SEC_E_INVALID_TOKEN sans écriture (fail-closed) ; send 'plein'/partiel/
+   ≤ 0. **V1** round-trip + padding (7 blocs). **V2** TREIZE scénarios de la
+   spec : span 1 octet, maximal exact, 2×maximal+1 (découpe 512+512+1),
+   tailles exotiques 17/33/200 (découpe 200+200+50), EM verdict 5 AU MILIEU
+   d'une chaîne (scrub vérifié octet par octet), émission partielle exigeant
+   l'achèvement, échec système tcp-04 (E2), échec d'acquisition E3
+   (barbouille annulée, AUCUN enregistrement), span NUL (UN enregistrement
+   vide), tailles déjà consignées (QCA JAMAIS rappelée — I3/P4), EM verdict 3
+   (routage tls-02 intégral), EM verdict 6 (table TOTALE), émission partielle
+   multi-enregistrements — CHAQUE scénario : cadre 0x9000 OCTET PAR OCTET
+   prédit (verdict, HRESULT, tailles, zone d'émission — clair copié,
+   chiffré produit, ou ZÉROS après destruction) + contrat d'appels COMPLET
+   (QCA : phContext/attribut/pBuffer exacts ; EM : phContext, fQOP 0,
+   MessageSeqNo 0, descripteur 7/1/6 exact aux pointeurs de la convention
+   contiguë, pMessage prédicat pile ; traces SEND [socket, pointeur,
+   longueur] appel par appel) + span de l'appelant OCTET POUR OCTET intact
+   (Q3) + canaris/non-volatils/IAT/fixture. **V3** 5 000 cas fuzzés ZÉRO
+   ÉCART, reproductible graines 20261028 PUIS 20261029 (10 000 cas cumulés :
+   longueurs hostiles, tailles aléatoires [message maximal ≥ 1 — un zéro est
+   hors contrat, la boucle do-while n'avancerait jamais ; une bibliothèque
+   de session vivante ne le rend jamais — borne consignée], verdicts
+   documentés ET exotiques, émissions partielles et rompues, tailles
+   pré-consignées aléatoires 30 % des cas) ; I1/I3 constatées POSITIVEMENT
+   (tout appel ACH/FCH/ISC/DSC/DM/recv/… = faux pas nommé — aucun ne s'est
+   jamais produit). **V4** SIX mutations d'un point, STABLES EN TAILLE
+   (leçon D82), TOUTES ATTRAPÉES : attribut QCA dévié (4→5), descripteur
+   tls-03 dévié (r9+0x98), pMessage EM dévié (r8+0x98), socket déviée
+   (cadre+0x28), scrub amputé (queue→en-tête), achèvement court-circuité
+   (jz→jnz) + témoin intact VERT 13/13.
+4. **LE DIFFÉRENTIEL EST PASSÉ VERT AU PREMIER PASSAGE COMPLET** — fait
+   notable, consigné : contrairement à tls-04 (quatre défauts nommés avant
+   le vert), tls-06 fut écrite sur les PATRONS PROUVÉS de tls-04 (frame pile,
+   boucle d'achèvement au restant, routage tls-02, discipline des volatils,
+   cbBuffer lu après l'appel) et les pièges des sessions précédentes furent
+   traités AVANT l'écriture plutôt que nommés après. Les leçons capitalisent :
+   le coût du vert baisse à chaque bloc — c'est l'économie promise par le
+   protocole, constatée bloc après bloc.
+5. Docs : Entrée 74 du journal, PLAN (M4 (b) suite D88), REPRISE (état
+   +D88, chronique § 7), README (état M4), worklog (Task ID 15) ; aucune clé
+   touchée : RIEN à remettre par cérémonie (phrase de contrôle D81 valable,
+   conteneur 0323029a… inchangé, sentinelles intactes).
+
+**Ce que ça établit** : le tunnel ÉMET — le critère M4 « HTTPS en transit »
+a désormais sa moitié émission en octets prouvés (la poignée D83 établissait
+le canal, tls-06 y fait circuler les requêtes : découpe au message négocié,
+chiffrement sur place dans le cadre, émission intégrale en achèvement borné,
+destruction du clair résiduel sur échec). La discipline des blocs à shims
+est répétée sur un DEUXIÈME bloc de boucle : différentiel contre modèle
+écrit depuis la spécification, falsification stable en taille,
+reproductibilité deux graines. Suites (b) : tls-07 (réception déchiffrée —
+DecryptMessage, résidu Extra à propriétaire unique), tls-08
+(orchestration), révisions http-08:R2/http-10:R2, oracle à scénarios SSPI,
+carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57
+(WER) seul point ouvert.

@@ -559,9 +559,33 @@ arguments d'ISC, certificat invalide = verdict 3), V3 5 000 cas fuzzés ZÉRO
 témoin 16/16 ; le différentiel a nommé QUATRE défauts avant le vert (dont deux
 dans la notation : l'envoyé passé en longueur à tcp-04, xor eax,eax écrasant
 le cadre avant phContext) ; IAT_ICS (collision M3/M4 dans auteur.py) corrigé
-en IAT_ISC avant première utilisation ; reste (b) : tls-06..08, révisions
-http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6 (lignée D80),
-proxy.exe 0.5.0-dev.1.
+en IAT_ISC avant première utilisation ; **suite (b) D88 : tls-06 (ÉMISSION
+CHIFFRÉE — le tunnel ÉMET) notée-mesurée-prouvée** : 491 o / 105
+instructions / 9 étiquettes, slot préfiguré 0x6740×0x300 CONSERVÉ (padding
+277, D8 — l'adresse préfigurée de tls-07 @0x6A40 reste exacte) ;
+SECPKG_ATTR_STREAM_SIZES = 4 VÉRIFIÉ À LA SOURCE (deux pages Microsoft
+concordantes — discipline D79) ; garde P4/I3 cBuffers @+0x4C (acquisition
+UNE fois par session, échec E3 → zéro défensif du bloc tailles, modèle
+tls-05 D82, AUCUN enregistrement entamé) ; boucle do-while des morceaux
+(longueur 0 → UN enregistrement vide, P3 ; morceau = min(restant, message
+maximal NÉGOCIÉ), jamais de constante) ; copie libc-01 vers zone+en-tête
+(convention contigu tls-03), descripteur tls-03 type 1 SUR la copie (5e
+argument [rsp+0x20] = adresse des tailles), EncryptMessageW à QUATRE
+arguments registre (fQOP 0, MessageSeqNo 0), total lu des TROIS cbBuffer
+APRÈS l'appel (leçon D83 (d)), émission tcp-04 en boucle d'achèvement (le
+RESTANT en argument — leçon D83 (b)), E1 → verdict tls-02 + DESTRUCTION du
+clair copié par libc-07 (Q2 : zéro octet clair résiduel), E2 → verdict 5,
+volatils seuls ; `m4/harnais_emission.py` (VRAIS octets tls-02/tls-03/
+tcp-04/libc-01/libc-07, héritage scellé m1/m2 R7) : V2 TREIZE scénarios
+(cadre 0x9000 octet par octet + contrat d'appels QCA/EM/SEND complet + span
+intact Q3 + QCA jamais rappelée I3), V3 5 000 cas fuzzés ZÉRO ÉCART ×
+graines 20261028/29 (10 000 cas cumulés), V4 six mutations
+stable-en-taille attrapées + témoin 13/13 — LE DIFFÉRENTIEL EST PASSÉ VERT
+AU PREMIER PASSAGE COMPLET (fait notable : tls-06 fut écrite sur les
+patrons prouvés de tls-04, les pièges des sessions précédentes traités
+AVANT l'écriture — les leçons capitalisent) ; reste (b) : tls-07, tls-08,
+révisions http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6
+(lignée D80), proxy.exe 0.5.0-dev.1.
 Terrain : D57 (WER, adresse de plantage de la démo) reste le seul point ouvert — le
 circuit de constat est désormais réflexe (D71). Hygiène : rotation/restriction
 des jetons du dossier Tokens/ (avertissement § 8 toujours réel) ; vider la

@@ -190,7 +190,15 @@ compensation ; harnais m4/harnais_poignee.py (VRAIS octets tls-02/tls-03/tcp-03/
 tcp-04 embarqués : V2 seize scénarios cadre 0x9000 octet par octet + contrat
 d'appels complet — certificat invalide = verdict 3, V3 5 000 cas fuzzés zéro
 écart × 2 graines, V4 six mutations stable-en-taille attrapées, témoin 16/16) ;
-reste (b) : tls-06..08, révisions http, oracle à scénarios
+**D88 : tls-06 (ÉMISSION CHIFFRÉE — le tunnel ÉMET) notée-mesurée-prouvée** —
+491 o, boucle do-while des morceaux au message maximal NÉGOCIÉ (longueur 0 →
+enregistrement vide), acquisition des tailles UNE fois par session
+(QueryContextAttributesW, attribut 4 VÉRIFIÉ À LA SOURCE — discipline D79),
+chiffrement SUR PLACE dans le cadre, destruction du clair copié sur échec
+(Q2) ; harnais m4/harnais_emission.py (VRAIS octets tls-02/tls-03/tcp-04/
+libc-01/libc-07 : V2 treize scénarios cadre octet par octet, V3 5 000 cas
+fuzzés zéro écart × 2 graines, V4 six mutations attrapées + témoin 13/13) ;
+reste (b) : tls-07..08, révisions http, oracle à scénarios
 SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
 seul point ouvert.
 
