@@ -25,6 +25,10 @@
 > nommage, les jalons M6/M7 du plan restent inchangés). Composant transversal ajouté
 > par la v0.5.1 (D75), hors jalons : le coffre-fort des phrases maîtresses — conteneur
 > chiffré TRIADE-CF1 (`coffre_fort.py`, spécification § 15.3 / FORMAT_CARTE § 11).
+> Composant transversal v0.6.0 (D84–D87, 28/10) : **souveraineté cryptographique**
+> (attestation de non-exfiltration, interrupteur d'homme mort Shamir, filigrane
+> hors-ligne de la couche I) + passage du dépôt sous licence BSL 1.1 — cf.
+> section « Programme v0.6.0 » en fin de plan.
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées
@@ -135,3 +139,33 @@ délivrée :
 Après M7 : bloc optionnel de syscalls directs, TLS 1.3 pur en blocs scellés, profils
 additionnels (`aarch64-macos-macho`, `wasm32-wasi`) — volontairement hors périmètre
 courant afin que chaque addition s'appuie sur des résultats mesurés.
+
+## Programme v0.6.0 — Souveraineté cryptographique (composant transversal, hors jalons)
+
+Ouvert le 28/10/2026 par directives développeur (décisions **D84–D87**, format
+normalisé § 15.1) — en complément du passage du dépôt sous **licence BSL 1.1**
+(concédant Alexis Lopez, cf. `LICENSE`). La menace nommée : l'expropriation par
+l'employeur — un tiers qui s'empare du binaire, du dépôt, voire des clés du
+poste. La v0.6.0 renforce la preuve cryptographique sur trois axes ; la
+spécification `PROTOCOLE_TRIADE.md` passera à v0.6.0 quand les trois composants
+seront écrits (modèle v0.5.1 : spécifiés à l'implémentation, pas avant).
+
+| Axe | Décision | Mécanisme | Critère de sortie |
+|---|---|---|---|
+| 1. Attestation de non-exfiltration | D85 | L'environnement d'exécution de l'IA fournit une attestation matérielle TPM 2.0/SGX (quote vérifiable) du code manipulant TRIADE-CF1 : code identifié, sans egress cloud des dérivés du coffre, sorties scellées localement ; le coffre CF2 refuse de déverrouiller sans quote (fail-closed) | Conteneur « exige-attestation » : ouvert avec quote, REFUS nommé sans quote ; quotes altérées/rejouées rejetées (falsifiabilité) |
+| 2. Interrupteur d'homme mort | D86 | Clé maîtresse du coffre CF2 découpée en Shamir (jamais stockée entière) ; sentinelle d'audit d'accès sur la couche C — lecture par processus hors liste blanche → destruction des fragments (écrasement multi-passe) → coffre indéchiffrable | Scénario d'exfiltration simulé en VM : fragments détruits, conteneur indéchiffrable ; fausses alertes nulles en essai nominal ; latence détection→destruction bornée |
+| 3. Filigrane de l'Intention | D87 | Chaque arbre de couche I condensé puis signé par la clé Ed25519 du développeur **hors-ligne** (jamais dans le bac à sable) ; build et chemin de patch refusent une couche I non signée → tout diff d'intention exige la clé physique | Cérémonie hors-ligne documentée ; signature I vérifiée sur tous les jalons scellés ; falsification d'un octet rejetée ; diff non signé refusé par le chemin de patch |
+
+**Positionnement** : priorité aux axes 2 et 3 (CF2-Shamir, sceau I) après le
+scellage 0.5.0 de M4 — ils touchent les disciplines § 15.3 et FORMAT_CARTE § 11
+et doivent s'intégrer aux cérémonies de rotation et de garde existantes ;
+l'axe 1 (attestation TEE) selon disponibilité d'une infrastructure à racine de
+confiance — l'exigence est d'ores et déjà consignée, l'infrastructure actuelle
+(VM cloud sans TEE) ne peut pas la satisfaire et le dit.
+
+**Hiérarchie des clés qui en découle (trois gardes, trois menaces)** : phrase
+de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne
+(signe les cartes — les FAITS) ; clé I hors-ligne (signe l'intention — la
+VOLONTÉ). La barrière juridique (BSL, D84) et la barrière cryptographique
+(D85–D87) se répondent : la licence pour les tribunaux, les preuves pour la
+machine.

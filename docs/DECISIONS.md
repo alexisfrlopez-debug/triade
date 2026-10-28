@@ -2018,3 +2018,193 @@ touche pas la page d'en-tête ici) ; corriger sans re-sceller (la
 discipline R10 exige version + carte à chaque image nouvelle).
 
 **Développement** : entrée 39 du journal de travail.
+
+## Décisions de souveraineté (D84–D87, 28 octobre 2026)
+
+Directives développeur du 28/10 (après D83) : passage sous licence BSL, puis
+renforcement de la preuve cryptographique au programme v0.6.0 sur trois axes —
+attestation de non-exfiltration, interrupteur d'homme mort, filigrane
+d'intention. La menace nommée par le développeur : **l'expropriation par
+l'employeur** — un tiers qui s'empare du binaire, du dépôt, voire des clés du
+poste, et ferait vivre le code sans son auteur. Les trois axes cryptographiques
+et la barrière juridique se répondent : la licence pour les tribunaux, les
+preuves pour la machine. Format normalisé § 15.1 de la spécification.
+
+### D84 — Licence BSL 1.1 : le dépôt devient Business Source
+
+| Champ | Valeur |
+|---|---|
+| Concédant | Alexis Lopez |
+| Œuvre concédée | Protocole TRIADE (code + docs), secrets exclus |
+| Additional Use Grant | None |
+| Change Date | 2030-10-28 |
+| Change License | GPL v3.0 ou ultérieure |
+
+**Décision** : le dépôt `triade` passe sous **Business Source License 1.1**
+(fichier `LICENSE` à la racine, termes officiels MariaDB verbatim — le
+covenant de concédant interdit toute autre modification que les paramètres).
+Jusqu'à la Change Date, seuls la copie, la modification et l'usage **hors
+production** sont concédés : tout usage de production — y compris par ou pour
+le compte d'un employeur ou de toute entité commerciale — exige une licence
+commerciale écrite du concédant. À la Change Date (ou au quatrième anniversaire
+de la première distribution publique d'une version, si antérieur), l'œuvre
+converge vers GPL v3.0+. **Les secrets et matériaux de garde sont EXCLUS de
+l'œuvre concédée** (`.keys/`, conteneurs TRIADE-CF1+, `PHRASE-CONTROLE-
+COFFRE.txt`, `.gdrive/`, jetons) : leur valeur tient à leur secret, pas à un
+droit d'usage — leur présence dans une copie ne concède rien.
+
+**Justification (fonction objectif, Sécurité d'abord)** : la menace
+d'expropriation est à la fois technique (vol des octets et des clés — cf. D76,
+l'exposition a déjà eu lieu) et juridique (l'employeur revendique le travail).
+GPL/MIT/Apache concéderaient d'emblée à l'employeur un usage libre — aucune
+barrière. La BSL inverse la charge : l'usage en production sans licence est une
+violation qui *termine automatiquement* les droits (clause des Terms), et la
+convergence programmée (GPL à 4 ans) préserve la promesse d'ouverture de la
+recherche : l'œuvre ne peut pas être capturée à jamais par personne, pas même
+par le concédant. La Date de conversion peut varier par version (clause des
+Terms) : le développeur conserve la main version par version.
+
+**Alternatives rejetées** : GPL immédiate (usage libre concédé d'emblée —
+exactement le scénario qu'il faut fermer) ; MIT/Apache-2.0 (permissifs, aucune
+condition d'usage) ; tous droits réservés (aucune voie légitime pour la
+communauté de recherche, pas de promesse d'ouverture — l'article v0.4 a besoin
+d'un chemin de réutilisation repérable) ; CC BY-NC (prévu pour les œuvres de
+l'esprit, inadapté au code exécutable, applique mal le seuil
+production/non-production).
+
+**Développement** : entrée 73 du journal de travail. Les en-têtes de fichier
+source (courte notice BSL par fichier) seront ajoutés progressivement aux
+prochains scellages — la licence s'applique par copie dès maintenant via
+`LICENSE` + README.
+
+### D85 — v0.6.0 axe 1 : attestation cryptographique de non-exfiltration du coffre
+
+**Décision** : la révision v0.6.0 exigera que l'environnement d'exécution de
+l'IA fournisse une **attestation matérielle** (TPM 2.0 measured boot / enclave
+SGX, quote vérifiable ancrée à une racine de confiance) couvrant le code qui
+manipule les données TRIADE-CF1 : ce code (i) est identifié octet par octet
+par l'attestation, (ii) n'émet AUCUNE donnée dérivée du coffre vers une API
+cloud — les sorties sont scellées à la racine locale. Le coffre CF2 marquera
+ses conteneurs « exige-attestation » et **refusera par défaut de déverrouiller
+sans quote valable** (fail-closed), avec procédure de dérogation explicite et
+consignée — l'arbitrage PERTE > EXPOSITION (D81) restant la décision finale du
+développeur, prise en connaissance de cause.
+
+**Formulation honnête de la preuve** : une « preuve à divulgation nulle de
+non-stockage » au sens strict n'existe pas pour une exécution arbitraire —
+aucune construction ZK ne prouve une absence historique sur du code non
+contraint. L'opérable, spécifié tel quel : (a) le code manipulant le coffre
+est audité sans voie d'egress des dérivés du coffre ; (b) ce code exact est
+attesté (identité + intégrité par la quote) ; (c) l'exécution en enclave
+scellée rend la sortie illisible hors de la machine (sealing local). La
+conjonction (a)∧(b)∧(c) est la preuve de confinement la plus forte
+constructible ; la spécification v0.6.0 la nommera sans la survendre.
+
+**État actuel consigné** : l'infrastructure d'exécution actuelle de l'assistant
+(VM cloud sans TEE) **ne peut pas fournir cette attestation** — l'exigence est
+écrite maintenant, satisfaite quand une infrastructure TEE sera disponible ;
+entre-temps les mitigations en vigueur restent la garde durable D81, la
+rotation des lignées (D80) et la fenêtre d'exposition consignée.
+
+**Alternatives rejetées** : confiance dans l'honnêteté de l'agent (statu quo
+pré-D81, déjà invalidé par l'incident d'exposition) ; interdire à l'IA toute
+manipulation du coffre (tue la fonction : l'assistant doit relire les lignées
+pour sceller — D75) ; attestation logicielle seule, journal signé par clé
+logicielle (falsifiable par l'hyperviseur, ne prouve pas le confinement) ;
+« ZK mathématique » de non-émission (impraticable, survendue — cf.
+formulation honnête).
+
+**Critère de sortie** : un conteneur CF2 « exige-attestation » s'ouvre avec
+quote valable et REFUSE sans quote (échec nommé, pas de silence) ; la
+vérification de quote rejette quotes altérées et rejouées (falsifiabilité
+démontrée en laboratoire).
+
+### D86 — v0.6.0 axe 2 : interrupteur d'homme mort du coffre (Shamir, destruction des fragments)
+
+**Décision** : en v0.6.0, le conteneur CF2 chiffre ses entrées sous une clé
+maîtresse **jamais stockée entière** : clé découpée par Shamir en N fragments
+logés dans des gardes distinctes (répertoires à ACL distinctes, supports
+séparés) ; le déverrouillage reconstitue la clé en RAM puis l'efface. Une
+**sentinelle** surveille la couche C (cartes et artefacts) par audit d'accès
+(ETW/ACL Windows) : accès en lecture par un processus hors liste blanche →
+**destruction immédiate des fragments présents** (écrasement multi-passe, TRIM
+si SSD) — sous le seuil de reconstitution, Shamir est informationnellement
+sûr : le coffre devient indéchiffrable, pas seulement « révoqué ». Le code
+volé reste inexploitable pour l'employeur : les enveloppes de carte sont mortes
+avec le coffre.
+
+**Adversaire modélisé, borne consignée** : processus tiers aux privilèges
+*utilisateur* (l'agent d'audit de l'employeur, un outil concurrent) — PAS un
+attaquant admin/noyau qui gèle d'abord la machine (édition froide) : une
+sentinelle userland peut être tuée avant d'agir. La garantie honnête : la
+sentinelle brûle les fragments *tant qu'elle vit* ; la fenêtre entre détection
+et destruction est la surface résiduelle, mesurée au critère de sortie et
+consignée § 13.1 étendu.
+
+**Contrepartie arbitrée** : la destruction est irréversible PAR CONSTRUCTION —
+une fausse alerte est une perte auto-infligée. Double seuil de déclenchement
+(deux signaux indépendants : processus non blanchi ET lecture de contenu, pas
+une simple ouverture d'attribut), liste blanche minimale (build, vérificateur,
+éditeur du développeur), test de santé de la sentinelle. L'arbitrage PERTE
+(fausse alerte) vs EXPROPRIATION appartient au développeur et sera consigné
+avec la configuration retenue.
+
+**Alternatives rejetées** : clé unique écrasée à la détection (une seule garde :
+corrompue avant l'écrasement, rien n'est détruit — Shamir distribue la
+destruction) ; cryptodestruction logique (« révocation » d'un drapeau —
+inopérante si la clé a fuité avant) ; sentinelle en service noyau (hors
+périmètre du protocole, esprit D7 : pas de code noyau) ; kill-switch réseau à
+distance (dépendance réseau + canal de commande falsifiable — un tiers peut
+déclencher la perte à distance, exactement l'inverse du but).
+
+**Critère de sortie** : en VM de laboratoire, un scénario d'exfiltration
+simulé (processus non blanchi lisant une carte) détruit les fragments et rend
+le conteneur indéchiffrable (preuve par restauration de copies de fragments de
+test) ; taux de fausse alerte nul sur la durée d'essai nominale consignée ;
+latence détection→destruction mesurée et bornée.
+
+### D87 — v0.6.0 axe 3 : filigrane cryptographique de l'Intention — clé Ed25519 hors-ligne, la souveraineté des mises à jour
+
+**Décision** : chaque arbre de couche I (par artefact et par version) est
+condensé (SHA-256 sur manifeste ordonné des fichiers) puis **signé par la clé
+privée Ed25519 du développeur, générée et conservée hors-ligne** (machine hors
+ligne ou support papier — JAMAIS dans le bac à sable de l'assistant :
+discipline D30 « graine jamais confiée », étendue du sceau de carte au sceau
+d'intention). Le dépôt porte la clé publique I et les signatures par version ;
+la chaîne de build et le chemin de patch **refusent toute couche I dont la
+signature échoue**. Corollaire : tout *diff d'intention* — mise à jour, patch,
+nouvelle version — exige la clé physique du développeur. Voler le binaire
+(couche B), le dépôt (B+C), et même les clés du poste (phrase de lignée, graine
+de carte — scénario D76 déjà vécu) ne permet PAS de produire une mise à jour
+valide : l'oracle et le verrou croisé rejettent l'update non signée. Le
+développeur reste l'unique source d'évolution de l'intention.
+
+**Hiérarchie des clés consignée (trois gardes, trois menaces)** :
+(1) phrase de lignée — chiffre les enveloppes de carte, menace « vol du dépôt
+au repos » ; (2) graine Ed25519 en ligne — signe les cartes, atteste les
+FAITS (les octets scellés) ; (3) clé I hors-ligne — signe l'INTENTION,
+atteste la VOLONTÉ (le droit de faire évoluer). La clé (3) est le seul des
+trois secrets que le bac à sable ne verra jamais.
+
+**Alternatives rejetées** : signer I avec la graine existante du dépôt (elle
+vit dans le bac à sable — un vol du poste l'emporte, contre-exemple D76) ;
+HMAC symétrique (la vérification exigerait le secret : chaque vérificateur
+tiendrait la clé, distribution impossible) ; X.509/PGP (chaîne de confiance
+tierce inutile, incohérent avec D4 : Ed25519 auto-porté) ; horodatage tiers
+en dépendance dure (la date du commit signé git suffit en première intention).
+
+**Critère de sortie** : cérémonie de génération hors-ligne documentée (script
++ mode d'emploi exécutable sans l'assistant) ; le dépôt vérifie la signature
+I de tous les jalons scellés ; falsification d'un octet d'un `.md` de couche I
+rejetée (falsifiabilité démontrée) ; un diff d'intention non signé refusé par
+le chemin de patch (test en laboratoire).
+
+**Développement commun D84–D87** : entrée 73 du journal de travail ; programme
+inscrit à la feuille de route (`docs/PLAN_MILESTONES.md`, section v0.6.0).
+La spécification PROTOCOLE_TRIADE passera à v0.6.0 quand les trois composants
+seront écrits (modèle v0.5.1 : le coffre fut spécifié à l'implémentation, pas
+avant). Positionnement : priorité à CF2 (D86) et au sceau I (D87) après le
+scellage 0.5.0 de M4 — ils touchent les disciplines § 15.3 et FORMAT_CARTE
+§ 11 et doivent s'intégrer aux cérémonies de rotation existantes ; l'attestation
+TEE (D85) selon disponibilité d'infrastructure.
+

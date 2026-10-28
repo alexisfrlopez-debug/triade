@@ -12,6 +12,19 @@ PE32+ écrit à la main). La suite cryptographique est paramétrable par le dév
 permet de sauvegarder et transférer l'état de développement vers n'importe quel agent
 conforme TRIADE.
 
+## Licence
+
+Le dépôt est sous **Business Source License 1.1** (D84, 28/10/2026) — concédant :
+**Alexis Lopez**. Usage, copie, modification et redistribution autorisés **hors
+production uniquement** jusqu'à la Change Date (**2030-10-28**), où l'œuvre
+passe sous **GPL v3.0 ou ultérieure**. Tout usage en production (notamment par
+ou pour le compte d'un employeur ou de toute entité commerciale) exige une
+licence commerciale écrite du concédant. **Exclusions** (aucun droit concédé) :
+`.keys/`, conteneurs de coffre-fort, `PHRASE-CONTROLE-COFFRE.txt`, `.gdrive/`
+et tout jeton — cf. `LICENSE`. La barrière juridique complète la barrière
+cryptographique du programme v0.6.0 (D85–D87 : attestation de non-exfiltration,
+interrupteur d'homme mort Shamir, filigrane hors-ligne de la couche I).
+
 ## Priorités (non négociables, arbitrage lexicographique)
 
 **Sécurité > Performance > Optimisation > Coût en tokens** — un objectif n'est jamais

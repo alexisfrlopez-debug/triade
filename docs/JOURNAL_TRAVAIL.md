@@ -4779,3 +4779,80 @@ tailles négociées, EncryptMessage), tls-07 (réception déchiffrée — Extra 
 propriétaire unique), tls-08 (orchestration), révisions http-08:R2/http-10:R2,
 oracle à scénarios SSPI, carte génération 6 (lignée D80), proxy.exe
 0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.
+
+## Entrée 73 — D84–D87 (28/10, ~18:30) : SOUVERAINETÉ — le dépôt passe sous licence BSL 1.1 et le programme v0.6.0 « preuve cryptographique » est ouvert : attestation de non-exfiltration, interrupteur d'homme mort Shamir, filigrane hors-ligne de l'Intention
+
+Contexte : directives développeur reçues au « go » (après D83) — avant de
+poursuivre M4 : (1) passer le projet sous licence BSL, (2) renforcer la
+preuve cryptographique dans la v0.6.0 sur trois mécanismes exactement
+spécifiés par le développeur. Le nom du concédant est donné dans la foulée :
+Alexis Lopez. État d'entrée vérifié : D80–D83 clos (rotation, garde durable
+v0.5.2, tls-05, tls-04), arbre git propre à 96f5800.
+
+1. **D84 — LICENCE BSL 1.1 POSÉE** : `LICENSE` à la racine du dépôt — termes
+   officiels MariaDB VERBATIM (le covenant du concédant interdit toute autre
+   modification que les paramètres), paramètres : concédant **Alexis Lopez**,
+   œuvre concédée = Protocole TRIADE (code + docs) **à l'exclusion des secrets
+   et matériaux de garde** (`.keys/`, conteneurs TRIADE-CF1+,
+   `PHRASE-CONTROLE-COFFRE.txt`, `.gdrive/`, jetons — section Exclusions dans
+   le fichier), Additional Use Grant **None**, Change Date **2030-10-28**,
+   Change License **GPL v3.0 ou ultérieure**. README : section Licence.
+   Effet : usage hors production seul jusqu'à la conversion ; tout usage de
+   production (notamment par l'employeur) exige une licence commerciale — la
+   clause « termination automatique » des Terms ferme la porte. La convergence
+   GPL à quatre ans préserve la promesse d'ouverture de la recherche.
+2. **D85–D87 — PROGRAMME v0.6.0 « SOUVERAINETÉ CRYPTOGRAPHIQUE » CONSIGNÉ**
+   (décisions formalisées, alternatives rejetées par axe, critères de sortie
+   mesurables ; inscrites à la feuille de route, section dédiée) :
+   - **D85, attestation de non-exfiltration** : l'environnement d'exécution
+     de l'IA devra fournir une attestation matérielle TPM 2.0/SGX (quote
+     vérifiable) du code manipulant TRIADE-CF1 — code identifié, sans egress
+     cloud des dérivés du coffre, sorties scellées localement ; le coffre CF2
+     refusera de déverrouiller sans quote (fail-closed). Formulation honnête
+     consignée : la conjonction code-audité-sans-egress + identité attestée +
+     sealing local est la preuve de confinement la plus forte constructible —
+     une « ZK de non-stockage » au sens strict n'existe pas pour une exécution
+     arbitraire, la spécification v0.6.0 ne la survendra pas. État actuel dit
+     tel quel : la VM cloud actuelle sans TEE ne peut PAS satisfaire
+     l'exigence.
+   - **D86, interrupteur d'homme mort** : clé maîtresse du coffre CF2 découpée
+     en Shamir (jamais stockée entière, fragments en gardes distinctes) ;
+     sentinelle d'audit d'accès sur la couche C — lecture par processus hors
+     liste blanche → destruction des fragments (écrasement multi-passe) →
+     sous le seuil, le coffre est informationnellement mort, le code volé
+     inexploitable. Bornes honnêtes : adversaire utilisateur (pas admin/noyau,
+     édition froide hors modèle — consigné) ; fausse alerte = perte
+     auto-infligée → double seuil de déclenchement, l'arbitrage appartient au
+     développeur.
+   - **D87, filigrane de l'Intention** : chaque arbre de couche I condensé
+     puis signé par la clé Ed25519 du développeur **générée et conservée
+     hors-ligne** (discipline D30 étendue : le bac à sable ne la verra jamais) ;
+     build et chemin de patch refusent une couche I non signée → tout diff
+     d'intention exige la clé physique. Hiérarchie des clés consignée : phrase
+     de lignée (enveloppes), graine en ligne (cartes = FAITS), clé I hors-ligne
+     (intention = VOLONTÉ) — trois gardes, trois menaces.
+3. **Positionnement du programme** : priorité aux axes CF2-Shamir et sceau I
+   APRÈS le scellage 0.5.0 de M4 (ils touchent § 15.3 et FORMAT_CARTE § 11 et
+   doivent s'intégrer aux cérémonies de rotation/garde) ; l'attestation TEE
+   selon disponibilité d'infrastructure. La spécification PROTOCOLE_TRIADE
+   passera à v0.6.0 quand les trois composants seront écrits (modèle v0.5.1 :
+   spécifié à l'implémentation, pas avant) — la version courante demeure
+   v0.5.2, inchangée en ce commit.
+4. Docs alignés : DECISIONS.md (section « Décisions de souveraineté D84–D87 »,
+   format normalisé), PLAN_MILESTONES.md (section « Programme v0.6.0 » +
+   en-tête d'état), README (section Licence), REPRISE (état général, chronique
+   § 7, suite), LICENSE (nouveau). NB discipline : aucun en-tête de licence
+   par fichier source n'est ajouté dans ce commit (churn évité — la licence
+   s'applique par copie via LICENSE + README ; ajouts progressifs aux
+   prochains scellages, consigné D84).
+5. Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle D81
+   toujours valable, conteneur 0323029a… inchangé, sentinelles intactes).
+
+**Ce que ça établit** : la menace nommée par le développeur — l'expropriation
+par l'employeur — a désormais DEUX lignes de défense consignées et traçables :
+la barrière juridique (BSL : usage de production sans licence = violation
+auto-terminante) et la barrière cryptographique à venir (v0.6.0 : le code
+volé ne peut ni s'ouvrir — coffre mort, ni évoluer — intention non signée).
+Suites : M4 étape (b) — tls-06 (émission chiffrée), tls-07, tls-08, révisions
+http-08:R2/http-10:R2, oracle SSPI, carte génération 6, proxy.exe
+0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.
