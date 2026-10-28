@@ -35,6 +35,21 @@ ARRÊT PARTIEL étape b (D79 — mesure auteur, trois feuilles pures) :
   préfigurée D77 0x7480 datait du slot 0x140 avant élargissement du slot
   http-08:R2 à 0x180, corrigée D91).
 
+ARRÊT D95 (le câblage — http-12:R2, NOTÉE-MESURÉE-PROUVÉE puis embarquée
+  dev.2) : http-12:R2 0x7DC0 (0x200 — la fin 0x7FC0 ≤ 0x8000 : la section
+  .text3 ne GRANDIT pas, la taille de fichier reste 0x6E00 ; la révision
+  tient dans l'espace int3 restant, l'ancien ZONE_RESERVEE_T3 se réduit à
+  0x7FC0-0x7FFF). L'ENTRÉE PE passe à 0x7DC0 (ENTREE_R2 — delta PE
+  documenté ; l'ancêtre http-12:R1 @0x1800 reste embarqué octet pour
+  octet, R7, indexé par la carte — la preuve d'héritage le lit, le
+  lancement ne l'exécute plus). LA PORTE R10 .text3 vient avec le
+  câblage : l'entrée #28 @0x2810 (l'ancien terminateur M4-dev.1 — la
+  table est PLEINE, R_VERSION @0x2820 immovable R7) = (0x6000, 0x2000,
+  somme .text3) — la marche de http-12:R2 s'arrête à la BORNE (adresse
+  de R_VERSION), fail-closed sur entrée trouée (rva nul / taille
+  nulle = KO : la troncature silencieuse du terminateur M3 n'existe
+  plus). Version dev.2 = 0x00050002.
+
 EXTENSION M4 (D77, génération 6 — blocs g7xxxx) :
   - .text3 démarre à 0x6000 (alignement section) : tls-01 0x6000,
     tls-02 0x6080, tls-03 0x6180 ; arrêts D79/D81 : tls-05 0x65C0 ;
@@ -232,7 +247,22 @@ DLL_CHARACTERISTICS = L3.DLL_CHARACTERISTICS  # DYNAMICBASE | HEVA | NX
 
 VERSION_DEV1 = "0.5.0-dev.1"   # tunnel chiffré : 8 blocs tls + 2 révisions http
 VERSION_U64_DEV1 = 0x00050001  # R10 : monotonie (plancher 0.4.0 = 0x00040000)
+VERSION_DEV2 = "0.5.0-dev.2"   # + le câblage : http-12:R2, porte R10 .text3 (D95)
+VERSION_U64_DEV2 = 0x00050002  # R10 : monotonie (≥ dev.1 ≥ plancher 0.4.0)
 VERSION_U64_MIN = 0x00040000   # accepté par la porte R10 (http-12:Q1 scellé)
+
+# --- Porte R10 .text3 (D95 — l'entrée #28, l'ancien terminateur remplacé) --------
+# La table d'intégrité est PLEINE : 27 entrées (26 héritage + libc-07) finissent
+# à 0x2810, R_VERSION scellé @0x2820 est immovable (R7) — l'entrée .text3 prend
+# la place du terminateur @0x2810 et la marche de http-12:R2 s'arrête à la BORNE
+# (l'adresse de R_VERSION — jamais son contenu : la version n'est lue qu'à la
+# fin de marche). La somme est recalculée par le build du binaire final.
+R10_PORTE_TEXT3 = 0x2810       # emplacement de l'entrée (fin de table)
+R10_BORNE = L3.R_VERSION       # 0x2820 — la borne de marche (adresse)
+R10_TEXT3_RVA = 0x6000         # la porte garde TOUTE la couche .text3
+R10_TEXT3_TAILLE = 0x2000      # y compris le bloc 0x7DC0 : la porte se garde
+                               # elle-même (miroir http-12:R1 @0x1800, table M3)
+R10_NB_ENTREES = 28            # 26 héritage + libc-07 + porte .text3
 
 # --- Blocs embarqués dans proxy.exe M4 (couche C, génération 6) ---------------
 # g7xxxx = M4. Les trois premières feuilles pures sont ARRÊTÉES sur mesure
@@ -251,25 +281,31 @@ BLOCS_TLS = [
 BLOCS_REVISIONS = [
     ("g70009", "http-08:R2", 0x7340, 0x180, "M4-dev.1", 0),  # cible https (préfig.)
     ("g70010", "http-10:R2", 0x74C0, 0x900, "M4-dev.1", 0),  # session + routage (préfig.)
+    ("g70011", "http-12:R2", 0x7DC0, 0x200, "M4-dev.2", 0),  # LE CÂBLAGE (arrêt D95)
 ]
 # L'héritage M3 complet (io, libc, tcp, http-01..07, 09, 11, 12) est repris
 # OCTET POUR OCTET (R7) depuis le plan M3 — le build_m4 le lira via L3.
 
-ENTREE = L3.ENTREE                            # 0x1800 — http-12 (R7, inchangé)
+ENTREE = L3.ENTREE                            # 0x1800 — http-12:R1 (R7, inchangé)
+ENTREE_R2 = 0x7DC0                            # D95 : le point d'entrée PE devient
+                                              # http-12:R2 (delta documenté ;
+                                              # l'ancêtre reste embarqué, mort au
+                                              # lancement, vivant à la preuve R7)
 
 NOMS_BLOCS = dict(L3.NOMS_BLOCS) | {
     "g70001": "tls-utf16", "g70002": "tls-verdicts", "g70003": "tls-jetons",
     "g70004": "tls-poignee", "g70005": "tls-cles", "g70006": "tls-emission",
     "g70007": "tls-reception", "g70008": "tls-session",
     "g70009": "http-cible-r2", "g70010": "http-session-r2",
+    "g70011": "http-principal-r2",
 }
 
 # --- .text3 : zones ------------------------------------------------------------
 
 ZONE_TLS_FEUILLES = (0x6000, 0x641F)   # tls-01..03 (arrêtées D79, mesure auteur)
 ZONE_TLS_SUITE = (0x6420, 0x733F)      # tls-04..08 (préfiguration — réarrêt b)
-ZONE_REVISIONS = (0x7340, 0x7DFF)      # http-08:R2, http-10:R2 (préfiguration)
-ZONE_RESERVEE_T3 = (0x7E00, 0x7FFF)    # int3 — extension future (M5 : patch à
+ZONE_REVISIONS = (0x7340, 0x7FBF)      # http-08:R2, http-10:R2, http-12:R2 (D95)
+ZONE_RESERVEE_T3 = (0x7FC0, 0x7FFF)    # int3 — extension future (M5 : patch à
                                        # chaud le réutilisera peut-être)
 
 # --- IAT secur32 : SEPT entrées (D77 — emplacements ARRÊTÉS D81, cf. IAT_SEC32_SLOTS)

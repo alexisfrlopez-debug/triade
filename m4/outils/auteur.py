@@ -72,6 +72,12 @@ _FICHIERS = {
                "RÉVISION (ancêtre http-10 scellé 0.4.0, cité § 9) : routage "
                "https → tls-08 + table des réponses étendue (certificat "
                "invalide → 502 « certificat rejete »)"),
+    "g70011": ("http-12-principal-r2", "http-12:R2",
+               "RÉVISION (ancêtre e50012 http-12:R1 scellé 0.4.0, cité § 9) — "
+               "LE CÂBLAGE : la boucle lance http-10:R2 (0x74C0) ; la porte R10 "
+               "devient marche aux BORNES (28 entrées, l'entrée .text3 "
+               "remplace le terminateur @0x2810, fail-closed sur entrée "
+               "trouée) ; l'ancêtre @0x1800 reste embarqué (R7)"),
 }
 
 
@@ -146,6 +152,8 @@ SYMBOLES = {
     # Blocs de la révision http-10:R2 (D92 — le routage TLS) :
     "TLS_SESSION": 0x6D40,       # g70008 — la session TLS appelée par http-10:R2
     "HTTP_CIBLE_R2": 0x7340,     # g70009 — le parseur RÉVISÉ (verdict 4 = cible TLS)
+    # Blocs de la révision http-12:R2 (D95 — le câblage) :
+    "SESSION_R2": 0x74C0,        # g70010 — la session RÉVISÉE lancée par boucle
     # IAT secur32 (ARRÊT D81 — layout.IAT_SEC32_SLOTS, slots .rdata M4) :
     # D83 : le symbole secur32 s'appelle IAT_ISC (l'abréviation des specs
     # elles-mêmes — « boucle ISC ») — IAT_ICS désignait DÉJÀ Initialize-
@@ -337,6 +345,7 @@ NOMS_COURTS = {
     "tls-08-session": "session TLS cliente (orchestration)",
     "http-08-cible-r2": "cible (forme) — révision https",
     "http-10-session-r2": "session proxy — révision routage TLS",
+    "http-12-principal-r2": "orchestration proxy — révision câblage + porte R10",
 }
 
 

@@ -2703,3 +2703,70 @@ ancêtres R1 de .text2 (R7 : la zone scellée ne bouge pas d'un octet).
 http-10:R2 — l'orchestrateur scellé appelle encore R1), terrain (c)
 (curl https:// par le proxy, certificat invalide → 502 propre),
 cristallisation 10/10, scellage 0.5.0. Entrée 80 du journal.
+
+### D95 — M4 : LE CÂBLAGE livré — http-12:R2 notée-mesurée-prouvée puis embarquée : proxy.exe 0.5.0-dev.2, la boucle lance http-10:R2 (0x74C0), l'entrée PE passe à 0x7DC0, LA PORTE R10 .text3 vient avec le câblage (entrée #28 @0x2810, marche aux BORNES, fail-closed sur entrée trouée) ; harnais 12 PASS × 2 graines (400 mutations de porte, 6/6 falsifications) ; 473 verrous structurels + oracle 560 cas ; cristallisation 3/10, byte-stable
+
+**Contexte** : D94 avait clos l'étape (b) sur un corps sans câblage —
+l'orchestrateur scellé http-12:R1 lançait encore http-10:R1 @0x5580. La
+pièce exigée par le terrain (c) avant le scellage 0.5.0, promise par
+l'arbitrage D94 (ii) (« un R10 .text3 viendra avec le câblage, pas en
+contrebande »).
+
+**La révision minimale** : UNE instruction fonctionnelle change —
+`lea rcx, [rip - 0xa1e]` → 0x74C0 (http-10:R2, D92) au lieu de 0x5580.
+Le reste est l'héritage R1 instruction pour instruction (ordre D42,
+ExitProcess 0/1/2) — le différentiel d'ancêtre le PROUVE trace à trace :
+12 scénarios, écart UNIQUE = la cible du spawn session. L'entrée PE
+passe à 0x7DC0 (delta PE documenté) ; l'ancêtre @0x1800 reste embarqué
+octet pour octet (R7 — mort au lancement, vivant à la preuve d'héritage).
+
+**La porte R10 .text3** : la table est PLEINE (27 entrées + terminateur
+@0x2810, R_VERSION @0x2820 immovable R7) — l'entrée #28 (0x6000, 0x2000,
+somme .text3) REMPLACE le terminateur et la marche de http-12:R2
+s'arrête à la BORNE (l'adresse de R_VERSION — jamais son contenu avant
+la fin). Fail-closed RENFORCÉ : rva nul ou taille nulle = ÉCHEC (un
+trou nomme une corruption — la troncature silencieuse du terminateur
+M3 n'existe plus). La somme couvre TOUTE la couche .text3, bloc 0x7DC0
+compris : LA PORTE SE GARDE ELLE-MÊME (miroir de http-12:R1 gardé par
+la table M3). La couche M4 entière — qui n'était gardée que par la
+carte + l'oracle + le verrou croisé depuis D94 — devient gardée AU
+LANCEMENT.
+
+**Le harnais** (`m4/harnais_principal_r2.py`) : V1 round-trip (R2 + 
+ancêtre à 0x1800) ; V2 différentiel d'ancêtre (la divergence légitime
+.text3 est NOMMÉE : R1 ne la garde pas, R2 la nomme KO — miroir du
+domaine https D91) ; V3 fuzz de la porte — le modèle (spécification)
+et l'émulation (octets) nomment le MÊME verdict, ZÉRO passage
+silencieux ; V4 six mutations stables en taille TOUTES attrapées —
+en tête LE CONTRE-CÂBLAGE (lea → 0x5580), puis les bornes décalées
+±0x10 (l'entrée .text3 sautée / la version lue comme entrée), le
+plancher abaissé, le code E3, le sens du test d'arrêt. **Cinq fautes
+du HARNAIS nommées avant le vert** (symboles de fixtures croisés
+MSG_KO/MSG_ERREUR/MSG_CONNEXION ; drapeau R_QUIT semé un octet sur un
+qword ; appel tcp-01 omis du modèle en échec d'écoute ; remplissage
+uniforme → collisions de somme, puis linéaire → périodicité : PRNG
+seedé ; mutations sans effet tirées au fuzz) — aucune dans la notation.
+
+**Le build dev.2** : g70011 @0x7DC0 × 0x200 (la section ne grandit
+pas — 28 160 o INCHANGÉS, l'ancienne réserve int3 absorbe le câblage) ;
+la section .text3 est composée D'ABORD (la porte scelle sa somme
+dessus) ; AddressOfEntryPoint 0x7DC0 ; validation = marche aux bornes
+28 entrées (le MÊME contrat que la notation — jamais deux sources) ;
+version 0x00050002 ; oracle structurel 473 verrous (+56 : IAT
+g70011, appels directs, données RIP dont les DEUX cibles de code par
+lea — pointeurs de fonctions pour tcp-06) ; verifier-puis-écrire
+38/38 ; carte 49 blocs, verrou croisé 49 empreintes + signature ;
+cristallisation 3/10 en trois runs, sha INCHANGÉ
+(b813f65e…) ; anti-rollback armé (dev.2 > dev.1 licite).
+
+**Le critère M4 est CÂBLÉ de bout en bout** : l'entrée PE →
+http-12:R2 → http-10:R2 → tls-08 → Schannel. Reste : terrain (c),
+cristallisation 10/10, scellage 0.5.0.
+
+Conséquences : layout.py (arrêt D95 : g70011, ENTREE_R2, VERSION_DEV2,
+constantes R10_PORTE_TEXT3/BORNE/NB_ENTREES, zones) ; auteur.py
+(_FICHIERS g70011, SYMBOLES SESSION_R2) ; build_m4.py (onzième bloc,
+porte .text3, entrée PE, validation bornée, deltas, compteur 38/49) ;
+harnais_principal_r2.py NOUVEAU ; spec m4/I/http-12-principal-r2.md
+NOUVELLE (écrite-avant-code) ; notation + brouillon NOUVEAUX.
+Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).

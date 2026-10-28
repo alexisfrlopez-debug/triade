@@ -5746,3 +5746,115 @@ critère M4 « HTTPS en transit » a désormais un corps : il attend le
 terrain (c) pour respirer (curl https:// par le proxy, certificat
 invalide → 502 propre — après la révision http-12:R2). Terrain : D57
 (WER) seul point ouvert.
+
+## Entrée 81 — D95 (29/10, ~23:50) : M4 — LE CÂBLAGE livré : http-12:R2 notée-mesurée-prouvée puis embarquée — proxy.exe 0.5.0-dev.2 : la boucle d'acceptation lance http-10:R2 (0x74C0), l'entrée PE passe à 0x7DC0, LA PORTE R10 .text3 vient avec le câblage (l'entrée #28 remplace l'ancien terminateur, marche aux BORNES, fail-closed sur entrée trouée — la couche M4 entière gardée AU LANCEMENT)
+
+**Contexte** : D94 avait livré le corps (le tunnel embarqué) mais
+l'orchestrateur scellé http-12:R1 @0x1800 lançait encore http-10:R1
+@0x5580 — la session 0.4.0, qui ne connaît pas le tunnel. La pièce
+exigée par le terrain (c) avant le scellage 0.5.0 : UNE révision,
+http-12:R2, qui câble le routage — et qui porte avec elle (pas en
+contrebande) la porte R10 .text3 promise par l'arbitrage D94 (ii).
+
+1. **LA SPÉCIFICATION, écrite-avant-code** (`m4/I/http-12-principal-r2.md`) :
+   l'héritage R1 repris TEL QUEL (ordre d'initialisation D42, ExitProcess
+   0/1/2, I1-I5) ; TROIS révisions de contrat — P1 le point d'entrée PE
+   devient 0x7DC0 (.text3, delta documenté ; l'ancêtre @0x1800 reste
+   embarqué octet pour octet, R7, mort au lancement, vivant à la preuve
+   d'héritage) ; Q1 la porte devient MARCHE AUX BORNES : la table est
+   PLEINE (27 entrées + terminateur @0x2810, R_VERSION @0x2820
+   immovable R7 — l'entrée .text3 [0x6000, 0x2000] PREND la place du
+   terminateur, la marche s'arrête à l'ADRESSE de R_VERSION, jamais son
+   contenu avant la fin), et TOUTE entrée d'rva nul ou de taille nulle
+   est un ÉCHEC — la troncature silencieuse du terminateur M3 n'existe
+   plus, fail-closed renforcé ; Q3 LA BOUCLE lance http-10:R2 (0x74C0)
+   avec la socket — l'unique différence fonctionnelle avec R1.
+2. **LA NOTATION** (`m4/notation/http-12-principal-r2.asm`, générée par
+   outils/auteur.py depuis le brouillon) : 458 o / 99 instructions /
+   slot 0x7DC0 × 0x200 (padding 54, D8 — la fin 0x7FC0 ≤ 0x8000 : la
+   section .text3 ne GRANDIT PAS, la taille de fichier reste 28 160 o,
+   l'ancienne zone réserve-t3 se réduit à 0x7FC0-0x7FFF). La porte :
+   r15 = borne (lea [rip + VERSION]), cmp rbx, r15 / jae — la marche
+   s'arrête à R_VERSION ; l'ancre RIP-relative donne la base d'image ;
+   rva nul → KO, taille nulle → KO, somme divergente → KO, version <
+   0x40000 → KO. Le câblage : `lea rcx, [rip - 0xa1e]` → 0x74C0 —
+   JAMAIS 0x5580 (la falsification nominale de V4).
+3. **LE HARNAIS** (`m4/harnais_principal_r2.py`) — 12 PASS / 0 ÉCHEC ×
+   graines 20261028/20261029 (400 mutations de porte par run) :
+   V1 round-trip (R2 458 o == déclarés, idempotence ; l'ancêtre R1
+   assemblé à 0x1800, 438 o — le préalable du différentiel) ; V2
+   différentiel d'ancêtre sur 12 scénarios (nominal 3 accepts + arrêt,
+   zéro accept, E3 échec d'accept sans arrêt, E2 écoute/console/session,
+   porte : squelette corrompu / .text3 corrompu / version sous plancher /
+   entrée de somme corrompue / entrée .text3 trouée [rva et taille]) —
+   traces R1 == R2 IDENTIQUES sauf la cible du spawn session
+   (0x5580 → 0x74C0, LE CÂBLAGE), la divergence légitime .text3 NOMMÉE
+   (R1 ne la garde pas, R2 la nomme KO — miroir du domaine https D91) ;
+   V3 fuzz de la porte : 400 mutations d'un point (champ d'entrée OU
+   octet gardé), le modèle de marche (depuis la SPÉCIFICATION) et
+   l'émulation (les OCTETS, unicorn) nomment le MÊME verdict, ZÉRO
+   passage silencieux ; V4 falsification : SIX mutations stables en
+   taille TOUTES attrapées + témoin vert — le CONTRE-CÂBLAGE (lea →
+   0x5580 : la boucle lance l'ancêtre !), la borne remontée à 0x2830
+   (la version lue comme une entrée — taille nulle — la table saine
+   échoue), la borne descendue à 0x2810 (l'entrée .text3 SAUTÉE — la
+   corruption .text3 passe la porte), le plancher abaissé (0x30000
+   passe), le code de sortie E3 dévié, le sens du test d'arrêt inversé.
+4. **LES FAUTES NOMMÉES AVANT LE VERT** (aucune dans la notation
+   finale, toutes consignées) : (a) la notation initiale visait
+   MSG_ERREUR (0x28F0) au lieu de MSG_KO (0x2910) sur le chemin KO —
+   et MSG_CONNEXION au lieu de MSG_ERREUR sur le chemin réseau : les
+   NOMS des fixtures M3 sont piégeux (R_MSG_CONNEXION @0x2870 n'est
+   JAMAIS lu par http-12 — « connexion entrante » appartient à
+   http-10), le différentiel les a nommés à la première exécution ;
+   (b) le drapeau R_QUIT n'était écrit qu'un OCTET sur un qword lu
+   entier — le remplissage le rendait non-nul, le chemin d'arrêt pris
+   même sans arrêt demandé (exactement le défaut que la mutation m6
+   devait exposer : la suite savait nommer ce que le harnais avait
+   mal semé) ; (c) le modèle omettait l'appel tcp-01 sur échec
+   d'écoute (l'appel A eu lieu — le retour 0 est la trace de l'échec) ;
+   (d) le remplissage uniforme 0xCC de l'image d'émulation rendait
+   POSSIBLES des collisions de somme entre plages de même longueur
+   (0xCCCCCCCCCCCCCC00) — un V3 « silencieux » fictif : le remplissage
+   est passé déterministe position-dépendant, puis PRNG seedé (un
+   remplissage LINÉAIRE avait encore des collisions par périodicité) ;
+   (e) le fuzz pouvait tirer une mutation SANS effet (valeur == 
+   originale, P=1/256 sur les octets) — comptée à tort comme passage
+   silencieux : désormais retournée effectivement.
+5. **LE BUILD dev.2** (`build_m4.py` adapté, UNE décision UNE chaîne
+   verte — l'assert BLOCS_M4 == layout interdisait la notation orpheline) :
+   g70011 embarqué (BLOCS_M4 += — 38 embarqués : 26 héritage + libc-07 +
+   11 M4) ; LA PORTE R10 .text3 scellée @0x2810 sur la section composée
+   D'ABORD (ordre inversé dans composer_image_m4 : la somme couvre les
+   ONZE blocs + int3 — 0x6000, 0x2000, y compris le bloc 0x7DC0 : LA
+   PORTE SE GARDE ELLE-MÊME, miroir de http-12:R1 gardé par la table
+   M3) ; AddressOfEntryPoint 0x1800 → 0x7DC0 (delta PE documenté) ;
+   la validation rejoue la MARCHE AUX BORNES (28 entrées, entrée trouée
+   = échec — le MÊME contrat que la notation, jamais deux sources) ;
+   zone réserve-t3 reculée à 0x7FC0 (l'assert int3 suit) ; version
+   0x00050002 ; deltas .rdata : + (0x2810, 16, porte .text3). Oracle
+   structurel M4 : 473 verrous (IAT g70011 = GSH/InitCS/ExitProcess/
+   CloseHandle/WSACleanup ; appels directs hello-02/tcp-01/02/06/11 ;
+   données RIP : table/ancre/version/état .data/messages + LES DEUX
+   CIBLES DE CODE PAR lea — http-11 @0x5D80 et http-10:R2 @0x74C0,
+   pointeurs de fonctions passés à tcp-06).
+6. **BILAN** : proxy.exe 0.5.0-dev.2 — 28 160 o (taille INCHANGÉE : le
+   câblage tient dans l'espace int3 restant), sha256
+   b813f65e37752ca7a56d549955a8e807b9ba07dc2288f32aab84e8e2db31e526 ;
+   cristallisation 3/10 en TROIS runs (build graine 20261028 ;
+   --verifier 20261029 complet ; --verifier 20261030 reduit), artefact
+   BYTE-STABLE (sha inchangé) ; carte génération 6 re-scellée : 49
+   blocs sur 5 artefacts, verrou croisé 49 empreintes + signature
+   Ed25519 + racine (MÊME graine lignée D80 — le témoin ne bouge pas) ;
+   anti-rollback R6 armé (dev.2 > dev.1, reconstruction licite).
+   **Le critère M4 « HTTPS en transit » est maintenant CÂBLÉ de bout en
+   bout : l'entrée PE → http-12:R2 → http-10:R2 → tls-08 → Schannel.**
+   Reste M4 : terrain (c) (curl https:// par le proxy, certificat
+   invalide → 502 propre), cristallisation 10/10, scellage 0.5.0 ;
+   terrain : D57 (WER) seul point ouvert.
+7. **Docs** : Entrée 81 du journal, DECISIONS D95, PLAN (M4 suite D95),
+   REPRISE (tableau § 2 + chronique § 7), README (état M4), worklog
+   (Task ID 22). Aucune clé touchée : RIEN à remettre par cérémonie
+   (phrase de contrôle D81 valable, conteneur 0323029a… inchangé,
+   sentinelles intactes — proxy 0.4.0 dd12b649…, demo 73c064fb…,
+   superviseur 2fb19c0f…, hello, selftest, echo).

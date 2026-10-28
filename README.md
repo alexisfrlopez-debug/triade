@@ -328,10 +328,26 @@ build : 560 cas verts ; verifier-puis-écrire 37/37 ; carte
 génération 6 signée Ed25519 (MÊME graine — le témoin d'intégrité ne
 bouge pas), 48 blocs sur 5 artefacts, verrou croisé 48 empreintes,
 cristallisation 3/10 en trois runs, artefact BYTE-STABLE ;
-anti-rollback R6 armé. Reste M4 : http-12:R2 (câblage du routage
-vers http-10:R2 — l'orchestrateur scellé appelle encore
-R1 @0x5580), terrain (c) (curl https:// par le proxy, certificat
-invalide → 502 propre), cristallisation 10/10, scellage 0.5.0.
+anti-rollback R6 armé.
+
+**D95 : LE CÂBLAGE livré — proxy.exe 0.5.0-dev.2 (28 160 o INCHANGÉS, sha
+b813f65e…)** : http-12:R2 (g70011 @0x7DC0, 458 o) câble la boucle
+d'acceptation sur http-10:R2 (0x74C0) — UNE instruction fonctionnelle
+change, le différentiel d'ancêtre le prouve trace à trace ; l'entrée PE
+passe à 0x7DC0 (delta documenté, l'ancêtre @0x1800 reste embarqué R7).
+**LA PORTE R10 .text3 vient avec le câblage** : l'entrée #28 @0x2810
+(0x6000, 0x2000, somme .text3) remplace l'ancien terminateur, la marche
+de http-12:R2 s'arrête à la BORNE R_VERSION — fail-closed sur entrée
+trouée, LA COUCHE M4 ENTIÈRE GARDÉE AU LANCEMENT (la porte se garde
+elle-même). Harnais `m4/harnais_principal_r2.py` : différentiel 12
+scénarios, fuzz de la porte 400 mutations (ZÉRO passage silencieux),
+falsification 6/6 dont LE CONTRE-CÂBLAGE — 12 PASS × 2 graines. Build
+dev.2 : oracle structurel 473 verrous, verifier-puis-écrire 38/38,
+carte 49 blocs, verrou croisé 49, cristallisation 3/10 BYTE-STABLE.
+**LE CRITÈRE M4 EST CÂBLÉ DE BOUT EN BOUT : entrée PE → http-12:R2 →
+http-10:R2 → tls-08 → Schannel.** Reste M4 : terrain (c) (curl https://
+par le proxy, certificat invalide → 502 propre), cristallisation 10/10,
+scellage 0.5.0.
 Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement

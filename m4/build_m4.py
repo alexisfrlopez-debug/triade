@@ -1,19 +1,27 @@
 #!/usr/bin/env python3
-"""build_m4.py : Jalon M4 de TRIADE — tunnel chiffré SSPI/Schannel (proxy 0.5.0-dev.1).
+"""build_m4.py : Jalon M4 de TRIADE — tunnel chiffré SSPI/Schannel, CÂBLÉ (proxy 0.5.0-dev.2).
 
 Chaîne : notation (keystone) -> octets -> PE32+ à la main (CINQ sections :
 .text/.rdata/.data/.text2 + .text3 NOUVELLE) -> carte projet génération 6
 (lignée D80). Implémente le jalon M4 sous les règles R4/R7 (adresses stables —
 l'héritage M0/M1/M2/M3 repris OCTET POUR OCTET du proxy.exe 0.4.0 scellé) et
-R10 (porte d'intégrité au lancement, plancher 0x00040000 — la table gagne
-l'entrée de libc-07, recette exacte de la zone : 27 blocs + terminateur finissent
-à 0x2820 = R_VERSION).
+R10 (porte d'intégrité au lancement, plancher 0x00040000).
 
 LIBC-07 (b20007, memset) devient EMBARQUÉ dans proxy.exe M4 : tls-06 (destruction
 du clair copié) et tls-07 (descente du résidu en tête) l'exigent — slot 0x13C0
 dans la zone reserve-libc (int3 défensif en M3), octets identiques à selftest.exe
-(R7), et la porte R10 le couvre désormais (la table scellée http-12 marche jusqu'au
-terminateur : l'entrée appendue est gardée SANS toucher au scellé).
+(R7), et la porte R10 le couvre (entrée @0x2800).
+
+D95 — LE CÂBLAGE (http-12:R2, g70011 @0x7DC0) : la boucle d'acceptation lance
+http-10:R2 (0x74C0 — la session révisée D92) ; l'entrée PE passe à 0x7DC0
+(delta documenté ; l'ancêtre http-12:R1 @0x1800 reste embarqué octet pour octet,
+R7 — mort au lancement, vivant à la preuve d'héritage). LA PORTE R10 .text3
+vient avec le câblage (pas en contrebande) : la table est PLEINE (27 entrées +
+terminateur @0x2810, R_VERSION @0x2820 immovable R7) — l'entrée #28
+(0x6000, 0x2000, somme .text3) REMPLACE le terminateur et la marche de
+http-12:R2 s'arrête à la BORNE (l'adresse de R_VERSION) : fail-closed sur
+entrée trouée (rva nul / taille nulle = KO — la troncature silencieuse du
+terminateur M3 n'existe plus), la couche M4 entière gardée AU LANCEMENT.
 
 L'ORACLE (D93) est exécuté sur les blobs du build : oracle_m4.executer(blobs,
 graine, volume) — 560 cas à volume complet (F1 session / F2 routage / F3 ancêtre
@@ -25,13 +33,17 @@ preuve R7 absolue, puis deltas M4 documentés :
 
   .text  : [0x13C0, 0x1440) = libc-07 (était int3 défensif)
   .rdata : 0x2550 = 8e entrée de la table des réponses (502 Certificat rejete)
-           0x2800 = entrée R10 libc-07 (le terminateur M3 descend à 0x2810)
-           0x2820 = version 0x00050001 (R10 : monotonie, plancher 0x00040000)
+           0x2800 = entrée R10 libc-07
+           0x2810 = PORTE R10 .text3 (D95 : l'ancien terminateur M4-dev.1
+                    remplacé — la table est PLEINE, marche aux bornes)
+           0x2820 = version 0x00050002 (R10 : monotonie, plancher 0x00040000)
            0x29A0+ = extension M4 (descripteurs, secur32, fixtures tls/http-R2)
-  .text3 : NOUVELLE (0x6000-0x7FFF) : tls-01..08, http-08:R2, http-10:R2
+  .text3 : NOUVELLE (0x6000-0x7FFF) : tls-01..08, http-08:R2, http-10:R2,
+           http-12:R2 (0x7DC0 — le câblage ; réserve int3 0x7FC0-0x7FFF)
+  PE     : AddressOfEntryPoint 0x1800 -> 0x7DC0 (D95)
 
 Usage :
-  python3 build_m4.py                  # construction 0.5.0-dev.1
+  python3 build_m4.py                  # construction 0.5.0-dev.2
   python3 build_m4.py --verifier [--graine N] [--volume complet|reduit]
 """
 
@@ -97,7 +109,8 @@ BLOCS_M4 = [(bid, spec, f"tls-0{i}-" + n, rva, slot)
                  (4, "poignee"), (5, "cles"), (6, "emission"),
                  (7, "reception"), (8, "session")])]
 BLOCS_M4 += [("g70009", "http-08:R2", "http-08-cible-r2", 0x7340, 0x180),
-             ("g70010", "http-10:R2", "http-10-session-r2", 0x74C0, 0x900)]
+             ("g70010", "http-10:R2", "http-10-session-r2", 0x74C0, 0x900),
+             ("g70011", "http-12:R2", "http-12-principal-r2", 0x7DC0, 0x200)]
 assert [(b[0], b[3], b[4]) for b in BLOCS_M4] == \
     [(b[0], b[2], b[3]) for b in L.BLOCS_TLS + L.BLOCS_REVISIONS], \
     "BLOCS_M4 diverge du plan d'adressage (layout.py, source unique)"
@@ -106,7 +119,7 @@ assert [(b[0], b[3], b[4]) for b in BLOCS_M4] == \
 # octets selftest.exe — R7 ; exigée par tls-06/tls-07).
 BLOC_LIBC07 = ("b20007", "libc-07:R1", "libc-07-memset", 0x13C0, 0x80)
 
-# Embarqués M4 au total : 26 (héritage M3) + 1 (libc-07) + 10 (M4) = 37.
+# Embarqués M4 au total : 26 (héritage M3) + 1 (libc-07) + 11 (M4) = 38.
 BLOCS_EMBARQUES_M4 = B3.blocs_embarques() + [BLOC_LIBC07] + BLOCS_M4
 
 # Clés de blobs pour l'oracle D93 (table d'intégration D92 — jamais deux
@@ -156,6 +169,7 @@ _FICHIERS_I_M4 = {
     "g70005": "tls-05-handles.md", "g70006": "tls-06-emission.md",
     "g70007": "tls-07-reception.md", "g70008": "tls-08-session.md",
     "g70009": "http-08-cible-r2.md", "g70010": "http-10-session-r2.md",
+    "g70011": "http-12-principal-r2.md",
 }
 
 
@@ -351,6 +365,8 @@ IAT_M4 = {
     "g70008": set(),          # l'orchestrateur ne touche JAMAIS SSPI directement
     "g70009": set(),
     "g70010": {"CloseHandle"},   # I6' : le SEUL appel IAT de la session révisée
+    "g70011": {"GetStdHandle", "InitializeCriticalSection", "ExitProcess",
+               "CloseHandle", "WSACleanup"},   # I1 de http-12:R2 — l'héritage R1
     "b20007": set(),         # libc-07 : feuille pure
 }
 APPELS_DIRECTS_M4 = {
@@ -368,6 +384,8 @@ APPELS_DIRECTS_M4 = {
     # http-10:R2 : http-01/02/04..07/09, tcp-03..06/11/13, http-08:R2, tls-08
     "g70010": {0x6D40, 0x7340, 0x4C00, 0x4C80, 0x4F40, 0x5080, 0x5140, 0x5200,
                0x54C0, 0x4140, 0x4180, 0x41C0, 0x4300, 0x4B00, 0x4400},
+    # http-12:R2 : hello-02 (ligne KO), tcp-01/02/06/11 — l'héritage R1 (I1)
+    "g70011": {0x1040, 0x4000, 0x4100, 0x4300, 0x4B00},
     "b20007": set(),
 }
 DONNEES_RIP_M4 = {
@@ -378,6 +396,14 @@ DONNEES_RIP_M4 = {
                L.R_TXT_502, L.R_TXT_TUNNEL, L.R_TXT_502_CERT,
                L.R_MSG_CONNEXION, L.R_MSG_TUNNEL, L.R_MSG_FIN,
                L.R_NOM_HOST, L.R_NOM_CL, L.R_NOM_TE},
+    # http-12:R2 : l'ancre/tab_sum/version/borne de la porte + l'état .data +
+    # les messages hérités + LES DEUX CIBLES DE CODE PAR lea (pointeurs de
+    # fonctions passés à tcp-06 : http-11 @0x5D80 et http-10:R2 @0x74C0 —
+    # D95 : le câblage ; JAMAIS 0x5580, la falsification nominale de V4)
+    "g70011": {L3.R_TAB_SUM, L.R_VERSION, L3.R_ANCRE, L3.R_STDOUT, L3.R_STDIN,
+               L3.R_LISTEN, L3.R_QUIT, L3.R_CS, L3.R_MSG_BANNIERE,
+               L3.R_MSG_ARRET, L3.R_MSG_ERREUR, L3.R_MSG_KO,
+               0x5D80, 0x74C0},
     "b20007": set(),
 }
 # Feuilles pures M4 : aucun appel externe (I1 — assistants internes permis).
@@ -600,6 +626,13 @@ def comparer_scelle(exe_m4: bytes, scelle: bytes, deltas: list[tuple[int, int, s
 def composer_image_m4(texte_m3: bytes, rdata_m3: bytes, data_m3: bytes, text2_m3: bytes,
                       code: dict, slot_libc07: bytes):
     """-> (texte, rdata, data, text2, text3) — l'image complète de proxy.exe M4."""
+    # .text3 : la section est composée EN PREMIER — la porte R10 .text3 (D95)
+    # scelle sa somme sur CES octets (int3 + les onze blocs M4, padding NOP
+    # intra-slot) ; la couche M4 entière devient gardée au lancement.
+    text3 = bytearray(b"\xcc" * L.TEXT3_VSIZE)
+    for bid, _sid, _f, rva, slot in BLOCS_M4:
+        text3[rva - L.TEXT3_RVA: rva - L.TEXT3_RVA + slot] = code[bid]["slot"]
+
     # .text : héritage + libc-07 dans la zone reserve-libc (était int3)
     texte = bytearray(texte_m3)
     texte[0x13C0 - L.TEXT_RVA: 0x13C0 - L.TEXT_RVA + 0x80] = slot_libc07
@@ -611,12 +644,18 @@ def composer_image_m4(texte_m3: bytes, rdata_m3: bytes, data_m3: bytes, text2_m3
         raise EchecBuild(f"garde-fou 502-cert : {len(L.TXT_502_CERT)} o != 34 (D92)")
     rdata[0x2550 - L.RDATA_RVA: 0x2550 - L.RDATA_RVA + 16] = \
         struct.pack("<QQ", L.R_TXT_502_CERT, len(L.TXT_502_CERT))
-    # (2) porte R10 : entrée libc-07 (le terminateur M3 @0x2800 descend à 0x2810)
+    # (2) porte R10 : entrée libc-07 @0x2800 + LA PORTE .text3 @0x2810 (D95 —
+    #     l'ancien terminateur M4-dev.1 est REMPLACÉ : la table est PLEINE,
+    #     28 entrées, la marche aux bornes de http-12:R2 s'arrête à R_VERSION ;
+    #     la somme est scellée sur la section .text3 CI-DESSUS — composée d'abord)
     rdata[0x2800 - L.RDATA_RVA: 0x2800 - L.RDATA_RVA + 16] = \
         struct.pack("<IIQ", 0x13C0, 0x80, _somme_qwords(slot_libc07))
-    rdata[0x2810 - L.RDATA_RVA: 0x2810 - L.RDATA_RVA + 16] = struct.pack("<IIQ", 0, 0, 0)
-    # (3) version (R10 : monotonie — plancher 0x00040000 accepté par http-12 scellé)
-    rdata[0x2820 - L.RDATA_RVA: 0x2820 - L.RDATA_RVA + 8] = struct.pack("<Q", L.VERSION_U64_DEV1)
+    rdata[L.R10_PORTE_TEXT3 - L.RDATA_RVA: L.R10_PORTE_TEXT3 - L.RDATA_RVA + 16] = \
+        struct.pack("<IIQ", L.R10_TEXT3_RVA, L.R10_TEXT3_TAILLE,
+                    _somme_qwords(bytes(text3)))
+    # (3) version (R10 : monotonie — dev.2 ≥ dev.1 ≥ plancher 0.4.0 scellé)
+    rdata[0x2820 - L.RDATA_RVA: 0x2820 - L.RDATA_RVA + 8] = \
+        struct.pack("<Q", L.VERSION_U64_DEV2)
     # (4) extension M4 (ARRÊT D81/D92 — layout.py source unique)
     _poses: list[tuple[int, int, str]] = []
 
@@ -664,11 +703,7 @@ def composer_image_m4(texte_m3: bytes, rdata_m3: bytes, data_m3: bytes, text2_m3
             raise EchecBuild(f"garde-fou fixture {nom} : {len(chaine)} o != {attendu}")
         poser(rva, chaine + b"\x00", nom)
 
-    # .text3 : NOUVELLE section — int3 + les dix blocs M4 (padding NOP intra-slot)
-    text3 = bytearray(b"\xcc" * L.TEXT3_VSIZE)
-    for bid, _sid, _f, rva, slot in BLOCS_M4:
-        text3[rva - L.TEXT3_RVA: rva - L.TEXT3_RVA + slot] = code[bid]["slot"]
-
+    # .text3 : composée EN TÊTE de fonction (la porte scelle sa somme dessus)
     return bytes(texte), bytes(rdata), bytes(data_m3), bytes(text2_m3), bytes(text3)
 
 
@@ -681,7 +716,9 @@ def ecrire_pe32plus(texte: bytes, rdata: bytes, data: bytes, text2: bytes, text3
         "<HBBIIIIIQIIHHHHHHIIIIHHQQQQII",
         0x20B, 0, 0,
         L.ENTREE, len(texte) + len(text2) + len(text3), 0,
-        L.ENTREE, L.TEXT_RVA,
+        L.ENTREE_R2, L.TEXT_RVA,   # AddressOfEntryPoint : 0x7DC0 (D95 — le
+                                   # câblage ; l'ancêtre 0x1800 reste embarqué,
+                                   # mort au lancement, vivant à la preuve R7)
         L.IMAGE_BASE,
         L.SECT_ALIGN, L.FILE_ALIGN,
         6, 0, 0, 1, 6, 0, 0,
@@ -729,7 +766,8 @@ def valider_pe(exe: bytes):
     assert pe.FILE_HEADER.Machine == 0x8664, "Machine != x86-64"
     assert pe.FILE_HEADER.NumberOfSections == 5, "sections != 5"
     assert pe.OPTIONAL_HEADER.Magic == 0x20B, "magic != PE32+"
-    assert pe.OPTIONAL_HEADER.AddressOfEntryPoint == L.ENTREE, "point d'entrée != http-12"
+    assert pe.OPTIONAL_HEADER.AddressOfEntryPoint == L.ENTREE_R2, \
+        "point d'entrée != http-12:R2 (0x7DC0, D95 — le câblage)"
     assert pe.OPTIONAL_HEADER.ImageBase == L.IMAGE_BASE
     assert pe.OPTIONAL_HEADER.Subsystem == 3, "sous-système != CONSOLE"
     dc = pe.OPTIONAL_HEADER.DllCharacteristics
@@ -759,27 +797,31 @@ def valider_pe(exe: bytes):
     assert pe.OPTIONAL_HEADER.DATA_DIRECTORY[1].VirtualAddress == L.R_IMPORTS_M4, \
         "répertoire d'imports != 0x29A0 (D81)"
     assert len(exe) == L.TAILLE_FICHIER, "taille de fichier inattendue"
-    # Zones réservées : int3 dans l'image livrée (héritage M3 + .text3)
-    for rva in (0x4200, 0x45C0, 0x4800, 0x7E00):
+    # Zones réservées : int3 dans l'image livrée (héritage M3 + .text3 — la
+    # zone réserve-t3 recule à 0x7FC0 : le slot http-12:R2 0x7DC0+0x200 l'exige)
+    for rva in (0x4200, 0x45C0, 0x4800, 0x7FC0):
         assert tranche_section(exe, rva, 1)[0] == 0xCC, f"zone réservée @{rva:#x} != int3"
     # 8e entrée de la table des réponses (concordance Q3' — I5 de http-10:R2)
     ptr, lng = struct.unpack("<QQ", tranche_section(exe, 0x2550, 16))
     assert (ptr, lng) == (L.R_TXT_502_CERT, 34), f"8e entrée != (0x2CA0, 34) : {(ptr, lng)}"
-    # Version (R10 : monotonie)
-    assert struct.unpack("<Q", tranche_section(exe, 0x2820, 8))[0] == L.VERSION_U64_DEV1
-    # Porte R10 : la table marchée depuis l'image est AUTO-CONSISTANTE (le
-    # scellé http-12 la parcourra au lancement — même calcul, mêmes sommes)
+    # Version (R10 : monotonie — dev.2)
+    assert struct.unpack("<Q", tranche_section(exe, 0x2820, 8))[0] == L.VERSION_U64_DEV2
+    # Porte R10 : la table marchée depuis l'image est AUTO-CONSISTANTE — la
+    # MARCHE AUX BORNES de http-12:R2 (D95 : la table est PLEINE, l'entrée
+    # .text3 @0x2810 remplace l'ancien terminateur, fail-closed sur entrée
+    # trouée — le MÊME contrat que la notation, jamais deux sources)
     k = 0
     rva_table = L3.R_TAB_SUM
-    while True:
+    while rva_table + 16 * k < L.R10_BORNE:
         r, t, s = struct.unpack("<IIQ", tranche_section(exe, rva_table + 16 * k, 16))
-        if (r, t, s) == (0, 0, 0):
-            break
+        assert r != 0 and t != 0, \
+            f"porte R10 : entrée #{k + 1} trouée (rva/taille nuls — fail-closed D95)"
         somme = _somme_qwords(tranche_section(exe, r, t))
         assert somme == s, f"porte R10 : somme de {r:#x} divergente ({somme:#x} != {s:#x})"
         k += 1
-        assert k <= 40, "porte R10 : terminateur introuvable"
-    assert k == 27, f"porte R10 : {k} entrées != 27 (26 héritage + libc-07)"
+        assert k <= L.R10_NB_ENTREES, "porte R10 : borne R_VERSION franchie"
+    assert k == L.R10_NB_ENTREES, \
+        f"porte R10 : {k} entrées != 28 (26 héritage + libc-07 + porte .text3)"
     return True
 
 
@@ -804,7 +846,9 @@ def preuve_reutilisation(exe: bytes) -> dict:
         (0x13C0, 0x80, "libc-07 embarqué (zone reserve-libc, int3 en M3)"),
         (0x2550, 16, "8e entrée de la table des réponses (502 Certificat rejete)"),
         (0x2800, 16, "entrée R10 libc-07 (terminateur descendu à 0x2810)"),
-        (0x2820, 8, "version 0x00050001 (R10 monotonie)"),
+        (0x2810, 16, "porte R10 .text3 (D95 : l'ancien terminateur M4-dev.1 "
+                     "remplacé — marche aux bornes de http-12:R2)"),
+        (0x2820, 8, "version 0x00050002 (R10 monotonie — dev.2)"),
     ])
     # libc-07 : octets identiques à selftest.exe @0x13C0 (R7 direct)
     with open(os.path.join(M1_DIR, "selftest.exe"), "rb") as f:
@@ -878,6 +922,11 @@ CONTRATS_M4 = {
                "session complete : routage https -> tls-08, reponses d echec TLS (502 Certificat rejete / 502 R1), sinon heritage R1",
                "verdict http-08:R2 consigne @+0x7010 sur tout chemin ; garde rdi @+0x7020 ; cadre TLS VIERGE ; UN appel IAT (CloseHandle) ; jamais tls-01..07 direct",
                "[e50001..e50009] [e50013] [g70008] [g70009] [c30003..c30006] [c30011] [ext kernel32:CloseHandle] [rdata:reponses,noms,502-cert]"),
+    "g70011": ("() -> noreturn (point d entree PE, thread principal)",
+               "pile alignee (convention chargeur) ; .data a l etat image",
+               "le processus finit TOUJOURS par ExitProcess (0 arret demande, 1 integrite, 2 erreur structurale)",
+               "porte R10 MARCHE AUX BORNES : 28 entrees, fail-closed sur entree trouee, la couche .text3 entiere gardee au lancement ; LA BOUCLE LANCE http-10:R2 (0x74C0 — le cablage) ; ordre d initialisation D42 herite",
+               "[a10002] [c30001] [c30002] [c30006] [c30011] [e50011] [g70010] [ext kernel32:GetStdHandle,InitializeCriticalSection,ExitProcess,CloseHandle] [ext ws2_32:WSACleanup] [rdata:table-R10,version,ancre,messages]"),
 }
 CONTRATS = dict(B3.CONTRATS) | CONTRATS_M4
 
@@ -917,6 +966,7 @@ SPEC_PAR_BLOC = {
     "g70004": "tls-04:R1", "g70005": "tls-05:R1", "g70006": "tls-06:R1",
     "g70007": "tls-07:R1", "g70008": "tls-08:R1",
     "g70009": "http-08:R2", "g70010": "http-10:R2",
+    "g70011": "http-12:R2",
 }
 
 FICH_PAR_BID = {
@@ -938,7 +988,8 @@ def _chemin_notation_bid(bid: str) -> str:
     """Notation d'un bloc indexé par la carte : routage M4 par défaut,
     héritage via le routeur M3 (jamais deux sources de vérité du routage)."""
     fichier = FICH_PAR_BID[bid]
-    if fichier.startswith("tls-") or fichier in ("http-08-cible-r2", "http-10-session-r2"):
+    if fichier.startswith("tls-") or fichier in ("http-08-cible-r2", "http-10-session-r2",
+                                                  "http-12-principal-r2"):
         return os.path.join(ICI, "notation", fichier + ".asm")
     if fichier == "libc-07-memset":
         return os.path.join(M1_DIR, "notation", fichier + ".asm")
@@ -953,7 +1004,7 @@ def fragments_clairs(exe: bytes, verrous_m3: list, verrous_m4: list, version: st
            "[zones] io=0x1000-0x10ff libc=0x1100-0x143f app=0x1800-0x1fff "
            "net=0x4000-0x42ff cli=0x4400-0x45bf thr=0x4300-0x43ff "
            "srv=0x4b00-0x4bff http=0x4c00-0x5e7f "
-           "tls=0x6000-0x733f revisions=0x7340-0x7dbf reserve-t3=0x7e00-0x7fff "
+           "tls=0x6000-0x733f revisions=0x7340-0x7fbf reserve-t3=0x7fc0-0x7fff "
            "reserve-libc=0x1440-0x17ff (int3 defensif)"]
     for bid in TOUS_BLOCS:
         loc.append(f"[bloc] id={bid} spec={SPEC_PAR_BLOC[bid]} cible=x86-64-win11-pe "
@@ -997,12 +1048,13 @@ def fragments_clairs(exe: bytes, verrous_m3: list, verrous_m4: list, version: st
         f"graine={verdict_oracle.get('graine', '-')}, volume={verdict_oracle.get('volume', '-')}",
         f"  heritage : proxy.exe 0.4.0 scelle (bf02769f...) repris octet pour octet "
         f"(R7 : .text/.text2/.data intacts, .rdata aux deltas documentes : 8e reponse, "
-        f"entree R10 libc-07, version) ; libc-07 embarque a 0x13C0 (octets selftest.exe) ; "
+        f"entree R10 libc-07, porte R10 .text3, version ; entree PE 0x7DC0 [D95]) ; "
+        f"libc-07 embarque a 0x13C0 (octets selftest.exe) ; "
         f"hello.exe 0.1.0 + selftest.exe 0.2.0 + echo.exe 0.3.0 inchanges",
         "[zones] io=0x1000-0x10ff libc=0x1100-0x143f app=0x1800-0x1fff "
         "net=0x4000-0x42ff cli=0x4400-0x45bf thr=0x4300-0x43ff "
         "srv=0x4b00-0x4bff http=0x4c00-0x5e7f "
-        "tls=0x6000-0x733f revisions=0x7340-0x7dbf reserve-t3=0x7e00-0x7fff",
+        "tls=0x6000-0x733f revisions=0x7340-0x7fbf reserve-t3=0x7fc0-0x7fff",
     ]
 
     retour = {}
@@ -1068,7 +1120,7 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, nb_blocs_car
     sha = lambda b: hashlib.sha256(b).hexdigest()
     lignes = [
         "[tableau] jalon=M4 artefact=proxy.exe version=" + manifeste.get("version", "?"),
-        f"  blocs_avec_spec_a_jour        : {nb_blocs_carte}/48 : audit de tracabilite I->C->B (5 artefacts)",
+        f"  blocs_avec_spec_a_jour        : {nb_blocs_carte}/49 : audit de tracabilite I->C->B (5 artefacts)",
         f"  chaines_I_C_B_tests           : {nb_blocs_carte}/{nb_blocs_carte} : specs, carte, exe, vecteurs",
         f"  construction                  : 0 erreur / 0 avertissement : build script",
         f"  tests_differentiels           : oracle M4 {verdict_oracle.get('total_cas', 0)} cas verts "
@@ -1076,18 +1128,20 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, nb_blocs_car
         f"oracle structurel M3 {len(verrous_m3)} + M4 {len(verrous_m4)} verrous PASS",
         f"  reutilisation_heritage        : 27 blocs octet-identiques au scellé 0.4.0 "
         f"(26 embarques M3 + libc-07 selftest.exe — R7, deltas .rdata documentes)",
-        f"  empreintes_donnees_embarquees : conforme (fixtures http + tls, table R10 27 entrees, "
-        f"table des reponses 8 entrees, secur32 x7, version 0x00050001)",
-        f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D93",
+        f"  empreintes_donnees_embarquees : conforme (fixtures http + tls, table R10 28 entrees "
+        f"[marche aux bornes — porte .text3 D95], table des reponses 8 entrees, "
+        f"secur32 x7, version 0x00050002)",
+        f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D94",
         f"  optimisations_sans_mesure     : 0 : aucune optimisation M4 (R11)",
-        f"  changements_hors_journal      : 0 : D77 a D93 consignees",
+        f"  changements_hors_journal      : 0 : D77 a D95 consignees",
         f"  preversions                   : {manifeste.get('version', '?')} conforme "
-        f"(schema dev, monotonie R10 verifiee par la porte : 27 sommes recalculees du binaire)",
+        f"(schema dev, monotonie R10 verifiee par la porte : 28 sommes recalculees du binaire)",
         f"  entrees_non_fiables           : comportement defini par contrat (E1-E8 herites + "
         f"table TOTALE des HRESULT, verdicts nommes, compensation par comptage) ; "
-        f"falsification : F4 8 mutations attrapees (D93)",
+        f"falsification : F4 8 mutations attrapees (D93) + 6/6 http-12:R2 (D95)",
         f"  artefact                      : {len(exe)} octets ; empreinte sha256:{sha(exe)[:16]}... ; "
-        f"5 sections (.text3 nouvelle 0x6000) ; secur32 x7 (Schannel)",
+        f"5 sections (.text3 nouvelle 0x6000) ; secur32 x7 (Schannel) ; "
+        f"entree PE 0x7DC0 (le cablage, http-12:R2)",
         f"  verrou_croise                 : {nb_blocs_carte} empreintes reverifiees "
         f"(5 artefacts + notations non embarquees) + signature Ed25519 + racine (R8/R9)",
     ]
@@ -1177,14 +1231,15 @@ def construire(volume: str, graine: int) -> int:
     exe = ecrire_pe32plus(texte, rdata, data, text2, text3)
     valider_pe(exe)
     print(f"[PE] proxy.exe : {len(exe)} octets, 5 sections (.text3 0x6000), "
-          f"kernel32 x10 + ws2_32 x13 + secur32 x7, entree 0x{L.ENTREE:x}")
+          f"kernel32 x10 + ws2_32 x13 + secur32 x7, entree 0x{L.ENTREE_R2:x} "
+          f"(http-12:R2 — le câblage)")
 
     # 5. Preuves R7 (les deux générations) + verifier-puis-écrire (R5)
     heritage = preuve_reutilisation(exe)
     print(f"[R7] réutilisation : {heritage['blocs_reutilises']} blocs octet-identiques "
           f"(26 héritage M3 + libc-07 selftest.exe), deltas .rdata documentés")
     nb_embarques = verifier_puis_ecrire(exe, code_m3, code_m4)
-    print(f"[R5] verifier-puis-ecrire : {nb_embarques}/37 blocs notés == artefact")
+    print(f"[R5] verifier-puis-ecrire : {nb_embarques}/38 blocs notés == artefact")
 
     # 6. L'oracle D93 sur les blobs du build (lève EchecOracle sur TOUT écart)
     blobs = blobs_oracle(code_m3, code_m4)
@@ -1205,13 +1260,13 @@ def construire(volume: str, graine: int) -> int:
         f.write(exe)
 
     # 8. Carte génération 6 (lignée D80) + verrou croisé + tableau de bord
-    version = L.VERSION_DEV1
+    version = L.VERSION_DEV2
     compteurs = {bid: 1 for bid in TOUS_BLOCS}
     journal = [f"run graine={graine} volume={volume} verdict={verdict['empreinte']} "
                f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} build={version}"]
     construire_carte(exe, verrous_m3, verrous_m4, version, verdict, compteurs, journal)
     print(f"[carte] génération 6 écrite (lignée D80) : 4 fragments chiffrés, "
-          f"signature Ed25519, 48 blocs indexés sur 5 artefacts")
+          f"signature Ed25519, 49 blocs indexés sur 5 artefacts")
     nb, manifeste = verrou_croise()
     print(f"[R8] verrou croisé : signature OK, racine OK, {nb} empreintes revérifiées, "
           f"artefact {manifeste.get('version')}")
@@ -1219,7 +1274,7 @@ def construire(volume: str, graine: int) -> int:
         f.write(tableau_de_bord(exe, verrous_m3, verrous_m4, nb, manifeste, verdict))
     print("[tableau] tableau de bord écrit (carte/tableau-de-bord.txt)")
     print(f"[B] proxy.exe scellé-dev : sha256:{hashlib.sha256(exe).hexdigest()}")
-    print(f"=== M4-dev (oracle vert) : {version} — tunnel chiffré embarqué, "
+    print(f"=== M4-dev (oracle vert) : {version} — tunnel chiffré embarqué et CÂBLÉ, "
           f"terrain (étape c) en attente ===")
     return 0
 
@@ -1235,7 +1290,7 @@ def verifier(graine: int, volume: str) -> int:
         exe = f.read()
     heritage = preuve_reutilisation(exe)
     nb_embarques = verifier_puis_ecrire(exe, code_m3, code_m4)
-    print(f"[R5] verifier-puis-ecrire : {nb_embarques}/37 blocs notés == artefact ; "
+    print(f"[R5] verifier-puis-ecrire : {nb_embarques}/38 blocs notés == artefact ; "
           f"[R7] {heritage['blocs_reutilises']} blocs réutilisés, deltas documentés")
 
     verdict = od4.executer(blobs_oracle(code_m3, code_m4), graine=graine, volume=volume)
@@ -1261,7 +1316,7 @@ def verifier(graine: int, volume: str) -> int:
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     manifeste_v = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
                         if "artefact=proxy.exe" in l), "?")
-    version = manifeste_v if manifeste_v != "?" else L.VERSION_DEV1
+    version = manifeste_v if manifeste_v != "?" else L.VERSION_DEV2
     construire_carte(exe, verrous_m3, verrous_m4, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise()
     crist = {b: compteurs.get(b, 0) for b, *_ in BLOCS_M4}
