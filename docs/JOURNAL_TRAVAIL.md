@@ -3925,3 +3925,68 @@ coûte désormais ~2 s ; budgets mesurés ; carte re-signée côté développeur
 constat terrain). Terrain : D57 (WER, adresse de plantage de la démo)
 reste le seul point ouvert — T3 ayant été démontré (D71), le circuit de
 constat est réflexe.
+
+## Entrée 63 — D74 (28/10, 17:15) : M3 SCELLÉ à la balise finale 0.4.0 — lignée de clés régénérée (4e réinitialisation, D27/D30 réappliquées avec preuve byte-identique), cristallisation 38/38 × 10/10, l'asymétrie R6 de l'héritage non embarqué corrigée au passage
+
+**Contexte** : après l'étape (e) (D73), il restait la cristallisation et le
+scellage final — mais toute écriture de carte exige `triade/.keys/` (phrase
+maîtresse + graine Ed25519), perdus à la réinitialisation du poste qui a
+précédé la session D71 : le miroir Drive ne contient que les fichiers suivis
+par git, les secrets ne le sont jamais (D12). La phrase est au coffre du
+développeur (lignée D30) ; la graine Ed25519, jamais confiée (D30), est
+définitivement perdue — la signature de la carte devait être régénérée dans
+tous les cas. D27/D30 avaient déjà tranché ce cas deux fois : régénérer et
+prouver la continuité par artefact byte-identique.
+
+**Déroulé** :
+1. `build_m3.py --sceller-rc / --sceller-final` écrits (modèle m1 D32 / m2
+   D43 — `_sceller(nouvelle_version, exigences)`) : cristallisation 10/10
+   exigée fail-closed, conformité § 8.2 re-exécutée au scellage, bascule de
+   balise dans frag-bld (occurrence EXACTEMENT une pour le final), fragments
+   re-chiffrés, carte re-signée Ed25519 — l'artefact n'est PAS touché : le
+   scellage est un fait de carte. Garde anti-rollback (l'angle mort D32) posée
+   dans construire() : toute reconstruction d'une carte cristallisée (rc ou
+   finale) est refusée. `VERSION_RC1`/`VERSION_FINALE` ajoutées au layout.
+2. Cérémonie D27/D30 réappliquée (D74) : `.keys/` régénéré (phrase 128 bits +
+   graine Ed25519 neuves) ; construire → **proxy.exe régénéré BYTE-IDENTIQUE
+   au scellé D63** (md5 dd12b649…, sha256 bf02769f… — la valeur perdue
+   n'était que l'enveloppe chiffrée, jamais le projet) ; R7 re-vérifié au
+   passage (hello.exe c89e330c…, selftest.exe 8038585b…, echo.exe da4a6ca2…
+   conformes à leurs SHA scellés, 13 blocs hérités octet-identiques) ; oracle
+   structurel 524 verrous, différentiel 153 036 cas verts, falsification
+   détectée ; verrou croisé 38 empreintes.
+3. Cristallisation R6 : 19 vérifications graines 1-19 (construire + 18
+   vérificateurs complets). Le PREMIER sceller-rc fut REFUSÉ en fail-closed :
+   12 blocs à 1/10 — l'asymétrie exacte du journal 18 m2 : l'héritage non
+   embarqué (a10001, b20005-08, c30007-10, c30012-14) est indexé par la carte
+   (38 blocs sur 4 artefacts) mais restait absent de la liste d'incrémentation
+   du vérificateur — jamais exposé depuis que m3 existe, car aucun scellage
+   n'avait jamais été tenté. Corrigé au modèle m2 : les octets scellés de ces
+   blocs vivent dans hello.exe/selftest.exe/echo.exe dont les SHA sont
+   re-vérifiés à chaque run du vérificateur (R7), et leurs notations sont
+   re-hachées à chaque reconstruction de carte (frag-prf) — le compteur R6
+   suit. → **38/38 × 10/10**.
+4. Scellage : **0.4.0-rc.1** (cristallisation R6 + conformité 161/161 VERTE
+   re-exécutée — le contrôle fuzz a tourné à la graine datée 20261028 :
+   10 000 cas SANS CRASH P1-P5, sentinelles 2/2, auto-test PASS, 1,8 s), puis
+   **0.4.0 FINALE** (validation terrain consignée : T2 du superviseur, 6 verts
+   consécutifs D64-D71 sur les octets dd12b649 inchangés — modèle 0.2.0/0.3.0,
+   le scellage est un fait de carte). Ré-vérification post-scellage graine 20 :
+   verrou croisé 38 empreintes conformes, artefact 0.4.0, tableau de bord
+   régénéré version=0.4.0 ; la reconstruction est désormais REFUSÉE (garde
+   testée : « carte scellée (0.4.0) : reconstruction interdite »).
+
+**Ce que ça établit** : le jalon M3 est CLOS. Critères de sortie tous remplis :
+un million de requêtes fuzzées sans crash (D72, reproductible), proxy
+transparent pour curl sur machine réelle (T2 6×, D64-D71), contrats renforcés
+écrits-avant-code (D46) ; conditions transverses § 16 vertes au scellage
+(oracle, conformité permanente D73, tableau conforme, carte signée + verrou
+croisé, journal à jour). La balise 0.4.0 est immuable (§ 9) ; défaut
+ultérieur → 0.4.1 à contrat stable (R4). La nouvelle phrase maîtresse est
+réaffichée UNE fois en fin de session (instruction de coffre immédiat,
+D27/D30). État des enveloppes : les cartes m0/m1/m2/terrain restent chiffrées
+à l'ancienne lignée D30 — illisibles depuis la restauration D71 (état
+préexistant, non dégradé par D74) ; deux relèves documentées : lecture par
+l'ancienne phrase du coffre développeur, ou cérémonies de reconstruction
+byte-identiques à la D74. Terrain : D57 (WER, adresse de plantage de la démo)
+reste le seul point ouvert.

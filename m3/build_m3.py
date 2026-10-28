@@ -25,8 +25,12 @@ ws2_32 gagne TROIS entrées appendues (getaddrinfo, freeaddrinfo, connect —
 arrêt b : la préfiguration D46 oubliait connect).
 
 Usage :
-  python3 build_m3.py                  # construction 0.4.0-dev.1
+  python3 build_m3.py                  # construction 0.4.0-dev.2
   python3 build_m3.py --verifier [--graine N] [--volume complet|reduit]
+  python3 build_m3.py --sceller-rc     # D74 : 0.4.0-dev.2 -> 0.4.0-rc.1
+                                        # (cristallisation R6 10/10 + conformite § 8.2)
+  python3 build_m3.py --sceller-final  # D74 : rc.1 -> 0.4.0 finale
+                                        # (validation terrain consignee D64-D71)
 """
 
 from __future__ import annotations
@@ -652,6 +656,7 @@ def valider_pe(exe: bytes):
 
 SHA_HELLO = "c89e330cd16f3fd48558ed4fdb6708fb671e6d907547d5c1ee28075ffd6507f2"
 SHA_SELFTEST = "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0"
+SHA_ECHO_SCELLE = "da4a6ca299339567be59ba5c48b1ad3de384bdc316c5a523ebd272b307d3fdb2"  # echo.exe 0.3.0 (D43)
 SHA_ECHO = None      # calculé à la première exécution (echo.exe scellé 0.3.0)
 
 
@@ -1139,6 +1144,24 @@ def assembler_tout():
 
 def construire(volume: str, graine: int) -> int:
     print("=== M3 : chaine artefact TRIADE (profil x86-64-win11-pe) ===")
+    # Anti-rollback (angle mort D32) : une carte cristallisee (rc/final)
+    # interdit la reconstruction — procedure lourde R6 ou X.Y.Z+1 requise.
+    try:
+        _, fragments, _, _ = cm.lire_carte()
+        phrase, _ = cm.charger_secrets(interactif=False)
+        maitre = cm.cle_maitresse(phrase)
+        bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+        version_existante = next(
+            (dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
+             if "artefact=proxy.exe" in l), None)
+        if version_existante and ("-rc" in version_existante
+                                   or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
+            raise EchecBuild(
+                f"carte scellee ({version_existante}) : reconstruction interdite — "
+                f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+    except (cm.ErreurCarte, FileNotFoundError):
+        pass  # pas de carte lisible : première construction (ou lignée régénérée, D74)
+
     blocs, specs, code, verrous = assembler_tout()
     version = L.VERSION_DEV1
 
@@ -1206,7 +1229,26 @@ def verifier(graine: int, volume: str) -> int:
             compteurs[champs["id"]] = int(m.group(1))
         elif ligne.startswith("  run "):
             journal.append(ligne.strip())
-    for bid, _, _, _, _ in blocs:
+    # D74 (asymétrie corrigée au modèle du journal 18 m2) : l'héritage non
+    # embarqué (a10001, b20005-08, c30007-10, c30012-14) est indexé par la
+    # carte mais restait figé à 1/10 — ses octets scellés vivent dans
+    # hello.exe / selftest.exe / echo.exe dont les SHA sont re-vérifiés à
+    # chaque run ci-dessous (R7), et leurs notations sont re-hachées à chaque
+    # reconstruction de carte (frag-prf) : le compteur R6 doit suivre, sinon
+    # le scellage reste bloqué à 1/10 pour des blocs pourtant reverifiés.
+    with open(os.path.join(M0_DIR, "hello.exe"), "rb") as f:
+        if hashlib.sha256(f.read()).hexdigest() != SHA_HELLO:
+            raise EchecBuild("hello.exe divergent de l'artefact scellé (R7)")
+    with open(os.path.join(M1_DIR, "selftest.exe"), "rb") as f:
+        if hashlib.sha256(f.read()).hexdigest() != SHA_SELFTEST:
+            raise EchecBuild("selftest.exe divergent de l'artefact scellé (R7)")
+    if _sha_fichier(os.path.join(M2_DIR, "echo.exe")) != SHA_ECHO_SCELLE:
+        raise EchecBuild("echo.exe divergent de l'artefact scellé 0.3.0 (R7)")
+    tous = ([bid for bid, _, _, _, _ in blocs]
+            + ["a10001", "b20005", "b20006", "b20007", "b20008",
+               "c30007", "c30008", "c30009", "c30010", "c30012",
+               "c30013", "c30014"])
+    for bid in tous:
         compteurs[bid] = min(compteurs.get(bid, 0) + 1, 10)
     journal.append(f"run graine={graine} volume={volume} verdict={verdict['empreinte']} "
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
@@ -1226,6 +1268,55 @@ def verifier(graine: int, volume: str) -> int:
     return 0
 
 
+def _sceller(nouvelle_version: str, exigences: str) -> int:
+    """Scellage commun (modèle m1 D32 / m2 D43) : cristallisation 10/10 +
+    conformité § 8.2 verte + bascule de balise dans frag-bld. L'artefact
+    n'est PAS touché — le scellage est un fait de carte ; proxy.exe reste
+    byte-identique à l'artefact validé terrain (md5 dd12b649…)."""
+    print(f"=== M3 : scellage {nouvelle_version} ({exigences}) ===")
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplete : {incomplets} — 10 verifications requises (R6)")
+
+    import conformite_profil as cp
+    ok, lignes = cp.executer()
+    print("\n".join(lignes))
+    if not ok:
+        raise EchecBuild(f"suite de conformite non verte — {nouvelle_version} refuse")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+    if nouvelle_version == L.VERSION_FINALE:
+        ancienne = L.VERSION_RC1
+        occurrences = bld.count(f"version={ancienne}")
+        if occurrences != 1:
+            raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
+                             f"({occurrences} occurrence(s)) — scellage final refuse (fail-closed)")
+    else:
+        ancienne = L.VERSION_DEV1
+    bld = bld.replace(f"version={ancienne}", f"version={nouvelle_version}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = cm.empreinte_racine(nouveaux)
+    entete = cm.construire_entete(racine)
+    _, graine_cles = cm.charger_secrets(interactif=False)
+    prive, pub = cm.paire_cles(graine_cles)
+    cm.ecrire_carte(entete, nouveaux, cm.signer(prive, entete, nouveaux), pub)
+    print(f"[balise] {nouvelle_version} scellee (immuable § 9 ; defaut -> 0.4.1 "
+          f"a contrat stable, R4)")
+    return 0
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     try:
@@ -1233,6 +1324,14 @@ if __name__ == "__main__":
             graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 1
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
             sys.exit(verifier(graine, volume))
+        if "--sceller-rc" in args:
+            sys.exit(_sceller(L.VERSION_RC1,
+                              "cristallisation R6 + conformite § 8.2 + criteres du jalon M3 "
+                              "(million fuzzee D72, contrats renforces D46)"))
+        if "--sceller-final" in args:
+            sys.exit(_sceller(L.VERSION_FINALE,
+                              "R6 + conformite + validation terrain consignee "
+                              "(T2 du superviseur 6x verts D64-D71, octets inchanges)"))
         volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
         graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 1
         sys.exit(construire(volume, graine))

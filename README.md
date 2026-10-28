@@ -27,7 +27,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D72 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–61) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D74 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–63) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -63,9 +63,8 @@ conformité du profil verte (68 contrôles), budgets tokens mesurés (localiser 
 le 27 octobre 2026** (D33–D43) — boucle § 5 (patch à chaud en production +
 rollback) DÉMONTRÉE sur machine réelle (journal terrain demo.8, 28/28 lignes
 jusqu'à « DÉMO OK »), huit classes de défauts invisibles nommées et corrigées
-(D35–D42), **balise finale `0.3.0` scellée, immuable**. **Étape en cours :
-jalon M3** — entrées non fiables : harnais de fuzzing à propriétés P1-P5
-livré et falsifiable, 101 000 cas sans crash sur la surface scellée (D45) ;
+(D35–D42), **balise finale `0.3.0` scellée, immuable**. **Jalon M3 franchi le 28 octobre 2026** (D45–D74) — entrées non fiables : harnais de
+fuzzing à propriétés P1-P5 livré et falsifiable, 101 000 cas sans crash sur la surface scellée (D45) ;
 couche I écrite avant le code — treize spécifications du domaine http
 (D46, `m3/I/`) ; **proxy.exe scellé 0.4.0-dev.1** (D47 — étape (b) : oracle
 à scénarios 153 036 cas verts, carte génération 5 sur 4 artefacts, R7 :
@@ -85,7 +84,15 @@ constatés depuis proxy.exe + contrôle de jalon « fuzzing à propriétés »
 graine datée reproductible, auto-test de falsification inclus ; suite VERTE,
 re-exécution à graine neuve identique ; `conformite.txt` lu par le tableau
 de bord — le harnais million devient sentinelle perpétuelle de chaque
-cristallisation rc/future, § 8.2/§ 9).
+cristallisation rc/future, § 8.2/§ 9) ; **cristallisation et scellage
+final (D74) : balise `0.4.0` scellée, immuable § 9** — 19 vérifications
+graines 1-19 → 38/38 blocs à 10/10 (l'asymétrie R6 de l'héritage non
+embarqué corrigée au passage, modèle journal 18 m2), 0.4.0-rc.1 puis
+0.4.0 sur la validation terrain consignée (T2 6×, D64-D71) ; la lignée
+de clés régénérée dans la session (4e réinitialisation, D27/D30
+réappliquées) avec preuve de continuité byte-identique : proxy.exe
+régénéré md5 dd12b649… égal au scellé D63 — le scellage est un fait de
+carte, l'artefact n'a pas bougé d'un octet.
 **Lignée terrain (D48–D71)** — `superviseur.exe` terrain.16 : le
 harnais du terrain « 1 seul exe qui contient tout » (demo.exe,
 proxy.exe et annexe de jetons EMBARQUÉS, section .blob), TOUS les
@@ -98,10 +105,13 @@ tueurs de runs (ABI shadow space D62, pile proxy D63, --fail D65,
 nettoyage du jeton D68, JSON indenté Google + HTTP/2 D69, tampon de
 composition D70) ; T1 inchangé : D57 — exit 0xC0000005 de demo.9
 publique, 5e reproduction, adresse de plantage attendue via WER.
-**Reste M3 : cristallisation et scellage final 0.4.0** (modèle 0.2.0/
-0.3.0 : conformité re-exécutée à la cristallisation — elle coûte désormais
-~2 s ; budgets mesurés ; carte re-signée côté développeur ; constat
-terrain).
+**M3 est clos : balise finale `0.4.0` (D74)** — les cartes m0/m1/m2/terrain
+restent chiffrées à l'ancienne lignée de clés (illisibles depuis la
+restauration D71, état préexistant) : relève par l'ancienne phrase du coffre
+développeur ou cérémonies de reconstruction byte-identiques (modèle D74) ;
+la NOUVELLE phrase maîtresse de la lignée courante est au coffre du
+développeur depuis la fin de session D74. Suite : M4 (tunnel chiffré
+Schannel) ; terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
 

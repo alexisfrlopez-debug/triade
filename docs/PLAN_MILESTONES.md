@@ -12,13 +12,17 @@
 > **État : M0 franchi le 26 octobre 2026** (D26 amendée — validation terrain Windows 11
 > constatée). **Jalon M1 franchi le 26 octobre 2026** (D32 — validation terrain
 > Windows 11 constatée : ligne unique `TRIADE M1 : minilibc 21/21 OK`, contrat
-> libc-08 Q2 ; balise finale **`0.2.0`** scellée, immuable § 9). **M2 à la balise
-> 0.3.0-rc.1** (boucle § 5 démontrée, conformité 124/124 ; constat terrain PARTIEL
-> du 26/10 : bannière exacte et porte R10 vivantes sous Windows 11 — le scellement
-> final attend la démonstration écho + console). En parallèle (D34, anticipation
-> restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir, `m6/`),
-> échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de nommage,
-> les jalons M6/M7 du plan restent inchangés).
+> libc-08 Q2 ; balise finale **`0.2.0`** scellée, immuable § 9). **Jalon M2 franchi
+> le 27 octobre 2026** (D43 — boucle § 5 démontrée sur machine réelle, balise
+> finale **`0.3.0`** scellée, immuable § 9). **Jalon M3 franchi le 28 octobre
+> 2026** (D74 — million de requêtes fuzzées sans crash D72, proxy transparent
+> pour curl validé terrain 6× D64-D71, balise finale **`0.4.0`** scellée sur
+> cristallisation 38/38 × 10/10, immuable § 9 ; la lignée de clés avait été
+> régénérée dans la même session — 4e réinitialisation, D27/D30 réappliquées,
+> preuve byte-identique dd12b649). En parallèle (D34, anticipation
+> restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir,
+> `m6/`), échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de
+> nommage, les jalons M6/M7 du plan restent inchangés).
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées
@@ -32,8 +36,8 @@ isolée, autorité de certification de test installée localement.
 |---|---|---|---|
 | M0 | Prouver la chaîne artefact | Éditeur PE32+ minimal ; hello.exe via WriteFile ; carte v0 à trois blocs ; vérificateur de round-trip | Exécution sur Windows 11 ; round-trip 100 % ; carte signée et vérifiée ; moins de 4 Kio. Règles : R1–R3, R8–R9. **Franchi le 26/10/2026** |
 | M1 | Blocs réutilisables | Mini-libc scellée : memcpy, memcmp, strlen, itoa, allocateur par zone, memset ; **instrumentation des budgets tokens** ; suite de conformité § 8.2 ; export de continuité D16 | Oracle à 100 % ; première cristallisation ; adresses stables démontrées ; première mesure effective des budgets (localiser/éditer/ajouter). Règles : R5–R7. **Franchi le 26/10/2026 — balise finale `0.2.0` (D32)** |
-| M2 | Code actif et patch à chaud | Serveur TCP écho ; thread par connexion ; journal console | Patch du bloc écho pendant exécution, sans interruption ; rollback démontré. Boucle complète |
-| M3 | Entrées non fiables | Proxy HTTP ; parseur à contrats renforcés ; threading du tunnel | Un million de requêtes fuzzées sans crash ; proxy transparent pour curl. Contrats renforcés. **Ouvert le 27/10/2026 (D45) — harnais P1-P5 livré et falsifiable, 101 000 cas sans crash sur la surface scellée ; couche I écrite-avant-code : 13 spécifications http-xx + tcp-13 (D46) ; étape (b) accomplie (D47) : proxy.exe scellé 0.4.0-dev.1 — oracle à scénarios 153 036 cas verts, carte génération 5 (38 blocs, 4 artefacts), révisions http-06:R2/http-10:R2 nées de l'implémentation ; étape (c) confiée au superviseur terrain (D48 : T2 traverse le proxy par curl) ; étape (c) validée terrain 6× (T2 du superviseur, D71) ; étape (d) ACCOMPLIE (D72 : campagne million — harnais fuzz_million.py falsifiable, 1 000 000 cas SANS CRASH en 175 s sur http-01..09 + accumulation http-10, re-exécution graine neuve identique ; rapport m3/rapport_million.json) ; étape (e) ACCOMPLIE (D73 : suite de conformité § 8.2 livrée — m3/conformite_profil.py, 161 contrôles, éléments 1-7 constatés depuis proxy.exe + contrôle de jalon « fuzzing à propriétés » 10^4 cas SANS CRASH à chaque exécution, graine datée reproductible, auto-test de falsification inclus, falsifiable ; conformite.txt lu par le tableau de bord ; suite VERTE, re-exécution à graine neuve identique — le harnais million devient sentinelle perpétuelle de chaque cristallisation rc/future, § 8.2/§ 9) ; reste : cristallisation + scellage final 0.4.0** |
+| M2 | Code actif et patch à chaud | Serveur TCP écho ; thread par connexion ; journal console | Patch du bloc écho pendant exécution, sans interruption ; rollback démontré. Boucle complète. **Franchi le 27/10/2026 (D43) — balise finale `0.3.0`** |
+| M3 | Entrées non fiables | Proxy HTTP ; parseur à contrats renforcés ; threading du tunnel | Un million de requêtes fuzzées sans crash ; proxy transparent pour curl. Contrats renforcés. **Franchi le 28/10/2026 (D74) — balise finale `0.4.0`** : étape (a) harnais P1-P5 falsifiable (D45) ; (b) proxy.exe scellé (D47, révisé D63 : 0.4.0-dev.2, oracle 153 036 cas verts, md5 dd12b649…) ; (c) validée terrain 6× (T2 du superviseur, D64-D71) ; (d) campagne million (D72 : 10^6 cas SANS CRASH en 175 s, re-exécution identique, harnais falsifiable) ; (e) suite de conformité § 8.2 (D73 : 161 contrôles, fuzzing intégré 10^4 cas/exécution, sentinelle perpétuelle) ; cristallisation 38/38 × 10/10 puis scellage rc.1 → 0.4.0 (D74 : lignée régénérée D27/D30, preuve byte-identique, asymétrie R6 de l'héritage non embarqué corrigée) |
 | terrain/ (hors jalons) | Harnais du terrain (D48) | Superviseur GUI 1 clic : T1 démo + T2 proxy + T3 envoi Drive | **superviseur.exe 0.5.0-terrain.3 scellé (27/10/2026, D50) — 23 blocs dont 11 octet-identiques R7, kit embarqué « 1 seul exe » (D49), oracle 10 102 cas verts, carte génération 5, cristallisation 10/10, audit 61 contrôles ; terrain.2 ne lançait rien (SizeOfHeaders incohérent à six sections — chargeur refusait l'image) : corrigé d'un octet, règle chargeur imposée build+oracle+audit ; run 16 (D71, 28/10 06:54) : T3 démontré de bout en bout PREMIÈRE FOIS — journal terrain_20261028_065408.txt déposé TOUT SEUL dans le dossier test (chaîne de garde fermée, md5 superviseur == LISEZMOI) ; T2 6e vert consécutif ; T1 inchangé D57 (WER attendu)** |
 | M4 | Tunnel chiffré | Contexte SSPI / Schannel ; poignée de main TLS ; relais chiffré | HTTPS en transit ; échec propre sur certificat invalide. Contrats cryptographiques |
 | M5 | L'outil complet | Autorité de test locale ; interception et re-chiffrement ; journal des flux ; interface en ligne de commande | Interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build activées. Intégralité du protocole |

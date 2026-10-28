@@ -80,6 +80,12 @@ VERSION_DEV1 = "0.4.0-dev.2"   # proxy complet : 13 blocs M3 + réutilisation R7
                                  # prologue (c00000fd terrain 21:38 corrigé)
 VERSION_U64_DEV1 = 0x00040002  # R10 : monotonie de version (anti-rollback)
 VERSION_U64_MIN = 0x00040000   # plancher accepté par la porte R10 (http-12:Q1)
+VERSION_RC1 = "0.4.0-rc.1"    # cristallisation R6 10/10 + conformité § 8.2 verte
+                               # (D74) — candidate à la validation terrain
+VERSION_FINALE = "0.4.0"      # validation terrain consignée (T2 du superviseur,
+                               # 6 verts consécutifs D64-D71, octets dd12b649
+                               # inchangés) — balise immuable § 9 ; défaut →
+                               # 0.4.1 à contrat stable (R4)
 
 # --- Blocs embarqués dans proxy.exe (couche C, génération 4) --------------------
 # a1xxxx = M0 ; b2xxxx = M1 ; c3xxxx = M2 ; e5xxxx = M3 (D46). Tous les slots
