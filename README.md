@@ -27,7 +27,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D46, format normalisé depuis D24) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D72 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–61) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -69,22 +69,29 @@ livré et falsifiable, 101 000 cas sans crash sur la surface scellée (D45) ;
 couche I écrite avant le code — treize spécifications du domaine http
 (D46, `m3/I/`) ; **proxy.exe scellé 0.4.0-dev.1** (D47 — étape (b) : oracle
 à scénarios 153 036 cas verts, carte génération 5 sur 4 artefacts, R7 :
-13 blocs octet-identiques M0/M1/M2) ; prochaine étape : proxy transparent
-curl sur le terrain, puis campagne million sur le périmètre parseur.
-**Lignée terrain (D48–D50)** — le harnis du terrain : `superviseur.exe`
-0.5.0-terrain.3 scellé (61 952 o, WINDOWS_GUI, écrit à la main) — la
-réponse à l'exigence du développeur « 1 seul exe qui contient tout » :
-demo.exe, proxy.exe et l'annexe de jetons EMBARQUÉS (section .blob),
-TOUS les tests en 1 clic (T1 démo rejouée sans main humaine, T2 proxy
-traversé par curl — c'est le run de l'étape (c) de M3, T3 journal
-téléversé automatiquement dans le dossier test du Drive par curl.exe
-relais), 23 blocs dont 11 octet-identiques R7, oracle 10 102 cas
-verts, carte génération 5, cristallisation 10/10. terrain.2 ne lançait
-rien (SizeOfHeaders 0x200 < 0x238 réels à six sections — le chargeur
-refusait l'image) : corrigé d'un octet en terrain.3, la règle du
-chargeur est désormais imposée au build, à l'oracle et à l'audit
-(D50) ; premier run terrain attendu (journal
-`terrain_YYYYMMDD_HHMMSS.txt` dans le dossier test).
+13 blocs octet-identiques M0/M1/M2) ; **étape (c) validée terrain 6×**
+(D64–D71 : T2 du superviseur — proxy 0.4.0-dev.2 scellé D63, oracle
+153 036 cas verts — vert à chaque run complet) ; **étape (d) ACCOMPLIE
+(D72) : campagne million** — 1 000 000 cas SANS CRASH en 175 s sur le
+périmètre parseur D46 (harnais `m3/fuzz_million.py` falsifiable :
+deux mutations d'un octet du proxy scellé détectées ; 900 000
+différentiels http-01..09 + 100 000 requêtes http-10 à propriétés
+P1-P5, 200/200 sentinelles ; re-exécution à graine neuve identique —
+2 × 10^6 cas cumulés ; rapport `m3/rapport_million.json`).
+**Lignée terrain (D48–D71)** — `superviseur.exe` terrain.16 : le
+harnais du terrain « 1 seul exe qui contient tout » (demo.exe,
+proxy.exe et annexe de jetons EMBARQUÉS, section .blob), TOUS les
+tests en 1 clic — T1 démo rejouée sans main humaine, T2 proxy
+traversé par curl, T3 journal téléversé automatiquement ; **T3
+DÉMONTRÉ de bout en bout sur machine réelle le 28/10 (D71, run 16 :
+le journal `terrain_20261028_065408.txt` est parti TOUT SEUL dans le
+dossier test)** — seize générations pour nommer et corriger les
+tueurs de runs (ABI shadow space D62, pile proxy D63, --fail D65,
+nettoyage du jeton D68, JSON indenté Google + HTTP/2 D69, tampon de
+composition D70) ; T1 inchangé : D57 — exit 0xC0000005 de demo.9
+publique, 5e reproduction, adresse de plantage attendue via WER.
+**Reste M3 : (e) fuzzing dans la suite de conformité, cristallisation
+et scellage final 0.4.0.**
 
 ## Avertissement
 
