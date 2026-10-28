@@ -3990,3 +3990,79 @@ préexistant, non dégradé par D74) ; deux relèves documentées : lecture par
 l'ancienne phrase du coffre développeur, ou cérémonies de reconstruction
 byte-identiques à la D74. Terrain : D57 (WER, adresse de plantage de la démo)
 reste le seul point ouvert.
+
+## Entrée 64 — D75 (28/10, 10:11) : le coffre-fort des phrases maîtresses rejoint le protocole — spécification v0.5.1 ; toutes les phrases, par projet, dans un conteneur chiffré falsifiable
+
+**Contexte** : demande du développeur en ouverture de session (« ajoute au protocole un
+coffre fort que tu coderas afin de stocker toutes les phrases maitresses par projet,
+ensuite on enchaine »). Le constat qui la fonde est déjà consigné quatre fois (D27, D30,
+la quatrième réinitialisation pré-D71, D74) : la phrase survit dans le coffre du
+développeur, mais chaque réinitialisation du bac à sable perd `.keys/` et impose la
+cérémonie de régénération avec preuve byte-identique ; l'export de continuité D16 protège
+l'état scellé, pas le secret lui-même. La demande devient COMPOSANT DU PROTOCOLE — donc
+spécification et outillage, pas un simple script.
+
+**Déroulé** :
+1. Conception sur la pile existante, zéro mécanisme nouveau : phrase de contrôle
+(développeur seul, jamais stockée, affichée une fois — le modèle D27/D30) → Argon2id
+64 Mio / 3 itérations / parallélisme 1 (planchers FORMAT_CARTE § 3.1, sel aléatoire de
+32 octets par coffre) → HKDF-SHA256 à contexte dédié `coffre=v1` (distinct des fragments
+de carte et de l'export de continuité — nul chevauchement de clé) → XChaCha20-Poly1305
+avec l'en-tête clair pour AAD. Le conteneur « TRIADE-CF1 » suit la mise en page du
+conteneur TRIADE-EXP1 : magic, version u16, champs longueur-préfixée (hachage, kdf,
+chiffrement, date), sel 32 o, nonce 24 o aléatoire à CHAQUE écriture, empreinte sha256
+du chiffretexte, chiffretexte AEAD.
+2. `coffre_fort.py` (racine du dépôt, 840 lignes trackées — l'OUTIL est public par
+Kerckhoffs, seul le conteneur est secret) : init / statut / ajouter / lister / obtenir /
+retirer / verifier / changer-phrase / exporter / importer / autotest ; écriture atomique
+(tmp + os.replace + fsync, 0600, répertoire 0700) ; liste blanche d'algorithmes vérifiée
+à chaque lecture ; fail-closed sur toute anomalie — parsing, empreinte, tag AEAD, phrase
+divergente : RIEN n'est interprété ; phrases stockées en base64 (round-trip octet exact) ;
+`obtenir --vers-fichier` (chmod 600) est la commande de relève ; export nu (conteneur
+chiffré, aucune phrase requise, update-or-create Drive) vers coffre projet et coffre
+développeur.
+3. Autotest de falsification (une suite qui ne peut pas échouer ne prouve rien) :
+**19/19 PASS** — mauvaise phrase refusée ; mutations d'UN octet du chiffretexte, du sel
+(dérivation divergente), du nonce (AAD ET vecteur) et de l'empreinte, chacune refusée ;
+`lister` ne divulgue aucune phrase (contrôle par capture de sortie) ; `obtenir
+--vers-fichier` exact et 0600 ; unicité d'étiquette refusée sans `--remplacer` ;
+`changer-phrase` : l'ancienne devient inopérante, les entrées restent intactes ;
+export/import round-trip ; anti-écrasement à l'import (refus sans `--force`) ; témoin
+sauvage : même phrase, sel/nonce neufs → octets tous différents, même contenu logique.
+4. Coffre réel initialisé (900 octets, TRIADE-CF1 v1, protocole 0.5.1) : phrase de
+contrôle générée à 128 bits (modèle D27) confiée à un fichier de session 0600 puis
+remise par cérémonie de fin de session — AFFICHÉE UNE SEULE FOIS, instruction de coffre
+immédiat ; entrée `TRIADE/lignee-D74` alimentée directement depuis `.keys/passphrase.txt`
+(la phrase maîtresse n'est JAMAIS passée par un affichage) ; `verifier` INTÈGRE ; le flux
+de relève prouvé : `obtenir --vers-fichier` == `.keys/passphrase.txt` OCTET POUR OCTET
+(cmp). La graine Ed25519 reste hors coffre (D30) — la relève de signature demeure la
+cérémonie byte-identique. Conteneur exporté : racine du coffre Drive (md5 ed2de621…,
+égal au local) + copie développeur (`download/coffre_fort.bin`).
+5. Spécification **v0.5.1** (rien ne se change en silence) : § 1.5 « Ce que change la
+v0.5.1 » ; menace « Vol du coffre-fort des phrases » au modèle § 13.1 (résiduel : sans
+la phrase, indéchiffrable) ; § 15.3 étendu — discipline : chaque cérémonie de clés
+alimente le coffre dans la même session, export chiffré aux DEUX coffres (projet +
+développeur) ; § 17.5 correspondance v0.5.0 → v0.5.1 avec alternatives rejetées (le
+statu quo de l'instruction seule ; les phrases en clair dans `.keys/` ; la graine au
+coffre — contraire D30 ; la copie unique sans coffre projet) ; glossaire +2 (coffre-fort,
+phrase de contrôle) ; § 19. FORMAT_CARTE § 11 : format normatif complet — layout octet,
+dérivation, commandes, discipline. L'état des jalons est rattrapé au passage : M3
+franchi (balise 0.4.0, D74) constaté au § 16. Chaîne formelle spec_v050 → spec_v051
+(git mv — sources LaTeX, couverture v0.5.1, cahier étendu V1–V10 ajusté + V11 nouveau :
+coffre-fort présent, deux niveaux de secret, menace, discipline, correspondance, rejets,
+glossaire, version, contenu du PDF, outil au dépôt + conteneur gitignoré, autotest
+exécuté) ; build_pdf.sh v0.5.1 ; PDF formel régénéré (21 pages, QA 12/12) ; cahier
+V1–V11 : TOUS LES CRITÈRES PASSÉS.
+6. Sauvegarde : README / REPRISE / PLAN_MILESTONES alignés (points d'entrée v0.5.1,
+section coffre-fort, arborescence, méthode A étendue de l'étape phrases, état des clés,
+commandes utiles) ; commit D75 + synchro Drive (miroir + bundle) + push GitHub ;
+vérification du coffre (`scripts/verifier_coffre_d75.py`).
+
+**Ce que ça établit** : le maillon manquant de la continuité est fermé — les phrases
+maîtresses vivent désormais chiffrées dans un conteneur falsifiable, exportable et
+restaurable après réinitialisation SANS cérémonie (importer + `obtenir --vers-fichier`) ;
+le composant est PAR PROJET (TRIADE aujourd'hui, tout projet conduit sous le protocole
+demain). La discipline D27/D30 est inchangée (cérémonie, affichage unique, graine hors
+coffre). Il reste au développeur à ajouter l'ancienne phrase D30 au coffre (elle seule
+relit les enveloppes m0/m1/m2/terrain). Suite : M4 (tunnel chiffré Schannel) ; terrain :
+D57 (WER) seul point ouvert ; hygiène jetons (REPRISE § 8).

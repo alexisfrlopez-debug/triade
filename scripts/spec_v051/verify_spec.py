@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Vérification post-révision du protocole TRIADE v0.5.0 (cahier de révision).
+"""Vérification post-révision du protocole TRIADE v0.5.1 (cahier de révision).
 
-Dix critères, tous vérifiés mécaniquement sur les sources et le PDF :
+Onze critères, tous vérifiés mécaniquement sur les sources et le PDF :
   V1  hiérarchie Sécurité > Performance > Optimisation > Coût en tokens intacte ;
   V2  couches I/B/C indissociables ;
   V3  aucune règle affaiblie — R1-R9 à l'identique, R10 en sur-ensemble ;
@@ -11,11 +11,16 @@ Dix critères, tous vérifiés mécaniquement sur les sources et le PDF :
   V7  chaque nouvelle exigence vérifiable (mécaniquement ou par oracle) ;
   V8  chaque évolution tracée dans le changelog ;
   V9  modifications incompatibles explicitement rejetées ;
-  V10 contenu v0.5.0 : validation terrain normée, taxonomie X1-X8, jalons
-      M0-M2 constatés, budgets mesurés, décisions D26-D45 consignées.
+  V10 contenu v0.5.0 : validation terrain normée, taxonomie X1-X8, budgets
+      mesurés, décisions D26-D45 consignées ;
+  V11 contenu v0.5.1 : coffre-fort des phrases maîtresses (D75, TRIADE-CF1),
+      menace du vol du coffre au modèle § 13.1, M3 franchi constaté (balise
+      0.4.0, D72-D74), correspondance v0.5.0 → v0.5.1.
 Sortie : PASS/FAIL par critère, exit 1 si échec.
 """
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -26,7 +31,7 @@ DEC_RAW = (HERE / "docs" / "DECISIONS.md").read_text(encoding="utf-8")
 DEC = re.sub(r"\s+", " ", DEC_RAW).replace("\u2019", "'")
 
 import pdfplumber
-with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.5.0_Specification.pdf") as pdf:
+with pdfplumber.open(HERE / "docs" / "Protocole_TRIADE_v0.5.1_Specification.pdf") as pdf:
     PDF = "\n".join((p.extract_text() or "") for p in pdf.pages).replace("\u2019", "'")
 
 failures = []
@@ -193,10 +198,12 @@ check("V10", "taxonomie X1-X8 présente (§ 8.5)",
       and "invisibles à l'émulation" in SPEC)
 check("V10", "les 8 classes X tracées vers leurs décisions",
       all(d in DEC for d in ("D35", "D36", "D37", "D38", "D39", "D40", "D41", "D42")))
-check("V10", "jalons M0-M2 constatés franchis",
-      SPEC.count("**franchi**") == 3 and "balise 0.3.0" in SPEC)
-check("V10", "M3 ouvert avec critères",
-      "**ouvert** 27/10/2026" in SPEC and "fuzzing à propriétés" in SPEC)
+check("V10", "jalons M0-M3 constatés franchis",
+      SPEC.count("**franchi**") == 4 and "balise 0.3.0" in SPEC
+      and "balise 0.4.0" in SPEC)
+check("V10", "M3 franchi avec preuves (campagne million, conformité, scellage)",
+      "**franchi** 28/10/2026" in SPEC and "fuzzing à propriétés" in SPEC
+      and "campagne million" in SPEC)
 check("V10", "budgets corrigés et mesurés (64, D31)",
       "≤ 64 / 3 000 / 6 000" in SPEC and "51 / 719 / 1 088" in SPEC)
 check("V10", "correspondance v0.4.0 → v0.5.0 présente",
@@ -207,6 +214,35 @@ check("V10", "contenu v0.5.0 dans le PDF formel",
       all(k in PDF for k in ("boucle d'évidence", "X1", "X8", "franchi", "D43")))
 check("V10", "décisions D43-D45 consignées",
       all(f"D{i}" in DEC for i in (43, 44, 45)))
+
+# ---- V11 : contenu v0.5.1 (coffre-fort des phrases maîtresses) ----
+check("V11", "coffre-fort des phrases maîtresses présent (D75)",
+      "coffre-fort des phrases maîtresses" in SPEC and "TRIADE-CF1" in SPEC
+      and "D75" in SPEC)
+check("V11", "deux niveaux de secret distincts (phrase de contrôle jamais stockée)",
+      "phrase de contrôle" in SPEC and "jamais stockée" in SPEC)
+check("V11", "menace « Vol du coffre-fort des phrases » au modèle (§ 13.1)",
+      "Vol du coffre-fort des phrases" in SPEC
+      and "Sans la phrase, indéchiffrable" in SPEC)
+check("V11", "règles de discipline et restauration post-réinitialisation (§ 15.3)",
+      "obtenir --vers-fichier" in SPEC and "graine Ed25519 reste hors coffre" in SPEC)
+check("V11", "correspondance v0.5.0 → v0.5.1 présente",
+      "### 17.5 Correspondance v0.5.0 → v0.5.1" in SPEC)
+check("V11", "alternatives rejetées à D75 consignées",
+      "alternatives rejetées à D75" in SPEC)
+check("V11", "glossaire étendu (coffre-fort, phrase de contrôle)",
+      "| Phrase de contrôle |" in SPEC)
+check("V11", "journal des versions : ligne v0.5.1",
+      "| v0.5.1 | 28 oct. 2026 |" in SPEC and "autotest de falsification" in SPEC)
+check("V11", "contenu v0.5.1 dans le PDF formel",
+      all(k in PDF for k in ("coffre-fort", "TRIADE-CF1", "D75", "0.5.1")))
+check("V11", "l'outil vit dans le dépôt, le conteneur jamais",
+      os.path.exists(HERE / "coffre_fort.py")
+      and "coffre_fort" in (HERE / ".gitignore").read_text(encoding="utf-8"))
+check("V11", "autotest de falsification de l'outil (19 contrôles)",
+      "AUTOTEST" in subprocess.run(
+          [sys.executable, str(HERE / "coffre_fort.py"), "autotest"],
+          capture_output=True, text=True, timeout=300).stdout)
 
 print()
 print("=" * 66)

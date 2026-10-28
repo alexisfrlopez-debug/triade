@@ -6,6 +6,8 @@
 > le binaire navigable pour l'agent, porte les preuves et concentre la valeur intellectuelle
 > du projet. Mis à jour pour la v0.4.0 : champ de traçabilité `spec=` dans l'entrée de bloc
 > (spécification § 4.2), norme de fragmentation, audit de traçabilité et tableau de bord.
+> Mis à jour pour la v0.5.1 (D75) : § 11 — le coffre-fort des phrases maîtresses, conteneur
+> chiffré TRIADE-CF1.
 
 ## 1. Contraintes de conception
 
@@ -294,3 +296,58 @@ taxonomie T1-T6, optimisations sans mesure, budgets tokens (une fois instrument�
 suite de conformité par profil actif, changements hors journal des décisions, balisage
 correct des pré-versions. Le tableau est archivé avec la carte à chaque cristallisation :
 la conformité s'inspecte a posteriori, elle ne se déclare pas.
+
+## 11. Le coffre-fort des phrases maîtresses (D75)
+
+### 11.1 Objet et modèle de secret
+
+Le coffre-fort centralise **toutes les phrases maîtresses, par projet**, dans un conteneur
+unique chiffré. Il ne remplace ni la carte ni l'export de continuité : il protège le
+maillon que ni l'un ni l'autre ne couvrait — la phrase elle-même, jusque-là confiée à la
+seule instruction de cérémonie (D27/D30) alors que quatre réinitialisations du poste de
+développement en ont démontré la fragilité. Deux niveaux de secret, jamais confondus :
+
+- la **phrase de contrôle** ouvre le coffre ; elle est détenue par le seul développeur,
+  n'est stockée nulle part et n'est affichée qu'une seule fois, à la cérémonie (D27/D30) ;
+- les **phrases maîtresses** stockées, une par lignée de clés et par projet, déverrouillent
+  les fragments de cartes (§ 3.1) — la graine Ed25519, elle, reste hors coffre (D30).
+
+### 11.2 Format conteneur « TRIADE-CF1 »
+
+```
+magic « TRIADE-CF1 » (10 o) · version u16 (1) ·
+champs longueur-préfixée u16 : hachage (sha256), kdf (argon2id(65536,3,1)),
+                               chiffrement (xchacha20poly1305), date ISO-8601 UTC ·
+sel Argon2id 32 o (aléatoire à l'init, rotation au changement de phrase) ·
+nonce 24 o (aléatoire à CHAQUE écriture) ·
+empreinte sha256 du chiffretexte 32 o ·
+chiffretexte : XChaCha20-Poly1305(JSON base, clé dérivée, AAD = tout ce qui précède)
+```
+
+La base déchiffrée est un JSON `{format, protocole, cree, modifie, projets}` ; chaque
+projet porte une description et des entrées `etiquette / description / cree / modifie /
+phrase_b64`. Dérivation : Argon2id aux planchers de § 3.1 sur la phrase de contrôle et le
+sel du conteneur, puis HKDF-SHA256 avec sel `TRIADE-coffre-fort` et info `coffre=v1` — un
+contexte distinct des fragments de carte et de l'export de continuité, nul chevauchement
+de clé. L'écriture est atomique (tmp + `os.replace` + `fsync`, 0600, répertoire 0700) ;
+toute anomalie de parsing, d'algorithme (liste blanche de l'en-tête), d'empreinte ou de
+tag AEAD est un refus terminal — rien n'est interprété (fail-closed).
+
+### 11.3 Outil, commandes et discipline
+
+L'outil vit dans le dépôt (`coffre_fort.py`, racine du projet) ; le conteneur
+`.keys/coffre_fort.bin` vit hors dépôt (gitignore, jamais commité ni synchronisé en clair).
+Commandes : `init` (génération éventuelle de la phrase de contrôle, 128 bits, modèle D27),
+`statut` (en-tête clair seul), `ajouter` / `lister` / `obtenir` / `retirer` (par projet et
+étiquette ; `obtenir --vers-fichier` restaure l'état opérationnel, chmod 600), `verifier`,
+`changer-phrase` (rotation du sel), `exporter` / `importer` (conteneur chiffré — coffre
+Drive du projet et coffre personnel du développeur, les deux copies), `autotest`.
+
+Discipline consignée : (1) chaque cérémonie de clés alimente le coffre dans la même
+session ; (2) l'`autotest` — falsifications d'un octet (chiffretexte, sel, nonce,
+empreinte), mauvaise phrase, anti-écrasement, témoin sauvage de randomisation — doit passer
+avant tout usage sur un poste neuf ; (3) l'export chiffré se téléverse au racine du coffre
+Drive (copie projet) et se remet au coffre du développeur (copie personnelle) ; (4) après
+une réinitialisation : importer le conteneur, puis `obtenir --vers-fichier .keys/passphrase.txt`
+— la lignée redevient opérationnelle sans cérémonie de régénération (la signature des
+cartes reste attachée à sa graine, D30/D74).

@@ -76,6 +76,20 @@ autodescriptif ; oracle régénéré depuis I à l'arrivée, jamais exporté ; i
 étapes dont l'échec d'une seule est terminal. Sauvegarde 3-2-1 chiffrée et escrow de la
 clé maîtresse inchangés.
 
+\paragraph{Le coffre-fort des phrases maîtresses (D75).} Le composant qui centralise
+toutes les phrases maîtresses d'un projet — et de tout projet ultérieur conduit sous le
+protocole — dans un conteneur unique chiffré TRIADE-CF1 (\code{coffre\_fort.py}) :
+phrase de contrôle détenue par le seul développeur (jamais stockée), Argon2id aux
+planchers de la carte au repos puis HKDF à contexte dédié, XChaCha20-Poly1305 avec
+l'en-tête clair pour AAD, écriture atomique 0600, autotest de falsification exigé à
+chaque installation. Le conteneur chiffré s'exporte tel quel vers le coffre Drive du
+projet et le coffre personnel du développeur — son vol relève de la menace « sans la
+phrase, indéchiffrable ». Après une réinitialisation du poste, l'import du conteneur
+puis \code{obtenir --vers-fichier} restaurent la phrase opérationnelle sans cérémonie
+de régénération. Discipline inchangée : chaque cérémonie de clés (D27/D30) alimente le
+coffre dans la même session, la phrase de contrôle est affichée une seule fois, et la
+graine Ed25519 reste hors coffre (D30) — format normatif : FORMAT\_CARTE § 11.
+
 \section{Menaces et limites}\label{sec:menaces}
 
 Le principe directeur demeure : séparer l'obfuscation, qui protège la propriété
@@ -87,7 +101,7 @@ divulgation.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Modèle de menace v0.4.0 — les six ajouts en gras.}
+\caption{Modèle de menace — ajouts v0.4.0 en gras ; ajout v0.5.1 en gras (D75).}
 \label{tab:menaces}
 \begin{tabularx}{\textwidth}{@{}Y Y Y@{}}
 \toprule
@@ -102,6 +116,9 @@ chargement \\
 Fuite de la carte & chiffrement ; sharding ; escrow & perte limitée à un fragment \\
 Vol de l'export de continuité & chiffrement intégral + signature & indéchiffrable sans
 la phrase \\
+\textbf{Vol du coffre-fort des phrases} & chiffrement intégral (phrase de contrôle +
+Argon2id, contexte HKDF dédié) ; AEAD ; écriture atomique & indéchiffrable sans la
+phrase (D75) \\
 \textbf{Binaire altéré} & checksums par bloc + signature du manifeste au lancement
 (R10 a, b) & détecté — arrêt avant tout effet \\
 \textbf{Rollback non autorisé} & monotonie de version signée, plancher anti-rollback
@@ -120,10 +137,11 @@ Instrumentation dynamique & anti-debug léger par mesure de temps & assumé \\
 \end{tabularx}
 \end{table}
 
-Les six menaces en gras sont les additions de la v0.4.0 ; toutes sont neutralisées par des
-mécanismes \textbf{locaux et vérifiables} — la contre-mesure anti-rollback ne dépend
-d'aucun service en ligne (le chargement doit échouer proprement hors ligne), et les
-vérifications de R10 s'exécutent avant toute entrée dans le chemin d'exécution.
+Les six menaces en gras sont les additions de la v0.4.0, le vol du coffre-fort (D75)
+celle de la v0.5.1 ; toutes sont neutralisées par des mécanismes \textbf{locaux et
+vérifiables} — la contre-mesure anti-rollback ne dépend d'aucun service en ligne (le
+chargement doit échouer proprement hors ligne), et les vérifications de R10 s'exécutent
+avant toute entrée dans le chemin d'exécution.
 
 \subsection{Limites assumées}\label{sec:limites}
 
@@ -159,7 +177,7 @@ adresses stables démontrées ; première mesure effective des budgets tokens & 
 M2 — patch à chaud & remplacement du bloc d'écho en exécution, sans interruption ;
 rollback démontré ; régression post-patch nulle & \textbf{franchi} 27/10/2026, 0.3.0 (D43) \\
 M3 — entrées non fiables & un million de requêtes fuzzées sans crash ; proxy
-transparent ; contrats renforcés & \textbf{ouvert} 27/10/2026 (D45) \\
+transparent ; contrats renforcés & \textbf{franchi} 28/10/2026, 0.4.0 (D74) \\
 M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide & à venir \\
 M5 — outil complet & interception d'un flux navigateur en VM isolée ; patch à chaud du
 journal en production ; empreintes par build actives & à venir \\
@@ -291,6 +309,35 @@ sont immuables, la documentation cite les empreintes. Fusionner les classes X da
 classes T — rejetée : les deux familles appellent des remèdes distincts, écrire le contrat
 (T) contre enrichir le modèle d'environnement et falsifier (X).
 
+\subsection{Correspondance v0.5.0 $\to$ v0.5.1}\label{sec:evolutions051}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les évolutions de la v0.5.1, tracées depuis la v0.5.0.}
+\label{tab:correspondance051}
+\begin{tabularx}{\textwidth}{@{}l Y Y l@{}}
+\toprule
+\textbf{Évolution} & \textbf{En v0.5.0} & \textbf{En v0.5.1} & \textbf{Statut} \\
+\midrule
+Phrases maîtresses & instruction de cérémonie seule (D27/D30) — quatre
+réinitialisations du poste ont montré la limite & coffre-fort TRIADE-CF1 : conteneur
+chiffré par projet, export/import, restauration post-réinitialisation & nouveau (D75) \\
+État des jalons & M0–M2 constatés, M3 ouvert & M3 franchi 28/10/2026 — campagne
+million (D72), conformité permanente (D73), scellage 0.4.0 (D74) & constaté (D72–D74) \\
+Modèle de menace & 13 menaces, dont le vol de l'export & + vol du coffre-fort des
+phrases — sans la phrase de contrôle, indéchiffrable & étendu (D75) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Modifications explicitement rejetées (v0.5.1).} Conserver la seule
+instruction de coffre développeur — rejeté : le statu quo que les quatre réinitialisations
+ont démenti. Stocker les phrases en clair dans \code{.keys/} — rejeté : l'état
+opérationnel du poste n'est pas un coffre. Embarquer la graine Ed25519 dans le coffre —
+rejeté : contraire à D30, jamais confiée. Confier le conteneur au seul gestionnaire de
+mots de passe du développeur sans copie de coffre projet — rejeté : la continuité exige
+les deux copies, le conteneur étant indéchiffrable sans la phrase.
+
 \section{Journal des décisions}\label{sec:decisions}
 
 Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. Synthèse :
@@ -349,6 +396,19 @@ ABI, état hérité — classes X5 à X8), D43 (M2 clos : boucle § 5 démontré
 réelle, retrait des sondes, scellage final 0.3.0 — la validation terrain devient
 couche normée). D44 consigne la présente révision v0.5.0 ; D45 ouvre le jalon M3
 (contrats renforcés sur entrées non fiables, fuzzing à propriétés).
+
+La campagne M3 poursuit le journal jusqu'à la clôture du jalon : D46 (couche I écrite
+avant le code — treize spécifications du domaine http), D47 (proxy.exe scellé),
+D48–D50 (lignée terrain : le superviseur un-exe et sa chaîne de lecture), D51–D71 (la
+chasse aux tueurs de runs en seize générations — ABI shadow space, pile du proxy,
+réponses Google, tampon de composition — jusqu'au T3 démontré de bout en bout sur
+machine réelle), D72 (campagne million : 10\^6 requêtes fuzzées sans crash, reproductible),
+D73 (le fuzzing rejoint la suite de conformité — sentinelle perpétuelle), D74 (M3 clos :
+cristallisation 38/38 $\times$ 10/10, scellage de la balise finale 0.4.0, lignée de clés
+régénérée avec preuve byte-identique). D75 consigne la présente révision v0.5.1 : le
+coffre-fort des phrases maîtresses — conteneur chiffré TRIADE-CF1 centralisant toutes
+les phrases par projet, sur la pile cryptographique de la carte au repos, avec autotest
+de falsification et restauration post-réinitialisation.
 
 Une décision ne se modifie jamais en silence : la révision remplace l'entrée par une note
 d'invalidation explicite référençant la décision qui la supplante. La gouvernance

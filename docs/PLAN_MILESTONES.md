@@ -22,7 +22,9 @@
 > preuve byte-identique dd12b649). En parallèle (D34, anticipation
 > restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir,
 > `m6/`), échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de
-> nommage, les jalons M6/M7 du plan restent inchangés).
+> nommage, les jalons M6/M7 du plan restent inchangés). Composant transversal ajouté
+> par la v0.5.1 (D75), hors jalons : le coffre-fort des phrases maîtresses — conteneur
+> chiffré TRIADE-CF1 (`coffre_fort.py`, spécification § 15.3 / FORMAT_CARTE § 11).
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
 choisie comme stress test : elle exige du réseau, de la concurrence, du parsing d'entrées

@@ -29,6 +29,11 @@ tmp/
 m0/.keys/
 m1/.keys/
 
+# Coffre-fort des phrases maitresses (D75) — conteneur chiffre, jamais commite
+/.keys/coffre_fort.bin
+coffre_fort*.bin
+coffre_session.tmp
+
 # Export de continuité (D16) — conteneur de coffre, jamais commite
 m1/export/
 

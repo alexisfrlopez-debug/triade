@@ -23,11 +23,11 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.0, source de travail) — `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (archive formelle v0.5.0, révision du retour du terrain : validation terrain normée, taxonomie X1–X8, jalons M0–M2 constatés — D44) ; archives conservées : v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v050/verify_spec.py` (cahier V1–V10) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.1, source de travail) — `docs/Protocole_TRIADE_v0.5.1_Specification.pdf` (archive formelle v0.5.1 : coffre-fort des phrases maîtresses D75, menace du vol du coffre § 13.1, M3 franchi constaté — D75) ; archives conservées : v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v051/verify_spec.py` (cahier V1–V11) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D74 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–63) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D75 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–64) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -43,6 +43,16 @@ Le script régénère d'abord le PDF formel si les sources du protocole ont chan
 committe, synchronise le miroir Google Drive (fichiers + bundle d'historique)
 et pousse vers le repo GitHub privé. Le hook `post-commit` synchronise le Drive à chaque
 commit. Vérification des jetons : `python3 scripts/check_auth.py`.
+
+**Coffre-fort des phrases maîtresses (D75).** Toutes les phrases maîtresses du projet
+— et de tout futur projet conduit sous TRIADE — vivent dans un conteneur unique chiffré
+TRIADE-CF1 (`python3 coffre_fort.py` à la racine) : phrase de contrôle au coffre du
+développeur seule (jamais stockée, affichée une fois à la cérémonie), Argon2id + HKDF à
+contexte dédié + XChaCha20-Poly1305, autotest de falsification (`python3 coffre_fort.py
+autotest`). Le conteneur est exporté chiffré au racine du coffre Drive (copie projet) et
+au coffre personnel du développeur ; après une réinitialisation du poste, `importer` +
+`obtenir --vers-fichier .keys/passphrase.txt` restaurent la lignée sans cérémonie.
+Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification § 15.3.
 
 ## État du projet
 
@@ -110,11 +120,19 @@ restent chiffrées à l'ancienne lignée de clés (illisibles depuis la
 restauration D71, état préexistant) : relève par l'ancienne phrase du coffre
 développeur ou cérémonies de reconstruction byte-identiques (modèle D74) ;
 la NOUVELLE phrase maîtresse de la lignée courante est au coffre du
-développeur depuis la fin de session D74. Suite : M4 (tunnel chiffré
+développeur depuis la fin de session D74. **Composant transversal (D75) : coffre-fort
+des phrases maîtresses** — conteneur chiffré TRIADE-CF1 (`coffre_fort.py`, spécification
+v0.5.1 § 15.3 + FORMAT_CARTE § 11), autotest de falsification 19/19, phrase de contrôle
+remise au développeur par cérémonie ; la phrase courante (lignée D74) y vit, export chiffré
+au racine du coffre Drive + copie développeur ; l'ancienne phrase D30 doit y être ajoutée
+côté développeur (`ajouter TRIADE lignee-D30`). Suite : M4 (tunnel chiffré
 Schannel) ; terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
 
 Le dossier `.gdrive/` contient des jetons d'accès : il ne doit jamais être commité,
-synchronisé ni affiché. L'application de validation (intercepteur MITM) est destinée à des
+synchronisé ni affiché. Le dossier `.keys/` contient les secrets de la carte (phrase,
+graine) et le conteneur chiffré du coffre-fort (D75) — jamais committés ni synchronisés
+en clair ; la phrase de contrôle du coffre vit uniquement au coffre du développeur.
+L'application de validation (intercepteur MITM) est destinée à des
 tests autorisés en environnement de laboratoire uniquement.

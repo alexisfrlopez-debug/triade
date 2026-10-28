@@ -118,6 +118,20 @@ référence de la méthode ; le jalon M3 est ouvert — contrats renforcés sur 
 fiables et fuzzing à propriétés (D45). Aucune règle n’est modifiée ; aucune couche
 n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
 
+\subsection{Ce que change la v0.5.1}\label{sec:nouveautes051}
+
+Un composant nouveau et deux constats, tous tracés dans la correspondance
+(§\ref{sec:evolutions051}) et le journal des versions, rattachés à la décision D75 : le
+\textbf{coffre-fort des phrases maîtresses} — conteneur chiffré TRIADE-CF1 centralisant
+toutes les phrases maîtresses par projet, sur la pile cryptographique de la carte au
+repos (Argon2id aux planchers, HKDF à contexte dédié, XChaCha20-Poly1305), doté d’un
+autotest de falsification et de règles d’export/import (continuité,
+§\ref{sec:gouvernance} ; FORMAT\_CARTE § 11) ; l’état des jalons est constaté — M3
+franchi le 28 octobre 2026 sur la campagne million (D72), la conformité permanente
+(D73) et le scellage de la balise finale 0.4.0 (D74) ; le modèle de menace gagne la
+ligne du vol du coffre-fort (§\ref{sec:menaces}). Aucune règle n’est modifiée ; aucune
+couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
+
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
 La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —

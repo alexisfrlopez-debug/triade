@@ -1,7 +1,8 @@
-# PROTOCOLE TRIADE v0.5.0 — Spécification technique
+# PROTOCOLE TRIADE v0.5.1 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.5.0. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
+> Source de travail faisant autorité pour la v0.5.1. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
+> `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
 > `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
 > `docs/Protocole_TRIADE_v0.2_Specification.pdf` (v0.2). La série documentaire compte
 > également la démonstration RoomEq (`docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf`)
@@ -10,13 +11,12 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.5.0 est la révision du retour du terrain : les jalons M0, M1 et M2 sont franchis sur
-> validations terrain Windows 11 (balises finales 0.2.0 et 0.3.0), et la campagne M2 — huit
-> classes de défauts invisibles à l'émulation nommées en huit lectures de journal — devient
-> norme (§ 8.4, § 8.5).
+> La v0.5.1 ajoute le coffre-fort des phrases maîtresses (D75) et consigne M3 franchi
+> (balise finale 0.4.0) ; la v0.5.0 demeure la révision du retour du terrain (validation
+> normée, taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.5.0 — révision du retour du terrain : validation terrain normée (boucle d'évidence), taxonomie étendue X1–X8, jalons M0–M2 constatés, budgets mesurés
-- Date : 27 octobre 2026
+- Version : v0.5.1 — coffre-fort des phrases maîtresses (D75) ; état des jalons constaté : M0–M3 franchis (balises 0.2.0, 0.3.0, 0.4.0)
+- Date : 28 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -122,6 +122,19 @@ itérations instrumentées) devient l'occurrence de référence de la méthode ;
 est ouvert — contrats renforcés sur entrées non fiables et fuzzing à propriétés (D45).
 Aucune règle n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de
 la fonction objectif est inchangée.
+
+### 1.5 Ce que change la v0.5.1
+
+Un composant nouveau et deux constats, tous tracés dans la correspondance (§ 17.5) et le
+journal des versions (§ 19), rattachés à la décision D75 : le **coffre-fort des phrases
+maîtresses** — conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses
+par projet, sur la pile cryptographique de la carte au repos (Argon2id aux planchers,
+HKDF à contexte dédié, XChaCha20-Poly1305), doté d'un autotest de falsification et de
+règles d'export/import (§ 15.3, FORMAT_CARTE § 11) ; l'état des jalons est constaté —
+M3 franchi le 28 octobre 2026 sur la campagne million (D72), la conformité permanente
+(D73) et le scellage de la balise finale 0.4.0 (D74) ; le modèle de menace gagne la ligne
+du vol du coffre-fort (§ 13.1). Aucune règle n'est modifiée ; aucune couche n'est ajoutée
+à l'exécution ; la hiérarchie de la fonction objectif est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -670,6 +683,7 @@ sur le secret de la carte : elle survivrait à sa divulgation.
 | Corruption de carte (accidentelle) | Bit rot, panne de stockage | Fragments au repos | AEAD (intégrité par fragment) + signature + verrou croisé | Détecté au chargement — refus propre |
 | Fuite de la carte | Initié, poste compromis | Fragments au repos | Chiffrement (algo de l'en-tête) ; sharding ; escrow | Perte partielle limitée à un fragment |
 | Vol de l'export de continuité | Voleur, stockage cloud compromis | Conteneur exporté | Chiffrement intégral (phrase maîtresse + Argon2id) ; signature | Sans la phrase, indéchiffrable |
+| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) | Chiffrement intégral (phrase de contrôle + Argon2id, contexte HKDF dédié) ; AEAD ; écriture atomique 0600 | Sans la phrase, indéchiffrable |
 | **Binaire altéré** | Attaquant local, fichier modifié | Artefact livré | Checksums par bloc + signature du manifeste au lancement (R10 a, b) | Détecté — arrêt avant tout effet |
 | **Rollback non autorisé** | Rejeu d'une version ancienne vulnérable | Artefact, état | Monotonie de version signée, plancher anti-rollback (R10 c) | Détecté — refus |
 | **Agent défaillant** | Hallucination, dérive hors périmètre | Processus de développement | R2 (intention d'abord) ; R5 (vérifie-puis-écrit) ; oracle dérivé de I ; budgets (§ 12) | L'erreur ne devient jamais permanente sans vérification |
@@ -832,6 +846,21 @@ autodescriptif ; oracle régénéré depuis I à l'arrivée, jamais exporté ; p
 en cinq étapes dont l'échec d'une seule est terminal. Les pré-requis de sauvegarde (3-2-1
 chiffrée, escrow de la clé maîtresse) sont inchangés.
 
+**Le coffre-fort des phrases maîtresses (D75, FORMAT_CARTE § 11).** Le composant qui
+centralise toutes les phrases maîtresses d'un projet — et de tout projet ultérieur conduit
+sous le protocole — dans un conteneur unique chiffré « TRIADE-CF1 » (`coffre_fort.py`) :
+phrase de contrôle détenue par le seul développeur (jamais stockée), Argon2id aux
+planchers de la carte au repos puis HKDF à contexte dédié, XChaCha20-Poly1305 avec
+l'en-tête clair pour AAD, écriture atomique 0600, autotest de falsification exigé à chaque
+installation de l'outil. Le conteneur chiffré s'exporte tel quel vers le coffre Drive du
+projet et le coffre personnel du développeur — son vol relève de la menace « sans la
+phrase, indéchiffrable » (§ 13.1). Après une réinitialisation du poste, l'import du
+conteneur puis `obtenir --vers-fichier` restaurent la phrase opérationnelle sans cérémonie
+de régénération. La règle de discipline demeure : chaque cérémonie de clés (D27/D30)
+alimente le coffre-fort dans la même session, la phrase de contrôle est affichée une seule
+fois, et la graine Ed25519 reste hors coffre (D30) — la relève d'une lignée perdue
+resterait la cérémonie avec preuve byte-identique.
+
 ## 16. Critères d'acceptation des jalons M0 à M7
 
 Huit jalons, chacun couvrant une capacité nouvelle et se terminant par des critères de
@@ -845,7 +874,7 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M0 | Chaîne artefact | exécution sur Windows 11 ; round-trip 100 % ; carte v0 signée et vérifiée ; exécutable < 4 Kio ; R1-R3, R8-R9 dès le premier octet | **franchi** 26/10/2026 (D26) |
 | M1 | Blocs réutilisables | oracle 100 % sur la mini-libc ; première cristallisation ; adresses stables démontrées ; budgets tokens instrumentés (première mesure) | **franchi** 26/10/2026 — balise 0.2.0 (D32) |
 | M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul | **franchi** 27/10/2026 — balise 0.3.0, boucle § 5 démontrée sur machine réelle (D43) |
-| M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **ouvert** 27/10/2026 (D45) |
+| M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **franchi** 28/10/2026 — balise 0.4.0 (D74) |
 | M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | à venir |
 | M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives | à venir |
 | M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | à venir |
@@ -925,6 +954,22 @@ Conformément au cahier de révision, les modifications suivantes ont été exam
 | Reconstruire les artefacts scellés 0.2.0 / 0.3.0 pour la documentation | rejetée | les balises finales sont immuables (§ 9) ; la documentation cite les empreintes |
 | Fusionner les classes X dans les classes T (T7–T14) | rejetée | les deux familles appellent des remèdes distincts : écrire le contrat (T) contre enrichir le modèle d'environnement et falsifier (X) |
 
+### 17.5 Correspondance v0.5.0 → v0.5.1
+
+| # | Évolution | En v0.5.0 | En v0.5.1 | Statut |
+|---|---|---|---|---|
+| 1 | Phrases maîtresses | instruction de cérémonie seule (D27/D30) — quatre réinitialisations du poste ont montré la limite | coffre-fort TRIADE-CF1 : conteneur chiffré par projet, export/import, restauration post-réinitialisation (§ 15.3, FORMAT_CARTE § 11) | nouveau (D75) |
+| 2 | État des jalons | M0–M2 constatés, M3 ouvert | M3 franchi 28/10/2026 — campagne million (D72), conformité permanente (D73), scellage 0.4.0 (D74) | constaté (D72–D74) |
+| 3 | Modèle de menace | 13 menaces, dont le vol de l'export de continuité | + vol du coffre-fort des phrases — sans la phrase de contrôle, indéchiffrable | étendu (D75) |
+
+Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée. Les
+alternatives rejetées à D75 : conserver la seule instruction de coffre développeur (le
+statu quo que les quatre réinitialisations ont démenti) ; stocker les phrases en clair
+dans `.keys/` (l'état opérationnel du poste n'est pas un coffre) ; embarquer la graine
+Ed25519 dans le coffre (contraire à D30 — jamais confiée) ; confier le conteneur au seul
+gestionnaire de mots de passe du développeur sans copie de coffre projet (la continuité
+exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
+
 ## 18. Glossaire
 
 | Terme | Définition |
@@ -962,6 +1007,8 @@ Conformément au cahier de révision, les modifications suivantes ont été exam
 | Défaut invisible à l'émulation | Défaut dont le modèle d'environnement de l'oracle ne rend pas compte — classes X1–X8 (§ 8.5) |
 | Diff chirurgical | Itération terrain dont l'audit vérifie qu'aucun octet hors des zones autorisées n'a changé |
 | Fuzzing à propriétés | Génération d'entrées aléatoires contraintes, vérifiées par propriétés (jamais de crash, domaines de retour, bornes mémoire) — cœur du jalon M3 |
+| Coffre-fort des phrases maîtresses | Conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses d'un projet (D75, § 15.3) — l'outil vit dans le dépôt, le conteneur jamais |
+| Phrase de contrôle | Secret ouvrant le coffre-fort, détenu par le seul développeur — jamais stockée, affichée une seule fois à la cérémonie |
 
 ## 19. Journal des versions
 
@@ -971,10 +1018,12 @@ Conformément au cahier de révision, les modifications suivantes ont été exam
 | v0.2 | 25 oct. 2026 | Décisions D1 à D10 ; sharding en quatre fragments chiffrés ; suite cryptographique (Ed25519, XChaCha20-Poly1305, Argon2id) ; règles R8 à R10 ; empreintes par build ; budgets en tokens ; spécification de la cible x86-64 / Windows 11 ; critères de sortie mesurables |
 | v0.3 | 25 oct. 2026 | Universalité par profils de cible (D14, amende D10) ; suite cryptographique paramétrable (D15, amende D5) ; export de continuité chiffré et signé (D16, précise R1) ; en-tête de carte normalisé ; jalons M6-M7 |
 | v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 15.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 13.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne l'état au passage de relais : jalons M0, M1 et M2 franchis
-sur validations terrain, jalon M3 ouvert (contrats renforcés sur entrées non fiables). Les évolutions prévisibles — bloc optionnel de syscalls directs,
+La présente version consigne l'état au passage de relais : jalons M0 à M3 franchis sur
+validations terrain (balises finales 0.2.0, 0.3.0, 0.4.0), coffre-fort des phrases
+maîtresses opérationnel (D75), jalon M4 (tunnel chiffré) à venir. Les évolutions prévisibles — bloc optionnel de syscalls directs,
 TLS 1.3 pur en blocs scellés, profils additionnels après M7 — restent volontairement hors
 du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle
 de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et
