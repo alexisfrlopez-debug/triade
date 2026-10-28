@@ -117,7 +117,13 @@ tls-05, unique propriétaire — 90 o) ; **fixtures console de tls-08 (D90)** :
 `"tunnel chiffre etabli\r\n"` `@0x2C60` (23 o — état nommé Q1) et
 `"certificat rejete\r\n"` `@0x2C80` (19 o — I4, LE critère M4 : le
 verdict 3 de tls-04 produit la ligne AVANT compensation ; tls-08 unique
-propriétaire des deux).
+propriétaire des deux). Fixture http-10:R2 (D92) : `"HTTP/1.1 502
+Certificat rejete\r\n\r\n"` `@0x2CA0` (34 o) — l'entrée ÉTIQUETÉE de la
+table des réponses (Q3' : le seul échec du tunnel distinguable côté
+client ; les verdicts 2/4/5/6/7 mappent sur la 502 R1 scellée ; la
+convention de cadre de session R2 — 0x13390, verdict @+0x7010, garde
+rdi @+0x7020, paquet @+0x7100, cadre TLS @+0x7130 — vit dans layout.py,
+source unique, D92).
 
 **Le paquet de session** (D90 — P2 de tls-08 : « spans : autorité cible
 [hôte, port], requête claire réécrite en forme origine, socket cliente,
