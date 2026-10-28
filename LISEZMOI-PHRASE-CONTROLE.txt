@@ -1,0 +1,91 @@
+PHRASE-CONTROLE-COFFRE.txt — la phrase de contrôle du coffre-fort TRIADE
+=========================================================================
+
+POURQUOI CE FICHIER EXISTE (consigne développeur, D81, 28/10/2026)
+-------------------------------------------------------------------
+« dès qu'une nouvelle phrase de contrôle est produite, il faut
+impérativement la sauvegarder dans le drive et le git avant tout pour
+éviter de la perdre en cas de problème sur ton infra (problèmes un peu
+trop récurrents) »
+
+Fait constaté à l'origine de la consigne : la rotation de lignée D80 a
+généré une phrase de contrôle neuve, la session d'exécution est MORTE
+avant la cérémonie de remise de fin de tour (« affichée UNE fois puis
+destruction », modèle D27/D30/D75) — la phrase ne vivait plus que dans
+le bac à sable éphémère (.keys/phrase_controle_session.txt). Un décès
+d'infra de plus et le coffre entier devenait indéchiffrable à jamais
+(l'ancienne phrase D75 étant déjà inopérante depuis la rotation).
+
+LA DISCIPLINE NOUVELLE (v0.5.2, § 15.3)
+----------------------------------------
+1. une phrase de contrôle est produite (init / rotation / changement) ;
+2. ELLE EST SAUVEGARDÉE ICI (git + push GitHub + miroir Drive + racine
+   Drive) AVANT TOUTE AUTRE ACTION de la session ;
+3. le fichier EST la remise — plus d'affichage en session, plus de
+   fichier de session à dépendre du bac à sable ;
+4. à la rotation suivante, le fichier est REMPLACÉ (git conserve
+   l'historique des phrases retirées du service — cf. avertissement).
+
+CE QUE LA PHRASE OUVRE
+----------------------
+Le conteneur TRIADE-CF1 du coffre-fort des phrases maîtresses
+(coffre_fort.py) :
+  - racine du coffre Drive « Triade » : coffre_fort.bin (copie chiffrée) ;
+  - dépôt local : .keys/coffre_fort.bin (gitignoré) ;
+  - copie développeur : download/coffre_fort.bin.
+Le conteneur D80 (md5 0323029a…) porte les entrées :
+  - TRIADE/lignee-D74  (archive — cartes m3 de l'historique antérieures
+    à D80, ne plus sceller avec) ;
+  - TRIADE/lignee-D80  (courante — carte m3 re-scellée + cartes M4+).
+
+UTILISATION
+-----------
+  python3 coffre_fort.py lister   --phrase-fichier PHRASE-CONTROLE-COFFRE.txt
+  python3 coffre_fort.py verifier --phrase-fichier PHRASE-CONTROLE-COFFRE.txt
+  python3 coffre_fort.py obtenir TRIADE lignee-D80 \
+         --vers-fichier .keys/passphrase.txt \
+         --phrase-fichier PHRASE-CONTROLE-COFFRE.txt
+  (le format du fichier — phrase seule, fin de ligne comprise — est lu
+   tel quel par --phrase-fichier : f.read().strip())
+
+RESTAURATION APRÈS UNE PANNE D'INFRA (le scénario visé par la consigne)
+-----------------------------------------------------------------------
+1. récupérer le dépôt (git clone GitHub, ou bundle du coffre Drive,
+   méthode A du REPRISE_PROJET.md) — PHRASE-CONTROLE-COFFRE.txt est
+   dedans ; à défaut : copie racine Drive ou miroir TRIADE/ ;
+2. restaurer le conteneur : python3 coffre_fort.py importer \
+      --depuis coffre_fort.bin (copie racine Drive) ;
+3. ouvrir : lister/obtenir --phrase-fichier PHRASE-CONTROLE-COFFRE.txt ;
+4. reconstituer .keys/ : obtenir TRIADE lignee-D80 --vers-fichier
+   .keys/passphrase.txt (chmod 600) — la graine Ed25519, ELLE, ne vit
+   pas au coffre (D30 inchangé : régénération = nouvelle paire de clés,
+   re-scellage des cartes à faits inchangés, modèle D74/D80).
+
+AVERTISSEMENT — CE QUE CE CHANGEMENT COÛTE (honnêteté § 13.1)
+----------------------------------------------------------------
+Le dossier Drive « Triade » est partagé PAR LIEN : quiconque tient
+l'URL peut lire ce fichier et donc DÉCHIFFRER LE COFFRE. La
+confidentialité des phrases maîtresses au repos repose désormais sur
+la non-divulgation de l'URL (et le compte Google du développeur), plus
+sur Argon2id+AEAD. Le développeur a arbitré : le risque de PERTE
+(pannes d'infra récurrentes, constatées) contre le risque d'EXPOSITION
+(théorique, URL non devinable). Décision consignée D81.
+
+Mitigations recommandées (ordre décroissant d'efficacité) :
+  1. RESTREINDRE le partage du dossier Drive : retirer « toute personne
+     disposant du lien », ne laisser que le compte développeur et le
+     compte de service — cela ferme TOUTE la classe d'exposition (§ 8
+     du REPRISE, dossier Tokens, cet incident-ci) ;
+  2. VIDER la corbeille Drive (copie D74 de la phrase maîtresse,
+     encore récupérable — reste développeur depuis D80) ;
+  3. le protocole reste roté-à-la-demande : si l'exposition devient
+     avérée, la rotation D80 se rejoue (nouvelle phrase, ce fichier
+     remplacé) — mais l'historique git CONSERVE les phrases retirées :
+     une phrase entrée en git n'en sort que par réécriture d'historique
+     (refusée par défaut — le bundle est l'autorité) ; en pratique on
+     considère une phrase commise comme exposée à vie et on ne compte
+     plus sur sa confidentialité.
+
+Rotation suivante : remplacer la ligne unique de
+PHRASE-CONTROLE-COFFRE.txt (commit dédié « AVANT TOUT », modèle D81),
+mettre à jour ce LISEZMOI si le modèle change.
