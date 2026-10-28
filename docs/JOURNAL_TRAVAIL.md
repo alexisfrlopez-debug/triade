@@ -5116,3 +5116,143 @@ notation, avec la preuve qu'aucun octet scellé n'en dépendait. Suites
 les champs de géométrie), révisions http-08:R2/http-10:R2, oracle à
 scénarios SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ;
 terrain : D57 (WER) seul point ouvert.
+
+
+## Entrée 76 — D90 (29/10, ~04:30) : M4 étape (b) — tls-08 LA SESSION TLS CLIENTE (l'orchestrateur) notée-mesurée-prouvée : la session complète de bout en bout existe en octets — connexion, nom, credentials, poignée, requête chiffrée, relais avec DRAIN du résidu, compensation INTÉGRALE par comptage — 18 blocs réels intégrés, 20 scénarios, 12 mutations attrapées
+
+Contexte : suite du « continue » — le bloc suivant la chaîne approuvée
+après D89 (tls-07). Le résumé de session plaçait encore la licence BSL
+« en cours » : re-synchronisation sur l'état réel (HEAD D89, arbre
+propre, journal à l'Entrée 75) — la continuation était tls-08,
+décision D90, entrée 76.
+
+1. CONVENTIONS D90 (layout.py, AVANT la notation — fail-closed) : le
+   PAQUET DE SESSION (P2 de tls-08, écrit par http-10:R2, lu par tls-08 :
+   +0x00 hôte ptr, +0x08 longueur, +0x10 port u16 ordre hôte, +0x18
+   requête ptr, +0x20 longueur, +0x28 socket cliente — le « contexte de
+   réponse » de la P2 vit dans le cadre http-10:R2, NON consommé : la
+   réponse 502 suit le RETOUR du verdict) ; VERDICT_CIBLE = 7, verdict
+   PROPRE de tls-08 hors domaine tls-02 (« cible injoignable » : tcp-13
+   en échec OU tls-01 en refus — la cible ne peut être ni connectée ni
+   nommée ; http-10:R2 mappe à 502) ; DEUX fixtures console .rdata à
+   propriétaire unique tls-08 : « tunnel chiffre etabli\r\n » @0x2C60
+   (23 o, état nommé Q1 — émis APRÈS poignée réussie, AVANT la requête)
+   et « certificat rejete\r\n » @0x2C80 (19 o, I4 — LE critère M4).
+
+2. LA NOTATION (brouillon → auteur.py : keystone assemble, rien
+   d'autre) : 740 o / 157 instructions / 16 étiquettes, slot préfiguré
+   0x6D40×0x600 CONSERVÉ (padding 796 ≥ 16, D8 — les adresses
+   préfigurées de http-08:R2 @0x7340 et http-10:R2 @0x7480 restent
+   exactes). ARCHITECTURE : l'ORDRE de Q1 est le contrat — tcp-13, nom
+   tls-01 (ptr consigné cadre+0x28), credentials tls-05:0 (validation
+   AUTOMATIQUE), poignée tls-04, console « tunnel chiffre etabli »,
+   requête tls-06, puis boucle de relais (tcp-03 PAR-DESSUS le résidu
+   → tls-07 → tcp-04 vers le CLIENT, le clair pompé TEL QUEL, jamais
+   parsé — charte § 7). TROIS règles propres à l'orchestrateur :
+   (a) le DRAIN — un verdict 0 de tls-07 avec résidu non vide est
+   rappelé SANS nouvelle réception (jamais un enregistrement déchiffrable
+   laissé en zone pendant que tcp-03 attendrait — le harnais D89
+   chaînait déjà deux appels sans réception, l'orchestrateur en fait sa
+   boucle) ; (b) la région vivante VIDE rend sa géométrie MORTE —
+   offset repris en tête quand utile = 0 (sans elle, un lot exactement
+   consommé de 0x8000 tuerait une session saine à la frontière : scénario
+   dédié) ; (c) la garde chambre NULLE avant tcp-03 (r8 > 0 est le
+   contrat P3 de SA spec — fail-closed avant l'appel système, charte
+   M3 § 9 ; c'est la « zone dépassée » de la table http-10:R2, verdict 5).
+   COMPENSATION INTÉGRALE (Q3) : TOUT chemin, l'ordre EST le contrat —
+   contexte détruit SI écrit (tls-05:1), credentials libérés SI acquis
+   (tls-05:2), socket serveur fermée SI ouverte (tcp-05) ; les tests
+   lisent le cadre (dwLower), la remise à zéro de tls-05 APRÈS succès
+   constaté est la garde anti-double (son I3) ; l'échec d'une libération
+   (E4) : verdict testé, UNE ressaisie, l'ordre JAMAIS interrompu, aucune
+   écriture au cadre (le verdict de session transporté en rax prime —
+   http-10:R2 mappe sa réponse sur le RETOUR) ; les champs de
+   compensation sont mis à zéro DÉFENSIVEMENT à l'entrée (précédent
+   tls-04/D83 : le compteur). LE CRITÈRE M4 (I4) : le verdict 3 de
+   tls-04 produit la ligne console « certificat rejete » AVANT la
+   compensation — « cet endroit précis » est la poignée (un verdict 3 de
+   tls-07 en plein relais est un E3 réponse tronquée, sans ligne —
+   décision D90).
+
+3. `m4/harnais_session.py` — L'INTÉGRATION LA PLUS LARGE DU PROJET :
+   DIX-HUIT blocs réels à leurs RVA exacts (hello-02 M0, libc-01/03/04/07
+   M1, tcp-03/04/05/tcp-11 M2, tcp-13 M3, tls-01..07 M4 — R7 : octets
+   scellés lus au dépôt) ; l'IAT kernel32/ws2_32/secur32 entière vers les
+   fausses adresses (page trampoline + crochet code, mécanisme M2/M3 ;
+   entrée ABI exacte : RSP ≡ 8 mod 16 — P5 des blocs M2/M3). Le modèle de
+   référence : la spécification tls-08:R1 ENTIÈRE en Python, compose les
+   modèles D83 (poignée), D88 (émission), D89 (réception) + tcp-13 +
+   tls-05 + tcp-11. V1 19 round-trips (tls-08 + 17 intégrés — hello-02
+   au format M0 hérité, taille consignée). V2 VINGT scénarios : les
+   SEPT de la spec (succès complet ; certificat invalide — la ligne
+   console « certificat rejete » aux octets près + Delete du contexte
+   barbouillé ; échec tcp-13 — compensation triviale ; verdict 5 à la
+   poignée ; altération en plein relais — réponse tronquée propre, le
+   client garde le premier enregistrement ; close_notify avec résidu —
+   curiosité consignée ; échec de libération simulé — UNE ressaisie,
+   l'ordre continue, Delete 2) PLUS les frontières de l'orchestrateur :
+   drain de deux enregistrements en un lot (aucune réception entre les
+   deux tls-07) ; fermeture système par tcp-03 et par tcp-04 ; client
+   parti en plein pompage ; boucle sans fin E5 ; tls-01 en refus
+   (verdict 7, socket compensée) ; densité hostile (garde chambre nulle)
+   ; lot exactement consommé de 0x8000 (la reprise en tête D90) ; ACH en
+   échec (hors liste blanche → verdict 6) ; verdict 6 exotique ;
+   incomplet-puis-complet ; émission cliente partielle exigeant
+   l'achèvement ; connect en échec (nettoyage INTERNE de tcp-13) —
+   CHAQUE scénario : cadre 0xD000 octet par octet + paquet INTACT
+   (le clair de l'appelant jamais touché, Q3 de tls-06) + contrat
+   d'appels complet (GAI/socket/connect/freeaddrinfo, ACH, ISC à 11
+   arguments + descripteurs, QCA, EM, DM, RECV/SEND socket-pointeur-
+   longueur, DSC/FCH, closesocket, ECS/WF/LCS — la ligne console
+   EXACTE) + COMPTES de compensation (Acquire 1 / Delete 0-1 [+1 en
+   échec simulé] / Free 1 [+1 idem] / tcp-05 serveur 1). V3 NON
+   APPLICABLE (spec : aucune entrée non fiable directe — héritage M3
+   pour les orchestrateurs ; le harnais est déterministe de bout en
+   bout, re-exécuté aux deux graines). V4 DOUZE mutations d'un point
+   stables en taille TOUTES ATTRAPÉES (verdict cible, port, socket
+   cliente, test de compensation, drain, garde chambre, champ utile,
+   routage console, longueur de ligne, destination de réception, verdict
+   de succès, pointeur de requête) + témoin 20/20 — BILAN 53 PASS /
+   0 ÉCHEC × graines 20261028/29.
+
+4. LE DIFFÉRENTIEL A NOMMÉ TROIS DÉFAUTS DU HARNAIS avant le vert (c'est
+   son office, aucun n'était dans la notation) : (a) le cadre-canari
+   VIOLAIT le contrat P1 — « vierge » signifie ZÉRO (http-10:R2 fournit
+   des pages de pile fraîches), or la garde d'acquisition de tls-06
+   (cBuffers @+0x4C ≠ 0) lisait le canari et sautait la
+   QueryContextAttributes : tailles absurdes, boucle sans fin — le
+   harnais doit HONORER la virginité du contrat, pas la contredire
+   (image_vierge : en-tête zéro, zones canari) ; (b) la tuple GAI
+   mélangeait les conventions (node avec/sans NUL ; hints
+   flags/family/type contre family/type/proto) ; (c) le scénario « ACH
+   en échec » attendait verdict 5 alors que SEC_E_INVALID_HANDLE est
+   hors liste blanche → verdict 6 (la table TOTALE ne négocie pas).
+   Consigné aussi : la leçon D88 se répète — tls-08 est passée verte
+   sur ses mécanismes propres au PREMIER passage complet (les pièges des
+   sessions précédentes traités avant l'écriture : restant vs envoyé,
+   cbBuffer produit, garde avant l'appel système, compensation par
+   tests sur le cadre).
+
+5. Docs : Entrée 76 du journal, DECISIONS (D90), PLAN (M4 (b) suite
+   D90), REPRISE (état général +D90, chronique § 7), README (état M4),
+   worklog (Task ID 17) ; aucune clé touchée : RIEN à remettre par
+   cérémonie (phrase de contrôle D81 valable, conteneur 0323029a…
+   inchangé, sentinelles intactes).
+
+**Ce que ça établit** : LA SESSION EXISTE — le critère de sortie du
+jalon M4 est désormais traversé de bout en bout en octets prouvés : la
+connexion à la cible, le nom, les credentials, la poignée de main, la
+requête chiffrée, le relais du flux déchiffré (avec drain du résidu et
+reprise en tête), et la COMPENSATION INTÉGRALE constatée PAR COMPTAGE
+sur tout chemin — le certificat invalide produit exactement le chemin
+spécifié D77 : verdict 3 → ligne console « certificat rejete » →
+compensation contexte/credentials/socket → verdict 3 transporté (la
+502 « certificat rejete » attend http-10:R2). Le tunnel TLS CLIENT est
+complet côté blocs : tls-01..08 tous notés-mesurés-prouvés, la chaîne
+intégrée réelle (18 blocs, M0→M4) fonctionne comme un tout. Reste (b) :
+les révisions http-08:R2 (schéma https) et http-10:R2 (routage + table
+des réponses — point croisé noté D90 : le verdict 4/2 transporté de la
+poignée/émission devra trouver son entrée, et le « contexte de
+réponse » du paquet), l'oracle à scénarios SSPI, la carte génération 6
+(lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER) seul point
+ouvert.

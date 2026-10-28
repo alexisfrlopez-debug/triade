@@ -28,15 +28,16 @@ ARRÊT PARTIEL étape b (D79 — mesure auteur, trois feuilles pures) :
   Mesures suivies, slots préfigurés CONSERVÉS (padding >= 16, D8 — les
   adresses préfigurées aval restent exactes) : tls-04 0x62C0 (0x300, 544 o,
   D83 — la poignée de main), tls-06 0x6740 (0x300, 491 o, D88 — l'émission),
-  tls-07 0x6A40 (0x300, 394 o, D89 — la réception). Restent préfigurés :
-  tls-08 0x6D40, http-08:R2 0x7340, http-10:R2 0x7480 (réarrêt éventuel à
-  leurs mesures, fin d'étape b).
+  tls-07 0x6A40 (0x300, 394 o, D89 — la réception), tls-08 0x6D40 (0x600,
+  740 o, D90 — la session : orchestration complète + compensation intégrale).
+  Restent préfigurés : http-08:R2 0x7340, http-10:R2 0x7480 (réarrêt
+  éventuel à leurs mesures, fin d'étape b).
 
 EXTENSION M4 (D77, génération 6 — blocs g7xxxx) :
   - .text3 démarre à 0x6000 (alignement section) : tls-01 0x6000,
     tls-02 0x6080, tls-03 0x6180 ; arrêts D79/D81 : tls-05 0x65C0 ;
     préfiguration : tls-04 0x62C0, tls-06 0x6740, tls-07 0x6A40,
-    tls-08 0x6D40, http-08:R2 0x7340, http-10:R2 0x7480 ;
+    tls-08 0x6D40 (mesuré D90), http-08:R2 0x7340, http-10:R2 0x7480 ;
   - l'IAT secur32 gagne SEPT entrées (D77) : AcquireCredentials-
     HandleW, FreeCredentialsHandle, InitializeSecurityContextW, Delete-
     SecurityContext, QueryContextAttributesW, EncryptMessage, DecryptMessage
@@ -132,6 +133,29 @@ octet à ses adresses — R7) :
   0x2A80 hints/names secur32 (7 entrées, se termine 0x2B2A, pad 0x2B30) ;
   0x2C00 fixture tls-05 : L"Microsoft Unified Security Protocol Provider"
          + mot NUL (44 + 1 wchar = 90 o) — pszPackage, unique propriétaire.
+  0x2C60 fixture tls-08 (D90) : "tunnel chiffre etabli\r\n" (23 o) — ligne
+         console tcp-11 de l'état nommé Q1 (émission APRÈS poignée réussie,
+         AVANT la requête — AUCUN secret, charte § 3).
+  0x2C80 fixture tls-08 (D90) : "certificat rejete\r\n" (19 o) — ligne
+         console tcp-11 du verdict 3 de tls-04 (I4 — LE critère M4 : cet
+         endroit précis ; la réponse 502 est émise par http-10:R2 au retour).
+
+PAQUET DE SESSION TLS (convention D90 — écrit par http-10:R2, lu par tls-08,
+P2 de sa spec : « spans : autorité cible [hôte, port], requête claire
+réécrite en forme origine, socket cliente, contexte de réponse ») :
+  +0x00 hôte ptr (u64 — span autorité, découpé par http-07:R1)
+  +0x08 hôte longueur (u64)
+  +0x10 port (u16 — ordre hôte, tcp-13:R1 P3)
+  +0x18 requête ptr (u64 — forme origine, réécriture propriété http-10:R2)
+  +0x20 requête longueur (u64)
+  +0x28 socket cliente (u64 — propriété http-10:R2, JAMAIS fermée par tls-08,
+         I1 de sa spec) ; le « contexte de réponse » de la P2 vit dans le
+         cadre http-10:R2 (table des réponses, zones d'émission) : NON
+         consommé par tls-08 — la réponse 502 suit le RETOUR du verdict.
+
+Verdict de session tls-08 (Q2) : le domaine tls-02 (2-6) est transporté TEL
+QUEL (jamais remappé) ; VERDICT_CIBLE = 7 est le verdict PROPRE de tls-08
+(« cible injoignable » — hors domaine tls-02 par construction).
 """
 
 import importlib.util
@@ -181,7 +205,7 @@ BLOCS_TLS = [
     ("g70005", "tls-05:R1", 0x65C0, 0x180, "M4-dev.1", 1),   # cycle de vie (ARRÊT D81)
     ("g70006", "tls-06:R1", 0x6740, 0x300, "M4-dev.1", 0),   # émission (préfig.)
     ("g70007", "tls-07:R1", 0x6A40, 0x300, "M4-dev.1", 0),   # réception (préfig.)
-    ("g70008", "tls-08:R1", 0x6D40, 0x600, "M4-dev.1", 0),   # session TLS (préfig.)
+    ("g70008", "tls-08:R1", 0x6D40, 0x600, "M4-dev.1", 0),   # session TLS (mesurée D90)
 ]
 BLOCS_REVISIONS = [
     ("g70009", "http-08:R2", 0x7340, 0x180, "M4-dev.1", 0),  # cible https (préfig.)
@@ -292,6 +316,29 @@ R_INT_SEC32 = 0x2A40            # INT secur32 : 7 entrées + terminateur 0x2A78
 R_HN_SEC32 = 0x2A80             # hints/names secur32 (7 entrées, fin 0x2B2A)
 R_PKG_M4 = 0x2C00               # L"Microsoft Unified Security Protocol Provider"
 PKG_M4 = "Microsoft Unified Security Protocol Provider".encode("utf-16-le") + b"\x00\x00"
+
+# Fixtures .rdata M4 de tls-08 (D90 — états nommés console, aucun secret) :
+R_TXT_TLS_ETABLI = 0x2C60       # "tunnel chiffre etabli\r\n" (23 o) — Q1
+TXT_TLS_ETABLI = b"tunnel chiffre etabli\r\n"
+R_TXT_TLS_CERT = 0x2C80         # "certificat rejete\r\n" (19 o) — I4 (critère M4)
+TXT_TLS_CERT = b"certificat rejete\r\n"
+
+# --- Paquet de session TLS (convention D90 — http-10:R2 écrit, tls-08 lit) ---------
+
+PAQUET_HOTE_PTR = 0x00          # u64 — span hôte (autorité, http-07:R1)
+PAQUET_HOTE_LEN = 0x08          # u64
+PAQUET_PORT = 0x10              # u16 — ordre hôte (tcp-13:R1 P3)
+PAQUET_REQUETE_PTR = 0x18       # u64 — requête réécrite forme origine
+PAQUET_REQUETE_LEN = 0x20       # u64
+PAQUET_SOCKET_CLIENT = 0x28     # u64 — propriété http-10:R2 (I1 de tls-08)
+# Le « contexte de réponse » (P2 de tls-08) vit dans le cadre http-10:R2,
+# NON consommé par tls-08 : la réponse 502 suit le RETOUR du verdict.
+
+VERDICT_CIBLE = 7               # tls-08 (D90) : « cible injoignable » — hors
+                                # domaine tls-02 (0-6) : tcp-13 en échec (E1)
+                                # OU tls-01 en refus (la cible ne peut être ni
+                                # connectée ni nommée pour la poignée) ;
+                                # http-10:R2 mappe à 502.
 
 IAT_SEC32_SLOTS = {
     "AcquireCredentialsHandleW": 0x2A00,

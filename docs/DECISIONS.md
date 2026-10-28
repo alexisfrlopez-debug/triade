@@ -2270,3 +2270,105 @@ différentiel l'a nommée, elle est partie).
 **Critère de sortie** : atteint — différentiel vert sur deux graines,
 falsification 10/10, convention amendée dans layout.py (source unique) et
 m4/I/README.md, entrée 75 du journal.
+
+
+### D90 — M4 (b) : tls-08 (LA SESSION TLS CLIENTE — l'orchestrateur) notée-mesurée-prouvée ; paquet de session, VERDICT_CIBLE 7, fixtures console, drain du résidu et compensation intégrale par comptage
+
+**Décision** : l'orchestrateur du jalon est noté (740 o / 157
+instructions / 16 étiquettes, slot préfiguré 0x6D40×0x600 conservé,
+padding 796 ≥ 16 — D8 : les adresses préfigurées de http-08:R2
+@0x7340 et http-10:R2 @0x7480 restent exactes). TROIS conventions
+nouvelles précèdent la notation (layout.py, source unique — fail-closed,
+modèle D89) : (1) le **PAQUET DE SESSION** (P2 de tls-08 : « spans :
+autorité cible [hôte, port], requête claire réécrite en forme origine,
+socket cliente, contexte de réponse ») — écrit par http-10:R2, lu par
+tls-08 aux offsets PAQUET_* (+0x00/+0x08 hôte, +0x10 port u16 ordre
+hôte, +0x18/+0x20 requête, +0x28 socket cliente) ; le « contexte de
+réponse » cité par la P2 vit dans le cadre http-10:R2 (table des
+réponses, zones d'émission) et N'EST PAS consommé par tls-08 : la
+réponse 502 suit le RETOUR du verdict — http-10:R2 mappe sur rax,
+jamais sur le cadre. (2) **VERDICT_CIBLE = 7**, verdict PROPRE de
+tls-08, hors domaine tls-02 (0-6) par construction : « cible
+injoignable » — tcp-13 en échec (E1) OU tls-01 en refus (la cible ne
+peut être ni connectée ni nommée pour la poignée). Les verdicts tls-02
+(2-6) sont transportés TELS QUELS, jamais remappés. (3) DEUX fixtures
+console .rdata à propriétaire unique tls-08 : « tunnel chiffre
+etabli\r\n » @0x2C60 (état nommé Q1, aucun secret) et « certificat
+rejete\r\n » @0x2C80 (I4 — LE critère M4).
+
+**Trois règles propres à l'orchestrateur, dans sa notation** :
+(a) le **DRAIN** — un verdict 0 de tls-07 avec résidu non vide est
+rappelé SANS nouvelle réception : jamais un enregistrement déchiffrable
+laissé en zone pendant que tcp-03 attendrait (le harnais D89 chaînait
+déjà deux tls-07 sans réception : l'orchestrateur en fait sa boucle —
+scénario dédié, mutation dédiée) ; (b) la **région vivante vide rend sa
+géométrie morte** — offset repris en tête quand utile = 0 : sans cette
+règle, un lot exactement consommé de 0x8000 (cas limite légal) ferait
+dévier la garde chambre et tuerait une session Saine en verdict 5
+(scénario frontière dédié) ; (c) la **garde chambre nulle AVANT
+tcp-03** — r8 > 0 est le contrat P3 de tcp-03 : fail-closed avant
+l'appel système (charte M3 § 9), verdict 5 « zone dépassée » (entrée
+nommée de la table http-10:R2).
+
+**Compensation intégrale (Q3)** : TOUT chemin (succès compris), l'ordre
+EST le contrat — contexte détruit SI écrit (tls-05:1), credentials
+libérés SI acquis (tls-05:2), socket serveur fermée SI ouverte (tcp-05) ;
+les tests lisent le dwLower du cadre, la remise à zéro de tls-05 APRÈS
+succès constaté est la garde anti-double (son I3) ; les champs de
+compensation sont mis à zéro DÉFENSIVEMENT à l'entrée (précédent
+tls-04/D83). L'échec d'une libération (E4) : « consigné (une
+ressaisie) » se lit — verdict testé et nommé (le branchement), UNE
+ressaisie de l'appel, l'ordre jamais interrompu, AUCUNE écriture au
+cadre : écrire le verdict de libération écraserait le verdict de session
+que http-10:R2 mappe (le rax prime). Le verdict 3 de tls-04 produit la
+ligne console « certificat rejete » AVANT compensation (I4 — « cet
+endroit précis » est la poignée ; un verdict 3 de tls-07 en plein relais
+est un E3 réponse tronquée, sans ligne).
+
+**Livré avec** : `m4/harnais_session.py` — l'intégration la plus large
+du projet : DIX-HUIT blocs réels (hello-02 M0 ; libc-01/03/04/07 M1 ;
+tcp-03/04/05/tcp-11 M2 ; tcp-13 M3 ; tls-01..07 M4 — R7, octets scellés
+lus au dépôt), IAT entière en fausses adresses, entrée ABI exacte
+(RSP ≡ 8 mod 16, P5 des blocs M2/M3). V2 VINGT scénarios (les sept de
+la spec + treize frontières), chacun : cadre 0xD000 octet par octet,
+paquet INTACT (clair de l'appelant jamais touché), contrat d'appels
+complet (GAI → freeaddrinfo, ACH, ISC 11 arguments + descripteurs, QCA,
+EM, DM, RECV/SEND, DSC/FCH, closesocket, ECS/WF/LCS — la ligne console
+EXACTE) et COMPTES de compensation (Acquire 1 / Delete 0-1 [+1 en
+échec simulé] / Free 1 [+1 idem] / tcp-05 serveur 1). V3 non applicable
+(héritage M3 pour les orchestrateurs — le harnais est déterministe,
+re-exécuté aux deux graines). V4 DOUZE mutations stable-en-taille
+TOUTES ATTRAPÉES + témoin 20/20 — BILAN 53 PASS / 0 ÉCHEC × graines
+20261028/20261029. Le différentiel a nommé TROIS défauts du HARNAIS
+avant le vert (cadre-canari violant la virginité du contrat P1 — la
+garde d'acquisition de tls-06 lisait le canari : le harnais doit
+honorer « vierge » = zéro, pas le contredire ; tuple GAI ; verdict
+attendu du scénario ACH) — aucun dans la notation : tls-08 est passée
+verte sur ses mécanismes propres au premier passage complet (leçon D88
+répétée).
+
+**Reporté à http-10:R2** (future notation, points croisés notés) : le
+verdict 4 (fin de contexte en poignée) et le verdict 2 (incomplet en
+émission) transportés par tls-08 devront trouver leurs entrées de table
+(« tunnel rompu » étendu ou entrées dédiées — l'énumération croisée de
+sa Q3'/E2 devra être complétée) ; le « contexte de réponse » du paquet ;
+la 502 « certificat rejete » (la ligne console est déjà produite PAR
+tls-08 — ne PAS double-émettre).
+
+**Alternatives rejetées** : remapper les verdicts tls-02 dans tls-08
+(l'orchestrateur transporte, il ne traduit pas — tls-05:Q4 « tel quel »
+est le précédent ; http-10:R2, propriétaire de la table, traduit) ;
+écrire le verdict de session au cadre +0x30 (le rax est le contrat Q2 —
+et un verdict de libération échouée écraserait la réponse) ; une boucle
+de relais sans drain (un enregistrement déchiffrable dormirait en zone
+pendant que tcp-03 bloquerait — le harnais D89 l'avait déjà prouvé en
+chaînes) ; compenser par drapeaux internes plutôt que par les tests du
+cadre (la remise à zéro de tls-05 est DÉJÀ la garde anti-double — un
+second état doublerait la vérité) ; ressaisie non bornée (E4 dit UNE) ;
+zéro défensif absent à l'entrée (précédent tls-04/D83 : la compensation
+ne dépend pas de la bonne volonté de l'amont).
+
+**Critère de sortie** : atteint — différentiel vert sur deux graines
+(53 PASS × 2), falsification 12/12, comptage de compensation constaté
+sur les vingt scénarios, conventions D90 dans layout.py (source unique),
+entrée 76 du journal.

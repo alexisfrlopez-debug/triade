@@ -214,7 +214,23 @@ appelant lit la géométrie au cadre et réceptionne par-dessus, le span
 d'un lot à deux enregistrements reste OCTET PAR OCTET intact : la
 preuve géométrique ; V3a 4 000 appels + V3b 1 000 chaînes fuzzés zéro
 écart × 2 graines, V4 DIX mutations attrapées + témoin 16/16) ;
-reste (b) : tls-08, révisions http, oracle à scénarios
+**D90 : tls-08 (LA SESSION TLS CLIENTE — l'orchestrateur)
+notée-mesurée-prouvée — LA SESSION COMPLÈTE EXISTE EN OCTETS** :
+740 o, conventions D90 (paquet de session, VERDICT_CIBLE 7, fixtures
+console « tunnel chiffre etabli » / « certificat rejete » — I4 : LE
+critère M4, le verdict 3 de tls-04 produit la ligne console AVANT
+compensation), l'ordre de Q1 est le contrat, TROIS règles
+d'orchestrateur (DRAIN du résidu — jamais un enregistrement déchiffrable
+en zone pendant que tcp-03 attendrait ; région vide = géométrie morte,
+reprise en tête ; garde chambre nulle avant tcp-03), compensation
+INTÉGRALE par COMPTAGE sur tout chemin (contexte SI écrit → credentials
+SI acquis → socket SI ouverte, E4 = une ressaisie, le rax prime) ;
+harnais m4/harnais_session.py — L'INTÉGRATION LA PLUS LARGE DU PROJET :
+DIX-HUIT blocs réels (hello-02 M0 → tls-07 M4, R7), V2 VINGT scénarios
+(cadre + paquet + contrat d'appels complet + comptes de compensation —
+la ligne console EXACTE), V4 DOUZE mutations attrapées + témoin 20/20 —
+53 PASS / 0 ÉCHEC × 2 graines.
+reste (b) : révisions http-08:R2/http-10:R2, oracle à scénarios
 SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
 seul point ouvert.
 

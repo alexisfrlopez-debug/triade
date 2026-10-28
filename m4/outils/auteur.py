@@ -140,6 +140,9 @@ SYMBOLES = {
     # exigé par tls-05 est arrêté dans layout.py, source unique).
     # Blocs tls (feuilles D79 — cibles d'appel des futurs tls-04..08) :
     "TLS_UTF16": 0x6000, "TLS_VERDICTS": 0x6080, "TLS_JETONS": 0x6180,
+    # Blocs tls mesurés (cibles d'appel de l'orchestrateur tls-08, D90) :
+    "TLS_POIGNEE": 0x62C0, "TLS_CLES": 0x65C0, "TLS_EMISSION": 0x6740,
+    "TLS_RECEPTION": 0x6A40,
     # IAT secur32 (ARRÊT D81 — layout.IAT_SEC32_SLOTS, slots .rdata M4) :
     # D83 : le symbole secur32 s'appelle IAT_ISC (l'abréviation des specs
     # elles-mêmes — « boucle ISC ») — IAT_ICS désignait DÉJÀ Initialize-
@@ -156,6 +159,9 @@ SYMBOLES = {
     "IAT_DM": L.IAT_SEC32_SLOTS["DecryptMessage"],
     # Fixtures .rdata M4 (tls-05 : package Schannel, unique propriétaire) :
     "PKG": L.R_PKG_M4,
+    # Fixtures .rdata M4 (tls-08 D90 : lignes console des états nommés) :
+    "TXT_TLS_ETABLI": L.R_TXT_TLS_ETABLI,
+    "TXT_TLS_CERT": L.R_TXT_TLS_CERT,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")

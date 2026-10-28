@@ -113,7 +113,35 @@ restent en place, espace mort lu par personne) ; `« secur32.dll\0 »`
 `@0x29F0` ; slots `0x2A00-0x2A30` (ACH, FCH, ICS, DSC, QCA, EM, DM +
 terminateur) ; INT `@0x2A40` ; hints/names `@0x2A80` ; fixture package
 `L"Microsoft Unified Security Protocol Provider"` `@0x2C00` (pszPackage de
-tls-05, unique propriétaire — 90 o).
+tls-05, unique propriétaire — 90 o) ; **fixtures console de tls-08 (D90)** :
+`"tunnel chiffre etabli\r\n"` `@0x2C60` (23 o — état nommé Q1) et
+`"certificat rejete\r\n"` `@0x2C80` (19 o — I4, LE critère M4 : le
+verdict 3 de tls-04 produit la ligne AVANT compensation ; tls-08 unique
+propriétaire des deux).
+
+**Le paquet de session** (D90 — P2 de tls-08 : « spans : autorité cible
+[hôte, port], requête claire réécrite en forme origine, socket cliente,
+contexte de réponse ») est ÉCRIT par http-10:R2 et LU par tls-08 :
+hôte ptr `@+0x00`, longueur `@+0x08`, port `@+0x10` (u16, ordre hôte —
+tcp-13:R1 P3), requête ptr `@+0x18`, longueur `@+0x20`, socket cliente
+`@+0x28` (propriété http-10:R2, JAMAIS fermée par tls-08 — I1) ; le
+« contexte de réponse » de la P2 vit dans le cadre http-10:R2 (table des
+réponses, zones d'émission), NON consommé par tls-08 : la réponse 502
+suit le RETOUR du verdict — http-10:R2 mappe sur rax, jamais sur le
+cadre. **Verdict de session (Q2)** : les verdicts tls-02 (2-6) sont
+transportés TELS QUELS (jamais remappés) ; VERDICT_CIBLE = 7 est le
+verdict PROPRE de tls-08 (« cible injoignable » : tcp-13 en échec OU
+tls-01 en refus — la cible ne peut être ni connectée ni nommée).
+
+**Les trois règles d'orchestrateur de tls-08 (D90)** : (a) le DRAIN — un
+verdict 0 de tls-07 avec résidu non vide est rappelé SANS nouvelle
+réception (jamais un enregistrement déchiffrable laissé en zone pendant
+que tcp-03 attendrait) ; (b) la région vivante VIDE rend sa géométrie
+morte — l'offset est repris en tête quand la longueur utile est nulle
+(sans elle, un lot exactement consommé de 0x8000 tuerait une session
+saine à la frontière) ; (c) la garde chambre nulle AVANT tcp-03 — r8 > 0
+est le contrat P3 de tcp-03 : fail-closed avant l'appel système, verdict
+5 « zone dépassée » (entrée nommée de la table http-10:R2).
 
 ## Révisions du domaine http (scellé 0.4.0 — citées, jamais réécrites)
 
