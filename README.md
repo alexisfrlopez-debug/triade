@@ -125,8 +125,12 @@ des phrases maîtresses** — conteneur chiffré TRIADE-CF1 (`coffre_fort.py`, s
 v0.5.1 § 15.3 + FORMAT_CARTE § 11), autotest de falsification 19/19, phrase de contrôle
 remise au développeur par cérémonie ; la phrase courante (lignée D74) y vit, export chiffré
 au racine du coffre Drive + copie développeur ; l'ancienne phrase D30 doit y être ajoutée
-côté développeur (`ajouter TRIADE lignee-D30`). Suite : M4 (tunnel chiffré
-Schannel) ; terrain : D57 (WER) seul point ouvert.
+côté développeur (`ajouter TRIADE lignee-D30`). **Coffre Drive nettoyé (D76)** : douze
+livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
+LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
+vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
+(instructions, miroir, jetons, coffre-fort, `demo.exe` + LISEZMOI à jour, dossier test).
+Suite : M4 (tunnel chiffré Schannel) ; terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
 

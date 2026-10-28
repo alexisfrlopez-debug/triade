@@ -4066,3 +4066,75 @@ demain). La discipline D27/D30 est inchangée (cérémonie, affichage unique, gr
 coffre). Il reste au développeur à ajouter l'ancienne phrase D30 au coffre (elle seule
 relit les enveloppes m0/m1/m2/terrain). Suite : M4 (tunnel chiffré Schannel) ; terrain :
 D57 (WER) seul point ouvert ; hygiène jetons (REPRISE § 8).
+
+---
+
+## Entrée 65 — D76 (28/10, 10:45) : le coffre Drive est nettoyé — douze livrables périmés archivés dans ARCHIVE/, la racine ne porte plus que les courants ; l'archivage devient un outil du dépôt (drive_archiver.py)
+
+**Contexte** : demande du développeur avant d'enchaîner sur M4 (« go, mais avant tout je
+veux que tu nettoies le drive en archivant tout ce qui ne nous est plus utile pour la
+suite »). La racine du coffre Drive avait accumulé vingt entrées depuis D16 : la synchro
+ne supprime jamais rien côté Drive (prudence de conception), et les livrables se
+succèdent de génération en génération sans que les anciens ne partent. Le constat qui
+fonde la décision : TROIS livrables périmés restaient en évidence à la racine —
+`proxy.exe` y était resté à **0.4.0-dev.1** (D47) alors que la finale 0.4.0 est scellée
+depuis D74 (md5 racine 8740e1ca… ≠ dd12b649… du courant) ; `superviseur.exe` y était
+resté à **terrain.3** (D50) alors que terrain.16 vit dans le dossier test ;
+`echo-0.3.0.exe` == `echo-0.3.0-rc.4.exe` (md5 identique — doublon exact). Or le
+développeur ne parcourt que la racine (constat fondateur de `drive_livraison.py`) : le
+risque de re-télécharger un livrable périmé était réel, pas théorique.
+
+**Déroulé** :
+1. Inventaire complet du coffre avant toute écriture (racine + sous-dossiers, trois
+niveaux, script de session `scripts/../inventaire_drive.py` réutilisant l'API de
+`drive_sync.py`) : 20 entrées racine ; miroir `TRIADE/` INTOUCHABLE (fidèle à git,
+605 fichiers) ; `test/` = terrain.16 courant (LISEZMOI + superviseur-terrain16.exe +
+journal du run 16) ; `Tokens/` = jetons actifs. Décision de périmètre : le miroir et
+le dossier test ne sont PAS concernés par le nettoyage (ils sont vivants par
+construction) ; seuls les fichiers libres de la racine sont arbitrés.
+2. Outil du dépôt `scripts/drive_archiver.py` (tracké — la gestion du coffre est
+outillée au même rang que drive_sync / drive_livraison / drive_recuperer) :
+déplacement racine → `ARCHIVE/` par `addParents`/`removeParents` — AUCUNE suppression,
+AUCUN octet de contenu modifié ; idempotent (déjà archivé = constaté) ; collision
+racine+ARCHIVE refusée ; dossiers refusés ; md5 AVANT == md5 APRÈS exigé pour chaque
+fichier déplacé (le déplacement est prouvé inoffensif, échec = abandon) ; mode
+`--verifier` (état racine + ARCHIVE).
+3. Douze éléments archivés, md5 préservés et vérifiés un à un : les diagnostics de la
+chasse aux tueurs (`DIAGNOSTIC-SUPERVISEUR.cmd`, `LISEZMOI-diagnostic.txt` — époque
+D62-D70, close à terrain.16) ; les LISEZMOI périmés (`LISEZMOI-proxy.txt` documentait
+dev.1, `LISEZMOI-superviseur.txt` documentait terrain.3) ; la spécification v0.5.0
+(v0.5.1 courante) ; les exports de continuité D16 (final 0.2.0 + rc.1 — la voie de
+reprise courante est le bundle git complet, méthode A) ; les trois echo (rc.3
+intermédiaire, rc.4 et 0.3.0 doublons octet-identiques — M2 clos, le même md5 vit au
+miroir `m2/echo.exe`) ; `proxy.exe` dev.1 ; `superviseur.exe` terrain.3.
+4. `LISEZMOI-ARCHIVE.txt` (racine du dépôt, tracké + copie téléversée dans `ARCHIVE/`) :
+pourquoi chaque fichier y vit, où vit le courant correspondant, et la règle pour la
+suite — la racine ne porte que des courants, tout périmé part à l'archive par l'outil.
+5. Racine après nettoyage — ONZE entrées, toutes courantes : les deux fichiers
+d'instruction (REPRISE, AGENT — poussés par la synchro), `TRIADE/` (miroir + bundle),
+`Tokens/`, `coffre_fort.bin` (D75), `demo.exe` + `LISEZMOI-demo.txt` (à jour — demo.9
+finale, T1/enquête D57), `test/` (terrain.16 + journaux), `ARCHIVE/`. Le proxy et le
+superviseur courants ne sont plus livrés en racine : le kit du superviseur terrain.16
+les EMBARQUE (extraction automatique au run T1/T2) et le miroir les porte
+(`TRIADE/m3/proxy.exe`) — la raison d'être historique des livrables racine séparés a
+disparu avec le kit tout-en-un (D49).
+6. Documentation alignée (rien ne se change en silence) : REPRISE_PROJET.md (état
+général +D76, tableau Infrastructure, § 3.1 Drive RÉÉCRIT — la convention « livrables
+terrain à la racine » devient « courants seuls + ARCHIVE/ outillé », § 7.1 continuité,
+arborescence + LISEZMOI-ARCHIVE.txt + drive_archiver.py, commandes utiles) ; README
+(état du projet). AUCUNE source de spécification touchée (PROTOCOLE_TRIADE.md,
+FORMAT_CARTE.md inchangés) : l'export de continuité y est défini comme FORMAT
+(FORMAT_CARTE § 8), sa localisation Drive n'est pas normative — le nettoyage du coffre
+n'est donc pas une révision v0.5.2, c'est une décision d'infrastructure.
+7. Sauvegarde : commit D76 + synchro Drive par le hook (le miroir reçoit
+LISEZMOI-ARCHIVE.txt, drive_archiver.py et les docs alignées) + push GitHub ;
+vérification du coffre (`scripts/verifier_coffre_d76.py`).
+
+**Ce que ça établit** : la racine du coffre Drive redevient lisible d'un coup d'œil —
+plus aucun piège de version périmée en évidence ; le nettoyage est OUTILLÉ et
+RÉVERSIBLE (rien n'est supprimé, l'historique complet reste dans git + le bundle,
+l'archive Drive n'est que lisibilité) ; la convention de livraison est explicitée :
+racine = courants seuls, kit embarqué = point d'entrée terrain, miroir = vérité.
+Suite : M4 (tunnel chiffré Schannel) ; terrain : D57 (WER) seul point ouvert ; côté
+développeur : ajouter l'ancienne phrase D30 au coffre-fort (`ajouter TRIADE lignee-D30`)
+et hygiène jetons (REPRISE § 8).

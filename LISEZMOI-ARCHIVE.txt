@@ -1,0 +1,84 @@
+TRIADE — dossier ARCHIVE du coffre Drive
+=========================================
+
+Ce dossier regroupe les livrables et documents PÉRIMÉS du coffre de
+livraison (racine du dossier Drive « Triade »). Le nettoyage a été fait le
+28/10/2026 (décision D76, demande du développeur : « nettoies le drive en
+archivant tout ce qui ne nous est plus utile pour la suite »).
+
+RIEN N'A ÉTÉ SUPPRIMÉ — chaque fichier a été DÉPLACÉ ici, octet pour
+octet (md5 vérifié au déplacement par scripts/drive_archiver.py). Si l'un
+de ces artefacts devait redevenir nécessaire, il est ici ; mais l'historique
+COMPLET du projet vit déjà dans git et dans TRIADE/triade-history.bundle
+(miroir du dépôt), qui remplacent tous ces fichiers pour toute reprise.
+
+POURQUOI CHAQUE FICHIER EST LÀ — ET OÙ VIT LE COURANT :
+
+1. DIAGNOSTIC-SUPERVISEUR.cmd
+   Outil de diagnostic de l'époque de la chasse aux tueurs de runs
+   (D62-D70 : shadow space, --fail, nettoyage, JSON indenté, tampon de
+   composition). Chasse CLOSE : terrain.16 vit (run 16, D71).
+   Courant : aucun — le superviseur terrain.16 fonctionne sans diagnostic.
+
+2. LISEZMOI-diagnostic.txt
+   Mode d'emploi de l'outil ci-dessus (même époque, même clôture).
+   Courant : aucun.
+
+3. LISEZMOI-proxy.txt
+   Documentait proxy.exe 0.4.0-dev.1 (D47, premier run terrain du parseur).
+   Courant : proxy.exe 0.4.0 FINALE scellée (D74) — miroir TRIADE/m3/proxy.exe
+   (md5 dd12b64948e6…), également embarquée dans le kit du superviseur
+   terrain.16 (extraction automatique, run T2).
+
+4. LISEZMOI-superviseur.txt
+   Documentait superviseur.exe 0.5.0-terrain.3 (D50, correction chargeur).
+   Courant : superviseur-terrain16.exe dans le dossier test/ du Drive, avec
+   son LISEZMOI-terrain16.txt (empreintes publiées, chaîne de garde).
+
+5. Protocole_TRIADE_v0.5.0_Specification.pdf
+   Spécification formelle v0.5.0, remplacée par la v0.5.1 (D75 : coffre-fort
+   des phrases maîtresses).
+   Courant : TRIADE/docs/Protocole_TRIADE_v0.5.1_Specification.pdf (miroir).
+
+6. TRIADE-continuite-0.2.0-20261026T121243Z.bin
+   Export de continuité FINAL de l'époque M1 (D16) — conteneur chiffré et
+   signé de l'état scellé 0.2.0. Remplacé comme voie de reprise par le
+   bundle git complet (méthode A du REPRISE_PROJET.md).
+   Courant : TRIADE/triade-history.bundle (historique D1-D75+, tout jalons).
+
+7. TRIADE-continuite-0.2.0-rc.1-20261026T114619Z.bin
+   Même lignée, balise intermédiaire rc.1 (précède le final ci-dessus).
+
+8. echo-0.3.0-rc.3.exe
+   Serveur écho M2, correctif DEP (D39). Balise intermédiaire.
+
+9. echo-0.3.0-rc.4.exe
+   Serveur écho M2, correctif shadow space (D41). Octet-identique à la
+   finale 0.3.0 (le scellage est un fait de carte, pas de binaire).
+
+10. echo-0.3.0.exe
+    Serveur écho M2 BALISE FINALE 0.3.0 (scellée D43).
+    Courant : le même fichier vit au miroir TRIADE/m2/echo.exe
+    (md5 28bd9863513a105a9822a16a0fb4e831 — identique).
+
+11. proxy.exe
+    Proxy HTTP 0.4.0-dev.1 (D47) — PREMIÈRE version scellée du parseur,
+    remplacée par 0.4.0-dev.2 (D63 : pile/sondes R3) puis la finale 0.4.0.
+    Courant : miroir TRIADE/m3/proxy.exe (md5 dd12b64948e6…) + kit
+    superviseur terrain.16.
+
+12. superviseur.exe
+    Superviseur 0.5.0-terrain.3 (D50) — version « correction chargeur »,
+    avant les seize générations de la lignée terrain.4 à terrain.16.
+    Courant : superviseur-terrain16.exe (dossier test/ du Drive, md5
+    34ee9f58ada0…, chaîne de garde LISEZMOI-terrain16.txt).
+
+RÈGLE POUR LA SUITE : la racine du coffre ne porte que des éléments
+COURANTS (fichiers d'instruction, miroir TRIADE/, jetons Tokens/, coffre
+de phrases coffre_fort.bin, livrable demo.exe + son LISEZMOI à jour,
+dossier test/ du terrain). Tout livrable périmé part ici via :
+
+    python3 scripts/drive_archiver.py NOM_DU_FICHIER
+
+(déplacement vérifié, idempotent, jamais de suppression — outil du dépôt,
+miroir TRIADE/scripts/drive_archiver.py).
