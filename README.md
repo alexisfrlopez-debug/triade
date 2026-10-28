@@ -170,8 +170,14 @@ partagée tls-04..08 + table des descripteurs M4 @0x29A0 + slots IAT 0x2A00-0x2A
 tls-05 (cycle de vie des handles) notée-mesurée-prouvée — PREMIER BLOC À SHIMS du
 jalon (harnais m4/harnais_cles.py : V1 round-trip 251 o + tls-02 intégrée, V2 dix
 scénarios cadre octet par octet, V3 5 000 cas fuzzés zéro écart — graines 20261028/29,
-V4 six mutations d'un point attrapées, témoin vert 7/7) ; reste (b) : tls-04 (la
-poignée de main — LE critère M4), tls-06..08, révisions http, oracle à scénarios
+V4 six mutations d'un point attrapées, témoin vert 7/7) ; **D83 : tls-04 (LA POIGNÉE
+DE MAIN — LE critère M4) notée-mesurée-prouvée** — 544 o, boucle ISC bornée 16
+allers, onze arguments msx64, garde E2 avant réception, échecs nommés sans
+compensation ; harnais m4/harnais_poignee.py (VRAIS octets tls-02/tls-03/tcp-03/
+tcp-04 embarqués : V2 seize scénarios cadre 0x9000 octet par octet + contrat
+d'appels complet — certificat invalide = verdict 3, V3 5 000 cas fuzzés zéro
+écart × 2 graines, V4 six mutations stable-en-taille attrapées, témoin 16/16) ;
+reste (b) : tls-06..08, révisions http, oracle à scénarios
 SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
 seul point ouvert.
 

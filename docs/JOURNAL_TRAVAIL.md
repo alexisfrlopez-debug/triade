@@ -4658,3 +4658,124 @@ de main, LE critère M4 — boucle ISC bornée 16 allers) qui hérite du cadre,
 de l'IAT et du mécanisme de harnais. Suites (b) : tls-04, tls-06..08,
 révisions http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6
 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.
+
+## Entrée 72 — D83 (28/10, 16:40) : M4 étape (b) — tls-04 LA POIGNÉE DE MAIN notée-mesurée-prouvée : LE critère M4 (boucle ISC bornée 16 allers) existe en octets, 10 000 cas fuzzés zéro écart sur deux graines, 6/6 mutations attrapées — le différentiel a nommé QUATRE défauts au passage, dont deux dans la notation elle-même
+
+**Contexte** : suite de session (« go », après D81/D82) — le bloc annoncé par
+l'Entrée 71 comme « la voie est ouverte » : tls-04 est LE critère de sortie du
+jalon M4 (« poignée de main TLS », PLAN D45) — la boucle InitializeSecurity-
+Context qui se termine TOUJOURS (I1 : borne 16), chaque HRESULT traversant la
+table UNIQUE des verdicts (charte § 1), le certificat invalide aboutissant ICI
+(verdict 3 → Q2 → la réponse 502 de http-10:R2). Modèle D79/D82 exactement :
+conventions héritées (cadre D81, IAT secur32, mécanisme de harnais), notation
+à la main, harnais à propriétés, rien committé sans vert.
+
+**Déroulé** :
+1. **Défaut d'outil nommé et corrigé AVANT première utilisation** :
+   `IAT_ICS` était déclaré DEUX FOIS dans m4/outils/auteur.py — Initialize-
+   CriticalSection (M2/M3, héritage) ET InitializeSecurityContextW (M4, D82) ;
+   le littéral de dictionnaire fait gagner la DERNIÈRE déclaration : le symbole
+   M3 était silencieusement éclipsé (les révisions http qui référenceront la
+   section critique auraient résolu vers le slot secur32 — faute d'adresse
+   sans aucun symptôme local). Renommé `IAT_ISC` (l'abréviation des specs
+   elles-mêmes — « boucle ISC ») ; AUCUNE notation n'avait jamais résolu à
+   travers le symbole éclipsé (fail-closed honoré : correction avant première
+   utilisation, pas après un constat d'octets faux).
+2. **Constante à propriétaire unique** : `layout.ISC_REQUETES = 0xC01C`
+   (fContextReq de tls-04 — REPLAY_DETECT | SEQUENCE_DETECT | CONFIDENTIALITY
+   | EXTENDED_ERROR | STREAM ; STREAM est exigé par tls-03:1 et tls-06/07 ;
+   JAMAIS MANUAL_CRED_VALIDATION [charte § 2 : validation automatique =
+   l'état le plus dur] ni ALLOCATE_MEMORY [les jetons vivent dans le cadre,
+   pas en mémoire de bibliothèque]) — le harnais lit la constante, la notation
+   porte l'immédiat, la spécification reste muette sur la valeur : le choix
+   consigné appartient au plan d'adressage, source unique.
+3. **tls-04 notée à la main** (brouillon → auteur.py : keystone assemble,
+   rien d'autre) : **544 o / 115 instructions / 17 étiquettes, slot
+   préfiguré 0x62C0×0x300 CONSERVÉ** (padding 224 ≥ 16, D8 — l'adresse
+   ARRÊTÉE D81 de tls-05 @0x65C0 ne bouge pas, l'adresse préfigurée de
+   tls-06 reste exacte). Architecture : une itération = UN aller-retour —
+   garde E5 (allers u16 consigné cadre+0x38, I1), descripteur SORTIE
+   reconstruit CHAQUE tour par la VRAIE tls-03 type 0 (capacité MAX_JETON —
+   la longueur produite revient par cbBuffer, écrit PAR la bibliothèque),
+   descripteur ENTRÉE si jeton serveur accumulé (absent au premier appel,
+   Q4) ; InitializeSecurityContextW à ONZE arguments (4 registres + 7 pile,
+   sub rsp 0xB8) — phCredential cadre+0, phContext NULL au premier appel
+   PUIS cadre+0x10, pszTargetName lu tel quel (I4), phNewContext cadre+0x10,
+   pfContextAttr en pile réécrit 0 avant chaque appel (aucun état résiduel) ;
+   verdict 0 → jeton final émis puis succès ; verdict 1 → entrée consommée
+   (accumulation FRAÎCHE), jeton émis en boucle d'achèvement bornée, UNE
+   réception tcp-03 par tour ; verdict 2 → garde E2 (jeton hors borne AVANT
+   réception complémentaire et avant tout appel SSPI) puis accumulation ;
+   verdicts {3,4,5,6} → Q2 (verdict + HRESULT d'origine consignés, le
+   contexte reste où la bibliothèque l'a laissé — I3 : AUCUNE compensation
+   ici) ; échecs système E3/E4 → verdict 5 ; pile de travail : les arguments
+   morts Reserved1/TargetDataRep (@rsp+0x20/+0x28) deviennent l'ENVOYÉ et la
+   DESTINATION-post-émission de la boucle d'achèvement (morts comme
+   arguments APRÈS l'appel, vivants comme état PENDANT l'émission — aucun
+   octet dupliqué) ; volatils seuls (I5 — cadre et longueurs en pile).
+4. **m4/harnais_poignee.py** — harnais à shims (mécanisme M2/M3 : page
+   trampoline de ret + crochet code ; leçon D79 : chaque chargement
+   RECONSTRUIT l'émulateur) : l'émulation embarque les VRAIS octets de
+   tls-02 + tls-03 + tcp-03 + tcp-04 (héritage scellé lu au dépôt m2/) —
+   la boucle est testée de bout en bout à travers ses dépendances réelles ;
+   les shims (ISC/recv/send) sont pilotés par comportements DÉTERMINISTES
+   PAR INDICE partagés modèle/émulation (jamais de file épuisable). **V1**
+   round-trip 544 o + quatre intégrations. **V2 SEIZE scénarios de la
+   spec** : poignées complètes en 2, 3, 9 allers (message incomplet au
+   milieu), certificat invalide (verdict 3 — LE critère M4), jeton trucidé
+   (5), HRESULT exotique (6), boucle sans fin (E5 à 16 allers — 48 appels
+   constatés, la borne EST la terminaison), jeton hors borne (E2), émission
+   rompue (E3), réception rompue et fermeture propre (E4), émission
+   partielle exigeant l'achèvement (2 tours), fin de contexte en poignée
+   (4), continuer sans jeton produit, succès sans jeton final, succès au
+   premier appel — CHAQUE scénario : cadre 0x9000 OCTET PAR OCTET prédit
+   (verdict, HRESULT, allers, handle écrit PAR la bibliothèque, zones
+   émission/réception) + contrat d'appels COMPLET (les 11 arguments d'ISC :
+   phContext NULL-puis-cadre+0x10, phNewContext cadre+0x10, fContextReq ==
+   layout.ISC_REQUETES, descripteurs tls-03 type 0 exacts [version, compte,
+   type TOKEN, cb = accumulé/capacité, pv = zone] ; traces recv/send
+   [socket, pointeur, longueur] prédites appel par appel — accumulation,
+   achèvement) ; les adresses de PILE (pInput/pOutput/pfContextAttr) sont
+   vérifiées par PRÉDICAT — l'adresse exacte appartient à la notation, le
+   CONTENU au contrat. **V3** 5 000 cas fuzzés ZÉRO ÉCART, reproductible
+   (graines 20261028 PUIS 20261029 — 10 000 cas au total : HRESULT
+   documentés et exotiques, jetons jusqu'à MAX_JETON, réceptions et
+   émissions partielles/rompues, « max » remplissant la zone) ; canaris
+   cadre + non-volatils + IAT (kernel32/ws2_32/secur32) + fixture intactes
+   à chaque cas ; I3 constatée POSITIVEMENT : tout appel ACH/FCH/DSC/QCA/
+   EM/DM/closesocket/… = faux pas nommé (aucun ne s'est jamais produit).
+   **V4** SIX mutations D'UN point chacune, STABLES EN TAILLE (leçon D82),
+   TOUTES ATTRAPÉES : borne E5 relâchée (16→17), garde E2 relâchée
+   (16384→16385), phNewContext dévié (cadre+0x18), drapeau ISC corrompu
+   (0xC01D), routage continuer dévié (cmp 1→3), émission depuis la zone
+   réception (lea 0x260→0x4260) + témoin intact VERT 16/16.
+5. **LE DIFFÉRENTIEL A NOMMÉ QUATRE DÉFAUTS AVANT LE VERT** (c'est son
+   office — chacun consigné) : (a) le harnais lui-même packait un SecHandle
+   de 16 octets dans une tranche de 8 — le bytearray GROSSIT silencieusement
+   (image 36 896 ≠ 0x9000 : écriture unicorn hors carte) ; (b) la notation
+   passait l'ENVOYÉ en longueur à tcp-04 au lieu du RESTANT — envoi de
+   0 octet, E3 immédiat (« SEND longueur 0 » dans la trace, le shim ne
+   ment jamais) ; (c) `xor eax, eax` (défaut pInput NULL) écrasait le CADRE
+   porté par rax avant le lea de phContext — phContext = 0x10 au lieu de
+   cadre+0x10 sur toute reprise (attrapé par le contrat d'appels, invisible
+   au round-trip) — le correctif route le défaut par r11 et le cadre n'est
+   plus jamais écrasé entre ses usages ; (d) la RÈGLE shim/modèle laissait
+   cbBuffer à la capacité 16384 quand aucun jeton n'est produit — une vraie
+   ISC consigne TOUJOURS la longueur produite (0 = aucun) : sans cette
+   correction, le notateur aurait émis 16 Kio de canari sur un succès sans
+   jeton final (le scénario dédié l'a exposé).
+6. Docs alignés : PLAN (M4 (b) — suite D83), REPRISE (état général +D83,
+   chronique § 7, arborescence + harnais_poignee.py), README (état M4).
+
+**Ce que ça établit** : le critère de sortie du jalon existe désormais en
+octets prouvés — la poignée de main se termine TOUJOURS (la borne est
+constatée par scénario, pas seulement affirmée), chaque verdict a une adresse
+(le certificat invalide traverse exactement le chemin spécifié D77 : verdict 3
+→ Q2 → la réponse 502 de http-10:R2), et la discipline des blocs à shims est
+répétée sur un bloc DE boucle (le premier était de cycle de vie) : différentiel
+contre modèle écrit depuis la spécification, falsification stable en taille,
+reproductibilité deux graines. Suites (b) : tls-06 (émission chiffrée —
+tailles négociées, EncryptMessage), tls-07 (réception déchiffrée — Extra à
+propriétaire unique), tls-08 (orchestration), révisions http-08:R2/http-10:R2,
+oracle à scénarios SSPI, carte génération 6 (lignée D80), proxy.exe
+0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.

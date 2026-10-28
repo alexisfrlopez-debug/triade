@@ -140,9 +140,15 @@ SYMBOLES = {
     # Blocs tls (feuilles D79 — cibles d'appel des futurs tls-04..08) :
     "TLS_UTF16": 0x6000, "TLS_VERDICTS": 0x6080, "TLS_JETONS": 0x6180,
     # IAT secur32 (ARRÊT D81 — layout.IAT_SEC32_SLOTS, slots .rdata M4) :
+    # D83 : le symbole secur32 s'appelle IAT_ISC (l'abréviation des specs
+    # elles-mêmes — « boucle ISC ») — IAT_ICS désignait DÉJÀ Initialize-
+    # CriticalSection (M2/M3, héritage) et le littéral de dictionnaire faisait
+    # gagner cette seconde déclaration en éclipsant la première SILENCIEUSEMENT
+    # (aucune notation n'a jamais résolu à travers : corrigé avant première
+    # utilisation, fail-closed).
     "IAT_ACH": L.IAT_SEC32_SLOTS["AcquireCredentialsHandleW"],
     "IAT_FCH": L.IAT_SEC32_SLOTS["FreeCredentialsHandle"],
-    "IAT_ICS": L.IAT_SEC32_SLOTS["InitializeSecurityContextW"],
+    "IAT_ISC": L.IAT_SEC32_SLOTS["InitializeSecurityContextW"],
     "IAT_DSC": L.IAT_SEC32_SLOTS["DeleteSecurityContext"],
     "IAT_QCA": L.IAT_SEC32_SLOTS["QueryContextAttributesW"],
     "IAT_EM": L.IAT_SEC32_SLOTS["EncryptMessage"],

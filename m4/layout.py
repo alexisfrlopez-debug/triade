@@ -198,6 +198,16 @@ MAX_JETON = 16384               # tls-03 (type 0) : borne des jetons de poignée
 HOTE_MAX = L3.HOTE_MAX          # 255 — tls-01 (héritage tcp-13)
 # MAX_MESSAGE : JAMAIS une constante — valeur négociée, lue dans les tailles
 # de flux ([tailles + 8], acquises par tls-06 — charte § 6/§ 8)
+ISC_REQUETES = 0xC01C           # tls-04 (D83) : fContextReq d'Initialize-
+                                # SecurityContextW — REPLAY_DETECT 0x4 |
+                                # SEQUENCE_DETECT 0x8 | CONFIDENTIALITY 0x10 |
+                                # EXTENDED_ERROR 0x4000 | STREAM 0x8000.
+                                # STREAM est exigé par tls-03:1 (en-tête/queue)
+                                # et tls-06/07 (enregistrements) ; JAMAIS
+                                # MANUAL_CRED_VALIDATION (charte § 2 : la
+                                # validation automatique reste l'état le plus
+                                # dur) ni ALLOCATE_MEMORY (les jetons vivent
+                                # dans le cadre, pas en mémoire de bibliothèque).
 
 # --- Liste blanche HRESULT tls-02 (winerror.h, vérifiée D79) --------------------
 
