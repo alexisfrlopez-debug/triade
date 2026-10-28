@@ -4472,3 +4472,178 @@ le cas échéant ajouter la phrase D30 au coffre (il tient désormais la NOUVELL
 phrase de contrôle). Suites : M4 étape (b) — tls-04..08, révisions http, oracle à
 shims SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain :
 D57 (WER) seul point ouvert.
+
+## Entrée 70 — D81 (28/10, ~14:30) : la phrase de contrôle du coffre-fort passe sous garde durable — consigne développeur appliquée AVANT TOUT, spécification v0.5.2
+
+**Contexte** : reprise de session après une INTERRUPTION D'INFRASTRUCTURE (la
+ième — le développeur : « problèmes un peu trop récurrents »). La session
+précédente avait exécuté la rotation de lignée D80 (commit 95dce4f : phrase
+D80 générée, carte m3 re-scellée, coffre-fort roté, exporté en racine Drive,
+md5 0323029a…) puis engagé l'étape (b) de M4 (tls-05) — puis la session est
+MORTE. Constat à la reprise : le travail M4 non committé traînait dans le bac
+à sable (récupéré, cf. Entrée 71) et surtout LA NOUVELLE PHRASE DE CONTRÔLE
+D80 N'AVAIT JAMAIS ÉTÉ REMISE — la cérémonie de fin de tour (affichage une
+fois puis destruction, modèle D27/D30/D75) n'a pas eu lieu ; la phrase ne
+vivait plus que dans .keys/phrase_controle_session.txt, éphémère. Un décès
+d'infra de plus et le coffre ENTIER devenait indéchiffrable à jamais (l'ancienne
+phrase D75 étant inopérante depuis la rotation). Le développeur consigne la
+règle et l'arbitrage : « dès qu'une nouvelle phrase de contrôle est produite,
+il faut impérativement la sauvegarder dans le drive et le git avant tout pour
+éviter de la perdre en cas de problème sur ton infra ».
+
+**Déroulé** :
+1. **AVANT TOUT** (commit dédié f652234, poussé immédiatement, AVANT tout
+   autre changement du plan de travail) : PHRASE-CONTROLE-COFFRE.txt au racine
+   du dépôt — phrase seule sur une ligne (33 o, copie par octets, JAMAIS
+   affichée ni transcrite en session), lisible tel quel par
+   `coffre_fort.py --phrase-fichier` (f.read().strip()) ; PROUVÉE sur le
+   conteneur réel (verifier INTÈGRE — 1 projet, 2 entrées : lignee-D74
+   archive + lignee-D80 courante ; cmp octet pour octet vs fichier session) ;
+   LISEZMOI-PHRASE-CONTROLE.txt (pourquoi — la consigne verbatim et le constat
+   fondateur ; usage ; procédure de restauration post-panne en 4 pas ;
+   avertissement honnête et mitigations). Disponibilité : git → GitHub +
+   miroir Drive TRIADE/ (hook post-commit, rc=0) + RACINE du coffre Drive
+   (update-or-create, md5 vérifiés : 1deda5a5… et 0a20c791… — la racine passe
+   à 11 entrées).
+2. **RESTAURATION POST-PANNE PROUVÉE DE BOUT EN BOUT** (le scénario exact que
+   vise la consigne) : la phrase est TÉLÉCHARGÉE depuis le racine du coffre
+   Drive (alt=media, 33 o, md5 identique), puis le conteneur est OUVERT avec
+   cette copie — verifier INTÈGRE, entrées lignee-D74 + lignee-D80 listées ;
+   copie temporaire détruite. La chaîne complète « infra morte → dépôt ou
+   Drive → phrase → coffre → phrases maîtresses » est démontrée, pas
+   supposée.
+3. **Spécification v0.5.2** (rien ne se change en silence — discipline D17 :
+   le PDF suit les sources) : PROTOCOLE_TRIADE.md (titre, en-tête, § 1.6
+   « Ce que change la v0.5.2 » : la garde durable, le constat fondateur,
+   l'arbitrage PERTE > EXPOSITION et ses conséquences honnêtes ; § 13.1
+   menace « vol du coffre-fort » étendue — la confidentialité au repos repose
+   désormais sur le contrôle d'accès au dossier Drive, mitigation première =
+   restreindre le partage par lien, une phrase commise en git y demeure à vie,
+   la rotation reste le remède ; § 15.3 discipline réécrite — produite →
+   SAUVEGARDÉE AVANT TOUTE AUTRE ACTION → le fichier EST la remise, à chaque
+   rotation il est remplacé et git conserve les phrases retirées ; § 17.6
+   correspondance v0.5.1 → v0.5.2 + alternatives rejetées (affichage unique,
+   scellement sous phrase antérieure, conteneur seul, restriction d'office du
+   partage — cette dernière appartient au développeur) ; glossaire ; § 19 ;
+   état : M4 ouvert D77 consigné). FORMAT_CARTE.md § 11 (§ 11.1 garde de la
+   phrase ; § 11.3 discipline (4) sauvegarde AVANT TOUT + (5) restauration
+   relit la phrase depuis le fichier ; contrepartie consignée). Chaîne
+   formelle : git mv spec_v051 → spec_v052 (main.tex, sec-a.tex § 1.6,
+   sec-d.tex — § 15.3, menace, jalons M4 ouvert, correspondance § 17.6,
+   décisions D76–D81 ; couverture v0.5.2 — sous-titre condensé après refus
+   du validateur : chevauchement de 8 px, corrigé) ; build_pdf.sh v0.5.2 ;
+   verify_spec.py : V12 NOUVEAU (12 contrôles dont « le fichier du dépôt
+   OUVRE le conteneur » — exécuté, INTÈGRE). PDF formel régénéré
+   docs/Protocole_TRIADE_v0.5.2_Specification.pdf, QA 12/12 ; cahier V1–V12
+   TOUS PASSÉS (l'archive v0.5.1 demeure dans docs/).
+4. **Cérémonie D80 CLOTURÉE PAR CETTE REMISE** : le modèle D27/D30/D75
+   (affichage unique) est transposé — la remise est le stockage durable ;
+   le fichier de session .keys/phrase_controle_session.txt est DÉTRUIT (md5
+   consigné au moment de la destruction) ; la phrase de contrôle vit
+   désormais au dépôt + racine Drive + miroir, et NULLE PART en clair hors
+   ces gardes. Conteneur inchangé d'un octet (md5 0323029a… avant == après ;
+   racine Drive == local == copie développeur).
+
+**Ce que ça établit** : le maillon qui mourait avec l'infra (la remise de la
+phrase de contrôle) est refermé — la phrase survit aux pannes par
+construction, la restauration est prouvée pas promise ; le coffre-fort reste
+ce qu'il est (intégrité, organisation, anti-furtif du conteneur) et sa
+confidentialité au repos est honnêtement re-qualifiée (contrôle d'accès au
+dossier Drive, pas le seul chiffrement). Reste développeur : VIDER la
+corbeille Drive (copie D74 de la phrase maîtresse — toujours récupérable) ;
+RESTREINDRE le partage par lien du dossier Drive (mitigation première — ferme
+toute la classe § 8 : Tokens, incident D76-D78, et ce fichier-ci) ; le cas
+échéant ajouter la phrase D30 au coffre (il tient la phrase de contrôle —
+désormais aussi dans PHRASE-CONTROLE-COFFRE.txt).
+
+**Suites** : reprise du travail M4 (b) tué par la panne (Entrée 71 — le WIP
+récupéré, harnais re-exécuté vert, committé) ; puis tls-04 (poignée de main,
+LE critère M4) ; terrain : D57 (WER) seul point ouvert.
+
+## Entrée 71 — D82 (28/10, 13:30 → consigné 15:30 après panne d'infra) : M4 étape (b) — le CADRE DE SESSION et l'IAT secur32 ARRÊTÉS, tls-05 notée-mesurée-prouvée : premier bloc à shims du jalon, 5 000 cas fuzzés zéro écart, 6/6 mutations attrapées — WIP de la session morte RÉCUPÉRÉ, re-vérifié vert puis committé
+
+**Contexte** : suite de session (« puis on enchaine sur la suite », après la
+rotation de lignée D80) — étape (b) de M4 poursuivie sur le modèle D79/D47 :
+la convention PRÉCÈDE la notation, la mesure arrête le slot, RIEN n'est
+commité sans harnais vert. tls-05 (cycle de vie des handles) est le premier
+bloc À SHIMS du jalon : il appelle l'IAT secur32 et route chaque HRESULT par
+la VRAIE tls-02.
+
+**Déroulé** :
+1. **ARRÊT du cadre de session TLS** (convention partagée tls-04..08, citée
+   par les specs « aux offsets documentés » — m4/I/README nouvelle section +
+   layout.py, source unique) : CredHandle @+0x00 / CtxtHandle @+0x10
+   (SecHandle deux mots chacun), socket @+0x20 (fermeture tls-08 SEUL),
+   pointeur nom @+0x28 (zone @+0x60, destination tls-01), verdict +
+   HRESULT d'origine @+0x30/+0x34, allers @+0x38 (u16), tailles de flux
+   @+0x40 (5×u32, tls-06 unique propriétaire), zones émission @+0x260 /
+   réception @+0x4260 (MAX_JETON) — taille 0x8260, fourni VIERGE par
+   http-10:R2, jamais de donnée statique.
+2. **ARRÊT de l'extension .rdata secur32** (après les fixtures http scellées
+   qui finissent 0x299C — l'héritage M3 reste octet pour octet, R7) : table
+   des descripteurs M4 @0x29A0 (le répertoire d'imports du PE M4 y pointera —
+   les 60 o M3 de 0x2030 deviennent espace mort lu par personne, le chargeur
+   suit le répertoire), « secur32.dll\0 » @0x29F0, slots IAT 0x2A00-0x2A30
+   (ACH/FCH/ICS/DSC/QCA/EM/DM + terminateur), INT @0x2A40, hints @0x2A80,
+   fixture package L"Microsoft Unified Security Protocol Provider" @0x2C00
+   (90 o, pszPackage de tls-05, unique propriétaire). Le commentaire
+   « emplacements au build » de D79 est résolu : l'arrêt PRÉCÈDE la notation
+   (modèle D47 — les trois entrées ws2_32 appendues de M3 l'avaient établi).
+3. **tls-05 notée à la main** (brouillon → auteur.py : keystone assemble,
+   rien d'autre) : 251 o / 55 instructions / 6 étiquettes, slot 0x65C0×0x180
+   conservé (padding 133 ≥ 16, D8 — l'adresse préfigurée de tls-06 reste
+   exacte) ; dispatch {0,1,2} + refus défensif hors domaine (P1 violé :
+   verdict 6, cadre intact, AUCUN appel — fail-closed) ; op 0 : les NEUF
+   arguments de AcquireCredentialsHandleW (4 registres + 5 pile, sub rsp 0x58
+   aligne la frontière msx64), pAuthData NULL (P3 : validation AUTOMATIQUE —
+   l'état le plus dur, jamais désactivée), OUTBOUND, phCredential = cadre+0 ;
+   op 1/2 : un argument, remise à zéro APRÈS succès constaté (I3 — jamais
+   avant l'appel) ; le HRESULT i32 est sign-étendu pour tls-02 ; le cadre est
+   rechargé depuis la pile APRÈS tls-02 (rdx = HRESULT en sortie, volatils
+   morts au retour d'un appel) ; zéro défensif de l'acquisition en échec
+   (Q1 : cadre intact par construction — rien d'acquis ne reste à compenser).
+4. **m4/harnais_cles.py** — harnais à shims (mécanisme M2/M3 : page
+   trampoline de ret + crochet code, résolution chargeur des slots IAT vers
+   les fausses adresses ; leçon D79 appliquée : chaque chargement RECONSTRUIT
+   l'émulateur) : **V1** round-trip 251 o + tls-02 intégrée (156 o, ses
+   propres octets — le routage des verdicts est testé de bout en bout) ;
+   **V2** dix scénarios de la spec — cadre prédit OCTET PAR OCTET
+   avant/après chaque appel, contrat d'appels COMPLET (pszPrincipal NULL,
+   pszPackage == fixture exacte, OUTBOUND, pAuthData NULL, pvLogonId NULL,
+   pGetKeyFn/pvGetKeyArgument NULL, phCredential cadre+0, ptsExpiry NULL —
+   le shim lit le contenu UTF-16 du pointeur passé) : acquisition
+   succès/échec certificat/fatal/continuer-absurde (table TOTALE),
+   destruction succès/échec (échec : handle INCHANGÉ), libération
+   succès/échec, hors domaine 3 et 0xFFFFFFFF (verdict 6, ZÉRO appel) ;
+   **V3** 5 000 cas fuzzés (ops valides ET hostiles, HRESULT documentés ET
+   exotiques, handles magiques aléatoires écrits par les shims — la shim
+   barbouille le handle en échec pour prouver le zéro défensif) : ZÉRO
+   écart, reproductible (graines 20261028/29) ; canaris cadre + non-volatils
+   sentinelles + IAT et fixture intactes à chaque cas ; **V4** SIX mutations
+   d'un point chacune ATTRAPÉE (fCredentialUse INBOUND, pAuthData non NULL
+   [P3 — la validation désactivée est impossible], zéro écrit sur la socket,
+   zéro d'échec sauté, op 1 routée vers la libération, domaine relâché à 4)
+   + témoin intact VERT 7/7. Leçon consignée : une mutation de notation doit
+   être STABLE EN TAILLE (remplacer mov par lea décale les cibles absolues
+   des sauts — l'émulation part en fetch non mappé : le différentiel n'a
+   rien à voir, la faute est au mécanisme de mutation, M5 remplacée par une
+   mutation de routage je→jne, encodage rel8 identique).
+5. Docs alignés : m4/I/README (section cadre + IAT arrêtés), PLAN (M4 (b)
+   arrêts D82), REPRISE (état général +D82, arborescence), README (état).
+6. **REPRISE POST-PANNE (la session d'exécution est morte AVANT le commit —
+   le WIP vivait seulement dans le bac à sable)** : à la reprise, RIEN n'est
+   committé tant que le harnais n'est pas re-exécuté vert — `harnais_cles.py`
+   re-exécuté à l'identique : **21 PASS, 0 ÉCHEC, graine 20261028 PUIS graine
+   20261029** (reproductibilité re-prouvée sur les deux graines canoniques) ;
+   les preuves de l'entrée ne dépendent d'aucune exécution disparue.
+
+**Ce que ça établit** : la convention de données du tunnel est arrêtée AVANT
+les blocs qui l'utilisent (le cadre est le contrat entre tls-04..08 —
+l'équivalent structurel de ce que la charte D77 est aux comportements), et le
+premier bloc à shims du jalon est prouvé par la même discipline que les
+feuilles pures : différentiel contre modèle écrit depuis la SPÉCIFICATION,
+falsification, reproductibilité. La voie est ouverte pour tls-04 (la poignée
+de main, LE critère M4 — boucle ISC bornée 16 allers) qui hérite du cadre,
+de l'IAT et du mécanisme de harnais. Suites (b) : tls-04, tls-06..08,
+révisions http-08:R2/http-10:R2, oracle à scénarios SSPI, carte génération 6
+(lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER) seul point ouvert.

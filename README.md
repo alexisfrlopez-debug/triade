@@ -23,11 +23,11 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.1, source de travail) — `docs/Protocole_TRIADE_v0.5.1_Specification.pdf` (archive formelle v0.5.1 : coffre-fort des phrases maîtresses D75, menace du vol du coffre § 13.1, M3 franchi constaté — D75) ; archives conservées : v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v051/verify_spec.py` (cahier V1–V11) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.2, source de travail) — `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (archive formelle v0.5.2 : garde durable de la phrase de contrôle D81, menace du vol du coffre étendue § 13.1, M4 ouvert constaté D77 — D81) ; archives conservées : v0.5.1, v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v052/verify_spec.py` (cahier V1–V12) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
-| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D75 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–64) |
+| Consulter les arbitrages | `docs/DECISIONS.md` (D1–D50 formalisées, format normalisé depuis D24 ; D51–D81 au fil des messages de commit et de `docs/JOURNAL_TRAVAIL.md`, Entrées 40–70) |
 | Voir la feuille de route | `docs/PLAN_MILESTONES.md` (M0–M7) |
 
 ## Sauvegarde et continuité
@@ -44,19 +44,22 @@ committe, synchronise le miroir Google Drive (fichiers + bundle d'historique)
 et pousse vers le repo GitHub privé. Le hook `post-commit` synchronise le Drive à chaque
 commit. Vérification des jetons : `python3 scripts/check_auth.py`.
 
-**Coffre-fort des phrases maîtresses (D75, ROTÉ D80).** Toutes les phrases maîtresses du projet
+**Coffre-fort des phrases maîtresses (D75, ROTÉ D80, phrase de contrôle sous garde durable D81).** Toutes les phrases maîtresses du projet
 — et de tout futur projet conduit sous TRIADE — vivent dans un conteneur unique chiffré
-TRIADE-CF1 (`python3 coffre_fort.py` à la racine) : phrase de contrôle au coffre du
-développeur seule (jamais stockée, affichée une fois à la cérémonie), Argon2id + HKDF à
+TRIADE-CF1 (`python3 coffre_fort.py` à la racine) : Argon2id + HKDF à
 contexte dédié + XChaCha20-Poly1305, autotest de falsification (`python3 coffre_fort.py
 autotest`). Le conteneur est exporté chiffré au racine du coffre Drive (copie projet) et
 au coffre personnel du développeur ; après une réinitialisation du poste, `importer` +
 `obtenir TRIADE lignee-D80 --vers-fichier .keys/passphrase.txt` restaurent la lignée
 sans cérémonie. **D80 (rotation de lignée après exposition D76-D78)** : le conteneur
 porte les DEUX lignées — `lignee-D74` (archive, « ne plus sceller avec ») et
-`lignee-D80` (courante) ; la phrase de contrôle D75 est INOPÉRANTE (nouvelle remise
-par cérémonie D80).
-Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification § 15.3.
+`lignee-D80` (courante) ; la phrase de contrôle D75 est INOPÉRANTE. **D81 (garde
+durable, consigne développeur)** : la phrase de contrôle courante vit dans
+`PHRASE-CONTROLE-COFFRE.txt` (racine du dépôt + GitHub + miroir Drive + racine du
+coffre Drive) — sauvegardée AVANT TOUTE AUTRE ACTION dès production, le fichier EST la
+remise ; elle ouvre le conteneur (prouvé, restauration post-panne démontrée de bout en
+bout — cf. `LISEZMOI-PHRASE-CONTROLE.txt`).
+Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification v0.5.2 § 15.3.
 
 ## État du projet
 
@@ -142,7 +145,15 @@ publique, version 0.4.0 inchangée, proxy.exe inchangé dd12b649… ; re-vérifi
 graine 21 verte : R5 38/38, oracle 524 verrous + 153 036 cas, R8 38), coffre-fort
 roté aux DEUX lignées (lignee-D74 archive + lignee-D80 courante, phrase de
 contrôle D75 inopérante) ; côté développeur : VIDER la corbeille Drive (hygiène —
-la phrase exposée est retirée du service, la copie y vit encore 30 j). **Coffre Drive nettoyé (D76)** : douze
+la phrase exposée est retirée du service, la copie y vit encore 30 j). **D81 : la phrase
+de contrôle passe sous garde durable** — PHRASE-CONTROLE-COFFRE.txt au racine du dépôt
+(commit dédié AVANT TOUT, GitHub + miroir + racine Drive, md5 vérifiés), le fichier est
+la remise (l'affichage unique de cérémonie cesse d'être le canal de survie — la session
+morte de D80 avait laissé la phrase D80 remise à personne dans le bac à sable) ;
+spécification v0.5.2 (§ 1.6, § 13.1 menace étendue — confidentialité au repos = contrôle
+d'accès au dossier Drive, mitigation première : restreindre le partage par lien —, § 15.3,
+§ 17.6, cahier V1–V12, PDF QA 12/12) ; restauration post-panne prouvée de bout en bout.
+**Coffre Drive nettoyé (D76)** : douze
 livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
@@ -151,13 +162,27 @@ Suite : **M4 ouvert (D77)** — tunnel chiffré Schannel, couche I écrite-avant
 (`m4/I/` : domaine `tls` créé — 8 spécifications + charte des contrats
 cryptographiques [fail-closed intégral, certificat invalide = 502 propre, zéro
 divulgation, compensation exacte] + révisions http-08:R2/http-10:R2, blocs
-génération 6 g7xxxx) ; terrain : D57 (WER) seul point ouvert.
+génération 6 g7xxxx) ; **étape (b) en cours** — D79 : layout.py (.text3 @ 0x6000,
+héritage M0-M3 réexporté, HRESULT vérifiés à la source), notations tls-01/02/03
+prouvées (différentiel de spécification 165 k cas zéro écart, falsification 6/6) ;
+D82 : CADRE DE SESSION TLS et extension .rdata/IAT secur32 ARRÊTÉS (convention
+partagée tls-04..08 + table des descripteurs M4 @0x29A0 + slots IAT 0x2A00-0x2A30),
+tls-05 (cycle de vie des handles) notée-mesurée-prouvée — PREMIER BLOC À SHIMS du
+jalon (harnais m4/harnais_cles.py : V1 round-trip 251 o + tls-02 intégrée, V2 dix
+scénarios cadre octet par octet, V3 5 000 cas fuzzés zéro écart — graines 20261028/29,
+V4 six mutations d'un point attrapées, témoin vert 7/7) ; reste (b) : tls-04 (la
+poignée de main — LE critère M4), tls-06..08, révisions http, oracle à scénarios
+SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
+seul point ouvert.
 
 ## Avertissement
 
 Le dossier `.gdrive/` contient des jetons d'accès : il ne doit jamais être commité,
 synchronisé ni affiché. Le dossier `.keys/` contient les secrets de la carte (phrase,
 graine) et le conteneur chiffré du coffre-fort (D75) — jamais committés ni synchronisés
-en clair ; la phrase de contrôle du coffre vit uniquement au coffre du développeur.
+en clair ; la phrase de contrôle du coffre vit sous garde durable depuis D81
+(`PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt et au racine du coffre Drive —
+décision développeur : le risque de perte l'emporte sur le risque d'exposition ;
+restreindre le partage par lien du dossier Drive est la mitigation première).
 L'application de validation (intercepteur MITM) est destinée à des
 tests autorisés en environnement de laboratoire uniquement.

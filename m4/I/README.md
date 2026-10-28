@@ -75,6 +75,37 @@ ajoutées : AcquireCredentialsHandleW, FreeCredentialsHandle,
 InitializeSecurityContextW, DeleteSecurityContext,
 QueryContextAttributesW, EncryptMessage, DecryptMessage.
 
+## Cadre de session TLS et IAT secur32 (arrêt D81)
+
+Deux conventions partagées par tls-04..08 ont été ARRÊTÉES avant la première
+notation à shims (tls-05) — elles vivent dans le plan d'adressage
+(`m4/layout.py`, source unique) et sont citées ici une fois, jamais recopiées
+dans les spécifications (T5) :
+
+**Le cadre de session TLS** — zone de travail complète de la session, fournie
+VIERGE par http-10:R2 (propriétaire mémoire), jamais de donnée statique :
+CredHandle credentials `@+0x00` et CtxtHandle contexte `@+0x10` (SecHandle
+SSPI : deux mots de 64 bits chacun, petits-boutistes — tls-05 est l'unique
+propriétaire du cycle de vie) ; socket serveur `@+0x20` (propriétaire de
+fermeture : tls-08 SEUL) ; pointeur nom UTF-16 `@+0x28` (vise la zone
+`@+0x60`, destination de tls-01) ; verdict `@+0x30` et HRESULT d'origine
+`@+0x34` (tls-04:Q2 — jamais un HRESULT brut sans verdict nommé à côté) ;
+allers-retours `@+0x38` (u16, tls-04:Q1) ; tailles de flux `@+0x40` (5×u32,
+écrites UNE fois par session par tls-06, lues par tls-03 type 1) ; zone nom
+`@+0x60` (512 o = 2×(HOTE_MAX+1)) ; zone émission `@+0x260` et zone
+réception `@+0x4260` (MAX_JETON chacune — poignée de main puis
+enregistrements) ; taille totale `0x8260`.
+
+**L'IAT secur32** (sept entrées) vit dans l'extension .rdata ARRÊTÉE à
+`0x29A0`, après les fixtures http scellées (tout l'héritage M3 reste octet
+pour octet à ses adresses — R7) : table des descripteurs M4 `@0x29A0` (le
+répertoire d'imports du PE M4 y pointera — les 60 octets M3 de `0x2030`
+restent en place, espace mort lu par personne) ; `« secur32.dll\0 »`
+`@0x29F0` ; slots `0x2A00-0x2A30` (ACH, FCH, ICS, DSC, QCA, EM, DM +
+terminateur) ; INT `@0x2A40` ; hints/names `@0x2A80` ; fixture package
+`L"Microsoft Unified Security Protocol Provider"` `@0x2C00` (pszPackage de
+tls-05, unique propriétaire — 90 o).
+
 ## Révisions du domaine http (scellé 0.4.0 — citées, jamais réécrites)
 
 | Révision | Rôle | Ancêtre |

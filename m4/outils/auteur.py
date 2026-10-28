@@ -6,7 +6,8 @@ octets : keystone assemble, rien d'autre) — cet outil fait l'arithmétique
 d'adresses de l'auteur : étiquettes locales -> adresses absolues des sauts,
 symboles de blocs -> cibles d'appels directes, symboles de données ->
 déplacements RIP calculés une fois pour toutes depuis le plan d'adressage M4
-(layout.py — arrêt partiel D79 : trois feuilles pures mesurées, la suite
+(layout.py — arrêts D79/D81 : trois feuilles pures + tls-05 mesuré, l'extension
+.rdata secur32 ARRÊTÉE D81 [IAT/INT/hints/fixture package], la suite reste
 préfigurée jusqu'à la fin de l'étape b).
 
 Entrée : notation/brouillons/*.asm. Sortie : notation/*.asm — notation
@@ -51,7 +52,8 @@ _FICHIERS = {
                "InitializeSecurityContextW ; tls-01/02/03"),
     "g70005": ("tls-05-cles", "tls-05:R1",
                "IAT secur32 AcquireCredentialsHandleW / FreeCredentialsHandle / "
-               "DeleteSecurityContext ; compensation exacte"),
+               "DeleteSecurityContext ; compensation exacte ; cadre aux offsets "
+               "documentés (layout.CADRE_*, arrêt D81)"),
     "g70006": ("tls-06-emission", "tls-06:R1",
                "IAT secur32 QueryContextAttributesW / EncryptMessage ; tcp-04 ; "
                "tls-03 type 1 ; tailles négociées"),
@@ -131,11 +133,22 @@ SYMBOLES = {
     "STDOUT": L.R_STDOUT, "STDIN": L.R_STDIN, "LISTEN": L.R_LISTEN,
     "QUIT": L.R_QUIT, "CS": L.R_CS, "CURSEUR": L.R_CURSEUR,
     "ARENE": L.ARENA_BASE,
-    # NB : les symboles IAT secur32 et les nouvelles données .text3/.rdata M4
-    # s'ajouteront QUAND leurs notations existeront (fail-closed : aucun
-    # symbole n'est déclaré d'avance — l'auteur refuse l'inconnu).
+    # IAT secur32 + fixtures .rdata M4 : déclarés à l'ARRÊT D81 (tls-05) —
+    # chaque nouveau symbole n'est déclaré qu'au moment de SA notation
+    # (fail-closed historique : l'inconnu refusait ; le connu désormais
+    # exigé par tls-05 est arrêté dans layout.py, source unique).
     # Blocs tls (feuilles D79 — cibles d'appel des futurs tls-04..08) :
     "TLS_UTF16": 0x6000, "TLS_VERDICTS": 0x6080, "TLS_JETONS": 0x6180,
+    # IAT secur32 (ARRÊT D81 — layout.IAT_SEC32_SLOTS, slots .rdata M4) :
+    "IAT_ACH": L.IAT_SEC32_SLOTS["AcquireCredentialsHandleW"],
+    "IAT_FCH": L.IAT_SEC32_SLOTS["FreeCredentialsHandle"],
+    "IAT_ICS": L.IAT_SEC32_SLOTS["InitializeSecurityContextW"],
+    "IAT_DSC": L.IAT_SEC32_SLOTS["DeleteSecurityContext"],
+    "IAT_QCA": L.IAT_SEC32_SLOTS["QueryContextAttributesW"],
+    "IAT_EM": L.IAT_SEC32_SLOTS["EncryptMessage"],
+    "IAT_DM": L.IAT_SEC32_SLOTS["DecryptMessage"],
+    # Fixtures .rdata M4 (tls-05 : package Schannel, unique propriétaire) :
+    "PKG": L.R_PKG_M4,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")

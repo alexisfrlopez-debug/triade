@@ -23,20 +23,23 @@ HÉRITAGE M0/M1/M2/M3 (R7 — jamais déplacé) :
 ARRÊT PARTIEL étape b (D79 — mesure auteur, trois feuilles pures) :
   tls-01 0x6000 (0x80), tls-02 0x6080 (0x100), tls-03 0x6180 (0x140) —
   slots réarrêtés sur les longueurs réelles des notations (règles D8 :
-  multiples de 64, alignés 16, padding >= 16). Les CINQ blocs suivants
-  (tls-04..08) et les DEUX révisions restent PRÉFIGURÉS : leurs slots
-  seront réarrêtés quand leurs notations existeront (fin d'étape b).
+  multiples de 64, alignés 16, padding >= 16). ARRÊT D81 : tls-05 0x65C0
+  (0x180, mesure auteur — cycle de vie des handles, premier bloc à shims).
+  Les QUATRE blocs restants (tls-04, tls-06..08) et les DEUX révisions
+  restent PRÉFIGURÉS : leurs slots seront réarrêtés à leurs mesures.
 
 EXTENSION M4 (D77, génération 6 — blocs g7xxxx) :
   - .text3 démarre à 0x6000 (alignement section) : tls-01 0x6000,
-    tls-02 0x6080, tls-03 0x6180 ; préfiguration : tls-04 0x62C0,
-    tls-05 0x65C0, tls-06 0x6740, tls-07 0x6A40, tls-08 0x6D40,
-    http-08:R2 0x7340, http-10:R2 0x7480 ;
-  - l'IAT secur32 gagne SEPT entrées appendues (D77) : AcquireCredentials-
+    tls-02 0x6080, tls-03 0x6180 ; arrêts D79/D81 : tls-05 0x65C0 ;
+    préfiguration : tls-04 0x62C0, tls-06 0x6740, tls-07 0x6A40,
+    tls-08 0x6D40, http-08:R2 0x7340, http-10:R2 0x7480 ;
+  - l'IAT secur32 gagne SEPT entrées (D77) : AcquireCredentials-
     HandleW, FreeCredentialsHandle, InitializeSecurityContextW, Delete-
     SecurityContext, QueryContextAttributesW, EncryptMessage, DecryptMessage
-    — les emplacements .rdata exacts seront arrêtés au build (extension
-    de la zone d'imports après les fixtures http scellées) ;
+    — emplacements .rdata ARRÊTÉS D81 dans l'extension de la zone d'imports
+    (après les fixtures http scellées, voir R_IAT_SEC32 ci-dessous — le build
+    émettra descripteurs/INT/hints à ces adresses exactes, concordance
+    IAT ↔ notation vérifiée comme en M3) ;
   - état .data identique à M3 (la session TLS vivra dans le cadre alloué
     par http-10:R2 — propriétaire unique, charte § 6).
 
@@ -71,6 +74,39 @@ SecBufferDesc { ULONG ulVersion ; ULONG cBuffers ; void* pBuffers } (16 o) ;
 SecPkgContext_StreamSizes { cbHeader, cbTrailer, cbMaximumMessage,
 cBuffers, cbBlockSize } (5 ULONG : en-tête +0, queue +4, message max +8 —
 tls-06, unique propriétaire de l'acquisition).
+
+CADRE DE SESSION TLS (arrêt D81 — convention partagée tls-04..08, citée par
+les spécifications « aux offsets documentés » ; propriété mémoire http-10:R2
+qui le fournit VIERGE ; zone de travail complete, jamais de donnée statique) :
+  +0x00 CredHandle credentials { u64 dwLower, u64 dwUpper }   (16 o, tls-05)
+  +0x10 CtxtHandle contexte    { u64 dwLower, u64 dwUpper }   (16 o, tls-04
+         écrit à l'établissement / tls-05 op 1 détruit+remet à zéro)
+  +0x20 socket serveur TLS (u64 — tcp-13 via tls-08, fermée par tls-08 SEUL)
+  +0x28 pointeur nom UTF-16 (u64 — vise CADRE_NOM_ZONE ; tls-01 destination)
+  +0x30 verdict poignée (u32 — tls-04:Q2) ; +0x34 HRESULT d'origine (u32,
+         tls-02:Q2 — jamais un HRESULT brut sans verdict nommé à côté)
+  +0x38 allers-retours (u16 — tls-04:Q1) ; +0x3A/0x3C réservés (zéro)
+  +0x40 tailles de flux StreamSizes (5 x u32, 20 o — tls-06 écrit UNE fois
+         par session, tls-03 type 1 lit via le pointeur passé en 5e argument)
+  +0x60 zone nom UTF-16 (512 o = 2 x (HOTE_MAX + 1))
+  +0x260 zone jeton ÉMISSION (MAX_JETON 16384 — poignée puis enregistrements)
+  +0x4260 zone jeton RÉCEPTION (MAX_JETON 16384 — poignée puis flux)
+  TAILLE_CADRE = 0x8260 (33376 o)
+
+.rdata M4 — extension de la zone d'imports ARRÊTÉE D81 (après les fixtures
+http scellées qui finissent à 0x299C ; tout l'héritage M3 reste octet pour
+octet à ses adresses — R7) :
+  0x29A0 table des descripteurs M4 (4 x 20 o : kernel32 FT 0x20B0,
+         ws2_32 FT 0x2300, secur32 FT 0x2A00, terminateur) — le répertoire
+         d'imports du PE M4 pointera ICI (les 60 o M3 à 0x2030-0x206B
+         restent en place, R7 : espace mort lu par personne, le chargeur
+         suit le répertoire) ;
+  0x29F0 "secur32.dll\0" (12 o) ;
+  0x2A00 IAT secur32 : 7 slots + terminateur (0x2A38) ;
+  0x2A40 INT secur32 : 7 entrées + terminateur (0x2A78) ;
+  0x2A80 hints/names secur32 (7 entrées, se termine 0x2B2A, pad 0x2B30) ;
+  0x2C00 fixture tls-05 : L"Microsoft Unified Security Protocol Provider"
+         + mot NUL (44 + 1 wchar = 90 o) — pszPackage, unique propriétaire.
 """
 
 import importlib.util
@@ -117,7 +153,7 @@ BLOCS_TLS = [
     ("g70002", "tls-02:R1", 0x6080, 0x100, "M4-dev.1", 1),   # verdicts SSPI
     ("g70003", "tls-03:R1", 0x6180, 0x140, "M4-dev.1", 1),   # jetons (descripteurs)
     ("g70004", "tls-04:R1", 0x62C0, 0x300, "M4-dev.1", 0),   # poignée de main (préfig.)
-    ("g70005", "tls-05:R1", 0x65C0, 0x180, "M4-dev.1", 0),   # cycle de vie (préfig.)
+    ("g70005", "tls-05:R1", 0x65C0, 0x180, "M4-dev.1", 1),   # cycle de vie (ARRÊT D81)
     ("g70006", "tls-06:R1", 0x6740, 0x300, "M4-dev.1", 0),   # émission (préfig.)
     ("g70007", "tls-07:R1", 0x6A40, 0x300, "M4-dev.1", 0),   # réception (préfig.)
     ("g70008", "tls-08:R1", 0x6D40, 0x600, "M4-dev.1", 0),   # session TLS (préfig.)
@@ -146,16 +182,15 @@ ZONE_REVISIONS = (0x7340, 0x7DFF)      # http-08:R2, http-10:R2 (préfiguration)
 ZONE_RESERVEE_T3 = (0x7E00, 0x7FFF)    # int3 — extension future (M5 : patch à
                                        # chaud le réutilisera peut-être)
 
-# --- IAT secur32 : SEPT entrées appendues (D77 — emplacements au build) --------
+# --- IAT secur32 : SEPT entrées (D77 — emplacements ARRÊTÉS D81, cf. IAT_SEC32_SLOTS)
 
 SECUR32_IMPORTS = [
     "AcquireCredentialsHandleW", "FreeCredentialsHandle",
     "InitializeSecurityContextW", "DeleteSecurityContext",
     "QueryContextAttributesW", "EncryptMessage", "DecryptMessage",
 ]
-# Les RVA .rdata des slots (R_IAT_SECUR32…) et les hint/names seront arrêtés
-# au build (extension de la zone d'imports après les fixtures http scellées —
-# la concordance IAT ↔ notation sera vérifiée comme en M3).
+# Concordance IAT ↔ notation vérifiée au build comme en M3 (le répertoire
+# d'imports du PE M4 pointera R_IMPORTS_M4 ; INT/hints/dll à leurs RVA).
 
 # --- Constantes à propriétaire unique (charte m4/I § 8) -------------------------
 
@@ -192,6 +227,41 @@ TAILLE_SECBUFFER = 16           # { u32 cb, u32 type, u64 pv } — x64
 TAILLE_SECBUFFERDESC = 16       # { u32 version, u32 count, u64 pBuffers }
 CAPACITE_CADRE_MIN = 16 + 4 * 16   # descripteur le plus large (type 2) = 80 o
 
+# --- Cadre de session TLS (ARRÊT D81 — voir docstring, convention tls-04..08) ---
+
+CADRE_CRED = 0x00               # CredHandle { u64 dwLower, u64 dwUpper }
+CADRE_CTXT = 0x10               # CtxtHandle { u64 dwLower, u64 dwUpper }
+CADRE_SOCKET = 0x20             # u64 — socket serveur TLS (propriétaire tls-08)
+CADRE_PTR_NOM = 0x28            # u64 — vise CADRE_NOM_ZONE (destination tls-01)
+CADRE_VERDICT = 0x30            # u32 — verdict poignée (tls-04:Q2)
+CADRE_HRESULT = 0x34            # u32 — HRESULT d'origine (tls-02:Q2)
+CADRE_ALLERS = 0x38             # u16 — allers-retours (tls-04:Q1)
+CADRE_TAILLES = 0x40            # 5 x u32 StreamSizes (tls-06 écrit, tls-03 lit)
+CADRE_NOM_ZONE = 0x60           # 512 o = 2 * (HOTE_MAX + 1)
+CADRE_EMISSION = 0x260          # MAX_JETON
+CADRE_RECEPTION = 0x4260        # MAX_JETON
+TAILLE_CADRE = 0x8260           # 33376 o
+SECPKG_CRED_OUTBOUND = 2        # client (tls-05 op 0 — validation AUTOMATIQUE)
+
+# --- .rdata M4 : extension de la zone d'imports secur32 (ARRÊT D81) -------------
+
+R_IMPORTS_M4 = 0x29A0           # table des descripteurs M4 (4 x 20 o, fin 0x29F0)
+R_NOM_SEC32 = 0x29F0            # "secur32.dll\0" (12 o)
+R_IAT_SEC32 = 0x2A00            # IAT secur32 : 7 slots + terminateur 0x2A38
+R_INT_SEC32 = 0x2A40            # INT secur32 : 7 entrées + terminateur 0x2A78
+R_HN_SEC32 = 0x2A80             # hints/names secur32 (7 entrées, fin 0x2B2A)
+R_PKG_M4 = 0x2C00               # L"Microsoft Unified Security Protocol Provider"
+PKG_M4 = "Microsoft Unified Security Protocol Provider".encode("utf-16-le") + b"\x00\x00"
+
+IAT_SEC32_SLOTS = {
+    "AcquireCredentialsHandleW": 0x2A00,
+    "FreeCredentialsHandle": 0x2A08,
+    "InitializeSecurityContextW": 0x2A10,
+    "DeleteSecurityContext": 0x2A18,
+    "QueryContextAttributesW": 0x2A20,
+    "EncryptMessage": 0x2A28,
+    "DecryptMessage": 0x2A30,
+}
 # --- Jetons de retour d'émulation (oracle, hors binaire) ------------------------
 
 SENTINELLE_RETOUR = L3.SENTINELLE_RETOUR
