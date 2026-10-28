@@ -5382,3 +5382,127 @@ verdicts 4/2 transportés devront trouver leurs entrées de table, le
 que tls-08 produit déjà). Reste (b) : http-10:R2, oracle à scénarios SSPI,
 carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57
 (WER) seul point ouvert.
+
+## Entrée 78 — D92 (29/10, ~15:30) : M4 étape (b) — http-10:R2 LA RÉVISION DE ROUTAGE TLS (la session proxy) notée-mesurée-prouvée : la requête https part dans le tunnel, le certificat rejete reçoit SA réponse 502 étiquetée — et le chemin M3 scellé reste inchangé OCTET PAR OCTET
+
+1. LA GÉOMÉTRIE AVANT LA NOTATION (convention D92, layout.py source unique) :
+   le cadre de session grandit de 0xC290 — 0x7100 → 0x13390 : verdict
+   http-08:R2 @+0x7010 (u64, écrit sur TOUT chemin immédiatement après
+   l'appel du parseur — jamais un drapeau non initialisé), garde de rdi
+   @+0x7020 (le rep stosq du cadre TLS emprunte un NON-VOLATIL ABI :
+   préservé puis restitué AVANT l'appel), paquet de session @+0x7100
+   (0x30, convention D90), cadre TLS @+0x7130 (0xC260, convention
+   D81/D89). Le probing Q0 hérité (D63) descend de -0x7000 à -0x13000
+   par pas de 0x1000, touche finale [rsp-0x13390], sub rsp, 0x13390
+   (multiple de 16 : l'ABI P5 est préservé et TOUS les offsets R1
+   restent numériquement exacts — le différentiel le prouve). Innocuité
+   des deux revendications @+0x7010/@+0x7020 : balayage de la notation
+   scellée — jamais lues, jamais écrites (R1 n'utilise que 0x7000,
+   0x7008, 0x7018 dans la région).
+
+2. LES QUATRE ARRÊTS CONTRACTUELS AVANT LA NOTATION (corpus cité, rien
+   inventé) : (a) la ligne console « certificat rejete » appartient à
+   tls-08 SEUL (I4, fixture @0x2C80 « tls-08 unique propriétaire des
+   deux », README D90) — la session ne la ré-émet JAMAIS (point croisé
+   D91 : pas de double émission), la réponse suit le RETOUR du verdict
+   (README D90 : « http-10:R2 mappe sur rax, jamais sur le cadre ») ;
+   (b) l'entrée étiquetée « HTTP/1.1 502 Certificat rejete » (34 o
+   @0x2CA0, D92) est la SEULE entrée nouvelle de la table Q3' — les
+   verdicts 2/4/5/6/7 de tls-08 mappent sur la ligne 502 R1 scellée (la
+   spécification n'étiquette QUE le certificat : « chaque entrée
+   NOUVELLE est nommée ICI une seule fois ») ; (c) le port implicite 443
+   est le DÉFAUT passé à http-07:R1 (P3 : « tout autre valeur est le
+   défaut de l'appelant : 80 pour un schéma http » — http-08:R2:Q4
+   « consigné DANS la sortie » : le port effectif vit dans la zone
+   http-07, l'EXPLICITE gagne, scénario 8443) ; (d) un corps sur cible
+   TLS (CL > 0) est REFUSÉ 501 — refus honnête, jamais de tentative : le
+   paquet D90 porte UNE requête (le head réécrit forme origine),
+   tls-08:Q1 l'émet UNE fois puis relais serveur→cliente SEUL — miroir
+   exact du Transfer-Encoding R1 (E4 : « le relais en flux n'est pas
+   dans le périmètre M3 »).
+
+3. LA NOTATION (brouillon → auteur.py : keystone assemble, rien
+   d'autre) : 2125 o / 430 instructions / 42 étiquettes, slot
+   préfiguré 0x74C0×0x900 CONSERVÉ (padding 179 ≥ 16, D8).
+   ARCHITECTURE : .cible_tls est le MIROIR EXACT de .forme_absolue (mov
+   rcx/rdx de l'autorité, jmp .resoudre) avec SEUL écart r8d = 443 — la
+   chaîne http-07 → contrôles TE/CL → réécriture est PARTAGÉE TELLE
+   QUELLE avec le chemin ordinaire (la requête forme origine est la
+   même, seul le transport diffère : tcp-04 clair ou tls-06 chiffré) ;
+   le verdict consigné @+0x7010 est lu aux DEUX dispatches (.trancher :
+   la garde corps AVANT le CONNECT/tcp-13 — r12 reste 0, .fin ne fermera
+   JAMAIS la socket serveur, I1 de tls-08 ; post-réécriture : le chemin
+   TLS ne touche NI tcp-13 NI tcp-04 — Q2' : « la session n'achève rien
+   elle-même ») ; le paquet est rempli champ à champ (hôte span http-07,
+   port u32→u16, requête = tampon de réécriture, socket cliente rbx)
+   puis le cadre TLS est zéroé PAR rep stosq (0x184C qwords) et tls-08
+   est appelé (rcx cadre, rdx paquet) ; au RETOUR : rax = 0 → .fin (le
+   relais a été fait PAR tls-08), rax = 3 → .repondre_502_cert (l'entrée
+   étiquetée), tout autre verdict → la 502 R1. Le cas pathologique
+   « CONNECT https:// » N'EXISTE PAS : http-08:R2 route la méthode 8
+   vers la forme autorité AVANT tout test de schéma (cmp r8d, 8 en tête
+   de notation) — l'héritage symétrique de « CONNECT http:// ».
+
+4. m4/harnais_session_r2.py — L'INTÉGRATION LA PLUS LARGE DU PROJET
+   (×2) : 29 blocs réels (hello-02 M0, libc-01/03/04/07 M1,
+   tcp-03/04/05/06/11 M2, tcp-13 + http-01..09 M3, tls-01..08 +
+   http-08:R2 M4 — R7) PLUS l'ancêtre scellé http-10:R3 @0x5580 avec
+   http-08:R1 @0x5380 émulés sur les mêmes scénarios (l'Emulateur D90
+   est SOUS-CLASSÉ — les règles shims restent une seule source de
+   vérité ; les entrées recv du script savent porter des OCTETS : le
+   client parle vraiment). V2a LE DIFFÉRENTIEL D'ANCÊTRE : traces
+   observables (lignes console, octets au client, résolutions/
+   connexions, fermetures, spawns) comparées APRÈS normalisation des
+   pointeurs par la base du cadre de CHAQUE run (l'adresse appartient à
+   la notation, le CONTENU au contrat ; le proc du thread détaché
+   exclu : .text2 ancêtre / .text3 révision) : ÉCART ZÉRO sur les
+   scénarios hors domaine https ; dans le domaine l'ancêtre refuse 501
+   (« jamais d'un schéma https en requête directe », http-08:R1:Q4)
+   quand la révision route — divergence EXACTEMENT la cible https
+   byte-exact (l'autorité vide : divergence 3→2 légitime, D91 ; POST
+   corps et HTTPS:// mal cassé : refus IDENTIQUE des deux côtés,
+   aucune tolérance neuve). V2b VINGT-TROIS scénarios : réponse EXACTE
+   au client (octets de la table Q3' — l'entrée étiquetée comprise),
+   lignes console EXACTES (la ligne « certificat rejete » UNE FOIS —
+   tls-08 seul), compensation croisée PAR COMPTAGE, le PAQUET au passage
+   de tls-08 (capturé par crochet au RVA : hôte, port 443 ou explicite,
+   requête réécrite forme origine, socket cliente) et le CADRE TLS
+   VIERGE (0xC260 en canaris avant l'appel, intégralement zéro au
+   passage — le rep stosq est la preuve, pas une supposition de pages
+   fraîches) ; le paquet reste INTACT au retour (le clair de l'appelant
+   jamais touché). V4 ONZE mutations stable-en-taille TOUTES ATTRAPÉES
+   + témoin — BILAN 69 PASS / 0 ÉCHEC × graines 20261028/29. V6bis :
+   contrôle statique du prologue étendu (leçon D63 armée sur le cadre
+   0x13390) + rejet I6' (appels ⊆ liste blanche héritage + tls-08 +
+   http-08:R2, UN SEUL appel IAT — CloseHandle, AUCUN appel SSPI
+   direct).
+
+5. LE DIFFÉRENTIEL A NOMMÉ UNE FAUTE ABI AVANT LE VERT : le rep stosq
+   initial empruntait rdi SANS le préserver — non-volatil msx64, la
+   sentinelle du harnais l'a nommé (I2) sur TOUT scénario TLS : corrigé
+   par la garde @+0x7020 (préservé puis restitué avant l'appel). LEÇON
+   consignée : un registre non volatil ne s'emprunte qu'avec reçu — la
+   sentinelle du harnais EST le reçu. Deux scénarios ont aussi nommé
+   leur propre script (la fermeture système du serveur arrive APRÈS le
+   premier record, jamais avant : recv=[128, 121, 0]) et l'émission
+   partielle a nommé la trace : le SEND porte désormais les octets
+   EFFECTIVEMENT émis (contenu tronqué au rendu de send()), pas la
+   demande — la concaténation cliente n'en compte que l'émis.
+
+**Ce que ça établit** : LA REQUÊTE HTTPS PART DANS LE TUNNEL — le
+critère M4 « HTTPS en transit » est traversé par LA SESSION ENTIÈRE du
+proxy révisé : accumulation → parsing (le parseur R2 sait) → résolution
+à 443 (ou l'explicite) → réécriture forme origine → paquet + cadre
+vierge → tls-08 (connexion, poignée, requête chiffrée, relais déchiffré,
+compensation intégrale) → réponse au client (le certificat invalide
+reçoit SA 502 étiquetée, tout autre échec nommé la 502 générique, le
+succès rend la main sans un octet de trop). Le modèle des révisions
+inter-jalons est appliqué pour la DEUXIÈME fois au domaine scellé :
+l'ancêtre http-10:R3 reste scellé et indexé (carte génération 5 à
+0x5580), la révision vit en .text3 (génération 6, g70010 @0x74C0), et
+l'HÉRITAGE COMPORTEMENTAL EST PROUVÉ PAR ÉMULATION CROISÉE sur la plus
+large chaîne du projet — l'ancêtre et la révision, exécutés avec 29
+blocs réels, ne divergent QUE là où la spécification le dit. Reste (b) :
+oracle à scénarios SSPI (le terrain de curl https par le proxy), carte
+génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER)
+seul point ouvert.

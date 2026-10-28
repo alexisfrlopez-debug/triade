@@ -142,6 +142,39 @@ octet à ses adresses — R7) :
   0x2C80 fixture tls-08 (D90) : "certificat rejete\r\n" (19 o) — ligne
          console tcp-11 du verdict 3 de tls-04 (I4 — LE critère M4 : cet
          endroit précis ; la réponse 502 est émise par http-10:R2 au retour).
+  0x2CA0 fixture http-10:R2 (D92) : "HTTP/1.1 502 Certificat rejete\r\n\r\n"
+         (34 o) — l'entrée ÉTIQUETÉE de la table des réponses (Q3' : le
+         certificat invalide est le seul échec du tunnel DISTINGUABLE côté
+         client — terrain § 8.4) ; les autres verdicts de tls-08 (2/4/5/6/7)
+         mappent sur la ligne 502 R1 scellée (txt_502 @0x2614, R7) ; la table
+         R1 de 7 entrées @0x24E0 reste OCTET POUR OCTET (R7) — la concordance
+         M4 vérifiera la 8e entrée au build (table unique, propriétaire
+         http-10:R2, I5 de sa spec).
+
+CADRE DE SESSION http-10:R2 (convention D92 — extension du cadre R1, citée par
+la notation g70010 ; le cadre R1 0x5580 reste scellé et indexé par la carte
+génération 5, ses offsets internes sont inchangés — l'innocuité de la revendi-
+cation @+0x7010 est prouvée par balayage de la notation scellée : jamais lue,
+jamais écrite) :
+  +0x0000..+0x7017  cadre R1 TEL QUEL (accumulation 0x4000, réécriture 0x3000,
+                    zones d'accueil 0x6F00-0x7018 — verdicts http-04, géométrie
+                    de session, longueur réécrite @+0x7008, dernier recv
+                    @+0x7018) ;
+  +0x7010 verdict http-08:R2 (u64 — D92 : écrit APRÈS l'appel du parseur sur
+         TOUT chemin, lu aux DEUX dispatches de routage [.trancher, post-
+         réécriture] ; valeur 4 = « cible TLS ». Toujours initialisé avant
+         lecture : la précède immédiatement l'appel http-08:R2) ;
+  +0x7020 garde rdi (u64 — D92 : le rep stosq du cadre TLS emprunte rdi,
+         NON-VOLATIL ABI msx64 : préservé au cadre, restitué avant l'appel
+         de tls-08 ; jamais lu ni écrit par R1 — innocuité par balayage) ;
+  +0x7100 paquet de session (0x30 — convention D90 ci-dessus, écrit par la
+         notation avant l'appel de tls-08) ;
+  +0x7130 cadre de session TLS (0xC260 — convention D81/D89 ci-dessus, fourni
+         VIERGE : rep stosq intégral par la notation, P6/P1) ;
+  TAILLE_CADRE_SESSION_R2 = 0x13390 (0x7100 + 0x30 + 0xC260 — le probing Q0
+  hérité D63 descend désormais de -0x1000 à -0x13000 par pas de 0x1000, touche
+  finale [rsp-0x13390], sub rsp, 0x13390 — 0x13390 multiple de 16 : l'ABI P5
+  est préservé, les offsets R1 restent numériquement exacts).
 
 PAQUET DE SESSION TLS (convention D90 — écrit par http-10:R2, lu par tls-08,
 P2 de sa spec : « spans : autorité cible [hôte, port], requête claire
@@ -325,6 +358,20 @@ R_TXT_TLS_ETABLI = 0x2C60       # "tunnel chiffre etabli\r\n" (23 o) — Q1
 TXT_TLS_ETABLI = b"tunnel chiffre etabli\r\n"
 R_TXT_TLS_CERT = 0x2C80         # "certificat rejete\r\n" (19 o) — I4 (critère M4)
 TXT_TLS_CERT = b"certificat rejete\r\n"
+
+# Fixtures .rdata M4 de http-10:R2 (D92 — l'entrée étiquetée de la table Q3') :
+R_TXT_502_CERT = 0x2CA0         # "HTTP/1.1 502 Certificat rejete\r\n\r\n" (34 o)
+TXT_502_CERT = b"HTTP/1.1 502 Certificat rejete\r\n\r\n"
+REP_502_CERT = 7                # index de l'entrée dans la table des réponses
+                                # (7 lignes R1 scellées + la 8e, propriété R2)
+
+# --- Cadre de session http-10:R2 (convention D92 — voir docstring ci-dessus) ------
+
+SESSION_VERDICT_CIBLE = 0x7010  # u64 — verdict http-08:R2 (4 = cible TLS)
+SESSION_RDI_GARDE = 0x7020      # u64 — garde de rdi autour du rep stosq (ABI)
+SESSION_PAQUET = 0x7100         # 0x30 — paquet de session (convention D90)
+SESSION_CADRE_TLS = 0x7130      # 0xC260 — cadre TLS VIERGE (convention D81/D89)
+TAILLE_CADRE_SESSION_R2 = 0x13390   # 0x7100 + 0x30 + 0xC260 (multiple de 16)
 
 # --- Paquet de session TLS (convention D90 — http-10:R2 écrit, tls-08 lit) ---------
 

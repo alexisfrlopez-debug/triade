@@ -247,11 +247,34 @@ divergence EXACTEMENT le domaine https byte-exact — tout autre écart
 serait une régression de l'héritage scellé) + V2b spécification + V3
 fuzz 20 000 + V4 six mutations stable-en-taille attrapées + témoin —
 13 PASS / 0 ÉCHEC × 2 graines.
-reste (b) : http-10:R2 (routage + table des réponses — points croisés
-D90 : verdicts 4/2 transportés → entrées de table ; ne PAS
-double-émettre la ligne console), oracle à scénarios
-SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
-seul point ouvert.
+**D92 : http-10:R2 (LA RÉVISION DE ROUTAGE TLS — la session proxy route
+la requête https dans le tunnel) notée-mesurée-prouvée** : 2125 o / 430
+instructions, slot 0x74C0×0x900 conservé ; convention de cadre D92
+(0x13390 = cadre R1 + verdict http-08:R2 @+0x7010 écrit sur tout chemin +
+garde rdi @+0x7020 + paquet @+0x7100 + cadre TLS @+0x7130 ; probing D63
+étendu aux bornes du cadre élargi) ; quatre arrêts contractuels — la
+ligne console « certificat rejete » appartient à tls-08 SEUL (jamais
+double-émise), l'entrée étiquetée « HTTP/1.1 502 Certificat rejete »
+(34 o @0x2CA0) est la SEULE entrée nouvelle de la table (verdicts
+2/4/5/6/7 → 502 R1 scellée), le port implicite 443 est le défaut passé à
+http-07 (l'explicite gagne), un corps sur cible TLS est refusé 501
+(refus honnête, miroir Transfer-Encoding) ; .cible_tls miroir de
+.forme_absolue à r8d = 443 près, la chaîne résolution → contrôles →
+réécriture est PARTAGÉE avec le chemin ordinaire, tls-08 appelé au
+retour de la réécriture — 0 → fin, 3 → l'étiquetée, autre verdict →
+502 générique ; harnais m4/harnais_session_r2.py — L'INTÉGRATION LA
+PLUS LARGE DU PROJET (×2) : 29 blocs réels + L'ANCIÊTRE http-10:R3
+scellé émulé sur les mêmes scénarios ; différentiel d'ancêtre (traces
+normalisées par la base du cadre) : écart ZÉRO hors https, divergence
+EXACTEMENT la cible https byte-exact ; 23 scénarios (réponse exacte au
+client, lignes console UNE fois, compensation par comptage, PAQUET
+capturé au passage de tls-08, cadre TLS VIERGE en canaris → zéro) ;
+11 mutations attrapées + témoin ; V6bis prologue étendu + rejet I6' —
+69 PASS / 0 ÉCHEC × 2 graines ; le différentiel a nommé une faute ABI
+(rdi emprunté sans reçu par le rep stosq — corrigé, leçon consignée).
+reste (b) : oracle à scénarios SSPI (terrain curl https par le proxy),
+carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57
+(WER) seul point ouvert.
 
 ## Avertissement
 

@@ -143,6 +143,9 @@ SYMBOLES = {
     # Blocs tls mesurés (cibles d'appel de l'orchestrateur tls-08, D90) :
     "TLS_POIGNEE": 0x62C0, "TLS_CLES": 0x65C0, "TLS_EMISSION": 0x6740,
     "TLS_RECEPTION": 0x6A40,
+    # Blocs de la révision http-10:R2 (D92 — le routage TLS) :
+    "TLS_SESSION": 0x6D40,       # g70008 — la session TLS appelée par http-10:R2
+    "HTTP_CIBLE_R2": 0x7340,     # g70009 — le parseur RÉVISÉ (verdict 4 = cible TLS)
     # IAT secur32 (ARRÊT D81 — layout.IAT_SEC32_SLOTS, slots .rdata M4) :
     # D83 : le symbole secur32 s'appelle IAT_ISC (l'abréviation des specs
     # elles-mêmes — « boucle ISC ») — IAT_ICS désignait DÉJÀ Initialize-
@@ -162,6 +165,8 @@ SYMBOLES = {
     # Fixtures .rdata M4 (tls-08 D90 : lignes console des états nommés) :
     "TXT_TLS_ETABLI": L.R_TXT_TLS_ETABLI,
     "TXT_TLS_CERT": L.R_TXT_TLS_CERT,
+    # Fixtures .rdata M4 (http-10:R2 D92 : l'entrée étiquetée de la table) :
+    "TXT_502_CERT": L.R_TXT_502_CERT,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")

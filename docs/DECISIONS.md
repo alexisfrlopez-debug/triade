@@ -2456,3 +2456,91 @@ même chemin par défaut doubleraient la vérité).
 **Critère de sortie** : atteint — différentiel vert sur deux graines
 (13 PASS × 2), falsification 6/6, héritage R1 prouvé octet pour octet
 hors https par émulation croisée, entrée 77 du journal.
+
+### D92 — M4 (b) : http-10:R2 (LA RÉVISION DE ROUTAGE TLS — la session proxy) notée-mesurée-prouvée — routage https → tls-08, table des réponses étendue (502 « Certificat rejete »), cadre de session 0x13390 ; héritage R1 prouvé par différentiel d'ancêtre à 29 blocs réels
+
+**Contexte** : la révision http-08:R2 (D91) rend un verdict « cible TLS »
+(rax = 4) — quelqu'un doit le ROUTER : P6/Q2'/Q3'/Q4'/I6' de la spécification
+http-10:R2 (D77) attendaient cette révision. Les points croisés D90 : les
+verdicts 4/2 transportés devaient trouver leurs entrées de table, le
+« contexte de réponse » du paquet ne devait PAS être consommé par tls-08, la
+ligne console « certificat rejete » ne devait PAS être double-émise.
+
+**Arrêts contractuels AVANT la notation** (corpus cité) : (1) la ligne
+console « certificat rejete » appartient à tls-08 SEUL (I4, fixture @0x2C80,
+README D90 « tls-08 unique propriétaire des deux ») — la session ne la
+ré-émet jamais, la réponse suit le RETOUR du verdict (« http-10:R2 mappe sur
+rax, jamais sur le cadre ») ; (2) l'entrée étiquetée « HTTP/1.1 502
+Certificat rejete » (34 o @0x2CA0, 8e entrée, index REP_502_CERT = 7) est la
+SEULE entrée nouvelle de la table Q3' — les verdicts 2/4/5/6/7 de tls-08
+mappent sur la ligne 502 R1 scellée (la table TOTALE couvre l'énumération
+E2 un à un) ; (3) le port implicite 443 est le DÉFAUT passé à http-07:R1
+(P3 — « consigné DANS la sortie » : le port effectif vit dans la zone, le
+port EXPLICITE gagne) ; (4) un corps sur cible TLS (CL > 0) est REFUSÉ 501
+— le paquet D90 porte UNE requête, tls-08:Q1 émet UNE fois puis relais
+serveur→cliente seul : miroir exact du Transfer-Encoding R1 (refus honnête,
+jamais de tentative).
+
+**Convention de cadre D92** (layout.py, source unique) : 0x13390 = cadre R1
+(offsets inchangés) + verdict http-08:R2 @+0x7010 (u64, écrit sur TOUT
+chemin après l'appel du parseur) + garde de rdi @+0x7020 (le rep stosq du
+cadre TLS emprunte le NON-VOLATIL ABI : préservé puis restitué) + paquet
+@+0x7100 + cadre TLS @+0x7130 ; probing Q0 hérité D63 étendu : boucle
+-0x1000..-0x13000 par pas de 0x1000, touche finale [rsp-0x13390], sub rsp,
+0x13390 (multiple de 16 — ABI P5 préservé, offsets R1 numériquement
+exacts). Innocuité @+0x7010/@+0x7020 prouvée par balayage de la notation
+scellée (R1 n'écrit que 0x7000/0x7008/0x7018 dans la région).
+
+**Architecture de la révision** : .cible_tls est le MIROIR EXACT de
+.forme_absolue (autorité de la zone http-08, jmp .resoudre) avec SEUL écart
+r8d = 443 — la chaîne http-07 → contrôles TE/CL → réécriture forme origine
+est PARTAGÉE avec le chemin ordinaire (seul le transport diffère) ; le
+verdict consigné est lu aux DEUX dispatches (.trancher : garde corps CL
+AVANT le CONNECT/tcp-13 — r12 reste 0, la socket serveur n'est JAMAIS fermée
+par la session, I1 de tls-08 ; post-réécriture : le chemin TLS ne touche ni
+tcp-13 ni tcp-04) ; le paquet est rempli champ à champ puis le cadre TLS
+zéroé PAR rep stosq intégral (la preuve de virginité repose sur des
+canaris, jamais sur une supposition de pages fraîches) ; au retour de
+tls-08 : 0 → .fin, 3 → l'entrée étiquetée, tout autre verdict → la 502 R1.
+Le cas « CONNECT https:// » n'existe pas (http-08:R2 route la méthode 8
+vers la forme autorité AVANT tout test de schéma).
+
+**Livré avec** : `m4/harnais_session_r2.py` — L'INTÉGRATION LA PLUS LARGE
+DU PROJET : 29 blocs réels (M0→M4, R7) PLUS l'ancêtre scellé http-10:R3
+@0x5580 + http-08:R1 @0x5380 émulés sur les mêmes scénarios (Emulateur D90
+sous-classé, règles shims unique source). V2a DIFFÉRENTIEL D'ANCÊTRE :
+traces normalisées par la base du cadre de chaque run (l'adresse appartient
+à la notation, le CONTENU au contrat) — écart ZÉRO hors domaine https,
+divergence EXACTEMENT la cible https byte-exact (l'ancêtre refuse 501 ;
+autorité vide : 3→2 légitime D91 ; POST-corps et HTTPS:// : identique des
+deux côtés). V2b VINGT-TROIS scénarios : réponse EXACTE au client, lignes
+console EXACTES (la ligne certificat UNE fois), compensation PAR COMPTAGE,
+PAQUET capturé au passage de tls-08 (crochet au RVA), CADRE VIERGE en
+canaris→zéro, paquet INTACT au retour. V4 ONZE mutations stable-en-taille
+TOUTES ATTRAPÉES + témoin — BILAN 69 PASS / 0 ÉCHEC × graines
+20261028/20261029. V6bis : prologue étendu contrôlé statiquement + rejet
+I6' (un seul appel IAT = CloseHandle, aucun appel SSPI direct ni tls-01..07
+direct). Le différentiel a nommé UNE FAUTE ABI avant le vert (rdi emprunté
+sans reçu par le rep stosq — corrigé par la garde @+0x7020 : LEÇON un
+registre non volatil ne s'emprunte qu'avec reçu, la sentinelle du harnais
+EST le reçu) et la trace SEND porte désormais les octets EFFECTIVEMENT
+émis (contenu tronqué au rendu de send()).
+
+**Alternatives rejetées** : étiqueter chaque verdict de tls-08 d'une ligne
+propre (la spécification ne nomme QUE le certificat — « chaque entrée
+NOUVELLE est nommée ICI une seule fois » ; la 502 générique est le refus
+DU TUNNEL, l'étiquette est le critère) ; relayer le corps sur cible TLS par
+boucles tls-06 inline (le paquet D90 porte UNE requête, tls-08:Q1 émet une
+fois puis relais unidirectionnel — le refus honnête 501 est le miroir TE ;
+l'alternative contredisait l'architecture propriétaire unique) ; un
+registre-drapeau TLS porté à travers la chaîne (le verdict consigné au
+cadre @+0x7010 est TOUJOURS initialisé — écrit sur tout chemin avant toute
+lecture — et falsifiable par mutation M1) ; étendre le sub rsp SANS étendre
+le probing (la leçon D63 : le cadre de 0x13390 exige sa boucle — V6bis
+l'exige statiquement, M10 l'éprouve) ; zéroer le cadre par boucle volatile
+(possible : le rep stosq avec garde de rdi @+0x7020 est plus court et la
+restitution est prouvée par sentinelle).
+
+**Critère de sortie** : atteint — différentiel vert sur deux graines (69
+PASS × 2), falsification 11/11, héritage R1 prouvé octet pour octet hors
+https par émulation croisée à 29 blocs réels, entrée 78 du journal.
