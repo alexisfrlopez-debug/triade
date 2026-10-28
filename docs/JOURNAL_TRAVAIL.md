@@ -4560,6 +4560,17 @@ désormais aussi dans PHRASE-CONTROLE-COFFRE.txt).
 récupéré, harnais re-exécuté vert, committé) ; puis tls-04 (poignée de main,
 LE critère M4) ; terrain : D57 (WER) seul point ouvert.
 
+*Complément D81 (hygiène du miroir, canon D76)* : le git mv spec_v051 → spec_v052 a
+retiré les chemins de l'ancienne chaîne formelle ; le miroir Drive ne supprime jamais
+— 17 reliquats spec_v051/ discovered par le contrôle exhaustif de fidélité du
+vérificateur D81. Remédiation canonique : QUARANTAINE locale AVANT corbeille
+(upload/quarantaine_spec_v051_d81/, manifeste.json, md5 TOUS vérifiés à la copie),
+puis corbeille Drive des 17 fichiers + du dossier (récupérable 30 j, le bundle est
+l'autorité — les contenus vivent dans l'historique git). Miroir re-contrôlé FIDÈLE à
+git ls-files (614 fichiers) ; le vérificateur D81 donne COFFRE CONFORME (13 contrôles,
+racine 11 entrées exactes, phrase aux TROIS gardes md5-identiques, conteneur 0323029a…
+inchangé, sentinelles proxy/demo/superviseur intactes, bundle à HEAD be719bc).
+
 ## Entrée 71 — D82 (28/10, 13:30 → consigné 15:30 après panne d'infra) : M4 étape (b) — le CADRE DE SESSION et l'IAT secur32 ARRÊTÉS, tls-05 notée-mesurée-prouvée : premier bloc à shims du jalon, 5 000 cas fuzzés zéro écart, 6/6 mutations attrapées — WIP de la session morte RÉCUPÉRÉ, re-vérifié vert puis committé
 
 **Contexte** : suite de session (« puis on enchaine sur la suite », après la
