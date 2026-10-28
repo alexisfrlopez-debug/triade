@@ -477,7 +477,12 @@ phrase est restaurée SANS cérémonie de régénération (la graine Ed25519 res
 régénérable uniquement, D30). À faire côté développeur : AJOUTER l'ancienne phrase D30
 au coffre (`python3 coffre_fort.py ajouter TRIADE lignee-D30 --description "ancienne
 lignée D30 — déverrouille les cartes m0/m1/m2/terrain"`) — elle seule relit les
-enveloppes anciennes. Chaque future cérémonie de clés alimente le coffre dans la même
+enveloppes anciennes. NB D76 : une trace « phrase maitresse triade.txt » (52 o,
+probablement l'ancienne phrase D30) a été trouvée exposée sur le MIROIR Drive —
+jamais suivie par git, dépôt manuel d'époque indéterminée, dossier partagé par lien :
+elle a été mise en quarantaine puis à la corbeille Drive (récupérable 30 jours) ;
+vider la corbeille par prudence, même hygiène que les jetons (§ 8). Chaque future
+cérémonie de clés alimente le coffre dans la même
 session (discipline § 15.3, FORMAT_CARTE § 11).
 
 **Suite du projet** : M4 — tunnel chiffré (contexte SSPI/Schannel, poignée de

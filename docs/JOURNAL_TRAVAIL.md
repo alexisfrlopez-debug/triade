@@ -4138,3 +4138,29 @@ racine = courants seuls, kit embarqué = point d'entrée terrain, miroir = véri
 Suite : M4 (tunnel chiffré Schannel) ; terrain : D57 (WER) seul point ouvert ; côté
 développeur : ajouter l'ancienne phrase D30 au coffre-fort (`ajouter TRIADE lignee-D30`)
 et hygiène jetons (REPRISE § 8).
+
+**Complément D76 (même journée, 10:55) — hygiène du miroir et trace de l'ancienne
+lignée** : le vérificateur D76 a exécuté pour la PREMIÈRE FOIS le contrôle exhaustif de
+fidélité miroir ↔ `git ls-files` (les vérificateurs précédents ne contrôlaient que des
+artefacts ciblés) : le miroir portait **18 reliquats** que git ne suit plus. D'une part
+`scripts/spec_v040/` (17 fichiers — la chaîne formelle renommée deux fois par `git mv`
+[D44 : spec_v040 → spec_v050 ; D75 : spec_v050 → spec_v051] ; le miroir ne supprime
+jamais, et les 17 reliquats spec_v050 corbeillés à D75 n'avaient pas d'homologues v040
+parce que PERSONNE n'avait jamais comparé les ensembles complets). D'autre part
+`docs/phrase maitresse triade.txt` : **jamais suivi par git, absent du dépôt local** —
+un dépôt manuel d'époque indéterminée (nommage humain : espaces, sans accent). Le
+fichier fait 52 octets, 3 lignes ; comparé PAR EMPREINTE à la phrase courante D74 :
+**différent** (aucun contenu affiché, aucun octet committé) — probablement l'ancienne
+phrase maîtresse D30. Le dossier Drive étant partagé par lien public, c'était une
+exposition réelle de l'ancienne lignée (les enveloppes m0/m1/m2/terrain chiffrées D30
+vivent sur le même Drive). REMÉDIATION : copie de quarantaine locale AVANT corbeille
+(`upload/quarantaine_d76/` du bac à sable de session — éphémère par nature ; md5
+vérifié à la copie), puis corbeille Drive du fichier ET du dossier spec_v040 entier
+(tous contenus préalablement quarantinés ; la corbeille Drive reste récupérable 30
+jours, le bundle reste l'autorité — les 17 fichiers v040 vivent dans l'historique
+git). Actions développeur : (a) si la phrase D30 était perdue, la quarantaine de cette
+session ou la corbeille Drive (30 j) permettent de la récupérer et d'alimenter le
+coffre-fort ; (b) VIDER la corbeille Drive par prudence (même hygiène que les jetons,
+REPRISE § 8) ; (c) le contrôle de fidélité exhaustif miroir ↔ git rejoint désormais le
+canon des vérifications de coffre. État final : miroir FIDÈLE à git (589 = 588 trackés
++ bundle).
