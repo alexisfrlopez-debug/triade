@@ -3679,3 +3679,84 @@ improbable) ; (c) S35 KO → chemin/PUT (couvert par les guillemets, jugé
 improbable) ; (d) journal en double (sync + upload) → signe de succès,
 l'opérateur le saura. T2 : 6e vert attendu. T1/D57 : inchangé — la capture
 WER (adresse de plantage démo) reste la priorité laboratoire.
+
+## Entrée 60 — D71 (28/10, 07:55) : LE JOURNAL EST PARTI TOUT SEUL — T3 démontré de bout en bout sur machine réelle (première fois de l'histoire du projet) : S33 jeton OAuth obtenu, S34 session upload ouverte, dépôt terrain_20261028_065408.txt constaté dans le dossier test ; prédictions D71 (a) confirmée, (b) et (c) réfutées, (d) non observée ; T2 6e vert consécutif ; T1 inchangé (D57, 5e reproduction propre, exit 0xC0000005)
+
+**La reprise et la pièce.** Le bac a été reconstruit depuis le coffre
+(Méthode A du REPRISE : `triade-history.bundle` 9 408 499 o cloné — HEAD =
+D70, 66 commits ; jetons `.gdrive/` restaurés depuis le dossier Tokens du
+Drive, chmod 600, jamais commités ; `check_auth.py` : OAuth 200 + listing
+200, GitHub 200). Le dossier test (listage direct) contient EXACTEMENT
+trois fichiers : LISEZMOI-terrain16.txt, superviseur-terrain16.exe, et
+**terrain_20261028_065408.txt — le journal du run, déposé TOUT SEUL**
+(1 712 o, 56 lignes, CRLF, Latin-1, md5 5221e0c28eeb1a9cb4efa30296a9da0e ;
+mtime Drive 06:54-06:55 heure opérateur, cohérent avec S01
+`20261028_065408` à la minute près).
+
+**Chaîne de garde du binaire qui a tourné.** superviseur-terrain16.exe
+rapatrié depuis le dossier test : md5 `34ee9f58ada0bf6cf76cc8a9c05bc869`,
+sha256
+`c7134af57276cdcc0f72389f25ab033b32c809e6567956977399b952ebf86f9e`,
+62 464 o — **ÉGAUX aux empreintes de confiance du LISEZMOI-terrain16**.
+Dans le journal lui-même : S00 « superviseur terrain 0.5.0-terrain16 »
+(la preuve de génération), S02 porte R10 VERTE (27/27), S03 libc M1 4/4,
+S04C md5 démo `73c064fb` (la PUBLIQUE demo.9, D64) et S05C md5 proxy
+`dd12b649` — le kit embarqué est conforme octet pour octet, la chaîne
+entière livrée→exécutée→constatée est fermée.
+
+**Le verdict contre les prédictions D71 pré-enregistrées (Entrée 59,
+AVANT le run).** (a) **Nominal : CONFIRMÉE** — S33 « jeton OAuth obtenu »
+(2e fois de l'histoire ; la 1re, terrain.15 hier 00:56, était morte 2 ms
+plus tard) ; S34 « session upload ouverte » **ÉCRITE** — la ligne exacte
+où terrain.15 mourait en composant 484 o dans 352 ; et le journal EST
+dans le dossier test : le PUT (S35) a réussi, la preuve matérielle est le
+fichier lui-même. Le contenu déposé s'arrête à S34 **par construction** :
+c'est le cliché lu par `--data-binary @"chemin"` à l'instant du PUT —
+S35/S36/S91 ne peuvent pas y figurer, elles vivent dans la copie locale
+et la fenêtre (confirmation opérateur en 10 s : « journal televerse :
+OK », « VERDICT OK », fenêtre « SUPERVISEUR : ECHEC » — honnête tant que
+T1 est KO). (b) **S34 KO : RÉFUTÉE** — le tampon de 1 888 o a tenu, la
+session --http1.1 (D69) s'est ouverte sans incident. (c) **S35 KO :
+RÉFUTÉE** — le PUT a déposé le journal : guillemets et `-m 120` ont tenu
+sur le chemin réel (espaces compris). (d) **journal en double : NON
+OBSERVÉE** — un seul exemplaire, aucune copie « (1) ». Les pièces
+d'hier (req/json/meta) qui arrivaient par la synchro du dossier de
+travail sont ABSENTES du dossier test : le dépôt provient du PUT du
+superviseur SEUL — la signature la plus propre possible (l'opérateur a
+vraisemblablement exécuté hors du dossier synchronisé, ou la synchro est
+inactive ; dans les deux cas, T3 est la cause unique du dépôt).
+
+**T2 : 6e vert consécutif.** S20→S28 complets : bannière reçue, curl http
+code=0 / 640 o, curl https code=0 / 577 o (tunnel), journal console
+7 lignes exactes (démarrage, connexion entrante, fin connexion,
+connexion entrante, tunnel, fin connexion, arret), S28 VERDICT OK.
+L'étape (c) de M3 — proxy transparent pour curl — est validée terrain SIX
+fois d'affilée (stable depuis terrain.11 ; correctif de pile http-10:R3,
+D63, cause→effet confirmé une 6e fois).
+
+**T1 : inchangé — 5e reproduction propre de D57 (9e classe).** Fenêtre
+détectée (S11), clic envoyé (S12) ; journal démo 14 lignes (6 L* + 8 de
+scénario) contre 17 nominales, coupe sur « réseau : échange en échec »
+après « client : connecté » ; S13 exit 3221225477 = **0xC0000005**.
+Aucune action terrain demandée : la capture WER (adresse de plantage)
+reste LA priorité laboratoire (D57/D66).
+
+**Ce que ça change.** L'exigence fondatrice de D48 — « TOUS les tests en
+1 clic, journal téléversé automatiquement dans le dossier test » — est
+RÉALISÉE sur machine réelle au bout de 16 générations et 11 runs
+constatés : le circuit réflexe de la validation terrain (§ 8.4) existe,
+sans main humaine entre le double-clic et le constat. Tout défaut futur
+(démo, proxy, superviseur) arrivera désormais avec ses pièces jointes
+automatiques — la cascade D36-D50 aurait été dix fois plus courte avec
+cet organe. **Consignes opérateur restantes (10 s)** : confirmer
+localement S35/S36 + fenêtre de verdict ; supprimer terrain_jeton.json à
+côté de l'exécutable (ÉTAPE 3 du LISEZMOI — jeton valable ~1 h).
+
+**Suite immédiate.** Retour au chantier M3 : campagne million (étape (d))
+sur le périmètre parseur http-01..09 + accumulation http-10 — le harnais
+P1-P5 (D45) s'étend aux cibles M3 (générateurs dérivés des contrats
+renforcés D46, rejeu sur état vierge, graines reproductibles), puis (e)
+le fuzzing rejoint la suite de conformité (§ 8.2). D57 continue en
+laboratoire (WER). Le dépôt automatique étant démontré, la prochaine
+session de terrain n'est plus une exigence de développement : elle ne
+reviendra que sur défaut ou à la livraison de terrain.17+.
