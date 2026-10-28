@@ -5256,3 +5256,129 @@ poignée/émission devra trouver son entrée, et le « contexte de
 réponse » du paquet), l'oracle à scénarios SSPI, la carte génération 6
 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER) seul point
 ouvert.
+
+
+## Entrée 77 — D91 (29/10, ~10:30) : M4 étape (b) — http-08:R2 LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ notée-mesurée-prouvée : le parseur sait que le tunnel existe — verdict « cible TLS », l'héritage R1 prouvé octet pour octet par différentiel d'ancêtre émulé
+
+Contexte : suite du « continue » (après D90 tls-08). Le résumé de reprise
+plaçait encore la licence BSL « en cours d'écriture » : re-synchronisation
+sur l'état réel (HEAD D90, arbre propre, journal à l'Entrée 76) —
+D84–D87 (BSL 1.1 concédant Alexis Lopez + programme v0.6.0, commit eabb114)
+et tls-05..08 étaient DÉJÀ livrés ; la continuation était http-08:R2,
+décision D91, entrée 77.
+
+1. LA LECTURE CONTRACTUELLE TRANCHÉE AVANT LA NOTATION. La spec R2 (D77,
+   écrite-avant-code) dit « rax = verdict "cible TLS" (valeur propre à la
+   révision, distincte du verdict "cible http" de R1) » : trois indices du
+   corpus départagent la lecture — (a) la convention D90 : « http-10:R2
+   mappe sur rax, jamais sur le cadre » (le ROUTAGE vit sur le retour) ;
+   (b) le V2 de la spec R2 nomme TROIS familles « verdicts http/TLS/refus »
+   — le verdict TLS est une famille de rax, pas une forme de zone ; (c) le
+   post R2 ne REPREND PAS le Q5-R1 « zone intacte sur verdict non nul » :
+   il le REMPLACE (la zone est remplie sur rax = 4). ARRÊT : rax = 4 pour
+   « https:// » byte-exact, la zone est remplie AUX RÈGLES R1 (forme
+   ABSOLUE = 1 — la STRUCTURE reste absolue, le schéma vit dans le
+   verdict ; le port implicite 443 est déductible du verdict : consigné
+   dans la sortie, la décision d'appeler tls-08 appartient à http-10:R2) ;
+   le Q3 hérité s'applique à l'identique (« https:// » seul ou
+   « https:///chemin » → rax = 2, autorité vide) ; les verdicts 1/2/3
+   hérités sont INTACTS.
+
+2. LA NOTATION (brouillon → auteur.py : keystone assemble, rien d'autre) :
+   326 o / 95 instructions / 15 étiquettes, slot préfiguré 0x7340×0x180
+   CONSERVÉ (padding 58 ≥ 16, D8 — l'adresse préfigurée de http-10:R2
+   @0x74C0 reste exacte). La fixture « / » @0x24d0 de l'ANCIÊTRE R1 est
+   RÉUTILISÉE (le déplacement RIP traverse les sections :
+   0x73c8 + 0x7 − 0x4eff = 0x24d0 — propriété unique du BLOC LOGIQUE
+   http-08, la révision cite son ancêtre, R7). ARCHITECTURE : l'ordre des
+   tests est DOCUMENTÉ (I5) — « http:// » D'ABORD (le tronçon d'entrée R1
+   reproduit octet pour octet : dword « http », word « :/ », byte « / »),
+   « https:// » ENSUITE, atteint SEULEMENT si [rcx+4] ≠ ':' (l'échec du
+   word rend http impossible ; l'échec du byte6 avec word réussi rend
+   https IMPOSSIBLE — [4] = ':' contredit 's' : l'héritage n'a pas bougé
+   d'un octet) ; le test https est BYTE-EXACT sur 8 octets, garde
+   len ≥ 8 AVANT toute lecture de [rcx+7] (jamais de lecture hors span) ;
+   le début d'autorité est PORTÉ dans rdx dès le match (lea rdx, [rcx+7]
+   ou [rcx+8]) — LA GÉOMÉTRIE PORTE LE SCHÈME ; le verdict est déduit
+   STRUCTURELLEMENT à l'écriture : lea r11, [rcx+8] ; cmp rdx, r11 ;
+   mov r11d, 1 (les drapeaux du cmp survivent au mov — mov ne touche pas
+   EFLAGS) ; je .ecrit_tls — LE SCHÉMA PRÉFIXE EST IMPOSSIBLE PAR
+   CONSTRUCTION : « http://s://x » a son début d'autorité à rcx+7, à
+   jamais distinct du seuil rcx+8 du verdict 4 (I5 falsifiable
+   structurellement, pas seulement par scénario) ; la boucle de scan R1
+   (garde cmp rax, r10 EN TÊTE de boucle — la terminaison héritée) est
+   PARTAGÉE par les deux schémas, seul le lea d'entrée diffère ; les CINQ
+   écritures de zone sont DUPLIQUÉES (.ecrit / .ecrit_tls — xor eax, eax
+   contre mov eax, 4) : chaque chemin de verdict est explicite, aucun
+   registre-drapeau, aucun coin pathologique (la forme AUTORITÉ/ORIGINE
+   converge vers .ecrit, l'absolu choisit son verdict à la géométrie).
+
+3. `m4/harnais_cible_r2.py` — LE DIFFÉRENTIEL D'ANCÊTRE, preuve propre à
+   cette révision : l'ancêtre R1 SCELLÉ (m3/notation, assemblé à son RVA
+   0x5380 — round-trip 241 o vérifié, le PRÉALABLE : si l'assemblage de
+   R1 ne reproduisait pas ses octets, la comparaison ne prouverait rien)
+   est ÉMULÉ contre la révision R2 sur les MÊMES entrées. V1 round-trip
+   R2 326 o + idempotence + ancêtre 241 o. V2a différentiel HÉRITÉ
+   (l'anti-régression R7 comportementale) : 20 056 cas — R1 ET R2
+   contre leurs modèles (le MÊME modèle, revision 1/2 : seul le test
+   https disparaît en revision 1), ÉCART ZÉRO, et la divergence R1/R2
+   est EXACTEMENT le domaine https byte-exact (715 cas graine 28, 756
+   graine 29 : R1 rend 3 « schéma non supporté » zone intacte — R2 rend
+   4 zone remplie, ou Q3 2 sur autorité vide), TOUT autre écart serait
+   une régression de l'héritage scellé. V2b différentiel de
+   SPÉCIFICATION : modèle écrit depuis la spec (jamais la notation),
+   zones 40 o OCTET PAR OCTET — le padding @4..7 de la structure n'est
+   JAMAIS écrit (il reste à l'appelant, la notation n'écrit que
+   forme@0-3 puis ptr/longueurs@8-39). V3 fuzz à propriétés hérité D45 :
+   20 000 cas non fiables (octets quelconques y compris ≥ 0x80 et NUL,
+   biais schémas) — survie, terminaison, verdict conforme, aucune
+   écriture hors zone (canaris DST/SRC, non-volatils). V4 SIX mutations
+   d'un point STABLES EN TAILLE (leçon D82) TOUTES ATTRAPÉES : le
+   huitième octet amnésié ([rcx+7]→[rcx+6] : « https:/x » lu comme
+   https), la casse (0x73 's' → 0x53 'S' : « httpS:// » accepté à tort),
+   LE SCHÉMA PRÉFIXE (lea r11 [rcx+8]→[rcx+7] : « http://x » reçoit le
+   verdict TLS — LA mutation I5), le verdict dévié (mov eax, 4 → 5), la
+   forme ABSOLUE déviée dans la zone (mov r11d, 1 → 5), le « ? »
+   délimiteur amnésié (0x3F → 0x40 : découpage d'autorité faux) + témoin
+   VERT — BILAN 13 PASS / 0 ÉCHEC × graines 20261028/20261029.
+
+4. LE DIFFÉRENTIEL A NOMMÉ UN DÉFAUT DU HARNAIS avant le vert (c'est son
+   office, aucun n'était dans la notation) : la définition du domaine de
+   divergence légitime était « le modèle R2 rend 4 » au lieu du TEST
+   BYTE-EXACT https — « https:// » (autorité vide) rend Q3 2 en R2, une
+   divergence 3→2 LÉGITIME que l'ancienne règle classait régression (71
+   écarts) ; corrigé : le domaine = le test byte-exact lui-même, R1 doit
+   y rendre 3 + zone intacte, la part R2 reste couverte par la conformité
+   au modèle. Leçon consignée : le domaine d'une divergence légitime se
+   définit par le TEST qui la crée, jamais par le verdict qu'il produit —
+   un même test rend 4 OU 2 selon la suite de la cible.
+
+5. Incohérence documentation nommée et corrigée AVANT utilisation : la
+   docstring de layout.py disait encore http-10:R2 @0x7480 (préfiguration
+   D77, slot http-08:R2 = 0x140) alors que BLOCS_REVISIONS — le code,
+   source unique lue par auteur.py/build/oracle — dit 0x74C0×0x900 ;
+   corrigée avec la raison consignée (le message D90 avait recopié la
+   docstring, pas le code).
+
+6. Docs : Entrée 77 du journal, DECISIONS (D91), PLAN (M4 (b) suite D91),
+   REPRISE (état général +D91, chronique § 7), README (état M4), worklog
+   (Task ID 18) ; aucune clé touchée : RIEN à remettre par cérémonie
+   (phrase de contrôle D81 valable, conteneur 0323029a… inchangé,
+   sentinelles intactes).
+
+**Ce que ça établit** : LA SURFACE DU PARSEUR QUI SAIT QUE LE TUNNEL
+EXISTE EST EXACTEMENT DE HUIT OCTETS — « https:// » byte-exact, minuscules
+strictes, aucune tolérance nouvelle (tout schéma mal cassé reçoit le refus
+R1 : « HTTPs:// », « https:/ », « https:\ » ne passent pas). Le modèle des
+révisions inter-jalons (lignée win-02:R2, tcp-07:R3) est appliqué pour la
+PREMIÈRE FOIS au domaine http scellé 0.4.0 : l'ancètre reste scellé et
+indexé par la carte génération 5 à 0x5380, la révision vit en .text3
+(génération 6, g70009) à 0x7340, et l'HÉRITAGE COMPORTEMENTAL EST PROUVÉ
+par émulation croisée — l'ancêtre et la révision exécutés sur les mêmes
+entrées ne divergent QUE là où la spécification le dit. La voie est ouverte
+pour http-10:R2 (routage + table des réponses — points croisés D90 : les
+verdicts 4/2 transportés devront trouver leurs entrées de table, le
+« contexte de réponse » du paquet, ne PAS double-émettre la ligne console
+que tls-08 produit déjà). Reste (b) : http-10:R2, oracle à scénarios SSPI,
+carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57
+(WER) seul point ouvert.

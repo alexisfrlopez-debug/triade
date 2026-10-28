@@ -229,8 +229,27 @@ harnais m4/harnais_session.py — L'INTÉGRATION LA PLUS LARGE DU PROJET :
 DIX-HUIT blocs réels (hello-02 M0 → tls-07 M4, R7), V2 VINGT scénarios
 (cadre + paquet + contrat d'appels complet + comptes de compensation —
 la ligne console EXACTE), V4 DOUZE mutations attrapées + témoin 20/20 —
-53 PASS / 0 ÉCHEC × 2 graines.
-reste (b) : révisions http-08:R2/http-10:R2, oracle à scénarios
+53 PASS / 0 ÉCHEC × 2 graines ;
+**D91 : http-08:R2 (LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ — le
+parseur sait que le tunnel existe) notée-mesurée-prouvée** : lecture
+contractuelle arrêtée avant notation (rax = 4 verdict « cible TLS »
+porté par le retour — convention « mappe sur rax » ; zone aux règles R1 :
+forme ABSOLUE = 1, Q3 hérité, verdicts 1/2/3 intacts) ; 326 o / 95
+instructions, slot 0x7340×0x180 conservé ; « http:// » d'abord (tronçon
+R1 octet pour octet), « https:// » ensuite BYTE-EXACT 8 octets, garde
+len ≥ 8 avant toute lecture ; le début d'autorité porté dans rdx (LA
+GÉOMÉTRIE PORTE LE SCHÉMA), verdict déduit structurellement au seuil
+rcx+8 : le schéma préfixe « http://s://x » impossible PAR CONSTRUCTION ;
+fixture « / » @0x24D0 de l'ancêtre réutilisée (RIP inter-sections) ;
+harnais m4/harnais_cible_r2.py avec le DIFFÉRENTIEL D'ANCÊTRE (R1
+scellé émulé contre R2 sur les mêmes entrées : 20 056 cas, écart ZÉRO,
+divergence EXACTEMENT le domaine https byte-exact — tout autre écart
+serait une régression de l'héritage scellé) + V2b spécification + V3
+fuzz 20 000 + V4 six mutations stable-en-taille attrapées + témoin —
+13 PASS / 0 ÉCHEC × 2 graines.
+reste (b) : http-10:R2 (routage + table des réponses — points croisés
+D90 : verdicts 4/2 transportés → entrées de table ; ne PAS
+double-émettre la ligne console), oracle à scénarios
 SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1. Terrain : D57 (WER)
 seul point ouvert.
 

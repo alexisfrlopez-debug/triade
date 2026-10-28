@@ -40,7 +40,7 @@ priorités du projet sont ordonnées lexicographiquement et ne se marchandent pa
 | Format de la Carte | Spécifié | `docs/FORMAT_CARTE.md` — en-tête normalisé, quatre fragments, verrou croisé, export de continuité, re-cryptage |
 | Démonstration RoomEq | Livrée | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole v0.3 démontré par le recodage complet de RoomEq (42 modules, 437 tests, parité v2.2.2), avec comparatifs de code avant/après ; dépôt `../roomeq` cristallisé depuis au tag `v3.0.2` (v3.0.0 → v3.0.2 : deux échecs de CI honorés puis corrigés, release GitHub publiée) |
 | Article de recherche v0.4 | Livré | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p.) — édition académique du protocole (D18) : restructuration IMRAD, formalisation (verrou croisé κ, ordre lexicographique ≻_lex, règles en transitions), travaux connexes (dette technique, DbC, AISE), étude de cas avec RQ et design déclaré, menaces sur la validité (Wohlin) dont l'écart source/natif ; rapport de vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
-| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; **carte m3 re-scellée D80 sous la lignée D80 — enveloppe neuve, faits inchangés, même cle publique** (rotation de lignée après exposition D76-D78) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER ; **M4 ouvert (D77)** : couche I écrite-avant-code (`m4/I/` — domaine `tls` : 8 spécifications [nom UTF-16, table des verdicts SSPI, jetons, poignée de main, handles, émission, réception, session] + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques : fail-closed intégral, certificat invalide = échec nommé 502 propre, zéro divulgation, compensation exacte) ; étape (b) en cours : D79 layout .text3 + tls-01..03 prouvées (165 k cas zéro écart) ; D82 cadre de session TLS + IAT secur32 arrêtés, tls-05 (premier bloc à shims) prouvée — 21 PASS × 2 graines, 5 000 cas fuzzés zéro écart, falsification 6/6 ; **D83 : tls-04 LA POIGNÉE DE MAIN (LE critère M4) notée-mesurée-prouvée — 544 o, boucle ISC bornée 16 allers, 16 scénarios cadre octet par octet + contrat d'appels complet, 10 000 cas fuzzés zéro écart (2 graines), 6/6 mutations** ; D88 : tls-06 ÉMISSION notée-prouvée (491 o, 34 PASS × 2 graines) ; **D89 : convention du cadre AMENDÉE (zone réception 2 × MAX_JETON → TAILLE_CADRE 0xC260, champs de géométrie +0x3A/+0x3C) puis tls-07 RÉCEPTION notée-mesurée-prouvée — 394 o, 16 scénarios EN CHAÎNES, 10 000 cas + 2 000 chaînes fuzzés zéro écart (2 graines), 10/10 mutations** ; **D90 : tls-08 LA SESSION (l'orchestrateur) notée-mesurée-prouvée — la session complète existe en octets : 740 o, conventions D90 (paquet de session PAQUET_*, VERDICT_CIBLE 7, fixtures console 0x2C60/0x2C80), DRAIN du résidu, reprise en tête, garde chambre, compensation INTÉGRALE par comptage ; harnais à 18 BLOCS RÉELS intégrés (M0→M4) — 20 scénarios, 12 mutations, 53 PASS / 0 ÉCHEC × 2 graines** — reste (b) : révisions http-08:R2/http-10:R2, oracle SSPI, carte génération 6, proxy.exe 0.5.0-dev.1 |
+| Implémentation | **M3 clos — balise finale 0.4.0 (D74)** | `m0/` validé terrain (D26) ; `m1/` clos à la balise finale `0.2.0` (D32) ; `m2/` clos à la balise finale `0.3.0` (D43) ; `m3/` : **balise finale `0.4.0` scellée (D74)** — proxy.exe inchangé (md5 dd12b649…, D63), campagne million D72 (10^6 cas SANS CRASH, harnais falsifiable), suite de conformité § 8.2 D73 (161 contrôles VERTE, fuzzing 10^4 cas/exécution), cristallisation 38/38 × 10/10, scellage rc.1 → 0.4.0 sur validation terrain consignée (T2 6×, D64-D71) ; lignée de clés régénérée D74 (4e réinitialisation, D27/D30, preuve byte-identique) ; **carte m3 re-scellée D80 sous la lignée D80 — enveloppe neuve, faits inchangés, même cle publique** (rotation de lignée après exposition D76-D78) ; `terrain/` : superviseur.exe terrain.16 — T3 DÉMONTRÉ sur machine réelle (D71), T1 = D57 en attente WER ; **M4 ouvert (D77)** : couche I écrite-avant-code (`m4/I/` — domaine `tls` : 8 spécifications [nom UTF-16, table des verdicts SSPI, jetons, poignée de main, handles, émission, réception, session] + révisions http-08:R2/http-10:R2, charte des contrats cryptographiques : fail-closed intégral, certificat invalide = échec nommé 502 propre, zéro divulgation, compensation exacte) ; étape (b) en cours : D79 layout .text3 + tls-01..03 prouvées (165 k cas zéro écart) ; D82 cadre de session TLS + IAT secur32 arrêtés, tls-05 (premier bloc à shims) prouvée — 21 PASS × 2 graines, 5 000 cas fuzzés zéro écart, falsification 6/6 ; **D83 : tls-04 LA POIGNÉE DE MAIN (LE critère M4) notée-mesurée-prouvée — 544 o, boucle ISC bornée 16 allers, 16 scénarios cadre octet par octet + contrat d'appels complet, 10 000 cas fuzzés zéro écart (2 graines), 6/6 mutations** ; D88 : tls-06 ÉMISSION notée-prouvée (491 o, 34 PASS × 2 graines) ; **D89 : convention du cadre AMENDÉE (zone réception 2 × MAX_JETON → TAILLE_CADRE 0xC260, champs de géométrie +0x3A/+0x3C) puis tls-07 RÉCEPTION notée-mesurée-prouvée — 394 o, 16 scénarios EN CHAÎNES, 10 000 cas + 2 000 chaînes fuzzés zéro écart (2 graines), 10/10 mutations** ; **D90 : tls-08 LA SESSION (l'orchestrateur) notée-mesurée-prouvée — la session complète existe en octets : 740 o, conventions D90 (paquet de session PAQUET_*, VERDICT_CIBLE 7, fixtures console 0x2C60/0x2C80), DRAIN du résidu, reprise en tête, garde chambre, compensation INTÉGRALE par comptage ; harnais à 18 BLOCS RÉELS intégrés (M0→M4) — 20 scénarios, 12 mutations, 53 PASS / 0 ÉCHEC × 2 graines** ; **D91 : http-08:R2 (LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ — le parseur sait que le tunnel existe) notée-mesurée-prouvée — 326 o / 95 instructions, slot 0x7340×0x180 conservé ; lecture contractuelle arrêtée AVANT notation (rax = 4 verdict « cible TLS » PORTÉ PAR LE RETOUR — convention « mappe sur rax » ; zone aux règles R1 : forme ABSOLUE=1, Q3 hérité) ; https BYTE-EXACT 8 octets après le test http:// hérité octet pour octet ; début d'autorité porté dans rdx (la GÉOMÉTRIE porte le schéma), verdict déduit structurellement au seuil rcx+8 — le schéma préfixe impossible PAR CONSTRUCTION ; fixture « / » @0x24D0 de l'ancêtre réutilisée (RIP inter-sections) ; harnais_cible_r2.py avec le DIFFÉRENTIEL D'ANCÊTRE (R1 scellé émulé contre R2 sur les mêmes entrées : 20 056 cas, écart ZÉRO, divergence EXACTEMENT le domaine https byte-exact) + V2b spécification + V3 fuzz 20 000 + V4 six mutations stable-en-taille attrapées + témoin — 13 PASS / 0 ÉCHEC × 2 graines** — reste (b) : http-10:R2 (points croisés D90 : verdicts 4/2 → entrées de table ; « contexte de réponse » ; ne PAS double-émettre la ligne console), oracle SSPI, carte génération 6, proxy.exe 0.5.0-dev.1 |
 | Infrastructure | Opérationnelle | Dépôt git local + sauvegarde Google Drive + miroir GitHub privé + synchro systématique ; coffre-fort des phrases maîtresses (D75) — conteneur chiffré TRIADE-CF1 au racine du Drive + copie développeur, **roté D80 avec les DEUX lignées (D74 archive + D80 courante)** ; phrase de contrôle sous garde durable D81 (`PHRASE-CONTROLE-COFFRE.txt` dépôt + racine Drive + miroir — le fichier est la remise, restauration post-panne prouvée) ; racine du coffre Drive nettoyée (D76 : livrables périmés archivés dans ARCHIVE/, courants seuls) |
 
 Aucune chaîne de build extérieure : les octets viennent de la notation. Le projet a
@@ -667,6 +667,48 @@ canari — leçon D90 consignée ; tuple GAI ; verdict attendu ACH),
 AUCUN dans la notation ; points croisés reportés à http-10:R2 (les
 verdicts 4/2 transportés devront trouver leurs entrées de table ;
 ne PAS double-émettre la ligne console certificat).
+
+**M4 (b) — D91 (29/10) : http-08:R2 LA PREMIÈRE RÉVISION DU DOMAINE HTTP
+SCELLÉ notée-mesurée-prouvée — le parseur sait que le tunnel existe.**
+Re-synchronisation préalable sur l'état réel (le résumé de reprise
+plaçait la licence BSL « en cours » : D84–D87 et tls-05..08 étaient déjà
+livrés — HEAD D90). La LECTURE CONTRACTUELLE de la spec R2 fut ARRÊTÉE
+avant la notation : rax = 4, verdict « cible TLS » à valeur propre PORTÉ
+PAR LE RETOUR (convention D90 « mappe sur rax » ; trois familles de
+verdicts http/TLS/refus chez V2), la zone remplie aux règles R1 (forme
+ABSOLUE = 1 — la structure reste absolue, le schéma vit dans le verdict,
+port implicite 443 déductible ; Q3 hérité applicable : « https:// » seul
+→ 2), les verdicts 1/2/3 intacts. Notation : 326 o / 95 instructions /
+15 étiquettes, slot 0x7340×0x180 conservé (padding 58, D8) ; l'ordre des
+tests est documenté (I5) — « http:// » D'ABORD (tronçon R1 octet pour
+octet : l'échec du word avec [4]=':' rend https impossible), « https:// »
+ENSUITE BYTE-EXACT 8 octets (garde len ≥ 8 AVANT toute lecture de
+[rcx+7]) ; le début d'autorité est PORTÉ dans rdx dès le match (rcx+7 /
+rcx+8 — LA GÉOMÉTRIE PORTE LE SCHÉMA) et le verdict est déduit
+STRUCTURELLEMENT au seuil rcx+8 (lea r11 / cmp / mov r11d, 1 — les
+drapeaux du cmp survivent au mov) : le schéma préfixe « http://s://x »
+est IMPOSSIBLE PAR CONSTRUCTION (début d'autorité rcx+7, à jamais
+distinct du seuil) ; la boucle de scan R1 est partagée, les cinq
+écritures de zone dupliquées (.ecrit / .ecrit_tls) ; la fixture « / »
+@0x24D0 de l'ancêtre est RÉUTILISÉE (déplacement RIP inter-sections —
+propriété unique du bloc logique, R7). `m4/harnais_cible_r2.py` introduit
+le DIFFÉRENTIEL D'ANCÊTRE, preuve propre aux révisions : l'ancêtre R1
+scellé (assemblé à 0x5380, round-trip 241 o — le préalable) est ÉMULÉ
+contre la révision sur les MÊMES entrées — 20 056 cas, écart ZÉRO,
+divergence EXACTEMENT le domaine https byte-exact (R1 3 zone intacte →
+R2 4 zone remplie, ou Q3 2 sur autorité vide) : tout autre écart serait
+une régression de l'héritage scellé ; V2b différentiel de spécification
+(zones 40 o octet par octet — le padding @4-7 JAMAIS écrit), V3 fuzz
+20 000 cas non fiables, V4 SIX mutations stable-en-taille TOUTES
+ATTRAPÉES (huitième octet amnésié, casse 's'→'S', LE SCHÉMA PRÉFIXE,
+verdict 4→5, forme 1→5, « ? » 0x3F→0x40) + témoin — BILAN 13 PASS /
+0 ÉCHEC × graines 20261028/29. Le différentiel a nommé UN défaut du
+HARNAIS (leçon D91 : le domaine d'une divergence légitime se définit par
+le TEST qui la crée — « https:// » à autorité vide rend Q3 2, divergence
+3→2 légitime — jamais par le verdict produit) ; incohérence docstring
+layout (0x7480 → 0x74C0) nommée et corrigée. Reste (b) : http-10:R2
+(routage + table des réponses — points croisés D90), oracle SSPI, carte
+génération 6, proxy.exe 0.5.0-dev.1.
 Terrain : D57 (WER, adresse de plantage de la démo) reste le seul point ouvert — le
 circuit de constat est désormais réflexe (D71). Hygiène : rotation/restriction
 des jetons du dossier Tokens/ (avertissement § 8 toujours réel) ; vider la

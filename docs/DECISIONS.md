@@ -2372,3 +2372,87 @@ ne dépend pas de la bonne volonté de l'amont).
 (53 PASS × 2), falsification 12/12, comptage de compensation constaté
 sur les vingt scénarios, conventions D90 dans layout.py (source unique),
 entrée 76 du journal.
+
+
+### D91 — M4 (b) : http-08:R2 (LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ) notée-mesurée-prouvée — verdict « cible TLS » rax = 4, l'héritage R1 prouvé par différentiel d'ancêtre émulé
+
+**Décision** : la révision du parseur de cible est notée (326 o / 95
+instructions / 15 étiquettes, slot préfiguré 0x7340×0x180 conservé,
+padding 58 ≥ 16 — D8 : l'adresse préfigurée de http-10:R2 @0x74C0 reste
+exacte ; incohérence documentation nommée et corrigée : la docstring de
+layout.py disait 0x7480, valeur D77 antérieure à l'élargissement du slot
+http-08:R2 à 0x180 — BLOCS_REVISIONS, le code, fait foi). La LECTURE
+CONTRACTUELLE de la spec R2 (D77) est ARRÊTÉE avant la notation :
+« rax = verdict "cible TLS" » se lit au pied de la lettre — rax = 4,
+valeur propre de la révision, PORTÉE PAR LE RETOUR (convention D90 :
+« http-10:R2 mappe sur rax, jamais sur le cadre » ; V2 de la spec :
+trois familles « verdicts http/TLS/refus ») ; la zone d'accueil est
+remplie AUX RÈGLES R1 (forme ABSOLUE = 1 : la STRUCTURE reste absolue,
+le schéma vit dans le verdict — le port implicite 443 est déductible du
+verdict, consigné dans la sortie, la décision d'appeler tls-08
+appartient à http-10:R2) ; le Q3 hérité s'applique à l'identique
+(« https:// » seul, « https:///chemin » → rax = 2, autorité vide, zone
+intacte) ; les verdicts 1/2/3 et tout le comportement R1 hors schéma
+sont INTACTS.
+
+**Architecture de la révision (l'ordre des tests est documenté, I5)** :
+« http:// » D'ABORD — le tronçon d'entrée R1 reproduit octet pour octet
+(dword « http », word « :/ », byte « / » ; l'échec du word avec [4] ≠
+':' va au test https ; l'échec du byte6 avec word réussi va DIRECTEMENT
+à pas_absolu : [4] = ':' contredit 's', https est impossible —
+l'héritage n'a pas bougé d'un octet) ; « https:// » ENSUITE, BYTE-EXACT
+sur 8 octets (garde len ≥ 8 AVANT toute lecture de [rcx+7] : jamais de
+lecture hors span) ; le début d'autorité est PORTÉ dans rdx dès le
+match (lea rdx, [rcx+7] / [rcx+8]) — LA GÉOMÉTRIE PORTE LE SCHÈMA — et
+le verdict est déduit STRUCTURELLEMENT à l'écriture : lea r11,
+[rcx+8] ; cmp rdx, r11 ; mov r11d, 1 (les drapeaux du cmp survivent au
+mov) ; je .ecrit_tls. LE SCHÉMA PRÉFIXE EST IMPOSSIBLE PAR
+CONSTRUCTION : « http://s://x » a son début d'autorité à rcx+7, à jamais
+distinct du seuil rcx+8 — I5 falsifiable structurellement. La boucle de
+scan R1 (garde en tête — terminaison héritée) est PARTAGÉE par les deux
+schémas ; les cinq écritures de zone sont DUPLIQUÉES (.ecrit /
+.ecrit_tls) : chaque chemin de verdict explicite, aucun
+registre-drapeau. La fixture « / » @0x24D0 de l'ancêtre est RÉUTILISÉE
+(déplacement RIP inter-sections : la révision cite son ancêtre,
+propriété unique du bloc logique http-08, R7).
+
+**Livré avec** : `m4/harnais_cible_r2.py` — le DIFFÉRENTIEL D'ANCÊTRE,
+preuve propre aux révisions : l'ancêtre R1 scellé (assemblé à 0x5380,
+round-trip 241 o — le préalable) est ÉMULÉ contre la révision sur les
+MÊMES entrées. V1 round-trip R2 + idempotence + ancêtre. V2a
+différentiel HÉRITÉ : 20 056 cas, R1 ET R2 contre leurs modèles (le même
+modèle, revision 1/2 — seul le test https disparaît en revision 1),
+ÉCART ZÉRO, divergence R1/R2 EXACTEMENT le domaine https byte-exact
+(715/756 cas selon graine : R1 rend 3 zone intacte, R2 rend 4 zone
+remplie ou Q3 2 sur autorité vide) — tout autre écart serait une
+régression de l'héritage scellé. V2b différentiel de spécification :
+zones 40 o octet par octet, le padding @4..7 JAMAIS écrit (il reste à
+l'appelant). V3 fuzz D45 hérité : 20 000 cas non fiables (octets ≥ 0x80,
+NUL) — survie, terminaison, verdict conforme, aucune écriture hors zone.
+V4 SIX mutations stable-en-taille TOUTES ATTRAPÉES (huitième octet
+amnésié, casse 's'→'S', LE SCHÉMA PRÉFIXE lea [rcx+8]→[rcx+7], verdict
+4→5, forme 1→5, « ? » 0x3F→0x40) + témoin VERT — BILAN 13 PASS /
+0 ÉCHEC × graines 20261028/20261029. Le différentiel a nommé UN défaut
+du HARNAIS avant le vert (le domaine de divergence légitime défini par
+« verdict 4 attendu » au lieu du test byte-exact : « https:// » à
+autorité vide rend Q3 2, divergence 3→2 légitime classée à tort
+régression — corrigé) — aucun dans la notation. LEÇON CONSIGNÉE : le
+domaine d'une divergence légitime se définit par le TEST qui la crée,
+jamais par le verdict qu'il produit.
+
+**Alternatives rejetées** : porter la distinction TLS dans la forme de
+zone (forme 4 @0, rax = 0 — le routage devrait lire la zone, CONTRE la
+convention D90 « mappe sur rax » ; et le post R2 ne reprend pas le
+Q5-R1 « zone intacte sur verdict non nul », il le remplace) ; un drapeau
+registre porté à travers le scan (conflit avec movzx r11d — le
+registre de scan R1 ; la déduction géométrique évite tout état) ; tester
+https avant http (I5 documente l'ordre inverse : la révision AJOUTE,
+R1 n'a pas changé) ; tolérer la casse mixte du schéma (Q5 : aucune
+tolérance nouvelle — la surface de contrebande n'augmente que des huit
+octets exacts) ; une fixture « / » propre à la révision (la fixture
+appartient au BLOC LOGIQUE http-08 depuis R1 — deux fixtures pour un
+même chemin par défaut doubleraient la vérité).
+
+**Critère de sortie** : atteint — différentiel vert sur deux graines
+(13 PASS × 2), falsification 6/6, héritage R1 prouvé octet pour octet
+hors https par émulation croisée, entrée 77 du journal.

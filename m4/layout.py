@@ -30,14 +30,17 @@ ARRÊT PARTIEL étape b (D79 — mesure auteur, trois feuilles pures) :
   D83 — la poignée de main), tls-06 0x6740 (0x300, 491 o, D88 — l'émission),
   tls-07 0x6A40 (0x300, 394 o, D89 — la réception), tls-08 0x6D40 (0x600,
   740 o, D90 — la session : orchestration complète + compensation intégrale).
-  Restent préfigurés : http-08:R2 0x7340, http-10:R2 0x7480 (réarrêt
-  éventuel à leurs mesures, fin d'étape b).
+  Restent préfigurés : http-08:R2 0x7340 (0x180), http-10:R2 0x74C0
+  (0x900 — réarrêt éventuel à leurs mesures, fin d'étape b ; l'adresse
+  préfigurée D77 0x7480 datait du slot 0x140 avant élargissement du slot
+  http-08:R2 à 0x180, corrigée D91).
 
 EXTENSION M4 (D77, génération 6 — blocs g7xxxx) :
   - .text3 démarre à 0x6000 (alignement section) : tls-01 0x6000,
     tls-02 0x6080, tls-03 0x6180 ; arrêts D79/D81 : tls-05 0x65C0 ;
     préfiguration : tls-04 0x62C0, tls-06 0x6740, tls-07 0x6A40,
-    tls-08 0x6D40 (mesuré D90), http-08:R2 0x7340, http-10:R2 0x7480 ;
+    tls-08 0x6D40 (mesuré D90), http-08:R2 0x7340 (0x180), http-10:R2
+    0x74C0 (0x900, corrigé D91 — cf. ci-dessus) ;
   - l'IAT secur32 gagne SEPT entrées (D77) : AcquireCredentials-
     HandleW, FreeCredentialsHandle, InitializeSecurityContextW, Delete-
     SecurityContext, QueryContextAttributesW, EncryptMessage, DecryptMessage
