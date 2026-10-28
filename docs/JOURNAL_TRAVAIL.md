@@ -3829,3 +3829,99 @@ exécution, ex. 10^4 cas), puis cristallisation et scellage final 0.4.0
 re-signée). Terrain : D57 (WER, adresse de plantage démo) reste le seul
 point ouvert — T3 ayant été démontré ce matin (D71), le circuit de constat
 est désormais réflexe.
+
+## Entrée 62 — D73 (28/10, 16:30) : le fuzzing a rejoint la conformité — étape (e) de M3 ACCOMPLIE : suite de conformité du profil livrée (m3/conformite_profil.py, 161 contrôles — éléments 1-7 § 8.2 constatés depuis proxy.exe + contrôle de jalon « fuzzing à propriétés » 10^4 cas SANS CRASH à chaque passage, graine datée reproductible) ; la première exécution fut ROUGE sur un scellé vert : la suite a appris la norme M3 sur citation de la couche I ; falsifiée sur trois mutations d'un octet
+
+**La suite (m3/conformite_profil.py, tracké — même contrat que m1/m2 :
+executer() → (ok, lignes), prête pour le sceller_rc de la cristallisation).**
+Les sept éléments constitutifs du profil (§ 8.2, D22) sont CONSTATÉS depuis
+l'artefact scellé (proxy.exe 0.4.0-dev.2, md5 dd12b649… — inchangé), les
+notations et le plan d'adressage — jamais déclarés sans preuve. Périmètre
+M3 : 26 blocs embarqués (13 M3 + 13 héritages), 23 slots IAT (kernel32 x10 +
+ws2_32 x13 — les trois appendus D46 compris), INT/IAT identiques sur disque,
+table R10 = 26 entrées + terminateur avec sommes reconstituées ÉGALES,
+version qword 0x00040002 ≥ plancher, porte en tête de http-12 (marche de
+sommation AVANT le premier appel), base par ancre 0x2830, 13 héritages
+octet-identiques aux trois artefacts scellés hello/selftest/echo (R7),
+réserves int3 aux bornes constatées (.text et .text2), round-trip 1 372
+instructions, identité WYSIWYG, oracle structurel 524 verrous. L'élément 5
+(patch à chaud) est partagé : porte R10 constatée VIVANTE, moteur (tcp-07,
+staging, croissance) hors périmètre M3 (jalon M5) — rapporté, exactement
+comme l'élément 5 l'était au jalon M1.
+
+**Le contrôle de jalon (étape (e)) — le harnais million devient sentinelle
+perpétuelle.** Dernier contrôle de la suite : campagne réduite du harnais
+D72 RÉUTILISÉ INTÉGRALEMENT (fuzz_million.campagne — zéro logique copiée,
+zéro dérive modèle possible) : 10^4 cas par exécution (9 000 différentiels
+feuilles http-01..09 + 1 000 accumulation http-10 à propriétés P1-P5,
+sentinelles tournantes), AUTO-TEST DE FALSIFICATION inclus à chaque passage
+(mutations M1/M2 d'un octet DÉTECTÉES, témoin sauvage PASS). Graine datée
+AAAAMMJJ : chaque cristallisation explore un échantillon FRAIS tout en
+restant reproductible. Passée ce jour : 10 000 cas SANS CRASH en 1,9 s,
+sentinelles 2/2 — re-exécution à graine neuve 20261031 : même verdict en
+1,8 s (la suite ENTIERE, éléments compris, prend 2,1 s : un contrôle
+permanent à coût quasi nul). **VERDICT : suite VERTE 161/161** (éléments
+1-7 : 159 contrôles ; [M3] fuzzing : 2). m3/conformite.txt (ligne ASCII
+unique, lue par le tableau de bord) : « verte (… étape (e) : fuzzing 10000
+cas SANS CRASH P1-P5, graine 20261030, sentinelles 2/2, auto-test PASS,
+1.9s) ».
+
+**La première exécution était ROUGE — et c'était la suite qui avait tort.**
+Huit échecs sur un artefact scellé et oracle-vert sur 2 × 10^6 cas :
+impossible que le binaire soit en défaut — les contrôles hérités de m1/m2
+décrivaient la norme des blocs mono-entrée/mono-sortie, pas celle de M3.
+Quatre leçons, chacune corrigée SUR CITATION de la couche I : (i) http-07
+est une feuille à ASSISTANT INTERNE (call 0x52E3, deux sorties pop rbx —
+permis par l'oracle structurel : les feuilles peuvent s'appeler
+elles-mêmes) : la comparaison multiset push/pop devient premier-push-avant-
+première-écriture + aucun pop sans push préalable + terminale ret ; (ii)
+http-10:R3 SONDE la pile sous RSP en LECTURE (Q0 de la spécification, D63 —
+pages de garde avant le grand sub rsp, 0x7100) : la zone rouge msx64
+interdit les STOCKAGES, pas les lectures de sonde — le contrôle ne flingue
+plus que les mov à destination [rsp − k], au passage PLUS STRICT que le
+garde-fou du build (qui ne parse que « + disp ») ; (iii) http-10 est
+TRI-ENTRÉE (session + thread tunnel + pompe, I5/D63) : le dictionnaire
+m1/m2 gardait le DERNIER push de chaque registre, écrasant les séries
+précédentes — premier push (minimum) désormais ; (iv) les movabs de
+http-02:Q4 (« HTTP/1.0 »/« HTTP/1.1 » comparés par mots de 8 octets —
+immédiats ASCII > 2^48) et de http-05:Q5 (borne u32 0xFFFFFFFF) sont des
+CONSTANTES DU CONTRAT, pas des adresses : la vérification devient « aucune
+movabs dans la fenêtre d'adresses de l'image » (PI par ancre) + « immédiats
+= constantes citées par la spécification ». L'équilibre dynamique des
+blocs multi-sorties relève de la preuve P2 (retour à la sentinelle) —
+re-vérifiée à chaque passage par le contrôle (e) lui-même. **Leçon
+systémique : une suite de conformité est un artefact comme les autres —
+son échec sur un scellé vert est une prévision ratée de la NORME, pas du
+binaire ; on corrige sur citation, jamais sur exception.**
+
+**La falsification de la suite (une suite qui ne peut pas échouer ne prouve
+rien).** Trois mutations D'UN OCTET de proxy.exe EN MÉMOIRE (jamais sur
+disque) : F1 somme de la table R10 → ROUGE sur [5] ; F2 champ Machine du
+COFF → ROUGE sur [1] — la première tentative visait l'offset 0x04, qui est
+l'en-tête DOS : mutation muette, leçon d'humilité (Machine vit à
+e_lfanew + 4 = 0x44) ; F3 octet d'un héritage tcp-01 → ROUGE sur [1]
+(décodage .text2 cassé), [5] (somme R10 rompue) et [6] (R7 + WYSIWYG
+divergents). Témoin sauvage : VERT. S'ajoute l'auto-test permanent du
+contrôle fuzz (M1/M2 DÉTECTÉES à chaque exécution) — la suite est
+falsifiable par construction, pas seulement par démonstration ponctuelle.
+
+**L'intégration.** build_m3.tableau_de_bord() lit m3/conformite.txt (ligne
+suite_conformite_profil, modèle exact m1/m2 — « a exécuter » si absente) ;
+tableau-de-bord.txt régénéré (+1 ligne, texte dérivé HORS matériel signé —
+la re-signature de la carte [compteurs R6 + ligne run] attend la phrase
+maîtresse côté développeur : elle a lieu à la cristallisation rc). § 8.2 :
+la suite est « un livrable obligatoire […] exécutée à chaque
+cristallisation de version rc et finale (§ 9) » ; § 9 : rc exige « dev +
+suite de conformité du profil verte + critères du jalon courant » — le
+critère M3 est DÉSORMAIS dans la suite elle-même : toute régression d'un
+bloc du périmètre D46, à n'importe quelle cristallisation future, rend la
+suite ROUGE avant que l'artefact ne parte au terrain.
+
+**Ce que ça établit.** L'étape (e) est ACCOMPLIE : le fuzzing à propriétés,
+démontré au million (D72), est devenu contrôle PERMANENT de la conformité
+du profil. M3 n'a plus que la cristallisation et le scellage final 0.4.0
+(modèle 0.2.0/0.3.0 : conformité re-exécutée à la cristallisation — elle
+coûte désormais ~2 s ; budgets mesurés ; carte re-signée côté développeur ;
+constat terrain). Terrain : D57 (WER, adresse de plantage de la démo)
+reste le seul point ouvert — T3 ayant été démontré (D71), le circuit de
+constat est réflexe.

@@ -77,7 +77,15 @@ périmètre parseur D46 (harnais `m3/fuzz_million.py` falsifiable :
 deux mutations d'un octet du proxy scellé détectées ; 900 000
 différentiels http-01..09 + 100 000 requêtes http-10 à propriétés
 P1-P5, 200/200 sentinelles ; re-exécution à graine neuve identique —
-2 × 10^6 cas cumulés ; rapport `m3/rapport_million.json`).
+2 × 10^6 cas cumulés ; rapport `m3/rapport_million.json`) ; **étape (e)
+ACCOMPLIE (D73) : le fuzzing rejoint la conformité** — suite de conformité
+§ 8.2 livrée (`m3/conformite_profil.py`, 161 contrôles : éléments 1-7
+constatés depuis proxy.exe + contrôle de jalon « fuzzing à propriétés »
+10^4 cas SANS CRASH à chaque exécution — harnais D72 réutilisé intégralement,
+graine datée reproductible, auto-test de falsification inclus ; suite VERTE,
+re-exécution à graine neuve identique ; `conformite.txt` lu par le tableau
+de bord — le harnais million devient sentinelle perpétuelle de chaque
+cristallisation rc/future, § 8.2/§ 9).
 **Lignée terrain (D48–D71)** — `superviseur.exe` terrain.16 : le
 harnais du terrain « 1 seul exe qui contient tout » (demo.exe,
 proxy.exe et annexe de jetons EMBARQUÉS, section .blob), TOUS les
@@ -90,8 +98,10 @@ tueurs de runs (ABI shadow space D62, pile proxy D63, --fail D65,
 nettoyage du jeton D68, JSON indenté Google + HTTP/2 D69, tampon de
 composition D70) ; T1 inchangé : D57 — exit 0xC0000005 de demo.9
 publique, 5e reproduction, adresse de plantage attendue via WER.
-**Reste M3 : (e) fuzzing dans la suite de conformité, cristallisation
-et scellage final 0.4.0.**
+**Reste M3 : cristallisation et scellage final 0.4.0** (modèle 0.2.0/
+0.3.0 : conformité re-exécutée à la cristallisation — elle coûte désormais
+~2 s ; budgets mesurés ; carte re-signée côté développeur ; constat
+terrain).
 
 ## Avertissement
 

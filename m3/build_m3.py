@@ -1084,6 +1084,12 @@ def verrou_croise(blocs: list[tuple]) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: list[str], nb_blocs_carte: int, manifeste: dict,
                     verdict_oracle: dict) -> str:
     sha = lambda b: hashlib.sha256(b).hexdigest()
+    conformite = ("a executer : conformite_profil.py (elements 1-7 + "
+                  "controle de jalon M3, etape (e) : fuzzing a proprietes)")
+    chemin_conf = os.path.join(ICI, "conformite.txt")
+    if os.path.exists(chemin_conf):
+        with open(chemin_conf, encoding="ascii") as f:
+            conformite = f.read().strip()
     lignes = [
         "[tableau] jalon=M3 artefact=proxy.exe version=" + manifeste.get("version", "?"),
         f"  blocs_avec_spec_a_jour        : {nb_blocs_carte}/38 : audit de tracabilite I->C->B (4 artefacts)",
@@ -1092,6 +1098,7 @@ def tableau_de_bord(exe: bytes, verrous: list[str], nb_blocs_carte: int, manifes
         f"  tests_differentiels           : {verdict_oracle.get('total_cas', 0)} cas verts "
         f"({verdict_oracle.get('volume', '-')}, graine {verdict_oracle.get('graine', '-')}) ; "
         f"oracle structurel {len(verrous)} verrous PASS",
+        f"  suite_conformite_profil       : {conformite}",
         f"  empreintes_donnees_embarquees : conforme (fixtures http, table R10, chaines, version)",
         f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D45-D47",
         f"  optimisations_sans_mesure     : 0 : aucune optimisation M3 (R11)",
