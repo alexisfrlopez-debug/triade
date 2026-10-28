@@ -2,7 +2,7 @@
   blocs_avec_spec_a_jour        : 38/38 : audit de tracabilite I->C->B (4 artefacts)
   chaines_I_C_B_tests           : 38/38 : specs, carte, exe, vecteurs
   construction                  : 0 erreur / 0 avertissement : build script
-  tests_differentiels           : 153036 cas verts (complet, graine 20) ; oracle structurel 524 verrous PASS
+  tests_differentiels           : 153036 cas verts (complet, graine 21) ; oracle structurel 524 verrous PASS
   suite_conformite_profil       : verte (conformite_profil.py : elements 1-7 + controle de jalon M3 : 161 controles PASS ; element 5 : porte R10 constatee, moteur de patch hors perimetre M3 (jalon M5) ; etape (e) : fuzzing 10000 cas SANS CRASH P1-P5, graine 20261028, sentinelles 2/2, auto-test PASS, 1.9s)
   empreintes_donnees_embarquees : conforme (fixtures http, table R10, chaines, version)
   defauts_T1_T6_ouverts         : 0 : journal des decisions D45-D47

@@ -4394,3 +4394,81 @@ orchestration), révisions http-08:R2/http-10:R2, oracle à scénarios SSPI,
 carte génération 6, proxy.exe 0.5.0-dev.1. Terrain : D57 (WER) seul point
 ouvert ; côté développeur : corbeille Drive à VIDER (D78) + décision de
 rotation de lignée.
+
+## Entrée 69 — D80 (28/10, 12:35) : ROTATION DE LIGNÉE EXÉCUTÉE — la phrase D74 exposée est retirée du service ; lignée D80 opérationnelle, carte m3 re-scellée à faits inchangés, coffre-fort roté aux DEUX lignées
+
+**Contexte** : décision développeur — « go pour la rotation de la lignée puis on
+enchaine sur la suite. » La recommandation D78 pendait : la phrase COURANTE D74 a
+été exposée ≈ 64 min sur le dossier Drive partagé par lien (dépôt manuel
+09:38:44 UTC, corbeille D76 10:42) ; le modèle est la cérémonie D74 (§ 15.3 : « la
+relève d'une lignée resterait la cérémonie avec preuve byte-identique »), le
+conteneur coffre étant roté par ré-init + re-scelage des entrées (équivalent
+conforme de changer-phrase + ajouter — modèle D78 préparé, la phrase de contrôle
+D75 vivant au seul développeur).
+
+**Déroulé** :
+1. **Pré-vol (lecture seule, `scripts/prevol_rotation_d80.py`)** : le périmètre est
+   arrêté par la preuve — la phrase D74 déchiffre la carte m3 SEULE (frag-bld :
+   artefact=proxy.exe version=0.4.0, cristallisation 38 blocs à 10/10) ; les cartes
+   terrain/m0/m1/m2/démo ÉCHOUENT toutes les cinq (ancienne lignée pré-D74, état
+   préexistant documenté D74). **Le glissement D78 « m3 + terrain » est corrigé
+   ici** : seule la carte m3 vivait sous la phrase exposée — le re-scellage
+   terrain était impossible et inutile. Précision d'état : le superviseur.exe du
+   dépôt est terrain.3 (md5 2fb19c0f…, état git normal), le kit terrain.16 vit au
+   dossier Drive test/ — aucune confusion possible. Conteneur coffre D75 intact
+   (md5 ed2de621…, == copie développeur == racine Drive).
+2. **Cérémonie (`scripts/ceremonie_rotation_d80.py`, 35 PASS + 1 faux négatif
+   nommé)** : quarantaine AVANT toute écriture (carte m3 D74 complète + phrase +
+   conteneur D75, md5 consignés, 0600 — réversibilité D76) ; **phrase maîtresse
+   D80 générée** (128 bits, modèle D27, jamais affichée) ; re-chiffrement des
+   QUATRE fragments à clairs OCTET-IDENTIQUES (les faits scellés ne bougent pas
+   d'un octet), nonces frais, **MÊME graine Ed25519** — cle-publique.ed25519
+   inchangée, le témoin d'intégrité reste le même ; en-tête version=0.4.0
+   generation=5 inchangés, empreinte_racine NOUVELLE (511c3124…) ; la phrase D74
+   ÉCHOUE sur la carte re-scellée (retrait du service réel) ; sentinelle
+   proxy.exe inchangée (dd12b649… — le re-scellage est un fait d'enveloppe,
+   jamais d'artefact).
+3. **Bascule + re-vérification (modèle D74 post-scellage)** : `.keys/passphrase.txt`
+   basculé à la lignée D80 (0600), puis `build_m3.py --verifier --graine 21` :
+   SUCCÈS — R5 38/38 round-trip 100 %, oracle 524 verrous + 153 036 cas verts,
+   R6 cristallisation conservée 10/10, R8 verrou croisé 38, artefact 0.4.0.
+   Constats post-run : frag-loc et frag-con régénérés par le vérificateur sont
+   OCTET-IDENTIQUES aux clairs préservés (zéro dérive de source) ; frag-bld porte
+   version=0.4.0, empreinte bf02769f… inchangées et consigne le run graine=21 ;
+   frag-prf gagne le run dans la fenêtre des 12 derniers ; le tableau de bord ne
+   change que d'une ligne (« graine 20 » → « graine 21 »). **Un contrôle du bilan
+   était un faux négatif, nommé** : `champ_outils` absorbait la virgule de
+   « graine=21, » (`\S+` glouton) — le constat de sortie `scripts/constat_d80_bis.py`
+   (lecture seule) établit graine=21, version=0.4.0, empreinte bf02769f… tous
+   conformes : bilan effectif 36/36.
+4. **Coffre-fort roté** : conteneur D75 retiré (vit en quarantaine), init neuf
+   (phrase de contrôle générée 128 bits, fichier de session 0600), DEUX entrées —
+   `lignee-D74` (archive : déverrouille les cartes m3 de l'historique git
+   antérieures à D80, « ne plus sceller avec ») et `lignee-D80` (courante) ;
+   relèves prouvées octet pour octet ET cryptographiquement (la phrase lignee-D80
+   issue du coffre DÉCHIFFRE la carte courante ; la phrase lignee-D74 ouvre la
+   carte d'archive et ÉCHOUE sur la courante — séparation de lignée démontrée) ;
+   export chiffré vers la copie développeur (download/) et la racine du coffre
+   Drive (md5 0323029a…, aller-retour vérifié). **L'ancienne phrase de contrôle
+   D75 est INOPÉRANTE** — la nouvelle est remise par cérémonie de fin de tour
+   (affichage UNE fois puis destruction du fichier de session, modèle
+   D27/D30/D75).
+5. **Hygiène** : la copie claire de la phrase D74 est détruite (md5 consigné) —
+   elle ne vit plus qu'en coffre chiffré (entrée lignee-D74) et dans les cartes
+   chiffrées de l'historique git ; TOUTES les sentinelles d'artefacts sont
+   inchangées (proxy dd12b649…, demo 73c064fb…, superviseur 2fb19c0f…, hello,
+   selftest, echo) ; la graine Ed25519 n'a pas bougé (jamais exposée, jamais
+   rotée).
+
+**Ce que ça établit** : l'exposition D76-D78 est refermée côté opérationnel — la
+phrase compromise ne protège plus rien de courant, la carte m3 (le seul actif de
+cette lignée) a repris sa confidentialité au repos à faits strictement inchangés,
+et la lignée D80 est la base des cartes M4+ (c'était le point d'opérer AVANT la
+carte génération 6). La relève de lignée par cérémonie à preuve byte-identique
+est démontrée une seconde fois (D74 l'avait été pour perte, D80 pour exposition).
+Reste développeur : VIDER la corbeille Drive (la copie D74 y vit encore 30 j — la
+phrase étant retirée du service, l'urgence descend d'un cran, l'hygiène demeure) ;
+le cas échéant ajouter la phrase D30 au coffre (il tient désormais la NOUVELLE
+phrase de contrôle). Suites : M4 étape (b) — tls-04..08, révisions http, oracle à
+shims SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain :
+D57 (WER) seul point ouvert.

@@ -44,14 +44,18 @@ committe, synchronise le miroir Google Drive (fichiers + bundle d'historique)
 et pousse vers le repo GitHub privé. Le hook `post-commit` synchronise le Drive à chaque
 commit. Vérification des jetons : `python3 scripts/check_auth.py`.
 
-**Coffre-fort des phrases maîtresses (D75).** Toutes les phrases maîtresses du projet
+**Coffre-fort des phrases maîtresses (D75, ROTÉ D80).** Toutes les phrases maîtresses du projet
 — et de tout futur projet conduit sous TRIADE — vivent dans un conteneur unique chiffré
 TRIADE-CF1 (`python3 coffre_fort.py` à la racine) : phrase de contrôle au coffre du
 développeur seule (jamais stockée, affichée une fois à la cérémonie), Argon2id + HKDF à
 contexte dédié + XChaCha20-Poly1305, autotest de falsification (`python3 coffre_fort.py
 autotest`). Le conteneur est exporté chiffré au racine du coffre Drive (copie projet) et
 au coffre personnel du développeur ; après une réinitialisation du poste, `importer` +
-`obtenir --vers-fichier .keys/passphrase.txt` restaurent la lignée sans cérémonie.
+`obtenir TRIADE lignee-D80 --vers-fichier .keys/passphrase.txt` restaurent la lignée
+sans cérémonie. **D80 (rotation de lignée après exposition D76-D78)** : le conteneur
+porte les DEUX lignées — `lignee-D74` (archive, « ne plus sceller avec ») et
+`lignee-D80` (courante) ; la phrase de contrôle D75 est INOPÉRANTE (nouvelle remise
+par cérémonie D80).
 Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification § 15.3.
 
 ## État du projet
@@ -131,8 +135,14 @@ octet-identique à `.keys/passphrase.txt`, déchiffre la carte m3, échoue sur m
 l'audit D76 avait comparé le fichier entier au lieu de la ligne phrase) — phrase
 active exposée ≈ 64 min sur le dossier partagé par lien (dépôt manuel 09:38:44 UTC,
 corbeille 10:42), graine Ed25519 jamais exposée, copies claires locales détruites ;
-côté développeur : VIDER la corbeille Drive (urgent) + décider de la rotation de
-lignée (recommandée, modèle D74). **Coffre Drive nettoyé (D76)** : douze
+**D80 : ROTATION DE LIGNÉE EXÉCUTÉE** — la phrase D74 est retirée du service,
+lignée D80 opérationnelle, **carte m3 re-scellée à faits strictement inchangés**
+(quatre fragments clairs octet-identiques, même graine Ed25519 donc même cle
+publique, version 0.4.0 inchangée, proxy.exe inchangé dd12b649… ; re-vérification
+graine 21 verte : R5 38/38, oracle 524 verrous + 153 036 cas, R8 38), coffre-fort
+roté aux DEUX lignées (lignee-D74 archive + lignee-D80 courante, phrase de
+contrôle D75 inopérante) ; côté développeur : VIDER la corbeille Drive (hygiène —
+la phrase exposée est retirée du service, la copie y vit encore 30 j). **Coffre Drive nettoyé (D76)** : douze
 livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
