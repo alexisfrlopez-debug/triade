@@ -13,6 +13,7 @@ fichier vérifié md5 ALLER-RETOUR après écriture) :
     LISEZMOI-coffre-CF2.txt     la cérémonie du coffre CF2, pas à pas (D106)
     lancer_ceremonie.bat        lanceur Windows (double-clic)
     lancer_ceremonie.sh         lanceur Linux/macOS
+    coffre_fort.py              le CLI CF1 (changer-phrase D110, migrer)
     MANIFESTE.txt               empreintes du kit (généré au dépôt)
     v06/                        complément « profil dépôt » portable :
       __init__.py, ceremonie_gui.py, ceremonie_hors_ligne.py,
@@ -55,12 +56,16 @@ V06 = REPO / "v06"
 AUDIT = ESPACE / "scripts"
 DOSSIER = "Cérémonie"
 SOUS = "v06"
-COMMIT_SRC = "6674e79"          # D111 — le GUI s'attache au dépôt (--depot)
+COMMIT_SRC = "77c8a7a"          # D112 — les trois chemins se choisissent
+# DANS la fenêtre (dossier du dépôt, coffre CF1, clé I fichier-ou-main)
 
-# (source locale, cible relative dans /Cérémonie) — 13 fichiers
+# (source locale, cible relative dans /Cérémonie) — 14 fichiers
+# (coffre_fort.py : posé par D110 — REPRIS dans la liste D112 pour que la
+# garde et le manifeste couvrent le kit RÉEL, sinon il vivrait orphelin)
 KIT = [
     (DOWNLOAD / "ceremonie_gui.py", "ceremonie_gui.py"),
     (DOWNLOAD / "ceremonie_hors_ligne.py", "ceremonie_hors_ligne.py"),
+    (REPO / "coffre_fort.py", "coffre_fort.py"),
     (DOWNLOAD / "LISEZMOI-ceremonie-GUI.txt", "LISEZMOI-ceremonie-GUI.txt"),
     (DOWNLOAD / "LISEZMOI-cle-I.txt", "LISEZMOI-cle-I.txt"),
     (DOWNLOAD / "LISEZMOI-coffre-CF2.txt", "LISEZMOI-coffre-CF2.txt"),
@@ -120,10 +125,9 @@ def fabriquer_manifeste():
         "",
         f"Déposé le : {now.strftime('%Y-%m-%dT%H:%M:%SZ')} (UTC) — canal : "
         "OAuth relais, Drive « Triade ».",
-        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D111 — le "
-        "GUI s'attache au dépôt :",
-        "--depot CHEMIN / TRIADE_DEPOT) + zone de livraison download/ de "
-        "l'espace de travail.",
+        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D112 — les "
+        "trois chemins se choisissent dans la fenêtre) + zone de livraison "
+        "download/ de l'espace de travail.",
         "",
         "CE QUE CONTIENT CE DOSSIER",
         "--------------------------",
@@ -143,12 +147,16 @@ def fabriquer_manifeste():
         "  pip (pynacl + cryptography) est vérifiée et proposée AVEC",
         "  votre accord.",
         "",
-        "- D111 : ce GUI (v1.3) peut aussi être lancé N'IMPORTE OÙ avec",
-        "  --depot CHEMIN (ou la variable TRIADE_DEPOT) pointant sur la",
-        "  racine d'un clone du dépôt git — un chemin faux est un échec",
-        "  nommé (code 2), et l'accueil affiche toujours le dépôt",
-        "  attaché et sa source. Voir LISEZMOI-ceremonie-GUI.txt, section",
-        "  « SE CONNECTER AU DÉPÔT ».",
+        "- D112 : ce GUI (v1.4) choisit ses TROIS chemins DANS la fenêtre —",
+        "  le bouton « Choisir le dossier du dépôt… » (accueil) attache",
+        "  votre clone local SANS relancer (garde v06/coffre_cf2.py,",
+        "  refus nommé sinon), le champ « Coffre CF1 » (onglet CF2)",
+        "  désigne VOTRE conteneur où qu'il vive (statut/verifier/",
+        "  changer-phrase/migrer le lisent), et l'onglet Signer accepte la",
+        "  clé par FICHIER ou SAISIE MANUELLE des 64 hex (masquée,",
+        "  validée, effacée après l'acte). --depot CHEMIN / TRIADE_DEPOT",
+        "  restent valables (D111) — la ligne de commande devient un",
+        "  raccourci, plus une obligation. Voir LISEZMOI-ceremonie-GUI.txt.",
         "",
         "- Mode d'emploi : LISEZMOI-ceremonie-GUI.txt (le GUI, les deux",
         "  profils), LISEZMOI-cle-I.txt et LISEZMOI-coffre-CF2.txt (les",
