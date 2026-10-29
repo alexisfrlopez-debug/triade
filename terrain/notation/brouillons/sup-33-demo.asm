@@ -5,6 +5,15 @@
 ; verifier (exit 0, 17 lignes, 31 derniers octets = fixture) et embarquer
 ; les preuves brutes (le constat 8.4 veut l'integralite) ; le balayage
 ; CRLF est UNE sous-routine partagee par le comptage et l'embarquement
+; R2 (D103) : FindWindowW porte la CLASSE en rcx et NULL en rdx — le contrat
+; Win32. R1 mettait la chaine en rdx (lpWindowName) : la fenetre etait
+; cherchee par TITRE, or demo.exe cree CLASSE="TRIADE_demo" et TITRE=
+; "TRIADE M2 — demonstration complete" — aucune fenetre ne porte le titre
+; TRIADE_demo, la vraie machine rendait NULL pendant 10 s (S11 ABSENTE,
+; runs 17-C a 17-G) alors que la fenetre vivait a l'ecran. Le correctif
+; terrain.6 etait un patch BINAIRE de 9 octets jamais reporte a la notation
+; — la reconstruction terrain.17 l'a perdu (leçon : un correctif qui ne
+; vit pas dans la source ne survit pas a la reconstruction).
 push rbx
 push r12
 push r13
@@ -25,11 +34,11 @@ xor r9d, r9d
 call JOURNAL_TRACE
 mov r12, qword ptr [rip + HPROC]
 lea rbx, [rip + TAMPON_CMD]
-; --- fenetre : FindWindowW(NULL, "TRIADE_demo"), 200 x 50 ms ---
+; --- fenetre : FindWindowW("TRIADE_demo", NULL) — LA CLASSE en rcx, 200 x 50 ms ---
 mov r15d, 200
 .boucle_fen:
-xor ecx, ecx
-lea rdx, [rip + CLASSE_DEMO]
+lea rcx, [rip + CLASSE_DEMO]
+xor edx, edx
 call qword ptr [rip + IAT_FINDWINDOW]
 test rax, rax
 jne .fen_ok

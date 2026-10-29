@@ -1,6 +1,6 @@
-; sup-33-demo · bloc terrain · spec sup-33:R1 · bloc carte f60033
+; sup-33-demo · bloc terrain · spec sup-33:R2 · bloc carte f60033
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5400, taille 960 octets
-; Dépendances : IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, TerminateProcess, Sleep ; IAT user32#2 : FindWindowW, FindWindowExW, SendMessageTimeoutW ; IAT kernel32#1 : CloseHandle ; blocs sup-31, sup-36, libc-02 ; chaînes S10..S16 + NOM_DEMO + CLASSE_DEMO + fixture finale (zones données)
+; Dépendances : IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, TerminateProcess, Sleep ; IAT user32#2 : FindWindowW, FindWindowExW, SendMessageTimeoutW ; IAT kernel32#1 : CloseHandle ; blocs sup-31, sup-36, libc-02 ; chaînes S10..S16 + NOM_DEMO + CLASSE_DEMO + fixture finale (zones données) — R2 (D103) : FindWindowW par CLASSE en rcx (NULL en rdx), la recherche par titre de R1 rendait S11 ABSENTE
 ; Notation explicite générée par outils/auteur.py depuis brouillons/sup-33-demo.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
 ; Code : 940 o · padding : 20 o (NOP)
@@ -10,7 +10,7 @@
 ;   0x5424 + 0x7 - 0x1048 = 0x43e3
 ;   0x543b + 0x7 - 0x1932 = 0x3b10
 ;   0x5442 + 0x7 - 0x16f9 = 0x3d50
-;   0x5451 + 0x7 - 0x29c6 = 0x2a92
+;   0x544f + 0x7 - 0x29c4 = 0x2a92
 ;   0x5458 + 0x6 - 0x30fe = 0x2360
 ;   0x5468 + 0x6 - 0x312e = 0x2340
 ;   0x5473 + 0x7 - 0x103f = 0x443b
@@ -68,8 +68,8 @@ call 0x5000
 mov r12, qword ptr [rip - 0x1932]
 lea rbx, [rip - 0x16f9]
 mov r15d, 200
-xor ecx, ecx
-lea rdx, [rip - 0x29c6]
+lea rcx, [rip - 0x29c4]
+xor edx, edx
 call qword ptr [rip - 0x30fe]
 test rax, rax
 jne 0x548f

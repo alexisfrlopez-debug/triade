@@ -297,7 +297,7 @@ class Emulateur:
         self.sortie_processus: dict[int, int] = {}    # handle → code de sortie
         self.echec_createprocess: list[str] = []      # cmdlines devant échouer
         self.findwindow_reponses: list[int] = []      # 0, 0, hwnd (V2 sup-33)
-        self.findwindow_appels: list[str] = []
+        self.findwindow_appels: list[tuple[str, str]] = []   # (classe rcx, titre rdx) — D103
         self.sendmsgtimeout: list[tuple] = []
         self.terminates: list[int] = []
         self.attentes: list[tuple] = []
@@ -544,9 +544,23 @@ class Emulateur:
                 else:
                     uc_.reg_write(UC_X86_REG_RAX, 0)
             elif nom == "FindWindowW":
-                nom_fen = chaine_utf16(uc_, rdx) if rdx else ""
-                em.findwindow_appels.append(nom_fen)
-                if em.findwindow_reponses:
+                # D103 (terrain.19) : le contrat Win32 RÉEL — lpClassName en
+                # rcx, lpWindowName en rdx. La fenêtre démo (demo.exe scellé,
+                # win-02) porte CLASSE "TRIADE_demo" et TITRE "TRIADE M2 —
+                # démonstration complète" : le handle n'est rendu QUE pour
+                # la recherche par CLASSE. Le shim d'avant D103 lisait la
+                # chaîne en rdx et rendait TOUJOURS un handle — modèle
+                # complice du code faux : FindWindowW(NULL, "TRIADE_demo")
+                # passait en émulation et rendait NULL à jamais sur la
+                # vraie machine (S11 ABSENTE des runs 17-C→17-G pendant
+                # que la fenêtre vivait à l'écran — leçon D102 : l'émulation
+                # doit DÉSACCORDer le code faux, jamais le couvrir).
+                classe = chaine_utf16(uc_, rcx) if rcx else ""
+                titre = chaine_utf16(uc_, rdx) if rdx else ""
+                em.findwindow_appels.append((classe, titre))
+                if classe != "TRIADE_demo":
+                    r = 0            # aucune fenêtre ne porte ce titre — NULL
+                elif em.findwindow_reponses:
                     r = em.findwindow_reponses.pop(0)
                 else:
                     r = FAKE_HWND_DEMO
@@ -1235,7 +1249,17 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
                               f"sup-38 — le dossier ne garde que le journal)")
     if "C:\\sup\\demo.exe" in em.fichiers or "C:\\sup\\proxy.exe" in em.fichiers:
         raise EchecOracle("nettoyage kit : un artefact survit au run (Q6)")
-    total += 7
+    # D103 (terrain.19) : la recherche T1 est par CLASSE — chaque
+    # FindWindowW porte rcx = "TRIADE_demo" (lpClassName) et rdx = NULL,
+    # exactement 3 appels (fenêtre trouvée au 3e sondage). La recherche
+    # par titre (la régression terrain.17, perdue du patch binaire
+    # terrain.6) ferait échouer ce verrou ET le journal d'or (S11B au
+    # lieu de S11A) — le modèle refuse d'être d'accord avec le code faux.
+    if em.findwindow_appels != [("TRIADE_demo", "")] * 3:
+        raise EchecOracle(f"D103 : appels FindWindowW {em.findwindow_appels[:4]!r} != "
+                          f"3 recherches par CLASSE (rcx='TRIADE_demo', rdx=NULL — "
+                          f"une recherche par titre ne doit plus jamais passer)")
+    total += 8
 
     # --- variante LIVRAISON (jetons FICTIFS au slot) : le run intégral ---
     exe_l = variante_livraison(exe)
@@ -1376,7 +1400,13 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         if secret in journal_brut:
             raise EchecOracle(f"sup-35 : secret {secret[:12]!r}… présent au journal "
                               f"(I1 — le constat ne fuit pas ses clés)")
-    total += 12
+    # D103 : le même verrou en variante livraison — la classe en rcx,
+    # NULL en rdx, 3 sondages, JAMAIS le titre
+    if em.findwindow_appels != [("TRIADE_demo", "")] * 3:
+        raise EchecOracle(f"D103 livraison : appels FindWindowW "
+                          f"{em.findwindow_appels[:4]!r} != 3 recherches par "
+                          f"CLASSE (rcx='TRIADE_demo', rdx=NULL)")
+    total += 13
     return total
 
 
@@ -1902,6 +1932,60 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
         if "ligne S08" not in str(exc):
             raise
     total += 1
+
+    # M11 (terrain.19, D103) : FindWindowW par TITRE — LA régression
+    # terrain.17 rejouée octet par octet : le lea de la classe glisse de
+    # rcx (lpClassName) vers rdx (lpWindowName), rcx = NULL — exactement
+    # les 9 octets du code R1 que le patch binaire terrain.6 corrigéait et
+    # que la reconstruction terrain.17 avait ressuscités (S11 ABSENTE des
+    # runs 17-C→17-G pendant que la fenêtre vivait à l'écran). Le shim au
+    # contrat Win32 réel rend 0 pour toujours : S11 « ABSENTE », clic
+    # JAMAIS envoyé, T1 KO — LE verrou de la leçon D102 : le modèle refuse
+    # d'être d'accord avec le code faux. Sans lui, ce mutant repasserait
+    # vert (c'est précisément comment 17-C→17-G ont menti).
+    base_t1 = _fichier_rva(L.ZONE_T1[0])
+    tranche_t1 = exe[base_t1:base_t1 + (L.ZONE_T1[1] - L.ZONE_T1[0])]
+    pos_cls = None
+    for i in range(len(tranche_t1) - 11):
+        if (tranche_t1[i:i + 3] == bytes.fromhex("488d0d")          # lea rcx,[rip+d]
+                and tranche_t1[i + 7:i + 9] == bytes.fromhex("31d2")     # xor edx,edx
+                and tranche_t1[i + 9:i + 11] == bytes.fromhex("ff15")):  # call [rip+IAT]
+            pos_cls = i
+            break
+    if pos_cls is None:
+        raise EchecOracle("falsification D103 : l'appel FindWindowW par classe "
+                          "introuvable en zone T1 (sup-33:R2 attendu — lea rcx "
+                          "48 8D 0D + xor edx 31 D2 + call FF 15)")
+    disp_cls = struct.unpack_from("<i", tranche_t1, pos_cls + 3)[0]
+    mutant = bytearray(exe)
+    # 31 C9 (xor ecx,ecx : lpClassName=NULL) + 48 8D 15 disp-2 (lea rdx :
+    # la classe en lpWindowName) — 9 octets, même taille, le défaut R1 exact
+    rempl_titre = bytes.fromhex("31c9488d15") + struct.pack("<i", disp_cls - 2)
+    mutant[base_t1 + pos_cls:base_t1 + pos_cls + 9] = rempl_titre
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    r = em.appeler(RVA_SUP["sup-33"])
+    if r == 1:
+        raise EchecOracle("falsification D103 : T1 VERTE avec une recherche par "
+                          "TITRE — le modèle a couvert le code faux (leçon D102 "
+                          "violée : exactement comment 17-C→17-G ont menti)")
+    brut = b"".join(em.journal_fichier)
+    if S("S11A") + b"\r\n" in brut:
+        raise EchecOracle("falsification D103 : S11A (fenêtre détectée) émise "
+                          "pour une recherche par titre — le handle fantôme a "
+                          "circulé (E2 sup-33)")
+    if S("S11B") + b"\r\n" not in brut:
+        raise EchecOracle("falsification D103 : S11B (ABSENTE) manquante — la "
+                          "recherche par titre doit échouer honnêtement (E2)")
+    if any(m == 0xF5 for (_h, m) in em.sendmsgtimeout):
+        raise EchecOracle("falsification D103 : BM_CLICK envoyé sans fenêtre — "
+                          "le clic aurait testé un handle fantôme (Q3 sup-33)")
+    if em.findwindow_appels and em.findwindow_appels[0] != ("", "TRIADE_demo"):
+        raise EchecOracle("falsification D103 : le premier appel n'est pas la "
+                          "signature titre (rcx=NULL, rdx='TRIADE_demo')")
+    total += 1
     return total, detectees, len(cibles)
 
 
@@ -1961,7 +2045,11 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     verdicts["f60031"] = {"cas": 3, "detail": "mode 0 muet / mode 1 tuyaux+héritage, "
                                                "cwd répertoire exe (D36), zéro fuite"}
     verdicts["f60033"] = {"cas": 3, "detail": "T1 vert : fenêtre au 3e sondage, clic "
-                                               "BM_CLICK, marqueur 31 o, 17 lignes embarquées"}
+                                               "BM_CLICK, marqueur 31 o, 17 lignes embarquées ; "
+                                               "D103 : recherche par CLASSE verrouillée "
+                                               "(rcx='TRIADE_demo', rdx=NULL — 3 appels "
+                                               "exacts par variante) et la régression par "
+                                               "TITRE de terrain.17 attrapée (M11)"}
     verdicts["f60034"] = {"cas": 3, "detail": "T2 vert : bannière/événements/arret "
                                                "memcmp exacts, curl sans tuyaux, flux embarqué"}
     verdicts["f60035"] = {"cas": 3, "detail": "T3 vert : OAuth/métadonnées/session/PUT "

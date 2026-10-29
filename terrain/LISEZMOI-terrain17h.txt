@@ -1,0 +1,129 @@
+TRIADE — TERRAIN.17-H : « LE DOUBLON EST MORT — LE SUPERVISEUR CHERCHAIT
+LA FENÊTRE DÉMO PAR SON TITRE AU LIEU DE SA CLASSE ». Votre constat du
+29/10 était juste : la fenêtre en doublon rendait le test non fiable.
+La cause est trouvée, prouvée, corrigée — et l'oracle ne pourra plus
+jamais la laisser passer.
+=============================================================================
+
+VOTRE CONSTAT, TRADUIT EN DIAGNOSE OCTET PAR OCTET
+---------------------------------------------------
+Après « TOUT DÉMARRER », une 2e fenêtre s'ouvrait (la fenêtre démo de T1) —
+et le journal disait « S11 T1 fenetre demo ABSENTE » PENDANT QU'ELLE ÉTAIT
+À L'ÉCRAN. Un test qui déclare absente une fenêtre visible n'est pas un
+test : c'est un menteur. Vous l'avez dit, le journal le prouvait :
+
+  - le journal démo de vos runs 17-G s'arrête à « L01 fenetre principale
+    creee » — la fenêtre EXISTAIT (5 lignes vivantes) ;
+  - le superviseur la déclarait ABSENTE et la tuait après 10 secondes,
+    SANS JAMAIS CLIQUER SON BOUTON : une fenêtre orpheline qui s'ouvre,
+    ne fait rien, et meurt — votre « doublon ».
+
+LE COUPABLE : UN BUG DE TERRAIN.5 RESSUSCITÉ PAR LA RECONSTRUCTION
+-------------------------------------------------------------------
+FindWindowW prend DEUX arguments : la CLASSE de fenêtre en premier, le
+TITRE en second. La démo crée sa fenêtre avec CLASSE « TRIADE_demo » et
+TITRE « TRIADE M2 — démonstration complète ». Le superviseur cherchait
+« TRIADE_demo » … en position TITRE :
+
+  17-G : 31 C9 48 8D 15 …   xor ecx,ecx ; lea rdx,[« TRIADE_demo »]
+                               = chercher un TITRE « TRIADE_demo »
+                               → AUCUNE fenêtre ne porte ce titre → NULL,
+                               200 sondes pendant 10 s, ABSENTE.
+
+Ce défaut exact avait été corrigé une première fois en terrain.6 — mais
+PAR PATCH BINAIRE DIRECT (9 octets), jamais reporté à la source. La
+reconstruction terrain.17 a régénéré le code depuis la source non corrigée
+: le bug est revenu dans TOUS les runs 17-C → 17-G. La leçon est
+inscrite au registre : un correctif qui ne vit pas dans la source ne
+survit pas à une reconstruction.
+
+LE CORRECTIF — 17-H : LA CLASSE EN PREMIER ARGUMENT
+---------------------------------------------------
+  17-H : 48 8D 0D … 31 D2   lea rcx,[« TRIADE_demo »] ; xor edx,edx
+                               = chercher la CLASSE — le vrai contrat
+                               Win32, trouvé au premier sondage.
+
+Mêmes 9 octets, même taille, même adresse : le différentiel 17-G → 17-H
+mesure 23 octets en 8 plages TOUTES NOMMÉES (le correctif 9 o, la version
+u64 terrain.8→terrain.9, 5 champs .rsrc 0.5.0.8→0.5.0.9, les sommes R10)
+— le kit embarqué est INTACT octet par octet (même démo, même proxy D102).
+
+CE QUE VOUS VERREZ CHANGER AU PROCHAIN RUN
+------------------------------------------
+  1. « S11 T1 fenetre demo detectee » — la ligne qui manquait depuis
+     terrain.14 (28/10). La fenêtre est VUE par le superviseur.
+  2. « S12 T1 clic TOUT DEMARRER envoye » — le superviseur clique LE
+     bouton de la démo à votre place.
+  3. La 2e fenêtre vit sa vie de test : elle s'ouvre, REÇOIT LE CLIC,
+     déroule son scénario sous vos yeux (c'est sa raison d'être : la
+     vitrine de la démo M2), puis se referme proprement. Elle n'est plus
+     une copie orpheline qui traîne — c'est le sujet du test T1, piloté.
+  4. T1 restera probablement KO — honnêtement : la démo publique (M2
+     scellée) possède sa panne CONNUE (D57 : échange réseau en échec,
+     sortie 0xC0000005). Le journal l'écrira noir sur blanc (S13
+     termine code=3221225477, S15 NON conforme) : c'est l'honnêteté du
+     superviseur, pas un échec du tunnel. T2 et T4 restent les juges M4.
+
+L'ORACLE A APPRIS LA LEÇON (ANTI-MENTIE, DÉFINITIF)
+---------------------------------------------------
+Le modèle d'émulation acceptait l'appel faux : il rendait TOUJOURS un
+handle — d'accord avec le code, faux contre la vraie API (la même classe
+de défaut que l'affaire des 13 octets, D102). Désormais :
+  - le simulateur FindWindowW applique le CONTRAT Win32 réel : un handle
+    SI ET SEULEMENT SI la classe cherchée est « TRIADE_demo » ;
+  - un verrou D103 exige exactement 3 appels par run, classe en premier
+    argument, titre NULL ;
+  - la mutation M11 rejoue le bug 17-G octet par octet (titre en second
+    argument) : l'oracle ÉCHOUE sur ce mutant — la régression ne peut
+    plus JAMAIS repasser verte en silence.
+
+Chaîne verte complète avant livraison : oracle terrain 10 127 cas verts
+(+3 : deux verrous D103, la mutation M11 attrapée), 29/29 falsifications
+de porte + 11 mutations ciblées, 1 158 verrous structurels, round-trip
+notation 100 % sur les 25 blocs, carte re-scellée (Ed25519, R8 OK),
+cristallisation vérifiée, taille 75 264 octets (HUIT générations de
+suite — le correctif vit dans les octets existants).
+
+PROTOCOLE — LE MÊME, UNE SEULE ÉTAPE
+------------------------------------
+ÉTAPE 1 — Double-cliquez superviseur-terrain17h.exe. La fenêtre s'ouvre,
+    cliquez le bouton, attendez le verdict (~4 minutes). PREUVE que vous
+    jouez le 17-H (et pas un ancien) : le journal contient « S11 T1
+    fenetre demo detectee » ET « S12 T1 clic TOUT DEMARRER envoye » —
+    deux lignes IMPOSSIBLES pour 17-G — et « S05C md5 proxy.exe
+    2b6481a1e76fbd8e245cd03d883e36c7 » (le proxy D102, inchangé).
+
+ÉTAPE 2 (APRÈS LE RUN) — déposez dans le dossier test du Drive : le
+    journal terrain_*.txt, temoin_m4a.txt ET demo_journal.txt (le journal
+    de la fenêtre démo — il dira enfin ce que la démo a fait APRÈS le
+    clic : la donnée que D57 attend depuis quatre jours).
+
+LECTURE DU VERDICT
+------------------
+  - S11 « detectee » + S12 « clic envoye » : le doublon est mort — le
+    superviseur pilote la fenêtre qu'il voit. C'est la réparation de
+    votre constat.
+  - T1 KO avec S13 code=3221225477 : la panne connue D57 de la démo
+    publique (échange réseau) — documentée, attendue, honnête. Le
+    journal démo complet (14 lignes au lieu de 5) précisera l'intervalle.
+  - S49 T4 OK + témoin « HTTP/1.1 200 » : le critère M4 prouvé de bout
+    en bout — le scellage 0.5.0 s'ouvre.
+  - S49 KO + témoin « HTTP/1.1 502 Passerelle inaccessible » (le cas de
+    vos runs du 29/10) : le tunnel M4 déchiffre et parle HTTP clair au
+    client — la preuve D102 est FAITE — mais l'amont était coupé PENDANT
+    le run ; réessayez réseau vivant.
+  - S49 KO + témoin « 17 03 03… » : dites-le moi — nouvelle divergence
+    Schchannel (couvert par le scan par type, mais l'évidence primeiro).
+
+RÉCAPITULATIF DES EMPREINTES
+-----------------------------
+md5 superviseur-terrain17h.exe  ab8afc77d9d50abefd4e42130f8236f1
+sha256                          f947b605486b8d8d71d1906e1dba51fca614dadb13a73df5a39ff9b0db91b6f9
+taille                          75 264 octets (la même depuis terrain.17)
+md5 démo embarquée              73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué              2b6481a1e76fbd8e245cd03d883e36c7 (inchangé — tls-07:R2 D102)
+version                         0.5.0-terrain.9 (u64 0x00050109, FileVersion 0.5.0.9)
+
+La fenêtre que vous voyiez en double était le symptôme ; le mensonge
+d'adresse en était la maladie ; l'oracle complice en était l'assurance.
+Les trois sont morts ensemble.

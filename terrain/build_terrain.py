@@ -570,7 +570,7 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     # 0x800 — 28 entrées conservées, la somme recouverte par le build) ;
     # terrain.18 (D101) : le prévol vit SOUS l'entrée de zone données sup 1
     # (bloc zone-résident — la table ne bouge toujours pas)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN8))
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN9))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -634,19 +634,19 @@ def composer_rsrc() -> tuple[bytes, int]:
     ffi = struct.pack("<13I",
                       0xFEEF04BD,      # signature
                       0x00010000,      # version de structure 1.0
-                      0x00050000, 0x00000008,   # version fichier 0.5.0.8 (terrain.17-G)
-                      0x00050000, 0x00000008,   # version produit 0.5.0.8 (terrain.17-G)
+                      0x00050000, 0x00000009,   # version fichier 0.5.0.9 (terrain.17-H)
+                      0x00050000, 0x00000009,   # version produit 0.5.0.9 (terrain.17-H)
                       0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
                       0x00040004,      # VOS_NT_WINDOWS32
                       0x00000001,      # VFT_APP
                       0x00000000, 0x00000000, 0x00000000)
     chaines = b"".join([
         _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
-        _chaine_vsi("FileVersion", "0.5.0.8"),
+        _chaine_vsi("FileVersion", "0.5.0.9"),
         _chaine_vsi("InternalName", "superviseur"),
         _chaine_vsi("OriginalFilename", "superviseur.exe"),
         _chaine_vsi("ProductName", "Protocole TRIADE"),
-        _chaine_vsi("ProductVersion", "0.5.0-terrain.8"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.9"),
         _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
     ])
     table = _noeud_vsi(1, "040904B0", enfants=chaines)
@@ -658,7 +658,7 @@ def composer_rsrc() -> tuple[bytes, int]:
     manifeste = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
         '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
-        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.8"/>'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.9"/>'
         '<description>TRIADE : superviseur terrain de tests</description>'
         '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
         '<requestedPrivileges>'
@@ -789,7 +789,7 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
                     for k, v in table.entries.items():
                         if k == b"FileVersion":
                             fic = v.decode("ascii")
-    assert fic == "0.5.0.8", f"FileVersion ressources = {fic!r}"
+    assert fic == "0.5.0.9", f"FileVersion ressources = {fic!r}"
     # D50 : règle du chargeur RÉEL — la table des sections doit tenir DANS
     # SizeOfHeaders (aligné FILE_ALIGN). Le terrain.2 violait cette règle
     # (0x238 d'en-têtes réels pour 0x200 déclarés) : Windows refusait de
@@ -1191,7 +1191,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  reutilisation_R7              : {herit} blocs octet-identiques "
         f"(hello/selftest/echo/demo.9)",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee terrain, "
-        f"u64 0x{L.VERSION_U64_TERRAIN8:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_TERRAIN9:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit "
         f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.5.0-dev.2 M4 + annexe jetons), "
         f"extraction verifiee par relecture octet a octet, nettoyage apres run ; "
@@ -1230,7 +1230,7 @@ def assembler_tout():
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN8
+    version = L.VERSION_TERRAIN9
     verrous_t4 = croiser_fixtures_t4()
     print(f"[croisement] T4 : {len(verrous_t4)} fixtures == octets du proxy M4 scellé "
           f"(bannière/événements/502 — jamais deux sources, D96)")
@@ -1318,7 +1318,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN8)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN9)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

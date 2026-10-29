@@ -6528,3 +6528,92 @@ D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
 du dépôt est la balise COURANTE terrain.17-G ee23cc80… — artefact vivant
 re-scellé par version ; le proxy M4 du dépôt est la balise 0.5.0-dev.2
 D102 b9264e0b…).
+
+## Entrée 89 — D103 : terrain.19 / 17-H, le doublon est mort (le développeur a refusé la fenêtre menteuse : « règle ça en priorité sinon le test n'est pas fiable » — et il avait raison ; les journaux 17-G disaient « fenetre demo ABSENTE » pendant que la fenêtre vivait à l'écran ; la racine : FindWindowW par TITRE — le bug de terrain.5 ressuscité par la reconstruction terrain.17, le patch binaire terrain.6 n'ayant jamais vécu dans la source ; ET le témoin 17-G a parlé : HTTP CLAIR chez le client — D102 prouvé sur machine réelle, 29/10, ~11:00)
+
+**Les pièces du matin (rapatriées par le compte de service, md5 MATCH).**
+Deux journaux complets séquentiels (10:41:49 et 10:45:00 — le run dure
+~3 min, pas de chevauchement), demo_journal.txt NEUF (150 o — dépôt
+demandé par le LISEZMOI 17-G), le témoin, et le superviseur 17-G
+identique à la livraison. Lecture en trois temps :
+
+  1. LE KIT EST BON : « S05C md5 proxy.exe 2b6481a1… » — le proxy D102
+     a vécu le run (l'ancien affichait 33c91815…).
+  2. LE TÉMOIN A DIT L'ESSENTIEL : « HTTP/1.1 502 Passerelle
+     inaccessible » — du HTTP EN CLAIR livré chez le client. L'anomalie
+     des 13 octets est MORTE sur machine réelle : le tunnel M4 déchiffre
+     et parle HTTP au client (le scan PAR TYPE de tls-07:R2 a tenu).
+     Le 502 est la voix honnête du proxy : l'amont était injoignable
+     PENDANT le run (S09 avait vu 0 AVANT — le réseau est tombé entre
+     temps ; S47 exit=0 : chemin propre dégradé, S49 KO honnête).
+  3. LA FENÊTRE MENTAIT : les DEUX runs disent « S11 T1 fenetre demo
+     ABSENTE » pendant que demo_journal.txt porte « L01 fenetre
+     principale creee » — la fenêtre EXISTAIT (le développeur la VOYAIT :
+     son « doublon »), jamais cliquée, tuée après 10 s.
+
+**La diagnose du doublon (une demi-heure, l'évidence la plus propre du
+projet).** FindWindowW prend la CLASSE en premier argument, le TITRE en
+second. La notation sup-33 portait `xor ecx,ecx ; lea rdx,[CLASSE_DEMO]`
+— la classe en position TITRE : la démo crée CLASSE « TRIADE_demo » et
+TITRE « TRIADE M2 — démonstration complète » ; aucune fenêtre ne porte
+le titre « TRIADE_demo », la vraie API rend NULL, 200 sondes, ABSENTE.
+La corrélation historique est parfaite : terrain.14 (28/10) DÉTECTAIT la
+fenêtre (le patch binaire terrain.6 vivait encore) ; les 7 runs 17-C →
+17-G la déclarent ABSENTE (la reconstruction terrain.17 a régénéré le
+code depuis la notation jamais corrigée). L'oracle était complice : le
+shim lisait la chaîne en rdx et rendait TOUJOURS un handle — la leçon
+D102 (« d'accord entre eux, faux contre le monde ») répliquée au niveau
+user32. Un correctif qui ne vit pas dans la source ne survit pas à une
+reconstruction : terrain.6 a patché l'octet, terrain.17 a régénéré le
+mensonge.
+
+**Le correctif (sup-33:R2, écrit-avant-code).** Q2 réécrite au contrat
+Win32 : la classe en rcx, NULL en rdx. Neuf octets échangés à la même
+adresse (31 C9 48 8D 15 disp → 48 8D 0D disp+2 31 D2 — même cible
+0x2a92, le call IAT intact) : le bloc fait toujours 940 o, le PE
+toujours 75 264 o (HUIT générations consécutives). L'oracle apprend le
+VRAI contrat : handle SI ET SEULEMENT SI la classe cherchée est
+« TRIADE_demo » ; verrou D103 (3 appels exacts par variante, tous
+(classe, NULL)) ; mutation M11 — le bug 17-G rejoué octet par octet —
+désormais ATTRAPÉE (T1 KO, S11B, aucun clic). Incident de correction :
+la première insertion de M11 avalait le compteur de M10 (total+=1
+remplacé au lieu d'inséré avant) — restauré, comptes audités par
+exécution isolée (40 = 29 cibles + 11 mutations).
+
+**Chaîne verte.** Oracle terrain 10 127 cas verts (+3) ; falsification
+29/29 + 11 mutations ; 1 158 verrous structurels ; round-trip notation
+100 % ; carte re-scellée (Ed25519, R8 OK) ; kit INTACT (demo 73c064fb…,
+proxy D102 2b6481a1… vérifiés dans le .blob). Différentiel 17-G → 17-H :
+23 octets en 8 plages TOUTES NOMMÉES (le correctif 9 o à rva 0x544f =
+.boucle_fen — EXACTEMENT là où vivait le bug ; R_VERSION 0x50108 →
+0x50109 ; 8 o sommes R10 ; 5×1 o versions .rsrc/manifeste) — .blob
+intouché. sha256 f947b605…, md5 ab8afc77…, version terrain.9
+(u64 0x00050109, FileVersion 0.5.0.9).
+
+**Livraison.** download/superviseur-terrain17h.exe + LISEZMOI-terrain17h.txt
+(poussés au Drive). La preuve du nouveau binaire est COMPORTEMENTALE :
+« S11 T1 fenetre demo detectee » + « S12 T1 clic TOUT DEMARRER envoye » —
+deux lignes impossibles pour 17-G. NOUVEAU dépôt demandé au développeur :
+demo_journal.txt AUSSI (le journal démo APRÈS le clic — la donnée que
+D57 attend depuis quatre jours : l'intervalle exact de la panne réseau
+de la démo scellée). Le 17-G archivé en référence locale.
+
+**Ce que le prochain run dira.** T1 atteindra enfin son point de panne
+D57 réel : la démo publique devrait mourir de 0xC0000005 à l'échange
+réseau (S13 termine code=3221225477, S15 NON conforme) — honnête,
+documenté, distinct du tunnel. T2/T4 restent les juges M4 : S49 OK +
+témoin « HTTP/1.1 200 » → le scellage 0.5.0 s'ouvre ; S49 KO + 502 →
+l'amont était encore coupé (réessayer réseau vivant — D102 est déjà
+prouvé par le témoin clair du 17-G). Puis v0.6.0 axes 2-3 (CF2-Shamir,
+sceau I) selon D86/D87.
+
+Docs : Entrée 89, DECISIONS D103, worklog (Task ID 30), I/README
+(sup-33:R2), layout (terrain.19, VERSION_TERRAIN9), auteur.py (R2),
+LISEZMOI-terrain17h. Commit D103.
+
+Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle
+D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
+0.4.0 dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur
+du dépôt est la balise COURANTE terrain.17-H f947b605… — artefact vivant
+re-scellé par version ; le proxy M4 du dépôt est la balise 0.5.0-dev.2
+D102 b9264e0b…).

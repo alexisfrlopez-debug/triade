@@ -132,6 +132,8 @@ VERSION_TERRAIN7 = "0.5.0-terrain.7"      # prévol intégré : orphelins + amon
 VERSION_U64_TERRAIN7 = 0x00050107         # ÉTAPES 0/0 BIS du protocole automatiques (17-F)
 VERSION_TERRAIN8 = "0.5.0-terrain.8"      # kit proxy M4 D102 : tls-07 scan PAR TYPE (17-G)
 VERSION_U64_TERRAIN8 = 0x00050108         # le clair ENFIN relayé — reclassement Schannel
+VERSION_TERRAIN9 = "0.5.0-terrain.9"      # T1 retrouvé : FindWindowW par CLASSE (D103)
+VERSION_U64_TERRAIN9 = 0x00050109         # la fenêtre démo vit, le doublon meurt (17-H)
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
@@ -175,7 +177,14 @@ BLOCS_TERRAIN = [
     ("f60009", "sup-09:R4", 0x4C00, 0x200, "terrain.18", 1), # scénario (R3 D96 ; R4 D101 : prévol avant extraction)
     ("f60031", "sup-31:R1", 0x5200, 0x1C0, "terrain.1", 1),  # lanceur
     ("f60036", "sup-36:R1", 0x4E00, 0x1C0, "terrain.1", 1),  # fichiers (D48)
-    ("f60033", "sup-33:R1", 0x5400, 0x3C0, "terrain.1", 1),  # T1 démo
+    ("f60033", "sup-33:R2", 0x5400, 0x3C0, "terrain.19", 1),  # T1 démo
+                                            # R2 (D103) : FindWindowW porte la CLASSE
+                                            # en rcx (NULL en rdx) — la recherche par
+                                            # TITRE de R1 (héritée de terrain.5, corrigée
+                                            # en binaire par terrain.6, PERDUE par la
+                                            # reconstruction terrain.17) rendait S11
+                                            # ABSENTE des runs 17-C→17-G pendant que la
+                                            # fenêtre vivait à l'écran — le doublon
     ("f60034", "sup-34:R1", 0x5800, 0x5C0, "terrain.1", 1),  # T2 proxy
     ("f60035", "sup-35:R1", 0x5E00, 0x4C0, "terrain.1", 1),  # T3 envoi Drive
     ("f60037", "sup-37:R1", 0x6600, 0x400, "terrain.2", 1),  # kit embarqué (D49)

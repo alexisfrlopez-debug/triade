@@ -1,4 +1,4 @@
-sup-33 · test T1 — démo M2 (regression scellée) · révision 1
+sup-33 · test T1 — démo M2 (regression scellée) · révision 2
 Intention : rejouer la démo M2 SANS main humaine : lancer demo.exe, trouver
 sa fenêtre (classe "TRIADE_demo" — la nôtre s'appelle autrement, V4 de
 sup-02), cliquer SON bouton « TOUT DÉMARRER » à sa place (BM_CLICK),
@@ -13,8 +13,13 @@ Contrat :
          d'échec F1 journalisé « S10 T1 demo.exe ABSENT ») ; P2 pile
          alignée ; P3 journal (win-05) opérationnel.
   post : Q1 lancement par sup-31 (mode 0, cmdline "demo.exe") ; échec ->
-         S10 ABSENT + rax = 0 ; Q2 fenêtre cherchée par FindWindowW(NULL,
-         "TRIADE_demo") avec re-sondage (Sleep 50 ms, 200 essais = 10 s) :
+         S10 ABSENT + rax = 0 ; Q2 fenêtre cherchée par FindWindowW
+         ("TRIADE_demo", NULL) — la CLASSE en premier argument, NULL en
+         second (le contrat Win32 : lpClassName = rcx, lpWindowName = rdx —
+         la fenêtre démo porte la classe "TRIADE_demo" et le titre
+         "TRIADE M2 — démonstration complète" : chercher le titre rend
+         NULL à jamais, la régression R1/terrain.17) — avec re-sondage
+         (Sleep 50 ms, 200 essais = 10 s) :
          trouvée -> S11 ; introuvable -> S11 timeout + TerminateProcess +
          CloseHandle + rax = 0 ; Q3 bouton = FindWindowExW(fenêtre, 0,
          "BUTTON", 0) ; BM_CLICK envoyé par SendMessageTimeoutW (SMTO_
@@ -72,3 +77,18 @@ Décisions   : D48 ; le clic est un BM_CLICK sur le bouton trouvé par classe
               (pas de coordonnées — la géométrie appartient à la démo) ;
               le marqueur final comme condition de fin (héritage de la
               sagesse terrain : les durées mentent, les événements non).
+Historique  : R1→R2 (D103) : la Q2 de R1 décrivait l'appel FindWindowW(NULL,
+              "TRIADE_demo") — chaine en lpWindowName : recherche par TITRE.
+              Le binaire terrain.6 avait été corrigé par patch direct (9 octets)
+              mais JAMAIS reporté à la notation : la reconstruction terrain.17
+              a ressuscité le défaut originel de terrain.5 — S11 « fenetre demo
+              ABSENTE » sur TOUS les runs 17-C→17-G pendant que la fenêtre
+              vivait à l'écran (journal démo : L01 posée), la fenêtre démo
+              orpheline jamais cliquée puis tuée après 10 s — le « doublon »
+              constaté par le développeur. R2 porte la classe en rcx : 9
+              octets, même taille, et l'oracle apprend le VRAI contrat (le
+              shim rend un handle SI ET SEULEMENT SI la classe cherchée est
+              "TRIADE_demo" — une recherche par titre échoue désormais en
+              émulation comme sur la vraie machine ; leçon D102 appliquée à
+              user32 : le modèle ne doit jamais être d'accord avec le code
+              faux).

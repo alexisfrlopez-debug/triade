@@ -50,7 +50,7 @@ résumé.
 | f60036 | sup-36:R1 | 0x4E00 | 0x1C0 | fichiers (lire/écrire/supprimer, préfixe répertoire, cache DIR_LONG) |
 | d40005 | win-05:R3 | 0x5000 | 0x200 | miroir écran + fichier (réutilisation R7) |
 | f60031 | sup-31:R1 | 0x5200 | 0x1C0 | lanceur de processus (CreateProcessA + tuyaux) |
-| f60033 | sup-33:R1 | 0x5400 | 0x3C0 | test T1 — démo M2 |
+| f60033 | sup-33:R2 | 0x5400 | 0x3C0 | test T1 — démo M2 (R2, D103 : FindWindowW par CLASSE en rcx — la recherche par titre de R1 rendait S11 ABSENTE, terrain.17 avait perdu le patch binaire terrain.6) |
 | f60034 | sup-34:R1 | 0x5800 | 0x5C0 | test T2 — proxy M3 |
 | f60035 | sup-35:R1 | 0x5E00 | 0x4C0 | test T3 — envoi Drive |
 | f60037 | sup-37:R1 | 0x6600 | 0x400 | kit embarqué : entrée à mode ecx 0/1 — extraire / nettoyer (D49) |

@@ -365,3 +365,40 @@ Stage Summary:
   scellage 0.5.0 si S49 OK + témoin « HTTP/1.1 200 » ; puis v0.6.0 axes
   2-3 (CF2-Shamir, sceau I) selon D86/D87 ; terrain : D57 (WER) seul
   point ouvert
+
+## Task ID 30 — D103 : terrain.19 / 17-H, le doublon est mort (2026-10-29)
+
+- JOURNAUX 17-G RAPATRIÉS (SA, md5 MATCH) : S05C 2b6481a1 ✓ (kit D102) ;
+  TÉMOIN « HTTP/1.1 502 Passerelle inaccessible » = HTTP CLAIR chez le
+  client — D102 PROUVÉ sur machine réelle (le 502 = amont coupé PENDANT
+  le run, S47 exit=0, S49 KO honnête) ; S11 « fenetre demo ABSENTE » x2
+  pendant que demo_journal.txt (5 lignes vivantes) prouvait la fenêtre
+- DIAGNOSE DOUBLON (constat développeur prioritaire, juste) :
+  FindWindowW(NULL, « TRIADE_demo ») = recherche par TITRE (notation
+  ligne 31-32, binaire 0x424f) — le bug terrain.5 ressuscité par la
+  reconstruction terrain.17 (le patch BINAIRE terrain.6 n'a jamais vécu
+  dans la source) ; terrain.14 détectait, 17-C→17-G mentaient (7 runs) ;
+  oracle complice (shim rendait toujours un handle — leçon D102 au
+  niveau user32)
+- CORRECTIF sup-33:R2 : classe en rcx / NULL en rdx (9 octets échangés,
+  même adresse 0x544f, même cible 0x2a92) ; spec Q2 réécrite, notation
+  régénérée 940 o INTACTE, layout terrain.19 + VERSION_TERRAIN9
+  (0x00050109, .rsrc 0.5.0.9), auteur.py + README à jour
+- ORACLE : contrat Win32 RÉEL (handle ssi classe « TRIADE_demo »),
+  verrou D103 (3 appels exacts par variante), mutation M11 (le bug 17-G
+  rejoué octet par octet) ATTRAPÉE ; M10 restauré (compteur avalé par
+  la première insertion — audit par exécution isolée : 40 = 29 + 11)
+- CHAÎNE : 10 127 cas verts (+3), 29/29 + 11 mutations, 1 158 verrous,
+  round-trip 100 %, carte re-scellée (R8 OK), 75 264 o (HUIT
+  générations), sha256 f947b605…, md5 ab8afc77… ; kit INTACT (demo
+  73c064fb… + proxy 2b6481a1…) ; diff 17-G → 17-H : 23 o / 8 plages
+  nommées, .blob intouché
+- LIVRAISON : download/superviseur-terrain17h.exe + LISEZMOI-terrain17h
+  (preuve comportementale : S11 « detectee » + S12 « clic envoyé »,
+  impossibles en 17-G) + Drive ; dépôt demandé EN PLUS : demo_journal.txt
+  (la donnée D57) ; 17-G archivé (scripts/superviseur-terrain17g_ref.exe)
+- Suite : run 17-H → T1 atteint ENFIN la panne D57 (S13 0xC0000005
+  attendu, honnête) ; S49 OK + témoin « HTTP/1.1 200 » → scellage 0.5.0
+  (sinon 502 = amont, réessayer — D102 déjà prouvé) ; puis v0.6.0 axes
+  2-3 (CF2-Shamir, sceau I) selon D86/D87 ; D57 avec le journal démo
+  complet

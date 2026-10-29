@@ -55,12 +55,13 @@ BLOCS = [
     ("sup-31-lancer", "f60031", "sup-31:R1", 0x5200, 0x1C0,
      "IAT kernel32#3 : CreateProcessA, CreatePipe ; IAT kernel32#1/#2 : "
      "CloseHandle, GetModuleFileNameA ; état .data ETAT_SUP (HPROC, PID, TUYAU_*)"),
-    ("sup-33-demo", "f60033", "sup-33:R1", 0x5400, 0x3C0,
+    ("sup-33-demo", "f60033", "sup-33:R2", 0x5400, 0x3C0,
      "IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, "
      "TerminateProcess, Sleep ; IAT user32#2 : FindWindowW, FindWindowExW, "
      "SendMessageTimeoutW ; IAT kernel32#1 : CloseHandle ; blocs sup-31, "
      "sup-36, libc-02 ; chaînes S10..S16 + NOM_DEMO + CLASSE_DEMO + fixture "
-     "finale (zones données)"),
+     "finale (zones données) — R2 (D103) : FindWindowW par CLASSE en rcx "
+     "(NULL en rdx), la recherche par titre de R1 rendait S11 ABSENTE"),
     ("sup-34-proxy", "f60034", "sup-34:R1", 0x5800, 0x5C0,
      "IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, "
      "TerminateProcess, PeekNamedPipe, Sleep, DeleteFileA ; IAT kernel32#2 : "
