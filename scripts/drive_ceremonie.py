@@ -55,7 +55,7 @@ V06 = REPO / "v06"
 AUDIT = ESPACE / "scripts"
 DOSSIER = "Cérémonie"
 SOUS = "v06"
-COMMIT_SRC = "da8fd4c"          # D107 — le maître de cérémonie graphique
+COMMIT_SRC = "6674e79"          # D111 — le GUI s'attache au dépôt (--depot)
 
 # (source locale, cible relative dans /Cérémonie) — 13 fichiers
 KIT = [
@@ -120,9 +120,10 @@ def fabriquer_manifeste():
         "",
         f"Déposé le : {now.strftime('%Y-%m-%dT%H:%M:%SZ')} (UTC) — canal : "
         "OAuth relais, Drive « Triade ».",
-        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D107 — le "
-        "maître de cérémonie",
-        "graphique) + zone de livraison download/ de l'espace de travail.",
+        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D111 — le "
+        "GUI s'attache au dépôt :",
+        "--depot CHEMIN / TRIADE_DEPOT) + zone de livraison download/ de "
+        "l'espace de travail.",
         "",
         "CE QUE CONTIENT CE DOSSIER",
         "--------------------------",
@@ -141,6 +142,13 @@ def fabriquer_manifeste():
         "  sentinelle détachée, BRÛLER avec confirmation tapée. La pile",
         "  pip (pynacl + cryptography) est vérifiée et proposée AVEC",
         "  votre accord.",
+        "",
+        "- D111 : ce GUI (v1.3) peut aussi être lancé N'IMPORTE OÙ avec",
+        "  --depot CHEMIN (ou la variable TRIADE_DEPOT) pointant sur la",
+        "  racine d'un clone du dépôt git — un chemin faux est un échec",
+        "  nommé (code 2), et l'accueil affiche toujours le dépôt",
+        "  attaché et sa source. Voir LISEZMOI-ceremonie-GUI.txt, section",
+        "  « SE CONNECTER AU DÉPÔT ».",
         "",
         "- Mode d'emploi : LISEZMOI-ceremonie-GUI.txt (le GUI, les deux",
         "  profils), LISEZMOI-cle-I.txt et LISEZMOI-coffre-CF2.txt (les",
