@@ -1388,11 +1388,17 @@ class Application:
         """Adaptateur : le verdict du CLI (code 0) devient le verdict GUI.
         reçoit l'émetteur de l'exécuteur (streaming ligne à ligne) quand la
         signature le demande (cf. _exige_emit) — functools.partial le
-        transmet."""
+        transmet. D114 : quand la sortie a déjà coulé ligne à ligne dans le
+        journal (emit), le verdict ne la RÉPÈTE plus en bloc — une seule
+        ligne d'ancrage (la première, celle de la barre), le détail vit
+        au-dessus dans l'ordre du flux ; sans emit (pas de flux), le texte
+        entier reste la remise du verdict."""
         code, texte = executer_cli(module, args, emit=emit, phrase=phrase,
                                    nouvelle_phrase=nouvelle_phrase,
                                    au_racine=au_racine)
         ok = code == 0
+        if emit is not None and texte.strip():
+            texte = texte.strip().splitlines()[0]
         return ok, (texte if texte.strip() else
                     ("VERT" if ok else f"code de sortie {code}"))
 

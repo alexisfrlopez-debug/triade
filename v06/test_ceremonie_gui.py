@@ -55,6 +55,10 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        statut/verifier (argument GLOBAL du parseur, avant la
        sous-commande), migrer --depuis le conteneur choisi — bout en bout
        sur coffre labo à chemin PERSONNALISÉ, CF1 laissé INTACT ;
+  T11  verdict sans répétition (D114) : quand la sortie CLI a déjà coulé
+       ligne à ligne dans le journal (emit), _cli rend UNE ligne d'ancrage
+       (la première — le détail vit au-dessus, dans l'ordre du flux) ;
+       sans emit, le texte ENTIER reste la remise du verdict ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -325,6 +329,21 @@ def t567f1(rep):
     verifie("t7-etat-fragments-code0", code_m == 0, texte_m)
     code_x, _ = gui.executer_cli("coffre_cf2.py", ["commande-inexistante"])
     verifie("t7-commande-invalide-code-non_nul", code_x != 0)
+
+    print("T11 — D114 : le verdict ne répète plus le flux (une ligne d'ancrage)")
+    class _Boite:      # self factice : _cli ne touche que executer_cli
+        pass
+    captes = []
+    code_v, texte_v = gui.Application._cli(
+        _Boite(), "coffre_cf2.py", ["statut", "--config", cfg],
+        emit=captes.append)
+    verifie("t11-avec-flux-verdict-une-seule-ligne",
+            code_v and "\n" not in texte_v and len(captes) > 1
+            and texte_v.strip() == captes[0].strip(), texte_v)
+    code_p, texte_p = gui.Application._cli(
+        _Boite(), "coffre_cf2.py", ["statut", "--config", cfg])
+    verifie("t11-sans-flux-texte-entier-reste",
+            code_p and "\n" in texte_p, texte_p)
 
     print("F1 — fail-closed (autotest, phrase, brûlage, relève)")
     autotest_orig = gui.autotest
