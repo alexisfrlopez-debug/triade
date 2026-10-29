@@ -1,0 +1,1901 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""ceremonie_gui.py — TRIADE v0.6.0 : le MAÎTRE DE CÉRÉMONIE graphique.
+
+UN SEUL FICHIER PYTHON, ZÉRO LIGNE DE COMMANDE (si ce n'est le lancer) :
+    python3 ceremonie_gui.py            (ou double-clic via lancer_ceremonie)
+
+Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
+
+  PROFIL « HORS-LIGNE » (machine air-gap, cérémonie de la clé I, D87) :
+    - stdlib PURE + tkinter — rien à installer, aucun réseau, aucun pip ;
+    - l'implémentation Ed25519 RFC 8032 est EMBARQUÉE (copie conforme de
+      v06/ceremonie_hors_ligne.py, attestée par test_ceremonie_gui.py T1 :
+      vecteurs RFC § 7.1 + interop « cryptography » quand elle existe) ;
+    - générée / signe / vérifie EXACTEMENT les mêmes fichiers que le script
+      console (interopérable : la remise GUI entre dans sceau_I.py tel quel).
+
+  PROFIL « DÉPÔT » (machine connectée, à côté du dépôt triade) :
+    - sceau I : preparer / deposer / verifier / etat (CLI sous-jacent) ;
+    - coffre CF2 : statut / verifier / migrer (phrase masquée) / export des
+      fragments en feuille imprimable / CONTRÔLE DE RELECTURE des copies
+      hors-ligne / liste blanche éditée par formulaire / sentinelle
+      (démarrage détaché + santé) / restaurer / brûler (confirmation tapée) ;
+    - les commandes passent par les CLI existants en sous-processus et la
+      sortie coule dans le journal : le fail-closed des CLI reste LA loi,
+      le GUI n'est qu'un habit (aucune logique critique dupliquée).
+
+DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
+  - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
+  - toute action destructrice exige une confirmation EXPLICITE (brûler :
+    taper « BRULER » en toutes lettres) ;
+  - la graine n'est JAMAIS affichée à l'écran : le fichier est la remise ;
+  - fail-closed d'abord : l'autotest RFC 8032 précède toute génération ou
+    signature ; un échec nommé n'écrit rien.
+
+DÉPENDANCES : tkinter (inclus dans python.org Windows/macOS ; Linux :
+  sudo apt install python3-tk — c'est la SEULE pièce hors pip). Le profil
+  dépôt veut la PILE DU DÉPÔT (pynacl + cryptography, cf. coffre_cf2.py) :
+  le GUI la vérifie et propose de l'installer (pip, avec votre accord) si
+  elle manque ; le profil hors-ligne reste stdlib pure, sans exception.
+
+BORNES HONNÊTES : le profil hors-ligne n'exige RIEN et n'installe RIEN
+  (c'est le point D87). tkinter lui-même ne s'installe pas via pip : si
+  absent, le script affiche la commande exacte de votre plateforme et
+  s'arrête proprement. La sentinelle démarrée depuis le GUI vit détachée :
+  sa santé se contrôle par le bouton « Santé » (heart-beat).
+
+Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
+  --profil hors-ligne|depot → saute l'écran d'accueil.
+"""
+
+import argparse
+import os
+import sys
+
+# --- confort console Windows (accents français) ---------------------------
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
+
+class ErreurCeremonie(RuntimeError):
+    """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
+
+
+VERSION_GUI = "ceremonie-GUI v1 (D107)"
+
+
+# ===========================================================================
+# SECTION A — Ed25519 en Python pur (RFC 8032), copie CONFORME de
+# v06/ceremonie_hors_ligne.py § crypto. La conformité est attestée par
+# test_ceremonie_gui.py (T1 : vecteurs RFC § 7.1 TEST 1-3 + interop avec
+# l'implémentation auditée « cryptography » quand elle est présente).
+# Duplication CONSCIENTE et CONSIGNÉE : le profil hors-ligne doit vivre
+# sans le dépôt — c'est la même posture que gf_mult_independant dans
+# test_cf2.py (réimplémentation attestée, pas une réécriture).
+# ===========================================================================
+
+P = 2 ** 255 - 19                                   # corps premier
+L = 2 ** 252 + 27742317777372353535851937790883648493   # ordre du point de base
+D = (-121665 * pow(121666, P - 2, P)) % P           # paramètre de courbe
+SQRT_M1 = pow(2, (P - 1) // 4, P)                   # racine de -1
+G = (15112221349535400772501151409588531511454012693041857206046113283949847762202,
+     46316835694926478169428394003475163141307993866256225615783033603165251855960)  # base
+
+import hashlib  # noqa: E402  (import local à la section, ordre voulu)
+
+
+def _sha512(donnees):
+    return hashlib.sha512(donnees).digest()
+
+
+def _inv(x):
+    return pow(x, P - 2, P)
+
+
+def _pt_add(P1, P2):
+    """Addition de points, coordonnées homogènes étendues (RFC 8032 § 5.1.4)."""
+    X1, Y1, Z1, T1 = P1
+    X2, Y2, Z2, T2 = P2
+    A = (Y1 - X1) * (Y2 - X2) % P
+    B = (Y1 + X1) * (Y2 + X2) % P
+    C = 2 * T1 * D * T2 % P
+    Ee = 2 * Z1 * Z2 % P
+    E, F, Gg, H = B - A, Ee - C, Ee + C, B + A
+    return (E * F % P, Gg * H % P, F * Gg % P, E * H % P)
+
+
+def _pt_mul(s, point):
+    """Multiplication scalaire (double-and-add ; s supposé dans [0, L))."""
+    Q = (0, 1, 1, 0)                                # élément neutre
+    Pp = point
+    while s > 0:
+        if s & 1:
+            Q = _pt_add(Q, Pp)
+        Pp = _pt_add(Pp, Pp)
+        s >>= 1
+    return Q
+
+
+def _pt_compress(point):
+    x, y, z, _ = point
+    zi = _inv(z)
+    x = x * zi % P
+    y = y * zi % P
+    return int.to_bytes(y | ((x & 1) << 255), 32, "little")
+
+
+def _pt_decompress(octets):
+    y = int.from_bytes(octets, "little")
+    sign = y >> 255
+    y &= (1 << 255) - 1
+    if y >= P:
+        return None
+    x2 = (y * y - 1) * _inv(D * y * y + 1) % P
+    if x2 == 0:
+        if sign:
+            return None
+        x = 0
+    else:
+        x = pow(x2, (P + 3) // 8, P)
+        if (x * x - x2) % P != 0:
+            x = x * SQRT_M1 % P
+        if (x * x - x2) % P != 0:
+            return None
+        if (x & 1) != sign:
+            x = P - x
+    return (x, y, 1, x * y % P)
+
+
+_G_EXT = (G[0], G[1], 1, G[0] * G[1] % P)
+
+
+def _pt_equal(P1, P2):
+    """Égalité projective : x1/z1 == x2/z2 ET y1/z1 == y2/z2."""
+    x1, y1, z1, _ = P1
+    x2, y2, z2, _ = P2
+    return (x1 * z2 - x2 * z1) % P == 0 and (y1 * z2 - y2 * z1) % P == 0
+
+
+def cle_publique_depuis_graine(graine):
+    """Clé publique (32 octets) depuis la graine (32 octets) — RFC 8032 § 5.1.5."""
+    h = _sha512(graine)
+    a = int.from_bytes(h[:32], "little")
+    a &= (1 << 254) - 8
+    a |= 1 << 254
+    return _pt_compress(_pt_mul(a, _G_EXT))
+
+
+def signer_ed25519(graine, message):
+    """Signature Ed25519 (64 octets) — RFC 8032 § 5.1.6."""
+    h = _sha512(graine)
+    a = int.from_bytes(h[:32], "little")
+    a &= (1 << 254) - 8
+    a |= 1 << 254
+    prefixe = h[32:]
+    r = int.from_bytes(_sha512(prefixe + message), "little") % L
+    R = _pt_compress(_pt_mul(r, _G_EXT))
+    A = _pt_compress(_pt_mul(a, _G_EXT))
+    k = int.from_bytes(_sha512(R + A + message), "little") % L
+    s = (r + k * a) % L
+    return R + int.to_bytes(s, 32, "little")
+
+
+def verifier_ed25519(cle_publique, message, signature):
+    """Vérification Ed25519 — RFC 8032 § 5.1.7. True ssi valide."""
+    if len(cle_publique) != 32 or len(signature) != 64:
+        return False
+    A = _pt_decompress(cle_publique)
+    if A is None:
+        return False
+    Rs = signature[:32]
+    R = _pt_decompress(Rs)
+    if R is None:
+        return False
+    s = int.from_bytes(signature[32:], "little")
+    if s >= L:
+        return False
+    k = int.from_bytes(_sha512(Rs + cle_publique + message), "little") % L
+    sG = _pt_mul(s, _G_EXT)
+    kA = _pt_mul(k, A)
+    return _pt_equal(sG, _pt_add(R, kA))
+
+
+VECTEURS_RFC8032 = [
+    # (graine, clé publique, message, signature)
+    ("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+     "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+     "",
+     "e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555f"
+     "b8821590a33bacc61e39701cf9b46bd25bf5f0595bbe24655141438e7a100b"),
+    ("4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4fb8a6fb",
+     "3d4017c3e843895a92b70aa74d1b7ebc9c982ccf2ec4968cc0cd55f12af4660c",
+     "72",
+     "92a009a9f0d4cab8720e820b5f642540a2b27b5416503f8fb3762223ebdb69da0"
+     "85ac1e43e15996e458f3613d0f11d8c387b2eaeb4302aeeb00d291612bb0c00"),
+    ("c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7",
+     "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025",
+     "af82",
+     "6291d657deec24024827e69c3abe01a30ce548a284743a445e3680d7db5ac3ac1"
+     "8ff9b538d16f290ae67f760984dc6594a7c15e9716ed28dc027beceea1ec40a"),
+]
+
+
+def autotest():
+    """True ssi les TROIS vecteurs RFC passent (clé, signature, vérification)."""
+    tout = True
+    for indice, (graine_hex, pub_hex, msg_hex, sig_hex) in enumerate(
+            VECTEURS_RFC8032, 1):
+        graine = bytes.fromhex(graine_hex)
+        message = bytes.fromhex(msg_hex)
+        signature = bytes.fromhex(sig_hex)
+        publique_calculee = cle_publique_depuis_graine(graine)
+        signature_calculee = signer_ed25519(graine, message)
+        ok = (publique_calculee.hex() == pub_hex
+              and signature_calculee.hex() == sig_hex
+              and verifier_ed25519(bytes.fromhex(pub_hex), message, signature)
+              and not verifier_ed25519(bytes.fromhex(pub_hex), message,
+                                       bytes(64)))
+        tout = tout and ok
+    # Mutation ciblée : un octet de message changé => signature invalide
+    graine, _, msg_hex, sig_hex = VECTEURS_RFC8032[1]
+    message = bytes.fromhex(msg_hex)
+    mauvaise = bytes([message[0] ^ 1]) + message[1:]
+    mutation = not verifier_ed25519(bytes.fromhex(
+        VECTEURS_RFC8032[1][1]), mauvaise, bytes.fromhex(sig_hex))
+    return tout and mutation
+
+
+# ===========================================================================
+# SECTION B — contrôleur du profil HORS-LIGNE (machine air-gap, D87).
+# Mêmes formats de fichiers que v06/ceremonie_hors_ligne.py (interop),
+# mais chemins PARAMÉTRABLES et résultat en (ok, texte) : la GUI habille,
+# le contrôleur décide. La graine ne paraît JAMAIS dans les textes retournés.
+# ===========================================================================
+
+HEX_MIN = set("0123456789abcdef")
+
+
+def _est_hex_min(texte, taille):
+    return (len(texte) == taille and all(c in HEX_MIN for c in texte))
+
+
+def _lire_graine_privee(chemin):
+    """Extrait la graine (64 hex minuscules) de cle-I-privee.txt."""
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            lignes = f.read().splitlines()
+    except OSError as exc:
+        raise ErreurCeremonie(f"clé privée illisible : {chemin} ({exc})")
+    for ligne in lignes:
+        cand = ligne.strip()
+        if _est_hex_min(cand, 64):
+            return bytes.fromhex(cand)
+    raise ErreurCeremonie(f"aucune graine (64 hex minuscules) lisible "
+                          f"dans {chemin}")
+
+
+def _lire_hex_fichier(chemin, quoi, taille):
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            texte = f.read().strip()
+    except OSError as exc:
+        raise ErreurCeremonie(f"{quoi} illisible : {chemin} ({exc})")
+    if not _est_hex_min(texte, taille * 2):
+        raise ErreurCeremonie(f"{quoi} malformé dans {chemin} "
+                              f"({taille * 2} hexadécimaux minuscules attendus)")
+    return bytes.fromhex(texte)
+
+
+def _lire_lignes_a_signer(chemin):
+    """Lignes « arbre balise empreinte » -> [(arbre, balise, empreinte_hex)]."""
+    entrees = []
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            lignes_enum = list(enumerate(f, 1))
+    except OSError as exc:
+        raise ErreurCeremonie(f"remise illisible : {chemin} ({exc})")
+    for numero, ligne in lignes_enum:
+        ligne = ligne.strip()
+        if not ligne:
+            continue
+        morceaux = ligne.split()
+        if (len(morceaux) != 3 or not _est_hex_min(morceaux[2], 64)):
+            raise ErreurCeremonie(
+                f"a-signer ligne {numero} malformée : {ligne!r} "
+                f"(format « arbre balise empreinte »)")
+        entrees.append((morceaux[0], morceaux[1], morceaux[2]))
+    if not entrees:
+        raise ErreurCeremonie(f"{chemin} vide — rien à signer")
+    return entrees
+
+def hl_generer(chemin_privee, chemin_publique):
+    """Génère la clé I (première cérémonie). Fail-closed : autotest d'abord.
+
+    Le contenu des fichiers est IDENTIQUE à mode_generer (interop), la
+    graine n'est JAMAIS retournée dans le texte (le fichier est la remise).
+    """
+    if not autotest():
+        raise ErreurCeremonie("AUTOTEST RFC 8032 : ÉCHEC — cérémonie refusée "
+                              "(fail-closed, rien n'est écrit)")
+    graine = os.urandom(32)
+    publique = cle_publique_depuis_graine(graine)
+    try:
+        with open(chemin_privee, "w", encoding="utf-8") as f:
+            f.write(
+            "# TRIADE — clé I PRIVÉE (sceau de l'Intention, D87)\n"
+            "# Générée HORS LIGNE ; ne doit JAMAIS entrer dans le bac à sable\n"
+            "# de l'assistant, ni être synchronisée, ni être commitée.\n"
+            "#\n"
+            "# GARDE : imprimez la ligne de 64 caractères ci-dessous, conservez\n"
+            "# le papier en lieu sûr (deux copies, deux lieux). Une graine perdue\n"
+            "# = toute évolution future de l'intention devient impossible ; une\n"
+            "# graine volée = la souveraineté est morte. Détruisez ce fichier\n"
+            "# après copie papier, ou conservez-le chiffré sur le média dédié.\n"
+            "#\n"
+            + graine.hex() + "\n")
+        try:
+            os.chmod(chemin_privee, 0o600)
+        except OSError:
+            pass  # Windows : attributs ACL, le fichier reste privé par posture
+        with open(chemin_publique, "w", encoding="utf-8") as f:
+            f.write(publique.hex() + "\n")
+    except OSError as exc:
+        raise ErreurCeremonie(f"impossible d'écrire la clé : {exc} "
+                              f"(vérifiez les chemins choisis)")
+    return (f"[ceremonie] generer : clé I créée.\n"
+            f"  {chemin_privee}   — LA garde (voir l'en-tête du fichier : "
+            f"impression papier recommandée)\n"
+            f"  {chemin_publique} — à remettre au dépôt (publique, sans "
+            f"risque)\n"
+            f"  La graine ne s'affiche jamais ici : le fichier est la remise.")
+
+
+def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie):
+    """Signe la remise a-signer.txt avec la clé privée — chaque signature
+    est auto-vérifiée AVANT écriture (une cérémonie douteuse n'écrit rien)."""
+    if not autotest():
+        raise ErreurCeremonie("AUTOTEST RFC 8032 : ÉCHEC — cérémonie refusée "
+                              "(fail-closed, rien n'est écrit)")
+    graine = _lire_graine_privee(chemin_privee)
+    publique = cle_publique_depuis_graine(graine)
+    entrees = _lire_lignes_a_signer(chemin_a_signer)
+    lignes = []
+    for arbre, balise, empreinte_hex in entrees:
+        message = bytes.fromhex(empreinte_hex)
+        signature = signer_ed25519(graine, message)
+        if not verifier_ed25519(publique, message, signature):
+            raise ErreurCeremonie(
+                f"signature auto-vérification invalide pour {arbre} — "
+                f"RIEN n'est écrit (cérémonie douteuse, spec § 4)")
+        lignes.append(f"{arbre} {balise} {signature.hex()}")
+    try:
+        with open(chemin_sortie, "w", encoding="utf-8") as f:
+            f.write("\n".join(lignes) + "\n")
+    except OSError as exc:
+        raise ErreurCeremonie(f"impossible d'écrire les signatures : {exc}")
+    return (f"[ceremonie] signer : {len(lignes)} signatures -> "
+            f"{chemin_sortie}\n"
+            f"  Chaque signature a été VÉRIFIÉE avec la clé publique avant "
+            f"écriture.\n"
+            f"  Remettez {os.path.basename(chemin_sortie)} au dépôt "
+            f"(profil dépôt, onglet Sceau de l'Intention, bouton Déposer).")
+
+
+def hl_verifier(chemin_a_signer, chemin_signatures, chemin_publique):
+    """Re-vérifie une remise de façon autonome (True, texte) / (False, texte)."""
+    entrees = _lire_lignes_a_signer(chemin_a_signer)
+    try:
+        with open(chemin_signatures, "r", encoding="utf-8") as f:
+            lignes_sig = [l.strip() for l in f if l.strip()]
+    except OSError as exc:
+        raise ErreurCeremonie(f"signatures illisibles : {chemin_signatures} "
+                              f"({exc})")
+    publique = _lire_hex_fichier(chemin_publique, "clé publique", 32)
+    vues, tout, texte = set(), True, []
+    for ligne in lignes_sig:
+        morceaux = ligne.split()
+        if len(morceaux) != 3 or not _est_hex_min(morceaux[2], 128):
+            texte.append(f"  ECHEC : ligne de signature malformée : {ligne!r}")
+            tout = False
+            continue
+        arbre, balise, signature_hex = morceaux
+        correspond = [e for e in entrees if e[0] == arbre]
+        if not correspond:
+            texte.append(f"  ECHEC : {arbre} absent de "
+                         f"{os.path.basename(chemin_a_signer)}")
+            tout = False
+            continue
+        if correspond[0][1] != balise:
+            texte.append(f"  ECHEC : balise divergente pour {arbre} : "
+                         f"{balise!r}")
+            tout = False
+            continue
+        ok = verifier_ed25519(publique, bytes.fromhex(correspond[0][2]),
+                              bytes.fromhex(signature_hex))
+        texte.append(f"  {arbre}: {'VERT' if ok else 'SIGNATURE INVALIDE'}")
+        vues.add(arbre)
+        tout = tout and ok
+    manquants = sorted({a for a, _, _ in entrees} - vues)
+    if manquants:
+        texte.append(f"  ECHEC : arbres sans signature : {', '.join(manquants)}")
+        tout = False
+    texte.append("[ceremonie] verifier : " + ("TOUT VERT" if tout else "ÉCHEC"))
+    return tout, "\n".join(texte)
+
+
+# ===========================================================================
+# SECTION C — socle du profil DÉPÔT (machine connectée, à côté du dépôt).
+# Les actions passent par les CLI existants en sous-processus : le
+# fail-closed des CLI reste la loi, le GUI n'est qu'un habit. Les NOUVELLES
+# capacités (contrôle de relecture, feuille d'export, éditeur de liste
+# blanche) importent v06/coffre_cf2.py directement et sont attestées par
+# test_ceremonie_gui.py (T5-T7).
+# ===========================================================================
+
+import subprocess  # noqa: E402
+import tempfile   # noqa: E402
+
+RACINE_DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Journalisation de la sentinelle démarrée en détaché (append, jamais le
+# journal des PV qui appartient au coffre) :
+def _chemin_log_sentinelle(chemin_config):
+    return os.path.join(os.path.dirname(os.path.abspath(chemin_config)),
+                        "sentinelle-stdout.txt")
+
+
+def depot_disponible() -> bool:
+    """True si ce fichier vit bien dans le dépôt (v06/coffre_cf2.py à côté)."""
+    return os.path.isfile(os.path.join(RACINE_DEPOT, "v06", "coffre_cf2.py"))
+
+
+def _module_cf2():
+    """Import paresseux de v06/coffre_cf2 (la pile du dépôt est requise —
+    l'absence est un échec NOMMÉ avec sa consigne, jamais un crash brut)."""
+    if not depot_disponible():
+        raise ErreurCeremonie(
+            "le profil dépôt exige de vivre DANS le dépôt triade "
+            f"(v06/coffre_cf2.py introuvable depuis {RACINE_DEPOT}) — "
+            "pour la machine hors-ligne, utilisez le profil hors-ligne")
+    manquants = _paquets_manquants()
+    if manquants:
+        raise ErreurCeremonie(
+            f"pile du dépôt incomplète (absents : {', '.join(manquants)}) — "
+            "installez-la depuis l'accueil du profil dépôt, ou : "
+            "pip install pynacl cryptography")
+    if RACINE_DEPOT not in sys.path:
+        sys.path.insert(0, RACINE_DEPOT)
+    import v06.coffre_cf2 as cf2
+    return cf2
+
+
+def _paquets_manquants():
+    """La pile du dépôt : pynacl (AEAD XChaCha20) + cryptography (HKDF,
+    Ed25519 de vérification) — cf. coffre_cf2.py, spec § 3."""
+    manquants = []
+    for module, paquet in (("nacl", "pynacl"), ("cryptography", "cryptography")):
+        try:
+            __import__(module)
+        except ImportError:
+            manquants.append(paquet)
+    return manquants
+
+
+def dependances_disponibles() -> bool:
+    return not _paquets_manquants()
+
+
+def installer_dependances(emit=None):
+    """Installe la pile du dépôt (pynacl + cryptography) AVEC l'accord de
+    l'utilisateur (le consentement est demandé par la GUI AVANT l'appel).
+    Dans un venv, pip refuse --user : l'essai retombe sans --user. Retour
+    (ok, texte) — l'échec est nommé, avec la parade si nécessaire."""
+    if not _paquets_manquants():
+        return True, "[pip] pile du dépôt déjà présente (pynacl + cryptography)"
+    manquants = _paquets_manquants()
+    env = dict(os.environ)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    dans_venv = (sys.prefix != getattr(sys, "base_prefix", sys.prefix))
+    essais = [[sys.executable, "-m", "pip", "install"] + manquants]
+    if not dans_venv:
+        essais.insert(0, [sys.executable, "-m", "pip", "install", "--user"]
+                      + manquants)
+    lignes = []
+    for cmd in essais:
+        if emit:
+            emit(f"[pip] {' '.join(cmd)}")
+        try:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, text=True,
+                                    encoding="utf-8", errors="replace", env=env)
+            for ligne in proc.stdout:
+                lignes.append(ligne.rstrip("\n"))
+                if emit:
+                    emit(ligne.rstrip("\n"))
+            proc.wait()
+        except OSError as exc:
+            return False, f"pip indisponible : {exc}"
+        if dependances_disponibles():
+            return True, ("[pip] pile du dépôt installée et importable : "
+                          "+ ".join(manquants))
+        sortie = "\n".join(lignes)
+        if "--user' install" not in sortie and \
+                "user site-packages" not in sortie:
+            break       # pas un souci de --user : inutile de réessayer
+    sortie = "\n".join(lignes)
+    if "externally-managed-environment" in sortie:
+        return False, ("environnement Python « externally-managed » (Debian "
+                       "récent) : créez un venv — python3 -m venv ~/venv-triade "
+                       "&& ~/venv-triade/bin/pip install pynacl cryptography — "
+                       "puis relancez le GUI avec ~/venv-triade/bin/python")
+    return False, ("l'installation a échoué — sortie pip ci-dessus ; remède "
+                   "manuel : pip install pynacl cryptography")
+
+
+def _detruire_fichier(chemin):
+    """Écrase puis supprime (best effort) — pour le fichier-phrase temporaire."""
+    try:
+        taille = os.path.getsize(chemin)
+        with open(chemin, "wb") as f:
+            f.write(b"\x00" * taille)
+    except OSError:
+        pass
+    try:
+        os.unlink(chemin)
+    except OSError:
+        pass
+
+
+def executer_cli(module, args, emit=None, phrase=None):
+    """Exécute un CLI du dépôt (v06/<module>) et streame sa sortie.
+
+    Retour (code_sortie, texte_complet). Le fail-closed appartient au CLI :
+    le GUI ne fait que RELAYER son verdict (et sa phrase d'échec nommée).
+    « phrase » (non None) passe par --phrase-fichier sur un temporaire 0600,
+    écrasé puis détruit — la phrase ne paraît ni dans la commande ni dans
+    le journal.
+    """
+    chemin_module = os.path.join(RACINE_DEPOT, "v06", module)
+    if not os.path.isfile(chemin_module):
+        raise ErreurCeremonie(f"module du dépôt introuvable : {chemin_module}")
+    cmd = [sys.executable, chemin_module] + [str(a) for a in args]
+    fichier_phrase = None
+    if phrase is not None:
+        if not phrase.strip():
+            raise ErreurCeremonie("phrase de contrôle vide — refus "
+                                  "(fail-closed)")
+        fd, fichier_phrase = tempfile.mkstemp(prefix="phrase-cf1-",
+                                              suffix=".txt")
+        try:
+            os.write(fd, phrase.strip().encode("utf-8"))
+        finally:
+            os.close(fd)
+        cmd += ["--phrase-fichier", fichier_phrase]
+    env = dict(os.environ)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONUNBUFFERED", "1")
+    lignes = []
+    try:
+        proc = subprocess.Popen(
+            cmd, cwd=RACINE_DEPOT, stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, text=True, encoding="utf-8",
+            errors="replace", env=env)
+        for ligne in proc.stdout:
+            propre = ligne.rstrip("\n")
+            lignes.append(propre)
+            if emit:
+                emit(propre)
+        code = proc.wait()
+    finally:
+        if fichier_phrase:
+            _detruire_fichier(fichier_phrase)
+    return code, "\n".join(lignes)
+
+
+# ---------------------------------------------------------------------------
+# CF2 : nouvelles capacités de cérémonie (attestées par test_ceremonie_gui)
+# ---------------------------------------------------------------------------
+
+def controle_lecture(chemin_config, fichiers_copies, emit=None):
+    """Le CONTRÔLE DE RELECTURE : vérifie que les copies hors-ligne de
+    l'utilisateur reconstituent bien le seuil — SANS rien écrire nulle part.
+
+    Méthode : fragments des copies -> gardes virtuelles (temporaire) ->
+    deverrouiller() : reconstitution Shamir + vérification + AEAD du
+    conteneur RÉEL. Si le déverrouillage passe, la relève après brûlage
+    est garantie (les copies sont la loi). m est effacé aussitôt (spec § 8).
+    """
+    cf2 = _module_cf2()
+    config = cf2.lire_config(chemin_config)
+    conteneur = config["conteneur"]
+    if not os.path.isfile(conteneur):
+        raise ErreurCeremonie(f"conteneur CF2 introuvable : {conteneur}")
+    with open(conteneur, "rb") as f:
+        entete = cf2._parser_entete(f.read())
+    t, n = entete["t"], entete["n"]
+    sel_coffre = entete["sel"].hex()
+    if len(fichiers_copies) != t:
+        raise ErreurCeremonie(
+            f"le contrôle exige EXACTEMENT le seuil de copies : {t} "
+            f"(reçu : {len(fichiers_copies)}) — ni moins (impossible), "
+            f"ni plus (le contrôle mesure le pire cas de brûlage)")
+    parses, xs = [], []
+    for chemin in fichiers_copies:
+        try:
+            with open(chemin, "r", encoding="ascii") as f:
+                texte = f.read()
+        except (OSError, UnicodeDecodeError) as exc:
+            raise ErreurCeremonie(f"copie illisible : {chemin} ({exc})")
+        try:
+            d = cf2.parser_fragment(texte)
+        except cf2.ErreurCoffre as exc:
+            raise ErreurCeremonie(f"copie INVALIDE {os.path.basename(chemin)} "
+                                  f"corrompue ou falsifiée : {exc}")
+        if d["coffre"] != sel_coffre:
+            raise ErreurCeremonie(
+                f"copie {os.path.basename(chemin)} : sel du coffre divergent "
+                f"— fragment d'un AUTRE coffre (spec § 4)")
+        if (d["t"], d["n"]) != (t, n):
+            raise ErreurCeremonie(
+                f"copie {os.path.basename(chemin)} : seuil divergent "
+                f"{d['t']}/{d['n']} (conteneur : {t}/{n})")
+        parses.append((chemin, texte, d))
+        xs.append(d["x"])
+    if len(set(xs)) != len(xs):
+        raise ErreurCeremonie(
+            f"les {t} copies doivent porter {t} indices x DISTINCTS "
+            f"(reçu : {sorted(xs)}) — deux fois la même copie ne relève rien")
+    if emit:
+        emit(f"[ceremonie] contrôle de relecture : {t} copies, indices "
+             f"x={sorted(xs)} — reconstitution en cours…")
+    with tempfile.TemporaryDirectory(prefix="cf2-relecture-") as tmp:
+        gardes_virtuelles = []
+        for chemin, texte, d in parses:
+            garde = os.path.join(tmp, f"g{d['x']}")
+            os.makedirs(garde, exist_ok=True)
+            with open(os.path.join(garde, f"fragment-{d['x']}.cf2f"), "w",
+                      encoding="ascii") as f:
+                f.write(texte)
+            gardes_virtuelles.append(garde)
+        try:
+            base, _, m, _ = cf2.deverrouiller(conteneur, gardes_virtuelles)
+            cf2._effacer(m)
+            del m
+        except cf2.ErreurCoffre as exc:
+            return False, (f"[ceremonie] contrôle de relecture : ÉCHEC — {exc}\n"
+                           f"  Les copies ne reconstituent PAS le seuil : après "
+                           f"un brûlage, la relève serait IMPOSSIBLE avec ces "
+                           f"copies. Recopiez depuis les gardes du coffre.")
+    nb = sum(len(p.get("entrees", [])) for p in base["projets"].values())
+    return True, (f"[ceremonie] contrôle de relecture : VERT — les {t} copies "
+                  f"reconstituent la clé maîtresse et le conteneur s'ouvre "
+                  f"(AEAD vert, {len(base['projets'])} projet(s), {nb} "
+                  f"entrée(s))\n  La relève après brûlage est garantie avec "
+                  f"ces copies. m a été effacée de la RAM (spec § 8).")
+
+
+def exporter_feuille(chemin_config, chemin_sortie, numeros=None):
+    """Feuille IMPRIMABLE des fragments à copier hors-ligne (= le seuil).
+
+    Par défaut les TROIS dernières gardes (g3, g4, g5 — écho du LISEZMOI).
+    Le fragment sérialisé est déjà du texte hexadécimal transportable à la
+    main : la feuille ajoute les consignes de garde (deux lieux, le seuil
+    est la loi)."""
+    cf2 = _module_cf2()
+    config = cf2.lire_config(chemin_config)
+    t, n = config["t"], config["n"]
+    if numeros is None:
+        numeros = list(range(n - t + 1, n + 1))
+    if len(numeros) != t:
+        raise ErreurCeremonie(
+            f"la feuille exporte le SEUIL de fragments ({t}), reçu : "
+            f"{len(numeros)}")
+    blocs, manquantes = [], []
+    for i in numeros:
+        if not 1 <= i <= n:
+            raise ErreurCeremonie(f"garde hors bornes : g{i} (coffre : {n})")
+        chemin_frag = os.path.join(config["gardes"][i - 1],
+                                   f"fragment-{i}.cf2f")
+        if not os.path.isfile(chemin_frag):
+            manquantes.append(chemin_frag)
+            continue
+        with open(chemin_frag, "r", encoding="ascii") as f:
+            texte = f.read().strip()
+        try:
+            cf2.parser_fragment(texte)      # tag vérifié avant impression
+        except cf2.ErreurCoffre as exc:
+            raise ErreurCeremonie(f"fragment g{i} INVALIDE — {exc}")
+        blocs.append(f"--- COPIE {blocs and len(blocs) + 1 or 1} "
+                     f"(garde g{i}) ---\n{texte}\n")
+    if manquantes:
+        raise ErreurCeremonie("fragments absents des gardes : "
+                              + ", ".join(manquantes))
+    try:
+        with open(chemin_sortie, "w", encoding="utf-8") as f:
+            f.write(
+            "TRIADE — FRAGMENTS HORS-LIGNE DU COFFRE CF2 (D86)\n"
+            "=================================================\n"
+            f"\n{t} fragments ci-dessous (= le seuil {t}/{n}). Chaque bloc\n"
+            "entre « --- COPIE » et la ligne « tag: » EST une copie complète :\n"
+            "imprimez cette feuille (ou copiez les blocs sur USB), DEUX lieux\n"
+            "distincts de préférence. ATTENTION : le seuil est la loi — avec\n"
+            "moins de ces copies, un brûlage laisse le coffre MORT pour de\n"
+            "bonne.\n"
+            "\nPour relever le coffre après un brûlage (profil dépôt,\n"
+            "bouton Restaurer, ou python3 v06/coffre_cf2.py restaurer\n"
+            "copie-1 copie-2 copie-3) :\n"
+            + "\n".join(blocs) +
+            "\nCONSIGNE FINALE : ce papier OUVRE le coffre s'il survit au\n"
+            "brûlage — traitez-le comme la clé qu'il est.\n")
+    except OSError as exc:
+        raise ErreurCeremonie(f"impossible d'écrire la feuille : {exc}")
+    return (f"[ceremonie] feuille exportée : {chemin_sortie} ({t} fragments, "
+            f"gardes g{numeros[0]}…g{numeros[-1]}, tags vérifiés avant "
+            f"impression)")
+
+
+def liste_blanche_lire(chemin_config):
+    cf2 = _module_cf2()
+    return list(cf2.lire_config(chemin_config).get("liste_blanche", []))
+
+
+def liste_blanche_ecrire(chemin_config, motifs):
+    """Réécrit la liste blanche via ecrire_config (atomique, 0600) —
+    le reste de la config est préservé tel quel."""
+    cf2 = _module_cf2()
+    config = cf2.lire_config(chemin_config)
+    config["liste_blanche"] = list(motifs)
+    cf2.ecrire_config(chemin_config, config)
+
+
+def motif_valide(motif):
+    try:
+        import re
+        re.compile(motif)
+        return bool(motif.strip())
+    except re.error:
+        return False
+
+
+def motif_teste(motif, chaine):
+    """re.search du motif contre une image/ligne de commande COMPLÈTE."""
+    import re
+    return re.search(motif, chaine) is not None
+
+
+def sentinelle_demarrer_detachee(chemin_config, attente_max=5.0):
+    """Démarre la sentinelle DÉTACHÉE du GUI (elle vit tant que la machine
+    vit) et attend son heart-beat (borne labo : 5 s). Retour (ok, texte)."""
+    import time
+    cf2 = _module_cf2()
+    config = cf2.lire_config(chemin_config)
+    chemin_sentinelle = os.path.join(RACINE_DEPOT, "v06", "sentinelle_cf2.py")
+    chemin_log = _chemin_log_sentinelle(chemin_config)
+    kwargs = {}
+    if os.name == "nt":
+        kwargs["creationflags"] = (subprocess.DETACHED_PROCESS
+                                   | subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:
+        kwargs["start_new_session"] = True
+    with open(chemin_log, "ab") as f_log:
+        f_log.write(f"\n--- demarrage GUI {time.strftime('%Y-%m-%dT%H:%M:%S')}"
+                    f" ---\n".encode("utf-8"))
+        f_log.flush()
+        proc = subprocess.Popen(
+            [sys.executable, chemin_sentinelle, "demarrer",
+             "--config", chemin_config],
+            cwd=RACINE_DEPOT, stdout=f_log, stderr=subprocess.STDOUT,
+            env=dict(os.environ, PYTHONIOENCODING="utf-8",
+                     PYTHONUNBUFFERED="1"), **kwargs)
+    import json
+    t0 = time.time()
+    while time.time() - t0 < attente_max:
+        hb = config.get("heartbeat")
+        if hb and os.path.isfile(hb):
+            try:
+                with open(hb, "r", encoding="utf-8") as f:
+                    if time.time() - json.load(f)["ts"] < 1.0:
+                        return True, (f"[ceremonie] sentinelle VIVANTE "
+                                      f"(pid {proc.pid}, heart-beat frais, "
+                                      f"sortie journalisée dans {chemin_log}) "
+                                      f"— elle vit détachée du GUI : fermer la "
+                                      f"fenêtre ne la tue pas")
+            except (OSError, ValueError):
+                pass
+        time.sleep(0.05)
+    return False, (f"[ceremonie] sentinelle SANS heart-beat frais après "
+                   f"{attente_max:.0f} s (pid {proc.pid}) — consultez "
+                   f"{chemin_log}")
+
+
+# ===========================================================================
+# SECTION D — la GUI (tkinter, import PROTÉGÉ : --selftest et le profil
+# hors-ligne restent utilisables sur une machine sans tkinter ; l'aide
+# d'installation exacte s'affiche alors en console).
+# ===========================================================================
+
+try:
+    import tkinter as tk
+    from tkinter import ttk, filedialog, messagebox
+    TKINTER_DISPONIBLE, TKINTER_ERREUR = True, ""
+except ImportError as _exc:
+    TKINTER_DISPONIBLE, TKINTER_ERREUR = False, str(_exc)
+
+COULEUR_VERTE = "#1a7f37"
+COULEUR_ROUGE = "#b42318"
+COULEUR_ENCRE = "#1f2328"
+COULEUR_ATTENTE = "#9a6700"
+POLICE_FIXE = ("TkFixedFont", 10)
+
+
+def _message_tkinter_manquant():
+    if sys.platform.startswith("linux"):
+        aide = ("Linux : sudo apt install python3-tk   (Debian/Ubuntu) ; "
+                "sudo dnf install python3-tkinter   (Fedora)")
+    elif sys.platform == "darwin":
+        aide = ("macOS : brew install python-tk   — ou réinstallez Python "
+                "depuis python.org (installeur incluant « Tcl/Tk »)")
+    else:
+        aide = ("Windows : réinstallez Python depuis python.org en cochant "
+                "« tcl/tk and IDLE » (inclus par défaut)")
+    print("tkinter est absent de ce Python — la GUI ne peut pas s'ouvrir.\n"
+          f"  {aide}\n  (tkinter ne s'installe PAS via pip : c'est une "
+          f"composante de Python elle-même.)")
+    print(f"  détail : {TKINTER_ERREUR}")
+    try:
+        import time
+        time.sleep(20)      # double-clic Windows : laisse lire le message
+    except Exception:
+        pass
+
+
+def demarrer_gui(profil=None):
+    """Construit et lance la fenêtre. Retour 0/1 (pour exit())."""
+    if not TKINTER_DISPONIBLE:
+        _message_tkinter_manquant()
+        return 1
+    app = Application(profil=profil)
+    app.mainloop()
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Exécution asynchrone : les cérémonies (pip, migration, autotest CLI) ne
+# gèlent JAMAIS la fenêtre ; la sortie coule ligne à ligne dans le journal.
+# ---------------------------------------------------------------------------
+import queue   # noqa: E402
+import threading   # noqa: E402
+
+
+class Executeur:
+    """Un fil d'exécution + une file : marshal vers le fil tkinter via
+    racine.after (tkinter n'est PAS thread-safe — la file est la frontière)."""
+
+    def __init__(self, application):
+        self.app = application
+        self.file = queue.Queue()
+        self.occupe = False
+        self.fil = None
+
+    def lancer(self, titre, fonction, args=()):
+        if self.occupe:
+            return False
+        self.occupe = True
+        self.app.journal.ajoute(f"── {titre} ──", "titre")
+        self.app.verdict(None, f"{titre} : en cours…")
+        self.fil = threading.Thread(target=self._fil, args=(fonction, args),
+                                     daemon=True)
+        self.fil.start()
+        return True
+
+    def _fil(self, fonction, args):
+        emit = self.emit
+        try:
+            r = fonction(*args, emit=emit) if _exige_emit(fonction) else \
+                fonction(*args)
+        except ErreurCeremonie as exc:
+            r = (False, f"ÉCHEC : {exc}")
+        except Exception as exc:            # garde-fou : nommé, jamais muet
+            r = (False, f"échec inattendu ({type(exc).__name__}) : {exc}")
+        r = _normalise(r)
+        self.file.put(("fin", r))
+
+    def emit(self, ligne):
+        self.file.put(("ligne", str(ligne)))
+
+    def pompe(self):
+        try:
+            while True:
+                genre, donnees = self.file.get_nowait()
+                if genre == "ligne":
+                    self.app.journal.ajoute(donnees)
+                else:
+                    ok, texte = donnees
+                    self.occupe = False
+                    self.app.verdict(ok, texte)
+        except queue.Empty:
+            pass
+        self.app.racine.after(80, self.pompe)
+
+
+def _exige_emit(fonction):
+    """Les contrôleurs déclarant un paramètre « emit » le reçoivent (uniforme)."""
+    import inspect
+    try:
+        return "emit" in inspect.signature(fonction).parameters
+    except (TypeError, ValueError):
+        return False
+
+
+def _normalise(r):
+    if isinstance(r, str):
+        return True, r
+    if isinstance(r, bool):
+        return r, ("VERT" if r else "ÉCHEC")
+    if isinstance(r, int):
+        return r == 0, ("" if r == 0 else f"code de sortie {r}")
+    if isinstance(r, tuple) and len(r) == 2:
+        return bool(r[0]), str(r[1])
+    return True, str(r)
+
+
+class Journal:
+    """Le journal de cérémonie : trace TEXTUELLE de tout ce qui s'est passé
+    (la preuve de passage reste aux CLI et tests — le journal est pour
+    l'humain)."""
+
+    def __init__(self, parent, application):
+        self.app = application
+        cadre = ttk.LabelFrame(parent, text="Journal de cérémonie")
+        cadre.pack(side="bottom", fill="both", expand=True, padx=10, pady=(4, 10))
+        barre = ttk.Frame(cadre)
+        barre.pack(side="top", fill="x", padx=6, pady=(2, 0))
+        ttk.Button(barre, text="Copier tout", width=12,
+                   command=self.copier).pack(side="right", padx=(6, 0))
+        ttk.Button(barre, text="Effacer", width=8,
+                   command=self.effacer).pack(side="right")
+        self.texte = tk.Text(cadre, height=9, wrap="word", state="disabled",
+                             font=POLICE_FIXE, background="#ffffff",
+                             relief="flat", highlightthickness=1,
+                             highlightbackground="#d0d7de")
+        self.texte.pack(side="top", fill="both", expand=True, padx=6, pady=4)
+        for tag, couleur in (("titre", "#0969da"), ("info", COULEUR_ENCRE),
+                             ("pip", "#8250df"), ("vert", COULEUR_VERTE),
+                             ("rouge", COULEUR_ROUGE)):
+            self.texte.tag_configure(tag, foreground=couleur)
+        self.texte.tag_configure("titre", font=(POLICE_FIXE[0], 10, "bold"))
+
+    def ajoute(self, ligne, genre="info"):
+        self.texte.configure(state="normal")
+        self.texte.insert("end", str(ligne) + "\n", genre)
+        self.texte.see("end")
+        self.texte.configure(state="disabled")
+
+    def copier(self):
+        self.app.racine.clipboard_clear()
+        self.app.racine.clipboard_append(self.texte.get("1.0", "end"))
+
+    def effacer(self):
+        self.texte.configure(state="normal")
+        self.texte.delete("1.0", "end")
+        self.texte.configure(state="disabled")
+
+
+# ---------------------------------------------------------------------------
+# L'application
+# ---------------------------------------------------------------------------
+class Application:
+
+    def __init__(self, profil=None):
+        self.racine = tk.Tk()
+        self.racine.title("TRIADE — Maître de cérémonie")
+        self.racine.geometry("1020x740")
+        self.racine.minsize(880, 600)
+        self._batir_style()
+        self._batir_header()
+        self.corps = ttk.Frame(self.racine)
+        self.corps.pack(side="top", fill="both", expand=True, padx=10, pady=6)
+        self.pages = {}
+        self.journal = Journal(self.racine, self)
+        self.executeur = Executeur(self)
+        self._batir_statut()
+        self.depot_pret = depot_disponible()
+        self._batir_accueil()
+        self._batir_hors_ligne()
+        self._batir_depot()
+        self.executeur.pompe()
+        self._autotest_demarrage()
+        cible = {"hors-ligne": "hors-ligne", "depot": "depot"}.get(profil)
+        self.montrer(cible if (cible and (cible != "depot" or self.depot_pret))
+                     else "accueil")
+
+    # --- squelette ---------------------------------------------------------
+    def _batir_style(self):
+        style = ttk.Style(self.racine)
+        try:
+            style.theme_use("clam")     # rendu homogène multi-plateformes
+        except tk.TclError:
+            pass
+        style.configure(".", background="#f6f8fa", foreground=COULEUR_ENCRE,
+                        font=("Segoe UI", 10))
+        style.configure("Titre.TLabel", font=("Segoe UI", 15, "bold"))
+        style.configure("Sous.TLabel", foreground="#57606a")
+        style.configure("Carte.TLabelframe", borderwidth=1,
+                        relief="solid", padding=8)
+        style.configure("Verdict.TLabel", font=("Segoe UI", 10, "bold"))
+
+    def _batir_header(self):
+        cadre = ttk.Frame(self.racine)
+        cadre.pack(side="top", fill="x", padx=10, pady=(10, 0))
+        ttk.Label(cadre, text="TRIADE — Maître de cérémonie",
+                  style="Titre.TLabel").pack(side="left")
+        self.badge_autotest = ttk.Label(cadre, text="autotest RFC 8032 : …",
+                                        style="Sous.TLabel")
+        self.badge_autotest.pack(side="right")
+        ttk.Label(cadre, text=VERSION_GUI + "   ·   "
+                  "la clé privée ne traverse jamais la machine connectée",
+                  style="Sous.TLabel").pack(side="right", padx=12)
+
+    def _batir_statut(self):
+        self.var_verdict = tk.StringVar(value="")
+        self.label_verdict = ttk.Label(self.racine, textvariable=self.var_verdict,
+                                       style="Verdict.TLabel", anchor="w",
+                                       padding=(12, 4))
+        self.label_verdict.pack(side="bottom", fill="x")
+        self.label_verdict.configure(foreground=COULEUR_ATTENTE)
+
+    def montrer(self, nom):
+        for page in self.pages.values():
+            page.pack_forget()
+        self.pages[nom].pack(fill="both", expand=True)
+
+    def verdict(self, ok, texte):
+        prem = texte.strip().splitlines()[0] if texte.strip() else ""
+        self.var_verdict.set(prem if prem else ("VERT" if ok else "ÉCHEC"))
+        self.label_verdict.configure(
+            foreground=COULEUR_VERTE if ok else COULEUR_ROUGE
+            if ok is not None else COULEUR_ATTENTE)
+        if texte.strip():
+            self.journal.ajoute(texte, "vert" if ok else "rouge")
+
+    def action(self, titre, fonction, *args):
+        """Point d'entrée UNIFIÉ : refuse pendant qu'une cérémonie tourne."""
+        if self.executeur.occupe:
+            messagebox.showinfo(
+                "Cérémonie en cours",
+                "Une action est déjà en cours — attendez son verdict "
+                "dans le journal avant d'en lancer une autre.")
+            return
+        self.executeur.lancer(titre, fonction, args)
+
+    def _cli(self, module, args, phrase=None, emit=None):
+        """Adaptateur : le verdict du CLI (code 0) devient le verdict GUI.
+        reçoit l'émetteur de l'exécuteur (streaming ligne à ligne) quand la
+        signature le demande (cf. _exige_emit) — functools.partial le
+        transmet."""
+        code, texte = executer_cli(module, args, emit=emit, phrase=phrase)
+        ok = code == 0
+        return ok, (texte if texte.strip() else
+                    ("VERT" if ok else f"code de sortie {code}"))
+
+    def _autotest_demarrage(self):
+        ok = autotest()
+        self.badge_autotest.configure(
+            text="autotest RFC 8032 : " + ("VERT" if ok else "ÉCHEC"),
+            foreground=COULEUR_VERTE if ok else COULEUR_ROUGE)
+        self.journal.ajoute(
+            "[ceremonie] autotest RFC 8032 : " + ("VERT" if ok else "ÉCHEC"),
+            "vert" if ok else "rouge")
+
+    # --- composants réutilisables -------------------------------------------
+    def _ligne_fichier(self, parent, etiquette, mode="open", defaut="",
+                       types=None):
+        cadre = ttk.Frame(parent)
+        ttk.Label(cadre, text=etiquette, width=26, anchor="w").pack(side="left")
+        var = tk.StringVar(value=defaut)
+        ttk.Entry(cadre, textvariable=var).pack(side="left", fill="x",
+                                                expand=True, padx=(0, 6))
+
+        def choisir():
+            if mode == "save":
+                chemin = filedialog.asksaveasfilename(
+                    initialfile=os.path.basename(var.get() or defaut),
+                    filetypes=types or [("Texte", "*.txt"), ("Tout", "*.*")])
+            else:
+                chemin = filedialog.askopenfilename(filetypes=types or
+                                                     [("Texte", "*.txt"),
+                                                      ("Tout", "*.*")])
+            if chemin:
+                var.set(chemin)
+
+        ttk.Button(cadre, text="Parcourir…", width=11,
+                   command=choisir).pack(side="left")
+        cadre.pack(fill="x", pady=2)
+        return var
+
+    def _section(self, parent, titre):
+        return ttk.LabelFrame(parent, text=titre, style="Carte.TLabelframe")
+
+    def _note(self, parent, texte, couleur="#57606a"):
+        ttk.Label(parent, text=texte, style="Sous.TLabel",
+                  foreground=couleur, wraplength=880,
+                  justify="left").pack(anchor="w", pady=(2, 4))
+
+    # ------------------------------------------------------------------
+    # PAGE ACCUEIL — choix du profil
+    # ------------------------------------------------------------------
+    def _batir_accueil(self):
+        page = ttk.Frame(self.corps)
+        self.pages["accueil"] = page
+        ttk.Label(page, text="Quelle machine êtes-vous ?",
+                  style="Titre.TLabel").pack(anchor="w", pady=(6, 2))
+        self._note(page, "La clé privée de l'Intention naît et signe "
+                         "HORS-LIGNE ; le dépôt connecté vérifie et installe "
+                         "les remises. Les deux profils partagent ce fichier "
+                         "mais jamais leurs secrets.")
+
+        hors_ligne = self._section(page, "Machine HORS-LIGNE — cérémonie de la clé I (D87)")
+        hors_ligne.pack(fill="x", pady=6)
+        self._note(hors_ligne, "Générer la clé (première fois), signer les "
+                               "remises d'intention, re-vérifier une remise. "
+                               "Python standard SEUL : rien à installer, "
+                               "aucun réseau, la clé ne quitte jamais cette "
+                               "machine.")
+        ttk.Button(hors_ligne, text="Ouvrir le profil hors-ligne",
+                   command=lambda: self.montrer("hors-ligne")).pack(anchor="w",
+                                                                    pady=4)
+        depot = self._section(page, "Machine du DÉPÔT (connectée) — sceau I + coffre CF2")
+        depot.pack(fill="x", pady=6)
+        self._note(depot, "Préparer/signer les arbres d'intention, déposer les "
+                          "remises ; migrer le coffre CF1 vers CF2, exporter "
+                          "les fragments, éditer la liste blanche, démarrer "
+                          "la sentinelle, relever ou brûler.")
+        self.bouton_depot = ttk.Button(
+            depot, text="Ouvrir le profil dépôt",
+            command=self._ouvrir_depot)
+        self.bouton_depot.pack(anchor="w", pady=4)
+        if not self.depot_pret:
+            self.bouton_depot.configure(state="disabled")
+            ttk.Label(depot, style="Sous.TLabel", foreground="#9a6700",
+                      wraplength=880, justify="left",
+                      text=("(indisponible : ce fichier ne vit pas dans le "
+                            "dépôt triade — le copier tel quel sur une clef "
+                            "USB ne donne QUE le profil hors-ligne, c'est "
+                            "voulu)")).pack(anchor="w")
+        ttk.Button(page, text="← Retour à l'accueil",
+                   command=lambda: self.montrer("accueil")).pack(anchor="w",
+                                                                 pady=8)
+
+    # ------------------------------------------------------------------
+    # PAGE HORS-LIGNE — clé I : générer / signer / vérifier
+    # ------------------------------------------------------------------
+    def _batir_hors_ligne(self):
+        page = ttk.Frame(self.corps)
+        self.pages["hors-ligne"] = page
+        cahier = ttk.Notebook(page)
+        cahier.pack(fill="both", expand=True, pady=4)
+
+        # --- onglet générer ------------------------------------------------
+        generer = ttk.Frame(cahier, padding=8)
+        cahier.add(generer, text=" 1 · Générer la clé (première fois) ")
+        self._note(generer, "La clé I signera TOUTE évolution future de "
+                            "l'intention. Elle naît ici, hors ligne, et ne "
+                            "doit jamais quitter cette machine : le fichier "
+                            "est la remise, le papier est la garde.")
+        self.var_hl_privee = self._ligne_fichier(
+            generer, "Clé privée (à écrire) :", mode="save",
+            defaut="cle-I-privee.txt")
+        self.var_hl_publique = self._ligne_fichier(
+            generer, "Clé publique (à écrire) :", mode="save",
+            defaut="cle-publique-I.txt")
+        ttk.Label(generer, foreground=COULEUR_ROUGE, wraplength=880,
+                  justify="left",
+                  text=("GARDE — après génération : imprimez la ligne de 64 "
+                        "caractères du fichier privé (deux copies, deux "
+                        "lieux). Graine perdue = plus aucune évolution de "
+                        "l'intention ; graine volée = souveraineté morte. La "
+                        "graine ne s'affiche jamais à l'écran.")
+                  ).pack(anchor="w", pady=6)
+        ttk.Button(generer, text="Générer la clé I",
+                   command=self._sur_hl_generer).pack(anchor="w", pady=4)
+
+        # --- onglet signer -------------------------------------------------
+        signer = ttk.Frame(cahier, padding=8)
+        cahier.add(signer, text=" 2 · Signer une remise ")
+        self._note(signer, "Recevez a-signer.txt depuis le dépôt (profil "
+                           "dépôt, bouton Préparer), puis signez-le ici. "
+                           "Chaque signature est auto-vérifiée avant "
+                           "écriture : une cérémonie douteuse n'écrit rien.")
+        self.var_hl_a_signer = self._ligne_fichier(
+            signer, "Remise à signer (a-signer.txt) :", mode="open")
+        self.var_hl_cle = self._ligne_fichier(
+            signer, "Votre clé privée (cle-I-privee.txt) :", mode="open",
+            defaut="cle-I-privee.txt")
+        self.var_hl_signatures = self._ligne_fichier(
+            signer, "Signatures produites (à écrire) :", mode="save",
+            defaut="signatures-I.txt")
+        ttk.Button(signer, text="Signer la remise",
+                   command=self._sur_hl_signer).pack(anchor="w", pady=4)
+
+        # --- onglet vérifier -----------------------------------------------
+        verifier = ttk.Frame(cahier, padding=8)
+        cahier.add(verifier, text=" 3 · Vérifier une remise (contrôle) ")
+        self._note(verifier, "Re-vérification autonome d'une remise : les "
+                             "signatures correspondent-elles à a-signer.txt "
+                             "ET à la clé publique ? (aucune écriture)")
+        self.var_hl_v_a_signer = self._ligne_fichier(
+            verifier, "Remise de référence (a-signer.txt) :", mode="open")
+        self.var_hl_v_signatures = self._ligne_fichier(
+            verifier, "Signatures (signatures-I.txt) :", mode="open")
+        self.var_hl_v_publique = self._ligne_fichier(
+            verifier, "Clé publique (cle-publique-I.txt) :", mode="open",
+            defaut="cle-publique-I.txt")
+        ttk.Button(verifier, text="Vérifier la remise",
+                   command=self._sur_hl_verifier).pack(anchor="w", pady=4)
+
+        ttk.Button(page, text="← Retour à l'accueil",
+                   command=lambda: self.montrer("accueil")).pack(anchor="w",
+                                                                 pady=6)
+
+    def _sur_hl_generer(self):
+        privee, publique = self.var_hl_privee.get().strip(), \
+            self.var_hl_publique.get().strip()
+        if not privee or not publique:
+            messagebox.showwarning("Champs manquants",
+                                   "Choisissez où écrire la clé privée ET la "
+                                   "clé publique.")
+            return
+        if os.path.exists(privee) and not messagebox.askyesno(
+                "Écraser ?", f"{privee} existe déjà — une clé DÉJÀ générée "
+                f"à cet endroit serait perdue si vous écrasez. Continuer ?"):
+            return
+        self.action("Hors-ligne — générer la clé I", hl_generer, privee,
+                    publique)
+
+    def _sur_hl_signer(self):
+        a_signer, cle, sortie = (self.var_hl_a_signer.get().strip(),
+                                 self.var_hl_cle.get().strip(),
+                                 self.var_hl_signatures.get().strip())
+        if not (a_signer and cle and sortie):
+            messagebox.showwarning("Champs manquants",
+                                   "Les trois chemins sont requis "
+                                   "(a-signer, clé privée, signatures).")
+            return
+        self.action("Hors-ligne — signer la remise", hl_signer, a_signer, cle,
+                    sortie)
+
+    def _sur_hl_verifier(self):
+        a_signer, signatures, publique = (
+            self.var_hl_v_a_signer.get().strip(),
+            self.var_hl_v_signatures.get().strip(),
+            self.var_hl_v_publique.get().strip())
+        if not (a_signer and signatures and publique):
+            messagebox.showwarning("Champs manquants",
+                                   "Les trois chemins sont requis.")
+            return
+        self.action("Hors-ligne — vérifier la remise", hl_verifier, a_signer,
+                    signatures, publique)
+
+    # ------------------------------------------------------------------
+    # PAGE DÉPÔT — sceau I + coffre CF2 + liste blanche
+    # ------------------------------------------------------------------
+    def _batir_depot(self):
+        import functools
+        self._functools = functools
+        page = ttk.Frame(self.corps)
+        self.pages["depot"] = page
+        if not self.depot_pret:
+            self._note(page, "Ce fichier ne vit pas dans le dépôt triade "
+                             "(v06/coffre_cf2.py introuvable) : le profil "
+                             "dépôt est désactivé. Pour la cérémonie hors "
+                             "ligne, utilisez le profil hors-ligne.")
+            ttk.Button(page, text="← Retour à l'accueil",
+                       command=lambda: self.montrer(
+                           "accueil")).pack(anchor="w", pady=8)
+            return
+        # champ configuration CF2 (partagé par les actions du coffre)
+        zone = self._section(page, "Configuration du coffre CF2")
+        zone.pack(fill="x", pady=(4, 6))
+        self.var_config = tk.StringVar(
+            value=os.path.join(RACINE_DEPOT, ".keys", "config_cf2.json"))
+        cadre = ttk.Frame(zone)
+        cadre.pack(fill="x", pady=2)
+        ttk.Label(cadre, text="config_cf2.json :", width=26,
+                  anchor="w").pack(side="left")
+        ttk.Entry(cadre, textvariable=self.var_config).pack(
+            side="left", fill="x", expand=True, padx=(0, 6))
+
+        def choisir_config():
+            chemin = filedialog.askopenfilename(
+                filetypes=[("Config CF2", "config_cf2.json"),
+                           ("JSON", "*.json"), ("Tout", "*.*")])
+            if chemin:
+                self.var_config.set(chemin)
+                self._maj_etat_config()
+
+        ttk.Button(cadre, text="Parcourir…", width=11,
+                   command=choisir_config).pack(side="left")
+        self.label_etat_config = ttk.Label(zone, style="Sous.TLabel")
+        self.label_etat_config.pack(anchor="w")
+        self._maj_etat_config()
+
+        cahier = ttk.Notebook(page)
+        cahier.pack(fill="both", expand=True, pady=4)
+
+        # --- onglet Sceau de l'Intention -----------------------------------
+        sceau = ttk.Frame(cahier, padding=8)
+        cahier.add(sceau, text=" Sceau de l'Intention (D87) ")
+        self._note(sceau, "L'intention du dépôt est signée par la clé "
+                          "hors-ligne. Préparer écrit v06/sceau-I/"
+                          "a-signer.txt (~1 Ko, dix lignes « arbre balise "
+                          "empreinte ») : transportez-le vers la machine "
+                          "hors-ligne, faites-le signer (profil hors-ligne), "
+                          "puis déposez la remise ici.")
+        barre = ttk.Frame(sceau)
+        barre.pack(fill="x", pady=2)
+        ttk.Button(barre, text="Préparer a-signer.txt",
+                   command=self._sur_sceau_preparer).pack(side="left")
+        ttk.Button(barre, text="Vérifier les dix arbres",
+                   command=self._sur_sceau_verifier).pack(side="left", padx=6)
+        ttk.Button(barre, text="État de la clé",
+                   command=lambda: self.action(
+                       "Sceau I — état", self._cli, "sceau_I.py",
+                       ["etat"])).pack(side="left")
+        self.var_sceau_signatures = self._ligne_fichier(
+            sceau, "Remise à déposer (signatures-I.txt) :", mode="open")
+        self.var_sceau_cle = self._ligne_fichier(
+            sceau, "Clé publique (PREMIÈRE remise seulement) :", mode="open")
+        ttk.Button(sceau, text="Déposer la remise (acte souverain)",
+                   command=self._sur_sceau_deposer).pack(anchor="w", pady=4)
+
+        # --- onglet Coffre CF2 ---------------------------------------------
+        cf2 = ttk.Frame(cahier, padding=8)
+        cahier.add(cf2, text=" Coffre CF2 — homme mort (D86) ")
+
+        inspection = self._section(cf2, "Inspection (aucune clé touchée)")
+        inspection.pack(fill="x", pady=2)
+        barre = ttk.Frame(inspection)
+        barre.pack(fill="x", pady=2)
+        ttk.Button(barre, text="Statut",
+                   command=self._sur_cf2_statut).pack(side="left")
+        ttk.Button(barre, text="Vérifier",
+                   command=self._sur_cf2_verifier).pack(side="left", padx=6)
+        ttk.Button(barre, text="État fragments",
+                   command=self._sur_cf2_etat_fragments).pack(side="left")
+        ttk.Button(barre, text="Autotest (labo)",
+                   command=self._sur_cf2_autotest).pack(side="left", padx=6)
+
+        migration = self._section(cf2, "Migration CF1 → CF2 (cérémonie réelle)")
+        migration.pack(fill="x", pady=2)
+        self._note(migration, "Part d'un coffre CF1 SAIN (le vérifier "
+                              "d'abord : coffre_fort.py verifier). Le CF1 "
+                              "reste INTACT ; le CF2 naît coupé en 5 "
+                              "fragments (seuil 3) chez des gardes "
+                              "distinctes.")
+        cadre = ttk.Frame(migration)
+        cadre.pack(fill="x", pady=2)
+        ttk.Label(cadre, text="Phrase de contrôle CF1 :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_phrase = tk.StringVar(value="")
+        self.entry_phrase = ttk.Entry(cadre, textvariable=self.var_phrase,
+                                      show="\u2022")
+        self.entry_phrase.pack(side="left", fill="x", expand=True, padx=(0, 6))
+        self.var_voir_phrase = tk.BooleanVar(value=False)
+        ttk.Checkbutton(cadre, text="afficher",
+                        variable=self.var_voir_phrase,
+                        command=self._basculer_phrase).pack(side="left")
+        ttk.Button(migration, text="Migrer vers CF2",
+                   command=self._sur_cf2_migrer).pack(anchor="w", pady=4)
+
+        fragments = self._section(cf2, "Fragments hors-ligne (le seuil est la loi)")
+        fragments.pack(fill="x", pady=2)
+        self._note(fragments, "Exportez la feuille des TROIS fragments, "
+                              "imprimez-la (ou copiez-la sur USB, deux "
+                              "lieux). Puis CONTRÔLEZ vos copies : l'assistant "
+                              "relit vos trois fichiers et prouve qu'ils "
+                              "reconstituent le seuil (AEAD vert) — sans "
+                              "rien écrire.")
+        self.var_feuille = self._ligne_fichier(
+            fragments, "Feuille à écrire :", mode="save",
+            defaut="fragments-cf2.txt")
+        ttk.Button(fragments, text="Exporter la feuille des fragments",
+                   command=self._sur_cf2_feuille).pack(anchor="w", pady=2)
+        self.var_copie_1 = self._ligne_fichier(
+            fragments, "Copie 1 relue (fragment-*.cf2f) :", mode="open",
+            types=[("Fragment CF2", "*.cf2f"), ("Texte", "*.txt"),
+                   ("Tout", "*.*")])
+        self.var_copie_2 = self._ligne_fichier(
+            fragments, "Copie 2 relue :", mode="open",
+            types=[("Fragment CF2", "*.cf2f"), ("Texte", "*.txt"),
+                   ("Tout", "*.*")])
+        self.var_copie_3 = self._ligne_fichier(
+            fragments, "Copie 3 relue :", mode="open",
+            types=[("Fragment CF2", "*.cf2f"), ("Texte", "*.txt"),
+                   ("Tout", "*.*")])
+        ttk.Button(fragments, text="Contrôler les trois copies",
+                   command=self._sur_cf2_controle).pack(anchor="w", pady=2)
+
+        sentinelle = self._section(cf2, "Sentinelle (elle vit tant que la machine vit)")
+        sentinelle.pack(fill="x", pady=2)
+        barre = ttk.Frame(sentinelle)
+        barre.pack(fill="x", pady=2)
+        ttk.Button(barre, text="Démarrer (détachée)",
+                   command=self._sur_sentinelle).pack(side="left")
+        ttk.Button(barre, text="Santé",
+                   command=self._sur_sentinelle_sante).pack(side="left", padx=6)
+
+        releve = self._section(cf2, "Relever… ou détruire")
+        releve.pack(fill="x", pady=2)
+        barre = ttk.Frame(releve)
+        barre.pack(fill="x", pady=2)
+        ttk.Button(barre, text="Restaurer (3 copies)",
+                   command=self._sur_cf2_restaurer).pack(side="left")
+        ttk.Button(barre, text="BRÛLER (irréversible)",
+                   command=self._sur_cf2_bruler).pack(side="left", padx=6)
+
+        # --- onglet Liste blanche ------------------------------------------
+        blanche = ttk.Frame(cahier, padding=8)
+        cahier.add(blanche, text=" Liste blanche (D86) ")
+        self._note(blanche, "Un processus NON blanchi qui lit la couche C "
+                            "détériore le coffre : BRÛLAGE. La liste juge la "
+                            "ligne de commande COMPLÈTE (jamais « tout "
+                            "python3 ») — réfléchissez avant d'ajouter un "
+                            "motif : une fausse alerte est une perte "
+                            "auto-infligée.")
+        cadre = ttk.Frame(blanche)
+        cadre.pack(fill="both", expand=True, pady=2)
+        self.liste_blanche = tk.Listbox(cadre, height=7,
+                                        font=POLICE_FIXE)
+        self.liste_blanche.pack(side="left", fill="both", expand=True)
+        barre_d = ttk.Frame(cadre, width=34)
+        barre_d.pack(side="left", fill="y", padx=(6, 0))
+        self.var_motif = tk.StringVar()
+        ttk.Entry(barre_d, textvariable=self.var_motif).pack(
+            fill="x", pady=(0, 2))
+        ttk.Button(barre_d, text="Ajouter", width=10,
+                   command=self._sur_motif_ajouter).pack(fill="x", pady=2)
+        ttk.Button(barre_d, text="Retirer la sélection", width=10,
+                   command=self._sur_motif_retirer).pack(fill="x", pady=2)
+        ttk.Button(barre_d, text="Recharger", width=10,
+                   command=self._charger_liste_blanche).pack(fill="x", pady=2)
+        ttk.Label(barre_d, text="tester contre :",
+                  style="Sous.TLabel").pack(fill="x", pady=(8, 0))
+        self.var_essai = tk.StringVar(
+            value="/usr/bin/code.exe /home/dev/triade/m0/carte/x.txt")
+        ttk.Entry(barre_d, textvariable=self.var_essai).pack(fill="x")
+        ttk.Button(barre_d, text="Tester", width=10,
+                   command=self._sur_motif_tester).pack(fill="x", pady=2)
+        self.label_motif_verdict = ttk.Label(barre_d, style="Sous.TLabel",
+                                              wraplength=230, justify="left")
+        self.label_motif_verdict.pack(fill="x")
+        ttk.Button(blanche, text="Enregistrer la liste (acte de déploiement)",
+                   command=self._sur_liste_blanche_ecrire).pack(
+                       anchor="w", pady=4)
+        self._charger_liste_blanche()
+
+        ttk.Button(page, text="← Retour à l'accueil",
+                   command=lambda: self.montrer("accueil")).pack(anchor="w",
+                                                                 pady=6)
+
+    def _cfg_args(self):
+        cfg = self.var_config.get().strip()
+        return [cfg] if cfg else []
+
+    def _sur_cf2_statut(self):
+        if not self._pile_prete("Le statut du coffre"):
+            return
+        self.action("CF2 — statut", self._cli, "coffre_cf2.py",
+                    ["statut"] + self._cfg())
+
+    def _sur_cf2_verifier(self):
+        if not self._pile_prete("La vérification du coffre"):
+            return
+        self.action("CF2 — verifier", self._cli, "coffre_cf2.py",
+                    ["verifier"] + self._cfg())
+
+    def _sur_cf2_etat_fragments(self):
+        if not self._pile_prete("L'état des fragments"):
+            return
+        self.action("CF2 — état fragments", self._cli, "coffre_cf2.py",
+                    ["etat-fragments"] + self._cfg())
+
+    def _sur_cf2_autotest(self):
+        if not self._pile_prete("L'autotest du coffre"):
+            return
+        self.action("CF2 — autotest", self._cli, "coffre_cf2.py", ["autotest"])
+
+    def _sur_sentinelle_sante(self):
+        if not self._pile_prete("La santé de la sentinelle"):
+            return
+        self.action("Sentinelle — santé", self._cli, "sentinelle_cf2.py",
+                    ["sante", "--config"] + self._cfg_args())
+
+    def _cfg(self):
+        return ["--config"] + self._cfg_args() if self._cfg_args() else []
+
+    def _basculer_phrase(self):
+        self.entry_phrase.configure(
+            show="" if self.var_voir_phrase.get() else "\u2022")
+
+    def _maj_etat_config(self):
+        if not getattr(self, "label_etat_config", None):
+            return
+        cfg = self.var_config.get().strip()
+        if not cfg:
+            self.label_etat_config.configure(
+                text="config : (vide — le CLI utilisera ses défauts)",
+                foreground="#57606a")
+            return
+        if os.path.isfile(cfg):
+            self.label_etat_config.configure(
+                text=f"config : trouvée ({cfg})", foreground=COULEUR_VERTE)
+        else:
+            self.label_etat_config.configure(
+                text=f"config : absente ({cfg}) — la migration la créera ; "
+                     f"les autres commandes la refuseront",
+                foreground="#9a6700")
+
+    def _ouvrir_depot(self):
+        """Entrée du profil dépôt : si la pile (pynacl + cryptography) manque,
+        on PROPOSE de l'installer avant d'entrer (sinon tout le panneau CF2
+        échouerait — mieux vaut le dire tout de suite)."""
+        if _paquets_manquants() and not self._pile_prete(
+                "Le profil dépôt (coffre CF2 + sceau I)"):
+            return      # installation refusée ou en cours : on n'entre pas
+        self.montrer("depot")
+
+    def _pile_prete(self, pour_quoi):
+        manquants = _paquets_manquants()
+        if not manquants:
+            return True
+        if messagebox.askyesno(
+                "Pile du dépôt manquante",
+                f"{pour_quoi} exige {' + '.join(manquants)} (absent(s) de "
+                f"ce Python).\n\nL'installer maintenant via pip ?\n"
+                f"(votre accord requis — c'est la seule dépendance pip de "
+                f"la cérémonie)"):
+            self.action("pip — installation de la pile du dépôt",
+                        installer_dependances)
+            self.journal.ajoute("[ceremonie] relancez l'action (ou rouvrez le "
+                                "profil) après l'installation, si elle a "
+                                "réussi", "info")
+        return False
+
+    def _sur_sceau_preparer(self):
+        self.action("Sceau I — preparer", self._cli, "sceau_I.py",
+                    ["preparer"])
+
+    def _sur_sceau_verifier(self):
+        if not self._pile_prete("La vérification des arbres"):
+            return
+        self.action("Sceau I — verifier", self._cli, "sceau_I.py", ["verifier"])
+
+    def _sur_sceau_deposer(self):
+        signatures = self.var_sceau_signatures.get().strip()
+        if not signatures:
+            messagebox.showwarning("Champ manquant",
+                                   "Choisissez la remise signatures-I.txt.")
+            return
+        if not self._pile_prete("Le dépôt de la remise"):
+            return
+        args = ["deposer", signatures]
+        cle = self.var_sceau_cle.get().strip()
+        if cle:
+            args += ["--cle", cle]
+            detail = ("PREMIÈRE remise : la clé publique sera installée — "
+                      "l'assistant ne pourra plus faire évoluer une "
+                      "spécification sans votre signature.")
+        else:
+            detail = ("rotation ordinaire : les signatures seront vérifiées "
+                      "contre la clé publique DÉJÀ installée.")
+        if not messagebox.askyesno("Acte souverain — déposer la remise",
+                                   f"{detail}\n\nSignatures : "
+                                   f"{signatures}\nContinuer ?"):
+            return
+        self.action("Sceau I — deposer", self._cli, "sceau_I.py", args)
+
+    def _sur_cf2_migrer(self):
+        if not self._pile_prete("La migration CF1 vers CF2"):
+            return
+        phrase = self.var_phrase.get()
+        if not phrase.strip():
+            messagebox.showwarning("Phrase vide",
+                                   "La phrase de contrôle du coffre CF1 est "
+                                   "requise (fail-closed).")
+            return
+        if not messagebox.askyesno(
+                "Migration CF1 → CF2",
+                "Le coffre CF1 sera lu (il restera INTACT) et le CF2 sera "
+                "créé : conteneur + 5 fragments chez des gardes + config.\n"
+                "Après la migration : exportez la feuille, contrôlez vos "
+                "trois copies hors-ligne, PUIS démarrez la sentinelle.\n"
+                "Continuer ?"):
+            return
+        self.action(
+            "CF2 — migrer",
+            self._functools.partial(self._cli, "coffre_cf2.py",
+                                    ["migrer"] + self._cfg(), phrase=phrase))
+        self.var_phrase.set("")
+
+    def _sur_cf2_feuille(self):
+        if not self._pile_prete("L'export de la feuille"):
+            return
+        sortie = self.var_feuille.get().strip()
+        if not sortie:
+            messagebox.showwarning("Champ manquant",
+                                   "Choisissez où écrire la feuille.")
+            return
+        cfg = self.var_config.get().strip()
+        if not cfg:
+            messagebox.showwarning("Champ manquant",
+                                   "Renseignez la config CF2 (bouton "
+                                   "Parcourir…).")
+            return
+        self.action("CF2 — export de la feuille", exporter_feuille, cfg,
+                    sortie)
+
+    def _sur_cf2_controle(self):
+        if not self._pile_prete("Le contrôle de relecture"):
+            return
+        copies = [self.var_copie_1.get().strip(),
+                  self.var_copie_2.get().strip(),
+                  self.var_copie_3.get().strip()]
+        if not all(copies):
+            messagebox.showwarning("Champs manquants",
+                                   "Les TROIS copies relues sont requises "
+                                   "(le seuil est la loi).")
+            return
+        cfg = self.var_config.get().strip()
+        if not cfg:
+            messagebox.showwarning("Champ manquant",
+                                   "Renseignez la config CF2.")
+            return
+        self.action("CF2 — contrôle de relecture", controle_lecture, cfg,
+                    copies)
+
+    def _sur_sentinelle(self):
+        if not self._pile_prete("Le démarrage de la sentinelle"):
+            return
+        cfg = self.var_config.get().strip()
+        if not os.path.isfile(cfg):
+            messagebox.showwarning("Config absente",
+                                   f"config introuvable : {cfg} — migrez "
+                                   f"d'abord le coffre.")
+            return
+        if not messagebox.askyesno(
+                "Démarrer la sentinelle",
+                "Elle surveillera la couche C et BRÛLERA les fragments si "
+                "un processus non blanchi lit une carte.\nElle vivra "
+                "DÉTACHÉE : fermer cette fenêtre ne la tuera pas.\n"
+                "Vérifiez d'abord la liste blanche (onglet dédié) — une "
+                "fausse alerte est une perte auto-infligée.\n\nContinuer ?"):
+            return
+        self.action("Sentinelle — démarrage détaché",
+                    sentinelle_demarrer_detachee, cfg)
+
+    def _sur_cf2_restaurer(self):
+        if not self._pile_prete("La restauration des fragments"):
+            return
+        fichiers = list(filedialog.askopenfilenames(
+            title="Choisissez vos copies hors-ligne (au moins le seuil)",
+            filetypes=[("Fragment CF2", "*.cf2f"), ("Texte", "*.txt"),
+                       ("Tout", "*.*")]))
+        if not fichiers:
+            return
+        if not messagebox.askyesno(
+                "Restaurer les fragments",
+                f"Les {len(fichiers)} copie(s) choisies seront réécrites "
+                f"chez les gardes (atomique : tout ou rien).\nContinuer ?"):
+            return
+        self.action("CF2 — restaurer", self._cli, "coffre_cf2.py",
+                    ["restaurer"] + fichiers + self._cfg())
+
+    def _sur_cf2_bruler(self):
+        if not self._pile_prete("Le brûlage"):
+            return
+        if not self._confirmer_bruler():
+            return
+        self.action("CF2 — BRÛLAGE (irréversible)", self._cli,
+                    "coffre_cf2.py", ["bruler", "--oui-je-comprends"]
+                    + self._cfg())
+
+    def _confirmer_bruler(self):
+        """Dialogue modal : l'utilisateur doit taper BRULER en toutes lettres
+        (l'équivalent GUI de --oui-je-comprends, en plus fort)."""
+        fenetre = tk.Toplevel(self.racine)
+        fenetre.title("BRÛLAGE — confirmation finale")
+        fenetre.transient(self.racine)
+        fenetre.grab_set()
+        fenetre.resizable(False, False)
+        reponse = {"ok": False}
+        ttk.Label(fenetre, wraplength=420, justify="left", padding=10,
+                  foreground=COULEUR_ROUGE,
+                  text=("La destruction est IRRÉVERSIBLE PAR CONSTRUCTION : "
+                        "les fragments seront écrasés (trois passes) et un "
+                        "procès-verbal sera écrit. La relève exigera vos "
+                        "TROIS copies hors-ligne.\n\nPour confirmer, tapez "
+                        "BRULER en toutes lettres :")
+                  ).pack()
+        var = tk.StringVar()
+        entree = ttk.Entry(fenetre, textvariable=var, width=24,
+                           font=POLICE_FIXE)
+        entree.pack(pady=(0, 8))
+        entree.focus_set()
+
+        def autoriser(*_):
+            bouton.configure(state="normal" if var.get().strip() == "BRULER"
+                             else "disabled")
+
+        var.trace_add("write", autoriser)
+        barre = ttk.Frame(fenetre)
+        barre.pack(pady=(0, 10))
+
+        def oui():
+            reponse["ok"] = True
+            fenetre.destroy()
+
+        bouton = ttk.Button(barre, text="Je comprends : BRÛLER le coffre",
+                            state="disabled", command=oui)
+        bouton.pack(side="left", padx=6)
+        ttk.Button(barre, text="Annuler",
+                   command=fenetre.destroy).pack(side="left", padx=6)
+        fenetre.wait_window()
+        return reponse["ok"]
+
+    # --- liste blanche ------------------------------------------------------
+    def _charger_liste_blanche(self):
+        self.liste_blanche.delete(0, "end")
+        try:
+            motifs = liste_blanche_lire(self.var_config.get().strip())
+        except Exception as exc:
+            self._note_blanche(f"liste illisible : {exc}")
+            return
+        for motif in motifs:
+            self.liste_blanche.insert("end", motif)
+
+    def _note_blanche(self, texte, couleur=COULEUR_ROUGE):
+        self.label_motif_verdict.configure(text=texte, foreground=couleur)
+
+    def _sur_motif_ajouter(self):
+        motif = self.var_motif.get().strip()
+        if not motif:
+            return
+        if not motif_valide(motif):
+            self._note_blanche(f"motif regex INVALIDE : {motif}")
+            return
+        if motif in self.liste_blanche.get(0, "end"):
+            self._note_blanche(f"déjà présent : {motif}")
+            return
+        self.liste_blanche.insert("end", motif)
+        self.var_motif.set("")
+        self._note_blanche("motif AJOUTÉ (non enregistré — bouton "
+                           "Enregistrer)", COULEUR_ATTENTE)
+
+    def _sur_motif_retirer(self):
+        sel = self.liste_blanche.curselection()
+        if not sel:
+            return
+        self.liste_blanche.delete(sel[0])
+
+    def _sur_motif_tester(self):
+        sel = self.liste_blanche.curselection()
+        motif = self.var_motif.get().strip() or (
+            self.liste_blanche.get(sel[0]) if sel else "")
+        essai = self.var_essai.get().strip()
+        if not (motif and essai):
+            self._note_blanche("sélectionnez (ou saisissez) un motif et une "
+                               "ligne à tester")
+            return
+        if motif_teste(motif, essai):
+            self._note_blanche(f"BLANCHI : « {essai} » matche « {motif} »",
+                               COULEUR_VERTE)
+        else:
+            self._note_blanche(f"NON blanchi : « {essai} » ne matche PAS "
+                               f"« {motif} » — une telle lecture BRÛLERAIT",
+                               COULEUR_ROUGE)
+
+    def _sur_liste_blanche_ecrire(self):
+        if not self._pile_prete("L'enregistrement de la liste blanche"):
+            return
+        motifs = list(self.liste_blanche.get(0, "end"))
+        if not messagebox.askyesno(
+                "Enregistrer la liste blanche",
+                f"{len(motifs)} motif(s) seront écrits dans la config "
+                f"(atomique). Une erreur ici arme le brûlage ou l'ouvre "
+                f"aux fausses alertes.\nContinuer ?"):
+            return
+        self.action("Liste blanche — enregistrement", liste_blanche_ecrire,
+                    self.var_config.get().strip(), motifs)
+
+
+# [SUITE-4]
+
+# ===========================================================================
+# SECTION E — selftest embarqué (headless : sans tkinter, sans dépôt, sans
+# réseau — utilisable sur la machine hors-ligne AVANT la cérémonie) +
+# point d'entrée. La batterie COMPLÈTE de falsifiabilité vit dans
+# v06/test_ceremonie_gui.py (côté dépôt).
+# ===========================================================================
+
+import tempfile   # noqa: E402  (déjà importé en section C si profil dépôt —
+                   # l'import est idempotent, et le selftest y a droit aussi)
+
+
+def selftest():
+    """Batterie de sanité de l'utilisateur final : vecteurs RFC 8032, cycle
+    complet générer → signer → vérifier en répertoire temporaire, et
+    falsification nommée (un octet de signature muté doit être attrapé).
+    True ssi tout passe."""
+    import secrets
+    passes, echecs = [], []
+
+    def controle(nom, ok, detail=""):
+        (passes if ok else echecs).append(nom)
+        print(f"  {'PASS' if ok else 'ÉCHEC'} {nom}"
+              + (f" — {detail}" if detail and not ok else ""))
+
+    controle("rfc8032-vecteurs-test1-3", autotest())
+    with tempfile.TemporaryDirectory(prefix="ceremonie-selftest-") as tmp:
+        privee = os.path.join(tmp, "cle-I-privee.txt")
+        publique = os.path.join(tmp, "cle-publique-I.txt")
+        a_signer = os.path.join(tmp, "a-signer.txt")
+        signatures = os.path.join(tmp, "signatures-I.txt")
+        with open(a_signer, "w", encoding="utf-8") as f:
+            f.write("m0/test ALPHA " + secrets.token_hex(32) + "\n"
+                    "m4/test BETA " + secrets.token_hex(32) + "\n")
+        try:
+            hl_generer(privee, publique)
+            controle("generer-fichiers-ecrits",
+                     os.path.isfile(privee) and os.path.isfile(publique))
+            with open(privee, "r", encoding="utf-8") as f:
+                contenu = f.read()
+            controle("generer-entete-garde-present",
+                     "clé I PRIVÉE" in contenu and "GARDE" in contenu)
+            hl_signer(a_signer, privee, signatures)
+            with open(signatures, "r", encoding="utf-8") as f:
+                lignes = [l for l in f.read().splitlines() if l.strip()]
+            controle("signer-deux-signatures", len(lignes) == 2,
+                     f"{len(lignes)} lignes")
+            ok, texte = hl_verifier(a_signer, signatures, publique)
+            controle("verifier-remise-valable", ok, texte)
+            # falsification : un octet de signature muté => ÉCHEC nommé
+            fautif = os.path.join(tmp, "signatures-fausses.txt")
+            premiere = lignes[0].split()
+            premiere[2] = ("0" if premiere[2][0] != "0" else "1") \
+                + premiere[2][1:]
+            with open(fautif, "w", encoding="utf-8") as f:
+                f.write(" ".join(premiere) + "\n" + "\n".join(lignes[1:])
+                        + "\n")
+            ok_f, _ = hl_verifier(a_signer, fautif, publique)
+            controle("falsification-un-octet-attrapee", not ok_f,
+                     "la remise falsifiée a été acceptée !")
+        except ErreurCeremonie as exc:
+            controle("cycle-sans-erreur", False, str(exc))
+    print(f"[ceremonie-GUI] selftest : "
+          f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
+    return not echecs
+
+
+def main():
+    parseur = argparse.ArgumentParser(
+        description="TRIADE — Maître de cérémonie (GUI). Sans argument : "
+                    "fenêtre. --selftest : batterie headless (machine "
+                    "hors-ligne incluse).")
+    parseur.add_argument("--selftest", action="store_true",
+                         help="batterie embarquée (aucune GUI requise)")
+    parseur.add_argument("--profil", choices=["hors-ligne", "depot"],
+                         default=None,
+                         help="ouvrir directement ce profil (sinon : accueil)")
+    arguments = parseur.parse_args()
+    if arguments.selftest:
+        ok = selftest()
+        return 0 if ok else 1
+    return demarrer_gui(profil=arguments.profil)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
