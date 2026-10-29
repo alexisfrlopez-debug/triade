@@ -451,19 +451,32 @@ def main():
     parseur.add_argument("--arbres", help="verifier : liste restreinte "
                                           "(virgules) pour les gardes de build")
     arguments = parseur.parse_args()
-    if arguments.mode == "preparer":
-        return preparer()
-    if arguments.mode == "deposer":
-        if not arguments.fichier:
-            print("usage : sceau_I.py deposer signatures-I.txt [--cle cle-publique-I.txt]")
-            return CODE_DEPOT
-        return deposer(arguments.fichier, arguments.cle)
-    if arguments.mode == "signer-test":
-        return signer_test()
-    if arguments.mode == "verifier":
-        arbres = arguments.arbres.split(",") if arguments.arbres else None
-        return verifier(arbres)
-    return etat()
+    # Échec NOMMÉ au niveau CLI (le GUI streame ces lignes dans son journal) :
+    # une remise douteuse s'affiche comme une phrase, pas comme un traceback
+    # — l'atomicité de cérémonie garantit que rien n'a été écrit.
+    try:
+        if arguments.mode == "preparer":
+            return preparer()
+        if arguments.mode == "deposer":
+            if not arguments.fichier:
+                print("usage : sceau_I.py deposer signatures-I.txt "
+                      "[--cle cle-publique-I.txt]")
+                return CODE_DEPOT
+            return deposer(arguments.fichier, arguments.cle)
+        if arguments.mode == "signer-test":
+            return signer_test()
+        if arguments.mode == "verifier":
+            arbres = arguments.arbres.split(",") if arguments.arbres else None
+            return verifier(arbres)
+        return etat()
+    except EchecSceauI as exc:
+        print(f"[sceau-I] ECHEC : {exc}")
+        print("[sceau-I] rien n'a été écrit (atomicité de cérémonie)")
+        return CODE_DEPOT
+    except OSError as exc:
+        print(f"[sceau-I] ECHEC : fichier illisible — {exc}")
+        print("[sceau-I] rien n'a été écrit (atomicité de cérémonie)")
+        return CODE_DEPOT
 
 
 if __name__ == "__main__":
