@@ -380,10 +380,24 @@ sup-38:R3, deux octets 74 48→74 56 : les timeouts SILENCIEUX, miroir
 sup-34). Oracle terrain : 10 117 cas verts (cas (k) « proxy M4 muet » —
 le 17-D rejeté nommément), 9 mutations attrapées, cristallisation
 terrain byte-stable. Livré (variante publique) dans `download/`
-(superviseur-terrain17e.exe, sha256 234b99d6…). **Le scellage 0.5.0
-attend le journal + le témoin du run 17-E (réseau stable souhaité :
-S49 OK + témoin « HTTP/1.1 200… » complet → scellage ; témoin tronqué
-→ correctif relais tls-08 — l'anomalie 13 o du 17-C reste ouverte).**
+(superviseur-terrain17e.exe, sha256 234b99d6…).
+
+**terrain.18 / 17-F (D101) — LE PRÉVOL** : la demande développeur du
+29/10 (« intégrer la commande taskkill et la verif curl dans le
+superviseur ») est intégrée — le bloc f60039 (169 o, ZONE-RÉSIDENT
+0x4B40-0x4BFF sous l'entrée de zone R10 : la table est PLEINE, aucune
+case neuve) lance taskkill (orphelins proxy/demo) puis curl (amont
+DIRECT example.com) AVANT l'extraction ; codes bruts en S08/S09,
+jamais au verdict (une évidence, pas un juge). Les ÉTAPES 0/0 BIS du
+protocole LISEZMOI sont SUPPRIMÉES (automatiques). Oracle : 10 124 cas
+verts (+7), 29/29 falsifications + 10 mutations, PE 75 264 o inchangé,
+sha256 81f7ef3f…. **Le scellage 0.5.0 attend le journal + le témoin du
+run 17-F (S09 dira l'amont AVANT les tests : S49 OK + témoin
+« HTTP/1.1 200… » complet → scellage ; témoin tronqué → correctif
+relais tls-08 — l'anomalie 13 o du 17-C reste ouverte).** Canal Drive
+/test bloqué (OAuth relais mort + compte de service lecteur seul) :
+partage Éditeur du dossier test à
+z-ai-811@physichong.iam.gserviceaccount.com à poser côté développeur.
 Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement
