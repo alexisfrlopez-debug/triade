@@ -411,8 +411,10 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     poser(L.R_DESC_USER32, struct.pack("<IIIII", L.R_INT_USER32, 0, 0, L.R_NOM_USER32, L.R_IAT_USER32))
     poser(L.R_DESC_GDI32, struct.pack("<IIIII", L.R_INT_GDI32, 0, 0, L.R_NOM_GDI32, L.R_IAT_GDI32))
     poser(L.R_DESC_K32B, struct.pack("<IIIII", L.R_INT_K32B, 0, 0, L.R_NOM_DLL, L.R_IAT_K32B))
-    poser(L.R_DESC_K32C, struct.pack("<IIIII", L.R_INT_K32C, 0, 0, L.R_NOM_DLL, L.R_IAT_K32C))
-    poser(L.R_DESC_U32B, struct.pack("<IIIII", L.R_INT_U32B, 0, 0, L.R_NOM_USER32, L.R_IAT_U32B))
+    # terrain.17-B : les descripteurs #3 pointent l'INT .rdata (motif D54) —
+    # la copie .text2 reste DONNÉE MORTE, la table R10 ne bouge pas
+    poser(L.R_DESC_K32C, struct.pack("<IIIII", L.R_INT_K32C_RDATA, 0, 0, L.R_NOM_DLL, L.R_IAT_K32C))
+    poser(L.R_DESC_U32B, struct.pack("<IIIII", L.R_INT_U32B_RDATA, 0, 0, L.R_NOM_USER32, L.R_IAT_U32B))
     poser(L.R_DESC_TERM, b"\x00" * 20)
 
     poser(L.R_NOM_DLL, b"kernel32.dll\x00")
@@ -460,6 +462,23 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     poser(L.R_INT_K32B, b"".join(struct.pack("<Q", hints_k32b[n]) for n in L.KERNEL32B_IMPORTS)
           + struct.pack("<Q", 0))
     poser(L.R_IAT_K32B, b"".join(struct.pack("<Q", hints_k32b[n]) for n in L.KERNEL32B_IMPORTS)
+          + struct.pack("<Q", 0))
+
+    # motif loader D54 (terrain.17-B) : hints + INT kernel32#3/user32#2 en
+    # .rdata AUX ADRESSES DU TERRAIN16 (prouvées sur machine réelle — la
+    # machine cible résout par le chemin FirstThunk : slots pré-remplis),
+    # résolution possible par les DEUX chemins (OFT et FT)
+    for nom, rva_h in L.HINTS_K32C_RDATA.items():
+        poser(rva_h, hn(nom))
+    for nom, rva_h in L.HINTS_U32B_RDATA.items():
+        poser(rva_h, hn(nom))
+    poser(L.R_INT_K32C_RDATA, b"".join(struct.pack("<Q", L.HINTS_K32C_RDATA[n]) for n in L.KERNEL32C_IMPORTS)
+          + struct.pack("<Q", 0))
+    poser(L.R_INT_U32B_RDATA, b"".join(struct.pack("<Q", L.HINTS_U32B_RDATA[n]) for n in L.USER32B_IMPORTS)
+          + struct.pack("<Q", 0))
+    poser(L.R_IAT_K32C, b"".join(struct.pack("<Q", L.HINTS_K32C_RDATA[n]) for n in L.KERNEL32C_IMPORTS)
+          + struct.pack("<Q", 0))
+    poser(L.R_IAT_U32B, b"".join(struct.pack("<Q", L.HINTS_U32B_RDATA[n]) for n in L.USER32B_IMPORTS)
           + struct.pack("<Q", 0))
 
     # table R10 : 23 blocs + 4 zones données (sup 1/2/3 + blob intégrée) +

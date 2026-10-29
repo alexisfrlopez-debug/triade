@@ -1886,7 +1886,6 @@ D15 (amende D5) illustrent la procédure.
   reste propre).
 - **Développement** : entrée 37 du journal de travail.
 
-
 ### D49 — le kit embarqué : « 1 seul exe qui contient tout » (27/10/2026)
 
 **Constat développeur** (27/10, après le run de livraison terrain.1) :
@@ -2208,7 +2207,6 @@ scellage 0.5.0 de M4 — ils touchent les disciplines § 15.3 et FORMAT_CARTE
 § 11 et doivent s'intégrer aux cérémonies de rotation existantes ; l'attestation
 TEE (D85) selon disponibilité d'infrastructure.
 
-
 ### D89 — M4 (b) : la convention du cadre de session TLS est AMENDÉE — zone de réception 2 × MAX_JETON, champs de géométrie +0x3A/+0x3C (tls-07 unique propriétaire) ; tls-07 notée-mesurée-prouvée
 
 **Décision** : avant la notation de tls-07 (réception déchiffrée), la
@@ -2270,7 +2268,6 @@ différentiel l'a nommée, elle est partie).
 **Critère de sortie** : atteint — différentiel vert sur deux graines,
 falsification 10/10, convention amendée dans layout.py (source unique) et
 m4/I/README.md, entrée 75 du journal.
-
 
 ### D90 — M4 (b) : tls-08 (LA SESSION TLS CLIENTE — l'orchestrateur) notée-mesurée-prouvée ; paquet de session, VERDICT_CIBLE 7, fixtures console, drain du résidu et compensation intégrale par comptage
 
@@ -2372,7 +2369,6 @@ ne dépend pas de la bonne volonté de l'amont).
 (53 PASS × 2), falsification 12/12, comptage de compensation constaté
 sur les vingt scénarios, conventions D90 dans layout.py (source unique),
 entrée 76 du journal.
-
 
 ### D91 — M4 (b) : http-08:R2 (LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ) notée-mesurée-prouvée — verdict « cible TLS » rax = 4, l'héritage R1 prouvé par différentiel d'ancêtre émulé
 
@@ -2852,3 +2848,63 @@ terrain/outils/auteur.py (TEST_TUNNEL, f60038) ; build_terrain.py
 oracle_terrain.py (flux_proxies, modulo tuyaux, T4 complet) ; 
 carte_terrain.py (entête terrain.4). Aucune clé touchée (phrase D81 
 valable, conteneur 0323029a… inchangé).
+
+---
+
+## D97 — terrain.17-B : le motif loader D54 porté au dépôt (habillage
+
+d'import restauré)
+
+Contexte : rapport machine réelle — « il ne se passe rien » au double-clic
+
+du superviseur-terrain17.exe. Le kit M4, T4 et le proxy 0.5.0-dev.2 étaient
+
+sains ; le processus mourait à l'initialisation du chargeur (Windows 11
+
+build 26300 Insider résout kernel32#3/user32#2 par le chemin FirstThunk :
+
+les slots IAT du fichier doivent porter des pointeurs de hints valables,
+
+les hints/INT vivant en .rdata non exécutable — leçon terrain.4/terrain.5,
+
+D54). Le correctif D54 n'avait jamais été committé : la régénération D96
+
+l'a perdu ; l'oracle est resté vert à juste titre (il résout les imports
+
+lui-même — il ne juge pas le chargeur).
+
+Décision : (i) restaurer le motif aux adresses fixes du terrain16, prouvées
+
+sur la machine (IAT pré-remplies @0x2300/0x2360, OFT → 0x2B40/0x2B90, INT +
+
+hints .rdata @0x2B40-0x2C79) — .rdata est hors table R10 : la porte ne
+
+bouge pas, le test terrain.17 est inchangé (même S00/L00, même version) ;
+
+(ii) PORTER le motif aux sources (layout.py : constantes fixes ; build_
+
+terrain.py : descripteurs #3 → INT .rdata, hints/INT posés, IAT
+
+pré-remplie — miroir des tables héritées D35) : une régénération future ne
+
+pourra plus le perdre ; (iii) reconstruire par la chaîne complète et
+
+re-sceller la carte (24 empreintes + Ed25519 + R8) — le rebuild reproduit
+
+le correctif chirurgical octet pour octet (sha256 991dcb5e…).
+
+Conséquences : terrain/layout.py (+R_INT_K32C_RDATA/R_INT_U32B_RDATA/
+
+HINTS_K32C_RDATA/HINTS_U32B_RDATA) ; terrain/build_terrain.py (descripteurs
+
+#3, pose du motif, IAT pré-remplies) ; superviseur.exe (dépôt) = balise
+
+991dcb5e… ; download/superviseur-terrain17b.exe + LISEZMOI-terrain17b.txt
+
+(le 17 cassé retiré, mono-génération) ; Entrée 83, worklog Task ID 24.
+
+LEÇON consignée : un correctif non-committé est un correctif qui n'existe
+
+pas — l'habillage d'import fait partie de la surface de test terrain.
+
+Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).

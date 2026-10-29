@@ -2073,7 +2073,6 @@ T2 LE teste) ; puis M3 (d) campagne million sur le périmètre
 parseur (http-01..09 + accumulation http-10) ; (e) le fuzzing
 rejoint la suite de conformité.
 
-
 ## Journal 38 — D49 : le kit embarqué — « 1 seul exe qui contient tout » : demo.exe + proxy.exe + l'annexe de jetons vivent DANS superviseur.exe 0.5.0-terrain.2 (section .blob, extraction vérifiée par relecture octet à octet, nettoyage après run), la fausse alerte Defender du 27/10 reçoit sa réponse d'ingénierie (VERSIONINFO + manifeste asInvoker, md5 vérifiables, exclusion documentée) ; six défauts attrapés avant le build par la chaîne elle-même
 
 Le développeur revient du terrain avec deux choses : une exigence —
@@ -3586,7 +3585,6 @@ N≠0/26 → réseau/machine, grille D68 ; (c) S34 KO → session (couvert par
 --http1.1, jugé improbable) ; (d) json vivant après run réussi → l'opérateur
 l'efface (consigne donnée). T2 : 6e vert attendu. T1 : inchangé — D67
 (WER/adresse de plantage) reste la priorité laboratoire.
-
 
 ## Entrée 59 — D70 (28/10, 02:00) : « le superviseur s'est fermé tout seul » — S33 a RÉUSSI pour la première fois, il est mort 2 ms plus tard d'un manque de place : la commande session (484 o) débordait le tampon de composition (352 o) sur .text2 non inscriptible ; terrain.16 déménage le tampon (1 888 o), quote le chemin du PUT, et l'oracle apprend les protections d'écriture de Windows
 
@@ -5117,7 +5115,6 @@ les champs de géométrie), révisions http-08:R2/http-10:R2, oracle à
 scénarios SSPI, carte génération 6 (lignée D80), proxy.exe 0.5.0-dev.1 ;
 terrain : D57 (WER) seul point ouvert.
 
-
 ## Entrée 76 — D90 (29/10, ~04:30) : M4 étape (b) — tls-08 LA SESSION TLS CLIENTE (l'orchestrateur) notée-mesurée-prouvée : la session complète de bout en bout existe en octets — connexion, nom, credentials, poignée, requête chiffrée, relais avec DRAIN du résidu, compensation INTÉGRALE par comptage — 18 blocs réels intégrés, 20 scénarios, 12 mutations attrapées
 
 Contexte : suite du « continue » — le bloc suivant la chaîne approuvée
@@ -5256,7 +5253,6 @@ poignée/émission devra trouver son entrée, et le « contexte de
 réponse » du paquet), l'oracle à scénarios SSPI, la carte génération 6
 (lignée D80), proxy.exe 0.5.0-dev.1 ; terrain : D57 (WER) seul point
 ouvert.
-
 
 ## Entrée 77 — D91 (29/10, ~10:30) : M4 étape (b) — http-08:R2 LA PREMIÈRE RÉVISION DU DOMAINE HTTP SCELLÉ notée-mesurée-prouvée : le parseur sait que le tunnel existe — verdict « cible TLS », l'héritage R1 prouvé octet pour octet par différentiel d'ancêtre émulé
 
@@ -5976,3 +5972,99 @@ terrain (c).
    dd12b649…, demo 73c064fb…, superviseur 2fb19c0f… [le dépôt porte
    l'ancienne balise terrain — le NEUVE 5360ffe2… est la sentinelle
    de terrain.17], hello, selftest, echo).
+
+---
+
+## Entrée 83 — D97 : terrain.17-B, l'habillage réparé (le motif loader D54
+
+   retrouve le dépôt)
+
+RAPPORT MACHINE RÉELLE : « il ne se passe rien » au double-clic de
+
+   superviseur-terrain17.exe — ni fenêtre, ni journal, ni message. Le
+
+   processus mourait à l'initialisation du chargeur, AVANT l'entrée.
+
+1. **DIAGNOSTIC** (par élimination A/B : le terrain16 charge, le
+
+   terrain17 non, sur la même machine) : PE structurellement sain, table
+
+   R10 correctement recalculée — la différence visible du chargeur est
+
+   l'habillage d'import kernel32#3/user32#2 : le 16 portait le motif D54
+
+   (INT + hints en .rdata, slots IAT du fichier PRÉ-REMPLIS — résolution
+
+   par les deux chemins) ; le 17 livré avait l'INT en .text2 exécutable,
+
+   la zone .rdata effacée, les slots IAT à zéro. Le Windows 11 build
+
+   26300 Insider de la machine cible résout ces tables par le chemin
+
+   FirstThunk : slots nuls → mort avant l'entrée → silence total.
+
+2. **POURQUOI l'oracle est resté vert** (10 111 cas sur l'exe cassé) :
+
+   l'émulateur résout les imports lui-même, par nom — il n'émule pas le
+
+   chargeur. Et le correctif D54 n'avait JAMAIS été committé : la
+
+   régénération D96 l'a perdu (miroir de la dérive D68 — le dépôt était
+
+   redevenu la vérité, sauf pour D54). Les sources committées du 16
+
+   portent déjà le motif cassé : le terrain16.exe venait de l'arbre
+
+   local seul.
+
+3. **CORRECTIF terrain.17-B** : restauration verbatim des 5 plages
+
+   .rdata du motif 16 (IAT pré-remplies @0x2300/0x2360, OFT descripteurs
+
+   → 0x2B40/0x2B90, INT + hints @0x2B40-0x2C79) — .rdata est hors table
+
+   R10 : les 28 zones couvertes restent byte-identiques (0/28, porte
+
+   VERTE), kit embarqué intact (demo 73c064fb…, proxy M4 33c91815…/
+
+   b813f65e…).
+
+4. **PORTAGE AUX SOURCES** (anti-récurrence) : layout.py (R_INT_K32C_
+
+   RDATA, HINTS_*_RDATA — adresses fixes du 16) + build_terrain.py
+
+   (descripteurs #3 → INT .rdata, pose hints/INT + IAT pré-remplie,
+
+   miroir des tables héritées D35). Reconstruction complète : R5 100 %,
+
+   croisement T4 10/10, oracle 1 090 verrous + 10 111 cas + 28/28 + 7
+
+   mutations, carte génération 5 re-scellée (Ed25519 + R8) — le rebuild
+
+   reproduit le correctif chirurgical OCTET POUR OCTET (sha256 991dcb5e…).
+
+5. **LIVRAISON** : superviseur-terrain17b.exe (75 264 o, md5
+
+   8ffde83b7b800a0f191b70e59358cf4d, sha256 991dcb5ed52f5be1eb6f5a7496f
+
+   a1fc3e7a154b2631a4c06e71a084c2ca279a9) + LISEZMOI-terrain17b.txt ;
+
+   le 17 cassé retiré (mono-génération). Le test s'appelle toujours
+
+   terrain17 (S00/L00, version u64 0x00050104 inchangés) — le MÊME test,
+
+   habillage réparé. Critère d'acceptation du correctif : LA FENÊTRE
+
+   S'OUVRE. Puis le critère M4 : « tunnel chiffre etabli », « certificat
+
+   rejete », « S49 T4 VERDICT OK ».
+
+6. **LEÇON SYSTÉMIQUE** : un correctif non-committé est un correctif qui
+
+   n'existe pas ; l'oracle juge le code, jamais le chargeur —
+
+   l'habillage d'import fait partie de la surface de test terrain.
+
+   Docs : Entrée 83, DECISIONS D97, worklog (Task ID 24). Aucune clé
+
+   touchée (phrase D81 valable, conteneur 0323029a… inchangé).

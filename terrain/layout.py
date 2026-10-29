@@ -634,6 +634,30 @@ R_HN_K32C = R_INT_U32B + 0x20                # hints k32#3 (9)
 R_HN_U32B = R_HN_K32C + 0xA0                 # hints u32#2 (3)
 assert R_HN_U32B + 0x40 <= ZONE_DATA_SUP_2[1] + 1, "INT/hints #3 débordants"
 
+# --- .rdata : motif loader D54 (terrain.17-B — LEÇON MACHINE RÉELLE) -----------
+# La machine cible (Windows 11 build 26300, Insider) résout kernel32#3 et
+# user32#2 par le CHEMIN FirstThunk : les slots IAT du fichier doivent porter
+# des pointeurs de hints VALABLES, et hints + INT vivent en .rdata NON
+# exécutable (leçon terrain.4/terrain.5, D54). Le correctif vivait seulement
+# dans l'arbre local du terrain.16 — jamais committé : la régénération D96
+# l'a perdu, le run machine réelle l'a nommé (fenêtre jamais créée, journal
+# jamais ouvert, processus mort avant l'entrée). Adresses FIXES = celles du
+# terrain16, prouvées sur la machine ; la copie .text2 ci-dessus reste DONNÉE
+# MORTE couverte par la table R10 (aucun octet couvert ne bouge).
+R_INT_K32C_RDATA = 0x2B40      # INT kernel32#3 en .rdata (9 qwords + terme)
+R_INT_U32B_RDATA = 0x2B90      # INT user32#2 en .rdata (3 qwords + terme)
+HINTS_K32C_RDATA = {           # hints kernel32#3 — adresses terrain16
+    "CreateProcessA": 0x2BB0, "CreatePipe": 0x2BC2,
+    "WaitForSingleObject": 0x2BD0, "GetExitCodeProcess": 0x2BE6,
+    "TerminateProcess": 0x2BFC, "GetLocalTime": 0x2C10,
+    "DeleteFileA": 0x2C20, "PeekNamedPipe": 0x2C2E, "Sleep": 0x2C3E,
+}
+HINTS_U32B_RDATA = {           # hints user32#2 — adresses terrain16
+    "FindWindowW": 0x2C46, "FindWindowExW": 0x2C54,
+    "SendMessageTimeoutW": 0x2C64,
+}
+assert max(HINTS_U32B_RDATA.values()) + 24 <= 0x2C80, "hints .rdata débordants"
+
 # --- Section .blob : kit embarqué (D49) ---------------------------------------------
 # En-tête : u64 longueur démo, u64 longueur proxy (JAMAIS codées en dur dans
 # le code — sup-37 les lit ici) ; les octets suivent ; l'emplacement annexe

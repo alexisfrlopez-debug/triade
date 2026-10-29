@@ -2,7 +2,7 @@
   blocs_avec_spec_a_jour        : 24/24 : tracabilite I->C->B (heritage M0/M1/M2/demo + 13 blocs sup)
   chaines_I_C_B_tests           : 24/24
   construction                  : 0 erreur / 0 avertissement
-  tests_oracle                  : 10111 cas verts (graine 20261117) ; oracle structurel 1090 verrous PASS ; falsification : 28/28 cibles R10 détectées (octets 11/23) + 7 mutations ciblées attrapées
+  tests_oracle                  : 10111 cas verts (graine 1) ; oracle structurel 1090 verrous PASS ; falsification : 28/28 cibles R10 détectées (octets 11/23) + 7 mutations ciblées attrapées
   empreintes_donnees_embarquees : conforme (table R10 28 entrees + terminateur dont 4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures) ; croisement T4 : 10 fixtures == octets du proxy M4 scelle (D96)
   defauts_attrapes_avant_build  : 6 classes (constante terrain_, mode .curl, flux banniere 39->38, mapping .champ decale, 7 traces valeur en mode 0, SA consomme avant initialisation) — le systeme a fonctionne comme concu
   reutilisation_R7              : 11 blocs octet-identiques (hello/selftest/echo/demo.9)
