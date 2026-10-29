@@ -8,7 +8,7 @@ scellé lu au dépôt m1, R7) ; l'IAT secur32 reçoit une fausse adresse
 (résolution chargeur, mécanisme M2/M3 : page trampoline de ret + crochet
 code). AUCUNE socket ici : tls-07 est un bloc de bibliothèque et de mémoire
 — la réception tcp-03 est l'affaire de l'APPELANT tls-08 (I2). Vecteurs de
-la spécification tls-07:R1 :
+la spécification tls-07:R2 :
 
   V1  round-trip de notation 100 % (taille totale == « Code : N o », padding
       >= 16 — D8) pour tls-07 ET les trois blocs intégrés ;
@@ -248,21 +248,32 @@ def image_initiale(utile: int = 0, offset: int = 0, zone_brut: bytes = b"",
 
 class Script:
     """Comportements shims déterministes par INDICE d'appel (jamais de file
-    épuisable) : dm[i] = (HRESULT, en-tête, clair, queue) — la géométrie du
-    record traité au i-ème appel DecryptMessage ; le verdict dérive de
-    l'HRESULT par tls-02, le résidu de lot − consommé (règles D89)."""
+    épuisable) : dm[i] = (HRESULT, en-tête, clair, queue[, disposition]) — la
+    géométrie du record traité au i-ème appel DecryptMessage ; le verdict
+    dérive de l'HRESULT par tls-02, le résidu de lot − consommé (règles D89).
+    D102 : la DISPOSITION optionnelle est un quadruplet de rôles {H, D, T, E,
+    X} disant OÙ la « bibliothèque » reclasse chaque tampon en sortie (H =
+    STREAM_HEADER, D = DATA le clair, T = STREAM_TRAILER, E = EXTRA,
+    X = EMPTY intact) — absente : l'ordre canonique de Schannel
+    (H, D, T, E). msdn « Extra Buffers Returned by Schannel » nomme l'EXTRA
+    rendu « seul, à une position quelconque » : le scan PAR TYPE de la
+    notation doit tout retrouver (I6)."""
 
     def __init__(self, dm: list):
         self.entries_dm = dm
 
     def comportement_dm(self, i: int) -> tuple:
         if i < len(self.entries_dm):
-            return self.entries_dm[i]
-        return (0, 5, 256, 16)
+            e = self.entries_dm[i]
+        else:
+            e = (0, 5, 256, 16)
+        if len(e) >= 5 and e[4] is not None:
+            return e[0], e[1], e[2], e[3], e[4]
+        return e[0], e[1], e[2], e[3], None
 
 
 class Modele:
-    """La spécification tls-07:R1 en Python — même environnement shims. L'état
+    """La spécification tls-07:R2 en Python — même environnement shims. L'état
     (cadre + zone + span) VIT à travers les appels : le modèle est le miroir
     exact de ce que l'émulation doit produire, appel après appel."""
 
@@ -306,9 +317,10 @@ class Modele:
                      (0, L.SECBUFFER_EMPTY, 0),
                      (0, L.SECBUFFER_EMPTY, 0),
                      (0, L.SECBUFFER_EMPTY, 0)])
-        # --- DecryptMessage (règles D89)
+        # --- DecryptMessage (règles D89 AMENDÉES D102 — reclassement PAR TYPE)
         i = self.i_dm
-        h, cbh, ln_c, cbt = self.script.comportement_dm(i)
+        h, cbh, ln_c, cbt, disposition = self.script.comportement_dm(i)
+        roles = disposition or ("H", "D", "T", "E")
         v = verdict_modele(h)
         self.appels.append(("DM", ZONE_CADRE + L.CADRE_CTXT, "PILE", 0,
                             "PILE", desc_att, 0))
@@ -316,21 +328,28 @@ class Modele:
         self._dw32(L.CADRE_HRESULT, h)
         c = cbh + ln_c + cbt
         r = lot - c if lot > c else 0
-        if v in (0, 4):
+        if v in (0, 4) and "D" in roles:
             # déchiffrement SUR PLACE : le clair remplace le brut à l'offset
-            # de l'en-tête (les tampons 0/1 réécrits vivent sur la pile de la
-            # notation — hors image vérifiée, le CONTRAT les porte ailleurs)
+            # de l'en-tête — SI ET SEULEMENT SI la bibliothèque reclasse un
+            # tampon DATA ; les tampons réécrits vivent sur la pile de la
+            # notation — hors image vérifiée, le CONTRAT les porte ailleurs
             z = L.CADRE_RECEPTION
             self.page[z + cbh:z + cbh + ln_c] = clair_dm(i, ln_c)
-        # verdict 2 : MISSING dans le tampon 0 — la zone n'est PAS touchée ;
-        # verdicts 1/3/5/6 : la bibliothèque n'écrit rien
+        if v == 0 and "D" not in roles:
+            v = 6          # E4 D102 : SEC_E_OK sans DATA — fail-closed
+            # (UNIQUEMENT le SEC_E_OK : un CONTEXT_EXPIRED sans DATA est
+            # légitime — le payload close_notify est vide, Q3 reste Q3)
+        # le résidu EFFICACE : l'EXTRA n'existe que si la disposition le dit
+        r_eff = r if "E" in roles else 0
+        # verdict 2 : MISSING dans le tampon porteur — la zone n'est PAS
+        # touchée ; verdicts 1/3/5/6 : la bibliothèque n'écrit rien
         # --- post-états (le miroir EXACT de la notation, formule pour formule)
         if v == 0:
             self.span_page[MARGE_SPAN:MARGE_SPAN + 16] = struct.pack(
                 "<QQ", ZONE_RECEPTION + cbh, ln_c)
             self._dw32(L.CADRE_VERDICT, 0)
-            self._w16(L.CADRE_UTILE, r)
-            self._w16(L.CADRE_OFFSET, lot - r)
+            self._w16(L.CADRE_UTILE, r_eff)
+            self._w16(L.CADRE_OFFSET, lot - r_eff)
             return 0, self.appels
         if v == 2:
             self._dw32(L.CADRE_VERDICT, 2)
@@ -339,7 +358,7 @@ class Modele:
             return 2, self.appels
         if v == 4:
             self._dw32(L.CADRE_VERDICT, 4)
-            self._w16(L.CADRE_UTILE, r)          # curiosité « fin propre avec résidu »
+            self._w16(L.CADRE_UTILE, r_eff)   # curiosité « fin propre avec résidu »
             self._w16(L.CADRE_OFFSET, 0)         # purgée : plus rien de vivant
             return 4, self.appels
         self._dw32(L.CADRE_VERDICT, v)
@@ -444,7 +463,8 @@ class Emulateur:
             uc.reg_write(REGS["rax"], 0x80090308)
             return
         i = self._i_dm
-        h, cbh, ln_c, cbt = self.script.comportement_dm(i)
+        h, cbh, ln_c, cbt, disposition = self.script.comportement_dm(i)
+        roles = disposition or ("H", "D", "T", "E")
         v = verdict_modele(h)
         lot = desc[3][0][0]
         c = cbh + ln_c + cbt
@@ -452,17 +472,32 @@ class Emulateur:
         if v in (0, 4):
             pv0 = desc[3][0][2]
             pb = desc[2]
-            # déchiffrement SUR PLACE (règle D89) + tampons réécrits PAR la
-            # bibliothèque (leçon D83 (d) : les longueurs produites consignées)
-            uc.mem_write(pv0 + cbh, clair_dm(i, ln_c))
-            uc.mem_write(pb + 0x00, struct.pack("<I", ln_c))
-            uc.mem_write(pb + 0x04, struct.pack("<I", L.SECBUFFER_DATA))
-            uc.mem_write(pb + 0x08, struct.pack("<Q", pv0 + cbh))
-            uc.mem_write(pb + 0x10, struct.pack("<I", r))
-            uc.mem_write(pb + 0x14, struct.pack("<I", L.SECBUFFER_EXTRA))
-            uc.mem_write(pb + 0x18, struct.pack("<Q", pv0 + c))
+            # reclassement D102 — Schannel RÉELLE en sortie de son SEC_E_OK :
+            # chaque rôle à SA position dans la disposition (canonique :
+            # [0]=STREAM_HEADER, [1]=DATA le clair, [2]=STREAM_TRAILER,
+            # [3]=EXTRA ou EMPTY — la preuve byte-level du témoin 17-C/17-F :
+            # l'ancienne notation pompait le [0] reclassé STREAM_HEADER) ;
+            # le clair est écrit SUR PLACE (règle D89 inchangée) SI ET
+            # SEULEMENT SI un rôle D existe (E4 : zone brute, verdict 6)
+            if "D" in roles:
+                uc.mem_write(pv0 + cbh, clair_dm(i, ln_c))
+            for k, role in enumerate(roles):
+                base = pb + L.TAILLE_SECBUFFER * k
+                if role == "H":
+                    cb, typ, pv = cbh, L.SECBUFFER_STREAM_HEADER, pv0
+                elif role == "D":
+                    cb, typ, pv = ln_c, L.SECBUFFER_DATA, pv0 + cbh
+                elif role == "T":
+                    cb, typ, pv = cbt, L.SECBUFFER_STREAM_TRAILER, pv0 + cbh + ln_c
+                elif role == "E" and r:
+                    cb, typ, pv = r, L.SECBUFFER_EXTRA, pv0 + c
+                else:                        # "X", ou "E" vide : EMPTY intact
+                    cb, typ, pv = 0, L.SECBUFFER_EMPTY, 0
+                uc.mem_write(base + 0x00, struct.pack("<I", cb))
+                uc.mem_write(base + 0x04, struct.pack("<I", typ))
+                uc.mem_write(base + 0x08, struct.pack("<Q", pv))
         elif v == 2:
-            # MISSING : octets manquants dans le tampon 0 — zone intacte
+            # MISSING : octets manquants dans le tampon porteur — zone intacte
             manquant = c - lot if c > lot else 0
             pb = desc[2]
             uc.mem_write(pb + 0x00, struct.pack("<I", manquant))
@@ -688,6 +723,21 @@ SCENARIOS_V2 = [
      "de bout en bout",
      Script([(INCOMPLET, 5, 60, 8), (OK, 5, 60, 8), (OK, 2, 20, 4)]),
      [("appel",), ("recv", 31), ("appel",), ("appel",)], 0, 72, motif(7, 72)),
+    ("D102 — l'EXTRA en position INHABITUELLE [0] (msdn « extra seul, à une "
+     "position quelconque ») : le scan PAR TYPE le trouve (I6)",
+     Script([(OK, 5, 100, 16, ("E", "H", "D", "T"))]),
+     [("appel",)], 0, 172, motif(7, 172)),
+    ("D102 — DATA en [3], EXTRA en [2] : l'ordre canonique n'est jamais une "
+     "hypothèse",
+     Script([(OK, 5, 100, 16, ("H", "T", "E", "D"))]),
+     [("appel",)], 0, 172, motif(7, 172)),
+    ("D102 — close_notify avec résidu et EXTRA déplacé en [1] : Q3 par TYPE",
+     Script([(CONTEXTE_EXPIRE, 5, 0, 16, ("H", "E", "D", "T"))]),
+     [("appel",)], 0, 58, motif(7, 58)),
+    ("D102 — E4 : SEC_E_OK SANS tampon DATA — verdict 6, span INTACT "
+     "(canari), région consignée (0, lot), zone brute",
+     Script([(OK, 5, 100, 16, ("H", "T", "X", "X"))]),
+     [("appel",)], 0, 121, motif(7, 121)),
 ]
 
 MUTATIONS_V4 = [
@@ -700,20 +750,29 @@ MUTATIONS_V4 = [
      ("movzx eax, word ptr [r10 + 0x3C]",
       "movzx eax, word ptr [r10 + 0x3E]")),
     ("M4 longueur utile écrite déviée (+0x3A → +0x3E)",
-     ("mov word ptr [r10 + 0x3A], cx",
-      "mov word ptr [r10 + 0x3E], cx")),
-    ("M5 span ptr dévié (tampon 0 → tampon 1)",
-     ("mov rcx, [rsp + 0xA8]", "mov rcx, [rsp + 0xB8]")),
+     ("mov word ptr [r10 + 0x3A], r9w",
+      "mov word ptr [r10 + 0x3E], r9w")),
+    ("M5 D102 scan DATA : type comparé dévié (1 → 6) — le clair devient "
+     "introuvable, E4 déclenché sur tout Q1",
+     ("cmp dword ptr [r11 + rcx*8 + 4], 1",
+      "cmp dword ptr [r11 + rcx*8 + 4], 6")),
     ("M6 routage incomplet dévié (cmp 2 → 3)",
      ("cmp eax, 2", "cmp eax, 3")),
-    ("M7 résidu lu dévié (tampon 1 → tampon 2)",
-     ("mov ecx, [rsp + 0xB0]", "mov ecx, [rsp + 0xC0]")),
+    ("M7 D102 scan EXTRA (Q1) : type comparé dévié (5 → 1) — le résidu "
+     "lu devient le clair",
+     ("cmp dword ptr [r11 + rcx*8 + 4], 5",
+      "cmp dword ptr [r11 + rcx*8 + 4], 1")),
+    ("M7b D102 scan EXTRA (Q3 fin de contexte) : type dévié (5 → 6)",
+     ("cmp dword ptr [r11 + rdx*8 + 4], 5",
+      "cmp dword ptr [r11 + rdx*8 + 4], 6")),
     ("M8 pfQOP non réécrit (0 → 1)",
      ("mov dword ptr [rsp + 0x58], 0", "mov dword ptr [rsp + 0x58], 1")),
     ("M9 descripteur tls-03 dévié (r9 +0x98)",
      ("lea r9, [rsp + 0x90]", "lea r9, [rsp + 0x98]")),
     ("M10 pMessage DM dévié (rdx +0x98)",
      ("lea rdx, [rsp + 0x90]", "lea rdx, [rsp + 0x98]")),
+    ("M11 D102 scan borné dévié (4 → 3) — le 4e tampon devient invisible",
+     ("cmp r8d, 4", "cmp r8d, 3")),
 ]
 
 
@@ -725,7 +784,8 @@ def main() -> int:
     args = parseur.parse_args()
     rng = random.Random(args.graine)
 
-    print("=== harnais_reception.py — tls-07:R1 (réception déchiffrée, D89 session) ===")
+    print("=== harnais_reception.py — tls-07:R2 (réception déchiffrée, D89 "
+          "session — reclassement PAR TYPE D102) ===")
     print(f"graine {args.graine} · fuzz {args.cas} cas · {args.chaines} chaînes")
 
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
@@ -785,7 +845,20 @@ def main() -> int:
              (INCOMPLET if rng.random() < 0.5 else
               (rng.choice(codes_documentes) if rng.random() < 0.6
                else rng.getrandbits(32))))
-        dm = [(h, rng.randint(0, 64), rng.randint(0, 600), rng.randint(0, 80))]
+        # D102 : disposition du reclassement — permutations aléatoires des
+        # rôles (msdn « extra seul, à une position quelconque »), cas E4
+        # (aucun DATA) et cas sans EXTRA — le scan PAR TYPE doit TOUT retrouver
+        tirage = rng.random()
+        if tirage < 0.10:
+            disposition = ("H", "T", "X", "X")          # E4 : pas de DATA
+        elif tirage < 0.20:
+            disposition = ("H", "D", "T", "X")          # pas d'EXTRA
+        elif tirage < 0.45:
+            disposition = tuple(rng.sample(("H", "D", "T", "E"), 4))
+        else:
+            disposition = None                             # canonique
+        dm = [(h, rng.randint(0, 64), rng.randint(0, 600), rng.randint(0, 80),
+               disposition)]
         script = Script(dm)
         problemes = jouer_cas(emu, script, "fuzz", lot, utile0, offset0, brut)
         if problemes:
@@ -805,8 +878,18 @@ def main() -> int:
                  (INCOMPLET if rng.random() < 0.4 else
                   (rng.choice(codes_documentes) if rng.random() < 0.5
                    else rng.getrandbits(32))))
+            # D102 : permutations de reclassement en chaîne aussi
+            tirage = rng.random()
+            if tirage < 0.08:
+                disposition = ("H", "T", "X", "X")      # E4
+            elif tirage < 0.16:
+                disposition = ("H", "D", "T", "X")      # sans EXTRA
+            elif tirage < 0.40:
+                disposition = tuple(rng.sample(("H", "D", "T", "E"), 4))
+            else:
+                disposition = None
             dm.append((h, rng.randint(0, 64), rng.randint(0, 500),
-                       rng.randint(0, 80)))
+                       rng.randint(0, 80), disposition))
         script = Script(dm)
         lot0 = rng.randint(0, 500)
         etapes = []

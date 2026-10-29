@@ -6471,3 +6471,60 @@ conteneur 0323029a… inchangé, sentinelles intactes — proxy 0.4.0
 dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur du
 dépôt est la balise COURANTE terrain.17-F 81f7ef3f… — artefact vivant
 re-scellé par version).
+
+## Entrée 88 — D102 : M4 / terrain.17-G, le témoin a parlé (les 13 octets du run 17-F sont l'EN-TÊTE TLS BRUT du premier record — Schannel reclasse les tampons PAR TYPE en sortie de DecryptMessageW, l'ancienne tls-07 lisait des positions fixes : le client recevait l'en-tête chiffré, jamais le clair ; correctif tls-07:R2 scan PAR TYPE, machine réelle en attente du run 17-G)
+
+**Le fait fondateur.** Le témoin du run 17-F (13 octets, `17 03 03 03 B3
+00 00 00 00 00 00 00 01`) n'est pas du texte HTTP tronqué : c'est
+l'en-tête d'enregistrement TLS (type 0x17, version 03 03, longueur 947)
+suivi du nonce GCM (séquence 1). Le tunnel vivait, le serveur répondait —
+et le relais livrait l'EN-TÊTE CHIFFRÉ au client.
+
+**La divergence, nommée par la documentation.** Sur SEC_E_OK, Schannel
+réelle RECLASSE les quatre tampons : [0]=STREAM_HEADER (13 o en GCM —
+exactement le témoin), [1]=DATA (le clair), [2]=TRAILER, [3]=EXTRA —
+msdn « Extra Buffers Returned by Schannel » : l'EXTRA « peut être rendu
+seul, à une position quelconque » ; l'exemple canonique « Decrypting a
+Message » scanne les tampons PAR BufferType. L'ancienne notation lisait
+le clair au tampon 0 et le résidu au tampon 1 — positions fixes. Pourquoi
+l'oracle restait vert : le shim et le modèle partageaient la même lecture
+positionnelle. D'accord entre eux, faux contre l'API réelle.
+
+**Le correctif (écrite-avant-code, tls-07:R2).** Le span EST le premier
+tampon reclassé SECBUFFER_DATA ; le résidu EST le SECBUFFER_EXTRA — où
+que la bibliothèque les pose (I6 : la position n'est jamais une
+hypothèse). E4 neuf : SEC_E_OK sans aucun DATA → verdict 6, span intact,
+fail-closed. Q3 lit l'EXTRA par type. tls-08 intact : il pompe le span,
+où qu'il pointe.
+
+**Chaîne verte.** Harnais tls-07 réécrit au reclassement réel : 40 PASS
+(round-trip 116/116 ; 20 scénarios dont EXTRA en [0], DATA en [3],
+close_notify avec EXTRA déplacé, E4 ; 4 000 appels + 1 000 chaînes à
+dispositions aléatoires, zéro écart ; 12 mutations attrapées — M5/M7/
+M7b/M11 ciblent le scan —, témoin intact). Harnais session : 53 PASS.
+Oracle M4 : 560 cas verts. Proxy.exe reconstruit : 28 160 o TAILLE
+INCHANGÉE (le correctif vit dans le padding du slot), sha256 b9264e0b…,
+carte génération 6, cristallisation 2/2. Superviseur 17-G : kit D102
+(md5 proxy 2b6481a1…), version terrain.8, oracle 10 124 cas verts,
+falsification 29/29 + 10 mutations, 75 264 o TAILLE INCHANGÉE (sept
+générations), sha256 ee23cc80…, différentiel 295 octets en 10 plages
+nommées.
+
+**Canal Drive.** OAuth relais ressuscité (échange authorization_code,
+refresh_token neuf, copie Tokens restaurée par le chemin résumable).
+Livraison 17-G + LISEZMOI poussés dans /test (md5 MATCH). Le jeton
+mourra dans 7 jours (mode Testing) — le partage Éditeur du compte de
+service reste la parade définitive.
+
+**Leçon systémique.** Un modèle et son émulation ne prouvent rien contre
+l'API réelle s'ils partagent la même erreur : la divergence se nomme par
+l'évidence (le témoin byte-level), le correctif se cherche dans la
+documentation de l'API cible. « D'accord entre eux, faux contre le
+monde » est le mode de défaillance des couples modèle/shim.
+
+Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle
+D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
+0.4.0 dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur
+du dépôt est la balise COURANTE terrain.17-G ee23cc80… — artefact vivant
+re-scellé par version ; le proxy M4 du dépôt est la balise 0.5.0-dev.2
+D102 b9264e0b…).

@@ -130,6 +130,8 @@ VERSION_TERRAIN6 = "0.5.0-terrain.6"      # T4 honnêteté : timeout d'événeme
 VERSION_U64_TERRAIN6 = 0x00050106         # le même test, la charte § 3 protégée (17-E)
 VERSION_TERRAIN7 = "0.5.0-terrain.7"      # prévol intégré : orphelins + amont (D101)
 VERSION_U64_TERRAIN7 = 0x00050107         # ÉTAPES 0/0 BIS du protocole automatiques (17-F)
+VERSION_TERRAIN8 = "0.5.0-terrain.8"      # kit proxy M4 D102 : tls-07 scan PAR TYPE (17-G)
+VERSION_U64_TERRAIN8 = 0x00050108         # le clair ENFIN relayé — reclassement Schannel
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
@@ -590,8 +592,11 @@ MD5_DEMO_HEXA = b"73c064fbaf4610a167bc6434dee400e4"
 # D63 (terrain.11+) : proxy re-scellé après le correctif de pile http-10:R3.
 # D96 (terrain.17) : le kit embarque le proxy M4 scellé D95 — le tunnel TLS
 # voyage dans le superviseur ; md5/sha256 assertés au build contre l'artefact.
-MD5_PROXY_HEXA = b"33c9181580b7e381e527e72902180733"
-SHA256_PROXY_HEXA = b"b813f65e37752ca7a56d549955a8e807b9ba07dc2288f32aab84e8e2db31e526"
+# D102 (terrain.18/17-G) : le kit embarque le proxy M4 RECONSTRUIT — tls-07:R2
+# scan PAR TYPE (Schannel reclasse [0]=STREAM_HEADER/[1]=DATA/[3]=EXTRA —
+# l'anomalie 13 octets 17-C/17-F ÉTEINTE : le clair est enfin relayé).
+MD5_PROXY_HEXA = b"2b6481a1e76fbd8e245cd03d883e36c7"
+SHA256_PROXY_HEXA = b"b9264e0b6aef460f86c54ec0c4d38ebe90ca58b841fec7a09257e813ff6545cf"
 LONGUEUR_DEMO = 16384                     # demo.exe 0.3.0 (M2 scellé)
 LONGUEUR_PROXY = 28160                    # proxy.exe 0.5.0-dev.2 (M4 scellé D95)
 LONGUEUR_ANNEXE = 248                     # terrain_jetons.bin (D48)

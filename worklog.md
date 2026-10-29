@@ -344,3 +344,24 @@ Stage Summary:
   les tests) → scellage 0.5.0 si S49 OK + témoin « 200 » complet ; sinon
   correctif ciblé (tls-08 si tronqué) ; puis v0.6.0 axes 2-3 (CF2-
   Shamir, sceau I) selon D86/D87 ; terrain : D57 (WER) seul point ouvert
+
+## Task ID 29 — D102 : tls-07:R2, l'anomalie des 13 octets éteinte (2026-10-29)
+
+- TÉMOIN 17-F ANALYSÉ byte-level : 13 o = en-tête TLS brut + nonce GCM —
+  Schannel reclasse les tampons PAR TYPE ([0]=STREAM_HEADER, [1]=DATA,
+  [2]=TRAILER, [3]=EXTRA) ; l'ancienne tls-07 lisait des positions fixes
+- CORRECTIF tls-07:R2 (scan PAR TYPE, E4 fail-closed) + shims au
+  reclassement réel + dispositions aléatoires au fuzz ; 40 + 53 PASS,
+  oracle M4 560 verts ; proxy.exe 28 160 o TAILLE INCHANGÉE (carte
+  génération 6, cristallisation 2/2, sha b9264e0b…)
+- TERRAIN.17-G : kit D102 (md5 proxy 2b6481a1…), terrain.8, 75 264 o
+  TAILLE INCHANGÉE (sept générations), sha ee23cc80…, différentiel
+  295 o / 10 plages nommées ; livraison download/ + /test Drive (md5
+  MATCH) ; 17-F archivé en référence locale
+- Canal Drive : OAuth relais RESSUSCITÉ (refresh_token neuf + copie
+  Tokens) — meurt dans 7 jours (mode Testing) ; parade définitive :
+  partage Éditeur du dossier test au compte de service
+- Suite : LE JOURNAL + LE TÉMOIN du run 17-G (S05C md5 2b6481a1…) →
+  scellage 0.5.0 si S49 OK + témoin « HTTP/1.1 200 » ; puis v0.6.0 axes
+  2-3 (CF2-Shamir, sceau I) selon D86/D87 ; terrain : D57 (WER) seul
+  point ouvert

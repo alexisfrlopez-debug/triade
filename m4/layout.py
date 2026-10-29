@@ -97,13 +97,18 @@ SecBufferDesc { ULONG ulVersion ; ULONG cBuffers ; void* pBuffers } (16 o) ;
 SecPkgContext_StreamSizes { cbHeader, cbTrailer, cbMaximumMessage,
 cBuffers, cbBlockSize } (5 ULONG : en-tête +0, queue +4, message max +8 —
 tls-06, unique propriétaire de l'acquisition).
-Règles DecryptMessage (D89 — contrat de la « bibliothèque », partagé modèle/
-émulation du harnais tls-07, jamais deux sources de vérité) : en succès le
-tampon 0 devient (cb = longueur claire, DATA, pv = zone + en-tête — le clair
-remplace le brut à l'offset de l'en-tête d'enregistrement) ; le tampon 1
-devient (cb = résidu Extra, EXTRA, pv = zone + consommé) ; en message
-incomplet le tampon 0 devient (cb = octets manquants, MISSING) SANS toucher
-la zone ; tout autre verdict n'écrit rien.
+Règles DecryptMessage (D89, AMENDÉES D102 — contrat de la « bibliothèque », partagé modèle/
+émulation des harnais tls-07/tls-08, jamais deux sources de vérité) : en succès
+Schannel RÉELLE RECLASSE les QUATRE tampons PAR TYPE : [0]=STREAM_HEADER
+(cb = en-tête du record — 13 o en GCM : 5 en-tête + 8 nonce, preuve byte-
+level du témoin terrain 17-C/17-F), [1]=DATA (cb = longueur claire, pv =
+zone + en-tête — le clair remplace le brut à l'offset de l'en-tête
+d'enregistrement), [2]=STREAM_TRAILER, [3]=EXTRA (cb = résidu, pv = zone +
+consommé) ou EMPTY — msdn « Extra Buffers Returned by Schannel » : l'EXTRA
+peut être rendu « seul, à une position quelconque » : le CONSOMMATEUR
+cherche PAR TYPE, jamais par position (I6 de tls-07:R2) ; en message
+incomplet le tampon porteur devient (cb = octets manquants, MISSING) SANS
+toucher la zone ; tout autre verdict n'écrit rien.
 
 CADRE DE SESSION TLS (arrêt D81, AMENDÉ D89 — convention partagée tls-04..08, citée
 par les spécifications « aux offsets documentés » ; propriété mémoire http-10:R2
@@ -132,7 +137,7 @@ qui le fournit VIERGE ; zone de travail complete, jamais de donnée statique) :
          par session, tls-03 type 1 lit via le pointeur passé en 5e argument)
   +0x60 zone nom UTF-16 (512 o = 2 x (HOTE_MAX + 1))
   +0x260 zone jeton ÉMISSION (MAX_JETON 16384 — poignée puis enregistrements)
-  +0x4260 zone RÉCEPTION (2 x MAX_JETON 32768 — D89 : tls-07:R1 P1/E2, le
+  +0x4260 zone RÉCEPTION (2 x MAX_JETON 32768 — D89 : tls-07:R2 P1/E2, le
          résidu Extra suivi des octets bruts récents ; tls-04 y voit une zone
          ≥ MAX_JETON — ses gardes restent au bornage JETON, inchangées)
   TAILLE_CADRE = 0xC260 (49760 o — 0x8260 avant D89)
@@ -275,7 +280,7 @@ BLOCS_TLS = [
     ("g70004", "tls-04:R1", 0x62C0, 0x300, "M4-dev.1", 0),   # poignée de main (préfig.)
     ("g70005", "tls-05:R1", 0x65C0, 0x180, "M4-dev.1", 1),   # cycle de vie (ARRÊT D81)
     ("g70006", "tls-06:R1", 0x6740, 0x300, "M4-dev.1", 0),   # émission (préfig.)
-    ("g70007", "tls-07:R1", 0x6A40, 0x300, "M4-dev.1", 0),   # réception (préfig.)
+    ("g70007", "tls-07:R2", 0x6A40, 0x300, "M4-dev.1", 0),   # réception (préfig., D102 scan par type)
     ("g70008", "tls-08:R1", 0x6D40, 0x600, "M4-dev.1", 0),   # session TLS (mesurée D90)
 ]
 BLOCS_REVISIONS = [
@@ -379,7 +384,7 @@ CADRE_OFFSET = 0x3C             # u16 — offset résidu (D89, tls-07 — normal
 CADRE_TAILLES = 0x40            # 5 x u32 StreamSizes (tls-06 écrit, tls-03 lit)
 CADRE_NOM_ZONE = 0x60           # 512 o = 2 * (HOTE_MAX + 1)
 CADRE_EMISSION = 0x260          # MAX_JETON
-CADRE_RECEPTION = 0x4260        # 2 x MAX_JETON (D89 — tls-07:R1 P1/E2)
+CADRE_RECEPTION = 0x4260        # 2 x MAX_JETON (D89 — tls-07:R2 P1/E2)
 CAPACITE_RECEPTION = 2 * MAX_JETON   # 32768 — borne E2 de tls-07
 TAILLE_CADRE = 0xC260           # 49760 o (0x8260 avant D89)
 SECPKG_CRED_OUTBOUND = 2        # client (tls-05 op 0 — validation AUTOMATIQUE)

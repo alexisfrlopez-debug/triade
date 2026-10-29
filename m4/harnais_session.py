@@ -353,9 +353,17 @@ class Script:
         return self.entries_em[i] if i < len(self.entries_em) else 0
 
     def comportement_dm(self, i: int) -> tuple:
+        """(HRESULT, en-tête, clair, queue[, disposition D102]) — absente :
+        l'ordre canonique de Schannel (H, D, T, E). Le harnais de SESSION
+        n'utilise que la disposition canonique (les permutations sont
+        l'affaire du harnais tls-07 propre)."""
         if i < len(self.entries_dm):
-            return self.entries_dm[i]
-        return (OK, 5, 256, 16)
+            e = self.entries_dm[i]
+        else:
+            e = (OK, 5, 256, 16)
+        if len(e) >= 5 and e[4] is not None:
+            return e[0], e[1], e[2], e[3], e[4]
+        return e[0], e[1], e[2], e[3], None
 
     def donnees_recv(self, i: int, capacite: int) -> tuple[int, bytes]:
         if i < len(self.entries_recv):
@@ -657,7 +665,7 @@ class Modele:
         self._dw32(L.CADRE_VERDICT, 0)
         return 0
 
-    # --- tls-07 (spec tls-07:R1 + règles D89 — miroir du harnais D89) ----------
+    # --- tls-07 (spec tls-07:R2 + règles D89/D102 — miroir du harnais) ----------
 
     def _tls07(self, lot: int) -> tuple[int, int, int]:
         """UN appel tls-07 → (verdict, ptr span, longueur span)."""
@@ -673,7 +681,7 @@ class Modele:
                     (0, L.SECBUFFER_EMPTY, 0),
                     (0, L.SECBUFFER_EMPTY, 0),
                     (0, L.SECBUFFER_EMPTY, 0)]
-        h, cbh, ln_c, cbt = self.script.comportement_dm(self.i_dm)
+        h, cbh, ln_c, cbt, _disposition = self.script.comportement_dm(self.i_dm)
         v = verdict_modele(h)
         self.appels.append(("DM", ZONE_CADRE + L.CADRE_CTXT, "PILE", 0, "PILE",
                             (0, 4, "PBUF", desc_att), 0))
@@ -1210,7 +1218,8 @@ class Emulateur:
             uc.reg_write(REGS["rax"], INVALID_TOKEN)
             return
         i = self._i_dm
-        h, cbh, ln_c, cbt = self.script.comportement_dm(i)
+        h, cbh, ln_c, cbt, disposition = self.script.comportement_dm(i)
+        roles = disposition or ("H", "D", "T", "E")
         v = verdict_modele(h)
         lot = desc[3][0][0]
         c = cbh + ln_c + cbt
@@ -1218,13 +1227,29 @@ class Emulateur:
         if v in (0, 4):
             pv0 = desc[3][0][2]
             pb = desc[2]
-            uc.mem_write(pv0 + cbh, clair_dm(i, ln_c))
-            uc.mem_write(pb + 0x00, struct.pack("<I", ln_c))
-            uc.mem_write(pb + 0x04, struct.pack("<I", L.SECBUFFER_DATA))
-            uc.mem_write(pb + 0x08, struct.pack("<Q", pv0 + cbh))
-            uc.mem_write(pb + 0x10, struct.pack("<I", r))
-            uc.mem_write(pb + 0x14, struct.pack("<I", L.SECBUFFER_EXTRA))
-            uc.mem_write(pb + 0x18, struct.pack("<Q", pv0 + c))
+            # reclassement D102 — Schannel RÉELLE en sortie de son SEC_E_OK :
+            # [0]=STREAM_HEADER (l'en-tête du record — 13 o en GCM, la
+            # preuve byte-level du témoin 17-C/17-F), [1]=DATA le clair,
+            # [2]=STREAM_TRAILER, [3]=EXTRA ou EMPTY (msdn « Extra Buffers
+            # Returned by Schannel ») ; le clair est écrit SUR PLACE (règle
+            # D89 inchangée) SI ET SEULEMENT SI un rôle D existe
+            if "D" in roles:
+                uc.mem_write(pv0 + cbh, clair_dm(i, ln_c))
+            for k, role in enumerate(roles):
+                base = pb + L.TAILLE_SECBUFFER * k
+                if role == "H":
+                    cb, typ, pv = cbh, L.SECBUFFER_STREAM_HEADER, pv0
+                elif role == "D":
+                    cb, typ, pv = ln_c, L.SECBUFFER_DATA, pv0 + cbh
+                elif role == "T":
+                    cb, typ, pv = cbt, L.SECBUFFER_STREAM_TRAILER, pv0 + cbh + ln_c
+                elif role == "E" and r:
+                    cb, typ, pv = r, L.SECBUFFER_EXTRA, pv0 + c
+                else:                        # "X", ou "E" vide : EMPTY intact
+                    cb, typ, pv = 0, L.SECBUFFER_EMPTY, 0
+                uc.mem_write(base + 0x00, struct.pack("<I", cb))
+                uc.mem_write(base + 0x04, struct.pack("<I", typ))
+                uc.mem_write(base + 0x08, struct.pack("<Q", pv))
         elif v == 2:
             manquant = c - lot if c > lot else 0
             pb = desc[2]

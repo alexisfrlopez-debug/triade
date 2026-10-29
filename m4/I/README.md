@@ -63,7 +63,7 @@ recopie (défaut T5 sinon).
 | tls-04:R1 | g70004 | Poignée de main cliente (boucle ISC) | tls @ .text3, slot 4 |
 | tls-05:R1 | g70005 | Cycle de vie des handles (acquis/libérés) | tls @ .text3, slot 5 |
 | tls-06:R1 | g70006 | Émission chiffrée (tailles + EncryptMessage) | tls @ .text3, slot 6 |
-| tls-07:R1 | g70007 | Réception déchiffrée (Extra, incomplet, fin) | tls @ .text3, slot 7 |
+| tls-07:R2 | g70007 | Réception déchiffrée (Extra, incomplet, fin ; D102 scan PAR TYPE) | tls @ .text3, slot 7 |
 | tls-08:R1 | g70008 | Session TLS cliente (orchestration complète) | tls @ .text3, slot 8 |
 
 Le plan d'adressage définitif (étape b du jalon, modèle D47) arrêtera les
@@ -101,7 +101,7 @@ réceptionne PAR-DESSUS, à zone+offset+longueur, jamais ailleurs)** ; tailles
 de flux `@+0x40` (5×u32, écrites UNE fois par session par tls-06, lues par
 tls-03 type 1) ; zone nom `@+0x60` (512 o = 2×(HOTE_MAX+1)) ; zone émission
 `@+0x260` (MAX_JETON) et zone **réception `@+0x4260` (2×MAX_JETON = 32768,
-D89 — tls-07:R1 P1/E2 : le résidu Extra suivi des octets bruts récents ;
+D89 — tls-07:R2 P1/E2 : le résidu Extra suivi des octets bruts récents ;
 tls-04 y voit une zone ≥ MAX_JETON, ses gardes jeton restent inchangées)** ;
 taille totale `0xC260` (`0x8260` avant D89).
 

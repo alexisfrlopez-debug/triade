@@ -57,7 +57,7 @@ _FICHIERS = {
     "g70006": ("tls-06-emission", "tls-06:R1",
                "IAT secur32 QueryContextAttributesW / EncryptMessage ; tcp-04 ; "
                "tls-03 type 1 ; tailles négociées"),
-    "g70007": ("tls-07-reception", "tls-07:R1",
+    "g70007": ("tls-07-reception", "tls-07:R2",
                "IAT secur32 DecryptMessage ; tls-03 type 2 ; tls-02 ; "
                "libc-01 normalisation ; résidu Extra à propriétaire unique "
                "(la réception tcp-03 est l'affaire de l'APPELANT tls-08)"),
