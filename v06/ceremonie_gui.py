@@ -16,6 +16,9 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       console (interopérable : la remise GUI entre dans sceau_I.py tel quel).
 
   PROFIL « DÉPÔT » (machine connectée, à côté du dépôt triade) :
+    - phrase de contrôle CF1 : mettez la VÔTRE — alphanumérique (A-Z a-z
+      0-9), 8 caractères minimum, AUCUN plafond de longueur (D110) ;
+      l'ancienne devient inopérante, la remise D81 se remplace après ;
     - sceau I : preparer / deposer / verifier / etat (CLI sous-jacent) ;
     - coffre CF2 : statut / verifier / migrer (phrase masquée) / export des
       fragments en feuille imprimable / CONTRÔLE DE RELECTURE des copies
@@ -65,7 +68,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.1 (D109)"      # correctif mainloop
+VERSION_GUI = "ceremonie-GUI v1.2 (D110)"      # mainloop + la phrase à vous
 
 
 # ===========================================================================
@@ -466,7 +469,7 @@ def _module_cf2():
         raise ErreurCeremonie(
             f"pile du dépôt incomplète (absents : {', '.join(manquants)}) — "
             "installez-la depuis l'accueil du profil dépôt, ou : "
-            "pip install pynacl cryptography")
+            "pip install pynacl cryptography argon2-cffi")
     if RACINE_DEPOT not in sys.path:
         sys.path.insert(0, RACINE_DEPOT)
     import v06.coffre_cf2 as cf2
@@ -475,9 +478,12 @@ def _module_cf2():
 
 def _paquets_manquants():
     """La pile du dépôt : pynacl (AEAD XChaCha20) + cryptography (HKDF,
-    Ed25519 de vérification) — cf. coffre_cf2.py, spec § 3."""
+    Ed25519 de vérification) + argon2-cffi (le KDF du coffre CF1 — requis
+    par migrer ET changer-phrase depuis D110, cf. coffre_fort.py)."""
     manquants = []
-    for module, paquet in (("nacl", "pynacl"), ("cryptography", "cryptography")):
+    for module, paquet in (("nacl", "pynacl"),
+                           ("cryptography", "cryptography"),
+                           ("argon2", "argon2-cffi")):
         try:
             __import__(module)
         except ImportError:
@@ -495,7 +501,8 @@ def installer_dependances(emit=None):
     Dans un venv, pip refuse --user : l'essai retombe sans --user. Retour
     (ok, texte) — l'échec est nommé, avec la parade si nécessaire."""
     if not _paquets_manquants():
-        return True, "[pip] pile du dépôt déjà présente (pynacl + cryptography)"
+        return True, ("[pip] pile du dépôt déjà présente (pynacl + "
+                      "cryptography + argon2-cffi)")
     manquants = _paquets_manquants()
     env = dict(os.environ)
     env.setdefault("PYTHONIOENCODING", "utf-8")
@@ -530,10 +537,11 @@ def installer_dependances(emit=None):
     if "externally-managed-environment" in sortie:
         return False, ("environnement Python « externally-managed » (Debian "
                        "récent) : créez un venv — python3 -m venv ~/venv-triade "
-                       "&& ~/venv-triade/bin/pip install pynacl cryptography — "
+                       "&& ~/venv-triade/bin/pip install pynacl cryptography "
+                       "argon2-cffi — "
                        "puis relancez le GUI avec ~/venv-triade/bin/python")
     return False, ("l'installation a échoué — sortie pip ci-dessus ; remède "
-                   "manuel : pip install pynacl cryptography")
+                   "manuel : pip install pynacl cryptography argon2-cffi")
 
 
 def _detruire_fichier(chemin):
@@ -550,20 +558,26 @@ def _detruire_fichier(chemin):
         pass
 
 
-def executer_cli(module, args, emit=None, phrase=None):
-    """Exécute un CLI du dépôt (v06/<module>) et streame sa sortie.
+def executer_cli(module, args, emit=None, phrase=None, nouvelle_phrase=None,
+                au_racine=False):
+    """Exécute un CLI du dépôt et streame sa sortie.
 
     Retour (code_sortie, texte_complet). Le fail-closed appartient au CLI :
     le GUI ne fait que RELAYER son verdict (et sa phrase d'échec nommée).
     « phrase » (non None) passe par --phrase-fichier sur un temporaire 0600,
     écrasé puis détruit — la phrase ne paraît ni dans la commande ni dans
-    le journal.
+    le journal. « nouvelle_phrase » (D110, changer-phrase) passe par
+    --nouvelle-depuis-fichier, même discipline de temporaire détruit.
+    « au_racine » : le module vit à la RACINE du dépôt (coffre_fort.py)
+    au lieu de v06/ (le kit /Cérémonie pose l'un et l'autre).
     """
-    chemin_module = os.path.join(RACINE_DEPOT, "v06", module)
+    relatif = module if au_racine else os.path.join("v06", module)
+    chemin_module = os.path.join(RACINE_DEPOT, relatif)
     if not os.path.isfile(chemin_module):
         raise ErreurCeremonie(f"module du dépôt introuvable : {chemin_module}")
     cmd = [sys.executable, chemin_module] + [str(a) for a in args]
     fichier_phrase = None
+    fichier_nouvelle = None
     if phrase is not None:
         if not phrase.strip():
             raise ErreurCeremonie("phrase de contrôle vide — refus "
@@ -575,6 +589,17 @@ def executer_cli(module, args, emit=None, phrase=None):
         finally:
             os.close(fd)
         cmd += ["--phrase-fichier", fichier_phrase]
+    if nouvelle_phrase is not None:
+        if not nouvelle_phrase.strip():
+            raise ErreurCeremonie("nouvelle phrase vide — refus "
+                                  "(fail-closed)")
+        fd, fichier_nouvelle = tempfile.mkstemp(prefix="phrase-votre-",
+                                                suffix=".txt")
+        try:
+            os.write(fd, nouvelle_phrase.strip().encode("utf-8"))
+        finally:
+            os.close(fd)
+        cmd += ["--nouvelle-depuis-fichier", fichier_nouvelle]
     env = dict(os.environ)
     env.setdefault("PYTHONIOENCODING", "utf-8")
     env.setdefault("PYTHONUNBUFFERED", "1")
@@ -593,7 +618,70 @@ def executer_cli(module, args, emit=None, phrase=None):
     finally:
         if fichier_phrase:
             _detruire_fichier(fichier_phrase)
+        if fichier_nouvelle:
+            _detruire_fichier(fichier_nouvelle)
     return code, "\n".join(lignes)
+
+
+# ---------------------------------------------------------------------------
+# CF1 : la phrase de contrôle à VOUS (D110) — alphanumérique, sans plafond
+# ---------------------------------------------------------------------------
+
+LOG2_62 = 5.954196310386875     # log2(62) — l'alphabet A-Z a-z 0-9
+PLANCHER_PHRASE = 8             # fail-closed ; recommandé : 22 ≈ 128 bits
+
+
+def entropie_bits(longueur):
+    """Entropie ESTIMÉE d'une phrase alphanumérique (bits) — estimation
+    honnête pour un choix UNIFORME ; un choix humain mémorisable (mots,
+    suites logiques) vaut typiquement MOINS : la longueur est un plafond,
+    pas une promesse."""
+    return longueur * LOG2_62
+
+
+def phrase_personnelle_valide(phrase):
+    """Valide la phrase de contrôle CHOISIE par l'utilisateur (D110).
+
+    Retour (ok, message). Le message NOMME la règle violée — il ne révèle
+    JAMAIS le caractère fautif (seule sa POSITION : corriger sans que le
+    journal n'apprenne le contenu).
+
+    Règles (la demande développeur D110, telle quelle) :
+      - alphanumérique ASCII : A-Z, a-z, 0-9 — espaces, accents, symboles
+        refusés PAR CONCEPTION, échec nommé avec position ;
+      - plancher 8 caractères (fail-closed : en dessous, Argon2id ne
+        sauvera pas une phrase devinable) ;
+      - AUCUN plafond de longueur : Argon2id digère toute taille
+        (10 000 caractères passent — prouvé par test_ceremonie_gui.py T8).
+    """
+    if not phrase:
+        return False, "phrase vide — refus (fail-closed)"
+    for i, caractere in enumerate(phrase):
+        if not (caractere.isascii() and caractere.isalnum()):
+            if caractere.isspace():
+                genre = "une espace"
+            elif not caractere.isascii():
+                genre = ("une lettre accentuée ou non latine"
+                         if caractere.isalpha() else
+                         "un chiffre ou symbole non ASCII")
+            else:
+                genre = "un symbole ou signe de ponctuation"
+            return False, (f"caractère non alphanumérique en position "
+                           f"{i + 1} ({genre}) — la phrase personnelle "
+                           "n'accepte QUE A-Z, a-z, 0-9 (espaces et "
+                           "accents refusés par conception, D110)")
+    if len(phrase) < PLANCHER_PHRASE:
+        return False, (f"{len(phrase)} caractère(s) — plancher fail-closed : "
+                       f"{PLANCHER_PHRASE} minimum (recommandé : "
+                       "22 caractères ≈ 128 bits)")
+    bits = entropie_bits(len(phrase))
+    if bits < 128:
+        return True, (f"alphanumérique, {len(phrase)} caractères — "
+                      f"≈ {bits:.0f} bits d'entropie, sans plafond de "
+                      "longueur — AVERTISSEMENT : moins de 128 bits "
+                      "(22 caractères)")
+    return True, (f"alphanumérique, {len(phrase)} caractères — ≈ {bits:.0f} "
+                  "bits d'entropie, sans plafond de longueur")
 
 
 # ---------------------------------------------------------------------------
@@ -1072,12 +1160,15 @@ class Application:
             return
         self.executeur.lancer(titre, fonction, args)
 
-    def _cli(self, module, args, phrase=None, emit=None):
+    def _cli(self, module, args, phrase=None, emit=None,
+             nouvelle_phrase=None, au_racine=False):
         """Adaptateur : le verdict du CLI (code 0) devient le verdict GUI.
         reçoit l'émetteur de l'exécuteur (streaming ligne à ligne) quand la
         signature le demande (cf. _exige_emit) — functools.partial le
         transmet."""
-        code, texte = executer_cli(module, args, emit=emit, phrase=phrase)
+        code, texte = executer_cli(module, args, emit=emit, phrase=phrase,
+                                   nouvelle_phrase=nouvelle_phrase,
+                                   au_racine=au_racine)
         ok = code == 0
         return ok, (texte if texte.strip() else
                     ("VERT" if ok else f"code de sortie {code}"))
@@ -1369,6 +1460,57 @@ class Application:
         ttk.Button(barre, text="Autotest (labo)",
                    command=self._sur_cf2_autotest).pack(side="left", padx=6)
 
+        phrase_vous = self._section(
+            cf2, "Phrase de contrôle CF1 — mettez la VÔTRE (D110)")
+        phrase_vous.pack(fill="x", pady=2)
+        self._note(phrase_vous,
+                   "La phrase actuelle est celle de D81 — remise : "
+                   "PHRASE-CONTROLE-COFFRE.txt, dépôt ET racine du Drive "
+                   "« Triade » (si vous la perdez, rouvrez ce fichier : "
+                   "c'est LA copie de secours). Remplacez-la par la vôtre : "
+                   "alphanumérique (A-Z a-z 0-9), 8 caractères minimum, "
+                   "AUCUN plafond de longueur. L'ancienne devient INOPÉRANTE ; "
+                   "après le changement, remplacez la remise (discipline "
+                   "D81 — le journal vous le rappellera).")
+        cadre_a = ttk.Frame(phrase_vous)
+        cadre_a.pack(fill="x", pady=2)
+        ttk.Label(cadre_a, text="Ancienne phrase :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_cf1_ancienne = tk.StringVar(value="")
+        self.entry_cf1_ancienne = ttk.Entry(
+            cadre_a, textvariable=self.var_cf1_ancienne, show="\u2022")
+        self.entry_cf1_ancienne.pack(side="left", fill="x", expand=True,
+                                     padx=(0, 6))
+        cadre_n = ttk.Frame(phrase_vous)
+        cadre_n.pack(fill="x", pady=2)
+        ttk.Label(cadre_n, text="Nouvelle (la vôtre) :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_cf1_nouvelle = tk.StringVar(value="")
+        self.entry_cf1_nouvelle = ttk.Entry(
+            cadre_n, textvariable=self.var_cf1_nouvelle, show="\u2022")
+        self.entry_cf1_nouvelle.pack(side="left", fill="x", expand=True,
+                                     padx=(0, 6))
+        cadre_c = ttk.Frame(phrase_vous)
+        cadre_c.pack(fill="x", pady=2)
+        ttk.Label(cadre_c, text="Confirmation :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_cf1_confirmation = tk.StringVar(value="")
+        self.entry_cf1_confirmation = ttk.Entry(
+            cadre_c, textvariable=self.var_cf1_confirmation, show="\u2022")
+        self.entry_cf1_confirmation.pack(side="left", fill="x", expand=True,
+                                          padx=(0, 6))
+        self.var_cf1_voir = tk.BooleanVar(value=False)
+        ttk.Checkbutton(phrase_vous, text="afficher (vérifiez votre frappe)",
+                        variable=self.var_cf1_voir,
+                        command=self._basculer_cf1).pack(anchor="w")
+        self.label_cf1_verdict = ttk.Label(phrase_vous, style="Sous.TLabel",
+                                           wraplength=880, justify="left")
+        self.label_cf1_verdict.pack(anchor="w", pady=(2, 0))
+        self.var_cf1_nouvelle.trace_add("write", self._maj_entropie_cf1)
+        ttk.Button(phrase_vous, text="Changer la phrase (la vôtre)",
+                   command=self._sur_cf1_changer_phrase).pack(
+                       anchor="w", pady=4)
+
         migration = self._section(cf2, "Migration CF1 → CF2 (cérémonie réelle)")
         migration.pack(fill="x", pady=2)
         self._note(migration, "Part d'un coffre CF1 SAIN (le vérifier "
@@ -1520,6 +1662,89 @@ class Application:
     def _basculer_phrase(self):
         self.entry_phrase.configure(
             show="" if self.var_voir_phrase.get() else "\u2022")
+
+    def _basculer_cf1(self):
+        affiche = "" if self.var_cf1_voir.get() else "\u2022"
+        for entree in (self.entry_cf1_ancienne, self.entry_cf1_nouvelle,
+                       self.entry_cf1_confirmation):
+            entree.configure(show=affiche)
+
+    def _maj_entropie_cf1(self, *_):
+        """Verdict vivant sous la nouvelle phrase (validation D110) :"""
+        phrase = self.var_cf1_nouvelle.get()
+        if not phrase:
+            self.label_cf1_verdict.configure(text="",
+                                             foreground="#57606a")
+            return
+        ok, message = phrase_personnelle_valide(phrase)
+        bits = entropie_bits(len(phrase))
+        couleur = (COULEUR_VERTE if ok and bits >= 128 else
+                   COULEUR_ATTENTE if ok else COULEUR_ROUGE)
+        self.label_cf1_verdict.configure(text=message, foreground=couleur)
+
+    def _sur_cf1_changer_phrase(self):
+        if not self._pile_prete("Le changement de phrase CF1"):
+            return
+        ancienne = self.var_cf1_ancienne.get()
+        nouvelle = self.var_cf1_nouvelle.get().strip()
+        confirmation = self.var_cf1_confirmation.get().strip()
+        if not ancienne.strip():
+            messagebox.showwarning(
+                "Champ manquant",
+                "L'ANCIENNE phrase de contrôle est requise (fail-closed) —\n"
+                "c'est elle qui prouve que le coffre est le vôtre.\n"
+                "Perdue ? Elle vit dans PHRASE-CONTROLE-COFFRE.txt\n"
+                "(dépôt triade ET racine du Drive « Triade »).")
+            return
+        ok, message = phrase_personnelle_valide(nouvelle)
+        if not ok:
+            messagebox.showwarning("Phrase refusée (fail-closed)", message)
+            return
+        if nouvelle != confirmation:
+            messagebox.showwarning(
+                "Divergence",
+                "La nouvelle phrase et sa confirmation divergent —\n"
+                "refus (fail-closed). Retapez la confirmation.")
+            return
+        if nouvelle == ancienne.strip():
+            messagebox.showwarning(
+                "Refus",
+                "La nouvelle phrase est IDENTIQUE à l'ancienne —\n"
+                "il n'y a rien à changer.")
+            return
+        bits = entropie_bits(len(nouvelle))
+        avertissement = (""
+                         if bits >= 128 else
+                         "\n\nATTENTION : ≈ " + f"{bits:.0f} bits seulement "
+                         "(recommandé ≥ 22 caractères ≈ 128 bits) —\n"
+                         "une phrase plus courte est plus faible : Argon2id "
+                         "ne compensera pas un dictionnaire.")
+        if not messagebox.askyesno(
+                "Changer la phrase de contrôle — acte souverain",
+                "Le coffre sera OUVERT avec l'ancienne phrase puis "
+                "RE-SCCELLÉ avec la vôtre (sel Argon2id neuf).\n\n"
+                "L'ANCIENNE phrase deviendra INOPÉRANTE immédiatement.\n"
+                "APRÈS : remplacez la remise PHRASE-CONTROLE-COFFRE.txt "
+                "(votre phrase, ligne unique),\ncommit « AVANT TOUT » + "
+                "push git + racine Drive — sinon vous la PERDREZ comme la "
+                "précédente.\n\n"
+                f"Votre phrase : {len(nouvelle)} caractères, "
+                f"≈ {bits:.0f} bits d'entropie."
+                + avertissement + "\n\nContinuer ?"):
+            return
+        self.action(
+            "CF1 — changer la phrase (la vôtre)",
+            self._functools.partial(
+                self._cli, "coffre_fort.py", ["changer-phrase"],
+                phrase=ancienne, nouvelle_phrase=nouvelle, au_racine=True))
+        self.var_cf1_ancienne.set("")
+        self.var_cf1_nouvelle.set("")
+        self.var_cf1_confirmation.set("")
+        self.journal.ajoute(
+            "[ceremonie] DISCIPLINE D81 (rappel) : la remise est le FICHIER — "
+            "remplacez la ligne unique de PHRASE-CONTROLE-COFFRE.txt par "
+            "votre nouvelle phrase, puis commit « AVANT TOUT » et push "
+            "(git ET racine du Drive « Triade »).", "titre")
 
     def _maj_etat_config(self):
         if not getattr(self, "label_etat_config", None):

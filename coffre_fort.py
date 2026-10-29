@@ -44,6 +44,9 @@ Usage (depuis triade/) :
   python3 coffre_fort.py verifier
   python3 coffre_fort.py changer-phrase
        [--nouvelle-depuis-fichier F | --nouvelle-generer]
+       (sans option : tapez la VÔTRE deux fois — D110 : alphanumérique
+        souhaité, AUCUNE limite de longueur ; la validation fine, avec
+        plancher d'entropie et position de faute nommée, vit au GUI)
   python3 coffre_fort.py exporter [--sortie F] [--pousser-drive]
   python3 coffre_fort.py importer F [--force]
   python3 coffre_fort.py autotest
@@ -722,6 +725,23 @@ def cmd_autotest(args: argparse.Namespace) -> int:
         except ErreurCoffre:
             controle("import sans --force sur coffre présent : REFUS", True)
 
+        # 17 : phrase personnelle D110 — SANS PLAFOND, ancienne inopérante
+        mienne = ("aA1" * 3333 + "Zz9")[:10_000]     # 10 000 caractères
+        _, base8 = charger(chemin, phrase_b)
+        sauver(chemin, base8, mienne.encode("ascii"),
+               sel=secrets.token_bytes(32))
+        refuse("phrase personnelle : l'ancienne est refusée",
+               charger, chemin, phrase_b)
+        _, base9 = charger(chemin, mienne.encode("ascii"))
+        controle("phrase personnelle : 10 000 caractères ouvrent, entrées "
+                 "intactes — AUCUN plafond de longueur (D110)",
+                 _trouver(base9, "TRIADE", "lignee-X") is not None)
+        sauver(chemin, base9, phrase_b, sel=secrets.token_bytes(32))
+        controle("phrase personnelle : retour à phrase_b (le coffre digère "
+                 "tout octet — la règle alphanumérique vit au GUI, "
+                 "par conception)",
+                 charger(chemin, phrase_b)[1] is not None)
+
     print()
     echecs = [nom for ok, nom in resultats if not ok]
     print("=" * 66)
@@ -792,7 +812,9 @@ def _construire_parseur() -> argparse.ArgumentParser:
     p = sous.add_parser("verifier", help="déchiffre et vérifie l'intégrité")
     p.set_defaults(func=cmd_verifier)
 
-    p = sous.add_parser("changer-phrase", help="change la phrase de contrôle (nouveau sel)")
+    p = sous.add_parser("changer-phrase",
+                        help="change la phrase de contrôle (nouveau sel) — "
+                             "sans option : la VÔTRE, tapée deux fois (D110)")
     p.add_argument("--nouvelle-depuis-fichier", metavar="F")
     p.add_argument("--nouvelle-generer", action="store_true",
                    help="génère la nouvelle phrase (128 bits, affichée une fois)")

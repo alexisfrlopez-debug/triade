@@ -89,3 +89,15 @@ Mitigations recommandées (ordre décroissant d'efficacité) :
 Rotation suivante : remplacer la ligne unique de
 PHRASE-CONTROLE-COFFRE.txt (commit dédié « AVANT TOUT », modèle D81),
 mettre à jour ce LISEZMOI si le modèle change.
+
+D110 (30/10/2026) — le modèle s'étend, la discipline ne bouge PAS : la
+phrase de contrôle peut désormais être CHOISIE par le développeur
+(alphanumérique A-Z a-z 0-9, 8 caractères minimum, AUCUN plafond de
+longueur — section « Phrase de contrôle CF1 — mettez la VÔTRE » du
+maître de cérémonie v1.2, ou « coffre_fort.py changer-phrase » tapé
+deux fois en console). Qu'elle soit générée ou choisie, CE FICHIER
+reste la remise : produite → remplacée ici → commit « AVANT TOUT » →
+push git + racine Drive. Une phrase choisie plus courte que 22
+caractères (≈ 128 bits) est acceptée mais AVERTIE — Argon2id ne
+compensera pas un dictionnaire. Le plancher des 8 caractères est
+fail-closed : la voûte refuse en dessous.

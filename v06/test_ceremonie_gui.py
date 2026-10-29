@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """test_ceremonie_gui.py — falsifiabilité du MAÎTRE DE CÉRÉMONIE (D107,
-complément correctif D109).
+compléments correctif D109, phrase personnelle D110).
 
 Le GUI est un HABIT : ce qui doit être prouvé, c'est son contrôleur —
 la couche qui décide, écrit ou refuse. Ce test l'attaque :
@@ -21,6 +21,12 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        l'AEAD, sous-seuil refusé, doublon refusé ;
   T6   liste blanche : lecture/écriture atomique, motif invalide refusé ;
   T7   le relais CLI : verdict capturé, code de sortie honoré ;
+  T8   phrase personnelle CF1 (D110) : alphanumérique exigé, faute NOMMÉE
+       par position SANS divulguer le caractère, plancher 8 refusé,
+       10 000 caractères acceptés (AUCUN plafond) ; bout en bout PAR LE
+       RELAIS GUI : coffre labo, changer-phrase, ancienne inopérante,
+       la vôtre ouvre, entrées intactes, phrase vide refusée SANS
+       lancement ;
   F1   fail-closed : autotest muté => génération/signation refusées ;
        clé absente => échec nommé ; phrase vide => refus AVANT tout
        lancement ; BRÛLER sans confirmation => le CLI refuse et les
@@ -50,6 +56,7 @@ sys.path.insert(0, RACINE)
 
 import v06.ceremonie_gui as gui          # noqa: E402
 import v06.coffre_cf2 as cf2             # noqa: E402
+import coffre_fort as cf1                 # noqa: E402 (relais au_racine)
 
 try:
     import v06.ceremonie_hors_ligne as ref_hl
@@ -347,6 +354,72 @@ def _ecrire(chemin, texte):
     return chemin
 
 
+# ---------------------------------------------------------------------------
+# T8 — phrase personnelle CF1 (D110) : alphanumérique, sans plafond
+# ---------------------------------------------------------------------------
+def t8_phrase_personnelle(rep):
+    print("T8 — phrase personnelle CF1 (alphanumérique, sans plafond — D110)")
+    ok, m = gui.phrase_personnelle_valide("AlphaBravo123Charlie22")
+    verifie("t8-valide-22car-131bits-sans-avertissement",
+            ok and "sans plafond" in m and "AVERTISSEMENT" not in m, m)
+    ok, m = gui.phrase_personnelle_valide("")
+    verifie("t8-vide-refusee", not ok and "vide" in m, m)
+    ok, m = gui.phrase_personnelle_valide("Alpha Bravo123")
+    verifie("t8-espace-refuse-position-nommee", not ok
+            and "position 6" in m, m)
+    ok, m = gui.phrase_personnelle_valide("AlphaBrav\u00f3123")
+    verifie("t8-accent-refuse-position-nommee", not ok
+            and "position 10" in m, m)
+    ok, m = gui.phrase_personnelle_valide("A!phaBravo123")
+    verifie("t8-symbole-refuse-position-nommee", not ok
+            and "position 2" in m, m)
+    ok, m = gui.phrase_personnelle_valide("Abc1234")
+    verifie("t8-plancher-huit-refuse", not ok and "8" in m, m)
+    longue = ("aA1" * 3333 + "Zz9")[:10_000]
+    ok, m = gui.phrase_personnelle_valide(longue)
+    verifie("t8-aucun-plafond-10000-caracteres",
+            ok and "10000" in m and "sans plafond" in m, m)
+    ok, m = gui.phrase_personnelle_valide("AlphaBravo123!")
+    verifie("t8-caractere-fautif-jamais-divulgue", not ok and "!" not in m, m)
+
+    # bout en bout PAR LE RELAIS GUI (le chemin exact de l'utilisateur)
+    chemin = os.path.join(rep, "coffre-labo.bin")
+    code, texte = gui.executer_cli(
+        "coffre_fort.py",
+        ["--chemin", chemin, "init", "--generer-phrase",
+         "--phrase-vers-fichier", os.path.join(rep, "ancienne.txt")],
+        au_racine=True)
+    verifie("t8-labo-init-code0", code == 0, texte)
+    with open(os.path.join(rep, "ancienne.txt"), "rb") as f:
+        ancienne = f.read().strip()
+    entree = os.path.join(rep, "entree.txt")
+    with open(entree, "wb") as f:
+        f.write(b"SECRET-LABO-T8")
+    code, texte = gui.executer_cli(
+        "coffre_fort.py",
+        ["--chemin", chemin, "ajouter", "LABO", "temoin",
+         "--description", "temoin D110", "--depuis-fichier", entree],
+        phrase=ancienne.decode("ascii"), au_racine=True)
+    verifie("t8-labo-entree-ajoutee", code == 0, texte)
+    mienne = "MaPhrasePersonnelle2026"
+    code, texte = gui.executer_cli(
+        "coffre_fort.py", ["--chemin", chemin, "changer-phrase"],
+        phrase=ancienne.decode("ascii"), nouvelle_phrase=mienne,
+        au_racine=True)
+    verifie("t8-changer-phrase-code0", code == 0, texte)
+    try:
+        cf1.charger(chemin, ancienne)
+        verifie("t8-ancienne-inoperante", False, "aucun refus levé")
+    except cf1.ErreurCoffre as exc:
+        verifie("t8-ancienne-inoperante", str(exc) != "", str(exc))
+    _, base = cf1.charger(chemin, mienne.encode("utf-8"))
+    verifie("t8-mienne-ouvre-entree-intacte",
+            cf1._trouver(base, "LABO", "temoin") is not None)
+    refuse("t8-phrase-vide-refusee-sans-lancement", gui.executer_cli,
+           "coffre_fort.py", ["--chemin", chemin, "changer-phrase"],
+           phrase=ancienne.decode("ascii"), nouvelle_phrase="   ")
+
+
 def x1_import_headless():
     print("X1 — import headless + selftest embarqué")
     verifie("x1-import-sans-fenetre", not hasattr(gui, "_fenetre_cree")
@@ -461,12 +534,14 @@ def x2_coherence_attributs():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 + X2 D109) — dépôt {RACINE}")
+          f"(D107 · D109 · D110) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-cf2-") as rep:
         t567f1(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t8-") as rep:
+        t8_phrase_personnelle(rep)
     x1_import_headless()
     x2_coherence_attributs()
     print(f"[test-ceremonie-GUI] {len(PASSES)} PASS / {len(ECHECS)} ÉCHEC")
