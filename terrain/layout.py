@@ -124,6 +124,8 @@ VERSION_TERRAIN3 = "0.5.0-terrain.3"      # correction chargeur (D50)
 VERSION_U64_TERRAIN3 = 0x00050103
 VERSION_TERRAIN4 = "0.5.0-terrain.4"      # T4 tunnel M4 + kit proxy 0.5.0-dev.2 (D96)
 VERSION_U64_TERRAIN4 = 0x00050104         # monotonie : génération M4 du superviseur
+VERSION_TERRAIN5 = "0.5.0-terrain.5"      # T4 diagnostic : témoin page A + ligne S47 (D99)
+VERSION_U64_TERRAIN5 = 0x00050105         # le même test, l'évidence préservée (17-D)
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
@@ -171,7 +173,11 @@ BLOCS_TERRAIN = [
     ("f60034", "sup-34:R1", 0x5800, 0x5C0, "terrain.1", 1),  # T2 proxy
     ("f60035", "sup-35:R1", 0x5E00, 0x4C0, "terrain.1", 1),  # T3 envoi Drive
     ("f60037", "sup-37:R1", 0x6600, 0x400, "terrain.2", 1),  # kit embarqué (D49)
-    ("f60038", "sup-38:R1", 0x7200, 0x600, "terrain.17", 1), # test T4 — tunnel TLS M4 (D96)
+    ("f60038", "sup-38:R2", 0x7200, 0x800, "terrain.17", 1), # test T4 — tunnel M4 (D96)
+                                            # R2 (D99) : .temoin/.exitline — la zone s'étend
+                                            # à 0x800 (0x7800-0x7FFF était libre), la table
+                                            # R10 garde SES 28 entrées (l'entrée T4 couvre
+                                            # désormais 0x7200-0x7FFF — taille 0x800)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = sup-01
 
@@ -197,7 +203,10 @@ ZONE_T3 = (0x5E00, 0x62BF)           # sup-35 (0x4C0)
 ZONE_KIT = (0x6600, 0x69FF)          # sup-37 — .extraire @0x6600, .nettoyage @0x6800 (D49)
 ZONE_DATA_SUP_3 = (0x6A00, 0x71FF)   # lignes S04-S07 + md5 + T4 (fixtures + ps1,
                                      #  terrain.17 : 0x400 -> 0xC00, la zone suit le kit)
-ZONE_T4 = (0x7200, 0x77FF)           # sup-38 test T4 — tunnel TLS M4 (terrain.17)
+ZONE_T4 = (0x7200, 0x7FFF)           # sup-38 test T4 — tunnel TLS M4 (terrain.17 ;
+                                     #  terrain.17-D : étendue à 0x800 — le diagnostic
+                                     #  .temoin/.exitline vit dans le même slot, la
+                                     #  section .text2 s'arrête là avant .rsrc @0x8000)
 EXTRACTION = 0x6600                  # entrée publique de sup-37 (D49)
 NETTOYAGE = 0x6800                   # HISTORIQUE : le mode 1 (nettoyage) est
                                      # dispatché à l'entrée unique 0x6600
@@ -617,6 +626,12 @@ _SEQ_SUP_3 = [
     ("FIX_EVT_M4A", b"connexion entrante\r\ntunnel chiffre etabli\r\nfin connexion\r\n"),
     ("FIX_EVT_M4B", b"connexion entrante\r\ncertificat rejete\r\nfin connexion\r\n"),
     ("FIX_PS1", b'param([string]$m,[string]$o)\r\ntry{\r\n$c=New-Object Net.Sockets.TcpClient(\'127.0.0.1\',25000)\r\n$c.ReceiveTimeout=30000\r\n$s=$c.GetStream()\r\n$r=[Text.Encoding]::ASCII.GetBytes("GET https://$m/ HTTP/1.1`r`nHost: $m`r`nConnection: close`r`n`r`n")\r\n$s.Write($r,0,$r.Length)\r\n$b=New-Object byte[] 65536\r\n$f=[IO.File]::Create("page_m4$o.txt")\r\nwhile(($n=$s.Read($b,0,65536)) -gt 0){$f.Write($b,0,$n)}\r\n$f.Close();$c.Close();exit 0\r\n}catch{exit 1}\r\n'),
+    # terrain.17-D (D99) : le TÉMOIN de la page A (l'évidence qui manquait au
+    # run 17-C — 13 octets livrés, contenu inconnu) + l'étiquette de la ligne
+    # S47 (le code de sortie du proxy journalisé — exit 0 confirme le chemin
+    # propre, tout autre code nomme le mode de mort)
+    ("NOM_TEMOIN_A", b"temoin_m4a.txt\x00"),
+    ("S47", b"S47 T4 exit proxy="),
 ]
 
 _cur = ZONE_DATA_SUP_3[0]

@@ -1,4 +1,4 @@
-sup-38 · test T4 — tunnel TLS du proxy M4 (run terrain étape c) · révision 1
+sup-38 · test T4 — tunnel TLS du proxy M4 (run terrain étape c) · révision 2
 Intention : le run terrain que M4 attend (étape c, charte § 8.4 du jalon)
 : le tunnel chiffré vit SOUS le proxy. Le superviseur lance proxy.exe
 0.5.0-dev.2 avec TUYAUX (sup-31 MODE 1, la voix du proxy captée ligne à
@@ -46,6 +46,17 @@ Contrat :
          Q5 page A : lue par sup-36 (<= 640 o gardés, comptage), LU >= 12
          et memcmp 12 o == « HTTP/1.1 200 » (FIX_200) -> bit ; octets ->
          S44A ; jamais journalisés ;
+         Q5' NOUVEAU (R2, terrain.17-D — LE TÉMOIN) : immédiatement après
+         la lecture de la page A, les LU premiers octets de TAMPON_CMD
+         sont copiés vers TAMPON_COMPO (libc-01) puis écrits sous le nom
+         temoin_m4a.txt (sup-36 op 1) — la page reçue est L'ÉVIDENCE du
+         run : le nettoyage Q11 retire page_m4a.txt, le témoin reste posé
+         à côté du journal (miroir terrain_page_http.txt côté T2 — la
+         preuve vit sur le disque, jamais dans le journal, charte § 3
+         inchangée) ; lecture réussie comme dégradée (LU = 0 -> témoin
+         vide : l'absence EST une information) ; le résultat de
+         l'écriture est ignoré (diagnostic best-effort, jamais un
+         verdict, jamais un bit) ;
          Q6 événements A : sondage puis memcmp 58 o == « connexion
          entrante\r\ntunnel chiffre etabli\r\nfin connexion\r\n »
          (FIX_EVT_M4A — la concaténation des fixtures du SCELLÉ M3/M4 :
@@ -65,6 +76,16 @@ Contrat :
          (7 o), WaitForSingleObject (10 s) — timeout -> TerminateProcess
          (miroir T2 : un proxy muet ne reste pas vivant), second sondage
          5 s, GetExitCodeProcess -> exit 0 exigé, fermeture du handle ;
+         Q9' NOUVEAU (R2, terrain.17-D — LA LIGNE S47) : après
+         GetExitCodeProcess, le journal gagne « S47 T4 exit proxy=N »
+         (N = code de sortie du proxy, décimal) — le code de sortie
+         devient une PREUVE JOURNALISÉE : exit 0 confirme le chemin
+         propre (arret -> WSACleanup -> ExitProcess(0)), tout autre
+         code NOMME le mode de mort (crash au détachement SSPI — E6 —,
+         TerminateProcess du timeout, exit 1/2 structurels) ; la ligne
+         précède le verdict, sur TOUT chemin (l'évidence d'abord, le
+         jugement ensuite — leçon du run 17-C : le fait manquait au
+         journal) ;
          Q10 verdict : NEUF bits de succès (bannière, code A, page A,
          événements A, code B, page B 502 exacte, événements B, arret,
          exit 0) tous posés -> S48A « verdict console : conforme » +
@@ -73,13 +94,19 @@ Contrat :
          ligne visible du journal est le diagnostic, leçon demo.3/T2) ;
          Q11 nettoyage : page_m4a.txt, page_m4b.txt, terrain_m4.ps1
          supprimés (sup-36 op 2), extrémités parent des tuyaux fermées —
-         TOUT chemin, succès comme échec.
+         TOUT chemin, succès comme échec ; le TÉMOIN temoin_m4a.txt
+         SURVIT au nettoyage (R2 : c'est l'évidence du run — le dossier
+         garde le journal ET le témoin, le développeur dépose les deux
+         dans le dossier test du Drive).
   inv  : I1 les événements sont comparés par memcmp EXACT sur le flux
          brut (l'ordre est séquentiel PAR CONSTRUCTION : la requête B ne
          part qu'après la fin de A — le script les enchaîne, le sondage
          Q6 a vu « fin connexion » avant que la connexion B existe) ;
          I2 rien du contenu des pages n'est journalisé (taille seule,
-         memcmp des préfixes attendus — le reste n'est pas à nous) ;
+         memcmp des préfixes attendus — le reste n'est pas à nous) —
+         le TÉMOIN est un FICHIER posé, jamais une ligne de journal
+         (R2 : l'évidence vit sur le disque, la charte § 3 reste
+         entière) ;
          I3 toutes les attentes bornées par timeout (PeekNamedPipe +
          Sleep ; WaitForSingleObject 45/10/5 s) — aucun ReadFile
          bloquant sans garantie de disponibilité : le superviseur ne
@@ -109,10 +136,13 @@ Vecteurs :
   V1 : round-trip 100 %.
   V2 : émulation — les DEUX requêtes scriptées (powershell enfui par
        cmdline, effets de bord page_m4a.txt/page_m4b.txt servis par le
-       scénario) : journal d'or EXACT (S40..S49 + la voix du proxy
-       recopiée : bannière, 6 lignes d'événements, arret), neufs bits,
-       rax = 1 ; l'ordre des appels observé (lancement proxy AVANT
-       powershell, quit APRÈS la requête B, nettoyage en DERNIER).
+       scénario) : journal d'or EXACT (S40..S49 AVEC la ligne S47 après
+       arret — R2 — + la voix du proxy recopiée : bannière, 6 lignes
+       d'événements, arret), neufs bits, rax = 1 ; l'ordre des appels
+       observé (lancement proxy AVANT powershell, quit APRÈS la requête
+       B, nettoyage en DERNIER) ; le témoin temoin_m4a.txt posé == les
+       LU octets lus de la page servie, et NON supprimé au nettoyage
+       (Q5'/Q11 R2 — l'évidence survit au run).
   V3 : dégradés nommés — page A vide (LU = 0), page B à 33 o (un octet
        volé), événements B absents (timeout sondage), code A != 0,
        arret muet (timeout) : chaque cas nomme SES bits manquants,
@@ -122,18 +152,32 @@ Vecteurs :
        A/B fait échouer le verrou d'ordre ; omettre « Connection: close »
        du script fait échouer la relecture de spécification (le relais
        tls-08 ne finirait jamais côté serveur — la fin propre est un
-       contrat du script, vérifié à la relecture du FIX_PS1).
+       contrat du script, vérifié à la relecture du FIX_PS1) ; R2 :
+       raccourcir le nom du témoin (14 -> 13, le NUL n'est plus porté)
+       fait échouer le verrou « l'évidence survit » ; tronquer la ligne
+       S47 (18 -> 17) fait échouer le journal d'or.
 Fixtures    : FIX_PS1 (script client, 0x6E00+ zone données sup 3),
               FIX_BANNIERE/FIX_ARRET (partagées T2), FIX_200 (12 o),
               FIX_502_M4 (34 o, == TXT_502_CERT m4/layout.py), FIX_EVT_M4A
               (58 o), FIX_EVT_M4B (54 o), CMD_PS_M4A/CMD_PS_M4B (zone
-              données sup 2), NOM_PS1/NOM_PAGE_M4A/NOM_PAGE_M4B.
+              données sup 2), NOM_PS1/NOM_PAGE_M4A/NOM_PAGE_M4B ; R2 :
+              NOM_TEMOIN_A (temoin_m4a.txt, 14 o) + S47 (étiquette de la
+              ligne exit, 18 o) en zone données sup 3.
 Provenance  : écrite-avant-code (terrain.17, M4 étape c — le critère M4
               « HTTPS en transit ; échec propre sur certificat invalide »
               atterrit ICI : la preuve du tunnel est la voix du proxy +
-              la 502 étiquetée octet pour octet).
+              la 502 étiquetée octet pour octet) ; révision 2 née du run
+              terrain.17-C (D99) : le critère est PROUVÉ sur machine
+              réelle (« tunnel chiffre etabli » + « certificat rejete » +
+              502 exacte 34 o) mais S49B nomme une anomalie de relais
+              page A (13 octets livrés, fermeture propre immédiate) — le
+              journal manquait les DEUX faits qui départagent les
+              mécanismes (le CONTENU de la page, le CODE DE SORTIE du
+              proxy) : la révision les préserve — le témoin sur le
+              disque, la ligne S47 dans le journal. Le diagnostic précède
+              le correctif (discipline D54/D68/D98 : l'évidence d'abord).
 Décisions   : D48 (cadre terrain), D49 (kit 1 exe), D77 (charte M4 § 8.4),
-              D96 ; le client TCP est powershell.exe parce que la forme
+              D96, D99 ; le client TCP est powershell.exe parce que la forme
               absolue https:// n'existe dans aucun client standard —
               l'exigence est le CONTRAT du proxy M4 (http-08:R2 Q4),
               le véhicule est une donnée du plan.

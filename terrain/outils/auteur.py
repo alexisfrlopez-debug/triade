@@ -83,14 +83,16 @@ BLOCS = [
      "(relecture 512 o) ; lignes S04..S07 (zone données sup 3) ; "
      "NOM_DEMO/NOM_PROXY (.rdata), NOM_JETONS (zone données sup 2) ; "
      "entrée à mode @0x6600 : ecx 0 = extraire / 1 = nettoyer (D49)"),
-    ("sup-38-tunnel", "f60038", "sup-38:R1", 0x7200, 0x600,
+    ("sup-38-tunnel", "f60038", "sup-38:R2", 0x7200, 0x800,
      "IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, "
      "TerminateProcess, PeekNamedPipe, Sleep ; IAT kernel32#1 : CloseHandle, "
      "ReadFile, WriteFile ; blocs sup-31, sup-36, libc-01/02 ; état .data "
      "(HPROC_PROXY, TUYAU_*, CODE_SORTIE, LU, DISPO, TAMPON_COMPO/CMD) ; "
      "chaînes S40..S49 + fixtures bannière/événements M4A-M4B/200/502 "
      "étiquetée/arret + FIX_PS1 + cmdlines powershell (zones données sup "
-     "1/3) — T4 : LE critère M4 en run terrain (D96)"),
+     "1/3) — T4 : LE critère M4 en run terrain (D96) ; R2 (D99) : "
+     ".temoin (page A préservée, temoin_m4a.txt) + .exitline (S47 exit "
+     "proxy=N) — NOM_TEMOIN_A/S47 en zone données sup 3"),
 ]
 
 SYMBOLES = {

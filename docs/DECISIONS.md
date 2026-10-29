@@ -2952,3 +2952,76 @@ LEÇON consignée : alignement n'est pas ombre — un cadre aligné peut être
 mortel ; l'ABI de la machine cible fait partie de la surface de test
 terrain, au même titre que son chargeur (D97). Aucune clé touchée (phrase
 D81 valable, conteneur 0323029a… inchangé).
+
+## D99 — terrain.17-D : le diagnostic armé (le run 17-C a PROUVÉ le critère M4 — tunnel + certificat + 502 exacte — et nommé une anomalie de relais page A ; la révision conserve les DEUX faits qui manquaient au journal : témoin de la page SUR LE DISQUE, ligne S47 du code de sortie)
+
+**Constat machine (run 17-C, 29/10 05:59)** : le correctif D98 a tenu —
+T2 VERDICT OK, T4 complet : « tunnel chiffre etabli » (première fois), «
+certificat rejete » (première fois), 502 étiquetée octet pour octet (34 o)
+— LE CRITÈRE M4 « HTTPS en transit ; échec propre sur certificat invalide »
+EST PROUVÉ SUR MACHINE RÉELLE. Reste UNE anomalie : « S49 T4 VERDICT KO »
+avec « S44 page exemple octets=13 » — la page A (~1 300 o attendues)
+livrée sur SON PREMIER ENREGISTREMENT déchiffré puis fermeture propre
+immédiate (aucune 502 en suffixe : le chemin n'est PAS l'échec nommé de
+tls-08 ; aucune corruption de boucle : le client a reçu une FIN propre).
+
+**Élimination (neuf bits)** : bits 1-8 prouvés posés par les lignes du
+journal (chaque ligne suit son memcmp gagné) ; tout chemin propre du
+relais mène à S49A — le bit manquant désigne le CONTENU exact des 13
+octets (bit 3) ou le CODE DE SORTIE du proxy (bit 9 — E6 : un handle SSPI
+survivant tuerait le processus en sortie). Le journal 17-C ne pouvait pas
+départager : page supprimée au nettoyage, code de sortie jamais journalisé.
+La cause racine bas niveau (DecryptMessageW réel vs shim — résidu Extra,
+frontière d'enregistrement) ne sera nommée qu'avec les faits : discipline
+D54/D68/D98, l'évidence AVANT le correctif.
+
+**sup-38:R2 (écrite-avant-code)** : Q5' LE TÉMOIN — les LU octets lus de
+la page A sauvés vers TAMPON_COMPO puis posés sous temoin_m4a.txt (sup-36
+op 1), fichier SURVIVANT au nettoyage Q11 (miroir terrain_page_http.txt
+côté T2 : la preuve vit sur le disque, jamais dans le journal — charte
+§ 3 entière) ; LU = 0 → témoin vide ; résultat ignoré (jamais un bit).
+Q9' LA LIGNE S47 — « S47 T4 exit proxy=N » journalisé après
+GetExitCodeProcess sur TOUT chemin, avant le verdict : exit 0 = chemin
+propre (arret → WSACleanup → ExitProcess(0)), autre code = mode de mort
+nommé (E6 détachement, TerminateProcess timeout, exit 1/2).
+
+**Le piège nommé par l'oracle AVANT la machine (fail-closed)** : (a)
+l'écriture du témoin COMPOSE SON CHEMIN dans TAMPON_CMD — le tampon qui
+porte la page lue — le premier jet détruisait la page avant le memcmp
+FIX_200 → .temoin devient SAUVER → ÉCRIRE → RESTAURER (double memcpy,
+transparent pour l'appelant) ; (b) le motif de mutation M8 devait compter
+15 (nom + NUL) ET être discriminé de l'écriture FIX_PS1 par le mov
+r9d,[rip+LU] qui suit (44 8b 0d vs 41 b9 immédiat).
+
+**Géométrie (table R10 PLEINE — miroir D95/D96)** : AUCUN bloc nouveau —
+.temoin/.exitline vivent DANS sup-38 (motif .ligne/.ps), slot 0x600 →
+0x800 (0x7800-0x7FFF libre en .text2), l'ENTRÉE R10 T4 seule change de
+taille (28 entrées conservées, la marche par terminateur inchangée) ;
+code 1 645 o / 357 ins / 403 padding. Chaîne verte : R5 100 % (357/357),
+croisement T4 10/10, oracle structurel 1 130 verrous, scénario 10 114 cas
++ 28/28 + 9 mutations (M8 : nom du témoin 15→14 le NUL plus porté ; M9 :
+ligne S47 tronquée 18→17), carte génération 5 re-scellée (24 + Ed25519 +
+R8 OK), PE 75 264 o TAILLE INCHANGÉE, cristallisation 3/10 en trois runs
+byte-stables.
+
+**Différentiel 17-C → 17-D (vérifié binairement)** : 1 652 octets en 12
+plages TOUTES NOMMÉES (entrée R10 T4 + version en .rdata ; fixtures R2
+appendues en zone sup 3 ; reflow du code sup-38 ; chaînes .rsrc) — kit
+embarqué INTACT (demo 73c064fb…, proxy M4 33c91815…), motif loader D54
+INTACT, monotonie 0x00050104 → 0x00050105. RIEN d'autre ne bouge.
+
+**Livraison** : superviseur-terrain17d.exe (75 264 o, md5 18aa0a66…,
+sha256 e82924dd…) + LISEZMOI-terrain17d.txt (ÉTAPE 0 inchangée ; DÉPOSER
+dans /test du Drive : le journal ET temoin_m4a.txt ET les pages T2 si
+présentes) ; le 17-C retiré (mono-génération) ; superviseur.exe (dépôt) =
+balise e82924dd… ; Entrée 85, worklog Task ID 26. Lecture du verdict
+quadrichotomique : S47=0 + S49 OK → anomalie passagère (scellage 0.5.0
+ouvert) ; S49 KO + S47=0 + témoin tronqué → correctif relais tls-08 ;
+S49 KO + S47≠0 → correctif compensation E6.
+
+LEÇON consignée : un verdict KO sans ses faits est un échec muet — la
+PREMIÈRE réaction à une anomalie terrain est de la FAIRE PARLER (préserver
+l'évidence), la deuxième seule-ment de la corriger ; chaque run terrain
+doit rapporter ses propres preuves (le journal seul ne suffit pas quand le
+doute porte sur un contenu). Aucune clé touchée (phrase D81 valable,
+conteneur 0323029a… inchangé).

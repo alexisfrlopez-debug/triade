@@ -350,8 +350,8 @@ http-10:R2 → tls-08 → Schannel.**
 **D96 : la moitié du reste scellée — cristallisation 10/10 + TERRAIN.17
 livré.** Cristallisation M4 : 49/49 blocs à 10/10 (10 runs journalisés,
 sha b813f65e… inchangé à travers les dix reconstructions). Terrain.17 :
-superviseur.exe 0.5.0-terrain.4 (75 264 o, sha 5360ffe2…) — le kit
-embarque proxy.exe 0.5.0-dev.2 et **T4 (sup-38, 1 505 o, neuf bits
+superviseur.exe 0.5.0-terrain.5 (75 264 o, sha e82924dd…) — le kit
+embarque proxy.exe 0.5.0-dev.2 et **T4 (sup-38:R2, 1 645 o, neuf bits
 miroir T2) juge LE CRITÈRE M4 sur machine réelle** : la forme absolue
 « GET https://… » (aucun client standard ne l'émet — curl envoie
 CONNECT) est jouée par un script powershell (terrain_m4.ps1, 438 o,
@@ -362,11 +362,20 @@ rejete ». Les fixtures T4 sont croisées au build contre les OCTETS de
 l'artefact scellé (pefile RVA→offset — dix verrous, jamais deux
 sources). Leçons consignées : VA de section alignée sur
 SectionAlignment (le jet .rsrc 0x7800 nommé par pefile AVANT
-livraison), table R10 terrain PLEINE (28 entrées), dérive de notations
-du dépôt (D48) nommée et réparée (retouches D68 portées aux
-brouillons). Oracle terrain : 10 111 cas verts, 7 mutations attrapées,
-cristallisation terrain 10/10. Livré (variante publique) dans
-`download/`. **Le scellage 0.5.0 attend le journal du développeur.**
+livraison), table R10 terrain PLEINE (28 entrées — le diagnostic 17-D
+vit DANS l'entrée T4 : slot 0x800), dérive de notations du dépôt
+(D48) nommée et réparée (retouches D68 portées aux brouillons), ombre
+ABI x64 réparée et verrouillée (D98), motif loader D54 porté au dépôt
+(D97). **LE RUN 17-C A PROUVÉ LE CRITÈRE M4 sur machine réelle**
+(« tunnel chiffre etabli » + « certificat rejete » + 502 exacte —
+Entrée 85) ; l'anomalie résiduelle (page A tronquée à 13 o, S49B) est
+nommée et le 17-D la fait parler : **temoin_m4a.txt SURVIT au
+nettoyage** (l'évidence de la page sur le disque) + **« S47 T4 exit
+proxy=N »** journalisé (le code de sortie du proxy devient une preuve —
+sup-38:R2, D99). Oracle terrain : 10 114 cas verts, 9 mutations
+attrapées, cristallisation terrain 3/10 (trois runs byte-stables).
+Livré (variante publique) dans `download/`. **Le scellage 0.5.0 attend
+le journal + le témoin du développeur (run 17-D).**
 Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement

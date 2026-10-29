@@ -880,6 +880,10 @@ def lignes_journal_or(demo17: list[bytes], livraison: bool = True) -> list[bytes
         S("S45A") + b"0", S("S46A") + b"34",
         *[l for l in EVT_M4B.split(b"\r\n") if l],
         S("FIX_ARRET").rstrip(b"\r\n"),
+        # terrain.17-D (D99) : le code de sortie du proxy JOURNALISÉ — la ligne
+        # S47 précède le verdict sur tout chemin (exit 0 = chemin propre en
+        # émulation ; la falsification M9 tronque l'étiquette)
+        S("S47") + b"0",
         S("S49A"),
     ]
     if livraison:
@@ -1289,6 +1293,19 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
     if ps1_ecrit != S("FIX_PS1"):
         raise EchecOracle(f"sup-38 : terrain_m4.ps1 posé != fixture FIX_PS1 "
                           f"({len(ps1_ecrit or b'')} o != {len(S('FIX_PS1'))} o, I5/Q1)")
+    # sup-38:R2 (terrain.17-D, D99) : le TÉMOIN de la page A — l'évidence
+    # survit au nettoyage (Q5'/Q11) : les LU octets lus (<= 640) posés sous
+    # temoin_m4a.txt, miroir terrain_page_http.txt côté T2
+    temoin = em.fichiers_ecrits.get("C:\\sup\\temoin_m4a.txt")
+    if temoin != PAGE_M4A[:L.MAX_LECTURE]:
+        raise EchecOracle(f"sup-38:R2 : temoin_m4a.txt != {L.MAX_LECTURE} premiers "
+                          f"octets de la page servie ({len(temoin or b'')} o — "
+                          f"l'évidence du run doit survivre au nettoyage, Q5'/Q11)")
+    if any(s.rsplit("\\", 1)[-1] == "temoin_m4a.txt" for s in em.suppressions):
+        raise EchecOracle("sup-38:R2 : le témoin SUPPRIMÉ au nettoyage — "
+                          "l'évidence doit survivre (Q11 : le dossier garde "
+                          "le journal ET le témoin)")
+    total += 1
     for p in em.processus:
         if p["cmdline"].startswith("powershell.exe"):
             if p["herite"] != 0 or p["si_flags"] & 0x100:
@@ -1722,6 +1739,47 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
     if len([s for s in supprimees if s.startswith(("page_m4", "terrain_m4"))]) >= 3:
         raise EchecOracle("falsification nettoyage T4 : 3 suppressions malgré le "
                           "site corrompu — le verrou zéro résidu est muet (Q11)")
+    total += 1
+
+    # M8 (terrain.17-D, D99) : le TÉMOIN amputé — la LONGUEUR du nom
+    # (temoin_m4a.txt, 15 -> 14 : le NUL n'est plus porté, le chemin composé
+    # dérive) : l'évidence de la page A ne serait plus posée sous son nom —
+    # le verrou « l'évidence survit au run » doit parler (Q5' sup-38:R2).
+    # Le motif est DISCRIMINÉ par le mov r9d,[rip+LU] qui suit (44 8b 0d) :
+    # l'écriture FIX_PS1 porte le même edx=1/r8d=15 mais un r9d IMMÉDIAT
+    # (41 b9) — jamais de collision sur le premier trouvé.
+    mutant = muter(bytes.fromhex("ba0100000041b80f000000448b0d"),
+                   bytes.fromhex("ba0100000041b80e000000448b0d"),
+                   L.ZONE_T4, "nom temoin 15")
+    em = Emulateur(mutant)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.appeler(RVA_SUP["sup-38"])
+    if em.fichiers_ecrits.get("C:\\sup\\temoin_m4a.txt") == PAGE_M4A[:L.MAX_LECTURE]:
+        raise EchecOracle("falsification témoin : la preuve posée malgré le nom "
+                          "corrompu — le témoin n'est pas gardé (Q5' sup-38:R2)")
+    total += 1
+
+    # M9 (terrain.17-D, D99) : la ligne S47 tronquée (18 -> 17 : le code de
+    # sortie amputé d'un caractère) — le journal d'or doit refuser la
+    # divergence : le code de sortie du proxy est une PREUVE gardée (Q9')
+    mutant = muter(bytes.fromhex("ba1200000041b801000000"),
+                   bytes.fromhex("ba1100000041b801000000"),
+                   L.ZONE_T4, "ligne S47")
+    em = Emulateur(mutant)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    r = em.appeler(RVA_SUP["sup-09"])
+    try:
+        _comparer_journal(em, lignes_journal_or(demo17), "ligne S47")
+        raise EchecOracle("falsification S47 : le journal d'or a accepté la ligne "
+                          "tronquée — le code de sortie n'est pas gardé (Q9' "
+                          "sup-38:R2)")
+    except EchecOracle as exc:
+        if "ligne S47" not in str(exc):
+            raise
     total += 1
     return total, detectees, len(cibles)
 

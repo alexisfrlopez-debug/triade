@@ -1,4 +1,4 @@
-; sup-38 · test T4 — tunnel TLS du proxy M4 (R1, terrain.17) : le critère M4
+; sup-38 · test T4 — tunnel TLS du proxy M4 (R2, terrain.17-D) : le critère M4
 ; « HTTPS en transit ; échec propre sur certificat invalide » atterrit ICI.
 ; Le superviseur pose le script client terrain_m4.ps1 (fixture RX -> fichier,
 ; powershell.exe lancé en MODE 0 — la forme absolue « GET https://… »
@@ -8,6 +8,11 @@
 ; puis arrête le proxy (« quit »/« arret »/exit 0 — miroir T2). Les pages
 ; sont comptées, jamais journalisées ; les événements console du proxy
 ; SONT journalisés (.flux par ligne) — le constat § 8.4 veut sa voix.
+; R2 (D99, leçon du run 17-C : le journal manquait les faits) : .temoin
+; préserve la page A lue sous temoin_m4a.txt (l'évidence survit au
+; nettoyage Q11), .exitline journalise « S47 T4 exit proxy=N » après
+; GetExitCodeProcess (le code de sortie devient une preuve — exit 0 =
+; chemin propre, tout autre code nomme le mode de mort).
 ; Neuf bits de succès (bannière, code A, page A, évts A, code B, page B
 ; 502 exacte, évts B, arret, exit) — tous posés = rax 1, sinon 0.
 ; (rbx = TAMPON_CMD — pages lues ET console du proxy, séquentiellement ;
@@ -110,6 +115,7 @@ xor edx, edx
 mov r8d, LEN_NOM_PAGE_M4A
 xor r9d, r9d
 call FICHIERS
+call .temoin
 lea rcx, [rip + S44A]
 mov edx, LEN_S44A
 mov r9d, dword ptr [rip + LU]
@@ -250,6 +256,7 @@ call qword ptr [rip + IAT_WAIT]
 mov rcx, r12
 lea rdx, [rip + CODE_SORTIE]
 call qword ptr [rip + IAT_EXITCODE]
+call .exitline
 mov rcx, r12
 call qword ptr [rip + IAT_CH]
 cmp dword ptr [rip + CODE_SORTIE], 0
@@ -374,6 +381,49 @@ mov rcx, r12
 call qword ptr [rip + IAT_CH]
 mov eax, 1
 .ps_fin:
+add rsp, 0x28
+ret
+; .temoin : AUCUN argument — LU lu en .data, page A deja en TAMPON_CMD :
+; (1) sauve TAMPON_CMD[0..LU) vers TAMPON_COMPO (libc-01), (2) pose
+; temoin_m4a.txt (sup-36 op 1 — ATTENTION : l'ecriture COMPOSE SON CHEMIN
+; dans TAMPON_CMD, la page y serait detruite), (3) RESTAURE la page
+; TAMPON_CMD[0..LU) depuis TAMPON_COMPO — l'appelant (memcmp FIX_200) lit
+; TAMPON_CMD comme si rien n'etait passe : le temoin est TRANSPARENT.
+; L'EVIDENCE du run survit au nettoyage Q11 (miroir terrain_page_http.txt
+; cote T2) ; resultat du write ignore (jamais un bit) ; LU = 0 -> temoin
+; vide et restaurations vides (l'absence EST une information)
+; (R2 terrain.17-D, D99 ; 0x28 = ombre ABI x64, discipline D98)
+.temoin:
+sub rsp, 0x28
+lea rcx, [rip + TAMPON_COMPO]
+lea rdx, [rip + TAMPON_CMD]
+mov r8, qword ptr [rip + LU]
+call MEMCPY
+lea rcx, [rip + NOM_TEMOIN_A]
+mov edx, 1
+mov r8d, LEN_NOM_TEMOIN_A
+mov r9d, dword ptr [rip + LU]
+call FICHIERS
+lea rcx, [rip + TAMPON_CMD]
+lea rdx, [rip + TAMPON_COMPO]
+mov r8, qword ptr [rip + LU]
+call MEMCPY
+add rsp, 0x28
+ret
+; .exitline : AUCUN argument — CODE_SORTIE lu en .data : journalise
+; « S47 T4 exit proxy=N » (mode 1, le nombre decimal pose par le journal)
+; — le code de sortie devient une PREUVE : exit 0 confirme le chemin
+; propre (arret -> WSACleanup -> ExitProcess(0)), tout autre code nomme
+; le mode de mort (crash detachement SSPI E6, TerminateProcess timeout,
+; exit 1/2 structurels) ; sur TOUT chemin, AVANT le verdict
+; (R2 terrain.17-D, D99 ; 0x28 = ombre ABI x64, discipline D98)
+.exitline:
+sub rsp, 0x28
+lea rcx, [rip + S47]
+mov edx, LEN_S47
+mov r8d, 1
+mov r9d, dword ptr [rip + CODE_SORTIE]
+call JOURNAL_TRACE
 add rsp, 0x28
 ret
 ; .flux : rcx = ptr, edx = longueur -> ligne embarquee au journal (mode 0)

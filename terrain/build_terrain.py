@@ -246,7 +246,9 @@ DONNEES_RIP = {
                SUP["FIX_BANNIERE"][0], SUP["FIX_ARRET"][0], SUP["FIX_200"][0],
                SUP["FIX_502_M4"][0], SUP["FIX_EVT_M4A"][0], SUP["FIX_EVT_M4B"][0],
                SUP["FIX_PS1"][0], SUP["NOM_PS1"][0], SUP["NOM_PAGE_M4A"][0],
-               SUP["NOM_PAGE_M4B"][0], SUP["CMD_PS_M4A"][0], SUP["CMD_PS_M4B"][0]},
+               SUP["NOM_PAGE_M4B"][0], SUP["CMD_PS_M4A"][0], SUP["CMD_PS_M4B"][0],
+               # R2 (D99) : le témoin page A + la ligne S47 exit
+               SUP["NOM_TEMOIN_A"][0], SUP["S47"][0]},
     "f60035": {L.BUF_CHEMIN, L.TAMPON_NOM, L.HPROC, L.CODE_SORTIE, L.TAMPON_JETON,
                L.TAMPON_CMD, L.TAMPON_COMPO,
                *[SUP[n][0] for n in ("S30", "S31", "S32", "S33A", "S33B", "S34A",
@@ -545,8 +547,10 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     poser(L.R_TAB_SUM, table)
     # terrain.17 : 28 entrées + terminateur = 464 o — la table TOUCHE l'ancre
     # @0x2620 sans la chevaucher : la table est PLEINE (miroir D95 M4 — tout
-    # futur bloc terrain exige une autre surface que .text2/table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN4))
+    # futur bloc terrain exige une autre surface que .text2/table) ;
+    # terrain.17-D : le diagnostic vit DANS l'entrée T4 existante (0x600 ->
+    # 0x800 — 28 entrées conservées, la somme recouverte par le build)
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN5))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -610,19 +614,19 @@ def composer_rsrc() -> tuple[bytes, int]:
     ffi = struct.pack("<13I",
                       0xFEEF04BD,      # signature
                       0x00010000,      # version de structure 1.0
-                      0x00050000, 0x00000004,   # version fichier 0.5.0.4 (terrain.17)
-                      0x00050000, 0x00000004,   # version produit 0.5.0.4 (terrain.17)
+                      0x00050000, 0x00000005,   # version fichier 0.5.0.5 (terrain.17-D)
+                      0x00050000, 0x00000005,   # version produit 0.5.0.5 (terrain.17-D)
                       0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
                       0x00040004,      # VOS_NT_WINDOWS32
                       0x00000001,      # VFT_APP
                       0x00000000, 0x00000000, 0x00000000)
     chaines = b"".join([
         _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
-        _chaine_vsi("FileVersion", "0.5.0.4"),
+        _chaine_vsi("FileVersion", "0.5.0.5"),
         _chaine_vsi("InternalName", "superviseur"),
         _chaine_vsi("OriginalFilename", "superviseur.exe"),
         _chaine_vsi("ProductName", "Protocole TRIADE"),
-        _chaine_vsi("ProductVersion", "0.5.0-terrain.4"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.5"),
         _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
     ])
     table = _noeud_vsi(1, "040904B0", enfants=chaines)
@@ -634,7 +638,7 @@ def composer_rsrc() -> tuple[bytes, int]:
     manifeste = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
         '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
-        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.4"/>'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.5"/>'
         '<description>TRIADE : superviseur terrain de tests</description>'
         '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
         '<requestedPrivileges>'
@@ -765,7 +769,7 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
                     for k, v in table.entries.items():
                         if k == b"FileVersion":
                             fic = v.decode("ascii")
-    assert fic == "0.5.0.4", f"FileVersion ressources = {fic!r}"
+    assert fic == "0.5.0.5", f"FileVersion ressources = {fic!r}"
     # D50 : règle du chargeur RÉEL — la table des sections doit tenir DANS
     # SizeOfHeaders (aligné FILE_ALIGN). Le terrain.2 violait cette règle
     # (0x238 d'en-têtes réels pour 0x200 déclarés) : Windows refusait de
@@ -1184,7 +1188,7 @@ def assembler_tout():
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN4
+    version = L.VERSION_TERRAIN5
     verrous_t4 = croiser_fixtures_t4()
     print(f"[croisement] T4 : {len(verrous_t4)} fixtures == octets du proxy M4 scellé "
           f"(bannière/événements/502 — jamais deux sources, D96)")
@@ -1272,7 +1276,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN4)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN5)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

@@ -1,0 +1,118 @@
+TRIADE — TERRAIN.17-D : « LE TUNNEL EST PROUVÉ, L'ANOMALIE EST NOMMÉE, LES
+FAITS SERONT CONSERVÉS ». LE MÊME TEST TERRAIN.17, DANS UN EXE QUI PRÉSERVE
+LES DEUX PREUVES QUI MANQUAIENT AU JOURNAL DU RUN 17-C : LE CONTENU DE LA
+PAGE A (TÉMOIN SUR LE DISQUE) ET LE CODE DE SORTIE DU PROXY (LIGNE S47).
+=============================================================================
+
+CE QUE VOTRE RUN 17-C A PROUVÉ — LISEZ-LE D'ABORD
+-----------------------------------------------------------------
+Votre journal du 29/10 (05:59) a franchi le seuil que le projet attendait
+depuis le début du jalon M4 :
+
+  1. « tunnel chiffre etabli » — PREMIÈRE FOIS sur machine réelle : le
+     tunnel TLS Schannel a vécu SOUS le proxy, la poignée de main a
+     réussi, example.com a été jointe en HTTPS.
+  2. « certificat rejete » — PREMIÈRE FOIS : le certificat invalide de
+     self-signed.badssl.com a été REFUSÉ proprement.
+  3. La 502 étiquetée reçue OCTET POUR OCTET : « S46 T4 page badssl
+     octets=34 » — exactement les 34 octets du scellé M4. LE critère
+     « échec propre sur certificat invalide » est PROUVÉ.
+  4. T2 VERDICT OK, le superviseur a survécu à tous ses appels système,
+     le nettoyage a tourné, plus de proxy orphelin.
+
+LE CRITÈRE M4 EST PROUVÉ PAR VOTRE JOURNAL. Ce qui reste est plus fin.
+
+L'ANOMALIE RESTANTE — UN FAIT, PAS UN ÉCHEC DU TUNNEL
+-----------------------------------------------------------------
+Une seule ligne KO :
+
+  S49 T4 VERDICT KO (console NON conforme)
+
+et un compte suspect :
+
+  S44 T4 page exemple octets=13
+
+La page exemple.com fait normalement ~1 300 octets. Votre run n'en a reçu
+que 13 — le premier enregistrement déchiffré, puis fermeture propre,
+immediately. Le relais a livré le début et perdu la suite. Les huit
+premiers bits du verdict sont pourtant posés (bannière, codes, page A
+commençant bien par « HTTP/1.1 200 », événements, 502 exacte, arrêt) —
+le ou les bits manquants désignent soit le contenu exact de la page,
+soit le code de sortie du proxy. Le journal 17-C ne pouvait pas les
+départager : il ne conservait NI le contenu de la page (supprimé au
+nettoyage), NI le code de sortie (jamais journalisé).
+
+CE QUE LE 17-D AJOUTE — ET CE QU'IL NE TOUCHE PAS
+--------------------------------------------------
+Le test est LE MÊME (T4, le tunnel M4, le proxy 0.5.0-dev.2, version du
+scénario inchangée). Deux mécanismes neufs, chirurgicaux :
+
+  - LE TÉMOIN (.temoin) : juste après la lecture de la page A, ses
+    premiers octets (jusqu'à 640) sont posés dans temoin_m4a.txt — un
+    fichier qui SURVIT au nettoyage de fin de run, posé à côté du
+    journal. La page de 13 octets (ou de 1300) sera LISIBLE après le
+    run : son contenu départagera les mécanismes (préfixe « HTTP/1.1
+    200 » exact ? autre chose ? vide ?).
+  - LA LIGNE S47 (.exitline) : après l'arrêt du proxy, le journal gagne
+    « S47 T4 exit proxy=N » — le code de sortie est désormais une
+    preuve : 0 confirme le chemin propre (arret -> WSACleanup ->
+    ExitProcess(0)) ; tout autre code nomme le mode de mort (crash au
+    détachement SSPI, TerminateProcess du timeout, exit structurel).
+  - Différentiel 17-C -> 17-D vérifié octet par octet : kit embarqué
+    INTACT (demo 73c064fb…, proxy M4 33c91815…), motif loader D54
+    INTACT, table R10 inchangée en nombre d'entrées (la zone T4 seule
+    s'étend), taille du fichier INCHANGÉE (75 264 octets).
+  - Oracle rejoué : 10 114 cas verts, 1130 verrous structurels,
+    falsification 28/28 + 9 mutations (dont deux nouvelles : le témoin
+    oublié, la ligne S47 tronquée) ; carte terrain re-scellée
+    (24 empreintes + signature Ed25519 + verrou croisé R8 OK).
+
+PROTOCOLE — L'ÉTAPE 0 RESTE LE RÉFLEXE
+----------------------------------------------------
+ÉTAPE 0 — TUEZ LE PROXY ORPHELIN s'il survit d'un ancien run (console) :
+        taskkill /IM proxy.exe /F
+    (« processus introuvable » = déjà réglé.)
+
+ÉTAPE 1 — Double-cliquez superviseur-terrain17d.exe. La fenêtre s'ouvre,
+    cliquez le bouton, attendez le verdict (~4 minutes). PREUVE du bon
+    binaire : le journal commence par « S00 superviseur terrain
+    0.5.0-terrain17 ».
+
+ÉTAPE 2 — Les lignes qui comptent : les mêmes qu'au 17-C, PLUS la
+    nouvelle « S47 T4 exit proxy=N » entre « arret » et le verdict.
+    Notez N (0 ou autre) et le verdict S49.
+
+ÉTAPE 3 (APRÈS LE RUN) — le journal terrain_*.txt ET le témoin
+    temoin_m4a.txt restent posés à côté de l'exe (le nettoyage ne les
+    touche plus). DÉPOSEZ LES DEUX dans le dossier test du Drive.
+    Si terrain_page_http.txt et terrain_page_https.txt (les pages de
+    T2, posées par curl) existent encore sur votre machine, déposez-les
+    aussi : les pages réelles du M4 nous intéressent toutes.
+
+LECTURE DU VERDICT
+------------------------------------------------------------------
+  - S49 T4 VERDICT OK + S47 exit proxy=0 : le relais page A est réparé
+    de lui-même (l'anomalie 17-C était liée à l'état de la machine ou
+    au réseau du moment) — le scellage 0.5.0 peut s'ouvrir.
+  - S49 KO + S47 exit proxy=0 + témoin « HTTP/1.1 200… » tronqué :
+    le relais perd la suite de la page mais sort proprement — le
+    correctif visera la boucle de relais tls-08 (résidu Extra).
+  - S49 KO + S47 exit proxy≠0 : le proxy meurt anormalement en sortie
+    (handle SSPI survivant — le mode E6 de la spécification) — le
+    correctif visera la compensation.
+  - Le verdict final affichera « SUPERVISEUR : ECHEC » tant que T1 (la
+    démo, panne connue D57) reste KO — l'honnêteté du superviseur, pas
+    un échec du tunnel. T2 et T4 sont les juges d'aujourd'hui.
+
+RÉCAPITULATIF DES EMPREINTES
+-----------------------------
+md5 superviseur-terrain17d.exe  18aa0a66b01f2b6e978e003f65fbb0af
+sha256                          e82924dde846d2987555605e21f68c6fdd39430da8b88befd98fa5ca76f51b4b
+taille                          75 264 octets (la même que 17/17-B/17-C)
+md5 démo embarquée              73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué              33c9181580b7e381e527e72902180733 (inchangé : 0.5.0-dev.2 M4)
+version                         0.5.0-terrain.5 (u64 0x00050105, FileVersion 0.5.0.5)
+
+Quand votre journal reviendra avec la ligne S47 et le témoin, le
+mécanisme exact de l'anomalie page A sera nommé — et le correctif (s'il
+en faut un) sera chirurgical, comme les quatre précédents.
