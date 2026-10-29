@@ -100,6 +100,7 @@ NOTATION = {
     "f60031": "sup-31-lancer", "f60036": "sup-36-fichiers",
     "f60033": "sup-33-demo", "f60034": "sup-34-proxy", "f60035": "sup-35-envoi",
     "f60037": "sup-37-extraction", "f60038": "sup-38-tunnel",
+    "f60039": "sup-39-prevol",
 }
 
 FICHIERS_I = {
@@ -115,7 +116,7 @@ FICHIERS_I = {
     "sup-31": "sup-31-lancer.md", "sup-33": "sup-33-demo.md",
     "sup-34": "sup-34-proxy.md", "sup-35": "sup-35-envoi.md",
     "sup-36": "sup-36-fichiers.md", "sup-37": "sup-37-extraction.md",
-    "sup-38": "sup-38-tunnel.md",
+    "sup-38": "sup-38-tunnel.md", "sup-39": "sup-39-prevol.md",
 }
 
 
@@ -193,6 +194,9 @@ IAT_PAR_BLOC = {
     "f60037": {"CloseHandle", "CreateFileA", "ReadFile", "WriteFile"},
     "f60038": {"CloseHandle", "GetExitCodeProcess", "PeekNamedPipe", "ReadFile",
                "Sleep", "TerminateProcess", "WaitForSingleObject", "WriteFile"},
+    # prévol (D101) : attends + code + ferme — les sondes sont MODE 0, le
+    # lancement vit dans sup-31 (un seul CreateProcessA par appel, I1 sup-31)
+    "f60039": {"WaitForSingleObject", "GetExitCodeProcess", "CloseHandle"},
 }
 APPELS_DIRECTS = {
     **{k: v for k, v in bd.APPELS_DIRECTS.items() if k in _HERITAGE},
@@ -202,12 +206,13 @@ APPELS_DIRECTS = {
     "f60022": {0x1100, 0x1180},
     "f60011": {0x1100, 0x1200, 0x1280},
     "f60009": {0x1AC0, L.JOURNAL_TRACE, 0x5400, 0x5800, 0x7200, 0x5E00,
-               L.EXTRACTION},  # porte + trace + kit + T1/T2/T4/T3 (R3 D96)
+               L.EXTRACTION, L.PREVOL},  # porte + trace + prévol + kit + T1/T2/T4/T3 (R4 D101)
     "f60031": set(),
     "f60033": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},          # memcmp, fichiers, trace, lanceur
     "f60034": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},
     "f60038": {0x1180, 0x1100, 0x4E00, L.JOURNAL_TRACE, 0x5200},  # memcmp, memcpy, fichiers, trace, lanceur
     "f60035": {0x1100, 0x1D40, 0x4E00, L.JOURNAL_TRACE, 0x5200},  # memcpy, balayeur, fichiers, trace, lanceur
+    "f60039": {L.JOURNAL_TRACE, 0x5200},  # trace (jmp terminal .ligne) + lanceur
     "f60036": {0x1100, 0x1200},
     "f60037": {0x1100, 0x1180, 0x1200, 0x4E00, L.JOURNAL_TRACE},  # memcpy, memcmp, strlen, fichiers, trace
 }
@@ -266,6 +271,12 @@ DONNEES_RIP = {
                *[SUP[n][0] for n in ("S04A", "S04B", "S04C", "S04D",
                                      "S05A", "S05B", "S05C", "S05D",
                                      "S06A", "S06B", "S06C", "S07A")]},
+    # prévol (D101) : les DEUX cmdlines + les lignes S08/S09 (zone sup 3)
+    # et l'état partagé HPROC/CODE_SORTIE (séquentiel : le prévol précède
+    # tout test, aucun conflit d'écriture)
+    "f60039": {L.HPROC, L.CODE_SORTIE,
+               SUP["CMD_TASKKILL"][0], SUP["CMD_CURL_AMONT"][0],
+               SUP["S08"][0], SUP["S09"][0]},
 }
 
 
@@ -528,6 +539,13 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     # la variante, seul octet mutable de l'image)
     entrees = []
     for bid, _, _, rva, slot in blocs:
+        if bid == "f60039":
+            # prévol (D101, terrain.18) : ZONE-RÉSIDENT dans ZONE_DATA_SUP —
+            # couvert par l'entrée DE ZONE ci-dessous (la table est PLEINE
+            # depuis terrain.17 : 28 entrées conservées, miroir D95/D96/D99 ;
+            # la falsification d'un octet du prévol passe par la somme de
+            # zone — la porte reste juge, aucune case neuve)
+            continue
         base = texte if rva < L.TEXT2_RVA else text2
         base_rva = L.TEXT_RVA if rva < L.TEXT2_RVA else L.TEXT2_RVA
         off = rva - base_rva
@@ -549,8 +567,10 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
     # @0x2620 sans la chevaucher : la table est PLEINE (miroir D95 M4 — tout
     # futur bloc terrain exige une autre surface que .text2/table) ;
     # terrain.17-D : le diagnostic vit DANS l'entrée T4 existante (0x600 ->
-    # 0x800 — 28 entrées conservées, la somme recouverte par le build)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN6))
+    # 0x800 — 28 entrées conservées, la somme recouverte par le build) ;
+    # terrain.18 (D101) : le prévol vit SOUS l'entrée de zone données sup 1
+    # (bloc zone-résident — la table ne bouge toujours pas)
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN7))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -614,19 +634,19 @@ def composer_rsrc() -> tuple[bytes, int]:
     ffi = struct.pack("<13I",
                       0xFEEF04BD,      # signature
                       0x00010000,      # version de structure 1.0
-                      0x00050000, 0x00000006,   # version fichier 0.5.0.6 (terrain.17-E)
-                      0x00050000, 0x00000006,   # version produit 0.5.0.6 (terrain.17-E)
+                      0x00050000, 0x00000007,   # version fichier 0.5.0.7 (terrain.17-F)
+                      0x00050000, 0x00000007,   # version produit 0.5.0.7 (terrain.17-F)
                       0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
                       0x00040004,      # VOS_NT_WINDOWS32
                       0x00000001,      # VFT_APP
                       0x00000000, 0x00000000, 0x00000000)
     chaines = b"".join([
         _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
-        _chaine_vsi("FileVersion", "0.5.0.6"),
+        _chaine_vsi("FileVersion", "0.5.0.7"),
         _chaine_vsi("InternalName", "superviseur"),
         _chaine_vsi("OriginalFilename", "superviseur.exe"),
         _chaine_vsi("ProductName", "Protocole TRIADE"),
-        _chaine_vsi("ProductVersion", "0.5.0-terrain.6"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.7"),
         _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
     ])
     table = _noeud_vsi(1, "040904B0", enfants=chaines)
@@ -638,7 +658,7 @@ def composer_rsrc() -> tuple[bytes, int]:
     manifeste = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
         '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
-        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.6"/>'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.7"/>'
         '<description>TRIADE : superviseur terrain de tests</description>'
         '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
         '<requestedPrivileges>'
@@ -769,7 +789,7 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
                     for k, v in table.entries.items():
                         if k == b"FileVersion":
                             fic = v.decode("ascii")
-    assert fic == "0.5.0.6", f"FileVersion ressources = {fic!r}"
+    assert fic == "0.5.0.7", f"FileVersion ressources = {fic!r}"
     # D50 : règle du chargeur RÉEL — la table des sections doit tenir DANS
     # SizeOfHeaders (aligné FILE_ALIGN). Le terrain.2 violait cette règle
     # (0x238 d'en-têtes réels pour 0x200 déclarés) : Windows refusait de
@@ -890,16 +910,21 @@ CONTRATS = {
                "[ext kernel32#2:GetModuleFileNameA,CreateFileA] [ext kernel32:WriteFile,"
                "FlushFileBuffers] [donnees .data:handle,tampons,TAMPON_NOM]"),
     "f60009": ("(arg u64) -> u32", "lancé une fois par win-04 ; TAMPON_* posés",
-               "porte -> libc -> extraction kit -> T1 -> T2 -> T4 -> T3 -> nettoyage -> "
-               "S90/S91 ; rax = 1 ssi les verdicts COMPTÉS sont verts (T3 non "
-               "applicable en variante publique n'est pas compté — D49 ; T4 compte "
-               "comme T2 sur LE MÊME bit proxy — D96)",
-               "un KO n'arrête rien ; la porte précède tout test ; le proxy de T4 ne "
-               "naît qu'après la mort de celui de T2 (port 25000 partagé, R3) ; "
-               "l'envoi vient en dernier (la voix du tunnel part dans le journal) ; "
-               "le nettoyage suit T3 (l'annexe vit le temps de l'envoi)",
-               "[d40006] [d40005] [f60037] [f60033] [f60034] [f60038] [f60035] "
-               "[donnees sup:S00..S03,S90,S91] [donnees .data:TAMPON_AFF]"),
+               "porte -> libc -> prévol (S08/S09, rax ignoré) -> extraction kit -> "
+               "T1 -> T2 -> T4 -> T3 -> nettoyage -> S90/S91 ; rax = 1 ssi les "
+               "verdicts COMPTÉS sont verts (T3 non applicable en variante "
+               "publique n'est pas compté — D49 ; T4 compte comme T2 sur LE "
+               "MÊME bit proxy — D96)",
+               "un KO n'arrête rien ; la porte précède tout test (et tout EFFET : "
+               "le taskkill du prévol compris, R10) ; le prévol précède "
+               "l'extraction (un orphelin tué après re-pose verrouillerait le "
+               "fichier, D101) ; le proxy de T4 ne naît qu'après la mort de "
+               "celui de T2 (port 25000 partagé, R3) ; l'envoi vient en dernier "
+               "(la voix du tunnel part dans le journal) ; le nettoyage suit T3 "
+               "(l'annexe vit le temps de l'envoi)",
+               "[d40006] [d40005] [f60039] [f60037] [f60033] [f60034] [f60038] "
+               "[f60035] [donnees sup:S00..S03,S90,S91] "
+               "[donnees .data:TAMPON_AFF]"),
     "f60031": ("(cmdline ptr, mode u32) -> u32", "pile alignée",
                "rax = 1 : HPROC/PID posés, hThread fermé, extrémités enfant fermées ; "
                "0 = échec (zéro fuite, quatre fermetures en mode 1)",
@@ -973,6 +998,22 @@ CONTRATS = {
                "[ext kernel32#2:CreateFileA] [ext kernel32:ReadFile,WriteFile,CloseHandle] "
                "[donnees .blob:BLOB_LONGUEURS,BLOB_DEMO,BLOB_PROXY,SLOT_JETONS] "
                "[donnees sup:S04..S07,NOM_JETONS] [rdata:NOM_DEMO,NOM_PROXY]"),
+    "f60039": ("() -> u32",
+               "journal opérationnel ; sup-31 opérationnel ; pile alignée ; "
+               "appelé par sup-09:R4 APRÈS porte+libc, AVANT extraction",
+               "S08 « orphelins proxy/demo : taskkill code=N » puis S09 « reseau "
+               "amont : curl code=N » (N = codes bruts, mode numérique win-05) ; "
+               "rax = 0 sur TOUT chemin — une évidence, jamais un bit",
+               "une seule tentative par sonde, aucune retry (I1) ; codes bruts "
+               "sans interprétation in-code (I2) ; aucun tuyau/fichier lus "
+               "(I3) ; MODE 0 partout (I4) ; ordre taskkill PUIS curl fixe "
+               "(I5) ; attentes bornées 30000 ms, zéro gel (charte § 1) ; "
+               "handle fermé sur tout chemin, zéro fuite (§ 2) ; lancement "
+               "impossible = ligne sautée, jamais un crash",
+               "[f60031] [d40005] [ext kernel32#3:WaitForSingleObject,"
+               "GetExitCodeProcess] [ext kernel32:CloseHandle] "
+               "[donnees sup:CMD_TASKKILL,CMD_CURL_AMONT,S08,S09] "
+               "[donnees .data:HPROC,CODE_SORTIE]"),
 }
 
 
@@ -980,7 +1021,8 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
     sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
     loc = ["[carte-frag] nom=frag-loc generation=5",
            "[zones] io=0x1000-0x10ff libc=0x1100-0x12ff coquille=0x1400-0x1fff "
-           "scenario=0x4c00 fichiers=0x4e00 miroir=0x5000 lanceur=0x5200 "
+           "prevol=0x4b40 scenario=0x4c00 "
+           "fichiers=0x4e00 miroir=0x5000 lanceur=0x5200 "
            "t1=0x5400 t2=0x5800 t3=0x5e00 kit=0x6600 "
            "donnees-sup=0x4340-0x4bff,0x6300-0x65ff,0x6a00-0x6dff blob=0x8000"]
     spec_map = {bid: sid for bid, sid, _, _, _ in blocs}
@@ -1030,7 +1072,7 @@ def fragments_clairs(code, exe, verrous, blocs, version, verdict, compteurs, jou
         f"(io/libc/tcp-06 + coquille win réutilisés octet-identiques, R7)",
         f"  kit embarqué : demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 en .blob "
         f"(md5 assertés au build, table R10 zone blob — emplacement annexe exclu, D49)",
-        f"[zones] coquille=0x1400-0x1fff scenario=0x4c00 t1=0x5400 t2=0x5800 t3=0x5e00 "
+        f"[zones] coquille=0x1400-0x1fff prevol=0x4b40 scenario=0x4c00 t1=0x5400 t2=0x5800 t3=0x5e00 "
         f"kit=0x6600 donnees-sup=0x4340-0x4bff,0x6300-0x65ff,0x6a00-0x6dff blob=0x8000",
     ]
     retour = {}
@@ -1149,7 +1191,7 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  reutilisation_R7              : {herit} blocs octet-identiques "
         f"(hello/selftest/echo/demo.9)",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee terrain, "
-        f"u64 0x{L.VERSION_U64_TERRAIN4:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_TERRAIN7:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit "
         f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.5.0-dev.2 M4 + annexe jetons), "
         f"extraction verifiee par relecture octet a octet, nettoyage apres run ; "
@@ -1188,7 +1230,7 @@ def assembler_tout():
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN6
+    version = L.VERSION_TERRAIN7
     verrous_t4 = croiser_fixtures_t4()
     print(f"[croisement] T4 : {len(verrous_t4)} fixtures == octets du proxy M4 scellé "
           f"(bannière/événements/502 — jamais deux sources, D96)")
@@ -1276,7 +1318,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN6)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN7)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

@@ -1,4 +1,4 @@
-sup-09 · scénario (orchestrateur des tests) · révision 3
+sup-09 · scénario (orchestrateur des tests) · révision 4
 Intention : le fil ouvrier du superviseur — lancé par UN clic (win-04
 scellé, tcp-06 scellé), il enchaîne porte R10, libc, EXTRACTION du kit
 embarqué (sup-37, D49), T1 (démo M2), T2 (proxy M3), T4 (tunnel TLS
@@ -16,7 +16,12 @@ livraison, elle, reste intégralement comptée, sémantique terrain.1
 préservée). Révision 3 (D96, terrain.17) : T4 (sup-38) s'insère entre
 T2 et T3 — le port 25000 est partagé par T2 ET T4 (l'ordre est un
 invariant : le proxy de T2 est MORT avant celui de T4), et T3 reste le
-dernier (le journal téléversé contient les lignes du tunnel).
+dernier (le journal téléversé contient les lignes du tunnel). Révision 4
+(D101, terrain.18) : le PRÉVOL (sup-39) s'insère entre le verdict libc et
+l'extraction — les ÉTAPES 0/0 BIS du protocole (taskkill des orphelins,
+sonde curl de l'amont) deviennent automatiques : un proxy.exe orphelin
+verrouillerait le fichier à re-poser et tiendrait le port 25000, et le
+réseau amont est désormais un FAIT journalisé (S08/S09) avant tout test.
 Contrat :
   pre  : P1 lancé une fois par win-04 (drapeau DRAPEAU_WORKER) ; P2
          TAMPON_NOM/TAMPON_AFF posés (sup-01) ; P3 journal opérationnel ;
@@ -26,7 +31,10 @@ Contrat :
          win-06 scellé : -1 -> S02 KO + S91 + rax = 0 (arrêt immédiat —
          la porte invalide TOUT le reste, fail-closed R10 ; elle couvre
          AUSSI la zone .blob depuis D49) ; 4 -> S02 VERTE + S03 4/4 ;
-         autre -> S03 KO + arrêt ; Q3 extraction (sup-37 .extraire) ->
+         autre -> S03 KO + arrêt ; Q2' NOUVEAU (R4) : prévol (sup-39)
+         — taskkill orphelins + sonde amont, lignes S08/S09 journalisées
+         par sup-39 lui-même, rax ignoré (une évidence, jamais un bit) ;
+         Q3 extraction (sup-37 .extraire) ->
          drapeaux bit 0 demo / bit 1 proxy / bit 2 T3 applicable, lignes
          S04*/S05*/S06* journalisées par sup-37 lui-même ; Q4 T1 (sup-33)
          si bit 0, sinon SAUTÉ (S04B/S04D déjà dit pourquoi) ; Q5 T2
@@ -45,8 +53,10 @@ Contrat :
          variante publique) n'est PAS compté du tout ; Q9 le fil se
          termine TOUJOURS (retour) — la fenêtre reste ouverte, le journal
          est complet, l'envoi a déjà été tenté, le kit est retiré.
-  inv  : I1 ordre strict porte -> libc -> extraction -> T1 -> T2 -> T4 ->
-         T3 -> nettoyage -> verdict (l'envoi se fait APRÈS que le journal
+  inv  : I1 ordre strict porte -> libc -> prévol -> extraction -> T1 ->
+         T2 -> T4 -> T3 -> nettoyage -> verdict (le prévol AVANT
+         l'extraction : un orphelin tué après re-pose verrouillerait le
+         fichier ; l'envoi se fait APRÈS que le journal
          contient tout le reste — les lignes du tunnel comprises ; le
          nettoyage se fait APRÈS T3 — l'annexe posée doit vivre le temps
          de l'envoi) ; I2 aucune dépendance entre tests (T2 et T4
@@ -89,8 +99,10 @@ Fixtures    : lignes S00..S03, S90, S91 (.rdata zone données sup), lignes
 Provenance  : écrite-avant-code ; révision 2 née de D49 (kit embarqué —
               l'exigence développeur « 1 seul exe qui contient tout ») ;
               révision 3 née de D96 (terrain.17 — T4 : le critère M4
-              exige son run terrain).
-Décisions   : D48 (v1), D49 (R2), D96 (R3) ; squelette win-09:R4 (porte -> libc ->
+              exige son run terrain) ; révision 4 née de D101 (terrain.18 —
+              le prévol : les ÉTAPES 0/0 BIS du protocole deviennent
+              automatiques, l'exigence développeur du 29/10).
+Décisions   : D48 (v1), D49 (R2), D96 (R3), D101 (R4) ; squelette win-09:R4 (porte -> libc ->
               séquence) ; l'indépendance des tests est le cœur du
               superviseur (un constat partiel vaut mieux qu'un arrêt au
               premier échec) ; la règle du T3 non compté en variante

@@ -46,10 +46,12 @@ BLOCS = [
      "IAT kernel32#2 : GetModuleFileNameA, CreateFileA, WriteFile (commune), "
      "FlushFileBuffers ; blocs libc-01/03/04 ; état .data (handle, tampons) ; "
      "TAMPON_NOM (.data, posé par sup-21)"),
-    ("sup-09-scenario", "f60009", "sup-09:R3", 0x4C00, 0x200,
-     "blocs win-05 (entrée trace), win-06 autotest, sup-33, sup-34, sup-38, "
-     "sup-35 ; lignes S00..S03/S90/S91 (zone données sup) ; TAMPON_AFF (.data) — "
-     "R3 (terrain.17) : T4 entre T2 et T3, verdict à quatre tests"),
+    ("sup-09-scenario", "f60009", "sup-09:R4", 0x4C00, 0x200,
+     "blocs win-05 (entrée trace), win-06 autotest, sup-39 (prévol D101), "
+     "sup-33, sup-34, sup-38, sup-35 ; lignes S00..S03/S90/S91 (zone données "
+     "sup) ; TAMPON_AFF (.data) — R3 (terrain.17) : T4 entre T2 et T3, verdict "
+     "à quatre tests ; R4 (terrain.18) : prévol orphelins + amont AVANT "
+     "l'extraction (D101)"),
     ("sup-31-lancer", "f60031", "sup-31:R1", 0x5200, 0x1C0,
      "IAT kernel32#3 : CreateProcessA, CreatePipe ; IAT kernel32#1/#2 : "
      "CloseHandle, GetModuleFileNameA ; état .data ETAT_SUP (HPROC, PID, TUYAU_*)"),
@@ -93,6 +95,15 @@ BLOCS = [
      "1/3) — T4 : LE critère M4 en run terrain (D96) ; R2 (D99) : "
      ".temoin (page A préservée, temoin_m4a.txt) + .exitline (S47 exit "
      "proxy=N) — NOM_TEMOIN_A/S47 en zone données sup 3"),
+    ("sup-39-prevol", "f60039", "sup-39:R1", 0x4B40, 0xC0,
+     "IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess ; IAT "
+     "kernel32#1 : CloseHandle ; blocs sup-31 (lanceur), win-05 (entrée "
+     "trace) ; état .data (HPROC, CODE_SORTIE) ; chaînes S08/S09 + "
+     "CMD_TASKKILL/CMD_CURL_AMONT (zone données sup 3) — ZONE-RÉSIDENT "
+     "dans la queue de la zone données sup 1 (table R10 PLEINE, miroir "
+     "D95/D96/D99 : couvert par l'entrée de zone, jamais une entrée "
+     "neuve) — prévol : orphelins + réseau amont AVANT l'extraction "
+     "(D101, terrain.18 — les ÉTAPES 0/0 BIS du protocole automatiques)"),
 ]
 
 SYMBOLES = {
@@ -105,7 +116,7 @@ SYMBOLES = {
     "FENETRE": 0x1440, "HORODATAGE": 0x1C40, "BALAYEUR": 0x1D40,
     "JOURNAL_FICHIER": 0x1E00, "SCENARIO": 0x4C00, "LANCEUR": 0x5200,
     "TEST_DEMO": 0x5400, "TEST_PROXY": 0x5800, "TEST_ENVOI": 0x5E00,
-    "TEST_TUNNEL": 0x7200,
+    "TEST_TUNNEL": 0x7200, "PREVOL": 0x4B40,
     # entrées win-05 scellé (miroir écran + fichier, D37)
     "JOURNAL_TRACE": L.JOURNAL_TRACE, "JOURNAL_GUI": L.JOURNAL_GUI,
     # IAT (kernel32#1, #2, #3, user32, user32#2, gdi32)
@@ -315,6 +326,7 @@ NOMS_COURTS = {
     "sup-34-proxy": "test T2 — proxy M3 (tuyaux, curl, événements, arrêt)",
     "sup-35-envoi": "test T3 — envoi Drive (OAuth, session, téléversement)",
     "sup-36-fichiers": "fichiers du terrain (lire/écrire/supprimer, préfixe)",
+    "sup-39-prevol": "prévol — orphelins + réseau amont avant l'extraction (D101)",
 }
 
 

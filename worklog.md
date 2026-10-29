@@ -237,3 +237,110 @@ Stage Summary:
   sinon correctif ciblé (tls-08 si tronqué) ; puis v0.6.0 axes 2-3
   (CF2-Shamir, sceau I) selon le positionnement D86/D87 ; terrain :
   D57 (WER) seul point ouvert
+
+---
+Task ID: 28
+Agent: Z.ai (agent principal)
+Task: demande développeur 29/10 (« journaux envoyés » — trois runs du jour
+rapatriés : 01:46 tronqué au démarrage T2, 05:59 le run 17-C complet
+[anomalie 13 o], 07:14 le 17-D déjà soldé par D100 ; question : « quand je
+lance le superviseur puis TOUT DÉMARRER, une 2e fenêtre s'ouvre avec aussi
+un bouton TOUT DÉMARRER, puis se referme au cours du test » ; demande :
+« peux-tu intégrer la commande taskkill et la verif curl dans le
+superviseur ? ») — réponse : terrain.18 / superviseur-terrain17f.exe, LE
+PRÉVOL f60039 (les ÉTAPES 0/0 BIS du protocole deviennent automatiques).
+
+Work Log:
+- LA 2e FENÊTRE, EXPLIQUÉE (aucun mystère) : c'est la fenêtre de demo.exe,
+  le test T1 — le superviseur est construit sur la COQUILLE DÉMO (héritage
+  R7, « coquille démo éprouvée ») : deux fenêtres jumelles, deux fois le
+  même bouton TOUT DÉMARRER. Elle se referme « au cours du test » parce que
+  le superviseur ne retrouve PAS la fenêtre démo en 10 s (S11 ABSENTE —
+  panne D57, connue et documentée) et TERMINE alors le processus démo
+  (.tuer_ko de sup-33) pendant que T2/T4 continuent (~4 min). Compagnon
+  nouveau du LISEZMOI 17-F : réponse en tête de document.
+- LE PRÉVOL sup-39:R1, ÉCRITE-AVANT-CODE (I/sup-39-prevol.md révision 1) :
+  après porte+libc, AVANT l'extraction (un proxy.exe orphelin VERROUILLE le
+  fichier à re-poser et tient le port 25000 ; une démo orpheline ferait
+  mentir FindWindowW), DEUX sondes MODE 0 bornées 30 s : taskkill.exe /f
+  /IM proxy.exe /IM demo.exe puis curl.exe -s --max-time 20 -o NUL
+  https://example.com/ (amont DIRECT, sans proxy — la panne du 17-D).
+  Codes BRUTS au journal (S08/S09, mode numérique win-05 miroir S13/S22/
+  S47), JAMAIS au verdict : une évidence, pas un juge (miroir du témoin
+  D99). Lancement impossible = ligne sautée, jamais un crash.
+- GÉOMÉTRIE (la contrainte maîtresse) : la table R10 est PLEINE depuis
+  terrain.17 (28 entrées, 464 o touchant l'ancre — « tout futur bloc
+  exige une autre surface ») → le prévol est ZONE-RÉSIDENT : slot
+  0x4B40-0x4BFF (0xC0) dans la queue de la zone données sup 1 (FIN_SUP_1
+  0x4B17 + marge 41 o), couvert par l'ENTRÉE DE ZONE R10 — aucune case
+  neuve, la falsification passe par la somme de zone (la porte reste
+  juge) ; chaînes S08/S09 + cmdlines en queue de zone sup 3 (0x70FA-
+  0x71A0, marge 95 o). Code 169 o / 36 ins / padding 23 o ; sup-09:R4
+  (I/sup-09-scenario.md révision 4) gagne les 5 octets de `call PREVOL`
+  @0x4CE6 (432 o, padding 80).
+- STRUCTURE INTERNE DU PRÉVOL (économie de place) : .ligne (relais
+  terminal jmp vers win-05 : mov r8d,1 + code → 18 o) et .attendre
+  (mort bornée HPROC + GetExitCodeProcess + CloseHandle, cadre 0x28 —
+  ombre ABI D98) factorisent les DEUX sondes : 149 o de code utile.
+- CHAÎNE VERTE (graines 20261029/20261030/20261029, cristallisation 3/3
+  byte-stables) : R5 100 % (25 blocs, f60039 36/36), oracle structurel
+  1 158 verrous (+28), scénario 10 124 cas verts (+7 : verdict f60039,
+  échec (l) prévol dégradé, mutation M10, cible porte f60039), falsifi-
+  cation 29/29 cibles + 10 mutations, carte génération 5 re-scellée
+  (25 empreintes + Ed25519 + R8), PE 75 264 o TAILLE INCHANGÉE (le prévol
+  vit dans le 0xCC de queue de zone), sha256 81f7ef3feab8ff29f4dd7334ca
+  c1ff5128f8a06cfd3f95f9e6b4e992f7261a76, md5 2d2bc168…, version
+  terrain.7 (u64 0x00050107, FileVersion 0.5.0.7).
+- VERROUS D'ORACLE NEUFS : (l) prévol dégradé (taskkill absent + amont
+  curl 28 → S08 sautée SANS crash, S09 code=28 BRUTE au journal, verdict
+  = 1 : les sondes ne comptent JAMAIS) ; M10 (ligne S08 amputée 41 → 40 :
+  le journal d'or refuse — miroir M9/S47) ; la porte détecte f60039 via
+  la somme de zone (cible 29e, octets 11/23). Journal d'or : S08
+  code=128 (rien à tuer — FS vierge, l'état PROPRE) + S09 code=0, AVANT
+  S04 ; lancements 9 (publique) / 12 (livraison).
+- DIFFÉRENTIEL 17-E → 17-F (scripts/verif_terrain17f.py) : 579 octets en
+  ONZE plages TOUTES NOMMÉES (sommes R10 #16/#25/#27 ; version u64 ; le
+  prévol 0x4B40-0x4BFF de 0xCC vers code ; call PREVOL + 2 disp32
+  jmp .fin +5 + code décalé ; chaînes zone 3 ; champs .rsrc) — kit INTACT
+  (demo 73c064fb…, proxy 33c91815…), loader D54 INTACT, table R10
+  28 entrées CONSERVÉES, entrée zone sup 1 géométrie inchangée (0x4340/
+  0x8C0), monotonie ✓. Cosmétique : le tableau de bord affichait l'u64
+  terrain.4 (bug d'affichage préexistant) — corrigé vers TERRAIN7.
+- LIVRAISON : download/superviseur-terrain17f.exe + LISEZMOI-
+  terrain17f.txt (md5 MATCH vérifié) ; le 17-E retiré du download
+  (mono-génération ; référence locale scripts/superviseur-terrain17e_
+  ref.exe — le différentiel reste rejouable). POUSSÉE DRIVE BLOQUÉE :
+  le refresh OAuth du relais est MORT (HTTP 400 invalid_grant, 29/10
+  08:11 — jeton révoqué/expiré) ; le compte de service .gdrive/
+  physichong (z-ai-811@physichong.iam.gserviceaccount.com) s'authentifie
+  (JWT RS256, scripts/relais_service_account.py neuf) et LISTE tout le
+  Drive Triade mais n'a que le rôle LECTEUR (403 « Insufficient
+  permissions » à la création, racine comprise) → le canal /test attend
+  un partage Éditeur du dossier test au compte de service (ou une
+  reprise OAuth interactive côté développeur) ; livrable disponible dans
+  download/ de l'espace de travail.
+- Docs : Entrée 87 du journal, DECISIONS D101, worklog (Task ID 28),
+  I/README + I/sup-09 rév 4 + I/sup-39 neuf, LISEZMOI-terrain17f.txt ;
+  aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle
+  D81 valable, conteneur 0323029a… inchangé, sentinelles intactes —
+  proxy 0.4.0 dd12b649…, demo 73c064fb…, hello, selftest, echo ; le
+  superviseur du dépôt est la balise COURANTE terrain.17-F 81f7ef3f… —
+  artefact vivant re-scellé par version).
+
+Stage Summary:
+- TERRAIN.18 ACCOMPLI : la demande développeur du 29/10 est INTÉGRÉE —
+  taskkill et la vérif curl vivent DANS le superviseur (prévol f60039),
+  les ÉTAPES 0/0 BIS du protocole sont SUPPRIMÉES du LISEZMOI ; la 2e
+  fenêtre est expliquée (la coquille démo de T1 — normale, refermée par
+  la panne connue D57)
+- LEÇON SYSTÉMIQUE : une table d'intégrité PLEINE n'interdit pas
+  d'ajouter du code — elle impose de vivre SOUS une couverture
+  existante (le prévol zone-résident : la porte reste juge par la somme
+  de zone, aucune case neuve)
+- Canal Drive : OAuth relais mort + compte de service lecteur — le
+  partage Éditeur du dossier test au compte de service rouvre la voie
+  (action développeur, une seule fois)
+- Suite M4 : LE JOURNAL + LE TÉMOIN du run 17-F (S09 dira l'amont AVANT
+  les tests) → scellage 0.5.0 si S49 OK + témoin « 200 » complet ; sinon
+  correctif ciblé (tls-08 si tronqué) ; puis v0.6.0 axes 2-3 (CF2-
+  Shamir, sceau I) selon D86/D87 ; terrain : D57 (WER) seul point ouvert

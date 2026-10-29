@@ -821,6 +821,12 @@ CMD_PUT_ATTENDU = ("curl.exe -s --fail -m 120 -o NUL -X PUT "
 # chemin RELATIF (cwd forcé D36 : aucun guillemet, aucun espace à craindre)
 CMD_PS_M4A_ATTENDU = _cmd("CMD_PS_M4A")
 CMD_PS_M4B_ATTENDU = _cmd("CMD_PS_M4B")
+# terrain.18 (D101) : les DEUX sondes du prévol — taskkill (orphelins) puis
+# curl amont direct (sans proxy). Nominal émulé : 128 = rien à tuer (FS
+# vierge, l'état PROPRE) et 0 = amont vivant ; l'échec piloté (V3 sup-39)
+# jouera taskkill = 0 (orphelins présents et tués — code brut, même preuve).
+CMD_TASKKILL_ATTENDU = _cmd("CMD_TASKKILL")
+CMD_CURL_AMONT_ATTENDU = _cmd("CMD_CURL_AMONT")
 
 
 def variante_publique(exe: bytes) -> bytes:
@@ -855,6 +861,10 @@ def lignes_journal_or(demo17: list[bytes], livraison: bool = True) -> list[bytes
     du dépôt (S06B, T3 non applicable, non compté — D49)."""
     lignes = [
         S("S00"), LIGNE_S01, S("S02A"), S("S03A"),
+        # prévol (terrain.18, D101) : AVANT le kit — l'évidence des sondes
+        # précède les extractions ; codes bruts (128 = rien à tuer, état
+        # propre d'un FS vierge ; 0 = amont vivant)
+        S("S08") + b"128", S("S09") + b"0",
         # kit embarqué (D49)
         S("S04A"), S("S04C"), S("S05A"), S("S05C"),
         S("S06A") if livraison else S("S06B"),
@@ -918,7 +928,11 @@ def preparer_scenario(em: Emulateur, demo17: list[bytes],
                          (CMD_PS_M4B_ATTENDU, 0),
                          (CMD_JETON_ATTENDU, 0 if reponse_oauth is not None else 22),
                          (CMD_SESSION_ATTENDU, 0 if reponse_oauth is not None else 22),
-                         (CMD_PUT_ATTENDU, 0)])
+                         (CMD_PUT_ATTENDU, 0),
+                         # prévol (D101) : taskkill 128 (rien à tuer — FS
+                         # vierge, l'état PROPRE) + amont 0 (réseau vivant)
+                         (CMD_TASKKILL_ATTENDU, 128),
+                         (CMD_CURL_AMONT_ATTENDU, 0)])
     # effets de bord des curls scriptés (fichiers -o / -D)
     if code_curl_http == 0:
         em.fichiers["C:\\sup\\terrain_page_http.txt"] = PAGE_HTTP
@@ -1173,8 +1187,9 @@ def test_coquille_gui(exe: bytes):
 
 def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
     """Famille 5 : sup-09 complet, les DEUX variantes (D49) — publique (T3 non
-    applicable, 4 lancements) et livraison (annexe intégrée, 7 lancements) :
-    journal d'or, ordre, requêtes, kit posé puis retiré, nettoyage."""
+    applicable, 9 lancements : prévol x2 + T1 + T2 + T4) et livraison (annexe
+    intégrée, 12 lancements : + T3 x3) : journal d'or, ordre, requêtes, kit
+    posé puis retiré, nettoyage."""
     total = 0
 
     # --- variante PUBLIQUE : le kit vit, T3 sauté non compté, TOUT OK ---
@@ -1192,11 +1207,13 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
     _comparer_journal(em, lignes_journal_or(demo17, livraison=False),
                       "sup-09 nominal public")
     cmdlines = [p["cmdline"] for p in em.processus]
-    if cmdlines != ["demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
+    if cmdlines != [CMD_TASKKILL_ATTENDU, CMD_CURL_AMONT_ATTENDU,
+                    "demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
                     _cmd("CMD_CURL_HTTPS"), "proxy.exe",
                     CMD_PS_M4A_ATTENDU, CMD_PS_M4B_ATTENDU]:
         raise EchecOracle(f"sup-09 public : lancements {[c[:20] for c in cmdlines]} "
-                          f"!= 7 attendus (T3 sauté, I6 ; T4 : proxy + 2 scripts, D96)")
+                          f"!= 9 attendus (prévol x2 + T1 + T2 + T4, D101 ; "
+                          f"T3 sauté, I6)")
     # kit : les artefacts posés SONT les octets embarqués (V2), puis retirés
     blob_demo = exe[L.BLOB_FILE + 0x10: L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO]
     blob_proxy = exe[L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO:
@@ -1235,11 +1252,13 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("sup-37 : annexe posée != annexe du slot (V2 — la "
                           "variante livraison porte ses jetons)")
 
-    # I2/I4 sup-09 : ordre ET composition exacte des 10 lancements
-    # (terrain.17 : T4 entre T2 et T3 — I2 R3 : le proxy de T4 ne naît
-    # qu'après la MORT de celui de T2, le port 25000 est partagé)
+    # I2/I4 sup-09 : ordre ET composition exacte des 12 lancements
+    # (terrain.18 : le prévol ouvre la marche — orphelins tués AVANT le kit,
+    # amont sondé AVANT tout test, D101 ; T4 entre T2 et T3 — I2 R3 : le
+    # proxy de T4 ne naît qu'après la MORT de celui de T2, port 25000 partagé)
     cmdlines = [p["cmdline"] for p in em.processus]
-    attendus = ["demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
+    attendus = [CMD_TASKKILL_ATTENDU, CMD_CURL_AMONT_ATTENDU,
+                "demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
                 _cmd("CMD_CURL_HTTPS"), "proxy.exe",
                 CMD_PS_M4A_ATTENDU, CMD_PS_M4B_ATTENDU,
                 CMD_JETON_ATTENDU, CMD_SESSION_ATTENDU, CMD_PUT_ATTENDU]
@@ -1248,8 +1267,8 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
             if obtenu != attendu:
                 raise EchecOracle(f"sup-09 : lancement #{i + 1} divergent :\n"
                                   f"  obtenu  {obtenu!r}\n  attendu {attendu!r} "
-                              f"(I2 ordre T1->T2->T4->T3 + composition)")
-        raise EchecOracle(f"sup-09 : {len(cmdlines)} lancements != 10 : "
+                              f"(I2 ordre prévol->T1->T2->T4->T3 + composition)")
+        raise EchecOracle(f"sup-09 : {len(cmdlines)} lancements != 12 : "
                           f"{[c[:30] for c in cmdlines]}")
 
     # sup-31 V2 : héritage et cwd par lancement (D36 : cwd forcé)
@@ -1610,6 +1629,37 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
                           "exit 0 survit aux événements muets — jamais de "
                           "court-circuit)")
     total += 3
+
+    # (l) prévol dégradé (terrain.18, D101) : taskkill ABSENT (politique
+    #     machine — CreateProcessA refusé) + amont COUPÉ (curl code 28) ->
+    #     S08 sautée SANS crash (E1 sup-39), S09 code=28 journalisée BRUT
+    #     (I2 : l'évidence du réseau coupé naît dans le journal), les tests
+    #     vivent quand même et le verdict ne compte JAMAIS les sondes (une
+    #     évidence, pas un juge — le miroir exact du 17-D, automatique)
+    em = Emulateur(variante_livraison(exe))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.echec_createprocess = [CMD_TASKKILL_ATTENDU]
+    em.scripter_sorties(em._codes_scriptes[:-1] + [(CMD_CURL_AMONT_ATTENDU, 28)])
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 1:
+        raise EchecOracle("prévol dégradé : verdict final != 1 (les sondes ne "
+                          "comptent JAMAIS au verdict — une évidence, pas un "
+                          "juge, D101)")
+    brut = b"".join(em.journal_fichier)
+    if S("S08") + b"128" + b"\r\n" in brut:
+        raise EchecOracle("prévol dégradé : S08 émise sans lancement (E1 sup-39 — "
+                          "l'échec de sonde se saute, jamais ne se forge)")
+    if S("S09") + b"28" + b"\r\n" not in brut:
+        raise EchecOracle("prévol dégradé : S09 code=28 absente (l'amont coupé "
+                          "doit se journaliser BRUT — la preuve du run 17-D, "
+                          "désormais automatique, I2 sup-39)")
+    if S("S36A") + b"\r\n" not in brut or S("S49A") + b"\r\n" not in brut:
+        raise EchecOracle("prévol dégradé : les tests devaient vivre leurs "
+                          "verdicts (l'indépendance sondes/tests est le cœur "
+                          "du prévol)")
+    total += 3
     return total
 
 
@@ -1830,6 +1880,28 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
         if "ligne S47" not in str(exc):
             raise
     total += 1
+
+    # M10 (terrain.18, D101) : la ligne S08 du prévol amputée (41 -> 40 : le
+    # code taskkill perd un caractère) — le journal d'or doit refuser la
+    # divergence : l'évidence de prévol est une PREUVE gardée (V4 sup-39,
+    # miroir M9/S47 — un code de sonde journalisé reste un code gardé ; la
+    # porte peut aussi parler : le prévol vit sous l'entrée de zone R10)
+    mutant = muter(bytes.fromhex("ba29000000"), bytes.fromhex("ba28000000"),
+                   L.ZONE_PREVOL, "ligne S08")
+    em = Emulateur(mutant)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    r = em.appeler(RVA_SUP["sup-09"])
+    try:
+        _comparer_journal(em, lignes_journal_or(demo17), "ligne S08")
+        raise EchecOracle("falsification S08 : le journal d'or a accepté la ligne "
+                          "amputée — l'évidence de prévol n'est pas gardée (V4 "
+                          "sup-39, D101)")
+    except EchecOracle as exc:
+        if "ligne S08" not in str(exc):
+            raise
+    total += 1
     return total, detectees, len(cibles)
 
 
@@ -1883,8 +1955,8 @@ def executer(exe: bytes, graine: int = 1) -> dict:
 
     n = test_scenario_nominal(exe, JOURNAL_DEMO_17)
     verdicts["f60009"] = {"cas": n, "detail": "scénario COMPLET x2 variantes (publique "
-                                               "7 lancements + livraison 10) : journal d'or, ordre "
-                                               "T1->T2->T4->T3, cwd forcé, quit<attente x2, requêtes "
+                                               "9 lancements + livraison 12) : journal d'or, ordre "
+                                               "prévol->T1->T2->T4->T3, cwd forcé, quit<attente x2, requêtes "
                                                "exactes, kit posé/relu/retiré"}
     verdicts["f60031"] = {"cas": 3, "detail": "mode 0 muet / mode 1 tuyaux+héritage, "
                                                "cwd répertoire exe (D36), zéro fuite"}
@@ -1903,13 +1975,20 @@ def executer(exe: bytes, graine: int = 1) -> dict:
                                                "(58/54 o), quit, nettoyage x3, dégradés 33 o / "
                                                "événements muets A/B — la page ne fuit JAMAIS "
                                                "(R3/D100), ordre T2/T4 verrouillé"}
-    total += n + 6
+    verdicts["f60039"] = {"cas": 2, "detail": "prévol D101 : taskkill+curl amont MODE 0 "
+                                               "bornés 30 s, S08 code=128 (état propre) + S09 "
+                                               "code=0 dans le journal d'or AVANT le kit, "
+                                               "lancement impossible = ligne sautée sans crash "
+                                               "(V3), résultat jamais un bit"}
+    total += n + 8
 
     n = test_echecs(exe, JOURNAL_DEMO_17)
     verdicts["echecs"] = {"cas": n, "detail": "GUI KO + démo absente + journal non "
                                                "conforme + curl 22 + annexe non posable + OAuth muet + "
                                                "extraction impossible + écart relecture + proxy M4 muet "
-                                               "(fuite I2 verrouillée, R3/D100) — jamais de court-circuit"}
+                                               "(fuite I2 verrouillée, R3/D100) + prévol dégradé "
+                                               "(taskkill absent + amont 28 : lignes brutes, sondes "
+                                               "jamais comptées, D101) — jamais de court-circuit"}
     total += n
 
     n, detectees, nb_cibles = test_falsification(exe, JOURNAL_DEMO_17)

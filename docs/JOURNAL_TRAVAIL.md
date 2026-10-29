@@ -6369,3 +6369,105 @@ inchangé, sentinelles intactes — proxy 0.4.0 dd12b649…, demo
 73c064fb…, hello, selftest, echo ; le superviseur du dépôt est la balise
 COURANTE terrain.17-E 234b99d6… — artefact vivant re-scellé par
 version).
+
+## Entrée 87 — D101 : terrain.18 / 17-F, le prévol (la demande développeur du 29/10 intégrée : « peux-tu intégrer la commande taskkill et la verif curl dans le superviseur ? » — les ÉTAPES 0/0 BIS manuelles depuis trois générérations deviennent AUTOMATIQUES ; et la question de la 2e fenêtre répondue : c'est la coquille démo de T1, refermée par la panne connue D57)
+
+Trois journaux du jour attendaient dans /test (01:46 : run coupé net
+après la bannière proxy — le témoignage de la panne 17-B déjà soldée ;
+05:59 : le run 17-C complet, l'anomalie 13 octets, déjà nommée par D99 ;
+07:14 : le 17-D, déjà soldé par D100). Le neuf du jour était ailleurs :
+le développeur a vu une 2e fenêtre s'ouvrir avec le même bouton TOUT
+DÉMARRER, puis se refermer en cours de test — et il a demandé
+l'automatisation des deux gestes que le protocole lui imposait avant
+chaque run.
+
+LA 2e FENÊTRE. C'est la fenêtre de demo.exe, le test T1. Le superviseur
+est construit sur la MÊME coquille graphique que la démo (héritage R7 :
+win-03/win-04/win-05 réutilisés octet-identiques — deux fenêtres
+jumelles, deux fois le même bouton). Elle se referme « au cours du
+test » parce que le superviseur ne retrouve pas la fenêtre démo dans les
+10 premières secondes (S11 ABSENTE — la panne D57, connue, honnêtement
+comptée) et termine alors le processus démo pendant que T2/T4 vivent
+leur ~4 minutes. Réponse mise EN TÊTE du LISEZMOI 17-F : plus aucune
+ambiguïté pour l'œil du terrain.
+
+LE PRÉVOL (sup-39:R1, écrite-avant-code). Après la porte R10 et le
+verdict libc, AVANT l'extraction du kit, deux sondes bornées (30 s,
+zéro gel) lancées MODE 0 par le lanceur scellé : taskkill.exe /f /IM
+proxy.exe /IM demo.exe — les orphelins d'un run antérieur, parce qu'un
+proxy.exe survivant verrouille le fichier à re-poser et tient le port
+25000 — puis curl.exe -s --max-time 20 -o NUL https://example.com/ —
+l'amont DIRECT, sans proxy, exactement la panne qui a tué le 17-D. Les
+codes bruts partent au journal en S08/S09 (mode numérique win-05, miroir
+S13/S22/S47) et ne TOUCHENT JAMAIS le verdict : une évidence, pas un
+juge (miroir du témoin D99 — le résultat ignoré, jamais un bit). Un
+lancement impossible (politique machine) saute sa ligne sans crash.
+
+LA GÉOMÉTRIE — la partie la plus instructive. La table R10 est PLEINE
+depuis terrain.17 (28 entrées, 464 o touchant l'ancre : « tout futur
+bloc exige une autre surface que .text2/table »). Le prévol ne force
+donc AUCUNE case : il vit en queue de la zone données sup 1
+(0x4B40-0x4BFF, dans l'ancien remplissage 0xCC, marge 41 o après les
+chaînes), couvert par l'ENTRÉE DE ZONE — la porte reste juge par la
+somme, et l'oracle le prouve : la falsification des octets 11/23 du
+bloc neuf est détectée (29e cible). Code : 169 o / 36 instructions /
+padding 23 o. Les chaînes (cmdlines + S08/S09) posées en queue de zone
+sup 3 (0x70FA-0x71A0, marge 95 o). sup-09 passe en R4 (I rév 4) :
+`call PREVOL` @0x4CE6, cinq octets, code 432 o / padding 80.
+
+L'ÉCONOMIE INTERNE (le slot est serré : 192 o, padding minimum 16) :
+deux relais internes factorisent les sondes — .ligne (jmp terminal vers
+win-05 : mov r8d,1 + code, 18 o) et .attendre (mort bornée de HPROC,
+GetExitCodeProcess vers CODE_SORTIE, CloseHandle — cadre 0x28, ombre ABI
+D98 respectée). Le journal d'or gagne ses DEUX lignes après S03 :
+S08 code=128 (rien à tuer — FS vierge, l'état PROPRE) et S09 code=0,
+AVANT S04 ; les lancements attendus passent à 9 (publique) et 12
+(livraison) — le prévol ouvre la marche.
+
+CHAÎNE VERTE (graines 20261029/20261030/20261029 — cristallisation 3/3
+byte-stables) : R5 round-trip 100 % (25 blocs), oracle structurel
+1 158 verrous, scénario 10 124 cas verts (+7), falsification 29/29
+cibles + 10 mutations, carte génération 5 re-scellée (25 empreintes +
+Ed25519), PE 75 264 o TAILLE INCHANGÉE — six générations de suite.
+sha256 81f7ef3feab8ff29f4dd7334cac1ff5128f8a06cfd3f95f9e6b4e992f7261a76,
+md5 2d2bc168…, version 0.5.0-terrain.7 (u64 0x00050107). Les DEUX
+verrous neufs : l'échec (l) — prévol dégradé (taskkill absent + amont
+curl 28) : S08 sautée sans crash, S09 code=28 BRUTE, verdict final = 1
+(les sondes ne comptent jamais — le miroir exact du 17-D joué en
+émulation) ; la mutation M10 — ligne S08 amputée (41 → 40) : le journal
+d'or refuse, l'évidence de prévol est une preuve gardée comme S47 avant
+elle.
+
+DIFFÉRENTIEL 17-E → 17-F (scripts/verif_terrain17f.py) : 579 octets en
+ONZE plages toutes nommées — les sommes R10 (#16 f60009, #25 zone 1,
+#27 zone 3), la version u64, le bloc prévol (0xCC → 48 83 EC 28), le
+call PREVOL + les DEUX disp32 jmp .fin ajustés (+5) + le code décalé,
+les chaînes de zone 3, les champs .rsrc. Kit INTACT (demo 73c064fb…,
+proxy 33c91815…), motif loader D54 INTACT, table R10 : 28 entrées
+CONSERVÉES, entrée zone sup 1 inchangée (0x4340 / 0x8C0), monotonie
+vérifiée. Cosmétique soldée : le tableau de bord affichait l'u64
+terrain.4 depuis quatre générations — corrigé.
+
+LIVRAISON : download/superviseur-terrain17f.exe + LISEZMOI-
+terrain17f.txt (md5 MATCH vérifié ; le 17-E retiré, mono-génération ;
+référence locale conservée). Le LISEZMOI change de forme : le protocole
+n'a plus qu'UNE étape (double-cliquer) — les ÉTAPES 0 et 0 BIS sont
+SUPPRIMÉES, faites par le superviseur lui-même, preuve en journal ; la
+lecture du verdict gagne son raccourci décisif (S09 code≠0 + 502 :
+l'amont était déjà coupé AVANT le run — le journal l'avait dit avant
+que T2 ne commence). POUSSÉE DRIVE BLOQUÉE : le refresh OAuth du relais
+est mort (HTTP 400 invalid_grant — jeton révoqué) ; le compte de
+service s'authentique par JWT RS256 (scripts/relais_service_account.py
+neuf) et LISTE tout le Drive Triade, mais son rôle est LECTEUR seul
+(403 à la création, racine comprise) — le canal /test attend le partage
+Éditeur du dossier test au compte z-ai-811@physichong.iam.
+gserviceaccount.com, ou une reprise OAuth interactive ; le livrable
+reste disponible dans download/ de l'espace de travail.
+
+Docs : Entrée 87, DECISIONS D101, worklog (Task ID 28), I/README +
+I/sup-09 rév 4 + I/sup-39 neuf, LISEZMOI-terrain17f.txt. Aucune clé
+touchée : RIEN à remettre par cérémonie (phrase de contrôle D81 valable,
+conteneur 0323029a… inchangé, sentinelles intactes — proxy 0.4.0
+dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur du
+dépôt est la balise COURANTE terrain.17-F 81f7ef3f… — artefact vivant
+re-scellé par version).

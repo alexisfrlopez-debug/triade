@@ -18,10 +18,11 @@ resumable dans le dossier test (1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0) par la
 MÊME voie que drive_sync.py. Le développeur n'a plus rien à copier-coller :
 un clic, puis le constat attend le laboratoire dans le Drive.
 
-## Les tests (v1, étendus terrain.17)
+## Les tests (v1, étendus terrain.17, prévol terrain.18)
 
 | Test | Cible | Preuve exigée |
 |---|---|---|
+| prévol | orphelins + amont direct (terrain.18, D101) | S08 « taskkill code=N » (orphelins d’un run antérieur tués AVANT l’extraction : un proxy.exe survivant verrouille le fichier à re-poser et tient le port 25000) + S09 « curl code=N » (amont sondé SANS proxy — le 17-D est mort de l’amont) ; codes bruts, JAMAIS comptés au verdict (une évidence, pas un juge) |
 | T1 | demo.exe 0.3.0 (M2 scellé) | 17 lignes exactes, dernière = « boucle § 5 complète - DÉMO OK », exit 0 |
 | T2 | proxy.exe 0.5.0-dev.2 (héritage M3 R7 — la voix T2-visible est identique octet pour octet) | bannière + 5 événements exacts + arret + exit 0, curl http/https codes 0 |
 | T4 | proxy.exe 0.5.0-dev.2, tunnel TLS M4 (terrain étape c, D96) | page https « HTTP/1.1 200 » + événements « tunnel chiffre etabli » ; certificat invalide → 502 étiquetée 34 o OCTET POUR OCTET + ligne « certificat rejete » (powershell.exe client TCP — la forme absolue https:// n'existe dans aucun client standard) |
@@ -54,6 +55,7 @@ résumé.
 | f60035 | sup-35:R1 | 0x5E00 | 0x4C0 | test T3 — envoi Drive |
 | f60037 | sup-37:R1 | 0x6600 | 0x400 | kit embarqué : entrée à mode ecx 0/1 — extraire / nettoyer (D49) |
 | f60038 | sup-38:R1 | 0x7200 | 0x600 | test T4 — tunnel TLS M4 (terrain.17 : .rsrc glisse à 0x7800) |
+| f60039 | sup-39:R1 | 0x4B40 | 0xC0 | prévol — orphelins + réseau amont AVANT l’extraction (terrain.18, D101 : ZONE-RÉSIDENT en queue de zone données sup 1, couvert par l’entrée DE ZONE R10 — la table est PLEINE, 28 entrées, miroir D95/D96/D99) |
 
 Héritage byte-identique (R7, preuve contre les artefacts scellés) :
 a10002/a10003 (io M0, hello.exe), b20001-04 (libc M1, selftest.exe),
@@ -115,13 +117,16 @@ Wacatac sur proxy.exe : binaire sans signature ni ressources = bruit ML).
 ## Zones préfigurées du plan
 
 - .text 0x1400-0x1FFF : coquille + horodatage + balayeur + journal ;
-- .text2 0x4000-0x6BFF : tcp-06 @0x4300, zone données sup 0x4340-0x4BFF
+- .text2 0x4000-0x7FFF : tcp-06 @0x4300, zone données sup 0x4340-0x4BFF
   (chaînes S*/URL/gabarits/étiquettes — RX, lisible, hors pages de code
-  testé), scénario @0x4C00, win-05 @0x5000, lanceur 0x5200, T1/T2/T3
+  testé ; terrain.18 : le PRÉVOL f60039 vit en queue de zone
+  0x4B40-0x4BFF, ZONE-RÉSIDENT couvert par l’entrée de zone R10),
+  scénario @0x4C00 (R4 : prévol -> extraction -> T1/T2/T4/T3),
+  win-05 @0x5000, lanceur 0x5200, T1/T2/T3
   0x5400/0x5800/0x5E00, kit embarqué sup-37 0x6600-0x69FF (entrées fixes
   .extraire/.nettoyage), zone données sup 2 0x6300-0x65FF (INT/hints
-  kernel32#3/user32#2 + noms + cmdlines), zone données sup 3 0x6A00-0x6BFF
-  (lignes S04-S07 + md5 attendus, D49) ;
+  kernel32#3/user32#2 + noms + cmdlines), zone données sup 3 0x6A00-0x71FF
+  (lignes S04-S07 + md5 attendus + T4 + chaînes prévol, D49/D96/D101) ;
 - .data 0x3800-0x3FFF : état hérité (hwnds, drapeaux, journal) + état
   terrain (TAMPON_NOM 0x3AD0, TAMPON_AFF 0x3AF0, ETAT_SUP 0x3B10,
   TAMPON_JETON 0x3B70, TAMPON_CMD 0x3D50).
@@ -132,8 +137,13 @@ Wacatac sur proxy.exe : binaire sans signature ni ressources = bruit ML).
 - comportemental : sup-21 (horloge fixée), sup-11 (7 vecteurs win-11
   transposés), coquille GUI (entrée complète : L00/L02/L4C/L4D/L01,
   clic unique), scénario nominal COMPLET (journal d'or écran + fichier,
-  spawn/pipe/findwindow scriptés), 5 scénarios d'échec (démo absente,
-  journal non conforme, curl KO, jetons absents, réponse OAuth muette) ;
+  spawn/pipe/findwindow scriptés — prévol en tête : S08 code=128 + S09
+  code=0, terrain.18), 6 scénarios d'échec (démo absente,
+  journal non conforme, curl KO, jetons absents, réponse OAuth muette,
+  prévol dégradé : taskkill absent + amont 28 — lignes brutes, sondes
+  jamais comptées, D101) ;
 - falsification : octets de bloc corrompus -> porte R10 (boucle sur les
-  15 blocs embarqués), 5 mutations ciblées (constante 17, longueur
-  d'étiquette, ordre T1/T2/T3, nettoyage, timeout d'arrêt).
+  blocs + zones embarquées — le prévol zone-résident compris : sa
+  falsification passe par la somme de zone), mutations ciblées
+  (constante 17, longueur d'étiquette, ordre T1/T2/T3, nettoyage,
+  timeout d'arrêt, ligne S08 du prévol — M10/D101).

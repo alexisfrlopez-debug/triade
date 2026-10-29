@@ -128,6 +128,8 @@ VERSION_TERRAIN5 = "0.5.0-terrain.5"      # T4 diagnostic : témoin page A + lig
 VERSION_U64_TERRAIN5 = 0x00050105         # le même test, l'évidence préservée (17-D)
 VERSION_TERRAIN6 = "0.5.0-terrain.6"      # T4 honnêteté : timeout d'événements silencieux (D100)
 VERSION_U64_TERRAIN6 = 0x00050106         # le même test, la charte § 3 protégée (17-E)
+VERSION_TERRAIN7 = "0.5.0-terrain.7"      # prévol intégré : orphelins + amont (D101)
+VERSION_U64_TERRAIN7 = 0x00050107         # ÉTAPES 0/0 BIS du protocole automatiques (17-F)
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
@@ -168,7 +170,7 @@ BLOCS_TERRAIN = [
     ("f60001", "sup-01:R1", 0x1400, 0x40, "terrain.1", 1),   # principal — entrée
     ("f60002", "sup-02:R1", 0x1440, 0x180, "terrain.1", 1),  # fenêtre
     ("f60011", "sup-11:R1", 0x1E00, 0x200, "terrain.1", 1),  # journal horodaté
-    ("f60009", "sup-09:R3", 0x4C00, 0x200, "terrain.17", 1), # scénario T1/T2/T4/T3 (R3 D96)
+    ("f60009", "sup-09:R4", 0x4C00, 0x200, "terrain.18", 1), # scénario (R3 D96 ; R4 D101 : prévol avant extraction)
     ("f60031", "sup-31:R1", 0x5200, 0x1C0, "terrain.1", 1),  # lanceur
     ("f60036", "sup-36:R1", 0x4E00, 0x1C0, "terrain.1", 1),  # fichiers (D48)
     ("f60033", "sup-33:R1", 0x5400, 0x3C0, "terrain.1", 1),  # T1 démo
@@ -180,6 +182,14 @@ BLOCS_TERRAIN = [
                                             # à 0x800 (0x7800-0x7FFF était libre), la table
                                             # R10 garde SES 28 entrées (l'entrée T4 couvre
                                             # désormais 0x7200-0x7FFF — taille 0x800)
+    ("f60039", "sup-39:R1", 0x4B40, 0xC0, "terrain.18", 1),  # prévol — orphelins + amont
+                                            # (D101) ZONE-RÉSIDENT dans la queue de la zone
+                                            # données sup 1 (0x4B40-0x4BFF, après FIN_SUP_1
+                                            # + marge 16) : code couvert par l'ENTRÉE DE
+                                            # ZONE R10 — la table est PLEINE depuis
+                                            # terrain.17 (28 entrées, miroir D95/D96/D99 :
+                                            # tout bloc neuf vit sous une couverture
+                                            # EXISTANTE, jamais comme entrée neuve)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = sup-01
 
@@ -188,13 +198,20 @@ NOMS_BLOCS = dict(LD.NOMS_BLOCS) | {   # LD fusionne déjà L2 (M2 ⊂ démo)
     "f60011": "sup-journal", "f60021": "sup-horodatage", "f60022": "sup-balaye",
     "f60031": "sup-lanceur", "f60033": "sup-test-demo", "f60034": "sup-test-proxy",
     "f60035": "sup-test-envoi", "f60036": "sup-fichiers", "f60037": "sup-kit",
-    "f60038": "sup-test-tunnel",
+    "f60038": "sup-test-tunnel", "f60039": "sup-prevol",
 }
 
 # --- .text2 : zones ----------------------------------------------------------------
 
 ZONE_THR = (0x4300, 0x433F)          # tcp-06
 ZONE_DATA_SUP = (0x4340, 0x4BFF)     # lignes S + fixtures + étiquettes + URLs (RX)
+                                     # terrain.18 (D101) : le PRÉVOL f60039 vit dans la
+                                     # queue de zone (0x4B40-0x4BFF) — code RX couvert
+                                     # par l'entrée DE ZONE R10 (table PLEINE D95/D96)
+ZONE_PREVOL = (0x4B40, 0x4BFF)       # sup-39 — orphelins + réseau amont (D101)
+PREVOL = 0x4B40                      # entrée publique : sup-09:R4 l'appelle AVANT
+                                     # l'extraction (un proxy.exe orphelin VERROUILLE
+                                     # le fichier à extraire et tient le port 25000)
 ZONE_SCENARIO = (0x4C00, 0x4DFF)     # sup-09
 ZONE_FICHIERS = (0x4E00, 0x4FBF)     # sup-36 (lecture/écriture/suppression)
 ZONE_MIROIR = (0x5000, 0x51FF)       # win-05 scellé
@@ -532,6 +549,7 @@ for _nom, _octets in _SEQ_SUP_1:
     _cur += len(_octets)
 assert _cur <= ZONE_DATA_SUP[1] + 1, f"zone données sup 1 débordante (fin 0x{_cur:x})"
 FIN_SUP_1 = _cur
+assert FIN_SUP_1 + 16 <= ZONE_PREVOL[0], "prévol : marge < 16 o après les chaînes zone 1"
 
 # --- .text2 zone données sup 2 : noms de fichiers + cmdlines curl complètes (0x6000+)
 
@@ -634,6 +652,24 @@ _SEQ_SUP_3 = [
     # propre, tout autre code nomme le mode de mort)
     ("NOM_TEMOIN_A", b"temoin_m4a.txt\x00"),
     ("S47", b"S47 T4 exit proxy="),
+    # terrain.18 (D101) : le PRÉVOL — les ÉTAPES 0/0 BIS du protocole LISEZMOI
+    # deviennent AUTOMATIQUES (demande développeur 29/10 : « peux-tu intégrer la
+    # commande taskkill et la verif curl dans le superviseur ? » — le réflexe
+    # manuel constaté runs après runs depuis D98). (1) taskkill tue les orphelins
+    # d'un run antérieur AVANT l'extraction (un proxy.exe survivant verrouille le
+    # FICHIER proxy.exe à re-poser et tient le PORT 25000) ; codes lus au
+    # LISEZMOI : 0 = orphelins tués, 128 = introuvables (état PROPRE), autre =
+    # refus/échec. (2) curl sonde l'AMONT DIRECT (sans proxy, exemple.com) :
+    # code 0 = réseau vivant, 6/7/28 = DNS/connexion/timeout — le run 17-D est
+    # mort de l'amont, pas du code : cette preuve naît désormais DANS le
+    # journal, AVANT les tests. Les DEUX codes ne touchent JAMAIS le verdict
+    # (une évidence, pas un juge — miroir du témoin D99 : résultat ignoré).
+    ("CMD_TASKKILL",
+     b"taskkill.exe /f /IM proxy.exe /IM demo.exe\x00"),
+    ("CMD_CURL_AMONT",
+     b"curl.exe -s --max-time 20 -o NUL https://example.com/\x00"),
+    ("S08", b"S08 orphelins proxy/demo : taskkill code="),
+    ("S09", b"S09 reseau amont : curl code="),
 ]
 
 _cur = ZONE_DATA_SUP_3[0]
@@ -776,3 +812,6 @@ ATTENTE_MARQUEUR = 150      # sup-33 : 150 x 200 ms = 30 s (journal démo)
 ATTENTE_BANNIERE = 300      # sup-34 : 300 x 50 ms = 15 s
 ATTENTE_EVENEMENTS = 300    # sup-34 : 300 x 50 ms = 15 s
 ATTENTE_ARRET = 200         # sup-34 : 200 x 50 ms = 10 s
+ATTENTE_PREVOL = 30000      # sup-39 : sonde bornée — taskkill OU curl amont
+                            # (curl --max-time 20 s'autolimite ; 259 = STILL_ACTIVE
+                            # si le plafond tombe, l'évidence reste brute, zéro gel)

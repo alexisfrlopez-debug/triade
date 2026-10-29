@@ -1,16 +1,19 @@
-; le fil ouvrier (R3, terrain.17) : porte R10, libc, EXTRACTION du kit embarque,
+; le fil ouvrier (R4, terrain.18) : porte R10, libc, PREVOL (orphelins +
+; reseau amont, sup-39 D101 — les ETAPES 0/0 BIS du protocole, automatiques),
+; EXTRACTION du kit embarque,
 ; T1 (demo M2), T2 (proxy M3 heritage), T4 (tunnel TLS M4 — LE MEME bit
 ; que T2 : le tunnel vit dans le MÊME proxy.exe 0.5.0-dev.2), T3 (envoi
 ; Drive, en DERNIER — le journal téléversé embarque la voix du tunnel),
 ; NETTOYAGE du kit, verdict final — chaque test est INDEPENDANT (un KO
 ; n'arrete pas les suivants : le constat veut TOUT le tableau) ; TOUTES les
 ; traces passent par win-05 scelle (entree trace, mode 0/1) ; l'ordre porte
-; -> libc -> extraction -> T1 -> T2 -> T4 -> T3 -> nettoyage -> verdict est
-; un invariant (le port 25000 est partage par T2 ET T4 : le proxy de T2
-; doit être MORT avant celui de T4 ; l'envoi vient en dernier, l'annexe
-; doit vivre le temps de l'envoi) ; un test saute pour extraction
-; impossible COMPTE ECHEC ; un T3 non applicable (variante publique,
-; annexe absente) n'est PAS compte
+; -> libc -> prevol -> extraction -> T1 -> T2 -> T4 -> T3 -> nettoyage ->
+; verdict est un invariant (le prevol AVANT l'extraction : un orphelin tue
+; apres re-pose verrouillerait le fichier ; le port 25000 est partage par
+; T2 ET T4 : le proxy de T2 doit être MORT avant celui de T4 ; l'envoi vient
+; en dernier, l'annexe doit vivre le temps de l'envoi) ; un test saute pour
+; extraction impossible COMPTE ECHEC ; un T3 non applicable (variante
+; publique, annexe absente) n'est PAS compte
 push rbx
 push r12
 push r13
@@ -71,6 +74,11 @@ mov edx, LEN_S03A
 xor r8d, r8d
 xor r9d, r9d
 call JOURNAL_TRACE
+; --- prevol (R4, terrain.18, D101) : orphelins tues + reseau amont sonde,
+; AVANT l'extraction (un proxy.exe orphelin VERROUILLE le fichier a
+; re-poser et tient le port 25000) ; les codes partent au journal
+; (S08/S09), JAMAIS au verdict — rax ignore (une evidence, pas un juge) ---
+call PREVOL
 ; --- extraction du kit embarque (D49) : bit0 demo / bit1 proxy / bit2 T3 ---
 xor ecx, ecx
 call EXTRACTION

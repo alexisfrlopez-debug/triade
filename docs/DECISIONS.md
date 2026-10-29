@@ -3102,3 +3102,48 @@ Limite assumée : le lecteur d'événements à longueur fixe se
 désynchronise quand le flux diverge — verdicts honnêtes, diagnostics
 tassés (le memcmp exact est un choix). Aucune clé touchée (phrase D81
 valable, conteneur 0323029a… inchangé).
+
+### D101 — terrain.18 / 17-F : LE PRÉVOL — les ÉTAPES 0/0 BIS du protocole deviennent AUTOMATIQUES (demande développeur du 29/10 : « peux-tu intégrer la commande taskkill et la verif curl dans le superviseur ? » — le réflexe manuel constaté depuis D98/D99/D100 : tuer le proxy orphelin, sonder l'amont) ; le bloc neuf f60039 (169 o) est ZONE-RÉSIDENT en queue de zone données sup 1 (0x4B40-0x4BFF) car la table R10 est PLEINE depuis terrain.17 (28 entrées : le code vit SOUS l'entrée de zone, la falsification passe par la somme, la porte reste juge, aucune case neuve) ; sup-09:R4 l'appelle APRÈS porte+libc, AVANT l'extraction (un proxy.exe orphelin verrouille le fichier à re-poser et tient le port 25000) ; S08 « orphelins proxy/demo : taskkill code=N » (0 tués / 128 propre / autre refus) + S09 « reseau amont : curl code=N » (0 vivant / 6/7/28 DNS-connexion-timeout : la panne du 17-D désormais prouvée DANS le journal avant tout test) ; codes BRUTS, JAMAIS au verdict (une évidence, pas un juge — miroir du témoin D99) ; chaîne verte : 10 124 cas verts (+7 : échec (l) prévol dégradé — taskkill absent + amont 28, verdict = 1, sondes jamais comptées ; mutation M10 — ligne S08 amputée rejetée par le journal d'or ; cible porte 29e par somme de zone), 1 158 verrous structurels, 29/29 falsifications + 10 mutations, carte re-scellée (25 empreintes Ed25519), PE 75 264 o TAILLE INCHANGÉE, sha256 81f7ef3f…, md5 2d2bc168…, version terrain.7 (u64 0x00050107) ; différentiel 17-E → 17-F : 579 octets en 11 plages TOUTES NOMMÉES (kit INTACT, loader D54 INTACT, 28 entrées R10 conservées) ; livraison download/superviseur-terrain17f.exe + LISEZMOI (protocol réduit à UNE étape : plus de taskkill/curl manuels) ; la 2e fenêtre du run expliquée au développeur (la coquille démo de T1, refermée par la panne connue D57) ; canal Drive /test BLOQUÉ : refresh OAuth mort (400 invalid_grant) + compte de service authentifié mais LECTEUR seul (403 création) — attend le partage Éditeur du dossier test au z-ai-811@physichong.iam.gserviceaccount.com (ou reprise OAuth interactive)
+
+Le développeur a posé la question la plus rentable du projet : trois
+générations de suite, le protocole lui demandait DEUX gestes manuels
+avant chaque run (D98 : « taskkill /IM proxy.exe /F » — le proxy orphelin
+tient le port 25000 ; D99/D100 : « curl -s -o NUL https://example.com/ » —
+le 17-D est mort de l'amont, pas du code). Chaque geste était une leçon
+devenu réflexe ; le 29/10, il a demandé l'automatisation. Le prévol
+naît de ces trois leçons exactement :
+
+1. **AVANT l'extraction, pas après** — un proxy.exe orphelin n'attend pas
+   gentiment : il VERROUILLE le fichier proxy.exe que sup-37 doit re-poser
+   (CreateFileA en écriture refusé sur un exe en cours) ET il tient le
+   port 25000. Tuer après, c'est tuer trop tard. L'ordre
+   taskkill → curl → extraction est un invariant (I5 sup-39).
+2. **Codes bruts, jamais un juge** — le 17-D nous a appris à lire un code
+   de sortie comme un fait (« S47 exit proxy=0 », témoin 502). Le prévol
+   applique la même grammaire : S08/S09 portent N SANS interprétation
+   in-code (0/128 côté taskkill ; 0/6/7/28 côté curl — la lecture vit au
+   LISEZMOI, un journal d'événements rapporte, il ne commente pas). Le
+   réseau coupé n'est pas un échec du superviseur : c'est un FAIT du run,
+   désormais consigné AVANT que les tests ne le subissent.
+3. **Sous une couverture existante** — la table R10 est PLEINE depuis
+   terrain.17 (28 entrées, 464 o touchant l'ancre : « tout futur bloc
+   exige une autre surface que .text2/table »). Le prévol ne force aucune
+   case : il vit en queue de zone données sup 1 (0x4B40-0x4BFF, dans
+   l'ancien 0xCC de remplissage), couvert par l'entrée DE ZONE — la porte
+   reste juge par la somme, et l'oracle le PROUVE : la 29e cible de
+   falsification (octets 11/23 du bloc) est détectée via la somme de
+   zone. PE 75 264 o : TAILLE INCHANGÉE, six générations de suite.
+
+Le verrou d'échec (l) mérite son nom : taskkill ABSENT (politique
+machine) + amont COUPÉ (curl 28) → S08 sautée sans crash, S09 code=28
+BRUTE au journal, verdict final = 1 (les sondes ne comptent jamais) —
+c'est le miroir exact du run 17-D, joué en émulation AVANT la machine.
+La mutation M10 (ligne S08 amputée d'un caractère) est rejetée par le
+journal d'or : l'évidence de prévol est une preuve gardée, comme S47
+avant elle.
+
+Cosmétique soldée au passage : le tableau de bord affichait l'u64 de
+terrain.4 depuis quatre générations (bug d'affichage — la carte portait
+toujours la bonne version) ; corrigé vers TERRAIN7.
+
+Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).
