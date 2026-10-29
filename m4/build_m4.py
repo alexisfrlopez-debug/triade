@@ -96,6 +96,27 @@ from keystone import Ks, KS_ARCH_X86, KS_MODE_64  # noqa: E402
 import carte_m4 as cm  # noqa: E402
 import oracle_m4 as od4  # noqa: E402
 
+# --- Garde sceau de l'Intention (v0.6.0 axe 3, D105/D87) --------------------
+# Les arbres d'intention qui NOURRISSENT la chaîne proxy.exe : hello-02 (M0)
+# vit dans .text, la libc M1 dans .text, tcp M2/M3 et http/tls M3/M4 dans
+# .text/.text2/.text3 — un arbre divergé de sa signature = un diff
+# d'intention NON SIGNÉ par la clé hors-ligne du développeur : le build
+# REFUSE (fail-closed). La garde est une source de vérité UNIQUE :
+# v06/sceau_I.py (chargé par chemin, aucune duplication de logique).
+SCEAU_I = _charger_module("sceau_I", os.path.join(TRIADE, "v06", "sceau_I.py"))
+ARBRES_GARDE_M4 = ["m0", "m1", "m2", "m3", "m4"]
+
+
+def _garde_sceau_I() -> None:
+    """Traduit le refus du sceau I en échec de build (fail-closed nommé)."""
+    try:
+        SCEAU_I.garde(ARBRES_GARDE_M4)
+        print(f"[sceau-I] garde : {len(ARBRES_GARDE_M4)} arbres d'intention "
+              f"conformes à leurs signatures ({', '.join(ARBRES_GARDE_M4)}) ; "
+              f"clé déposée : {SCEAU_I.etat_cle()}")
+    except SCEAU_I.EchecSceauI as exc:
+        raise EchecBuild(str(exc)) from exc
+
 
 # --- Blocs M4 embarqués dans .text3 (couche C, génération 6) -------------------
 # (id carte, spec, fichier notation, rva, slot) — le plan d'adressage est la
@@ -1200,6 +1221,7 @@ def _anti_rollback() -> None:
 def construire(volume: str, graine: int) -> int:
     print("=== M4 : chaîne artefact TRIADE (profil x86-64-win11-pe) ===")
     _anti_rollback()
+    _garde_sceau_I()
 
     # 1. Héritage M3 re-vérifié de bout en bout (R5 + oracle structurel M3)
     print("[heritage] re-vérification M3 complète (build_m3.assembler_tout)…")
@@ -1281,6 +1303,7 @@ def construire(volume: str, graine: int) -> int:
 
 def verifier(graine: int, volume: str) -> int:
     print(f"=== M4 : re-vérification complète (R5/R7/R8, graine {graine}) ===")
+    _garde_sceau_I()
     print("[heritage] re-vérification M3 complète (build_m3.assembler_tout)…")
     blocs_m3, _specs_m3, code_m3, verrous_m3 = B3.assembler_tout()
     texte_m3, rdata_m3, data_m3, text2_m3 = B3.composer_sections(code_m3, blocs_m3)
@@ -1335,6 +1358,7 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
     byte-identique à l'artefact prouvé terrain (md5 2b6481a1…, sha256
     b9264e0b… — les octets du run 17-H : S49 OK + témoin HTTP/1.1 200)."""
     print(f"=== M4 : scellage {nouvelle_version} ({exigences}) ===")
+    _garde_sceau_I()
     phrase, _ = cm.charger_secrets(interactif=False)
     maitre = cm.cle_maitresse(phrase)
     _, fragments, _, _ = cm.lire_carte()

@@ -1,0 +1,14 @@
+TRIADE-SCEAU-I v1
+arbre: m1
+artefact: minilibc (hello/selftest/echo)
+balise: 0.2.0
+fichiers: 9
+sha256:07624bea6b17de917257f1bcbecd721b6109f83fb7b11e19097c15ca63c9aa00  README.md
+sha256:7d3e11e926358020a28c49e4f856aac991ee6d9031a230e0323a31cfa1e0b03f  libc-01-memcpy.md
+sha256:159ceab7e4a569b7d9b283edc30808eb86585d5d5a0b31006862d093ea5ec761  libc-02-memcmp.md
+sha256:9e88d0a09b08433e8e80cab2bf6555129dc0b5c75b5f8bc3231584a8a923cc0b  libc-03-strlen.md
+sha256:71af38fd14d9b6ac3086a9e6d979e5ce708db269fd0e752844f3081af4ca68d4  libc-04-itoa.md
+sha256:cc46eed15a734d417eda3cd0ba03765e55194860b7544701d982aacf550b3c30  libc-05-zone-alloc.md
+sha256:bb39650fbd4d266c7c093bd96060314868341187a6d70346fdbb3474af99963e  libc-06-zone-reset.md
+sha256:42ef747c5e092206749dcbc86602cfffe8b305c6e729ab8d3fa84022d3cd20e0  libc-07-memset.md
+sha256:a33c5fa12c03a3fb26f96073389ec7a6c9839b5b4cfad86a08418ec14d11e909  libc-08-autotest.md

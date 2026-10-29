@@ -1,0 +1,16 @@
+TRIADE-SCEAU-I v1
+arbre: demo
+artefact: demo.exe
+balise: 0.3.0
+fichiers: 11
+sha256:0354436470755beff62eb3843f8cfe7866f695d83475fbc814218b524de8e9fb  win-01-principal.md
+sha256:c7c0ffbc0834d2de2273aef7ce871f8aafad65d7c8355856a2ba5221549b67dd  win-02-fenetre.md
+sha256:b2e3b2927318ae26bce66ccb71bc7d739184b0bb54691398b44cda71439570ce  win-03-boucle.md
+sha256:8ab63174e43173f7a739c4d74a521b15913b6e852868c02baf569d8dd448e729  win-04-procedure.md
+sha256:da595902a9e28f5b12c86e326645fa79243bedf04d0ef097d0aefaca1fb5da99  win-05-journal.md
+sha256:436c1646a30484349045899e024e7b31797f413bae42978563cc7f2c9fb81b61  win-06-autotest.md
+sha256:1eb2aa9d14d758f2595669d1478963934fd062c2acfcda8accfeab59bf3b581e  win-07-client.md
+sha256:b5beef1e31c7d1f177974c7bc649740c88f79b0d5e0d7e09925f7c2d6dfbdc5b  win-08-serveur.md
+sha256:62aa82d3dd938c05a28cc3cdf75542aec5c29fae70554ecba9e376ae24bcde85  win-09-scenario.md
+sha256:c7cfdbe22706ee76064dc1a683c9d8eb8e0c1d0493e5e1ebbbd1d245e3615f3f  win-10-echange.md
+sha256:e9e760512249daa5fb51049e24ce095a909d8e4df77a55ed624056cc214a7b50  win-11-journal.md

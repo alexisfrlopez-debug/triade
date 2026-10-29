@@ -57,6 +57,31 @@ sys.modules["layout_terrain"] = L
 import carte_terrain as cm
 import oracle_terrain as od
 
+# --- Garde sceau de l'Intention (v0.6.0 axe 3, D105/D87) --------------------
+# Les arbres d'intention qui NOURRISSENT la chaîne superviseur.exe : les
+# blocs win-*/tcp viennent des chaînes scellées m0/m1/m2/démo (R7 — les
+# specs y sont assemblées PUIS prouvées octet-identiques aux artefacts
+# scellés), les blocs sup-* de terrain/I. Le proxy M4 embarqué est un
+# BINAIRE scellé (carte R8 + md5 S05C du kit — sa propre chaîne le garde).
+# Un arbre divergé = un diff d'intention NON SIGNÉ : le build REFUSE.
+_spec_sceau = _ilu.spec_from_file_location(
+    "sceau_I", os.path.join(os.path.dirname(ICI), "v06", "sceau_I.py"))
+SCEAU_I = _ilu.module_from_spec(_spec_sceau)
+_spec_sceau.loader.exec_module(SCEAU_I)
+sys.modules["sceau_I"] = SCEAU_I
+ARBRES_GARDE_TERRAIN = ["m0", "m1", "m2", "demo", "terrain"]
+
+
+def _garde_sceau_I() -> None:
+    """Traduit le refus du sceau I en échec de build (fail-closed nommé)."""
+    try:
+        SCEAU_I.garde(ARBRES_GARDE_TERRAIN)
+        print(f"[sceau-I] garde : {len(ARBRES_GARDE_TERRAIN)} arbres d'intention "
+              f"conformes à leurs signatures ({', '.join(ARBRES_GARDE_TERRAIN)}) ; "
+              f"clé déposée : {SCEAU_I.etat_cle()}")
+    except SCEAU_I.EchecSceauI as exc:
+        raise EchecBuild(str(exc)) from exc
+
 import capstone
 import pefile
 from keystone import Ks, KS_ARCH_X86, KS_MODE_64
@@ -1229,6 +1254,7 @@ def assembler_tout():
 
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
+    _garde_sceau_I()
     blocs, specs, code, verrous = assembler_tout()
     version = L.VERSION_TERRAIN9
     verrous_t4 = croiser_fixtures_t4()
@@ -1290,6 +1316,7 @@ def construire(graine: int, avec_jetons: bool = False) -> int:
 
 def verifier(graine: int) -> int:
     print(f"=== terrain : re-vérification complète (R5/R8, graine {graine}) ===")
+    _garde_sceau_I()
     blocs, specs, code, verrous = assembler_tout()
     with open(os.path.join(ICI, "superviseur.exe"), "rb") as f:
         exe = f.read()

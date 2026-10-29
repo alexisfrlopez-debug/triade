@@ -420,8 +420,26 @@ ARMÉ (« carte scellée (0.5.0) : reconstruction interdite »), R8 indépendant
 b9264e0b…, 28 160 o — les octets mêmes que le terrain a prouvés. La chaîne
 terrain : 17-C (critère câblé) → 17-D (S47=0, témoin 502) → 17-E (fuite I2
 morte) → 17-F (prévol) → 17-G (D102 prouvé en clair) → 17-H (juge et témoin
-verts ensemble). Suite : v0.6.0 axes 2-3 (CF2-Shamir, sceau I) selon
-D86/D87 ; D57 avec l'intervalle exact (0.3.x à contrat stable si ouvert).
+verts ensemble).
+
+**v0.6.0 axe 3 — LE SCEAU DE L'INTENTION VIT (D105, 29/10)** : dix arbres
+d'intention (`m0/I`…`terrain/I` + `v06/I` — le sceau se scelle lui-même)
+sont condensés en manifestes canoniques et signés Ed25519 (`v06/sceau-I/`) ;
+`v06/sceau_I.py verifier` (codes nommés 0/10/11/12) ; la cérémonie hors
+ligne est AUTOPORTIÈRE (`v06/ceremonie_hors_ligne.py` : stdlib seule,
+autotest RFC 8032 fail-closed — vecteurs vérifiés à la source contre le
+témoin `cryptography`) ; les chaînes `build_m4.py` et `build_terrain.py`
+REFUSENT un arbre divergé EN TÊTE (diff d'intention non signé : la clé
+hors-ligne du développeur est requise — preuve end-to-end : un octet muté
+dans `m4/I`, le build refuse exit 1 avec le fichier nommé) ; falsifiabilité
+47/47 (`v06/test_sceau_I.py` : vecteurs RFC, interop bidirectionnelle ×20,
+cérémonie complète air-gap en réplique, un octet par arbre 10/10, manifeste
+réécrit dénoncé par la signature, atomicité des remises). **État visible :
+phase TEST** (clé dérivée d'une constante publique, `etat-cle.txt` le dit)
+— la souveraineté s'arme quand le développeur exécute la cérémonie réelle
+(`download/LISEZMOI-cle-I.txt` : le flux pas à pas). Suite : v0.6.0 axe 2
+(CF2-Shamir D86) ; D57 avec l'intervalle exact (0.3.x à contrat stable si
+ouvert).
 
 ## Avertissement
 

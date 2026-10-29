@@ -163,6 +163,17 @@ l'axe 1 (attestation TEE) selon disponibilité d'une infrastructure à racine de
 confiance — l'exigence est d'ores et déjà consignée, l'infrastructure actuelle
 (VM cloud sans TEE) ne peut pas la satisfaire et le dit.
 
+**Avancement** : **axe 3 LIVRÉ en phase laboratoire (D105, 29/10)** — spec
+écrite-avant-code (`v06/I/README.md`), cérémonie hors-ligne autoportière
+(`v06/ceremonie_hors_ligne.py`, stdlib seule, autotest RFC 8032
+fail-closed), dix arbres signés (`v06/sceau-I/`), gardes sceau-I dans
+`build_m4.py` et `build_terrain.py` (refus en tête d'un diff d'intention
+non signé), falsifiabilité 47/47 ; l'état « test » (clé dérivée d'une
+constante publique) est VISIBLE tant que le développeur n'a pas exécuté la
+cérémonie réelle (`download/LISEZMOI-cle-I.txt` — l'acte qui arme la
+souveraineté). Reste l'axe 2 (CF2-Shamir), puis l'écriture des trois
+composants portera la spécification à v0.6.0.
+
 **Hiérarchie des clés qui en découle (trois gardes, trois menaces)** : phrase
 de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne
 (signe les cartes — les FAITS) ; clé I hors-ligne (signe l'intention — la

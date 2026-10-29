@@ -1,0 +1,6 @@
+TRIADE-SCEAU-I v1
+arbre: v06
+artefact: sceau-I (transversal)
+balise: v0.6.0-axe3
+fichiers: 1
+sha256:4933825a552d5dabc0abbcd8a2bd0b5dc7fd868f97ce7a7e3add972006d0cf39  README.md

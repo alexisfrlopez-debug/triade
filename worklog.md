@@ -428,3 +428,41 @@ Stage Summary:
 - Suite : v0.6.0 axes 2-3 (CF2-Shamir, sceau I) D86/D87 ; D57 avec
   l'intervalle exact (M2 scellé, 0.3.x à contrat stable si ouvert) ;
   partage Éditeur /test au SA toujours attendu (refresh OAuth ~05/11)
+
+## Task ID 32 — D105 : v0.6.0 axe 3, le sceau de l'Intention (2026-10-29)
+
+- CONTEXTE : M4 scellé 0.5.0 (D104) → suite déclarée = v0.6.0 axes 2-3 ;
+  axe 3 ouvert le premier (additif, zéro contact coffre/clés existantes)
+- SPEC écrite-avant-code : v06/I/README.md (220 lignes) — 10 arbres
+  (9 lignées + v06/I : le sceau se scelle lui-même), manifeste canonique
+  POSIX, empreinte = SHA-256 du texte entier, signature Ed25519 sur 32 o
+  (charge utile PAPIER), codes 0/10/11/12, périmètre des trois gardes
+- CÉRÉMONIE v06/ceremonie_hors_ligne.py (427 l.) : stdlib SEULE, autotest
+  RFC 8032 fail-closed ; VECTEURS VÉRIFIÉS À LA SOURCE (mémoire fautive
+  sur TEST 2 — rattrapée multi-sources + témoin cryptography : la leçon
+  D102 retournée en méthode de preuve)
+- OUTIL v06/sceau_I.py (470 l.) : preparer / deposer (atomicité INTÉGRALE
+  — faute propre corrigée : clé installée seulement en phase d'écriture) /
+  signer-test / verifier / etat ; 10 arbres signés (clé TEST = constante
+  PUBLIQUE, état « test » visible — X8 tenu) ; a-signer.txt prêt
+- FALSIFIABILITÉ v06/test_sceau_I.py : 47 PASS / 0 ÉCHEC (T1 RFC + T2
+  interop ×20 bidirectionnelle + T3 déterminisme + F1 cérémonie complète
+  en sous-processus jusqu'à « reelle » sur réplique + F2 un octet/arbre
+  10/10 nommé + F3 manifeste réécrit dénoncé (11) + garde de build + F4
+  remise douteuse sans écrire) ; 2 fautes du HARNAIS nommées, zéro dans
+  le sceau
+- GARDES : build_m4.py [m0..m4] ×3 chemins + build_terrain.py
+  [m0,m1,m2,demo,terrain] ×2 chemins ; PREUVE END-TO-END : octet muté
+  dans m4/I/tls-02-verdicts.md → build refuse EN TÊTE (exit 1, fichier
+  nommé), restauration → vert
+- NON-RÉGRESSION : M4 verifier EXIT=0 (38/38, 524+482 verrous,
+  cristallisation 10/10, R8 49) ; terrain verifier EXIT=0 (10 127 cas,
+  1 158 verrous, R8 25) ; ARTEFACTS INTACTS (proxy b9264e0b… 28 160 o,
+  superviseur f947b605… 75 264 o)
+- NOTA : dépendances build réinstallées (bac à sable reconstruit :
+  capstone, keystone-engine, pefile, pynacl, unicorn)
+- LIVRAISON : download/LISEZMOI-cle-I.txt + copie du script de cérémonie
+  (flux air-gap pas à pas — la souveraineté s'arme à la cérémonie réelle)
+- Suite : v0.6.0 axe 2 (CF2-Shamir D86) ; cérémonie réelle développeur ;
+  D57 (intervalle exact en main) ; partage Éditeur /test au SA
+  (refresh OAuth ~05/11)

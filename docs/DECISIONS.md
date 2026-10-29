@@ -3153,3 +3153,139 @@ Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).
 ### D103 — terrain.19 / 17-H : LE DOUBLON EST MORT — le superviseur cherchait la fenêtre démo par son TITRE, la reconstruction terrain.17 avait ressuscité le bug de terrain.5 (le constat développeur du 29/10 10:50 : « toujours le problème de la fenêtre qui s'ouvre en doublon après avoir lancé "tout démarrer" — règle ça en priorité sinon le test n'est pas fiable » — PRIORITÉ INVERSÉE assumée : le T1 menteur invalide la lecture de TOUT le journal) ; L'ÉVIDENCE DES RUNS 17-G (rapatriés par le compte de service, md5 MATCH) : les DEUX journaux complets (10:41:49 + 10:45:00, séquentiels) disent « S11 T1 fenetre demo ABSENTE » alors que demo_journal.txt (150 o, DÉPÔT NEUF demandé par le LISEZMOI) porte CINQ lignes vivantes dont « L01 fenetre principale creee » — la fenêtre EXISTAIT à l'écran pendant que le superviseur la déclarait absente, jamais cliquée, tuée après 10 s : la définition exacte du « doublon » perçu (une coquille jumelle orpheline qui s'ouvre, ne fait rien, et meurt) ; ET PARALLÈLEMENT : S05C md5 proxy 2b6481a1 ✓ (le kit D102 en place) + LE TÉMOIN « HTTP/1.1 502 Passerelle inaccessible » — du HTTP EN CLAIR chez le client : D102 EST PROUVÉ SUR MACHINE RÉELLE (l'anomalie des 13 octets est bien morte : le tunnel déchiffre et parle HTTP au client ; le 502 est la voix honnête du proxy — l'amont example.com était injoignable PENDANT le run, S49 KO console NON conforme, S47 exit=0 : chemin propre dégradé) ; LA RACINE (notation ligne 31-32 + binaire 17-G offset fichier 0x424f) : FindWindowW porte rcx=NULL (lpClassName) et rdx=« TRIADE_demo » (lpWindowName) — RECHERCHE PAR TITRE : or demo.exe crée CLASSE « TRIADE_demo » (@rva 0x2a92) et TITRE « TRIADE M2 — démonstration complète » : AUCUNE fenêtre ne porte le titre cherché → NULL 200 sondes durant 10 s ; le défaut est le BUG ORIGINEL de terrain.5, corrigé en terrain.6 PAR PATCH BINAIRE DIRECT (9 octets, jamais reporté à la notation/spec) — la RECONSTRUCTION terrain.17 l'a RESSUSCITÉ : S11 detectee en terrain.14 (28/10, patch vivant) puis ABSENTE sur les 7 runs 17-C→17-G (corrélation parfaite, preuve par le journal) ; L'ORACLE ÉTAIT COMPLICE (leçon D102 répliquée au niveau user32) : le shim FindWindowW lisait la chaîne en rdx et rendait TOUJOURS FAKE_HWND_DEMO — le code faux passait l'émulation, NULL à jamais sur la vraie machine : « d'accord entre eux, faux contre le monde » ; CORRECTIF sup-33:R2 ÉCRITE-AVANT-CODE : Q2 réécrite au contrat Win32 (« TRIADE_demo », NULL) — la CLASSE en rcx, NULL en rdx ; notation brouillon échangée (lea rcx, [rip+CLASSE_DEMO] / xor edx,edx — 9 octets, MÊME TAILLE : 31 C9 48 8D 15 disp → 48 8D 0D disp+2 31 D2, même cible 0x2a92, le call [rip] IAT intact) ; régénérée 940 o / 229 instructions SANS CHANGEMENT DE TAILLE (le correctif vit dans les octets existants du slot f60033) ; auteur.py BLOCS + layout BLOCS_TERRAIN « sup-33:R2 »/« terrain.19 » + I/README ; ORACLE AU CONTRAT RÉEL : le shim rend un handle SI ET SEULEMENT SI la classe cherchée (rcx) est « TRIADE_demo » — une recherche par titre rend 0 pour toujours, exactement la vraie machine ; VERROU D103 (deux variantes du scénario nominal) : exactement 3 appels par run, tous (« TRIADE_demo », « ») — la fenêtre est trouvée au 3e sondage, jamais par le titre ; FALSIFICATION M11 (la 11e) : le bug 17-G rejoué octet par octet sur le binaire construit (motif lea rcx+xor edx+call → 31 C9 + lea rdx disp-2) → S11B ABSENTE, clic jamais envoyé, T1 KO, premier appel (« », « TRIADE_demo ») — la régression ne peut plus JAMAIS repasser verte en silence (incident de correction : la première insertion de M11 avalait le total+=1 de M10 — restauré, comptes audités par exécution isolée : 40 = 29 + 11) ; CHAÎNE VERTE : oracle terrain 10 127 cas verts (+3 : deux verrous D103 + M11), falsification 29/29 cibles R10 + 11 mutations ciblées, 1 158 verrous structurels, round-trip notation 100 % (25 blocs), croisé T4 10 fixtures, carte lignée re-scellée (Ed25519, R8 OK, 25 empreintes), PE 75 264 o TAILLE INCHANGÉE (HUIT générations consécutives), sha256 f947b605486b8d8d71d1906e1dba51fca614dadb13a73df5a39ff9b0db91b6f9, md5 ab8afc77d9d50abefd4e42130f8236f1, version terrain.9 (u64 0x00050109, .rsrc 0.5.0.9/terrain.9) ; kit INTACT (demo 73c064fb… + proxy D102 2b6481a1… — vérifiés par le découpage oracle du .blob) ; DIFFÉRENTIEL 17-G → 17-H : 23 octets en 8 plages TOUTES NOMMÉES (9 o le correctif à rva 0x544f = .boucle_fen EXACTEMENT là où vivait le bug ; 1 o R_VERSION 0x50108→0x50109 ; 8 o sommes R10 ; 5×1 o champs version .rsrc+manifeste) — .blob INTACT octet par octet (45 056 o), monotonie vérifiée ; LIVRAISON : download/superviseur-terrain17h.exe + LISEZMOI-terrain17h.txt (la PREUVE comportementale du nouveau binaire : S11 « detectee » + S12 « clic TOUT DEMARRER envoye » — deux lignes IMPOSSIBLES pour 17-G ; NOUVEAU dépôt demandé : demo_journal.txt AUSSI — la donnée D57 enfin complète : le journal démo APRÈS le clic) ; 17-G archivé en référence locale (scripts/superviseur-terrain17g_ref.exe) ; ATTENTE 17-H : T1 atteindra ENFIN son point de panne D57 réel (S13 termine code=3221225477 attendu — échange réseau démo en échec, panne scellée M2 documentée, honnête) ; T2/T4 restent les juges M4 (S49 OK + témoin « HTTP/1.1 200 » → scellage 0.5.0 ; S49 KO + 502 → amont coupé, réessayer réseau vivant — D102 déjà prouvé par le témoin clair) ; LEÇON CONSIGNÉE : un correctif binaire qui ne vit pas dans la source ne survit pas à une reconstruction — terrain.6 a patché l'octet, terrain.17 a régénéré le mensonge ; la source (notation + spec + oracle) est le seul lieu de vérité, et l'oracle doit modéliser le CONTRAT de l'API (jamais le comportement du code qu'il teste).
 
 ### D104 — M4 SCELLÉ à la balise finale 0.5.0 : LE RUN 17-H A LIVRÉ LE JUGEMENT ET LE TÉMOIN ENSEMBLE (terrain_20261029_115002.txt, rapatrié du /test avec le dépôt du superviseur lui-même — md5 ab8afc77… == la livraison D103 : la preuve d'identité du run ; S05C md5 proxy 2b6481a1 ✓, le kit D102 octet pour octet) ; LE DOUBLON EST MORT SUR MACHINE RÉELLE (« S11 T1 fenetre demo detectee » + « S12 T1 clic TOUT DEMARRER envoye » — deux lignes impossibles pour 17-G — et demo_journal.txt 14 lignes : la fenêtre démo a vécu sa vie de test PILOTÉE, la réparation du constat développeur prioritaire est prouvée, le test est redevenu fiable) ; T1 KO HONNÊTE EXACTEMENT PRÉVU (D57 : « réseau : échange en échec », S13 code=3221225477 = 0xC0000005 — la panne scellée M2, l'intervalle exact EN MAIN pour la première fois : après L03, à l'échange, en sortie de scénario) ; T2 OK (HTTP 640/HTTPS 577) ; **T4 S49 VERDICT OK (console conforme) + LE TÉMOIN « HTTP/1.1 200 OK »** (example.com 640 o EN CLAIR livré au client PowerShell par le tunnel — Date 29 Oct 10:50:47 GMT, PENDANT le run ; « tunnel chiffre etabli », badssl « certificat rejete » 34 o exacts, S47 exit=0 : compensation intégrale) — S91 ECHEC ne vient QUE de T1/D57, T2/T4 les juges M4 sont VERTS ENSEMBLE pour la première fois avec le témoin 200 ; SCELLAGE 0.5.0 (modèle 0.4.0/D74 : « l'artefact n'est PAS touché, le scellage est un fait de carte ») : (1) conformité § 8.2 ÉCRITE POUR M4 — m4/conformite_profil.py, 44 contrôles, éléments 1-7 constatés depuis l'artefact scellé (COFF/PE32+, INT 10+13+7, hints séquentiels ; les SEPT appels secur32 visités par call [rip], zéro hors plages IAT, ombres ABI posées ; DEP/NX+ASLR+HEV actifs, CFG rapporté ; table HRESULTS 13 + VERDICT_FATAL 6 ; porte R10 VIVANTE — 28 entrées, somme .text3 déclarée == recalculée, R_VERSION 0x00050002 ≥ plancher ; round-trip 12 M4 + 27 héritage octet-identiques + scellé M3 présent ; 28 160 o, tls-07:R2 527 o dans slot 768) + contrôle de jalon oracle différentiel (sentinelle, miroir fuzzing M3) — TROIS LEÇONS DE CONSTAT : l'empan d'une section est SA taille réelle (un span large fait mentir le mapping), les entrées hints/names se serrent SANS padding (un hint sur adresse IMPAIRE), la mesure d'un code compte le padding DEPUIS LA QUEUE (un 0x90 isolé peut vivre dans un disp32) ; (2) CRISTALLISATION PORTÉE À 10/10 (verifier graines 20261029-37 : M3 524 + M4 482 verrous, oracle 560 cas, R8 49 empreintes à chaque passage — 49 blocs à 10/10) ; (3) _sceller/--sceller-rc/--sceller-final portés à build_m4.py + VERSION_RC1/VERSION_FINALE au layout (la balise u64 de l'artefact RESTE 0x00050002 — R7, les octets prouvés terrain ne bougent pas) ; (4) CÉRÉMONIE : 0.5.0-rc.1 (cristallisation + conformité + critères du jalon — HTTPS via Schannel et échec propre sur certificat invalide, prouvés 17-C→17-H) puis **0.5.0 FINALE** (validation terrain consignée : T4 17-H — S49 OK + témoin HTTP/1.1 200 + S05C 2b6481a1, octets inchangés), frag-bld basculé exactement une occurrence (fail-closed), fragments re-chiffrés, carte re-signée Ed25519 ; (5) POST-SCELLAGE : anti-rollback ARMÉ (« carte scellée (0.5.0) : reconstruction interdite » — testé), R8 indépendant 49 empreintes artefact 0.5.0, tableau de bord version=0.5.0, proxy.exe INTACT md5 2b6481a1… sha256 b9264e0b… 28 160 o — la chaîne terrain complète : 17-C (critère câblé) → 17-D (S47=0, témoin 502) → 17-E (fuite I2 morte) → 17-F (prévol) → 17-G (D102 prouvé en clair) → 17-H (juge et témoin verts ENSEMBLE) ; M4 CLOS (§ 16) — balise immuable § 9, défaut → 0.5.1 à contrat stable (R4) ; SUITE : v0.6.0 axes 2-3 (CF2-Shamir, sceau I) selon D86/D87, D57 avec l'intervalle exact en main (M2 scellé — 0.3.x à contrat stable si ouvert), partage Éditeur /test au compte de service toujours attendu (refresh OAuth ~05/11).
+
+### D105 — v0.6.0 axe 3 : LE SCEAU DE L'INTENTION VIT (D87 instancié — spec écrite-avant-code, cérémonie hors-ligne autoportière, dix arbres signés, gardes de build armées, falsifiabilité 47/47 ; la clé RÉELLE attend la cérémonie du développeur, l'état « test » est VISIBLE)
+
+**Décision** : la souveraineté cryptographique de l'intention (D87) quitte la
+feuille de route et entre dans le dépôt. Dix arbres d'intention (les neuf
+lignées `m0/I` … `terrain/I` PLUS `v06/I` — l'arbre de l'axe lui-même : la
+spécification qui définit le sceau est la première couche I qu'il garde, un
+mécanisme de garde qui s'exempte de lui-même serait une contrebande X2) sont
+condensés en manifestes canoniques ordonnés et signés Ed25519 ; la chaîne de
+build M4 et la chaîne terrain REFUSENT tout arbre divergé de sa signature
+(fail-closed, fichier fautif NOMMÉ). Voler le binaire, le dépôt, et même les
+clés du poste ne permet plus de faire ÉVOLUER l'intention : seul le
+développeur, clé hors-ligne en main, le peut — quand il aura exécuté la
+cérémonie.
+
+**La spécification (v06/I/README.md, R2 écrite-avant-code, 220 lignes)** :
+manifeste canonique (en-tête `TRIADE-SCEAU-I v1`, arbre/artefact/balise/
+décompte, une ligne `sha256:<hex>  <chemin>` par fichier régulier, tri
+lexicographique POSIX INDÉPENDANT du système, LF, UTF-8 — répertoires vides,
+liens symboliques et fichiers spéciaux REFUSÉS : un arbre d'intention n'est
+pas un espace arbitraire) ; l'EMPREINTE d'arbre = SHA-256 du texte du
+manifeste ENTIER (l'en-tête compris — aucun champ hors signature) ; la
+signature Ed25519 (RFC 8032, D4 auto-porté) couvre le message de 32 octets
+— la charge utile de cérémonie est IMPRIMABLE SUR PAPIER (`a-signer.txt`,
+dix lignes) ; le dépôt porte la preuve (`v06/sceau-I/` : clé publique,
+manifestes, signatures par arbre, état de clé) ; codes de sortie nommés
+(0 vert / 10 arbre divergé / 11 signature invalide / 12 dépôt incohérent) ;
+la garde n'est PAS la défense contre la réécriture intégrale du dépôt
+(trois gardes, trois menaces — D87 : cette menace appartient à la phrase de
+lignée et au git signé).
+
+**La cérémonie hors-ligne (v06/ceremonie_hors_ligne.py, 427 lignes,
+AUTOPORTEUR)** : Python 3.8+ STANDARD SEUL — aucun pip, aucun réseau, aucun
+dépôt ; copiable seul sur machine hors ligne (une copie vivra dans
+download/). Ed25519 en Python pur (arithmétique entière, RFC 8032 § 5.1) ;
+AUTOTEST fail-closed à chaque `generer`/`signer` : les vecteurs RFC 8032
+§ 7.1 TEST 1-3 (clé + signature déterministe + vérification + mutation
+rejetée) doivent passer AVANT toute production — une cérémonie dont la
+cryptographie est cassée n'écrit rien. Trois modes : `generer` (graine
+os.urandom 32 o → `cle-I-privee.txt` 0600 avec mode d'emploi de garde
+papier, `cle-publique-I.txt` ; la graine ne s'affiche JAMAIS — le fichier
+EST la remise), `signer` (chaque signature auto-vérifiée avant écriture),
+`verifier` (audit autonome d'une remise). **Les vecteurs furent vérifiés à
+la SOURCE (discipline D79)** : la mémoire du modèle se trompait sur la
+graine du TEST 2 (faute détectée par dérivation graine→clé contre le témoin
+`cryptography`), les vraies valeurs furent rapportées de sources RFC
+concordantes (rfc-editor, datatracker, miroirs) puis AUTHENTIFIÉES contre
+l'implémentation auditée `cryptography` (pk + signature déterministe
+identiques) — le témoin byte-level est la SPÉCIFICATION, pas la mémoire :
+la leçon D102 (« d'accord entre eux, faux contre le monde ») retournée en
+méthode de preuve.
+
+**L'outil du dépôt (v06/sceau_I.py, 470 lignes)** : `preparer` (manifestes
+vivants → `a-signer.txt`, arbres divergés RAPPORTÉS — le signal
+« l'intention a évolué, signature requise »), `deposer` (rotation : chaque
+signature vérifiée AVANT toute écriture — ATOMICITÉ INTÉGRALE, corrigée en
+cours de route : la clé de cérémonie ne s'installe qu'en phase d'écriture,
+un échec laisse le dépôt INTACT, jamais une clé neuve au-dessus de
+signatures mortes), `signer-test`, `verifier` (la gardienne), `etat`
+(audit). Vérification côté dépôt : `cryptography` (dépendance existante).
+
+**La phase LABORATOIRE, honnête (spec § 8, défaut X8 sinon)** : tant que le
+développeur n'exécute pas la cérémonie réelle, le dépôt porte des
+signatures de clé de TEST DÉRIVÉE D'UNE CONSTANTE PUBLIQUE (une clé de test
+n'est un secret pour personne — sa non-sécurité est CONSIGNÉE et visible,
+et l'état survit à toute réinitialisation du bac à sable) ; l'étiquette
+`test` vit dans `etat-cle.txt`, répétée par chaque garde et chaque
+`verifier`. La MÉCANIQUE est prouvée ; la SOUVERAINETÉ s'arme à la
+cérémonie réelle (remplacement = une rotation § 5).
+
+**La falsifiabilité (v06/test_sceau_I.py — 47 PASS / 0 ÉCHEC)** : T1
+vecteurs RFC 8032 (TEST 1-3 + signature de zéros + un octet de message +
+un octet de signature mutés rejetés) ; T2 interop BIDIRECTIONNELLE
+pure-Python ↔ cryptography ×20 messages seedés (clés publiques identiques,
+signatures déterministes IDENTIQUES, vérifications croisées des deux sens —
+deux implémentations indépendantes + le témoin RFC) ; T3 déterminisme du
+manifeste (double calcul, mtime changé → manifeste inchangé, tri canon) ;
+F1 LA CÉRÉMONIE COMPLÈTE jouée en réplique isolée par SOUS-PROCESSUS
+(generer → signer → verifier « TOUT VERT » → deposer --cle → état
+« reelle » → dépôt de réplique vert : le flux air-gap exact du
+développeur) ; F2 falsification D'UN OCTET par arbre 10/10 (rejet +
+fichier NOMMÉ — l'évidence, pas un verdict muet) ; F3 diffs non signés
+refusés par la GARDE DE BUILD (ajout → 10 « ajoute », suppression → 10
+« supprime », l'ATTAQUANT RÉÉCRIT LE MANIFESTE pour suivre l'arbre muté →
+la SIGNATURE le dénonce : 11, signature supprimée → 12, lien symbolique et
+répertoire vide → refus structurel, garde() lève l'exception nommée, garde
+verte après restauration : zéro rémanence) ; F4 remise douteuse SANS ÉCRIRE
+(mauvaise signature / remise incomplète / balise divergente → refus nommé,
+dépôt INTACT octet pour octet — l'atomicité est prouvée par empreinte
+globale avant/après) ; T4 clé de test déterministe, clé déposée == clé de
+test, état « test » JAMAIS confondu avec « reelle ». FAUTES DU HARNAIS
+nommées avant le vert (dictionnaire de divergence inversé condensé↔chemin —
+« fichier supprimé : \<hash\> » au lieu du nom ; collision de mots entre
+l'étiquette de phase test et le test T4-c) : aucune dans le sceau.
+
+**Les gardes de build (spec § 7, intégrées aux TROIS chemins d'entrée :
+construire / verifier / sceller)** : `m4/build_m4.py` garde
+`[m0, m1, m2, m3, m4]` (hello-02 M0 + libc M1 + tcp M2/M3 + http/tls
+M3/M4 — les arbres que la chaîne ASSEMBLE) ; `terrain/build_terrain.py`
+garde `[m0, m1, m2, demo, terrain]` (les héritages R7 + les blocs sup-* ;
+le proxy M4 embarqué est un BINAIRE scellé gardé par sa propre chaîne —
+carte R8 + md5 S05C du kit). PREUVE END-TO-END : un octet muté dans
+`m4/I/tls-02-verdicts.md` → `build_m4.py --verifier` REFUSE EN TÊTE (exit
+1, « arbre m4 REFUSE (code 10) — fichier modifie : tls-02-verdicts.md ;
+diff d'intention non signe : la cle hors-ligne du developpeur est requise
+(D87, spec § 7) », AVANT tout assemblage) ; restauration → vert. AUCUNE
+RÉGRESSION : M4 verifier EXIT=0 (garde + 524 verrous M3 + 482 verrous M4 +
+38/38 + oracle vert + cristallisation 10/10 + R8 49 empreintes, artefact
+0.5.0 INTACT md5 2b6481a1… sha256 b9264e0b… 28 160 o) ; terrain verifier
+EXIT=0 (garde + 1 158 verrous + 10 127 cas verts + R8 25 empreintes,
+superviseur 17-H INTACT sha256 f947b605… 75 264 o — le scellage 0.5.0 et la
+balise terrain.19 ne bougent pas : la garde LIT, elle ne construit pas).
+
+**Critères de sortie D87** : (1) cérémonie hors-ligne documentée exécutable
+sans l'assistant — `v06/ceremonie_hors_ligne.py` + `download/LISEZMOI-cle-I.txt`
+(flux pas à pas) ✓ ; (2) le dépôt vérifie la signature I de tous les jalons
+scellés — `verifier` : 10 arbres, gardes dans les deux chaînes ✓ ; (3)
+falsification d'un octet rejetée — F2 10/10 + preuve end-to-end du build ✓ ;
+(4) diff non signé refusé par le chemin de patch — F3 + la garde refuse le
+BUILD réel (exit 1 nommé) ✓ — la souveraineté effective s'arme à la
+cérémonie réelle du développeur (remplacement de la clé de test par
+rotation, l'état « test » le dit tant qu'il n'est pas fait).
+
+**Environnement consigné** : le bac à sable avait perdu ses dépendances de
+build (capstone, keystone-engine, pefile, pynacl, unicorn réinstallés) —
+aucun impact dépôt, les chaînes repassées vertes après réinstallation.
+
+Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle D81
+valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy 0.4.0
+dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur du dépôt
+reste la balise terrain.17-H f947b605…, le proxy M4 la balise FINALE 0.5.0 ;
+la clé de test du sceau I dérive d'une constante PUBLIQUE, la clé réelle
+naîtra hors ligne et n'entrera jamais ici). SUITE : v0.6.0 axe 2 (CF2-Shamir
+D86, sentinelle et fragments) ; cérémonie réelle du développeur (LISEZMOI
+livré) ; D57 (intervalle exact en main, correction 0.3.x si ouverte) ;
+partage Éditeur /test au compte de service (refresh OAuth ~05/11).

@@ -6713,3 +6713,80 @@ D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
 du dépôt est la balise COURANTE terrain.17-H f947b605… ; le proxy M4 du
 dépôt est la balise FINALE 0.5.0 — les MÊMES octets que le run 17-H a
 prouvés, md5 2b6481a1…, re-signés par la carte de génération 6).
+
+## Entrée 91 — D105 (29/10, après-midi) : v0.6.0 axe 3 — LE SCEAU DE L'INTENTION VIT (dix arbres signés, gardes de build armées, falsifiabilité 47/47 ; la clé réelle attend la cérémonie hors-ligne du développeur)
+
+**Contexte.** M4 est scellé 0.5.0 (Entrée 90) — la suite déclarée était
+v0.6.0 axes 2-3. L'axe 3 (sceau I, D87) fut ouvert le premier : additif,
+zéro contact avec le coffre vivant ni les clés existantes, là où l'axe 2
+(CF2-Shamir) touchera aux cérémonies de rotation — l'ordre des risques
+dictait l'ordre des axes.
+
+**La spécification d'abord (écrite-avant-code, R2).** `v06/I/README.md` :
+dix arbres (les neuf lignées + `v06/I` lui-même — la spécification du sceau
+est la première couche I qu'il garde) ; manifeste canonique ordonné, tri
+POSIX déterministe, tous fichiers réguliers (un ajout non signé est un diff
+d'intention refusé comme une modification) ; empreinte = SHA-256 du texte
+ENTIER ; signature Ed25519 sur l'empreinte de 32 octets — la charge utile
+de cérémonie tient sur PAPIER ; dépôt `v06/sceau-I/` ; codes de sortie
+nommés 0/10/11/12 ; ce que la garde N'EST PAS (la réécriture intégrale du
+dépôt appartient à la phrase de lignée — trois gardes, trois menaces).
+
+**La cérémonie autoportière.** `v06/ceremonie_hors_ligne.py` : stdlib
+SEULE, zéro pip, zéro réseau — copiable seul sur machine hors ligne.
+Ed25519 en Python pur ; AUTOTEST fail-closed à chaque mode signant (les
+vecteurs RFC 8032 TEST 1-3 doivent passer, sinon la cérémonie refuse de
+produire quoi que ce soit). **Le moment discipline du jour** : ma mémoire
+des vecteurs était FAUTIVE (graine du TEST 2 erronée — détecté parce que la
+dérivation graine→clé contredisait le témoin `cryptography`) ; les vraies
+valeurs furent rapportées de sources RFC concordantes puis authentifiées
+contre l'implémentation auditée. Le témoin byte-level est la
+SPÉCIFICATION, jamais la mémoire du modèle — la leçon D102 retournée en
+méthode : ce qui fut un piège (deux sources d'accord entre elles) devient
+la preuve quand les sources sont LA norme et une implémentation auditée
+indépendante.
+
+**Le dépôt, la phase test honnête.** `v06/sceau_I.py` :
+preparer/deposer/signer-test/verifier/etat ; `deposer` atomicité INTÉGRALE
+(faute propre nommée en cours de route : la clé de cérémonie s'installait
+avant la vérification — corrigé, un échec laisse le dépôt intact). Dix
+arbres signés avec la clé de TEST dérivée d'une CONSTANTE PUBLIQUE (sa
+non-sécurité est consignée et VISIBLE — défaut X8 sinon ; elle survit aux
+réinitialisations du bac à sable) ; `a-signer.txt` (10 lignes) prêt pour
+la cérémonie réelle.
+
+**La falsifiabilité (47 PASS / 0 ÉCHEC).** T1 vecteurs RFC + mutations ;
+T2 interop ×20 bidirectionnelle ; T3 déterminisme (mtime neutre) ; F1 la
+cérémonie COMPLÈTE en sous-processus isolé jusqu'à l'état « reelle » sur
+réplique ; F2 un octet par arbre 10/10 avec fichier NOMMÉ ; F3 l'attaquant
+qui RÉÉCRIT le manifeste dénoncé par la signature (11) + garde de build ;
+F4 remise douteuse sans rien écrire (empreinte du dépôt avant/après) ; T4
+l'état « test » jamais confondu. Deux fautes du HARNAIS nommées avant le
+vert (dictionnaire de divergence inversé ; collision de mots test/reelle) —
+aucune dans le sceau.
+
+**Les gardes et la non-régression.** `build_m4.py` (m0-m4, trois chemins :
+construire/verifier/sceller) et `build_terrain.py` (m0/m1/m2/demo/terrain,
+deux chemins) refusent un arbre divergé EN TÊTE — preuve end-to-end : un
+octet muté dans `m4/I/tls-02-verdicts.md`, le build M4 refuse (exit 1,
+fichier nommé, avant tout assemblage), restauration → vert. Chaînes
+repassées EXIT=0 toutes les deux : artefacts INTACTS (proxy 0.5.0
+b9264e0b… 28 160 o ; superviseur 17-H f947b605… 75 264 o — la garde LIT).
+Nota environnement : dépendances de build réinstallées (bac à sable
+reconstruit).
+
+**Livraison.** `download/LISEZMOI-cle-I.txt` + copie du script de
+cérémonie : le flux air-gap pas à pas pour le développeur (generer hors
+ligne → signer → remettre → deposer --cle → l'état « test » devient
+« reelle », la souveraineté s'arme). Les critères de sortie D87 sont
+prouvés en laboratoire ; le dernier acte appartient au développeur.
+
+Docs : Entrée 91, DECISIONS D105, worklog (Task ID 32), README (état
+v0.6.0 axe 3), v06/I/README.md (spec), LISEZMOI-cle-I.txt. Commit D105.
+
+Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle D81
+valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy 0.4.0
+dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur du dépôt
+est la balise COURANTE terrain.17-H f947b605… ; le proxy M4 du dépôt est la
+balise FINALE 0.5.0 b9264e0b… ; la clé de test du sceau I dérive d'une
+constante publique — la clé réelle ne verra jamais le bac à sable).
