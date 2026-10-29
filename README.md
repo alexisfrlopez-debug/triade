@@ -368,14 +368,22 @@ vit DANS l'entrée T4 : slot 0x800), dérive de notations du dépôt
 ABI x64 réparée et verrouillée (D98), motif loader D54 porté au dépôt
 (D97). **LE RUN 17-C A PROUVÉ LE CRITÈRE M4 sur machine réelle**
 (« tunnel chiffre etabli » + « certificat rejete » + 502 exacte —
-Entrée 85) ; l'anomalie résiduelle (page A tronquée à 13 o, S49B) est
-nommée et le 17-D la fait parler : **temoin_m4a.txt SURVIT au
-nettoyage** (l'évidence de la page sur le disque) + **« S47 T4 exit
-proxy=N »** journalisé (le code de sortie du proxy devient une preuve —
-sup-38:R2, D99). Oracle terrain : 10 114 cas verts, 9 mutations
-attrapées, cristallisation terrain 3/10 (trois runs byte-stables).
-Livré (variante publique) dans `download/`. **Le scellage 0.5.0 attend
-le journal + le témoin du développeur (run 17-D).**
+Entrée 85) ; le 17-D a livré SES preuves (Entrée 86) : **« S47 T4 exit
+proxy=0 » PREMIÈRE FOIS** (la compensation intégrale tient sur machine
+réelle — E6 mort), le témoin parlé (page A = la 502 du proxy :
+tcp-13 en échec — réseau intermittent autour, proxy INNOCENT),
+badssl 34 o exact ENCORE — et une **fuite I2 nommée, corrigée et
+verrouillée** (le journal du 17-D contenait 40 o de page : .evt_a_ko
+journalisait TAMPON/LU périmés après un timeout ; à LU=640 la ligne de
+fuite écrasait l'état .data — memcpy sauvage — et tuait le superviseur ;
+sup-38:R3, deux octets 74 48→74 56 : les timeouts SILENCIEUX, miroir
+sup-34). Oracle terrain : 10 117 cas verts (cas (k) « proxy M4 muet » —
+le 17-D rejeté nommément), 9 mutations attrapées, cristallisation
+terrain byte-stable. Livré (variante publique) dans `download/`
+(superviseur-terrain17e.exe, sha256 234b99d6…). **Le scellage 0.5.0
+attend le journal + le témoin du run 17-E (réseau stable souhaité :
+S49 OK + témoin « HTTP/1.1 200… » complet → scellage ; témoin tronqué
+→ correctif relais tls-08 — l'anomalie 13 o du 17-C reste ouverte).**
 Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement

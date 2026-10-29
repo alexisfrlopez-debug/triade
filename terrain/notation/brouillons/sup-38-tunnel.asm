@@ -13,6 +13,14 @@
 ; nettoyage Q11), .exitline journalise « S47 T4 exit proxy=N » après
 ; GetExitCodeProcess (le code de sortie devient une preuve — exit 0 =
 ; chemin propre, tout autre code nomme le mode de mort).
+; R3 (D100, leçon du run 17-D : LA FUITE I2) : sur timeout d'un sondage
+; d'événements, TAMPON/LU portent ENCORE la page A (rien n'a été lu) —
+; l'ancien branchement vers .evt_a_ko/.evt_b_ko y versait le CONTENU de
+; la page dans le journal (40 o de 502 « Passerelle inaccessible » dans
+; le journal du run 17-D — charte § 3 violée). Les DEUX timeouts deviennent
+; SILENTS (branchement direct, miroir sup-34 : rien lu, rien journalisé) ;
+; seule la divergence memcmp journalise — les OCTETS LUS, preuve valide.
+; Verrou : cas d'oracle (k) « proxy M4 muet » — la page ne fuit JAMAIS.
 ; Neuf bits de succès (bannière, code A, page A, évts A, code B, page B
 ; 502 exacte, évts B, arret, exit) — tous posés = rax 1, sinon 0.
 ; (rbx = TAMPON_CMD — pages lues ET console du proxy, séquentiellement ;
@@ -130,11 +138,13 @@ test eax, eax
 jne .evt_a
 or r13d, 4
 ; --- Q6 : événements A (58 o — la voix du tunnel établi) ---
+; R3 (D100) : timeout -> .req_b DIRECT (SILENT — rien lu, rien journalisé ;
+; l'ancien chemin versait TAMPON/LU périmés = LA PAGE A, fuite I2 du 17-D)
 .evt_a:
 mov eax, 58
 call .attendre
 test rax, rax
-je .evt_a_ko
+je .req_b
 mov rcx, rbx
 lea rdx, [rip + FIX_EVT_M4A]
 mov r8d, 58
@@ -188,11 +198,13 @@ test eax, eax
 jne .evt_b
 or r13d, 32
 ; --- Q8 : événements B (54 o — le certificat nommé) ---
+; R3 (D100) : timeout -> .arret DIRECT (SILENT — même miroir que Q6 : la
+; page B ne fuiterait pas mieux que la page A dans un journal d'événements)
 .evt_b:
 mov eax, 54
 call .attendre
 test rax, rax
-je .evt_b_ko
+je .arret
 mov rcx, rbx
 lea rdx, [rip + FIX_EVT_M4B]
 mov r8d, 54

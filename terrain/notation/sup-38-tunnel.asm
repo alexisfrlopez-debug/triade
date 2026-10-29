@@ -197,7 +197,7 @@ or r13d, 4
 mov eax, 58
 call 0x76eb
 test rax, rax
-je 0x743e
+je 0x744c
 mov rcx, rbx
 lea rdx, [rip - 0x54d]
 mov r8d, 58
@@ -250,7 +250,7 @@ or r13d, 32
 mov eax, 54
 call 0x76eb
 test rax, rax
-je 0x7533
+je 0x7541
 mov rcx, rbx
 lea rdx, [rip - 0x608]
 mov r8d, 54

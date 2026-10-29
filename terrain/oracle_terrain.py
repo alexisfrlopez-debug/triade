@@ -1561,6 +1561,55 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("événements B muets : la ligne B servie malgré un flux "
                           "qui ne la porte pas (le sondage a deviné ?)")
     total += 3
+
+    # (k) T4 proxy M4 MUET après la bannière (tunnel et certificat jamais
+    #     nommés — timeout des DEUX sondages d'événements) -> S49B ET LA
+    #     PAGE NE FUIT PAS (R3, D100 : le run 17-D a vu .evt_a_ko verser
+    #     TAMPON/LU périmés = les 40 o de la page A dans le journal —
+    #     charte § 3 violée ; le timeout ne journalise RIEN, la divergence
+    #     memcmp seule journalise les OCTETS LUS)
+    em = Emulateur(variante_livraison(exe))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.flux_proxies = [BANNIERE + EVT_HTTP + EVT_HTTPS + ARRET,
+                       BANNIERE + ARRET]        # le M4 n'a pas de voix
+    em.flux_proxy = b""
+    try:
+        r = em.appeler(RVA_SUP["sup-09"])
+    except Exception as exc:
+        # 17-D non corrigé : la ligne .flux de LU o (la page entière !)
+        # compose au-delà du tampon journal, écrase l'état .data (LU lu
+        # comme count — memcpy sauvage) et emporte l'émulation — la fuite
+        # n'est pas cosmétique, elle est MORTELLE pour un run à grande page
+        raise EchecOracle("proxy M4 muet : CRASH avant le verdict "
+                          f"({type(exc).__name__}) — la ligne de fuite (LU o "
+                          "de page) déborde du tampon journal et emporte "
+                          "l'état .data : memcpy sauvage (R3/D100)") from exc
+    if r != 0:
+        raise EchecOracle("proxy M4 muet : verdict final != 0 (E4 sup-38 — "
+                          "les événements manquants nomment l'étage)")
+    brut = b"".join(em.journal_fichier)
+    if S("S49B") + b"\r\n" not in brut:
+        raise EchecOracle("proxy M4 muet : S49B absent")
+    if S("S47") + b"0" + b"\r\n" not in brut:
+        raise EchecOracle("proxy M4 muet : S47 exit proxy=0 absent (l'évidence "
+                          "précède le verdict sur TOUT chemin, R2/D99)")
+    if b"tunnel chiffre etabli" in brut:
+        raise EchecOracle("proxy M4 muet : la voix de A servie malgré un flux "
+                          "qui ne la porte pas")
+    if b"certificat rejete" in brut:
+        raise EchecOracle("proxy M4 muet : la voix de B servie malgré un flux "
+                          "qui ne la porte pas")
+    if b"HTTP/1.1 200 OK" in brut:
+        raise EchecOracle("proxy M4 muet : LA PAGE A A FUIT dans le journal "
+                          "(R3/D100 : un timeout ne journalise RIEN — "
+                          "l'évidence vit sur le disque, charte § 3)")
+    if S("FIX_ARRET").rstrip(b"\r\n") + b"\r\n" not in brut:
+        raise EchecOracle("proxy M4 muet : arret devait vivre (le quit/arret/"
+                          "exit 0 survit aux événements muets — jamais de "
+                          "court-circuit)")
+    total += 3
     return total
 
 
@@ -1852,13 +1901,15 @@ def executer(exe: bytes, graine: int = 1) -> dict:
                                                "2 requêtes powershell ordonnées sans tuyaux (I6), "
                                                "502 étiquetée 34 o EXACTES + voix du proxy "
                                                "(58/54 o), quit, nettoyage x3, dégradés 33 o / "
-                                               "événements muets, ordre T2/T4 verrouillé"}
+                                               "événements muets A/B — la page ne fuit JAMAIS "
+                                               "(R3/D100), ordre T2/T4 verrouillé"}
     total += n + 6
 
     n = test_echecs(exe, JOURNAL_DEMO_17)
     verdicts["echecs"] = {"cas": n, "detail": "GUI KO + démo absente + journal non "
                                                "conforme + curl 22 + annexe non posable + OAuth muet + "
-                                               "extraction impossible + écart relecture — jamais de court-circuit"}
+                                               "extraction impossible + écart relecture + proxy M4 muet "
+                                               "(fuite I2 verrouillée, R3/D100) — jamais de court-circuit"}
     total += n
 
     n, detectees, nb_cibles = test_falsification(exe, JOURNAL_DEMO_17)

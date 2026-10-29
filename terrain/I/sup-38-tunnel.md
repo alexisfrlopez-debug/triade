@@ -1,4 +1,4 @@
-sup-38 · test T4 — tunnel TLS du proxy M4 (run terrain étape c) · révision 2
+sup-38 · test T4 — tunnel TLS du proxy M4 (run terrain étape c) · révision 3
 Intention : le run terrain que M4 attend (étape c, charte § 8.4 du jalon)
 : le tunnel chiffré vit SOUS le proxy. Le superviseur lance proxy.exe
 0.5.0-dev.2 avec TUYAUX (sup-31 MODE 1, la voix du proxy captée ligne à
@@ -62,7 +62,12 @@ Contrat :
          (FIX_EVT_M4A — la concaténation des fixtures du SCELLÉ M3/M4 :
          msg connexion M3 + ligne tls-08 M4 + fin M3, croisée au build
          contre les octets de l'artefact embarqué) -> les trois lignes
-         journalisées (.flux par ligne, miroir T2) ;
+         journalisées (.flux par ligne, miroir T2) ; R3 (D100) : le
+         timeout du sondage branche DIRECT vers Q7, SILENT (miroir
+         sup-34 : rien n'a été lu, rien ne se journalise — l'ancien
+         chemin .evt_a_ko y versait TAMPON/LU PÉRIMÉS, c'est-à-dire LA
+         PAGE A encore en tampon : la fuite I2 du run 17-D) ; la
+         divergence memcmp seule journalise — les OCTETS LUS ;
          Q7 requête B : même discipline, cmdline « … self-signed.
          badssl.com b », réponse attendue OCTET POUR OCTET : memcmp 34 o
          == « HTTP/1.1 502 Certificat rejete\r\n\r\n » (FIX_502_M4 ==
@@ -71,7 +76,8 @@ Contrat :
          de plus est une divergence nommée) ;
          Q8 événements B : memcmp 54 o == « connexion entrante\r\n
          certificat rejete\r\nfin connexion\r\n » (FIX_EVT_M4B) -> lignes
-         journalisées ;
+         journalisées ; R3 (D100) : timeout -> Q9 DIRECT, SILENT (même
+         miroir — la page B ne fuiterait pas mieux que la page A) ;
          Q9 arrêt : « quit\r\n » sur TUYAU_IN_WR, sondage « arret\r\n »
          (7 o), WaitForSingleObject (10 s) — timeout -> TerminateProcess
          (miroir T2 : un proxy muet ne reste pas vivant), second sondage
@@ -106,7 +112,10 @@ Contrat :
          memcmp des préfixes attendus — le reste n'est pas à nous) —
          le TÉMOIN est un FICHIER posé, jamais une ligne de journal
          (R2 : l'évidence vit sur le disque, la charte § 3 reste
-         entière) ;
+         entière) ; R3 (D100) : le timeout d'un sondage d'événements
+         ne journalise RIEN (un tampon non lu n'est pas une preuve —
+         la fuite du run 17-D est nommée et verrouillée par le cas
+         d'oracle (k) « proxy M4 muet ») ;
          I3 toutes les attentes bornées par timeout (PeekNamedPipe +
          Sleep ; WaitForSingleObject 45/10/5 s) — aucun ReadFile
          bloquant sans garantie de disponibilité : le superviseur ne
@@ -176,8 +185,20 @@ Provenance  : écrite-avant-code (terrain.17, M4 étape c — le critère M4
               proxy) : la révision les préserve — le témoin sur le
               disque, la ligne S47 dans le journal. Le diagnostic précède
               le correctif (discipline D54/D68/D98 : l'évidence d'abord).
+              Révision 3 née du run terrain.17-D (D100) : le journal du
+              run contenait les 40 octets de la page A (la 502 « Passerelle
+              inaccessible » du proxy — tcp-13 en échec vers example.com)
+              parce que .evt_a_ko journalisait (TAMPON, LU) APRÈS un
+              timeout qui n'avait RIEN lu — TAMPON/LU portaient encore
+              la page : violation I2 (charte § 3). Correctif taille-neutre
+              (deux octets de déplacement de branchement) : les DEUX
+              timeouts deviennent silencieux (branchement direct, miroir
+              sup-34) ; la divergence memcmp journalise les octets lus —
+              une preuve valide. Verrou : cas d'oracle (k) « proxy M4
+              muet » — la page ne fuit JAMAIS dans le journal.
 Décisions   : D48 (cadre terrain), D49 (kit 1 exe), D77 (charte M4 § 8.4),
-              D96, D99 ; le client TCP est powershell.exe parce que la forme
+              D96, D99, D100 (timeout silencieux — charte § 3 protégée) ;
+              le client TCP est powershell.exe parce que la forme
               absolue https:// n'existe dans aucun client standard —
               l'exigence est le CONTRAT du proxy M4 (http-08:R2 Q4),
               le véhicule est une donnée du plan.

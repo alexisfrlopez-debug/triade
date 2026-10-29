@@ -137,3 +137,103 @@ Stage Summary:
   S47=0 et S49 OK, ou correctif ciblé sinon) ; puis v0.6.0 axes 2-3
   (CF2-Shamir, sceau I) selon le positionnement D86/D87 ; terrain : D57
   (WER) seul point ouvert
+
+---
+Task ID: 27
+Agent: Z.ai (agent principal)
+Task: journaux + témoin du drive /test — le run 17-D ANALYSÉ (S47=0 :
+compensation PROUVÉE ; témoin = la 502 du PROXY — tcp-13 en échec,
+réseau intermittent, proxy INNOCENT ; badssl 34 o exact ENCORE), la
+fuite I2 du journal nommée (.evt_a_ko journalisait TAMPON/LU périmés =
+la page après un timeout qui n'a rien lu) + le piège latent (LU=640 :
+memcpy sauvage — le superviseur serait MORT en plein T4), correctif
+taille-neutre sup-38:R3 (les deux timeouts silencieux, miroir sup-34),
+verrou d'oracle (k) « proxy M4 muet », rebuild, différentiel, livraison
+terrain.17-E.
+
+Work Log:
+- FAITS RAPATRIÉS (drive /test) : terrain_20261029_071458.txt (1 534 o,
+  le journal 17-D) + temoin_m4a.txt (40 o — LE TÉMOIN). TROIS PREUVES :
+  « S47 T4 exit proxy=0 » PREMIÈRE FOIS (la compensation intégrale tient
+  sur machine réelle — E6 MORT) ; le témoin = « HTTP/1.1 502 Passerelle
+  inaccessible\r\n\r\n » (40 o exacts — la 502 DU PROXY : tcp-13 n'a pas
+  joint example.com, tls-08 E1 conforme : 502 propre, service continu,
+  badssl OK juste après, sortie propre — LE PROXY EST INNOCENT, la panne
+  était le réseau : neverssl ET example.com injoignables en amont à
+  07:14, pendant que CONNECT/badssl répondaient) ; « S46 octets=34 » —
+  la 502 Certificat rejete OCTET POUR OCTET, ENCORE.
+- LA FUITE I2 (hexdump du journal) : les 40 o de la page A recopiés
+  DANS le journal après S44 (charte § 3 violée). Mécanisme (notation
+  sup-38 + sup-34 ligne à ligne, adresses par table des déplacements) :
+  .evt_a_ko journalise (TAMPON, LU) ; après un timeout le sondage n'a
+  rien lu — TAMPON/LU portent ENCORE la page. Reconstruction COMPLÈTE
+  du journal 17-D octet par octet : S23 octets=40 VRAI (le jne 0x592d
+  saute VERS le bloc de lecture — la page est lue même sur code=28) ;
+  « tun » = la lecture fixe de 43 o coupe « tunnel » (le « connexion
+  entrante » http non consommé par le timeout SILENT de sup-34 décale
+  tout) ; S26 lignes=2 = bannière + l'unique .flux de 43 o ; le
+  « connexion entrante\r » de T4 = la lecture de 54 o (35 résidus de A +
+  19 de B).
+- LE PIÈGE LATENT (sonde par crochet memcpy, émulation) : à LU=640 (une
+  VRAIE page), la ligne de fuite compose au-delà du tampon journal
+  0x3890, ÉCRASE l'état .data (LU relu comme count : memcpy au count
+  0x45004500450045 — les octets de page devenus longueur) et emporte
+  l'émulation (UC_ERR_WRITE_PROT, rip memcpy+0xE, 178 memcpy tracés).
+  Sur machine réelle : PLANTAGE du superviseur en plein T4. Le run 17-D
+  a eu de la chance (sa page ne faisait que 40 o).
+- SUP-38:R3 écrite-avant-code (I/sup-38-tunnel.md révision 3) : les
+  DEUX branchements de timeout deviennent SILENCIEUX (branchement
+  direct je .req_b / je .arret — miroir sup-34 : rien lu, rien
+  journalisé) ; la divergence memcmp seule journalise — les OCTETS LUS.
+  Correctif TAILLE-NEUTRE : 74 48 → 74 56 aux rva 0x73F5/0x74EA ; code
+  1 645 o / 357 ins / 403 o padding INCHANGÉS.
+- VERROU D'ORACLE NEUF — cas (k) « proxy M4 muet » (famille échecs) :
+  les DEUX sondages expirent ; assertions S49B + S47 exit=0 + arret
+  journalisé + voix A/B absentes + « HTTP/1.1 200 OK » JAMAIS dans le
+  journal ; le crash éventuel converti en EchecOracle NOMMÉ. PREUVE
+  DANS LES DEUX SENS : le 17-D REJETÉ nommément, le 17-E VERT.
+- CHAÎNE VERTE (graines 20261029/20261030, cristallisation 2/2
+  byte-stables) : R5 100 % (357/357), croisement T4 10/10, structurel
+  1 130 verrous, scénario 10 117 cas verts (+3) + falsification 28/28 +
+  9 mutations, carte génération 5 re-scellée (24 + Ed25519 + R8 OK,
+  artefact 0.5.0-terrain.6), PE 75 264 o TAILLE INCHANGÉE, sha256
+  234b99d6590a5aeee44a9830b685fbf99e4ea6408516a2a5ed07949e1e470b80,
+  md5 739cbd42bf37…, version terrain.6 (u64 0x00050106).
+- DIFFÉRENTIEL 17-D → 17-E (scripts/verif_terrain17e.py) : DIX octets
+  en HUIT plages TOUTES NOMMÉES (les deux 74 48→74 56 vérifiés
+  explicitement ; somme R10 T4 ; u64 de version ; champs .rsrc) — kit
+  INTACT (demo 73c064fb…, proxy 33c91815…), loader D54 INTACT,
+  géométrie R10 T4 inchangée, monotonie ✓. RIEN d'autre ne bouge.
+- LIVRAISON : download/superviseur-terrain17e.exe + LISEZMOI-
+  terrain17e.txt, poussés dans /test du Drive (md5 MATCH vérifié) ; le
+  17-D mis à la corbeille du Drive (mono-génération D69 ; référence
+  locale scripts/superviseur-terrain17d_ref.exe — le différentiel reste
+  rejouable) ; le test s'appelle TOUJOURS terrain17 (S00/L00
+  inchangés) ; ÉTAPE 0 BIS NEUVE du protocole : vérifier l'amont avant
+  le run (curl -s -o NUL https://example.com/). Lecture du verdict
+  mise à jour : S49 OK + témoin « 200 » → scellage 0.5.0 ; S49 KO +
+  S47=0 + témoin 502 Passerelle → réseau (réessayer) ; S49 KO + S47=0 +
+  témoin « 200 » tronqué → correctif tls-08 (l'anomalie 13 o du 17-C,
+  toujours ouverte).
+- Docs : Entrée 86 du journal, DECISIONS D100, worklog (Task ID 27),
+  README (état M4) ; aucune clé touchée : RIEN à remettre par cérémonie
+  (phrase de contrôle D81 valable, conteneur 0323029a… inchangé,
+  sentinelles intactes — proxy 0.4.0 dd12b649…, demo 73c064fb…, hello,
+  selftest, echo ; le superviseur du dépôt est la balise COURANTE
+  terrain.17-E 234b99d6…).
+
+Stage Summary:
+- TERRAIN.17-E ACCOMPLI : le journal du run 17-D est PROPREMENT soldé —
+  les preuves (S47=0, témoin 502, badssl 34 o) sont consignées, la fuite
+  I2 est nommée, corrigée (deux octets) et verrouillée (l'oracle rejette
+  le 17-D nommément) ; le piège latent (memcpy sauvage à grande page)
+  est désamorcé avant d'avoir tué
+- LEÇON SYSTÉMIQUE : un tampon non lu n'est pas une preuve — journaliser
+  un état qu'on n'a pas lu, c'est forger ; la charte § 3 protège le
+  journal d'enregistrement, et une ligne de fuite à grande page était
+  une bombe
+- Suite M4 : LE JOURNAL + LE TÉMOIN du run 17-E (réseau stable
+  souhaité) → scellage 0.5.0 si S49 OK + témoin « 200 » complet ;
+  sinon correctif ciblé (tls-08 si tronqué) ; puis v0.6.0 axes 2-3
+  (CF2-Shamir, sceau I) selon le positionnement D86/D87 ; terrain :
+  D57 (WER) seul point ouvert

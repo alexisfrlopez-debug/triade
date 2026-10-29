@@ -126,6 +126,8 @@ VERSION_TERRAIN4 = "0.5.0-terrain.4"      # T4 tunnel M4 + kit proxy 0.5.0-dev.2
 VERSION_U64_TERRAIN4 = 0x00050104         # monotonie : génération M4 du superviseur
 VERSION_TERRAIN5 = "0.5.0-terrain.5"      # T4 diagnostic : témoin page A + ligne S47 (D99)
 VERSION_U64_TERRAIN5 = 0x00050105         # le même test, l'évidence préservée (17-D)
+VERSION_TERRAIN6 = "0.5.0-terrain.6"      # T4 honnêteté : timeout d'événements silencieux (D100)
+VERSION_U64_TERRAIN6 = 0x00050106         # le même test, la charte § 3 protégée (17-E)
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------

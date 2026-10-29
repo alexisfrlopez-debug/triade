@@ -6238,3 +6238,134 @@ RAPPORT MACHINE RÉELLE : « il ne se passe rien » au double-clic de
 
    Docs : Entrée 85, DECISIONS D99, worklog (Task ID 26). Aucune clé
    touchée (phrase D81 valable, conteneur 0323029a… inchangé).
+
+## Entrée 86 — D100 : terrain.17-E, la charte protégée (le run 17-D a livré SES preuves — « S47 exit proxy=0 » PREMIÈRE FOIS : la compensation intégrale tient sur machine réelle ; le TÉMOIN a parlé : la page A était la 502 « Passerelle inaccessible » DU PROXY — tcp-13 en échec, le réseau autour, pas le tunnel ; et le journal a révélé une fuite I2 : 40 octets de page recopiés par un chemin de diagnostic qui journalisait un tampon PÉRIMÉ — le correctif tient en DEUX octets, et le verrou d'oracle qui l'entoure rejette le 17-D nommément)
+
+**Faits rapatriés (drive /test)** : terrain_20261029_071458.txt (1 534 o —
+le journal du run 17-D) + temoin_m4a.txt (40 o — LE TÉMOIN, la preuve
+vivante du disque) + terrain_20261029_014640.txt (le 17-B, déjà soldé par
+D98) + terrain_20261029_055906.txt (le 17-C, déjà analysé par D99).
+
+**LE RUN 17-D EST MAJEUR — TROIS PREUVES** : (1) « S47 T4 exit
+proxy=0 » — PREMIÈRE journalisation du code de sortie du proxy : la
+compensation intégrale (contexte détruit, credentials libérés, socket
+fermée, chacun exactement une fois) TIENT sur machine réelle — E6 est
+MORT, le mécanisme Q9'/R2 a fonctionné exactement comme conçu ; (2) le
+témoin = « HTTP/1.1 502 Passerelle inaccessible\r\n\r\n » (40 o EXACTS)
+— la page exemple n'était PAS une page tronquée : c'est la 502 DU PROXY
+LUI-MÊME (chaîne 0x1a14 du binaire M4), c'est-à-dire « cible injoignable
+» (tls-08 E1 : tcp-13 en échec de résolution/connexion vers
+example.com). Le proxy a réagi EXACTEMENT selon sa spécification : 502
+étiquetée propre, service continu (badssl traité juste après), sortie
+propre. LE PROXY EST INNOCENT — la panne était autour de lui : à 07:14,
+neverssl.com:80 (T2 http, code curl=28 + la même 502 reçue) et
+example.com:443 (T4 A) étaient injoignables en amont, pendant que
+example.com:443 via CONNECT (T2 https, 577 o) et badssl:443 (T4 B)
+répondaient — réseau INTERMITTENT, pas coupé ; (3) « S46 octets=34 » —
+la 502 « Certificat rejete » OCTET POUR OCTET, ENCORE — le critère M4
+« échec propre sur certificat invalide » tient MÊME EN PLEINE PANNE.
+
+**LA FUITE I2 — LE FAUX PLI QUE SEUL LE JOURNAL POUVAIT NOMMER** : le
+journal contenait une ligne qui n'aurait jamais dû exister — les 40
+octets de la page A recopiés DANS le journal juste après « S44 »
+(hexdump : « HTTP/1.1 502 Passerelle inaccessible\r\n\r\n » + le CRLF du
+poseur de ligne). La charte § 3 est formelle : journal d'événements,
+JAMAIS d'octets de page — la preuve vit sur le disque (le témoin).
+MÉCANISME (notation sup-38 ligne à ligne) : quand le sondage d'événements
+A expire (15 s — le proxy n'a imprimé que « connexion entrante\r\nfin
+connexion\r\n », 35 o, jamais les 58 attendus : le tunnel n'a pas vécu),
+le chemin de diagnostic .evt_a_ko journalise (TAMPON, LU) — or le sondage
+qui n'a rien lu n'a pas non plus écrasé TAMPON/LU : ils portent ENCORE
+la page A lue juste avant. Le diagnostic qui croyait recopier « le flux
+capté » recopiait la PAGE. Reconstruction OCTET PAR OCTET du journal
+17-D : la même mécanique explique « S23 page http octets=40 » (vrai —
+la 502 lue du disque même sur code=28 : le jne saute vers le bloc de
+LECTURE, pas au-delà), le « tun » tronqué (la lecture fixe de 43 o
+coupe « tunnel » en « tun » — le « connexion entrante » http non
+consommé décale tout), le « S26 lignes=2 » (bannière + l'unique .flux de
+43 o), et le « connexion entrante\r » final de T4 (la lecture de 54 o
+mêle les 35 o résiduels de A aux 19 premiers de B).
+
+**LE PIÈGE PLUS GRAVE — NOMMÉ PAR L'ÉMULATION AVANT QU'IL NE TUE** : la
+ligne de fuite ne fait pas que souiller le journal — elle le compose
+dans le tampon journal (0x3890) AVEC LA LONGUEUR DE LA PAGE. À 40 o
+(run 17-D) : fuite cosmétique, le run survit. À LU = 640 o (une VRAIE
+page, MAX_LECTURE) : la composition déborde, ÉCRASE l'état .data (LU lu
+comme count — le memcpy sauvage reçoit 0x45004500450045, les octets de
+page devenus longueur) et emporte l'émulation (UC_ERR_WRITE_PROT, rip
+0x110E = memcpy+0xE, sonde par crochet : 178 memcpy tracés, le dernier
+au count absurde). SUR MACHINE RÉELLE, un run à page A réelle + sondage
+expiré aurait fait PLANTER le superviseur en plein T4. Le run 17-D a eu
+de la chance : sa page ne faisait que 40 octets.
+
+**SUP-38:R3 (écrite-avant-code)** : les DEUX branchements de timeout
+(.evt_a : je .evt_a_ko ; .evt_b : je .evt_b_ko) deviennent SILENCIEUX —
+branchement direct vers .req_b / .arret (miroir de sup-34, qui n'a
+JAMAIS journalisé sur timeout : rien n'a été lu, rien ne se journalise).
+La divergence memcmp seule journalise — les OCTETS LUS, une preuve
+valide (« la dernière ligne localise l'intervalle » reste vraie).
+Correctif TAILLE-NEUTRE : deux déplacements de branchement, 74 48 ->
+74 56, aux deux points (rva 0x73F5/0x74EA) — le code reste 1 645 o /
+357 ins / 403 o padding, RIEN ne bouge autour.
+
+**VERROU D'ORACLE NEUF — le cas (k) « proxy M4 muet »** (famille
+échecs) : flux T4 = bannière + arret seul (les DEUX sondages expirent) ;
+le run doit vivre jusqu'au verdict (S49B + S47 exit=0 + arret journalisé,
+la voix de A/B absente, JAMAIS de « HTTP/1.1 200 OK » dans le journal) ;
+le crash éventuel est converti en ÉchecOracle NOMMÉ (« la ligne de fuite
+déborde du tampon journal et emporte l'état .data : memcpy sauvage »).
+PREUVE DANS LES DEUX SENS : le 17-D est REJETÉ nommément ; le 17-E
+passe. L'oracle passe à 10 117 cas verts (10 114 + 3).
+
+**CHAÎNE VERTE (rebuild graine 20261029, cristallisation graine
+20261030 — 2/2 byte-stables)** : R5 round-trip 100 % (24 blocs,
+357/357 pour sup-38:R3), croisement T4 10/10, oracle structurel 1 130
+verrous, scénario 10 117 cas verts + falsification 28/28 R10 + 9
+mutations, carte génération 5 re-scellée (24 empreintes + Ed25519 +
+verrou croisé R8 OK, artefact 0.5.0-terrain.6), PE 75 264 o TAILLE
+INCHANGÉE, sha256 234b99d6590a5aeee44a9830b685fbf99e4ea6408516a2a5ed0
+7 949e1e470b80, md5 739cbd42bf37…, version terrain.6 (u64 0x00050106,
+FileVersion 0.5.0.6).
+
+**DIFFÉRENTIEL 17-D → 17-E (scripts/verif_terrain17e.py)** : DIX octets
+en HUIT plages TOUTES NOMMÉES — les deux 74 48→74 56 (rva 0x73F5 zone
+T4, vérifiés EXPLICITEMENT), la somme R10 T4 (4 o, recalculée), l'u64 de
+version (0x00050105 → 0x00050106), les champs .rsrc (0.5.0.6 /
+terrain.6 × FFI + FileVersion + ProductVersion + manifeste). Kit embarqué
+INTACT (demo 73c064fb…, proxy M4 33c91815…), motif loader D54 INTACT,
+géométrie R10 T4 inchangée (0x800), monotonie ✓. RIEN d'autre ne bouge.
+
+**LIVRAISON** : download/superviseur-terrain17e.exe + LISEZMOI-
+terrain17e.txt — poussés dans /test du Drive (md5 MATCH vérifié) ; le
+17-D mis à la corbeille du Drive (mono-génération D69 ; référence locale
+conservée : scripts/superviseur-terrain17d_ref.exe — le différentiel
+reste rejouable) ; le test s'appelle TOUJOURS terrain17 (S00/L00
+inchangés). PROTOCOLE : ÉTAPE 0 (taskkill /IM proxy.exe /F) + ÉTAPE 0
+BIS NEUVE (curl -s -o NUL https://example.com/ && echo RESEAU OK —
+vérifier que le réseau du moment joint les cibles : le run 17-D est mort
+de l'amont, pas du code) ; le run (~4 min) ; DÉPOSER dans /test : le
+journal + temoin_m4a.txt + les pages T2 si présentes. LECTURE DU VERDICT
+MISE À JOUR : S49 OK + témoin « HTTP/1.1 200… » → LA PAGE COMPLÈTE, le
+scellage 0.5.0 s'ouvre ; S49 KO + S47=0 + témoin 502 Passerelle → réseau
+amont encore coupé (réessayer — le proxy est conforme, preuves en main) ;
+S49 KO + S47=0 + témoin « 200 » tronqué → correctif relais tls-08
+(l'anomalie 13 o du 17-C, toujours ouverte).
+
+LEÇON consignée : un tampon non lu n'est pas une preuve — un chemin de
+diagnostic qui journalise un état qu'il n'a pas lu ne diagnostique rien,
+il FORGE ; la charte § 3 (jamais d'octets de page dans le journal)
+protège le journal D'ENREGISTREMENT : une ligne de fuite n'est pas une
+coquetterie de format, c'est une entrée fausse dans la preuve — et à
+grande page, une bombe (memcpy sauvage). La limite ASSUMÉE : le lecteur
+d'événements à longueur fixe se désynchronise quand le flux réel diverge
+de l'attendu — les VERDICTS restent honnêtes (bits exacts), seuls les
+diagnostics se tassent ; documenté, pas corrigé (le memcmp exact est un
+choix : « une divergence est une trouvaille, pas un bruit »).
+
+Docs : Entrée 86, DECISIONS D100, worklog (Task ID 27), README (état
+M4), LISEZMOI-terrain17e.txt. Aucune clé touchée : RIEN à remettre par
+cérémonie (phrase de contrôle D81 valable, conteneur 0323029a…
+inchangé, sentinelles intactes — proxy 0.4.0 dd12b649…, demo
+73c064fb…, hello, selftest, echo ; le superviseur du dépôt est la balise
+COURANTE terrain.17-E 234b99d6… — artefact vivant re-scellé par
+version).

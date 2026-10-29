@@ -3025,3 +3025,80 @@ l'évidence), la deuxième seule-ment de la corriger ; chaque run terrain
 doit rapporter ses propres preuves (le journal seul ne suffit pas quand le
 doute porte sur un contenu). Aucune clé touchée (phrase D81 valable,
 conteneur 0323029a… inchangé).
+
+### D100 — terrain.17-E : LA CHARTE PROTÉGÉE — le run 17-D a livré « S47 exit proxy=0 » (PREMIÈRE FOIS : la compensation intégrale tient sur machine réelle, E6 mort) et le TÉMOIN a parlé (page A = la 502 « Passerelle inaccessible » DU PROXY — tcp-13 en échec, réseau intermittent autour, proxy INNOCENT : neverssl ET example.com injoignables en amont pendant que CONNECT/badssl répondaient) ; le journal a révélé une FUITE I2 (40 o de page recopiés par .evt_a_ko journalisant TAMPON/LU PÉRIMÉS après un timeout qui n'a rien lu) et l'émulation a nommé le piège latent (à LU=640 : la ligne de fuite déborde du tampon journal, écrase l'état .data — LU lu comme count, memcpy sauvage 0x45004500450045 — et tuerait le superviseur en plein T4) ; correctif sup-38:R3 TAILLE-NEUTRE : les DEUX timeouts silencieux (je 74 48 → 74 56 vers .req_b/.arret, miroir sup-34 — rien lu, rien journalisé ; la divergence memcmp seule journalise les OCTETS LUS) ; verrou d'oracle (k) « proxy M4 muet » qui REJETTE le 17-D nommément et passe le 17-E (10 117 cas verts) ; différentiel 10 octets / 8 plages (kit INTACT, loader INTACT, monotonie 0x00050105 → 0x00050106) ; livraison superviseur-terrain17e.exe (75 264 o, sha256 234b99d6…, md5 739cbd42…, version 0.5.0-terrain.6) + LISEZMOI (ÉTAPE 0 BIS : vérifier le réseau avant le run) ; le 17-D à la corbeille (mono-génération)
+
+Le run 17-D (journal terrain_20261029_071458.txt + témoin 40 o, tous
+deux déposés dans /test) ferme la question laissée ouverte par D99 :
+
+1. **S47 T4 exit proxy=0** — le code de sortie du proxy journalisé pour
+   la première fois : la compensation intégrale de tls-08 (Q3 : contexte
+   détruit, credentials libérés, socket serveur fermée — exactement une
+   fois chacun, dans cet ordre) TIENT sur machine réelle. L'hypothèse E6
+   (handle SSPI survivant tuant la sortie) est morte : exit 0 constaté.
+2. **Le témoin répond à la question du 17-C** : la page A du run 17-D
+   n'était pas une page tronquée mais la 502 du proxy lui-même (« cible
+   injoignable », tls-08 E1) : tcp-13 n'a pas joint example.com à 07:14.
+   Le proxy a réagi selon sa spécification (502 propre, service continu,
+   badssl traité juste après, sortie propre) — la panne était le réseau
+   de la machine (neverssl.com ET example.com injoignables en amont,
+   curl http code=28 + même 502 reçue ; pendant que example.com via
+   CONNECT et badssl répondaient). L'anomalie « 13 o » du 17-C (tunnel
+   vécu, relais tronqué) reste ouverte — différente de celle-ci.
+3. **La fuite I2** : le journal du 17-D contenait les 40 o de la page
+   (charte § 3 : jamais d'octets de page dans le journal). Mécanisme :
+   .evt_a_ko journalise (TAMPON, LU) ; après un timeout, le sondage
+   n'a rien lu et TAMPON/LU portent ENCORE la page A. La même mécanique
+   explique chaque ligne « tassée » du journal (reconstruction octet par
+   octet : « tun » = la lecture fixe de 43 o coupant « tunnel », le
+   « connexion entrante\r » = la lecture de 54 o mêlant résidus de A).
+4. **Le piège latent, nommé avant qu'il ne tue** : à LU = 640 (une vraie
+   page), la ligne de fuite compose au-delà du tampon journal, écrase
+   l'état .data (LU relu comme count : memcpy sauvage) et fait planter
+   le superviseur — prouvé en émulation par crochet (le dernier memcpy
+   au count 0x45004500450045, les octets de page devenus longueur).
+
+**Le correctif (sup-38:R3, écrit-avant-code)** : les deux branchements
+de timeout deviennent SILENCIEUX — branchement direct (je 74 48 → 74 56,
+rva 0x73F5 vers .req_b et 0x74EA vers .arret), miroir de sup-34 qui n'a
+jamais journalisé sur timeout. La divergence memcmp seule journalise,
+les octets LUS — preuve valide. Taille-neutre : 1 645 o / 357 ins /
+403 o padding inchangés.
+
+**Le verrou** : cas d'oracle (k) « proxy M4 muet » — le 17-D est rejeté
+nommément (« la ligne de fuite déborde du tampon journal et emporte
+l'état .data : memcpy sauvage »), le 17-E passe. Oracle 10 117 cas
+verts (+3), falsification 28/28 + 9 mutations, R5 100 % (357/357),
+structurel 1 130 verrous, croisement T4 10/10, carte génération 5
+re-scellée (24 + Ed25519 + R8), cristallisation 2/2 byte-stables
+(graines 20261029/20261030, sha256 234b99d6… inchangé).
+
+**Différentiel 17-D → 17-E (verif_terrain17e.py)** : 10 octets en 8
+plages nommées — les deux 74 48→74 56, la somme R10 T4 (4 o), l'u64 de
+version (0x00050105 → 0x00050106), les champs .rsrc (0.5.0.6/terrain.6).
+Kit INTACT (demo 73c064fb…, proxy 33c91815…), loader D54 INTACT,
+géométrie R10 T4 inchangée (0x800). RIEN d'autre ne bouge.
+
+**Livraison** : superviseur-terrain17e.exe (75 264 o, md5 739cbd42…,
+sha256 234b99d6…, version 0.5.0-terrain.6 / u64 0x00050106 /
+FileVersion 0.5.0.6) + LISEZMOI-terrain17e.txt dans /test du Drive
+(md5 MATCH) ; le 17-D à la corbeille (mono-génération D69 ; référence
+locale scripts/superviseur-terrain17d_ref.exe pour rejouer le
+différentiel) ; sentinelle dépôt = 234b99d6…. PROTOCOLE : ÉTAPE 0
+(taskkill) + ÉTAPE 0 BIS (curl -s -o NUL https://example.com/ —
+vérifier l'amont AVANT le run) ; déposer journal + témoin + pages T2.
+
+**Lecture du verdict (mise à jour)** : S49 OK + témoin « HTTP/1.1
+200… » → page complète, scellage 0.5.0 ouvert ; S49 KO + S47=0 + témoin
+502 Passerelle → réseau amont coupé (réessayer) ; S49 KO + S47=0 +
+témoin « 200 » tronqué → correctif relais tls-08 (l'anomalie 13 o du
+17-C). Le verdict final reste « ECHEC » tant que T1/D57 est KO —
+l'honnêteté du superviseur.
+
+LEÇON : un tampon non lu n'est pas une preuve — journaliser un état
+qu'on n'a pas lu, c'est forger ; la charte § 3 protège le journal
+D'ENREGISTREMENT, et à grande page la ligne de fuite était une bombe.
+Limite assumée : le lecteur d'événements à longueur fixe se
+désynchronise quand le flux diverge — verdicts honnêtes, diagnostics
+tassés (le memcmp exact est un choix). Aucune clé touchée (phrase D81
+valable, conteneur 0323029a… inchangé).
