@@ -287,6 +287,8 @@ class Emulateur:
         self.chemin_journal: str | None = None
         # tuyaux + processus
         self.flux_proxy = b""                   # octets restants au tuyau stdout
+        self.flux_proxies: list[bytes] = []     # file : un flux console PAR proxy
+                                                # mode 1 (T2 puis T4, terrain.17)
         self.pipe_visible = 0                   # octets révélés (preuve du sondage)
         self.pipe_sondages = 0
         self.stdin_proxy = b""                  # ce que nous écrivons au stdin
@@ -478,9 +480,11 @@ class Emulateur:
                 em.fichiers.pop(chemin, None)
                 uc_.reg_write(UC_X86_REG_RAX, 1 if present else 0)
             elif nom == "CreatePipe":
-                # paires dans l'ordre : 1re = stdin (IN), 2e = stdout (OUT)
+                # paires dans l'ordre : IMPAIRE = stdin (IN), PAIRE = stdout
+                # (OUT) — terrain.17 : DEUX proxies MODE 1 (T2 puis T4), le
+                # compteur tourne EN MODULO : chaque lancement refait SA paire
                 em._pipes_crees += 1
-                if em._pipes_crees == 1:
+                if em._pipes_crees % 2 == 1:
                     uc_.mem_write(rcx, struct.pack("<Q", PIPE_IN_RD))
                     uc_.mem_write(rdx, struct.pack("<Q", PIPE_IN_WR))
                 else:
@@ -499,6 +503,12 @@ class Emulateur:
                 em.processus.append({"cmdline": cmdline, "herite": herite,
                                      "cwd": cwd, "si_flags": si_flags})
                 em.seq("spawn", cmdline[:40])
+                # terrain.17 : chaque proxy MODE 1 naît avec SA voix — la file
+                # sert le flux suivant (T2 puis T4 : deux processus distincts,
+                # deux consoles distinctes, un seul couple de handles global)
+                if cmdline.startswith("proxy.exe") and herite and em.flux_proxies:
+                    em.flux_proxy = em.flux_proxies.pop(0)
+                    em.pipe_visible = 0
                 if any(cmdline.startswith(p) for p in em.echec_createprocess):
                     uc_.reg_write(UC_X86_REG_RAX, 0)
                     retour(uc_)
@@ -735,6 +745,12 @@ EVT_HTTP = S("FIX_EVT_HTTP")                       # 35 octets
 EVT_HTTPS = S("FIX_EVT_HTTPS")                     # 43 octets
 ARRET = S("FIX_ARRET")                             # 7 octets
 PAGE_HTTP, PAGE_HTTPS = b"<html>" + b"A" * 1262 + b"</html>", b"<html>" + b"B" * 1250 + b"</html>"
+# --- T4 (terrain.17) : la voix du proxy M4 + les pages de la passerelle ---------
+EVT_M4A = S("FIX_EVT_M4A")                         # 58 octets (tunnel établi)
+EVT_M4B = S("FIX_EVT_M4B")                         # 54 octets (certificat nommé)
+PAGE_M4A = (b"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n"
+            b"Content-Length: 1256\r\n\r\n<html>" + b"E" * 1250 + b"</html>")
+PAGE_M4B = S("FIX_502_M4")                         # 34 octets — LA 502 étiquetée
 
 # --- T3 : jetons et réponses réalistes (fausses valeurs de test) ----------------
 JETONS = (b"client-id-test.apps.googleusercontent.com\x00"
@@ -801,6 +817,10 @@ CMD_SESSION_ATTENDU = ("curl.exe -s --http1.1 -m 30      -o NUL -D terrain_sessi
 CMD_PUT_ATTENDU = ("curl.exe -s --fail -m 120 -o NUL -X PUT "
                    "--data-binary @\"" + CHEMIN_JOURNAL.decode() + "\""
                    + " " * 7 + URL_SESSION.decode())   # D70 : chemin QUOTÉ
+# T4 (terrain.17) : les cmdlines powershell telles que le plan les pose —
+# chemin RELATIF (cwd forcé D36 : aucun guillemet, aucun espace à craindre)
+CMD_PS_M4A_ATTENDU = _cmd("CMD_PS_M4A")
+CMD_PS_M4B_ATTENDU = _cmd("CMD_PS_M4B")
 
 
 def variante_publique(exe: bytes) -> bytes:
@@ -853,6 +873,14 @@ def lignes_journal_or(demo17: list[bytes], livraison: bool = True) -> list[bytes
         *[l for l in S("FIX_EVT_HTTPS").split(b"\r\n") if l],
         S("FIX_ARRET").rstrip(b"\r\n"),
         S("S26") + b"7", S("S27A"), S("S28A"),
+        # T4 — tunnel TLS M4 (terrain.17 : la voix du tunnel dans le constat)
+        S("S40"), S("S41A"), S("S42A"), BANNIERE.rstrip(b"\r\n"),
+        S("S43A") + b"0", S("S44A") + str(min(len(PAGE_M4A), L.MAX_LECTURE)).encode(),
+        *[l for l in EVT_M4A.split(b"\r\n") if l],
+        S("S45A") + b"0", S("S46A") + b"34",
+        *[l for l in EVT_M4B.split(b"\r\n") if l],
+        S("FIX_ARRET").rstrip(b"\r\n"),
+        S("S49A"),
     ]
     if livraison:
         lignes += [S("S30"), S("S32"), S("S33A"), S("S34A"), S("S35A"), S("S36A")]
@@ -868,7 +896,13 @@ def preparer_scenario(em: Emulateur, demo17: list[bytes],
     de la variante livraison — sup-37 les pose lui-même pendant le run."""
     global JOURNAL_DEMO_17
     em.fichiers["C:\\sup\\demo_journal.txt"] = b"".join(demo17)
-    em.flux_proxy = BANNIERE + EVT_HTTP + EVT_HTTPS + ARRET
+    # terrain.17 : DEUX voix de proxy (T2 l'ancienne, T4 celle du tunnel M4)
+    # — la FILE est servie PAR LE SHIM au lancement de CHAQUE proxy MODE 1 :
+    # jamais de pré-consommation (le premier jet double-popait : T2 lisait
+    # la voix de T4 et T4 naissait muet)
+    em.flux_proxies = [BANNIERE + EVT_HTTP + EVT_HTTPS + ARRET,
+                       BANNIERE + EVT_M4A + EVT_M4B + ARRET]
+    em.flux_proxy = b""
     em.pipe_sondages = 0
     # fenêtre démo trouvée au 3e sondage (V2 sup-33) ; jeton/session servis par
     # les curls scriptés via fichiers de sortie
@@ -876,6 +910,8 @@ def preparer_scenario(em: Emulateur, demo17: list[bytes],
     em.scripter_sorties([("demo.exe", 0), ("proxy.exe", 0),
                          (_cmd("CMD_CURL_HTTP"), code_curl_http),
                          (_cmd("CMD_CURL_HTTPS"), 0),
+                         (CMD_PS_M4A_ATTENDU, 0),
+                         (CMD_PS_M4B_ATTENDU, 0),
                          (CMD_JETON_ATTENDU, 0 if reponse_oauth is not None else 22),
                          (CMD_SESSION_ATTENDU, 0 if reponse_oauth is not None else 22),
                          (CMD_PUT_ATTENDU, 0)])
@@ -883,6 +919,10 @@ def preparer_scenario(em: Emulateur, demo17: list[bytes],
     if code_curl_http == 0:
         em.fichiers["C:\\sup\\terrain_page_http.txt"] = PAGE_HTTP
     em.fichiers["C:\\sup\\terrain_page_https.txt"] = PAGE_HTTPS
+    # terrain.17 : les effets de bord des scripts powershell T4 (le relais
+    # tls-08 écrit la page déchiffrée / la 502 étiquetée — 34 o EXACTS)
+    em.fichiers["C:\\sup\\page_m4a.txt"] = PAGE_M4A
+    em.fichiers["C:\\sup\\page_m4b.txt"] = PAGE_M4B
     if reponse_oauth is not None:
         em.fichiers["C:\\sup\\terrain_jeton.json"] = reponse_oauth
         em.fichiers["C:\\sup\\terrain_session.txt"] = REPONSE_SESSION
@@ -1149,9 +1189,10 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
                       "sup-09 nominal public")
     cmdlines = [p["cmdline"] for p in em.processus]
     if cmdlines != ["demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
-                    _cmd("CMD_CURL_HTTPS")]:
+                    _cmd("CMD_CURL_HTTPS"), "proxy.exe",
+                    CMD_PS_M4A_ATTENDU, CMD_PS_M4B_ATTENDU]:
         raise EchecOracle(f"sup-09 public : lancements {[c[:20] for c in cmdlines]} "
-                          f"!= 4 attendus (T3 sauté, I6)")
+                          f"!= 7 attendus (T3 sauté, I6 ; T4 : proxy + 2 scripts, D96)")
     # kit : les artefacts posés SONT les octets embarqués (V2), puis retirés
     blob_demo = exe[L.BLOB_FILE + 0x10: L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO]
     blob_proxy = exe[L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO:
@@ -1166,10 +1207,11 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
                           "le slot vide ne doit jamais écrire l'annexe)")
     supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
     for nom in ("demo.exe", "proxy.exe", "terrain_jetons.bin",
-                "terrain_page_http.txt", "terrain_page_https.txt"):
+                "terrain_page_http.txt", "terrain_page_https.txt",
+                "terrain_m4.ps1", "page_m4a.txt", "page_m4b.txt"):
         if nom not in supprimees:
-            raise EchecOracle(f"nettoyage kit : {nom} non supprimé (Q6 sup-37 — "
-                              f"le dossier ne garde que le journal)")
+            raise EchecOracle(f"nettoyage kit : {nom} non supprimé (Q6 sup-37/Q11 "
+                              f"sup-38 — le dossier ne garde que le journal)")
     if "C:\\sup\\demo.exe" in em.fichiers or "C:\\sup\\proxy.exe" in em.fichiers:
         raise EchecOracle("nettoyage kit : un artefact survit au run (Q6)")
     total += 7
@@ -1189,18 +1231,21 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("sup-37 : annexe posée != annexe du slot (V2 — la "
                           "variante livraison porte ses jetons)")
 
-    # I2/I4 sup-09 : ordre ET composition exacte des 7 lancements
+    # I2/I4 sup-09 : ordre ET composition exacte des 10 lancements
+    # (terrain.17 : T4 entre T2 et T3 — I2 R3 : le proxy de T4 ne naît
+    # qu'après la MORT de celui de T2, le port 25000 est partagé)
     cmdlines = [p["cmdline"] for p in em.processus]
     attendus = ["demo.exe", "proxy.exe", _cmd("CMD_CURL_HTTP"),
-                _cmd("CMD_CURL_HTTPS"), CMD_JETON_ATTENDU,
-                CMD_SESSION_ATTENDU, CMD_PUT_ATTENDU]
+                _cmd("CMD_CURL_HTTPS"), "proxy.exe",
+                CMD_PS_M4A_ATTENDU, CMD_PS_M4B_ATTENDU,
+                CMD_JETON_ATTENDU, CMD_SESSION_ATTENDU, CMD_PUT_ATTENDU]
     if cmdlines != attendus:
         for i, (obtenu, attendu) in enumerate(zip(cmdlines, attendus)):
             if obtenu != attendu:
                 raise EchecOracle(f"sup-09 : lancement #{i + 1} divergent :\n"
                                   f"  obtenu  {obtenu!r}\n  attendu {attendu!r} "
-                              f"(I2 ordre T1->T2->T3 + composition)")
-        raise EchecOracle(f"sup-09 : {len(cmdlines)} lancements != 7 : "
+                              f"(I2 ordre T1->T2->T4->T3 + composition)")
+        raise EchecOracle(f"sup-09 : {len(cmdlines)} lancements != 10 : "
                           f"{[c[:30] for c in cmdlines]}")
 
     # sup-31 V2 : héritage et cwd par lancement (D36 : cwd forcé)
@@ -1222,16 +1267,39 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
             raise EchecOracle("sup-34 : curl lancé AVEC tuyaux — .curl devait "
                               "poser edx = 0 (défaut mode corrigé)")
 
-    # sup-34 : quit écrit sur stdin AVANT l'attente du proxy (V5)
-    if em.stdin_proxy != b"quit\r\n":
-        raise EchecOracle(f"sup-34 : stdin du proxy {em.stdin_proxy!r} != quit (Q6)")
-    h_proxy = next(p["hproc"] for p in em.processus
-                   if p["cmdline"].startswith("proxy.exe"))
+    # sup-34/sup-38 : quit écrit sur stdin AVANT l'attente du proxy (V5) —
+    # terrain.17 : DEUX proxies, DEUX quits (T2 puis T4, un couple de handles
+    # global réutilisé : la voix de chacun part avant sa mort)
+    if em.stdin_proxy != b"quit\r\nquit\r\n":
+        raise EchecOracle(f"stdin des proxies {em.stdin_proxy!r} != 2 quits (Q6 "
+                          f"sup-34 + Q9 sup-38)")
+    h_proxies = [p["hproc"] for p in em.processus
+                 if p["cmdline"].startswith("proxy.exe")]
+    if len(h_proxies) != 2:
+        raise EchecOracle(f"{len(h_proxies)} proxies lancés != 2 (T2 + T4)")
     seq_stdin = [i for i, (_n, e, _d) in enumerate(em.sequence) if e == "stdin"]
     seq_attente_proxy = [i for i, (_n, e, d) in enumerate(em.sequence)
-                         if e == "attente" and d == hex(h_proxy)]
-    if not seq_stdin or not seq_attente_proxy or seq_stdin[0] > seq_attente_proxy[0]:
-        raise EchecOracle("sup-34 : quit non écrit avant l'attente du proxy (V5)")
+                         if e == "attente" and d in [hex(h) for h in h_proxies]]
+    if len(seq_stdin) < 2 or not seq_attente_proxy or seq_stdin[0] > seq_attente_proxy[0]:
+        raise EchecOracle("quit non écrit avant l'attente du proxy (V5)")
+
+    # sup-38 V2 : le script client posé == la fixture du plan (le client est
+    # une DONNÉE — I5 : jamais un octet de code superviseur)
+    ps1_ecrit = em.fichiers_ecrits.get("C:\\sup\\terrain_m4.ps1")
+    if ps1_ecrit != S("FIX_PS1"):
+        raise EchecOracle(f"sup-38 : terrain_m4.ps1 posé != fixture FIX_PS1 "
+                          f"({len(ps1_ecrit or b'')} o != {len(S('FIX_PS1'))} o, I5/Q1)")
+    for p in em.processus:
+        if p["cmdline"].startswith("powershell.exe"):
+            if p["herite"] != 0 or p["si_flags"] & 0x100:
+                raise EchecOracle("sup-38 : powershell lancé avec tuyaux/héritage "
+                                  "(I6 — le client ne voit NI les tuyaux NI le journal)")
+    # T4 : les DEUX requêtes jouées dans l'ordre A puis B (I1 — la fin de A
+    # précède la naissance de B : l'ordre séquentiel des événements est couvert)
+    seq_ps = [i for i, (_n, e, d) in enumerate(em.sequence)
+              if e == "spawn" and d.startswith("powershell.exe")]
+    if len(seq_ps) != 2 or seq_ps[0] > seq_ps[1]:
+        raise EchecOracle("sup-38 : les requêtes A/B ne partent pas dans l'ordre (I1)")
 
     # sup-35 : requêtes composées octet par octet (V2 — le miroir d'écriture
     # survit au nettoyage qui supprime les 4 temporaires, D68)
@@ -1247,10 +1315,12 @@ def test_scenario_nominal(exe: bytes, demo17: list[bytes]):
         raise EchecOracle(f"sup-35 : PUT {put and put['cmdline']!r} != "
                           f"--data-binary @<BUF_CHEMIN> <URL session> (Q7/I2)")
 
-    # nettoyage : 2 pages (T2) + 4 temporaires (T3 — D68 : terrain_jeton.json
-    # SURVIT désormais, la preuve doit rester sur disque) + 3 kit (sup-37)
+    # nettoyage : 2 pages (T2) + script + 2 pages (T4) + 4 temporaires (T3 —
+    # D68 : terrain_jeton.json SURVIT désormais, la preuve doit rester sur
+    # disque) + 3 kit (sup-37)
     supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
     for nom in ("terrain_page_http.txt", "terrain_page_https.txt",
+                "terrain_m4.ps1", "page_m4a.txt", "page_m4b.txt",
                 "terrain_req.txt", "terrain_meta.json",
                 "terrain_session.txt", "terrain_rep.json",
                 "demo.exe", "proxy.exe", "terrain_jetons.bin"):
@@ -1425,12 +1495,60 @@ def test_echecs(exe: bytes, demo17: list[bytes]):
         raise EchecOracle("écart relecture : T2 a été lancé sur un artefact écarté")
     if S("S16A") + b"\r\n" not in brut or S("S36A") + b"\r\n" not in brut:
         raise EchecOracle("écart relecture : T1/T3 devaient vivre leur verdict")
+    if S("S41A") + b"\r\n" in brut:
+        raise EchecOracle("écart relecture : T4 a été lancé sur un artefact écarté "
+                          "(LE MÊME bit que T2 — S05B dit « T2 et T4 sautent »)")
+    total += 3
+
+    # (i) T4 page B TRONQUÉE (33 o — un octet volé à la 502 étiquetée) ->
+    #     S49B : la réponse étiquetée est un contrat D'EXACTITUDE (E5 sup-38)
+    em = Emulateur(variante_livraison(exe))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.fichiers["C:\\sup\\page_m4b.txt"] = PAGE_M4B[:-1]
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 0:
+        raise EchecOracle("502 tronquée : verdict final != 0 (E5 sup-38 — tout "
+                          "autre octet que les 34 exacts est une falsification)")
+    brut = b"".join(em.journal_fichier)
+    if S("S49B") + b"\r\n" not in brut:
+        raise EchecOracle("502 tronquée : S49B absent (E5 — le verdict T4 KO)")
+    if S("S46A") + b"33" + b"\r\n" not in brut:
+        raise EchecOracle("502 tronquée : S46A octets=33 absent (le comptage "
+                          "nomme le vol — leçon T2 : la dernière ligne localise)")
+    if S("S36A") + b"\r\n" not in brut:
+        raise EchecOracle("502 tronquée : T3 devait vivre son verdict (indépendance)")
+    total += 3
+
+    # (j) T4 événements B muets (le certificat jamais nommé en console) ->
+    #     S49B : l'événement manquant nomme l'étage (E4 sup-38)
+    em = Emulateur(variante_livraison(exe))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.flux_proxies = [BANNIERE + EVT_HTTP + EVT_HTTPS + ARRET,
+                       BANNIERE + EVT_M4A + ARRET]      # le B n'existe pas
+    em.flux_proxy = b""
+    r = em.appeler(RVA_SUP["sup-09"])
+    if r != 0:
+        raise EchecOracle("événements B muets : verdict final != 0 (E4 sup-38)")
+    brut = b"".join(em.journal_fichier)
+    if S("S49B") + b"\r\n" not in brut:
+        raise EchecOracle("événements B muets : S49B absent")
+    if b"tunnel chiffre etabli" not in brut:
+        raise EchecOracle("événements B muets : la voix de A devait vivre "
+                          "(l'événement manquant nomme l'étage : bannière -> "
+                          "poignée -> relais, E4)")
+    if b"certificat rejete" in brut:
+        raise EchecOracle("événements B muets : la ligne B servie malgré un flux "
+                          "qui ne la porte pas (le sondage a deviné ?)")
     total += 3
     return total
 
 
 def test_falsification(exe: bytes, demo17: list[bytes]):
-    """Famille 7 : porte R10 sur tout + 5 mutations ciblées attrapées."""
+    """Famille 7 : porte R10 sur tout + mutations ciblées attrapées (M1-M7)."""
     total = 0
     detectees = 0
     cibles = _blocs_terrain() + [("zone-sup-1", L.ZONE_DATA_SUP[0]),
@@ -1525,9 +1643,10 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
             raise
     total += 1
 
-    # M4 : nettoyage 4 -> 3 dans sup-35 (V5, forme terrain.14+ — D68 a fait
-    # passer la constante de 5 à 4 : req/meta/session/rep supprimés,
-    # terrain_jeton.json SURVIT) — un temporaire supplémentaire survit
+    # M4 : nettoyage 4 -> 3 dans sup-35 (V5, forme D96 — la marche des
+    # temporaires compte QUATRE noms contigus : req/meta/session/rep ;
+    # terrain_jeton.json vit HORS du chemin et SURVIT, D68) — la constante
+    # corrompue laisse un temporaire vivant : le verrou zéro résidu parle
     mutant = muter(bytes.fromhex("41bd04000000"), bytes.fromhex("41bd03000000"),
                    L.ZONE_T3, "nettoyage 4")
     em = Emulateur(mutant)
@@ -1541,6 +1660,40 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
                           "constante corrompue à 3 — le verrou zéro résidu est muet")
     total += 1
 
+    # M6 (terrain.17) : ordre T2/T4 inversé dans sup-09 (V5, I2 R3) — le
+    # proxy de T4 naîtrait AVANT la mort de celui de T2 (port 25000 partagé)
+    # et le journal téléversé perdrait la voix du tunnel ; le verrou d'ordre
+    # de l'oracle doit s'y opposer (le flux servi au mauvais proxy fait
+    # échouer les memcmp : T4 lirait la voix de T2)
+    base = _fichier_rva(L.ZONE_SCENARIO[0])
+    tranche = exe[base:base + 0x200]
+    appels = []
+    for i in range(len(tranche) - 4):
+        if tranche[i] == 0xE8:
+            disp = struct.unpack_from("<i", tranche, i + 1)[0]
+            cible = L.ZONE_SCENARIO[0] + i + 5 + disp
+            appels.append((i, cible))
+    t2 = next(a for a in appels if a[1] == RVA_SUP["sup-34"])
+    t4 = next(a for a in appels if a[1] == RVA_SUP["sup-38"])
+    mutant = bytearray(exe)
+    struct.pack_into("<i", mutant, base + t2[0] + 1,
+                     RVA_SUP["sup-38"] - (L.ZONE_SCENARIO[0] + t2[0] + 5))
+    struct.pack_into("<i", mutant, base + t4[0] + 1,
+                     RVA_SUP["sup-34"] - (L.ZONE_SCENARIO[0] + t4[0] + 5))
+    em = Emulateur(bytes(mutant))
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    r = em.appeler(RVA_SUP["sup-09"])
+    try:
+        _comparer_journal(em, lignes_journal_or(demo17), "ordre T2/T4")
+        raise EchecOracle("falsification ordre T2/T4 : le journal d'or a accepté "
+                          "T4 avant T2 — le verrou d'ordre ne garde rien (I2 R3)")
+    except EchecOracle as exc:
+        if "ordre T2/T4" not in str(exc):
+            raise
+    total += 1
+
     # M5 : quit raccourci (6 -> 0) dans sup-34 (V5) — rien sur stdin
     mutant = muter(bytes.fromhex("41b806000000"), bytes.fromhex("41b800000000"),
                    L.ZONE_T2, "quit 6")
@@ -1552,6 +1705,23 @@ def test_falsification(exe: bytes, demo17: list[bytes]):
     if em.stdin_proxy:
         raise EchecOracle("falsification quit : stdin non vide malgré la longueur "
                           "corrompue — « quit écrit avant arret » est muet")
+    total += 1
+
+    # M7 (terrain.17) : nettoyage T4 amputé — la LONGUEUR du premier nom
+    # (page_m4a.txt, 13 -> 12 : le NUL n'est plus porté, le chemin composé
+    # dérive) : la page survit au run — le verrou zéro résidu doit parler
+    mutant = muter(bytes.fromhex("ba0200000041b80d000000"),
+                   bytes.fromhex("ba0300000041b80d000000"),
+                   L.ZONE_T4, "op suppression page_m4a")
+    em = Emulateur(mutant)
+    em.installer_shims()
+    em.uc.mem_write(IMAGE + L.HWND_JOURNAL, struct.pack("<Q", FAKE_HWND_EDIT))
+    preparer_scenario(em, demo17)
+    em.appeler(RVA_SUP["sup-38"])
+    supprimees = [s.rsplit("\\", 1)[-1] for s in em.suppressions]
+    if len([s for s in supprimees if s.startswith(("page_m4", "terrain_m4"))]) >= 3:
+        raise EchecOracle("falsification nettoyage T4 : 3 suppressions malgré le "
+                          "site corrompu — le verrou zéro résidu est muet (Q11)")
     total += 1
     return total, detectees, len(cibles)
 
@@ -1571,8 +1741,8 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     r = em.appeler(RVA_SUP["win-06"])
     if r != 4:
         raise EchecOracle(f"win-06 : eax = {r} != 4 (porte + 4 vecteurs attendus)")
-    verdicts["d40006"] = {"cas": 5, "detail": "porte R10 verte (table 27 entrées + terminateur, "
-                                               "4 zones + blob, D49) + 4/4 libc"}
+    verdicts["d40006"] = {"cas": 5, "detail": "porte R10 verte (table 28 entrées + terminateur, "
+                                               "4 zones + blob, D49/D96) + 4/4 libc"}
     total += 5
     mutant = bytearray(exe)
     struct.pack_into("<Q", mutant, L.RDATA_FILE + (L.R_VERSION - L.RDATA_RVA), 0x00020000)
@@ -1606,8 +1776,9 @@ def executer(exe: bytes, graine: int = 1) -> dict:
 
     n = test_scenario_nominal(exe, JOURNAL_DEMO_17)
     verdicts["f60009"] = {"cas": n, "detail": "scénario COMPLET x2 variantes (publique "
-                                               "4 lancements + livraison 7) : journal d'or, cwd forcé, "
-                                               "quit<attente, requêtes exactes, kit posé/relu/retiré"}
+                                               "7 lancements + livraison 10) : journal d'or, ordre "
+                                               "T1->T2->T4->T3, cwd forcé, quit<attente x2, requêtes "
+                                               "exactes, kit posé/relu/retiré"}
     verdicts["f60031"] = {"cas": 3, "detail": "mode 0 muet / mode 1 tuyaux+héritage, "
                                                "cwd répertoire exe (D36), zéro fuite"}
     verdicts["f60033"] = {"cas": 3, "detail": "T1 vert : fenêtre au 3e sondage, clic "
@@ -1616,9 +1787,14 @@ def executer(exe: bytes, graine: int = 1) -> dict:
                                                "memcmp exacts, curl sans tuyaux, flux embarqué"}
     verdicts["f60035"] = {"cas": 3, "detail": "T3 vert : OAuth/métadonnées/session/PUT "
                                                "composés exacts, 5 suppressions, zéro secret"}
-    verdicts["f60037"] = {"cas": 6, "detail": "kit embarqué : demo/proxy posés puis "
+    verdicts["f60037"] = {"cas": 6, "detail": "kit embarqué : demo/proxy M4 posés puis "
                                                "relus octet conformes, annexe selon variante, "
                                                "échec écriture + écart relecture, nettoyage"}
+    verdicts["f60038"] = {"cas": 9, "detail": "T4 tunnel M4 : script posé == fixture (I5), "
+                                               "2 requêtes powershell ordonnées sans tuyaux (I6), "
+                                               "502 étiquetée 34 o EXACTES + voix du proxy "
+                                               "(58/54 o), quit, nettoyage x3, dégradés 33 o / "
+                                               "événements muets, ordre T2/T4 verrouillé"}
     total += n + 6
 
     n = test_echecs(exe, JOURNAL_DEMO_17)
@@ -1628,8 +1804,9 @@ def executer(exe: bytes, graine: int = 1) -> dict:
     total += n
 
     n, detectees, nb_cibles = test_falsification(exe, JOURNAL_DEMO_17)
+    nb_mutations = n - detectees          # les mutations ciblées au-delà de la porte
     falsification = f"{detectees}/{nb_cibles} cibles R10 détectées (octets 11/23) + " \
-                    f"5 mutations ciblées attrapées"
+                    f"{nb_mutations} mutations ciblées attrapées"
     verdicts["falsification"] = {"cas": n, "detail": falsification}
     total += n
 

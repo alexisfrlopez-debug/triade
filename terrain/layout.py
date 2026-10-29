@@ -87,8 +87,10 @@ FILE_ALIGN, SECT_ALIGN = L2.FILE_ALIGN, L2.SECT_ALIGN
 TEXT_VSIZE = L2.TEXT_VSIZE                # 0x1000 (io + libc + coquille)
 RDATA_VSIZE = L2.RDATA_VSIZE              # 0x1000 (structures + chaînes scellées)
 DATA_VSIZE = L2.DATA_VSIZE                # 0x1000 (0x3000-0x3FFF, brut dès 0x3800)
-TEXT2_VSIZE = 0x2E00                      # 0x4000-0x6DFF (tcp-06 + zones données + sup + kit)
-SIZE_OF_IMAGE = 0x11000                  # aligné SectionAlignment (.blob compris)
+TEXT2_VSIZE = 0x4000                      # 0x4000-0x7FFF (tcp-06 + zones données + sup + kit
+                                          #  + T4 @0x7200, terrain.17 — la section s'étend
+                                          #  jusqu'à la borne alignée AVANT .rsrc @0x8000)
+SIZE_OF_IMAGE = 0x14000                  # aligné SectionAlignment (.blob compris, terrain.17)
 # Offsets fichier TERRAIN.2 : six sections -> 568 o d'en-têtes, la première
 # section brute recule à 0x400 (les RVA ne bougent PAS — seuls les plans
 # M2/démo gardent les anciennes valeurs scellées).
@@ -98,13 +100,18 @@ DATA_RAW = L2.DATA_RAW                    # 0xA00 (données committées dès 0x3
 
 # --- Sections .rsrc et .blob (D49 — kit embarqué + habillage ressources) ----
 
-RSRC_RVA = 0x7000                         # VERSIONINFO + manifeste (RT_MANIFEST)
+# terrain.17 : T4 @0x7200 pousse .rsrc hors de .text2 — TOUTE VA de section
+# doit rester ALIGNÉE sur SectionAlignment (0x1000) : le premier jet la posait
+# à 0x7800, pefile ajustait à 0x7000 et le répertoire des ressources devenait
+# illisible (le chargeur Windows exigerait la même discipline — attrapé par
+# pefile AVANT l'écriture, fail-closed du build). .rsrc -> 0x8000, .blob -> 0x9000.
+RSRC_RVA = 0x8000                         # VERSIONINFO + manifeste (RT_MANIFEST)
 RSRC_VSIZE = 0x800                       # arbre ressources + VS_VERSIONINFO + XML
-RSRC_FILE = 0x5C00
-BLOB_RVA = 0x8000                         # kit embarqué : lecture seule
-BLOB_VSIZE = 0x8D10                      # en-tête + demo + proxy + slot annexe
-BLOB_FILE = 0x6400
-TAILLE_FICHIER = 0xF200                   # 0x6400 + 0x8E00 (blob arrondi 0x200)
+RSRC_FILE = 0x6E00                        # terrain.17 : suit .text2 crue allongée (0x2E00+0x4000)
+BLOB_RVA = 0x9000                         # kit embarqué : lecture seule
+BLOB_VSIZE = 0xAF10                      # en-tête + demo + proxy M4 (28 160 o) + slot annexe
+BLOB_FILE = 0x7600                        # terrain.17 : 0x6E00 + 0x800 (.rsrc)
+TAILLE_FICHIER = 0x12600                  # 0x7600 + 0xB000 (blob arrondi 0x200)
 
 DLL_CHARACTERISTICS = L2.DLL_CHARACTERISTICS   # DYNAMICBASE | HEVA | NX
 SUBSYSTEM_GUI = 2                         # WINDOWS_GUI
@@ -115,6 +122,8 @@ VERSION_TERRAIN2 = "0.5.0-terrain.2"      # kit embarqué (D49) : 1 seul exe
 VERSION_U64_TERRAIN2 = 0x00050102
 VERSION_TERRAIN3 = "0.5.0-terrain.3"      # correction chargeur (D50)
 VERSION_U64_TERRAIN3 = 0x00050103
+VERSION_TERRAIN4 = "0.5.0-terrain.4"      # T4 tunnel M4 + kit proxy 0.5.0-dev.2 (D96)
+VERSION_U64_TERRAIN4 = 0x00050104         # monotonie : génération M4 du superviseur
 VERSION_U64_MIN = 0x00050000              # plancher de la lignée terrain
 
 # --- En-têtes PE : règle du chargeur RÉEL (D50) -------------------------------------
@@ -155,13 +164,14 @@ BLOCS_TERRAIN = [
     ("f60001", "sup-01:R1", 0x1400, 0x40, "terrain.1", 1),   # principal — entrée
     ("f60002", "sup-02:R1", 0x1440, 0x180, "terrain.1", 1),  # fenêtre
     ("f60011", "sup-11:R1", 0x1E00, 0x200, "terrain.1", 1),  # journal horodaté
-    ("f60009", "sup-09:R1", 0x4C00, 0x200, "terrain.1", 1),  # scénario T1/T2/T3
+    ("f60009", "sup-09:R3", 0x4C00, 0x200, "terrain.17", 1), # scénario T1/T2/T4/T3 (R3 D96)
     ("f60031", "sup-31:R1", 0x5200, 0x1C0, "terrain.1", 1),  # lanceur
     ("f60036", "sup-36:R1", 0x4E00, 0x1C0, "terrain.1", 1),  # fichiers (D48)
     ("f60033", "sup-33:R1", 0x5400, 0x3C0, "terrain.1", 1),  # T1 démo
     ("f60034", "sup-34:R1", 0x5800, 0x5C0, "terrain.1", 1),  # T2 proxy
     ("f60035", "sup-35:R1", 0x5E00, 0x4C0, "terrain.1", 1),  # T3 envoi Drive
     ("f60037", "sup-37:R1", 0x6600, 0x400, "terrain.2", 1),  # kit embarqué (D49)
+    ("f60038", "sup-38:R1", 0x7200, 0x600, "terrain.17", 1), # test T4 — tunnel TLS M4 (D96)
 ]
 ENTREE = 0x1400    # AddressOfEntryPoint = sup-01
 
@@ -170,6 +180,7 @@ NOMS_BLOCS = dict(LD.NOMS_BLOCS) | {   # LD fusionne déjà L2 (M2 ⊂ démo)
     "f60011": "sup-journal", "f60021": "sup-horodatage", "f60022": "sup-balaye",
     "f60031": "sup-lanceur", "f60033": "sup-test-demo", "f60034": "sup-test-proxy",
     "f60035": "sup-test-envoi", "f60036": "sup-fichiers", "f60037": "sup-kit",
+    "f60038": "sup-test-tunnel",
 }
 
 # --- .text2 : zones ----------------------------------------------------------------
@@ -184,7 +195,9 @@ ZONE_T1 = (0x5400, 0x57BF)           # sup-33
 ZONE_T2 = (0x5800, 0x5DBF)           # sup-34 (0x5C0)
 ZONE_T3 = (0x5E00, 0x62BF)           # sup-35 (0x4C0)
 ZONE_KIT = (0x6600, 0x69FF)          # sup-37 — .extraire @0x6600, .nettoyage @0x6800 (D49)
-ZONE_DATA_SUP_3 = (0x6A00, 0x6DFF)   # lignes S04-S07 + md5 attendus (D49)
+ZONE_DATA_SUP_3 = (0x6A00, 0x71FF)   # lignes S04-S07 + md5 + T4 (fixtures + ps1,
+                                     #  terrain.17 : 0x400 -> 0xC00, la zone suit le kit)
+ZONE_T4 = (0x7200, 0x77FF)           # sup-38 test T4 — tunnel TLS M4 (terrain.17)
 EXTRACTION = 0x6600                  # entrée publique de sup-37 (D49)
 NETTOYAGE = 0x6800                   # HISTORIQUE : le mode 1 (nettoyage) est
                                      # dispatché à l'entrée unique 0x6600
@@ -198,7 +211,6 @@ JOURNAL_TRACE = 0x5000      # entrée trace de win-05 (4 args ASCII, prologue
 JOURNAL_GUI = 0x5100        # entrée scénario (utf16, nchars) : force mode 2 (shim
                             # en fin de slot, saute au début du bloc)
 ZONE_DATA_SUP_2 = (0x6300, 0x65FF)   # INT/hints k32#3 + u32#2 + noms + cmdlines
-ZONE_DATA_SUP_3 = (0x6A00, 0x6DFF)   # lignes S04-S07 + md5 attendus (D49)
 
 # --- .rdata : structures PE ---------------------------------------------------------
 # Le TABLEAU des descripteurs (contigu, terminé par zéros — le chargeur
@@ -364,7 +376,7 @@ _SEQ_ASCII = [
 # lignes J_* de la démo (après CLASSE_DEMO, avant l'IAT kernel32#2).
 R_ASCII_LIBRE = 0x2AAA
 _SEQ_ASCII_LIBRE = [
-    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain16"),   # 49 o
+    ("L00", b"L00 demarrage superviseur terrain 0.5.0-terrain17"),   # 49 o
     ("L01", b"L01 fenetre principale creee"),                        # 28 o
     ("LKO_GUI", b"LKO creation fenetre impossible gle="),            # 36 o
     ("NOM_DEMO", b"demo.exe\x00"),                                   # 9 o (cmdline T1)
@@ -396,7 +408,7 @@ LONGUEURS_ASCII = {n: len(o) for n, (_a, o, _l) in CHAINES_ASCII.items()}
 
 _SEQ_SUP_1 = [
     # en-tête scénario
-    ("S00", b"S00 superviseur terrain 0.5.0-terrain16"),
+    ("S00", b"S00 superviseur terrain 0.5.0-terrain17"),
     ("S01_PREFIXE", b"S01 date "),
     ("S02A", b"S02 porte R10 : integrite VERTE"),
     ("S02B", b"S02 porte R10 : KO - arret"),
@@ -514,11 +526,14 @@ FIN_SUP_1 = _cur
 
 _SEQ_SUP_2 = [
     ("NOM_JETONS", b"terrain_jetons.bin\x00"),
+    # D68/D96 : les QUATRE temporaires du nettoyage T3 sont CONTIGUS —
+    # terrain_jeton.json vit APRÈS rep (la réponse de Google SURVIT au run,
+    # la preuve doit rester sur disque : jamais dans le chemin de la marche)
     ("NOM_REQ", b"terrain_req.txt\x00"),
-    ("NOM_JETON_JSON", b"terrain_jeton.json\x00"),
     ("NOM_META", b"terrain_meta.json\x00"),
     ("NOM_SESSION", b"terrain_session.txt\x00"),
     ("NOM_REP", b"terrain_rep.json\x00"),
+    ("NOM_JETON_JSON", b"terrain_jeton.json\x00"),
     ("NOM_PAGE_HTTP", b"terrain_page_http.txt\x00"),
     ("NOM_PAGE_HTTPS", b"terrain_page_https.txt\x00"),
     ("NOM_CURL", b"curl.exe\x00"),
@@ -544,9 +559,12 @@ assert FIN_SUP_2 <= ZONE_DATA_SUP_2[1] + 1, "zone données sup 2 débordante"
 
 MD5_DEMO_HEXA = b"73c064fbaf4610a167bc6434dee400e4"
 # D63 (terrain.11+) : proxy re-scellé après le correctif de pile http-10:R3.
-MD5_PROXY_HEXA = b"dd12b64948e64153ff1dd7a66f367ff3"
+# D96 (terrain.17) : le kit embarque le proxy M4 scellé D95 — le tunnel TLS
+# voyage dans le superviseur ; md5/sha256 assertés au build contre l'artefact.
+MD5_PROXY_HEXA = b"33c9181580b7e381e527e72902180733"
+SHA256_PROXY_HEXA = b"b813f65e37752ca7a56d549955a8e807b9ba07dc2288f32aab84e8e2db31e526"
 LONGUEUR_DEMO = 16384                     # demo.exe 0.3.0 (M2 scellé)
-LONGUEUR_PROXY = 19456                    # proxy.exe 0.4.0-dev.1 (M3 scellé)
+LONGUEUR_PROXY = 28160                    # proxy.exe 0.5.0-dev.2 (M4 scellé D95)
 LONGUEUR_ANNEXE = 248                     # terrain_jetons.bin (D48)
 
 _SEQ_SUP_3 = [
@@ -555,13 +573,50 @@ _SEQ_SUP_3 = [
     ("S04C", b"S04C md5 demo.exe " + MD5_DEMO_HEXA),
     ("S04D", b"S04D extraction demo.exe : echec ecriture"),
     ("S05A", b"S05 proxy.exe extrait, octets conformes"),
-    ("S05B", b"S05B proxy.exe : octets ECART - T2 saute"),
+    ("S05B", b"S05B proxy.exe : octets ECART - T2 et T4 sautent"),
     ("S05C", b"S05C md5 proxy.exe " + MD5_PROXY_HEXA),
     ("S05D", b"S05D extraction proxy.exe : echec ecriture"),
     ("S06A", b"S06 annexe jetons extraite - T3 actif"),
     ("S06B", b"S06 variante publique - annexe absente, T3 non applicable"),
     ("S06C", b"S06C annexe jetons : octets ECART"),
     ("S07A", b"S07 nettoyage kit effectue (demo, proxy, annexe)"),
+    # T4 (terrain.17) : le client de la passerelle M4 — la forme absolue
+    # « GET https://… HTTP/1.1 » n'existe dans AUCUN client standard (curl
+    # envoie CONNECT) : powershell.exe + script TCP brut (FIX_PS1), lancé
+    # par sup-31 MODE 0, chemin RELATIF (cwd forcé = répertoire de l'exe —
+    # la leçon D36 des chemins relatifs travaille pour nous ici : aucun
+    # guillemet à composer, aucun espace à craindre).
+    ("NOM_PS1", b"terrain_m4.ps1\x00"),
+    ("NOM_PAGE_M4A", b"page_m4a.txt\x00"),
+    ("NOM_PAGE_M4B", b"page_m4b.txt\x00"),
+    ("CMD_PS_M4A",
+     b"powershell.exe -NoProfile -ExecutionPolicy Bypass -File "
+     b"terrain_m4.ps1 example.com a\x00"),
+    ("CMD_PS_M4B",
+     b"powershell.exe -NoProfile -ExecutionPolicy Bypass -File "
+     b"terrain_m4.ps1 self-signed.badssl.com b\x00"),
+    # T4 — tunnel TLS M4 (terrain.17, D96 : le critère M4 « HTTPS en transit ;
+    # échec propre sur certificat invalide » atterrit dans le run terrain)
+    ("S40", b"S40 T4 tunnel M4 : script terrain_m4.ps1 pose"),
+    ("S40B", b"S40B T4 script NON POSE - rien lance"),
+    ("S41A", b"S41 T4 proxy 0.5.0-dev.2 : lancement"),
+    ("S41B", b"S41 T4 proxy.exe ABSENT"),
+    ("S42A", b"S42 T4 banniere proxy recue"),
+    ("S42B", b"S42 T4 banniere ABSENTE"),
+    ("S43A", b"S43 T4 powershell exemple : code="),
+    ("S43B", b"S43 T4 powershell.exe ABSENT"),
+    ("S44A", b"S44 T4 page exemple octets="),
+    ("S45A", b"S45 T4 powershell badssl : code="),
+    ("S46A", b"S46 T4 page badssl octets="),
+    ("S49A", b"S49 T4 VERDICT OK (console conforme)"),
+    ("S49B", b"S49 T4 VERDICT KO (console NON conforme)"),
+    # fixtures T4 — CROISÉES au build contre les octets de l'artefact embarqué
+    # (pefile RVA→offset : jamais deux sources de vérité)
+    ("FIX_200", b"HTTP/1.1 200"),
+    ("FIX_502_M4", b"HTTP/1.1 502 Certificat rejete\r\n\r\n"),
+    ("FIX_EVT_M4A", b"connexion entrante\r\ntunnel chiffre etabli\r\nfin connexion\r\n"),
+    ("FIX_EVT_M4B", b"connexion entrante\r\ncertificat rejete\r\nfin connexion\r\n"),
+    ("FIX_PS1", b'param([string]$m,[string]$o)\r\ntry{\r\n$c=New-Object Net.Sockets.TcpClient(\'127.0.0.1\',25000)\r\n$c.ReceiveTimeout=30000\r\n$s=$c.GetStream()\r\n$r=[Text.Encoding]::ASCII.GetBytes("GET https://$m/ HTTP/1.1`r`nHost: $m`r`nConnection: close`r`n`r`n")\r\n$s.Write($r,0,$r.Length)\r\n$b=New-Object byte[] 65536\r\n$f=[IO.File]::Create("page_m4$o.txt")\r\nwhile(($n=$s.Read($b,0,65536)) -gt 0){$f.Write($b,0,$n)}\r\n$f.Close();$c.Close();exit 0\r\n}catch{exit 1}\r\n'),
 ]
 
 _cur = ZONE_DATA_SUP_3[0]

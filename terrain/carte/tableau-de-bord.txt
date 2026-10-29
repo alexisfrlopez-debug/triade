@@ -1,12 +1,12 @@
-[tableau] jalon=terrain artefact=superviseur.exe version=0.5.0-terrain.3
-  blocs_avec_spec_a_jour        : 23/23 : tracabilite I->C->B (heritage M0/M1/M2/demo + 12 blocs sup)
-  chaines_I_C_B_tests           : 23/23
+[tableau] jalon=terrain artefact=superviseur.exe version=0.5.0-terrain.4
+  blocs_avec_spec_a_jour        : 24/24 : tracabilite I->C->B (heritage M0/M1/M2/demo + 13 blocs sup)
+  chaines_I_C_B_tests           : 24/24
   construction                  : 0 erreur / 0 avertissement
-  tests_oracle                  : 10102 cas verts (graine 31) ; oracle structurel 921 verrous PASS ; falsification : 27/27 cibles R10 détectées (octets 11/23) + 5 mutations ciblées attrapées
-  empreintes_donnees_embarquees : conforme (table R10 27 entrees + terminateur dont 4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures)
+  tests_oracle                  : 10111 cas verts (graine 20261117) ; oracle structurel 1090 verrous PASS ; falsification : 28/28 cibles R10 détectées (octets 11/23) + 7 mutations ciblées attrapées
+  empreintes_donnees_embarquees : conforme (table R10 28 entrees + terminateur dont 4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures) ; croisement T4 : 10 fixtures == octets du proxy M4 scelle (D96)
   defauts_attrapes_avant_build  : 6 classes (constante terrain_, mode .curl, flux banniere 39->38, mapping .champ decale, 7 traces valeur en mode 0, SA consomme avant initialisation) — le systeme a fonctionne comme concu
   reutilisation_R7              : 11 blocs octet-identiques (hello/selftest/echo/demo.9)
-  preversions                   : 0.5.0-terrain.3 (lignee terrain, u64 0x50103, plancher 0x50000)
-  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit embarque .blob (demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 + annexe jetons), extraction verifiee par relecture octet a octet, nettoyage apres run ; variante publique (depot, slot vide) / livraison (--jetons, annexe D48)
-  artefact                      : 61952 octets ; subsystem WINDOWS_GUI ; entree 0x1400
-  verrou_croise                 : 23 empreintes reverifiees + signature Ed25519 (R8/R9)
+  preversions                   : 0.5.0-terrain.4 (lignee terrain, u64 0x50104, plancher 0x50000)
+  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit embarque .blob (demo.exe 0.3.0 + proxy.exe 0.5.0-dev.2 M4 + annexe jetons), extraction verifiee par relecture octet a octet, nettoyage apres run ; variante publique (depot, slot vide) / livraison (--jetons, annexe D48) ; T4 (terrain.17) : le critere M4 juge sur le terrain — https saine + certificat invalide -> 502 etiquetee OCTET POUR OCTET (powershell client TCP, forme absolue https:// hors clients standards)
+  artefact                      : 75264 octets ; subsystem WINDOWS_GUI ; entree 0x1400
+  verrou_croise                 : 24 empreintes reverifiees + signature Ed25519 (R8/R9)

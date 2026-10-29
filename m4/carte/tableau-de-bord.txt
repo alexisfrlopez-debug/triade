@@ -2,7 +2,7 @@
   blocs_avec_spec_a_jour        : 49/49 : audit de tracabilite I->C->B (5 artefacts)
   chaines_I_C_B_tests           : 49/49 : specs, carte, exe, vecteurs
   construction                  : 0 erreur / 0 avertissement : build script
-  tests_differentiels           : oracle M4 30 cas verts (reduit, graine 20261030) ; oracle structurel M3 524 + M4 473 verrous PASS
+  tests_differentiels           : oracle M4 560 cas verts (complet, graine 20261107) ; oracle structurel M3 524 + M4 473 verrous PASS
   reutilisation_heritage        : 27 blocs octet-identiques au scellé 0.4.0 (26 embarques M3 + libc-07 selftest.exe — R7, deltas .rdata documentes)
   empreintes_donnees_embarquees : conforme (fixtures http + tls, table R10 28 entrees [marche aux bornes — porte .text3 D95], table des reponses 8 entrees, secur32 x7, version 0x00050002)
   defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D94

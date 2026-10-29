@@ -1,0 +1,125 @@
+TRIADE — TERRAIN.17 : « LE TUNNEL CHIFFRÉ JUGÉ SUR VOTRE MACHINE » — LE
+CRITÈRE M4 ATTERIT. LE PROXY 0.5.0-DEV.2 (CELUI QUI CHIFFRE) EST DANS LE
+KIT, ET UN NOUVEAU TEST (T4) FAIT PARLER LE TUNNEL : HTTPS SAIN À TRAVERS
+LE PROXY, PUIS CERTIFICAT INVALIDE → LA 502 ÉTIQUETÉE, OCTET PAR OCTET.
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Le jalon M4 a construit le tunnel TLS ces trois derniers jours : la poignée
+de main Schannel, l'émission chiffrée, la réception déchiffrée, la session
+complète — le tout noté, mesuré, prouvé, puis câblé dans proxy.exe
+0.5.0-dev.2 (l'entrée du programme lance maintenant la couche M4 entière,
+gardée par une porte d'intégrité qui protège AUSSI la zone neuve). Tout
+cela vivait dans nos émulateurs. Il manque UNE chose : votre machine réelle.
+C'est le rôle de terrain.17 : le kit embarqué transporte le NOUVEAU proxy,
+et le test T4 joue les DEUX moitiés du critère M4 :
+
+  (a) HTTPS SAIN — une requête « GET https://example.com/ » (forme absolue,
+      le schéma dans la ligne de requête) traverse le proxy : le tunnel se
+      chiffre, la page revient en clair au client. Le journal du proxy doit
+      dire « tunnel chiffre etabli ».
+  (b) CERTIFICAT INVALIDE — la même requête vers self-signed.badssl.com :
+      Schannel doit refuser le certificat auto-signé, et le proxy doit
+      répondre EXACTEMENT « HTTP/1.1 502 Certificat rejete » — 34 octets,
+      pas un de plus — et dire « certificat rejete » au journal.
+
+Le client qui parle la forme absolue https:// n'existe dans AUCUN outil
+standard (curl envoie CONNECT et chiffre lui-même) : le superviseur pose
+donc un petit script TCP (terrain_m4.ps1, composant système powershell.exe)
+qui écrit la requête à la main et recopie la réponse. Le script est une
+DONNÉE du plan — le superviseur ne contient pas un octet de client.
+
+1) CE QUE LE TERRAIN.17 EMBARQUE DE PLUS QUE LE 16
+   - LE KIT PORTE LE PROXY M4 : proxy.exe 0.5.0-dev.2 (28 160 octets,
+     sha256 b813f65e37752ca7… — le câblage D95 : entrée 0x7DC0, porte
+     R10 .text3 qui garde la couche M4 au lancement). T2 rejoue les mêmes
+     tests qu'avant sur CE proxy (sa voix T2-visible est inchangée octet
+     pour octet — héritage prouvé) : c'est la même preuve, sur l'artefact
+     neuf.
+   - T4 (bloc sup-38, 1 505 octets écrits à la main) : lance le proxy,
+     joue les DEUX requêtes, vérifie la bannière, les pages, les ÉVÉNEMENTS
+     du journal proxy (memcmp exacts : 58 puis 54 octets), l'arrêt propre
+     et le code de sortie zéro. Neuf bits de succès, tous exigés.
+   - Les fixtures attendues par T4 (bannière, événements, la 502
+     étiquetée) sont CROISÉES AU BUILD contre les OCTETS du proxy embarqué
+     (nous lisons son .rdata et comparons) : le superviseur attend
+     exactement ce que l'artefact émet. Jamais deux sources de vérité.
+   - L'image grandit : 75 264 octets (le .blob grossit du proxy M4, la
+     section ressources déménage proprement alignée). Porte d'intégrité :
+     28 entrées + terminateur, VERTE — la table est PLEINE désormais
+     (comme la porte du proxy : tout futur bloc terrain exigera une autre
+     surface).
+   - L'ORACLE a grandi avec : 10 111 cas verts, 28/28 falsifications de
+     porte, 7 mutations ciblées attrapées ; cristallisation 10/10 (l'exe
+     reconstruit dix fois, octet pour octet identique).
+
+2) LA PREUVE AVANT LIVRAISON (ce que l'émulateur a déjà vu)
+   Le scénario nominal complet : T1 → T2 → T4 → T3, journal d'or exact —
+   la voix du proxy recopiée : « TRIADE M3 : proxy demarre », « tunnel
+   chiffre etabli », « certificat rejete », « fin connexion », « arret ».
+   Les dégradés nommés : la 502 à 33 octets (un octet volé) est ATTRAPÉE ;
+   les événements muets sont nommés ; l'ordre T2→T4 inversé est refusé
+   (le port 25000 est partagé : le proxy de T2 doit être MORT avant celui
+   de T4). Votre run jouera exactement ces chemins — sur du Schannel réel.
+
+3) POINTS D'ATTENTION POUR CE RUN
+   - Internet requis : example.com (page saine) et self-signed.badssl.com
+     (certificat auto-signé délibéré). Si l'un est injoignable, T4 le
+     dira honnêtement (ligne KO, jamais de silence).
+   - powershell.exe : composant système Windows 11, lancé SANS héritage
+     (il ne voit ni les tuyaux du proxy ni le journal).
+   - Le run complet fait ~2-3 minutes de plus que le 16 (deux poignées
+     TLS réelles + les marges de sondage).
+   - Cette livraison est la VARIANTE PUBLIQUE (pas d'annexe de jetons dans
+     nos machines de build) : T3 dira « S06 variante publique - annexe
+     absente, T3 non applicable » et n'enverra PAS le journal tout seul.
+     Le journal terrain_*.txt restera À CÔTÉ DE L'EXE — votre dossier de
+     travail étant synchronisé Drive, il partira tout seul ; sinon,
+     déposez-le dans le dossier test comme aux terrains 1 à 4.
+
+PROTOCOLE (AUSSI COURT QU'HIER)
+-------------------------------
+ÉTAPE 0 — SUPPRIMEZ les anciens superviseur-terrain*.exe (5 à 16) de votre
+   dossier de travail. Un seul exe, une seule version.
+ÉTAPE 1 — Double-cliquez superviseur-terrain17.exe, attendez le verdict
+   (~4 minutes). PREUVE du bon binaire : le journal commence par
+   « S00 superviseur terrain 0.5.0-terrain17 ».
+ÉTAPE 2 — Les lignes qui comptent :
+   T4 : « S40 T4 tunnel M4 : script terrain_m4.ps1 pose »,
+        « S42 T4 banniere proxy recue »,
+        « tunnel chiffre etabli » (la voix du tunnel — PREMIÈRE FOIS),
+        « certificat rejete » (le critère M4 — PREMIÈRE FOIS),
+        « S49 T4 VERDICT OK (console conforme) ».
+   Le verdict final affichera « SUPERVISEUR : ECHEC » tant que T1 (la démo,
+   panne connue D57) reste KO — c'est l'honnêteté du superviseur, pas un
+   échec du tunnel. T2 et T4 sont les juges d'aujourd'hui.
+ÉTAPE 3 (APRÈS LE RUN) — le journal terrain_*.txt reste posé à côté de
+   l'exe (cette variante n'embarque pas l'annexe d'envoi). S'il n'est pas
+   parti par la synchronisation, déposez-le dans le dossier test.
+
+CE QUE NOUS ATTENDONS, EN CLAIR
+-------------------------------
+- S00 « terrain17 » ;
+- T2 : 7e vert consécutif attendu (le proxy M4 parle comme le M3 — R7) ;
+- T4 : « S49 T4 VERDICT OK » + les lignes « tunnel chiffre etabli » et
+  « certificat rejete » dans le journal — LE CRITÈRE M4 « HTTPS en
+  transit ; échec propre sur certificat invalide » démontré sur machine
+  réelle. C'est la DERNIÈRE pièce avant le scellage 0.5.0 ;
+- T1 : inchangé — l'échec d'échange de la démo est connu (D57), ce run
+  n'y changerait rien.
+
+RÉCAPITULATIF DES EMPREINTES
+----------------------------
+md5 superviseur-terrain17.exe  e7587c46feef6f79a88e66a78c9d5729
+sha256                         5360ffe2282e386d7a0c0d095738c5b3b3b2193fc9ab54a866eb0f99bf1d87f8
+taille                         75 264 octets
+md5 démo embarquée             73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué             33c9181580b7e381e527e72902180733 (NOUVEAU : 0.5.0-dev.2 M4)
+sha256 proxy embarqué          b813f65e37752ca7a56d549955a8e807b9ba07dc2288f32aab84e8e2db31e526
+
+Le superviseur-terrain16.exe fait 62 464 octets ; le 17 en fait 75 264 :
+la différence, c'est le tunnel qui voyage (le proxy M4 est plus gros que
+le M3 de 8 704 octets, et T4 vit sa propre section). Quand votre journal
+sera revenu avec « tunnel chiffre etabli » dedans, le jalon M4 n'aura
+plus qu'à sceller : 0.5.0.

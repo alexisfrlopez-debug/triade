@@ -64,6 +64,19 @@ from keystone import Ks, KS_ARCH_X86, KS_MODE_64
 M0_DIR = bm.M0_DIR
 M1_DIR = bm.M1_DIR
 M3_DIR = os.path.join(os.path.dirname(ICI), "m3")
+M4_DIR = os.path.join(os.path.dirname(ICI), "m4")   # terrain.17 : le kit
+# embarque le proxy M4 scellé D95 (le tunnel TLS voyage dans le superviseur)
+
+# plans m3/m4 chargés sous noms distincts (croisement des fixtures T4 :
+# la bannière/événements/502 attendus au run sont les OCTETS du scellé —
+# jamais deux sources de vérité, D96)
+import importlib.util as _ilu
+_s3 = _ilu.spec_from_file_location("layout_m3_t", os.path.join(M3_DIR, "layout.py"))
+L3 = _ilu.module_from_spec(_s3)
+_s3.loader.exec_module(L3)
+_s4 = _ilu.spec_from_file_location("layout_m4_t", os.path.join(M4_DIR, "layout.py"))
+L4M = _ilu.module_from_spec(_s4)
+_s4.loader.exec_module(L4M)
 
 
 class EchecBuild(Exception):
@@ -86,7 +99,7 @@ NOTATION = {
     "f60011": "sup-11-journal", "f60009": "sup-09-scenario",
     "f60031": "sup-31-lancer", "f60036": "sup-36-fichiers",
     "f60033": "sup-33-demo", "f60034": "sup-34-proxy", "f60035": "sup-35-envoi",
-    "f60037": "sup-37-extraction",
+    "f60037": "sup-37-extraction", "f60038": "sup-38-tunnel",
 }
 
 FICHIERS_I = {
@@ -102,6 +115,7 @@ FICHIERS_I = {
     "sup-31": "sup-31-lancer.md", "sup-33": "sup-33-demo.md",
     "sup-34": "sup-34-proxy.md", "sup-35": "sup-35-envoi.md",
     "sup-36": "sup-36-fichiers.md", "sup-37": "sup-37-extraction.md",
+    "sup-38": "sup-38-tunnel.md",
 }
 
 
@@ -177,6 +191,8 @@ IAT_PAR_BLOC = {
     "f60035": {"CloseHandle", "GetExitCodeProcess", "WaitForSingleObject"},
     "f60036": {"CloseHandle", "CreateFileA", "DeleteFileA", "ReadFile", "WriteFile"},
     "f60037": {"CloseHandle", "CreateFileA", "ReadFile", "WriteFile"},
+    "f60038": {"CloseHandle", "GetExitCodeProcess", "PeekNamedPipe", "ReadFile",
+               "Sleep", "TerminateProcess", "WaitForSingleObject", "WriteFile"},
 }
 APPELS_DIRECTS = {
     **{k: v for k, v in bd.APPELS_DIRECTS.items() if k in _HERITAGE},
@@ -185,10 +201,12 @@ APPELS_DIRECTS = {
     "f60021": {0x1100},
     "f60022": {0x1100, 0x1180},
     "f60011": {0x1100, 0x1200, 0x1280},
-    "f60009": {0x1AC0, L.JOURNAL_TRACE, 0x5400, 0x5800, 0x5E00, L.EXTRACTION},  # porte + trace + kit + T1/T2/T3
+    "f60009": {0x1AC0, L.JOURNAL_TRACE, 0x5400, 0x5800, 0x7200, 0x5E00,
+               L.EXTRACTION},  # porte + trace + kit + T1/T2/T4/T3 (R3 D96)
     "f60031": set(),
     "f60033": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},          # memcmp, fichiers, trace, lanceur
     "f60034": {0x1180, 0x4E00, L.JOURNAL_TRACE, 0x5200},
+    "f60038": {0x1180, 0x1100, 0x4E00, L.JOURNAL_TRACE, 0x5200},  # memcmp, memcpy, fichiers, trace, lanceur
     "f60035": {0x1100, 0x1D40, 0x4E00, L.JOURNAL_TRACE, 0x5200},  # memcpy, balayeur, fichiers, trace, lanceur
     "f60036": {0x1100, 0x1200},
     "f60037": {0x1100, 0x1180, 0x1200, 0x4E00, L.JOURNAL_TRACE},  # memcpy, memcmp, strlen, fichiers, trace
@@ -220,6 +238,15 @@ DONNEES_RIP = {
                SUP["FIX_BANNIERE"][0], SUP["FIX_EVT_HTTP"][0], SUP["FIX_EVT_HTTPS"][0],
                SUP["FIX_ARRET"][0], SUP["NOM_PAGE_HTTP"][0], SUP["NOM_PAGE_HTTPS"][0],
                SUP["CMD_CURL_HTTP"][0], SUP["CMD_CURL_HTTPS"][0]},
+    "f60038": {AD["NOM_PROXY"][0], AD["QUIT"][0], L.HPROC, L.DRAPEAU_SRV, L.TUYAU_IN_WR,
+               L.TUYAU_OUT_RD, L.CODE_SORTIE, L.LU, L.DISPO, L.TAMPON_CMD, L.TAMPON_COMPO,
+               *[SUP[n][0] for n in ("S40", "S40B", "S41A", "S41B", "S42A", "S42B",
+                                     "S43A", "S43B", "S44A", "S45A", "S46A",
+                                     "S49A", "S49B")],
+               SUP["FIX_BANNIERE"][0], SUP["FIX_ARRET"][0], SUP["FIX_200"][0],
+               SUP["FIX_502_M4"][0], SUP["FIX_EVT_M4A"][0], SUP["FIX_EVT_M4B"][0],
+               SUP["FIX_PS1"][0], SUP["NOM_PS1"][0], SUP["NOM_PAGE_M4A"][0],
+               SUP["NOM_PAGE_M4B"][0], SUP["CMD_PS_M4A"][0], SUP["CMD_PS_M4B"][0]},
     "f60035": {L.BUF_CHEMIN, L.TAMPON_NOM, L.HPROC, L.CODE_SORTIE, L.TAMPON_JETON,
                L.TAMPON_CMD, L.TAMPON_COMPO,
                *[SUP[n][0] for n in ("S30", "S31", "S32", "S33A", "S33B", "S34A",
@@ -458,7 +485,10 @@ def composer_sections(code: dict, blocs: list[tuple], blob: bytes):
         raise EchecBuild(f"table R10 déborde sur la version "
                          f"({len(entrees)} entrées, {len(table)} octets)")
     poser(L.R_TAB_SUM, table)
-    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN3))
+    # terrain.17 : 28 entrées + terminateur = 464 o — la table TOUCHE l'ancre
+    # @0x2620 sans la chevaucher : la table est PLEINE (miroir D95 M4 — tout
+    # futur bloc terrain exige une autre surface que .text2/table)
+    poser(L.R_VERSION, struct.pack("<Q", L.VERSION_U64_TERRAIN4))
     poser(L.R_ANCRE, struct.pack("<Q", 0))
     poser(L.R_FIX_MEMCPY, L.FIXTURE_MEMCPY + L.FIXTURE_MEMCMP_A + L.FIXTURE_STRLEN
           + L.FIXTURE_ITOA)
@@ -480,12 +510,14 @@ def composer_blob(jetons: bytes | None) -> bytes:
     emplacement annexe (None/248 o — les DEUX variantes du même code)."""
     with open(os.path.join(DEMO_DIR, "demo.exe"), "rb") as f:
         demo = f.read()
-    with open(os.path.join(M3_DIR, "proxy.exe"), "rb") as f:
+    with open(os.path.join(M4_DIR, "proxy.exe"), "rb") as f:
         proxy = f.read()
     if len(demo) != L.LONGUEUR_DEMO or hashlib.md5(demo).hexdigest().encode() != L.MD5_DEMO_HEXA:
         raise EchecBuild("demo.exe divergent du scellé M2 0.3.0 (md5/longueur)")
-    if len(proxy) != L.LONGUEUR_PROXY or hashlib.md5(proxy).hexdigest().encode() != L.MD5_PROXY_HEXA:
-        raise EchecBuild("proxy.exe divergent du scellé M3 0.4.0-dev.1 (md5/longueur)")
+    if (len(proxy) != L.LONGUEUR_PROXY
+            or hashlib.md5(proxy).hexdigest().encode() != L.MD5_PROXY_HEXA
+            or hashlib.sha256(proxy).hexdigest().encode() != L.SHA256_PROXY_HEXA):
+        raise EchecBuild("proxy.exe divergent du scellé M4 0.5.0-dev.2 (md5/sha256/longueur)")
     if jetons is not None and len(jetons) != L.LONGUEUR_ANNEXE:
         raise EchecBuild(f"annexe de jetons inattendue ({len(jetons)} o != {L.LONGUEUR_ANNEXE})")
     slot = (struct.pack("<Q", len(jetons) if jetons is not None else 0)
@@ -520,19 +552,19 @@ def composer_rsrc() -> tuple[bytes, int]:
     ffi = struct.pack("<13I",
                       0xFEEF04BD,      # signature
                       0x00010000,      # version de structure 1.0
-                      0x00050000, 0x00000003,   # version fichier 0.5.0.3
-                      0x00050000, 0x00000003,   # version produit 0.5.0.3
+                      0x00050000, 0x00000004,   # version fichier 0.5.0.4 (terrain.17)
+                      0x00050000, 0x00000004,   # version produit 0.5.0.4 (terrain.17)
                       0x0000003F, 0x00000000,   # masque drapeaux / drapeaux
                       0x00040004,      # VOS_NT_WINDOWS32
                       0x00000001,      # VFT_APP
                       0x00000000, 0x00000000, 0x00000000)
     chaines = b"".join([
         _chaine_vsi("FileDescription", "TRIADE superviseur terrain"),
-        _chaine_vsi("FileVersion", "0.5.0.3"),
+        _chaine_vsi("FileVersion", "0.5.0.4"),
         _chaine_vsi("InternalName", "superviseur"),
         _chaine_vsi("OriginalFilename", "superviseur.exe"),
         _chaine_vsi("ProductName", "Protocole TRIADE"),
-        _chaine_vsi("ProductVersion", "0.5.0-terrain.3"),
+        _chaine_vsi("ProductVersion", "0.5.0-terrain.4"),
         _chaine_vsi("LegalCopyright", "Projet TRIADE - tests terrain"),
     ])
     table = _noeud_vsi(1, "040904B0", enfants=chaines)
@@ -544,7 +576,7 @@ def composer_rsrc() -> tuple[bytes, int]:
     manifeste = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
         '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">'
-        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.3"/>'
+        '<assemblyIdentity type="win32" name="TRIADE.superviseur" version="0.5.0.4"/>'
         '<description>TRIADE : superviseur terrain de tests</description>'
         '<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3"><security>'
         '<requestedPrivileges>'
@@ -600,7 +632,7 @@ def composer_rsrc() -> tuple[bytes, int]:
 
 
 RSRC_RAW = 0x800      # tailles brutes alignées FILE_ALIGN (D49)
-BLOB_RAW = 0x8E00
+BLOB_RAW = 0xB000   # terrain.17 : 0xAF10 arrondi (proxy M4 28 160 o)
 
 
 def ecrire_pe32plus(texte, rdata, data, text2, rsrc, blob) -> bytes:
@@ -675,7 +707,7 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
                     for k, v in table.entries.items():
                         if k == b"FileVersion":
                             fic = v.decode("ascii")
-    assert fic == "0.5.0.3", f"FileVersion ressources = {fic!r}"
+    assert fic == "0.5.0.4", f"FileVersion ressources = {fic!r}"
     # D50 : règle du chargeur RÉEL — la table des sections doit tenir DANS
     # SizeOfHeaders (aligné FILE_ALIGN). Le terrain.2 violait cette règle
     # (0x238 d'en-têtes réels pour 0x200 déclarés) : Windows refusait de
@@ -695,7 +727,7 @@ def valider_pe(exe: bytes, jetons: bytes | None = None):
     # kit embarqué (D49) : les octets .blob SONT les artefacts scellés
     with open(os.path.join(DEMO_DIR, "demo.exe"), "rb") as f:
         demo = f.read()
-    with open(os.path.join(M3_DIR, "proxy.exe"), "rb") as f:
+    with open(os.path.join(M4_DIR, "proxy.exe"), "rb") as f:
         proxy = f.read()
     assert exe[L.BLOB_FILE + 0x10: L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO] == demo
     assert exe[L.BLOB_FILE + 0x10 + L.LONGUEUR_DEMO:
@@ -796,12 +828,15 @@ CONTRATS = {
                "[ext kernel32#2:GetModuleFileNameA,CreateFileA] [ext kernel32:WriteFile,"
                "FlushFileBuffers] [donnees .data:handle,tampons,TAMPON_NOM]"),
     "f60009": ("(arg u64) -> u32", "lancé une fois par win-04 ; TAMPON_* posés",
-               "porte -> libc -> extraction kit -> T1 -> T2 -> T3 -> nettoyage -> S90/S91 ; "
-               "rax = 1 ssi les verdicts COMPTÉS sont verts (T3 non applicable en "
-               "variante publique n'est pas compté — D49)",
-               "un KO n'arrête rien ; la porte précède tout test ; l'envoi vient en "
-               "dernier ; le nettoyage suit T3 (l'annexe vit le temps de l'envoi)",
-               "[d40006] [d40005] [f60037] [f60033] [f60034] [f60035] "
+               "porte -> libc -> extraction kit -> T1 -> T2 -> T4 -> T3 -> nettoyage -> "
+               "S90/S91 ; rax = 1 ssi les verdicts COMPTÉS sont verts (T3 non "
+               "applicable en variante publique n'est pas compté — D49 ; T4 compte "
+               "comme T2 sur LE MÊME bit proxy — D96)",
+               "un KO n'arrête rien ; la porte précède tout test ; le proxy de T4 ne "
+               "naît qu'après la mort de celui de T2 (port 25000 partagé, R3) ; "
+               "l'envoi vient en dernier (la voix du tunnel part dans le journal) ; "
+               "le nettoyage suit T3 (l'annexe vit le temps de l'envoi)",
+               "[d40006] [d40005] [f60037] [f60033] [f60034] [f60038] [f60035] "
                "[donnees sup:S00..S03,S90,S91] [donnees .data:TAMPON_AFF]"),
     "f60031": ("(cmdline ptr, mode u32) -> u32", "pile alignée",
                "rax = 1 : HPROC/PID posés, hThread fermé, extrémités enfant fermées ; "
@@ -845,6 +880,26 @@ CONTRATS = {
                "[b20001] [b20003] [ext kernel32#2:CreateFileA] "
                "[ext kernel32:ReadFile,WriteFile,CloseHandle] "
                "[ext kernel32#3:DeleteFileA] [donnees .data:DIR_LONG,LU]"),
+    "f60038": ("() -> u32",
+               "proxy.exe 0.5.0-dev.2 posé (bit 1 extraction) ; powershell.exe "
+               "résoluble ; port 25000 libre ; pile alignée",
+               "S40..S49 + la voix du proxy recopiée (bannière + 6 événements + "
+               "arret) ; rax = 1 ssi les NEUF bits (bannière, code A, page A "
+               "« HTTP/1.1 200 », évts A 58 o, code B, page B 502 étiquetée "
+               "34 o EXACTES, évts B 54 o, arret, exit 0)",
+               "le script client est une DONNÉE (fixture RX -> fichier, I5) ; "
+               "pages comptées jamais journalisées (I2) ; attentes bornées "
+               "(I3) ; zéro fuite (I4) ; powershell MODE 0 sans héritage (I6) ; "
+               "l'ordre A puis B séquentiel par construction (I1)",
+               "[f60031] [f60036] [b20001] [b20002] "
+               "[ext kernel32#3:WaitForSingleObject,GetExitCodeProcess,"
+               "TerminateProcess,PeekNamedPipe,Sleep] "
+               "[ext kernel32:CloseHandle,ReadFile,WriteFile] "
+               "[donnees sup:S40..S49,FIX_PS1,FIX_200,FIX_502_M4,FIX_EVT_M4A,"
+               "FIX_EVT_M4B,FIX_BANNIERE,FIX_ARRET,CMD_PS_M4A,CMD_PS_M4B,"
+               "NOM_PS1,NOM_PAGE_M4A,NOM_PAGE_M4B] "
+               "[donnees .data:HPROC_PROXY,TUYAU_*,CODE_SORTIE,LU,DISPO,"
+               "TAMPON_COMPO,TAMPON_CMD]"),
     "f60037": ("(mode u32 ecx) -> u32", "BUF_CHEMIN valide ; pile alignée ; mode 0/1",
                "mode 0 : bit0 demo.exe posé+relu conforme, bit1 proxy.exe idem, "
                "bit2 T3 applicable (variante livraison) ; mode 1 : trois fichiers "
@@ -966,6 +1021,52 @@ def verrou_croise(blocs):
     return len(empreintes), manifeste
 
 
+def croiser_fixtures_t4() -> list[str]:
+    """D96 : les fixtures T4 du plan terrain == les OCTETS du proxy M4 scellé
+    embarqué (pefile RVA→offset) — la preuve que le superviseur attend EXACTE-
+    MENT ce que l'artefact émet : bannière (R7 : l'octet M3 vit dans le M4),
+    lignes console tls-08, 502 étiquetée http-10:R2. FIX_200 (préfixe de
+    statut HTTP générique) n'est pas un octet scellé : une attente, pas un
+    emprunt — non croisée, par design."""
+    with open(os.path.join(M4_DIR, "proxy.exe"), "rb") as f:
+        proxy = f.read()
+    pe = pefile.PE(data=proxy)
+
+    def octets(rva, n):
+        off = pe.get_offset_from_rva(rva)
+        return proxy[off:off + n]
+
+    SUP = L.CHAINES_SUP
+    conn = octets(L3.R_MSG_CONNEXION, 20)
+    fin = octets(L3.R_MSG_FIN, 15)
+    etabli = octets(L4M.R_TXT_TLS_ETABLI, 23)
+    cert = octets(L4M.R_TXT_TLS_CERT, 19)
+    attendus = [
+        ("banniere-R7", SUP["FIX_BANNIERE"][1], octets(L3.R_MSG_BANNIERE, 40)),
+        ("connexion-R7", conn, b"connexion entrante\r\n"),
+        ("fin-R7", fin, b"fin connexion\r\n"),
+        ("arret-R7", SUP["FIX_ARRET"][1], octets(L3.R_MSG_ARRET, 7)),
+        ("tunnel-etabli-M4", etabli, b"tunnel chiffre etabli\r\n"),
+        ("certificat-M4", cert, b"certificat rejete\r\n"),
+        ("evt-m4a", SUP["FIX_EVT_M4A"][1], conn + etabli + fin),
+        ("evt-m4b", SUP["FIX_EVT_M4B"][1], conn + cert + fin),
+        ("502-etiquetee-M4", SUP["FIX_502_M4"][1], octets(L4M.R_TXT_502_CERT, 34)),
+        ("ps1-forme", b"1" if b"GET https://$m/ HTTP/1.1" in SUP["FIX_PS1"][1] else b"0", b"1"),
+    ]
+    verrous = []
+    for nom, attendu, trouve in attendus:
+        if attendu != trouve:
+            raise EchecBuild(f"croisement T4 : {nom} divergent — la fixture "
+                             f"terrain != l'octet du proxy M4 scellé "
+                             f"({trouve[:24]!r} != {attendu[:24]!r})")
+        verrous.append(nom)
+    if b"Connection: close" not in SUP["FIX_PS1"][1]:
+        raise EchecBuild("croisement T4 : le script client perd « Connection: "
+                         "close » — le relais tls-08 ne finirait jamais côté "
+                         "serveur (fin propre = contrat du script, spec sup-38 V4)")
+    return verrous
+
+
 def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
     herit = len(_HERITAGE)
     lignes = [
@@ -977,19 +1078,23 @@ def tableau_de_bord(exe, verrous, nb, manifeste, verdict) -> str:
         f"  tests_oracle                  : {verdict.get('total_cas', 0)} cas verts "
         f"(graine {verdict.get('graine', '-')}) ; oracle structurel {len(verrous)} verrous PASS ; "
         f"falsification : {verdict.get('falsification', '-')}",
-        f"  empreintes_donnees_embarquees : conforme (table R10 27 entrees + terminateur dont "
-        f"4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures)",
+        f"  empreintes_donnees_embarquees : conforme (table R10 28 entrees + terminateur dont "
+        f"4 zones de donnees sup + zone blob, UTF-16 contraint, fixtures) ; "
+        f"croisement T4 : 10 fixtures == octets du proxy M4 scelle (D96)",
         f"  defauts_attrapes_avant_build  : 6 classes (constante terrain_, mode .curl, "
         f"flux banniere 39->38, mapping .champ decale, 7 traces valeur en mode 0, "
         f"SA consomme avant initialisation) — le systeme a fonctionne comme concu",
         f"  reutilisation_R7              : {herit} blocs octet-identiques "
         f"(hello/selftest/echo/demo.9)",
         f"  preversions                   : {manifeste.get('version', '?')} (lignee terrain, "
-        f"u64 0x{L.VERSION_U64_TERRAIN3:x}, plancher 0x{L.VERSION_U64_MIN:x})",
+        f"u64 0x{L.VERSION_U64_TERRAIN4:x}, plancher 0x{L.VERSION_U64_MIN:x})",
         f"  exigence_developpeur          : 1 SEUL EXE qui contient tout (D49) — kit "
-        f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.4.0-dev.1 + annexe jetons), "
+        f"embarque .blob (demo.exe 0.3.0 + proxy.exe 0.5.0-dev.2 M4 + annexe jetons), "
         f"extraction verifiee par relecture octet a octet, nettoyage apres run ; "
-        f"variante publique (depot, slot vide) / livraison (--jetons, annexe D48)",
+        f"variante publique (depot, slot vide) / livraison (--jetons, annexe D48) ; "
+        f"T4 (terrain.17) : le critere M4 juge sur le terrain — https saine + "
+        f"certificat invalide -> 502 etiquetee OCTET POUR OCTET (powershell client "
+        f"TCP, forme absolue https:// hors clients standards)",
         f"  artefact                      : {len(exe)} octets ; "
         f"subsystem WINDOWS_GUI ; entree 0x{L.ENTREE:x}",
         f"  verrou_croise                 : {nb} empreintes reverifiees + signature "
@@ -1021,7 +1126,10 @@ def assembler_tout():
 def construire(graine: int, avec_jetons: bool = False) -> int:
     print("=== terrain : chaîne artefact TRIADE (profil x86-64-win11-pe, WINDOWS_GUI) ===")
     blocs, specs, code, verrous = assembler_tout()
-    version = L.VERSION_TERRAIN3
+    version = L.VERSION_TERRAIN4
+    verrous_t4 = croiser_fixtures_t4()
+    print(f"[croisement] T4 : {len(verrous_t4)} fixtures == octets du proxy M4 scellé "
+          f"(bannière/événements/502 — jamais deux sources, D96)")
     blob_public = composer_blob(None)
     rsrc, taille_rsrc = composer_rsrc()
     texte, rdata, data, text2 = composer_sections(code, blocs, blob_public)
@@ -1106,7 +1214,7 @@ def verifier(graine: int) -> int:
                    f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
     version = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
-                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN3)
+                    if "artefact=superviseur.exe" in l), L.VERSION_TERRAIN4)
     construire_carte(code, exe, verrous, blocs, version, verdict, compteurs, journal)
     nb, manifeste = verrou_croise(blocs)
     print(f"[R6] cristallisation enclenchée ; [R8] {nb} empreintes conformes ; "

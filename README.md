@@ -345,9 +345,28 @@ falsification 6/6 dont LE CONTRE-CÂBLAGE — 12 PASS × 2 graines. Build
 dev.2 : oracle structurel 473 verrous, verifier-puis-écrire 38/38,
 carte 49 blocs, verrou croisé 49, cristallisation 3/10 BYTE-STABLE.
 **LE CRITÈRE M4 EST CÂBLÉ DE BOUT EN BOUT : entrée PE → http-12:R2 →
-http-10:R2 → tls-08 → Schannel.** Reste M4 : terrain (c) (curl https://
-par le proxy, certificat invalide → 502 propre), cristallisation 10/10,
-scellage 0.5.0.
+http-10:R2 → tls-08 → Schannel.**
+
+**D96 : la moitié du reste scellée — cristallisation 10/10 + TERRAIN.17
+livré.** Cristallisation M4 : 49/49 blocs à 10/10 (10 runs journalisés,
+sha b813f65e… inchangé à travers les dix reconstructions). Terrain.17 :
+superviseur.exe 0.5.0-terrain.4 (75 264 o, sha 5360ffe2…) — le kit
+embarque proxy.exe 0.5.0-dev.2 et **T4 (sup-38, 1 505 o, neuf bits
+miroir T2) juge LE CRITÈRE M4 sur machine réelle** : la forme absolue
+« GET https://… » (aucun client standard ne l'émet — curl envoie
+CONNECT) est jouée par un script powershell (terrain_m4.ps1, 438 o,
+DONNÉE du plan en zone R10) ; example.com saine → « HTTP/1.1 200 » +
+« tunnel chiffre etabli » ; self-signed.badssl.com → SEC_E_UNTRUSTED_
+ROOT → **la 502 étiquetée 34 o OCTET POUR OCTET** + « certificat
+rejete ». Les fixtures T4 sont croisées au build contre les OCTETS de
+l'artefact scellé (pefile RVA→offset — dix verrous, jamais deux
+sources). Leçons consignées : VA de section alignée sur
+SectionAlignment (le jet .rsrc 0x7800 nommé par pefile AVANT
+livraison), table R10 terrain PLEINE (28 entrées), dérive de notations
+du dépôt (D48) nommée et réparée (retouches D68 portées aux
+brouillons). Oracle terrain : 10 111 cas verts, 7 mutations attrapées,
+cristallisation terrain 10/10. Livré (variante publique) dans
+`download/`. **Le scellage 0.5.0 attend le journal du développeur.**
 Terrain : D57 (WER) seul point ouvert.
 
 ## Avertissement

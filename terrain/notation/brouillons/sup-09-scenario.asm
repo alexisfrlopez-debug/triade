@@ -1,12 +1,16 @@
-; le fil ouvrier (R2, D49) : porte R10, libc, EXTRACTION du kit embarque,
-; T1 (demo M2), T2 (proxy M3), T3 (envoi Drive), NETTOYAGE du kit, verdict
-; final — chaque test est INDEPENDANT (un KO n'arrete pas les suivants :
-; le constat veut TOUT le tableau) ; TOUTES les traces passent par win-05
-; scelle (entree trace, mode 0/1) ; l'ordre porte -> libc -> extraction ->
-; T1 -> T2 -> T3 -> nettoyage -> verdict est un invariant (le port 25000
-; est partage, l'envoi vient en dernier, l'annexe doit vivre le temps de
-; l'envoi) ; un test saute pour extraction impossible COMPTE ECHEC ; un T3
-; non applicable (variante publique, annexe absente) n'est PAS compte
+; le fil ouvrier (R3, terrain.17) : porte R10, libc, EXTRACTION du kit embarque,
+; T1 (demo M2), T2 (proxy M3 heritage), T4 (tunnel TLS M4 — LE MEME bit
+; que T2 : le tunnel vit dans le MÊME proxy.exe 0.5.0-dev.2), T3 (envoi
+; Drive, en DERNIER — le journal téléversé embarque la voix du tunnel),
+; NETTOYAGE du kit, verdict final — chaque test est INDEPENDANT (un KO
+; n'arrete pas les suivants : le constat veut TOUT le tableau) ; TOUTES les
+; traces passent par win-05 scelle (entree trace, mode 0/1) ; l'ordre porte
+; -> libc -> extraction -> T1 -> T2 -> T4 -> T3 -> nettoyage -> verdict est
+; un invariant (le port 25000 est partage par T2 ET T4 : le proxy de T2
+; doit être MORT avant celui de T4 ; l'envoi vient en dernier, l'annexe
+; doit vivre le temps de l'envoi) ; un test saute pour extraction
+; impossible COMPTE ECHEC ; un T3 non applicable (variante publique,
+; annexe absente) n'est PAS compte
 push rbx
 push r12
 push r13
@@ -89,6 +93,16 @@ jmp .apres_t2
 .sans_t2:
 xor r13d, r13d
 .apres_t2:
+; --- T4 si proxy pose (R3 : LE MÊME bit — le tunnel M4 vit dans le MÊME
+; proxy.exe 0.5.0-dev.2 : un seul artefact, deux facettes) ---
+test r15d, 2
+je .sans_t4
+call TEST_TUNNEL
+mov ebx, eax
+jmp .apres_t4
+.sans_t4:
+xor ebx, ebx
+.apres_t4:
 ; --- T3 si la variante declare l'annexe (livraison) ; publique = non applicable ---
 test r15d, 4
 je .sans_t3
@@ -105,6 +119,8 @@ call EXTRACTION
 test r12d, r12d
 je .echec
 test r13d, r13d
+je .echec
+test ebx, ebx
 je .echec
 test r14d, r14d
 je .echec

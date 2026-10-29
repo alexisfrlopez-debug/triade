@@ -46,9 +46,10 @@ BLOCS = [
      "IAT kernel32#2 : GetModuleFileNameA, CreateFileA, WriteFile (commune), "
      "FlushFileBuffers ; blocs libc-01/03/04 ; état .data (handle, tampons) ; "
      "TAMPON_NOM (.data, posé par sup-21)"),
-    ("sup-09-scenario", "f60009", "sup-09:R1", 0x4C00, 0x200,
-     "blocs win-05 (entrée trace), win-06 autotest, sup-33, sup-34, sup-35 ; "
-     "lignes S00..S03/S90/S91 (zone données sup) ; TAMPON_AFF (.data)"),
+    ("sup-09-scenario", "f60009", "sup-09:R3", 0x4C00, 0x200,
+     "blocs win-05 (entrée trace), win-06 autotest, sup-33, sup-34, sup-38, "
+     "sup-35 ; lignes S00..S03/S90/S91 (zone données sup) ; TAMPON_AFF (.data) — "
+     "R3 (terrain.17) : T4 entre T2 et T3, verdict à quatre tests"),
     ("sup-31-lancer", "f60031", "sup-31:R1", 0x5200, 0x1C0,
      "IAT kernel32#3 : CreateProcessA, CreatePipe ; IAT kernel32#1/#2 : "
      "CloseHandle, GetModuleFileNameA ; état .data ETAT_SUP (HPROC, PID, TUYAU_*)"),
@@ -82,6 +83,14 @@ BLOCS = [
      "(relecture 512 o) ; lignes S04..S07 (zone données sup 3) ; "
      "NOM_DEMO/NOM_PROXY (.rdata), NOM_JETONS (zone données sup 2) ; "
      "entrée à mode @0x6600 : ecx 0 = extraire / 1 = nettoyer (D49)"),
+    ("sup-38-tunnel", "f60038", "sup-38:R1", 0x7200, 0x600,
+     "IAT kernel32#3 : WaitForSingleObject, GetExitCodeProcess, "
+     "TerminateProcess, PeekNamedPipe, Sleep ; IAT kernel32#1 : CloseHandle, "
+     "ReadFile, WriteFile ; blocs sup-31, sup-36, libc-01/02 ; état .data "
+     "(HPROC_PROXY, TUYAU_*, CODE_SORTIE, LU, DISPO, TAMPON_COMPO/CMD) ; "
+     "chaînes S40..S49 + fixtures bannière/événements M4A-M4B/200/502 "
+     "étiquetée/arret + FIX_PS1 + cmdlines powershell (zones données sup "
+     "1/3) — T4 : LE critère M4 en run terrain (D96)"),
 ]
 
 SYMBOLES = {
@@ -94,6 +103,7 @@ SYMBOLES = {
     "FENETRE": 0x1440, "HORODATAGE": 0x1C40, "BALAYEUR": 0x1D40,
     "JOURNAL_FICHIER": 0x1E00, "SCENARIO": 0x4C00, "LANCEUR": 0x5200,
     "TEST_DEMO": 0x5400, "TEST_PROXY": 0x5800, "TEST_ENVOI": 0x5E00,
+    "TEST_TUNNEL": 0x7200,
     # entrées win-05 scellé (miroir écran + fichier, D37)
     "JOURNAL_TRACE": L.JOURNAL_TRACE, "JOURNAL_GUI": L.JOURNAL_GUI,
     # IAT (kernel32#1, #2, #3, user32, user32#2, gdi32)

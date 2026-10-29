@@ -184,10 +184,12 @@ xor r9d, r9d
 call JOURNAL_TRACE
 jmp .ko
 .jeton_ko:
+; D68 : « S33 T3 jeton KO code=NN » — le code de sortie curl (lu CODE_SORTIE)
+; voyage dans la trace MODE 1 : l'octet qui nomme l'étage suit la ligne
 lea rcx, [rip + S33B]
 mov edx, LEN_S33B
-xor r8d, r8d
-xor r9d, r9d
+mov r8d, 1
+mov r9d, dword ptr [rip + CODE_SORTIE]
 call JOURNAL_TRACE
 jmp .ko
 .session_ko:
@@ -210,10 +212,11 @@ xor r8d, r8d
 xor r9d, r9d
 call JOURNAL_TRACE
 xor r14d, r14d
-; --- nettoyage : les 5 temporaires contigus (zone donnees 2), un a un ---
+; --- nettoyage : les 4 temporaires contigus (zone donnees 2 — D68 :
+; terrain_jeton.json SURVIT, la réponse de Google est la preuve) ---
 .nettoyage:
 lea r15, [rip + NOM_REQ]
-mov r13d, 5
+mov r13d, 4
 .nettoie:
 mov rcx, r15
 mov edx, 2

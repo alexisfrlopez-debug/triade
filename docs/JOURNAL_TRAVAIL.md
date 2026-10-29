@@ -5858,3 +5858,121 @@ contrebande) la porte R10 .text3 promise par l'arbitrage D94 (ii).
    (phrase de contrôle D81 valable, conteneur 0323029a… inchangé,
    sentinelles intactes — proxy 0.4.0 dd12b649…, demo 73c064fb…,
    superviseur 2fb19c0f…, hello, selftest, echo).
+
+## Entrée 82 — D96 (29/10, ~23:59) : M4 — LA MOITIÉ DU RESTE SCELLÉE : cristallisation 10/10 (49/49 blocs, 10 runs byte-stables) + TERRAIN.17 livré (T4 : le tunnel TLS jugé sur machine réelle — LE kit embarque le proxy M4, la 502 étiquetée attendue OCTET POUR OCTET, les fixtures croisées contre l'artefact) — le scellage 0.5.0 n'attend plus que le journal du développeur
+
+Suite du « continue » (après D95 le câblage). Deux pièces du reste M4
+sont closes en une session : la cristallisation ET la préparation du
+terrain (c).
+
+1. **CRISTALLISATION M4 : 10/10.** Sept runs --verifier neufs (graines
+   20261101-20261107, volume COMPLET — 560 cas d'oracle chacun)
+   portent les compteurs de TOUTES les cartes à 10/10 : 49/49 blocs,
+   10 runs journalisés dans frag-prf (build 20261028 + 9
+   re-vérifications), artefact BYTE-STABLE (sha b813f65e… INCHANGÉ à
+   travers les dix reconstructions — la preuve R5/R6 que la notation
+   re-produit l'octet), verrou croisé 49 empreintes + signature
+   Ed25519 + racine re-scellé à chaque run (faits inchangés, modèle
+   D80). La pièce « cristallisation 10/10 » du scellage 0.5.0 est
+   POSÉE.
+
+2. **TERRAIN.17 : LE CRITÈRE M4 ATTERIT SUR LA MACHINE RÉELLE.** Le
+   kit embarqué du superviseur porte désormais proxy.exe 0.5.0-dev.2
+   (28 160 o, md5 33c91815…, sha256 b813f65e… — LE câblage : entrée
+   PE 0x7DC0, porte R10 .text3) et un test NEUF l'exerce de bout en
+   bout : **T4 (sup-38, 1 505 o / 331 instructions / slot 0x7200×0x600,
+   écrite-avant-code)**. Le problème que T4 résout : la forme absolue
+   « GET https://… HTTP/1.1 » — LA porte d'entrée du tunnel M4
+   (http-08:R2 Q4) — n'existe dans AUCUN client standard (curl -x
+   envoie CONNECT et chiffre lui-même) : le superviseur pose donc un
+   script client powershell (terrain_m4.ps1, 438 o, DONNÉE du plan en
+   zone RX couverte par la table R10, extraite par memcpy+sup-36 —
+   jamais un octet de code superviseur) qui écrit la requête à la main
+   sur 127.0.0.1:25000 et recopie la réponse. DEUX requêtes : (a)
+   example.com saine — page « HTTP/1.1 200 » + événements console
+   « connexion entrante / tunnel chiffre etabli / fin connexion »
+   (58 o memcmp EXACT) ; (b) self-signed.badssl.com — SEC_E_UNTRUSTED_
+   ROOT attendu de Schannel → LA 502 ÉTIQUETÉE « HTTP/1.1 502
+   Certificat rejete\r\n\r\n » (34 o memcmp EXACT, tout octet de plus
+   est une divergence nommée) + « certificat rejete » au journal
+   (54 o). Neuf bits de succès (bannière, code A, page A, évts A,
+   code B, page B 502 exacte, évts B, arret, exit 0 — le miroir
+   exact des neuf bits de T2), quit/arret/exit 0, nettoyage intégral
+   (pages + script supprimés, tuyaux fermés — tout chemin).
+
+3. **LES FIXTURES T4 SONT CROISÉES CONTRE L'ARTEFACT** (jamais deux
+   sources de vérité) : croiser_fixtures_t4() lit le .rdata du proxy
+   M4 scellé par pefile (RVA→offset) et asserte bannière ==
+   R_MSG_BANNIERE M3 (R7 : l'octet bannière vit dans le M4),
+   « tunnel chiffre etabli » == R_TXT_TLS_ETABLI m4/layout,
+   « certificat rejete » == R_TXT_TLS_CERT, la 502 étiquetée ==
+   R_TXT_502_CERT, les événements attendus == les CONCATENATIONS des
+   octets réels — DIX croisements au build, fail-closed.
+
+4. **LAYOUT TERRAIN.17** : .text2 0x2E00→0x4000 (T4 @0x7200, la table
+   R10 passe à 28 entrées + terminateur = 464 o — LA TABLE EST
+   PLEINE, elle TOUCHE l'ancre scellée 0x2620 sans la chevaucher :
+   miroir D95, tout futur bloc exige une autre surface) ;
+   **.rsrc 0x7000→0x8000 et .blob 0x8000→0x9000** : LEÇON nommée par
+   le build AVANT livraison — le premier jet posait .rsrc à 0x7800,
+   NON-ALIGNÉE sur SectionAlignment (0x1000) : pefile ajustait la VA
+   à 0x7000 et le répertoire des ressources devenait ILLISIBLE (et le
+   chargeur Windows refuserait pareil) — les VA de section restent
+   alignées, période ; .blob 0x9000 + 0xAF10 (proxy M4 + slot),
+   image 0x14000, fichier 0x12600 = 75 264 o. Version terrain.4
+   (u64 0x00050104, FileVersion 0.5.0.4, manifeste asInvoker).
+
+5. **LA DÉRIVE DU DÉPÔT NOMMÉE ET RÉPARÉE** : les notations terrain
+   committées dataient de D48 (terrain.1) — les retouches D68
+   (nettoyage T3 à 4 temporaires : terrain_jeton.json SURVIT ;
+   relais jeton-KO mode 1 « S33 T3 jeton KO code=NN ») vivaient
+   seulement dans des notations locales jamais committées. La
+   régénération auteur.py a SURFACÉ la dérive (jeton.json supprimé,
+   S33B muet) : les retouches sont PORTÉES dans les sources
+   authoritatives — brouillon sup-35 (compteur 4 + relais mode 1),
+   _SEQ_SUP_2 réordonné (les QUATRE temporaires contigus, jeton.json
+   HORS du chemin de la marche), motif M4 de falsification aligné
+   (41bd04000000 = mov r13d, 4 keystone). Le dépôt redevient la
+   vérité : brouillon → auteur → notation, bout en bout.
+
+6. **L'ORACLE TERRAIN A GRANDI** : la file flux_proxies (un flux
+   console PAR proxy mode 1 — le shim sert au lancement, jamais de
+   pré-consommation : le premier jet double-popait et T2 lisait la
+   voix de T4), CreatePipe en MODULO (deux paires pour deux proxies
+   — le compteur plat mélangeait stdin/stdout au second lancement),
+   powershell scripté par cmdline (effets de bord page_m4a.txt /
+   page_m4b.txt servis par le scénario), journal d'or étendu (S40-S49
+   + la voix du tunnel recopiée), verrous neufs : le script posé ==
+   FIX_PS1 (I5), powershell MODE 0 sans héritage (I6), l'ordre A→B
+   séquentiel (I1), 2 quits (T2 puis T4), 10 lancements livraison /
+   7 publics, nettoyage x3 T4 ; dégradés : (i) 502 tronquée à 33 o —
+   ATTRAPÉE, S46A octets=33 nomme le vol ; (j) événements B muets —
+   l'événement manquant nomme l'étage ; falsifications M6 (ordre
+   T2/T4 inversé — le flux servi au mauvais proxy fait échouer les
+   memcmp, le verrou d'ordre parle) et M7 (longueur du nom composé —
+   motif composé op+longueur, le site de lecture portait le même
+   LEN) : **7 mutations ciblées attrapées**. BILAN : 10 111 cas
+   verts, 28/28 cibles R10 (octets 11/23), oracle structurel 1 090
+   verrous (+1 : sup-09 R3 porte-avant-tests étendu), cristallisation
+   terrain 10/10 (graines 20261108-20261117, sha 5360ffe2… INCHANGÉ
+   à travers les dix runs), carte génération 5 re-scellée : 24
+   empreintes + signature Ed25519 + racine.
+
+7. **LIVRAISON** : superviseur-terrain17.exe (VARIANTE PUBLIQUE —
+   l'annexe de jetons n'existe pas dans les machines de build : T3
+   dira S06B non applicable, le journal restera posé à côté de
+   l'exe) + LISEZMOI-terrain17.txt dans download/ — md5
+   e7587c46feef6f79a88e66a78c9d5729, sha256 5360ffe2…, 75 264 o.
+   Le protocole développeur : double-clic, ~4 min, lignes attendues
+   « tunnel chiffre etabli » puis « certificat rejete » puis « S49
+   T4 VERDICT OK ». **Le scellage 0.5.0 n'attend plus que le journal
+   du développeur.**
+
+8. **Docs** : Entrée 82 du journal, DECISIONS D96, PLAN (M4 suite
+   D96 + ligne terrain), REPRISE (tableau § 2 + chronique § 7),
+   README (état M4), worklog (Task ID 23). Aucune clé touchée :
+   RIEN à remettre par cérémonie (phrase de contrôle D81 valable,
+   conteneur 0323029a… inchangé, sentinelles intactes — proxy 0.4.0
+   dd12b649…, demo 73c064fb…, superviseur 2fb19c0f… [le dépôt porte
+   l'ancienne balise terrain — le NEUVE 5360ffe2… est la sentinelle
+   de terrain.17], hello, selftest, echo).

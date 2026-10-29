@@ -2770,3 +2770,85 @@ porte .text3, entrée PE, validation bornée, deltas, compteur 38/49) ;
 harnais_principal_r2.py NOUVEAU ; spec m4/I/http-12-principal-r2.md
 NOUVELLE (écrite-avant-code) ; notation + brouillon NOUVEAUX.
 Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).
+
+### D96 — M4 : la MOITIÉ du reste scellée — cristallisation 10/10 (49/49 blocs, 10 runs byte-stables) + TERRAIN.17 livré : T4 (sup-38, 1 505 o) juge le tunnel M4 sur machine réelle — le kit embarque proxy.exe 0.5.0-dev.2, la 502 étiquetée attendue OCTET POUR OCTET, les fixtures croisées contre les octets de l'artefact ; la dérive de notations du dépôt (D48) nommée et réparée ; l'alignement des VA de section (leçon .rsrc 0x7800) attrapée par le build avant livraison
+
+**Contexte** : D95 avait laissé trois pièces : terrain (c), 
+cristallisation 10/10, scellage 0.5.0. Deux sont closes ici — la
+troisième n'attend plus que le journal du développeur.
+
+**Cristallisation M4** : sept runs --verifier neufs (graines 
+20261101-20261107, volume complet — 560 cas d'oracle par run)
+portent les 49 blocs à 10/10 ; dix runs journalisés dans frag-prf ;
+sha b813f65e… INCHANGÉ à travers les dix reconstructions ; verrou
+croisé re-scellé à chaque run (faits inchangés, modèle D80). La
+pièce est POSÉE.
+
+**T4 — le problème et le véhicule** : la forme absolue « GET 
+https://… HTTP/1.1 » — LA porte du tunnel M4 (http-08:R2 Q4) — 
+n'existe dans AUCUN client standard (curl -x envoie CONNECT et 
+chiffre lui-même : le tunnel M4 ne serait pas exercé). Le superviseur
+pose donc un script client powershell (terrain_m4.ps1, 438 o — une
+DONNÉE du plan : fixture RX couverte par la table R10, posée par 
+memcpy + sup-36, jamais un octet de code superviseur ; I5) qui écrit
+la requête à la main sur 127.0.0.1:25000 (« Connection: close » : la
+fin propre du relais tls-08 est un contrat du script) et recopie la
+réponse. DEUX requêtes : example.com saine (page « HTTP/1.1 200 » +
+événements 58 o memcmp exact) ; self-signed.badssl.com 
+(SEC_E_UNTRUSTED_ROOT → LA 502 étiquetée 34 o memcmp EXACT + 
+« certificat rejete » 54 o). Neuf bits de succès — le miroir exact 
+des neuf de T2. sup-38 : spec écrite-avant-code, 1 505 o / 331 
+instructions / slot 0x7200×0x600, sous-routines .ligne/.ligneNum/
+.attendre/.ps/.flux (facteurs communs — le premier jet faisait 
+1 649 o, trop gros pour le slot).
+
+**Les croisements** : croiser_fixtures_t4() lit le .rdata du proxy 
+M4 scellé (pefile RVA→offset) et asserte bannière/événements/502 ==
+les octets de l'artefact — DIX verrous au build, fail-closed. La 
+502 que le superviseur attend est la 502 que le scellé émet — 
+jamais deux sources.
+
+**Layout terrain.17** : .text2 0x4000 (T4 @0x7200) ; table R10 à 28 
+entrées + terminateur = 464 o — LA TABLE EST PLEINE, touche l'ancre 
+scellée sans la chevaucher (miroir D95) ; .rsrc 0x8000, .blob 0x9000 
+(0xAF10 — le proxy M4 fait +8 704 o) ; image 0x14000 ; 75 264 o ; 
+version terrain.4 (u64 0x00050104). **LEÇON (attrapée par le build 
+AVANT livraison)** : le premier jet posait .rsrc à 0x7800 — NON-
+alignée sur SectionAlignment (0x1000) : pefile ajustait la VA à 
+0x7000 et le répertoire des ressources devenait illisible (le 
+chargeur Windows exigerait la même discipline). Toute VA de section 
+reste alignée sur SectionAlignment — invariant désormais consigné.
+
+**La dérive du dépôt nommée** : les notations terrain committées 
+dataient de D48 — les retouches D68 (nettoyage T3 à 4 temporaires : 
+terrain_jeton.json SURVIT ; relais jeton-KO mode 1) vivaient dans 
+des notations locales jamais committées. La régénération auteur.py a 
+surfacé la dérive (jeton.json supprimé, S33B muet) : les retouches 
+sont PORTÉES dans les sources authoritatives (brouillon sup-35, 
+_SEQ_SUP_2 réordonné — les quatre temporaires contigus, jeton.json 
+hors du chemin de la marche). Le dépôt redevient la vérité : 
+brouillon → auteur → notation, bout en bout.
+
+**L'oracle** : file flux_proxies (un flux console PAR proxy mode 1, 
+servi au lancement — le premier jet double-popait : T2 lisait la 
+voix de T4) ; CreatePipe en modulo (deux paires pour deux proxies) ; 
+powershell scripté par cmdline ; journal d'or S40-S49 + la voix du 
+tunnel ; verrous I5/I6/I1 (script == fixture, mode 0 sans héritage, 
+ordre A→B) ; dégradés (i) 502 tronquée à 33 o ATTRAPÉE et (j) 
+événements B muets nommés ; falsifications M6 (ordre T2/T4 inversé 
+— refusé) et M7 (longueur du nom composé) : 7 mutations attrapées. 
+BILAN : 10 111 cas verts, 28/28 R10, 1 090 verrous structurels, 
+cristallisation terrain 10/10 (sha 5360ffe2… inchangé), carte 24 
+empreintes. Livraison : superviseur-terrain17.exe (variante 
+publique) + LISEZMOI-terrain17.txt dans download/ — md5 
+e7587c46feef6f79a88e66a78c9d5729.
+
+Conséquences : terrain/layout.py (zones, .rsrc/.blob alignés, kit 
+M4, fixtures T4 + ps1, version terrain.4) ; terrain/I/sup-38-tunnel.
+md NOUVELLE + sup-09-scenario.md R3 + README charte T4 ; brouillons 
++ notations sup-38 NOUVEAUX, sup-09/sup-37/sup-35 régénérés ; 
+terrain/outils/auteur.py (TEST_TUNNEL, f60038) ; build_terrain.py 
+(M4_DIR, croisements, R10 28, versions, CONTRATS f60038/f60009 R3) ; 
+oracle_terrain.py (flux_proxies, modulo tuyaux, T4 complet) ; 
+carte_terrain.py (entête terrain.4). Aucune clé touchée (phrase D81 
+valable, conteneur 0323029a… inchangé).

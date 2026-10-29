@@ -1,17 +1,22 @@
-sup-09 · scénario (orchestrateur des tests) · révision 2
+sup-09 · scénario (orchestrateur des tests) · révision 3
 Intention : le fil ouvrier du superviseur — lancé par UN clic (win-04
 scellé, tcp-06 scellé), il enchaîne porte R10, libc, EXTRACTION du kit
-embarqué (sup-37, D49), T1 (démo M2), T2 (proxy M3), T3 (envoi Drive),
-NETTOYAGE du kit, et rend le verdict final : « SUPERVISEUR : TOUT OK » ou
-« SUPERVISEUR : ECHEC ». Chaque test est indépendant : un KO n'arrête pas
-les suivants (le constat veut TOUT le tableau, pas la première ligne). Le
-journal produit est le constat § 8.4 complet — prêt à partir dans le Drive
-par T3. Révision 2 (D49) : l'extraction précède les tests (T1/T2 lancent
-des fichiers qui sortent de CE superviseur), le nettoyage suit T3 (le
-journal seul reste posé), et le verdict de T3 ne compte QUE si la variante
-déclare l'annexe (variante publique du dépôt : T3 non applicable, pas
-échoué — la variante de livraison, elle, reste intégralement comptée,
-sémantique terrain.1 préservée).
+embarqué (sup-37, D49), T1 (démo M2), T2 (proxy M3), T4 (tunnel TLS
+M4, terrain.17), T3 (envoi Drive), NETTOYAGE du kit, et rend le verdict
+final : « SUPERVISEUR : TOUT OK » ou « SUPERVISEUR : ECHEC ». Chaque test
+est indépendant : un KO n'arrête pas les suivants (le constat veut TOUT
+le tableau, pas la première ligne). Le journal produit est le constat
+§ 8.4 complet — prêt à partir dans le Drive par T3 (qui vient APRÈS T4 :
+l'envoi embarque la voix du tunnel). Révision 2 (D49) : l'extraction
+précède les tests (T1/T2 lancent des fichiers qui sortent de CE
+superviseur), le nettoyage suit T3 (le journal seul reste posé), et le
+verdict de T3 ne compte QUE si la variante declare l'annexe (variante
+publique du dépôt : T3 non applicable, pas échoué — la variante de
+livraison, elle, reste intégralement comptée, sémantique terrain.1
+préservée). Révision 3 (D96, terrain.17) : T4 (sup-38) s'insère entre
+T2 et T3 — le port 25000 est partagé par T2 ET T4 (l'ordre est un
+invariant : le proxy de T2 est MORT avant celui de T4), et T3 reste le
+dernier (le journal téléversé contient les lignes du tunnel).
 Contrat :
   pre  : P1 lancé une fois par win-04 (drapeau DRAPEAU_WORKER) ; P2
          TAMPON_NOM/TAMPON_AFF posés (sup-01) ; P3 journal opérationnel ;
@@ -25,8 +30,11 @@ Contrat :
          drapeaux bit 0 demo / bit 1 proxy / bit 2 T3 applicable, lignes
          S04*/S05*/S06* journalisées par sup-37 lui-même ; Q4 T1 (sup-33)
          si bit 0, sinon SAUTÉ (S04B/S04D déjà dit pourquoi) ; Q5 T2
-         (sup-34) si bit 1, sinon SAUTÉ ; Q6 T3 (sup-35) si bit 2, sinon
-         SAUTÉ (S06B a dit pourquoi — variante publique) ; Q7 nettoyage
+         (sup-34) si bit 1, sinon SAUTÉ ; Q5' NOUVEAU (R3) : T4 (sup-38)
+         si bit 1 (LE MÊME bit — le tunnel M4 vit dans le MÊME proxy.exe
+         0.5.0-dev.2 que T2 teste : un seul artefact, deux facettes),
+         sinon SAUTÉ ; Q6 T3 (sup-35) si bit 2, sinon SAUTÉ (S06B a dit
+         pourquoi — variante publique) ; Q7 nettoyage
          (sup-37 .nettoyage) TOUJOURS appelé après T3 — sur les chemins
          de succès COMME d'échec, tant que l'extraction a été tentée ;
          ligne S07 ; Q8 verdict final : les verdicts COMPTÉS tous == 1 ->
@@ -37,16 +45,18 @@ Contrat :
          variante publique) n'est PAS compté du tout ; Q9 le fil se
          termine TOUJOURS (retour) — la fenêtre reste ouverte, le journal
          est complet, l'envoi a déjà été tenté, le kit est retiré.
-  inv  : I1 ordre strict porte -> libc -> extraction -> T1 -> T2 -> T3 ->
-         nettoyage -> verdict (l'envoi se fait APRÈS que le journal
-         contient tout le reste ; le nettoyage se fait APRÈS T3 —
-         l'annexe posée doit vivre le temps de l'envoi) ; I2 aucune
-         dépendance entre tests (T2 lance son proxy APRÈS la fermeture
-         de la démo : le port 25000 partagé impose la séquence — verrou
-         d'ordre dans l'oracle) ; I3 le verdict final agrège les retours
-         comptés — jamais une impression ; I4 la porte R10 précède tout
-         test (héritage win-09, R10) ; I5 le nettoyage n'efface JAMAIS
-         le journal du run (c'est le constat — seul le kit est retiré).
+  inv  : I1 ordre strict porte -> libc -> extraction -> T1 -> T2 -> T4 ->
+         T3 -> nettoyage -> verdict (l'envoi se fait APRÈS que le journal
+         contient tout le reste — les lignes du tunnel comprises ; le
+         nettoyage se fait APRÈS T3 — l'annexe posée doit vivre le temps
+         de l'envoi) ; I2 aucune dépendance entre tests (T2 et T4
+         lancent CHACUN leur proxy : le port 25000 partagé impose la
+         séquence — verrou d'ordre dans l'oracle : le proxy de T4 ne
+         naît qu'après la MORT de celui de T2) ; I3 le verdict final
+         agrège les retours comptés — jamais une impression ; I4 la
+         porte R10 précède tout test (héritage win-09, R10) ; I5 le
+         nettoyage n'efface JAMAIS le journal du run (c'est le constat —
+         seul le kit est retiré).
 Échecs :
   E1 : porte KO (image corrompue, zone .blob comprise) -> S02 KO + S91,
        rax = 0, AUCUN test lancé, AUCUN fichier posé — exactement le
@@ -58,13 +68,13 @@ Contrat :
 Vecteurs :
   V1 : round-trip 100 %.
   V2 : émulation nominale COMPLÈTE livraison (extraction 3 fichiers
-       conformes, T1/T2/T3 verts, nettoyage) — journal ÉCRAN + FICHIER
+       conformes, T1/T2/T4/T3 verts, nettoyage) — journal ÉCRAN + FICHIER
        comparés exactement à la séquence d'or (l'ordre des appels
-       observé : porte, extraction, T1, T2, T3, nettoyage, verdict),
+       observé : porte, extraction, T1, T2, T4, T3, nettoyage, verdict),
        rax = 1.
   V3 : émulation nominale publique (slot annexe vide) -> S06B, T3 SAUTÉ
-       non compté, T1/T2 verts + extraction conforme -> S90, rax = 1
-       (la variante du dépôt prouve T1/T2, pas l'envoi).
+       non compté, T1/T2/T4 verts + extraction conforme -> S90, rax = 1
+       (la variante du dépôt prouve T1/T2/T4, pas l'envoi).
   V4 : T2 KO seul -> S91 final, rax = 0, T3 quand même, nettoyage quand
        même.
   V5 : extraction demo.exe en échec (bit 0 = 0) -> T1 sauté, compté
@@ -77,8 +87,10 @@ Vecteurs :
 Fixtures    : lignes S00..S03, S90, S91 (.rdata zone données sup), lignes
               S04..S07 (sup-37, zone données sup 3).
 Provenance  : écrite-avant-code ; révision 2 née de D49 (kit embarqué —
-              l'exigence développeur « 1 seul exe qui contient tout »).
-Décisions   : D48 (v1), D49 (R2) ; squelette win-09:R4 (porte -> libc ->
+              l'exigence développeur « 1 seul exe qui contient tout ») ;
+              révision 3 née de D96 (terrain.17 — T4 : le critère M4
+              exige son run terrain).
+Décisions   : D48 (v1), D49 (R2), D96 (R3) ; squelette win-09:R4 (porte -> libc ->
               séquence) ; l'indépendance des tests est le cœur du
               superviseur (un constat partiel vaut mieux qu'un arrêt au
               premier échec) ; la règle du T3 non compté en variante

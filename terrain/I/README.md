@@ -18,13 +18,14 @@ resumable dans le dossier test (1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0) par la
 MÊME voie que drive_sync.py. Le développeur n'a plus rien à copier-coller :
 un clic, puis le constat attend le laboratoire dans le Drive.
 
-## Les tests (v1)
+## Les tests (v1, étendus terrain.17)
 
 | Test | Cible | Preuve exigée |
 |---|---|---|
 | T1 | demo.exe 0.3.0 (M2 scellé) | 17 lignes exactes, dernière = « boucle § 5 complète - DÉMO OK », exit 0 |
-| T2 | proxy.exe 0.4.0-dev.1 (M3 étape c) | bannière + 5 événements exacts + arret + exit 0, curl http/https codes 0 |
-| T3 | Drive (constat § 8.4) | 3 codes curl 0, jeton + session extraits, journal téléversé |
+| T2 | proxy.exe 0.5.0-dev.2 (héritage M3 R7 — la voix T2-visible est identique octet pour octet) | bannière + 5 événements exacts + arret + exit 0, curl http/https codes 0 |
+| T4 | proxy.exe 0.5.0-dev.2, tunnel TLS M4 (terrain étape c, D96) | page https « HTTP/1.1 200 » + événements « tunnel chiffre etabli » ; certificat invalide → 502 étiquetée 34 o OCTET POUR OCTET + ligne « certificat rejete » (powershell.exe client TCP — la forme absolue https:// n'existe dans aucun client standard) |
+| T3 | Drive (constat § 8.4) | 3 codes curl 0, jeton + session extraits, journal téléversé (APRÈS T4 : la voix du tunnel part dans l'envoi) |
 
 Un test KO n'arrête pas les suivants : le journal embarque les preuves
 brutes (journal démo intégralement recopié, flux console proxy intégralement
@@ -44,7 +45,7 @@ résumé.
 | f60022 | sup-22:R1 | 0x1D40 | 0xC0 | balayeur étiquette->valeur (pur) |
 | f60011 | sup-11:R1 | 0x1E00 | 0x200 | journal fichier horodaté (contrat win-11:R1) |
 | c30006 | tcp-06:R1 | 0x4300 | 0x40 | CreateThread (réutilisation R7) |
-| f60009 | sup-09:R1 | 0x4C00 | 0x200 | scénario : porte, libc, T1, T2, T3, verdict |
+| f60009 | sup-09:R3 | 0x4C00 | 0x200 | scénario : porte, libc, T1, T2, T4, T3, verdict (R3 : T4 entre T2 et T3) |
 | f60036 | sup-36:R1 | 0x4E00 | 0x1C0 | fichiers (lire/écrire/supprimer, préfixe répertoire, cache DIR_LONG) |
 | d40005 | win-05:R3 | 0x5000 | 0x200 | miroir écran + fichier (réutilisation R7) |
 | f60031 | sup-31:R1 | 0x5200 | 0x1C0 | lanceur de processus (CreateProcessA + tuyaux) |
@@ -52,6 +53,7 @@ résumé.
 | f60034 | sup-34:R1 | 0x5800 | 0x5C0 | test T2 — proxy M3 |
 | f60035 | sup-35:R1 | 0x5E00 | 0x4C0 | test T3 — envoi Drive |
 | f60037 | sup-37:R1 | 0x6600 | 0x400 | kit embarqué : entrée à mode ecx 0/1 — extraire / nettoyer (D49) |
+| f60038 | sup-38:R1 | 0x7200 | 0x600 | test T4 — tunnel TLS M4 (terrain.17 : .rsrc glisse à 0x7800) |
 
 Héritage byte-identique (R7, preuve contre les artefacts scellés) :
 a10002/a10003 (io M0, hello.exe), b20001-04 (libc M1, selftest.exe),
@@ -61,13 +63,18 @@ demo.exe 0.3.0-demo.9). Neuf blocs nouveaux + sup-37 (D49).
 ## Le kit embarqué (D49 — « 1 seul exe qui contient tout »)
 
 Section .blob (lecture seule, RVA 0x8000) : en-tête (longueurs) +
-demo.exe 0.3.0 (16 384 o) + proxy.exe 0.4.0-dev.1 (19 456 o) + emplacement
+demo.exe 0.3.0 (16 384 o) + proxy.exe 0.5.0-dev.2 (28 160 o, M4 scellé
+D95 — le kit embarque LE CÂBLAGE : entrée PE 0x7DC0, porte R10 .text3)
++ emplacement
+annexe (u64 longueur + 248 o). Les fixtures T4 (bannière, événements
+tunnel, 502 étiquetée) sont CROISÉES au build contre les OCTETS de
+l'artefact embarqué (pefile RVA→offset — jamais deux sources).
 annexe (u64 longueur + 248 o). Deux variantes DU MÊME code : publique
 (dépôt — emplacement à zéro, T3 non applicable) et livraison (--jetons,
 annexe D48 intégrée — livrée au dossier test, JAMAIS committée). La table
 R10 couvre en-tête + démo + proxy (intégrité à la porte) et EXCLUIT
 l'emplacement annexe (seul octet mutable de l'image). Section .rsrc
-(RVA 0x7000) : VERSIONINFO + manifeste asInvoker — l'habillage légitime
+(RVA 0x7800 depuis terrain.17 — la place de sup-38 @0x7200) : VERSIONINFO + manifeste asInvoker — l'habillage légitime
 face aux heuristiques antivirus (constat Defender du 27/10, fausse alerte
 Wacatac sur proxy.exe : binaire sans signature ni ressources = bruit ML).
 
