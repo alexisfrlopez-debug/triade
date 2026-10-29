@@ -254,6 +254,13 @@ VERSION_DEV1 = "0.5.0-dev.1"   # tunnel chiffré : 8 blocs tls + 2 révisions ht
 VERSION_U64_DEV1 = 0x00050001  # R10 : monotonie (plancher 0.4.0 = 0x00040000)
 VERSION_DEV2 = "0.5.0-dev.2"   # + le câblage : http-12:R2, porte R10 .text3 (D95)
 VERSION_U64_DEV2 = 0x00050002  # R10 : monotonie (≥ dev.1 ≥ plancher 0.4.0)
+VERSION_RC1 = "0.5.0-rc.1"     # D104 : cristallisation 10/10 + conformité § 8.2
+                               # verte — candidate soumise à la validation terrain
+VERSION_FINALE = "0.5.0"       # D104 : validation terrain consignée (17-H du
+                               # 29/10 : S49 OK + témoin HTTP/1.1 200 + S05C) ;
+                               # l'u64 de l'artefact RESTE 0x00050002 (R7 : le
+                               # scellage est un fait de carte, les octets
+                               # prouvés terrain ne bougent pas — modèle 0.4.0)
 VERSION_U64_MIN = 0x00040000   # accepté par la porte R10 (http-12:Q1 scellé)
 
 # --- Porte R10 .text3 (D95 — l'entrée #28, l'ancien terminateur remplacé) --------

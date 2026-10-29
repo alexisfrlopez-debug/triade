@@ -402,3 +402,29 @@ Stage Summary:
   (sinon 502 = amont, réessayer — D102 déjà prouvé) ; puis v0.6.0 axes
   2-3 (CF2-Shamir, sceau I) selon D86/D87 ; D57 avec le journal démo
   complet
+
+## Task ID 31 — D104 : M4 scellé 0.5.0 — le run 17-H a livré le jugement et le témoin (2026-10-29)
+
+- JOURNAUX 17-H RAPATRIÉS (SA, md5 MATCH) avec le dépôt du superviseur
+  lui-même : md5 ab8afc77… == livraison D103 (identité du run prouvée) ;
+  S05C 2b6481a1 ✓ (kit D102 octet pour octet)
+- VERDICT : doublon MORT sur machine réelle (S11 detectee + S12 clic
+  envoyé + demo_journal 14 lignes — impossible pour 17-G) ; T1 KO honnête
+  D57 PRÉVU (échange réseau échec + 0xC0000005 — l'intervalle exact en
+  main) ; T2 OK ; **T4 S49 OK + témoin HTTP/1.1 200** (640 o example.com
+  en clair par le tunnel, badssl 34 o exacts, S47=0) — juges M4 verts
+  ENSEMBLE, première fois avec témoin 200
+- CONFORMITÉ § 8.2 écrite pour M4 (m4/conformite_profil.py, 44 contrôles
+  + sentinelle oracle ; trois leçons de constat : empan de section, hints
+  sans padding, padding compté depuis la queue)
+- CRISTALLISATION 10/10 (verifier × graines 20261029-37 ; 49 blocs) ;
+  _sceller porté (rc/final, modèle D74) ; cérémonie : 0.5.0-rc.1 →
+  **0.5.0 FINALE** (frag-bld une occurrence, fragments re-chiffrés,
+  carte re-signée Ed25519) — proxy.exe INTACT (2b6481a1…, 28 160 o : le
+  scellage est un fait de carte, la preuve terrain reste la preuve du
+  binaire scellé) ; anti-rollback ARMÉ (testé), R8 indépendant 49
+  empreintes artefact 0.5.0
+- M4 CLOS (§ 16) : balise 0.5.0 immuable, défaut → 0.5.1 (R4)
+- Suite : v0.6.0 axes 2-3 (CF2-Shamir, sceau I) D86/D87 ; D57 avec
+  l'intervalle exact (M2 scellé, 0.3.x à contrat stable si ouvert) ;
+  partage Éditeur /test au SA toujours attendu (refresh OAuth ~05/11)

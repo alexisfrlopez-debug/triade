@@ -1328,6 +1328,71 @@ def verifier(graine: int, volume: str) -> int:
     return 0
 
 
+def _sceller(nouvelle_version: str, exigences: str) -> int:
+    """Scellage M4 (modèle m3 D74 / m1 D32 / m2 D43) : cristallisation 10/10 +
+    conformité § 8.2 verte + bascule de balise dans frag-bld. L'artefact
+    n'est PAS touché — le scellage est un fait de carte ; proxy.exe reste
+    byte-identique à l'artefact prouvé terrain (md5 2b6481a1…, sha256
+    b9264e0b… — les octets du run 17-H : S49 OK + témoin HTTP/1.1 200)."""
+    print(f"=== M4 : scellage {nouvelle_version} ({exigences}) ===")
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplete : {incomplets} — 10 verifications requises (R6)")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # Conformité § 8.2 (m4/conformite_profil.py — D104) : suite exigée à
+    # chaque cristallisation rc/finale ; chargée sous un nom distinct (elle
+    # recharge build_m4 comme module : aucune collision d'état).
+    cp = _charger_module("conformite_profil_m4", os.path.join(ICI, "conformite_profil.py"))
+    ok_conf, lignes_conf = cp.executer()
+    print("\n".join(lignes_conf[-3:]))
+    if not ok_conf:
+        raise EchecBuild(f"suite de conformite non verte — {nouvelle_version} refuse")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+    if nouvelle_version == L.VERSION_FINALE:
+        ancienne = L.VERSION_RC1
+        occurrences = bld.count(f"version={ancienne}")
+        if occurrences != 1:
+            raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
+                             f"({occurrences} occurrence(s)) — scellage final refuse (fail-closed)")
+    else:
+        ancienne = L.VERSION_DEV2
+    bld = bld.replace(f"version={ancienne}", f"version={nouvelle_version}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = cm.empreinte_racine(nouveaux)
+    entete = cm.construire_entete(racine)
+    _, graine_cles = cm.charger_secrets(interactif=False)
+    prive, pub = cm.paire_cles(graine_cles)
+    cm.ecrire_carte(entete, nouveaux, cm.signer(prive, entete, nouveaux), pub)
+
+    # Le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt")
+    if os.path.exists(chemin_tab):
+        with open(chemin_tab, "r", encoding="utf-8") as f:
+            tab = f.read()
+        tab = tab.replace(f"version={ancienne}", f"version={nouvelle_version}")
+        tab = tab.replace(f"{ancienne} conforme", f"{nouvelle_version} conforme")
+        with open(chemin_tab, "w", encoding="utf-8") as f:
+            f.write(tab)
+    print(f"[balise] {nouvelle_version} scellee (immuable § 9 ; defaut -> 0.5.1 "
+          f"a contrat stable, R4) ; proxy.exe INTACT (md5 2b6481a1…, "
+          f"28 160 o — le scellage est un fait de carte)")
+    return 0
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     try:
@@ -1335,6 +1400,16 @@ if __name__ == "__main__":
             graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 20261028
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
             sys.exit(verifier(graine, volume))
+        if "--sceller-rc" in args:
+            sys.exit(_sceller(L.VERSION_RC1,
+                              "cristallisation R6 10/10 + conformite § 8.2 + criteres du "
+                              "jalon M4 (HTTPS en transit via Schannel ; echec propre sur "
+                              "certificat invalide — prouves par les runs 17-C a 17-H)"))
+        if "--sceller-final" in args:
+            sys.exit(_sceller(L.VERSION_FINALE,
+                              "R6 + conformite + validation terrain consignee (T4 du "
+                              "superviseur 17-H du 29/10 : S49 OK + temoin HTTP/1.1 200 "
+                              "+ S05C md5 2b6481a1, octets inchanges)"))
         volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
         graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 20261028
         sys.exit(construire(volume, graine))

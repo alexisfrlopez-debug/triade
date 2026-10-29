@@ -909,7 +909,7 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M1 | Blocs réutilisables | oracle 100 % sur la mini-libc ; première cristallisation ; adresses stables démontrées ; budgets tokens instrumentés (première mesure) | **franchi** 26/10/2026 — balise 0.2.0 (D32) |
 | M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul | **franchi** 27/10/2026 — balise 0.3.0, boucle § 5 démontrée sur machine réelle (D43) |
 | M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **franchi** 28/10/2026 — balise 0.4.0 (D74) |
-| M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | à venir |
+| M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | **franchi** 29/10/2026 — balise 0.5.0 (D104 : run 17-H — S49 OK + témoin HTTP/1.1 200 + S05C 2b6481a1) |
 | M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives | à venir |
 | M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | à venir |
 | M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | à venir |

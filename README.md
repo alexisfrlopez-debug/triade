@@ -171,7 +171,7 @@ livrables périmés archivés dans le sous-dossier `ARCHIVE/` de la racine (avec
 LISEZMOI-ARCHIVE.txt, via l'outil du dépôt `scripts/drive_archiver.py` — déplacement
 vérifié md5, jamais de suppression) ; la racine ne porte plus que les courants
 (instructions, miroir, jetons, coffre-fort, `demo.exe` + LISEZMOI à jour, dossier test).
-Suite : **M4 ouvert (D77) — étape (b) CLOSE (D94)** — tunnel chiffré Schannel, couche I écrite-avant-code
+Suite : **M4 SCELLÉ — balise finale 0.5.0 (D104, 29/10)** — tunnel chiffré Schannel, le run 17-H a livré le jugement et le témoin ENSEMBLE (S49 OK + témoin HTTP/1.1 200 sur les octets 2b6481a1 inchangés ; le scellage est un fait de carte — modèle 0.4.0/D74). Couche I écrite-avant-code
 (`m4/I/` : domaine `tls` créé — 8 spécifications + charte des contrats
 cryptographiques [fail-closed intégral, certificat invalide = 502 propre, zéro
 divulgation, compensation exacte] + révisions http-08:R2/http-10:R2, blocs
@@ -399,6 +399,29 @@ relais tls-08 — l'anomalie 13 o du 17-C reste ouverte).** Canal Drive
 partage Éditeur du dossier test à
 z-ai-811@physichong.iam.gserviceaccount.com à poser côté développeur.
 Terrain : D57 (WER) seul point ouvert.
+
+**D104 : M4 SCELLÉ à la balise finale 0.5.0.** Le run 17-H (29/10 11:50)
+a livré le jugement et le témoin ENSEMBLE pour la première fois : « S49 T4
+VERDICT OK (console conforme) » + témoin « HTTP/1.1 200 OK » (example.com
+640 o EN CLAIR par le tunnel — Date 10:50:47 GMT, pendant le run) + S05C
+md5 2b6481a1 ✓ + S47 exit=0 ; le doublon est mort SUR MACHINE RÉELLE (S11
+detectee + S12 clic envoyé + demo_journal 14 lignes — impossible en 17-G) ;
+T1 KO honnête de la panne D57 (échange réseau démo + 0xC0000005, l'intervalle
+exact en main — M2 scellé, distinct du tunnel). SCELLAGE (modèle 0.4.0/D74 :
+l'artefact n'est PAS touché) : conformité § 8.2 écrite pour M4
+(`m4/conformite_profil.py`, 44 contrôles + sentinelle oracle — trois leçons
+de constat : empan de section = taille réelle, hints/names sans padding,
+padding nop compté depuis la queue) ; cristallisation portée à 10/10
+(49 blocs, graines 20261029-37) ; `_sceller` porté à build_m4.py ; cérémonie
+0.5.0-rc.1 → **0.5.0 FINALE** (validation terrain consignée) ; frag-bld
+basculé exactement une occurrence, carte re-signée Ed25519, anti-rollback
+ARMÉ (« carte scellée (0.5.0) : reconstruction interdite »), R8 indépendant
+49 empreintes artefact 0.5.0. proxy.exe INTACT : md5 2b6481a1…, sha256
+b9264e0b…, 28 160 o — les octets mêmes que le terrain a prouvés. La chaîne
+terrain : 17-C (critère câblé) → 17-D (S47=0, témoin 502) → 17-E (fuite I2
+morte) → 17-F (prévol) → 17-G (D102 prouvé en clair) → 17-H (juge et témoin
+verts ensemble). Suite : v0.6.0 axes 2-3 (CF2-Shamir, sceau I) selon
+D86/D87 ; D57 avec l'intervalle exact (0.3.x à contrat stable si ouvert).
 
 ## Avertissement
 

@@ -1,0 +1,1 @@
+verte (conformite_profil.py : elements 1-7 + controle de jalon M4 : 44 controles PASS ; element 5 : porte R10 constatee VIVANTE, moteur de patch hors perimetre M4 (jalon M5) ; controle de jalon : oracle differentiel 30 cas verts, graine 20261029, 18.0s ; artefact proxy.exe md5 2b6481a1... - les octets prouves par le terrain 17-H du 29/10)

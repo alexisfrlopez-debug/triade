@@ -6617,3 +6617,99 @@ D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
 du dépôt est la balise COURANTE terrain.17-H f947b605… — artefact vivant
 re-scellé par version ; le proxy M4 du dépôt est la balise 0.5.0-dev.2
 D102 b9264e0b…).
+
+## Entrée 90 — D104 (29/10, 12:35) : LE RUN 17-H A PARLÉ — M4 SCELLÉ à la balise finale 0.5.0 (S49 OK + témoin HTTP/1.1 200 sur les octets 2b6481a1 inchangés ; la conformité § 8.2 écrite pour M4, la cristallisation portée à 10/10, l'anti-rollback armé)
+
+**Contexte.** Le développeur a déposé les journaux du run 17-H (« journaux
+envoyés », /test du Drive — rapatriés par le compte de service, 4 fichiers
+md5 MATCH). L'attente de l'Entrée 89 était binaire : S49 OK + témoin
+« HTTP/1.1 200 » → scellage 0.5.0. Le run a livré PLUS que l'attente.
+
+**Le verdict du run 17-H (terrain_20261029_115002.txt).**
+1. IDENTITÉ : le dépôt /test contenait AUSSI superviseur-terrain17h.exe —
+   md5 ab8afc77… == la livraison D103 exactement (la preuve que le run a
+   joué le 17-H, pas un ancien) ; S05C md5 proxy 2b6481a1 ✓ (le kit D102
+   en place, octet pour octet).
+2. LE DOUBLON EST MORT, PREUVE COMPORTEMENTALE : « S11 T1 fenetre demo
+   detectee » + « S12 T1 clic TOUT DEMARRER envoye » — deux lignes
+   impossibles pour 17-G — et demo_journal.txt porte QUATORZE lignes
+   complètes (la fenêtre démo a vécu sa vie de test PILOTÉE : L00 → L03 →
+   scénario M2 complet). La réparation du constat développeur (« règle ça
+   en priorité sinon le test n'est pas fiable ») est PROUVÉE sur machine
+   réelle : le test redevient fiable.
+3. T1 KO HONNÊTE, EXACTEMENT PRÉVU (D57) : la démo scellée M2 meurt de sa
+   panne connue — « réseau : échange en échec », S13 termine
+   code=3221225477 (0xC0000005), S15 NON conforme. La donnée que D57
+   attendait depuis quatre jours est EN MAIN : l'intervalle exact est
+   « après L03, à l'échange réseau, en sortie de scénario ».
+4. T2 OK : HTTP 640 o / HTTPS 577 o, 7 lignes console, verdict conforme.
+5. **T4 S49 VERDICT OK (console conforme) + LE TÉMOIN « HTTP/1.1 200 OK »**
+   (example.com, 640 o, Date: Thu 29 Oct 10:50:47 GMT — PENDANT le run) :
+   le tunnel chiffre établi, le scan PAR TYPE D102 a livré LA PAGE COMPLÈTE
+   EN CLAIR au client PowerShell, badssl rejeté proprement (« certificat
+   rejete », 34 o exacts), S47 exit proxy=0 (compensation intégrale).
+   S91 « SUPERVISEUR : ECHEC » ne vient QUE de T1/D57 — T2 et T4, les
+   juges M4, sont verts ENSEMBLE pour la première fois avec le témoin 200.
+
+**Le scellage 0.5.0 (modèle 0.4.0 / D74 — « l'artefact n'est PAS touché,
+le scellage est un fait de carte »).**
+1. CONFORMITÉ § 8.2 ÉCRITE POUR M4 : m4/conformite_profil.py (D104) —
+   44 contrôles, éléments 1-7 constatés depuis l'artefact scellé (COFF/
+   PE32+ ; INT kernel32 ×10 + ws2_32 ×13 + secur32 ×7, hints/names à
+   lecture séquentielle ; les SEPT appels secur32 visités par call [rip],
+   zéro appel hors plages IAT ; DEP/NX + ASLR + HIGH_ENTROPY_VA actifs,
+   CFG rapporté ; table HRESULTS 13 entrées + VERDICT_FATAL 6 ; porte R10
+   VIVANTE — 28 entrées, la somme .text3 déclarée == recalculée ; round-trip
+   12 blocs M4 + 27 héritage octet-identiques + scellé M3 présent ; 28 160 o
+   inchangés, tls-07:R2 527 o dans le slot 768) + le contrôle de jalon
+   (oracle différentiel volume reduit, graine datée — miroir du fuzzing
+   sentinelle M3). TROIS LEÇONS DE CONSTAT en cours de route : l'empan
+   d'une section est SA taille réelle (un span large laisse .text avaler
+   .rdata et fait mentir le mapping), les entrées hints/names se serrent
+   SANS padding (un hint peut vivre sur une adresse IMPAIRE), la mesure
+   d'un code compte le padding nop DEPUIS LA QUEUE (un 0x90 isolé peut
+   vivre dans un disp32). Verte, reproductible, écrite dans
+   m4/conformite.txt.
+2. CRISTALLISATION PORTÉE À 10/10 : build_m4.py --verifier, graines
+   20261029-20261037 (M3 524 verrous + M4 482 verrous + oracle 560 cas
+   verts + R8 49 empreintes, à CHAQUE passage) — 49 blocs à 10/10.
+3. _SCELLER PORTÉ À build_m4.py (--sceller-rc / --sceller-final, modèle
+   m3 D74) + VERSION_RC1/VERSION_FINALE au layout. La balise u64 de
+   l'artefact RESTE 0x00050002 (R7 : les octets prouvés terrain ne
+   bougent pas — le scellage est un fait de carte).
+4. CÉRÉMONIE : **0.5.0-rc.1** (cristallisation + conformité + critères du
+   jalon — HTTPS via Schannel et échec propre sur certificat invalide,
+   prouvés par les runs 17-C à 17-H), puis **0.5.0 FINALE** (validation
+   terrain consignée : T4 du superviseur 17-H — S49 OK + témoin
+   HTTP/1.1 200 + S05C md5 2b6481a1, octets inchangés). frag-bld basculé
+   (exactement une occurrence, fail-closed), fragments re-chiffrés, carte
+   re-signée Ed25519.
+5. POST-SCELLAGE : anti-rollback ARMÉ (« carte scellée (0.5.0) :
+   reconstruction interdite » — testé) ; R8 re-vérifié indépendamment :
+   49 empreintes conformes, artefact 0.5.0 ; tableau de bord version=0.5.0 ;
+   proxy.exe INTACT md5 2b6481a1…, sha256 b9264e0b…, 28 160 o.
+
+**Ce que ça établit.** Le jalon M4 est CLOS (§ 16 : HTTPS en transit via
+Schannel — le témoin 200 le prouve de bout en bout ; échec propre sur
+certificat invalide — badssl 34 o exacts, encore). La balise 0.5.0 est
+immuable (§ 9) ; défaut ultérieur → 0.5.1 à contrat stable (R4). La
+chaîne terrain est complète : 17-C (critère câblé) → 17-D (S47=0,
+témoin 502) → 17-E (fuite I2 morte) → 17-F (prévol) → 17-G (D102 prouvé
+en clair) → 17-H (le juge et le témoin verts ENSEMBLE).
+
+**Suite.** v0.6.0 axes 2-3 (CF2-Shamir, sceau I) selon D86/D87 ; D57 avec
+l'intervalle exact en main (échange réseau démo, M2 scellé — correction
+0.3.x à contrat stable si le développeur l'ouvre) ; canal Drive : le
+partage Éditeur du dossier test au compte de service reste la parade
+définitive (le refresh_token OAuth relais D102 meurt ~05/11, mode
+Testing).
+
+Docs : Entrée 90, DECISIONS D104, worklog (Task ID 31), README (état M4
+CLOS), PROTOCOLE_TRIADE.md § 16 (M4 franchi). Commit D104.
+
+Aucune clé touchée : RIEN à remettre par cérémonie (phrase de contrôle
+D81 valable, conteneur 0323029a… inchangé, sentinelles intactes — proxy
+0.4.0 dd12b649…, demo 73c064fb…, hello, selftest, echo ; le superviseur
+du dépôt est la balise COURANTE terrain.17-H f947b605… ; le proxy M4 du
+dépôt est la balise FINALE 0.5.0 — les MÊMES octets que le run 17-H a
+prouvés, md5 2b6481a1…, re-signés par la carte de génération 6).
