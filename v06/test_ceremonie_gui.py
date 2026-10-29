@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """test_ceremonie_gui.py — falsifiabilité du MAÎTRE DE CÉRÉMONIE (D107,
 compléments correctif D109, phrase personnelle D110, attachement --depot
-D111).
+D111, chemins choisis dans la fenêtre D112).
 
 Le GUI est un HABIT : ce qui doit être prouvé, c'est son contrôleur —
 la couche qui décide, écrit ou refuse. Ce test l'attaque :
@@ -47,6 +47,14 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        dossier sans v06/coffre_cf2.py = profil désactivé (garde intacte) ;
        définir_racine_depot bascule TOUT le profil (disponibilité, import
        v06.coffre_cf2) et le rétablissement est vérifié ;
+  T9   clé à la main (D112) : graine_texte signe IDENTIQUEMENT au fichier
+       (majuscules acceptées), les saisies fautives (63 hex, non-hex,
+       espace interne, vide, aucun des deux) sont des refus NOMMÉS sans
+       écriture, et la graine ne paraît JAMAIS dans le texte de retour ;
+  T10  chemins coffre CF1 par le relais (D112) : --chemin choisi pour
+       statut/verifier (argument GLOBAL du parseur, avant la
+       sous-commande), migrer --depuis le conteneur choisi — bout en bout
+       sur coffre labo à chemin PERSONNALISÉ, CF1 laissé INTACT ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -427,6 +435,148 @@ def t8_phrase_personnelle(rep):
            phrase=ancienne.decode("ascii"), nouvelle_phrase="   ")
 
 
+# ---------------------------------------------------------------------------
+# T9 — clé à la main (D112) : la graine retapée signe pareil, les fautes
+# sont nommées, rien ne fuite
+# ---------------------------------------------------------------------------
+def t9_cle_a_la_main(rep):
+    print("T9 — clé à la main (graine_texte, D112)")
+    privee = os.path.join(rep, "cle-I-privee.txt")
+    publique = os.path.join(rep, "cle-publique-I.txt")
+    a_signer = os.path.join(rep, "a-signer.txt")
+    gui.hl_generer(privee, publique)
+    graine = gui._lire_graine_privee(privee)        # le TEST peut lire : le GUI, jamais
+    with open(a_signer, "w", encoding="ascii") as f:
+        f.write("m0/test ALPHA " + secrets.token_hex(32) + "\n"
+                "m4/test BETA " + secrets.token_hex(32) + "\n")
+
+    # 1. la saisie manuelle signe IDENTIQUEMENT au fichier (même graine)
+    sig_fichier = os.path.join(rep, "sig-fichier.txt")
+    sig_manuelle = os.path.join(rep, "sig-manuelle.txt")
+    texte_f = gui.hl_signer(a_signer, privee, sig_fichier)
+    texte_m = gui.hl_signer(a_signer, None, sig_manuelle,
+                            graine_texte=graine.hex())
+    with open(sig_fichier, "r", encoding="ascii") as f:
+        lignes_f = f.read()
+    with open(sig_manuelle, "r", encoding="ascii") as f:
+        lignes_m = f.read()
+    verifie("t9-saisie-signe-identiquement-au-fichier",
+            lignes_f == lignes_m and len(lignes_f.splitlines()) == 2,
+            f"fichier={lignes_f[:40]!r} main={lignes_m[:40]!r}")
+    verifie("t9-texte-mentionne-la-source-manuelle",
+            "saisie manuelle" in texte_m and privee not in texte_m,
+            texte_m[:120])
+    verifie("t9-texte-fichier-mentionne-le-fichier", privee in texte_f)
+
+    # 2. majuscules acceptées (retype papier), mêmes octets de graine
+    sig_maj = os.path.join(rep, "sig-maj.txt")
+    gui.hl_signer(a_signer, None, sig_maj,
+                  graine_texte=graine.hex().upper())
+    with open(sig_maj, "r", encoding="ascii") as f:
+        verifie("t9-majuscules-acceptees-memes-signatures",
+                f.read() == lignes_f)
+
+    # 3. la graine ne paraît JAMAIS dans les textes de retour
+    hexa = graine.hex()
+    verifie("t9-graine-absente-des-textes",
+            hexa not in texte_m and hexa not in texte_f
+            and hexa.upper() not in texte_m)
+
+    # 4. saisies fautives : refus NOMMÉS, RIEN d'écrit (fail-closed)
+    fautives = {
+        "t9-soixante-trois-hex-refuses": graine.hex()[:-1],
+        "t9-caractere-non-hex-refuse": graine.hex()[:63] + "z",
+        "t9-espace-interne-refuse": graine.hex()[:32] + " "
+                                    + graine.hex()[32:],
+        "t9-soixante-cinq-refuse": graine.hex() + "0",
+    }
+    for nom, saisie in fautives.items():
+        cible = os.path.join(rep, nom + ".txt")
+        refuse(nom, gui.hl_signer, a_signer, None, cible,
+               graine_texte=saisie)
+        verifie(nom + "-rien-ecrit", not os.path.exists(cible))
+    refuse("t9-saisie-vide-refusee", gui.hl_signer, a_signer, None,
+           os.path.join(rep, "x.txt"), graine_texte="   ")
+    refuse("t9-fichier-ni-saisie-refuses", gui.hl_signer, a_signer, None,
+           os.path.join(rep, "x.txt"))
+    refuse("t9-fichier-introuvable-refuse", gui.hl_signer, a_signer,
+           os.path.join(rep, "introuvable-cle.txt"),
+           os.path.join(rep, "x.txt"))
+
+    # 5. la vérification croise les DEUX sources (interop claire)
+    ok, texte = gui.hl_verifier(a_signer, sig_manuelle, publique)
+    verifie("t9-remise-manuelle-verifiee-verte", ok, texte)
+
+
+# ---------------------------------------------------------------------------
+# T10 — chemins coffre CF1 choisis (D112) : --chemin/--depuis par le relais
+# ---------------------------------------------------------------------------
+def t10_chemins_coffre(rep):
+    print("T10 — chemins coffre CF1 (--chemin / --depuis par le relais, D112)")
+    # un coffre labo à un chemin PERSONNALISÉ (nulle part dans .keys/)
+    coffre = os.path.join(rep, "ailleurs", "mon-coffre.bin")
+    os.makedirs(os.path.dirname(coffre), exist_ok=True)
+    phrase_f = os.path.join(rep, "phrase.txt")
+    code, texte = gui.executer_cli(
+        "coffre_fort.py",
+        ["--chemin", coffre, "init", "--generer-phrase",
+         "--phrase-vers-fichier", phrase_f],
+        au_racine=True)
+    verifie("t10-init-chemin-personnalise-code0", code == 0, texte)
+    with open(phrase_f, "rb") as f:
+        phrase = f.read().strip()
+    entree = os.path.join(rep, "entree.txt")
+    with open(entree, "wb") as f:
+        f.write(b"SECRET-LABO-T10")
+    code, texte = gui.executer_cli(
+        "coffre_fort.py",
+        ["--chemin", coffre, "ajouter", "LABO", "temoin",
+         "--depuis-fichier", entree],
+        phrase=phrase.decode("ascii"), au_racine=True)
+    verifie("t10-entree-ajoutee-chemin-personnalise", code == 0, texte)
+
+    # la forme EXACTE des boutons GUI : --chemin AVANT la sous-commande
+    code, texte = gui.executer_cli(
+        "coffre_fort.py", ["--chemin", coffre, "statut"], au_racine=True)
+    verifie("t10-statut-chemin-avant-souscommande-code0",
+            code == 0 and "coffre-fort" in texte.lower(), texte)
+    code, texte = gui.executer_cli(
+        "coffre_fort.py", ["--chemin", coffre, "verifier"],
+        phrase=phrase.decode("ascii"), au_racine=True)
+    verifie("t10-verifier-chemin-choisi-code0", code == 0, texte)
+
+    # un chemin FAUX reste un échec nommé (le champ est la vérité — pas de
+    # repli silencieux vers .keys/ : le relais nomme le conteneur absent)
+    code, texte = gui.executer_cli(
+        "coffre_fort.py",
+        ["--chemin", os.path.join(rep, "coffre-absent.bin"), "statut"],
+        au_racine=True)
+    verifie("t10-chemin-faux-echec-nomme", code != 0
+            and "coffre-absent.bin" in texte, texte[:160])
+
+    # migrer --depuis le conteneur choisi : conteneur/gardes/config labo
+    conteneur_cf2 = os.path.join(rep, "coffre-cf2.bin")
+    config = os.path.join(rep, "config_cf2.json")
+    gardes = os.path.join(rep, "gardes")
+    code, texte = gui.executer_cli(
+        "coffre_cf2.py",
+        ["migrer", "--depuis", coffre, "--conteneur", conteneur_cf2,
+         "--racine-gardes", gardes, "--config", config],
+        phrase=phrase.decode("ascii"))
+    verifie("t10-migrer-depuis-chemin-choisi-code0", code == 0, texte)
+    verifie("t10-cf1-laisse-intact", os.path.isfile(coffre))
+    verifie("t10-cf2-ne-chez-les-gardes",
+            all(os.path.isfile(os.path.join(gardes, f"g{i}",
+                                            f"fragment-{i}.cf2f"))
+                for i in range(1, 6)))
+    code, texte = gui.executer_cli(
+        "coffre_cf2.py", ["statut", "--config", config])
+    verifie("t10-cf2-statut-config-choisie-code0", code == 0, texte)
+    _, base = cf1.charger(coffre, phrase)
+    verifie("t10-entree-cf1-migree",
+            cf1._trouver(base, "LABO", "temoin") is not None)
+
+
 def x1_import_headless():
     print("X1 — import headless + selftest embarqué")
     verifie("x1-import-sans-fenetre", not hasattr(gui, "_fenetre_cree")
@@ -631,7 +781,7 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111) — dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111 · D112) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -639,6 +789,10 @@ def main() -> int:
         t567f1(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t8-") as rep:
         t8_phrase_personnelle(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t9-") as rep:
+        t9_cle_a_la_main(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t10-") as rep:
+        t10_chemins_coffre(rep)
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

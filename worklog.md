@@ -600,3 +600,87 @@ Stage Summary:
 - Suite : redépôt du kit Drive (ceremonie_gui.py + LISEZMOI + MANIFESTE)
   si l'OAuth relais vit encore (~05/11) ; cérémonies réelles (clé-I +
   coffre-CF2) ; D57 ; partage Éditeur /test au SA
+
+---
+Task ID: 29
+Agent: Z.ai (agent principal)
+Task: demande développeur 30/10 (suite D111) — « j'aimerais, dans le GUI,
+pouvoir choisir le chemin dossier du repo local, choisir le chemin du
+coffre, et choisir le chemin du fichier de clé (ou entrer la clef à la
+main) » — D112 : les TROIS chemins se choisissent DANS la fenêtre.
+
+Work Log:
+- LE DÉPÔT SE CHOISIT DANS LA FENÊTRE (la suite logique de D111 — la ligne
+  de commande devient un RACCOURCI, plus une obligation) : bouton
+  « Choisir le dossier du dépôt… » à l'accueil ET sur la page dépôt
+  indisponible ; garde Inchangée v06/coffre_cf2.py (le mauvais dossier =
+  refus NOMMÉ par dialog, attachement et pages INCHANGÉS — fail-closed) ;
+  le bon dossier appelle definir_racine_depot(candidat, "dossier choisi
+  (GUI)") puis _rebâtir_pages() : destruction/reconstruction des trois
+  pages (tout ce qui capture le dépôt à la construction suit — config CF2,
+  coffre CF1, disponibilité, textes d'accueil), journal/exécuteur/barre de
+  verdict vivant HORS des pages SURVIVENT (l'historique n'est jamais
+  effacé) ; refus pendant qu'une cérémonie tourne (occupe)
+- LE COFFRE CF1 SE DÉSIGNÉ (onglet CF2, nouvelle première section
+  « Coffre CF1 — conteneur et phrase ») : champ coffre_fort.bin + Parcourir
+  + état vivant (TROUVÉ·taille / ABSENT / vide) ; le champ est la VÉRITÉ —
+  _coffre_cf1_exige refuse le vide avec échec nommé, AUCUN repli
+  silencieux vers .keys/ ; câblé aux QUATRE actes : statut CF1
+  (--chemin X statut, en-tête clair, aucune phrase), verifier CF1
+  (--chemin X verifier + phrase par temporaire détruit), changer-phrase
+  (--chemin X AVANT la sous-commande — argument global du parseur) et
+  migrer (--depuis X) ; la phrase de contrôle DÉMÉNAGE de la section
+  migration vers la section coffre : UNE frappe pour vérifier PUIS migrer
+  (le préalable « coffre sain » devient un bouton) ; le dialogue de
+  migration nomme le conteneur lu
+- LA CLÉ I : FICHIER OU SAISIE MANUELLE (onglet Signer, le cas
+  RÉCUPÉRATION PAPIER) : deux boutons radio, la ligne inactive est
+  GRISEÉ ; _graine_depuis_saisie accepte 64 hex majuscules OU minuscules
+  (une retape papier ne mérite pas un refus de casse — hex est hex) et
+  refuse nommément longueur fausse/caractère non hex (position nommée,
+  contenu jamais divulgué) ; hl_signer gagne graine_texte=None — la même
+  graine produit les MÊMES signatures quelle que soit la source, l'échec
+  est nommé et n'écrit rien ; l'entrée est MASQUÉE (•) avec case
+  « afficher », verdict vivant (n/64 hex, position de faute, JAMAIS le
+  contenu), pré-validation fail-closed AVANT lancement, champ EFFACÉ +
+  « afficher » réinitialisé dès l'acte lancé, graine absente du journal ET
+  du verdict (discipline « jamais à l'écran » tenue : le GUI n'affiche
+  que si l'utilisateur le demande, pour vérifier sa frappe)
+- DEUX DÉFAUTS ATTRAPÉS PAR LA FUMÉE AVANT LIVRAISON : (1) la saisie
+  fautive partait en fil d'exécution pour mourir au journal — désormais
+  _graine_depuis_saisie est appelée DANS le handler, refus nommé par
+  dialog AVANT tout lancement ; (2) action() n'accepte pas de kwargs —
+  statut CF2 passait au_racine= en direct, TypeError à l'exécution ;
+  functools.partial comme tous les autres relais au_racine
+- PREUVES : test_ceremonie_gui.py 96 PASS / 0 ÉCHEC (T9 clé à la main, 17
+  contrôles : saisie signe IDENTIQUEMENT au fichier, majuscules acceptées,
+  63 hex/non-hex/espace interne/trop long/vide/ni fichier ni saisie =
+  refus NOMMÉS sans écriture, graine absente des textes, remise vérifiée
+  verte ; T10 chemins coffre, 10 contrôles : init/ajouter/statut/verifier
+  à chemin PERSONNALISÉ, --chemin AVANT la sous-commande, chemin faux =
+  échec nommé, migrer --depuis (CF1 INTACT, 5 fragments chez les gardes,
+  entrée témoin migrée, statut CF2 config choisie)) ; fumée D112 (Xvfb,
+  scripts/fumee_gui_chemins_d112.py au bac à sable) 33/33 sur copie
+  AUTONOME (le scénario exact de la demande) : mauvais dossier → refus
+  nommé + rien ne bouge ; bon dossier → pages rebâties + config ET coffre
+  CF1 dans le dépôt attaché + journal survit + relais sceau etat code 0 ;
+  clé manuelle → mêmes signatures, champ effacé, graine nulle part,
+  fautive refusée avant lancement, champs grisés ; coffre labo hors
+  .keys/ → statut+verifier par relais, coffre RÉEL md5 inchangé ;
+  NON-RÉGRESSION : selftest 7/7, test_cf2 43/43, test_sceau_I 47/47,
+  fumées GUI 19 contrôles et D111 10 contrôles VERTES ; download/ ↔ v06/
+  identiques (md5 4fe24995…)
+- Docs : JOURNAL Entrée 97, DECISIONS D112, LISEZMOI-ceremonie-GUI v1.4
+  (quatre façons de se connecter, sections « LE COFFRE CF1 SE CHOISIT » et
+  « LA CLÉ PRIVÉE I : FICHIER OU SAISIE MANUELLE », compteurs honnêtes
+  96/19/10/33), worklog (Task ID 29) ; aucune clé touchée : RIEN à
+  remettre par cérémonie (phrase D81 valable, conteneur 0323029a…
+  inchangé, sentinelles intactes)
+
+Stage Summary:
+- D112 ACCOMPLI : les trois chemins du développeur — dossier du dépôt,
+  coffre CF1, clé I (fichier ou main) — se choisissent DANS la fenêtre,
+  chacun avec sa garde fail-closed nommée, prouvés 96 PASS + 33 fumée
+- Suite : redépôt du kit Drive (v1.4 + LISEZMOI + MANIFESTE) si l'OAuth
+  relais vit encore ; cérémonies réelles (clé-I + coffre-CF2, le GUI est
+  maintenant complet pour) ; D57 ; moteur sentinel Windows

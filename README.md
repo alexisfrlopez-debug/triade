@@ -485,7 +485,17 @@ idempotent (`scripts/drive_ceremonie.py`), aucun secret déposé.
 un faux chemin est un échec nommé (code 2), la garde
 `v06/coffre_cf2.py` reste LA même pour toutes les voies, et l'accueil
 affiche le dépôt attaché et sa source ; la réponse à « tester en local
-ou depuis le repo git ». Suite :
+ou depuis le repo git ». **Les TROIS chemins se choisissent DANS la
+fenêtre (D112, 30/10 — v1.4)** : le dossier du dépôt (bouton
+« Choisir le dossier du dépôt… », re-attachement à chaud, pages
+rebâties, journal préservé), le coffre CF1 (champ de l'onglet CF2, câblé
+à `--chemin` pour statut/verifier/changer-phrase et `--depuis` pour la
+migration, aucun repli silencieux, état vivant TROUVÉ/ABSENT), et la
+clé I (onglet Signer : fichier OU saisie manuelle des 64 hex — masquée,
+validée vivante, pré-validée fail-closed avant lancement, effacée après
+l'acte, jamais dans le journal) ; falsifiabilité 96/96 (T9/T10 nouveaux :
+clé à la main et chemins coffre par relais) + fumée D112 33/33 sur copie
+autonome. Suite :
 les cérémonies réelles (clé-I + coffre-CF2) — le kit est prêt depuis le
 dépôt, depuis le Drive (dossier complet), ou n'importe où via --depot ;
 D57 (0.3.x à contrat stable si ouvert).

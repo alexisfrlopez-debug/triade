@@ -7048,3 +7048,48 @@ rompue en silence : la poussée fait partie de la livraison.
 Suite immédiate : poussée des commits vers GitHub (v0.6.0 devient clonable
 — c'est la voie « tester en local » recommandée), redépôt du kit Drive si
 l'OAuth relais vit encore, puis les cérémonies réelles (clé-I + coffre-CF2).
+
+## Entrée 97 — D112 (30/10) : les trois chemins se choisissent DANS la fenêtre (dossier du dépôt, coffre CF1, clé I fichier-ou-main) — la demande « choisir le chemin dossier du repo local, le chemin du coffre, le chemin du fichier de clé (ou entrer la clef à la main) » servie intégralement
+
+**Constat.** D111 avait nommé le dépôt, mais en ligne de commande seulement :
+le développeur qui lance le kit du Drive sans argument garde le profil dépôt
+grisé. Le coffre CF1, lui, n'était adressable par AUCUN champ (le relais
+`migrer` laissait le CLI deviner `.keys/coffre_fort.bin`), et la clé I
+n'existait que par fichier — or la garde D87 dit « le papier est la garde » :
+une clé dont le fichier est perdu devait être retapable depuis la copie
+imprimée.
+
+**Livré (v1.4).** Un : le bouton « Choisir le dossier du dépôt… » (accueil
+ET page dépôt indisponible) — même garde que --depot (v06/coffre_cf2.py,
+refus nommé, rien ne bouge), re-attachement À CHAUD par
+`_rebâtir_pages()` : les trois pages sont détruites et reconstruites, la
+config CF2 et le coffre CF1 pointent dans le dépôt choisi, le journal et
+l'exécuteur survivent (l'historique de cérémonie n'est jamais effacé), et le
+changement attend qu'une action en cours rende son verdict. Deux : la
+section « Coffre CF1 — conteneur et phrase » de l'onglet CF2 — champ
+coffre_fort.bin + Parcourir + état vivant, câblé aux quatre actes
+(`--chemin X` AVANT la sous-commande pour statut/verifier/changer-phrase,
+`--depuis X` pour migrer) ; le champ est la vérité : vide = refus nommé,
+aucun repli silencieux ; la phrase de contrôle déménage dans cette section —
+UNE frappe pour vérifier PUIS migrer. Trois : l'onglet Signer gagne la
+bascule fichier / SAISIE MANUELLE — 64 hex masqués (majuscules acceptées :
+une retape papier ne mérite pas un refus de casse), verdict vivant sans
+jamais paraphraser le contenu, pré-validation fail-closed AVANT lancement,
+champ effacé dès l'acte lancé, et `hl_signer(graine_texte=…)` produit les
+MÊMES signatures que par fichier (la graine est la graine).
+
+**Preuves.** test_ceremonie_gui.py : 96 PASS / 0 ÉCHEC (T9, 17 contrôles —
+identité des signatures, majuscules, cinq saisies fautives refusées nommées
+sans écriture, graine absente des textes ; T10, 10 contrôles — chemins
+personnalisés par le relais, --chemin avant sous-commande, migrer --depuis,
+CF1 intact). Fumée D112 (Xvfb, scripts/fumee_gui_chemins_d112.py) : 33
+contrôles VERT sur copie AUTONOME — mauvais dossier : refus nommé, pages
+inchangées ; bon dossier : attachement à chaud complet, relais sceau réel
+code 0 ; clé manuelle : mêmes signatures, champ effacé, graine nulle part ;
+coffre labo hors .keys/ : statut + verifier par relais, coffre réel du dépôt
+md5 inchangé. Deux défauts attrapés par la fumée avant livraison (saisie
+fautive partie en fil pour mourir au journal → pré-validation dans le
+handler ; `action()` sans kwargs → TypeError sur statut CF1 →
+functools.partial). Non-régression : selftest 7/7, test_cf2 43/43,
+test_sceau_I 47/47, fumées GUI 19 et D111 10 contrôles VERTES.
+download/ ↔ v06/ identiques (md5 4fe24995…).

@@ -3488,3 +3488,35 @@ une promesse rompue en silence.
 dépôt COMPLET (le mini-dépôt du kit Drive nomme son échec, par
 conception) ; --depot n'autorise RIEN de nouveau — il autorise le GUI
 à TROUVER ce qui existait déjà, la discipline des CLI reste la loi.
+
+## D112 — Les trois chemins se choisissent dans la fenêtre (le GUI devient auto-suffisant pour la cérémonie)
+
+**Décision.** La demande développeur « choisir le chemin dossier du repo
+local, le chemin du coffre, le chemin du fichier de clé (ou entrer la clef
+à la main) » est servie par des CHAMPS, pas par des options de lancement :
+le dossier du dépôt (bouton à l'accueil, re-attachement à chaud), le coffre
+CF1 (champ de l'onglet CF2, câblé à --chemin/--depuis), la clé I (bascule
+fichier / saisie manuelle dans l'onglet Signer). `--depot` et TRIADE_DEPOT
+restent inchangés : la ligne de commande devient un RACCOURCI, plus une
+obligation.
+
+**Frontières tenues.** Chaque champ porte SA garde fail-closed : le dossier
+doit contenir v06/coffre_cf2.py (refus nommé, attachement inchangé) ; le
+champ coffre vide est un refus nommé, AUCUN repli silencieux vers .keys/
+(le champ est la vérité — le CLI garde son défaut, le GUI ne devine plus) ;
+la saisie manuelle est pré-validée AVANT tout lancement (63 hex, non-hex,
+trop long = refus nommé sans écriture), masquée par défaut, effacée dès
+l'acte lancé, et la graine ne paraît ni dans le journal ni dans le verdict
+(discipline « jamais à l'écran » : le GUI n'affiche que si l'utilisateur
+coche « afficher » pour vérifier SA frappe). La majuscule est acceptée en
+saisie (hex est hex, la copie papier ne connaît pas la casse) — le fichier
+reste minuscule, norme inchangée. Le re-attachement attend qu'une cérémonie
+en cours rende son verdict, et le journal survit au re-bâtissage : changer
+de dépôt n'efface jamais l'historique.
+
+**Bornes.** La vérification des dix arbres du sceau exige toujours le dépôt
+COMPLET (le mini-dépôt du kit nomme son échec) ; les champs n'autorisent
+RIEN de nouveau — ils permettent de DÉSIGNER ce que les CLI savaient déjà
+faire, la discipline des CLI reste la loi ; la phrase saisie dans la
+section Coffre CF1 transite par le temporaire 0600 détruit du relais, elle
+ne paraît jamais dans une ligne de commande.

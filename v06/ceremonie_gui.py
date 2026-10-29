@@ -22,6 +22,13 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       <dépôt>/v06/) — un chemin faux est un échec NOMMÉ (code 2), un
       dossier sans v06/coffre_cf2.py laisse le profil désactivé avec la
       cause affichée à l'accueil (fail-closed, jamais deviné) ;
+    - D112 : les TROIS chemins se choisissent DANS LA FENÊTRE — le dossier
+      du dépôt (bouton « Choisir le dossier du dépôt… », garde
+      v06/coffre_cf2.py, re-attachement à chaud, échec nommé), le coffre
+      CF1 (champ + Parcourir, câblé à --chemin pour statut/verifier/
+      changer-phrase et à --depuis pour la migration), et la clé privée I
+      (onglet Signer : fichier OU saisie manuelle des 64 hex — entrée
+      masquée, validée vivante, effacée après l'acte, jamais affichée) ;
     - phrase de contrôle CF1 : mettez la VÔTRE — alphanumérique (A-Z a-z
       0-9), 8 caractères minimum, AUCUN plafond de longueur (D110) ;
       l'ancienne devient inopérante, la remise D81 se remplace après ;
@@ -59,7 +66,10 @@ Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
   --depot CHEMIN → attache le GUI à ce dépôt triade (D111 : le GUI
   peut vivre N'IMPORTE OÙ — clef USB, kit du Drive, bureau — tant que
   CHEMIN désigne la racine d'un clone du dépôt : v06/coffre_cf2.py y
-  est vérifié AVANT d'activer le profil dépôt).
+  est vérifié AVANT d'activer le profil dépôt). D112 : le même
+  attachement se fait AUSSI depuis la fenêtre (accueil, bouton
+  « Choisir le dossier du dépôt… ») — la ligne de commande devient un
+  RACCOURCI, plus une obligation.
 """
 
 import argparse
@@ -78,7 +88,8 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.3 (D111)"   # --depot : le GUI s'attache au dépôt
+VERSION_GUI = "ceremonie-GUI v1.4 (D112)"   # les trois chemins se choisissent
+# DANS la fenêtre : dossier du dépôt, coffre CF1, clé I (fichier ou main)
 
 
 # ===========================================================================
@@ -291,6 +302,33 @@ def _lire_graine_privee(chemin):
                           f"dans {chemin}")
 
 
+def _graine_depuis_saisie(texte):
+    """D112 — la clé tapée à la main (récupération papier) : 64 hex.
+
+    La SAISIE accepte majuscules ET minuscules (une retape depuis le
+    papier ne mérite pas un refus de casse — hex est hex), mais RIEN
+    d'autre : longueur fausse, caractère non hex = échec NOMMÉ avec la
+    nature de la faute (jamais le contenu — la graine ne paraît ni dans
+    le message d'erreur ni dans le journal).
+    """
+    cand = texte.strip()
+    if not cand:
+        raise ErreurCeremonie("saisie manuelle vide — entrez les 64 hex de "
+                              "la graine (ligne imprimée de "
+                              "cle-I-privee.txt) ou choisissez le FICHIER")
+    if len(cand) != 64:
+        raise ErreurCeremonie(
+            f"saisie manuelle : {len(cand)} caractère(s) au lieu de 64 — "
+            "la graine Ed25519 est la ligne de 64 hexadécimaux")
+    position = next((i for i, c in enumerate(cand)
+                     if c not in "0123456789abcdefABCDEF"), None)
+    if position is not None:
+        raise ErreurCeremonie(
+            f"saisie manuelle : caractère non hexadécimal en position "
+            f"{position + 1} — la graine n'accepte QUE 0-9 a-f A-F")
+    return bytes.fromhex(cand.lower())
+
+
 def _lire_hex_fichier(chemin, quoi, taille):
     try:
         with open(chemin, "r", encoding="utf-8") as f:
@@ -367,13 +405,28 @@ def hl_generer(chemin_privee, chemin_publique):
             f"  La graine ne s'affiche jamais ici : le fichier est la remise.")
 
 
-def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie):
+def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie,
+              graine_texte=None):
     """Signe la remise a-signer.txt avec la clé privée — chaque signature
-    est auto-vérifiée AVANT écriture (une cérémonie douteuse n'écrit rien)."""
+    est auto-vérifiée AVANT écriture (une cérémonie douteuse n'écrit rien).
+
+    D112 — la clé vient du FICHIER (chemin_privee, comportement historique)
+    OU de la SAISIE MANUELLE (graine_texte : les 64 hex retapés depuis la
+    copie papier). Les DEUX sources produisent les MÊMES signatures (la
+    graine est la graine) ; l'échec de l'une ou l'autre est NOMMÉ et
+    n'écrit rien. La graine ne paraît jamais dans le texte de retour.
+    """
     if not autotest():
         raise ErreurCeremonie("AUTOTEST RFC 8032 : ÉCHEC — cérémonie refusée "
                               "(fail-closed, rien n'est écrit)")
-    graine = _lire_graine_privee(chemin_privee)
+    if graine_texte is not None:
+        graine = _graine_depuis_saisie(graine_texte)
+    elif not (chemin_privee and chemin_privee.strip()):
+        raise ErreurCeremonie(
+            "aucune clé privée — choisissez le FICHIER cle-I-privee.txt "
+            "ou cochez la saisie manuelle (D112)")
+    else:
+        graine = _lire_graine_privee(chemin_privee)
     publique = cle_publique_depuis_graine(graine)
     entrees = _lire_lignes_a_signer(chemin_a_signer)
     lignes = []
@@ -392,6 +445,11 @@ def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie):
         raise ErreurCeremonie(f"impossible d'écrire les signatures : {exc}")
     return (f"[ceremonie] signer : {len(lignes)} signatures -> "
             f"{chemin_sortie}\n"
+            "  Clé privée : "
+            + ("saisie manuelle (D112) — la remise est signée par la graine "
+               "retapée ; effacez le champ (déjà fait) et gardez le papier"
+               if graine_texte is not None else chemin_privee)
+            + "\n"
             f"  Chaque signature a été VÉRIFIÉE avec la clé publique avant "
             f"écriture.\n"
             f"  Remettez {os.path.basename(chemin_sortie)} au dépôt "
@@ -1320,17 +1378,71 @@ class Application:
                       text=(f"(indisponible : v06/coffre_cf2.py introuvable "
                             f"dans {RACINE_DEPOT} — source : "
                             f"{SOURCE_DEPOT}). Le GUI peut vivre n'importe "
-                            "où : relancez-le avec --depot CHEMIN (ou la "
-                            "variable TRIADE_DEPOT) pointant sur la RACINE "
-                            "d'un clone du dépôt triade, ou téléchargez le "
+                            "où : CHOISISSEZ le dossier du dépôt par le "
+                            "bouton ci-dessous (D112 — plus besoin de "
+                            "relancer), ou --depot CHEMIN / la variable "
+                            "TRIADE_DEPOT au lancement, ou téléchargez le "
                             "dossier /Cérémonie du Drive ENTIÈREMENT (le "
                             "sous-dossier v06/ fait du kit un mini-dépôt). "
                             "Copié seul sur une clef USB, il ne donne QUE le "
                             "profil hors-ligne — c'est voulu)")
             ).pack(anchor="w")
+        ttk.Button(depot, text="Choisir le dossier du dépôt…",
+                   command=self._sur_choisir_depot).pack(anchor="w",
+                                                          pady=(4, 2))
         ttk.Button(page, text="← Retour à l'accueil",
                    command=lambda: self.montrer("accueil")).pack(anchor="w",
                                                                  pady=8)
+
+    def _sur_choisir_depot(self):
+        """D112 — le dossier du dépôt se choisit DANS la fenêtre. La garde
+        D111 est inchangée : v06/coffre_cf2.py doit y vivre (échec NOMMÉ,
+        aucun attachement partiel). Le re-attachement REBÂTIT les pages :
+        config, coffre CF1 et disponibilité suivent le nouveau dépôt."""
+        if self.executeur.occupe:
+            messagebox.showinfo(
+                "Cérémonie en cours",
+                "Attendez le verdict de l'action en cours avant de changer "
+                "de dépôt (les CLI lancés lisent le dépôt à leur départ).")
+            return
+        initial = RACINE_DEPOT if os.path.isdir(RACINE_DEPOT) else \
+            os.path.expanduser("~")
+        chemin = filedialog.askdirectory(
+            title="Dossier RACINE du dépôt triade (celui qui contient v06/)",
+            initialdir=initial)
+        if not chemin:
+            return                      # annulé : rien ne bouge
+        candidat = os.path.abspath(chemin)
+        if not os.path.isfile(os.path.join(candidat, "v06", "coffre_cf2.py")):
+            messagebox.showerror(
+                "Pas un dépôt triade complet",
+                f"v06/coffre_cf2.py introuvable dans :\n  {candidat}\n\n"
+                "Le dossier doit être la RACINE d'un clone du dépôt triade "
+                "(celui qui contient v06/). Refus nommé, attachement "
+                "inchangé (fail-closed) : le profil dépôt reste ce qu'il "
+                "était.")
+            return
+        definir_racine_depot(candidat, "dossier choisi (GUI)")
+        self.journal.ajoute(
+            f"[ceremonie] dépôt attaché : {RACINE_DEPOT} — dossier choisi "
+            "dans la fenêtre (D112), garde v06/coffre_cf2.py VERTE", "titre")
+        self._rebâtir_pages()
+
+    def _rebâtir_pages(self):
+        """Détruit et reconstruit les trois pages : tout ce qui capture le
+        dépôt À LA CONSTRUCTION (config CF2, coffre CF1, disponibilité,
+        textes de l'accueil) suit le re-attachement. Le journal, l'exécuteur
+        et la barre de verdict vivant HORS des pages, ils survivent —
+        l'historique de cérémonie n'est jamais effacé par un changement de
+        dépôt."""
+        for page in self.pages.values():
+            page.destroy()
+        self.pages = {}
+        self.depot_pret = depot_disponible()
+        self._batir_accueil()
+        self._batir_hors_ligne()
+        self._batir_depot()
+        self.montrer("accueil")
 
     # ------------------------------------------------------------------
     # PAGE HORS-LIGNE — clé I : générer / signer / vérifier
@@ -1374,9 +1486,59 @@ class Application:
                            "écriture : une cérémonie douteuse n'écrit rien.")
         self.var_hl_a_signer = self._ligne_fichier(
             signer, "Remise à signer (a-signer.txt) :", mode="open")
-        self.var_hl_cle = self._ligne_fichier(
-            signer, "Votre clé privée (cle-I-privee.txt) :", mode="open",
-            defaut="cle-I-privee.txt")
+
+        # --- source de la clé privée : FICHIER ou SAISIE MANUELLE (D112) ---
+        source = self._section(
+            signer, "Clé privée — fichier OU saisie manuelle (D112)")
+        source.pack(fill="x", pady=2)
+        self.var_hl_cle_manuelle = tk.BooleanVar(value=False)
+        modes = ttk.Frame(source)
+        modes.pack(fill="x", pady=(0, 2))
+        ttk.Radiobutton(modes, text="Depuis un FICHIER (cle-I-privee.txt)",
+                        variable=self.var_hl_cle_manuelle, value=False,
+                        command=self._basculer_source_cle).pack(side="left")
+        ttk.Radiobutton(modes, text="SAISIE MANUELLE (récupération papier)",
+                        variable=self.var_hl_cle_manuelle, value=True,
+                        command=self._basculer_source_cle).pack(
+                            side="left", padx=(12, 0))
+        cadre_f = ttk.Frame(source)
+        cadre_f.pack(fill="x", pady=2)
+        ttk.Label(cadre_f, text="Clé privée (fichier) :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_hl_cle = tk.StringVar(value="cle-I-privee.txt")
+        self.entry_hl_cle = ttk.Entry(cadre_f, textvariable=self.var_hl_cle)
+        self.entry_hl_cle.pack(side="left", fill="x", expand=True,
+                               padx=(0, 6))
+
+        def choisir_cle():
+            chemin = filedialog.askopenfilename(
+                filetypes=[("Texte", "*.txt"), ("Tout", "*.*")])
+            if chemin:
+                self.var_hl_cle.set(chemin)
+
+        self.bouton_hl_cle = ttk.Button(cadre_f, text="Parcourir…", width=11,
+                                         command=choisir_cle)
+        self.bouton_hl_cle.pack(side="left")
+        cadre_m = ttk.Frame(source)
+        cadre_m.pack(fill="x", pady=2)
+        ttk.Label(cadre_m, text="Graine (64 hex, masquée) :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_hl_cle_saisie = tk.StringVar(value="")
+        self.entry_hl_cle_saisie = ttk.Entry(
+            cadre_m, textvariable=self.var_hl_cle_saisie, show="\u2022",
+            font=POLICE_FIXE)
+        self.entry_hl_cle_saisie.pack(side="left", fill="x", expand=True,
+                                      padx=(0, 6))
+        self.var_hl_voir_saisie = tk.BooleanVar(value=False)
+        ttk.Checkbutton(cadre_m, text="afficher",
+                        variable=self.var_hl_voir_saisie,
+                        command=self._basculer_voir_saisie).pack(side="left")
+        self.label_saisie_verdict = ttk.Label(
+            source, style="Sous.TLabel", wraplength=880, justify="left")
+        self.label_saisie_verdict.pack(anchor="w", pady=(2, 0))
+        self.var_hl_cle_saisie.trace_add("write", self._maj_saisie_cle)
+        self._basculer_source_cle()
+
         self.var_hl_signatures = self._ligne_fichier(
             signer, "Signatures produites (à écrire) :", mode="save",
             defaut="signatures-I.txt")
@@ -1419,16 +1581,85 @@ class Application:
                     publique)
 
     def _sur_hl_signer(self):
-        a_signer, cle, sortie = (self.var_hl_a_signer.get().strip(),
-                                 self.var_hl_cle.get().strip(),
-                                 self.var_hl_signatures.get().strip())
-        if not (a_signer and cle and sortie):
+        a_signer, sortie = (self.var_hl_a_signer.get().strip(),
+                            self.var_hl_signatures.get().strip())
+        if not (a_signer and sortie):
             messagebox.showwarning("Champs manquants",
-                                   "Les trois chemins sont requis "
-                                   "(a-signer, clé privée, signatures).")
+                                   "La remise à signer et le fichier de "
+                                   "signatures sont requis.")
             return
-        self.action("Hors-ligne — signer la remise", hl_signer, a_signer, cle,
-                    sortie)
+        if self.var_hl_cle_manuelle.get():
+            saisie = self.var_hl_cle_saisie.get()
+            if not saisie.strip():
+                messagebox.showwarning(
+                    "Saisie manuelle vide",
+                    "La graine saisie est vide — entrez les 64 hexadécimaux "
+                    "(ligne imprimée de cle-I-privee.txt) ou basculez sur le "
+                    "FICHIER.")
+                return
+            try:
+                _graine_depuis_saisie(saisie)   # fail-closed AVANT l'acte
+            except ErreurCeremonie as exc:
+                messagebox.showwarning("Saisie refusée (fail-closed)",
+                                       str(exc))
+                return
+            self.action("Hors-ligne — signer (clé saisie à la main)",
+                        hl_signer, a_signer, None, sortie, saisie)
+            # la graine ne s'attarde pas dans le champ ni dans un état
+            # « afficher » oublié : effacée dès l'acte lancé (D112)
+            self.var_hl_cle_saisie.set("")
+            self.var_hl_voir_saisie.set(False)
+            self._basculer_voir_saisie()
+        else:
+            cle = self.var_hl_cle.get().strip()
+            if not cle:
+                messagebox.showwarning(
+                    "Champ manquant",
+                    "Choisissez le fichier de clé privée — ou basculez sur "
+                    "la saisie manuelle (D112).")
+                return
+            self.action("Hors-ligne — signer la remise", hl_signer, a_signer,
+                        cle, sortie)
+
+    def _basculer_source_cle(self):
+        """Active la ligne choisie (fichier OU saisie) et gris l'autre —
+        une seule source de vérité visible à la fois (D112)."""
+        manuelle = self.var_hl_cle_manuelle.get()
+        for widget in (self.entry_hl_cle, self.bouton_hl_cle):
+            widget.configure(state="disabled" if manuelle else "normal")
+        self.entry_hl_cle_saisie.configure(
+            state="normal" if manuelle else "disabled")
+
+    def _basculer_voir_saisie(self):
+        self.entry_hl_cle_saisie.configure(
+            show="" if self.var_hl_voir_saisie.get() else "\u2022")
+
+    def _maj_saisie_cle(self, *_):
+        """Verdict vivant sous la saisie manuelle — longueur et nature des
+        caractères, JAMAIS le contenu (la graine ne se paraphrase pas)."""
+        cand = self.var_hl_cle_saisie.get().strip()
+        if not cand:
+            self.label_saisie_verdict.configure(text="",
+                                                foreground="#57606a")
+            return
+        faux = next((i for i, c in enumerate(cand)
+                     if c not in "0123456789abcdefABCDEF"), None)
+        if faux is not None:
+            self.label_saisie_verdict.configure(
+                text=f"caractère non hexadécimal en position {faux + 1}",
+                foreground=COULEUR_ROUGE)
+        elif len(cand) == 64:
+            self.label_saisie_verdict.configure(
+                text="64 hexadécimaux — graine COMPLÈTE (masquée)",
+                foreground=COULEUR_VERTE)
+        elif len(cand) > 64:
+            self.label_saisie_verdict.configure(
+                text=f"{len(cand)} caractères — TROP LONG (64 attendus)",
+                foreground=COULEUR_ROUGE)
+        else:
+            self.label_saisie_verdict.configure(
+                text=f"{len(cand)}/64 hexadécimaux",
+                foreground=COULEUR_ATTENTE)
 
     def _sur_hl_verifier(self):
         a_signer, signatures, publique = (
@@ -1454,11 +1685,15 @@ class Application:
             self._note(page, f"Aucun dépôt triade complet n'est attaché "
                              f"(v06/coffre_cf2.py introuvable dans "
                              f"{RACINE_DEPOT}, source : {SOURCE_DEPOT}) : "
-                             "le profil dépôt est désactivé. Relancez avec "
-                             "--depot CHEMIN (ou la variable TRIADE_DEPOT) "
-                             "désignant la racine d'un clone du dépôt. Pour "
-                             "la cérémonie hors-ligne, utilisez le profil "
-                             "hors-ligne.")
+                             "le profil dépôt est désactivé. Choisissez le "
+                             "dossier du dépôt par le bouton ci-dessous "
+                             "(D112), ou relancez avec --depot CHEMIN (ou "
+                             "la variable TRIADE_DEPOT) désignant la racine "
+                             "d'un clone du dépôt. Pour la cérémonie "
+                             "hors-ligne, utilisez le profil hors-ligne.")
+            ttk.Button(page, text="Choisir le dossier du dépôt…",
+                       command=self._sur_choisir_depot).pack(anchor="w",
+                                                            pady=4)
             ttk.Button(page, text="← Retour à l'accueil",
                        command=lambda: self.montrer(
                            "accueil")).pack(anchor="w", pady=8)
@@ -1522,7 +1757,62 @@ class Application:
         cf2 = ttk.Frame(cahier, padding=8)
         cahier.add(cf2, text=" Coffre CF2 — homme mort (D86) ")
 
-        inspection = self._section(cf2, "Inspection (aucune clé touchée)")
+        coffre_cf1 = self._section(
+            cf2, "Coffre CF1 — conteneur et phrase (D112)")
+        coffre_cf1.pack(fill="x", pady=2)
+        self._note(coffre_cf1,
+                   "Le conteneur CF1 que la cérémonie LIT (verifier, "
+                   "changer-phrase, migrer) — le champ est la VÉRITÉ : "
+                   "aucun repli silencieux vers .keys/. Choisissez-le "
+                   "(Parcourir…) s'il vit ailleurs : copie du Drive, clef "
+                   "USB, autre clone. La phrase de contrôle CI-DESSOUS "
+                   "sert à VÉRIFIER le coffre PUIS à la migration : une "
+                   "seule frappe, les deux actes.")
+        cadre_o = ttk.Frame(coffre_cf1)
+        cadre_o.pack(fill="x", pady=2)
+        ttk.Label(cadre_o, text="coffre_fort.bin :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_coffre_cf1 = tk.StringVar(
+            value=os.path.join(RACINE_DEPOT, ".keys", "coffre_fort.bin"))
+        ttk.Entry(cadre_o, textvariable=self.var_coffre_cf1).pack(
+            side="left", fill="x", expand=True, padx=(0, 6))
+
+        def choisir_coffre():
+            chemin = filedialog.askopenfilename(
+                title="Conteneur CF1 (coffre_fort.bin)",
+                filetypes=[("Coffre CF1", "coffre_fort.bin"),
+                           ("Binaire", "*.bin"), ("Tout", "*.*")])
+            if chemin:
+                self.var_coffre_cf1.set(chemin)
+
+        ttk.Button(cadre_o, text="Parcourir…", width=11,
+                   command=choisir_coffre).pack(side="left")
+        self.label_etat_coffre = ttk.Label(coffre_cf1, style="Sous.TLabel",
+                                           wraplength=880, justify="left")
+        self.label_etat_coffre.pack(anchor="w")
+        self.var_coffre_cf1.trace_add("write", self._maj_etat_coffre)
+        self._maj_etat_coffre()
+        cadre_p = ttk.Frame(coffre_cf1)
+        cadre_p.pack(fill="x", pady=2)
+        ttk.Label(cadre_p, text="Phrase de contrôle CF1 :", width=26,
+                  anchor="w").pack(side="left")
+        self.var_phrase = tk.StringVar(value="")
+        self.entry_phrase = ttk.Entry(cadre_p, textvariable=self.var_phrase,
+                                      show="\u2022")
+        self.entry_phrase.pack(side="left", fill="x", expand=True,
+                               padx=(0, 6))
+        self.var_voir_phrase = tk.BooleanVar(value=False)
+        ttk.Checkbutton(cadre_p, text="afficher",
+                        variable=self.var_voir_phrase,
+                        command=self._basculer_phrase).pack(side="left")
+        barre_cf1 = ttk.Frame(coffre_cf1)
+        barre_cf1.pack(fill="x", pady=2)
+        ttk.Button(barre_cf1, text="Statut CF1",
+                   command=self._sur_cf1_statut).pack(side="left")
+        ttk.Button(barre_cf1, text="Vérifier CF1 (phrase)",
+                   command=self._sur_cf1_verifier).pack(side="left", padx=6)
+
+        inspection = self._section(cf2, "Inspection CF2 (aucune clé touchée)")
         inspection.pack(fill="x", pady=2)
         barre = ttk.Frame(inspection)
         barre.pack(fill="x", pady=2)
@@ -1588,23 +1878,13 @@ class Application:
 
         migration = self._section(cf2, "Migration CF1 → CF2 (cérémonie réelle)")
         migration.pack(fill="x", pady=2)
-        self._note(migration, "Part d'un coffre CF1 SAIN (le vérifier "
-                              "d'abord : coffre_fort.py verifier). Le CF1 "
-                              "reste INTACT ; le CF2 naît coupé en 5 "
-                              "fragments (seuil 3) chez des gardes "
-                              "distinctes.")
-        cadre = ttk.Frame(migration)
-        cadre.pack(fill="x", pady=2)
-        ttk.Label(cadre, text="Phrase de contrôle CF1 :", width=26,
-                  anchor="w").pack(side="left")
-        self.var_phrase = tk.StringVar(value="")
-        self.entry_phrase = ttk.Entry(cadre, textvariable=self.var_phrase,
-                                      show="\u2022")
-        self.entry_phrase.pack(side="left", fill="x", expand=True, padx=(0, 6))
-        self.var_voir_phrase = tk.BooleanVar(value=False)
-        ttk.Checkbutton(cadre, text="afficher",
-                        variable=self.var_voir_phrase,
-                        command=self._basculer_phrase).pack(side="left")
+        self._note(migration, "Part d'un coffre CF1 SAIN — vérifiez-le "
+                              "d'abord (section « Coffre CF1 » ci-dessus : "
+                              "bouton Vérifier, la même phrase). La "
+                              "migration lit le conteneur choisi dans cette "
+                              "section et le laisse INTACT ; le CF2 naît "
+                              "coupé en 5 fragments (seuil 3) chez des "
+                              "gardes distinctes.")
         ttk.Button(migration, text="Migrer vers CF2",
                    command=self._sur_cf2_migrer).pack(anchor="w", pady=4)
 
@@ -1757,12 +2037,64 @@ class Application:
                    COULEUR_ATTENTE if ok else COULEUR_ROUGE)
         self.label_cf1_verdict.configure(text=message, foreground=couleur)
 
+    def _coffre_cf1_exige(self, pour_quoi):
+        """D112 — le chemin CF1 choisi, ou None (avec l'échec nommé affiché).
+        Le champ est la VÉRITÉ : vide = refus, AUCUN repli silencieux vers
+        .keys/ (contrairement au CLI qui, lui, garde son défaut)."""
+        coffre = self.var_coffre_cf1.get().strip()
+        if not coffre:
+            messagebox.showwarning(
+                "Champ manquant",
+                f"{pour_quoi} exige le chemin du coffre CF1 — remplissez le "
+                "champ coffre_fort.bin (bouton Parcourir…).")
+            return None
+        return coffre
+
+    def _sur_cf1_statut(self):
+        """Statut CF1 : l'en-tête CLAIR du conteneur choisi (aucune phrase,
+        aucune clé — la commande la plus sûre pour nommer un conteneur)."""
+        if not self._pile_prete("Le statut du coffre CF1"):
+            return
+        coffre = self._coffre_cf1_exige("Le statut CF1")
+        if coffre is None:
+            return
+        self.action("CF1 — statut",
+                    self._functools.partial(
+                        self._cli, "coffre_fort.py",
+                        ["--chemin", coffre, "statut"], au_racine=True))
+
+    def _sur_cf1_verifier(self):
+        """Vérifier CF1 : déchiffre le conteneur choisi avec la phrase —
+        LE préalable de la migration (un coffre non vérifié ne migre pas)."""
+        if not self._pile_prete("La vérification du coffre CF1"):
+            return
+        coffre = self._coffre_cf1_exige("La vérification CF1")
+        if coffre is None:
+            return
+        phrase = self.var_phrase.get()
+        if not phrase.strip():
+            messagebox.showwarning(
+                "Phrase vide",
+                "La phrase de contrôle CF1 est requise (fail-closed) — "
+                "remplissez le champ « Phrase de contrôle CF1 » de la "
+                "section « Coffre CF1 ».")
+            return
+        self.action(
+            "CF1 — verifier",
+            self._functools.partial(
+                self._cli, "coffre_fort.py",
+                ["--chemin", coffre, "verifier"],
+                phrase=phrase, au_racine=True))
+
     def _sur_cf1_changer_phrase(self):
         if not self._pile_prete("Le changement de phrase CF1"):
             return
         ancienne = self.var_cf1_ancienne.get()
         nouvelle = self.var_cf1_nouvelle.get().strip()
         confirmation = self.var_cf1_confirmation.get().strip()
+        coffre = self._coffre_cf1_exige("Le changement de phrase")
+        if coffre is None:
+            return
         if not ancienne.strip():
             messagebox.showwarning(
                 "Champ manquant",
@@ -1810,7 +2142,8 @@ class Application:
         self.action(
             "CF1 — changer la phrase (la vôtre)",
             self._functools.partial(
-                self._cli, "coffre_fort.py", ["changer-phrase"],
+                self._cli, "coffre_fort.py",
+                ["--chemin", coffre, "changer-phrase"],
                 phrase=ancienne, nouvelle_phrase=nouvelle, au_racine=True))
         self.var_cf1_ancienne.set("")
         self.var_cf1_nouvelle.set("")
@@ -1820,6 +2153,27 @@ class Application:
             "remplacez la ligne unique de PHRASE-CONTROLE-COFFRE.txt par "
             "votre nouvelle phrase, puis commit « AVANT TOUT » et push "
             "(git ET racine du Drive « Triade »).", "titre")
+
+    def _maj_etat_coffre(self, *_):
+        if not getattr(self, "label_etat_coffre", None):
+            return
+        coffre = self.var_coffre_cf1.get().strip()
+        if not coffre:
+            self.label_etat_coffre.configure(
+                text="coffre CF1 : (vide — statut/vérifier/migrer seront "
+                     "refusés, aucun repli silencieux)",
+                foreground="#57606a")
+            return
+        if os.path.isfile(coffre):
+            taille = os.path.getsize(coffre)
+            self.label_etat_coffre.configure(
+                text=f"coffre CF1 : TROUVÉ ({coffre} · {taille} o)",
+                foreground=COULEUR_VERTE)
+        else:
+            self.label_etat_coffre.configure(
+                text=f"coffre CF1 : ABSENT ({coffre}) — verifier, migrer et "
+                     "changer-phrase le refuseront (fail-closed)",
+                foreground="#9a6700")
 
     def _maj_etat_config(self):
         if not getattr(self, "label_etat_config", None):
@@ -1901,24 +2255,32 @@ class Application:
     def _sur_cf2_migrer(self):
         if not self._pile_prete("La migration CF1 vers CF2"):
             return
+        coffre = self._coffre_cf1_exige("La migration CF1 vers CF2")
+        if coffre is None:
+            return
         phrase = self.var_phrase.get()
         if not phrase.strip():
             messagebox.showwarning("Phrase vide",
                                    "La phrase de contrôle du coffre CF1 est "
-                                   "requise (fail-closed).")
+                                   "requise (fail-closed) — champ « Phrase "
+                                   "de contrôle CF1 » de la section « Coffre "
+                                   "CF1 ».")
             return
         if not messagebox.askyesno(
                 "Migration CF1 → CF2",
                 "Le coffre CF1 sera lu (il restera INTACT) et le CF2 sera "
                 "créé : conteneur + 5 fragments chez des gardes + config.\n"
+                "Conteneur CF1 lu : " + coffre + "\n"
                 "Après la migration : exportez la feuille, contrôlez vos "
                 "trois copies hors-ligne, PUIS démarrez la sentinelle.\n"
                 "Continuer ?"):
             return
         self.action(
             "CF2 — migrer",
-            self._functools.partial(self._cli, "coffre_cf2.py",
-                                    ["migrer"] + self._cfg(), phrase=phrase))
+            self._functools.partial(
+                self._cli, "coffre_cf2.py",
+                ["migrer", "--depuis", coffre] + self._cfg(),
+                phrase=phrase))
         self.var_phrase.set("")
 
     def _sur_cf2_feuille(self):
