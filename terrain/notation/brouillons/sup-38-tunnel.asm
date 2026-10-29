@@ -356,8 +356,9 @@ ret
 ; .ps : rcx = cmdline -> eax = 1 (ZF=1) | 0 (ZF=0) ; CODE_SORTIE pose
 ; (miroir .curl T2 — attente 45 s : le script porte son propre ReceiveTimeout
 ;  30 s, la marge couvre le lancement powershell + la poignée TLS Schannel)
+; (D98 : 0x28 = ombre ABI x64 — même faute que .curl, même correctif)
 .ps:
-sub rsp, 8
+sub rsp, 0x28
 xor edx, edx
 call LANCEUR
 test eax, eax
@@ -373,7 +374,7 @@ mov rcx, r12
 call qword ptr [rip + IAT_CH]
 mov eax, 1
 .ps_fin:
-add rsp, 8
+add rsp, 0x28
 ret
 ; .flux : rcx = ptr, edx = longueur -> ligne embarquee au journal (mode 0)
 .flux:

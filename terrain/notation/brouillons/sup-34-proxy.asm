@@ -329,8 +329,12 @@ pop r15
 add rsp, 8
 ret
 ; .curl : rcx = cmdline -> eax = 1 (ZF=1) | 0 (ZF=0) ; CODE_SORTIE pose
+; (D98 : 0x28 = ombre ABI x64 0x20 + alignement 8 — le 8 nu de la régénération
+;  D96 laissait la maison d'arguments rdx de WaitForSingleObject/GetExitCode
+;  Process RECOUVRIR l'adresse de retour : mort du superviseur pendant T2,
+;  fenêtre fermée, proxy orphelin — terrain16 portait 0x28, miroir exact)
 .curl:
-sub rsp, 8
+sub rsp, 0x28
 xor edx, edx
 call LANCEUR
 test eax, eax
@@ -346,7 +350,7 @@ mov rcx, r12
 call qword ptr [rip + IAT_CH]
 mov eax, 1
 .curl_fin:
-add rsp, 8
+add rsp, 0x28
 ret
 ; .flux : rcx = ptr, edx = longueur -> ligne embarquee au journal (mode 0)
 .flux:

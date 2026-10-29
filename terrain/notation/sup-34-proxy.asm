@@ -359,7 +359,7 @@ add rsp, 0x38
 pop r15
 add rsp, 8
 ret
-sub rsp, 8
+sub rsp, 0x28
 xor edx, edx
 call 0x5200
 test eax, eax
@@ -374,7 +374,7 @@ call qword ptr [rip - 0x3a3a]
 mov rcx, r12
 call qword ptr [rip - 0x3c63]
 mov eax, 1
-add rsp, 8
+add rsp, 0x28
 ret
 sub rsp, 8
 xor r8d, r8d

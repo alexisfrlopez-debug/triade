@@ -1,0 +1,126 @@
+TRIADE — TERRAIN.17-C : « LA FENÊTRE S'OUVRAIT, LE SUPERVISEUR MOURAIT
+AU PREMIER CURL » — L'OMBRE ABI PERDUE PAR LA RÉGÉNÉRATION EST RESTAURÉE
+ET VERROUILLÉE. LE MÊME TEST TERRAIN.17 (T4, LE TUNNEL M4, LE PROXY
+0.5.0-DEV.2), DANS UN EXE QUI SURVIT À SES PROPRES APPELS SYSTÈME.
+=============================================================================
+
+CE QUI S'EST PASSÉ AU RUN 17-B — ET CE QUE VOTRE JOURNAL A PROUVÉ
+-----------------------------------------------------------------
+Votre run du 29/10 (01:46) a été le plus loquain des runs muets :
+
+  1. LA FENÊTRE S'EST OUVERTE — le correctif loader du 17-B TENAIT
+     (le motif D54 a été accepté par votre Windows : critère rempli).
+  2. Le scénario a démarré : porte R10 VERTE, kit extrait conforme
+     (demo 73c064fb…, proxy M4 33c91815…), T1 joué (KO connu, D57),
+     T2 lancé, bannière proxy REÇUE et journalisée.
+  3. Puis le superviseur est MORT SILENCIEUSEMENT pendant l'attente du
+     curl : la fenêtre s'est fermée, le journal s'arrête NET après
+     « TRIADE M3 : proxy demarre (port 25000) » — aucun S22, aucun
+     verdict. Et proxy.exe EST RESTÉ OUVERT : lancé en mode tuyaux, sa
+     séquence d'arrêt (attendre 10 s → TerminateProcess → 5 s) n'a
+     jamais été exécutée — voilà VOTRE processus orphelin, et il tient
+     le port 25000.
+  4. LA PREUVE QUE LE TUNNEL A TRAVAILLÉ : la page déposée à côté
+     (terrain_page_http.txt, 3 961 octets) est la VRAIE page de
+     neverssl.com — curl a TOUT rapatrié À TRAVERS le proxy M4. La pile
+     M4 (forward Winsock) a fonctionné sur votre machine, PREMIÈRE FOIS.
+     Ce n'est pas le proxy qui est mort : c'est le superviseur, APRÈS.
+
+LA FAUTE — UNE OMBRE PERDUE, PAS UN CODE FAUX
+---------------------------------------------
+Le bloc .curl de T2 (« lancer curl, attendre, lire le code de sortie »)
+portait chez terrain16 :   sub rsp, 0x28   (40 octets de cadre)
+La régénération D96 l'a réduit à :   sub rsp, 8
+L'ABI x64 exige 32 octets de « maisons d'arguments » sous rsp à chaque
+appel système. Avec 8, la maison de l'argument rdx de
+WaitForSingleObject/GetExitCodeProcess RECOUVRE L'ADRESSE DE RETOUR de
+.curl : Windows y déverse sa valeur (le timeout 25000, ou une adresse
+de données), le « ret » saute dans la nature, le processus meurt — sans
+dialogue, sans journal, la fenêtre se ferme. Terrain16 avait la bonne
+valeur EN LOCAL, jamais committée : troisième manifestation de la même
+dérive de dépôt (D54 loader, D68 retouches, D98 ombre). La même faute
+existait dans .ps (T4) : le 17-B serait mort aussi au premier powershell.
+Nos émulateurs ne l'ont pas vue : leurs shims ne déversent jamais dans
+les maisons d'arguments — l'ombre est invisible à l'émulation, elle ne
+l'est pas à kernel32. Le verrou « pile alignée » était vert à juste
+titre : 8 est aligné, et nu.
+
+CE QUE LE 17-C CORRIGE — ET CE QU'IL NE TOUCHE PAS
+--------------------------------------------------
+Le correctif est DE QUATRE OCTETS (deux paires sub/add rsp : .curl T2 +
+.ps T4), taille-neutre — strictement rien d'autre ne bouge :
+  - différentiel 17-B → 17-C vérifié OCTET PAR OCTET : 8 octets au
+    total (4 de code, 4 de sommes de la porte R10 recalculées) ;
+  - le motif loader D54 est INTACT (IAT pré-remplies, INT/hints .rdata,
+    descripteurs — re-vérifié binairement) ;
+  - le kit embarqué est INTACT : demo.exe md5 73c064fb…, proxy.exe
+    0.5.0-dev.2 md5 33c91815… / sha256 b813f65e… ;
+  - l'oracle rejoué : 10 111 cas verts, falsification 28/28 + 7
+    mutations ; la carte terrain est re-scellée (24 empreintes +
+    signature Ed25519 + verrou croisé R8 OK) ;
+  - ET LE VERROU NEUF : chaque bloc passe désormais le verrou
+    « ombre-abi-x64 » (oracle structurel : 1 090 → 1 114 verrous) —
+    cette classe de faute ne peut PLUS passer le build.
+
+PROTOCOLE — L'ÉTAPE 0 EST NOUVELLE ET INDISPENSABLE
+----------------------------------------------------
+ÉTAPE 0 — TUEZ LE PROXY ORPHELIN avant tout run. Il tient le port
+   25000 : le T2 d'un nouveau run ne pourrait pas écouter. Dans une
+   console (cmd ou PowerShell) :
+        taskkill /IM proxy.exe /F
+   (ou Gestionnaire des tâches → proxy.exe → Fin de tâche). Si la
+   commande répond « processus introuvable », c'est déjà réglé.
+
+ÉTAPE 1 — Double-cliquez superviseur-terrain17c.exe. La fenêtre
+   s'ouvre, cliquez le bouton, attendez le verdict (~4 minutes). PREUVE
+   du bon binaire : le journal commence par « S00 superviseur terrain
+   0.5.0-terrain17 ».
+
+ÉTAPE 2 — Les lignes qui comptent, DANS l'ordre :
+   T2 : « S22 T2 curl http : code=0 » (LA ligne que le 17-B n'a jamais
+        écrite — la preuve que le superviseur SURVIT à son curl),
+        « S23 T2 page http octets=N » — ATTENTION : N ne sera plus 640 :
+        le proxy M4 RELAIE la vraie requête et la vraie page arrive
+        (3 961 chez vous). C'est LÉGITIME : T2 juge la PRÉSENCE de page
+        et les événements console, pas le contenu. N=0 seul serait KO.
+        (L'étiquette « S20 T2 proxy 0.4.0-dev.1 » est historique : le
+        md5 de S05C désigne bien le proxy M4 embarqué.)
+   T4 : « S40 T4 tunnel M4 : script terrain_m4.ps1 pose »,
+        « S41 T4 proxy 0.5.0-dev.2 : lancement »,
+        « S42 T4 banniere proxy recue »,
+        « S43 T4 powershell exemple : code=0 » (première fois que T4
+        passe son premier powershell — .ps portait la même ombre),
+        « tunnel chiffre etabli » (la voix du tunnel — PREMIÈRE FOIS),
+        « certificat rejete » (le critère M4 — PREMIÈRE FOIS),
+        « S49 T4 VERDICT OK (console conforme) ».
+   Le verdict final affichera « SUPERVISEUR : ECHEC » tant que T1 (la
+   démo, panne connue D57) reste KO — l'honnêteté du superviseur, pas un
+   échec du tunnel. T2 et T4 sont les juges d'aujourd'hui.
+
+ÉTAPE 3 (APRÈS LE RUN) — le journal terrain_*.txt reste posé à côté de
+   l'exe. Déposez-le dans le dossier test du Drive (avec la page
+   terrain_page_http.txt et terrain_page_https.txt si vous voulez —
+   les pages réelles du M4 nous intéressent).
+
+APRÈS LE RUN — LE PROXY SE FERMERA TOUT SEUL
+--------------------------------------------
+C'est toute la leçon de l'orphelin : la séquence d'arrêt de T2/T4
+(attendre 10 s → TerminateProcess si besoin → attendre 5 s → fermer)
+s'exécute MAINTENANT — elle était déjà dans le code, elle n'était juste
+jamais atteinte. En fin de run, plus de proxy.exe dans vos processus
+(vérifiable au Gestionnaire des tâches : le test S07 nettoie aussi les
+fichiers posés). Si un jour un run plantait encore autrement, l'ÉTAPE 0
+reste le réflexe.
+
+RÉCAPITULATIF DES EMPREINTES
+-----------------------------
+md5 superviseur-terrain17c.exe  b0f912baa0e7c3100a0d653240d1babc
+sha256                          c381d088c19e6941907850fcc0eed7c03bd3e39263787f44596a2394b856cb9a
+taille                          75 264 octets (la même que le 17/17-B)
+md5 démo embarquée              73c064fbaf4610a167bc6434dee400e4 (inchangée)
+md5 proxy embarqué              33c9181580b7e381e527e72902180733 (inchangé : 0.5.0-dev.2 M4)
+sha256 proxy embarqué           b813f65e37752ca7a56d549955a8e807b9ba07dc2288f32aab84e8e2db31e526
+
+Quand votre journal sera revenu avec « tunnel chiffre etabli » et
+« certificat rejete » dedans, le jalon M4 n'aura plus qu'à sceller :
+0.5.0 — exactement comme prévu, un run plus tard.

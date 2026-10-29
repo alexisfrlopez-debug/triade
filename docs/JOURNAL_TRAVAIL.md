@@ -6068,3 +6068,76 @@ RAPPORT MACHINE RÉELLE : « il ne se passe rien » au double-clic de
    Docs : Entrée 83, DECISIONS D97, worklog (Task ID 24). Aucune clé
 
    touchée (phrase D81 valable, conteneur 0323029a… inchangé).
+
+## Entrée 84 — D98 : terrain.17-C, l'ombre ABI réparée (le superviseur ne meurt plus au premier curl — le proxy orphelin expliqué)
+
+1. **LE RAPPORT MACHINE (17-B, run du 29/10 01:46)** : la fenêtre S'EST
+   OUVERTE (le motif loader D54 tient — critère d'acceptation du 17-B
+   REMPLI), le scénario a démarré, T1 connu KO (D57, « réseau : échange en
+   échec »), T2 a lancé le proxy M4, reçu la bannière… puis le superviseur
+   est MORT SILENCIEUSEMENT pendant l'attente curl : fenêtre fermée, journal
+   coupé NET après « TRIADE M3 : proxy demarre (port 25000) » (aucun S22),
+   et proxy.exe RESTÉ OUVERT (lancé mode 1, sa séquence d'arrêt jamais
+   exécutée — l'orphelin tient le port 25000). La page HTTP déposée dans
+   /test (3 961 o) prouve que curl a TOUT rapatrié : la pile M4 A RELAYÉ LA
+   VRAIE REQUÊTE vers neverssl.com — première preuve machine du forward M4.
+
+2. **LE DIAGNOSTIC (A/B terrain16 ↔ 17-B, bloc par bloc)** : lanceur
+   sup-31 OCTET POUR OCTET IDENTIQUE ; sup-34 diverge sur SIX octets dont
+   UNE paire sémantique — .curl : `sub rsp, 0x28` (terrain16, prouvé
+   machine, T2 complet) → `sub rsp, 8` (régénération D96). L'OMBRE ABI x64
+   (0x20 de maisons d'arguments sous rsp aux points d'appel) AVAIT DISPARU :
+   la maison rdx de WaitForSingleObject/GetExitCodeProcess recouvre
+   L'ADRESSE DE RETOUR de .curl — le callee kernel32 y déverse (25000 ou
+   l'adresse de CODE_SORTIE), le `ret` saute dans la nature, le processus
+   meurt avant même S22. Troisième manifestation de la dérive de dépôt
+   (D54 loader, D68 retouches, D98 ombre) — terrain16 la portait en local,
+   jamais committée. L'audit système nomme la même faute dans .ps (sup-38,
+   T4) : mort garantie au premier powershell. AUCUNE autre violation dans
+   m0-m4/démo/terrain (audit ombre dédié, scripts/audit_ombre_abi.py).
+
+3. **POURQUOI L'ORACLE EST RESTÉ VERT (10 111 cas, à juste titre)** : les
+   shims de l'émulateur ne déversent JAMAIS dans leurs maisons
+   d'arguments — l'ombre est invisible à l'émulation ; ET `_prologue_aligne`
+   (M2 scellé) vérifie l'ALIGNEMENT mod 16, PAS la présence de l'ombre :
+   `sub rsp, 8` est aligné et nu. LA FAILLE : le verrou d'ABI était
+   incomplet — l'ombre fait partie de la surface de test terrain.
+
+4. **LE CORRECTIF (chirurgical, TAILLE-NEUTRE)** : `sub/add rsp, 8` →
+   `0x28` dans .curl (sup-34) et .ps (sup-38) — imm8 pour imm8, AUCUN
+   octet ne bouge en aval (compteurs 1418 o/315 ins et 1505 o/331 ins
+   inchangés, slots et padding identiques, table R10 recalculée pour les
+   deux zones couvertes : 4 octets). Différentiel 17-B → 17-C : 8 octets
+   au total, RIEN d'autre (vérifié binairement, motif D54 INTACT).
+
+5. **LE VERROU NEUF (anti-récurrence)** : `_ombre_abi()` dans
+   build_terrain.py — toute fenêtre `sub rsp, IMM … add rsp, IMM` où
+   IMM < 0x28 ne doit contenir AUCUN appel externe (IAT) ; appels internes
+   directs tolérés (convention prouvée machine par terrain16 : les blocs
+   internes ne touchent jamais les maisons). Oracle structurel :
+   1 090 → 1 114 verrous (+24 ombre-abi-x64, un par bloc).
+
+6. **RECONSTRUCTION COMPLÈTE** : auteur.py (brouillon → notation), R5
+   round-trip 100 % (24 blocs), croisement T4 10/10, oracle scénario
+   10 111 cas verts + falsification 28/28 + 7 mutations, carte génération 5
+   re-scellée (24 empreintes + Ed25519 + R8 OK), PE 75 264 o —
+   sha256 c381d088c19e6941907850fcc0eed7c03bd3e39263787f44596a2394b856cb9a,
+   md5 b0f912baa0e7c3100a0d653240d1babc.
+
+7. **LIVRAISON** : superviseur-terrain17c.exe + LISEZMOI-terrain17c.txt ;
+   le 17-B retiré du download (mono-génération). Le test s'appelle
+   TOUJOURS terrain17 (S00/L00, version u64 0x00050104 inchangés). ÉTAPE 0
+   DU PROTOCOLE (nouvelle) : TUER LE PROXY ORPHELIN avant le run
+   (taskkill /IM proxy.exe /F — il tient le port 25000, le T2 du nouveau
+   run ne pourrait pas écouter). Critères du jour : S22/S23 (octets=N — N
+   peut être 3 961 : le M4 relaie la VRAIE page, le test juge la PRÉSENCE
+   pas le contenu), puis le critère M4 : « tunnel chiffre etabli »,
+   « certificat rejete », « S49 T4 VERDICT OK ».
+
+8. **LEÇON SYSTÉMIQUE** : alignement n'est pas ombre — un cadre de pile
+   peut être aligné et mortel ; l'ABI de la machine cible fait partie de la
+   surface de test terrain, au même titre que son chargeur (D97). Et la
+   dérive de dépôt a maintenant trois noms : D54, D68, D98.
+
+   Docs : Entrée 84, DECISIONS D98, worklog (Task ID 25). Aucune clé
+   touchée (phrase D81 valable, conteneur 0323029a… inchangé).

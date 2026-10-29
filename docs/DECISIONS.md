@@ -2908,3 +2908,47 @@ LEÇON consignée : un correctif non-committé est un correctif qui n'existe
 pas — l'habillage d'import fait partie de la surface de test terrain.
 
 Aucune clé touchée (phrase D81 valable, conteneur 0323029a… inchangé).
+
+## D98 — terrain.17-C : l'ombre ABI x64 réparée et VERROUILLÉE (le superviseur ne meurt plus au premier curl — le proxy orphelin du run 17-B expliqué et soldé)
+
+**Constat machine (run 17-B, 29/10 01:46)** : fenêtre ouverte (D54 tient),
+T2 lancé, bannière reçue — puis mort silencieuse pendant l'attente curl :
+journal coupé après la bannière (aucun S22), fenêtre fermée, proxy.exe
+orphelin (mode 1, arrêt jamais exécuté, port 25000 occupé). La page
+rapatriée (3 961 o, la VRAIE page neverssl.com) prouve le relais M4 réel :
+curl a tout reçu, c'est le superviseur qui est mort en aval.
+
+**Diagnostic (A/B bloc par bloc terrain16 ↔ 17-B)** : .curl de sup-34
+portait `sub rsp, 0x28` prouvé machine (terrain16, T2 complet) — la
+régénération D96 l'avait réduit à `sub rsp, 8` : l'OMBRE ABI x64 (0x20 de
+maisons d'arguments sous rsp) avait disparu, la maison rdx de
+WaitForSingleObject/GetExitCodeProcess recouvrait l'adresse de retour —
+troisième manifestation de la dérive de dépôt (D54, D68, D98). Même faute
+dans .ps de sup-38 (T4 serait mort au premier powershell). Aucune autre
+violation (audit dédié : m0-m4/démo/terrain).
+
+**Pourquoi l'oracle est resté vert** : les shims ne déversent pas dans les
+maisons (l'ombre est invisible à l'émulation) ET `_prologue_aligne`
+vérifie l'alignement mod 16, pas l'ombre — `sub rsp, 8` est aligné et nu.
+La faille était le verrou incomplet, pas l'oracle.
+
+**Correctif (taille-neutre, chirurgical)** : `sub/add rsp, 8` → `0x28`
+dans .curl et .ps (imm8 → imm8, aucun octet en aval ne bouge) ; porté aux
+BROUILLONS (source unique : brouillon → auteur → notation) ; différentiel
+17-B → 17-C : 8 octets (4 code + 4 sommes R10), motif D54 intact ;
+verrou neuf `_ombre_abi()` (fenêtre < 0x28 + appel IAT = ÉCHEC, appels
+internes tolérés — convention prouvée machine) : oracle structurel
+1 090 → 1 114. Chaîne verte : R5 100 %, croisement T4 10/10, oracle
+10 111 cas + 28/28 + 7 mutations, carte génération 5 re-scellée.
+
+**Livraison** : superviseur-terrain17c.exe (75 264 o, md5 b0f912ba…,
+sha256 c381d088…) + LISEZMOI-terrain17c.txt (ÉTAPE 0 : tuer le proxy
+orphelin — taskkill /IM proxy.exe /F — il tient le port 25000) ; le 17-B
+retiré (mono-génération) ; superviseur.exe (dépôt) = balise c381d088… ;
+Entrée 84, worklog Task ID 25. T2 juge la PRÉSENCE de page (octets=N,
+N≠640 légitime : le M4 relaie la vraie page), pas son contenu.
+
+LEÇON consignée : alignement n'est pas ombre — un cadre aligné peut être
+mortel ; l'ABI de la machine cible fait partie de la surface de test
+terrain, au même titre que son chargeur (D97). Aucune clé touchée (phrase
+D81 valable, conteneur 0323029a… inchangé).

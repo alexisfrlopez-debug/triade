@@ -267,6 +267,43 @@ DONNEES_RIP = {
 }
 
 
+def _ombre_abi(insns):
+    """(D98) Ombre ABI x64 : toute fenêtre « sub rsp, IMM ... add rsp, IMM »
+    où IMM < 0x28 ne doit contenir AUCUN appel externe (call qword ptr
+    [rip ±x] = IAT) : la maison d'arguments rdx du callee recouvrirait
+    l'adresse de retour du caller (leçon terrain.17-B : sub rsp, 8 dans
+    .curl/.ps laissait WaitForSingleObject/GetExitCodeProcess écraser le
+    retour — mort du superviseur, fenêtre fermée, proxy orphelin).
+    Les appels internes directs (call 0x...) sont tolérés : les blocs
+    internes ne touchent jamais les maisons d'arguments (convention
+    prouvée sur machine par terrain16, T2 complet)."""
+    fenetres = []   # [index_sub, imm, premier_appel_externe ou None]
+    for i in insns:
+        if i.mnemonic == "sub" and i.op_str.startswith("rsp,"):
+            imm = int(i.op_str.split(",")[1].strip(), 16)
+            if imm < 0x28:
+                fenetres.append([i, imm, None])
+        elif i.mnemonic == "add" and i.op_str.startswith("rsp,"):
+            imm = int(i.op_str.split(",")[1].strip(), 16)
+            if fenetres and fenetres[-1][1] == imm:
+                debut, _, ext = fenetres.pop()
+                if ext is not None:
+                    return (False, f"appel externe {ext.mnemonic} {ext.op_str} "
+                                   f"@{ext.address:#x} dans la fenêtre "
+                                   f"{debut.mnemonic} {debut.op_str} @{debut.address:#x} "
+                                   f"({imm:#x} < 0x28 : pas d'ombre)")
+        elif i.mnemonic == "call" and "ptr [rip" in i.op_str:
+            if fenetres and fenetres[-1][2] is None:
+                fenetres[-1][2] = i
+    for debut, imm, ext in fenetres:   # fenêtres non fermées (fin de bloc)
+        if ext is not None:
+            return (False, f"appel externe {ext.mnemonic} {ext.op_str} "
+                           f"@{ext.address:#x} dans la fenêtre "
+                           f"{debut.mnemonic} {debut.op_str} @{debut.address:#x} "
+                           f"({imm:#x} < 0x28 : pas d'ombre)")
+    return (True, "")
+
+
 def oracle_structurel(specs: dict, code: dict, blocs: list[tuple]) -> list[str]:
     verrous = []
 
@@ -317,6 +354,8 @@ def oracle_structurel(specs: dict, code: dict, blocs: list[tuple]) -> list[str]:
         verrou(f"{bid}:slot-aligne-16", rva % 16 == 0)
         verrou(f"{bid}:slot-multiple-64", slot % 64 == 0)
         verrou(f"{bid}:pile-alignee", bm._prologue_aligne(insns))
+        ombre_ok, ombre_detail = _ombre_abi(insns)
+        verrou(f"{bid}:ombre-abi-x64", ombre_ok, ombre_detail)
 
     def canon_(i):
         return bm.canon(f"{i.mnemonic} {i.op_str}")
