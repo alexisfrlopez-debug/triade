@@ -3403,3 +3403,45 @@ l'implémentation », v0.5.1) est mûre — l'arbitrage (passer avec l'axe 1
 consigné, ou attendre) appartient au développeur ; cérémonies réelles
 clé-I et coffre-CF2 ; D57 avec l'intervalle exact en main ; partage Éditeur
 /test au compte de service (refresh OAuth ~05/11).
+
+### D108 — le kit de cérémonie déposé dans /Cérémonie du Drive (30/10) : la distribution devient un dossier vérifié, la preuve reste au dépôt
+
+**La demande.** « Dépose les livrables dans un dossier /Cérémonie du
+drive. » Les livrables du chantier cérémonies v0.6.0 (D105-D107) vivaient
+dans download/ de l'espace de travail ; ils vivent désormais AUSSI à la
+racine du Drive « Triade », dans un dossier dédié, vérifiable.
+
+**Le dossier (id 1JJXohy5olmngfm_hE_AW17AfjSciISSg).** À plat : le kit
+hors-ligne (`ceremonie_gui.py` autoporteur — stdlib + tkinter seules,
+zéro pip — et `ceremonie_hors_ligne.py` de référence interopérable), les
+TROIS LISEZMOI (GUI, cle-I, coffre-CF2, encarts MODE GRAPHIQUE inclus),
+les lanceurs double-clic `.bat`/`.sh`, et `MANIFESTE.txt` (taille + md5 +
+sha256 par fichier, régénéré à chaque dépôt, commandes de vérification
+par plateforme). En sous-dossier `v06/` : `__init__.py` + les cinq `.py`
+du dépôt — le dossier est un MINI-DÉPÔT portable : le profil DÉPÔT du GUI
+(relais `RACINE_DEPOT/v06/*.py`, import `v06.coffre_cf2`) y est
+opérationnel sur toute machine connectée, pile pip proposée avec accord.
+La vérification des DIX arbres du sceau exige le dépôt complet — depuis
+le kit seul, l'échec est nommé, par conception.
+
+**La discipline (l'habit ne change pas la loi, même pour la distribution).**
+Gardes avant dépôt : sources présentes, et `ceremonie_gui.py` /
+`ceremonie_hors_ligne.py` IDENTIQUES (md5) entre `download/` et `v06/` —
+un kit divergent n'est pas déposé. Vérification ALLER-RETOUR après
+écriture : 14/14 md5 MATCH (affiché, pas affirmé). Idempotence prouvée
+par relance : 14/14 « inchangé », aucun doublon. Aucun secret déposé :
+ni clé privée, ni phrase de contrôle D81, ni coffre — les textes vérifiés
+avant envoi, `MANIFESTE.txt` le consigne. L'outil
+`scripts/drive_ceremonie.py` est committé et rejouable ; son échec
+éventuel est NOMMÉ avec ses parades (OAuth relais refresh ~05/11, compte
+de service lecteur seul).
+
+**La position.** Le Drive est une commodité de distribution, pas une
+preuve : le md5 aller-retour protège le transport, les preuves restent
+les tests du dépôt (`test_ceremonie_gui.py` 36/36 + selftest 6/6 + fumée
+Xvfb 14/14 ; non-régression 43/43 et 47/47). Le kit déposé inclut le
+complément D107 consigné au commit da8fd4c (journal Entrée 93, différée).
+
+**Suite** : les cérémonies réelles (clé-I + coffre-CF2) — le kit est prêt
+depuis le dépôt OU depuis le Drive ; D57 ; partage Éditeur /test au compte
+de service (refresh OAuth ~05/11).

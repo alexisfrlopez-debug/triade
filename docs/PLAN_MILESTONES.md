@@ -178,7 +178,14 @@ modulo 0x11B, ordre 51 : consigné), sentinelle inotify + attribution /proc
 passes + PV, migration CF1 → CF2, falsifiabilité 43/43
 (`v06/test_cf2.py`) ; le coffre réel n'a pas migré — l'acte qui arme
 l'interrupteur appartient au développeur
-(`download/LISEZMOI-coffre-CF2.txt`). Les trois composants étant écrits
+(`download/LISEZMOI-coffre-CF2.txt`). Les cérémonies sont menées par le
+MAÎTRE DE CÉRÉMONIE GRAPHIQUE (D107 : `v06/ceremonie_gui.py`, un fichier,
+deux profils, zéro ligne de commande — falsifiabilité 36/36 + fumée Xvfb
+14/14) et le kit complet est déposé dans le dossier **/Cérémonie du
+Drive** (D108, 30/10 : 14 fichiers vérifiés md5 aller-retour, `v06/` en
+mini-dépôt portable, MANIFESTE d'empreintes, aucun secret) — les
+cérémonies réelles peuvent s'armer depuis le dépôt OU depuis le Drive.
+Les trois composants étant écrits
 (l'axe 1 D85 reste une exigence consignée — infrastructure sans TEE), la
 passation de la spécification à v0.6.0 est MÛRE : l'arbitrage (passer avec
 l'axe 1 consigné, ou attendre) appartient au développeur.

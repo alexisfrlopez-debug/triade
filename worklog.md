@@ -515,3 +515,42 @@ Stage Summary:
   axe 1 consigné ; arbitrage développeur) ; cérémonies réelles clé-I +
   coffre-CF2 ; D57 (intervalle exact en main) ; partage Éditeur /test au
   SA (refresh OAuth ~05/11)
+
+## Task ID 34 — D107 (consignation différée) + D108 : le kit de cérémonie déposé dans /Cérémonie du Drive (2026-10-30)
+
+- CONTEXTE : demande développeur du 30/10 — « dépose les livrables dans un
+  dossier /Cérémonie du drive ». En amont : D107 (le maître de cérémonie
+  graphique, réponse à « un script python auto-suffisant qui installe
+  lui-même les dépendances requises et ouvre une GUI ») fut livré et
+  committé (da8fd4c, 29/10 16:25) mais la session s'interrompit AVANT
+  worklog/journal — la consigne de référence de D107 est le MESSAGE DE
+  COMMIT ; cette dette de consignation est soldée ici (JOURNAL Entrée 93)
+- LE DOSSIER POSÉ (14 fichiers, /Cérémonie créé à la racine du Drive
+  « Triade », id 1JJXohy5olmngfm_hE_AW17AfjSciISSg) : profil hors-ligne
+  (ceremonie_gui.py autoporteur + ceremonie_hors_ligne.py interopérable) ;
+  les TROIS LISEZMOI (ceremonie-GUI, cle-I, coffre-CF2 — encarts MODE
+  GRAPHIQUE inclus) ; lanceurs lancer_ceremonie.bat/.sh ; MANIFESTE.txt
+  (taille + md5 + sha256 par fichier, régénéré à chaque dépôt) ; et v06/
+  (le complément « profil dépôt » : __init__.py + les cinq .py du dépôt) —
+  le sous-dossier fait du dossier un MINI-DÉPÔT : le GUI y relaye les CLI
+  par RACINE_DEPOT/v06/*.py (import v06.coffre_cf2 opérationnel) ; la
+  vérification des DIX arbres du sceau exige le dépôt complet — échec
+  nommé depuis le kit seul, par conception
+- CANAL : OAuth relais (refresh du 29/10, mode Testing ≈ 7 j — échéance
+  ~05/11) ; le compte de service reste LECTEUR (échec nommé avec ses
+  parades si l'OAuth meurt)
+- PREUVES : gardes anti-divergence AVANT dépôt (download/ ↔ v06/ md5
+  identiques pour le GUI et la CLI hors-ligne — un kit divergent n'est pas
+  déposé) ; vérification ALLER-RETOUR 14/14 md5 MATCH ; IDEMPOTENCE prouvée
+  par relance (14/14 « inchangé », aucun doublon) ; AUCUN secret déposé
+  (ni clé, ni phrase D81, ni coffre — les LISEZMOI ne portent que des
+  références, vérifié avant envoi)
+- Outil : scripts/drive_ceremonie.py (dépôt + --sonde, gardes, manifeste,
+  vérification md5 aller-retour, idempotent) ; journal d'exécution et
+  copie d'audit du manifeste dans scripts/ de l'espace de travail
+- Docs : JOURNAL Entrées 93 (D107, différée) + 94 (D108), DECISIONS D108,
+  README (paragraphe cérémonies D107/D108), PLAN (avancement v0.6.0),
+  worklog (Task ID 34)
+- Suite : cérémonies réelles (cle-I + CF2) par le GUI — le kit est prêt,
+  depuis le dépôt OU depuis le Drive ; D57 ; partage Éditeur /test au SA
+  (refresh OAuth ~05/11)

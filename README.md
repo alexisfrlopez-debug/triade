@@ -460,6 +460,26 @@ programme v0.6.0 sont écrits (l'axe 1 D85 reste consigné) — la passation
 de la spécification à v0.6.0 est mûre, arbitrage développeur. Suite : D57
 avec l'intervalle exact (0.3.x à contrat stable si ouvert).
 
+**v0.6.0 cérémonies — LE MAÎTRE DE CÉRÉMONIE GRAPHIQUE (D107, 29/10)** :
+`v06/ceremonie_gui.py` — UN fichier, DEUX profils, zéro ligne de commande
+après le lancement (lanceurs `lancer_ceremonie.bat`/`.sh` en double-clic).
+Profil hors-ligne : Ed25519 RFC 8032 embarqué (copie conforme de la CLI,
+attestée par les preuves), stdlib + tkinter seules, zéro pip, zéro réseau,
+fichiers produits identiques à la console. Profil dépôt : relais des CLI en
+sous-processus (le fail-closed des CLI reste la loi) + contrôle de
+RELECTURE des trois copies (copie corrompue et falsifiée-cohérente
+attrapées), feuille d'export imprimable, liste blanche par formulaire,
+sentinelle détachée avec heart-beat, BRÛLER avec confirmation tapée ; pile
+pip vérifiée et installable avec accord. Falsifiabilité 36/36
+(`v06/test_ceremonie_gui.py`) + selftest embarqué 6/6 + fumée GUI réelle
+sous Xvfb 14/14 ; non-régression 43/43 + 47/47. **Le kit est déposé dans
+/Cérémonie du Drive (D108, 30/10)** : 14 fichiers vérifiés md5
+aller-retour — kit hors-ligne, trois LISEZMOI, lanceurs, MANIFESTE
+d'empreintes, et `v06/` qui fait du dossier un mini-dépôt portable ;
+idempotent (`scripts/drive_ceremonie.py`), aucun secret déposé. Suite :
+les cérémonies réelles (clé-I + coffre-CF2) — le kit est prêt depuis le
+dépôt OU depuis le Drive ; D57 (0.3.x à contrat stable si ouvert).
+
 ## Avertissement
 
 Le dossier `.gdrive/` contient des jetons d'accès : il ne doit jamais être commité,

@@ -6881,3 +6881,90 @@ attendre — appartient au développeur. Suite immédiate : les DEUX cérémonie
 réelles attendent leur développeur (clé-I hors-ligne, coffre-CF2), D57 avec
 l'intervalle exact en main, partage Éditeur /test au compte de service
 (refresh OAuth ~05/11).
+
+## Entrée 93 — D107 (29/10, consignation différée au 30/10) : v0.6.0 — LE MAÎTRE DE CÉRÉMONIE GRAPHIQUE (les cérémonies sans ligne de commande : la demande développeur du 29/10 — « un script python auto-suffisant qui installe lui-même les dépendances requises et ouvre une GUI, 0 ligne de commande » — servie intégralement ; source de cette consigne différée : commit da8fd4c, la session s'étant interrompue avant journal)
+
+**Contexte.** Les cérémonies v0.6.0 livrées (Entrées 91-92) exigeaient des
+lignes de commande, un JSON de liste blanche édité à la main, des fragments
+copiés à la main : la discipline était intégralement là, l'ergonomie n'y
+était pas. La demande développeur fixait le cap : un script auto-suffisant,
+qui installe lui-même ses dépendances et ouvre une GUI — zéro ligne de
+commande sauf le lancement. La loi du chantier : l'habit ne change pas la
+loi (le fail-closed des CLI reste la référence, la clé privée ne s'affiche
+jamais, le brûlage exige une confirmation tapée).
+
+**La machine (v06/ceremonie_gui.py — UN fichier, DEUX profils).** Profil
+HORS-LIGNE (D87) : Ed25519 RFC 8032 EMBARQUÉ, copie conforme de
+ceremonie_hors_ligne.py attestée par les preuves (graines aléatoires contre
+la référence + interop bidirectionnelle cryptography) ; stdlib + tkinter
+seules, zéro pip, zéro réseau ; générer/signer/vérifier produisent LES
+MÊMES FICHIERS que la console (interopérables). Profil DÉPÔT : relais des
+CLI existants en sous-processus (codes de sortie honorés, sortie streamée,
+aucune logique critique dupliquée) + NOUVELLES capacités : CONTRÔLE DE
+RELECTURE des copies hors-ligne (copie corrompue ET falsifiée-cohérente —
+tag reforgé — attrapées, sous-seuil et doublon refusés), feuille d'export
+imprimable (tags vérifiés avant impression), liste blanche par formulaire
+(motif regex invalide refusé, testeur de motifs), sentinelle DÉTACHÉE avec
+heart-beat et bouton santé, migration phrase masquée, BRÛLER exige de taper
+BRULER ; pile pip (pynacl + cryptography) vérifiée à l'entrée et installable
+AVEC accord ; tkinter manquant → consigne exacte par plateforme.
+
+**Falsifiabilité.** v06/test_ceremonie_gui.py 36/36 (copie conforme, interop,
+journal muet — la graine n'y fuit jamais, falsifications nommées, labo CF2
+complet, brûlage sans confirmation refusé, relève des copies après brûlage
+réel, fail-closed autotest/phrase) + selftest embarqué 6/6 (utilisable sur
+la machine hors-ligne AVANT la cérémonie) + fumée GUI RÉELLE sous Xvfb 14/14
+(construction, navigation, action asynchrone, verdict, journal sans graine).
+Non-régression : test_cf2.py 43/43, test_sceau_I.py 47/47. Kit download/ :
+ceremonie_gui.py md5 identique au dépôt, lanceurs double-clic, LISEZMOI +
+encarts MODE GRAPHIQUE dans les deux LISEZMOI de cérémonie.
+
+**Bornes honnêtes.** Le moteur sentinelle livré reste LABORATOIRE (inotify +
+/proc, Linux ; SACL/4663/ETW Windows spécifié non implémenté, même posture
+que D85) ; un GUI n'est pas une preuve — les CLI restent la référence, les
+fichiers produits sont identiques, et l'air-gap de la clé I reste le geste
+du développeur, pas celui de l'outil. Aucune clé touchée.
+
+## Entrée 94 — D108 (30/10) : le kit de cérémonie déposé dans /Cérémonie du Drive (la demande développeur du 30/10 — « dépose les livrables dans un dossier /Cérémonie du drive » — exécutée : 14 fichiers vérifiés md5 ALLER-RETOUR, idempotence prouvée, aucun secret déposé)
+
+**Contexte.** Le kit des cérémonies vivait dans download/ de l'espace de
+travail — accessible depuis la session seulement. La demande : le poser sur
+le Drive, dans un dossier dédié. Le canal d'écriture disponible : l'OAuth
+relais (refresh_token du 29/10, mode Testing ≈ 7 jours — échéance ~05/11) ;
+le compte de service reste LECTEUR seul (l'échec éventuel est nommé avec
+ses parades : partage Éditeur, ou reprise interactive).
+
+**Le dossier.** /Cérémonie créé à la racine du Drive « Triade » (id
+1JJXohy5olmngfm_hE_AW17AfjSciISSg). À plat : le kit hors-ligne
+(ceremonie_gui.py autoporteur, ceremonie_hors_ligne.py de référence), les
+TROIS LISEZMOI (GUI, cle-I, coffre-CF2 — encarts MODE GRAPHIQUE inclus),
+les lanceurs .bat/.sh, et MANIFESTE.txt (taille + md5 + sha256 par
+fichier, régénéré à chaque dépôt — la vérification post-téléchargement est
+écrite dedans, commandes par plateforme). En sous-dossier v06/ : les six
+fichiers du dépôt (__init__.py + GUI + CLI + coffre_cf2 + sceau_I +
+sentinelle) — le dossier devient un MINI-DÉPÔT portable : le profil DÉPÔT
+du GUI y est opérationnel (relais RACINE_DEPOT/v06/*.py, import
+v06.coffre_cf2), la pile pip étant proposée avec accord. La vérification
+des DIX arbres du sceau exige le dépôt complet — depuis le kit seul,
+l'échec est nommé, par conception.
+
+**Preuves.** Gardes AVANT dépôt : les 13 sources présentes, et
+ceremonie_gui.py / ceremonie_hors_ligne.py IDENTIQUES (md5) entre
+download/ et v06/ — un kit divergent n'est pas déposé. Vérification
+ALLER-RETOUR après écriture : 14/14 md5 MATCH. Idempotence PROUVÉE par
+relance : 14/14 « inchangé », aucun doublon créé. Aucun secret déposé :
+ni clé privée, ni phrase de contrôle D81, ni coffre — vérifié sur les
+textes avant envoi (les LISEZMOI ne portent que des références) ;
+MANIFESTE.txt le consigne noir sur blanc. L'outil (scripts/drive_ceremonie.py)
+est committé : le dépôt est rejouable, la relance ne coûte rien.
+
+**Leçon.** Un dépôt Drive est une commodité de distribution, pas une
+preuve : le md5 MATCH protège le TRANSPORT (l'aller-retour est vérifié,
+pas affirmé), les preuves restent les tests du dépôt ; et l'échéance de
+l'OAuth relais (~05/11) est nommée dans l'outil même — le jour où le
+canal meurt, l'échec dira son nom et ses parades.
+
+Suite immédiate : les DEUX cérémonies réelles attendent leur développeur
+(clé-I hors-ligne, coffre-CF2 — le kit est prêt depuis le dépôt OU depuis
+le Drive), D57 avec l'intervalle exact en main, partage Éditeur /test au
+compte de service (refresh OAuth ~05/11).
