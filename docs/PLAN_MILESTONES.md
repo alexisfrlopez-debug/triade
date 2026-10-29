@@ -163,16 +163,25 @@ l'axe 1 (attestation TEE) selon disponibilité d'une infrastructure à racine de
 confiance — l'exigence est d'ores et déjà consignée, l'infrastructure actuelle
 (VM cloud sans TEE) ne peut pas la satisfaire et le dit.
 
-**Avancement** : **axe 3 LIVRÉ en phase laboratoire (D105, 29/10)** — spec
-écrite-avant-code (`v06/I/README.md`), cérémonie hors-ligne autoportière
-(`v06/ceremonie_hors_ligne.py`, stdlib seule, autotest RFC 8032
-fail-closed), dix arbres signés (`v06/sceau-I/`), gardes sceau-I dans
-`build_m4.py` et `build_terrain.py` (refus en tête d'un diff d'intention
-non signé), falsifiabilité 47/47 ; l'état « test » (clé dérivée d'une
-constante publique) est VISIBLE tant que le développeur n'a pas exécuté la
-cérémonie réelle (`download/LISEZMOI-cle-I.txt` — l'acte qui arme la
-souveraineté). Reste l'axe 2 (CF2-Shamir), puis l'écriture des trois
-composants portera la spécification à v0.6.0.
+**Avancement** : **axes 2 et 3 LIVRÉS en phase laboratoire (D105/D106,
+29/10)** — axe 3 : spec écrite-avant-code (`v06/I/README.md`), cérémonie
+hors-ligne autoportière (`v06/ceremonie_hors_ligne.py`, stdlib seule,
+autotest RFC 8032 fail-closed), dix arbres signés (`v06/sceau-I/`), gardes
+sceau-I dans `build_m4.py` et `build_terrain.py`, falsifiabilité 47/47 ;
+l'état « test » est VISIBLE tant que le développeur n'a pas exécuté la
+cérémonie réelle (`download/LISEZMOI-cle-I.txt`). Axe 2 : spec
+écrite-avant-code (`v06/I/CF2/README.md` — l'arbre v06/I porte les deux
+axes, balise `v0.6.0-axes2-3`), coffre CF2 à clé maîtresse jamais stockée
+entière (Shamir sur générateur PRIMITIF 0x03 — 0x02 n'est pas primitif
+modulo 0x11B, ordre 51 : consigné), sentinelle inotify + attribution /proc
+à double seuil (latence mesurée 0,05 s, borne 2 s), destruction trois
+passes + PV, migration CF1 → CF2, falsifiabilité 43/43
+(`v06/test_cf2.py`) ; le coffre réel n'a pas migré — l'acte qui arme
+l'interrupteur appartient au développeur
+(`download/LISEZMOI-coffre-CF2.txt`). Les trois composants étant écrits
+(l'axe 1 D85 reste une exigence consignée — infrastructure sans TEE), la
+passation de la spécification à v0.6.0 est MÛRE : l'arbitrage (passer avec
+l'axe 1 consigné, ou attendre) appartient au développeur.
 
 **Hiérarchie des clés qui en découle (trois gardes, trois menaces)** : phrase
 de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne

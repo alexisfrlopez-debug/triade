@@ -1,6 +1,7 @@
 TRIADE-SCEAU-I v1
 arbre: v06
-artefact: sceau-I (transversal)
-balise: v0.6.0-axe3
-fichiers: 1
-sha256:4933825a552d5dabc0abbcd8a2bd0b5dc7fd868f97ce7a7e3add972006d0cf39  README.md
+artefact: coffre CF2 + sceau-I (transversal)
+balise: v0.6.0-axes2-3
+fichiers: 2
+sha256:43f599d02ddc66630773e37709a6e0dcd89604aaf2df668846ccbe1149aaf8aa  CF2/README.md
+sha256:a07451af5173f174a30e16aacecbededaab9ab5f3f3b47f0cb0c2d0ed6dc2577  README.md

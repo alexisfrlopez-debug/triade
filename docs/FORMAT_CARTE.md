@@ -364,3 +364,40 @@ Contrepartie consignée (D81) : la phrase vit sur le stockage du coffre Drive pa
 lien — la confidentialité au repos repose sur le contrôle d'accès au dossier (restriction
 du partage par lien : mitigation première) ; une phrase entrée dans l'historique git y
 demeure à vie, la rotation reste le remède à toute exposition avérée.
+
+### 11.4 Le conteneur « TRIADE-CF2 » et l'interrupteur d'homme mort (D86/D106)
+
+Le coffre de la v0.6.0 change de CÉRÉMONIE de clé : la base (même schéma JSON
+que § 11.2) est chiffrée sous une clé maîtresse M de 32 octets **jamais
+stockée entière** — découpée par Shamir (GF(2^8), polynôme 0x11B, générateur
+de tables PRIMITIF 0x03 — 0x02 n'est pas primitif modulo 0x11B, ordre 51)
+en N fragments (par défaut 5, seuil 3) logés dans des gardes distinctes.
+Spécification complète écrite-avant-code : `v06/I/CF2/README.md` (l'arbre
+v06/I est sous sceau-I, axes 2-3).
+
+```
+magic « TRIADE-CF2 » (10 o) · version u16 (1) ·
+champs longueur-préfixée u16 : hachage (sha256), kdf (hkdf-sha256),
+                               chiffrement (xchacha20poly1305),
+                               date ISO-8601 UTC, shamir (« t=3/n=5 ») ·
+sel HKDF 32 o · nonce 24 o (frais à CHAQUE écriture) ·
+empreinte sha256 du chiffretexte 32 o ·
+verif 16 o = sha256(HKDF(M, sel, info « cf2=verif »)) tronqué ·
+chiffretexte : XChaCha20-Poly1305(JSON base, K, AAD = en-tête + sel + nonce)
+   avec K = HKDF-SHA256(M, sel, info « coffre=v2 »)
+```
+
+Fragment ASCII `TRIADE-CF2-FRAG v1` : sel du coffre (identité STABLE — jamais l'empreinte de l'en-tête, le nonce y est frais à chaque écriture), indice x, seuil,
+64 hex (32 o), tag 8 o (sha256 sur « TRIADE-CF2-frag » ‖ x ‖ fragment) — le
+tag NOMME le fautif sans le divulguer ; il se transporte sur papier. La
+sentinelle (`v06/sentinelle_cf2.py`) surveille la couche C (inotify +
+attribution /proc, double seuil, liste blanche sur image ET ligne de
+commande) et détruit les fragments (3 passes + PV) à la lecture non
+blanchie : sous le seuil, le coffre est informationnellement mort. La
+RELÈVE exige T copies hors-ligne (trois à seuil 3 — deux copies laissent le
+coffre mort, l'autotest le prouve par restauration partielle refusée).
+Migration CF1 → CF2 : `python3 v06/coffre_cf2.py migrer` (CF1 reste intact,
+destruction = acte explicite) ; falsifiabilité : `python3 v06/test_cf2.py`
+(43 contrôles : Shamir contre témoin indépendant — somme de puissances et
+Gauss, tout M′ compatible sous T, fail-closed nommé, fausses alertes nulles,
+exfiltration simulée avec latence bornée, atomicité des remises, santé).

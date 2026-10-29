@@ -437,9 +437,28 @@ cérémonie complète air-gap en réplique, un octet par arbre 10/10, manifeste
 réécrit dénoncé par la signature, atomicité des remises). **État visible :
 phase TEST** (clé dérivée d'une constante publique, `etat-cle.txt` le dit)
 — la souveraineté s'arme quand le développeur exécute la cérémonie réelle
-(`download/LISEZMOI-cle-I.txt` : le flux pas à pas). Suite : v0.6.0 axe 2
-(CF2-Shamir D86) ; D57 avec l'intervalle exact (0.3.x à contrat stable si
-ouvert).
+(`download/LISEZMOI-cle-I.txt` : le flux pas à pas).
+
+**v0.6.0 axe 2 — L'INTERRUPTEUR D'HOMME MORT VIT (D106, 29/10)** : le
+conteneur TRIADE-CF2 chiffre le coffre sous une clé maîtresse **jamais
+stockée entière** — Shamir (GF(2^8)/0x11B, générateur PRIMITIF 0x03 —
+0x02 n'est pas primitif, ordre 51 : consigné) en 5 fragments (seuil 3)
+dans des gardes distinctes ; la SENTINELLE (`v06/sentinelle_cf2.py`)
+surveille la couche C (inotify + attribution /proc, DOUBLE SEUIL :
+processus hors liste blanche ET lecture de contenu) et DÉTRUIT les
+fragments à la lecture hostile (trois passes + PROCÈS-VERBAL nommé —
+latence mesurée 0,05 s, borne 2 s) : sous le seuil, le coffre est
+informationnellement mort. Falsifiabilité 43/43 (`v06/test_cf2.py` :
+Shamir contre témoin indépendant — somme de puissances, corps bit-à-bit,
+Gauss ; tout M′ compatible sous T, verif nomme le mensonge ; fausses
+alertes nulles — même binaire, seule la commande blanchit ; exfiltration
+simulée complète avec relève ; atomicité des remises). **Le coffre réel
+n'a PAS migré** : l'acte qui arme l'interrupteur appartient au
+développeur (`download/LISEZMOI-coffre-CF2.txt` : migrer, TROIS copies
+hors-ligne, liste blanche de l'éditeur, sentinelle). Les axes 2-3 du
+programme v0.6.0 sont écrits (l'axe 1 D85 reste consigné) — la passation
+de la spécification à v0.6.0 est mûre, arbitrage développeur. Suite : D57
+avec l'intervalle exact (0.3.x à contrat stable si ouvert).
 
 ## Avertissement
 

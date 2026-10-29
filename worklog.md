@@ -466,3 +466,52 @@ Stage Summary:
 - Suite : v0.6.0 axe 2 (CF2-Shamir D86) ; cérémonie réelle développeur ;
   D57 (intervalle exact en main) ; partage Éditeur /test au SA
   (refresh OAuth ~05/11)
+
+## Task ID 33 — D106 : v0.6.0 axe 2, l'interrupteur d'homme mort (2026-10-29)
+
+- CONTEXTE : axe 3 livré (D105/Task 32) → l'axe 2 (CF2-Shamir, D86)
+  mené spec d'abord ; coffre réel et clés JAMAIS touchés (discipline D105)
+- SPEC écrite-avant-code : v06/I/CF2/README.md (13 sections — Shamir
+  GF(2^8)/0x11B, conteneur TRIADE-CF2 (miroir CF1, HKDF coffre=v2, champ
+  verif qui nomme la clé fausse), fragment papier lié au SEL du coffre,
+  gardes, sentinelle double seuil, destruction + PV, restauration
+  atomique, migration CF1→CF2, bornes honnêtes, moteur Windows consigné)
+- ARBRE V06/I étendu aux axes 2-3 (balise v0.6.0-axes2-3, ARBRES
+  sceau_I.py mis à jour, re-signé en phase test — 10 arbres VERTS)
+- IMPLÉMENTATION : v06/coffre_cf2.py (Shamir + conteneur + gardes + CLI
+  complète init/migrer/statut/etat-fragments/lister/obtenir/ajouter/
+  retirer/verifier/restaurer/bruler/autotest 13 contrôles) ;
+  v06/sentinelle_cf2.py (inotify ctypes IN_OPEN|IN_ACCESS fichiers,
+  IN_ISDIR ignoré, balayage /proc immédiat + périodique, attribution
+  exe+cmdline, anti-bruit, heart-beat, PV via la routine bruler — source
+  unique ; fanotify EPERM utilisateur non root : CONSIGNÉ)
+- TROIS FAUTES DÉNONCÉES PAR LES PREUVES : (1) tables GF sur 0x02 NON
+  PRIMITIF mod 0x11B (ordre 51, 204 éléments muets — tests de coin
+  complices) → générateur 0x03 + preuve EXHAUSTIVE (65536 distributivités,
+  255 inverses) + témoin indépendant (somme de puissances, corps
+  bit-à-bit, Gauss) ; (2) liaison fragment→empreinte d'en-tête (le
+  parcours CLI écrire-puis-relire l'a dénoncée : nonce frais = en-tête
+  changé = copies papier mortes à la première écriture) → liaison au SEL ;
+  (3) relève à 2 copies impossible (autotest : 2 < seuil 3) → T copies
+  hors-ligne, sémantique PROUVÉE (2 → morte, 3e → vie)
+- FALSIFIABILITÉ v06/test_cf2.py : 43 PASS / 0 ÉCHEC (T1 témoin
+  indépendant 1000×10 + Gauss ×50 + bornes ; T2 informationnel — deux M′
+  forgés compatibles avec T−1 réels, verif nomme le mensonge ; T3
+  fail-closed nommé + custodie répartie ; T4 fausses alertes NULLES —
+  même binaire, seule la commande blanchit ; F1 exfiltration complète :
+  PV nommé, mort, latence 0,05 s < borne 2 s, relève → vie ; F2 remise
+  douteuse sans écrire ; T5 santé ; X8 coffres réels intacts)
+- NON-RÉGRESSION : oracle M4 560 cas + verifier EXIT=0 (38/38, 482
+  verrous, cristallisation 10/10, R8 49) ; oracle terrain 10 127 cas +
+  verifier EXIT=0 (1158 verrous, R8 25) ; test_sceau_I 47/47 ; artefacts
+  intacts (proxy 2b6481a1…/b9264e0b… 28 160 o ; superviseur f947b605…
+  75 264 o)
+- LIVRAISON : download/LISEZMOI-coffre-CF2.txt (cérémonie réelle pas à
+  pas : vérifier → migrer → TROIS copies hors-ligne → liste blanche
+  éditeur → sentinelle → sante ; bornes honnêtes en clair)
+- Docs : DECISIONS D106, JOURNAL Entrée 92, FORMAT_CARTE § 11.4, PLAN
+  (avancement v0.6.0), README, worklog (Task ID 33)
+- Suite : passation PROTOCOLE_TRIADE à v0.6.0 (mûre — axes 2-3 écrits,
+  axe 1 consigné ; arbitrage développeur) ; cérémonies réelles clé-I +
+  coffre-CF2 ; D57 (intervalle exact en main) ; partage Éditeur /test au
+  SA (refresh OAuth ~05/11)

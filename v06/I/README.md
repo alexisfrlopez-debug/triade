@@ -21,7 +21,7 @@ physique du développeur. Le code volé ne peut pas évoluer.
 Un **arbre d'intention** est un répertoire `<lignée>/I/` du dépôt : ses
 fichiers `.md` (registre figé + spécifications + README transverse). Dix
 arbres vivent sous le sceau — les neuf lignées existantes à l'ouverture de
-l'axe, PLUS l'arbre de l'axe lui-même (`v06/I`) : la spécification qui
+l'axe, PLUS l'arbre des axes eux-mêmes (`v06/I`) : la spécification qui
 définit le sceau est la première couche I qu'il garde (un mécanisme de
 garde qui s'exempte de lui-même serait une contrebande de niveau X2) ;
 la table lie chaque arbre à son artefact et à sa balise de référence :
@@ -37,7 +37,12 @@ la table lie chaque arbre à son artefact et à sa balise de référence :
 | `m7/I` | sceau (lignée D34) | sceau.1 |
 | `demo/I` | demo.exe | 0.3.0 (M2, scellée) |
 | `terrain/I` | superviseur.exe | terrain.19/17-H (0.5.0-terrain.9) |
-| `v06/I` | sceau-I (transversal) | v0.6.0 axe 3 (D105) |
+| `v06/I` | coffre CF2 + sceau-I (transversal) | v0.6.0 axes 2-3 (D105/D106) |
+
+L'arbre `v06/I` porte les spécifications transversales du programme v0.6.0 :
+ce README (axe 3, sceau de l'Intention — D87/D105) ET `CF2/README.md`
+(axe 2, coffre CF2 et interrupteur d'homme mort — D86/D106) : la volonté
+d'évolution couvre le programme souverain ENTIER, axes 2 et 3 ensemble.
 
 La balise est **informative dans le manifeste mais couverte par la
 signature** : changer l'étiquette sans re-signer est un diff d'intention

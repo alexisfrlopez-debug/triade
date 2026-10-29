@@ -1,1 +1,1 @@
-test (cle-test-I lab, D105 — a remplacer par la ceremonie hors-ligne du developpeur, spec § 8)
+test (cle-test-I lab, D105/D106 — a remplacer par la ceremonie hors-ligne du developpeur, spec § 8)

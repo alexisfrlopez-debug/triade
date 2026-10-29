@@ -50,7 +50,7 @@ ARBRES = {
     "m7": ("sceau", "sceau.1"),
     "demo": ("demo.exe", "0.3.0"),
     "terrain": ("superviseur.exe", "terrain.19/17-H"),
-    "v06": ("sceau-I (transversal)", "v0.6.0-axe3"),
+    "v06": ("coffre CF2 + sceau-I (transversal)", "v0.6.0-axes2-3"),
 }
 
 # Constante publique de dérivation de la clé de TEST (spec § 8) — PAS un
@@ -415,7 +415,7 @@ def signer_test():
     # La clé de test s'installe comme clé courante — via la MÊME atomicité
     # que la cérémonie réelle (vérification intégrale avant écriture)
     return _deposer(lignes, cle_pour_verif=publique, cle_a_ecrire=publique,
-                    label_etat="test (cle-test-I lab, D105 — a remplacer "
+                    label_etat="test (cle-test-I lab, D105/D106 — a remplacer "
                                "par la ceremonie hors-ligne du developpeur, "
                                "spec § 8)")
 

@@ -3289,3 +3289,117 @@ naîtra hors ligne et n'entrera jamais ici). SUITE : v0.6.0 axe 2 (CF2-Shamir
 D86, sentinelle et fragments) ; cérémonie réelle du développeur (LISEZMOI
 livré) ; D57 (intervalle exact en main, correction 0.3.x si ouverte) ;
 partage Éditeur /test au compte de service (refresh OAuth ~05/11).
+
+### D106 — v0.6.0 axe 2 : L'INTERRUPTEUR D'HOMME MORT VIT (D86 instancié — spec écrite-avant-code v06/I/CF2/README.md, coffre CF2 à clé maîtresse jamais stockée entière, Shamir sur générateur PRIMITIF, sentinelle inotify + attribution /proc à double seuil, destruction trois passes + PV, falsifiabilité 43/43 ; le coffre RÉEL attend la cérémonie de migration du développeur)
+
+**Décision** : la seconde moitié de la souveraineté cryptographique quitte la
+feuille de route et entre dans le dépôt. Le conteneur **TRIADE-CF2** chiffre
+la base du coffre (même schéma JSON que CF1) sous une clé maîtresse M de 32
+octets **jamais stockée entière** — découpée par Shamir en N fragments (5 par
+défaut, seuil 3) logés dans des gardes distinctes ; le déverrouillage
+reconstitue M en RAM puis l'efface. La **sentinelle** surveille la couche C :
+lecture de contenu par un processus hors liste blanche → destruction
+immédiate des fragments présents (trois passes d'écrasement, fsync par passe,
+troncature, renommage, unlink, fsync du répertoire — PROCÈS-VERBAL nommé :
+pid, image, ligne de commande, fichier lu). Sous le seuil, Shamir est
+informationnellement sûr : le coffre devient indéchiffrable, pas seulement
+« révoqué » — le code volé pendant que la machine vit perd le coffre dans le
+même mouvement. La relève exige **T copies hors-ligne** (trois à seuil 3 :
+deux copies laissent le coffre mort — l'autotest le prouve par restauration
+partielle refusée, puis acceptée à la troisième).
+
+**La spécification (v06/I/CF2/README.md, R2 écrite-avant-code, 13 sections)** :
+GF(2^8) polynomial 0x11B, évaluation de Horner, interpolation de Lagrange en
+x=0, coefficients FRAIS du CSPRNG pour CHACUN des 32 octets ; bornes
+2 ≤ T ≤ N ≤ 255, T=1 refusé (une seule garde = l'alternative rejetée par
+D86) ; conteneur miroir de CF1 (§ 11.2) avec contexte HKDF distinct
+(`coffre=v2`) et champ **verif** 16 o qui NOMME la clé fausse avant l'AEAD ;
+fragment ASCII transportable sur papier, lié au **SEL du coffre** ; gardes
+répertoires distincts 0700 ; sentinelle à double seuil (processus hors liste
+blanche ET lecture de contenu — un stat ou un listage n'ouvre pas de
+descripteur : PAS un signal ; une lecture non attribuée est journalée, PAS
+brûlée) ; liste blanche MINIMALE sur l'image résolue ET la ligne de commande
+complète (jamais « tout python3 ») ; heart-beat de santé ; moteur Windows
+SACL/4663 consigné (même posture que D85) ; bornes honnêtes écrites
+(sentinelle tuable, fenêtre d'attribution ~10 ms, zéroïsation au mieux de
+Python, CoW).
+
+**Trois fautes nommées par les preuves elles-mêmes (la méthode D102
+retournée en discipline de développement)** : (1) **le générateur de tables
+GF(256)** — 0x02 n'est PAS primitif modulo 0x11B (ordre 51 : 204 éléments
+sans logarithme), l'arithmétique silencieusement fausse passait les tests de
+coin (les erreurs COÏNCIDAIENT) : corrigé sur le générateur primitif 0x03,
+prouvé par EXHAUSTIVITÉ (65536 cas de distributivité + 255 inverses) — et la
+suite croise Shamir contre un témoin INDÉPENDANT (évaluation en somme de
+puissances et multiplication GF bit-à-bit, reconstitution par élimination de
+Gauss : trois algorithmes, zéro table partagée) ; (2) **la liaison fragment →
+empreinte d'en-tête** — le parcours CLI complet (écrire puis relire) l'a
+dénoncée : le nonce est frais à CHAQUE écriture, l'en-tête change, toutes les
+fragments deviendraient « d'un autre coffre » à chaque `ajouter` — et les
+copies PAPIER mourraient à la première écriture : corrigé sur le SEL du
+coffre (stable par construction) ; (3) **la relève à 2 copies** — l'autotest
+a dénoncé l'impossibilité sous le seuil 3 : la cérémonie exige T copies
+hors-ligne, la spec le consigne et la suite PROUVE la sémantique (2 copies →
+mort persistante, 3ᵉ → vie).
+
+**L'outil (v06/coffre_cf2.py)** : `init`/`migrer` (CF1 → CF2 : la base est
+re-chiffrée sous M, CF1 RESTE INTACT — sa destruction est un acte explicite
+après vérification), `statut`, `etat-fragments` (verdict VIVANT/MORT),
+`lister`/`obtenir`/`ajouter`/`retirer` (M reconstitué en RAM à CHAQUE
+opération puis effacé — jamais écrit entier), `verifier`, `restaurer`
+(remise ATOMIQUE : tout valider avant d'écrire, motif D105 [11]),
+`bruler --oui-je-comprends`, `autotest` (13 contrôles, répertoires
+temporaires — le coffre réel n'est JAMAIS touché).
+
+**La sentinelle (v06/sentinelle_cf2.py)** : moteur de laboratoire Linux non
+privilégié — l'utilisateur du bac à sable n'a pas CAP_SYS_ADMIN
+(`fanotify_init` rend EPERM : CONSIGNÉ) — inotify par ctypes (autoporté,
+`IN_OPEN|IN_ACCESS` sur fichiers, `IN_ISDIR` ignoré : le listage n'est pas
+une lecture de contenu) déclenche un balayage /proc IMMÉDIAT (la latence ne
+dépend pas de la période), balayage périodique en secours ; attribution par
+`/proc/<pid>/fd` + exe + cmdline ; anti-bruit (une ligne par pid-fichier) ;
+journal partagé outil/sentinelle SANS secret. **Latence mesurée :
+0,05 s de l'ouverture hostile aux gardes vides (borne consignée 2 s).**
+
+**Falsifiabilité 43/43 (v06/test_cf2.py)** : T1 Shamir contre témoin
+indépendant (KAT somme de puissances + corps bit-à-bit, 1 000 secrets × les
+DIX combinaisons C(5,3), Gauss ×50, refus des bornes) ; T2 sécurité
+INFORMATIONNELLE démontrée (deux M′ arbitraires rendus compatibles avec
+T−1 fragments réels par un troisième forgé : la réconstitution rend M′ sans
+erreur — aucune discrimination n'est possible, c'est verif qui nomme le
+mensonge) ; T3 fail-closed nommé (verif, AEAD, liste blanche d'algorithmes,
+troncature, magic ; un fragment fautif ÉCARTÉ sans entâcher les quatre
+autres, trois fautifs → refus) ; T4 fausses alertes NULLES (lecteur blanchi
+— MÊME binaire que l'attaquant, seule la ligne de commande distingue — 1,5 s
+de lecture : rien ne brûle ; attributs seuls : aucun signal) ; F1
+EXFILTRATION SIMULÉE (critère D86 complet : PV nommé, 5 fragments détruits,
+coffre MORT refusé nommément, latence bornée, relève par T copies → vie) ;
+F2 remise douteuse sans écrire (lot corrompu, indice déjà présent, fragment
+d'un autre coffre — gardes INTACTES octet pour octet) ; T5 santé (heart-beat
+frais en vie, MORT visible après décès) ; X8 coffres réels intacts (md5 de
+`.keys/coffre_fort.bin` inchangé, aucun `.keys/coffre_cf2.bin` créé).
+
+**Non-régression** : oracle M4 560 cas verts + build verifier EXIT=0 (38/38,
+524+482 verrous, cristallisation 10/10, R8 49) ; oracle terrain 10 127 cas +
+verifier EXIT=0 (1 158 verrous, R8 25) ; sceau-I 10 arbres VERTS (l'arbre
+v06/I porte désormais les axes 2-3 : `v06/I/CF2/README.md` re-signé en phase
+test, balise `v0.6.0-axes2-3`) + test_sceau_I 47/47 ; artefacts INTACTS
+(proxy 0.5.0 `2b6481a1…`/`b9264e0b…` 28 160 o ; superviseur 17-H
+`f947b605…` 75 264 o).
+
+**Phase laboratoire / cérémonie réelle** : la mécanique est COMPLÈTE et
+prouvée, le coffre réel du développeur N'A PAS MIGRÉ (aucune clé touchée,
+discipline D105). L'acte qui arme l'interrupteur : `migrer` (phrase de
+contrôle CF1) + TROIS copies hors-ligne + liste blanche de l'éditeur +
+`sentinelle demarrer` — le flux pas à pas vit dans
+`download/LISEZMOI-coffre-CF2.txt` (bornes honnêtes comprises : la fausse
+alerte est une perte auto-infligée, la liste blanche est minimale, la
+sentinelle est tuable — le heart-beat rend sa mort visible).
+
+**Suite** : les axes 2-3 du programme v0.6.0 sont écrits (l'axe 1 D85 reste
+une exigence consignée — l'infrastructure sans TEE ne peut pas la satisfaire
+et le dit) ; la passation de PROTOCOLE_TRIADE à v0.6.0 (modèle « spécifiés à
+l'implémentation », v0.5.1) est mûre — l'arbitrage (passer avec l'axe 1
+consigné, ou attendre) appartient au développeur ; cérémonies réelles
+clé-I et coffre-CF2 ; D57 avec l'intervalle exact en main ; partage Éditeur
+/test au compte de service (refresh OAuth ~05/11).
