@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""test_ceremonie_gui.py — falsifiabilité du MAÎTRE DE CÉRÉMONIE (D107).
+"""test_ceremonie_gui.py — falsifiabilité du MAÎTRE DE CÉRÉMONIE (D107,
+complément correctif D109).
 
 Le GUI est un HABIT : ce qui doit être prouvé, c'est son contrôleur —
 la couche qui décide, écrit ou refuse. Ce test l'attaque :
@@ -25,7 +26,14 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        lancement ; BRÛLER sans confirmation => le CLI refuse et les
        fragments SURVIVENT ; après brûlage réel (labo), les copies
        hors-ligne relèvent le conteneur survivant (contrôle VERT) ;
-  X1   import headless (aucune fenêtre créée) + selftest embarqué vert.
+  X1   import headless (aucune fenêtre créée) + selftest embarqué vert ;
+  X2   cohérence des attributs (régression D109) : AST — tout self.X lu
+       existe (méthode ou champ assigné), toute traversée self.app.X
+       pointe sur du réel Application, et demarrer_gui ne référence que
+       des attributs existants (le bogue original appelait app.mainloop()
+       alors que le Tk racine vit dans app.racine ; la fumée pilotait
+       Application en direct et n'exerçait jamais cette ligne — le trou
+       est bouché ici, headless, sur TOUTE la classe).
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -348,15 +356,119 @@ def x1_import_headless():
     verifie("x1-selftest-embarque", gui.selftest())
 
 
+# ---------------------------------------------------------------------------
+# X2 — cohérence des attributs (régression D109 : « app.mainloop »)
+# ---------------------------------------------------------------------------
+def _noeuds_fonctions(cls):
+    """AST de chaque méthode de la classe (source introuvable => vide)."""
+    import ast
+    import inspect
+    import textwrap
+    for _, f in inspect.getmembers(cls, predicate=inspect.isfunction):
+        try:
+            yield ast.parse(textwrap.dedent(inspect.getsource(f)))
+        except (OSError, TypeError):
+            continue
+
+
+def _aplatir_cible(t):
+    """Attributs self.X d'une cible d'affectation (tuples aplatis)."""
+    import ast
+    if isinstance(t, ast.Tuple):
+        return [x for e in t.elts for x in _aplatir_cible(e)]
+    if isinstance(t, ast.Starred):
+        return _aplatir_cible(t.value)
+    if (isinstance(t, ast.Attribute) and isinstance(t.value, ast.Name)
+            and t.value.id == "self"):
+        return [t.attr]
+    return []
+
+
+def _self_assignes(cls):
+    import ast
+    assignes = set()
+    for arbre in _noeuds_fonctions(cls):
+        for n in ast.walk(arbre):
+            if isinstance(n, ast.Assign):
+                cibles = n.targets
+            elif isinstance(n, (ast.AugAssign, ast.AnnAssign)):
+                cibles = [n.target]
+            elif isinstance(n, ast.For):
+                cibles = [n.target]
+            else:
+                continue
+            for t in cibles:
+                assignes.update(_aplatir_cible(t))
+    return assignes
+
+
+def _self_lus(cls):
+    import ast
+    lus = set()
+    for arbre in _noeuds_fonctions(cls):
+        for n in ast.walk(arbre):
+            if (isinstance(n, ast.Attribute)
+                    and isinstance(n.value, ast.Name)
+                    and n.value.id == "self"):
+                lus.add(n.attr)
+    return lus
+
+
+def _app_traverses(cls):
+    """Attributs lus via self.app.X (l'enveloppe d'Application)."""
+    import ast
+    refs = set()
+    for arbre in _noeuds_fonctions(cls):
+        for n in ast.walk(arbre):
+            if (isinstance(n, ast.Attribute)
+                    and isinstance(n.value, ast.Attribute)
+                    and n.value.attr == "app"
+                    and isinstance(n.value.value, ast.Name)
+                    and n.value.value.id == "self"):
+                refs.add(n.attr)
+    return refs
+
+
+def x2_coherence_attributs():
+    print("X2 — cohérence des attributs (régression « app.mainloop » D109)")
+    import ast
+    import inspect
+    for cls in (gui.Executeur, gui.Journal, gui.Application):
+        methodes = {nom for nom, _ in
+                    inspect.getmembers(cls, predicate=inspect.isfunction)}
+        fantomes = sorted(_self_lus(cls) - _self_assignes(cls) - methodes)
+        verifie(f"x2-{cls.__name__.lower()}-attributs-self-connus",
+                not fantomes, f"self.{fantomes} jamais assigné ni méthode")
+    connus = ({nom for nom, _ in inspect.getmembers(
+                gui.Application, predicate=inspect.isfunction)}
+              | _self_assignes(gui.Application))
+    traverses = set()
+    for cls in (gui.Executeur, gui.Journal):
+        traverses |= _app_traverses(cls)
+    fantomes_app = sorted(traverses - connus)
+    verifie("x2-traversee-self-app-application-connue",
+            not fantomes_app,
+            f"self.app.{fantomes_app} inexistant sur Application")
+    refs = {n.attr for n in ast.walk(ast.parse(
+                inspect.getsource(gui.demarrer_gui)))
+            if isinstance(n, ast.Attribute)
+            and isinstance(n.value, ast.Name) and n.value.id == "app"}
+    fantomes = sorted(refs - connus)
+    verifie("x2-demarrer_gui-app-connu", not fantomes,
+            f"app.{fantomes} inexistant sur Application — "
+            "le Tk racine est app.racine (bogue D109)")
+
+
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107) — dépôt {RACINE}")
+          f"(D107 + X2 D109) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-cf2-") as rep:
         t567f1(rep)
     x1_import_headless()
+    x2_coherence_attributs()
     print(f"[test-ceremonie-GUI] {len(PASSES)} PASS / {len(ECHECS)} ÉCHEC")
     if ECHECS:
         for e in ECHECS:

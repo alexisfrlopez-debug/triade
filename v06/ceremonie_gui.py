@@ -65,7 +65,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1 (D107)"
+VERSION_GUI = "ceremonie-GUI v1.1 (D109)"      # correctif mainloop
 
 
 # ===========================================================================
@@ -859,7 +859,7 @@ def demarrer_gui(profil=None):
         _message_tkinter_manquant()
         return 1
     app = Application(profil=profil)
-    app.mainloop()
+    app.racine.mainloop()          # Application est une enveloppe : le Tk est racine
     return 0
 
 
@@ -1825,6 +1825,46 @@ import tempfile   # noqa: E402  (déjà importé en section C si profil dépôt 
                    # l'import est idempotent, et le selftest y a droit aussi)
 
 
+def _coherence_demarrer_gui():
+    """Régression D109 : demarrer_gui ne doit toucher sur « app » QUE des
+    attributs qui EXISTENT sur Application (méthodes, ou champs assignés
+    dans __init__). Le bogue original appelait app.mainloop() alors que le
+    Tk racine vit dans app.racine — la fenêtre mourait à la naissance.
+    Contrôle STATIQUE (ast) : fonctionne sur la machine hors-ligne, sans
+    aucun affichage. False avec diagnostic imprimé s'il reste un fantôme."""
+    import ast
+    import inspect
+    import textwrap
+    try:
+        refs = {n.attr for n in ast.walk(ast.parse(textwrap.dedent(
+            inspect.getsource(demarrer_gui))))
+            if isinstance(n, ast.Attribute)
+            and isinstance(n.value, ast.Name) and n.value.id == "app"}
+        assignes = set()
+        for n in ast.walk(ast.parse(textwrap.dedent(
+                inspect.getsource(Application.__init__)))):
+            cibles = getattr(n, "targets", None) or (
+                [n.target] if isinstance(n, getattr(ast, "AnnAssign", ()))
+                and hasattr(n, "target") else [])
+            for t in cibles:
+                if (isinstance(t, ast.Attribute)
+                        and isinstance(t.value, ast.Name)
+                        and t.value.id == "self"):
+                    assignes.add(t.attr)
+        methodes = {nom for nom, _ in inspect.getmembers(
+            Application, predicate=inspect.isfunction)}
+    except (OSError, TypeError, ValueError) as exc:
+        print(f"  selftest : introspection impossible ({exc})")
+        return False
+    fantomes = sorted(r for r in refs if r not in assignes
+                      and r not in methodes)
+    if fantomes:
+        print(f"  selftest : app.{fantomes} inexistant sur Application — "
+              "demarrer_gui planterait (le Tk est app.racine)")
+        return False
+    return True
+
+
 def selftest():
     """Batterie de sanité de l'utilisateur final : vecteurs RFC 8032, cycle
     complet générer → signer → vérifier en répertoire temporaire, et
@@ -1875,6 +1915,9 @@ def selftest():
                      "la remise falsifiée a été acceptée !")
         except ErreurCeremonie as exc:
             controle("cycle-sans-erreur", False, str(exc))
+    # régression D109 : le point d'entrée ne référence que du réel
+    controle("demarrer_gui-attributs-coherents",
+             _coherence_demarrer_gui())
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs
