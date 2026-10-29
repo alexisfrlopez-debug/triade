@@ -3,5 +3,5 @@ arbre: v06
 artefact: coffre CF2 + sceau-I (transversal)
 balise: v0.6.0-axes2-3
 fichiers: 2
-sha256:43f599d02ddc66630773e37709a6e0dcd89604aaf2df668846ccbe1149aaf8aa  CF2/README.md
-sha256:a07451af5173f174a30e16aacecbededaab9ab5f3f3b47f0cb0c2d0ed6dc2577  README.md
+sha256:082adc8d1a625f8ba1973cbbca2b130264818fb4cef59015ebf84f2be09b48e7  CF2/README.md
+sha256:2d33371419c99439fa7954585b8f63775ce08b5a300e060efa452f01d0778f13  README.md
