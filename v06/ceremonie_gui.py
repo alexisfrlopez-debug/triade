@@ -39,7 +39,22 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       (démarrage détaché + santé) / restaurer / brûler (confirmation tapée) ;
     - les commandes passent par les CLI existants en sous-processus et la
       sortie coule dans le journal : le fail-closed des CLI reste LA loi,
-      le GUI n'est qu'un habit (aucune logique critique dupliquée).
+      le GUI n'est qu'un habit (aucune logique critique dupliquée) ;
+    - D113 — BOÎTE NOIRE : tout ce que la fenêtre affiche, chaque dialogue
+      posé (et sa réponse), chaque verdict et CHAQUE CRASH de rappel
+      tkinter atterrit dans v06/ceremonie-journal.log (fichier local,
+      horodaté, AUCUN réseau — la discipline hors-ligne reste entière) ; le
+      bouton « Envoyer le rapport… » constitue le fichier à remettre À LA
+      MAIN à l'assistant (glisser dans la conversation) : le GUI ne prend
+      pas de réseau pour se faire débugger ;
+    - D113 — le journal ne peut plus être évincé : barre de verdict et
+      journal se packent AVANT le corps (l'ordre de pack est la priorité
+      d'espace — avant, la page dépôt, ~1000 px demandés, poussait le
+      journal hors de la fenêtre : « aucun journal qui s'affiche »), et le
+      corps DÉFILE (une page plus haute que la fenêtre reste entièrement
+      atteignable) ; les dialogues passent TOUJOURS au-dessus de la fenêtre
+      (parent explicite — un dialogue sans parent peut naître DERRIÈRE et
+      faire croire le GUI mort : « je clique, rien ne se passe »).
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -73,8 +88,11 @@ Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
 """
 
 import argparse
+import datetime   # D113 : horodatage de la boîte noire
 import os
+import platform   # D113 : environnement du rapport
 import sys
+import traceback  # D113 : crashes complets dans la boîte noire
 
 # --- confort console Windows (accents français) ---------------------------
 try:
@@ -88,8 +106,70 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.4 (D112)"   # les trois chemins se choisissent
-# DANS la fenêtre : dossier du dépôt, coffre CF1, clé I (fichier ou main)
+VERSION_GUI = "ceremonie-GUI v1.5 (D113)"   # boîte noire + rapport remis
+# à la main + journal garanti + dialogues au-dessus (le debug à distance
+# sans donner de réseau à la cérémonie)
+
+
+# ===========================================================================
+# SECTION 0 — D113 : L'ENREGISTREUR DE VOL (boîte noire). Tout ce que le GUI
+# dit, fait, et chaque crash atterrit dans un journal LOCAL horodaté, à
+# côté du fichier lui-même (ceremonie-journal.log). AUCUN réseau ; aucune
+# donnée secrète : la phrase de contrôle passe par des fichiers temporaires
+# détruits, la graine n'est JAMAIS affichée (D87/D110). Le rapport part par
+# la main de l'humain (bouton « Envoyer le rapport… »), pas par le fil.
+# ===========================================================================
+
+CHEMIN_JOURNAL_VOL = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "ceremonie-journal.log")
+
+
+class Enregistreur:
+    """Boîte noire locale : append horodaté, une ligne = un fait. Un échec
+    d'écriture (disque en lecture seule, clef USB pleine) ne gêne JAMAIS la
+    cérémonie : la boîte noire est un témoin, pas une dépendance."""
+
+    def __init__(self, chemin):
+        self.chemin = chemin
+        self.fichier = None
+        try:
+            self.fichier = open(chemin, "a", encoding="utf-8", buffering=1)
+        except OSError:
+            pass
+
+    def ligne(self, texte, genre="info"):
+        if not self.fichier:
+            return
+        horodatage = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            self.fichier.write(f"[{horodatage}] [{genre:<8}] {texte}\n")
+        except OSError:
+            pass
+
+    def traceback(self):
+        """Le traceback COMPLET de l'exception en cours, ligne par ligne."""
+        for ligne in traceback.format_exc().splitlines():
+            self.ligne(ligne, "crash")
+
+    def entete(self, racine=None):
+        self.ligne("=" * 72, "entete")
+        self.ligne(f"DEMARRAGE {VERSION_GUI}", "entete")
+        self.ligne(f"python {sys.version.split()[0]} — "
+                   f"{platform.platform()} — argv : {' '.join(sys.argv)!r}",
+                   "entete")
+        if racine is not None:
+            try:
+                self.ligne(
+                    f"Tk {racine.tk.call('info', 'patchlevel')} — écran "
+                    f"{racine.winfo_screenwidth()}x"
+                    f"{racine.winfo_screenheight()}", "entete")
+            except Exception:
+                pass
+        self.ligne(f"dépôt attaché : {RACINE_DEPOT} (source : {SOURCE_DEPOT})",
+                   "entete")
+
+
+ENREGISTREUR = Enregistreur(CHEMIN_JOURNAL_VOL)
 
 
 # ===========================================================================
@@ -1103,8 +1183,12 @@ class Executeur:
             r = fonction(*args, emit=emit) if _exige_emit(fonction) else \
                 fonction(*args)
         except ErreurCeremonie as exc:
+            ENREGISTREUR.ligne(f"échec nommé : {exc}", "echec")
             r = (False, f"ÉCHEC : {exc}")
         except Exception as exc:            # garde-fou : nommé, jamais muet
+            ENREGISTREUR.ligne(
+                f"échec inattendu ({type(exc).__name__}) : {exc}", "crash")
+            ENREGISTREUR.traceback()
             r = (False, f"échec inattendu ({type(exc).__name__}) : {exc}")
         r = _normalise(r)
         self.file.put(("fin", r))
@@ -1159,6 +1243,9 @@ class Journal:
         cadre.pack(side="bottom", fill="both", expand=True, padx=10, pady=(4, 10))
         barre = ttk.Frame(cadre)
         barre.pack(side="top", fill="x", padx=6, pady=(2, 0))
+        ttk.Button(barre, text="Envoyer le rapport…", width=20,
+                   command=lambda: self.app.envoyer_rapport()).pack(
+                       side="right", padx=(6, 0))   # D113 : la main tendue
         ttk.Button(barre, text="Copier tout", width=12,
                    command=self.copier).pack(side="right", padx=(6, 0))
         ttk.Button(barre, text="Effacer", width=8,
@@ -1175,6 +1262,7 @@ class Journal:
         self.texte.tag_configure("titre", font=(POLICE_FIXE[0], 10, "bold"))
 
     def ajoute(self, ligne, genre="info"):
+        ENREGISTREUR.ligne(str(ligne), genre)   # D113 : tout voit la boîte noire
         self.texte.configure(state="normal")
         self.texte.insert("end", str(ligne) + "\n", genre)
         self.texte.see("end")
@@ -1185,6 +1273,8 @@ class Journal:
         self.app.racine.clipboard_append(self.texte.get("1.0", "end"))
 
     def effacer(self):
+        ENREGISTREUR.ligne("journal d'écran effacé (la boîte noire garde tout)",
+                           "info")
         self.texte.configure(state="normal")
         self.texte.delete("1.0", "end")
         self.texte.configure(state="disabled")
@@ -1202,12 +1292,22 @@ class Application:
         self.racine.minsize(880, 600)
         self._batir_style()
         self._batir_header()
-        self.corps = ttk.Frame(self.racine)
-        self.corps.pack(side="top", fill="both", expand=True, padx=10, pady=6)
-        self.pages = {}
-        self.journal = Journal(self.racine, self)
-        self.executeur = Executeur(self)
+        # D113 — ORDRE DE PACK = PRIORITÉ D'ESPACE. Avant : le corps (packé
+        # en premier, expand) évinçait le journal et la barre de verdict hors
+        # de la fenêtre dès que la page demandait plus de haut que l'écran
+        # (page dépôt : ~1000 px) — « aucun journal qui s'affiche ». Désormais
+        # verdict et journal se packent AVANT (garantis) ; le corps, packé en
+        # DERNIER, DÉFILE au lieu d'évincer (_batir_corps_defilant).
         self._batir_statut()
+        self.journal = Journal(self.racine, self)
+        self._batir_corps_defilant()
+        self.pages = {}
+        self.executeur = Executeur(self)
+        # D113 — un crash dans un rappel tkinter (bouton, trace, after) va
+        # dans le journal VISIBLE et la boîte noire : plus jamais un
+        # traceback muet vers stderr (invisible lancé via .bat sans console).
+        self.racine.report_callback_exception = self._sur_crash_rappel
+        ENREGISTREUR.entete(self.racine)
         self.depot_pret = depot_disponible()
         self._batir_accueil()
         self._batir_hors_ligne()
@@ -1238,6 +1338,9 @@ class Application:
         cadre.pack(side="top", fill="x", padx=10, pady=(10, 0))
         ttk.Label(cadre, text="TRIADE — Maître de cérémonie",
                   style="Titre.TLabel").pack(side="left")
+        ttk.Button(cadre, text="Envoyer le journal…", width=20,
+                   command=self.envoyer_rapport).pack(
+                       side="right", padx=(0, 12))   # D113 : toujours visible
         self.badge_autotest = ttk.Label(cadre, text="autotest RFC 8032 : …",
                                         style="Sous.TLabel")
         self.badge_autotest.pack(side="right")
@@ -1260,6 +1363,9 @@ class Application:
 
     def verdict(self, ok, texte):
         prem = texte.strip().splitlines()[0] if texte.strip() else ""
+        etat = "…" if ok is None else ("VERT" if ok else "ÉCHEC")
+        ENREGISTREUR.ligne(f"verdict {etat} : {prem if prem else '—'}",
+                           "verdict")
         self.var_verdict.set(prem if prem else ("VERT" if ok else "ÉCHEC"))
         self.label_verdict.configure(
             foreground=COULEUR_VERTE if ok else COULEUR_ROUGE
@@ -1270,7 +1376,7 @@ class Application:
     def action(self, titre, fonction, *args):
         """Point d'entrée UNIFIÉ : refuse pendant qu'une cérémonie tourne."""
         if self.executeur.occupe:
-            messagebox.showinfo(
+            self._dialogue("showinfo", 
                 "Cérémonie en cours",
                 "Une action est déjà en cours — attendez son verdict "
                 "dans le journal avant d'en lancer une autre.")
@@ -1298,6 +1404,205 @@ class Application:
         self.journal.ajoute(
             "[ceremonie] autotest RFC 8032 : " + ("VERT" if ok else "ÉCHEC"),
             "vert" if ok else "rouge")
+
+    # ------------------------------------------------------------------
+    # D113 — corps défilant, crashes, dialogues, rapport (boîte noire)
+    # ------------------------------------------------------------------
+    def _batir_corps_defilant(self):
+        """Le corps vit dans un canevas défilant : une page plus haute que
+        la fenêtre reste ENTÈREMENT atteignable (molette + barre), sans
+        jamais rogner le journal (garanti par l'ordre de pack)."""
+        conteneur = ttk.Frame(self.racine)
+        conteneur.pack(side="top", fill="both", expand=True, padx=10, pady=6)
+        self.zone_defilement = tk.Canvas(conteneur, highlightthickness=0,
+                                         background="#f6f8fa")
+        self.zone_defilement.pack(side="left", fill="both", expand=True)
+        self.barre_defilement = ttk.Scrollbar(
+            conteneur, orient="vertical",
+            command=self.zone_defilement.yview)
+        self.barre_defilement.pack(side="left", fill="y")
+        self.zone_defilement.configure(
+            yscrollcommand=self.barre_defilement.set)
+        self.corps = ttk.Frame(self.zone_defilement)
+        self._fenetre_interne = self.zone_defilement.create_window(
+            (0, 0), window=self.corps, anchor="nw")
+        self.corps.bind("<Configure>", self._sur_taille_corps)
+        self.zone_defilement.bind("<Configure>", self._sur_taille_canevas)
+        # molette multi-plateformes : Windows/macOS <MouseWheel>, Linux
+        # <Button-4>/<Button-5> — le journal Text garde sa propre molette.
+        self.racine.bind_all("<MouseWheel>", self._sur_molette)
+        self.racine.bind_all("<Button-4>", self._sur_molette)
+        self.racine.bind_all("<Button-5>", self._sur_molette)
+
+    def _sur_taille_corps(self, evenement):
+        self.zone_defilement.configure(
+            scrollregion=self.zone_defilement.bbox("all"))
+
+    def _sur_taille_canevas(self, evenement):
+        # le contenu s'étire à la LARGEUR de la fenêtre : jamais de coupe
+        # horizontale, la barre ne sert qu'au vertical.
+        self.zone_defilement.itemconfigure(self._fenetre_interne,
+                                           width=evenement.width)
+
+    def _sur_molette(self, evenement):
+        try:
+            vise = self.zone_defilement.winfo_containing(evenement.x_root,
+                                                         evenement.y_root)
+        except tk.TclError:
+            vise = None
+        if isinstance(vise, tk.Text):    # le journal défile tout seul
+            return
+        delta = int(getattr(evenement, "delta", 0) or 0)
+        if delta:
+            pas = -(delta // 120) if abs(delta) >= 120 else -delta
+        else:
+            pas = -1 if int(getattr(evenement, "num", 0) or 0) == 4 else 1
+        self.zone_defilement.yview_scroll(int(pas), "units")
+
+    def _sur_crash_rappel(self, type_exc, valeur, tb):
+        """report_callback_exception : le crash d'un rappel tkinter, avant
+        MUET (stderr — invisible lancé via .bat sans console), devient un
+        échec NOMMÉ à l'écran + traceback complet dans la boîte noire."""
+        ENREGISTREUR.ligne("CRASH dans un rappel tkinter :", "crash")
+        for ligne in "".join(traceback.format_exception(type_exc, valeur,
+                                                        tb)).splitlines():
+            ENREGISTREUR.ligne(ligne, "crash")
+        self.journal.ajoute(
+            f"CRASH CAPTURÉ ({type_exc.__name__}) : {valeur} — détail "
+            "complet dans le rapport (bouton « Envoyer le rapport… »)",
+            "rouge")
+        self.verdict(False, f"crash capturé : {valeur}")
+
+    def _dialogue(self, genre, titre, message, **options):
+        """D113 — TOUTE boîte de dialogue passe par ici : parent EXPLICITE
+        (un dialogue sans parent peut naître DERRIÈRE la fenêtre — sur
+        Windows, le GUI semblait mort : « je clique, rien ne se passe ») et
+        posée/résolue dans la boîte noire (titre + réponse ; les dialogues
+        ne contiennent jamais un secret)."""
+        ENREGISTREUR.ligne(f"dialogue « {titre} » posé", "dialogue")
+        reponse = getattr(messagebox, genre)(titre, message,
+                                             parent=self.racine, **options)
+        ENREGISTREUR.ligne(f"dialogue « {titre} » → {reponse!r}", "dialogue")
+        return reponse
+
+    def constituer_rapport(self):
+        """Rapport complet : environnement + journal d'écran + journal de
+        vol brut. Aucun secret n'y figure (phrase par temporaires détruits,
+        graine jamais affichée — D87/D110)."""
+        lignes = [
+            "RAPPORT DE CÉRÉMONIE — " + VERSION_GUI,
+            "généré le "
+            + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            f"python {sys.version.split()[0]} — {platform.platform()}",
+            f"dépôt attaché : {RACINE_DEPOT} (source : {SOURCE_DEPOT})",
+            "pile du dépôt : "
+            + ("présente" if dependances_disponibles() else "ABSENTE"),
+            f"boîte noire : {CHEMIN_JOURNAL_VOL}",
+            "=" * 72,
+            "JOURNAL D'ÉCRAN (ce que la fenêtre a affiché) :",
+            self.journal.texte.get("1.0", "end").rstrip() or "(vide)",
+            "=" * 72,
+            "JOURNAL DE VOL (boîte noire, horodatée) :",
+        ]
+        try:
+            with open(CHEMIN_JOURNAL_VOL, "r", encoding="utf-8") as f:
+                brut = f.read().splitlines()
+            if len(brut) > 3000:   # garde-fou : le récent suffit au diagnostic
+                lignes.append(f"… ({len(brut) - 3000} lignes plus anciennes "
+                              "tronquées)")
+                brut = brut[-3000:]
+            lignes.extend(brut)
+        except OSError as exc:
+            lignes.append(f"(boîte noire illisible : {exc})")
+        return "\n".join(lignes)
+
+    def envoyer_rapport(self):
+        """D113 — le rapport part par la main de l'humain : fichier .txt +
+        presse-papiers + dossier ouvert. AUCUN réseau (discipline hors-ligne
+        : la cérémonie ne prend pas de réseau pour se faire débugger) ; le
+        transport, c'est vous (glisser le fichier dans la conversation)."""
+        ENREGISTREUR.ligne("bouton « Envoyer le rapport » actionné", "envoi")
+        rapport = self.constituer_rapport()
+        fenetre = tk.Toplevel(self.racine)
+        fenetre.title("Envoyer le rapport de cérémonie (D113)")
+        fenetre.geometry("880x560")
+        fenetre.transient(self.racine)
+        zone = ttk.Frame(fenetre, padding=8)
+        zone.pack(fill="both", expand=True)
+        barre = ttk.Frame(zone)
+        barre.pack(fill="x", pady=(0, 4))
+
+        def copier():
+            self.racine.clipboard_clear()
+            self.racine.clipboard_append(rapport)
+            self.journal.ajoute("[ceremonie] rapport copié dans le "
+                                "presse-papiers (D113)", "info")
+            ENREGISTREUR.ligne("rapport copié dans le presse-papiers", "envoi")
+
+        def enregistrer():
+            horodatage = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            bureau = os.path.join(os.path.expanduser("~"), "Desktop")
+            chemin = filedialog.asksaveasfilename(
+                parent=fenetre, title="Enregistrer le rapport de cérémonie",
+                defaultextension=".txt",
+                initialfile=f"rapport-ceremonie-{horodatage}.txt",
+                initialdir=bureau if os.path.isdir(bureau)
+                else os.path.expanduser("~"),
+                filetypes=[("Rapport", "*.txt"), ("Tout", "*.*")])
+            if not chemin:
+                return
+            try:
+                with open(chemin, "w", encoding="utf-8") as f:
+                    f.write(rapport + "\n")
+            except OSError as exc:
+                self._dialogue("showerror", "Écriture impossible",
+                               f"{chemin} :\n{exc}")
+                return
+            self.journal.ajoute(f"[ceremonie] rapport écrit : {chemin} "
+                                "(D113)", "info")
+            ENREGISTREUR.ligne(f"rapport écrit : {chemin}", "envoi")
+            self._dialogue(
+                "showinfo", "Rapport écrit",
+                f"Rapport écrit :\n  {chemin}\n\nPour l'envoyer à "
+                "l'assistant : glissez ce fichier dans la conversation "
+                "(ou collez le presse-papiers).")
+
+        def ouvrir_dossier():
+            dossier = (os.path.dirname(CHEMIN_JOURNAL_VOL)
+                       or os.path.expanduser("~"))
+            ENREGISTREUR.ligne(f"dossier de la boîte noire ouvert : {dossier}",
+                               "envoi")
+            try:
+                if sys.platform.startswith("win"):
+                    os.startfile(dossier)   # noqa: S606 — ouverture dossier
+                elif sys.platform == "darwin":
+                    subprocess.Popen(["open", dossier])
+                else:
+                    subprocess.Popen(["xdg-open", dossier])
+            except OSError as exc:
+                self._dialogue("showwarning", "Ouverture impossible",
+                               f"{dossier} :\n{exc}")
+
+        ttk.Button(barre, text="Copier tout le rapport",
+                   command=copier).pack(side="left")
+        ttk.Button(barre, text="Enregistrer sous (.txt)…",
+                   command=enregistrer).pack(side="left", padx=6)
+        ttk.Button(barre, text="Ouvrir le dossier de la boîte noire",
+                   command=ouvrir_dossier).pack(side="left")
+        texte = tk.Text(zone, wrap="word", font=POLICE_FIXE)
+        barre_d = ttk.Scrollbar(zone, orient="vertical", command=texte.yview)
+        texte.configure(yscrollcommand=barre_d.set)
+        barre_d.pack(side="right", fill="y")
+        texte.pack(side="left", fill="both", expand=True)
+        texte.insert("1.0", rapport)
+        texte.configure(state="disabled")
+        ttk.Label(zone, style="Sous.TLabel", wraplength=820, justify="left",
+                  text=("AUCUN réseau — le rapport part par vos mains : "
+                        "glissez le fichier .txt dans la conversation de "
+                        "l'assistant (ou collez le presse-papiers). Aucun "
+                        "secret n'y figure : phrase et graine ne traversent "
+                        "jamais les journaux (D87/D110).")
+                  ).pack(fill="x", pady=(4, 0))
 
     # --- composants réutilisables -------------------------------------------
     def _ligne_fichier(self, parent, etiquette, mode="open", defaut="",
@@ -1400,7 +1705,7 @@ class Application:
         aucun attachement partiel). Le re-attachement REBÂTIT les pages :
         config, coffre CF1 et disponibilité suivent le nouveau dépôt."""
         if self.executeur.occupe:
-            messagebox.showinfo(
+            self._dialogue("showinfo", 
                 "Cérémonie en cours",
                 "Attendez le verdict de l'action en cours avant de changer "
                 "de dépôt (les CLI lancés lisent le dépôt à leur départ).")
@@ -1414,7 +1719,7 @@ class Application:
             return                      # annulé : rien ne bouge
         candidat = os.path.abspath(chemin)
         if not os.path.isfile(os.path.join(candidat, "v06", "coffre_cf2.py")):
-            messagebox.showerror(
+            self._dialogue("showerror", 
                 "Pas un dépôt triade complet",
                 f"v06/coffre_cf2.py introuvable dans :\n  {candidat}\n\n"
                 "Le dossier doit être la RACINE d'un clone du dépôt triade "
@@ -1569,11 +1874,11 @@ class Application:
         privee, publique = self.var_hl_privee.get().strip(), \
             self.var_hl_publique.get().strip()
         if not privee or not publique:
-            messagebox.showwarning("Champs manquants",
+            self._dialogue("showwarning", "Champs manquants",
                                    "Choisissez où écrire la clé privée ET la "
                                    "clé publique.")
             return
-        if os.path.exists(privee) and not messagebox.askyesno(
+        if os.path.exists(privee) and not self._dialogue("askyesno", 
                 "Écraser ?", f"{privee} existe déjà — une clé DÉJÀ générée "
                 f"à cet endroit serait perdue si vous écrasez. Continuer ?"):
             return
@@ -1584,14 +1889,14 @@ class Application:
         a_signer, sortie = (self.var_hl_a_signer.get().strip(),
                             self.var_hl_signatures.get().strip())
         if not (a_signer and sortie):
-            messagebox.showwarning("Champs manquants",
+            self._dialogue("showwarning", "Champs manquants",
                                    "La remise à signer et le fichier de "
                                    "signatures sont requis.")
             return
         if self.var_hl_cle_manuelle.get():
             saisie = self.var_hl_cle_saisie.get()
             if not saisie.strip():
-                messagebox.showwarning(
+                self._dialogue("showwarning", 
                     "Saisie manuelle vide",
                     "La graine saisie est vide — entrez les 64 hexadécimaux "
                     "(ligne imprimée de cle-I-privee.txt) ou basculez sur le "
@@ -1600,7 +1905,7 @@ class Application:
             try:
                 _graine_depuis_saisie(saisie)   # fail-closed AVANT l'acte
             except ErreurCeremonie as exc:
-                messagebox.showwarning("Saisie refusée (fail-closed)",
+                self._dialogue("showwarning", "Saisie refusée (fail-closed)",
                                        str(exc))
                 return
             self.action("Hors-ligne — signer (clé saisie à la main)",
@@ -1613,7 +1918,7 @@ class Application:
         else:
             cle = self.var_hl_cle.get().strip()
             if not cle:
-                messagebox.showwarning(
+                self._dialogue("showwarning", 
                     "Champ manquant",
                     "Choisissez le fichier de clé privée — ou basculez sur "
                     "la saisie manuelle (D112).")
@@ -1667,7 +1972,7 @@ class Application:
             self.var_hl_v_signatures.get().strip(),
             self.var_hl_v_publique.get().strip())
         if not (a_signer and signatures and publique):
-            messagebox.showwarning("Champs manquants",
+            self._dialogue("showwarning", "Champs manquants",
                                    "Les trois chemins sont requis.")
             return
         self.action("Hors-ligne — vérifier la remise", hl_verifier, a_signer,
@@ -2043,7 +2348,7 @@ class Application:
         .keys/ (contrairement au CLI qui, lui, garde son défaut)."""
         coffre = self.var_coffre_cf1.get().strip()
         if not coffre:
-            messagebox.showwarning(
+            self._dialogue("showwarning", 
                 "Champ manquant",
                 f"{pour_quoi} exige le chemin du coffre CF1 — remplissez le "
                 "champ coffre_fort.bin (bouton Parcourir…).")
@@ -2073,7 +2378,7 @@ class Application:
             return
         phrase = self.var_phrase.get()
         if not phrase.strip():
-            messagebox.showwarning(
+            self._dialogue("showwarning", 
                 "Phrase vide",
                 "La phrase de contrôle CF1 est requise (fail-closed) — "
                 "remplissez le champ « Phrase de contrôle CF1 » de la "
@@ -2096,7 +2401,7 @@ class Application:
         if coffre is None:
             return
         if not ancienne.strip():
-            messagebox.showwarning(
+            self._dialogue("showwarning", 
                 "Champ manquant",
                 "L'ANCIENNE phrase de contrôle est requise (fail-closed) —\n"
                 "c'est elle qui prouve que le coffre est le vôtre.\n"
@@ -2105,16 +2410,16 @@ class Application:
             return
         ok, message = phrase_personnelle_valide(nouvelle)
         if not ok:
-            messagebox.showwarning("Phrase refusée (fail-closed)", message)
+            self._dialogue("showwarning", "Phrase refusée (fail-closed)", message)
             return
         if nouvelle != confirmation:
-            messagebox.showwarning(
+            self._dialogue("showwarning", 
                 "Divergence",
                 "La nouvelle phrase et sa confirmation divergent —\n"
                 "refus (fail-closed). Retapez la confirmation.")
             return
         if nouvelle == ancienne.strip():
-            messagebox.showwarning(
+            self._dialogue("showwarning", 
                 "Refus",
                 "La nouvelle phrase est IDENTIQUE à l'ancienne —\n"
                 "il n'y a rien à changer.")
@@ -2126,7 +2431,7 @@ class Application:
                          "(recommandé ≥ 22 caractères ≈ 128 bits) —\n"
                          "une phrase plus courte est plus faible : Argon2id "
                          "ne compensera pas un dictionnaire.")
-        if not messagebox.askyesno(
+        if not self._dialogue("askyesno", 
                 "Changer la phrase de contrôle — acte souverain",
                 "Le coffre sera OUVERT avec l'ancienne phrase puis "
                 "RE-SCCELLÉ avec la vôtre (sel Argon2id neuf).\n\n"
@@ -2206,7 +2511,7 @@ class Application:
         manquants = _paquets_manquants()
         if not manquants:
             return True
-        if messagebox.askyesno(
+        if self._dialogue("askyesno", 
                 "Pile du dépôt manquante",
                 f"{pour_quoi} exige {' + '.join(manquants)} (absent(s) de "
                 f"ce Python).\n\nL'installer maintenant via pip ?\n"
@@ -2231,7 +2536,7 @@ class Application:
     def _sur_sceau_deposer(self):
         signatures = self.var_sceau_signatures.get().strip()
         if not signatures:
-            messagebox.showwarning("Champ manquant",
+            self._dialogue("showwarning", "Champ manquant",
                                    "Choisissez la remise signatures-I.txt.")
             return
         if not self._pile_prete("Le dépôt de la remise"):
@@ -2246,7 +2551,7 @@ class Application:
         else:
             detail = ("rotation ordinaire : les signatures seront vérifiées "
                       "contre la clé publique DÉJÀ installée.")
-        if not messagebox.askyesno("Acte souverain — déposer la remise",
+        if not self._dialogue("askyesno", "Acte souverain — déposer la remise",
                                    f"{detail}\n\nSignatures : "
                                    f"{signatures}\nContinuer ?"):
             return
@@ -2260,13 +2565,13 @@ class Application:
             return
         phrase = self.var_phrase.get()
         if not phrase.strip():
-            messagebox.showwarning("Phrase vide",
+            self._dialogue("showwarning", "Phrase vide",
                                    "La phrase de contrôle du coffre CF1 est "
                                    "requise (fail-closed) — champ « Phrase "
                                    "de contrôle CF1 » de la section « Coffre "
                                    "CF1 ».")
             return
-        if not messagebox.askyesno(
+        if not self._dialogue("askyesno", 
                 "Migration CF1 → CF2",
                 "Le coffre CF1 sera lu (il restera INTACT) et le CF2 sera "
                 "créé : conteneur + 5 fragments chez des gardes + config.\n"
@@ -2288,12 +2593,12 @@ class Application:
             return
         sortie = self.var_feuille.get().strip()
         if not sortie:
-            messagebox.showwarning("Champ manquant",
+            self._dialogue("showwarning", "Champ manquant",
                                    "Choisissez où écrire la feuille.")
             return
         cfg = self.var_config.get().strip()
         if not cfg:
-            messagebox.showwarning("Champ manquant",
+            self._dialogue("showwarning", "Champ manquant",
                                    "Renseignez la config CF2 (bouton "
                                    "Parcourir…).")
             return
@@ -2307,13 +2612,13 @@ class Application:
                   self.var_copie_2.get().strip(),
                   self.var_copie_3.get().strip()]
         if not all(copies):
-            messagebox.showwarning("Champs manquants",
+            self._dialogue("showwarning", "Champs manquants",
                                    "Les TROIS copies relues sont requises "
                                    "(le seuil est la loi).")
             return
         cfg = self.var_config.get().strip()
         if not cfg:
-            messagebox.showwarning("Champ manquant",
+            self._dialogue("showwarning", "Champ manquant",
                                    "Renseignez la config CF2.")
             return
         self.action("CF2 — contrôle de relecture", controle_lecture, cfg,
@@ -2324,11 +2629,11 @@ class Application:
             return
         cfg = self.var_config.get().strip()
         if not os.path.isfile(cfg):
-            messagebox.showwarning("Config absente",
+            self._dialogue("showwarning", "Config absente",
                                    f"config introuvable : {cfg} — migrez "
                                    f"d'abord le coffre.")
             return
-        if not messagebox.askyesno(
+        if not self._dialogue("askyesno", 
                 "Démarrer la sentinelle",
                 "Elle surveillera la couche C et BRÛLERA les fragments si "
                 "un processus non blanchi lit une carte.\nElle vivra "
@@ -2348,7 +2653,7 @@ class Application:
                        ("Tout", "*.*")]))
         if not fichiers:
             return
-        if not messagebox.askyesno(
+        if not self._dialogue("askyesno", 
                 "Restaurer les fragments",
                 f"Les {len(fichiers)} copie(s) choisies seront réécrites "
                 f"chez les gardes (atomique : tout ou rien).\nContinuer ?"):
@@ -2464,7 +2769,7 @@ class Application:
         if not self._pile_prete("L'enregistrement de la liste blanche"):
             return
         motifs = list(self.liste_blanche.get(0, "end"))
-        if not messagebox.askyesno(
+        if not self._dialogue("askyesno", 
                 "Enregistrer la liste blanche",
                 f"{len(motifs)} motif(s) seront écrits dans la config "
                 f"(atomique). Une erreur ici arme le brûlage ou l'ouvre "
@@ -2580,6 +2885,15 @@ def selftest():
     # régression D109 : le point d'entrée ne référence que du réel
     controle("demarrer_gui-attributs-coherents",
              _coherence_demarrer_gui())
+    # D113 : la boîte noire écrit et restitue (le rapport aura du fond)
+    marque = "selftest-boite-noire-" + secrets.token_hex(8)
+    ENREGISTREUR.ligne(marque, "selftest")
+    try:
+        with open(CHEMIN_JOURNAL_VOL, "r", encoding="utf-8") as f:
+            retrouvé = marque in f.read()
+    except OSError:
+        retrouvé = False
+    controle("boite-noire-ecrit-et-restitue", retrouvé)
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs
