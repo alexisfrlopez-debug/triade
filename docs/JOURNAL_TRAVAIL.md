@@ -6968,3 +6968,83 @@ Suite immédiate : les DEUX cérémonies réelles attendent leur développeur
 (clé-I hors-ligne, coffre-CF2 — le kit est prêt depuis le dépôt OU depuis
 le Drive), D57 avec l'intervalle exact en main, partage Éditeur /test au
 compte de service (refresh OAuth ~05/11).
+
+## Entrée 95 — D109/D110 (29/10 soir, consignation différée au 30/10) : correctif de naissance v1.1 + la phrase de contrôle à VOUS (les deux demandes machine réelle servies ; la consigne de référence de chacune est son MESSAGE DE COMMIT — e3eee92 pour D109, 594f4dd pour D110 — cette dette de consignation est soldée ici, modèle Entrée 93)
+
+**D109 (correctif v1.1).** Constat machine réelle Windows : la v1 D107
+mourait à la naissance — `AttributeError: 'Application' object has no
+attribute 'mainloop'` à `demarrer_gui`. Application est une ENVELOPPE
+(`self.racine = tk.Tk()`) : UNE ligne fautive (`app.mainloop()` au lieu de
+`app.racine.mainloop()`). La fumée D107 pilotait Application en direct
+(`update()`) et n'exerçait JAMAIS cette ligne — le trou de couverture est
+bouché : X2 (AST sur TOUTE la classe : tout `self.X` lu existe, toute
+traversée `self.app.X` pointe sur du réel, `demarrer_gui` ne référence que
+du réel) ET la fumée exerce désormais le VRAI point d'entrée (auto-fermeture
+après 700 ms, code 0 exigé). La v1.1 fut poussée au kit le jour même.
+
+**D110 (phrase personnelle).** Demande : « je ne retrouve pas ma
+passphrase / j'aimerais mettre la mienne, alphanumérique, sans maximum de
+caractères ». Diagnostic préalable (verifier_phrase_recuperable.py, VERT aux
+deux emplacements) : la phrase D81 n'était PAS perdue —
+PHRASE-CONTROLE-COFFRE.txt vit au dépôt git ET au racine du Drive, et elle
+OUVRE le coffre réel. Livré : section « Phrase de contrôle CF1 — mettez la
+VÔTRE » (validation vivante, position de faute nommée SANS divulguer le
+caractère, entropie en direct, plancher 8 fail-closed, AUCUN plafond —
+10 000 caractères prouvés par test, double confirmation, l'ancienne
+inopérante immédiatement, rappel de la remise git+Drive APRÈS le
+changement). T8 bout en bout par le relais GUI ; coffre_fort.py autotest
+22/22 dont le #17 (10 000 caractères).
+
+## Entrée 96 — D111 (30/10) : le maître de cérémonie s'attache au dépôt (--depot CHEMIN / TRIADE_DEPOT) — la demande « le GUI ne se connecte pas au dépôt, je n'ai accès qu'à la version hors-ligne ; j'aimerais tester en local, ou le lancer depuis le repo git » servie intégralement
+
+**Constat (machine réelle).** Le GUI téléchargé SEUL (fichier unique depuis
+/Cérémonie du Drive) n'active QUE le profil hors-ligne : D107 calculait
+RACINE_DEPOT depuis la position du fichier (`<dépôt>/v06/`), le bouton
+dépôt grisé, la cause affichée mais la parade absente. Complément au
+diagnostic : le remote GitHub était ARRÊTÉ à D95 — dix-sept commits non
+poussés : un `git clone` ne contenait même pas v0.6.0 (v06/, le GUI, le
+coffre CF2). La promesse D108 « depuis le dépôt OU depuis le Drive » était
+vraie seulement pour le dossier /Cérémonie téléchargé ENTIÈREMENT.
+
+**Livré (v1.3).** Ordre de résolution NOMMÉ : `--depot CHEMIN` >
+`TRIADE_DEPOT` (environnement) > position du fichier (défaut D107
+inchangé). `_resoudre_racine_depot()` retourne (racine, source) ; un chemin
+introuvable est un ÉCHEC NOMMÉ (ErreurCeremonie ; le point d'entrée rend
+code 2 avec la cause sur stderr — jamais un repli silencieux) ; un dossier
+valide sans v06/coffre_cf2.py n'est PAS une erreur : le profil reste
+désactivé et l'accueil nomme la cause ET la parade. `definir_racine_depot()`
+rebascule le global AVANT toute construction — relais CLI, import
+v06.coffre_cf2, sentinelle et config par défaut (.keys/config_cf2.json)
+lisent RACINE_DEPOT À L'APPEL : tout suit sans autre câblage. L'accueil
+affiche désormais le dépôt attaché et sa source (vert) ou la cause et les
+TROIS parades (grisé) : depuis le dépôt git, dossier /Cérémonie complet,
+ou --depot/TRIADE_DEPOT sur un clone. La garde ne bouge pas : la MÊME
+vérification v06/coffre_cf2.py protège les trois voies.
+
+**Preuves.** test_ceremonie_gui.py : 69 PASS / 0 ÉCHEC (X3 nouveau, 14
+contrôles : défaut inchangé, résolution --depot, échecs nommés argument ET
+environnement, précédence argument>env, dossier sans v06 fail-closed,
+v06 factice incomplet refusé, bascule complète par definir_racine_depot,
+rétablissement vérifié, et le point d'entrée en sous-processus — chemin
+faux code 2 nommé, --depot valide + --selftest exit 0, TRIADE_DEPOT fausse
+code 2 nommé). Fumée D111 (Xvfb, scripts/fumee_gui_depot_d111.py) : 10
+contrôles VERT — le scénario EXACT de la demande : copie autonome en
+temporaire, symptôme reproduit (dépôt indisponible, _module_cf2 refuse en
+nommant --depot, --profil depot retombe sur l'accueil), puis correctif
+(page dépôt DIRECTEMENT ouverte, config dans le dépôt attaché, accueil
+« dépôt attaché », VRAI relais CLI sceau_I.py etat code 0). Non-régression
+: test_cf2.py 43/43 (coffres réels md5 inchangés), test_sceau_I.py 47/47
+(dépôt réel VERT, 10 arbres), fumée GUI 19 contrôles VERT, selftest
+embarqué 7/7. Kit download/ resynchronisé (ceremonie_gui.py md5 ==
+v06/, LISEZMOI v1.3 avec la section « SE CONNECTER AU DÉPÔT »).
+
+**Leçon.** La position du fichier n'est pas une IDENTITÉ, c'est un défaut
+par défaut : dès qu'un outil vit aussi en distribution, son ancrage doit
+pouvoir être NOMMÉ par l'utilisateur — mais la garde, elle, ne se délègue
+pas : le dépôt attaché est vérifié par la même empreinte que le dépôt
+hébergé. Et dix-sept commits non poussés = une promesse de documentation
+rompue en silence : la poussée fait partie de la livraison.
+
+Suite immédiate : poussée des commits vers GitHub (v0.6.0 devient clonable
+— c'est la voie « tester en local » recommandée), redépôt du kit Drive si
+l'OAuth relais vit encore, puis les cérémonies réelles (clé-I + coffre-CF2).

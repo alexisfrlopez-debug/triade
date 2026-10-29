@@ -470,15 +470,25 @@ sous-processus (le fail-closed des CLI reste la loi) + contrôle de
 RELECTURE des trois copies (copie corrompue et falsifiée-cohérente
 attrapées), feuille d'export imprimable, liste blanche par formulaire,
 sentinelle détachée avec heart-beat, BRÛLER avec confirmation tapée ; pile
-pip vérifiée et installable avec accord. Falsifiabilité 36/36
-(`v06/test_ceremonie_gui.py`) + selftest embarqué 6/6 + fumée GUI réelle
-sous Xvfb 14/14 ; non-régression 43/43 + 47/47. **Le kit est déposé dans
+pip vérifiée et installable avec accord. Falsifiabilité 69/69
+(`v06/test_ceremonie_gui.py`, dont X3-D111 : résolution --depot >
+TRIADE_DEPOT > position, échecs nommés, fail-closed) + selftest embarqué
+7/7 + fumée GUI réelle sous Xvfb 19/19 + fumée D111 10/10 (le kit autonome
+s'attache au dépôt, symptôme puis correctif, relais CLI réel vert) ;
+non-régression 43/43 + 47/47. **Le kit est déposé dans
 /Cérémonie du Drive (D108, 30/10)** : 14 fichiers vérifiés md5
 aller-retour — kit hors-ligne, trois LISEZMOI, lanceurs, MANIFESTE
 d'empreintes, et `v06/` qui fait du dossier un mini-dépôt portable ;
-idempotent (`scripts/drive_ceremonie.py`), aucun secret déposé. Suite :
+idempotent (`scripts/drive_ceremonie.py`), aucun secret déposé.
+**L'attachement au dépôt est NOMMABLE (D111, 30/10)** : `--depot CHEMIN`
+(ou `TRIADE_DEPOT`) attache le GUI à un clone du dépôt où qu'il vive —
+un faux chemin est un échec nommé (code 2), la garde
+`v06/coffre_cf2.py` reste LA même pour toutes les voies, et l'accueil
+affiche le dépôt attaché et sa source ; la réponse à « tester en local
+ou depuis le repo git ». Suite :
 les cérémonies réelles (clé-I + coffre-CF2) — le kit est prêt depuis le
-dépôt OU depuis le Drive ; D57 (0.3.x à contrat stable si ouvert).
+dépôt, depuis le Drive (dossier complet), ou n'importe où via --depot ;
+D57 (0.3.x à contrat stable si ouvert).
 
 ## Avertissement
 

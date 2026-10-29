@@ -16,6 +16,12 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       console (interopérable : la remise GUI entre dans sceau_I.py tel quel).
 
   PROFIL « DÉPÔT » (machine connectée, à côté du dépôt triade) :
+    - le dépôt est trouvé par ordre D111 : --depot CHEMIN sur la ligne de
+      lancement, sinon la variable d'environnement TRIADE_DEPOT, sinon la
+      position du fichier lui-même (le dépôt complet : ce fichier vit dans
+      <dépôt>/v06/) — un chemin faux est un échec NOMMÉ (code 2), un
+      dossier sans v06/coffre_cf2.py laisse le profil désactivé avec la
+      cause affichée à l'accueil (fail-closed, jamais deviné) ;
     - phrase de contrôle CF1 : mettez la VÔTRE — alphanumérique (A-Z a-z
       0-9), 8 caractères minimum, AUCUN plafond de longueur (D110) ;
       l'ancienne devient inopérante, la remise D81 se remplace après ;
@@ -49,7 +55,11 @@ BORNES HONNÊTES : le profil hors-ligne n'exige RIEN et n'installe RIEN
   sa santé se contrôle par le bouton « Santé » (heart-beat).
 
 Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
-  --profil hors-ligne|depot → saute l'écran d'accueil.
+  --profil hors-ligne|depot → saute l'écran d'accueil ;
+  --depot CHEMIN → attache le GUI à ce dépôt triade (D111 : le GUI
+  peut vivre N'IMPORTE OÙ — clef USB, kit du Drive, bureau — tant que
+  CHEMIN désigne la racine d'un clone du dépôt : v06/coffre_cf2.py y
+  est vérifié AVANT d'activer le profil dépôt).
 """
 
 import argparse
@@ -68,7 +78,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.2 (D110)"      # mainloop + la phrase à vous
+VERSION_GUI = "ceremonie-GUI v1.3 (D111)"   # --depot : le GUI s'attache au dépôt
 
 
 # ===========================================================================
@@ -442,7 +452,52 @@ def hl_verifier(chemin_a_signer, chemin_signatures, chemin_publique):
 import subprocess  # noqa: E402
 import tempfile   # noqa: E402
 
-RACINE_DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def _racine_depot_defaut():
+    """Le dépôt par défaut : le PARENT du dossier qui contient ce fichier
+    (ce fichier vit dans <dépôt>/v06/ — posture D107/D108, inchangée)."""
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _resoudre_racine_depot(argument=None):
+    """Ordre de résolution D111 — le dépôt N'EST PLUS deviné, il est NOMMÉ :
+        1. --depot CHEMIN (ligne de lancement) ;
+        2. la variable d'environnement TRIADE_DEPOT ;
+        3. le défaut D107 : ce fichier vit dans <dépôt>/v06/.
+    Retourne (racine_absolue, source). Un chemin donné mais introuvable est
+    un ÉCHEC NOMMÉ (ErreurCeremonie) — jamais un repli silencieux : la
+    discipline fail-closed s'applique AUSSI à la connexion au dépôt.
+    Un dossier valide mais sans v06/coffre_cf2.py n'est PAS une erreur ici :
+    depot_disponible() rendra son verdict, l'accueil affichera la cause."""
+    if argument:
+        candidat = os.path.abspath(os.path.expanduser(argument))
+        if not os.path.isdir(candidat):
+            raise ErreurCeremonie(
+                f"--depot : dossier introuvable : {candidat} — donnez la "
+                "RACINE du clone du dépôt triade (celui qui contient v06/)")
+        return candidat, "--depot"
+    env = os.environ.get("TRIADE_DEPOT", "").strip()
+    if env:
+        candidat = os.path.abspath(os.path.expanduser(env))
+        if not os.path.isdir(candidat):
+            raise ErreurCeremonie(
+                f"TRIADE_DEPOT : dossier introuvable : {candidat} — la "
+                "variable doit désigner la RACINE du clone du dépôt triade "
+                "(celui qui contient v06/), ou retirez-la")
+        return candidat, "TRIADE_DEPOT"
+    return _racine_depot_defaut(), "position du fichier"
+
+
+RACINE_DEPOT = _racine_depot_defaut()
+SOURCE_DEPOT = "position du fichier"
+
+
+def definir_racine_depot(racine, source):
+    """Fixe le dépôt résolu (appelé par main() AVANT toute construction).
+    Les CLI, l'import v06.coffre_cf2 et la sentinelle lisent RACINE_DEPOT
+    À L'APPEL — tout le profil dépôt suit, sans autre câblage."""
+    global RACINE_DEPOT, SOURCE_DEPOT
+    RACINE_DEPOT = racine
+    SOURCE_DEPOT = source
 
 # Journalisation de la sentinelle démarrée en détaché (append, jamais le
 # journal des PV qui appartient au coffre) :
@@ -452,7 +507,9 @@ def _chemin_log_sentinelle(chemin_config):
 
 
 def depot_disponible() -> bool:
-    """True si ce fichier vit bien dans le dépôt (v06/coffre_cf2.py à côté)."""
+    """True si le dépôt résolu est complet (v06/coffre_cf2.py présent).
+    D111 : le dépôt résolu vient de --depot / TRIADE_DEPOT / la position
+    du fichier — la GARDE est la même dans les trois cas."""
     return os.path.isfile(os.path.join(RACINE_DEPOT, "v06", "coffre_cf2.py"))
 
 
@@ -461,9 +518,11 @@ def _module_cf2():
     l'absence est un échec NOMMÉ avec sa consigne, jamais un crash brut)."""
     if not depot_disponible():
         raise ErreurCeremonie(
-            "le profil dépôt exige de vivre DANS le dépôt triade "
-            f"(v06/coffre_cf2.py introuvable depuis {RACINE_DEPOT}) — "
-            "pour la machine hors-ligne, utilisez le profil hors-ligne")
+            "le profil dépôt exige un dépôt triade complet "
+            f"(v06/coffre_cf2.py introuvable dans {RACINE_DEPOT}) — "
+            "lancez le GUI depuis <dépôt>/v06/ceremonie_gui.py, ou pointez "
+            "un clone avec --depot CHEMIN (ou TRIADE_DEPOT) ; pour la "
+            "machine hors-ligne, utilisez le profil hors-ligne")
     manquants = _paquets_manquants()
     if manquants:
         raise ErreurCeremonie(
@@ -1249,14 +1308,26 @@ class Application:
             depot, text="Ouvrir le profil dépôt",
             command=self._ouvrir_depot)
         self.bouton_depot.pack(anchor="w", pady=4)
-        if not self.depot_pret:
+        if self.depot_pret:
+            ttk.Label(depot, style="Sous.TLabel", wraplength=880,
+                      justify="left",
+                      text=(f"dépôt attaché : {RACINE_DEPOT} "
+                            f"(source : {SOURCE_DEPOT})")).pack(anchor="w")
+        else:
             self.bouton_depot.configure(state="disabled")
             ttk.Label(depot, style="Sous.TLabel", foreground="#9a6700",
                       wraplength=880, justify="left",
-                      text=("(indisponible : ce fichier ne vit pas dans le "
-                            "dépôt triade — le copier tel quel sur une clef "
-                            "USB ne donne QUE le profil hors-ligne, c'est "
-                            "voulu)")).pack(anchor="w")
+                      text=(f"(indisponible : v06/coffre_cf2.py introuvable "
+                            f"dans {RACINE_DEPOT} — source : "
+                            f"{SOURCE_DEPOT}). Le GUI peut vivre n'importe "
+                            "où : relancez-le avec --depot CHEMIN (ou la "
+                            "variable TRIADE_DEPOT) pointant sur la RACINE "
+                            "d'un clone du dépôt triade, ou téléchargez le "
+                            "dossier /Cérémonie du Drive ENTIÈREMENT (le "
+                            "sous-dossier v06/ fait du kit un mini-dépôt). "
+                            "Copié seul sur une clef USB, il ne donne QUE le "
+                            "profil hors-ligne — c'est voulu)")
+            ).pack(anchor="w")
         ttk.Button(page, text="← Retour à l'accueil",
                    command=lambda: self.montrer("accueil")).pack(anchor="w",
                                                                  pady=8)
@@ -1380,10 +1451,14 @@ class Application:
         page = ttk.Frame(self.corps)
         self.pages["depot"] = page
         if not self.depot_pret:
-            self._note(page, "Ce fichier ne vit pas dans le dépôt triade "
-                             "(v06/coffre_cf2.py introuvable) : le profil "
-                             "dépôt est désactivé. Pour la cérémonie hors "
-                             "ligne, utilisez le profil hors-ligne.")
+            self._note(page, f"Aucun dépôt triade complet n'est attaché "
+                             f"(v06/coffre_cf2.py introuvable dans "
+                             f"{RACINE_DEPOT}, source : {SOURCE_DEPOT}) : "
+                             "le profil dépôt est désactivé. Relancez avec "
+                             "--depot CHEMIN (ou la variable TRIADE_DEPOT) "
+                             "désignant la racine d'un clone du dépôt. Pour "
+                             "la cérémonie hors-ligne, utilisez le profil "
+                             "hors-ligne.")
             ttk.Button(page, text="← Retour à l'accueil",
                        command=lambda: self.montrer(
                            "accueil")).pack(anchor="w", pady=8)
@@ -2152,13 +2227,25 @@ def main():
     parseur = argparse.ArgumentParser(
         description="TRIADE — Maître de cérémonie (GUI). Sans argument : "
                     "fenêtre. --selftest : batterie headless (machine "
-                    "hors-ligne incluse).")
+                    "hors-ligne incluse). --depot CHEMIN : attache le GUI "
+                    "à un clone du dépôt triade (D111), où qu'il vive.")
     parseur.add_argument("--selftest", action="store_true",
                          help="batterie embarquée (aucune GUI requise)")
     parseur.add_argument("--profil", choices=["hors-ligne", "depot"],
                          default=None,
                          help="ouvrir directement ce profil (sinon : accueil)")
+    parseur.add_argument("--depot", metavar="CHEMIN", default=None,
+                         help="racine d'un clone du dépôt triade (celui qui "
+                              "contient v06/) — priorité sur TRIADE_DEPOT "
+                              "et sur la position de ce fichier ; un chemin "
+                              "introuvable est un échec nommé (code 2)")
     arguments = parseur.parse_args()
+    try:
+        racine, source = _resoudre_racine_depot(arguments.depot)
+    except ErreurCeremonie as exc:
+        print(f"[ceremonie-GUI] ÉCHEC — {exc}", file=sys.stderr)
+        return 2
+    definir_racine_depot(racine, source)
     if arguments.selftest:
         ok = selftest()
         return 0 if ok else 1

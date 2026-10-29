@@ -3445,3 +3445,46 @@ complément D107 consigné au commit da8fd4c (journal Entrée 93, différée).
 **Suite** : les cérémonies réelles (clé-I + coffre-CF2) — le kit est prêt
 depuis le dépôt OU depuis le Drive ; D57 ; partage Éditeur /test au compte
 de service (refresh OAuth ~05/11).
+
+## D111 — le maître de cérémonie s'attache au dépôt (l'ancrage devient NOMMABLE, la garde ne se délègue pas)
+
+**Constat (30/10, machine réelle).** « Le GUI ne se connecte pas au
+dépôt, je n'ai accès qu'à la version hors-ligne. » Le kit D108 rendait le
+profil dépôt opérationnel dans DEUX positions : le dossier /Cérémonie
+téléchargé ENTIÈREMENT (mini-dépôt v06/) ou le dépôt git lui-même. Un
+fichier téléchargé SEUL depuis le Drive, ou posé ailleurs, tombait sur le
+bouton grisé — la cause était affichée, la parade non. Aggravant : le
+remote GitHub vivait à D95, dix-sept commits derrière — « le lancer depuis
+le repo git » était impossible sans poussée.
+
+**Décision.** L'ordre de résolution du dépôt devient explicite :
+`--depot CHEMIN` > `TRIADE_DEPOT` > position du fichier (défaut D107,
+inchangé — le GUI vivant dans `<dépôt>/v06/` reste la voie sans option).
+Trois principes, non négociables :
+
+1. **Un chemin introuvable est un échec NOMMÉ** (code 2 au point
+   d'entrée, la cause sur stderr) — JAMAIS un repli silencieux sur le
+   défaut : un utilisateur qui nomme un dépôt a décidé quelque chose,
+   le tooling ne décide pas à sa place.
+2. **La garde ne se délègue pas** : quelle que soit la voie, c'est la
+   MÊME empreinte `v06/coffre_cf2.py` qui fait foi. Un dossier sans
+   elle laisse le profil désactivé, l'accueil nomme la cause ET les
+   trois parades. Aucune confiance en un chemin tapé.
+3. **L'état est VISIBLE** : l'accueil affiche le dépôt attaché et sa
+   source (« --depot », « TRIADE_DEPOT », « position du fichier ») —
+   l'utilisateur voit TOUJOURS à quoi il est connecté.
+
+**Conséquences.** `definir_racine_depot()` rebascule le global avant
+toute construction ; relais CLI, import v06.coffre_cf2, sentinelle et
+config par défaut suivent sans autre câblage (lecture à l'appel).
+X3 (14 contrôles) attaque la résolution, la précédence, le fail-closed
+et le point d'entrée en sous-processus ; la fumée D111 rejoue le
+scénario EXACT de la demande (copie autonome → symptôme → correctif →
+relais CLI réel vert). La poussée des dix-huit commits vers GitHub fait
+partie de la livraison : une promesse documentée mais non poussée est
+une promesse rompue en silence.
+
+**Bornes.** La vérification des DIX arbres du sceau exige toujours le
+dépôt COMPLET (le mini-dépôt du kit Drive nomme son échec, par
+conception) ; --depot n'autorise RIEN de nouveau — il autorise le GUI
+à TROUVER ce qui existait déjà, la discipline des CLI reste la loi.

@@ -554,3 +554,49 @@ Stage Summary:
 - Suite : cérémonies réelles (cle-I + CF2) par le GUI — le kit est prêt,
   depuis le dépôt OU depuis le Drive ; D57 ; partage Éditeur /test au SA
   (refresh OAuth ~05/11)
+
+## Task ID 35 — D111 : le maître de cérémonie s'attache au dépôt (2026-10-30)
+
+- CONTEXTE : demande développeur du 30/10 — « le GUI de cérémonie ne se
+  connecte pas au dépôt, je n'ai accès qu'à la version hors-ligne ;
+  j'aimerais pouvoir tester en local, à moins que tu aies une solution
+  pour le lancer à partir du repo git ». En amont, dette de consignation
+  D109/D110 soldée (JOURNAL Entrées 95 — référence : commits e3eee92 /
+  594f4dd, modèle Entrée 93)
+- DIAGNOSTIC : D107 calculait RACINE_DEPOT depuis la SEULE position du
+  fichier (<dépôt>/v06/) — le GUI téléchargé SEUL (fichier unique depuis
+  /Cérémonie) n'active que le hors-ligne, par conception D108 le kit ne
+  devient mini-dépôt que téléchargé ENTIÈREMENT ; aggravant : le remote
+  GitHub vivait à D95, 17 commits NON POUSSÉS — un clone ne contenait
+  même pas v0.6.0
+- LIVRÉ (v1.3) : ordre de résolution NOMMÉ --depot CHEMIN > TRIADE_DEPOT
+  (env) > position du fichier (défaut D107 inchangé) ;
+  _resoudre_racine_depot() → (racine, source) ; chemin introuvable =
+  ÉCHEC NOMMÉ (code 2 au point d'entrée, cause sur stderr, jamais de
+  repli silencieux) ; dossier sans v06/coffre_cf2.py = profil désactivé,
+  l'accueil nomme la cause ET les trois parades ; definir_racine_depot()
+  rebascule le global AVANT construction — relais CLI / import
+  v06.coffre_cf2 / sentinelle / config par défaut suivent (lecture à
+  l'appel) ; l'accueil AFFICHE le dépôt attaché + sa source ; LA MÊME
+  GARDE v06/coffre_cf2.py protège les trois voies
+- PREUVES : test_ceremonie_gui.py 69 PASS / 0 ÉCHEC (X3 nouveau : 14
+  contrôles — défaut inchangé, résolution, échecs nommés arg+env,
+  précédence, fail-closed sans v06, v06 factice incomplet refusé,
+  bascule/rétablissement, point d'entrée en sous-processus ×3) ; fumée
+  D111 (Xvfb, scripts/fumee_gui_depot_d111.py au bac à sable) 10/10 —
+  scénario EXACT de la demande : copie autonome → symptôme (profil dépôt
+  refusé, --profil depot retombe sur l'accueil) → correctif (page dépôt
+  ouverte directement, config dans le dépôt attaché, relais CLI réel
+  sceau_I.py etat code 0) ; NON-RÉGRESSION : test_cf2 43/43 (coffres
+  réels md5 inchangés), test_sceau_I 47/47 (dépôt réel VERT), fumée GUI
+  19 contrôles VERT, selftest 7/7 ; kit download/ resynchronisé (md5 ==
+  v06/, LISEZMOI v1.3 avec « SE CONNECTER AU DÉPÔT »)
+- Docs : JOURNAL Entrées 95 (D109/D110 différées) + 96 (D111), DECISIONS
+  D111, README (compteurs rafraîchis 69/7/19/10 + paragraphe D111),
+  worklog (Task ID 35)
+- POUSSÉE : les 18 commits (D95→D111) vers origin GitHub — v0.6.0
+  devient clonable, c'est la voie « tester en local » recommandée :
+  git pull && python v06\ceremonie_gui.py
+- Suite : redépôt du kit Drive (ceremonie_gui.py + LISEZMOI + MANIFESTE)
+  si l'OAuth relais vit encore (~05/11) ; cérémonies réelles (clé-I +
+  coffre-CF2) ; D57 ; partage Éditeur /test au SA

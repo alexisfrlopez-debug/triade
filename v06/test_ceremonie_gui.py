@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """test_ceremonie_gui.py — falsifiabilité du MAÎTRE DE CÉRÉMONIE (D107,
-compléments correctif D109, phrase personnelle D110).
+compléments correctif D109, phrase personnelle D110, attachement --depot
+D111).
 
 Le GUI est un HABIT : ce qui doit être prouvé, c'est son contrôleur —
 la couche qui décide, écrit ou refuse. Ce test l'attaque :
@@ -39,7 +40,13 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        des attributs existants (le bogue original appelait app.mainloop()
        alors que le Tk racine vit dans app.racine ; la fumée pilotait
        Application en direct et n'exerçait jamais cette ligne — le trou
-       est bouché ici, headless, sur TOUTE la classe).
+       est bouché ici, headless, sur TOUTE la classe) ;
+  X3   attachement au dépôt (D111) : ordre de résolution --depot >
+       TRIADE_DEPOT > position du fichier ; chemin introuvable = échec
+       NOMMÉ (code 2 par le point d'entrée, jamais un repli silencieux) ;
+       dossier sans v06/coffre_cf2.py = profil désactivé (garde intacte) ;
+       définir_racine_depot bascule TOUT le profil (disponibilité, import
+       v06.coffre_cf2) et le rétablissement est vérifié ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -532,9 +539,99 @@ def x2_coherence_attributs():
             "le Tk racine est app.racine (bogue D109)")
 
 
+def x3_attachement_depot():
+    print("X3 — D111 : le GUI s'attache au dépôt (--depot / TRIADE_DEPOT)")
+    import subprocess
+
+    # Le défaut D107 ne bouge pas : ce fichier vit dans <dépôt>/v06/.
+    racine_defaut, source_defaut = gui._resoudre_racine_depot()
+    verifie("x3-defaut-position-du-fichier",
+            racine_defaut == gui._racine_depot_defaut()
+            and source_defaut == "position du fichier")
+
+    # --depot CHEMIN : résolution absolue + source nommée.
+    racine_arg, source_arg = gui._resoudre_racine_depot(RACINE)
+    verifie("x3-argument-depot-resolu",
+            os.path.abspath(racine_arg) == os.path.abspath(RACINE)
+            and source_arg == "--depot")
+
+    # Un chemin introuvable est un ÉCHEC NOMMÉ — jamais un repli silencieux.
+    refuse("x3-argument-introuvable-nomme", gui._resoudre_racine_depot,
+           os.path.join(RACINE, "absent-totalement"))
+    env_avant = os.environ.get("TRIADE_DEPOT")
+    os.environ.pop("TRIADE_DEPOT", None)
+    try:
+        os.environ["TRIADE_DEPOT"] = os.path.join(RACINE, "introuvable-aussi")
+        refuse("x3-env-introuvable-nomme", gui._resoudre_racine_depot, None)
+        # précédence : l'argument GAGNE sur l'environnement
+        racine_p, source_p = gui._resoudre_racine_depot(RACINE)
+        verifie("x3-precedence-argument-sur-env",
+                source_p == "--depot"
+                and os.path.abspath(racine_p) == os.path.abspath(RACINE))
+        # l'environnement seul résout aussi
+        os.environ["TRIADE_DEPOT"] = RACINE
+        racine_e, source_e = gui._resoudre_racine_depot(None)
+        verifie("x3-env-triade-depot-resolu",
+                source_e == "TRIADE_DEPOT"
+                and os.path.abspath(racine_e) == os.path.abspath(RACINE))
+    finally:
+        if env_avant is None:
+            os.environ.pop("TRIADE_DEPOT", None)
+        else:
+            os.environ["TRIADE_DEPOT"] = env_avant
+
+    # définir_racine_depot : tout le profil suit (disponibilité + garde).
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-x3-") as rep:
+        gui.definir_racine_depot(rep, "--depot")
+        verifie("x3-dossier-sans-v06-fail-ferme",
+                not gui.depot_disponible())
+        refuse("x3-module-cf2-refuse-hors-depot", gui._module_cf2)
+        # un v06 factice SANS coffre_cf2.py ne suffit pas (garde intacte)
+        os.makedirs(os.path.join(rep, "v06"), exist_ok=True)
+        verifie("x3-v06-factice-incomplet-refuse",
+                not gui.depot_disponible())
+        gui.definir_racine_depot(RACINE, "--depot")
+        verifie("x3-retablissement-depot-disponible",
+                gui.depot_disponible() and gui.RACINE_DEPOT == RACINE)
+        try:
+            gui._module_cf2()      # la pile du dépôt est présente ici
+            verifie("x3-module-cf2-charge-une-fois-attache", True)
+        except gui.ErreurCeremonie as exc:
+            verifie("x3-module-cf2-charge-une-fois-attache", False, str(exc))
+
+    # Le point d'entrée : chemin faux => code 2 avec la cause nommée ;
+    # --depot valide + --selftest => la batterie reste verte.
+    env = dict(os.environ)
+    env.pop("TRIADE_DEPOT", None)
+    chemin_gui = os.path.join(RACINE, "v06", "ceremonie_gui.py")
+    proc = subprocess.run(
+        [sys.executable, chemin_gui, "--selftest",
+         "--depot", os.path.join(RACINE, "encore-absent")],
+        capture_output=True, text=True, env=env, timeout=300)
+    verifie("x3-main-chemin-faux-code-2-nomme",
+            proc.returncode == 2 and "dossier introuvable" in proc.stderr,
+            f"code={proc.returncode} stderr={proc.stderr[:120]!r}")
+    proc = subprocess.run(
+        [sys.executable, chemin_gui, "--selftest", "--depot", RACINE],
+        capture_output=True, text=True, env=env, timeout=300)
+    verifie("x3-main-depot-valide-selftest-vert",
+            proc.returncode == 0,
+            f"code={proc.returncode} stderr={proc.stderr[:120]!r}")
+    env_faux = dict(env)
+    env_faux["TRIADE_DEPOT"] = os.path.join(RACINE, "toujours-absent")
+    proc = subprocess.run(
+        [sys.executable, chemin_gui, "--selftest"],
+        capture_output=True, text=True, env=env_faux, timeout=300)
+    verifie("x3-main-env-fausse-code-2-nomme",
+            proc.returncode == 2 and "TRIADE_DEPOT" in proc.stderr,
+            f"code={proc.returncode} stderr={proc.stderr[:120]!r}")
+    # état restauré pour les séries suivantes
+    gui.definir_racine_depot(gui._racine_depot_defaut(), "position du fichier")
+
+
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110) — dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -544,6 +641,7 @@ def main() -> int:
         t8_phrase_personnelle(rep)
     x1_import_headless()
     x2_coherence_attributs()
+    x3_attachement_depot()
     print(f"[test-ceremonie-GUI] {len(PASSES)} PASS / {len(ECHECS)} ÉCHEC")
     if ECHECS:
         for e in ECHECS:
