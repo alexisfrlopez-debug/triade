@@ -74,10 +74,17 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        signature manque) : mentir dans un sens comme dans l'autre
        serait attrapé ; clé absente
        nommée, fichiers manquants nommés, git propre ET poussé ;
-  T14  scénarios et clonage (D117) : le choix AVANT TOUT (dossier local
-       / repo git) détermine les étapes — fil de CINQ d'un côté, de SIX
-       avec « Cloner le dépôt » en tête (preuve rev-parse + origin)
-       de l'autre ; masquage du jeton d'URL ; preuve clone refusée
+  T14  scénarios et clonage (D117/D128) : le choix AVANT TOUT (dossier
+       local / repo git) détermine les étapes — fil de CINQ d'un côté,
+       de SIX lignes avec « Cloner le dépôt » en PRÉALABLE (étape 0,
+       D128 : le clonage ne décale PLUS les cinq étapes du tronc
+       commun ; preuve rev-parse + origin)
+       de l'autre ; D128 — LE CAHIER SE LIT COMME LE FIL : les onglets
+       portent leurs numéros D'ÉTAPE (table TITRES_ONGLETS_CEREMONIE,
+       ordre sceau/générer/signer/vérifier = 1/2/3/4), le hint de
+       l'étape n désigne l'onglet « n · » (les étapes 4-5 REVIENNENT
+       à l'onglet 1), l'étape 0 s'affiche « Pré »/« PRÉALABLE » ;
+       masquage du jeton d'URL ; preuve clone refusée
        NOMMÉE (hors git / sans origin) ; cloner_depot refuse URL vide,
        URL « - » (injection), destination vide / « - » / NON VIDE
        (intacte après refus), git absent (127 nommé, simulation sans
@@ -600,17 +607,59 @@ def t14_scenarios_clone(rep):
     fil_six = gui.fil_ceremonie(a_signer=a_signer, scenario="repo git")
     verifie("t14-fil-dossier-cinq-etapes", len(fil_cinq) == 5
             and fil_cinq[0][1].startswith("Préparer"))
-    verifie("t14-fil-git-six-etapes-clone-en-tete", len(fil_six) == 6
-            and [e[0] for e in fil_six] == [1, 2, 3, 4, 5, 6]
+    # D128 — le clonage est le PRÉALABLE (étape 0) : le fil git ne
+    # décale PLUS les cinq étapes du tronc commun — mêmes numéros dans
+    # les deux scénarios, l'étape n et l'onglet « n · » désignent LE
+    # MÊME geste (l'ancien décalage d'un rang — « Préparer » en étape 2
+    # pendant que l'onglet « 1 » numérotait « Générer » — est MORT :
+    # c'est lui que le terrain a dénoncé pendant la re-cérémonie).
+    verifie("t14-fil-git-prealable-en-tete-etapes-non-decalees",
+            len(fil_six) == 6
+            and [e[0] for e in fil_six] == [0, 1, 2, 3, 4, 5]
             and "Cloner" in fil_six[0][1]
             and fil_six[0][2] is True
-            and fil_six[1][1] == fil_cinq[0][1],
-            f"{fil_six[0]} / {fil_six[1]}")
+            and fil_six[1:] == fil_cinq,
+            f"{fil_six[0]} / {fil_six[1:]}")
     verifie("t14-hints-suivent-le-scenario",
-            "Cloner en local" in gui.hint_fil("repo git", 1)
-            and gui.hint_fil("repo git", 2) == gui.FIL_HINTS[1]
+            "Cloner en local" in gui.hint_fil("repo git", 0)
+            and gui.hint_fil("repo git", 1) == gui.FIL_HINTS[1]
+            and gui.hint_fil("repo git", 5) == gui.FIL_HINTS[5]
             and gui.hint_fil("dossier local", 1) == gui.FIL_HINTS[1]
             and gui.hint_fil(None, 5) == gui.FIL_HINTS[5])
+    # D128 — LE CAHIER SE LIT COMME LE FIL : chaque onglet numéroté
+    # porte LE numéro de SON étape, dans l'ordre gauche → droite du
+    # processus (sceau en 1 : la remise « à signer » naît là — l'onglet
+    # qui vivait EN TÊTE SANS numéro devant « 1 · Générer » mentait sur
+    # la position) ; le hint de l'étape n désigne l'onglet « n · » (les
+    # étapes 4 et 5 REVIENNENT à l'onglet 1 — c'est le RETOUR qui est
+    # écrit, pas un décalage) ; l'étape 0 s'affiche « Pré »/« PRÉALABLE »
+    # et jamais comme une étape numérotée qui précéderait la 1.
+    verifie("t14-d128-onglets-numerotes-comme-le-fil",
+            list(gui.TITRES_ONGLETS_CEREMONIE) == ["sceau", "generer",
+                                                   "signer", "verifier"]
+            and [int(gui.TITRES_ONGLETS_CEREMONIE[k].strip().split(" ·")[0])
+                 for k in ("sceau", "generer", "signer", "verifier")]
+            == [1, 2, 3, 4]
+            and "Sceau de l'Intention" in
+            gui.TITRES_ONGLETS_CEREMONIE["sceau"]
+            and "Générer" in gui.TITRES_ONGLETS_CEREMONIE["generer"]
+            and "Signer" in gui.TITRES_ONGLETS_CEREMONIE["signer"]
+            and "Vérifier" in gui.TITRES_ONGLETS_CEREMONIE["verifier"],
+            str(gui.TITRES_ONGLETS_CEREMONIE))
+    verifie("t14-d128-hints-designent-longlet-du-meme-numero",
+            "1 · Sceau de l'Intention" in gui.FIL_HINTS[1]
+            and "2 · Générer" in gui.FIL_HINTS[2]
+            and "3 · Signer" in gui.FIL_HINTS[3]
+            and "1 · Sceau de l'Intention" in gui.FIL_HINTS[4]
+            and "1 · Sceau de l'Intention" in gui.FIL_HINTS[5],
+            str(gui.FIL_HINTS))
+    verifie("t14-d128-libelles-du-prealable",
+            gui.libelle_court_fil(0) == "Pré"
+            and gui.libelle_court_fil(1) == "1"
+            and gui.libelle_court_fil(3) == "3"
+            and gui.libelle_courant_fil(0) == "PRÉALABLE"
+            and gui.libelle_courant_fil(2) == "ÉTAPE 2"
+            and gui.libelle_courant_fil(5) == "ÉTAPE 5")
 
     # --- cloner_depot : refus NOMMÉS avant tout lancement ----------------
     refuse("t14-clone-url-vide-refusee", gui.cloner_depot, "",
@@ -1332,7 +1381,7 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119) — "
+          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119 · D128) — "
           f"dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:

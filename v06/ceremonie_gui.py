@@ -121,6 +121,22 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       coffre CF2 devient Windows-safe (fsync de répertoire POSIX-seul —
       le terrain voyait « CF2 — migrer » mourir en PermissionError sur
       .keys/, corrigé dans v06/coffre_cf2.py) ;
+    - D128 — LE CAHIER SE LIT COMME LE FIL (le terrain a dénoncé le
+      décalage pendant la re-cérémonie : l'onglet de l'étape « à
+      signer » vivait EN TÊTE du cahier SANS numéro, devant « 1 ·
+      Générer la clé ») : les onglets portent DÉSORMAIS leurs numéros
+      D'ÉTAPE, dans l'ordre GAUCHE → DROITE du processus — « 1 · Sceau
+      de l'Intention » (préparer la remise à signer, puis y revenir
+      déposer et pousser), « 2 · Générer la clé », « 3 · Signer une
+      remise », « 4 · Vérifier une remise » — une seule table
+      TITRES_ONGLETS_CEREMONIE fait foi ; en scénario repo git le
+      CLONAGE devient le PRÉALABLE (étape 0, « Pré ») au lieu de
+      décaler les cinq étapes d'un rang : le numéro du fil et le numéro
+      de l'onglet désignent LE MÊME geste dans les DEUX scénarios ; la
+      cérémonie s'ouvre sur l'onglet de l'étape 1 (select explicite —
+      l'insert en tête ne déplaçait PAS la sélection Tk : le GUI
+      s'ouvrait sur « Générer » alors que l'étape 1 vivait en tête de
+      bande) ;
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -622,7 +638,8 @@ def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie,
             f"  Chaque signature a été VÉRIFIÉE avec la clé publique avant "
             f"écriture.\n"
             f"  Remettez {os.path.basename(chemin_sortie)} au dépôt "
-            f"(profil dépôt, onglet Sceau de l'Intention, bouton Déposer).")
+            f"(page Cérémonie, onglet « 1 · Sceau de l'Intention », "
+            f"bouton Déposer).")
 
 
 def hl_verifier(chemin_a_signer, chemin_signatures, chemin_publique):
@@ -1081,27 +1098,64 @@ FIL_ETAPES = (
 )
 
 FIL_HINTS = {
-    1: "Bouton « Préparer a-signer.txt » (onglet Sceau de l'Intention) — la "
-       "remise est COPIÉE dans le dossier de cérémonie, à côté des clés "
-       "(D118), et le champ « Remise à signer » est pré-rempli.",
-    2: "Onglet « 1 · Générer la clé » ci-contre (D118 : plus d'aller-retour "
+    1: "Onglet « 1 · Sceau de l'Intention » : bouton « Préparer "
+       "a-signer.txt » — la remise est COPIÉE dans le dossier de "
+       "cérémonie, à côté des clés (D118), et le champ « Remise à "
+       "signer » est pré-rempli.",
+    2: "Onglet « 2 · Générer la clé » ci-contre (D118 : plus d'aller-retour "
        "par l'accueil) — les fichiers naissent dans le dossier de "
        "cérémonie, hors du dépôt.",
-    3: "Onglet « 2 · Signer une remise » ci-contre — a-signer.txt y attend "
+    3: "Onglet « 3 · Signer une remise » ci-contre — a-signer.txt y attend "
        "DÉJÀ dans le dossier de cérémonie (pré-rempli), la clé n'en part "
        "jamais.",
-    4: "Onglet Sceau de l'Intention : champ « Remise à déposer » + bouton "
-       "« Déposer la remise (acte souverain) ».",
-    5: "Onglet Sceau de l'Intention : bouton « Pousser v06/sceau-I sur "
-       "git… » (commit + pull --rebase + push).",
+    4: "Onglet « 1 · Sceau de l'Intention » : champ « Remise à déposer » + "
+       "bouton « Déposer la remise (acte souverain) ».",
+    5: "Onglet « 1 · Sceau de l'Intention » : bouton « Pousser v06/sceau-I "
+       "sur git… » (commit + pull --rebase + push).",
 }
+
+# D128 — LE CAHIER SE LIT COMME LE FIL : le numéro d'un onglet est son
+# RANG DANS LA CÉRÉMONIE (l'onglet « 1 · » porte l'étape 1 du fil —
+# « Préparer a-signer.txt » —, le « 2 · » l'étape 2, le « 3 · »
+# l'étape 3 ; les étapes 4 [Déposer] et 5 [git] REVIENNENT à l'onglet
+# 1). Une seule table au lieu de chaînes dispersées : le terrain D127
+# a dénoncé l'ancien décalage (l'onglet Sceau vivait EN TÊTE du cahier
+# SANS numéro, devant « 1 · Générer la clé » — l'onglet de l'étape « à
+# signer » semblait PRÉCÉDER l'étape 1, et en scénario repo git il
+# portait l'étape 2 pendant que le « 1 · » numérotait la deuxième). Le
+# « 4 · Vérifier » n'est pas une étape du fil : c'est le contrôle
+# autonome d'une remise quelconque — mais il se lit APRÈS « Signer »,
+# sa place reste la sienne.
+TITRES_ONGLETS_CEREMONIE = {
+    "sceau": " 1 · Sceau de l'Intention (D87) ",
+    "generer": " 2 · Générer la clé (première fois) ",
+    "signer": " 3 · Signer une remise ",
+    "verifier": " 4 · Vérifier une remise (contrôle) ",
+}
+
+
+def libelle_court_fil(numero):
+    """D128 — le numéro d'étape en LIBELLÉ court (listes « Faites » et
+    « À venir » du fil) : l'étape 0 du scénario repo git est le
+    PRÉALABLE (« Pré » — cloner le dépôt) ; elle ne décale PLUS les
+    cinq étapes du tronc commun."""
+    return "Pré" if numero == 0 else str(numero)
+
+
+def libelle_courant_fil(numero):
+    """D128 — le titre de la ligne COURANTE du fil : « PRÉALABLE » pour
+    l'étape 0 (repo git), « ÉTAPE n » sinon — cloner n'est pas une
+    étape de cérémonie, c'est ce qui la rend possible."""
+    return "PRÉALABLE" if numero == 0 else f"ÉTAPE {numero}"
 
 
 # D117 — le scénario AVANT TOUT : deux façons d'amener le dépôt sur la
 # machine, deux fils d'étapes. « dossier local » : le dépôt existe déjà
 # (attachement D112), fil de CINQ étapes. « repo git » : le dépôt vient
-# d'un distant — fil de SIX étapes, « Cloner le dépôt » en tête, prouvé
-# lecture seule (git rev-parse + origin).
+# d'un distant — fil de SIX lignes, « Cloner le dépôt » en PRÉALABLE
+# (étape 0, D128 : le clonage ne décale PLUS les cinq étapes du tronc
+# commun — mêmes numéros dans les deux scénarios), prouvé lecture
+# seule (git rev-parse + origin).
 SCENARIOS = ("dossier local", "repo git")
 SCENARIO_DOSSIER, SCENARIO_GIT = SCENARIOS
 TITRE_ETAPE_CLONE = "Cloner le dépôt (repo git)"
@@ -1240,15 +1294,15 @@ def cloner_et_attacher(url, destination, emit=None):
 
 
 def hint_fil(scenario, numero):
-    """D117 — le GESTE de l'étape NUMERO sous le SCÉNARIO courant : en
-    repo git l'étape 1 est le CLONAGE et les étapes du sceau sont décalées
-    d'un rang ; sinon la table FIL_HINTS d'origine."""
-    if scenario == SCENARIO_GIT:
-        if numero == 1:
-            return ("Accueil → scénario REPO GIT → bouton « Cloner en "
-                    "local… » (ou « Attacher un clone existant… » si le "
-                    "clone vit déjà sur cette machine).")
-        numero -= 1
+    """D117/D128 — le GESTE de l'étape NUMERO sous le SCÉNARIO courant :
+    en repo git l'étape 0 est le PRÉALABLE (cloner le dépôt) ; les
+    étapes 1-5 sont celles du tronc commun DANS LES DEUX scénarios —
+    D128 a tué le décalage d'un rang : le numéro du fil et le numéro
+    de l'onglet du cahier désignent LE MÊME geste."""
+    if scenario == SCENARIO_GIT and numero == 0:
+        return ("Accueil → scénario REPO GIT → bouton « Cloner en "
+                "local… » (ou « Attacher un clone existant… » si le "
+                "clone vit déjà sur cette machine).")
     return FIL_HINTS[numero]
 
 
@@ -1380,8 +1434,11 @@ def fil_ceremonie(a_signer=None, privee=None, publique=None,
             e5 = True, f"{', '.join(chemins_git)} propre et poussé"
     etats_sceau = (e1, e2, e3, e4, e5)
     if scenario == SCENARIO_GIT:
-        lignes = [(1, TITRE_ETAPE_CLONE, *preuve_clone())]
-        lignes += [(i + 2, FIL_ETAPES[i][1], *etat)
+        # D128 — le clonage est le PRÉALABLE (étape 0) : les étapes du
+        # sceau gardent leurs numéros 1-5 du tronc commun, comme en
+        # scénario dossier local (le fil git ne décale PLUS rien).
+        lignes = [(0, TITRE_ETAPE_CLONE, *preuve_clone())]
+        lignes += [(FIL_ETAPES[i][0], FIL_ETAPES[i][1], *etat)
                    for i, etat in enumerate(etats_sceau)]
         return lignes
     return [(FIL_ETAPES[i][0], FIL_ETAPES[i][1], *etat)
@@ -2308,13 +2365,18 @@ class Application:
             page, "La cérémonie — une seule page (D118) : clé I, sceau, "
                   "coffre")
         cero.pack(fill="x", pady=6)
-        self._note(cero, "Tout y vit : générer la clé, signer et vérifier "
-                         "les remises (onglets 1-3 — Python standard seul, "
-                         "aucun réseau, la clé ne quitte jamais la machine), "
-                         "puis le fil du sceau I, le dépôt des remises, git "
-                         "et le coffre CF2 dès qu'un dépôt triade est "
-                         "attaché. Le dossier de cérémonie (clé + remises, "
-                         "HORS du dépôt) se règle dans la page elle-même.")
+        self._note(cero, "Tout y vit, DANS L'ORDRE DU FIL (D128 : le cahier "
+                         "se lit de gauche à droite comme le fil se suit) : "
+                         "l'onglet « 1 · Sceau de l'Intention » ouvre la "
+                         "cérémonie — y préparer la remise à signer, puis y "
+                         "revenir déposer et pousser — ; générer la clé, "
+                         "signer et vérifier les remises suivent (onglets "
+                         "2-4 — Python standard seul, aucun réseau, la clé "
+                         "ne quitte jamais la machine) ; le fil du sceau I "
+                         "guide les étapes ; le coffre CF2 apparaît dès "
+                         "qu'un dépôt triade est attaché. Le dossier de "
+                         "cérémonie (clé + remises, HORS du dépôt) se règle "
+                         "dans la page elle-même.")
         ttk.Button(cero, text="Ouvrir la cérémonie…",
                    command=self._ouvrir_ceremonie).pack(anchor="w", pady=4)
         if self.depot_pret:
@@ -2328,8 +2390,8 @@ class Application:
                       wraplength=880, justify="left",
                       text=(f"(dépôt NON attaché : v06/coffre_cf2.py "
                             f"introuvable dans {RACINE_DEPOT} — source : "
-                            f"{SOURCE_DEPOT}). Les onglets clé I "
-                            "(générer / signer / vérifier) restent pleinement "
+                            f"{SOURCE_DEPOT}). Les onglets clé I (2-4 : "
+                            "générer / signer / vérifier) restent pleinement "
                             "actifs ; sceau et coffre apparaîtront dès "
                             "l'attachement. Le GUI peut vivre n'importe où : "
                             "ATTACHEZ le dossier du dépôt par le bouton "
@@ -2659,7 +2721,8 @@ class Application:
                          "signatures-I.txt y naissent PAR DÉFAUT — la remise "
                          "« à signer » vit À CÔTÉ des clés, vous ne la "
                          "cherchez plus : « Préparer a-signer.txt » (onglet "
-                         "Sceau) COPIE la remise fraîche dans ce dossier. Par "
+                         "« 1 · Sceau de l'Intention ») COPIE la remise "
+                         "fraîche dans ce dossier. Par "
                          "défaut : sœur du dépôt attaché, donc HORS du dépôt "
                          "— la clé privée n'y entre JAMAIS. Changer le "
                          "dossier suit les champs NON retapés à la main "
@@ -2673,8 +2736,12 @@ class Application:
             pas_depot.pack(fill="x", pady=(4, 2))
             self._note(pas_depot,
                        f"v06/coffre_cf2.py introuvable dans {RACINE_DEPOT} "
-                       f"(source : {SOURCE_DEPOT}). Les onglets 1-3 (clé I) "
-                       "sont pleinement actifs — Python standard seul. Pour "
+                       f"(source : {SOURCE_DEPOT}). Les onglets 2-4 (clé I — "
+                       "étapes 2-3 de la cérémonie + le contrôle autonome) "
+                       "sont pleinement actifs — Python standard seul : "
+                       "l'étape 1 (le sceau, la remise « à signer ») "
+                       "exige un dépôt, c'est le sens du mode « fichier "
+                       "seul » (D87). Pour "
                        "le sceau I, git et le coffre CF2 : ATTACHEZ le "
                        "dossier du dépôt (bouton ci-dessous), ou relancez "
                        "avec --depot CHEMIN / la variable TRIADE_DEPOT "
@@ -2691,7 +2758,7 @@ class Application:
 
         # --- onglet générer ------------------------------------------------
         generer = ttk.Frame(cahier, padding=8)
-        cahier.add(generer, text=" 1 · Générer la clé (première fois) ")
+        cahier.add(generer, text=TITRES_ONGLETS_CEREMONIE["generer"])
         self._note(generer, "La clé I signera TOUTE évolution future de "
                             "l'intention. Elle naît ici, hors ligne, et ne "
                             "doit jamais quitter cette machine : le fichier "
@@ -2717,9 +2784,9 @@ class Application:
 
         # --- onglet signer -------------------------------------------------
         signer = ttk.Frame(cahier, padding=8)
-        cahier.add(signer, text=" 2 · Signer une remise ")
+        cahier.add(signer, text=TITRES_ONGLETS_CEREMONIE["signer"])
         self._note(signer, "La remise a-signer.txt arrive depuis l'onglet "
-                           "Sceau de l'Intention (bouton « Préparer "
+                           "« 1 · Sceau de l'Intention » (bouton « Préparer "
                            "a-signer.txt » — D118 : elle est COPIÉE dans le "
                            "dossier de cérémonie, à côté des clés, et le champ "
                            "ci-dessous est pré-rempli), puis signez-la ici. "
@@ -2789,7 +2856,7 @@ class Application:
 
         # --- onglet vérifier -----------------------------------------------
         verifier = ttk.Frame(cahier, padding=8)
-        cahier.add(verifier, text=" 3 · Vérifier une remise (contrôle) ")
+        cahier.add(verifier, text=TITRES_ONGLETS_CEREMONIE["verifier"])
         self._note(verifier, "Re-vérification autonome d'une remise : les "
                              "signatures correspondent-elles à a-signer.txt "
                              "ET à la clé publique ? (aucune écriture)")
@@ -2987,18 +3054,25 @@ class Application:
         self.label_etat_config.pack(anchor="w")
         self._maj_etat_config()
 
-        # --- onglet Sceau de l'Intention (EN TÊTE du cahier, D118) -------
+        # --- onglet Sceau de l'Intention (EN TÊTE du cahier — D118 la
+        # place en tête, D128 lui donne SON numéro : c'est l'ÉTAPE 1,
+        # la remise « à signer » naît ici) -----------------------------
         sceau = ttk.Frame(cahier, padding=8)
-        cahier.insert(0, sceau, text=" Sceau de l'Intention (D87) ")
+        cahier.insert(0, sceau, text=TITRES_ONGLETS_CEREMONIE["sceau"])
+        cahier.select(0)   # D128 : la cérémonie s'OUVRE sur l'étape 1
         self._note(sceau, "L'intention du dépôt est signée par la clé "
-                          "hors-ligne. Préparer écrit v06/sceau-I/"
+                          "hors-ligne : cette page est l'ÉTAPE 1 de la "
+                          "cérémonie (D128) — la remise « à signer » y "
+                          "naît, et les étapes 4 [déposer] et 5 [git] y "
+                          "REVIENNENT. Préparer écrit v06/sceau-I/"
                           "a-signer.txt (~1 Ko, dix lignes « arbre balise "
                           "empreinte ») PUIS LE COPIE dans le dossier de "
                           "cérémonie (D118 — à côté des clés, le champ "
-                          "« Remise à signer » de l'onglet 2 est pré-rempli) : "
+                          "« Remise à signer » de l'onglet « 3 · Signer une "
+                          "remise » est pré-rempli) : "
                           "transportez la copie vers la machine hors-ligne, "
-                          "faites-la signer (onglet 2 · Signer une remise), "
-                          "puis déposez la remise ici.")
+                          "faites-la signer (onglet « 3 · Signer une "
+                          "remise »), puis déposez la remise ici.")
         # --- fil de cérémonie (D116) : l'étape satisfaite s'efface, la
         # suivante s'affiche — auto-détection par PREUVES, lecture seule
         fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116 · "
@@ -3499,7 +3573,7 @@ class Application:
     def _ouvrir_ceremonie(self):
         """Entrée de l'unique page de cérémonie (D118). La pile (pynacl +
         cryptography + argon2) n'est PLUS exigée à l'entrée : les onglets
-        clé I (1-3) n'en ont pas besoin — elle est PROPOSÉE ici si elle
+        clé I (2-4) n'en ont pas besoin — elle est PROPOSÉE ici si elle
         manque (les onglets sceau et coffre l'exigent, chaque action CF2
         la re-demande), puis la page s'ouvre DANS TOUS LES CAS : la moitié
         hors-ligne de la cérémonie ne dépend d'aucune installation."""
@@ -3605,8 +3679,8 @@ class Application:
                 self.var_hl_a_signer.set(dest)   # la page vient d'être rebâtie
                 self.journal.ajoute(
                     f"[ceremonie] remise à signer pré-remplie : {dest} "
-                    "(dossier de cérémonie, D118 — à côté des clés, onglet "
-                    "2 · Signer une remise)", "info")
+                    "(dossier de cérémonie, D118 — à côté des clés, "
+                    "onglet « 3 · Signer une remise »)", "info")
             except tk.TclError:
                 pass    # page en cours de destruction : peu importe
         if getattr(self, "label_fil_courant", None) is not None:
@@ -3677,12 +3751,12 @@ class Application:
         faites, suite, courante = [], [], None
         for numero, titre, faite, detail in etat:
             if faite or numero in self.fil_manuel:
-                faites.append(f"{numero} · {titre}"
+                faites.append(f"{libelle_court_fil(numero)} · {titre}"
                               + ("" if faite else " (à la main)"))
             elif courante is None:
                 courante = (numero, titre, faite, detail)
             else:
-                suite.append(f"{numero} · {titre}")
+                suite.append(f"{libelle_court_fil(numero)} · {titre}")
         if faites:
             self.label_fil_resume.configure(
                 text="✓ Faites : " + "  ·  ".join(faites),
@@ -3702,7 +3776,8 @@ class Application:
         else:
             numero, titre, _, detail = courante
             self.label_fil_courant.configure(
-                text=f"▶ ÉTAPE {numero} — {titre}", foreground=COULEUR_ENCRE)
+                text=f"▶ {libelle_courant_fil(numero)} — {titre}",
+                foreground=COULEUR_ENCRE)
             self.label_fil_detail.configure(
                 text=f"{detail}\n   Geste : {hint_fil(self.scenario, numero)}",
                 foreground="#57606a")
@@ -3734,8 +3809,9 @@ class Application:
             if not faite and numero not in self.fil_manuel:
                 self.fil_manuel.add(numero)
                 self.journal.ajoute(
-                    f"[fil] étape {numero} · {titre} — marquée faite À LA "
-                    f"MAIN (la preuve de fichier reste la vérité)", "info")
+                    f"[fil] {libelle_court_fil(numero)} · {titre} — "
+                    f"marquée faite À LA MAIN (la preuve de fichier reste "
+                    f"la vérité)", "info")
                 break
         self._montrer_fil(etat)
 
@@ -4176,9 +4252,14 @@ def selftest():
         faite, detail = preuve_clone(tmp)
         controle("d117-preuve-refusee-hors-git-nommee", not faite
                  and "pas un dépôt git" in detail, detail)
-    controle("d117-hints-suivent-le-scenario",
-             "Cloner en local" in hint_fil(SCENARIO_GIT, 1)
-             and hint_fil(SCENARIO_GIT, 2) == FIL_HINTS[1]
+    # D117/D128 — le clonage est le PRÉALABLE (étape 0) : les hints des
+    # étapes 1-5 ne dépendent PLUS du scénario (le décalage d'un rang
+    # est mort — le numéro du fil et le numéro de l'onglet du cahier
+    # désignent LE MÊME geste dans les deux scénarios).
+    controle("d117-d128-hints-suivent-le-scenario",
+             "Cloner en local" in hint_fil(SCENARIO_GIT, 0)
+             and hint_fil(SCENARIO_GIT, 1) == FIL_HINTS[1]
+             and hint_fil(SCENARIO_GIT, 5) == FIL_HINTS[5]
              and hint_fil(SCENARIO_DOSSIER, 1) == FIL_HINTS[1]
              and hint_fil(None, 5) == FIL_HINTS[5])
     # D118 : la page unifiée — dossier de cérémonie hors du dépôt,
