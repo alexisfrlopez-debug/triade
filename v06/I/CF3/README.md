@@ -18,10 +18,12 @@ La présente spec durcit les deux intuitions là où elles étaient attaquables
 indispensable au déverrouillage ») **par invocation au lieu de résidence**, et
 ajoute le cycle en deux actes qui borne la fenêtre de session.
 
-> **Position dans le sceau.** CE texte vit provisoirement sous `docs/` (hors
-> périmètre du sceau, spec § 1 de v06/I/README.md — aucune divergence créée) ;
-> il entrera dans l'arbre scellé `v06/I/CF3/README.md` à la prochaine
-> re-cérémonie (précédent : erratum § 12 du README CF2, consigné 47e704f).
+> **Position dans le sceau.** CE texte vit dans l'arbre scellé
+> `v06/I/CF3/README.md` — écrit D121 sous `docs/I/CF3/` (hors périmètre du
+> sceau, spec § 1 de v06/I/README.md : aucune divergence créée), il y est
+> entré à la re-cérémonie D126, en compagnie de l'erratum § 12 du README
+> CF2 (« 2 fragments » → TROIS, consigné 47e704f) : la même signature
+> couvre l'entrée et le correctif.
 
 ## 1. Périmètre et adversaire modélisé
 

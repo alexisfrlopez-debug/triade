@@ -37,12 +37,15 @@ la table lie chaque arbre à son artefact et à sa balise de référence :
 | `m7/I` | sceau (lignée D34) | sceau.1 |
 | `demo/I` | demo.exe | 0.3.0 (M2, scellée) |
 | `terrain/I` | superviseur.exe | terrain.19/17-H (0.5.0-terrain.9) |
-| `v06/I` | coffre CF2 + sceau-I (transversal) | v0.6.0 axes 2-3 (D105/D106) |
+| `v06/I` | coffre CF2 + CF3 + sceau-I (transversal) | v0.6.0 axes 2-3-4 (D105/D106/D121) |
 
 L'arbre `v06/I` porte les spécifications transversales du programme v0.6.0 :
 ce README (axe 3, sceau de l'Intention — D87/D105) ET `CF2/README.md`
-(axe 2, coffre CF2 et interrupteur d'homme mort — D86/D106) : la volonté
-d'évolution couvre le programme souverain ENTIER, axes 2 et 3 ensemble.
+(axe 2, coffre CF2 et interrupteur d'homme mort — D86/D106) ET
+`CF3/README.md` (axe 4, coffre CF3 : la serrure à triple scellement et le
+cycle en deux actes — D121, entré à la re-cérémonie D126 avec l'erratum
+§ 12 du README CF2) : la volonté d'évolution couvre le programme souverain
+ENTIER, axes 2, 3 et 4 ensemble.
 
 La balise est **informative dans le manifeste mais couverte par la
 signature** : changer l'étiquette sans re-signer est un diff d'intention

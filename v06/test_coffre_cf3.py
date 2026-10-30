@@ -2,7 +2,7 @@
 """test_coffre_cf3.py — D121 : la falsifiabilité de la serrure CF3.
 
 Une garde qui ne rejette rien ne garde rien (leçon M3). Cette suite prouve
-les critères de sortie D121 un par un (spec docs/I/CF3/README.md § 13) :
+les critères de sortie D121 un par un (spec v06/I/CF3/README.md § 13) :
 
   T1  le cycle en deux actes CONTRE TÉMOIN INDÉPENDANT : round-trip complet,
       époque incrémentée, checksum == sha256 recalculé par le TEST (pas par
@@ -770,7 +770,7 @@ def t12_cli():
 # ---------------------------------------------------------------------------
 
 def main() -> int:
-    print("[test-CF3] suite de falsifiabilité D121 — spec docs/I/CF3/README.md § 13")
+    print("[test-CF3] suite de falsifiabilité D121 — spec v06/I/CF3/README.md § 13")
     for groupe in (t1_cycle_deux_actes, t2_phrase_erronee_acte1,
                    t3_phrase_erronee_acte2, t4_piege_absent,
                    t5_retour_en_arriere, t6_tag_piege_invalide,

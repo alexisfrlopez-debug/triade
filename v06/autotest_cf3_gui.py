@@ -3,7 +3,7 @@
 """autotest_cf3_gui.py — le PUPITRE D'AUTOTEST CF3 (D122).
 
 POURQUOI CE MODULE EXISTE. Le terrain s'apprête à prouver la serrure CF3
-(docs/I/CF3/README.md, D121). Un autotest en ligne de commande rend son
+(v06/I/CF3/README.md, D121). Un autotest en ligne de commande rend son
 verdict à l'écran, puis le verdict S'ÉVANOUIT : si quelque chose se passe
 mal sur la machine du développeur (pile pip absente, encodage Windows,
 version périmée du module), je ne reçois RIEN à analyser. La demande du

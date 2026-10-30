@@ -50,7 +50,7 @@ ARBRES = {
     "m7": ("sceau", "sceau.1"),
     "demo": ("demo.exe", "0.3.0"),
     "terrain": ("superviseur.exe", "terrain.19/17-H"),
-    "v06": ("coffre CF2 + sceau-I (transversal)", "v0.6.0-axes2-3"),
+    "v06": ("coffre CF2 + CF3 + sceau-I (transversal)", "v0.6.0-axes2-3-4"),
 }
 
 # Constante publique de dérivation de la clé de TEST (spec § 8) — PAS un

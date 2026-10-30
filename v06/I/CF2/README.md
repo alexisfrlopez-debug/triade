@@ -272,8 +272,10 @@ falsifiabilité (`v06/test_cf2.py`, § 13) sur des coffres de TEST — le
 conteneur réel `.keys/coffre_fort.bin` et les phrases réelles ne sont
 JAMAIS touchés (discipline D105 : aucune clé touchée). L'acte qui arme la
 protection réelle appartient au développeur : `migrer` + copies hors-ligne
-de 2 fragments + `sentinelle demarrer` — le flux pas à pas vit dans
-`download/LISEZMOI-coffre-CF2.txt`.
+de 3 fragments + `sentinelle demarrer` — le flux pas à pas vit dans
+`download/LISEZMOI-coffre-CF2.txt`. [Erratum D121, consigné 47e704f,
+appliqué à la re-cérémonie D126 : « 2 fragments » → TROIS — le seuil
+T est LE nombre de copies hors-ligne qui arment la relève (spec § 5).]
 
 ## 13. Critères de sortie D86 → tests
 

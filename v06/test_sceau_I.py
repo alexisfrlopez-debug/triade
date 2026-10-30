@@ -13,7 +13,8 @@ les critères de sortie D87 un par un :
   T3  déterminisme du manifeste (double calcul, mtime changé, jumelle
       CRLF IDENTIQUE — canon LF D115 : la représentation du checkout
       n'est pas l'intention —, octet muté hors fin de ligne toujours
-      attrapé, dépôt réel vert OU fenêtre de re-cérémonie D115 PROUVÉE)
+      attrapé, dépôt réel vert OU fenêtre de re-cérémonie PROUVÉE —
+      représentation seule (D115) OU contenu en attente de signature (D126))
   F1  la CÉRÉMONIE COMPLÈTE en laboratoire, sur RÉPLIQUE : generer →
       signer → verifier (script autonome, sous-processus, répertoire
       isolé) → deposer --cle → le dépôt de réplique passe vert avec
@@ -39,7 +40,11 @@ ré-alignée VERT canonique par signer-test à l'entrée — D115 : le dépôt
 réel peut porter les empreintes CRLF d'une cérémonie de terrain pendant
 la fenêtre de re-cérémonie), et la dernière ligne vérifie que le dépôt
 RÉEL est vert — ou, pendant la fenêtre D115, que sa divergence est de
-REPRÉSENTATION seule, signatures valides.
+REPRÉSENTATION seule, signatures valides — ou, pendant une fenêtre de
+RE-CÉRÉMONIE de CONTENU (modèle D126 : spec CF3 entrée dans v06/I/,
+erratum § 12 CF2 appliqué), que a-signer.txt est FRAIS (empreintes
+vivantes, balises courantes) et que les signatures déposées restent
+valides : l'intention évoluée attend sa signature, rien ne fut altéré.
 
 Usage : python3 v06/test_sceau_I.py
 """
@@ -269,6 +274,85 @@ def _fenetre_d115():
     return True, ""
 
 
+def _fenetre_recemonie():
+    """(ok, detail) — le dépôt réel pendant la fenêtre de RE-CÉRÉMONIE
+    (modèle D126 : l'intention a évolué, la signature est EN ATTENTE).
+
+    L'état CONÇU par preparer (spec § 6) : des arbres vivants divergent
+    de leurs manifestes déposés PAR CONTENU (la spec CF3 entrée dans
+    v06/I/, l'erratum § 12 du README CF2 appliqué) — mais DEUX preuves
+    tiennent et font la différence avec une falsification :
+    (1) a-signer.txt est FRAIS : chaque ligne porte l'empreinte VIVANTE
+    de son arbre et la balise COURANTE de la table — la charge utile de
+    la cérémonie est prête, la clé physique du développeur n'a plus
+    qu'à signer ; (2) les signatures DÉPOSÉES restent valides contre
+    les manifestes déposés et la clé déposée : l'ancien état signé est
+    INTACT — rien ne fut altéré, seule la nouvelle signature manque.
+    Cette fonction MEURT à la cérémonie : verifier() re-verdit et ne
+    l'appelle plus (même loi que _fenetre_d115)."""
+    # (1) a-signer.txt FRAIS — empreintes vivantes + balises courantes
+    try:
+        with open(os.path.join(S.SCEAU_DIR, "a-signer.txt"),
+                  encoding="utf-8") as f:
+            lignes = [l.strip() for l in f if l.strip()]
+    except OSError as e:
+        return False, f"a-signer.txt illisible : {e}"
+    attendues = {}
+    for ligne in lignes:
+        morceaux = ligne.split()
+        if len(morceaux) != 3:
+            return False, f"a-signer.txt ligne malformée : {ligne!r}"
+        arbre, balise, empreinte = morceaux
+        if arbre not in S.ARBRES:
+            return False, f"a-signer.txt arbre inconnu : {arbre!r}"
+        if balise != S.ARBRES[arbre][1]:
+            return False, (f"a-signer.txt balise périmée pour {arbre} : "
+                           f"{balise!r} != {S.ARBRES[arbre][1]!r}")
+        attendues[arbre] = empreinte
+    if set(attendues) != set(S.ARBRES):
+        return False, "a-signer.txt incomplet (arbres manquants)"
+    for arbre in S.ARBRES:
+        _, emp_vivante = S.manifeste(arbre)
+        if attendues[arbre] != emp_vivante:
+            return False, (f"a-signer.txt PÉRIMÉ pour {arbre} : "
+                           "l'empreinte vivante a encore bougé depuis "
+                           "preparer")
+    # (2) les signatures déposées restent valides — l'ancien état signé
+    # est intact (rien ne fut altéré pendant la fenêtre)
+    for arbre in S.ARBRES:
+        try:
+            with open(os.path.join(S.DIR_MANIFESTES, f"{arbre}.txt"),
+                      encoding="utf-8") as f:
+                texte_depose = f.read()
+            empreinte_deposee = hashlib.sha256(
+                texte_depose.encode("utf-8")).hexdigest()
+            with open(os.path.join(S.DIR_SIGNATURES, f"{arbre}.txt"),
+                      encoding="utf-8") as f:
+                signature = f.read().strip()
+            valide = S._verifier_ed25519(bytes.fromhex(empreinte_deposee),
+                                          bytes.fromhex(signature),
+                                          S.cle_publique_deposee())
+        except (OSError, ValueError, S.EchecSceauI) as e:
+            return False, f"signature {arbre} illisible : {e}"
+        if not valide:
+            return False, (f"signature {arbre} invalide — l'ancien état "
+                           "signé fut altéré (ceci n'est PAS une fenêtre "
+                           "de re-cérémonie)")
+    diverges = []
+    for arbre in S.ARBRES:
+        _, emp_vivante = S.manifeste(arbre)
+        with open(os.path.join(S.DIR_MANIFESTES, f"{arbre}.txt"),
+                  encoding="utf-8") as f:
+            emp_deposee = hashlib.sha256(
+                f.read().encode("utf-8")).hexdigest()
+        if emp_vivante != emp_deposee:
+            diverges.append(arbre)
+    if not diverges:
+        return False, "aucun arbre divergé (fenêtre de re-cérémonie impossible)"
+    return True, ("divergence d'intention en attente de signature : "
+                  + ", ".join(diverges))
+
+
 def t3_determinisme():
     print("[T3] déterminisme du manifeste")
     texte1, emp1 = S.manifeste("m4")
@@ -316,14 +400,23 @@ def t3_determinisme():
                 code == S.CODE_DIVERGE and "modifie" in detail
                 and "tls-02-verdicts.md" in detail,
                 f"code={code} {detail}")
-    # le dépôt RÉEL : vert — ou fenêtre de re-cérémonie D115 PROUVÉE
+    # le dépôt RÉEL : vert — ou fenêtre D115 (représentation seule) — ou
+    # fenêtre de RE-CÉRÉMONIE (D126) : l'intention a évolué, a-signer
+    # FRAIS attend la clé physique du développeur
     code = S.verifier(silencieux=True)
     if code == S.OK:
         verifie("T3-g dépôt réel : 10 arbres verts (canon LF)", True)
     else:
         ok_f, detail = _fenetre_d115()
-        verifie("T3-g dépôt réel : fenêtre D115 — divergence de "
-                "représentation seule, signatures valides", ok_f, detail)
+        if ok_f:
+            verifie("T3-g dépôt réel : fenêtre D115 — divergence de "
+                    "représentation seule, signatures valides", True)
+        else:
+            ok_r, detail_r = _fenetre_recemonie()
+            verifie("T3-g dépôt réel : fenêtre de re-cérémonie — "
+                    "a-signer FRAIS, anciennes signatures valides, "
+                    "divergence d'intention en attente de signature",
+                    ok_r, detail_r if not ok_r else detail)
 
 
 # ---------------------------------------------------------------------------
@@ -616,7 +709,8 @@ def main():
         for e in ECHECS:
             print(f"  ÉCHEC : {e}")
         return 1
-    # le dépôt RÉEL : vert — ou fenêtre de re-cérémonie D115 PROUVÉE
+    # le dépôt RÉEL : vert — ou fenêtre D115 PROUVÉE — ou fenêtre de
+    # re-cérémonie (D126) PROUVÉE
     code = S.verifier(silencieux=True)
     if code == S.OK:
         print("[final] dépôt réel : VERT (10 arbres, canon LF D115)")
@@ -628,8 +722,18 @@ def main():
               "SEULE, signatures valides ; la re-cérémonie du développeur "
               "(clé physique) re-signera les manifestes canoniques")
         return 0
+    ok_r, detail_r = _fenetre_recemonie()
+    if ok_r:
+        print(f"[final] dépôt réel : FENÊTRE DE RE-CÉRÉMONIE — {detail_r} ; "
+              "a-signer.txt est FRAIS (empreintes vivantes, balises "
+              "courantes) et les signatures déposées restent valides : "
+              "l'ancien état signé est INTACT, seule la nouvelle signature "
+              "manque — la clé physique du développeur signera la nouvelle "
+              "intention (ceremonie_hors_ligne.py signer, puis sceau_I.py "
+              "deposer)")
+        return 0
     print(f"[final] dépôt réel : CODE {code} — divergence NON expliquée : "
-          f"{detail}")
+              f"{detail_r or detail}")
     return 1
 
 

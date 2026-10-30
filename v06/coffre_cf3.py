@@ -2,10 +2,10 @@
 """coffre_cf3.py — CF3 : la serrure à triple scellement et le cycle en deux
 actes (D121, v0.6.0 axe 4).
 
-Spécification : docs/I/CF3/README.md (R2 écrite-avant-code — CE fichier
-l'instente, aucun écart toléré ; la spec entrera dans l'arbre scellé
-v06/I/CF3/ à la prochaine re-cérémonie — précédent erratum § 12 du README
-CF2, consigné 47e704f).
+Spécification : v06/I/CF3/README.md (R2 écrite-avant-code — CE fichier
+l'instente, aucun écart toléré ; la spec est ENTRÉE dans l'arbre scellé
+à la re-cérémonie D126, en compagnie de l'erratum § 12 du README CF2,
+consigné 47e704f).
 
 CF3 est la génération suivante de la serrure du coffre :
 
@@ -1277,7 +1277,7 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(
         prog="coffre_cf3.py",
         description="CF3 : la serrure à triple scellement et le cycle en "
-                    "deux actes (D121, spec docs/I/CF3/README.md)")
+                    "deux actes (D121, spec v06/I/CF3/README.md)")
     sous = parser.add_subparsers(dest="commande", required=True)
 
     p = sous.add_parser("init", help="coffre neuf (époque 1)")

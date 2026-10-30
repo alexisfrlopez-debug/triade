@@ -68,8 +68,11 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        PREUVES en lecture seule, et les témoins e1/e4 sont ÈRE-COHÉRENTS
        — le fil suit l'ère du dépôt réel (re-cérémonie passée → « tout
        est signé — préparer inutile » / « arbres VERTS » ; fenêtre D115
-       vivante → « a-signer PÉRIMÉ » / « signature requise ») : mentir
-       dans un sens comme dans l'autre serait attrapé ; clé absente
+       vivante → « a-signer PÉRIMÉ » / « signature requise » ; fenêtre
+       de RE-CÉRÉMONIE de contenu, modèle D126 → « a-signer.txt FRAIS »
+       / « signature requise » : la charge utile est prête, seule la
+       signature manque) : mentir dans un sens comme dans l'autre
+       serait attrapé ; clé absente
        nommée, fichiers manquants nommés, git propre ET poussé ;
   T14  scénarios et clonage (D117) : le choix AVANT TOUT (dossier local
        / repo git) détermine les étapes — fil de CINQ d'un côté, de SIX
@@ -478,8 +481,12 @@ def t567f1(rep):
     # D117 : les témoins e1/e4 suivent l'ÈRE du dépôt réel — après la
     # re-cérémonie (59b7ddc) le sceau est VERT et le fil doit le DIRE
     # (« préparer inutile », « arbres VERTS ») ; pendant la fenêtre D115
-    # il devait nommer « PÉRIMÉ » / « signature requise ». Le fil qui
-    # mentirait dans UN sens comme dans l'autre serait attrapé ICI.
+    # il devait nommer « PÉRIMÉ » / « signature requise » ; depuis D126
+    # existe la TROISIÈME ère — la fenêtre de RE-CÉRÉMONIE de CONTENU
+    # (spec entrée, erratum appliqué) : a-signer.txt est FRAIS (la
+    # charge utile de cérémonie est prête) et seule la signature
+    # manque. Le fil qui mentirait dans UN sens comme dans l'autre
+    # serait attrapé ICI.
     code_ere, _ = gui.executer_cli("sceau_I.py", ["verifier"])
     if code_ere == 0:
         verifie("t13-e1-ere-signee-preparer-inutile",
@@ -490,12 +497,18 @@ def t567f1(rep):
                 par_etape[4][0] is True and "VERTS" in par_etape[4][1],
                 par_etape[4][1])
     else:
-        verifie("t13-e1-fenetre-d115-a-signer-perime-nomme",
-                par_etape[1][0] is False and "PÉRIMÉ" in par_etape[1][1],
-                par_etape[1][1])
         verifie("t13-e4-signature-requise-nomme",
                 par_etape[4][0] is False and "signature requise" in
                 par_etape[4][1], par_etape[4][1])
+        if "PÉRIMÉ" in par_etape[1][1]:
+            verifie("t13-e1-fenetre-d115-a-signer-perime-nomme",
+                    par_etape[1][0] is False, par_etape[1][1])
+        else:
+            # fenêtre de RE-CÉRÉMONIE (modèle D126) : a-signer FRAIS
+            verifie("t13-e1-fenetre-recemonie-a-signer-frais-nomme",
+                    par_etape[1][0] is True
+                    and "frais" in par_etape[1][1].lower(),
+                    par_etape[1][1])
     verifie("t13-e2-cle-absente-nomme",
             par_etape[2][0] is False and "absent" in par_etape[2][1],
             par_etape[2][1])
