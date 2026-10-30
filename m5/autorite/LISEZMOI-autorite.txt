@@ -1,0 +1,58 @@
+TRIADE — M5-B : L'AUTORITÉ DE TEST LOCALE (m5/autorite/)
+========================================================
+
+QU'EST-CE QUE C'EST
+-------------------
+Une origine HTTPS locale à certificat pilotable — le composant « autorité
+de test locale » exigé par le jalon M5 (PLAN_MILESTONES). Les runs
+terrain.17 jugeaient le tunnel contre example.com et self-signed.badssl.com
+(de vrais serveurs, donc du réseau) ; l'autorité locale remplace les DEUX :
+elle sert la page du tunnel avec un certificat VALIDE, puis présente
+l'hérésie de votre choix — SANS quitter la machine.
+
+QUATRE MODES (une hérésie chacun)
+  valide      : SAN autorite.test, signée par la racine de test (à installer
+                dans le magasin de la machine qui juge) ;
+  autonome    : AUTO-SIGNÉE — le miroir local de self-signed.badssl.com ;
+  autre-hote  : chaîne VALIDE mais SAN autre.test (l'invariant est l'hôte) ;
+  expiree     : signée, hôte correct, notAfter DANS LE PASSÉ.
+
+FIXTURES (m5/autorite/fixtures/, génération laboratoire, OpenSSL ≥ 3.5)
+  racine-autorite.pem/.key — la racine « TRIADE Autorite de Test M5-b
+  (jetable) » : sha256 1D9083023A3E…
+  serv-valide.pem          : sha256 98389EC92809…
+  serv-autonome.pem        : sha256 20F269CC4B9F…
+  serv-autre-hote.pem      : sha256 8083E8C86FE1…
+  serv-expiree.pem         : sha256 B5415DE40673…
+  (empreintes complètes dans le journal des builds / le témoin de run.)
+  Les clés sont des CLÉS DE TEST JETABLES : elles ne protègent rien et ne
+  signent que autorite.test / autre.test. La discipline « aucune clé dans
+  git » du coffre réel vise les secrets réels — pas les fixtures d'essai
+  d'une autorité qui se déclare elle-même de test. Régénération : UNIQUEMENT
+  au laboratoire (regenerer_fixtures.sh — les dates de validité exigent
+  OpenSSL 3.5+, le terrain n'a rien à générer).
+
+UTILISATION
+  python autorite_test.py --mode valide --port 443 \
+      --journal C:\preuves\autorite-a.log --arret-apres 1
+  Arrêt propre : --arret-apres N requêtes servies, ou
+  --arret-apres-secondes S (la poignée refusée ne compte PAS — un tunnel
+  qui échoue n'est pas un service rendu). Journal SUR LE DISQUE (D99) :
+  « en ecoute », « requete servie », « poignee de main refusee »,
+  « arret propre ». La page servie est STABLE (aucune date embarquée) :
+  deux runs se recoupent octet pour octet ; l'en-tête Date, lui, vit sa
+  vie — il EST une preuve de run (« PENDANT le run », modèle 17-H).
+
+REFUS NOMMÉS (code de sortie 2)
+  MODE-INCONNU · FIXTURE-ABSENTE (fichier coupable nommé) ·
+  FIXTURE-ILLISIBLE · JOURNAL-INDICIBLE (D99 : le journal est exigé) ·
+  PORT-INDISPONIBLE.
+
+PREUVE AU LABORATOIRE (D136)
+  test_autorite.py — 13 contrôles, 13 PASS / 0 ÉCHEC : chaque mode tient
+  sa promesse (rejet auto-signé / mauvais hôte / expiré par un client TLS
+  exigeant), chaque refus nommé est VIVANT (prouvé par le geste qui le
+  déclenche), l'arrêt propre est constaté (apres-1 et par délai), la page
+  est stable, et le juge indépendant CURL (le client M3 du terrain)
+  croise le verdict : 200 + marqueur sur valide, code 60 (certificat) sur
+  autonome.

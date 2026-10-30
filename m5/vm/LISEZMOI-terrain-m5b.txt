@@ -1,0 +1,100 @@
+TRIADE — TERRAIN M5-B ÉTAPE 1 : « LE CRITÈRE M4 DANS UNE VM ISOLÉE, SANS
+AUCUN RÉSEAU » — L'AUTORITÉ DE TEST LOCALE ATTERIT. LE KIT EMPORTE LE PROXY
+0.5.0 SCELLÉ, L'AUTORITÉ (ORIGINE HTTPS LOCALE À CERTIFICAT PILOTABLE) ET
+LE CLIENT FORME-ABSOLUE ; LE BAC À SABLE WINDOWS JOUE LA VM ISOLÉE (RÉSEAU
+COUPÉ) ; LES DEUX RUNS — CERTIFICAT VALIDE PUIS CERTIFICAT INVALIDE — ONT
+LIEU DANS LE MÊME SCÉNARIO, AVEC JOURNAL + TÉMOIN SUR LE DISQUE (D99).
+=============================================================================
+
+LA NOUVELLE, EN PREMIER
+-----------------------
+Le jalon M5 (outil complet) a trois chantiers : (a) empreintes par build —
+RÉALISÉ (D134) ; (b) interception en VM isolée — OUVERT (D136) ;
+(c) patch à chaud du journal — pas ouvert. Le chantier (b) exige « une
+autorité de test locale » : les runs terrain.17 jugeaient le tunnel contre
+example.com et self-signed.badssl.com — de vrais serveurs Internet, donc du
+réseau, donc pas d'isolement. D136 construit l'autorité LOCALE : une origine
+HTTPS à vous, dont le certificat se pilote (valide / auto-signé / mauvais
+hôte / expiré), prouvée au laboratoire (13 contrôles, juge indépendant curl).
+
+  Ce que l'étape 1 PRouve : le critère M4 complet (tunnel + certificat +
+  502 étiquetée) rejoué DANS une VM isolée au réseau coupé, par l'autorité
+  locale — journal + témoin SUR LE DISQUE, survivant à la destruction de la VM.
+
+  Ce que l'étape 1 n'est PAS encore : le flux NAVIGATEUR. Aucun navigateur
+  ne parle la « forme absolue https:// » que le proxy attend (constat
+  terrain.17) ; le client de l'étape 1 est le script TCP hérité de
+  terrain_m4.ps1. Le flux navigateur est l'étape 2 : elle exige la révision
+  R3 du proxy (« relèvement https amont », spécifications écrites-avant-code
+  dans m5/I/README.md) — le laboratoire la notera après votre verdict sur
+  l'étape 1.
+
+1) PRÉPARATION (UNE FOIS, SUR VOTRE MACHINE — 10 MINUTES)
+   a) Le bac à sable Windows doit être disponible : « Paramètres →
+      Applications → Fonctionnalités facultatives → Plus de fonctionnalités
+      Windows → Bac à sable Windows » (édition Pro/Entreprise/Education ;
+      sinon voir § 5, mode dégradé).
+   b) Un clone à jour du dépôt (git pull) — les fichiers viennent de là.
+   c) Python EMBARQUÉ (le bac à sable n'a pas de Python et son réseau sera
+      COUPÉ) : téléchargez « Windows embeddable package (64-bit) » sur
+      python.org (toute version 3.8 ou plus récente convient — l'autorité
+      n'utilise que la bibliothèque standard) et dézippez-le dans
+      m5b\kit-m5b\python\ (le dossier doit contenir python.exe).
+   d) Assemblez le dossier de scénario (PowerShell, depuis la racine du
+      clone) :
+
+        New-Item -ItemType Directory -Force m5b, m5b\kit-m5b, m5b\preuves-m5b
+        Copy-Item m5\vm\scenario-m5b.wsb m5b\
+        Copy-Item m5\vm\scenario-m5b.ps1, m5\vm\client-m5b.ps1 m5b\kit-m5b\
+        Copy-Item m4\proxy.exe m5b\kit-m5b\
+        Copy-Item -Recurse m5\autorite m5b\kit-m5b\autorite
+        # puis dézippez python embarqué dans m5b\kit-m5b\python
+
+   e) Le proxy attendu est le 0.5.0 scellé : sha256 b9264e0b… / md5
+      2b6481a1… / 28 160 octets (m4/proxy.exe). Le témoin consignera
+      l'empreinte de CE que vous aurez réellement exécuté — si elle
+      diverge, le rapport le dira.
+
+2) LE GESTE (UN DOUBLE-CLIC)
+   Ouvrez m5b\scenario-m5b.wsb. Le bac à sable démarre réseau COUPÉ, monte
+   le kit en lecture seule (C:\kit) et un dossier de preuves en écriture
+   (C:\preuves), puis lance le scénario tout seul : hosts (autorite.test →
+   127.0.0.1), installation de la racine de test, empreintes consignées,
+   RUN A (certificat VALIDE → 200 + page + « tunnel chiffre etabli »),
+   RUN B (certificat AUTO-SIGNÉ → 502 « Certificat rejete » 34 octets
+   exacts + « certificat rejete » au journal proxy + poignée refusée au
+   journal autorité), arrêt propre du proxy par « quit » (code 0), TÉMOIN
+   posé. Comptez une à deux minutes. Fermez le bac à sable ensuite — les
+   preuves survivent (elles vivent dans m5b\preuves-m5b\, sur VOTRE disque).
+
+3) LA LECTURE ET LE RAPPORT
+   Ouvrez m5b\preuves-m5b\temoin-m5b.txt — le verdict y vit avec les
+   empreintes. Envoyez au laboratoire : ce témoin, plus
+   scenario-m5b-journal.log, proxy-journal.log, autorite-a.log,
+   autorite-b.log, page-a.txt et page-b.txt (les deux pages sont petites —
+   collez-les entières). Un ÉCHEC NOMMÉ est un RÉSULTAT : collez-le tel
+   quel, il désigne lui-même le coupable.
+
+4) RISQUES CONSIGNÉS (le laboratoire les a comptés)
+   - Les scripts PowerShell ont été écrits au laboratoire SANS interpréteur
+     PowerShell sous la main : une faute de syntaxe serait nommée par
+     PowerShell lui-même dès le lancement — collez le message tel quel.
+   - Schannel en mode hors-ligne : la révocation en ligne des certificats
+     est impossible réseau coupé ; si le run A refusait le certificat
+     VALIDE (journal proxy : « certificat rejete » POUR LE RUN A), le
+     témoin le dirait — collez-le : c'est l'évidence qui décidera le
+     correctif (le drapeau de non-révocation entrerait alors dans la
+     spécification R3, jamais en silence).
+   - Les clés du kit sont des CLÉS DE TEST JETABLES (elles ne signent que
+     autorite.test / autre.test) : aucune vraie clé ne voyage ici.
+
+5) MODE DÉGRADÉ (SANS BAC À SABLE — édition Home)
+   Créez C:\kit et C:\preuves à la main, copiez le contenu de
+   m5b\kit-m5b\ dans C:\kit, puis lancez en PowerShell ADMINISTRATEUR :
+   powershell -ExecutionPolicy Bypass -File C:\kit\scenario-m5b.ps1
+   ATTENTION : ce mode touche VOTRE machine (ligne hosts + racine de test
+   au magasin de certificats). Nettoyage après le run :
+     - retirez la ligne « 127.0.0.1 autorite.test » de
+       C:\Windows\System32\drivers\etc\hosts ;
+     - certutil -delstore Root "TRIADE Autorite de Test M5-b (jetable)"
+   Le bac à sable reste la voie propre : rien ne survit chez vous.

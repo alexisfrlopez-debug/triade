@@ -1078,3 +1078,105 @@ Stage Summary:
   liste blanche → CF2 verifier VERT → lancer_migration_cf3
   (MIGRER média du piège / VÉRIFIER checksum contre la CARTE /
   DÉTRUIRE après recoupement) → rapport ; OAuth relais avant ~05/11
+
+---
+Task ID: 41
+Agent: Z.ai (agent principal)
+Task: demande développeur 31/10 — (1) le coffre fort devient PROJET FILS
+(dossier Drive propre, repo git propre, plan milestone, instructions de
+reprise ; développement différé au bouclage de TRIADE) ; (2) attaque du
+jalon M5 (le chantier (a) étant déjà réalisé par D134).
+
+Work Log:
+- SITUATION RÉCUPÉRÉE : dépôt /home/z/my-project/triade, main ==
+  origin/main, arbre propre ; v0.6.0 passée (D133), Entrée 121 (passation
+  terminée après la mort du bac à sable), D134 (M5-a empreintes par build,
+  registre 12 consignations, verifier VERT 10 PDF / 0 refus) — TOUT
+  poussé ; sceau_I.py verifier : 10 arbres VERTS CODE 0 (base intacte)
+- PROJET FILS — LES QUATRE DOCUMENTS (/home/z/my-project/coffre-fort/) :
+  README.md (charte : les QUATRE domaines de l'analyse fondatrice CITÉS
+  intégralement — journalisme/Dead Man's Switch, finance haute sécurité,
+  défense/infrastructures critiques, héritage numérique ; héritage
+  mobilisable comme FAITS ; frontières : rien n'est forké, aucune clé,
+  nom et licence = arbitrage M0), docs/PLAN_MILESTONES.md (M0-M6 du fils :
+  acte fondateur / détachement / profils / commutateur d'homme mort /
+  succession post-mortem / durcissement / passation — PROPOSITION,
+  l'arbitrage au développeur), REPRISE_PROJET.md (auto-suffisant :
+  condition d'ouverture = UN MESSAGE du développeur), docs/JOURNAL_TRAVAIL
+  (Entrée 0) + .gitignore (.gdrive/.keys/*.log) — commit initial 8f52851
+- PROJET FILS — GITHUB : repo alexisfrlopez-debug/coffre-fort CRÉÉ par
+  API (visibilité miroir du père : private ; jeton extrait du remote SANS
+  affichage), push 8f52851 + 67757dc (main == origin/main)
+- PROJET FILS — DRIVE : dossier « Coffre-Fort » CRÉÉ FRÈRE du dossier
+  « Triade » (parent 1SByvY55…, id 1YP3Y8n3… via scripts/
+  creer_dossier_drive_coffre.py) ; scripts/drive_sync.py du fils (adapté :
+  racine propre, coffre-fort-sauvegarde-git + bundle + REPRISE) ;
+  .gdrive/ copié (jeton relais, gitignoré) ; hook post-commit INSTALLÉ
+  (git-hooks/ suivi + .git/hooks/) — le commit 67757dc a porté la PREMIÈRE
+  synchro (hook rc=0), re-run idempotent : 8 inchangés, 0 erreur
+- M5 (b) — L'AUTORITÉ DE TEST LOCALE (m5/autorite/) : fixtures générées
+  au labo (regenerer_fixtures.sh, OpenSSL 3.5.7 — -not_before/-not_after
+  pour l'expirée ; 4 chaînes JUGÉES à la sortie ; empreintes sha256
+  consignées ; clés de TEST jetables) ; autorite_test.py (stdlib pure :
+  4 modes, REFUS NOMMÉS MODE-INCONNU/FIXTURE-ABSENTE/FIXTURE-ILLISIBLE/
+  JOURNAL-INDICIBLE/PORT-INDISPONIBLE, journal SUR LE DISQUE — poignée
+  refusée NOMMÉE, arrêt propre arret-apres/arret-apres-secondes, la
+  poignée refusée ne COMPTE PAS, page STABLE, close_notify borné 2 s)
+- M5 (b) — FALSIFIABILITÉ : test_autorite.py 13 PASS / 0 ÉCHEC (C0
+  fixtures+OpenSSL ; C1 valide 200+marqueur+4 lignes+journal ; C2 corps
+  stable ; C3 autonome rejet+poignée nommée+SURVIE+comptes ; C4 autre-
+  hôte ; C5 expirée ; C6-C9 les 4 refus VIVANTS ; C10 POST 405 ; C11
+  juge croisé CURL 200/code 60 ; C12 arrêt délai 2,1 s) — deux leçons :
+  s_client rc=1 sur EOF abrupte → close_notify SERVEUR + juge passé à
+  CURL (le client M3 du terrain) ; l'en-tête Date fait échouer la
+  comparaison naïve → le contrôle compare le CORPS (le Date RESTE : il
+  est une preuve de run, modèle 17-H)
+- M5 (b) — LE KIT VM ÉTAPE 1 (m5/vm/) : scenario-m5b.wsb (Windows
+  Sandbox, RÉSEAU COUPÉ, kit RO C:\kit + preuves RW C:\preuves) ;
+  scenario-m5b.ps1 (hosts + racine certutil + empreintes + RUN A valide
+  [200+marqueur+tunnel chiffre etabli] + RUN B autonome [502 « Certificat
+  rejete » 34 octets EXACTS + certificat rejete + poignée refusee] DANS
+  LE MÊME SCÉNARIO + quit code 0 + TÉMOIN SUR LE DISQUE) ; client-m5b.ps1
+  (héritier direct de terrain_m4.ps1) ; LISEZMOI-terrain-m5b.txt (prépa
+  hôte 10 min, python EMBARQUÉ, mode dégradé nommé + nettoyage, risques
+  consignés : PowerShell sans parseur au labo, révocation Schannel
+  hors-ligne OUVERTE) — le proxy lancé par cmd /c à redirection NATIVE
+  (la version à événements PowerShell ÉCARTÉE : portée $Preuves vide
+  dans les handlers d'événements) ; .ps1 convertis en CRLF (assertif)
+- M5 (b) — LE DESIGN DU FLUX NAVIGATEUR (m5/I/README.md) : le constat
+  terrain.17 tient (aucun navigateur ne parle la forme absolue https:// ;
+  https:// = CONNECT+chiffrement pair-à-pair, http:// = forme absolue du
+  chemin M3 scellé) → ARBITRAGE : RELEVEMENT http→https AMONT RETENU
+  (le proxy re-chiffre vers l'origine par le tunnel M4 TEL QUEL), MITM/
+  CONNECT REJETÉ (exigerait un domaine AcceptSecurityContext entier) ;
+  intentions écrites-avant-code : http-08:R3 (verdict « à relever »,
+  politique armée SEULEMENT — sinon R2 octet pour octet, T2 reste vert),
+  http-10:R3 (routage par LE MÊME chemin Q2' + LA LIGNE DE FLUX — zéro
+  secret), http-12:R2 (--relever-https, argument inconnu = REFUS NOMMÉ
+  au démarrage — graine de la CLI M5) ; question ouverte CONSIGNÉE
+  (ligne de flux : bloc neuf vs console http-11)
+- CONSIGNATION : DECISIONS.md +D135 (projet fils) +D136 (M5-b ouvert) ;
+  JOURNAL_TRAVAIL.md +Entrées 123 (fondation du fils) et 124 (M5-b) —
+  insérées AVANT le marqueur m5a (la règle du marqueur) ; PLAN_MILESTONES
+  (b) → EN COURS D136 + section « projet fils » ; REPRISE_PROJET.md :
+  bloc DERNIÈRES ÉVOLUTIONS 31/10 (v0.6.0, M4 franchi, M5 a/b, projet
+  fils) + date ; le paragraphe État général marqué HISTORIQUE (arrêté à
+  D82 — dette honnête, le journal fait foi)
+- FRONTIÈRES : proxy 0.5.0 scellé INTACT (sha256 b9264e0b…, 28 160 o) ;
+  AUCUNE notation touchée ; sceau non touché (m5/ + docs/ hors v06/I/) ;
+  aucune clé réelle (fixtures de test jetables) ; le dépôt du fils ne
+  contient AUCUN code forké
+- SUIITE : build_pdf.sh (DECISIONS/PLAN sont sources du PDF formel — le
+  build consignera lui-même), verifier sceau+empreintes, commit, push,
+  hook D130 (kit + miroir) — TERRAIN : kit m5b (LISEZMOI-terrain-m5b),
+  carte du sachet, machine froide, DÉTRUIRE CF2, git pull → modules
+
+Stage Summary:
+- D135 livré : le projet fils coffre-fort FONDÉ (repo GitHub privé poussé,
+  dossier Drive frère synchronisé par son propre hook, 4 documents, Entrée
+  0) — développement différé sur message du développeur
+- D136 livré : M5 (b) OUVERT — autorité de test locale (4 modes, refus
+  nommés, 13/13 au labo, juge croisé curl) + kit VM étape 1 (réseau coupé,
+  deux runs dans le même scénario, témoin D99) + arbitrage du flux
+  navigateur (relevement http→https amont, R3 écrites-avant-code) ; la
+  notation R3 attend le verdict terrain de l'étape 1

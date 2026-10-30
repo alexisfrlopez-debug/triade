@@ -231,10 +231,27 @@ la dépendance — (a) arme la preuve dont (b) et (c) ont besoin pour être audi
 | Chantier | Contenu | Critère de sortie mesurable |
 |---|---|---|
 | (a) Empreintes par build actives — **RÉALISÉ (D134, 31/10)** | chaque build consigne l'empreinte de son artefact au tableau de bord et au journal de travail ; la comparaison inter-build devient un contrôle automatique | tout artefact livré porte son empreinte CONSIGNÉE par le build qui l'a produit ; une divergence inter-build est un refus nommé — CONSTATÉ : registre rattrapé des dix PDF livrés, build_livre.sh né, deux consignations PAR LE BUILD, seize contrôles de falsifiabilité, refus nommés vivants |
-| (b) Interception en VM isolée | le proxy transparent M3 porte le tunnel M4 au scénario réel complet : navigateur, VM isolée, autorité de test locale | un flux navigateur intercepté de bout en bout dans la VM (journal + témoin sur disque, leçon D99) ; échec propre sur certificat invalide constaté dans LE MÊME run |
+| (b) Interception en VM isolée — **EN COURS (D136, 31/10)** | le proxy transparent M3 porte le tunnel M4 au scénario réel complet : navigateur, VM isolée, autorité de test locale | un flux navigateur intercepté de bout en bout dans la VM (journal + témoin sur disque, leçon D99) ; échec propre sur certificat invalide constaté dans LE MÊME run — OUVERT : l'AUTORITÉ DE TEST LOCALE livrée et prouvée au labo (m5/autorite/, 13 contrôles, juge croisé curl), le kit VM ÉTAPE 1 livré au terrain (critère M4 rejoué en VM isolée réseau coupé, sans navigateur encore), le flux navigateur arbitré (relevement http→https amont, révisions R3 écrites-avant-code — m5/I/README.md), la notation attend le verdict terrain de l'étape 1 |
 | (c) Patch à chaud du journal en production | l'écriture vivante du superviseur terrain sous patch, retour arrière prêt | patch appliqué pendant le trafic, journal cohérent, rollback démontré, zéro régression (suite de conformité verte) |
 
 Conditions transverses inchangées : oracle vert, suite de conformité verte,
 tableau de bord conforme, carte signée — et, depuis le sceau, couche I signée
 à chaque build. La discipline du terrain demeure la règle : l'évidence avant
 le correctif, chaque run rapporte ses propres preuves.
+
+## Le projet fils COFFRE-FORT (fondé D135, 31/10/2026 — développement différé)
+
+Le coffre fort dispose désormais de son PROPRE dépôt
+(github.com/alexisfrlopez-debug/coffre-fort), de son PROPRE dossier Drive
+(« Coffre-Fort », frère du dossier « Triade »), de son PROPRE plan des jalons
+(M0-M6 : acte fondateur, détachement, profils d'application, commutateur
+d'homme mort, succession post-mortem, durcissement par domaine, passation
+v1.0) et d'instructions de reprise auto-suffisantes — l'analyse fondatrice du
+développeur (journalisme et lanceurs d'alerte, finance de haute sécurité,
+défense et infrastructures critiques, héritage numérique) y est citée
+integralement. RIEN du code TRIADE n'y est forké : le chantier s'ouvrira sur
+UN MESSAGE du développeur, au bouclage de TRIADE. Le père continue sa route
+sans ralentir — la fondation du fils n'emprunte rien au jalon M5 ni aux
+suivants ; toute dépendance vivante entre les deux dépôts serait un défaut
+à consigner. Le plan détaillé vit au FILS (docs/PLAN_MILESTONES.md du dépôt
+coffre-fort) ; la fondation est consignée D135 / Entrée 123 du présent dépôt.
