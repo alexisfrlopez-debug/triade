@@ -23,7 +23,11 @@
 (D104 — run 17-H : tunnel chiffré établi et échec propre sur certificat
 invalide sur machine réelle ; balise finale **`0.5.0`** scellée, arbre
 `m4/I` signé sous le sceau de l'Intention). **Jalon M5 ouvert le
-31 octobre 2026** (D133 — programme « Outil complet » ci-dessous). En parallèle (D34, anticipation
+31 octobre 2026** (D133 — programme « Outil complet » ci-dessous) ; chantier
+**(a) empreintes par build RÉALISÉ le 31 octobre 2026** (D134 — registre
+docs/TABLEAU_BORD.md consigné PAR LES BUILDS, contrôle automatique
+`scripts/empreintes_build.py verifier` avec refus nommés, recoupement des 15
+modules d'ANNEXE A par `modules`). En parallèle (D34, anticipation
 > restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir,
 > `m6/`), échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de
 > nommage, les jalons M6/M7 du plan restent inchangés). Composant transversal ajouté
@@ -226,7 +230,7 @@ la dépendance — (a) arme la preuve dont (b) et (c) ont besoin pour être audi
 
 | Chantier | Contenu | Critère de sortie mesurable |
 |---|---|---|
-| (a) Empreintes par build actives | chaque build consigne l'empreinte de son artefact au tableau de bord et au journal de travail ; la comparaison inter-build devient un contrôle automatique | tout artefact livré porte son empreinte CONSIGNÉE par le build qui l'a produit ; une divergence inter-build est un refus nommé |
+| (a) Empreintes par build actives — **RÉALISÉ (D134, 31/10)** | chaque build consigne l'empreinte de son artefact au tableau de bord et au journal de travail ; la comparaison inter-build devient un contrôle automatique | tout artefact livré porte son empreinte CONSIGNÉE par le build qui l'a produit ; une divergence inter-build est un refus nommé — CONSTATÉ : registre rattrapé des dix PDF livrés, build_livre.sh né, deux consignations PAR LE BUILD, seize contrôles de falsifiabilité, refus nommés vivants |
 | (b) Interception en VM isolée | le proxy transparent M3 porte le tunnel M4 au scénario réel complet : navigateur, VM isolée, autorité de test locale | un flux navigateur intercepté de bout en bout dans la VM (journal + témoin sur disque, leçon D99) ; échec propre sur certificat invalide constaté dans LE MÊME run |
 | (c) Patch à chaud du journal en production | l'écriture vivante du superviseur terrain sous patch, retour arrière prêt | patch appliqué pendant le trafic, journal cohérent, rollback démontré, zéro régression (suite de conformité verte) |
 

@@ -4,13 +4,23 @@
 
 Miroir de spec_v060/merge_cover.py : normalisation A4 stricte de la couverture
 et métadonnées posées au writer.
+
+D134 — le bloc de constantes (HERE/COVER/BODY/OUT), perdu à la consignation
+de 7c9a09c, est rétabli : le script redevient exécutable depuis la racine,
+condition de la chaîne build_livre.sh (M5-a).
 """
+import os
 from pypdf import PdfReader, PdfWriter
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+COVER = os.path.join(HERE, "cover.pdf")
+BODY = os.path.join(HERE, "main.pdf")
+OUT = os.path.join(HERE, "final.pdf")
 
 A4_W, A4_H = 595.28, 841.89
 
 writer = PdfWriter()
-couverture = PdfReader("cover.pdf").pages[0]
+couverture = PdfReader(COVER).pages[0]
 couverture.scale_to(A4_W, A4_H)
 writer.add_page(couverture)
 for page in PdfReader(BODY).pages:

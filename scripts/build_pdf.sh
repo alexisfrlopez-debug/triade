@@ -111,4 +111,18 @@ if [ -d "$BASE/download" ]; then
   cp "$FINAL_PDF" "$BASE/download/" || true
 fi
 echo "$CURRENT" > "$STAMP"
-echo "[pdf] PDF formel v0.6.0 régénéré -> $FINAL_PDF"
+
+# 5bis) M5 (a), D134 — le build CONSIGNE LUI-MÊME l'empreinte de son artefact
+#       (sha256 + md5 + taille) au tableau de bord et au journal de travail :
+#       scripts/empreintes_build.py consigner. La comparaison inter-build
+#       devient un contrôle automatique (empreintes_build.py verifier) et une
+#       divergence est un refus nommé.
+if [ -f scripts/empreintes_build.py ]; then
+  python3 scripts/empreintes_build.py consigner \
+    --artefact "$FINAL_PDF" --build "build_pdf.sh (chaîne spec_v060)" \
+    --stamp-file "$STAMP" || \
+    echo "[pdf] AVERTISSEMENT : consignation de l'empreinte impossible (non bloquant)"
+else
+  echo "[pdf] AVERTISSEMENT : scripts/empreintes_build.py absent (M5-a non porté)"
+fi
+echo "[pdf] PDF formel v0.6.0 régénéré -> $FINAL_PDF (empreinte consignée)"
