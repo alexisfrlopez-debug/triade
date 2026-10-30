@@ -110,6 +110,17 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       DÉSORMAIS à la racine du dépôt git (un clone frais les porte : plus
       besoin du kit du Drive pour lancer le GUI) — ils cherchent
       v06/ceremonie_gui.py d'abord, puis toute copie posée à côté ;
+    - D119 — LE DOSSIER NAÎT AVEC LA CLÉ (rapport de cérémonie du terrain
+      v1.8) : « générer la clé » et « signer la remise » CRÉENT le dossier
+      de cérémonie s'il n'existe pas encore — avant, SEULE la copie de la
+      remise (D118) le créait : la clé mourait en Errno 2 tant qu'on
+      n'avait pas lancé « Préparer » une première fois (la preuve : le
+      terrain devait relancer « générer » après « Préparer ») ; l'export
+      de la feuille CF2 suit la même loi, refus NOMMÉ si le dossier est
+      impossible (rien n'est écrit) ; au passage, l'écriture atomique du
+      coffre CF2 devient Windows-safe (fsync de répertoire POSIX-seul —
+      le terrain voyait « CF2 — migrer » mourir en PermissionError sur
+      .keys/, corrigé dans v06/coffre_cf2.py) ;
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -162,7 +173,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.8 (D118)"   # page unique + dossier de cérémonie + attachement unique
+VERSION_GUI = "ceremonie-GUI v1.9 (D119)"   # le dossier de cérémonie naît AVEC la clé (terrain v1.8 : Errno 2) + feuille CF2
 
 
 # ===========================================================================
@@ -497,6 +508,27 @@ def _lire_lignes_a_signer(chemin):
         raise ErreurCeremonie(f"{chemin} vide — rien à signer")
     return entrees
 
+
+def _assurer_dossier_de_sortie(chemin, quoi):
+    """D119 — le dossier qui doit PORTER le fichier de sortie existe AVANT
+    l'écriture. La preuve du défaut venait du rapport de cérémonie du
+    terrain (v1.8) : « générer la clé » mourait en Errno 2 sur
+    <parent du dépôt>\\ceremonie-triade\\cle-I-privee.txt parce que SEULE
+    la copie de la remise (D118) créait le dossier — la clé devait
+    attendre un « Préparer » préalable pour y vivre. Désormais le dossier
+    naît avec le PREMIER fichier de cérémonie qui le désigne ; échec NOMMÉ
+    si la création est impossible (rien n'est écrit, fail-closed)."""
+    dossier = os.path.dirname(os.path.abspath(chemin))
+    if os.path.isdir(dossier):
+        return
+    try:
+        os.makedirs(dossier, exist_ok=True)
+    except OSError as exc:
+        raise ErreurCeremonie(
+            f"impossible de créer le dossier de {quoi} : {dossier} ({exc}) "
+            "— vérifiez le dossier de cérémonie choisi")
+
+
 def hl_generer(chemin_privee, chemin_publique):
     """Génère la clé I (première cérémonie). Fail-closed : autotest d'abord.
 
@@ -508,6 +540,8 @@ def hl_generer(chemin_privee, chemin_publique):
                               "(fail-closed, rien n'est écrit)")
     graine = os.urandom(32)
     publique = cle_publique_depuis_graine(graine)
+    _assurer_dossier_de_sortie(chemin_privee, "la clé privée")      # D119
+    _assurer_dossier_de_sortie(chemin_publique, "la clé publique")  # D119
     try:
         with open(chemin_privee, "w", encoding="utf-8") as f:
             f.write(
@@ -572,6 +606,7 @@ def hl_signer(chemin_a_signer, chemin_privee, chemin_sortie,
                 f"signature auto-vérification invalide pour {arbre} — "
                 f"RIEN n'est écrit (cérémonie douteuse, spec § 4)")
         lignes.append(f"{arbre} {balise} {signature.hex()}")
+    _assurer_dossier_de_sortie(chemin_sortie, "les signatures")     # D119
     try:
         with open(chemin_sortie, "w", encoding="utf-8") as f:
             f.write("\n".join(lignes) + "\n")
@@ -1532,6 +1567,7 @@ def exporter_feuille(chemin_config, chemin_sortie, numeros=None):
     if manquantes:
         raise ErreurCeremonie("fragments absents des gardes : "
                               + ", ".join(manquantes))
+    _assurer_dossier_de_sortie(chemin_sortie, "la feuille")         # D119
     try:
         with open(chemin_sortie, "w", encoding="utf-8") as f:
             f.write(
@@ -4163,6 +4199,43 @@ def selftest():
              and "dossier de cérémonie" in FIL_HINTS[1]
              and "dossier de cérémonie" in FIL_HINTS[3]
              and "ci-contre" in FIL_HINTS[2].lower())
+    # D119 : le dossier de cérémonie naît AVEC la clé — le terrain v1.8
+    # devait lancer « Préparer » d'abord pour que le dossier existe
+    with tempfile.TemporaryDirectory(prefix="ceremonie-selftest-d119-") as tmp:
+        dossier = os.path.join(tmp, "ceremonie-triade")   # ABSENT au départ
+        privee = os.path.join(dossier, "cle-I-privee.txt")
+        publique = os.path.join(dossier, "cle-publique-I.txt")
+        try:
+            hl_generer(privee, publique)
+            controle("d119-generer-cree-le-dossier-manquant",
+                     os.path.isdir(dossier) and os.path.isfile(privee)
+                     and os.path.isfile(publique))
+        except ErreurCeremonie as exc:
+            controle("d119-generer-cree-le-dossier-manquant", False,
+                     str(exc))
+        remise = os.path.join(dossier, "a-signer.txt")
+        with open(remise, "w", encoding="utf-8") as f:
+            f.write("m0/test ALPHA " + secrets.token_hex(32) + "\n"
+                    "m4/test BETA " + secrets.token_hex(32) + "\n")
+        sortie = os.path.join(dossier, "sous-dossier", "signatures-I.txt")
+        try:
+            hl_signer(remise, privee, sortie)
+            controle("d119-signer-cree-le-dossier-manquant",
+                     os.path.isfile(sortie))
+        except ErreurCeremonie as exc:
+            controle("d119-signer-cree-le-dossier-manquant", False,
+                     str(exc))
+        bloqueur = os.path.join(tmp, "un-fichier.txt")
+        with open(bloqueur, "w", encoding="utf-8") as f:
+            f.write("bloqueur")
+        try:
+            _assurer_dossier_de_sortie(
+                os.path.join(bloqueur, "sous", "cle.txt"), "la clé privée")
+            controle("d119-dossier-impossible-refus-nomme", False,
+                     "aucun refus levé")
+        except ErreurCeremonie as exc:
+            controle("d119-dossier-impossible-refus-nomme",
+                     "impossible de créer le dossier" in str(exc), str(exc))
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs

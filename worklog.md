@@ -751,3 +751,58 @@ Stage Summary:
 - Suite : cérémonie CF2 du développeur (le GUI est prêt : scénario repo
   git → cloner → migrer → TROIS fragments → sentinelle), puis verdict à
   froid CF2 par l'assistant ; D57 ; moteur sentinel Windows SACL/ETW
+
+---
+Task ID: 31
+Agent: Z.ai (agent principal)
+Task: RAPPORT DE CÉRÉMONIE du terrain v1.8 (D118, bouton « Envoyer le
+rapport ») — deux échecs nommés (« générer la clé » Errno 2, « signer »
+par contagie) et un crash (« CF2 — migrer » PermissionError errno 13 sur
+triade\.keys\) : D119 corrige les trois, le verdict CF2 à froid repasse,
+push.
+
+Work Log:
+- DIAGNOSTIC depuis le rapport (boîte noire complète, horodatée) : (1)
+  « générer » écrivait la clé SANS créer le dossier de cérémonie —
+  SEULE la copie de la remise D118 le créait (preuve : le re-run du
+  terrain après « Préparer » a tout fait passer ; la borne D118 « le
+  dossier naîtra à la première écriture » était écrite mais pas tenue) ;
+  (2) « signer » échouait par contagie (clé absente) ; (3) « migrer »
+  mourait sur os.open(dossier, O_RDONLY) dans _ecrire_atomique — légal
+  POSIX, REFUSÉ par Windows ; crash PROPRE (conteneur = PREMIER écrit
+  de migrer : aucun fragment ni config posés, reprise = re-lancement) ;
+  l'« ÉCHEC : ni config ni conteneur » du statut CF2 était l'état
+  NORMAL avant initialisation
+- CORRECTIFS : _assurer_dossier_de_sortie (hl_generer / hl_signer /
+  exporter_feuille — échec nommé « impossible de créer le dossier »,
+  RIEN n'est écrit) ; _fsync_repertoire POSIX-seul dans coffre_cf2.py
+  (DEUX sites : _ecrire_atomique + destruction des fragments) ;
+  VERSION_GUI v1.9 (D119)
+- PREUVES : selftest 18 PASS (+3 D119) ; test_ceremonie_gui.py
+  155 PASS / 0 ÉCHEC (T16 neuf contrôles, témoin t15 version rendu
+  ère-cohérent) ; test_cf2.py 46 PASS / 0 ÉCHEC (T6 : simulation
+  Windows FIDÈLE — os.open(dossier) → PermissionError 13) ;
+  test_sceau_I.py 50/50 ; sceau verifier CODE 0 (10 arbres VERTS) ;
+  VERDICT CF2 À FROID D119 (scripts/verdict_cf2_d119.py au bac à
+  sable) 14 PASS / 0 ÉCHEC : migrer CF1 → CF2 sous la sémantique
+  Windows EXACTE du terrain + statut + verifier VERT + etat-fragments
+  5/5 VIVANT + brûlage Windows → MORT + restauration TROIS copies →
+  VIVANT + verifier VERT (journal/PV/heartbeat de labo re-localisés —
+  discipline X8)
+- KIT : download/ceremonie_gui.py re-synchronisé (md5 == v06/),
+  LISEZMOI-ceremonie-GUI v1.9 (D119 consigné) ; consignation : JOURNAL
+  Entrée 105, DECISIONS D119, ce worklog ; push ciblé (aucun arbre
+  signé touché)
+- CONSIGNES TERRAIN : git pull dans le clone → relancer (lancer_ceremonie.bat
+  à la racine, ou copier v06/ceremonie_gui.py dans Cérémonie) → la clé
+  générée à 04:08:45 reste VALABLE (le dossier de cérémonie existe
+  désormais chez lui) → relancer « CF2 — migrer » (rien n'avait été
+  posé) → export de la feuille + TROIS copies hors-ligne + sentinelle
+
+Stage Summary:
+- D119 ACCOMPLI : le rapport de cérémonie du terrain a dénoncé deux
+  défauts invisibles au bac à sable Linux — corrigés et prouvés (155 +
+  46 + 50 PASS, verdict CF2 à froid 14 PASS, sceau CODE 0), poussés
+- Suite : cérémonie CF2 RÉELLE du développeur (migrer → TROIS copies
+  hors-ligne → sentinelle), puis verdict à froid du rapport v1.9 ;
+  moteur sentinel Windows SACL/ETW ; D57

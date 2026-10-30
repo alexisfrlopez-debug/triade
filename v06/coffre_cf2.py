@@ -16,6 +16,11 @@ mieux de Python ; aucun secret n'entre dans un journal, un PV ou une sortie.
 Le conteneur réel et les phrases réels ne sont JAMAIS touchés par les
 autocontrôles (répertoires temporaires uniquement — discipline D105).
 
+D119 (rapport de cérémonie du terrain v1.8) : le fsync de RÉPERTOIRE est
+POSIX-seul — Windows refuse os.open() sur un dossier (PermissionError
+errno 13 : « migrer » y mourait en écrivant .keys/coffre_cf2.bin) ;
+l'atomicité ne change pas (os.replace est atomique sur les deux familles).
+
 Usage (depuis triade/) :
   python3 v06/coffre_cf2.py init [--fragments N] [--seuil T]
        [--racine-gardes DIR] [--description-projet D]
@@ -405,6 +410,27 @@ def nouvelle_base(description: str = "") -> dict:
             "description": description, "projets": {}}
 
 
+def _fsync_repertoire(chemin: str) -> None:
+    """D119 — fsync du répertoire conteneur, POSIX SEUL : Windows refuse
+    os.open() sur un répertoire (PermissionError errno 13 — le rapport de
+    cérémonie du terrain v1.8 portait la preuve : « CF2 — migrer » mourait
+    en écrivant .keys/coffre_cf2.bin). L'atomicité ne dépend PAS de ce
+    fsync (os.replace est atomique sur les deux familles) : sous Windows
+    il est absent, et sous POSIX un répertoire impossible à ouvrir
+    n'abandonne pas une écriture déjà posée (la durabilité du dossier est
+    un mieux-disant, pas une garantie)."""
+    if os.name != "posix":
+        return
+    try:
+        rep = os.open(chemin, os.O_RDONLY)
+    except OSError:
+        return
+    try:
+        os.fsync(rep)
+    finally:
+        os.close(rep)
+
+
 def _ecrire_atomique(chemin: str, donnees: bytes) -> None:
     os.makedirs(os.path.dirname(chemin), exist_ok=True)
     tmp = chemin + ".tmp"
@@ -414,11 +440,7 @@ def _ecrire_atomique(chemin: str, donnees: bytes) -> None:
         os.fsync(f.fileno())
     os.chmod(tmp, 0o600)
     os.replace(tmp, chemin)
-    rep = os.open(os.path.dirname(chemin), os.O_RDONLY)
-    try:
-        os.fsync(rep)
-    finally:
-        os.close(rep)
+    _fsync_repertoire(os.path.dirname(chemin))
 
 
 # ---------------------------------------------------------------------------
@@ -607,11 +629,7 @@ def bruler(config: dict, declencheur: str) -> str:
                                     secrets.token_hex(16))
             os.rename(chemin, nom_alea)
             os.unlink(nom_alea)
-            rep = os.open(os.path.dirname(chemin), os.O_RDONLY)
-            try:
-                os.fsync(rep)
-            finally:
-                os.close(rep)
+            _fsync_repertoire(os.path.dirname(chemin))
             detruits += 1
             lignes_pv.append(f"DETRUIT : {chemin} ({taille} o, 3 passes, "
                              "tronqué, renommé, unlink, fsync rép.)")

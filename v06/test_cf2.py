@@ -30,6 +30,13 @@ les critères de sortie D86 un par un (spec v06/I/CF2/README.md § 13) :
       octet pour octet (atomicité D105 [11])
   T5  santé de la sentinelle : heart-beat frais en vie, MORT visible après
       décès (sante exit 1)
+  T6  D119 Windows : os.open() sur un dossier = PermissionError errno 13
+      (le crash du terrain v1.8 : « CF2 — migrer » mourait en écrivant
+      .keys/coffre_cf2.bin) — le fsync de répertoire est POSIX-seul
+      (sous 'nt' il ne touche JAMAIS os.open), l'écriture atomique SURVIT
+      à la simulation fidèle du refus Windows (contenu exact, pas de .tmp),
+      et sous POSIX un dossier impossible à ouvrir est toléré (le replace
+      est déjà fait — la durabilité du dossier est mieux-disante)
   X8  les coffres RÉELS ne sont pas touchés : md5 de .keys/coffre_fort.bin
       inchangé, aucun .keys/coffre_cf2.bin créé ; coffre réel ABSENT
       (clone frais, kit du Drive) : l'absence est un état NOMMÉ qui doit
@@ -551,6 +558,72 @@ def t5_sante():
 
 
 # ---------------------------------------------------------------------------
+# T6 — D119 : Windows refuse os.open() sur un dossier — l'écriture
+# atomique survit au crash du terrain v1.8 (« CF2 — migrer » mourait sur
+# .keys/, PermissionError errno 13 au rapport de cérémonie)
+# ---------------------------------------------------------------------------
+
+def t6_windows():
+    print("T6 — D119 : Windows refuse os.open(dossier), l'atome tient")
+    import tempfile
+    import unittest.mock as mock
+    vrai_open = os.open
+
+    def windows_open(chemin, flags, *a, **k):
+        # simulation FIDÈLE du terrain : un DOSSIER lève PermissionError 13
+        if os.path.isdir(chemin):
+            raise PermissionError(
+                13, "Permission denied (dossier — simulation Windows "
+                "D119)", chemin)
+        return vrai_open(chemin, flags, *a, **k)
+
+    with tempfile.TemporaryDirectory(prefix="cf2-t6-") as tmp:
+        # (1) sous 'nt', le fsync de dossier ne touche JAMAIS os.open
+        appels = []
+
+        def espion(chemin, flags, *a, **k):
+            if os.path.isdir(chemin):
+                appels.append(chemin)
+            return vrai_open(chemin, flags, *a, **k)
+
+        os.open = espion
+        try:
+            with mock.patch("os.name", "nt"):
+                C._fsync_repertoire(tmp)
+        finally:
+            os.open = vrai_open
+        verifie("nt-fsync-dossier-sans-os-open", not appels, str(appels))
+        # (2) le crash du terrain, reproduit : PermissionError 13 sur le
+        # dossier — _ecrire_atomique écrit quand même, contenu exact
+        cible = os.path.join(tmp, "sous-dossier", "coffre_cf2.bin")
+        donnees = secrets.token_bytes(64)
+        os.open = windows_open
+        try:
+            C._ecrire_atomique(cible, donnees)
+            crash = None
+        except PermissionError as exc:
+            crash = str(exc)
+        finally:
+            os.open = vrai_open
+        verifie("ecrire-atomique-survit-au-refus-windows",
+                crash is None and os.path.isfile(cible)
+                and open(cible, "rb").read() == donnees
+                and not os.path.exists(cible + ".tmp"), crash or "")
+        # (3) POSIX : répertoire impossible à ouvrir = toléré (le replace
+        # est déjà fait — la durabilité du dossier est mieux-disante)
+        os.open = windows_open
+        try:
+            C._fsync_repertoire(tmp)
+            leve = None
+        except PermissionError as exc:
+            leve = str(exc)
+        finally:
+            os.open = vrai_open
+        verifie("posix-ouverture-dossier-impossible-toleree",
+                leve is None, leve or "")
+
+
+# ---------------------------------------------------------------------------
 # X8 — les coffres réels ne sont JAMAIS touchés
 # ---------------------------------------------------------------------------
 
@@ -591,6 +664,7 @@ def main() -> int:
     f1_exfiltration()
     f2_atomicite()
     t5_sante()
+    t6_windows()
     x8_coffres_reels()
     empreinte_apres = _md5_si_present(chemin_reel)
     if empreinte_avant is None:

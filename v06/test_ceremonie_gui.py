@@ -89,6 +89,15 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        refus sont NOMMÉS (source absente) ; les gestes du fil ne
        référencent PLUS aucun « profil » (plus d'allers-retours par
        l'accueil) et nomment le dossier de cérémonie ;
+  T16  D119 — le dossier naît AVEC LA CLÉ (rapport du terrain v1.8 :
+       « générer » mourait en Errno 2 tant que « Préparer » n'avait pas
+       créé le dossier via la copie de la remise) : hl_generer et
+       hl_signer CRÉENT le dossier de sortie avant d'écrire (clé,
+       signatures, y compris un SOUS-dossier), l'interop historique
+       reste intacte (graine = une ligne de 64 hex), refus NOMMÉ si le
+       dossier est impossible (parent-fichier) et RIEN n'est écrit ;
+       exporter_feuille suit la même loi sur un mini-coffre de labo
+       (feuille écrite dans un dossier ABSENT) ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -769,9 +778,101 @@ def t15_fusion_d118(rep):
     verifie("t15-geste-cle-hors-aller-retour",
             "ci-contre" in gui.FIL_HINTS[2].lower())
 
-    # --- la version porte la fusion ------------------------------------
-    verifie("t15-version-d118", "D118" in gui.VERSION_GUI,
+    # --- la version porte la fusion (ère-cohérente : D118 ou après) ----
+    verifie("t15-version-d118-ou-posterieure",
+            any(f"D{d}" in gui.VERSION_GUI for d in (118, 119, 120)),
             gui.VERSION_GUI)
+
+
+# ---------------------------------------------------------------------------
+# T16 — D119 : le dossier de cérémonie NAÎT AVEC LA CLÉ (rapport du
+# terrain v1.8 : « générer » mourait en Errno 2 tant que « Préparer »
+# n'avait pas créé le dossier via la copie de la remise D118)
+# ---------------------------------------------------------------------------
+
+def t16_dossier_avec_la_cle(rep):
+    """T16 — D119 : hl_generer / hl_signer / exporter_feuille créent le
+    dossier de sortie AVANT d'écrire ; refus NOMMÉ si le dossier est
+    impossible (rien n'est écrit). Tout en laboratoire temporaire."""
+    print("T16 — D119 : le dossier de cérémonie naît avec la clé")
+    dossier = os.path.join(rep, "ceremonie-triade")      # ABSENT au départ
+    verifie("t16-dossier-absent-au-depart", not os.path.isdir(dossier))
+    privee = os.path.join(dossier, "cle-I-privee.txt")
+    publique = os.path.join(dossier, "cle-publique-I.txt")
+    gui.hl_generer(privee, publique)
+    verifie("t16-generer-cree-dossier-et-cle",
+            os.path.isdir(dossier) and os.path.isfile(privee)
+            and os.path.isfile(publique))
+    # l'interop historique est intacte : graine = UNE ligne de 64 hex
+    with open(privee, "r", encoding="utf-8") as f:
+        texte = f.read()
+    hexa = [l.strip() for l in texte.splitlines()
+            if l.strip() and not l.startswith("#")]
+    verifie("t16-cle-privee-format-interop",
+            len(hexa) == 1 and len(hexa[0]) == 64
+            and all(c in "0123456789abcdef" for c in hexa[0]))
+    # signer : sortie dans un SOUS-dossier ABSENT
+    remise = os.path.join(dossier, "a-signer.txt")
+    empreinte = secrets.token_hex(32)
+    with open(remise, "w", encoding="utf-8") as f:
+        f.write(f"m0/test ALPHA {empreinte}\nm4/test BETA {empreinte}\n")
+    sortie = os.path.join(dossier, "sous-dossier", "signatures-I.txt")
+    gui.hl_signer(remise, privee, sortie)
+    verifie("t16-signer-cree-le-sous-dossier", os.path.isfile(sortie))
+    ok, texte_v = gui.hl_verifier(remise, sortie, publique)
+    verifie("t16-signatures-verify-vertes", ok, texte_v)
+    # refus NOMMÉ : le parent est un FICHIER, le dossier est impossible
+    bloqueur = os.path.join(rep, "un-fichier.txt")
+    with open(bloqueur, "w", encoding="utf-8") as f:
+        f.write("bloqueur")
+    refus = None
+    try:
+        gui.hl_generer(os.path.join(bloqueur, "sous", "cle-I-privee.txt"),
+                       os.path.join(bloqueur, "sous", "cle-publique-I.txt"))
+    except gui.ErreurCeremonie as exc:
+        refus = str(exc)
+    verifie("t16-dossier-impossible-refus-nomme",
+            refus is not None
+            and "impossible de créer le dossier" in refus,
+            refus or "aucun refus levé")
+    # fail-closed : le refus n'écrit RIEN
+    verifie("t16-rien-ecrit-sur-refus",
+            not os.path.exists(os.path.join(bloqueur, "sous")))
+    # exporter_feuille (D119) : même loi — mini-coffre de LABORATOIRE, la
+    # feuille naît dans un dossier ABSENT (rien de réel n'est touché)
+    labo = os.path.join(rep, "labo-cf2-d119")
+    racine_gardes = os.path.join(labo, "gardes")
+    conteneur = os.path.join(labo, "coffre_cf2.bin")
+    m = bytearray(secrets.token_bytes(cf2.TAILLE_M))
+    sel = secrets.token_bytes(32)
+    try:
+        fragments = cf2.decouper(bytes(m), 5, 3)
+        clair = json.dumps(cf2.nouvelle_base("labo T16 D119"),
+                           ensure_ascii=False).encode("utf-8")
+        blob = cf2.construire_conteneur(clair, bytes(m), sel,
+                                        cf2._date_utc(), 3, 5)
+        cf2._ecrire_atomique(conteneur, blob)
+        sel_coffre = cf2._parser_entete(blob)["sel"].hex()
+        for x, frag in fragments:
+            garde = os.path.join(racine_gardes, f"g{x}")
+            os.makedirs(garde, exist_ok=True)
+            cf2._ecrire_atomique(
+                os.path.join(garde, f"fragment-{x}.cf2f"),
+                cf2.serialiser_fragment(x, frag, 3, 5, sel_coffre)
+                .encode("ascii"))
+        config = cf2.config_par_defaut(5, 3, racine_gardes, conteneur)
+        chemin_config = os.path.join(labo, "config_cf2.json")
+        cf2.ecrire_config(chemin_config, config)
+        feuille = os.path.join(rep, "dossier-feuille", "feuille.txt")
+        texte_feuille = gui.exporter_feuille(chemin_config, feuille)
+    finally:
+        cf2._effacer(m)
+    verifie("t16-feuille-cree-son-dossier-de-sortie",
+            os.path.isfile(feuille)
+            and "feuille exportée" in texte_feuille,
+            texte_feuille)
+    # la version porte l'ère D119
+    verifie("t16-version-d119", "D119" in gui.VERSION_GUI, gui.VERSION_GUI)
 
 
 def _ecrire(chemin, texte):
@@ -1192,7 +1293,8 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118) — dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119) — "
+          f"dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -1208,6 +1310,8 @@ def main() -> int:
         t14_scenarios_clone(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t15-") as rep:
         t15_fusion_d118(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t16-") as rep:
+        t16_dossier_avec_la_cle(rep)
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

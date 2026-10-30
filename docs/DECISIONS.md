@@ -3663,3 +3663,37 @@ dossier par défaut sur la maison ne survit qu'au cas du dépôt à la racine
 d'un disque ; les lanceurs Windows exigent py/python présents (le .bat
 met en pause sur échec pour lire la cause) ; --profil hors-ligne|depot
 reste accepté (compat D117) et ouvre la même page.
+
+## D119 — Le dossier de cérémonie naît avec la clé, et le fsync de répertoire est POSIX-seul (le terrain Windows fait loi)
+
+**Décision.** Deux correctifs du RAPPORT DE CÉRÉMONIE du terrain v1.8 :
+(1) TOUT fichier de cérémonie CRÉE son dossier de sortie s'il manque —
+_assurer_dossier_de_sortie précède l'écriture de la clé privée, de la
+clé publique, des signatures et de la feuille CF2 (la borne D118 « le
+dossier naîtra à la première écriture » devient VRAIE pour « Générer la
+clé », pas seulement pour « Préparer la remise » — le terrain l'a prouvé
+en Errno 2, puis en re-run réussi après « Préparer ») ; (2) le fsync de
+répertoire de l'écriture atomique (conteneur CF2, fragments,
+destruction) est POSIX-seul — Windows refuse os.open() sur un dossier
+(PermissionError errno 13, « CF2 — migrer » mourait en écrivant
+.keys/coffre_cf2.bin) : _fsync_repertoire retourne sous 'nt', et sous
+POSIX un dossier impossible à ouvrir n'abandonne pas une écriture déjà
+posée (os.replace est atomique sur les deux familles).
+
+**Frontières tenues.** Rien n'est écrit avant que le dossier soit
+possible (échec NOMMÉ « impossible de créer le dossier », fail-closed —
+le parent-fichier en est le témoin de test) ; l'atomicité ne dépend
+JAMAIS du fsync de répertoire (la durabilité du dossier reste un
+mieux-disant POSIX, pas une garantie) ; la discipline « aucun coffre
+réel touché par les autocontrôles » tient (T6 et le verdict à froid D119
+vivent en temporaire, journal/PV/heartbeat de labo re-localisés) ; la
+simulation Windows est FIDÈLE (os.open(dossier) → PermissionError 13 ET
+os.name='nt'), pas une approximation ; le crash du terrain était PROPRE
+(conteneur = premier écrit de migrer : aucun fragment posé, la reprise
+est un re-lancement).
+
+**Bornes.** La simulation ne remplace pas le terrain Windows réel (le
+rapport v1.9 tranchera) ; le fsync de dossier est ABSENT sous Windows
+(aucune émulation) ; après tout changement du GUI, le kit du Drive doit
+être re-synchronisé (md5) et le clone du terrain mis à jour (git pull)
+avant toute cérémonie.

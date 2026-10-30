@@ -7324,3 +7324,53 @@ ceremonie_gui.py et son test vivent hors v06/I), test_sceau_I.py 50/50,
 test_cf2.py 43/43. Kit synchronisé : download/ceremonie_gui.py ==
 v06/ceremonie_gui.py (md5, garde drive_ceremonie.py), LISEZMOI v1.8 (12
 remplacements comptés), lanceurs copiés.
+
+## Entrée 105 — D119 (30/10) : le dossier de cérémonie naît AVEC la clé et l'écriture atomique devient Windows-safe — le correctif du RAPPORT DE CÉRÉMONIE du terrain v1.8 (deux échecs nommés, un crash nommé, rien de perdu)
+
+Le terrain a remis son premier rapport de cérémonie v1.8 (bouton
+« Envoyer le rapport », D113) : la fusion des profils VIT (un seul fil —
+clone D117 → clé → preparer + copie D118 → signer → vérifier TOUT VERT),
+la boîte noire a tout capté — et le rapport DÉNONCE deux défauts que le
+bac à sable Linux ne pouvait pas voir.
+
+Un : « Hors-ligne — générer la clé I » mourait en Errno 2 sur
+…GitHub\ceremonie-triade\cle-I-privee.txt — SEULE la copie de la remise
+(D118) créait le dossier de cérémonie : la clé devait attendre un
+« Préparer » préalable pour y vivre (preuve vive : le terrain a relancé
+« générer » après « Préparer » et tout est passé ; « signer » avait
+échoué par contagie — clé absente). La borne D118 « le dossier naîtra à
+la première écriture » était ÉCRITE mais pas tenue par le code. D119 la
+tient : _assurer_dossier_de_sortie précède l'écriture de la clé privée,
+de la clé publique, des signatures et de la feuille CF2 (échec NOMMÉ si
+le dossier est impossible — parent-fichier, par exemple — et RIEN
+n'est écrit).
+
+Deux : « CF2 — migrer » mourait en PermissionError errno 13 sur
+triade\.keys\ — _ecrire_atomique faisait os.open(dossier, O_RDONLY)
+pour le fsync du répertoire : légal sous POSIX, REFUSÉ par Windows (un
+dossier ne s'ouvre pas comme un fichier). Le crash est PROPRE : le
+conteneur CF2 est le PREMIER écrit de migrer — aucun fragment ni config
+n'ont été posés chez le terrain, la reprise est un re-lancement (et
+l'« ÉCHEC : ni config ni conteneur » du statut CF2 était l'état NORMAL
+avant initialisation, pas une panne).
+
+**Preuves.** selftest embarqué 18 PASS (trois contrôles D119 :
+génération dans le dossier manquant, signatures dans un sous-dossier
+manquant, refus nommé parent-fichier) ; test_ceremonie_gui.py
+155 PASS / 0 ÉCHEC (T16, neuf contrôles : dossier + clé créés, format
+interop intact — graine = une ligne de 64 hex —, sous-dossier des
+signatures, vérification verte, refus nommé + RIEN écrit, feuille CF2
+née dans un dossier absent sur mini-coffre de labo, version D119) ;
+test_cf2.py 46 PASS / 0 ÉCHEC (T6 : simulation Windows FIDÈLE —
+os.open(dossier) → PermissionError errno 13 — le fsync 'nt' ne touche
+JAMAIS os.open, _ecrire_atomique survit au refus, contenu exact, pas de
+.tmp) ; VERDICT CF2 À FROID D119 (scripts/verdict_cf2_d119.py, bac à
+sable) : 14 PASS / 0 ÉCHEC — migrer CF1 → CF2 sous la sémantique
+Windows EXACTE du terrain, puis statut, verifier VERT, etat-fragments
+5/5 VIVANT, brûlage sous la même sémantique → MORT, restauration de
+TROIS copies hors-ligne → VIVANT, verifier VERT (journal/PV/heartbeat
+de labo re-localisés en temporaire — discipline X8) ; non-régression :
+sceau_I.py verifier CODE 0 (10 arbres VERTS — D119 ne touche AUCUN
+arbre signé), test_sceau_I.py 50/50. Kit synchronisé :
+download/ceremonie_gui.py == v06/ceremonie_gui.py (md5),
+LISEZMOI-ceremonie-GUI v1.9.
