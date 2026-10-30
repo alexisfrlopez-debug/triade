@@ -3762,3 +3762,89 @@ informationnelle), ACL et brûlage ; sous Windows la porte n'exige rien
 tant que le moteur n'existe pas (borne d'ère, pas de conception) ; la
 sentinelle demeure TUABLE avant la lecture (borne D86) — mais sa mort
 est maintenant BLOQUANTE au déverrouillage, plus seulement visible.
+
+## D121 — La serrure à triple scellement et le cycle en deux actes : CF3 remplace le démon par un piège hors machine, et borne la session (les deux demandes du terrain, servies ensemble)
+
+**Décision.** Les deux demandes du terrain : (1) « plutôt qu'une sentinelle
+externe, une serrure du coffre piégée — un système à 3 éléments : clé
+utilisateur qui ne change pas, serrure du coffre métamorphe basée sur un
+hash du projet, et piège de la serrure, métamorphe aussi ; pas de 2ème
+moitié (piège), tentative de déverrouillage impossible ; mauvaise clé ou
+problème sur une des 2 moitiés : destruction du coffre ; ça évite de faire
+tourner une sentinelle en permanence alors qu'elle ne sert qu'au
+déverrouillage » ; (2) « une vulnérabilité réside durant le temps où la
+session est ouverte — il faudrait deux déverrouillages : un à l'ouverture
+pour la modification, un à la fermeture pour la validation ». D121 les
+instancie en CF3 (spec docs/I/CF3/README.md, R2 écrite-avant-code ;
+prototype v06/coffre_cf3.py, suite v06/test_coffre_cf3.py) en durcissant
+TROIS pièges de l'intuition d'origine, consignés : un hash de projet est
+PUBLIC (il LIE, il ne protège pas — le hash n'entre que comme contexte
+HKDF, l'entropie vient des trois éléments) ; le piège ne doit PAS être
+dérivable de la serrure (deux aléas INDÉPENDANTS — sinon le voleur de
+l'en-tête calcule le piège) ; détruire sur mauvaise clé est un DoS OFFERT
+(la phrase erronée est BÉNIGNE — réessai à délai croissant — seule la
+falsification PROUVÉE détruit). La serrure : K_user = Argon2id(phrase)
+INVARIANT à travers les époques (la demande), S_serrure (moitié machine,
+aléa frais par époque, en-tête clair), S_piège (moitié MÉDIA SÉPARÉ, aléa
+frais par époque) ; KEK = HKDF des trois, info = époque ‖ H_projet (le
+liant) ; champ verif dérivé de K_user ‖ V_piège (publique, portée par le
+média) : le voleur de la machine seule ne peut même pas TESTER des
+phrases hors ligne. La sentinelle D120 devient INSTANTANÉE : réalisée par
+INVOCATION (vérifications in-process à chaque acte, ordre normatif spec
+§ 5) au lieu d'un démon résident — le démon était usurpable (faux
+heart-beat, borne D120), le piège ne dépend d'AUCUN état de machine
+falsifiable : sine qua non réalisée sans démon (le déverrouillage est
+IMPOSSIBLE, pas seulement refusé, sans la seconde moitié). Le cycle en
+deux actes borne la fenêtre de session : ACTE I (phrase + piège →
+brouillon chiffré sous clé de session éphémère ; les clés maîtresses
+meurent ; le canonique n'est JAMAIS réécrit), SESSION (une panne
+auto-nettoie : K_session morte = brouillon déchet indéchiffrable),
+ACTE II (phrase RETAPÉE + média REBRANCHÉ ; clé de clôture LIÉE AU
+CONTENU ; moitiés fraîches, époque + 1 ; re-lecture À FROID avant le
+remplacement atomique — l'ordre des écritures est crash-cohérent, toute
+panne laisse un état rejouable).
+
+**Frontières tenues.** La course de clôture est fermée par une parade
+DOUBLE trouvée en écrivant la suite de falsifiabilité : la clé de
+clôture est dérivée AVEC H_final (un KEK volé ne scelle que l'état vu) ET
+l'ÉTIQUETTE est vérifiée à l'ouverture (le clair déchiffré doit hacher
+vers le H_projet de l'en-tête — le faux conteneur « étiquette honnête,
+contenu substitué » est une falsification PROUVÉE : destruction locale) ;
+la destruction ne touche QUE la machine (conteneur, staging, brouillon —
+JAMAIS le média du piège, JAMAIS les fragments CF2 ni les copies
+hors-ligne : coexistence spec § 12, la destruction reste survivable) ; le
+tag du piège invalide est refusé SANS destruction (le média est hors
+limite de confiance — corruption bénigne possible, la destruction attend
+la preuve cryptographique) ; l'anti-retour-en-arrière a TROIS miroirs
+(journal local — contrôle conteneur ≥ miroir ; carte papier du sachet —
+checksum 8 hex recoupé à froid ; journal Git poussé — --epoque-attendue) ;
+la discipline RAM est tenue (bytearray + _effacer, aucun secret dans
+journal/PV/sorties) ; l'écriture atomique D119 est RÉUTILISÉE depuis
+coffre_cf2 (source unique — CF3 ne la duplique pas) ; aucun conteneur ni
+phrase réels touchés (répertoires temporaires, D105) ; la spec vit sous
+docs/I/CF3/ (hors périmètre du sceau — aucune divergence : verifier CODE 0
+après écriture) et entrera dans l'arbre scellé v06/I/CF3/ à la prochaine
+re-cérémonie (précédent erratum § 12) ; la CLI ouvrir ne pose JAMAIS de
+brouillon (une session CLI meurt avec son processus — le cycle complet
+vit en API, prouvé par la suite, et entrera dans le GUI après preuve
+terrain).
+
+**Bornes.** Un attaquant admin qui contrôle la machine PENDANT un acte
+voit la phrase, peut photographier le média branché et forger — aucun
+logiciel pur ne pare ça (le rayon est borné à UNE époque : moitiés neuves
+à chaque clôture) ; cérémonie sur machine propre, sessions courtes ; le
+contenu de la session reste lisible par un malware présent pendant qu'on
+travaille (inhérent — on a ouvert pour lire) ; un piège ENTIÈREMENT forgé
+se présente comme une phrase erronée (bénin — refus nommé, jamais de
+destruction : l'aveu est le contrôle) ; contre le voleur de TOUT (machine
++ média), la défense est Argon2id seule (borne consignée, même famille que
+CF1) ; le miroir local est effaçable par un attaquant admin (les témoins
+hors-bande — carte, Git — restent) ; le checksum affiché ne protège que
+s'il est regardé (le verdict à froid re-exécuté est le filet) ; un média
+du piège par coffre (le sachet est individuel — le créneau N+1 peut être
+remplacé par un rejeu, les époques passées jamais) ; CF3 ne REMPLACE pas
+CF2 d'un claquement : la migration du coffre réel est une CÉRÉMONIE
+consignée (spec § 12 — CF2 déverrouillé une dernière fois, porte D120
+honorée, base re-scellée SCHÉMA IDENTIQUE, verdict à froid, destruction
+explicite du conteneur CF2, fragments CF2 = relève historique),
+l'outillage migrer vivra avec la preuve terrain.

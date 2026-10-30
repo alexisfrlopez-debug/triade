@@ -7456,3 +7456,119 @@ l'annonce de la porte, les comptes 53/53 et 17, l'ordre inversé de la
 cérémonie, l'ouverture qui exige le témoin, la relève hors porte, les
 bornes porte + ère Windows) ; Entrée 106 du journal + décision D120
 consignées.
+
+## Entrée 107 — D121 (30/10) : CF3, la serrure à triple scellement et le cycle en deux actes — « plutôt qu'une sentinelle externe, une serrure du coffre piégée » et « une vulnérabilité réside durant le temps où la session est ouverte » — les deux demandes du terrain, servies ensemble et durcies
+
+Le terrain a posé les deux questions de conception qui ouvraient l'axe 4.
+La première : remplacer la sentinelle externe par une serrure de coffre
+PIÉGÉE à trois éléments — clé utilisateur invariable, serrure
+métamorphe liée au hash du projet, piège de la serrure métamorphe aussi ;
+sans la seconde moitié, déverrouillage impossible ; problème sur une
+moitié, destruction ; plus de démon permanent qui ne sert qu'au
+déverrouillage. La seconde : la vulnérabilité de la SESSION OUVERTE —
+deux déverrouillages, un à l'ouverture pour modifier, un à la fermeture
+pour valider. L'analyse a validé les deux intuitions ET dénoncé trois
+pièges de conception, consignés dans la spec (§ 2) : un hash de projet
+est PUBLIC (le dépôt est sur GitHub — il lie, il ne protège pas : le hash
+n'entre que comme contexte HKDF) ; le piège ne doit PAS être dérivable de
+la serrure (deux aléas indépendants) ; détruire sur mauvaise clé est un
+DoS OFFERT (une faute de frappe suffirait — les modes de défaillance sont
+SÉPARÉS).
+
+Un — LA SERRURE (spec docs/I/CF3/README.md § 2-§ 4, R2
+écrite-avant-code). Trois éléments : K_user = Argon2id(phrase, sel_argon)
+INVARIANT à travers les époques (la demande : « clé utilisateur qui ne
+change pas » — sel_argon posé à l'init, jamais retouché) ; S_serrure, 32
+octets frais par ÉPOQUE, en-tête clair du conteneur (moitié machine) ;
+S_piège, 32 octets frais par époque, MÉDIA SÉPARÉ uniquement (moitié
+piège — le sachet du kit, un fichier texte par époque :
+piege-CF3-epoque-N.txt, additif, les époques passées ne brûlent jamais).
+KEK = HKDF-SHA256(K_user ‖ S_serrure ‖ S_piège ; sel_hkdf ; info =
+« triade-CF3/v1|‖époque‖H_projet »), XChaCha20-Poly1305, AAD intégral
+(miroir CF2 § 11.2). Le champ verif = HKDF(K_user ‖ V_piège)[:16] où
+V_piège est publique mais vit SUR LE MÉDIA : le voleur de la machine
+seule ne peut même pas TESTER des phrases hors ligne — il lui manque la
+moitié publique du piège. Contre le voleur de tout, Argon2id (borne
+consignée, famille CF1).
+
+Deux — LA SENTINELLE INSTANTANÉE (spec § 5) remplace le démon. L'exigence
+D120 (« si le déverrouillage est tenté et qu'elle n'est pas lancée, tous
+nos efforts sont inutiles ») RESTE — réalisée par INVOCATION : les
+vérifications courent in-process à CHAQUE acte, dans un ORDRE normatif :
+piège présent (absent = déverrouillage IMPOSSIBLE, rien lu, rien brûlé) ;
+piège intègre (tag invalide = refus SANS destruction — le média est hors
+limite de confiance, une corruption bénigne se relit) ; cohérence des
+champs publics (piège PÉRIMÉ, piège d'un AUTRE coffre, RETOUR EN
+ARRIÈRE contre le miroir local, témoin hors-bande --epoque-attendue) ;
+phrase (PhraseErronee — BÉNIGNE, réessai à délai croissant 1-2-4 s
+plafond 8 s, JAMAIS de destruction) ; empreinte + AEAD + ÉTIQUETTE
+(échec après tout vert = falsification PROUVÉE côté machine →
+destruction LOCALE + PV). Le démon résident était usurpable (faux
+heart-beat — borne D120) ; le piège ne dépend d'aucun état de machine
+falsifiable : le témoin EST hors machine.
+
+Trois — LE CYCLE EN DEUX ACTES (spec § 6) borne la session. ACTE I :
+phrase + piège → brouillon chiffré sous clé de session éphémère
+K_session ; les clés maîtresses MEURENT ici ; le canonique n'est jamais
+réécrit pendant la session. SESSION : lire/ecrire sous K_session ; une
+panne auto-nettoie (K_session morte = brouillon déchet indéchiffrable) ;
+abandonner() efface. ACTE II : média rebranché + phrase RETAPÉE — une
+faute de frappe est BÉNIGNE (vérifiée AVANT tout scellement, rien n'est
+écrit) ; H_final = sha256(brouillon), checksum 8 hex AFFICHÉ (la carte
+du sachet recoupe) ; moitiés fraîches, époque + 1, sel_argon intact ;
+clé de clôture LIÉE AU CONTENU ; écritures crash-cohérentes (piège
+additif → staging → re-lecture À FROID → os.replace → miroir → journal) ;
+toute panne laisse un état rejouable — panne après replace : canonique à
+N+1, miroir en retard, le contrôle « conteneur ≥ miroir » passe, AUCUNE
+clôture n'est perdue.
+
+Quatre — LA COURSE DE CLOTURE FERMÉE PAR UNE PARADE DOUBLE (trouvée en
+écrivant la suite — c'est le boulot d'une suite de falsifiabilité) : la
+clé de clôture dérive AVEC H_final (un KEK volé en RAM ne scelle que
+l'état vu) ET l'ÉTIQUETTE est vérifiée à l'ouverture (le clair déchiffré
+doit hacher vers le H_projet de l'en-tête) : le faux conteneur « en-tête
+H(A), chiffretexte B sous le KEK volé » — qui PASSERAIT l'AEAD — est
+démasqué par sha256(B) ≠ H(A) : falsification PROUVÉE, destruction
+locale. Et la variante « étiquette menteuse H(B) » est attrapée encore
+plus tôt (cohérence H_projet du piège) si l'attaquant n'a pas pu écrire
+le média. T8 prouve les trois variantes : jamais une ouverture.
+
+Cinq — LA DESTRUCTION RESTE SURVIVABLE (spec § 7/§ 12) : destruction
+locale = conteneur + staging + brouillon (3 passes, PV nommé, journal) —
+JAMAIS le média du piège (c'est la relève), JAMAIS les fragments CF2 ni
+les copies hors-ligne (coexistence : la destruction du prototype
+d'origine est ce qui la rendait acceptable). CF3 ne remplace pas CF2
+d'un claquement : la migration du coffre RÉEL est une cérémonie consignée
+(§ 12 : CF2 déverrouillé une dernière fois porte D120 honorée, base
+re-scellée SCHÉMA IDENTIQUE — rien à traduire, verdict à froid, destruction
+explicite du conteneur CF2, fragments = relève historique) ; l'outillage
+migrer vivra avec la preuve terrain. Le GUI et le support FIDO2/smartcard
+pour le piège sont des bornes MONTANTES (le protocole ne change pas).
+
+PREUVES : v06/test_coffre_cf3.py 90 PASS / 0 ÉCHEC (12 groupes : T1 cycle
+contre témoin indépendant — checksum recalculé par le TEST, moitiés
+serrure ET piège remplacées, sel_argon invariant, rotation pure, checksum
+clôture == checksum verdict à froid, miroir + journal ; T2 phrase erronée
+bénigne + délais 1-2-4-8-8 + piège forgé se présentant comme phrase
+erronée ; T3 acte II sans scellement PUIS réessai réussi ; T4 piège absent
+= impossible aux TROIS actes ; T5 périmé + couple restauré refusé +
+témoin hors-bande + miroir corrompu ; T6 tag invalide sans destruction ;
+T7 falsification prouvée — PV nommé, média et fragments CF2 INTACTS
+octet pour octet, relève nommée après mort ; T8 course de clôture en
+TROIS variantes — étiquette menteuse média intact (refus H_projet, sans
+effusion), étiquette menteuse + piège forgé (AEAD refusé), étiquette
+honnête contenu substitué (l'étiquette démasque) — 1b et 2 DÉTRUITES, le
+vrai reste ouvrable, jamais une ouverture de B ; T9 panne injectée aux
+CINQ phases — canonique intact, staging détruit, orphelin inoffensif,
+clôture rejouable, après-replace crash-cohérent, init rejouable après
+orphelin ; T10 brouillon falsifié = clôture refusée ; T11 brouillon
+déchet sans clé, écrasement avec aveu, abandon efface ; T12 CLI complet
+en sous-processus — codes et refus nommés) ; autotest embarqué 28 PASS /
+0 ÉCHEC (indépendant de la plateforme, temporaires D105) ;
+NON-RÉGRESSION : sceau_I.py verifier CODE 0 (10 arbres VERTS — CF3
+n'écrit que hors v06/I/ : la spec vit sous docs/I/CF3/, hors périmètre
+du sceau, et entrera dans l'arbre scellé v06/I/CF3/ à la prochaine
+re-cérémonie, précédent erratum § 12), test_sceau_I.py 50/50,
+test_cf2.py 54/54, test_ceremonie_gui.py 157/157 ; Entrée 107 du journal
++ décision D121 consignées ; l'écriture atomique D119 est RÉUTILISÉE
+depuis coffre_cf2 (source unique, CF3 ne la duplique pas).
