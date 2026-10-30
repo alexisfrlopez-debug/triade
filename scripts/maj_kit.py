@@ -91,15 +91,19 @@ NOTE_D130 = (
     "plates (posture « fichier seul sur clef USB » D87), coffre_fort.py\n"
     "(CF1), LISEZMOI-*.txt, MANIFESTE.txt.\n"
     "Entrée : double-cliquez lancer_ceremonie (le maître de cérémonie\n"
-    "v2.1 — pilier droit D129 : la liste des étapes et le journal vivent\n"
-    "dans l'encart à droite, visibles quel que soit l'onglet),\n"
+    "v2.2 — pilier droit D129 : la liste des étapes et le journal vivent\n"
+    "dans l'encart à droite, visibles quel que soit l'onglet ; D131 : le\n"
+    "bouton d'attachement vit UNE fois par page — l'ex doublon de\n"
+    "l'accueil est mort),\n"
     "lancer_autotest_cf3 (prouver la serrure CF3) ou\n"
     "lancer_migration_cf3 (migrer le coffre réel CF2 → CF3, spec § 12).\n"
     "En cas de problème : bouton « Envoyer le rapport… » dans le GUI,\n"
     "glissez le .txt dans la conversation (règle systématique D122).\n"
-    "La fenêtre de re-cérémonie D126 reste OUVERTE : verifier dit\n"
-    "CODE 10 sur v06 jusqu'à la signature du maître — le SIGNAL, pas la\n"
-    "panne.")
+    "Le sceau I signe l'INTENTION (v06/I/ — spec CF2/CF3, table\n"
+    "normative), PAS le code : une évolution du code (D131 aujourd'hui)\n"
+    "ne diverge RIEN — seule une évolution de v06/I/ appellerait la\n"
+    "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
+    "le SIGNAL, pas la panne).")
 
 
 # ---------------------------------------------------------------- utilitaires

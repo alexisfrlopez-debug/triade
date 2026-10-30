@@ -122,6 +122,17 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        STATIQUES par source (headless) — la preuve WIDGET VIVANT vit
        dans scripts/fumee_xvfb_d129.py (pilier affiché sur CHAQUE
        onglet, page accueil comprise) ;
+  T18  D131 — UN BOUTON D'ATTACHEMENT PAR PAGE (retour du terrain
+       31/10 : « sur la page de choix de scénario, il y a 2 boutons
+       pour attacher un repo local qui font doublon ») : l'accueil ne
+       porte le bouton QUE dans le panneau de scénario (il NAÎT du
+       choix D117 — sans scénario, PAS de bouton), la page de cérémonie
+       ne le porte QUE dans son bandeau « non attaché » — la méthode
+       _sur_choisir_depot, la garde D111 et la preuve D118 restent
+       INTACTES (seule la redondance d'affichage meurt) ; la version
+       porte l'ère D131 ; au passage la note « Fragments hors-ligne »
+       NOMME où vivent les cinq originaux (.keys/gardes-cf2/… — la
+       question du terrain : « le système attend 3 fragment-*.cf2 ») ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -1014,7 +1025,7 @@ def t17_pilier_droit_d129():
                 "Application._batir_colonne_droite inexistant — le pilier "
                 "n'est pas bâti (l'ancien GUI portait le fil dans l'onglet "
                 "« 1 · Sceau » : les onglets 2-4 le cachaient)")
-        verifie("t17-version-d129", False, gui.VERSION_GUI)
+        verifie("t17-version-d131", False, gui.VERSION_GUI)
         return
 
     # --- le pilier existe et porte le fil ET le journal ------------------
@@ -1098,8 +1109,75 @@ def t17_pilier_droit_d129():
             f"largeur {getattr(gui, 'LARGEUR_COLONNE_DROITE', '—')} / "
             f"wrap {getattr(gui, 'WRAP_COLONNE_DROITE', '—')}")
 
-    # --- la version porte l'ère D129 -------------------------------------
-    verifie("t17-version-d129", "D129" in gui.VERSION_GUI, gui.VERSION_GUI)
+    # --- la version porte l'ère courante (D129 pilier → D131 bouton
+    # unique par page — l'ère suit la DERNIÈRE décision GUI) -------------
+    verifie("t17-version-d131", "D131" in gui.VERSION_GUI, gui.VERSION_GUI)
+
+
+# ---------------------------------------------------------------------------
+# T18 — D131 : UN BOUTON D'ATTACHEMENT PAR PAGE — le doublon de l'accueil
+# (« 2 boutons pour attacher un repo local qui font doublon », terrain
+# 31/10) est mort ; le bouton NAÎT du choix de scénario (D117).
+# ---------------------------------------------------------------------------
+def t18_bouton_unique_par_page():
+    """Contrôles STATIQUES par source (headless) : le GESTE est intact
+    (_sur_choisir_depot, garde D111, preuve D118) — seule la redondance
+    d'affichage meurt. L'accueil ne porte plus le bouton dans sa section
+    « La cérémonie » : le seul rendu de la page vit dans le PANNEAU DE
+    SCÉNARIO ; la page de cérémonie ne le porte que dans son bandeau
+    « Dépôt triade — NON attaché ». Au passage, la note « Fragments
+    hors-ligne » nomme où vivent les CINQ originaux (la question du
+    terrain : « le système attend 3 fragment-*.cf2 »)."""
+    print("T18 — bouton d'attachement unique par page (D131)")
+    import inspect
+    commande = "command=self._sur_choisir_depot"
+    src_accueil = inspect.getsource(gui.Application._batir_accueil)
+    src_scenario = inspect.getsource(gui.Application._montrer_panels_scenario)
+    src_ceremonie = inspect.getsource(gui.Application._batir_ceremonie)
+    src_onglets = inspect.getsource(gui.Application._batir_onglets_depot)
+    src_choisir = inspect.getsource(gui.Application._sur_choisir_depot)
+    src_classe = inspect.getsource(gui.Application)
+
+    # 1. l'accueil ne porte PLUS le bouton — et sa note RENVOIE au panneau
+    verifie("t18-accueil-zero-rendu",
+            src_accueil.count(commande) == 0
+            and "PANNEAU DE SCÉNARIO" in src_accueil,
+            "la section « La cérémonie » de l'accueil ne doit plus porter "
+            "le bouton ; sa note renvoie au panneau de scénario (D131)")
+
+    # 2. le panneau de scénario porte le bouton des DEUX scénarios
+    verifie("t18-scenario-deux-rendus",
+            src_scenario.count(commande) == 2,
+            "dossier local : 1 bouton ; repo git : 1 bouton à côté du "
+            "clonage — l'unique rendu de l'accueil vit ICI")
+
+    # 3. la page de cérémonie ne le porte QUE dans son bandeau non attaché
+    verifie("t18-ceremonie-bandeau-seul",
+            src_ceremonie.count(commande) == 1,
+            "un seul rendu sur la page de cérémonie (bandeau « Dépôt "
+            "triade — NON attaché »)")
+
+    # 4. TROIS rendus au total, UN par panneau, DEUX pages — plus de doublon
+    verifie("t18-trois-rendus-au-total",
+            src_classe.count(commande) == 3,
+            f"attendu 3 rendus (accueil 0 + scénario 2 + cérémonie 1), "
+            f"trouvé {src_classe.count(commande)} — un doublon serait "
+            f"régressif")
+
+    # 5. le GESTE est intact : garde D111 + preuve D118 inchangées
+    verifie("t18-geste-intact",
+            "coffre_cf2.py" in src_choisir
+            and "preuve_clone" in src_choisir
+            and "SCENARIO_GIT" in src_choisir,
+            "_sur_choisir_depot garde la garde v06/coffre_cf2.py (D111) "
+            "et la preuve clone du scénario repo git (D118)")
+
+    # 6. la note fragments NOMME les cinq originaux (question du terrain)
+    verifie("t18-note-fragments-nomme-les-gardes",
+            "CINQ originaux" in src_onglets
+            and "gardes-cf2" in src_onglets,
+            "la note « Fragments hors-ligne » doit nommer "
+            ".keys\\gardes-cf2\\g1…g5\\fragment-N.cf2f")
 
 
 def _ecrire(chemin, texte):
@@ -1521,7 +1599,7 @@ def x3_attachement_depot():
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
           f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119 · D128 · "
-          f"D129) — dépôt {RACINE}")
+          f"D129 · D131) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -1540,6 +1618,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t16-") as rep:
         t16_dossier_avec_la_cle(rep)
     t17_pilier_droit_d129()
+    t18_bouton_unique_par_page()
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

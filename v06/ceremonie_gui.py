@@ -97,7 +97,12 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       dossier du dépôt » avaient la même fonction : désigner un dossier
       local et l'attacher ; seule la PREUVE diffère, et le SCÉNARIO la
       décide : repo git → rev-parse + origin, dossier local → garde
-      v06/coffre_cf2.py seule) ;
+      v06/coffre_cf2.py seule) ; D131 — UN RENDU PAR PAGE : le terrain a
+      dénoncé le DOUBLON de l'accueil (le même bouton y vivait DEUX fois,
+      panneau de scénario ET section « La cérémonie ») — l'accueil ne le
+      porte PLUS QUE dans le PANNEAU DU SCÉNARIO (il naît du choix,
+      D117), la page de cérémonie ne le porte QUE dans son bandeau
+      « Dépôt triade — NON attaché » ;
     - D118 — DOSSIER DE CÉRÉMONIE : la clé privée, la clé publique,
       a-signer.txt et signatures-I.txt naissent PAR DÉFAUT dans un même
       dossier HORS du dépôt (sœur du dépôt attaché : <parent du dépôt>/
@@ -185,10 +190,11 @@ Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
   --depot CHEMIN → attache le GUI à ce dépôt triade (D111 : le GUI
   peut vivre N'IMPORTE OÙ — clef USB, kit du Drive, bureau — tant que
   CHEMIN désigne la racine d'un clone du dépôt : v06/coffre_cf2.py y
-  est vérifié AVANT d'activer les onglets du dépôt). D112/D118 : le même
-  attachement se fait AUSSI depuis la fenêtre (accueil ou page de
-  cérémonie, bouton « Attacher le dépôt local… ») — la ligne de commande
-  devient un RACCOURCI, plus une obligation.
+  est vérifié AVANT d'activer les onglets du dépôt). D112/D118/D131 : le
+  même attachement se fait AUSSI depuis la fenêtre — accueil : bouton du
+  PANNEAU DE SCÉNARIO (unique de la page, il naît du choix D117) ; page
+  de cérémonie : bandeau « Dépôt triade — NON attaché » — la ligne de
+  commande devient un RACCOURCI, plus une obligation.
 """
 
 import argparse
@@ -210,7 +216,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v2.1 (D129)"   # D129 : le pilier droit — fil + journal toujours visibles (lisibilité du terrain) ; v2.0 = D128 (cahier numéroté comme le fil)
+VERSION_GUI = "ceremonie-GUI v2.2 (D131)"   # D131 : bouton d'attachement UNE fois par page (doublon de l'accueil dénoncé par le terrain) + la note fragments nomme les originaux .keys/gardes-cf2 ; v2.1 = D129 (pilier droit — fil + journal toujours visibles) ; v2.0 = D128 (cahier numéroté comme le fil)
 
 
 # ===========================================================================
@@ -2504,18 +2510,18 @@ class Application:
                             "générer / signer / vérifier) restent pleinement "
                             "actifs ; sceau et coffre apparaîtront dès "
                             "l'attachement. Le GUI peut vivre n'importe où : "
-                            "ATTACHEZ le dossier du dépôt par le bouton "
-                            "ci-dessous (D112/D118 — plus besoin de "
-                            "relancer), ou --depot CHEMIN / la variable "
-                            "TRIADE_DEPOT au lancement, ou téléchargez le "
-                            "dossier /Cérémonie du Drive ENTIÈREMENT (le "
-                            "sous-dossier v06/ fait du kit un mini-dépôt). "
-                            "Copié seul sur une clef USB, il ne donne QUE "
-                            "les onglets hors-ligne — c'est voulu)")
+                            "choisissez le SCÉNARIO ci-dessus puis ATTACHEZ "
+                            "le dossier du dépôt par le bouton du "
+                            "PANNEAU DE SCÉNARIO (D131 : c'est l'UNIQUE "
+                            "bouton d'attachement de cette page — l'ex "
+                            "doublon ci-dessous est mort), ou --depot CHEMIN / la "
+                            "variable TRIADE_DEPOT au lancement, ou "
+                            "téléchargez le dossier /Cérémonie du Drive "
+                            "ENTIÈREMENT (le sous-dossier v06/ fait du kit "
+                            "un mini-dépôt). Copié seul sur une clef USB, il "
+                            "ne donne QUE les onglets hors-ligne — c'est "
+                            "voulu)")
             ).pack(anchor="w")
-        ttk.Button(cero, text="Attacher le dépôt local…",
-                   command=self._sur_choisir_depot).pack(anchor="w",
-                                                          pady=(4, 2))
         ttk.Button(page, text="← Retour à l'accueil",
                    command=lambda: self.montrer("accueil")).pack(anchor="w",
                                                                  pady=8)
@@ -2550,7 +2556,12 @@ class Application:
         local… ») — l'ex-« attacher un clone EXISTANT… » et l'ex-« choisir
         le dossier du dépôt… » désignaient le même geste (désigner un
         dossier local, l'attacher) ; seule la PREUVE diffère, et le
-        SCÉNARIO la décide (repo git → rev-parse + origin exigés)."""
+        SCÉNARIO la décide (repo git → rev-parse + origin exigés).
+        D131 : ce panneau porte l'UNIQUE bouton d'attachement de
+        l'accueil — l'ex doublon de la section « La cérémonie » (deux
+        boutons identiques sur une même page, dénoncés par le terrain)
+        est supprimé ; sans scénario choisi, PAS de bouton : le scénario
+        est AVANT TOUT (D117), le bouton naît du choix."""
         panneau = getattr(self, "cadre_scen_panels", None)
         if panneau is not None:
             panneau.destroy()
@@ -2634,8 +2645,9 @@ class Application:
         else:
             self.label_scenario.configure(
                 text="Aucun scénario choisi — AVANT TOUT, choisissez ci-dessus "
-                     "(le fil affichera cinq étapes en dossier local, six en "
-                     "repo git avec « Cloner le dépôt » en tête).")
+                     "(le bouton d'attachement naîtra ICI même, D131 ; le fil "
+                     "affichera cinq étapes en dossier local, six en repo git "
+                     "avec « Cloner le dépôt » en tête).")
 
     def _maj_nom_auto_clone(self, *_):
         """Pré-remplit le nom du clone depuis l'URL (triade.git → triade) —
@@ -3360,10 +3372,16 @@ class Application:
 
         fragments = self._section(cf2, "Fragments hors-ligne (le seuil est la loi)")
         fragments.pack(fill="x", pady=2)
-        self._note(fragments, "Exportez la feuille des TROIS fragments, "
-                              "imprimez-la (ou copiez-la sur USB, deux "
-                              "lieux). Puis CONTRÔLEZ vos copies : l'assistant "
-                              "relit vos trois fichiers et prouve qu'ils "
+        self._note(fragments, "Les CINQ originaux vivent sous "
+                              ".keys\\gardes-cf2\\g1…g5\\fragment-N.cf2f du "
+                              "dépôt attaché (un par garde ; dossier "
+                              "CACHÉ : « Éléments masqués » de "
+                              "l'explorateur). Exportez la feuille des "
+                              "TROIS fragments, imprimez-la (papier), ou "
+                              "copiez ces TROIS fichiers .cf2f sur USB — "
+                              "DEUX lieux. Puis CONTRÔLEZ vos copies : "
+                              "l'assistant relit vos trois fichiers COPIÉS "
+                              "(l'USB, pas les gardes) et prouve qu'ils "
                               "reconstituent le seuil (AEAD vert) — sans "
                               "rien écrire.")
         self.var_feuille = self._ligne_fichier(

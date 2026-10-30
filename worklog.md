@@ -1021,3 +1021,60 @@ Stage Summary:
   réel nommé dans le kit ; (b) reste : CF1 → CF2 → CF3 guidé par les
   LISEZMOI
 - Suite : rapport de migration attendu (bouton Envoyer le rapport)
+
+---
+Task ID: 40
+Agent: Z.ai (agent principal)
+Task: rapport de cérémonie du terrain 31/10 18:18 (GUI v2.1, boîte noire
+complète) — (b) EN MARCHE : CF1 trouvé + phrase changée (D110) +
+migration CF1 → CF2 VERTE + feuille exportée ; DEUX questions du
+terrain : « où puis-je trouver les 3 fragments sachant que le système
+attend 3 fragment-*.cf2 ? » et « sur la page de choix de scénario, il y
+a 2 boutons pour attacher un repo local qui font doublon ».
+
+Work Log:
+- RAPPORT LU : la chaîne réelle accomplie — CF1 statut/verifier VERT
+  (coffre au dossier de cérémonie), phrase changée (nouveau sel
+  1edc23db…, ancienne inopérante), premier migrer ÉCHEC nommé fail-
+  closed (remise D81 pas encore remplacée — le maître l'a faite entre
+  les deux tentatives), second migrer VERT (.keys\coffre_cf2.bin + 5
+  gardes seuil 3 + CF1 INTACT + PORTE D120 ère sans moteur), feuille
+  exportée (g3…g5)
+- QUESTION FRAGMENTS RÉPONDUE PAR LE CODE LU (coffre_cf2.py,
+  migration_cf3_gui.py) : 5 originaux sous .keys\gardes-cf2\g1…g5\
+  fragment-N.cf2f (un par garde, dossier caché) ; la feuille =
+  export PAPIER des 3 mêmes (g3-g5) ; relecture = les COPIES (une par
+  champ, un fragment par fichier) ; CF3 lit les gardes du dépôt
+  (champ « Racine des gardes CF2 » vide = config)
+- D131 — DOUBLON TUÉ : accueil portait « Attacher le dépôt local… »
+  DEUX fois (panneau de scénario + section « La cérémonie », gesture
+  vu 2× dans le rapport à 6 min d'écart) → UN RENDU PAR PAGE :
+  accueil = panneau de scénario SEUL (le bouton NAÎT du choix D117,
+  sinon aucun bouton), cérémonie = bandeau « NON attaché » seul ;
+  _sur_choisir_depot INTACT (garde D111 + preuve D118) ; VERSION v2.2
+- NOTE FRAGMENTS (GUI + LISEZMOI-coffre-CF2.txt étape 3) : nomme les 5
+  originaux + distingue FEUILLE (papier) vs COPIES USB (.cf2f) ;
+  LISEZMOI-ceremonie-GUI.txt suit (ex-« Choisir le dossier du dépôt… »
+  périmé corrigé)
+- SCEAU VÉRIFIÉ AVANT CONSIGNATION : l'arbre signé v06 = v06/I/ (3
+  fichiers de spec), PAS le code → verifier 10 arbres VERTS CODE 0
+  APRÈS le correctif — D131 n'appelle AUCUNE re-cérémonie ; la note
+  MANIFESTE kit (maj_kit.py) qui prétendait l'inverse réécrite avant
+  commit
+- FALSIFIABILITÉ : T18 ajouté (6 contrôles statiques) → suite
+  178 PASS / 0 ÉCHEC ; selftest 19/19 ; fumée Xvfb D131 écrite
+  (scripts/fumee_xvfb_d131.py, 8 contrôles fenêtre RÉELLE : zéro
+  bouton sans scénario, UN en dossier local dans le panneau, UN en
+  repo git + clonage distinct, jamais deux) ; fumée D129 intacte
+  (21 PASS)
+- DÉPLOIEMENT : commit → hook D130 (kit + miroir Drive, même geste) ;
+  download/ceremonie_gui.py auto-réparé sur v06/ par les gardes du kit
+
+Stage Summary:
+- D131 livré : un bouton d'attachement par page (v2.2), note fragments
+  qui nomme les originaux — tests et fumées verts, sceau INTACT
+- Terrain suite (b) : copies hors-ligne des 3 fragments (g3/g4/g5,
+  USB deux lieux + feuille papier) → Contrôler les trois copies →
+  liste blanche → CF2 verifier VERT → lancer_migration_cf3
+  (MIGRER média du piège / VÉRIFIER checksum contre la CARTE /
+  DÉTRUIRE après recoupement) → rapport ; OAuth relais avant ~05/11
