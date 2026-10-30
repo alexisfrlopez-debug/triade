@@ -64,10 +64,23 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        synchronisation VERTE, commit+push PROUVÉS sur un origin NU de
        laboratoire (le dépôt distant a bien reçu le commit), statut
        propre après, dossier hors-git refus NOMMÉ ;
-  T13  fil de cérémonie (D116) : les cinq étapes s'auto-détectent par
-       PREUVES en lecture seule — fenêtre D115 nommée (a-signer
-       PÉRIMÉ), clé absente nommée, fichiers manquants nommés,
-       signature requise nommée, git propre ET poussé ;
+  T13  fil de cérémonie (D116/D117) : les étapes s'auto-détectent par
+       PREUVES en lecture seule, et les témoins e1/e4 sont ÈRE-COHÉRENTS
+       — le fil suit l'ère du dépôt réel (re-cérémonie passée → « tout
+       est signé — préparer inutile » / « arbres VERTS » ; fenêtre D115
+       vivante → « a-signer PÉRIMÉ » / « signature requise ») : mentir
+       dans un sens comme dans l'autre serait attrapé ; clé absente
+       nommée, fichiers manquants nommés, git propre ET poussé ;
+  T14  scénarios et clonage (D117) : le choix AVANT TOUT (dossier local
+       / repo git) détermine les étapes — fil de CINQ d'un côté, de SIX
+       avec « Cloner le dépôt » en tête (preuve rev-parse + origin)
+       de l'autre ; masquage du jeton d'URL ; preuve clone refusée
+       NOMMÉE (hors git / sans origin) ; cloner_depot refuse URL vide,
+       URL « - » (injection), destination vide / « - » / NON VIDE
+       (intacte après refus), git absent (127 nommé, simulation sans
+       réseau) ; clone de LABORATOIRE (origin nu local, AUCUN réseau
+       réel) : réussite → dépôt ATTACHÉ + origin prouvé ; clone sans
+       garde D111 → attachement REFUSÉ, clone conservé sur disque ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -412,28 +425,44 @@ def t567f1(rep):
     finally:
         gui.RACINE_DEPOT = racine_sauvee
 
-    print("T13 — D116 : fil de cérémonie (lecture seule, dépôt réel)")
+    print("T13 — D116/D117 : fil de cérémonie (lecture seule, dépôt réel)")
     a_signer = os.path.join(RACINE, "v06", "sceau-I", "a-signer.txt")
     etat_fil = gui.fil_ceremonie(a_signer=a_signer)
     verifie("t13-cinq-etapes-titrees", len(etat_fil) == 5
             and [e[0] for e in etat_fil] == [1, 2, 3, 4, 5])
     par_etape = {numero: (faite, detail)
                  for numero, _, faite, detail in etat_fil}
-    verifie("t13-e1-fenetre-d115-a-signer-perime-nomme",
-            par_etape[1][0] is False and "PÉRIMÉ" in par_etape[1][1],
-            par_etape[1][1])
+    # D117 : les témoins e1/e4 suivent l'ÈRE du dépôt réel — après la
+    # re-cérémonie (59b7ddc) le sceau est VERT et le fil doit le DIRE
+    # (« préparer inutile », « arbres VERTS ») ; pendant la fenêtre D115
+    # il devait nommer « PÉRIMÉ » / « signature requise ». Le fil qui
+    # mentirait dans UN sens comme dans l'autre serait attrapé ICI.
+    code_ere, _ = gui.executer_cli("sceau_I.py", ["verifier"])
+    if code_ere == 0:
+        verifie("t13-e1-ere-signee-preparer-inutile",
+                par_etape[1][0] is True
+                and "préparer inutile" in par_etape[1][1].lower(),
+                par_etape[1][1])
+        verifie("t13-e4-ere-signee-arbres-verts",
+                par_etape[4][0] is True and "VERTS" in par_etape[4][1],
+                par_etape[4][1])
+    else:
+        verifie("t13-e1-fenetre-d115-a-signer-perime-nomme",
+                par_etape[1][0] is False and "PÉRIMÉ" in par_etape[1][1],
+                par_etape[1][1])
+        verifie("t13-e4-signature-requise-nomme",
+                par_etape[4][0] is False and "signature requise" in
+                par_etape[4][1], par_etape[4][1])
     verifie("t13-e2-cle-absente-nomme",
             par_etape[2][0] is False and "absent" in par_etape[2][1],
             par_etape[2][1])
     verifie("t13-e3-fichiers-manquants-nommes",
             par_etape[3][0] is False and "manquants" in par_etape[3][1],
             par_etape[3][1])
-    verifie("t13-e4-signature-requise-nomme",
-            par_etape[4][0] is False and "signature requise" in
-            par_etape[4][1], par_etape[4][1])
     verifie("t13-e5-git-propre-et-pousse",
             par_etape[5][0] is True and "propre" in par_etape[5][1],
             par_etape[5][1])
+
 
     print("F1 — fail-closed (autotest, phrase, brûlage, relève)")
     autotest_orig = gui.autotest
@@ -470,6 +499,179 @@ def t567f1(rep):
             and os.path.isdir(pv_dir) and os.listdir(pv_dir), texte_br)
     ok_r, texte_r = gui.controle_lecture(cfg, copies)
     verifie("f1-copies-relevent-apres-brulage", ok_r, texte_r)
+
+
+def t14_scenarios_clone(rep):
+    """T14 — D117 : le scénario AVANT TOUT (dossier local / repo git) et
+    le CLONAGE. Tout en laboratoire : l'origin est un dépôt nu LOCAL, la
+    panne de git est SIMULÉE (faux Popen, aucun processus lancé) — aucune
+    dépendance au réseau, aucune clé touchée."""
+    import io
+    import subprocess
+    import types
+
+    print("T14 — D117 : scénarios (dossier local / repo git) + clonage")
+    verifie("t14-scenarios-nommes",
+            gui.SCENARIOS == ("dossier local", "repo git"))
+    verifie("t14-masque-jeton",
+            gui.masquer_jeton("https://jeton@github.com/u/r.git")
+            == "https://***@github.com/u/r.git"
+            and gui.masquer_jeton("https://user:pass@h/x.git")
+            == "https://***@h/x.git"
+            and gui.masquer_jeton("git@github.com:u/r.git")
+            == "git@github.com:u/r.git")
+
+    # --- la preuve clone (lecture seule, refus nommés) -------------------
+    pas_git = os.path.join(rep, "pas-un-depot")
+    os.makedirs(pas_git, exist_ok=True)
+    faite, detail = gui.preuve_clone(pas_git)
+    verifie("t14-preuve-hors-git-refusee-nommee", not faite
+            and "pas un dépôt git" in detail, detail)
+    init_seul = os.path.join(rep, "init-seul")
+    os.makedirs(init_seul, exist_ok=True)
+    subprocess.run(["git", "init", "-q", init_seul], check=True,
+                   capture_output=True, timeout=60)
+    faite_i, detail_i = gui.preuve_clone(init_seul)
+    verifie("t14-preuve-sans-origin-refusee-nommee", not faite_i
+            and "origin" in detail_i, detail_i)
+    faite_a, detail_a = gui.preuve_clone()   # le dépôt des tests est un clone
+    verifie("t14-preuve-vrai-clone-verte", faite_a
+            and "origin" in detail_a, detail_a)
+
+    # --- le scénario détermine les étapes du fil ------------------------
+    a_signer = os.path.join(RACINE, "v06", "sceau-I", "a-signer.txt")
+    fil_cinq = gui.fil_ceremonie(a_signer=a_signer)
+    fil_six = gui.fil_ceremonie(a_signer=a_signer, scenario="repo git")
+    verifie("t14-fil-dossier-cinq-etapes", len(fil_cinq) == 5
+            and fil_cinq[0][1].startswith("Préparer"))
+    verifie("t14-fil-git-six-etapes-clone-en-tete", len(fil_six) == 6
+            and [e[0] for e in fil_six] == [1, 2, 3, 4, 5, 6]
+            and "Cloner" in fil_six[0][1]
+            and fil_six[0][2] is True
+            and fil_six[1][1] == fil_cinq[0][1],
+            f"{fil_six[0]} / {fil_six[1]}")
+    verifie("t14-hints-suivent-le-scenario",
+            "Cloner en local" in gui.hint_fil("repo git", 1)
+            and gui.hint_fil("repo git", 2) == gui.FIL_HINTS[1]
+            and gui.hint_fil("dossier local", 1) == gui.FIL_HINTS[1]
+            and gui.hint_fil(None, 5) == gui.FIL_HINTS[5])
+
+    # --- cloner_depot : refus NOMMÉS avant tout lancement ----------------
+    refuse("t14-clone-url-vide-refusee", gui.cloner_depot, "",
+           os.path.join(rep, "c1"))
+    refuse("t14-clone-url-tiret-injection-refusee", gui.cloner_depot,
+           "--upload-pack=x", os.path.join(rep, "c2"))
+    refuse("t14-clone-destination-vide-refusee", gui.cloner_depot,
+           "https://example.invalid/x.git", "")
+    refuse("t14-clone-destination-tiret-refusee", gui.cloner_depot,
+           "https://example.invalid/x.git", "-opt")
+    prise = os.path.join(rep, "destination-prise")
+    os.makedirs(prise, exist_ok=True)
+    _ecrire(os.path.join(prise, "deja.txt"), "contenu\n")
+    refuse("t14-clone-destination-prise-refusee", gui.cloner_depot,
+           "https://example.invalid/x.git", prise)
+    verifie("t14-destination-prise-intacte",
+            os.path.isfile(os.path.join(prise, "deja.txt")))
+
+    # --- git ABSENT (127) et ÉCHEC de clone : SIMULÉS, aucun réseau -----
+    class _ProcFaux:
+        def __init__(self, code, sortie=""):
+            self.stdout = io.StringIO(sortie)
+            self._code = code
+
+        def wait(self):
+            return self._code
+
+    subprocess_reel = gui.subprocess
+    try:
+        # git ABSENT : Popen LÈVE FileNotFoundError (c'est exactement ce que
+        # fait subprocess quand le binaire manque — le faux proc ne suffit
+        # pas, l'exception est le chemin réel du code 127)
+        def _popen_absent(*a, **k):
+            raise FileNotFoundError("git absent (simulation T14)")
+
+        gui.subprocess = types.SimpleNamespace(
+            Popen=_popen_absent, PIPE=-1, STDOUT=-2)
+        ok_127, texte_127 = gui.cloner_depot(
+            "https://example.invalid/x.git", os.path.join(rep, "c3"))
+        verifie("t14-clone-git-absent-127-nomme",
+                not ok_127 and "git introuvable" in texte_127, texte_127)
+        gui.subprocess = types.SimpleNamespace(
+            Popen=lambda *a, **k: _ProcFaux(
+                128, "fatal: échec simulé par T14 (aucun réseau)\n"),
+            PIPE=-1, STDOUT=-2)
+        captes_tok = []
+        ok_tok, texte_tok = gui.cloner_depot(
+            "https://jetonsecret@exemple.invalid/x.git",
+            os.path.join(rep, "c4"), emit=captes_tok.append)
+        tout_tok = texte_tok + "\n" + "\n".join(captes_tok)
+        verifie("t14-jeton-masque-dans-l-echec",
+                not ok_tok and "jetonsecret" not in tout_tok
+                and "***@" in tout_tok, tout_tok[:200])
+    finally:
+        gui.subprocess = subprocess_reel
+
+    # --- cloner_et_attacher : clone de LABORATOIRE (origin nu local) ----
+    def git_labo(args, cwd):
+        return subprocess.run(["git"] + args, cwd=cwd, capture_output=True,
+                              text=True, timeout=60)
+
+    def monter_source(nom, avec_garde):
+        labo = os.path.join(rep, nom)
+        origin = os.path.join(labo, "origin.git")
+        travail = os.path.join(labo, "source-travail")
+        os.makedirs(os.path.join(travail, "v06"), exist_ok=True)
+        if avec_garde:
+            _ecrire(os.path.join(travail, "v06", "coffre_cf2.py"),
+                    "# garde D111 factice\n")
+        _ecrire(os.path.join(travail, "x.txt"), "contenu\n")
+        subprocess.run(["git", "init", "-q", "--bare", origin],
+                       check=True, capture_output=True, timeout=60)
+        # le dépôt nu naît la tête sur « master » (défaut git) : on y pousse
+        # « main » — sans ce symbolic-ref, un clone de l'origin nu est vide
+        # (checkout impossible : « remote HEAD refers to nonexistent ref »)
+        subprocess.run(["git", "--git-dir", origin, "symbolic-ref", "HEAD",
+                       "refs/heads/main"], check=True, capture_output=True,
+                       timeout=60)
+        git_labo(["init", "-q"], travail)
+        git_labo(["config", "user.email", "lab@triade.test"], travail)
+        git_labo(["config", "user.name", "lab-triade"], travail)
+        git_labo(["add", "."], travail)
+        git_labo(["commit", "-q", "-m", "init"], travail)
+        git_labo(["branch", "-M", "main"], travail)
+        git_labo(["push", "-q", origin, "main"], travail)
+        return origin
+
+    origin_garde = monter_source("labo-avec-garde", True)
+    racine_sauvee, source_sauvee = gui.RACINE_DEPOT, gui.SOURCE_DEPOT
+    destination = os.path.join(rep, "labo-avec-garde", "triade-clone")
+    try:
+        captes = []
+        ok_c, texte_c = gui.cloner_et_attacher(origin_garde, destination,
+                                               emit=captes.append)
+        verifie("t14-clone-labo-vert-et-attache",
+                ok_c and "ATTACHÉ" in texte_c
+                and gui.RACINE_DEPOT == os.path.abspath(destination)
+                and gui.SOURCE_DEPOT == "clone choisi (GUI, D117)",
+                texte_c)
+        verifie("t14-clone-labo-preuve-origin",
+                os.path.isdir(os.path.join(destination, ".git"))
+                and gui.preuve_clone()[0] is True)
+        verifie("t14-clone-labo-fil-git-vert-sur-clone",
+                gui.fil_ceremonie(scenario="repo git")[0][2] is True)
+        origin_sans_garde = monter_source("labo-sans-garde", False)
+        destination2 = os.path.join(rep, "labo-sans-garde", "clone")
+        ok_d, texte_d = gui.cloner_et_attacher(origin_sans_garde, destination2)
+        verifie("t14-clone-sans-garde-attachement-refuse",
+                not ok_d and "v06/coffre_cf2.py introuvable" in texte_d
+                and "attachement REFUSÉ" in texte_d
+                and gui.RACINE_DEPOT == os.path.abspath(destination)
+                and os.path.isdir(os.path.join(destination2, ".git")),
+                texte_d[:200])
+    finally:
+        gui.definir_racine_depot(racine_sauvee, source_sauvee)
+    verifie("t14-restauration-depot-des-tests",
+            gui.RACINE_DEPOT == racine_sauvee)
 
 
 def _ecrire(chemin, texte):
@@ -890,7 +1092,7 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111 · D112) — dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111 · D112 · D117) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -902,6 +1104,8 @@ def main() -> int:
         t9_cle_a_la_main(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t10-") as rep:
         t10_chemins_coffre(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t14-") as rep:
+        t14_scenarios_clone(rep)
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

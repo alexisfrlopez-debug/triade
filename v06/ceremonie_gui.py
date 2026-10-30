@@ -70,6 +70,20 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       jamais « add -A », la clé privée vit hors du dépôt — commit nommé,
       pull --rebase AVANT push : le push rejeté du terrain D113-115 ne se
       reproduira plus silencieusement, échecs nommés étape par étape) ;
+    - D117 — LE SCÉNARIO AVANT TOUT : l'accueil s'ouvre sur le CHOIX entre
+      deux scénarios qui déterminent les étapes affichées par le fil de
+      cérémonie — « DOSSIER LOCAL » (le dépôt vit déjà sur cette machine :
+      on l'attache, fil de CINQ étapes) et « REPO GIT » (le dépôt vient
+      d'un distant : fil de SIX étapes avec « Cloner le dépôt » en tête,
+      prouvé lecture seule par git rev-parse + origin) ; le scénario git
+      donne un panneau « Cloner en local… » (URL + dossier parent + nom,
+      destination non vide refusée NOMMÉ, URL ou destination commençant
+      par « - » refusée : un argument git déguisé est une injection,
+      git absent : code 127 nommé, jeton éventuel de l'URL MASQUÉ dans
+      journal, verdict et boîte noire) et « Attacher un clone
+      EXISTANT… » (garde D111 + preuve git/origin exigée) ; après un
+      clone réussi le dépôt est ATTACHÉ et les pages REBÂTIES (le profil
+      dépôt s'ouvre directement — le journal survit, discipline D112) ;
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -121,7 +135,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.6 (D116)"   # fenêtre au contenu + fil de cérémonie + git
+VERSION_GUI = "ceremonie-GUI v1.7 (D117)"   # scénarios dossier local / repo git + clonage
 
 
 # ===========================================================================
@@ -846,20 +860,24 @@ def executer_cli(module, args, emit=None, phrase=None, nouvelle_phrase=None,
 # l'AUTO-DÉTECTION des cinq étapes du sceau I (lecture seule, par preuves).
 # ---------------------------------------------------------------------------
 
-def executer_git(args, emit=None):
-    """git dans le dossier du dépôt attaché — même discipline de flux que
+def executer_git(args, emit=None, cwd=None):
+    """git dans le dossier du dépôt attaché (ou CWD explicite — D117 :
+    preuve/clonage sur un chemin QUELCONQUE) — même discipline de flux que
     les CLI (sortie streamee ligne à ligne, code de retour honnête). git
     absent du système : (127, échec nommé), jamais un traceback."""
+    dossier = cwd if cwd is not None else RACINE_DEPOT
     env = dict(os.environ)
     env.setdefault("PYTHONIOENCODING", "utf-8")
     try:
         proc = subprocess.Popen(
-            ["git"] + [str(a) for a in args], cwd=RACINE_DEPOT,
+            ["git"] + [str(a) for a in args], cwd=dossier,
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
             encoding="utf-8", errors="replace", env=env)
     except FileNotFoundError:
         return 127, ("git introuvable sur cette machine — installez-le "
                      "(git-scm.com) ou poussez depuis votre terminal")
+    except OSError as exc:      # cwd inexistant, entre autres
+        return 128, f"git : dossier de travail invalide ({exc})"
     return _pomper(proc, emit)
 
 
@@ -943,6 +961,161 @@ FIL_HINTS = {
 }
 
 
+# D117 — le scénario AVANT TOUT : deux façons d'amener le dépôt sur la
+# machine, deux fils d'étapes. « dossier local » : le dépôt existe déjà
+# (attachement D112), fil de CINQ étapes. « repo git » : le dépôt vient
+# d'un distant — fil de SIX étapes, « Cloner le dépôt » en tête, prouvé
+# lecture seule (git rev-parse + origin).
+SCENARIOS = ("dossier local", "repo git")
+SCENARIO_DOSSIER, SCENARIO_GIT = SCENARIOS
+TITRE_ETAPE_CLONE = "Cloner le dépôt (repo git)"
+
+
+def masquer_jeton(url):
+    """D117 — masque les IDENTIFIANTS d'une URL (user:pass@ ou jeton@)
+    pour le journal, le verdict et la boîte noire : une URL de clone peut
+    porter un jeton d'accès (https://<jeton>@github.com/…) et le GUI ne
+    le consigne JAMAIS en clair. Formes ssh scp-like (git@hôte:…) sans
+    schéma : inchangées (l'utilisateur « git » y est public)."""
+    import re   # noqa: E402 (usage local, ordre voulu)
+    return re.sub(r"(?<=://)[^/@:]+(?::[^/@]*)?@", "***@", str(url))
+
+
+def preuve_clone(chemin=None):
+    """D117 — preuve LECTURE SEULE que le dossier attaché (ou donné) est
+    un CLONE : racine d'un arbre git AVEC un remote origin. Retour
+    (faite, detail) — les refus sont NOMMÉS (pas un dépôt git / sans
+    origin / git absent / dossier absent), jamais devinés."""
+    cible = os.path.abspath(chemin if chemin is not None else RACINE_DEPOT)
+    if not os.path.isdir(cible):
+        return False, f"dossier absent — aucun dépôt à sonder : {cible}"
+    code_r, texte_r = executer_git(["rev-parse", "--show-toplevel"],
+                                   cwd=cible)
+    if code_r == 127:
+        return False, "git introuvable sur cette machine — clone impossible à prouver"
+    if code_r != 0:
+        premiere = texte_r.strip().splitlines()
+        premiere = premiere[0] if premiere else f"code {code_r}"
+        return False, f"pas un dépôt git ({premiere}) : {cible}"
+    racine_git = texte_r.strip().splitlines()[0].strip()
+    if os.path.abspath(racine_git) != cible:
+        return (False, f"sous-dossier d'un dépôt git (racine : "
+                       f"{racine_git}) — attachez la RACINE du clone, "
+                       f"pas un sous-dossier : {cible}")
+    code_o, texte_o = executer_git(["remote", "get-url", "origin"],
+                                   cwd=cible)
+    if code_o != 0:
+        return (False, "dépôt git SANS origin — le scénario repo git veut "
+                       "un CLONE (git clone pose l'origin ; un dépôt "
+                       "localement « init » n'en a pas)")
+    origin = texte_o.strip().splitlines()[0].strip() if texte_o.strip() \
+        else "(origine muette)"
+    return True, f"dépôt git cloné — origin : {masquer_jeton(origin)}"
+
+
+def cloner_depot(url, destination, emit=None):
+    """D117 — clone le dépôt distant vers DESTINATION (le dossier qui
+    DEVIENT la racine du clone). Refus NOMMÉS AVANT tout lancement : URL
+    vide, URL commençant par « - » (un argument git déguisé est une
+    injection), destination vide / commençant par « - » / NON VIDE
+    (fail-closed : rien n'y est touché). git absent : code 127 nommé.
+    Le jeton éventuel de l'URL est MASQUÉ partout (journal, verdict,
+    boîte noire). Après le clone, la PREUVE (rev-parse + origin) doit
+    passer — sinon échec nommé (un clone que l'on ne peut pas prouver
+    n'est pas un clone)."""
+    url = str(url or "").strip()
+    destination = str(destination or "").strip()
+    if not url:
+        raise ErreurCeremonie(
+            "cloner : URL du dépôt VIDE — donnez l'adresse git (ex. "
+            "https://github.com/alexisfrlopez-debug/triade.git ou "
+            "git@github.com:alexisfrlopez-debug/triade.git)")
+    if url.startswith("-"):
+        raise ErreurCeremonie(
+            f"cloner : URL refusée (elle commence par « - » — un argument "
+            f"git déguisé est une INJECTION, refus fail-closed) : "
+            f"{masquer_jeton(url)}")
+    if not destination:
+        raise ErreurCeremonie(
+            "cloner : destination VIDE — choisissez le dossier parent et le "
+            "nom du clone (le dossier qui DEVIENT la racine du dépôt)")
+    if destination.startswith("-"):
+        raise ErreurCeremonie(
+            f"cloner : destination refusée (commence par « - » — argument "
+            f"git déguisé, injection) : {destination}")
+    destination = os.path.abspath(os.path.expanduser(destination))
+    if os.path.exists(destination) and os.listdir(destination):
+        raise ErreurCeremonie(
+            f"cloner : destination NON VIDE — {destination} contient déjà "
+            f"des fichiers ; git clone veut un chemin LIBRE et le refus "
+            f"est NOMMÉ avant tout lancement (fail-closed, rien n'y est "
+            f"touché)")
+    if emit:
+        emit(f"[git] clone {masquer_jeton(url)} → {destination}")
+    env = dict(os.environ)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    try:
+        proc = subprocess.Popen(
+            ["git", "clone", "--", url, destination], cwd=None,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            encoding="utf-8", errors="replace", env=env)
+    except FileNotFoundError:
+        return False, ("git introuvable sur cette machine — installez-le "
+                       "(git-scm.com) ou clonez depuis votre terminal")
+    code, texte = _pomper(proc, emit)
+    if code != 0:
+        lignes = texte.strip().splitlines()
+        premiere = lignes[0] if lignes else f"code {code}"
+        return False, (f"git clone a échoué (code {code}) — {premiere} ; "
+                       f"URL : {masquer_jeton(url)}")
+    faite, detail = preuve_clone(destination)
+    if not faite:
+        return False, (f"clone posé mais PREUVE refusée : {detail} — "
+                       "un clone que l'on ne peut pas prouver n'est pas "
+                       "un clone (échec nommé, rien n'est attaché)")
+    return True, (f"[git] clone terminé : {destination} — {detail}")
+
+
+def cloner_et_attacher(url, destination, emit=None):
+    """D117 — clone PUIS attache (la chaîne du bouton « Cloner en
+    local… ») : après un clone prouvé, la garde D111 (v06/coffre_cf2.py)
+    décide de l'attachement — un clone qui n'est pas un dépôt triade
+    complet reste sur le disque mais n'est PAS attaché (échec nommé,
+    aucun attachement partiel). L'attachement réussi re-pointe TOUT le
+    profil dépôt (config, coffre CF1, CLI) sur le clone — les pages sont
+    rebâties par le fil tkinter (cf. _sur_fin_action), jamais depuis le
+    fil ouvrier."""
+    ok, texte = cloner_depot(url, destination, emit=emit)
+    if not ok:
+        return False, texte
+    destination = os.path.abspath(os.path.expanduser(str(destination)))
+    if not os.path.isfile(os.path.join(destination, "v06", "coffre_cf2.py")):
+        return False, (f"{texte}\n[ceremonie] v06/coffre_cf2.py introuvable "
+                       "dans le clone : ce n'est pas (pas encore) un dépôt "
+                       "triade complet — attachement REFUSÉ (fail-closed "
+                       "D111) ; le clone reste sur le disque, il s'attachera "
+                       "par « Choisir le dossier du dépôt… » s'il se "
+                       "complète")
+    definir_racine_depot(destination, "clone choisi (GUI, D117)")
+    if emit:
+        emit(f"[ceremonie] dépôt attaché : {RACINE_DEPOT} — clone (D117), "
+             "garde v06/coffre_cf2.py VERTE")
+    return True, f"{texte} ; dépôt ATTACHÉ : {RACINE_DEPOT}"
+
+
+def hint_fil(scenario, numero):
+    """D117 — le GESTE de l'étape NUMERO sous le SCÉNARIO courant : en
+    repo git l'étape 1 est le CLONAGE et les étapes du sceau sont décalées
+    d'un rang ; sinon la table FIL_HINTS d'origine."""
+    if scenario == SCENARIO_GIT:
+        if numero == 1:
+            return ("Accueil → scénario REPO GIT → bouton « Cloner en "
+                    "local… » (ou « Attacher un clone existant… » si le "
+                    "clone vit déjà sur cette machine).")
+        numero -= 1
+    return FIL_HINTS[numero]
+
+
 def _lire_a_signer(chemin):
     """Lignes « arbre balise empreinte » d'un a-signer.txt → dictionnaire
     arbre → empreinte (64 hex). Absent ou illisible : {}."""
@@ -960,12 +1133,18 @@ def _lire_a_signer(chemin):
 
 
 def fil_ceremonie(a_signer=None, privee=None, publique=None,
-                  signatures=None, chemins_git=("v06/sceau-I",)):
-    """D116 — l'état des CINQ étapes de la cérémonie du sceau I, par
+                  signatures=None, chemins_git=("v06/sceau-I",),
+                  scenario=None):
+    """D116/D117 — l'état des étapes de la cérémonie du sceau I, par
     PREUVES (lecture seule : fichiers présents, CLI read-only, git
     status — aucune écriture, aucune clé touchée). Retour
     [(numéro, titre, faite, detail)] ; ce que la détection ne peut pas
-    PROUVER, elle le nomme « à faire » avec la cause — jamais deviné."""
+    PROUVER, elle le nomme « à faire » avec la cause — jamais deviné.
+    D117 : scenario="repo git" prépose « Cloner le dépôt » (preuve
+    rev-parse + origin) et décale les cinq étapes du sceau d'un rang
+    (fil de SIX) ; tout autre scénario (dont None) rend le fil de CINQ
+    d'origine — le scénario ne change AUCUNE preuve du sceau, seulement
+    la tête du fil."""
     import re   # noqa: E402 (usage local au fil, ordre voulu)
     re_verifier = re.compile(
         r"^\[sceau-I\] (\S+): CODE (\d+) — .*empreinte vivante "
@@ -1063,8 +1242,14 @@ def fil_ceremonie(a_signer=None, privee=None, publique=None,
                          f"({branche.strip(' #')})")
         else:
             e5 = True, f"{', '.join(chemins_git)} propre et poussé"
+    etats_sceau = (e1, e2, e3, e4, e5)
+    if scenario == SCENARIO_GIT:
+        lignes = [(1, TITRE_ETAPE_CLONE, *preuve_clone())]
+        lignes += [(i + 2, FIL_ETAPES[i][1], *etat)
+                   for i, etat in enumerate(etats_sceau)]
+        return lignes
     return [(FIL_ETAPES[i][0], FIL_ETAPES[i][1], *etat)
-            for i, etat in enumerate((e1, e2, e3, e4, e5))]
+            for i, etat in enumerate(etats_sceau)]
 
 
 # ---------------------------------------------------------------------------
@@ -1564,9 +1749,11 @@ class Application:
         self.racine.report_callback_exception = self._sur_crash_rappel
         ENREGISTREUR.entete(self.racine)
         self.depot_pret = depot_disponible()
+        self.scenario = None            # D117 : aucun scénario choisi AVANT TOUT
         self._batir_accueil()
         self._batir_hors_ligne()
         self._batir_depot()
+        self._racine_pages = RACINE_DEPOT   # D117 : détecte un attachement post-clone
         self.executeur.pompe()
         self._autotest_demarrage()
         cible = {"hors-ligne": "hors-ligne", "depot": "depot"}.get(profil)
@@ -1928,6 +2115,39 @@ class Application:
                          "les remises. Les deux profils partagent ce fichier "
                          "mais jamais leurs secrets.")
 
+        # --- D117 : LE SCÉNARIO AVANT TOUT -------------------------------
+        # Deux scénarios déterminent les étapes affichées par le fil de
+        # cérémonie (profil dépôt) : DOSSIER LOCAL (cinq étapes — le dépôt
+        # vit déjà ici, on l'attache) et REPO GIT (six étapes — « Cloner le
+        # dépôt » en tête, prouvé lecture seule ; bouton de clonage).
+        scen = self._section(
+            page, "Scénario de cérémonie — AVANT TOUT, comment le dépôt "
+                  "arrive-t-il ici ? (D117)")
+        scen.pack(fill="x", pady=6)
+        self.cadre_scen_section = scen   # D117 : le panneau s'y re-bâtit
+        self._note(scen, "Le scénario détermine les étapes affichées par le "
+                         "fil de cérémonie du profil dépôt : DOSSIER LOCAL → "
+                         "cinq étapes (le dépôt vit déjà sur cette machine) ; "
+                         "REPO GIT → six étapes, « Cloner le dépôt » en tête "
+                         "(le dépôt vient d'un distant — GitHub ou autre). "
+                         "Changer de scénario se fait ici, à tout moment.")
+        barre_sc = ttk.Frame(scen)
+        barre_sc.pack(fill="x", pady=2)
+        self.bouton_scen_dossier = ttk.Button(
+            barre_sc, text="DOSSIER LOCAL — le dépôt est déjà ici",
+            command=lambda: self._choisir_scenario(SCENARIO_DOSSIER))
+        self.bouton_scen_dossier.pack(side="left", padx=(0, 6))
+        self.bouton_scen_git = ttk.Button(
+            barre_sc, text="REPO GIT — cloner depuis un distant",
+            command=lambda: self._choisir_scenario(SCENARIO_GIT))
+        self.bouton_scen_git.pack(side="left")
+        self.label_scenario = ttk.Label(scen, style="Sous.TLabel",
+                                        wraplength=880, justify="left")
+        self.label_scenario.pack(anchor="w", pady=(4, 0))
+        self.cadre_scen_panels = ttk.Frame(scen)
+        self.cadre_scen_panels.pack(fill="x", pady=(4, 0))
+        self._montrer_panels_scenario()
+
         hors_ligne = self._section(page, "Machine HORS-LIGNE — cérémonie de la clé I (D87)")
         hors_ligne.pack(fill="x", pady=6)
         self._note(hors_ligne, "Générer la clé (première fois), signer les "
@@ -1976,11 +2196,178 @@ class Application:
                    command=lambda: self.montrer("accueil")).pack(anchor="w",
                                                                  pady=8)
 
-    def _sur_choisir_depot(self):
-        """D112 — le dossier du dépôt se choisit DANS la fenêtre. La garde
-        D111 est inchangée : v06/coffre_cf2.py doit y vivre (échec NOMMÉ,
-        aucun attachement partiel). Le re-attachement REBÂTIT les pages :
-        config, coffre CF1 et disponibilité suivent le nouveau dépôt."""
+    # ------------------------------------------------------------------
+    # D117 — LE SCÉNARIO AVANT TOUT : choix, panneau, clonage
+    # ------------------------------------------------------------------
+    def _choisir_scenario(self, scenario):
+        """Retient le scénario (consigné au journal et à la boîte noire —
+        un choix de cérémonie n'est pas un secret) et rebâtit son panneau.
+        Le fil de cérémonie suit AU PROCHAIN RAFRAÎCHISSEMENT (montrer le
+        profil dépôt, ré-évaluer, fin d'action) : la preuve reste la
+        vérité, l'affichage la suit."""
+        if scenario not in SCENARIOS:
+            return
+        if self.scenario != scenario:
+            self.scenario = scenario
+            ENREGISTREUR.ligne(f"scénario choisi : {scenario}", "scenario")
+            self.journal.ajoute(
+                f"[ceremonie] scénario de cérémonie : {scenario} (D117 — il "
+                "détermine les étapes affichées par le fil)", "info")
+        self._montrer_panels_scenario()
+        if getattr(self, "label_fil_courant", None) is not None:
+            self._rafraichir_fil()
+
+    def _montrer_panels_scenario(self):
+        """Le panneau du scénario courant : dossier local → l'attache
+        D112 ; repo git → le CLONAGE (URL + parent + nom) et l'attache
+        d'un clone existant ; aucun → l'invitation à choisir AVANT TOUT."""
+        panneau = getattr(self, "cadre_scen_panels", None)
+        if panneau is not None:
+            panneau.destroy()
+        panneau = ttk.Frame(self.cadre_scen_section)
+        panneau.pack(fill="x", pady=(4, 0))
+        self.cadre_scen_panels = panneau
+        if self.scenario == SCENARIO_GIT:
+            self.label_scenario.configure(
+                text="Scénario retenu : REPO GIT — fil de SIX étapes "
+                     "(« Cloner le dépôt » en tête, prouvé par git rev-parse "
+                     "+ origin). Le jeton éventuel de l'URL est MASQUÉ dans "
+                     "le journal et la boîte noire.")
+            self._note(panneau, "Le bouton ci-dessous exécute git clone "
+                                "(réseau) vers le dossier parent + nom choisis "
+                                "— la destination doit être LIBRE (un dossier "
+                                "non vide est un refus NOMMÉ, rien n'y est "
+                                "touché) ; après un clone prouvé, le dépôt est "
+                                "ATTACHÉ et le profil dépôt s'ouvre. Un dépôt "
+                                "privé peut demander votre authentification "
+                                "GitHub.")
+            cadre_u = ttk.Frame(panneau)
+            cadre_u.pack(fill="x", pady=2)
+            ttk.Label(cadre_u, text="URL du dépôt git :", width=26,
+                      anchor="w").pack(side="left")
+            self.var_clone_url = tk.StringVar()
+            ttk.Entry(cadre_u, textvariable=self.var_clone_url).pack(
+                side="left", fill="x", expand=True, padx=(0, 6))
+            cadre_p = ttk.Frame(panneau)
+            cadre_p.pack(fill="x", pady=2)
+            ttk.Label(cadre_p, text="Dossier parent du clone :", width=26,
+                      anchor="w").pack(side="left")
+            self.var_clone_parent = tk.StringVar(
+                value=os.path.expanduser("~"))
+            ttk.Entry(cadre_p, textvariable=self.var_clone_parent).pack(
+                side="left", fill="x", expand=True, padx=(0, 6))
+
+            def choisir_parent():
+                chemin = filedialog.askdirectory(
+                    title="Dossier PARENT qui recevra le clone",
+                    initialdir=self.var_clone_parent.get()
+                    if os.path.isdir(self.var_clone_parent.get()) else
+                    os.path.expanduser("~"))
+                if chemin:
+                    self.var_clone_parent.set(chemin)
+
+            ttk.Button(cadre_p, text="Parcourir…", width=11,
+                       command=choisir_parent).pack(side="left")
+            cadre_n = ttk.Frame(panneau)
+            cadre_n.pack(fill="x", pady=2)
+            ttk.Label(cadre_n, text="Nom du dossier local :", width=26,
+                      anchor="w").pack(side="left")
+            self.var_clone_nom = tk.StringVar()
+            ttk.Entry(cadre_n, textvariable=self.var_clone_nom).pack(
+                side="left", fill="x", expand=True, padx=(0, 6))
+            self._nom_auto_clone = ""
+            self.var_clone_url.trace_add(
+                "write", lambda *_: self._maj_nom_auto_clone())
+            barre_clone = ttk.Frame(panneau)
+            barre_clone.pack(fill="x", pady=(4, 0))
+            ttk.Button(barre_clone, text="Cloner en local…",
+                       command=self._sur_clone).pack(side="left")
+            ttk.Button(barre_clone, text="Attacher un clone EXISTANT…",
+                       command=lambda: self._sur_choisir_depot(
+                           exige_clone=True)).pack(side="left", padx=6)
+        elif self.scenario == SCENARIO_DOSSIER:
+            self.label_scenario.configure(
+                text="Scénario retenu : DOSSIER LOCAL — fil de CINQ étapes "
+                     "(le dépôt vit déjà sur cette machine, on l'attache).")
+            ttk.Button(panneau, text="Choisir le dossier du dépôt…",
+                       command=self._sur_choisir_depot).pack(anchor="w",
+                                                            pady=2)
+        else:
+            self.label_scenario.configure(
+                text="Aucun scénario choisi — AVANT TOUT, choisissez ci-dessus "
+                     "(le fil affichera cinq étapes en dossier local, six en "
+                     "repo git avec « Cloner le dépôt » en tête).")
+
+    def _maj_nom_auto_clone(self, *_):
+        """Pré-remplit le nom du clone depuis l'URL (triade.git → triade) —
+        SANS écraser un nom retapé à la main : la main garde le dernier "
+        mot tant qu'elle a touché le champ."""
+        url = self.var_clone_url.get().strip()
+        nom = url.rstrip("/").rsplit("/", 1)[-1].rsplit(":", 1)[-1]
+        if nom.endswith(".git"):
+            nom = nom[:-4]
+        nom_auto = nom if nom else ""
+        if not self.var_clone_nom.get().strip() \
+                or self.var_clone_nom.get().strip() == self._nom_auto_clone:
+            self.var_clone_nom.set(nom_auto)
+        self._nom_auto_clone = nom_auto
+
+    def _sur_clone(self):
+        """« Cloner en local… » : validations LOCALES nommées AVANT tout
+        lancement (URL, parent, nom, destination libre), confirmation
+        explicite (l'URL y est MASQUÉE — un jeton ne paraît pas à l'écran
+        plus qu'au journal), puis l'action asynchrone cloner_et_attacher
+        (le fil ouvrier clone et attache ; le fil tkinter rebâtit les
+        pages au verdict — cf. _sur_fin_action)."""
+        if self.executeur.occupe:
+            self._dialogue("showinfo", "Cérémonie en cours",
+                "Attendez le verdict de l'action en cours avant de cloner "
+                "(les chemins se suivent à l'attachement).")
+            return
+        url = self.var_clone_url.get().strip()
+        parent = self.var_clone_parent.get().strip()
+        nom = self.var_clone_nom.get().strip()
+        if not url:
+            self._dialogue("showwarning", "Clone — URL vide",
+                "Donnez l'URL du dépôt git à cloner (ex. "
+                "https://github.com/alexisfrlopez-debug/triade.git).")
+            return
+        if not parent or not os.path.isdir(parent):
+            self._dialogue("showwarning", "Clone — dossier parent",
+                "Choisissez le dossier PARENT EXISTANT qui recevra le clone "
+                "(bouton Parcourir…).")
+            return
+        if not nom:
+            self._dialogue("showwarning", "Clone — nom du dossier",
+                "Donnez le nom du dossier local du clone (pré-rempli depuis "
+                "l'URL).")
+            return
+        destination = os.path.join(parent, nom)
+        if os.path.exists(destination) and os.listdir(destination):
+            self._dialogue("showerror", "Clone — destination NON VIDE",
+                f"{destination} contient déjà des fichiers — git clone veut "
+                "un chemin LIBRE. Refus nommé (fail-closed) : rien n'y est "
+                "touché.")
+            return
+        if not self._dialogue(
+                "askyesno", "Cloner le dépôt (D117)",
+                f"git clone {masquer_jeton(url)}\n→ {destination}\n\n"
+                "Le réseau est utilisé ; l'authentification d'un dépôt privé "
+                "peut ouvrir votre navigateur. Le jeton éventuel de l'URL est "
+                "MASQUÉ dans le journal et la boîte noire. Continuer ?"):
+            return
+        self.action("Git — cloner le dépôt", cloner_et_attacher, url,
+                    destination)
+
+    def _sur_choisir_depot(self, exige_clone=False):
+        """D112/D117 — le dossier du dépôt se choisit DANS la fenêtre. La
+        garde D111 est inchangée : v06/coffre_cf2.py doit y vivre (échec
+        NOMMÉ, aucun attachement partiel). EXIGE_CLONE (scénario repo git,
+        « Attacher un clone EXISTANT… ») ajoute la preuve git : le dossier
+        doit ÊTRE la racine d'un clone AVEC origin (refus nommé sinon —
+        le fil de ce scénario l'exigerait de toute façon). Le
+        re-attachement REBÂTIT les pages : config, coffre CF1 et
+        disponibilité suivent le nouveau dépôt."""
         if self.executeur.occupe:
             self._dialogue("showinfo", 
                 "Cérémonie en cours",
@@ -2004,19 +2391,31 @@ class Application:
                 "inchangé (fail-closed) : le profil dépôt reste ce qu'il "
                 "était.")
             return
+        if exige_clone:
+            faite, detail = preuve_clone(candidat)
+            if not faite:
+                self._dialogue("showerror",
+                    "Pas un CLONE (scénario repo git)",
+                    f"{detail}\n\nLe scénario REPO GIT exige la racine d'un "
+                    "dépôt git AVEC origin (le fil de ce scénario le prouve "
+                    "à chaque étape). Refus nommé, attachement inchangé.")
+                return
         definir_racine_depot(candidat, "dossier choisi (GUI)")
         self.journal.ajoute(
             f"[ceremonie] dépôt attaché : {RACINE_DEPOT} — dossier choisi "
             "dans la fenêtre (D112), garde v06/coffre_cf2.py VERTE", "titre")
         self._rebâtir_pages()
 
-    def _rebâtir_pages(self):
+    def _rebâtir_pages(self, cible="accueil"):
         """Détruit et reconstruit les trois pages : tout ce qui capture le
         dépôt À LA CONSTRUCTION (config CF2, coffre CF1, disponibilité,
-        textes de l'accueil) suit le re-attachement. Le journal, l'exécuteur
-        et la barre de verdict vivant HORS des pages, ils survivent —
-        l'historique de cérémonie n'est jamais effacé par un changement de
-        dépôt."""
+        textes de l'accueil, panneau du scénario D117) suit le
+        re-attachement. Le journal, l'exécuteur et la barre de verdict
+        vivant HORS des pages, ils survivent — l'historique de cérémonie
+        n'est jamais effacé par un changement de dépôt. D117 : CIBLE
+        permet d'ouvrir DIRECTEMENT le profil dépôt après un clone (la
+        cérémonie commence) ; le marqueur _racine_pages dit au
+        _sur_fin_action quand un attachement a eu lieu HORS des pages."""
         for page in self.pages.values():
             page.destroy()
         self.pages = {}
@@ -2024,7 +2423,9 @@ class Application:
         self._batir_accueil()
         self._batir_hors_ligne()
         self._batir_depot()
-        self.montrer("accueil")
+        self._racine_pages = RACINE_DEPOT
+        self.montrer(cible if (cible == "depot" and self.depot_pret)
+                     else "accueil")
 
     # ------------------------------------------------------------------
     # PAGE HORS-LIGNE — clé I : générer / signer / vérifier
@@ -2322,6 +2723,7 @@ class Application:
         # suivante s'affiche — auto-détection par PREUVES, lecture seule
         fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116)")
         fil.pack(fill="x", pady=(0, 4))
+        self.cadre_fil = fil      # D117 : le titre porte le scénario courant
         self.fil_manuel = set()
         self._fil_etat = None
         self.label_fil_resume = ttk.Label(
@@ -2881,7 +3283,15 @@ class Application:
     # ------------------------------------------------------------------
     def _sur_fin_action(self):
         """Chaque verdict relance l'auto-détection du fil : l'étape
-        satisfaite s'efface, la suivante prend la lumière (D116)."""
+        satisfaite s'efface, la suivante prend la lumière (D116). D117 :
+        si l'action vient d'ATTACHER un nouveau dépôt (clone réussi, ou
+        dossier choisi ailleurs), les pages sont rebâties SUR LE FIL
+        tkinter — jamais depuis le fil ouvrier — et le profil dépôt
+        s'ouvre directement (la cérémonie commence)."""
+        if getattr(self, "_racine_pages", RACINE_DEPOT) != RACINE_DEPOT:
+            cible = "depot" if depot_disponible() else "accueil"
+            self._rebâtir_pages(cible=cible)
+            return
         if getattr(self, "label_fil_courant", None) is not None:
             self.racine.after(300, self._rafraichir_fil)
 
@@ -2908,11 +3318,18 @@ class Application:
         return a_signer, privee, publique, signatures
 
     def _rafraichir_fil(self):
-        """Ré-évalue les CINQ étapes par PREUVES (lecture seule) et
-        redessine le fil. Les marques MANUELLES survivent (l'union
+        """Ré-évalue les étapes par PREUVES (lecture seule) et redessine
+        le fil — le TITRE porte le scénario (D117 : cinq étapes en dossier
+        local, six en repo git). Les marques MANUELLES survivent (l'union
         l'emporte — seul « Ré-évaluer l'étape » les efface)."""
         if getattr(self, "label_fil_courant", None) is None:
             return
+        try:
+            self.cadre_fil.configure(
+                text="Fil de cérémonie — Sceau I (D117 · scénario : "
+                     f"{self.scenario or 'non choisi'})")
+        except tk.TclError:
+            pass    # page en cours de destruction : le prochain passage suivra
         self.label_fil_courant.configure(
             text="▶ Fil de cérémonie : évaluation en cours (lecture "
                  "seule)…", foreground=COULEUR_ATTENTE)
@@ -2921,7 +3338,8 @@ class Application:
         a_signer, privee, publique, signatures = self._collecter_chemins_fil()
         try:
             etat = fil_ceremonie(a_signer=a_signer, privee=privee,
-                                 publique=publique, signatures=signatures)
+                                 publique=publique, signatures=signatures,
+                                 scenario=self.scenario)
         except Exception as exc:      # jamais muet, même ici
             ENREGISTREUR.ligne(
                 f"fil : échec inattendu ({type(exc).__name__}) : {exc}",
@@ -2969,7 +3387,7 @@ class Application:
             self.label_fil_courant.configure(
                 text=f"▶ ÉTAPE {numero} — {titre}", foreground=COULEUR_ENCRE)
             self.label_fil_detail.configure(
-                text=f"{detail}\n   Geste : {FIL_HINTS[numero]}",
+                text=f"{detail}\n   Geste : {hint_fil(self.scenario, numero)}",
                 foreground="#57606a")
         if suite:
             self.label_fil_suite.configure(
@@ -3428,6 +3846,24 @@ def selftest():
     except OSError:
         retrouvé = False
     controle("boite-noire-ecrit-et-restitue", retrouvé)
+    # D117 : le scénario AVANT TOUT — masquage de jeton, preuve clone,
+    # gestes du fil qui suivent le scénario
+    controle("d117-masque-jeton-url",
+             masquer_jeton("https://jeton@github.com/u/r.git")
+             == "https://***@github.com/u/r.git"
+             and masquer_jeton("https://user:pass@h/x.git")
+             == "https://***@h/x.git"
+             and masquer_jeton("git@github.com:u/r.git")
+             == "git@github.com:u/r.git")
+    with tempfile.TemporaryDirectory(prefix="ceremonie-selftest-scen-") as tmp:
+        faite, detail = preuve_clone(tmp)
+        controle("d117-preuve-refusee-hors-git-nommee", not faite
+                 and "pas un dépôt git" in detail, detail)
+    controle("d117-hints-suivent-le-scenario",
+             "Cloner en local" in hint_fil(SCENARIO_GIT, 1)
+             and hint_fil(SCENARIO_GIT, 2) == FIL_HINTS[1]
+             and hint_fil(SCENARIO_DOSSIER, 1) == FIL_HINTS[1]
+             and hint_fil(None, 5) == FIL_HINTS[5])
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs
