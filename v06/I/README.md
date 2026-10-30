@@ -76,9 +76,14 @@ Règles :
    `.md` ; tout fichier nouveau — quelle que soit son extension — entre au
    manifeste au prochain `preparer` : un ajout non signé est un diff
    d'intention, refusé comme une modification).
-2. Chaque ligne fichier porte le SHA-256 du contenu, hexadécimal minuscule,
-   **deux espaces** après le condensé (canon `sha256sum`-compatible en
-   lecture humaine).
+2. Chaque ligne fichier porte le SHA-256 du contenu **canonique LF** :
+   toute paire `\r\n` est normalisée en `\n` avant condensé — la
+   représentation du checkout (Windows `autocrlf` porte CRLF ; le dépôt
+   git porte LF) n'est pas l'intention. D115 : la cérémonie de terrain
+   D113 avait signé des empreintes CRLF, la vérification à froid sur un
+   clone LF dénonçait les dix arbres CODE 10, signatures pourtant
+   valides. Hexadécimal minuscule, **deux espaces** après le condensé
+   (canon `sha256sum`-compatible en lecture humaine).
 3. Répertoires vides, liens symboliques et fichiers spéciaux : **refus de
    préparation** (fail-closed — un arbre d'intention n'est pas un espace
    arbitraire ; un lien symbolique serait une échappée hors de l'arbre).

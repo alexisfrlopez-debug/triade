@@ -10,8 +10,10 @@ les critères de sortie D87 un par un :
   T2  interopérabilité BIDIRECTIONNELLE pure-Python <-> cryptography
       (signer A vérifier B, signer B vérifier A, signatures déterministes
       IDENTIQUES, clés publiques identiques — 20 messages seedés)
-  T3  déterminisme du manifeste (double calcul, mtime changé, dépôt réel
-      vert)
+  T3  déterminisme du manifeste (double calcul, mtime changé, jumelle
+      CRLF IDENTIQUE — canon LF D115 : la représentation du checkout
+      n'est pas l'intention —, octet muté hors fin de ligne toujours
+      attrapé, dépôt réel vert OU fenêtre de re-cérémonie D115 PROUVÉE)
   F1  la CÉRÉMONIE COMPLÈTE en laboratoire, sur RÉPLIQUE : generer →
       signer → verifier (script autonome, sous-processus, répertoire
       isolé) → deposer --cle → le dépôt de réplique passe vert avec
@@ -26,12 +28,18 @@ les critères de sortie D87 un par un :
   F4  remise douteuse REFUSÉE sans rien écrire (atomicité : mauvaise
       signature, remise incomplète, balise divergente — le dépôt reste
       INTACT, octet pour octet)
-  T4  clé de TEST déterministe + état visible (« test », jamais confondu
-      avec une cérémonie réelle — défaut X8 sinon)
+  T4  clé de TEST déterministe + COHÉRENCE état ↔ clé déposée (l'ère lab
+      dépose la clé de test et dit « test » ; l'ère réelle dépose une
+      clé ≠ test et dit « reelle » — mentir dans un sens comme dans
+      l'autre serait le défaut X8)
 
 Les tests ne touchent JAMAIS aux vrais arbres ni au vrai dépôt : tout se
-joue sur une RÉPLIQUE (copie temporaire, globaux du module patchés), et la
-dernière ligne vérifie que le dépôt RÉEL est toujours vert.
+joue sur une RÉPLIQUE (copie temporaire, globaux du module patchés,
+ré-alignée VERT canonique par signer-test à l'entrée — D115 : le dépôt
+réel peut porter les empreintes CRLF d'une cérémonie de terrain pendant
+la fenêtre de re-cérémonie), et la dernière ligne vérifie que le dépôt
+RÉEL est vert — ou, pendant la fenêtre D115, que sa divergence est de
+REPRÉSENTATION seule, signatures valides.
 
 Usage : python3 v06/test_sceau_I.py
 """
@@ -92,19 +100,17 @@ class Replique:
         S.DIR_MANIFESTES = os.path.join(dst_dep, "manifestes")
         S.DIR_SIGNATURES = os.path.join(dst_dep, "signatures")
         S.ETAT_CLE = os.path.join(dst_dep, "etat-cle.txt")
+        # D115 — la réplique repart d'un état VERT canonique (clé de test,
+        # spec § 8) : le dépôt copié peut porter les empreintes CRLF d'une
+        # cérémonie de terrain (fenêtre de re-cérémonie) — F2/F3/F4 doivent
+        # mesurer leurs PROPRES mutations, pas la fenêtre du dépôt réel.
+        S.signer_test()
         return self
 
     def __exit__(self, *args):
         for cle, valeur in self.sauves.items():
             setattr(S, cle, valeur)
         shutil.rmtree(self.tmp, ignore_errors=True)
-
-    def _lire_manifeste_source(self, arbre):
-        """Manifeste d'origine du dépôt réel (restauration F3-c)."""
-        chemin = os.path.join(self.source, "v06", "sceau-I", "manifestes",
-                              f"{arbre}.txt")
-        with open(chemin, "r", encoding="utf-8") as f:
-            return f.read()
 
 
 def _empreinte_depot(replique):
@@ -196,6 +202,73 @@ def t2_interop():
 # T3 — déterminisme du manifeste + dépôt réel vert
 # ---------------------------------------------------------------------------
 
+# Hash canonique (LF) du v06/I/README.md AMENDÉ par D115 (règle § 2 :
+# hachage du contenu canonique LF) — l'UNIQUE divergence de contenu
+# tolérée pendant la fenêtre de re-cérémonie : l'amendement lui-même,
+# en attente de re-signature par la clé physique du développeur.
+HASH_README_V06_D115 = "4bd40fa591ebc9728bd900dbb74c70e21b3f4a804732548b6e2105eb8c0922f0"
+
+
+def _hashes_manifeste(texte):
+    """Dictionnaire chemin -> condensé (parseur « sha256: » = 7 caractères)."""
+    d = {}
+    for l in texte.splitlines():
+        if l.startswith("sha256:"):
+            condense, chemin = l[7:].split("  ", 1)
+            d[chemin] = condense
+    return d
+
+
+def _fenetre_d115():
+    """(ok, detail) — le dépôt réel pendant la fenêtre de re-cérémonie D115.
+
+    Il porte les empreintes CRLF de la cérémonie de terrain D113 pendant
+    que code et arbres vivants sont devenus canoniques LF. PREUVE exigée
+    fichier par fichier : hash(CRLF(vivant)) == hash déposé — sauf
+    v06/I/README.md, l'amendement D115 lui-même (hash littéral
+    ci-dessus) ; et signature par signature : la clé réelle a bien signé
+    l'empreinte déposée. Cette fonction MEURT à la re-cérémonie :
+    verifier() re-verdit et ne l'appelle plus."""
+    for arbre in S.ARBRES:
+        texte_vivant, _ = S.manifeste(arbre)
+        with open(os.path.join(S.DIR_MANIFESTES, f"{arbre}.txt"),
+                  encoding="utf-8") as f:
+            texte_depose = f.read()
+        vivants = _hashes_manifeste(texte_vivant)
+        deposees = _hashes_manifeste(texte_depose)
+        for chemin_f in sorted(set(vivants) | set(deposees)):
+            if vivants.get(chemin_f) == deposees.get(chemin_f):
+                continue
+            p = os.path.join(S.RACINE, arbre, "I", chemin_f)
+            try:
+                with open(p, "rb") as f:
+                    canon = f.read().replace(b"\r\n", b"\n")
+            except OSError as e:
+                return False, f"{arbre}/I/{chemin_f} illisible : {e}"
+            if (arbre == "v06" and chemin_f == "README.md"
+                    and hashlib.sha256(canon).hexdigest()
+                    == HASH_README_V06_D115):
+                continue      # l'amendement D115, en attente de signature
+            if hashlib.sha256(canon.replace(b"\n", b"\r\n")).hexdigest() \
+                    != deposees.get(chemin_f):
+                return False, (f"{arbre}/I/{chemin_f} : divergence hors "
+                               f"représentation CRLF/LF")
+        empreinte_deposee = hashlib.sha256(
+            texte_depose.encode("utf-8")).hexdigest()
+        try:
+            with open(os.path.join(S.DIR_SIGNATURES, f"{arbre}.txt"),
+                      encoding="utf-8") as f:
+                signature = f.read().strip()
+            valide = S._verifier_ed25519(bytes.fromhex(empreinte_deposee),
+                                          bytes.fromhex(signature),
+                                          S.cle_publique_deposee())
+        except (OSError, ValueError, S.EchecSceauI) as e:
+            return False, f"signature {arbre} illisible : {e}"
+        if not valide:
+            return False, f"signature {arbre} invalide (empreinte déposée)"
+    return True, ""
+
+
 def t3_determinisme():
     print("[T3] déterminisme du manifeste")
     texte1, emp1 = S.manifeste("m4")
@@ -209,14 +282,48 @@ def t3_determinisme():
     os.utime(chemin, (avant, avant))
     verifie("T3-b mtime changé, manifeste inchangé", emp3 == emp1)
     # tri indépendant du système : lignes déjà triées lexicographiquement
-    lignes = [l[8:].split("  ", 1)[1] for l in texte1.splitlines()
+    lignes = [l[7:].split("  ", 1)[1] for l in texte1.splitlines()
               if l.startswith("sha256:")]
     verifie("T3-c lignes triées lexicographiquement (canon POSIX)",
             lignes == sorted(lignes))
-    # le dépôt RÉEL est vert (aucun test précédent n'a dû le toucher)
+    # D115 — jumelle CRLF : même intention, autre représentation. La
+    # réplique (ré-alignée canonique en __enter__) reste VERTE sur des
+    # fichiers portés en CRLF : le sceau ne voit pas la représentation.
+    with Replique():
+        base = os.path.join(S.RACINE, "m4", "I")
+        for racine_dir, dirs, fichiers in os.walk(base):
+            for nom in fichiers:
+                p = os.path.join(racine_dir, nom)
+                with open(p, "rb") as f:
+                    brut = f.read()
+                with open(p, "wb") as f:
+                    f.write(brut.replace(b"\r\n", b"\n")
+                            .replace(b"\n", b"\r\n"))
+        texte_crlf, emp_crlf = S.manifeste("m4")
+        verifie("T3-d jumelle CRLF : manifeste IDENTIQUE (canon LF, D115)",
+                texte_crlf == texte1 and emp_crlf == emp1)
+        verifie("T3-e jumelle CRLF : verifier VERT (représentation invisible)",
+                S.verifier(["m4"], silencieux=True) == S.OK)
+        # un octet VRAIMENT muté (hors paire \r\n) reste attrapé
+        p = os.path.join(base, "tls-02-verdicts.md")
+        with open(p, "rb") as f:
+            brut = f.read()
+        i = next(k for k, o in enumerate(brut) if o not in (10, 13))
+        with open(p, "wb") as f:
+            f.write(brut[:i] + bytes([brut[i] ^ 1]) + brut[i + 1:])
+        code, _, detail = S._etat_arbre("m4")
+        verifie("T3-f octet muté hors fin de ligne : divergence NOMMÉE",
+                code == S.CODE_DIVERGE and "modifie" in detail
+                and "tls-02-verdicts.md" in detail,
+                f"code={code} {detail}")
+    # le dépôt RÉEL : vert — ou fenêtre de re-cérémonie D115 PROUVÉE
     code = S.verifier(silencieux=True)
-    verifie("T3-d dépôt réel : 10 arbres verts", code == S.OK,
-            f"code={code}")
+    if code == S.OK:
+        verifie("T3-g dépôt réel : 10 arbres verts (canon LF)", True)
+    else:
+        ok_f, detail = _fenetre_d115()
+        verifie("T3-g dépôt réel : fenêtre D115 — divergence de "
+                "représentation seule, signatures valides", ok_f, detail)
 
 
 # ---------------------------------------------------------------------------
@@ -307,7 +414,7 @@ def f2_falsification_octet():
 
 def f3_diffs_non_signes():
     print("[F3] diffs non signés refusés (garde de build, codes nommés)")
-    with Replique() as rep:
+    with Replique():
         # (a) ajout d'un fichier — l'extension ne compte pas : tout entre
         rel, chemin = S._entrees_arbre("m4")[0]
         nouveau = os.path.join(os.path.dirname(chemin), "zz-nouveau.md")
@@ -345,9 +452,12 @@ def f3_diffs_non_signes():
                 f"code={code} {detail}")
         with open(chemin, "wb") as f:
             f.write(sauve)
+        # D115 : restaure le manifeste CANONIQUE de la réplique (fichier
+        # rétabli) — l'ère du dépôt source n'entre plus ici.
+        texte_retabli, _ = S.manifeste("m4")
         with open(os.path.join(S.DIR_MANIFESTES, "m4.txt"), "w",
                   encoding="utf-8") as f:
-            f.write(rep._lire_manifeste_source("m4"))
+            f.write(texte_retabli)
         # (d) signature supprimée -> dépôt incohérent (12)
         chemin_sig = os.path.join(S.DIR_SIGNATURES, "m4.txt")
         with open(chemin_sig, "r", encoding="utf-8") as f:
@@ -464,7 +574,7 @@ def f4_remise_douteuse():
 # ---------------------------------------------------------------------------
 
 def t4_cle_test():
-    print("[T4] clé de TEST déterministe, état visible (jamais « reelle »)")
+    print("[T4] clé de TEST déterministe, cohérence état ↔ clé (défaut X8)")
     graine1 = S.graine_cle_test()
     graine2 = S.graine_cle_test()
     verifie("T4-a graine de test stable (constante publique)",
@@ -472,16 +582,25 @@ def t4_cle_test():
             == hashlib.sha256(S.CONSTANTE_CLE_TEST).digest())
     from cryptography.hazmat.primitives.asymmetric.ed25519 import \
         Ed25519PrivateKey
-    pub_calc = Ed25519PrivateKey.from_private_bytes(graine1) \
+    pub_test = Ed25519PrivateKey.from_private_bytes(graine1) \
         .public_key().public_bytes_raw()
-    verifie("T4-b la clé déposée du dépôt RÉEL est bien la clé de test",
-            pub_calc == S.cle_publique_deposee())
-    verifie("T4-c état de clé visible : « test », jamais « reelle »",
-            "test" in S.etat_cle() and "reelle" not in S.etat_cle())
+    deposee = S.cle_publique_deposee()
+    etat = S.etat_cle()
+    # D115 : les DEUX ères sont honnêtes — lab : clé de test déposée +
+    # état « test » ; cérémonie réelle : clé ≠ test + état « reelle ».
+    # Dire « reelle » sur la clé du lab (ou l'inverse) serait le défaut
+    # X8 : affirmer une preuve non faite.
+    verifie("T4-b cohérence état ↔ clé déposée (X8 : jamais « reelle » "
+            "sur la clé de test, jamais « test » sur une clé réelle)",
+            ("reelle" in etat) == (deposee != pub_test)
+            and ("test" in etat) == (deposee == pub_test))
+    verifie("T4-c l'état de clé NOMME l'ère (test/reelle, jamais muet)",
+            ("test" in etat) or ("reelle" in etat))
 
 
 def main():
-    print("=== v0.6.0 axe 3 — falsifiabilité du sceau de l'Intention (D105) ===")
+    print("=== v0.6.0 axe 3 — falsifiabilité du sceau de l'Intention "
+          "(D105, canon LF D115) ===")
     t1_vecteurs_rfc()
     t2_interop()
     t3_determinisme()
@@ -497,10 +616,21 @@ def main():
         for e in ECHECS:
             print(f"  ÉCHEC : {e}")
         return 1
-    # le dépôt RÉEL est resté vert du début à la fin
+    # le dépôt RÉEL : vert — ou fenêtre de re-cérémonie D115 PROUVÉE
     code = S.verifier(silencieux=True)
-    print(f"[final] dépôt réel : {'VERT (10 arbres)' if code == S.OK else 'CODE ' + str(code)}")
-    return 0 if code == S.OK else 1
+    if code == S.OK:
+        print("[final] dépôt réel : VERT (10 arbres, canon LF D115)")
+        return 0
+    ok_f, detail = _fenetre_d115()
+    if ok_f:
+        print("[final] dépôt réel : FENÊTRE D115 — empreintes déposées de "
+              "la cérémonie de terrain (CRLF), divergence de représentation "
+              "SEULE, signatures valides ; la re-cérémonie du développeur "
+              "(clé physique) re-signera les manifestes canoniques")
+        return 0
+    print(f"[final] dépôt réel : CODE {code} — divergence NON expliquée : "
+          f"{detail}")
+    return 1
 
 
 if __name__ == "__main__":

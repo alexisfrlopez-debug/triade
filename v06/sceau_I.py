@@ -118,7 +118,16 @@ def manifeste(arbre):
               f"balise: {balise}", f"fichiers: {len(entrees)}"]
     for rel, chemin in entrees:
         with open(chemin, "rb") as f:
-            condense = hashlib.sha256(f.read()).hexdigest()
+            contenu = f.read()
+        # D115 — canon LF : la représentation du checkout (Windows
+        # autocrlf porte CRLF ; le dépôt git porte LF) n'est pas
+        # l'intention. La cérémonie de terrain D113 a signé des empreintes
+        # CRLF ; la vérification à froid sur un clone LF dénonçait CODE 10
+        # sur les DIX arbres, signatures pourtant valides — le manifeste
+        # redevient ce que promet la spec § 2 : « le même arbre produit le
+        # même manifeste sur toute machine ».
+        condense = hashlib.sha256(
+            contenu.replace(b"\r\n", b"\n")).hexdigest()
         lignes.append(f"sha256:{condense}  {rel}")
     texte = "\n".join(lignes) + "\n"
     empreinte = hashlib.sha256(texte.encode("utf-8")).hexdigest()
@@ -188,15 +197,19 @@ def _etat_arbre(arbre):
         # Nommer le premier fichier divergent (l'évidence, pas juste le verdict)
         # — dictionnaires CHEMIN -> condensé (itération sur les CHEMINS :
         # un fichier modifié garde sa clé, seul le condensé diverge)
+        # D115 : "sha256:" fait 7 caractères — l'ancien [8:] avalait le
+        # premier hex du condensé (symétrique des deux côtés, la comparaison
+        # restait juste, mais deux condensés ne différant que par leur
+        # premier caractère échappaient au NOMMAGE du fichier fautif).
         vivantes = {}
         for l in texte_vivant.splitlines():
             if l.startswith("sha256:"):
-                condense, chemin = l[8:].split("  ", 1)
+                condense, chemin = l[7:].split("  ", 1)
                 vivantes[chemin] = condense
         deposees = {}
         for l in texte_depose.splitlines():
             if l.startswith("sha256:"):
-                condense, chemin = l[8:].split("  ", 1)
+                condense, chemin = l[7:].split("  ", 1)
                 deposees[chemin] = condense
         detail = "divergence d'intention"
         for chemin in sorted(set(vivantes) | set(deposees)):
