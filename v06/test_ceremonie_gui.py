@@ -59,6 +59,15 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        ligne à ligne dans le journal (emit), _cli rend UNE ligne d'ancrage
        (la première — le détail vit au-dessus, dans l'ordre du flux) ;
        sans emit, le texte ENTIER reste la remise du verdict ;
+  T12  git (D116) : pousser les fichiers générés — add ciblé (JAMAIS
+       « -A »), message vide refusé AVANT tout, rien-à-committer =
+       synchronisation VERTE, commit+push PROUVÉS sur un origin NU de
+       laboratoire (le dépôt distant a bien reçu le commit), statut
+       propre après, dossier hors-git refus NOMMÉ ;
+  T13  fil de cérémonie (D116) : les cinq étapes s'auto-détectent par
+       PREUVES en lecture seule — fenêtre D115 nommée (a-signer
+       PÉRIMÉ), clé absente nommée, fichiers manquants nommés,
+       signature requise nommée, git propre ET poussé ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -344,6 +353,87 @@ def t567f1(rep):
         _Boite(), "coffre_cf2.py", ["statut", "--config", cfg])
     verifie("t11-sans-flux-texte-entier-reste",
             code_p and "\n" in texte_p, texte_p)
+
+    print("T12 — D116 : pousser sur git (labo — add ciblé, commit, "
+          "pull --rebase, push)")
+    import subprocess
+    labo_git = tempfile.mkdtemp(prefix="git-labo-")
+    origin_git = os.path.join(labo_git, "origin.git")
+    clone_git = os.path.join(labo_git, "triade")
+    os.makedirs(os.path.join(clone_git, "v06", "sceau-I"))
+    _ecrire(os.path.join(clone_git, "v06", "sceau-I", "x.txt"),
+            "premier\n")
+
+    def git_labo(args, cwd):
+        return subprocess.run(["git"] + args, cwd=cwd, capture_output=True,
+                              text=True, timeout=60)
+
+    git_labo(["init", "--bare", "-q", origin_git], labo_git)
+    git_labo(["init", "-q"], clone_git)
+    git_labo(["config", "user.email", "lab@triade.test"], clone_git)
+    git_labo(["config", "user.name", "lab-triade"], clone_git)
+    git_labo(["add", "."], clone_git)
+    git_labo(["commit", "-q", "-m", "init"], clone_git)
+    git_labo(["branch", "-M", "main"], clone_git)
+    git_labo(["remote", "add", "origin", origin_git], clone_git)
+    git_labo(["push", "-q", "-u", "origin", "main"], clone_git)
+    racine_sauvee = gui.RACINE_DEPOT
+    gui.RACINE_DEPOT = clone_git
+    try:
+        refuse("t12-message-vide-refuse-avant-tout", gui.git_pousser,
+               ["v06/sceau-I"], "   ")
+        refuse("t12-aucun-chemin-refuse-avant-tout", gui.git_pousser, [],
+               "message")
+        captes_git = []
+        ok_git, texte_git = gui.git_pousser(["v06/sceau-I"], "sync seule",
+                                            emit=captes_git.append)
+        verifie("t12-rien-a-committer-sync-seule-verte",
+                ok_git and any("rien à committer" in l for l in captes_git),
+                texte_git)
+        _ecrire(os.path.join(clone_git, "v06", "sceau-I", "x.txt"),
+                "second\n")
+        ok_git2, texte_git2 = gui.git_pousser(["v06/sceau-I"],
+                                             "sceau-I : test D116")
+        verifie("t12-commit-pousse-vert", ok_git2 and "poussé" in texte_git2
+                and "1 commit" in texte_git2, texte_git2)
+        sujet = git_labo(["--git-dir", origin_git, "log", "-1", "main",
+                          "--format=%s"], labo_git).stdout.strip()
+        verifie("t12-origin-a-bien-recu-le-commit",
+                sujet == "sceau-I : test D116", sujet)
+        code_st, texte_st = gui.executer_git(
+            ["status", "--porcelain", "-b"])
+        lignes_st = [l for l in texte_st.splitlines() if l.strip()]
+        verifie("t12-statut-propre-apres-push",
+                code_st == 0 and len(lignes_st) == 1
+                and "ahead" not in lignes_st[0], texte_st)
+        gui.RACINE_DEPOT = tempfile.mkdtemp(prefix="pas-un-depot-")
+        refuse("t12-hors-depot-git-refus-nomme", gui.git_pousser,
+               ["v06/sceau-I"], "message")
+    finally:
+        gui.RACINE_DEPOT = racine_sauvee
+
+    print("T13 — D116 : fil de cérémonie (lecture seule, dépôt réel)")
+    a_signer = os.path.join(RACINE, "v06", "sceau-I", "a-signer.txt")
+    etat_fil = gui.fil_ceremonie(a_signer=a_signer)
+    verifie("t13-cinq-etapes-titrees", len(etat_fil) == 5
+            and [e[0] for e in etat_fil] == [1, 2, 3, 4, 5])
+    par_etape = {numero: (faite, detail)
+                 for numero, _, faite, detail in etat_fil}
+    verifie("t13-e1-fenetre-d115-a-signer-perime-nomme",
+            par_etape[1][0] is False and "PÉRIMÉ" in par_etape[1][1],
+            par_etape[1][1])
+    verifie("t13-e2-cle-absente-nomme",
+            par_etape[2][0] is False and "absent" in par_etape[2][1],
+            par_etape[2][1])
+    verifie("t13-e3-fichiers-manquants-nommes",
+            par_etape[3][0] is False and "manquants" in par_etape[3][1],
+            par_etape[3][1])
+    verifie("t13-e4-signature-requise-nomme",
+            par_etape[4][0] is False and "signature requise" in
+            par_etape[4][1], par_etape[4][1])
+    verifie("t13-e5-git-propre-et-pousse",
+            par_etape[5][0] is True and "propre" in par_etape[5][1],
+            par_etape[5][1])
 
     print("F1 — fail-closed (autotest, phrase, brûlage, relève)")
     autotest_orig = gui.autotest

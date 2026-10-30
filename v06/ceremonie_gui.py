@@ -54,7 +54,22 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       corps DÉFILE (une page plus haute que la fenêtre reste entièrement
       atteignable) ; les dialogues passent TOUJOURS au-dessus de la fenêtre
       (parent explicite — un dialogue sans parent peut naître DERRIÈRE et
-      faire croire le GUI mort : « je clique, rien ne se passe »).
+      faire croire le GUI mort : « je clique, rien ne se passe ») ;
+    - D116 — LA FENÊTRE SUIT SON CONTENU : plus de géométrie fixe —
+      chaque page affichée redimensionne la fenêtre (clampée à l'écran,
+      minsize 880x600) ; « ← Accueil » vit dans le BANDEAU, toujours
+      visible (jamais plus chassé en bas d'une page trop haute) ;
+    - D116 — FIL DE CÉRÉMONIE : les cinq étapes du sceau I (Préparer →
+      Générer la clé → Signer → Déposer → Git) s'auto-détectent par
+      PREUVES en lecture seule (a-signer frais ? paire de clés ? remise
+      vérifiée ? arbres verts ? git propre ?) ; l'étape satisfaite
+      s'efface, la suivante s'affiche — ré-évaluation après chaque
+      verdict ET validation manuelle possible (« Marquer faite (à la
+      main) » — la preuve de fichier reste la vérité) ;
+    - D116 — GIT : « Pousser v06/sceau-I sur git… » (add ciblé SEUL —
+      jamais « add -A », la clé privée vit hors du dépôt — commit nommé,
+      pull --rebase AVANT push : le push rejeté du terrain D113-115 ne se
+      reproduira plus silencieusement, échecs nommés étape par étape) ;
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -106,9 +121,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.5 (D113)"   # boîte noire + rapport remis
-# à la main + journal garanti + dialogues au-dessus (le debug à distance
-# sans donner de réseau à la cérémonie)
+VERSION_GUI = "ceremonie-GUI v1.6 (D116)"   # fenêtre au contenu + fil de cérémonie + git
 
 
 # ===========================================================================
@@ -755,6 +768,19 @@ def _detruire_fichier(chemin):
         pass
 
 
+def _pomper(proc, emit=None):
+    """D116 — pompe commune de sortie : streame ligne à ligne (emit),
+    retourne (code de sortie, texte complet). Partagée par les CLI du
+    dépôt et par git — aucune logique de flux dupliquée."""
+    lignes = []
+    for ligne in proc.stdout:
+        propre = ligne.rstrip("\n")
+        lignes.append(propre)
+        if emit:
+            emit(propre)
+    return proc.wait(), "\n".join(lignes)
+
+
 def executer_cli(module, args, emit=None, phrase=None, nouvelle_phrase=None,
                 au_racine=False):
     """Exécute un CLI du dépôt et streame sa sortie.
@@ -800,24 +826,245 @@ def executer_cli(module, args, emit=None, phrase=None, nouvelle_phrase=None,
     env = dict(os.environ)
     env.setdefault("PYTHONIOENCODING", "utf-8")
     env.setdefault("PYTHONUNBUFFERED", "1")
-    lignes = []
     try:
         proc = subprocess.Popen(
             cmd, cwd=RACINE_DEPOT, stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, text=True, encoding="utf-8",
             errors="replace", env=env)
-        for ligne in proc.stdout:
-            propre = ligne.rstrip("\n")
-            lignes.append(propre)
-            if emit:
-                emit(propre)
-        code = proc.wait()
+        code, texte = _pomper(proc, emit)
     finally:
         if fichier_phrase:
             _detruire_fichier(fichier_phrase)
         if fichier_nouvelle:
             _detruire_fichier(fichier_nouvelle)
-    return code, "\n".join(lignes)
+    return code, texte
+
+
+# ---------------------------------------------------------------------------
+# D116 — GIT + FIL DE CÉRÉMONIE : pousser les fichiers générés (add
+# ciblé, commit, pull --rebase, push — échecs nommés étape par étape) et
+# l'AUTO-DÉTECTION des cinq étapes du sceau I (lecture seule, par preuves).
+# ---------------------------------------------------------------------------
+
+def executer_git(args, emit=None):
+    """git dans le dossier du dépôt attaché — même discipline de flux que
+    les CLI (sortie streamee ligne à ligne, code de retour honnête). git
+    absent du système : (127, échec nommé), jamais un traceback."""
+    env = dict(os.environ)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    try:
+        proc = subprocess.Popen(
+            ["git"] + [str(a) for a in args], cwd=RACINE_DEPOT,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            encoding="utf-8", errors="replace", env=env)
+    except FileNotFoundError:
+        return 127, ("git introuvable sur cette machine — installez-le "
+                     "(git-scm.com) ou poussez depuis votre terminal")
+    return _pomper(proc, emit)
+
+
+def git_pousser(chemins, message, emit=None):
+    """D116 — pousse les fichiers générés de la cérémonie sur git.
+
+    add (UNIQUEMENT les chemins donnés — jamais « add -A » : la clé privée
+    vit hors du dépôt et les journaux *.log sont ignorés par .gitignore)
+    → commit (message exigé — un commit de cérémonie se NOMME) →
+    pull --rebase (le push rejeté du terrain D113-115 ne se reproduira
+    plus : le dépôt distant est intégré AVANT de pousser) → push. Chaque
+    étape refuse NOMMÉ ; rien n'est forcé, rien n'est deviné.
+    """
+    chemins = [str(c).strip() for c in chemins if c and str(c).strip()]
+    if not chemins:
+        raise ErreurCeremonie("git : aucun chemin à pousser — refus "
+                              "(fail-closed, D116)")
+    message = (message or "").strip()
+    if not message:
+        raise ErreurCeremonie("git : message de commit vide — refus (un "
+                              "commit de cérémonie se NOMME, D116)")
+
+    def git(args, cause=None):
+        code, texte = executer_git(args, emit=emit)
+        if code != 0:
+            lignes = texte.strip().splitlines()
+            premiere = lignes[0] if lignes else f"code {code}"
+            raise ErreurCeremonie(
+                f"git {' '.join(args)} : {cause or premiere}")
+        return texte
+
+    git(["rev-parse", "--is-inside-work-tree"],
+        "le dossier attaché n'est pas un dépôt git")
+    git(["add", "--"] + chemins)
+    code_diff, _ = executer_git(["diff", "--cached", "--quiet"])
+    commits = 0
+    if code_diff == 0:
+        if emit:
+            emit(f"[git] rien à committer ({', '.join(chemins)} inchangé) "
+                 "— synchronisation seule")
+    else:
+        git(["commit", "-m", message])
+        commits = 1
+        if emit:
+            emit(f"[git] commit : {message}")
+    code_pull, texte_pull = executer_git(["pull", "--rebase"], emit=emit)
+    if code_pull != 0:
+        lignes_pull = texte_pull.strip().splitlines()
+        raise ErreurCeremonie(
+            "git pull --rebase a échoué — push ANNULÉ ; si git signale un "
+            "rebase en cours, « git rebase --abort » remet votre dépôt "
+            "tel quel (première ligne : "
+            f"{lignes_pull[0] if lignes_pull else '?'})")
+    git(["push"], "push refusé (authentification GitHub ? branche amont ?)")
+    if commits:
+        return True, (f"[git] poussé : 1 commit ({', '.join(chemins)}) — "
+                      f"« {message} »")
+    return True, (f"[git] rien à committer — dépôt synchronisé "
+                  f"({', '.join(chemins)})")
+
+
+FIL_ETAPES = (
+    (1, "Préparer a-signer.txt (dépôt)"),
+    (2, "Générer la clé I (hors-ligne)"),
+    (3, "Signer la remise (hors-ligne)"),
+    (4, "Déposer la remise (dépôt)"),
+    (5, "Enregistrer sur git"),
+)
+
+FIL_HINTS = {
+    1: "Bouton « Préparer a-signer.txt » ci-dessous (onglet Sceau de "
+       "l'Intention).",
+    2: "Bouton « ← Accueil » (bandeau, toujours visible) → profil "
+       "hors-ligne → onglet « 1 · Générer la clé ».",
+    3: "Profil hors-ligne → onglet « 2 · Signer une remise » (a-signer.txt "
+       "y est transporté, la clé n'en part jamais).",
+    4: "Champ « Remise à déposer » ci-dessous + bouton « Déposer la "
+       "remise (acte souverain) ».",
+    5: "Bouton « Pousser v06/sceau-I sur git… » ci-dessous (commit + "
+       "pull --rebase + push).",
+}
+
+
+def _lire_a_signer(chemin):
+    """Lignes « arbre balise empreinte » d'un a-signer.txt → dictionnaire
+    arbre → empreinte (64 hex). Absent ou illisible : {}."""
+    lignes = {}
+    if chemin and os.path.isfile(chemin):
+        try:
+            with open(chemin, "r", encoding="utf-8") as f:
+                for ligne in f:
+                    morceaux = ligne.split()
+                    if len(morceaux) == 3:
+                        lignes[morceaux[0]] = morceaux[2]
+        except OSError:
+            return {}
+    return lignes
+
+
+def fil_ceremonie(a_signer=None, privee=None, publique=None,
+                  signatures=None, chemins_git=("v06/sceau-I",)):
+    """D116 — l'état des CINQ étapes de la cérémonie du sceau I, par
+    PREUVES (lecture seule : fichiers présents, CLI read-only, git
+    status — aucune écriture, aucune clé touchée). Retour
+    [(numéro, titre, faite, detail)] ; ce que la détection ne peut pas
+    PROUVER, elle le nomme « à faire » avec la cause — jamais deviné."""
+    import re   # noqa: E402 (usage local au fil, ordre voulu)
+    re_verifier = re.compile(
+        r"^\[sceau-I\] (\S+): CODE (\d+) — .*empreinte vivante "
+        r"([0-9a-f]{16})")
+    pile_ok = not _paquets_manquants()
+    code_verif, texte_verif = None, ""
+    if pile_ok:
+        try:
+            code_verif, texte_verif = executer_cli("sceau_I.py", ["verifier"])
+        except ErreurCeremonie as exc:
+            code_verif, texte_verif = None, str(exc)
+    vivantes = {}
+    for ligne in texte_verif.splitlines():
+        trouve = re_verifier.match(ligne)
+        if trouve:
+            vivantes[trouve.group(1)] = trouve.group(3)
+    cause = "verifier indisponible"
+    if not pile_ok:
+        cause = "pile du dépôt manquante (pynacl/cryptography)"
+    elif code_verif is None and texte_verif:
+        cause = texte_verif.strip().splitlines()[0]
+    # É1 — Préparer : a-signer FRAIS (chaque arbre divergé porte, dans
+    # a-signer.txt, l'empreinte VIVANTE — sinon la remise signée ne
+    # correspondra plus au dépôt au moment de déposer)
+    if code_verif == 0:
+        e1 = True, "tout est signé — préparer inutile"
+    elif code_verif in (10, 11, 12) and vivantes:
+        deposees = _lire_a_signer(a_signer)
+        if not deposees:
+            e1 = False, f"a-signer.txt absent ou vide : {a_signer}"
+        else:
+            perimes = sorted(
+                arbre for arbre, empreinte in vivantes.items()
+                if arbre not in deposees
+                or deposees[arbre][:16] != empreinte[:16])
+            if perimes:
+                e1 = (False, f"a-signer PÉRIMÉ pour {', '.join(perimes)} — "
+                             f"relancez Préparer")
+            else:
+                e1 = True, f"a-signer.txt frais ({len(deposees)} arbres)"
+    else:
+        e1 = False, f"état des arbres inconnu — {cause}"
+    # É2 — Générer la clé : les DEUX fichiers existent (côté hors-ligne)
+    manquants = [nom for nom, chemin in
+                 (("clé privée", privee), ("clé publique", publique))
+                 if not (chemin and os.path.isfile(chemin))]
+    if manquants:
+        e2 = (False, f"absent(es) : {', '.join(manquants)} — privée "
+                     f"{privee}, publique {publique}")
+    else:
+        e2 = True, f"paire présente ({privee})"
+    # É3 — Signer : la remise VÉRIFIÉE contre a-signer + clé publique
+    # (ceremonie_hors_ligne.py verifier — pur standard, aucune pile)
+    if not all(chemin and os.path.isfile(chemin)
+               for chemin in (a_signer, signatures, publique)):
+        e3 = (False, f"fichiers manquants — a-signer : {a_signer} ; "
+                     f"signatures : {signatures} ; clé publique : "
+                     f"{publique}")
+    else:
+        try:
+            code_h, _ = executer_cli(
+                "ceremonie_hors_ligne.py",
+                ["verifier", a_signer, signatures, publique])
+            e3 = ((code_h == 0),
+                  "remise vérifiée (signatures == a-signer == clé publique)"
+                  if code_h == 0 else
+                  "la remise ne correspond pas (a-signer changé depuis la "
+                  "signature ? re-signez)")
+        except ErreurCeremonie as exc:
+            e3 = False, str(exc)
+    # É4 — Déposer : le vérificateur du dépôt dit VERT
+    e4 = {0: (True, "10 arbres VERTS sous la clé déposée"),
+          10: (False, "signature requise (arbres divergés de leur "
+                      "manifeste déposé)"),
+          11: (False, "signature déposée invalide"),
+          12: (False, "dépôt incohérent (code 12)")}.get(
+              code_verif, (False, f"état inconnu — {cause}"))
+    # É5 — Git : sceau-I commité ET poussé (status --porcelain -b)
+    code_g, texte_g = executer_git(
+        ["status", "--porcelain", "-b", "--"] + list(chemins_git))
+    if code_g == 127:
+        e5 = False, "git introuvable sur cette machine"
+    elif code_g != 0:
+        e5 = False, "le dossier attaché n'est pas un dépôt git"
+    else:
+        lignes_g = texte_g.splitlines()
+        branche = lignes_g[0] if lignes_g and lignes_g[0].startswith("##") \
+            else ""
+        sales = [ligne for ligne in lignes_g[1:] if ligne.strip()]
+        if sales:
+            e5 = (False, f"{len(sales)} changement(s) non commité(s) dans "
+                         f"{', '.join(chemins_git)}")
+        elif "ahead" in branche:
+            e5 = (False, f"commit(s) local(aux) NON POUSSÉ(S) "
+                         f"({branche.strip(' #')})")
+        else:
+            e5 = True, f"{', '.join(chemins_git)} propre et poussé"
+    return [(FIL_ETAPES[i][0], FIL_ETAPES[i][1], *etat)
+            for i, etat in enumerate((e1, e2, e3, e4, e5))]
 
 
 # ---------------------------------------------------------------------------
@@ -1206,6 +1453,9 @@ class Executeur:
                     ok, texte = donnees
                     self.occupe = False
                     self.app.verdict(ok, texte)
+                    fin_action = getattr(self.app, "_sur_fin_action", None)
+                    if callable(fin_action):
+                        fin_action()   # D116 : le fil se ré-évalue
         except queue.Empty:
             pass
         self.app.racine.after(80, self.pompe)
@@ -1241,6 +1491,7 @@ class Journal:
         self.app = application
         cadre = ttk.LabelFrame(parent, text="Journal de cérémonie")
         cadre.pack(side="bottom", fill="both", expand=True, padx=10, pady=(4, 10))
+        self.cadre = cadre    # D116 : mesure pour la fenêtre au contenu
         barre = ttk.Frame(cadre)
         barre.pack(side="top", fill="x", padx=6, pady=(2, 0))
         ttk.Button(barre, text="Envoyer le rapport…", width=20,
@@ -1288,7 +1539,11 @@ class Application:
     def __init__(self, profil=None):
         self.racine = tk.Tk()
         self.racine.title("TRIADE — Maître de cérémonie")
-        self.racine.geometry("1020x740")
+        # D116 — plus de géométrie fixe : chaque page affichée redimensionne
+        # la fenêtre à son contenu (_ajuster_taille_fenetre, clampée à
+        # l'écran) ; l'ancienne fenêtre fixe (1020x740) pouvait laisser le
+        # bouton « Retour à l'accueil » hors de vue, en bas d'une page plus
+        # haute qu'elle.
         self.racine.minsize(880, 600)
         self._batir_style()
         self._batir_header()
@@ -1336,6 +1591,7 @@ class Application:
     def _batir_header(self):
         cadre = ttk.Frame(self.racine)
         cadre.pack(side="top", fill="x", padx=10, pady=(10, 0))
+        self.cadre_header = cadre          # D116 : mesure de la fenêtre
         ttk.Label(cadre, text="TRIADE — Maître de cérémonie",
                   style="Titre.TLabel").pack(side="left")
         ttk.Button(cadre, text="Envoyer le journal…", width=20,
@@ -1347,6 +1603,13 @@ class Application:
         ttk.Label(cadre, text=VERSION_GUI + "   ·   "
                   "la clé privée ne traverse jamais la machine connectée",
                   style="Sous.TLabel").pack(side="right", padx=12)
+        # D116 — le retour à l'accueil vit dans le BANDEAU : TOUJOURS
+        # visible, hors du corps défilant (jamais plus chassé en bas d'une
+        # page trop haute par la fenêtre fixe d'avant).
+        self.bouton_accueil = ttk.Button(cadre, text="← Accueil", width=10,
+                                         state="disabled",
+                                         command=self._retour_accueil)
+        self.bouton_accueil.pack(side="right")
 
     def _batir_statut(self):
         self.var_verdict = tk.StringVar(value="")
@@ -1360,6 +1623,14 @@ class Application:
         for page in self.pages.values():
             page.pack_forget()
         self.pages[nom].pack(fill="both", expand=True)
+        # D116 — le bandeau porte le retour à l'accueil (visible PARTOUT),
+        # la fenêtre prend la taille de la page affichée, et l'entrée du
+        # profil dépôt ré-évalue le fil de cérémonie.
+        self.bouton_accueil.configure(
+            state="disabled" if nom == "accueil" else "normal")
+        self._ajuster_taille_fenetre()
+        if nom == "depot":
+            self._rafraichir_fil()
 
     def verdict(self, ok, texte):
         prem = texte.strip().splitlines()[0] if texte.strip() else ""
@@ -2047,6 +2318,35 @@ class Application:
                           "empreinte ») : transportez-le vers la machine "
                           "hors-ligne, faites-le signer (profil hors-ligne), "
                           "puis déposez la remise ici.")
+        # --- fil de cérémonie (D116) : l'étape satisfaite s'efface, la
+        # suivante s'affiche — auto-détection par PREUVES, lecture seule
+        fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116)")
+        fil.pack(fill="x", pady=(0, 4))
+        self.fil_manuel = set()
+        self._fil_etat = None
+        self.label_fil_resume = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=880, justify="left",
+            foreground="#8b949e")
+        self.label_fil_resume.pack(anchor="w")
+        self.label_fil_courant = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=880, justify="left",
+            font=("Segoe UI", 10, "bold"), foreground=COULEUR_ENCRE)
+        self.label_fil_courant.pack(anchor="w", pady=(2, 0))
+        self.label_fil_detail = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=880, justify="left",
+            foreground="#57606a")
+        self.label_fil_detail.pack(anchor="w")
+        self.label_fil_suite = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=880, justify="left",
+            foreground="#8b949e")
+        self.label_fil_suite.pack(anchor="w")
+        barre_fil = ttk.Frame(fil)
+        barre_fil.pack(fill="x", pady=(4, 0))
+        ttk.Button(barre_fil, text="Ré-évaluer l'étape",
+                   command=self._sur_fil_reevaluer).pack(side="left")
+        ttk.Button(barre_fil, text="Marquer faite (à la main)",
+                   command=self._sur_fil_manuel).pack(side="left", padx=6)
+
         barre = ttk.Frame(sceau)
         barre.pack(fill="x", pady=2)
         ttk.Button(barre, text="Préparer a-signer.txt",
@@ -2063,6 +2363,19 @@ class Application:
             sceau, "Clé publique (PREMIÈRE remise seulement) :", mode="open")
         ttk.Button(sceau, text="Déposer la remise (acte souverain)",
                    command=self._sur_sceau_deposer).pack(anchor="w", pady=4)
+
+        # --- git (D116) : enregistrer la cérémonie sur le dépôt distant --
+        gitcadre = self._section(
+            sceau, "Git — enregistrer la cérémonie (D116)")
+        gitcadre.pack(fill="x", pady=(6, 0))
+        self._note(gitcadre,
+                   "add v06/sceau-I (SEUL — jamais « add -A » : la clé "
+                   "privée vit hors du dépôt, les journaux sont ignorés) "
+                   "→ commit → pull --rebase → push. Chaque échec est "
+                   "NOMMÉ dans le journal ; l'authentification GitHub peut "
+                   "ouvrir votre navigateur.")
+        ttk.Button(gitcadre, text="Pousser v06/sceau-I sur git…",
+                   command=self._sur_git_pousser).pack(anchor="w", pady=4)
 
         # --- onglet Coffre CF2 ---------------------------------------------
         cf2 = ttk.Frame(cahier, padding=8)
@@ -2562,6 +2875,221 @@ class Application:
                                    f"{signatures}\nContinuer ?"):
             return
         self.action("Sceau I — deposer", self._cli, "sceau_I.py", args)
+
+    # ------------------------------------------------------------------
+    # D116 — fil de cérémonie (auto-détection), git, fenêtre au contenu
+    # ------------------------------------------------------------------
+    def _sur_fin_action(self):
+        """Chaque verdict relance l'auto-détection du fil : l'étape
+        satisfaite s'efface, la suivante prend la lumière (D116)."""
+        if getattr(self, "label_fil_courant", None) is not None:
+            self.racine.after(300, self._rafraichir_fil)
+
+    def _collecter_chemins_fil(self):
+        """Les chemins que le fil SONDE : champs remplis par
+        l'utilisateur, à défaut les défauts du dépôt attaché (aucune
+        invention — le détail des étapes nomme les chemins testés)."""
+        def premier(*valeurs):
+            for valeur in valeurs:
+                if valeur and str(valeur).strip():
+                    return str(valeur).strip()
+            return None
+        sceau_dir = os.path.join(RACINE_DEPOT, "v06", "sceau-I")
+        a_signer = premier(self.var_hl_a_signer.get(),
+                           os.path.join(sceau_dir, "a-signer.txt"))
+        privee = premier(
+            None if self.var_hl_cle_manuelle.get() else self.var_hl_cle.get(),
+            self.var_hl_privee.get())
+        publique = premier(self.var_hl_v_publique.get(),
+                           self.var_hl_publique.get(),
+                           os.path.join(sceau_dir, "cle-publique-I.txt"))
+        signatures = premier(self.var_sceau_signatures.get(),
+                             self.var_hl_signatures.get())
+        return a_signer, privee, publique, signatures
+
+    def _rafraichir_fil(self):
+        """Ré-évalue les CINQ étapes par PREUVES (lecture seule) et
+        redessine le fil. Les marques MANUELLES survivent (l'union
+        l'emporte — seul « Ré-évaluer l'étape » les efface)."""
+        if getattr(self, "label_fil_courant", None) is None:
+            return
+        self.label_fil_courant.configure(
+            text="▶ Fil de cérémonie : évaluation en cours (lecture "
+                 "seule)…", foreground=COULEUR_ATTENTE)
+        self.label_fil_detail.configure(text="", foreground="#57606a")
+        self.racine.update_idletasks()
+        a_signer, privee, publique, signatures = self._collecter_chemins_fil()
+        try:
+            etat = fil_ceremonie(a_signer=a_signer, privee=privee,
+                                 publique=publique, signatures=signatures)
+        except Exception as exc:      # jamais muet, même ici
+            ENREGISTREUR.ligne(
+                f"fil : échec inattendu ({type(exc).__name__}) : {exc}",
+                "crash")
+            ENREGISTREUR.traceback()
+            self.label_fil_courant.configure(
+                text="▶ Fil indisponible — échec nommé (rapport : bouton "
+                     "« Envoyer le journal… »)", foreground=COULEUR_ROUGE)
+            self.label_fil_detail.configure(text=str(exc)[:200])
+            return
+        self._montrer_fil(etat)
+
+    def _montrer_fil(self, etat):
+        """Dessine le fil : faites (une ligne), étape COURANTE (détail +
+        geste), à venir (une ligne) — l'étape satisfaite DISPARAÎT pour
+        laisser la suivante s'afficher (D116)."""
+        self._fil_etat = etat
+        faites, suite, courante = [], [], None
+        for numero, titre, faite, detail in etat:
+            if faite or numero in self.fil_manuel:
+                faites.append(f"{numero} · {titre}"
+                              + ("" if faite else " (à la main)"))
+            elif courante is None:
+                courante = (numero, titre, faite, detail)
+            else:
+                suite.append(f"{numero} · {titre}")
+        if faites:
+            self.label_fil_resume.configure(
+                text="✓ Faites : " + "  ·  ".join(faites),
+                foreground=COULEUR_VERTE)
+        else:
+            self.label_fil_resume.configure(
+                text="✓ Faites : (aucune pour l'instant)",
+                foreground="#8b949e")
+        if courante is None:
+            self.label_fil_courant.configure(
+                text="✓ CÉRÉMONIE COMPLETE — sceau signé et enregistré sur "
+                     "git", foreground=COULEUR_VERTE)
+            self.label_fil_detail.configure(
+                text="Vérification à froid conseillée sur un clone frais "
+                     "(bouton « Vérifier les dix arbres »).",
+                foreground="#57606a")
+        else:
+            numero, titre, _, detail = courante
+            self.label_fil_courant.configure(
+                text=f"▶ ÉTAPE {numero} — {titre}", foreground=COULEUR_ENCRE)
+            self.label_fil_detail.configure(
+                text=f"{detail}\n   Geste : {FIL_HINTS[numero]}",
+                foreground="#57606a")
+        if suite:
+            self.label_fil_suite.configure(
+                text="· À venir : " + "  ·  ".join(suite))
+        else:
+            self.label_fil_suite.configure(text="")
+        ENREGISTREUR.ligne(
+            f"fil : courante={courante[0] if courante else '—'} ; "
+            f"manuelles={sorted(self.fil_manuel) or '—'}", "fil")
+
+    def _sur_fil_reevaluer(self):
+        """« Ré-évaluer l'étape » : les marques manuelles meurent, les
+        PREUVES reprennent seules la parole (la preuve de fichier reste
+        la vérité — le clic manuel n'est qu'un aveugle secours)."""
+        self.fil_manuel.clear()
+        self._rafraichir_fil()
+
+    def _sur_fil_manuel(self):
+        """« Marquer faite (à la main) » : l'utilisateur valide l'étape
+        courante lui-même (récupération papier, machine sans le dépôt…).
+        La marque survit aux ré-évaluations automatiques et meurt au
+        « Ré-évaluer » — honnêteté conservée."""
+        etat = getattr(self, "_fil_etat", None)
+        if not etat:
+            return
+        for numero, titre, faite, _ in etat:
+            if not faite and numero not in self.fil_manuel:
+                self.fil_manuel.add(numero)
+                self.journal.ajoute(
+                    f"[fil] étape {numero} · {titre} — marquée faite À LA "
+                    f"MAIN (la preuve de fichier reste la vérité)", "info")
+                break
+        self._montrer_fil(etat)
+
+    def _demander_texte(self, titre, etiquette, defaut=""):
+        """D116 — petit dialogue modal de saisie (message de commit) :
+        parent explicite + grab_set (leçon D113 : jamais derrière). La
+        saisie part dans la boîte noire (un message de commit n'est pas
+        un secret). Retour None si annulé."""
+        fenetre = tk.Toplevel(self.racine)
+        fenetre.title(titre)
+        fenetre.transient(self.racine)
+        fenetre.resizable(False, False)
+        var = tk.StringVar(value=defaut)
+        ttk.Label(fenetre, text=etiquette, wraplength=430,
+                  justify="left").pack(anchor="w", padx=12, pady=(10, 2))
+        entree = ttk.Entry(fenetre, textvariable=var, width=54)
+        entree.pack(fill="x", padx=12, pady=(2, 6))
+        entree.focus_set()
+        reponse = {"texte": None}
+
+        def valider():
+            reponse["texte"] = var.get()
+            fenetre.destroy()
+
+        ttk.Button(fenetre, text="Annuler",
+                   command=fenetre.destroy).pack(
+                       side="right", padx=(4, 12), pady=(2, 10))
+        ttk.Button(fenetre, text="Valider",
+                   command=valider).pack(side="right", padx=(4, 0),
+                                         pady=(2, 10))
+        fenetre.bind("<Return>", lambda _e: valider())
+        fenetre.bind("<Escape>", lambda _e: fenetre.destroy())
+        fenetre.grab_set()
+        self.racine.wait_window(fenetre)
+        ENREGISTREUR.ligne(f"dialogue « {titre} » → {reponse['texte']!r}",
+                           "dialogue")
+        return reponse["texte"]
+
+    def _sur_git_pousser(self):
+        """Pousser v06/sceau-I sur git : add ciblé → commit → pull
+        --rebase → push (échecs nommés — le push rejeté du terrain
+        D113-115 ne se reproduira plus silencieusement)."""
+        chemin_sceau = os.path.join("v06", "sceau-I")
+        if not self._dialogue(
+                "askyesno", "Pousser sur git (D116)",
+                "Étapes : git add " + chemin_sceau + " → commit → "
+                "pull --rebase → push.\n\nSEUL " + chemin_sceau + " sera "
+                "ajouté (jamais « add -A » : la clé privée vit hors du "
+                "dépôt, les journaux sont ignorés par .gitignore).\n"
+                "L'authentification GitHub peut ouvrir votre navigateur.\n"
+                "Continuer ?"):
+            return
+        message = self._demander_texte(
+            "Message du commit de cérémonie",
+            "Message du commit (il se nomme — fail-closed) :",
+            "sceau-I : remise de ceremonie (" +
+            datetime.date.today().isoformat() + ")")
+        if message is None or not message.strip():
+            return      # annulé : aucun lancement, rien n'est écrit
+        self.action("Git — pousser v06/sceau-I", git_pousser,
+                    [chemin_sceau], message)
+
+    def _ajuster_taille_fenetre(self):
+        """D116 — la fenêtre prend la taille de son CONTENU, clampée à
+        l'écran. L'ancienne géométrie fixe (1020x740) cachait « Retour à
+        l'accueil » quand la page exigeait plus haut ; désormais chaque
+        page affichée redimensionne la fenêtre, et si l'écran est trop
+        petit le corps DÉFILE (D113) — tout reste atteignable, le bouton
+        « ← Accueil » du bandeau aussi (toujours visible, hors du corps
+        défilant)."""
+        try:
+            self.racine.update_idletasks()
+            fixe_h = (self.cadre_header.winfo_reqheight()
+                      + self.label_verdict.winfo_reqheight()
+                      + self.journal.cadre.winfo_reqheight() + 70)
+            besoin_h = self.corps.winfo_reqheight() + fixe_h
+            besoin_w = max(self.corps.winfo_reqwidth(),
+                           self.cadre_header.winfo_reqwidth(),
+                           self.journal.cadre.winfo_reqwidth()) + 40
+            hauteur = max(600, min(besoin_h,
+                                   self.racine.winfo_screenheight() - 120))
+            largeur = max(880, min(besoin_w,
+                                   self.racine.winfo_screenwidth() - 60))
+            self.racine.geometry(f"{largeur}x{hauteur}")
+        except tk.TclError:
+            pass    # fenêtre en cours de destruction : peu importe
+
+    def _retour_accueil(self):
+        self.montrer("accueil")
 
     def _sur_cf2_migrer(self):
         if not self._pile_prete("La migration CF1 vers CF2"):
