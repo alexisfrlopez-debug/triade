@@ -3,7 +3,7 @@
 actes (D121, v0.6.0 axe 4).
 
 Spécification : v06/I/CF3/README.md (R2 écrite-avant-code — CE fichier
-l'instente, aucun écart toléré ; la spec est ENTRÉE dans l'arbre scellé
+l'instancie, aucun écart toléré ; la spec est ENTRÉE dans l'arbre scellé
 à la re-cérémonie D126, en compagnie de l'erratum § 12 du README CF2,
 consigné 47e704f).
 
@@ -53,6 +53,10 @@ Usage (depuis triade/) :
        [--epoque-attendue N] [--phrase-stdin]
   python3 v06/coffre_cf3.py statut
   python3 v06/coffre_cf3.py bruler --oui-je-comprends
+  python3 v06/coffre_cf3.py migrer --conteneur-cf2 F [--gardes RACINE]
+       [--config-cf2 F] --piege-dir DIR [--conteneur F] [--phrase-stdin]
+  python3 v06/coffre_cf3.py detruire-cf2 --conteneur-cf2 F
+       [--conteneur F] --oui-je-comprends
   python3 v06/coffre_cf3.py autotest
 
 En CLI, `ouvrir` porte la sentinelle complète et rend son verdict SANS écrire
@@ -63,6 +67,15 @@ après preuve terrain (spec § 1). `--piege-dir` par défaut : .keys/pieges-cf3
 (COMMODITÉ DE LABORATOIRE — sur le terrain, passez le chemin du MÉDIA du
 piège : clef USB du sachet ; un média par coffre, spec § 4). `--phrase-stdin`
 = UN essai, sans confirmation (automatisation de laboratoire).
+
+MIGRATION CF2 → CF3 (spec § 12, D127 — la preuve terrain étant acquise,
+l'outillage naît) : `migrer` est une CÉRÉMONIE en quatre actes — (1) CF2
+déverrouillé une dernière fois (porte D120 honorée), (2) base re-scellée
+schéma identique (RIEN À TRADUIRE), (3) re-lecture à froid du scellage,
+(4) conteneur CF2 laissé INTACT — sa destruction est EXPLICITE
+(`detruire-cf2`, après verdict humain ; les fragments CF2 et leurs copies
+hors-ligne restent la relève HISTORIQUE). Le GUI de cérémonie de migration
+(v06/migration_cf3_gui.py) guide les quatre actes avec le trio D122.
 
 Dépendances : argon2-cffi, pynacl, cryptography (la pile du dépôt — miroir
 CF1/CF2).
@@ -1049,6 +1062,199 @@ def init(phrase: bytes, piege_dir: str, description: str = "",
 
 
 # ---------------------------------------------------------------------------
+# Migration CF2 → CF3 (spec § 12 — cérémonie consignée, outillage D127 :
+# la preuve terrain est acquise, l'outil naît au mot du maître)
+# ---------------------------------------------------------------------------
+
+def _config_cf2_pour_migrer(conteneur_cf2: str, gardes, config_cf2):
+    """Résolution NOMMÉE de la config CF2 pour la migration : (1) le
+    chemin --config-cf2 s'il est donné (doit exister) ; (2) la config
+    PAR DÉFAUT de CF2 si elle vit déjà (le déploiement réel en a une,
+    écrite par son propre migrer) ; (3) à défaut, une config synthétisée
+    depuis l'en-tête du conteneur (n, t) et la racine des gardes.
+    La PORTE D120 y trouve ses champs (heartbeat, exiger_sentinelle) —
+    chaque état est nommé, jamais un repli silencieux."""
+    if config_cf2:
+        if not os.path.isfile(config_cf2):
+            raise ErreurCoffre(f"config CF2 ABSENTE : {config_cf2}")
+        return _cf2.lire_config(config_cf2)
+    if os.path.isfile(_cf2.CHEMIN_CONFIG_DEFAUT):
+        config = _cf2.lire_config(_cf2.CHEMIN_CONFIG_DEFAUT)
+    else:
+        with open(conteneur_cf2, "rb") as f:
+            entete = _cf2._parser_entete(f.read())
+        racine = gardes if gardes else _cf2.RACINE_GARDES_DEFAUT
+        config = _cf2.config_par_defaut(entete["n"], entete["t"], racine,
+                                         conteneur_cf2)
+    if gardes:
+        n = int(config.get("n", 5))
+        config["gardes"] = [os.path.join(gardes, f"g{i}")
+                            for i in range(1, n + 1)]
+    return config
+
+
+def migrer(conteneur_cf2: str, piege_dir: str, phrase: bytes,
+           conteneur_chemin: str = CONTENEUR_DEFAUT, gardes=None,
+           config_cf2=None) -> dict:
+    """Cérémonie de migration CF2 → CF3 (spec § 12, D127).
+
+    (1) CF2 déverrouillé UNE DERNIÈRE FOIS — porte D120 honorée (la
+        PORTE court AVANT toute lecture de fragment, là où le moteur
+        existe elle EXIGE la sentinelle vivante) ; la clé maîtresse
+        Shamir M ne vit que l'instant de la lecture et MEURT aussitôt
+        (CF3 n'en a que faire : K_user vient de la phrase) ;
+    (2) la base re-scellée sous CF3, SCHÉMA IDENTIQUE — RIEN À TRADUIRE :
+        le JSON clair passe octet pour octet (H_projet CF3 = condensé du
+        MÊME clair que CF2 scellait) ; époque 1, moitiés fraîches,
+        sel_argon NEUF (K_user est invariable à travers les ÉPOQUES CF3,
+        pas à travers les générations) ;
+    (3) re-lecture À FROID du staging par la sentinelle COMPLÈTE avant
+        le remplacement atomique — une migration qui ne relirait pas son
+        scellage ne serait pas une cérémonie ; échec → staging détruit,
+        CF2 et médias INTACTS, migration REJOUABLE ;
+    (4) le conteneur CF2 reste INTACT : sa destruction est un acte
+        EXPLICITE après verdict humain (detruire-cf2) — les fragments
+        CF2 et leurs copies hors-ligne restent la RELÈVE HISTORIQUE.
+
+    Retour {epoque, checksum, empreinte, piege, conteneur, conteneur_cf2}.
+    """
+    if not phrase:
+        raise ErreurCoffre("phrase VIDE — refus (spec § 2)")
+    if os.path.isfile(conteneur_chemin):
+        raise ErreurCoffre(f"conteneur CF3 DÉJÀ PRÉSENT : {conteneur_chemin} "
+                           "— refus d'écraser (bruler d'abord si assumé)")
+    if not os.path.isfile(conteneur_cf2):
+        raise ErreurCoffre(f"conteneur CF2 ABSENT : {conteneur_cf2} — la "
+                           "migration part d'un coffre CF2 vivant (spec § 12)")
+    if not os.path.isdir(piege_dir):
+        raise ErreurCoffre(f"média du piège ABSENT : {piege_dir} — branchez-le "
+                           "(spec § 4 : la seconde moitié vit sur un média "
+                           "séparé, la machine ne le CRÉE jamais)")
+    config = _config_cf2_pour_migrer(conteneur_cf2, gardes, config_cf2)
+    _cf2.porte_sentinelle(config)     # D120 — la PORTE avant toute lecture
+    base, _entete_cf2, m, _blob_cf2 = _cf2.deverrouiller(conteneur_cf2,
+                                                         config["gardes"])
+    try:
+        clair = bytearray(_serialiser(base))
+        h_projet = hashlib.sha256(bytes(clair)).digest()
+        checksum = h_projet[:4].hex()
+    finally:
+        _cf2._effacer(m)
+        del m
+    sel_argon = secrets.token_bytes(TAILLE_SEL_ARGON)
+    sel_hkdf = secrets.token_bytes(TAILLE_SEL_HKDF)
+    s_serrure = bytearray(secrets.token_bytes(TAILLE_MOITIE))
+    s_piege = bytearray(secrets.token_bytes(TAILLE_MOITIE))
+    v_piege = bytearray(secrets.token_bytes(TAILLE_V_PIEGE))
+    k_user = bytearray(cle_utilisateur(phrase, sel_argon))
+    piege_chemin = chemin_piege(piege_dir, 1)
+    staging = conteneur_chemin + ".staging"
+    try:
+        if os.path.isfile(piege_chemin):
+            print(f"[CF3] un piège d'époque 1 préexistant a été REMPLACÉ "
+                  "(orphelin d'une migration interrompue — spec § 6/§ 12)",
+                  file=sys.stderr)
+        _cf2._ecrire_atomique(
+            piege_chemin,
+            serialiser_piege(1, h_projet, s_piege, v_piege).encode("ascii"))
+        blob = construire_conteneur(bytes(clair), k_user, s_serrure, s_piege,
+                                    v_piege, sel_argon, sel_hkdf, 1, h_projet)
+        _cf2._ecrire_atomique(staging, blob)
+        # re-lecture À FROID — uniquement depuis les artefacts ÉCRITS :
+        # VERTE → remplacement atomique ; ÉCHEC → staging détruit, CF2 et
+        # médias INTACTS, migration rejouable (miroir de la clôture § 6.6)
+        base2, _ = sentinelle_instantanee(
+            blob, piege_chemin, phrase, conteneur_chemin,
+            brouillon_chemin=None, miroir=True, consigner=False)
+        if base2 != json.loads(bytes(clair).decode("utf-8")):
+            raise ErreurCoffre("re-lecture à froid divergente — le staging "
+                               "ne relit pas la base migrée")
+        os.replace(staging, conteneur_chemin)
+        _ecrire_miroir(conteneur_chemin, 1, checksum)
+    except ErreurCoffre:
+        if os.path.isfile(staging):
+            _detruire_fichier(staging)
+        raise
+    finally:
+        _cf2._effacer(k_user, s_serrure, s_piege, v_piege, clair)
+    _journal(conteneur_chemin, f"MIGRATION CF2 → CF3 : époque 1, checksum "
+             f"{checksum} — base re-scellée schéma identique (rien à "
+             f"traduire) depuis {conteneur_cf2} ; conteneur CF2 laissé "
+             "INTACT (destruction explicite après verdict : detruire-cf2, "
+             "spec § 12)")
+    print(f"[CF3-migration] CF2 déverrouillé une dernière fois (porte D120 "
+          f"honorée) : {conteneur_cf2}")
+    print(f"[CF3-migration] base re-scellée sous CF3 (schéma identique — "
+          f"rien à traduire) : {conteneur_chemin} (époque 1)")
+    print(f"[CF3-migration] piège posé sur le média : {piege_chemin}")
+    print("[CF3-migration] re-lecture à froid du scellage : VERTE")
+    print(f"[CF3-migration] VERDICT : VERT — époque 1, checksum {checksum} "
+          f"({len(base.get('projets', {}))} projet(s)) — notez-le sur la "
+          "carte du sachet (spec § 9)")
+    print(f"[CF3-migration] conteneur CF2 laissé INTACT : {conteneur_cf2} — "
+          "destruction EXPLICITE après verdict humain : "
+          "coffre_cf3.py detruire-cf2 --conteneur-cf2 <…> "
+          "--oui-je-comprends (les fragments CF2 et leurs copies hors-ligne "
+          "restent la relève historique, spec § 12)")
+    return {"epoque": 1, "checksum": checksum,
+            "empreinte": h_projet.hex(), "piege": piege_chemin,
+            "conteneur": conteneur_chemin, "conteneur_cf2": conteneur_cf2}
+
+
+def detruire_cf2(conteneur_cf2: str, conteneur_cf3: str = CONTENEUR_DEFAUT,
+                 affirmation: bool = False) -> int:
+    """Destruction EXPLICITE du conteneur CF2 après migration (spec § 12.4).
+
+    Le QUATRIÈME acte de la cérémonie — jamais automatique : migrer
+    laisse le conteneur CF2 INTACT, c'est l'humain qui décide, après le
+    verdict à froid VERT et le recoupement de la carte. Garde
+    fail-closed : refus nommé si le conteneur CF3 qui le remplace est
+    ABSENT (détruire l'ancien coffre sans le neuf serait une perte
+    sèche). Les fragments CF2 et leurs copies hors-ligne ne sont JAMAIS
+    touchés : ils restent la RELÈVE HISTORIQUE (spec § 12).
+    """
+    if not affirmation:
+        raise ErreurCoffre("detruire-cf2 exige --oui-je-comprends — la "
+                           "destruction du conteneur CF2 est EXPLICITE "
+                           "(spec § 12.4 : après le verdict à froid VERT, "
+                           "jamais automatique ; les fragments CF2 et leurs "
+                           "copies hors-ligne restent la relève historique)")
+    if not os.path.isfile(conteneur_cf2):
+        raise ErreurCoffre(f"conteneur CF2 ABSENT : {conteneur_cf2}")
+    if not os.path.isfile(conteneur_cf3):
+        raise ErreurCoffre(f"refus FAIL-CLOSED : le conteneur CF3 qui remplace "
+                           f"le coffre est ABSENT ({conteneur_cf3}) — détruire "
+                           "l'ancien sans le neuf serait une perte sèche "
+                           "(verifiez d'abord : coffre_cf3.py verifier)")
+    _detruire_fichier(conteneur_cf2)
+    # PV nommé dans le dossier PV du coffre CF3 (le survivant consigne
+    # la mort de l'ancien) + ligne au journal CF3 — même loi que les
+    # destructions locales spec § 7 : chaque mort laisse SON procès-verbal
+    pv_dir = chemin_pv_dir(conteneur_cf3)
+    os.makedirs(pv_dir, exist_ok=True)
+    horodatage = _cf2._date_utc().replace(":", "").replace("-", "")
+    chemin_pv = os.path.join(pv_dir, f"pv-destruction-cf2-{horodatage}.txt")
+    _cf2._ecrire_atomique(chemin_pv, "\n".join([
+        "PROCÈS-VERBAL — destruction explicite du conteneur CF2 "
+        "(migration, spec § 12.4)",
+        f"date : {_cf2._date_utc()}",
+        f"conteneur CF2 détruit : {conteneur_cf2} (3 passes, tronqué, "
+        "renommé, unlink, fsync rép.)",
+        f"conteneur CF3 survivant : {conteneur_cf3}",
+        "les fragments CF2 et leurs copies hors-ligne sont INTACTS : "
+        "relève HISTORIQUE (spec § 12)",
+        "le média du piège CF3 est INTACT (la relève vivante)",
+    ]).encode("utf-8"))
+    _journal(conteneur_cf3, f"DESTRUCTION CF2 : conteneur {conteneur_cf2} "
+             "détruit EXPLICITEMENT après migration — fragments CF2 INTACTS "
+             "(relève historique, spec § 12)")
+    print(f"[CF3-migration] conteneur CF2 DÉTRUIT : {conteneur_cf2}")
+    print(f"[CF3-migration] fragments CF2 et copies hors-ligne INTACTS "
+          f"(relève historique) ; PV : {chemin_pv}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Délai croissant (spec § 5.4)
 # ---------------------------------------------------------------------------
 
@@ -1227,7 +1433,7 @@ def autotest() -> int:
 # CLI
 # ---------------------------------------------------------------------------
 
-def _demander_phrase_confirme() -> bytes:
+def _demander_phrase_confirme(action_nom: str = "init") -> bytes:
     for _ in (1, 2, 3):
         a = getpass.getpass("Phrase du coffre : ").encode("utf-8")
         b = getpass.getpass("Confirmez la phrase : ").encode("utf-8")
@@ -1235,7 +1441,7 @@ def _demander_phrase_confirme() -> bytes:
             return a
         print("[CF3] les deux phrases divergent (ou vide) — recomposez",
               file=sys.stderr)
-    raise ErreurCoffre("trois essais de phrase — init abandonné")
+    raise ErreurCoffre(f"trois essais de phrase — {action_nom} abandonné")
 
 
 def _choisir_piege(args, conteneur: str) -> str:
@@ -1316,6 +1522,31 @@ def main(argv=None) -> int:
     p.add_argument("--oui-je-comprends", action="store_true")
     p.add_argument("--conteneur", default=CONTENEUR_DEFAUT)
 
+    p = sous.add_parser("migrer", help="CF2 -> CF3 : cérémonie de "
+                                       "migration (spec § 12)")
+    p.add_argument("--conteneur-cf2", default=_cf2.CHEMIN_CONTENEUR_DEFAUT,
+                   help="conteneur CF2 vivant (défaut : .keys/coffre_cf2.bin)")
+    p.add_argument("--gardes", default=None,
+                   help="racine des gardes CF2 (g1…gN — défaut : config CF2 "
+                        "ou .keys/gardes-cf2)")
+    p.add_argument("--config-cf2", default=None,
+                   help="config CF2 explicite (défaut : .keys/config_cf2.json "
+                        "si elle vit)")
+    p.add_argument("--piege-dir", default=PIEGE_DIR_DEFAUT,
+                   help="média du piège (LABO : .keys/pieges-cf3 — terrain : "
+                        "chemin de la clef USB du sachet, REQUIS)")
+    p.add_argument("--conteneur", default=CONTENEUR_DEFAUT)
+    p.add_argument("--phrase-stdin", action="store_true")
+
+    p = sous.add_parser("detruire-cf2", help="destruction EXPLICITE du "
+                                             "conteneur CF2 après migration "
+                                             "(spec § 12.4 — fragments "
+                                             "INTACTS)")
+    p.add_argument("--conteneur-cf2", default=_cf2.CHEMIN_CONTENEUR_DEFAUT)
+    p.add_argument("--conteneur", default=CONTENEUR_DEFAUT,
+                   help="le conteneur CF3 qui le remplace (garde fail-closed)")
+    p.add_argument("--oui-je-comprends", action="store_true")
+
     sous.add_parser("autotest", help="autocontrôles (temporaire, D105)")
 
     args = parser.parse_args(argv)
@@ -1352,6 +1583,17 @@ def main(argv=None) -> int:
             return 0
         if args.commande == "bruler":
             return bruler(args.conteneur, args.oui_je_comprends)
+        if args.commande == "migrer":
+            phrase = (sys.stdin.buffer.read().strip(b"\r\n")
+                      if args.phrase_stdin
+                      else _demander_phrase_confirme("migration"))
+            migrer(args.conteneur_cf2, args.piege_dir, phrase,
+                   conteneur_chemin=args.conteneur, gardes=args.gardes,
+                   config_cf2=args.config_cf2)
+            return 0
+        if args.commande == "detruire-cf2":
+            return detruire_cf2(args.conteneur_cf2, args.conteneur,
+                                args.oui_je_comprends)
         if args.commande == "autotest":
             return autotest()
     except ErreurCoffre as exc:
