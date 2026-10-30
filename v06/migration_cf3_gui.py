@@ -42,6 +42,13 @@ CE QUE LE GUI FAIT :
   4. « Envoyer le rapport… » (D113/D122) : entête d'environnement + journal
      d'écran + journal de vol → Enregistrer sous .txt + presse-papiers +
      dossier ouvert. AUCUN réseau, AUCUN secret.
+  5. DISPOSITION EN GRILLE (D132) : dans chaque onglet, l'étiquette vit
+     AU-DESSUS de son champ, et le bouton « Parcourir… » vit sur la MÊME
+     LIGNE que le champ qu'il remplit (le terrain avait les boutons
+     empilés en colonne à droite, hors de leurs champs) ; la confirmation
+     de phrase est étiquetée, les boutons d'acte prennent la pleine
+     largeur, et TOUT champ de chemin porte son bouton (migrer, vérifier,
+     détruire).
 
 ENCODAGE : les enfants sont lancés avec PYTHONIOENCODING=utf-8 et lus en
 UTF-8 remplacé — les accents des verdicts survivent au cp850 de Windows.
@@ -88,7 +95,12 @@ except Exception:
     pass
 
 
-VERSION_GUI = "migration-CF3-GUI v1.0 (D127)"
+VERSION_GUI = "migration-CF3-GUI v1.1 (D132)"
+# v1.1 = D132 : disposition en GRILLE — chaque bouton « Parcourir… » vit
+#        sur la MÊME ligne que son champ (le terrain avait les boutons
+#        empilés en colonne à droite, hors de leurs champs), confirmation
+#        de phrase étiquetée, boutons d'acte pleine largeur, Parcourir sur
+#        tous les champs de chemin. v1.0 = D127.
 
 NOM_JOURNAL_VOL = "migration-cf3-journal.log"
 
@@ -468,24 +480,28 @@ class Journal:
         self.texte.configure(state="disabled")
 
 
-def _champ(parent, etiquette, valeur="", largeur=52):
-    """Une ligne de saisie : Label + Entry (retourne la StringVar)."""
-    ttk.Label(parent, text=etiquette).pack(anchor="w")
+def _champ(parent, etiquette, valeur="", dialogue=None, titre=None,
+           largeur=48, ligne=0):
+    """Une ligne de saisie ALIGNÉE (D132) : étiquette AU-DESSUS, puis le
+    champ et son éventuel bouton « Parcourir… » sur la MÊME ligne de
+    grille — le terrain a dénoncé des boutons empilés en colonne à
+    droite de l'onglet, loin de leurs champs (retour 31/10 : « les
+    boutons de recherche de fichiers ne sont pas alignés aux champs
+    concernés »). Retourne la StringVar."""
+    ttk.Label(parent, text=etiquette).grid(
+        column=0, row=ligne, columnspan=2, sticky="w")
     variable = tk.StringVar(value=valeur)
-    ttk.Entry(parent, textvariable=variable, width=largeur).pack(
-        anchor="w", fill="x", pady=(0, 4))
-    return variable
-
-
-def _ligne_parcourir(parent, cadre, etiquette, variable,
-                     dialogue, titre):
-    """Bouton « Parcourir… » qui remplit la StringVar (fichier ou dossier)."""
-    def parcourir():
-        choix = dialogue(title=titre, parent=parent)
-        if choix:
-            variable.set(choix)
-    ttk.Button(cadre, text="Parcourir…", width=11,
-               command=parcourir).pack(side="right", padx=(6, 0))
+    ttk.Entry(parent, textvariable=variable, width=largeur).grid(
+        column=0, row=ligne + 1, sticky="ew", pady=(0, 8))
+    if dialogue is not None:
+        def parcourir():
+            choix = dialogue(title=titre, parent=parent.winfo_toplevel())
+            if choix:
+                variable.set(choix)
+        ttk.Button(parent, text="Parcourir…", width=11,
+                   command=parcourir).grid(
+            column=1, row=ligne + 1, sticky="e", padx=(6, 0),
+            pady=(0, 8))
     return variable
 
 
@@ -572,86 +588,106 @@ class Application:
 
         carnets = ttk.Notebook(self.racine)
         carnets.pack(fill="both", expand=True, padx=10, pady=(6, 2))
+        self.carnets = carnets   # la fumée Xvfb sélectionne les onglets
 
         # --- onglet 1 : MIGRER ---------------------------------------
         acte1 = ttk.Frame(carnets, padding=(10, 8))
         carnets.add(acte1, text="1 · Migrer (CF2 → CF3)")
+        acte1.columnconfigure(0, weight=1)
         ttk.Label(acte1, text=(
             "Actes 1-3 de la cérémonie (spec § 12) : CF2 déverrouillé une "
             "dernière fois (porte D120 honorée), base re-scellée sous CF3 "
             "SCHÉMA IDENTIQUE (rien à traduire), re-lecture à froid du "
             "scellage. Le conteneur CF2 reste INTACT — sa destruction est "
             "l'onglet 3, après votre verdict."),
-            wraplength=880, justify="left").pack(anchor="w", pady=(0, 6))
-        self.var_cf2 = _champ(acte1, "Conteneur CF2 (le coffre vivant)",
-                              CONTENEUR_CF2_DEFAUT)
-        _ligne_parcourir(self.racine, acte1, "", self.var_cf2,
-                         filedialog.askopenfilename,
-                         "Choisir le conteneur CF2")
+            wraplength=880, justify="left").grid(
+                column=0, row=0, columnspan=2, sticky="w", pady=(0, 8))
+        self.var_cf2 = _champ(
+            acte1, "Conteneur CF2 (le coffre vivant)",
+            CONTENEUR_CF2_DEFAUT,
+            dialogue=filedialog.askopenfilename,
+            titre="Choisir le conteneur CF2", ligne=1)
         self.var_gardes = _champ(
             acte1, "Racine des gardes CF2 (g1…gN — vide : la config CF2 "
-                   "décide)", "")
-        _ligne_parcourir(self.racine, acte1, "", self.var_gardes,
-                         filedialog.askdirectory,
-                         "Choisir la racine des gardes CF2")
+                   "décide)", "",
+            dialogue=filedialog.askdirectory,
+            titre="Choisir la racine des gardes CF2", ligne=3)
         self.var_config = _champ(
             acte1, "Config CF2 explicite (vide : .keys/config_cf2.json si "
-                   "elle vit, sinon synthèse nommée)", "")
-        _ligne_parcourir(self.racine, acte1, "", self.var_config,
-                         filedialog.askopenfilename,
-                         "Choisir la config CF2")
+                   "elle vit, sinon synthèse nommée)", "",
+            dialogue=filedialog.askopenfilename,
+            titre="Choisir la config CF2", ligne=5)
         self.var_media = _champ(
             acte1, "MÉDIA du piège (la clef USB du sachet — REQUIS, la "
-                   "machine ne le crée jamais)", "")
-        _ligne_parcourir(self.racine, acte1, "", self.var_media,
-                         filedialog.askdirectory,
-                         "Choisir le média du piège")
-        self.var_cf3 = _champ(acte1, "Conteneur CF3 (le coffre qui naît)",
-                              CONTENEUR_CF3_DEFAUT)
+                   "machine ne le crée jamais)", "",
+            dialogue=filedialog.askdirectory,
+            titre="Choisir le média du piège", ligne=7)
+        self.var_cf3 = _champ(
+            acte1, "Conteneur CF3 (le coffre qui naît)",
+            CONTENEUR_CF3_DEFAUT,
+            dialogue=filedialog.asksaveasfilename,
+            titre="Choisir l'emplacement du conteneur CF3", ligne=9)
+        ttk.Separator(acte1, orient="horizontal").grid(
+            column=0, row=11, columnspan=2, sticky="ew", pady=(0, 6))
         ttk.Label(acte1, text="Phrase du coffre (tapée DEUX fois — un "
                               "scellé sous une phrase typée ne s'ouvrirait "
-                              "plus sous la phrase pensée) :").pack(
-                                  anchor="w")
+                              "plus sous la phrase pensée) :").grid(
+                                  column=0, row=12, columnspan=2,
+                                  sticky="w")
         self.var_phrase = tk.StringVar(value="")
-        ttk.Entry(acte1, textvariable=self.var_phrase, width=52,
-                  show="•").pack(anchor="w", fill="x", pady=(0, 2))
+        ttk.Entry(acte1, textvariable=self.var_phrase, width=48,
+                  show="•").grid(column=0, row=13, sticky="ew",
+                                 pady=(0, 4))
+        ttk.Label(acte1, text="Confirmation de la phrase :").grid(
+            column=0, row=14, columnspan=2, sticky="w")
         self.var_phrase2 = tk.StringVar(value="")
-        ttk.Entry(acte1, textvariable=self.var_phrase2, width=52,
-                  show="•").pack(anchor="w", fill="x", pady=(0, 6))
+        ttk.Entry(acte1, textvariable=self.var_phrase2, width=48,
+                  show="•").grid(column=0, row=15, sticky="ew",
+                                 pady=(0, 8))
         self.bouton_migrer = ttk.Button(
             acte1, text="MIGRER (actes 1-3 : porte, re-scellage, "
                         "re-lecture à froid)",
             command=self.acte_migrer)
-        self.bouton_migrer.pack(anchor="w")
+        self.bouton_migrer.grid(column=0, row=16, columnspan=2,
+                                sticky="ew", pady=(4, 0))
         self.boutons_actes.append(self.bouton_migrer)
 
         # --- onglet 2 : VÉRIFIER -------------------------------------
         acte2 = ttk.Frame(carnets, padding=(10, 8))
         carnets.add(acte2, text="2 · Vérifier (verdict à froid)")
+        acte2.columnconfigure(0, weight=1)
         ttk.Label(acte2, text=(
             "Acte 3 de la cérémonie, par l'humain : sentinelle complète, "
             "verdict à froid, checksum de 8 hex à RECOUPER avec la CARTE "
             "du sachet AVANT toute destruction (spec § 9). Recommandé : "
             "re-exécutez-le le lendemain, machine froide."),
-            wraplength=880, justify="left").pack(anchor="w", pady=(0, 6))
-        self.var_cf3_v = _champ(acte2, "Conteneur CF3",
-                                CONTENEUR_CF3_DEFAUT)
-        self.var_media_v = _champ(acte2, "MÉDIA du piège", "")
-        _ligne_parcourir(self.racine, acte2, "", self.var_media_v,
-                         filedialog.askdirectory,
-                         "Choisir le média du piège")
+            wraplength=880, justify="left").grid(
+                column=0, row=0, columnspan=2, sticky="w", pady=(0, 8))
+        self.var_cf3_v = _champ(
+            acte2, "Conteneur CF3", CONTENEUR_CF3_DEFAUT,
+            dialogue=filedialog.askopenfilename,
+            titre="Choisir le conteneur CF3", ligne=1)
+        self.var_media_v = _champ(
+            acte2, "MÉDIA du piège", "",
+            dialogue=filedialog.askdirectory,
+            titre="Choisir le média du piège", ligne=3)
+        ttk.Label(acte2, text="Phrase du coffre :").grid(
+            column=0, row=5, columnspan=2, sticky="w")
         self.var_phrase_v = tk.StringVar(value="")
-        ttk.Label(acte2, text="Phrase du coffre :").pack(anchor="w")
-        ttk.Entry(acte2, textvariable=self.var_phrase_v, width=52,
-                  show="•").pack(anchor="w", fill="x", pady=(0, 6))
+        ttk.Entry(acte2, textvariable=self.var_phrase_v, width=48,
+                  show="•").grid(column=0, row=6, sticky="ew",
+                                 pady=(0, 8))
         self.bouton_verifier = ttk.Button(
-            acte2, text="VÉRIFIER (verdict à froid)", command=self.acte_verifier)
-        self.bouton_verifier.pack(anchor="w")
+            acte2, text="VÉRIFIER (verdict à froid)",
+            command=self.acte_verifier)
+        self.bouton_verifier.grid(column=0, row=7, columnspan=2,
+                                  sticky="ew", pady=(4, 0))
         self.boutons_actes.append(self.bouton_verifier)
 
         # --- onglet 3 : DÉTRUIRE -------------------------------------
         acte3 = ttk.Frame(carnets, padding=(10, 8))
         carnets.add(acte3, text="3 · Détruire le conteneur CF2")
+        acte3.columnconfigure(0, weight=1)
         ttk.Label(acte3, text=(
             "Acte 4 de la cérémonie, EXPLICITE (spec § 12.4) : destruction "
             "du conteneur CF2 SEUL — les fragments CF2 et leurs copies "
@@ -659,21 +695,30 @@ class Application:
             "Uniquement après un verdict à froid VERT recoupé avec la "
             "carte. Garde fail-closed : refus si le conteneur CF3 est "
             "absent (jamais l'ancien sans le neuf)."),
-            wraplength=880, justify="left").pack(anchor="w", pady=(0, 6))
-        self.var_cf2_d = _champ(acte3, "Conteneur CF2 (à détruire)",
-                                CONTENEUR_CF2_DEFAUT)
-        self.var_cf3_d = _champ(acte3, "Conteneur CF3 (le survivant — "
-                                       "garde)", CONTENEUR_CF3_DEFAUT)
+            wraplength=880, justify="left").grid(
+                column=0, row=0, columnspan=2, sticky="w", pady=(0, 8))
+        self.var_cf2_d = _champ(
+            acte3, "Conteneur CF2 (à détruire)", CONTENEUR_CF2_DEFAUT,
+            dialogue=filedialog.askopenfilename,
+            titre="Choisir le conteneur CF2", ligne=1)
+        self.var_cf3_d = _champ(
+            acte3, "Conteneur CF3 (le survivant — garde)",
+            CONTENEUR_CF3_DEFAUT,
+            dialogue=filedialog.askopenfilename,
+            titre="Choisir le conteneur CF3", ligne=3)
         self.var_oui = tk.BooleanVar(value=False)
         ttk.Checkbutton(
             acte3, variable=self.var_oui,
             text="Je comprends : destruction EXPLICITE et irréversible du "
                  "conteneur CF2 ; fragments et copies hors-ligne INTACTS "
-                 "(relève historique)").pack(anchor="w", pady=(0, 6))
+                 "(relève historique)").grid(
+                     column=0, row=5, columnspan=2, sticky="w",
+                     pady=(0, 8))
         self.bouton_detruire = ttk.Button(
             acte3, text="DÉTRUIRE le conteneur CF2 (acte 4)",
             command=self.acte_detruire)
-        self.bouton_detruire.pack(anchor="w")
+        self.bouton_detruire.grid(column=0, row=6, columnspan=2,
+                                  sticky="ew", pady=(4, 0))
         self.boutons_actes.append(self.bouton_detruire)
 
         barre = ttk.Frame(self.racine, padding=(10, 2))
@@ -1168,6 +1213,46 @@ def selftest():
                                  "ftplib", "smtplib", "telnetlib"},
              ", ".join(sorted(importations & {"socket", "urllib",
                                              "requests", "http"})))
+
+    # 9 — disposition D132 : dans les onglets, le bouton « Parcourir… »
+    #     vit SUR LA LIGNE de grille de SON champ (le terrain a dénoncé
+    #     des boutons empilés en colonne à droite, loin de leurs champs
+    #     — retour 31/10 : « les boutons de recherche de fichiers ne
+    #     sont pas alignés aux champs concernés »). Preuve structurelle
+    #     AST : dans _champ, le Entry et le Button partagent la MÊME
+    #     ligne (row), dans des colonnes DISTINCTES — un retour au pack
+    #     side="right" ferait échouer ce contrôle.
+    def _mots_cles_grid(noeud, nom_widget):
+        """Les mots-clés du .grid(...) attaché à ttk.<nom_widget>(...)."""
+        for expression in ast.walk(noeud):
+            if not (isinstance(expression, ast.Call)
+                    and isinstance(expression.func, ast.Attribute)
+                    and expression.func.attr == "grid"):
+                continue
+            constructeur = expression.func.value
+            if (isinstance(constructeur, ast.Call)
+                    and isinstance(constructeur.func, ast.Attribute)
+                    and constructeur.func.attr == nom_widget
+                    and constructeur.args
+                    and isinstance(constructeur.args[0], ast.Name)):
+                return {mot.arg: ast.dump(mot.value)
+                        for mot in expression.keywords}
+        return None
+
+    arbre_source = ast.parse(source)
+    fonction_champ = next(
+        (n for n in ast.walk(arbre_source)
+         if isinstance(n, ast.FunctionDef) and n.name == "_champ"), None)
+    grille_entree = (_mots_cles_grid(fonction_champ, "Entry")
+                     if fonction_champ else None)
+    grille_bouton = (_mots_cles_grid(fonction_champ, "Button")
+                     if fonction_champ else None)
+    controle("disposition : champ et bouton « Parcourir… » sur la même "
+             "ligne de grille (D132)",
+             grille_entree is not None and grille_bouton is not None
+             and grille_entree.get("row") == grille_bouton.get("row")
+             and grille_entree.get("column") != grille_bouton.get("column"),
+             f"Entry/grid={grille_entree!r} Button/grid={grille_bouton!r}")
 
     # 8 — phrases_coherentes : la confirmation de l'onglet MIGRER
     controle("phrases divergentes refusées nommément",

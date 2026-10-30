@@ -27,6 +27,10 @@ et v06/test_migration_cf3.py) :
       la phrase N'Y FIGURE JAMAIS ; troncature à 3000 lignes (garde-fou)
   X6  la boîte noire est un TÉMOIN, pas une dépendance : chemin
       impossible → l'écriture est silencieuse, la cérémonie continue
+  X7  (via selftest, D132) la disposition en GRILLE : dans _champ, le
+      Entry et le bouton « Parcourir… » partagent la MÊME ligne de
+      grille (le terrain a dénoncé des boutons empilés en colonne à
+      droite, hors de leurs champs — retour 31/10)
   L   les lanceurs lancer_migration_cf3.bat/.sh : le .sh EXÉCUTÉ (deux
       postures : dossier v06/ d'abord, copie plate ensuite, refus nommé
       sans cible) ; le .bat par CONTENU (Windows ne court pas ici, la
@@ -379,7 +383,7 @@ def l_lanceurs():
                            cwd=posture, capture_output=True, text=True,
                            timeout=600)
         _verifie("l-sh-posture-v06-selftest-vert",
-                 r.returncode == 0 and "18 PASS / 0 ÉCHEC" in r.stdout,
+                 r.returncode == 0 and "19 PASS / 0 ÉCHEC" in r.stdout,
                  r.stdout[-300:] + r.stderr[-200:])
 
         # posture 2 : copie PLATE — le selftest se prouve aussi (la
@@ -396,7 +400,7 @@ def l_lanceurs():
                             timeout=600)
         _verifie("l-sh-posture-copie-plate-selftest-vert",
                  r2.returncode == 0
-                 and "18 PASS / 0 ÉCHEC" in r2.stdout,
+                 and "19 PASS / 0 ÉCHEC" in r2.stdout,
                  r2.stdout[-300:] + r2.stderr[-200:])
 
         # refus nommé : sans cible, le lanceur S'ARRÊTE en disant pourquoi
