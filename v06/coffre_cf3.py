@@ -485,7 +485,16 @@ def _destruction_locale(conteneur_chemin: str, raison: str,
     lignes_pv.append("RELÈVE : copie hors-ligne du couple conteneur+piège, "
                      "ou re-scellement depuis CF2 (cérémonie spec § 12)")
     horodatage = _cf2._date_utc().replace(":", "").replace("-", "")
-    chemin_pv = os.path.join(pv_dir, f"pv-destruction-cf3-{horodatage}.txt")
+    base_pv = os.path.join(pv_dir, f"pv-destruction-cf3-{horodatage}")
+    chemin_pv = base_pv + ".txt"
+    suffixe = 2
+    while os.path.exists(chemin_pv):
+        # D123 : DEUX destructions la même seconde (prouvé par le rapport
+        # terrain D122 — t8 rendait DEUX fois le MÊME chemin de PV : le
+        # second ÉCRASAIT le premier) : chaque destruction laisse SON
+        # procès-verbal — suffixe -2, -3, … jamais un écrasement.
+        chemin_pv = f"{base_pv}-{suffixe}.txt"
+        suffixe += 1
     with open(chemin_pv, "w", encoding="utf-8") as f:
         f.write("\n".join(lignes_pv) + "\n")
     os.chmod(chemin_pv, 0o600)

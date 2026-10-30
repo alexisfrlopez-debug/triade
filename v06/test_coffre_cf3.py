@@ -536,9 +536,20 @@ def t8_course_de_cloture():
                      "étiquette H_projet" in str(exc))
         _verifie("t8-contenu-substitue-detruit",
                  not os.path.isfile(bac.conteneur))
+        # D123 : DEUX destructions → DEUX PV DISTINCTS. Le rapport terrain
+        # D122 a prouvé l'écrasement même-seconde (t8 rendait DEUX fois le
+        # MÊME chemin) : l'ancien pvs[-1] ne passait QUE par ce bug —
+        # chaque destruction laisse SON procès-verbal, les DEUX raisons
+        # (AEAD refusé, substitution démasquée) restent lisibles.
         pvs = os.listdir(C.chemin_pv_dir(bac.conteneur))
-        pv2 = _texte(os.path.join(C.chemin_pv_dir(bac.conteneur), pvs[-1]))
-        _verifie("t8-pv-course-nommee", "course de clôture" in pv2)
+        _verifie("t8-deux-destructions-deux-pv", len(pvs) == 2)
+        pv_union = "\n".join(
+            _texte(os.path.join(C.chemin_pv_dir(bac.conteneur), p))
+            for p in pvs)
+        _verifie("t8-pv-course-nommee", "course de clôture" in pv_union)
+        _verifie("t8-pv-aead-et-substitution-tous-deux-ecrits",
+                 "tag AEAD invalide" in pv_union
+                 and "substitution PROUVÉE" in pv_union)
 
         # JAMAIS une ouverture : le vrai conteneur remis OUVRABLE, le faux
         # ne l'a jamais été — et le KEK volé ne scelle QUE l'état vu

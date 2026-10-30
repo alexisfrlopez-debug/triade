@@ -237,7 +237,11 @@ destructif acceptable).
 
 Trois passes (aléa CSPRNG, 0xFF, 0x00) + truncate + renommage aléatoire +
 unlink + fsync (miroir `bruler` CF2 § 7), PV horodaté avec la RAISON NOMMÉE
-dans `.keys/pv-cf3/`, ligne au journal. `bruler` (commande explicite,
+dans `.keys/pv-cf3/`, ligne au journal. Chaque destruction laisse SON PV :
+deux destructions la même seconde produisent DEUX fichiers distincts
+(suffixe `-2`, correctif D123 — le rapport terrain D122 a prouvé
+l'écrasement même-seconde : le second PV écrasait le premier).
+`bruler` (commande explicite,
 `--oui-je-comprends`) reste la destruction MANUELLE — même routine, déclencheur
 humain.
 

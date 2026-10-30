@@ -16,7 +16,7 @@ ce que son rapport emporte. Cette suite l'attaque :
       alors que le Tk vit dans app.racine ;
   X3  le relais sous-processus : l'autotest embarqué rend « 28 PASS /
       0 ÉCHEC » COMPTÉ DEPUIS LE FLUX, la suite complète rend
-      « 90 PASS / 0 ÉCHEC », une cible absente est un refus NOMMÉ, et
+      « 92 PASS / 0 ÉCHEC », une cible absente est un refus NOMMÉ, et
       l'enfant reçoit PYTHONIOENCODING=utf-8 (les accents des verdicts
       survivent au cp850 de Windows — prouvé par un enfant témoin qui
       imprime son environnement) ;
@@ -185,8 +185,8 @@ def x3_relais_sous_processus():
     relais_suite = P.RelaisEssais()
     lignes_suite = relais_suite.lancer(P.chemin_cible("test_coffre_cf3.py"))
     _verifie("x3-relais-suite-code-0", relais_suite.code == 0)
-    _verifie("x3-relais-suite-90-pass-du-flux",
-             P.compter_verdict(lignes_suite) == (90, 0))
+    _verifie("x3-relais-suite-92-pass-du-flux",
+             P.compter_verdict(lignes_suite) == (92, 0))
 
     # cible absente : refus NOMMÉ (aucune ligne, code None)
     relais_fantome = P.RelaisEssais()
@@ -437,9 +437,9 @@ def x8_posture_kit_sous_processus():
             [sys.executable, "test_coffre_cf3.py"],
             cwd=kit, capture_output=True, text=True, timeout=300,
             env={**os.environ, "PYTHONIOENCODING": "utf-8"})
-        _verifie("x8-kit-v06-suite-cf3-90-pass",
+        _verifie("x8-kit-v06-suite-cf3-92-pass",
                  sortie3.returncode == 0
-                 and "90 PASS / 0 ÉCHEC" in sortie3.stdout)
+                 and "92 PASS / 0 ÉCHEC" in sortie3.stdout)
     finally:
         shutil.rmtree(bac, ignore_errors=True)
 

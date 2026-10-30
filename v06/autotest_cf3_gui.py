@@ -28,7 +28,7 @@ CE QUE LE PUPITRE FAIT :
        - « Autotest CF3 embarqué » → python v06/coffre_cf3.py autotest
          (28 contrôles, ~3 s, temporaires, AUCUN coffre réel touché) ;
        - « Suite de falsifiabilité CF3 » → python v06/test_coffre_cf3.py
-         (90 contrôles, ~10-30 s selon machine).
+         (92 contrôles, ~10-30 s selon machine).
      La sortie coule ligne à ligne dans le journal (écran + boîte noire),
      le verdict final est compté DEPUIS LE FLUX (PASS / ÉCHEC) et croisé
      avec le code de sortie — un mensonge d'un des deux serait visible.
@@ -75,7 +75,7 @@ except Exception:
     pass
 
 
-VERSION_PUPITRE = "autotest-CF3-GUI v1.0 (D122)"
+VERSION_PUPITRE = "autotest-CF3-GUI v1.1 (D123)"
 
 NOM_JOURNAL_VOL = "autotest-cf3-journal.log"
 
@@ -517,7 +517,7 @@ class Application:
             command=self.lancer_autotest)
         self.bouton_autotest.pack(side="left")
         self.bouton_suite = ttk.Button(
-            actions, text="Lancer la suite de falsifiabilité (90 contrôles)",
+            actions, text="Lancer la suite de falsifiabilité (92 contrôles)",
             command=self.lancer_suite)
         self.bouton_suite.pack(side="left", padx=(6, 0))
         self.barre_verdict = ttk.Label(
@@ -919,8 +919,8 @@ def selftest():
 
 def main():
     parseur = argparse.ArgumentParser(
-        description="TRIADE — pupitre d'autotest CF3 (D122). Sans argument : "
-                    "fenêtre (essais relais + rapport). --selftest : "
+        description="TRIADE — pupitre d'autotest CF3 (D123, v1.1). Sans "
+                    "argument : fenêtre (essais relais + rapport). --selftest : "
                     "batterie headless (aucune GUI requise). --v06 CHEMIN : "
                     "dossier qui porte coffre_cf3.py (défaut : à côté du "
                     "pupitre).")
