@@ -19,7 +19,11 @@
 > pour curl validé terrain 6× D64-D71, balise finale **`0.4.0`** scellée sur
 > cristallisation 38/38 × 10/10, immuable § 9 ; la lignée de clés avait été
 > régénérée dans la même session — 4e réinitialisation, D27/D30 réappliquées,
-> preuve byte-identique dd12b649). En parallèle (D34, anticipation
+> preuve byte-identique dd12b649). **Jalon M4 franchi le 29 octobre 2026**
+(D104 — run 17-H : tunnel chiffré établi et échec propre sur certificat
+invalide sur machine réelle ; balise finale **`0.5.0`** scellée, arbre
+`m4/I` signé sous le sceau de l'Intention). **Jalon M5 ouvert le
+31 octobre 2026** (D133 — programme « Outil complet » ci-dessous). En parallèle (D34, anticipation
 > restreinte) : échelle d'auto-hébergement — échelon 1 franchi (hachoir,
 > `m6/`), échelon 2 phase 1 scellée (sceau SHA-512 natif, `m7/` — emprunt de
 > nommage, les jalons M6/M7 du plan restent inchangés). Composant transversal ajouté
@@ -27,7 +31,9 @@
 > chiffré TRIADE-CF1 (`coffre_fort.py`, spécification § 15.3 / FORMAT_CARTE § 11).
 > Composant transversal v0.6.0 (D84–D87, 28/10) : **souveraineté cryptographique**
 > (attestation de non-exfiltration, interrupteur d'homme mort Shamir, filigrane
-> hors-ligne de la couche I) + passage du dépôt sous licence BSL 1.1 — cf.
+> hors-ligne de la couche I) + passage du dépôt sous licence BSL 1.1 — cf. Le programme est
+> ACCOMPLI et PROUVÉ SUR TERRAIN à la passation v0.6.0 (D133, 31/10) : la chaîne
+> réelle du coffre a migré CF1 → CF2 → CF3 les 30–31 octobre 2026.
 > section « Programme v0.6.0 » en fin de plan.
 
 L'application cible — un outil de pentest de type intercepteur MITM pour Windows 11 — est
@@ -187,8 +193,24 @@ mini-dépôt portable, MANIFESTE d'empreintes, aucun secret) — les
 cérémonies réelles peuvent s'armer depuis le dépôt OU depuis le Drive.
 Les trois composants étant écrits
 (l'axe 1 D85 reste une exigence consignée — infrastructure sans TEE), la
-passation de la spécification à v0.6.0 est MÛRE : l'arbitrage (passer avec
-l'axe 1 consigné, ou attendre) appartient au développeur.
+passation de la spécification à v0.6.0 était MÛRE : **elle est effective
+(D133, 31/10/2026)** — l'arbitrage du développeur a tranché : passer avec
+l'axe 1 consigné. L'état au moment de la passation : axes 2 et 3 non seulement
+livrés mais PROUVÉS TERRAIN — la chaîne réelle du coffre a migré CF1 → CF2
+(le 31/10 : phrase changée D110, cinq gardes seuil 3, trois copies hors-ligne,
+CF1 laissé intact) puis CF2 → CF3 (le 30–31/10 : époque 1, checksum
+`0cc89a96`, verdict à froid VERT deux fois, CF2 laissé intact jusqu'au geste
+explicite de destruction) —, la re-cérémonie du sceau accomplie par le
+développeur depuis son clone (D126 : dix signatures vérifiées, commit 20f40bc
+poussé), l'outillage de migration livré (D127), les cérémonies conduites par
+le maître de cérémonie graphique avec le kit Drive identique au miroir par
+construction (D130). Un AXE 4 s'est ajouté en cours de route, né du terrain :
+la serrure à triple scellement CF3 (D121) — le démon sentinelle remplacé par
+un piège hors machine, la sentinelle instantanée PAR INVOCATION, le cycle en
+deux actes. La spécification `PROTOCOLE_TRIADE.md` est passée à v0.6.0 ; le
+PDF formel et le *Livre du Coffre* (complément opératoire) l'accompagnent
+(`docs/`). Un coffre neuf naît désormais CF3 (`init` direct, époque 1) : la
+chaîne de migration appartient à l'histoire du coffre réel.
 
 **Hiérarchie des clés qui en découle (trois gardes, trois menaces)** : phrase
 de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne
@@ -196,3 +218,19 @@ de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne
 VOLONTÉ). La barrière juridique (BSL, D84) et la barrière cryptographique
 (D85–D87) se répondent : la licence pour les tribunaux, les preuves pour la
 machine.
+
+## Programme M5 — Outil complet (ouvert le 31/10/2026, D133)
+
+Le jalon de l'outil complet s'ouvre sur trois chantiers mesurables, ordonnés par
+la dépendance — (a) arme la preuve dont (b) et (c) ont besoin pour être auditables :
+
+| Chantier | Contenu | Critère de sortie mesurable |
+|---|---|---|
+| (a) Empreintes par build actives | chaque build consigne l'empreinte de son artefact au tableau de bord et au journal de travail ; la comparaison inter-build devient un contrôle automatique | tout artefact livré porte son empreinte CONSIGNÉE par le build qui l'a produit ; une divergence inter-build est un refus nommé |
+| (b) Interception en VM isolée | le proxy transparent M3 porte le tunnel M4 au scénario réel complet : navigateur, VM isolée, autorité de test locale | un flux navigateur intercepté de bout en bout dans la VM (journal + témoin sur disque, leçon D99) ; échec propre sur certificat invalide constaté dans LE MÊME run |
+| (c) Patch à chaud du journal en production | l'écriture vivante du superviseur terrain sous patch, retour arrière prêt | patch appliqué pendant le trafic, journal cohérent, rollback démontré, zéro régression (suite de conformité verte) |
+
+Conditions transverses inchangées : oracle vert, suite de conformité verte,
+tableau de bord conforme, carte signée — et, depuis le sceau, couche I signée
+à chaque build. La discipline du terrain demeure la règle : l'évidence avant
+le correctif, chaque run rapporte ses propres preuves.

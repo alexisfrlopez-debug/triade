@@ -36,7 +36,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.5.2, source de travail) — `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (archive formelle v0.5.2 : garde durable de la phrase de contrôle D81, menace du vol du coffre étendue § 13.1, M4 ouvert constaté D77 — D81) ; archives conservées : v0.5.1, v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v052/verify_spec.py` (cahier V1–V12) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.6.0, source de travail) — `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (PDF formel v0.6.0 : passation du programme de souveraineté cryptographique D133 — axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3, coffre neuf né CF3 ; annexe empreintes + tableau décisionnel D75–D133) ; **Livre du Coffre** : `docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf` (complément opératoire — cérémonies, runbook, mode dégradé, FAQ du terrain) ; archives conservées : v0.5.2, v0.5.1, v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v060/verify_spec.py` (cahier V1–V14) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
@@ -72,7 +72,7 @@ durable, consigne développeur)** : la phrase de contrôle courante vit dans
 coffre Drive) — sauvegardée AVANT TOUTE AUTRE ACTION dès production, le fichier EST la
 remise ; elle ouvre le conteneur (prouvé, restauration post-panne démontrée de bout en
 bout — cf. `LISEZMOI-PHRASE-CONTROLE.txt`).
-Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification v0.5.2 § 15.3.
+Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification v0.6.0 § 17.3 (souveraineté : § 12 ; cérémonies : § 13 ; le détail opératoire vit dans le Livre du Coffre).
 
 ## État du projet
 
@@ -163,7 +163,7 @@ de contrôle passe sous garde durable** — PHRASE-CONTROLE-COFFRE.txt au racine
 (commit dédié AVANT TOUT, GitHub + miroir + racine Drive, md5 vérifiés), le fichier est
 la remise (l'affichage unique de cérémonie cesse d'être le canal de survie — la session
 morte de D80 avait laissé la phrase D80 remise à personne dans le bac à sable) ;
-spécification v0.5.2 (§ 1.6, § 13.1 menace étendue — confidentialité au repos = contrôle
+spécification v0.6.0 (§ 1.7 passation D133 ; § 15.1 menaces étendues — expropriation, evil maid, roll-back du couple ; confidentialité au repos = contrôle
 d'accès au dossier Drive, mitigation première : restreindre le partage par lien —, § 15.3,
 § 17.6, cahier V1–V12, PDF QA 12/12) ; restauration post-panne prouvée de bout en bout.
 **Coffre Drive nettoyé (D76)** : douze

@@ -1,0 +1,141 @@
+% =====================================================================
+%  CH 8-11 : Pré-versions · Reverse-specs · Optimisation · Profils
+% =====================================================================
+\section{Cristallisation et pré-versions}\label{sec:preversions}
+
+La v0.3 connaissait les balises de version sans en fixer la sémantique ; la démonstration
+RoomEq a inventé en cours de route la pré-version \code{-dev.N} pour distinguer « vérifié
+par l’oracle » de « validé sur le terrain ». La v0.4.0 formalise le schéma complet (D23) :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Schéma de pré-versions de cristallisation.}
+\label{tab:preversions}
+\begin{tabularx}{\textwidth}{@{}l l Y@{}}
+\toprule
+\textbf{Segment} & \textbf{Signification} & \textbf{Conditions d’ouverture} \\
+\midrule
+\code{X.Y.Z-dev.N} & pré-version de développement & oracle vert (R5) ; construction
+0 erreur / 0 avertissement ; jamais validée terrain ; usage interne \\
+\code{X.Y.Z-rc.N} & candidate à la validation & dev + suite de conformité du profil
+verte (§\ref{sec:conformite}) + critères du jalon courant ; soumise à la validation
+terrain \\
+\code{X.Y.Z} & version finale & validation terrain consignée au journal des décisions ;
+balise immuable \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Trois règles gouvernent le schéma. \textbf{Monotonie} : pour un même triplet,
+\code{dev.N} $<$ \code{rc.N} $<$ version finale ; la version minimale acceptée alimente
+le contrôle anti-rollback de R10. \textbf{Immuabilité} : une balise posée n’est jamais
+déplacée ni supprimée ; un défaut découvert après cristallisation se corrige en
+\code{X.Y.Z+1} à contrat stable (R4) — l’échec est honoré, pas effacé.
+\textbf{Progression de contrat} : une évolution qui rompt un contrat publié passe par
+\code{X.(Y+1).0} avec révision explicite de la spécification concernée. Le schéma
+généralise la séquence vécue par RoomEq (\code{v3.0.0-dev.1} $\to$ \code{v3.0.0} $\to$
+\code{v3.0.1} $\to$ \code{v3.0.2} : deux échecs d’intégration continue honorés puis
+corrigés en patchs à contrat stable), qui demeure l’occurrence de référence. Le schéma
+a depuis été vécu deux fois par le cœur natif : les balises finales \code{0.2.0} (M1,
+D32) et \code{0.3.0} (M2, D43) sont posées, chacune après validation terrain consignée
+— la séquence rc.1 $\to$ rc.4 de M2 (quatre générations, chacune sur défaut terrain
+nommé et corrigé) demeure l’occurrence de référence de la boucle d’évidence
+(§\ref{sec:terrain}).
+
+\section{Binaires scellés hérités : reverse-specs}\label{sec:reversespecs}
+
+Un projet agent-first hérite presque toujours d’un patrimoine : binaires scellés, validés
+sur le terrain, dont les contrats ne sont écrits nulle part. La v0.3 ne disait rien de ce
+cas ; la démonstration y a répondu par invention (spécifications de l’installateur scellé
+v2.2.2, huit modules extraits par rétro-ingénierie). La v0.4.0 officialise la pratique
+(D23).
+
+\begin{sloppypar}
+\paragraph{Définition.} Une \emph{reverse-spec} est une spécification I extraite d’un
+artefact scellé existant : le gabarit s’applique intégralement, avec deux particularités.
+La \textbf{provenance} est \code{reverse-spec de <binaire scellé @ tag>} — elle identifie
+l’artefact source et sa balise. Le \textbf{statut} est « prête » tant que la spécification
+n’a pas été confrontée au comportement réel (fixtures issues de l’artefact, tests de
+discrimination) ; il passe à « validée » lorsque les vecteurs ont tranché. Une
+reverse-spec ne modifie jamais l’artefact scellé : elle le documente.
+\end{sloppypar}
+
+\paragraph{Règles.} Premièrement, le recodage d’un binaire scellé ne peut partir que de sa
+reverse-spec \emph{validée} — jamais du code relu en séance, jamais d’une mémoire de
+session. Deuxièmement, une reverse-spec « prête » figure dans la traçabilité avec son
+statut visible : l’exception est nommée, pas silencieuse. Troisièmement, la
+rétro-ingénierie se fait par lecture ligne à ligne du code source scellé — méthode
+déclarée dans la spécification, reproductible par un tiers. La reverse-spec étend la
+couche I au patrimoine sans l’exiger de recoder : figer la connaissance avant de décider.
+
+\section{Optimisation mesurée et journal d’optimisation}\label{sec:optimisation}
+
+La fonction objectif place l’optimisation au troisième rang et l’assortit d’une condition :
+descente à l’ISA sur hot paths identifiés par profilage. La v0.4.0 en tire l’interdiction
+normative (R11) et son instrument, le \textbf{journal d’optimisation} (D21) :
+l’optimisation sans hot path identifié ni mesure est prématurée, donc interdite ; sa
+demande est refusée et consignée — le refus motivé fait partie de la gouvernance, comme
+les alternatives rejetées du journal des décisions.
+
+\begin{lstlisting}[caption={Format normalisé d’une entrée du journal
+d’optimisation.}, label={lst:opt}]
+[OPT-NN] date . bloc/chemin . decideur
+  hot path       : <identification + preuve de mesure>
+  mesure avant   : <valeur, conditions, materiel>
+  changement     : <description> . contrat stable : oui/non (R4)
+  mesure apres   : <valeur, conditions identiques>
+  gain           : <x ou %> . decision : appliquee | refusee (motif)
+  decision liee  : Dxx
+\end{lstlisting}
+
+Le journal est versionné avec la couche I ; toute optimisation appliquée doit précéder le
+commit du bloc optimisé (R11 sanctionne le commit, pas seulement l’intention). L’entrée de
+référence est l’occurrence RoomEq : la demande d’« optimisation maximale » a été honorée
+par la mesure — chaîne d’égalisation à 152$\times$ le temps réel, zéro allocation par
+bloc — puis refusée comme transformation, faute de problème de performance à corriger.
+
+\section{Profils de cible}\label{sec:profils}
+
+Le cœur du protocole — couches, règles, boucle, vérification — est indépendant de la cible
+par construction ; tout ce qui dépend de la cible est regroupé dans un \textbf{profil}.
+L’universalité reste structurelle : instancier une plateforme nouvelle revient à écrire un
+profil — ses sept éléments \emph{et sa suite de conformité} (§\ref{sec:conformite}) —
+jamais à modifier le protocole.
+
+Un profil définit sept éléments : (1) l’ISA et ses types ; (2) l’ABI d’appel ; (3) le
+format d’exécutable et les protections à honorer ; (4) l’interface système autorisée ;
+(5) le mécanisme de patch à chaud natif ; (6) le moteur de notation et son vérificateur
+de round-trip ; (7) la granularité des blocs et le padding des adresses stables. Un
+huitième livrable s’ajoute en v0.4.0 : la \textbf{politique anti-rollback et de
+vérification au chargement} propre au profil (déclinaison de R10).
+
+\begin{table}[htbp]
+\centering\small
+\caption{Profils de cible déclarés.}
+\label{tab:profils}
+\begin{tabularx}{\textwidth}{@{}l l l Y@{}}
+\toprule
+\textbf{Profil} & \textbf{Format} & \textbf{Interface} & \textbf{Statut} \\
+\midrule
+\code{x86-64-win11-pe} & PE32+ & IAT (kernel32, ws2\_32, Schannel) & primaire — jalons
+M0–M5 \\
+\code{x86-64-linux-elf64} & ELF64 & syscalls + libc & M6 — inter-OS \\
+\code{riscv64-linux-elf64} & ELF64 & syscalls + libc & M7 — inter-ISA \\
+\code{aarch64-macos-macho} & Mach-O & libSystem & réservé \\
+\code{wasm32-wasi} & Wasm & WASI & réservé, étude \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Profil primaire, ABI Microsoft x64.} Arguments en RCX, RDX, R8, R9 puis la
+pile ; retour en RAX ; shadow space de 32 octets par appelant ; volatils RAX, RCX, RDX,
+R8–R11, XMM0–XMM5 ; RSP aligné 16 ; \textbf{aucune zone rouge} — contrairement à System
+V, stocker sous RSP sans allocation préalable est interdit. R10 et R11 sont les registres
+de travail internes ; aucune donnée vivante ne séjourne entre RSP et RSP+32 au moment
+d’un appel ; tout bloc appelant alloue son cadre avant d’y toucher.
+
+\paragraph{Différences entre profils.} Le passage Windows $\to$ Linux \textbf{inverse} le
+piège de la zone rouge (interdite sur msx64, permise sur SysV pour une fonction feuille) ;
+le passage x86-64 $\to$ RISC-V change la nature du patch à chaud : sur une ISA à
+instructions de taille fixe, la bascule passe par un registre scratch chargé de l’adresse
+cible, suivi de \code{fence.i} — le profil spécifie la séquence exacte et son atomicité.

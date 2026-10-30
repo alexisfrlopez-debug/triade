@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # TRIADE — Régénération systématique du PDF formel du protocole (décisions D17, D25).
 #
-# Depuis la v0.5.2, le PDF formel de la version courante est
-# docs/Protocole_TRIADE_v0.5.2_Specification.pdf, produit par la chaîne
-# LaTeX/Tectonic (scripts/spec_v052/, D81 — née spec_v040 → spec_v050 → spec_v051) : corps
+# Depuis la v0.6.0, le PDF formel de la version courante est
+# docs/Protocole_TRIADE_v0.6.0_Specification.pdf, produit par la chaîne
+# LaTeX/Tectonic (scripts/spec_v060/, D133 — née spec_v040 → spec_v050 →
+# spec_v051 → spec_v052) : corps
 # monocolonne avec sommaire, couverture académique Template 03 fusionnée par
 # pypdf. Les archives des versions précédentes (v0.2, v0.3, v0.4.0, v0.5.0, v0.5.1)
 # demeurent dans docs/ et ne sont plus régénérées. Le présent script garantit
@@ -28,17 +29,17 @@ cd "$ROOT"
 BASE="${TRIADE_BASE:-/home/z/my-project}"
 SKILL="$BASE/skills/pdf"
 
-SPEC_DIR=scripts/spec_v052
+SPEC_DIR=scripts/spec_v060
 COVER_HTML="$SPEC_DIR/cover.html"
 COVER_PDF="$SPEC_DIR/cover.pdf"
-FINAL_PDF=docs/Protocole_TRIADE_v0.5.2_Specification.pdf
+FINAL_PDF=docs/Protocole_TRIADE_v0.6.0_Specification.pdf
 STAMP=.pdf_build.stamp
 
 # Sources dont la modification déclenche la reconstruction.
 SOURCES=(docs/PROTOCOLE_TRIADE.md docs/FORMAT_CARTE.md docs/DECISIONS.md
          docs/PLAN_MILESTONES.md
          "$SPEC_DIR/main.tex" "$SPEC_DIR/sec-a.tex" "$SPEC_DIR/sec-b.tex"
-         "$SPEC_DIR/sec-c.tex" "$SPEC_DIR/sec-d.tex"
+         "$SPEC_DIR/sec-c.tex" "$SPEC_DIR/sec-cf.tex" "$SPEC_DIR/sec-d.tex"
          "$SPEC_DIR/cover.html" "$SPEC_DIR/merge_cover.py")
 
 hash_sources() {
@@ -66,7 +67,7 @@ if [ "$CHECK" -eq 1 ]; then
   exit 2
 fi
 
-echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel v0.5.2"
+echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel v0.6.0"
 
 # 1) Validation de la couverture (HTML puis chevauchements au rendu réel)
 if [ ! -d "$SKILL" ]; then
@@ -110,4 +111,4 @@ if [ -d "$BASE/download" ]; then
   cp "$FINAL_PDF" "$BASE/download/" || true
 fi
 echo "$CURRENT" > "$STAMP"
-echo "[pdf] PDF formel v0.5.2 régénéré -> $FINAL_PDF"
+echo "[pdf] PDF formel v0.6.0 régénéré -> $FINAL_PDF"

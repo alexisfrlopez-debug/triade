@@ -1,23 +1,28 @@
-# PROTOCOLE TRIADE v0.5.2 — Spécification technique
+# PROTOCOLE TRIADE v0.6.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.5.2. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
+> Source de travail faisant autorité pour la v0.6.0. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (v0.5.2),
+> `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
 > `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
 > `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
 > `docs/Protocole_TRIADE_v0.2_Specification.pdf` (v0.2). La série documentaire compte
 > également la démonstration RoomEq (`docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf`)
 > et l'édition académique v0.4 (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`, D18 —
-> présentation IMRAD du noyau v0.3, sans valeur normative). Depuis la décision D17,
+> présentation IMRAD du noyau v0.3, sans valeur normative) ; depuis la v0.6.0, le
+> **Livre du Coffre** l'accompagne (`docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf`,
+> D133 — complément opératoire : cérémonies, runbook, mode dégradé). Depuis la décision D17,
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.5.2 consigne la garde durable de la phrase de contrôle du coffre-fort (D81) ;
-> la v0.5.1 avait ajouté le coffre-fort des phrases maîtresses (D75) et consigné M3 franchi
-> (balise finale 0.4.0) ; la v0.5.0 demeure la révision du retour du terrain (validation
-> normée, taxonomie X1–X8, jalons M0–M2).
+> La v0.6.0 consigne la passation du programme de souveraineté cryptographique (D133) :
+> axes 2-3-4 accomplis et prouvés sur terrain — la chaîne réelle du coffre a migré
+> CF1 → CF2 → CF3 les 30–31 octobre 2026 ; la v0.5.2 avait consigné la garde durable de
+> la phrase de contrôle (D81) ; la v0.5.1 avait ajouté le coffre-fort (D75) et consigné
+> M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
+> taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.5.2 — phrase de contrôle du coffre-fort sous garde durable dépôt + coffre Drive (D81) ; état des jalons constaté : M0–M3 franchis (balises 0.2.0, 0.3.0, 0.4.0), M4 ouvert (D77)
-- Date : 28 octobre 2026
+- Version : v0.6.0 — souveraineté cryptographique accomplie (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3, un coffre neuf naît CF3 ; état des jalons constaté : M0–M4 franchis (balises 0.2.0 à 0.5.0), M5 ouvert (D133)
+- Date : 31 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -75,7 +80,7 @@ l'ordre, pas les rangs, pas la non-compensation.
 | Sécurité | Sûreté mémoire validée par oracle, intégrité carte ↔ binaire, durcissement au chargement | 0 corruption détectée par l'oracle ; tout échec de verrou bloque la session ; échec de vérification au lancement = arrêt propre |
 | Performance | 100 % code machine natif, zéro abstraction intermédiaire entre l'écriture et l'exécution | Comparaison par bloc scellé face à une référence compilée (clang -O2 ou équivalent du profil) |
 | Optimisation | Descente à l'ISA sur les hot paths identifiés par profilage — jamais sans mesure (R11) | Gain mesuré et journalisé pour chaque bloc optimisé |
-| Coût en tokens | Édition ciblée via la carte, jamais de lecture intégrale du binaire | Budgets par type d'édition (§ 12) |
+| Coût en tokens | Édition ciblée via la carte, jamais de lecture intégrale du binaire | Budgets par type d'édition (§ 14) |
 
 ### 1.2 Périmètre et non-objectifs
 
@@ -97,27 +102,27 @@ jalons M0 à M7 demeurent la charge de validation du cœur natif.
 
 ### 1.3 Ce que change la v0.4.0
 
-Dix-sept évolutions, toutes tracées dans la correspondance du § 17 et dans le journal des
-versions (§ 19), toutes rattachées aux décisions D19 à D24 : normalisation de la couche I
+Dix-sept évolutions, toutes tracées dans la correspondance du § 19 et dans le journal des
+versions (§ 21), toutes rattachées aux décisions D19 à D24 : normalisation de la couche I
 (§ 2), taxonomie des défauts de contrat non écrit (§ 3), traçabilité I ↔ C ↔ B ↔ tests
-(§ 4.2), norme de fragmentation et localisation par intention (§ 7, § 12), R10 renforcée
+(§ 4.2), norme de fragmentation et localisation par intention (§ 7, § 14), R10 renforcée
 et R11 nouvelle (§ 6), suite de conformité par profil et parité inter-profils (§ 8),
 pré-versions de cristallisation (§ 9), reverse-specs (§ 10), journal d'optimisation
-(§ 11), modèle de menace étendu (§ 13), journal des décisions normalisé et tableau de bord
-de conformité (§ 15). Aucune règle existante n'est affaiblie ; aucune couche n'est ajoutée
+(§ 11), modèle de menace étendu (§ 15), journal des décisions normalisé et tableau de bord
+de conformité (§ 17). Aucune règle existante n'est affaiblie ; aucune couche n'est ajoutée
 à l'exécution ; la hiérarchie de la fonction objectif est inchangée.
 
 ### 1.4 Ce que change la v0.5.0
 
-Huit évolutions, toutes tracées dans la correspondance (§ 17.3) et le journal des versions
-(§ 19), toutes rattachées aux décisions D26 à D45 : la validation terrain devient une
+Huit évolutions, toutes tracées dans la correspondance (§ 19.3) et le journal des versions
+(§ 21), toutes rattachées aux décisions D26 à D45 : la validation terrain devient une
 couche de vérification normée — boucle d'évidence, journal d'exécution, instrumentation
 contractualisée, diff chirurgical (§ 8.4) ; la taxonomie des défauts s'étend des classes T
 (contrat non écrit) aux classes X — défauts invisibles à l'émulation, huit classes nommées
 par la campagne M2 (§ 8.5) ; l'état des jalons est constaté — M0, M1 et M2 franchis sur
-validations terrain Windows 11, balises finales 0.2.0 et 0.3.0 posées (§ 16) ; le budget
+validations terrain Windows 11, balises finales 0.2.0 et 0.3.0 posées (§ 18) ; le budget
 de localisation est corrigé à 64 tokens (D31) et les budgets affichent leurs valeurs
-mesurées (§ 12, § 15.2) ; les volumes d'oracle effectifs sont consignés ; les preuves
+mesurées (§ 14, § 17.2) ; les volumes d'oracle effectifs sont consignés ; les preuves
 terrain sont archivées brutes avec leurs empreintes ; le corpus de démonstration (huit
 itérations instrumentées) devient l'occurrence de référence de la méthode ; le jalon M3
 est ouvert — contrats renforcés sur entrées non fiables et fuzzing à propriétés (D45).
@@ -126,21 +131,21 @@ la fonction objectif est inchangée.
 
 ### 1.5 Ce que change la v0.5.1
 
-Un composant nouveau et deux constats, tous tracés dans la correspondance (§ 17.5) et le
-journal des versions (§ 19), rattachés à la décision D75 : le **coffre-fort des phrases
+Un composant nouveau et deux constats, tous tracés dans la correspondance (§ 19.5) et le
+journal des versions (§ 21), rattachés à la décision D75 : le **coffre-fort des phrases
 maîtresses** — conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses
 par projet, sur la pile cryptographique de la carte au repos (Argon2id aux planchers,
 HKDF à contexte dédié, XChaCha20-Poly1305), doté d'un autotest de falsification et de
-règles d'export/import (§ 15.3, FORMAT_CARTE § 11) ; l'état des jalons est constaté —
+règles d'export/import (§ 17.3, FORMAT_CARTE § 11) ; l'état des jalons est constaté —
 M3 franchi le 28 octobre 2026 sur la campagne million (D72), la conformité permanente
 (D73) et le scellage de la balise finale 0.4.0 (D74) ; le modèle de menace gagne la ligne
-du vol du coffre-fort (§ 13.1). Aucune règle n'est modifiée ; aucune couche n'est ajoutée
+du vol du coffre-fort (§ 15.1). Aucune règle n'est modifiée ; aucune couche n'est ajoutée
 à l'exécution ; la hiérarchie de la fonction objectif est inchangée.
 
 ### 1.6 Ce que change la v0.5.2
 
-Une évolution de discipline, tracée dans la correspondance (§ 17.6) et le journal des
-versions (§ 19), rattachée à la décision D81 : la **phrase de contrôle du coffre-fort
+Une évolution de discipline, tracée dans la correspondance (§ 19.6) et le journal des
+versions (§ 21), rattachée à la décision D81 : la **phrase de contrôle du coffre-fort
 passe sous garde durable** — dès sa production (init, rotation, changement), elle est
 sauvegardée dans le dépôt git (commit dédié, push GitHub, miroir du coffre Drive par le
 hook) et au racine du coffre Drive AVANT toute autre action de la session ; le fichier
@@ -152,13 +157,37 @@ d'exécution est morte avant (pannes d'infrastructure récurrentes, quatre réin
 et une interruption de session déjà consignées) — et la phrase ne vivait plus que dans le
 bac à sable éphémère : un décès d'infra de plus et le coffre entier devenait
 indéchiffrable à jamais. L'arbitrage est consigné : le risque de PERTE (vécu, répété) est
-jugé supérieur au risque d'EXPOSITION (URL non devinable) ; le modèle de menace (§ 13.1)
+jugé supérieur au risque d'EXPOSITION (URL non devinable) ; le modèle de menace (§ 15.1)
 en tire la conséquence honnête — la confidentialité des phrases au repos repose désormais
 sur le contrôle d'accès au dossier du coffre Drive, la mitigation première devient la
 restriction du partage par lien, et une phrase entrée dans l'historique git y demeure à
 vie : on ne compte plus sur sa confidentialité, la rotation reste le remède. Aucune règle
 n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction
 objectif est inchangée.
+
+### 1.7 Ce que change la v0.6.0
+
+La révision de génération attendue par le plan : le **programme de souveraineté
+cryptographique est accompli et prouvé sur terrain** — décision de passation D133,
+arbitrage du développeur. Trois axes livrés (§ 12) : l'**axe 2** (D86) — le coffre CF2 à
+clé maîtresse répartie par Shamir, cinq gardes seuil trois, sentinelle à double seuil
+puis PORTE D120 ; l'**axe 3** (D87) — le sceau de l'Intention : dix arbres de couche I
+signés par la clé Ed25519 hors-ligne du développeur, gardes de build et de patch ;
+l'**axe 4** (D121, né du terrain) — le coffre CF3 : la serrure à triple scellement, le
+piège sur média séparé, la sentinelle instantanée *par invocation* et le cycle en deux
+actes. L'**axe 1** (D85, attestation TEE) demeure une exigence consignée :
+l'infrastructure sans racine de confiance matérielle ne peut pas la satisfaire et le
+dit. La **chaîne réelle du coffre** a migré sur le terrain du développeur les 30–31
+octobre 2026 — CF1 vérifié INTÈGRE, phrase de contrôle changée (D110), CF2 migré (cinq
+gardes, seuil 3, trois copies hors-ligne), CF3 migré (époque 1, checksum `0cc89a96`),
+verdict à froid VERT deux fois — les cérémonies étant conduites par le maître de
+cérémonie graphique (D107–D118) avec le kit Drive tenu identique au miroir par
+construction (D130) : le détail vit au § 13. Un **coffre neuf naît désormais CF3** :
+`init` direct à l'époque 1 — la chaîne de migration est l'histoire du coffre réel, pas
+un rite obligé. Un document complémentaire, le *Livre du Coffre* (même date, même
+dépôt), porte la posture opératoire du maître : cérémonies pas à pas, runbook, mode
+dégradé. Aucune règle du cœur n'est modifiée ; aucune couche n'est ajoutée à
+l'exécution ; la hiérarchie de la fonction objectif est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -244,7 +273,7 @@ la démonstration RoomEq — défauts d'application et défauts d'installateur c
 
 Deux règles d'usage. D'abord, tout défaut corrigé est **classé dans cette taxonomie** au
 journal des décisions du projet — la métrique « défauts ouverts par classe » du tableau de
-bord (§ 15.2) en dérive. Ensuite, la taxonomie sert de liste de contrôle de rédaction :
+bord (§ 17.2) en dérive. Ensuite, la taxonomie sert de liste de contrôle de rédaction :
 chaque bloc du gabarit § 2.2 verrouille au moins une classe (Échecs verrouille T6, Fixtures
 verrouille T4/T5, le contrat typé verrouille T1/T2/T3).
 
@@ -312,7 +341,7 @@ implémente-t-il, et quel test la défend ? » sans lecture du binaire.
 
 La carte est le cœur opérationnel du protocole : c'est elle qui rend le binaire navigable
 pour l'agent, qui porte les preuves et qui concentre la valeur intellectuelle du projet.
-Elle est compacte (coût en tokens, § 12), intègre (verrou croisé) et résiliente face à la
+Elle est compacte (coût en tokens, § 14), intègre (verrou croisé) et résiliente face à la
 compromission (sharding et chiffrement). Sa spécification détaillée — en-tête normalisé,
 quatre fragments, format d'entrée, procédure du verrou, cycle de vie, budgets, export de
 continuité, re-cryptage — fait l'objet de `docs/FORMAT_CARTE.md`, mis à jour avec la
@@ -383,7 +412,7 @@ n'ait rendu son verdict.
 la localisation est **dérivée du diff d'intention** par l'index de la carte — jamais par
 balayage du binaire, jamais par recherche de motif dans les octets. Un diff qui ne localise
 aucun bloc est une erreur de spécification à corriger dans I, pas une licence de scan ;
-un balayage serait d'ailleurs une violation du budget (§ 12) et de R3. C'est la
+un balayage serait d'ailleurs une violation du budget (§ 14) et de R3. C'est la
 formalisation du principe « l'agent ne lit jamais le binaire en entier », appliqué à
 l'étape la plus fréquente de la boucle. La précision de localisation — bon bloc identifié
 du premier coup — reste l'indicateur de santé mesuré dès M0 (cible 95 %).
@@ -497,7 +526,7 @@ de profil sont documentées dans frag-con de chaque bloc. La parité se **vérif
 exécution**, jamais par déduction : c'est le critère de sortie de M6 (inter-OS, à ISA
 constante) et M7 (inter-ISA). Aucune couche d'abstraction n'est introduite pour l'obtenir —
 un bytecode portable trahirait la fonction objectif Performance (rejet consigné, D14 et
-§ 17.2).
+§ 19.2).
 
 ### 8.4 La validation terrain — la boucle d'évidence
 
@@ -564,7 +593,7 @@ fixe la taxonomie (D35–D43) :
 
 Trois règles d'usage, miroir de celles de la taxonomie T. Premièrement, tout défaut
 terrain corrigé est classé T ou X au journal des décisions — la métrique « défauts
-ouverts par classe » du tableau de bord (§ 15.2) couvre désormais les deux familles.
+ouverts par classe » du tableau de bord (§ 17.2) couvre désormais les deux familles.
 Deuxièmement, chaque classe X est gardée par une falsification : réintroduire le défaut
 doit faire échouer l'oracle — le modèle s'enrichit mais ne régresse jamais en silence.
 Troisièmement, la taxonomie est ouverte : une neuvième classe sera nommée X9 avec sa
@@ -652,10 +681,185 @@ l'intention). L'entrée de référence est l'occurrence RoomEq : la demande d'«
 maximale » a été honorée par la mesure — chaîne d'égalisation à 152× le temps réel, zéro
 allocation par bloc — puis refusée en tant que transformation, faute de problème de
 performance à corriger ; le tout consigné en une entrée unique (décision D15 du dépôt de
-démonstration). La métrique « optimisations sans mesure » du tableau de bord (§ 15.2) doit
+démonstration). La métrique « optimisations sans mesure » du tableau de bord (§ 17.2) doit
 rester à zéro.
 
-## 12. Coût en tokens : fragmentation, localisation, budgets
+## 12. Souveraineté cryptographique — le programme v0.6.0
+
+La menace fondatrice est nommée depuis D84 : *l'expropriation* — un tiers (typ.
+l'employeur) qui s'empare du binaire, du dépôt, voire des clés du poste. La barrière
+juridique (licence BSL 1.1) répond aux tribunaux ; la barrière cryptographique répond à
+la machine. Sources normatives de ce chapitre : les spécifications scellées sous le
+sceau de l'Intention — `v06/I/README.md` (axe 3), `v06/I/CF2/README.md` (axe 2),
+`v06/I/CF3/README.md` (axe 4). En cas de divergence, l'arbre signé fait foi.
+
+| Axe | Décision | Mécanisme livré | État à la passation |
+|---|---|---|---|
+| 1 · Attestation de non-exfiltration | D85 | quote vérifiable TPM 2.0/SGX du code manipulant le coffre ; refus de déverrouillage sans quote | **exigence consignée** — infrastructure sans TEE |
+| 2 · Interrupteur d'homme mort | D86 | clé maîtresse CF2 jamais stockée entière (Shamir, 5 gardes seuil 3) ; sentinelle à double seuil ; destruction des fragments ; PORTE D120 | **livré, prouvé terrain** — chaîne réelle migrée CF1 → CF2 le 31/10/2026 |
+| 3 · Filigrane de l'Intention | D87 | chaque arbre de couche I condensé puis signé par la clé Ed25519 *hors-ligne* ; build et chemin de patch refusent une couche I non signée | **livré, prouvé terrain** — dix arbres signés, re-cérémonie réelle D126 |
+| 4 · Serrure piégée | D121 | coffre CF3 : clé utilisateur invariable, moitiés serrure/piège fraîches à chaque époque, piège sur média séparé, cycle en deux actes, sentinelle instantanée par invocation | **livré, prouvé terrain** — chaîne réelle migrée CF2 → CF3 le 30–31/10/2026 |
+
+### 12.1 La hiérarchie des gardes — quatre secrets, quatre menaces
+
+| Garde | Menace couverte | Où elle vit |
+|---|---|---|
+| Phrase de lignée | chiffre les enveloppes de carte — vol du dépôt au repos | en tête du développeur, secours au coffre Drive (D81 : le fichier est la remise) |
+| Graine Ed25519 en ligne | signe les cartes — atteste les FAITS (les octets scellés) | dépôt du développeur (jamais confiée au bac à sable, D30) |
+| Clé I hors-ligne | signe l'intention — atteste la VOLONTÉ (le droit de faire évoluer) | support physique hors machine ; le dépôt ne voit que la clé publique |
+| Clave du coffre (CF2/CF3) | le secret maître — expropriation du poste vivant | CF2 : répartie par Shamir ; CF3 : moitié piège sur média séparé |
+
+### 12.2 CF2 — la clé maîtresse répartie (D86)
+
+Le secret maître **M** (32 octets CSPRNG) n'est *jamais* écrit entier — nulle part,
+jamais. Découpage Shamir sur GF(2^8) (polynôme générateur **0x11B**) : pour chacun des
+32 octets, un polynôme distinct de degré T−1 à coefficients frais du CSPRNG ; le
+fragment j porte les évaluations. Bornes : 2 ≤ T ≤ N ≤ 255, **T = 1 refusé**.
+Reconstruction par Lagrange sur T fragments valides, vérifiée contre `verif` (16 o)
+avant toute interprétation. **Sous le seuil, la sécurité est informationnelle** : tout
+M′ reste compatible — la destruction des fragments est une mort, pas une révocation.
+Valeurs terrain : **N = 5, T = 3** ; la relève exige T copies hors-ligne (erratum D121 :
+TROIS, pas deux). Format fragment ASCII (transportable sur papier) :
+
+```
+TRIADE-CF2-FRAG v1
+coffre: <sel HKDF du conteneur, 64 hex - identite STABLE du coffre>
+x: <indice, decimal>
+seuil: t=3/n=5
+fragment: <64 hex - 32 o>
+tag: <16 hex - sha256("TRIADE-CF2-frag" || x || fragment) tronque>
+```
+
+La sentinelle CF2 surveille la couche C à **double seuil** (processus hors liste
+blanche ET lecture de contenu) ; moteur laboratoire inotify + `/proc`, moteur Windows
+SACL/4663/ETW exigence consignée. La **PORTE D120** exige une sentinelle vivante pour
+déverrouiller ; sans moteur, la porte *avertit nommément* à chaque déverrouillage —
+l'ère intermédiaire est dite, pas cachée. Destruction `bruler` : trois passes + PV
+nommant le déclencheur ; restauration atomique (toute anomalie et rien n'est écrit).
+
+### 12.3 CF3 — la serrure à triple scellement (D121)
+
+Trois éléments : **K_user** (`Argon2id(phrase, sel_argon)`, 65536 Kio / 3 it / p=1 —
+**invariable à travers les époques**) ; **S_serrure** (32 o frais par époque, dans
+l'en-tête clair) ; **S_piège** (32 o frais par époque, *exclusivement sur le média
+séparé*). L'**époque** (u64, incrémentée à chaque clôture) est l'horloge de la
+métamorphose et le témoin anti-retour ; **H_projet** lie la clé de clôture au contenu.
+Dérivation : `KEK = HKDF-SHA256(ikm = K_user ‖ S_serrure ‖ S_piège ; salt = sel_hkdf ;
+info = "triade-CF3/v1|" ‖ époque ‖ H_projet)` ; le champ **verif** rend l'essai
+hors-ligne impossible au voleur de la machine seule (il manque V_piège, publique,
+portée par le piège). Conteneur :
+
+```
+"TRIADE-CF3" 10 o | version u16 (=1) | époque u64 | H_projet 32 o |
+sel_argon 16 o | params (t,m,p : u32×3) | sel_hkdf 32 o | S_serrure 32 o |
+nonce 24 o |                       <- fin de l'AAD (168 o)
+empreinte 32 o = sha256(chiffretexte) | verif 16 o |
+chiffretexte = AEAD(clair, aad, nonce, KEK)
+```
+
+Le fichier **piège** (un ASCII par époque, sur le média du sachet) : une clôture
+AJOUTE le piège N+1 et ne ronge jamais les pièges passés ; un piège entièrement forgé
+se présente comme une phrase erronée — bénin, jamais de destruction. La **sentinelle
+instantanée** réalise l'exigence D120 *par invocation au lieu de résidence* : cinq
+vérifications ordonnées à tout acte (piège présent → tag → cohérence époques/H_projet
+→ phrase → AEAD + étiquette) — le démon résident, usurpable par faux heart-beat, est
+mort ; *le piège est le témoin, et il est hors machine*. Le **cycle en deux actes**
+borne la session : ouverture → brouillon sous K_session (média débranché, canonique
+jamais réécrit) ; clôture → phrase retapée, moitiés fraîches, époque N+1, piège
+additif, staging relu à froid, remplacement atomique — une panne auto-nettoie. La
+**réponse à la falsification prouvée** (AEAD + étiquette après quatre verts) détruit
+côté machine (trois passes + PV) — jamais le média ni les fragments. L'**anti-retour**
+repose sur trois témoins d'époque : journal local (effaçable par un admin), **carte
+papier du sachet** (checksum à la main, indécevable par logiciel), journal Git
+(poussé, hors machine).
+
+### 12.4 Le sceau de l'Intention (D87)
+
+Dix arbres de couche I vivent sous le sceau (les neuf lignées plus `v06/I` — la
+spécification du sceau est la première couche qu'il garde). Manifeste canonique (UTF-8,
+LF, tri lexicographique déterministe) ; chaque ligne porte le SHA-256 du contenu
+**canonique LF** (D115 — la représentation du checkout n'est pas l'intention) ;
+l'empreinte d'arbre est le SHA-256 du manifeste entier ; la signature **Ed25519**
+(RFC 8032) couvre l'empreinte — 32 octets, imprimables : la cérémonie hors-ligne
+manipule quelques lignes hexadécimales, jamais le dépôt. Cérémonie autoportée (stdlib
+seule) : `generer`, `signer` (chaque signature vérifiée avant écriture), `verifier`.
+Gardes dans la source des chaînes : `build_m4.py` et `build_terrain.py` refusent le
+build sur arbre divergé ; tout script qui modifie une couche I appelle la garde en
+sortie. `sceau_I.py verifier` : codes nommés 0/10/11/12.
+
+### 12.5 Le coffre neuf naît CF3
+
+La chaîne CF1 → CF2 → CF3 est le chemin *historique* du coffre réel. Un coffre neuf
+n'a rien à migrer : `coffre_cf3.py init` le crée sous CF3, époque 1, média du piège
+dès le premier jour. La question du terrain — *puisqu'on impose CF3 dès la création,
+la sentinelle ne devient-elle pas inutile ?* — reçoit sa réponse normative : la
+sentinelle de CF3 n'est pas un composant qu'on peut oublier de lancer, c'est la
+serrure elle-même ; l'exigence D120 est réalisée *par construction*. Ce qui demeure
+obligatoire : le média du piège (sans S_piège, le déverrouillage est *impossible*) et
+la discipline du sachet (§ 13).
+
+### 12.6 Bornes honnêtes consolidées
+
+Attaquant admin pendant un acte (le rayon est borné à UNE époque) ; zéroïsation au
+mieux de Python (garantie native au déploiement Windows) ; sentinelle CF2 tuable (le
+heart-beat rend la mort visible — CF3 supprime la classe du risque) ; lecture non
+attribuée < ~10 ms (journalée, non brûlée) ; CoW/instantanés (l'écrasement logique ne
+tue pas les copies physiques) ; carte papier regardée (le verdict à froid est le
+filet) ; axe 1 TEE non satisfait (exigence consignée, pas promesse).
+
+## 13. Les cérémonies et le kit du terrain
+
+Les cérémonies de la souveraineté sont des *actes du maître* : le bac à sable ne
+touche jamais le conteneur ni les phrases réels (discipline D105). L'outillage les
+guide sans les réimplémenter.
+
+### 13.1 La chaîne des cérémonies
+
+| Cérémonie | Gestes | Preuve attendue |
+|---|---|---|
+| Sceau de l'Intention (D87/D126) | `preparer` ; cérémonie hors-ligne `signer` (clé physique) ; `deposer` (vérifié avant écriture) ; `verifier` | dix arbres VERTS, code 0 ; commit poussé |
+| CF1 → CF2 (D106) | phrase (remise D81 AVANT tout) ; `migrer` ; 5 gardes ; T = 3 copies hors-ligne (feuille g3–g5 ou USB) ; relecture ; liste blanche | CF2 `verifier` VERT ; CF1 laissé intact |
+| CF2 → CF3 (D121/D127) | MIGRER (conteneur CF2, gardes, *média du piège requis*, phrase deux fois) ; VÉRIFIER (checksum contre la carte) ; DÉTRUIRE (case explicite) | époque 1, checksum 8 hex noté ; verdict à froid VERT (machine froide recommandé) |
+| Clôture CF3 (usage courant) | acte I (média débranché) ; session sur le brouillon ; acte II (phrase retapée, époque N+1) | checksum affiché, ligne sur la carte ; journal Git consigné |
+| Destruction locale (`bruler`) | commande explicite `--oui-je-comprends` ; trois passes + PV | PV nommé ; fragments et médias jamais touchés |
+
+### 13.2 Le maître de cérémonie graphique et le trio D122
+
+Les cérémonies sont conduites par le maître de cérémonie graphique
+(`v06/ceremonie_gui.py` pour le sceau et CF2 ; `v06/migration_cf3_gui.py` pour CF2 →
+CF3) : zéro ligne de commande, un fichier, deux profils. Le GUI est un *relais* : il
+lance les vérités vivantes et croise code de sortie ET marque de verdict. La phrase
+passe par STDIN, jamais affichée, jamais dans un rapport. Chaque module porte le trio
+D122 : une GUI, une boîte noire locale horodatée, un bouton « Envoyer le rapport ».
+L'habit a appris du terrain : cahier numéroté (D128), pilier droit permanent (D129),
+un bouton d'attachement par page (D131), grille — chaque bouton « Parcourir » sur la
+ligne de son champ (D132).
+
+### 13.3 Le kit Drive — identité par construction (D130)
+
+Les cérémonies s'arment depuis le dépôt *ou* depuis le kit du dossier `/Cérémonie` du
+Drive. Depuis D130, le `v06/` du kit est déployé depuis `git ls-files v06/` — la même
+source que le miroir, lue dans le même arbre : **identité octet pour octet par
+construction**, `I/` et `sceau-I/` inclus. Le hook post-commit porte le miroir PUIS le
+kit dans le même geste. Le `MANIFESTE.txt` du kit porte le commit de référence : un
+kit périmé se *lit*, ne se devine pas.
+
+### 13.4 La preuve terrain de la chaîne réelle (30–31 octobre 2026)
+
+CF1 statut VERT ; CF1 verifier INTÈGRE ; phrase changée (D110) ; un premier `migrer`
+CF2 refusé nommément (« phrase de contrôle divergente » — la remise D81 n'était pas
+encore remplacée : le fail-closed a travaillé, la cérémonie rejouée) ; CF2 né (cinq
+gardes, seuil 3, CF1 intact, porte D120 posée en ère sans moteur) ; feuille exportée ;
+puis CF2 → CF3 : MIGRER VERT (base re-scellée, schéma identique — rien à traduire ;
+piège posé sur le média ; re-lecture à froide verte ; époque 1, checksum
+`0cc89a96`, CF2 laissé intact) et VÉRIFIER VERT deux fois, checksum identique. La
+destruction du conteneur CF2 (acte 4) est un geste *explicite* du maître, après
+recoupement sur machine froide : jamais l'ancien avant le vert du neuf. Observation
+honnête consignée : l'empreinte du `coffre_fort.py` mesurée au clone terrain
+(`299fd124…`) diverge de celle du dépôt (`8c79263b…`) — à recouper au prochain
+`git pull`.
+
+## 14. Coût en tokens : fragmentation, localisation, budgets
 
 Le coût en tokens est le seul des quatre objectifs spécifique à l'ère agent-first. Il est
 traité comme une contrainte d'ingénierie — budgets, mécanismes, instrumentation — toujours
@@ -671,7 +875,7 @@ journalisée. Le multi-profils n'alourdit pas la localisation : l'entrée de fra
 le profil, et l'instanciation d'un contrat sur un profil nouveau est budgétée comme un
 ajout — la couche I, elle, n'est jamais dupliquée.
 
-**Budgets par type d'opération** (désormais instrumentés — § 15.2 ; le budget de
+**Budgets par type d'opération** (désormais instrumentés — § 17.2 ; le budget de
 localisation est amendé à 64 tokens par D31 : la mesure M1 a constaté 43 tokens sur le
 gabarit canonique de la v0.4.0 lui-même, tokenizer BPE cl100k_base) :
 
@@ -690,7 +894,7 @@ mesurés depuis M1 (`m1/budgets_tokens.py`, tokenizer cl100k_base, mesure sur la
 scellée et les sources réelles) ; le tableau de bord les affiche comme métriques
 mesurées, avec leur écart.
 
-## 13. Sécurité : modèle de menace et limites
+## 15. Sécurité : modèle de menace et limites
 
 Le principe directeur demeure : séparer l'obfuscation, qui protège la propriété
 intellectuelle (le comment), du durcissement, qui protège l'exécution (le où ça casse).
@@ -698,7 +902,7 @@ La carte privée relève du premier ; la sûreté mémoire, les contrats et le f
 du second. Conformément au principe de Kerckhoffs, la sécurité du système ne repose jamais
 sur le secret de la carte : elle survivrait à sa divulgation.
 
-### 13.1 Modèle de menace (étendu en v0.4.0, D20)
+### 15.1 Modèle de menace (étendu en v0.4.0, D20)
 
 | Menace | Acteur | Cible | Contre-mesure | Résiduel |
 |---|---|---|---|---|
@@ -707,10 +911,13 @@ sur le secret de la carte : elle survivrait à sa divulgation.
 | Corruption de carte (accidentelle) | Bit rot, panne de stockage | Fragments au repos | AEAD (intégrité par fragment) + signature + verrou croisé | Détecté au chargement — refus propre |
 | Fuite de la carte | Initié, poste compromis | Fragments au repos | Chiffrement (algo de l'en-tête) ; sharding ; escrow | Perte partielle limitée à un fragment |
 | Vol de l'export de continuité | Voleur, stockage cloud compromis | Conteneur exporté | Chiffrement intégral (phrase maîtresse + Argon2id) ; signature | Sans la phrase, indéchiffrable |
-| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) ; depuis D81 la phrase de contrôle elle-même vit au coffre Drive et dans le dépôt (arbitrage PERTE > EXPOSITION) | Chiffrement intégral (Argon2id, contexte HKDF dédié, AEAD) ; écriture atomique 0600 ; mitigation première : restreindre le partage par lien du dossier (§ 15.3) | Confidentialité ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — on ne compte plus sur sa confidentialité, la rotation reste le remède |
+| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) ; depuis D81 la phrase de contrôle elle-même vit au coffre Drive et dans le dépôt (arbitrage PERTE > EXPOSITION) | Chiffrement intégral (Argon2id, contexte HKDF dédié, AEAD) ; écriture atomique 0600 ; mitigation première : restreindre le partage par lien du dossier (§ 17.3) | Confidentialité ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — on ne compte plus sur sa confidentialité, la rotation reste le remède |
+| **Expropriation (employeur, tiers)** | D84 | Barrière juridique BSL 1.1 ; barrière cryptographique : clé maîtresse jamais entière (Shamir, axe 2), intention signée par la clé hors-ligne (sceau I, axe 3), serrure piégée à média séparé (axe 4) | Le code volé est inexploitable et ne peut pas évoluer ; l'axe 1 (TEE) reste une exigence consignée |
+| **Evil maid sur le conteneur ou le média du piège** | D121 | Tag du piège, époques croisées conteneur/piège, AEAD + étiquette, champ `verif` indérivable | Détecté — refus nommé ; la falsification prouvée détruit côté machine, jamais le média |
+| **Roll-back du couple conteneur + piège** | D121 | Trois témoins d'époque : journal local, carte papier du sachet (à la main), journal Git poussé | Détecté — « RETOUR EN ARRIÈRE » nommé ; recoupement humain à froid |
 | **Binaire altéré** | Attaquant local, fichier modifié | Artefact livré | Checksums par bloc + signature du manifeste au lancement (R10 a, b) | Détecté — arrêt avant tout effet |
 | **Rollback non autorisé** | Rejeu d'une version ancienne vulnérable | Artefact, état | Monotonie de version signée, plancher anti-rollback (R10 c) | Détecté — refus |
-| **Agent défaillant** | Hallucination, dérive hors périmètre | Processus de développement | R2 (intention d'abord) ; R5 (vérifie-puis-écrit) ; oracle dérivé de I ; budgets (§ 12) | L'erreur ne devient jamais permanente sans vérification |
+| **Agent défaillant** | Hallucination, dérive hors périmètre | Processus de développement | R2 (intention d'abord) ; R5 (vérifie-puis-écrit) ; oracle dérivé de I ; budgets (§ 14) | L'erreur ne devient jamais permanente sans vérification |
 | **Données embarquées modifiées** | Supply chain des données | Tables, profils, ressources livrés | Empreintes des données dans la carte ; vérification au lancement (R10 b) ; parité par hachage | Détecté — arrêt propre |
 | **Environnement non conforme** | OS, ABI, protections inattendues | Exécution | Contrôles de conformité au profil au lancement (R10 d) ; fail-closed | Refus propre avant exécution |
 | Fuzzing boîte noire | Attaquant externe | Runtime | Contrats, oracle, tests par propriétés, fail-closed | Indépendant du secret de la carte |
@@ -722,7 +929,7 @@ mécanismes **locaux et vérifiables** — la contre-mesure anti-rollback ne dé
 service en ligne (le chargement doit échouer proprement hors ligne), et les vérifications
 de R10 s'exécutent avant toute entrée dans le chemin d'exécution.
 
-### 13.2 Limites assumées
+### 15.2 Limites assumées
 
 La rétro-ingénierie est traitée comme un objectif d'économie, pas d'impossibilité : rendre
 le coût de l'analyse supérieur à la valeur de ce qu'on obtient. Un binaire strippé, sans
@@ -735,9 +942,9 @@ dont la transparence vis-à-vis du système est totale. Et la gouvernance du pro
 validée sur un cas unique (N = 1) — l'étude de cas RoomEq, dont les limites sont
 documentées dans l'édition académique (D18) : la généralité reste à établir par
 réplication, le cœur natif par les jalons M0 à M7 — dont M0, M1 et M2 sont désormais
-franchis (§ 16), preuves terrain archivées.
+franchis (§ 18), preuves terrain archivées.
 
-## 14. Profils de cible — universalité
+## 16. Profils de cible — universalité
 
 Le cœur du protocole — couches, règles, boucle, vérification — est indépendant de la cible
 par construction, et tout ce qui dépend de la cible est regroupé dans un **profil de
@@ -772,7 +979,7 @@ build et son registre de variantes dans frag-bld. « Sans compilateur » ne sign
 « sans système d'exploitation » — les interfaces sont appelées selon les conventions du
 profil, comme tout binaire natif légitime.
 
-### 14.1 Profil primaire : ABI Microsoft x64
+### 16.1 Profil primaire : ABI Microsoft x64
 
 | Convention | Règle |
 |---|---|
@@ -791,7 +998,7 @@ internes — volatils selon l'ABI, donc jamais promis à un appelant ; aucune do
 ne séjourne entre RSP et RSP+32 au moment d'un appel ; tout bloc qui appelle une API
 alloue son cadre avant d'y toucher. Ces règles internes sont portées par frag-con.
 
-### 14.2 Différences entre profils — aperçu
+### 16.2 Différences entre profils — aperçu
 
 | Élément | `x86-64-win11-pe` (primaire) | `x86-64-linux-elf64` (M6) | `riscv64-linux-elf64` (M7) |
 |---|---|---|---|
@@ -811,9 +1018,9 @@ passe par un registre scratch chargé de l'adresse cible, suivi d'une barrière
 d'invalidation du cache d'instructions (`fence.i`) — le profil spécifie la séquence exacte
 et son atomicité.
 
-## 15. Gouvernance
+## 17. Gouvernance
 
-### 15.1 Journal des décisions — format normalisé
+### 17.1 Journal des décisions — format normalisé
 
 Le protocole ne se révisant jamais en silence, chaque décision structurante est consignée
 dans un journal des décisions. La v0.4.0 normalise le format (D24) — les entrées D19 à
@@ -834,9 +1041,9 @@ Trois règles : le journal est **append-only** (une entrée ne s'efface jamais) 
 révision **invalide explicitement** ce qu'elle remplace (la procédure D14→amende D10
 illustre le mécanisme) ; aucune entrée n'est rétrodatée. La conformité du journal —
 présence des champs, unicité des ID, chaînage des amendements — est contrôlée
-mécaniquement par l'audit de gouvernance (§ 15.2).
+mécaniquement par l'audit de gouvernance (§ 17.2).
 
-### 15.2 Tableau de bord de conformité
+### 17.2 Tableau de bord de conformité
 
 La v0.4.0 unifie les indicateurs de santé en un **tableau de bord de conformité** (D24),
 généré par la commande d'audit à chaque commit et à chaque cristallisation, archivé avec
@@ -862,7 +1069,7 @@ s'appuie sur une déclaration non vérifiable. Les métriques dépendantes de l'
 (instrumentation des budgets) affichent leur statut « cible » jusqu'à leur premier
 mesurage.
 
-### 15.3 Continuité et anti-enfermement
+### 17.3 Continuité et anti-enfermement
 
 L'export de continuité (D16, FORMAT_CARTE § 8) demeure l'unique forme de transfert de
 l'état de développement : conteneur chiffré et signé regroupant I, B, C et un manifeste
@@ -878,7 +1085,7 @@ planchers de la carte au repos puis HKDF à contexte dédié, XChaCha20-Poly1305
 l'en-tête clair pour AAD, écriture atomique 0600, autotest de falsification exigé à chaque
 installation de l'outil. Le conteneur chiffré s'exporte tel quel vers le coffre Drive du
 projet et le coffre personnel du développeur — son vol relève de la menace « sans la
-phrase, indéchiffrable » (§ 13.1). Après une réinitialisation du poste, l'import du
+phrase, indéchiffrable » (§ 15.1). Après une réinitialisation du poste, l'import du
 conteneur puis `obtenir --vers-fichier` restaurent la phrase opérationnelle sans cérémonie
 de régénération. La règle de discipline évolue en D81 sur un point, l'arbitrage étant
 consigné : chaque cérémonie de clés (D27/D30) alimente le coffre-fort dans la même
@@ -895,13 +1102,13 @@ d'accès au dossier (restriction du partage par lien et vidage de corbeille sont
 mitigations premières) ; une phrase entrée dans l'historique git y demeure, la rotation
 reste le remède à toute exposition avérée.
 
-## 16. Critères d'acceptation des jalons M0 à M7
+## 18. Critères d'acceptation des jalons M0 à M7
 
 Huit jalons, chacun couvrant une capacité nouvelle et se terminant par des critères de
 sortie mesurables — détail dans `docs/PLAN_MILESTONES.md`, mis à jour avec la présente
 révision. **Conditions transverses** (v0.4.0) : aucun jalon n'est franchi sans oracle
 vert, suite de conformité verte pour les éléments couverts, tableau de bord conforme
-(§ 15.2) et carte signée. Les critères propres à chaque jalon :
+(§ 17.2) et carte signée. Les critères propres à chaque jalon :
 
 | Jalon | Capacité | Critères de sortie mesurables | Statut |
 |---|---|---|---|
@@ -910,7 +1117,7 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul | **franchi** 27/10/2026 — balise 0.3.0, boucle § 5 démontrée sur machine réelle (D43) |
 | M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **franchi** 28/10/2026 — balise 0.4.0 (D74) |
 | M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | **franchi** 29/10/2026 — balise 0.5.0 (D104 : run 17-H — S49 OK + témoin HTTP/1.1 200 + S05C 2b6481a1) |
-| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives | à venir |
+| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives ; programme d'étapes et critères dans `PLAN_MILESTONES.md` | **ouvert** 31/10/2026 (D133 — empreintes par build, interception VM, patch du journal en production) |
 | M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | à venir |
 | M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | à venir |
 
@@ -924,19 +1131,19 @@ zéro régression possible (chaque classe est gardée par une falsification). M6
 démontrée, en isolant chaque variable ; la suite de conformité par profil (§ 8.2) en est
 désormais le critère d'acceptation explicite.
 
-## 17. Correspondance des versions
+## 19. Correspondance des versions
 
-### 17.1 Traçabilité des évolutions
+### 19.1 Traçabilité des évolutions
 
 | # | Évolution | En v0.3 | En v0.4.0 | Statut |
 |---|---|---|---|---|
 | 1 | Couche I normalisée | « contrats légers » sans gabarit | gabarit § 2 : identifiants stables, pre/post, invariants, cas d'échec, vecteurs | renforcé (D19) |
 | 2 | Taxonomie des défauts | absente (analyse dans la seule démonstration) | classes T1–T6, § 3 | nouveau (D19) |
-| 3 | Threat model minimal | 7 menaces | 13, dont 6 nouvelles, § 13.1 | étendu (D20) |
+| 3 | Threat model minimal | 7 menaces | 13, dont 6 nouvelles, § 15.1 | étendu (D20) |
 | 4 | R10 renforcée | checksums au lancement | + signature du manifeste, anti-rollback, conformité environnement, fail-closed explicite | renforcé (D20) |
 | 5 | Optimisation prématurée | interdite implicitement (ordre lexicographique) | interdiction normative R11 | explicité (D21) |
 | 6 | Journal d'optimisation | pratique de la démonstration (D15 RoomEq) | format normalisé OPT-NN, § 11 | officialisé (D21) |
-| 7 | Fragmentation de la carte | 4 fragments (D4) | + norme « aucune opération ne lit tout », § 12 | consolidé (D24) |
+| 7 | Fragmentation de la carte | 4 fragments (D4) | + norme « aucune opération ne lit tout », § 14 | consolidé (D24) |
 | 8 | Localisation par intention | étape 2 de la boucle, implicite | interdiction du balayage formalisée, § 7 | renforcé (D24) |
 | 9 | Budgets de tokens | 40 / 3 000 / 6 000 | inchangés, instrumentés au tableau de bord | consolidé (D24) |
 | 10 | Suite de conformité par profil | implicite (7 éléments du profil) | suite obligatoire, § 8.2 | nouveau (D22) |
@@ -945,10 +1152,10 @@ désormais le critère d'acceptation explicite.
 | 13 | Pré-versions | absente (pratique `-dev.1`) | dev.N / rc.N / X.Y.Z, § 9 | officialisé (D23) |
 | 14 | Fixtures partagées | absente (pratique installateur) | contractuelles, § 2.4 | officialisé (D23) |
 | 15 | Traçabilité I ↔ C ↔ B ↔ tests | implicite | table normative + audit mécanique, § 4.2 | formalisé (D24) |
-| 16 | Journal des décisions | pratique (« mode de gouvernance ») | format normalisé, § 15.1 | normalisé (D24) |
-| 17 | Tableau de bord de conformité | indicateurs dispersés (plan M0-M7) | métriques unifiées mesurables, § 15.2 | nouveau (D24) |
+| 16 | Journal des décisions | pratique (« mode de gouvernance ») | format normalisé, § 17.1 | normalisé (D24) |
+| 17 | Tableau de bord de conformité | indicateurs dispersés (plan M0-M7) | métriques unifiées mesurables, § 17.2 | nouveau (D24) |
 
-### 17.2 Modifications explicitement rejetées
+### 19.2 Modifications explicitement rejetées
 
 Conformément au cahier de révision, les modifications suivantes — demandées ou
 envisageables — ont été examinées et **rejetées, donc non appliquées** :
@@ -963,20 +1170,20 @@ envisageables — ont été examinées et **rejetées, donc non appliquées** :
 | Anti-rollback par contrôle en ligne au chargement | rejetée | R10 doit échouer proprement hors ligne — aucune dépendance réseau |
 | Optimisation validée sans mesure | rejetée | R11 : hot path + mesure avant/après + contrat stable |
 
-### 17.3 Correspondance v0.4.0 → v0.5.0
+### 19.3 Correspondance v0.4.0 → v0.5.0
 
 | # | Évolution | En v0.4.0 | En v0.5.0 | Statut |
 |---|---|---|---|---|
 | 1 | Validation terrain | constats dispersés au journal des décisions | couche normée : boucle d'évidence, journal d'exécution, sondes contractualisées, diff chirurgical (§ 8.4) | nouveau (D43) |
 | 2 | Taxonomie des défauts | classes T1–T6 (contrat non écrit) | + classes X1–X8, défauts invisibles à l'émulation (§ 8.5) | étendu (D35–D42) |
-| 3 | État des jalons | M0 planifié, M1-M7 à venir | M0, M1, M2 franchis — preuves terrain archivées (§ 16) | constaté (D26, D32, D43) |
+| 3 | État des jalons | M0 planifié, M1-M7 à venir | M0, M1, M2 franchis — preuves terrain archivées (§ 18) | constaté (D26, D32, D43) |
 | 4 | Budgets de tokens | 40 / 3 000 / 6 000 (cibles) | 64 / 3 000 / 6 000 — corrigé et mesuré : 51 / 719 / 1 088 (D31) | corrigé (D31) |
 | 5 | Suite de conformité | définie (7 éléments, 124 contrôles) | exécutée à chaque scellage rc/final — 124/124 sur le profil primaire | mesuré (D39–D43) |
 | 6 | Volume d'oracle | 12 000 cas par bloc critique (référence) | campagnes effectives consignées : M1 76 010 cas, M2 50 533 cas, démo 86 cas | consolidé |
 | 7 | Preuves terrain | non normées | archives brutes (journaux octet-exacts, empreintes) référencées au journal des décisions | officialisé (D43) |
-| 8 | Fuzzing | mentionné (menace « fuzzing boîte noire », § 13.1) | jalon M3 ouvert : fuzzing à propriétés sur la surface d'entrées non fiables (D45) | structuré |
+| 8 | Fuzzing | mentionné (menace « fuzzing boîte noire », § 15.1) | jalon M3 ouvert : fuzzing à propriétés sur la surface d'entrées non fiables (D45) | structuré |
 
-### 17.4 Modifications explicitement rejetées (v0.5.0)
+### 19.4 Modifications explicitement rejetées (v0.5.0)
 
 Conformément au cahier de révision, les modifications suivantes ont été examinées et
 **rejetées, donc non appliquées** :
@@ -988,11 +1195,11 @@ Conformément au cahier de révision, les modifications suivantes ont été exam
 | Reconstruire les artefacts scellés 0.2.0 / 0.3.0 pour la documentation | rejetée | les balises finales sont immuables (§ 9) ; la documentation cite les empreintes |
 | Fusionner les classes X dans les classes T (T7–T14) | rejetée | les deux familles appellent des remèdes distincts : écrire le contrat (T) contre enrichir le modèle d'environnement et falsifier (X) |
 
-### 17.5 Correspondance v0.5.0 → v0.5.1
+### 19.5 Correspondance v0.5.0 → v0.5.1
 
 | # | Évolution | En v0.5.0 | En v0.5.1 | Statut |
 |---|---|---|---|---|
-| 1 | Phrases maîtresses | instruction de cérémonie seule (D27/D30) — quatre réinitialisations du poste ont montré la limite | coffre-fort TRIADE-CF1 : conteneur chiffré par projet, export/import, restauration post-réinitialisation (§ 15.3, FORMAT_CARTE § 11) | nouveau (D75) |
+| 1 | Phrases maîtresses | instruction de cérémonie seule (D27/D30) — quatre réinitialisations du poste ont montré la limite | coffre-fort TRIADE-CF1 : conteneur chiffré par projet, export/import, restauration post-réinitialisation (§ 17.3, FORMAT_CARTE § 11) | nouveau (D75) |
 | 2 | État des jalons | M0–M2 constatés, M3 ouvert | M3 franchi 28/10/2026 — campagne million (D72), conformité permanente (D73), scellage 0.4.0 (D74) | constaté (D72–D74) |
 | 3 | Modèle de menace | 13 menaces, dont le vol de l'export de continuité | + vol du coffre-fort des phrases — sans la phrase de contrôle, indéchiffrable | étendu (D75) |
 
@@ -1004,11 +1211,11 @@ Ed25519 dans le coffre (contraire à D30 — jamais confiée) ; confier le conte
 gestionnaire de mots de passe du développeur sans copie de coffre projet (la continuité
 exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
 
-### 17.6 Correspondance v0.5.1 → v0.5.2
+### 19.6 Correspondance v0.5.1 → v0.5.2
 
 | # | Évolution | En v0.5.1 | En v0.5.2 | Statut |
 |---|---|---|---|---|
-| 1 | Garde de la phrase de contrôle | détenue par le seul développeur, jamais stockée, affichée une seule fois (D75) | sauvegardée durablement dès production : `PHRASE-CONTROLE-COFFRE.txt` au dépôt (git + GitHub + miroir Drive) et au racine du coffre Drive, AVANT toute autre action ; le fichier est la remise (§ 15.3, FORMAT_CARTE § 11) | modifié (D81) |
+| 1 | Garde de la phrase de contrôle | détenue par le seul développeur, jamais stockée, affichée une seule fois (D75) | sauvegardée durablement dès production : `PHRASE-CONTROLE-COFFRE.txt` au dépôt (git + GitHub + miroir Drive) et au racine du coffre Drive, AVANT toute autre action ; le fichier est la remise (§ 17.3, FORMAT_CARTE § 11) | modifié (D81) |
 | 2 | Menace « vol du coffre-fort » | sans la phrase, indéchiffrable | la phrase vit sur le coffre Drive partagé par lien : confidentialité au repos ramenée au contrôle d'accès du dossier ; mitigation première = restreindre le partage ; une phrase commise en git y demeure à vie, la rotation reste le remède | étendu (D81) |
 | 3 | État des jalons | M0–M3 franchis, M4 à venir | M4 ouvert (D77 — couche I écrite-avant-code : huit spécifications tls + deux révisions http) ; M0–M3 inchangés | constaté (D77) |
 
@@ -1020,9 +1227,29 @@ de secours exigerait sa propre garde) ; exporter la seule copie chiffrée du cof
 garder la phrase (le conteneur indéchiffrable protège de l'exposition, pas de la perte —
 or c'est la perte qui est le risque vécu) ; restreindre d'office le partage du dossier
 Drive (décision appartenant au développeur, hors du champ de l'agent — consignée en
-recommandation, § 15.3).
+recommandation, § 17.3).
 
-## 18. Glossaire
+### 19.7 Correspondance v0.5.2 → v0.6.0
+
+| Évolution | En v0.5.2 | En v0.6.0 | Statut |
+|---|---|---|---|
+| Coffre-fort | conteneur TRIADE-CF1 à phrase (D75), garde durable de la phrase (D81) | chaîne complète : CF2 (clé maîtresse Shamir, cinq gardes seuil 3, sentinelle/porte D120) puis CF3 (serrure à triple scellement, piège sur média, cycle en deux actes, sentinelle instantanée par invocation) — le coffre réel a migré par cérémonies (30–31/10/2026) ; un coffre neuf naît CF3 | ajouté (D86, D106, D121, D127, D133) |
+| Souveraineté de l'intention | exigence consignée (D87) | le sceau de l'Intention vit : dix arbres signés par la clé Ed25519 hors-ligne, cérémonie autoportée, gardes de build et de patch, re-cérémonie réelle (D126) | ajouté (D87, D105, D126) |
+| Cérémonies et kit | non couverts | maître de cérémonie graphique, trio D122, kit Drive identique au miroir par construction (D130), lanceurs Windows/POSIX | ajouté (D107–D132) |
+| Attestation TEE (axe 1) | exigence consignée (D85) | inchangée — l'infrastructure sans racine de confiance ne peut pas la satisfaire et le dit | constaté (D133) |
+| Menaces | vol du coffre, rollback binaire | lignes nouvelles : expropriation, evil maid, roll-back du couple conteneur + piège | étendu (D133) |
+| Jalons | M4 ouvert (D77) | M4 franchi (0.5.0 scellée, terrain.17-D) ; M5 ouvert (D133) | constaté |
+
+Modifications explicitement rejetées (v0.6.0) : supprimer la sentinelle en guise de
+simplification — rejeté : l'exigence D120 est réalisée *par invocation* (la sentinelle
+instantanée est la serrure) ; ce qui meurt est le démon résident, usurpable. N'imposer
+la chaîne de migration aux coffres neufs — rejeté : un coffre neuf naît CF3. Signer la
+présente spécification avant passation — reporté : les sources `docs/` sont hors
+périmètre du sceau courant (modèle par-version, `v06/I/README.md` § 1). Passer à
+v0.6.0 en attendant l'axe 1 — arbitrée par le développeur : la passation se fait avec
+l'axe 1 consigné (D133).
+
+## 20. Glossaire
 
 | Terme | Définition |
 |---|---|
@@ -1045,7 +1272,7 @@ recommandation, § 15.3).
 | Journal d'optimisation | Registre normalisé des optimisations mesurées — appliquées ou refusées (§ 11) |
 | Fixtures contractuelles | Échantillons partagés d'un contrat externe, portés par la spécification I (§ 2.4) |
 | Traçabilité I ↔ C ↔ B ↔ tests | Chaîne complète exigence → index → bloc → défense, auditée mécaniquement (§ 4.2) |
-| Tableau de bord de conformité | Métriques mesurables avec cibles, générées à chaque cycle (§ 15.2) |
+| Tableau de bord de conformité | Métriques mesurables avec cibles, générées à chaque cycle (§ 17.2) |
 | Suite cryptographique | Paramètres de l'en-tête de carte — hachage, signature, chiffrement — choisis par le développeur dans une liste blanche |
 | Re-cryptage | Migration atomique de la suite cryptographique : recalcul des empreintes, re-chiffrement, re-signature, archivage |
 | Export de continuité | Conteneur chiffré et signé regroupant I, B, C et un manifeste — seule forme de transfert de l'état de développement |
@@ -1059,10 +1286,17 @@ recommandation, § 15.3).
 | Défaut invisible à l'émulation | Défaut dont le modèle d'environnement de l'oracle ne rend pas compte — classes X1–X8 (§ 8.5) |
 | Diff chirurgical | Itération terrain dont l'audit vérifie qu'aucun octet hors des zones autorisées n'a changé |
 | Fuzzing à propriétés | Génération d'entrées aléatoires contraintes, vérifiées par propriétés (jamais de crash, domaines de retour, bornes mémoire) — cœur du jalon M3 |
-| Coffre-fort des phrases maîtresses | Conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses d'un projet (D75, § 15.3) — l'outil vit dans le dépôt, le conteneur jamais |
-| Phrase de contrôle | Secret ouvrant le coffre-fort — sous garde durable depuis D81 : `PHRASE-CONTROLE-COFFRE.txt` au dépôt et au racine du coffre Drive, sauvegardé AVANT toute autre action dès production (§ 15.3) |
+| Coffre-fort des phrases maîtresses | Conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses d'un projet (D75, § 17.3) — l'outil vit dans le dépôt, le conteneur jamais |
+| Phrase de contrôle | Secret ouvrant le coffre-fort — sous garde durable depuis D81 : `PHRASE-CONTROLE-COFFRE.txt` au dépôt et au racine du coffre Drive, sauvegardé AVANT toute autre action dès production (§ 17.3) |
 
-## 19. Journal des versions
+- **Époque** — compteur u64 du coffre CF3, incrémenté à chaque clôture : l'horloge de la métamorphose et le témoin anti-retour.
+- **Piège** — la moitié S_piège de la clé CF3, vivant exclusivement sur le média séparé ; sans elle, le déverrouillage est impossible.
+- **Sentinelle instantanée** — les cinq vérifications ordonnées qui courent à chaque acte CF3, par invocation : la serrure est le témoin.
+- **Sachet** — la pochette physique individuelle : pièges d'époque, copies hors-ligne des fragments, carte papier.
+- **Carte du sachet** — fiche où le maître consigne à la main le checksum de chaque clôture : témoin indécevable par logiciel.
+- **PORTE D120** — l'exigence de sentinelle vivante au déverrouillage CF2 ; sans moteur de plateforme, avertissement nommé à chaque acte.
+
+## 21. Journal des versions
 
 | Version | Date | Contenu |
 |---|---|---|
@@ -1070,14 +1304,16 @@ recommandation, § 15.3).
 | v0.2 | 25 oct. 2026 | Décisions D1 à D10 ; sharding en quatre fragments chiffrés ; suite cryptographique (Ed25519, XChaCha20-Poly1305, Argon2id) ; règles R8 à R10 ; empreintes par build ; budgets en tokens ; spécification de la cible x86-64 / Windows 11 ; critères de sortie mesurables |
 | v0.3 | 25 oct. 2026 | Universalité par profils de cible (D14, amende D10) ; suite cryptographique paramétrable (D15, amende D5) ; export de continuité chiffré et signé (D16, précise R1) ; en-tête de carte normalisé ; jalons M6-M7 |
 | v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
-| v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 15.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 13.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 17.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 15.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.2 | 28 oct. 2026 | Garde durable de la phrase de contrôle du coffre-fort (D81) : sauvegardée AVANT TOUTE AUTRE ACTION dès production — fichier `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne, lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive, copie au racine du coffre Drive ; le fichier est la remise, l'affichage unique de cérémonie cesse d'être le canal de survie ; restauration post-panne prouvée de bout en bout (téléchargement Drive → coffre ouvert, entrées listées) ; menace « vol du coffre-fort » étendue — la confidentialité au repos repose désormais sur le contrôle d'accès au dossier Drive (mitigation première : restriction du partage par lien), une phrase commise en git y demeure à vie ; M4 constaté ouvert (D77, couche I écrite-avant-code). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne l'état au passage de relais : jalons M0 à M3 franchis sur
-validations terrain (balises finales 0.2.0, 0.3.0, 0.4.0), coffre-fort des phrases
-maîtresses opérationnel (D75) et sa phrase de contrôle sous garde durable (D81), jalon
-M4 (tunnel chiffré) ouvert — couche I écrite-avant-code (D77), étape (b) en cours. Les évolutions prévisibles — bloc optionnel de syscalls directs,
+La présente version consigne l'état au passage de relais : jalons M0 à M4 franchis sur
+validations terrain (balises finales 0.2.0 à 0.5.0), le programme de souveraineté
+cryptographique accompli (axes 2-3-4, D133) — le coffre réel a migré CF1 → CF2 → CF3
+les 30–31 octobre 2026 —, jalon M5 (outil complet) ouvert (D133) : empreintes par
+build, interception en VM isolée, patch à chaud du journal en production. Les évolutions prévisibles — bloc optionnel de syscalls directs,
 TLS 1.3 pur en blocs scellés, profils additionnels après M7 — restent volontairement hors
 du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle
 de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et
