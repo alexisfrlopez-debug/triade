@@ -108,6 +108,7 @@ import re
 import secrets
 import sys
 import tempfile
+import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, RACINE)
@@ -170,6 +171,12 @@ def monter_labo(rep):
     config["journal"] = os.path.join(rep, "journal.txt")
     config["pv_dir"] = os.path.join(rep, "pv")
     config["heartbeat"] = os.path.join(rep, "heartbeat.txt")
+    # D120 : le labo du test ne fait pas vivre de sentinelle — la porte y
+    # est donc muette (exiger=false). La porte ELLE-MÊME est prouvée à
+    # part : T5b ci-dessous l'arme exprès sur ce labo, et test_cf2.py T7
+    # la prouve au niveau CLI (refus nommé, VERT avec sentinelle vivante,
+    # morte visible, ère sans moteur).
+    config["exiger_sentinelle"] = False
     config_chemin = os.path.join(rep, "config_cf2.json")
     cf2.ecrire_config(config_chemin, config)
     return {"config": config_chemin, "conteneur": conteneur,
@@ -346,6 +353,25 @@ def t567f1(rep):
            cfg, copies[:2])
     refuse("t5-doublon-refuse", gui.controle_lecture,
            cfg, [copies[0], copies[0], copies[1]])
+
+    print("T5b — porte D120 : le contrôle de relecture EST un déverrouillage")
+    # la porte armée (exiger=true) SANS sentinelle vivante => refus NOMMÉ
+    # (ErreurCeremonie — le contrat du contrôleur), AVANT toute lecture
+    c = cf2.lire_config(cfg)
+    c["exiger_sentinelle"] = True
+    c["heartbeat"] = os.path.join(rep, "heartbeat-t5b.txt")
+    cf2.ecrire_config(cfg, c)
+    refuse("t5b-porte-refuse-sans-sentinelle", gui.controle_lecture,
+           cfg, copies)
+    # heart-beat FRAIS (forgé — discipline du labo) => le contrôle repasse
+    with open(c["heartbeat"], "w", encoding="utf-8") as f:
+        f.write(json.dumps({"ts": time.time()}))
+    ok_p, texte_p = gui.controle_lecture(cfg, copies)
+    verifie("t5b-porte-verte-heartbeat-frais", ok_p, texte_p)
+    # la porte redevient muette pour la suite du labo (T6/F1 utilisent
+    # le même config)
+    c["exiger_sentinelle"] = False
+    cf2.ecrire_config(cfg, c)
 
     print("T6 — liste blanche (atomique, motifs)")
     motifs = gui.liste_blanche_lire(cfg)

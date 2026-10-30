@@ -12,6 +12,15 @@ de répertoire ou un stat() n'ouvre pas de descripteur de fichier : PAS un
 signal. Une lecture non attribuée (fd refermé avant le balayage) est
 journalée SANS brûler — la discipline du double seuil prime.
 
+D120 (la PORTE de sentinelle — la demande du terrain) : la sentinelle
+est EXIGÉE au déverrouillage du coffre — coffre_cf2.porte_sentinelle()
+refuse NOMMÉ un heart-beat absent ou périmé AVANT toute reconstitution
+de M. « Une sentinelle morte est un avertissement nominal » (ère D86)
+est REMPLACÉ par : une sentinelle morte FERME le coffre. Et `demarrer`
+REFUSE de lancer une sentinelle là où le moteur n'existe pas (Windows :
+exigence consignée spec § 9) — une sentinelle incapable de surveiller ne
+battrait qu'un FAUX heart-beat (fail-closed : pas de sécurité de façade).
+
 Moteur de laboratoire (Linux non privilégié — l'utilisateur du bac à sable
 n'a pas CAP_SYS_ADMIN, fanotify_init rend EPERM : consigné spec § 6) :
   - inotify (ctypes, autoporté) : IN_OPEN|IN_ACCESS sur fichiers de la
@@ -52,11 +61,18 @@ IN_ISDIR = 0x40000000
 MASQUE_SURVEILLANCE = IN_ACCESS | IN_OPEN
 
 _libc = ctypes.CDLL(None, use_errno=True)
-_libc.inotify_init.argtypes = []
-_libc.inotify_init.restype = ctypes.c_int
-_libc.inotify_add_watch.argtypes = [ctypes.c_int, ctypes.c_char_p,
-                                    ctypes.c_uint32]
-_libc.inotify_add_watch.restype = ctypes.c_int
+try:
+    _libc.inotify_init.argtypes = []
+    _libc.inotify_init.restype = ctypes.c_int
+    _libc.inotify_add_watch.argtypes = [ctypes.c_int, ctypes.c_char_p,
+                                        ctypes.c_uint32]
+    _libc.inotify_add_watch.restype = ctypes.c_int
+    _INOTIFY_LIE = True
+except AttributeError:
+    # D120 : Windows/macOS n'exportent pas inotify — le module reste
+    # IMPORTABLE (sante y court), demarrer y refuse NOMMÉ (moteur non
+    # livré, exigence consignée spec § 9).
+    _INOTIFY_LIE = False
 
 
 class ArretSentinelle(Exception):
@@ -283,6 +299,9 @@ class Sentinelle:
 
 def _monter_surveillance_unique(chemins: list):
     """Monte inotify pour TOUS les chemins sur un seul fd."""
+    if not _INOTIFY_LIE:
+        raise RuntimeError("inotify non disponible sur cette plateforme "
+                           "(moteur non livré — spec § 9)")
     fd = _libc.inotify_init()
     if fd < 0:
         errno = ctypes.get_errno()
@@ -310,11 +329,21 @@ def _monter_surveillance_unique(chemins: list):
 # --- Santé (spec § 6) ---------------------------------------------------------
 
 def sante(config: dict, age_max: float) -> int:
+    exiger = bool(config.get("exiger_sentinelle", False))
+    print("[sentinelle] PORTE D120 : exiger_sentinelle="
+          f"{str(exiger).lower()}"
+          + (" — le déverrouillage du coffre REFUSE sans heart-beat frais"
+             if exiger else
+             " — le déverrouillage AVERTIT dans cette ère (moteur non "
+             "livré, exigence consignée spec § 9)"))
     chemin = config.get("heartbeat")
     if not chemin or not os.path.isfile(chemin):
         print("[sentinelle] SANTÉ : heart-beat ABSENT — sentinelle jamais "
-              "démarrée (ou tuée) : AVERTISSEMENT nominal, le coffre ne meurt "
-              "pas avec la sentinelle (spec § 6)")
+              "démarrée (ou tuée)")
+        if exiger:
+            print("[sentinelle] D120 : le déverrouillage REFUSERA tant "
+                  "qu'elle n'est pas relancée — python3 "
+                  "v06/sentinelle_cf2.py demarrer")
         return 1
     try:
         with open(chemin, "r", encoding="utf-8") as f:
@@ -352,6 +381,15 @@ def main() -> int:
         return 1
     if args.mode == "sante":
         return sante(config, args.age_max)
+    if not C.moteur_sentinelle_disponible():
+        print("ECHEC : moteur de sentinelle NON LIVRÉ sur cette plateforme "
+              "(exigence consignée spec § 9) — démarrage REFUSÉ : une "
+              "sentinelle incapable de surveiller ne battrait qu'un FAUX "
+              "heart-beat (fail-closed D120). Dans cette ère, la porte du "
+              "coffre AVERTIT à chaque déverrouillage, elle ne refuse pas ; "
+              "santé et diagnostic restent disponibles (mode sante).",
+              file=sys.stderr)
+        return 1
     try:
         Sentinelle(config).demarrer()
     except KeyboardInterrupt:

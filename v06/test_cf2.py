@@ -37,6 +37,15 @@ les critères de sortie D86 un par un (spec v06/I/CF2/README.md § 13) :
       à la simulation fidèle du refus Windows (contenu exact, pas de .tmp),
       et sous POSIX un dossier impossible à ouvrir est toléré (le replace
       est déjà fait — la durabilité du dossier est mieux-disante)
+  T7  D120 la PORTE de sentinelle (la demande du terrain : « si le
+      déverrouillage est tenté et qu'elle n'est pas lancée, tous nos
+      efforts sont inutiles ») : exiger=true + sentinelle ABSENTE →
+      `verifier` refuse NOMMÉ avec parade, journalise le refus, ne touche
+      RIEN ; sentinelle VIVANTE → le MÊME verifier passe VERT ; sentinelle
+      TUÉE → heart-beat périmé, refus NOMMÉ (la mort est visible) ;
+      exiger=false (ère Windows sans moteur, spec § 9) → AVERTIT et
+      passe ; la BORNE consignée : un heart-beat fraîchement FORGÉ ouvre
+      la porte — discipline, pas cryptographie (l'aveu est le contrôle)
   X8  les coffres RÉELS ne sont pas touchés : md5 de .keys/coffre_fort.bin
       inchangé, aucun .keys/coffre_cf2.bin créé ; coffre réel ABSENT
       (clone frais, kit du Drive) : l'absence est un état NOMMÉ qui doit
@@ -621,6 +630,88 @@ def t6_windows():
             os.open = vrai_open
         verifie("posix-ouverture-dossier-impossible-toleree",
                 leve is None, leve or "")
+        # (4) D120 collatéral (démo) : un chemin NU — sans composant de
+        # dossier — donnait os.makedirs('') -> traceback anonyme ; la
+        # garde nomme le cas et l'atome tient
+        cwd_avant = os.getcwd()
+        os.chdir(tmp)
+        try:
+            C._ecrire_atomique("fichier-nu.bin", donnees)
+        finally:
+            os.chdir(cwd_avant)
+        nu = os.path.join(tmp, "fichier-nu.bin")
+        verifie("ecrire-atomique-chemin-nu",
+                os.path.isfile(nu) and open(nu, "rb").read() == donnees
+                and not os.path.exists(nu + ".tmp"))
+
+
+# ---------------------------------------------------------------------------
+# T7 — D120 : la PORTE de sentinelle — aucun déverrouillage sans témoin
+# ---------------------------------------------------------------------------
+
+def t7_porte():
+    print("T7 — D120 : la porte — refus NOMMÉ sans sentinelle, VERT avec, "
+          "morte visible, ère sans moteur, heart-beat falsifiable CONSIGNÉ")
+    etat = monter_labo()
+    etat["config"]["heartbeat_age_max"] = 1.0
+    C.ecrire_config(etat["config_chemin"], etat["config"])
+    empreintes_avant = empreintes_gardes(etat)
+
+    def cli(*mots):
+        return subprocess.run(
+            [sys.executable, os.path.join(RACINE, "v06", "coffre_cf2.py"),
+             *mots, "--config", etat["config_chemin"]],
+            capture_output=True, text=True, timeout=60)
+
+    # (1) exiger=true, sentinelle ABSENTE : refus NOMMÉ + parade + journal,
+    #     et le refus ne touche RIEN (gardes octet pour octet)
+    r1 = cli("verifier")
+    verifie("porte-refus-nommé-avec-parade",
+            r1.returncode == 1 and "NON VIVANTE" in r1.stderr
+            and "demarrer" in r1.stderr, r1.stderr.strip()[:200])
+    verifie("porte-refus-journalisé",
+            "PORTE" in lire_journal(etat)
+            and "REFUSÉ" in lire_journal(etat))
+    verifie("porte-refus-ne-touche-rien",
+            empreintes_gardes(etat) == empreintes_avant)
+    # (2) sentinelle VIVANTE : le MÊME verifier passe VERT (la chaîne
+    #     complète : porte -> fragments -> M -> verif -> AEAD)
+    proc = demarrer_sentinelle(etat)
+    r2 = cli("verifier")
+    verifie("porte-sentinelle-vivante-verifier-vert",
+            r2.returncode == 0 and "verifier : VERT" in r2.stdout,
+            (r2.stdout + r2.stderr).strip()[:200])
+    tuer_sentinelle(proc)
+    time.sleep(1.3)                            # heart-beat périmé (borne 1.0)
+    # (3) sentinelle TUÉE : la mort est VISIBLE — refus NOMMÉ « MORTE »
+    r3 = cli("verifier")
+    verifie("porte-sentinelle-morte-refus-nommé",
+            r3.returncode == 1 and "MORTE" in r3.stderr
+            and "borne 1 s" in r3.stderr, r3.stderr.strip()[:200])
+    # (4) l'ère SANS moteur (Windows : exigence consignée spec § 9) :
+    #     exiger=false → la porte AVERTIT fort et PASSE (jamais un refus
+    #     qui scellerait le coffre derrière un moteur non livré)
+    etat["config"]["exiger_sentinelle"] = False
+    C.ecrire_config(etat["config_chemin"], etat["config"])
+    r4 = cli("verifier")
+    verifie("porte-ère-sans-moteur-avertit-et-passe",
+            r4.returncode == 0 and "SANS sentinelle" in r4.stderr
+            and "verifier : VERT" in r4.stdout,
+            (r4.stdout + r4.stderr).strip()[:200])
+    # (5) la BORNE CONSIGNÉE (D120) : le heart-beat est falsifiable — un
+    #     ts fraîchement forgé ouvre la porte sans sentinelle. La porte
+    #     est une exigence de CÉRÉMONIE, pas une barrière cryptographique
+    #     (la sécurité DURE reste Shamir + ACL + brûlage). L'aveu EST le
+    #     contrôle : prouver la limite, pas la cacher.
+    etat["config"]["exiger_sentinelle"] = True
+    C.ecrire_config(etat["config_chemin"], etat["config"])
+    with open(etat["config"]["heartbeat"], "w", encoding="utf-8") as f:
+        json.dump({"ts": time.time()}, f)
+    r5 = cli("verifier")
+    verifie("porte-heartbeat-falsifiable-borne-consignée",
+            r5.returncode == 0 and "verifier : VERT" in r5.stdout,
+            (r5.stdout + r5.stderr).strip()[:200])
+    shutil.rmtree(LABO, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
@@ -665,6 +756,7 @@ def main() -> int:
     f2_atomicite()
     t5_sante()
     t6_windows()
+    t7_porte()
     x8_coffres_reels()
     empreinte_apres = _md5_si_present(chemin_reel)
     if empreinte_avant is None:

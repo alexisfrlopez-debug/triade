@@ -7374,3 +7374,85 @@ sceau_I.py verifier CODE 0 (10 arbres VERTS — D119 ne touche AUCUN
 arbre signé), test_sceau_I.py 50/50. Kit synchronisé :
 download/ceremonie_gui.py == v06/ceremonie_gui.py (md5),
 LISEZMOI-ceremonie-GUI v1.9.
+
+## Entrée 106 — D120 (30/10) : la PORTE de sentinelle — la sentinelle devient indispensable au déverrouillage (« si le déverrouillage est tenté et qu'elle n'est pas lancée, tous nos efforts sont inutiles » — la demande du terrain, servie)
+
+Le terrain a posé la question de conception qui manquait à l'axe 2 :
+la sentinelle est une condition sine qua non du dispositif — alors elle
+doit être INDISPENSABLE au déverrouillage du coffre, sinon la
+tentative de déverrouillage sans elle rend tous les efforts inutiles.
+L'analyse dit OUI, avec deux précisions honnêtes qui distinguent
+« exigée par la cérémonie » de « mathématiquement indispensable » :
+
+Un — L'ANGLE MORT DE L'ÈRE D86. La spec § 6 disait : « une sentinelle
+morte est un avertissement nominal, pas un décès du coffre ». La
+fenêtre la plus dangereuse du dispositif (M reconstituée en RAM,
+secrets exposés) était donc la SEULE où la surveillance était
+optionnelle — incohérent avec le fail-closed maison (refus nommés,
+atomicité, double seuil) et avec le nom même de D86 : un interrupteur
+d'homme mort qui ne fait rien quand il est mort n'en est pas un. D120
+arme la PORTE : porte_sentinelle() dans v06/coffre_cf2.py (source
+unique de vérité, motif bruler) refuse NOMMÉ (avec parade :
+demarrer) et JOURNALISE tout heart-beat absent, illisible ou périmé —
+borne heartbeat_age_max 5 s (≈ 20 boucles manquées à 0,25 s) — AVANT
+toute lecture de fragment. Câblée dans _avec_deverrouillage (lister,
+obtenir, ajouter, retirer) ET cmd_verifier, donc héritée par le GUI
+PAR RELAIS (il shelle le CLI) ; controle_lecture du GUI la passe AUSSI
+(le contrôle de relecture EST un déverrouillage : M en RAM depuis les
+copies, conteneur réel ouvert — refus renommé ErreurCeremonie, le
+contrat du contrôleur). La config porte exiger_sentinelle (défaut :
+moteur_sentinelle_disponible() — la porte juge le heart-beat, pas la
+plateforme) et heartbeat_age_max. La CÉRÉMONIE S'INVERSE : liste
+blanche → sentinelle DÉMARRÉE → premier déverrouillage (migrer/init
+l'enseignent en sortie, le LISEZMOI du kit réordonne ses étapes 5/6) ;
+restaurer / etat-fragments / statut / bruler restent HORS porte
+(aucune clé lue) : diagnostic et relève après brûlage demeurent
+possibles coffre mort — la porte interdit l'OUBLI, pas la récupération.
+
+Deux — LA BORNE, DITE PLENEMENT. La porte est une exigence de
+CÉRÉMONIE, pas une barrière cryptographique : le heart-beat peut être
+FALSIFIÉ (ts forgé), et l'adversaire aux privilèges utilisateur peut
+déverrouiller AILLEURS avec des fragments copiés (les gardes ne sont
+pas sous sentinelle — ACL distinctes, spec § 5). Ce que la porte
+garantit : plus AUCUN déverrouillage légitime sans témoin, et
+l'absence de sentinelle est un ÉVÉNEMENT (refus nommé + journal),
+jamais un silence. La sécurité DURE reste Shamir (sous le seuil = mort
+informationnelle), ACL et brûlage — la porte les fait respecter en
+pratique. L'ÈRE WINDOWS est consignée : moteur livré = Linux
+(inotify + /proc) ; sur la machine réelle du développeur,
+sentinelle_cf2.py demarrer REFUSE honnêtement (une sentinelle incapable
+de surveiller ne battrait qu'un FAUX heart-beat — l'import inotify est
+gardé, sante court partout et affiche l'état de la porte) et la porte
+AVERTIT + journalise « SANS sentinelle » à CHAQUE déverrouillage
+(exiger_sentinelle=false) — jamais un refus qui scellerait le coffre
+réel derrière une fonctionnalité non livrée (exigence consignée
+spec § 9, même posture que l'axe 1 D85) ; le jour où le moteur
+SACL 4663/ETW est livré, exiger_sentinelle=true l'arme sans rien
+changer d'autre.
+
+Collatéral nommé (démo) : _ecrire_atomique crachait un traceback
+anonyme sur un chemin NU (os.makedirs('') — nom de fichier sans
+dossier) ; la garde nomme le cas (T6, témoin
+« ecrire-atomique-chemin-nu »), l'atome tient.
+
+PREUVES : test_cf2.py 54 PASS / 0 ÉCHEC (T7 nouveau, 7 contrôles :
+refus nommé AVEC parade + journal + gardes intactes octet pour octet ;
+le MÊME verifier VERT sentinelle vivante ; sentinelle tuée → « MORTE »
+nommé, borne affichée ; ère sans moteur → AVERTIT et passe ; heart-beat
+forgé → passe — la borne PROUVÉE, l'aveu est le contrôle) ; autotest 17
+PASS (4 contrôles porte, indépendants de la plateforme) ;
+test_ceremonie_gui.py 157 PASS / 0 ÉCHEC (T5b : le contrôle de
+relecture refusé NOMMÉ porte armée, repasse heart-beat frais — le
+labo du test garde exiger=false, la porte y est testée à part) ;
+NON-RÉGRESSION : sceau_I.py verifier CODE 0 (10 arbres VERTS — D120 ne
+touche AUCUN arbre signé : coffre_cf2.py, sentinelle_cf2.py,
+ceremonie_gui.py et ses tests vivent hors v06/I ; le TEXTE SCELLÉ
+v06/I/CF2/README.md § 6/§ 8 reste INTACT, l'amendement est consigné
+D120 + LISEZMOI du kit et entrera dans l'arbre scellé à la prochaine
+re-cérémonie — précédent erratum § 12), test_sceau_I.py 50/50 ; kit
+synchronisé : download/ceremonie_gui.py == v06/ (md5) ;
+LISEZMOI-coffre-CF2.txt du kit patché (8 remplacements COMPTÉS :
+l'annonce de la porte, les comptes 53/53 et 17, l'ordre inversé de la
+cérémonie, l'ouverture qui exige le témoin, la relève hors porte, les
+bornes porte + ère Windows) ; Entrée 106 du journal + décision D120
+consignées.

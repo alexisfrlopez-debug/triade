@@ -3697,3 +3697,68 @@ rapport v1.9 tranchera) ; le fsync de dossier est ABSENT sous Windows
 (aucune émulation) ; après tout changement du GUI, le kit du Drive doit
 être re-synchronisé (md5) et le clone du terrain mis à jour (git pull)
 avant toute cérémonie.
+
+## D120 — La sentinelle est EXIGÉE au déverrouillage : la porte ferme le coffre quand le témoin meurt (la demande du terrain)
+
+**Décision.** La question du terrain : « vu qu'elle est une condition
+sine qua non du dispositif de sécurité, il faut qu'elle soit
+indispensable au déverrouillage du coffre non ? parce que si le
+déverrouillage est tenté et qu'elle n'est pas lancée, tous nos efforts
+sont inutiles » — JUSTE, et l'ère D86 portait l'angle mort : spec § 6
+disait « une sentinelle morte est un avertissement nominal, pas un
+décès du coffre », donc la fenêtre la plus dangereuse du dispositif (M
+reconstituée en RAM, secrets exposés) était précisément la seule où la
+surveillance était OPTIONNELLE — incohérent avec le fail-closed maison
+et avec le nom même de D86 (un interrupteur d'homme mort qui ne fait
+rien quand il est mort n'en est pas un). D120 arme la PORTE :
+porte_sentinelle() (v06/coffre_cf2.py, source unique de vérité) est
+appelée par TOUTE commande qui déverrouille — verifier, lister,
+obtenir, ajouter, retirer (_avec_deverrouillage et cmd_verifier) — ET
+par le contrôle de relecture du GUI (controle_lecture : c'est un
+déverrouillage, M en RAM depuis les copies) : sans heart-beat FRAIS
+(borne heartbeat_age_max, défaut 5 s ≈ 20 boucles manquées), REFUS NOMMÉ
+avec parade, JOURNALISÉ, AVANT toute lecture de fragment et toute
+reconstitution — l'absence de sentinelle devient un ÉVÉNEMENT, jamais un
+silence. Config : exiger_sentinelle (défaut : moteur_sentinelle_disponible()
+— true là où le moteur livré inotify+/proc peut vivre) et
+heartbeat_age_max ; la porte juge le heart-beat, PAS la plateforme. Le
+GUI hérite de la porte PAR RELAIS (il shelle le CLI) et par
+controle_lecture. La cérémonie s'inverse : liste blanche → sentinelle
+DÉMARRÉE → premier déverrouillage (migrer et init l'enseignent en
+sortie ; restaurer / etat-fragments / statut / bruler restent HORS
+porte, aucune clé lue — le diagnostic et la relève après brûlage
+demeurent possibles coffre mort : la porte interdit l'OUBLI, pas la
+récupération). sentinelle_cf2.py suit : demarrer REFUSE de lancer une
+sentinelle là où le moteur n'existe pas (une sentinelle incapable de
+surveiller ne battrait qu'un FAUX heart-beat — pas de sécurité de
+façade), l'import inotify y est gardé (sante court partout), et sante
+affiche l'état de la PORTE (exiger_sentinelle) en tête.
+
+**Frontières tenues.** Le refus est NOMMÉ avec parade et JOURNALISÉ
+(best-effort : un journal impossible à écrire ne noie jamais le refus) ;
+le refus ne touche RIEN (gardes octet pour octet — témoin T7) ; la
+disponibilité de la relève est préservée (restaurer hors porte :
+brûlage → diagnostic → restauration → sentinelle → déverrouillage) ;
+l'ère Windows est honnête (exiger_sentinelle=false tant que le moteur
+SACL 4663/ETW n'est pas livré, exigence consignée spec § 9 : la porte
+AVERTIT fort et journalise « SANS sentinelle » à CHAQUE déverrouillage
+— jamais un refus qui scellerait le coffre réel derrière une
+fonctionnalité non livrée) ; le texte scellé v06/I/CF2/README.md § 6/§ 8
+reste INTACT (le corriger ferait diverger l'arbre v06/I de son manifeste
+signé sans la clé physique — l'amendement D120 est consigné ICI et au
+LISEZMOI du kit, il entrera dans l'arbre scellé à la prochaine
+re-cérémonie, précédent erratum § 12) ; aucun coffre réel touché (X8).
+
+**Bornes.** La porte est une exigence de CÉRÉMONIE, pas une barrière
+cryptographique : le heart-beat est FALSIFIABLE par un adversaire aux
+privilèges utilisateur (ts forgé — prouvé par le contrôle T7
+« porte-heartbeat-falsifiable-borne-consignée », l'aveu est le contrôle),
+qui peut aussi déverrouiller AILLEURS avec des fragments copiés (les
+gardes ne sont pas sous sentinelle, elles sont sous ACL distinctes —
+spec § 5) ; ce que la porte garantit : plus AUCUN déverrouillage
+légitime sans témoin, l'absence de sentinelle toujours nommée et
+journalisée ; la sécurité DURE reste Shamir (sous le seuil = mort
+informationnelle), ACL et brûlage ; sous Windows la porte n'exige rien
+tant que le moteur n'existe pas (borne d'ère, pas de conception) ; la
+sentinelle demeure TUABLE avant la lecture (borne D86) — mais sa mort
+est maintenant BLOQUANTE au déverrouillage, plus seulement visible.

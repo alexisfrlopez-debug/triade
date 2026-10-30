@@ -806,3 +806,57 @@ Stage Summary:
 - Suite : cérémonie CF2 RÉELLE du développeur (migrer → TROIS copies
   hors-ligne → sentinelle), puis verdict à froid du rapport v1.9 ;
   moteur sentinel Windows SACL/ETW ; D57
+
+---
+Task ID: 32
+Agent: Z.ai (agent principal)
+Task: demande développeur 30/10 — « concernant la sentinelle, vu qu'elle
+est une condition sine qua non du dispositif de sécurité, il faut qu'elle
+soit indispensable au déverrouillage du coffre non ? parce que si le
+déverrouillage est tenté et qu'elle n'est pas lancée, tous nos efforts
+sont inutiles » — D120, la PORTE de sentinelle.
+
+Work Log:
+- ANALYSE : la demande est JUSTE et dénonce l'angle mort de l'ère D86 —
+  spec § 6 disait « une sentinelle morte est un avertissement nominal » :
+  la fenêtre la plus dangereuse (M en RAM) était la seule sans
+  surveillance obligatoire, incohérent avec le fail-closed maison ; MAIS
+  « indispensable » doit être dit honnêtement : la porte est une
+  exigence de CÉRÉMONIE, pas une barrière cryptographique (heart-beat
+  falsifiable, fragments copiables) — borne consignée D120
+- D120 armé : porte_sentinelle() dans coffre_cf2.py (source unique) —
+  refus NOMMÉ + parade + journal sur heart-beat absent/illisible/périmé
+  (borne 5 s), AVANT toute lecture de fragment ; câblée dans
+  _avec_deverrouillage (lister/obtenir/ajouter/retirer) et cmd_verifier
+  → héritée par le GUI PAR RELAIS ; controle_lecture du GUI la passe
+  AUSSI (c'est un déverrouillage — renommé ErreurCeremonie) ; config :
+  exiger_sentinelle (défaut moteur_sentinelle_disponible() : la porte
+  juge le heart-beat, pas la plateforme) + heartbeat_age_max ;
+  restaurer/etat-fragments/statut/bruler HORS porte (relève possible
+  coffre mort — la porte interdit l'OUBLI, pas la récupération)
+- sentinelle_cf2.py : demarrer REFUSE sans moteur (pas de faux
+  heart-beat — sécurité de façade interdite), import inotify gardé
+  (sante court sous Windows), sante affiche la PORTE en tête ; migrer/
+  init enseignent l'ordre inversé (sentinelle AVANT premier
+  déverrouillage), LISEZMOI du kit réordonne (8 remplacements COMPTÉS)
+- PREUVES : test_cf2.py 54 PASS / 0 ÉCHEC (T7 : 7 contrôles — refus
+  nommé + journal + gardes intactes ; VERT sentinelle vivante ; « MORTE »
+  nommée ; ère sans moteur avertit et passe ; heart-beat forgé PROUVÉ,
+  l'aveu est le contrôle) ; autotest 17 PASS (4 porte) ;
+  test_ceremonie_gui.py 157 PASS / 0 ÉCHEC (T5b : relecture gated) ;
+  collatéral : _ecrire_atomique chemin NU gardé (T6) ;
+  sceau_I verifier CODE 0 (10 arbres VERTS — texte scellé v06/I INTACT,
+  amendement consigné D120 + kit, entrera à la re-cérémonie) ;
+  test_sceau_I.py 50/50 ; kit md5 synchronisé
+- CONSIGNES TERRAIN : git pull → la cérémonie CF2 suit l'ordre liste
+  blanche → sentinelle → verifier (sous Windows la sentinelle REFUSE de
+  démarrer honnêtement et la porte AVERTIT « SANS sentinelle » à chaque
+  déverrouillage — moteur SACL/ETW reste à livrer, exigence consignée)
+
+Stage Summary:
+- D120 ACCOMPLI : la sentinelle morte ne donne plus un avertissement
+  nominal — elle FERME le coffre (53 + 17 + 157 + 50 PASS, sceau CODE 0),
+  poussée
+- Suite : cérémonie CF2 réelle (migrer → TROIS copies → sentinelle là où
+  elle peut vivre), verdict à froid du rapport v1.9 ; moteur sentinel
+  Windows SACL/ETW ; D57

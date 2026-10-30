@@ -1464,6 +1464,14 @@ def controle_lecture(chemin_config, fichiers_copies, emit=None):
     """
     cf2 = _module_cf2()
     config = cf2.lire_config(chemin_config)
+    # D120 — la PORTE de sentinelle : le contrôle de relecture EST un
+    # déverrouillage (M reconstituée en RAM depuis les copies, conteneur
+    # réel ouvert) — la porte s'applique donc comme au CLI. Le refus est
+    # renommé ErreurCeremonie (le contrat d'exception du contrôleur).
+    try:
+        cf2.porte_sentinelle(config)
+    except cf2.ErreurCoffre as exc:
+        raise ErreurCeremonie(f"porte de sentinelle (D120) : {exc}")
     conteneur = config["conteneur"]
     if not os.path.isfile(conteneur):
         raise ErreurCeremonie(f"conteneur CF2 introuvable : {conteneur}")

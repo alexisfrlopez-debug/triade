@@ -21,6 +21,18 @@ POSIX-seul — Windows refuse os.open() sur un dossier (PermissionError
 errno 13 : « migrer » y mourait en écrivant .keys/coffre_cf2.bin) ;
 l'atomicité ne change pas (os.replace est atomique sur les deux familles).
 
+D120 (la PORTE de sentinelle — la demande du terrain) : « une sentinelle
+morte est un avertissement nominal » (spec § 6, ère D86) est REMPLACÉ :
+le déverrouillage EXIGE une sentinelle VIVANTE là où un moteur existe.
+porte_sentinelle() — appelée PAR TOUTE commande qui déverrouille (et par
+le contrôle de relecture du GUI) — refuse NOMMÉ (avec parade) un
+heart-beat absent, illisible ou périmé, AVANT toute reconstitution de M.
+Là où le moteur n'est pas livré (Windows : exigence consignée spec § 9),
+la porte AVERTIT et journalise — posture D85 : dire la limite au lieu de
+la cacher. La porte est une exigence de CÉRÉMONIE, pas une barrière
+cryptographique : les bornes (heart-beat falsifiable, déverrouillage
+possible ailleurs avec des fragments copiés) sont consignées D120.
+
 Usage (depuis triade/) :
   python3 v06/coffre_cf2.py init [--fragments N] [--seuil T]
        [--racine-gardes DIR] [--description-projet D]
@@ -50,6 +62,7 @@ import json
 import os
 import secrets
 import sys
+import time
 from datetime import datetime, timezone
 
 try:
@@ -82,6 +95,13 @@ T_DEFAUT = 3
 MAGIC_FRAG = "TRIADE-CF2-FRAG v1"
 MOTIF_FRAG = "fragment-*.cf2f"         # spec § 7 — seuls ces fichiers brûlent
 PREFIXE_FRAG = "fragment-"
+
+# D120 — la PORTE de sentinelle : borne de fraîcheur du heart-beat. La
+# sentinelle bat à chaque boucle (periode_sondage = 0,25 s par défaut) :
+# 5 s = ~20 boucles manquées — une sentinelle vivante qui cesse de battre
+# 5 s est MORTE pour la porte (fail-closed : une borne large évite le refus
+# frauduleux sur une machine chargée, une morte est toujours attrapée).
+AGE_MAX_HEARTBEAT_DEFAUT = 5.0
 
 RE_PROJET = None  # posé après import coffre_fort (mêmes règles que CF1)
 
@@ -432,7 +452,12 @@ def _fsync_repertoire(chemin: str) -> None:
 
 
 def _ecrire_atomique(chemin: str, donnees: bytes) -> None:
-    os.makedirs(os.path.dirname(chemin), exist_ok=True)
+    # D120 (collatéral de la démo) : un chemin SANS composant de dossier
+    # (nom de fichier relatif nu) donnait os.makedirs('') -> traceback
+    # anonyme ; la garde nomme le cas et l'écriture demeure atomique.
+    dossier = os.path.dirname(chemin)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
     tmp = chemin + ".tmp"
     with open(tmp, "wb") as f:
         f.write(donnees)
@@ -446,6 +471,17 @@ def _ecrire_atomique(chemin: str, donnees: bytes) -> None:
 # ---------------------------------------------------------------------------
 # Configuration partagée outil/sentinelle (spec § 5-6)
 # ---------------------------------------------------------------------------
+
+def moteur_sentinelle_disponible() -> bool:
+    """D120 — True là où le moteur livré (inotify + balayage /proc, spec
+    § 6) peut VIVRE. Sous Windows, le moteur réel (SACL 4663 / ETW) est
+    une EXIGENCE CONSIGNÉE non livrée (spec § 9) : la porte de sentinelle
+    y AVERTIT au lieu de refuser — même posture que l'axe 1 D85 : dire la
+    limite au lieu de la cacher. Le jour où le moteur Windows est livré,
+    exiger_sentinelle=true l'arme SANS rien changer d'autre (la porte juge
+    le heart-beat, pas la plateforme)."""
+    return os.path.isdir("/proc")
+
 
 def config_par_defaut(n: int, t: int, racine_gardes: str,
                       conteneur: str) -> dict:
@@ -476,6 +512,11 @@ def config_par_defaut(n: int, t: int, racine_gardes: str,
         "journal": os.path.join(KEYS_DIR, "journal-sentinelle.txt"),
         "pv_dir": os.path.join(KEYS_DIR, "pv-cf2"),
         "heartbeat": os.path.join(KEYS_DIR, "heartbeat-sentinelle.txt"),
+        # D120 — la PORTE : le déverrouillage exige une sentinelle VIVANTE
+        # là où un moteur existe ; ailleurs (Windows : exigence consignée
+        # § 9) la porte AVERTIT et journalise à CHAQUE déverrouillage.
+        "exiger_sentinelle": moteur_sentinelle_disponible(),
+        "heartbeat_age_max": AGE_MAX_HEARTBEAT_DEFAUT,
     }
 
 
@@ -661,6 +702,100 @@ def journaliser(config: dict, message: str) -> None:
 
 
 # ---------------------------------------------------------------------------
+# La PORTE de sentinelle (D120) — source unique de vérité
+# ---------------------------------------------------------------------------
+
+def _porte_journal(config: dict, message: str) -> None:
+    """Journal best-effort de la porte : un journal impossible à écrire ne
+    doit JAMAIS noyer le refus (le refus prime — le journal est un
+    témoignage, pas une condition)."""
+    try:
+        journaliser(config, message)
+    except OSError:
+        pass
+
+
+def _porte_refus(config: dict, message: str) -> None:
+    """Refus NOMMÉ + journal — le cœur fail-closed de la porte."""
+    _porte_journal(config, f"PORTE : déverrouillage REFUSÉ — {message}")
+    raise ErreurCoffre(message)
+
+
+def porte_sentinelle(config: dict) -> None:
+    """D120 — la PORTE : aucun déverrouillage sans sentinelle VIVANTE,
+    là où un moteur existe (exiger_sentinelle=true).
+
+    La question du terrain : « si le déverrouillage est tenté et qu'elle
+    n'est pas lancée, tous nos efforts sont inutiles » — JUSTE, et la
+    spec § 6 de l'ère D86 (« une sentinelle morte est un avertissement
+    nominal ») était l'angle mort : la fenêtre la plus dangereuse du
+    dispositif (M reconstituée en RAM) était la seule où la surveillance
+    était optionnelle. La porte ferme ça : refus NOMMÉ avec parade AVANT
+    toute lecture de fragment, AVANT toute reconstitution.
+
+    Ère honnête : exiger_sentinelle=false (plateforme sans moteur livré
+    — Windows, spec § 9) → AVERTISSEMENT fort + journal à CHAQUE
+    déverrouillage « SANS sentinelle » ; jamais un refus qui scellerait
+    le coffre derrière une fonctionnalité non livrée (auto-destruction de
+    service). Restaurer / etat-fragments / statut / bruler restent HORS
+    porte (aucune clé lue) : le diagnostic et la relève après brûlage
+    demeurent possibles coffre mort — la porte interdit l'OUBLI, pas la
+    récupération.
+
+    BORNE CONSIGNÉE (D120) : le heart-beat est un signal de discipline,
+    PAS une preuve cryptographique — un adversaire aux privilèges
+    utilisateur peut le falsifier, comme il peut déverrouiller ailleurs
+    avec des fragments copiés. Ce que la porte garantit : plus AUCUN
+    déverrouillage légitime sans témoin, et l'absence de sentinelle est
+    un ÉVÉNEMENT (refus nommé + journal), jamais un silence.
+    """
+    if not config.get("exiger_sentinelle", False):
+        message = ("déverrouillage SANS sentinelle vivante — le moteur "
+                   "n'est pas livré sur cette plateforme (exigence "
+                   "consignée spec § 9) : le coffre s'ouvre sans témoin. "
+                   "La PORTE journalise ainsi chaque déverrouillage "
+                   "jusqu'au moteur réel (SACL 4663 / ETW)")
+        print(f"[coffre-CF2] AVERTISSEMENT D120 : {message}", file=sys.stderr)
+        _porte_journal(config, f"PORTE : {message}")
+        return
+    chemin = config.get("heartbeat")
+    if not chemin:
+        _porte_refus(
+            config,
+            "PORTE : exiger_sentinelle=true SANS chemin de heart-beat dans "
+            "la config (champ 'heartbeat' absent) — config incomplète, "
+            "refus (spec § 6)")
+    try:
+        age_max = float(config.get("heartbeat_age_max",
+                                   AGE_MAX_HEARTBEAT_DEFAUT))
+    except (TypeError, ValueError):
+        _porte_refus(
+            config,
+            "PORTE : heartbeat_age_max non numérique dans la config — "
+            "config corrompue, refus (fail-closed)")
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            etat = json.load(f)
+        age = time.time() - float(etat["ts"])
+    except (OSError, ValueError, KeyError, TypeError):
+        _porte_refus(
+            config,
+            f"sentinelle NON VIVANTE : heart-beat absent ou illisible "
+            f"({chemin}) — déverrouillage REFUSÉ (D120 : la sentinelle "
+            "est EXIGÉE au déverrouillage, spec § 6). Parade : démarrez-la "
+            "(python3 v06/sentinelle_cf2.py demarrer) puis réessayez ; "
+            "santé : python3 v06/sentinelle_cf2.py sante")
+    if age > age_max:
+        _porte_refus(
+            config,
+            f"sentinelle MORTE : heart-beat vieux de {age:.1f} s "
+            f"(borne {age_max:.0f} s — {chemin}) — déverrouillage REFUSÉ "
+            "(D120 : la sentinelle est EXIGÉE au déverrouillage, spec § 6). "
+            "Parade : relancez-la (python3 v06/sentinelle_cf2.py demarrer) "
+            "puis réessayez")
+
+
+# ---------------------------------------------------------------------------
 # Restauration atomique (spec § 10)
 # ---------------------------------------------------------------------------
 
@@ -781,10 +916,20 @@ def migrer(depuis: str, conteneur_cf2: str, racine_gardes: str, n: int,
           f"(seuil {t}) — copiez {t} fragments hors-ligne (papier/USB, "
           "= le SEUIL :")
     print("[coffre-CF2] deux copies de moins que le seuil et la relève est "
-          "impossible après brûlage — spec § 5), puis démarrez la sentinelle "
-          "(python3 v06/sentinelle_cf2.py demarrer)")
+          "impossible après brûlage — spec § 5).")
     print(f"[coffre-CF2] CF1 laissé INTACT : {depuis} (destruction = acte "
           "explicite après vérification — spec § 10)")
+    if moteur_sentinelle_disponible():
+        print("[coffre-CF2] PORTE D120 : verifier / obtenir / lister / "
+              "ajouter / retirer REFUSERONT tant que la sentinelle n'est "
+              "pas DÉMARRÉE (elle est EXIGÉE au déverrouillage) : "
+              "python3 v06/sentinelle_cf2.py demarrer — puis vérifiez "
+              "(python3 v06/coffre_cf2.py verifier)")
+    else:
+        print("[coffre-CF2] PORTE D120 — ère sans moteur (exigence "
+              "consignée spec § 9) : exiger_sentinelle=false, chaque "
+              "déverrouillage AVERTIRA « SANS sentinelle » jusqu'au "
+              "moteur Windows réel (SACL 4663 / ETW).")
     return 0
 
 
@@ -836,6 +981,10 @@ def cmd_init(args) -> int:
         _effacer(m)
     print(f"[coffre-CF2] coffre neuf : {args.conteneur} (t={t}/n={n})")
     print(f"[coffre-CF2] {n} fragments posés sous {args.racine_gardes}")
+    if moteur_sentinelle_disponible():
+        print("[coffre-CF2] PORTE D120 : démarrez la sentinelle avant tout "
+              "déverrouillage (python3 v06/sentinelle_cf2.py demarrer) — "
+              "elle est EXIGÉE au déverrouillage (spec § 6, D120)")
     print("[coffre-CF2] LABORATOIRE — la cérémonie réelle passe par migrer "
           "(download/LISEZMOI-coffre-CF2.txt, spec § 12)")
     return 0
@@ -856,8 +1005,13 @@ def cmd_statut(args) -> int:
 
 
 def _avec_deverrouillage(args):
-    """Ouvre le coffre et rend (config, base, entete, m) — l'appelant ferme."""
+    """Ouvre le coffre et rend (config, base, entete, m) — l'appelant ferme.
+
+    D120 : la PORTE de sentinelle précède TOUT — lister, obtenir, ajouter,
+    retirer passent ici, le refus est nommé AVANT toute lecture.
+    """
     config, _ = _config_ou_defauts(args)
+    porte_sentinelle(config)
     base, entete, m, _ = deverrouiller(config["conteneur"], config["gardes"])
     return config, base, entete, m
 
@@ -978,6 +1132,7 @@ def cmd_retirer(args) -> int:
 
 def cmd_verifier(args) -> int:
     config, _ = _config_ou_defauts(args)
+    porte_sentinelle(config)                # D120 — la porte AVANT tout
     with open(config["conteneur"], "rb") as f:
         entete = _parser_entete(f.read())       # fail-closed dès l'en-tête
     print(f"[coffre-CF2] en-tête VALIDE — seuil {entete['shamir']}, "
@@ -1112,7 +1267,35 @@ def cmd_autotest(args) -> int:
         base4, _, mram2, _ = deverrouiller(conteneur, gardes)
         controle("releve-3-copies-restaure-vie", base4 == base)
         _effacer(mram2)
-        # 4. Le coffre RÉEL n'existe pas / n'est pas touché
+        # 4. La PORTE D120 : aucun déverrouillage sans sentinelle vivante
+        #    (là où un moteur existe — le contrôle est indépendant de la
+        #    plateforme : la porte juge le heart-beat, pas l'OS)
+        config["heartbeat"] = os.path.join(racine, "heartbeat.txt")
+        config["heartbeat_age_max"] = 1.0
+        config["exiger_sentinelle"] = True
+        refuse("porte-refuse-heartbeat-absent", porte_sentinelle, config)
+        with open(config["heartbeat"], "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time() - 30}, f)
+        refuse("porte-refuse-heartbeat-périmé", porte_sentinelle, config)
+        with open(config["heartbeat"], "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time()}, f)
+        porte_ok = True
+        try:
+            porte_sentinelle(config)
+        except ErreurCoffre:
+            porte_ok = False
+        controle("porte-passe-heartbeat-frais", porte_ok)
+        config["exiger_sentinelle"] = False
+        import io
+        import contextlib
+        with contextlib.redirect_stderr(io.StringIO()):
+            porte_ok2 = True
+            try:
+                porte_sentinelle(config)   # avertit (moteur non livré)
+            except ErreurCoffre:
+                porte_ok2 = False
+        controle("porte-avertit-hors-moteur-sans-refuser", porte_ok2)
+        # 5. Le coffre RÉEL n'existe pas / n'est pas touché
         controle("aucun-coffre-reel-touché",
                  not os.path.exists(CHEMIN_CONTENEUR_DEFAUT))
     print(f"[coffre-CF2] autotest : {len(passes)} PASS, "
