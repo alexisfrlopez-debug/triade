@@ -980,3 +980,44 @@ Stage Summary:
   (57/57 vérifiés, diagnostic indépendant nul), poussée
 - Suite : re-cérémonie (a) puis migration CF2→CF3 (b) — « a puis b »
   D126 ; OAuth relais à reprendre avant ~05/11
+
+---
+Task ID: 39
+Agent: Z.ai (agent principal)
+Task: rapport de cérémonie du terrain 30/10 17:15 (GUI v2.1) — (a) la
+re-cérémonie ACCOMPLIE + « je suis prêt pour migration cf1 => cf2 =>
+cf3 mais je ne trouve pas le coffre_fort.bin » — fermer la boucle au
+labo et NOMMER le coffre réel.
+
+Work Log:
+- RAPPORT LU : fil du pilier droit D129 courante 0→5 (clone → préparer
+  a-signer FRAIS → générer clé → signer 10 signatures vérifiées →
+  déposer → git 20f40bc poussé) → verifier terrain : 10 arbres VERTS,
+  cle deposee reelle ; CF1 — statut : fail-closed NOMMÉ (coffre
+  introuvable dans le clone) — la question du coffre suit, à juste
+  titre
+- BOUCLE FERMÉE AU LABO : pull 20f40bc puis sceau_I.py verifier →
+  CODE 0, 10 arbres VERTS — la fenêtre D126 est FERMÉE (spec CF3 +
+  erratum § 12 CF2 sous le sceau réel du maître)
+- INCIDENT BAC À SABLE (sans perte) : recyclage entre messages — disque
+  restauré à ~13h15 (post-D127) ; reset --hard origin/main (WIP = bits
+  de mode uniquement, diff 0/0), hook D130 réinstallé, LISEZMOI D130
+  récupérés du kit Drive (md5 MATCH) — GitHub + Drive = vérités
+  durables, disque labo volatil
+- COFFRE RÉEL VÉRIFIÉ (scripts/verif_coffre_drive.py) : coffre_fort.bin
+  à la RACINE du Drive md5 0323029a… == labo .keys/ (INTACT, livré) ;
+  PHRASE-CONTROLE-COFFRE.txt + LISEZMOI-PHRASE-CONTROLE.txt présents ;
+  le kit porte l'OUTIL (coffre_fort.py), jamais le COFFRE (aucun
+  secret dans un kit)
+- DOCS CORRIGÉS : LISEZMOI-kit.txt NOTE (b) « OÙ EST LE COFFRE RÉEL ? »
+  (racine Drive, geste .keys\ du clone, chaîne CF1→CF2→CF3) ;
+  LISEZMOI-coffre-CF2.txt posture clone attaché (.keys\ DU CLONE —
+  CF1 — statut nomme le chemin)
+- DÉPLOIEMENT : commit de consignation → hook D130 → kit + miroir
+  Drive portent l'état SIGNÉ (signatures 20f40bc) et les docs corrigés
+
+Stage Summary:
+- (a) ACCOMPLIE et close des deux côtés (20f40bc, CODE 0) ; le coffre
+  réel nommé dans le kit ; (b) reste : CF1 → CF2 → CF3 guidé par les
+  LISEZMOI
+- Suite : rapport de migration attendu (bouton Envoyer le rapport)
