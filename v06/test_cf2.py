@@ -31,7 +31,10 @@ les critères de sortie D86 un par un (spec v06/I/CF2/README.md § 13) :
   T5  santé de la sentinelle : heart-beat frais en vie, MORT visible après
       décès (sante exit 1)
   X8  les coffres RÉELS ne sont pas touchés : md5 de .keys/coffre_fort.bin
-      inchangé, aucun .keys/coffre_cf2.bin créé
+      inchangé, aucun .keys/coffre_cf2.bin créé ; coffre réel ABSENT
+      (clone frais, kit du Drive) : l'absence est un état NOMMÉ qui doit
+      subsister — jamais un crash (le verdict CF2 à froid clone GitHub,
+      .keys/ n'y vit jamais)
 
 Usage : python3 v06/test_cf2.py
 """
@@ -551,21 +554,36 @@ def t5_sante():
 # X8 — les coffres réels ne sont JAMAIS touchés
 # ---------------------------------------------------------------------------
 
+def _md5_si_present(chemin):
+    """md5 du coffre réel, None si ABSENT : le coffre réel CF1 ne vit que
+    sur la machine du développeur (.keys/ est gitignore) — un clone frais
+    ou un kit du Drive n'en porte PAS. L'absence est un état NOMMÉ, jamais
+    un crash muet (leçon du verdict CF2 à froid, D117)."""
+    if not os.path.isfile(chemin):
+        return None
+    return hashlib.md5(open(chemin, "rb").read()).hexdigest()
+
+
 def x8_coffres_reels():
     print("X8 — coffres réels intacts")
     chemin_cf1 = os.path.join(RACINE, ".keys", "coffre_fort.bin")
-    md5_avant = hashlib.md5(open(chemin_cf1, "rb").read()).hexdigest()
+    md5_avant = _md5_si_present(chemin_cf1)
     yield_verdict = not os.path.exists(C.CHEMIN_CONTENEUR_DEFAUT)
     verifie("aucun-coffre-cf2-réel-créé", yield_verdict,
             f"{C.CHEMIN_CONTENEUR_DEFAUT} existe")
-    md5_apres = hashlib.md5(open(chemin_cf1, "rb").read()).hexdigest()
-    verifie("coffre-cf1-réel-inchangé", md5_avant == md5_apres)
+    md5_apres = _md5_si_present(chemin_cf1)
+    if md5_avant is None:
+        verifie("coffre-cf1-réel-absent-nomme-et-subistant",
+                md5_apres is None,
+                "le coffre réel CF1 était ABSENT (clone frais / kit) : la "
+                "suite n'en crée JAMAIS — l'absence doit subsister")
+    else:
+        verifie("coffre-cf1-réel-inchangé", md5_avant == md5_apres)
 
 
 def main() -> int:
-    empreinte_avant = hashlib.md5(
-        open(os.path.join(RACINE, ".keys", "coffre_fort.bin"), "rb")
-        .read()).hexdigest()
+    chemin_reel = os.path.join(RACINE, ".keys", "coffre_fort.bin")
+    empreinte_avant = _md5_si_present(chemin_reel)
     t1_shamir()
     t2_informationnel()
     t3_conteneur()
@@ -574,11 +592,14 @@ def main() -> int:
     f2_atomicite()
     t5_sante()
     x8_coffres_reels()
-    empreinte_apres = hashlib.md5(
-        open(os.path.join(RACINE, ".keys", "coffre_fort.bin"), "rb")
-        .read()).hexdigest()
-    verifie("md5-coffre-réel-pre-post-suite",
-            empreinte_avant == empreinte_apres)
+    empreinte_apres = _md5_si_present(chemin_reel)
+    if empreinte_avant is None:
+        verifie("md5-coffre-réel-absent-avant-et-après",
+                empreinte_apres is None,
+                "absent avant la suite, PRÉSENT après : la suite l'a créé !")
+    else:
+        verifie("md5-coffre-réel-pre-post-suite",
+                empreinte_avant == empreinte_apres)
     print(f"\n[test-cf2] FALSIFIABILITÉ : {len(PASSES)} PASS, "
           f"{len(ECHECS)} ÉCHEC(s)")
     if ECHECS:
