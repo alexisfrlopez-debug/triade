@@ -81,6 +81,14 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        réseau) ; clone de LABORATOIRE (origin nu local, AUCUN réseau
        réel) : réussite → dépôt ATTACHÉ + origin prouvé ; clone sans
        garde D111 → attachement REFUSÉ, clone conservé sur disque ;
+  T15  fusion D118 (une seule page) : le DOSSIER DE CÉRÉMONIE naît
+       HORS du dépôt (sœur du dépôt attaché, il suit le re-attachement),
+       les QUATRE chemins de travail (clé privée, clé publique,
+       a-signer, signatures) vivent dedans ; la COPIE de la remise vers
+       ce dossier est verte (dossier créé, contenu identique) et ses
+       refus sont NOMMÉS (source absente) ; les gestes du fil ne
+       référencent PLUS aucun « profil » (plus d'allers-retours par
+       l'accueil) et nomment le dossier de cérémonie ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -674,6 +682,98 @@ def t14_scenarios_clone(rep):
             gui.RACINE_DEPOT == racine_sauvee)
 
 
+def t15_fusion_d118(rep):
+    """T15 — D118 : UNE seule page de cérémonie. Le dossier de cérémonie
+    (clé + remises) naît HORS du dépôt, suit le re-attachement ; la copie
+    de la remise vers ce dossier est verte et ses refus nommés ; les
+    gestes du fil ne référencent plus aucun profil. Tout en laboratoire."""
+    print("T15 — D118 : fusion des profils, dossier de cérémonie, remise "
+          "à côté des clés")
+
+    # --- le dossier de cérémonie : HORS du dépôt, sœur, il suit --------
+    defaut = gui.dossier_ceremonie_defaut()
+    verifie("t15-dossier-hors-du-depot",
+            not defaut.startswith(os.path.abspath(gui.RACINE_DEPOT) + os.sep)
+            and os.path.dirname(os.path.abspath(defaut))
+            == os.path.dirname(os.path.abspath(gui.RACINE_DEPOT)),
+            defaut)
+    verifie("t15-dossier-nomme",
+            os.path.basename(defaut) == gui.NOM_DOSSIER_CEREMONIE)
+    # le dossier VIDE retombe sur le défaut (jamais d'invention ailleurs)
+    verifie("t15-chemins-dossier-vide-retombe-defaut",
+            gui.chemins_ceremonie("")["a_signer"]
+            == os.path.join(defaut, "a-signer.txt"))
+    chemins = gui.chemins_ceremonie(rep)
+    verifie("t15-quatre-chemins-sous-le-dossier",
+            chemins == {"privee": os.path.join(rep, "cle-I-privee.txt"),
+                        "publique": os.path.join(rep, "cle-publique-I.txt"),
+                        "a_signer": os.path.join(rep, "a-signer.txt"),
+                        "signatures": os.path.join(rep, "signatures-I.txt")},
+            str(chemins))
+    # le re-attachement déplace le défaut : sœur du NOUVEAU dépôt
+    racine_sauvee, source_sauvee = gui.RACINE_DEPOT, gui.SOURCE_DEPOT
+    autre = os.path.join(rep, "autre-depot")
+    os.makedirs(os.path.join(autre, "v06"), exist_ok=True)
+    try:
+        gui.definir_racine_depot(autre, "--depot")
+        verifie("t15-dossier-suit-le-re-attachement",
+                gui.dossier_ceremonie_defaut()
+                == os.path.join(rep, gui.NOM_DOSSIER_CEREMONIE),
+                gui.dossier_ceremonie_defaut())
+    finally:
+        gui.definir_racine_depot(racine_sauvee, source_sauvee)
+    verifie("t15-dossier-retabli-avec-le-depot",
+            gui.dossier_ceremonie_defaut() == defaut)
+
+    # --- la copie de la remise vers le dossier de cérémonie ------------
+    source = os.path.join(rep, "source-a-signer.txt")
+    empreinte = secrets.token_hex(32)
+    with open(source, "w", encoding="utf-8") as f:
+        f.write(f"m0/test ALPHA {empreinte}\nm4/test BETA {empreinte}\n")
+    cible_dir = os.path.join(rep, "sous-dossier-cree")
+    ok_c, texte_c = gui.copier_remise_vers_dossier(source, cible_dir)
+    cible = os.path.join(cible_dir, "a-signer.txt")
+    pareil = False
+    if os.path.isfile(cible):
+        with open(cible, "r", encoding="utf-8") as f:
+            pareil = f.read() == f"m0/test ALPHA {empreinte}\n" \
+                     f"m4/test BETA {empreinte}\n"
+    verifie("t15-copie-verte-dossier-cree-contenu-identique",
+            ok_c and pareil and "COPIÉE" in texte_c, texte_c)
+    verifie("t15-copie-source-intacte",
+            os.path.isfile(source))
+    ok_f, texte_f = gui.copier_remise_vers_dossier(
+        os.path.join(rep, "jamais-ecrit.txt"), cible_dir)
+    verifie("t15-copie-source-absente-refus-nomme",
+            not ok_f and "source absente" in texte_f, texte_f)
+    # dossier VIDE : retombe sur le défaut — attaché au LABO pour que la
+    # copie atterrit DANS le temporaire (aucun dossier réel touché)
+    try:
+        gui.definir_racine_depot(autre, "--depot")
+        ok_v, texte_v = gui.copier_remise_vers_dossier(source, "")
+        verifie("t15-copie-dossier-vide-retombe-defaut-sandboxe",
+                ok_v and os.path.isfile(
+                    os.path.join(rep, gui.NOM_DOSSIER_CEREMONIE,
+                                 "a-signer.txt")),
+                texte_v)
+    finally:
+        gui.definir_racine_depot(racine_sauvee, source_sauvee)
+
+    # --- les gestes du fil : plus aucun profil, le dossier nommé -------
+    verifie("t15-gestes-sans-profil",
+            all("profil" not in h.lower() for h in gui.FIL_HINTS.values()),
+            str(gui.FIL_HINTS))
+    verifie("t15-gestes-nomment-le-dossier-de-ceremonie",
+            "dossier de cérémonie" in gui.FIL_HINTS[1]
+            and "dossier de cérémonie" in gui.FIL_HINTS[3])
+    verifie("t15-geste-cle-hors-aller-retour",
+            "ci-contre" in gui.FIL_HINTS[2].lower())
+
+    # --- la version porte la fusion ------------------------------------
+    verifie("t15-version-d118", "D118" in gui.VERSION_GUI,
+            gui.VERSION_GUI)
+
+
 def _ecrire(chemin, texte):
     with open(chemin, "w", encoding="ascii") as f:
         f.write(texte)
@@ -1092,7 +1192,7 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111 · D112 · D117) — dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -1106,6 +1206,8 @@ def main() -> int:
         t10_chemins_coffre(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t14-") as rep:
         t14_scenarios_clone(rep)
+    with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t15-") as rep:
+        t15_fusion_d118(rep)
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

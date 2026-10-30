@@ -80,10 +80,36 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       destination non vide refusée NOMMÉ, URL ou destination commençant
       par « - » refusée : un argument git déguisé est une injection,
       git absent : code 127 nommé, jeton éventuel de l'URL MASQUÉ dans
-      journal, verdict et boîte noire) et « Attacher un clone
-      EXISTANT… » (garde D111 + preuve git/origin exigée) ; après un
-      clone réussi le dépôt est ATTACHÉ et les pages REBÂTIES (le profil
-      dépôt s'ouvre directement — le journal survit, discipline D112) ;
+      journal, verdict et boîte noire) et « Attacher un dépôt LOCAL…
+      (D118) » (garde D111 +, en scénario repo git, preuve git/origin
+      exigée) ; après un clone réussi le dépôt est ATTACHÉ et les pages
+      REBÂTIES (la page de cérémonie s'ouvre directement — le journal
+      survit, discipline D112) ;
+    - D118 — UNE SEULE PAGE DE CÉRÉMONIE : les profils « hors-ligne » et
+      « dépôt » ne font plus deux pages distinctes (l'aller-retour par
+      l'accueil fatiguait le terrain) — la clé I (générer / signer /
+      vérifier, stdlib pure), le sceau I (fil + preparer + deposer + git)
+      et le coffre CF2 vivent dans le MÊME cahier d'onglets ; les onglets
+      du dépôt n'apparaissent que si un dépôt triade est attaché (la
+      copie « fichier seul sur clef USB » reste hors-ligne pure, c'est
+      voulu) ; le bouton d'attachement est UNIQUE (« Attacher le dépôt
+      local… » — l'ex-« attacher un clone existant » et l'ex-« choisir le
+      dossier du dépôt » avaient la même fonction : désigner un dossier
+      local et l'attacher ; seule la PREUVE diffère, et le SCÉNARIO la
+      décide : repo git → rev-parse + origin, dossier local → garde
+      v06/coffre_cf2.py seule) ;
+    - D118 — DOSSIER DE CÉRÉMONIE : la clé privée, la clé publique,
+      a-signer.txt et signatures-I.txt naissent PAR DÉFAUT dans un même
+      dossier HORS du dépôt (sœur du dépôt attaché : <parent du dépôt>/
+      ceremonie-triade, choisissable dans la fenêtre) — la remise « à
+      signer » vit À CÔTÉ des clés (la demande du terrain : ne plus la
+      chercher) ; « Préparer a-signer.txt » écrit dans le dépôt (le CLI
+      reste la vérité) PUIS COPIE la remise fraîche dans ce dossier et
+      pré-remplit le champ « Remise à signer » ;
+    - D118 — LANCEURS DU DÉPÔT : lancer_ceremonie.sh / .bat vivent
+      DÉSORMAIS à la racine du dépôt git (un clone frais les porte : plus
+      besoin du kit du Drive pour lancer le GUI) — ils cherchent
+      v06/ceremonie_gui.py d'abord, puis toute copie posée à côté ;
 
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
@@ -106,14 +132,15 @@ BORNES HONNÊTES : le profil hors-ligne n'exige RIEN et n'installe RIEN
   sa santé se contrôle par le bouton « Santé » (heart-beat).
 
 Modes : (aucun) → GUI ; --selftest → batterie embarquée headless ;
-  --profil hors-ligne|depot → saute l'écran d'accueil ;
+  --profil hors-ligne|depot → compat D117 (les DEUX ouvrent l'unique
+  page de cérémonie D118) ;
   --depot CHEMIN → attache le GUI à ce dépôt triade (D111 : le GUI
   peut vivre N'IMPORTE OÙ — clef USB, kit du Drive, bureau — tant que
   CHEMIN désigne la racine d'un clone du dépôt : v06/coffre_cf2.py y
-  est vérifié AVANT d'activer le profil dépôt). D112 : le même
-  attachement se fait AUSSI depuis la fenêtre (accueil, bouton
-  « Choisir le dossier du dépôt… ») — la ligne de commande devient un
-  RACCOURCI, plus une obligation.
+  est vérifié AVANT d'activer les onglets du dépôt). D112/D118 : le même
+  attachement se fait AUSSI depuis la fenêtre (accueil ou page de
+  cérémonie, bouton « Attacher le dépôt local… ») — la ligne de commande
+  devient un RACCOURCI, plus une obligation.
 """
 
 import argparse
@@ -135,7 +162,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.7 (D117)"   # scénarios dossier local / repo git + clonage
+VERSION_GUI = "ceremonie-GUI v1.8 (D118)"   # page unique + dossier de cérémonie + attachement unique
 
 
 # ===========================================================================
@@ -616,6 +643,7 @@ def hl_verifier(chemin_a_signer, chemin_signatures, chemin_publique):
 
 import subprocess  # noqa: E402
 import tempfile   # noqa: E402
+import shutil    # noqa: E402  (D118 : copie de la remise vers le dossier de cérémonie)
 
 def _racine_depot_defaut():
     """Le dépôt par défaut : le PARENT du dossier qui contient ce fichier
@@ -663,6 +691,76 @@ def definir_racine_depot(racine, source):
     global RACINE_DEPOT, SOURCE_DEPOT
     RACINE_DEPOT = racine
     SOURCE_DEPOT = source
+
+
+# ---------------------------------------------------------------------------
+# D118 — LE DOSSIER DE CÉRÉMONIE : la clé et la remise « à signer » vivent
+# au MÊME endroit, HORS du dépôt (la demande du terrain : après « Préparer
+# a-signer.txt », la remise se cherchait au fond de v06/sceau-I/ ; les clés
+# s'écrivaient dans le dossier de lancement — parfois DANS le dépôt). Un
+# seul dossier, sœur du dépôt, porte les quatre fichiers de travail.
+# ---------------------------------------------------------------------------
+NOM_DOSSIER_CEREMONIE = "ceremonie-triade"
+
+
+def dossier_ceremonie_defaut():
+    """D118 — le dossier de cérémonie PAR DÉFAUT : HORS du dépôt (la clé
+    privée et les remises de travail n'entrent JAMAIS dans le dépôt),
+    SŒUR du dépôt attaché : <parent du dépôt>/ceremonie-triade. À côté du
+    clone, visible dès l'ouverture du parent — l'utilisateur ne cherche
+    plus. Si le parent n'est pas déterminable (dépôt à la racine d'un
+    disque), repli NOMMÉ sur la maison de l'utilisateur."""
+    parent = os.path.dirname(os.path.abspath(RACINE_DEPOT))
+    if parent in ("", os.sep, os.path.abspath(RACINE_DEPOT)):
+        parent = os.path.expanduser("~")
+    return os.path.join(parent, NOM_DOSSIER_CEREMONIE)
+
+
+def chemins_ceremonie(dossier=None):
+    """D118 — les QUATRE chemins de travail du dossier de cérémonie : clé
+    privée, clé publique, remise à signer, signatures. La clé et la
+    remise vivent au MÊME endroit (c'est la demande) ; le dossier vide
+    retombe sur le défaut — jamais d'invention silencieuse ailleurs."""
+    base = dossier if (dossier and str(dossier).strip()) \
+        else dossier_ceremonie_defaut()
+    return {"privee": os.path.join(base, "cle-I-privee.txt"),
+            "publique": os.path.join(base, "cle-publique-I.txt"),
+            "a_signer": os.path.join(base, "a-signer.txt"),
+            "signatures": os.path.join(base, "signatures-I.txt")}
+
+
+def copier_remise_vers_dossier(chemin_source, dossier, emit=None):
+    """D118 — copie la remise a-signer.txt FRAÎCHEMENT préparée vers le
+    dossier de cérémonie (celui des clés) : l'utilisateur la trouve à
+    côté de ses clés, sans fouiller v06/sceau-I/. Le fichier du dépôt
+    reste LA vérité de la cérémonie (le CLI l'a écrit) — la copie est un
+    TRANSPORT, comme la clef USB du protocole. Retour (ok, texte) ;
+    échecs NOMMÉS (source absente, dossier impossible à créer)."""
+    source = str(chemin_source or "").strip()
+    if not os.path.isfile(source):
+        return False, (f"copie de la remise : source absente — {source} "
+                       "(le CLI preparer devait l'écrire ; ce qu'il n'a "
+                       "pas écrit n'existe pas, rien n'est copié)")
+    base = str(dossier or "").strip() or dossier_ceremonie_defaut()
+    try:
+        os.makedirs(base, exist_ok=True)
+    except OSError as exc:
+        return False, (f"copie de la remise : dossier de cérémonie "
+                       f"IMPOSSIBLE à créer — {base} ({exc}) ; la remise "
+                       "reste dans le dépôt, rien n'est perdu")
+    destination = os.path.join(base, "a-signer.txt")
+    try:
+        shutil.copyfile(source, destination)
+    except OSError as exc:
+        return False, (f"copie de la remise : écriture refusée — "
+                       f"{destination} ({exc}) ; la remise reste dans le "
+                       "dépôt, rien n'est perdu")
+    if emit:
+        emit(f"[cérémonie] remise copiée vers le dossier de cérémonie : "
+             f"{destination} (à côté des clés, D118)")
+    return True, (f"[cérémonie] remise COPIÉE dans le dossier de cérémonie : "
+                  f"{destination} — à côté des clés (D118), le champ « Remise "
+                  "à signer » est pré-rempli")
 
 # Journalisation de la sentinelle démarrée en détaché (append, jamais le
 # journal des PV qui appartient au coffre) :
@@ -948,16 +1046,19 @@ FIL_ETAPES = (
 )
 
 FIL_HINTS = {
-    1: "Bouton « Préparer a-signer.txt » ci-dessous (onglet Sceau de "
-       "l'Intention).",
-    2: "Bouton « ← Accueil » (bandeau, toujours visible) → profil "
-       "hors-ligne → onglet « 1 · Générer la clé ».",
-    3: "Profil hors-ligne → onglet « 2 · Signer une remise » (a-signer.txt "
-       "y est transporté, la clé n'en part jamais).",
-    4: "Champ « Remise à déposer » ci-dessous + bouton « Déposer la "
-       "remise (acte souverain) ».",
-    5: "Bouton « Pousser v06/sceau-I sur git… » ci-dessous (commit + "
-       "pull --rebase + push).",
+    1: "Bouton « Préparer a-signer.txt » (onglet Sceau de l'Intention) — la "
+       "remise est COPIÉE dans le dossier de cérémonie, à côté des clés "
+       "(D118), et le champ « Remise à signer » est pré-rempli.",
+    2: "Onglet « 1 · Générer la clé » ci-contre (D118 : plus d'aller-retour "
+       "par l'accueil) — les fichiers naissent dans le dossier de "
+       "cérémonie, hors du dépôt.",
+    3: "Onglet « 2 · Signer une remise » ci-contre — a-signer.txt y attend "
+       "DÉJÀ dans le dossier de cérémonie (pré-rempli), la clé n'en part "
+       "jamais.",
+    4: "Onglet Sceau de l'Intention : champ « Remise à déposer » + bouton "
+       "« Déposer la remise (acte souverain) ».",
+    5: "Onglet Sceau de l'Intention : bouton « Pousser v06/sceau-I sur "
+       "git… » (commit + pull --rebase + push).",
 }
 
 
@@ -1750,15 +1851,16 @@ class Application:
         ENREGISTREUR.entete(self.racine)
         self.depot_pret = depot_disponible()
         self.scenario = None            # D117 : aucun scénario choisi AVANT TOUT
+        self._pre_remplissage_a_signer = None   # D118 : fil ouvrier → fil tkinter
         self._batir_accueil()
-        self._batir_hors_ligne()
-        self._batir_depot()
+        self._batir_ceremonie()
         self._racine_pages = RACINE_DEPOT   # D117 : détecte un attachement post-clone
         self.executeur.pompe()
         self._autotest_demarrage()
-        cible = {"hors-ligne": "hors-ligne", "depot": "depot"}.get(profil)
-        self.montrer(cible if (cible and (cible != "depot" or self.depot_pret))
-                     else "accueil")
+        # D118 : --profil hors-ligne|depot (compat D117) ouvrent la MÊME
+        # page unifiée — les deux profils n'en font plus qu'une.
+        cible = {"hors-ligne": "ceremonie", "depot": "ceremonie"}.get(profil)
+        self.montrer(cible if cible else "accueil")
 
     # --- squelette ---------------------------------------------------------
     def _batir_style(self):
@@ -1811,12 +1913,13 @@ class Application:
             page.pack_forget()
         self.pages[nom].pack(fill="both", expand=True)
         # D116 — le bandeau porte le retour à l'accueil (visible PARTOUT),
-        # la fenêtre prend la taille de la page affichée, et l'entrée du
-        # profil dépôt ré-évalue le fil de cérémonie.
+        # la fenêtre prend la taille de la page affichée, et l'entrée de la
+        # page de cérémonie ré-évalue le fil (D118 : elle porte le sceau
+        # dès qu'un dépôt est attaché — sinon il n'y a rien à évaluer).
         self.bouton_accueil.configure(
             state="disabled" if nom == "accueil" else "normal")
         self._ajuster_taille_fenetre()
-        if nom == "depot":
+        if nom == "ceremonie" and self.depot_pret:
             self._rafraichir_fil()
 
     def verdict(self, ok, texte):
@@ -2103,34 +2206,36 @@ class Application:
                   justify="left").pack(anchor="w", pady=(2, 4))
 
     # ------------------------------------------------------------------
-    # PAGE ACCUEIL — choix du profil
+    # PAGE ACCUEIL — le scénario AVANT TOUT (D117), puis la cérémonie (D118)
     # ------------------------------------------------------------------
     def _batir_accueil(self):
         page = ttk.Frame(self.corps)
         self.pages["accueil"] = page
-        ttk.Label(page, text="Quelle machine êtes-vous ?",
+        ttk.Label(page, text="Le maître de cérémonie vous attend",
                   style="Titre.TLabel").pack(anchor="w", pady=(6, 2))
         self._note(page, "La clé privée de l'Intention naît et signe "
                          "HORS-LIGNE ; le dépôt connecté vérifie et installe "
-                         "les remises. Les deux profils partagent ce fichier "
-                         "mais jamais leurs secrets.")
+                         "les remises. D118 : les deux moitiés vivent dans "
+                         "UNE SEULE page — plus d'allers-retours par ici — "
+                         "mais elles ne partagent jamais leurs secrets.")
 
         # --- D117 : LE SCÉNARIO AVANT TOUT -------------------------------
         # Deux scénarios déterminent les étapes affichées par le fil de
-        # cérémonie (profil dépôt) : DOSSIER LOCAL (cinq étapes — le dépôt
-        # vit déjà ici, on l'attache) et REPO GIT (six étapes — « Cloner le
-        # dépôt » en tête, prouvé lecture seule ; bouton de clonage).
+        # cérémonie (page de cérémonie) : DOSSIER LOCAL (cinq étapes — le
+        # dépôt vit déjà ici, on l'attache) et REPO GIT (six étapes —
+        # « Cloner le dépôt » en tête, prouvé lecture seule ; bouton de
+        # clonage).
         scen = self._section(
             page, "Scénario de cérémonie — AVANT TOUT, comment le dépôt "
                   "arrive-t-il ici ? (D117)")
         scen.pack(fill="x", pady=6)
         self.cadre_scen_section = scen   # D117 : le panneau s'y re-bâtit
         self._note(scen, "Le scénario détermine les étapes affichées par le "
-                         "fil de cérémonie du profil dépôt : DOSSIER LOCAL → "
-                         "cinq étapes (le dépôt vit déjà sur cette machine) ; "
-                         "REPO GIT → six étapes, « Cloner le dépôt » en tête "
-                         "(le dépôt vient d'un distant — GitHub ou autre). "
-                         "Changer de scénario se fait ici, à tout moment.")
+                         "fil de cérémonie : DOSSIER LOCAL → cinq étapes (le "
+                         "dépôt vit déjà sur cette machine) ; REPO GIT → six "
+                         "étapes, « Cloner le dépôt » en tête (le dépôt vient "
+                         "d'un distant — GitHub ou autre). Changer de "
+                         "scénario se fait ici, à tout moment.")
         barre_sc = ttk.Frame(scen)
         barre_sc.pack(fill="x", pady=2)
         self.bouton_scen_dossier = ttk.Button(
@@ -2148,48 +2253,51 @@ class Application:
         self.cadre_scen_panels.pack(fill="x", pady=(4, 0))
         self._montrer_panels_scenario()
 
-        hors_ligne = self._section(page, "Machine HORS-LIGNE — cérémonie de la clé I (D87)")
-        hors_ligne.pack(fill="x", pady=6)
-        self._note(hors_ligne, "Générer la clé (première fois), signer les "
-                               "remises d'intention, re-vérifier une remise. "
-                               "Python standard SEUL : rien à installer, "
-                               "aucun réseau, la clé ne quitte jamais cette "
-                               "machine.")
-        ttk.Button(hors_ligne, text="Ouvrir le profil hors-ligne",
-                   command=lambda: self.montrer("hors-ligne")).pack(anchor="w",
-                                                                    pady=4)
-        depot = self._section(page, "Machine du DÉPÔT (connectée) — sceau I + coffre CF2")
-        depot.pack(fill="x", pady=6)
-        self._note(depot, "Préparer/signer les arbres d'intention, déposer les "
-                          "remises ; migrer le coffre CF1 vers CF2, exporter "
-                          "les fragments, éditer la liste blanche, démarrer "
-                          "la sentinelle, relever ou brûler.")
-        self.bouton_depot = ttk.Button(
-            depot, text="Ouvrir le profil dépôt",
-            command=self._ouvrir_depot)
-        self.bouton_depot.pack(anchor="w", pady=4)
+        # --- D118 : LA CÉRÉMONIE, UNE SEULE PAGE -------------------------
+        # L'ex-profil « hors-ligne » (clé I) et l'ex-profil « dépôt »
+        # (sceau + coffre) ne font plus QU'UNE page : l'aller-retour par
+        # l'accueil, dénoncé par le terrain, disparaît. L'attachement du
+        # dépôt aussi devient UN seul bouton : l'ex-« attacher un clone
+        # existant » et l'ex-« choisir le dossier du dépôt » désignaient
+        # le MÊME geste — seul le SCÉNARIO décide de la preuve exigée.
+        cero = self._section(
+            page, "La cérémonie — une seule page (D118) : clé I, sceau, "
+                  "coffre")
+        cero.pack(fill="x", pady=6)
+        self._note(cero, "Tout y vit : générer la clé, signer et vérifier "
+                         "les remises (onglets 1-3 — Python standard seul, "
+                         "aucun réseau, la clé ne quitte jamais la machine), "
+                         "puis le fil du sceau I, le dépôt des remises, git "
+                         "et le coffre CF2 dès qu'un dépôt triade est "
+                         "attaché. Le dossier de cérémonie (clé + remises, "
+                         "HORS du dépôt) se règle dans la page elle-même.")
+        ttk.Button(cero, text="Ouvrir la cérémonie…",
+                   command=self._ouvrir_ceremonie).pack(anchor="w", pady=4)
         if self.depot_pret:
-            ttk.Label(depot, style="Sous.TLabel", wraplength=880,
+            ttk.Label(cero, style="Sous.TLabel", wraplength=880,
                       justify="left",
                       text=(f"dépôt attaché : {RACINE_DEPOT} "
-                            f"(source : {SOURCE_DEPOT})")).pack(anchor="w")
+                            f"(source : {SOURCE_DEPOT}) — onglets sceau I "
+                            "et coffre CF2 actifs")).pack(anchor="w")
         else:
-            self.bouton_depot.configure(state="disabled")
-            ttk.Label(depot, style="Sous.TLabel", foreground="#9a6700",
+            ttk.Label(cero, style="Sous.TLabel", foreground="#9a6700",
                       wraplength=880, justify="left",
-                      text=(f"(indisponible : v06/coffre_cf2.py introuvable "
-                            f"dans {RACINE_DEPOT} — source : "
-                            f"{SOURCE_DEPOT}). Le GUI peut vivre n'importe "
-                            "où : CHOISISSEZ le dossier du dépôt par le "
-                            "bouton ci-dessous (D112 — plus besoin de "
+                      text=(f"(dépôt NON attaché : v06/coffre_cf2.py "
+                            f"introuvable dans {RACINE_DEPOT} — source : "
+                            f"{SOURCE_DEPOT}). Les onglets clé I "
+                            "(générer / signer / vérifier) restent pleinement "
+                            "actifs ; sceau et coffre apparaîtront dès "
+                            "l'attachement. Le GUI peut vivre n'importe où : "
+                            "ATTACHEZ le dossier du dépôt par le bouton "
+                            "ci-dessous (D112/D118 — plus besoin de "
                             "relancer), ou --depot CHEMIN / la variable "
                             "TRIADE_DEPOT au lancement, ou téléchargez le "
                             "dossier /Cérémonie du Drive ENTIÈREMENT (le "
                             "sous-dossier v06/ fait du kit un mini-dépôt). "
-                            "Copié seul sur une clef USB, il ne donne QUE le "
-                            "profil hors-ligne — c'est voulu)")
+                            "Copié seul sur une clef USB, il ne donne QUE "
+                            "les onglets hors-ligne — c'est voulu)")
             ).pack(anchor="w")
-        ttk.Button(depot, text="Choisir le dossier du dépôt…",
+        ttk.Button(cero, text="Attacher le dépôt local…",
                    command=self._sur_choisir_depot).pack(anchor="w",
                                                           pady=(4, 2))
         ttk.Button(page, text="← Retour à l'accueil",
@@ -2202,8 +2310,8 @@ class Application:
     def _choisir_scenario(self, scenario):
         """Retient le scénario (consigné au journal et à la boîte noire —
         un choix de cérémonie n'est pas un secret) et rebâtit son panneau.
-        Le fil de cérémonie suit AU PROCHAIN RAFRAÎCHISSEMENT (montrer le
-        profil dépôt, ré-évaluer, fin d'action) : la preuve reste la
+        Le fil de cérémonie suit AU PROCHAIN RAFRAÎCHISSEMENT (montrer la
+        page de cérémonie, ré-évaluer, fin d'action) : la preuve reste la
         vérité, l'affichage la suit."""
         if scenario not in SCENARIOS:
             return
@@ -2219,8 +2327,13 @@ class Application:
 
     def _montrer_panels_scenario(self):
         """Le panneau du scénario courant : dossier local → l'attache
-        D112 ; repo git → le CLONAGE (URL + parent + nom) et l'attache
-        d'un clone existant ; aucun → l'invitation à choisir AVANT TOUT."""
+        D112 ; repo git → le CLONAGE (URL + parent + nom) ET l'attache
+        d'un dépôt déjà présent ; aucun → l'invitation à choisir AVANT
+        TOUT. D118 : UN SEUL bouton d'attachement (« Attacher le dépôt
+        local… ») — l'ex-« attacher un clone EXISTANT… » et l'ex-« choisir
+        le dossier du dépôt… » désignaient le même geste (désigner un
+        dossier local, l'attacher) ; seule la PREUVE diffère, et le
+        SCÉNARIO la décide (repo git → rev-parse + origin exigés)."""
         panneau = getattr(self, "cadre_scen_panels", None)
         if panneau is not None:
             panneau.destroy()
@@ -2233,14 +2346,17 @@ class Application:
                      "(« Cloner le dépôt » en tête, prouvé par git rev-parse "
                      "+ origin). Le jeton éventuel de l'URL est MASQUÉ dans "
                      "le journal et la boîte noire.")
-            self._note(panneau, "Le bouton ci-dessous exécute git clone "
-                                "(réseau) vers le dossier parent + nom choisis "
-                                "— la destination doit être LIBRE (un dossier "
-                                "non vide est un refus NOMMÉ, rien n'y est "
-                                "touché) ; après un clone prouvé, le dépôt est "
-                                "ATTACHÉ et le profil dépôt s'ouvre. Un dépôt "
-                                "privé peut demander votre authentification "
-                                "GitHub.")
+            self._note(panneau, "Le bouton « Cloner en local… » exécute git "
+                                "clone (réseau) vers le dossier parent + nom "
+                                "choisis — la destination doit être LIBRE (un "
+                                "dossier non vide est un refus NOMMÉ, rien n'y "
+                                "est touché) ; après un clone prouvé, le dépôt "
+                                "est ATTACHÉ et la page de cérémonie s'ouvre. "
+                                "Un dépôt privé peut demander votre "
+                                "authentification GitHub. Déjà cloné ailleurs ? "
+                                "« Attacher le dépôt local… » (même bouton que "
+                                "partout, D118) l'attache — la preuve "
+                                "git/origin est exigée dans CE scénario.")
             cadre_u = ttk.Frame(panneau)
             cadre_u.pack(fill="x", pady=2)
             ttk.Label(cadre_u, text="URL du dépôt git :", width=26,
@@ -2282,14 +2398,20 @@ class Application:
             barre_clone.pack(fill="x", pady=(4, 0))
             ttk.Button(barre_clone, text="Cloner en local…",
                        command=self._sur_clone).pack(side="left")
-            ttk.Button(barre_clone, text="Attacher un clone EXISTANT…",
-                       command=lambda: self._sur_choisir_depot(
-                           exige_clone=True)).pack(side="left", padx=6)
+            ttk.Button(barre_clone, text="Attacher le dépôt local…",
+                       command=self._sur_choisir_depot).pack(side="left",
+                                                              padx=6)
         elif self.scenario == SCENARIO_DOSSIER:
             self.label_scenario.configure(
                 text="Scénario retenu : DOSSIER LOCAL — fil de CINQ étapes "
                      "(le dépôt vit déjà sur cette machine, on l'attache).")
-            ttk.Button(panneau, text="Choisir le dossier du dépôt…",
+            self._note(panneau, "Le dépôt triade est déjà sur cette machine "
+                                "(un clone, le kit du Drive complet, une "
+                                "copie) : désignez sa racine — garde "
+                                "v06/coffre_cf2.py, aucune preuve git "
+                                "exigée dans CE scénario (D118 : même bouton "
+                                "que partout, la preuve suit le scénario).")
+            ttk.Button(panneau, text="Attacher le dépôt local…",
                        command=self._sur_choisir_depot).pack(anchor="w",
                                                             pady=2)
         else:
@@ -2359,17 +2481,20 @@ class Application:
         self.action("Git — cloner le dépôt", cloner_et_attacher, url,
                     destination)
 
-    def _sur_choisir_depot(self, exige_clone=False):
-        """D112/D117 — le dossier du dépôt se choisit DANS la fenêtre. La
-        garde D111 est inchangée : v06/coffre_cf2.py doit y vivre (échec
-        NOMMÉ, aucun attachement partiel). EXIGE_CLONE (scénario repo git,
-        « Attacher un clone EXISTANT… ») ajoute la preuve git : le dossier
-        doit ÊTRE la racine d'un clone AVEC origin (refus nommé sinon —
-        le fil de ce scénario l'exigerait de toute façon). Le
-        re-attachement REBÂTIT les pages : config, coffre CF1 et
-        disponibilité suivent le nouveau dépôt."""
+    def _sur_choisir_depot(self):
+        """D112/D118 — UN SEUL bouton (« Attacher le dépôt local… ») :
+        cloner ailleurs puis revenir, ou dépôt déjà posé — même geste,
+        désigner la racine d'un dossier triade. La garde D111 est
+        inchangée : v06/coffre_cf2.py doit y vivre (échec NOMMÉ, aucun
+        attachement partiel). La PREUVE complémentaire suit le SCÉNARIO
+        (D118) : repo git → le dossier doit ÊTRE la racine d'un clone
+        AVEC origin (le fil de ce scénario le prouverait à chaque étape —
+        refus nommé, avec la parade : basculer en DOSSIER LOCAL) ;
+        dossier local → garde seule, attachement direct. Le
+        re-attachement REBÂTIT les pages : config, coffre CF1, dossier
+        de cérémonie et disponibilité suivent le nouveau dépôt."""
         if self.executeur.occupe:
-            self._dialogue("showinfo", 
+            self._dialogue("showinfo",
                 "Cérémonie en cours",
                 "Attendez le verdict de l'action en cours avant de changer "
                 "de dépôt (les CLI lancés lisent le dépôt à leur départ).")
@@ -2383,22 +2508,24 @@ class Application:
             return                      # annulé : rien ne bouge
         candidat = os.path.abspath(chemin)
         if not os.path.isfile(os.path.join(candidat, "v06", "coffre_cf2.py")):
-            self._dialogue("showerror", 
+            self._dialogue("showerror",
                 "Pas un dépôt triade complet",
                 f"v06/coffre_cf2.py introuvable dans :\n  {candidat}\n\n"
                 "Le dossier doit être la RACINE d'un clone du dépôt triade "
                 "(celui qui contient v06/). Refus nommé, attachement "
-                "inchangé (fail-closed) : le profil dépôt reste ce qu'il "
+                "inchangé (fail-closed) : la cérémonie reste ce qu'elle "
                 "était.")
             return
-        if exige_clone:
+        if self.scenario == SCENARIO_GIT:
             faite, detail = preuve_clone(candidat)
             if not faite:
                 self._dialogue("showerror",
                     "Pas un CLONE (scénario repo git)",
                     f"{detail}\n\nLe scénario REPO GIT exige la racine d'un "
                     "dépôt git AVEC origin (le fil de ce scénario le prouve "
-                    "à chaque étape). Refus nommé, attachement inchangé.")
+                    "à chaque étape). Refus nommé, attachement inchangé — "
+                    "si ce dossier est un dépôt LOCAL (pas un clone), "
+                    "basculez le scénario sur DOSSIER LOCAL puis réessayez.")
                 return
         definir_racine_depot(candidat, "dossier choisi (GUI)")
         self.journal.ajoute(
@@ -2407,13 +2534,14 @@ class Application:
         self._rebâtir_pages()
 
     def _rebâtir_pages(self, cible="accueil"):
-        """Détruit et reconstruit les trois pages : tout ce qui capture le
-        dépôt À LA CONSTRUCTION (config CF2, coffre CF1, disponibilité,
-        textes de l'accueil, panneau du scénario D117) suit le
-        re-attachement. Le journal, l'exécuteur et la barre de verdict
-        vivant HORS des pages, ils survivent — l'historique de cérémonie
-        n'est jamais effacé par un changement de dépôt. D117 : CIBLE
-        permet d'ouvrir DIRECTEMENT le profil dépôt après un clone (la
+        """Détruit et reconstruit les DEUX pages (accueil + cérémonie) :
+        tout ce qui capture le dépôt À LA CONSTRUCTION (config CF2,
+        coffre CF1, dossier de cérémonie, disponibilité, textes de
+        l'accueil, panneau du scénario D117) suit le re-attachement. Le
+        journal, l'exécuteur et la barre de verdict vivant HORS des
+        pages, ils survivent — l'historique de cérémonie n'est jamais
+        effacé par un changement de dépôt. D117/D118 : CIBLE permet
+        d'ouvrir DIRECTEMENT la page de cérémonie après un clone (la
         cérémonie commence) ; le marqueur _racine_pages dit au
         _sur_fin_action quand un attachement a eu lieu HORS des pages."""
         for page in self.pages.values():
@@ -2421,20 +2549,101 @@ class Application:
         self.pages = {}
         self.depot_pret = depot_disponible()
         self._batir_accueil()
-        self._batir_hors_ligne()
-        self._batir_depot()
+        self._batir_ceremonie()
         self._racine_pages = RACINE_DEPOT
-        self.montrer(cible if (cible == "depot" and self.depot_pret)
+        self.montrer(cible if (cible == "ceremonie" and self.depot_pret)
                      else "accueil")
 
     # ------------------------------------------------------------------
-    # PAGE HORS-LIGNE — clé I : générer / signer / vérifier
+    # PAGE CÉRÉMONIE (D118) — UNE page : clé I + sceau + coffre.
+    # L'ex-page « hors-ligne » (clé I) et l'ex-page « dépôt » (sceau +
+    # coffre) n'en font plus qu'une : plus d'aller-retour par l'accueil.
     # ------------------------------------------------------------------
-    def _batir_hors_ligne(self):
+    def _batir_ceremonie(self):
+        import functools
+        self._functools = functools
         page = ttk.Frame(self.corps)
-        self.pages["hors-ligne"] = page
+        self.pages["ceremonie"] = page
+        ttk.Label(page, text="La cérémonie, de bout en bout (D118)",
+                  style="Titre.TLabel").pack(anchor="w", pady=(6, 2))
+        self._note(page, "La clé I naît et signe HORS-LIGNE ; le dépôt "
+                         "connecté vérifie et installe les remises — les "
+                         "deux moitiés vivent ICI, dans le même cahier "
+                         "d'onglets, sans jamais partager leurs secrets. "
+                         "Les onglets du dépôt n'apparaissent qu'une fois "
+                         "un dépôt triade attaché ( bandeau ci-dessous si "
+                         "ce n'est pas le cas).")
+
+        # --- D118 : LE DOSSIER DE CÉRÉMONIE ------------------------------
+        # La demande du terrain : la clé et la remise « à signer » au MÊME
+        # endroit, HORS du dépôt par défaut — la remise préparée ne se
+        # cherche plus au fond de v06/sceau-I/. Sœur du dépôt attaché.
+        zone = self._section(
+            page, "Dossier de cérémonie — la clé et les remises vivent "
+                  "HORS du dépôt (D118)")
+        zone.pack(fill="x", pady=(4, 2))
+        auto = chemins_ceremonie(dossier_ceremonie_defaut())
+        self._chemins_auto = dict(auto)
+        self.var_dossier_ceremonie = tk.StringVar(
+            value=dossier_ceremonie_defaut())
+        cadre_d = ttk.Frame(zone)
+        cadre_d.pack(fill="x", pady=2)
+        ttk.Label(cadre_d, text="Dossier de cérémonie :", width=26,
+                  anchor="w").pack(side="left")
+        ttk.Entry(cadre_d, textvariable=self.var_dossier_ceremonie).pack(
+            side="left", fill="x", expand=True, padx=(0, 6))
+
+        def choisir_dossier_ceremonie():
+            chemin = filedialog.askdirectory(
+                title="Dossier de cérémonie (clé + remises — hors du dépôt)",
+                initialdir=self.var_dossier_ceremonie.get()
+                if os.path.isdir(self.var_dossier_ceremonie.get()) else
+                os.path.dirname(RACINE_DEPOT)
+                if os.path.isdir(os.path.dirname(RACINE_DEPOT)) else
+                os.path.expanduser("~"))
+            if chemin:
+                self.var_dossier_ceremonie.set(chemin)
+
+        ttk.Button(cadre_d, text="Parcourir…", width=11,
+                   command=choisir_dossier_ceremonie).pack(side="left")
+        self.label_etat_dossier = ttk.Label(zone, style="Sous.TLabel",
+                                            wraplength=880, justify="left")
+        self.label_etat_dossier.pack(anchor="w")
+        self.var_dossier_ceremonie.trace_add(
+            "write", self._maj_chemins_ceremonie)
+        self._note(zone, "La clé privée, la clé publique, a-signer.txt et "
+                         "signatures-I.txt y naissent PAR DÉFAUT — la remise "
+                         "« à signer » vit À CÔTÉ des clés, vous ne la "
+                         "cherchez plus : « Préparer a-signer.txt » (onglet "
+                         "Sceau) COPIE la remise fraîche dans ce dossier. Par "
+                         "défaut : sœur du dépôt attaché, donc HORS du dépôt "
+                         "— la clé privée n'y entre JAMAIS. Changer le "
+                         "dossier suit les champs NON retapés à la main "
+                         "(même loi que le nom du clone).")
+
+        # --- bandeau dépôt : l'état du dépôt attaché ----------------------
+        if not self.depot_pret:
+            pas_depot = self._section(
+                page, "Dépôt triade — NON attaché (les onglets sceau et "
+                      "coffre attendent)")
+            pas_depot.pack(fill="x", pady=(4, 2))
+            self._note(pas_depot,
+                       f"v06/coffre_cf2.py introuvable dans {RACINE_DEPOT} "
+                       f"(source : {SOURCE_DEPOT}). Les onglets 1-3 (clé I) "
+                       "sont pleinement actifs — Python standard seul. Pour "
+                       "le sceau I, git et le coffre CF2 : ATTACHEZ le "
+                       "dossier du dépôt (bouton ci-dessous), ou relancez "
+                       "avec --depot CHEMIN / la variable TRIADE_DEPOT "
+                       "désignant la racine d'un clone du dépôt. Les onglets "
+                       "apparaîtront à l'attachement, sans relancer.",
+                       couleur="#9a6700")
+            ttk.Button(pas_depot, text="Attacher le dépôt local…",
+                       command=self._sur_choisir_depot).pack(anchor="w",
+                                                              pady=4)
+
         cahier = ttk.Notebook(page)
         cahier.pack(fill="both", expand=True, pady=4)
+        self.cahier_ceremonie = cahier   # D118 : les onglets dépôt s'y ajoutent
 
         # --- onglet générer ------------------------------------------------
         generer = ttk.Frame(cahier, padding=8)
@@ -2442,13 +2651,15 @@ class Application:
         self._note(generer, "La clé I signera TOUTE évolution future de "
                             "l'intention. Elle naît ici, hors ligne, et ne "
                             "doit jamais quitter cette machine : le fichier "
-                            "est la remise, le papier est la garde.")
+                            "est la remise, le papier est la garde. D118 : les "
+                            "fichiers naissent dans le DOSSIER DE CÉRÉMONIE "
+                            "(ci-dessus), hors du dépôt.")
         self.var_hl_privee = self._ligne_fichier(
             generer, "Clé privée (à écrire) :", mode="save",
-            defaut="cle-I-privee.txt")
+            defaut=auto["privee"])
         self.var_hl_publique = self._ligne_fichier(
             generer, "Clé publique (à écrire) :", mode="save",
-            defaut="cle-publique-I.txt")
+            defaut=auto["publique"])
         ttk.Label(generer, foreground=COULEUR_ROUGE, wraplength=880,
                   justify="left",
                   text=("GARDE — après génération : imprimez la ligne de 64 "
@@ -2463,12 +2674,16 @@ class Application:
         # --- onglet signer -------------------------------------------------
         signer = ttk.Frame(cahier, padding=8)
         cahier.add(signer, text=" 2 · Signer une remise ")
-        self._note(signer, "Recevez a-signer.txt depuis le dépôt (profil "
-                           "dépôt, bouton Préparer), puis signez-le ici. "
+        self._note(signer, "La remise a-signer.txt arrive depuis l'onglet "
+                           "Sceau de l'Intention (bouton « Préparer "
+                           "a-signer.txt » — D118 : elle est COPIÉE dans le "
+                           "dossier de cérémonie, à côté des clés, et le champ "
+                           "ci-dessous est pré-rempli), puis signez-la ici. "
                            "Chaque signature est auto-vérifiée avant "
                            "écriture : une cérémonie douteuse n'écrit rien.")
         self.var_hl_a_signer = self._ligne_fichier(
-            signer, "Remise à signer (a-signer.txt) :", mode="open")
+            signer, "Remise à signer (a-signer.txt) :", mode="open",
+            defaut=auto["a_signer"])
 
         # --- source de la clé privée : FICHIER ou SAISIE MANUELLE (D112) ---
         source = self._section(
@@ -2488,7 +2703,7 @@ class Application:
         cadre_f.pack(fill="x", pady=2)
         ttk.Label(cadre_f, text="Clé privée (fichier) :", width=26,
                   anchor="w").pack(side="left")
-        self.var_hl_cle = tk.StringVar(value="cle-I-privee.txt")
+        self.var_hl_cle = tk.StringVar(value=auto["privee"])
         self.entry_hl_cle = ttk.Entry(cadre_f, textvariable=self.var_hl_cle)
         self.entry_hl_cle.pack(side="left", fill="x", expand=True,
                                padx=(0, 6))
@@ -2524,7 +2739,7 @@ class Application:
 
         self.var_hl_signatures = self._ligne_fichier(
             signer, "Signatures produites (à écrire) :", mode="save",
-            defaut="signatures-I.txt")
+            defaut=auto["signatures"])
         ttk.Button(signer, text="Signer la remise",
                    command=self._sur_hl_signer).pack(anchor="w", pady=4)
 
@@ -2540,13 +2755,17 @@ class Application:
             verifier, "Signatures (signatures-I.txt) :", mode="open")
         self.var_hl_v_publique = self._ligne_fichier(
             verifier, "Clé publique (cle-publique-I.txt) :", mode="open",
-            defaut="cle-publique-I.txt")
+            defaut=auto["publique"])
         ttk.Button(verifier, text="Vérifier la remise",
                    command=self._sur_hl_verifier).pack(anchor="w", pady=4)
 
-        ttk.Button(page, text="← Retour à l'accueil",
-                   command=lambda: self.montrer("accueil")).pack(anchor="w",
-                                                                 pady=6)
+        # --- les onglets du DÉPÔT rejoignent le même cahier (D118) --------
+        if self.depot_pret:
+            self._batir_onglets_depot(page, cahier)
+
+        # l'état initial du dossier de cérémonie s'affiche APRÈS la
+        # création des champs (les défauts suivront à la première frappe)
+        self._maj_chemins_ceremonie()
 
     def _sur_hl_generer(self):
         privee, publique = self.var_hl_privee.get().strip(), \
@@ -2656,34 +2875,51 @@ class Application:
         self.action("Hors-ligne — vérifier la remise", hl_verifier, a_signer,
                     signatures, publique)
 
+    def _maj_chemins_ceremonie(self, *_):
+        """D118 — les chemins de travail suivent le DOSSIER DE CÉRÉMONIE
+        sans jamais écraser un chemin retapé à la main (même loi que le
+        nom du clone D117 : la main garde le dernier mot tant qu'elle a
+        touché le champ). L'état du dossier (présent / à créer) s'affiche
+        en direct — un dossier absent n'est pas une erreur, il naîtra à la
+        première écriture (Générer la clé, Préparer la remise)."""
+        dossier = self.var_dossier_ceremonie.get().strip()
+        auto = chemins_ceremonie(dossier)
+        for cle, var in (("privee", self.var_hl_privee),
+                         ("publique", self.var_hl_publique),
+                         ("a_signer", self.var_hl_a_signer),
+                         ("signatures", self.var_hl_signatures),
+                         ("privee", self.var_hl_cle),
+                         ("publique", self.var_hl_v_publique)):
+            courant = var.get().strip()
+            if not courant or courant == self._chemins_auto.get(cle, ""):
+                var.set(auto[cle])
+        self._chemins_auto = dict(auto)
+        if dossier and os.path.isdir(dossier):
+            self.label_etat_dossier.configure(
+                text=f"dossier présent : {dossier} — clé et remises s'y "
+                     "écriront (hors du dépôt)",
+                foreground=COULEUR_VERTE)
+        elif dossier:
+            self.label_etat_dossier.configure(
+                text=f"dossier absent : {dossier} — il sera créé à la "
+                     "première écriture (Générer la clé / Préparer la "
+                     "remise), aucun geste à faire",
+                foreground=COULEUR_ATTENTE)
+        else:
+            self.label_etat_dossier.configure(
+                text="dossier de cérémonie : (vide — le défaut s'applique : "
+                     f"{dossier_ceremonie_defaut()})",
+                foreground=COULEUR_ATTENTE)
+
     # ------------------------------------------------------------------
-    # PAGE DÉPÔT — sceau I + coffre CF2 + liste blanche
+    # ONGLETS DU DÉPÔT (D118) — sceau I + coffre CF2 + liste blanche,
+    # greffés sur le cahier de la page de cérémonie dès qu'un dépôt
+    # triade est attaché (l'ex-page « dépôt » séparée n'existe plus).
     # ------------------------------------------------------------------
-    def _batir_depot(self):
-        import functools
-        self._functools = functools
-        page = ttk.Frame(self.corps)
-        self.pages["depot"] = page
-        if not self.depot_pret:
-            self._note(page, f"Aucun dépôt triade complet n'est attaché "
-                             f"(v06/coffre_cf2.py introuvable dans "
-                             f"{RACINE_DEPOT}, source : {SOURCE_DEPOT}) : "
-                             "le profil dépôt est désactivé. Choisissez le "
-                             "dossier du dépôt par le bouton ci-dessous "
-                             "(D112), ou relancez avec --depot CHEMIN (ou "
-                             "la variable TRIADE_DEPOT) désignant la racine "
-                             "d'un clone du dépôt. Pour la cérémonie "
-                             "hors-ligne, utilisez le profil hors-ligne.")
-            ttk.Button(page, text="Choisir le dossier du dépôt…",
-                       command=self._sur_choisir_depot).pack(anchor="w",
-                                                            pady=4)
-            ttk.Button(page, text="← Retour à l'accueil",
-                       command=lambda: self.montrer(
-                           "accueil")).pack(anchor="w", pady=8)
-            return
+    def _batir_onglets_depot(self, page, cahier):
         # champ configuration CF2 (partagé par les actions du coffre)
         zone = self._section(page, "Configuration du coffre CF2")
-        zone.pack(fill="x", pady=(4, 6))
+        zone.pack(fill="x", pady=(4, 2))
         self.var_config = tk.StringVar(
             value=os.path.join(RACINE_DEPOT, ".keys", "config_cf2.json"))
         cadre = ttk.Frame(zone)
@@ -2707,21 +2943,22 @@ class Application:
         self.label_etat_config.pack(anchor="w")
         self._maj_etat_config()
 
-        cahier = ttk.Notebook(page)
-        cahier.pack(fill="both", expand=True, pady=4)
-
-        # --- onglet Sceau de l'Intention -----------------------------------
+        # --- onglet Sceau de l'Intention (EN TÊTE du cahier, D118) -------
         sceau = ttk.Frame(cahier, padding=8)
-        cahier.add(sceau, text=" Sceau de l'Intention (D87) ")
+        cahier.insert(0, sceau, text=" Sceau de l'Intention (D87) ")
         self._note(sceau, "L'intention du dépôt est signée par la clé "
                           "hors-ligne. Préparer écrit v06/sceau-I/"
                           "a-signer.txt (~1 Ko, dix lignes « arbre balise "
-                          "empreinte ») : transportez-le vers la machine "
-                          "hors-ligne, faites-le signer (profil hors-ligne), "
+                          "empreinte ») PUIS LE COPIE dans le dossier de "
+                          "cérémonie (D118 — à côté des clés, le champ "
+                          "« Remise à signer » de l'onglet 2 est pré-rempli) : "
+                          "transportez la copie vers la machine hors-ligne, "
+                          "faites-la signer (onglet 2 · Signer une remise), "
                           "puis déposez la remise ici.")
         # --- fil de cérémonie (D116) : l'étape satisfaite s'efface, la
         # suivante s'affiche — auto-détection par PREUVES, lecture seule
-        fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116)")
+        fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116 · "
+                                   "D118 : une page)")
         fil.pack(fill="x", pady=(0, 4))
         self.cadre_fil = fil      # D117 : le titre porte le scénario courant
         self.fil_manuel = set()
@@ -3000,10 +3237,6 @@ class Application:
                        anchor="w", pady=4)
         self._charger_liste_blanche()
 
-        ttk.Button(page, text="← Retour à l'accueil",
-                   command=lambda: self.montrer("accueil")).pack(anchor="w",
-                                                                 pady=6)
-
     def _cfg_args(self):
         cfg = self.var_config.get().strip()
         return [cfg] if cfg else []
@@ -3219,14 +3452,16 @@ class Application:
                      f"les autres commandes la refuseront",
                 foreground="#9a6700")
 
-    def _ouvrir_depot(self):
-        """Entrée du profil dépôt : si la pile (pynacl + cryptography) manque,
-        on PROPOSE de l'installer avant d'entrer (sinon tout le panneau CF2
-        échouerait — mieux vaut le dire tout de suite)."""
-        if _paquets_manquants() and not self._pile_prete(
-                "Le profil dépôt (coffre CF2 + sceau I)"):
-            return      # installation refusée ou en cours : on n'entre pas
-        self.montrer("depot")
+    def _ouvrir_ceremonie(self):
+        """Entrée de l'unique page de cérémonie (D118). La pile (pynacl +
+        cryptography + argon2) n'est PLUS exigée à l'entrée : les onglets
+        clé I (1-3) n'en ont pas besoin — elle est PROPOSÉE ici si elle
+        manque (les onglets sceau et coffre l'exigent, chaque action CF2
+        la re-demande), puis la page s'ouvre DANS TOUS LES CAS : la moitié
+        hors-ligne de la cérémonie ne dépend d'aucune installation."""
+        if self.depot_pret and _paquets_manquants():
+            self._pile_prete("Les onglets du dépôt (coffre CF2 + sceau I)")
+        self.montrer("ceremonie")
 
     def _pile_prete(self, pour_quoi):
         manquants = _paquets_manquants()
@@ -3246,8 +3481,33 @@ class Application:
         return False
 
     def _sur_sceau_preparer(self):
-        self.action("Sceau I — preparer", self._cli, "sceau_I.py",
-                    ["preparer"])
+        """D118 — Préparer a-signer.txt PUIS le copier dans le dossier de
+        cérémonie (celui des clés) : la remise ne se cherche plus. Le
+        dossier est lu SUR LE FIL TKINTER (l'ouvrier n'y touche jamais) et
+        passe en ARGUMENT — même loi que tout le GUI."""
+        dossier = self.var_dossier_ceremonie.get().strip() \
+            or dossier_ceremonie_defaut()
+        self.action("Sceau I — preparer (+ copie vers le dossier de "
+                    "cérémonie, D118)", self._preparer_et_copier, dossier)
+
+    def _preparer_et_copier(self, dossier, emit=None):
+        """Contrôleur (fil OUVRIER — jamais une var tkinter touchée ici) :
+        le CLI preparer écrit v06/sceau-I/a-signer.txt (il reste LA
+        vérité), puis la COPIE part dans le dossier de cérémonie ; si la
+        copie réussit, le chemin pré-rempli transite par
+        _pre_remplissage_a_signer (un attribut simple), appliqué sur le
+        fil tkinter par _sur_fin_action. Un échec de copie est NOMMÉ — la
+        préparation reste vraie, la remise reste dans le dépôt, le champ
+        n'est PAS pré-rempli sur une copie douteuse."""
+        ok, texte = self._cli("sceau_I.py", ["preparer"], emit=emit)
+        if not ok:
+            return False, texte
+        source = os.path.join(RACINE_DEPOT, "v06", "sceau-I", "a-signer.txt")
+        ok_c, texte_c = copier_remise_vers_dossier(source, dossier, emit=emit)
+        if ok_c:
+            self._pre_remplissage_a_signer = os.path.join(
+                dossier, "a-signer.txt")
+        return ok_c, texte + ("\n" + texte_c if texte_c else "")
 
     def _sur_sceau_verifier(self):
         if not self._pile_prete("La vérification des arbres"):
@@ -3286,12 +3546,25 @@ class Application:
         satisfaite s'efface, la suivante prend la lumière (D116). D117 :
         si l'action vient d'ATTACHER un nouveau dépôt (clone réussi, ou
         dossier choisi ailleurs), les pages sont rebâties SUR LE FIL
-        tkinter — jamais depuis le fil ouvrier — et le profil dépôt
-        s'ouvre directement (la cérémonie commence)."""
+        tkinter — jamais depuis le fil ouvrier — et la page de cérémonie
+        s'ouvre directement (la cérémonie commence). D118 : si l'action
+        vient de PRÉPARER la remise, le champ « Remise à signer » est
+        pré-rempli avec la COPIE du dossier de cérémonie — appliqué ICI,
+        sur le fil tkinter (jamais depuis l'ouvrier)."""
         if getattr(self, "_racine_pages", RACINE_DEPOT) != RACINE_DEPOT:
-            cible = "depot" if depot_disponible() else "accueil"
+            cible = "ceremonie" if depot_disponible() else "accueil"
             self._rebâtir_pages(cible=cible)
-            return
+        dest = getattr(self, "_pre_remplissage_a_signer", None)
+        if dest:
+            self._pre_remplissage_a_signer = None
+            try:
+                self.var_hl_a_signer.set(dest)   # la page vient d'être rebâtie
+                self.journal.ajoute(
+                    f"[ceremonie] remise à signer pré-remplie : {dest} "
+                    "(dossier de cérémonie, D118 — à côté des clés, onglet "
+                    "2 · Signer une remise)", "info")
+            except tk.TclError:
+                pass    # page en cours de destruction : peu importe
         if getattr(self, "label_fil_courant", None) is not None:
             self.racine.after(300, self._rafraichir_fil)
 
@@ -3864,6 +4137,32 @@ def selftest():
              and hint_fil(SCENARIO_GIT, 2) == FIL_HINTS[1]
              and hint_fil(SCENARIO_DOSSIER, 1) == FIL_HINTS[1]
              and hint_fil(None, 5) == FIL_HINTS[5])
+    # D118 : la page unifiée — dossier de cérémonie hors du dépôt,
+    # remise copiée à côté des clés, gestes sans allers-retours
+    controle("d118-dossier-hors-du-depot",
+             not dossier_ceremonie_defaut().startswith(
+                 os.path.abspath(RACINE_DEPOT) + os.sep)
+             and os.path.basename(dossier_ceremonie_defaut())
+             == NOM_DOSSIER_CEREMONIE,
+             dossier_ceremonie_defaut())
+    with tempfile.TemporaryDirectory(prefix="ceremonie-selftest-d118-") as tmp:
+        source = os.path.join(tmp, "source.txt")
+        with open(source, "w", encoding="utf-8") as f:
+            f.write("m0/test ALPHA " + secrets.token_hex(32) + "\n")
+        cible = os.path.join(tmp, "sous-dossier", "a-signer.txt")
+        ok_c, _ = copier_remise_vers_dossier(source, os.path.dirname(cible))
+        with open(cible, "r", encoding="utf-8") as f:
+            pareil = f.read() == open(source, "r", encoding="utf-8").read()
+        controle("d118-remise-copiee-dans-le-dossier", ok_c and pareil)
+        ok_f, texte_f = copier_remise_vers_dossier(
+            os.path.join(tmp, "introuvable.txt"), tmp)
+        controle("d118-copie-source-absente-nommee", not ok_f
+                 and "source absente" in texte_f, texte_f)
+    controle("d118-gestes-sans-allers-retours",
+             "profil" not in FIL_HINTS[1].lower()
+             and "dossier de cérémonie" in FIL_HINTS[1]
+             and "dossier de cérémonie" in FIL_HINTS[3]
+             and "ci-contre" in FIL_HINTS[2].lower())
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs
@@ -3879,7 +4178,8 @@ def main():
                          help="batterie embarquée (aucune GUI requise)")
     parseur.add_argument("--profil", choices=["hors-ligne", "depot"],
                          default=None,
-                         help="ouvrir directement ce profil (sinon : accueil)")
+                         help="compat D117 — les DEUX ouvrent l'unique page "
+                              "de cérémonie D118 (sinon : accueil)")
     parseur.add_argument("--depot", metavar="CHEMIN", default=None,
                          help="racine d'un clone du dépôt triade (celui qui "
                               "contient v06/) — priorité sur TRIADE_DEPOT "

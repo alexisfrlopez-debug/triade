@@ -7260,3 +7260,67 @@ non-régression : test_sceau_I.py 50/50 (D117 ne touche AUCUN arbre signé),
 test_cf2.py 43/43, verifier CODE 0. Verdict à froid du commit 674b63e par
 l'assistant (clone frais de GitHub) : 132 PASS / 0 ÉCHEC, sceau 50/50,
 verifier CODE 0.
+
+## Entrée 104 — D118 (30/10) : UNE SEULE page de cérémonie, le bouton d'attachement UNIQUE, le dossier de cérémonie (clé + remise au même endroit, hors du dépôt), et les lanceurs vivent dans le dépôt git — la demande « fusionner le profil hors ligne et le profil dépôt pour éviter les aller-retours vers la page d'accueil ; le bouton "attacher un clone existant" et "choisir le dossier du dépot" peuvent aussi être fusionnés ; il faudrait que le dossier "à signer" soit généré dans le même dossier que les clés (par défaut dans un dossier en dehors du dépot) ; dans le kit cérémonie du repos, je n'ai pas les sh et bat de lancement du gui » servie intégralement
+
+**Constat.** Trois frictions du terrain, une même racine : le GUI parlait
+encore en TERMES D'OUTIL (deux profils, deux boutons d'attachement, des
+fichiers éparpillés) au lieu de parler en termes de CÉRÉMONIE. Signer une
+remise exigeait : accueil → profil hors-ligne → retour accueil → profil
+dépôt → retour accueil… ; « Attacher un clone EXISTANT… » et « Choisir le
+dossier du dépôt… » désignaient le MÊME geste (désigner un dossier local,
+l'attacher) sous deux noms ; la remise a-signer.txt naissait au fond de
+v06/sceau-I/ pendant que les clés s'écrivaient dans le dossier de
+lancement — l'utilisateur cherchait ses fichiers ; et un clone frais du
+dépôt git n'avait AUCUN lanceur (les .sh/.bat ne vivaient que dans le kit
+du Drive).
+
+**Livré (v1.8).** Un : UNE SEULE PAGE — les profils hors-ligne et dépôt
+sont FUSIONNÉS dans la page « ceremonie » : le cahier porte « Sceau de
+l'Intention » EN TÊTE (inséré en position 0), puis « 1 · Générer la
+clé », « 2 · Signer une remise », « 3 · Vérifier une remise », « Coffre
+CF2 », « Liste blanche » ; les onglets du dépôt n'apparaissent qu'une
+fois un dépôt ATTACHÉ (copie « fichier seul sur clef USB » = onglets
+clé I seuls, posture D87 inchangée) ; --profil hors-ligne|depot (compat
+D117) ouvrent la même page ; la pile pip n'est plus exigée à l'ENTRÉE
+(les onglets 1-3 n'en ont pas besoin — elle reste proposée). Deux : LE
+BOUTON UNIQUE « Attacher le dépôt local… » — l'exige_clone disparaît du
+GESTE : seul le SCÉNARIO décide de la preuve (repo git → rev-parse +
+origin exigés, refus nommé avec la parade « basculez en DOSSIER LOCAL » ;
+dossier local → garde v06/coffre_cf2.py seule). Trois : LE DOSSIER DE
+CÉRÉMONIE — un champ en tête de page (sœur du dépôt attaché :
+<parent>/ceremonie-triade, donc HORS du dépôt par défaut) ; la clé
+privée, la clé publique, a-signer.txt et signatures-I.txt y naissent PAR
+DÉFAUT ; changer le dossier déplace les champs NON retapés à la main
+(même loi que le nom du clone D117) ; « Préparer a-signer.txt » lance le
+CLI (qui reste LA vérité : v06/sceau-I/a-signer.txt) PUIS COPIE la remise
+dans ce dossier (copier_remise_vers_dossier, échecs nommés — source
+absente, dossier impossible) et PRÉ-REMPLIT le champ « Remise à signer »
+— le chemin transite par _pre_remplissage_a_signer (attribut simple),
+appliqué sur le FIL TKINTER par _sur_fin_action (jamais depuis l'ouvrier
+— les vars tkinter ne se touchent que sur leur fil). Quatre : LES
+LANCEURS DU DÉPÔT — lancer_ceremonie.sh / .bat vivent à la RACINE du
+dépôt git (un clone frais les porte) : ils cherchent
+v06/ceremonie_gui.py d'abord, repli sur toute copie posée à côté (le cas
+« fichier seul sur clef USB » du kit D107 fonctionne toujours) ; le kit
+du Drive les reçoit depuis le dépôt (drive_ceremonie.py : source
+REPO/lancer_ceremonie.* — une seule vérité).
+
+**Preuves.** test_ceremonie_gui.py 146 PASS / 0 ÉCHEC (T15 nouveau, 14
+contrôles : dossier hors du dépôt + suit le re-attachement, quatre
+chemins, copie verte + refus nommés, gestes sans plus aucun « profil ») ;
+selftest embarqué 15 PASS (quatre contrôles D118) ; fumée Xvfb D118
+40/40 (l'accueil fusionné sans sections profils, la copie seule à TROIS
+onglets avec invite d'attachement, le dossier qui suit les champs et
+respecte la main, l'attachement UNIQUE dont la preuve suit le scénario —
+même dossier refusé en repo git, attaché en dossier local —, le clonage
+réel labo → page cérémonie ouverte + fil SIX, et « Préparer » sur un
+VRAI clone local du dépôt : remise COPIÉE dans le dossier de cérémonie
+(sœur du clone), champ pré-rempli, dix arbres, dépôt réel INTACT) ;
+lanceur .sh prouvé dans les DEUX postures (racine du dépôt → selftest
+15/15 ; copie seule → 15/15) ; non-régression : sceau_I.py verifier
+CODE 0 (10 arbres VERTS — D118 ne touche AUCUN arbre signé :
+ceremonie_gui.py et son test vivent hors v06/I), test_sceau_I.py 50/50,
+test_cf2.py 43/43. Kit synchronisé : download/ceremonie_gui.py ==
+v06/ceremonie_gui.py (md5, garde drive_ceremonie.py), LISEZMOI v1.8 (12
+remplacements comptés), lanceurs copiés.

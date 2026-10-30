@@ -3626,3 +3626,40 @@ change AUCUNE preuve du sceau : seulement la tête du fil.
 réimplémentation réseau) ; un dépôt privé peut exiger l'authentification
 GitHub (le navigateur peut s'ouvrir) ; le nom pré-rempli n'écrase jamais
 un nom retapé à la main.
+
+## D118 — Une seule page de cérémonie, un attachement unique, un dossier de cérémonie hors du dépôt, des lanceurs dans le dépôt
+
+**Décision.** La demande développeur est servie par QUATRE gestes :
+(1) les profils « hors-ligne » et « dépôt » sont FUSIONNÉS en une page
+unique — le cahier d'onglets porte « Sceau de l'Intention » en tête, les
+onglets 1-3 (clé I, stdlib pure) restent disponibles SANS dépôt attaché,
+les onglets du dépôt apparaissent à l'attachement ; (2) l'ex-« Attacher
+un clone EXISTANT… » et l'ex-« Choisir le dossier du dépôt… » deviennent
+UN SEUL bouton « Attacher le dépôt local… » — seul le SCÉNARIO décide de
+la preuve (repo git → dépôt git AVEC origin, refus nommé avec la parade ;
+dossier local → garde v06/coffre_cf2.py seule) ; (3) le DOSSIER DE
+CÉRÉMONIE (sœur du dépôt attaché, hors du dépôt par défaut) porte la clé
+privée, la clé publique, a-signer.txt et signatures-I.txt — « Préparer
+a-signer.txt » COPIE la remise fraîche dans ce dossier et pré-remplit le
+champ « Remise à signer » ; (4) lancer_ceremonie.sh / .bat vivent à la
+RACINE du dépôt git (v06/ceremonie_gui.py d'abord, repli sur toute copie
+posée à côté) — le kit du Drive les reçoit depuis le dépôt.
+
+**Frontières tenues.** Le CLI reste LA vérité : la copie de la remise est
+un TRANSPORT (le fichier du dépôt reste la référence, échecs de copie
+NOMMÉS sans annuler la préparation) ; le chemin pré-rempli transite par
+un attribut simple et n'est appliqué que SUR LE FIL TKINTER (jamais
+depuis le fil ouvrier — tkinter n'est pas thread-safe) ; le dossier de
+cérémonie vit HORS du dépôt (la clé privée n'y entre jamais, même par
+défaut) ; les champs retapés à la main ne sont JAMAIS écrasés par le
+changement de dossier ; la copie « fichier seul sur clef USB » garde les
+onglets clé I seuls (D87 inchangé — l'air-gap ne s'installe rien) ; la
+pile pip n'est plus exigée à l'entrée mais chaque action du dépôt la
+re-demande.
+
+**Bornes.** Le dossier absent n'est pas une erreur (il naîtra à la
+première écriture — Générer la clé / Préparer la remise) ; le repli du
+dossier par défaut sur la maison ne survit qu'au cas du dépôt à la racine
+d'un disque ; les lanceurs Windows exigent py/python présents (le .bat
+met en pause sur échec pour lire la cause) ; --profil hors-ligne|depot
+reste accepté (compat D117) et ouvre la même page.

@@ -11,22 +11,26 @@ fichier vérifié md5 ALLER-RETOUR après écriture) :
     LISEZMOI-ceremonie-GUI.txt  le mode d'emploi du GUI (D107)
     LISEZMOI-cle-I.txt          la cérémonie de la clé I, pas à pas (D105)
     LISEZMOI-coffre-CF2.txt     la cérémonie du coffre CF2, pas à pas (D106)
-    lancer_ceremonie.bat        lanceur Windows (double-clic)
-    lancer_ceremonie.sh         lanceur Linux/macOS
+    lancer_ceremonie.bat        lanceur Windows (double-clic, D118)
+    lancer_ceremonie.sh         lanceur Linux/macOS (D118)
     coffre_fort.py              le CLI CF1 (changer-phrase D110, migrer)
     MANIFESTE.txt               empreintes du kit (généré au dépôt)
-    v06/                        complément « profil dépôt » portable :
+    v06/                        complément « onglets du dépôt » portable :
       __init__.py, ceremonie_gui.py, ceremonie_hors_ligne.py,
       coffre_cf2.py, sceau_I.py, sentinelle_cf2.py
 
-Le sous-dossier v06/ fait du dossier un MINI-DÉPÔT : le profil DÉPÔT du
-GUI (relais des CLI par RACINE_DEPOT/v06/*.py, import v06.coffre_cf2)
-y est opérationnel sur toute machine connectée. La vérification des DIX
-arbres du sceau I exige le dépôt complet (miroir Drive « TRIADE » ou
-git) — depuis ce kit seul, l'échec est nommé, par conception.
+Le sous-dossier v06/ fait du dossier un MINI-DÉPÔT : la page de cérémonie
+unifiée du GUI (relais des CLI par RACINE_DEPOT/v06/*.py, import
+v06.coffre_cf2) y est opérationnelle sur toute machine connectée. La
+vérification des DIX arbres du sceau I exige le dépôt complet (miroir
+Drive « TRIADE » ou git) — depuis ce kit seul, l'échec est nommé, par
+conception. D118 : les lanceurs vivent À LA RACINE DU DÉPÔT git (un clone
+frais les porte) et sont déployés ICI depuis le dépôt — version
+intelligente : v06/ceremonie_gui.py d'abord (mini-dépôt complet), repli
+sur toute copie posée à côté (fichier seul sur clef USB).
 
 GARDES avant dépôt :
-- les 13 sources existent localement ;
+- les 14 sources existent localement ;
 - ceremonie_gui.py et ceremonie_hors_ligne.py sont IDENTIQUES (md5)
   entre download/ et v06/ — un kit divergent n'est pas déposé.
 
@@ -56,12 +60,14 @@ V06 = REPO / "v06"
 AUDIT = ESPACE / "scripts"
 DOSSIER = "Cérémonie"
 SOUS = "v06"
-COMMIT_SRC = "77c8a7a"          # D112 — les trois chemins se choisissent
-# DANS la fenêtre (dossier du dépôt, coffre CF1, clé I fichier-ou-main)
+COMMIT_SRC = "06e49f8"          # D118 — la page unifiée + le dossier de
+# cérémonie + l'attachement unique + les lanceurs à la racine du dépôt
 
 # (source locale, cible relative dans /Cérémonie) — 14 fichiers
 # (coffre_fort.py : posé par D110 — REPRIS dans la liste D112 pour que la
-# garde et le manifeste couvrent le kit RÉEL, sinon il vivrait orphelin)
+# garde et le manifeste couvrent le kit RÉEL, sinon il vivrait orphelin ;
+# lanceurs D118 : sourcés À LA RACINE DU DÉPÔT — une seule vérité, la
+# même version « v06/ d'abord, repli copie à côté » que porte tout clone)
 KIT = [
     (DOWNLOAD / "ceremonie_gui.py", "ceremonie_gui.py"),
     (DOWNLOAD / "ceremonie_hors_ligne.py", "ceremonie_hors_ligne.py"),
@@ -69,8 +75,8 @@ KIT = [
     (DOWNLOAD / "LISEZMOI-ceremonie-GUI.txt", "LISEZMOI-ceremonie-GUI.txt"),
     (DOWNLOAD / "LISEZMOI-cle-I.txt", "LISEZMOI-cle-I.txt"),
     (DOWNLOAD / "LISEZMOI-coffre-CF2.txt", "LISEZMOI-coffre-CF2.txt"),
-    (DOWNLOAD / "lancer_ceremonie.bat", "lancer_ceremonie.bat"),
-    (DOWNLOAD / "lancer_ceremonie.sh", "lancer_ceremonie.sh"),
+    (REPO / "lancer_ceremonie.bat", "lancer_ceremonie.bat"),
+    (REPO / "lancer_ceremonie.sh", "lancer_ceremonie.sh"),
     (V06 / "__init__.py", "v06/__init__.py"),
     (V06 / "ceremonie_gui.py", "v06/ceremonie_gui.py"),
     (V06 / "ceremonie_hors_ligne.py", "v06/ceremonie_hors_ligne.py"),
@@ -125,44 +131,49 @@ def fabriquer_manifeste():
         "",
         f"Déposé le : {now.strftime('%Y-%m-%dT%H:%M:%SZ')} (UTC) — canal : "
         "OAuth relais, Drive « Triade ».",
-        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D112 — les "
-        "trois chemins se choisissent dans la fenêtre) + zone de livraison "
-        "download/ de l'espace de travail.",
+        f"Provenance : dépôt git TRIADE commit {COMMIT_SRC} (D118 — la "
+        "page unifiée, le dossier de cérémonie, l'attachement unique, les "
+        "lanceurs à la racine du dépôt) + zone de livraison download/ de "
+        "l'espace de travail.",
         "",
         "CE QUE CONTIENT CE DOSSIER",
         "--------------------------",
-        "Deux profils, zéro ligne de commande après le lancement (D107) :",
+        "Une page de cérémonie, zéro ligne de commande après le lancement "
+        "(D107/D118) :",
         "",
-        "- MACHINE HORS-LIGNE (cérémonie de la clé I, D87) : copiez",
-        "  ceremonie_gui.py SEUL sur une clef USB. Python standard",
-        "  uniquement — rien à installer, aucun réseau, aucun pip. Il",
-        "  produit les MÊMES fichiers que ceremonie_hors_ligne.py",
-        "  (interopération attestée par les preuves D107).",
+        "- ONGLETS CLÉ I (air-gap, D87) : copiez ceremonie_gui.py SEUL sur",
+        "  une clef USB. Python standard uniquement — rien à installer,",
+        "  aucun réseau, aucun pip. Il produit les MÊMES fichiers que",
+        "  ceremonie_hors_ligne.py (interopération attestée D107).",
         "",
-        "- MACHINE CONNECTÉE (cérémonie du coffre CF2, D86) : lancez",
-        "  v06/ceremonie_gui.py. Le sous-dossier v06/ fait office de",
-        "  mini-dépôt : relais des CLI, CONTRÔLE DE RELECTURE de vos trois",
-        "  copies, feuille d'export, liste blanche par formulaire,",
-        "  sentinelle détachée, BRÛLER avec confirmation tapée. La pile",
-        "  pip (pynacl + cryptography) est vérifiée et proposée AVEC",
-        "  votre accord.",
+        "- ONGLETS DU DÉPÔT (cérémonie du coffre CF2, D86) : dès qu'un dépôt",
+        "  triade est ATTACHÉ (bouton « Attacher le dépôt local… »). Le",
+        "  sous-dossier v06/ fait office de mini-dépôt : relais des CLI,",
+        "  CONTRÔLE DE RELECTURE de vos trois copies, feuille d'export,",
+        "  liste blanche par formulaire, sentinelle détachée, BRÛLER avec",
+        "  confirmation tapée. La pile pip (pynacl + cryptography) est",
+        "  vérifiée et proposée AVEC votre accord.",
         "",
-        "- D112 : ce GUI (v1.4) choisit ses TROIS chemins DANS la fenêtre —",
-        "  le bouton « Choisir le dossier du dépôt… » (accueil) attache",
-        "  votre clone local SANS relancer (garde v06/coffre_cf2.py,",
-        "  refus nommé sinon), le champ « Coffre CF1 » (onglet CF2)",
-        "  désigne VOTRE conteneur où qu'il vive (statut/verifier/",
-        "  changer-phrase/migrer le lisent), et l'onglet Signer accepte la",
-        "  clé par FICHIER ou SAISIE MANUELLE des 64 hex (masquée,",
-        "  validée, effacée après l'acte). --depot CHEMIN / TRIADE_DEPOT",
-        "  restent valables (D111) — la ligne de commande devient un",
-        "  raccourci, plus une obligation. Voir LISEZMOI-ceremonie-GUI.txt.",
+        "- D118 : UNE SEULE PAGE — les profils hors-ligne et dépôt ne font",
+        "  plus qu'un cahier d'onglets (plus d'allers-retours par l'accueil)",
+        "  ; le bouton d'attachement est UNIQUE (« Attacher le dépôt",
+        "  local… », la preuve git/origin ne s'exige qu'en scénario repo",
+        "  git) ; le DOSSIER DE CÉRÉMONIE porte la clé et la remise",
+        "  a-signer.txt AU MÊME endroit, HORS du dépôt par défaut (sa",
+        "  sœur) — « Préparer a-signer.txt » y COPIE la remise et",
+        "  pré-remplit le champ « Remise à signer ». --depot CHEMIN /",
+        "  TRIADE_DEPOT restent valables (D111) — la ligne de commande",
+        "  devient un raccourci, plus une obligation. Voir",
+        "  LISEZMOI-ceremonie-GUI.txt.",
         "",
-        "- Mode d'emploi : LISEZMOI-ceremonie-GUI.txt (le GUI, les deux",
-        "  profils), LISEZMOI-cle-I.txt et LISEZMOI-coffre-CF2.txt (les",
+        "- Mode d'emploi : LISEZMOI-ceremonie-GUI.txt (le GUI, la page",
+        "  unifiée), LISEZMOI-cle-I.txt et LISEZMOI-coffre-CF2.txt (les",
         "  cérémonies réelles pas à pas, encarts MODE GRAPHIQUE inclus).",
         "  Lanceurs : lancer_ceremonie.bat (Windows, double-clic) et",
-        "  lancer_ceremonie.sh (Linux/macOS).",
+        "  lancer_ceremonie.sh (Linux/macOS) — D118 : les MÊMES lanceurs",
+        "  vivent à la racine d'un clone git du dépôt (ils y visent",
+        "  v06/ceremonie_gui.py d'abord, avec repli sur toute copie posée",
+        "  à côté).",
         "",
         "- La vérification des DIX arbres du sceau I exige le dépôt",
         "  COMPLET (dossier « TRIADE » du même Drive, ou dépôt git) ;",
