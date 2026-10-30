@@ -45,6 +45,23 @@ CE QUE LE PUPITRE FAIT :
 ENCODEAGE : les enfants sont lancés avec PYTHONIOENCODING=utf-8 et lus en
 UTF-8 remplacé — les « É » des verdicts survivent au cp850 de Windows.
 
+FLUX (D124) : les enfants sont lancés « python -u », stdout NON tamponné,
+et PYTHONUNBUFFERED ambiant est NEUTRALISÉ — le drapeau VISIBLE décide
+seul. Pourquoi : pipé, le stdout d'un enfant Python se tamponne par BLOCS
+— la boîte noire horodate l'ARRIVÉE des lignes, pas leur émission (le
+rapport terrain du 30/10 12:13 en portait la trace : 22 secondes de
+suite collapsées sur un seul horodatage, 12:13:31). Pire : un enfant qui
+meurt BRUTALEMENT (crash natif, mémoire fautive) emporte son tampon —
+les DERNIÈRES lignes, celles qui précèdent le crash et disent son nom,
+ne parviendraient JAMAIS au journal. Avec -u chaque écriture est
+immédiate : le journal de vol devient fidèle ET survivant au crash de
+ce qu'il observe. Nota : le défaut était INVISIBLE au laboratoire
+(variable PYTHONUNBUFFERED ambiante qui tamponnait tout en vert) — seul
+le terrain l'a montré : le pupitre ne laisse plus l'ambiance décider.
+Le drapeau est du PUPITRE, pas des vérités vivantes — coffre_cf3.py,
+test_coffre_cf3.py et coffre_cf2.py ne changent pas d'un octet, leurs
+verdicts restent acquis.
+
 EMPLACEMENT : ce pupitre vit dans v06/ (dépôt complet OU kit du Drive —
 le kit porte v06/ entier depuis D122) et attend coffre_cf3.py À CÔTÉ de
 lui ; --v06 CHEMIN le pointe ailleurs (échec NOMMÉ si introuvable, jamais
@@ -75,7 +92,7 @@ except Exception:
     pass
 
 
-VERSION_PUPITRE = "autotest-CF3-GUI v1.1 (D123)"
+VERSION_PUPITRE = "autotest-CF3-GUI v1.2 (D124)"
 
 NOM_JOURNAL_VOL = "autotest-cf3-journal.log"
 
@@ -316,10 +333,18 @@ class RelaisEssais:
         self.erreur = None
 
     def lancer(self, chemin_script, arguments=None, emit=None):
-        """Exécute [sys.executable, chemin_script] + arguments dans le
-        dossier v06. PYTHONIOENCODING=utf-8 : les accents des verdicts
+        """Exécute [sys.executable, "-u", chemin_script] + arguments dans
+        le dossier v06. PYTHONIOENCODING=utf-8 : les accents des verdicts
         survivent au cp850 de Windows (l'enfant ne reconfigure pas
-        lui-même)."""
+        lui-même). « -u » (D124) : stdout de l'enfant NON tamponné — la
+        boîte noire horodate l'émission réelle et un crash brutal de
+        l'enfant ne peut plus emporter ses dernières lignes dans un
+        tampon mort. PYTHONUNBUFFERED ambiant est retiré : le drapeau
+        visible décide seul (au laboratoire, cette variable ambiante
+        rendait tout non tamponné — vert — et MASQUAIT le défaut que
+        seul le terrain a montré).
+        Le drapeau relève du pupitre : les vérités vivantes ne changent
+        pas d'un octet."""
         self.code, self.erreur = None, None
         if not os.path.isfile(chemin_script):
             self.erreur = (f"essai impossible : {chemin_script} introuvable "
@@ -328,7 +353,12 @@ class RelaisEssais:
             return []
         environnement = dict(os.environ)
         environnement["PYTHONIOENCODING"] = "utf-8"
-        commande = [sys.executable, chemin_script] + list(arguments or [])
+        # D124 : le drapeau VISIBLE (-u dans la commande affichée au
+        # rapport) décide seul — une variable ambiante ne peut ni le
+        # remplacer ni le masquer (au labo, PYTHONUNBUFFERED=1 ambiant
+        # rendait tout vert et cachait le tampon que le terrain a vu).
+        environnement.pop("PYTHONUNBUFFERED", None)
+        commande = [sys.executable, "-u", chemin_script] + list(arguments or [])
         lignes = []
         try:
             processus = subprocess.Popen(
@@ -576,7 +606,7 @@ class Application:
         self._bloquer_essais(True)
         self.barre_verdict.configure(text=f"{nom_essai} : en cours…",
                                      foreground=COULEUR_ENCRE)
-        commande_affichee = f"{sys.executable} {nom_script}"
+        commande_affichee = f"{sys.executable} -u {nom_script}"
         if arguments:
             commande_affichee += " " + " ".join(arguments)
         self.journal.ajoute(f"— {nom_essai} : lancement "
@@ -919,7 +949,7 @@ def selftest():
 
 def main():
     parseur = argparse.ArgumentParser(
-        description="TRIADE — pupitre d'autotest CF3 (D123, v1.1). Sans "
+        description="TRIADE — pupitre d'autotest CF3 (D124, v1.2). Sans "
                     "argument : fenêtre (essais relais + rapport). --selftest : "
                     "batterie headless (aucune GUI requise). --v06 CHEMIN : "
                     "dossier qui porte coffre_cf3.py (défaut : à côté du "

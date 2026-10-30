@@ -19,7 +19,12 @@ ce que son rapport emporte. Cette suite l'attaque :
       « 92 PASS / 0 ÉCHEC », une cible absente est un refus NOMMÉ, et
       l'enfant reçoit PYTHONIOENCODING=utf-8 (les accents des verdicts
       survivent au cp850 de Windows — prouvé par un enfant témoin qui
-      imprime son environnement) ;
+      imprime son environnement) ET « python -u » (D124 : stdout non
+      tamponné — la boîte noire horodate l'émission réelle, et un crash
+      brutal de l'enfant ne peut plus perdre ses dernières lignes dans
+      un tampon mort ; prouvé par le MÊME témoin qui avoue la classe
+      réelle de son tampon stdout : FileIO = non tamponné,
+      BufferedWriter = tamponné par blocs) ;
   X4  le verdict est CROISÉ flux/code : un enfant menteur qui imprime
       « 28 PASS / 0 ÉCHEC » mais sort 1 est ROUGE (la composition
       code==0 ET échecs==0 est testée telle quelle) ; le compteur garde
@@ -196,18 +201,32 @@ def x3_relais_sous_processus():
              lignes_fantome == [] and relais_fantome.code is None
              and "introuvable" in str(relais_fantome.erreur))
 
-    # PYTHONIOENCODING=utf-8 passé à l'enfant : un témoin l'imprime
+    # PYTHONIOENCODING=utf-8 ET -u (D124) passés à l'enfant : un témoin
+    # imprime l'un et avoue l'autre. sys.flags ne porte AUCUN champ
+    # « unbuffered » (l'attribut n'existe pas — le premier témoin D124 en
+    # est mort à l'essai) : la PREUVE est la classe du tampon stdout de
+    # l'enfant — FileIO = écrit immédiat (-u), BufferedWriter = tampon
+    # par blocs (la boîte noire horodaterait l'arrivée des blocs, et un
+    # crash brutal emporterait les dernières lignes).
     bac = tempfile.mkdtemp(prefix="pupitre-x3-")
     try:
         temoin = os.path.join(bac, "temoin_env.py")
         with open(temoin, "w", encoding="utf-8") as f:
-            f.write("import os\n"
+            f.write("import os, sys, io\n"
                     "print('ENV=' + "
-                    "str(os.environ.get('PYTHONIOENCODING')))\n")
+                    "str(os.environ.get('PYTHONIOENCODING')))\n"
+                    "print('TAMPON=' + "
+                    "type(sys.stdout.buffer).__name__)\n")
         relais_env = P.RelaisEssais()
         lignes_env = relais_env.lancer(temoin)
         _verifie("x3-enfant-recoit-pythonioencoding-utf8",
                  any("ENV=utf-8" in ligne for ligne in lignes_env))
+        _verifie("x3-enfant-flux-non-tamponne-u",
+                 any("TAMPON=FileIO" in ligne for ligne in lignes_env),
+                 "attendu TAMPON=FileIO : sans -u, l'enfant tamponne "
+                 "par blocs — la boîte noire horodaterait l'arrivée des "
+                 "blocs, pas l'émission, et un crash brutal perdrait "
+                 "son tampon")
     finally:
         shutil.rmtree(bac, ignore_errors=True)
 
