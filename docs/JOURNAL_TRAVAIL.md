@@ -7093,3 +7093,170 @@ handler ; `action()` sans kwargs → TypeError sur statut CF1 →
 functools.partial). Non-régression : selftest 7/7, test_cf2 43/43,
 test_sceau_I 47/47, fumées GUI 19 et D111 10 contrôles VERTES.
 download/ ↔ v06/ identiques (md5 4fe24995…).
+
+
+## Entrée 98 — D113 (30/10, consignation différée) : le GUI porte sa boîte noire (enregistreur de vol) et le journal ne peut plus être évincé — la consigne de référence est le MESSAGE DE COMMIT 66696f6
+
+**Constat.** Le terrain dénonçait deux aveuglements : un rapport D113 où
+chaque ligne du journal était DOUBLÉE (le verdict retransmettait TOUTE la
+sortie déjà coulée par le flux temps réel), et un profil dépôt où la page
+(~1000 px) évinçait le journal hors de la fenêtre fixe (1020x740 : mappe=0,
+hauteur 1 px — « aucun journal qui s'affiche »). Les dialogues sans parent
+pouvaient naître DERRIÈRE la fenêtre (« je clique, rien ne se passe »), et
+un crash de rappel tkinter mourait muet vers stderr — invisible lancé via
+.bat sans console.
+
+**Livré (v1.5).** Un : L'ENREGISTREUR DE VOL — chaque ligne d'écran, chaque
+dialogue posé et résolu, chaque verdict et CHAQUE crash de rappel atterrit
+dans v06/ceremonie-journal.log (local, horodaté, AUCUN réseau : la
+cérémonie ne prend pas de fil pour se faire débugger) ; le bouton
+« Envoyer le rapport… » constitue le fichier (entête d'environnement +
+journal d'écran + journal de vol) à remettre À LA MAIN. Deux : l'ORDRE DE
+PACK EST LA PRIORITÉ D'ESPACE — verdict et journal se packent AVANT le
+corps, et le corps DÉFILE (canevas + barre + moette
+Windows/macOS/Linux). Trois : _dialogue passe parent=la fenêtre à TOUT
+messagebox et consigne titre + réponse dans la boîte noire ; le crash de
+rappel devient un échec NOMMÉ à l'écran avec traceback complet au vol.
+
+**Preuves.** selftest 8 PASS (boîte noire écrit-restitue inclus) ;
+test_ceremonie_gui.py 96 PASS ; fumée Xvfb D113 11/11 (journal >= 120 px
+aux deux tailles, contenu > canevas, crash capturé, dialogue parenté +
+consigné, rapport complet v1.5).
+
+## Entrée 99 — D114 (30/10, consignation différée) : le verdict ne répète plus ce qu'il vient de montrer — la consigne de référence est le MESSAGE DE COMMIT fb3e578
+
+**Constat.** La sortie d'un CLI coulait DEUX fois dans le journal : une fois
+ligne à ligne par le flux temps réel de l'exécuteur, une fois en bloc par le
+verdict qui retransmettait TOUTE la sortie — le rapport du terrain portait
+la preuve (chaque ligne doublée, rapport deux fois trop lourd).
+
+**Livré.** _cli rend UNE ligne d'ancrage (la première — celle de la barre de
+verdict) quand la sortie a déjà coulé par emit : le détail vit au-dessus,
+dans l'ordre du flux. SANS emit (pas de flux), le texte ENTIER reste la
+remise du verdict — générer/signer hors-ligne inchangés.
+
+**Preuves.** test_ceremonie_gui.py 98 PASS (T11 nouveau : avec flux →
+verdict une seule ligne, égale à la première du flux ; sans flux → texte
+entier) ; test_sceau_I.py 47/47 ; dépôt réel VERT (10 arbres).
+
+## Entrée 100 — D115 (30/10, consignation différée) : le sceau ne signe plus la représentation du checkout — le manifeste hache le contenu CANONIQUE LF — la consigne de référence est le MESSAGE DE COMMIT 936fbcc
+
+**Constat.** La vérification à froid du commit de cérémonie 5427956 (clé
+réelle 478f182d…) dénonçait CODE 10 sur les DIX arbres : les empreintes
+vivantes calculées sur un clone LF != empreintes déposées par la cérémonie
+de terrain (checkout Windows autocrlf porte CRLF sur disque). La clé
+physique avait bien signé — la REPRÉSENTATION, pas le canon : « le même
+arbre produit le même manifeste sur toute machine » était devenu FAUX.
+
+**Livré.** PREUVE par diagnostic exhausteur : les 112 fichiers divergents
+satisfont TOUS hash(CRLF(vivant)) == hash déposé, et les 10 signatures
+restent VALIDES sur leurs empreintes. Le manifeste hache désormais le
+contenu CANONIQUE LF (toute paire CRLF normalisée avant condensé) et la
+spécification v06/I/README.md § 2 règle 2 l'écrit. Parseur « sha256: »
+réparé ([8:] avalait le premier hex). FENÊTRE DE RE-CÉRÉMONIE nommée et
+prouvée : la suite prouve la divergence de représentation SEULE +
+signatures valides + l'amendement D115 du README v06 par hash littéral ;
+cette preuve MEURT à la re-cérémonie. La RÉPLIQUE de test repart VERT
+canonique à l'entrée ; T4 devient la COHÉRENCE état-clé (mentir dans un
+sens comme dans l'autre serait le défaut X8).
+
+**Preuves.** test_sceau_I.py 50 PASS / 0 ÉCHEC (T3-d/e/f : jumelle CRLF
+manifeste IDENTIQUE, verifier VERT, octet muté hors fin de ligne divergence
+NOMMÉE) ; test_ceremonie_gui.py 98 PASS.
+
+## Entrée 101 — D116 (30/10, consignation différée) : le maître de cérémonie tient le fil, pousse sur git, et la fenêtre suit son contenu — la consigne de référence est le MESSAGE DE COMMIT 56c3097
+
+**Constat.** Trois aveuglements du terrain : le push rejeté D113-115
+échouait en silence (aucun bouton git) ; le bouton « Retour à l'accueil »
+en BAS de page restait hors de vue quand la page dépassait la fenêtre
+fixe ; et les cinq étapes du sceau I n'existaient nulle part à l'écran —
+le développeur devait retenir l'ordre.
+
+**Livré (v1.6).** Un : GIT — bouton « Pousser v06/sceau-I sur git… » : add
+ciblé SEUL (jamais « add -A » : la clé privée vit hors du dépôt, *.log
+ignoré), commit au message EXIGÉ (dialogue modal, leçon D113 : parent +
+grab), pull --rebase AVANT push, chaque étape refuse NOMMÉ (pas un dépôt
+git, git absent code 127, rebase en cours → « git rebase --abort » nommé,
+rien-à-committer = synchronisation VERTE). Deux : FENÊTRE AU CONTENU —
+chaque page affichée redimensionne la fenêtre (clampée à l'écran, minsize
+880x600) et « ← Accueil » vit dans le BANDEAU, toujours visible. Trois :
+FIL DE CÉRÉMONIE — les cinq étapes (Préparer → Générer la clé → Signer →
+Déposer → Git) s'auto-détectent par PREUVES en lecture seule ; l'étape
+satisfaite S'EFFACE, ré-évaluation après chaque verdict + validation
+manuelle possible (la preuve de fichier reste la vérité).
+
+**Preuves.** test_ceremonie_gui.py 111 PASS (T12 git : commit+push PROUVÉS
+sur un origin NU de laboratoire ; T13 fil : cinq étapes par preuves) ;
+fumée Xvfb D116 8/8 ; test_sceau_I.py 50/50.
+
+## Entrée 102 — la RE-CÉRÉMONIE RÉELLE du sceau I (nuit du 30/10, commit 59b7ddc) : la rotation 478f182d… → 2bc97573… est CONSIGNÉE ici (spec § 5), le verdict à froid de l'assistant est VERT, et l'erratum § 12 du README CF2 est consigné
+
+**La cérémonie.** Le développeur a exécuté la re-cérémonie prédite par D115
+sur son terrain : commit 59b7ddc « sceau-I : remise de ceremonie
+(2026-10-30) » (aleksickx, 30/10 01:51) — ROTATION de la clé publique
+478f182d… → 2bc97573…, les DIX manifestes et les DIX signatures remplacés
+dans le MÊME commit (état cohérent, spec v06/I/README.md § 5 : « la
+rotation consignée au journal de travail » — la présente entrée EST cette
+consigne ; la dette de consignation des D113–D116 est soldée par les
+Entrées 98–101).
+
+**Le verdict à froid (l'assistant, clone frais de GitHub — pas la copie de
+travail).** sceau_I.py etat : clé déposée RÉELLE, 2bc97573…, 10/10 arbres
+SIGNE. sceau_I.py verifier : CODE 0 — DIX arbres VERTS. test_sceau_I.py :
+50/50, contrôle final « dépôt réel : VERT (10 arbres, canon LF D115) ».
+test_ceremonie_gui.py : 109/111 — les deux échecs étaient les témoins T13
+de la FENÊTRE D115, morts PAR CONSTRUCTION à la re-cérémonie (la preuve
+D115 l'avait promis : « cette preuve MEURT à la re-cérémonie ») ;
+réparés en D117 par des témoins ÈRE-COHÉRENTS. HYGIÈNE de la clé privée :
+PROPRE — aucun chemin de clé privée dans tout l'historique des objets que
+GitHub sert, inventaire exhaustif de sceau-I/ conforme (cinq entrées
+légitimes), le flux air-gap a tenu : la graine n'a jamais touché git. La
+phrase de D115 s'est réalisée mot pour mot : le sceau verdit sur TOUTE
+machine et la fenêtre est morte.
+
+**ERRATUM consigné (v06/I/CF2/README.md § 12).** Le § 12 dit « migrer +
+copies hors-ligne de 2 fragments » : FAUX — le seuil T=3 exige TROIS
+copies (le § 5 du MÊME README et download/LISEZMOI-coffre-CF2.txt font
+foi : « trois copies, pas deux — après un brûlage intégral, deux copies
+laissent le coffre MORT »). Le texte scellé reste INTACT : le corriger
+directement ferait diverger l'arbre v06/I de son manifeste signé (CODE 10)
+sans la clé physique — la correction entrera dans l'arbre à la PROCHAINE
+re-cérémonie, en même temps que toute autre évolution d'intention. Le
+LISEZMOI du kit (hors sceau) dit déjà la vérité : la cérémonie CF2 n'est
+pas exposée à l'erreur.
+
+## Entrée 103 — D117 (30/10) : le scénario se choisit AVANT TOUT (dossier local / repo git) et le repo git se clone DANS la fenêtre — la demande « pour la cérémonie, on puisse avant tout choisir entre 2 scenarii qui détermineront les étapes à afficher : dossier local et repo git. pour le cas du repos git, il faudrait un bouton qui permette de cloner le repo voulu en local » servie intégralement
+
+**Constat.** L'accueil s'ouvrait sur le choix du PROFIL (hors-ligne /
+dépôt) mais rien ne disait COMMENT le dépôt arrivait sur la machine : le
+développeur qui repart de zéro (machine neuve, dépôt distant) devait
+cloner dans son terminal PUIS attacher — le GUI ignorait la moitié du
+chemin, et le fil de cérémonie ne connaissait pas l'étape « cloner ».
+
+**Livré (v1.7).** Un : LE SCÉNARIO AVANT TOUT — une section « Scénario de
+cérémonie » vit EN TÊTE de l'accueil, deux boutons : « DOSSIER LOCAL — le
+dépôt est déjà ici » (attachement D112, fil de CINQ étapes) et « REPO GIT
+— cloner depuis un distant » ; le choix est consigné au journal ET à la
+boîte noire, re-choississable à tout moment, et DÉTERMINE LES ÉTAPES
+AFFICHÉES : le titre du fil porte le scénario, « repo git » prépose
+« Cloner le dépôt » en tête (fil de SIX, étapes du sceau décalées d'un
+rang, gestes suivent). Deux : LE BOUTON « Cloner en local… » — URL +
+dossier parent (Parcourir) + nom PRÉ-REMPLI depuis l'URL ; refus NOMMÉS
+avant tout lancement (URL vide, URL « - » = INJECTION, destination vide /
+« - » / NON VIDE — rien n'y est touché, git absent code 127, échec git
+relayé) ; le JETON éventuel de l'URL est MASQUÉ partout (journal, verdict,
+boîte noire, confirmation) ; après le clone, la PREUVE lecture seule
+(rev-parse --show-toplevel == dossier ET origin présent) doit passer, puis
+la garde D111 (v06/coffre_cf2.py) décide de l'ATTACHEMENT ; l'attachement
+réussi rebâtit les pages SUR LE FIL TKINTER et ouvre le profil dépôt
+directement. « Attacher un clone EXISTANT… » exige la preuve git/origin en
+plus de la garde D111.
+
+**Preuves.** test_ceremonie_gui.py 132 PASS / 0 ÉCHEC (T14 nouveau, 21
+contrôles ; T13 rework ÈRE-COHÉRENT) ; fumée Xvfb D117 27/27 sur copie
+AUTONOME du kit (clonage RÉEL labo → attaché, pages rebâties, fil SIX,
+bascule → fil CINQ, jeton absent partout) ; selftest 11 PASS ;
+non-régression : test_sceau_I.py 50/50 (D117 ne touche AUCUN arbre signé),
+test_cf2.py 43/43, verifier CODE 0. Verdict à froid du commit 674b63e par
+l'assistant (clone frais de GitHub) : 132 PASS / 0 ÉCHEC, sceau 50/50,
+verifier CODE 0.

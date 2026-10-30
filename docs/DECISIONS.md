@@ -3520,3 +3520,109 @@ RIEN de nouveau — ils permettent de DÉSIGNER ce que les CLI savaient déjà
 faire, la discipline des CLI reste la loi ; la phrase saisie dans la
 section Coffre CF1 transite par le temporaire 0600 détruit du relais, elle
 ne paraît jamais dans une ligne de commande.
+
+
+## D113 — Le GUI porte sa boîte noire (l'observabilité est locale, jamais réseau)
+
+**Décision.** Tout ce que la fenêtre affiche, chaque dialogue posé (et sa
+réponse), chaque verdict et CHAQUE crash de rappel tkinter atterrit dans
+v06/ceremonie-journal.log — fichier LOCAL, horodaté, AUCUN réseau. Le
+rapport part par la main de l'humain (bouton « Envoyer le rapport… » :
+Enregistrer sous .txt + presse-papiers + dossier ouvert), jamais par un
+fil que le GUI aurait pris pour se faire débugger.
+
+**Frontières tenues.** L'ordre de pack est la priorité d'espace : barre de
+verdict et journal se packent AVANT le corps, le corps DÉFILE (une page
+plus haute que la fenêtre reste intégralement atteignable). Les dialogues
+passent TOUJOURS au-dessus (parent explicite — un dialogue sans parent
+peut naître DERRIÈRE et faire croire le GUI mort). Un échec d'écriture de
+la boîte noire (disque en lecture seule) ne gêne JAMAIS la cérémonie : le
+témoin n'est pas une dépendance. Aucune donnée secrète n'y entre : phrase
+par temporaire détruit, graine jamais affichée.
+
+**Bornes.** La boîte noire est un JOURNAL, pas une preuve : ce qui prouve
+reste les CLI, les tests et le sceau — le rapport sert au DIAGNOSTIC de
+terrain (le développeur le glisse dans la conversation, l'assistant lit).
+
+## D114 — Le verdict ne répète pas le flux (une ligne d'ancrage suffit)
+
+**Décision.** Quand la sortie d'un CLI a déjà coulé ligne à ligne dans le
+journal par le flux temps réel de l'exécuteur, le verdict rend UNE ligne
+d'ancrage — la première, celle de la barre. Le détail vit au-dessus, dans
+l'ordre du flux ; le rapport n'est plus deux fois trop lourd.
+
+**Frontières tenues.** SANS emit (pas de flux), le texte ENTIER reste la
+remise du verdict — générer/signer hors-ligne inchangés. Le verdict ne
+perd AUCUNE information : il perd un DOUBLON.
+
+**Bornes.** Purement cosmétique de journal : aucune logique de cérémonie
+touchée, aucun CLI modifié.
+
+## D115 — Le manifeste hache le contenu CANONIQUE LF (la représentation du checkout n'est pas l'intention)
+
+**Décision.** Toute paire CRLF est normalisée en LF avant condensé : « le
+même arbre produit le même manifeste sur toute machine » redevient VRAI.
+La clé physique signe l'INTENTION (le canon), pas la représentation locale
+du checkout (Windows autocrlf porte CRLF sur disque).
+
+**Frontières tenues.** La preuve de la faute est CONSERVÉE : la fenêtre de
+re-cérémonie nomme la divergence de représentation SEULE (fichier par
+fichier), les signatures valides, et l'amendement de spécification par
+hash littéral — au lieu d'échouer en silence. Cette preuve MEURT à la
+re-cérémonie (le verifier re-verdit et ne l'appelle plus). La réplique de
+test repart VERT canonique à l'entrée : les tests de falsifiabilité
+mesurent leurs PROPRES mutations, pas l'ère du dépôt réel. T4 devient la
+cohérence état-clé (l'ère lab dit « test » sur la clé de test, l'ère
+réelle dit « reelle » sur une clé différente).
+
+**Bornes.** Un octet muté HORS fin de ligne reste une divergence NOMMÉE :
+la normalisation ne masque que la représentation, jamais le contenu.
+
+## D116 — Le fil de cérémonie par preuves, le git ciblé, la fenêtre au contenu
+
+**Décision.** Les cinq étapes du sceau I (Préparer → Générer la clé →
+Signer → Déposer → Git) s'auto-détectent par PREUVES en lecture seule
+(a-signer frais, paire de clés, remise vérifiée, arbres verts, git propre
+ET poussé) ; l'étape satisfaite S'EFFACE, la suivante s'affiche avec son
+GESTE ; ré-évaluation après chaque verdict + validation manuelle possible
+(la preuve de fichier reste la vérité). Le bouton « Pousser v06/sceau-I
+sur git… » fait add ciblé SEUL (jamais « add -A » : la clé privée vit hors
+du dépôt), commit au message EXIGÉ, pull --rebase AVANT push. La fenêtre
+prend la taille de son contenu, « ← Accueil » vit dans le bandeau.
+
+**Frontières tenues.** Chaque étape de git refuse NOMMÉ (pas un dépôt git,
+git absent code 127, rebase en cours → « git rebase --abort » nommé,
+rien-à-committer = synchronisation VERTE). La validation MANUELLE survit
+aux ré-évaluations auto et meurt au « Ré-évaluer ».
+
+**Bornes.** Le fil ne PROUVE rien (lecture seule) : il ORIENTE — la
+preuve reste sceau_I.py verifier. Le push du GUI ne remplace pas le
+terminal : il le relaye avec les mêmes gardes.
+
+## D117 — Le scénario se choisit AVANT TOUT (dossier local / repo git), et le clonage vit dans la fenêtre
+
+**Décision.** La demande développeur « avant tout choisir entre 2
+scenarii qui détermineront les étapes à afficher : dossier local et repo
+git ; pour le cas du repo git, un bouton qui permette de cloner le repo
+voulu en local » est servie par une section SCÉNARIO en tête de l'accueil :
+DOSSIER LOCAL (attachement D112, fil de CINQ étapes) et REPO GIT (fil de
+SIX étapes — « Cloner le dépôt » en tête, prouvé lecture seule par
+rev-parse + origin). Le panneau repo git porte le bouton « Cloner en
+local… » (URL + parent + nom pré-rempli) et « Attacher un clone
+EXISTANT… » (garde D111 + preuve git/origin exigée).
+
+**Frontières tenues.** Refus NOMMÉS avant tout lancement : URL vide, URL
+ou destination commençant par « - » (un argument git déguisé est une
+INJECTION), destination NON VIDE (rien n'y est touché), git absent (127),
+échec git relayé. Le JETON éventuel de l'URL est MASQUÉ partout
+(journal, verdict, boîte noire, confirmation — ssh scp-like inchangé :
+l'utilisateur « git » y est public). Après le clone, la PREUVE
+(rev-parse == dossier ET origin) doit passer, puis la garde D111 décide de
+l'attachement ; les pages sont rebâties SUR LE FIL TKINTER (jamais depuis
+le fil ouvrier) et le profil dépôt s'ouvre directement. Le scénario ne
+change AUCUNE preuve du sceau : seulement la tête du fil.
+
+**Bornes.** Le clonage utilise LE git de la machine (aucune
+réimplémentation réseau) ; un dépôt privé peut exiger l'authentification
+GitHub (le navigateur peut s'ouvrir) ; le nom pré-rempli n'écrase jamais
+un nom retapé à la main.

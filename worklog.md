@@ -684,3 +684,70 @@ Stage Summary:
 - Suite : redépôt du kit Drive (v1.4 + LISEZMOI + MANIFESTE) si l'OAuth
   relais vit encore ; cérémonies réelles (clé-I + coffre-CF2, le GUI est
   maintenant complet pour) ; D57 ; moteur sentinel Windows
+
+---
+Task ID: 30
+Agent: Z.ai (agent principal)
+Task: demande développeur 30/10 (suite de la cérémonie complète) — « tout
+d'abord j'aimerais que pour la cérémonie, on puisse avant tout choisir
+entre 2 scenarii qui détermineront les étapes à afficher : dossier local
+et repo git. pour le cas du repos git, il faudrait un bouton qui permette
+de cloner le repo voulu en local. ensuite (a) et (b) » — D117 + rattrapage
+documentaire + préparation du verdict CF2.
+
+Work Log:
+- VERDICT À FROID de la re-cérémonie 59b7ddc (la promesse de la session
+  précédente, tenue) : fetch → le distant avait AVANCÉ (re-cérémonie
+  poussée à 01:51 par le terrain) ; clone FRAIS de GitHub (pas la copie
+  de travail) → etat : clé RÉELLE 2bc97573… ; verifier : DIX arbres VERTS
+  CODE 0 ; test_sceau_I 50/50 (« dépôt réel : VERT, canon LF D115 ») ;
+  test_ceremonie_gui 109/111 — les 2 échecs = témoins T13 de la fenêtre
+  D115, morts PAR CONSTRUCTION à la re-cérémonie (nommés comme tels,
+  réparés en D117) ; hygiène clé privée : PROPRE (aucun chemin d'objet,
+  inventaire sceau-I exhaustif, flux air-gap tenu)
+- D117 : LE SCÉNARIO AVANT TOUT (section en tête d'accueil, deux
+  boutons, choix consigné journal + boîte noire, re-choississable) qui
+  DÉTERMINE LES ÉTAPES DU FIL (cinq en dossier local, SIX en repo git
+  avec « Cloner le dépôt » en tête — preuve lecture seule rev-parse +
+  origin, gestes décalés via hint_fil) ; LE BOUTON « Cloner en local… »
+  (URL + parent Parcourir + nom PRÉ-REMPLI sans écraser la main) :
+  refus NOMMÉS (URL vide, « - » = injection, destination vide/« - »/NON
+  VIDE intacte, git absent 127, échec relayé), JETON masqué partout
+  (masquer_jeton), preuve clone exigée après le clone (« un clone que
+  l'on ne peut pas prouver n'est pas un clone »), garde D111 pour
+  l'attachement (clone d'un autre dépôt : conservé, refus nommé), pages
+  rebâties SUR LE FIL TKINTER (_sur_fin_action détecte _racine_pages !=
+  RACINE_DEPOT) et profil dépôt OUVERT directement ; « Attacher un clone
+  EXISTANT… » avec preuve git/origin exigée
+- PREUVES D117 : test_ceremonie_gui.py 132 PASS / 0 ÉCHEC (T14 nouveau
+  21 contrôles ; T13 rework ÈRE-COHÉRENT — le fil suit l'ère du dépôt
+  réel, mentir dans un sens comme dans l'autre serait attrapé ; leçon de
+  labo : dépôt nu + push main sans symbolic-ref HEAD → clone VIDE) ;
+  fumée Xvfb D117 27/27 sur copie AUTONOME (clonage RÉEL labo attaché,
+  fil SIX, bascule fil CINQ, jeton absent du journal/verdict/boîte
+  noire) ; selftest 11 ; non-régression sceau 50/50 (aucun arbre signé
+  touché), cf2 43/43, verifier CODE 0 ; VERDICT À FROID du commit 674b63e
+  (clone frais) : 132 PASS, 50/50, CODE 0
+- (a) RATTRAPAGE DOCUMENTAIRE : JOURNAL_TRAVAIL Entrées 98–103 (D113–D116
+  consignées à retardement, référence = message de commit, modèle Entrée
+  95 ; la re-cérémonie 59b7ddc avec la ROTATION 478f182d… → 2bc97573…
+  CONSIGNÉE — spec § 5 ; l'ERRATUM § 12 du README CF2 consigné : « 2
+  fragments » → TROIS copies, § 5 et le LISEZMOI font foi, le texte
+  scellé reste INTACT — la correction entrera à la prochaine
+  re-cérémonie) ; DECISIONS D113–D117 ; ce worklog
+- (b) PRÉPARATION DU VERDICT CF2 À FROID : scripts/verdict_cf2_a_froid.py
+  (bac à sable) — clonage froid + autotest + falsifiabilité CF2 + la
+  liste de contrôle du rapport boîte noire du développeur (le coffre réel
+  ne traverse JAMAIS git, le verdict lit le dépôt + le rapport) ; le
+  LISEZMOI-coffre-CF2 du kit gagne la section « LA VÉRIFICATION À FROID »
+
+Stage Summary:
+- D117 ACCOMPLI ET JUGÉ À FROID : le scénario (dossier local / repo git)
+  se choisit AVANT TOUT, détermine les étapes du fil, et le repo git se
+  clone DANS la fenêtre (jeton masqué, preuve + garde D111, attachement
+  à chaud) — 132 PASS + fumée 27/27 + clone frais 132 PASS
+- (a) ACCOMPLI : la rotation de clé consignée, les entrées D113–D117 au
+  journal, l'erratum § 12 consigné (texte scellé intact)
+- Suite : cérémonie CF2 du développeur (le GUI est prêt : scénario repo
+  git → cloner → migrer → TROIS fragments → sentinelle), puis verdict à
+  froid CF2 par l'assistant ; D57 ; moteur sentinel Windows SACL/ETW
