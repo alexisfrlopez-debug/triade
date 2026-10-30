@@ -108,6 +108,20 @@ la couche qui décide, écrit ou refuse. Ce test l'attaque :
        dossier est impossible (parent-fichier) et RIEN n'est écrit ;
        exporter_feuille suit la même loi sur un mini-coffre de labo
        (feuille écrite dans un dossier ABSENT) ;
+  T17  D129 — LE PILIER DROIT : le fil d'étapes et le journal de
+       cérémonie vivent dans un encart À DROITE de la fenêtre, visible
+       QUEL QUE SOIT l'onglet affiché (la demande du terrain : « la
+       liste des étapes dans un encart à droite, visible quel que soit
+       l'onglet, idem pour le journal en dessous — pour une lisibilité
+       de l'écran plus facile ») : le fil QUITTE l'onglet « 1 · Sceau »
+       (les onglets 2-4 le cachaient), rejoint le journal dans une
+       colonne packée AVANT le corps (priorité d'espace D113, largeur
+       tenue), le fil sans dépôt attaché le DIT (jamais un fil muet),
+       le pilier SURVIT aux re-attachements (bâti une fois, hors des
+       pages), la fenêtre compte la colonne en LARGEUR ; contrôles
+       STATIQUES par source (headless) — la preuve WIDGET VIVANT vit
+       dans scripts/fumee_xvfb_d129.py (pilier affiché sur CHAQUE
+       onglet, page accueil comprise) ;
 
 Style maison : tout sur la sortie, échec nommé, exit code 0/1.
 """
@@ -866,9 +880,13 @@ def t15_fusion_d118(rep):
     verifie("t15-geste-cle-hors-aller-retour",
             "ci-contre" in gui.FIL_HINTS[2].lower())
 
-    # --- la version porte la fusion (ère-cohérente : D118 ou après) ----
+    # --- la version porte la fusion (ère-cohérente : v1.9 [D119] ou
+    # après — la version GUI vit désormais en v2.1 [D129] : c'est le
+    # NUMÉRO qui fait foi, la mention d'ère a quitté la chaîne) --------
+    mo = re.search(r"v(\d+)\.(\d+)", gui.VERSION_GUI)
     verifie("t15-version-d118-ou-posterieure",
-            any(f"D{d}" in gui.VERSION_GUI for d in (118, 119, 120)),
+            mo is not None
+            and (int(mo.group(1)), int(mo.group(2))) >= (1, 9),
             gui.VERSION_GUI)
 
 
@@ -959,8 +977,129 @@ def t16_dossier_avec_la_cle(rep):
             os.path.isfile(feuille)
             and "feuille exportée" in texte_feuille,
             texte_feuille)
-    # la version porte l'ère D119
-    verifie("t16-version-d119", "D119" in gui.VERSION_GUI, gui.VERSION_GUI)
+    # la version porte l'ère D119 (v1.9 ou après — v2.1 [D129] la porte :
+    # numéro comparé, la mention d'ère a quitté la chaîne)
+    mo = re.search(r"v(\d+)\.(\d+)", gui.VERSION_GUI)
+    verifie("t16-version-d119",
+            mo is not None
+            and (int(mo.group(1)), int(mo.group(2))) >= (1, 9),
+            gui.VERSION_GUI)
+
+
+# ---------------------------------------------------------------------------
+# T17 — D129 : LE PILIER DROIT — le fil d'étapes et le journal vivent dans
+# un encart à droite de la fenêtre, visible QUEL QUE SOIT l'onglet affiché
+# (la demande du terrain : « la liste des étapes dans un encart à droite,
+# visible quel que soit l'onglet, idem pour le journal en dessous — pour
+# une lisibilité de l'écran plus facile »). Contrôles STATIQUES par source
+# (headless : la machine hors-ligne y a droit) ; la preuve WIDGET VIVANT
+# vit dans scripts/fumee_xvfb_d129.py (fenêtre Tk réelle sous Xvfb : le
+# pilier reste affiché sur CHAQUE onglet du cahier, page accueil comprise).
+# ---------------------------------------------------------------------------
+
+def t17_pilier_droit_d129():
+    """T17 — D129 : le fil QUITTE l'onglet « 1 · Sceau » (il y était la
+    propriété d'un seul onglet : les onglets 2-4 le cachaient) et rejoint
+    le journal dans le PILIER DROIT, packé avant le corps (priorité
+    d'espace D113) ; le fil sans dépôt attaché le DIT ; la fenêtre compte
+    la colonne en LARGEUR."""
+    import inspect
+
+    print("T17 — D129 : le pilier droit (fil + journal, tout onglet)")
+
+    # fail-closed AVANT toute introspection : sans pilier (code pré-D129),
+    # l'échec est NOMMÉ, pas un traceback (style maison)
+    if not hasattr(gui.Application, "_batir_colonne_droite"):
+        verifie("t17-pilier-bati-avec-fil-et-journal", False,
+                "Application._batir_colonne_droite inexistant — le pilier "
+                "n'est pas bâti (l'ancien GUI portait le fil dans l'onglet "
+                "« 1 · Sceau » : les onglets 2-4 le cachaient)")
+        verifie("t17-version-d129", False, gui.VERSION_GUI)
+        return
+
+    # --- le pilier existe et porte le fil ET le journal ------------------
+    src_pilier = inspect.getsource(gui.Application._batir_colonne_droite)
+    verifie("t17-pilier-bati-avec-fil-et-journal",
+            "cadre_fil" in src_pilier
+            and "label_fil_resume" in src_pilier
+            and "label_fil_courant" in src_pilier
+            and "label_fil_detail" in src_pilier
+            and "label_fil_suite" in src_pilier
+            and "Journal(" in src_pilier,
+            "le pilier doit construire le fil complet ET le journal")
+    verifie("t17-pilier-a-droite-largeur-tenue",
+            'side="right"' in src_pilier
+            and "pack_propagate(False)" in src_pilier
+            and "LARGEUR_COLONNE_DROITE" in src_pilier,
+            "colonne packée à droite, largeur tenue (propagate off)")
+
+    # --- le fil a QUITTÉ l'onglet Sceau (LE défaut que D129 tue) --------
+    src_onglets = inspect.getsource(gui.Application._batir_onglets_depot)
+    verifie("t17-fil-hors-de-longlet-sceau",
+            "label_fil" not in src_onglets
+            and "cadre_fil" not in src_onglets
+            and "fil_manuel" not in src_onglets,
+            "le fil ne doit plus naître dans l'onglet « 1 · Sceau » — "
+            "sinon les onglets 2-4 le cachent (défaut dénoncé)")
+    # le cahier garde ses repères D128 : insert en tête + ouverture étape 1
+    verifie("t17-cahier-garde-ses-reperes-d128",
+            "insert(0" in src_onglets and "select(0)" in src_onglets)
+
+    # --- le journal vit dans le pilier, plus SOUS le corps --------------
+    src_journal = inspect.getsource(gui.Journal.__init__)
+    verifie("t17-journal-dans-le-parent-sans-bottom",
+            'side="top"' in src_journal
+            and 'side="bottom"' not in src_journal
+            and 'expand=True' in src_journal,
+            "le journal se packe dans le pilier (parent), il remplit le "
+            "reste — plus de bandeau pleine largeur sous le corps")
+
+    # --- l'ordre de pack : pilier AVANT corps (priorité d'espace D113) --
+    src_init = inspect.getsource(gui.Application.__init__)
+    pos_pilier = src_init.find("_batir_colonne_droite()")
+    pos_corps = src_init.find("_batir_corps_defilant()")
+    verifie("t17-pilier-packe-avant-le-corps",
+            0 <= pos_pilier < pos_corps,
+            "la colonne doit être packée AVANT le corps défilant "
+            "(sinon le corps l'évince — discipline D113)")
+    verifie("t17-pilier-une-fois-hors-des-pages",
+            src_init.count("_batir_colonne_droite()") == 1,
+            "le pilier se bâtit UNE fois, à la racine (jamais par page)")
+
+    # --- le fil sans dépôt attaché le DIT (fail-closed affiché) ---------
+    src_fil = inspect.getsource(gui.Application._rafraichir_fil)
+    verifie("t17-fil-sans-depot-le-dit",
+            "depot_pret" in src_fil
+            and "aucun dépôt attaché" in src_fil,
+            "sans dépôt, le fil nomme l'état au lieu de se taire "
+            "(jamais un fil muet qu'on prendrait pour un fil vide)")
+    # le fil survit aux re-attachements : il n'est PAS rebâti par page
+    src_rebatir = inspect.getsource(gui.Application._rebâtir_pages)
+    verifie("t17-fil-survit-au-re-attachement",
+            "cadre_fil" not in src_rebatir
+            and "colonne_droite" not in src_rebatir,
+            "les pages renaissent seules — le pilier (fil + journal) "
+            "survit, l'historique ne s'efface jamais")
+
+    # --- la fenêtre compte le pilier en LARGEUR, plus le journal en haut
+    src_taille = inspect.getsource(gui.Application._ajuster_taille_fenetre)
+    verifie("t17-fenetre-elargie-du-pilier",
+            "LARGEUR_COLONNE_DROITE" in src_taille
+            and "self.journal.cadre.winfo_reqheight()" not in src_taille,
+            "la largeur compte la colonne ; la hauteur ne compte plus le "
+            "journal SOUS le corps (il vit à côté)")
+
+    # --- les libellés du fil se replient à la largeur du pilier --------
+    verifie("t17-libelles-replies-au-pilier",
+            isinstance(gui.LARGEUR_COLONNE_DROITE, int)
+            and 300 <= gui.LARGEUR_COLONNE_DROITE <= 600
+            and gui.WRAP_COLONNE_DROITE < 880
+            and gui.WRAP_COLONNE_DROITE == gui.LARGEUR_COLONNE_DROITE - 44,
+            f"largeur {getattr(gui, 'LARGEUR_COLONNE_DROITE', '—')} / "
+            f"wrap {getattr(gui, 'WRAP_COLONNE_DROITE', '—')}")
+
+    # --- la version porte l'ère D129 -------------------------------------
+    verifie("t17-version-d129", "D129" in gui.VERSION_GUI, gui.VERSION_GUI)
 
 
 def _ecrire(chemin, texte):
@@ -1381,8 +1520,8 @@ def x3_attachement_depot():
 
 def main() -> int:
     print(f"[test-ceremonie-GUI] falsifiabilité du maître de cérémonie "
-          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119 · D128) — "
-          f"dépôt {RACINE}")
+          f"(D107 · D109 · D110 · D111 · D112 · D117 · D118 · D119 · D128 · "
+          f"D129) — dépôt {RACINE}")
     t1_ed25519()
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-test-") as rep:
         t234_cle_i(rep)
@@ -1400,6 +1539,7 @@ def main() -> int:
         t15_fusion_d118(rep)
     with tempfile.TemporaryDirectory(prefix="ceremonie-gui-t16-") as rep:
         t16_dossier_avec_la_cle(rep)
+    t17_pilier_droit_d129()
     x1_import_headless()
     x2_coherence_attributs()
     x3_attachement_depot()

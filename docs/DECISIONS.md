@@ -3857,3 +3857,53 @@ l'outillage migrer vivra avec la preuve terrain.
 **Frontières tenues.** Le pupitre NE RÉIMPLÉMENTE rien (il lance coffre_cf3.py et test_coffre_cf3.py tels quels — une divergence de verdict entre le bouton et la ligne de commande est impossible par construction) ; le rapport ne contient NI secret NI chemin de coffre réel (preuve par le rapport lui-même, falsifiée par la suite X5) ; le fil ouvrier ne touche JAMAIS tkinter (file de messages, pompage côté fil tkinter — discipline D18x) ; la boîte noire vit en *.log gitignoré (jamais commise, jamais synchronisée) ; le kit ne contient JAMAIS clé, phrase, coffre réel ni jeton (les secrets vivent hors kit).
 
 **Bornes.** Le rapport part par la main de l'humain (aucun réseau par PRINCIPE — la cérémonie ne prend pas de fil pour se faire débugger : l'assistance ne peut pas être plus assistée que la main qui glisse le fichier) ; la preuve du .bat est STRUCTURELLE sur POSIX (contenu : replis + pause — Windows ne court pas dans le laboratoire, la limite est dite) ; la boîte noire locale est effaçable par un attaquant admin (comme tout témoin local — la carte papier et Git restent les témoins hors-bande) ; les empreintes md5 disent la GÉNÉRATION des fichiers, pas leur intégrité cryptographique face à un attaquant qui réécrirait aussi le MANIFESTE (le verdict à froid depuis un clone frais GitHub reste le filet) ; le diagnostic distant dépend du rapport ENVOYÉ (un problème non rapporté reste un problème aveugle — le trio maximise la chance, il ne la garantit pas).
+
+
+## D129 — Le pilier droit : le fil d'étapes et le journal vivent dans un encart à droite, visible quel que soit l'onglet affiché (la demande du terrain : la lisibilité de l'écran)
+
+**Décision.** La demande développeur « je voudrais que dans la gui de
+cérémonie, la liste des étapes soit affichée dans un encart à droite de
+l'écran qui soit visible quel que soit l'onglet affiché, idem pour le
+journal de cérémonie (en dessous de la liste des étapes) pour une
+lisibilité de l'écran plus facile » est servie par LE PILIER DROIT : une
+colonne (380 px, largeur tenue par pack_propagate(False)) packée
+side="right" À LA RACINE, AVANT le corps défilant (ordre de pack =
+priorité d'espace, discipline D113 — le pilier ne peut plus être évincé)
+; le FIL DE CÉRÉMONIE (D116 : résumé, étape courante, détail + geste, à
+venir, boutons « Ré-évaluer l'étape » / « Marquer faite (à la main) »)
+vit EN HAUT du pilier, le JOURNAL DE CÉRÉMONIE (D113) DESSOUS et
+remplit le reste — tous deux HORS DES PAGES et HORS DU CAHIER : le fil
+QUITTE l'onglet « 1 · Sceau de l'Intention » où il vivait depuis D118
+(les onglets « 2 · Générer la clé », « 3 · Signer », « 4 · Vérifier »,
+CF2 et liste blanche le CACHAIENT — le terrain devait jongler entre les
+onglets pour savoir où il en était), le journal quitte sa bande
+pleine largeur SOUS le corps (qui repoussait la page vers le haut) ; le
+pilier SURVIT aux re-attachements (bâti UNE fois à la naissance, comme
+l'exécuteur et la barre de verdict — l'historique de cérémonie ne
+s'efface jamais d'un changement de dépôt) ; le fil sans dépôt attaché
+le DIT (« aucun dépôt attaché — les étapes 1, 4 et 5 naîtront à
+l'attachement, les onglets 2-3 restent actifs » : fail-closed, jamais
+un fil muet qu'on prendrait pour un fil vide) ; les libellés du fil se
+replient à la LARGEUR DU PILIER (wrap 336, plus de 880) ; la fenêtre
+s'ÉLARGIT du pilier (_ajuster_taille_fenetre compte la colonne en
+LARGEUR — le journal ne compte plus en hauteur : il vit à côté) ; la
+version GUI passe en v2.1 (v2.0 fut l'ère LISEZMOI D128).
+
+**Frontières tenues.** AUCUNE vérité vivante ne bouge : le fil garde
+ses PREUVES lecture seule (fil_ceremonie inchangé), ses numéros D128
+(onglet « n · » = étape n), son scénario D117 (titre « Fil de cérémonie
+· scénario : … ») ; le journal garde sa boîte noire (chaque ligne du
+pilier atterrit toujours dans v06/ceremonie-journal.log — l'encart ne
+change QUE l'habit) ; le corps DÉFILE toujours (D113) et le bandeau
+« ← Accueil » reste hors du corps (D116) ; la molette au-dessus du
+journal Text reste la sienne ; le pilier n'existe qu'à l'écran — le
+rapport « Envoyer le journal… » emporte le même texte qu'avant.
+
+**Bornes.** Le pilier mange 380 px de largeur : sur un écran étroit
+(< ~1250 px) le cahier se resserre (la fenêtre s'ouvre à la taille du
+contenu, clampée à l'écran — minsize 880 inchangé, un écran plus étroit
+que le contenu défile toujours) ; le fil du pilier reste COMPACT (une
+ligne par liste, le détail replié à 336 px — le détail intégral vit
+dans les preuves et le journal) ; le pilier n'est pas un tableau de
+bord figé : il ne PROUVE rien (lecture seule), il ORIENTE — la preuve
+reste sceau_I.py verifier.

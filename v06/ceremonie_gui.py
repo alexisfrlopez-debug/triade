@@ -138,6 +138,27 @@ Il couvre les DEUX cérémonies de souveraineté v0.6.0 (D105/D106) :
       s'ouvrait sur « Générer » alors que l'étape 1 vivait en tête de
       bande) ;
 
+    - D129 — LE PILIER DROIT : la liste des étapes (fil de cérémonie)
+      et le journal vivent désormais dans UN ENCART À DROITE de la
+      fenêtre, visible QUEL QUE SOIT L'ONGLET AFFICHÉ (la demande du
+      terrain : « la liste des étapes soit affichée dans un encart à
+      droite de l'écran, visible quel que soit l'onglet affiché, idem
+      pour le journal de cérémonie en dessous, pour une lisibilité de
+      l'écran plus facile ») ; avant, le fil ne vivait QUE dans l'onglet
+      « 1 · Sceau de l'Intention » — dès l'onglet « 2 · Générer la clé »
+      le terrain PERDAIT le fil de vue, il devait jongler entre les
+      onglets pour savoir où il en était, et le journal (pleine largeur
+      SOUS le corps défilant) repoussait la page vers le haut ; la
+      colonne est packée AVANT le corps (ordre de pack = priorité
+      d'espace, discipline D113) : fil EN HAUT, journal DESSOUS (il
+      remplit le reste) ; le fil et le journal vivENT HORS des pages,
+      ils SURVIVENT aux re-attachements (comme l'exécuteur et la barre
+      de verdict — l'historique de cérémonie ne s'efface jamais d'un
+      changement de dépôt) ; le fil sans dépôt attaché le DIT (fail-
+      closed : jamais un fil muet qu'on prendrait pour un fil vide) ;
+      la fenêtre s'élargit du pilier (D116 : taille au contenu, la
+      largeur compte désormais la colonne) ;
+
 DISCIPLINE (inchangée — le GUI ne l'assouplit JAMAIS) :
   - la clé privée I ne traverse ni le bac à sable, ni le réseau, ni git ;
   - toute action destructrice exige une confirmation EXPLICITE (brûler :
@@ -189,7 +210,7 @@ class ErreurCeremonie(RuntimeError):
     """Échec NOMMÉ de cérémonie — le GUI l'affiche, rien n'est écrit."""
 
 
-VERSION_GUI = "ceremonie-GUI v1.9 (D119)"   # le dossier de cérémonie naît AVEC la clé (terrain v1.8 : Errno 2) + feuille CF2
+VERSION_GUI = "ceremonie-GUI v2.1 (D129)"   # D129 : le pilier droit — fil + journal toujours visibles (lisibilité du terrain) ; v2.0 = D128 (cahier numéroté comme le fil)
 
 
 # ===========================================================================
@@ -1133,6 +1154,14 @@ TITRES_ONGLETS_CEREMONIE = {
     "verifier": " 4 · Vérifier une remise (contrôle) ",
 }
 
+# D129 — LE PILIER DROIT : largeur de l'encart (fil + journal) qui vit à
+# droite de la fenêtre, TOUJOURS visible quel que soit l'onglet affiché.
+# Assez étroit pour laisser le cahier respirer, assez large pour qu'un
+# verdict se lise sans retour à la ligne tous les trois mots ; les
+# libellés du fil s'y replient (wrap) au lieu de réclamer 880 px.
+LARGEUR_COLONNE_DROITE = 380
+WRAP_COLONNE_DROITE = LARGEUR_COLONNE_DROITE - 44   # ≈ 336 : marges ôtées
+
 
 def libelle_court_fil(numero):
     """D128 — le numéro d'étape en LIBELLÉ court (listes « Faites » et
@@ -1872,12 +1901,14 @@ def _normalise(r):
 class Journal:
     """Le journal de cérémonie : trace TEXTUELLE de tout ce qui s'est passé
     (la preuve de passage reste aux CLI et tests — le journal est pour
-    l'humain)."""
+    l'humain). D129 : il vit dans le PILIER DROIT, SOUS le fil d'étapes —
+    le parent est la colonne (plus la racine pleine largeur), il remplit
+    tout ce que le fil lui laisse."""
 
     def __init__(self, parent, application):
         self.app = application
         cadre = ttk.LabelFrame(parent, text="Journal de cérémonie")
-        cadre.pack(side="bottom", fill="both", expand=True, padx=10, pady=(4, 10))
+        cadre.pack(side="top", fill="both", expand=True)   # D129 : pilier
         self.cadre = cadre    # D116 : mesure pour la fenêtre au contenu
         barre = ttk.Frame(cadre)
         barre.pack(side="top", fill="x", padx=6, pady=(2, 0))
@@ -1940,8 +1971,12 @@ class Application:
         # (page dépôt : ~1000 px) — « aucun journal qui s'affiche ». Désormais
         # verdict et journal se packent AVANT (garantis) ; le corps, packé en
         # DERNIER, DÉFILE au lieu d'évincer (_batir_corps_defilant).
+        # D129 — le journal vit dans le PILIER DROIT avec le fil (la colonne
+        # se packe AVANT le corps : sa place est garantie, quel que soit
+        # l'onglet affiché).
         self._batir_statut()
-        self.journal = Journal(self.racine, self)
+        self.depot_pret = depot_disponible()   # D129 : le pilier le dit dès sa naissance
+        self._batir_colonne_droite()
         self._batir_corps_defilant()
         self.pages = {}
         self.executeur = Executeur(self)
@@ -1950,7 +1985,7 @@ class Application:
         # traceback muet vers stderr (invisible lancé via .bat sans console).
         self.racine.report_callback_exception = self._sur_crash_rappel
         ENREGISTREUR.entete(self.racine)
-        self.depot_pret = depot_disponible()
+        # (depot_pret est évalué plus haut, AVANT le pilier D129 qui le dit)
         self.scenario = None            # D117 : aucun scénario choisi AVANT TOUT
         self._pre_remplissage_a_signer = None   # D118 : fil ouvrier → fil tkinter
         self._batir_accueil()
@@ -2008,6 +2043,77 @@ class Application:
                                        padding=(12, 4))
         self.label_verdict.pack(side="bottom", fill="x")
         self.label_verdict.configure(foreground=COULEUR_ATTENTE)
+
+    def _batir_colonne_droite(self):
+        """D129 — LE PILIER DROIT : le fil d'étapes et le journal vivent
+        dans un encart à droite de la fenêtre, TOUJOURS visible quel que
+        soit l'onglet affiché (la demande du terrain : « la liste des
+        étapes dans un encart à droite, visible quel que soit l'onglet,
+        idem pour le journal en dessous — pour une lisibilité de l'écran
+        plus facile »). Avant : le fil ne vivait que dans l'onglet
+        « 1 · Sceau de l'Intention » — les onglets 2-4 le cachaient ; le
+        journal, pleine largeur sous le corps, repoussait la page vers le
+        haut. La colonne est packée AVANT le corps (ordre de pack =
+        priorité d'espace, D113) et vit HORS des pages : elle SURVIT aux
+        re-attachements, comme l'exécuteur et la barre de verdict."""
+        colonne = ttk.Frame(self.racine, width=LARGEUR_COLONNE_DROITE)
+        colonne.pack(side="right", fill="y", padx=(0, 10), pady=(6, 4))
+        colonne.pack_propagate(False)    # la largeur est TENUE : le contenu s'y plie
+        self.colonne_droite = colonne
+        # --- le FIL (D116/D117/D128) : l'étape satisfaite s'efface, la
+        # suivante s'affiche — auto-détection par PREUVES, lecture seule ;
+        # les libellés se replient à la LARGEUR DU PILIER (plus de 880 px) ;
+        # le titre porte le scénario courant (D117).
+        fil = ttk.LabelFrame(colonne, text="Fil de cérémonie",
+                              style="Carte.TLabelframe")
+        fil.pack(side="top", fill="x")
+        self.cadre_fil = fil
+        self.fil_manuel = set()
+        self._fil_etat = None
+        self.label_fil_resume = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=WRAP_COLONNE_DROITE,
+            justify="left", foreground="#8b949e")
+        self.label_fil_resume.pack(anchor="w", fill="x")
+        self.label_fil_courant = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=WRAP_COLONNE_DROITE,
+            justify="left", font=("Segoe UI", 10, "bold"),
+            foreground=COULEUR_ENCRE)
+        self.label_fil_courant.pack(anchor="w", fill="x", pady=(2, 0))
+        self.label_fil_detail = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=WRAP_COLONNE_DROITE,
+            justify="left", foreground="#57606a")
+        self.label_fil_detail.pack(anchor="w", fill="x")
+        self.label_fil_suite = ttk.Label(
+            fil, style="Sous.TLabel", wraplength=WRAP_COLONNE_DROITE,
+            justify="left", foreground="#8b949e")
+        self.label_fil_suite.pack(anchor="w", fill="x")
+        barre_fil = ttk.Frame(fil)
+        barre_fil.pack(fill="x", pady=(4, 0))
+        ttk.Button(barre_fil, text="Ré-évaluer l'étape",
+                   command=self._sur_fil_reevaluer).pack(side="left")
+        ttk.Button(barre_fil, text="Marquer faite (à la main)",
+                   command=self._sur_fil_manuel).pack(side="left", padx=6)
+        # --- le JOURNAL (D113) : SOUS le fil, il remplit le reste ------
+        self.journal = Journal(colonne, self)
+        # --- l'état initial du fil se DIT (fail-closed : jamais un fil muet
+        # qu'on prendrait pour un fil vide) ; avec un dépôt, la première
+        # évaluation part à l'ouverture de la page de cérémonie (montrer).
+        if not self.depot_pret:
+            self.label_fil_resume.configure(text="✓ Faites : —")
+            self.label_fil_courant.configure(
+                text="▶ Fil de cérémonie : aucun dépôt attaché",
+                foreground=COULEUR_ATTENTE)
+            self.label_fil_detail.configure(
+                text="Les étapes 1 [préparer], 4 [déposer] et 5 [git] "
+                     "naîtront à l'attachement du dépôt (accueil → "
+                     "scénario) ; les onglets « 2 · Générer la clé » et "
+                     "« 3 · Signer une remise » restent actifs (mode "
+                     "fichier seul, D87).")
+            self.label_fil_suite.configure(text="")
+        else:
+            self.label_fil_courant.configure(
+                text="▶ Fil de cérémonie : évaluation à l'ouverture de la "
+                     "page de cérémonie", foreground=COULEUR_ATTENTE)
 
     def montrer(self, nom):
         for page in self.pages.values():
@@ -2322,21 +2428,23 @@ class Application:
 
         # --- D117 : LE SCÉNARIO AVANT TOUT -------------------------------
         # Deux scénarios déterminent les étapes affichées par le fil de
-        # cérémonie (page de cérémonie) : DOSSIER LOCAL (cinq étapes — le
-        # dépôt vit déjà ici, on l'attache) et REPO GIT (six étapes —
-        # « Cloner le dépôt » en tête, prouvé lecture seule ; bouton de
-        # clonage).
+        # cérémonie (encart à droite — D129, visible quel que soit l'onglet) :
+        # DOSSIER LOCAL (cinq étapes — le dépôt vit déjà ici, on l'attache) et
+        # REPO GIT (six étapes — « Cloner le dépôt » en tête, prouvé lecture
+        # seule ; bouton de clonage).
         scen = self._section(
             page, "Scénario de cérémonie — AVANT TOUT, comment le dépôt "
                   "arrive-t-il ici ? (D117)")
         scen.pack(fill="x", pady=6)
         self.cadre_scen_section = scen   # D117 : le panneau s'y re-bâtit
         self._note(scen, "Le scénario détermine les étapes affichées par le "
-                         "fil de cérémonie : DOSSIER LOCAL → cinq étapes (le "
-                         "dépôt vit déjà sur cette machine) ; REPO GIT → six "
-                         "étapes, « Cloner le dépôt » en tête (le dépôt vient "
-                         "d'un distant — GitHub ou autre). Changer de "
-                         "scénario se fait ici, à tout moment.")
+                         "fil de cérémonie (l'encart à DROITE de la fenêtre, "
+                         "D129 — le fil et le journal y restent visibles sur "
+                         "chaque page et chaque onglet) : DOSSIER LOCAL → "
+                         "cinq étapes (le dépôt vit déjà sur cette machine) ; "
+                         "REPO GIT → six étapes, « Cloner le dépôt » en tête "
+                         "(le dépôt vient d'un distant — GitHub ou autre). "
+                         "Changer de scénario se fait ici, à tout moment.")
         barre_sc = ttk.Frame(scen)
         barre_sc.pack(fill="x", pady=2)
         self.bouton_scen_dossier = ttk.Button(
@@ -2373,7 +2481,9 @@ class Application:
                          "signer et vérifier les remises suivent (onglets "
                          "2-4 — Python standard seul, aucun réseau, la clé "
                          "ne quitte jamais la machine) ; le fil du sceau I "
-                         "guide les étapes ; le coffre CF2 apparaît dès "
+                         "guide les étapes DEPUIS L'ENCART À DROITE (D129 : "
+                         "visible quel que soit l'onglet affiché, avec le "
+                         "journal en dessous) ; le coffre CF2 apparaît dès "
                          "qu'un dépôt triade est attaché. Le dossier de "
                          "cérémonie (clé + remises, HORS du dépôt) se règle "
                          "dans la page elle-même.")
@@ -2426,7 +2536,8 @@ class Application:
             ENREGISTREUR.ligne(f"scénario choisi : {scenario}", "scenario")
             self.journal.ajoute(
                 f"[ceremonie] scénario de cérémonie : {scenario} (D117 — il "
-                "détermine les étapes affichées par le fil)", "info")
+                "détermine les étapes affichées par le fil, encart à "
+                "droite — D129)", "info")
         self._montrer_panels_scenario()
         if getattr(self, "label_fil_courant", None) is not None:
             self._rafraichir_fil()
@@ -2678,7 +2789,10 @@ class Application:
                          "d'onglets, sans jamais partager leurs secrets. "
                          "Les onglets du dépôt n'apparaissent qu'une fois "
                          "un dépôt triade attaché ( bandeau ci-dessous si "
-                         "ce n'est pas le cas).")
+                         "ce n'est pas le cas). Le FIL d'étapes et le "
+                         "JOURNAL vivent dans l'encart À DROITE (D129) : "
+                         "ils restent visibles QUEL QUE SOIT l'onglet du "
+                         "cahier affiché.")
 
         # --- D118 : LE DOSSIER DE CÉRÉMONIE ------------------------------
         # La demande du terrain : la clé et la remise « à signer » au MÊME
@@ -3072,37 +3186,12 @@ class Application:
                           "remise » est pré-rempli) : "
                           "transportez la copie vers la machine hors-ligne, "
                           "faites-la signer (onglet « 3 · Signer une "
-                          "remise »), puis déposez la remise ici.")
-        # --- fil de cérémonie (D116) : l'étape satisfaite s'efface, la
-        # suivante s'affiche — auto-détection par PREUVES, lecture seule
-        fil = self._section(sceau, "Fil de cérémonie — Sceau I (D116 · "
-                                   "D118 : une page)")
-        fil.pack(fill="x", pady=(0, 4))
-        self.cadre_fil = fil      # D117 : le titre porte le scénario courant
-        self.fil_manuel = set()
-        self._fil_etat = None
-        self.label_fil_resume = ttk.Label(
-            fil, style="Sous.TLabel", wraplength=880, justify="left",
-            foreground="#8b949e")
-        self.label_fil_resume.pack(anchor="w")
-        self.label_fil_courant = ttk.Label(
-            fil, style="Sous.TLabel", wraplength=880, justify="left",
-            font=("Segoe UI", 10, "bold"), foreground=COULEUR_ENCRE)
-        self.label_fil_courant.pack(anchor="w", pady=(2, 0))
-        self.label_fil_detail = ttk.Label(
-            fil, style="Sous.TLabel", wraplength=880, justify="left",
-            foreground="#57606a")
-        self.label_fil_detail.pack(anchor="w")
-        self.label_fil_suite = ttk.Label(
-            fil, style="Sous.TLabel", wraplength=880, justify="left",
-            foreground="#8b949e")
-        self.label_fil_suite.pack(anchor="w")
-        barre_fil = ttk.Frame(fil)
-        barre_fil.pack(fill="x", pady=(4, 0))
-        ttk.Button(barre_fil, text="Ré-évaluer l'étape",
-                   command=self._sur_fil_reevaluer).pack(side="left")
-        ttk.Button(barre_fil, text="Marquer faite (à la main)",
-                   command=self._sur_fil_manuel).pack(side="left", padx=6)
+                          "remise »), puis déposez la remise ici. Le FIL "
+                          "d'étapes vit dans l'encart À DROITE (D129) : il "
+                          "reste visible sur CHAQUE onglet du cahier.")
+        # (D129 — le fil de cérémonie ne vit PLUS ici : il a déménagé dans
+        # le PILIER DROIT (_batir_colonne_droite), TOUJOURS visible quel
+        # que soit l'onglet affiché — avant, les onglets 2-4 le cachaient)
 
         barre = ttk.Frame(sceau)
         barre.pack(fill="x", pady=2)
@@ -3712,15 +3801,33 @@ class Application:
         """Ré-évalue les étapes par PREUVES (lecture seule) et redessine
         le fil — le TITRE porte le scénario (D117 : cinq étapes en dossier
         local, six en repo git). Les marques MANUELLES survivent (l'union
-        l'emporte — seul « Ré-évaluer l'étape » les efface)."""
+        l'emporte — seul « Ré-évaluer l'étape » les efface). D129 : le fil
+        vit dans le PILIER DROIT et existe TOUJOURS — sans dépôt attaché
+        il le DIT (les preuves du sceau exigent le dépôt ; les champs de
+        l'onglet « 1 · » n'existent pas non plus : _collecter_chemins_fil
+        ne serait qu'un crash) — jamais un fil muet qu'on prendrait pour
+        un fil vide."""
         if getattr(self, "label_fil_courant", None) is None:
             return
         try:
             self.cadre_fil.configure(
-                text="Fil de cérémonie — Sceau I (D117 · scénario : "
-                     f"{self.scenario or 'non choisi'})")
+                text="Fil de cérémonie · scénario : "
+                     f"{self.scenario or 'non choisi'}")
         except tk.TclError:
             pass    # page en cours de destruction : le prochain passage suivra
+        if not getattr(self, "depot_pret", False):
+            self.label_fil_resume.configure(text="✓ Faites : —")
+            self.label_fil_courant.configure(
+                text="▶ Fil de cérémonie : aucun dépôt attaché",
+                foreground=COULEUR_ATTENTE)
+            self.label_fil_detail.configure(
+                text="Les étapes 1 [préparer], 4 [déposer] et 5 [git] "
+                     "naîtront à l'attachement du dépôt (accueil → "
+                     "scénario) ; les onglets « 2 · Générer la clé » et "
+                     "« 3 · Signer une remise » restent actifs (mode "
+                     "fichier seul, D87).")
+            self.label_fil_suite.configure(text="")
+            return
         self.label_fil_courant.configure(
             text="▶ Fil de cérémonie : évaluation en cours (lecture "
                  "seule)…", foreground=COULEUR_ATTENTE)
@@ -3881,16 +3988,19 @@ class Application:
         page affichée redimensionne la fenêtre, et si l'écran est trop
         petit le corps DÉFILE (D113) — tout reste atteignable, le bouton
         « ← Accueil » du bandeau aussi (toujours visible, hors du corps
-        défilant)."""
+        défilant). D129 : le PILIER DROIT ne compte plus en HAUTEUR (le
+        journal n'est plus SOUS le corps, il est À CÔTÉ) mais en LARGEUR
+        — la fenêtre s'élargit du pilier pour que le cahier garde son
+        souffle ; la hauteur du pilier suit la fenêtre, le journal y
+        remplit ce que le fil lui laisse."""
         try:
             self.racine.update_idletasks()
             fixe_h = (self.cadre_header.winfo_reqheight()
-                      + self.label_verdict.winfo_reqheight()
-                      + self.journal.cadre.winfo_reqheight() + 70)
+                      + self.label_verdict.winfo_reqheight() + 70)
             besoin_h = self.corps.winfo_reqheight() + fixe_h
-            besoin_w = max(self.corps.winfo_reqwidth(),
-                           self.cadre_header.winfo_reqwidth(),
-                           self.journal.cadre.winfo_reqwidth()) + 40
+            besoin_w = (max(self.corps.winfo_reqwidth(),
+                            self.cadre_header.winfo_reqwidth())
+                        + LARGEUR_COLONNE_DROITE + 50)
             hauteur = max(600, min(besoin_h,
                                    self.racine.winfo_screenheight() - 120))
             largeur = max(880, min(besoin_w,
@@ -4325,6 +4435,26 @@ def selftest():
         except ErreurCeremonie as exc:
             controle("d119-dossier-impossible-refus-nomme",
                      "impossible de créer le dossier" in str(exc), str(exc))
+    # D129 — LE PILIER DROIT : le fil et le journal vivent dans l'encart à
+    # droite, TOUJOURS visible quel que soit l'onglet (contrôle STATIQUE
+    # par source — fonctionne sur la machine hors-ligne, sans affichage ;
+    # la fumée Xvfb du dépôt prouve le reste, widget vivant à l'appui).
+    import inspect
+    try:
+        src_pilier = inspect.getsource(Application._batir_colonne_droite)
+        src_onglets = inspect.getsource(Application._batir_onglets_depot)
+        src_journal = inspect.getsource(Journal.__init__)
+        controle("d129-pilier-droit-fil-et-journal",
+                 "cadre_fil" in src_pilier
+                 and "label_fil_courant" in src_pilier
+                 and "Journal(" in src_pilier
+                 and 'side="right"' in src_pilier
+                 and "label_fil" not in src_onglets    # le fil a QUITTÉ l'onglet Sceau
+                 and 'side="bottom"' not in src_journal,
+                 "le fil doit naître dans le pilier (et plus dans l'onglet "
+                 "Sceau), le journal s'y packe sans side=bottom")
+    except (AttributeError, OSError, TypeError) as exc:
+        controle("d129-pilier-droit-fil-et-journal", False, str(exc))
     print(f"[ceremonie-GUI] selftest : "
           f"{len(passes)} PASS / {len(echecs)} ÉCHEC")
     return not echecs
