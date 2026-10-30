@@ -925,3 +925,58 @@ Stage Summary:
 - Suite : preuve terrain CF3 par le pupitre PUIS protocole
   LISEZMOI-coffre-CF3 ; migration CF2→CF3 = cérémonie consignée
   (spec § 12) après preuve terrain
+
+---
+Task ID: 38
+Agent: Z.ai (agent principal)
+Task: demande terrain 30/10 — « le dossier du drive /cérémonie et
+/TRIADE-sauvegarde-git/V06 ont encore des contenus différents, ça porte
+à confusion » — D130, le kit ne dérive plus du miroir.
+
+Work Log:
+- DIAGNOSTIC (empreintes AVANT d'écrire, scripts/diag_drive_v06.py,
+  cartes récursives des deux dossiers) : kit Drive 28 fichiers dont
+  ceremonie_gui.py PÉRIMÉ (cd69cc837323… pré-D129 vs 0228d708f637…
+  au miroir/au dépôt) ; v06 miroir = 42 fichiers (16 racine + I/ 3 +
+  sceau-I/ 23) contre 13 au kit : TROIS tests absents + les DEUX arbres
+  du sceau absents ; CAUSE RACINE = asymétrie de déclenchement : le
+  miroir se synchro À CHAQUE COMMIT (hook D121), le kit n'était mis à
+  jour que MANUELLEMENT (maj_kit_d122…d128.py, hors dépôt) — D129
+  (commit 2ae5033) avait synchronisé le miroir 15:34 et laissé le kit
+- MISE EN ŒUVRE (1) : scripts/maj_kit.py — déployeur CANONIQUE du kit,
+  SUIVI PAR GIT comme drive_sync.py ; le v06/ du kit est déployé depuis
+  `git ls-files v06/` (la MÊME source que le miroir, même arbre de
+  travail : identité par construction, I/ et sceau-I/ inclus — preuves
+  publiques, aucun secret) ; racine du kit = lanceurs + copies plates
+  D87 + coffre_fort.py + LISEZMOI-*.txt (download/ labo, ignorés sans
+  échec ailleurs) ; MANIFESTE.txt porte le COMMIT de référence ; gardes,
+  idempotence md5, aller-retour TOUTES entrées, échecs NOMMÉS (parades
+  OAuth ~05/11)
+- MISE EN ŒUVRE (2) : le hook post-commit porte le kit — git-hooks/
+  post-commit (modèle) + .git/hooks/post-commit (vivant) exécutent
+  drive_sync.py --quiet PUIS maj_kit.py --quiet, rc journalisés
+  séparément dans .gdrive/last_sync.log (échec kit ≠ blocage miroir ni
+  commit) ; scripts/sync_backup.sh suit (réinstallation du hook +
+  synchro explicite des deux canaux)
+- MISE EN ŒUVRE (3) : docs du kit à la vérité — LISEZMOI-kit.txt (note
+  D130 « kit == miroir », v06 entier listé), LISEZMOI-ceremonie-GUI.txt
+  v2.1 (note D129 pilier droit, qui manquait), download/ceremonie_gui.py
+  resynchronisé sur v06/ (la copie plate avait aussi vieilli)
+- DÉPLOIEMENT : 29 téléversés (I/ ×3, sceau-I/ ×23, tests ×3), 5 mis à
+  jour, 23 inchangés — 57/57 entrées VÉRIFIÉES aller-retour md5
+- VÉRIFICATION INDÉPENDANTE (diag_drive_v06.py après déploiement) :
+  divergences fichiers communs v06/ : AUCUNE ; présents d'un seul côté :
+  AUCUN — /Cérémonie/v06 == /TRIADE-sauvegarde-git/v06, 42 fichiers aux
+  mêmes empreintes
+- FRONTIÈRES : rôles préservés (miroir = sauvegarde complète 722
+  fichiers + bundle ; kit = distribution opérable 57 entrées) — D130
+  unifie le CONTENU PARTAGÉ (v06/) et le DÉCLENCHEMENT, pas les rôles ;
+  verifier : 9 arbres VERTS + v06 CODE 10 (fenêtre D126 INTACTE) ;
+  AUCUNE clé touchée, AUCUN coffre réel, AUCUN arbre scellé
+
+Stage Summary:
+- D130 ACCOMPLI : /Cérémonie/v06 et /TRIADE-sauvegarde-git/v06
+  identiques par construction, rafraîchis ensemble à chaque commit
+  (57/57 vérifiés, diagnostic indépendant nul), poussée
+- Suite : re-cérémonie (a) puis migration CF2→CF3 (b) — « a puis b »
+  D126 ; OAuth relais à reprendre avant ~05/11

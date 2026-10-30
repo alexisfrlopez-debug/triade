@@ -6,6 +6,11 @@
 # D12) : un échec de synchro ne doit plus jamais être invisible — constat du
 # 27/10/2026 : le miroir était à jour par chance, mais tout échec du hook
 # aurait été silencieux (>/dev/null 2>&1).
+# D130 — le KIT « Cérémonie » suit le MIROIR dans le MÊME geste : le v06/
+# du kit est déployé depuis git ls-files v06/ (source identique au miroir),
+# donc /Cérémonie/v06 et /TRIADE-sauvegarde-git/v06 ne peuvent plus diverger
+# d'une génération de code. Un échec du kit ne bloque JAMAIS le miroir (ni
+# le commit) : chaque rc est journalisé séparément.
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 [ -f "$ROOT/.gdrive/oauth_token_relais.json" ] || exit 0
 [ -f "$ROOT/scripts/drive_sync.py" ] || exit 0
@@ -13,6 +18,12 @@ LOG="$ROOT/.gdrive/last_sync.log"
 {
   echo "--- $(date -u +%Y-%m-%dT%H:%M:%SZ) commit $(git rev-parse --short HEAD 2>/dev/null)"
   python3 "$ROOT/scripts/drive_sync.py" --quiet
-  echo "--- fin (rc=$?)"
+  echo "--- fin miroir (rc=$?)"
+  if [ -f "$ROOT/scripts/maj_kit.py" ]; then
+    python3 "$ROOT/scripts/maj_kit.py" --quiet
+    echo "--- fin kit Cérémonie (rc=$?)"
+  else
+    echo "--- fin kit Cérémonie : scripts/maj_kit.py absent (D130 non porté)"
+  fi
 } >>"$LOG" 2>&1 || true
 exit 0

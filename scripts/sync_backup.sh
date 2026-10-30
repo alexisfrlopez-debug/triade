@@ -45,10 +45,16 @@ else
 fi
 
 # 2) Synchro Drive explicite (idempotente ; couvre le cas d'un hook absent ou contourné)
+#     D130 : le kit « Cérémonie » suit le miroir dans le MÊME geste.
 if [ -f scripts/drive_sync.py ]; then
   python3 scripts/drive_sync.py
 else
   echo "[sync] AVERTISSEMENT : scripts/drive_sync.py introuvable"
+fi
+if [ -f scripts/maj_kit.py ]; then
+  python3 scripts/maj_kit.py
+else
+  echo "[sync] AVERTISSEMENT : scripts/maj_kit.py introuvable (kit non rafraîchi)"
 fi
 
 # 3) Push GitHub si la remote est configurée
