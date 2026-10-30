@@ -4,7 +4,9 @@
 TRIADE — Synchronisation Google Drive.
 
 Pousse une copie miroir du projet vers le dossier Drive de sauvegarde :
-  - sous-dossier TRIADE/ : tous les fichiers suivis par git (miroir lisible) ;
+  - sous-dossier TRIADE-sauvegarde-git/ : tous les fichiers suivis
+    par git (miroir lisible — renommé D122 : ce n'est PAS un kit de
+    cérémonie, c'est la sauvegarde automatique du dépôt) ;
   - TRIADE/triade-history.bundle : bundle git complet (historique restaurable) ;
   - racine du dossier Drive : les deux fichiers d'instruction
     (REPRISE_PROJET.md, PROTOCOLE_TRIADE_AGENT.md).
@@ -37,7 +39,9 @@ TOKEN_FILE = GDRIVE / "oauth_token_relais.json"
 STATE_FILE = GDRIVE / "state.json"
 
 DRIVE_ROOT_ID = "105MmhMGsVEiDICOv8uM8CVjcBm6pcdYp"   # dossier Drive « Triade »
-PROJECT_FOLDER = "TRIADE"
+PROJECT_FOLDER = "TRIADE-sauvegarde-git"   # D122 : renommé pour que
+                                          # le miroir ne se confonde
+                                          # plus avec le kit de cérémonie
 BUNDLE_NAME = "triade-history.bundle"
 ROOT_PUSH = ["REPRISE_PROJET.md", "PROTOCOLE_TRIADE_AGENT.md"]
 FOLDER_MIME = "application/vnd.google-apps.folder"

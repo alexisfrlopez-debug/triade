@@ -860,3 +860,68 @@ Stage Summary:
 - Suite : cérémonie CF2 réelle (migrer → TROIS copies → sentinelle là où
   elle peut vivre), verdict à froid du rapport v1.9 ; moteur sentinel
   Windows SACL/ETW ; D57
+
+---
+Task ID: 34
+Agent: Z.ai (agent principal)
+Task: demande développeur 30/10 — « sur le drive, j'ai 2 dossiers avec
+les fichiers de cérémonie : un à la racine avec les .bat et sh pour
+lancer la gui mais pas à jour, et un avec cf3 mais sans les .bat et sh ;
+je n'en veux qu'un complet et à jour pour éviter toute confusion » +
+« pour l'autotest cf3, fais une gui avec bouton d'envoi de journaux
+afin que tu puisses analyser, en cas de problème éventuel. J'aimerais
+que ces conditions soient systématiques lorsque tu produis un module à
+tester » — D122, le kit unique + le trio systématique.
+
+Work Log:
+- DIAGNOSTIC (empreintes, avant d'écrire) : kit Drive « Cérémonie »
+  D118 PÉRIMÉ — GUI v1.8 (pré-D119), coffre_cf2 pré-D119, sentinelle
+  pré-D120, 6 fichiers divergents + 4 absents (dont coffre_cf3.py) ;
+  le miroir git « TRIADE » (D121, complet) lu par le terrain comme « le
+  dossier CF3 sans lanceurs » — la confusion était structurelle
+- MISE EN ŒUVRE (1) : v06/autotest_cf3_gui.py v1.0 — relais
+  sous-processus des vérités vivantes (autotest 28 + suite 90, JAMAIS
+  une réimplémentation), environnement AVANT essai (pile pip par
+  métadonnées importlib — argon2.__version__ DÉPRÉCIÉ — + EMPREINTES
+  md5 des modules : « pas à jour » se LIT dans un rapport), boîte noire
+  v06/autotest-cf3-journal.log (témoin muet si disque refusé), bouton
+  « Envoyer le rapport » (trio D113 : .txt + presse-papiers + dossier,
+  AUCUN réseau, aucun secret), constituer_rapport_complet au NIVEAU
+  MODULE (une seule vérité prouvable headless), verdict compté DU FLUX
+  et CROISÉ au code de sortie, PYTHONIOENCODING=utf-8 aux enfants
+  (cp850), posture dite avant le fait (copie plate = refus nommé de la
+  suite), fil ouvrier sans tkinter, tkinter protégé + AST « tk.Tk() ne
+  vit que dans demarrer_gui » ; lanceurs lancer_autotest_cf3.bat/.sh à
+  la racine du dépôt (conventions D118)
+- MISE EN ŒUVRE (2) : kit UNIQUE — maj_kit_d122.py (idempotent) déploie
+  Cérémonie/ complet (23 entrées, aller-retour md5 MATCH) + MANIFESTE
+  22 empreintes + note D122 + LISEZMOI-kit.txt (« remplace les DEUX
+  anciens ») + LISEZMOI-coffre-CF3.txt (protocole pupitre) ; miroir
+  Drive « TRIADE » RENOMMÉ « TRIADE-sauvegarde-git » (même id,
+  drive_sync.PROJECT_FOLDER mis à jour, ensure_folder le retrouve — le
+  hook post-commit continue dans le MÊME dossier, prouvé) ; ZIP miroir
+  kit-ceremonie-triade-D122.zip (23 fichiers, md5 MATCH)
+- FALSIFIABILITÉ : test_autotest_cf3_gui.py 37 PASS / 0 ÉCHEC (X1-X8+L :
+  menteux/avouant/muet croisés flux-code, troncature 3000 par boîte
+  factice, kits plat et v06/ en sous-processus réels, lanceurs exécutés
+  + .bat par contenu) ; selftest embarqué 18 PASS ; fumée Xvfb 19 PASS
+  (boutons bloqués/reactivés, barre verte, fenêtre rapport, crash
+  nommé) ; captures : les pixels VERTS n'apparaissent qu'au verdict
+- PREUVE TERRAIN COMPLÈTE : kit RETÉLÉCHARGÉ du Drive → manifeste
+  22/22 → lancer_autotest_cf3.sh --selftest 18 PASS, test_coffre_cf3.py
+  90 PASS, ceremonie_gui.py --selftest 18 PASS
+- NON-RÉGRESSION : verifier CODE 0 (10 arbres VERTS — pupitre et suite
+  hors v06/I/), test_sceau_I 50/50, test_cf2 54/54, test_coffre_cf3
+  90/90, test_ceremonie_gui 157/157 ; AUCUNE clé touchée
+- DOCS : Entrée 108 JOURNAL_TRAVAIL + décision D122 (le trio
+  systématique : GUI + boîte noire + bouton rapport, pour TOUT module
+  livré au terrain) ; scripts persistés : maj_kit_d122.py,
+  fumee_pupitre_cf3_d122.py, capture_pupitre_d122.py
+
+Stage Summary:
+- D122 ACCOMPLI : un seul kit complet (Drive vérifié par retéléchargement
+  + ZIP), le pupitre d'autotest CF3 livré avec le trio systématique,
+  tout vert (37 + 18 + 19 + 90 + 157 + 54 + 50 PASS, sceau CODE 0)
+- Suite : preuve terrain CF3 par le pupitre PUIS protocole
+  LISEZMOI-coffre-CF3 ; migration CF2→CF3 = cérémonie consignée
+  (spec § 12) après preuve terrain
