@@ -191,7 +191,9 @@ qu'aucun logiciel ne peut truquer (§ \ref{sec:gards}).
 impose CF3 dès la création, on n'a plus besoin de sentinelle, non ? »] Le
 \emph{démon} est mort en CF3 ; l'exigence D120 vit \emph{par invocation} : la
 sentinelle instantanée est la serrure — impossible à oublier de lancer. Et oui :
-un coffre neuf naît CF3 par \code{init} direct (§ \ref{sec:sentinelle}).
+à l'époque de cette question, un coffre neuf naissait CF3 par \code{init} direct ;
+depuis D137 (v0.6.1), le niveau de naissance — CF1, CF2 ou CF3 — est votre
+arbitrage à la création (spécification § 12.5).
 \item[« J'ai fermé sans exporter le rapport, mais ça a marché. »] Normal : l'export
 n'est pas un prérequis de la cérémonie — la vérité vit dans le conteneur, les
 gardes et le journal local. Le rapport est la \emph{mémoire} du geste : le bouton

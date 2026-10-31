@@ -1180,3 +1180,77 @@ Stage Summary:
   deux runs dans le même scénario, témoin D99) + arbitrage du flux
   navigateur (relevement http→https amont, R3 écrites-avant-code) ; la
   notation R3 attend le verdict terrain de l'étape 1
+Task ID: 42
+Agent: Z.ai (agent principal)
+Task: demande développeur 31/10 (suite) — « laisser le choix du niveau de
+sécurité (cf1 - cf2 - cf3) à l'appréciation du développeur lors de la
+création de son projet de développement, car imposer cf3 par défaut risque
+d'être trop contraignant selon le projet » : révision de la règle D133-(7),
+passation v0.6.1 + Livre du Coffre v1.1.
+
+Work Log:
+- SITUATION RÉCUPÉRÉE : dépôt /home/z/my-project/triade, HEAD 5878c99
+  (D135+D136), arbre propre (47 fichiers en « bits de mode » seul — diff
+  0/0, phénomène connu et consigné) ; sceau_I.py verifier AVANT toute
+  action : 10 arbres VERTS CODE 0, cle deposee reelle
+- LA RÈGLE REPLACÉE : « un coffre neuf naît CF3 » vivait dans
+  PROTOCOLE_TRIADE.md (titre/en-tête/§ 1.7/§ 12.5/tableaux/historique),
+  PLAN_MILESTONES, README, la chaîne spec_v060, le Livre du Coffre et le
+  schéma de la chaîne (chaine_cf.html) — JAMAIS dans les specs scellées
+  v06/I/ (constat : le sceau n'est pas en jeu)
+- MARKDOWN v0.6.1 : scripts/revision_v061_md.py (miroir de
+  revision_v060_md.py — huit remplacements/insertions ASSERTÉS) : titre,
+  en-tête (archives + Livre v1.1), § 1.7 au passé + renvoi, § 1.8 NOUVEAU,
+  § 12.5 RÉÉCRIT (trois naissances [CF1 init / CF2 init+migrer, init CF2 =
+  LABORATOIRE selon la spec scellée CF2 § 12 / CF3 init], guide,
+  obligations par niveau, migration disponible à tout moment, consigne au
+  journal des décisions), § 19.8 NOUVEAU (correspondance + 4 rejets),
+  versions + 1 ligne, clôture
+- CHAÎNE spec_v061 : copie de spec_v060 + main.tex (en-tête/fancyhead/
+  pdftitle), sec-a (§ 1.7/§ 1.8), sec-cf (§ 12.5 + tableau naissances +
+  légende), sec-d (correspondance v0.6.1 + D137 narratif + annexe
+  D75–D137 + ligne D137), cover.html v0.6.1 (sous-titre chevauchait
+  .authors de 33 px — raccourci, re-sondé : +16,8 px), merge_cover.py,
+  verify_spec.py (V11/V8/V9/V13/V14 mis à jour + V15 NOUVEAU : la règle
+  invalidée vit en passe, D137 consignée, erratum, Livre aligné) ;
+  build_pdf.sh → spec_v061/v0.6.1
+- ERRATUM NOMMÉ : \begin{table}tbp] (crochet ouvrant manquant,
+  spec_v060/sec-d.tex:377) — l'octet parasite « tbp] » PAGE 31 du PDF
+  v0.6.0 livré (pdfplumber : ligne isolée) ; réparé [htbp] dans spec_v061 ;
+  l'archive v0.6.0 reste intacte ; contrôle V15 raffiné (le parasite est
+  une LIGNE isolée, la citation « tbp] » de la table de correspondance est
+  légitime)
+- SCHÉMA re-capturé : chaine_cf.html (note → « le niveau d'un coffre neuf
+  est arbitré par le développeur (D137) »), Playwright @2× (2244×1912),
+  PNG porté à spec_v061 + livre_coffre (spec_v060 archivée intacte)
+- LIVRE v1.1 : main.tex/cover v1.1, avant-propos (complément de la
+  v0.6.1), légende, runbook « Pour un coffre neuf » réécrit (arbitrage +
+  trois naissances + chaîne disponible), table décisionnelle + D137,
+  réponse FAQ alignée (question verbatim — réellement posée), build_livre.
+  sh → v1.1
+- DOCS : PLAN_MILESTONES (phrase de naissance révisée), README (pointeurs
+  v0.6.1/v1.1, cahier V1–V15, discipline § 12/17.3), REPRISE_PROJET (bloc
+  DERNIÈRES ÉVOLUTIONS : v0.6.1 en tête)
+- CONSIGNATIONS : DECISIONS.md +D137 (demande citée fidèlement, règle,
+  rejets, passation, erratum, frontières, vérifiabilité) ;
+  JOURNAL_TRAVAIL.md +Entrée 125 (insérée AVANT le marqueur m5a — la règle
+  du marqueur)
+- BUILDS PRÉLIMINAIRES : spécification v0.6.1 39 pages sha256 f34b2720e3f5…
+  (pdf_qa PASS — 11 advisories typographiques hérités, non bloquants,
+  classe consignée depuis D133) ; Livre v1.1 26 pages sha256 25be934886d4…
+  (pdf_qa PASS) ; empreintes consignées PAR LE BUILD (n°14, n°15) ; les
+  deux artefacts livrés à download/
+- FRONTIÈRES : AUCUN code d'outil touché (les trois init existaient — le
+  droit de choisir manquait) ; coffre réel RESTE CF3 ; sceau vérifié avant
+  consignation (10/10 VERTS) ; proxy 0.5.0 intact ; aucune notation
+- SUITE : build final (les .md consignés sont sources du PDF — le stamp
+  diverge, reconstruction et nouvelle consignation attendues), verify_spec
+  V1–V15, contrôle visuel des deux PDF, commit + push (hook D130), note
+  d'alignement au projet fils coffre-fort (commit propre)
+
+Stage Summary:
+- D137 livré : le niveau de naissance d'un coffre neuf (CF1/CF2/CF3) est
+  l'arbitrage du développeur à la création — règle v0.6.0 invalidée
+  explicitement, spécification v0.6.1 (§ 1.8, § 12.5, § 19.8) et Livre du
+  Coffre v1.1 alignés, erratum « tbp] » nommé et réparé, chaîne
+  diagramme re-capturée

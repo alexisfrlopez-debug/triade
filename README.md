@@ -36,7 +36,7 @@ sacrifié au profit d'un objectif de rang inférieur.
 |---|---|
 | Reprendre le projet là où il s'est arrêté | `REPRISE_PROJET.md` |
 | Démarrer un nouveau projet logiciel avec un agent IA | `PROTOCOLE_TRIADE_AGENT.md` |
-| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.6.0, source de travail) — `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (PDF formel v0.6.0 : passation du programme de souveraineté cryptographique D133 — axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3, coffre neuf né CF3 ; annexe empreintes + tableau décisionnel D75–D133) ; **Livre du Coffre** : `docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf` (complément opératoire — cérémonies, runbook, mode dégradé, FAQ du terrain) ; archives conservées : v0.5.2, v0.5.1, v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v060/verify_spec.py` (cahier V1–V14) |
+| Consulter la spécification complète | `docs/PROTOCOLE_TRIADE.md` (v0.6.1, source de travail) — `docs/Protocole_TRIADE_v0.6.1_Specification.pdf` (PDF formel v0.6.1 : révision D137 — le niveau d'un coffre neuf, CF1/CF2/CF3, devient l'arbitrage du développeur à la création de son projet ; sur la base v0.6.0 : passation D133, axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; annexe empreintes + tableau décisionnel D75–D137) ; **Livre du Coffre** : `docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf` (complément opératoire — cérémonies, runbook, mode dégradé, FAQ du terrain ; v1.1 alignée sur D137) ; archives conservées : v0.6.0, v0.5.2, v0.5.1, v0.5.0, v0.4.0, v0.3, v0.2 ; vérification : `scripts/spec_v061/verify_spec.py` (cahier V1–V15) |
 | Consulter la démonstration | `docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf` (22 p.) — le protocole démontré par le recodage complet de RoomEq sous TRIADE : 42 modules, 437 tests, parité v2.2.2, comparatifs de code avant/après |
 | Lire l'édition académique | `docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf` (12 p., D18) — le protocole et son étude de cas restructurés en article de recherche IMRAD : formalisation (verrou croisé, ordre lexicographique), travaux connexes, menaces sur la validité ; vérification interne : `docs/VERIFICATION_v0.4_Article.md` |
 | Comprendre le format de la Carte | `docs/FORMAT_CARTE.md` |
@@ -72,7 +72,7 @@ durable, consigne développeur)** : la phrase de contrôle courante vit dans
 coffre Drive) — sauvegardée AVANT TOUTE AUTRE ACTION dès production, le fichier EST la
 remise ; elle ouvre le conteneur (prouvé, restauration post-panne démontrée de bout en
 bout — cf. `LISEZMOI-PHRASE-CONTROLE.txt`).
-Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification v0.6.0 § 17.3 (souveraineté : § 12 ; cérémonies : § 13 ; le détail opératoire vit dans le Livre du Coffre).
+Format normatif : `docs/FORMAT_CARTE.md` § 11 ; discipline : spécification v0.6.1 § 17.3 (souveraineté : § 12 — le niveau du coffre neuf y est arbitré par le développeur, D137 ; cérémonies : § 13 ; le détail opératoire vit dans le Livre du Coffre).
 
 ## État du projet
 

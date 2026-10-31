@@ -211,10 +211,12 @@ le maître de cérémonie graphique avec le kit Drive identique au miroir par
 construction (D130). Un AXE 4 s'est ajouté en cours de route, né du terrain :
 la serrure à triple scellement CF3 (D121) — le démon sentinelle remplacé par
 un piège hors machine, la sentinelle instantanée PAR INVOCATION, le cycle en
-deux actes. La spécification `PROTOCOLE_TRIADE.md` est passée à v0.6.0 ; le
-PDF formel et le *Livre du Coffre* (complément opératoire) l'accompagnent
-(`docs/`). Un coffre neuf naît désormais CF3 (`init` direct, époque 1) : la
-chaîne de migration appartient à l'histoire du coffre réel.
+deux actes. La spécification `PROTOCOLE_TRIADE.md` est passée à v0.6.0 puis à
+v0.6.1 (D137) ; le PDF formel et le *Livre du Coffre* (complément opératoire,
+v1.1) l'accompagnent (`docs/`). Le niveau d'un coffre neuf — CF1, CF2 ou CF3 —
+est arbitré par le développeur à la création de son projet (D137, v0.6.1) : la
+chaîne de migration appartient à l'histoire du coffre réel et demeure
+disponible à tout moment.
 
 **Hiérarchie des clés qui en découle (trois gardes, trois menaces)** : phrase
 de lignée (chiffre les enveloppes, vol au repos) ; graine Ed25519 en ligne

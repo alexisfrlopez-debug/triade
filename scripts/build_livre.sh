@@ -2,7 +2,7 @@
 # TRIADE — Régénération systématique du LIVRE DU COFFRE (D133 → M5-a, D134).
 #
 # Miroir de scripts/build_pdf.sh pour la seconde chaîne PDF du dépôt : le
-# Livre du Coffre (docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf, produit par
+# Livre du Coffre (docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf, produit par
 # scripts/livre_coffre/ — figure de la chaîne Playwright @2× + couverture
 # Template 03 + corps LaTeX/Tectonic fusionnés par pypdf). Le présent script
 # garantit ce que D133 faisait à la main : le livre ne peut pas vieillir —
@@ -35,7 +35,7 @@ COVER_HTML="$LIVRE_DIR/cover.html"
 COVER_PDF="$LIVRE_DIR/cover.pdf"
 DIAG_HTML="$LIVRE_DIR/chaine_cf.html"
 DIAG_PNG="$LIVRE_DIR/chaine_cf.png"
-FINAL_PDF=docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf
+FINAL_PDF=docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf
 STAMP=.livre_build.stamp
 
 # Sources dont la modification déclenche la reconstruction.
@@ -74,7 +74,7 @@ if [ "$CHECK" -eq 1 ]; then
   exit 2
 fi
 
-echo "[livre] sources modifiées (ou build forcé) — régénération du Livre du Coffre v1.0"
+echo "[livre] sources modifiées (ou build forcé) — régénération du Livre du Coffre v1.1"
 
 # 1) Figure de la chaîne : re-capture Playwright si le schéma HTML est plus
 #    récent que le PNG, si le PNG manque, ou si --diagramme est demandé.
@@ -138,4 +138,4 @@ if [ -f scripts/empreintes_build.py ]; then
 else
   echo "[livre] AVERTISSEMENT : scripts/empreintes_build.py absent (M5-a non porté)"
 fi
-echo "[livre] Livre du Coffre v1.0 régénéré -> $FINAL_PDF (empreinte consignée)"
+echo "[livre] Livre du Coffre v1.1 régénéré -> $FINAL_PDF (empreinte consignée)"

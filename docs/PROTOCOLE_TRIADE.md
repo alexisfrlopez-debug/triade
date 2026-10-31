@@ -1,7 +1,8 @@
-# PROTOCOLE TRIADE v0.6.0 — Spécification technique
+# PROTOCOLE TRIADE v0.6.1 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.6.0. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (v0.5.2),
+> Source de travail faisant autorité pour la v0.6.1. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (v0.6.0),
+> `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (v0.5.2),
 > `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
 > `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
 > `docs/Protocole_TRIADE_v0.3_Specification.pdf` (v0.3),
@@ -9,19 +10,21 @@
 > également la démonstration RoomEq (`docs/Protocole_TRIADE_v0.3_Demonstration_RoomEq.pdf`)
 > et l'édition académique v0.4 (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`, D18 —
 > présentation IMRAD du noyau v0.3, sans valeur normative) ; depuis la v0.6.0, le
-> **Livre du Coffre** l'accompagne (`docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.0.pdf`,
-> D133 — complément opératoire : cérémonies, runbook, mode dégradé). Depuis la décision D17,
+> **Livre du Coffre** l'accompagne (`docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf`,
+> D133 — complément opératoire : cérémonies, runbook, mode dégradé ; v1.1 : l'arbitrage
+> D137 du niveau de naissance y est aligné). Depuis la décision D17,
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.6.0 consigne la passation du programme de souveraineté cryptographique (D133) :
+> La v0.6.1 consigne l'arbitrage du niveau de naissance d'un coffre neuf (D137) ; la
+> v0.6.0 avait consigné la passation du programme de souveraineté cryptographique (D133) :
 > axes 2-3-4 accomplis et prouvés sur terrain — la chaîne réelle du coffre a migré
 > CF1 → CF2 → CF3 les 30–31 octobre 2026 ; la v0.5.2 avait consigné la garde durable de
 > la phrase de contrôle (D81) ; la v0.5.1 avait ajouté le coffre-fort (D75) et consigné
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.6.0 — souveraineté cryptographique accomplie (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3, un coffre neuf naît CF3 ; état des jalons constaté : M0–M4 franchis (balises 0.2.0 à 0.5.0), M5 ouvert (D133)
+- Version : v0.6.1 — le niveau du coffre neuf (CF1/CF2/CF3) devient l'arbitrage du développeur à la création (D137) ; la v0.6.0 avait accompli la souveraineté cryptographique (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; état des jalons constaté : M0–M4 franchis (balises 0.2.0 à 0.5.0), M5 ouvert (D133)
 - Date : 31 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
@@ -182,12 +185,27 @@ octobre 2026 — CF1 vérifié INTÈGRE, phrase de contrôle changée (D110), CF
 gardes, seuil 3, trois copies hors-ligne), CF3 migré (époque 1, checksum `0cc89a96`),
 verdict à froid VERT deux fois — les cérémonies étant conduites par le maître de
 cérémonie graphique (D107–D118) avec le kit Drive tenu identique au miroir par
-construction (D130) : le détail vit au § 13. Un **coffre neuf naît désormais CF3** :
+construction (D130) : le détail vit au § 13. Un **coffre neuf naissait CF3** :
 `init` direct à l'époque 1 — la chaîne de migration est l'histoire du coffre réel, pas
-un rite obligé. Un document complémentaire, le *Livre du Coffre* (même date, même
+un rite obligé (la v0.6.1 remet ce choix au développeur — § 1.8, § 12.5). Un document complémentaire, le *Livre du Coffre* (même date, même
 dépôt), porte la posture opératoire du maître : cérémonies pas à pas, runbook, mode
 dégradé. Aucune règle du cœur n'est modifiée ; aucune couche n'est ajoutée à
 l'exécution ; la hiérarchie de la fonction objectif est inchangée.
+
+### 1.8 Ce que change la v0.6.1
+
+Une seule règle, explicitement invalidée et remplacée (§ 19.8) : le niveau de
+sécurité d'un coffre neuf. La v0.6.0 (D133) l'avait fixé — un coffre neuf naît CF3,
+`init` direct à l'époque 1 ; la v0.6.1 (D137) en fait **l'arbitrage du développeur au
+moment de créer son projet de développement** : CF1, CF2 ou CF3, chacun avec son acte
+de naissance, ses obligations et son guide (§ 12.5) — imposer CF3 par défaut risque
+d'être trop contraignant selon le projet : média du piège à produire dès le premier
+jour, cycle en deux actes à chaque session, sachet physique à tenir — la contrainte se
+justifie quand le secret la mérite. La chaîne de migration CF1 → CF2 → CF3 demeure
+disponible à tout moment pour un coffre dont les besoins grandissent ; le coffre réel
+de TRIADE reste CF3 (époque 1, checksum `0cc89a96`). Aucune autre règle n'est
+modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction
+objectif est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -787,16 +805,44 @@ Gardes dans la source des chaînes : `build_m4.py` et `build_terrain.py` refusen
 build sur arbre divergé ; tout script qui modifie une couche I appelle la garde en
 sortie. `sceau_I.py verifier` : codes nommés 0/10/11/12.
 
-### 12.5 Le coffre neuf naît CF3
+### 12.5 Le niveau du coffre neuf — un arbitrage du développeur (D137)
 
-La chaîne CF1 → CF2 → CF3 est le chemin *historique* du coffre réel. Un coffre neuf
-n'a rien à migrer : `coffre_cf3.py init` le crée sous CF3, époque 1, média du piège
-dès le premier jour. La question du terrain — *puisqu'on impose CF3 dès la création,
-la sentinelle ne devient-elle pas inutile ?* — reçoit sa réponse normative : la
-sentinelle de CF3 n'est pas un composant qu'on peut oublier de lancer, c'est la
-serrure elle-même ; l'exigence D120 est réalisée *par construction*. Ce qui demeure
-obligatoire : le média du piège (sans S_piège, le déverrouillage est *impossible*) et
-la discipline du sachet (§ 13).
+La chaîne CF1 → CF2 → CF3 est le chemin *historique* du coffre réel ; elle n'est plus
+un rang de naissance. La v0.6.0 fixait la règle « un coffre neuf naît CF3 » (`init`
+direct, époque 1, média du piège dès le premier jour) ; la v0.6.1 revient sur cet
+arbitrage : **le niveau de sécurité d'un coffre neuf — CF1, CF2 ou CF3 — est choisi
+par le développeur lors de la création de son projet de développement** (D137).
+Imposer CF3 par défaut risque d'être trop contraignant selon le projet : le niveau le
+plus fort exige un média de piège dès le premier jour, le cycle en deux actes à chaque
+session, le sachet physique et sa carte — la contrainte se justifie quand le secret la
+mérite, pas pour tout projet.
+
+**Les trois naissances** — l'acte de création détermine le niveau et ses obligations :
+
+| Niveau | Acte de création | Ce qui vient avec |
+|---|---|---|
+| CF1 | `coffre_fort.py init` | conteneur chiffré à phrase (D75) ; garde durable de la phrase (D81) ; relève simple |
+| CF2 | `coffre_fort.py init` puis cérémonie `coffre_cf2.py migrer` — l'`init` direct de CF2 demeure un outil de LABORATOIRE, la spécification scellée CF2 (§ 12 — phase laboratoire / cérémonie réelle) fait foi | clé maîtresse répartie Shamir (N gardes, seuil T), T copies hors-ligne, liste blanche, sentinelle/porte D120 |
+| CF3 | `coffre_cf3.py init` | époque 1, média du piège dès le premier jour, cycle en deux actes, sentinelle par invocation, sachet + carte papier (§ 13) |
+
+**Le guide de l'arbitrage** (recommandation, pas contrainte) : CF1 suffit quand la
+menace est le vol au repos du poste seul et que la simplicité de relève prime —
+prototype, projet jetable, secrets reproductibles ; CF2 quand la garde doit être
+partagée ou survivre au maître — quorum, relève à plusieurs ; CF3 pour les secrets
+maîtresses d'un projet vivant sous menace d'expropriation — la référence demeure le
+coffre réel de TRIADE, né CF1 et monté à CF3 par cérémonies. La montée n'est jamais
+bloquée : **la chaîne de migration CF1 → CF2 → CF3 reste disponible à tout moment** —
+les besoins grandissent, le coffre suit ; la descente de niveau n'existe pas (`bruler`
+demeure l'acte de fin de vie). Le niveau choisi se consigne au journal des décisions
+du projet avec sa raison — un arbitrage muet serait un contrat non écrit (§ 3).
+
+La question du terrain — *puisqu'un coffre né CF3 porte sa sentinelle dès la
+création, celle-ci ne devient-elle pas inutile ?* — garde sa réponse normative au
+niveau CF3 : la sentinelle de CF3 n'est pas un composant qu'on peut oublier de
+lancer, c'est la serrure elle-même ; l'exigence D120 est réalisée *par construction*.
+Ce qui demeure obligatoire, niveau par niveau : CF1 — la garde durable de la phrase ;
+CF2 — les T copies hors-ligne et la liste blanche ; CF3 — le média du piège (sans
+S_piège, le déverrouillage est *impossible*) et la discipline du sachet (§ 13).
 
 ### 12.6 Bornes honnêtes consolidées
 
@@ -1249,6 +1295,26 @@ périmètre du sceau courant (modèle par-version, `v06/I/README.md` § 1). Pass
 v0.6.0 en attendant l'axe 1 — arbitrée par le développeur : la passation se fait avec
 l'axe 1 consigné (D133).
 
+### 19.8 Correspondance v0.6.0 → v0.6.1
+
+| Évolution | En v0.6.0 | En v0.6.1 | Statut |
+|---|---|---|---|
+| Niveau de naissance d'un coffre neuf | un coffre neuf naît CF3 — `init` direct à l'époque 1 (D133) | le niveau (CF1/CF2/CF3) est arbitré par le développeur à la création de son projet : les trois naissances, le guide et les obligations par niveau (§ 12.5) ; la chaîne de migration demeure disponible à tout moment | révisé (D137) |
+| Le coffre réel | CF3 (époque 1, checksum `0cc89a96`) | inchangé — la révision est un droit de création, pas un geste sur le coffre vivant | constaté |
+| Chaîne PDF et Livre du Coffre | spécification v0.6.0 (37 p.) ; Livre v1.0 | chaîne spec_v061 (l'erratum typographique « tbp] » page 31 réparé au passage) ; Livre v1.1 — runbook « coffre neuf » et FAQ terrain alignés sur D137 | révisé (D137) |
+| Le reste de la spécification | — | inchangé : aucune autre règle, aucune couche d'exécution ajoutée, hiérarchie inchangée | constaté |
+
+Modifications explicitement rejetées (v0.6.1) : imposer CF1 par défaut en guise de
+souplesse — rejeté : remplacer une imposition par une autre ne rend pas la décision au
+développeur. Rendre le niveau mutable sans cérémonie — rejeté : le niveau change par
+MIGRATION uniquement, acte explicite et fail-closed (l'anti-retour d'époque et le
+verrou croisé demeurent). Promouvoir l'`init` de CF2 (laboratoire) en cérémonie réelle
+dans cette révision — rejeté : la spécification scellée CF2 fait foi ; la naissance
+CF2 passe par `init` CF1 puis `migrer`, tout est prouvé ; l'arbitrage est consigné si
+le besoin naît. Toucher au code des trois outils — rejeté : les trois actes de
+création existent et sont prouvés ; c'est le droit de choisir qui manquait, pas la
+mécanique.
+
 ## 20. Glossaire
 
 | Terme | Définition |
@@ -1306,10 +1372,12 @@ l'axe 1 consigné (D133).
 | v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 17.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 15.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.2 | 28 oct. 2026 | Garde durable de la phrase de contrôle du coffre-fort (D81) : sauvegardée AVANT TOUTE AUTRE ACTION dès production — fichier `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne, lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive, copie au racine du coffre Drive ; le fichier est la remise, l'affichage unique de cérémonie cesse d'être le canal de survie ; restauration post-panne prouvée de bout en bout (téléchargement Drive → coffre ouvert, entrées listées) ; menace « vol du coffre-fort » étendue — la confidentialité au repos repose désormais sur le contrôle d'accès au dossier Drive (mitigation première : restriction du partage par lien), une phrase commise en git y demeure à vie ; M4 constaté ouvert (D77, couche I écrite-avant-code). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.6.1 | 31 oct. 2026 | Révision de l'arbitrage de naissance du coffre (D137) : le niveau de sécurité d'un coffre neuf — CF1, CF2 ou CF3 — est choisi par le développeur lors de la création de son projet de développement ; la règle v0.6.0 « un coffre neuf naît CF3 » (D133) est explicitement invalidée et remplacée — imposer CF3 par défaut risque d'être trop contraignant selon le projet. § 12.5 réécrit (les trois naissances, guide de l'arbitrage, obligations par niveau) ; § 1.8 ajouté ; correspondance v0.6.0 → v0.6.1 (§ 19.8) ; la chaîne de migration CF1 → CF2 → CF3 demeure disponible à tout moment ; le coffre réel reste CF3 ; le *Livre du Coffre* passe à v1.1 (runbook et FAQ alignés) ; erratum typographique « tbp] » (page 31 du PDF v0.6.0) réparé dans la chaîne spec_v061. Une règle modifiée et nommée ; aucune couche d'exécution ajoutée ; hiérarchie inchangée |
 | v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne l'état au passage de relais : jalons M0 à M4 franchis sur
+La présente version consigne l'arbitrage du niveau de naissance d'un coffre neuf
+(D137, § 12.5) et l'état au passage de relais : jalons M0 à M4 franchis sur
 validations terrain (balises finales 0.2.0 à 0.5.0), le programme de souveraineté
 cryptographique accompli (axes 2-3-4, D133) — le coffre réel a migré CF1 → CF2 → CF3
 les 30–31 octobre 2026 —, jalon M5 (outil complet) ouvert (D133) : empreintes par
