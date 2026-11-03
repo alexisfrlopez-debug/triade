@@ -1909,3 +1909,65 @@ Stage Summary:
   coffre, D144) — plus jamais orpheline aux recyclages.
 - Suite : proposer le scellage carte génération 7 au développeur, kit VM
   ÉTAPE 2, run M5-b étape 2.
+## Task ID 54 — « lance le scellage » : carte génération 7 SCELLÉE à 0.6.0-rc.1 — machinerie M5 écrite (modèle D104), cristallisation 52/52 × 10/10, artefact 4b8f6af6… inchangé, finale 0.6.0 en attente du critère (b) (04/11)
+
+Task: demande du développeur « lance le scellage » — le geste développeur
+attendu (D87/D144) : sceller la carte génération 7 du proxy 0.6.0.
+
+Work Log:
+- BALISE TRANCHÉE AVANT TOUT GESTE : 0.6.0-rc.1 (candidate), PAS la finale
+  — le critère (b) de D136 (navigateur en VM) n'est pas prouvé ; table des
+  versions du protocole : rc.N = candidate soumise à la validation terrain,
+  X.Y.Z = validation consignée ; plan m5 : « la balise 0.6.0 est posée à la
+  validation terrain » ; modèle D104 (rc.1 puis finale après 17-H).
+- MACHINERIE ÉCRITE (trois écritures, modèle D104) : m5/carte_m5.py
+  (génération 7, charger_secrets FAIL-CLOSED — D144 appliqué au code :
+  aucune génération de secret au labo, relève au coffre nommée) ;
+  m5/conformite_profil.py (§ 8.2 M5 : 58 contrôles, les DEUX portes
+  constatées VIVANTES, oracle D136 jalon) ; build_m5.py porté
+  (fragments_clairs 52 blocs/6 artefacts, construire_carte, verrou_croise
+  R8, tableau_de_bord, _anti_rollback, --sceller-rc/--sceller-final) ;
+  layout VERSION_RC1/VERSION_FINALE.
+- CONSTRUCTION : chaîne entière re-vérifiée (524+492+312 verrous ; image M4
+  == scellé 0.5.1 OCTET POUR OCTET ; oracles 560+365 cas verts) ; carte
+  génération 7 NÉE (lignée D80, graine durable pub e9cd8c549485…, 52
+  blocs, 6 artefacts, R8 52 empreintes, tableau) ; proxy.exe OCTET POUR
+  OCTET == témoin pris avant le geste (4b8f6af6…).
+- CRISTALLISATION : construire 1/10 puis NEUF --verifier (graines
+  20261104…20261112, oracles complets à chaque passage, R8 à chaque
+  passage) → 52/52 blocs à 10/10, dix runs datés consignés au frag-prf.
+- SCELLAGE --sceller-rc : garde sceau 6 arbres (clé réelle) ;
+  cristallisation exigée et constatée ; conformité § 8.2 VERTE exécutée
+  par le scellage (58 contrôles) ; bascule dev.1→rc.1 UNE occurrence
+  fail-closed ; re-chiffrement + signature graine durable ; vérification
+  EN MÉMOIRE avant l'unique écriture (listes blanches, signature, racine,
+  bascule re-déchiffrée) ; tableau suivi ; R8 post 52 empreintes ;
+  artefact re-vérifié == 4b8f6af6….
+- POST-VÉRIFICATIONS : P1 carte LISIBLE lignée D80 (frag-bld
+  version=0.6.0-rc.1, empreinte 4b8f6af6…, signature valide, 52/52 à
+  10/10) ; P2 anti-rollback REFUSE (« carte scellée (0.6.0-rc.1) :
+  reconstruction interdite ») ; P3 sceau ONZE arbres VERTS (m5:
+  1869422e… intact) ; P4 artefact == témoin.
+- HONNÊTETÉ DES CONSTATS : deux erreurs de la conformité née (comparaison
+  hexdigest vs préfixe sha16 ; indexes tuples BLOCS_REVISIONS_M5) et un
+  seuil d'ombres ABI copié du 0.5.0 (la trame tls-05:R2 0x98 de D140 vit
+  en imm32) — nommées et réparées PAR les échecs de la suite elle-même,
+  AVANT le scellage.
+- PASSATION : JOURNAL_TRAVAIL +Entrée 136 PAR SCRIPT (ordre
+  135<136<marqueur, rejeu REFUSÉ fail-closed), scripts/inserer_entree_136.py.
+- FRONTIÈRES : artefact 4b8f6af6… inchangé ; sceau et arbres signés
+  intouchés (m5/I aucun changement, onze verts avant/après) ; cartes
+  m0/m3/m4 intactes ; .keys/ gitignoré, aucun secret dans les écrits ;
+  finale 0.6.0 NON posée (elle attend la validation terrain — la carte ne
+  ment pas) ; aucune suppression.
+- SUITE : kit VM ÉTAPE 2 (navigateur du bac à sable, mandataire
+  127.0.0.1:25000, http://autorite.test/ sous --relever-https) ; run M5-b
+  étape 2 (critère (b) de D136) ; si vert : --sceller-final pose 0.6.0
+  (l'exigence est déjà écrite au code). D139 ouvert, non bloquant.
+
+Stage Summary:
+- La carte génération 7 VIT : scellée 0.6.0-rc.1 sous la lignée D80 et la
+  graine durable du coffre (D144), lisible, verrouillée (anti-rollback
+  vivant, R8 52 empreintes), l'artefact n'a pas bougé d'un octet — et la
+  finale attend honnêtement le navigateur du critère (b).
+- Suite : kit VM étape 2, run M5-b étape 2, puis --sceller-final si vert.

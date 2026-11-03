@@ -107,6 +107,12 @@ VERSION_U64_DEV1 = 0x00060000  # R10 : monotonie (> 0.5.1 = 0x00050003 ≥
                                # plancher 0.4.0)
 VERSION_U64_MIN = 0x00040000   # plancher hérité (http-12:Q1 scellé)
 VERSION_060 = "0.6.0"          # la balise est posée à la validation terrain
+VERSION_RC1 = "0.6.0-rc.1"     # candidate (modèle D104) : cristallisation
+                               # 10/10 + conformité § 8.2 — SOUMISE au run
+                               # M5-b étape 2 (critère (b) de D136)
+VERSION_FINALE = "0.6.0"       # la finale : validation terrain consignée
+                               # (critère (b) — la page servie ET la 502
+                               # « Certificat rejete » PAR LE NAVIGATEUR)
 
 # --- Blocs embarqués dans proxy.exe M5 (couche C, génération 7 — g8xxxx) -------
 

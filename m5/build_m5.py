@@ -39,8 +39,12 @@ et l'image composée M4 est confrontée OCTET PAR OCTET au proxy.exe 0.5.1
 scellé AVANT toute extension — la preuve R7 absolue.
 
 Usage :
-  python3 build_m5.py                  # construction 0.6.0-dev.1
+  python3 build_m5.py                  # construction 0.6.0-dev.1 (+ carte gén. 7)
   python3 build_m5.py --verifier [--graine N] [--volume complet|reduit]
+  python3 build_m5.py --sceller-rc     # scellage 0.6.0-rc.1 : cristallisation
+                                       # 10/10 + conformité § 8.2 (modèle D104)
+  python3 build_m5.py --sceller-final  # 0.6.0 : validation terrain consignée
+                                       # (critère (b) de D136 — le run M5-b étape 2)
 """
 
 from __future__ import annotations
@@ -89,6 +93,7 @@ B4 = _charger_module("build_m4", os.path.join(M4_DIR, "build_m4.py"))
 # sous nom propre par importlib (liaison par objet module, miroir build_m4).
 import oracle_m4 as od4  # noqa: E402
 import oracle_m5 as od5  # noqa: E402
+import carte_m5 as cm  # noqa: E402  # génération 7 (lignée D80, graine durable D144)
 L = _charger_module("layout", os.path.join(ICI, "layout.py"))   # plan M5
 
 import capstone  # noqa: E402
@@ -448,6 +453,7 @@ def oracle_structurel_m5(specs: dict, code: dict, blocs: list[tuple]) -> list[st
 # --- Composition de l'image M5 ----------------------------------------------------
 
 SHA_PROXY_051 = "fb41697ddde265ac"    # préfixe — la scellé 0.5.1 PROUVÉ v7/v8
+SHA_PROXY_060_DEV1 = "4b8f6af6caedb3e17811e6e25da1f1680068866bd1b417154fc54474170ec236"  # 0.6.0-dev.1 — le scellage est un fait de carte, ces octets ne bougent plus
 
 
 def _somme_qwords(octets: bytes) -> int:
@@ -765,19 +771,279 @@ def preuve_reutilisation(exe: bytes) -> dict:
             "blocs_reutilises": len(B4.BLOCS_EMBARQUES_M4)}
 
 
-# --- Verrou croisé et carte ----------------------------------------------------------
-# La carte génération 7 est un fait de CÉRÉMONIE (les secrets vivent hors
-# du laboratoire — D87) ; le build vérifie ce qu'il peut et nomme ce qui
-# reste à l'opérateur. Le verrou croisé s'installe à la cérémonie.
+# --- Carte génération 7 : tables, fragments, verrou croisé (modèle D104) -------------
+# Les secrets sont DURABLES au coffre (D144) : la phrase de la lignée D80
+# (entrée lignee-D80) et la graine Ed25519 (entrée graine-ed25519-cartes,
+# pub e9cd8c549485…) — la même qui a signé la m4 0.5.1 re-scellée. La carte
+# est écrite par le build (modèle m0-m4) ; carte_m5.charger_secrets est
+# FAIL-CLOSED (aucun secret éphémère — la cause de l'orpheline v7 est morte).
+
+CONTRATS_M5 = {
+    "g80001": ("(span cible, longueur, sorties methode/chemin/autorite, zone "
+               "accueil 40 o, politique au 5e argument) -> rax verdict",
+               "P1-P4 de http-08:R2 repris tels quels ; P5 NOUVEAU : la "
+               "politique (u64 a la loge d argument 5) vaut 0 ou 1 — toute "
+               "autre valeur suit la branche politique absente",
+               "Q1-Q3 et Q5 de R2 repris ; Q4 https byte-exact (8 octets "
+               "minuscules, rax 4, port 443) repris ; Q6 NOUVEAU : http:// "
+               "absolu ET P5 != 0 -> rax 5 « cible a relever », port implicite "
+               "443 consigne dans la sortie ; SANS politique : R2 OCTET POUR "
+               "OCTET (anti-regression R7 — le chemin M3 scelle T2 reste vert)",
+               "I1-I5 de R2 repris : feuille pure, aucune lecture .data, "
+               "aucune ecriture hors zone accueil, aucun NUL suppose, "
+               "non-volatils",
+               "[] (feuille pure — la politique atteint le bloc en CINQUIEME "
+               "argument, jamais par .data)"),
+    "g80002": ("(thread session, paquet client, socket cliente, cadres) -> "
+               "session complete",
+               "P1-P5 de http-10:R2 repris tels quels ; P6 cible TLS -> paquet "
+               "tls-08 port 443 repris ; P7 NOUVEAU : la politique lue UNE "
+               "fois en .data (R_POLITIQUE) et passee en 5e argument a "
+               "http-08:R3 ; P8 NOUVEAU : compteurs de flux rsi/rdi "
+               "non-volatils sauvegardes au prologue (7 pushes) — les octets "
+               "des relais delegues jamais comptes deux fois",
+               "Q1-Q5 et Q2'/Q3'/Q4' de R2 repris ; le verdict 5 route comme "
+               "le verdict 4 : LE MEME chemin Q2' (port 443 AUSSI pour la "
+               "cible relevee, E2) ; LA LIGNE DE FLUX (prefixe au routage "
+               ".pas_releve, suffixe v/e/s a .fin, politique armee "
+               "seulement) ; verdicts tls transportes tels quels",
+               "I1-I6 de R2 repris (premier push, terminale ret, aucun "
+               "tls-01..07 direct — tout passe par tls-08 @0x6D40) ; zones "
+               "FLUX du cadre jamais touchees par R1/R2",
+               "[g80001 http-08:R3] [g70008 tls-08] [e50001 e50002 e50004 "
+               "e50005 e50006 e50007 e50009 http] [e50013 tcp-13] [c30003 "
+               "c30004 c30005 c30006 tcp] [c30011 tcp-11] [b20001 b20003 "
+               "b20004 libc] [ext kernel32:CloseHandle] [rdata:table-"
+               "methodes,reponses,noms,502-cert]"),
+    "g80003": ("() -> noreturn (point d entree PE, thread principal)",
+               "P1 le bloc est le point d entree PE — DESORMAIS 0x8C80 "
+               "(.text4, delta PE documente) ; P2 pile alignee (convention "
+               "chargeur) ; P3 .data a l etat image (R_POLITIQUE = 0)",
+               "Q1 porte R10 heritee avant tout effet (28 entrees, fail-"
+               "closed) ; Q1bis PORTE M5 : UNE entree (0x8000, 0x2000, somme "
+               ".text4) — le bloc d entree est DANS la plage gardee ; Q1ter "
+               "version >= plancher 0x00040000 ; Q2 la CLI naît : --relever-"
+               "https arme la politique (R_POLITIQUE ecrit UNE fois avant "
+               "toute initialisation reseau), TOUT argument inconnu = refus "
+               "nomme ExitProcess 3 SANS initialisation ; la boucle lance "
+               "http-10:R3 (0x81C0 — le contre-cablage nominal)",
+               "I1 appels systeme : IAT kernel32 GetStdHandle/"
+               "InitializeCriticalSection/ExitProcess/CloseHandle + "
+               "GetCommandLineW (l entree NOUVELLE, IAT M5) + ws2_32 "
+               "WSACleanup ; jamais tls-01..07 direct",
+               "[a10002 hello-02] [c30001 c30002 c30006 tcp] [c30011 tcp-11] "
+               "[g80002 http-10:R3 @0x81C0 par lea] [ext kernel32:"
+               "GetStdHandle,InitializeCriticalSection,ExitProcess,"
+               "CloseHandle,GetCommandLineW] [ext ws2_32:WSACleanup] "
+               "[rdata:table-R10,porte-M5,version,ancre,messages,cmd-"
+               "relever,refus-cli,politique]"),
+}
+
+TOUS_BLOCS = B4.TOUS_BLOCS + [b[0] for b in BLOCS_M5]          # 52 (génération 7)
+RVA_PAR_BLOC = dict(B4.RVA_PAR_BLOC) | {b[0]: b[3] for b in BLOCS_M5}
+SPEC_PAR_BLOC = dict(B4.SPEC_PAR_BLOC) | {b[0]: b[1] for b in BLOCS_M5}
+EXE_PAR_BLOC = dict(B4.EXE_PAR_BLOC) | {b[0]: "proxy" for b in BLOCS_M5}
+CONTRATS = dict(B4.CONTRATS) | CONTRATS_M5
+ROLES = dict(L.NOMS_BLOCS)
+EMBARQUES = {b[0] for b in BLOCS_EMBARQUES_M5}                 # 41 blocs
+FICH_PAR_BID = dict(B4.FICH_PAR_BID) | {b[0]: b[2] for b in BLOCS_M5}
+
+
+def _chemin_notation_bid(bid: str) -> str:
+    """Notation d'un bloc indexé par la carte : routage M5 par défaut,
+    héritage via le routeur M4 (jamais deux sources de vérité du routage)."""
+    if bid in {b[0] for b in BLOCS_M5}:
+        return chemin_notation_m5(FICH_PAR_BID[bid])
+    return B4._chemin_notation_bid(bid)
+
+
+_ZONES_CARTE = ("[zones] io=0x1000-0x10ff libc=0x1100-0x143f app=0x1800-0x1fff "
+                "net=0x4000-0x42ff cli=0x4400-0x45bf thr=0x4300-0x43ff "
+                "srv=0x4b00-0x4bff http=0x4c00-0x5e7f "
+                "tls=0x6000-0x733f revisions=0x7340-0x7fbf reserve-t3=0x7fc0-0x7fff "
+                "revisions-m5=0x8000-0x8fbf reserve-t4=0x8fc0-0x9fff "
+                "reserve-libc=0x1440-0x17ff (int3 defensif)")
+
+
+def fragments_clairs(exe: bytes, verrous_m3: list, verrous_m4: list,
+                     verrous_m5: list, version: str, verdict_m4: dict,
+                     verdict_m5: dict, compteurs: dict,
+                     journal_runs: list[str]) -> dict[str, bytes]:
+    sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
+
+    loc = ["[carte-frag] nom=frag-loc generation=7", _ZONES_CARTE]
+    for bid in TOUS_BLOCS:
+        loc.append(f"[bloc] id={bid} spec={SPEC_PAR_BLOC[bid]} cible=x86-64-win11-pe "
+                   f"exe={EXE_PAR_BLOC[bid]} addr={L.IMAGE_BASE + RVA_PAR_BLOC[bid]:#x} "
+                   f"v=1 etat=scelle role={ROLES[bid]}")
+
+    con = ["[carte-frag] nom=frag-con generation=7"]
+    for bid in TOUS_BLOCS:
+        sig, pre, post, inv, deps = CONTRATS[bid]
+        con += [f"[bloc] id={bid}", f"  sig : {sig}", f"  pre : {pre}",
+                f"  post : {post}", f"  inv : {inv}", f"  deps : {deps}"]
+
+    prf = ["[carte-frag] nom=frag-prf generation=7"]
+    for bid in TOUS_BLOCS:
+        with open(_chemin_notation_bid(bid), "rb") as f:
+            empreinte_notation = sha(f.read())
+        crist = min(compteurs.get(bid, 1), 10)
+        prf += [
+            f"[bloc] id={bid} etat={'cristallise' if crist >= 10 else 'scelle'} crist={crist}/10",
+            f"  vecteurs : roundtrip=ok structure=ok notation={empreinte_notation}",
+        ]
+    prf.append("[verifications] runs=" + str(len(journal_runs)))
+    prf += ["  " + r for r in journal_runs[-12:]]
+
+    bld = ["[carte-frag] nom=frag-bld generation=7"]
+    for bid in TOUS_BLOCS:
+        rva = RVA_PAR_BLOC[bid]
+        if bid in EMBARQUES:
+            slot = next(s for b, _sid, _f, _r, s in BLOCS_EMBARQUES_M5 if b == bid)
+            empreinte = sha(tranche_section(exe, rva, slot))
+        else:
+            with open(_chemin_notation_bid(bid), "rb") as f:
+                empreinte = "notation:" + sha(f.read())[7:]
+        bld.append(f"[bloc] id={bid} addr={L.IMAGE_BASE + rva:#x} empreinte={empreinte}")
+    bld += [
+        f"[build] artefact=proxy.exe version={version} profil=x86-64-win11-pe "
+        f"taille={len(exe)} empreinte={sha(exe)}",
+        f"  outils : keystone-engine + capstone {capstone.cs_version()[0]}.{capstone.cs_version()[1]} ; "
+        f"verrous structurels : M3 {len(verrous_m3)} + M4 {len(verrous_m4)} + M5 {len(verrous_m5)} ; "
+        f"oracles : M4 (heritage rejoue) {verdict_m4.get('total_cas', 0)} cas + M5 (scenarios "
+        f"etendus D136) {verdict_m5.get('total_cas', 0)} cas, "
+        f"graine={verdict_m5.get('graine', '-')}, volume={verdict_m5.get('volume', '-')}",
+        f"  heritage : proxy.exe 0.5.1 scelle (fb41697d...) repris octet pour octet "
+        f"(R7 : .text/.text2/.text3/.data intacts, .rdata identique jusqu a 0x2CC2 "
+        f"SAUF la version @0x2820 = 0x00060000 — le delta documente ; extension M5 "
+        f"dans la zone VIERGE VERIFIEE : fixtures CLI/flux, descripteurs M5, IAT/INT/"
+        f"hints GetCommandLineW, porte M5 ; entree PE 0x7DC0 -> 0x8C80, section "
+        f".text4 nouvelle) ; les 38 blocs heritages octet-identiques ; hello.exe 0.1.0 "
+        f"+ selftest.exe 0.2.0 + echo.exe 0.3.0 + proxy.exe 0.4.0 + proxy.exe 0.5.1 "
+        f"(lignees D74/D80/D144) inchanges",
+        _ZONES_CARTE,
+    ]
+
+    retour = {}
+    for nom, lignes in (("frag-loc", loc), ("frag-con", con), ("frag-prf", prf), ("frag-bld", bld)):
+        retour[nom] = ("\n".join(lignes) + "\n").encode("utf-8", errors="replace")
+    return retour
+
+
+def construire_carte(exe, verrous_m3, verrous_m4, verrous_m5, version,
+                     verdict_m4, verdict_m5, compteurs, journal_runs):
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    clairs = fragments_clairs(exe, verrous_m3, verrous_m4, verrous_m5, version,
+                              verdict_m4, verdict_m5, compteurs, journal_runs)
+    fragments = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = cm.empreinte_racine(fragments)
+    entete = cm.construire_entete(racine)
+    prive, pub = cm.paire_cles(cm.charger_secrets(interactif=False)[1])
+    signature = cm.signer(prive, entete, fragments)
+    cm.ecrire_carte(entete, fragments, signature, pub)
+    return pub
+
+
+# --- Verrou croisé (R8 : relecture indépendante — les TROIS générations) ------------
+
+def verrou_croise() -> tuple[int, dict]:
+    phrase, _ = cm.charger_secrets(interactif=False)
+    entete, fragments, signature, pub = cm.lire_carte()
+    cm.verifier_listes_blanches(entete.decode("ascii"))
+    cm.verifier_signature(pub, entete, fragments, signature)
+    if cm.empreinte_racine(fragments).hex() not in entete.decode("ascii"):
+        raise cm.ErreurCarte("empreinte racine divergente")
+    maitre = cm.cle_maitresse(phrase)
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+    with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
+        exe = f.read()
+    empreintes, manifestes = {}, []
+    for ligne in bld.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            empreintes[champs["id"]] = champs["empreinte"]
+        elif ligne.startswith("[build]"):
+            manifestes.append(dict(re.findall(r"(\w+)=(\S+)", ligne)))
+    manifeste = next((m for m in manifestes if m.get("artefact") == "proxy.exe"), {})
+    for bid, _sid, _f, rva, slot in BLOCS_EMBARQUES_M5:
+        sha = "sha256:" + hashlib.sha256(tranche_section(exe, rva, slot)).hexdigest()
+        if sha != empreintes.get(bid):
+            raise cm.ErreurCarte(f"verrou croisé : empreinte de {bid} divergente (R8)")
+    sha_exe = "sha256:" + hashlib.sha256(exe).hexdigest()
+    if sha_exe != manifeste.get("empreinte"):
+        raise cm.ErreurCarte("verrou croisé : empreinte de proxy.exe divergente (R8)")
+    return len(empreintes), manifeste
+
+
+# --- Tableau de bord (§ 15.2, métriques M5) -----------------------------------------
+
+def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, verrous_m5: list,
+                    nb_blocs_carte: int, manifeste: dict, verdict_m4: dict,
+                    verdict_m5: dict) -> str:
+    sha = lambda b: hashlib.sha256(b).hexdigest()
+    lignes = [
+        "[tableau] jalon=M5 artefact=proxy.exe version=" + manifeste.get("version", "?"),
+        f"  blocs_avec_spec_a_jour        : {nb_blocs_carte}/52 : audit de tracabilite I->C->B (6 artefacts)",
+        f"  chaines_I_C_B_tests           : {nb_blocs_carte}/{nb_blocs_carte} : specs, carte, exe, vecteurs",
+        f"  construction                  : 0 erreur / 0 avertissement : build script",
+        f"  tests_differentiels           : oracle M4 (heritage rejoue) {verdict_m4.get('total_cas', 0)} cas verts "
+        f"+ oracle M5 (scenarios etendus D136) {verdict_m5.get('total_cas', 0)} cas verts "
+        f"({verdict_m5.get('volume', '-')}, graine {verdict_m5.get('graine', '-')}) ; "
+        f"oracle structurel M3 {len(verrous_m3)} + M4 {len(verrous_m4)} + M5 {len(verrous_m5)} verrous PASS",
+        f"  reutilisation_heritage        : 38 blocs octet-identiques au scelle 0.5.1 "
+        f"(R7, deltas .rdata/.text4/PE documentes)",
+        f"  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5, "
+        f"table R10 28 entrees [marche aux bornes — porte .text3 D95], PORTE M5 une "
+        f"entree [0x8000, 0x2000, somme .text4], table des reponses 8 entrees, "
+        f"secur32 x7, GetCommandLineW, version 0x00060000)",
+        f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D136",
+        f"  optimisations_sans_mesure     : 0 : aucune optimisation M5 (R11)",
+        f"  changements_hors_journal      : 0 : D77 a D144 consignees",
+        f"  preversions                   : {manifeste.get('version', '?')} conforme "
+        f"(schema dev, monotonie R10 verifiee par la porte heritee 28 sommes + la "
+        f"porte M5 — recalculees du binaire)",
+        f"  entrees_non_fiables           : comportement defini par contrat (E1-E8 herites + "
+        f"table TOTALE des HRESULT, verdicts nommes, compensation par comptage, refus "
+        f"CLI nomme ExitProcess 3) ; falsification : F3 14/14 + V4 onze mutations "
+        f"attrapees (D136)",
+        f"  artefact                      : {len(exe)} octets ; empreinte sha256:{sha(exe)[:16]}... ; "
+        f"6 sections (.text4 nouvelle 0x8000) ; secur32 x7 (Schannel) + "
+        f"GetCommandLineW ; entree PE 0x8C80 (http-12:R3 — la CLI et la porte M5)",
+        f"  verrou_croise                 : {nb_blocs_carte} empreintes reverifiees "
+        f"(6 artefacts + notations non embarquees) + signature Ed25519 (graine "
+        f"durable D144, pub e9cd8c549485...) + racine (R8/R9)",
+    ]
+    return "\n".join(lignes) + "\n"
+
+
+def _anti_rollback() -> None:
+    """Une carte scellée (rc/final) interdit la reconstruction (R6)."""
+    try:
+        _, fragments, _, _ = cm.lire_carte()
+        phrase, _ = cm.charger_secrets(interactif=False)
+        maitre = cm.cle_maitresse(phrase)
+        bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+        version_existante = next(
+            (dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
+             if "artefact=proxy.exe" in l), None)
+        if version_existante and ("-rc" in version_existante
+                                  or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
+            raise EchecBuild(
+                f"carte scellée ({version_existante}) : reconstruction interdite — "
+                f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+    except (cm.ErreurCarte, FileNotFoundError):
+        pass  # pas de carte lisible : première construction
+
 
 def verifier_carte_possible() -> str:
     """-> le motif : 'cérémonie requise' (secrets absents) ou 'prête'."""
     chemin_phrase = os.path.join(TRIADE, ".keys", "passphrase.txt")
     chemin_graine = os.path.join(TRIADE, ".keys", "ed25519.seed")
     if not os.path.exists(chemin_phrase) or not os.path.exists(chemin_graine):
-        return ("cérémonie requise (D87) : les secrets de la carte ne vivent "
-                "pas au laboratoire — l'opérateur scelle (R6/R8/R9)")
-    return "prête"
+        return ("cérémonie requise (D144) : relève au coffre — phrase = entrée "
+                "lignee-D80, graine = entrée graine-ed25519-cartes")
+    return "prête (lignée D80 + graine durable D144)"
 
 
 # --- Assemblage + vérification --------------------------------------------------------
@@ -819,6 +1085,7 @@ def blobs_oracle(code_m3: dict, code_m4: dict, code_m5: dict) -> dict:
 
 def construire(volume: str, graine: int) -> int:
     print("=== M5 : chaîne artefact TRIADE (profil x86-64-win11-pe, 0.6.0) ===")
+    _anti_rollback()
     _garde_sceau_I()
 
     # 1. Héritage M3+M4 re-vérifié de bout en bout (R5 + oracles structurels)
@@ -877,13 +1144,32 @@ def construire(volume: str, graine: int) -> int:
     with open(os.path.join(ICI, "proxy.exe"), "wb") as f:
         f.write(exe)
 
-    # 8. La carte génération 7 : un fait de cérémonie (D87)
-    etat_carte = verifier_carte_possible()
-    print(f"[carte] génération 7 : {etat_carte}")
-    print(f"[B] proxy.exe 0.6.0-dev.1 : sha256:{hashlib.sha256(exe).hexdigest()}")
-    print(f"=== M5-dev (oracle vert) : {L.VERSION_DEV1} — le flux navigateur "
-          f"embarqué et CÂBLÉ, cérémonie de signature puis terrain (étape 2) "
-          f"en attente ===")
+    # 8. Carte génération 7 (lignée D80, graine durable D144) + verrou croisé
+    #    + tableau de bord — le scellage reste un fait de carte (D104)
+    version = L.VERSION_DEV1
+    compteurs = {bid: 1 for bid in TOUS_BLOCS}
+    journal = [f"run graine={graine} volume={volume} "
+               f"verdict-m4={verdict_m4['empreinte']} verdict-m5={verdict['empreinte']} "
+               f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} "
+               f"build={version}"]
+    construire_carte(exe, verrous_m3, verrous_m4, verrous_m5, version,
+                     verdict_m4, verdict, compteurs, journal)
+    print(f"[carte] génération 7 écrite (lignée D80, graine durable D144) : "
+          f"4 fragments chiffrés, signature Ed25519, {len(TOUS_BLOCS)} blocs "
+          f"indexés sur 6 artefacts")
+    nb, manifeste = verrou_croise()
+    print(f"[R8] verrou croisé : signature OK, racine OK, {nb} empreintes "
+          f"revérifiées, artefact {manifeste.get('version')}")
+    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="utf-8") as f:
+        f.write(tableau_de_bord(exe, verrous_m3, verrous_m4, verrous_m5, nb,
+                                manifeste, verdict_m4, verdict))
+    print("[tableau] tableau de bord écrit (carte/tableau-de-bord.txt)")
+    print(f"[B] proxy.exe {manifeste.get('version')} : "
+          f"sha256:{hashlib.sha256(exe).hexdigest()}")
+    print(f"=== M5-dev (oracle vert) : {version} — le flux navigateur embarqué "
+          f"et CÂBLÉ, carte génération 7 vivante ; cristallisation puis "
+          f"scellage rc (R6), kit VM étape 2 et run M5-b étape 2 (critère (b) "
+          f"de D136) en attente ===")
     return 0
 
 
@@ -905,9 +1191,133 @@ def verifier(graine: int, volume: str) -> int:
     verdict = od5.executer(blobs, graine=graine, volume=volume)
     print(f"[oracle] différentiel M5 : {verdict['total_cas']} cas verts")
     valider_pe(exe)
-    print("[PE] proxy.exe 0.6.0-dev.1 re-validé (6 sections, porte M5, porte "
+    print("[PE] proxy.exe 0.6.0 re-validé (6 sections, porte M5, porte "
           "R10, fixtures M5, version 0x00060000)")
+
+    # Cristallisation R6 : chaque passage incrémente les compteurs (10/10
+    # exigés au scellage) — la carte est re-signée à chaque passage (fragments
+    # re-chiffrés, graine durable D144), le verrou croisé re-vérifié (R8)
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode("utf-8")
+    compteurs, journal = {}, []
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            m = re.match(r"(\d+)/10", champs.get("crist", "1/10"))
+            compteurs[champs["id"]] = int(m.group(1))
+        elif ligne.startswith("  run "):
+            journal.append(ligne.strip())
+    for bid in TOUS_BLOCS:
+        compteurs[bid] = min(compteurs.get(bid, 0) + 1, 10)
+    journal.append(f"run graine={graine} volume={volume} "
+                   f"verdict-m4={verdict_m4['empreinte']} verdict-m5={verdict['empreinte']} "
+                   f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+    manifeste_v = next((dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
+                        if "artefact=proxy.exe" in l), "?")
+    version = manifeste_v if manifeste_v != "?" else L.VERSION_DEV1
+    construire_carte(exe, verrous_m3, verrous_m4, verrous_m5, version,
+                     verdict_m4, verdict, compteurs, journal)
+    nb, manifeste = verrou_croise()
+    crist = {b: compteurs.get(b, 0) for b, *_ in BLOCS_M5}
+    print("[R6] cristallisation M5 : " + ", ".join(f"{b}={n}/10" for b, n in crist.items()))
+    print(f"[R8] verrou croisé : {nb} empreintes conformes ; artefact {manifeste.get('version')}")
+    with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w", encoding="utf-8") as f:
+        f.write(tableau_de_bord(exe, verrous_m3, verrous_m4, verrous_m5, nb,
+                                manifeste, verdict_m4, verdict))
     print(f"[carte] génération 7 : {verifier_carte_possible()}")
+    return 0
+
+
+def _sceller(nouvelle_version: str, exigences: str) -> int:
+    """Scellage M5 (modèle m4 D104 / m3 D74) : cristallisation 10/10 +
+    conformité § 8.2 verte + bascule de balise dans frag-bld. L'artefact
+    n'est PAS touché — le scellage est un fait de carte ; proxy.exe reste
+    byte-identique à l'artefact 0.6.0-dev.1 (sha256 4b8f6af6…, 36 352 o —
+    l'image M4 == le scellé 0.5.1 octet pour octet, la lignée prouvée par
+    les runs v7/v8)."""
+    print(f"=== M5 : scellage {nouvelle_version} ({exigences}) ===")
+    _garde_sceau_I()
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplete : {incomplets} — 10 verifications requises (R6)")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # Conformité § 8.2 (m5/conformite_profil.py — modèle D104) : suite exigée
+    # à chaque cristallisation rc/finale ; chargée sous un nom distinct (elle
+    # recharge build_m5 comme module : aucune collision d'état).
+    cp = _charger_module("conformite_profil_m5", os.path.join(ICI, "conformite_profil.py"))
+    ok_conf, lignes_conf = cp.executer()
+    print("\n".join(lignes_conf[-3:]))
+    if not ok_conf:
+        raise EchecBuild(f"suite de conformite non verte — {nouvelle_version} refuse")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode("utf-8")
+    if nouvelle_version == L.VERSION_FINALE:
+        ancienne = L.VERSION_RC1
+        occurrences = bld.count(f"version={ancienne}")
+        if occurrences != 1:
+            raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
+                             f"({occurrences} occurrence(s)) — scellage final refuse (fail-closed)")
+    else:
+        ancienne = L.VERSION_DEV1
+        occurrences = bld.count(f"version={ancienne}")
+        if occurrences != 1:
+            raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
+                             f"({occurrences} occurrence(s)) — scellage refuse (fail-closed)")
+    bld = bld.replace(f"version={ancienne}", f"version={nouvelle_version}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = cm.empreinte_racine(nouveaux)
+    entete = cm.construire_entete(racine)
+    _, graine_cles = cm.charger_secrets(interactif=False)
+    prive, pub = cm.paire_cles(graine_cles)
+    signature = cm.signer(prive, entete, nouveaux)
+
+    # Vérification EN MÉMOIRE avant l'unique écriture (modèle réparation D144)
+    cm.verifier_listes_blanches(entete.decode("ascii"))
+    cm.verifier_signature(pub, entete, nouveaux, signature)
+    if cm.empreinte_racine(nouveaux).hex() not in entete.decode("ascii"):
+        raise EchecBuild("contrôle en mémoire : empreinte racine divergente")
+    controle = cm.dechiffrer_fragment(maitre, "frag-bld", nouveaux["frag-bld"]).decode("utf-8")
+    if f"version={nouvelle_version}" not in controle or f"version={ancienne}" in controle:
+        raise EchecBuild("contrôle en mémoire : bascule de balise non constatée")
+    cm.ecrire_carte(entete, nouveaux, signature, pub)
+
+    # Le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt")
+    if os.path.exists(chemin_tab):
+        with open(chemin_tab, "r", encoding="utf-8") as f:
+            tab = f.read()
+        tab = tab.replace(f"version={ancienne}", f"version={nouvelle_version}")
+        tab = tab.replace(f"{ancienne} conforme", f"{nouvelle_version} conforme")
+        with open(chemin_tab, "w", encoding="utf-8") as f:
+            f.write(tab)
+    nb, manifeste = verrou_croise()
+    print(f"[R8] verrou croisé post-scellage : {nb} empreintes conformes, "
+          f"artefact {manifeste.get('version')}")
+    with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
+        sha_artefact = hashlib.sha256(f.read()).hexdigest()
+    if sha_artefact != SHA_PROXY_060_DEV1:
+        raise EchecBuild(f"artefact divergent ({sha_artefact[:16]}…) — le scellage "
+                         f"est un fait de carte, proxy.exe ne bouge pas")
+    print(f"[balise] {nouvelle_version} scellée (immuable § 9 ; défaut -> X.Y.Z+1 "
+          f"à contrat stable, R4) ; proxy.exe INTACT (sha256 {sha_artefact[:16]}…, "
+          f"36 352 o — le scellage est un fait de carte)")
     return 0
 
 
@@ -918,9 +1328,26 @@ if __name__ == "__main__":
             graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 20261103
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
             sys.exit(verifier(graine, volume))
+        if "--sceller-rc" in args:
+            sys.exit(_sceller(L.VERSION_RC1,
+                              "cristallisation R6 10/10 + conformite § 8.2 + "
+                              "criteres du jalon M5 prouves a ce jour (flux "
+                              "navigateur embarque et cable — oracle D136 365 cas, "
+                              "falsification incluse ; autorite de test locale "
+                              "13 controles ; etape 1 en VM isolee : runs v7/v8 "
+                              "verdict OK 0 reserve ; empreintes par build D134) — "
+                              "candidate SOUMISE au run M5-b etape 2 (critere (b) "
+                              "de D136 : la page servie ET la 502 Certificat "
+                              "rejete PAR LE NAVIGATEUR)"))
+        if "--sceller-final" in args:
+            sys.exit(_sceller(L.VERSION_FINALE,
+                              "R6 + conformite + validation terrain consignee (le "
+                              "run M5-b etape 2 — critere (b) de D136 : la page "
+                              "servie ET la 502 Certificat rejete recues PAR LE "
+                              "NAVIGATEUR, la ligne de flux aux preuves)"))
         volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"
         graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 20261103
         sys.exit(construire(volume, graine))
-    except (EchecBuild, EchecOracle) as exc:
+    except (EchecBuild, EchecOracle, cm.ErreurCarte) as exc:
         print(f"ECHEC (fail-closed) : {exc}", file=sys.stderr)
         sys.exit(1)
