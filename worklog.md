@@ -1254,3 +1254,62 @@ Stage Summary:
   explicitement, spécification v0.6.1 (§ 1.8, § 12.5, § 19.8) et Livre du
   Coffre v1.1 alignés, erratum « tbp] » nommé et réparé, chaîne
   diagramme re-capturée
+
+Task ID: 43
+Agent: Z.ai (agent principal)
+Task: cérémonie D87 réalisée par le développeur (signatures-I.txt déposé
+au coffre « test ») — dépôt sceau, build scellé 0.5.1 (jalon v7/D140-S3),
+checklist guide §6, kit v7, livraison Drive.
+
+Work Log:
+- REMISE RAPATRIÉE : signatures-I.txt (1 425 o, md5 467ea252…) téléchargé
+  PAR ID depuis le dossier « test » du coffre, md5 local == distant
+  (intacte) ; sceau_I.py etat AVANT : m4 DIVERGE (README.md), 9 verts
+- DÉPÔT : sceau_I.py deposer → 10 signatures installées, état clé =
+  reelle (ceremonie hors-ligne, D87) ; verifier APRÈS : 10 arbres VERTS,
+  m4 = 7e5c61fbce15d3ec… (empreinte signée attendue — RAPPORT chirurgie)
+- BUILD SCELLÉ 0.5.1 (UNIQUE — anti-rollback : la carte scelle ensuite) :
+  g70005 tls-05:R2 325 o round-trip 67/67 ; oracle structurel 524 + 492
+  verrous PASS ; différentiel 560 cas verts ; R7 image M3 == scellé 0.4.0
+  octet pour octet (bf02769f…) ; PE 28 160 o, 5 sections, kernel32 x10 +
+  ws2_32 x13 + secur32 x7, entrée 0x7DC0 ; carte génération 6 (49 blocs,
+  5 artefacts, Ed25519) ; verrou croisé OK ; scellé-dev sha256
+  fb41697ddde265ac659bdceecc2ab3ec55f564d0998d43059090235762edf3f3
+- CHECKLIST GUIDE §6 (scripts/checklist_051.py — indépendante du build,
+  capstone + lecture PE directe) : TOUT PASSÉ — taille/table de sections/
+  ImageBase ; delta .text3 CONFINÉ au slot tls-05 (0x65C0-0x673F) ;
+  delta .rdata NOMMÉ = somme .text3 de la porte R10 (0x2818, recalculée
+  car le bloc a changé) + version (0x2820, 0x00050002 → 0x00050003) ;
+  .text/.text2/.data OCTET POUR OCTET (héritage R7) ; désassemblage du
+  site ACH : trame 0x98 @0x14000660d, mov dword [rsp+0x48],5
+  @0x140006651, lea rax,[rsp+0x48] @0x140006679, mov [rsp+0x20],rax
+  @0x14000667e (pAuthData = ARG 5, erratum E1), xor r9d,r9d
+  @0x140006692 (pvLogonID NULL), call [rip] → IAT 0x140002A00
+  @0x140006695, ordre cohérent ; table verdicts tls-02 (0x6080-0x611B)
+  octet pour octet ; R_TXT_502_CERT @0x2CA0 34 o INTACTE
+  (« HTTP/1.1 502 Certificat rejete\r\n\r\n ») ; entrée 0x7DC0 ; secur32
+  7 entrées IAT @0x2A00 ; kernel32 x10 + ws2_32 x13 ; sha256 == scellé-dev
+  annoncé ; md5 ≠ scellé 0.5.0
+- KIT v7 (scripts/assembler_kit_v7.py) : base = m5b-kit-v6.zip LIVRÉ (le
+  coffre fait foi) ; proxy 0.5.0 → 0.5.1 (contrôle sha256 avant/après) ;
+  scenario v7 ; LISEZMOI-KIT-M5B.md aligné v7 (7 remplacements ancrés,
+  ancres assertées) ; archive 11 185 452 o, 55 entrées, intégrité OK,
+  pièces critiques 4/4, marqueurs v7 4/4, racine v5 inchangée
+  (86525998…)
+- LIVRAISON DRIVE (scripts/drive_livraison_v7.py — idempotente) :
+  5 pièces préparatoires DÉJÀ CONFORMES ; m5b-kit-v7.zip TÉLÉVERSÉ
+  (id 1yCNq6PnUTt1…, 11 185 452 o, md5 1609228df344…) ; recoupement
+  final nom+taille+md5 : VAGUE COMPLÈTE ET CONFORME (6/6)
+- FRONTIÈRES : aucune clé réelle traversée (la remise opérateur est
+  publique — signatures, pas la clé) ; le 0.5.0 scellé D104 reste INTACT
+  (upload/m4/proxy-050-scelle.exe, md5 2b6481a1…) ; l'arbre m4 signé
+  0.5.1 est VERROUILLÉ par la carte génération 6 (anti-rollback) ; le
+  RUN v7 (opérateur, VM isolée) EST le test de validation du jalon
+- SUITE : run v7 opérateur (LISEZMOI-m5b-v7.txt, Temps 3) ; retour des
+  preuves au coffre preuves-m5b ; verdict sur pièces
+
+Stage Summary:
+- 0.5.1 BUILD ET LIVRÉ : la poignée ne meurt plus sur la révocation hors
+  ligne (SCH_CREDENTIALS dwFlags=0) ; le chemin hérésie « certificat
+  rejete » devient atteignable (UNTRUSTED_ROOT → verdict 3 → 502 34 o) ;
+  kit v7 au coffre — le run v7 dira.
