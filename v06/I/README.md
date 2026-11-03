@@ -19,12 +19,16 @@ physique du développeur. Le code volé ne peut pas évoluer.
 ## 1. Périmètre — les arbres signés
 
 Un **arbre d'intention** est un répertoire `<lignée>/I/` du dépôt : ses
-fichiers `.md` (registre figé + spécifications + README transverse). Dix
+fichiers `.md` (registre figé + spécifications + README transverse). Onze
 arbres vivent sous le sceau — les neuf lignées existantes à l'ouverture de
 l'axe, PLUS l'arbre des axes eux-mêmes (`v06/I`) : la spécification qui
 définit le sceau est la première couche I qu'il garde (un mécanisme de
 garde qui s'exempte de lui-même serait une contrebande de niveau X2) ;
-la table lie chaque arbre à son artefact et à sa balise de référence :
+la table lie chaque arbre à son artefact et à sa balise de référence.
+L'arbre `m5/I` — les trois révisions R3 du relèvement http→https,
+écrites-avant-code (D136) — entre au sceau à la cérémonie 0.6.0 : le
+périmètre ne grandit que signé (même modèle que l'entrée de CF3 à la
+re-cérémonie D126).
 
 | Arbre | Artefact | Balise de référence |
 |---|---|---|
@@ -33,6 +37,7 @@ la table lie chaque arbre à son artefact et à sa balise de référence :
 | `m2/I` | echo.exe + tcp | 0.3.0 (M2, scellée) |
 | `m3/I` | proxy.exe | 0.4.0 (M3, scellée) |
 | `m4/I` | proxy.exe (tunnel) | 0.5.0 (M4, scellée) |
+| `m5/I` | proxy.exe (relèvement https) | 0.6.0 (M5, cérémonie 0.6.0 — D136) |
 | `m6/I` | hachoir (lignée D34) | hachoir.1 |
 | `m7/I` | sceau (lignée D34) | sceau.1 |
 | `demo/I` | demo.exe | 0.3.0 (M2, scellée) |

@@ -1721,3 +1721,67 @@ Stage Summary:
   reconstitués au labo) ; le geste demandé est EFFECTIF, rejouable et
   entretenu à chaque commit par le hook post-commit.
 - Suite : inchangée — cérémonie D87, kit VM ÉTAPE 2, run M5-b étape 2.
+
+---
+## Task ID 51 — Paquet de cérémonie 0.6.0 livré dans /test + canal GitHub reconfiguré (04/11)
+
+- DEMANDE DU DÉVELOPPEUR (consignée fidèlement) : « tu peux pas me faire
+  comme pour la cérémonie v7 ? tu m'avais fait un zip avec le script de
+  cérémonie en python, un document à signer, je mettais mon fichier de
+  clé privée et ça produisais un document signé que je te donnais après »
+  + « reconfigure origin pour le git push en echec ».
+- PRÉCÉDENT V7 RELU (pièce à pièce) : a-signer.txt 10 lignes (1 neuve
+  m4/0.5.1) + ceremonie_hors_ligne.py (autonome, autotest RFC 8032,
+  signature auto-vérifiée) + LISEZMOI (signer hors ligne, rendre
+  signatures-I.txt dans /test).
+- ÉTAT DU SCEAU AVANT LE GESTE : 10 arbres verts, m5 HORS du sceau ;
+  build_m5.py le nommait : « l'arbre m5 porte les révisions R3
+  écrites-avant-code (D136) — sa signature appartient à la cérémonie
+  0.6.0 ».
+- LE PÉRIMÈTRE NE GRANDIT QUE SIGNÉ (modèle D126) : sceau_I.py ARBRES +
+  m5 (proxy.exe relevement https, 0.6.0) ; v06/I/README.md § 1 « Onze
+  arbres » + ligne m5 — la re-signature de v06 évite la contrebande X2
+  (un code qui signe onze arbres sous une spec qui en nomme dix).
+  preparer : remise 11 lignes ; état pré-cérémonie EXACT — 9 verts
+  identiques, m5 CODE 12 (1869422e…), v06 CODE 10 (a8166442…).
+  GEL : m5/I/ et v06/I/ figés jusqu'au retour de la remise.
+- CHAÎNE PROUVÉE DEUX FOIS : (1) copie minimale /tmp/test-sceau —
+  signer-test (clé TEST, jamais sur le dépôt réel) → verifier 11 VERTS
+  code 0 ; (2) le paquet lui-même — clé JETABLE, 11/11 TOUT VERT,
+  artefacts détruits (clé privée jetable comprise), zip 3 entrées
+  AUCUNE clé, 9 232 o.
+- LIVRAISON : paquet-ceremonie-0.6.0.zip + LISEZMOI-ceremonie-0.6.0.txt
+  dans /test (point de reprise historique), md5 recoupés par relecture
+  2/2 ; /test = 10 entrées (8 vague v8 + 2 nouvelles, aucune
+  suppression) ; canal scripts/livrer_paquet_ceremonie_060.py.
+- GITHUB RECONFIGURÉ : cause racine Task 50 (origin = bundle LOCAL en
+  lecture seule) ; mécanique authentique retrouvée (check_auth.py +
+  Entrée 0 : credential helper .gdrive/git-credentials 600) ; token_git
+  rapatrié du dossier Drive « Tokens » (93 o, JAMAIS affiché), API /user
+  200 (alexisfrlopez-debug), origin → github.com/alexisfrlopez-debug/
+  triade.git ; CONSTAT : les ONZE commits du jalon (07d392e…cd85d8a)
+  n'avaient JAMAIS été poussés ; poussée bundle051/v0.5.1-jalon-v7 à
+  cd85d8a (recoupé ls-remote), main INTACT f62711b (la fusion du jalon
+  = décision de clôture du développeur).
+- PASSATION : JOURNAL_TRAVAIL.md +Entrée 133 (PAR SCRIPT, ordre
+  132<133<marqueur, rejeu REFUSÉ fail-closed) ; scripts/inserer_entree_
+  133.py ; scripts/assembler_paquet_ceremonie_060.py, livrer_paquet_
+  ceremonie_060.py, reconfigurer_origin_github.py (labo, hors dépôt).
+- FRONTIÈRES : clé réelle jamais traversée ni affichée ; 9 arbres
+  signés INCHANGÉS (mêmes empreintes) ; aucun artefact scellé touché ;
+  dépôt réel en état pré-cérémonie (clé déposée réelle intacte) ;
+  .keys/ toujours absent du labo (scellage carte génération 7 = geste
+  dédié à proposer après la remise).
+- SUITE : signatures-I.txt attendu dans /test → deposer → verifier (11
+  arbres verts) → ARBRES_GARDE_M5 += m5 → carte génération 7 → kit VM
+  ÉTAPE 2 → run M5-b étape 2 (critère (b) de D136) ; D139 ouvert (T7
+  éventuel), non bloquant.
+
+Stage Summary:
+- La cérémonie 0.6.0 est PRÊTE POUR LE DÉVELOPPEUR : paquet déposé dans
+  /test (11 lignes à signer : m5 l'entrée + v06 la re-signature, 9
+  inchangées), chaîne prouvée deux fois, aucune clé dans le paquet.
+- GitHub rebranché : les 11 commits du jalon enfin poussés (branche
+  dédiée, main intact) — sync_backup pousse de nouveau pour de vrai.
+- Suite : attendre signatures-I.txt dans /test, puis deposer → verifier
+  → carte génération 7 → kit étape 2 → run M5-b étape 2.

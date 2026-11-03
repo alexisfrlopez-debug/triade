@@ -46,6 +46,7 @@ ARBRES = {
     "m2": ("echo.exe + tcp", "0.3.0"),
     "m3": ("proxy.exe", "0.4.0"),
     "m4": ("proxy.exe (tunnel)", "0.5.1"),
+    "m5": ("proxy.exe (relevement https)", "0.6.0"),
     "m6": ("hachoir", "hachoir.1"),
     "m7": ("sceau", "sceau.1"),
     "demo": ("demo.exe", "0.3.0"),
