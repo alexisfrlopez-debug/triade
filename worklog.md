@@ -1971,3 +1971,102 @@ Stage Summary:
   vivant, R8 52 empreintes), l'artefact n'a pas bougé d'un octet — et la
   finale attend honnêtement le navigateur du critère (b).
 - Suite : kit VM étape 2, run M5-b étape 2, puis --sceller-final si vert.
+## Task ID 55 — « ok pour la suite » : LE KIT VM ÉTAPE 2 LIVRÉ AU COFFRE — la vague e2 (le flux NAVIGATEUR, critère (b) de D136) sur le proxy 0.6.0-rc.1 ARMÉ --relever-https ; base v8, 55 entrées, reprises assertées ; D143 appliquée (vague v8 + cérémonie 0.6.0 archivées) ; la finale 0.6.0 attend le run terrain (04/11)
+
+Task: « ok pour la suite » — la suite consignée à l'Entrée 136 : kit VM
+ÉTAPE 2 (navigateur du bac à sable, mandataire 127.0.0.1:25000, page
+http://127.0.0.1/ — IP littérale D139 — sous --relever-https), puis run
+M5-b étape 2 (critère (b) de D136), puis --sceller-final si vert.
+
+Work Log:
+- REPRISE SUR DÉPÔT (contexte de session perdu) : HEAD fe94417 (scellage
+  carte génération 7, 0.6.0-rc.1) ; arbre propre au bruit de bits de mode
+  près (12 fichiers, diff 0/0, phénomène connu et consigné) ; sceau_I.py
+  verifier AVANT tout geste : ONZE arbres VERTS code 0 (m5 = 1869422e…),
+  cle deposee reelle — le scénario vit dans m5/vm/, HORS de l'arbre m5/I
+  signé, aucune signature ne peut bouger.
+- LA VAGUE v8 RAPATRIÉE DU COFFRE (le coffre fait foi) : m5b-kit-v8.zip +
+  scenario-m5b-v8.ps1 + LISEZMOI-m5b-v8.txt + corriger-wsb.* téléchargés
+  PAR ID, md5 recoupés (kit 3986421f…) ; l'état /test constaté : 11
+  entrées (vague v8 + cérémonie 0.6.0 consommée + remise signatures) ;
+  le kit extrait et relu pièce à pièce (fixtures v5 SAN DNS+IP, racine
+  86525998…, autorite_test.py, client v5, wsb, python 3.12.10) ; le
+  scénario v8 relu ENTIER (614 lignes — 0bis parefeu, Attendre-Port,
+  Verdict-Vue D138, matrice curl, branche S1-S4, témoin D99).
+- LES ATTENDUS EXACTS tirés des sources (jamais devinés) : la ligne de
+  flux du MODÈLE DE COMPOSITION (harnais_session_r3.ligne_flux : « flux
+  » + méthode + hôte + «:» + port + « v= » + verdict + « e= » + « s= »)
+  → aiguilles « flux GET 127.0.0.1:443 v=0 » / « v=3 » ; l'armement
+  « relever-https arme » (http-12:R3 Q3/I2 : UNE fois, entre bannière et
+  écoute) ; la 502 héritée 34 o SANS corps (Q3' — Edge rend SA page
+  d'erreur, l'aiguille DOM est « 502 », aucun locale n'écrit le chiffre
+  autrement) ; CONNECT REJETÉ 501 (http-08:R2 — si la montée https
+  d'Edge se déclenchait malgré les drapeaux, le repli aboutit, trace
+  v=501 additive au journal).
+- LE SCÉNARIO e2 ÉCRIT (m5/vm/scenario-m5b-e2.ps1, BOM + CRLF, 805
+  lignes, structure v8 + sections navigateur) : Edge localisé par sondes
+  (x86, PF, App Paths, PATH — REFUS NAVIGATEUR-ABSENT) ; version au
+  témoin (DIAG-EDGE-VERSION, additive) ; invocation headless --dump-dom
+  (décisif) + --screenshot (additif) par run, profils NEUFS,
+  --proxy-server=127.0.0.1:25000 + --proxy-bypass-list="<-loopback>"
+  (retire la dérivation de boucle implicite de Chromium) +
+  --disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,
+  HttpsFirstModeEnabled ; proxy ARMÉ --relever-https par cmd /c (capture
+  NATIVE, modèle v8) avec l'armement CONSTATÉ sous 20 s AVANT le
+  navigateur (REFUS PROXY-SANS-ARMEMENT) ; autorités A/B PAR DÉLAI
+  (150 s — le compte de requetes navigateur est inconnu, jamais
+  --arret-apres N) ; verdicts DOM-A-MARQUEUR / DOM-B-502 +
+  DOM-B-SANS-PAGE (Verdict-Vue D138 : vue vide + rc=0 = RÉSERVE) ;
+  FLUX-A-V0 / FLUX-B-V3 ; décor v8 entier rejoué (0bis parefeu, hosts +
+  sonde D139, empreintes, matrice curl additive — branches recalibrées :
+  S4 attendue, S3 = régression à nommer —, T6 Dnscache, témoin D99 en
+  dernier acte) ; équilibrage des délimiteurs vérifié PAR SCRIPT (156/156
+  accolades, 88/88 crochets, 474/474 parenthèses) ; le labo n'a NI
+  Windows NI PowerShell : le scénario est RELU, pas exécuté — les risques
+  CONSIGNÉS au LISEZMOI (modèle v8, la lignée v2→v8 a prouvé que ce qui
+  casse se nomme au premier lancement).
+- L'ASSEMBLAGE (scripts/assembler_kit_e2.py, modèle assembler_kit_v7 —
+  Task 43) : base = kit v8 LIVRÉ ; DEUX pièces remplacées (proxy.exe
+  0.5.1 fb41697d… → 0.6.0-rc.1 4b8f6af6… 36 352 o, asserté avant/après ;
+  scenario v8 → e2, BOM + CRLF assertés) + DEUX documents (LISEZMOI-KIT
+  e2, LISEZMOI-preuves e2) ; 51 reprises ASSERTÉES par md5 ; intégrité du
+  zip re-vérifiée à la sortie (testzip, proxy relu == 4b8f6af6…) ;
+  m5b-kit-e2.zip 11 191 067 o, md5 76e7b02f8c922981dbdc64fb34c6f679 ;
+  vérification par extraction de contrôle (55 entrées, wsb == v8,
+  autorite_test.py == v8, racine == 86525998…).
+- LA LIVRAISON D143 (scripts/livrer_vague_e2.py — chaque mutation
+  RECOUPÉE PAR RELECTURE, D12 étendu) : vague v8 consommée archivée
+  (LISEZMOI + scenario + kit) ; cérémonie 0.6.0 consommée archivée
+  (paquet + LISEZMOI + signatures-I.txt RENOMMÉE signatures-I-0.6.0.txt —
+  la remise 0.5.1 vit déjà au même nom à l'archive) ; vague e2 posée
+  (kit + scenario octet-identique au kit + LISEZMOI-terrain) ;
+  preuves-m5b/LISEZMOI-preuves passé à la liste e2 ; index des archives
+  mis à jour (relu) ; ÉTAT FINAL : racine /test = EXACTEMENT 8 entrées
+  D143 {vague e2 ×3, corriger-wsb ×2, preuves-m5b, archives-livraisons,
+  archives-preuves}.
+- PASSATION : JOURNAL_TRAVAIL.md +Entrée 137 PAR SCRIPT (ordre
+  136<137<marqueur, rejeu REFUSÉ fail-closed) ; scripts/assembler_kit_
+  e2.py, livrer_vague_e2.py, inserer_entree_137.py suivis (le dépôt
+  porte le kit source — la dette des assembleurs v6-v8, jamais commis,
+  est nommée ici) ; worklog +Task ID 55 (le présent).
+- FRONTIÈRES : artefact 0.6.0-rc.1 4b8f6af6… inchangé (le kit l'EMBARQUE,
+  l'assertion d'assemblage le prouve) ; sceau onze verts avant/après
+  (m5/I signé INTACT) ; cartes m0/m3/m4/génération 7 intactes ; fixtures
+  v5 inchangées ; aucune clé réelle (test jetables) ; aucune suppression
+  Drive (archivage) ; finale 0.6.0 NON posée (elle attend le verdict
+  terrain) ; le bruit de bits de mode préexistant n'est pas commis.
+- SUITE : LE GESTE TERRAIN — télécharger m5b-kit-e2.zip depuis /test,
+  extraire dans un dossier NEUF, corriger-wsb.bat, double-clic du
+  scenario-m5b.wsb (~5-8 min), renvoyer TOUT preuves-m5b (liste au
+  LISEZMOI-preuves et en dernière ligne du témoin) ; SI vert :
+  python3 m5/build_m5.py --sceller-final pose 0.6.0 avec la validation
+  consignée. D139 ouvert (T7 éventuel), non bloquant.
+
+Stage Summary:
+- La vague e2 VIT au coffre /test : le kit VM ÉTAPE 2 (proxy 0.6.0-rc.1
+  ARMÉ, scénario Edge headless par le mandataire, décor v8 verrouillé)
+  attend le double-clic du développeur — LE critère (b) de D136 : la
+  page servie ET la 502 « Certificat rejete » RECUES PAR LE NAVIGATEUR,
+  la ligne de flux aux preuves.
+- Suite : le run M5-b étape 2 par le terrain ; si vert, --sceller-final
+  pose la finale 0.6.0.
