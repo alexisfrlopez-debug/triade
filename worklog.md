@@ -1837,3 +1837,75 @@ Stage Summary:
   geste opérateur (les secrets ne vivent pas au labo).
 - Suite : proposer le scellage carte génération 7, livrer le kit VM
   ÉTAPE 2, puis le run M5-b étape 2 (critère (b) de D136).
+
+## Task ID 53 — « répare la 0.5.1 » : carte m4 génération 6 orpheline NOMMÉE et RE-SCELLÉE sous lignée D80 ; graine de signature DURABLE au coffre (D144) ; branche GitHub complétée (04/11)
+
+Task: demande du développeur « répare la 0.5.1 » — diagnostic enchaîné puis
+réparation de la carte du scellé 0.5.1, consignation Entrée 135 + D144.
+
+Work Log:
+- REPRISE DU TRAVAIL INTERROMPU (session précédente morte à ~21:40) : ses
+  gestes relus et repris — poussée des 2 commits de cérémonie à la branche
+  GitHub (21:12, ls-remote : bundle051/v0.5.1-jalon-v7 == a5035e1, main
+  INTACTE f62711b) ; coffre CF1 rapatrié + importé (.keys/) + phrase
+  lignee-D80 extraite (21:17-21:18, scripts/rapatrier_coffre_cf1.py).
+- DIAGNOSTIC (preuves enchaînées, rien d'hypothétique) : la carte m4
+  génération 6 (scellé 0.5.1, posée à da68021 le 03/11 03:29) a une
+  signature Ed25519 VALIDE mais ses fragments NE se déchiffrent PAS avec
+  la lignée D80 ; la MÊME phrase déchiffre m3 génération 5 ET la carte m4
+  D104 (8c280d5) — la carte du jalon v7 est sous une autre clé. CAUSE
+  RACINE : le labo du jalon v7 était un clone du bundle (D140), .keys/
+  gitignoré n'y vivait pas ; carte_m0.charger_secrets a GÉNÉRÉ phrase +
+  graine aléatoires ; _anti_rollback a passé SILENCIEUSEMENT (« pas de
+  carte lisible ») ; construire() ne lit jamais l'ancienne carte → carte
+  0.5.1 scellée sous secrets éphémères morts avec la sandbox ; le churn
+  de pub (f40f8a20 → ad98a059) n'était pas consigné. Conséquences : verrou
+  anti-rollback de la 0.5.1 MORT (passe silencieusement à tout labo),
+  verrou croisé R8 inexécutable, promesse du coffre fausse pour cette
+  carte. Vestige constaté : stash « etat-partiel-d140 » (07:05) —
+  brouillons supersédés par da68021, CONSERVÉ.
+- RÉPARATION (scripts/reparer_carte_051.py, 23 s, modèle D80 à faits
+  inchangés) : 7 gardes fail-closed (artefact fb41697d… intact ; phrase
+  D80 PROUVÉE par témoins croisés m3-g5 + m4-D104 ; orpheline authentique
+  pub ad98a059… ; non-déchiffrable en D80 ; garde sceau-I verte ; sceau
+  11 verts ; coffre Drive joignable md5 0323029a… == local) PUIS la
+  machinerie EXACTE du build : verrous 524+492, image re-composée ==
+  scellé OCTET POUR OCTET (proxy.exe PAS réécrit), oracle D93 re-joué
+  (560 cas verts, graine 20261104, verdict 1e04996b…), fragments_clairs
+  (49 blocs, version 0.5.1, compteurs 1/10), scellement sous D80 vérifié
+  EN MÉMOIRE (signature, racine, déchiffrement, verrou croisé 38/38)
+  avant l'unique écriture ; verrou croisé disque 49 empreintes ; tableau
+  régénéré (seule change la graine de l'oracle : 20261104).
+- GRAINE DURABLE (D144) : neuve (pub e9cd8c549485…) déposée AU COFFRE —
+  entrée TRIADE/graine-ed25519-cartes (octets bruts 32 o, relève :
+  obtenir --vers-fichier .keys/ed25519.seed) ; conteneur 1158 → 1906 o,
+  md5 23a2987a9817…, racine Drive recoupée par RELECTURE, export
+  download/ ; entrées lignee-D74/D80 INTACTES (listing 3 entrées) ;
+  scripts/rapatrier_coffre_cf1.py suivi (attestation 23a2987a…, 1906 o).
+- POST-VÉRIFICATIONS : P1 carte LISIBLE en D80 (frag-bld version=0.5.1,
+  empreinte fb41697d…) ; P2 LE VERROU ANTI-ROLLBACK REFUSE (« carte
+  scellée (0.5.1) : reconstruction interdite ») — le défaut même est
+  mort ; P3 sceau ONZE verts après le geste ; P4 proxy.exe intact ;
+  écrits : les 8 fichiers m4/carte/ et rien d'autre côté dépôt.
+- PASSATION : JOURNAL_TRAVAIL.md +Entrée 135 PAR SCRIPT (ordre
+  134<135<marqueur, rejeu REFUSÉ fail-closed) ; DECISIONS.md +D144 ;
+  scripts/reparer_carte_051.py, inserer_entree_135.py ;
+  reparation_carte_051.log (gitignoré, le vol complet).
+- FRONTIÈRES : artefact 0.5.1 octet pour octet inchangé ; arbre m4/I et
+  sceau intouchés (onze verts avant/après, clé réelle jamais sollicitée) ;
+  orpheline conservée à l'historique git (da68021) ; coffre : aucune
+  entrée perdue ; stash conservé ; aucune suppression Drive ; .keys/
+  gitignoré (phrase + graine relèvables du coffre à tout labo).
+- SUITE : scellage carte génération 7 (geste développeur, désormais
+  exécutable : les deux secrets sont durables au coffre) ; kit VM
+  ÉTAPE 2 ; run M5-b étape 2 (critère (b) de D136). D139 ouvert, non
+  bloquant.
+
+Stage Summary:
+- La 0.5.1 est RÉPARÉE : sa carte génération 6 vit sous la lignée D80 du
+  coffre (lisible, verrou croisé exécutable), le verrou anti-rollback
+  REFUSE une reconstruction (preuve P2), l'artefact fb41697d… n'a pas
+  bougé d'un octet, et la graine de signature est enfin DURABLE (entrée
+  coffre, D144) — plus jamais orpheline aux recyclages.
+- Suite : proposer le scellage carte génération 7 au développeur, kit VM
+  ÉTAPE 2, run M5-b étape 2.
