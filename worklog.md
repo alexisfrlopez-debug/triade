@@ -1422,3 +1422,62 @@ Stage Summary:
   sont ré-archivées au coffre ; le registre (Entrée 127 + D142 +
   worklog 45) est consigné par scripts assertés et le bundle D141 est
   livré au miroir.
+
+
+## Task ID 46 — Vague v8 (parefeu muet dès l'ouverture) + D143 + corbeille (03/11)
+
+- DEMANDES DE L'OPÉRATEUR : archivage de fin de run (NOUVELLE RÈGLE),
+  vérification de la corbeille, parefeu muet dès l'ouverture de la VM,
+  puis enchaîner 0.6.0 (verbatim consigné à l'Entrée 128)
+- VAGUE v8 (le décisif NE change pas — scénario seul) : fondement D142 ;
+  scenario-m5b-v8.ps1 section 0bis AVANT tout bind (règles ALLOW nommées
+  TRIADE-M5B pour proxy.exe/python.exe + inboundusernotification disable
+  + parefeu-vm.txt ; diagnostics ADDITIFS) ; le service parefeu PAS
+  coupé (règles + exemption boucle locale suffisent — consigné) ;
+  construire_v8_scenario.py 8 remplacements ancrés ASSERTÉS (R1–R8,
+  ancre CRLF nommée) ; m5b-kit-v8.zip 11 186 300 o / 55 entrées depuis
+  le zip v7 LIVRÉ, proxy 0.5.1 scellé INCHANGÉ (fb41697d… vérifié
+  AVANT/APRÈS, md5 dec21e75…), racine v5 86525998… intouchée,
+  LISEZMOI-KIT-M5B.md aligné v8 (4 remplacements + item 12) ;
+  livraison /test 3/3 CONFORME (recoupement md5+parent+nom)
+- D143 (NOUVELLE) : archivage de fin de run — preuves →
+  archives-preuves/preuves-run-<v>/ + verdict ; vagues consommées →
+  archives-livraisons/vagues-m5b/ ; racine /test = vague courante +
+  corriger-wsb + preuves-m5b vierge + 2 archives ; copie versionnée
+  AVANT tout jet ; déduplication md5 ; index posés — APPLIQUÉE au run
+  v7 : preuves-run-v7 (30 entrées : 29 pièces + verdict),
+  preuves-m5b recréé VIERGE, vagues v6/v7 archivées (10 pièces)
+- CORBEILLE VÉRIFIÉE (rétroactivité) : 46 enfants jetés de /test (les
+  5 autres dossiers du coffre : zéro) — RESTAURÉS : preuves-run-v5
+  (12 pièces 23:58Z), preuves-run-v4 (11 pièces 19:02Z),
+  preuves-run-v2-depot1/2/3 (dépôts 18:33Z), vagues v3–v5, terrain-17
+  (17e→h, superviseurs, temoin_m4a 4 contenus, terrain ×6,
+  demo_journal 2 contenus), audit S11 copié ; RESTÉ à dessein :
+  dossier v6 (copie archive existante), copies octet-identiques,
+  2 oauth_token_relais.json (signalés, jamais imprimés) ;
+  preuves-samu (hors /test) non touché ; API 403 PATCH combiné
+  trashed+parents → deux PATCH (untrash puis move) — consigné
+- FRONTIÈRES : arbres scellés intouchés ; 0.5.0 D104 intact (md5
+  2b6481a1…) ; 0.5.1 fb41697d… revérifié dans le zip v8 ; aucune clé ;
+  corbeille non vidée ; aucun artefact touché
+- CONSIGNATION : JOURNAL_TRAVAIL.md +Entrée 128 (PAR SCRIPT AVANT le
+  marqueur m5a, ordre 126<127<128<marqueur recoupé) ; DECISIONS.md
+  +D143 (après D142) ; worklog +Task ID 46 (le présent) ; bundle
+  nouveau nom triade-history-051-<tip>.bundle (D141), l'ancien 051
+  archivé versionné dans archives-bundles ; miroir journal/decisions/
+  worklog recoupés md5
+- SUITE : 0.6.0 — étape 2 du M5 : INTERCEPTION D'UN FLUX NAVIGATEUR en
+  VM isolée (relèvement amont http→https, D135 ; intentions
+  http-08:R3/http-10:R3/http-12:R2 écrites-avant-code) ; le run v8
+  verrouille le décor (parefeu muet) pour toutes les vagues ; D139
+  reste ouvert (T7 éventuel), non bloquant
+
+Stage Summary:
+- Le décor des vagues à venir est verrouillé : le parefeu de la VM est
+  rendu muet dès l'ouverture (section 0bis v8 — plus d'invite, tout
+  trafic du kit autorisé avant le premier bind, état consigné à
+  parefeu-vm.txt), la règle D143 met l'archivage de fin de run au
+  registre et l'a appliquée au run v7 (preuves-run-v7 + vagues v6/v7
+  archivées, preuves-m5b vierge), et la corbeille a été purgée de son
+  passé TRIADE par RESTAURATION dans l'archive (runs v2/v4/v5, vagues
+  v3–v5, terrain-17, audit S11) — rien n'est jeté sans copie versionnée.
