@@ -45,8 +45,8 @@ moteur de patch (tcp-07, staging, croissance) n'est pas embarqué à ce jalon
                           somme) de 0x2660 à 0x2820 ; l'entrée #28 @0x2810
                           garde .text3 ENTIER (somme déclarée == somme
                           recalculée de la tranche) ; R_VERSION @0x2820 =
-                          0x00050002 ≥ plancher 0x00040000 ; R_ANCRE
-                          @0x2830 ; moteur rapporté M5.
+                          0x00050003 (0.5.1, D140) ≥ plancher 0x00040000 ;
+                          R_ANCRE @0x2830 ; moteur rapporté M5.
   6 Notation            : round-trip 100 % sur les 12 blocs M4
                           (assembler_tout_m4 — EchecBuild sinon) et 27 blocs
                           héritage re-vérifiés octet pour octet
@@ -55,8 +55,9 @@ moteur de patch (tcp-07, staging, croissance) n'est pas embarqué à ce jalon
   7 Granularité/padding : 28 160 octets inchangés depuis D94 (taille ==
                           layout) ; tls-07:R2 : 527 o dans le slot 768 (le
                           correctif D102 vit dans le padding, taille
-                          inchangée) ; adresses stables (rva/slot des blocs
-                          == plan).
+                          inchangée) ; tls-05:R2 : 325 o dans le slot 384
+                          (D140 — même mécanique, le padding absorbe) ;
+                          adresses stables (rva/slot des blocs == plan).
 
 Contrôle de jalon M4 (miroir du fuzzing sentinelle M3, étape (e)) : l'oracle
 différentiel en volume « reduit » (graine datée donc reproductible,
@@ -356,8 +357,8 @@ def element_5(s: Suite, exe: bytes):
              somme28 == _somme_qwords(tranche) and somme28 != 0,
              f"somme {somme28:#x}")
     version = _u64(exe, L.R10_BORNE)
-    s.verrou(5, "R_VERSION @0x2820 = 0x00050002 ≥ plancher 0x00040000",
-             version == L.VERSION_U64_DEV2 and version >= L.VERSION_U64_MIN,
+    s.verrou(5, "R_VERSION @0x2820 = 0x00050003 (0.5.1, D140) ≥ plancher 0x00040000",
+             version == L.VERSION_U64_051 and version >= L.VERSION_U64_MIN,
              f"version {version:#x}")
     s.verrou(5, "R_ANCRE @0x2830 réservée (ancre STATIQUE nulle — écrite au "
              "lancement par http-12, position-indépendance D33)",

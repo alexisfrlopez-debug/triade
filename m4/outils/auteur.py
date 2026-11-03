@@ -50,9 +50,10 @@ _FICHIERS = {
     "g70004": ("tls-04-poignee", "tls-04:R1",
                "boucle ISC bornée 16 allers ; IAT secur32 "
                "InitializeSecurityContextW ; tls-01/02/03"),
-    "g70005": ("tls-05-cles", "tls-05:R1",
+    "g70005": ("tls-05-cles", "tls-05:R2",
                "IAT secur32 AcquireCredentialsHandleW / FreeCredentialsHandle / "
-               "DeleteSecurityContext ; compensation exacte ; cadre aux offsets "
+               "DeleteSecurityContext ; compensation exacte ; SCH_CREDENTIALS "
+               "explicite dwVersion=5 dwFlags=0 (P3/R2, D140) ; cadre aux offsets "
                "documentés (layout.CADRE_*, arrêt D81)"),
     "g70006": ("tls-06-emission", "tls-06:R1",
                "IAT secur32 QueryContextAttributesW / EncryptMessage ; tcp-04 ; "

@@ -1,4 +1,4 @@
-; tls-05 · cycle de vie des handles · spec tls-05:R1 · bloc carte g70005
+; tls-05 · cycle de vie des handles · spec tls-05:R2 · bloc carte g70005
 ; pre : rcx = opération {0 acquérir credentials clientes, 1 détruire le
 ;       contexte, 2 libérer les credentials}, rdx pointe le cadre de session
 ;       TLS (offsets documentés layout.CADRE_* — arrêt D81 : credentials
@@ -17,11 +17,12 @@
 ;       cadre intact par construction) ; I4/I5 volatils seuls modifiés
 ;       (le cadre est sauvegardé dans la ZONE ARGS de la pile, jamAIS en
 ;       donnée propre — aucun octet du cadre n'est journalisé)
-; ABI : msx64 — op 0 : 9 arguments (4 registres + 5 pile, sub rsp 0x58
-;       aligne la frontière) ; op 1/2 : 1 argument ; le HRESULT (i32)
-;       est sign-étendu pour tls-02 (P1 de sa spec) ; le cadre est
-;       rechargé depuis la pile APRÈS tls-02 (rdx = HRESULT en sortie,
-;       tous les volatils sont morts au retour d'un appel)
+; ABI : msx64 — op 0 : 9 arguments (4 registres + 5 pile, sub rsp 0x98
+;       aligne la frontière : trame 0x58 + SCH_CREDENTIALS 0x48) ;
+;       op 1/2 : 1 argument ; le HRESULT (i32) est sign-étendu pour
+;       tls-02 (P1 de sa spec) ; le cadre est rechargé depuis la pile
+;       APRÈS tls-02 (rdx = HRESULT en sortie, tous les volatils sont
+;       morts au retour d'un appel)
 cmp ecx, 3
 jae .refus
 test ecx, ecx
@@ -46,16 +47,36 @@ add rsp, 0x28
 ret
 
 ; --- opération 0 : acquérir les credentials clientes (AcquireCredentialsHandleW) --
-; pAuthData NULL (P3 : validation de certificats AUTOMATIQUE — l'état le plus
-; dur, jamAIS désactivé) ; pszPackage = fixture Schannel ; OUTBOUND = client.
+; pAuthData → SCH_CREDENTIALS explicite construite SUR LA PILE (P3/R2, D140 —
+; branche S3 du run v6) : dwVersion = SCH_CREDENTIALS_VERSION (5, schannel.h),
+; TOUS les autres champs NULS — dwFlags = 0 : AUCUN bit de révocation
+; (l'équivalent --ssl-no-revoke de curl : la révocation exige le réseau,
+; impossible dans la VM isolée — T2a/T3 rc=60) ; hRootStore = NULL : le
+; magasin machine PAR DÉFAUT (la racine certutil y est utilisée — T2b rc=0) ;
+; la validation de la CHAÎNE reste AUTOMATIQUE (un certificat autonome est
+; TOUJOURS rejeté — T5 rc=60 UNTRUSTED_ROOT, le juge discrimine).
+; pszPackage = fixture Schannel ; OUTBOUND = client ; pvLogonID NULL (r9 —
+; l'argument 4 ; pAuthData est l'argument 5, [rsp+0x20]).
 .acquerir:
-sub rsp, 0x58
-mov qword ptr [rsp + 0x48], rdx
-mov qword ptr [rsp + 0x20], 0
+sub rsp, 0x98
+mov qword ptr [rsp + 0x90], rdx
+xor eax, eax
+mov [rsp + 0x48], rax
+mov [rsp + 0x50], rax
+mov [rsp + 0x58], rax
+mov [rsp + 0x60], rax
+mov [rsp + 0x68], rax
+mov [rsp + 0x70], rax
+mov [rsp + 0x78], rax
+mov [rsp + 0x80], rax
+mov [rsp + 0x88], rax
+mov dword ptr [rsp + 0x48], 5
 mov qword ptr [rsp + 0x28], 0
 mov qword ptr [rsp + 0x30], 0
 mov [rsp + 0x38], rdx
 mov qword ptr [rsp + 0x40], 0
+lea rax, [rsp + 0x48]
+mov [rsp + 0x20], rax
 xor ecx, ecx
 lea rdx, [rip + PKG]
 mov r8d, 2
@@ -63,13 +84,13 @@ xor r9d, r9d
 call qword ptr [rip + IAT_ACH]
 movsxd rcx, eax
 call TLS_VERDICTS
-mov rdx, [rsp + 0x48]
+mov rdx, [rsp + 0x90]
 test eax, eax
 jz .fin_acquerir
 mov qword ptr [rdx], 0
 mov qword ptr [rdx + 8], 0
 .fin_acquerir:
-add rsp, 0x58
+add rsp, 0x98
 ret
 
 ; --- opération 1 : détruire le contexte (DeleteSecurityContext) ------------------

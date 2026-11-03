@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""harnais_cles.py — Harnais à propriétés de tls-05 (cycle de vie des handles, D81).
+"""harnais_cles.py — Harnais à propriétés de tls-05 (cycle de vie des handles, D81 ; R2 = D140).
 
 Premier bloc À SHIMS du jalon M4 : la notation appelle l'IAT secur32
 (AcquireCredentialsHandleW / DeleteSecurityContext / FreeCredentialsHandle)
 et route chaque HRESULT par la VRAIE tls-02 (octets de sa notation, intégration
-testée). Vecteurs de la spécification tls-05:R1 :
+testée). Vecteurs de la spécification tls-05:R2 :
 
   V1  round-trip de notation 100 % (taille totale == « Code : N o ») ;
   V2  oracle à shims (scénarios de la spec) : acquisition/déstruction/
@@ -13,14 +13,17 @@ testée). Vecteurs de la spécification tls-05:R1 :
       opérations hors domaine — états du cadre OCTET PAR OCTET prédits
       avant/après chaque appel, contrat D'APPELS complet (9 arguments de
       l'acquisition vérifiés : principal NULL, package fixture EXACT,
-      OUTBOUND, pAuthData NULL — P3, la validation AUTOMATIQUE n'est jamais
-      désactivée —, phCredential = cadre+0) ;
+      OUTBOUND, pAuthData → SCH_CREDENTIALS RELUE DANS LA PILE ÉMULÉE et
+      confrontée octet par octet au contrat P3/R2 (dwVersion=5, tous les
+      autres octets nuls — dwFlags=0 : aucun bit de révocation, D140 ;
+      la régression 0.5.0, pAuthData NULL, est un REFUS) —
+      phCredential = cadre+0) ;
   V3  fuzzing à propriétés : opérations valides ET hostiles, HRESULT
       documentés ET exotiques, handles magiques aléatoires écrits par les
       shims — le verdict suit tls-02 (modèle écrit depuis la SPÉCIFICATION
       via layout.HRESULTS), le cadre ne change QUE sur succès constaté,
       canaris mémoire, non-volatils sentinelles ;
-  V4  falsification : SIX mutations D'UN SEUL point de la notation doivent
+  V4  falsification : SEPT mutations D'UN SEUL point de la notation doivent
       être ATTRAPÉES par le différentiel ; le témoin intact reste vert.
 
 Le harnais émule les octets de la NOTATION (ce que build_m4.py embarquera) à
@@ -354,9 +357,22 @@ class Emulateur:
                     problemes.append(f"fCredentialUse {usage} != OUTBOUND")
                 if logonid != 0:
                     problemes.append(f"pvLogonId {logonid:#x} != NULL")
-                if authdata != 0:
-                    problemes.append(f"pAuthData {authdata:#x} != NULL (P3 : "
-                                     "validation AUTOMATIQUE jamais désactivée)")
+                # P3/R2 (D140) : pAuthData pointe la SCH_CREDENTIALS construite
+                # par le bloc — RELUE ICI, octet par octet, dans la pile émulée :
+                # dwVersion = SCH_CREDENTIALS_VERSION (5), tout le reste nul
+                # (dwFlags=0 : aucun bit de révocation ; hRootStore=NULL :
+                # magasin machine par défaut — T2b).
+                if authdata == 0 or not (ZONE_PILE <= authdata
+                                         < ZONE_PILE + TAILLE_PILE):
+                    problemes.append(f"pAuthData {authdata:#x} ne pointe pas la "
+                                     "SCH_CREDENTIALS de la pile (P3/R2 — la "
+                                     "régression 0.5.0 est un refus)")
+                else:
+                    brut = bytes(self.uc.mem_read(authdata, 0x48))
+                    if brut[:4] != struct.pack("<I", 5) or any(brut[4:]):
+                        problemes.append(f"SCH_CREDENTIALS divergente @ "
+                                         f"{authdata:#x} (P3/R2 : dwVersion=5 "
+                                         "+ 0x44 octets nuls attendus)")
                 if getkey != 0 or getkeyarg != 0:
                     problemes.append("pGetKeyFn/pvGetKeyArgument != NULL")
                 if phcred != ZONE_CADRE + L.CADRE_CRED:
@@ -405,12 +421,14 @@ SCENARIOS_V2 = [
 
 MUTATIONS_V4 = [
     ("M1 fCredentialUse INBOUND", ("mov r8d, 2", "mov r8d, 1")),
-    ("M2 pAuthData non NULL (P3)", ("mov qword ptr [rsp + 0x20], 0",
-                                    "mov qword ptr [rsp + 0x20], 1")),
+    ("M2 pAuthData ≠ SCH_CREDENTIALS (régression 0.5.0)",
+     ("lea rax, [rsp + 0x48]", "lea rax, [rsp + 0x20]")),
+    ("M2b dwVersion ≠ SCH_CREDENTIALS_VERSION",
+     ("mov dword ptr [rsp + 0x48], 5", "mov dword ptr [rsp + 0x48], 4")),
     ("M3 zéro écrit sur la socket", ("mov qword ptr [rdx + 0x10], 0",
                                      "mov qword ptr [rdx + 0x20], 0")),
-    ("M4 zéro d'échec sauté (op 0)", ("jz 0x6677", "jmp 0x6677")),
-    ("M5 op 1 routée vers la libération", ("je 0x667c", "jne 0x667c")),
+    ("M4 zéro d'échec sauté (op 0)", ("jz 0x66be", "jmp 0x66be")),
+    ("M5 op 1 routée vers la libération", ("je 0x66c6", "jne 0x66c6")),
     ("M6 domaine relâché (op 3 accepté)", ("cmp ecx, 3", "cmp ecx, 4")),
 ]
 
@@ -422,7 +440,7 @@ def main() -> int:
     args = parseur.parse_args()
     rng = random.Random(args.graine)
 
-    print("=== harnais_cles.py — tls-05:R1 (cycle de vie des handles, D81) ===")
+    print("=== harnais_cles.py — tls-05:R2 (cycle de vie des handles, D81 ; R2 = D140) ===")
     print(f"graine {args.graine} · fuzz {args.cas} cas")
 
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
@@ -471,7 +489,7 @@ def main() -> int:
     controle(f"fuzz {args.cas} cas : ZÉRO écart", ecarts == 0, f"{ecarts} écart(s)")
 
     # --- V4 : falsification ------------------------------------------------------
-    print("\n[V4] falsification — six mutations d'un point, chacune attrapée")
+    print("\n[V4] falsification — sept mutations d'un point, chacune attrapée")
     cas_mutants = [(0, 0x00000000, (1, 2)), (0, 0x80090325, (0, 0)),
                    (1, 0x00000000, (0, 0)), (2, 0x00000000, (0, 0)),
                    (3, 0x00000000, (0, 0)), (2, 0x8009030F, (0, 0)),

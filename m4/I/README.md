@@ -61,7 +61,7 @@ recopie (défaut T5 sinon).
 | tls-02:R1 | g70002 | Table des verdicts SSPI (HRESULT → verdict nommé) | tls @ .text3, slot 2 |
 | tls-03:R1 | g70003 | Jetons SSPI (SecBufferDesc en cadre propre) | tls @ .text3, slot 3 |
 | tls-04:R1 | g70004 | Poignée de main cliente (boucle ISC) | tls @ .text3, slot 4 |
-| tls-05:R1 | g70005 | Cycle de vie des handles (acquis/libérés) | tls @ .text3, slot 5 |
+| tls-05:R2 | g70005 | Cycle de vie des handles (acquis/libérés — R2 : SCH_CREDENTIALS, D140) | tls @ .text3, slot 5 |
 | tls-06:R1 | g70006 | Émission chiffrée (tailles + EncryptMessage) | tls @ .text3, slot 6 |
 | tls-07:R2 | g70007 | Réception déchiffrée (Extra, incomplet, fin ; D102 scan PAR TYPE) | tls @ .text3, slot 7 |
 | tls-08:R1 | g70008 | Session TLS cliente (orchestration complète) | tls @ .text3, slot 8 |

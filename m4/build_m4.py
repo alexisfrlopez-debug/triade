@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""build_m4.py : Jalon M4 de TRIADE — tunnel chiffré SSPI/Schannel, CÂBLÉ (proxy 0.5.0-dev.2).
+"""build_m4.py : Jalon M4 de TRIADE — tunnel chiffré SSPI/Schannel, CÂBLÉ (proxy 0.5.1 — jalon v7, D140 : tls-05:R2).
 
 Chaîne : notation (keystone) -> octets -> PE32+ à la main (CINQ sections :
 .text/.rdata/.data/.text2 + .text3 NOUVELLE) -> carte projet génération 6
@@ -36,14 +36,14 @@ preuve R7 absolue, puis deltas M4 documentés :
            0x2800 = entrée R10 libc-07
            0x2810 = PORTE R10 .text3 (D95 : l'ancien terminateur M4-dev.1
                     remplacé — la table est PLEINE, marche aux bornes)
-           0x2820 = version 0x00050002 (R10 : monotonie, plancher 0x00040000)
+           0x2820 = version 0x00050003 (R10 : monotonie, plancher 0x00040000)
            0x29A0+ = extension M4 (descripteurs, secur32, fixtures tls/http-R2)
   .text3 : NOUVELLE (0x6000-0x7FFF) : tls-01..08, http-08:R2, http-10:R2,
            http-12:R2 (0x7DC0 — le câblage ; réserve int3 0x7FC0-0x7FFF)
   PE     : AddressOfEntryPoint 0x1800 -> 0x7DC0 (D95)
 
 Usage :
-  python3 build_m4.py                  # construction 0.5.0-dev.2
+  python3 build_m4.py                  # construction 0.5.1 (UNIQUE — la carte scelle ensuite, R6)
   python3 build_m4.py --verifier [--graine N] [--volume complet|reduit]
 """
 
@@ -674,9 +674,10 @@ def composer_image_m4(texte_m3: bytes, rdata_m3: bytes, data_m3: bytes, text2_m3
     rdata[L.R10_PORTE_TEXT3 - L.RDATA_RVA: L.R10_PORTE_TEXT3 - L.RDATA_RVA + 16] = \
         struct.pack("<IIQ", L.R10_TEXT3_RVA, L.R10_TEXT3_TAILLE,
                     _somme_qwords(bytes(text3)))
-    # (3) version (R10 : monotonie — dev.2 ≥ dev.1 ≥ plancher 0.4.0 scellé)
+    # (3) version (R10 : monotonie — 0.5.1 > dev.2 ≥ plancher 0.4.0 scellé ;
+    #     jalon v7/D140 : tls-05:R2 — SCH_CREDENTIALS explicite, révocation retirée)
     rdata[0x2820 - L.RDATA_RVA: 0x2820 - L.RDATA_RVA + 8] = \
-        struct.pack("<Q", L.VERSION_U64_DEV2)
+        struct.pack("<Q", L.VERSION_U64_051)
     # (4) extension M4 (ARRÊT D81/D92 — layout.py source unique)
     _poses: list[tuple[int, int, str]] = []
 
@@ -825,8 +826,8 @@ def valider_pe(exe: bytes):
     # 8e entrée de la table des réponses (concordance Q3' — I5 de http-10:R2)
     ptr, lng = struct.unpack("<QQ", tranche_section(exe, 0x2550, 16))
     assert (ptr, lng) == (L.R_TXT_502_CERT, 34), f"8e entrée != (0x2CA0, 34) : {(ptr, lng)}"
-    # Version (R10 : monotonie — dev.2)
-    assert struct.unpack("<Q", tranche_section(exe, 0x2820, 8))[0] == L.VERSION_U64_DEV2
+    # Version (R10 : monotonie — 0.5.1)
+    assert struct.unpack("<Q", tranche_section(exe, 0x2820, 8))[0] == L.VERSION_U64_051
     # Porte R10 : la table marchée depuis l'image est AUTO-CONSISTANTE — la
     # MARCHE AUX BORNES de http-12:R2 (D95 : la table est PLEINE, l'entrée
     # .text3 @0x2810 remplace l'ancien terminateur, fail-closed sur entrée
@@ -869,7 +870,7 @@ def preuve_reutilisation(exe: bytes) -> dict:
         (0x2800, 16, "entrée R10 libc-07 (terminateur descendu à 0x2810)"),
         (0x2810, 16, "porte R10 .text3 (D95 : l'ancien terminateur M4-dev.1 "
                      "remplacé — marche aux bornes de http-12:R2)"),
-        (0x2820, 8, "version 0x00050002 (R10 monotonie — dev.2)"),
+        (0x2820, 8, "version 0x00050003 (R10 monotonie — 0.5.1, D140)"),
     ])
     # libc-07 : octets identiques à selftest.exe @0x13C0 (R7 direct)
     with open(os.path.join(M1_DIR, "selftest.exe"), "rb") as f:
@@ -984,7 +985,7 @@ SPEC_PAR_BLOC = {
     "e50010": "http-10:R2", "e50011": "http-11:R1", "e50012": "http-12:R1",
     "e50013": "tcp-13:R1",
     "g70001": "tls-01:R1", "g70002": "tls-02:R1", "g70003": "tls-03:R1",
-    "g70004": "tls-04:R1", "g70005": "tls-05:R1", "g70006": "tls-06:R1",
+    "g70004": "tls-04:R1", "g70005": "tls-05:R2", "g70006": "tls-06:R1",
     "g70007": "tls-07:R2", "g70008": "tls-08:R1",
     "g70009": "http-08:R2", "g70010": "http-10:R2",
     "g70011": "http-12:R2",
@@ -1151,7 +1152,7 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, nb_blocs_car
         f"(26 embarques M3 + libc-07 selftest.exe — R7, deltas .rdata documentes)",
         f"  empreintes_donnees_embarquees : conforme (fixtures http + tls, table R10 28 entrees "
         f"[marche aux bornes — porte .text3 D95], table des reponses 8 entrees, "
-        f"secur32 x7, version 0x00050002)",
+        f"secur32 x7, version 0x00050003)",
         f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D94",
         f"  optimisations_sans_mesure     : 0 : aucune optimisation M4 (R11)",
         f"  changements_hors_journal      : 0 : D77 a D95 consignees",
@@ -1282,7 +1283,7 @@ def construire(volume: str, graine: int) -> int:
         f.write(exe)
 
     # 8. Carte génération 6 (lignée D80) + verrou croisé + tableau de bord
-    version = L.VERSION_DEV2
+    version = L.VERSION_051
     compteurs = {bid: 1 for bid in TOUS_BLOCS}
     journal = [f"run graine={graine} volume={volume} verdict={verdict['empreinte']} "
                f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} build={version}"]

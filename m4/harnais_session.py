@@ -175,6 +175,13 @@ SENTINELLES_NV = {
     "r14": 0x7878787878787878, "r15": 0x89898989898989,
 }
 MAGIC_CRED = (0xC1C1C1C1C1C1C1C1, 0xC2C2C2C2C2C2C2C2)   # acquis par tls-05
+
+# SCH_CREDENTIALS canonique du contrat P3/R2 (D140, jalon v7) : dwVersion =
+# SCH_CREDENTIALS_VERSION (5, schannel.h) + 0x44 octets nuls — dwFlags=0 :
+# AUCUN bit de révocation (l'équivalent --ssl-no-revoke ; la consultation de
+# la révocation exige le réseau, impossible dans la VM isolée) ; hRootStore
+# = NULL (magasin machine par défaut — T2b) ; validation de CHAÎNE intacte.
+SCH_CREDENTIALS_051 = struct.pack("<I", 5) + b"\x00" * 0x44
 MAGIC_PARTIAL = (0x1111111111111111, 0x2222222222222222)  # en cours d'établissement
 MAGIC_FINAL = (0xABABABABABABABAB, 0xCDCDCDCDCDCDCDCD)   # contexte établi
 MAGIC_ORDURE = (0xDEAD, 0xBEEF)                           # barbouillage en échec
@@ -497,12 +504,16 @@ class Modele:
             "<Q", ZONE_CADRE + L.CADRE_NOM_ZONE)
         return 0
 
-    # --- tls-05 op 0 (spec tls-05:R1 Q1 : rien d'acquis ne reste à compenser) --
+    # --- tls-05 op 0 (spec tls-05:R2, Q1 : rien d'acquis ne reste à compenser) --
 
     def _tls05_op0(self) -> int:
         h = self.script.hresult_ach
-        self.appels.append(("ACH", 0, L.R_PKG_M4, 2, 0, 0, 0, 0,
-                            ZONE_CADRE, 0, L.PKG_M4))
+        # P3/R2 (D140) : pAuthData → SCH_CREDENTIALS explicite — le modèle
+        # exprime le CONTRAT (None = pointeur de pile non nul attendu ;
+        # l'adresse exacte est un détail du bloc, le shim relit la structure
+        # et la confronte) + la structure canonique (dwVersion=5 + zéros).
+        self.appels.append(("ACH", 0, L.R_PKG_M4, 2, 0, None, 0, 0,
+                            ZONE_CADRE, 0, L.PKG_M4, SCH_CREDENTIALS_051))
         v = verdict_modele(h)
         if v == 0:
             self._sec(L.CADRE_CRED, MAGIC_CRED)
@@ -1089,8 +1100,17 @@ class Emulateur:
         phcred = self._pile(0x40)
         expiry = self._pile(0x48)
         pkg_lu = bytes(uc.mem_read(pkg, len(L.PKG_M4))) if pkg else b""
+        # P3/R2 (D140) : la SCH_CREDENTIALS pointée est RELUE par le shim —
+        # la comparaison au modèle (canonique : dwVersion=5 + zéros) prouve
+        # le contrat octet par octet, indépendamment de l'adresse de pile.
+        sch_lue = b""
+        if authdata:
+            try:
+                sch_lue = bytes(self.uc.mem_read(authdata, 0x48))
+            except Exception:
+                sch_lue = b""
         self.appels.append(("ACH", principal, pkg, usage, logonid, authdata,
-                            getkey, getkeyarg, phcred, expiry, pkg_lu))
+                            getkey, getkeyarg, phcred, expiry, pkg_lu, sch_lue))
         h = self.script.hresult_ach
         if verdict_modele(h) == 0:
             uc.mem_write(phcred, struct.pack("<QQ", *MAGIC_CRED))
@@ -1343,14 +1363,27 @@ def comparer_traces(recues: list, attendues: list) -> list[str]:
                     "DSC", "FCH", "WF", "QCA", "ACH", "CONNECT"):
             if nom == "ACH":
                 # (nom, principal, pkg, usage, logonid, authdata, getkey,
-                #  getkeyarg, phcred, expiry, pkg_lu) — 11 champs
+                #  getkeyarg, phcred, expiry, pkg_lu, sch_credentials) — 12 champs
                 for idx, nomch in ((1, "pszPrincipal"), (2, "pszPackage"),
                                    (3, "fCredentialUse"), (4, "pvLogonId"),
-                                   (5, "pAuthData"), (6, "pGetKeyFn"),
-                                   (7, "pvGetKeyFn"), (8, "phCredential"),
+                                   (6, "pGetKeyFn"), (7, "pvGetKeyFn"),
+                                   (8, "phCredential"),
                                    (9, "ptsExpiry")):
                     if a[idx] != e[idx]:
                         problemes.append(f"ACH #{k} {nomch} {a[idx]!r} != {e[idx]!r}")
+                # pAuthData (5) : le modèle exprime le contrat R2 (None =
+                # pointeur de pile non nul attendu, D140) — pAuthData NULL
+                # est la régression 0.5.0, REFUS nommé.
+                if a[5] == 0:
+                    problemes.append(f"ACH #{k} pAuthData NULL (régression "
+                                     "0.5.0 — P3/R2 : SCH_CREDENTIALS attendue)")
+                elif e[5] is not None and a[5] != e[5]:
+                    problemes.append(f"ACH #{k} pAuthData {a[5]!r} != {e[5]!r}")
+                # la SCH_CREDENTIALS relue par le shim (11) est confrontée
+                # EXACTEMENT au canon (dwVersion=5 + 0x44 octets nuls).
+                if a[11] != e[11]:
+                    problemes.append(f"ACH #{k} SCH_CREDENTIALS divergente "
+                                     "(P3/R2 : dwVersion=5 + 0x44 octets nuls)")
                 if a[10] != e[10]:
                     problemes.append("ACH #%d : fixture package lue != attendue" % k)
                 continue

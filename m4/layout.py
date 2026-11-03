@@ -261,6 +261,11 @@ VERSION_FINALE = "0.5.0"       # D104 : validation terrain consignée (17-H du
                                # l'u64 de l'artefact RESTE 0x00050002 (R7 : le
                                # scellage est un fait de carte, les octets
                                # prouvés terrain ne bougent pas — modèle 0.4.0)
+VERSION_051 = "0.5.1"          # jalon v7 (D140) : tls-05:R2 — SCH_CREDENTIALS
+                               # explicite, contrôle de révocation RETIRÉ
+                               # (P3/R2 ; la validation de chaîne reste
+                               # automatique) ; la validation est le RUN v7
+VERSION_U64_051 = 0x00050003   # R10 : monotonie (> dev.2 ≥ plancher 0.4.0)
 VERSION_U64_MIN = 0x00040000   # accepté par la porte R10 (http-12:Q1 scellé)
 
 # --- Porte R10 .text3 (D95 — l'entrée #28, l'ancien terminateur remplacé) --------
@@ -285,7 +290,7 @@ BLOCS_TLS = [
     ("g70002", "tls-02:R1", 0x6080, 0x100, "M4-dev.1", 1),   # verdicts SSPI
     ("g70003", "tls-03:R1", 0x6180, 0x140, "M4-dev.1", 1),   # jetons (descripteurs)
     ("g70004", "tls-04:R1", 0x62C0, 0x300, "M4-dev.1", 0),   # poignée de main (préfig.)
-    ("g70005", "tls-05:R1", 0x65C0, 0x180, "M4-dev.1", 1),   # cycle de vie (ARRÊT D81)
+    ("g70005", "tls-05:R2", 0x65C0, 0x180, "M4-dev.1", 1),   # cycle de vie (D81 ; R2 = D140 : SCH_CREDENTIALS dwFlags=0)
     ("g70006", "tls-06:R1", 0x6740, 0x300, "M4-dev.1", 0),   # émission (préfig.)
     ("g70007", "tls-07:R2", 0x6A40, 0x300, "M4-dev.1", 0),   # réception (préfig., D102 scan par type)
     ("g70008", "tls-08:R1", 0x6D40, 0x600, "M4-dev.1", 0),   # session TLS (mesurée D90)
