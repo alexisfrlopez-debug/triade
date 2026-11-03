@@ -42,3 +42,9 @@ m6/.tmp/
 
 # Variante livraison du superviseur (annexe jetons intégrée, D49) — jamais committée
 terrain/livraison/
+
+# Bundles de passation locaux (D141 : le bundle vivant = la canonique au
+# miroir Drive ; la copie labo est une zone de travail, JAMAIS committée
+# — Entrée 132 : la convention devient mécanique, git add -A ne peut plus
+# l'avaler)
+bundles-*/

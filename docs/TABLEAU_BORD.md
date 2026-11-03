@@ -21,7 +21,7 @@
 | docs/Protocole_TRIADE_v0.5.1_Specification.pdf | 2026-10-30T21:41:37Z | a52d54b | 1c5a00bc40a7c4406d6815b3c3bc83bc768a57f7a79264d43b0d517cf4fb8e53 | 05ce39d8777bba3f92bf0916df32dfd5 | 296486 | — | rattrapage M5-a (archive, version gelée) |
 | docs/Protocole_TRIADE_v0.5.2_Specification.pdf | 2026-10-30T21:41:37Z | a52d54b | 13abc4be39488270052d5f4b28672d922d85f085ddd53393603e1992d812732c | 139c6ed87e18ecc8778b7cb1d7a71ea1 | 305426 | — | rattrapage M5-a (archive, version gelée) |
 | docs/Protocole_TRIADE_v0.6.0_Specification.pdf | 2026-10-30T23:35:50Z | 4dea7da | 0f1818c93eba9dc42d3da3d5d55a8248851203d39189602509f4c9846022d06f | 18043b5fd30e4d9f90f9341ae84fd1f4 | 966591 | 18476b1d2537e140ff9e2d068d38f92e2909a429cf3b7d35c841ab0c0728e44d | build_pdf.sh (chaîne spec_v060) |
-| docs/Protocole_TRIADE_v0.6.1_Specification.pdf | 2026-10-31T05:36:40Z | 5878c99 | f34b2720e3f5e704e99e24fd03dbf3372f102edd2ddbc58a8253163501b6887e | 51724739d138c0d56967a98000895e12 | 984557 | 89d9b66a776f04a107f913a6225ac6ff41083080ada694c5f5ded6197d91563a | build_pdf.sh (chaîne spec_v061) |
+| docs/Protocole_TRIADE_v0.6.1_Specification.pdf | 2026-11-03T18:50:41Z | cdfabb6 | f34b2720e3f5e704e99e24fd03dbf3372f102edd2ddbc58a8253163501b6887e | 51724739d138c0d56967a98000895e12 | 984557 | e6e646f481e234b6654679b08a4a470f39b02a64856333a3484d184a4598fb7a | build_pdf.sh (chaîne spec_v061) |
 
 ## Registre des consignations (chronologique)
 
@@ -43,3 +43,4 @@
 | 14 | 2026-10-31T05:32:23Z | 5878c99 | docs/Protocole_TRIADE_v0.6.1_Specification.pdf | f34b2720e3f5e704e99e24fd03dbf3372f102edd2ddbc58a8253163501b6887e | 51724739d138c0d56967a98000895e12 | 984557 | 46369c08eabd89678b212a645fc328f9c59b4be5f2f6667630ac0966e1f48211 | build_pdf.sh (chaîne spec_v061) |
 | 15 | 2026-10-31T05:33:54Z | 5878c99 | docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf | 25be934886d40f627eb5a2971e66a0b711cfb4c450d00f79e1d55a18d0a8baef | e9970f77c2dfe650bdf673c3cba59b71 | 911989 | ec71237ad08caf629ede7675601d4844ec437c84634c6cefd8636f2d0ad63705 | build_livre.sh (chaîne livre_coffre) |
 | 16 | 2026-10-31T05:36:40Z | 5878c99 | docs/Protocole_TRIADE_v0.6.1_Specification.pdf | f34b2720e3f5e704e99e24fd03dbf3372f102edd2ddbc58a8253163501b6887e | 51724739d138c0d56967a98000895e12 | 984557 | 89d9b66a776f04a107f913a6225ac6ff41083080ada694c5f5ded6197d91563a | build_pdf.sh (chaîne spec_v061) |
+| 17 | 2026-11-03T18:50:41Z | cdfabb6 | docs/Protocole_TRIADE_v0.6.1_Specification.pdf | f34b2720e3f5e704e99e24fd03dbf3372f102edd2ddbc58a8253163501b6887e | 51724739d138c0d56967a98000895e12 | 984557 | e6e646f481e234b6654679b08a4a470f39b02a64856333a3484d184a4598fb7a | build_pdf.sh (chaîne spec_v061) |

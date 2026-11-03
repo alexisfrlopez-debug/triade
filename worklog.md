@@ -1654,3 +1654,56 @@ Stage Summary:
   touché, arbres scellés intouchés, aucune clé, aucun artefact.
 - SUITE : inchangée — cérémonie D87 (clé hors-ligne, carte génération 7,
   conformité_profil), kit VM ÉTAPE 2, run M5-b étape 2 (le navigateur).
+
+---
+## Task ID 50 — Kit de cérémonie déposé dans /Cérémonie à la demande du développeur (03/11)
+
+- DEMANDE DU DÉVELOPPEUR (consignée fidèlement) : « fais moi un kit pour
+  la cérémonie que tu mettras dans le drive /Cérémonie » — le geste est
+  un rejeu VÉRIFIÉ du déploiement canonique D130 (scripts/maj_kit.py),
+  pas une réinvention ; état constaté AVANT tout écrit.
+- ÉTAT CONSTATÉ (recyclage du disque labo entre les sessions) : zone
+  download/ AMPUTÉE — les 5 LISEZMOI de cérémonie absents (les copies
+  plates ceremonie_gui/hors_ligne présentes, datées 17:37) ; git HEAD
+  cdfabb6 propre à un bruit de bits de mode (7 fichiers, 0 insertion /
+  0 suppression ; proxy.exe md5 72cf8fdd… == HEAD, sha256 4b8f6af6… =
+  le 0.6.0-dev.1 attendu) — reset --hard (précédent Task 39) ; le hook
+  post-commit avait DÉJÀ déployé le kit au commit cdfabb6
+  (.gdrive/last_sync.log 18:21:39Z, rc=0 miroir + rc=0 kit).
+- PIÈGE IDENTIFIÉ AVANT LE GESTE : un rejeu de maj_kit.py depuis un labo
+  amputé aurait régénéré un MANIFESTE.txt SANS les 5 LISEZMOI (entrées
+  optionnelles absentes localement = « conservé tel quel côté Drive ») —
+  le manifeste n'aurait plus couvert le kit RÉEL : divergence
+  silencieuse d'attestation, jamais d'échec nommé.
+- GESTE (1) — RAPATRIEMENT : scripts/recuperer_lisezmoi_ceremonie.py
+  (labo, hors dépôt, canal drive_sync) télécharge les 5 LISEZMOI du kit
+  Drive → download/, md5 comparé AUX MÉTADONNÉES Drive : 5/5 MATCH
+  (même geste que la récupération post-recyclage Task 39).
+- GESTE (2) — DÉPÔT CANONIQUE : python3 scripts/maj_kit.py → gardes
+  vertes (42 fichiers v06/ suivis par git + 9 racine requis), 57 entrées
+  attendues, 0 téléversés, 1 mis à jour (MANIFESTE.txt régénéré — commit
+  de référence cdfabb6, les 5 LISEZMOI de nouveau couverts), 56
+  inchangés, 57/57 VÉRIFIÉS aller-retour md5 ; recoupement indépendant
+  par la sonde : 15 entrées racine + v06/ (42 fichiers).
+- INFRA : bundles-*/ ajouté au .gitignore — « zone de travail locale,
+  jamais committée » (Entrée 131) devient une règle MÉCANIQUE, le
+  git add -A de sync_backup.sh ne peut plus avaler un bundle (14,8 Mio).
+- PASSATION : JOURNAL_TRAVAIL.md +Entrée 132 (PAR SCRIPT, insertion
+  ASSERTÉE, ordre 131<132<marqueur recoupé, rejeu REFUSÉ fail-closed) ;
+  scripts/inserer_entree_132.py (contrat des entrées 127-132) ; worklog
+  +Task ID 50 (le présent).
+- FRONTIÈRES : aucun secret dans le kit (sceau-I/ = preuves publiques) ;
+  aucune suppression côté Drive (maj_kit.py prudent, idempotent) ;
+  /test intacte (8 entrées D143) ; arbres scellés intouchés ; aucune clé
+  traversée ; aucun artefact touché.
+- SUITE : inchangée — cérémonie de signature du développeur (D87 : clé
+  hors-ligne, carte génération 7, conformité_profil à écrire), kit VM
+  ÉTAPE 2 (le navigateur du bac à sable) et run M5-b étape 2 (critère
+  (b) de D136) ; D139 demeure ouvert (T7 éventuel), non bloquant.
+
+Stage Summary:
+- Le kit de cérémonie (D130) est DÉPLOYÉ ET VÉRIFIÉ dans /Cérémonie
+  (57/57 md5 aller-retour, MANIFESTE au commit cdfabb6, LISEZMOI
+  reconstitués au labo) ; le geste demandé est EFFECTIF, rejouable et
+  entretenu à chaque commit par le hook post-commit.
+- Suite : inchangée — cérémonie D87, kit VM ÉTAPE 2, run M5-b étape 2.
