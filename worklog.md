@@ -1313,3 +1313,53 @@ Stage Summary:
   ligne (SCH_CREDENTIALS dwFlags=0) ; le chemin hérésie « certificat
   rejete » devient atteignable (UNTRUSTED_ROOT → verdict 3 → 502 34 o) ;
   kit v7 au coffre — le run v7 dira.
+
+Task ID: 44
+Agent: Z.ai (agent principal)
+Task: règle permanente du développeur (03/11) — « ajoute le numéro de
+version au nom du bundle, et archive les anciennes versions quand une
+nouvelle est livrée » : application immédiate au coffre, consignation
+D138-D141 (la dette D138-D140 du registre est soldée dans le même geste).
+
+Work Log:
+- L'ÉTAT DU REGISTRE CONSTATÉ : docs/DECISIONS.md s'arrête à D137 —
+  D138/D139/D140 vivaient dans le VERDICT-run-v6-branche-S3.txt (download)
+  sans consignation au registre du dépôt (dette nommée en fin de session
+  v6) ; JOURNAL_TRAVAIL.md s'arrête à l'Entrée 125
+- LE GESTE COFFRE (règle appliquée immédiatement) : sous-dossier
+  archives-bundles créé dans TRIADE-sauvegarde-git ; triade-history-
+  050-f62711b.bundle (état f62711b/D137, arbre m4 0.5.0) déposé en archive
+  VERSIONNÉE — intégrité prouvée AVANT dépôt (md5 aab04f69… == coffre ==
+  copie labo) ; triade-history-051.bundle demeure la version COURANTE à la
+  racine ; BORNE CONSTATÉE : l'original triade-history.bundle appartient au
+  compte du développeur — le jeton relais ne peut ni le renommer ni le
+  déplacer (HTTP 403, lecture seule constatée) : il reste INTACT à la
+  racine, son retrait éventuel est le geste du développeur (nommé au
+  livrable, rien de caché)
+- LA CONSIGNATION : DECISIONS.md +D138 (lecture virtualisée aveugle, 4e
+  instance — le rc du producteur fait foi), +D139 (hosts ignoré — IP
+  littérale tient, T6 Dnscache instrumenté), +D140 (RÉSOLU branche S3 —
+  matrice T2a/T2b/T3/T5, mécanisme nommé, correction 0.5.1), +D141 (la
+  règle du développeur : version au nom, archives-bundles, la racine ne
+  porte que le courant ; la borne 403 consignée) ; JOURNAL_TRAVAIL.md
+  +Entrée 126 insérée PAR SCRIPT AVANT le marqueur m5a (la règle du
+  marqueur ; insertion assertée : marqueur unique, ordre recoupé) ;
+  worklog +Task ID 44
+- FRONTIÈRES : les arbres scellés ne sont pas touchés (les quatre
+  décisions vivent dans docs/, hors v06/I/) ; aucune clé, aucun artefact ;
+  le dossier « test » RESTE une file de livraison (la règle porte les
+  bundles de TRIADE-sauvegarde-git uniquement — scoping nommé à D141)
+- MÉCANIQUE POUR LES LIVRAISONS FUTURES : nom = triade-history-<jalon>.
+  bundle (ex. 052 pour 0.5.2) ; à chaque vague nouvelle, les anciens vont
+  dans archives-bundles (jamais supprimés) ; scripts lato :
+  archiver_bundles_anciens.py (idempotent, intégrité avant dépôt) et
+  miroir_maj_051.py (miroir + bundle)
+- SUITE : run v7 opérateur (le test du jalon) ; retour des preuves ;
+  verdict sur pièces
+
+Stage Summary:
+- D141 appliquée et consignée : archives-bundles/versionnée au coffre,
+  racine = courant seul (à la réserve près de l'original du développeur,
+  403 documenté) ; la dette D138-D140 est soldée au registre du dépôt —
+  le journal des décisions raconte maintenant le run v6 et la règle sans
+  lacune.
