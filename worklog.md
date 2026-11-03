@@ -1535,3 +1535,89 @@ Stage Summary:
   parefeu-vm.txt aux preuves). D143 fait sa première clôture toute
   seule : preuves-run-v8 + verdict dans l'archive, preuves-m5b vierge.
   Le décor est prêt pour 0.6.0 (interception navigateur).
+
+
+## Task ID 48 — Build 0.6.0-dev.1 : le flux navigateur embarqué et câblé (03/11)
+
+- REPRISE SUR DÉPÔT (le contexte de session était perdu) : les intentions
+  D136 (m5/I/README.md + les TROIS specs R3), le plan (m5/layout.py), les
+  notations finales (377/2703/779 o — 2e réarrêt D8 pour http-10:R3) et
+  DEUX harnais (cible, session) posés par la session interrompue ; le
+  TROISIÈME harnais, l'oracle étendu et le passage du builder manquaient —
+  chaque pièce relue depuis le dépôt avant d'écrire (T5 : citer, jamais
+  recopier)
+- HARNais_PRINCIPAL_R3.PY (NOUVEAU) : V1 round-trip R3 + les deux ancêtres
+  scellés ; V2 différentiel R2/R3 sans argument (14 scénarios — traces
+  identiques sauf LE CÂBLAGE 0x74C0 → 0x81C0 + GCLW normalisé ; divergence
+  .text4 nommée : R2 nominal, R3 KO) ; V2bis LA CLI (19 cas dirigés, le
+  modèle de parsing écrit depuis la spec — drapeau sain → armé + ligne
+  « relever-https arme », tout autre argument → refus ExitProcess 3 sans
+  initialisation, l'état .data compris) ; V3 fuzz des DEUX portes (400
+  mutations, zéro passage silencieux) + fuzz CLI (300 lignes) ; V4 ONZE
+  mutations stables en taille TOUTES ATTRAPÉES + témoin — BILAN 79 PASS
+  0 ÉCHEC (graines 20261103/20261104)
+- ORACLE_M5.PY (NOUVEAU — le cœur D136) : executer(blobs, graine, volume) ;
+  F1 relevée à volume (200 cas, politique armée : routée Q2' port 443
+  FORCÉ E2, gardes 501/411 la ligne porte le verdict nommé, 400/HTTP://
+  sans ligne — le refus précède le routage ; la ligne OCTET PAR OCTET
+  contre le MODÈLE DE COMPOSITION : méthode PAR TABLE, hôte tronqué à 14,
+  v = le verdict tls TRANSPORTÉ, e/s les compteurs P8 — les relais
+  délégués jamais comptés) + concordance avec la feuille (modele_cible,
+  le 5e argument) ; F2 domaines hérités (150 cas : Q7 à volume — R2 émulé
+  référence, octet pour octet, aucune ligne — puis politique 1 : les
+  octets au client ceux de l'ancêtre ÉMULÉ, la ligne seule composée ;
+  l'issue de la connexion amont propriété du générateur) ; F3 les TREIZE
+  mutations attrapées + le modèle falsifié (ligne maquillée) NOMMÉ + témoin
+  — BILAN 365 cas 0 écart (graines 20261103/424242)
+- BUILD_M5.PY COMPLÉTÉ : SIX écarts de câblage nommés par l'oracle
+  fail-closed un par un — (1) chemins d'import M4 ; (2) la liste RIP de
+  http-10:R3 sans R_TAB_METHODES (I9) ; (3) celle de http-12:R3 visant
+  ENTREE_M5 au lieu de LA SESSION 0x81C0 ; (4) la sentinelle -1 rendue
+  0xffffffffffffffff par capstone (deux graphies admises) ; (5) les
+  descripteurs hérités au plan M3 + NumberOfSections 6 + SizeOfCode
+  vestige ; (6) la version 0x00060000 jamais écrite + la tranche .data +
+  la preuve R7 excluant le delta version documenté (l'arbitrage de la
+  preuve M4) ; ordre d'import des oracles consigné (build_m4 laisse
+  sys.modules["layout"] = plan M4, les oracles s'y lient AVANT le plan M5)
+- BUILD VERT : sceau-I 5 arbres conformes (clé réelle hors-ligne D87) ;
+  héritage M3+M4 re-vérifié (524+492 verrous) ; l'image M4 == le scellé
+  0.5.1 OCTET POUR OCTET (fb41697d… — prouvé par les runs v7/v8) ;
+  structurel M5 312 verrous ; PE 36 352 o, 6 sections, .text4, kernel32
+  x10 + GetCommandLineW, entrée 0x8C80, version 0x00060000, portes M5
+  (fail-closed, la porte se garde elle-même) ET R10 (28 entrées) marchées ;
+  R7 : 38 blocs octet-identiques, deltas documentés ; oracles M4 560 cas
+  + M5 365 cas verts ; --verifier re-validé ; PROXY.EXE 0.6.0-DEV.1
+  sha256 4b8f6af6caedb3e17811e6e25da1f1680068866bd1b417154fc54474170ec236
+- FALSIFIABILITÉ CONSTATÉE (leçon D82) : l'arme creuse du V4 session
+  (scénarios armés rejoués à politique 0 — échec garanti) FILTRÉE ; le
+  fuzz-CLI a produit une fois le drapeau exact (casse tombée sur un trait
+  d'union) — ATTRAPÉ par l'assertion d'intention, le générateur ne vise
+  plus que les lettres
+- FRONTIÈRES : arbres scellés intouchés ; 0.5.0 D104 intact ; 0.5.1
+  fb41697d… revérifié par la preuve R7 ; 0.6.0-dev.1 NON scellé (la carte
+  génération 7 attend la cérémonie D87) ; aucune clé ; aucun artefact
+  scellé touché
+- CONSIGNATION : JOURNAL_TRAVAIL.md +Entrée 130 (PAR SCRIPT AVANT le
+  marqueur m5a, ordre 129<130<marqueur recoupé) ; worklog +Task ID 48 (le
+  présent) ; bundle triade-history-060-<tip>.bundle (D141 : version au
+  nom), l'ancien 051 archivé versionné, miroir recoupé md5
+- SUITE : cérémonie de signature du développeur (D87 — clé hors-ligne,
+  carte génération 7, conformité_profil), puis kit VM ÉTAPE 2 (navigateur
+  du bac à sable, mandataire 127.0.0.1:25000, page http://autorite.test/
+  sous --relever-https) et run M5-b étape 2 — le critère (b) : la page
+  servie ET la 502 « Certificat rejete » PAR LE NAVIGATEUR, la ligne de
+  flux aux preuves ; décor parefeu-muet v8 verrouillé ; D139 ouvert (T7
+  éventuel), non bloquant
+
+Stage Summary:
+- Le jalon 0.6.0 est CONSTRUIT au laboratoire : les trois révisions R3
+  (le verdict 5 sous politique, le routage Q2' + la ligne de flux, la CLI
+  --relever-https + la porte M5) sont assemblées, harnaisées (cible 13
+  PASS, session 34 PASS, principal 79 PASS) et jugées par l'oracle à
+  scénarios étendu D136 (365 cas verts, falsification détectée) ; le
+  proxy.exe 0.6.0-dev.1 (sha256 4b8f6af6…) reprend l'héritage scellé
+  0.5.1 octet pour octet (38 blocs, preuve R7) avec les deltas .text4/
+  .rdata/PE documentés ; six écarts de câblage du builder ont été nommés
+  par l'oracle fail-closed lui-même et réparés. L'artefact attend la
+  cérémonie de signature (D87) puis le terrain (run M5-b étape 2 — le
+  navigateur).

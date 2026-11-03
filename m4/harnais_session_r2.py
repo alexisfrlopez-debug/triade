@@ -378,22 +378,28 @@ class EmulateurSession(Emulateur):
 def normaliser(appels: list, base: int) -> list:
     """Pointeurs de PILE → offset (positif : dans le cadre ; négatif : chaîne
     d'appel sous le cadre — même géométrie des deux côtés). Les pointeurs
-    HORS pile (fixtures .rdata, addrinfo) passent tels quels — l'adresse
-    appartient à la notation, le CONTENU au contrat. Le proc du thread
-    détaché est exclus (.text2 ancêtre / .text3 révision)."""
-    def norm(p: int) -> int:
-        return p - base if ZONE_PILE <= p < ZONE_PILE + TAILLE_PILE else p
+    HORS pile (fixtures .rdata, addrinfo, cadre-miroir ZONE_CADRE, sockets
+    factices) passent tels quels — l'adresse appartient à la notation, le
+    CONTENU au contrat. Le proc du thread détaché est exclus (.text2 ancêtre /
+    .text3 révision). TOUS LES CHAMPS de TOUTES les entrées sont normalisés :
+    la révision http-10:R3 pousse DEUX registres de plus (P8 — rsi/rdi) et
+    déplace TOUTE la chaîne de 0x10 — un pointeur SSPI brut (ACH pAuthData,
+    pfHandle) différerait de 0x10 entre ancêtre et révision sans AUCUN sens
+    comportemental ; pour le différentiel R1/R2 (géométrie égale) la
+    normalisation supplémentaire est un non-événement (les DEUX côtés)."""
+    def norm(p):
+        if isinstance(p, (tuple, list)):
+            return type(p)(norm(x) for x in p)
+        if isinstance(p, int) and ZONE_PILE <= p < ZONE_PILE + TAILLE_PILE:
+            return p - base
+        return p
     out = []
     for a in appels:
         nom = a[0]
-        if nom in ("RECV",):
-            out.append((nom, a[1], norm(a[2]), a[3]))
-        elif nom == "SEND":
-            out.append((nom, a[1], norm(a[2]), a[3], a[4]))
-        elif nom == "CREATETHREAD":
-            out.append((nom, None, a[2]))
-        else:
-            out.append(a)
+        champs = [norm(x) for x in a[1:]]
+        if nom == "CREATETHREAD":
+            champs = [None] + champs[1:]
+        out.append((nom, *champs))
     return out
 
 

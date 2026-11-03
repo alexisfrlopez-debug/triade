@@ -1,0 +1,213 @@
+; http-12-principal-r3 · bloc orchestration proxy — la CLI et la porte M5 · spec http-12:R3 · bloc carte g80003
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x8c80, taille 832 octets
+; Dépendances : RÉVISION (ancêtre g70011 http-12:R2 embarqué 0.5.1, cité § 9) : la porte M5 + LA CLI (--relever-https, refus nommé) + le câblage http-10:R3 — RENUMÉROTÉE R3 (verdict v8)
+; Notation explicite générée par outils/auteur.py depuis brouillons/http-12-principal-r3.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 779 o · padding : 53 o (NOP)
+; Étiquettes résolues : .verif=0x8cac, .somme=0x8cd2, .verif_ok=0x8cef, .porte_m5_ok=0x8d0b, .cmd_quote=0x8d2f, .cmd_arg0=0x8d49, .cmd_apres_arg0=0x8d73, .cmd_suivant=0x8d77, .cmd_cmp=0x8da1, .cmd_inconnu=0x8dce, .cmd_relever=0x8df9, .cmd_sep=0x8e0d, .cmd_fin=0x8e16, .sans_politique=0x8e97, .boucle=0x8ec4, .accept_echec=0x8ef7, .erreur_reseau=0x8f01, .arret=0x8f2f, .integrite_ko=0x8f60
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x8c8d + 0x7 - 0x6464 = 0x2830
+;   0x8c9e + 0x7 - 0x6645 = 0x2660
+;   0x8ca5 + 0x7 - 0x648c = 0x2820
+;   0x8cef + 0x7 - 0x5e46 = 0x2eb0
+;   0x8cfb + 0x7 - 0x5e62 = 0x2ea0
+;   0x8d02 + 0x7 - 0x5e59 = 0x2eb0
+;   0x8d0b + 0x7 - 0x64f2 = 0x2820
+;   0x8d1e + 0x6 - 0x5ef4 = 0x2e30
+;   0x8d97 + 0x7 - 0x601e = 0x2d80
+;   0x8dd3 + 0x6 - 0x6d29 = 0x20b0
+;   0x8ddc + 0x7 - 0x6103 = 0x2ce0
+;   0x8df3 + 0x6 - 0x6d39 = 0x20c0
+;   0x8df9 + 0xb - 0x55a4 = 0x3860
+;   0x8e1b + 0x6 - 0x6d71 = 0x20b0
+;   0x8e21 + 0x7 - 0x5628 = 0x3800
+;   0x8e2d + 0x6 - 0x6d83 = 0x20b0
+;   0x8e33 + 0x7 - 0x5632 = 0x3808
+;   0x8e3a + 0x7 - 0x5611 = 0x3830
+;   0x8e41 + 0x6 - 0x6d6f = 0x20d8
+;   0x8e47 + 0x7 - 0x660e = 0x2840
+;   0x8e6a + 0x8 - 0x5612 = 0x3860
+;   0x8e74 + 0x7 - 0x616b = 0x2d10
+;   0x8ea1 + 0x7 - 0x5698 = 0x3810
+;   0x8ea8 + 0x7 - 0x312f = 0x5d80
+;   0x8ebe + 0x6 - 0x6dcc = 0x20f8
+;   0x8ec4 + 0x7 - 0x56bb = 0x3810
+;   0x8ed8 + 0x7 - 0xd1f = 0x81c0
+;   0x8eef + 0x6 - 0x6dfd = 0x20f8
+;   0x8ef7 + 0x8 - 0x56e7 = 0x3818
+;   0x8f01 + 0x7 - 0x6618 = 0x28f0
+;   0x8f29 + 0x6 - 0x6e6f = 0x20c0
+;   0x8f2f + 0x7 - 0x6676 = 0x28c0
+;   0x8f52 + 0x6 - 0x6c10 = 0x2348
+;   0x8f5a + 0x6 - 0x6ea0 = 0x20c0
+;   0x8f65 + 0x6 - 0x6ebb = 0x20b0
+;   0x8f6e + 0x7 - 0x6665 = 0x2910
+;   0x8f85 + 0x6 - 0x6ecb = 0x20c0
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x60
+lea rax, [rip - 0x6464]
+mov r14, rax
+sub r14, 0x2830
+lea rbx, [rip - 0x6645]
+lea r15, [rip - 0x648c]
+cmp rbx, r15
+jae 0x8cef
+mov edx, dword ptr [rbx]
+test edx, edx
+je 0x8f60
+mov r13d, dword ptr [rbx + 4]
+test r13d, r13d
+je 0x8f60
+mov r12, r14
+add r12, rdx
+xor eax, eax
+xor ecx, ecx
+add rax, qword ptr [r12 + rcx]
+add rcx, 8
+cmp rcx, r13
+jb 0x8cd2
+cmp rax, qword ptr [rbx + 8]
+jne 0x8f60
+add rbx, 16
+jmp 0x8cac
+lea rax, [rip - 0x5e46]
+cmp rbx, rax
+je 0x8d0b
+lea rbx, [rip - 0x5e62]
+lea r15, [rip - 0x5e59]
+jmp 0x8cac
+mov rax, qword ptr [rip - 0x64f2]
+cmp rax, 0x40000
+jb 0x8f60
+call qword ptr [rip - 0x5ef4]
+mov r12, rax
+cmp word ptr [r12], 0x22
+jne 0x8d49
+add r12, 2
+cmp word ptr [r12], 0
+je 0x8e16
+cmp word ptr [r12], 0x22
+jne 0x8d2f
+jmp 0x8d73
+cmp word ptr [r12], 0
+je 0x8e16
+cmp word ptr [r12], 0x22
+je 0x8d73
+cmp word ptr [r12], 0x20
+je 0x8d77
+cmp word ptr [r12], 0x09
+je 0x8d77
+add r12, 2
+jmp 0x8d49
+add r12, 2
+cmp word ptr [r12], 0
+je 0x8e16
+cmp word ptr [r12], 0x20
+je 0x8e0d
+cmp word ptr [r12], 0x09
+je 0x8e0d
+lea r13, [rip - 0x601e]
+xor r14d, r14d
+movzx eax, word ptr [r12 + r14*2]
+cmp ax, word ptr [r13 + r14*2]
+jne 0x8dce
+add r14d, 1
+cmp r14d, 15
+jb 0x8da1
+movzx eax, word ptr [r12 + 30]
+test eax, eax
+je 0x8df9
+cmp ax, 0x20
+je 0x8df9
+cmp ax, 0x09
+je 0x8df9
+mov ecx, -11
+call qword ptr [rip - 0x6d29]
+mov rcx, rax
+lea rdx, [rip - 0x6103]
+mov r8d, 37
+call 0x1040
+mov ecx, 3
+call qword ptr [rip - 0x6d39]
+mov qword ptr [rip - 0x55a4], 1
+add r12, 30
+jmp 0x8d77
+add r12, 2
+jmp 0x8d77
+mov ecx, -11
+call qword ptr [rip - 0x6d71]
+mov qword ptr [rip - 0x5628], rax
+mov ecx, -10
+call qword ptr [rip - 0x6d83]
+mov qword ptr [rip - 0x5632], rax
+lea rcx, [rip - 0x5611]
+call qword ptr [rip - 0x6d6f]
+lea rcx, [rip - 0x660e]
+mov edx, 40
+mov r8d, 0xFFFFFFFF
+xor r9d, r9d
+mov qword ptr [rsp + 0x20], 0
+call 0x4b00
+cmp qword ptr [rip - 0x5612], 1
+jne 0x8e97
+lea rcx, [rip - 0x616b]
+mov edx, 20
+mov r8d, 0xFFFFFFFF
+xor r9d, r9d
+mov qword ptr [rsp + 0x20], 0
+call 0x4b00
+call 0x4000
+test rax, rax
+je 0x8f01
+mov qword ptr [rip - 0x5698], rax
+lea rcx, [rip - 0x312f]
+xor edx, edx
+call 0x4300
+test rax, rax
+je 0x8f01
+mov rcx, rax
+call qword ptr [rip - 0x6dcc]
+mov rcx, qword ptr [rip - 0x56bb]
+call 0x4100
+mov r12, rax
+test rax, rax
+js 0x8ef7
+lea rcx, [rip - 0xd1f]
+mov rdx, r12
+call 0x4300
+test rax, rax
+je 0x8f01
+mov rcx, rax
+call qword ptr [rip - 0x6dfd]
+jmp 0x8ec4
+cmp qword ptr [rip - 0x56e7], 0
+jne 0x8f2f
+lea rcx, [rip - 0x6618]
+mov edx, 22
+mov r8d, 0xFFFFFFFF
+xor r9d, r9d
+mov qword ptr [rsp + 0x20], 0
+call 0x4b00
+mov ecx, 2
+call qword ptr [rip - 0x6e6f]
+lea rcx, [rip - 0x6676]
+mov edx, 7
+mov r8d, 0xFFFFFFFF
+xor r9d, r9d
+mov qword ptr [rsp + 0x20], 0
+call 0x4b00
+call qword ptr [rip - 0x6c10]
+xor ecx, ecx
+call qword ptr [rip - 0x6ea0]
+mov ecx, -11
+call qword ptr [rip - 0x6ebb]
+mov rcx, rax
+lea rdx, [rip - 0x6665]
+mov r8d, 33
+call 0x1040
+mov ecx, 1
+call qword ptr [rip - 0x6ecb]
