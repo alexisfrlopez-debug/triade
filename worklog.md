@@ -1621,3 +1621,36 @@ Stage Summary:
   par l'oracle fail-closed lui-même et réparés. L'artefact attend la
   cérémonie de signature (D87) puis le terrain (run M5-b étape 2 — le
   navigateur).
+
+## Task ID 49 — Synchro Drive+git vérifiée : le geste 3 de la passation D141 enfin effectif (03/11)
+
+- DEMANDE DU DÉVELOPPEUR (consignée fidèlement) : « fais moi une synchro
+  drive et git, je ne sais pas s'ils sont à jour » — vérification PAR PIÈCE
+  avant tout geste, puis réparation de l'unique écart trouvé.
+- ÉTAT CONSTATÉ : git local propre (HEAD 4faaf10) ; hook post-commit rc=0
+  sur les deux derniers commits ; drive_sync.py rejoué : 815 inchangés,
+  0 erreur ; kit Cérémonie OK ; canonique 060 au miroir md5 2bb725ef… ==
+  locale ; archives-bundles/ : 5 bundles ; UN ÉCART : /test 9 entrées au
+  lieu de 8 (D143) — la copie du bundle 060 y subsistait.
+- ENQUÊTE : copie /test (id 1beZpC6I…, créée 17:38:08Z) et canonique
+  miroir (id 1SRM35nG…, 17:40:19Z) = DEUX fichiers, md5 identiques ; le
+  rejeu de passe_bundle_060.py a refusé sur son état 0 (l'ancien 051 déjà
+  archivé) — gestes 1-2 effectifs, seul le geste 3 manquait.
+- CAUSE RACINE (5e instance du piège PATCH, par preuve API) : l'en-tête
+  Content-Type manquant — Drive IGNORE un corps non déclaré et répond 200
+  sans effet ; la graphie ?trashed=true (leçon trop large du commit
+  4faaf10) est tout aussi inopérante ; capabilities : canTrash=True (le
+  droit jamais en cause) ; la graphie qui marche : corps {"trashed":
+  true} AVEC Content-Type. Règle corrigée : trashed au corps DÉCLARÉ,
+  parents en requête, jamais combinés (403 du run v7). Un 200 Drive ne
+  prouve rien : toute mutation recoupée par relecture (D12 étendu).
+- GESTE RÉPARÉ : copie /test corbeillée (trashed=true constaté PAR
+  L'API) ; /test = 8 entrées D143 exactes ; canonique intacte ; corbeille
+  non vidée. Re-vérification complète : 13/13 OK.
+- OUTILS : scripts/retirer_bundle_test_060.py (geste 3 seul, idempotent,
+  protections identiques à passe_bundle_060.py) ; JOURNAL_TRAVAIL.md
+  +Entrée 131 (par script, ordre 130<131<marqueur recoupé).
+- FRONTIÈRES : aucune suppression définitive, aucun bundle d'archive
+  touché, arbres scellés intouchés, aucune clé, aucun artefact.
+- SUITE : inchangée — cérémonie D87 (clé hors-ligne, carte génération 7,
+  conformité_profil), kit VM ÉTAPE 2, run M5-b étape 2 (le navigateur).
