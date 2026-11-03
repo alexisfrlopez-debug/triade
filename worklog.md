@@ -1481,3 +1481,57 @@ Stage Summary:
   archivées, preuves-m5b vierge), et la corbeille a été purgée de son
   passé TRIADE par RESTAURATION dans l'archive (runs v2/v4/v5, vagues
   v3–v5, terrain-17, audit S11) — rien n'est jeté sans copie versionnée.
+
+
+## Task ID 47 — Run v8 : verdict OK 0 réserve, parefeu muet prouvé, D143 appliquée (03/11)
+
+- RAPATRIEMENT : 30 pièces par id du dossier coffre preuves-m5b (id
+  1OgqAnt2Pk5yXXnd-gfVyZ5SPYulNdA1b), 30/30 CONFORMES par taille
+  (rapatrier_preuves_v8.py) ; run 2026-11-03T04:56–04:57Z, VM
+  9687CE78-D5CF-4 — distinct de v7 (D99) ; pièce NOUVELLE parefeu-vm.txt
+  (835 o) ; empreinte du scellé consignée par le run : proxy 0.5.1
+  fb41697d… == le kit livré, racine v5 86525998… intouchée
+- VERDICT : M5-b étape 1 — OK, 0 réserve. RUN A : 200 OK 452 o (279
+  servis) + « tunnel chiffre etabli » + arret propre sur la LIGNE ; RUN
+  B : page-b.txt 34 octets EXACTS vérifiés octet par octet (sha
+  3355f352… == temoin) + « certificat rejete » (g70008/g70009) ; réserve
+  POIGNEE-B-REFUSEE LEVÉE sur autorite-b.log (2 poignées refusées +
+  arret propre) ; PROXY-ARRET quit code 0 ; matrice curl IDENTIQUE 3e
+  fois (rc=60/0/60/60 — un rc=60 prouve le TCP connecté) ; T6/D139 :
+  Dnscache RUNNING, HOSTS-IGNORE ECHEC — D139 demeure OUVERT non
+  bloquant
+- PAREFEU MUET PROUVÉ EN RUN : 4 DIAG-PAREFEU PASS aux PREMIÈRES lignes
+  du journal (04:56:39Z) AVANT tout bind — règles ALLOW TRIADE-M5B ×2 +
+  inboundusernotification off + parefeu-vm.txt (835 o : trois profils
+  ACTIFS — le parefeu n'est PAS coupé, refus consigné) ; AUCUNE
+  signature de blocage (rc=7/28, 10060/10061 absents) ; D142 passe de
+  « condition de run consignée » à « condition MAÎTRISÉE, prouvée par
+  pièce »
+- D143 APPLIQUÉE (1re clôture PAR LA RÈGLE) : preuves-run-v8 (31
+  entrées = 30 pièces + VERDICT-run-v8-parefeu-muet.txt, md5 recoupé)
+  dans archives-preuves ; preuves-m5b recréé VIERGE ; index mis à jour
+  EN PLACE ; le vierge préparé avant dépôt (1TAIGoTW…) resté en
+  corbeille à dessein (consigné à l'index) ; racine /test = 8 entrées
+  recoupées
+- FRONTIÈRES : arbres scellés intouchés ; 0.5.0 D104 intact (md5
+  2b6481a1…) ; 0.5.1 fb41697d… = artefact exact ; aucune clé ; corbeille
+  non vidée ; aucun artefact touché
+- CONSIGNATION : JOURNAL_TRAVAIL.md +Entrée 129 (PAR SCRIPT AVANT le
+  marqueur m5a, ordre 126<127<128<129 recoupé) ; worklog +Task ID 47
+  (le présent) ; bundle nouveau nom triade-history-051-<tip>.bundle
+  (D141), l'ancien 721ace3 archivé versionné dans archives-bundles ;
+  miroir journal/worklog recoupés md5
+- SUITE : 0.6.0 — interception d'un flux NAVIGATEUR en VM isolée
+  (relèvement amont http→https, D136/m5/I/README.md ; http-08:R3,
+  http-10:R3 + ligne de flux, CLI --relever-https → R3) ; décor
+  parefeu-muet verrouillé pour toutes les vagues ; D139 ouvert (T7
+  éventuel), non bloquant
+
+Stage Summary:
+- Le run v8 rentre un deuxième verdict OK consécutif (0 réserve) avec
+  le proxy 0.5.1 INCHANGÉ : la chaîne décisive est stable, la réserve
+  POIGNEE-B-REFUSEE se lève encore sur pièce host, et le parefeu muet
+  v8 est prouvé EN RUN (4/4 PASS avant tout bind, profils Actifs,
+  parefeu-vm.txt aux preuves). D143 fait sa première clôture toute
+  seule : preuves-run-v8 + verdict dans l'archive, preuves-m5b vierge.
+  Le décor est prêt pour 0.6.0 (interception navigateur).
