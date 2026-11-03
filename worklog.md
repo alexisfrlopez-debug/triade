@@ -1688,6 +1688,20 @@ Stage Summary:
 - INFRA : bundles-*/ ajouté au .gitignore — « zone de travail locale,
   jamais committée » (Entrée 131) devient une règle MÉCANIQUE, le
   git add -A de sync_backup.sh ne peut plus avaler un bundle (14,8 Mio).
+- POST-SCRIPTUM (même session, 18:55) — PUSH GITHUB NOMMÉ EN ÉCHEC :
+  l'échec « non bloquant » de sync_backup.sh a été ENQUÊTÉ, pas subi —
+  cause : dans ce labo restauré, origin pointe vers un BUNDLE LOCAL
+  (upload/triade-history.bundle, lecture seule), pas vers GitHub ;
+  un bundle ne reçoit pas de push, la divergence n'est pas une panne
+  réseau. Les canaux durables sont TOUS VERTS et recoupés : commit local
+  c0bc66f ; miroir Drive TRIADE-sauvegarde-git 6/6 fichiers commités
+  MATCH md5 (recoupement par relecture, scripts/recoupement_miroir_
+  c0bc66f.py) ; bundle canonique au miroir inchangé ; le bilan « 818
+  inchangés » du second drive_sync (non-quiet) est la PREUVE par
+  relecture que le hook silencieux a porté les 8 fichiers. Le push
+  GitHub réel exigera de reconfigurer origin vers l'URL du miroir
+  GitHub privé (décision du développeur — les credentials ne traversent
+  jamais le labo).
 - PASSATION : JOURNAL_TRAVAIL.md +Entrée 132 (PAR SCRIPT, insertion
   ASSERTÉE, ordre 131<132<marqueur recoupé, rejeu REFUSÉ fail-closed) ;
   scripts/inserer_entree_132.py (contrat des entrées 127-132) ; worklog
