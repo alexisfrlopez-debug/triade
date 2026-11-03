@@ -97,10 +97,11 @@ from keystone import Ks, KS_ARCH_X86, KS_MODE_64  # noqa: E402
 
 # --- Garde sceau de l'Intention (D87/D105) -----------------------------------
 # Les arbres d'intention qui NOURRISSENT la chaîne : l'héritage M0-M4 est
-# signé (cérémonies réelles, D87) ; l'arbre m5 porte les révisions R3
-# écrites-avant-code (D136) — sa signature appartient à la cérémonie 0.6.0.
+# signé (cérémonies réelles v7, D87) ; l'arbre m5 porte les révisions R3
+# écrites-avant-code (D136) — signé par la cérémonie 0.6.0 du 04/11
+# (remise 11 lignes, sceau_I.py deposer → verifier 11 verts code 0).
 SCEAU_I = B4.SCEAU_I
-ARBRES_GARDE_M5 = ["m0", "m1", "m2", "m3", "m4"]
+ARBRES_GARDE_M5 = ["m0", "m1", "m2", "m3", "m4", "m5"]
 
 
 def _garde_sceau_I() -> None:

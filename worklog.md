@@ -1785,3 +1785,55 @@ Stage Summary:
   dédiée, main intact) — sync_backup pousse de nouveau pour de vrai.
 - Suite : attendre signatures-I.txt dans /test, puis deposer → verifier
   → carte génération 7 → kit étape 2 → run M5-b étape 2.
+## Task ID 52 — Cérémonie 0.6.0 consommée : onze arbres verts, m5 à la garde (04/11)
+
+- DEMANDE DU DÉVELOPPEUR (consignée fidèlement) : « c'est signé » —
+  signatures-I.txt rendu par le chat (1 564 o, md5 a2b34831…, 11 lignes
+  CRLF — la machine Windows du geste).
+- CONTRÔLES SANS CLÉ avant tout geste : 11 lignes ; balises == a-signer.txt
+  ligne à ligne (diff vide) ; 9 signatures héritées OCTET POUR OCTET
+  identiques aux déposées (Ed25519 déterministe — même clé réelle) ;
+  m5 sans signature déposée (attendu) ; v06 divergente (attendu).
+- CANAL DURABLE : remise poussée dans /test du Drive (md5 MATCH par
+  relecture, /test = 11 entrées, aucune suppression).
+- CONSOMMATION : sceau_I.py deposer → 11 signatures installées (manifestes
+  vivants), clé réelle INTACTE (D87, sans rotation — la même clé signe la
+  nouvelle intention, spec § 5) ; verifier → ONZE arbres VERTS code 0 :
+  m5 = 1869422e… (neuve attendue), v06 = a8166442… (re-signée attendue) ;
+  écrits = signatures+m5.txt, manifestes/m5.txt (nouveaux), v06 (mis à
+  jour), 9 paires inchangées, a-signer.txt inchangé (git status le prouve).
+- GESTE POST-CÉRÉMONIE (nommé par la passation Task 51) : ARBRES_GARDE_M5
+  += m5 (build_m5.py, commentaire historisé) → garde VERTE d'un coup
+  (6 arbres m0-m5, clé réelle) ; re-vérification complète --verifier
+  TOUTE VERTE : oracles 524 + 312 verrous, différentiels M4 560 + M5 365
+  cas verts, R7 38 blocs réutilisés du scellé 0.5.1, PE proxy.exe
+  0.6.0-dev.1 re-validé (4b8f6af6… inchangé) ; [carte] génération 7 :
+  cérémonie requise — les secrets ne vivent pas au labo.
+- HONNÊTETÉ DES ÉTIQUETTES : test_sceau_I.py T3-g + [final] comptaient
+  « 10 arbres » en dur (ère v7) — contrôle juste, étiquette fausse par
+  sous-état : compte dynamique len(ARBRES) → 51 PASS / 0 ÉCHEC, [final]
+  « VERT (11 arbres) ». Labo recyclé : dépendances build réinstallées
+  (capstone, keystone, pefile, pynacl, unicorn).
+- PASSATION : JOURNAL_TRAVAIL.md +Entrée 134 PAR SCRIPT (ordre
+  133<134<marqueur, rejeu REFUSÉ fail-closed) ; scripts/inserer_entree_
+  134.py.
+- FRONTIÈRES : clé privée jamais vue ni demandée (remise = signatures
+  seules, 11 × 128 hex) ; clé publique déposée inchangée (173fae9c…) ;
+  9 arbres signés inchangés ; aucun artefact scellé touché ; .keys/
+  toujours absent du labo.
+- SUITE : scellage carte génération 7 (geste OPÉRATEUR à proposer — les
+  secrets de la carte ne vivent pas au laboratoire) → kit VM ÉTAPE 2
+  (navigateur du bac à sable, mandataire 127.0.0.1:25000, page
+  http://autorite.test/ sous --relever-https) → run M5-b étape 2
+  (critère (b) de D136 : la page servie ET la 502 « Certificat rejete »
+  PAR LE NAVIGATEUR) ; D139 ouvert (T7 éventuel), non bloquant.
+
+Stage Summary:
+- La cérémonie 0.6.0 est CONSOMMÉE : le sceau porte onze arbres verts
+  (m5 entré, v06 re-signée), la même clé réelle — la chaîne d'intention
+  M0-M5 est intégralement signée pour la première fois.
+- La garde du build M5 est verte (6 arbres) et la re-vérification
+  complète passe : la voie est libre pour le scellage carte génération 7,
+  geste opérateur (les secrets ne vivent pas au labo).
+- Suite : proposer le scellage carte génération 7, livrer le kit VM
+  ÉTAPE 2, puis le run M5-b étape 2 (critère (b) de D136).

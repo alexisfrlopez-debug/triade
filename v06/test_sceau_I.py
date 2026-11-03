@@ -405,7 +405,7 @@ def t3_determinisme():
     # FRAIS attend la clé physique du développeur
     code = S.verifier(silencieux=True)
     if code == S.OK:
-        verifie("T3-g dépôt réel : 10 arbres verts (canon LF)", True)
+        verifie("T3-g dépôt réel : arbres verts (canon LF)", True)
     else:
         ok_f, detail = _fenetre_d115()
         if ok_f:
@@ -713,7 +713,7 @@ def main():
     # re-cérémonie (D126) PROUVÉE
     code = S.verifier(silencieux=True)
     if code == S.OK:
-        print("[final] dépôt réel : VERT (10 arbres, canon LF D115)")
+        print(f"[final] dépôt réel : VERT ({len(S.ARBRES)} arbres, canon LF D115)")
         return 0
     ok_f, detail = _fenetre_d115()
     if ok_f:

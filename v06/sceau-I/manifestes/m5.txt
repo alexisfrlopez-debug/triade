@@ -1,0 +1,9 @@
+TRIADE-SCEAU-I v1
+arbre: m5
+artefact: proxy.exe (relevement https)
+balise: 0.6.0
+fichiers: 4
+sha256:5478307893d2e65b359075d15355132a2a89c9bc028c394bce1fe17664b1adfd  README.md
+sha256:ee80e0824517774a4779fe035ae6d1088e2a03517acb4f05bba0835fc5e1d82c  http-08-cible-r3.md
+sha256:db20c664564ff0382b8ec8abc61e74740c180a14fe5535797fbe0ca86acbe8cc  http-10-session-r3.md
+sha256:2ed205b5f3b88e67c5796dea6490ca8003f070650558627426ca4553b29c28c6  http-12-principal-r3.md
