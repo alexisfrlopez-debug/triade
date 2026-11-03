@@ -1363,3 +1363,62 @@ Stage Summary:
   403 documenté) ; la dette D138-D140 est soldée au registre du dépôt —
   le journal des décisions raconte maintenant le run v6 et la règle sans
   lacune.
+
+
+## Task ID 45 — Clôture du run v7 / jalon 0.5.1 + D142 (03/11)
+
+- LE RUN v7 EST RENTRÉ : 29 pièces rapatriées par id du nouveau dossier
+  coffre preuves-m5b (1_uHSH3OXtocUAJWM7CPP4DHXXHv9u0l3), 29/29
+  CONFORMES par taille annoncée ; page-d2b.txt reprise par id après la
+  même fausse alerte « HTML » qu'en v6 (la pièce EST la page servie,
+  marqueur TRIADE-M5B-PAGE-200 présent)
+- VERDICT : M5-b étape 1 — OK, 0 réserve restante ; JALON 0.5.1 CLOS.
+  RUN A : 200 OK 279 o servis + « tunnel chiffre etabli » — PLUS AUCUN
+  502 hérésie (v6 : 40 o, sha 4eac2836…) ; RUN B : 502 exacte 34 o
+  « HTTP/1.1 502 Certificat rejete » + « certificat rejete » au journal
+  proxy (LE critère g70008/g70009) ; réserve POIGNEE-B-REFUSEE LEVÉE
+  sur pièce host (autorite-b.log : 2 poignées refusées, arret propre) ;
+  matrice curl v6 à l'identique (rc=60/0/60/60) ; arrêts jugés sur la
+  LIGNE (règle v7 tenue) ; PROXY-ARRET quit code 0 (S47/D99)
+- D142 (nouveau) : l'invite du parefeu est déclenchée par la MISE EN
+  ÉCOUTE, pas par un trafic — preuve par désassemblage capstone du
+  binaire EXACT du run (sha256 fb41697d… vérifié dans le zip v7) :
+  mov dword [rsp+0x20],0xA8610002 + mov dword [rsp+0x24],0 =
+  bind(0.0.0.0:25000) INADDR_ANY ; la VM n'a AUCUNE interface
+  (ipconfig-vm.txt) et l'invite apparaît quand même ; boucle locale
+  EXEMPTE des règles (le mécanisme one-shot décrit par l'opérateur est
+  réel au niveau connexion — signature rc=7/28, 10060/10061, absente de
+  toutes les pièces) ; consignation labo + coffre
+  (VERDICT-run-v7-parefeu-bind.txt)
+- T6/D139 : Dnscache RUNNING, DIAG-HOSTS-IGNORE toujours ECHEC
+  (« Hôte inconnu ») — D139 DEMEURE OUVERT, non bloquant, hors verdict
+- CONSERVATION DES PREUVES : le dossier coffre preuves-m5b v6 (id
+  1ByG_vBFFC…) est passé à la corbeille par le dépôt v7 (trashed=True
+  constaté) — les 27 pièces v6 (labo, vérifiées) RÉ-ARCHIVÉES au coffre
+  : /test/archives-preuves/preuves-run-v6/ + VERDICT-run-v6 ; la
+  corbeille n'est pas vidée (geste possible du développeur)
+- CONSIGNATION : JOURNAL_TRAVAIL.md +Entrée 127 (insertion PAR SCRIPT
+  AVANT le marqueur m5a, ordre 126<127<marqueur recoupé) ;
+  DECISIONS.md +D142 ; worklog +Task ID 45 (le présent) ; bundle
+  nouveau nom triade-history-051-<tip>.bundle livré au miroir (D141 :
+  version au nom), l'ancien 051 archivé versionné dans
+  archives-bundles, la racine ne porte que le courant ; miroir
+  journal/decisions/worklog recoupés md5
+- FRONTIÈRES : arbres scellés intouchés ; 0.5.0 scellé D104 intact
+  (md5 2b6481a1…) ; 0.5.1 fb41697d… = artefact exact du run ; aucune
+  clé ; aucun artefact touché
+- SUITE : étape 2 du M5 — INTERCEPTION D'UN FLUX NAVIGATEUR en VM
+  isolée (relèvement amont http→https, D135 ; intentions
+  http-08:R3/http-10:R3/http-12:R2 --relever-https écrites-avant-code)
+  = build 0.6.0, puis run M5-b étape 2 ; D139 reste ouvert (T7
+  éventuel)
+
+Stage Summary:
+- Le jalon 0.5.1 est CLOS sur pièces (run v7 OK, 0 réserve) : le proxy
+  0.5.1 établit le tunnel sur certificat valide ET nomme « certificat
+  rejete » face au scellé autonome — la hérésie 502 est morte ; D142
+  nomme le mécanisme de l'invite parefeu (bind 0.0.0.0, pas un trafic)
+  et fixe la signature d'un vrai blocage (rc=7/28) ; les preuves v6
+  sont ré-archivées au coffre ; le registre (Entrée 127 + D142 +
+  worklog 45) est consigné par scripts assertés et le bundle D141 est
+  livré au miroir.
