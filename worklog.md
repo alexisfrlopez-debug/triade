@@ -2399,3 +2399,93 @@ Stage Summary:
   de bundle (recoupé) ; GitHub porté à la pointe dans le même geste
   (sync_backup : push, ls-remote recoupé) ; script suivi :
   passe_bundle_e4.py.
+
+## Task ID 61 — « Preuves déposées dans le drive /test » : LE RUN e4 ANALYSÉ SUR PIÈCES — LE CRITÈRE (b) DE D136 PRÉSENT (page rendue au DOM au marqueur + capture ; 502 « Certificat rejete » REÇUE par le navigateur, réception triplement recoupée), LE CRASH e3 GUÉRI à la base réelle, les cinq refus du scénario levés sur pièces (D138), LA FINALE 0.6.0 SCELLÉE au geste même ; clôture D143 du run, D148 née (04/11)
+
+Task: le développeur a déposé les preuves du run e4 au coffre /test (« Preuves
+déposées dans le drive /test ») — le geste analyse : rapatrier, juger sur
+pièces (D138), et si le critère (b) est présent, consigner la validation
+terrain et poser la finale 0.6.0 (l'exigence était écrite au code et au
+LISEZMOI terrain e4).
+
+Work Log:
+- (1) RAPATRIEMENT (lister_preuves_e4_run.py + rapatrier_preuves_e4.py,
+  modèle e2, D99 zéro mélange) : 37 entrées à /test/preuves-m5b →
+  download/preuves-run-e4/, 37/37 CONFORMES par md5. Run
+  2026-11-04T12:06:43–12:12:21Z, VM 9687CE78-D5CF-4 (même machine que
+  v7/v8/e2/e3). Artefact jugé : proxy.exe sha256 c1e46fb0… == 0.6.0-rc.2
+  SCELLÉ (le kit n'a pas bougé — le libellé « kit e3/rc.1 » du témoin est
+  le texte hérité du scénario e3 repris tel quel, la pièce juge le
+  binaire) ; fixtures v5 intactes ; Edge 156.0.4314.58 (VersionInfo,
+  pièce née).
+- (2) L'ANALYSE SUR PIÈCES (VERDICT-run-e4-critere-b.txt) : le verdict du
+  scénario « ÉCHEC NOMMÉ (5) » est un artefact d'instrument — (a) rc Edge
+  capturé VIDE (capture ExitCode aveugle, D138 complément d'arrêt v6) →
+  NAVIGATEUR-A/B faux échecs ; (b) verdicts EN LIVE sur journaux vivants
+  → « vues vides » (D138/D145 : handle vivant = 0 octet, le journal
+  flushe pourtant par ligne) et la branche RÉSERVE prévue (« producteur
+  rc=0 ») EMPOISONNÉE par le rc Edge vide → AUTORITE-A-SERVIE et
+  POIGNEE-B-REFUSEE faux échecs (les pièces post-mortem portent les
+  aiguilles : « requete servie » ×5, « poignee de main refusee » ×3) ;
+  (c) DOM-B vide PAR CONSTRUCTION : la 502 M5 est une ligne de statut
+  nue (TXT_502_CERT 34 o, sans corps) → Chromium échoue la 5xx à corps
+  vide avec ERR_HTTP_RESPONSE_CODE_FAILURE et le headless n'émet NI DOM
+  NI CAPTURE (risque consigné d'avance au LISEZMOI terrain e4, juge
+  remis au labo sur pièces).
+- (3) LE CRITÈRE (b) PRÉSENT : moitié A — dom-a.txt 282 o au marqueur
+  TRIADE-M5B-PAGE-200 (navigateur a reçu ET parsé, aucun autre chemin
+  que le tunnel), nav-a.png 13 081 o (attesté par Edge), autorité A
+  5 requêtes servies par le tunnel, flux v=0 ×3 ; moitié B — « certificat
+  rejete » + flux v=3 e=736 s=34 ×2 (la 502-cert 34 o SERVIE au
+  navigateur, dump-dom 12:09:20 + capture 12:09:24), poignée refusée ×3
+  côté autorité, ERR_HTTP_RESPONSE_CODE_FAILURE ×2 côté navigateur —
+  réception TRIPLEMENT recroisée, rendu non démontrable en headless
+  (réserve instrumentale nommée). LE BUT DU rc.2 : la première requête
+  routée qui tua le rc.1 a VÉCU — « flux GET 127.0.0.1:443 v=0 e=51 »,
+  page-sonde-armement.txt NÉE (452 o, en-tête 200 + page au marqueur) ;
+  l'idiome restauré tient à la base réelle sur Windows authentique.
+- (4) MATRICE CURL == v8 OCTET POUR OCTET (pièces comparées archive à la
+  main) : T2a rc=60 CERT_TRUST_REVOCATION_STATUS_UNKNOWN, T2b rc=0,
+  T3 rc=60, T5 rejet — branche S3 = L'ÉTAT STATIONNAIRE du curl de la VM
+  (v6/v8/e4) ; le libellé « RÉGRESSION à nommer » est une expectation
+  périmée de l'ère e2 — D140 réparait les credentials du PROXY (preuve :
+  le run A tunnelé hors ligne), jamais curl. D139 inchangée, T6 consigné.
+- (5) LA FINALE 0.6.0 POSÉE : relève du secret carte (coffre INTÈGRE,
+  lignee-D80 → .keys/passphrase.txt), python3 m5/build_m5.py
+  --sceller-final — sceau-I ONZE arbres verts, CONTRÔLE D146 VERT
+  EXÉCUTÉ AU SCELLAGE, cristallisation 52/52 × 10/10, conformité 58
+  contrôles, bascule rc.2 → 0.6.0 (occurrence unique assertée), verrou
+  croisé R8 52 empreintes, proxy.exe INTACT (c1e46fb0…, 36 352 o — le
+  scellage est un fait de carte) ; GARDES CONSTATÉES : re-scellage
+  REFUSÉ, reconstruction REFUSÉE (anti-rollback VIVANT sous 0.6.0).
+- (6) CONSIGNATIONS : JOURNAL_TRAVAIL +Entrée 143 PAR SCRIPT (ordre
+  142<143<marqueur), DECISIONS +D148 PAR SCRIPT (à la suite de D147 —
+  verdicts post-mortem et sur pièces, témoin de producteur jamais un rc
+  aveugle, preuve d'erreur à la réception, S3 stationnaire), ce worklog
+  +Task ID 61 ; scripts suivis : lister_preuves_e4_run.py,
+  rapatrier_preuves_e4.py, archiver_run_e4.py, inserer_entree_143.py,
+  inserer_d148.py.
+- (7) LA CLÔTURE D143 DU RUN e4 (archiver_run_e4.py) : les 37 pièces →
+  /test/archives-preuves/preuves-run-e4/ + VERDICT-run-e4-critere-b.txt ;
+  preuves-m5b recréé VIERGE (liste e4) ; index mis à jour EN PLACE ;
+  racine /test = 8 entrées (la vague e4 DEMEURE courante — aucune vague
+  e5, le jalon est rentré).
+- FRONTIÈRES : la finale est un FAIT DE CARTE (l'artefact n'a pas bougé
+  d'un octet) ; scellé 0.5.1, cartes m0-m4, sceau ONZE arbres, arbre
+  m5/I, fixtures v5, scénario e3-==-e4 : INTACTS ; aucune suppression
+  Drive, corbeille non vidée ; .keys/ gitignoré ; D139 ouverte non
+  bloquante.
+- SUITE : le jalon M5 est RENTRÉ (balise 0.6.0, validation terrain
+  consignée) — les jalons M6/M7 attendent leur plan ; la passation D141
+  suit au même geste.
+
+Stage Summary:
+- Le run e4 est VERT sur pièces : le navigateur a reçu et rendu la page
+  de l'autorité par le tunnel, et reçu la 502 « Certificat rejete » du
+  certificat auto-signé — les deux dans le même run, le crash e3 guéri à
+  la base réelle. Les cinq refus du scénario étaient des artefacts
+  d'instrument (D138), levés un à un ; la matrice curl est identique au
+  run v8 de référence.
+- LA FINALE 0.6.0 EST SCELLÉE : le contrôle D146 exécuté au scellage,
+  la carte basculée, les gardes vivantes. Le jalon M5 (le flux navigateur
+  intercepté de bout en bout) est RENTRÉ.
