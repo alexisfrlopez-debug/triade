@@ -2389,3 +2389,13 @@ Stage Summary:
 - Suite : le geste terrain du run e4 — le critère (b) de D136 par le
   navigateur ; si le verdict est vert, --sceller-final pose la finale
   0.6.0 avec la validation consignée.
+
+- PASSATION D141 rejouée au geste rc.2 : le bundle courant
+  triade-history-060-9fa7fb3.bundle (git bundle --all, 15 311 490 o,
+  md5 a7567812…) déposé au MIROIR, ASSERTÉ avant dépôt (branche jalon
+  pointe sur 9fa7fb3 — il porte le chemin rc.2 AVEC sa consignation) ;
+  l'ancien 060-5da81b0 (md5 cc18759e… recoupé AVANT) ARCHIVÉ VERSIONNÉ
+  dans archives-bundles/ (8 archives, jamais supprimé) ; /test sans copie
+  de bundle (recoupé) ; GitHub porté à la pointe dans le même geste
+  (sync_backup : push, ls-remote recoupé) ; script suivi :
+  passe_bundle_e4.py.
