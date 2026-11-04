@@ -3211,3 +3211,55 @@ unix/carte-corpus/ (la balise 0.7.0).
   est un déplacement), la carte du corpus vit SOUS 0.7.0 (INTACTE — le
   scellage est un fait de carte), l'artefact sha dd14195c… IMMUABLE, le
   jalon M7 est DÉBLOQUÉ (la fiche riscv64 attend son premier octet).
+
+## Task ID 68 — « continue M7 » : LE CHANTIER M7-(a) ACCOMPLI — LE MOTEUR DE NOTATION RV64 NÉ ET ÉPROUVÉ : l'ASSEMBLEUR RV64IMA+Zifencei MAISON DU DÉPÔT (riscv/outils/as_rv64.py : six formats R/I/S/B/U/J, 4 o exactement, SANS extension C, refus nommés fail-closed, le jeu EXACT des pseudos du juge) ; LA PORTE ROUND-TRIP EN DEUX DIRECTIONS (riscv/notation/porte_roundtrip.py : 783 textes du corpus du profil en AVANT + 1037 encodages légaux en INVERSE — le rendu INTÉGRAL du juge ré-assemble en ses octets, capstone 5.0.7 JUGE UNIQUE, 100 %) ; QEMU-RISCV64 OPÉRATIONNEL AU LABO (l'installation devient une PROCÉDURE du dépôt : riscv/outils/installer_qemu.sh, extraction locale SANS privilèges du paquet qemu-user statique 10.0.13 — le binaire instrument gitignoré sous riscv/.tmp/) ; LA LIGNÉE riscv/ NÉE (layout D8 en GÉOMÉTRIE MIROIR du plan unix — seul le demi-octet ISA change : e_machine 0xF3, e_flags 0, NOP canonique addi x0,x0,0, réserves ebreak ; quatre specs sr-01..04 ÉCRITES-AVANT-CODE, les miroirs de su-01..04 : l'ancrage auipc+addi remplace le lea rip, t1 remplace r10/r11, le cadre de .emit SAUVE ra) ; LA SONDE ET_DYN/PIE EM_RISCV 8 192 o sha d122bc68… À L'ORACLE QEMU VERT (6/6 runs — quatre lignes octet pour octet, code 6, table ERRNOS exercée sur ses DEUX branches, falsification 12/12 zéro silence) ; L'INDIFFÉRENCE À LA BASE DÉMONTRÉE PAR BASES FORCÉES DU CHARGEUR (-R 1G→0x2aaac000, -R 4G→0xaaaac000, -B+-R→0x55556000, TOUTES VERTES — la base par défaut CONSTANTE 0x555555556000 est un CONSTAT d'instrument nommé, l'épreuve -B a mort nommée avant d'être instruite) ; LA GARDE ANTI-TABLE-X86 VIVANTE (a7=1 write x86-64 : REFUS DE BUILD NOMMÉ) ; LA CARTE génération 1 (QUATRIÈME sel, verrou croisé 4/4) ; LA BALISE 0.8.0-dev.1 POSÉE par le premier build du jalon (geste de BUILD, jamais de scellage) ; D155 née (05/11)
+
+**Détail.** Les constats de la fiche re-vérifiés AU GESTE MÊME (keystone
+SANS RISC-V re-constaté, capstone RV64 confirmé, qemu installé par
+PROCÉDURE) ; l'assembleur maison éprouvé par la porte — QUATRE leçons
+attrapées au geste même (negw manquant, funct7 de SEPT bits des décalages
+W, jalr deux-opérandes mémoire, fence « unknown » aux champs vides),
+toutes par la direction INVERSE (D155 : la direction avant ne prouve que
+les prévisions de l'auteur) ; l'oracle structurel 219 verrous (appels/
+syscalls/données déclarés PAR BLOC, paires d'ancres re-vérifiées DEPUIS
+LE CODE DÉSASSEMBLÉ, taille 4 par instruction — garde anti-C, pile psABI
+appariée, t1 respecté par contrat, 22 symboles confrontés au layout —
+leçon C1, l'auteur a aussi attrapé sa propre paire d'ancre : le LO
+s'administre relativement à SON auipc, jamais isolément) ; le
+déterminisme constaté au rebuild (sha d122bc68… constant) ; la
+re-vérification complète rejouée (R5/R8 verts, cristallisation 2/10 par
+bloc) ; consignations : Entrée 150 PAR SCRIPT, D155 PAR SCRIPT, fiche
+riscv64 § statut/§ 6/§ 8/§ 10 (constats re-vérifiés + ACQUIS + le constat
+d'instrument qemu), PLAN § État du programme (M7-(a) RÉALISÉ) ; le PDF
+formel v0.6.1 BYTE-IDENTIQUE (l'état des jalons vit aux sources de
+travail — addendum Task 62) ; le coffre /test INCHANGÉ (la vague m6d
+demeure courante — la clôture D143 attend le kit M7) ; frontières : la
+finale 0.7.0 et sa carte INTACTES, le corpus dd14195c… et la sonde unix/
+INTACTS (la géométrie miroir est un PLAN partagé, jamais un octet
+partagé), riscv/.tmp/ gitignoré, .keys/ gitignoré, D139 ouverte non
+bloquante ; scripts suivis : inserer_entree_150.py, inserer_d155.py,
+passe_bundle_m7a.py.
+
+Stage Summary:
+- Le jalon M7 a son moteur de notation : l'assembleur maison du dépôt,
+  admis par la porte round-trip à 100 % en DEUX directions — la
+  direction inverse (l'espace d'encodage légal) est la preuve, quatre
+  leçons y ont été attrapées au geste même (D155).
+- qemu-riscv64 est opérationnel au labo et son installation est une
+  PROCÉDURE du dépôt ; la sonde EM_RISCV est VERTE sous l'exécuteur du
+  jalon (réserve instrumentale D149 nommée dans chaque verdict), et
+  l'indifférence à la base est démontrée par les paramètres du CHARGEUR —
+  jamais en feignant un ASLR émulé.
+- La balise 0.8.0-dev.1 est posée (geste de BUILD) ; le scellage
+  0.8.0-rc.1 attendra le chantier (c) et son contrôle D146 adapté.
+
+- SUITE : LE CHANTIER M7-(b) — la TROISIÈME instanciation de la même
+  couche I : le corpus paritaire RISC-V (les MÊMES fichiers I que unix/,
+  le diff nul mesuré par script, l'oracle régénéré vert sur l'instance
+  qemu, la parité § 8.3 sur les TROIS profils) ; le point d'attention
+  NOMMÉ : la portée imm12 des charges — le corpus unix accédait ses
+  données par [rbx+disp32], l'instance RISC-V porte ses fenêtres par
+  ANCES auipc+addi (le modèle des paires sr-04 généralisé, chaque fenêtre
+  déclarée en I3) ; puis (c) le patch scratch+fence.i + le verrou
+  multi-profils, (d) l'export multi-profils + le terrain → la finale
+  0.8.0.

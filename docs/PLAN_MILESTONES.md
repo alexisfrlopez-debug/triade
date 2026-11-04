@@ -346,6 +346,55 @@ déplacement vers `archives-preuves/preuves-run-m6d/` avec le verdict du
 recoup) attend le dépôt du kit M7, modèle e4 ; les décisions développeur
 (réserve qemu) demeurent non bloquantes.
 
+**Le chantier M7-(a) RÉALISÉ — le 05/11/2026** (Entrée 150, D155) : **LE
+MOTEUR DE NOTATION RV64 EST** — keystone ne porte pas l'ISA (constat
+re-vérifié au geste même), l'assembleur **RV64IMA+Zifencei maison du
+dépôt** (`riscv/outils/as_rv64.py` : six formats R/I/S/B/U/J, 4 o
+exactement, SANS extension C, refus nommés fail-closed) assemble, et sa
+preuve est une **PORTE** (`riscv/notation/porte_roundtrip.py`) : round-trip
+**100 % en DEUX directions** — 783 textes du corpus du profil (AVANT :
+assemble → désassemble → ré-assemble) + 1037 encodages légaux de l'espace
+RV64IMA+Zifencei (INVERSE : le rendu INTÉGRAL du juge ré-assemble en ses
+octets), **capstone 5.0.7 juge unique** (quatre leçons attrapées par la
+porte au geste même : negw, funct7 des décalages W, jalr deux-opérandes,
+fence « unknown » — D155). **qemu-riscv64 OPÉRATIONNEL au labo** (critère
+de sortie du chantier) : l'installation est une PROCÉDURE du dépôt
+(`riscv/outils/installer_qemu.sh`, extraction locale sans privilèges du
+paquet qemu-user statique 10.0.13 — le binaire est un instrument
+gitignoré, la procédure est la pièce). **La lignée `riscv/` née** (layout
+D8 décliné — géométrie MIRROIR du plan unix, seul le demi-octet ISA
+change : e_machine 0xF3, e_flags 0, instructions 4 o, NOP canonique
+`addi x0,x0,0`, réserves `ebreak` ; table ERRNOS MÊME contrat ; syscalls
+ASM-GENERIC avec **garde anti-table-x86** — a7=1 (write x86-64) est un
+REFUS DE BUILD NOMMÉ, la parité est SÉMANTIQUE jamais lexicale) ;
+**quatre specs écrites-avant-code** (`sr-01..sr-04`, le domaine `sr` —
+les miroirs de su-01..04 : le contrat survit au portage, l'ABI change,
+les ancres auipc+addi remplacent le lea rip, t1 remplace r10/r11, le
+cadre de .emit SAUVE ra — jal ne pousse pas) ; la sonde construite par
+`riscv/build_m7.py` : **120 instructions, round-trip 100 %, oracle
+structurel 219 verrous** (appels/syscalls/données déclarés PAR BLOC,
+paires d'ancres re-vérifiées depuis le code désassemblé, taille 4 par
+instruction — garde anti-C, pile psABI appariée, t1 respecté, symboles
+confrontés au layout — leçon C1), **ELF64 durci ET_DYN/PIE EM_RISCV**
+(3 segments R/RX/RW, W^X depuis les phdr, PT_GNU_STACK sans X, 8 192 o,
+sha256 d122bc68…), **l'oracle d'exécution SOUS QEMU VERT** (réserve
+instrumentale D149 NOMMÉE : TCG, noyau et syscalls RÉELS) : 6/6 runs
+conformes — quatre lignes octet pour octet (la base calculée par les
+paires d'ancres en tête, a0 = fffffffffffffff7 → verdict 1 [EBADF nommé],
+a0 = fffffffffffffff2 → verdict 6 [EFAULT hors table, VERDICT_FATAL,
+arrêt propre], code de sortie 6) ; **la table ERRNOS exercée sur ses deux
+branches**, la **falsification 12/12 zéro silence** ; **l'indifférence à
+la base DÉMONTRÉE par bases forcées du CHARGEUR** (constat d'instrument
+D155 : qemu 10 ne randomise PAS l'image PIE invitée — base par défaut
+constante 0x555555556000 CONSTATÉE, -B seul sans effet, le levier est -R
+la fenêtre de réservation : trois configurations VERTES à 0x2aaac000 /
+0xaaaac000 / 0x55556000) ; la **carte génération 1** du jalon (QUATRIÈME
+sel Argon2id distinct, clés projet partagées D27, signature Ed25519,
+verrou croisé 4/4) + le tableau de bord ; la re-vérification complète
+rejouée (cristallisation 2/10, R5/R8 verts) ; **la balise 0.8.0-dev.1
+posée par le premier build du jalon** (geste de BUILD, jamais de
+scellage — plancher 0x00080000).
+
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|
 | (a) Le durcissement format — l'ELF64 du jalon | le writer du jalon (`unix/build_m6.py`, modèle `m6/build_ah.py`) porte l'image à ET_DYN (PIE, base aléatoire), trois segments R/RX/RW, PT_GNU_STACK sans X ; table ERRNOS (contrat d'erreurs des syscalls, miroir de la table HRESULTS) ; layout `unix/layout.py` (modèle D8) | un ELF64 durci minimal exécuté au labo, l'image PIE chargée par le noyau à une base aléatoire CONSTATÉE ; W^X vérifié depuis les phdr ; round-trip 100 % |

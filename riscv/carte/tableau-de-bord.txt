@@ -1,0 +1,20 @@
+[tableau] jalon=M7-(a) artefact=sonde version=0.8.0-dev.1
+  profil                       : riscv64-linux-elf64 (fiche § 6 — le moteur de notation)
+  moteur_notation              : ASSEMBLEUR MAISON as_rv64 (RV64IMA+Zifencei, formats R/I/S/B/U/J, 4 o, SANS extension C) ; capstone 5.0.7 JUGE UNIQUE
+  porte_roundtrip              : VERTE — 783 textes (avant) + 1037 encodages légaux (inverse), 100 % (keystone SANS RISC-V — constat re-vérifié au chantier)
+  blocs_avec_spec_a_jour        : 4/4 : audit I->C->B (specs, carte, artefact)
+  chaines_I_C_B_tests           : 4/4 : 219 verrous PASS
+  construction                 : 0 erreur / 0 avertissement : build script
+  format_durci                 : ET_DYN (PIE), e_machine 0xf3 (EM_RISCV), e_flags 0, 3 segments R/RX/RW, PT_GNU_STACK RW sans X, W^X constaté depuis les phdr, offsets==vaddr, RW .bss pur (filesz 0), garde anti-C (taille 4 constatée par instruction)
+  contrat_erreurs               : table ERRNOS 1 entrée(s) (EBADF nommé, motivée par sr-04:E1) ; VERDICT_FATAL=6 (fail-closed) ; exercée en exécution sur les DEUX branches ; table syscalls ASM-GENERIC avec garde anti-table-x86 (write=1 REFUSÉ nommément)
+  tests_differentiels           : oracle qemu 6/6 runs conformes (4 lignes octet pour octet, code 6) ; falsification 12 mutations attrapées (zéro silence)
+  pie_indifference_base        : base par défaut CONSTANTE 0x555555556000 (1 distincte(s) sur 6 exécutions — qemu 10 ne randomise PAS l'image PIE invitée, CONSTATÉ nommé) ; bases forcées -R 1G=0x2aaac000, -R 4G=0xaaaac000, -B 0x100000000 -R 2G=0x55556000 VERTES — l'indifférence à la base est DÉMONTRÉE par les paramètres du CHARGEUR (-R la fenêtre de réservation), la preuve ne dépend jamais d'un ASLR émulé (réserve instrumentale D149 : qemu-riscv64 TCG, noyau et syscalls réels)
+  reutilisation_heritage        : 0 bloc réutilisé (lignée neuve — la TROISIÈME instanciation de la couche I est le chantier (b))
+  defauts_ouverts               : 0
+  preversions                   : 0.8.0-dev.1 conforme (R10 : monotonie, plancher 0x80000)
+  artefact                      : 8192 octets ; empreinte sha256:d122bc68fec2412677a9ebdd…
+  verrou_croise                 : 4 empreintes + signature Ed25519 (R8)
+  [phdr] PT_GNU_STACK drapeaux 6 (RW) SANS X — NX explicite psABI, align 0x10
+  [phdr] 3 PT_LOAD R/RX/RW + PT_GNU_STACK RW sans X — W^X CONSTATÉ depuis les phdr (aucun segment inscriptible exécutable)
+  [phdr] ET_DYN (PIE) : e_machine 0xf3 (EM_RISCV), e_flags 0x0 (ni RVC ni float-abi), e_entry 0x1140 RELATIF à la base, RW .bss pur (filesz 0)
+  [RX] réserves ebreak constatées hors slots ; NOP canonique addi x0, x0, 0 intra-slot (fiche § 7)

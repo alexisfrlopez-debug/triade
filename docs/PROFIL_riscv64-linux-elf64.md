@@ -11,7 +11,9 @@
 **Identifiant** : `riscv64-linux-elf64` · **ISA** : RISC-V 64 bits (RV64IMA +
 Zifencei, sans extension C — voir § 1) · **OS** : Linux (noyau ≥ 5.x, page 4 Kio) ·
 **Format** : ELF64 petit-boutiste · **Statut** : spécifié, jalon M7 ouvert le
-04/11/2026 (D149), exécution différée derrière M6.
+04/11/2026 (D149) — **le chantier M7-(a) RÉALISÉ le 05/11/2026** (le moteur
+de notation RV64 + la sonde aux oracles verts, Entrée 150, D155 ; balise
+`0.8.0-dev.1` posée par le premier build du jalon).
 
 ---
 
@@ -85,10 +87,27 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
 
 ## 6. Moteur de notation et round-trip — LE chantier propre à M7
 
-- **Constat labo (04/11/2026)** : keystone 0.9.2 **ne porte pas l'architecture
-  RISC-V** (`KS_ARCH_RISCV` absent du module Python) ; capstone 5.0.7 **désassemble
-  RV64** (constaté : `addi` décodé depuis ses octets). L'assemblage n'a donc AUCUN
-  moteur en l'état — c'est un livrable du jalon, pas une surprise.
+- **Constat labo (04/11/2026, re-vérifié au chantier M7-(a) le 05/11)** :
+  keystone 0.9.2 **ne porte pas l'architecture RISC-V** (`KS_ARCH_RISCV`
+  absent du module Python — re-constaté au geste même) ; capstone 5.0.7
+  **désassemble RV64** (constaté : `addi` décodé depuis ses octets).
+  L'assemblage n'a donc AUCUN moteur en l'état — c'est un livrable du
+  jalon, pas une surprise.
+- **ACQUIS (05/11/2026, chantier M7-(a), Entrée 150)** : l'**assembleur
+  RV64IMA+Zifencei maison du dépôt EST** — `riscv/outils/as_rv64.py`
+  (six formats R/I/S/B/U/J, 4 o exactement, refus NOMMÉS fail-closed sur
+  toute plage, tout décalage impair, tout mnémonique hors profil ; le jeu
+  EXACT des pseudos du juge : mv, not, neg, negw, sext.w, seqz, snez,
+  sgtz, sltz, beqz/bnez/bgez/bltz/bgtz/blez, j, jal implicite, jalr à
+  1-2-3 opérandes, ret, nop, fence, fence.tso) — et sa preuve vit à
+  `riscv/notation/porte_roundtrip.py` : **round-trip 100 % en DEUX
+  directions** (783 textes du corpus du profil en AVANT + 1037 encodages
+  légaux en INVERSE — le rendu INTÉGRAL du juge ré-assemble en ses
+  octets : c'est la direction inverse qui attrape ce que l'auteur n'avait
+  pas prévu), **capstone juge unique**. Quatre leçons attrapées par la
+  porte au geste même (D155) : le pseudo `negw` manquant, le funct7 de
+  SEPT bits des décalages W, la forme deux-opérandes mémoire de jalr, la
+  frontière « unknown » du juge sur les champs fence vides.
 - **Livrable (a) du jalon** : l'**assembleur RV64IMA+Zifencei maison du dépôt**
   (recommandé — l'encodage est régulier : six formats R/I/S/B/U/J, 4 o, champs fixes ;
   dans la lignée « à la main » du projet, sans dépendance nouvelle) — OU un moteur
@@ -113,7 +132,11 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   R_VERSION ≥ plancher, conformité environnement, arrêt propre fail-closed) —
   l'image est ELF64, le mécanisme est le même, seuls les octets changent.
 - Balise du jalon M7 = **0.8.0** (rc.1 → finale après validation) ; LICENSE
-  anti-rollback amendé à chaque scellage, modèle D147.
+  anti-rollback amendé à chaque scellage, modèle D147. **La 0.8.0-dev.1 est
+  POSÉE par le premier build du jalon (05/11/2026, chantier M7-(a)) — un geste
+  de BUILD, jamais de scellage (plancher 0x00080000 ; le scellage 0.8.0-rc.1
+  viendra du chantier (c) avec le contrôle D146 adapté à l'exécuteur du
+  jalon).**
 - Contrôle D146 adapté : exécution full-ELF à la base réelle **sur l'exécuteur du
   jalon** (§ 10) avant tout scellage rc/final.
 
@@ -131,14 +154,28 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
 
 ## 10. Exécution et terrain — la réserve instrumentale nommée
 
-- **Constat labo (04/11/2026)** : aucun binaire `qemu-riscv64` dans le bac à sable —
-  l'installation (qemu-user statique) est le prérequis du chantier (a), re-vérifié
-  avant usage.
+- **Constat labo (04/11/2026, LEVÉ au chantier M7-(a) le 05/11)** : aucun
+  binaire `qemu-riscv64` dans le bac à sable — l'installation (qemu-user
+  statique) était le prérequis du chantier (a) : **elle est FAITE et elle
+  est une PROCÉDURE du dépôt** (`riscv/outils/installer_qemu.sh` :
+  téléchargement + extraction locale du paquet Debian qemu-user SANS
+  privilèges — le binaire est un instrument gitignoré sous `riscv/.tmp/`,
+  la procédure est la pièce ; qemu-riscv64 10.0.13 statique, opérationnel,
+  re-vérifié par le build avant tout usage).
 - **L'exécuteur du jalon : qemu-riscv64 (émulation de processus, TCG)** — le noyau
   Linux et les syscalls sont RÉELS (qemu-user traduit les instructions et relaie les
   appels au noyau hôte) ; l'ISA est exécutée par l'émulateur, **pas par une fer
   RISC-V** : cette limite est une **réserve instrumentale nommée** (D149), consignée
   dans chaque verdict — le protocole ne la déguise jamais en exécution native.
+- **Constat d'instrument NOMMÉ (05/11/2026, chantier M7-(a), D155)** : qemu
+  10 ne randomise PAS l'image PIE invitée — la base par défaut est
+  CONSTANTE (0x555555556000 au labo, CONSTATÉE sur 6 exécutions), et
+  `-B` (guest_base) seul est SANS effet sur l'adresse d'image ET_DYN ;
+  le levier du chargeur est `-R` (la fenêtre de réservation VA fixe où
+  l'image vit) — **l'indifférence à la base se DÉMONTRÉE par bases
+  forcées du CHARGEUR** (trois configurations VERTES à 0x2aaac000 /
+  0xaaaac000 / 0x55556000 au geste même), jamais en feignant un ASLR
+  émulé : la preuve ne dépend d'aucun aléa de l'instrument.
 - Le terrain du jalon (machine du développeur) exécute le même artefact sous
   qemu-riscv64 (WSL2/VM Linux) — la parité inter-ISA se prouve par le MÊME oracle
   vert sur les TROIS profils et par le verrou croisé multi-profils (spec § 18-M7) ;

@@ -44,6 +44,11 @@ m6/.tmp/
 # convention que m6/.tmp/ : régénérés à chaque run, jamais committés)
 unix/.tmp/
 
+# Instruments du jalon M7 (riscv/, D149) : qemu-user extrait localement
+# (SANS sudo — installer_qemu.sh, la PROCÉDURE est la pièce du dépôt, le
+# binaire est l'instrument) + témoins de l'oracle qemu (régénérés)
+riscv/.tmp/
+
 # Variante livraison du superviseur (annexe jetons intégrée, D49) — jamais committée
 terrain/livraison/
 
