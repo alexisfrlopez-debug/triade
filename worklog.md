@@ -3447,6 +3447,27 @@ Stage Summary:
   et LE D146 PAR TRACE (in_asm — le témoin EXTERNE de la base réelle) ;
   la 0.8.0-rc.1 SCELLÉE, les trois gardes vivantes.
 
+
+- PASSATION D141 rejouée au geste « CHANTIER M7-(c) ACCOMPLI / le patch
+  fence.i démontré en exécution + le verrou multi-profils + le scellage
+  0.8.0-rc.1 » : le bundle courant triade-history-070-33cde07.bundle (git
+  bundle --all, 16 078 800 o, md5 ead5b48d…) déposé au MIROIR, ASSERTÉ
+  avant dépôt (branche jalon pointe sur 33cde07 — il porte LE TROISIÈME
+  CHANTIER DU JALON M7 AVEC sa consignation : le DÉMONSTRATEUR INVITÉ
+  riscv/demo [la bascule pendant le trafic 1200 usages, transcription
+  byte-exact 15 425 o, l'effet au geste même, les refus 1-4, le DEP
+  SIGSEGV 4 290 o exacts, la falsification, les bases forcées, zéro
+  régression] + LA CORRECTION tcp-07 [mv a2, t2 — le marshalling oublié au
+  port, la pièce par QEMU_STRACE ; le corpus REBUILDÉ sha ec343b4e…] + LE
+  VERROU MULTI-PROFILS [26 empreintes DEUX ISA avant l'édition] + LE D146
+  PAR TRACE + LA CONFORMITÉ 7/7 + LA CRISTALLISATION 10/10 + LA BALISE
+  0.8.0-rc.1 SCELLÉE + les TROIS gardes vivantes + Entrée 153 + D157 +
+  worklog Task 71) ; l'ancien 070-09ddd06 (md5 9c7461a3… recoupé AVANT)
+  ARCHIVÉ VERSIONNÉ dans archives-bundles/ (18 archives, jamais supprimé) ;
+  la série DEMEURE 070 (l'ère de la balise 0.7.0 scellée — la série 080
+  naîtra à la finale 0.8.0 du jalon) ; /test sans copie de bundle
+  (recoupé) ; GitHub porté à la pointe dans le même geste (push
+  6d1b8dd..33cde07, recoupé ls-remote) ; script suivi : passe_bundle_m7c.py.
 - SUITE : LE CHANTIER M7-(d) — l'export multi-profils + le terrain (le kit
   qemu-riscv64 au coffre /test ; le run terrain jugé POST-MORTEM ET SUR
   PIÈCES — D138/D145/D148) → la finale 0.8.0, LE JALON M7 FRANCHI —
