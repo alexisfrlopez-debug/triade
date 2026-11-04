@@ -2070,3 +2070,64 @@ Stage Summary:
   la ligne de flux aux preuves.
 - Suite : le run M5-b étape 2 par le terrain ; si vert, --sceller-final
   pose la finale 0.6.0.
+
+---
+Task ID: 56
+Agent: Z.ai (agent principal)
+Task: run e2 — « preuves déposées dans le drive /test, mais je pense que
+le run n'est pas tout vert » : rapatrier, juger sur pièces (D138),
+clôturer D143, consigner le verdict et la correction.
+
+Work Log:
+- LABO RÉCUPÉRÉ AVANT TOUT : le dépôt local était PÉRIMÉ à a5035e1
+  (recyclage après la Task 55 — origin portait 4580164/fe94417/9b3544d :
+  réparation 0.5.1 D144, scellage carte génération 7 rc.1, kit e2 livré)
+  ; fast-forward origin recoupé ; bruit de bits de mode neutralisé
+  (core.fileMode=false, rien commis).
+- PIÈCES RAPATRIÉES (preuves-m5b, 6/6 md5 MATCH par relecture) :
+  scénario exécuté == dépôt == /test == zip (e06db6c0…) ; empreintes
+  consignées PAR LE RUN : proxy 4b8f6af6… == 0.6.0-rc.1 scellé.
+- VERDICT : ÉCHEC NOMMÉ REFUS PROXY-SANS-ARMEMENT (00:13:37Z, ligne
+  finale du journal du scénario) — le navigateur n'a JAMAIS été lancé,
+  le critère (b) de D136 n'est PAS tranché. LE SCELLÉ EST INNOCENT :
+  proxy-journal.log (128 o) porte « relever-https arme » ; la sonde TCP
+  (00:13:17) prouve l'écoute posée, donc l'armement DÉJÀ écrit (Q3 :
+  bannière → armement → écoute) ; le quit post-REFUS a opéré (« arret »
+  ×2) ; autorité A cohérente (1 poignée refusée SSLEOF = la sonde 443,
+  0 requête servie, arret propre par délai 150 s à 00:15:46).
+- CAUSE RACINE NOMMÉE : la garde en live lit un fichier encore ouvert —
+  0 o lu à 00:13:37, les 7 lignes n'apparaissent qu'après la MORT du
+  proxy (WriteFile direct par ligne, tcp-11 Q1). MÊME symptôme que les
+  « vues vides » v7/v8 (D138) ; le v8 ne lisait le journal proxy qu'en
+  post-mortem : la garde en live du e2 était la régression. « commande
+  inconnue » = décor (présente au journal du run v8 VERT, même place).
+- CLÔTURE D143 FAITE : preuves-run-e2 (6 pièces + VERDICT-run-e2-vues-
+  vides.txt, md5 recoupés) aux archives-preuves ; preuves-m5b recréé
+  VIERGE ; index mis à jour EN PLACE ; racine /test inchangée (8
+  entrées) ; aucune suppression. Le script archiver_run_e2.py est
+  REPRISE-CAPABLE (premier passage interrompu mi-chemin : upload_create
+  exige un Path — corrigé, état final recoupé par relecture).
+- PASSATION : JOURNAL_TRAVAIL +Entrée 138 PAR SCRIPT (ordre
+  137<138<marqueur, rejeu REFUSÉ fail-closed) ; DECISIONS +D145 (après
+  D144, ordre recoupé) ; scripts/rapatrier_preuves_e2.py,
+  rapatrier_journal_v8.py, rapatrier_vagues_m5b.py, lister_drive.py,
+  rapatrier_index_archives.py, archiver_run_e2.py, inserer_entree_138.py,
+  inserer_d145.py.
+- FRONTIÈRES : le scellé 0.6.0-rc.1 sans défaut constaté (armé, écouté,
+  arrêté proprement) ; artefact/carte génération 7/sceau (onze verts)
+  intouchés ; finale 0.6.0 NON posée (elle attend un run VERT) ;
+  fixtures v5 inchangées ; aucune clé ; aucune suppression Drive.
+- SUITE : sur l'aval du développeur — la vague e3 (garde d'armement
+  FONCTIONNELLE : sonde « GET http://127.0.0.1/ » au mandataire, 200
+  attendu de l'autorité A ; RELEVER-ARME en verdict post-mortem ; Edge
+  version par VersionInfo), run rejoué, si vert --sceller-final. D139
+  ouvert, non bloquant.
+
+Stage Summary:
+- Le run e2 dit un refus de décor, pas un verdict navigateur : le
+  scénario a été piégé par la première garde en live d'un fichier vivant
+  (« vues vides », D145 désormais) ; le scellé 0.6.0-rc.1 s'est armé et
+  arrêté proprement — la carte ne ment pas.
+- Suite : vague e3 (garde fonctionnelle + verdicts post-mortem) à
+  construire sur l'aval du développeur, puis le run rejoué ; si vert,
+  --sceller-final pose la finale 0.6.0.
