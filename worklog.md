@@ -2608,3 +2608,18 @@ Stage Summary:
   « patch à chaud du journal en production » sera démontré sur le profil Linux,
   moteur tcp-07 embarqué. L'écart D81 racine Drive est FERMÉ (le fichier
   ouvre le coffre, la remise est la phrase seule, le coffre n'a pas bougé).
+
+- ADDENDUM Task ID 62 (honnêteté des étiquettes, leçon D138) : le PDF formel
+  v0.6.1 demeure BYTE-IDENTIQUE (sha f34b2720…, consignation n°19 PAR LE
+  BUILD) — la chaîne spec_v061 construit depuis le LaTeX scripts/spec_v061/
+  (balise de la révision D137, état des jalons au 31/10 : « M5 ouvert »,
+  sec-d.tex), PAS depuis la source de travail docs/PROTOCOLE_TRIADE.md ; le
+  rebuild déclenché par le changement des sources .md (stamp nouveau
+  b5ae11d8…) a produit un PDF identique — comportement ÉTABLI (consignations
+  14→18 identiques à travers trois commits). L'état courant « M0–M5 franchis,
+  M6/M7 ouverts » vit à la SOURCE DE TRAVAIL .md et au plan ; il rejoindra le
+  PDF formel à la prochaine RÉVISION de la spécification (le versionnement
+  suit les révisions du protocole, jamais les franchissements — v0.5.1/D75,
+  v0.5.2/D81, v0.6.0/D133, v0.6.1/D137). Le libellé du commit e6a0177
+  « regénéré (état des jalons…) » nomme le DÉCLENCHEUR du rebuild, pas un
+  changement de contenu du PDF — la présente note le fixe pour la traçabilité.
