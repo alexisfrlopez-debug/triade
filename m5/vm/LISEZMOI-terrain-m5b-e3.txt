@@ -1,0 +1,127 @@
+TRIADE M5-B — VAGUE e3 : LE FLUX NAVIGATEUR EN VM ISOLÉE, GARDE FONCTIONNELLE
+(KIT VM ÉTAPE 2 rejoué — le critère (b) de D136 : la page servie ET la 502
+« Certificat rejete » RECUES PAR LE NAVIGATEUR, dans le MÊME run, réseau coupé)
+=============================================================================
+Livré au coffre /test le 04/11/2026, après le run e2 (ÉCHEC NOMMÉ « REFUS
+PROXY-SANS-ARMEMENT » — un refus de DÉCOR, pas un verdict navigateur) et la
+règle D145 qui en est née.
+
+CE QUE LE RUN e2 A DIT (rappel sur pièces — VERDICT-run-e2-vues-vides.txt,
+archives-preuves)
+  Le scénario e2 s'est arrêté à SA PROPRE garde : il attendait la ligne
+  « relever-https arme » en lisant EN LIVE le journal du proxy — encore
+  ouvert par le processus vivant — et la VM rend ZÉRO octet pour un fichier
+  en cours d'écriture (« vues vides », le symptôme des runs v7/v8 — D138).
+  LE SCELLÉ 0.6.0-rc.1 EST INNOCENT : l'armement A EU LIEU (la ligne vit à
+  la pièce post-mortem), l'écoute était posée, le quit a opéré. Le
+  navigateur n'a jamais été lancé : le critère (b) n'est PAS tranché, il
+  attend CE run.
+
+CE QUE CETTE VAGUE CHANGE (trois corrections, D145 — rien d'autre)
+  1. LA GARDE D'ARMEMENT DEVIENT FONCTIONNELLE : le scénario envoie
+     LUI-MÊME au mandataire la requête forme-absolue claire du navigateur
+     (« GET http://127.0.0.1/ HTTP/1.1 » + Host) et attend LA PAGE 200 de
+     l'autorité A — relèvement http→https + tunnel + réponse = preuve
+     OPÉRATIVE que le 0.6.0 est ARMÉ (un 0.5.1 — ou un rc.1 non armé —
+     routerait vers l'origine port 80, muette : 502). La page reçue est la
+     pièce page-sonde-armement.txt ; REFUS PROXY-PAS-ARME nommé sinon
+     (l'extrait de la réponse dit lequel).
+  2. LA LIGNE « relever-https arme » DEVIENT UN VERDICT POST-MORTEM :
+     constatée au journal proxy APRÈS le quit du proxy (modèle v8) — plus
+     AUCUNE lecture en live d'un fichier vivant. D145 : la preuve
+     déclarative CONSTATE, la preuve opérative GARDE.
+  3. LA VERSION D'EDGE SE LIT PAR VersionInfo (le --version du run e2
+     était muet en console) : pièce edge-version.txt aux preuves.
+  TOUT LE RESTE EST L'ÉTAPE e2 INTACTE : le proxy du kit reste LE
+  0.6.0-rc.1 SCELLÉ (carte génération 7) :
+    sha256 4b8f6af6caedb3e17811e6e25da1f1680068866bd1b417154fc54474170ec236
+    md5    72cf8fdd803a0c9691145892800c31e5
+  (36 352 octets, inchangé — la correction touche le SCÉNARIO, jamais le
+  scellé). Edge headless par le mandataire 127.0.0.1:25000, page
+  http://127.0.0.1/ (IP littérale D139), drapeaux --proxy-bypass-list
+  «<-loopback>» + HttpsUpgrades désactivé, décor v8 entier (parefeu
+  neutralisé dès l'ouverture, matrice curl additive, témoin D99 en dernier
+  acte), fixtures v5 inchangées (SAN DNS + IP, racine 86525998…).
+
+LE GESTE (le run e3, cinq à huit minutes — ne jamais mélanger les runs, D99)
+  1. Téléchargez m5b-kit-e3.zip DEPUIS CE DOSSIER /test, extrayez-le dans
+     un NOUVEAU dossier (le kit e2 est archivé — cette vague le remplace).
+  2. corriger-wsb.bat (à la racine de CE dossier /test, PAS dans le zip) :
+     double-clic, il pose les chemins absolus du .wsb.
+  3. Double-clic du scenario-m5b.wsb corrigé. NE RIEN TOUCHER jusqu'à la
+     fin (les autorités s'arrêtent d'elles-mêmes par délai : comptez
+     cinq à huit minutes ; le témoin est posé en DERNIER acte).
+  4. Renvoyer TOUT le contenu de preuves-m5b (la liste exacte vit en
+     dernière ligne du témoin) : temoin + journaux +
+     page-sonde-armement.txt + edge-version.txt + dom-a.txt, dom-b.txt +
+     nav-a.png, nav-b.png + err du navigateur + autorités + matrice
+     curl + parefeu-vm.txt.
+
+RÉSULTATS ATTENDUS (le scénario reste fail-closed : c'est lui qui dit)
+  - Ouverture : DIAG-PAREFEU ×3 PASS ; REFUS NAVIGATEUR-ABSENT si Edge
+    manquait ; DIAG-EDGE-VERSION par VersionInfo (additif).
+  - La SONDE : « armement PROUVE PAR OPERATION » au journal du scénario —
+    la page 200 de l'autorité A reçue par le mandataire (marqueur
+    TRIADE-M5B-PAGE-200 à la pièce page-sonde-armement.txt) ; REFUS
+    PROXY-PAS-ARME sinon (l'extrait de réponse nomme le coupable).
+  - Run A : NAVIGATEUR-A code 0 ; DOM-A-MARQUEUR (le navigateur a REÇU et
+    RENDU la page de l'autorité, servie par le tunnel) ; FLUX-A-V0 (ligne
+    « flux GET 127.0.0.1:443 v=0 e=NN s=NN » — la sonde ET le run A la
+    produisent) ; TUNNEL-A ; AUTORITE-A-SERVIE puis « arret propre ».
+  - Run B : NAVIGATEUR-B code 0 ; DOM-B-502 (le navigateur a rendu SA
+    page d'erreur — la 502 du proxy reçue PAR LE NAVIGATEUR) ;
+    DOM-B-SANS-PAGE ; CERTIFICAT-REJETE au journal proxy ; FLUX-B-V3 (v=3
+    — la ligne nomme la CAUSE, la 502 nomme l'effet) ; POIGNEE-B-REFUSEE
+    à l'autorité ; « arret propre ».
+  - Post-mortem : RELEVER-ARME (ligne « relever-https arme » au journal
+    proxy, lue APRÈS le quit) ; PROXY-ARRET « quit » code 0 ; matrice curl
+    INCHANGÉE (T2a/T3 rc=60, T2b rc=0, T5 rejet — branche attendue S4) ;
+    T6 Dnscache consigné (D139 demeure ouvert, non bloquant).
+  - Un ÉCHEC NOMMÉ est un RÉSULTAT : il désigne lui-même le coupable —
+    renvoyez-le tel quel.
+
+RISQUES CONSIGNÉS (le laboratoire les a comptés, sans les avoir pu jouer)
+  - Le scénario reste écrit au LABORATOIRE SANS Windows sous la main :
+    une faute serait nommée par PowerShell ou par les refus du scénario
+    dès le lancement — collez le message tel quel.
+  - La sonde d'armement parle au mandataire AVANT le navigateur : si le
+    relèvement ne marchait pas, le REFUS PROXY-PAS-ARME porterait
+    l'extrait de la réponse reçue (502, vide, ou partiel) — c'est un
+    résultat, pas une panne du run.
+  - Edge headless varie par build Windows : le DOM dump ne rendrait pas
+    la page d'erreur en run B (DOM vide ou sans « 502 ») que l'échec
+    DOM-B-502 serait NOMMÉ — la capture nav-b.png et le journal proxy
+    diraient le reste ; le laboratoire jugera sur pièces (D138).
+  - La montée https d'Edge (HTTPS-First) reste désactivée par drapeaux :
+    si elle se déclenchait quand même, le CONNECT serait rejeté par le
+    protocole (D136) et le repli http aboutirait — trace au journal.
+  - Les clés du kit sont des CLÉS DE TEST JETABLES (elles ne signent que
+    autorite.test / 127.0.0.1) : aucune vraie clé ne voyage.
+
+CE QUE CE RUN DÉCIDE
+  Si le verdict est OK (ou OK-sous-réserve levée au labo sur pièces
+  host) : le critère (b) de D136 est PRÉSENT — le laboratoire consigne
+  la validation terrain et pose la balise FINALE 0.6.0
+  (m5/build_m5.py --sceller-final : l'exigence est déjà écrite au code —
+  le plan m5 : « la balise 0.6.0 est posée à la validation terrain »).
+  Si un échec est nommé : il désigne lui-même le coupable, le
+  laboratoire corrige sur pièces — le modèle D104 (0.5.0-rc.1 puis la
+  finale après le verdict terrain 17-H) est exactement ce geste.
+
+RÈGLES ACTIVES (résumé)
+  D138 le rc du producteur fait foi, les pièces host sont jugées au
+  labo ; D139 hosts ignoré dans la VM — IP littérale (ouvert, non
+  bloquant) ; D141 bundles versionnés au nom, archives-bundles ; D142
+  l'invite parefeu = bind, pas un trafic (boucle locale exempte) ;
+  D143 archivage de fin de run (APPLIQUÉE à cette livraison : la vague
+  e2 consommée est archivée dans archives-livraisons/vagues-m5b/, la
+  racine /test ne porte que la vague COURANTE e3 + corriger-wsb +
+  preuves-m5b vierge + les deux archives) ; D145 AUCUNE garde ne lit en
+  live un fichier en cours d'écriture dans la VM — les gardes sont
+  FONCTIONNELLES ou POST-MORTEM.
+
+SUITE — la finale 0.6.0 attend CE run ; D139 demeure ouvert (T7
+éventuel), non bloquant ; le chantier (c) du M5 (patch à chaud du
+journal) n'est pas ouvert.
+
+— Fin du LISEZMOI e3 (aucune allégation sans pièce citée) —

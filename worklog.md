@@ -2131,3 +2131,70 @@ Stage Summary:
 - Suite : vague e3 (garde fonctionnelle + verdicts post-mortem) à
   construire sur l'aval du développeur, puis le run rejoué ; si vert,
   --sceller-final pose la finale 0.6.0.
+## Task ID 57 — « go pour reconstruire le kit e3 » : LA VAGUE e3 CONSTRUITE ET LIVRÉE — la correction D145 appliquée au scénario (garde d'armement FONCTIONNELLE : la sonde forme-absolue reçoit la page 200 de l'autorité ; RELEVER-ARME post-mortem ; Edge par VersionInfo) ; le scellé 0.6.0-rc.1 n'a pas bougé d'un octet ; kit e3 au coffre /test, vague e2 archivée (04/11)
+
+- DEMANDE DU DÉVELOPPEUR (consignée fidèlement) : « go pour reconstruire
+  le kit e3 » — l'aval nommé par la SUITE de la Task 56 (Entrée 138).
+- PRÉALABLE AU GESTE : le labo était PÉRIMÉ à a5035e1 (recyclage après la
+  Task 56) — fast-forward depuis origin (142fc44, recoupé ls-remote),
+  reset --hard pour le bruit de bits de mode (précédent Task 39), git
+  propre ; les pièces du run e2 rapatriées À NEUF (rapatrier_preuves_e3.py,
+  7/7 conformes, miroir download/preuves-run-e2/) — le verdict relu AVANT
+  d'écrire la correction.
+- LE SCÉNARIO e3 (m5/vm/scenario-m5b-e3.ps1) : ONZE remplacements ancrés
+  ASSERTÉS (construire_scenario_e3.py, R1–R11) — tout le décor e2/v8
+  repris octet pour octet (BOM+CRLF, 852 lignes) ; TROIS corrections
+  (Entrée 138) : la garde d'armement FONCTIONNELLE (Sonde-Armement : « GET
+  http://127.0.0.1/ » au mandataire, la page 200 de l'autorité A attendue
+  — statut + marqueur TRIADE-M5B-PAGE-200 — pièce page-sonde-armement.txt
+  toujours posée, REFUS PROXY-PAS-ARME sinon avec l'extrait de réponse),
+  RELEVER-ARME en VERDICT POST-MORTEM (après le quit, modèle v8 — plus
+  aucune lecture en live d'un fichier vivant), DIAG-EDGE-VERSION par
+  (Get-Item).VersionInfo + pièce edge-version.txt ; l'honnêteté des
+  étiquettes : AUTORITE-A-SERVIE / TUNNEL-A / FLUX-A-V0 nomment la sonde
+  dans leurs détails (elle est servie, tunnelise et produit une ligne v=0
+  — le décisif navigateur reste le DOM).
+- LA RÉPONSE ATTENDUE DE LA SONDE EST PROUVÉE AVANT LE RUN : oracle D136
+  F1 (200 cas, octets au client octet par octet), pièce page-a.txt du run
+  v8 (le même tunnel — « HTTP/1.1 200 OK » + page), le marqueur ne vit
+  que dans la page de l'autorité ; le refus d'un non-armé est prouvé par
+  F2 (origine port 80 muette : 502).
+- L'ASSEMBLAGE (assembler_kit_e3.py) : base kit e2 LIVRÉ (md5 76e7b02f…
+  recoupé), LE PROXY N'EST PAS REMPLACÉ — égalité base == dépôt ASSERTÉE
+  (4b8f6af6… : la correction touche le scénario, jamais le scellé) ;
+  3 pièces remplacées (scénario + LISEZMOI-KIT + LISEZMOI-preuves e3),
+  52 reprises assertées ; m5b-kit-e3.zip 11 192 711 o md5 981b1a5b… ;
+  intégrité re-vérifiée à la sortie PUIS vérification disque indépendante
+  (kit-e3-verif/, 16/16).
+- LA LIVRAISON (livrer_vague_e3.py, mutations RECOUPÉES PAR RELECTURE) :
+  vague e2 consommée ARCHIVÉE (3 fichiers → vagues-m5b/, md5 recoupés) ;
+  vague e3 POSÉE (m5b-kit-e3.zip + scenario-m5b-e3.ps1 + LISEZMOI-m5b-
+  e3.txt, md5 distants == locaux) ; preuves-m5b/LISEZMOI-preuves.txt →
+  liste e3 (LES DEUX PIÈCES NOUVELLES y vivent — la liste « e3 == e2 » de
+  l'Entrée 138 est corrigée de ce que la correction ajoute) ; index des
+  archives mis à jour (bloc « vague e2 consommée ») ; racine /test =
+  EXACTEMENT 8 entrées D143.
+- PASSATION : JOURNAL_TRAVAIL +Entrée 139 PAR SCRIPT (ordre 138<139<
+  marqueur, rejeu REFUSÉ fail-closed) ; scripts suivis :
+  construire_scenario_e3.py, assembler_kit_e3.py, livrer_vague_e3.py,
+  inserer_entree_139.py, rapatrier_preuves_e3.py ; m5/vm/scenario-m5b-
+  e3.ps1 + LISEZMOI-terrain-m5b-e3.txt suivis.
+- FRONTIÈRES : le scellé 0.6.0-rc.1 (4b8f6af6…) SANS UN OCTET BOUGÉ ;
+  carte génération 7 et sceau (onze arbres verts) INTACTS ; arbres
+  scellés intouchés ; fixtures v5 inchangées ; finale 0.6.0 NON POSÉE
+  (elle attend un run VERT) ; aucune clé ; aucune suppression Drive ;
+  corbeille non vidée.
+- SUITE : LE GESTE TERRAIN — m5b-kit-e3.zip depuis /test, dossier NEUF,
+  corriger-wsb.bat, double-clic scenario-m5b.wsb (~5-8 min), renvoyer
+  TOUT preuves-m5b (page-sonde-armement.txt et edge-version.txt
+  comprises) ; le critère (b) de D136 PAR LE NAVIGATEUR ; si vert :
+  m5/build_m5.py --sceller-final pose la finale 0.6.0. D139 ouvert, non
+  bloquant.
+
+Stage Summary:
+- La vague e3 est au coffre : la garde d'armement est fonctionnelle (la
+  sonde reçoit la page 200 de l'autorité par le mandataire), les verdicts
+  de journal sont post-mortem, la version d'Edge se lit par VersionInfo —
+  et le scellé 0.6.0-rc.1 n'a pas bougé d'un octet.
+- Suite : le run e3 au terrain (le critère (b) de D136 par le navigateur) ;
+  si vert, --sceller-final pose la finale 0.6.0.
