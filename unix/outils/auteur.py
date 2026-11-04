@@ -224,6 +224,21 @@ def NOM(fichier: str) -> str:
         "su-02-hex64": "formatage hexadécimal u64",
         "su-03-verdict": "verdict d'erreur syscall",
         "su-04-principal": "orchestration sonde",
+        # le corpus paritaire (chantier M6-(b))
+        "hello-02-ecrire-r2": "écrire — interface du corpus (hello-02:R2)",
+        "hello-03-sortir-r2": "sortir — interface du corpus (hello-03:R2)",
+        "libc-01-memcpy-r2": "copie mémoire (libc-01:R2)",
+        "libc-02-memcmp-r2": "comparaison mémoire normalisée (libc-02:R2)",
+        "libc-03-strlen-r2": "longueur de chaîne (libc-03:R2)",
+        "libc-04-itoa-r3": "conversion décimale u32 (libc-04:R3)",
+        "libc-05-zone-alloc-r2": "allocateur par zone (libc-05:R2)",
+        "libc-06-zone-reset-r2": "réinitialisation de zone (libc-06:R2)",
+        "libc-07-memset-r2": "remplissage mémoire (libc-07:R2)",
+        "libc-08-autotest-r3": "auto-test de la mini-libc (libc-08:R3)",
+        "tcp-11-journal-r2": "ligne de journal console (tcp-11:R2)",
+        "tcp-11-journal-v2": "journal v2 — le remplaçant (staging, POUR la croissance)",
+        "tcp-07-patch-r4": "moteur de patch à chaud (tcp-07:R4)",
+        "corpus-13-principal": "orchestration du corpus paritaire (corpus-13:R1)",
     }.get(fichier, fichier)
 
 
@@ -232,13 +247,17 @@ def main() -> int:
     cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
     cs.detail = False
     verifier = "--verifier" in sys.argv
+    corpus = "--corpus" in sys.argv
     total_instr = 0
-    for bid, spec, fichier, rva, slot in L.BLOCS_SU:
+    blocs = list(L.BLOCS_SU)
+    if corpus:
+        blocs += list(L.BLOCS_CORPUS) + [L.BLOC_STAGING]
+    for bid, spec, fichier, rva, slot in blocs:
         r = generer(bid, spec, fichier, rva, slot, ks, cs)
         total_instr += r["instructions"]
         print(f"[auteur] {fichier} : {r['instructions']} instr, {r['code']} o "
               f"(padding {r['padding']}) -> notation/{fichier}.asm")
-    print(f"[auteur] 4 blocs, {total_instr} instructions — notation régénérée")
+    print(f"[auteur] {len(blocs)} blocs, {total_instr} instructions — notation régénérée")
     return 0
 
 

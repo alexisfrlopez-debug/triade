@@ -273,24 +273,28 @@ chantier qui les touche. **Convention de dossiers (D149)** : le jalon M6 vit dan
 l'échelle d'auto-hébergement (emprunt de nommage consigné, le présent programme ne
 le défait pas).
 
-**État du programme.** **Chantier M6-(a) RÉALISÉ le 04/11/2026** (Entrée 145,
-D150) — la sonde `unix/` (quatre blocs `su`, série f6xxxx, carte génération 1
-au TROISIÈME sel, artefact 8 192 o) porte le durcissement DÉMONTRÉ en
-exécution : ET_DYN/PIE à **base aléatoire CONSTATÉE** (6 bases distinctes sur
-6 exécutions, alignées 0x1000 — la sonde calcule et émet SA base ; recoupé
-sous `setarch -R` : même base deux fois, la base vient du noyau ; recoupé par
-`readelf` indépendant), **W^X constaté depuis les phdr** (3 PT_LOAD R/RX/RW +
-PT_GNU_STACK RW sans X, offsets == vaddr, .bss pur), **table ERRNOS exercée
-sur ses deux branches** (EBADF nommé → verdict 1 ; EFAULT hors table →
-VERDICT_FATAL 6, arrêt propre code 6), **round-trip 100 %** (133
-instructions), falsification 11/11 (zéro silence) — la leçon C1 a attrapé
-l'arithmétique de l'auteur en direct (L_FATAL 36 → 37 octets) et l'oracle
-natif a refusé le premier `.emit` (les volatils r8/r9/r11 ne traversent pas
-les appels : le verdict vit en `.bss`). **La balise 0.7.0-dev.1 est POSÉE**
-— par le premier build M6, exactement comme l'annonçait D149. Les chantiers
-(b) corpus paritaire, (c) conformité + scellage 0.7.0-rc.1 et (d) patch en
-production attendent ; les décisions développeur (terrain WSL2/VM, réserve
-qemu, aval du report M5-(c)) demeurent non bloquantes.
+**État du programme.** **Chantiers M6-(a) et M6-(b) RÉALISÉS le 04/11/2026**
+(Entrées 145-146, D150-D151) — la sonde `unix/` (M6-(a), Entrée 145) a posé le
+durcissement format DÉMONTRÉ en exécution (ET_DYN/PIE à base aléatoire
+constatée, W^X depuis les phdr, table ERRNOS exercée sur ses deux branches —
+balise 0.7.0-dev.1) ; **le corpus paritaire (M6-(b), Entrée 146) L'INSTANCIE
+ET LE MESURE** : les DOUZE blocs du patrimoine M0-M5 révisés R+1 au niveau
+FORMEL (audit de couplage `unix/I/AUDIT-COUPLAGE-CORPUS.md` : la classe A est
+VIDE, la voie du diff nul passe ENTIÈREMENT par la révision de granularité)
++ `corpus-13` le principal propre au jalon (domaine neuf, modèle ah-09) ; le
+diff nul MESURÉ PAR SCRIPT (`unix/diff_nul.py`, 39 recoupements : fichiers
+canoniques `unix/I/` empreintés zéro copie, observables R1↔R+1 équivalents,
+les CINQ scellés Windows octet-identiques à l'état zéro mesuré avant le
+geste) ; l'oracle m1 régénéré VERT sur l'instance Linux (76 631 cas verts,
+20 verrous, exécution native, falsification 12/12 zéro silence — tcp-07
+épuisé par SON scénario et le V7 DEP en fils) ; l'artefact `unix/corpus`
+12 288 o (ET_DYN/PIE, héritage M6-(a) recoupé `readelf`), sha256 dd14195c…,
+**la balise 0.7.0-dev.2 est POSÉE** — la carte génération 1 du corpus
+(fragments chiffrés, Ed25519, verrou croisé R8 13/13). Les chantiers (c)
+conformité + scellage 0.7.0-rc.1 (contrôle D146 adapté full-ELF à la base
+réelle) et (d) patch en production attendent ; les décisions développeur
+(terrain WSL2/VM, réserve qemu, aval du report M5-(c)) demeurent non
+bloquantes.
 
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|

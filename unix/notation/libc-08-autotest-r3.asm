@@ -1,0 +1,312 @@
+; libc-08-autotest-r3 · bloc auto-test de la mini-libc (libc-08:R3) · spec libc-08:R3 · bloc carte f61010
+; Profil : x86-64-linux-elf64 · ABI SysV · slot RVA 0x1340, taille 1280 octets
+; Notation explicite générée par outils/auteur.py depuis brouillons/libc-08-autotest-r3.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 1124 o · padding : 156 o (NOP)
+; Étiquettes résolues : .f1=0x1372, .f10=0x14d1, .f11=0x1512, .f12=0x1526, .f13=0x153b, .f14=0x1550, .f15=0x1577, .f16=0x15a1, .f17=0x15cb, .f18=0x15f5, .f19=0x1631, .f2=0x138d, .f20=0x1670, .f21=0x16c0, .f3=0x13a9, .f4=0x13c0, .f5=0x13df, .f6=0x13ff, .f7=0x141f, .f8=0x143e, .f9=0x147f, .verdict_ok=0x1775
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x13c0 + 0x7 - 0x1287 = 0x140 (@SA)
+;   0x13c7 + 0x7 - 0x1286 = 0x148 (@SB)
+;   0x13df + 0x7 - 0x12a6 = 0x140 (@SA)
+;   0x13e6 + 0x7 - 0x129d = 0x150 (@SC)
+;   0x13ff + 0x7 - 0x12b6 = 0x150 (@SC)
+;   0x1406 + 0x7 - 0x12cd = 0x140 (@SA)
+;   0x141f + 0x7 - 0x12e6 = 0x140 (@SA)
+;   0x1426 + 0x7 - 0x12d5 = 0x158 (@SD)
+;   0x1453 + 0x7 - 0x12fa = 0x160 (@MOTIF16)
+;   0x1467 + 0x7 - 0x130e = 0x160 (@MOTIF16)
+;   0x1494 + 0x7 - 0x132b = 0x170 (@SENT16)
+;   0x14a8 + 0x7 - 0x134f = 0x160 (@MOTIF16)
+;   0x14b9 + 0x7 - 0x1350 = 0x170 (@SENT16)
+;   0x14e6 + 0x7 - 0x136d = 0x180 (@MOTIF33)
+;   0x14fa + 0x7 - 0x1381 = 0x180 (@MOTIF33)
+;   0x1512 + 0x7 - 0x1339 = 0x1e0 (@S_VIDE)
+;   0x1526 + 0x7 - 0x1345 = 0x1e8 (@S_TRIADE)
+;   0x153b + 0x7 - 0x1352 = 0x1f0 (@S_33)
+;   0x155f + 0x7 - 0x134e = 0x218 (@I0)
+;   0x1589 + 0x7 - 0x1370 = 0x220 (@IMAX)
+;   0x15b3 + 0x7 - 0x138a = 0x230 (@I123)
+;   0x15dd + 0x7 - 0x13a4 = 0x240 (@I7)
+;   0x1619 + 0x7 - 0x1478 = 0x1a8 (@ZERO16)
+;   0x1658 + 0x7 - 0x14a7 = 0x1b8 (@FF33)
+;   0x1685 + 0x7 - 0x151c = 0x170 (@SENT16)
+;   0x16a8 + 0x7 - 0x153f = 0x170 (@SENT16)
+;   0x16d8 + 0x7 - 0x148f = 0x250 (@PREFIXE)
+;   0x171c + 0x7 - 0x14db = 0x248 (@SLASH)
+;   0x1761 + 0x7 - 0x1500 = 0x268 (@OK)
+;   0x176e + 0x7 - 0x1505 = 0x270 (@KO)
+; Symboles (vérifiés par build_m6.py contre layout.py) : @A_ECRIRE=0x1000, @A_ITOA=0x1180, @A_MEMCMP=0x10c0, @A_MEMCPY=0x1080, @A_MEMSET=0x12c0, @A_STRLEN=0x1140, @A_ZONE_ALLOC=0x1200, @A_ZONE_RESET=0x1280, @FF33=0x1b8, @I0=0x218, @I123=0x230, @I7=0x240, @IMAX=0x220, @KO=0x270, @MOTIF16=0x160, @MOTIF33=0x180, @OK=0x268, @PREFIXE=0x250, @SA=0x140, @SB=0x148, @SC=0x150, @SD=0x158, @SENT16=0x170, @SLASH=0x248, @S_33=0x1f0, @S_TRIADE=0x1e8, @S_VIDE=0x1e0, @ZERO16=0x1a8
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x40
+xor r15, r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+mov r14, rax
+test rax, rax
+je 0x1372
+test rax, 7
+jne 0x1372
+inc r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+sub rax, r14
+cmp rax, 0x10
+jb 0x138d
+inc r15
+call 0x1280
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+cmp rax, r14
+jne 0x13a9
+inc r15
+mov edi, 0x7d0
+mov esi, 8
+call 0x1200
+test rax, rax
+jne 0x13c0
+inc r15
+lea rdi, [rip - 0x1287]
+lea rsi, [rip - 0x1286]
+mov edx, 6
+call 0x10c0
+test eax, eax
+jne 0x13df
+inc r15
+lea rdi, [rip - 0x12a6]
+lea rsi, [rip - 0x129d]
+mov edx, 6
+call 0x10c0
+cmp eax, -1
+jne 0x13ff
+inc r15
+lea rdi, [rip - 0x12b6]
+lea rsi, [rip - 0x12cd]
+mov edx, 6
+call 0x10c0
+cmp eax, 1
+jne 0x141f
+inc r15
+lea rdi, [rip - 0x12e6]
+lea rsi, [rip - 0x12d5]
+mov edx, 3
+call 0x10c0
+test eax, eax
+jne 0x143e
+inc r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+lea rsi, [rip - 0x12fa]
+mov edx, 0x10
+call 0x1080
+mov rdi, r14
+lea rsi, [rip - 0x130e]
+mov edx, 0x10
+call 0x10c0
+test eax, eax
+jne 0x147f
+inc r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+lea rsi, [rip - 0x132b]
+mov edx, 0x10
+call 0x1080
+mov rdi, r14
+lea rsi, [rip - 0x134f]
+xor edx, edx
+call 0x1080
+mov rdi, r14
+lea rsi, [rip - 0x1350]
+mov edx, 0x10
+call 0x10c0
+test eax, eax
+jne 0x14d1
+inc r15
+mov edi, 0x30
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+lea rsi, [rip - 0x136d]
+mov edx, 0x21
+call 0x1080
+mov rdi, r14
+lea rsi, [rip - 0x1381]
+mov edx, 0x21
+call 0x10c0
+test eax, eax
+jne 0x1512
+inc r15
+lea rdi, [rip - 0x1339]
+call 0x1140
+test rax, rax
+jne 0x1526
+inc r15
+lea rdi, [rip - 0x1345]
+call 0x1140
+cmp rax, 6
+jne 0x153b
+inc r15
+lea rdi, [rip - 0x1352]
+call 0x1140
+cmp rax, 0x21
+jne 0x1550
+inc r15
+xor edi, edi
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+lea rsi, [rip - 0x134e]
+mov edx, 2
+call 0x10c0
+test eax, eax
+jne 0x1577
+inc r15
+mov edi, 0xffffffff
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+lea rsi, [rip - 0x1370]
+mov edx, 0xb
+call 0x10c0
+test eax, eax
+jne 0x15a1
+inc r15
+mov edi, 0x499602d2
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+lea rsi, [rip - 0x138a]
+mov edx, 0xb
+call 0x10c0
+test eax, eax
+jne 0x15cb
+inc r15
+mov edi, 7
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+lea rsi, [rip - 0x13a4]
+mov edx, 2
+call 0x10c0
+test eax, eax
+jne 0x15f5
+inc r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+xor esi, esi
+mov edx, 0x10
+call 0x12c0
+mov rdi, r14
+lea rsi, [rip - 0x1478]
+mov edx, 0x10
+call 0x10c0
+test eax, eax
+jne 0x1631
+inc r15
+mov edi, 0x30
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+mov esi, 0xff
+mov edx, 0x21
+call 0x12c0
+mov rdi, r14
+lea rsi, [rip - 0x14a7]
+mov edx, 0x21
+call 0x10c0
+test eax, eax
+jne 0x1670
+inc r15
+mov edi, 0x10
+mov esi, 8
+call 0x1200
+mov r14, rax
+mov rdi, r14
+lea rsi, [rip - 0x151c]
+mov edx, 0x10
+call 0x1080
+mov rdi, r14
+mov esi, 0xff
+xor edx, edx
+call 0x12c0
+mov rdi, r14
+lea rsi, [rip - 0x153f]
+mov edx, 0x10
+call 0x10c0
+test eax, eax
+jne 0x16c0
+inc r15
+mov edi, 0x40
+mov esi, 8
+call 0x1200
+mov rbx, rax
+xor r12, r12
+mov rdi, rbx
+lea rsi, [rip - 0x148f]
+mov edx, 0x15
+call 0x1080
+add r12, 0x15
+mov edi, r15d
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+call 0x1140
+mov r14, rax
+lea rdi, [rbx + r12]
+lea rsi, [rsp]
+mov rdx, r14
+call 0x1080
+add r12, r14
+lea rdi, [rbx + r12]
+lea rsi, [rip - 0x14db]
+mov edx, 1
+call 0x1080
+inc r12
+mov edi, 0x15
+lea rsi, [rsp]
+call 0x1180
+lea rdi, [rsp]
+call 0x1140
+mov r14, rax
+lea rdi, [rbx + r12]
+lea rsi, [rsp]
+mov rdx, r14
+call 0x1080
+add r12, r14
+lea rdi, [rbx + r12]
+lea rsi, [rip - 0x1500]
+cmp r15, 0x15
+je 0x1775
+lea rsi, [rip - 0x1505]
+mov edx, 4
+call 0x1080
+add r12, 4
+mov edi, 1
+mov rsi, rbx
+mov rdx, r12
+call 0x1000
+mov rax, r15
+add rsp, 0x40
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret

@@ -2733,3 +2733,104 @@ Stage Summary:
   fail-closed, zéro faux vert, la règle D150 en est née.
 - La balise 0.7.0-dev.1 est posée par le premier build M6, exactement comme
   l'annonçait D149 : la lignée du jalon vit, sa carte au troisième sel.
+
+## Task ID 64 — « continue » : LE CHANTIER M6-(b) ACCOMPLI — LE CORPUS PARITAIRE INSTANCIÉ, LE DIFF NUL MESURÉ (39 recoupements, les CINQ scellés Windows octet-identiques à l'état zéro), L'ORACLE m1 RÉGÉNÉRÉ VERT SUR L'INSTANCE LINUX (76 631 cas verts, 20 verrous, exécution native, falsification 12/12 zéro silence — tcp-07 épuisé par SON scénario et le V7 DEP en fils) ; L'ARTEFACT unix/corpus 12 288 o ET_DYN/PIE (sha256 dd14195c…), LA BALISE 0.7.0-dev.2 POSÉE, la carte génération 1 du corpus (verrou croisé R8 13/13, cristallisation 2/10) ; D151 née (ABSENT ≠ ILLISIBLE ; la mutation nomme son geste ; la falsification exhaustive par instruction ; le hors-chemin épuisé par SON scénario ; l'entrant concurrent porte ses entrées locales) ; Entrée 146, D151 (04/11)
+
+Task: reprise du chantier M6-(b) (la suite annoncée au Task 63) — le geste
+s'était éteint à 14:40 (sources écrites, la chaîne jamais conduite jusqu'au
+vert) ; une première reprise l'a exécutée jusqu'au vert puis s'est éteinte à
+son tour à la consignation (inserer_entree_146.py écrit, jamais exécuté) ;
+la présente passe vérifie l'état VERT SUR PIÈCES, conduit les consignations
+et la passation.
+
+Work Log:
+- (0) REPRISE : dépôt à 018db94 (pointe = passation M6-(a)), l'arbre de
+  travail porte le chantier M6-(b) non committé (audit + specs R+1 +
+  notation + build/oracle/diff_nul + artefact + carte) ;
+  vérification d'intégrité PAR BLOBS (seuls unix/I/README.md,
+  unix/layout.py et unix/outils/auteur.py ont un contenu modifié — les
+  scellés Windows, cartes m0-m5, scénarios e2/e3/e4 et sceau-I INTACTS en
+  contenu, le reste n'est que des modes 755) ; labo re-vérifié :
+  capstone/keystone RÉINSTALLÉS après recyclage du bac à sable (constat
+  fiche § 6 inchangé — capstone 5.0.7, keystone OK).
+- (1) L'AUDIT DE COUPLAGE (unix/I/AUDIT-COUPLAGE-CORPUS.md,
+  écrit-avant-code) : le constat central — la classe A est VIDE (le
+  paramétrage msx64 est partout dans le patrimoine), la voie du diff nul
+  passe ENTIÈREMENT par la révision de granularité R+1 au niveau FORMEL ;
+  la classe C (couplée à l'OS) est NOMMÉE, jamais réduite ; l'incident de
+  l'état zéro consigné au § 6 (m1/build_m1.py échoue OUVERT sur carte
+  illisible — except ErreurCarte: pass ; selftest.exe OCTET-IDENTIQUE,
+  carte m1 RESTAURÉE depuis git) fonde ABSENT ≠ ILLISIBLE.
+- (2) LES DOUZE RÉVISIONS R+1 + LE PRINCIPAL : les specs révisées vivent
+  dans l'arbre du jalon unix/I/ (libc-01..08, hello-02/03, tcp-07, tcp-11
+  + corpus-13 le domaine neuf modèle ah-09), ancêtres scellés INTACTS dans
+  m0/m1/m2 — la même couche I que M7 instanciera en troisième ; frag-con
+  DEUX PROFILS par bloc (§ 8.3-4) ; les DEUX journaux corrigés (tcp-11:R2
+  + le staging v2 — le remplaçant vérifié AVANT embarquement).
+- (3) LA CHAÎNE jusqu'au VERT (reprise de l'interruption 14:40) : build
+  fail-closed, oracle natif 76 631 cas verts / 20 verrous (graines 1 et 2
+  différenciées, empreintes 0e3d96c3…/09444ffb…), falsification 12/12 zéro
+  silence, diff nul 39 recoupements (fichiers canoniques empreintés zéro
+  copie, observables R1↔R+1 équivalents — 35 identiques + 1 écart nommé
+  frag-con —, les CINQ scellés Windows octet-identiques à l'état zéro mesuré
+  AVANT le geste par etat_zero_m6b.py), artefact 12 288 o sha256
+  dd14195c…, LA BALISE 0.7.0-dev.2 POSÉE (geste de BUILD), carte
+  génération 1 (fragments chiffrés, Ed25519, verrou croisé R8 13/13,
+  cristallisation 2/10).
+- (4) LES REFUS TRAVERSÉS (le cœur de D151) : le SEGFAULT MUET de
+  l'autotest (img.poser sans ouverture — l'instrument de mutation NOMME
+  désormais son geste) ; « libc-08 N=19 » (la fixture SC sert les DEUX
+  sens — l'attendu corrigé SUR PIÈCES) ; le SEGFAULT DÉTERMINISTE du
+  journal (memcpy rend dst jamais la longueur — l'add déplacé AVANT le
+  call ; le staging v2 portait LE MÊME piège, corrigé AVANT embarquement) ;
+  la cartouche non ré-entrante (verdicts divergents — entrées locales par
+  appel, sommet attribué sous verrou court, fenêtre de sorties par appel) ;
+  « libc-06 PASSÉ SILENCIEUX » (guéri par un RÉSIDU DE REGISTRE — la
+  falsification devient EXHAUSTIVE par instruction) ; « tcp-07 : 78
+  mutations TOUTES silencieuses » (HORS-CHEMIN du principal, fait de plan —
+  épuisé par SON scénario + le V7 DEP en fils : le père observe, le fils
+  meurt).
+- (5) LA VÉRIFICATION SUR PIÈCES de la présente passe (l'état vert constaté
+  AVANT consignation) : sha256 dd14195c… recoupé ; exécution native deux
+  lignes code 0 + setarch -R ; readelf (DYN, 3 LOAD R/R-E/RW, GNU_STACK
+  RW) ; diff_nul VERT 39 recoupements ; oracle rejoué aux DEUX graines
+  (76 631 cas verts / 20 verrous, empreintes identiques à la carte).
+- (6) CONSIGNATIONS : JOURNAL_TRAVAIL +Entrée 146 PAR SCRIPT (ordre
+  145<146<marqueur, rejeu REFUSÉ fail-closed), DECISIONS +D151 PAR SCRIPT
+  (à la suite de D150), fiche de profil § 7 (la granularité passe de Jalon
+  à ACQUIS PAR LE CHANTIER M6-(b)) + § 3 (le corpus L'A HÉRITÉ), PLAN §
+  État du programme (M6-(a) ET M6-(b) RÉALISÉS le 04/11, (c)/(d)
+  attendent), ce worklog +Task ID 64 ; scripts suivis : etat_zero_m6b.py,
+  inserer_entree_146.py, inserer_d151.py, passe_bundle_m6b.py.
+- FRONTIÈRES : la balise 0.7.0-dev.2 est POSÉE (geste de BUILD, jamais de
+  scellage — le scellage 0.7.0-rc.1 viendra du chantier (c) avec le
+  contrôle D146 adapté full-ELF à la base réelle ; le corpus est un DEV
+  vivant, la garde anti-rollback n'existe pas encore, le plancher demeure
+  0.7.0-dev.1) ; scellé 0.6.0, cartes m0-m5, sceau ONZE arbres, arbres I,
+  fixtures v5, hachoir m6/ : INTACTS (l'état zéro mesuré avant, le diff_nul
+  recoupe à chaque build) ; aucune suppression Drive, corbeille non vidée ;
+  .keys/ gitignoré ; D139 ouverte non bloquante.
+- SUITE : LE CHANTIER M6-(c) — la suite de conformité (unix/
+  conformite_profil.py, modèle m5 : les SEPT éléments constatés depuis
+  l'artefact) + le scellage 0.7.0-rc.1 avec le contrôle D146 adapté
+  (exécution full-ELF à la base réelle, l'émulation à base fixe interdite
+  comme témoin unique) ; puis (d) le patch en production — le chantier
+  M5-(c) refermé (bascule du journal PENDANT le trafic, moteur tcp-07
+  EMBARQUÉ, le staging v2 corrigé attend la démonstration), kit terrain au
+  coffre /test (WSL2 recommandé D149) ; les décisions développeur (terrain
+  WSL2/VM, réserve qemu, aval du report M5-(c)) peuvent tomber au fil de
+  l'eau.
+
+Stage Summary:
+- Le chantier M6-(b) est ACCOMPLI sur pièces : le diff nul n'est plus une
+  exigence du plan, il est MESURÉ par script (39 recoupements rejouables) —
+  les instances des deux profils chargent les MÊMES fichiers I, les
+  scellés Windows n'ont pas bougé d'un octet.
+- Les refus du geste ont chacun fondé une règle (D151) : l'instrument de
+  mutation nomme son geste, la falsification est exhaustive par
+  instruction, le hors-chemin est épuisé par SON scénario, l'entrant
+  concurrent porte ses entrées locales — et ABSENT ≠ ILLISIBLE ferme le
+  trou par lequel la garde m1 s'éteignait.
+- La balise 0.7.0-dev.2 est posée par le build du corpus, l'héritage
+  M6-(a) est CONSTATÉ (ET_DYN/PIE, W^X depuis les phdr) : la lignée du
+  jalon vit, la carte du corpus en génération 1 au même troisième sel.

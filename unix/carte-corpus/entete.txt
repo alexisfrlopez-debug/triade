@@ -1,0 +1,6 @@
+[carte] version=0.4.0 generation=1
+  algo_hachage     : sha256
+  algo_signature   : ed25519
+  algo_chiffrement : xchacha20poly1305
+  profils          : x86-64-linux-elf64
+  empreinte_racine : sha256:5dc483706f232083d6b1bc55a9e6399a2b26d8a6a3c25884cbfb1581bf26536a

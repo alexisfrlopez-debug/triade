@@ -69,7 +69,9 @@ est donc désappris sélectivement, jamais globalement.
      par le build** (`unix/build_m6.py` `valider_elf()` relit son image).
 - L'écart acquis → jalon est **nommé** : l'ELF minimal auto-hôte (ET_EXEC,
   base fixe) reste VALIDE pour sa lignée ; l'artefact du jalon exige l'ELF
-  durci — la sonde `unix/` le porte, le corpus du chantier (b) l'héritera.
+  durci — la sonde `unix/` le porte, **le corpus du chantier (b) L'A HÉRITÉ
+  (04/11/2026, Entrée 146 : `unix/corpus` 12 288 o, ET_DYN/PIE, 3 segments
+  R/RX/RW, PT_GNU_STACK sans X — `readelf` recoupé)**.
 
 ## 4. Interface système — syscalls directs
 
@@ -119,10 +121,12 @@ est donc désappris sélectivement, jamais globalement.
 - **ACQUIS** : le modèle D8 (slots, padding ≥ 16, NOP intra-slot, réserves `int3`,
   adresses stables R7) est instancié par `m6/layout.py` (RX 0x3000 + RW, zones
   réservées, chevauchement gardé).
-- **Jalon** : le layout de l'artefact paritaire (`unix/layout.py`, convention de
-  dossiers D149) reprend le modèle — slots et adresses stables **par profil**
-  (spec § 3 R7) ; la table de correspondance bloc ↔ slot vit dans frag-loc de la
-  carte du jalon.
+- **ACQUIS PAR LE CHANTIER M6-(b) (04/11/2026, Entrée 146)** : le layout du
+  corpus (`unix/layout.py`, balise 0.7.0-dev.2, convention de dossiers D149)
+  reprend le modèle — slots et adresses stables **par profil** (spec § 3 R7) :
+  13 blocs à slots stables (série f61xxxx), padding/réserves `int3`, la table
+  de correspondance bloc ↔ slot vit au frag-loc de la carte génération 1
+  (`unix/carte-corpus/`).
 
 ## 8. Politique anti-rollback et vérification au chargement (R10 décliné)
 
