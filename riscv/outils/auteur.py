@@ -70,10 +70,15 @@ _RELATIFS = {"beq", "bne", "blt", "bge", "bltu", "bgeu",
              "beqz", "bnez", "bgez", "bltz", "bgtz", "blez",
              "j", "jal"}
 
-# Ancres déclarées au layout : nom → (site, cible)
+# Ancres déclarées au layout : nom → (site, cible). Les DEUX de la sonde
+# (chantier M7-(a)) et les TROIS du corpus (chantier M7-(b)) — chaque paire
+# vit AU SITE déclaré, le LO relativement à SON auipc (leçon C1).
 _ANCRES = {
     "ANCRE_BASE": (L.ANCRE_BASE, L.CIBLE_BASE),
     "ANCRE_BSS": (L.ANCRE_BSS, L.CIBLE_BSS),
+    "ANCRE_RODATA": (L.ANCRE_RODATA, L.CIBLE_RODATA),
+    "ANCRE_BSS_CORPUS": (L.ANCRE_BSS_CORPUS, L.CIBLE_BSS_CORPUS),
+    "ANCRE_ENTREE": (L.ANCRE_ENTREE, L.CIBLE_ENTREE),
 }
 
 
@@ -232,7 +237,8 @@ def resoudre(rva: int, symboles: dict[str, int], lignes: list[tuple[str, str]]):
     return resolues, etiquettes, notes
 
 
-def generer(bid: str, spec: str, fichier: str, rva: int, slot: int) -> dict:
+def generer(bid: str, spec: str, fichier: str, rva: int, slot: int,
+            builder: str = "build_m7.py") -> dict:
     """Régénère notation/<fichier>.asm depuis brouillons/<fichier>.asm."""
     chemin_brouillon = os.path.join(BROUILLONS, fichier + ".asm")
     if not os.path.exists(chemin_brouillon):
@@ -294,7 +300,7 @@ def generer(bid: str, spec: str, fichier: str, rva: int, slot: int) -> dict:
             entete.append(f";   {n}")
     if symboles:
         s = ", ".join(f"@{n}={symboles[n]:#x}" for n in sorted(symboles))
-        entete.append(f"; Symboles (vérifiés par build_m7.py contre layout.py — "
+        entete.append(f"; Symboles (vérifiés par {builder} contre layout.py — "
                       f"leçon C1) : {s}")
 
     chemin_sortie = os.path.join(NOTATION, fichier + ".asm")
@@ -313,13 +319,36 @@ def NOM(fichier: str) -> str:
         "sr-02-hex64": "formatage hexadécimal u64",
         "sr-03-verdict": "verdict d'erreur syscall",
         "sr-04-principal": "orchestration sonde",
+        "hello-02-ecrire-r2": "écriture du flux (interface du corpus)",
+        "hello-03-sortir-r2": "terminaison (interface du corpus)",
+        "libc-01-memcpy-r2": "copie mémoire",
+        "libc-02-memcmp-r2": "comparaison mémoire normalisée",
+        "libc-03-strlen-r2": "longueur de chaîne",
+        "libc-04-itoa-r3": "conversion décimale u32",
+        "libc-05-zone-alloc-r2": "allocateur par zone",
+        "libc-06-zone-reset-r2": "réinitialisation de zone",
+        "libc-07-memset-r2": "remplissage mémoire",
+        "libc-08-autotest-r3": "auto-test de la mini-libc (21 vecteurs dorés)",
+        "tcp-11-journal-r2": "ligne de journal (verrou tournant amoswap.d)",
+        "tcp-11-journal-v2": "journal v2 — le remplaçant (staging, POUR la croissance)",
+        "tcp-07-patch-r4": "moteur de patch (mprotect asm-generic 226, fence.i)",
+        "corpus-13-principal": "orchestration du corpus paritaire — _start",
     }.get(fichier, fichier)
 
 
 def main() -> int:
     verifier = "--verifier" in sys.argv
+    corpus = "--corpus" in sys.argv
+    if corpus:
+        blocs = list(L.BLOCS_CORPUS) + [L.BLOC_STAGING]
+        domaine = "corpus"
+        builder = "build_corpus.py"
+    else:
+        blocs = L.BLOCS_SR
+        domaine = "sonde"
+        builder = "build_m7.py"
     total_instr = 0
-    for bid, spec, fichier, rva, slot in L.BLOCS_SR:
+    for bid, spec, fichier, rva, slot in blocs:
         if verifier:
             chemin = os.path.join(NOTATION, fichier + ".asm")
             with open(chemin, encoding="utf-8") as f:
@@ -336,12 +365,12 @@ def main() -> int:
                   f"round-trip 100 %")
             total_instr += len(instrs)
         else:
-            r = generer(bid, spec, fichier, rva, slot)
+            r = generer(bid, spec, fichier, rva, slot, builder=builder)
             total_instr += r["instructions"]
             print(f"[auteur] {fichier} : {r['instructions']} instr, "
                   f"{r['code']} o (padding {r['padding']}) "
                   f"-> notation/{fichier}.asm")
-    print(f"[auteur] {len(L.BLOCS_SR)} blocs, {total_instr} instructions — "
+    print(f"[auteur] {len(blocs)} blocs ({domaine}), {total_instr} instructions — "
           f"notation {'vérifiée' if verifier else 'régénérée'}")
     return 0
 

@@ -395,6 +395,37 @@ rejouée (cristallisation 2/10, R5/R8 verts) ; **la balise 0.8.0-dev.1
 posée par le premier build du jalon** (geste de BUILD, jamais de
 scellage — plancher 0x00080000).
 
+**Le chantier M7-(b) RÉALISÉ — le 05/11/2026** (Entrée 152, D156) : **LE
+CORPUS PARITAIRE RV64 — LA TROISIÈME INSTANCIATION DE LA MÊME COUCHE I** —
+les DOUZE blocs du patrimoine (hello-02/03, libc-01..08, tcp-07/11) +
+corpus-13, la notation RV64 native de 523 instructions (round-trip 100 %,
+graphie canonique du juge) ; **l'instance charge LES MÊMES FICHIERS
+CANONIQUES de unix/I/** (13 specs, empreintes mesurées, AUCUNE copie — le
+diff nul VERT en 4 recoupements : canoniques, observables R1↔R+1 par la
+chaîne M6 rejouée, 7 scellés octet-identiques à l'état zéro, parité § 8.3)
+; **GÉOMÉTRIE MIROIR du plan unix** (D8 : les MÊMES RVA, les MÊMES
+fixtures, f71xxxx à la série du corpus) ; **QUATRE LEÇONS DU GESTE**
+(D156 : LA LEÇON imm12 — le verrou 0x3800 vu de la base .bbs vivait à
++0x800 hors plage DE UN, la fenêtre s'est posée AU CENTRE 0x3400 ; le
+PIÈGE AMO — l'ISA AMO adresse [rs1] SANS déplacement, refus nommé, le
+déplacement vit dans la formation déclarée ; le RECYCLAGE s3 — dédié par
+rôle, la fenêtre de tcp-07 n'est pas l'ardoise de tcp-11 ; LA PORTE A
+GRANDI — l'extension A amoswap entre à la porte 791 + 1045 aux deux
+directions) ; **l'oracle qemu VERT SUR PIÈCES** (réserve D149) : le
+rituel de parité 6/6 — les DEUX lignes octet pour octet (« TRIADE M1 :
+minilibc 21/21 OK\n » puis « corpus : autotest 21 vecteurs\n ») code 0
+— **LA PARITÉ § 8.3 PAR EXÉCUTION sur les TROIS profils** ; les bases
+forcées du CHARGEUR VERTES ; la falsification 13 mutations 12/12 blocs
+rompus (zéro silence ; tcp-07 hors-chemin du rituel, son scénario est le
+chantier (c)) ; **1535 verrous structurels** (la garde anti-table-x86
+vivante : write 64, mprotect 226, exit_group 94 asm-generic) ; l'artefact
+`riscv/corpus` 12 288 o sha256 b34a7147… DÉTERMINISME constaté au
+rebuild ; la carte génération 1 au SIXIÈME sel (frag-con TROIS PROFILS
+par bloc — la TROISIÈME colonne psABI est née, § 8.3-4) ; la
+re-vérification rejouée (cristallisation 2/10) ; **la balise 0.8.0-dev.2
+posée par le build du corpus** (geste de BUILD — le scellage 0.8.0-rc.1
+viendra du chantier (c) avec le contrôle D146 adapté à l'exécuteur).
+
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|
 | (a) Le durcissement format — l'ELF64 du jalon | le writer du jalon (`unix/build_m6.py`, modèle `m6/build_ah.py`) porte l'image à ET_DYN (PIE, base aléatoire), trois segments R/RX/RW, PT_GNU_STACK sans X ; table ERRNOS (contrat d'erreurs des syscalls, miroir de la table HRESULTS) ; layout `unix/layout.py` (modèle D8) | un ELF64 durci minimal exécuté au labo, l'image PIE chargée par le noyau à une base aléatoire CONSTATÉE ; W^X vérifié depuis les phdr ; round-trip 100 % |

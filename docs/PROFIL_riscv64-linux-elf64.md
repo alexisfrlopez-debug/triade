@@ -13,7 +13,10 @@ Zifencei, sans extension C — voir § 1) · **OS** : Linux (noyau ≥ 5.x, page
 **Format** : ELF64 petit-boutiste · **Statut** : spécifié, jalon M7 ouvert le
 04/11/2026 (D149) — **le chantier M7-(a) RÉALISÉ le 05/11/2026** (le moteur
 de notation RV64 + la sonde aux oracles verts, Entrée 150, D155 ; balise
-`0.8.0-dev.1` posée par le premier build du jalon).
+`0.8.0-dev.1` posée par le premier build du jalon) ; **le chantier M7-(b)
+RÉALISÉ le 05/11/2026** (le corpus paritaire, Entrée 152, D156 ; balise
+`0.8.0-dev.2` — la TROISIÈME instanciation de la même couche I, le diff nul
+VERT, l'oracle qemu vert sur pièces).
 
 ---
 
@@ -93,6 +96,16 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   **désassemble RV64** (constaté : `addi` décodé depuis ses octets).
   L'assemblage n'a donc AUCUN moteur en l'état — c'est un livrable du
   jalon, pas une surprise.
+- **ACQUIS (05/11/2026, chantier M7-(b), Entrée 152 — D156 : LA PORTE S'ÉTEND
+  AVEC L'INSTRUMENT)** : l'extension A du profil est entrée au geste qui
+  l'exigeait — `amoswap.w/d` (aq/rl nuls, le seul AMO du corpus : le verrou
+  tournant de tcp-11, le portage du lock xchg) ; l'ISA AMO adresse [rs1]
+  SANS déplacement (funct5 aux bits 31:27 — le champ imm12 n'existe pas dans
+  ce format) : une demande de déplacement est un REFUS NOMMÉ, le déplacement
+  vit dans la formation `addi` déclarée ; la porte est étendue AU MÊME GESTE
+  aux DEUX directions : **AVANT 791 textes + INVERSE 1045 encodages légaux,
+  100 %** — les autres AMO (amoadd…) et aq/rl armés vivent hors instrument,
+  la frontière est nommée (la couverture se démontre, elle ne se décrète pas).
 - **ACQUIS (05/11/2026, chantier M7-(a), Entrée 150)** : l'**assembleur
   RV64IMA+Zifencei maison du dépôt EST** — `riscv/outils/as_rv64.py`
   (six formats R/I/S/B/U/J, 4 o exactement, refus NOMMÉS fail-closed sur
@@ -133,10 +146,12 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   l'image est ELF64, le mécanisme est le même, seuls les octets changent.
 - Balise du jalon M7 = **0.8.0** (rc.1 → finale après validation) ; LICENSE
   anti-rollback amendé à chaque scellage, modèle D147. **La 0.8.0-dev.1 est
-  POSÉE par le premier build du jalon (05/11/2026, chantier M7-(a)) — un geste
-  de BUILD, jamais de scellage (plancher 0x00080000 ; le scellage 0.8.0-rc.1
-  viendra du chantier (c) avec le contrôle D146 adapté à l'exécuteur du
-  jalon).**
+  POSÉE par le premier build du jalon (05/11/2026, chantier M7-(a)) ; la
+  0.8.0-dev.2 est POSÉE par le build du corpus (05/11/2026, chantier M7-(b),
+  Entrée 152) — des gestes de BUILD, jamais de scellage (plancher 0x00080000
+  ; le scellage 0.8.0-rc.1 viendra du chantier (c) avec le contrôle D146
+  adapté à l'exécuteur du jalon : l'image PIE sous qemu à des bases
+  constatées et forcées).**
 - Contrôle D146 adapté : exécution full-ELF à la base réelle **sur l'exécuteur du
   jalon** (§ 10) avant tout scellage rc/final.
 
@@ -181,3 +196,12 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   vert sur les TROIS profils et par le verrou croisé multi-profils (spec § 18-M7) ;
   l'export de continuité multi-profils de bout en bout (§ 6 du manuel : déchiffrer,
   vérifier signature, verrou croisé, régénérer l'oracle, reprendre) clôt le jalon.
+- **ACQUIS (05/11/2026, chantier M7-(b), Entrée 152)** : l'oracle du CORPUS
+  sous qemu — le rituel de parité 6/6 : les DEUX lignes octet pour octet
+  (« TRIADE M1 : minilibc 21/21 OK\n » — LA PARITÉ § 8.3 PAR EXÉCUTION, le
+  MÊME observable que l'instance Windows scellée et l'instance x86-64-linux,
+  au terminateur du profil près) puis « corpus : autotest 21 vecteurs\n »,
+  code 0 ; l'indifférence à la base par bases forcées du CHARGEUR (les trois
+  configurations du chantier (a), VERTES sur le corpus) ; la falsification
+  13 mutations 12/12 blocs rompus (zéro silence ; tcp-07 hors-chemin du
+  rituel — son scénario complet est le chantier (c)).

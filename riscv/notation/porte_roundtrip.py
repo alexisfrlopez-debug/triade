@@ -130,6 +130,12 @@ def corpus_avant() -> list[str]:
     for m in ("mv", "not", "neg", "seqz", "snez", "sgtz", "sltz", "sext.w"):
         for rd, rs in PAIRS:
             cas.append(f"{m} {rd}, {rs}")
+    # AMO (l'extension A du profil — chantier M7-(b) : amoswap seul, aq/rl
+    # nuls, l'ISA adresse [rs1] SANS déplacement — le juge rend « (rs1) »)
+    for m in ("amoswap.w", "amoswap.d"):
+        for rd, rs2, rs1 in (("t2", "t0", "s2"), ("zero", "zero", "zero"),
+                            ("a0", "a1", "sp"), ("t6", "s11", "x9")):
+            cas.append(f"{m} {rd}, {rs2}, ({rs1})")
     return cas
 
 
@@ -239,6 +245,13 @@ def encodages_profil() -> list[tuple[str, int]]:
         for succ in range(1, 16):
             cas.append(("fence", (pred << 24) | (succ << 20) | 0x0F))
     cas += [("fence.i", 0x0000100F), ("fence.tso", 0x8330000F)]
+    # AMO (l'extension A — chantier M7-(b) : amoswap SEUL, aq/rl nuls ; les
+    # autres AMO (amoadd…) et aq/rl armés vivent hors instrument du profil,
+    # la frontière est nommée — le corpus n'en porte aucun)
+    for f3, nom in ((2, "amoswap.w"), (3, "amoswap.d")):
+        for rd, rs2, rs1 in ((10, 11, 2), (0, 0, 0), (7, 5, 18), (31, 30, 9)):
+            cas.append((nom, (0x01 << 27) | (rs2 << 20) | (rs1 << 15)
+                        | (f3 << 12) | (rd << 7) | 0x2F))
     return cas
 
 

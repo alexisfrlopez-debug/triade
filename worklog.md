@@ -3318,3 +3318,72 @@ download/recoup-post-mortem/VERDICT-recoup-doctrine.txt.
   (d) l'export multi-profils + le terrain → la finale 0.8.0 (le terrain sera
   jugé POST-MORTEM ET SUR PIÈCES — D138/D145/D148, ré-établis sur originaux
   par la présente recoupure).
+
+
+## Task ID 70 — « lance le » : LE CHANTIER M7-(b) ACCOMPLI — LE CORPUS PARITAIRE RV64, LA TROISIÈME INSTANCIATION DE LA MÊME COUCHE I : les DOUZE blocs du patrimoine (hello-02/03, libc-01..08, tcp-07/11) + corpus-13, LA NOTATION RV64 NATIVE de 523 instructions (round-trip 100 %, capstone juge unique, graphie canonique du juge) ; L'INSTANCE CHARGE LES MÊMES FICHIERS CANONIQUES de unix/I/ (13 specs, empreintes mesurées, AUCUNE copie — le diff nul VERT en 4 recoupements : les canoniques, les observables R1↔R+1 par la chaîne M6 REJOUÉE, 7 scellés octet-identiques à l'état zéro, la parité § 8.3) ; L'ORACLE QEMU VERT SUR PIÈCES (réserve instrumentale D149 — TCG, noyau et syscalls réels) : le RITUEL DE PARITÉ 6/6 — les DEUX lignes octet pour octet (« TRIADE M1 : minilibc 21/21 OK\n » puis « corpus : autotest 21 vecteurs\n ») code 0 — LA PARITÉ § 8.3 PAR EXÉCUTION sur les TROIS profils ; LES BASES FORCÉES du CHARGEUR (-R 1G / -R 4G / -B+-R 2G) VERTES (indifférence à la base) ; LA FALSIFICATION 13 mutations 12/12 blocs rompus (zéro silence ; tcp-07 hors-chemin du rituel, son scénario est le chantier (c)) ; 1535 VERROUS STRUCTURELS (appels/syscalls/données déclarés PAR BLOC, la GARDE ANTI-TABLE-X86 vivante — write 64, mprotect 226, exit_group 94 asm-generic, les numéros 1/10/231 REFUSÉS nommément) ; QUATRE LEÇONS DU GESTE, toutes attrapées par les gardes au PREMIER passage (D156) (05/11)
+
+**Détail.** LA GÉOMÉTRIE MIROIR du plan unix (D8) : les MÊMES RVA (blocs
+0x1000-0x1D80, croissance 0x1D80 en réserve ebreak), les MÊMES fixtures au
+même plan, les MÊMES séries (f70xxxx à la sonde, f71xxxx au corpus) ;
+l'artefact `riscv/corpus` 12 288 o sha256 b34a7147…, DÉTERMINISME constaté
+au rebuild ; le staging (journal v2 « j2: », 248 o qword-paddé ebreak)
+assemblé POUR la croissance 0x1D80, la table d'intégrité R10 le porte en
+première entrée (somme 0x27ddc53f… — la porte AVANT tout effet) ; le verrou
+tournant amoswap.d (l'extension A du profil — le portage du lock x86-64),
+la restitution sd simple (mono-fil, fiche § 5) ; tcp-07 instancié avec LA
+SÉQUENCE du profil (fiche § 5 : mprotect RW → copie → fence rw,rw → LA
+BASCULE un mot jal CONSTRUITE EN REGISTRES → fence.i → RX, .protger local
+en jal) ; LA LEÇON imm12 (D156) : le verrou 0x3800 vu de la base .bss
+0x3000 vivait à +0x800 = 2048 — HORS imm12 DE UN, le REFUS NOMMÉ d'as_rv64
+au premier geste ; la fenêtre s'est posée AU CENTRE (s2 = base+0x3400 :
+curseur -0x400, arène -0x3C0, verrou +0x400) ; le PIÈGE AMO : l'ISA AMO
+adresse [rs1] SANS déplacement (funct5 aux bits 31:27) — le premier jet
+encodait la demande en ignorant le déplacement (un octet qui n'est pas
+celui demandé, l'espèce la plus grave) : REFUS NOMMÉ posé, le déplacement
+vit dans la formation addi déclarée ; le RECYCLAGE s3 : la fenêtre de
+tcp-07 ET l'ardoise de tcp-11 — l'oracle a refusé (s3+4 non déclaré), les
+rôles dédiés (s1/s2 fenêtres GLOBALES, s3 fenêtre PRIVÉE de tcp-07, s0/s7
+ardoises sauvegardées, t1 jamais touché) ; LA PORTE A GRANDI : l'extension
+A amoswap.w/d entre à la porte DU MÊME GESTE (AVANT 783→791 textes, INVERSE
+1037→1045 encodages — les autres AMO et aq/rl armés vivent hors instrument,
+frontière nommée) ; consignations : Entrée 152 PAR SCRIPT, D156 PAR SCRIPT
+(à la suite de D155), fiche riscv64 (statut + § 6 la porte étendue + § 8 la
+balise + § 10 l'oracle corpus), PLAN § État du programme (M7-(b) RÉALISÉ),
+riscv/I/README.md (la section corpus — la table des 13 blocs, la leçon
+imm12) ; la re-vérification complète rejouée (R5/R8 verts, cristallisation
+2/10 par bloc) ; la carte génération 1 au SIXIÈME sel (m2, hachoir D34,
+sonde unix, corpus unix, sonde riscv, corpus riscv — clés projet partagées
+D27), frag-con TROIS PROFILS par bloc (§ 8.3-4 — la TROISIÈME colonne psABI
+est née), verrou croisé 13/13 ; LA BALISE 0.8.0-dev.2 POSÉE par le build du
+corpus (geste de BUILD, jamais de scellage — le scellage 0.8.0-rc.1 viendra
+du chantier (c) avec le contrôle D146 adapté à l'exécuteur du jalon) ;
+frontières : la sonde d122bc68… INTACTE (le corpus ne la touche pas), le
+corpus unix dd14195c… INTACT (la TROISIÈME instanciation ne touche pas la
+seconde), les cinq scellés Windows INTACTS, le coffre /test INCHANGÉ (la
+vague m6d demeure courante — la clôture D143 attend le kit M7), riscv/.tmp/
+gitignoré, .keys/ gitignoré ; scripts suivis : riscv/build_corpus.py,
+riscv/diff_nul_corpus.py, riscv/carte_corpus.py, outils/auteur.py
+(--corpus), notation/porte_roundtrip.py (AMO), inserer_entree_152.py,
+inserer_d156.py ; livrables : riscv/corpus, riscv/carte-corpus/,
+riscv/notation/ (13 blocs + staging v2).
+
+Stage Summary:
+- La TROISIÈME instanciation de la même couche I est UN FAIT MESURÉ : les
+  13 specs sont LES MÊMES FICHIERS (empreintes, zéro copie), l'observable
+  du patrimoine est LE MÊME EN EXÉCUTION (« TRIADE M1 : minilibc 21/21
+  OK » octet pour octet sous qemu — § 8.3 PAR EXÉCUTION, jamais par
+  déduction).
+- QUATRE leçons du geste, toutes attrapées par les gardes au PREMIER
+  passage (D156) : la fenêtre .bss se pose AU CENTRE (la portée imm12 est
+  une contrainte de PLACE du plan) ; l'AMO adresse [rs1] sans déplacement
+  (le refus nommé, jamais l'octet silencieux) ; les registres sont dédiés
+  par rôle (s3 la fenêtre de tcp-07, jamais l'ardoise de tcp-11) ; la
+  porte grandit avec l'instrument (amoswap 791+1045 aux deux directions).
+- La balise 0.8.0-dev.2 est posée (geste de BUILD) ; le scellage 0.8.0-rc.1
+  attendra le chantier (c) et son contrôle D146 adapté à l'exécuteur.
+
+- SUITE : LE CHANTIER M7-(c) — le patch scratch+fence.i EN DÉMONSTRATION
+  (apply/effet/rollback sous qemu, l'intégrité R10, les refus nommés 1-5,
+  le DEP falsifié) + le verrou multi-profils ; puis (d) l'export
+  multi-profils + le terrain → la finale 0.8.0 (le terrain sera jugé
+  POST-MORTEM ET SUR PIÈCES — D138/D145/D148, ré-établis sur originaux).

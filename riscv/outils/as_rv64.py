@@ -123,6 +123,13 @@ _BRANCHES = {"beq": 0, "bne": 1, "blt": 4, "bge": 5, "bltu": 6, "bgeu": 7}
 _SHIFTS_64 = {"slli": (0x13, 1, 0x00), "srli": (0x13, 5, 0x00), "srai": (0x13, 5, 0x10)}
 _SHIFTS_W = {"slliw": (0x1B, 1, 0x00), "srliw": (0x1B, 5, 0x00), "sraiw": (0x1B, 5, 0x20)}
 
+# AMO op=0x2F (l'extension A du profil — chantier M7-(b) : le verrou tournant
+# de tcp-11 exige amoswap, le portage RV64 du lock xchg de l'instance x86-64) :
+# {mnemo: (funct3, funct5)} — amoswap SEUL (le seul AMO du corpus), aq/rl
+# NULS (relaxed : le corpus est mono-fil, fiche § 5 ; la barrière mémoire vit
+# au fence du profil, le chantier (c) porte le verrou multi-profils)
+_AMO = {"amoswap.w": (2, 0x01), "amoswap.d": (3, 0x01)}
+
 # fence : lettres du contrat pred/succ — i=8, o=4, r=2, w=1 (l'ordre canonique iorw)
 _FENCE_LETTRES = {"i": 8, "o": 4, "r": 2, "w": 1}
 
@@ -221,6 +228,23 @@ def assembler(texte: str, adresse: int = 0) -> bytes:
     if mnemo == "nop":
         besoin(0)
         return (0x00000013).to_bytes(4, "little")
+
+    # — AMO (extension A — l'ISA adresse [rs1] SANS déplacement : le champ
+    #   imm12 n'existe pas dans ce format, funct5 occupe les bits 31:27.
+    #   Toute demande de déplacement non nul est un REFUS NOMMÉ — jamais un
+    #   octet silencieux ; le déplacement vit dans la formation addi déclarée)
+    if mnemo in _AMO:
+        largeur, f5 = _AMO[mnemo]
+        besoin(3)
+        imm, rs1 = _memoire(ops[2])
+        if imm != 0:
+            raise EchecAssemblage(
+                f"AMO {mnemo} : déplacement {imm} — l'AMO adresse [rs1] SANS "
+                f"déplacement (l'ISA) ; le déplacement vit dans la formation "
+                f"addi (l'ancre), jamais ici (refus nommé, jamais un octet "
+                f"silencieux)")
+        return _enc_r(f5 << 2, _reg(ops[1]), rs1, largeur,
+                      _reg(ops[0]), 0x2F).to_bytes(4, "little")
 
     # — fence (Zifencei : fence.i ; fence pred, succ ; fence.tso)
     if mnemo == "fence.i":
@@ -391,6 +415,7 @@ def mnemoniques() -> list[str]:
     return sorted(set(
         list(_R64) + list(_R32W) + list(_I64) + list(_IW) + list(_LOADS)
         + list(_STORES) + list(_BRANCHES) + list(_SHIFTS_64) + list(_SHIFTS_W)
+        + list(_AMO)
         + ["lui", "auipc", "jal", "jalr", "j", "ret",
            "beqz", "bnez", "bgez", "bltz", "bgtz", "blez",
            "mv", "sext.w", "not", "neg", "negw", "seqz", "snez", "sgtz", "sltz",
