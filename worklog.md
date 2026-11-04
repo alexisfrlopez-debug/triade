@@ -3382,6 +3382,29 @@ Stage Summary:
 - La balise 0.8.0-dev.2 est posée (geste de BUILD) ; le scellage 0.8.0-rc.1
   attendra le chantier (c) et son contrôle D146 adapté à l'exécuteur.
 
+
+- PASSATION D141 rejouée au geste « CHANTIER M7-(b) ACCOMPLI / le corpus
+  paritaire RV64, la TROISIÈME instanciation de la même couche I » : le
+  bundle courant triade-history-070-09ddd06.bundle (git bundle --all,
+  16 000 761 o, md5 9c7461a3…) déposé au MIROIR, ASSERTÉ avant dépôt
+  (branche jalon pointe sur 09ddd06 — il porte LE SECOND CHANTIER DU
+  JALON M7 AVEC sa consignation : le corpus paritaire RV64 [les DOUZE
+  blocs du patrimoine + corpus-13, la notation native 523 instructions
+  round-trip 100 % ; l'instance CHARGE les MÊMES FICHIERS CANONIQUES de
+  unix/I/, zéro copie — le diff nul VERT 4 recoupements ; l'oracle qemu
+  VERT SUR PIÈCES : rituel 6/6 les DEUX lignes octet pour octet code 0 —
+  LA PARITÉ § 8.3 PAR EXÉCUTION sur les TROIS profils ; bases forcées
+  VERTES ; falsification 12/12 zéro silence ; 1535 verrous, la garde
+  anti-table-x86 vivante ; les QUATRE leçons D156 ; l'artefact sha
+  b34a7147… DÉTERMINISME au rebuild ; la carte au SIXIÈME sel, frag-con
+  TROIS PROFILS ; la balise 0.8.0-dev.2] + Entrée 152 + D156 + worklog
+  Task 70) ; l'ancien 070-f8472c6 (md5 845adafd… recoupé AVANT) ARCHIVÉ
+  VERSIONNÉ dans archives-bundles/ (17 archives, jamais supprimé) ; la
+  série DEMEURE 070 (l'ère de la balise 0.7.0 scellée — la série 080
+  naîtra à la finale 0.8.0 du jalon) ; /test sans copie de bundle
+  (recoupé) ; GitHub porté à la pointe dans le même geste (push
+  4b5d7fd..09ddd06, recoupé ls-remote) ; script suivi :
+  passe_bundle_m7b.py.
 - SUITE : LE CHANTIER M7-(c) — le patch scratch+fence.i EN DÉMONSTRATION
   (apply/effet/rollback sous qemu, l'intégrité R10, les refus nommés 1-5,
   le DEP falsifié) + le verrou multi-profils ; puis (d) l'export
