@@ -3289,3 +3289,32 @@ Stage Summary:
   suppression (l'archivage est un déplacement), la finale 0.7.0 et sa
   carte INTACTES, le coffre /test INCHANGÉ (la vague m6d demeure
   courante — la clôture D143 attend le kit M7).
+
+
+## Task ID 69 — « continue » : LA RECOUPURE POST-MORTEM DES DÉCISIONS D138/D145/D148 ACCOMPLIE — les TROIS décisions FIDÈLES à leurs pièces originales (v6 : 28 pièces ; e2 : 7 ; e4 : 37 re-contrôlées ; v8 : la matrice S3 ciblée — RAPATRIÉES des archives du coffre md5 contrôlés, LECTURE SEULE) : chaque fait fondateur RETROUVÉ SUR PIÈCE mot pour mot (page-d2b 279 o + marqueur + identique v6/e4 ; l'étiquette « ECHEC … rc=0 » ; les lectures in-VM «  » vides ; AUTORITE-B « arret propre — motif=delai » contre rc capturé vide ; AUTORITE-A jamais arrêtée ; le REFUS PROXY-SANS-ARMEMENT sur lecture 0 o ; la sonde TCP 00:13:17 ; la pièce post-mortem 128 o / 7 lignes avec « relever-https arme » en ligne 2 ; « ÉCHEC NOMMÉ (5) » et les CINQ refus aux noms exacts ; le rc d'Edge capturé VIDE ; dom-b 0 o + nav-b.png ABSENTE ; la réception triplement recoupée certificat rejete + s=34 + poignee refusee + ERR_HTTP_RESPONSE_CODE_FAILURE ; le libellé « REGRESSION a nommer » SUR PIÈCE) ; UNE PRÉCISION NOMMÉE sur la formulation D148 (la pièce T2b curl-d2b.txt porte la Date du run — pièce CRLF 946 o, trois md5 distincts, la seule ligne divergente entre v6/v8/e4 : l'identité octet pour octet vaut pour d2a/d3/d5 + hosts-lu, pour d2b elle vaut SAUF la ligne Date — la stationnarité S3 CONFIRMÉE EN SUBSTANCE, la précision consignée append-only, la règle D148 inchangée) ; l'instrument du recoup CORRIGÉ SUR PIÈCES après son ÉCHEC NOMMÉ (trois défauts d'instrument : l'extra LISEZMOI nommé, la matching sur texte APLATI, la ligne Date à l'index 24 et non 17 — pièce CRLF — le second passage VERT, les pièces immuables, D154 étendue au recoup de doctrine) (05/11)
+
+**Détail.** La reprise a suivi l'ordre promis : l'état du labo re-vérifié au geste
+même (porte 783+1037 VERT, build sha d122bc68… constant, sonde qemu 6/6 code 6,
+corpus unix dd14195c… intact, coffre /test recoupé — la vague m6d demeure
+courante) ; les décisions D138-D155 relues sur pièces (DECISIONS.md, jamais de
+mémoire) ; puis le rapatriement (rapatrier_preuves_doctrine.py — lecture seule,
+aucune écriture au coffre, le coffre fait foi) et le recoup
+(recouper_doctrine_post_mortem.py — verdict écrit à côté des pièces :
+download/recoup-post-mortem/VERDICT-recoup-doctrine.txt). Consignations :
+Entrée 151 PAR SCRIPT ; frontières : aucune pièce modifiée (md5 contrôlés aux
+deux passages), le coffre INCHANGÉ, download/ hors dépôt git (modèle
+preuves-run-m6d), aucune passation (pas un geste de jalon) ; scripts suivis :
+rapatrier_preuves_doctrine.py, recouper_doctrine_post_mortem.py,
+inserer_entree_151.py ; livrables : download/preuves-run-{v6,e2,v8,e4}/ +
+download/recoup-post-mortem/VERDICT-recoup-doctrine.txt.
+
+- SUITE : LE CHANTIER M7-(b) — la TROISIÈME instanciation de la même couche I :
+  le corpus paritaire RISC-V (les MÊMES fichiers I que unix/, le diff nul mesuré
+  par script, l'oracle régénéré vert sur l'instance qemu, la parité § 8.3 sur
+  les TROIS profils, la garde anti-table-x86 au corpus entier) ; le point
+  d'attention NOMMÉ : la portée imm12 des charges — les fenêtres par ANCES
+  auipc+addi (le modèle des paires sr-04 généralisé, chaque fenêtre déclarée
+  en I3) ; puis (c) le patch scratch+fence.i + le verrou multi-profils,
+  (d) l'export multi-profils + le terrain → la finale 0.8.0 (le terrain sera
+  jugé POST-MORTEM ET SUR PIÈCES — D138/D145/D148, ré-établis sur originaux
+  par la présente recoupure).
