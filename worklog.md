@@ -2992,3 +2992,23 @@ Stage Summary:
   cristallisation 10/10, la conformité 7/7, l'artefact INTACT — et les
   TROIS gardes vivantes constatées : le candidat est SOUMIS au chantier
   (d), le patch en production et le run terrain.
+
+- PASSATION D141 rejouée au geste « chantier M6-(c) accompli / la suite de
+  conformité verte + le scellage 0.7.0-rc.1 » : le bundle courant
+  triade-history-060-5328156.bundle (git bundle --all, 15 681 564 o, md5
+  e15e2c2f…) déposé au MIROIR, ASSERTÉ avant dépôt (branche jalon pointe
+  sur 5328156 — il porte LE TROISIÈME CHANTIER DU JALON M6 AVEC sa
+  consignation : la suite de conformité unix/conformite_profil.py [37
+  contrôles, les SEPT éléments constatés depuis l'artefact relu, le diff
+  nul rejoué] + LE CONTRÔLE D146 ADAPTÉ unix/controle_base_reelle.py [6
+  bases noyau distinctes CONSTATÉES par témoin ptrace/maps, le mutant « RVA
+  nu » mort nommé] + LE SCELLAGE 0.7.0-rc.1 avec le D146 EXÉCUTÉ AU SCELLAGE
+  même [cristallisation 13/13 à 10/10, conformité 7/7, bascule de balise,
+  gardes vivantes] + la cartouche au sommet PAR FIL + Entrée 147 + D152 +
+  worklog Task 65) ; l'ancien 060-34fe080 (md5 8ca07595… recoupé AVANT)
+  ARCHIVÉ VERSIONNÉ dans archives-bundles/ (13 archives, jamais supprimé) ;
+  /test sans copie de bundle (recoupé) ; GitHub porté à la pointe dans le
+  même geste (push aecb538..5328156, recoupé ls-remote) ; script suivi :
+  passe_bundle_m6c.py ; FRONTIÈRES : aucune suppression (l'archivage est un
+  déplacement), la finale 0.6.0 et sa carte INTACTS, /test inchangé (8
+  entrées D143, vague e4 courante — le kit terrain M6-(d) attendu).
