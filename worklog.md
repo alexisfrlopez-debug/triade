@@ -3263,3 +3263,29 @@ Stage Summary:
   déclarée en I3) ; puis (c) le patch scratch+fence.i + le verrou
   multi-profils, (d) l'export multi-profils + le terrain → la finale
   0.8.0.
+
+- PASSATION D141 rejouée au geste « CHANTIER M7-(a) ACCOMPLI / le moteur
+  de notation RV64 né et éprouvé » : le bundle courant
+  triade-history-070-f8472c6.bundle (git bundle --all, 15 878 588 o, md5
+  845adafd…) déposé au MIROIR, ASSERTÉ avant dépôt (branche jalon pointe
+  sur f8472c6 — il porte LE PREMIER CHANTIER DU JALON M7 AVEC sa
+  consignation : l'assembleur RV64IMA+Zifencei MAISON du dépôt + la PORTE
+  round-trip 783+1037 à 100 % en deux directions [capstone juge unique]
+  + qemu-riscv64 OPÉRATIONNEL par PROCÉDURE du dépôt + la lignée riscv/
+  née [layout géométrie miroir, quatre specs écrites-avant-code] + la
+  sonde ET_DYN/PIE EM_RISCV sha d122bc68… à l'oracle qemu VERT 6/6 +
+  falsification 12/12 + l'indifférence à la base DÉMONTRÉE par bases
+  forcées du chargeur + la garde anti-table-x86 vivante + la balise
+  0.8.0-dev.1 posée par le premier build du jalon + Entrée 150 + D155 +
+  worklog Task 68) ; l'ancien 070-642e5b8 (md5 91c47a53… recoupé AVANT)
+  ARCHIVÉ VERSIONNÉ dans archives-bundles/ (16 archives, jamais supprimé)
+  ; la série DEMEURE 070 (l'ère de la balise 0.7.0 scellée — la série 080
+  naîtra à la finale 0.8.0 du jalon) ; /test sans copie de bundle
+  (recoupé) ; GitHub porté à la pointe dans le même geste (push f07d11c..
+  f8472c6, recoupé ls-remote) ; le premier jet du passeur a été REFUSÉ
+  NOMMÉ par SA PROPRE assertion (BUNDLE-TETES : le sha complet attendu
+  avait été fabriqué au lieu d'être lu — corrigé sur pièces, la garde
+  vivait) ; script suivi : passe_bundle_m7a.py ; FRONTIÈRES : aucune
+  suppression (l'archivage est un déplacement), la finale 0.7.0 et sa
+  carte INTACTES, le coffre /test INCHANGÉ (la vague m6d demeure
+  courante — la clôture D143 attend le kit M7).
