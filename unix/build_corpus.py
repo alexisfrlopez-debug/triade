@@ -29,6 +29,11 @@ La chaîne (le modèle build_m6.py, la discipline de la lignée) :
      BLOC pour les DEUX profils — § 8.3-4).
 
 Usage : python3 build_corpus.py [--verifier] [--volume complet|reduit] [--graine N]
+                   [--sceller-rc]     # scellage 0.7.0-rc.1 (chantier M6-(c)) :
+                                      # contrôle D146 adapté + cristallisation
+                                      # 10/10 + conformité 7/7, bascule de balise
+                   [--sceller-final]  # 0.7.0 : validation terrain consignée
+                                      # (le chantier M6-(d) — jamais avant)
 """
 
 from __future__ import annotations
@@ -560,7 +565,9 @@ CONVENTIONS = {
 
 
 def fragments_clairs(code, img, verrous, specs, verdict, compteurs, journal,
-                     staging, empreintes_I):
+                     staging, empreintes_I, version=None):
+    if version is None:
+        version = L.VERSION_DEV2
     loc = ["[carte-frag] nom=frag-loc generation=1"]
     for bid, sid, _, rva, slot in L.BLOCS_CORPUS:
         loc.append(f"[bloc] id={bid} spec={sid} cible={L.CORPUS_PROFIL} "
@@ -613,7 +620,7 @@ def fragments_clairs(code, img, verrous, specs, verdict, compteurs, journal,
     for bid, _, _, rva, slot in L.BLOCS_CORPUS:
         bld.append(f"[bloc] id={bid} addr={rva:#x} empreinte={sha(code[bid]['slot'])}")
     bld += [
-        f"[build] artefact=corpus version={L.VERSION_DEV2} profil={L.CORPUS_PROFIL} "
+        f"[build] artefact=corpus version={version} profil={L.CORPUS_PROFIL} "
         f"taille={len(img)} empreinte={sha(img)}",
         f"  outils : keystone + capstone {capstone.cs_version()[0]}."
         f"{capstone.cs_version()[1]} ; verrous={len(verrous)} ; symboles vérifiés",
@@ -656,9 +663,9 @@ def verrou_croise(code: dict, img: bytes) -> int:
 
 
 def construire_carte(code, img, verrous, specs, verdict, compteurs, journal,
-                     staging, empreintes_I):
+                     staging, empreintes_I, version=None):
     clairs = fragments_clairs(code, img, verrous, specs, verdict, compteurs,
-                              journal, staging, empreintes_I)
+                              journal, staging, empreintes_I, version=version)
     phrase, graine = cm.charger_secrets(interactif=False)
     maitre = cm.cle_maitresse(phrase)
     fragments = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
@@ -670,12 +677,22 @@ def construire_carte(code, img, verrous, specs, verdict, compteurs, journal,
 
 # --- L'anti-rollback du jalon : ABSENT ≠ ILLISIBLE (la règle née de l'incident) ----
 
+# Le REGISTRE DES VERSIONS ACCEPTÉES de la lignée (fiche § 8 : « LICENSE
+# anti-rollback amendé à chaque scellage, modèle D147 ; plancher posé à
+# 0.7.0-dev.1 ») — une balise hors registre est un refus, jamais une
+# reconstruction opportune.
+BALISES_LIGNEE = {L.VERSION_DEV1, L.VERSION_DEV2, L.VERSION_RC1,
+                  L.VERSION_FINALE}
+
+
 def _anti_rollback() -> None:
     """La carte du corpus : ABSENTE = première construction ; PRÉSENTE et
     illisible = REFUS (l'incident de l'état zéro du chantier — jamais
     « illisible » traité comme « absente »). Dev : la reconstruction libre
-    est permise tant qu'aucune balise rc/final n'est posée (D149 : la
-    garde de scellage naît au chantier (c))."""
+    est permise tant qu'aucune balise rc/final n'est posée. SCELLÉE
+    (rc/final — le chantier M6-(c)) : reconstruction INTERDITE (R6) ; la
+    balise courante doit vivre au registre de la lignée (plancher
+    0.7.0-dev.1 — une balise inconnue ou antérieure est un refus nommé)."""
     fragments_pres = any(os.path.exists(os.path.join(cm.CARTE_DIR, n + ".bin"))
                          for n in cm.FRAGMENTS)
     if not fragments_pres:
@@ -691,14 +708,25 @@ def _anti_rollback() -> None:
             f"indéchiffrable est un REFUS, jamais une permission (l'incident de "
             f"l'état zéro du chantier : absent ≠ illisible)") from e
     m = re.search(r"\[build\] artefact=corpus version=(\S+)", bld)
-    if m and ("-rc" in m.group(1) or re.fullmatch(r"\d+\.\d+\.\d+", m.group(1))):
-        raise EchecBuild(f"carte scellée ({m.group(1)}) : reconstruction interdite — "
+    if not m:
+        raise EchecBuild("frag-bld : balise du corpus ILLISIBLE — refus "
+                         "(absent ≠ illisible, la garde D151)")
+    version_existante = m.group(1)
+    if version_existante not in BALISES_LIGNEE:
+        raise EchecBuild(f"balise {version_existante} HORS REGISTRE de la lignée "
+                         f"{sorted(BALISES_LIGNEE)} — plancher 0.7.0-dev.1, "
+                         f"anti-rollback R10 (fail-closed)")
+    if "-rc" in version_existante or re.fullmatch(r"\d+\.\d+\.\d+", version_existante):
+        raise EchecBuild(f"carte scellée ({version_existante}) : reconstruction interdite — "
                          f"procedure lourde R6 ou nouvelle version requise")
 
 
-def tableau_de_bord(img, verrous, verdict, phdr_lignes, empreintes_I) -> str:
+def tableau_de_bord(img, verrous, verdict, phdr_lignes, empreintes_I,
+                   version=None) -> str:
+    if version is None:
+        version = L.VERSION_DEV2
     return "\n".join([
-        "[tableau] jalon=M6-(b) artefact=corpus version=" + L.VERSION_DEV2,
+        "[tableau] jalon=M6 artefact=corpus version=" + version,
         "  profil                       : " + L.CORPUS_PROFIL
         + " (fiche — la parité du patrimoine)",
         "  blocs_avec_spec_a_jour        : 13/13 : audit I->C->B (specs, carte, artefact)",
@@ -730,7 +758,7 @@ def tableau_de_bord(img, verrous, verdict, phdr_lignes, empreintes_I) -> str:
         "  couche_I                     : " + str(len(empreintes_I))
         + " fichiers unix/I/ empreintés dans frag-prf (la même couche que M7)",
         "  defauts_ouverts              : 0",
-        "  preversions                  : " + L.VERSION_DEV2
+        "  preversions                  : " + version
         + " conforme (R10 : monotonie, plancher " + hex(L.VERSION_U64_MIN)
         + ", pointe sonde dev.1)",
         "  artefact                     : " + str(len(img)) + " octets ; "
@@ -802,8 +830,21 @@ def construire(volume: str, graine: int) -> int:
 
 
 def verifier(volume: str, graine: int) -> int:
-    print(f"=== M6-(b) : re-vérification complète (R5/R8, graine {graine}) ===")
-    _anti_rollback()
+    print(f"=== M6 : re-vérification complète (R5/R8, graine {graine}) ===")
+    # La balise de la carte est PRÉSERVÉE (modèle m5/D147) : un scellé ne se
+    # revertit pas — la re-vérification re-signe la carte SOUS sa balise
+    # courante, jamais au-dessus (le scellage est un fait de carte, la
+    # reconstruction une toute autre porte, gardée par _anti_rollback).
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode()
+    manifeste_v = next(
+        (dict(re.findall(r"(\w+)=(\S+)", l)).get("version") for l in bld.splitlines()
+         if "artefact=corpus" in l), "?")
+    version = manifeste_v if manifeste_v != "?" else L.VERSION_DEV2
+    print(f"[balise] la carte vit sous {version} (préservée — la re-vérification "
+          f"ne la déplace pas)")
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
     cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
     code, staging = assembler_tout(ks, cs)
@@ -836,20 +877,162 @@ def verifier(volume: str, graine: int) -> int:
     journal.append(f"run graine={graine} volume={volume} verdict={verdict['empreinte']}")
     specs = charger_couche_I()
     construire_carte(code, img, verrous, specs, verdict, compteurs, journal,
-                     staging, _empreintes_I())
+                     staging, _empreintes_I(), version=version)
     nb = verrou_croise(code, img)
     crist = {b: compteurs.get(b, 0) for b, _, _, _, _ in L.BLOCS_CORPUS}
     print("[R6] cristallisation : " + ", ".join(f"{b}={n}/10" for b, n in crist.items()))
     print(f"[R8] verrou croisé : {nb} empreintes conformes")
     with open(os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt"), "w",
               encoding="utf-8") as f:
-        f.write(tableau_de_bord(img, verrous, verdict, phdr, _empreintes_I()))
+        f.write(tableau_de_bord(img, verrous, verdict, phdr, _empreintes_I(),
+                                version=version))
+    return 0
+
+
+# --- Le scellage du jalon (chantier M6-(c), modèle D147 — m5/_sceller) -------------
+
+# Le sha du corpus dev.2 (constaté au Task 64, Entrée 146) — le scellage est
+# un fait de carte, l'artefact ne bouge JAMAIS : toute divergence = refus.
+SHA_CORPUS_DEV2 = "dd14195c9da5e9b990e8f9b141eedd6574bb8ecc793ffdd5b67edb71b81ddff7"
+
+
+def _charger_module(nom: str, chemin: str):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(nom, chemin)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[nom] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _sceller(nouvelle_version: str, exigences: str) -> int:
+    """Scellage du jalon M6 (modèle D147/m5) : CONTRÔLE D146 ADAPTÉ vert
+    (exécution full-ELF à la base réelle — l'image PIE au noyau, l'émulation
+    à base fixe interdite comme témoin unique, D149-(6)) + cristallisation
+    10/10 (R6) + conformité § 8.2 VERTE 7/7 (SEPT éléments constatés depuis
+    l'artefact) + bascule de balise dans frag-bld. L'artefact n'est PAS
+    touché — le scellage est un fait de carte, `corpus` reste byte-identique."""
+    print(f"=== M6-(c) : scellage {nouvelle_version} ({exigences}) ===")
+
+    # D146 adapté : AVANT que la carte ne se scelle, l'image PIE doit avoir
+    # vécu au NOYAU — la base 0 n'existe pas au loader Linux (un pointeur nu
+    # y meurt exactement comme sur le terrain : la leçon e3, devenue garde).
+    cbr = _charger_module("controle_base_reelle_m6",
+                          os.path.join(ICI, "controle_base_reelle.py"))
+    vert_d146, lignes_d146 = cbr.executer(bavard=False)
+    for l in lignes_d146[:8]:
+        print(l)
+    if not vert_d146:
+        raise EchecBuild("contrôle D146 non vert (base réelle) — "
+                         f"{nouvelle_version} refusé : {lignes_d146[-1]}")
+
+    phrase, _ = cm.charger_secrets(interactif=False)
+    maitre = cm.cle_maitresse(phrase)
+    _, fragments, _, _ = cm.lire_carte()
+    prf = cm.dechiffrer_fragment(maitre, "frag-prf", fragments["frag-prf"]).decode()
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(
+                re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplète : {incomplets} — "
+                         f"10 vérifications requises (R6)")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # Conformité § 8.2 (unix/conformite_profil.py — modèle m5/D104) : la
+    # suite exigée à chaque cristallisation rc/finale, chargée sous un nom
+    # distinct (elle recharge build_corpus comme module : aucune collision
+    # d'état avec le présent __main__).
+    cp = _charger_module("conformite_profil_m6",
+                         os.path.join(ICI, "conformite_profil.py"))
+    ok_conf, lignes_conf = cp.executer()
+    print("\n".join(lignes_conf[-3:]))
+    if not ok_conf:
+        raise EchecBuild(f"suite de conformité non verte — {nouvelle_version} refusé")
+
+    bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode()
+    ancienne = L.VERSION_RC1 if nouvelle_version == L.VERSION_FINALE else L.VERSION_DEV2
+    occurrences = bld.count(f"version={ancienne}")
+    if occurrences != 1:
+        raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
+                         f"({occurrences} occurrence(s)) — scellage refusé (fail-closed)")
+    bld = bld.replace(f"version={ancienne}", f"version={nouvelle_version}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm.chiffrer_fragment(maitre, n, clairs[n]) for n in cm.FRAGMENTS}
+    racine = empreinte_racine(nouveaux)
+    entete = cm.construire_entete(racine)
+    _, graine_cles = cm.charger_secrets(interactif=False)
+    prive, pub = cm.paire_cles(graine_cles)
+    signature = cm.signer(prive, entete, nouveaux)
+
+    # Vérification EN MÉMOIRE avant l'unique écriture (modèle D144/D147)
+    cm.verifier_listes_blanches(entete.decode("ascii"))
+    cm.verifier_signature(pub, entete, nouveaux, signature)
+    if empreinte_racine(nouveaux).hex() not in entete.decode("ascii"):
+        raise EchecBuild("contrôle en mémoire : empreinte racine divergente")
+    controle = cm.dechiffrer_fragment(maitre, "frag-bld", nouveaux["frag-bld"]).decode()
+    if f"version={nouvelle_version}" not in controle or f"version={ancienne}" in controle:
+        raise EchecBuild("contrôle en mémoire : bascule de balise non constatée")
+    cm.ecrire_carte(entete, nouveaux, signature, pub)
+
+    # Le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm.CARTE_DIR, "tableau-de-bord.txt")
+    if os.path.exists(chemin_tab):
+        with open(chemin_tab, encoding="utf-8") as f:
+            tab = f.read()
+        tab = tab.replace(f"version={ancienne}", f"version={nouvelle_version}")
+        tab = tab.replace(f"{ancienne} conforme", f"{nouvelle_version} conforme")
+        with open(chemin_tab, "w", encoding="utf-8") as f:
+            f.write(tab)
+
+    # Verrou croisé post-scellage + l'artefact INTACT (le fait de carte)
+    ks = Ks(KS_ARCH_X86, KS_MODE_64)
+    cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+    code, staging = assembler_tout(ks, cs)
+    with open(CHEMIN_ARTIFACT, "rb") as f:
+        img = f.read()
+    nb = verrou_croise(code, img)
+    print(f"[R8] verrou croisé post-scellage : {nb} empreintes conformes")
+    sha_artefact = sha(img)
+    if sha_artefact != SHA_CORPUS_DEV2:
+        raise EchecBuild(f"artefact divergent ({sha_artefact[:16]}…) — le scellage "
+                         f"est un fait de carte, `corpus` ne bouge pas")
+    print(f"[balise] {nouvelle_version} SCELLÉE (immuable § 9 ; défaut → X.Y.Z+1 "
+          f"à contrat stable, R4 ; anti-rollback R6 vivant, registre de la lignée "
+          f"plancher 0.7.0-dev.1) ; corpus INTACT (sha256 {sha_artefact[:16]}…, "
+          f"{len(img)} o — le scellage est un fait de carte)")
     return 0
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
     try:
+        if "--sceller-rc" in args:
+            sys.exit(_sceller(L.VERSION_RC1,
+                              "cristallisation R6 10/10 + conformité § 8.2 7/7 "
+                              "(SEPT éléments constatés depuis l'artefact, unix/"
+                              "conformite_profil.py) + CONTRÔLE D146 adapté VERT "
+                              "exécuté AU scellage (exécution full-ELF à la base "
+                              "réelle : 6 bases noyau distinctes constatées, le "
+                              "RVA nu nommé mort — unix/controle_base_reelle.py) — "
+                              "les critères du jalon prouvés à ce jour : durcissement "
+                              "M6-(a) démontré en exécution, diff nul MESURÉ 39 "
+                              "recoupements + oracle m1 régénéré 76 631 cas M6-(b) — "
+                              "candidate SOUMISE au chantier M6-(d) (le patch en "
+                              "production : bascule pendant le trafic + rollback + "
+                              "zéro régression, kit terrain au coffre /test, run "
+                              "WSL2/VM du développeur)"))
+        if "--sceller-final" in args:
+            sys.exit(_sceller(L.VERSION_FINALE,
+                              "R6 + conformité + contrôle D146 + validation terrain "
+                              "consignée (le run M6-(d) : patch pendant le trafic, "
+                              "rollback, zéro régression — les preuves au coffre "
+                              "/test, verdict sur pièces D138/D145/D148)"))
         if "--verifier" in args:
             graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 2
             volume = args[args.index("--volume") + 1] if "--volume" in args else "complet"

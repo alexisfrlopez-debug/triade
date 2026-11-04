@@ -2852,3 +2852,143 @@ Stage Summary:
   passe_bundle_m6b.py ; FRONTIÈRES : aucune suppression (l'archivage est un
   déplacement), la finale 0.6.0 et sa carte INTACTS, /test inchangé (8
   entrées D143, vague e4 courante — le kit terrain M6-(d) attendu).
+
+## Task ID 65 — « continue » : LE CHANTIER M6-(c) ACCOMPLI — LA SUITE DE CONFORMITÉ VERTE 7/7 (unix/conformite_profil.py, modèle m5 : 37 contrôles PASS, les SEPT éléments CONSTATÉS depuis l'artefact relu, le diff nul REJOUÉ à chaque passage) ; LE CONTRÔLE D146 ADAPTÉ NÉ (unix/controle_base_reelle.py : l'image PIE EXÉCUTÉE PAR LE NOYAU, 6 bases réelles DISTINCTES constatées par témoin ptrace/maps à l'arrêt d'exec, ADDR_NO_RANDOMIZE recoupé même base deux fois, le mutant « RVA nu » mort NOMMÉ à 0x280 RIP dans libc-01:R2 — la classe exacte du crash e3, en base aléatoire ET figée) ; LA CRISTALLISATION CONDUITE À 10/10 (graines datées 20261105→20261112) À TRAVERS L'INCIDENT DE LA CARTOUCHE (le refus intermittent « tcp-11 concurrence : verdicts divergents » ~1/11 — la chasse par sonde 240 essais a NOMMÉ la cause : l'allocateur de sommets par décrément-restitution rompt la LIFO sous concurrence, deux appels vivants partageaient la fenêtre ; LE SOMMET EST DÉSORMAIS PAR FIL, tcp-11 EXONÉRÉ sur pièces, l'artefact n'a pas bougé d'un octet) ; SCELLAGE 0.7.0-rc.1 AVEC LE D146 EXÉCUTÉ AU SCELLAGE MÊME (modèle D147 : cristallisation 10/10 + conformité 7/7 + bascule dev.2→rc.1 dans frag-bld occurrence unique assertée + re-scellage vérifié EN MÉMOIRE avant l'unique écriture + verrou croisé 13 empreintes + l'artefact INTACT sha dd14195c…, le scellage est un fait de carte) ; LES TROIS GARDES VIVANTES (re-scellage REFUSÉ, reconstruction REFUSÉE, la balise scellée SURVIT à la re-vérification) ; D152 née (05/11)
+
+Task: reprise « continue » — le résumé de reprise mélangeait des états
+historiques M5 (le « chemin rc.2 » et le « kit e4 » : des affaires réglées
+aux Entrées 142-143, la finale 0.6.0 est posée) ; l'état réel recoupé sur le
+worklog et git (aecb538) : M6-(a) et M6-(b) accomplis, la suite annoncée au
+Task 64 était LE CHANTIER M6-(c) — le geste l'exécute jusqu'aux gardes.
+
+Work Log:
+- (0) REPRISE : dépôt propre à aecb538 (passation M6-(b) déposée), le labo
+  réinstallé après recyclage du bac à sable (pynacl manquant — réinstallé ;
+  keystone/capstone opérationnels, ASLR noyau actif randomize_va_space=2),
+  l'état VERT re-établi SUR PIÈCES (verifier graine 3 : round-trip 100 %,
+  oracle 76 631 cas / 20 verrous, verrou croisé 13/13, sha dd14195c…
+  recoupé, cristallisation portée à 3/10).
+- (1) LE CONTRÔLE D146 ADAPTÉ (le livrable né — la règle D146 devenue OUTIL,
+  modèle m5/controle_base_reelle.py) : le contrôle N'ÉMULE RIEN (le labo EST
+  Linux x86-64, l'image est EXÉCUTÉE par execve au NOYAU) ; la base est
+  CONSTATÉE par témoin PTRACE_TRACEME (arrêt garanti À L'EXEC, lecture
+  /proc/<pid>/maps : le mapping du fichier à l'offset 0) ; les pièces
+  fail-closed : (a) 6 exécutions témoignées, 6 bases DISTINCTES (6/6,
+  alignées 0x1000), deux lignes exactes + code 0 à CHAQUE base ; (b)
+  ADDR_NO_RANDOMIZE (personality, le mécanisme de setarch -R) : MÊME base
+  deux fois (0x7ffff7ffb000) — la base vient du noyau ; (c) FALSIFIABILITÉ
+  SUR LA CLASSE : le mutant « RVA nu » (le lea rip de la chaîne du journal
+  @0x1C48 réécrit mov edi, 0x280 — l'adresse sans la base, le geste de la
+  ligne de flux fautive du 0.6.0-rc.1) meurt NOMMÉ : SIGSEGV à 0x280, RIP
+  rapporté AU BLOC par la plage EXACTE du slot du plan (f61003 libc-01:R2 —
+  une première version attribuait à hello-02 par une plage à +0x200 : la
+  faute est NOMMÉE ou n'est rien), en base aléatoire ET en base figée (la
+  base figée du noyau n'est JAMAIS 0) ; (d) frontière nommée : le patch
+  n'est pas au rituel (corpus-13:R1 I1), sa démonstration vit à l'oracle et
+  au chantier (d). Le mutant vit en COPIE temporaire supprimée au retour.
+- (2) LA SUITE DE CONFORMITÉ (modèle m5/D104 : chaque constat tranché
+  binaire, sortie unix/conformite.txt) : éléments 1-7 constatés depuis
+  l'ARTEFACT RELU (magie/ET_DYN/machine ; segment RX décodable sans reste ;
+  les 23 vecteurs dorés octet pour octet ; les 65 appels directs aux
+  entrées du plan ; zone rouge INUTILISÉE ; pile équilibrée PAR CONTEXTE —
+  les sous-programmes locaux scannés dans leur contexte d'appel (.protger
+  de tcp-07), alignement conduit ≡ 0 mod 16 aux points d'appel ; les
+  phdr RELUS + readelf INDÉPENDANT ; les syscalls PAR BLOC depuis les
+  octets ; écrire rend rax BRUT ; les codes 1-5 EXERCÉS en exécution ; la
+  table ERRNOS de la lignée lue depuis la sonde dev.1 ; LA PORTE R10
+  DÉCLINÉE ELF : table @0x540, staging 216 o, somme déclarée == RECALCULÉE
+  depuis l'artefact ; 0x7/0x5 dans les octets ; le qword unique [r15] ; le
+  scénario patch complet 6/6 familles ; round-trip REJOUÉ 13 blocs +
+  staging ; empreintes frag-prf == fichiers 13/13 ; DIFF NUL REJOUÉ 39
+  recoupements ; 13 blocs aux rva/slot de plan, padding >= 16, croissance
+  int3) + contrôle de jalon (oracle m1 reduit 8 231 cas, graine datée) —
+  VERTE 7/7, 37 contrôles PASS. Les cinq ECHECS du premier passage ont
+  chacun fondé une correction (regex frag-con 3 lignes intermédiaires,
+  coquille RDI/RSI, parse readelf R E en deux champs, seuil oracle reduit
+  8000, scan de pile par contexte) — la suite refuse AVANT de constater.
+- (3) L'INCIDENT DE LA CRISTALLISATION (le cœur de D152) : refus
+  fail-closed « tcp-11 concurrence : verdicts divergents » à la graine
+  20261109, INTERMITTENT (~1/11 — la même graine re-passait 4/4) ; la
+  chasse par sonde dédiée (scripts/probe_concurrence.py, 240 essais) a
+  attrapé la signature : rax = la longueur d'UNE AUTRE ligne (±1-2), pile
+  équilibrée ; LA CAUSE : l'allocateur de sommets de la cartouche
+  (décrément PAS_PILE à l'entrée, restitution au retour) est un bump-LIFO
+  que l'ordre de restitution INTERFOLÉ rompt — un fil libère pendant que
+  l'autre vit, le plafond remonte sur le sommet de l'appel VIVANT : deux
+  appels partagent la fenêtre et la pile ; D151 avait rendu la FENÊTRE par
+  appel, le SOMMET restait à recouvrement ; LE CORRECTIF : le sommet est
+  PAR FIL (attribué une fois sous verrou, réutilisé en séquence dans SON
+  fil, JAMAIS restitué) ; 240 essais verts post-correctif, l'oracle complet
+  vert ; tcp-11 EXONÉRÉ sur pièces (l'instrument mentait, pas le code) ;
+  la tentative refusée n'a PAS incrémenté la cristallisation (la carte
+  n'est re-signée que sur le vert), l'artefact n'a pas bougé (sha constant
+  à travers toute la chasse).
+- (4) LES DÉFAUTS LATENTS corrigés avant qu'ils ne mangent : verifier()
+  régénérait frag-bld avec version=dev.2 EN DUR — après un scellage, toute
+  re-vérification aurait REVERTI la balise (le défaut était là depuis le
+  Task 64) : la re-vérification lit la balise du manifeste et re-signe
+  SOUS elle (le scellé ne se revertit pas — modèle m5), et verifier()
+  n'appelle plus _anti_rollback (vérifier n'est pas reconstruire) ; le
+  REGISTRE DES VERSIONS ACCEPTÉES (BALISES_LIGNEE, plancher 0.7.0-dev.1)
+  refuse toute balise hors lignée ; verifier_listes_blanches délégué par
+  carte_corpus (le premier passage du scellage a été REFUSÉ fail-closed
+  AVANT toute écriture sur ce manque — la moitié du modèle).
+- (5) LE SCELLAGE 0.7.0-rc.1 : la séquence EXÉCUTÉE AU SCELLAGE même — D146
+  adapté VERT (re-exécuté dans le geste), cristallisation 13 blocs à 10/10
+  (conduite aux graines datées 20261105→20261112), conformité 7/7 (37
+  contrôles), bascule 0.7.0-dev.2 → 0.7.0-rc.1 dans frag-bld (occurrence
+  unique ASSERTÉE), re-scellage VÉRIFIÉ EN MÉMOIRE avant l'unique écriture
+  (listes blanches D15, signature, racine, bascule constatée), verrou
+  croisé post-scellage 13 empreintes, artefact INTACT (sha256
+  dd14195c9da5e9b990e8f9b141eedd6574bb8ecc793ffdd5b67edb71b81ddff7,
+  12 288 o — le scellage est un fait de carte).
+- (6) LES GARDES VIVANTES constatées sur pièces : re-scellage REFUSÉ
+  (« balise 0.7.0-dev.2 attendue une fois (0 occurrence) — scellage refusé
+  fail-closed ») ; reconstruction REFUSÉE (« carte scellée (0.7.0-rc.1) :
+  reconstruction interdite — procedure lourde R6 ou nouvelle version
+  requise ») ; la re-vérification SOUS balise scellée fonctionne et
+  PRÉSERVE la balise (carte sous 0.7.0-rc.1, cristallisation stable
+  10/10, verrou croisé 13/13, oracle 76 631 cas verts graine 20261113).
+- (7) CONSIGNATIONS : JOURNAL_TRAVAIL +Entrée 147 PAR SCRIPT (ordre
+  146<147<marqueur, rejeu REFUSÉ fail-closed), DECISIONS +D152 PAR SCRIPT
+  (à la suite de D151), fiche de profil § 8 (le scellage POSÉ avec D146 au
+  geste même, les gardes vivantes, le registre au code) + § 9 (la suite
+  LIVRÉE EXÉCUTÉE VERTE 7/7 au scellage même), PLAN_MILESTONES § État du
+  programme (M6-(a)/(b)/(c) RÉALISÉS, le (d) attend), ce worklog +Task ID
+  65 ; scripts suivis : probe_concurrence.py, inserer_entree_147.py,
+  inserer_d152.py, passe_bundle_m6c.py.
+- FRONTIÈRES : l'artefact unix/corpus n'a pas bougé d'un octet de tout le
+  chantier (le scellage est un fait de carte) ; --sceller-final est
+  DISPONIBLE au code (il attend rc.1 une fois) mais JAMAIS exécuté avant
+  le run terrain vert du chantier (d) (l'exigence porte « validation
+  terrain consignée » — la discipline m5) ; scellé 0.6.0 + cartes m0-m5 +
+  sceau ONZE arbres + arbres I + fixtures v5 + hachoir m6/ + sonde dev.1
+  INTACTS (le diff nul rejoué à chaque conformité) ; aucune suppression
+  Drive, corbeille non vidée ; .keys/ gitignoré ; D139 ouverte non
+  bloquante.
+- SUITE : LE CHANTIER M6-(d) — le patch en production, le chantier M5-(c)
+  refermé : bascule du journal PENDANT le trafic (le moteur tcp-07 EMBARQUÉ,
+  le staging v2 corrigé attend la démonstration), rollback, zéro régression
+  ; kit terrain Linux au coffre /test (artefact + scénario + LISEZMOI, WSL2
+  recommandé D149), run du développeur, preuves renvoyées ; si vert :
+  --sceller-final pose 0.7.0. Les décisions développeur (terrain WSL2/VM,
+  réserve qemu, aval du report M5-(c)) peuvent tomber au fil de l'eau.
+
+Stage Summary:
+- Le chantier M6-(c) est ACCOMPLI sur pièces : la suite de conformité est
+  VERTE 7/7 — les SEPT éléments CONSTATÉS depuis l'artefact relu, jamais
+  déclarés, le diff nul rejoué à chaque passage.
+- Le contrôle D146 adapté est NÉ et VERT : l'image PIE exécutée par le
+  NOYAU à 6 bases réelles distinctes CONSTATÉES (jamais décrétées), et le
+  mutant « RVA nu » — la classe exacte du défaut qui tua le 0.6.0-rc.1 —
+  mort NOMMÉ à chaque base : la leçon e3 intégralement transposée au profil
+  Linux, la falsifiabilité portant sur la CLASSE gardée.
+- L'incident de la cristallisation a fondé D152 : l'instrument concurrent
+  fautif (allocateur par décrément-restitution) nommé et corrigé sur
+  pièces — le sommet est PAR FIL, le bloc sous test EXONÉRÉ ; deux défauts
+  latents corrigés avant qu'ils ne mangent (la balise scellée aurait pu
+  être revertie par une re-vérification).
+- LE SCELLAGE 0.7.0-rc.1 EST POSÉ : D146 exécuté AU geste même, la
+  cristallisation 10/10, la conformité 7/7, l'artefact INTACT — et les
+  TROIS gardes vivantes constatées : le candidat est SOUMIS au chantier
+  (d), le patch en production et le run terrain.

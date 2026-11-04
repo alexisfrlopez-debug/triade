@@ -190,43 +190,55 @@ class Cartouche:
         self._ks = ks
         self.fn = ctypes.CFUNCTYPE(ctypes.c_uint64, ctypes.c_void_p)(self.code)
         # la pile du bloc appelé : une région fraîche, sommet 16-aligné ;
-        # l'attribution est PAR APPEL (ré-entrance) sous un verrou court
+        # le sommet est PAR THREAD (la leçon du run M6-(c) : un allocateur
+        # par décrément-restitution n'est PAS un allocateur sous concurrence
+        # — l'ordre de restitution interfolé rompt la LIFO, deux appels
+        # vivants se partagent la fenêtre et la pile ; D151 complétée : la
+        # fenêtre était par appel, le SOMMET est par fil — attribué une
+        # fois, réutilisé en séquence dans SON fil, jamais recouvert)
         self.pile = libc.mmap(ctypes.c_void_p(0), ctypes.c_size_t(0x10000),
                               ctypes.c_int(mmap.PROT_READ | mmap.PROT_WRITE),
                               ctypes.c_int(mmap.MAP_PRIVATE | mmap.MAP_ANONYMOUS),
                               ctypes.c_int(-1), ctypes.c_size_t(0))
         self.pile_sommet = (self.pile + 0x10000 - 0x200) & ~0xF
         self._suivant = self.pile_sommet
+        self._sommets_fils = {}         # ident de fil -> sommet dédié
         self._verrou_sommets = threading.Lock()
+
+    def _sommet_du_fils(self) -> int:
+        """Le sommet dédié du fil courant (attribué une fois, sous verrou)."""
+        ident = threading.get_ident()
+        with self._verrou_sommets:
+            if ident not in self._sommets_fils:
+                self._sommets_fils[ident] = self._suivant
+                self._suivant -= PAS_PILE
+            return self._sommets_fils[ident]
 
     def appeler(self, cible: int, args: list[int]) -> dict:
         """Appelle le bloc à l'adresse absolue cible avec args (≤ 6, SysV).
 
-        Ré-entrant : entrées LOCALES à l'appel, sommet attribué sous un
-        verrou court (PAS_PILE, restitué au retour), sorties dans la FENÊTRE
-        de CET appel. Retourne rax, les drapeaux, les six non volatils
-        (canaris attendus), rsp au retour et le sommet donné (l'attendu :
-        rsp == sommet — la pile équilibrée).
+        Ré-entrant : entrées LOCALES à l'appel, sommet PAR FIL (attribué une
+        fois sous un verrou court, réutilisé en séquence dans son fil —
+        jamais recouvert par un autre fil), sorties dans la FENÊTRE de CET
+        appel. Retourne rax, les drapeaux, les six non volatils (canaris
+        attendus), rsp au retour et le sommet donné (l'attendu : rsp ==
+        sommet — la pile équilibrée).
         """
         e = (ctypes.c_uint64 * 16)()
         e[0] = cible
         for i in range(6):
             e[1 + i] = args[i] if i < len(args) else 0
-        with self._verrou_sommets:
-            sommet = self._suivant
-            self._suivant -= PAS_PILE
+        sommet = self._sommet_du_fils()
         e[7] = sommet
-        try:
-            self.fn(ctypes.addressof(e))
-            q = (ctypes.c_uint64 * 10).from_address(sommet - FENETRE)
-            return {
-                "rax": q[1], "drapeaux": q[2], "rbx": q[3], "rbp": q[4],
-                "r12": q[5], "r13": q[6], "r14": q[7], "r15": q[8],
-                "rsp": q[9], "sommet": sommet,
-            }
-        finally:
-            with self._verrou_sommets:
-                self._suivant += PAS_PILE
+        self.fn(ctypes.addressof(e))
+        q = (ctypes.c_uint64 * 10).from_address(sommet - FENETRE)
+        return {
+            "rax": q[1], "drapeaux": q[2], "rbx": q[3], "rbp": q[4],
+            "r12": q[5], "r13": q[6], "r14": q[7], "r15": q[8],
+            "rsp": q[9], "sommet": sommet,
+        }
+        # (le sommet vit à son fil : rien à restituer — la restitution
+        #  interfolée de l'allocateur par décrément était la faille)
 
     def non_volatils_intacts(self, s: dict) -> bool:
         return (s["rbx"] == CANARIS[0] and s["rbp"] == CANARIS[1]

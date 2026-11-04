@@ -273,28 +273,44 @@ chantier qui les touche. **Convention de dossiers (D149)** : le jalon M6 vit dan
 l'échelle d'auto-hébergement (emprunt de nommage consigné, le présent programme ne
 le défait pas).
 
-**État du programme.** **Chantiers M6-(a) et M6-(b) RÉALISÉS le 04/11/2026**
-(Entrées 145-146, D150-D151) — la sonde `unix/` (M6-(a), Entrée 145) a posé le
-durcissement format DÉMONTRÉ en exécution (ET_DYN/PIE à base aléatoire
-constatée, W^X depuis les phdr, table ERRNOS exercée sur ses deux branches —
-balise 0.7.0-dev.1) ; **le corpus paritaire (M6-(b), Entrée 146) L'INSTANCIE
-ET LE MESURE** : les DOUZE blocs du patrimoine M0-M5 révisés R+1 au niveau
-FORMEL (audit de couplage `unix/I/AUDIT-COUPLAGE-CORPUS.md` : la classe A est
-VIDE, la voie du diff nul passe ENTIÈREMENT par la révision de granularité)
-+ `corpus-13` le principal propre au jalon (domaine neuf, modèle ah-09) ; le
-diff nul MESURÉ PAR SCRIPT (`unix/diff_nul.py`, 39 recoupements : fichiers
-canoniques `unix/I/` empreintés zéro copie, observables R1↔R+1 équivalents,
-les CINQ scellés Windows octet-identiques à l'état zéro mesuré avant le
-geste) ; l'oracle m1 régénéré VERT sur l'instance Linux (76 631 cas verts,
-20 verrous, exécution native, falsification 12/12 zéro silence — tcp-07
-épuisé par SON scénario et le V7 DEP en fils) ; l'artefact `unix/corpus`
-12 288 o (ET_DYN/PIE, héritage M6-(a) recoupé `readelf`), sha256 dd14195c…,
-**la balise 0.7.0-dev.2 est POSÉE** — la carte génération 1 du corpus
-(fragments chiffrés, Ed25519, verrou croisé R8 13/13). Les chantiers (c)
-conformité + scellage 0.7.0-rc.1 (contrôle D146 adapté full-ELF à la base
-réelle) et (d) patch en production attendent ; les décisions développeur
-(terrain WSL2/VM, réserve qemu, aval du report M5-(c)) demeurent non
-bloquantes.
+**État du programme.** **Chantiers M6-(a), M6-(b) et M6-(c) RÉALISÉS — le
+04/11/2026 pour (a)/(b), le 05/11/2026 pour (c)** (Entrées 145-147, D150-D152)
+— la sonde `unix/` (M6-(a), Entrée 145) a posé le durcissement format DÉMONTRÉ
+en exécution (ET_DYN/PIE à base aléatoire constatée, W^X depuis les phdr,
+table ERRNOS exercée sur ses deux branches — balise 0.7.0-dev.1) ; **le corpus
+paritaire (M6-(b), Entrée 146) L'INSTANCIE ET LE MESURE** : les DOUZE blocs du
+patrimoine M0-M5 révisés R+1 au niveau FORMEL (audit de couplage `unix/I/
+AUDIT-COUPLAGE-CORPUS.md` : la classe A est VIDE, la voie du diff nul passe
+ENTIÈREMENT par la révision de granularité) + `corpus-13` le principal propre
+au jalon (domaine neuf, modèle ah-09) ; le diff nul MESURÉ PAR SCRIPT
+(`unix/diff_nul.py`, 39 recoupements : fichiers canoniques `unix/I/` empreintés
+zéro copie, observables R1↔R+1 équivalents, les CINQ scellés Windows
+octet-identiques à l'état zéro mesuré avant le geste) ; l'oracle m1 régénéré
+VERT sur l'instance Linux (76 631 cas verts, 20 verrous, exécution native,
+falsification 12/12 zéro silence — tcp-07 épuisé par SON scénario et le V7 DEP
+en fils) ; l'artefact `unix/corpus` 12 288 o (ET_DYN/PIE, héritage M6-(a)
+recoupé `readelf`), sha256 dd14195c…, la balise 0.7.0-dev.2 posée, la carte
+génération 1 du corpus. **La suite de conformité + le scellage (M6-(c),
+Entrée 147) : la suite VERTE 7/7** (`unix/conformite_profil.py`, modèle m5 —
+37 contrôles PASS, les SEPT éléments CONSTATÉS depuis l'artefact relu + le
+diff nul REJOUÉ à chaque passage) ; **le contrôle D146 adapté NÉ**
+(`unix/controle_base_reelle.py` : l'image PIE EXÉCUTÉE PAR LE NOYAU, 6 bases
+réelles DISTINCTES constatées par témoin ptrace/maps, ADDR_NO_RANDOMIZE
+recoupé, le mutant « RVA nu » mort nommé — la classe exacte du crash e3) ;
+la cristallisation conduite à 10/10 (l'incident intermittent de la cartouche
+— l'allocateur de sommets sous concurrence — nommé et corrigé : le sommet est
+PAR FIL, D152 ; le bloc tcp-11 EXONÉRÉ sur pièces, l'artefact n'a pas bougé
+d'un octet) ; **LE SCELLAGE 0.7.0-rc.1 POSÉ avec le D146 EXÉCUTÉ AU SCELLAGE
+même** (modèle D147 — cristallisation 10/10 + conformité 7/7 + bascule de
+balise dans frag-bld, occurrence unique assertée, re-scellage vérifié en
+mémoire avant l'unique écriture ; l'artefact INTACT sha dd14195c…, le
+scellage est un fait de carte) ; **les gardes VIVANTES sur pièces**
+(re-scellage REFUSÉ, reconstruction REFUSÉE, la balise scellée SURVIT à la
+re-vérification — le registre des versions acceptées vit au code, plancher
+0.7.0-dev.1). Le chantier (d) — le patch en production, le kit terrain au
+coffre /test, le run WSL2/VM du développeur, puis `--sceller-final` → 0.7.0
+si vert — attend ; les décisions développeur (terrain WSL2/VM, réserve qemu,
+aval du report M5-(c)) demeurent non bloquantes.
 
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|

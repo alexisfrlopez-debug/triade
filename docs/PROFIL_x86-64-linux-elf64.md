@@ -138,6 +138,16 @@ est donc désappris sélectivement, jamais globalement.
 - **Registre des versions acceptées** : LICENSE anti-rollback amendé à chaque scellage
   (modèle D147) ; plancher posé à `0.7.0-dev.1`, balise du jalon M6 = **0.7.0**
   (rc.1 → finale après run terrain vert).
+- **ACQUIS PAR LE CHANTIER M6-(c) (05/11/2026, Entrée 147)** : le scellage
+  `0.7.0-rc.1` est POSÉ avec le contrôle D146 adapté EXÉCUTÉ AU SCELLAGE
+  même (modèle D147 — `unix/controle_base_reelle.py` : 6 bases noyau
+  DISTINCTES constatées par témoin ptrace/maps, ADDR_NO_RANDOMIZE recoupé,
+  le mutant « RVA nu » mort nommé — la classe exacte du crash e3) ; les
+  gardes sont VIVANTES sur pièces (re-scellage REFUSÉ, reconstruction
+  REFUSÉE, la balise scellée SURVIT à la re-vérification) ; l'artefact
+  est INTACT (sha dd14195c… — le scellage est un fait de carte) ; le
+  registre des versions acceptées vit au code (`BALISES_LIGNEE`, plancher
+  `0.7.0-dev.1`).
 - Le scellage du jalon (rc et finale) exécute le **contrôle D146 adapté** : aucune
   balise sans exécution **full-ELF à la base réelle** — au labo l'image PIE se charge
   par le noyau à une base aléatoire authentique : un pointeur nu ou un RVA mal
@@ -158,7 +168,12 @@ est donc désappris sélectivement, jamais globalement.
 | 7 | Granularité et padding | adresses stables après patch (R7), slots et réserves constatés |
 
 La suite s'exécute à chaque cristallisation rc et finale (spec § 9) — modèle
-`m5/conformite_profil.py`, porté à `unix/conformite_profil.py`.
+`m5/conformite_profil.py`, portée à `unix/conformite_profil.py`. **ACQUIS PAR
+LE CHANTIER M6-(c) (05/11/2026, Entrée 147) : la suite est LIVRÉE, EXÉCUTÉE
+VERTE 7/7 (37 contrôles PASS, sortie `unix/conformite.txt`) au scellage
+`0.7.0-rc.1` même — les SEPT éléments constatés depuis l'artefact relu,
+jamais déclarés ; le diff nul y est REJOUÉ à chaque passage (une garde qui
+vit, pas un souvenir du chantier (b)).**
 
 ## 10. Terrain — le constat qui resserre la frontière labo/terrain
 

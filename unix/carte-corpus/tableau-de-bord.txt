@@ -1,4 +1,4 @@
-[tableau] jalon=M6-(b) artefact=corpus version=0.7.0-dev.2
+[tableau] jalon=M6 artefact=corpus version=0.7.0-rc.1
   profil                       : x86-64-linux-elf64 (fiche — la parité du patrimoine)
   blocs_avec_spec_a_jour        : 13/13 : audit I->C->B (specs, carte, artefact)
   chaines_I_C_B_tests           : 13/13 : 185 verrous PASS (structurels) ; diff nul VERT
@@ -11,7 +11,7 @@
   tests_differentiels          : oracle m1 régénéré NATIF — 76631 cas verts (20 verrous) ; deux lignes exactes, code 0 ; falsification zéro silence
   couche_I                     : 13 fichiers unix/I/ empreintés dans frag-prf (la même couche que M7)
   defauts_ouverts              : 0
-  preversions                  : 0.7.0-dev.2 conforme (R10 : monotonie, plancher 0x70000, pointe sonde dev.1)
+  preversions                  : 0.7.0-rc.1 conforme (R10 : monotonie, plancher 0x70000, pointe sonde dev.1)
   artefact                     : 12288 octets ; empreinte sha256:dd14195c9da5e9b990e8f9b1…
   verrou_croise                : 13 empreintes + signature Ed25519 (R8)
   [phdr] PT_GNU_STACK RW SANS X — NX explicite

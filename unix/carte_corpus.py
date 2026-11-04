@@ -93,6 +93,12 @@ def paire_cles(graine: bytes):
     return base.paire_cles(graine)
 
 
+def verifier_listes_blanches(entete: str) -> None:
+    # D15 : les algorithmes de l'en-tête doivent vivre aux listes blanches —
+    # délégué à la source commune (le scellage l'exige avant l'unique écriture)
+    return base.verifier_listes_blanches(entete)
+
+
 def signer(prive, entete: bytes, fragments: dict) -> bytes:
     return base.signer(prive, entete, fragments)
 
