@@ -2198,3 +2198,35 @@ Stage Summary:
   et le scellé 0.6.0-rc.1 n'a pas bougé d'un octet.
 - Suite : le run e3 au terrain (le critère (b) de D136 par le navigateur) ;
   si vert, --sceller-final pose la finale 0.6.0.
+## Task ID 58 — Passation D141 rejouée à la livraison e3 : bundle courant 060-193b8d4 au miroir, ancien archivé, dette des six commits fermée ; GitHub à 193b8d4 (04/11)
+
+- GESTE : la passation D141 n'avait plus été rejouée depuis 07d392e (SIX
+  commits de jalon, deux recyclages — l'ère 051 tenait une passation par
+  livraison) : triade-history-060-193b8d4.bundle (git bundle --all,
+  15 128 008 o, md5 0eef6b2b…) construit, la branche jalon du bundle
+  ASSERTÉE sur 193b8d4 (git bundle list-heads — le bundle porte la
+  livraison e3 AVEC sa consignation), déposé au miroir (md5 MATCH par
+  relecture) ; l'ancien 060-07d392e (md5 2bb725ef… recoupé AVANT) ARCHIVÉ
+  VERSIONNÉ dans archives-bundles/ (déplacement par paramètres de requête,
+  jamais supprimé) ; /test sans copie de bundle (recoupé) ; état final :
+  LE courant unique à la racine du miroir, SIX archives.
+- CANAUX : GitHub porté à 193b8d4 (push, recoupé ls-remote) — les trois
+  canaux durables alignés (miroir de fichiers, bundle versionné, GitHub) ;
+  le hook post-commit a fait son œuvre sur 193b8d4 (miroir rc=0, kit
+  Cérémonie rc=0 — .gdrive/last_sync.log).
+- PASSATION : JOURNAL_TRAVAIL +Entrée 140 PAR SCRIPT (ordre 139<140<
+  marqueur, rejeu REFUSÉ fail-closed) ; scripts suivis :
+  passe_bundle_e3.py, inserer_entree_140.py.
+- FRONTIÈRES : aucune suppression (l'archivage est un déplacement) ;
+  /test INTACT (8 entrées D143) ; aucune clé (le bundle --all suit le
+  dépôt, .keys/ gitignoré) ; scellé 0.6.0-rc.1 et carte génération 7
+  INTACTS.
+- SUITE : inchangée — LE GESTE TERRAIN (m5b-kit-e3.zip, dossier NEUF,
+  corriger-wsb.bat, double-clic, renvoyer TOUT preuves-m5b) ; si vert,
+  --sceller-final pose la finale 0.6.0. D139 ouvert, non bloquant.
+
+Stage Summary:
+- Les trois canaux durables sont alignés sur la livraison e3 : fichiers
+  au miroir, bundle versionné 060-193b8d4, branche GitHub — la dette de
+  passation (six commits) est nommée et fermée.
+- Suite : le run e3 au terrain ; si vert, la finale 0.6.0 est posée.
