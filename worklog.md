@@ -2230,3 +2230,60 @@ Stage Summary:
   au miroir, bundle versionné 060-193b8d4, branche GitHub — la dette de
   passation (six commits) est nommée et fermée.
 - Suite : le run e3 au terrain ; si vert, la finale 0.6.0 est posée.
+## Task ID 59 — Run e3 analysé sur pièces, reproduit au labo, cause racine nommée : LE RVA NU DE LA LIGNE DE FLUX (crash du proxy 0.6.0-rc.1 à la première requête routée) ; clôture D143, règle D146, chemin de réparation proposé (04/11)
+
+- GESTE (l'analyse) : les preuves du run e3 rapatriées du coffre /test
+  (rapatrier_run_e3.py, 8/8 md5 conformes) — le run s'arrête à la garde
+  d'armement (RIEN reçu, MethodInvocationException immédiate) MAIS la
+  pièce proxy-journal.log porte « relever-https arme » : l'étiquette
+  REFUS PROXY-PAS-ARME est démentie, la signature (pas de fin connexion,
+  quit sans effet, autorité vierge, mort instantanée) désigne la MORT du
+  processus à la PREMIÈRE requête routée jamais envoyée au binaire.
+- GESTE (la reproduction) : harnais full-PE unicorn (reproduire_run_e3.py,
+  modèle emulation_forensique D52h — base préférée 0x140000000, IAT marchée
+  par les 4 descripteurs, ligne de commande réelle, fils coopératifs,
+  séquence terrain exacte) : le journal capté reproduit le journal réel
+  LIGNE POUR LIGNE jusqu'à la mort, puis faute à http-10:R3+0xA46
+  (movzx eax, byte [r12], r12 = 0x24A0 — RVA nu hors image).
+- CAUSE RACINE : la ligne de flux (code NOUVEAU 0.6.0 — le 0.5.1 ne
+  contient pas la chaîne « flux ») lit le couple (RVA, longueur) de la
+  table des méthodes et passe le RVA NU à la copie — l'idiome hérité
+  http-02 (dword + base d'image) a été PERDU. Toute requête routée tue
+  le rc.1. Les oracles étaient verts parce que TOUTE l'émulation M5 vit
+  à base 0 (le RVA nu y résout par accident) — règle D146 : contrôle
+  d'exécution À LA BASE RÉELLE avant tout scellage.
+- PREUVE CHIRURGICALE : le correctif simulé au crochet (rdx = base + rdx)
+  fait disparaître le crash et renaître TOUTE la chaîne — ligne de flux
+  « flux GET 127.0.0.1:443 v=6 e=51 s=40 » (port 443 forcé par le
+  relèvement), getaddrinfo, connect 443, réponse ENVOYÉE au client.
+- CLÔTURE D143 (archiver_run_e3.py, mutations recoupées par relecture) :
+  7 pièces + VERDICT-run-e3-rva-nu.txt vers archives-preuves/preuves-run-e3/
+  (11 entrées), preuves-m5b recréé VIERGE (liste e3 — vaut pour e4 : le
+  scénario e3 est repris tel quel), index mis à jour EN PLACE, racine /test
+  inchangée (8 entrées), aucune suppression.
+- PASSATION : JOURNAL_TRAVAIL +Entrée 141 PAR SCRIPT (ordre 140<141<
+  marqueur, rejeu REFUSÉ fail-closed), DECISIONS +D146 PAR SCRIPT (à la
+  suite de D145), scripts suivis : lister_preuves_e3_run.py,
+  rapatrier_run_e3.py, reproduire_run_e3.py, archiver_run_e3.py,
+  inserer_entree_141.py, inserer_d146.py.
+- FRONTIÈRES : le scellé 4b8f6af6… INTACT (lu en émulation, jamais
+  écrit) ; carte génération 7, sceau ONZE arbres, scellé 0.5.1, fixtures
+  v5, m5/I, scénario e3 et kit e3 au coffre INTACTS ; .keys/ absent ;
+  la finale 0.6.0 TOUJOURS NON POSÉE ; D139 ouverte non bloquante.
+- SUITE (proposition, décision du développeur) : (1) notation
+  http-10-session-r3 corrigée (idiome dword + base restauré — l'arbre
+  m5/I ne change pas, le sceau-I m5 reste VALIDE, pas de nouvelle
+  cérémonie) ; (2) contrôle d'exécution à la base réelle adjoint au
+  corpus (D146) ; (3) rebuild → 0.6.0-rc.2 → scellage rc ; (4) kit e4
+  (scénario e3 repris) → geste terrain → critère (b) de D136 ; si vert,
+  --sceller-final pose la finale.
+
+Stage Summary:
+- Le run e3 a fait exactement ce pour quoi il était construit : la garde
+  fonctionnelle a attrapé la mort du rc.1 AVANT le navigateur. La cause
+  est nommée, reproduite et prouvée chirurgicalement : un RVA nu passé
+  comme pointeur par la ligne de flux — invisible pour toute émulation à
+  base 0 (règle D146).
+- Suite : la décision du développeur sur le chemin rc.2 (notation corrigée
+  + contrôle à la base réelle + kit e4) ; le critère (b) de D136 attend
+  toujours son run.
