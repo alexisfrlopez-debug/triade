@@ -2500,3 +2500,111 @@ Stage Summary:
   (9 archives, jamais supprimé) ; /test sans copie de bundle (recoupé) ;
   GitHub porté à la pointe dans le même geste (push f7b460c..f425ceb,
   recoupé ls-remote) ; script suivi : passe_bundle_analyse_e4.py.
+## Task ID 62 — « ok, on enchaine » : LE PLAN DES JALONS M6/M7 ÉCRIT — le programme M6/M7 ouvert (D149, quatre chantiers par jalon, critères mesurables, frontières nommées), les FICHES DE PROFIL COMPLÈTES nées AVANT le premier octet (x86-64-linux-elf64 et riscv64-linux-elf64, 7+1 éléments, constats labo DATÉS : keystone sans RISC-V / capstone RV64 OK / qemu absent), le statut M5 FRANCHI consigné au plan et à la spec, le chantier M5-(c) REPORTÉ au M6-(d) (explicite), l'écart D81 racine Drive FERMÉ (59 o→33 o, ouverture VERT) ; Entrée 144, D149 (04/11)
+
+Task: demande du développeur « ok, on enchaine » — la suite annoncée au Task 61
+était « les jalons M6/M7 attendent leur plan » : le geste écrit ce plan et referme
+le reste nommé (l'écart D81 « à corriger à la prochaine synchro »).
+
+Work Log:
+- (0) REPRISE RECROUPÉE : dépôt propre à dc318f2 (pointe = passation e4), auth
+  Drive VERT (check_auth), coffre /test recoupé 8 entrées D143 (vague e4 courante,
+  le jalon rentré), .keys/coffre_fort.bin md5 23a2987a… (D144) intègre.
+- (1) LE CADRE NORMATIF RELU AVANT D'ÉCRIRE : spec § 16 (les 7+1 éléments du
+  profil, « jamais d'instanciation approximative »), § 8.2 (suite de conformité
+  par profil — le critère d'acceptation explicite de M6/M7), § 8.3 (parité à
+  contrat constant : même spec I, oracle mutualisé, différences documentées dans
+  frag-con), § 18 (critères M6 : suite verte + diff nul + parité + même oracle ;
+  M7 : round-trip 100 % + patch fence.i + verrou croisé + export multi-profils),
+  plan § Universalité (M6 change l'OS à ISA constante, M7 change d'ISA — l'ordre
+  isole chaque variable).
+- (2) LE PATRIMOINE MESURÉ : le profil x86-64-linux-elf64 N'EST PAS une page
+  blanche — l'échelle d'auto-hébergement D34 y vit (hachoir m6/ échelon 1 :
+  ELF64 À LA MAIN [ehdr 64 o + 2 phdr, composer_elf], exécuté NATIVEMENT au
+  labo, oracle différentiel FIPS 180-4 sur le terrain natif ; sceau m7/ échelon
+  2 phase 1) ; CONSTAT DU WRITÉ EXISTANT : ET_EXEC à base fixe, 2 PT_LOAD, sans
+  GNU_STACK/RELRO — le jalon monte en gamme (ET_DYN/PIE base aléatoire, trois
+  segments R/RX/RW, PT_GNU_STACK sans X), l'écart est NOMMÉ dans la fiche ;
+  l'AUDIT DE COUPLAGE des contrats : les pré/post m0/m1 portent le paramétrage
+  msx64 (hello-02 : HANDLE/WriteFile/rcx ; libc-01 R1 : « rcx contient dst ») —
+  la VOIE du diff nul est la RÉVISION DE GRANULARITÉ R+1 (arguments formels
+  dans I, convention d'appel vers frag-con, § 8.3-4), invariance des octets
+  Windows ASSERTÉE.
+- (3) LES CONSTATS LABO DATÉS (faisabilité vérifiée AVANT d'écrire le plan) :
+  keystone 0.9.2 n'a PAS KS_ARCH_RISCV (l'assemblage RISC-V n'existe pas dans
+  la chaîne — un LIVRABLE du jalon M7, pas une surprise) ; capstone 5.0.7
+  désassemble RV64 (constaté sur octets : addi décodé) ; qemu-riscv64 ABSENT du
+  bac à sable (prérepos chantier M7-(a)) ; le bac à sable EST Linux x86-64
+  (l'oracle du jalon M6 s'exécutera NATIVEMENT — plus fort que l'émulation
+  full-PE du primaire).
+- (4) LES DEUX FICHES DE PROFIL (docs/PROFIL_x86-64-linux-elf64.md,
+  docs/PROFIL_riscv64-linux-elf64.md) : les 7+1 éléments chacune, ACQUIS vs À
+  PRODUIRE distingués — SysV (zone rouge 128 o LE PIÈGE INVERSE, XMM tous
+  volatils, 4e argument syscall par R10), syscalls −errno fail-closed (table
+  ERRNOS miroir HRESULTS), patch mprotect + cohérence I-cache matérielle (SDM
+  vol. 3 § 8.1.3) ; RV64IMA+Zifencei SANS C (instructions 4 o — choix assumé),
+  psABI LP64 (AUCUNE zone rouge — le piège inverse de SysV), table asm-generic
+  avec garde anti-table-x86 (write=1 = refus nommé : la parité est SÉMANTIQUE,
+  jamais lexicale), séquence patch scratch+fence.i en sept gestes (portée du
+  fence.i = cœur courant, mono-fil au jalon — frontière nommée), NOP canonique
+  0x13 / garde ebreak, l'exécuteur qemu avec la RÉSERVE INSTRUMENTALE nommée
+  (le noyau et les syscalls réels, l'ISA émulée — jamais déguisée).
+- (5) LE PROGRAMME M6/M7 (PLAN_MILESTONES.md, section « ouvert le 04/11/2026,
+  D149 ») : M6 (a) durcissement format + ERRNOS ; (b) corpus paritaire (audit
+  A/B/C, révision de granularité, diff nul MESURÉ PAR SCRIPT, oracle m1 régénéré
+  VERT sur l'instance Linux, parité § 8.3 par exécution) ; (c) suite de
+  conformité (modèle m5) + scellage 0.7.0-rc.1 avec contrôle D146 ADAPTÉ
+  (exécution full-ELF à la base réelle — l'image PIE au noyau, un pointeur nu
+  y meurt comme sur le terrain) ; (d) LE PATCH EN PRODUCTION — le chantier
+  M5-(c) refermé : tcp-07 instancié (mprotect) et EMBARQUÉ, bascule du journal
+  PENDANT le trafic, rollback, zéro régression, kit terrain au coffre /test,
+  run WSL2/VM, verdict sur pièces (D138/D145/D148) → finale 0.7.0. M7 (différé
+  derrière M6) : (a) assembleur RV64 + qemu ; (b) la TROISIÈME instanciation
+  de la même couche I ; (c) patch fence.i + verrou croisé multi-profils ;
+  (d) export multi-profils aux CINQ étapes → finale 0.8.0. FRONTIÈRES NOMMÉES :
+  corpus nominal M6 RESTREINT (le serveur écho complet de M2 est un chantier
+  OUVERT, jamais une réduction silencieuse) ; TROIS décisions développeur
+  attendues (terrain M6 : WSL2 recommandé / VM ; terrain M7 : qemu + réserve ;
+  aval du report M5-(c)) — aucune ne bloque M6-(a). Convention de dossiers :
+  unix/ (M6) et riscv/ (M7), m6/ et m7/ demeurent l'échelle D34.
+- (6) LES CONSIGNATIONS D'ÉTAT : PLAN_MILESTONES préambule (chantier M5-(b)
+  RÉALISÉ le 04/11 — critère (b) de D136 VERT sur pièces, JALON M5 FRANCHI ;
+  (c) REPORTÉ), vue d'ensemble (ligne M5 franchie), tableau programme M5
+  ((a)/(b)/(c) à jour) ; PROTOCOLE_TRIADE préambule (M0–M5 franchis, M6/M7
+  ouverts) + § 18 (M5 franchi 04/11 balise 0.6.0 ; M6/M7 ouverts, fiches
+  référencées) — le PDF v0.6.1 se régénère par le mécanisme D17/D134, empreinte
+  consignée PAR LE BUILD.
+- (7) L'ÉCART D81 FERMÉ (scripts/corriger_phrase_racine.py, fail-closed) : le
+  PHRASE-CONTROLE-COFFRE.txt racine Drive portait 59 o / 3 lignes (ligne 1 ==
+  phrase du dépôt, recoupé en mémoire SANS affichage), l'ouverture ÉCHOUAIT
+  (« déchiffrement impossible »), la copie du dépôt (33 o) ouvrait (rc=0) —
+  MUTATION APRÈS preuves (upload_update), re-téléchargement IDENTIQUE octet
+  pour octet, ouverture par le fichier RAPATRIÉ VERT (rc=0) ; coffre INTÈGRE
+  (md5 23a2987a…, lecture seule) ; IDEMPOTENCE CONSTATÉE (re-exécution :
+  ÉCART AU CONSTAT, AUCUNE MUTATION, rc=1).
+- (8) CONSIGNATIONS : DECISIONS +D149 PAR SCRIPT (à la suite de D148),
+  JOURNAL_TRAVAIL +Entrée 144 PAR SCRIPT (ordre 143<144<marqueur, rejeu REFUSÉ
+  fail-closed), ce worklog +Task ID 62 ; scripts suivis : corriger_phrase_racine.py,
+  inserer_d149.py, inserer_entree_144.py.
+- FRONTIÈRES : AUCUNE balise posée (geste de PLAN — la 0.7.0-dev.1 viendra du
+  premier build M6) ; scellé 0.6.0, cartes m0-m5, sceau ONZE arbres, arbres I,
+  fixtures v5 : INTACTS ; aucune suppression Drive, corbeille non vidée ;
+  .keys/ gitignoré ; D139 ouverte non bloquante ; la seule mutation Drive du
+  geste est la correction D81 PRÉVUE (fichier phrase racine, avant/après
+  attestés).
+- SUITE : LE CHANTIER M6-(a) — le durcissement format (writer ET_DYN/PIE +
+  GNU_STACK + segments R/RX/RW, table ERRNOS, unix/layout.py) ; les décisions
+  développeur (terrain WSL2/VM, réserve qemu, aval du report M5-(c)) peuvent
+  tomber au fil de l'eau.
+
+Stage Summary:
+- Le plan des jalons M6/M7 est ÉCRIT et ANCÉ DANS LE RÉEL : les fiches de
+  profil complètes précèdent le premier octet (l'exigence du manuel honorée),
+  le programme part du fait que la chaîne ELF64 vit déjà (échelle
+  d'auto-hébergement D34) et nomme ce qui manque (parité, diff nul, durcissement
+  format, patch en production) ; les constats labo sont datés et vérifiés
+  (keystone sans RISC-V : l'assembleur RV64 est un livrable, pas une surprise).
+- Le chantier M5-(c) est reporté AU M6-(d) de façon EXPLICITE — le critère
+  « patch à chaud du journal en production » sera démontré sur le profil Linux,
+  moteur tcp-07 embarqué. L'écart D81 racine Drive est FERMÉ (le fichier
+  ouvre le coffre, la remise est la phrase seule, le coffre n'a pas bougé).

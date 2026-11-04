@@ -24,7 +24,7 @@
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.6.1 — le niveau du coffre neuf (CF1/CF2/CF3) devient l'arbitrage du développeur à la création (D137) ; la v0.6.0 avait accompli la souveraineté cryptographique (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; état des jalons constaté : M0–M4 franchis (balises 0.2.0 à 0.5.0), M5 ouvert (D133)
+- Version : v0.6.1 — le niveau du coffre neuf (CF1/CF2/CF3) devient l'arbitrage du développeur à la création (D137) ; la v0.6.0 avait accompli la souveraineté cryptographique (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; état des jalons constaté : M0–M5 franchis (balises 0.2.0 à 0.6.0 — M5 rentré le 04/11/2026, Entrée 143/D148), M6/M7 ouverts (D149 — programme M6/M7 au plan, fiches de profil au dépôt)
 - Date : 31 octobre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
@@ -1163,9 +1163,9 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M2 | Patch à chaud | remplacement du bloc d'écho en exécution, sans interruption ; rollback démontré ; taux de régression post-patch nul | **franchi** 27/10/2026 — balise 0.3.0, boucle § 5 démontrée sur machine réelle (D43) |
 | M3 | Entrées non fiables | un million de requêtes fuzzées sans crash ; proxy transparent ; contrats renforcés sur la surface de parsing | **franchi** 28/10/2026 — balise 0.4.0 (D74) |
 | M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | **franchi** 29/10/2026 — balise 0.5.0 (D104 : run 17-H — S49 OK + témoin HTTP/1.1 200 + S05C 2b6481a1) |
-| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives ; programme d'étapes et critères dans `PLAN_MILESTONES.md` | **ouvert** 31/10/2026 (D133 — empreintes par build, interception VM, patch du journal en production) |
-| M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | à venir |
-| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | à venir |
+| M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives ; programme d'étapes et critères dans `PLAN_MILESTONES.md` | **franchi** 04/11/2026 — balise `0.6.0` (Entrée 143, D148 : critère (b) de D136 constaté VERT sur pièces au run e4 ; le chantier (c) « patch du journal en production » reporté au programme M6 par D149 — démonstration sur le profil Linux, moteur embarqué) |
+| M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | **ouvert** 04/11/2026 (D149 — programme M6/M7 au plan, fiche `docs/PROFIL_x86-64-linux-elf64.md`) |
+| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | **ouvert** 04/11/2026, exécution différée derrière M6 (D149 — fiche `docs/PROFIL_riscv64-linux-elf64.md`) |
 
 M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutable, exécution
 sans compilateur ; il est franchi. M2 est le jalon de vérité — le patch à chaud sur code
