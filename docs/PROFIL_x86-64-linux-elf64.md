@@ -146,8 +146,9 @@ est donc désappris sélectivement, jamais globalement.
   immédiat, fail-closed explicite (le modèle m5/m4 transposé : mêmes qwords de
   garde, image ELF).
 - **Registre des versions acceptées** : LICENSE anti-rollback amendé à chaque scellage
-  (modèle D147) ; plancher posé à `0.7.0-dev.1`, balise du jalon M6 = **0.7.0**
-  (rc.1 → finale après run terrain vert).
+  (modèle D147) ; plancher posé à `0.7.0-dev.1`, balise du jalon M6 = **`0.7.0` SCELLÉE**
+  (rc.1 au chantier (c) ; la FINALE posée le 05/11/2026 sur run terrain WSL2 vert
+  recoupé sur pièces — Entrée 149/D154).
 - **ACQUIS PAR LE CHANTIER M6-(c) (05/11/2026, Entrée 147)** : le scellage
   `0.7.0-rc.1` est POSÉ avec le contrôle D146 adapté EXÉCUTÉ AU SCELLAGE
   même (modèle D147 — `unix/controle_base_reelle.py` : 6 bases noyau
@@ -158,6 +159,19 @@ est donc désappris sélectivement, jamais globalement.
   est INTACT (sha dd14195c… — le scellage est un fait de carte) ; le
   registre des versions acceptées vit au code (`BALISES_LIGNEE`, plancher
   `0.7.0-dev.1`).
+- **ACQUIS PAR LE CHANTIER M6-(d), LA FINALE (05/11/2026, Entrée 149)** : la
+  finale `0.7.0` est SCELLÉE sur le run terrain recoupé VERT — le kit m6d
+  exécuté par la machine du développeur (WSL2, noyau
+  `6.18.54.1-microsoft-standard-WSL2`, UN AUTRE noyau que celui du labo,
+  ASLR complet `randomize_va_space=2` ; 16/16 constats PASS ; le recoup
+  labo 22/22 sur pièces croisées — D154) : `--sceller-final` a exécuté la
+  même chaîne que le rc (D146 adapté + cristallisation 10/10 + conformité
+  7/7 — la suite exécutant la démonstration M5-(c)) au geste même, la
+  bascule rc.1 → 0.7.0 dans frag-bld (occurrence unique assertée, le
+  re-scellage vérifié en mémoire avant l'unique écriture), l'artefact
+  INTACT (sha dd14195c… — le scellage est un fait de carte) ; les gardes
+  VIVANTES constatées : re-scellage REFUSÉ, reconstruction REFUSÉE, la
+  balise PRÉSERVÉE par la re-vérification.
 - Le scellage du jalon (rc et finale) exécute le **contrôle D146 adapté** : aucune
   balise sans exécution **full-ELF à la base réelle** — au labo l'image PIE se charge
   par le noyau à une base aléatoire authentique : un pointeur nu ou un RVA mal
@@ -215,6 +229,18 @@ complet sur la machine du développeur : le rituel ×3 à l'ASLR du noyau
 concurrence réelle (Q3), le refus EACCES PAR LE NOYAU de la machine
 (cartographie partagée lecture seule — aucun shim), la zéro régression
 (sha re-relu + rituel rejoué) ; les pièces naissent dans preuves-m6/
-(temoin + journal + VERDICT post-mortem). **Le run VERT sur pièces pose
-la finale 0.7.0 (le jalon M6 franchi) — le scellage final attend le
-terrain, jamais le labo à sa place.**
+(temoin + journal + VERDICT post-mortem). **ACQUIS (05/11/2026, Entrée 149) :
+LE RUN EST VENU ET VERT — LA FINALE `0.7.0` SCELLÉE, LE JALON M6 FRANCHI.**
+La machine du développeur (WSL2 — la recommandation D149 suivie ; le premier
+geste, lancé sous Windows natif, était mort NOMMÉ AVANT T0 : `libc.so.6`
+introuvable — le fail-closed tient hors terrain, D154 : LE TERRAIN D'UN KIT
+FAIT PARTIE DE SON CONTRAT) a rendu son verdict **VERT 16/16** sur le noyau
+`6.18.54.1-microsoft-standard-WSL2` — UN AUTRE noyau que celui du
+laboratoire, l'ASLR complet constaté (`randomize_va_space=2`), le scellé
+relu `dd14195c…` avant tout geste ; les trois pièces renvoyées au coffre
+`/test/preuves-m6/`, le RECOUP labo VERT 22/22 sur pièces croisées
+(`scripts/recouper_run_m6d.py` — D154 : le verdict du labo se rend sur
+pièces croisées, jamais sur console), et la finale `0.7.0` scellée au geste
+même — **la portabilité inter-OS est une propriété démontrée** : le MÊME
+corpus, la MÊME couche I, deux systèmes d'exploitation, deux noyaux
+constatés, le diff nul mesuré et rejoué.

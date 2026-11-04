@@ -3159,3 +3159,32 @@ Stage Summary:
   rc.1 (INTACTE — la re-vérification du geste l'a re-signée sous sa
   balise), l'artefact sha dd14195c… IMMUEABLE, le scellage final 0.7.0
   attend le run terrain vert du développeur (le kit m6d est AU COFFRE).
+
+## Task ID 67 — « preuves déposées dans le dossier /test du drive » : LE JALON M6 FRANCHI — LE RUN TERRAIN M6-(d) VERT SUR PIÈCES (le kit m6d exécuté par la machine du développeur : WSL2, noyau 6.18.54.1-microsoft-standard-WSL2 — UN AUTRE noyau que celui du labo, ASLR complet randomize_va_space=2, le scellé relu dd14195c… avant tout geste, 16/16 constats PASS ; le premier geste du développeur, lancé sous Windows natif, était mort NOMMÉ AVANT T0 — libc.so.6 introuvable : le fail-closed tient hors terrain) ; LE RECOUP LABO VERT 22/22 SUR PIÈCES CROISÉES (scripts/recouper_preuves_m6d.py + scripts/recouper_run_m6d.py : les trois pièces md5 contrôlés contre le coffre, témoin ↔ journal ↔ verdict recoupés ENTRE EUX, l'arithmétique RECOMPTE [800+400==1200 ; 778+560==1338 ; 14 890 o émis == attendus], les constats vérifiés contre la SOURCE du scénario, le noyau CONSTATÉ distinct, l'artefact RECALCULÉ au geste même — le premier passage avait ÉCHOUÉ NOMMÉ : le défaut était dans l'INSTRUMENT du recoup, arguments inversés, corrigé et rejoué, les pièces immuables) ; LA FINALE 0.7.0 SCELLÉE au geste même (--sceller-final : D146 adapté vert + cristallisation 13×10/10 + conformité 7/7 AU geste — la suite EXÉCUTANT la démonstration M5-(c) — bascule rc.1→0.7.0 dans frag-bld occurrence unique assertée, re-scellage vérifié en mémoire avant l'unique écriture, verrou croisé 13/13, l'artefact INTACT sha dd14195c… — le scellage est un fait de carte) ; LES TROIS GARDES VIVANTES (re-scellage REFUSÉ, reconstruction REFUSÉE, la balise 0.7.0 PRÉSERVÉE par la re-vérification — oracle 76 631 cas verts) ; D154 née (05/11)
+
+**Détail.** Les trois pièces (temoin-m6d.txt b425e831…, scenario-m6d-journal.log
+87d340d7…, VERDICT-run-m6d.txt 28345bce…) rapatriées md5 contrôlés vers
+download/preuves-run-m6d/ (D99) ; le recoup fail-closed rend son verdict ÉCRIT
+(VERDICT-recoup-m6d.txt) ; la finale scellée, le tableau de bord suit
+(jalon=M6 artefact=corpus version=0.7.0) ; consignations : Entrée 149 PAR
+SCRIPT, D154 PAR SCRIPT, PLAN § État du programme + la ligne M6 du tableau
+(FRANCHI 05/11 — balise finale 0.7.0) + la ligne (c) M5 refermée,
+PROTOCOLE_TRIADE en-tête + § 18 (M0–M6 franchis, M7 DÉBLOQUÉ), fiche de
+profil § 8 (balise SCELLÉE + ACQUIS la finale) + § 10 (ACQUIS le run venu et
+vert) ; le PDF formel v0.6.1 BYTE-IDENTIQUE (l'état des jalons vit aux sources
+de travail — addendum Task 62) ; le LISEZMOI-preuves.txt du réceptacle /test
+(disparu au dépôt des pièces) RESTAURÉ par deposer_kit_m6d.py idempotent ; la
+vague m6d DEMEURE courante au coffre (la clôture D143 des pièces — leur
+déplacement vers archives-preuves/preuves-run-m6d/ avec le verdict du recoup —
+attend le dépôt du kit M7, modèle e4) ; scripts suivis :
+rapatrier_preuves_m6d.py, recouper_run_m6d.py, inserer_entree_149.py,
+inserer_d154.py, passe_bundle_m6final.py ; livrables :
+download/preuves-run-m6d/ (les trois pièces + VERDICT-recoup-m6d.txt),
+unix/carte-corpus/ (la balise 0.7.0).
+
+- SUITE : LE JALON M7 — la portabilité inter-ISA (l'assembleur RV64IMA+Zifencei
+  maison ou un moteur tiers à la même porte, qemu-riscv64 à installer avec
+  réserve instrumentale nommée, la TROISIÈME instanciation de la MÊME couche I
+  dans riscv/, le patch scratch+fence.i, le verrou multi-profils, la finale
+  0.8.0) ; la fiche docs/PROFIL_riscv64-linux-elf64.md attend son premier
+  octet.
