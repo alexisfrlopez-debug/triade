@@ -3130,3 +3130,32 @@ Stage Summary:
   le flux mesuré n'est à personne ; un livrable ne se dépose que vert à
   l'extraction vierge).
 - RESTE LE RUN DU DÉVELOPPEUR : le seul juge du scellage final 0.7.0.
+
+- PASSATION D141 rejouée au geste « chantier M6-(d), partie laboratoire
+  accomplie / la démonstration M5-(c) verte + le kit terrain m6d au
+  coffre » : le bundle courant triade-history-060-a581d1e.bundle (git
+  bundle --all, 15 759 307 o, md5 3fc639bc…) déposé au MIROIR, ASSERTÉ
+  avant dépôt (branche jalon pointe sur a581d1e — il porte LE QUATRIÈME
+  GESTE DU JALON M6 AVEC sa consignation : la démonstration M5-(c)
+  refermée unix/demo_patch.py [la bascule pendant le trafic V5, la
+  concurrence réelle Q3, le journal cohérent octet pour octet, le
+  rollback, la zéro régression — sur l'artefact scellé relu, CINQ
+  passages 5/5 verts] + la suite de conformité qui EXÉCUTE désormais la
+  démonstration [l'élément 5 devenu CONTRÔLE RÉEL, VERTE 7/7 — 37
+  contrôles] + LE KIT TERRAIN unix/terrain/ [le scénario AUTONOME
+  python3/ctypes, la cartouche pré-assemblée à l'adresse factice HAUTE
+  recoupée contre l'instrument VIVANT de l'oracle OCTET POUR OCTET,
+  relogée au terrain par le fixup imm64 unique ; le kit ÉPROUVÉ PAR
+  EXTRACTION VIERGE : VERT 16/16 — la première épreuve a nommé la
+  pollution du flux mesuré, D153] + le dépôt au coffre /test [la vague
+  m6d : kit-m6d.zip md5 67b85983… + LISEZMOI-m6d.txt + preuves-m6/ né ;
+  la vague e4 consommée archivée D143 md5 intacts] + Entrée 148 + D153 +
+  worklog Task 66) ; l'ancien 060-5328156 (md5 e15e2c2f… recoupé AVANT)
+  ARCHIVÉ VERSIONNÉ dans archives-bundles/ (14 archives, jamais
+  supprimé) ; /test sans copie de bundle (recoupé) ; GitHub porté à la
+  pointe dans le même geste (push 402508f..a581d1e, recoupé ls-remote) ;
+  script suivi : passe_bundle_m6d.py ; FRONTIÈRES : aucune suppression
+  (l'archivage est un déplacement), la carte du corpus vit SOUS 0.7.0-
+  rc.1 (INTACTE — la re-vérification du geste l'a re-signée sous sa
+  balise), l'artefact sha dd14195c… IMMUEABLE, le scellage final 0.7.0
+  attend le run terrain vert du développeur (le kit m6d est AU COFFRE).
