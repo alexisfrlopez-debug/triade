@@ -3188,3 +3188,26 @@ unix/carte-corpus/ (la balise 0.7.0).
   dans riscv/, le patch scratch+fence.i, le verrou multi-profils, la finale
   0.8.0) ; la fiche docs/PROFIL_riscv64-linux-elf64.md attend son premier
   octet.
+
+- PASSATION D141 rejouée au geste « JALON M6 FRANCHI / le run terrain VERT
+  sur pièces + la finale 0.7.0 scellée » : le bundle courant
+  triade-history-070-642e5b8.bundle (git bundle --all, 15 801 591 o, md5
+  91c47a53…) — PREMIER DE LA SÉRIE 070 (l'ère de la balise 0.7.0) — déposé
+  au MIROIR, ASSERTÉ avant dépôt (branche jalon pointe sur 642e5b8 — il
+  porte LE GESTE QUI FRANCHIT LE JALON M6 AVEC sa consignation : le run
+  terrain de la machine du développeur [WSL2, noyau
+  6.18.54.1-microsoft-standard-WSL2 UN AUTRE que celui du labo, ASLR
+  complet, VERT 16/16 — le premier geste hors terrain mort NOMMÉ avant
+  T0, D154] + LE RECOUP LABO 22/22 sur pièces croisées [l'instrument du
+  recoup corrigé sur pièces après son ÉCHEC NOMMÉ, les pièces immuables]
+  + LA FINALE 0.7.0 SCELLÉE [D146 + cristallisation 13×10/10 + conformité
+  7/7 au geste même, la bascule rc.1→0.7.0 dans frag-bld, verrou croisé
+  13/13, l'artefact INTACT dd14195c…] + les gardes vivantes + Entrée 149
+  + D154 + worklog Task 67) ; l'ancien 060-a581d1e (md5 3fc639bc…
+  recoupé AVANT) ARCHIVÉ VERSIONNÉ dans archives-bundles/ (15 archives,
+  jamais supprimé) ; /test sans copie de bundle (recoupé) ; GitHub porté
+  à la pointe dans le même geste (push, recoupé ls-remote) ; script suivi
+  : passe_bundle_m6final.py ; FRONTIÈRES : aucune suppression (l'archivage
+  est un déplacement), la carte du corpus vit SOUS 0.7.0 (INTACTE — le
+  scellage est un fait de carte), l'artefact sha dd14195c… IMMUABLE, le
+  jalon M7 est DÉBLOQUÉ (la fiche riscv64 attend son premier octet).
