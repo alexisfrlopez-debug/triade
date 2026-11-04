@@ -40,6 +40,10 @@ m1/export/
 # Témoins temporaires de l'oracle natif m6 (régénérés à chaque run)
 m6/.tmp/
 
+# Témoins temporaires de l'oracle natif du jalon M6 (unix/, D149 — même
+# convention que m6/.tmp/ : régénérés à chaque run, jamais committés)
+unix/.tmp/
+
 # Variante livraison du superviseur (annexe jetons intégrée, D49) — jamais committée
 terrain/livraison/
 

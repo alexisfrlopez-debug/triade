@@ -1,0 +1,17 @@
+[tableau] jalon=M6-(a) artefact=sonde version=0.7.0-dev.1
+  profil                       : x86-64-linux-elf64 (fiche § 3 — le durcissement)
+  blocs_avec_spec_a_jour        : 4/4 : audit I->C->B (specs, carte, artefact)
+  chaines_I_C_B_tests           : 4/4 : 73 verrous PASS
+  construction                 : 0 erreur / 0 avertissement : build script
+  format_durci                 : ET_DYN (PIE), 3 segments R/RX/RW, PT_GNU_STACK RW sans X, W^X constaté depuis les phdr, offsets==vaddr, RW .bss pur (filesz 0)
+  contrat_erreurs               : table ERRNOS 1 entrée(s) (EBADF nommé, 1 motivée par su-04:E1) ; VERDICT_FATAL=6 (fail-closed) ; exercée en exécution sur les DEUX branches
+  tests_differentiels           : oracle natif 6/6 runs conformes (4 lignes octet pour octet, code 6) ; falsification 11 mutations attrapées (zéro silence)
+  pie_aslr                      : 6 bases distinctes sur 6 exécutions (alignées 0x1000, >= 0x10000) ; base fixe recoupée (setarch -R)
+  reutilisation_heritage        : 0 bloc réutilisé (lignée neuve — la parité du patrimoine est le chantier (b), la sonde démontre le FORMAT)
+  defauts_ouverts               : 0
+  preversions                   : 0.7.0-dev.1 conforme (R10 : monotonie, plancher 0x70000)
+  artefact                      : 8192 octets ; empreinte sha256:f5f0a08fa4f63067ccfbd965…
+  verrou_croise                 : 4 empreintes + signature Ed25519 (R8)
+  [phdr] PT_GNU_STACK drapeaux 6 (RW) SANS X — NX explicite, align 0x10
+  [phdr] 3 PT_LOAD R/RX/RW + PT_GNU_STACK RW sans X — W^X CONSTATÉ depuis les phdr (aucun segment inscriptible exécutable)
+  [phdr] ET_DYN (PIE) : e_entry 0x1140 RELATIF à la base, 3 segments identité offset==vaddr, RW .bss pur (filesz 0)

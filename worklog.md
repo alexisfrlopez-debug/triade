@@ -2636,3 +2636,100 @@ Stage Summary:
   push recoupé) ; script suivi : passe_bundle_plan_m6m7.py ; FRONTIÈRES :
   aucune suppression (l'archivage est un déplacement), les scellés et la
   carte 0.6.0 INTACTS, /test inchangé (8 entrées D143, vague e4 courante).
+
+## Task ID 63 — « continue M6 » : LE CHANTIER M6-(a) ACCOMPLI — LE DURCISSEMENT FORMAT DÉMONTRÉ EN EXÉCUTION (la sonde unix/ : ET_DYN/PIE à base aléatoire CONSTATÉE 6 bases distinctes/6 runs + setarch -R + readelf, 3 segments R/RX/RW, PT_GNU_STACK sans X, W^X DEPUIS LES PHDR, table ERRNOS exercée sur ses deux branches, round-trip 100 %, falsification 11/11) ; LA BALISE 0.7.0-dev.1 POSÉE par le premier build M6 (comme l'annonçait D149) ; D150 née (la table motivée par bloc, l'état qui traverse vit en mémoire) ; Entrée 145, D150 (04/11)
+
+Task: demande du développeur « continue M6 » — la suite annoncée au Task 62
+était le chantier M6-(a), le durcissement format (« aucune décision développeur
+ne le bloque ») : le geste l'exécute jusqu'au vert et le consigne.
+
+Work Log:
+- (0) REPRISE RECROUPÉE : dépôt propre à 2b2853e (pointe = passation du plan
+  M6/M7), git status vide, .keys/ présent (passphrase + graine D27), labo
+  re-vérifié : ASLR noyau actif (randomize_va_space=2), setarch présent,
+  keystone/capstone opérationnels, le bac à sable EST Linux x86-64 (fiche
+  § 10 — l'oracle du jalon s'exécutera NATIVEMENT).
+- (1) LA LIGNÉE DU JALON NÉE (unix/, convention D149-(5) — m6/ et m7/
+  demeurent l'échelle D34) : unix/layout.py (ET_DYN/PIE, 3 segments R/RX/RW,
+  PT_GNU_STACK 0x6474e551 sans X, table ERRNOS {9:1} + VERDICT_FATAL 6,
+  messages, tampon .bss, versions — 0.7.0-dev.1/rc.1/0.7.0, plancher
+  0x00070000) ; unix/I/ (README + QUATRE specs écrites-avant-code : su-01
+  écrire [miroir ah-01, ET instrument déclaré des sondes d'erreur], su-02
+  hex64 [%016lx du noyau], su-03 verdict [la table ERRNOS, miroir
+  tls-02:R1/HRESULTS D79], su-04 principal [_start : SA base par lea rip
+  sur le témoin .rodata, les deux branches de la table exercées, arrêt
+  propre code 6]) ; brouillons étiquetés + unix/outils/auteur.py (le point
+  fixe du modèle, séries f6xxxx par CARTE) ; unix/carte_sonde.py (génération
+  1 au TROISIÈME sel : m2, hachoir D34, jalon unix — clés projet partagées
+  D27).
+- (2) LE WRITER (unix/build_m6.py, modèle build_ah) : chaîne intégrale —
+  couche I auditée (gabarit § 2.2), round-trip keystone/capstone PAR
+  INSTRUCTION, oracle structurel ÉTENDU (appels : les blocs déclarés ∪ les
+  étiquettes locales déclarées — le sous-programme .emit passe la même
+  porte ; syscalls PAR BLOC {1}/{231} ; cibles RIP déclarées ; NOUVEAU :
+  accès [base + RVA] déclarés — le code est indifférent à la base ; _start
+  sans push + pile appariée du sous-programme), composition à la main
+  (ehdr ET_DYN + 4 phdr, e_entry RELATIF 0x1140, .bss pur filesz 0),
+  valider_elf RELIT l'image (W^X depuis les phdr, concordance des tables au
+  layout source unique).
+- (3) L'ORACLE NATIF (le critère du chantier, exécution réelle au labo) :
+  6 runs, quatre lignes octet pour octet et code 6 à chaque fois — la
+  sonde émet SA base (6 bases DISTINCTES, alignées 0x1000 : l'ASLR noyau
+  CONSTATÉ, jamais décrété), setarch -R rend la MÊME base deux fois (la
+  base vient du NOYAU, pas du programme), readelf recoupe (DYN, 3 LOAD
+  R/R E/RW, GNU_STACK RW align 0x10) ; la table ERRNOS EXERCÉE en
+  exécution : EBADF nommé (verdict 1, la sonde continue), EFAULT hors
+  table (VERDICT_FATAL 6, ligne fatale, arrêt propre code 6) ;
+  falsification 11 mutations attrapées (zéro silence).
+- (4) LES DEUX LEÇONS ATTRAPÉES PAR LES GARDES (le cœur de D150) : (a) la
+  leçon C1 EN DIRECT — @L_FATAL portait 36, le message réel en fait 37 (le
+  «\n» oublié) : verifier_symboles a REFUSÉ le build AVANT exécution ;
+  (b) le premier .emit mourrait au premier appel (r8/r9 clobber par
+  su-02/su-03, r11 détruit par chaque syscall de su-01 — la sortie rendait
+  deux lignes, l'adresse doublée rendait EFAULT) : l'oracle natif a REFUSÉ
+  fail-closed, JAMAIS un faux vert. Correction : préfixe consommé avant le
+  premier appel, verdict au tampon .bss +32 (TAMPON_NUM), brut en r10
+  (registre interne que ni su-01 ni su-02 ni su-03 ne touchent) — la règle
+  D150 consigne le réflexe.
+- (5) LA CARTE + LE TABLEAU DE BORD : génération 1 de la lignée du jalon
+  (4 fragments chiffrés, signature Ed25519 clés projet, verrou croisé R8
+  4/4, frag-bld « artefact=sonde version=0.7.0-dev.1 profil=
+  x86-64-linux-elf64 »), tableau-de-bord.txt (format durci, contrat
+  d'erreurs, PIE/ASLR, falsification) ; re-vérification --verifier :
+  cristallisation 2/10, verrou croisé re-recoupé.
+- (6) CONSIGNATIONS : JOURNAL_TRAVAIL +Entrée 145 PAR SCRIPT (ordre
+  144<145<marqueur, rejeu REFUSÉ fail-closed), DECISIONS +D150 PAR SCRIPT
+  (à la suite de D149), fiche de profil § 3 (le durcissement passe de À
+  PRODUIRE à ACQUIS PAR LE CHANTIER M6-(a), constats datés et re-vérifiés
+  au chantier qui les touche — keystone/capstone re-vérifiés par le
+  round-trip même, le MÊME moteur que le primaire), PLAN_MILESTONES §
+  État du programme (M6-(a) RÉALISÉ le 04/11, (b)/(c)/(d) attendent), ce
+  worklog +Task ID 63 ; scripts suivis : inserer_entree_145.py,
+  inserer_d150.py, passe_bundle_m6a.py.
+- FRONTIÈRES : la balise 0.7.0-dev.1 est POSÉE (geste de BUILD, jamais de
+  scellage — le scellage 0.7.0-rc.1 viendra du chantier (c) avec le
+  contrôle D146 adapté ; la sonde est un DEV vivant, la garde
+  anti-rollback n'existe pas encore) ; scellé 0.6.0, cartes m0-m5, sceau
+  ONZE arbres, arbres I, fixtures v5, hachoir m6/ (ET_EXEC, VALIDE pour SA
+  lignée — l'écart est NOMMÉ) : INTACTS ; aucune suppression Drive,
+  corbeille non vidée ; .keys/ gitignoré ; D139 ouverte non bloquante.
+- SUITE : LE CHANTIER M6-(b) — le corpus paritaire (audit de couplage A/B/C,
+  révision de granularité R+1 au niveau FORMEL, invariance des octets
+  Windows ASSERTÉE, diff nul MESURÉ PAR SCRIPT, oracle m1 régénéré VERT sur
+  l'instance Linux, un principal propre au jalon) ; puis (c) conformité +
+  scellage 0.7.0-rc.1 (contrôle D146 adapté), (d) le patch en production ;
+  les décisions développeur (terrain WSL2/VM, réserve qemu, aval du report
+  M5-(c)) peuvent tomber au fil de l'eau.
+
+Stage Summary:
+- Le chantier M6-(a) est ACCOMPLI sur pièces : le durcissement format n'est
+  plus une exigence de fiche, c'est un comportement CONSTATÉ en exécution —
+  la sonde calcule et émet sa propre base (l'image PIE vit à la base que le
+  NOYAU choisit), la table ERRNOS rend ses verdicts sur ses deux branches,
+  et le build relit son image pour constater W^X depuis les phdr.
+- Les deux défenses du protocole ont travaillé EN DIRECT : la leçon C1 a
+  refusé l'arithmétique fausse de l'auteur (36 → 37), l'oracle natif a
+  refusé le sous-programme qui mourait au premier appel — deux refus
+  fail-closed, zéro faux vert, la règle D150 en est née.
+- La balise 0.7.0-dev.1 est posée par le premier build M6, exactement comme
+  l'annonçait D149 : la lignée du jalon vit, sa carte au troisième sel.

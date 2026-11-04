@@ -53,15 +53,23 @@ est donc désappris sélectivement, jamais globalement.
 - **ACQUIS (hachoir/sceau)** : ET_EXEC à base fixe, en-têtes écrits à la main
   (ehdr 64 o + 2 phdr 56 o, PT_LOAD RX avec RVA == offset fichier, PT_LOAD RW `.bss`
   pur) — `m6/build_ah.py` `composer_elf()`, artefact exécuté nativement au labo.
-- **À PRODUIRE PAR LE JALON M6 (le durcissement)** :
-  1. **ET_DYN (PIE)** — l'image se charge à une **base aléatoire** (ASLR noyau) ;
-     `e_entry` relatif à la base de chargement ;
-  2. **séparation R/RX/RW en trois segments** : `.rodata` dans un PT_LOAD R distinct
-     (lecture seule structurelle), code RX, données RW ;
-  3. **PT_GNU_STACK** (p_type `0x6474e551`) à drapeaux RW **sans X** — NX explicite ;
-  4. pas de section exécutable inscriptible (W^X), vérifié depuis les phdr.
-- L'écart acquis → jalon est **nommé** : l'ELF minimal auto-hôte (ET_EXEC, base fixe)
-  reste VALIDE pour sa lignée ; le jalon M6 exige l'ELF durci pour l'artefact du jalon.
+- **ACQUIS PAR LE CHANTIER M6-(a) (04/11/2026, `unix/` — la sonde, balise
+  0.7.0-dev.1, D149/D150)** : le durcissement est DÉMONTRÉ en exécution —
+  1. **ET_DYN (PIE)** — l'image se charge à une **base aléatoire** (ASLR
+     noyau), `e_entry` relatif à la base (RVA 0x1140) ; **CONSTATÉ** : 6
+     bases distinctes sur 6 exécutions (alignées 0x1000, >= 0x10000),
+     recoupées sous `setarch -R` (ADDR_NO_RANDOMIZE : même base deux fois —
+     la base vient du noyau, pas du programme) et par `readelf` indépendant ;
+     la sonde calcule sa propre base (`lea rip` sur le témoin `.rodata`,
+     lien-temps soustrait) et l'émet en tête de sortie ;
+  2. **séparation R/RX/RW en trois segments** : table ERRNOS + HEXCHARS +
+     messages dans un PT_LOAD R distinct, code RX, `.bss` pur RW (filesz 0) ;
+  3. **PT_GNU_STACK** (`0x6474e551`) à drapeaux RW **sans X** — NX explicite ;
+  4. pas de section exécutable inscriptible (W^X), **vérifié depuis les phdr
+     par le build** (`unix/build_m6.py` `valider_elf()` relit son image).
+- L'écart acquis → jalon est **nommé** : l'ELF minimal auto-hôte (ET_EXEC,
+  base fixe) reste VALIDE pour sa lignée ; l'artefact du jalon exige l'ELF
+  durci — la sonde `unix/` le porte, le corpus du chantier (b) l'héritera.
 
 ## 4. Interface système — syscalls directs
 

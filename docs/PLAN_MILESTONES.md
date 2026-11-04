@@ -273,6 +273,25 @@ chantier qui les touche. **Convention de dossiers (D149)** : le jalon M6 vit dan
 l'échelle d'auto-hébergement (emprunt de nommage consigné, le présent programme ne
 le défait pas).
 
+**État du programme.** **Chantier M6-(a) RÉALISÉ le 04/11/2026** (Entrée 145,
+D150) — la sonde `unix/` (quatre blocs `su`, série f6xxxx, carte génération 1
+au TROISIÈME sel, artefact 8 192 o) porte le durcissement DÉMONTRÉ en
+exécution : ET_DYN/PIE à **base aléatoire CONSTATÉE** (6 bases distinctes sur
+6 exécutions, alignées 0x1000 — la sonde calcule et émet SA base ; recoupé
+sous `setarch -R` : même base deux fois, la base vient du noyau ; recoupé par
+`readelf` indépendant), **W^X constaté depuis les phdr** (3 PT_LOAD R/RX/RW +
+PT_GNU_STACK RW sans X, offsets == vaddr, .bss pur), **table ERRNOS exercée
+sur ses deux branches** (EBADF nommé → verdict 1 ; EFAULT hors table →
+VERDICT_FATAL 6, arrêt propre code 6), **round-trip 100 %** (133
+instructions), falsification 11/11 (zéro silence) — la leçon C1 a attrapé
+l'arithmétique de l'auteur en direct (L_FATAL 36 → 37 octets) et l'oracle
+natif a refusé le premier `.emit` (les volatils r8/r9/r11 ne traversent pas
+les appels : le verdict vit en `.bss`). **La balise 0.7.0-dev.1 est POSÉE**
+— par le premier build M6, exactement comme l'annonçait D149. Les chantiers
+(b) corpus paritaire, (c) conformité + scellage 0.7.0-rc.1 et (d) patch en
+production attendent ; les décisions développeur (terrain WSL2/VM, réserve
+qemu, aval du report M5-(c)) demeurent non bloquantes.
+
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|
 | (a) Le durcissement format — l'ELF64 du jalon | le writer du jalon (`unix/build_m6.py`, modèle `m6/build_ah.py`) porte l'image à ET_DYN (PIE, base aléatoire), trois segments R/RX/RW, PT_GNU_STACK sans X ; table ERRNOS (contrat d'erreurs des syscalls, miroir de la table HRESULTS) ; layout `unix/layout.py` (modèle D8) | un ELF64 durci minimal exécuté au labo, l'image PIE chargée par le noyau à une base aléatoire CONSTATÉE ; W^X vérifié depuis les phdr ; round-trip 100 % |
