@@ -1,9 +1,9 @@
-[tableau] jalon=M7-(b) artefact=corpus version=0.8.0-dev.2
+[tableau] jalon=M7-(b) artefact=corpus version=0.8.0-rc.1
   profil                       : riscv64-linux-elf64 (fiche — la parité inter-ISA du patrimoine)
   moteur_notation              : ASSEMBLEUR MAISON as_rv64 (RV64IMA+Zifencei, formats R/I/S/B/U/J, 4 o, SANS extension C ; AMO amoswap au chantier — l'extension A) ; capstone JUGE UNIQUE
   porte_roundtrip              : VERTE — 791 textes (avant) + 1045 encodages légaux (inverse), 100 % — l'extension A couverte
   blocs_avec_spec_a_jour        : 13/13 : audit I->C->B (specs, carte, artefact) — les MÊMES fichiers canoniques que M6 (chargés)
-  chaines_I_C_B_tests           : 13/13 : 1535 verrous PASS (structurels) ; diff nul VERT (4 recoupements)
+  chaines_I_C_B_tests           : 13/13 : 1537 verrous PASS (structurels) ; diff nul VERT (4 recoupements)
   construction                 : 0 erreur / 0 avertissement : build script
   format_durci                 : ET_DYN (PIE), e_machine 0xf3 (EM_RISCV), e_flags 0, 3 segments R/RX/RW, PT_GNU_STACK RW sans X, W^X constaté depuis les phdr (héritage M7-(a)), .bss pur, garde anti-C (taille 4 par instruction)
   corpus_paritaire             : 12 blocs du patrimoine M0-M5 (les révisions R+1 de unix/I/, LES MÊMES fichiers canoniques — aucune copie) + corpus-13 (domaine neuf, modèle ah-09) ; GÉOMÉTRIE MIROIR du plan unix (D8) : les MÊMES RVA, les MÊMES fixtures
@@ -13,8 +13,8 @@
   tests_differentiels          : oracle qemu (réserve D149 — TCG, syscalls réels) : rituel 6/6 les DEUX lignes octet pour octet, code 0 ; bases forcées -R 1G, -R 4G, -B 0x100000000 -R 2G VERTES ; falsification 13 mutations, 12/12 blocs rompus (zéro silence)
   couche_I                     : 13 fichiers unix/I/ empreintés dans frag-prf (la même couche que M6 — la TROISIÈME instanciation)
   defauts_ouverts              : 0
-  preversions                  : 0.8.0-dev.2 conforme (R10 : monotonie, plancher 0x80000 ; la sonde 0.8.0-dev.1 INTACTE)
-  artefact                     : 12288 octets ; empreinte sha256:b34a71474ebd92b8e1cea81c…
+  preversions                  : 0.8.0-rc.1 conforme (R10 : monotonie, plancher 0x80000 ; la sonde 0.8.0-dev.1 INTACTE)
+  artefact                     : 12288 octets ; empreinte sha256:ec343b4e8bebf21c8b29a6da…
   verrou_croise                : 13 empreintes + signature Ed25519 (R8)
   [phdr] PT_GNU_STACK RW SANS X — NX explicite psABI
   [phdr] 3 PT_LOAD R/RX/RW + PT_GNU_STACK RW sans X — W^X CONSTATÉ depuis les phdr (le durcissement M7-(a) hérité)

@@ -3,7 +3,7 @@
 ; Notation explicite générée par outils/auteur.py depuis brouillons/tcp-07-patch-r4.asm
 ; (outil d'arithmétique d'adresses de l'auteur — l'ASSEMBLEUR MAISON outils/as_rv64.py assemble,
 ; capstone 5.0.7 juge unique du round-trip, sa graphie est canonique)
-; Code : 392 o (98 instructions × 4 o — taille fixe, garde anti-C) · padding : 120 o (NOP canonique addi x0, x0, 0)
+; Code : 396 o (99 instructions × 4 o — taille fixe, garde anti-C) · padding : 116 o (NOP canonique addi x0, x0, 0)
 ; Étiquettes résolues : .applique=0x1a98, .fin=0x1b94, .protger=0x1ba4, .refus1=0x1b68, .refus2=0x1b70, .refus3=0x1b78, .refus4=0x1b80, .refus5=0x1b88, .restauration_echouee=0x1b90, .somme=0x1ab8
 ; Arithmétique de l'auteur (ancres auipc+addi, décalages B/J relatifs) :
 ;   0x1a50 -> .refus1 (0x1b68) : décalage +0x118
@@ -127,6 +127,7 @@ mv t2, a0
 mv a0, t0
 addi a1, zero, 1
 slli a1, a1, 0xc
+mv a2, t2
 addi a7, zero, 0xe2
 ecall
 ret

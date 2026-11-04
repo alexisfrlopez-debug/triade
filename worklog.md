@@ -3410,3 +3410,44 @@ Stage Summary:
   le DEP falsifié) + le verrou multi-profils ; puis (d) l'export
   multi-profils + le terrain → la finale 0.8.0 (le terrain sera jugé
   POST-MORTEM ET SUR PIÈCES — D138/D145/D148, ré-établis sur originaux).
+
+
+## Task ID 71 — « synchro git et drive puis continue » : LE CHANTIER M7-(c) ACCOMPLI — LE PATCH fence.i DÉMONTRÉ EN EXÉCUTION + LE VERROU MULTI-PROFILS + LE SCELLAGE 0.8.0-rc.1 : LA SYNCHRO vérifiée SUR PIÈCES (git propre, pointe 6d1b8dd == ls-remote ; Drive série versionnée [070-09ddd06], 17 archives, /test vague m6d courante — le vestige triade-history.bundle pré-D141 hors série, toléré) ; LE DÉMONSTRATEUR INVITÉ `riscv/demo` (f72001 demo-patch, 191 instructions, 764 o, à 0x2000 dans la réserve RX — LES MÊMES blocs du corpus + le démonstrateur, le modèle unix/demo_patch.py PORTÉ EN INVITÉ : sous qemu le scénario vit DANS l'invité) : LA BASCULE PENDANT LE TRAFIC — 1 200 usages de l'ENTRÉE du journal, l'apply ENTRE 399/400, le rollback ENTRE 799/800, la transcription OCTET POUR OCTET (15 425 o), 800 v1 + 400 v2 (marque j2:), L'EFFET AU GESTE MÊME (j2: verdict 12 o / verdict 8 o), le retour à l'état image (entrée == ENTREE_SAUVEE, remplaçant DORMANT, verrou rendu), LES REFUS 1/2/3/4 (l'absent et la somme par mutation IN-GUEST de la table R10 — mprotect par le démonstrateur, restaurée), LE DEP FALSIFIÉ (0x7→0x3 : SIGSEGV au premier apply, 4 290 o EXACTS), la falsification du démonstrateur (rompu essai 1), LES BASES FORCÉES (transcription identique), ZÉRO RÉGRESSION (corpus relu + rituel rejoué) ; LA CORRECTION tcp-07 (D157) : le PORT avait OUBLIÉ le marshalling du prot (.protger ne passait jamais a2 — mprotect recevait 0xB de débris, la page perdait son bit X, ACCERR) — nommé au premier apply par la démonstration, la pièce par QEMU_STRACE (PROT_SEM — un prot dans AUCUN plan), UNE ligne (`mv a2, t2` — l'équivalent du mov rdx, rdi x86-64), le corpus REBUILDÉ sha256 ec343b4e… (b34a7147… demeure le record de l'Entrée 152 — append-only) ; QUATRE leçons (D157 : le port n'est conforme que CHEMIN RÉEL exécuté ; le journal de l'exécuteur est une PIÈCE ; le sous-programme qui appelle SAUVE ra — .dire ; D150 réapprise — s10 l'attendu, t0 recalé) ; LE VERROU CROISÉ MULTI-PROFILS VIVANT (26 empreintes DEUX ISA AVANT l'édition, la géométrie miroir [spec/rva/slot identiques], la couche I partagée [13 fichiers mêmes empreintes aux deux cartes], les artefacts voisins intacts) ; LE CONTRÔLE D146 ADAPTÉ VERT (riscv/controle_base_reelle.py : la base CONSTATÉE PAR TRACE in_asm — le premier bloc - e_entry : 0x555555556000 ×6, D155 confirmé ; -R 1G/4G, -B+-R 2G distinctes, transcription identique) ; LA CONFORMITÉ § 8.2 VERTE 7/7 (riscv/conformite_profil.py — 29 contrôles PASS, les éléments constatés depuis l'artefact, la suite EXÉCUTANT le scénario à l'élément 5) ; LA CRISTALLISATION conduite à 10/10 (9 passes) ; SCELLAGE 0.8.0-rc.1 (le verrou multi-profils AVANT l'édition, D146, R6, 7/7 ; la bascule dans frag-bld vérifiée EN MÉMOIRE avant l'unique écriture ; l'ARTEFACT INTACT — le scellage est un fait de carte) ; LES TROIS GARDES VIVANTES (re-scellage REFUSÉ « 0 occurrence », reconstruction REFUSÉE « carte scellée », la re-vérification PRÉSERVE la balise) (05/11)
+
+**Détail.** La séquence du profil (fiche § 5) aux octets ET en exécution :
+mprotect RW (bit X RETENU — D39) → copie → fence rw,rw → LA BASCULE UN mot
+(jal construit en registres) → fence.i → RX ; le verrou tournant amoswap.d
+(mono-fil — fiche § 5 : la concurrence HORS périmètre nommée) ; FRONTIÈRES :
+code 5 STRUCTUREL sous qemu (l'hôte accorde RWX sur mapping privé — la
+branche fail-closed vit dans le bloc) ; le demo n'est PAS un artefact de la
+lignée (pas de carte — l'instrument du chantier, modèle demo_patch.py) ;
+l'incident des reproducers (trois images roulées à la main ont failli faire
+nommer une réserve d'instrument qui n'existait pas — le mprotect invité
+fonctionne PARFAITEMENT sous qemu : l'isolement se mène sur l'image de la
+FAMILLE, D157) ; consignations : Entrée 153 PAR SCRIPT, D157 PAR SCRIPT (à
+la suite de D156), fiche riscv64 (§ 8 la rc.1 scellée + § 9 l'élément 5
+ACQUIS + § 10 le journal de l'exécuteur), PLAN § État (M7-(c) RÉALISÉ) + la
+ligne M7 du tableau (les chantiers (a)(b)(c) réalisés, reste (d)) ; la carte
+du corpus vit SOUS 0.8.0-rc.1, la cristallisation 10/10, le verrou croisé
+13/13 ; livrables : riscv/demo (sha e57fc74b…), riscv/demo_patch.py,
+riscv/verrou_multi_profils.py, riscv/controle_base_reelle.py,
+riscv/conformite_profil.py (+ conformite.txt), le corpus REBUILDÉ (sha
+ec343b4e…), la notation demo-patch (brouillon + générée) ; scripts suivis :
+inserer_entree_153.py, inserer_d157.py.
+
+Stage Summary:
+- LA SÉQUENCE scratch+fence.i est DÉMONTRÉE EN EXÉCUTION sous qemu — la
+  bascule pendant le trafic, 1200 usages, la transcription byte-exact : le
+  patch est UN FAIT DE SESSION INVITÉE, jamais du fichier (l'artefact
+  relu immuable).
+- LE PORT N'EST CONFORME QUE CHEMIN RÉEL EXÉCUTÉ (D157) : tcp-07 se lisait
+  parfaitement et crashait au premier appel — l'oubli du marshalling (a2)
+  ne vivait dans AUCUNE lecture ; la pièce : le strace de l'exécuteur.
+- LE VERROU MULTI-PROFILS VIVANT (26 empreintes DEUX ISA avant l'édition)
+  et LE D146 PAR TRACE (in_asm — le témoin EXTERNE de la base réelle) ;
+  la 0.8.0-rc.1 SCELLÉE, les trois gardes vivantes.
+
+- SUITE : LE CHANTIER M7-(d) — l'export multi-profils + le terrain (le kit
+  qemu-riscv64 au coffre /test ; le run terrain jugé POST-MORTEM ET SUR
+  PIÈCES — D138/D145/D148) → la finale 0.8.0, LE JALON M7 FRANCHI —
+  l'universalité DÉMONTRÉE.

@@ -104,6 +104,11 @@ def verifier_signature(pub: bytes, entete: bytes, fragments: dict,
     base.verifier_signature(pub, entete, fragments, signature)
 
 
+def verifier_listes_blanches(entete_ascii: str) -> None:
+    """Les listes blanches D15 (algorithme/sonde) — délégué à la source."""
+    base.verifier_listes_blanches(entete_ascii)
+
+
 def construire_entete(racine: bytes) -> bytes:
     lignes = [
         f"[carte] version=0.4.0 generation={GENERATION}",

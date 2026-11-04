@@ -71,14 +71,19 @@ _RELATIFS = {"beq", "bne", "blt", "bge", "bltu", "bgeu",
              "j", "jal"}
 
 # Ancres déclarées au layout : nom → (site, cible). Les DEUX de la sonde
-# (chantier M7-(a)) et les TROIS du corpus (chantier M7-(b)) — chaque paire
-# vit AU SITE déclaré, le LO relativement à SON auipc (leçon C1).
+# (chantier M7-(a)), les TROIS du corpus (chantier M7-(b)) et les TROIS du
+# démonstrateur (chantier M7-(c)) — chaque paire vit AU SITE déclaré, le LO
+# relativement à SON auipc (leçon C1). s3 demeure à tcp-07 SEUL (D156 : les
+# registres dédiés par rôle — le démonstrateur ne le touche JAMAIS).
 _ANCRES = {
     "ANCRE_BASE": (L.ANCRE_BASE, L.CIBLE_BASE),
     "ANCRE_BSS": (L.ANCRE_BSS, L.CIBLE_BSS),
     "ANCRE_RODATA": (L.ANCRE_RODATA, L.CIBLE_RODATA),
     "ANCRE_BSS_CORPUS": (L.ANCRE_BSS_CORPUS, L.CIBLE_BSS_CORPUS),
     "ANCRE_ENTREE": (L.ANCRE_ENTREE, L.CIBLE_ENTREE),
+    "ANCRE_D_RODATA": (L.ANCRE_D_RODATA, L.CIBLE_D_RODATA),
+    "ANCRE_D_BSS": (L.ANCRE_D_BSS, L.CIBLE_D_BSS),
+    "ANCRE_D_ENTREE": (L.ANCRE_D_ENTREE, L.CIBLE_D_ENTREE),
 }
 
 
@@ -333,13 +338,19 @@ def NOM(fichier: str) -> str:
         "tcp-11-journal-v2": "journal v2 — le remplaçant (staging, POUR la croissance)",
         "tcp-07-patch-r4": "moteur de patch (mprotect asm-generic 226, fence.i)",
         "corpus-13-principal": "orchestration du corpus paritaire — _start",
+        "demo-patch": "démonstrateur du patch fence.i — _start (chantier M7-(c))",
     }.get(fichier, fichier)
 
 
 def main() -> int:
     verifier = "--verifier" in sys.argv
     corpus = "--corpus" in sys.argv
-    if corpus:
+    demo = "--demo" in sys.argv
+    if demo:
+        blocs = [L.BLOC_DEMO]
+        domaine = "demo"
+        builder = "demo_patch.py"
+    elif corpus:
         blocs = list(L.BLOCS_CORPUS) + [L.BLOC_STAGING]
         domaine = "corpus"
         builder = "build_corpus.py"

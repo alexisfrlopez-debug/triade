@@ -145,13 +145,16 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   R_VERSION ≥ plancher, conformité environnement, arrêt propre fail-closed) —
   l'image est ELF64, le mécanisme est le même, seuls les octets changent.
 - Balise du jalon M7 = **0.8.0** (rc.1 → finale après validation) ; LICENSE
-  anti-rollback amendé à chaque scellage, modèle D147. **La 0.8.0-dev.1 est
-  POSÉE par le premier build du jalon (05/11/2026, chantier M7-(a)) ; la
-  0.8.0-dev.2 est POSÉE par le build du corpus (05/11/2026, chantier M7-(b),
-  Entrée 152) — des gestes de BUILD, jamais de scellage (plancher 0x00080000
-  ; le scellage 0.8.0-rc.1 viendra du chantier (c) avec le contrôle D146
-  adapté à l'exécuteur du jalon : l'image PIE sous qemu à des bases
-  constatées et forcées).**
+  anti-rollback amendé à chaque scellage, modèle D147. La 0.8.0-dev.1
+  (chantier (a)), la 0.8.0-dev.2 (chantier (b)) — des gestes de BUILD ;
+  **la 0.8.0-rc.1 est SCELLÉE le 05/11/2026 (chantier M7-(c), Entrée 153 :
+  le contrôle D146 adapté VERT [base réelle CONSTATÉE PAR TRACE
+  0x555555556000 + 3 bases forcées distinctes] + le verrou croisé
+  multi-profils AVANT l'édition + cristallisation 10/10 + conformité § 8.2
+  7/7 [29 contrôles, la suite EXÉCUTANT la démonstration du patch] ; l'artefact
+  INTACT sha ec343b4e… — le scellage est un fait de carte ; les TROIS gardes
+  vivantes [re-scellage et reconstruction REFUSÉS, la re-vérification
+  PRÉSERVE la balise]).**
 - Contrôle D146 adapté : exécution full-ELF à la base réelle **sur l'exécuteur du
   jalon** (§ 10) avant tout scellage rc/final.
 
@@ -163,7 +166,7 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
 | 2 | ABI d'appel | appels/retours conformes psABI ; AUCUNE zone rouge (frag-con) ; alignement sp 16 |
 | 3 | Format | ET_DYN, trois segments R/RX/RW, PT_GNU_STACK sans X, W^X |
 | 4 | Interface système | numéros asm-generic autorisés PAR BLOC (garde anti-table-x86) ; contrat ERRNOS |
-| 5 | Patch à chaud | séquence scratch + `fence.i` DÉMONTRÉE en exécution, écriture alignée atomique, rollback vivant |
+| 5 | Patch à chaud | séquence scratch + `fence.i` DÉMONTRÉE en exécution, écriture alignée atomique, rollback vivant — **ACQUIS (05/11/2026, chantier M7-(c), Entrée 153 : le DÉMONSTRATEUR INVITÉ `riscv/demo` — la bascule pendant le trafic 1200 usages, apply/rollback ENTRE deux usages, transcription byte-exact 15 425 o, l'effet au geste même, les refus 1-4, le DEP SIGSEGV (4 290 o exacts), la falsification du démonstrateur, les bases forcées ; la correction tcp-07 D157 : `mv a2, t2` — le marshalling du prot oublié au port, nommé au premier apply, la pièce par QEMU_STRACE** |
 | 6 | Notation | round-trip 100 % sur le corpus (assembleur maison + capstone juge) |
 | 7 | Granularité et padding | adresses stables après patch (R7), NOP/ebreak constatés |
 
@@ -205,3 +208,12 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   configurations du chantier (a), VERTES sur le corpus) ; la falsification
   13 mutations 12/12 blocs rompus (zéro silence ; tcp-07 hors-chemin du
   rituel — son scénario complet est le chantier (c)).
+- **ACQUIS (05/11/2026, chantier M7-(c), Entrée 153 — D157)** : LE JOURNAL DE
+  L'EXÉCUTEUR EST UNE PIÈCE — QEMU_STRACE a nommé le marshalling oublié du
+  port (`PROT_SEM` : un prot qui n'est dans AUCUN plan) ; le trace in_asm
+  sert de TÉMOIN de la base réelle (le premier bloc traduit - e_entry) dans
+  le contrôle D146 adapté (controle_base_reelle.py : base 0x555555556000 ×6,
+  3 forçages distincts) ; les reproducers roulés à la main sont un marécage
+  (l'isolement d'un défaut se mène SUR L'IMAGE DE LA FAMILLE — le builder) ;
+  le mprotect invité fonctionne PARFAITEMENT sous qemu (RWX puis RX, D39
+  tenu) — la réserve d'instrument qui aurait été nommée n'existait pas.

@@ -148,6 +148,7 @@ mv t2, a0
 mv a0, t0
 addi a1, zero, 1
 slli a1, a1, 12
+mv a2, t2
 addi a7, zero, @SYS_MPROTECT
 ecall
 ret

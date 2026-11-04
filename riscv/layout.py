@@ -383,3 +383,142 @@ PROT_RWX = 0x7                 # le bit exécution RETENU pendant l'écriture (D
 
 VERSION_DEV2 = "0.8.0-dev.2"   # le corpus paritaire (chantier M7-(b))
 VERSION_U64_DEV2 = 0x00080002
+
+# ============================================================================
+# LE DÉMONSTRATEUR DU CHANTIER M7-(c) — la bascule pendant le trafic, RV64
+# ============================================================================
+"""Plan d'adressage de l'artefact `demo` (le démonstrateur du patch fence.i —
+LE CHANTIER M7-(c) : la séquence scratch+fence.i DÉMONTRÉE en exécution sous
+qemu, la bascule PENDANT le trafic). Le demo est UN INSTRUMENT du chantier :
+il n'est PAS un artefact de la lignée (pas de carte propre — le modèle
+unix/demo_patch.py, l'instrument du jalon M6) ; il réutilise LES MÊMES blocs
+du corpus (la même notation, les mêmes slots, le même staging, la même table
+R10, les mêmes fixtures — l'image ne diffère du corpus QUE par le
+démonstrateur et ses chaînes) :
+
+  - le DÉMONSTRATEUR `demo-patch` (f72001, e_entry 0x2000) vit dans la réserve
+    RX (0x2000-0x2800 — la réserve ebreak du corpus y cède la place au
+    démonstrateur, le reste demeure réserve) ; le corpus-13 (0x1C40) reste À
+    SA PLACE dans l'image (inerte — personne ne l'appelle) ;
+  - les CHAÎNES du démonstrateur (0x5A0-0xA20, segment R — des slots 0x40) ;
+    le SCRATCH itoa (0x3900, .bss — s2+0x500, hors la zone du corpus qui
+    finit à 0x3818) ;
+  - LES TROIS FENÊTRES du démonstrateur (le modèle sr-04, la leçon imm12) :
+    s1 = base+0 (rodata : les chaînes, la table R10), s2 = base+0x3400 (la
+    fenêtre .bss CENTRALE — état/entrée_sauvée/verrou/scratch), s9 =
+    base+0x1840 (la fenêtre d'INSPECTION de l'entrée du journal — l'entrée à
+    +0, la croissance à +0x540). s3 demeure la fenêtre PRIVÉE de tcp-07
+    (D156 : les registres sont dédiés par rôle — le démonstrateur ne touche
+    JAMAIS s3) ; le démonstrateur est _start : AUCUN cadre, sp ≡ 0 mod 16
+    à chaque jal, jamais touché entre les appels (toute sa vie dans les
+    non volatils — s8 = i, s7 = le drapeau v2 (4 = la marque), s11/s5 = les
+    sauvegardes de la table pour les refus).
+
+LE SCÉNARIO (le modèle unix/demo_patch.py — la bascule pendant le trafic) :
+  (a) LE TRAFIC EN SESSION : 1 200 usages de l'ENTRÉE du journal (0x1840 —
+      la cible du patch) ; l'apply ENTRE les usages 399 et 400, le rollback
+      entre 799 et 800 ; le verdict de CHAQUE usage est CONTRÔLÉ SUR PLACE
+      (la longueur rendue == 8 + len(itoa(i)) + marque) ; l'effet constaté
+      au geste même (l'entrée appelée rend « j2: verdict » sous v2, la ligne
+      sans marque sous v1) ;
+  (b) LE RETOUR À L'ÉTAT IMAGE : l'entrée revenue à l'octet près
+      (== ENTREE_SAUVEE), le remplaçant DORMANT (la croissance porte le
+      remplaçant, pas la réserve), le verrou rendu ;
+  (c) LES REFUS NOMMÉS : mode invalide 1, états incohérents 4, staging
+      absent 2 et somme divergente 3 — les DEUX derniers par mutation
+      IN-GUEST de la table R10 (le démonstrateur ouvre la page R par
+      mprotect — LE MÊME SERVICE que le bloc, le geste est nommé dans sa
+      spec), restaurée après chacun ;
+  (d) LA FRONTIÈRE NOMMÉE : code 5 (le service refuse) n'est pas
+      productible sous qemu-user de façon naturelle (l'hôte accorde RWX sur
+      mapping privé) — la branche vit fail-closed dans le bloc (bltz →
+      refus5, constaté structurellement) ; la concurrence réelle est HORS
+      périmètre (fiche § 5 : le corpus M7 est mono-fil — portée de fence.i :
+      le cœur courant) ; le DEP falsifié (0x7→0x3) est une épreuve
+      HOST-SIDE (le mutant du FICHIER, un run séparé — SIGSEGV attendu).
+"""
+
+# --- Le démonstrateur : bloc, entrée, fenêtres --------------------------------------
+
+BLOC_DEMO = ("f72001", "demo-patch:R1", "demo-patch", 0x2000, 0x800)
+DEMO_ENTREE = 0x2000              # e_entry = RVA (le démonstrateur EST _start)
+DEMO_SCRATCH = 0x3900             # .bss (s2+0x500) — le tampon itoa du trafic
+DEMO_SCRATCH_REL = 0x500          # … relativement à s2 (base+0x3400)
+
+# Les fenêtres du démonstrateur (les paires auipc+addi — sites = 3 premières
+# paires d'instructions ; s3 demeure à tcp-07 SEUL — D156, jamais recyclé)
+ANCRE_D_RODATA = 0x2000          # s1 = base + 0 (les chaînes + la table R10)
+CIBLE_D_RODATA = 0x0
+ANCRE_D_BSS = 0x2008             # s2 = base + 0x3400 (la fenêtre CENTRALE)
+CIBLE_D_BSS = 0x3400
+ANCRE_D_ENTREE = 0x2010          # s9 = base + 0x1840 (l'INSPECTION : entrée
+CIBLE_D_ENTREE = 0x1840          # à +0, croissance à +0x540)
+
+# --- Les chaînes du démonstrateur (segment R, slots 0x40, 0x5A0-0xA20) --------------
+
+R_D_TRAFIC = 0x580
+D_TRAFIC = b"trafic "                              # 7 o — le préfixe du trafic
+L_D_TRAFIC = 7
+R_D_NL = 0x588
+D_NL = b"\n"                                       # 1 o — le suffixe du trafic
+L_D_NL = 1
+R_D_VERDICT = 0x58C
+D_VERDICT = b"verdict"                             # 7 o — la ligne de l'épreuve d'effet
+L_D_VERDICT = 7
+R_D_APPLY = 0x594
+D_APPLY = b"demo: PASS apply 0 (usages 399/400)\n"
+L_D_APPLY = 36
+R_D_TRAMP = 0x5B8
+D_TRAMP = b"demo: PASS trampoline (le mot a bascule)\n"
+L_D_TRAMP = 41
+R_D_EFFET = 0x5E4
+D_EFFET = b"demo: PASS effet j2: verdict (v2 effectif)\n"
+L_D_EFFET = 43
+R_D_ROLLB = 0x610
+D_ROLLB = b"demo: PASS rollback 0 (usages 799/800)\n"
+L_D_ROLLB = 39
+R_D_V1 = 0x638
+D_V1 = b"demo: PASS v1-retour (verdict sans marque)\n"
+L_D_V1 = 43
+R_D_PTRAFIC = 0x664
+D_PTRAFIC = b"demo: PASS trafic 1200 verdicts (800 v1 + 400 v2)\n"
+L_D_PTRAFIC = 50
+R_D_REST = 0x698
+D_REST = b"demo: PASS restauration (entree a l'octet)\n"
+L_D_REST = 43
+R_D_DORM = 0x6C4
+D_DORM = b"demo: PASS dormance (croissance habitee)\n"
+L_D_DORM = 41
+R_D_VERROU = 0x6F0
+D_VERROU = b"demo: PASS verrou (rendu un-pour-un)\n"
+L_D_VERROU = 37
+R_D_REFMODE = 0x718
+D_REFMODE = b"demo: PASS refus-mode 1\n"
+L_D_REFMODE = 24
+R_D_REFETAT = 0x730
+D_REFETAT = b"demo: PASS refus-etat 4 (x2)\n"
+L_D_REFETAT = 29
+R_D_REFABS = 0x750
+D_REFABS = b"demo: PASS refus-absent 2\n"
+L_D_REFABS = 26
+R_D_REFSOM = 0x76C
+D_REFSOM = b"demo: PASS refus-somme 3\n"
+L_D_REFSOM = 25
+R_D_FIN = 0x788
+D_FIN = b"demo: VERDICT VERT (fence.i demontre)\n"
+L_D_FIN = 38
+R_D_ECHEC = 0x7B0
+D_ECHEC = b"demo: ECHEC\n"
+L_D_ECHEC = 12
+# LA LEÇON imm12 (D156) APPLIQUÉE AU DÉMONSTRATEUR : les chaînes vivent
+# PACKÉES dans la zone libre 0x580-0x7BC — SOUS la portée de la fenêtre
+# s1 = base+0 (le zone 0x5A0-0xA20 du premier jet dépassait imm12 de un
+# geste : le REFUS NOMMÉ d'as_rv64 ; la zone libre après la table est
+# 0x580-0x7FF, les messages ont été comptés pour y tenir — le plan paie
+# la portée, jamais l'instrument).
+
+# --- Les symboles du scénario (les cibles et fenêtres, vérifiés au build) -----------
+
+A_JOURNAL_DEMO = 0x1840          # l'ENTRÉE du journal — la cible du patch
+A_PATCH_DEMO = 0x1A40
+SYS_MPROTECT_DEMO = 226          # asm-generic (10 : REFUSÉ nommément — la garde)
