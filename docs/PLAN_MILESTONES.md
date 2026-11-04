@@ -307,10 +307,27 @@ mémoire avant l'unique écriture ; l'artefact INTACT sha dd14195c…, le
 scellage est un fait de carte) ; **les gardes VIVANTES sur pièces**
 (re-scellage REFUSÉ, reconstruction REFUSÉE, la balise scellée SURVIT à la
 re-vérification — le registre des versions acceptées vit au code, plancher
-0.7.0-dev.1). Le chantier (d) — le patch en production, le kit terrain au
-coffre /test, le run WSL2/VM du développeur, puis `--sceller-final` → 0.7.0
-si vert — attend ; les décisions développeur (terrain WSL2/VM, réserve qemu,
-aval du report M5-(c)) demeurent non bloquantes.
+0.7.0-dev.1). **Le chantier M6-(d) : LA PART LABORATOIRE EST ACCOMPLIE —
+le chantier M5-(c) REFERMÉ au labo (05/11/2026, Entrée 148, D153)** : la
+démonstration `unix/demo_patch.py` VERTE sur pièces sur l'artefact scellé
+relu (la boucle d'écriture basculée ENTRE DEUX USAGES — tcp-07:R4 V5 ;
+le journal cohérent OCTET POUR OCTET ; la bascule sous CONCURRENCE RÉELLE —
+le qword d'atomicité Q3 posé pendant qu'un fil ouvrier journalise, les DEUX
+formats constatés dans son trafic ; le rollback en pleine session ; le
+retour à l'état image ; la zéro régression — le fichier n'a pas bougé d'un
+octet, le rituel rejoué vert) — et la suite de conformité EXÉCUTE la
+démonstration à chaque passage (l'élément 5 devenu contrôle RÉEL, toujours
+VERTE 7/7 — 37 contrôles) ; **LE KIT TERRAIN AU COFFRE `/test`** (la vague
+m6d : kit-m6d.zip — l'artefact + le scénario AUTONOME python3/ctypes, la
+cartouche PRÉ-ASSEMBLÉE recoupée contre l'instrument de l'oracle octet
+pour octet, relogée au terrain par un fixup imm64 unique — + LISEZMOI +
+preuves-m6/ ; la vague e4 consommée archivée D143 ; le kit EXACT éprouvé
+au labo PAR EXTRACTION VIERGE + RUN : VERT 16/16). RESTE LE RUN DU
+DÉVELOPPEUR (WSL2 recommandé — D149), preuves renvoyées au coffre
+`/test/preuves-m6/`, verdict sur pièces (D138/D145/D148) ; si vert :
+`--sceller-final` pose `0.7.0` — le jalon M6 franchi ; les décisions
+développeur (terrain WSL2/VM, réserve qemu, aval du report M5-(c)) demeurent
+non bloquantes.
 
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|

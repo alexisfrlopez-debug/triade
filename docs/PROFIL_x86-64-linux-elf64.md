@@ -101,9 +101,19 @@ est donc désappris sélectivement, jamais globalement.
   cache I/D est matérielle sur x86-64 (Intel SDM vol. 3 § 8.1.3) ; le trampoline
   exécuté après l'écriture alignée fait foi. C'est l'écart documenté avec RISC-V
   (`fence.i`, fiche `riscv64`).
-- **À PRODUIRE PAR LE JALON** : la démonstration en exécution (bascule pendant le
-  trafic, rollback, zéro régression) — elle porte le chantier M5-(c) reporté
-  (patch à chaud du journal en production, D149).
+- **ACQUIS PAR LE CHANTIER M6-(d) (05/11/2026, Entrée 148)** : la démonstration
+  en exécution est LIVRÉE — `unix/demo_patch.py`, VERT sur pièces sur l'artefact
+  scellé 0.7.0-rc.1 relu (sha dd14195c…, le fichier jamais touché : le patch
+  vit en cartographie privée) : la boucle d'écriture basculée ENTRE DEUX
+  USAGES (1 200 lignes, apply entre 400/401, rollback entre 800/801 — tcp-07:R4
+  V5), le journal COHÉRENT octet pour octet (aucune ligne déchirée, aucun
+  mélange de formats), la bascule sous CONCURRENCE RÉELLE (le qword posé
+  pendant qu'un fil ouvrier journalise — 5 300+ lignes entières, les DEUX
+  formats dans SON trafic, Q3), le retour à l'état image et la zéro
+  régression ; la suite § 9 EXÉCUTE la démonstration à chaque passage
+  (l'élément 5 est devenu un contrôle RÉEL) — le chantier M5-(c) reporté est
+  REFERMÉ au labo ; le run terrain (kit m6d au coffre /test) juge le
+  scellage final.
 
 ## 6. Moteur de notation et round-trip
 
@@ -173,7 +183,11 @@ LE CHANTIER M6-(c) (05/11/2026, Entrée 147) : la suite est LIVRÉE, EXÉCUTÉE
 VERTE 7/7 (37 contrôles PASS, sortie `unix/conformite.txt`) au scellage
 `0.7.0-rc.1` même — les SEPT éléments constatés depuis l'artefact relu,
 jamais déclarés ; le diff nul y est REJOUÉ à chaque passage (une garde qui
-vit, pas un souvenir du chantier (b)).**
+vit, pas un souvenir du chantier (b)). ACQUIS PAR LE CHANTIER M6-(d)
+(05/11/2026, Entrée 148) : l'élément 5 porte désormais LA BASCULE PENDANT LE
+TRAFIC comme contrôle RÉEL — la suite exécute `unix/demo_patch.py` (V5, Q3,
+cohérence octet pour octet, zéro régression) et exige son vert : le scellage
+final re-prouvera le critère M5-(c) à chaque passage.**
 
 ## 10. Terrain — le constat qui resserre la frontière labo/terrain
 
@@ -185,3 +199,22 @@ DISTINCTE du labo (D149 : WSL2 recommandé — noyau Linux complet sur la machin
 Windows 11 du développeur — ou VM Linux isolée dans la lignée des runs e*) : c'est
 la preuve de portabilité réelle (noyau, chargeur et libc éventuels différents),
 les preuves rapportées au coffre `/test` par la boucle d'évidence (§ 8.4, D99).
+
+**ACQUIS PAR LE CHANTIER M6-(d) (05/11/2026, Entrée 148) : le kit terrain
+est LIVRÉ AU COFFRE** — `/test` vit à la vague m6d (kit-m6d.zip +
+LISEZMOI-m6d.txt + preuves-m6/, la vague e4 consommée archivée D143) :
+l'artefact scellé 0.7.0-rc.1 + le scénario AUTONOME (python3 + ctypes
+seulement — la cartouche d'appel PRÉ-ASSEMBLÉE au labo, octets embarqués
+sha256 assertés, relogée au terrain par UN fixup imm64 ; recoupée contre
+l'instrument vivant de l'oracle octet pour octet) + le LISEZMOI ; le kit
+EXACT est ÉPROUVÉ au labo PAR EXTRACTION VIERGE + RUN (16/16 constats
+PASS — D153 : un livrable ne se dépose que s'il est vert à l'extraction,
+jamais par confiance en sa construction). Le scénario rejoue le geste
+complet sur la machine du développeur : le rituel ×3 à l'ASLR du noyau
+(+ base figée si setarch), la bascule pendant le trafic (V5), la
+concurrence réelle (Q3), le refus EACCES PAR LE NOYAU de la machine
+(cartographie partagée lecture seule — aucun shim), la zéro régression
+(sha re-relu + rituel rejoué) ; les pièces naissent dans preuves-m6/
+(temoin + journal + VERDICT post-mortem). **Le run VERT sur pièces pose
+la finale 0.7.0 (le jalon M6 franchi) — le scellage final attend le
+terrain, jamais le labo à sa place.**

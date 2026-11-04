@@ -1,0 +1,603 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""scenario-m6d.py — LE SCÉNARIO TERRAIN M6-(d) : le patch en production,
+le chantier M5-(c) refermé sur le profil Linux.
+
+Généré par scripts/assembler_kit_m6d.py depuis scenario-m6d.py.in (le
+gabarit) — la cartouche d'appel est PRÉ-ASSEMBLÉE au laboratoire (octets
+embarqués ci-dessous, sha256 asserted : le terrain n'exige NI keystone NI
+capstone, seulement python3 + ctypes) et VÉRIFIÉE à l'identique contre
+l'instrument de l'oracle (unix/oracle_corpus.py, la même source assemblée).
+
+Le scénario est AUTONOME et FAIL-CLOSED : chaque constat est tranché
+binaire (PASS/ÉCHEC nommé), le verdict se rend POST-MORTEM (après la mort
+de chaque producteur — D145/D148), et le FICHIER artefact n'est JAMAIS
+écrit (lecture seule : le patch vit dans des cartographies mémoire
+privées de ce processus, le fichier demeure octet pour octet).
+
+Les temps du run :
+  T0 LE TÉMOIN      : l'environnement de la machine (uname, WSL, python,
+                      ASLR noyau) + l'empreinte du corpus SCELLÉ relu
+                      (sha256 dd14195c… attendu — un kit corrompu est un
+                      refus nommé AVANT tout geste) ;
+  T1 LE RITUEL      : ./corpus exécuté TROIS FOIS par le noyau de la
+                      machine (execve réel — l'ASLR choisit la base, le
+                      comportement est identique : la position-indifférence
+                      du patrimoine, D146 au terrain) — exactement les
+                      deux lignes nominales au code 0 ; si setarch est
+                      disponible : un passage à base figée
+                      (ADDR_NO_RANDOMIZE), même sortie (le recoupement du
+                      mécanisme noyau) ;
+  T2 LE PATCH PENDANT LE TRAFIC (LE critère M5-(c)) :
+     (a) le trafic en session : 1 200 usages de la boucle d'écriture, le
+         moteur APPLIQUÉ entre les usages 400 et 401, le RETOUR ARRIÈRE
+         entre 800 et 801 — la boucle CONTINUE, le journal COHÉRENT
+         (octet pour octet : 800 lignes v1, 400 lignes v2 marquées
+         « j2: », aucune déchirée, aucune perdue) ;
+     (b) la bascule sous CONCURRENCE RÉELLE : un fil ouvrier journalise
+         en boucle PENDANT que le conducteur applique / revient /
+         applique encore — la preuve de vie de l'ouvrier AVANT la
+         bascule, chaque ligne ENTIÈRE au format v1 OU v2 (jamais un
+         mélange : le qword d'atomicité Q3), les DEUX formats constatés
+         dans le trafic de l'ouvrier ;
+     (c) le retour à l'état image : l'entrée restaurée octet pour octet,
+         l'état v1, le verrou rendu, le remplaçant DORMANT dans la
+         croissance ;
+     (d) LE NOYAU DE LA MACHINE PARLE : la cartographie PARTAGÉE en
+         lecture seule (descripteur du fichier ouvert en lecture seule) —
+         mprotect EXIGE un descripteur inscriptible : le refus EACCES est
+         le NOYAU qui refuse (code 5 du contrat, aucun octet écrit) ;
+  T3 ZÉRO RÉGRESSION : le fichier artefact n'a pas bougé d'un octet
+                      (sha256 re-relu), le rituel REJOUÉ rend ses deux
+                      lignes au code 0.
+
+Les pièces naissent dans ./preuves-m6/ : temoin-m6d.txt (T0),
+scenario-m6d-journal.log (tout le run), VERDICT-run-m6d.txt (le verdict
+post-mortem). À renvoyer au coffre /test/preuves-m6/ après le run.
+
+Usage : python3 scenario-m6d.py     (depuis le dossier extrait du kit)
+Code de sortie : 0 = VERT ; 1 = ÉCHEC nommé (le verdict dit lequel)."""
+
+import ctypes
+import hashlib
+import os
+import platform
+import re
+import subprocess
+import sys
+import threading
+import time
+
+# --- Le plan du scellé 0.7.0-rc.1 (unix/layout.py — le corpus paritaire) --------
+# Les constantes du plan d'adressage, pour CET artefact (la source unique
+# du jalon ; le scénario les porte en clair — le terrain n'emporte pas le
+# dépôt). L'artefact est relu et son empreinte ASSERTÉE avant tout geste.
+SHA_SCELLE = "@@SHA_SCELLE@@"
+RITUEL = b"TRIADE M1 : minilibc 21/21 OK\ncorpus : autotest 21 vecteurs\n"
+TAILLE_FICHIER = 0x3000
+A_JOURNAL = 0x1840            # la CIBLE du patch (l'entrée du journal tcp-11)
+A_PATCH = 0x1A40              # le moteur tcp-07
+A_CROISSANCE = 0x1D80         # la zone de croissance (le remplaçant y est copié)
+R_TAB_SUM = 0x540             # la porte R10 : (rva, taille, somme) — 1re = staging
+R_VERROU = 0x3800             # le verrou tournant du journal (né déverrouillé)
+R_ETAT_PATCH = 0x3808         # 0 = v1, 1 = v2
+R_ENTREE_SAUVEE = 0x3810      # les 8 octets originaux de l'entrée
+
+# Le trafic (miroir de unix/demo_patch.py — le jumeau de laboratoire)
+N_TRAFIC, K_APPLY, M_ROLLBACK = 1200, 400, 800
+OUVRIER_CAP = 60000
+
+# --- La cartouche d'appel PRÉ-ASSEMBLÉE au laboratoire --------------------------
+# (la MÊME source que l'instrument de l'oracle — unix/oracle_corpus.py —
+# assemblée par keystone au labo pour la base 0, octet pour octet, sha256
+# ci-dessous ; le terrain n'assemble RIEN : il pose ces octets dans une page
+# et exécute — SEUL le fixup unique est reposé à l'exécution : la cartouche
+# embarque l'adresse ABSOLUE de son étiquette .retour (mov r11, imm64),
+# l'imm est recalculé pour l'adresse RÉELLE de la page avant le mprotect RX)
+CARTOUCHE_HEX = "@@CARTOUCHE_HEX@@"
+CARTOUCHE_SHA = "@@CARTOUCHE_SHA@@"
+RETOUR_FIXUP = @@FIXUP_OFF@@      # l'offset de l'imm64 « mov r11, .retour »
+RETOUR_OFFSET = @@RETOUR_OFF@@    # l'offset de l'étiquette .retour (base 0)
+
+CANARIS = [0x4E6F6E566F6C31, 0x4E6F6E566F6C32, 0x4E6F6E566F6C33,
+           0x4E6F6E566F6C34, 0x4E6F6E566F6C35, 0x4E6F6E566F6C36]  # "NonVol1..6"
+FENETRE = 0x200
+PAS_PILE = 0x800
+
+PROT_NONE, PROT_READ, PROT_WRITE, PROT_EXEC = 0, 1, 2, 4
+MAP_PRIVATE, MAP_ANONYMOUS, MAP_SHARED, MAP_FIXED = 0x02, 0x20, 0x01, 0x10
+
+_libc = ctypes.CDLL("libc.so.6", use_errno=True)
+_libc.mmap.restype = ctypes.c_void_p
+
+
+class EchecScenario(Exception):
+    """Tout refus nommé du scénario (fail-closed : jamais un faux vert)."""
+
+
+# --- Le journal du run (les pièces vivent dans ./preuves-m6/) -------------------
+
+DOSSIER_PREUVES = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "preuves-m6")
+FICHIER_TEMOIN = os.path.join(DOSSIER_PREUVES, "temoin-m6d.txt")
+FICHIER_JOURNAL = os.path.join(DOSSIER_PREUVES, "scenario-m6d-journal.log")
+FICHIER_VERDICT = os.path.join(DOSSIER_PREUVES, "VERDICT-run-m6d.txt")
+
+_pieces: list[str] = []          # le journal complet (le flux des constats)
+_controles: list[tuple] = []     # (nom, ok, detail) — le squelette du verdict
+_en_capture = [False]           # fd 1 détourné : la narration ATTEND (jamais
+_en_attente: list[str] = []     # dans le tuyau de la boucle d'écriture)
+
+
+def piece(ligne: str) -> None:
+    _pieces.append(ligne)
+    if _en_capture[0]:
+        _en_attente.append(ligne)     # différée à la sortie de la fenêtre
+    else:
+        print(ligne, flush=True)
+
+
+def constat(nom: str, ok: bool, detail: str = "") -> bool:
+    _controles.append((nom, bool(ok), detail))
+    piece(f"[m6d] {'PASS' if ok else 'ECHEC'} : {nom}" + (f" ({detail})" if detail else ""))
+    return bool(ok)
+
+
+# --- La cartouche : l'appelant natif (registres contrôlés, sorties capturées) ---
+
+class Cartouche:
+    def __init__(self):
+        octets = bytearray(bytes.fromhex(CARTOUCHE_HEX))
+        sha = hashlib.sha256(bytes(octets)).hexdigest()
+        if sha != CARTOUCHE_SHA:
+            raise EchecScenario(f"cartouche : sha256 {sha[:16]}… != embarqué "
+                                f"{CARTOUCHE_SHA[:16]}… — le kit est corrompu")
+        adr = _libc.mmap(ctypes.c_void_p(0), ctypes.c_size_t(0x2000),
+                         ctypes.c_int(PROT_READ | PROT_WRITE),
+                         ctypes.c_int(MAP_PRIVATE | MAP_ANONYMOUS),
+                         ctypes.c_int(-1), ctypes.c_size_t(0))
+        if not adr or adr == ctypes.c_void_p(-1).value:
+            raise EchecScenario("cartouche : mmap impossible")
+        self.code = adr
+        # LE FIXUP UNIQUE : l'imm64 « mov r11, .retour » assemblé pour la
+        # base 0 est REPOSÉ pour l'adresse RÉELLE de cette page — écrit
+        # AVANT le mprotect RX (la page est encore RW), jamais après
+        import struct as _struct
+        _struct.pack_into("<Q", octets, RETOUR_FIXUP, self.code + RETOUR_OFFSET)
+        ctypes.memmove(self.code, bytes(octets), len(octets))
+        # W^X jusque dans l'instrument : la page code passe RX APRÈS l'écriture
+        if _libc.mprotect(ctypes.c_void_p(self.code), ctypes.c_size_t(0x1000),
+                          ctypes.c_int(PROT_READ | PROT_EXEC)) != 0:
+            raise EchecScenario("cartouche : mprotect RX impossible")
+        self.fn = ctypes.CFUNCTYPE(ctypes.c_uint64, ctypes.c_void_p)(self.code)
+        # la pile du bloc appelé : sommet PAR FIL (attribué une fois sous
+        # verrou, réutilisé en séquence — la leçon D152 de la concurrence)
+        self.pile = _libc.mmap(ctypes.c_void_p(0), ctypes.c_size_t(0x10000),
+                               ctypes.c_int(PROT_READ | PROT_WRITE),
+                               ctypes.c_int(MAP_PRIVATE | MAP_ANONYMOUS),
+                               ctypes.c_int(-1), ctypes.c_size_t(0))
+        if not self.pile or self.pile == ctypes.c_void_p(-1).value:
+            raise EchecScenario("cartouche : pile impossible")
+        self.pile_sommet = (self.pile + 0x10000 - 0x200) & ~0xF
+        self._suivant = self.pile_sommet
+        self._sommets_fils: dict[int, int] = {}
+        self._verrou_sommets = threading.Lock()
+
+    def _sommet_du_fils(self) -> int:
+        ident = threading.get_ident()
+        with self._verrou_sommets:
+            if ident not in self._sommets_fils:
+                self._sommets_fils[ident] = self._suivant
+                self._suivant -= PAS_PILE
+            return self._sommets_fils[ident]
+
+    def appeler(self, cible: int, args: list) -> dict:
+        e = (ctypes.c_uint64 * 16)()
+        e[0] = cible
+        for i in range(6):
+            e[1 + i] = args[i] if i < len(args) else 0
+        sommet = self._sommet_du_fils()
+        e[7] = sommet
+        self.fn(ctypes.addressof(e))
+        q = (ctypes.c_uint64 * 10).from_address(sommet - FENETRE)
+        return {"rax": q[1], "rbx": q[3], "rbp": q[4], "r12": q[5], "r13": q[6],
+                "r14": q[7], "r15": q[8], "rsp": q[9], "sommet": sommet}
+
+    def non_volatils_intacts(self, s: dict) -> bool:
+        return (s["rbx"] == CANARIS[0] and s["rbp"] == CANARIS[1]
+                and s["r12"] == CANARIS[2] and s["r13"] == CANARIS[3]
+                and s["r14"] == CANARIS[4] and s["r15"] == CANARIS[5])
+
+    def tampon(self, donnees: bytes) -> int:
+        p = _libc.mmap(ctypes.c_void_p(0), ctypes.c_size_t(64),
+                       ctypes.c_int(PROT_READ | PROT_WRITE),
+                       ctypes.c_int(MAP_PRIVATE | MAP_ANONYMOUS),
+                       ctypes.c_int(-1), ctypes.c_size_t(0))
+        if not p or p == ctypes.c_void_p(-1).value:
+            raise EchecScenario("tampon : mmap impossible")
+        ctypes.memmove(p, donnees, len(donnees))
+        return p
+
+
+# --- L'image du corpus en mémoire (le plan d'adressage, la vraie protection) ----
+
+class Image:
+    """L'artefact mappé selon ses phdr. mode "prive" : segments anonymes
+    privés — mprotect peut ouvrir la page code (le patch) ; mode "partage" :
+    R et RX mappés PARTAGÉS depuis le fichier OUVERT EN LECTURE SEULE —
+    mprotect exige un descripteur inscriptible : le refus EACCES est le
+    NOYAU qui refuse (le temps (d))."""
+
+    def __init__(self, chemin: str, mode: str = "prive"):
+        with open(chemin, "rb") as f:
+            self.artefact = f.read()
+        if len(self.artefact) != TAILLE_FICHIER:
+            raise EchecScenario(f"artefact {len(self.artefact)} o != plan {TAILLE_FICHIER:#x}")
+        fd = os.open(chemin, os.O_RDONLY)
+        try:
+            self.base = _libc.mmap(ctypes.c_void_p(0), ctypes.c_size_t(0x4000),
+                                   ctypes.c_int(PROT_NONE),
+                                   ctypes.c_int(MAP_PRIVATE | MAP_ANONYMOUS),
+                                   ctypes.c_int(-1), ctypes.c_size_t(0))
+            if not self.base or self.base == ctypes.c_void_p(-1).value:
+                raise EchecScenario("image : réserve mmap impossible")
+            drapeaux = (MAP_SHARED if mode == "partage" else MAP_PRIVATE) | MAP_FIXED
+            r1 = _libc.mmap(ctypes.c_void_p(self.base), ctypes.c_size_t(0x1000),
+                            ctypes.c_int(PROT_READ), ctypes.c_int(drapeaux),
+                            ctypes.c_int(fd), ctypes.c_size_t(0))
+            r2 = _libc.mmap(ctypes.c_void_p(self.base + 0x1000), ctypes.c_size_t(0x2000),
+                            ctypes.c_int(PROT_READ | PROT_EXEC), ctypes.c_int(drapeaux),
+                            ctypes.c_int(fd), ctypes.c_size_t(0x1000))
+            r3 = _libc.mmap(ctypes.c_void_p(self.base + 0x3000), ctypes.c_size_t(0x1000),
+                            ctypes.c_int(PROT_READ | PROT_WRITE),
+                            ctypes.c_int(MAP_PRIVATE | MAP_FIXED | MAP_ANONYMOUS),
+                            ctypes.c_int(-1), ctypes.c_size_t(0))
+            if not r1 or not r2 or not r3:
+                raise EchecScenario("image : segments non mappés")
+        finally:
+            os.close(fd)
+        self.mode = mode
+
+    def adr(self, rva: int) -> int:
+        return self.base + rva
+
+    def octets(self, rva: int, n: int) -> bytes:
+        return bytes((ctypes.c_ubyte * n).from_address(self.adr(rva)))
+
+    def qword(self, rva: int) -> int:
+        return struct_qword(self.adr(rva))
+
+
+def struct_qword(adresse: int) -> int:
+    return (ctypes.c_uint64 * 1).from_address(adresse)[0]
+
+
+# --- La capture du flux (fd 1) : la boucle d'écriture, jamais muette -----------
+
+class CaptureFlux:
+    """Détourne fd 1 vers un tube ; `pomper()` draine sans consommer le
+    producteur (relecture post-mortem — D145)."""
+
+    def __init__(self):
+        self.lecture, self.ecriture = os.pipe()
+        os.set_blocking(self.lecture, False)
+        self.sauve = None
+        self.morceaux = []
+
+    def __enter__(self):
+        self.sauve = os.dup(1)
+        os.dup2(self.ecriture, 1)
+        _en_capture[0] = True          # la narration attend la sortie (D145 :
+        return self                     # le flux de la boucle n'est QUE le sien)
+
+    def pomper(self) -> int:
+        while True:
+            try:
+                m = os.read(self.lecture, 65536)
+            except BlockingIOError:
+                break
+            if not m:
+                break
+            self.morceaux.append(m)
+        return sum(len(m) for m in self.morceaux)
+
+    def flux(self) -> bytes:
+        return b"".join(self.morceaux)
+
+    def __exit__(self, *a):
+        os.dup2(self.sauve, 1)
+        os.close(self.sauve)
+        _en_capture[0] = False
+        for l in _en_attente:          # la narration différée se rend MAINTENANT
+            print(l, flush=True)
+        _en_attente.clear()
+
+
+# --- Le run ---------------------------------------------------------------------
+
+def main() -> int:
+    os.makedirs(DOSSIER_PREUVES, exist_ok=True)
+    ici = os.path.dirname(os.path.abspath(__file__))
+    chemin = os.path.join(ici, "corpus")
+
+    piece("[m6d] === SCÉNARIO TERRAIN M6-(d) — le patch en production ===")
+    piece("[m6d] (les pièces naissent dans ./preuves-m6/ — à renvoyer au "
+          "coffre /test/preuves-m6/ après le run)")
+
+    # T0 — LE TÉMOIN -----------------------------------------------------------
+    temoin = []
+    temoin.append(f"date        : {time.strftime('%Y-%m-%d %H:%M:%S %z')}")
+    temoin.append(f"uname       : {platform.uname()!r}")
+    wsl = ("microsoft" in (open("/proc/sys/kernel/osrelease").read().lower()
+                           if os.path.exists("/proc/sys/kernel/osrelease") else "")
+           or "WSL_DISTRO_NAME" in os.environ)
+    temoin.append(f"wsl         : {'OUI (WSL — le noyau Linux complet de la machine Windows) ' if wsl else 'non'}")
+    temoin.append(f"python      : {sys.version.split()[0]} ({platform.machine()})")
+    aslr = ""
+    if os.path.exists("/proc/sys/kernel/randomize_va_space"):
+        aslr = open("/proc/sys/kernel/randomize_va_space").read().strip()
+    temoin.append(f"aslr-noyau  : randomize_va_space={aslr or '?'} "
+                  f"(2 = complet — la base choisie par le NOYAU, D146)")
+    with open(chemin, "rb") as f:
+        sha_corpus = hashlib.sha256(f.read()).hexdigest()
+    temoin.append(f"corpus      : sha256 {sha_corpus}")
+    temoin.append(f"            : attendu {SHA_SCELLE}")
+    with open(FICHIER_TEMOIN, "w", encoding="utf-8") as f:
+        f.write("\n".join(temoin) + "\n")
+    piece("[m6d] T0 LE TÉMOIN — l'environnement consigné (temoin-m6d.txt)")
+    for l in temoin:
+        piece(f"[m6d]   {l}")
+    if not constat("T0 : le corpus est LE scellé 0.7.0-rc.1 relu (sha256 "
+                   "asserté AVANT tout geste — un kit corrompu est un refus "
+                   "nommé)", sha_corpus == SHA_SCELLE, f"{sha_corpus[:16]}…"):
+        return _verdict()
+
+    # le droit d'exécution (un transfert zip peut le perdre — nommé, jamais muet)
+    if not os.access(chemin, os.X_OK):
+        os.chmod(chemin, 0o755)
+        piece("[m6d] le bit +x du corpus rétabli (le transfert l'avait perdu)")
+
+    # T1 — LE RITUEL EN EXÉCUTION RÉELLE ---------------------------------------
+    piece("[m6d] T1 LE RITUEL — ./corpus exécuté PAR LE NOYAU de la machine "
+          "(l'ASLR choisit la base — le comportement ne dépend pas d'elle)")
+    rituel_ok = True
+    for k in range(3):
+        p = subprocess.run([chemin], capture_output=True, cwd=ici)
+        ok = (p.stdout == RITUEL and p.returncode == 0)
+        rituel_ok = rituel_ok and ok
+        piece(f"[m6d]   run {k + 1} : code={p.returncode}, {len(p.stdout)} o"
+              + ("" if ok else f" — SORTIE INATTENDUE {p.stdout[:60]!r}"))
+    constat("T1 : le rituel exact aux TROIS exécutions réelles (deux lignes "
+            "nominales, code 0 — la position-indifférence du patrimoine, la "
+            "base choisie par le noyau à CHAQUE run)", rituel_ok)
+    if subprocess.run(["which", "setarch"], capture_output=True).returncode == 0:
+        p = subprocess.run(["setarch", os.uname().machine, "-R", chemin],
+                           capture_output=True, cwd=ici)
+        constat("T1b : la base FIGÉE recoupée (setarch -R, ADDR_NO_RANDOMIZE "
+                "— le mécanisme noyau) : même sortie exacte, code 0",
+                p.stdout == RITUEL and p.returncode == 0,
+                f"code={p.returncode}")
+    else:
+        piece("[m6d]   setarch absent — le recoupement base figée est sauté "
+              "(nommé : le run T1 reste le témoin d'exécution réelle)")
+
+    # T2 — LE PATCH PENDANT LE TRAFIC -------------------------------------------
+    piece(f"[m6d] T2 (a) LE TRAFIC EN SESSION — {N_TRAFIC} usages de la boucle "
+          f"d'écriture, l'apply entre les usages {K_APPLY - 1} et {K_APPLY}, "
+          f"le retour arrière entre {M_ROLLBACK - 1} et {M_ROLLBACK}")
+    cart = Cartouche()
+    img = Image(chemin, "prive")
+    entree_originale = img.octets(A_JOURNAL, 8)
+    P_TRAFIC, LP = cart.tampon(b"trafic "), 7
+    P_OUVRIERE, LO = cart.tampon(b"ouvriere "), 9
+    P_CONDUCTEUR, LC = cart.tampon(b"contremaitre "), 13
+    P_NL, LN = cart.tampon(b"\n"), 1
+
+    def v1(prefixe: bytes, i: int) -> bytes:
+        return prefixe + str(i).encode() + b"\n"
+
+    attendus = []
+    anomalie = pile_rompue = None
+    etats_ok = True
+    with CaptureFlux() as cap:
+        for i in range(N_TRAFIC):
+            if i == K_APPLY:
+                r = cart.appeler(img.adr(A_PATCH), [0])
+                etats_ok = etats_ok and r["rax"] == 0 and img.qword(R_ETAT_PATCH) == 1
+                piece(f"[m6d]   apply  PENDANT le trafic : rax={r['rax']}, état={img.qword(R_ETAT_PATCH)}")
+            if i == M_ROLLBACK:
+                r = cart.appeler(img.adr(A_PATCH), [1])
+                etats_ok = etats_ok and r["rax"] == 0 and img.qword(R_ETAT_PATCH) == 0
+                piece(f"[m6d]   rollback PENDANT le trafic : rax={r['rax']}, état={img.qword(R_ETAT_PATCH)}")
+            en_v2 = K_APPLY <= i < M_ROLLBACK
+            ligne = v1(b"trafic ", i)
+            attendus.append(b"j2: " + ligne if en_v2 else ligne)
+            r = cart.appeler(img.adr(A_JOURNAL), [P_TRAFIC, LP, i, P_NL, LN])
+            if r["rax"] != len(attendus[-1]):
+                anomalie = anomalie or (i, len(attendus[-1]), r["rax"])
+            if not cart.non_volatils_intacts(r) or r["rsp"] != r["sommet"]:
+                pile_rompue = pile_rompue or i
+        cap.pomper()
+        flux = cap.flux()
+    constat("T2a : l'apply et le rollback PENDANT le trafic rendent 0, les "
+            "états 1 puis 0 constatés (la boucle ne s'arrête jamais)", etats_ok)
+    constat(f"T2a : les {N_TRAFIC} usages rendent leur verdict exact, pile "
+            "équilibrée, non volatils intacts — JAMAIS une interruption",
+            anomalie is None and pile_rompue is None,
+            f"première anomalie @{anomalie[0]}" if anomalie
+            else (f"pile rompue @{pile_rompue}" if pile_rompue is not None
+                  else f"{N_TRAFIC}/{N_TRAFIC}"))
+    constat(f"T2a : le journal COHÉRENT — le flux OCTET POUR OCTET l'attendu "
+            f"({N_TRAFIC - (M_ROLLBACK - K_APPLY)} lignes v1, "
+            f"{M_ROLLBACK - K_APPLY} lignes v2 marquées j2:, aucune déchirée, "
+            "aucune perdue, aucun mélange)",
+            flux == b"".join(attendus),
+            f"{len(flux)} o émis == {sum(len(a) for a in attendus)} o attendus")
+
+    # T2 (b) — la concurrence réelle -------------------------------------------
+    piece("[m6d] T2 (b) LA BASCULE SOUS CONCURRENCE RÉELLE — l'ouvrier journalise "
+          "en boucle, le conducteur bascule PENDANT son trafic")
+    img2 = Image(chemin, "prive")
+    arret = threading.Event()
+    fautes: list = []
+    compte = {"n": 0}
+
+    def ouvriere() -> None:
+        i = 0
+        while not arret.is_set() and i < OUVRIER_CAP:
+            l1 = len(v1(b"ouvriere ", i))
+            r = cart.appeler(img2.adr(A_JOURNAL), [P_OUVRIERE, LO, i, P_NL, LN])
+            if r["rax"] not in (l1, l1 + 4):
+                fautes.append((i, r["rax"], l1))
+            i += 1
+        compte["n"] = i
+
+    fenetres_ok = True
+    cm_exactes = True
+    with CaptureFlux() as cap2:
+        t = threading.Thread(target=ouvriere)
+        t.start()
+        vivante = False
+        for _ in range(400):
+            time.sleep(0.005)
+            if cap2.pomper() >= LO + 2:
+                vivante = True
+                break
+        constat("T2b : la PREUVE DE VIE de l'ouvrier AVANT la bascule (des "
+                "lignes déjà émises — la bascule tombe dans un trafic vivant)",
+                vivante, f"{cap2.pomper()} o déjà émis" if vivante else "pas démarré")
+        r = cart.appeler(img2.adr(A_PATCH), [0])
+        fenetres_ok = fenetres_ok and r["rax"] == 0 and img2.qword(R_ETAT_PATCH) == 1
+        for j in (100, 101):
+            l1 = len(v1(b"contremaitre ", j))
+            rj = cart.appeler(img2.adr(A_JOURNAL), [P_CONDUCTEUR, LC, j, P_NL, LN])
+            cm_exactes = cm_exactes and rj["rax"] == l1 + 4
+        cap2.pomper(); time.sleep(0.004); cap2.pomper()
+        r = cart.appeler(img2.adr(A_PATCH), [1])
+        fenetres_ok = fenetres_ok and r["rax"] == 0 and img2.qword(R_ETAT_PATCH) == 0
+        for j in (200, 201):
+            l1 = len(v1(b"contremaitre ", j))
+            rj = cart.appeler(img2.adr(A_JOURNAL), [P_CONDUCTEUR, LC, j, P_NL, LN])
+            cm_exactes = cm_exactes and rj["rax"] == l1
+        cap2.pomper(); time.sleep(0.004); cap2.pomper()
+        r = cart.appeler(img2.adr(A_PATCH), [0])
+        fenetres_ok = fenetres_ok and r["rax"] == 0 and img2.qword(R_ETAT_PATCH) == 1
+        time.sleep(0.004); cap2.pomper()
+        arret.set()
+        t.join()
+        r = cart.appeler(img2.adr(A_PATCH), [1])
+        fenetres_ok = fenetres_ok and r["rax"] == 0 and img2.qword(R_ETAT_PATCH) == 0
+        cap2.pomper()
+        flux2 = cap2.flux()
+    constat("T2b : les TROIS fenêtres rendent 0, états 1→0→1→0 constatés "
+            "(le moteur idempotent par refus)", fenetres_ok)
+    constat("T2b : le conducteur journalise sous CHAQUE version (2 usages v2 "
+            "= ligne + marque, puis 2 usages v1 = ligne) — le comportement "
+            "change À L'USAGE SUIVANT", cm_exactes)
+
+    motif = re.compile(rb"^(j2: )?(ouvriere|contremaitre) (\d+)$")
+    vues_ouv: dict[int, bool] = {}
+    vues_cm: dict[int, bool] = {}
+    fragment = duplique = None
+    for l in flux2.split(b"\n")[:-1] if flux2.endswith(b"\n") else flux2.split(b"\n"):
+        m = motif.match(l)
+        if not m:
+            fragment = fragment or l
+            continue
+        est_v2 = m.group(1) is not None
+        qui, num = m.group(2), int(m.group(3))
+        table = vues_ouv if qui == b"ouvriere" else vues_cm
+        if num in table:
+            duplique = duplique or num
+        table[num] = est_v2
+    n_ouv = compte["n"]
+    v2_ouv = sum(1 for b in vues_ouv.values() if b)
+    v1_ouv = n_ouv - v2_ouv
+    constat(f"T2b : l'ouvrier : {n_ouv} lignes ENTIÈRES, indices 0..{n_ouv - 1} "
+            "chacun EXACTEMENT une fois, verdicts exacts (aucune perdue, "
+            "aucune dupliquée, aucune fragmentée)",
+            set(vues_ouv) == set(range(n_ouv)) and duplique is None
+            and not fautes and fragment is None,
+            (f"fragment {fragment!r}") if fragment is not None
+            else (f"faute @{fautes[0][0]}") if fautes
+            else (f"dupliqué {duplique}") if duplique is not None
+            else f"{n_ouv} lignes / {n_ouv} indices")
+    constat("T2b : la bascule était VIVANTE — le flux de l'ouvrier porte les "
+            "DEUX formats, chaque ligne d'UNE seule version (le qword "
+            "d'atomicité, jamais un mélange)", v1_ouv > 0 and v2_ouv > 0,
+            f"{v1_ouv} lignes v1, {v2_ouv} lignes v2 (j2:)")
+    constat("T2b : le conducteur vu du flux : 2 lignes v2 puis 2 lignes v1 "
+            "exactement (les DEUX formats des deux côtés — verdict et octets)",
+            vues_cm == {100: True, 101: True, 200: False, 201: False})
+
+    # T2 (c) — le retour à l'état image ----------------------------------------
+    piece("[m6d] T2 (c) LE RETOUR À L'ÉTAT IMAGE — la session rend l'image")
+    st_rva = int.from_bytes(img2.octets(R_TAB_SUM, 4), "little")
+    st_taille = int.from_bytes(img2.octets(R_TAB_SUM + 4, 4), "little")
+    constat("T2c : l'entrée du journal restaurée OCTET POUR OCTET, l'état v1, "
+            "le verrou rendu, le remplaçant DORMANT dans la croissance "
+            "(réactivable)", img2.octets(A_JOURNAL, 8) == entree_originale
+            and img2.qword(R_ETAT_PATCH) == 0 and img2.qword(R_VERROU) == 0
+            and img2.octets(A_CROISSANCE, st_taille) == img2.octets(st_rva, st_taille),
+            f"staging {st_taille} o @ {st_rva:#x} == croissance @ {A_CROISSANCE:#x}")
+
+    # T2 (d) — LE NOYAU DE LA MACHINE PARLE -------------------------------------
+    piece("[m6d] T2 (d) LE NOYAU PARLE — la cartographie PARTAGÉE en lecture "
+          "seule : mprotect EXIGE un descripteur inscriptible")
+    img3 = Image(chemin, "partage")
+    r = cart.appeler(img3.adr(A_PATCH), [0])
+    constat("T2d : le refus EACCES EST LE NOYAU de la machine (code 5 du "
+            "contrat, AVANT toute écriture — l'entrée intacte)",
+            r["rax"] == 5 and img3.octets(A_JOURNAL, 8) == entree_originale
+            and img3.qword(R_ETAT_PATCH) == 0,
+            f"rax={r['rax']} (5 = le service de protection a refusé), errno "
+            f"noyau parlant")
+
+    # T3 — ZÉRO RÉGRESSION ------------------------------------------------------
+    piece("[m6d] T3 ZÉRO RÉGRESSION SUR PIÈCES")
+    with open(chemin, "rb") as f:
+        sha_apres = hashlib.sha256(f.read()).hexdigest()
+    constat("T3 : le FICHIER artefact n'a pas bougé d'un octet (le patch est "
+            "un fait de la session, jamais du fichier)",
+            sha_apres == SHA_SCELLE, f"{sha_apres[:16]}…")
+    p = subprocess.run([chemin], capture_output=True, cwd=ici)
+    constat("T3 : le rituel REJOUÉ après la démonstration : les deux lignes "
+            "exactes au code 0", p.stdout == RITUEL and p.returncode == 0,
+            f"code={p.returncode}, {len(p.stdout)} o")
+
+    return _verdict()
+
+
+def _verdict() -> int:
+    verts = sum(1 for _, ok, _ in _controles if ok)
+    total = len(_controles)
+    vert = verts == total and total > 0
+    lignes_v = [f"[m6d] {nom}" + (f" ({det})" if det else "")
+                for nom, ok, det in _controles]
+    sortie = ["=== VERDICT RUN M6-(d) — le patch en production ===",
+              time.strftime("%Y-%m-%d %H:%M:%S %z"),
+              f"{verts}/{total} constats PASS",
+              "", "Les constats :", *lignes_v, "",
+              f"VERDICT : {'VERT' if vert else 'ÉCHEC NOMMÉ'}"
+              + ("" if vert else " — la première ligne ÉCHEC ci-dessus nomme le défaut")]
+    with open(FICHIER_VERDICT, "w", encoding="utf-8") as f:
+        f.write("\n".join(sortie) + "\n")
+    with open(FICHIER_JOURNAL, "w", encoding="utf-8") as f:
+        f.write("\n".join(_pieces) + "\n")
+    piece(f"[m6d] VERDICT : {'VERT' if vert else 'ÉCHEC NOMMÉ'} — {verts}/{total} "
+          f"constats PASS (les pièces : {FICHIER_VERDICT}, {FICHIER_JOURNAL}, "
+          f"{FICHIER_TEMOIN})")
+    return 0 if vert else 1
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except EchecScenario as exc:
+        piece(f"[m6d] ECHEC (fail-closed) : {exc}")
+        try:
+            with open(FICHIER_JOURNAL, "w", encoding="utf-8") as f:
+                f.write("\n".join(_pieces) + "\n")
+        except OSError:
+            pass
+        sys.exit(1)

@@ -3012,3 +3012,121 @@ Stage Summary:
   passe_bundle_m6c.py ; FRONTIÈRES : aucune suppression (l'archivage est un
   déplacement), la finale 0.6.0 et sa carte INTACTS, /test inchangé (8
   entrées D143, vague e4 courante — le kit terrain M6-(d) attendu).
+
+## Task ID 66 — « ok go M6-(d) » : LE CHANTIER M6-(d), PARTIE LABORATOIRE ACCOMPLIE — LE CHANTIER M5-(c) REFERMÉ SUR LE PROFIL LINUX : unix/demo_patch.py NÉ ET VERT (la bascule du journal PENDANT le trafic — 1 200 usages, apply entre 400/401, rollback entre 800/801, tcp-07:R4 V5 ; le journal COHÉRENT octet pour octet — 800 lignes v1, 400 v2 marquées j2:, aucune déchirée, aucun mélange ; la CONCURRENCE RÉELLE — le qword d'atomicité Q3 posé pendant qu'un fil ouvrier journalise, la preuve de vie AVANT la bascule, les DEUX formats dans le flux de l'ouvrier, 5/5 passages verts sans intermittence ; le retour à l'état image ; la zéro régression — le fichier artefact n'a pas bougé d'un octet, le rituel rejoué code 0) ; LA SUITE DE CONFORMITÉ EXÉCUTE DÉSORMAIS LA DÉMONSTRATION (l'élément 5 devenu CONTRÔLE RÉEL — VERTE 7/7, 37 contrôles, le scellage final re-prouvera M5-(c) à chaque passage) ; LE KIT TERRAIN LINUX AU COFFRE /test (la vague m6d : kit-m6d.zip + LISEZMOI-m6d.txt + preuves-m6/ né, la vague e4 consommée ARCHIVÉE D143 md5 intacts, le kit ÉPROUVÉ au labo PAR EXTRACTION VIERGE + RUN : VERT 16/16 — la première épreuve a ÉCHOUÉ NOMMÉ : la narration de l'instrument polluait le flux mesuré, D153) ; D153 née (05/11)
+
+Task: la suite annoncée au Task 65 était le chantier M6-(d) — le patch en
+production (le chantier M5-(c) reporté, D149-(4)), le kit terrain Linux au
+coffre /test, puis le run du développeur. Le geste l'exécute jusqu'au dépôt
+du kit ; le scellage final 0.7.0 attend le run terrain vert (l'exigence
+porte « validation terrain consignée » — jamais le labo à sa place).
+
+Work Log:
+- (0) REPRISE : dépôt propre à 402508f (l'arbre ne portait que des modes
+  755 — le motif connu des reprises, aucun contenu modifié), la carte du
+  corpus sous 0.7.0-rc.1, l'artefact sha dd14195c… ; le labo RÉINSTALLÉ
+  après recyclage du bac à sable (keystone, capstone 5.0.7, pynacl) ;
+  l'état VERT ré-établi SUR PIÈCES en la session (build_corpus
+  --verifier --volume reduit --graine 20261105 : round-trips 100 %, oracle
+  8 231 cas verts, cristallisation 13×10/10, verrou croisé 13/13, la
+  balise rc.1 PRÉSERVÉE ; conformite_profil : VERTE 7/7 — 37 contrôles,
+  le diff nul rejoué VERT).
+- (1) LA DÉMONSTRATION (unix/demo_patch.py, modèle controle_base_reelle :
+  la règle devenue OUTIL) : sur l'ARTEFACT SCELLÉ relu (sha ASSERTÉ, le
+  fichier en lecture seule — le patch vit en cartographie PRIVÉE), les
+  QUATRE pièces tranchées binaires : (a) LE TRAFIC EN SESSION V5 — 1 200
+  usages, l'apply ENTRE les usages 400/401 (rax 0, état 1), le rollback
+  ENTRE 800/801 (rax 0, état 0), la boucle SANS INTERRUPTION (verdicts
+  exacts, pile équilibrée, non volatils intacts à chaque usage), le flux
+  OCTET POUR OCTET l'attendu (800 v1 + 400 v2 « j2: », aucune déchirée,
+  aucune perdue, AUCUN MÉLANGE) ; (b) LA CONCURRENCE RÉELLE Q3 — la
+  PREUVE DE VIE de l'ouvrier AVANT la bascule (des lignes déjà émises :
+  la bascule tombe dans un trafic VIVANT), les trois fenêtres
+  1→0→1→0, le conducteur sous CHAQUE version, l'ouvrier 5 224-5 478
+  lignes ENTIÈRES (indices 0..n-1 chacun une fois, verdicts exacts) et
+  SON flux porte les DEUX formats (~2 800 v1, ~2 520 v2) — le qword posé
+  pendant qu'il journalisait, chaque ligne d'UNE seule version ;
+  (c) LE RETOUR À L'ÉTAT IMAGE (entrée restaurée octet pour octet, état
+  v1, verrou rendu, le remplaçant DORMANT dans la croissance) ; (d) LA
+  ZÉRO RÉGRESSION (sha re-relu IDENTIQUE, le rituel rejoué : deux lignes,
+  code 0). La chasse D152 : CINQ passages — 5/5 VERTS, 16 PASS chacun,
+  aucune intermittence.
+- (2) L'INTÉGRATION À LA SUITE : l'élément 5 de conformite_profil.py
+  (frontière documentaire au (c)) est devenu un CONTRÔLE RÉEL qui
+  EXÉCUTE demo_patch (bavard=False) et exige son vert — la frontière
+  reste NOMMÉE (le run terrain juge le scellage final) ; le libellé de
+  conformite.txt suit (« la bascule PENDANT LE TRAFIC DÉMONTRÉE … le run
+  terrain juge le scellage final ») ; la suite rejouée VERTE 7/7 (37
+  contrôles).
+- (3) LE KIT TERRAIN (unix/terrain/ + scripts/assembler_kit_m6d.py) :
+  la cartouche PRÉ-ASSEMBLÉE au labo (la MÊME source que l'instrument
+  de l'oracle, assemblée à l'ADRESSE FACTICE HAUTE 0x100000000000 qui
+  FORCE la forme imm64 — une base 0 produirait l'imm32 TRONQUÉE, le
+  piège nommé), RECOUPÉE contre l'instrument VIVANT octet pour octet
+  (gabarit assemblé à l'adresse réelle == la page ; gabarit + le FIXUP
+  UNIQUE [movabs r11, imm64 @ +0x6d, reposé AVANT le mprotect RX] ==
+  l'instrument) ; le scénario GÉNÉRÉ depuis le gabarit .in (python3 +
+  ctypes SEULEMENT — sha256 de la cartouche ASSERTÉ au démarrage), il
+  rejoue T0 (témoin + empreinte) / T1 (rituel ×3 à l'ASLR du noyau +
+  base figée si setarch) / T2 (les phases a/b/c + LE NOYAU DE LA MACHINE
+  PARLE : cartographie partagée lecture seule → mprotect EACCES → code
+  5, aucun shim) / T3 (zéro régression) et rend son verdict POST-MORTEM
+  (preuves-m6/ : temoin, journal, VERDICT) ; le kit m6-kit/ (corpus +x,
+  scénario, LISEZMOI) 46 568 o, sha256 98b8c1be…, md5 67b85983….
+- (4) L'ÉPREUVE (la moitié du montage) : LA PREMIÈRE A ÉCHOUÉ NOMMÉ —
+  la narration du scénario vivait sur fd 1, le canal même que la capture
+  détourne : 102 o de narration DANS le flux mesuré (T2a 14 992 !=
+  14 890) et un fragment littéral au trafic de l'ouvrier (T2b) ; le
+  défaut était DANS L'INSTRUMENT (pas l'artefact), l'assertion
+  octet-pour-octet l'a nommé au premier passage ; CORRIGÉ : la
+  narration est DIFFÉRÉE pendant les fenêtres de capture (elle se rend
+  à la sortie) ; la seconde épreuve (extraction VIERGE + run du kit
+  EXACT) : VERT 16/16, rc 0, les trois pièces nées — le kit déposé est
+  le kit prouvé.
+- (5) LE COFFRE /test (scripts/deposer_kit_m6d.py, D143, idempotent) :
+  la vague e4 CONSOMMÉE archivée (LISEZMOI-m5b-e4.txt, m5b-kit-e4.zip,
+  scenario-m5b-e4.ps1 → vagues-m5b/, md5 constatés INTACTS — un
+  déplacement, jamais un jet) ; l'index LISEZMOI-archives-livraisons
+  mis à jour ; preuves-m6/ NÉ (LISEZMOI-preuves.txt : les pièces
+  attendues) ; la vague déposée (kit-m6d.zip md5 67b85983… RECOUPÉ +
+  LISEZMOI-m6d.txt) ; la racine vérifiée : 8 entrées (la vague m6d +
+  les résidents D143 + les deux salles d'archive).
+- (6) CONSIGNATIONS : fiche de profil § 5 (la démonstration ACQUISE),
+  § 9 (la suite exécute la démo), § 10 (le kit LIVRÉ au coffre — le
+  run VERT pose la finale) ; PLAN_MILESTONES § État du programme (le
+  (d) partie laboratoire ACCOMPLIE, le kit au coffre, RESTE le run du
+  développeur) ; JOURNAL_TRAVAIL +Entrée 148 PAR SCRIPT (ordre
+  147<148<marqueur, rejeu REFUSÉ), DECISIONS +D153 PAR SCRIPT (à la
+  suite de D152) ; ce worklog +Task ID 66 ; scripts suivis :
+  assembler_kit_m6d.py, deposer_kit_m6d.py, inserer_entree_148.py,
+  inserer_d153.py.
+- FRONTIÈRES : l'artefact unix/corpus n'a pas bougé d'un octet (sha
+  dd14195c… re-relu PAR la démonstration même) ; la carte vit SOUS
+  0.7.0-rc.1 (re-signée sous sa balise par la re-vérification du
+  geste — préservée) ; --sceller-final DISPONIBLE mais JAMAIS exécuté
+  (le run terrain juge) ; scellé 0.6.0 + cartes m0-m5 + sceau ONZE
+  arbres + arbres I + fixtures v5 + hachoir m6/ + sonde dev.1 INTACTS ;
+  AUCUNE suppression Drive (l'archivage e4 est un DÉPLACEMENT), corbeille
+  non vidée ; .keys/ gitignoré ; D139 ouverte non bloquante.
+- SUITE : LE RUN DU DÉVELOPPEUR — extraire kit-m6d.zip dans un dossier
+  NEUF, python3 scenario-m6d.py (WSL2 recommandé D149), renvoyer
+  preuves-m6/ au coffre /test/preuves-m6/ ; le labo recoupe (D138/D145/
+  D148) et si le critère est établi : --sceller-final pose la FINALE
+  0.7.0 (le jalon M6 franchi) ; puis M7 (l'ISA : l'assembleur RV64
+  maison ou moteur tiers, qemu-riscv64, la TROISIÈME instanciation).
+
+Stage Summary:
+- Le chantier M5-(c) est REFERMÉ au labo : la bascule du journal PENDANT
+  le trafic est démontrée SUR PIÈCES — entre deux usages (V5), sous
+  concurrence réelle (Q3), le journal cohérent octet pour octet, le
+  rollback en pleine session, la zéro régression — sur l'artefact scellé
+  0.7.0-rc.1 relu, le fichier jamais touché.
+- La suite de conformité EXÉCUTE la démonstration : le critère vit dans
+  le témoin de jalon, le scellage final le re-prouvera à chaque passage.
+- Le kit terrain Linux est AU COFFRE /test (vague m6d) : le scénario
+  AUTONOME (python3 + ctypes, la cartouche du labo recoupée octet pour
+  octet), ÉPROUVÉ par extraction vierge — la première épreuve a nommé
+  la pollution du flux mesuré par la narration de l'instrument (D153 :
+  le flux mesuré n'est à personne ; un livrable ne se dépose que vert à
+  l'extraction vierge).
+- RESTE LE RUN DU DÉVELOPPEUR : le seul juge du scellage final 0.7.0.

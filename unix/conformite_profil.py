@@ -499,14 +499,25 @@ def element_5(s: Suite, art: bytes, blocs: dict, verrous: list[str]):
              "code 5 (EACCES réel), DEP V7 (0x7→0x3 : le ret faute)",
              len(presents) == 6, f"{len(presents)}/6 familles")
 
-    # (e) la frontière : le moteur est EMBARQUÉ (les octets + le scénario),
-    # la bascule PENDANT le trafic est le chantier (d) — rapportée, pas tue
-    s.verrou(5, "frontière nommée : la bascule PENDANT le trafic (M5-(c) "
-             "refermé) est le chantier M6-(d) — le moteur est embarqué, la "
-             "démonstration en production attend", True,
-             "constat partagé (miroir D73/D104 : portes vivantes, moteur "
-             "rapporté ; ici le moteur est EMBARQUÉ, la bascule au trafic "
-             "reste à (d))")
+    # (e) LA BASCULE PENDANT LE TRAFIC — le chantier M6-(d) : la démonstration
+    # est EXÉCUTÉE ici même (unix/demo_patch.py, fail-closed) : la boucle
+    # d'écriture basculée ENTRE DEUX USAGES (V5), le journal cohérent octet
+    # pour octet, le rollback en pleine session, la concurrence réelle du
+    # qword (Q3) et la zéro régression — M5-(c) refermé sur le profil Linux ;
+    # le run terrain (kit M6-(d) au coffre /test) demeure le juge du scellage
+    # final 0.7.0 (D138/D145/D148 : le verdict terrain sur pièces)
+    import demo_patch as DP
+    vert_demo, lignes_demo = DP.executer(bavard=False)
+    details_demo = "; ".join(l.split("] ", 1)[1] for l in lignes_demo
+                             if "VERDICT" not in l and l.startswith("[demo] PASS")
+                             and ("COHÉRENT" in l or "VIVANTE" in l))
+    s.verrou(5, "la bascule PENDANT LE TRAFIC DÉMONTRÉE en exécution "
+             "(unix/demo_patch.py exécuté PAR LA PRÉSENTE SUITE : trafic en "
+             "session V5, journal cohérent octet pour octet, rollback en "
+             "pleine session, qword sous concurrence réelle Q3, zéro "
+             "régression — M5-(c) refermé) ; le run terrain (kit M6-(d), "
+             "coffre /test) juge le scellage final",
+             vert_demo, details_demo or "la démonstration du chantier (d)")
 
 
 # --- Élément 6 : notation (round-trip + carte + diff nul) ----------------------------
@@ -643,7 +654,9 @@ def executer(graine: int | None = None) -> tuple[bool, list[str]]:
                 f"VIVANTE (staging {struct.unpack_from('<IIQ', art, L.R_TAB_SUM_CORPUS)[1]} o, "
                 f"somme recalculée depuis l'artefact) ; le patch démontré en "
                 f"exécution (apply/effet/rollback/refus 1-5/EACCES/DEP), la "
-                f"bascule pendant le trafic au chantier (d) ; contrôle de "
+                f"bascule PENDANT LE TRAFIC DÉMONTRÉE (unix/demo_patch.py, "
+                f"exécutée par la présente suite — M5-(c) refermé ; le run "
+                f"terrain juge le scellage final) ; contrôle de "
                 f"jalon : oracle m1 {verdict['cas']} cas verts, graine "
                 f"{graine} ; artefact corpus sha256 "
                 f"{SHA_CORPUS_ATTENDU[:16]}… — le diff nul rejoué VERT, les "
