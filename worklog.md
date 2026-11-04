@@ -2623,3 +2623,16 @@ Stage Summary:
   v0.5.2/D81, v0.6.0/D133, v0.6.1/D137). Le libellé du commit e6a0177
   « regénéré (état des jalons…) » nomme le DÉCLENCHEUR du rebuild, pas un
   changement de contenu du PDF — la présente note le fixe pour la traçabilité.
+
+- PASSATION D141 rejouée au geste « plan M6/M7 écrit / programme ouvert » :
+  le bundle courant triade-history-060-c1107d2.bundle (git bundle --all,
+  15 425 266 o, md5 c2ebb26b…) déposé au MIROIR, ASSERTÉ avant dépôt (branche
+  jalon pointe sur c1107d2 — il porte l'ouverture du programme M6/M7 AVEC sa
+  consignation : fiches de profil + programme D149 + statut M5 franchi +
+  report M5-(c) + écart D81 fermé + Entrée 144 + D149 + addendum d'honnêteté
+  PDF) ; l'ancien 060-f425ceb (md5 e9568bd7… recoupé AVANT) ARCHIVÉ VERSIONNÉ
+  dans archives-bundles/ (10 archives, jamais supprimé) ; /test sans copie de
+  bundle (recoupé) ; GitHub porté à la pointe dans le même geste (sync_backup,
+  push recoupé) ; script suivi : passe_bundle_plan_m6m7.py ; FRONTIÈRES :
+  aucune suppression (l'archivage est un déplacement), les scellés et la
+  carte 0.6.0 INTACTS, /test inchangé (8 entrées D143, vague e4 courante).
