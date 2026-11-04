@@ -2834,3 +2834,21 @@ Stage Summary:
 - La balise 0.7.0-dev.2 est posée par le build du corpus, l'héritage
   M6-(a) est CONSTATÉ (ET_DYN/PIE, W^X depuis les phdr) : la lignée du
   jalon vit, la carte du corpus en génération 1 au même troisième sel.
+
+- PASSATION D141 rejouée au geste « chantier M6-(b) accompli / corpus
+  paritaire instancié » : le bundle courant
+  triade-history-060-34fe080.bundle (git bundle --all, 15 620 078 o, md5
+  8ca07595…) déposé au MIROIR, ASSERTÉ avant dépôt (branche jalon pointe
+  sur 34fe080 — il porte LE SECOND CHANTIER DU JALON M6 AVEC sa
+  consignation : l'audit de couplage + les DOUZE specs R+1 + le build/
+  oracle/diff_nul + l'artefact unix/corpus ET_DYN/PIE 12 288 o sha256
+  dd14195c… + la carte génération 1 verrou croisé R8 13/13 + LE DIFF NUL
+  mesuré 39 recoupements + l'oracle m1 régénéré VERT 76 631 cas + LA
+  BALISE 0.7.0-dev.2 POSÉE par le build du corpus + Entrée 146 + D151 +
+  worklog Task 64) ; l'ancien 060-51bd748 (md5 449d1fd0… recoupé AVANT)
+  ARCHIVÉ VERSIONNÉ dans archives-bundles/ (12 archives, jamais supprimé) ;
+  /test sans copie de bundle (recoupé) ; GitHub porté à la pointe dans le
+  même geste (push 018db94..34fe080, recoupé ls-remote) ; script suivi :
+  passe_bundle_m6b.py ; FRONTIÈRES : aucune suppression (l'archivage est un
+  déplacement), la finale 0.6.0 et sa carte INTACTS, /test inchangé (8
+  entrées D143, vague e4 courante — le kit terrain M6-(d) attendu).
