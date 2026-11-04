@@ -2294,3 +2294,98 @@ Stage Summary:
 - Suite : la décision du développeur sur le chemin rc.2 (notation corrigée
   + contrôle à la base réelle + kit e4) ; le critère (b) de D136 attend
   toujours son run.
+## Task ID 60 — « continue chemin rc.2 » : LE CHEMIN ACCOMPLI — idiome http-02:R1 restauré dans la ligne de flux, contrôle D146 né en livrable du jalon (rc.1 KO / rc.2 VERT — falsifiabilité prouvée), cristallisation 52/52 × 10/10, SCELLÉ 0.6.0-rc.2 (c1e46fb0…, contrôle D146 exécuté AU scellage), kit e4 LIVRÉ au coffre /test (scénario e3 repris tel quel, proxy remplacé) ; D147 (04/11)
+
+Task: demande du développeur « continue chemin rc.2 » (et confirmation du
+état e3 : non, tout n'était pas vert — le proxy rc.1 crashait à la première
+requête routée) — les quatre pièces du chemin proposé à l'Entrée 141,
+exécutées et consignées.
+
+Work Log:
+- REPRISE DU LABO : dépôt restauré du bundle 060-5da81b0 (méthode A, arbre
+  propre), jetons .gdrive/ posés (OAuth Drive VERT par check_auth), coffre
+  CF1 importé (.keys/, md5 23a2987a… attesté D144), secrets relevés
+  (lignee-D80 + graine ed25519-cartes, chmod 600) ; NOTE nommée : le
+  PHRASE-CONTROLE-COFFRE.txt de la RACINE Drive porte 3 lignes (59 o) —
+  sa ligne 1 EST la phrase courante, mais l'ouverture directe par
+  --phrase-fichier échoue ; la copie du DÉPÔT (33 o, phrase seule, norme
+  D81) ouvre le coffre — l'écart vit au dossier Drive racine, à corriger
+  à la prochaine synchro (aucune mutation de ma part).
+- (1) LE CORRECTIF DE NOTATION : le brouillon
+  m5/notation/brouillons/http-10-session-r3.asm corrigé (zone Q6, lignes
+  ~237-246) — l'idiome hérité http-02:R1 restauré : base d'image dérivée
+  de l'adresse complète de TAB_METHODES (lea) moins son RVA (sub rdx,
+  0x2410, sub 64 bits OBLIGATOIRE — la base tient sur 33 bits), puis
+  add sur le RVA lu avant l'appel .copier ; CINQ instructions (+16 o),
+  registres morts seuls, arithmétique recoupée (0x84f3+7-0x60ea=0x2410) ;
+  auteur.py régénère : g80002 2719 o, padding 49→33 o, slot 2752 o
+  inchangé, .copier glisse 0x8bf3→0x8c03 ; m5/I INTACT (le contrat Q6
+  « méthode (texte R_TAB_METHODES) » est respecté PAR le correctif) —
+  sceau-I valide, pas de cérémonie.
+- (2) LE CONTRÔLE D146 EN LIVRABLE DU JALON (m5/controle_base_reelle.py,
+  modèle reproduire_run_e3.py D52h) : image ENTIERE à la base réelle
+  0x140000000, IAT marchée, ligne de commande réelle, fils coopératifs,
+  séquence e3 exacte ; verdict fail-closed en trois pièces (pas de faute
+  mémoire/la ligne de flux avec méthode en texte/le client servi) ;
+  FALSIFIABILITÉ PROUVÉE : le rc.1 ÉCHOUE à l'identique du terrain
+  (faute 0x24A0, http-10:R3+0xA46, movzx eax, byte [r12] — KO a/b/c) ;
+  le dev.2 est VERT : « flux GET 127.0.0.1:443 v=6 e=51 s=40 » émis, 502
+  nommée servie au client (poignée shimmée défaillante, frontière D146),
+  getaddrinfo + connect 443, ExitProcess propre.
+- (3) LES VERSIONS + L'AMENDEMENT D147 (modèle D35) : layout.py dev.2 /
+  U64 0x00060001 / rc.2 ; anti-rollback amendé (LICENSE une entrée :
+  exactement rc.1 → dev.2, motif Entrée 141) ; _sceller GAGNE l'exigence
+  D146 MÉCANIQUE (contrôle base réelle AVANT la bascule de balise, refus
+  non vert) ; SHA_PROXY_060_RC1 conservé (mémoire du fautif),
+  SHA_PROXY_060_DEV2 posé après constat (c1e46fb0…).
+- (4) LA CHAÎNE rc.2 : build dev.2 VERT (R5 541/541 sur g80002 corrigé,
+  structurels 524+492+312, R7 image M4 == scellé 0.5.1 octet pour octet,
+  oracles 560+365 cas verts, PE 36 352 o INCHANGÉ, carte gén. 7) ;
+  CRISTALLISATION REPARTIE À ZÉRO : DIX passages (build + graines
+  20261104→20261112), 52/52 × 10/10, sha stable ; SCELLAGE rc.2 : sceau-I
+  6 arbres, contrôle D146 VERT AU SCELLAGE même, conformité § 8.2 VERTE
+  (58 contrôles), bascule assertée, verrou croisé 52, proxy INTACT ;
+  gardes constatées après : re-scellage REFUSÉ, reconstruction REFUSÉE —
+  anti-rollback VIVANT.
+- (5) LE KIT e4 (assembler_kit_e4.py) : base kit e3 LIVRÉ rapatrié du
+  coffre (md5 981b1a5b… recoupé), TROIS remplacements (proxy rc.1 FAUTIF
+  → rc.2 — égalité base == scellé fautif ASSERTÉE ; LISEZMOI-KIT e4 ;
+  LISEZMOI-preuves e4), LE SCÉNARIO e3 REPRIS TEL QUEL (byte-identique,
+  asserté deux fois — la garde D145 demeure), 52 reprises assertées ;
+  m5b-kit-e4.zip 11 193 488 o md5 0922b281352c02b3ed25cf9a778ba664,
+  intégrité re-vérifiée + VÉRIFICATION DISQUE INDÉPENDANTE (kit-e4-verif/,
+  11 contrôles verts) ; m5/vm/ gagne scenario-m5b-e4.ps1 (copie) +
+  LISEZMOI-terrain-m5b-e4.txt.
+- (6) LA LIVRAISON D143 (livrer_vague_e4.py, tout recoupé par relecture) :
+  vague e3 consommée ARCHIVÉE (3 pièces → vagues-m5b/, md5 avant/après) ;
+  vague e4 POSÉE (kit + scénario + LISEZMOI, md5 distants == locaux) ;
+  preuves-m5b → liste e4 ; index mis à jour (bloc e3 après e2) ; racine
+  /test = 8 entrées, vague courante e4.
+- CONSIGNATIONS : JOURNAL_TRAVAIL +Entrée 142 PAR SCRIPT (ordre
+  141<142<marqueur, rejeu REFUSÉ fail-closed), DECISIONS +D147 PAR SCRIPT
+  (à la suite de D146), ce worklog +Task ID 60 ; scripts suivis :
+  rapatrier_kit_e3.py, assembler_kit_e4.py, livrer_vague_e4.py,
+  inserer_entree_142.py, inserer_d147.py.
+- FRONTIÈRES : le scellé rc.1 FAUTIF vit à l'historique git (jamais
+  reconstruit ni réécrit) ; scellé 0.5.1, cartes m0-m4, sceau ONZE
+  arbres, arbre m5/I, fixtures v5, scénario e3 : INTACTS ; aucune
+  suppression Drive, corbeille non vidée ; .keys/ gitignoré ; D139
+  ouverte non bloquante ; la finale 0.6.0 TOUJOURS NON POSÉE (elle attend
+  un run VERT).
+- SUITE : LE GESTE TERRAIN — m5b-kit-e4.zip depuis /test, dossier NEUF,
+  corriger-wsb.bat, double-clic scenario-m5b.wsb (~5-8 min), renvoyer
+  TOUT preuves-m5b (page-sonde-armement.txt et edge-version.txt
+  comprises) — le critère (b) de D136 ; si vert :
+  python3 m5/build_m5.py --sceller-final pose la finale 0.6.0.
+
+Stage Summary:
+- Le chemin rc.2 est ACCOMPLI : l'idiome perdu est restauré (cinq
+  instructions, slot préservé), le contrôle D146 vit au jalon ET au
+  scellage (le rc.1 y crashe, le rc.2 y sert — la falsifiabilité est
+  prouvée sur le scellé fautif lui-même), la cristallisation est repartie
+  à zéro et le 0.6.0-rc.2 est SCELLÉ avec le contrôle exécuté au geste
+  même. Le kit e4 (scénario e3 repris tel quel, proxy corrigé) est au
+  coffre /test.
+- Suite : le geste terrain du run e4 — le critère (b) de D136 par le
+  navigateur ; si le verdict est vert, --sceller-final pose la finale
+  0.6.0 avec la validation consignée.

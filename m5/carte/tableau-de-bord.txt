@@ -1,14 +1,14 @@
-[tableau] jalon=M5 artefact=proxy.exe version=0.6.0-rc.1
+[tableau] jalon=M5 artefact=proxy.exe version=0.6.0-rc.2
   blocs_avec_spec_a_jour        : 52/52 : audit de tracabilite I->C->B (6 artefacts)
   chaines_I_C_B_tests           : 52/52 : specs, carte, exe, vecteurs
   construction                  : 0 erreur / 0 avertissement : build script
   tests_differentiels           : oracle M4 (heritage rejoue) 560 cas verts + oracle M5 (scenarios etendus D136) 365 cas verts (complet, graine 20261112) ; oracle structurel M3 524 + M4 492 + M5 312 verrous PASS
   reutilisation_heritage        : 38 blocs octet-identiques au scelle 0.5.1 (R7, deltas .rdata/.text4/PE documentes)
-  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5, table R10 28 entrees [marche aux bornes — porte .text3 D95], PORTE M5 une entree [0x8000, 0x2000, somme .text4], table des reponses 8 entrees, secur32 x7, GetCommandLineW, version 0x00060000)
+  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5, table R10 28 entrees [marche aux bornes — porte .text3 D95], PORTE M5 une entree [0x8000, 0x2000, somme .text4], table des reponses 8 entrees, secur32 x7, GetCommandLineW, version 0x60001)
   defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D136
   optimisations_sans_mesure     : 0 : aucune optimisation M5 (R11)
   changements_hors_journal      : 0 : D77 a D144 consignees
-  preversions                   : 0.6.0-rc.1 conforme (schema dev, monotonie R10 verifiee par la porte heritee 28 sommes + la porte M5 — recalculees du binaire)
+  preversions                   : 0.6.0-rc.2 conforme (schema dev, monotonie R10 verifiee par la porte heritee 28 sommes + la porte M5 — recalculees du binaire)
   entrees_non_fiables           : comportement defini par contrat (E1-E8 herites + table TOTALE des HRESULT, verdicts nommes, compensation par comptage, refus CLI nomme ExitProcess 3) ; falsification : F3 14/14 + V4 onze mutations attrapees (D136)
-  artefact                      : 36352 octets ; empreinte sha256:4b8f6af6caedb3e1... ; 6 sections (.text4 nouvelle 0x8000) ; secur32 x7 (Schannel) + GetCommandLineW ; entree PE 0x8C80 (http-12:R3 — la CLI et la porte M5)
+  artefact                      : 36352 octets ; empreinte sha256:c1e46fb0b857b6f3... ; 6 sections (.text4 nouvelle 0x8000) ; secur32 x7 (Schannel) + GetCommandLineW ; entree PE 0x8C80 (http-12:R3 — la CLI et la porte M5)
   verrou_croise                 : 52 empreintes reverifiees (6 artefacts + notations non embarquees) + signature Ed25519 (graine durable D144, pub e9cd8c549485...) + racine (R8/R9)

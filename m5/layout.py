@@ -102,14 +102,22 @@ TAILLE_FICHIER = 0x8E00                       # 0x6E00 + 0x2000
 
 DLL_CHARACTERISTICS = L4.DLL_CHARACTERISTICS  # DYNAMICBASE | HEVA | NX
 
-VERSION_DEV1 = "0.6.0-dev.1"   # les trois révisions http R3 + la porte M5
-VERSION_U64_DEV1 = 0x00060000  # R10 : monotonie (> 0.5.1 = 0x00050003 ≥
-                               # plancher 0.4.0)
+VERSION_DEV1 = "0.6.0-dev.2"   # rc.1 corrigé (run e3, Entrée 141/D146) :
+                               # l'idiome hérité http-02:R1 (dword + base)
+                               # restauré dans la ligne de flux — le crash
+                               # du RVA nu à la base réelle est éteint ; la
+                               # reconstruction est licite par l'amendement
+                               # D147 (EXACTEMENT rc.1 -> dev.2, R4 contrat
+                               # stable, modèle D35)
+VERSION_U64_DEV1 = 0x00060001  # R10 : monotonie (> 0x00060000 = rc.1 >
+                               # 0.5.1 = 0x00050003 ≥ plancher 0.4.0)
 VERSION_U64_MIN = 0x00040000   # plancher hérité (http-12:Q1 scellé)
 VERSION_060 = "0.6.0"          # la balise est posée à la validation terrain
-VERSION_RC1 = "0.6.0-rc.1"     # candidate (modèle D104) : cristallisation
-                               # 10/10 + conformité § 8.2 — SOUMISE au run
-                               # M5-b étape 2 (critère (b) de D136)
+VERSION_RC1 = "0.6.0-rc.2"     # candidate corrigée (modèle D104/D35) :
+                               # cristallisation 10/10 + conformité § 8.2
+                               # + contrôle D146 VERT (base réelle) —
+                               # SOUMISE au run M5-b étape 2 (critère (b)
+                               # de D136 ; le kit e4 reprend le scénario e3)
 VERSION_FINALE = "0.6.0"       # la finale : validation terrain consignée
                                # (critère (b) — la page servie ET la 502
                                # « Certificat rejete » PAR LE NAVIGATEUR)

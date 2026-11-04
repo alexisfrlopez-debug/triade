@@ -233,7 +233,14 @@ mov dword ptr [rsp + 0x6FB0], 443
 ; ne sont JAMAIS un tampon de relais ; la longueur est consignée @+0x70D8
 ; (FLUX_PREF_LEN, layout — le trou R2, jamais lu ni écrit par R1) ;
 ; registres morts ici : rax (verdict http-07 testé), r10/r11, rcx/rdx/r8 —
-; .copier préserve rbx/r12/r13 (les volatils vivants du routage)
+; .copier préserve rbx/r12/r13 (les volatils vivants du routage) ;
+; RUN e3 / D146 : le rc.1 passait le RVA NU de la méthode à .copier (mort à
+; la base réelle 0x140000000, invisible à base 0) — l'idiome hérité
+; http-02:R1 (« lea puis sub le RVA attendu » = base d'image, « add » sur
+; le RVA lu) est RESTAURÉ : la base est dérivée de l'adresse complète de
+; TAB_METHODES (lea) moins son RVA 0x2410 (immédiat, .rdata STABLE héritage
+; m4 — R_TAB_METHODES, layout ; sub 64 bits OBLIGATOIRE : la base réelle
+; tient sur 33 bits, sub edx la tronquerait)
 lea r10, [rsp + 0x7030]
 mov dword ptr [r10], 0x78756C66
 mov byte ptr [r10 + 4], 0x20
@@ -241,10 +248,14 @@ add r10, 5
 mov eax, dword ptr [rsp + 0x6F00]
 shl rax, 4
 lea r11, [rip + TAB_METHODES]
+mov rdx, r11
+sub rdx, 0x2410
 add r11, rax
 sub r11, 16
 mov rcx, r10
-mov rdx, qword ptr [r11]
+mov rax, qword ptr [r11]
+add rax, rdx
+mov rdx, rax
 mov r8, qword ptr [r11 + 8]
 call .copier
 add r10, r8

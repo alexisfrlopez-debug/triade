@@ -1,0 +1,147 @@
+TRIADE M5-B — VAGUE e4 : LE FLUX NAVIGATEUR EN VM ISOLÉE, PROXY CORRIGÉ rc.2
+(KIT VM ÉTAPE 2 rejoué — le critère (b) de D136 : la page servie ET la 502
+« Certificat rejete » RECUES PAR LE NAVIGATEUR, dans le MÊME run, réseau coupé)
+=============================================================================
+Livré au coffre /test le 04/11/2026, après le run e3 (ÉCHEC NOMMÉ « CRASH
+DU PROXY 0.6.0-rc.1 » — le crash du rc.1, pas un verdict navigateur) et le
+correctif rc.2 avec ses deux règles D146/D147.
+
+CE QUE LE RUN e3 A DIT (rappel sur pièces — VERDICT-run-e3-rva-nu.txt,
+archives-preuves)
+  La garde d'armement fonctionnelle A OPÉRÉ (la sonde a connecté, envoyé
+  ses 51 octets de requête forme-absolue) — mais le proxy 0.6.0-rc.1 est
+  MORT à cette PREMIÈRE requête routée : la ligne de flux (code nouveau
+  M5) lisait le couple (RVA, longueur) de la table R_TAB_METHODES et
+  passait le RVA NU comme pointeur à la copie — l'idiome hérité
+  http-02:R1 « dword + base d'image » avait été PERDU dans la révision.
+  Sur Windows (image à 0x140000000), la lecture à 0x24A0 est une
+  violation d'accès (http-10:R3+0xA46, movzx eax, byte [r12]) : le
+  processus meurt SANS réponse. Les oracles étaient VERTS parce que
+  TOUTE l'émulation M5 vit à base 0 — un RVA nu y résout par accident :
+  le défaut y était invisible PAR PRINCIPE (règle D146 née de ce constat,
+  reproduit au labo harnais full-PE, correctif simulé prouvant la cause
+  chirurgicalement).
+
+CE QUE CETTE VAGUE CHANGE (LE PROXY — rien d'autre)
+  1. LE PROXY REMPLACÉ : 0.6.0-rc.1 → 0.6.0-rc.2 SCELLÉ (carte
+     génération 7) :
+       sha256 c1e46fb0b857b6f33c67aa7f26a1db3064f2e3adbd528414116b497220b6a20c
+       md5    48be81e0588351f72a0ce417d25b4553
+     (36 352 octets, taille INCHANGÉE). Le correctif restaure l'idiome
+     hérité : la base d'image est dérivée de l'adresse complète de la
+     table (lea) moins son RVA 0x2410 (sub 64 bits), puis AJOUTÉE au RVA
+     lu — cinq instructions, +16 o en .text4 (padding 49→33 o, le slot ne
+     bouge pas, AUCUNE adresse de bloc ne bouge). L'héritage 0.5.1 reste
+     octet pour octet (38 blocs, preuve R7 re-jouée au build) ; version
+     R10 0x00060001 (monotonie : > 0x00060000 = rc.1).
+  2. LE CONTRÔLE D146 (né du correctif, livrable du jalon
+     m5/controle_base_reelle.py) : l'image ENTIÈRE exécutée À LA BASE
+     RÉELLE en émulation, l'IAT remplie par la marche des descripteurs,
+     la séquence e3 rejouée — le rc.1 y crashe à l'identique (faute
+     NOMMÉE : 0x24A0, http-10:R3+0xA46), le rc.2 y SERT la requête
+     routée : ligne de flux « flux GET 127.0.0.1:443 v=6 e=51 s=40 »
+     émise (la méthode lue de la table À LA BASE RÉELLE), réponse au
+     client. Ce contrôle est désormais EXIGÉ AVANT TOUT scellage
+     rc/final (intégré au build — le scellage rc.2 l'a exécuté).
+  3. LE SCÉNARIO EST CELUI DE LA VAGUE e3, REPRIS TEL QUEL
+     (byte-identique) : la garde fonctionnelle (la sonde forme-absolue +
+     page 200 de l'autorité A attendue, pièce page-sonde-armement.txt),
+     les verdicts post-mortem (D145), la version Edge par VersionInfo
+     (pièce edge-version.txt), tout le décor v8. Le run e3 s'est arrêté
+     au crash du proxy AVANT le navigateur : le scénario n'a rien à se
+     reprocher, il n'a pas bougé d'une ligne.
+  4. LA LICENCE DE RECONSTRUCTION est l'amendement D147 (modèle D35) :
+     EXACTEMENT rc.1 → dev.2 → rc.2 à contrat stable (R4) ; la
+     cristallisation rc.2 est repartie à zéro (dix passages, 52/52 ×
+     10/10, sha stable) ; le scellé rc.1 fautif vit à l'historique git.
+
+LE GESTE (le run e4, cinq à huit minutes — ne jamais mélanger les runs, D99)
+  1. Téléchargez m5b-kit-e4.zip DEPUIS CE DOSSIER /test, extrayez-le dans
+     un NOUVEAU dossier (la vague e3 est archivée — cette vague la
+     remplace).
+  2. corriger-wsb.bat (à la racine de CE dossier /test, PAS dans le zip) :
+     double-clic, il pose les chemins absolus du .wsb.
+  3. Double-clic du scenario-m5b.wsb corrigé. NE RIEN TOUCHER jusqu'à la
+     fin (les autorités s'arrêtent d'elles-mêmes par délai : comptez
+     cinq à huit minutes ; le témoin est posé en DERNIER acte).
+  4. Renvoyer TOUT le contenu de preuves-m5b (la liste exacte vit en
+     dernière ligne du témoin) : temoin + journaux +
+     page-sonde-armement.txt + edge-version.txt + dom-a.txt, dom-b.txt +
+     nav-a.png, nav-b.png + err du navigateur + autorités + matrice
+     curl + parefeu-vm.txt.
+
+RÉSULTATS ATTENDUS (le scénario reste fail-closed : c'est lui qui dit)
+  - Ouverture : DIAG-PAREFEU ×3 PASS ; REFUS NAVIGATEUR-ABSENT si Edge
+    manquait ; DIAG-EDGE-VERSION par VersionInfo (additif).
+  - La SONDE : « armement PROUVE PAR OPERATION » au journal du scénario —
+    la page 200 de l'autorité A reçue par le mandataire (marqueur
+    TRIADE-M5B-PAGE-200 à la pièce page-sonde-armement.txt) ; REFUS
+    PROXY-PAS-ARME sinon (l'extrait de réponse nomme le coupable).
+  - Run A : NAVIGATEUR-A code 0 ; DOM-A-MARQUEUR (le navigateur a REÇU et
+    RENDU la page de l'autorité, servie par le tunnel) ; FLUX-A-V0 (ligne
+    « flux GET 127.0.0.1:443 v=0 e=NN s=NN » — la sonde ET le run A la
+    produisent) ; TUNNEL-A ; AUTORITE-A-SERVIE puis « arret propre ».
+  - Run B : NAVIGATEUR-B code 0 ; DOM-B-502 (le navigateur a rendu SA
+    page d'erreur — la 502 du proxy reçue PAR LE NAVIGATEUR) ;
+    DOM-B-SANS-PAGE ; CERTIFICAT-REJETE au journal proxy ; FLUX-B-V3 (v=3
+    — la ligne nomme la CAUSE, la 502 nomme l'effet) ; POIGNEE-B-REFUSEE
+    à l'autorité ; « arret propre ».
+  - Post-mortem : RELEVER-ARME (ligne « relever-https arme » au journal
+    proxy, lue APRÈS le quit) ; PROXY-ARRET « quit » code 0 ; matrice curl
+    INCHANGÉE (T2a/T3 rc=60, T2b rc=0, T5 rejet — branche attendue S4) ;
+    T6 Dnscache consigné (D139 demeure ouvert, non bloquant).
+  - Un ÉCHEC NOMMÉ est un RÉSULTAT : il désigne lui-même le coupable —
+    renvoyez-le tel quel.
+
+RISQUES CONSIGNÉS (le laboratoire les a comptés, sans les avoir pu jouer)
+  - Le scénario reste écrit au LABORATOIRE SANS Windows sous la main :
+    une faute serait nommée par PowerShell ou par les refus du scénario
+    dès le lancement — collez le message tel quel.
+  - Le correctif rc.2 est prouvé à la base réelle EN ÉMULATION avec API
+    shimmées (frontière D146 : le contrôle constate l'adressage et le
+    chemin de session, PAS la vraie Schannel) : le run terrain reste le
+    juge — si le proxy mourait encore, le journal du scénario porterait
+    la séquence exacte (la sonde connectée, la requête envoyée, la mort
+    sans réponse) et la pièce page-sonde-armement.txt serait vide ou
+    partielle : c'est un résultat, pas une panne du run.
+  - Edge headless varie par build Windows : le DOM dump ne rendrait pas
+    la page d'erreur en run B (DOM vide ou sans « 502 ») que l'échec
+    DOM-B-502 serait NOMMÉ — la capture nav-b.png et le journal proxy
+    diraient le reste ; le laboratoire jugera sur pièces (D138).
+  - La montée https d'Edge (HTTPS-First) reste désactivée par drapeaux :
+    si elle se déclenchait quand même, le CONNECT serait rejeté par le
+    protocole (D136) et le repli http aboutirait — trace au journal.
+  - Les clés du kit sont des CLÉS DE TEST JETABLES (elles ne signent que
+    autorite.test / 127.0.0.1) : aucune vraie clé ne voyage.
+
+CE QUE CE RUN DÉCIDE
+  Si le verdict est OK (ou OK-sous-réserve levée au labo sur pièces
+  host) : le critère (b) de D136 est PRÉSENT — le laboratoire consigne
+  la validation terrain et pose la balise FINALE 0.6.0
+  (m5/build_m5.py --sceller-final : l'exigence est déjà écrite au code —
+  le plan m5 : « la balise 0.6.0 est posée à la validation terrain »).
+  Si un échec est nommé : il désigne lui-même le coupable, le
+  laboratoire corrige sur pièces — le modèle D104 (0.5.0-rc.1 puis la
+  finale après le verdict terrain 17-H) est exactement ce geste.
+
+RÈGLES ACTIVES (résumé)
+  D138 le rc du producteur fait foi, les pièces host sont jugées au
+  labo ; D139 hosts ignoré dans la VM — IP littérale (ouvert, non
+  bloquant) ; D141 bundles versionnés au nom, archives-bundles ; D142
+  l'invite parefeu = bind, pas un trafic (boucle locale exempte) ;
+  D143 archivage de fin de run (APPLIQUÉE à cette livraison : la vague
+  e3 consommée est archivée dans archives-livraisons/vagues-m5b/, la
+  racine /test ne porte que la vague COURANTE e4 + corriger-wsb +
+  preuves-m5b vierge + les deux archives) ; D145 AUCUNE garde ne lit en
+  live un fichier en cours d'écriture dans la VM — les gardes sont
+  FONCTIONNELLES ou POST-MORTEM ; D146 AUCUN scellage rc/final sans
+  contrôle d'exécution full-PE À LA BASE RÉELLE (l'émulation à base 0
+  n'est pas un témoin de l'exécution réelle) ; D147 la licence de
+  reconstruction est EXACTEMENT rc.1 → dev.2 → rc.2 (modèle D35), à
+  contrat stable.
+
+SUITE — la finale 0.6.0 attend CE run ; D139 demeure ouvert (T7
+éventuel), non bloquant ; le chantier (c) du M5 (patch à chaud du
+journal) n'est pas ouvert.
+
+— Fin du LISEZMOI e4 (aucune allégation sans pièce citée) —

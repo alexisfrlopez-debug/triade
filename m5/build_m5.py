@@ -39,10 +39,13 @@ et l'image composée M4 est confrontée OCTET PAR OCTET au proxy.exe 0.5.1
 scellé AVANT toute extension — la preuve R7 absolue.
 
 Usage :
-  python3 build_m5.py                  # construction 0.6.0-dev.1 (+ carte gén. 7)
+  python3 build_m5.py                  # construction 0.6.0-dev.2 (+ carte gén. 7)
+                                       # — rc.1 corrigé (run e3, Entrée 141/D146,
+                                       # amendement D147 : EXACTEMENT rc.1 -> dev.2)
   python3 build_m5.py --verifier [--graine N] [--volume complet|reduit]
-  python3 build_m5.py --sceller-rc     # scellage 0.6.0-rc.1 : cristallisation
-                                       # 10/10 + conformité § 8.2 (modèle D104)
+  python3 build_m5.py --sceller-rc     # scellage 0.6.0-rc.2 : cristallisation
+                                       # 10/10 + conformité § 8.2 + contrôle D146
+                                       # VERT à la base réelle (modèle D104/D35)
   python3 build_m5.py --sceller-final  # 0.6.0 : validation terrain consignée
                                        # (critère (b) de D136 — le run M5-b étape 2)
 """
@@ -453,7 +456,16 @@ def oracle_structurel_m5(specs: dict, code: dict, blocs: list[tuple]) -> list[st
 # --- Composition de l'image M5 ----------------------------------------------------
 
 SHA_PROXY_051 = "fb41697ddde265ac"    # préfixe — la scellé 0.5.1 PROUVÉ v7/v8
-SHA_PROXY_060_DEV1 = "4b8f6af6caedb3e17811e6e25da1f1680068866bd1b417154fc54474170ec236"  # 0.6.0-dev.1 — le scellage est un fait de carte, ces octets ne bougent plus
+SHA_PROXY_060_RC1 = "4b8f6af6caedb3e17811e6e25da1f1680068866bd1b417154fc54474170ec236"  # 0.6.0-rc.1 — le scellé fautif du run e3 (Entrée 141) :
+                                       # mort à la première requête routée à la
+                                       # base réelle (RVA nu, http-10:R3+0xA46) ;
+                                       # il vit à l'historique git, JAMAIS reconstruit
+SHA_PROXY_060_DEV2 = "c1e46fb0b857b6f33c67aa7f26a1db3064f2e3adbd528414116b497220b6a20c"  # 0.6.0-dev.2 — le correctif rc.2 : idiome http-02:R1
+                                       # restauré (léger +16 o en .text4, padding
+                                       # 49->33 o, taille PE INCHANGÉE 36 352 o) ;
+                                       # contrôle D146 VERT à la base réelle
+                                       # (ligne de flux « flux GET 127.0.0.1:443
+                                       # v=6 e=51 s=40 » + client servi 502)
 
 
 def _somme_qwords(octets: bytes) -> int:
@@ -996,7 +1008,7 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, verrous_m5: 
         f"  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5, "
         f"table R10 28 entrees [marche aux bornes — porte .text3 D95], PORTE M5 une "
         f"entree [0x8000, 0x2000, somme .text4], table des reponses 8 entrees, "
-        f"secur32 x7, GetCommandLineW, version 0x00060000)",
+        f"secur32 x7, GetCommandLineW, version {L.VERSION_U64_DEV1:#x})",
         f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D136",
         f"  optimisations_sans_mesure     : 0 : aucune optimisation M5 (R11)",
         f"  changements_hors_journal      : 0 : D77 a D144 consignees",
@@ -1018,7 +1030,17 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list, verrous_m5: 
 
 
 def _anti_rollback() -> None:
-    """Une carte scellée (rc/final) interdit la reconstruction (R6)."""
+    """Une carte scellée (rc/final) interdit la reconstruction (R6).
+
+    AMENDEMENT D147 (modèle D35, M3) : la reconstruction est autorisée
+    EXACTEMENT pour 0.6.0-rc.1 -> 0.6.0-dev.2 (le correctif du run e3,
+    Entrée 141 / D146 : l'idiome hérité http-02:R1 restauré dans la ligne
+    de flux — le RVA nu passé à .copier tuait le rc.1 à la première requête
+    routée sur machine réelle). R4 : correctif à contrat stable ; la
+    cristallisation rc.2 repart à zéro (10/10 exigés avant scellage) et le
+    contrôle D146 (base réelle) est exigé AVANT tout scellage. Toute autre
+    reconstruction sous balise scellée reste interdite (fail-closed)."""
+    LICENSE = {"0.6.0-rc.1": "0.6.0-dev.2"}   # EXACTEMENT celle-ci (D147)
     try:
         _, fragments, _, _ = cm.lire_carte()
         phrase, _ = cm.charger_secrets(interactif=False)
@@ -1029,9 +1051,13 @@ def _anti_rollback() -> None:
              if "artefact=proxy.exe" in l), None)
         if version_existante and ("-rc" in version_existante
                                   or re.fullmatch(r"\d+\.\d+\.\d+", version_existante)):
-            raise EchecBuild(
-                f"carte scellée ({version_existante}) : reconstruction interdite — "
-                f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+            if LICENSE.get(version_existante) != L.VERSION_DEV1:
+                raise EchecBuild(
+                    f"carte scellée ({version_existante}) : reconstruction interdite — "
+                    f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+            print(f"[anti-rollback] AMENDEMENT D147 : reconstruction licite "
+                  f"{version_existante} -> {L.VERSION_DEV1} (correctif run e3, "
+                  f"Entrée 141/D146 — R4 contrat stable, modèle D35)")
     except (cm.ErreurCarte, FileNotFoundError):
         pass  # pas de carte lisible : première construction
 
@@ -1191,8 +1217,8 @@ def verifier(graine: int, volume: str) -> int:
     verdict = od5.executer(blobs, graine=graine, volume=volume)
     print(f"[oracle] différentiel M5 : {verdict['total_cas']} cas verts")
     valider_pe(exe)
-    print("[PE] proxy.exe 0.6.0 re-validé (6 sections, porte M5, porte "
-          "R10, fixtures M5, version 0x00060000)")
+    print(f"[PE] proxy.exe 0.6.0 re-validé (6 sections, porte M5, porte "
+          f"R10, fixtures M5, version {L.VERSION_U64_DEV1:#x})")
 
     # Cristallisation R6 : chaque passage incrémente les compteurs (10/10
     # exigés au scellage) — la carte est re-signée à chaque passage (fragments
@@ -1234,13 +1260,27 @@ def verifier(graine: int, volume: str) -> int:
 
 def _sceller(nouvelle_version: str, exigences: str) -> int:
     """Scellage M5 (modèle m4 D104 / m3 D74) : cristallisation 10/10 +
-    conformité § 8.2 verte + bascule de balise dans frag-bld. L'artefact
-    n'est PAS touché — le scellage est un fait de carte ; proxy.exe reste
-    byte-identique à l'artefact 0.6.0-dev.1 (sha256 4b8f6af6…, 36 352 o —
-    l'image M4 == le scellé 0.5.1 octet pour octet, la lignée prouvée par
-    les runs v7/v8)."""
+    conformité § 8.2 verte + CONTRÔLE D146 VERT (exécution full-PE à la
+    base réelle — la requête routée SERVIE, exigée depuis le correctif
+    rc.2) + bascule de balise dans frag-bld. L'artefact n'est PAS touché —
+    le scellage est un fait de carte ; proxy.exe reste byte-identique à
+    l'artefact reconstruit."""
     print(f"=== M5 : scellage {nouvelle_version} ({exigences}) ===")
     _garde_sceau_I()
+
+    # D146 (Entrée 141) : AVANT que la carte ne se scelle, un contrôle
+    # d'exécution À LA BASE RÉELLE doit être VERT — l'émulation à base 0
+    # n'est pas un témoin de l'exécution réelle (un RVA nu y résout par
+    # accident ; c'est ainsi que le rc.1 est mort sur machine réelle).
+    cbr = _charger_module("controle_base_reelle",
+                          os.path.join(ICI, "controle_base_reelle.py"))
+    vert, lignes_d146 = cbr.executer(bavard=False)
+    for l in lignes_d146[:6]:
+        print(l)
+    if not vert:
+        raise EchecBuild("contrôle D146 non vert (base réelle) — "
+                         f"{nouvelle_version} refusé : {lignes_d146[-1]}")
+
     phrase, _ = cm.charger_secrets(interactif=False)
     maitre = cm.cle_maitresse(phrase)
     _, fragments, _, _ = cm.lire_carte()
@@ -1312,12 +1352,17 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
           f"artefact {manifeste.get('version')}")
     with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
         sha_artefact = hashlib.sha256(f.read()).hexdigest()
-    if sha_artefact != SHA_PROXY_060_DEV1:
+    if not SHA_PROXY_060_DEV2:
+        raise EchecBuild("SHA_PROXY_060_DEV2 non posé — constater le sha du "
+                         "build dev.2 (construire, puis reporter la valeur) "
+                         "avant tout scellage (fail-closed)")
+    if sha_artefact != SHA_PROXY_060_DEV2:
         raise EchecBuild(f"artefact divergent ({sha_artefact[:16]}…) — le scellage "
                          f"est un fait de carte, proxy.exe ne bouge pas")
     print(f"[balise] {nouvelle_version} scellée (immuable § 9 ; défaut -> X.Y.Z+1 "
           f"à contrat stable, R4) ; proxy.exe INTACT (sha256 {sha_artefact[:16]}…, "
-          f"36 352 o — le scellage est un fait de carte)")
+          f"{os.path.getsize(os.path.join(ICI, 'proxy.exe'))} o — le scellage "
+          f"est un fait de carte)")
     return 0
 
 
