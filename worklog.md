@@ -2489,3 +2489,14 @@ Stage Summary:
 - LA FINALE 0.6.0 EST SCELLÉE : le contrôle D146 exécuté au scellage,
   la carte basculée, les gardes vivantes. Le jalon M5 (le flux navigateur
   intercepté de bout en bout) est RENTRÉ.
+
+- PASSATION D141 rejouée au geste « run e4 analysé / finale 0.6.0 » : le
+  bundle courant triade-history-060-f425ceb.bundle (git bundle --all,
+  15 384 065 o, md5 e9568bd7…) déposé au MIROIR, ASSERTÉ avant dépôt
+  (branche jalon pointe sur f425ceb — il porte le jalon M5 RENTRÉ AVEC sa
+  consignation : analyse sur pièces + critère (b) + finale 0.6.0 +
+  clôture D143 + Entrée 143 + D148) ; l'ancien 060-9fa7fb3 (md5
+  a7567812… recoupé AVANT) ARCHIVÉ VERSIONNÉ dans archives-bundles/
+  (9 archives, jamais supprimé) ; /test sans copie de bundle (recoupé) ;
+  GitHub porté à la pointe dans le même geste (push f7b460c..f425ceb,
+  recoupé ls-remote) ; script suivi : passe_bundle_analyse_e4.py.
