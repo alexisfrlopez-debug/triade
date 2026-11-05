@@ -3972,3 +3972,57 @@ Stage Summary:
 - LE POSTE A ENCORE ÉTÉ RECYCLÉ (troisième fois) : la reprise D159
   rejouée au geste même — fetch + pointe consignée 7079df1, les
   instruments par leur procédure ; RIEN ne s'est perdu.
+
+## Task ID 79 — « on reprend ce projet : signatures déposées dans le drive /test, et j'ai mis à jour le jeton relais du drive /tokens » (la suite, côté infrastructure) : LA REPRISE SUR LES TROIS MIROIRS + LA PASSATION REJOUÉE
+
+- LA DÉCOUVERTE (le recoup GitHub AVANT de travailler) : origin à
+  9193019, UN COMMIT EN AVANCE du bundle 080-b7b6e01 — le Task 78
+  d'une session précédente (cérémonie installée + garde 12/12 + build
+  0.9.0-dev.1 + Entrée 160 + D163) POUSSÉ mais la session morte
+  AVANT la passation : le bundle ne portait pas la pointe.
+- L'ALIGNEMENT (D159 rejouée) : le geste parallèle refait au labo
+  constaté DOUBLON AVANT consignation (aucune entrée doublée), reset
+  à la pointe consignée 9193019 ; l'état vérifié : garde 12 VERTS
+  (état « reelle »), carte génération 8, artefact régénéré 44 544 o
+  sha256 1492b0bc… == la pièce de D163 (le déterminisme s'accumule :
+  trois postes, le même sha).
+- LE JETON RELAIS ROUVRE LE CANAL D'ÉCRITURE (la mise à jour du
+  développeur au /Tokens) : check_auth 200, drive_sync.py rc=0 (16
+  téléversés, 7 mis à jour, 1 122 inchangés, 0 erreur — le miroir à
+  la pointe, triade-history.bundle mis à jour).
+- LE KIT D130 : le premier rejeu depuis le labo amputé a RE-DÉCLENCHÉ
+  LE PIÈGE des Entrées 132/159 (MANIFESTE 56 entrées pour un kit
+  réel de 62 — les 6 LISEZMOI ignorés) ; LE RAPATRIEMENT CANONIQUE
+  d'abord (6/6 md5 MATCH contre les métadonnées Drive après
+  écriture), le rejeu ensuite : 62/62 vérifiés aller-retour — le
+  manifeste couvre le kit réel.
+- LA PASSATION VERSIONNÉE : triade-history-080-9193019.bundle (16
+  565 966 o, md5 a8cd69f8…, branche jalon == 9193019) DÉPOSÉ au
+  miroir (relu MATCH), l'ancien 080-b7b6e01 ARCHIVÉ VERSIONNÉ
+  (md5 39393eaa… recoupé avant le déplacement PATCH — 25 archives,
+  rien supprimé), /test recoupé SANS copie de bundle ; script :
+  scripts/passe_bundle_m8c_execution.py.
+- FRONTIÈRES : aucune balise ne bouge (win 0.6.0 / linux 0.7.0 /
+  riscv 0.8.0 INTACTES), l'artefact 0.9.0-dev.1 INTACT (régénéré
+  identique), le garde VERT 12/12, le scellé 0.6.0 INTACT, aucun
+  secret exposé ; consignations : Entrée 161 PAR SCRIPT, D164 PAR
+  SCRIPT, worklog +Task ID 79 ; scripts suivis :
+  inserer_entree_161.py, inserer_d164.py,
+  passe_bundle_m8c_execution.py (dépôt),
+  rapatrier_lisezmoi_ceremonie.py (labo, hors dépôt).
+- SUITE : LE CHANTIER M8-(d) — le kit terrain au coffre /test (le
+  VRAI ntdll lu sur la machine du développeur, le motif confronté,
+  la ligne comparée par les DEUX chemins), la finale 0.9.0 attend le
+  vert ; la cristallisation R6 progresse par les --verifier.
+
+Stage Summary:
+- LES TROIS MIROIRS SONT À LA POINTE : GitHub 9193019 == le bundle
+  080-9193019 == le miroir (16/7/1122, 0 erreur) == le kit (62/62) —
+  la dette de passation de la session morte est SOLDÉE, la reprise
+  D164 est la doctrine consignée (fetch GitHub d'abord, alignement à
+  la pointe, passation rejouée, rapatriement avant maj_kit).
+- L'artefact 0.9.0-dev.1 RÉGÉNÉRÉ IDENTIQUE (1492b0bc…, troisième
+  poste) — la preuve de déterminisme s'accumule, le garde est VERT à
+  12/12, l'état « réelle » intact.
+- SUITE : le chantier M8-(d) — le kit terrain au coffre /test (le
+  VRAI ntdll sur la machine du développeur).
