@@ -4532,6 +4532,21 @@ Stage Summary:
 - SUITE : la famille x25519 (tls13-09..14), puis aead (tls13-15..19) —
   les slots à la suite de 0xC980 ; puis (c) RFC 8448, (d) sys-04+,
   (e) le build 1.0.0-dev.1, (f) le terrain.
+- PASSATION (le même geste, Task ID 89) : le bundle courant
+  triade-history-090-544b51a.bundle (17 256 962 o, md5 22eb71d9…, branche
+  jalon == 544b51a [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE hkdf [Entrée 171 — tls13-05..08
+  notés-mesurés-prouvés : 435/151/347/310 o, round-trip 100 %, les slots
+  ARRÊTÉS 0x200/0xC0/0x180/0x180 tassés depuis 0xC3C0, le harnais 52
+  contrôles · 52 VERTS × 3 graines — les SEPT vecteurs RFC 4231, les TROIS
+  cas RFC 5869, LE TRANSFERT RFC 8448 (trois extraits + DIX étiquettes, la
+  structure HkdfLabel recroisée avec les « info » EXACTES de la RFC)] + le
+  worklog Task 89), l'ancien 090-c82fe7b (LA FAMILLE sha) ARCHIVÉ VERSIONNÉ
+  (md5 5ca58429… recoupé — 33 archives, rien supprimé), /test sans copie
+  (recoupé), le push GitHub à la pointe (origin == 544b51a relu MATCH — les
+  trois miroirs alignés, le commit de passation 39d84ae du Task 88
+  EMBARQUÉ) ; script suivi : passe_bundle_m9b2.py ; LA SÉRIE 090 POURSUIT
+  — le geste est PASSÉ.
 
 Stage Summary:
 - LA SECONDE FAMILLE de la grande œuvre est notée-mesurée-prouvée : le
