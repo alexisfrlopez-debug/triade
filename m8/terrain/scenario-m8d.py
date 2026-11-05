@@ -204,7 +204,10 @@ def forger_module_crochete():
     struct.pack_into("<I", v, 0x280, 0x300)                    # fonctions[0]
     struct.pack_into("<I", v, 0x290, 0x2A0)                    # noms[0]
     struct.pack_into("<H", v, 0x294, 0)                        # ordinaux[0]
-    v[0x2A0:0x2B0] = b"NtWriteFile\x00"
+    v[0x2A0:0x2AC] = b"NtWriteFile\x00"                   # 12 o — nom + NUL
+    # NB (le correctif) : une assignation memoryview exige tranche == valeur
+    # (la longueur FAIT PARTIE de la « structure » : 16 face à 12 octets,
+    # c'est le refus « different structures » — jamais un remplissage tacite)
     # le stub CROCHETÉ : B8 <imm32> sans le « mov r10, rcx » — motif absent
     v[0x300:0x305] = b"\xB8\x44\x33\x22\x11"
     return ctypes.addressof(tampon), tampon

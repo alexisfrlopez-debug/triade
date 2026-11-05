@@ -4091,3 +4091,53 @@ Stage Summary:
   archives, rien supprimé), /test sans copie (recoupé) ; script suivi :
   passe_bundle_m8d.py ; la série 080 continue (la série 090 naîtra à
   la finale 0.9.0).
+
+## Task ID 81 — (la suite annoncée au Task 80) : LE PREMIER RUN DÉVELOPPEUR A CRASHÉ NOMMÉ — le kit terrain M8-(d) CORRIGÉ et REDÉPOSÉ
+
+- LE RUN (Windows 10.0 build 26300, Python 3.13.9 AMD64) : T0 et T1
+  verts jusqu'à la falsification (empreinte MATCH, le VRAI ntdll lu par
+  les DEUX lecteurs d'accord, le motif confronté, NtReadFile résolu,
+  les DEUX SSN distincts) — puis CRASH Python à la préparation du
+  module forgé : ligne 207, « ValueError: memoryview assignment:
+  lvalue and rvalue have different structures ». Le run meurt AVANT
+  T2 : aucun syscall émis, l'artefact intact.
+- LA CAUSE NOMMÉE : v[0x2A0:0x2B0] (16 octets) face à
+  b"NtWriteFile\x00" (12 octets) — l'assignation memoryview exige la
+  structure identique ET LA LONGUEUR EST LA STRUCTURE (jamais de
+  remplissage tacite). La vue était saine ('B', 1-D) : le défaut est
+  la FORME, pas le format. Reproduit au labo à l'identique (la MÊME
+  ValueError, la même ligne).
+- LA CORRECTION : UNE ligne — v[0x2A0:0x2AC] = b"NtWriteFile\x00"
+  (la tranche == la valeur, 12 octets : le nom + son NUL — le motif
+  déjà suivi par les voisins MZ/PE/stub) ; la règle portée en
+  commentaire DANS la source.
+- L'ÉPREUVÉ : assembler_kit_m8d.py REJOUÉ (recoup AST 13 constantes
+  == l'artefact/le plan, py_compile, extraction vierge VERT) ; le
+  contrat du forgé vérifié SUR LE FICHIER LIVRÉ (verifier_m8d.py :
+  la marche EAT trouve « NtWriteFile » au RVA 0x300, le motif ABSENT
+  du stub crocheté b8 44 33 22 11 → le refus -4 NOMMÉ attendu de
+  sys-02) ; vérifié AUSSI sur le script extrait du zip (zip == zone
+  == dépôt).
+- LE DÉPÔT CORRIGÉ (corriger_kit_m8d.py) : kit-m8d.zip du coffre
+  /test MIS À JOUR EN PLACE (upload_update — le contenu remplacé, le
+  fichier conservé, rien jeté) : md5 117eb10a… (défectueux) →
+  ad6cbffe… MATCH par relecture ; les résidents intacts (11 entrées).
+- FRONTIÈRES : aucune balise ne bouge (la finale 0.9.0 attend le
+  vert du run rejoué), l'artefact INTACT, le labo ne connaît toujours
+  pas le SSN du terrain (la sortie collée en conversation n'est pas
+  une pièce — le témoin temoin-m8d.txt reste la référence) ;
+  consignations : Entrée 163 PAR SCRIPT, worklog +Task ID 81 ;
+  scripts suivis : inserer_entree_163.py, corriger_kit_m8d.py.
+- SUITE : LE GESTE DU DÉVELOPPEUR REJOUE (kit-m8d.zip retéléchargé du
+  coffre /test OU le seul scenario-m8d.py remplacé, puis python
+  scenario-m8d.py) → les pièces au coffre /test/preuves-m8d/ → LE
+  RECOUP LABO (D138/D145/D148) → SI VERT : LA FINALE 0.9.0 SCELLÉE.
+
+Stage Summary:
+- LE CRASH DU PREMIER RUN EST NOMMÉ ET RÉPARÉ : une tranche memoryview
+  de 16 octets face à une valeur de 12 — la longueur fait partie de la
+  « structure », le refus était la RÈGLE de Python, pas la panne du
+  terrain.
+- LE KIT CORRIGÉ EST AU COFFRE /test (md5 ad6cbffe… MATCH par
+  relecture) : le geste du développeur peut reprendre — la finale
+  0.9.0 attend toujours le vert.
