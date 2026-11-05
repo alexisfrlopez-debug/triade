@@ -4725,6 +4725,23 @@ Stage Summary:
   des fragments, le numéro de séquence au nonce), puis la poignée
   (tls13-23..28 — LE TRANSFERT RFC 8448 en bout en bout), (d) sys-04+,
   (e) LA CÉRÉMONIE + le build 1.0.0-dev.1, (f) le terrain.
+- PASSATION (le même geste, Task ID 91) : le bundle courant
+  triade-history-090-0774e55.bundle (17 402 982 o, md5 3fed603b…, branche
+  jalon == 0774e55 [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE aead [Entrée 173 — tls13-15..19
+  notés-mesurés-prouvés : 520/129/162/1076/1163 o, round-trip 100 %, les
+  slots ARRÊTÉS 0x240/0xC0/0xC0/0x480/0x4C0 tassés depuis 0xDCC0 — fin de
+  famille 0xE9C0, le harnais 49 contrôles · 49 VERTS × 3 graines — FIPS
+  197 C.1 + SP 800-38A F.1.1 + McGrew–Viega TC1..TC4, LE TRANSFERT
+  RFC 8448 des SEPT enregistrements OUVERTS ET RESCELLÉS octet pour
+  octet, LE VERDICT temps constant MESURÉ (trois étiquettes divergentes
+  → 11 755 instructions LE MÊME COMPTE)] + le worklog Task 91), l'ancien
+  090-06c2f4d (LA FAMILLE x25519) ARCHIVÉ VERSIONNÉ (md5 265475d6…
+  recoupé — 35 archives, rien supprimé), /test sans copie (recoupé), le
+  push GitHub à la pointe (origin == 0774e55 relu MATCH — les trois
+  miroirs alignés, le commit de passation 8b7b8e9 du Task 90 EMBARQUÉ) ;
+  script suivi : passe_bundle_m9d.py ; LA SÉRIE 090 POURSUIT — le geste
+  est PASSÉ.
 
 Stage Summary:
 - LA QUATRIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
