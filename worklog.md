@@ -4439,3 +4439,42 @@ Stage Summary:
   (recoupé), le push GitHub à la pointe (origin == ffe06fc relu MATCH) ;
   script suivi : passe_bundle_v070.py ; LA SÉRIE 090 POURSUIT — le geste
   est PASSÉ.
+
+
+## Task ID 88 — LE CHANTIER M9-(b) OUVERT : LA FAMILLE sha NOTÉE-MESURÉE-PROUVÉE (05/11 au soir)
+
+- LE GESTE : tls13-01..04 — les QUATRE miroirs win msx64 des contrats
+  ah-04..07 (M6) — notés (74/387/139/165 o, round-trip 100 %), mesurés (les
+  slots ARRÊTÉS sur les longueurs réelles : 0x80/0x1C0/0xC0/0xC0 tassés
+  depuis 0xC000 — D161 rejoué), prouvés (LE HARNAIS 35 contrôles · 35 VERTS).
+- LE FIXTURE : K[64] @RVA 0x2F00 — la réserve M8 exactement remplie (256 o
+  vierges CONSTATÉS SUR PIÈCES dans le scellé 0.9.0 relu ; les fixtures M8
+  intacts) ; le prochain fixture vivra en .text6 (l'arrêt nommé).
+- LES PREUVES : les CINQ vecteurs officiels FIPS 180-4 octet pour octet
+  (le vide, « a », « abc », 448 bits la borne .deux, 896 bits) ; la
+  compression SEULE à découvert ; l'invariance de découpage (entier, 1, 3,
+  63, 64, 65, 13, 199+1) ; H0 et K DÉRIVÉS PAR ARITHMÉTIQUE des premiers
+  (isqrt/icbrt entiers) ; la falsification 12/12 ATTRAPÉE + K/H0/total
+  corrompus → divergence ; le temps constant MESURÉ (4 380 instructions
+  exactement — aucune branche ne lit les données) ; l'alignement msx64 à
+  l'entrée du callee par appel direct.
+- LES TROIS DÉFAUTS D'INSTRUMENT nommés par le fail-closed : la regex des
+  décalages décimaux, le compte de boucles écrit de tête, LE HOOK MUET
+  (unicorn attache les hooks à la traduction — un bloc en cache ne les
+  déclenche jamais : l'INSTRUMENT PERMANENT posé à la naissance, togglé par
+  drapeaux) — corrigés, rejoués, VERT.
+- FRONTIÈRES : aucune balise, AUCUN build, l'arbre scellé tls13/I INTACT
+  (le sceau 13/13 APRÈS le geste), m8/proxy.exe INTACT, verifier_specs_m9a
+  rejoué VERT ; consignations : Entrée 170 PAR SCRIPT, PLAN (chantier (b)
+  OUVERT + État du programme), worklog +Task ID 88.
+- SUITE : les familles hkdf/x25519/aead (la suite du chantier (b)), puis
+  (c) RFC 8448, (d) sys-04+, (e) le build 1.0.0-dev.1, (f) le terrain.
+
+Stage Summary:
+- LE CHANTIER M9-(b) EST OUVERT SUR PIÈCES : la première famille de la
+  grande œuvre est notée-mesurée-prouvée — les vecteurs officiels passent
+  octet pour octet, la falsification est attrapée, le temps constant est
+  mesuré.
+- LA DISCIPLINE TIENT : R2 (les specs signées précèdent), D161 (les slots
+  sur les longueurs réelles), la charte § 2 (les vecteurs AVANT usage) —
+  et l'arbre scellé de l'ère n'a pas bougé d'un octet.

@@ -129,8 +129,70 @@ TAILLE_FICHIER_M8 = 0xAE00        # 44 544 o (l'ancre : le corps hérité)
 TEXT6_RAW = TEXT5_RAW_M8          # préfiguration : la mesure décidera
 TEXT6_VA = 0xC000                 # préfiguration : aligné SectionAlignment
 
-# Les slots des 28 blocs : PRÉFIGURÉS en tassé depuis TEXT6_VA (D8 : multiples
-# de 64, alignés 16, padding >= 16) — ARRÊTÉS à la notation sur les longueurs
-# réelles (D161 : sys-01 fut préfiguré 0x40 et le resta ; sys-02 0x140 → 0x140
-# ; la préfiguration s'incline devant la mesure, TOUJOURS).
-TAILLE_SLOT_PREFIGUREE = 0x200    # par bloc, préfiguration généreuse
+# --- La famille sha ARRÊTÉE (chantier (b), le 05/11 — D161 rejoué) ---------------
+# Les slots ARRÊTÉS sur les longueurs réelles MESURÉES par outils/auteur.py
+# (la mesure auteur décide, la préfiguration 0x200/bloc s'incline) : multiples
+# de 64 (D8), tassés depuis TEXT6_VA, padding >= 16 — le MINIMUM admissible
+# pour chaque longueur mesurée :
+#   tls13-01 : 74 o notés  -> slot 0x80  (padding 54)
+#   tls13-02 : 387 o notés -> slot 0x1C0 (padding 61)
+#   tls13-03 : 139 o notés -> slot 0xC0  (padding 53)
+#   tls13-04 : 165 o notés -> slot 0xC0  (padding 27)
+# Les familles suivantes (hkdf, x25519, aead, enregistrement, poignée,
+# principal) s'arrêteront au geste de LEUR notation, chacune à la suite.
+
+TLS01_VA = 0xC000        # h100001 — l'initialisation (slot 0x80)
+TLS02_VA = 0xC080        # h100002 — la compression (slot 0x1C0)
+TLS03_VA = 0xC240        # h100003 — l'absorption (slot 0xC0)
+TLS04_VA = 0xC300        # h100004 — la finalisation (slot 0xC0)
+# fin de la famille sha : 0xC3C0 — la réserve .text6 suit (0xC3C0-0xDFFF)
+
+SLOTS_TLS13 = {
+    "h100001": (TLS01_VA, 0x80),
+    "h100002": (TLS02_VA, 0x1C0),
+    "h100003": (TLS03_VA, 0xC0),
+    "h100004": (TLS04_VA, 0xC0),
+}
+
+# --- Le fixture K[64] : la réserve M8 exactement remplie (vérifiée sur pièces) ---
+# La zone RVA 0x2F00-0x2FFF (raw 0x2300) est VIERGE dans le scellé 0.9.0 —
+# 256 octets nuls constatés sur pièces au chantier (b) (m8/proxy.exe relu :
+# sha256 1492b0bc…, .rdata RVA 0x2000 raw 0x1400, la borne de marche M8
+# R_SYS_BORNE = 0x2F00). K[64] u32 = 256 o : la réserve est ÉPUISÉE par la
+# table — le prochain fixture du domaine vivra en .text6 (l'arrêt nommé,
+# miroir D95 : jamais au-delà d'une borne sans arrêt consigné).
+
+R_K = 0x2F00             # K[64] u32 — FIPS 180-4 § 4.2.2 (la table de tls13-02)
+
+# Les constantes FIPS 180-4 § 4.2.2 : parties fractionnaires des racines
+# cubiques des 64 premiers nombres premiers — DÉRIVÉES PAR ARITHMÉTIQUE à
+# l'instrument du chantier (b) (racine cubique entière de p × 2^96 ; le juge
+# est le code, jamais une copie d'écriture).
+K = (
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
+    0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+    0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
+    0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+    0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+    0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
+    0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
+    0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+    0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
+)
+
+# --- Les décalages du contexte SHA (la disposition ah — miroir M6, charte § 6) ---
+
+CTX_H = 0                 # H[8] u32 — l'état du hachage
+CTX_TAMPON = 32           # tampon[64] — le couplage partiel
+CTX_REMPLISSAGE = 96      # u32 — octets valides du tampon
+CTX_RESERVE = 100         # u32 — l'alignement (jamais lu)
+CTX_TOTAL = 104           # u64 — octets absorbés cumulés
+
+# --- Les adresses de blocs (les appels directs inter-blocs — I1 des specs) -------
+
+A_INIT = TLS01_VA          # tls13-01 (l'initialisation)
+A_COMPRIMER = TLS02_VA     # tls13-02 (la compression — appelée par 03 et 04)
+A_ABSORBER = TLS03_VA      # tls13-03 (l'absorption)
+A_FINALISER = TLS04_VA     # tls13-04 (la finalisation)
