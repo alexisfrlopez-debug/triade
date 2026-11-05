@@ -3515,3 +3515,30 @@ Stage Summary:
   /test, la réserve D149 nommée dans chaque verdict) ; le recoup
   post-mortem sur pièces croisées à sa réception ; si vert :
   --sceller-final pose LA FINALE 0.8.0 — LE JALON M7 FRANCHI.
+
+
+- PASSATION D141 rejouée au geste « CHANTIER M7-(d), LA PART LABORATOIRE
+  ACCOMPLIE / l'export de continuité multi-profils + le kit terrain + la
+  clôture D143 » : le bundle courant triade-history-070-816eee7.bundle (git
+  bundle --all, 16 139 756 o, md5 5bfed8e8…) déposé au MIROIR, ASSERTÉ avant
+  dépôt (branche jalon pointe sur 816eee7 — il porte LE QUATRIÈME CHANTIER
+  DU JALON M7 avec sa consignation : L'EXPORT MULTI-PROFILS [le conteneur
+  TRIADE-EXP1 729 277 o chiffré + signé, 126 fichiers, l'import
+  AUTO-PORTANT aux cinq étapes, les rituels sur les octets TRANSPORTÉS] + LE
+  KIT TERRAIN DÉPOSÉ AU COFFRE /test [le scellé riscv/corpus 0.8.0-rc.1 +
+  le démonstrateur + L'INSTRUMENT EMBARQUÉ qemu statique, épreuvé VERT
+  16/16 à l'extraction vierge] + LA CLÔTURE D143 DU RUN m6d [la vague m6d
+  archivée, les pièces du run + le verdict du recoup labo à
+  preuves-run-m6d/] + Entrée 154 + D158 + worklog Task 72) ; l'ancien
+  070-33cde07 (md5 ead5b48d… recoupé AVANT) ARCHIVÉ VERSIONNÉ dans
+  archives-bundles/ (19 archives, jamais supprimé) ; la série DEMEURE 070
+  (l'ère de la balise 0.7.0 scellée — la série 080 naîtra à la finale 0.8.0
+  du jalon) ; /test sans copie de bundle (recoupé) ; GitHub porté à la
+  pointe dans le même geste (push 3505ea8..816eee7, recoupé ls-remote) ;
+  script suivi : passe_bundle_m7d.py.
+- SUITE : LE RUN TERRAIN M7-(d) DU DÉVELOPPEUR — kit-m7d.zip au coffre
+  /test (qemu-riscv64 DANS le kit, la réserve D149 nommée dans chaque
+  verdict), preuves-m7/ le réceptacle ; le recoup post-mortem sur pièces
+  croisées (D138/D145/D148) à sa réception ; si vert : --sceller-final pose
+  LA FINALE 0.8.0 — LE JALON M7 FRANCHI, l'universalité DÉMONTRÉE : chaque
+  profil déclaré supporté a franchi ses critères.
