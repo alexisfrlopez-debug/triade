@@ -62,6 +62,19 @@ F25519_P_MEMBRES = (0x7FFFFFFFFFFED,) + (0x7FFFFFFFFFFFF,) * 4
                                           # DÉRIVÉ PAR ARITHMÉTIQUE (av-10 I2
                                           # cité ; erratum M9 : jamais copié)
 F25519_REPLI = 19                         # 2^255 ≡ 19 (mod p)
+F25519_P2_MEMBRES = (0x7FFFFFFFFFFDA,) + (0x7FFFFFFFFFFFF,) * 3 \
+    + (0xFFFFFFFFFFFFF,)                # 2p = 2^256 − 38 en radix 2^51 :
+                                          # (2^51 − 38), (2^51 − 1)×3, (2^52 − 1)
+                                          # — DÉRIVÉ PAR ARITHMÉTIQUE au geste
+                                          # x25519 (Σ membres·2^51i == 2·p prouvé
+                                          # par code ; ERRATUM tls13-10 I1 consigné
+                                          # AVANT la notation : « (2^51 − 38) puis
+                                          # (2^51 − 1)×4 » compose 2^255 − 38 ≡ −19
+                                          # (mod p) — le membre 4 est 2^52 − 1,
+                                          # l'écriture seule est fautive, la
+                                          # notation re-dérive, le juge est le code)
+F25519_P0 = 0x7FFFFFFFFFFED            # le membre 0 de p (2^51 − 19) — la borne
+                                          # du gel de tls13-12 (I2/I3)
 X25519_A24 = 121665                       # (486662 − 2) / 4 — RFC 7748 §5
 X25519_BASE = 9                           # le point de base u = 9, RFC 7748 §6.1
 X25519_EXP_INV = bytes.fromhex(
@@ -159,7 +172,26 @@ TLS05_VA = 0xC3C0        # h100005 — HMAC-SHA-256 (slot 0x200)
 TLS06_VA = 0xC5C0        # h100006 — HKDF-Extract (slot 0xC0)
 TLS07_VA = 0xC680        # h100007 — HKDF-Expand (slot 0x180)
 TLS08_VA = 0xC800        # h100008 — HKDF-Expand-Label (slot 0x180)
-# fin de la famille hkdf : 0xC980 — les familles suivantes suivent
+# fin de la famille hkdf : 0xC980 — la famille x25519 suit
+
+# --- La famille x25519 ARRÊTÉE (chantier (b), le geste trois — D161 rejoué) ------
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py (la mesure
+# auteur décide, la préfiguration s'incline — le cas tls13-13 : préfiguré
+# 0xA00, mesuré 2815 o → 0xB40) : multiples de 64 (D8), tassés depuis la fin
+# hkdf (0xC980), padding >= 16 — le MINIMUM admissible pour chaque longueur :
+#   tls13-09 :  54 o notés -> slot 0x80  (padding 74)
+#   tls13-10 : 252 o notés -> slot 0x140 (padding 68)
+#   tls13-11 : 1078 o notés -> slot 0x480 (padding 74)
+#   tls13-12 : 281 o notés -> slot 0x140 (padding 39)
+#   tls13-13 : 2887 o notés -> slot 0xB80 (padding 57)
+#   tls13-14 : 23 o notés -> slot 0x40  (padding 41)
+TLS09_VA = 0xC980        # h100009 — f25519 addition réduite (slot 0x80)
+TLS10_VA = 0xCA00        # h100010 — f25519 soustraction réduite (slot 0x140)
+TLS11_VA = 0xCB40        # h100011 — f25519 multiplication (slot 0x480)
+TLS12_VA = 0xCFC0        # h100012 — propagation + gel modulo p (slot 0x140)
+TLS13_VA = 0xD100        # h100013 — X25519 échelle de Montgomery (slot 0xB80)
+TLS14_VA = 0xDC80        # h100014 — X25519 clé publique (slot 0x40)
+# fin de la famille x25519 : 0xDCC0 — les familles suivantes suivent
 
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
@@ -170,7 +202,29 @@ SLOTS_TLS13 = {
     "h100006": (TLS06_VA, 0xC0),
     "h100007": (TLS07_VA, 0x180),
     "h100008": (TLS08_VA, 0x180),
+    "h100009": (TLS09_VA, 0x80),
+    "h100010": (TLS10_VA, 0x140),
+    "h100011": (TLS11_VA, 0x480),
+    "h100012": (TLS12_VA, 0x140),
+    "h100013": (TLS13_VA, 0xB80),
+    "h100014": (TLS14_VA, 0x40),
 }
+
+# --- Les fixtures du domaine en .text6 (l'ARRÊT nommé — miroir D95) ---------------
+# La réserve .rdata M8 (R_K 0x2F00, 256 o) est ÉPUISÉE par K[64] (le constat du
+# geste sha) : les fixtures NOUVEAUX du domaine vivent en .text6, à l'ARRÊT
+# CONSIGNÉ au geste x25519 — AU-DELÀ du plancher de croissance des familles
+# (la marge : la famille x25519 finit vers 0xDAC0, les quatre familles
+# restantes — aead, enregistrement, poignée, principal — tiennent sous 0xF000,
+# la mesure décidera, jamais la négociation) :
+R_U9 = 0xFF00             # le point de base u = 9 sérialisé LE (32 o) —
+                          # X25519_BASE du plan, la fixture PUBLIQUE de
+                          # tls13-14 I1 (RFC 7748 § 6.1 : « the base point
+                          # is u = 9 » — jamais un octet de code)
+R_EXP_INV = 0xFF20        # l'exposant p − 2 sérialisé LE (32 o) —
+                          # X25519_EXP_INV du plan, la constante PUBLIQUE
+                          # de tls13-13 I4 (l'inversion z2^(p−2), miroir
+                          # av-11 : le fixture de l'exposant)
 
 # --- Le fixture K[64] : la réserve M8 exactement remplie (vérifiée sur pièces) ---
 # La zone RVA 0x2F00-0x2FFF (raw 0x2300) est VIERGE dans le scellé 0.9.0 —
@@ -218,3 +272,9 @@ A_HMAC = TLS05_VA          # tls13-05 (l'HMAC — appelée par 06, 07 et 25)
 A_EXTRACT = TLS06_VA       # tls13-06 (l'extraction)
 A_EXPAND = TLS07_VA        # tls13-07 (l'expansion — appelée par 08)
 A_EXPAND_LABEL = TLS08_VA  # tls13-08 (l'étiquette — LE bloc du calendrier)
+A_ADD = TLS09_VA           # tls13-09 (l'addition réduite — appelée par 13)
+A_SUB = TLS10_VA           # tls13-10 (la soustraction réduite — appelée par 13)
+A_MUL = TLS11_VA           # tls13-11 (la multiplication — appelée par 13)
+A_PROPAGER_GELER = TLS12_VA  # tls13-12 (le gardien — appelé par 09, 10 et 11)
+A_ECHELLE = TLS13_VA       # tls13-13 (l'échelle — appelée par 14)
+A_CLE_PUBLIQUE = TLS14_VA  # tls13-14 (le couple du ClientHello)

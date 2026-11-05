@@ -4556,3 +4556,80 @@ Stage Summary:
 - LA PREUVE A CORRIGÉ LA NOTATION : le défaut de l'intérieur écrasé par
   l'opad, nommé par les vecteurs officiels au premier passage, corrigé
   par le slot dédié — le fail-closed fait son travail.
+
+
+## Task ID 90 — LE CHANTIER M9-(b) CONTINUE : LA FAMILLE x25519 NOTÉE-MESURÉE-PROUVÉE (07/11)
+
+- LA SYNCHRO VÉRIFIÉE SUR LES TROIS MIROIRS (la demande du développeur :
+  « vérifie si la synchro… puis on continue ») : le bundle 090-544b51a au
+  miroir md5 22eb71d9… == consigné == local, 33 archives (l'ancien
+  090-c82fe7b présent), /test sans copie, GitHub == 544b51a (la pointe hkdf),
+  le jeton OAuth vivant ; la réserve instrumentale réinstallée (keystone/
+  capstone/unicorn/pefile/pynacl — le disque recyclé les avait emportés) ;
+  les « modifications » m8/ : des bits de permission seuls (core.fileMode
+  false, AUCUN contenu — proxy.exe relu INTACT 1492b0bc…).
+- LE GESTE : tls13-09..14 — f25519 addition (cinq membres in place, UNE
+  passe), soustraction (les membres de 2p RE-DÉRIVÉS par arithmétique, DEUX
+  passes a+2p au scratch puis sub/sbb, LE VERROU fail-closed rax = −1 NOMMÉ,
+  RIEN écrit), multiplication (l'école 5×5 déroulée aux DIX logements u128
+  [le dixième NUL porte le repli uniforme], le repli ×19 en deux morceaux,
+  la chaîne 51 bits et le retour final), LE GARDIEN FUSIONNÉ propagation+gel
+  SANS BRANCHE (le drapeau « ≥ p » en registre sans écrire, le masque 0/−1
+  par sar, la soustraction conditionnelle par ET logique — l'amélioration
+  nommée sur av-10 : le M7 branchait, le M9 sélectionne), l'échelle de
+  Montgomery RFC 7748 § 5 (le clamp dans la copie locale, le bit 255 masqué,
+  le cswap XOR MASQUÉ, LA RECETTE 18 appels par itération [4 add + 4 sub +
+  10 mul — l'erratum I5 consigné], l'inversion z2^(p−2) à l'exposant PUBLIC
+  du FIXTURE, la sérialisation en miroir d'av-05) et le couple du
+  ClientHello (le point 9 au FIXTURE U9 — jamais un octet de code) — notés
+  (54/252/1078/281/2887/23 o, round-trip 100 %), mesurés (les slots ARRÊTÉS
+  0x80/0x140/0x480/0x140/0xB80/0x40 tassés depuis 0xC980, fin 0xDCC0 — D161
+  rejoué, la préfiguration inclinée DEUX FOIS), prouvés (LE HARNAIS 46
+  contrôles · 46 VERTS × 3 graines).
+- LES FIXTURES .text6 ARRÊTÉS (miroir D95) : la réserve .rdata M8 ÉPUISÉE
+  par K[64] — R_U9 = 0xFF00 (le point 9 LE) et R_EXP_INV = 0xFF20 (p−2 LE),
+  les contenus re-dérivés par arithmétique (V0.c), JAMAIS copiés.
+- LES PREUVES : RFC 7748 § 5.2 (les DEUX paires octet pour octet, la
+  référence croisée avant de juger) + § 6.1 (les clés publiques par le
+  couple, LE SECRET PARTAGÉ des DEUX côtés — la commutativité) + LE TEST
+  ITÉRÉ (1 pas : 422c8e7a…, 1000 pas : 684cf59b…) + LE TRANSFERT RFC 8448
+  (le key_share du ClientHello 99381de5… et le shared 8bd4054f… du
+  transcript, octet pour octet) ; l'oracle différentiel 60 échelles + 1600
+  opérations de champ ; les punitifs (p → 0 EXACT, les lâches, les
+  saturés, les non-canoniques, les dégénérés → 0) ; le contrat (20 398
+  entrées de callee alignées ≡ 8 mod 16 — les comptes EXACTS de la
+  recette ; le verrou −1 exercé hors contrat, la sortie INTACTE) ; la
+  falsification (6/6 + 3/3, les fixtures corrompus → divergence : les
+  données du plan sont LUES) ; le temps constant MESURÉ (1 238 953
+  instructions EXACTEMENT — le scalaire et le point JAMAIS comptés).
+- LES DEUX ERRATA consignés AVANT la notation (le juge est le code) :
+  tls13-10 I1 (les membres de 2p : « (2^51−38) puis (2^51−1)×4 » compose
+  2^255−38 ≡ −19 — le membre 4 est 2^52−1) ; tls13-13 I5 (« entre 4 et 6
+  opérations » : la recette § 5 exige 4+4+10 = 18).
+- LES DEUX DÉFAUTS DE NOTATION nommés par le fail-closed : l'école — mul
+  DÉTRUIT rax, le second mul de chaque rangée multipliait le demi-produit
+  (la bisection : a0×b1 → 0) : a_i RECHARGÉ avant CHAQUE mul, re-mesuré
+  1002 → 1078, slot 0x400 → 0x480 ; l'échelle — x2' lisait A au lieu de la
+  copie d'AA [trois consommateurs destructifs] et le cswap ÉCRASAIT le bit
+  du drapeau (rax est le scratch : k_t préservé en r11d) — nommés par LA
+  TRACE ITÉRATIVE (l'état comparé à chaque pas contre Python, la première
+  faute à t = 252), re-mesuré 2887, slot 0xB80, REJOUÉ VERT.
+- FRONTIÈRES : aucune balise, AUCUN build, l'arbre scellé tls13/I INTACT
+  (verifier_specs_m9a relu VERT au harnais V0), m8/proxy.exe INTACT, les
+  familles sha et hkdf intactes (relues en V0.b) ; consignations : Entrée
+  172 PAR SCRIPT, PLAN (chantier (b) : la famille x25519 + État du
+  programme), worklog +Task ID 90.
+- SUITE : la famille aead (tls13-15..19 — les slots à la suite de 0xDCC0),
+  puis (c) RFC 8448, (d) sys-04+, (e) LA CÉRÉMONIE + le build 1.0.0-dev.1,
+  (f) le terrain.
+
+Stage Summary:
+- LA TROISIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
+  l'arithmétique du corps F(2^255−19) et L'ÉCHANGE DE CLÉS X25519 existent
+  en octets — le couple du ClientHello (la clé publique) et le secret
+  partagé du transcript officiel RFC 8448 rendus octet pour octet, le
+  temps constant MESURÉ à l'instruction près.
+- LA PREUVE A CORRIGÉ LA NOTATION, ENCORE : les deux défauts (mul détruit
+  rax ; le cswap écrasait le bit du drapeau) nommés par la bisection et la
+  trace itérative, corrigés et rejoués verts — le fail-closed est la
+  méthode, pas l'accident.

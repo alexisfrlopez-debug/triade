@@ -69,6 +69,38 @@ _FICHIERS = {
                 "tls13-07 (l'expansion appelée UNE fois — I1) ; la structure "
                 "HkdfLabel sérialisée GROS-BOUTISTE dans le tampon de PILE "
                 "; le préfixe « tls13 » en immédiats du plan (I2)"),
+    "h100009": ("tls13-09-f25519-add", "tls13-09:R1",
+                "bloc feuille de la famille x25519 ; tls13-12 (UNE passe — "
+                "I1) ; les CINQ additions membres à membres IN PLACE, la "
+                "sortie ÉCRASE a (Q2, miroir av-07) ; les bornes < 2^53 en "
+                "registres volatils — AUCUN déplacement RIP"),
+    "h100010": ("tls13-10-f25519-sub", "tls13-10:R1",
+                "tls13-12 (UNE passe — I2) ; les membres de 2p en IMMÉDIATS "
+                "re-dérivés du plan (I1, l'erratum consigné) ; la chaîne "
+                "sub/sbb SUR LE SCRATCH, l'emprunt sortant VERROU fail-closed "
+                "(Q3 : rax = -1 NOMMÉ, RIEN écrit) ; AUCUN déplacement RIP"),
+    "h100011": ("tls13-11-f25519-mul", "tls13-11:R1",
+                "tls13-12 (UNE passe — I3) ; l'école 5×5 déroulée, les DIX "
+                "accumulateurs u128 en PILE [sous-cadre 0xC0 — I1], le repli "
+                "×19 et la chaîne 51 bits (I2) ; rbx retenu (le pointeur b "
+                "survit aux mul) ; AUCUN déplacement RIP"),
+    "h100012": ("tls13-12-f25519-propager-geler", "tls13-12:R1",
+                "bloc FEUILLE fusionné (miroirs av-06 + av-10, UNE frontière) ; "
+                "la passe séquentielle 0→4 puis LE GEL SANS BRANCHE DE DONNÉES "
+                "(I2 : le drapeau en registre, sar, le masque 0/-1, l'ET "
+                "logique — l'amélioration nommée) ; le masque, 19 et les "
+                "membres de p en IMMÉDIATS (I1/I3)"),
+    "h100013": ("tls13-13-x25519-echelle", "tls13-13:R1",
+                "tls13-09/10/11 (4 add + 4 sub + 10 mul PAR ITÉRATION — I5, "
+                "l'erratum de compte consigné ; entre 255 et 510 pour "
+                "l'inversion) ; le cswap XOR MASQUÉ (I1), les états sur la "
+                "PILE (I3, le sous-cadre réel consigné), l'exposant p−2 au "
+                "fixture R_EXP_INV (I4) ; le clamp et le masque bit 255 dans "
+                "des COPIES LOCALES (P2/P3)"),
+    "h100014": ("tls13-14-x25519-cle-publique", "tls13-14:R1",
+                "tls13-13 (l'échelle au point de base — I1) ; le point 9 au "
+                "fixture R_U9 (la fixture PUBLIQUE du domaine, jamais un "
+                "octet de code)"),
 }
 
 
@@ -90,9 +122,18 @@ SYMBOLES = {
     "TLS04": L.TLS04_VA,
     "TLS05": L.TLS05_VA,
     "TLS07": L.TLS07_VA,
+    "TLS09": L.TLS09_VA,
+    "TLS10": L.TLS10_VA,
+    "TLS11": L.TLS11_VA,
+    "TLS12": L.TLS12_VA,
+    "TLS13": L.TLS13_VA,
     # le fixture .rdata du domaine (le plan, source unique) : K[64] dans la
     # réserve M8 exactement (RVA 0x2F00 — 256 o, vérifié vierge sur pièces)
     "K": L.R_K,
+    # les fixtures .text6 du domaine (l'ARRÊT du geste x25519, miroir D95) :
+    # le point de base u = 9 (tls13-14 I1) et l'exposant p−2 (tls13-13 I4)
+    "U9": L.R_U9,
+    "EXP_INV": L.R_EXP_INV,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
@@ -265,6 +306,12 @@ NOMS_COURTS = {
     "tls13-06-hkdf-extract": "HKDF-Extract (RFC 5869 § 2.1 : le sel → le PRK)",
     "tls13-07-hkdf-expand": "HKDF-Expand (RFC 5869 § 2.3 : PRK + info → OKM)",
     "tls13-08-hkdf-expand-label": "HKDF-Expand-Label (RFC 8446 § 7.1 : le calendrier)",
+    "tls13-09-f25519-add": "f25519 addition réduite (cinq membres, miroir av-07)",
+    "tls13-10-f25519-sub": "f25519 soustraction réduite (a + 2p − b, miroir av-08)",
+    "tls13-11-f25519-mul": "f25519 multiplication (école 5×5, repli ×19, miroir av-09)",
+    "tls13-12-f25519-propager-geler": "f25519 propagation + gel sans branche (av-06+av-10 fusionnés)",
+    "tls13-13-x25519-echelle": "X25519 échelle de Montgomery (RFC 7748 § 5, miroir av-11)",
+    "tls13-14-x25519-cle-publique": "X25519 clé publique (le couple du ClientHello)",
 }
 
 
