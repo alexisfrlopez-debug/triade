@@ -4312,3 +4312,42 @@ Stage Summary:
   déplacement PATCH — 29 archives, rien supprimé), /test sans copie
   (recoupé), le push GitHub à la pointe ; scripts suivis :
   passe_bundle_m9a2.py.
+
+## Task ID 85 — LE KIT DE CÉRÉMONIE DE L'ÈRE M9 DÉPOSÉ au /Cérémonie (la remise RÉGÉNÉRÉE sur l'arbre complet — la charge de l'ouverture était périmée par les 24 specs ; le LISEZMOI pas à pas ; l'erratum de la ligne SUITE de l'Entrée 166) (05/11 au soir)
+
+- LA REPRISE : les trois miroirs confrontés (local == GitHub == e83a27e la
+  pointe, le bundle 090-64eae8e au geste), les canaux 200 ; l'état du sceau
+  LU au geste même (clé « reelle » 173fae9c…, m0 DIVERGE + tls13 DEPOT
+  INCOHERENT + 11 verts — la dette constatée sur pièces).
+- LA CHARGE RÉGÉNÉRÉE : la découverte du geste — a-signer.txt de
+  l'ouverture portait tls13 0ef882d6… (l'arbre alors naissant) ; les 24
+  specs ont bougé l'arbre ; preparer rejoué : UNE ligne sur treize
+  (tls13 → 9ff91874… = L'ARBRE COMPLET : le registre + les 28 specs), les
+  douze autres octet-identiques. SANS ce geste, la remise signée aurait
+  laissé tls13 CODE 10 APRÈS installation.
+- LE LISEZMOI + LE DÉPÔT : LISEZMOI-ceremonie-ere-M9.txt (modèle Entrée
+  159 : les deux empreintes m0 4ebe6a2c… / tls13 9ff91874…, la règle d'or
+  « JAMAIS generer », les pas à pas console + graphique, le contrat D87) ;
+  déposé au /Cérémonie md5 par relecture ; la remise du kit recoupée ==
+  celle du dépôt (D130).
+- L'ERRATUM : la ligne SUITE de l'Entrée 166 (« le chantier (b) … APRÈS la
+  remise ») — IMPRÉCIS : le garde exige la remise pour LE BUILD (chantier
+  (e)), pas pour la notation (le miroir M8 : Entrée 157 précéda 158) ;
+  consigné en tête du geste suivant, le journal ne se réécrit pas.
+- FRONTIÈRES : aucune balise ne bouge, AUCUN build avant la remise (le
+  garde fait son travail), AUCUN octet de notation ; consignations :
+  Entrée 167 PAR SCRIPT, D168 PAR SCRIPT, worklog +Task ID 85 ; scripts
+  suivis : inserer_entree_167.py, deposer_lisezmoi_ere_m9.py.
+- SUITE : LE GESTE DU DÉVELOPPEUR (la cérémonie hors-ligne : signer la
+  remise 13 arbres à la clé du 04/11, ramener signatures-I.txt +
+  cle-publique-I.txt) → le labo installe et recroise (le garde 13/13) ;
+  EN PARALLÈLE LICITE : le chantier (b) — la notation des 28 blocs + les
+  vecteurs officiels.
+
+Stage Summary:
+- LA MAIN DU DÉVELOPPEUR EST SERVIE : la remise est FRAÎCHE (l'arbre
+  complet des 28 spécifications), le LISEZMOI la sert pas à pas, la règle
+  d'or est réitérée — la cérémonie peut avoir lieu.
+- LA CHARGE PÉRIMÉE DE L'OUVERTURE EST LA PREUVE DE LA RÈGLE : la charge
+  se prépare au geste de la cérémonie — l'ouverture annonce, la cérémonie
+  exige.
