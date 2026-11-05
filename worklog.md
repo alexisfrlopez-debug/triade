@@ -4351,3 +4351,13 @@ Stage Summary:
 - LA CHARGE PÉRIMÉE DE L'OUVERTURE EST LA PREUVE DE LA RÈGLE : la charge
   se prépare au geste de la cérémonie — l'ouverture annonce, la cérémonie
   exige.
+
+- PASSATION (le même geste, Task ID 85) : le bundle courant
+  triade-history-090-094a15f.bundle (16 863 824 o, md5 a20150c1…, branche
+  jalon == 094a15f [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte la remise régénérée [tls13 9ff91874… = l'arbre
+  complet des 28 specs] + Entrée 167/D168 + l'erratum de la ligne SUITE +
+  Task 85), l'ancien 090-64eae8e (M9-(a) COMPLET) ARCHIVÉ VERSIONNÉ (md5
+  90c7168e… recoupé — 30 archives, rien supprimé), /test sans copie
+  (recoupé), le push GitHub à la pointe ; scripts suivis :
+  passe_bundle_ere_m9.py.
