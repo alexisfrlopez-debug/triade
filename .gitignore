@@ -62,3 +62,4 @@ bundles-*/
 # JAMAIS committée (modèle bundles-*/, Entrée 132 ; les pièces durables
 # vivent au coffre Drive, jamais au dépôt)
 upload/
+riscv/export/

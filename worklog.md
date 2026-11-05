@@ -3472,3 +3472,46 @@ Stage Summary:
   qemu-riscv64 au coffre /test ; le run terrain jugé POST-MORTEM ET SUR
   PIÈCES — D138/D145/D148) → la finale 0.8.0, LE JALON M7 FRANCHI —
   l'universalité DÉMONTRÉE.
+
+
+## Task ID 72 — « continue » : LE CHANTIER M7-(d), LA PART LABORATOIRE ACCOMPLIE — L'EXPORT DE CONTINUITÉ MULTI-PROFILS VERT DE BOUT EN BOUT + LE KIT TERRAIN DÉPOSÉ AU COFFRE AVEC L'INSTRUMENT EMBARQUÉ + LA CLÔTURE D143 DU RUN m6d (la suite annoncée au Task 71) : L'EXPORT (`riscv/export_continuite.py`, le premier depuis M1 — D16/FORMAT_CARTE § 8 aux TROIS profils déclarés) : le conteneur TRIADE-EXP1 729 277 o CHIFFRÉ (XChaCha20-Poly1305, AAD = l'en-tête clair ; la clé : Argon2id 64 Mio/3 it sur un sel DÉDIÉ à l'export — jamais celui d'une carte — puis HKDF à contexte propre) + SIGNÉ (Ed25519, la lignée D27) portant 126 fichiers — I : 81 spécifications (m0..m5 win, LES CANONIQUES unix/I, les miroirs riscv/I), B : CINQ artefacts (m5/proxy.exe 0.6.0 le scellé de la lignée win, unix/sonde 0.7.0-dev.1 + unix/corpus 0.7.0, riscv/sonde 0.8.0-dev.1 + riscv/corpus 0.8.0-rc.1), C : les CINQ cartes de l'ère courante (m5/carte — les 52 blocs de la pile win, les quatre M6/M7) ; L'IMPORT AUTO-PORTANT aux CINQ ÉTAPES § 8.2 : (1) déchiffrement terminal-à-l'échec ; (2) signature du conteneur + des CINQ cartes (le vérificateur PORTÉ, PROUVÉ équivalent aux modules — UNE seule lignée D27, la clé publique recoupée au dépôt) ; (3) LE VERROU CROISÉ : 34 empreintes de blocs (13+13 corpus, 4+4 sondes — les DEUX ISA) + 5 artefacts ENTIERS recalculés aux offsets du MANIFESTE et recoupés au frag-bld de CHAQUE carte ; (4) l'oracle RÉGÉNÉRÉ depuis I (81 specs, jamais importé — D1) ; (5) la REPRISE (win 0.6.0 / linux 0.7.0 / riscv 0.8.0-rc.1) ; LA PREUVE D'EXÉCUTION DE BOUT EN BOUT : les RITUELS rejoués sur les octets TRANSPORTÉS (le conteneur déchiffré en mémoire, jamais le disque) — corpus unix NATIF et corpus riscv SOUS QEMU chacun les DEUX lignes au code 0 (LA PARITÉ § 8.3 DES TROIS PROFILS DANS UN SEUL CONTENEUR), les sondes aux quatre lignes code 6 ; le scellé win : FRONTIÈRE NOMMÉE (son rituel vit au poste Windows — le verrou (3) porte ses octets) ; LES CONSTATS D'ÈRES SUR PIÈCES : HUIT cartes de l'ère courante (m3/m4/m5/terrain + les quatre M6/M7, signatures valides, UNE clé) — les cartes m0/m1/m2/demo/m6/m7 sont des ÈRES PASSÉES de la phrase (signatures valides, fragments NON déchiffrables avec la phrase courante) : l'état scellé COURANT du profil win vit dans SA DERNIÈRE carte de l'ère (m5) ; LE KIT TERRAIN (`scripts/assembler_kit_m7d.py`, modèle m6d) : le SCELLÉ riscv/corpus (ec343b4e…) + le DÉMONSTRATEUR riscv/demo (e57fc74b…) + L'INSTRUMENT EMBARQUÉ qemu-riscv64 10.0.13 STATIQUE (14 821 328 o, md5 bae5a36f…) + le SCÉNARIO PRÉ-ASSEMBLÉ (les 14 chaînes RECOUPÉES PAR AST au layout, le site DEP PAR DÉSASSEMBLAGE @0x1ad4, les 191 adresses du démonstrateur, les tailles FIGÉES 15 425/4 290) + le LISEZMOI ; L'ÉPREUVE D153 : extraction vierge + run au labo — VERT 16 PASS / 0 ÉCHEC ; LA CLÔTURE D143 DU RUN m6d (`scripts/deposer_kit_m7d.py`) : la vague m6d ARCHIVÉE (vagues-m6/), les PIÈCES DU RUN à preuves-run-m6d/ AVEC le VERDICT-DU-RECOUP labo (Entrée 149 — l'archive porte le JUGEMENT avec les pièces), preuves-m6/ DEMEURE avec son LISEZMOI, les DEUX index mis à jour, preuves-m7/ NÉ, la vague m7d DÉPOSÉE (kit-m7d.zip sha 85f7b4bf… + LISEZMOI-m7d.txt) ; L'EXPORT POUSSÉ au coffre Drive racine « Triade » ; LE SCELLAGE 0.8.0 ATTEND LE RUN TERRAIN DU DÉVELOPPEUR (modèle m6d) ; CINQ leçons D158 (l'import AUTO-PORTANT porte géométrie et dérivations publiques AU MANIFESTE ; une carte d'ère passée ne se transporte pas ; l'instrument du terrain vit dans le kit — version ET md5 au témoin ; qemu-user EXIGE le bit X de l'image invitée, rétabli geste nommé ; les lignées homonymes se chargent par chemin absolu) (05/11)
+
+**Détail.** Le manifeste est AUTO-DESCENT au sens plein : géométrie par
+artefact, paramètres publics de dérivation par carte, versions par profil,
+contrôles effectués à l'export — tout vit au conteneur signé ; seuls la
+phrase maîtresse (coffre) et la clé publique (dépôt — recoupement,
+transportée en dernier recours avec la réserve nommée) viennent de
+l'extérieur. FRONTIÈRES : le conteneur chiffré ne se committe PAS
+(riscv/export/ gitignoré, modèle m1/export/) ; le demo n'est PAS un
+artefact de la lignée ; code 5 STRUCTUREL sous qemu-user ; concurrence
+HORS périmètre (mono-fil) ; le scénario terrain écrit UNIQUEMENT dans
+preuves-m7/ (les mutants en .tmp/ effacés, les artefacts originaux jamais
+touchés — les empreintes re-prouvées en T3). Livrables :
+riscv/export_continuite.py (+ export/ le conteneur, poussé au Drive),
+riscv/terrain/ (scenario-m7d.py.in, scenario-m7d.py généré,
+LISEZMOI-KIT-M7D.md), scripts/assembler_kit_m7d.py,
+scripts/deposer_kit_m7d.py ; consignations : Entrée 154 PAR SCRIPT, D158
+PAR SCRIPT (à la suite de D157), fiche riscv64 (Statut + § 10), PLAN §
+État (M7-(d) la part laboratoire RÉALISÉE) + la ligne M7 du tableau,
+worklog +Task ID 72 ; scripts suivis : inserer_entree_154.py,
+inserer_d158.py.
+
+Stage Summary:
+- L'EXPORT DE CONTINUITÉ EST DEVENU MULTI-PROFILS ET AUTO-PORTANT : les
+  couches I/B/C des TROIS profils dans UN conteneur chiffré + signé, les
+  cinq étapes § 8.2 vérifiées sur poste nu (géométrie et dérivations
+  publiques AU MANIFESTE), les rituels rejoués sur les octets TRANSPORTÉS —
+  export → import → reprise SANS écart.
+- LE KIT TERRAIN M7 EST AU COFFRE avec l'INSTRUMENT DANS LE KIT (qemu
+  statique, md5 au témoin) — épreuvé VERT 16/16 à l'extraction vierge ; la
+  clôture D143 du run m6d est FAITE (les pièces + le verdict du recoup à
+  l'archive).
+- LA FINALE 0.8.0 ATTEND LE GESTE DU DÉVELOPPEUR : extraire kit-m7d.zip,
+  python3 scenario-m7d.py, renvoyer preuves-m7/ — puis le recoup sur
+  pièces (D138/D145/D148) et --sceller-final : le jalon M7 franchi,
+  l'universalité DÉMONTRÉE.
+
+- SUITE : LE RUN TERRAIN M7-(d) DU DÉVELOPPEUR (kit-m7d.zip au coffre
+  /test, la réserve D149 nommée dans chaque verdict) ; le recoup
+  post-mortem sur pièces croisées à sa réception ; si vert :
+  --sceller-final pose LA FINALE 0.8.0 — LE JALON M7 FRANCHI.

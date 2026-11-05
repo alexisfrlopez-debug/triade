@@ -16,7 +16,14 @@ de notation RV64 + la sonde aux oracles verts, Entrée 150, D155 ; balise
 `0.8.0-dev.1` posée par le premier build du jalon) ; **le chantier M7-(b)
 RÉALISÉ le 05/11/2026** (le corpus paritaire, Entrée 152, D156 ; balise
 `0.8.0-dev.2` — la TROISIÈME instanciation de la même couche I, le diff nul
-VERT, l'oracle qemu vert sur pièces).
+VERT, l'oracle qemu vert sur pièces) ; **le chantier M7-(c) RÉALISÉ le
+05/11/2026** (le patch fence.i DÉMONTRÉ en exécution par le démonstrateur
+invité, le verrou croisé multi-profils, Entrée 153, D157 ; balise
+`0.8.0-rc.1` SCELLÉE) ; **le chantier M7-(d), LA PART LABORATOIRE RÉALISÉE
+le 05/11/2026** (l'export de continuité MULTI-PROFILS vert de bout en bout
++ le kit terrain DÉPOSÉ au coffre /test avec l'instrument EMBARQUÉ + la
+clôture D143 du run m6d, Entrée 154, D158) — **la finale `0.8.0` attend le
+run terrain du développeur**.
 
 ---
 
@@ -217,3 +224,21 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
   (l'isolement d'un défaut se mène SUR L'IMAGE DE LA FAMILLE — le builder) ;
   le mprotect invité fonctionne PARFAITEMENT sous qemu (RWX puis RX, D39
   tenu) — la réserve d'instrument qui aurait été nommée n'existait pas.
+- **ACQUIS (05/11/2026, chantier M7-(d), Entrée 154 — D158)** : LE KIT
+  TERRAIN DU JALON est ASSEMBLÉ, ÉPROUVÉ (extraction vierge + run au labo :
+  VERT 16 PASS / 0 ÉCHEC — D153) et DÉPOSÉ au coffre /test (vague m7d :
+  kit-m7d.zip + LISEZMOI) — il porte le SCELLÉ riscv/corpus (0.8.0-rc.1),
+  le DÉMONSTRATEUR riscv/demo (f72001) et **l'INSTRUMENT EMBARQUÉ**
+  qemu-riscv64 10.0.13 STATIQUE (md5 bae5a36f… consigné au TÉMOIN du run :
+  aucun paquet, aucun réseau, aucun droit root — la réserve D149 NOMMÉE
+  dans chaque verdict du scénario) ; le scénario PRÉ-ASSEMBLÉ rétablit le
+  bit exécutable des images si l'extraction le perd (qemu-user L'EXIGE —
+  « Exec format error » constaté, D158 : geste nommé, le chmod ne touche
+  aucun octet de contenu) ; **L'EXPORT DE CONTINUITÉ MULTI-PROFILS** est
+  VERT DE BOUT EN BOUT (riscv/export_continuite.py : conteneur TRIADE-EXP1
+  chiffré + signé portant les couches I/B/C des TROIS profils — import
+  AUTO-PORTANT aux cinq étapes § 8.2, la géométrie et les dérivations
+  publiques AU MANIFESTE ; les rituels rejoués sur les octets TRANSPORTÉS) ;
+  la clôture D143 du run m6d est FAITE au même geste (les pièces du run +
+  le verdict du recoup labo à archives-preuves/preuves-run-m6d/) ; le run
+  terrain du développeur (preuves-m7/) précède le scellage final 0.8.0.
