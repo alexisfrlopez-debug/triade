@@ -4185,6 +4185,19 @@ Stage Summary:
   archives-preuves/preuves-run-m8d/, le réceptacle demeure) + le push
   GitHub à la pointe.
 
+- PASSATION + CLÔTURE (le même geste, Task ID 82) : LA SÉRIE 090 NÉE —
+  triade-history-090-4edf0c3.bundle (16 757 330 o, md5 63c6bfb3…, branche
+  jalon == 4edf0c3 LA FINALE 0.9.0) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH),
+  l'ancien 080-b5d5018 ARCHIVÉ VERSIONNÉ (md5 356315b0… recoupé — 27
+  archives, rien supprimé), /test sans copie (recoupé), le push GitHub à
+  la pointe (431666c..4edf0c3) ; LA CLÔTURE D143 du run m8d : les SIX
+  pièces DÉPLACÉES vers archives-preuves/preuves-run-m8d/ (md5 constatés
+  APRÈS le geste — jamais un jet), VERDICT-recoup-labo-m8d.txt DÉPOSÉ AVEC
+  elles (le jugement AVEC les pièces), les DEUX index mis à jour,
+  preuves-m8d/ ne porte plus que son LISEZMOI (le réceptacle demeure), la
+  racine recoupée (kit-m8d.zip md5 ad6cbffe…) ; scripts suivis :
+  passe_bundle_finale_090.py, cloturer_run_m8d.py.
+
 Stage Summary:
 - LE JALON M8 EST FRANCHI : le terrain a établi le critère (le VRAI
   ntdll lu, la même ligne par les DEUX chemins), le labo a recoupé sur
