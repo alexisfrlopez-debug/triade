@@ -1,0 +1,121 @@
+TRIADE — KIT TERRAIN M8-(d) : LE VRAI ntdll, LA TWIN, LES DEUX CHEMINS
+=======================================================================
+(domaine `sys`, jalon M8 — le chantier final : la finale 0.9.0 attend
+le vert de CE run ; D160/D161/D162/D163, carte génération 8)
+
+POURQUOI ce kit existe
+----------------------
+Le jalon M8 a prouvé le domaine `sys` AU LABORATOIRE : les trois blocs
+(sys-01 l'émetteur, sys-02 le résolveur SSN, sys-03 la twin de hello-02)
+sont notés, mesurés et prouvés au harnais sur FIXTURES ntdll
+SYNTHÉTIQUES — le labo ne connaît pas le SSN de VOTRE machine et ne le
+devine jamais. L'artefact 0.9.0-dev.1 est né du build (44 544 o, sha256
+1492b0bc…), la carte génération 8 le prouve, le verrou croisé est vert
+à 55 empreintes. Il reste LE geste que seul VOTRE machine peut faire :
+lire le VRAI ntdll, confronter le motif du stub, et émettre LA MÊME
+LIGNE par les DEUX chemins — l'IAT userland (hello-02, le scellé M0)
+et le syscall direct (sys-03, par NtWriteFile résolu au geste même).
+
+Le run terrain VERT sur pièces pose la balise finale 0.9.0 : le jalon
+M8 franchi — le second chemin preuve : la même observable SANS un seul
+import, sur votre machine.
+
+CE QUE CE KIT CONTIENT
+----------------------
+kit-m8d/
+├── proxy.exe         l'ARTEFACT 0.9.0-dev.1 du jalon M8 — 44 544 o,
+│                     sha256 1492b0bc0792e1ab162338b414fb20573134e84d7
+│                     52b9d0657292421f8eb0cd4 (lecture seule pour le
+│                     run — le scénario ne l'écrit JAMAIS ; la carte
+│                     privée ne voyage JAMAIS avec l'artefact) ;
+├── scenario-m8d.py   LE SCÉNARIO (python SEUL — aucun paquet à
+│                     installer, aucun droit particulier, aucun
+│                     réseau) ;
+└── LISEZMOI-m8d.txt  le présent document.
+
+CE QUE LE SCÉNARIO FAIT (et ce qu'il ne fait PAS)
+-------------------------------------------------
+T0 LE TÉMOIN    l'empreinte de l'artefact ASSERTÉE avant tout geste ;
+                votre Windows, votre Python, votre ntdll (base + sha256
+                du fichier) consignés ; l'artefact CARTOGRAPHIÉ en
+                mémoire (LoadLibraryEx DONT_RESOLVE : aucune entrée
+                résolue, AUCUN point d'entrée appelé — le scénario est
+                le chargeur, jamais l'exécutant) ; les octets attendus
+                constatés UN PAR UN (le trombone sys-01, les fixtures,
+                le slot IAT — le slot kernel32!WriteFile est résolu PAR
+                LE SCÉNARIO, le geste du chargeur pour le chemin A).
+T1 LA LECTURE   le VRAI ntdll lu par DEUX lecteurs indépendants : la
+                marche EAT refaite en PYTHON et le BLOC sys-02 appelé
+                à son adresse scellée — LE MÊME SSN attendu des deux ;
+                le MOTIF du stub confronté (4C 8B D1 B8 avant l'imm32 :
+                un stub crocheté — un hook — est un REFUS NOMMÉ, jamais
+                un numéro extrait) ; un second nom résolu (NtReadFile :
+                jamais un numéro en cache) ; un module FORGÉ au stub
+                crocheté pour voir le refus -4 NOMMÉ sur pièce.
+T2 LA TWIN      LA MÊME LIGNE (33 octets, « TRIADE M0 : Hello, Windows
+                11 ! ») par les DEUX chemins : CHEMIN A hello-02 par
+                l'IAT kernel32 (WriteFile) ; CHEMIN B sys-03 par
+                NtWriteFile EN SYSCALL DIRECT — zéro IAT, le SSN résolu
+                au geste même. Les DEUX sorties comparées OCTET PAR
+                OCTET.
+T3 LES GARDES   une base invalide rend -1 NOMMÉ et AUCUN syscall
+                n'est émis (un fichier-témoin reste VIDE) ; proxy.exe
+                relu inchangé ; le ntdll lu n'est JAMAIS touché ; la
+                cartographie libérée.
+
+Le scénario N'ÉCRIT JAMAIS dans proxy.exe ni dans votre ntdll. Le seul
+syscall émis est NtWriteFile vers un fichier du dossier preuves-m8d/
+ créé par le scénario — l'observable même du jalon, bénigne par
+construction. Aucun réseau, aucun droit particulier.
+
+LA MARCHE À SUIVRE
+------------------
+1. Dézippez kit-m8d.zip où vous voulez (par exemple Documents).
+
+2. Ouvrez un terminal (PowerShell ou cmd) et placez-vous dans le
+   dossier m8-kit/ dézippé.
+
+3. Lancez :
+       python scenario-m8d.py
+   (ou py scenario-m8d.py, ou python3 — selon votre installation ;
+   un Python 64 bits est requis — c'est le défaut).
+
+4. Le run s'exécute en quelques secondes et affiche chaque contrôle.
+   Les pièces naissent dans ./preuves-m8d/ :
+       temoin-m8d.txt            le témoin complet (l'environnement,
+                                 le SSN, le stub, chaque contrôle)
+       scenario-m8d-journal.log  le journal horodaté
+       VERDICT-run-m8d.txt       le verdict
+       chemin-a-hello02.txt      la ligne par le CHEMIN A (l'IAT)
+       chemin-b-sys03.txt        la ligne par le CHEMIN B (le syscall)
+       chemin-c-refus.txt        le fichier-témoin du refus (VIDE)
+
+5. Si le verdict est VERT : renvoyez le dossier preuves-m8d/ EN ENTIER
+   au coffre Drive « Triade » → « test » → « preuves-m8d/ » (glisser-
+   déposer les fichiers). Le laboratoire recoupe sur pièces
+   (D138/D145/D148) et scelle la finale 0.9.0.
+
+   Si le verdict est ROUGE : renvoyez les pièces TEL QUELLES — un
+   échec honnête vaut plus qu'un vert muet ; la ligne d'échec NOMME le
+   défaut (p. ex. « le stub divergent » : votre ntdll est crocheté —
+   c'est une information, pas une panne du kit).
+
+CE QUE LE LABORATOIRE RECOUPE
+-----------------------------
+- l'empreinte de l'artefact (le kit éprouvé == le kit déposé) ;
+- le SSN consigné (cohérent avec la version Windows consignée — jamais
+  deviné par le labo, il ne le connaît toujours pas) ;
+- les DEUX lignes (octet pour octet le fixture, identiques entre elles) ;
+- le refus nommé (le fichier-témoin VIDE) ;
+- l'environnement (la version Windows fait foi pour l'ère déclarée
+  Win10/11 x64 — la réserve du registre figé).
+
+Une note d'honnêteté : sous Python, le scénario utilise ctypes pour
+charger l'artefact et appeler les blocs à leurs adresses scellées —
+c'est le moyen standard d'invoquer du code natif depuis un script. Le
+CODE appelé est celui de l'ARTEFACT (les octets du build, vérifiés par
+empreinte avant tout appel) ; le scénario n'embarque AUCUN octet de
+code exécuté — seulement les attendus et les pièces.
+
+Le dépôt est sous licence BSL 1.1 (concédant Alexis Lopez). La carte
+de l'artefact ne voyage jamais avec lui (R1) — l'empreinte fait foi.

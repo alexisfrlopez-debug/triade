@@ -4026,3 +4026,59 @@ Stage Summary:
   12/12, l'état « réelle » intact.
 - SUITE : le chantier M8-(d) — le kit terrain au coffre /test (le
   VRAI ntdll sur la machine du développeur).
+
+## Task ID 80 — (la suite annoncée au Task 79) : LE CHANTIER M8-(d) OUVERT ET SERVI — LE KIT TERRAIN DÉPOSÉ AU COFFRE /test
+
+- LE SCÉNARIO (m8/terrain/scenario-m8d.py — python SEUL, stdlib) :
+  QUATRE temps — T0 LE TÉMOIN (l'empreinte de l'artefact assertée,
+  l'environnement consigné [la version Windows], le VRAI ntdll localisé
+  et haché, l'artefact cartographié DONT_RESOLVE [le scénario est le
+  CHARGEUR : aucune entrée résolue, aucun point d'entrée appelé], les
+  octets attendus constatés UN PAR UN, le slot kernel32!WriteFile
+  résolu PAR LE SCÉNARIO — le geste du chargeur pour le chemin A) ;
+  T1 LA LECTURE (le VRAI ntdll par DEUX lecteurs indépendants : la
+  marche EAT en PYTHON et le BLOC sys-02 à son adresse scellée — LE
+  MÊME SSN ; le MOTIF confronté [4C 8B D1 B8 avant l'imm32, les octets
+  du stub consignés] ; un second nom [NtReadFile — jamais un numéro en
+  cache] ; LA FALSIFICATION INVITÉE [un module forgé au stub crocheté :
+  -4 NOMMÉ sur la machine réelle]) ; T2 LA TWIN (la même ligne par les
+  DEUX chemins : hello-02 l'IAT kernel32 VS sys-03 le syscall direct —
+  les DEUX fichiers comparés OCTET PAR OCTET au fixture 33 o) ; T3 LES
+  GARDES (la base invalide → -1 NOMMÉ, AUCUN syscall [le
+  fichier-témoin VIDE — la garde I5 sur la machine réelle] ; proxy.exe
+  relu inchangé ; le ntdll relu inchangé [I8] ; FreeLibrary).
+- L'ÉPREUVE DE LABO (assembler_kit_m8d.py) : le labo NE PEUT PAS
+  exécuter le scénario (Windows + VRAI ntdll — le cœur du chantier) ;
+  LE RECOUP PAR AST : 13 constantes du scénario == l'artefact/le plan
+  (AUCUN chiffre gravé de tête) ; py_compile ; L'EXTRACTION VIERGE
+  VERT — kit-m8d.zip 20 286 o, md5 117eb10a…, sha256 cc21cd85….
+- LE DÉPÔT (deposer_kit_m8d.py, règle D143 : par DÉPLACEMENT, jamais
+  un jet) : la vague m7d CONSOMMÉE archivée (vagues-m7/ : kit-m7d.zip
+  md5 4d17f3fa… + LISEZMOI-m7d.txt, md5 constatés après) ; preuves-m8d/
+  NÉ avec son LISEZMOI-preuves.txt (les six pièces attendues) ; LA
+  VAGUE m8d POSÉE (kit-m8d.zip MATCH par relecture + LISEZMOI-m8d.txt) ;
+  l'index mis à jour ; la vérification : 11 entrées à la racine, rien
+  jeté (corriger-wsb.* et signatures-I.txt [la remise consommée]
+  demeurent).
+- FRONTIÈRES : aucune balise ne bouge (win 0.6.0 / linux 0.7.0 / riscv
+  0.8.0 INTACTES — la finale 0.9.0 attend le run terrain vert),
+  l'artefact INTACT (lecture seule), le labo ne connaît toujours PAS le
+  SSN du terrain (le scénario le résout sur la machine du développeur,
+  le témoin le consigne), la carte ne voyage pas avec l'artefact (R1) ;
+  consignations : Entrée 162 PAR SCRIPT, PLAN (la ligne (d) : le kit
+  déposé), worklog +Task ID 80 ; scripts suivis : inserer_entree_162.py,
+  assembler_kit_m8d.py, deposer_kit_m8d.py.
+- SUITE : LE GESTE DU DÉVELOPPEUR (python scenario-m8d.py sur la
+  machine Windows — les pièces au coffre /test/preuves-m8d/) → LE
+  RECOUP LABORATOIRE (D138/D145/D148) → SI VERT : LA FINALE 0.9.0
+  SCELLÉE (le jalon M8 franchi).
+
+Stage Summary:
+- LE KIT TERRAIN M8-(d) EST DÉPOSÉ au coffre /test : le scénario du
+  VRAI ntdll en QUATRE temps (le témoin, la lecture par deux lecteurs,
+  LA TWIN par les deux chemins, les gardes), recoupé au labo PAR AST
+  (13 constantes == l'artefact), la vague m8d posée, la vague m7d
+  archivée, preuves-m8d/ né.
+- LA FINALE 0.9.0 ATTEND LE VERT DU TERRAIN : le run du développeur
+  (python scenario-m8d.py sur sa machine Windows) — le second chemin
+  preuve, la même observable SANS un seul import.
