@@ -4082,3 +4082,12 @@ Stage Summary:
 - LA FINALE 0.9.0 ATTEND LE VERT DU TERRAIN : le run du développeur
   (python scenario-m8d.py sur sa machine Windows) — le second chemin
   preuve, la même observable SANS un seul import.
+
+- PASSATION D141 (la clôture du geste M8-(d)) : le bundle courant
+  triade-history-080-b5d5018.bundle (16 677 811 o, md5 356315b0…,
+  branche jalon == b5d5018 [le geste 1e3aaf6 + sa consignation]) DÉPOSÉ
+  au miroir ASSERTÉ (relu MATCH), l'ancien 080-9193019 (la cérémonie +
+  le build 0.9.0-dev.1) ARCHIVÉ VERSIONNÉ (md5 a8cd69f8… recoupé — 26
+  archives, rien supprimé), /test sans copie (recoupé) ; script suivi :
+  passe_bundle_m8d.py ; la série 080 continue (la série 090 naîtra à
+  la finale 0.9.0).
