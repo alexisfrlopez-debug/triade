@@ -3710,3 +3710,34 @@ Stage Summary:
   la carte génération 8 + le verrou croisé ; puis le chantier (d) — le
   kit terrain au coffre /test, le VRAI ntdll sur la machine du
   développeur, la finale 0.9.0 attend le vert.
+
+- PASSATION D141 rejouée au geste « CHANTIER M8-(c) OUVERT SUR UNE
+  DÉCOUVERTE : le garde-sceau D87 nomme la dette de cérémonie de l'ère » :
+  le bundle courant triade-history-080-d999103.bundle (git bundle --all,
+  16 415 924 o, md5 46a74722…) déposé au MIROIR, ASSERTÉ avant dépôt
+  (branche jalon pointe sur d999103 — il porte LE CHANTIER M8-(c) OUVERT
+  avec sa consignation : LA DÉCOUVERTE [le garde refuse le registre m0
+  étendu au M8-(a) sans re-signature — les specs hello intactes, seul le
+  registre diverge ; l'arbre m8 absent de la table] + LA CÉRÉMONIE DE
+  L'ÈRE M8 EXIGÉE [la table étendue à m8 sys.1, a-signer.txt préparé —
+  la remise du développeur : m0 + m8 signés hors-ligne, sa clé] + LE
+  BUILD ÉCRIT [build_m8.py construire+verifier, le garde armé en tête],
+  ses composants VÉRIFIÉS SUR PIÈCES DÉTACHÉES [l'héritage complet :
+  l'image M5 composée == scellé 0.6.0 octet/octet, M3 524 + M4 492 +
+  M5 312 verrous ; l'oracle structurel M8 54 verrous — AUCUN IAT PAR
+  BLOC sys ; l'exe composé 44 544 o sha256 1492b0bc… re-constaté
+  identique ; les TROIS oracles appelés ; la carte génération 8 prête —
+  le témoin e9cd8c549485… ne bouge pas ; l'arrêt D162 des offsets :
+  .text5 raw 0x8E00, taille 0xAE00] + Entrée 158 + D162 + worklog Task
+  76) ; l'ancien 080-99f96b1 (le chantier M8-(b) : les trois blocs
+  notés-mesurés-prouvés, md5 3e8b77fb… recoupé AVANT) ARCHIVÉ VERSIONNÉ
+  dans archives-bundles/ (23 archives, jamais supprimé) ; la série 080
+  continue (la série 090 naîtra à la finale 0.9.0 du jalon M8) ; /test
+  sans copie de bundle (recoupé) ; GitHub porté à la pointe dans le même
+  geste (push 897e9b7..d999103, recoupé ls-remote) ; script suivi :
+  passe_bundle_m8c.py.
+- SUITE : LA CÉRÉMONIE DE L'ÈRE M8 (la remise du développeur : m0 + m8
+  signés hors-ligne, v06/sceau-I/a-signer.txt) → LE DÉPÔT → LE GARDE
+  REPASSÉ → LE BUILD EXÉCUTÉ (construire : l'artefact 0.9.0-dev.1 + la
+  carte génération 8) ; puis le chantier (d) — le kit terrain au coffre
+  /test, le VRAI ntdll lu sur la machine du développeur.
