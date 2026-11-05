@@ -1,0 +1,9 @@
+TRIADE-SCEAU-I v1
+arbre: m8
+artefact: proxy.exe (domaine sys, syscalls directs)
+balise: sys.1
+fichiers: 4
+sha256:24bc6e51b9d79c7ea560cdaabff5929d0bfe0438d08d0454b98f0836549d9bec  README.md
+sha256:e764c67fbd591c31110e75a066638df4fa7714595be85e082a1afc9f8315f032  sys-01-emetteur.md
+sha256:ad9a7c0a4d172a7386baf26c7f868f7bc2bd7767ae50048e81a42386f8c6208b  sys-02-resolveur.md
+sha256:d5242c3d7024b4f3f50b926273e96bda2772d6b0df0a0c634343cc5a99762120  sys-03-ecriture.md

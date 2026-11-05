@@ -1,0 +1,14 @@
+[tableau] jalon=M8 artefact=proxy.exe version=0.9.0-dev.1
+  blocs_avec_spec_a_jour        : 55/55 : audit de tracabilite I->C->B (7 artefacts)
+  chaines_I_C_B_tests           : 55/55 : specs, carte, exe, vecteurs
+  construction                  : 0 erreur / 0 avertissement : build script
+  tests_differentiels           : oracle M4 (heritage rejoue) 560 cas verts + oracle M5 (scenarios etendus D136) 365 cas verts + harnais M8 (domaine sys, fixtures ntdll synthetiques D161) 61 cas verts (complet, graine 20261105) ; oracle structurel M3 524 + M4 492 + M5 312 + M8 54 verrous PASS (LA REGLE AUCUN IAT PAR BLOC sys)
+  reutilisation_heritage        : 44 blocs octet-identiques au scelle 0.6.0 (R7, deltas .rdata/.text5/PE documentes — version 0x00090001 : geste de BUILD)
+  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5 + span-nom/fixture-ligne M8 dans la zone VIERGE 0x2EC0-0x2EFF, table R10 28 entrees archee, porte M5, version 0x90001)
+  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D161
+  optimisations_sans_mesure     : 0 : aucune optimisation M8 (R11)
+  changements_hors_journal      : 0 : D77 a D161 consignees
+  preversions                   : 0.9.0-dev.1 conforme (schema dev, monotonie R10 : 0x00090001 > 0x00060001 — la finale 0.9.0 attend le terrain vert du chantier (d), jamais un scellage ici)
+  entrees_non_fiables           : comportement defini par contrat (les SEPT verdicts nommes du domaine, le NTSTATUS jamais muet, I5 echec de resolution = AUCUN syscall) ; falsification : V4 15/15 mutations attrapees (D161)
+  artefact                      : 44544 octets ; empreinte sha256:1492b0bc0792e1ab... ; 7 sections (.text5 nouvelle 0xA000 — le domaine sys) ; AUCUN import nouveau (la preuve structurelle : le domaine ne declare RIEN) ; entree PE 0x8C80 inchangee
+  verrou_croise                 : 55 empreintes reverifiees (7 artefacts + notations non embarquees) + signature Ed25519 (graine durable D144, pub e9cd8c549485... — le temoin ne bouge pas) + racine (R8/R9)
