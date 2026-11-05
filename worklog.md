@@ -3822,3 +3822,53 @@ Stage Summary:
   (construire : l'artefact 0.9.0-dev.1 + la carte génération 8) ; puis
   le chantier (d) — le kit terrain au coffre /test, le VRAI ntdll lu
   sur la machine du développeur.
+
+Stage Summary:
+- LE KIT DE CÉRÉMONIE DE L'ÈRE M8 EST DÉPOSÉ au dossier /Cérémonie du
+  Drive : la remise fraîche (a-signer.txt, 12 arbres — les DEUX
+  signatures nouvelles m0 d9415484… + m8 621daf17…), les outils
+  (ceremonie_hors_ligne.py, GUI, lanceurs), les cinq LISEZMOI
+  historiques RAPATRIÉS (5/5 md5 MATCH) et LA PIÈCE NOUVELLE :
+  LISEZMOI-ceremonie-ere-M8.txt — le mode d'emploi de la
+  RE-SIGNATURE, avec LA RÈGLE D'OR « JAMAIS generer » (la clé du
+  04/11 173fae9c… est réutilisée).
+- LA SYNCHRO EST VERTE SUR PIÈCES : git f3d72e9 == GitHub (recoupé
+  ls-remote, 0/0), le miroir Drive re-synchronisé (rc=0), le recoup
+  de l'ère 3/3 (le kit porte exactement l'état de cérémonie du
+  dépôt : remise + ancre de clé + état « reelle »).
+- AUCUN ARTEFACT N'EST NÉ : m8/proxy.exe n'existe toujours pas — la
+  cérémonie du développeur précède construire() (le garde est armé,
+  D87/D162).
+
+- SUITE : LE GESTE DU DÉVELOPPEUR (la cérémonie hors-ligne : signer
+  a-signer.txt avec la clé du 04/11, ramener signatures-I.txt +
+  cle-publique-I.txt — le kit /Cérémonie du Drive porte tout) → LE
+  DÉPÔT (sceau_I.py deposer) → LE GARDE REPASSÉ → LE BUILD EXÉCUTÉ
+  (construire : l'artefact 0.9.0-dev.1 + la carte génération 8 + le
+  verrou croisé) ; puis le chantier (d) — le kit terrain au coffre
+  /test, le VRAI ntdll sur la machine du développeur, la finale 0.9.0
+  attend le vert.
+
+- PASSATION D141 rejouée au geste « LE KIT DE CÉRÉMONIE DE L'ÈRE M8
+  DÉPOSÉ » : le bundle courant triade-history-080-b7b6e01.bundle
+  (git bundle --all, 16 428 940 o, md5 39393eaa…) DÉPOSÉ AU MIROIR
+  ASSERTÉ (il porte LE KIT DE L'ÈRE avec sa consignation : la synchro
+  sur pièces [git == GitHub recoupé, miroir rc=0] + les 5 LISEZMOI
+  rapatriés [5/5 md5 MATCH] + le recoup de l'ère [3/3 : a-signer.txt
+  12 arbres + cle-publique 173fae9c… + état « reelle »] +
+  LISEZMOI-ceremonie-ere-M8.txt écrit et recoupé [la règle d'or
+  « JAMAIS generer », les empreintes m0/m8 citées == les pièces] +
+  maj_kit.py étendu [RACINE_KIT + NOTE_D130] + le kit déployé 60/60
+  aller-retour + Entrée 159 + worklog Task 77), l'ancien
+  080-d999103 (le chantier M8-(c) ouvert, md5 46a74722… recoupé
+  AVANT) ARCHIVÉ VERSIONNÉ dans archives-bundles/ (24 archives,
+  jamais supprimé), la série 080 continue, /test sans copie
+  (recoupé), GitHub porté à la pointe dans le même geste (push
+  f3d72e9..b7b6e01, recoupé ls-remote) ; script suivi :
+  passe_bundle_ere.py ; FRONTIÈRES : aucune balise ne bouge (win
+  0.6.0 / linux 0.7.0 / riscv 0.8.0 INTACTES), AUCUN artefact m8
+  écrit (le garde est armé — l'artefact naîtra après la cérémonie),
+  le scellé 0.6.0 INTACT (l'ancre R7), l'état de clé du sceau
+  « réelle » INTACT ; SUITE : LA CÉRÉMONIE (le geste du développeur —
+  le kit /Cérémonie porte tout) → le dépôt → le garde repassé →
+  construire() : l'artefact 0.9.0-dev.1 + la carte génération 8.
