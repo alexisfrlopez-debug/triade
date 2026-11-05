@@ -53,6 +53,22 @@ _FICHIERS = {
     "h100004": ("tls13-04-sha256-finaliser", "tls13-04:R1",
                 "tls13-02 (les compressions finales, DEUX appels à "
                 "l'adresse scellée — I1) ; le tampon passé en second argument"),
+    "h100005": ("tls13-05-hmac-sha256", "tls13-05:R1",
+                "tls13-01 (init ×2, DEUX contextes), tls13-03 (absorption), "
+                "tls13-04 (finalisation) — appels directs aux adresses "
+                "scellées (I1) ; K', le masque et les DEUX contextes sur la "
+                "PILE (I2) — AUCUN déplacement RIP"),
+    "h100006": ("tls13-06-hkdf-extract", "tls13-06:R1",
+                "tls13-05 (l'HMAC appelé UNE fois — le sel devient la clé) ; "
+                "les 32 zéros du sel vide sur la PILE (I1)"),
+    "h100007": ("tls13-07-hkdf-expand", "tls13-07:R1",
+                "tls13-05 (l'HMAC appelé à CHAQUE itération — I1) ; le tampon "
+                "T(i−1) || info || i en allocation dynamique 16-alignée sur "
+                "la PILE ; T(i−1) LU DEPUIS OKM (I2)"),
+    "h100008": ("tls13-08-hkdf-expand-label", "tls13-08:R1",
+                "tls13-07 (l'expansion appelée UNE fois — I1) ; la structure "
+                "HkdfLabel sérialisée GROS-BOUTISTE dans le tampon de PILE "
+                "; le préfixe « tls13 » en immédiats du plan (I2)"),
 }
 
 
@@ -72,6 +88,8 @@ SYMBOLES = {
     "TLS02": L.TLS02_VA,
     "TLS03": L.TLS03_VA,
     "TLS04": L.TLS04_VA,
+    "TLS05": L.TLS05_VA,
+    "TLS07": L.TLS07_VA,
     # le fixture .rdata du domaine (le plan, source unique) : K[64] dans la
     # réserve M8 exactement (RVA 0x2F00 — 256 o, vérifié vierge sur pièces)
     "K": L.R_K,
@@ -243,6 +261,10 @@ NOMS_COURTS = {
     "tls13-02-sha256-comprimer": "compression d'un bloc de 64 o (FIPS § 6.2.2)",
     "tls13-03-sha256-absorber": "absorption tamponnée (invariance de découpage)",
     "tls13-04-sha256-finaliser": "finalisation bourrage-longueur-extraction",
+    "tls13-05-hmac-sha256": "HMAC-SHA-256 (RFC 2104 : ipad/opad, la clé expulsée)",
+    "tls13-06-hkdf-extract": "HKDF-Extract (RFC 5869 § 2.1 : le sel → le PRK)",
+    "tls13-07-hkdf-expand": "HKDF-Expand (RFC 5869 § 2.3 : PRK + info → OKM)",
+    "tls13-08-hkdf-expand-label": "HKDF-Expand-Label (RFC 8446 § 7.1 : le calendrier)",
 }
 
 

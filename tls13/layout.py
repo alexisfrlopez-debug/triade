@@ -138,20 +138,38 @@ TEXT6_VA = 0xC000                 # préfiguration : aligné SectionAlignment
 #   tls13-02 : 387 o notés -> slot 0x1C0 (padding 61)
 #   tls13-03 : 139 o notés -> slot 0xC0  (padding 53)
 #   tls13-04 : 165 o notés -> slot 0xC0  (padding 27)
-# Les familles suivantes (hkdf, x25519, aead, enregistrement, poignée,
+# Les familles suivantes (x25519, aead, enregistrement, poignée,
 # principal) s'arrêteront au geste de LEUR notation, chacune à la suite.
 
 TLS01_VA = 0xC000        # h100001 — l'initialisation (slot 0x80)
 TLS02_VA = 0xC080        # h100002 — la compression (slot 0x1C0)
 TLS03_VA = 0xC240        # h100003 — l'absorption (slot 0xC0)
 TLS04_VA = 0xC300        # h100004 — la finalisation (slot 0xC0)
-# fin de la famille sha : 0xC3C0 — la réserve .text6 suit (0xC3C0-0xDFFF)
+# fin de la famille sha : 0xC3C0 — la famille hkdf suit à la contiguïté
+
+# --- La famille hkdf ARRÊTÉE (chantier (b), la suite — D161 rejoué) ---------------
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py (la mesure
+# auteur décide) : multiples de 64 (D8), tassés depuis la fin sha (0xC3C0),
+# padding >= 16 — le MINIMUM admissible pour chaque longueur mesurée :
+#   tls13-05 : 435 o notés -> slot 0x200 (padding 77)
+#   tls13-06 : 151 o notés -> slot 0xC0  (padding 41)
+#   tls13-07 : 347 o notés -> slot 0x180 (padding 37)
+#   tls13-08 : 310 o notés -> slot 0x180 (padding 74)
+TLS05_VA = 0xC3C0        # h100005 — HMAC-SHA-256 (slot 0x200)
+TLS06_VA = 0xC5C0        # h100006 — HKDF-Extract (slot 0xC0)
+TLS07_VA = 0xC680        # h100007 — HKDF-Expand (slot 0x180)
+TLS08_VA = 0xC800        # h100008 — HKDF-Expand-Label (slot 0x180)
+# fin de la famille hkdf : 0xC980 — les familles suivantes suivent
 
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
     "h100002": (TLS02_VA, 0x1C0),
     "h100003": (TLS03_VA, 0xC0),
     "h100004": (TLS04_VA, 0xC0),
+    "h100005": (TLS05_VA, 0x200),
+    "h100006": (TLS06_VA, 0xC0),
+    "h100007": (TLS07_VA, 0x180),
+    "h100008": (TLS08_VA, 0x180),
 }
 
 # --- Le fixture K[64] : la réserve M8 exactement remplie (vérifiée sur pièces) ---
@@ -196,3 +214,7 @@ A_INIT = TLS01_VA          # tls13-01 (l'initialisation)
 A_COMPRIMER = TLS02_VA     # tls13-02 (la compression — appelée par 03 et 04)
 A_ABSORBER = TLS03_VA      # tls13-03 (l'absorption)
 A_FINALISER = TLS04_VA     # tls13-04 (la finalisation)
+A_HMAC = TLS05_VA          # tls13-05 (l'HMAC — appelée par 06, 07 et 25)
+A_EXTRACT = TLS06_VA       # tls13-06 (l'extraction)
+A_EXPAND = TLS07_VA        # tls13-07 (l'expansion — appelée par 08)
+A_EXPAND_LABEL = TLS08_VA  # tls13-08 (l'étiquette — LE bloc du calendrier)

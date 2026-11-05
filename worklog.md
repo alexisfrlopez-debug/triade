@@ -4489,3 +4489,55 @@ Stage Summary:
 - LA DISCIPLINE TIENT : R2 (les specs signées précèdent), D161 (les slots
   sur les longueurs réelles), la charte § 2 (les vecteurs AVANT usage) —
   et l'arbre scellé de l'ère n'a pas bougé d'un octet.
+
+
+## Task ID 89 — LE CHANTIER M9-(b) CONTINUE : LA FAMILLE hkdf NOTÉE-MESURÉE-PROUVÉE (06/11)
+
+- LA SYNCHRO VÉRIFIÉE SUR LES TROIS MIROIRS (la demande du développeur) :
+  le bundle Drive cloné (pointe 39d84ae == la passation Task 88, l'arbre
+  propre), le bundle du geste md5 5ca58429… == consigné, les 16 fichiers du
+  geste recroisés 16/16 MATCH avec le miroir, GitHub == c82fe7b (la pointe
+  du geste, le flux établi), les jetons du coffre /tokens (check_auth 200).
+- LE GESTE : tls13-05..08 — HMAC-SHA-256 (RFC 2104 : l'expulsion de la clé
+  dans les DEUX sens, les masques sur 64 positions fixes), HKDF-Extract
+  (le sel devient la clé, le sel vide 32 zéros SUR LA PILE), HKDF-Expand
+  (l'allocation dynamique 16-alignée, T(i−1) LU DEPUIS OKM, la borne
+  8160), HKDF-Expand-Label (la HkdfLabel GROS-BOUTISTE par immédiats, le
+  préfixe « tls13 » du plan) — notés (435/151/347/310 o, round-trip
+  100 %), mesurés (les slots ARRÊTÉS 0x200/0xC0/0x180/0x180 tassés depuis
+  0xC3C0 — D161 rejoué), prouvés (LE HARNAIS 52 contrôles · 52 VERTS × 3
+  graines).
+- LES PREUVES : les SEPT vecteurs RFC 4231 octet pour octet (les clés de
+  131 o, la troncature officielle) + le balayage différentiel 132 cas ;
+  les TROIS cas RFC 5869 + la chaîne complète ; LE TRANSFERT RFC 8448 —
+  les trois extraits (early/handshake/master : le sel vide ET le sel
+  dérivé) + les DIX étiquettes (« derived », « c/s hs traffic », « key »,
+  « iv », « finished ») avec la structure HkdfLabel RECROISÉE sur les
+  « info » EXACTES de la RFC ; la borne L = 8160 (le compteur d'un octet) ;
+  les SEIZE refus nommés ; la falsification 59/59 attrapée + K corrompu →
+  divergence ; le temps constant MESURÉ (18 371/31 844/18 407/74 387/
+  18 704 instructions exactement) ; l'alignement msx64 à 77 entrées de
+  callee ; la sortie JAMAIS dépassée (canaris après L).
+- LE DÉFAUT DE NOTATION nommé par le fail-closed : tls13-05 rangeait
+  l'intérieur dans le masque — l'opad l'écrasait (les SEPT vecteurs
+  divergeaient au premier passage) : le slot DÉDIÉ @+0x180, re-mesuré,
+  ré-arrêté, rejoué VERT ; rdi rendu dans 06 (quatre quads directs) ;
+  l'erratum d'arithmétique de la spec tls13-08 consigné AVANT la notation
+  (« ≤ 264 o » : les bornes P3/P5 donnent 514).
+- FRONTIÈRES : aucune balise, AUCUN build, l'arbre scellé tls13/I INTACT
+  (verifier_specs_m9a relu VERT au harnais V0), m8/proxy.exe INTACT, la
+  famille sha intacte (74/387/139/165 relus) ; consignations : Entrée 171
+  PAR SCRIPT, PLAN (chantier (b) : la famille hkdf + État du programme),
+  worklog +Task ID 89.
+- SUITE : la famille x25519 (tls13-09..14), puis aead (tls13-15..19) —
+  les slots à la suite de 0xC980 ; puis (c) RFC 8448, (d) sys-04+,
+  (e) le build 1.0.0-dev.1, (f) le terrain.
+
+Stage Summary:
+- LA SECONDE FAMILLE de la grande œuvre est notée-mesurée-prouvée : le
+  calendrier de clés de TLS 1.3 (HMAC, Extract, Expand, Expand-Label)
+  existe en octets et rend les clés du transcript officiel RFC 8448
+  octet pour octet.
+- LA PREUVE A CORRIGÉ LA NOTATION : le défaut de l'intérieur écrasé par
+  l'opad, nommé par les vecteurs officiels au premier passage, corrigé
+  par le slot dédié — le fail-closed fait son travail.
