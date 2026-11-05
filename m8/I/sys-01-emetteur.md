@@ -45,5 +45,9 @@ Contrat :
          I6 le `ret` suit IMMÉDIATEMENT le site syscall (aucune
              instruction entre les deux — après le verdict du noyau, la
              main rendue est la suivante) ;
-         I7 la croissance du slot est int3 (convention de la lignée win —
-             le six octets utiles, le reste du slot en 0xCC).
+         I7 la croissance du slot est NOP, 0x90 (la convention de la lignée
+             win depuis M0 — build_m0.py pose `octets + b"\x90" * pad` ; les
+             zones RÉSERVÉES inter-blocs seules sont int3 ; erratum M8-(b) :
+             la couche I naissante disait « int3, le reste du slot en
+             0xCC » — sur pièces, le padding de slot de toute la lignée
+             est NOP) ;

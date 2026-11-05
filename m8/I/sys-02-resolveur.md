@@ -46,9 +46,10 @@ Contrat :
              AddressOfFunctions ; l'ordinal lu est un indice dans la table
              des fonctions, la fonction lue est un RVA dans l'image du
              module) ;
-         I2 la comparaison du nom est libc-04 (memcmp de l'héritage scellé
+         I2 la comparaison du nom est libc-02 (memcmp de l'héritage scellé
              M1 — appel direct DÉCLARÉ, le seul du bloc : le domaine ne
-             réécrit pas memcmp) ;
+             réécrit pas memcmp ; erratum M8-(b) : la couche I naissante
+             citait libc-04 — itoa ; le registre figé m1 fait foi) ;
          I3 le motif du stub est vérifié AVANT la lecture de l'imm32
              (charte § 2 — les quatre octets du MOTIF_STUB d'abord, le
              numéro à +4 ensuite ; l'ordre est le contrat, jamais

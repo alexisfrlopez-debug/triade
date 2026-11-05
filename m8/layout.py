@@ -20,15 +20,17 @@ HÉRITAGE M0/M1/M2/M3/M4/M5 (R7 — jamais déplacé) :
     l'extension M8 vit dans une section NOUVELLE .text5 — le corps scellé
     0.6.0 ne bouge pas d'un octet (§ 9).
 
-LA SECTION .text5 (préfiguration D160 — arrêt définitif au chantier (b)) :
+LA SECTION .text5 (ARRÊT D161 au chantier (b) — la mesure auteur décide) :
   0xA000-0xBFFF (8 Kio, modèle .text3/.text4) ; SizeOfImage 0xA000 → 0xC000
   et la table de sections 6 → 7 entrées AU BUILD du chantier (c) — deltas PE
-  documentés alors (modèle D94/D136). Slots préfigurés (D8 — multiples de
-  64, alignés 16, padding >= 16) :
-    sys-01 @ 0xA000 (0x80)   l'émetteur — six octets utiles, int3 au reste ;
-    sys-02 @ 0xA400 (0x400)  le résolveur — la marche EAT, le motif ;
-    sys-03 @ 0xB000 (0x800)  la twin de hello-02 — résoudre + neuf args ;
-    réserve 0xB800-0xBFFF (croissance du domaine : sys-04 et suivants).
+  documentés alors (modèle D94/D136). Slots ARRÊTÉS sur les longueurs réelles
+  des notations (D8 — multiples de 64, alignés 16, padding >= 16), tassés
+  depuis 0xA000 (la préfiguration 0xA000/0xA400/0xB000 n'était pas un
+  droit, D47/D79) :
+    sys-01 @ 0xA000 (0x40)   l'émetteur — six octets utiles (mesurés), NOP au reste ;
+    sys-02 @ 0xA040 (0x140)  le résolveur — 293 o notés (mesurés), NOP au reste ;
+    sys-03 @ 0xA180 (0xC0)   la twin de hello-02 — 164 o notés (mesurés), NOP au reste ;
+    réserve 0xA240-0xBFFF (croissance du domaine : sys-04 et suivants).
 
 LES CONSTANTES DU DOMAINE (charte m8/I/README.md — source unique ici) :
   - MOTIF_STUB : les quatre premiers octets du stub natif Windows 10/11
@@ -72,17 +74,25 @@ TEXT5_VA = 0xA000                            # la section NOUVELLE du jalon
 TEXT5_RAW = None                             # offset fichier arrêté au (c)
 TAILLE_FICHIER_M5 = L5.TAILLE_FICHIER        # le scellé — ne bouge pas
 
-# --- Les slots préfigurés du domaine sys (arrêt définitif au chantier (b)) ------
+# --- Les slots ARRÊTÉS du domaine sys (D161 — la mesure auteur décide) -----------
+# ARRÊT DÉFINITIF au chantier (b) sur les longueurs RÉELLES des notations
+# (D47/D79 : la préfiguration 0xA000/0xA400/0xB000 n'était pas un droit) :
+#   sys-01 : 6 o notés   -> slot 0x40  (padding 58)
+#   sys-02 : 293 o notés -> slot 0x140 (padding 27)
+#   sys-03 : 164 o notés -> slot 0xC0  (padding 28)
+# Tassés depuis 0xA000 (D8 : slots multiples de 64, alignés 16, padding >= 16)
+# — la réserve contiguë 0xA240-0xBFFF (7 488 o) porte la croissance du
+# domaine (sys-04 et suivants ; TLS 1.3 pur attend sa décision propre, D160).
 
-SYS01_VA = 0xA000        # g90001 — l'émetteur (slot 0x80)
-SYS02_VA = 0xA400        # g90002 — le résolveur (slot 0x400)
-SYS03_VA = 0xB000        # g90003 — la twin de hello-02 (slot 0x800)
+SYS01_VA = 0xA000        # g90001 — l'émetteur (slot 0x40)
+SYS02_VA = 0xA040        # g90002 — le résolveur (slot 0x140)
+SYS03_VA = 0xA180        # g90003 — la twin de hello-02 (slot 0xC0)
 ZONE_SYS = (0xA000, 0xBFFF)       # .text5 entière
-ZONE_SYS_RESERVE = (0xB800, 0xBFFF)   # la croissance du domaine
+ZONE_SYS_RESERVE = (0xA240, 0xBFFF)   # la croissance du domaine
 SLOTS_SYS = {
-    "g90001": (SYS01_VA, 0x80),
-    "g90002": (SYS02_VA, 0x400),
-    "g90003": (SYS03_VA, 0x800),
+    "g90001": (SYS01_VA, 0x40),
+    "g90002": (SYS02_VA, 0x140),
+    "g90003": (SYS03_VA, 0xC0),
 }
 
 # --- Les constantes du domaine (charte m8/I/README.md — source unique) ----------
@@ -124,3 +134,36 @@ NOMS_BLOCS = dict(L5.NOMS_BLOCS) | {
     "g90002": "sys-02-resolveur",
     "g90003": "sys-03-ecriture",
 }
+
+# --- Les fixtures .rdata du domaine (chantier (b) — posées au build (c)) ---------
+# La zone 0x2EB0-0x2FFF est VIERGE dans le scellé 0.6.0 (vérifiée sur pièces au
+# (b) : 336 octets nuls dans proxy.exe, .rdata raw 0x1400 — après la borne de
+# marche M5 R_BORNE_M5 = 0x2EB0). Les fixtures du domaine y vivent : le corps
+# scellé ne bouge d'AUCUN octet (R7), la zone libre reçoit les nouveaux.
+
+R_SYS_NOM = 0x2EC0      # "NtWriteFile" — le span-nom (P3 de sys-03), la CLEF
+TXT_SYS_NOM = b"NtWriteFile"    # 11 octets, AUCUN NUL : P1 de sys-02 est un SPAN
+LEN_SYS_NOM = 11        # la mesure sur pièces (erratum M8-(b) : la couche I
+                        # naissante disait « 10 octets » — N-t-W-r-i-t-e-F-i-l-e)
+
+R_SYS_LIGNE = 0x2ED0    # la LIGNE de hello-02 — le fixture M0 CITÉ (I4 de
+                        # sys-03) : byte-exact le MESSAGE de m0/build_m0.py
+                        # (jamais une seconde copie : la twin ÉMET ces octets)
+TXT_SYS_LIGNE = b"TRIADE M0 : Hello, Windows 11 !\r\n\x00"   # 33 utiles + NUL
+LEN_SYS_LIGNE = 33      # la longueur ÉMISE (hello-02 reçut r8d=33 de M0)
+
+R_SYS_BORNE = 0x2F00    # la borne des fixtures du domaine (fail-closed, miroir
+                        # D95 : le prochain fixture pose ICI, jamais au-delà
+                        # sans arrêt nommé — 0x2F00-0x2FFF demeure en réserve)
+
+# --- memcmp — le seul appel direct DÉCLARÉ du domaine (I2 de sys-02) -------------
+# Cité depuis la table scellée de la lignée (jamais un littéral) : libc-02:R1,
+# bloc carte b20002, embarqué à chaque build depuis M1.
+
+def _trouver_memcmp():
+    for ent in L5.L4.L3.BLOCS_LIBC_EMBARQUES:
+        if ent[0] == "b20002":
+            return ent[2], ent[3]
+    raise RuntimeError("b20002 (libc-02 memcmp) introuvable à la table scellée")
+
+MEMCMP_VA, MEMCMP_SLOT = _trouver_memcmp()   # 0x1180, 0x80 — la source héritée

@@ -16,9 +16,13 @@ Contrat :
              fourni par l'appelant ; le bloc ne l'ouvre pas, ne le ferme
              pas, ne le possède pas) ;
          P3 les fixtures du domaine vivent en .rdata, cités par
-             déplacement : le nom « NtWriteFile » (ASCII, 10 octets — la
-             CLEF de la résolution) et la LIGNE de hello-02 (le fixture
-             M0, R7 : la twin n'invente pas sa ligne, elle la CITE).
+             déplacement : le nom « NtWriteFile » (ASCII, 11 octets — la
+             CLEF de la résolution ; erratum M8-(b) : la couche I naissante
+             disait « 10 octets », la mesure sur pièces fait foi —
+             N-t-W-r-i-t-e-F-i-l-e) et la LIGNE de hello-02 (le fixture
+             M0, R7 : la twin n'invente pas sa ligne, elle la CITE —
+             33 octets utiles + NUL, « TRIADE M0 : Hello, Windows 11 !
+             CRLF », byte-exact le fixture posé par build_m0.py) ;
   post : Q1 succès : rax = 0, la ligne est ÉMISE (octet pour octet le
              fixture de hello-02 — la comparaison est la preuve
              d'observable, elle se joue au harnais ET au terrain) ;
@@ -67,4 +71,6 @@ Contrat :
          I7 le NTSTATUS rendu n'est JAMAIS muet : succès = 0 nommé, échec
              = -6 avec le STATUS consigné en rdx (charte § 5 — le miroir
              de tls-02 : le code brut accompagne, il ne remplace pas) ;
-         I8 la croissance du slot est int3 (convention de la lignée).
+         I8 la croissance du slot est NOP, 0x90 (la convention de la
+             lignée win depuis M0 — erratum M8-(b) : la couche I naissante
+             disait « int3 », sur pièces le padding de slot est NOP).

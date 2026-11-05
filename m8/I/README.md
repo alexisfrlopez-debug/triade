@@ -91,9 +91,15 @@ lu à l'exécution dans ntdll ELLE-MÊME. La promesse est MESURABLE et DOUBLE :
    NumberOfNames (lue une fois, gardée en registre le temps de la boucle) ;
    aucun accès hors des trois tables pointées par le répertoire export
    (AddressOfNames, AddressOfNameOrdinals, AddressOfFunctions) ; la
-   comparaison du nom est **libc-04** (memcmp, l'héritage scellé M1 — appel
+   comparaison du nom est **libc-02** (memcmp, l'héritage scellé M1 — appel
    direct déclaré, jamais une boucle nouvelle : le domaine ne réécrit pas ce
    que la lignée sait déjà faire).
+
+   *Erratum (M8-(b), sur pièces)* : la couche I naissante citait « libc-04
+   (memcmp) » — coquille de citation : memcmp est **libc-02** (b20002), itoa
+   est libc-04 (b20004) ; le registre figé m1/I/README.md fait foi. Corrigé
+   nommément AVANT la notation (aucun octet n'avait encore été écrit sur la
+   citation fausse — la preuve la correction précède l'octet).
 
 ## Spécifications nouvelles (génération 8, blocs g9xxxx)
 
@@ -105,14 +111,19 @@ lu à l'exécution dans ntdll ELLE-MÊME. La promesse est MESURABLE et DOUBLE :
 
 ## Le plan d'adressage du jalon (`m8/layout.py`, source unique)
 
-La section **.text5 est NOUVELLE** (préfigurée 0xA000-0xBFFF — SizeOfImage
+La section **.text5 est NOUVELLE** (0xA000-0xBFFF — SizeOfImage
 0xA000 → 0xC000 au build du chantier (c), modèle .text3/.text4) : le corps
-hérité 0.6.0 ne bouge pas d'un octet (R7). Les slots préfigurés (D8 —
-multiples de 64, alignés 16, padding >= 16) : sys-01 @ 0xA000 (0x80),
-sys-02 @ 0xA400 (0x400), sys-03 @ 0xB000 (0x800), réserve 0xB800-0xBFFF —
-**les RVA et tailles définitifs seront ARRÊTÉS au chantier (b) sur les
-longueurs réelles des notations** (modèle D47/D79 : la mesure auteur
-décide, la préfiguration n'est pas un droit).
+hérité 0.6.0 ne bouge pas d'un octet (R7). Les slots sont ARRÊTÉS au
+chantier (b) sur les longueurs réelles des notations (**D161**, modèle
+D47/D79 : la mesure auteur décide, la préfiguration n'est pas un droit) —
+tassés depuis 0xA000 (D8 : multiples de 64, alignés 16, padding >= 16) :
+sys-01 @ 0xA000 (0x40 — six octets notés), sys-02 @ 0xA040 (0x140 — 293 o
+notés), sys-03 @ 0xA180 (0xC0 — 164 o notés), réserve contiguë
+0xA240-0xBFFF (la croissance du domaine). Les fixtures .rdata du domaine
+(posées au build (c) dans la zone VIERGE 0x2EB0-0x2FFF du scellé, vérifiée
+sur pièces au (b)) : le nom « NtWriteFile » @ 0x2EC0 (11 o), la ligne de
+hello-02 @ 0x2ED0 (33 o utiles + NUL, byte-exact le MESSAGE M0), la borne
+@ 0x2F00 (fail-closed, miroir D95).
 
 Les constantes du domaine vivent au plan d'adressage — source unique, citée
 par les spécifications, jamais recopiée (T5) : le `MOTIF_STUB` et le
