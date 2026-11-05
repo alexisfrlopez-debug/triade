@@ -4301,3 +4301,14 @@ Stage Summary:
 - LA COÏNCIDENCE N'EST PAS UNE PREUVE (les neuf premiers identifiants
   passaient en hex par hasard) : le fail-closed a nommé, l'instrument s'est
   instruit, le vert final est gagné.
+
+- PASSATION (le même geste, Task ID 84) : le bundle courant
+  triade-history-090-64eae8e.bundle (16 847 529 o, md5 90c7168e…, branche
+  jalon == 64eae8e [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte les 24 spécifications + le plan étendu aux SIX
+  familles + l'erratum av-10 + l'instrument 117 VERTS + Entrée 166/D167 +
+  le PLAN [chantier (a) RÉALISÉ] + Task 84), l'ancien 090-ab48be1
+  (L'OUVERTURE M9) ARCHIVÉ VERSIONNÉ (md5 3663dc5a… recoupé avant le
+  déplacement PATCH — 29 archives, rien supprimé), /test sans copie
+  (recoupé), le push GitHub à la pointe ; scripts suivis :
+  passe_bundle_m9a2.py.
