@@ -4649,3 +4649,92 @@ Stage Summary:
   rax ; le cswap écrasait le bit du drapeau) nommés par la bisection et la
   trace itérative, corrigés et rejoués verts — le fail-closed est la
   méthode, pas l'accident.
+
+
+## Task ID 91 — LE CHANTIER M9-(b) CONTINUE : LA FAMILLE aead NOTÉE-MESURÉE-PROUVÉE (07/11)
+
+- LA SYNCHRO VÉRIFIÉE SUR LES TROIS MIROIRS (la demande du développeur :
+  « vérifie si la synchro… puis on continue », puis « on enchaine », puis
+  « continue ») : verify_sync_m9d.py 22 VERTS / 0 ROUGES — HEAD 8b7b8e9
+  (la passation Task 90), le miroir porte les fichiers de la passation
+  md5 MATCH, le bundle courant 090-06c2f4d UNIQUE, 34 archives (rien
+  supprimé), /test sans copie, GitHub == 06c2f4d (la pointe x25519 — le
+  commit de passation EMBARQUÉ au geste présent, le flux établi), le
+  jeton OAuth vivant ; les cinq notations aead non committées
+  correctement ABSENTES du miroir.
+- LE GESTE : tls13-15..19 — le déploiement des clés de tour (L'ARRÊT
+  AES-NI : AESKEYGENASSIST le SubWord/RotWord MATÉRIEL, pshufd 0xFF le
+  mot au dword 3 [la sonde du labo], la recette préfixe-XOR ⊕ t, les dix
+  Rcon en IMMÉDIATS, les dix tours DÉROULÉS), le chiffrement d'un bloc
+  (pxor + NEUF AESENC + AESENCLAST, la BRIQUE D'INVERSION n'existe
+  pas), GHASH (la marche de l'algorithme 1 § 6.3 MOT POUR MOT, sans
+  table par donnée, SANS BRANCHE — le masque 0/−1 par sbb, le repli par
+  ET logique), GCM sceller (H = E(K,0) d'abord, le CTR, le GHASH par
+  appels répétés, les longueurs u64 gros-boutistes, E(K,J0) ⊕ GHASH,
+  les refus −1/−2 NOMMÉS) et GCM ouvrir (LA DISCIPLINE DU VERDICT : le
+  OU cumulatif des 16 différences en UN drapeau, AUCUN court-circuit,
+  PUIS le CTR — la restitution DERNIÈRE, l'étiquette divergente → −4
+  NOMMÉ, la sortie INTACTE) — notés (520/129/162/1076/1163 o,
+  round-trip 100 %), mesurés (les slots ARRÊTÉS 0x240/0xC0/0xC0/0x480/
+  0x4C0 tassés depuis 0xDCC0, fin 0xE9C0 — D161 rejoué), prouvés (LE
+  HARNAIS 49 contrôles · 49 VERTS × 3 graines).
+- LES PREUVES : FIPS 197 C.1 (le déploiement ET le bloc), SP 800-38A
+  F.1.1 (les quatre blocs PAR LA COMPOSITION — un déploiement faux rend
+  un chiffrement faux), McGrew–Viega TC1..TC4 (chiffrés + étiquettes
+  octet pour octet, puis ouverts ; TC5/TC6 hors contrat — P2 le nonce
+  de 12 o), **LE TRANSFERT RFC 8448 : les SEPT enregistrements chiffrés
+  du § 3 OUVERTS puis RESCELLÉS == l'enregistrement OCTET POUR OCTET**
+  (le vol serveur 679 o, le Finished 58 o, le NewSessionTicket 227 o,
+  les applicatives 72 o ×2, les close_notify 24 o ×2 — le nonce =
+  IV ⊕ séquence, la tête 0x17 en AAD) ; l'oracle 100 scellages + 100
+  ouvertures ZÉRO écart ; la borne P4 (N = 16384 exact), les refus −1
+  (DOUZE pointeurs) et −2, l'indifférence (A = 0 : le pointeur nul
+  n'est pas un refus) ; le contrat (20 entrées de callee alignées aux
+  comptes EXACTS, les entrées intactes, les sorties jamais dépassées,
+  le refus SANS corruption) ; la falsification (la clé/le nonce/le
+  clair 12/12 ; **LES 16 octets de l'étiquette ET LES 53 octets du
+  chiffré mutés UN PAR UN → −4, la sortie INTACTE 69/69**) ; le temps
+  constant MESURÉ (114/26/2199/12531 instructions ; **LE VERDICT :
+  trois étiquettes divergentes → 11 755 instructions LE MÊME COMPTE —
+  la position de la divergence INVISIBLE dans le temps**).
+- LES DEUX DÉFAUTS DE NOTATION nommés par LA SONDE du geste (la preuve
+  corrige la notation : 7/12 avant, 12/12 après) : (1) tls13-17 LA
+  REPRÉSENTATION — la première écriture tenait la chaîne en DEUX u64
+  little-endian : renversée 30/30, la commutativité elle-même fausse ;
+  la correction du labo d'avant s'était arrêtée à l'IMMÉDIAT du repli,
+  la REPRÉSENTATION restait fausse ; les candidats LE-classique et
+  X-MSB rejetés par le code (1/43), LE CANDIDAT BSWAP/BE 63/63 — les
+  DEUX voies bswapées, l'extraction shld/sbb/shl (le drapeau capturé
+  AVANT l'écrasement), le repli 0xE1<<56 au sommet de la voie haute ;
+  re-mesuré 139 → 162, le slot 0xC0 TIENT. (2) tls13-18/19 LE J0
+  TERMINAL — le u32 1 posé en boutisme MACHINE (01 00 00 00) : le
+  premier compteur sortait 01 00 00 01, le CHIFFRÉ et l'étiquette
+  faux ; l'immédiat corrigé 0x01000000 (les octets 00 00 00 01),
+  taille NEUTRE, REJOUÉ VERT.
+- Les défauts d'instrument corrigés au geste : l'échelle *1 (capstone
+  ne l'imprime pas — cinq occurrences normalisées, mêmes octets), le
+  sys.exit(0) du labo à l'import (capturé à exec_module), RET_MAGIQUE
+  déplacé 0xDE00 → 0xEF00 (la marge .text6 du harnais x25519 était
+  devenue l'intérieur du slot de tls13-15).
+- FRONTIÈRES : aucune balise, AUCUN build, l'arbre scellé tls13/I
+  INTACT (verifier_specs_m9a relu VERT au harnais V0), m8/proxy.exe
+  INTACT, les familles sha, hkdf ET x25519 intactes (relues en V0.b) ;
+  consignations : Entrée 173 PAR SCRIPT, PLAN (chantier (b) : la
+  famille aead + État du programme), worklog +Task ID 91.
+- SUITE : la famille enregistrement (tls13-20/21 — le chevauchement
+  des fragments, le numéro de séquence au nonce), puis la poignée
+  (tls13-23..28 — LE TRANSFERT RFC 8448 en bout en bout), (d) sys-04+,
+  (e) LA CÉRÉMONIE + le build 1.0.0-dev.1, (f) le terrain.
+
+Stage Summary:
+- LA QUATRIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
+  LE CHIFFREMENT AUTHENTIFIÉ de TLS 1.3 existe en octets — les SEPT
+  enregistrements du transcript officiel RFC 8448 ouverts ET rescellés
+  octet pour octet par les briques mêmes, le verdict temps constant
+  MESURÉ (la position d'une divergence INVISIBLE dans le temps).
+- LA PREUVE A CORRIGÉ LA NOTATION, TROISIÈME GESTE DE SUITE : la
+  représentation GHASH (le domaine gros-boutiste par bswap — le
+  candidat des candidats rejeté 1/43 par le code) et le J0 terminal
+  (l'immédiat gros-boutiste) nommés par la sonde AVANT le harnais,
+  corrigés et rejoués verts — la sonde d'abord, le harnais ensuite :
+  LA MÉTHODE EST LA MÊME depuis le geste hkdf.

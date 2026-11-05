@@ -101,6 +101,43 @@ _FICHIERS = {
                 "tls13-13 (l'échelle au point de base — I1) ; le point 9 au "
                 "fixture R_U9 (la fixture PUBLIQUE du domaine, jamais un "
                 "octet de code)"),
+    "h100015": ("tls13-15-aes128-cles-tour", "tls13-15:R1",
+                "bloc feuille de la famille aead ; l'ARRÊT AES-NI — "
+                "AESKEYGENASSIST le SubWord/RotWord MATÉRIEL, la disposition "
+                "DÉRIVÉE DE L'OBSERVATION (le mot d'AES-128 au dword 3 → pshufd "
+                "0xFF — la sonde du labo, derive_aead.py), les DIX Rcon en "
+                "IMMÉDIATS, la recette préfixe-XOR ⊕ t CONTRE-PROUVÉE sur C.1 ; "
+                "les dix tours DÉROULÉS — AUCUN saut, AUCUN déplacement RIP"),
+    "h100016": ("tls13-16-aes128-bloc", "tls13-16:R1",
+                "bloc feuille ; pxor + NEUF AESENC + AESENCLAST — LA "
+                "COMPOSITION BLANCHE rend FIPS 197 C.1 sur l'émulateur (la "
+                "contre-preuve du labo AVANT la notation) ; les clés chargées "
+                "par movdqu NON ALIGNÉES (aucune précondition cachée), la "
+                "BRIQUE D'INVERSION n'existe pas — AES en sens unique"),
+    "h100017": ("tls13-17-ghash-multiplication", "tls13-17:R1",
+                "bloc feuille ; la marche de l'algorithme 1 SP 800-38D § 6.3 "
+                "MOT POUR MOT — SANS TABLE PAR DONNÉE (I1 : le masque 0/−1 par "
+                "sbb, le repli SANS BRANCHE — I2) ; LE DOMAINE GROS-BOUTISTE "
+                "PAR BSWAP (la seconde faute nommée par la sonde du geste : "
+                "les DEUX voies bswapées, le premier bit de la chaîne = le bit "
+                "63 de la voie haute, le sortant = le bit 0 de la voie basse, "
+                "l'ordre shld/sbb/shl capture le drapeau AVANT l'écrasement) ; "
+                "R = GCM_R du plan en IMMÉDIAT : l'octet 0 au SOMMET de la "
+                "voie haute — 0xE1 << 56 ; le SEUL saut est la boucle sur le "
+                "COMPTEUR"),
+    "h100018": ("tls13-18-gcm-sceller", "tls13-18:R1",
+                "tls13-16 (H = E(K,0) D'ABORD, les compteurs du CTR, E(K, J0)) "
+                "+ tls13-17 (CHAQUE bloc du GHASH — I2) ; J0 FIGÉ, CB la "
+                "COPIE qui mute (inc32 u32 GROS-BOUTISTE par bswap — I3) ; le "
+                "cadre 0xE8 : l'ombre + J0/CB/H/Y/X/ks + les pointeurs (I5 — "
+                "tout sur la PILE) ; les refus -1/-2 NOMMÉS (Q3)"),
+    "h100019": ("tls13-19-gcm-ouvrir", "tls13-19:R1",
+                "tls13-16 + tls13-17 (la même recette que 18 sur le chiffré "
+                "REÇU) ; LA DISCIPLINE DU VERDICT — la confrontation TEMPS "
+                "CONSTANT (I1 : le OU cumulatif des 16 différences en UN seul "
+                "drapeau, AUCUN court-circuit, le branch sur LE drapeau), "
+                "PUIS le CTR : LA RESTITUTION EST LA DERNIÈRE OPÉRATION (I2) ; "
+                "l'étiquette divergente → rax = -4 NOMMÉ, la sortie INTACTE"),
 }
 
 
@@ -127,6 +164,8 @@ SYMBOLES = {
     "TLS11": L.TLS11_VA,
     "TLS12": L.TLS12_VA,
     "TLS13": L.TLS13_VA,
+    "TLS16": L.TLS16_VA,     # le chiffrement d'un bloc — appelé par 18/19
+    "TLS17": L.TLS17_VA,     # la multiplication GF(2^128) — appelée par 18/19
     # le fixture .rdata du domaine (le plan, source unique) : K[64] dans la
     # réserve M8 exactement (RVA 0x2F00 — 256 o, vérifié vierge sur pièces)
     "K": L.R_K,
@@ -312,6 +351,11 @@ NOMS_COURTS = {
     "tls13-12-f25519-propager-geler": "f25519 propagation + gel sans branche (av-06+av-10 fusionnés)",
     "tls13-13-x25519-echelle": "X25519 échelle de Montgomery (RFC 7748 § 5, miroir av-11)",
     "tls13-14-x25519-cle-publique": "X25519 clé publique (le couple du ClientHello)",
+    "tls13-15-aes128-cles-tour": "AES-128 le déploiement des clés de tour (FIPS 197 § 5.2)",
+    "tls13-16-aes128-bloc": "AES-128 le chiffrement d'un bloc (l'arrêt AES-NI)",
+    "tls13-17-ghash-multiplication": "GHASH la multiplication GF(2^128) (SP 800-38D § 6.3)",
+    "tls13-18-gcm-sceller": "GCM sceller (SP 800-38D § 7.1 — CTR + étiquette)",
+    "tls13-19-gcm-ouvrir": "GCM ouvrir (le verdict AVANT la restitution, fail-closed)",
 }
 
 

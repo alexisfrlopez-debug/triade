@@ -193,6 +193,25 @@ TLS13_VA = 0xD100        # h100013 — X25519 échelle de Montgomery (slot 0xB80
 TLS14_VA = 0xDC80        # h100014 — X25519 clé publique (slot 0x40)
 # fin de la famille x25519 : 0xDCC0 — les familles suivantes suivent
 
+# --- La famille aead ARRÊTÉE (chantier (b), le geste quatre — D161 rejoué) ------
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py (la
+# mesure auteur décide) : multiples de 64 (D8), tassés depuis la fin
+# x25519 (0xDCC0), padding >= 16 — le MINIMUM admissible par longueur :
+#   tls13-15 :  520 o notés -> slot 0x240 (padding 56)
+#   tls13-16 :  129 o notés -> slot 0xC0  (padding 63)
+#   tls13-17 :  162 o notés -> slot 0xC0  (padding 30 — la sonde du
+#                              geste a nommé la représentation : le domaine
+#                              GROS-BOUTISTE par bswap, re-mesuré 139->162)
+#   tls13-18 : 1076 o notés -> slot 0x480 (padding 76)
+#   tls13-19 : 1163 o notés -> slot 0x4C0 (padding 53)
+TLS15_VA = 0xDCC0        # h100015 — AES-128 le déploiement des clés de tour (slot 0x240)
+TLS16_VA = 0xDF00        # h100016 — AES-128 le chiffrement d'un bloc (slot 0xC0)
+TLS17_VA = 0xDFC0        # h100017 — GHASH la multiplication GF(2^128) (slot 0xC0)
+TLS18_VA = 0xE080        # h100018 — GCM sceller (slot 0x480)
+TLS19_VA = 0xE500        # h100019 — GCM ouvrir (slot 0x4C0)
+# fin de la famille aead : 0xE9C0 — les familles enregistrement, poignée,
+# principal suivent (la marge du plan : sous 0xF000, TENUE)
+
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
     "h100002": (TLS02_VA, 0x1C0),
@@ -208,6 +227,11 @@ SLOTS_TLS13 = {
     "h100012": (TLS12_VA, 0x140),
     "h100013": (TLS13_VA, 0xB80),
     "h100014": (TLS14_VA, 0x40),
+    "h100015": (TLS15_VA, 0x240),
+    "h100016": (TLS16_VA, 0xC0),
+    "h100017": (TLS17_VA, 0xC0),
+    "h100018": (TLS18_VA, 0x480),
+    "h100019": (TLS19_VA, 0x4C0),
 }
 
 # --- Les fixtures du domaine en .text6 (l'ARRÊT nommé — miroir D95) ---------------
@@ -278,3 +302,8 @@ A_MUL = TLS11_VA           # tls13-11 (la multiplication — appelée par 13)
 A_PROPAGER_GELER = TLS12_VA  # tls13-12 (le gardien — appelé par 09, 10 et 11)
 A_ECHELLE = TLS13_VA       # tls13-13 (l'échelle — appelée par 14)
 A_CLE_PUBLIQUE = TLS14_VA  # tls13-14 (le couple du ClientHello)
+A_CLES_TOUR = TLS15_VA     # tls13-15 (le déploiement des clés de tour)
+A_BLOC = TLS16_VA          # tls13-16 (le chiffrement d'un bloc — appelé par 18/19)
+A_GHASH = TLS17_VA         # tls13-17 (la multiplication GF(2^128) — appelée par 18/19)
+A_SCELLER = TLS18_VA       # tls13-18 (GCM sceller)
+A_OUVRIR = TLS19_VA        # tls13-19 (GCM ouvrir)
