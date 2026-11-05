@@ -4244,3 +4244,13 @@ Stage Summary:
   racine) ET LA DÉTTE DE CÉRÉMONIE EST NÉE NOMMÉE : le garde refuse
   jusqu'à la remise du développeur — c'est son travail, exactement comme
   en D162.
+
+- PASSATION (le même geste, Task ID 83) : le bundle courant
+  triade-history-090-ab48be1.bundle (16 788 985 o, md5 3663dc5a…, branche
+  jalon == ab48be1 [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte l'export 0.9.0 + D166/Entrée 165 + la couche I
+  tls13 + la dette de cérémonie + le plan M9 + Task 83), l'ancien
+  090-4edf0c3 (LA FINALE 0.9.0) ARCHIVÉ VERSIONNÉ (md5 63c6bfb3… recoupé
+  avant le déplacement PATCH — 28 archives, rien supprimé), /test sans
+  copie (recoupé), le push GitHub à la pointe ; scripts suivis :
+  passe_bundle_m9a.py.
