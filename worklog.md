@@ -4469,6 +4469,17 @@ Stage Summary:
   OUVERT + État du programme), worklog +Task ID 88.
 - SUITE : les familles hkdf/x25519/aead (la suite du chantier (b)), puis
   (c) RFC 8448, (d) sys-04+, (e) le build 1.0.0-dev.1, (f) le terrain.
+- PASSATION (le même geste, Task ID 88) : le bundle courant
+  triade-history-090-c82fe7b.bundle (17 209 142 o, md5 5ca58429…, branche
+  jalon == c82fe7b [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE sha NOTÉE-MESURÉE-PROUVÉE [Entrée 170 —
+  tls13-01..04, la notation 74/387/139/165 o, les slots arrêtés sur les
+  longueurs réelles, le fixture K[64] @0x2F00, le harnais 35/35 VERTS] + le
+  worklog Task 88), l'ancien 090-ffe06fc (LA SPÉCIFICATION v0.7.0) ARCHIVÉ
+  VERSIONNÉ (md5 1d9bcd09… recoupé — 32 archives, rien supprimé), /test sans
+  copie (recoupé), le push GitHub à la pointe (origin == c82fe7b relu MATCH —
+  les trois miroirs alignés) ; script suivi : passe_bundle_m9b.py ; LA SÉRIE
+  090 POURSUIT — le geste est PASSÉ.
 
 Stage Summary:
 - LE CHANTIER M9-(b) EST OUVERT SUR PIÈCES : la première famille de la
