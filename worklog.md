@@ -3614,3 +3614,27 @@ Stage Summary:
   puis (c) le build 0.9.0-dev.1 + la carte génération 8, (d) le kit
   terrain au coffre /test — le VRAI ntdll lu sur la machine du
   développeur.
+
+- PASSATION D141 rejouée au geste « ÈRE M6/M7 REFERMÉE PROPRE + PROGRAMME
+  D'APRÈS M7 OUVERT / le jalon M8 et sa couche I écrite-avant-code » : le
+  bundle courant triade-history-080-ab41def.bundle (git bundle --all,
+  16 311 627 o, md5 0682e407…) déposé au MIROIR, ASSERTÉ avant dépôt
+  (branche jalon pointe sur ab41def — il porte L'OUVERTURE DE L'ÈRE avec
+  sa consignation : L'EXPORT DE CONTINUITÉ 0.8.0 [le conteneur régénéré
+  porte la carte 0.8.0 scellée, import à sec + rituels VERTS sur les
+  octets transportés, la copie au coffre racine] + LE PROGRAMME D'APRÈS
+  M7 [D160 : la fondation d'abord — syscalls directs → TLS 1.3 pur →
+  profils additionnels] + LE JALON M8 ET SA COUCHE I [la charte à huit
+  règles ; sys-01 l'émetteur ; sys-02 le résolveur ; sys-03 la twin de
+  hello-02 ; m8/layout.py la .text5 préfigurée et les constantes en
+  source unique] + le registre figé étendu + Entrée 156 + D160 + worklog
+  Task 74) ; l'ancien 080-a1541ce (md5 322ae6b0… recoupé AVANT — la
+  finale 0.8.0) ARCHIVÉ VERSIONNÉ dans archives-bundles/ (21 archives,
+  jamais supprimé) ; la série 080 continue (la série 090 naîtra à la
+  finale 0.9.0 du jalon M8) ; /test sans copie de bundle (recoupé) ;
+  GitHub porté à la pointe dans le même geste (push 7d0188a..ab41def,
+  recoupé ls-remote) ; script suivi : passe_bundle_m8a.py.
+- SUITE : LE CHANTIER M8-(b) — les blocs notés-mesurés-prouvés ; le
+  labo ne connaît pas le SSN du terrain et ne le devine jamais (les
+  FIXTURES ntdll synthétiques font la preuve au harnais ; le VRAI ntdll
+  se lira au terrain, chantier (d)).
