@@ -4426,3 +4426,16 @@ Stage Summary:
 - LA DEMANDE DU DÉVELOPPEUR EST SERVIE SUR LES DEUX TABLES : le document
   PDF formel (42 pages, empreinte consignée) et la source maîtresse
   markdown — la série documentaire continue.
+
+- PASSATION (le même geste, Task ID 87) : le bundle courant
+  triade-history-090-ffe06fc.bundle (17 172 544 o, md5 1d9bcd09…, branche
+  jalon == ffe06fc [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte la cérémonie de l'ère M9 installée [Entrée 168 —
+  le garde 13/13] + la spécification v0.7.0 [Entrée 169/D169 — le maître
+  markdown révisé, la chaîne spec_v070, le PDF 42 pages sha256 dd36eb41…
+  consigné n°23, le cahier V1-V16 TOUT PASSÉ] + le worklog Task 86/87),
+  l'ancien 090-094a15f (LE KIT DE CÉRÉMONIE DE L'ÈRE M9) ARCHIVÉ VERSIONNÉ
+  (md5 a20150c1… recoupé — 31 archives, rien supprimé), /test sans copie
+  (recoupé), le push GitHub à la pointe (origin == ffe06fc relu MATCH) ;
+  script suivi : passe_bundle_v070.py ; LA SÉRIE 090 POURSUIT — le geste
+  est PASSÉ.
