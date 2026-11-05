@@ -68,6 +68,7 @@ isolée, autorité de certification de test installée localement.
 | M5 | L'outil complet | Autorité de test locale ; interception et re-chiffrement ; journal des flux ; interface en ligne de commande | Interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build activées. Intégralité du protocole. **Franchi le 04/11/2026 — balise finale `0.6.0`** (Entrée 143, D148 : critère (b) de D136 constaté VERT sur pièces au run e4 ; le chantier (c) reporté au programme M6 par D149) |
 | M6 | Portabilité inter-OS | Profil `x86-64-linux-elf64` complet : même couche I réutilisée sans modification ; mini-libc re-scellée pour le profil ; hello et serveur écho sur Linux ; **suite de conformité du profil** | **Suite de conformité verte (§ 8.2)** ; diff nul sur la couche I ; carte multi-profils signée et vérifiée ; le même oracle passe sur les deux profils ; **parité inter-profils vérifiée (§ 8.3)**. **Franchi le 05/11/2026 — balise finale `0.7.0`** (Entrée 149, D154 : run terrain WSL2 vert sur pièces — recoup labo 22/22, le noyau 6.18.54.1-microsoft-standard-WSL2 de la machine du développeur DISTINCT de celui du labo, ASLR complet ; conformité 7/7 exécutée AU scellage même, l'artefact INTACT sha dd14195c… ; le chantier M5-(c) refermé sur le profil Linux — la bascule pendant le trafic, le rollback, la zéro régression) |
 | M7 | Portabilité inter-ISA | Profil `riscv64-linux-elf64` : blocs re-générés pour une ISA à instructions de taille fixe ; patch à chaud adapté (registre scratch + `fence.i`) ; **suite de conformité du profil** | Round-trip 100 % sur la nouvelle ISA ; **suite de conformité verte (7/7 — 29 contrôles, le 05/11)** ; patch à chaud conforme au profil (**DÉMONTRÉ en exécution — le démonstrateur invité, la bascule pendant le trafic**) ; verrou croisé multi-profils (**VIVANT — 26 empreintes DEUX ISA**) ; **parité inter-profils vérifiée (§ 8.3 par exécution)** ; export de continuité multi-profils vérifié (**VERT DE BOUT EN BOUT — 34+5 verrouillés, 5 cartes, 81 specs I, les rituels rejoués sur les octets transportés**) — **les chantiers (a)(b)(c) RÉALISÉS (05/11, Entrées 150/152/153), la 0.8.0-rc.1 SCELLÉE ; (d) RÉALISÉ (05/11, Entrées 154/155 : la part laboratoire — l'export VERT + le kit terrain DÉPOSÉ au coffre /test avec l'instrument embarqué + la clôture D143 du run m6d — puis LE RUN TERRAIN VERT SUR PIÈCES 16/16 + LE RECOUP LABO VERT 29/29 sur pièces croisées + LA FINALE 0.8.0 SCELLÉE, l'artefact intact) — LE JALON M7 FRANCHI, l'universalité DÉMONTRÉE (win 0.6.0 / linux 0.7.0 / riscv 0.8.0)** |
+| M8 | Syscalls directs (win) | Le domaine `sys` sur le profil primaire : l'émetteur syscall direct (le trombone ABI, zéro IAT), le résolveur SSN (l'EAT de ntdll LUE directement, le motif du stub VÉRIFIÉ avant l'extraction), l'usage réel (la twin de hello-02 par NtWriteFile — la même observable, le second chemin) ; **le SSN est une DONNÉE, jamais un octet de code** | Le mécanisme prouvé au harnais (round-trip, oracle structurel — la règle AUCUN IAT PAR BLOC sys, différentiel sur FIXTURES ntdll) ; le terrain : le VRAI ntdll lu sur la machine du développeur, le motif confronté, la ligne comparée par les DEUX chemins, tout stub divergent = refus nommé ; run terrain VERT sur pièces → balise finale `0.9.0` — **OUVERT le 05/11/2026 (D160, Entrée 156) : la couche I écrite-avant-code LIVRÉE (chantier (a) RÉALISÉ), les chantiers (b)/(c)/(d) attendent** |
 
 ## Conditions transverses d'acceptation (v0.4.0)
 
@@ -157,7 +158,11 @@ délivrée :
 
 Après M7 : bloc optionnel de syscalls directs, TLS 1.3 pur en blocs scellés, profils
 additionnels (`aarch64-macos-macho`, `wasm32-wasi`) — volontairement hors périmètre
-courant afin que chaque addition s'appuie sur des résultats mesurés.
+courant afin que chaque addition s'appuie sur des résultats mesurés. **L'ère est
+OUVERTE le 05/11/2026 (D160, Entrée 156) : la première famille est le jalon M8
+(le domaine `sys` — voir « Programme d'après M7 ») ; la clause « hors périmètre »
+est levée NOMMÉMENT pour elle seule, les deux autres familles attendent leur
+décision propre.**
 
 ## Programme v0.6.0 — Souveraineté cryptographique (composant transversal, hors jalons)
 
@@ -519,6 +524,10 @@ WSL2 le terrain attendu). **LE PROGRAMME M6/M7 (D149) EST ACCOMPLI : les
 chantiers d'après M7 (bloc optionnel de syscalls directs, TLS 1.3 pur en
 blocs scellés, profils additionnels) attendent la décision du
 développeur.**
+**La décision est VENUE le même jour (« continue ») : l'ère d'après M7 est
+OUVERTE — D160, Entrée 156, la section « Programme d'après M7 » ci-dessous ;
+l'export de continuité 0.8.0 a refermé l'ère M6/M7 proprement avant
+l'ouverture.**
 
 | Chantier M6 | Contenu | Critère de sortie mesurable |
 |---|---|---|
@@ -550,6 +559,36 @@ Windows 11, aucun outil nouveau) ou VM Linux isolée (lignée des runs e*) ;
 instrumentale consignée (aucune fer RISC-V) ; (3) l'aval du report du chantier
 M5-(c) dans M6-(d) (D149 le consigne — le critère sera démontré sur le profil
 Linux, moteur de patch embarqué).
+
+## Programme d'après M7 — les additions mesurées (ouvert le 05/11/2026, D160)
+
+La demande « continue » du développeur au lendemain de la finale 0.8.0 EST la
+décision d'ouverture (D160, le modèle D149). L'ordre des familles est LA
+FONDATION D'ABORD — chacune s'appuie sur les résultats MESURÉS de la
+précédente : **(1) le jalon M8, le bloc optionnel de syscalls directs** (OUVERT
+— la lignée m8/, le domaine `sys` créé au registre figé, la charte à huit
+règles, la couche I écrite-avant-code livrée) ; **(2) TLS 1.3 pur en blocs
+scellés** (la grande œuvre de la souveraineté complète — HORS PÉRIMÈTRE jusqu'à
+sa décision propre d'ouverture : elle s'appuiera sur le domaine sys, la
+fondation I/O) ; **(3) les profils additionnels** (`aarch64-macos-macho`,
+`wasm32-wasi` — HORS PÉRIMÈTRE : chacun répétera M6/M7 sur résultats mesurés).
+L'ère a été refermée PROPRE avant l'ouverture : l'export de continuité 0.8.0
+(le conteneur régénéré porte la carte 0.8.0 scellée, import à sec + rituels
+VERTS sur les octets transportés, la copie au coffre racine — Entrée 156).
+
+| Chantier M8 (win, l'ère 0.9.0) | Contenu | Critère de sortie mesurable |
+|---|---|---|
+| (a) La couche I du domaine `sys` | écrit-avant-code (D77) : la charte des syscalls directs à HUIT règles + les spécifications sys-01 (l'émetteur — le trombone ABI, aucun prologue), sys-02 (le résolveur SSN — l'EAT de ntdll LUE, jamais appelée), sys-03 (la twin de hello-02 par NtWriteFile, zéro IAT) ; le plan d'adressage né (m8/layout.py : .text5 préfigurée, MOTIF_STUB/PE/EAT en source unique, la table des SEPT verdicts, les versions 0.9.0) | **RÉALISÉ le 05/11/2026** (Entrée 156, D160) : le registre figé étendu (`sys`, M8), le contrat précède l'octet |
+| (b) Les blocs notés-mesurés-prouvés | la notation à la main (auteur.py), le round-trip, le harnais différentiel sur FIXTURES ntdll synthétiques (le labo ne connaît pas le SSN du terrain et ne le devine jamais — le motif vérifié avant l'extraction), la falsification (zéro silence) | round-trip 100 % ; le différentiel VERT par bloc (l'émetteur : aucun prologue — I3 ; le résolveur : la marche bornée, les refus nommés -1..-5 ; la twin : la MÊME ligne par les DEUX chemins, la preuve d'observable) ; falsification attrapée |
+| (c) Le build 0.9.0-dev.1 + la carte | la composition .text5 sur le corps 0.6.0 INTACT (R7 — deltas PE documentés, modèle D94/D136), l'oracle structurel AVEC la règle du domaine (AUCUN IAT PAR BLOC sys — la preuve structurelle), la carte génération 8, la balise 0.9.0-dev.1 (geste de BUILD, jamais scellage) | l'oracle VERT (la règle AUCUN IAT constatée sur les octets) ; la carte signée, verrou croisé étendu ; le scellé 0.6.0 byte-identique au corps |
+| (d) Le terrain — le VRAI ntdll | le kit au coffre `/test` (l'artefact + le scénario : le run lit le VRAI ntdll de la machine du développeur, le motif confronté, la ligne comparée — la version Windows consignée au témoin) ; le run, les preuves au coffre, le recoup sur pièces (D138/D145/D148) ; si vert : la finale `0.9.0` | run terrain VERT sur pièces → balise finale `0.9.0` — le second chemin preuve : la même observable SANS un seul import, sur la machine du développeur |
+
+**Frontières du programme d'après M7, nommées.** La clause spec « hors périmètre
+courant » est LEVÉE NOMMÉMENT pour la seule première famille (D160) ; la
+PEB-walk (trouver ntdll sans IAT — l'IAT-free du principal) et la
+contre-mesure du hooking (stubs crochetés) sont des CHANTIERS FUTURS NOMMÉS :
+en l'état, la base est FOURNIE par l'appelant et un stub divergent est un
+REFUS nommé — le résolveur ne devine jamais, il ne s'adapte jamais en silence.
 
 ## Le projet fils COFFRE-FORT (fondé D135, 31/10/2026 — développement différé)
 
