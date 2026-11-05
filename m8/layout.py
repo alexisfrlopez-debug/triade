@@ -71,7 +71,15 @@ IMAGE_BASE = L5.IMAGE_BASE
 SIZE_OF_IMAGE_M5 = L5.SIZE_OF_IMAGE          # 0xA000 — le corps scellé 0.6.0
 SIZE_OF_IMAGE = 0xC000                       # 0xA000 + .text5 (AU BUILD (c))
 TEXT5_VA = 0xA000                            # la section NOUVELLE du jalon
-TEXT5_RAW = None                             # offset fichier arrêté au (c)
+TEXT5_FILE = 0x8E00                          # ARRÊT D162 (chantier (c)) : la
+                                            # 7e section vit APRÈS .text4 —
+                                            # les SIX premières raw INCHANGÉES
+                                            # (0x400/0x1400/0x2400/0x2E00/
+                                            # 0x4E00/0x6E00), les 7 en-têtes
+                                            # (608 o) TIENNENT dans la marge
+                                            # 0x400 : le décalage de packaging
+                                            # D94 n'est PAS rejoué
+TAILLE_FICHIER = 0xAE00                      # 0x8E00 + 0x2000 (ARRÊT D162)
 TAILLE_FICHIER_M5 = L5.TAILLE_FICHIER        # le scellé — ne bouge pas
 
 # --- Les slots ARRÊTÉS du domaine sys (D161 — la mesure auteur décide) -----------

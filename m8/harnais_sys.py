@@ -76,20 +76,29 @@ sys.path.insert(0, M4_DIR)
 sys.path.insert(0, os.path.join(M4_DIR, "outils"))
 
 # Le plan M8 chargé par CHEMIN NOMINATIF (leçon D158 : m4/layout.py est
-# devant au sys.path pour build_m4 — jamais d'import anonyme ici)
-_spec_l8 = importlib.util.spec_from_file_location(
-    "layout_m8", os.path.join(ICI, "layout.py"))
-L = importlib.util.module_from_spec(_spec_l8)
-sys.modules["layout_m8"] = L
-_spec_l8.loader.exec_module(L)
+# devant au sys.path pour build_m4 — jamais d'import anonyme ici). En mode
+# BUILD (le module build_m8 importe le harnais), le plan est DÉJÀ chargé
+# sous ce nom : RÉUTILISÉ, jamais re-exécuté (une seule instance).
+if "layout_m8" in sys.modules:
+    L = sys.modules["layout_m8"]
+else:
+    _spec_l8 = importlib.util.spec_from_file_location(
+        "layout_m8", os.path.join(ICI, "layout.py"))
+    L = importlib.util.module_from_spec(_spec_l8)
+    sys.modules["layout_m8"] = L
+    _spec_l8.loader.exec_module(L)
 
 # La machinerie de notation de la lignée, importée par chemin (leçon D158 :
-# les build.py homonymes se chargent par importlib, jamais par sys.path)
-_spec_b4 = importlib.util.spec_from_file_location(
-    "build_m4", os.path.join(M4_DIR, "build_m4.py"))
-B4 = importlib.util.module_from_spec(_spec_b4)
-sys.modules["build_m4"] = B4
-_spec_b4.loader.exec_module(B4)
+# les build.py homonymes se chargent par importlib, jamais par sys.path) —
+# réutilisée si build_m8 l'a déjà chargée (une seule instance du builder).
+if "build_m4" in sys.modules:
+    B4 = sys.modules["build_m4"]
+else:
+    _spec_b4 = importlib.util.spec_from_file_location(
+        "build_m4", os.path.join(M4_DIR, "build_m4.py"))
+    B4 = importlib.util.module_from_spec(_spec_b4)
+    sys.modules["build_m4"] = B4
+    _spec_b4.loader.exec_module(B4)
 
 from keystone import Ks, KS_ARCH_X86, KS_MODE_64  # noqa: E402
 import capstone  # noqa: E402
@@ -131,6 +140,10 @@ SENTINELLES_NV = {
 }
 
 REUSSITES, ECHECS = [], []
+
+
+class ErreurHarnais(Exception):
+    """Tout écart du harnais (mode build : lève, jamais un verdict muet)."""
 
 
 def controle(nom: str, ok: bool, detail: str = "") -> None:
@@ -321,9 +334,13 @@ class Noyau:
 # --- L'émulateur ------------------------------------------------------------------
 
 class Emulateur:
-    """L'image du plan + les notations + le module + les traceurs."""
+    """L'image du plan + les notations + le module + les traceurs.
 
-    def __init__(self, noyau: Noyau):
+    blobs : les OCTETS du build (mode construire/verifier de build_m8 — le
+    harnais re-constate byte-égal avec l'assemblage des notations : jamais
+    deux sources de vérité) ; None : assemblage local (mode autonome)."""
+
+    def __init__(self, noyau: Noyau, blobs: dict[str, bytes] | None = None):
         self.ks = Ks(KS_ARCH_X86, KS_MODE_64)
         self.noyau = noyau
         self.uc = Uc(UC_ARCH_X86, UC_MODE_64)
@@ -335,14 +352,21 @@ class Emulateur:
 
         # les notations (ce que build_m8.py embarquera) + les héritages scellés
         self.octets_blocs: dict[str, bytes] = {}
-        for bid, (nom_fichier, _spec, _dep) in {
-            "g90001": ("sys-01-emetteur", None, None),
-            "g90002": ("sys-02-resolveur", None, None),
-            "g90003": ("sys-03-ecriture", None, None),
+        for bid, (nom_fichier, cle_blob) in {
+            "g90001": ("sys-01-emetteur", "sys-01"),
+            "g90002": ("sys-02-resolveur", "sys-02"),
+            "g90003": ("sys-03-ecriture", "sys-03"),
         }.items():
             rva, slot = L.SLOTS_SYS[bid]
             chemin = os.path.join(ICI, "notation", nom_fichier + ".asm")
             octets, _metas = B4.assembler_bloc(self.ks, chemin, rva, slot)
+            if blobs is not None:
+                # le build passe SES octets : re-constat byte-égal (une seule
+                # source de vérité — la notation ; le build n'en est que le porteur)
+                if blobs[cle_blob] != octets:
+                    raise ErreurHarnais(
+                        f"{bid} : les octets du build divergent de la notation "
+                        f"assemblée ({len(blobs[cle_blob])} o vs {len(octets)} o)")
             self.octets_blocs[bid] = octets
             uc.mem_write(rva, octets + b"\x90" * (slot - len(octets)))
         # memcmp libc-02 (b20002 — l'héritage scellé M1) et hello-02 (a10002, M0)
@@ -1147,25 +1171,48 @@ def bilan(graine: int) -> int:
     return 1 if ECHECS else 0
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description="Harnais du domaine sys (M8-(b))")
-    ap.add_argument("--graine", type=int, default=20261105)
-    ap.add_argument("--volume", choices=["complet", "reduit"], default="complet")
-    args = ap.parse_args()
-    rng = random.Random(args.graine)
-    print("=== harnais_sys.py — le domaine sys noté-mesuré-prouvé (M8-(b), D161) ===")
-    print(f"graine {args.graine} · volume {args.volume}")
+def executer(blobs: dict[str, bytes] | None = None, graine: int = 20261105,
+             volume: str = "complet") -> dict:
+    """Le point d'entrée du BUILD (modèle oracle_m5.executer — D136) : joue
+    la batterie V1-V4 sur les blobs passés (ou les notations assemblées en
+    mode autonome) et rend le verdict ; LÈVE ErreurHarnais sur TOUT échec
+    (le build ne continue jamais sur un harnais non vert).
+
+    -> {"total_cas", "verts", "empreinte", "graine", "volume"}"""
+    global REUSSITES, ECHECS
+    REUSSITES, ECHECS = [], []
+    print(f"=== harnais_sys.py — le domaine sys noté-mesuré-prouvé "
+          f"(M8, blobs {'du build' if blobs else 'locaux'}) ===")
+    print(f"graine {graine} · volume {volume}")
 
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
     cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
     vecteur_v1(ks, cs)
 
     noyau = Noyau()
-    emu = Emulateur(noyau)
+    emu = Emulateur(noyau, blobs=blobs)
     vecteur_v2(emu, noyau)
-    vecteur_v3(emu, noyau, rng,
-               300 if args.volume == "complet" else 60)
+    vecteur_v3(emu, noyau, random.Random(graine),
+               300 if volume == "complet" else 60)
     vecteur_v4(emu, noyau)
+    if ECHECS:
+        raise ErreurHarnais(
+            f"harnais non vert : {len(ECHECS)} échec(s) — premier : "
+            f"{ECHECS[0][0]} : {ECHECS[0][1]}")
+    empreinte = hashlib.sha256(
+        ("|".join(REUSSITES) + f"#{graine}").encode()).hexdigest()[:16]
+    print(f"[harnais] {len(REUSSITES)} contrôles VERTS · empreinte "
+          f"{empreinte} · graine {graine}")
+    return {"total_cas": len(REUSSITES), "verts": len(REUSSITES),
+            "empreinte": empreinte, "graine": graine, "volume": volume}
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="Harnais du domaine sys (M8)")
+    ap.add_argument("--graine", type=int, default=20261105)
+    ap.add_argument("--volume", choices=["complet", "reduit"], default="complet")
+    args = ap.parse_args()
+    executer(None, graine=args.graine, volume=args.volume)
     return bilan(args.graine)
 
 

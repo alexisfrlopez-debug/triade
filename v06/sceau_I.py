@@ -49,6 +49,7 @@ ARBRES = {
     "m5": ("proxy.exe (relevement https)", "0.6.0"),
     "m6": ("hachoir", "hachoir.1"),
     "m7": ("sceau", "sceau.1"),
+    "m8": ("proxy.exe (domaine sys, syscalls directs)", "sys.1"),
     "demo": ("demo.exe", "0.3.0"),
     "terrain": ("superviseur.exe", "terrain.19/17-H"),
     "v06": ("coffre CF2 + CF3 + sceau-I (transversal)", "v0.6.0-axes2-3-4"),
