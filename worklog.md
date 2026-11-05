@@ -3741,3 +3741,84 @@ Stage Summary:
   REPASSÉ → LE BUILD EXÉCUTÉ (construire : l'artefact 0.9.0-dev.1 + la
   carte génération 8) ; puis le chantier (d) — le kit terrain au coffre
   /test, le VRAI ntdll lu sur la machine du développeur.
+
+## Task ID 77 — « fais une synchro git et drive, et fais moi un kit pour la cérémonie comme tu as fait pour les précédentes » : LA SYNCHRO SUR PIÈCES + LE KIT DE CÉRÉMONIE DE L'ÈRE M8 DÉPOSÉ
+
+- LA SYNCHRO (la doctrine d'abord — sur pièces, jamais sur mémoire) :
+  git PROPRE à f3d72e9, la branche jalon == origin RECROUPÉE ls-remote
+  (f3d72e9829a8…, 0 avance / 0 retard — GitHub à la pointe, rien à
+  pousser) ; le miroir Drive re-synchronisé (drive_sync.py rc=0 : 1 126
+  fichiers inchangés, triade-history.bundle mis à jour — le hook
+  post-commit avait déjà tourné à chaque commit, le rejeu manuel le
+  constate).
+- L'ÉTAT CONSTATÉ AVANT LE KIT : la zone download/ AMPUTÉE des 5
+  LISEZMOI de cérémonie (le disque labo encore recyclé — le PIÈGE de
+  l'Entrée 132 guettait : un rejeu de maj_kit.py depuis un labo amputé
+  aurait régénéré un MANIFESTE sans les LISEZMOI, divergence
+  silencieuse d'attestation).
+- PAS 1 — RAPATRIEMENT + RECOUP DE L'ÈRE
+  (scripts/rapatrier_lisezmoi_ceremonie.py, labo hors dépôt, aucun
+  secret) : les 5 LISEZMOI du kit Drive /Cérémonie → download/, md5
+  vérifiés CONTRE LES MÉTADONNÉES Drive après écriture : 5/5 MATCH
+  (25 136 + 5 391 + 14 246 + 9 171 + 10 264 o — les mêmes tailles qu'à
+  l'Entrée 132) ; PUIS le recoup propre à l'ère (sur métadonnées) : le
+  kit porte DÉJÀ la remise fraîche v06/sceau-I/a-signer.txt md5 MATCH
+  (12 arbres, déposé au kit par le hook du commit d999103 — la charge
+  du développeur est EN PLACE), cle-publique-I.txt MATCH (173fae9c…,
+  l'ancre de rotation) et etat-cle.txt MATCH (« reelle ») — le kit et
+  le dépôt décrivent le MÊME état de cérémonie.
+- LA PIÈCE NOUVELLE — LISEZMOI-ceremonie-ere-M8.txt ÉCRIT ET RECOUPÉ :
+  le mode d'emploi de la cérémonie de l'ère (celui qui manquait — le
+  LISEZMOI-cle-I.txt couvre la PREMIÈRE fois [generer + signer +
+  déposer --cle], celui-ci couvre la RE-SIGNATURE) : POURQUOI (le garde
+  D87 refuse le registre m0 étendu au M8-(a) — README.md modifié, code
+  10 — et l'arbre m8 jamais signé : la dette est échue au premier
+  build, D162) ; CE QUI A CHANGÉ (12 arbres, DEUX empreintes bougées :
+  m0 0.1.0 d94154840c9de80a… le registre étendu [les specs hello
+  INTACTES], m8 sys.1 621daf173debcc4c… le domaine sys [README +
+  sys-01/02/03] ; les DIX autres aux MÊMES empreintes qu'au 04/11 —
+  Ed25519 déterministe : les re-signer redonne les signatures déposées)
+  ; LA RÈGLE D'OR : JAMAIS « generer » (la clé du 04/11 réutilisée, sa
+  moitié publique 173fae9c75229b15… écrite noir sur blanc — une clé
+  neuve romprait la continuité de l'état « réelle » ; si
+  cle-publique-I.txt diverge : ARRÊT) ; LE PAS-À-PAS (emporter
+  ceremonie_hors_ligne.py + a-signer.txt + cle-publique-I.txt + SA
+  cle-I-privee.txt ; signer → signatures-I.txt 12 lignes
+  auto-vérifiées ; verifier → TOUT VERT + la clé commence par
+  173fae9c… ; ramener signatures-I.txt ET cle-publique-I.txt) ; LE
+  DÉPÔT (sceau_I.py deposer signatures-I.txt --cle
+  cle-publique-I.txt — l'atomicité de cérémonie) ; CE QUE CELA
+  DÉBLOQUE (le garde repassé → construire() : l'artefact 0.9.0-dev.1 +
+  la carte génération 8 → le chantier (d), le VRAI ntdll). LE RECOUP
+  PAR SCRIPT AVANT DÉPÔT : les empreintes m0/m8 et la clé citées ==
+  les pièces (a-signer.txt, cle-publique-I.txt — aucun chiffre
+  inventé), les empreintes vivantes des DIX arbres inchangés == leurs
+  manifestes déposés (la phrase « mêmes empreintes qu'au 04/11 »
+  PROUVÉE sur pièces), aucun marqueur de substitution.
+- PAS 2 — LE DÉPÔT CANONIQUE (maj_kit.py ÉTENDU puis rejoué) :
+  RACINE_KIT reçoit l'entrée LISEZMOI-ceremonie-ere-M8.txt
+  (optionnelle comme ses cinq aînées — le contrat D130 inchangé),
+  NOTE_D130 (qui alimente MANIFESTE.txt) porte la mention de la
+  cérémonie de l'ère (le développeur qui ouvre le dossier est ORIENTÉ
+  vers le bon LISEZMOI) ; le rejeu : gardes vertes (44 fichiers v06/
+  suivis par git + 9 racine requis), 60 entrées attendues, 1 téléversé
+  (LISEZMOI-ceremonie-ere-M8.txt), 1 mis à jour (MANIFESTE.txt), 58
+  inchangés, 60/60 VÉRIFIÉS ALLER-RETOUR md5.
+- FRONTIÈRES : AUCUN artefact m8 écrit (m8/proxy.exe n'existe pas — il
+  naîtra de construire() après la cérémonie), AUCUNE balise ne bouge
+  (win 0.6.0 / linux 0.7.0 / riscv 0.8.0 INTACTES), la remise
+  a-signer.txt INCHANGÉE (12 arbres), le scellé 0.6.0 INTACT (l'ancre
+  R7), l'état de clé « réelle » INTACT, AUCUN secret déposé (le kit ne
+  porte que des preuves publiques — D130), le labo ne signe rien (la
+  cérémonie appartient au développeur, D87/D162) ; consignations :
+  JOURNAL_TRAVAIL +Entrée 159 PAR SCRIPT (ordre 158<159<marqueur,
+  rejeu REFUSÉ), PLAN (la ligne M8-(c) : le kit déposé), worklog
+  +Task ID 77 ; scripts suivis : inserer_entree_159.py (dépôt),
+  rapatrier_lisezmoi_ceremonie.py (labo, hors dépôt).
+- SUITE : LE GESTE DU DÉVELOPPEUR (la cérémonie hors-ligne : signer
+  a-signer.txt avec la clé du 04/11, ramener signatures-I.txt +
+  cle-publique-I.txt — le kit /Cérémonie du Drive porte tout) → LE
+  DÉPÔT (sceau_I.py deposer) → LE GARDE REPASSÉ → LE BUILD EXÉCUTÉ
+  (construire : l'artefact 0.9.0-dev.1 + la carte génération 8) ; puis
+  le chantier (d) — le kit terrain au coffre /test, le VRAI ntdll lu
+  sur la machine du développeur.

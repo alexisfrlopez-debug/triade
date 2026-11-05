@@ -75,6 +75,12 @@ RACINE_KIT = [
     ("LISEZMOI-coffre-CF2.txt", DOWNLOAD / "LISEZMOI-coffre-CF2.txt", False),
     ("LISEZMOI-coffre-CF3.txt", DOWNLOAD / "LISEZMOI-coffre-CF3.txt", False),
     ("LISEZMOI-kit.txt", DOWNLOAD / "LISEZMOI-kit.txt", False),
+    # L'ÈRE M8 (M8-(c), D162) : la cérémonie de re-signature m0 + m8 — la
+    # remise fraîche vit déjà dans v06/sceau-I/a-signer.txt (source git) ;
+    # ce LISEZMOI est le mode d'emploi qui va avec (règle d'or : JAMAIS
+    # « generer », la clé du 04/11 est réutilisée — 173fae9c…).
+    ("LISEZMOI-ceremonie-ere-M8.txt",
+     DOWNLOAD / "LISEZMOI-ceremonie-ere-M8.txt", False),
 ]
 
 NOTE_D130 = (
@@ -103,7 +109,13 @@ NOTE_D130 = (
     "normative), PAS le code : une évolution du code (D131 aujourd'hui)\n"
     "ne diverge RIEN — seule une évolution de v06/I/ appellerait la\n"
     "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
-    "le SIGNAL, pas la panne).")
+    "le SIGNAL, pas la panne).\n"
+    "\n"
+    "CÉRÉMONIE DE L'ÈRE M8 (M8-(c), D162) : le build 0.9.0-dev.1 attend\n"
+    "la re-signature m0 (registre étendu) + m8 (domaine sys). Suivez\n"
+    "LISEZMOI-ceremonie-ere-M8.txt : la remise est v06/sceau-I/a-signer.txt\n"
+    "(DOUZE arbres), à signer HORS LIGNE avec votre clé du 04/11 — la\n"
+    "règle d'or : JAMAIS « generer » (la clé 173fae9c… est réutilisée).")
 
 
 # ---------------------------------------------------------------- utilitaires
