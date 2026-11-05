@@ -1,7 +1,8 @@
-# PROTOCOLE TRIADE v0.6.1 — Spécification technique
+# PROTOCOLE TRIADE v0.7.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.6.1. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (v0.6.0),
+> Source de travail faisant autorité pour la v0.7.0. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.6.1_Specification.pdf` (v0.6.1),
+> `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (v0.6.0),
 > `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (v0.5.2),
 > `docs/Protocole_TRIADE_v0.5.0_Specification.pdf` (v0.5.0),
 > `docs/Protocole_TRIADE_v0.4.0_Specification.pdf` (v0.4.0),
@@ -11,12 +12,17 @@
 > et l'édition académique v0.4 (`docs/Protocole_TRIADE_v0.4_Article_Recherche.pdf`, D18 —
 > présentation IMRAD du noyau v0.3, sans valeur normative) ; depuis la v0.6.0, le
 > **Livre du Coffre** l'accompagne (`docs/Livre_du_Coffre_TRIADE_CF1-CF3_v1.1.pdf`,
-> D133 — complément opératoire : cérémonies, runbook, mode dégradé ; v1.1 : l'arbitrage
+> D137 — complément opératoire : cérémonies, runbook, mode dégradé ; v1.1 : l'arbitrage
 > D137 du niveau de naissance y est aligné). Depuis la décision D17,
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.6.1 consigne l'arbitrage du niveau de naissance d'un coffre neuf (D137) ; la
+> La v0.7.0 consolide le programme d'après M7 (D160) : le jalon M8 — le domaine `sys`,
+> les syscalls directs — est franchi (finale 0.9.0 scellée sur run terrain vert recoupé
+> 30/30), le jalon M9 — le domaine `tls13`, TLS 1.3 pur — est ouvert (couche I complète,
+> 28 spécifications), et le sceau de l'Intention porte treize arbres, ses cérémonies
+> d'ère (M8 puis M9) passées sur pièces (garde 13/13) ; la
+> v0.6.1 consigne l'arbitrage du niveau de naissance d'un coffre neuf (D137) ; la
 > v0.6.0 avait consigné la passation du programme de souveraineté cryptographique (D133) :
 > axes 2-3-4 accomplis et prouvés sur terrain — la chaîne réelle du coffre a migré
 > CF1 → CF2 → CF3 les 30–31 octobre 2026 ; la v0.5.2 avait consigné la garde durable de
@@ -24,8 +30,8 @@
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.6.1 — le niveau du coffre neuf (CF1/CF2/CF3) devient l'arbitrage du développeur à la création (D137) ; la v0.6.0 avait accompli la souveraineté cryptographique (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; état des jalons constaté : M0–M6 franchis (balises 0.2.0 à 0.7.0 — M5 rentré le 04/11/2026, Entrée 143/D148 ; M6 franchi le 05/11/2026 sur run terrain WSL2 vert recoupé sur pièces, Entrée 149/D154 — le chantier M5-(c) refermé sur le profil Linux), M7 ouvert (D149 — fiche `docs/PROFIL_riscv64-linux-elf64.md`)
-- Date : 31 octobre 2026
+- Version : v0.7.0 — la consolidation du programme d'après M7 (D160) : le jalon M8 (syscalls directs — le domaine `sys`) est franchi, finale `0.9.0` scellée le 05/11/2026 sur run terrain vert recoupé 30/30 sur pièces croisées (Entrée 164, D165) ; le jalon M9 (TLS 1.3 pur en blocs scellés — le domaine `tls13`, l'ère 1.0.0) est ouvert (D166) : couche I complète — 28 spécifications en six familles, l'instrument 117 contrôles verts (D167) — et cérémonie de l'ère passée le 05/11 (13 arbres, garde 13/13, la dette D166 soldée) ; le sceau de l'Intention porte TREIZE arbres (cérémonies d'ère M8 : 12 arbres, D162/D163 ; M9 : 13 arbres, D168) ; la v0.6.1 avait consigné l'arbitrage du niveau du coffre neuf (D137) ; la v0.6.0 avait accompli la souveraineté cryptographique (D133) : axes 2-3-4 prouvés terrain, chaîne réelle du coffre migrée CF1 → CF2 → CF3 ; état des jalons constaté : M0–M6 franchis (balises 0.2.0 à 0.7.0 — M5 rentré le 04/11/2026, Entrée 143/D148 ; M6 franchi le 05/11/2026 sur run terrain WSL2 vert recoupé sur pièces, Entrée 149/D154 — le chantier M5-(c) refermé sur le profil Linux), M7 ouvert (D149 — fiche `docs/PROFIL_riscv64-linux-elf64.md`)
+- Date : 5 novembre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -101,7 +107,7 @@ elle trahirait la fonction objectif Performance (rejet consigné, D14). Cinquiè
 couche de gouvernance validée par la démonstration RoomEq (spécifications avant code,
 vérifie-puis-écrit, cristallisation) et le cœur natif du protocole (notation, verrou
 cryptographique sur octets, patch à chaud) restent des niveaux de preuve distincts : les
-jalons M0 à M7 demeurent la charge de validation du cœur natif.
+jalons M0 à M9 demeurent la charge de validation du cœur natif.
 
 ### 1.3 Ce que change la v0.4.0
 
@@ -206,6 +212,37 @@ disponible à tout moment pour un coffre dont les besoins grandissent ; le coffr
 de TRIADE reste CF3 (époque 1, checksum `0cc89a96`). Aucune autre règle n'est
 modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction
 objectif est inchangée.
+
+### 1.9 Ce que change la v0.7.0
+
+La révision de consolidation du programme d'après M7 (D160) : ce que la clôture de la
+v0.6.1 tenait « hors périmètre courant » entre dans la spécification, sur résultats
+mesurés — la clause est levée NOMMÉMENT pour les deux premières familles, les profils
+additionnels demeurent hors périmètre. Le **jalon M8** (le bloc optionnel de
+syscalls directs — le domaine `sys`) est franchi : la charte à huit règles (le SSN
+est une donnée, jamais un octet de code ; le motif du stub vérifié avant toute
+extraction ; un stub divergent est un refus nommé — le résolveur ne devine jamais,
+il ne s'adapte jamais en silence), les spécifications sys-01…03 écrites-avant-code,
+le harnais différentiel 61 contrôles verts sur fixtures ntdll synthétiques (le
+laboratoire ne connaît jamais le SSN du terrain), la cérémonie de l'ère passée avant
+le build (12 arbres, D162/D163), le run terrain sur le VRAI ntdll — la twin de la
+ligne hello-02 par les DEUX chemins (l'IAT kernel32 et le syscall direct
+NtWriteFile), le refus -4 nommé du stub crocheté — recoupé 30/30 sur pièces
+croisées, la finale `0.9.0` scellée (Entrée 164, D165 : le scellage exige le verdict
+du recoup comme pièce ; le scellage est un fait de carte, l'artefact ne bouge
+jamais). Le **jalon M9** (TLS 1.3 pur en blocs scellés — le domaine `tls13`, l'ère
+1.0.0) est ouvert (D166) : la couche I complète — 28 spécifications en six familles
+(sha, hkdf, x25519, aead, enregistrement, poignée, principal), l'instrument
+`verifier_specs_m9a.py` 117 contrôles verts (D167) — et la cérémonie de l'ère passée
+le 05/11 : la remise du développeur, TREIZE arbres signés hors ligne à la clé du
+04/11 (la continuité prouvée par le déterminisme Ed25519, D163 : les onze arbres
+inchangés rendent les signatures de l'ère M8), le garde repassé VERT 13/13 — la
+dette D166 soldée sur pièces. Le **sceau de l'Intention** porte désormais treize
+arbres (§ 12.4) et les cérémonies d'ère entrent au protocole (§ 13.5) : la dette se
+nomme à la naissance, jamais après coup (D166, règle 8) ; la charge se prépare au
+geste qui sert la main du développeur (D168). Aucune règle du cœur n'est modifiée ;
+aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif
+est inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -715,7 +752,7 @@ sceau de l'Intention — `v06/I/README.md` (axe 3), `v06/I/CF2/README.md` (axe 2
 |---|---|---|---|
 | 1 · Attestation de non-exfiltration | D85 | quote vérifiable TPM 2.0/SGX du code manipulant le coffre ; refus de déverrouillage sans quote | **exigence consignée** — infrastructure sans TEE |
 | 2 · Interrupteur d'homme mort | D86 | clé maîtresse CF2 jamais stockée entière (Shamir, 5 gardes seuil 3) ; sentinelle à double seuil ; destruction des fragments ; PORTE D120 | **livré, prouvé terrain** — chaîne réelle migrée CF1 → CF2 le 31/10/2026 |
-| 3 · Filigrane de l'Intention | D87 | chaque arbre de couche I condensé puis signé par la clé Ed25519 *hors-ligne* ; build et chemin de patch refusent une couche I non signée | **livré, prouvé terrain** — dix arbres signés, re-cérémonie réelle D126 |
+| 3 · Filigrane de l'Intention | D87 | chaque arbre de couche I condensé puis signé par la clé Ed25519 *hors-ligne* ; build et chemin de patch refusent une couche I non signée | **livré, prouvé terrain** — treize arbres signés ; re-cérémonie réelle D126, cérémonies d'ère M8 (12 arbres, D162/D163) et M9 (13 arbres, D166/D168) passées sur pièces, garde 13/13 |
 | 4 · Serrure piégée | D121 | coffre CF3 : clé utilisateur invariable, moitiés serrure/piège fraîches à chaque époque, piège sur média séparé, cycle en deux actes, sentinelle instantanée par invocation | **livré, prouvé terrain** — chaîne réelle migrée CF2 → CF3 le 30–31/10/2026 |
 
 ### 12.1 La hiérarchie des gardes — quatre secrets, quatre menaces
@@ -793,8 +830,15 @@ papier du sachet** (checksum à la main, indécevable par logiciel), journal Git
 
 ### 12.4 Le sceau de l'Intention (D87)
 
-Dix arbres de couche I vivent sous le sceau (les neuf lignées plus `v06/I` — la
-spécification du sceau est la première couche qu'il garde). Manifeste canonique (UTF-8,
+Treize arbres de couche I vivent sous le sceau — les lignées m0 à m8 (le domaine
+`sys` depuis l'ère M8), l'arbre `tls13` (le domaine TLS 1.3 pur depuis l'ère M9),
+`demo`, `terrain`, et `v06/I` : la spécification du sceau est la première couche
+qu'il garde. Chaque ère qui ouvre un arbre nomme sa dette de cérémonie à la
+naissance (D166, règle 8) : le registre figé étendu et l'arbre neuf exigent la clé
+hors-ligne avant tout build — la charge se prépare au geste qui sert la main du
+développeur (D168), et la continuité de la clé se prouve par le déterminisme
+Ed25519 (D163) : re-signer les arbres inchangés redonne exactement les signatures
+déposées. Manifeste canonique (UTF-8,
 LF, tri lexicographique déterministe) ; chaque ligne porte le SHA-256 du contenu
 **canonique LF** (D115 — la représentation du checkout n'est pas l'intention) ;
 l'empreinte d'arbre est le SHA-256 du manifeste entier ; la signature **Ed25519**
@@ -863,7 +907,7 @@ guide sans les réimplémenter.
 
 | Cérémonie | Gestes | Preuve attendue |
 |---|---|---|
-| Sceau de l'Intention (D87/D126) | `preparer` ; cérémonie hors-ligne `signer` (clé physique) ; `deposer` (vérifié avant écriture) ; `verifier` | dix arbres VERTS, code 0 ; commit poussé |
+| Sceau de l'Intention (D87/D126) | `preparer` ; cérémonie hors-ligne `signer` (clé physique) ; `deposer` (vérifié avant écriture) ; `verifier` | treize arbres VERTS, code 0 ; commit poussé |
 | CF1 → CF2 (D106) | phrase (remise D81 AVANT tout) ; `migrer` ; 5 gardes ; T = 3 copies hors-ligne (feuille g3–g5 ou USB) ; relecture ; liste blanche | CF2 `verifier` VERT ; CF1 laissé intact |
 | CF2 → CF3 (D121/D127) | MIGRER (conteneur CF2, gardes, *média du piège requis*, phrase deux fois) ; VÉRIFIER (checksum contre la carte) ; DÉTRUIRE (case explicite) | époque 1, checksum 8 hex noté ; verdict à froid VERT (machine froide recommandé) |
 | Clôture CF3 (usage courant) | acte I (média débranché) ; session sur le brouillon ; acte II (phrase retapée, époque N+1) | checksum affiché, ligne sur la carte ; journal Git consigné |
@@ -904,6 +948,31 @@ recoupement sur machine froide : jamais l'ancien avant le vert du neuf. Observat
 honnête consignée : l'empreinte du `coffre_fort.py` mesurée au clone terrain
 (`299fd124…`) diverge de celle du dépôt (`8c79263b…`) — à recouper au prochain
 `git pull`.
+
+### 13.5 Les cérémonies d'ère du sceau de l'Intention (5 novembre 2026)
+
+Le sceau a traversé deux cérémonies d'ère en un jour, chacune née d'un garde qui
+refusait. **Ère M8** : l'ouverture du domaine `sys` avait étendu le registre figé m0
+et créé l'arbre m8 — le garde a nommé la dette AVANT tout build (D162 : un diff
+d'intention non signé ; la clé hors-ligne du développeur requise, le laboratoire ne
+signe jamais à sa place) ; le kit de cérémonie servi au dossier `/Cérémonie` du
+Drive (la remise, le LISEZMOI pas à pas, la règle d'or « JAMAIS generer »), la
+cérémonie passée sur pièces : douze arbres, les dix inchangés rendant les MÊMES
+signatures que celles du 04/11 (la preuve D163 de la réutilisation de la clé, sans
+jamais voir la clé privée), le garde repassé VERT 12/12 — puis le build 0.9.0-dev.1
+né, déterministe d'un poste à l'autre. **Ère M9** : la dette fut nommée À LA
+NAISSANCE (D166, règle 8) ; le geste des 24 spécifications ayant bougé l'arbre, la
+charge fut RÉGÉNÉRÉE au geste de la cérémonie (D168 : la charge de l'ouverture était
+périmée — une remise signée dessus aurait laissé l'arbre divergé APRÈS
+installation) ; le développeur signa hors ligne la remise de TREIZE arbres et
+déposa signatures-I.txt et cle-publique-I.txt au coffre `/test` ; le laboratoire
+rapatrie, recoupe — la clé déposée égale l'ancre `173fae9c…`, les ONZE arbres
+inchangés rendent les signatures de l'ère M8, m0 re-signé, tls13 arbre neuf, les
+empreintes vivantes égales la remise, chaque signature vérifiée Ed25519 — puis
+installe canoniquement (tout vérifié AVANT toute écriture) et le garde est repassé
+VERT 13/13, l'état « reelle » tenant. La règle qui en découle : la cérémonie d'ère
+n'est pas une formalité de documentation — c'est le geste qui rend le build de
+l'ère possible, et il suit le calendrier du garde, jamais l'inverse.
 
 ## 14. Coût en tokens : fragmentation, localisation, budgets
 
@@ -1148,9 +1217,9 @@ d'accès au dossier (restriction du partage par lien et vidage de corbeille sont
 mitigations premières) ; une phrase entrée dans l'historique git y demeure, la rotation
 reste le remède à toute exposition avérée.
 
-## 18. Critères d'acceptation des jalons M0 à M7
+## 18. Critères d'acceptation des jalons M0 à M9
 
-Huit jalons, chacun couvrant une capacité nouvelle et se terminant par des critères de
+Dix jalons, chacun couvrant une capacité nouvelle et se terminant par des critères de
 sortie mesurables — détail dans `docs/PLAN_MILESTONES.md`, mis à jour avec la présente
 révision. **Conditions transverses** (v0.4.0) : aucun jalon n'est franchi sans oracle
 vert, suite de conformité verte pour les éléments couverts, tableau de bord conforme
@@ -1165,7 +1234,9 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M4 | Tunnel chiffré | HTTPS en transit via Schannel ; échec propre sur certificat invalide | **franchi** 29/10/2026 — balise 0.5.0 (D104 : run 17-H — S49 OK + témoin HTTP/1.1 200 + S05C 2b6481a1) |
 | M5 | Outil complet | interception d'un flux navigateur en VM isolée ; patch à chaud du journal en production ; empreintes par build actives ; programme d'étapes et critères dans `PLAN_MILESTONES.md` | **franchi** 04/11/2026 — balise `0.6.0` (Entrée 143, D148 : critère (b) de D136 constaté VERT sur pièces au run e4 ; le chantier (c) « patch du journal en production » reporté au programme M6 par D149 — démonstration sur le profil Linux, moteur embarqué) |
 | M6 | Portabilité inter-OS | profil `x86-64-linux-elf64` : suite de conformité verte ; **diff nul sur la couche I** ; parité inter-profils vérifiée (§ 8.3) ; même oracle vert sur les deux profils | **franchi** 05/11/2026 — balise `0.7.0` (Entrée 149, D154 : run terrain WSL2 vert sur pièces — recoup labo 22/22, noyau de la machine du développeur DISTINCT de celui du labo ; conformité 7/7 exécutée au scellage même, l'artefact INTACT ; le chantier M5-(c) « patch du journal en production » refermé sur le profil Linux) |
-| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | **ouvert** 04/11/2026, exécution DÉBLOQUÉE le 05/11/2026 (M6 franchi — Entrée 149 ; D149, fiche `docs/PROFIL_riscv64-linux-elf64.md`) |
+| M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | **franchi** 05/11/2026 — balise `0.8.0` (Entrée 155 : run terrain M7-(d) vert sur pièces, recoup labo 29/29 sur pièces croisées, export multi-profils de bout en bout — l'universalité démontrée : win `0.6.0` / linux `0.7.0` / riscv `0.8.0`) |
+| M8 | Syscalls directs (domaine `sys`) | la charte à huit règles et les spécifications sys-01…03 écrites-avant-code ; le harnais différentiel sur fixtures ntdll synthétiques (le labo ne connaît jamais le SSN du terrain) ; le motif du stub vérifié avant toute extraction ; le run terrain sur le VRAI ntdll — la même observable par les DEUX chemins, les refus nommés ; la cérémonie de l'ère avant le build | **franchi** 05/11/2026 — balise `0.9.0` (Entrées 156–164, D160–D165 : harnais 61 verts ; cérémonie de l'ère passée 12/12 ; run terrain m8d VERT — 35 verts / 0 échec, la twin octet pour octet, le refus -4 du stub crocheté ; recoup labo 30/30 ; finale `0.9.0` scellée sur recoup exigé comme pièce) |
+| M9 | TLS 1.3 pur (domaine `tls13`) | la charte à huit règles et les 28 spécifications en six familles écrites-avant-code ; les primitives aux vecteurs officiels (FIPS 180-4, RFC 2104/4231, RFC 5869, RFC 7748, SP 800-38D) ; la poignée rejouée sur le transcript RFC 8448 ; le socle socket par syscalls directs (sys-04+) ; la cérémonie de l'ère avant construire() ; la session réelle avec un serveur réel — la ligne applicative chiffrée | **ouvert** 05/11/2026 (D166) — couche I complète (28 spécifications, l'instrument 117 verts, D167) ; cérémonie de l'ère passée le 05/11 (13 arbres, garde 13/13 — la dette soldée) ; chantiers (b) notation, (c) harnais RFC 8448, (d) socle socket, (e) build 1.0.0-dev.1, (f) terrain → finale `1.0.0` |
 
 M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutable, exécution
 sans compilateur ; il est franchi. M2 est le jalon de vérité — le patch à chaud sur code
@@ -1175,7 +1246,10 @@ démontrée sur machine réelle le 27 octobre 2026 (D43), au terme de la campagn
 d'instrumentation relatée en § 8.4 — huit itérations, huit classes de défauts nommées,
 zéro régression possible (chaque classe est gardée par une falsification). M6 et M7 transforment la portabilité de promesse en propriété
 démontrée, en isolant chaque variable ; la suite de conformité par profil (§ 8.2) en est
-désormais le critère d'acceptation explicite.
+désormais le critère d'acceptation explicite. M8 et M9 sont les additions mesurées du
+programme d'après M7 (D160) : la fondation d'abord — le domaine `sys` est la
+condition d'une pile TLS 1.3 qui n'émettrait plus par l'IAT userland ; chaque
+famille s'appuie sur les résultats mesurés de la précédente.
 
 ## 19. Correspondance des versions
 
@@ -1315,6 +1389,26 @@ le besoin naît. Toucher au code des trois outils — rejeté : les trois actes 
 création existent et sont prouvés ; c'est le droit de choisir qui manquait, pas la
 mécanique.
 
+### 19.9 Correspondance v0.6.1 → v0.7.0
+
+| Évolution | En v0.6.1 | En v0.7.0 | Statut |
+|---|---|---|---|
+| Programme d'après M7 | clause de clôture : syscalls directs et TLS 1.3 pur « hors périmètre courant » | le programme D160 entre en spécification : la clause est LEVÉE NOMMÉMENT pour les deux premières familles — le jalon M8 (domaine `sys`) franchi, le jalon M9 (domaine `tls13`) ouvert ; les profils additionnels demeurent hors périmètre | révisé (D160, D166) |
+| Sceau de l'Intention | dix arbres sous le sceau | treize arbres (m0–m8, tls13, demo, terrain, v06) ; les cérémonies d'ère entrent au protocole : la dette nommée à la naissance (D166 règle 8), la charge préparée au geste qui sert la main (D168), la continuité de clé prouvée par le déterminisme Ed25519 (D163) | étendu (D162, D166, D168) |
+| État des jalons | M0–M6 franchis, M7 ouvert | M0–M8 franchis (balises 0.2.0 à 0.9.0), M9 ouvert — la cérémonie de l'ère M9 passée (garde 13/13) | constaté (Entrées 155–168) |
+| Chaîne PDF | spec_v061 | chaîne spec_v070 ; l'archive v0.6.1 demeure (dernier build consigné : sha256 `4aac10f1…`, 984 555 o) | révisé (D169) |
+
+Modifications explicitement rejetées (v0.7.0) : réviser la spécification à chaque
+franchissement de jalon — rejeté : le versionnement suit les RÉVISIONS, jamais les
+franchissements (l'état des jalons vit aux sources de travail, régénérées à chaque
+geste ; la v0.7.0 consolide un PROGRAMME, pas un simple constat). Signer les
+sources `docs/` sous le sceau courant — rejeté : le modèle par-version demeure
+(`v06/I/README.md` § 1). Ouvrir les profils additionnels (`aarch64-macos-macho`,
+`wasm32-wasi`) dans la même révision — rejeté : chacun répétera M6/M7 sur
+résultats mesurés, hors périmètre. Fusionner les cérémonies d'ère dans la cérémonie
+CF3 — rejeté : trois gardes, trois menaces ; le sceau garde l'intention, le coffre
+garde les secrets.
+
 ## 20. Glossaire
 
 | Terme | Définition |
@@ -1372,18 +1466,22 @@ mécanique.
 | v0.5.0 | 27 oct. 2026 | Révision du retour du terrain : validation terrain normée — boucle d'évidence, journal d'exécution, instrumentation contractualisée, diff chirurgical (D43) ; taxonomie étendue X1–X8 des défauts invisibles à l'émulation (D35–D42) ; jalons M0–M2 constatés franchis (balises 0.2.0 et 0.3.0 — D26, D32, D43) ; budget de localisation corrigé à 64 tokens et budgets mesurés (D31) ; ouverture du jalon M3 — contrats renforcés sur entrées non fiables, fuzzing à propriétés (D45). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.1 | 28 oct. 2026 | Coffre-fort des phrases maîtresses (D75) : conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses par projet — Argon2id aux planchers de la carte, HKDF à contexte dédié, XChaCha20-Poly1305, autotest de falsification (19 contrôles), export chiffré vers les coffres projet et développeur, restauration post-réinitialisation (§ 17.3, FORMAT_CARTE § 11) ; état des jalons constaté — M3 franchi le 28/10/2026 (campagne million D72, conformité permanente D73, scellage balise 0.4.0 D74) ; modèle de menace étendu au vol du coffre-fort (§ 15.1). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.5.2 | 28 oct. 2026 | Garde durable de la phrase de contrôle du coffre-fort (D81) : sauvegardée AVANT TOUTE AUTRE ACTION dès production — fichier `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne, lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive, copie au racine du coffre Drive ; le fichier est la remise, l'affichage unique de cérémonie cesse d'être le canal de survie ; restauration post-panne prouvée de bout en bout (téléchargement Drive → coffre ouvert, entrées listées) ; menace « vol du coffre-fort » étendue — la confidentialité au repos repose désormais sur le contrôle d'accès au dossier Drive (mitigation première : restriction du partage par lien), une phrase commise en git y demeure à vie ; M4 constaté ouvert (D77, couche I écrite-avant-code). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
+| v0.7.0 | 5 nov. 2026 | Révision de consolidation du programme d'après M7 (D160) : le jalon M8 — le bloc optionnel de syscalls directs, le domaine `sys` — est franchi (charte à huit règles, spécifications écrites-avant-code, harnais 61 verts, cérémonie de l'ère passée 12 arbres, run terrain m8d vert sur le VRAI ntdll recoupé 30/30, finale `0.9.0` scellée — D160–D165) ; le jalon M9 — TLS 1.3 pur en blocs scellés, le domaine `tls13`, l'ère 1.0.0 — est ouvert (D166) : couche I complète (28 spécifications, six familles, instrument 117 verts — D167), cérémonie de l'ère passée le 05/11 (13 arbres, garde 13/13, la dette D166 soldée) ; le sceau de l'Intention porte treize arbres, les cérémonies d'ère entrent au protocole (§ 12.4, § 13.5) ; M7 franchi constaté (balise `0.8.0`, Entrée 155). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.6.1 | 31 oct. 2026 | Révision de l'arbitrage de naissance du coffre (D137) : le niveau de sécurité d'un coffre neuf — CF1, CF2 ou CF3 — est choisi par le développeur lors de la création de son projet de développement ; la règle v0.6.0 « un coffre neuf naît CF3 » (D133) est explicitement invalidée et remplacée — imposer CF3 par défaut risque d'être trop contraignant selon le projet. § 12.5 réécrit (les trois naissances, guide de l'arbitrage, obligations par niveau) ; § 1.8 ajouté ; correspondance v0.6.0 → v0.6.1 (§ 19.8) ; la chaîne de migration CF1 → CF2 → CF3 demeure disponible à tout moment ; le coffre réel reste CF3 ; le *Livre du Coffre* passe à v1.1 (runbook et FAQ alignés) ; erratum typographique « tbp] » (page 31 du PDF v0.6.0) réparé dans la chaîne spec_v061. Une règle modifiée et nommée ; aucune couche d'exécution ajoutée ; hiérarchie inchangée |
 | v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne l'arbitrage du niveau de naissance d'un coffre neuf
-(D137, § 12.5) et l'état au passage de relais : jalons M0 à M4 franchis sur
-validations terrain (balises finales 0.2.0 à 0.5.0), le programme de souveraineté
-cryptographique accompli (axes 2-3-4, D133) — le coffre réel a migré CF1 → CF2 → CF3
-les 30–31 octobre 2026 —, jalon M5 (outil complet) ouvert (D133) : empreintes par
-build, interception en VM isolée, patch à chaud du journal en production. Les évolutions prévisibles — bloc optionnel de syscalls directs,
-TLS 1.3 pur en blocs scellés, profils additionnels après M7 — restent volontairement hors
-du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle
+La présente version consolide le programme d'après M7 (D160, § 1.9) et l'état au
+passage de relais : jalons M0 à M8 franchis sur validations terrain (balises
+finales 0.2.0 à 0.9.0), le programme de souveraineté cryptographique accompli
+(axes 2-3-4, D133) — le coffre réel a migré CF1 → CF2 → CF3 les 30–31 octobre
+2026 —, le sceau de l'Intention portant treize arbres signés, ses cérémonies d'ère
+passées sur pièces (garde 13/13) ; jalon M9 (TLS 1.3 pur) ouvert : sa couche I est
+complète et sa cérémonie d'ère passée — les chantiers de notation, de harnais, de
+socle socket et de build attendent. La clause « hors périmètre courant » est levée
+nommément pour les deux premières familles du programme D160 ; les profils
+additionnels après M7 restent volontairement hors du périmètre courant afin que
+chaque addition s'appuie sur des résultats mesurés. La règle
 de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et
 rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une
 révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """TRIADE — fusion couverture + corps (chemins absolus, appelable de la racine).
 
-Miroir de scripts/spec_v052/merge_cover.py : normalisation A4 stricte de la
+Miroir de scripts/spec_v061/merge_cover.py : normalisation A4 stricte de la
 couverture (écart 794px/A4) et métadonnées posées au writer (hyperref ne
 traverse pas PdfWriter). Chemins ABSOLUS : build_pdf.sh appelle depuis la racine.
 """
@@ -23,10 +23,10 @@ for page in PdfReader(BODY).pages:
     writer.add_page(page)
 
 writer.add_metadata({
-    "/Title": "Protocole TRIADE v0.6.1 — spécification technique",
+    "/Title": "Protocole TRIADE v0.7.0 — spécification technique",
     "/Author": "Alexis FR-LOPEZ ; Agent Z.ai (GLM)",
     "/Subject": "Gouvernance vérifiable du développement logiciel assisté par IA",
-    "/Creator": "TRIADE — chaîne LaTeX/Tectonic (D25/D81/D133/D137)",
+    "/Creator": "TRIADE — chaîne LaTeX/Tectonic (D25/D81/D133/D137/D169)",
     "/Keywords": "TRIADE, agent-first, contrat, vérification, gouvernance, "
                  "profils, souveraineté cryptographique, coffre-fort",
 })

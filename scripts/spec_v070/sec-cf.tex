@@ -30,8 +30,9 @@ cinq gardes seuil 3) ; sentinelle à double seuil ; destruction des fragments ; 
 D120 & \textbf{livré, prouvé terrain} — chaîne réelle migrée CF1 $\to$ CF2 le 31/10/2026 \\
 3 · Filigrane de l'Intention (D87) & chaque arbre de couche I condensé puis signé par
 la clé Ed25519 \emph{hors-ligne} du développeur ; build et chemin de patch refusent
-une couche I non signée & \textbf{livré, prouvé terrain} — dix arbres signés, re-cérémonie
-réelle D126, verifier 10 arbres VERTS \\
+une couche I non signée & \textbf{livré, prouvé terrain} — treize arbres signés ;
+re-cérémonie réelle D126, cérémonies d'ère M8 (12 arbres, D162/D163) et M9 (13
+arbres, D166/D168) passées sur pièces — verifier 13 arbres VERTS \\
 4 · Serrure piégée (D121) & coffre CF3 : clé utilisateur invariable, moitiés
 serrure/piège fraîches à chaque époque, piège sur média séparé, cycle en deux actes,
 sentinelle instantanée par invocation & \textbf{livré, prouvé terrain} — chaîne réelle
@@ -290,9 +291,16 @@ hors-ligne des fragments & le sachet : pièges d'époque + carte papier \\
 
 \subsection{Le sceau de l'Intention (D87)}\label{sec:sceauI}
 
-Dix arbres de couche I vivent sous le sceau — les neuf lignées existantes \emph{plus}
-l'arbre des axes lui-mêmes (\code{v06/I}) : la spécification qui définit le sceau est la
-première couche I qu'il garde. Pour chaque arbre, le \textbf{manifeste} est le texte
+Treize arbres de couche I vivent sous le sceau — les lignées m0 à m8 (le domaine
+\code{sys} depuis l'ère M8), l'arbre \code{tls13} (le domaine TLS 1.3 pur depuis
+l'ère M9), \code{demo}, \code{terrain}, et l'arbre des axes lui-mêmes
+(\code{v06/I}) : la spécification qui définit le sceau est la première couche I
+qu'il garde. Chaque ère qui ouvre un arbre nomme sa dette de cérémonie à la
+naissance (D166, règle 8) : le registre figé étendu et l'arbre neuf exigent la clé
+hors-ligne avant tout build — la charge se prépare au geste qui sert la main du
+développeur (D168), et la continuité de la clé se prouve par le déterminisme
+Ed25519 (D163) : re-signer les arbres inchangés redonne exactement les signatures
+déposées. Pour chaque arbre, le \textbf{manifeste} est le texte
 canonique (UTF-8, LF, tri lexicographique déterministe du chemin relatif POSIX) ; chaque
 ligne fichier porte le SHA-256 du contenu \emph{canonique LF} — la représentation du
 checkout (Windows \code{autocrlf} porte CRLF) n'est pas l'intention (D115, appris de la
@@ -448,7 +456,7 @@ de migration est l'histoire du coffre réel — et demeure disponible à tout mo
 \midrule
 Sceau de l'Intention (D87/D126) & \code{preparer} (le dépôt écrit \code{a-signer.txt}) ;
 cérémonie hors-ligne \code{signer} (clé physique) ; \code{deposer} (chaque signature
-vérifiée AVANT écriture) ; \code{verifier} & dix arbres VERTS, code 0 ; commit poussé \\
+vérifiée AVANT écriture) ; \code{verifier} & treize arbres VERTS, code 0 ; commit poussé \\
 CF1 $\to$ CF2 (D106) & phrase de contrôle (D81 : remise AVANT tout) ; \code{migrer} ;
 cinq gardes posées ; T = 3 copies hors-ligne (feuille g3--g5 ou USB) ; contrôle de
 relecture ; liste blanche & CF2 \code{verifier} VERT ; CF1 laissé intact \\
@@ -518,6 +526,33 @@ la passation : l'empreinte du \code{coffre\_fort.py} mesurée au clone terrain
 (\code{299fd124…}) diverge de celle du dépôt (\code{8c79263b…}) — à recouper au
 prochain \code{git pull} (\code{git status}) ; le fichier ne sert qu'à la migration
 CF1 $\to$ CF2, déjà accomplie.
+
+\subsection{Les cérémonies d'ère du sceau de l'Intention (5 novembre 2026)}\label{sec:ceremoniesere}
+
+Le sceau a traversé deux cérémonies d'ère en un jour, chacune née d'un garde qui
+refusait. \textbf{Ère M8} : l'ouverture du domaine \code{sys} avait étendu le
+registre figé m0 et créé l'arbre m8 — le garde a nommé la dette AVANT tout build
+(D162 : un diff d'intention non signé ; la clé hors-ligne du développeur requise,
+le laboratoire ne signe jamais à sa place) ; le kit de cérémonie servi au dossier
+\code{/Cérémonie} du Drive (la remise, le LISEZMOI pas à pas, la règle d'or
+« JAMAIS generer »), la cérémonie passée sur pièces : douze arbres, les dix
+inchangés rendant les MÊMES signatures que celles du 04/11 (la preuve D163 de la
+réutilisation de la clé, sans jamais voir la clé privée), le garde repassé VERT
+12/12 — puis le build \code{0.9.0-dev.1} né, déterministe d'un poste à l'autre.
+\textbf{Ère M9} : la dette fut nommée À LA NAISSANCE (D166, règle 8) ; le geste
+des 24 spécifications ayant bougé l'arbre, la charge fut RÉGÉNÉRÉE au geste de la
+cérémonie (D168 : la charge de l'ouverture était périmée — une remise signée
+dessus aurait laissé l'arbre divergé APRÈS installation) ; le développeur signa
+hors ligne la remise de TREIZE arbres et déposa \code{signatures-I.txt} et
+\code{cle-publique-I.txt} au coffre \code{/test} ; le laboratoire rapatrie,
+recoupe — la clé déposée égale l'ancre \code{173fae9c…}, les ONZE arbres
+inchangés rendent les signatures de l'ère M8, m0 re-signé, tls13 arbre neuf, les
+empreintes vivantes égales la remise, chaque signature vérifiée Ed25519 — puis
+installe canoniquement (tout vérifié AVANT toute écriture) et le garde est
+repassé VERT 13/13, l'état « reelle » tenant. La règle qui en découle : la
+cérémonie d'ère n'est pas une formalité de documentation — c'est le geste qui
+rend le build de l'ère possible, et il suit le calendrier du garde, jamais
+l'inverse.
 
 \subsection{La frontière des secrets — git, \code{.keys}, sachet}\label{sec:frontiere}
 

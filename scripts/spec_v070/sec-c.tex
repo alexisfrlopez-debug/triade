@@ -127,6 +127,13 @@ M0–M5 \\
 \end{tabularx}
 \end{table}
 
+\paragraph{Les domaines du programme d'après M7 (D160).} Deux domaines s'ajoutent
+sur le profil primaire : \code{sys} (M8 — les syscalls directs, balise \code{0.9.0} :
+le SSN lu de l'EAT de \code{ntdll}, jamais un octet de code) et \code{tls13} (M9 —
+TLS 1.3 pur, ère \code{1.0.0}) ; chacun est une lignée de couche I à part entière
+sous le sceau (§\ref{sec:sceauI}) et s'ajoute au profil sans le modifier —
+l'universalité demeure structurelle.
+
 \paragraph{Profil primaire, ABI Microsoft x64.} Arguments en RCX, RDX, R8, R9 puis la
 pile ; retour en RAX ; shadow space de 32 octets par appelant ; volatils RAX, RCX, RDX,
 R8–R11, XMM0–XMM5 ; RSP aligné 16 ; \textbf{aucune zone rouge} — contrairement à System

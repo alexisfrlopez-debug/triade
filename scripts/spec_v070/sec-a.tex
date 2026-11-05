@@ -199,6 +199,37 @@ CF3 (époque 1, checksum \code{0cc89a96}). Aucune autre règle n'est modifiée ;
 couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif est
 inchangée.
 
+\subsection{Ce que change la v0.7.0}\label{sec:nouveautes070}
+
+La révision de consolidation du programme d'après M7 (D160) : ce que la clôture de la
+v0.6.1 tenait « hors périmètre courant » entre dans la spécification, sur résultats
+mesurés — la clause est levée NOMMÉMENT pour les deux premières familles, les profils
+additionnels demeurent hors périmètre. Le \textbf{jalon M8} (le bloc optionnel de
+syscalls directs — le domaine \code{sys}) est franchi : la charte à huit règles (le SSN
+est une donnée, jamais un octet de code ; le motif du stub vérifié avant toute
+extraction ; un stub divergent est un refus nommé — le résolveur ne devine jamais, il ne
+s'adapte jamais en silence), les spécifications sys-01…03 écrites-avant-code, le harnais
+différentiel 61 contrôles verts sur fixtures \code{ntdll} synthétiques (le laboratoire
+ne connaît jamais le SSN du terrain), la cérémonie de l'ère passée avant le build (12
+arbres, D162/D163), le run terrain sur le VRAI \code{ntdll} — la twin de la ligne
+hello-02 par les DEUX chemins (l'IAT \code{kernel32} et le syscall direct
+\code{NtWriteFile}), le refus $-4$ nommé du stub crocheté — recoupé 30/30 sur pièces
+croisées, la finale \code{0.9.0} scellée (Entrée 164, D165 : le scellage exige le
+verdict du recoup comme pièce ; le scellage est un fait de carte, l'artefact ne bouge
+jamais). Le \textbf{jalon M9} (TLS 1.3 pur en blocs scellés — le domaine \code{tls13},
+l'ère 1.0.0) est ouvert (D166) : la couche I complète — 28 spécifications en six
+familles (sha, hkdf, x25519, aead, enregistrement, poignée, principal), l'instrument
+\code{verifier\_specs\_m9a.py} 117 contrôles verts (D167) — et la cérémonie de l'ère
+passée le 05/11 : la remise du développeur, TREIZE arbres signés hors ligne à la clé du
+04/11 (la continuité prouvée par le déterminisme Ed25519, D163 : les onze arbres
+inchangés rendent les signatures de l'ère M8), le garde repassé VERT 13/13 — la dette
+D166 soldée sur pièces. Le \textbf{sceau de l'Intention} porte désormais treize arbres
+(§\ref{sec:sceauI}) et les cérémonies d'ère entrent au protocole
+(§\ref{sec:ceremoniesere}) : la dette se nomme à la naissance, jamais après coup (D166,
+règle 8) ; la charge se prépare au geste qui sert la main du développeur (D168). Aucune
+règle du cœur n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie
+de la fonction objectif est inchangée.
+
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
 La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —

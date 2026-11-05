@@ -179,9 +179,9 @@ validée sur un cas unique (N = 1) — l'étude de cas RoomEq, dont les limites 
 documentées dans l'édition académique (D18) : la généralité reste à établir par
 réplication, le cœur natif par les jalons M0 à M7.
 
-\section{Critères d'acceptation des jalons M0 à M7}\label{sec:jalons}
+\section{Critères d'acceptation des jalons M0 à M9}\label{sec:jalons}
 
-Huit jalons, chacun avec des critères de sortie mesurables (détail dans
+Dix jalons, chacun avec des critères de sortie mesurables (détail dans
 \code{PLAN\_MILESTONES.md}). \textbf{Conditions transverses} (v0.4.0) : aucun jalon n'est
 franchi sans oracle vert, suite de conformité verte pour les éléments couverts, tableau de
 bord conforme et carte signée.
@@ -205,12 +205,14 @@ transparent ; contrats renforcés & \textbf{franchi} 28/10/2026, 0.4.0 (D74) \\
 M4 — tunnel chiffré & HTTPS en transit ; échec propre sur certificat invalide & \textbf{franchi} 29/10/2026, 0.5.0 (D99 — tunnel chiffré établi et certificat rejeté sur machine réelle, terrain.17-D ; balise scellée, arbre \code{m4/I} signé) \\
 M5 — outil complet & interception d'un flux navigateur en VM isolée ; patch à chaud du
 journal en production ; empreintes par build actives ; programme d'étapes et critères
-dans \code{PLAN\_MILESTONES.md} & \textbf{ouvert} 31/10/2026 (D133) \\
+dans \code{PLAN\_MILESTONES.md} & \textbf{franchi} 04/11/2026, \code{0.6.0} (Entrée 143, D148 : critère (b) de D136 vert sur pièces au run e4 ; le chantier (c) refermé au M6 sur le profil Linux) \\
 M6 — portabilité inter-OS & suite de conformité verte ; \textbf{diff nul sur la couche
-I} ; parité inter-profils vérifiée ; même oracle vert sur les deux profils & à venir \\
+I} ; parité inter-profils vérifiée ; même oracle vert sur les deux profils & \textbf{franchi} 05/11/2026, \code{0.7.0} (Entrée 149, D154 : run terrain WSL2 vert sur pièces, recoup labo 22/22 — le noyau de la machine du développeur distinct de celui du labo) \\
 M7 — portabilité inter-ISA & round-trip 100 \% sur la nouvelle ISA ; suite de conformité
 verte ; patch à chaud conforme (scratch + \code{fence.i}) ; verrou multi-profils ; export
-multi-profils vérifié & à venir \\
+multi-profils vérifié & \textbf{franchi} 05/11/2026, \code{0.8.0} (Entrée 155 : run terrain M7-(d) vert sur pièces, recoup labo 29/29, export multi-profils de bout en bout — l'universalité démontrée : win \code{0.6.0} / linux \code{0.7.0} / riscv \code{0.8.0}) \\
+M8 — syscalls directs (domaine \code{sys}) & la charte à huit règles et les spécifications sys-01…03 écrites-avant-code ; le harnais sur fixtures \code{ntdll} synthétiques (le labo ne connaît jamais le SSN du terrain) ; le motif du stub vérifié avant toute extraction ; le run terrain sur le VRAI \code{ntdll} — la même observable par les DEUX chemins ; la cérémonie de l'ère avant le build & \textbf{franchi} 05/11/2026, \code{0.9.0} (Entrées 156--164, D160--D165 : harnais 61 verts ; cérémonie de l'ère passée 12/12 ; run terrain m8d vert — 35 verts / 0 échec, la twin octet pour octet, le refus $-4$ du stub crocheté ; recoup labo 30/30 ; finale scellée sur recoup exigé comme pièce) \\
+M9 — TLS 1.3 pur (domaine \code{tls13}) & la charte à huit règles et les 28 spécifications en six familles écrites-avant-code ; les primitives aux vecteurs officiels (FIPS 180-4, RFC 2104/4231, RFC 5869, RFC 7748, SP 800-38D) ; la poignée rejouée sur le transcript RFC 8448 ; le socle socket par syscalls directs (sys-04+) ; la cérémonie de l'ère avant \code{construire()} ; la session réelle — la ligne applicative chiffrée & \textbf{ouvert} 05/11/2026 (D166) — couche I complète (28 spécifications, l'instrument 117 verts, D167) ; cérémonie de l'ère passée le 05/11 (13 arbres, garde 13/13) ; chantiers (b) notation, (c) harnais RFC 8448, (d) socle socket, (e) build \code{1.0.0-dev.1}, (f) terrain $\to$ finale \code{1.0.0} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -219,9 +221,26 @@ M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutab
 sans compilateur. M2 est le jalon de vérité — le patch à chaud a motivé l'architecture.
 M6 et M7 transforment la portabilité de promesse en propriété démontrée, en isolant chaque
 variable ; la suite de conformité par profil en est désormais le critère d'acceptation
-explicite.
+explicite. M8 et M9 sont les additions mesurées du programme d'après M7 (D160) : la
+fondation d'abord — le domaine \code{sys} est la condition d'une pile TLS 1.3 qui
+n'émettrait plus par l'IAT userland ; chaque famille s'appuie sur les résultats
+mesurés de la précédente.
 
-\paragraph{Ouverture de M5 (D133).} Le jalon de l'outil complet s'ouvre sur trois
+\paragraph{Le programme d'après M7 (D160).} La clôture v0.6.1 tenait les additions
+mesurées « hors périmètre courant » ; la v0.7.0 lève la clause pour les deux
+premières familles, sur résultats mesurés. \emph{M8, les syscalls directs} (domaine
+\code{sys}) : la charte à huit règles — le SSN est une donnée, jamais un octet de
+code ; le motif du stub est vérifié avant toute extraction ; un stub divergent est
+un refus nommé — et la preuve d'observable : la MÊME ligne émise par les deux
+chemins (l'IAT \code{kernel32} de hello-02 et le syscall direct \code{NtWriteFile}
+de sys-03), comparées octet pour octet au fixture. \emph{M9, TLS 1.3 pur} (domaine
+\code{tls13}, ère 1.0.0) : la grande œuvre de la souveraineté complète — la
+cryptographie de session sans délégation, la couche I complète (28 spécifications,
+six familles), la cérémonie d'ère passée (13 arbres, garde 13/13). L'ordre est la
+fondation d'abord : une pile TLS pure qui émettrait encore par l'IAT userland
+garderait la surface de hook qu'elle prétend éliminer.
+
+\paragraph{Archivé (D133, pour mémoire).} Le jalon de l'outil complet s'ouvrit sur trois
 chantiers mesurables : (a) \emph{empreintes par build actives} — chaque build consigne
 l'empreinte de son artefact dans le tableau de bord et le journal de travail, la
 comparaison inter-build devient un contrôle automatique ; (b) \emph{interception d'un
@@ -490,9 +509,56 @@ l'arbitrage est consigné si le besoin naît. Toucher au code des trois outils �
 les trois actes de création existent et sont prouvés ; c'est le droit de choisir qui
 manquait, pas la mécanique.
 
+\subsection{Correspondance v0.6.1 $\to$ v0.7.0}\label{sec:evolutions070}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les évolutions de la v0.7.0, tracées depuis la v0.6.1 (D169).}
+\label{tab:correspondance070}
+\begin{tabularx}{\textwidth}{@{}l Y Y l@{}}
+\toprule
+\textbf{Évolution} & \textbf{En v0.6.1} & \textbf{En v0.7.0} & \textbf{Statut} \\
+\midrule
+Programme d'après M7 & clause de clôture : syscalls directs et TLS 1.3 pur « hors
+périmètre courant » & le programme D160 entre en spécification : la clause est
+LEVÉE NOMMÉMENT pour les deux premières familles — M8 (domaine \code{sys})
+franchi, M9 (domaine \code{tls13}) ouvert ; les profils additionnels demeurent
+hors périmètre & révisé (D160, D166) \\
+Sceau de l'Intention & dix arbres sous le sceau & treize arbres (m0--m8, tls13,
+demo, terrain, v06) ; les cérémonies d'ère entrent au protocole : la dette nommée
+à la naissance (D166 règle 8), la charge préparée au geste qui sert la main
+(D168), la continuité de clé prouvée par le déterminisme Ed25519 (D163) & étendu
+(D162, D166, D168) \\
+État des jalons & M0--M6 franchis, M7 ouvert & M0--M8 franchis (balises 0.2.0 à
+0.9.0), M9 ouvert — la cérémonie de l'ère M9 passée (garde 13/13) & constaté
+(Entrées 155--168) \\
+Chaîne PDF & spec\_v061 & chaîne spec\_v070 ; l'archive v0.6.1 demeure (dernier
+build consigné : sha256 \code{4aac10f1…}, 984 555 o) & révisé (D169) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Modifications explicitement rejetées (v0.7.0).} Réviser la spécification
+à chaque franchissement de jalon — rejeté : le versionnement suit les RÉVISIONS,
+jamais les franchissements (l'état des jalons vit aux sources de travail,
+régénérées à chaque geste ; la v0.7.0 consolide un PROGRAMME, pas un simple
+constat). Signer les sources \code{docs/} sous le sceau courant — rejeté : le
+modèle par-version demeure (\code{v06/I/README.md} § 1). Ouvrir les profils
+additionnels (\code{aarch64-macos-macho}, \code{wasm32-wasi}) dans la même
+révision — rejeté : chacun répétera M6/M7 sur résultats mesurés, hors périmètre.
+Fusionner les cérémonies d'ère dans la cérémonie CF3 — rejeté : trois gardes,
+trois menaces ; le sceau garde l'intention, le coffre garde les secrets.
+
 \section{Journal des décisions}\label{sec:decisions}
 
-Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. Synthèse :
+Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt du projet. La
+v0.7.0 consolide le programme d'après M7 : D160 (l'ordre des familles — la
+fondation d'abord), D162/D163 (la cérémonie de l'ère M8, la continuité de clé par
+le déterminisme Ed25519), D165 (la finale d'une ère se scelle sur le recoup
+exigé comme pièce), D166 (l'ouverture M9 — TLS 1.3 pur, la dette de cérémonie
+nommée à la naissance), D167 (les 28 spécifications avant tout octet de
+notation), D168 (la charge se prépare au geste de la cérémonie) et D169 (la
+présente consolidation). Synthèse des débuts :
 D1–D10 (v0.2) fixent l'oracle éphémère, la notation, les contrats légers, la
 cryptographie, le verrou croisé, les variantes par build, l'interface système et la
 granularité ; D11–D13 (infrastructure) la sauvegarde triple et systématique ; D14–D16
@@ -764,4 +830,26 @@ D137 & Arbitrage du niveau de naissance & le niveau d'un coffre neuf (CF1/CF2/CF
 choisi par le développeur à la création ; la règle « un coffre neuf naît CF3 » est
 explicitement invalidée ; la chaîne de migration demeure disponible ; le coffre réel
 reste CF3. \\
+D160 & L'ère d'après M7 & l'ordre des familles est syscalls directs $\to$ TLS 1.3
+pur $\to$ profils : la fondation I/O d'abord ; le jalon M8 naît sur le profil win
+(domaine \code{sys}). \\
+D162 & La cérémonie d'ère avant tout build & le garde-sceau NOMME la dette
+(registre étendu non re-signé, arbre neuf) ; la table du sceau étendue à m8. \\
+D163 & Continuité de clé par le déterminisme Ed25519 & re-signer un arbre inchangé
+redonne exactement la signature déposée : la preuve de la réutilisation de la
+clé, sans jamais voir la clé privée. \\
+D165 & La finale d'une ère se scelle sur le recoup exigé comme pièce & le scellage
+REFUSE sans le verdict du recoup vert ; le scellage est un fait de carte,
+l'artefact ne bouge jamais. \\
+D166 & La seconde famille ouverte : TLS 1.3 pur & le jalon M9, le domaine
+\code{tls13}, l'ère 1.0.0 ; la dette de cérémonie nommée à la naissance. \\
+D167 & Le chantier M9-(a) clos sur les 28 spécifications & la couche I complète
+avant tout octet de notation ; les constantes du plan dérivées par arithmétique. \\
+D168 & La charge de cérémonie se prépare au geste de la cérémonie & la charge de
+l'ouverture était périmée par le geste des 24 specs ; l'ouverture annonce, la
+cérémonie exige. \\
+D169 & La consolidation v0.7.0 & le programme d'après M7 entre en spécification :
+M8 franchi, M9 ouvert, le sceau à treize arbres, les cérémonies d'ère au
+protocole ; la clause « hors périmètre courant » levée pour les deux premières
+familles. \\
 \end{longtable}

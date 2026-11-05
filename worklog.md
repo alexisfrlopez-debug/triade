@@ -4391,3 +4391,38 @@ Stage Summary:
 - LA PREUVE D163 REJOUÉE SUR PIÈCES : les onze arbres inchangés ont rendu
   exactement les signatures de l'ère M8 — la continuité de la clé prouvée
   sans jamais la voir.
+
+
+## Task ID 87 — LA SPÉCIFICATION v0.7.0 LIVRÉE : la consolidation du programme d'après M7 (la demande du développeur : la dernière version complète du document PDF) (05/11 au soir)
+
+- LA DEMANDE : « je voudrais que tu produises la dernière version complète du
+  document pdf Protocole TRIADE » — au geste qui suit la cérémonie de l'ère
+  installée ; le constat : la spécification était en retard sur le programme
+  (dix arbres vs treize, M7 franchi non constaté, M8/M9 absents, la clause
+  « hors périmètre courant » périmée).
+- LA RÉVISION : revision_v070_md.py — 18 remplacements ASSERTÉS (titre,
+  en-tête, § 1.9 NOUVEAU, § 12.4 treize arbres + discipline des ères,
+  § 13.1, § 13.5 NOUVEAU, § 18 M0-M9 + lignes M8/M9, § 19.9 NOUVEAU +
+  rejets, journal des versions, clôture réécrite).
+- LA CHAÎNE : spec_v061 → spec_v070 (git mv) ; main/sec-a/sec-c/sec-cf/sec-d
+  édités (14 remplacements assertés) ; la couverture v0.7.0 RACCOURCIE après
+  REFUS du validateur (8 px de chevauchement — la leçon v0.6.1 rejouée) ;
+  l'annexe décisionnelle étendue D160–D169.
+- LES PREUVES : le PDF 42 pages, 999 631 o, sha256 dd36eb41…, empreinte
+  CONSIGNÉE PAR LE BUILD (n°23, stamp 8b811a55…) ; empreintes verifier VERT
+  (23 consignations, 0 refus) ; LE CAHIER V1–V16 TOUT PASSÉ ; 42 pages
+  rendues, aucune quasi blanche ; le sceau I vérifié au geste (13 verts).
+- FRONTIÈRES : aucune balise, aucune règle modifiée, aucune couche
+  d'exécution, hiérarchie inchangée ; l'archive v0.6.1 demeure ; le Livre
+  v1.1 inchangé ; consignations : Entrée 169 PAR SCRIPT, D169 PAR SCRIPT,
+  worklog +Task ID 87.
+- SUITE : LA PASSATION D141 (bundle 090 + GitHub + Drive) ; les chantiers
+  M9 (b)/(e)/(f).
+
+Stage Summary:
+- LA DERNIÈRE VERSION COMPLÈTE EST LIVRÉE : la v0.7.0 consolide le
+  programme d'après M7 — M8 franchi, M9 ouvert, le sceau à treize arbres,
+  les cérémonies d'ère au protocole.
+- LA DEMANDE DU DÉVELOPPEUR EST SERVIE SUR LES DEUX TABLES : le document
+  PDF formel (42 pages, empreinte consignée) et la source maîtresse
+  markdown — la série documentaire continue.
