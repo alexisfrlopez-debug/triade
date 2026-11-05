@@ -951,7 +951,7 @@ def construire_carte(exe, verrous_m3, verrous_m4, verrous_m5, verrous_m8,
                               verdict_m8, compteurs, journal_runs)
     fragments = {n: cm8.chiffrer_fragment(maitre, n, clairs[n]) for n in cm8.FRAGMENTS}
     racine = cm8.empreinte_racine(fragments)
-    entete = cm8.construire_entete(racine)
+    entete = cm8.construire_entete(racine, version)
     prive, pub = cm8.paire_cles(cm8.charger_secrets(interactif=False)[1])
     signature = cm8.signer(prive, entete, fragments)
     cm8.ecrire_carte(entete, fragments, signature, pub)
@@ -991,6 +991,20 @@ def verrou_croise() -> tuple[int, dict]:
 
 # --- Tableau de bord (§ 15.2, métriques M8) -----------------------------------------
 
+def _ligne_preversions(version: str) -> str:
+    """La ligne preversions du tableau — CONSCIENTE de la balise : la finale
+    scellée (X.Y.Z sans suffixe) nomme le geste (le recoup terrain vert sur
+    pièces) ; le schéma dev nomme son attente (le terrain (d))."""
+    if re.fullmatch(r"\d+\.\d+\.\d+", version):
+        return (f"  preversions                   : {version} SCELLÉE sur le "
+                "recoup terrain M8-(d) VERT 30/30 sur pièces croisées (le "
+                "fait de carte D104 ; monotonie R10 : 0x00090001 > 0x00060001 "
+                "tenue)")
+    return (f"  preversions                   : {version} conforme "
+            f"(schema dev, monotonie R10 : 0x00090001 > 0x00060001 — la finale 0.9.0 "
+            f"attend le terrain vert du chantier (d), jamais un scellage ici)")
+
+
 def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list,
                     verrous_m5: list, verrous_m8: list, nb_blocs_carte: int,
                     manifeste: dict, verdict_m4: dict, verdict_m5: dict,
@@ -1012,12 +1026,10 @@ def tableau_de_bord(exe: bytes, verrous_m3: list, verrous_m4: list,
         f"  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5 "
         f"+ span-nom/fixture-ligne M8 dans la zone VIERGE 0x2EC0-0x2EFF, table R10 "
         f"28 entrees archee, porte M5, version {L.VERSION_U64_DEV1:#x})",
-        f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D161",
+        f"  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D165",
         f"  optimisations_sans_mesure     : 0 : aucune optimisation M8 (R11)",
-        f"  changements_hors_journal      : 0 : D77 a D161 consignees",
-        f"  preversions                   : {manifeste.get('version', '?')} conforme "
-        f"(schema dev, monotonie R10 : 0x00090001 > 0x00060001 — la finale 0.9.0 "
-        f"attend le terrain vert du chantier (d), jamais un scellage ici)",
+        f"  changements_hors_journal      : 0 : D77 a D165 consignees",
+        _ligne_preversions(manifeste.get("version", "?")),
         f"  entrees_non_fiables           : comportement defini par contrat (les SEPT "
         f"verdicts nommes du domaine, le NTSTATUS jamais muet, I5 echec de "
         f"resolution = AUCUN syscall) ; falsification : V4 15/15 mutations "
@@ -1160,8 +1172,8 @@ def verifier(graine: int, volume: str) -> int:
     print(f"[oracle] différentiel M5 (héritage) : {verdict_m5['total_cas']} cas verts")
     verdict_m8 = harnais.executer(blobs_sys(code_m8), graine=graine, volume=volume)
     print(f"[oracle] harnais M8 (le domaine sys) : {verdict_m8['total_cas']} cas verts")
-    print(f"[PE] proxy.exe 0.9.0-dev.1 re-validé (7 sections, portes R10+M5, "
-          f"fixtures du domaine, version {L.VERSION_U64_DEV1:#x})")
+    print(f"[PE] proxy.exe re-validé (7 sections, portes R10+M5, "
+          f"fixtures du domaine, version PE {L.VERSION_U64_DEV1:#x})")
 
     # Cristallisation R6 : chaque passage incrémente les compteurs — la carte
     # est re-signée à chaque passage (fragments re-chiffrés, graine durable
@@ -1205,6 +1217,149 @@ def verifier(graine: int, volume: str) -> int:
     return 0
 
 
+# --- Le scellage de la finale (chantier M8-(d), modèle D147/corpus — né au geste) --
+
+SHA_ARTIFACT_M8 = ("sha256:1492b0bc0792e1ab162338b414fb20573134e84d752b9d065"
+                   "7292421f8eb0cd4")
+VERDICT_RECOUP_M8D = os.path.join(
+    TRIADE, "..", "download", "preuves-run-m8d", "VERDICT-recoup-m8d.txt")
+
+
+def _sceller_final() -> int:
+    """Scellage de la finale 0.9.0 (modèle D147/corpus : le scellage est un
+    FAIT DE CARTE — l'artefact ne bouge JAMAIS, proxy.exe demeure
+    byte-identique). Les portes, tranchées binaires AVANT l'unique écriture :
+    le garde sceau I (D87/D162), LE RECOUP TERRAIN VERT SUR PIÈCES (le run
+    M8-(d) consigné — D138/D145/D148/D154), la cristallisation R6 10/10, le
+    verrou croisé R8, la balise encore dev ; puis la bascule de balise dans
+    frag-bld (occurrence unique, vérifiée EN MÉMOIRE avant l'écriture)."""
+    print("=== M8-(d) : SCELLAGE de la finale 0.9.0 "
+          "(la validation terrain consignée) ===")
+
+    # 1. le garde sceau I (D87) — l'état « réelle » tenu avant tout geste
+    _garde_sceau_I()
+
+    # 2. LE RECOUP TERRAIN sur pièces (la seule porte que le terrain ouvre)
+    if not os.path.isfile(VERDICT_RECOUP_M8D):
+        raise EchecBuild(
+            f"le verdict du recoup terrain est ABSENT ({VERDICT_RECOUP_M8D}) — "
+            "le recoup labo d'abord : la finale ne se scelle QUE sur pièces "
+            "(D138/D145/D148)")
+    with open(VERDICT_RECOUP_M8D, encoding="utf-8") as f:
+        verdict_recoup = f.read()
+    if "RECOUP : VERT 30/30" not in verdict_recoup:
+        raise EchecBuild("le verdict du recoup terrain n'est pas « VERT 30/30 » — "
+                         "scellage REFUSÉ (fail-closed)")
+    if verdict_recoup.count("[recoup-m8d] PASS : A :") != 6:
+        raise EchecBuild("les six pièces du run ne sont pas attestées PASS au "
+                         "verdict du recoup — scellage refusé")
+    print("[terrain] le recoup M8-(d) VERT 30/30 sur pièces croisées : le run "
+          "du 2026-11-05 (Windows 10.0 build 26300, le VRAI ntdll lu par les "
+          "DEUX lecteurs, la twin octet pour octet, le refus nommé sur pièce "
+          "VIDE — les pièces au coffre /test/preuves-m8d)")
+
+    # 3. la cristallisation R6 10/10 (exigée au scellage)
+    phrase, graine_cles = cm8.charger_secrets(interactif=False)
+    maitre = cm8.cle_maitresse(phrase)
+    _, fragments, _, _ = cm8.lire_carte()
+    prf = cm8.dechiffrer_fragment(maitre, "frag-prf",
+                                  fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(
+                re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplète : {incomplets} — "
+                         "10 vérifications requises (R6)")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # 4. le verrou croisé R8 AVANT l'édition + la balise encore dev
+    nb, manifeste = verrou_croise()
+    if manifeste.get("version") != L.VERSION_DEV1:
+        raise EchecBuild(
+            f"la carte porte déjà « {manifeste.get('version')} » — la balise "
+            "n'est pas dev.1 : scellage refusé (anti-rollback R6, idempotence)")
+    if manifeste.get("empreinte") != SHA_ARTIFACT_M8:
+        raise EchecBuild(
+            f"l'artefact diverge du scellé attendu "
+            f"({(manifeste.get('empreinte') or '?')[:24]}…) — le scellage est "
+            "un fait de carte, proxy.exe ne bouge pas")
+    print(f"[R8] verrou croisé : {nb} empreintes conformes ; artefact "
+          f"{manifeste.get('version')} INTACT ({SHA_ARTIFACT_M8[7:23]}…)")
+
+    # 5. la bascule de balise (occurrence unique, EN MÉMOIRE avant l'écriture)
+    bld = cm8.dechiffrer_fragment(maitre, "frag-bld",
+                                  fragments["frag-bld"]).decode("utf-8")
+    occurrences = bld.count(f"version={L.VERSION_DEV1}")
+    if occurrences != 1:
+        raise EchecBuild(f"balise {L.VERSION_DEV1} attendue une fois dans "
+                         f"frag-bld ({occurrences} occurrence(s)) — scellage "
+                         "refusé (fail-closed)")
+    bld = bld.replace(f"version={L.VERSION_DEV1}", f"version={L.VERSION_FINALE}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm8.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm8.chiffrer_fragment(maitre, n, clairs[n])
+                for n in cm8.FRAGMENTS}
+    racine = cm8.empreinte_racine(nouveaux)
+    entete = cm8.construire_entete(racine, L.VERSION_FINALE)
+    prive, pub = cm8.paire_cles(graine_cles)
+    signature = cm8.signer(prive, entete, nouveaux)
+
+    # 6. vérification EN MÉMOIRE avant l'unique écriture (modèle D144/D147)
+    cm8.verifier_listes_blanches(entete.decode("ascii"))
+    cm8.verifier_signature(pub, entete, nouveaux, signature)
+    if cm8.empreinte_racine(nouveaux).hex() not in entete.decode("ascii"):
+        raise EchecBuild("contrôle en mémoire : empreinte racine divergente")
+    controle = cm8.dechiffrer_fragment(maitre, "frag-bld",
+                                       nouveaux["frag-bld"]).decode("utf-8")
+    if (f"version={L.VERSION_FINALE}" not in controle
+            or f"version={L.VERSION_DEV1}" in controle):
+        raise EchecBuild("contrôle en mémoire : bascule de balise non constatée")
+    cm8.ecrire_carte(entete, nouveaux, signature, pub)
+
+    # 7. le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm8.CARTE_DIR, "tableau-de-bord.txt")
+    if os.path.exists(chemin_tab):
+        with open(chemin_tab, encoding="utf-8") as f:
+            tab = f.read()
+        tab = tab.replace(f"version={L.VERSION_DEV1}", f"version={L.VERSION_FINALE}")
+        tab = tab.replace(
+            f"{L.VERSION_DEV1} conforme (schema dev, monotonie R10 : "
+            "0x00090001 > 0x00060001 — la finale 0.9.0 attend le terrain vert "
+            "du chantier (d), jamais un scellage ici)",
+            f"{L.VERSION_FINALE} SCELLÉE sur le recoup terrain M8-(d) VERT 30/30 "
+            "sur pièces croisées (le fait de carte D104 ; monotonie R10 : "
+            "0x00090001 > 0x00060001 tenue)")
+        if f"version={L.VERSION_FINALE}" not in tab or "SCELLÉE" not in tab:
+            raise EchecBuild("le tableau de bord n'a pas suivi la balise — "
+                             "constater avant d'aller plus loin")
+        with open(chemin_tab, "w", encoding="utf-8") as f:
+            f.write(tab)
+
+    # 8. le verrou croisé POST-scellage + l'artefact INTACT (le fait de carte)
+    nb2, manifeste2 = verrou_croise()
+    if manifeste2.get("version") != L.VERSION_FINALE:
+        raise EchecBuild(f"la carte scellée porte « {manifeste2.get('version')} » "
+                         "— la bascule n'est pas constatée après écriture")
+    with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
+        exe = f.read()
+    if "sha256:" + hashlib.sha256(exe).hexdigest() != SHA_ARTIFACT_M8:
+        raise EchecBuild("l'artefact a bougé — le scellage est un fait de "
+                         "carte, proxy.exe demeure byte-identique")
+    print(f"[R8] verrou croisé post-scellage : {nb2} empreintes conformes ; "
+          f"balise {manifeste2.get('version')}")
+    print(f"[balise] {L.VERSION_FINALE} SCELLÉE (immuable § 9 ; défaut → "
+          "X.Y.Z+1 à contrat stable, R4 ; anti-rollback R6 vivant — la "
+          "reconstruction est désormais REFUSÉE) ; proxy.exe INTACT (sha256 "
+          f"{hashlib.sha256(exe).hexdigest()[:16]}…, {len(exe)} o — le "
+          "scellage est un fait de carte, le terrain a établi le critère)")
+    return 0
+
+
 def main() -> int:
     args = sys.argv[1:]
     graine = 20261105
@@ -1213,6 +1368,8 @@ def main() -> int:
         graine = int(args[args.index("--graine") + 1])
     if "--volume" in args:
         volume = args[args.index("--volume") + 1]
+    if "--sceller-final" in args:
+        return _sceller_final()
     if "--verifier" in args:
         return verifier(graine, volume)
     return construire(volume, graine)

@@ -1,6 +1,6 @@
-[carte] version=0.9.0-dev.1 generation=8
+[carte] version=0.9.0 generation=8
   algo_hachage     : sha256
   algo_signature   : ed25519
   algo_chiffrement : xchacha20poly1305
   profils          : x86-64-win11-pe
-  empreinte_racine : sha256:f42d2fe866d48bff430572ab22df118dbe289efdc71df431c34a8788855778fa
+  empreinte_racine : sha256:a23de8f31894a6cb382d64cd5ceb4e07fde0950132a1b9e0e4539f16f7a432ab

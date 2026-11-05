@@ -167,9 +167,11 @@ def verifier_signature(pub: bytes, entete: bytes, fragments: dict[str, bytes], s
 
 # --- En-tête normalisé -------------------------------------------------------
 
-def construire_entete(racine: bytes) -> bytes:
+def construire_entete(racine: bytes, version: str = VERSION_DEV1) -> bytes:
+    """L'en-tête porte la version de l'ARTEFACT (dev au fil des builds, la
+    balise scellée au geste final — le scellage est un fait de carte)."""
     lignes = [
-        f"[carte] version={VERSION_DEV1} generation={GENERATION}",
+        f"[carte] version={version} generation={GENERATION}",
         f"  algo_hachage     : {ALGO_HACHAGE}",
         f"  algo_signature   : {ALGO_SIGNATURE}",
         f"  algo_chiffrement : {ALGO_CHIFFREMENT}",

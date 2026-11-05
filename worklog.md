@@ -4141,3 +4141,55 @@ Stage Summary:
 - LE KIT CORRIGÉ EST AU COFFRE /test (md5 ad6cbffe… MATCH par
   relecture) : le geste du développeur peut reprendre — la finale
   0.9.0 attend toujours le vert.
+
+## Task ID 82 — « preuves m8d déposées dans le drive /test » : LE RUN TERRAIN M8-(d) VERT SUR PIÈCES + LE RECOUP LABO VERT 30/30 SUR PIÈCES CROISÉES + LA FINALE 0.9.0 SCELLÉE — LE JALON M8 FRANCHI (05/11)
+
+- LE RUN REJOUÉ (le kit corrigé ad6cbffe…, la ligne 207 n'est plus) :
+  temoin-m8d.txt (2026-11-05 12:10:03, Windows 10.0 build 26300, Python
+  3.13.9 AMD64) — T0-T3 ENTIERS, 35 verts / 0 échecs, VERDICT VERT ; le
+  SSN(NtWriteFile) rendu DEUX fois le MÊME (Python + sys-02), NtReadFile
+  DISTINCT, le stub confronté, le forgé crocheté REFUSÉ (-4), LA TWIN
+  (l'IAT kernel32 == le syscall direct == le fixture 33 octets), le refus
+  -1 sur pièce VIDE, proxy.exe relu inchangé.
+- LE RECOUP (scripts/recouper_run_m8d.py — le juge est le code : les
+  constantes importées de la source, le fixture et le sha RECALCULÉS au
+  geste même) : 30 contrôles, RECOUP VERT 30/30 — l'imm32 du stub
+  consigné == LE SSN (RE-LU, jamais cru), la twin re-contrôlée octet par
+  octet au labo (md5 c64ab06b…, sha du fixture == le constat T2.TWIN),
+  le kit du coffre == le corrigé, le zip == le dépôt (scenario + proxy).
+  DEUX défauts d'INSTRUMENT nommés par le fail-closed (le « $ » sans
+  re.M ; la tranche de sortie amputant la première attestation —
+  attrapée par LE SCELLAGE), corrigés et rejoués, les pièces immuables
+  (D154).
+- LA CRISTALLISATION R6 : dix passes --verifier (M4 560 + M5 365 +
+  harnais M8 61 verts par passe, verrou 55/55) — 55 blocs à 10/10.
+- LE SCELLAGE (m8/build_m8.py --sceller-final né au geste, modèle
+  D147/corpus) : garde sceau I (7 arbres, clé réelle) + recoup terrain
+  EXIGÉ SUR PIÈCES + cristallisation 10/10 + verrou croisé avant/après
+  + bascule unique version=0.9.0-dev.1 → 0.9.0 dans frag-bld (EN MÉMOIRE
+  avant l'unique écriture), entête portant la balise, signature à la
+  graine durable (pub e9cd8c549485… ne bouge pas), tableau CONSCIENT de
+  la balise ; proxy.exe INTACT (1492b0bc…, 44 544 o — FAIT DE CARTE) ;
+  l'anti-rollback REFUSE désormais la reconstruction (constaté), la
+  re-vérification sous 0.9.0 VERTE.
+- FRONTIÈRES : win 0.6.0 / linux 0.7.0 / riscv 0.8.0 INTACTES ; le
+  scellé 0.6.0 ancre R7 ; le SSN du terrain INCONNU du labo (donnée du
+  témoin) ; consignations : Entrée 164 PAR SCRIPT (ordre 163<164<
+  marqueur, rejeu REFUSÉ), D165 PAR SCRIPT (à la suite de D164), PLAN
+  (jalon M8 FRANCHI — ligne du jalon, ligne (d), État du programme),
+  worklog +Task ID 82 ; scripts suivis : inserer_entree_164.py,
+  rapatrier_preuves_m8d.py, recouper_run_m8d.py [labo].
+- SUITE : LA PASSATION D141 (la série 090 NAÎT à la finale 0.9.0 — le
+  bundle à la pointe, l'ancien 080 archivé versionné) + LA CLÔTURE D143
+  du run m8d (les pièces + VERDICT-recoup-labo-m8d.txt →
+  archives-preuves/preuves-run-m8d/, le réceptacle demeure) + le push
+  GitHub à la pointe.
+
+Stage Summary:
+- LE JALON M8 EST FRANCHI : le terrain a établi le critère (le VRAI
+  ntdll lu, la même ligne par les DEUX chemins), le labo a recoupé sur
+  pièces croisées, la carte a scellé — l'artefact n'a pas bougé d'un
+  octet.
+- LA FINALE 0.9.0 EST SCELLÉE (le fait de carte, la chrystal 10/10, le
+  recoup 30/30 exigé comme pièce — le fail-closed a refusé deux fois
+  avant de sceller, et il avait raison les deux fois).
