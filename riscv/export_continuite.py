@@ -4,17 +4,23 @@
 
 Le modèle : m1/export_continuite.py (D16, FORMAT_CARTE § 8) — le premier
 conteneur de l'ère M1 portait UN profil. Le présent port le projet TOUT
-ENTIER au moment de l'universalité : l'état scellé COURANT de CHACUN des
-TROIS profils déclarés (spécification § 10) —
+ENTIER : l'état scellé COURANT de CHACUN des TROIS profils déclarés
+(spécification § 10). Régénéré au geste de fermeture de l'ère M8 (le
+modèle Entrée 156 : chaque fermeture d'ère refait l'export à la pointe) —
 
-  x86-64-win11-pe      le scellé de la lignée : m5/proxy.exe 0.6.0 + m5/carte
-                       (la carte indexe les 52 blocs de la pile win M0-M5) ;
-                       les couches I de toute la pile (m0/I .. m5/I)
+  x86-64-win11-pe      le scellé de la lignée : m8/proxy.exe 0.9.0 + m8/carte
+                       (la carte génération 8 indexes les 55 blocs de la pile
+                       win M0-M8 — le domaine sys compris, jalon franchi
+                       le 05/11, D165) ; les couches I de toute la pile
+                       (m0/I .. m5/I + m8/I)
   x86-64-linux-elf64   unix/sonde 0.7.0-dev.1 + unix/corpus 0.7.0 + leurs
                        cartes ; la couche I CANONIQUE (unix/I — chargée par
                        les instances unix ET riscv, zéro copie D149)
   riscv64-linux-elf64  riscv/sonde 0.8.0-dev.1 + riscv/corpus 0.8.0-rc.1 +
                        leurs cartes ; les miroirs sr-01..04 (riscv/I)
+
+Le nom du conteneur porte LA POINTE des balises (max des versions par
+profil — 0.9.0 à l'ère M8).
 
 Conteneur « TRIADE-EXP1 » (le MÊME format que M1 — seul le champ profils
 s'étend) : en-tête clair + AEAD XChaCha20-Poly1305 (AAD = en-tête) +
@@ -71,7 +77,7 @@ EXPORT_DIR = os.path.join(ICI, "export")
 MAGIC = b"TRIADE-EXP1"
 FORMAT_VERSION = 1
 PROTOCOLE = "0.6.1"
-JALON = "M7"
+JALON = "M8"
 
 PROFILS = ["x86-64-win11-pe", "x86-64-linux-elf64", "riscv64-linux-elf64"]
 
@@ -110,9 +116,9 @@ L_UNIX = _charger_module("layout_unix_export", os.path.join(RACINE, "unix", "lay
 
 # (répertoire, en-tête, signature, clé publique, sel Argon2id, sel HKDF, génération)
 CARTES = [
-    ("m5/carte", "header.txt", "carte.sig", "cle-publique.ed25519",
-     hashlib.sha256(b"TRIADE-M5-carte-argon2id-v1").digest(),
-     b"TRIADE-carte-M5", 7),
+    ("m8/carte", "header.txt", "carte.sig", "cle-publique.ed25519",
+     hashlib.sha256(b"TRIADE-M8-carte-argon2id-v1").digest(),
+     b"TRIADE-carte-M8", 8),
     ("unix/carte", "entete.txt", "signature.bin", "cle-publique.txt",
      hashlib.sha256(b"TRIADE-M6-jalon-unix-carte-argon2id-v1").digest(),
      b"TRIADE-carte-M6-unix", 1),
@@ -129,7 +135,10 @@ CARTES = [
 
 # (chemin artefact, carte, profil, table de blocs [(id, rva, slot)] ou None)
 ARTEFACTS = [
-    ("m5/proxy.exe", "m5/carte", "x86-64-win11-pe", None),
+    # le scellé win COURANT : m8/proxy.exe 0.9.0 (le corps 0.6.0 y vit
+    # R7-octet-identique ; la table de blocs win reste None — l'offset
+    # fichier ≠ RVA au PE, le verrou croisé porte l'ARTEFACT ENTIER)
+    ("m8/proxy.exe", "m8/carte", "x86-64-win11-pe", None),
     ("unix/sonde", "unix/carte", "x86-64-linux-elf64",
      [(b[0], b[3], b[4]) for b in L_UNIX.BLOCS_SU]),
     ("unix/corpus", "unix/carte-corpus", "x86-64-linux-elf64",
@@ -140,7 +149,7 @@ ARTEFACTS = [
      [(b[0], b[3], b[4]) for b in L_RISCV.BLOCS_CORPUS]),
 ]
 
-_ARBRES_I = ["m0", "m1", "m2", "m3", "m4", "m5", "unix", "riscv"]
+_ARBRES_I = ["m0", "m1", "m2", "m3", "m4", "m5", "m8", "unix", "riscv"]
 FICHIERS_I = sorted(
     os.path.join(RACINE, a, "I", f)
     for a in _ARBRES_I
@@ -335,7 +344,8 @@ def jouer_rituel(nom: str, img: bytes, qemu: str | None) -> tuple[bool, str]:
 
 
 def generer() -> tuple[str, list[str]]:
-    lignes = ["=== Export de continuité MULTI-PROFILS (D16, M7-(d)) — génération ==="]
+    lignes = ["=== Export de continuité MULTI-PROFILS (D16 ; M7-(d), régénéré "
+              "à la fermeture de l'ère M8 — le modèle Entrée 156) — génération ==="]
     phrase, graine = cc.charger_secrets(interactif=False)
     prive, pub = cc.paire_cles(graine)
 
@@ -345,7 +355,7 @@ def generer() -> tuple[str, list[str]]:
     cartes_manifeste, artefacts_manifeste = [], []
     nb_empreintes = 0
     modules_cartes = {
-        "m5/carte": _charger_module("carte_m5_export", os.path.join(RACINE, "m5", "carte_m5.py")),
+        "m8/carte": _charger_module("carte_m8_export", os.path.join(RACINE, "m8", "carte_m8.py")),
         "unix/carte": _charger_module("carte_sonde_unix_export", os.path.join(RACINE, "unix", "carte_sonde.py")),
         "unix/carte-corpus": _charger_module("carte_corpus_unix_export", os.path.join(RACINE, "unix", "carte_corpus.py")),
         "riscv/carte": _charger_module("carte_sonde_riscv_export", os.path.join(ICI, "carte_sonde.py")),
@@ -411,7 +421,7 @@ def generer() -> tuple[str, list[str]]:
     #     VIVANT — les rituels rejoués sur les octets DU DISQUE (la couche B)
     qemu = _chemin_qemu()
     for chemin_artefact, _, profil, _ in ARTEFACTS:
-        if chemin_artefact.startswith("m5/"):
+        if chemin_artefact.startswith("m8/"):
             continue                       # le scellé win : son rituel vit au
                                              # poste Windows — le verrou (3) porte
                                              # ses octets ; frontière nommée
@@ -497,7 +507,7 @@ def generer() -> tuple[str, list[str]]:
         json.dumps(manifeste, ensure_ascii=False).encode("utf-8"),
         entete_clair, cle, prive)
     os.makedirs(EXPORT_DIR, exist_ok=True)
-    nom = (f"TRIADE-continuite-multiprofils-{versions['riscv64-linux-elf64']}"
+    nom = (f"TRIADE-continuite-multiprofils-{max(versions.values())}"
            f"-{manifeste['date'].replace(':', '').replace('-', '')}.bin")
     sortie = os.path.join(EXPORT_DIR, nom)
     with open(sortie, "wb") as f:
@@ -689,7 +699,7 @@ def preuve_execution(chemin: str) -> tuple[bool, list[str]]:
     qemu = _chemin_qemu()
     vert = True
     for artefact in manifeste["artefacts"]:
-        if artefact["chemin"].startswith("m5/"):
+        if artefact["chemin"].startswith("m8/"):
             lignes.append(f"  [{os.path.basename(artefact['chemin'])}] scellé "
                           f"{artefact['version']} win — le rituel se rejoue au "
                           "poste Windows du développeur (frontière nommée : le "

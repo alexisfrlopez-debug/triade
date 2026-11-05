@@ -4206,3 +4206,41 @@ Stage Summary:
 - LA FINALE 0.9.0 EST SCELLÉE (le fait de carte, la chrystal 10/10, le
   recoup 30/30 exigé comme pièce — le fail-closed a refusé deux fois
   avant de sceller, et il avait raison les deux fois).
+
+## Task ID 83 — « on ouvre la suite » : LA SECONDE FAMILLE OUVERTE — LE JALON M9 TLS 1.3 PUR (domaine `tls13`, ère 1.0.0) ; l'ère M8 refermée propre (export 0.9.0 au coffre racine), la couche I fondée, la dette de cérémonie nommée (05/11)
+
+- LA REPRISE : les trois miroirs confrontés (local == GitHub == 8ced0bb la
+  pointe ; le bundle 090-4edf0c3 au geste — le schéma normal), les canaux
+  200 ; qemu-riscv64 réinstallé PAR SA PROCÉDURE (10.0.13, la réserve
+  D149 re-vérifiée avant usage).
+- L'ÈRE M8 REFERMÉE PROPRE : riscv/export_continuite.py étendu au scellé
+  win COURANT (m8/proxy.exe 0.9.0 + carte génération 8 + m8/I) ; le
+  conteneur 0.9.0 (779 272 o, md5 3de022b7…) régénéré, import à sec CINQ
+  étapes VERT, preuve d'exécution VERT sur les octets transportés, copie
+  au coffre racine relu MATCH ; les anciens 0.8.0 demeurent.
+- LA COUCHE I FONDÉE : le domaine `tls13` (l'identifiant `tls` appartient
+  à M4 — jamais réutilisé) ; la charte à HUIT règles ; le tableau des 28
+  blocs (h10xxxx, SIX familles) ; la famille `sha` spécifiée (les 4
+  miroirs win des contrats ah-04..07, le contexte en ARGUMENT) ;
+  tls13/layout.py préfiguré (.text6, versions 1.0.0, SEPT verdicts — la
+  préfiguration n'est pas un droit, D161).
+- LA DETTE DE CÉRÉMONIE NOMMÉE : le garde constate m0 CODE 10 + tls13
+  CODE 12 (les 11 autres verts) ; a-signer.txt préparé (13 arbres, remise
+  minimale m0 + tls13) ; AUCUN build avant la remise du développeur.
+- FRONTIÈRES : aucune balise ne bouge (0.9.0/0.7.0/0.8.0 INTACTES), le
+  1.0.0-dev.1 naîtra du premier BUILD M9 ; m8/proxy.exe INTACT
+  (1492b0bc…) ; consignations : Entrée 165 PAR SCRIPT, D166 PAR SCRIPT,
+  PLAN (famille (2) OUVERTE + table M9 + État), worklog +Task ID 83 ;
+  scripts suivis : inserer_entree_165.py.
+- SUITE : les 24 spécifications restantes du chantier M9-(a) (hkdf,
+  x25519, aead, enregistrement, poignée, principal — R2) ; le kit de
+  cérémonie de l'ère M9 au /Cérémonie du Drive (modèle Entrée 159).
+
+Stage Summary:
+- LA SECONDE FAMILLE EST OUVERTE sur la demande « on ouvre la suite »
+  (D166, le modèle D149/D160) : TLS 1.3 pur en blocs scellés — le jalon
+  M9, la grande œuvre, l'ère 1.0.0.
+- L'ÈRE M8 S'EST REFERMÉE PROPRE (l'export de continuité 0.9.0 au coffre
+  racine) ET LA DÉTTE DE CÉRÉMONIE EST NÉE NOMMÉE : le garde refuse
+  jusqu'à la remise du développeur — c'est son travail, exactement comme
+  en D162.
