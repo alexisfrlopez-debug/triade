@@ -4361,3 +4361,33 @@ Stage Summary:
   90c7168e… recoupé — 30 archives, rien supprimé), /test sans copie
   (recoupé), le push GitHub à la pointe ; scripts suivis :
   passe_bundle_ere_m9.py.
+
+## Task ID 86 — LA CÉRÉMONIE DE L'ÈRE M9 PASSÉE SUR PIÈCES : la dette D166 soldée, le garde VERT 13/13, l'état « reelle » tenant (05/11 au soir)
+
+- LE GESTE DU DÉVELOPPEUR VENU : l'annonce (« le fichier de signatures et la
+  clé publique sont dans le dossier /test du drive ») — les deux pièces au
+  coffre, le SUITE du Task 85 tenu.
+- LE RAPATRIEMENT : les deux pièces md5 contrôlés après écriture contre les
+  métadonnées Drive (signatures-I.txt 1 847 o, cle-publique-I.txt 66 o) —
+  lecture seule, aucun écrit avant le verdict.
+- LE RECOUP INTÉGRAL VERT : la clé déposée == l'ancre 173fae9c… (la règle
+  d'or tenue) ; 13/13 lignes valides ; les ONZE arbres inchangés == les
+  signatures de l'ère M8 (la preuve D163 par le déterminisme Ed25519) ; m0
+  re-signé (registre étendu) ; tls13 arbre neuf ; empreintes vivantes ==
+  la remise ; Ed25519 13/13.
+- L'INSTALLATION CANONIQUE : sceau_I.py deposer (tout vérifié AVANT
+  écriture) ; le garde REPASSÉ VERT 13/13 ; l'état « reelle » intact.
+- FRONTIÈRES : aucune balise, aucun build (le chantier (e) est un geste à
+  part), aucun octet de notation, la clé privée jamais traversée (D87) ;
+  consignations : Entrée 168 PAR SCRIPT, worklog +Task ID 86 ; script
+  suivi : rapatrier_ceremonie_m9.py.
+- SUITE : LA SPÉCIFICATION v0.7.0 (la demande du développeur : la dernière
+  version complète du document PDF) ; les chantiers M9 (b)/(e) en parallèle
+  licite.
+
+Stage Summary:
+- LA DETTE DE CÉRÉMONIE DE L'ÈRE M9 EST SOLDÉE : le garde treize arbres
+  verts, l'état « reelle » — le build de l'ère est DÉBLOQUÉ.
+- LA PREUVE D163 REJOUÉE SUR PIÈCES : les onze arbres inchangés ont rendu
+  exactement les signatures de l'ère M8 — la continuité de la clé prouvée
+  sans jamais la voir.
