@@ -3660,3 +3660,32 @@ Stage Summary:
   génération 8 + l'oracle structurel (AUCUN IAT PAR BLOC sys) ; puis
   (d) le kit terrain au coffre /test — le VRAI ntdll lu sur la machine
   du développeur, la finale 0.9.0 attend le vert.
+
+- PASSATION D141 rejouée au geste « CHANTIER M8-(b) : les trois blocs du
+  domaine sys notés-mesurés-prouvés au harnais sur fixtures ntdll
+  synthétiques » : le bundle courant triade-history-080-99f96b1.bundle
+  (git bundle --all, 16 366 513 o, md5 3e8b77fb…) déposé au MIROIR,
+  ASSERTÉ avant dépôt (branche jalon pointe sur 99f96b1 — il porte LE
+  CHANTIER M8-(b) avec sa consignation : LES TROIS ERRATA de la couche I
+  corrigés nommément avant la notation [memcmp est libc-02 jamais
+  libc-04 ; « NtWriteFile » mesure 11 octets jamais 10 ; le padding de
+  slot est NOP 0x90 jamais int3] + LA NOTATION à la main [sys-01 l'émetteur
+  SIX octets ; sys-02 le résolveur 293 o — la marche EAT bornée, le motif
+  AVANT l'imm32 ; sys-03 la twin 164 o — les neuf arguments, le
+  fixture-ligne CITÉ, I5 aucun syscall sur échec] + L'ARRÊT D161 des slots
+  sur les longueurs réelles [0xA000/0x40, 0xA040/0x140, 0xA180/0xC0] + LES
+  FIXTURES .rdata dans la zone VIERGE du scellé [nom @0x2EC0, ligne
+  @0x2ED0, borne @0x2F00] + LA PREUVE AU HARNAIS [61 contrôles · 61 VERTS
+  sur TROIS graines 20261105/424242/777 — la twin au différentiel, la
+  MÊME ligne par les DEUX chemins ; les QUINZE mutations de falsification
+  attrapées, les témoins intacts verts] + Entrée 157 + D161 + worklog
+  Task 75) ; l'ancien 080-ab41def (l'ouverture de l'ère : l'export de
+  continuité 0.8.0 + D160 + la couche I du jalon M8, md5 0682e407…
+  recoupé AVANT) ARCHIVÉ VERSIONNÉ dans archives-bundles/ (22 archives,
+  jamais supprimé) ; la série 080 continue (la série 090 naîtra à la
+  finale 0.9.0 du jalon M8) ; /test sans copie de bundle (recoupé) ;
+  GitHub porté à la pointe dans le même geste (push 407343c..99f96b1,
+  recoupé ls-remote) ; script suivi : passe_bundle_m8b.py.
+- SUITE : LE CHANTIER M8-(c) — le build 0.9.0-dev.1 + la carte génération 8
+  + l'oracle structurel (AUCUN IAT PAR BLOC sys) ; puis (d) le kit terrain
+  au coffre /test — le VRAI ntdll lu sur la machine du développeur.
