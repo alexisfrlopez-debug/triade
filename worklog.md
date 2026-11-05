@@ -4254,3 +4254,50 @@ Stage Summary:
   avant le déplacement PATCH — 28 archives, rien supprimé), /test sans
   copie (recoupé), le push GitHub à la pointe ; scripts suivis :
   passe_bundle_m9a.py.
+
+## Task ID 84 — LE CHANTIER M9-(a) COMPLET : LES 28 SPÉCIFICATIONS POSÉES — les 24 du geste (hkdf, x25519, aead, enregistrement, poignée, principal), le plan étendu aux SIX familles, l'erratum av-10 consigné, l'instrument 117 VERTS (05/11 au soir)
+
+- LA REPRISE : les trois miroirs confrontés (local == GitHub == 45c8970 la
+  pointe, le bundle 090-ab48be1 au geste), les canaux 200 ; un défaut
+  d'instrument nommé au geste même (le recyclage du disque avait posé le bit
+  exécutable sur 179 fichiers suivis — ZÉRO octet de contenu : réparé par git
+  restore, l'arbre propre re-constaté).
+- LES 24 SPÉCIFICATIONS : hkdf (HMAC RFC 2104/4231, Extract/Expand RFC
+  5869, Expand-Label RFC 8446 § 7.1) ; x25519 (les miroirs av-05..11, la
+  passe propagation+gel FUSIONNÉE, l'échelle SANS branche de données, l'état
+  EN PILE — la divergence nommée sur av-11) ; aead (l'arrêt AES-NI, GHASH
+  sans table par donnée, le tag VÉRIFIÉ avant restitution, AUCUNE brique
+  d'inversion) ; enregistrement (le nonce IV ⊕ séquence, l'AAD = l'en-tête,
+  l'opaque 23, la borne 2^14) ; poignée (le ClientHello FIXE 114 o, le
+  ServerHello aux refus nommés [HRR -5, suite -5], le calendrier à trois
+  étages, le Finished, l'épinglage -6) ; principal (la machine d'états
+  17 520 o, quatre événements, OUVRIR tient la poignée entière par la
+  rotule ; le socle d'appel à deux rappels en argument).
+- LE PLAN ÉTENDU : les constantes des SIX familles DÉRIVÉES PAR ARITHMÉTIQUE
+  (les membres de p, p − 2, la valeur magique HRR, R, les libellés, les
+  dispositions 200/17 520 o) ; l'ERRATUM av-10 consigné AVANT la notation
+  (quatorze chiffres hex pour un membre de 51 bits — l'écriture fautive,
+  jamais la notation prouvée ; le miroir re-dérive, il ne copie pas).
+- L'INSTRUMENT : verifier_specs_m9a.py — 117 contrôles VERTS (28/28 specs,
+  la table h100001..h100028, les constantes re-dérivées, les constructions
+  re-jouées 114/90/17 520, les verdicts dans la table des SEPT) ; TROIS
+  défauts nommés par le fail-closed avant le vert (les identifiants lus en
+  hex au lieu du DÉCIMAL — les neuf premiers passaient par coïncidence ;
+  l'ordre de tri de la table ; la formule structurelle absente de tls13-27)
+  : corrigés, rejoués.
+- FRONTIÈRES : aucune balise ne bouge (0.9.0/0.7.0/0.8.0 INTACTES), AUCUN
+  octet de notation (R2), AUCUN build avant la remise (la dette de
+  cérémonie demeure) ; consignations : Entrée 166 PAR SCRIPT, D167 PAR
+  SCRIPT, PLAN (chantier (a) RÉALISÉ + État), worklog +Task ID 84 ;
+  scripts suivis : inserer_entree_166.py, verifier_specs_m9a.py [labo].
+- SUITE : le kit de cérémonie de l'ère M9 au /Cérémonie du Drive (modèle
+  Entrée 159) ; puis le chantier (b) — la notation et les vecteurs
+  officiels — APRÈS la remise du développeur.
+
+Stage Summary:
+- LE CHANTIER M9-(a) EST RÉALISÉ : les 28 spécifications posées avant tout
+  octet de notation, la charte instanciée bloc par bloc, les constantes
+  re-dérivées par arithmétique — l'erratum av-10 consigné en fait la règle.
+- LA COÏNCIDENCE N'EST PAS UNE PREUVE (les neuf premiers identifiants
+  passaient en hex par hasard) : le fail-closed a nommé, l'instrument s'est
+  instruit, le vert final est gagné.

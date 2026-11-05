@@ -146,10 +146,22 @@ la carte génération 9 les portera)
 Les familles s'héritent par MESURE : `sha` est le miroir win des contrats
 `ah-04..07` (M6, la même sémantique FIPS — l'ABI change, l'intention non) ;
 `x25519` hérite de l'arithmétique f25519 prouvée par `av-05..11` (M7) — la
-notation win ré-écrit, les contrats se citent. **Le chantier (a) n'est
-complet que lorsque les 28 spécifications sont posées** — la famille `sha`
-est livrée à l'ouverture (les quatre specs suivent ce README) ; les familles
-suivantes se posent au fil du chantier (a), AVANT toute notation (R2).
+notation win ré-écrit, les contrats se citent. **Le chantier (a) est
+COMPLET : les 28 spécifications sont POSÉES** — la famille `sha` à
+l'ouverture (05/11, Entrée 165), les 24 suivantes au geste du 05/11 au
+soir (Entrée 166) : R2 tenue de bout en bout, AUCUN octet de notation
+n'existe — la cérémonie de l'ère précède tout build (la dette est nommée,
+le garde refuse jusqu'à la remise du développeur, et c'est son travail).
+
+*Erratum (M9, sur pièces, AVANT la notation — le modèle M8-(b) libc-02)* :
+la spec av-10 (M7) écrit « 0x7ffffffffffedc » pour le membre 0 de p —
+coquille d'ÉCRITURE : quatorze chiffres hexadécimaux feraient 55 bits, un
+membre de 51 bits en a treize, et le membre 0 de p = 2^255 − 19 est
+0x7ffffffffffed ; l'oracle différentiel d'av-10 (V2 : « p → 0 ») ne
+pouvait passer qu'avec la valeur juste — l'écriture seule est fautive,
+jamais la notation prouvée. Le miroir M9 (tls13-12) re-dérive les membres
+PAR ARITHMÉTIQUE au plan d'adressage (le juge est le code) : la preuve
+que le miroir ne copie JAMAIS l'hexadécimal d'une spec, il le re-dérive.
 
 ## Le plan d'adressage préfiguré (tls13/layout.py — la source unique)
 
