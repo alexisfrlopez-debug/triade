@@ -3563,3 +3563,31 @@ Stage Summary:
   bundle au miroir TRIADE-sauvegarde-git/, l'ancien 070-816eee7 archivé
   versionné, GitHub porté à la pointe, /test sans copie recoupé) ; puis
   les chantiers d'après M7 attendent la décision du développeur.
+
+- PASSATION D141 rejouée au geste « JALON M7 FRANCHI / RUN TERRAIN VERT
+  SUR PIÈCES + RECOUP LABO 29/29 + FINALE 0.8.0 SCELLÉE » : le bundle
+  courant triade-history-080-a1541ce.bundle (git bundle --all, 16 272 636 o,
+  md5 322ae6b0…) — LA SÉRIE 080 NAÎT À LA FINALE 0.8.0 — déposé au MIROIR,
+  ASSERTÉ avant dépôt (branche jalon pointe sur a1541ce — il porte LA
+  FINALE DU JALON M7 avec sa consignation : LE RUN TERRAIN [16/16 PASS sur
+  la machine du développeur — WSL2, un autre noyau, l'instrument EMBARQUÉ
+  du kit, la réserve D149 nommée] + LE RECOUP LABO [VERT 29/29 sur pièces
+  croisées — le juge est le code, l'attendu re-généré au geste même ; trois
+  défauts d'instrument nommés au premier passage, corrigés et rejoués, les
+  pièces immuables] + LA FINALE 0.8.0 SCELLÉE [--sceller-final né au geste,
+  modèle unix/m6d : verrou multi-profils AVANT l'édition + D146 adapté +
+  cristallisation 13×10/10 + conformité 7/7 au geste même + bascule
+  rc.1→0.8.0 + L'ARTEFACT INTACT ec343b4e… ; les trois gardes vivantes] +
+  L'ÉVÉNEMENT DE REPRISE D159 [le poste restauré à l'instantané M6-(c), le
+  jalon entier retrouvé aux MIROIRS — GitHub à la pointe consignée D141 +
+  le coffre Drive ; la reprise par fetch + reset, l'instrument réinstallé
+  par sa procédure md5 IDENTIQUE] + LA CLÔTURE D143 DU RUN m7d [les pièces
+  + le verdict du recoup à preuves-run-m7d/] + Entrée 155 + D159 + worklog
+  Task 73) ; l'ancien 070-816eee7 (md5 5bfed8e8… recoupé AVANT) ARCHIVÉ
+  VERSIONNÉ dans archives-bundles/ (20 archives, jamais supprimé — la série
+  070 s'achève aux archives) ; /test sans copie de bundle (recoupé) ;
+  GitHub porté à la pointe dans le même geste (push cc56930..a1541ce,
+  recoupé ls-remote) ; script suivi : passe_bundle_finale_080.py.
+- SUITE : le programme M6/M7 (D149) est ACCOMPLI — les chantiers d'après
+  M7 (bloc optionnel de syscalls directs, TLS 1.3 pur en blocs scellés,
+  profils additionnels) attendent la décision du développeur.
