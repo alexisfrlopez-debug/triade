@@ -1,4 +1,4 @@
-[tableau] jalon=M7-(b) artefact=corpus version=0.8.0-rc.1
+[tableau] jalon=M7-(b) artefact=corpus version=0.8.0
   profil                       : riscv64-linux-elf64 (fiche — la parité inter-ISA du patrimoine)
   moteur_notation              : ASSEMBLEUR MAISON as_rv64 (RV64IMA+Zifencei, formats R/I/S/B/U/J, 4 o, SANS extension C ; AMO amoswap au chantier — l'extension A) ; capstone JUGE UNIQUE
   porte_roundtrip              : VERTE — 791 textes (avant) + 1045 encodages légaux (inverse), 100 % — l'extension A couverte
@@ -13,7 +13,7 @@
   tests_differentiels          : oracle qemu (réserve D149 — TCG, syscalls réels) : rituel 6/6 les DEUX lignes octet pour octet, code 0 ; bases forcées -R 1G, -R 4G, -B 0x100000000 -R 2G VERTES ; falsification 13 mutations, 12/12 blocs rompus (zéro silence)
   couche_I                     : 13 fichiers unix/I/ empreintés dans frag-prf (la même couche que M6 — la TROISIÈME instanciation)
   defauts_ouverts              : 0
-  preversions                  : 0.8.0-rc.1 conforme (R10 : monotonie, plancher 0x80000 ; la sonde 0.8.0-dev.1 INTACTE)
+  preversions                  : 0.8.0 conforme (R10 : monotonie, plancher 0x80000 ; la sonde 0.8.0-dev.1 INTACTE)
   artefact                     : 12288 octets ; empreinte sha256:ec343b4e8bebf21c8b29a6da…
   verrou_croise                : 13 empreintes + signature Ed25519 (R8)
   [phdr] PT_GNU_STACK RW SANS X — NX explicite psABI

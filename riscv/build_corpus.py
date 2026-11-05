@@ -47,6 +47,14 @@ Le scellage rc/final est la porte du chantier (c) (le contrôle D146 adapté
 à l'exécuteur du jalon) — le présent build pose la balise 0.8.0-dev.2.
 
 Usage : python3 riscv/build_corpus.py [--verifier] [--graine N]
+                   [--sceller-rc]     # scellage 0.8.0-rc.1 (chantier M7-(c)) :
+                                      # contrôle D146 adapté + verrou
+                                      # multi-profils + cristallisation +
+                                      # conformité, bascule dev.2 -> rc.1
+                   [--sceller-final]  # 0.8.0 : validation terrain consignée
+                                      # (chantier M7-(d) — le run du
+                                      # développeur recoupé sur pièces),
+                                      # bascule rc.1 -> 0.8.0
 Code de sortie : 0 = chaîne verte ; 1 = refus nommé (fail-closed).
 """
 
@@ -1387,7 +1395,8 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
     EXÉCUTANT la démonstration du patch — l'élément 5 réel) + la bascule de
     balise dans frag-bld. L'artefact n'est PAS touché — le scellage est un
     fait de carte, `corpus` reste byte-identique."""
-    print(f"=== M7-(c) : scellage {nouvelle_version} ({exigences}) ===")
+    chantier = "M7-(d)" if nouvelle_version == L.VERSION_FINALE else "M7-(c)"
+    print(f"=== {chantier} : scellage {nouvelle_version} ({exigences}) ===")
 
     # — AVANT l'édition : le verrou croisé multi-profils (le plan : les
     #   empreintes des DEUX ISA vérifiées avant CHAQUE édition)
@@ -1435,7 +1444,10 @@ def _sceller(nouvelle_version: str, exigences: str) -> int:
     # — la bascule de balise (occurrence unique, vérifiée EN MÉMOIRE avant
     #   l'unique écriture — modèle D144/D147)
     bld = cm.dechiffrer_fragment(maitre, "frag-bld", fragments["frag-bld"]).decode()
-    ancienne = L.VERSION_DEV2
+    # la finale bascule rc.1 -> 0.8.0 ; le rc basculait dev.2 -> rc.1 (modèle
+    # unix/m6d : la version précédente de la lignée, jamais une constante unique)
+    ancienne = (L.VERSION_RC1 if nouvelle_version == L.VERSION_FINALE
+                else L.VERSION_DEV2)
     occurrences = bld.count(f"version={ancienne}")
     if occurrences != 1:
         raise EchecBuild(f"balise {ancienne} attendue une fois dans frag-bld "
@@ -1507,6 +1519,17 @@ if __name__ == "__main__":
                               "forcées — unix/demo_patch.py porté en INVITÉ "
                               "riscv/demo_patch.py, le démonstrateur f72001 à "
                               "0x2000 dans la réserve RX)"))
+        if "--sceller-final" in args:
+            sys.exit(_sceller(L.VERSION_FINALE,
+                              "R6 + conformité + contrôle D146 + verrou "
+                              "multi-profils + LA VALIDATION TERRAIN CONSIGNÉE "
+                              "(le run M7-(d) : l'universalité rejouée sur la "
+                              "machine du développeur — WSL2, un autre noyau, "
+                              "l'instrument du kit — le recoup labo VERT 29/29 "
+                              "sur pièces croisées : le juge est le code, "
+                              "l'attendu re-généré au geste même ; les preuves "
+                              "au coffre /test/preuves-m7, verdict sur pièces "
+                              "D138/D145/D148/D154)"))
         if "--verifier" in args:
             graine = int(args[args.index("--graine") + 1]) if "--graine" in args else 2
             sys.exit(verifier(graine))

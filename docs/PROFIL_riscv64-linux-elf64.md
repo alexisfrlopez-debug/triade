@@ -22,8 +22,14 @@ invité, le verrou croisé multi-profils, Entrée 153, D157 ; balise
 `0.8.0-rc.1` SCELLÉE) ; **le chantier M7-(d), LA PART LABORATOIRE RÉALISÉE
 le 05/11/2026** (l'export de continuité MULTI-PROFILS vert de bout en bout
 + le kit terrain DÉPOSÉ au coffre /test avec l'instrument EMBARQUÉ + la
-clôture D143 du run m6d, Entrée 154, D158) — **la finale `0.8.0` attend le
-run terrain du développeur**.
+clôture D143 du run m6d, Entrée 154, D158) ; **LE RUN TERRAIN VERT SUR
+PIÈCES + LE RECOUP LABORATOIRE VERT 29/29 SUR PIÈCES CROISÉES + LA FINALE
+`0.8.0` SCELLÉE le 05/11/2026** (Entrée 155, D159 : le run du développeur
+WSL2 — un autre noyau, l'instrument du kit, 16/16 PASS — le recoup le code
+pour juge, l'attendu re-généré au geste même ; `--sceller-final` les gardes
+vivantes constatées, l'artefact INTACT sha `ec343b4e…`) — **LE JALON M7
+FRANCHI, l'universalité DÉMONTRÉE : chaque profil déclaré supporté a franchi
+ses critères (win `0.6.0` / linux `0.7.0` / riscv `0.8.0`)**.
 
 ---
 
