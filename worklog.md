@@ -4622,6 +4622,22 @@ Stage Summary:
 - SUITE : la famille aead (tls13-15..19 — les slots à la suite de 0xDCC0),
   puis (c) RFC 8448, (d) sys-04+, (e) LA CÉRÉMONIE + le build 1.0.0-dev.1,
   (f) le terrain.
+- PASSATION (le même geste, Task ID 90) : le bundle courant
+  triade-history-090-06c2f4d.bundle (17 327 267 o, md5 265475d6…, branche
+  jalon == 06c2f4d [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE x25519 [Entrée 172 — tls13-09..14
+  notés-mesurés-prouvés : 54/252/1078/281/2887/23 o, round-trip 100 %, les
+  slots ARRÊTÉS 0x80/0x140/0x480/0x140/0xB80/0x40 tassés depuis 0xC980 —
+  fin de famille 0xDCC0, le harnais 46 contrôles · 46 VERTS × 3 graines —
+  les DEUX paires RFC 7748 § 5.2, les clés publiques ET le secret partagé
+  § 6.1, LE TEST ITÉRÉ (1 pas 422c8e7a…, 1000 pas 684cf59b…), LE TRANSFERT
+  RFC 8448 (le key_share 99381de5… et le shared 8bd4054f… du transcript,
+  octet pour octet)] + le worklog Task 90), l'ancien 090-544b51a (LA
+  FAMILLE hkdf) ARCHIVÉ VERSIONNÉ (md5 22eb71d9… recoupé — 34 archives,
+  rien supprimé), /test sans copie (recoupé), le push GitHub à la pointe
+  (origin == 06c2f4d relu MATCH — les trois miroirs alignés, le commit de
+  passation de68778 du Task 89 EMBARQUÉ) ; script suivi : passe_bundle_m9c.py
+  ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ.
 
 Stage Summary:
 - LA TROISIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
