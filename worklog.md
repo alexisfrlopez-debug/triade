@@ -5825,3 +5825,35 @@ Stage Summary:
   réparation suivra la charte (l'erratum de la notation + la
   révision 2 de la spec le cas échéant), jamais une dérive
   silencieuse.
+
+- PASSATION (le même geste, Task ID 102) : le bundle courant
+  triade-history-090-46d3eee.bundle (18 456 000 o, md5 35fb15ab…,
+  branche jalon == 46d3eee [le geste + sa consignation]) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE QUATRIÈME RUN RECROPÉ
+  [Entrée 184 — LA RÉPÉTITION À L'IDENTIQUE constatée PAR CODE : le
+  journal du run 4 == celui du run 3, ligne à ligne, sur la machine
+  Windows 11 build 26300 ; LE SUSPECT (a) — la divergence afd.sys
+  Win10 ↔ Win11 — ÉLIMINÉ SUR PIÈCES : le refus est
+  INTER-GÉNÉRATIONS ; le recoup 30/30 ; le run archivé →
+  preuves-run-m9f-4/ AVEC le verdict] + LA SONDE SYS-05 (m9-(g))
+  LIVRÉE AU COFFRE [kit-sonde-sys05.zip md5 215c2caa…, le trampoline
+  de capture 33 o — l'artefact INTACT ; la vague m9f DEMEURE
+  kit-m9f.zip 90a1d022…] + le worklog Task 102 + le scénario m9f
+  INCHANGÉ relu à la pointe [le kit ACQUITTÉ : les TROIS PORTES
+  passées au geste même] + la sonde à la pointe + le plan à jour
+  [rangée (f) + État]), l'ancien 090-cd19fe6 (LE TROISIÈME RUN
+  RECROPÉ) ARCHIVÉ VERSIONNÉ (md5 6dd8c1d1… recoupé — 47 archives,
+  rien supprimé), /test sans copie de bundle (recoupé) ET les DEUX
+  kits recoupés (kit-m9f.zip == l'ACQUITTÉ 90a1d022…,
+  kit-sonde-sys05.zip == le livré 215c2caa…) ; LE PUSH GITHUB EST
+  REFUSÉ NOMMÉ : HTTP 403 — la sortie du labo vers github.com est
+  refusée (MÊME LA RACINE du site rend 403 au curl : le refus est au
+  chemin de sortie, PAS au token — le push avait réussi au geste
+  précédent à 18:11) ; le labo NE CONTOURNE PAS le refus : le miroir
+  Drive porte TOUT (l'histoire vit là, D141), le push sera RE-TENTÉ
+  au geste suivant — ou poussé par le développeur depuis sa machine
+  (git push origin bundle051/v0.5.1-jalon-v7 : le dépôt local ==
+  le miroir == le bundle) ; script suivi : passe_bundle_m9q.py ; LA
+  SÉRIE 090 POURSUIT — le geste est PASSÉ (Drive + local), GitHub en
+  retard NOMMÉ, LE GESTE DU DÉVELOPPEUR SUR LA SONDE ATTENDU.
+
