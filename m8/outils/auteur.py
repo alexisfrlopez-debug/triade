@@ -46,6 +46,22 @@ _FICHIERS = {
                "sys-02 (la résolution au geste même) PUIS sys-01 (l'émission) "
                "— l'ordre est le contrat (I3) ; les fixtures .rdata NOM/LIGNE "
                "cités par déplacement (I4)"),
+    # LE SOCLE SOCKET (chantier M9-(d), l'ère 1.0.0 du transport) — les
+    # TROIS blocs du plan : l'établissement AFD, l'émission, la réception
+    "g90004": ("sys-04-transport", "sys-04:R1",
+               "sys-02 × 3 PUIS sys-01 × 3 — create PUIS bind PUIS connect, "
+               "la séquence MESURÉE mswsock (I6) ; chaque SSN résolu au "
+               "geste même (Q3) ; les fixtures .text6 DEVICE/EA/BIND et les "
+               "noms de résolution cités par déplacement (I3/T5)"),
+    "g90005": ("sys-05-emission", "sys-05:R1",
+               "sys-02 PUIS sys-01 (IOCTL_AFD_SEND) — TOTALE ou refus -7 "
+               "(Q2) ; AUCUNE copie de la charge (I2) ; le fixture .text6 "
+               "NOM_DEVICEIOCTL cité par déplacement (T5)"),
+    "g90006": ("sys-06-reception", "sys-06:R1",
+               "sys-02 PUIS sys-01 (IOCTL_AFD_RECEIVE bloquant) — LE ZÉRO "
+               "EST LA DEMI-FIN -7 (Q2) ; le noyau ÉCRIT chez le kit (I2) ; "
+               "AfdFlags 0x20 LA MESURE (l'erratum) ; le fixture .text6 "
+               "NOM_DEVICEIOCTL cité par déplacement (T5)"),
 }
 
 
@@ -64,12 +80,24 @@ SYMBOLES = {
     "SYS01": L.SYS01_VA,
     "SYS02": L.SYS02_VA,
     "SYS03": L.SYS03_VA,
+    "SYS04": L.SYS04_VA,
+    "SYS05": L.SYS05_VA,
+    "SYS06": L.SYS06_VA,
     # l'héritage scellé : memcmp libc-02 (b20002) — CITÉ depuis la table
     # scellée par m8/layout.py (MEMCMP_VA), jamais un littéral ici
     "MEMCMP": L.MEMCMP_VA,
     # les fixtures .rdata du domaine (le plan, source unique)
     "NOM": L.R_SYS_NOM,
     "LIGNE": L.R_SYS_LIGNE,
+    # les fixtures .text6 du SOCLE SOCKET (chantier M9-(d) — le plan,
+    # source unique : le device UTF-16LE, le EA déterministe, le bind
+    # WILDCARD, les noms de résolution en SPANS sans NUL)
+    "DEVICE": L.R_SYS_DEVICE,
+    "EA": L.R_SYS_EA,
+    "BIND": L.R_SYS_BIND,
+    "NOM_CREATEFILE": L.R_SYS_NOM_CREATEFILE,
+    "NOM_DEVICEIOCTL": L.R_SYS_NOM_DEVICEIOCTL,
+    "NOM_CLOSE": L.R_SYS_NOM_CLOSE,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
@@ -233,6 +261,12 @@ NOMS_COURTS = {
     "sys-01-emetteur": "émetteur syscall (le trombone ABI, six octets)",
     "sys-02-resolveur": "résolveur SSN (l'EAT de ntdll lue, le motif vérifié)",
     "sys-03-ecriture": "écriture directe — la twin de hello-02 par NtWriteFile",
+    "sys-04-transport": "le transport établi — le socket natif par AFD, "
+                        "sans ws2_32 (create + bind WILDCARD + connect)",
+    "sys-05-emission": "l'émission du transport — le send AFD par syscall "
+                       "direct, TOTALE ou refus -7",
+    "sys-06-reception": "la réception du transport — le recv AFD bloquant, "
+                        "le zéro est LA DEMI-FIN -7",
 }
 
 

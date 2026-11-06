@@ -42,17 +42,43 @@ Vecteurs (les specs m8/I/sys-0{1,2,3}:
       syscall (compteur), -6 le STATUS non nul consigné en rdx, -6 la
       divergence iosb (le noyau ne parle pas deux fois), I6 non-volatils ;
 
+  V2d/e/f  LE SOCLE SOCKET (chantier M9-(d)) sur FIXTURES AFD
+      SYNTHÉTIQUES — le noyau simulé devient AFD STRICT : chaque geste
+      transport VALIDE ses arguments contre le plan (la séquence MESURÉE
+      mswsock, les VECTEURS DORÉS, l'erratum AfdFlags 0x20 au receive —
+      la notation suit la MESURE, la littérature serait REFUSÉE) : sys-04
+      — create + bind WILDCARD + connect (la marche, les ONZE/DIX
+      arguments, le handle en LOCALE posé à [P3] au succès SEULEMENT,
+      Q4 : au -6 AUCUNE possession partielle — le canari de P3 le
+      constate aux TROIS étages d'échec), la résolution double de
+      « NtDeviceIoControlFile » (deux fixtures à SSN distincts — Q3),
+      l'ordre create→bind→connect relu (I6) ; sys-05 — TOTALE ou refus
+      -7 (le compteur du IOSB), AUCUNE COPIE (le noyau LIT chez le kit,
+      le WSABUF pointe LA CHARGE du kit, jamais le cadre), -5/-1/-6
+      nommés ; sys-06 — n ≥ 1 ou LA DEMI-FIN -7 (le zéro du pair), le
+      noyau ÉCRIT chez le kit (I8 : le reçu INTÈGRE, les canaris au-delà
+      de n intacts), STATUS_CONNECTION_RESET consigné (Q5) ;
+
   V3  fuzzing à propriétés : modules aléatoires en graine (noms, SSN,
       ordinals permutés, préfixes pièges, stubs crochetés, e_lfanew
       hostiles, cible en dernière position, doublons) — le MODÈLE (dérivé
       de la couche I et du plan, JAMAIS des octets de la notation) prédit
       le verdict, l'émulation confrontée ; l'intégrité du module et les
-      non-volatils re-contrôlés à CHAQUE cas ;
+      non-volatils re-contrôlés à CHAQUE cas ; LE TRANSPORT EN SUITE :
+      modules et comportements noyau aléatoires, le modèle marche la
+      séquence create→bind→connect (chaque étage : succès | STATUS |
+      divergence) et les verdicts d'émission/réception (TOTALE | partielle
+      | zéro | STATUS), sys-05/06 confrontés verdict par verdict ;
 
   V4  falsification : les mutations D'UN SEUL point de chaque notation
       (stables en taille — leçon D82) doivent être ATTRAPÉES par le
       différentiel ; le témoin intact reste VERT — une suite qui ne peut
-      pas échouer ne prouve rien.
+      pas échouer ne prouve rien. LE SOCLE EN SUITE : l'erratum AfdFlags
+      falsifié DANS LES DEUX SENS (0x20→0 et 0→0x20 au receive : la MESURE
+      est la seule écriture qui passe le noyau strict, la littérature
+      serait refusée), les IOCTL échangés, le sockaddr décalé, la garde
+      span inversée, la demi-fin masquée (jz→jnz) — chaque mutante trahit
+      la batterie.
 
 Usage : python3 harnais_sys.py [--graine G] [--volume complet|reduit]
 """
@@ -121,7 +147,9 @@ REGS = {"rax": UC_X86_REG_RAX, "rbx": UC_X86_REG_RBX, "rcx": UC_X86_REG_RCX,
 
 # --- La mémoire du harnais (émulation nue à les RVA du plan, mécanisme D79) ------
 
-ZONE_CODE = (0x1000, 0xC000)      # .text/.rdata/.data/.text2-4/.text5 du plan
+ZONE_CODE = (0x1000, 0x11000)    # .text/.rdata/.data/.text2-4/.text5 du plan
+                                   # + .text6 (les fixtures transport du
+                                   # socle, M9-(d) — jusqu'à 0x10CF0, borne)
 MODULE_BASE = 0x150000000         # le module ntdll synthétique (page exacte)
 ZONE_PILE = 0x7F000000
 TAILLE_PILE = 0x10000
@@ -131,6 +159,19 @@ TRAMPOLINE_WF = 0xBF10            # la fausse WriteFile (mécanisme M2/M3)
 
 HANDLE_MAGIQUE = 0x0000ABCD       # le handle d'écriture des deux chemins
 STATUS_INVALIDE = 0xC000001C      # STATUS_INVALID_SYSTEM_SERVICE (SSN inconnu)
+
+# --- LE SOCLE SOCKET (chantier M9-(d)) : le ntdll et l'AFD simulés -------------
+SSN_NT_CREATEFILE = 0x55          # le SSN de « NtCreateFile » du fixture
+SSN_NT_IOCTL = 0x56               # le SSN de « NtDeviceIoControlFile »
+HANDLE_AFD = 0x0000BEEF           # le handle d'endpoint posé au create
+STATUS_PARAM_INVALIDE = 0xC000000D   # STATUS_INVALID_PARAMETER (le noyau
+STATUS_ACCES_REFUSE = 0xC0000022      # strict refuse l'argument divergent)
+STATUS_CNX_REINIT = 0xC000013C    # STATUS_CONNECTION_RESET (sys-06:Q5 — le
+                                   # pair a coupé BRUTALEMENT)
+KIT_SOCKADDR = RSP0 - 0x800       # le sockaddr_in DU KIT (16 o — P2)
+KIT_CELLULE = RSP0 - 0x700        # la cellule u64 du handle CHEZ LE KIT (P3)
+KIT_CHARGE = RSP0 + 0x2000        # la zone charge du kit (sys-05 — P3)
+KIT_TAMPON = RSP0 + 0x4000        # la zone tampon du kit (sys-06 — P3)
 
 SENTINELLES_NV = {
     "rbx": 0x1212121212121212, "rbp": 0x2323232323232323,
@@ -318,7 +359,8 @@ class Noyau:
             "arg3": uc.reg_read(UC_X86_REG_R8),
             "arg4": uc.reg_read(UC_X86_REG_R9),
             "arg5": pile(0x28), "arg6": pile(0x30), "arg7": pile(0x38),
-            "arg8": pile(0x40), "arg9": pile(0x48),
+            "arg8": pile(0x40), "arg9": pile(0x48), "arg10": pile(0x50),
+            "arg11": pile(0x58),
             "rsp": rsp, "ret": pile(0x00),
         }
         self.captures.append(args)
@@ -329,6 +371,308 @@ class Noyau:
             uc.reg_write(UC_X86_REG_RAX, STATUS_INVALIDE)
         uc.reg_write(UC_X86_REG_RCX, rip + 2)          # le coup du noyau (Q3)
         uc.reg_write(UC_X86_REG_R11, 0x246)
+
+
+# --- Les fixtures AFD RE-DÉRIVÉS (le juge est le code, jamais une copie) --------
+
+def ea_deterministe() -> bytes:
+    """Le EA complet DÉTERMINISTE du plan (54 o) : l'en-tête FILE_FULL_EA_
+    INFORMATION (NextEntryOffset 0, Flags 0, EaNameLength 15, EaValueLength
+    30 — la MESURE p.1), le nom « AfdOpenPacketXX\\0 », la valeur aux SIX
+    DWORD du jalon (AF_INET/SOCK_STREAM/IPPROTO_TCP PORTÉS PAR LE EA —
+    jamais des octets de code), la marge NULLE (la divergence MESURÉE :
+    ws2_32 y laisse du bruit de pile qu'afd.sys ne lit pas — les nôtres
+    NULS, le transport reproductible)."""
+    entete = struct.pack("<IBBH", 0, 0, L.LEN_AFD_EA_NOM, L.AFD_EA_VALEUR)
+    valeur = struct.pack("<6I", 0, 0, L.AF_INET, L.SOCK_STREAM,
+                         L.IPPROTO_TCP, 0)
+    return entete + L.AFD_EA_NOM + b"\x00" + valeur + b"\x00" * 6
+
+
+def bind_wildcard() -> bytes:
+    """Le bind IMPLICITE WILDCARD du plan (20 o) : flags AFD_WILDCARDADDRESS
+    (le noyau DÉDUIT l'adresse source — jamais une adresse choisie par le
+    domaine), le sockaddr sauvage AF_INET LE / port 0 / INADDR_ANY en
+    BOUTISME RÉSEAU / sin_zero NUL (la divergence MESURÉE p.2 : le padding
+    mswsock est du bruit SANS SIGNIFICATION)."""
+    return (struct.pack("<I", L.AFD_BIND_WILDCARD)
+            + struct.pack("<H", L.AF_INET)
+            + struct.pack(">H", 0) + struct.pack(">I", 0) + b"\x00" * 8)
+
+
+def sockaddr_kit(port: int = 80, adresse: bytes = bytes([192, 168, 1, 1])) -> bytes:
+    """Le sockaddr_in DU KIT (16 o — P2 de sys-04) : family en BOUTISME
+    MACHINE, port et adresse en BOUTISME RÉSEAU (charte § 9 : le format
+    est celui de la structure Windows, le kit répond de son boutisme)."""
+    return struct.pack("<H", L.AF_INET) + struct.pack(">H", port) \
+        + adresse + b"\x00" * 8
+
+
+# --- Le noyau AFD STRICT du socle (chantier M9-(d)) -------------------------------
+
+class NoyauAFD:
+    """Le noyau AFD simulé STRICT : chaque geste transport VALIDE ses
+    arguments contre le plan (les VECTEURS DORÉS, la séquence MESURÉE
+    mswsock, l'erratum AfdFlags 0x20 au receive) — une divergence est le
+    refus STATUS_INVALID_PARAMETER ET un écart NOMMÉ (jamais muet : le
+    témoin du harnais le relit). L'état (le handle, la poignée, les
+    échanges) vit ICI chez le noyau — jamais chez le bloc (charte § 6)."""
+
+    def __init__(self, noyau: Noyau):
+        self.noyau = noyau
+        self.reinit()
+
+    def reinit(self):
+        self.ecarts: list[str] = []
+        self.modes = {"create": ("succes", 0), "bind": ("succes", 0),
+                      "connect": ("succes", 0), "send": ("succes", None),
+                      "recv": ("succes", 0)}
+        self.handle = None            # posé au create — HANDLE_AFD
+        self.poignee_etablie = False  # posée au connect réussi
+        self.sockaddr_attendu = b""   # le kit pose, le noyau recoupe
+        self.longueur_attendue = 0    # le WSABUF.len du send
+        self.capacite_attendue = 0    # le WSABUF.len du receive
+        self.charge_vue = 0           # le WSABUF.buf — CHEZ LE KIT (P3)
+        self.emis = b""               # lu au send chez le kit
+        self.recu_pose = b""          # écrit au receive chez le kit
+        self.noyau_sabotage = 0       # l'adresse (VA) du nom à corrompre (le juge Q3)
+
+    # petits lecteurs little-endian dans l'espace du bloc
+    def _q(self, uc, adr, off=0):
+        return struct.unpack("<Q", uc.mem_read(adr + off, 8))[0]
+
+    def _d(self, uc, adr, off=0):
+        return struct.unpack("<I", uc.mem_read(adr + off, 4))[0]
+
+    def _w(self, uc, adr, off=0):
+        return struct.unpack("<H", uc.mem_read(adr + off, 2))[0]
+
+    # --- le geste create : les ONZE arguments contre le plan ----------------------
+
+    def creer(self, uc, a):
+        a["_geste"] = "create"
+        if a["arg2"] != L.AFD_DESIRED_ACCESS:
+            self.ecarts.append(f"DesiredAccess {a['arg2']:#x}")
+        oa = a["arg3"]
+        if self._d(uc, oa) != L.OBJECT_ATTRIBUTES_TAILLE:
+            self.ecarts.append("OA.Length")
+        if self._q(uc, oa, 8) != 0:
+            self.ecarts.append("RootDirectory")
+        us = self._q(uc, oa, 16)
+        if self._w(uc, us) != L.LEN_AFD_DEVICE \
+                or self._w(uc, us, 2) != L.LEN_AFD_DEVICE + 2:
+            self.ecarts.append("UNICODE_STRING Length/MaximumLength")
+        tampon = self._q(uc, us, 8)
+        if tampon != L.R_SYS_DEVICE:
+            self.ecarts.append(f"device-cible {tampon:#x}")
+        elif bytes(uc.mem_read(tampon, L.LEN_AFD_DEVICE)) != L.TXT_AFD_DEVICE:
+            self.ecarts.append("device-octets")
+        if self._d(uc, oa, 24) != L.OBJ_CASE_INSENSITIVE:
+            self.ecarts.append("Attributes")
+        if self._q(uc, oa, 32) != 0 or self._q(uc, oa, 40) != 0:
+            self.ecarts.append("SecurityDescriptor/QoS")
+        if a["arg5"] != 0 or a["arg6"] != 0:
+            self.ecarts.append("AllocationSize/FileAttributes")
+        if a["arg7"] != L.AFD_SHARE_ACCESS:
+            self.ecarts.append("ShareAccess")
+        if a["arg8"] != L.AFD_CREATE_DISPOSITION:
+            self.ecarts.append("CreateDisposition")
+        if a["arg9"] != L.AFD_CREATE_OPTIONS:
+            self.ecarts.append("CreateOptions")
+        if a["arg10"] != L.R_SYS_EA:
+            self.ecarts.append(f"EaBuffer {a['arg10']:#x}")
+        elif bytes(uc.mem_read(L.R_SYS_EA, L.AFD_EA_TAILLE)) != ea_deterministe():
+            self.ecarts.append("EA-octets")
+        if a["arg11"] != L.AFD_EA_TAILLE:
+            self.ecarts.append("EaLength")
+        if self.ecarts:
+            uc.mem_write(a["arg4"], struct.pack("<QQ", STATUS_PARAM_INVALIDE, 0))
+            uc.reg_write(UC_X86_REG_RAX, STATUS_PARAM_INVALIDE)
+            return
+        mode, status = self.modes["create"]
+        if mode == "succes":
+            uc.mem_write(a["handle"], struct.pack("<Q", HANDLE_AFD))
+            self.handle = HANDLE_AFD
+            uc.mem_write(a["arg4"], struct.pack("<QQ", 0, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "status":              # le STATUS non nul, JAMAIS muet
+            uc.mem_write(a["arg4"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, status)
+        elif mode == "divergence":           # rax 0, l'IOSB diverge
+            uc.mem_write(a["handle"], struct.pack("<Q", HANDLE_AFD))
+            self.handle = HANDLE_AFD
+            uc.mem_write(a["arg4"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+
+    # --- les gestes ioctl : le dispatch de l'IOCTL, la validation par geste ------
+
+    def ioctl(self, uc, a):
+        a["_geste"] = "ioctl"
+        code = a["arg6"]
+        if code == L.IOCTL_AFD_BIND:
+            return self._bind(uc, a)
+        if code == L.IOCTL_AFD_CONNECT:
+            return self._connect(uc, a)
+        if code == L.IOCTL_AFD_SEND:
+            return self._send(uc, a)
+        if code == L.IOCTL_AFD_RECEIVE:
+            return self._recv(uc, a)
+        self.ecarts.append(f"IOCTL inconnu {code:#x}")
+        uc.mem_write(a["arg5"], struct.pack("<QQ", STATUS_PARAM_INVALIDE, 0))
+        uc.reg_write(UC_X86_REG_RAX, STATUS_PARAM_INVALIDE)
+
+    def _garde_ioctl(self, uc, a):
+        if self.handle is None:
+            self.ecarts.append("ioctl-sans-handle (jamais bind sans handle — I6)")
+        if a["handle"] != self.handle:
+            self.ecarts.append(f"handle {a['handle']:#x} ≠ endpoint")
+        if a["arg2"] != 0 or a["arg3"] != 0 or a["arg4"] != 0:
+            self.ecarts.append("Event/ApcRoutine/ApcContext")
+
+    def _garde_sans_sortie(self, uc, a):
+        """connect/send/recv : AUCUNE sortie attendue (Q2 de sys-04 : « NULL
+        pour le CONNECT » ; Q4 de sys-05/06) — la réponse est le IOSB. Le
+        BIND SEUL a une sortie (16 o — jamais pour les autres)."""
+        if a["arg9"] != 0 or a["arg10"] != 0:
+            self.ecarts.append("OutputBuffer/Length")
+
+    def _wsabuf(self, uc, a, attendu_len, attendu_buf, nom_len, nom_buf):
+        """Le WSABUF 12 o (len u32 + buf ptr, la MESURE) + l'AFD_*_INFO 24 o :
+        BufferArray → le WSABUF, BufferCount 1, les drapeaux du plan."""
+        info = a["arg7"]
+        if a["arg8"] != L.AFD_SENDRECV_TAILLE:
+            self.ecarts.append("AFD_INFO taille")
+        wsabuf = self._q(uc, info)
+        if self._d(uc, wsabuf) != attendu_len:
+            self.ecarts.append(nom_len)
+        if self._q(uc, wsabuf, 4) != attendu_buf:
+            self.ecarts.append(nom_buf)
+        self.charge_vue = self._q(uc, wsabuf, 4)
+        if self._d(uc, info, 8) != 1:
+            self.ecarts.append("BufferCount")
+        return info
+
+    def _refus_param(self, uc, a):
+        uc.mem_write(a["arg5"], struct.pack("<QQ", STATUS_PARAM_INVALIDE, 0))
+        uc.reg_write(UC_X86_REG_RAX, STATUS_PARAM_INVALIDE)
+
+    def _bind(self, uc, a):
+        self._garde_ioctl(uc, a)
+        if a["arg7"] != L.R_SYS_BIND:
+            self.ecarts.append(f"bind-buffer {a['arg7']:#x} (le fixture CITÉ — I3)")
+        elif bytes(uc.mem_read(L.R_SYS_BIND, L.AFD_BIND_TAILLE)) != bind_wildcard():
+            self.ecarts.append("bind-octets")
+        if a["arg8"] != L.AFD_BIND_TAILLE:
+            self.ecarts.append("bind-taille")
+        if a["arg10"] != L.AFD_BIND_SORTIE:
+            self.ecarts.append("bind-sortie-taille")
+        if self.ecarts:
+            return self._refus_param(uc, a)
+        mode, status = self.modes["bind"]
+        if mode == "succes":
+            uc.mem_write(a["arg9"], b"\x00" * L.AFD_BIND_SORTIE)  # l'adresse DÉDUITE
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "status":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, status)
+        elif mode == "divergence":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "sabotage":
+            """Le geste 3 mis à l'épreuve : le module CHANGE sous les pieds
+            du bloc (l'octet du nom corrompu PAR LE NOYAU — la mémoire vit)
+            : la TROISIÈME résolution doit échouer -1, jamais un numéro en
+            cache (Q3 — le sabotage est le juge de la résolution double)."""
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+            nom_rva = self.noyau_sabotage
+            uc.mem_write(nom_rva, b"\xFF")
+
+    def _connect(self, uc, a):
+        self._garde_ioctl(uc, a)
+        self._garde_sans_sortie(uc, a)
+        j = a["arg7"]
+        if a["arg8"] != L.AFD_CONNECT_TAILLE:
+            self.ecarts.append("connect-taille")
+        if self._q(uc, j) != 0 or self._q(uc, j, 8) != 0 \
+                or self._q(uc, j, 16) != 0:
+            self.ecarts.append("SanActive/Root/ConnectEndpoint (les zéros MESURÉS)")
+        sockaddr_vu = bytes(uc.mem_read(j + 24, L.SOCKADDR_TAILLE))
+        if sockaddr_vu != self.sockaddr_attendu:
+            self.ecarts.append(f"sockaddr copié {sockaddr_vu.hex()} ≠ "
+                               f"{self.sockaddr_attendu.hex()} (LU, jamais interprété — I4)")
+        if self.ecarts:
+            return self._refus_param(uc, a)
+        mode, status = self.modes["connect"]
+        if mode == "succes":
+            self.poignee_etablie = True          # LA POIGNÉE EST ÉTABLIE
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "status":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, status)
+        elif mode == "divergence":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", status, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+
+    def _send(self, uc, a):
+        self._garde_ioctl(uc, a)
+        self._garde_sans_sortie(uc, a)
+        info = self._wsabuf(uc, a, self.longueur_attendue, KIT_CHARGE,
+                            "WSABUF.len (la longueur demandée)",
+                            "WSABUF.buf (LA CHARGE du kit — AUCUNE copie, I2)")
+        if self._d(uc, info, 12) != 0 or self._d(uc, info, 16) != 0:
+            self.ecarts.append("AfdFlags/TdiFlags (la MESURE p.3 : zéro et zéro)")
+        if self.ecarts:
+            return self._refus_param(uc, a)
+        mode, compte = self.modes["send"]
+        if mode == "succes":
+            compte = self.longueur_attendue          # TOUT est émis
+        if mode in ("succes", "partiel"):
+            self.emis = bytes(uc.mem_read(self.charge_vue, self.longueur_attendue))
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, compte))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "status":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", compte, 0))
+            uc.reg_write(UC_X86_REG_RAX, compte)
+        elif mode == "divergence":
+            self.emis = bytes(uc.mem_read(self.charge_vue, self.longueur_attendue))
+            uc.mem_write(a["arg5"], struct.pack("<QQ", compte, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+
+    def _recv(self, uc, a):
+        self._garde_ioctl(uc, a)
+        self._garde_sans_sortie(uc, a)
+        info = self._wsabuf(uc, a, self.capacite_attendue, KIT_TAMPON,
+                            "WSABUF.len (la capacité)",
+                            "WSABUF.buf (LE TAMPON du kit — le noyau ÉCRIT chez lui, I2)")
+        # L'ERRATUM DE LECTURE : TDI_RECEIVE_NORMAL vit au champ AfdFlags
+        # (+12 — LA MESURE p.4), PAS en TdiFlags (+16 — la littérature) — le
+        # noyau strict est LE JUGE : la notation suit la MESURE ou est REFUSÉE
+        if self._d(uc, info, 12) != L.TDI_RECEIVE_NORMAL:
+            self.ecarts.append(f"AfdFlags {self._d(uc, info, 12):#x} ≠ 0x20 "
+                               "(L'ERRATUM : LA MESURE en TROISIÈME champ)")
+        if self._d(uc, info, 16) != 0:
+            self.ecarts.append(f"TdiFlags {self._d(uc, info, 16):#x} ≠ 0 "
+                               "(la littérature serait REFUSÉE)")
+        if self.ecarts:
+            return self._refus_param(uc, a)
+        mode, n = self.modes["recv"]
+        if mode == "succes":
+            uc.mem_write(self.charge_vue, self.recu_pose)   # le noyau ÉCRIT
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, len(self.recu_pose)))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "demi-fin":                     # le pair a fermé proprement
+            uc.mem_write(a["arg5"], struct.pack("<QQ", 0, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+        elif mode == "status":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", n, 0))
+            uc.reg_write(UC_X86_REG_RAX, n)
+        elif mode == "divergence":
+            uc.mem_write(a["arg5"], struct.pack("<QQ", n, 0))
+            uc.reg_write(UC_X86_REG_RAX, 0)
+
 
 
 # --- L'émulateur ------------------------------------------------------------------
@@ -356,6 +700,9 @@ class Emulateur:
             "g90001": ("sys-01-emetteur", "sys-01"),
             "g90002": ("sys-02-resolveur", "sys-02"),
             "g90003": ("sys-03-ecriture", "sys-03"),
+            "g90004": ("sys-04-transport", "sys-04"),
+            "g90005": ("sys-05-emission", "sys-05"),
+            "g90006": ("sys-06-reception", "sys-06"),
         }.items():
             rva, slot = L.SLOTS_SYS[bid]
             chemin = os.path.join(ICI, "notation", nom_fichier + ".asm")
@@ -384,6 +731,18 @@ class Emulateur:
         uc.mem_write(L.R_SYS_LIGNE, L.TXT_SYS_LIGNE + b"\x00" * 16)
         uc.mem_write(0x20B8, struct.pack("<Q", TRAMPOLINE_WF))   # IAT[1] WriteFile
 
+        # les fixtures .text6 du SOCLE SOCKET (chantier M9-(d) — le plan,
+        # source unique ; RE-DÉRIVÉS des constantes, jamais recopiés : le
+        # device UTF-16LE + NUL, le EA DÉTERMINISTE 54 o, le bind WILDCARD
+        # 20 o, les noms de résolution en SPANS sans NUL — verifier_specs_m9d
+        # en est le juge dédié des VALEURS, le harnais les re-pose ici)
+        uc.mem_write(L.R_SYS_DEVICE, L.TXT_AFD_DEVICE + b"\x00\x00")
+        uc.mem_write(L.R_SYS_EA, ea_deterministe())
+        uc.mem_write(L.R_SYS_BIND, bind_wildcard())
+        uc.mem_write(L.R_SYS_NOM_CREATEFILE, L.TXT_NT_CREATEFILE)
+        uc.mem_write(L.R_SYS_NOM_DEVICEIOCTL, L.TXT_NT_DEVICEIOCTL)
+        uc.mem_write(L.R_SYS_NOM_CLOSE, L.TXT_NT_CLOSE)
+
         # le module ntdll synthétique (posé par poser_module)
         self.module: ModuleFixe | None = None
         self.lectures_hors_module = []
@@ -396,6 +755,16 @@ class Emulateur:
                     end=TRAMPOLINE_WF)
         uc.hook_add(UC_HOOK_MEM_READ, self._hook_lecture)
         uc.hook_add(UC_HOOK_MEM_WRITE, self._hook_ecriture)
+
+        # le traceur SOUS-CADRE (chantier M9-(d)) : les blocs du socle ont une
+        # chaîne d'appel (sys-02 → memcmp) dont les trames écrivent légitime-
+        # ment AU-DESSOUS de la leur — la canariée pleine ne juge que les
+        # blocs SANS cadre ; la PREUVE du socle est la PROVENANCE : chaque
+        # écriture sous le cadre doit venir d'un bloc PRUVÉ (sys-02, memcmp
+        # scellé M1, sys-01 six octets) ou du push d'un appel DU bloc
+        # (taille 8, RIP dans sa plage) — TOUT autre scribble est une faute
+        self.surveillance_basse: tuple[int, int] | None = None
+        self.ecritures_basses: list[tuple[int, int, int]] = []
 
         # les captures de la fausse WriteFile (le chemin A du différentiel)
         self.captures_wf: list[dict] = []
@@ -427,6 +796,10 @@ class Emulateur:
             base, fin = MODULE_BASE, MODULE_BASE + m.taille
             if base <= adresse < fin:
                 self.ecritures_module.append((adresse, taille, valeur))
+        if self.surveillance_basse is not None \
+                and self.surveillance_basse[0] <= adresse < self.surveillance_basse[1]:
+            self.ecritures_basses.append(
+                (adresse, taille, uc.reg_read(UC_X86_REG_RIP)))
 
     def reposer_bloc(self, va: int, octets: bytes):
         """Re-pose des octets de code ET invalide la cache de traduction
@@ -495,6 +868,27 @@ def s64(v: int) -> int:
     return v - (1 << 64) if v >= (1 << 63) else v
 
 
+def fautes_sous_cadre(emu: "Emulateur", rva_bloc: int, taille_slot: int):
+    """Le juge de PROVENANCE des écritures sous le cadre du bloc : chaque
+    écriture doit venir d'un bloc PRUVÉ (sys-02 V2b, memcmp scellé M1, sys-01
+    six octets — leurs trames sont leurs affaires, déjà prouvées) ou être le
+    push d'un appel DU bloc (taille 8, RIP dans SA plage : les six call du
+    socle) — TOUT autre scribble est une faute NOMMÉE."""
+    plages_prouvees = [
+        (L.SYS02_VA, L.SYS02_VA + L.SLOTS_SYS["g90002"][1]),
+        (L.MEMCMP_VA, L.MEMCMP_VA + L.MEMCMP_SLOT),
+        (L.SYS01_VA, L.SYS01_VA + 6),
+    ]
+    fautes = []
+    for adresse, taille, rip in emu.ecritures_basses:
+        if any(a <= rip < b for a, b in plages_prouvees):
+            continue
+        if rva_bloc <= rip < rva_bloc + taille_slot and taille == 8:
+            continue          # le push d'un call du bloc lui-même
+        fautes.append((adresse, taille, rip))
+    return fautes
+
+
 def attendus_du_modele(modele):
     """Le modèle rend (verdict, ssn, stub_va) ; le bloc rend rax = LE SSN au
     succès (Q1 de sys-02 — jamais 0), rax = le verdict aux échecs ; rdx =
@@ -505,13 +899,75 @@ def attendus_du_modele(modele):
     return verdict, None
 
 
+# --- Les modèles du SOCLE (dérivés des specs m8/I/sys-0{4,5,6} — jamais -----
+# --- des octets de la notation) ------------------------------------------------
+
+def modele_sys04(module: ModuleFixe, modes: dict):
+    """La marche create→bind→connect de la SPÉCIFICATION : chaque étage
+    réussit, rend un STATUS non nul, ou parle deux fois (la divergence) ;
+    chaque résolution peut échouer (l'ordre est le contrat — I6). Rend
+    (rax, rdx, nb_syscalls, handle_posé) — rdx n'est nommé qu'aux échecs."""
+    v = modele_resoudre(module, L.TXT_NT_CREATEFILE)
+    if v[0] != L.V_RESOLU:
+        return (-1, v[0], 0, False)
+    mode, status = modes["create"]
+    if mode == "status":
+        return (-6, status, 1, False)
+    if mode == "divergence":
+        return (-6, status, 1, False)
+    v2 = modele_resoudre(module, L.TXT_NT_DEVICEIOCTL)
+    if v2[0] != L.V_RESOLU:            # le module statique : geste 2 échoue ici
+        return (-1, v2[0], 1, False)
+    for geste, attendus in (("bind", 2), ("connect", 3)):
+        mode, status = modes[geste]
+        if mode == "status":
+            return (-6, status, attendus, False)
+        if mode == "divergence":
+            return (-6, status, attendus, False)
+    return (0, None, 3, True)          # le handle posé, la poignée établie
+
+
+def modele_sys05(module: ModuleFixe, mode: str, compte: int, rdx_span: bool = False):
+    """L'émission de la SPÉCIFICATION : TOTALE ou refus -7 (le compte
+    consigné), -6 le STATUS nommé, -1 la résolution, -5 le span."""
+    if rdx_span:
+        return (-5, None, 0)
+    v = modele_resoudre(module, L.TXT_NT_DEVICEIOCTL)
+    if v[0] != L.V_RESOLU:
+        return (-1, v[0], 0)
+    if mode == "status" or mode == "divergence":
+        return (-6, compte, 1)
+    if mode == "partiel":
+        return (-7, compte, 1)
+    return (0, None, 1)                 # TOUT est émis
+
+
+def modele_sys06(module: ModuleFixe, mode: str, n: int, compte: int,
+                 rdx_span: bool = False):
+    """La réception de la SPÉCIFICATION : n ≥ 1 ou LA DEMI-FIN -7 (le zéro
+    du pair, rdx consigné 0), -6 le STATUS nommé (p. ex. CNX_REINIT), -1, -5."""
+    if rdx_span:
+        return (-5, None, 0)
+    v = modele_resoudre(module, L.TXT_NT_DEVICEIOCTL)
+    if v[0] != L.V_RESOLU:
+        return (-1, v[0], 0)
+    if mode == "status" or mode == "divergence":
+        return (-6, compte, 1)
+    if mode == "demi-fin":
+        return (-7, 0, 1)
+    return (n, None, 1)                 # n rendu au kit
+
+
 # --- V1 : le round-trip + la concordance des immdiats -----------------------------
 
 def vecteur_v1(ks: Ks, cs: capstone.Cs):
     section("V1 — round-trip de notation + concordance au plan (source unique)")
-    for bid, attendu in [("g90001", 6), ("g90002", 293), ("g90003", 164)]:
+    for bid, attendu in [("g90001", 6), ("g90002", 293), ("g90003", 164),
+                         ("g90004", 676), ("g90005", 289), ("g90006", 287)]:
         nom_fichier = {"g90001": "sys-01-emetteur", "g90002": "sys-02-resolveur",
-                       "g90003": "sys-03-ecriture"}[bid]
+                       "g90003": "sys-03-ecriture", "g90004": "sys-04-transport",
+                       "g90005": "sys-05-emission",
+                       "g90006": "sys-06-reception"}[bid]
         rva, slot = L.SLOTS_SYS[bid]
         chemin = os.path.join(ICI, "notation", nom_fichier + ".asm")
         octets, metas = B4.assembler_bloc(ks, chemin, rva, slot)
@@ -592,6 +1048,116 @@ def vecteur_v1(ks: Ks, cs: capstone.Cs):
     pos_emi = n3.find(f"call {L.SYS01_VA:#x}")
     controle("V1.sys-03:ordre-resoudre-puis-emettre", 0 <= pos_res < pos_emi,
              "l'appel sys-02 précède l'appel sys-01 dans les octets (I3)")
+
+    # ---- LE SOCLE (chantier M9-(d)) : la concordance des TROIS notations ----------
+
+    def citations_rip(nom_fichier):
+        """Les cibles RIP d'une notation, lues de son en-tête (jamais des
+        adresses gravées ici — l'arithmétique re-faite au geste du contrôle)."""
+        with open(os.path.join(ICI, "notation", nom_fichier + ".asm"),
+                  encoding="utf-8") as f:
+            brut = f.read()
+        deplacements = re.findall(
+            r";\s+0x([0-9a-f]+) \+ 0x([0-9a-f]+) ([+-]) 0x([0-9a-f]+)"
+            r" = 0x([0-9a-f]+)", brut)
+        cibles = []
+        for adr, t, signe, disp, cible in deplacements:
+            calc = (int(adr, 16) + int(t, 16)
+                    + (int(disp, 16) if signe == "+" else -int(disp, 16)))
+            cibles.append(calc)
+            assert calc == int(cible, 16), f"arithmétique RIP fausse @ {adr}"
+        return cibles
+
+    n4 = "\n".join(lignes("sys-04-transport")).lower()
+    attendus_4 = [
+        (f"mov edx, {L.AFD_DESIRED_ACCESS:#x}",
+         "AFD_DESIRED_ACCESS (mesuré — ZÉRO-étendu en edx : le C7 de mov "
+         "rdx SIGNERAIT, le bit 31 est posé)"),
+        (f"mov dword ptr [rsp + 0x90], {L.OBJECT_ATTRIBUTES_TAILLE:#x}",
+         "OBJECT_ATTRIBUTES_TAILLE 0x30"),
+        (f"mov dword ptr [rsp + 0xa8], {L.OBJ_CASE_INSENSITIVE:#x}",
+         "OBJ_CASE_INSENSITIVE 0x40"),
+        (f"mov word ptr [rsp + 0xc0], {L.LEN_AFD_DEVICE}",
+         "LEN_AFD_DEVICE 40 (l'erratum : SANS le NUL)"),
+        (f"mov word ptr [rsp + 0xc2], {L.LEN_AFD_DEVICE + 2}",
+         "MaximumLength 42 (AVEC le NUL)"),
+        (f"mov qword ptr [rsp + 0x50], {L.AFD_EA_TAILLE}", "AFD_EA_TAILLE 54"),
+        (f"mov qword ptr [rsp + 0x28], {L.IOCTL_AFD_BIND:#x}", "IOCTL_AFD_BIND"),
+        (f"mov qword ptr [rsp + 0x38], {L.AFD_BIND_TAILLE:#x}",
+         "AFD_BIND_TAILLE 0x14"),
+        (f"mov qword ptr [rsp + 0x48], {L.AFD_BIND_SORTIE:#x}",
+         "AFD_BIND_SORTIE 0x10"),
+        (f"mov qword ptr [rsp + 0x28], {L.IOCTL_AFD_CONNECT:#x}",
+         "IOCTL_AFD_CONNECT"),
+        (f"mov qword ptr [rsp + 0x38], {L.AFD_CONNECT_TAILLE:#x}",
+         "AFD_CONNECT_TAILLE 0x28"),
+        (f"mov edx, {L.LEN_NT_CREATEFILE}", "LEN_NT_CREATEFILE 11"),
+        (f"call {L.SYS02_VA:#x}", "SYS02 (résoudre — × 3 au geste même)"),
+        (f"call {L.SYS01_VA:#x}", "SYS01 (émettre — × 3)"),
+    ]
+    manquants = [nom for morceau, nom in attendus_4 if morceau not in n4]
+    controle("V1.sys-04:concordance-plan", not manquants,
+             f"{len(attendus_4) - len(manquants)}/{len(attendus_4)} immédiats"
+             + (f" — MANQUANTS : {manquants}" if manquants else
+                " — create/bind/connect au plan, jamais un littéral hors plan (T5)"))
+    controle("V1.sys-04:les-trois-resolutions-au-geste-meme",
+             n4.count(f"call {L.SYS02_VA:#x}") == 3
+             and n4.count(f"call {L.SYS01_VA:#x}") == 3
+             and re.findall(rf"call ({L.SYS02_VA:#x}|{L.SYS01_VA:#x})", n4)
+             == [f"{L.SYS02_VA:#x}", f"{L.SYS01_VA:#x}"] * 3,
+             "l'alternance résoudre-émettre × 3 dans les octets (Q3/I6 : "
+             "create PUIS bind PUIS connect, chaque geste résout)")
+    cibles_04 = sorted(citations_rip("sys-04-transport"))
+    attendues_04 = sorted([L.R_SYS_DEVICE, L.R_SYS_EA, L.R_SYS_BIND,
+                            L.R_SYS_NOM_CREATEFILE, L.R_SYS_NOM_DEVICEIOCTL,
+                            L.R_SYS_NOM_DEVICEIOCTL])
+    controle("V1.sys-04:citations-fixtures", cibles_04 == attendues_04,
+             f"les SIX seuls [rip] résolvent à {[hex(c) for c in attendues_04]} "
+             "— le device, le EA, le bind WILDCARD et les noms CITÉS (T5/I3)")
+
+    n5 = "\n".join(lignes("sys-05-emission")).lower()
+    attendus_5 = [
+        (f"mov qword ptr [rsp + 0x28], {L.IOCTL_AFD_SEND:#x}", "IOCTL_AFD_SEND"),
+        (f"mov qword ptr [rsp + 0x38], {L.AFD_SENDRECV_TAILLE:#x}",
+         "AFD_SENDRECV_TAILLE 0x18 (le C_ASSERT send==recv)"),
+        ("mov dword ptr [rsp + 0x78], 1", "BufferCount 1 (la MESURE)"),
+        ("mov dword ptr [rsp + 0x7c], 0", "AfdFlags 0 (la MESURE p.3)"),
+        ("mov dword ptr [rsp + 0x80], 0", "TdiFlags 0"),
+        ("mov dword ptr [rsp + 0x60], esi", "WSABUF.len = la longueur demandée"),
+        ("mov qword ptr [rsp + 0x64], rdi", "WSABUF.buf = LA CHARGE du kit (I2)"),
+        (f"mov edx, {L.LEN_NT_DEVICEIOCTL}", "LEN_NT_DEVICEIOCTL 21"),
+    ]
+    manquants = [nom for morceau, nom in attendus_5 if morceau not in n5]
+    controle("V1.sys-05:concordance-plan", not manquants,
+             f"{len(attendus_5) - len(manquants)}/{len(attendus_5)} immédiats"
+             + (f" — MANQUANTS : {manquants}" if manquants else ""))
+    controle("V1.sys-05:citation-fixture",
+             citations_rip("sys-05-emission") == [L.R_SYS_NOM_DEVICEIOCTL],
+             f"l'unique [rip] résout à {L.R_SYS_NOM_DEVICEIOCTL:#x} — le nom "
+             "CITÉ, jamais reconstruit (T5)")
+
+    n6 = "\n".join(lignes("sys-06-reception")).lower()
+    attendus_6 = [
+        (f"mov qword ptr [rsp + 0x28], {L.IOCTL_AFD_RECEIVE:#x}",
+         "IOCTL_AFD_RECEIVE"),
+        (f"mov dword ptr [rsp + 0x7c], {L.TDI_RECEIVE_NORMAL:#x}",
+         "AfdFlags = TDI_RECEIVE_NORMAL 0x20 (L'ERRATUM : LA MESURE en "
+         "TROISIÈME champ)"),
+        ("mov dword ptr [rsp + 0x80], 0", "TdiFlags 0 (la littérature ici "
+         "serait REFUSÉE par le noyau strict du harnais)"),
+        ("mov dword ptr [rsp + 0x78], 1", "BufferCount 1"),
+        ("mov dword ptr [rsp + 0x60], esi", "WSABUF.len = la capacité"),
+        ("mov qword ptr [rsp + 0x64], rdi", "WSABUF.buf = LE TAMPON du kit"),
+        (f"mov edx, {L.LEN_NT_DEVICEIOCTL}", "LEN_NT_DEVICEIOCTL 21"),
+    ]
+    manquants = [nom for morceau, nom in attendus_6 if morceau not in n6]
+    controle("V1.sys-06:concordance-plan", not manquants,
+             f"{len(attendus_6) - len(manquants)}/{len(attendus_6)} immédiats"
+             + (f" — MANQUANTS : {manquants}" if manquants else
+                " — l'erratum tenu : 0x20 en AfdFlags, RIEN en TdiFlags"))
+    controle("V1.sys-06:citation-fixture",
+             citations_rip("sys-06-reception") == [L.R_SYS_NOM_DEVICEIOCTL],
+             f"l'unique [rip] résout à {L.R_SYS_NOM_DEVICEIOCTL:#x} (T5)")
 
 
 # --- V2 : l'épreuve à shims --------------------------------------------------------
@@ -869,6 +1435,373 @@ def vecteur_v2(emu: Emulateur, noyau: Noyau):
              and not emu.ecritures_module)
 
 
+# --- V2d/e/f : LE SOCLE SOCKET au noyau AFD simulé (chantier M9-(d)) ---------------
+
+def vecteur_v2d(emu: Emulateur, noyau: Noyau):
+    section("V2d — sys-04 : le transport établi au noyau AFD simulé")
+    afd = NoyauAFD(noyau)
+    SOCKADDR_KIT = sockaddr_kit(80, bytes([192, 168, 1, 1]))
+
+    def poser_kit_sockaddr():
+        emu.uc.mem_write(KIT_SOCKADDR - 0x20, emu.CANARI * 0x60)
+        emu.uc.mem_write(KIT_SOCKADDR, SOCKADDR_KIT)
+
+    def poser_cellule():
+        emu.uc.mem_write(KIT_CELLULE - 0x20, emu.CANARI * 0x60)
+
+    def cellule_lue() -> int:
+        return struct.unpack("<Q", emu.uc.mem_read(KIT_CELLULE, 8))[0]
+
+    def jouer_sys04(module, afd_modes=None, sabotage_va=0):
+        """Un cas sys-04 : pose le kit, règle le noyau AFD, appelle le bloc.
+        Rend (sortie, attendus_du_modèle, cellule, empreinte_avant)."""
+        emu.poser_module(module)
+        avant = module.empreinte()
+        afd.reinit()
+        if afd_modes:
+            afd.modes.update(afd_modes)
+        afd.sockaddr_attendu = SOCKADDR_KIT
+        afd.noyau_sabotage = sabotage_va
+        poser_kit_sockaddr()
+        poser_cellule()
+        noyau.dispatch = {SSN_NT_CREATEFILE: afd.creer, SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        entree = RSP0 - 0x100
+        emu.surveillance_basse = (entree - 0x200, entree - 0x128)
+        emu.ecritures_basses = []
+        r = emu.appeler(L.SYS04_VA, {"rcx": MODULE_BASE, "rdx": KIT_SOCKADDR,
+                                     "r8": KIT_CELLULE})
+        emu.surveillance_basse = None
+        attendus = modele_sys04(module, afd.modes)
+        return r, attendus, cellule_lue(), avant
+
+    MOD_COMPLET = forger_module([
+        ("NtClose", 0x0F), ("NtCreateFile", SSN_NT_CREATEFILE),
+        ("NtDeviceIoControlFile", SSN_NT_IOCTL)])
+
+    # LE SUCCÈS : la marche ENTIERE, la poignée établie, le handle posé à [P3]
+    r, attendus, cellule, avant = jouer_sys04(MOD_COMPLET)
+    rax_att, rdx_att, nb_att, pose_att = attendus
+    controle("V2d.sys-04:etabli-rax-0-handle-pose",
+             not r["crash"] and r["rax"] == 0 and cellule == HANDLE_AFD
+             and afd.poignee_etablie,
+             f"rax = 0, [P3] = {HANDLE_AFD:#x} (posé au succès seulement — Q1), "
+             "la poignée TCP EST ÉTABLIE (le connect synchrone a tenu)")
+    controle("V2d.sys-04:la-marche-create-bind-connect",
+             [c["ssn"] for c in noyau.captures] == [SSN_NT_CREATEFILE,
+                                                    SSN_NT_IOCTL, SSN_NT_IOCTL]
+             and [c["arg6"] for c in noyau.captures[1:]] ==
+             [L.IOCTL_AFD_BIND, L.IOCTL_AFD_CONNECT] and len(noyau.captures) == 3,
+             "TROIS syscalls : create PUIS BIND PUIS CONNECT — la séquence "
+             "MESURÉE mswsock, jamais connect sans bind (I6)")
+    controle("V2d.sys-04:aucun-ecart-noyau-strict", not afd.ecarts,
+             f"les ONZE + DIX + DIX arguments validés : {afd.ecarts}" if afd.ecarts
+             else "le noyau strict n'a RIEN à nommer")
+    # le PHANDLE du create : la LOCALE du bloc, JAMAIS P3 (Q4) — le noyau
+    # écrit chez le bloc, le bloc seul décide de copier au kit
+    cap0 = noyau.captures[0]
+    entree_rsp = r["entree_rsp"]
+    controle("V2d.sys-04:phandle-en-locale-jamais-p3",
+             entree_rsp - 0x138 <= cap0["handle"] < entree_rsp
+             and cap0["handle"] != KIT_CELLULE,
+             f"PHANDLE {cap0['handle']:#x} DANS le cadre (I2), la cellule du "
+             "kit INTACTE jusqu'à la copie finale — aucune possession partielle")
+    controle("V2d.sys-04:iosb-sur-la-pile-du-bloc",
+             all(entree_rsp - 0x138 <= c["arg4" if i == 0 else "arg5"] < entree_rsp
+                 for i, c in enumerate(noyau.captures)),
+             "les TROIS IOSB vivent dans le cadre — zones mortes au retour (I2)")
+    controle("V2d.sys-04:le-sockaddr-lu-copie-sans-interpretation",
+             bytes(emu.uc.mem_read(KIT_SOCKADDR, 16)) == SOCKADDR_KIT,
+             "les 16 o du kit copiés à +24 du AFD_CONNECT, family LE et port "
+             "RÉSEAU INTACTS (charte § 9 — le domaine ne convertit JAMAIS)")
+    controle("V2d.sys-04:le-kit-et-la-pile-intacts",
+             all(r[k] == v for k, v in SENTINELLES_NV.items())
+             and r.get("rsp") == entree_rsp + 8 and r.get("canaris_haut")
+             and not fautes_sous_cadre(emu, L.SYS04_VA, L.SLOTS_SYS["g90004"][1])
+             and bytes(emu.uc.mem_read(KIT_CELLULE - 0x20, 0x18)) == emu.CANARI * 0x18
+             and bytes(emu.uc.mem_read(KIT_CELLULE + 8, 0x38)) == emu.CANARI * 0x38,
+             "rbx/rbp/rdi sauvés et rendus (I7), la pile rendue, AUCUNE "
+             "écriture sous le cadre hors les pushes des six call et les "
+             "trames des blocs PRUVÉS — la cellule AVoisinante canariée "
+             "intacte : le bloc n'écrit QUE les 8 o de [P3]")
+    controle("V2d.sys-04:module-intact", avant == hashlib.sha256(
+        emu.uc.mem_read(MODULE_BASE, emu.module.taille)).hexdigest()[:16]
+        and not emu.ecritures_module,
+        "l'EAT lue trois fois, JAMAIS écrite (I8 de sys-02 au passage)")
+
+    # AU GESTE MÊME (Q3) : deux modules à SSN distincts — la suite suit
+    noyau.captures.clear()
+    for ssn_c, ssn_i in ((0x55, 0x56), (0xAA, 0xBB)):
+        mod = forger_module([("NtCreateFile", ssn_c),
+                             ("NtDeviceIoControlFile", ssn_i)])
+        afd.reinit()
+        afd.sockaddr_attendu = SOCKADDR_KIT
+        poser_kit_sockaddr()
+        poser_cellule()
+        emu.poser_module(mod)
+        noyau.dispatch = {ssn_c: afd.creer, ssn_i: afd.ioctl}
+        emu.appeler(L.SYS04_VA, {"rcx": MODULE_BASE, "rdx": KIT_SOCKADDR,
+                                 "r8": KIT_CELLULE})
+    controle("V2d.sys-04:au-geste-meme-les-trois-ssn-suivent",
+             [c["ssn"] for c in noyau.captures] == [0x55, 0x56, 0x56, 0xAA, 0xBB, 0xBB],
+             "« NtDeviceIoControlFile » résolu DEUX FOIS par appel — jamais "
+             "un numéro en cache (Q3, charte § 6)")
+
+    # I5 : l'échec de résolution du GESTE 1 = AUCUN syscall émis
+    r, attendus, cellule, _ = jouer_sys04(forger_module([("NtClose", 3)]))
+    rax_att, rdx_att, nb_att, pose_att = attendus
+    controle("V2d.sys-04:resolution-1-echouee-moins-1",
+             r["rax"] == -1 and r["rdx"] == L.V_NOM_ABSENT
+             and len(noyau.captures) == 0 and cellule == int.from_bytes(
+                 emu.CANARI * 8, "little"),
+             "« NtCreateFile » absent : rax = -1, rdx = LA CAUSE, le compteur "
+             "syscall À ZÉRO (I5), la cellule canariée INTACTE")
+
+    # le geste 2 : le create est émis (UN syscall), le bind jamais
+    r, attendus, cellule, _ = jouer_sys04(forger_module(
+        [("NtCreateFile", SSN_NT_CREATEFILE)]))
+    controle("V2d.sys-04:resolution-2-echouee-la-marche-s-arrete",
+             r["rax"] == -1 and r["rdx"] == L.V_NOM_ABSENT
+             and len(noyau.captures) == 1 and cellule == int.from_bytes(
+                 emu.CANARI * 8, "little"),
+             "« NtDeviceIoControlFile » absent : le create parti, le bind "
+             "JAMAIS (I5/I6), le handle JAMAIS posé (Q4)")
+
+    # le geste 3 : le module CHANGE sous les pieds (le noyau corrompt le
+    # MOTIF DU STUB au bind — la mémoire vit) — la TROISIÈME résolution doit
+    # échouer -4 stub divergent (Q3 : jamais un numéro en cache)
+    mod = forger_module([("NtCreateFile", SSN_NT_CREATEFILE),
+                         ("NtDeviceIoControlFile", SSN_NT_IOCTL)])
+    stub_va = MODULE_BASE + mod.noms["NtDeviceIoControlFile"]["stub_rva"]
+    r, attendus, cellule, _ = jouer_sys04(
+        mod, afd_modes={"bind": ("sabotage", 0)}, sabotage_va=stub_va)
+    controle("V2d.sys-04:resolution-3-echouee-le-module-change",
+             r["rax"] == -1 and r["rdx"] == L.V_STUB_DIVERGENT
+             and len(noyau.captures) == 2 and cellule == int.from_bytes(
+                 emu.CANARI * 8, "little") and not emu.ecritures_module,
+             "le stub corrompu PAR LE NOYAU au bind : la 3e résolution rend "
+             "-4 (create et bind partis — 2 syscalls), rax = -1 LA CAUSE, la "
+             "cellule INTACTE (Q4), le bloc n'a RIEN écrit dans le module")
+
+    # Q4 : -6 le STATUS brut consigné à CHAQUE étage, la cellule INTACTE
+    for geste, status, attendus_sys in (
+            ("create", 0xC0000034, 1), ("bind", 0xC0000094, 2),
+            ("connect", 0xC0000236, 3)):
+        r, attendus, cellule, _ = jouer_sys04(MOD_COMPLET,
+                                              afd_modes={geste: ("status", status)})
+        controle(f"V2d.sys-04:status-{geste}-moins-6-consigne",
+                 r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == status
+                 and len(noyau.captures) == attendus_sys
+                 and cellule == int.from_bytes(emu.CANARI * 8, "little"),
+                 f"-6 au {geste} : rdx = {status:#x} le BRUT consigné, "
+                 "le handle n'est PAS posé (aucune possession partielle — Q4)")
+
+    # la divergence iosb au create : le noyau ne parle pas deux fois
+    r, attendus, cellule, _ = jouer_sys04(
+        MOD_COMPLET, afd_modes={"create": ("divergence", 0xC0000094)})
+    controle("V2d.sys-04:divergence-iosb-create",
+             r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == 0xC0000094
+             and cellule == int.from_bytes(emu.CANARI * 8, "little"),
+             "rax = 0 mais l'IOSB rend 0xC0000094 : un désaccord est une "
+             "anomalie — le BRUT de l'IOSB consigné en rdx")
+
+    section("V2e — sys-05 : l'émission au noyau AFD simulé")
+    CHARGE = bytes((i * 7 + 3) & 0xFF for i in range(16406))  # 5 + 2^14 + 17
+    emu.uc.mem_write(KIT_CHARGE - 0x100, emu.CANARI * 0x100)
+    emu.uc.mem_write(KIT_CHARGE, CHARGE)
+    emu.uc.mem_write(KIT_CHARGE + len(CHARGE), emu.CANARI * 0x100)
+
+    def jouer_sys05(module, mode="succes", compte=None, charge=CHARGE,
+                    ptr=KIT_CHARGE, longueur=None, r9_defaut=None):
+        emu.poser_module(module)
+        avant = module.empreinte()
+        afd.reinit()
+        afd.handle = HANDLE_AFD               # l'endpoint EST établi (sys-04)
+        afd.longueur_attendue = len(charge) if longueur is None else longueur
+        if mode == "partiel":
+            afd.modes["send"] = ("partiel", compte)
+        elif mode in ("status", "divergence"):
+            afd.modes["send"] = (mode, compte)
+        noyau.dispatch = {SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        entree = RSP0 - 0x100
+        emu.surveillance_basse = (entree - 0x200, entree - 0xA8)
+        emu.ecritures_basses = []
+        args = {"rcx": MODULE_BASE, "rdx": HANDLE_AFD, "r8": ptr,
+                "r9": r9_defaut if r9_defaut is not None else afd.longueur_attendue}
+        r = emu.appeler(L.SYS05_VA, args)
+        emu.surveillance_basse = None
+        attendus = modele_sys05(module, mode,
+                                compte if compte is not None else 0,
+                                rdx_span=(r9_defaut == 0 or ptr == 0))
+        return r, attendus, avant
+
+    MOD_IOCTL = forger_module([("NtClose", 0x0F),
+                                ("NtDeviceIoControlFile", SSN_NT_IOCTL)])
+
+    # Q1 : TOUT est émis — la charge MAXIMALE d'un enregistrement TLS
+    r, attendus, avant = jouer_sys05(MOD_IOCTL)
+    controle("V2e.sys-05:totale-emise-rax-0",
+             not r["crash"] and r["rax"] == 0 and len(noyau.captures) == 1
+             and afd.emis == CHARGE,
+             f"le noyau a lu {len(afd.emis)} o == la demande : 16406 "
+             "[5 + 2^14 + 17] — la borne du jalon tient d'un geste")
+    controle("V2e.sys-05:aucune-copie-le-wsabuf-pointe-le-kit",
+             afd.charge_vue == KIT_CHARGE and CHARGE == bytes(
+                 emu.uc.mem_read(KIT_CHARGE, len(CHARGE)))
+             and bytes(emu.uc.mem_read(KIT_CHARGE - 0x100, 0x100)) == emu.CANARI * 0x100,
+             "le WSABUF pointe LA CHARGE du kit (P3 traverse — I2), les "
+             "canaris autour INTACTS : le bloc n'y a JAMAIS touché")
+    controle("V2e.sys-05:les-dix-arguments-nt",
+             noyau.captures[0]["handle"] == HANDLE_AFD
+             and noyau.captures[0]["arg2"] == 0
+             and noyau.captures[0]["arg3"] == 0
+             and noyau.captures[0]["arg4"] == 0
+             and noyau.captures[0]["arg6"] == L.IOCTL_AFD_SEND
+             and noyau.captures[0]["arg8"] == L.AFD_SENDRECV_TAILLE
+             and noyau.captures[0]["arg9"] == 0
+             and noyau.captures[0]["arg10"] == 0,
+             "handle, Event/Apc/Context NULL, l'IOCTL du plan, 24, NULL, 0 (Q4)")
+    controle("V2e.sys-05:non-volatils-pile-module",
+             all(r[k] == v for k, v in SENTINELLES_NV.items())
+             and r.get("canaris_haut")
+             and not fautes_sous_cadre(emu, L.SYS05_VA, L.SLOTS_SYS["g90005"][1])
+             and avant == hashlib.sha256(
+                 emu.uc.mem_read(MODULE_BASE, emu.module.taille)).hexdigest()[:16]
+             and not emu.ecritures_module,
+             "rbx/rbp/rdi/rsi rendus (I6), AUCUNE écriture sous le cadre hors "
+             "les pushes des DEUX call et les trames des blocs PRUVÉS, "
+             "l'EAT intacte")
+
+    # Q2 : l'émission PARTIELLE est LE REFUS -7 (le compte consigné)
+    r, attendus, avant = jouer_sys05(MOD_IOCTL, mode="partiel", compte=16403)
+    controle("V2e.sys-05:partielle-refusee-moins-7",
+             r["rax"] == L.V_TRANSPORT_ECHEC and r["rdx"] == 16403,
+             "le noyau a pris 16403 sur 16406 : -7, rdx = LE COMPTE — jamais "
+             "une boucle silencieuse (le kit tranche de la suite)")
+    r, attendus, avant = jouer_sys05(MOD_IOCTL, mode="partiel", compte=0)
+    controle("V2e.sys-05:rien-parti-moins-7-compte-nul",
+             r["rax"] == L.V_TRANSPORT_ECHEC and r["rdx"] == 0,
+             "zéro octet parti : le refus -7 aussi — rdx = 0 consigné")
+
+    # Q5 : -6 le STATUS brut, -6 la divergence iosb
+    r, attendus, avant = jouer_sys05(MOD_IOCTL, mode="status",
+                                     compte=STATUS_ACCES_REFUSE)
+    controle("V2e.sys-05:status-moins-6-consigne",
+             r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == STATUS_ACCES_REFUSE,
+             f"rdx = {STATUS_ACCES_REFUSE:#x} le BRUT — nommé, jamais muet")
+    r, attendus, avant = jouer_sys05(MOD_IOCTL, mode="divergence",
+                                     compte=0xC0000094)
+    controle("V2e.sys-05:divergence-iosb-moins-6",
+             r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == 0xC0000094,
+             "le noyau ne parle pas deux fois")
+
+    # I5/I3 : -1 la résolution, AUCUN syscall ; -5 le span (la garde d'abord)
+    r, attendus, avant = jouer_sys05(forger_module([("NtClose", 3)]))
+    controle("V2e.sys-05:resolution-echouee-moins-1",
+             r["rax"] == -1 and r["rdx"] == L.V_NOM_ABSENT
+             and len(noyau.captures) == 0, "la cause consignée, 0 syscall (I5)")
+    for nom, ptr, lon in (("pointeur-nul", 0, 100), ("longueur-nulle", KIT_CHARGE, 0)):
+        r, attendus, avant = jouer_sys05(MOD_IOCTL, ptr=ptr, r9_defaut=lon)
+        controle(f"V2e.sys-05:span-invalide-{nom}-moins-5",
+                 r["rax"] == L.V_SPAN_INVALIDE and len(noyau.captures) == 0,
+                 "la garde AVANT tout : AUCUN syscall émis (charte § 5)")
+
+    section("V2f — sys-06 : la réception au noyau AFD simulé")
+    CAPACITE = 4096                       # 0x1000 — la capacité MESURÉE p.4
+    RECU = bytes((i * 13 + 5) & 0xFF for i in range(100))
+    emu.uc.mem_write(KIT_TAMPON, emu.CANARI * CAPACITE)
+
+    def jouer_sys06(module, mode="succes", recu=RECU, compte=None,
+                    ptr=KIT_TAMPON, capacite=CAPACITE, r9_defaut=None):
+        emu.poser_module(module)
+        avant = module.empreinte()
+        afd.reinit()
+        afd.handle = HANDLE_AFD
+        afd.capacite_attendue = capacite
+        afd.recu_pose = recu
+        if mode == "demi-fin":
+            afd.modes["recv"] = ("demi-fin", 0)
+        elif mode in ("status", "divergence"):
+            afd.modes["recv"] = (mode, compte)
+        noyau.dispatch = {SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        entree = RSP0 - 0x100
+        emu.surveillance_basse = (entree - 0x200, entree - 0xA8)
+        emu.ecritures_basses = []
+        args = {"rcx": MODULE_BASE, "rdx": HANDLE_AFD, "r8": ptr,
+                "r9": r9_defaut if r9_defaut is not None else capacite}
+        emu.uc.mem_write(KIT_TAMPON, emu.CANARI * capacite)   # le tampon vierge
+        r = emu.appeler(L.SYS06_VA, args)
+        emu.surveillance_basse = None
+        attendus = modele_sys06(module, mode, len(recu),
+                                compte if compte is not None else 0,
+                                rdx_span=(r9_defaut == 0 or ptr == 0))
+        return r, attendus, avant
+
+    # Q1 : n rendu, le noyau a ÉCRIT chez le kit, le reçu INTÈGRE
+    r, attendus, avant = jouer_sys06(MOD_IOCTL)
+    tampon = bytes(emu.uc.mem_read(KIT_TAMPON, CAPACITE))
+    controle("V2f.sys-06:n-octets-rendus",
+             not r["crash"] and r["rax"] == 100 and len(noyau.captures) == 1,
+             "rax = 100 = le compte du IOSB (n ≥ 1 — Q1), UN syscall")
+    controle("V2f.sys-06:le-noyau-ecrit-chez-le-kit-recu-integre",
+             tampon[:100] == RECU and tampon[100:] == emu.CANARI * (CAPACITE - 100)
+             and afd.charge_vue == KIT_TAMPON,
+             "les 100 o du noyau INTACTS chez le kit (I8), le RESTE du tampon "
+             "canarié INTACT (I7 : rien de caché — le noyau n'a pas livré plus)")
+    controle("V2f.sys-06:les-dix-arguments-nt",
+             noyau.captures[0]["arg6"] == L.IOCTL_AFD_RECEIVE
+             and noyau.captures[0]["arg8"] == L.AFD_SENDRECV_TAILLE
+             and not afd.ecarts,
+             f"l'IOCTL du plan, la taille 24, Aucun écart : {afd.ecarts}"
+             if afd.ecarts else "l'IOCTL du plan, la taille 24, le noyau strict VERT")
+    controle("V2f.sys-06:non-volatils-pile-module",
+             all(r[k] == v for k, v in SENTINELLES_NV.items())
+             and r.get("canaris_haut")
+             and not fautes_sous_cadre(emu, L.SYS06_VA, L.SLOTS_SYS["g90006"][1])
+             and avant == hashlib.sha256(
+                 emu.uc.mem_read(MODULE_BASE, emu.module.taille)).hexdigest()[:16]
+             and not emu.ecritures_module,
+             "rbx/rbp/rdi/rsi rendus (I6), AUCUNE écriture sous le cadre hors "
+             "les pushes des DEUX call et les trames des blocs PRUVÉS, "
+             "l'EAT intacte")
+
+    # Q2 : LE ZÉRO EST LA DEMI-FIN — le refus -7, rdx = 0, le tampon VIERGE
+    r, attendus, avant = jouer_sys06(MOD_IOCTL, mode="demi-fin", recu=b"")
+    controle("V2f.sys-06:demi-fin-moins-7",
+             r["rax"] == L.V_TRANSPORT_ECHEC and r["rdx"] == 0
+             and bytes(emu.uc.mem_read(KIT_TAMPON, 32)) == emu.CANARI * 32,
+             "le pair a fermé : -7 NOMMÉ, rdx = 0 le compte consigné — jamais "
+             "un succès silencieux (le kit tranche)")
+
+    # Q5 : STATUS_CONNECTION_RESET — le pair a coupé BRUTALEMENT
+    r, attendus, avant = jouer_sys06(MOD_IOCTL, mode="status",
+                                     compte=STATUS_CNX_REINIT)
+    controle("V2f.sys-06:connexion-reset-moins-6-consigne",
+             r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == STATUS_CNX_REINIT,
+             f"rdx = {STATUS_CNX_REINIT:#x} (STATUS_CONNECTION_RESET) — "
+             "l'exemple NOMMÉ de la spec, jamais muet")
+    r, attendus, avant = jouer_sys06(MOD_IOCTL, mode="divergence",
+                                     compte=0xC0000094)
+    controle("V2f.sys-06:divergence-iosb-moins-6",
+             r["rax"] == L.V_STATUS_NONNUL and s64(r["rdx"]) == 0xC0000094,
+             "le noyau ne parle pas deux fois")
+
+    # I5 : -1 la résolution ; -5 le span (la garde d'abord)
+    r, attendus, avant = jouer_sys06(forger_module([("NtClose", 3)]))
+    controle("V2f.sys-06:resolution-echouee-moins-1",
+             r["rax"] == -1 and r["rdx"] == L.V_NOM_ABSENT
+             and len(noyau.captures) == 0, "la cause consignée, 0 syscall (I5)")
+    for nom, ptr, cap in (("pointeur-nul", 0, 100), ("capacite-nulle", KIT_TAMPON, 0)):
+        r, attendus, avant = jouer_sys06(MOD_IOCTL, ptr=ptr, r9_defaut=cap)
+        controle(f"V2f.sys-06:span-invalide-{nom}-moins-5",
+                 r["rax"] == L.V_SPAN_INVALIDE and len(noyau.captures) == 0,
+                 "la garde AVANT tout : AUCUN syscall émis")
+
+    del afd
+
+
 # --- V3 : le fuzzing à propriétés ---------------------------------------------------
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789"
@@ -939,6 +1872,161 @@ def vecteur_v3(emu: Emulateur, noyau: Noyau, rng: random.Random, volume: int):
              not emu.ecritures_module and len(noyau.captures) == 0,
              "aucune écriture module, aucun syscall émis, "
              "NumberOfNames lu une fois par appel")
+
+
+# --- V3b : le fuzzing du TRANSPORT à propriétés (le modèle marche la séquence) ---
+
+def vecteur_v3_transport(emu: Emulateur, noyau: Noyau, rng: random.Random,
+                         volume: int):
+    section(f"V3b — fuzzing transport à propriétés ({volume * 3} cas en graine)")
+    afd = NoyauAFD(noyau)
+    SOCKADDR_KIT = sockaddr_kit(80, bytes([192, 168, 1, 1]))
+    STATUSES = [STATUS_ACCES_REFUSE, 0xC0000094, 0xC0000034, 0xC0000236,
+                STATUS_CNX_REINIT]
+    ecarts, cas = [], 0
+
+    def mode_aleatoire():
+        u = rng.random()
+        if u < 0.55:
+            return ("succes", 0)
+        if u < 0.8:
+            return ("status", rng.choice(STATUSES))
+        return ("divergence", 0xC0000094)
+
+    def module_transport_aleatoire():
+        noms = []
+        ssns_tires = set()
+
+        def ssn_unique():                  # JAMAIS de collision : le dispatch
+            while True:                   # du noyau suit LES SSN du module
+                s = rng.randint(1, 0xFFF)
+                if s not in ssns_tires:
+                    ssns_tires.add(s)
+                    return s
+        for nom in ("NtCreateFile", "NtDeviceIoControlFile"):
+            if rng.random() < 0.85:
+                noms.append((nom, ssn_unique()))
+        for i in range(rng.randint(0, 3)):             # les leurres hostiles
+            taille = rng.randint(2, 20)
+            noms.append(("Nt" + "".join(rng.choice(ALPHABET)
+                                       for _ in range(taille)),
+                         ssn_unique()))
+        rng.shuffle(noms)
+        crochet = None
+        if rng.random() < 0.12:                        # le stub crocheté
+            presentes = [n for n, _ in noms
+                         if n in ("NtCreateFile", "NtDeviceIoControlFile")]
+            if presentes:
+                crochet = rng.choice(presentes)
+        return forger_module(noms, stub_trop=crochet)
+
+    def dispatch_transport(mod: ModuleFixe) -> dict:
+        """Le noyau connaît les SSN DU MODULE (aléatoires — jamais des
+        constantes de harnais : la résolution est la SEULE source du
+        numéro, le dispatch suit la fixture, miroir de la Q2 au geste
+        même)."""
+        d = {}
+        if "NtCreateFile" in mod.noms:
+            d[mod.noms["NtCreateFile"]["ssn"]] = afd.creer
+        if "NtDeviceIoControlFile" in mod.noms:
+            d[mod.noms["NtDeviceIoControlFile"]["ssn"]] = afd.ioctl
+        return d
+
+    # --- sys-04 : la marche create→bind→connect contre le modèle ------------------
+    for _ in range(volume):
+        mod = module_transport_aleatoire()
+        emu.poser_module(mod)
+        avant = mod.empreinte()
+        afd.reinit()
+        for geste in ("create", "bind", "connect"):
+            afd.modes[geste] = mode_aleatoire()
+        afd.sockaddr_attendu = SOCKADDR_KIT
+        emu.uc.mem_write(KIT_SOCKADDR, SOCKADDR_KIT + emu.CANARI * 0x40)
+        emu.uc.mem_write(KIT_CELLULE - 0x20, emu.CANARI * 0x60)
+        noyau.dispatch = dispatch_transport(mod)
+        noyau.captures.clear()
+        r = emu.appeler(L.SYS04_VA, {"rcx": MODULE_BASE, "rdx": KIT_SOCKADDR,
+                                     "r8": KIT_CELLULE})
+        cellule = struct.unpack("<Q", emu.uc.mem_read(KIT_CELLULE, 8))[0]
+        rax_att, rdx_att, nb_att, pose_att = modele_sys04(mod, afd.modes)
+        cas += 1
+        ok = not r["crash"] and r["rax"] == rax_att and len(noyau.captures) == nb_att
+        if rax_att < 0:
+            ok = ok and r["rdx"] == rdx_att
+        if pose_att:
+            ok = ok and cellule == HANDLE_AFD and afd.poignee_etablie
+        else:
+            ok = ok and cellule == int.from_bytes(emu.CANARI * 8, "little")
+        intact = hashlib.sha256(emu.uc.mem_read(
+            MODULE_BASE, mod.taille)).hexdigest()[:16] == avant
+        if not ok or not intact or afd.ecarts:
+            ecarts.append(("sys-04", rax_att, r.get("rax"), r.get("rdx"),
+                            len(noyau.captures), afd.ecarts[:2], r.get("crash")))
+
+    # --- sys-05 / sys-06 : les verdicts d'échange contre le modèle -----------------
+    for _ in range(volume):
+        for bid, va, mode_set in (("g90005", L.SYS05_VA, "send"),
+                                  ("g90006", L.SYS06_VA, "recv")):
+            mod = module_transport_aleatoire()
+            emu.poser_module(mod)
+            avant = mod.empreinte()
+            afd.reinit()
+            afd.handle = HANDLE_AFD
+            u = rng.random()
+            if mode_set == "send":
+                longueur = rng.randint(1, 16406)
+                charge = bytes((i * 7 + 3) & 0xFF for i in range(longueur))
+                emu.uc.mem_write(KIT_CHARGE - 0x40, emu.CANARI * 0x40)
+                emu.uc.mem_write(KIT_CHARGE, charge)
+                afd.longueur_attendue = longueur
+                if u < 0.5:
+                    mode, compte = "succes", longueur
+                elif u < 0.7:
+                    mode, compte = "partiel", rng.randint(0, longueur - 1)
+                else:
+                    mode, compte = ("status" if u < 0.85 else "divergence",
+                                    rng.choice(STATUSES))
+                afd.modes["send"] = (mode, compte)
+                args = {"rcx": MODULE_BASE, "rdx": HANDLE_AFD,
+                        "r8": KIT_CHARGE, "r9": longueur}
+                rax_att, rdx_att, nb_att = modele_sys05(mod, mode, compte)
+            else:
+                capacite = rng.randint(1, 4096)
+                n = rng.randint(0, capacite)
+                recu = bytes((i * 13 + 5) & 0xFF for i in range(n))
+                emu.uc.mem_write(KIT_TAMPON, emu.CANARI * capacite)
+                afd.capacite_attendue = capacite
+                afd.recu_pose = recu
+                if u < 0.5 and n >= 1:
+                    mode, compte = "succes", n
+                elif u < 0.7:
+                    mode, compte = "demi-fin", 0
+                else:
+                    mode, compte = ("status" if u < 0.85 else "divergence",
+                                    rng.choice(STATUSES))
+                afd.modes["recv"] = (mode, compte)
+                args = {"rcx": MODULE_BASE, "rdx": HANDLE_AFD,
+                        "r8": KIT_TAMPON, "r9": capacite}
+                rax_att, rdx_att, nb_att = modele_sys06(mod, mode, n, compte)
+            noyau.dispatch = dispatch_transport(mod)
+            noyau.captures.clear()
+            r = emu.appeler(va, args)
+            cas += 1
+            ok = not r["crash"] and r["rax"] == rax_att \
+                and len(noyau.captures) == nb_att
+            if rax_att < 0:
+                ok = ok and r["rdx"] == rdx_att
+            intact = hashlib.sha256(emu.uc.mem_read(
+                MODULE_BASE, mod.taille)).hexdigest()[:16] == avant
+            if not ok or not intact or afd.ecarts:
+                ecarts.append((bid, rax_att, r.get("rax"), r.get("rdx"),
+                               len(noyau.captures), afd.ecarts[:2], r.get("crash")))
+
+    controle("V3b.fuzz-transport:modele-contre-emulation", not ecarts,
+             f"{cas} cas, 0 écart — chaque verdict (-1/-4/-5/-6/-7, n, 0) "
+             "prédit par le modèle de la couche I, consigné en rdx quand "
+             "il est négatif, le noyau strict SANS AUCUN écart" if not ecarts
+             else f"{len(ecarts)} écart(s) — premier : {ecarts[0]}")
 
 
 # --- V4 : la falsification ----------------------------------------------------------
@@ -1154,6 +2242,293 @@ def vecteur_v4(emu: Emulateur, noyau: Noyau):
     del ks
 
 
+# --- V4b : la falsification du SOCLE (chantier M9-(d)) ------------------------------
+
+def _offsets_saut(octets: bytes, va_base: int, court: int, long2: int,
+                  cible: int) -> list[int]:
+    """Tous les offsets des sauts (courts rel8 et longs rel32) vers la
+    cible — keystone choisit la forme, le harnais les lit TOUTES."""
+    out = []
+    for i in range(len(octets) - 1):
+        if octets[i] == court:
+            rel = int.from_bytes(octets[i + 1:i + 2], "little", signed=True)
+            if va_base + i + 2 + rel == cible:
+                out.append(i)
+        if i + 6 <= len(octets) and octets[i] == 0x0F and octets[i + 1] == long2:
+            rel = int.from_bytes(octets[i + 2:i + 6], "little", signed=True)
+            if va_base + i + 6 + rel == cible:
+                out.append(i)
+    return sorted(out)
+
+
+def _patch_saut_inverse(octets: bytes, offset: int) -> tuple[int, bytes]:
+    """L'inversion du sens du saut (je↔jne, jz↔jnz, js↔jns) — stable en
+    taille : un octet muté, la cible demeure."""
+    if octets[offset] == 0x0F:            # la forme longue : 0F 84/88 → 0F 85/89
+        return offset + 1, bytes([octets[offset + 1] + 1])
+    return offset, bytes([octets[offset] + 1])   # la courte : 74/78 → 75/79
+
+
+def vecteur_v4_transport(emu: Emulateur, noyau: Noyau):
+    section("V4b — falsification du socle : chaque mutante trahit la batterie")
+    ks = emu.ks
+
+    def octets_de(src: str) -> bytes:
+        enc, _ = ks.asm(src, 0)
+        return bytes(enc)
+
+    def etiquette(nom_fichier, nom_etiquette):
+        with open(os.path.join(ICI, "notation", nom_fichier + ".asm"),
+                  encoding="utf-8") as f:
+            entete = f.read()
+        m = re.search(rf"\.{nom_etiquette}=0x([0-9a-f]+)", entete)
+        assert m, f".{nom_etiquette} absente de l'en-tête de {nom_fichier}"
+        return int(m.group(1), 16)
+
+    afd = NoyauAFD(noyau)
+    SOCKADDR_KIT = sockaddr_kit(80, bytes([192, 168, 1, 1]))
+    MOD_COMPLET = forger_module([("NtClose", 0x0F),
+                                 ("NtCreateFile", SSN_NT_CREATEFILE),
+                                 ("NtDeviceIoControlFile", SSN_NT_IOCTL)])
+    MOD_SANS_IOCTL = forger_module([("NtCreateFile", SSN_NT_CREATEFILE)])
+    MOD_SANS_CREATE = forger_module([("NtClose", 3)])
+    MOD_IOCTL_SEUL = forger_module([("NtClose", 0x0F),
+                                    ("NtDeviceIoControlFile", SSN_NT_IOCTL)])
+    CHARGE = bytes((i * 7 + 3) & 0xFF for i in range(16406))
+    RECU = bytes((i * 13 + 5) & 0xFF for i in range(100))
+
+    # --- sys-04 : la batterie et les mutations de l'établissement -----------------
+    def cas_sys04(module, afd_modes=None):
+        emu.poser_module(module)
+        afd.reinit()
+        if afd_modes:
+            afd.modes.update(afd_modes)
+        afd.sockaddr_attendu = SOCKADDR_KIT
+        emu.uc.mem_write(KIT_SOCKADDR, SOCKADDR_KIT + emu.CANARI * 0x40)
+        emu.uc.mem_write(KIT_CELLULE - 0x20, emu.CANARI * 0x60)
+        noyau.dispatch = {SSN_NT_CREATEFILE: afd.creer, SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        r = emu.appeler(L.SYS04_VA, {"rcx": MODULE_BASE, "rdx": KIT_SOCKADDR,
+                                     "r8": KIT_CELLULE})
+        cellule = struct.unpack("<Q", emu.uc.mem_read(KIT_CELLULE, 8))[0]
+        rax_att, rdx_att, nb_att, pose_att = modele_sys04(module, afd.modes)
+        ok = (not r["crash"] and r["rax"] == rax_att
+              and len(noyau.captures) == nb_att
+              and (rax_att >= 0 or r["rdx"] == rdx_att))
+        if pose_att:
+            return ok and cellule == HANDLE_AFD
+        return ok and cellule == int.from_bytes(emu.CANARI * 8, "little")
+
+    BATTERIE_04 = [
+        ("succès", lambda: cas_sys04(MOD_COMPLET)),
+        ("bind-status", lambda: cas_sys04(
+            MOD_COMPLET, {"bind": ("status", 0xC0000094)})),
+        ("sans-create", lambda: cas_sys04(MOD_SANS_CREATE)),
+        ("sans-ioctl", lambda: cas_sys04(MOD_SANS_IOCTL)),
+        ("connect-status", lambda: cas_sys04(
+            MOD_COMPLET, {"connect": ("status", 0xC0000236)})),
+    ]
+
+    sys04 = emu.octets_blocs["g90004"]
+
+    def trouve04(morceau: bytes) -> int:
+        i = sys04.find(morceau)
+        assert i >= 0, f"{morceau.hex()} introuvable dans sys-04"
+        return i
+
+    a_desired = octets_de("mov edx, 0xC0140000")
+    a_ioctl_bind = octets_de("mov qword ptr [rsp + 0x28], 0x12003")
+    a_ioctl_connect = octets_de("mov qword ptr [rsp + 0x28], 0x12007")
+    a_ea_len = octets_de("mov qword ptr [rsp + 0x50], 54")
+    a_maxlen = octets_de("mov word ptr [rsp + 0xC2], 42")
+    a_sockaddr = octets_de("mov r10, qword ptr [rdi + 8]")
+    a_handle_src = octets_de("mov r10, qword ptr [rsp + 0x58]")
+    a_iosb_create = octets_de("cmp dword ptr [rsp + 0x60], 0")
+    js_echec = _offsets_saut(sys04, L.SYS04_VA, 0x78, 0x88,
+                             etiquette("sys-04-transport", "resolution_echouee"))
+    assert len(js_echec) == 3, f"{len(js_echec)} js vers .resolution_echouee"
+    off_patch, patch_sens = _patch_saut_inverse(sys04, js_echec[1])
+    mutations_04 = [
+        ("desired-access-+1 (le noyau strict refuse)",
+         trouve04(a_desired) + 1, struct.pack("<I", 0xC0140001)),
+        ("ioctl-bind-inconnu (0x12003→0x12004)",
+         trouve04(a_ioctl_bind) + len(a_ioctl_bind) - 4, struct.pack("<I", 0x12004)),
+        ("ioctl-connect-confondu-bind (0x12007→0x12003)",
+         trouve04(a_ioctl_connect) + len(a_ioctl_connect) - 4,
+         struct.pack("<I", 0x12003)),
+        ("ea-length-53 (le EA tronqué)",
+         trouve04(a_ea_len) + len(a_ea_len) - 4, struct.pack("<I", 53)),
+        ("device-maxlength-44 (l'erratum d'instrument rejoué)",
+         trouve04(a_maxlen) + len(a_maxlen) - 2, struct.pack("<H", 44)),
+        ("sockaddr-decale (+8→+16 : la copie au-delà du kit)",
+         trouve04(a_sockaddr) + 3, b"\x10"),
+        ("handle-fausse-source ([rsp+0x58]→[rsp+0x50])",
+         trouve04(a_handle_src) + 4, b"\x50"),
+        ("create-iosb-aveugle (0x60→0x70 : le mauvais IOSB relu)",
+         trouve04(a_iosb_create) + 3, b"\x70"),
+        ("resolution2-sautee (js→jns : la marche sans garde)",
+         off_patch, patch_sens),
+    ]
+
+    for nom, offset, patch in mutations_04:
+        octets = bytearray(sys04)
+        octets[offset:offset + len(patch)] = patch
+        emu.reposer_bloc(L.SYS04_VA, bytes(octets))
+        trahis = [nom_cas for nom_cas, cas in BATTERIE_04 if not cas()]
+        controle(f"V4b.sys-04:{nom}", bool(trahis),
+                 f"trahie sur {len(trahis)}/5 ({', '.join(trahis)})"
+                 if trahis else "PAS ATTRAPÉE — la batterie demeure verte")
+        emu.reposer_bloc(L.SYS04_VA, sys04)     # le témoin restauré
+    controle("V4b.sys-04:temoin-intact-vert",
+             all(cas() for _, cas in BATTERIE_04),
+             "les cinq cas de la batterie au témoin")
+
+    # --- sys-05 : la batterie et les mutations de l'émission -----------------------
+    def cas_sys05(module, mode="succes", compte=None, ptr=KIT_CHARGE, r9=None):
+        emu.poser_module(module)
+        afd.reinit()
+        afd.handle = HANDLE_AFD
+        afd.longueur_attendue = len(CHARGE)
+        if mode in ("partiel", "status", "divergence"):
+            afd.modes["send"] = (mode, compte)
+        noyau.dispatch = {SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        emu.uc.mem_write(KIT_CHARGE, CHARGE)
+        r = emu.appeler(L.SYS05_VA, {"rcx": MODULE_BASE, "rdx": HANDLE_AFD,
+                                     "r8": ptr,
+                                     "r9": r9 if r9 is not None else len(CHARGE)})
+        rax_att, rdx_att, nb_att = modele_sys05(
+            module, mode, compte if compte is not None else 0,
+            rdx_span=(r9 == 0 or ptr == 0))
+        return (not r["crash"] and r["rax"] == rax_att
+                and len(noyau.captures) == nb_att
+                and (rax_att >= 0 or rdx_att is None or r["rdx"] == rdx_att))
+
+    BATTERIE_05 = [
+        ("succès", lambda: cas_sys05(MOD_IOCTL_SEUL)),
+        ("partiel", lambda: cas_sys05(MOD_IOCTL_SEUL, "partiel", 16403)),
+        ("status", lambda: cas_sys05(MOD_IOCTL_SEUL, "status", STATUS_ACCES_REFUSE)),
+        ("sans-nom", lambda: cas_sys05(MOD_SANS_CREATE)),
+        ("span", lambda: cas_sys05(MOD_IOCTL_SEUL, ptr=0)),
+    ]
+
+    sys05 = emu.octets_blocs["g90005"]
+
+    def trouve05(morceau: bytes) -> int:
+        i = sys05.find(morceau)
+        assert i >= 0, f"{morceau.hex()} introuvable dans sys-05"
+        return i
+
+    a_ioctl_send = octets_de("mov qword ptr [rsp + 0x28], 0x1201F")
+    a_wsabuf_len = octets_de("mov dword ptr [rsp + 0x60], esi")
+    a_compteur = octets_de("cmp qword ptr [rsp + 0x58], rsi")
+    a_afdflags = octets_de("mov dword ptr [rsp + 0x7C], 0")
+    je_span = _offsets_saut(sys05, L.SYS05_VA, 0x74, 0x84,
+                            etiquette("sys-05-emission", "span_invalide"))
+    assert len(je_span) == 2, f"{len(je_span)} je vers .span_invalide"
+    off_patch, patch_sens = _patch_saut_inverse(sys05, je_span[0])
+    mutations_05 = [
+        ("ioctl-send-confondu-recv (0x1201F→0x12017)",
+         trouve05(a_ioctl_send) + len(a_ioctl_send) - 4, struct.pack("<I", 0x12017)),
+        ("wsabuf-len-pour-ptr (esi→edi : la longueur faussée)",
+         trouve05(a_wsabuf_len), bytes.fromhex("897c2460")),
+        ("compteur-compare-a-rax (rsi→rax : le partiel passe)",
+         trouve05(a_compteur), bytes.fromhex("483b442458")),
+        ("afdflags-0x20-au-send (le drapeau du recv, pas du send)",
+         trouve05(a_afdflags) + len(a_afdflags) - 4, struct.pack("<I", 0x20)),
+        ("span-garde-inversee (je→jne : le refus des sains)",
+         off_patch, patch_sens),
+    ]
+
+    for nom, offset, patch in mutations_05:
+        octets = bytearray(sys05)
+        octets[offset:offset + len(patch)] = patch
+        emu.reposer_bloc(L.SYS05_VA, bytes(octets))
+        trahis = [nom_cas for nom_cas, cas in BATTERIE_05 if not cas()]
+        controle(f"V4b.sys-05:{nom}", bool(trahis),
+                 f"trahie sur {len(trahis)}/5 ({', '.join(trahis)})"
+                 if trahis else "PAS ATTRAPÉE — la batterie demeure verte")
+        emu.reposer_bloc(L.SYS05_VA, sys05)
+    controle("V4b.sys-05:temoin-intact-vert",
+             all(cas() for _, cas in BATTERIE_05),
+             "les cinq cas de la batterie au témoin")
+
+    # --- sys-06 : la batterie et les mutations de la réception ---------------------
+    def cas_sys06(module, mode="succes", n=100, compte=None, ptr=KIT_TAMPON,
+                  r9=None):
+        emu.poser_module(module)
+        afd.reinit()
+        afd.handle = HANDLE_AFD
+        afd.capacite_attendue = 4096
+        afd.recu_pose = RECU[:n]
+        if mode in ("demi-fin", "status", "divergence"):
+            afd.modes["recv"] = (mode, compte)
+        noyau.dispatch = {SSN_NT_IOCTL: afd.ioctl}
+        noyau.captures.clear()
+        emu.uc.mem_write(KIT_TAMPON, emu.CANARI * 4096)
+        r = emu.appeler(L.SYS06_VA, {"rcx": MODULE_BASE, "rdx": HANDLE_AFD,
+                                     "r8": ptr,
+                                     "r9": r9 if r9 is not None else 4096})
+        rax_att, rdx_att, nb_att = modele_sys06(
+            module, mode, n, compte if compte is not None else 0,
+            rdx_span=(r9 == 0 or ptr == 0))
+        return (not r["crash"] and r["rax"] == rax_att
+                and len(noyau.captures) == nb_att
+                and (rax_att >= 0 or rdx_att is None or r["rdx"] == rdx_att))
+
+    BATTERIE_06 = [
+        ("succès", lambda: cas_sys06(MOD_IOCTL_SEUL)),
+        ("demi-fin", lambda: cas_sys06(MOD_IOCTL_SEUL, "demi-fin", 0)),
+        ("cnx-reset", lambda: cas_sys06(MOD_IOCTL_SEUL, "status", 100,
+                                        STATUS_CNX_REINIT)),
+        ("sans-nom", lambda: cas_sys06(MOD_SANS_CREATE)),
+        ("span", lambda: cas_sys06(MOD_IOCTL_SEUL, ptr=0)),
+    ]
+
+    sys06 = emu.octets_blocs["g90006"]
+
+    def trouve06(morceau: bytes) -> int:
+        i = sys06.find(morceau)
+        assert i >= 0, f"{morceau.hex()} introuvable dans sys-06"
+        return i
+
+    a_erratum = octets_de("mov dword ptr [rsp + 0x7C], 0x20")
+    a_litterature = octets_de("mov dword ptr [rsp + 0x80], 0")
+    a_ioctl_recv = octets_de("mov qword ptr [rsp + 0x28], 0x12017")
+    a_wsabuf_buf = octets_de("mov qword ptr [rsp + 0x64], rdi")
+    jz_demifin = _offsets_saut(sys06, L.SYS06_VA, 0x74, 0x84,
+                               etiquette("sys-06-reception", "demi_fin"))
+    assert len(jz_demifin) == 1, f"{len(jz_demifin)} jz vers .demi_fin"
+    off_patch, patch_sens = _patch_saut_inverse(sys06, jz_demifin[0])
+    mutations_06 = [
+        ("L'ERRATUM-falsifie (AfdFlags 0x20→0 : la MESURE trahie)",
+         trouve06(a_erratum) + len(a_erratum) - 4, struct.pack("<I", 0)),
+        ("LA-LITTERATURE (TdiFlags 0→0x20 : l'écriture faussière)",
+         trouve06(a_litterature) + len(a_litterature) - 4, struct.pack("<I", 0x20)),
+        ("demi-fin-masquee (jz→jnz : le zéro déguisé en succès)",
+         off_patch, patch_sens),
+        ("ioctl-recv-confondu-send (0x12017→0x1201F)",
+         trouve06(a_ioctl_recv) + len(a_ioctl_recv) - 4, struct.pack("<I", 0x1201F)),
+        ("wsabuf-buf-pour-capacite (rdi→rsi : le tampon perdu)",
+         trouve06(a_wsabuf_buf), bytes.fromhex("4889742464")),
+    ]
+
+    for nom, offset, patch in mutations_06:
+        octets = bytearray(sys06)
+        octets[offset:offset + len(patch)] = patch
+        emu.reposer_bloc(L.SYS06_VA, bytes(octets))
+        trahis = [nom_cas for nom_cas, cas in BATTERIE_06 if not cas()]
+        controle(f"V4b.sys-06:{nom}", bool(trahis),
+                 f"trahie sur {len(trahis)}/5 ({', '.join(trahis)})"
+                 if trahis else "PAS ATTRAPÉE — la batterie demeure verte")
+        emu.reposer_bloc(L.SYS06_VA, sys06)
+    controle("V4b.sys-06:temoin-intact-vert",
+             all(cas() for _, cas in BATTERIE_06),
+             "les cinq cas de la batterie au témoin")
+
+    del ks
+
+
 # --- Le bilan -----------------------------------------------------------------------
 
 def bilan(graine: int) -> int:
@@ -1195,6 +2570,13 @@ def executer(blobs: dict[str, bytes] | None = None, graine: int = 20261105,
     vecteur_v3(emu, noyau, random.Random(graine),
                300 if volume == "complet" else 60)
     vecteur_v4(emu, noyau)
+    # LE SOCLE SOCKET (chantier M9-(d)) : le noyau AFD strict, le fuzz
+    # transport, la falsification des TROIS blocs — la graine dérivée
+    # (jamais la même suite : chaque série de preuves vit seule)
+    vecteur_v2d(emu, noyau)
+    vecteur_v3_transport(emu, noyau, random.Random(graine ^ 0xA0A0),
+                         120 if volume == "complet" else 40)
+    vecteur_v4_transport(emu, noyau)
     if ECHECS:
         raise ErreurHarnais(
             f"harnais non vert : {len(ECHECS)} échec(s) — premier : "

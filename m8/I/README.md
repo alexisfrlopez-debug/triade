@@ -143,3 +143,175 @@ est un CHANTIER FUTUR NOMMÉ : en l'état, la base est FOURNIE par l'appelant
 CHANTIER FUTUR NOMMÉ : en l'état, un stub divergent est un refus (règle 7).
 TLS 1.3 pur et les profils additionnels demeurent HORS PÉRIMÈTRE jusqu'à
 leur ouverture (une décision propre chacun — D160 ne les ouvre pas).
+
+---
+
+# Révision M9-(d) — LE SOCLE SOCKET (l'ère 1.0.0 du transport, le 07/11/2026)
+
+> La présente révision étend le domaine `sys` au chantier M9-(d) du plan :
+> la fondation I/O que M8 a nommée (« réserve contiguë 0xA240-0xBFFF : la
+> croissance du domaine [sys-04 et suivants] ; TLS 1.3 pur s'appuiera sur
+> lui ») — le client TLS 1.3 pur (M9-(b), les 28 blocs notés-mesurés-
+> prouvés) attend son socle : une pile TLS pure qui émettrait encore par
+> l'IAT userland garderait la surface de hook qu'elle prétend éliminer ;
+> le plan M9-(d) le réclame TEL QUEL : « le transport par SYSCALL DIRECT
+> (jamais l'IAT ws2_32), l'EAT de ntdll reste la source des SSN (sys-02
+> réutilisé), l'établissement/émission/réception par les appels NT du
+> transport ». R2 tenue : les TROIS spécifications ci-dessous sont écrites
+> AVANT tout octet de notation (provenance `écrite-avant-code`, le geste
+> miroir de la couche I fondée à l'ouverture M8) — la notation, le harnais
+> et l'arrêt des slots suivront au geste suivant (D161 rejoué), AUCUN
+> octet n'est écrit par la présente.
+
+## Ce que le socle promet (et comment il se preuve)
+
+Le transport est le périphérique AFD — le Ring 0 de Winsock — parlé
+DIRECTEMENT : le handle d'endpoint naît de NtCreateFile sur
+`\Device\Afd\Endpoint` (le nom est une DONNÉE de fixture, jamais un
+import), l'échange vit de NtDeviceIoControlFile aux QUATRE IOCTL du
+jalon. La promesse est MESURABLE et DOUBLE, miroir de la promesse du
+domaine :
+
+- **STRUCTURELLE** — les blocs du socle ne déclarent AUCUNE entrée IAT :
+  ws2_32 n'est JAMAIS importé, l'oracle structurel du build (e) le
+  constatera sur les octets (la règle 3 TENUE pour le transport) ;
+- **D'ÉCHANGE** — les verdicts sont NOMMÉS aux frontières du kit : le
+  zéro de réception est LA DEMI-FIN (refus -7), l'émission partielle est
+  LE REFUS (-7), le STATUS brut est TOUJOURS consigné (règle 5, la table
+  des HUIT) — le socle tls13-28 (M9-(b)) a consigné CES frontières AVANT
+  que le socle n'existe : les specs sys-05/06 les instaurent (Q2/Q3 de
+  tls13-28 sont le CONTRAT DU KIT, la couche I les cite).
+
+## La charte du transport (§ 9 — les règles transverses, suite de § 1-8)
+
+9. **Le sockaddr est une DONNÉE du kit, en boutisme du FORMAT** — le kit
+   construit le sockaddr_in (family en boutisme machine, port et adresse
+   en BOUTISME RÉSEAU), le domaine ne convertit JAMAIS en silence (un
+   domaine qui convertirait déciderait à la place du kit ; la mesure du
+   format fait foi, le kit répond de son boutisme) ;
+10. **L'émission est TOTALE ou refusée** — le compteur du IOSB doit
+    couvrir la longueur demandée : un envoi partiel est le refus -7
+    NOMMÉ, jamais une boucle silencieuse (une boucle d'envoi serait une
+    décision de transport que le domaine n'a pas) ;
+11. **La réception est BLOQUANTE et le zéro est LA DEMI-FIN** — le handle
+    est SYNCHRONE (FILE_SYNCHRONOUS_IO_NONALERT au create : la séquence
+    est le contrat de sys-04), la lecture attend ; le compte nul est le
+    refus -7 NOMMÉ (le pair a fermé), jamais un succès silencieux ;
+12. **Les IOCTL et les structures d'échange sont DES DONNÉES du plan
+    d'adressage** — dérivées par la macro canonique (jamais recopiées en
+    littéraux de notation, T5), les tailles MESURÉES (20/40/24/12 o), les
+    drapeaux MESURÉS (AfdFlags 0x20 au receive : l'erratum de lecture
+    consigné à sys-06 — la MESURE en AfdFlags, la littérature en
+    TdiFlags, la notation suivra la mesure) ;
+13. **Le transport est SANS ÉTAT** — le bloc ne détient rien (règle 6
+    TENUE) : ni séquence, ni compte cumulé, ni reste de lecture ; ce que
+    le noyau n'a pas livré vit dans la file du NOYAU, jamais chez le
+    bloc ;
+14. **La fermeture est AU KIT** — « NtClose » résolu par sys-02, émis par
+    sys-01 : la fermeture n'est PAS un bloc (le kit orchestre sa
+    session), miroir de la règle 6 : l'état vit chez l'appelant.
+
+## Spécifications nouvelles (génération 8 étendue, blocs g9xxxx — suite)
+
+| Spécification | Bloc carte | Rôle | Zone prévue |
+|---|---|---|---|
+| sys-04:R1 | g90004 | L'établissement — le socket natif par AFD : NtCreateFile (\Device\Afd\Endpoint, EA AfdOpenPacketXX) + le bind implicite WILDCARD + le connect, TROIS SSN résolus au geste même | sys @ .text5, réserve 0xA240 |
+| sys-05:R1 | g90005 | L'émission — IOCTL_AFD_SEND, le WSABUF pointant la charge du kit, TOTALE ou refus -7 | sys @ .text5, à la suite |
+| sys-06:R1 | g90006 | La réception — IOCTL_AFD_RECEIVE bloquant, le noyau écrit chez le kit, n ≥ 1 ou la demi-fin -7 | sys @ .text5, à la suite |
+
+## La provenance du socle (la couche I la cite — l'instrument la re-dérive)
+
+- les définitions canoniques : **phnt/ntafd.h** — « Ancillary Function
+  Driver Definitions », diversenok, Hunt & Hackett, avril 2025
+  (systeminformer/phnt, commit 2dda0dd) : AfdOpenPacket,
+  _AFD_CONTROL_CODE, AFD_CONNECT_JOIN_INFO_TL (le mode TLI — aucun
+  device de transport déclaré : SOCKADDR, PAS TRANSPORT_ADDRESS),
+  AFD_BIND_INFO_TL, AFD_SEND_INFO/AFD_RECV_INFO (C_ASSERT : tailles
+  égales), AFD_WILDCARDADDRESS, TDI_RECEIVE_NORMAL ;
+- les mesures WinDbg **Windows 11 x64** : la série « Under the Hood of
+  AFD.sys » (M. Lewczak, leftarcode.com, parties 1-4, juillet-août 2025) :
+  le dump du create EA (54 o, EaValueLength 0x1E), le dump du bind
+  IMPLICITE mswsock au connect (20 o, flags 2), le dump du connect
+  (40 o, les zéros des trois champs acceptés), le dump du send (24 o,
+  AfdFlags 0) et du receive (24 o, AfdFlags 0x20) — recopiés OCTET PAR
+  OCTET en VECTEURS DORÉS à l'instrument verifier_specs_m9d.py ;
+- le laboratoire ne possède AUCUN Windows : la preuve de notation se
+  jouera au harnais sur FIXTURES AFD SYNTHÉTIQUES (le modèle
+  différentiel M4/M5), le terrain M9-(f) confrontera le VRAI afd.sys de
+  la machine du développeur — la version Windows du run consignée au
+  témoin (règle 2, la réserve d'ère s'étend au transport).
+
+## Le plan d'adressage étendu (m8/layout.py — la source unique)
+
+Les slots .text5 du socle sont PRÉFIGURÉS dans la réserve contiguë
+(0xA240-0xBFFF : « la croissance du domaine » — sys-04 @ 0xA240,
+sys-05 @ 0xA540, sys-06 @ 0xA6C0) : l'ARRÊT viendra au geste de la
+notation sur les longueurs réelles (D161 rejoué, la préfiguration
+n'est pas un droit). Les fixtures du socle vivent en **.text6**
+AU-DELÀ des fixtures poignée tls13 (fin 0x10C10) : le nom-device
+UTF-16LE @ 0x10C20 (42 o), le EA complet déterministe @ 0x10C50
+(54 o), le bind WILDCARD @ 0x10C90 (20 o), les noms de résolution
+« NtCreateFile »/« NtDeviceIoControlFile »/« NtClose » @
+0x10CB0/0x10CC0/0x10CE0 (SPANS sans NUL) — la réserve .rdata M8 est
+ÉPUISÉE par K[64] (Entrée 172, l'ARRÊT nommé tenu : les nouveaux
+fixtures en .text6, jamais au-delà de la borne 0x10CF0 sans arrêt).
+La table des verdicts passe de SEPT à **HUIT** noms : le -7
+TRANSPORT (l'émission partielle, la demi-fin de réception — les
+frontières que tls13-28 a consignées AVANT le socle).
+
+## Frontières (la révision)
+
+La présente révision ne touche NI aux spécifications sys-01..03 (les
+balises scellées, INTACTES), NI au scellé 0.9.0 (R7), NI aux 28
+spécifications tls13 (l'arbre M9 relu VERT — verifier_specs_m9a), NI
+aux balises (aucune posée : la 1.0.0-dev.1 viendra du build (e), geste
+de BUILD). Le CertificateVerify cryptographique, la PEB-walk et la
+contre-mesure du hooking demeurent les CHANTIERS FUTURS NOMMÉS qu'ils
+sont. AUCUN octet de notation n'est écrit par la présente (R2 : la
+couche I précède — l'instrument verifier_specs_m9d.py en est le juge,
+le juge est le code).
+
+## La notation du socle (phase 2 — l'écrit a précédé, la notation a suivi)
+
+La R2 a vécu : les TROIS spécifications ci-dessus ont précédé, la
+notation suit. Les brouillons sont assemblés par `outils/auteur.py`
+(keystone, rien d'autre — l'arithmétique d'adresses de l'auteur) :
+
+- **sys-04-transport** — 676 o MESURÉS, slot 0xA240/0x300 ARRÊTÉ
+  (92 o de NOP) : create + bind WILDCARD + connect, les ONZE/DIX/DIX
+  arguments NT, les TROIS résolutions au geste même (l'alternance
+  résoudre-émettre × 3 dans les octets), le handle en LOCALE posé à
+  [P3] au succès des TROIS gestes SEULEMENT (Q4 : au -6, AUCUNE
+  possession partielle) ;
+- **sys-05-emission** — 289 o MESURÉS, slot 0xA540/0x180 ARRÊTÉ
+  (95 o de NOP) : le WSABUF de pile pointe LA CHARGE du kit (P3
+  traverse, AUCUNE copie), TOTALE ou refus -7 (le compte du IOSB
+  consigné), la garde -5 AVANT tout ;
+- **sys-06-reception** — 287 o MESURÉS, slot 0xA6C0/0x180 ARRÊTÉ
+  (97 o de NOP) : AfdFlags = TDI_RECEIVE_NORMAL 0x20 — L'ERRATUM
+  TENU (LA MESURE en TROISIÈME champ : la littérature, qui le met en
+  TdiFlags, serait REFUSÉE par le noyau strict du harnais), LE ZÉRO
+  EST LA DEMI-FIN -7, le noyau ÉCRIT chez le kit.
+
+L'ERRATUM DE NOTATION n° 3 consigné sur pièces : le DesiredAccess
+0xC0140000 (bit 31 posé) se charge en `mov edx` ZÉRO-étendu — le
+round-trip V1 a attrapé le `mov rdx` fauteur DONT le C7 SIGNERAIT
+l'extension (0xFFFFFFFFC0140000 : un refus muet du noyau entier) AVANT
+que le noyau simulé ne parle — la preuve a corrigé la notation, la
+méthode est la même depuis le geste hkdf.
+
+La preuve : `m8/harnais_sys.py` étendu au noyau AFD STRICT — chaque
+geste transport VALIDE ses arguments contre le plan (les VECTEURS
+DORÉS rejoués : le EA déterministe, le bind WILDCARD, les zéros du
+connect MESURÉS, l'erratum AfdFlags), les verdicts -1/-4/-5/-6/-7
+NOMMÉS aux TROIS étages d'échec (le canari de [P3] constate l'absence
+de possession partielle), le traceur SOUS-CADRE juge la PROVENANCE de
+chaque écriture (les blocs prouvés sys-02/memcmp/sys-01 ou les pushes
+des call du bloc — TOUT autre scribble est une faute), la
+falsification mute UN point de chaque notation (19 mutantes : les
+IOCTL échangés, le sockaddr décalé, l'erratum falsifié DANS LES DEUX
+SENS, la demi-fin masquée, la résolution sautée) — **131 contrôles ·
+131 VERTS × 3 graines** ; l'instrument `verifier_specs_m9d.py` relu :
+**116 VERTS** (phases 1+2 : les specs, les constantes re-dérivées, les
+vecteurs dorés, la notation concordante au plan). Le terrain M9-(f)
+confrontera le VRAI afd.sys de la machine du développeur.

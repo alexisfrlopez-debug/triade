@@ -4982,3 +4982,129 @@ Stage Summary:
 - LE DOMAINE tls13 EST COMPLET : LES 28 BLOCS notés-mesurés-prouvés, de
   SHA-256 à la machine d'états — reste la fondation socket, la cérémonie
   du sceau, le build, le terrain : LA GRANDE ŒUVRE.
+
+## Task ID 94 — LE CHANTIER M9-(d) : LE SOCLE SOCKET sys-04..06 NOTÉ-MESURÉ-PROUVÉ (07/11)
+
+- LA SYNCHRO VÉRIFIÉE AVANT LE GESTE (« on enchaine ») : drive_sync.py
+  --quiet EXIT 0 (rien à téléverser — le miroir DÉJÀ à la pointe 514f42b
+  [la famille poignée + le principal, Task 93]), l'arbre propre : la
+  reprise voit les specs sys-04..06, le README § 9-14, le plan étendu et
+  l'instrument verifier_specs_m9d.py 93 VERTS (la phase 1 de la couche I
+  DÉJÀ consignée par le développeur — R2 tenue : l'écrit a précédé, la
+  notation attendait SON geste), la réserve instrumentale vivante
+  (keystone/unicorn/capstone).
+- LE GESTE : sys-04..06 — LA FONDATION I/O que M8 a nommée, notée sur les
+  specs telles quelles : l'ÉTABLISSEMENT (NtCreateFile sur
+  \Device\Afd\Endpoint — le EA AfdOpenPacketXX fixture, le handle
+  SYNCHRONE FILE_SYNCHRONOUS_IO_NONALERT — PUIS IOCTL_AFD_BIND le
+  fixture-WILDCARD CITÉ (le noyau DÉDUIT, le domaine ne décide RIEN de la
+  source) PUIS IOCTL_AFD_CONNECT — le sockaddr du kit COPIÉ à +24 SANS
+  interprétation, les zéros de tête MESURÉS acceptés), l'ÉMISSION (le
+  WSABUF de pile pointe LA CHARGE du kit, P3 traverse, AUCUNE COPIE ;
+  TOTALE ou refus -7, le compte Information consigné — jamais une boucle
+  silencieuse), la RÉCEPTION (bloquante sur le handle synchrone ; LE ZÉRO
+  EST LA DEMI-FIN -7 ; le noyau ÉCRIT chez le kit, le reçu INTÈGRE) ;
+  chaque SSN résolu AU GESTE MÊME par sys-02 — « NtDeviceIoControlFile »
+  résolu DEUX FOIS (l'alternance résoudre-émettre × 3 dans les octets,
+  relu par l'instrument).
+- LES MESURES, L'ARRÊT (D161 REJOUÉ — la préfiguration s'est inclinée) :
+  sys-04 676 o (slot 0xA240/0x300, 92 o de NOP), sys-05 289 o
+  (0xA540/0x180, 95 o), sys-06 287 o (0xA6C0/0x180, 97 o) — les slots
+  préfigurés TIENNENT, la réserve contiguë 0xA240 demeure la croissance
+  du domaine ; les fixtures .text6 @ 0x10C20..0x10CE0 CITÉS par les SIX
+  déplacements RIP de sys-04 et l'unique de chacun de 05/06 (relevés par
+  l'instrument — le device UTF-16LE 40/42 [l'erratum n° 2 de l'instrument,
+  corrigé sur pièces AVANT la notation], le EA déterministe 54 o, le bind
+  WILDCARD 20 o, les noms en SPANS).
+- LA PREUVE A CORRIGÉ LA NOTATION ET L'INSTRUMENT, LE JUGE EST LE CODE :
+  l'ERRATUM DE NOTATION n° 3 — le DesiredAccess 0xC0140000 (bit 31 posé)
+  en `mov edx` ZÉRO-étendu, JAMAIS `mov rdx` dont le C7 SIGNERAIT
+  l'extension (0xFFFFFFFFC0140000 : le noyau entier refusé muet) — le
+  round-trip V1 l'a attrapé AVANT que le noyau simulé ne parle, corrigé
+  sur pièces, la consigne citée dans le brouillon ; le noyau AFD strict
+  du harnais a lui-même appris sur pièces : la garde commune refusait le
+  buffer de sortie du BIND (16 o — Q2 de sys-04 : « 16 o de pile pour le
+  BIND, NULL pour le CONNECT ») — la garde déplacée aux gestes qui exigent
+  NULL, le BIND garde SA sortie ; et la leçon canaris : un bloc À cadre
+  appelle des blocs à cadres (sys-02 → memcmp) qui écrivent légitimement
+  SOUS sa trame — la couverture pleine ne juge que les blocs SANS cadre,
+  le harnais gagne le TRACEUR SOUS-CADRE de PROVENANCE (chaque écriture
+  doit venir d'un bloc PRUVÉ sys-02/memcmp scellé M1/sys-01 six octets ou
+  du push taille-8 d'un appel DU bloc — tout autre scribble est une faute
+  NOMMÉE).
+- LES PREUVES : harnais_sys.py ÉTENDU au noyau AFD STRICT (NoyauAFD) —
+  chaque geste transport VALIDE ses arguments contre le plan : les ONZE
+  du create (DesiredAccess, l'OBJECT_ATTRIBUTESLength 0x30/Attributes
+  0x40/ni SD ni QoS, l'UNICODE_STRING 40/42 pointant le fixture-device
+  octet pour octet, ShareAccess 3, Disposition 1, CreateOptions 0x20, le
+  EaBuffer CITÉ et sa valeur re-dérivée, EaLength 54), les DIX du
+  bind/connect/send/recv (l'IOCTL du plan, les tailles MESURÉES, le
+  sockaddr recoupé au kit, les zéros de tête, BufferCount 1, les
+  drapeaux : AfdFlags 0 au send — la MESURE p.3 —, AfdFlags 0x20 au recv
+  — L'ERRATUM DE LECTURE TENU, la littérature en TdiFlags serait REFUSÉE
+  par le noyau même) ; V2d/e/f : la marche create→bind→connect relue aux
+  captures (la séquence MESURÉE, jamais connect sans bind), le SSN suit
+  DEUX modules distincts (0x55/0x56 puis 0xAA/0xBB — au geste même), la
+  TROISIÈME résolution mise à l'épreuve par le noyau qui CORROMPT le stub
+  au bind (le module change sous les pieds : -4 nommé, la marche s'arrête
+  — jamais un numéro en cache), le handle en LOCALE jamais P3 (au -6 des
+  TROIS étages : create, bind, connect — le canari de [P3] constate
+  l'absence de possession partielle, le premier STATUS non nul arrête),
+  l'émission 16406 o d'un geste (la borne TLS 5+2^14+17), la divergence
+  iosb -6, les demi-fins et RESET consignés, les spans -5 AVANT tout ;
+  V3b : 240 cas fuzzés en graine — modules aléatoires (SSN uniques — la
+  leçon du STATUS_INVALIDE : le dispatch suit la fixture, la résolution
+  est la SEULE source du numéro), comportements noyau aléatoires par
+  étage, le modèle de la couche I prédit, l'émulation confrontée verdict
+  par verdict ; V4b : 19 mutantes d'UN point (stables en taille) — le
+  DesiredAccess+1, les IOCTL échangés ou inconnus, le EA tronqué, le
+  MaximumLength faussé, le sockaddr décalé, la fausse source du handle,
+  l'IOSB aveugle, la résolution sautée (js→jns), la garde span inversée,
+  le compteur contre rax, L'ERRATUM FALSIFIÉ DANS LES DEUX SENS (0x20→0
+  et la littérature 0→0x20 : la MESURE est la SEULE écriture qui passe
+  le noyau), la demi-fin masquée (jz→jnz : le zéro déguisé en succès) —
+  CHACUNE trahit sa batterie, les trois témoins restent verts —
+  BILAN : 131 contrôles · 131 VERTS × 3 graines (20261105, 424242,
+  777777) ; l'instrument verifier_specs_m9d.py révisé en phases 1+2 :
+  116 VERTS (C7 inversé : la notation PRÉSENTE + CONCORDANTE — les
+  constantes re-lues de la notation contre le plan re-dérivé, les
+  citations RIP, la marche dans les octets, les brouillons).
+- FRONTIÈRES : aucune balise, AUCUN build (le chantier (e) attend : la
+  cérémonie du sceau I de l'ère + le 1.0.0-dev.1 — le garde VERT, la
+  dette de cérémonie demeure), m8/proxy.exe le scellé 0.9.0 INTACT (relu
+  par l'instrument), les notations et specs sys-01..03 INTACTES, l'arbre
+  tls13/I des 28 INTACT, la charte tenue de § 1 à § 14 ; consignations :
+  README m8/I phase 2 (les mesures, l'erratum n° 3, les preuves), worklog
+  +Task ID 94.
+- SUITE : (e) LA CÉRÉMONIE DU SCEAU I de l'ère + le build 1.0.0-dev.1
+  (l'oracle structurel y lira : le socket natif SANS une seule entrée
+  d'import réseau), (f) le terrain — LA GRANDE ŒUVRE (le VRAI afd.sys de
+  la machine du développeur, la version Windows consignée au témoin).
+- PASSATION (le même geste, Task ID 94) : le bundle courant
+  triade-history-090-<pointe>.bundle (branche jalon == la pointe [le
+  geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH : il
+  porte LE SOCLE SOCKET [Entrée 176 — sys-04..06 notés-mesurés-prouvés :
+  676/289/287 o, round-trip 100 %, le noyau AFD strict, 131 contrôles ·
+  131 VERTS × 3 graines, 19 mutantes trahies, l'erratum de notation n° 3
+  consigné sur pièces] + le worklog Task 94), l'ancien 090-514f42b (LA
+  FAMILLE poignée + LE PRINCIPAL) ARCHIVÉ VERSIONNÉ (recoupé — rien
+  supprimé), /test sans copie (recoupé), le push GitHub à la pointe
+  (origin == la pointe relu MATCH — les trois miroirs alignés) ; script
+  suivi : passe_bundle_m9g.py ; LA SÉRIE 090 POURSUIT — le geste est
+  PASSÉ.
+
+Stage Summary:
+- LA FONDATION I/O EXISTE EN OCTETS : l'endpoint AFD naît, se binde
+  WILDCARD et connecte par TROIS appels NT directs, l'émission est
+  TOTALE ou refusée, la réception est bloquante et LE ZÉRO EST LA
+  DEMI-FIN — le client TLS 1.3 pur (M9-(b), les 28 blocs) a SON socle :
+  la pile n'importe plus ws2_32, la surface de hook est close côté
+  transport.
+- LA PREUVE A CORRIGÉ LA NOTATION UNE FOIS ET L'INSTRUMENT DEUX FOIS :
+  le boutisme du DesiredAccess (mov edx zéro-étendu — le round-trip
+  l'a pris avant le noyau), la sortie du BIND (jamais NULL — Q2), la
+  provenance sous-cadre (les cadres des blocs prouvés ne sont pas des
+  scribbles) — le juge est le code, la méthode est la même depuis le
+  geste hkdf.
+- LE DOMAINE sys COMpte SIX BLOCS, L'ÈRE 1.0.0 A SES FONDATIONS : reste
+  la cérémonie du sceau, le build, le terrain — LA GRANDE ŒUVRE.

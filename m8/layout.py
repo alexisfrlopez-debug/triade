@@ -1,5 +1,7 @@
 """layout.py — Plan d'adressage du projet TRIADE, jalon M8 (profil
-x86-64-win11-pe, le domaine sys — l'ère 0.9.0 des additions mesurées, D160).
+x86-64-win11-pe, le domaine sys — l'ère 0.9.0 des additions mesurées, D160),
+ÉTENDU au chantier M9-(d) : LE SOCLE SOCKET (sys-04..06, l'ère 1.0.0 du
+transport — la fondation I/O du client TLS 1.3 pur, le plan M9 l'attendait).
 
 Source unique de vérité partagée par le futur build_m8.py, outils/auteur.py
 et oracle du jalon (les chantiers (b)/(c)). Toute adresse, tout décalage,
@@ -175,3 +177,201 @@ def _trouver_memcmp():
     raise RuntimeError("b20002 (libc-02 memcmp) introuvable à la table scellée")
 
 MEMCMP_VA, MEMCMP_SLOT = _trouver_memcmp()   # 0x1180, 0x80 — la source héritée
+
+# ============================================================================
+# --- LE TRANSPORT AFD (chantier M9-(d), l'ère 1.0.0 — charte § 9 du README ---
+# --- révisé : la source unique des constantes du socle socket sys-04..06) ---
+#
+# PROVENANCE (la couche I la cite, l'instrument verifier_specs_m9d.py la
+# RE-DÉRIVE PAR CODE — le juge est le code, jamais une copie d'écriture) :
+#   (1) les définitions canoniques du header phnt/ntafd.h — « Ancillary
+#       Function Driver Definitions », diversenok, Hunt & Hackett, avril 2025
+#       (systeminformer/phnt, commit 2dda0dd) : AfdOpenPacket, la macro
+#       _AFD_CONTROL_CODE, AFD_CONNECT_JOIN_INFO_TL, AFD_BIND_INFO_TL,
+#       AFD_SEND_INFO/AFD_RECV_INFO (C_ASSERT mêmes tailles), les
+#       AFD_*ADDRUSE et les TDI_RECEIVE_* ;
+#   (2) les MESURES WinDbg Windows 11 x64 de la série « Under the Hood of
+#       AFD.sys » (M. Lewczak, leftarcode.com, parties 1 à 4, juillet-août
+#       2025) : les dumps OCTET PAR OCTET du create EA, du bind IMPLICITE
+#       mswsock, du connect (SOCKADDR en mode TLI — aucun device de
+#       transport déclaré à la création), du send et du receive — recopiés
+#       en VECTEURS DORÉS à l'instrument ;
+#   le laboratoire ne possède AUCUN Windows : les preuves de notation se
+#   joueront au harnais sur FIXTURES AFD SYNTHÉTIQUES (le modèle
+#   différentiel M4/M5), et le terrain M9-(f) confrontera le VRAI afd.sys de
+#   la machine du développeur — la version Windows du run sera consignée au
+#   témoin (charte § 2, la réserve d'ère étendue au transport).
+#
+# L'ORDRE DES GESTES DE sys-04 (la séquence mesurée mswsock, jamais une
+# invention) : NtCreateFile(\Device\Afd\Endpoint, EA AfdOpenPacketXX, le
+# handle SYNCHRONE) PUIS IOCTL_AFD_BIND (le bind implicite WILDCARD —
+# « infer the address », jamais une adresse choisie par le domaine) PUIS
+# IOCTL_AFD_CONNECT (le sockaddr distant du kit, boutisme réseau) — chaque
+# SSN résolu AU GESTE MÊME par sys-02 (charte § 1/§ 6 : le bloc ne détient
+# rien, chaque appel résout).
+# ============================================================================
+
+# --- le périphérique et le EA de création (les mesures p. 1) --------------------
+
+AFD_NOM_DEVICE = "\\Device\\Afd\\Endpoint"    # le nom ouvert par ws2_32 sur
+                                             # Windows 11 (mesuré leftarcode
+                                             # p.1 — phnt nomme le device
+                                             # \Device\Afd, la MESURE ouvre
+                                             # \Device\Afd\Endpoint)
+TXT_AFD_DEVICE = AFD_NOM_DEVICE.encode("utf-16le")   # 40 o — 20 caractères
+LEN_AFD_DEVICE = 40                         # sans le NUL UTF-16 du fixture
+
+AFD_EA_NOM = b"AfdOpenPacketXX"              # 15 o — phnt AfdOpenPacket ;
+                                             # ReactOS AFD_PACKET_COMMAND_
+                                             # LENGTH 15 : les DEUX recoupent
+LEN_AFD_EA_NOM = 15
+AFD_EA_VALEUR = 30                           # EaValueLength MESURÉ (dump
+                                             # 1E 00) : les SIX DWORD utiles
+                                             # + 6 o de marge — les NOTRES
+                                             # NULS (déterministes ; la
+                                             # mesure ws2_32 y laisse du
+                                             # bruit de pile qu'afd.sys ne
+                                             # lit pas : TransportDevice-
+                                             # NameLength = 0)
+AFD_EA_TAILLE = 54                           # 8 (l'en-tête EA) + 16 (le nom
+                                             # + NUL) + 30 (la valeur)
+
+# --- les paramètres du NtCreateFile (les mesures p. 1) -------------------------
+
+AFD_DESIRED_ACCESS = 0xC0140000              # mesuré ws2_32 Windows 11 (GENERIC_
+                                             # READ|WRITE + SYNCHRONIZE +
+                                             # marge d'accès — la mesure fait
+                                             # foi, le terrain recoupera)
+AFD_CREATE_OPTIONS = 0x20                    # FILE_SYNCHRONOUS_IO_NONALERT :
+                                             # le handle est SYNCHRONE — le
+                                             # recv BLOQUANT du kit (Q2 du
+                                             # socle tls13-28)
+AFD_CREATE_DISPOSITION = 1                   # FILE_OPEN
+AFD_SHARE_ACCESS = 3                         # FILE_SHARE_READ | FILE_SHARE_WRITE
+OBJ_CASE_INSENSITIVE = 0x40                  # les attributs d'objet (mesuré)
+OBJECT_ATTRIBUTES_TAILLE = 0x30              # 48 o (mesuré)
+
+# --- l'endpoint du jalon (le EA porté par ces valeurs, jamais ailleurs) --------
+
+AF_INET = 2                                  # la famille IPv4
+SOCK_STREAM = 1                              # le flux TCP
+IPPROTO_TCP = 6                              # le protocole TCP
+SOCKADDR_TAILLE = 16                         # sockaddr_in : family u16 LE,
+                                             # port u16 RÉSEAU, adresse u32
+                                             # RÉSEAU, zero[8] — LE BOUTISME
+                                             # EST CELUI DU FORMAT, le kit
+                                             # fournit, le domaine ne
+                                             # convertit JAMAIS en silence
+
+# --- les IOCTL du transport — DÉRIVÉS PAR LA MACRO canonique -------------------
+# _AFD_CONTROL_CODE(Request, METHOD_NEITHER) = FILE_DEVICE_NETWORK(0x12) << 12
+#     | Request << 2 | 3  (phnt ; les quatre recoupés par les mesures) :
+#   BIND 0x12003 (mesuré p.2) · CONNECT 0x12007 (p.2) ·
+#   RECEIVE 0x12017 (p.4) · SEND 0x1201F (p.3).
+
+AFD_REQ_BIND = 0
+AFD_REQ_CONNECT = 1
+AFD_REQ_RECEIVE = 5
+AFD_REQ_SEND = 7
+
+
+def _afd_ioctl(req):
+    return 0x12 << 12 | req << 2 | 3
+
+
+IOCTL_AFD_BIND = _afd_ioctl(AFD_REQ_BIND)            # 0x12003
+IOCTL_AFD_CONNECT = _afd_ioctl(AFD_REQ_CONNECT)      # 0x12007
+IOCTL_AFD_RECEIVE = _afd_ioctl(AFD_REQ_RECEIVE)      # 0x12017
+IOCTL_AFD_SEND = _afd_ioctl(AFD_REQ_SEND)            # 0x1201F
+
+# --- les structures d'échange (les mesures p. 2/3/4 — les tailles EXACTES) -----
+
+AFD_BIND_WILDCARD = 2                        # AFD_WILDCARDADDRESS (phnt) : le
+                                             # bind IMPLICITE mswsock au
+                                             # connect — le noyau DÉDUIT
+                                             # l'adresse source (mesuré p.2 :
+                                             # « infer from which available
+                                             # address » — jamais une
+                                             # adresse choisie par le domaine)
+AFD_BIND_TAILLE = 0x14                       # 20 o : flags u32 + SOCKADDR 16
+AFD_BIND_SORTIE = 0x10                       # 16 o de sortie (mesuré !irp)
+AFD_CONNECT_TAILLE = 0x28                    # 40 o : SanActive (1 + 7 NUL) +
+                                             # RootEndpoint 8 + Connect-
+                                             # Endpoint 8 (la MESURE : les
+                                             # zéros SONT acceptés) + SOCKADDR
+AFD_SENDRECV_TAILLE = 0x18                   # 24 o : BufferArray ptr +
+                                             # BufferCount u32 + AfdFlags u32 +
+                                             # TdiFlags u32 (C_ASSERT phnt :
+                                             # SEND == RECV)
+WSABUF_TAILLE = 12                           # len u32 + buf ptr
+TDI_RECEIVE_NORMAL = 0x20                    # le recv NORMAL : le champ
+                                             # AfdFlags MESURÉ (leftarcode
+                                             # p.4 : « I have experimentally
+                                             # checked » — la littérature le
+                                             # met en TdiFlags, la MESURE le
+                                             # met en AfdFlags ; l'erratum de
+                                             # lecture consigné à sys-06)
+IOSB_TAILLE = 16                             # IO_STATUS_BLOCK : Status 8 +
+                                             # Information 8 (le compteur du
+                                             # transport : émis/lu)
+
+# --- la table des verdicts ÉTENDUE (charte § 5 : le huitième nom) ---------------
+
+V_TRANSPORT_ECHEC = -7                       # l'émission PARTIELLE, la DEMI-FIN
+                                             # de réception (Q2/Q3 du socle
+                                             # tls13-28 : « le zéro de
+                                             # réception est le refus -7 du
+                                             # KIT » ; « un envoi partiel est
+                                             # le refus du kit ») — la table
+                                             # du domaine passe de SEPT à
+                                             # HUIT noms à M9-(d)
+
+# --- les noms NT du transport (les CLEFS de résolution — des SPANS, jamais -----
+# --- de NUL supposé, miroir R_SYS_NOM) ------------------------------------------
+
+TXT_NT_CREATEFILE = b"NtCreateFile"              # 11 o — le geste 1 de sys-04
+LEN_NT_CREATEFILE = 11
+TXT_NT_DEVICEIOCTL = b"NtDeviceIoControlFile"    # 21 o — les gestes 2/3 de
+LEN_NT_DEVICEIOCTL = 21                          #        sys-04, 05 et 06
+TXT_NT_CLOSE = b"NtClose"                        # 7 o — LA FERMETURE AU KIT
+LEN_NT_CLOSE = 7                                 # (le kit résoudra et émettra
+                                                 # par sys-02 + sys-01 : la
+                                                 # fermeture n'est PAS un bloc)
+
+# --- Les slots .text5 du socle (sys-04..06 — L'ARRÊT DÉFINITIF au geste de ---
+# --- la notation, D161 REJOUÉ : la mesure auteur décide, la préfiguration ---
+# --- s'est inclinée — 676/289/287 o de code MESURÉS (la leçon du round-trip ---
+# --- au passage : le DesiredAccess en edx ZÉRO-étendu, jamais mov rdx ---
+# --- dont le C7 SIGNERAIT l'extension — le harnais l'a attrapé AVANT le ---
+# --- noyau), les tailles des slots restent les bornes préfigurées ---------
+# --- tassées depuis la réserve contiguë 0xA240, la croissance M8) -------------
+
+SYS04_VA = 0xA240        # g90004 — l'établissement : 676 o MESURÉS (arrêté :
+SYS05_VA = 0xA540        # g90005 — l'émission : 289 o MESURÉS (arrêté :
+SYS06_VA = 0xA6C0        # g90006 — la réception : 287 o MESURÉS (arrêté :
+SLOTS_SYS["g90004"] = (SYS04_VA, 0x300)   # 676 o de code · 92 o de NOP (I10)
+SLOTS_SYS["g90005"] = (SYS05_VA, 0x180)   # 289 o de code · 95 o de NOP (I8)
+SLOTS_SYS["g90006"] = (SYS06_VA, 0x180)   # 287 o de code · 97 o de NOP (I9)
+
+NOMS_BLOCS["g90004"] = "sys-04-transport"
+NOMS_BLOCS["g90005"] = "sys-05-emission"
+NOMS_BLOCS["g90006"] = "sys-06-reception"
+
+# --- Les fixtures .text6 du transport (PRÉFIGURATION — l'ARRÊT au geste de -----
+# ---- la notation, miroir D161 : la mesure décidera ; la réserve .rdata M8 ----
+# ---- est ÉPUISÉE par K[64] [Entrée 172], les fixtures vivent AU-DELÀ des ------
+# ---- fixtures poignée tls13 [fin 0x10C10 : R_HRR 0x10BF0 + 32], chacun --------
+# ---- aligné 16 — l'instrument recoupe les DEUX plans, la concordance des ------
+# ---- bornes est un contrôle VERT) ---------------------------------------------
+
+R_SYS_DEVICE = 0x10C20         # le nom UTF-16LE du périphérique + NUL (42 o)
+R_SYS_EA = 0x10C50             # le EA complet DÉTERMINISTE (54 o — la valeur
+                               # aux SIX DWORD utiles + 6 NULS)
+R_SYS_BIND = 0x10C90           # le bind implicite WILDCARD (20 o : flags 2,
+                               # AF_INET, port 0, INADDR_ANY, zero NUL)
+R_SYS_NOM_CREATEFILE = 0x10CB0  # « NtCreateFile » (11 o, SPAN sans NUL)
+R_SYS_NOM_DEVICEIOCTL = 0x10CC0  # « NtDeviceIoControlFile » (21 o, SPAN)
+R_SYS_NOM_CLOSE = 0x10CE0      # « NtClose » (7 o, SPAN)
+R_SYS_FIXTURES_FIN = 0x10CF0   # la borne préfigurée — le prochain fixture
+                               # pose ICI (miroir D95 : jamais au-delà d'une
+                               # borne sans arrêt nommé au geste suivant)
