@@ -5702,6 +5702,27 @@ Work Log:
   (maj_plan_m9p.py : rangée (f) + État), worklog +Task ID 101.
 - SUITE : LA RELANCE DU DÉVELOPPEUR — puis le recoup, et si vert : LA
   FINALE 1.0.0 — LA GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 101) : le bundle courant
+  triade-history-090-cd19fe6.bundle (18 393 913 o, md5 6dd8c1d1…,
+  branche jalon == cd19fe6 [le geste + sa consignation]) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE TROISIÈME RUN RECROPÉ
+  [Entrée 183 — le recoup du jalon VERT : le ClientHello de LA MACHINE
+  == la référence octet pour octet, 119 o, LA PREUVE CRYPTOGRAPHIQUE
+  DU JALON SUR LA MACHINE RÉELLE ; la réparation de l'erratum n° 7
+  PROUVÉE (la clé attendue NON-NULLE 89d50a86…) ; la mort nommée à
+  sys-05 : -6 à SON PREMIER appel réel (l'émission du CH, UNE SEULE
+  émission tentée) → -7 transport, état 5 ; le kit ACQUITTÉ INCHANGÉ
+  90a1d022… ; le run archivé → preuves-run-m9f-3/ AVEC le verdict du
+  recoup 26/26 ; LA RELANCE attendue] + le worklog Task 101 + le
+  scénario INCHANGÉ relu à la pointe [le kit ACQUITTÉ : les TROIS
+  PORTES passées au geste même] + le plan à jour [rangée (f) + État]),
+  l'ancien 090-374137b (L'ERRATUM n° 7 RÉPARÉ) ARCHIVÉ VERSIONNÉ (md5
+  93b7f7d4… recoupé — 46 archives, rien supprimé), /test sans copie
+  de bundle (recoupé) ET le kit du /test == l'ACQUITTÉ md5 90a1d022…
+  (recoupé INCHANGÉ), le push GitHub à la pointe (origin == cd19fe6
+  relu MATCH — les trois miroirs alignés) ; script suivi :
+  passe_bundle_m9p.py ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ,
+  LA RELANCE DU DÉVELOPPEUR ATTENDUE.
 
 Stage Summary:
 - LE TROISIÈME RUN EST LE PLUS LOIN DU PROGRAMME : la réparation de
