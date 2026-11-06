@@ -138,6 +138,30 @@ _FICHIERS = {
                 "drapeau, AUCUN court-circuit, le branch sur LE drapeau), "
                 "PUIS le CTR : LA RESTITUTION EST LA DERNIÈRE OPÉRATION (I2) ; "
                 "l'étiquette divergente → rax = -4 NOMMÉ, la sortie INTACTE"),
+    "h100020": ("tls13-20-enregistrement-proteger", "tls13-20:R1",
+                "bloc ; tls13-18 (UNE composition — le scellement) ; le "
+                "texte interne charge || type au DERNIER octet (bourre "
+                "LONGUEUR ZÉRO), le nonce = IV ⊕ séquence GROS-BOUTISTE "
+                "(I2 : le IV COPIÉ en local, le contexte jamais réécrit), "
+                "l'AAD = l'en-tête LOCALE (23, 0x0303, N+17 u16 "
+                "gros-boutiste — copiée à la sortie APRÈS le succès : le "
+                "-3 propagé n'écrit RIEN) ; l'incrémentation SUIT le "
+                "scellement (un échec n'avance JAMAIS) ; le cadre 0x4078 : "
+                "le texte interne jusqu'à 2^14+1 sur la pile ; le verdict "
+                "-3 = le verdict PROPAGÉ de 18 (N = 2^14 : le texte interne "
+                "2^14+1 hors la brique — la fragmentation à l'appelant)"),
+    "h100021": ("tls13-21-enregistrement-deproteger", "tls13-21:R1",
+                "bloc ; tls13-19 (UNE composition — le déverrouillage) ; "
+                "l'en-tête CONFRONTÉE AVANT TOUT (le type 23 → -1, la "
+                "longueur déclarée == reçue et les bornes → -2, la version "
+                "héritage IGNORÉE mais couverte par l'AAD : la mutation → "
+                "-4, la cryptographie attrape ce que la logique ignore), "
+                "l'AAD = l'en-tête REÇUE telle quelle, le nonce = IV ⊕ "
+                "séquence, la restitution DERNIÈRE (le -4 : la sortie et "
+                "le type INTACTS, la séquence ne bouge pas) ; le type = le "
+                "DERNIER octet du texte interne déverrouillé dans le "
+                "tampon LOCAL (la sortie P4 n'a que L−17 o) ; l'anti-rejoue "
+                "par la séquence (une étiquette qui ne colle pas)"),
 }
 
 
@@ -166,6 +190,8 @@ SYMBOLES = {
     "TLS13": L.TLS13_VA,
     "TLS16": L.TLS16_VA,     # le chiffrement d'un bloc — appelé par 18/19
     "TLS17": L.TLS17_VA,     # la multiplication GF(2^128) — appelée par 18/19
+    "TLS18": L.TLS18_VA,     # GCM sceller — appelé par 20 (l'enregistrement)
+    "TLS19": L.TLS19_VA,     # GCM ouvrir — appelé par 21 (l'enregistrement)
     # le fixture .rdata du domaine (le plan, source unique) : K[64] dans la
     # réserve M8 exactement (RVA 0x2F00 — 256 o, vérifié vierge sur pièces)
     "K": L.R_K,
@@ -356,6 +382,8 @@ NOMS_COURTS = {
     "tls13-17-ghash-multiplication": "GHASH la multiplication GF(2^128) (SP 800-38D § 6.3)",
     "tls13-18-gcm-sceller": "GCM sceller (SP 800-38D § 7.1 — CTR + étiquette)",
     "tls13-19-gcm-ouvrir": "GCM ouvrir (le verdict AVANT la restitution, fail-closed)",
+    "tls13-20-enregistrement-proteger": "l'enregistrement protéger (RFC 8446 § 5.2)",
+    "tls13-21-enregistrement-deproteger": "l'enregistrement déprotéger (l'anti-rejoue par la séquence)",
 }
 
 

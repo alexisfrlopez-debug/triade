@@ -212,6 +212,18 @@ TLS19_VA = 0xE500        # h100019 — GCM ouvrir (slot 0x4C0)
 # fin de la famille aead : 0xE9C0 — les familles enregistrement, poignée,
 # principal suivent (la marge du plan : sous 0xF000, TENUE)
 
+# --- La famille enregistrement ARRÊTÉE (chantier (b), le geste cinq — D161 rejoué) --
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py (la
+# mesure auteur décide) : multiples de 64 (D8), tassés depuis la fin
+# aead (0xE9C0), padding >= 16 — le MINIMUM admissible par longueur :
+#   tls13-20 :  349 o notés -> slot 0x180 (padding 35 — le verdict
+#                              64 bits de la sonde : mov rax, -N, +3 o)
+#   tls13-21 :  403 o notés -> slot 0x1C0 (padding 45 — idem, +4 o)
+TLS20_VA = 0xE9C0        # h100020 — l'enregistrement protéger (slot 0x180)
+TLS21_VA = 0xEB40        # h100021 — l'enregistrement déprotéger (slot 0x1C0)
+# fin de la famille enregistrement : 0xED00 — la famille poignée suit
+# (la marge du plan : la poignée sous 0xF000, la mesure décidera)
+
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
     "h100002": (TLS02_VA, 0x1C0),
@@ -232,6 +244,8 @@ SLOTS_TLS13 = {
     "h100017": (TLS17_VA, 0xC0),
     "h100018": (TLS18_VA, 0x480),
     "h100019": (TLS19_VA, 0x4C0),
+    "h100020": (TLS20_VA, 0x180),
+    "h100021": (TLS21_VA, 0x1C0),
 }
 
 # --- Les fixtures du domaine en .text6 (l'ARRÊT nommé — miroir D95) ---------------
@@ -305,5 +319,7 @@ A_CLE_PUBLIQUE = TLS14_VA  # tls13-14 (le couple du ClientHello)
 A_CLES_TOUR = TLS15_VA     # tls13-15 (le déploiement des clés de tour)
 A_BLOC = TLS16_VA          # tls13-16 (le chiffrement d'un bloc — appelé par 18/19)
 A_GHASH = TLS17_VA         # tls13-17 (la multiplication GF(2^128) — appelée par 18/19)
-A_SCELLER = TLS18_VA       # tls13-18 (GCM sceller)
-A_OUVRIR = TLS19_VA        # tls13-19 (GCM ouvrir)
+A_SCELLER = TLS18_VA       # tls13-18 (GCM sceller — appelée par 20)
+A_OUVRIR = TLS19_VA        # tls13-19 (GCM ouvrir — appelée par 21)
+A_PROTEGER = TLS20_VA      # tls13-20 (l'enregistrement protéger)
+A_DEPROTEGER = TLS21_VA    # tls13-21 (l'enregistrement déprotéger)

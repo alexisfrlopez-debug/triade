@@ -4755,3 +4755,83 @@ Stage Summary:
   (l'immédiat gros-boutiste) nommés par la sonde AVANT le harnais,
   corrigés et rejoués verts — la sonde d'abord, le harnais ensuite :
   LA MÉTHODE EST LA MÊME depuis le geste hkdf.
+
+
+## Task ID 92 — LE CHANTIER M9-(b) CONTINUE : LA FAMILLE enregistrement NOTÉE-MESURÉE-PROUVÉE (07/11)
+
+- LA SYNCHRO VÉRIFIÉE SUR LES TROIS MIROIRS (« on enchaine ») :
+  verify_sync_m9e.py 16 VERTS / 0 ROUGES — HEAD 6dbd7db (la passation
+  Task 91), l'arbre propre, le bundle courant 090-0774e55 UNIQUE, 35
+  archives, /test sans copie, GitHub == 0774e55 (la pointe aead), le
+  jeton OAuth vivant ; la réserve instrumentale RÉINSTALLÉE (le disque
+  labo recyclé ENCORE : capstone/keystone/unicorn/nacl/pefile).
+- LE GESTE : tls13-20/21 — l'enregistrement protéger (le contexte 200 o
+  à la disposition DÉCLARÉE, le cadre NOMMÉ 0x4078 : le texte interne
+  jusqu'à 2^14+1 sur la pile, l'en-tête LOCALE cinq octets fixes copiée
+  à la sortie APRÈS le succès — le fail-closed : le refus n'écrit
+  RIEN ; le nonce = IV ⊕ séquence GROS-BOUTISTE, le contexte jamais
+  réécrit sur son IV ; le type au DERNIER octet du texte interne ;
+  l'incrémentation SUIT le scellement ; le verdict -3 PROPAGÉ de 18 :
+  N = 2^14 porte le texte interne à 2^14+1, HORS la brique — le
+  maximal du protocole refusé par la composition, la fragmentation à
+  l'appelant) et l'enregistrement déprotéger (l'en-tête confrontée
+  AVANT TOUT : le type → -1, la longueur déclarée == reçue et les
+  bornes 18..2^14+16 → -2, LA VERSION héritage IGNORÉE par la logique
+  mais COUVERTE par l'AAD ; l'AAD = l'en-tête reçue telle quelle ; le
+  type = le DERNIER octet déverrouillé dans le tampon local ; la
+  restitution DERNIÈRE ; la séquence n'avance JAMAIS sur l'échec) —
+  notés (349/403 o, round-trip 100 %), mesurés (les slots ARRÊTÉS
+  0x180/0x1C0 depuis 0xE9C0, fin 0xED00 — D161 rejoué), prouvés (LE
+  HARNAIS 48 contrôles · 48 VERTS × 3 graines).
+- LES PREUVES : LE TRANSFERT RFC 8448 EN CHAÎNES — les QUATRE
+  contextes de trafic consommés en séquence : chaque enregistrement du
+  § 3 PROTÉGÉ par 20 == le transcript OCTET POUR OCTET, PUIS
+  DÉPROTÉGÉ par 21 (les charges ET les types), ET LA REJOUE REFUSÉE
+  ×4 (l'anti-rejoue tient dans la cryptographie, pas dans un compteur
+  de logique) ; l'oracle 60+60 ZÉRO écart ; LA BORNE (N = 2^14−1
+  scellé/ouvert — le texte interne 2^14 == la borne de la brique ;
+  N = 2^14 → le -3 PROPAGÉ, la sortie VIERGE ; N = 2^14+1 → -2) ; le
+  type passe-plat 21/22/23 ; l'indifférence (N = 0 : la charge nulle
+  n'est pas un refus) ; LA VERSION héritage mutée → -4 (l'AAD couvre
+  ce que la logique ignore — RFC 8446 § 5.1 « MUST be ignored ») ;
+  L'ORDRE (7 → 8 au succès, FIGÉE sur le -3 et le -4) ; le contrat
+  (le contexte réécrit SUR SA SÉQUENCE SEULE — les 192 premiers
+  octets OCTET-IDENTIQUES ; l'alignement aux 2 entrées de callee ;
+  les refus SANS corruption) ; la falsification (17/17 attrapées) ;
+  le temps constant MESURÉ (12 963/13 029/11 800 instructions — LE
+  VERDICT : la position de la divergence INVISIBLE dans le temps).
+- LE DÉFAUT DE NOTATION nommé par LA SONDE du geste (la méthode du
+  geste aead rejouée : la sonde d'abord, le harnais ensuite) : les
+  verdicts en eax 32 bits — le HAUT de rax à ZÉRO, l'appelant lit
+  4294967295 au lieu de −1 ; corrigé en mov rax, -N (le 64 bits
+  signé de la famille), re-mesuré 343→349 et 395→403, les slots
+  TIENNENT, REJOUÉ VERT (25/25). Les fautes d'instrument : la
+  composition incomplètement chargée (16/17 non posés — le crochet
+  de faute l'a nommée), la séquence python jamais réavancée (la
+  relecture après CHAQUE appel). La faute de CONSTANTE nommée par la
+  dérivation : le payload du Finished copié AVEC son type (0x36 ≠
+  0x35) — le juge est le code, corrigé AVANT la notation.
+- FRONTIÈRES : aucune balise, AUCUN build, l'arbre scellé tls13/I
+  INTACT (verifier_specs_m9a relu VERT au harnais V0), m8/proxy.exe
+  INTACT, les familles sha/hkdf/x25519/aead intactes (relues en V0.b) ;
+  consignations : Entrée 174 PAR SCRIPT, PLAN (chantier (b) : la
+  famille enregistrement + État du programme), worklog +Task ID 92.
+- SUITE : la famille poignée (tls13-23..28 — ServerHello, le
+  calendrier des clés [LE CONTEXTE posé par tls13-24], Finished,
+  l'épinglage, la machine d'états : LE TRANSFERT RFC 8448 en bout en
+  bout), les slots à la suite de 0xED00 (la marge : 0x300 o, la
+  mesure décidera) ; puis (d) sys-04+, (e) LA CÉRÉMONIE + le build
+  1.0.0-dev.1, (f) le terrain.
+
+Stage Summary:
+- LA CINQUIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
+  LA COUCHE ENREGISTREMENT de TLS 1.3 existe en octets — les SEPT
+  enregistrements du transcript officiel RFC 8448 PROTÉGÉS et
+  DÉPROTÉGÉS en chaînes par les briques mêmes, l'anti-rejoue tenu par
+  la cryptographie, la borne du protocole nommée (le -3 propagé), la
+  version héritage couverte par l'AAD quand la logique l'ignore.
+- LA MÉTHODE TIENT : la dérivation (qui a nommé SA PROPRE faute de
+  constante), la sonde (qui a nommé le verdict 32 bits), le harnais
+  (qui a nommé ses fautes d'instrument) — le fail-closed QUATRIÈME
+  geste de suite, la preuve corrige la notation, l'instrument se
+  prouve non-vide.
