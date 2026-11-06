@@ -38,7 +38,9 @@ sys.path.insert(0, REPO + "/scripts")
 import drive_sync as ds  # noqa: E402
 
 BUNDLE = None                                    # posé au geste : 090-<pointe>.bundle
-ANCIEN = "triade-history-090-3fa7168.bundle"      # le courant au miroir (le build né)
+ANCIEN = None                                    # le courant AU MIROIR au geste
+                                                # (découvert : la racine porte UN
+                                                # bundle 090-* qui n'est pas le neuf)
 TIP_ATTENDU = None                              # la POINTE COURANTE, lue au geste —
                                                 # elle porte TOUJOURS le geste (b3fe063 :
                                                 # Entrée 179 + Task 97 + le kit) + ses
@@ -56,7 +58,7 @@ def lister(pid):
 
 
 def main():
-    global BUNDLE, TIP_ATTENDU, CHEMIN_LOCAL
+    global BUNDLE, TIP_ATTENDU, CHEMIN_LOCAL, ANCIEN
     # -- 0. la pointe courante : le geste + ses consignations -------------------
     TIP_ATTENDU = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
                                  capture_output=True, text=True).stdout.strip()
@@ -103,14 +105,21 @@ def main():
     coffre = lister(ds.DRIVE_ROOT_ID)
     miroir = coffre.get("TRIADE-sauvegarde-git") or refus("ETAT", "miroir introuvable")
     racine_m = lister(miroir["id"])
-    ancien = racine_m.get(ANCIEN) or refus("ETAT", f"l'ancien courant {ANCIEN} "
-                                                   "introuvable au miroir")
+    # L'ANCIEN découvert : le bundle 090-* courant de la racine, S'il n'est
+    # pas le neuf (idempotence : absent si déjà re-passé)
+    ANCIEN = next((n for n in sorted(racine_m)
+                   if n.startswith("triade-history-090-")
+                   and n.endswith(".bundle") and n != BUNDLE), None)
+    if ANCIEN:
+        ancien = racine_m.get(ANCIEN) or refus("ETAT", f"l'ancien courant {ANCIEN} "
+                                                       "introuvable au miroir")
     archives = racine_m.get("archives-bundles") or refus("ETAT", "archives-bundles/ "
                                                                  "introuvable")
     deja = racine_m.get(BUNDLE)
     deja_arch = lister(archives["id"]).get(BUNDLE)
-    print(f"[état] ancien courant : {ANCIEN} "
-          f"(md5 {ancien.get('md5Checksum', '')[:8]}…)")
+    if ANCIEN:
+        print(f"[état] ancien courant : {ANCIEN} "
+              f"(md5 {ancien.get('md5Checksum', '')[:8]}…)")
     print(f"[état] archives-bundles/ : {len(lister(archives['id']))} archives")
 
     # -- 2. dépôt du NOUVEAU courant au miroir --------------------------------------
@@ -129,30 +138,35 @@ def main():
               f"(md5 {md5_local[:8]}… MATCH par relecture)")
 
     # -- 3. l'ancien ARCHIVÉ VERSIONNÉ (jamais supprimé, jamais écrasé) -------------
-    deja_archives = lister(archives["id"]).get(ANCIEN)
-    if deja_archives:
-        if deja_archives.get("md5Checksum") != ancien.get("md5Checksum"):
-            refus("ARCHIVAGE", f"{ANCIEN} : l'exemplaire archivé diverge de "
-                               f"l'ancien courant")
-        print(f"[3] {ANCIEN} déjà archivé — idempotent")
+    if not ANCIEN:
+        print("[3] aucun ancien courant à archiver (la racine ne portait que "
+              "le neuf) — idempotent")
     else:
-        url = (ds.API + f"/files/{ancien['id']}"
-               f"?addParents={archives['id']}&removeParents={miroir['id']}")
-        st, rep, _ = ds.api("PATCH", url, body={})
-        if st not in (200, 201):
-            refus("ARCHIVAGE", f"HTTP {st} : {rep[:150]!r}")
-        apres_racine = lister(miroir["id"])
-        apres_archives = lister(archives["id"])
-        if ANCIEN in apres_racine:
-            refus("ARCHIVAGE", f"{ANCIEN} RESTE à la racine du miroir — "
-                               "déplacement inopérant")
-        cible = apres_archives.get(ANCIEN) or \
-            refus("ARCHIVAGE", f"{ANCIEN} absent de l'archive après déplacement")
-        if cible.get("md5Checksum") != ancien.get("md5Checksum"):
-            refus("ARCHIVAGE", f"{ANCIEN} : md5 diverge après déplacement")
-        print(f"[3] archivé versionné : {ANCIEN} → archives-bundles/ "
-              f"(md5 {ancien.get('md5Checksum', '')[:8]}… recoupé — la racine "
-              f"ne porte que le courant ; LE BUILD NÉ demeure dans l'histoire)")
+        deja_archives = lister(archives["id"]).get(ANCIEN)
+        if deja_archives:
+            if deja_archives.get("md5Checksum") != ancien.get("md5Checksum"):
+                refus("ARCHIVAGE", f"{ANCIEN} : l'exemplaire archivé diverge de "
+                                   f"l'ancien courant")
+            print(f"[3] {ANCIEN} déjà archivé — idempotent")
+        else:
+            url = (ds.API + f"/files/{ancien['id']}"
+                   f"?addParents={archives['id']}&removeParents={miroir['id']}")
+            st, rep, _ = ds.api("PATCH", url, body={})
+            if st not in (200, 201):
+                refus("ARCHIVAGE", f"HTTP {st} : {rep[:150]!r}")
+            apres_racine = lister(miroir["id"])
+            apres_archives = lister(archives["id"])
+            if ANCIEN in apres_racine:
+                refus("ARCHIVAGE", f"{ANCIEN} RESTE à la racine du miroir — "
+                                   "déplacement inopérant")
+            cible = apres_archives.get(ANCIEN) or \
+                refus("ARCHIVAGE", f"{ANCIEN} absent de l'archive après déplacement")
+            if cible.get("md5Checksum") != ancien.get("md5Checksum"):
+                refus("ARCHIVAGE", f"{ANCIEN} : md5 diverge après déplacement")
+            print(f"[3] archivé versionné : {ANCIEN} → archives-bundles/ "
+                  f"(md5 {ancien.get('md5Checksum', '')[:8]}… recoupé — la racine "
+                  f"ne porte que le courant ; le geste précédent demeure "
+                  f"dans l'histoire)")
 
     # -- 4. aucun bundle parasite au /test (recoupé, rien à retirer) ----------------
     test = coffre.get("test")
@@ -174,7 +188,7 @@ def main():
     if courants != [BUNDLE]:
         refus("ETAT-FINAL", f"la racine du miroir ne porte pas LE courant "
                             f"unique : {courants}")
-    if ANCIEN not in archives_finales:
+    if ANCIEN and ANCIEN not in archives_finales:
         refus("ETAT-FINAL", f"{ANCIEN} absent des archives après la passation")
 
     # -- 6. le push GitHub à la pointe (D164 : GitHub D'ABORD) ----------------------
