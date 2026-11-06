@@ -5648,3 +5648,75 @@ Stage Summary:
   dossier NEUF, python scenario-m9f.py, renvoyer preuves-m9f/
   ENTIER — et si le run est vert : LA FINALE 1.0.0, le jalon M9
   franchi — LA GRANDE ŒUVRE.
+
+## Task ID 101 — LE TROISIÈME RUN TERRAIN (f) REÇU (« preuves deposees dans le drive /test ») : ROUGE T3.ouvrir NOMMÉ (sys-05 rend -6 à SON PREMIER APPEL RÉEL — l'émission du CH refusée par le transport) — MAIS LE RECOUP DU JALON VERT (le ClientHello de LA MACHINE == la référence octet pour octet, 119 o) ET LA RÉPARATION DE L'ERRATUM n° 7 PROUVÉE ; LE KIT ACQUITTÉ, LE RUN ARCHIVÉ AVEC LE VERDICT DU RECOUP 26/26 — LA RELANCE EST LE GESTE SUIVANT (06/11 au soir, deuxième geste)
+
+Work Log:
+- LE RAPATRIEMENT : le TRIO complet au réceptacle (temoin f8491dc2…,
+  journal 03e555c8… 605 o SEPT lignes, verdict b9d79a0c…), les pièces
+  T4/T6 jamais nées (mort à T3 : cohérence constatée) ; le run :
+  2026-11-06 18:49:34, l'heure de la machine du développeur — SIX
+  MINUTES après le dépôt du kit corrigé (18:43 Paris).
+- LA RÉPARATION PROUVÉE : T0/T1/T2 VERT (les SEIZE T0, SSN 85/7/15,
+  handle 0x328), la clé publique attendue NON-NULLE 89d50a86… (le run 2
+  imprimait 000…0), le segment qui tua le run 2 TRAVERSÉ VIVANT, la
+  machine appelée AU POINTEUR.
+- LE RECOUP DU JALON, VERT : T3.recoup [ok] — le CH COMPOSÉ PAR LA
+  MACHINE (les blocs scellés tls13-22 + tls13-14 + f25519) == la
+  construction re-jouée OCTET POUR OCTET (119 o) : les DEUX lecteurs
+  d'accord — LA PREUVE CRYPTOGRAPHIQUE DU JALON SUR LA MACHINE RÉELLE.
+- LA MORT NOMMÉE : sys-05 rend -6 (un NTSTATUS non nul — l'information
+  vit dans rdx, la limite NOMMÉE de l'instrument) à L'ÉMISSION, SON
+  PREMIER APPEL RÉEL → la machine propage -7 LE TRANSPORT EN ÉCHEC,
+  état 5 ; LA PREUVE EN UNE LIGNE : la ligne « [T3] la dernière
+  émission » ABSENTE du témoin et l'append du rappel PRÉCÈDE l'envoi →
+  UNE SEULE émission tentée, CELLE DU CH : l'offre PARFAITE en
+  composition, son envoi REFUSÉ.
+- LE RECOUP LABO 26/26 (recouper_run3_m9f.py) : l'échelle REJOUÉE sur
+  la clé privée DU RUN rend la clé du témoin ; la construction CH
+  re-jouée (114 o, le vol 119 o) ; la chaîne -6 → -7 reconstituée
+  depuis les contrats ; le LISEZMOI avait nommé la frontière AU MOT
+  PRÈS ; LE KIT ACQUITTÉ (exécuté fidèlement, l'offre parfaite — le
+  kit du /test INCHANGÉ 90a1d022…).
+- LES CANDIDATS NOMMÉS : (a) la divergence afd.sys Windows 10 ↔
+  Windows 11 (les mesures du socle viennent de Win11 ; sys-04 passe
+  sur Win10, sys-05 refusé à son premier appel) ; (b) la connexion
+  refermée côté serveur (RST) ; (c) le passager réseau — l'horloge ne
+  départage pas (le run entier dans SA seconde), le NTSTATUS vit dans
+  rdx : UNE RELANCE tranche (c), la répétition à l'identique installe
+  (a).
+- LE RUN ARCHIVÉ (archiver_run3_m9f.py) : preuves-run-m9f-3/ (le trio
+  DÉPLACÉ + le verdict 26/26 déposé AVEC), preuves-m9f/ ré-armé, les
+  DEUX index, la racine 13 entrées, le kit ACQUITTÉ recoupé INCHANGÉ.
+- LE GESTE RENDU : (i) RELANCER le kit TEL QUEL, réseau vivant ; (ii)
+  si le -6 se répète À L'IDENTIQUE à l'émission du CH : Windows 11 si
+  disponible (la cible du kit), ou renvoyer les pièces — le labo
+  ouvre LA SONDE sys-05 (le chantier futur nommé) ; (iii) preuves-m9f/
+  ENTIER au coffre → si vert : LA FINALE 1.0.0, le jalon M9 franchi —
+  LA GRANDE ŒUVRE.
+- FRONTIÈRES : l'artefact INTACT (d8928934… re-haché au geste), le
+  scellé 0.9.0 INTACT, AUCUNE balise (la finale attend le VERT), les
+  archives des runs 1/2 intactes ; livrables :
+  download/preuves-run-m9f-3/ (l'archive locale avec le verdict du
+  recoup) ; consignations : Entrée 183 PAR SCRIPT, PLAN
+  (maj_plan_m9p.py : rangée (f) + État), worklog +Task ID 101.
+- SUITE : LA RELANCE DU DÉVELOPPEUR — puis le recoup, et si vert : LA
+  FINALE 1.0.0 — LA GRANDE ŒUVRE.
+
+Stage Summary:
+- LE TROISIÈME RUN EST LE PLUS LOIN DU PROGRAMME : la réparation de
+  l'erratum n° 7 PROUVÉE sur la machine réelle, ET le recoup du jalon
+  VERT — le ClientHello composé PAR LA MACHINE (les blocs scellés)
+  égale la référence octet pour octet : la preuve cryptographique du
+  jalon tient SUR LE TERRAIN.
+- LA MORT EST NOMMÉE À LA FRONTIÈRE QUI L'ÉTAIT D'AVANCE : sys-05
+  (l'émission) rend -6 à son PREMIER appel réel — le NTSTATUS vit
+  dans rdx (la limite nommée de l'instrument) ; le kit est ACQUITTÉ,
+  l'artefact INTACT : la frontière est l'artefact contre le VRAI
+  afd.sys (les mesures viennent de Windows 11, les runs ont lieu sur
+  Windows 10).
+- LE GESTE SUIVANT EST UNE RELANCE (un réseau vivant distingue le
+  passager du structurel) ; si le -6 se répète à l'identique : la
+  divergence afd.sys devient le suspect principal — Windows 11, ou la
+  sonde sys-05 au labo ; et si le vert tient : LA FINALE 1.0.0, le
+  jalon M9 franchi — LA GRANDE ŒUVRE.
