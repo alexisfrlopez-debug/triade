@@ -5924,3 +5924,22 @@ Work Log:
   l'assemblage re-passées) — puis LE KIT M9F RÉPARÉ livré au /test, le
   run du développeur, ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9
   — LA GRANDE ŒUVRE.
+- LA PASSATION (passe_bundle_m9r.py) : le bundle courant
+  triade-history-090-9413fd2 (18 490 886 o, md5 45bd8207…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE RUN DE LA SONDE RECROPÉ
+  [Entrée 185 — LA MESURE 0xC0000005 TROIS fois, LE COUPABLE NOMMÉ : LA
+  POSE DU WSABUF relu dans l'artefact scellé ; le recoup 31/31 ; le run
+  archivé → preuves-sonde-sys05-1/] + le worklog Task 103 + LA RÉVISION
+  2 de la spec sys-05 + la notation corrigée + l'erratum n° 8 réparé
+  dans les DEUX scénarios + le plan à jour [rangée (f) + État]),
+  l'ancien 090-46d3eee (LE QUATRIÈME RUN RECROPÉ + LA SONDE LIVRÉE)
+  ARCHIVÉ VERSIONNÉ (md5 35fb15ab… recoupé — 48 archives, rien
+  supprimé), /test sans copie de bundle ET les DEUX kits recoupés
+  (kit-m9f.zip == l'ACQUITTÉ 90a1d022…, kit-sonde-sys05.zip == le
+  livré 215c2caa…) + le run de la sonde ARCHIVÉ et le réceptacle
+  ré-armé (recoupés) ; LE PUSH GITHUB RÉUSSI CETTE FOIS : origin ==
+  9413fd2 relu MATCH — LES TROIS MIROIRS ALIGNÉS (le refus 403 du geste
+  précédent était TRANSITOIRE, comme nommé : le chemin de sortie est
+  rouvert) ; script suivi : passe_bundle_m9r.py ; LA SÉRIE 090 POURSUIT
+  — le geste est PASSÉ (Drive + local + GitHub), LE REBUILD
+  1.0.0-dev.3 EST LE GESTE SUIVANT.
