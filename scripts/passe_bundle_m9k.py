@@ -37,9 +37,11 @@ REPO = "/home/z/my-project/triade"
 sys.path.insert(0, REPO + "/scripts")
 import drive_sync as ds  # noqa: E402
 
-BUNDLE = "triade-history-090-b3fe063.bundle"      # le courant NOUVEAU (le kit déposé)
+BUNDLE = "triade-history-090-f63164a.bundle"      # le courant NOUVEAU (le kit déposé)
 ANCIEN = "triade-history-090-3fa7168.bundle"      # le courant au miroir (le build né)
-TIP_ATTENDU = "b3fe063fa943553656ad5426dcaaa21ebbcb228d"
+TIP_ATTENDU = "f63164a313c74e984a46ea35c901e633a4b86b79"   # la pointe : le geste
+                                            # b3fe063 (Entrée 179 + Task 97 + le kit)
+                                            # + la consignation de passation
 CHEMIN_LOCAL = REPO + "/bundles-090/" + BUNDLE
 
 
@@ -182,7 +184,8 @@ def main():
           f"{TIP_ATTENDU[:7]} (relu MATCH — les trois miroirs à la pointe)")
 
     print("=== PASSATION FAITE : le bundle courant porte LE KIT TERRAIN M9-(f) "
-          "DÉPOSÉ (b3fe063) — la série 090 poursuit à la pointe ; l'ancien "
+          "DÉPOSÉ (f63164a — le geste b3fe063 + sa consignation) — la série 090 "
+          "poursuit à la pointe ; l'ancien "
           "3fa7168 (LE BUILD NÉ) demeure dans l'histoire ; LA GRANDE ŒUVRE "
           "ATTEND LE GESTE DU DÉVELOPPEUR ===")
     return 0
