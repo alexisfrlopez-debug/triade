@@ -5997,3 +5997,29 @@ Work Log:
   garde 13/13, LE REBUILD 1.0.0-dev.3, LE KIT M9F RÉPARÉ au /test, le
   run — ET SI LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE
   ŒUVRE.
+
+- LA PASSATION (passe_bundle_m9s.py) : le bundle courant
+  triade-history-090-81f2beb (18 510 020 o, md5 2c3780bd…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LA RE-CÉRÉMONIE DE LA RÉVISION 2
+  ARMÉE [Entrée 186 — la remise régénérée m8 sys.1 3e778fa0…, UNE seule
+  empreinte nouvelle, les DOUZE autres lignes byte-identiques ; le garde
+  m8 CODE 10 nommé LE SIGNAL, pas la panne ; la main du développeur
+  servie : le kit /Cérémonie porte la remise fraîche +
+  LISEZMOI-ceremonie-revision2-sys05.txt + le MANIFESTE réécrit (60/60
+  vérifiés aller-retour au commit même)] + le worklog Task 104 +
+  maj_kit.py [le LISEZMOI au RACINE_KIT] + le plan à jour [rangée (f) +
+  État]), l'ancien 090-9413fd2 (LE RUN DE LA SONDE RECROPÉ) ARCHIVÉ
+  VERSIONNÉ (md5 45bd8207… recoupé — 49 archives, rien supprimé), /test
+  sans copie de bundle ET les DEUX kits recoupés (kit-m9f.zip ==
+  l'ACQUITTÉ 90a1d022…, kit-sonde-sys05.zip == le livré 215c2caa…) + le
+  run de la sonde ARCHIVÉ et le réceptacle ré-armé (recoupés) ; LE PUSH
+  GITHUB RÉUSSI : origin == 81f2beb relu MATCH — LES TROIS MIROIRS
+  ALIGNÉS (le commit de passation 15b7de7 du geste précédent EMBARQUÉ,
+  le flux tenu) ; script suivi : passe_bundle_m9s.py ; LA SÉRIE 090
+  POURSUIT — le geste est PASSÉ (Drive + local + GitHub), LE GESTE DU
+  DÉVELOPPEUR EST ATTENDU : la signature hors-ligne de la remise
+  (signatures-I.txt + cle-publique-I.txt au /test) — puis deposer, le
+  garde 13/13, LE REBUILD 1.0.0-dev.3 [le bloc sys-05 réparé, les portes
+  de l'assemblage re-passées], LE KIT M9F RÉPARÉ livré au /test, le run
+  — ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE
+  ŒUVRE.
