@@ -4822,6 +4822,27 @@ Stage Summary:
   bout), les slots à la suite de 0xED00 (la marge : 0x300 o, la
   mesure décidera) ; puis (d) sys-04+, (e) LA CÉRÉMONIE + le build
   1.0.0-dev.1, (f) le terrain.
+- PASSATION (le même geste, Task ID 92) : le bundle courant
+  triade-history-090-5487f7f.bundle (17 453 790 o, md5 f73af0a2…, branche
+  jalon == 5487f7f [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE enregistrement [Entrée 174 —
+  tls13-20/21 notés-mesurés-prouvés : 349/403 o, round-trip 100 %, les
+  slots ARRÊTÉS 0x180/0x1C0 tassés depuis 0xE9C0 — fin de famille
+  0xED00, le harnais 48 contrôles · 48 VERTS × 3 graines — LE TRANSFERT
+  RFC 8448 EN CHAÎNES (les QUATRE contextes consommés en séquence, chaque
+  enregistrement protégé PUIS déprotégé octet pour octet), LA REJOUE
+  refusée ×4, le verdict -3 PROPAGÉ à la borne du protocole, LA VERSION
+  héritage couverte par l'AAD, LE VERDICT temps constant mesuré (11 800
+  instructions LE MÊME COMPTE)] + le worklog Task 92), l'ancien
+  090-0774e55 (LA FAMILLE aead) ARCHIVÉ VERSIONNÉ (md5 3fed603b…
+  recoupé — 36 archives, rien supprimé), /test sans copie (recoupé), le
+  push GitHub à la pointe (origin == 5487f7f relu MATCH — les trois
+  miroirs alignés, le commit de passation 6dbd7db du Task 91 EMBARQUÉ) ;
+  script suivi : passe_bundle_m9e.py ; NOTE D'INSTRUMENT : git bundle
+  n'est PAS reproductible octet pour octet (le md5 du re-jeu diffère —
+  le consigné est le DÉPOSÉ f73af0a2…), la passation est UN GESTE (le
+  re-jeu REFUSE : l'ancien est déjà archivé — le miroir intact) ;
+  LA SÉRIE 090 POURSUIT — le geste est PASSÉ.
 
 Stage Summary:
 - LA CINQUIÈME FAMILLE de la grande œuvre est notée-mesurée-prouvée :
