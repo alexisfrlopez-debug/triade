@@ -5433,6 +5433,25 @@ Stage Summary:
   réseau vivant) → renvoyer preuves-m9f/ ENTIER au coffre → le labo
   recoupe → si vert : LA FINALE 1.0.0 (fait de carte) — le jalon M9
   franchi, LA GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 98) : le bundle courant
+  triade-history-090-acf5055.bundle (18 312 206 o, md5 17d6c2a9…,
+  branche jalon == acf5055 [le geste + sa consignation]) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE RUN RECROPÉ [Entrée 180 — le
+  premier run du développeur ROUGE T1.la-résolution NOMMÉ, 25/25 sur
+  pièces croisées, le terrain LAVÉ, L'ERRATUM n° 6 du kit nommé sur
+  pièces (la base de l'artefact aux lecteurs de SSN au lieu de
+  ntdll_base — proxy.exe sans répertoire export, le refus -3
+  inévitable sur toute machine) RÉPARÉ À LA SOURCE + LE CONTRÔLE
+  PERMANENT à l'assemblage, le kit corrigé MIS À JOUR EN PLACE au /test
+  md5 7d5380ce…, le run ROUGE archivé AVEC le VERDICT-recoup-labo] + le
+  worklog Task 98 + le scénario RÉPARÉ relu à la pointe), l'ancien
+  090-20ab30f (LA PASSATION IDEMPOTENTE) ARCHIVÉ VERSIONNÉ (md5
+  409bcedf… recoupé — 43 archives, rien supprimé), /test sans copie de
+  bundle (recoupé) ET le kit du /test == le CORRIGÉ md5 7d5380ce…
+  (recoupé — l'état que le bundle porte), le push GitHub à la pointe
+  (origin == acf5055 relu MATCH — les trois miroirs alignés) ; script
+  suivi : passe_bundle_m9l.py ; LA SÉRIE 090 POURSUIT — le geste est
+  PASSÉ.
 
 Stage Summary:
 - LE PREMIER RUN EST UN ÉCHEC HONNÊTE, ET LA FAUTE EST AU LABO : le
