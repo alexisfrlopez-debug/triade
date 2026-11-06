@@ -4949,13 +4949,23 @@ Stage Summary:
 - SUITE : (d) le socle socket sys-04+ (la fondation I/O), (e) LA CÉRÉMONIE
   DU SCEAU I de l'ère + le build 1.0.0-dev.1, (f) le terrain — LA GRANDE
   ŒUVRE.
-- SUITE : (d) le socle socket sys-04+ (la fondation I/O), (e) LA CÉRÉMONIE
-  DU SCEAU I de l'ère + le build 1.0.0-dev.1, (f) le terrain — LA GRANDE
-  ŒUVRE.
 - PASSATION (le même geste, Task ID 93) : le bundle courant
-  triade-history-090-b59bf44.bundle DÉPOSÉ AU MIROIR ASSERTÉ, l'ancien
-  090-5487f7f ARCHIVÉ VERSIONNÉ, /test sans copie, le push GitHub à la
-  pointe — LA SÉRIE 090 POURSUIT — le geste est PASSÉ.
+  triade-history-090-514f42b.bundle (17 552 945 o, md5 88db6aa9…, branche
+  jalon == 514f42b [le geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ
+  (relu MATCH : il porte LA FAMILLE poignée + LE PRINCIPAL [Entrée 175 —
+  tls13-22..28 notés-mesurés-prouvés : 241/532/2130/239/285/2906/144 o,
+  round-trip 100 %, la poignée finit 0xFB20 SOUS les fixtures x25519
+  immobiles, le principal 0xFF40..0x10B30 — LA MARGE A FRANCHI 0xF000, le
+  harnais 52 contrôles · 52 VERTS × 3 graines — LE TRANSFERT RFC 8448 BLOC
+  PAR BLOC sur les valeurs consignées ET LA SESSION ENTIÈRE contre le
+  simulateur, la falsification à chaque étage rend SON verdict nommé,
+  l'erratum n° 2 consigné sur pièces AVANT la notation] + le worklog
+  Task 93), l'ancien 090-5487f7f (LA FAMILLE enregistrement) ARCHIVÉ
+  VERSIONNÉ (md5 f73af0a2… recoupé — 37 archives, rien supprimé), /test
+  sans copie (recoupé), le push GitHub à la pointe (origin == 514f42b relu
+  MATCH — les trois miroirs alignés, le commit de passation b59bf44 du
+  Task 92 EMBARQUÉ) ; script suivi : passe_bundle_m9f.py ; LA SÉRIE 090
+  POURSUIT — le geste est PASSÉ.
 
 Stage Summary:
 - LA SIXIÈME FAMILLE et la dernière de la couche de calcul : LA POIGNÉE
