@@ -26,6 +26,26 @@
 > bits (la frontière du kit). La spécification scellée disait déjà TOUT
 > CELA (P1 : « 114 ») — la notation a été réparée à la source, le harnais
 > 54/54 × 3 graines re-joué VERT, le kit embarque le build réparé.
+>
+> **L'ERRATUM n° 6 (le kit corrigé le 06/11 au soir, après le premier
+> run)** : le premier run (le 06/11 à 16:17, Windows 10.0 build 19045,
+> Python 3.14.6) a rendu un verdict ROUGE HONNÊTE, nommé
+> `T1.la-résolution` : « le miroir Python refuse “NtCreateFile” :
+> répertoire export absent ». LA FAUTE ÉTAIT AU KIT, jamais au terrain :
+> T1 passait la base de L'ARTEFACT (`base` = proxy.exe, qui n'a PAS de
+> répertoire export) aux lecteurs de SSN, au lieu de la base du VRAI
+> ntdll (`ntdll_base`) — le refus était INÉVITABLE sur toute machine. Le
+> terrain est LAVÉ par le recoup sur pièces (le VRAI ntdll localisé et
+> haché, l'artefact relu INTACT, le scénario exécuté fidèlement : octet
+> pour octet celui du labo) ; la réparation est À LA SOURCE (les trois
+> sites de résolution reçoivent `ntdll_base`) avec un CONTRÔLE PERMANENT
+> à l'assemblage (l'AST exige `ntdll_base` aux trois lecteurs — la faute
+> ne peut plus dormir). L'ARTEFACT n'a pas bougé d'un octet : proxy.exe
+> demeure le build 1.0.0-dev.2 (sha256 d8928934…). NOTE d'environnement :
+> le kit vise Windows 11 (les mesures AFD WinDbg) mais ne l'exige pas —
+> le premier run a eu lieu sur Windows 10 22H2 : si votre afd.sys
+> diverge, le refus sera NOMMÉ (-6, l'étape en cause) — un échec honnête
+> vaut plus qu'un vert muet.
 
 ## 1. Ce que ce kit contient
 

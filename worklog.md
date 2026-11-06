@@ -5385,3 +5385,64 @@ Stage Summary:
 - LE KIT TERRAIN M9-(f) EST AU COFFRE /test : la grande œuvre attend
   le geste du développeur — la session réelle, l'épinglage, la ligne
   chiffrée ; si vert : la finale 1.0.0, le jalon M9 franchi.
+
+## Task ID 98 — LE PREMIER RUN TERRAIN (f) REÇU (« preuves déposées dans le dossier /test du drive ») ET RECROPÉ : ROUGE T1.la-résolution NOMMÉ, 25/25 sur pièces croisées ; L'ERRATUM n° 6 du kit (la base de l'artefact aux lecteurs de SSN au lieu de la base ntdll) NOMMÉ SUR PIÈCES ET RÉPARÉ À LA SOURCE ; LE KIT CORRIGÉ RÉ-DÉPOSÉ AU COFFRE /test — le second geste du développeur attendu (06/11 au soir)
+
+- LE RAPATRIEMENT + LE RECOUP : rapatrier_preuves_m9f.py (les TROIS
+  pièces md5 contrôlés par pièce ; les DEUX pièces T4/T6 absentes ==
+  cohérentes avec la mort à T1) ; recouper_preuves_m9f.py — ROUGE
+  CONSTATÉ COHÉRENT 25/25 (D138/D145/D148, le juge est le code : les
+  SEIZE T0 aux noms exacts de la source, le refus T1 AU TEXTE EXACT, le
+  témoin embarqué == la pièce LIGNE POUR LIGNE, l'horodatage unique
+  16:17:51) ; LE TERRAIN LAVÉ : le VRAI ntdll localisé et haché
+  (36b1a62e…), l'artefact relu INTACT (d8928934…), le scénario du kit ==
+  la source du dépôt octet pour octet ; l'environnement consigné :
+  Windows 10.0 build 19045 (10 22H2), Python 3.14.6 AMD64.
+- L'ERRATUM n° 6 (LA FAUTE AU KIT, JAMAIS AU TERRAIN) : T1 passait
+  `base` (l'ARTEFACT cartographié — proxy.exe N'A PAS de répertoire
+  export, data directory[0] == 0 recalculé au geste même) aux lecteurs
+  de SSN au lieu de `ntdll_base` : le refus -3 « répertoire export
+  absent » était INÉVITABLE sur toute machine. RÉPARÉ À LA SOURCE : les
+  TROIS sites de scenario-m9f.py reçoivent `ntdll_base` ; LE CONTRÔLE
+  PERMANENT : assembler_kit_m9f.py [2b] — l'AST EXIGE `ntdll_base` aux
+  trois lecteurs (contrôle négatif PROUVÉ sur la source pré-réparation :
+  REFUS) ; la rejouabilité des pièces : E3/E5 du recoup lisent la
+  source à la POINTE pré-réparation 20ab30f (l'histoire fait foi).
+- LE KIT CORRIGÉ RÉ-DÉPOSÉ : réassemblé et rééprouvé (26 constantes PAR
+  AST == l'artefact/le plan/la sonde, l'octet 0x72 relu DANS L'IMAGE,
+  py_compile, extraction vierge VERT) — kit-m9f.zip 35 522 o, md5
+  7d5380ce…, sha256 85c75fc1… ; corriger_kit_m9f.py : kit-m9f.zip MIS À
+  JOUR EN PLACE au /test (md5 MATCH par relecture, rien jeté), le
+  LISEZMOI porte l'erratum (md5 b1b91887…), LE PREMIER RUN archivé
+  (les TROIS pièces → archives-preuves/preuves-run-m9f/ AVEC le
+  VERDICT-recoup-labo — l'archive porte le jugement), preuves-m9f/
+  ré-armé (son LISEZMOI seul), les DEUX index mis à jour, la racine
+  vérifiée (13 entrées).
+- FRONTIÈRES : le scellé 0.9.0 INTACT, l'ARTEFACT 1.0.0-dev.2 INTACT
+  (l'erratum touche LE SCÉNARIO, jamais l'artefact), les arbres I
+  inchangés, AUCUNE balise (la finale 1.0.0 attend le SECOND run vert,
+  D104), la clé privée jamais traversée (D87) ; livrables :
+  rapatrier_preuves_m9f.py, recouper_preuves_m9f.py +
+  VERDICT-recoup-labo-m9f.txt, corriger_kit_m9f.py, maj_plan_m9k.py,
+  scenario-m9f.py corrigé, assembler_kit_m9f.py [2b],
+  LISEZMOI-KIT-M9F.md, kit-m9f.zip corrigé ; consignations : Entrée 180
+  PAR SCRIPT, PLAN (maj_plan_m9k.py : la rangée (f) + l'État), worklog
+  +Task ID 98.
+- SUITE : LE SECOND GESTE DU DÉVELOPPEUR — dézipper kit-m9f.zip (la
+  version CORRIGÉE md5 7d5380ce…), python scenario-m9f.py (~10 s,
+  réseau vivant) → renvoyer preuves-m9f/ ENTIER au coffre → le labo
+  recoupe → si vert : LA FINALE 1.0.0 (fait de carte) — le jalon M9
+  franchi, LA GRANDE ŒUVRE.
+
+Stage Summary:
+- LE PREMIER RUN EST UN ÉCHEC HONNÊTE, ET LA FAUTE EST AU LABO : le
+  verdict ROUGE T1.la-résolution est cohérent de bout en bout (25/25),
+  le terrain est lavé (le VRAI ntdll haché, l'artefact intact, le
+  scénario exécuté fidèlement) — la garde a refusé d'extraire un numéro
+  d'un module sans exports : exactement ce qu'on lui demande.
+- L'ERRATUM n° 6 EST RÉPARÉ À LA SOURCE avec un contrôle PERMANENT à
+  l'assemblage (l'AST exige ntdll_base aux trois lecteurs — contrôle
+  négatif prouvé) : la faute ne peut plus dormir.
+- LE KIT CORRIGÉ EST AU COFFRE /test (md5 7d5380ce…) : le second geste
+  du développeur est attendu — si vert : la finale 1.0.0, le jalon M9
+  franchi — LA GRANDE ŒUVRE.

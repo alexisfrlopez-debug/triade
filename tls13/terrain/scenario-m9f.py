@@ -486,11 +486,19 @@ def main():
 
     # ---------------- T1 — LA RÉSOLUTION ----------------------------------------
     print("\nT1 — LA RÉSOLUTION (le VRAI ntdll lu par les DEUX lecteurs)")
+    # L'ERRATUM n° 6 (le premier run du 06/11, 16:17 : le miroir Python
+    # rendait -3 « répertoire export absent ») : les lecteurs de SSN
+    # lisent LE VRAI ntdll — `ntdll_base`, JAMAIS `base` (l'artefact
+    # cartographié : proxy.exe n'a PAS de répertoire export, le refus
+    # était INÉVITABLE sur toute machine). Le CONTRÔLE PERMANENT vit à
+    # l'assemblage : l'AST exige `ntdll_base` aux TROIS sites
+    # (scripts/assembler_kit_m9f.py) — la faute ne peut plus dormir.
     try:
-        ssn_create, stub_create = ssn_par_deux_lecteurs(base, "NtCreateFile")
+        ssn_create, stub_create = ssn_par_deux_lecteurs(
+            ntdll_base, "NtCreateFile")
         ssn_ioctl, stub_ioctl = ssn_par_deux_lecteurs(
-            base, "NtDeviceIoControlFile")
-        ssn_close, stub_close = ssn_par_deux_lecteurs(base, "NtClose")
+            ntdll_base, "NtDeviceIoControlFile")
+        ssn_close, stub_close = ssn_par_deux_lecteurs(ntdll_base, "NtClose")
     except RuntimeError as e:
         journal(f"T1 : {e}")
         _echecs.append("T1.la-résolution")

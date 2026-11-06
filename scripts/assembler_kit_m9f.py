@@ -184,6 +184,29 @@ def main():
     print("    le plan relu : SESSION_TAILLE 17520, CLIENTHELLO_TAILLE 114 "
           "— le record 16 03 03 00 72")
 
+    # -- 2b. LE CONTRÔLE PERMANENT DE L'ERRATUM n° 6 (la faute ne peut plus
+    # dormir) : les lecteurs de SSN (le miroir Python ET le bloc sys-02)
+    # lisent LE VRAI ntdll — l'AST exige `ntdll_base` au premier argument
+    # DES TROIS sites, JAMAIS `base` (l'artefact cartographié : proxy.exe
+    # n'a PAS de répertoire export — le refus -3 « répertoire export
+    # absent » du premier run du 06/11 était INÉVITABLE sur toute machine).
+    arbre_t1 = ast.parse(SCENARIO.read_text(encoding="utf-8"))
+    sites = []
+    for noeud in ast.walk(arbre_t1):
+        if isinstance(noeud, ast.Call) and isinstance(noeud.func, ast.Name) \
+                and noeud.func.id == "ssn_par_deux_lecteurs":
+            arg = noeud.args[0] if noeud.args else None
+            sites.append(isinstance(arg, ast.Name) and arg.id == "ntdll_base")
+    if len(sites) != 3 or not all(sites):
+        refus("ERRATUM-6", f"les lecteurs de SSN : {len(sites)} site(s), "
+                           f"{sites.count(True)} à ntdll_base — T1 doit passer "
+                           "NTDLL_BASE (le VRAI ntdll lu par les DEUX "
+                           "lecteurs), jamais la base de l'artefact (l'erratum "
+                           "n° 6, le premier run du 06/11 l'a nommé)")
+    print("[2b] LE CONTRÔLE PERMANENT erratum n° 6 : les TROIS lecteurs de "
+          "SSN reçoivent `ntdll_base` — constaté PAR AST (le refus -3 du "
+          "premier run ne peut plus dormir)")
+
     # -- 3. la compilation du scénario -----------------------------------------
     with tempfile.TemporaryDirectory() as tmp:
         py_compile.compile(str(SCENARIO), cfile=os.path.join(tmp, "s.pyc"),
