@@ -5522,6 +5522,25 @@ Work Log:
 - SUITE : LE GESTE DU DÉVELOPPEUR — preuves-m9f/ ENTIER au coffre →
   le recoup (D138/D145/D148) → si vert : LA FINALE 1.0.0, le jalon
   M9 franchi — LA GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 99) : le bundle courant
+  triade-history-090-35706ef.bundle (18 330 575 o, md5 537c015e…,
+  branche jalon == 35706ef [le geste + sa consignation]) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE SECOND RUN ANALYSÉ
+  [Entrée 181 — le journal seul md5 24680ac9…, T0/T1/T2 VERT nommés :
+  la réparation de l'erratum n° 6 PROUVÉE sur la machine réelle + LE
+  VRAI afd.sys franchi pour la première fois ; la mort silencieuse
+  entre T2 VERT et la ligne « T3 : OUVRIR » nommée sur pièces, le kit
+  acquitté par élimination, le geste rendu au développeur] + le
+  worklog Task 99 + le scénario INCHANGÉ relu à la pointe
+  [ntdll_base aux trois lecteurs] + le plan à jour [rangée (f) +
+  État]), l'ancien 090-acf5055 (LE PREMIER RUN RECROPÉ) ARCHIVÉ
+  VERSIONNÉ (md5 17d6c2a9… recoupé — 44 archives, rien supprimé),
+  /test sans copie de bundle (recoupé) ET le kit du /test == le
+  CORRIGÉ md5 7d5380ce… (recoupé — l'état que le bundle porte), le
+  push GitHub à la pointe (origin == 35706ef relu MATCH — les trois
+  miroirs alignés) ; script suivi : passe_bundle_m9m.py ; LA SÉRIE
+  090 POURSUIT — le geste est PASSÉ, LE RUN COMPLET DU DÉVELOPPEUR
+  ATTENDU.
 
 Stage Summary:
 - LE SECOND RUN EST LE PLUS LOIN QUE LE PROGRAMME AIT JAMAIS ÉTÉ SUR
