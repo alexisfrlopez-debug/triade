@@ -1,13 +1,13 @@
 ; tls13-27-principal-machine-etats · bloc la machine d'états du client (l'orchestration, § 2) · spec tls13-27:R1 · bloc carte h100027
-; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0xff40, taille 2944 octets
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0xff40, taille 3008 octets
 ; Domaine : tls13 (M9, l'ère 1.0.0) · Dépendances : LE PRINCIPAL — l'orchestration sur le contexte session 17 520 o (la disposition DÉCLARÉE par la spec P1) ; LES COMPOSITIONS DÉCLARÉES (I1, LA LISTE FERMÉE) : tls13-14, tls13-22, tls13-23, tls13-24 (×3 étages), tls13-25 (×2 modes), tls13-26, tls13-20 (×2), tls13-21 (×2), tls13-03 (le transcript — chaque message ABSORBÉ AVANT traitement, charte § 4), tls13-04 (les coupes du hash sur la COPIE — I2), LE SOCLE tls13-28 pour TOUTE entrée/sortie ; QUATRE événements NOMMÉS (OUVRIR/ÉMETTRE/RECEVOIR/FERMER), tout événement hors de sa ligne → -3 ; LA DISCIPLINE D'ÉCHEC (Q2) : tout verdict négatif PROPAGÉ NOMMÉ, l'état passe à 5 (MORT), AUCUN octet applicatif après ; le réassemblage au tampon @ +1136 (la borne 2^14 NOMMÉE), le Certificate Verify ABSORBÉ sans vérification (le chantier futur nommé), l'extraction de la PREMIÈRE entrée du Certificate (le u24 lu) le DÉTROIT de tls13-26
 ; Notation explicite générée par outils/auteur.py depuis brouillons/tls13-27-principal-machine-etats.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
-; Code : 2906 o · padding : 38 o (NOP, 0x90)
-; Étiquettes résolues : .ouvrir_ligne=0xff72, .sh_tete=0x100f3, .sh_tete_fin=0x1013c, .sh_corps=0x1016a, .sh_corps_fin=0x101b2, .protege=0x10306, .pr_tete=0x10318, .pr_tete_fin=0x10361, .pr_corps=0x103a5, .pr_corps_fin=0x103ed, .marche=0x10447, .absorbe=0x104e6, .cert=0x1052b, .fin_serveur=0x10593, .marche_avance=0x10741, .emettre_ligne=0x10754, .recevoir_ligne=0x107ea, .rc_tete=0x1082e, .rc_tete_fin=0x10874, .rc_corps=0x1089d, .rc_corps_fin=0x108e2, .rc_restituer=0x1092d, .rc_alerte=0x1093e, .rc_alerte_morte=0x1096c, .fermer_ligne=0x10989, .fermer_ok=0x109a0, .mort=0x10a36, .refus_etat_mort=0x10a4e, .refus_taille_mort=0x10a55, .refus_pre_etat=0x10a5c, .refus_pre_nul=0x10a6e, .refus_pre_taille=0x10a80, .refus_contexte_nul=0x10a92
-; Appels directs (l'adresse scellée du plan — I1) : call 0xc000, call 0xf060, call 0xdc80, call 0xed00, call 0xc240, call 0x10ac0, call 0x10ac0, call 0x10ac0, call 0xee20, call 0xc240, call 0xc300, call 0xf060, call 0x10ac0, call 0x10ac0, call 0xeb40, call 0xc300, call 0xc240, call 0xf9e0, call 0xf8e0, call 0xc300, call 0xf060, call 0xf8e0, call 0xc240, call 0xe9c0, call 0x10ac0, call 0xe9c0, call 0x10ac0, call 0x10ac0, call 0x10ac0, call 0xeb40, call 0xe9c0, call 0x10ac0
+; Code : 2975 o · padding : 33 o (NOP, 0x90)
+; Étiquettes résolues : .ouvrir_ligne=0xff72, .sh_tete=0x100f3, .sh_tete_fin=0x1013c, .sh_corps=0x1016a, .sh_corps_fin=0x101b2, .protege=0x10306, .pr_tete=0x10318, .pr_tete_fin=0x10361, .pr_corps=0x103a5, .pr_corps_fin=0x103ed, .marche=0x10447, .absorbe=0x104e6, .cert=0x1052b, .fin_serveur=0x10593, .marche_avance=0x10741, .emettre_ligne=0x10754, .recevoir_ligne=0x107ea, .rc_tete=0x1082e, .rc_tete_fin=0x10874, .rc_corps=0x1089d, .rc_corps_fin=0x108e2, .rc_restituer=0x1092d, .rc_alerte=0x1093e, .rc_alerte_morte=0x1096c, .fermer_ligne=0x1098b, .fermer_ok=0x109a2, .mort=0x10a38, .refus_etat_mort=0x10a50, .refus_taille_mort=0x10a59, .pr_ccs_ou_mort=0x10a62, .refus_pre_etat=0x10aa1, .refus_pre_nul=0x10ab3, .refus_pre_taille=0x10ac5, .refus_contexte_nul=0x10ad7
+; Appels directs (l'adresse scellée du plan — I1) : call 0xc000, call 0xf060, call 0xdc80, call 0xed00, call 0xc240, call 0x10d00, call 0x10d00, call 0x10d00, call 0xee20, call 0xc240, call 0xc300, call 0xf060, call 0x10d00, call 0x10d00, call 0xeb40, call 0xc300, call 0xc240, call 0xf9e0, call 0xf8e0, call 0xc300, call 0xf060, call 0xf8e0, call 0xc240, call 0xe9c0, call 0x10d00, call 0xe9c0, call 0x10d00, call 0x10d00, call 0x10d00, call 0xeb40, call 0xe9c0, call 0x10d00, call 0x10d00
 test rcx, rcx
-jz 0x10a92
+jz 0x10ad7
 cmp rdx, 1
 je 0xff72
 cmp rdx, 2
@@ -15,14 +15,14 @@ je 0x10754
 cmp rdx, 3
 je 0x107ea
 cmp rdx, 4
-je 0x10989
-jmp 0x10a5c
+je 0x1098b
+jmp 0x10aa1
 cmp dword ptr [rcx + 1120], 0
-jne 0x10a5c
+jne 0x10aa1
 test r8, r8
-jz 0x10a6e
+jz 0x10ab3
 test r9, r9
-jz 0x10a6e
+jz 0x10ab3
 sub rsp, 0x43c8
 mov qword ptr [rsp + 0x28], rcx
 mov qword ptr [rsp + 0x38], r9
@@ -30,7 +30,7 @@ mov qword ptr [rcx + 1128], r8
 mov rcx, qword ptr [rsp + 0x28]
 call 0xc000
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 lea r10, [r9 + 32]
 lea r11, [rcx + 160]
 mov rax, qword ptr [r10]
@@ -57,14 +57,14 @@ xor edx, edx
 xor r8d, r8d
 call 0xf060
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 192
 mov rdx, qword ptr [rsp + 0x38]
 add rdx, 32
 call 0xdc80
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x38]
 mov rdx, qword ptr [rsp + 0x28]
 add rdx, 192
@@ -73,24 +73,24 @@ add r8, 5
 mov r9d, 114
 call 0xed00
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 lea r10, [rsp + 0x80]
 mov dword ptr [r10], 0x30316
-mov byte ptr [r10 + 4], 0x76
+mov byte ptr [r10 + 4], 0x72
 mov rcx, qword ptr [rsp + 0x28]
 lea rdx, [rsp + 0x85]
 mov r8d, 114
 call 0xc240
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 mov rcx, qword ptr [rcx + 1128]
 mov edx, 1
 lea r8, [rsp + 0x80]
 mov r9d, 119
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 1
 mov qword ptr [rsp + 0x40], 0
@@ -104,18 +104,18 @@ lea r8, [rsp + 0x80]
 add r8, qword ptr [rsp + 0x40]
 mov r9, 5
 sub r9, qword ptr [rsp + 0x40]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x40], rax
 jmp 0x100f3
 lea r10, [rsp + 0x80]
 cmp byte ptr [r10], 22
-jne 0x10a4e
+jne 0x10a50
 movzx eax, word ptr [r10 + 3]
 xchg al, ah
 cmp rax, 16400
-ja 0x10a55
+ja 0x10a59
 lea rax, [rax + 5]
 mov qword ptr [rsp + 0x58], rax
 mov rax, qword ptr [rsp + 0x40]
@@ -128,9 +128,9 @@ lea r8, [rsp + 0x80]
 add r8, qword ptr [rsp + 0x40]
 mov r9, qword ptr [rsp + 0x58]
 sub r9, qword ptr [rsp + 0x40]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x40], rax
 jmp 0x1016a
 mov r8, qword ptr [rsp + 0x28]
@@ -142,14 +142,14 @@ sub rdx, 5
 lea r9, [rsp + 0x40a0]
 call 0xee20
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 lea rdx, [rsp + 0x85]
 mov r8, qword ptr [rsp + 0x58]
 sub r8, 5
 call 0xc240
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rsi, qword ptr [rsp + 0x28]
 lea rdi, [rsp + 0x42b0]
 mov ecx, 14
@@ -160,14 +160,14 @@ lea rdx, [rsp + 0x40a0]
 add rdx, 32
 call 0xc300
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 112
 lea rdx, [rsp + 0x40a0]
 lea r8, [rsp + 0x40e0]
 call 0xf060
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 lea rsi, [rsp + 0x40e0]
 mov rdi, qword ptr [rsp + 0x28]
 add rdi, 224
@@ -206,22 +206,22 @@ lea r8, [rsp + 0x80]
 add r8, qword ptr [rsp + 0x40]
 mov r9, 5
 sub r9, qword ptr [rsp + 0x40]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x40], rax
 jmp 0x10318
 lea r10, [rsp + 0x80]
 cmp byte ptr [r10], 23
-jne 0x10a4e
+jne 0x10a62
 movzx eax, word ptr [r10 + 3]
 xchg al, ah
 cmp rax, 16400
-ja 0x10a55
+ja 0x10a59
 lea r11, [rax - 17]
 add r11, qword ptr [rsp + 0x48]
 cmp r11, 16384
-ja 0x10a55
+ja 0x10a59
 lea rax, [rax + 5]
 mov qword ptr [rsp + 0x58], rax
 mov rax, qword ptr [rsp + 0x40]
@@ -234,9 +234,9 @@ lea r8, [rsp + 0x80]
 add r8, qword ptr [rsp + 0x40]
 mov r9, qword ptr [rsp + 0x58]
 sub r9, qword ptr [rsp + 0x40]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x40], rax
 jmp 0x103a5
 mov rcx, qword ptr [rsp + 0x28]
@@ -250,9 +250,9 @@ lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x20], r10
 call 0xeb40
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 cmp byte ptr [rsp + 0x60], 22
-jne 0x10a4e
+jne 0x10a50
 mov rax, qword ptr [rsp + 0x58]
 sub rax, 22
 add qword ptr [rsp + 0x48], rax
@@ -288,7 +288,7 @@ lea rcx, [rsp + 0x42b0]
 lea rdx, [rsp + 0x4320]
 call 0xc300
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 mov r10, qword ptr [rsp + 0x28]
 add r10, 1136
@@ -298,7 +298,7 @@ mov r8, qword ptr [rsp + 0x70]
 add r8, 4
 call 0xc240
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rax, qword ptr [rsp + 0x68]
 cmp rax, 0xb
 je 0x1052b
@@ -318,7 +318,7 @@ or rax, r11
 mov r11, qword ptr [rsp + 0x70]
 sub r11, 7
 cmp rax, r11
-ja 0x10a55
+ja 0x10a59
 mov rcx, r10
 add rcx, 11
 mov rdx, rax
@@ -326,10 +326,10 @@ mov r8, qword ptr [rsp + 0x28]
 add r8, 1088
 call 0xf9e0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 jmp 0x10741
 cmp qword ptr [rsp + 0x70], 32
-jne 0x10a55
+jne 0x10a59
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 1056
 lea rdx, [rsp + 0x4320]
@@ -340,7 +340,7 @@ add r8, 4
 mov r9d, 1
 call 0xf8e0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rsi, qword ptr [rsp + 0x28]
 lea rdi, [rsp + 0x42b0]
 mov ecx, 14
@@ -349,7 +349,7 @@ lea rcx, [rsp + 0x42b0]
 lea rdx, [rsp + 0x4340]
 call 0xc300
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 112
 lea rdx, [rsp + 0x4340]
@@ -357,7 +357,7 @@ mov r8, qword ptr [rsp + 0x28]
 add r8, 624
 call 0xf060
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 1024
 lea rdx, [rsp + 0x4340]
@@ -365,7 +365,7 @@ lea r8, [rsp + 0x4360]
 xor r9d, r9d
 call 0xf8e0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 lea r10, [rsp + 0x4380]
 mov dword ptr [r10], 0x20000014
 mov rax, qword ptr [rsp + 0x4360]
@@ -381,7 +381,7 @@ lea rdx, [rsp + 0x4380]
 mov r8d, 36
 call 0xc240
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 add rcx, 224
 mov edx, 22
@@ -391,15 +391,15 @@ lea r10, [rsp + 0x80]
 mov qword ptr [rsp + 0x20], r10
 call 0xe9c0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 mov rcx, qword ptr [rcx + 1128]
 mov edx, 1
 lea r8, [rsp + 0x80]
 mov r9d, 58
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 3
 xor eax, eax
@@ -410,7 +410,7 @@ add rax, 4
 add qword ptr [rsp + 0x50], rax
 jmp 0x10447
 cmp dword ptr [rcx + 1120], 3
-jne 0x10a5c
+jne 0x10aa1
 sub rsp, 0x43c8
 mov qword ptr [rsp + 0x28], rcx
 mov qword ptr [rsp + 0x38], r9
@@ -425,25 +425,25 @@ lea r10, [rsp + 0x80]
 mov qword ptr [rsp + 0x20], r10
 call 0xe9c0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 mov rcx, qword ptr [rcx + 1128]
 mov edx, 1
 lea r8, [rsp + 0x80]
 mov r9, qword ptr [rsp + 0x40]
 add r9, 22
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 xor eax, eax
 add rsp, 0x43c8
 ret
 cmp dword ptr [rcx + 1120], 3
-jne 0x10a5c
+jne 0x10aa1
 test r8, r8
-jz 0x10a6e
+jz 0x10ab3
 cmp r9, 5
-jb 0x10a80
+jb 0x10ac5
 sub rsp, 0x43c8
 mov qword ptr [rsp + 0x28], rcx
 mov qword ptr [rsp + 0x38], r9
@@ -460,9 +460,9 @@ mov r8, qword ptr [rsp + 0x78]
 add r8, qword ptr [rsp + 0x48]
 mov r9, 5
 sub r9, qword ptr [rsp + 0x48]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x48], rax
 jmp 0x1082e
 mov r10, qword ptr [rsp + 0x78]
@@ -470,7 +470,7 @@ movzx eax, word ptr [r10 + 3]
 xchg al, ah
 lea rax, [rax + 5]
 cmp rax, qword ptr [rsp + 0x40]
-ja 0x10a55
+ja 0x10a59
 mov qword ptr [rsp + 0x58], rax
 mov qword ptr [rsp + 0x40], 5
 mov rax, qword ptr [rsp + 0x40]
@@ -483,9 +483,9 @@ mov r8, qword ptr [rsp + 0x78]
 add r8, qword ptr [rsp + 0x40]
 mov r9, qword ptr [rsp + 0x58]
 sub r9, qword ptr [rsp + 0x40]
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jle 0x10a36
+jle 0x10a38
 add qword ptr [rsp + 0x40], rax
 jmp 0x1089d
 mov rcx, qword ptr [rsp + 0x28]
@@ -497,7 +497,7 @@ lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x20], r10
 call 0xeb40
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 movzx eax, byte ptr [rsp + 0x60]
 cmp eax, 21
 je 0x1093e
@@ -505,7 +505,7 @@ cmp eax, 22
 je 0x1092d
 cmp eax, 23
 je 0x1092d
-jmp 0x10a4e
+jmp 0x10a50
 mov rax, qword ptr [rsp + 0x58]
 sub rax, 22
 add rsp, 0x43c8
@@ -522,14 +522,14 @@ add rsp, 0x43c8
 ret
 mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 5
-mov eax, -3
+mov rax, -3
 add rsp, 0x43c8
 ret
 cmp dword ptr [rcx + 1120], 3
-je 0x109a0
+je 0x109a2
 cmp dword ptr [rcx + 1120], 4
-je 0x109a0
-jmp 0x10a5c
+je 0x109a2
+jmp 0x10aa1
 sub rsp, 0x43c8
 mov qword ptr [rsp + 0x28], rcx
 mov qword ptr [rsp + 0x38], r9
@@ -544,15 +544,15 @@ lea r10, [rsp + 0x80]
 mov qword ptr [rsp + 0x20], r10
 call 0xe9c0
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov rcx, qword ptr [rsp + 0x28]
 mov rcx, qword ptr [rcx + 1128]
 mov edx, 1
 lea r8, [rsp + 0x80]
 mov r9d, 24
-call 0x10ac0
+call 0x10d00
 test eax, eax
-jnz 0x10a36
+jnz 0x10a38
 mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 4
 xor eax, eax
@@ -562,10 +562,25 @@ mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 5
 add rsp, 0x43c8
 ret
-mov eax, -3
-jmp 0x10a36
-mov eax, -2
-jmp 0x10a36
+mov rax, -3
+jmp 0x10a38
+mov rax, -2
+jmp 0x10a38
+cmp byte ptr [r10], 20
+jne 0x10a50
+movzx eax, word ptr [r10 + 3]
+xchg al, ah
+cmp eax, 1
+jne 0x10a59
+lea r8, [rsp + 0x85]
+mov edx, 2
+mov r9d, 1
+mov rcx, qword ptr [rsp + 0x28]
+mov rcx, qword ptr [rcx + 1128]
+call 0x10d00
+test eax, eax
+jle 0x10a38
+jmp 0x10306
 mov dword ptr [rcx + 1120], 5
 mov rax, -3
 ret

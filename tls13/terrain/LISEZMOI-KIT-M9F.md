@@ -1,0 +1,174 @@
+# KIT TERRAIN M9-(f) — LA SESSION RÉELLE, LA GRANDE ŒUVRE (win)
+
+> Préparé au laboratoire le 06/11/2026 (le chantier (f) : le dernier du jalon —
+> la finale `1.0.0` attend le vert de CE run, D104 : le scellage est un fait
+> de carte).
+>
+> **Deux pièces** : `proxy.exe` est L'ARTEFACT **1.0.0-dev.2** du jalon M9 —
+> 65 024 o, sha256
+> `d892893469608fd69e381b92b8e18623107bd2bc694f43a512bc5900773dc314` —
+> le CLIENT TLS 1.3 ENTIER en blocs scellés sur le corps 0.9.0 INTACT
+> (la carte génération 10 le prouve, le verrou croisé 86/86 est vert) ;
+> `scenario-m9f.py` est LE SCÉNARIO (python SEUL — aucun paquet à
+> installer, aucun droit particulier ; le réseau vers
+> www.cloudflare.com:443 EST requis, c'est le but même du run).
+>
+> **L'erratum n° 5 est la raison d'être du build dev.2** : la sonde
+> terrain du laboratoire (le 06/11, avant le kit) a prouvé sur pièces
+> que le build dev.1 ne pouvait PAS franchir un serveur réel —
+> (1) l'octet de longueur du record ClientHello revendiquait 118 octets
+> pour un vol de 119 = 5 + 114 : les serveurs réels attendaient 4 octets
+> jamais émis (le SILENCE prouvé contre google/github/cloudflare/debian) ;
+> (2) les serveurs réels émettent l'enregistrement CCS de compatibilité
+> (`14 03 03 00 01 01`) ENTRE leur ServerHello et leur vol protégé — la
+> RFC 8446 § 4.1.3 ordonne de l'ignorer, la machine dev.1 en mourrait ;
+> (3) les verdicts internes de la machine s'écrivent désormais en 64
+> bits (la frontière du kit). La spécification scellée disait déjà TOUT
+> CELA (P1 : « 114 ») — la notation a été réparée à la source, le harnais
+> 54/54 × 3 graines re-joué VERT, le kit embarque le build réparé.
+
+## 1. Ce que ce kit contient
+
+```
+m9-kit/
+├── proxy.exe         l'ARTEFACT 1.0.0-dev.2 (65 024 o, sha256
+│                     d8928934… — lecture seule pour le run ; la carte
+│                     privée ne voyage JAMAIS avec l'artefact, R1) ;
+├── scenario-m9f.py   LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
+│                     platform, socket, struct, sys, threading, time —
+│                     les constantes FIGÉES au laboratoire depuis le
+│                     plan du dépôt, recoupées PAR AST contre l'artefact
+│                     à l'assemblage — un kit corrompu est un refus
+│                     nommé AVANT tout geste) ;
+└── LISEZMOI-KIT-M9F.md  le présent document.
+```
+
+## 2. Le geste (trois temps)
+
+1. **Extraire** le zip COMPLET dans un NOUVEAU dossier (ne jamais
+   mélanger les runs — D99). Sur votre Windows 11 : `m9-kit/`.
+2. **Lancer** : `python scenario-m9f.py` (ou `py`/`python3` selon votre
+   installation — **un Python 64 bits est requis**). Aucun paquet à
+   installer, aucun droit particulier ; le réseau doit être vivant (la
+   cible : www.cloudflare.com:443). Le run dure ~10 secondes et dit
+   tout à l'écran ; chaque constat est tranché binaire, le verdict se
+   rend POST-MORTEM. Si rien ne bouge au-delà de 300 secondes, la
+   garde-chien du scénario vous le dira et rendra la main — un
+   transport muet est une information, jamais une attente.
+3. **Renvoyer** le dossier `preuves-m9f/` ENTIER au coffre
+   `/test/preuves-m9f/` (dossier Drive « Triade » → « test ») : les
+   pièces naissent toutes seules —
+   - `temoin-m9f.txt` — l'environnement (Windows, Python, le VRAI ntdll
+     localisé et haché), les SSN des TROIS noms lus par les DEUX
+     lecteurs, l'empreinte épinglée, chaque contrôle tranché ;
+   - `scenario-m9f-journal.log` — le journal horodaté du run ;
+   - `VERDICT-run-m9f.txt` — le verdict post-mortem ;
+   - `ligne-recue.txt` — la ligne applicative DÉCHIFFRÉE PAR LA MACHINE
+     (la réponse HTTP reçue chiffrée, restituée en clair) ;
+   - `journal-emissions.txt` — TOUT ce que la machine a émis (le CH
+     recoupé octet par octet, le Finished client, la ligne scellée, le
+     close_notify).
+
+## 3. Ce que le scénario démontre (les temps du run)
+
+- **T0 LE TÉMOIN** : l'empreinte de l'artefact ASSERTÉE avant tout geste ;
+  le VRAI ntdll localisé et haché ; l'artefact cartographié
+  (LoadLibraryEx DONT_RESOLVE — le scénario est le CHARGEUR, jamais
+  l'exécutant de l'artefact entier) ; les octets attendus constatés UN
+  PAR UN — dont **l'octet de l'erratum n° 5 relu dans l'image**
+  (`41 C7 02 16 03 03 00 41 C6 42 04 72` @0x10082 : la preuve que le
+  kit embarque le build réparé) ; la cible résolue par DNS.
+- **T1 LA RÉSOLUTION** : le VRAI ntdll lu par DEUX lecteurs indépendants —
+  la marche EAT refaite en PYTHON et le BLOC sys-02 appelé à son adresse
+  scellée — LE MÊME SSN pour NtCreateFile, NtDeviceIoControlFile et
+  NtClose ; le MOTIF du stub confronté (`4C 8B D1 B8` avant l'imm32 :
+  un stub crocheté — un hook — est un REFUS NOMMÉ, jamais un numéro
+  extrait).
+- **T2 L'ÉTABLISSEMENT** : le socket TCP par le **VRAI afd.sys** — sys-04
+  à son adresse scellée : NtCreateFile sur `\Device\Afd\Endpoint`, bind
+  implicite WILDCARD, connect SYNCHRONE — TROIS appels NT, chaque SSN
+  résolu AU GESTE MÊME, **zéro ws2_32** (la surface de hook que M8 a
+  nommée — le socket natif SANS une seule entrée d'import réseau).
+- **T3 LA SESSION** : LA POIGNÉE ENTIÈRE par LE CLIENT TLS 1.3 DE
+  L'ARTEFACT — tls13-27 (la machine d'états) appelé à son adresse
+  scellée, le socle tls13-28 câblé aux rappels DU KIT (émettre/recevoir
+  → sys-05/sys-06 → les SYSCALLS DIRECTS). Le kit fournit TOUT : l'aléa,
+  le couple x25519, L'EMPREINTE ÉPINGLÉE (96 o, le contrat P1 de la
+  machine). **LE RECOUP** : le ClientHello émis par la machine ==
+  `16 03 03 00 72` + la construction re-jouée en Python pur (114 o,
+  l'aléa du kit à +6, la clé publique à +82 == l'échelle RFC 7748
+  refaite en Python — les DEUX lecteurs, encore). L'état 3 (CONNECTÉ).
+- **T4 LA LIGNE** : la ligne applicative CHIFFRÉE ÉCHANGÉE — É2 ÉMETTRE
+  (le GET scellé par LA MACHINE sous SES clés), É3 RECEVOIR (la
+  réponse DÉCHIFFRÉE PAR LA MACHINE) ; le témoin « HTTP/1.1 200 OK »
+  cherché dans le flux EN CLAIR restitué ; les éventuels tickets de
+  session traversent comme données et sont ignorés.
+- **T5 L'ÉPINGLAGE** : LA FALSIFICATION CONTRE LE VRAI SERVEUR — une
+  seconde session, l'empreinte MUTÉE d'un bit → le certificat réel
+  offert n'est pas celui qu'on attend → **-6 NOMMÉ** (l'épinglage
+  divergent), l'état 5 (MORT), le journal == l'offre seule. La
+  confiance est une COMPARAISON, jamais une croyance — la garde est
+  constatée sur le monde réel.
+- **T6 LA CLÔTURE** : É4 FERMER (le close_notify composé, scellé et
+  émis PAR LA MACHINE — 24 o) ; puis la fermeture des handles — LE
+  GESTE DU KIT (I8 de sys-04) : NtClose résolu par sys-02, ÉMIS PAR
+  SYS-01, le trombone ABI, via un trampoline à deux instructions
+  (ctypes ne peut pas charger rax — le trampoline le fait) ; proxy.exe
+  relu inchangé, la cartographie libérée.
+
+## 4. Les frontières nommées (l'honnêteté du terrain)
+
+- **Le certificat épinglé est servi SANS SNI** : le ClientHello du jalon
+  ne porte pas l'extension nom-de-serveur (I3 de tls13-22 : « le kit
+  cible le serveur par son adresse, l'épinglage fait la confiance »).
+  www.cloudflare.com répond alors avec le certificat de son vhost par
+  défaut — **CN=www.cloudflare.com, émis par Let's Encrypt (YR2),
+  RSA-2048, valide 2026-11-01 → 2027-01-30** — l'empreinte épinglée
+  (sha256 du DER) :
+  `045d0758ed7db6e7a3a1ffaffb2cd8ca2a8185318d40422145af3259b106f72f`.
+  **Un renouvellement côté serveur** (Let's Encrypt renouvelle tous
+  les ~60-90 jours) fera échouer T3 par -6 NOMMÉ : c'est la NATURE de
+  l'épinglage — renvoyez les pièces, le labo re-gèle l'empreinte.
+  L'analyse X.509 complète reste le CHANTIER FUTUR NOMMÉ (tls13-26) :
+  le jalon COMPARE, il ne fait pas confiance en silence.
+- **Le socle socket (sys-04/05/06) court POUR LA PREMIÈRE FOIS sur le
+  VRAI afd.sys** : il fut prouvé au labo sur le MODÈLE STRICT du noyau
+  (131 contrôles) — la séquence create/bind/connect vient des mesures
+  WinDbg de Windows 11 (« Under the Hood of AFD.sys », leftarcode 2025).
+  Si votre afd.sys diverge, le verdict sera -6 NOMMÉ avec l'étape
+  nommée — un échec honnête vaut plus qu'un vert muet.
+- **Les causes NTSTATUS vivent dans rdx** au moment des verdicts -6 de
+  sys-04/05/06 (le contrat) : ctypes ne restitue que rax — le kit NOMME
+  l'étape en échec, l'information exacte existe dans les octets, la
+  limite de l'instrument est nommée ici.
+- **Sous Python, le scénario utilise ctypes** pour charger l'artefact
+  et appeler les blocs à leurs adresses scellées, et pour câbler ses
+  propres rappels de transport au socle de la machine — c'est le moyen
+  standard d'invoquer du code natif depuis un script. Le CODE appelé
+  est celui de l'ARTEFACT (vérifié par empreinte avant tout appel) ;
+  le scénario n'embarque AUCUN octet de code exécuté — seulement les
+  attendus, les rappels de transport et les pièces. Le réseau, lui,
+  n'est JAMAIS touché par Python : chaque octet émis ou reçu passe par
+  les SYSCALLS DIRECTS de l'artefact (sys-05/sys-06).
+
+## 5. Après le run
+
+- Si le verdict est **VERT** : renvoyer `preuves-m9f/` au coffre
+  `/test/preuves-m9f/` — le laboratoire recoupe sur pièces
+  (D138/D145/D148 : témoin ↔ journal ↔ verdict ↔ émissions recoupés
+  ENTRE EUX) et, si elles établissent le critère, la **finale 1.0.0**
+  est posée (fait de carte) : **le jalon M9 franchi — LA GRANDE
+  ŒUVRE : le client TLS 1.3 entier en blocs scellés, zéro délégation
+  cryptographique, la souveraineté complète.**
+- Si un constat dit **ÉCHEC NOMMÉ** : renvoyer `preuves-m9f/` TEL QUEL —
+  la ligne nomme le défaut ; un échec honnête vaut plus qu'un vert
+  muet (l'ordre lexicographique de la maison : la vérité d'abord).
+
+*Le laboratoire ne peut PAS rejouer ce kit (Windows + le VRAI ntdll + le
+VRAI afd.sys exigés — le cœur même du chantier). Le labo a fait ce qu'il
+peut : le client de RÉFÉRENCE en Python (la sonde du 06/11) a rejoué le
+protocole EXACT du kit contre la MÊME cible — le calendrier recoupé sur
+les pièces RFC 8448, la poignée entière, le certificat épinglé, la ligne
+reçue — et le kit est éprouvé par l'assemblage : chaque constante du
+scénario recoupée contre l'artefact, la compilation vérifiée,
+l'extraction vierge constatée.*

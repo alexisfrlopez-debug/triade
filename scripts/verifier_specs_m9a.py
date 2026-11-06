@@ -126,7 +126,10 @@ controle("ALERTE_CLOSE_NOTIFY == 01 00", lay.ALERTE_CLOSE_NOTIFY == b"\x01\x00")
 controle("la suite et le groupe arrêtés",
          lay.SUITE == 0x1301 and lay.GROUPE == 0x001D)
 controle("les versions de l'ère",
-         lay.VERSION_DEV == 0x01000001 and lay.VERSION_FINALE == 0x01000000)
+         lay.VERSION_DEV == 0x01000002 and lay.VERSION_FINALE == 0x01000000,
+         "dev.2 : l'erratum n° 5 [la sonde terrain du 06/11 — l'octet de "
+         "longueur du record CH + le CCS hérité avalé] ; dev.1 = le premier "
+         "build, soldé")
 controle("la table des SEPT verdicts (0, −1..−7)",
          sorted(lay.VERDICTS) == list(range(-7, 1)))
 controle("le préfixe d'étiquette « tls13 » + espace",

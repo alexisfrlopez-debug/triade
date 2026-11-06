@@ -96,6 +96,26 @@
 ; l'argument (pointeur) · r9 = sa longueur (ou la capacité) · I4 AUCUN
 ; état détenu hors du contexte pointé (charte § 6) ; aucun registre non
 ; volatil détruit ; NOP, 0x90 (charte § 8).
+; L'ERRATUM n° 5 (la sonde terrain du 06/11 — AVANT le kit, le modèle n° 4 :
+; le défaut nommé par la sonde, réparé À LA SOURCE, le terrain épargné) :
+; (1) L'OCTET DE LONGUEUR DU RECORD CH — le brouillon écrivait 0x76 (118)
+; pour un vol de 119 o = 5 + 114 : la spec P1 ÉTAIT JUSTE (« 5 o : type
+; 22, 0x0303, 114 »), la notation contredite par elle-même — contre les
+; SERVEURS RÉELS l'interblocage est PROUVÉ sur pièces (la sonde : le vol
+; 0x76 reçoit le SILENCE de google/github/cloudflare/debian TOUS — le
+; serveur attend 4 octets qui ne viennent jamais ; le vol corrigé 0x72
+; reçoit le ServerHello des QUATRE) ; l'octet est 0x72 (114) ;
+; (2) LE CCS HÉRITÉ (RFC 8446 § 4.1.3) — la même sonde a constaté que les
+; serveurs réels émettent l'enregistrement change_cipher_spec de
+; compatibilité (14 03 03 00 01 01) ENTRE leur ServerHello et leur premier
+; vol protégé : la RFC ORDONNE de l'ignorer ; la boucle protégée L'AVALE
+; DÉSORMAIS — la charge héritage D'UN octet lue au socle SANS
+; déverrouillage (l'enregistrement n'est PAS opaque : AUCUNE séquence
+; consommée, AUCUNE clé touchée), la boucle reprend ; toute longueur
+; déclarée autre que 1 est le refus -2 NOMMÉ (un faux « CCS » est une
+; attaque, jamais un aval) ; le socle 28 DÉMÉNAGE 0x10AC0 → 0x10D00 (la
+; croissance du slot du principal 0xB80 → 0xBC0, la zone fixtures
+; INTACTE — les 26 autres blocs byte-identiques).
 test rcx, rcx
 jz .refus_contexte_nul
 cmp rdx, 1
@@ -179,10 +199,12 @@ call TLS22
 test eax, eax
 jnz .mort
 ; l'en-tête en clair : type 22, version héritage 0x0303, longueur 114
-; (5 o : 16 03 03 00 76 — l'u16 GROS-BOUTISTE)
+; (5 o : 16 03 03 00 72 — l'u16 GROS-BOUTISTE ; l'erratum n° 5 : l'octet
+; de longueur 0x76 du premier jet contredisait le vol même 119 = 5 + 114
+; — le serveur réel attendait 4 octets jamais émis, le SILENCE prouvé)
 lea r10, [rsp + 0x80]
 mov dword ptr [r10], 0x30316
-mov byte ptr [r10 + 4], 0x76
+mov byte ptr [r10 + 4], 0x72
 ; le CH ABSORBÉ (l'ordre d'émission — charte § 4)
 mov rcx, qword ptr [rsp + 0x28]
 lea rdx, [rsp + 0x85]
@@ -340,7 +362,7 @@ jmp .pr_tete
 .pr_tete_fin:
 lea r10, [rsp + 0x80]
 cmp byte ptr [r10], 23
-jne .refus_etat_mort
+jne .pr_ccs_ou_mort
 movzx eax, word ptr [r10 + 3]
 xchg al, ah
 cmp rax, 16400
@@ -693,7 +715,7 @@ ret
 .rc_alerte_morte:
 mov r10, qword ptr [rsp + 0x28]
 mov dword ptr [r10 + 1120], 5
-mov eax, -3
+mov rax, -3
 add rsp, 0x43c8
 ret
 ; ------------------------------------------------------------------ FERMER
@@ -743,11 +765,44 @@ mov dword ptr [r10 + 1120], 5
 add rsp, 0x43c8
 ret
 .refus_etat_mort:
-mov eax, -3
+mov rax, -3
 jmp .mort
 .refus_taille_mort:
-mov eax, -2
+mov rax, -2
 jmp .mort
+; LA LARGEUR DES VERDICTS (l'erratum n° 5, complément) : les refus
+; internes de la machine s'écrivent mov rax, -N en 64 BITS — miroir
+; de la lignée (sys-02/03/04 : tous « mov rax, -N ») : un « mov eax »
+; zéro-étendrait rax et le kit 64 bits lirait +4294967293 au lieu de
+; -3 (la frontière du kit — tls13-28 Q3 : rax = le verdict) ; TROIS
+; sites convertis (l'alerte inconnue d'É3, l'état hors ligne, la
+; taille hors borne) — taille +6 o, le slot tient
+; LE CCS HÉRITÉ AVALÉ (l'erratum n° 5 — RFC 8446 § 4.1.3 : « un client
+; DOIT ignorer les change_cipher_spec reçus pendant la poignée » ; la
+; sonde terrain du 06/11 l'a constaté chez les serveurs réels TOUS :
+; l'enregistrement 14 03 03 00 01 01 arrive ENTRE le ServerHello et le
+; premier vol protégé). La charge héritage D'UN octet est lue au socle
+; SANS déverrouillage — l'enregistrement n'est PAS opaque : AUCUNE
+; séquence consommée, AUCUNE clé touchée, le transcript INTACT — puis la
+; boucle protégée REPREND à zéro ; toute longueur déclarée autre que 1
+; est le refus -2 NOMMÉ (un faux « CCS » est une attaque, jamais un
+; aval — fail-closed).
+.pr_ccs_ou_mort:
+cmp byte ptr [r10], 20
+jne .refus_etat_mort
+movzx eax, word ptr [r10 + 3]
+xchg al, ah
+cmp eax, 1
+jne .refus_taille_mort
+lea r8, [rsp + 0x85]
+mov edx, 2
+mov r9d, 1
+mov rcx, qword ptr [rsp + 0x28]
+mov rcx, qword ptr [rcx + 1128]
+call TLS28
+test eax, eax
+jle .mort
+jmp .protege
 .refus_pre_etat:
 mov dword ptr [rcx + 1120], 5
 mov rax, -3

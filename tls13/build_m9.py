@@ -7,13 +7,14 @@ Chaîne : notation (keystone) -> octets -> PE32+ à la main (HUIT sections :
 projet génération 9. Le chantier (e) du plan M9 sous les règles R4/R7 (le
 corps 0.9.0 scellé INTACT — m8/proxy.exe sha 1492b0bc…, l'ancre R7 de l'ère,
 confronté OCTET PAR OCTET à la recomposition M3+M4+M5+M8 AVANT l'extension)
-et R10 (la version 0x01000001 — geste de BUILD, JAMAIS un scellage : la
+et R10 (la version 0x01000002 — geste de BUILD, JAMAIS un scellage : la
 1.0.0 finale attend le terrain vert du chantier (f)).
 
 LA COMPOSITION 1.0.0-dev.1 (D166, tls13/I/README.md + le LISEZMOI du geste) :
   - le corps 0.9.0 INTACT (R7) : .text/.text2/.text3/.text4/.data octet-
     identiques au scellé ; .rdata identique SAUF la version @0x2820
-    (0x00090001 -> 0x01000001 — LE delta R10, geste de BUILD) et la table
+    (0x00090001 -> 0x01000002 — LE delta R10, geste de BUILD, l'erratum
+    n° 5 : dev.2, la sonde terrain du 06/11) et la table
     K[64] @0x2F00-0x2FFF (la réserve .rdata M8 VIERGE vérifiée dans le
     scellé — ÉPUISÉE par la table de SHA-256 de tls13-02, FIPS 180-4 § 4.2.2) ;
   - .text5 : sys-01..03 (l'héritage 0.9.0) + LE SOCLE SOCKET de M9-(d) —
@@ -22,7 +23,9 @@ LA COMPOSITION 1.0.0-dev.1 (D166, tls13/I/README.md + le LISEZMOI du geste) :
     0x180) — dans la réserve int3 VÉRIFIÉE du scellé ; la réserve
     [0xA840, 0xBFFF) demeure int3 ;
   - .text6 NOUVELLE (0xC000-0x10FFF, raw 0xAE00) : les 28 blocs du domaine
-    tls13 (0xC000..0x10B70 — l'erratum n° 4 : tls13-28 DÉPLACÉ 0x10AC0) +
+    tls13 (0xC000..0x10B00 — l'erratum n° 5 : le principal ré-arrêté 0xBC0,
+    le socle tls13-28 DÉPLACÉ 0x10AC0 → 0x10D00, APRÈS les fixtures — la
+    zone fixtures INTACTE, les 26 autres blocs byte-identiques) +
     les fixtures (U9/EXP_INV @0xFF00/0xFF20 ; les HUIT libellés du calendrier
     + la valeur magique HRR @0x10B80..0x10BF0 ; les fixtures du transport
     AFD @0x10C20..0x10CF0 — device/EA/bind + les TROIS spans de résolution) ;
@@ -725,9 +728,9 @@ def valider_pe_m9(exe: bytes, code_sys: dict, code_tls13: dict):
     for rva in (0x4200, 0x45C0, 0x4800, 0x7FC0, 0x8FC0):
         assert tranche_section_m9(exe, rva, 1)[0] == 0xCC, \
             f"zone réservée @{rva:#x} != int3"
-    # Version (R10 : geste de BUILD — 0x01000001 > 0x00090001 du scellé 0.9.0)
+    # Version (R10 : geste de BUILD — 0x01000002 > 0x01000001 dev.1 > 0x00090001)
     version = struct.unpack("<Q", tranche_section_m9(exe, B5.L4.R_VERSION, 8))[0]
-    assert version == L.VERSION_DEV, f"version {version:#x} != 0x01000001"
+    assert version == L.VERSION_DEV, f"version {version:#x} != 0x01000002"
     assert version > L8.VERSION_U64_DEV1, "la monotonie R10 est rompue"
     assert version >= L8.VERSION_U64_MIN, "le plancher R10 est franchi"
     # R_POLITIQUE @0x3860 : l'état image reste 0 (héritage)
@@ -896,10 +899,11 @@ _ZONES_CARTE_M9 = ("[zones] io=0x1000-0x10ff libc=0x1100-0x143f app=0x1800-0x1ff
                    "tls=0x6000-0x733f revisions=0x7340-0x7fbf reserve-t3=0x7fc0-0x7fff "
                    "revisions-m5=0x8000-0x8fbf reserve-t4=0x8fc0-0x9fff "
                    "sys=0xa000-0xa83f reserve-t5=0xa840-0xbfff "
-                   "tls13=0xc000-0x10b6f fixtures-x25519=0xff00-0xff3f "
+                   "tls13=0xc000-0x10aff socle-28=0x10d00-0x10daf "
+                   "fixtures-x25519=0xff00-0xff3f "
                    "fixtures-poignee=0x10b80-0x10c1f "
                    "fixtures-transport=0x10c20-0x10cef "
-                   "reserve-t6=0x10cf0-0x10fff "
+                   "marge-t6=0x10b00-0x10b7f reserve-t6=0x10db0-0x10fff "
                    "reserve-libc=0x1440-0x17ff (int3 defensif)")
 
 
@@ -911,20 +915,20 @@ def fragments_clairs_m9(exe: bytes, verrous_m3: list, verrous_m4: list,
                         journal_runs: list[str]) -> dict[str, bytes]:
     sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
 
-    loc = ["[carte-frag] nom=frag-loc generation=9", _ZONES_CARTE_M9]
+    loc = ["[carte-frag] nom=frag-loc generation=10", _ZONES_CARTE_M9]
     for bid in TOUS_BLOCS_M9:
         loc.append(f"[bloc] id={bid} spec={SPEC_PAR_BLOC[bid]} cible=x86-64-win11-pe "
                    f"exe={EXE_PAR_BLOC[bid]} addr={B5.L.IMAGE_BASE + RVA_PAR_BLOC[bid]:#x} "
                    f"v=1 etat=scelle role={ROLES[bid]}")
 
-    con = ["[carte-frag] nom=frag-con generation=9"]
+    con = ["[carte-frag] nom=frag-con generation=10"]
     for bid in TOUS_BLOCS_M9:
         sig, pre, post, inv, deps = (CONTRATS_M9[bid] if bid in CONTRATS_M9
                                      else B8.CONTRATS[bid])
         con += [f"[bloc] id={bid}", f"  sig : {sig}", f"  pre : {pre}",
                 f"  post : {post}", f"  inv : {inv}", f"  deps : {deps}"]
 
-    prf = ["[carte-frag] nom=frag-prf generation=9"]
+    prf = ["[carte-frag] nom=frag-prf generation=10"]
     for bid in TOUS_BLOCS_M9:
         chemin_asm = _chemin_notation_bid_m9(bid)
         with open(chemin_asm, "rb") as f:
@@ -937,7 +941,7 @@ def fragments_clairs_m9(exe: bytes, verrous_m3: list, verrous_m4: list,
     prf.append("[verifications] runs=" + str(len(journal_runs)))
     prf += ["  " + r for r in journal_runs[-12:]]
 
-    bld = ["[carte-frag] nom=frag-bld generation=9"]
+    bld = ["[carte-frag] nom=frag-bld generation=10"]
     for bid in TOUS_BLOCS_M9:
         rva = RVA_PAR_BLOC[bid]
         if bid in EMBARQUES_M9:
@@ -960,7 +964,7 @@ def fragments_clairs_m9(exe: bytes, verrous_m3: list, verrous_m4: list,
         f"graine={verdict_sys.get('graine', '-')}, volume={verdict_sys.get('volume', '-')}",
         f"  heritage : proxy.exe 0.9.0 scelle (1492b0bc...) repris octet pour octet "
         f"(R7 : .text/.text2/.text3/.text4/.data intacts, .rdata identique SAUF la "
-        f"version @0x2820 = 0x01000001 [LE delta R10 — geste de BUILD, jamais "
+        f"version @0x2820 = 0x01000002 [LE delta R10 — geste de BUILD, jamais "
         f"scellage : la 1.0.0 finale attend le terrain vert du chantier (f)] et la "
         f"table K[64] @0x2F00-0x2FFF dans la reserve .rdata M8 VIERGE VERIFIEE "
         f"[EPUISSEE par la table de SHA-256 de tls13-02, FIPS 180-4 § 4.2.2] ; "
@@ -968,9 +972,16 @@ def fragments_clairs_m9(exe: bytes, verrous_m3: list, verrous_m4: list,
         f"sys-05 @0xA540/0x180, sys-06 @0xA6C0/0x180 dans la reserve int3 "
         f"VERIFIEE du scelle, la reserve [0xA840, 0xBFFF) demeurant int3 ; "
         f"section .text6 NOUVELLE [0xC000-0x10FFF : les 28 blocs tls13 "
-        f"0xC000..0x10B70 — l'erratum n° 4 : tls13-28 DEPLACE 0x10AC0, les "
-        f"notations 27/28 re-generees par l'auteur, le harnais poignee re-joue "
-        f"VERT 52/52 × 3 graines — + les fixtures (U9/EXP_INV @0xFF00/0xFF20, "
+        f"0xC000..0x10B00 — l'erratum n° 5 : l'octet de longueur du record CH "
+        f"[0x76 → 0x72 : la sonde terrain du 06/11 a prouvé le SILENCE des "
+        f"serveurs réels sur le vol 0x76] + LE CCS HÉRITÉ AVALÉ [RFC 8446 "
+        f"§ 4.1.3 : la même sonde l'a constaté chez google/github/cloudflare/"
+        f"debian TOUS — l'enregistrement 14 03 03 00 01 01 avalé SANS "
+        f"déverrouillage] + les verdicts internes EN 64 BITS [mov rax, la "
+        f"frontière du kit] — le principal ré-arrêté 0xBC0, le socle tls13-28 "
+        f"DEPLACE 0x10AC0 → 0x10D00 APRÈS les fixtures, les 26 autres blocs "
+        f"byte-identiques, le harnais poignee re-joue VERT 54/54 × 3 graines "
+        f"— + les fixtures (U9/EXP_INV @0xFF00/0xFF20, "
         f"les HUIT libelles du calendrier + HRR @0x10B80..0x10BF0, les fixtures "
         f"du transport AFD @0x10C20..0x10CF0)] ; PE : 8 sections, SizeOfImage "
         f"0x11000, taille 0xFE00, en-tetes <= 0x400 AUCUN decalage (le modele "
@@ -1055,9 +1066,9 @@ def _ligne_preversions_m9(version: str) -> str:
     if re.fullmatch(r"\d+\.\d+\.\d+", version):
         return (f"  preversions                   : {version} SCELLÉE sur le "
                 "recoup terrain M9-(f) VERT (le fait de carte D104 ; monotonie "
-                "R10 : 0x01000001 > 0x00090001 tenue)")
+                "R10 : 0x01000002 > 0x01000001 > 0x00090001 tenue)")
     return (f"  preversions                   : {version} conforme "
-            f"(schema dev, monotonie R10 : 0x01000001 > 0x00090001 — la finale "
+            f"(schema dev, monotonie R10 : 0x01000002 > 0x00090001 — la finale "
             f"1.0.0 attend le terrain vert du chantier (f), jamais un scellage ici)")
 
 
@@ -1085,7 +1096,7 @@ def tableau_de_bord_m9(exe: bytes, verrous_m3: list, verrous_m4: list,
         f"  reutilisation_heritage        : 44 blocs embarques octet-identiques au scelle 0.9.0 "
         f"(R7, deltas .rdata [version + K[64] dans la reserve VIERGE VERIFIEE]/"
         f".text5 [le socle socket dans la reserve int3]/.text6 NOUVELLE/PE "
-        f"documentes — version 0x01000001 : geste de BUILD)",
+        f"documentes — version 0x01000002 : geste de BUILD [l'erratum n° 5]),",
         f"  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5 "
         f"+ span-nom/fixture-ligne M8 + K[64] @0x2F00 + les fixtures .text6 "
         f"[U9/EXP_INV, les HUIT libelles + HRR, le transport AFD], table R10 "
@@ -1196,7 +1207,7 @@ def construire(volume: str, graine: int) -> int:
     heritage = preuve_reutilisation_m9(exe)
     print(f"[R7] réutilisation : {heritage['blocs_reutilises']} blocs "
           f"octet-identiques au scellé 0.9.0, deltas .rdata/.text5/.text6/PE "
-          f"documentés (version 0x01000001 : geste de BUILD, jamais scellage)")
+          f"documentés (version 0x01000002 : geste de BUILD, jamais scellage)")
 
     # 6. Les oracles : l'héritage M4 puis M5 PUIS le domaine sys au complet
     #    (le socle socket compris — les blobs du build)
@@ -1230,7 +1241,7 @@ def construire(volume: str, graine: int) -> int:
                         h9["verrous_m8"], verrous_socle, verrous_tls13,
                         version, verdict_m4, verdict_m5, verdict_sys,
                         compteurs, journal)
-    print(f"[carte] génération 9 écrite (lignée D80, graine durable D144) : "
+    print(f"[carte] génération 10 écrite (lignée D80, graine durable D144) : "
           f"4 fragments chiffrés, signature Ed25519, {len(TOUS_BLOCS_M9)} blocs "
           f"indexés sur 8 artefacts")
     nb, manifeste = verrou_croise_m9()
@@ -1246,7 +1257,7 @@ def construire(volume: str, graine: int) -> int:
           f"sha256:{hashlib.sha256(exe).hexdigest()}")
     print(f"=== M9-dev (oracle vert) : {version} — le domaine tls13 composé sur "
           f"le corps 0.9.0 INTACT (R7), le socle socket dans la réserve .text5, "
-          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 9 "
+          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 10 "
           f"vivante ; le chantier (f) (le terrain — LA GRANDE ŒUVRE : la "
           f"session RÉELLE) attend ; la finale 1.0.0 attend le terrain vert ===")
     return 0

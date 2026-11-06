@@ -13,7 +13,7 @@ spécificités M9 :
     g8 M5, g9 M8/M9-sys, h10 M9-tls13) ; la carte COURANTE indexe l'ensemble
     des blocs des artefacts hello.exe, selftest.exe, echo.exe, proxy.exe
     0.4.0, proxy.exe 0.5.1, proxy.exe 0.6.0 (génération 7, l'ère close),
-    proxy.exe 0.9.0 (l'ère close, génération 8) et proxy.exe 1.0.0-dev.1
+    proxy.exe 0.9.0 (l'ère close, génération 8) et proxy.exe 1.0.0-dev.2
     (l'ère du TLS 1.3 pur — le geste de BUILD, jamais scellage : la finale
     1.0.0 attend le terrain vert du chantier (f)) ;
   - LIGNÉE D80 : la phrase maîtresse est celle du coffre (entrée
@@ -49,9 +49,11 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 9
+GENERATION = 10   # l'erratum n° 5 : la carte régénérée [tls13-27 réparé,
+                   # tls13-28 déplacé 0x10D00] — la lignée D80 tient, la
+                   # graine durable tient, la génération AVANCE (dev.2)
 
-# Sel Argon2id propre à la génération 9 (public par conception — la phrase
+# Sel Argon2id propre à l'ère M9 (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
 ARGON2_SALT = hashlib.sha256(b"TRIADE-M9-carte-argon2id-v1").digest()  # 32 o
 
@@ -68,7 +70,7 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV1 = "1.0.0-dev.1"
+VERSION_DEV1 = "1.0.0-dev.2"   # l'erratum n° 5 : le build dev.2
 
 
 class ErreurCarte(Exception):

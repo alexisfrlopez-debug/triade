@@ -21,7 +21,16 @@ PREFIXE_ETIQUETTE = b"tls13 "      # RFC 8446 §7.1 (le NUL de terminaison
 
 # --- Les versions de l'ère (le miroir m8 : 0x00090001 = 0.9.0-dev.1) ----------
 
-VERSION_DEV = 0x01000001           # 1.0.0-dev.1 (geste de BUILD, jamais scellage)
+VERSION_DEV = 0x01000002           # 1.0.0-dev.2 (geste de BUILD, jamais scellage ;
+                                   # dev.2 = l'erratum n° 5 : la sonde terrain
+                                   # du 06/11 a nommé l'octet de longueur du
+                                   # record CH [0x76 → 0x72 : la spec P1 dit
+                                   # 114, le vol 119 = 5 + 114 — le brouillon
+                                   # se contredisait] et le CCS hérité que les
+                                   # serveurs réels émettent [google/github/
+                                   # cloudflare/debian TOUS — la machine
+                                   # l'avalait sans le déverrouiller, RFC 8446
+                                   # § 4.1.3 : IGNORÉ])
 VERSION_FINALE = 0x01000000        # 1.0.0 (le scellage est un fait de carte, D165)
 
 # --- La table des SEPT verdicts du domaine (charte § 5 : l'échec nommé) --------
@@ -268,17 +277,23 @@ TLS21_VA = 0xEB40        # h100021 — l'enregistrement déprotéger (slot 0x1C0
 #   tls13-28 :  144 o notés -> slot 0xB0  (padding 32 ; ERRATUM n° 4 : le
 #                              socle DÉPLACÉ 0x10A80 -> 0x10AC0, à la fin du
 #                              slot ré-arrêté du principal)
-# — fin du principal : 0x10B70 ; les fixtures poignée suivent à leur ARRÊT.
+# — fin du principal [27] : 0x10B00 (le slot 0xBC0 de l'erratum n° 5) ;
+# le socle 28 vit APRÈS les fixtures à 0x10D00 (la réserve int3).
 TLS22_VA = 0xED00        # h100022 — le ClientHello composé (slot 0x120)
 TLS23_VA = 0xEE20        # h100023 — le ServerHello traité (slot 0x240)
 TLS24_VA = 0xF060        # h100024 — le calendrier de clés (slot 0x880)
 TLS25_VA = 0xF8E0        # h100025 — le Finished calculé/vérifié (slot 0x100)
 TLS26_VA = 0xF9E0        # h100026 — l'épinglage du certificat (slot 0x140)
-TLS27_VA = 0xFF40        # h100027 — la machine d'états (slot 0xB80, l'erratum
-                         # n° 3 : le re-arrêt après les douze fautes, 2906 o)
-TLS28_VA = 0x10AC0       # h100028 — le socle d'appel (slot 0xB0 ; DÉPLACÉ de
-                         # 0x10A80 à l'erratum n° 4 : la fin du slot de 27)
-# fin du principal : 0x10B70 — les fixtures poignée suivent
+TLS27_VA = 0xFF40        # h100027 — la machine d'états (slot 0xBC0, l'erratum
+                         # n° 5 : le CCS hérité avalé [RFC 8446 § 4.1.3] — le
+                         # slot ré-arrêté 0xB80 → 0xBC0 sur la mesure)
+TLS28_VA = 0x10D00       # h100028 — le socle d'appel (slot 0xB0 ; DÉPLACÉ de
+                         # 0x10AC0 à l'erratum n° 5 : la croissance du slot de
+                         # 27 — la réserve int3 APRÈS les fixtures [0x10D00,
+                         # 0x10FFF), la zone fixtures 0x10B80..0x10CF0 INTACTE
+                         # — les 26 autres blocs byte-identiques])
+# fin du principal [27] : 0x10B00 ; les fixtures poignée suivent à leur ARRÊT
+# (0x10B80..0x10CF0) ; le socle 28 suit à 0x10D00 (l'erratum n° 5)
 
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
@@ -307,7 +322,7 @@ SLOTS_TLS13 = {
     "h100024": (TLS24_VA, 0x880),
     "h100025": (TLS25_VA, 0x100),
     "h100026": (TLS26_VA, 0x140),
-    "h100027": (TLS27_VA, 0xB80),
+    "h100027": (TLS27_VA, 0xBC0),
     "h100028": (TLS28_VA, 0xB0),
 }
 

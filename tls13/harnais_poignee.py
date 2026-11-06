@@ -159,8 +159,10 @@ REGS = {"rax": UC_X86_REG_RAX, "rbx": UC_X86_REG_RBX, "rcx": UC_X86_REG_RCX,
 
 # --- La mémoire du harnais (émulation nue à les RVA du plan, mécanisme D79) ------
 
-ZONE_IMAGE = (0x1000, 0x11000)     # les 28 blocs (0xC000..0x10BD0) + la marge
-RET_MAGIQUE = 0x10D00              # au-delà des fixtures poignée (0x10BD0)
+ZONE_IMAGE = (0x1000, 0x11000)     # les 28 blocs (0xC000..0x10DB0) + la marge
+RET_MAGIQUE = 0x10E00              # au-delà du socle (l'erratum n° 5 l'a déplacé
+                                   # 0x10AC0 → 0x10D00 : la sentinelle suit,
+                                   # 0x10E00 > la fin du slot de 28 [0x10DB0])
 ZONE_SESSION = 0x500000            # le contexte session (17 520 o) + le kit
 ZONE_SIMU = 0x600000               # LE SIMULATEUR : les stubs, la cassette, le journal
 ZONE_PILE = 0x7E000000
@@ -755,7 +757,12 @@ class Simulation:
 
     def __init__(self):
         self.ch = ref_construction_ch(ALEA_8448, PUBLIQUE_CLIENT)
-        self.ch_rec = b"\x16\x03\x03\x00\x76" + self.ch
+        self.ch_rec = b"\x16\x03\x03\x00\x72" + self.ch
+        # (l'erratum n° 5 : l'octet de longueur du record CH — 114 = 0x72 ;
+        #  le premier jet écrivait 0x76 [118] : la sonde terrain du 06/11 a
+        #  prouvé sur pièces le SILENCE des serveurs réels — le serveur
+        #  attend 4 octets jamais émis ; machine et référence corrigées
+        #  ENSEMBLE — le juge est le code ET le monde)
         self.hash1 = hashlib.sha256(self.ch + SH_8448).digest()
         self.cadenas = ref_Cadenas(PARTAGE_8448, self.hash1)
         self.hash_cv = hashlib.sha256(
@@ -908,7 +915,7 @@ APPELS_ATTENDUS = {
     "h100026": {L.TLS01_VA: 1, L.TLS03_VA: 1, L.TLS04_VA: 1},
     "h100027": {L.TLS01_VA: 1, L.TLS03_VA: 4, L.TLS04_VA: 3, L.TLS14_VA: 1,
                 L.TLS20_VA: 3, L.TLS21_VA: 2, L.TLS22_VA: 1, L.TLS23_VA: 1,
-                L.TLS24_VA: 3, L.TLS25_VA: 2, L.TLS26_VA: 1, L.TLS28_VA: 10},
+                L.TLS24_VA: 3, L.TLS25_VA: 2, L.TLS26_VA: 1, L.TLS28_VA: 11},
     "h100028": {},
 }
 
@@ -916,7 +923,7 @@ APPELS_ATTENDUS = {
 def vecteur_v1(emul: Emulation):
     section("V1 — round-trip de notation + concordance au plan (source unique)")
     attendus = {"h100022": 241, "h100023": 532, "h100024": 2130,
-                "h100025": 239, "h100026": 285, "h100027": 2906,
+                "h100025": 239, "h100026": 285, "h100027": 2975,
                 "h100028": 144}
     noms = {bid: nom for bid, nom in Emulation.BLOCS if bid in attendus}
     insns_par_bloc = {}
@@ -945,8 +952,9 @@ def vecteur_v1(emul: Emulation):
              "22 : AUCUN (bloc feuille) ; 23 : TLS13 ; 24 : TLS06 ×3 + TLS08 "
              "×16 + TLS15 ×4 + TLS01 + TLS04 (le condensé du vide) ; 25 : "
              "TLS05 ; 26 : TLS01 + TLS03 + TLS04 ; 27 : LA LISTE FERMÉE de la "
-             "spec I1 (31 sites : les douze blocs composés, TLS28 ×10 pour "
-             "TOUTE entrée/sortie) ; 28 : AUCUN appel direct"
+             "spec I1 (32 sites : les douze blocs composés, TLS28 ×11 pour "
+             "TOUTE entrée/sortie — l'erratum n° 5 : le onzième site AVALE le "
+             "CCS hérité) ; 28 : AUCUN appel direct"
              + (f" — DÉFAUTS : {details}" if details else ""))
     # LA ROTULE : l'appel indirect DÉCLARÉ (tls13-28 I2 — le seul du domaine)
     indirects = [i for i in insns_par_bloc["h100028"]
@@ -1509,8 +1517,9 @@ def vecteur_v7(emul: Emulation, nue: Emulation):
     ok_ouvrir = (r["rax"] == 0 and lire_etat(S) == 3
                  and journal == simu.ch_rec + simu.fin_c_rec)
     controle("V7.a:OUVRIR-la-session-entiere", ok_ouvrir,
-             "le journal == NOTRE CH cadré (16 03 03 00 76 || la construction "
-             "re-jouée, 119 o) + NOTRE Finished (58 o : le HMAC de NOTRE "
+             "le journal == NOTRE CH cadré (16 03 03 00 72 || la construction "
+             "re-jouée, 119 o — l'erratum n° 5 : l'octet de longueur) + NOTRE "
+             "Finished (58 o : le HMAC de NOTRE "
              "transcript scellé sous NOS clés de poignée) — le simulateur a "
              "servi le SH du RFC VERBATIM (95 o) et le vol re-scellé (le "
              "Finished serveur recalculé sur NOTRE coupe Hash(CH..CV)) ; "
@@ -1622,6 +1631,50 @@ def vecteur_v7(emul: Emulation, nue: Emulation):
              "OUVRIR sur l'état 3 → -3 ; l'état 5 (MORT) ne rend PLUS RIEN "
              "(É2/É3/É4 → -3) — chaque session morte n'a émis QUE son offre "
              "(le CH : un échec n'ÉMET RIEN de plus, charte § 5)")
+
+    # (h) L'ERRATUM n° 5 — LE CCS HÉRITÉ (RFC 8446 § 4.1.3) : la sonde
+    #     terrain du 06/11 l'a constaté chez les serveurs réels TOUS
+    #     (google, github, cloudflare, debian — la carte du run : SH [90] →
+    #     CCS [6] → vol [N]) ; la machine L'AVALA désormais : servi ENTRE
+    #     le ServerHello et le vol, la session s'établit QUAND MÊME, le
+    #     journal INTACT, AUCUNE séquence consommée, les secrets INTACTS
+    CCS_REC = b"\x14\x03\x03\x00\x01\x01"       # la compatibilité boîtes
+    session_neuve(S)
+    poser_kit(S, ALEA_8448, PRIVEE_CLIENT, EMPREINTE_8448)
+    S.reinit_journal()
+    S.poser_cassette(SH_REC_8448 + CCS_REC + simu.flight)
+    r = ouvrir(S)
+    journal = S.lire_journal()
+    ctrl_ccs = (r["rax"] == 0 and lire_etat(S) == 3
+                and journal == simu.ch_rec + simu.fin_c_rec
+                and lire_session(S, 424, 200)
+                == ENR.Contexte(simu.cadenas.s_cle_hs,
+                                simu.cadenas.s_iv_hs, 1).serialiser())
+    controle("V7.h:le-ccs-herite-avale", ctrl_ccs,
+             "l'enregistrement CCS (14 03 03 00 01 01) servi ENTRE le SH et "
+             "le vol — l'erratum n° 5 : la charge héritage D'UN octet lue au "
+             "socle SANS déverrouillage, la boucle reprend, la session "
+             "s'établit, le journal == l'offre + le Finished (le CCS n'y "
+             "figure JAMAIS), la réception POIGNÉE aux séquences 0/1 — "
+             "AUCUN octet de séquence consommé par l'enregistrement avalé, "
+             "les secrets INTACTS (RFC 8446 § 4.1.3 : IGNORÉ)")
+
+    # (i) LA FALSIFICATION DU CCS : une longueur déclarée autre que 1 est
+    #     le refus -2 NOMMÉ (un faux « CCS » est une attaque, jamais un
+    #     aval — fail-closed) ; AUCUN octet n'est lu au-delà du refus
+    session_neuve(S)
+    poser_kit(S, ALEA_8448, PRIVEE_CLIENT, EMPREINTE_8448)
+    S.reinit_journal()
+    S.poser_cassette(SH_REC_8448 + b"\x14\x03\x03\x00\x02\x01\x01"
+                     + simu.flight)
+    r = ouvrir(S)
+    ctrl_ccs_faux = (r["rax"] == -2 and lire_etat(S) == 5
+                     and S.lire_journal() == simu.ch_rec)
+    controle("V7.i:le-faux-ccs-refuse", ctrl_ccs_faux,
+             "le « CCS » à longueur déclarée 2 → -2 NOMMÉ, l'état 5 (MORT), "
+             "le journal == l'offre seule — l'aval n'est JAMAIS aveugle, "
+             "seul l'enregistrement héritage LÉGAL (la charge d'UN octet) "
+             "passe")
 
 
 # --- Le verdict --------------------------------------------------------------------

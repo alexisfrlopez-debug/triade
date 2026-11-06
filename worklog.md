@@ -5284,3 +5284,85 @@ Stage Summary:
 - LA GRANDE ŒUVRE ATTEND : le chantier (f), le terrain — la session
   RÉELLE avec le VRAI afd.sys, la ligne chiffrée de bout en bout ; si
   vert : la finale 1.0.0.
+
+## Task ID 97 — L'ERRATUM n° 5 (la sonde terrain : l'octet du record CH 0x76→0x72, LE CCS HÉRITÉ, les verdicts 64 bits) NOMMÉ AVANT LE KIT ET RÉPARÉ À LA SOURCE ; LE BUILD 1.0.0-dev.2 NÉ (carte GÉNÉRATION 10, verrou croisé 86/86) ; LE KIT TERRAIN M9-(f) DÉPOSÉ AU COFFRE /test — LA GRANDE ŒUVRE ATTEND LE GESTE DU DÉVELOPPEUR (06/11)
+
+- LA SONDE AVANT LE KIT (la doctrine n° 4 rejouée — le geste du
+  développeur épargné) : sonde_erratum_ch_record.py — le vol de
+  l'artefact dev.1 (16 03 03 00 76 + 114 : la longueur déclarée 118
+  pour 119 = 5 + 114 émis) reçoit LE SILENCE de google/github/
+  cloudflare/debian TOUS ; le vol corrigé 0x72 reçoit le ServerHello
+  des QUATRE — dev.1 ne pouvait franchir AUCUN serveur réel. SECOND
+  CONSTAT : les serveurs réels émettent TOUS le CCS hérité (14 03 03
+  00 01 01) entre le SH et le vol — RFC 8446 § 4.1.3 impose de
+  l'ignorer ; la machine exigeait le type 23 strict : morte -3 contre
+  le monde réel. TROISIÈME (la frontière du kit) : les verdicts
+  internes mov eax, -N zéro-étendus — un kit 64 bits lirait
+  +4294967293 ; la lignée écrit mov rax (sys-02/03/04 tous).
+- LE CLIENT DE RÉFÉRENCE (sonde_cible_terrain.py, python pur, le
+  calendrier AUTO-TESTÉ sur les pièces RFC 8448) : les QUATRE sessions
+  réelles TIENNENT de bout en bout ; LA CIBLE FIGÉE : www.cloudflare.com
+  — LE VRAI certificat CN=www.cloudflare.com (Let's Encrypt YR2,
+  RSA-2048, valide → 2027-01-30) servi SANS SNI, l'empreinte épinglée
+  045d0758… IDENTIQUE sur 3 sessions consécutives, le témoin
+  « HTTP/1.1 200 OK » stable.
+- LA RÉPARATION À LA SOURCE (les arbres I HORS du sceau — INTACTS :
+  la spec disait 114, la notation seule était fautive ; le garde 13/13
+  re-passé VERT) : l'octet 0x72 (brouillon + notation) ; LE BLOC CCS
+  (.pr_ccs_ou_mort : type 20, longueur EXIGÉE == 1 — un faux CCS est
+  le refus -2 NOMMÉ —, la charge d'UN octet avalée au socle SANS
+  déverrouillage, AUCUNE séquence consommée, la boucle reprend) ; LES
+  TROIS VERDICTS EN 64 BITS ; LE PLAN : slot de 27 ré-arrêté 0xB80 →
+  0xBC0 (2975 o, padding 33), TLS28_VA 0x10AC0 → 0x10D00 (la réserve
+  int3 APRÈS les fixtures — la zone fixtures INTACTE, les 26 autres
+  blocs byte-identiques), VERSION_DEV 0x01000002. LE HARNAIS corrigé
+  ENSEMBLE (machine ET référence) : ch_rec 0x72, V7.h LE CCS AVALÉ
+  (session établie, journal intact, séquences 0/1), V7.i LE FAUX CCS
+  REFUSÉ (-2), la SENTINELLE RET_MAGIQUE déplacée 0x10D00 → 0x10E00
+  (la collision avec le socle déplacé nommée) — 54/54 × 3 graines
+  VERTS (20261107/41/20261108).
+- LE BUILD 1.0.0-dev.2 NÉ : la chaîne entière verte (l'ancre 0.9.0
+  confrontée octet par octet, 589 verrous structurels, M4 560 + M5 365
+  + sys 131) ; tls13/proxy.exe 65 024 o, sha256
+  d892893469608fd69e381b92b8e18623107bd2bc694f43a512bc5900773dc314,
+  DÉTERMINISTE (deux builds, octets identiques) ; les octets réparés
+  RELUS DANS L'IMAGE (0x72 @0x10082, le bloc CCS présent, le 0x76
+  absent) ; LA CARTE GÉNÉRATION 10 (fragments « generation=10 », zones
+  socle-28=0x10d00-0x10daf, la lignée D80 + la graine durable tenues,
+  le témoin pub e9cd8c549485…), le verrou croisé 86/86.
+- LE KIT TERRAIN DÉPOSÉ (scripts/assembler_kit_m9f.py +
+  deposer_kit_m9f.py) : scenario-m9f.py (T0..T6 : le VRAI ntdll par
+  les DEUX lecteurs, sys-04/05/06 sur le VRAI afd.sys, tls13-27 OUVRIR
+  avec LE RECOUP du CH contre la construction re-jouée en Python pur,
+  la ligne chiffrée échangée, la falsification -6 contre le serveur
+  réel, le close_notify + NtClose par sys-01 en trampoline) — 26
+  constantes recoupées PAR AST (dont l'octet 0x72 relu DANS l'image),
+  l'extraction vierge VERT — kit-m9f.zip (34 759 o, md5 a73fb526…,
+  sha256 5f30b34e…) DÉPOSÉ à la racine du /test (md5 MATCH relu) avec
+  LISEZMOI-m9f.txt ; preuves-m9f/ NÉ avec son LISEZMOI-preuves ; la
+  vague m8d CONSOMMÉE archivée → vagues-m8/ ; l'index mis à jour ; la
+  racine vérifiée (13 entrées).
+- FRONTIÈRES : le scellé 0.9.0 INTACT, la carte gén 8 INTACTE, les
+  arbres I INCHANGÉS (l'erratum touche layout + notation + instruments,
+  hors sceau), AUCUNE balise (la finale 1.0.0 attend le terrain vert,
+  D104), dev.1 conservé par l'histoire git, la clé privée jamais
+  traversée (D87).
+- SUITE : LE GESTE DU DÉVELOPPEUR — dézipper kit-m9f.zip (au coffre
+  /test du Drive), python scenario-m9f.py (Windows 11, réseau vivant,
+  ~10 s) → renvoyer preuves-m9f/ au coffre /test/preuves-m9f/ → le
+  labo recoupe (D138/D145/D148) → si vert : LA FINALE 1.0.0 (fait de
+  carte) — le jalon M9 franchi, LA GRANDE ŒUVRE.
+
+Stage Summary:
+- L'ERRATUM n° 5 EST LA PREUVE DE LA MÉTHODE ENCORE : la sonde a
+  nommé l'octet 0x76 (le SILENCE des serveurs prouvé sur pièces), le
+  CCS hérité (les 4 serveurs constatés) et les verdicts 64 bits AVANT
+  le terrain — le kit déposé embarque le build RÉPARÉ et le constat
+  de l'octet relu dans l'image.
+- LE BUILD 1.0.0-dev.2 EST NÉ : 65 024 o, sha256 d8928934…,
+  déterministe, la carte génération 10, le verrou croisé 86/86, le
+  harnais 54/54 × 3 graines — la spécification scellée n'a JAMAIS
+  bougé (la notation seule était fautive, les arbres I intacts).
+- LE KIT TERRAIN M9-(f) EST AU COFFRE /test : la grande œuvre attend
+  le geste du développeur — la session réelle, l'épinglage, la ligne
+  chiffrée ; si vert : la finale 1.0.0, le jalon M9 franchi.
