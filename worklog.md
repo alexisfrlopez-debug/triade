@@ -5943,3 +5943,57 @@ Work Log:
   rouvert) ; script suivi : passe_bundle_m9r.py ; LA SÉRIE 090 POURSUIT
   — le geste est PASSÉ (Drive + local + GitHub), LE REBUILD
   1.0.0-dev.3 EST LE GESTE SUIVANT.
+
+## Task ID 104 — LA RE-CÉRÉMONIE DE LA RÉVISION 2 ARMÉE : LA REMISE RÉGÉNÉRÉE (m8 3e778fa0…, UNE SEULE EMPREINTE NOUVELLE — LES DOUZE AUTRES LIGNES BYTE-IDENTIQUES), LA MAIN DU DÉVELOPPEUR SERVIE (LISEZMOI-ceremonie-revision2-sys05.txt AU KIT + LE NOTE_D130 RÉÉCRIT) ; LA SYNCHRO GIT ↔ DRIVE RE-VÉRIFIÉE AU POINT M9F AVANT LE GESTE (verify_sync_m9f.py : 43/43 VERTS) — LE REBUILD 1.0.0-dev.3 ATTEND LA SIGNATURE HORS LIGNE (07/11 au soir)
+
+Work Log:
+- LA REPRISE A VÉRIFIÉ LE TERRAIN AVANT D'ARMER (verify_sync_m9f.py,
+  lecture seule — D164 rejouée) : 43/43 VERTS — HEAD == 15b7de7 (la
+  passation Task 103), l'arbre propre, la dernière consignation == Task
+  103 ; le bundle courant 090-9413fd2 UNIQUE au miroir, 48 archives
+  (rien supprimé), /test sans copie de bundle ; les QUATORZE fichiers
+  du geste sonde + de la passation au miroir (md5 MATCH) ; les DEUX
+  kits du /test INTACTS (90a1d022… + 215c2caa… == les copies locales),
+  les matériaux de signature (cle-publique-I == 188a7d42… LA clé
+  publique du kit, signatures-I présent), les réceptacles ré-armés, le
+  run de la sonde archivé (le trio + le VERDICT 31/31 == les copies
+  locales), la racine 16 entrées ; le kit « Cérémonie » re-vérifié
+  (58/58 == MANIFESTE == l'arbre local, octet pour octet) ; origin
+  GitHub == 9413fd2 (la pointe du geste sonde — le commit de passation
+  15b7de7 EMBARQUÉ au geste présent, flux établi) ; le jeton OAuth
+  vivant — LES TROIS MIROIRS ALIGNÉS.
+- LE GARDE A DIT LE SIGNAL : sceau_I.py verifier — m8 CODE 10,
+  fichier modifié : sys-05-emission.md (empreinte vivante
+  3e778fa0e7ff4a7e…), les DOUZE autres arbres VERTS. LE SIGNAL attendu
+  (la révision 2 a fait évoluer l'arbre m8), PAS la panne :
+  construire() suit le garde VERT — le rebuild 1.0.0-dev.3 attend la
+  re-signature ; la remise du kit portait ENCORE l'empreinte ancienne
+  (72aadd38…, signée à la cérémonie du build du 06/11) : la
+  régénération précède la cérémonie.
+- LA REMISE RÉGÉNÉRÉE (sceau_I.py preparer) : a-signer.txt porte les
+  TREIZE arbres à l'état vivant — UNE SEULE empreinte nouvelle : m8
+  sys.1 3e778fa0e7ff4a7ef7557820933cb3a2b66dca0dcba31e26c45bccddf51c83ab
+  (l'ancienne 72aadd38… remplacée) ; les DOUZE autres lignes
+  BYTE-IDENTIQUES (diff contrôlé : une ligne, une seule) ; la balise
+  demeure sys.1 (le précédent M9-(d) tenu : l'empreinte porte le
+  changement, la balise nomme la lignée de l'artefact) ; Ed25519
+  déterministe — les douze re-signatures rendront les signatures
+  déposées (la preuve de D163 rejointe).
+- LA MAIN DU DÉVELOPPEUR SERVIE : LISEZMOI-ceremonie-revision2-sys05
+  .txt ÉCRIT au kit (POURQUOI : la mesure 0xC0000005 + la révision 2 ;
+  CE QUI A CHANGÉ : sys-05-emission.md SEUL, l'empreinte à attendre
+  3e778fa0… ; LA RÈGLE D'OR : JAMAIS « generer », la clé du 04/11
+  réutilisée 173fae9c… ; LES CINQ PAS ; ce que cela débloque) ; le
+  LISEZMOI AJOUTÉ à RACINE_KIT (maj_kit.py : déployé + listé au
+  MANIFESTE au commit même) ; le NOTE_D130 RÉÉCRIT (il nommait encore
+  la cérémonie du build Task 95, soldée le 06/11 — il nomme désormais
+  la re-cérémonie de la révision 2).
+- FRONTIÈRES : l'artefact INTACT (d8928934…), le scellé 0.9.0 INTACT,
+  les manifestes et signatures DÉPOSÉS INCHANGÉS (le dépôt ne bouge
+  qu'à deposer — l'atomicité de cérémonie), la clé privée jamais
+  traversée (D87), le labo ne signera JAMAIS à la place du développeur.
+  SUITE : LE GESTE DU DÉVELOPPEUR (la signature hors-ligne →
+  signatures-I.txt + cle-publique-I.txt au /test) — puis deposer, le
+  garde 13/13, LE REBUILD 1.0.0-dev.3, LE KIT M9F RÉPARÉ au /test, le
+  run — ET SI LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE
+  ŒUVRE.

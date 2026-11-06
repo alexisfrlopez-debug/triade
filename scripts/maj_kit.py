@@ -90,6 +90,16 @@ RACINE_KIT = [
     # 173fae9c…).
     ("LISEZMOI-ceremonie-build-1.0.0.txt",
      DOWNLOAD / "LISEZMOI-ceremonie-build-1.0.0.txt", False),
+    # LA RE-CÉRÉMONIE DE LA RÉVISION 2 (Entrée 186, la rangée (f)) : la
+    # révision 2 de la spec sys-05 (le WSABUF canonique 16 o — la mesure
+    # de la sonde, Entrée 185 : 0xC0000005) fait évoluer l'arbre m8 : la
+    # remise régénérée (m8 3e778fa0…) attend la signature HORS LIGNE du
+    # développeur AVANT le rebuild 1.0.0-dev.3 (construire() suit le
+    # garde VERT — LE SIGNAL, pas la panne) ; ce LISEZMOI est le mode
+    # d'emploi qui va avec (règle d'or : JAMAIS « generer », la clé du
+    # 04/11 est réutilisée — 173fae9c…).
+    ("LISEZMOI-ceremonie-revision2-sys05.txt",
+     DOWNLOAD / "LISEZMOI-ceremonie-revision2-sys05.txt", False),
 ]
 
 NOTE_D130 = (
@@ -120,15 +130,18 @@ NOTE_D130 = (
     "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
     "le SIGNAL, pas la panne).\n"
     "\n"
-    "CÉRÉMONIE DU BUILD 1.0.0 (chantier (e) M9, Task 95) : le build\n"
-    "1.0.0-dev.1 attend la re-signature m8 (la révision M9-(d) — le\n"
-    "socle socket sys-04..06) + tls13 (l'erratum n° 2 de la notation).\n"
-    "Suivez LISEZMOI-ceremonie-build-1.0.0.txt : la remise est\n"
-    "v06/sceau-I/a-signer.txt (TREIZE arbres), à signer HORS LIGNE avec\n"
-    "votre clé du 04/11 — la règle d'or : JAMAIS « generer » (la clé\n"
-    "173fae9c… est réutilisée). La notation est COMPLÈTE : cette\n"
-    "cérémonie est la DERNIÈRE avant l'artefact (construire() suit le\n"
-    "garde VERT).")
+    "RE-CÉRÉMONIE DE LA RÉVISION 2 (Entrée 186, la suite du chantier\n"
+    "(f)) : la révision 2 de la spec sys-05 (le WSABUF canonique 16 o —\n"
+    "la mesure de la sonde, Entrée 185) a fait évoluer l'arbre m8 : le\n"
+    "garde REFUSE le rebuild 1.0.0-dev.3 (LE SIGNAL « signature\n"
+    "requise », pas la panne). Suivez LISEZMOI-ceremonie-revision2-\n"
+    "sys05.txt : la remise est v06/sceau-I/a-signer.txt (TREIZE arbres,\n"
+    "UNE seule empreinte nouvelle — m8 3e778fa0…), à signer HORS LIGNE\n"
+    "avec votre clé du 04/11 — la règle d'or : JAMAIS « generer » (la\n"
+    "clé 173fae9c… est réutilisée). Le dépôt de signatures-I.txt au\n"
+    "/test débloque : LE REBUILD 1.0.0-dev.3 (le bloc sys-05 réparé),\n"
+    "LE KIT M9F RÉPARÉ au /test, le run du développeur — ET SI LE VERT\n"
+    "TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.")
 
 
 # ---------------------------------------------------------------- utilitaires
