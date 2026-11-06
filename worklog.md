@@ -5741,3 +5741,87 @@ Stage Summary:
   divergence afd.sys devient le suspect principal — Windows 11, ou la
   sonde sys-05 au labo ; et si le vert tient : LA FINALE 1.0.0, le
   jalon M9 franchi — LA GRANDE ŒUVRE.
+
+## Task ID 102 — LE QUATRIÈME RUN TERRAIN (f) REÇU (« preuves déposées dans le drive /test ») : LE GESTE (ii) ACCOMPLI (Windows 11 build 26300) ET LE -6 SE RÉPÈTE À L'IDENTIQUE — LE SUSPECT (a) ÉLIMINÉ SUR PIÈCES (le refus est INTER-GÉNÉRATIONS) ; LE RECOUP 30/30, LE RUN ARCHIVÉ ; LA SONDE SYS-05 (m9-(g)) OUVERTE ET LIVRÉE AU COFFRE — LE TRAMPOLINE DE CAPTURE, L'ARTEFACT INTACT (07/11)
+
+Work Log:
+- LE RAPATRIEMENT : le trio INÉDIT (temoin 79c83775… 2 350 o, journal
+  2b819ae4… 605 o SEPT lignes, verdict c95fb66e…), md5 aller-retour OK ;
+  le run : 2026-11-06 19:20:57 — LA MACHINE CHANGÉE : Windows 11 build
+  26300 (Python 3.14.3, ntdll b072efae…) contre Win10 19045 au run 3 ;
+  l'artefact INTACT (d8928934…), le kit ACQUITTÉ INCHANGÉ (90a1d022…).
+- LA RÉPÉTITION CONSTATÉE PAR CODE (F1) : le journal du run 4 == celui
+  du run 3, LIGNE À LIGNE, horodatements exceptés (le run 3 rapatrié du
+  coffre au geste même) ; les témoins ne divergent QUE sur
+  l'environnement (F2) — le rappel « sys-05 rend -6 » est UN CONSTAT
+  (relu dans la source : la ligne 578 ne journalise QUE SI r != 0), pas
+  un rappel fixe.
+- LE SUSPECT (a) ÉLIMINÉ (F3) : le même -6 à l'émission du CH sur les
+  DEUX GÉNÉRATIONS — un refus qui ne distingue pas les générations
+  n'est pas une divergence de génération : STRUCTUREL au contrat
+  d'appel de sys-05 ou à l'état de l'endpoint ; F4 : la connexion était
+  ÉTABLIE aux deux runs (T2 VERT, handle posé, le connect SYNCHRONE de
+  sys-04 Q1).
+- LE RECOUP LABO 30/30 (recouper_run4_m9f.py) : l'échelle REJOUÉE sur
+  la clé privée DU RUN (c3184909… → f650affb… == le témoin), la
+  construction CH re-jouée (114 o, le vol 119 o), la chaîne -6 → -7
+  reconstituée, la frontière nommée d'avance réalisée DEUX FOIS ; LES
+  CANDIDATS RE-ÉVALUÉS : (b) le contrat d'appel, (c) l'état de
+  l'endpoint, (d) le passager INVRAISEMBLABLE — LE NTSTATUS BRUT qui
+  vit dans rdx DÉPARTAGE : la sonde le lit.
+- LA SONDE SYS-05 (m9-(g)) OUVERTE : scenario-sonde-sys05.py — LE
+  TRAMPOLINE DE CAPTURE (33 o, l'ABI msx64 démontrée, le dépaquetage
+  éprouvé sur QUATRE cas) appelle LE MÊME BLOC sys-05 et rend le code
+  ET le NTSTATUS ; LE COMPAS AVANT LA MESURE (handle invalide → -6 +
+  0xC0000008 attendu : fail-closed) ; LA MESURE (le CH de référence,
+  119 o) ; LES VARIATIONS (taille : un octet sur session sacrifiée ;
+  délai : 2 s) ; LA CONTRE-ÉPREUVE S4 (la poignée par LE RAPPEL
+  STANDARD sur session NEUVE — si le refus disparaît : LA PERCÉE, la
+  ligne suit DANS LE MÊME RUN) ; LA TABLE NTSTATUS recoupée aux sources
+  canoniques (Wine ET ReactOS au bit près — la classe de sévérité
+  tranche : un PENDING traité en -6 serait LE BUG DU CONTRAT).
+- L'ASSEMBLAGE (assembler_kit_sondesys05.py) : 29 constantes recoupées
+  PAR AST, LES PORTES passées (l'erratum n° 7 hérité + S1 le squelette
+  EXACT + S2 la table canonique + S3 le compas avant la mesure + S4 le
+  témoin vivant), l'extraction vierge VERT — kit-sonde-sys05.zip
+  (37 012 o, md5 215c2caa…, sha256 cc917600…).
+- LA LIVRAISON (deposer_kit_sondesys05.py) : LA VAGUE M9F DEMEURE
+  (kit-m9f.zip 90a1d022… recoupé INTACT — la finale attend LE RUN
+  m9f), kit-sonde-sys05.zip + LISEZMOI-sonde-sys05.txt à la racine,
+  preuves-sonde-sys05/ NÉ avec son LISEZMOI, l'index mis à jour, la
+  racine 16 entrées.
+- LE RUN ARCHIVÉ (archiver_run4_m9f.py) : preuves-run-m9f-4/ (le trio
+  DÉPLACÉ + le verdict 30/30 AVEC), preuves-m9f/ ré-armé, les DEUX
+  index, le kit recoupé INCHANGÉ.
+- LE GESTE AU DÉVELOPPEUR : python scenario-sonde-sys05.py (Python 64
+  bits, réseau vivant, Win11 OU Win10), puis preuves-sonde-sys05/
+  ENTIER au coffre — le labo recoupe, NOMME le coupable (le contrat du
+  bloc, l'état de l'endpoint, ou le réseau) et répare selon la charte
+  (l'erratum de la notation + la révision 2 de la spec sys-05 le cas
+  échéant — jamais une dérive silencieuse).
+- FRONTIÈRES : l'artefact INTACT (la sonde ne reconstruit RIEN — relu
+  d8928934…), le scellé 0.9.0 INTACT, AUCUNE balise (la finale attend
+  le VERT), les archives des runs 1/2/3 intactes ; livrables :
+  download/preuves-run-m9f-4/ + download/kit-sonde-sys05.zip ;
+  consignations : Entrée 184 PAR SCRIPT, PLAN (maj_plan_m9q.py :
+  rangée (f) + État), worklog +Task ID 102.
+- SUITE : LE GESTE DU DÉVELOPPEUR SUR LA SONDE — puis le recoup, le
+  coupable NOMMÉ, la réparation — et si la percée tient : le run m9f
+  réparé, LA FINALE 1.0.0 — LA GRANDE ŒUVRE.
+
+Stage Summary:
+- LE GESTE (ii) DU RECOUP-3 EST ACCOMPLI ET LE RÉEL A RÉPONDU : le
+  même kit, la même offre PARFAITE, sur Windows 11 — le même refus -6
+  à l'émission du CH, à l'identique, journal pour journal : la
+  divergence afd.sys Win10 ↔ Win11 est ÉLIMINÉE, le refus est
+  INTER-GÉNÉRATIONS.
+- IL NE RESTE QU'UNE INFORMATION MANQUANTE — LE NTSTATUS BRUT qui vit
+  dans rdx (la limite NOMMÉE de l'instrument, sys-05 Q5) — ET LA SONDE
+  SYS-05 EST LIVRÉE POUR LA LIRE : le trampoline de capture (l'artefact
+  INTACT), le compas étalonné, la table canonique, les variations, et
+  la contre-épreuve qui enchaîne la poignée si le refus disparaît.
+- LE KIT M9F DEMEURE ACQUITTÉ ET EN PLACE : la finale 1.0.0 attend
+  toujours LE RUN m9f — la sonde est l'instrument du diagnostic, la
+  réparation suivra la charte (l'erratum de la notation + la
+  révision 2 de la spec le cas échéant), jamais une dérive
+  silencieuse.
