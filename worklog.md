@@ -4856,3 +4856,119 @@ Stage Summary:
   (qui a nommé ses fautes d'instrument) — le fail-closed QUATRIÈME
   geste de suite, la preuve corrige la notation, l'instrument se
   prouve non-vide.
+
+## Task ID 93 — LE CHANTIER M9-(b) CONTINUE : LA FAMILLE poignée + LE PRINCIPAL NOTÉS-MESURÉS-PROUVÉS (07/11)
+
+- LA SYNCHRO VÉRIFIÉE SUR LES TROIS MIROIRS (« on enchaine ») :
+  verify_sync_m9f.py 16 VERTS (l'arbre propre : le contrôle ne voyait que
+  l'empreinte du script éphémère lui-même, retiré avant la lecture) — HEAD
+  b59bf44 (la passation Task 92), le bundle courant 090-5487f7f UNIQUE, md5
+  f73af0a2… MATCH, 36 archives, /test sans copie, GitHub == 5487f7f, le
+  jeton OAuth vivant ; la réserve instrumentale RÉINSTALLÉE (le disque labo
+  recyclé ENCORE : capstone/keystone/unicorn/pynacl/pefile).
+- LE GESTE : tls13-22..28 — le ClientHello COMPOSÉ (114 o FIXES, la
+  composition par octets, les valeurs du plan en immédiats, l'aléa @ +6, la
+  clé @ +82), le ServerHello TRAITÉ (la marche bornée, chaque confrontation
+  NOMMÉE, HRR par OU cumulatif au fixture, LA SUITE lue GROS-BOUTISTE → -5
+  la négociation refusée, les extensions inconnues ignorées, l'épuisement
+  exact, tls13-13 APRÈS le dernier refus), le CALENDRIER à trois étages
+  STRICTS (SEIZE étiquettes HKDF aux fixtures R_LIB_*, TROIS extraits,
+  QUATRE déploiements, le condensé du vide par 01+04 — l'erratum n° 2 :
+  le contexte de « derived » est Hash(vide) 32 o, JAMAIS zéro octet), le
+  FINISHED calculé/vérifié (DEUX modes nommés, le OU cumulatif des 32
+  différences, LE test à la fin, le reçu jamais modifié), L'ÉPINGLAGE (le
+  SHA-256 du DER sur pile, la comparaison temps constant, -6 nommé), LA
+  MACHINE D'ÉTATS (17 520 o à la disposition déclarée, QUATRE événements
+  nommés, LA LISTE FERMÉE des compositions, le transcript initialisé puis
+  chaque message complet ABSORBÉ AVANT traitement, les coupes du hash sur
+  la COPIE, le réassemblage borné 2^14, le certificat extrait (le u24 lu,
+  le DÉTROIT de tls13-26), le CertificateVerify absorbé sans vérification
+  [le chantier futur nommé], LA DISCIPLINE D'ÉCHEC : tout verdict négatif
+  propagé nommé, l'état 5 ne rend PLUS RIEN, un échec n'ÉMET rien) et LA
+  ROTULE (le socle à DEUX rappels, L'APPEL INDIRECT DÉCLARÉ, le zéro de
+  réception est le refus -7 du kit, aucune copie).
+- L'ERRATUM n° 2 consigné sur pièces AVANT la notation (tls13/I/README.md,
+  verifier_specs_m9a relu VERT) : (1) le CH du RFC 8448 § 3 compte 196 o
+  (trois suites, SNI « server », neuf groupes, quinze sigalgs) — l'égalité
+  octet pour octet promise par tls13-22 Q1 et tls13-27 Q3 est IMPOSSIBLE
+  PAR CONSTRUCTION contre l'offre minimale scellée (114 o, charte § 1, I3) :
+  la preuve est la construction re-jouée + LA SESSION ENTIÈRE contre le
+  simulateur, les égalités qui TIENNENT (le SH verbatim, le secret partagé,
+  les secrets consignés, les QUATRE chaînes, les DEUX Finished au niveau
+  des blocs) ; (2) le contexte de « derived » = Hash(vide) 32 o ; (3) la
+  garde de tls13-23 P2 « ≥ 94 » compte l'en-tête deux fois — le SH minimal
+  = 90. Les écritures seules sont fautives, jamais la notation.
+- LES PREUVES : LE TRANSFERT RFC 8448 BLOC PAR BLOC (le labo
+  derive_poignee.py 41 VERTS : le texte officiel parsé, TOUT recoupé par
+  code — le couple et le secret par PyNaCl, le calendrier étage par étage,
+  les QUATRE chaînes == TRANSFERT_8448, les trois hash dont CH..CV
+  RE-DÉRIVÉ, les deux Finished, le vol déverrouillé, le certificat parsé,
+  la marche du SH pré-jouée) ; LE HARNAIS tls13/harnais_poignee.py : 52
+  contrôles · 52 VERTS × 3 graines — V2 le transfert bloc par bloc (le SH
+  verbatim → le secret partagé octet pour octet ; le calendrier sur les
+  hash consignés → les secrets ET les QUATRE chaînes ET les clés Finished ;
+  le Finished client calculé == a8ec436d…, le serveur vérifié ==
+  9b9b141d… ; l'épinglage) ; V4 l'alignement 205 entrées à travers la
+  session ENTIÈRE (l'imbrication comptée), le kit INTACT ; V6 le temps
+  constant MESURÉ (le verdict du Finished 18 416, l'épinglage 31 405, la
+  comparaison HRR 1 239 089 — LE MÊME compte) ; V7 LA SESSION ENTIÈRE
+  contre LE SIMULATEUR (deux rappels de machine code : l'émettre qui
+  journalise, le recevoir qui sert la cassette ; OUVRIR → l'état 3, le
+  journal == NOTRE CH cadré + NOTRE Finished [le SH du RFC servi verbatim,
+  le vol re-scellé sous nos clés, le Finished serveur recalculé sur NOTRE
+  coupe] ; la session recoupée champ par champ ; ÉMETTRE/RECEVOIR les
+  charges du § 3 sous NOS chaînes d'application == la référence ; la
+  close_notify des deux côtés ; LA FALSIFICATION : le SH muté → -5,
+  l'étiquette mutée → -4, l'empreinte mutée → -6, LA COUPURE DU SOCLE →
+  -7, OUVRIR sur l'état 3 → -3, l'état 5 ne rend PLUS RIEN).
+- LES FAUTES nommées par le fail-closed (DOUZE — la preuve a corrigé la
+  notation ET l'instrument) : la suite en BOUTISME MACHINE (cmp word
+  0x1301 ne voit jamais 13 01 — la lecture par xchg), les registres
+  haute-octet (r10b/r10h inexistants), cmp imm64 → movabs, LES STUBS et
+  rdi/rsi NON-VOLATILES msx64 (push/pop), le stub écrivant la CASE DE
+  PILE au lieu de la cellule pointée (le pointeur rechargé, l'écriture À
+  TRAVERS), LE KIT (r9 VOLATIL) clobberé par l'appel d'étage — sauvé au
+  cadre, l'immédiat sigalgs (0x04080400), les QUATRE copies rep movsq
+  rsi/rdi INVERSÉES, LA TRANSCRIPTION MANUELLE du secret partagé (un
+  octet mutilé — re-posé PAR DÉRIVATION : jamais recopiée à la main),
+  les longueurs de libellés (« c hs traffic » = 12 o), L'INIT du
+  transcript manquait à OUVRIR (tls13-01, la session naît VIERGE),
+  l'auteur (l'appel indirect sur registre DÉCLARÉ ; TLS06/08/14/15/20/21
+  aux SYMBOLES).
+- L'ARRÊT : 22 @0xED00 (0x120) · 23 @0xEE20 (0x240) · 24 @0xF060 (0x880) ·
+  25 @0xF8E0 (0x100) · 26 @0xF9E0 (0x140) — la poignée finit 0xFB20 SOUS
+  les fixtures x25519 immobiles ; 27 @0xFF40 (0xB80) · 28 @0x10AC0 (0xB0) —
+  fin du principal 0x10B30, LA MARGE a franchi 0xF000 comme le plan
+  l'avait nommé ; les fixtures libellés+HRR @0x10B40..0x10BD0.
+- FRONTIÈRES : aucune balise, AUCUN build (le chantier (e) attend — le
+  garde VERT, la dette de cérémonie demeure), l'arbre I scellé relu VERT
+  AVEC l'erratum (R2 tenue), m8/proxy.exe INTACT, les cinq familles
+  précédentes intactes (relues en V0.b), la charte tenue de § 1 à § 8 ;
+  consignations : Entrée 175 PAR SCRIPT, PLAN (chantier (b) : la famille
+  poignée + le principal + État du programme), worklog +Task ID 93.
+- SUITE : (d) le socle socket sys-04+ (la fondation I/O), (e) LA CÉRÉMONIE
+  DU SCEAU I de l'ère + le build 1.0.0-dev.1, (f) le terrain — LA GRANDE
+  ŒUVRE.
+- SUITE : (d) le socle socket sys-04+ (la fondation I/O), (e) LA CÉRÉMONIE
+  DU SCEAU I de l'ère + le build 1.0.0-dev.1, (f) le terrain — LA GRANDE
+  ŒUVRE.
+- PASSATION (le même geste, Task ID 93) : le bundle courant
+  triade-history-090-b59bf44.bundle DÉPOSÉ AU MIROIR ASSERTÉ, l'ancien
+  090-5487f7f ARCHIVÉ VERSIONNÉ, /test sans copie, le push GitHub à la
+  pointe — LA SÉRIE 090 POURSUIT — le geste est PASSÉ.
+
+Stage Summary:
+- LA SIXIÈME FAMILLE et la dernière de la couche de calcul : LA POIGNÉE
+  et LE PRINCIPAL existent en octets — le ClientHello composé, le
+  ServerHello jugé champ par champ, le calendrier dérivé étage par étage,
+  le Finished prouvé, la confiance épinglée, LA MACHINE orchestre la
+  session ENTIÈRE et la rotule la touche au monde — LE CLIENT TLS 1.3
+  ENTIER du jalon, zéro délégation cryptographique.
+- LA PREUVE A CORRIGÉ LA NOTATION ET L'INSTRUMENT, DOUZE FOIS : le
+  boutisme machine, les registres haute-octet, les non-volatiles msx64
+  des rappels, le pointeur rechargé, le kit sauvé, les copies remises
+  dans le bon sens, le secret RE-DÉRIVÉ après la transcription mutilée —
+  le juge est le code, la méthode est la même depuis le geste hkdf.
+- LE DOMAINE tls13 EST COMPLET : LES 28 BLOCS notés-mesurés-prouvés, de
+  SHA-256 à la machine d'états — reste la fondation socket, la cérémonie
+  du sceau, le build, le terrain : LA GRANDE ŒUVRE.

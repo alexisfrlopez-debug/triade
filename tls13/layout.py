@@ -224,6 +224,42 @@ TLS21_VA = 0xEB40        # h100021 — l'enregistrement déprotéger (slot 0x1C0
 # fin de la famille enregistrement : 0xED00 — la famille poignée suit
 # (la marge du plan : la poignée sous 0xF000, la mesure décidera)
 
+# --- La famille poignée + le principal ARRÊTÉS (chantier (b), le geste six —
+# D161 rejoué : la mesure auteur décide, la préfiguration s'incline) ------------
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py : multiples
+# de 64 (D8), tassés depuis la fin enregistrement (0xED00), padding >= 16 — le
+# MINIMUM admissible par longueur :
+#   tls13-22 :  241 o notés -> slot 0x120 (padding 47)
+#   tls13-23 :  532 o notés -> slot 0x240 (padding 44 — le re-arrêt en
+#                              cours de geste : la lecture GROS-BOUTISTE de la
+#                              suite par xchg [eax], la faute du premier jet : le
+#                              « cmp word, 0x1301 » ne voyait jamais les octets
+#                              13 01 en boutisme machine)
+#   tls13-24 : 2130 o notés -> slot 0x880 (padding 46 — le plus grand bloc de
+#                              calcul pur du domaine : SEIZE étiquettes HKDF,
+#                              TROIS extraits, QUATRE déploiements, le condensé
+#                              du vide dérivé par 01+04)
+#   tls13-25 :  239 o notés -> slot 0x100 (padding 17)
+#   tls13-26 :  285 o notés -> slot 0x140 (padding 35)
+# — fin de la famille poignée : 0xFB20 (SOUS 0xFF00 : les fixtures x25519
+# R_U9/R_EXP_INV à leur ARRÊT consigné 0xFF00/0xFF20 ne bougent pas, miroir
+# R7 — la famille poignée s'arrête AVANT eux) ; le principal suit À 0xFF40 —
+# la marge a franchi 0xF000 comme le plan l'avait nommé (« la mesure décidera,
+# jamais la négociation ») :
+#   tls13-27 : 2864 o notés -> slot 0xB40 (padding 16 — LE PLUS GRAND bloc du
+#                              domaine : la machine d'états, 563 instructions,
+#                              33 étiquettes, le cadre 0x43C8)
+#   tls13-28 :  144 o notés -> slot 0xB0  (padding 32)
+# — fin du principal : 0x10B30 ; les fixtures poignée suivent à leur ARRÊT.
+TLS22_VA = 0xED00        # h100022 — le ClientHello composé (slot 0x120)
+TLS23_VA = 0xEE20        # h100023 — le ServerHello traité (slot 0x240)
+TLS24_VA = 0xF060        # h100024 — le calendrier de clés (slot 0x880)
+TLS25_VA = 0xF8E0        # h100025 — le Finished calculé/vérifié (slot 0x100)
+TLS26_VA = 0xF9E0        # h100026 — l'épinglage du certificat (slot 0x140)
+TLS27_VA = 0xFF40        # h100027 — la machine d'états (slot 0xB40)
+TLS28_VA = 0x10A80       # h100028 — le socle d'appel (slot 0xB0)
+# fin du principal : 0x10B30 — les fixtures poignée suivent
+
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),
     "h100002": (TLS02_VA, 0x1C0),
@@ -246,7 +282,30 @@ SLOTS_TLS13 = {
     "h100019": (TLS19_VA, 0x4C0),
     "h100020": (TLS20_VA, 0x180),
     "h100021": (TLS21_VA, 0x1C0),
+    "h100022": (TLS22_VA, 0x120),
+    "h100023": (TLS23_VA, 0x240),
+    "h100024": (TLS24_VA, 0x880),
+    "h100025": (TLS25_VA, 0x100),
+    "h100026": (TLS26_VA, 0x140),
+    "h100027": (TLS27_VA, 0xB80),
+    "h100028": (TLS28_VA, 0xB0),
 }
+
+# --- Les fixtures POIGNÉE du domaine en .text6 (l'ARRÊT du geste — miroir D95) ----
+# Les LIBELLÉS du calendrier (tls13-24 I1 : « des DONNÉES PUBLIQUES du plan
+# d'adressage, jamais des octets de code » — RFC 8446 § 7.1) et la VALEUR
+# MAGIQUE HelloRetryRequest (tls13-23 Q1 : la constante du plan — RFC 8446
+# § 4.1.3, SHA-256("HelloRetryRequest")) vivent AU-DELÀ du principal, à
+# leur ARRÊT consigné (chaque libellé aligné 16) :
+R_LIB_DERIVED = 0x10B80       # « derived » (7 o)
+R_LIB_C_HS = 0x10B90          # « c hs traffic » (13 o)
+R_LIB_S_HS = 0x10BA0          # « s hs traffic » (13 o)
+R_LIB_C_AP = 0x10BB0          # « c ap traffic » (13 o)
+R_LIB_S_AP = 0x10BC0          # « s ap traffic » (13 o)
+R_LIB_KEY = 0x10BD0           # « key » (3 o)
+R_LIB_IV = 0x10BD8            # « iv » (2 o)
+R_LIB_FINISHED = 0x10BE0      # « finished » (8 o)
+R_HRR = 0x10BF0               # la valeur magique HRR (32 o) — HRR_MAGIQUE
 
 # --- Les fixtures du domaine en .text6 (l'ARRÊT nommé — miroir D95) ---------------
 # La réserve .rdata M8 (R_K 0x2F00, 256 o) est ÉPUISÉE par K[64] (le constat du
@@ -323,3 +382,10 @@ A_SCELLER = TLS18_VA       # tls13-18 (GCM sceller — appelée par 20)
 A_OUVRIR = TLS19_VA        # tls13-19 (GCM ouvrir — appelée par 21)
 A_PROTEGER = TLS20_VA      # tls13-20 (l'enregistrement protéger)
 A_DEPROTEGER = TLS21_VA    # tls13-21 (l'enregistrement déprotéger)
+A_COMPOSER = TLS22_VA      # tls13-22 (le ClientHello composé)
+A_TRAITER = TLS23_VA       # tls13-23 (le ServerHello traité)
+A_CALENDRIER = TLS24_VA    # tls13-24 (le calendrier — appelé par 27, trois étages)
+A_FINISHED = TLS25_VA      # tls13-25 (le Finished — appelé par 27, deux modes)
+A_EPINGLAGE = TLS26_VA     # tls13-26 (l'épinglage — appelé par 27)
+A_PRINCIPAL = TLS27_VA     # tls13-27 (la machine d'états — LE principal)
+A_SOCLE = TLS28_VA         # tls13-28 (le socle — appelé par 27, deux rappels)

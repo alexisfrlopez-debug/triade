@@ -163,6 +163,46 @@ jamais la notation prouvée. Le miroir M9 (tls13-12) re-dérive les membres
 PAR ARITHMÉTIQUE au plan d'adressage (le juge est le code) : la preuve
 que le miroir ne copie JAMAIS l'hexadécimal d'une spec, il le re-dérive.
 
+*Erratum n° 2 (M9, sur pièces, AVANT la notation de la famille poignée —
+le labo derive_poignee.py, 41 contrôles VERTS sur le texte officiel
+RFC 8448 § 3 parsé pas à pas)* : DEUX écritures de l'arbre I sont
+fautives contre le transcript officiel. **(1) l'égalité octet pour octet
+du ClientHello** — tls13-22 Q1 promet le ClientHello « OCTET POUR OCTET la
+structure du premier message du transfert RFC 8448 § 3 » et tls13-27 Q3
+promet « les octets émis == les octets du RFC 8448 (le CH, le Finished
+client, les enregistrements d'application, le close_notify) » : SUR
+PIÈCES le ClientHello du RFC 8448 § 3 compte **196 o** — l'offre RICHE
+d'un client généraliste (TROIS suites 1301/1303/1302, SNI « server », NEUF
+groupes, QUINZE algorithmes de signature, session_ticket,
+psk_key_exchange_modes, record_size_limit, renegotiation_info) — et
+l'égalité est IMPOSSIBLE PAR CONSTRUCTION contre l'offre MINIMALE scellée
+du jalon (114 o : charte § 1 « le domaine ne propose JAMAIS ce qu'il ne
+prouve pas », I3 de tls13-22 « SNI : chantier futur nommé »). **La lecture
+corrigée** : « la structure du premier message » est la CONSTRUCTION
+RE-JOUÉE du plan (le fixture aléa @ +6 et clé publique @ +82 aux offsets
+déclarés, la longueur totale == la constante — verifier_specs_m9a § 4) ;
+les octets ÉMIS par la machine sont NOTRES (le CH de l'offre scellée, le
+Finished client = le HMAC de NOTRE transcript, les enregistrements
+scellés sous NOS clés) ; les égalités octet pour octet TIENNENT là où le
+jalon les peut : le ServerHello traité VERBATIM (95 o), le secret partagé
+(8bd4054f…), LES SECRETS CONSIGNÉS du calendrier (les hash du RFC en
+ARGUMENTS : 860c06ed… [CH..SH] et 9608102a… [CH..Fin serveur]), les clés
+write/IV == LES QUATRE CHAÎNES du TRANSFERT_8448, le Finished serveur
+VÉRIFIÉ (9b9b141d…) et le Finished client CALCULÉ (a8ec436d…) au niveau
+des BLOCS sur les hash consignés ; la preuve de la machine est LA SESSION
+ENTIÈRE contre le SIMULATEUR (le simulateur dérive le calendrier de
+NOTRE transcript, sert le SH verbatim, re-scelle le vol sous nos clés
+avec le Finished serveur recalculé, chaque étage recoupé, la
+falsification à chaque étage rend SON verdict nommé). **(2) le contexte
+de l'étiquette « derived »** — tls13-24 Q1/Q2 écrit « Expand-Label(early,
+« derived », vide, 32) » : SUR PIÈCES l'info imprimée par le RFC § 3
+fait 49 o, le contexte de l'étiquette « derived » est le hash du
+TRANSCRIPT VIDE (Derive-Secret(., "derived", "") de la § 7.1 :
+Hash("") = e3b0c442…, 32 o — JAMAIS un contexte de zéro octet) ; la
+notation dérivera le condensé du vide par tls13-01 + tls13-04 au geste
+même (le juge est le code). Les écritures seules sont fautives, jamais
+la notation.
+
 ## Le plan d'adressage préfiguré (tls13/layout.py — la source unique)
 
 La 8e section `.text6` suit `.text5` du scellé 0.9.0 (raw 0xAE00, RVA

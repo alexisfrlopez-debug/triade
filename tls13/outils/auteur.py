@@ -162,6 +162,84 @@ _FICHIERS = {
                 "DERNIER octet du texte interne déverrouillé dans le "
                 "tampon LOCAL (la sortie P4 n'a que L−17 o) ; l'anti-rejoue "
                 "par la séquence (une étiquette qui ne colle pas)"),
+    "h100022": ("tls13-22-clienthello-composer", "tls13-22:R1",
+                "bloc feuille de la famille poignée ; LA COMPOSITION PAR "
+                "OCTETS FIXES — chaque champ à son offset constant (I1), les "
+                "valeurs protocolaires du plan d'adressage en IMMÉDIATS "
+                "(T5), l'aléa copié @ +6, la clé publique copiée @ +82 ; "
+                "AUCUNE branche, AUCUNE construction variable — le message "
+                "est FIXE (charte § 1) ; le message ne TOUCHE PAS au "
+                "transcript (I2 — le principal chronique)"),
+    "h100023": ("tls13-23-serverhello-traiter", "tls13-23:R1",
+                "bloc ; tls13-13 (UNE composition — le secret partagé, "
+                "APRÈS le dernier refus possible : la clé privée n'est "
+                "JAMAIS touchée sur un message refusé — Q3) ; LA MARCHE "
+                "BORNÉE (I1 : chaque lecture précédée du contrôle de "
+                "reste), chaque confrontation NOMMÉE dans l'ordre du corps "
+                "(le type 2, la version 0x0303, l'aléa ≠ la valeur magique "
+                "HRR au fixture R_HRR par OU cumulatif — I2, l'écho "
+                "session_id vide, LA SUITE 0x1301 → -5 la négociation "
+                "refusée, la compression nulle, supported_versions 0x0304 "
+                "PRÉSENTE, key_share x25519 32 o PRÉSENTE, les extensions "
+                "inconnues IGNORÉES — la règle du protocole, l'épuisement "
+                "exact) ; le message ne TOUCHE PAS au transcript (I3)"),
+    "h100024": ("tls13-24-calendrier-cles", "tls13-24:R1",
+                "bloc ; tls13-06 (l'extrait — UN par étage), tls13-08 "
+                "(l'étiquette — TOUTES les clés : les libellés aux fixtures "
+                "R_LIB_* du plan, données PUBLIQUES), tls13-15 (le "
+                "déploiement des clés de tour), tls13-01 + tls13-04 (le "
+                "condensé du VIDE — le contexte de « derived » : l'erratum "
+                "n° 2 sur pièces, Hash du VIDE de 32 o, JAMAIS zéro octet) ; "
+                "la machine à TROIS étages STRICTS (-3 sur tout saut), le "
+                "contexte porte (secret courant, étape), les contextes "
+                "sortis COMPLETS (rk 176 + IV 12 + réserve 4 + séquence "
+                "u64) ; le hash du transcript est un ARGUMENT (I1 — le "
+                "principal tient le contexte SHA) ; le calendrier ne "
+                "hache RIEN"),
+    "h100025": ("tls13-25-finished-calculer-verifier", "tls13-25:R1",
+                "bloc ; tls13-05 (UNE composition — l'HMAC, le Finished "
+                "n'est RIEN d'autre — I1) ; DEUX modes NOMMÉS sur r9 (0 "
+                "calculer, 1 vérifier, toute autre valeur → -1) ; le mode "
+                "VÉRIFIER : le reçu CONFRONTÉ par OU cumulatif des 32 "
+                "différences (I2 : AUCUN court-circuit — la discipline du "
+                "verdict AEAD), conforme → 0, divergent → -4 NOMMÉ ; le "
+                "mode est une donnée PUBLIQUE de contrôle (le branch licite)"),
+    "h100026": ("tls13-26-epinglage", "tls13-26:R1",
+                "bloc ; tls13-01, tls13-03, tls13-04 (le hachage — un "
+                "contexte de PILE local, I2) ; la décision de confiance : "
+                "SHA-256(DER) CONFRONTÉ à l'empreinte par OU cumulatif des "
+                "32 différences (I1 : TEMPS CONSTANT — la discipline "
+                "demeure sur une donnée de confiance), conforme → 0, "
+                "divergent → -6 NOMMÉ (épinglage divergent — la session "
+                "MEURT sans autres formes)"),
+    "h100027": ("tls13-27-principal-machine-etats", "tls13-27:R1",
+                "LE PRINCIPAL — l'orchestration sur le contexte session "
+                "17 520 o (la disposition DÉCLARÉE par la spec P1) ; LES "
+                "COMPOSITIONS DÉCLARÉES (I1, LA LISTE FERMÉE) : tls13-14, "
+                "tls13-22, tls13-23, tls13-24 (×3 étages), tls13-25 (×2 "
+                "modes), tls13-26, tls13-20 (×2), tls13-21 (×2), tls13-03 "
+                "(le transcript — chaque message ABSORBÉ AVANT traitement, "
+                "charte § 4), tls13-04 (les coupes du hash sur la COPIE — "
+                "I2), LE SOCLE tls13-28 pour TOUTE entrée/sortie ; QUATRE "
+                "événements NOMMÉS (OUVRIR/ÉMETTRE/RECEVOIR/FERMER), tout "
+                "événement hors de sa ligne → -3 ; LA DISCIPLINE D'ÉCHEC "
+                "(Q2) : tout verdict négatif PROPAGÉ NOMMÉ, l'état passe à "
+                "5 (MORT), AUCUN octet applicatif après ; le réassemblage "
+                "au tampon @ +1136 (la borne 2^14 NOMMÉE), le Certificate "
+                "Verify ABSORBÉ sans vérification (le chantier futur nommé), "
+                "l'extraction de la PREMIÈRE entrée du Certificate (le u24 "
+                "lu) le DÉTROIT de tls13-26"),
+    "h100028": ("tls13-28-socle-appel", "tls13-28:R1",
+                "LA ROTULE — le seul point du domaine où le calcul touche "
+                "le monde : UN contexte de DEUX rappels fournis par "
+                "l'appelant (émettre @ +0/+8, recevoir @ +16/+24), "
+                "invoqués PAR POINTEUR DEPUIS LE CONTEXTE (I2 : l'appel "
+                "indirect DÉCLARÉ sur une cible qui est une DONNÉE du "
+                "contexte n'est NI un import NI un syscall) ; l'opération "
+                "rdx ∈ {1 émettre, 2 recevoir}, toute autre → -1 ; le "
+                "verdict du rappel négatif → -7 NOMMÉ (transport en "
+                "échec) ; aucune copie, aucun tampon (Q4 — l'adaptateur), "
+                "le zéro de réception est le refus -7 du KIT"),
 }
 
 
@@ -182,16 +260,29 @@ SYMBOLES = {
     "TLS03": L.TLS03_VA,
     "TLS04": L.TLS04_VA,
     "TLS05": L.TLS05_VA,
+    "TLS06": L.TLS06_VA,     # l'extrait — appelé par 24 (le calendrier)
     "TLS07": L.TLS07_VA,
+    "TLS08": L.TLS08_VA,     # l'étiquette — appelée par 24 (LE bloc du calendrier)
     "TLS09": L.TLS09_VA,
     "TLS10": L.TLS10_VA,
     "TLS11": L.TLS11_VA,
     "TLS12": L.TLS12_VA,
     "TLS13": L.TLS13_VA,
+    "TLS14": L.TLS14_VA,     # la clé publique — appelée par 27 (le couple du CH)
+    "TLS15": L.TLS15_VA,     # le déploiement des clés de tour — appelé par 24
     "TLS16": L.TLS16_VA,     # le chiffrement d'un bloc — appelé par 18/19
     "TLS17": L.TLS17_VA,     # la multiplication GF(2^128) — appelée par 18/19
     "TLS18": L.TLS18_VA,     # GCM sceller — appelé par 20 (l'enregistrement)
     "TLS19": L.TLS19_VA,     # GCM ouvrir — appelé par 21 (l'enregistrement)
+    "TLS20": L.TLS20_VA,     # l'enregistrement protéger — appelé par 27 (×2)
+    "TLS21": L.TLS21_VA,     # l'enregistrement déprotéger — appelé par 27 (×2)
+    "TLS22": L.TLS22_VA,     # le ClientHello composé — appelé par 27
+    "TLS23": L.TLS23_VA,     # le ServerHello traité — appelé par 27
+    "TLS24": L.TLS24_VA,     # le calendrier — appelé par 27 (trois étages)
+    "TLS25": L.TLS25_VA,     # le Finished — appelé par 27 (deux modes)
+    "TLS26": L.TLS26_VA,     # l'épinglage — appelé par 27
+    "TLS27": L.TLS27_VA,     # la machine d'états — LE principal
+    "TLS28": L.TLS28_VA,     # le socle d'appel — appelé par 27 (le transport)
     # le fixture .rdata du domaine (le plan, source unique) : K[64] dans la
     # réserve M8 exactement (RVA 0x2F00 — 256 o, vérifié vierge sur pièces)
     "K": L.R_K,
@@ -199,6 +290,19 @@ SYMBOLES = {
     # le point de base u = 9 (tls13-14 I1) et l'exposant p−2 (tls13-13 I4)
     "U9": L.R_U9,
     "EXP_INV": L.R_EXP_INV,
+    # les fixtures .text6 POIGNÉE (l'ARRÊT du geste poignée, miroir D95) :
+    # les libellés du calendrier (tls13-24 — RFC 8446 § 7.1, données
+    # PUBLIQUES du plan d'adressage, jamais des octets de code) et la
+    # valeur magique HelloRetryRequest (tls13-23 Q1 — RFC 8446 § 4.1.3)
+    "LIB_DERIVED": L.R_LIB_DERIVED,
+    "LIB_C_HS": L.R_LIB_C_HS,
+    "LIB_S_HS": L.R_LIB_S_HS,
+    "LIB_C_AP": L.R_LIB_C_AP,
+    "LIB_S_AP": L.R_LIB_S_AP,
+    "LIB_KEY": L.R_LIB_KEY,
+    "LIB_IV": L.R_LIB_IV,
+    "LIB_FINISHED": L.R_LIB_FINISHED,
+    "HRR": L.R_HRR,
 }
 
 RE_ETIQUETTE = re.compile(r"^\s*\.(\w+)\s*:\s*$")
@@ -206,6 +310,12 @@ RE_OPERANDE_ETIQUETTE = re.compile(r"^(j\w+|loop\w*|call)\s+\.(\w+)$")
 RE_OPERANDE_SYMBOLE = re.compile(r"^(call)\s+(\w+)$")
 RE_LEA_ETIQUETTE = re.compile(r"^(lea\s+\w+), \[\.(\w+)\]$")
 RE_RIP_CIBLE = re.compile(r"^(.*?\[rip\s*([+-])\s*)(\w+|\.\w+)(\s*\].*)$")
+
+# les registres 64 bits : « call r10 » est l'APPEL INDIRECT DÉCLARÉ de
+# tls13-28 (I2 : l'appel indirect sur une cible qui est une DONNÉE du
+# contexte n'est NI un import NI un syscall) — PAS un symbole de bloc
+REGISTRES64 = {"rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp"} \
+    | {f"r{i}" for i in range(8, 16)}
 
 
 class ErreurAuteur(Exception):
@@ -260,6 +370,8 @@ def substituer(ligne: str, adresse: int, etiquettes: dict, taille: int = 0) -> s
     m = RE_OPERANDE_SYMBOLE.match(ligne)
     if m:
         mnemo, nom = m.groups()
+        if nom in REGISTRES64:
+            return ligne          # l'appel indirect DÉCLARÉ (tls13-28 I2)
         if nom not in SYMBOLES:
             raise ErreurAuteur(f"symbole de bloc inconnu : {nom}")
         return f"{mnemo} 0x{SYMBOLES[nom]:x}"
@@ -384,6 +496,13 @@ NOMS_COURTS = {
     "tls13-19-gcm-ouvrir": "GCM ouvrir (le verdict AVANT la restitution, fail-closed)",
     "tls13-20-enregistrement-proteger": "l'enregistrement protéger (RFC 8446 § 5.2)",
     "tls13-21-enregistrement-deproteger": "l'enregistrement déprotéger (l'anti-rejoue par la séquence)",
+    "tls13-22-clienthello-composer": "le ClientHello composé (l'offre scellée du jalon, 114 o)",
+    "tls13-23-serverhello-traiter": "le ServerHello traité (les refus nommés, le secret partagé)",
+    "tls13-24-calendrier-cles": "le calendrier de clés (RFC 8446 § 7.1, trois étages)",
+    "tls13-25-finished-calculer-verifier": "le Finished calculé/vérifié (le HMAC du transcript, § 4.4.4)",
+    "tls13-26-epinglage": "l'épinglage du certificat (la comparaison, jamais la croyance)",
+    "tls13-27-principal-machine-etats": "la machine d'états du client (l'orchestration, § 2)",
+    "tls13-28-socle-appel": "le socle d'appel (la rotule de transport à rappels)",
 }
 
 
