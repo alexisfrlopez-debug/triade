@@ -37,12 +37,13 @@ REPO = "/home/z/my-project/triade"
 sys.path.insert(0, REPO + "/scripts")
 import drive_sync as ds  # noqa: E402
 
-BUNDLE = "triade-history-090-f63164a.bundle"      # le courant NOUVEAU (le kit déposé)
+BUNDLE = None                                    # posé au geste : 090-<pointe>.bundle
 ANCIEN = "triade-history-090-3fa7168.bundle"      # le courant au miroir (le build né)
-TIP_ATTENDU = "f63164a313c74e984a46ea35c901e633a4b86b79"   # la pointe : le geste
-                                            # b3fe063 (Entrée 179 + Task 97 + le kit)
-                                            # + la consignation de passation
-CHEMIN_LOCAL = REPO + "/bundles-090/" + BUNDLE
+TIP_ATTENDU = None                              # la POINTE COURANTE, lue au geste —
+                                                # elle porte TOUJOURS le geste (b3fe063 :
+                                                # Entrée 179 + Task 97 + le kit) + ses
+                                                # consignations ultérieures
+CHEMIN_LOCAL = None
 
 
 def refus(nom, detail):
@@ -55,7 +56,13 @@ def lister(pid):
 
 
 def main():
-    # -- 0. le bundle local, construit et vérifié --------------------------------
+    global BUNDLE, TIP_ATTENDU, CHEMIN_LOCAL
+    # -- 0. la pointe courante : le geste + ses consignations -------------------
+    TIP_ATTENDU = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
+                                 capture_output=True, text=True).stdout.strip()
+    BUNDLE = f"triade-history-090-{TIP_ATTENDU[:7]}.bundle"
+    CHEMIN_LOCAL = REPO + "/bundles-090/" + BUNDLE
+    # le bundle local, construit et vérifié --------------------------------
     subprocess.run(["mkdir", "-p", REPO + "/bundles-090"], check=True)
     out = subprocess.run(["git", "bundle", "create", CHEMIN_LOCAL, "--all"],
                          cwd=REPO, capture_output=True, text=True)
@@ -66,8 +73,8 @@ def main():
     ligne_jalon = next((l for l in tetes.splitlines()
                         if l.endswith("refs/heads/bundle051/v0.5.1-jalon-v7")), "")
     if not ligne_jalon.startswith(TIP_ATTENDU):
-        refus("BUNDLE-TETES", f"la branche jalon du bundle ne pointe pas sur le "
-                              f"geste : {ligne_jalon[:80]!r}")
+        refus("BUNDLE-TETES", f"la branche jalon du bundle ne pointe pas sur la "
+                              f"pointe courante : {ligne_jalon[:80]!r}")
     octets = open(CHEMIN_LOCAL, "rb").read()
     md5_local = hashlib.md5(octets).hexdigest()
     print(f"[0] bundle construit : {BUNDLE} ({len(octets)} o, md5 {md5_local[:8]}… — "
@@ -184,8 +191,8 @@ def main():
           f"{TIP_ATTENDU[:7]} (relu MATCH — les trois miroirs à la pointe)")
 
     print("=== PASSATION FAITE : le bundle courant porte LE KIT TERRAIN M9-(f) "
-          "DÉPOSÉ (f63164a — le geste b3fe063 + sa consignation) — la série 090 "
-          "poursuit à la pointe ; l'ancien "
+          f"DÉPOSÉ ({TIP_ATTENDU[:7]} — le geste b3fe063 + ses consignations) — la "
+          "série 090 poursuit à la pointe ; l'ancien "
           "3fa7168 (LE BUILD NÉ) demeure dans l'histoire ; LA GRANDE ŒUVRE "
           "ATTEND LE GESTE DU DÉVELOPPEUR ===")
     return 0
