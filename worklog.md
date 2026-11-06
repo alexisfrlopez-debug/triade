@@ -5613,6 +5613,26 @@ Work Log:
   dans un dossier NEUF (D99), python scenario-m9f.py, renvoyer
   preuves-m9f/ ENTIER au coffre → le recoup → si vert : LA FINALE
   1.0.0, le jalon M9 franchi — LA GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 100) : le bundle courant
+  triade-history-090-374137b.bundle (18 366 483 o, md5 93b7f7d4…,
+  branche jalon == 374137b [le geste + sa consignation]) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte L'ERRATUM n° 7 RÉPARÉ
+  [Entrée 182 — la pièce console d6d1e931…, le TypeError ligne 593
+  nommé et REJOUÉ au labo, les TROIS fautes au kit, la réparation à
+  la source + le contrôle PERMANENT aux TROIS portes + le kit corrigé
+  90a1d022… MIS À JOUR EN PLACE au /test + le run 2 archivé AVEC la
+  pièce console et le verdict 12/12] + le worklog Task 100 + le
+  scénario RÉPARÉ relu à la pointe [LES TROIS PORTES de l'assembleur
+  passées AU geste même sur la pointe : le POINTEUR aux DEUX sites
+  OUVRIR, AUCUNE écriture .raw, l'échelle contre les vecteurs
+  officiels] + le plan à jour [rangée (f) + État]), l'ancien
+  090-35706ef (LE SECOND RUN ANALYSÉ le journal seul) ARCHIVÉ
+  VERSIONNÉ (md5 537c015e… recoupé — 45 archives, rien supprimé),
+  /test sans copie de bundle (recoupé) ET le kit du /test == le
+  CORRIGÉ md5 90a1d022… (recoupé), le push GitHub à la pointe
+  (origin == 374137b relu MATCH — les trois miroirs alignés) ;
+  script suivi : passe_bundle_m9n.py ; LA SÉRIE 090 POURSUIT — le
+  geste est PASSÉ, LE TROISIÈME RUN DU DÉVELOPPEUR ATTENDU.
 
 Stage Summary:
 - LA PIÈCE CONSOLE RENVERSE L'ACQUITTEMENT : le second run n'était
