@@ -5465,3 +5465,73 @@ Stage Summary:
 - LE KIT CORRIGÉ EST AU COFFRE /test (md5 7d5380ce…) : le second geste
   du développeur est attendu — si vert : la finale 1.0.0, le jalon M9
   franchi — LA GRANDE ŒUVRE.
+
+## Task ID 99 — LE SECOND RUN TERRAIN (f) REÇU (« preuves deposees dans le dossier /test du drive ») : LE JOURNAL SEUL, LE RUN INTERROMPU SANS VERDICT — T0/T1/T2 VERT NOMMÉS (la réparation de l'erratum n° 6 PROUVÉE sur la machine réelle, le VRAI afd.sys franchi pour la première fois) ; l'interruption nommée entre T2 VERT et la ligne « T3 : OUVRIR » (fenêtre Python pur, AUCUN appel machine en vol) ; LE GESTE RENDU AU DÉVELOPPEUR (06/11 au soir)
+
+Work Log:
+- LE RAPATRIEMENT (17:03) : /test/preuves-m9f/ ne porte QUE le journal
+  (171 o, md5 24680ac9…) + le LISEZMOI du réceptacle (0387616d…) ;
+  rapatrier_preuves_m9f.py REFUSE (code 2 : le trio absent — la garde
+  fait son métier) ; la pièce rapatriée à la main, md5 contrôlé par
+  relecture.
+- LE JOURNAL LU SUR PIÈCES : TROIS lignes CRLF à 16:56:09 — T0 VERT ;
+  T1 VERT (les DEUX lecteurs d'accord sur les TROIS noms : LA
+  RÉPARATION DE L'ERRATUM n° 6 PROUVÉE SUR LA MACHINE RÉELLE — le
+  refus -3 ne s'est pas représenté, le kit corrigé 7d5380ce… exécuté) ;
+  T2 VERT (l'endpoint AFD TCP IPv4 ÉTABLI vers cloudflare:443 par
+  sys-04 en TROIS appels NT : LE VRAI afd.sys FRANCHI POUR LA
+  PREMIÈRE FOIS — le plus loin du programme sur le terrain) ; 171 o
+  == la ré-écriture EXACTE des trois lignes par _ecrire_journal en
+  mode texte Windows (CRLF) : la pièce EST native.
+- L'INTERRUPTION NOMMÉE : le journal meurt après T2 VERT, la ligne
+  suivante (« T3 : OUVRIR ») est journalée AVANT l'appel TLS27 (597
+  contre 599) — entre les deux : UN SEGMENT PYTHON PUR (le print
+  d'entête T3, os.urandom, l'échelle x25519 en Python, les rappels
+  ctypes, les tampons), LA PREMIÈRE INSTRUCTION UN PRINT CONSOLE,
+  AUCUN appel machine en vol ; le témoin/le verdict ne naissent qu'à
+  la fin (_verdict) : leur absence est COHÉRENTE ; l'horloge des
+  pièces : mtime 16:56:09.463 == la seconde de T2, dépôt Drive
+  16:56:34 — à 16:56:34 le run était déjà GELÉ ou MORT (un process
+  vivant traverse la fenêtre en millisecondes).
+- LES CANDIDATS (évidence avant correctif — D54/D68/D98) : (a) LA
+  CONSOLE GELÉE (QuickEdit : un clic dans la fenêtre gèle tout print ;
+  la fenêtre reste OUVERTE, « Sélection » au titre, ÉCHAP reprend le
+  run là où il s'est tu) ; (b) LA MORT DU PROCESSUS (fenêtre fermée,
+  Ctrl+C, arrêt — indistinguable sur pièces) ; (c) LE KIT ACQUITTÉ
+  PAR ÉLIMINATION : la fenêtre ne porte AUCUN octet du kit, et le
+  premier run (16:17) avait traversé tous les prints jusqu'au verdict
+  sur la MÊME console — l'incident est LOCAL ; la limite nommée : le
+  journal seul ne départage pas, la console du développeur répond.
+- LE GESTE RENDU : (i) console figée → ÉCHAP (le run REPREND ; un
+  « -7 LE TRANSPORT EN ÉCHEC » est possible et HONNÊTE : la connexion
+  muette depuis 16:56 a pu être refermée par le serveur — la nature
+  du transport, jamais une panne du kit) ; (ii) fenêtre morte →
+  RELANCER python scenario-m9f.py (réseau vivant, ~10 s) ; (iii) PUIS
+  renvoyer preuves-m9f/ ENTIER au coffre → le labo recoupe → si
+  vert : LA FINALE 1.0.0 (fait de carte, D104) — LA GRANDE ŒUVRE.
+- FRONTIÈRES : le kit INCHANGÉ au /test (7d5380ce… relu — AUCUN
+  correctif : rien ne condamne le kit), l'artefact d8928934… INTACT
+  (re-haché au geste), le scénario du kit == la source du dépôt
+  OCTET POUR OCTET (38 992 o, différencié au geste), le scellé 0.9.0
+  INTACT, AUCUNE balise (run INCONCLU : la finale attend un run
+  COMPLET vert), l'archive du premier run intacte (D99 zéro
+  mélange) ; livrables : download/preuves-run-m9f/scenario-m9f-
+  journal.log (md5 24680ac9…) + LISEZMOI-preuves.txt (0387616d…) ;
+  consignations : Entrée 181 PAR SCRIPT, PLAN (maj_plan_m9m.py :
+  rangée (f) + État), worklog +Task ID 99.
+- SUITE : LE GESTE DU DÉVELOPPEUR — preuves-m9f/ ENTIER au coffre →
+  le recoup (D138/D145/D148) → si vert : LA FINALE 1.0.0, le jalon
+  M9 franchi — LA GRANDE ŒUVRE.
+
+Stage Summary:
+- LE SECOND RUN EST LE PLUS LOIN QUE LE PROGRAMME AIT JAMAIS ÉTÉ SUR
+  LE TERRAIN : T1 VERT prouve la réparation de l'erratum n° 6 SUR LA
+  MACHINE RÉELLE, T2 VERT établit la connexion TCP par LE VRAI
+  afd.sys — mais le run est INCONCLU : mort silencieuse dans une
+  fenêtre Python pur dont la première instruction est un print
+  console, AUCUN appel machine en vol, le kit acquitté par
+  élimination.
+- LE JOURNAL SEUL NE DÉPARTAGE PAS LA CONSOLE GELÉE (Échap reprend)
+  DE LA MORT DU PROCESSUS (relancer) : le geste rendu au développeur
+  couvre les deux — puis preuves-m9f/ ENTIER, et si vert : LA FINALE
+  1.0.0, le jalon M9 franchi — LA GRANDE ŒUVRE.
