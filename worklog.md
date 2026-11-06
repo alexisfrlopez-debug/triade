@@ -5108,3 +5108,80 @@ Stage Summary:
   geste hkdf.
 - LE DOMAINE sys COMpte SIX BLOCS, L'ÈRE 1.0.0 A SES FONDATIONS : reste
   la cérémonie du sceau, le build, le terrain — LA GRANDE ŒUVRE.
+
+## Task ID 95 — LA REPRISE SUR LES TROIS MIROIRS : LE CHANTIER M9-(e) OUVERT — LA CÉRÉMONIE DU BUILD 1.0.0 ARMÉE, la dette de consignation des Tasks 93/94 soldée (06/11)
+
+- LA SYNCHRO VÉRIFIÉE AVANT LE GESTE (« ok continue ») : HEAD 611f878 ==
+  origin relu (fetch), le miroir Drive 1 297 inchangés + le bundle
+  rafraîchi (0 erreur), l'arbre propre, le scellé 0.9.0 INTACT
+  (1492b0bc…), la réserve instrumentale VIVANTE, la garde : m8 + tls13
+  DIVERGÉS (README.md) — la dette de cérémonie de l'ère 1.0.0.
+- LA DETTE DE CONSIGNATION NOMMÉE ET SOLDÉE : (1) l'Entrée 176 ABSENTE
+  (la passation Task 94 la revendiquait « relu MATCH » — un MATCH jamais
+  constaté sur la pièce) ; (2) l'ordre 174<175 VIOLÉ (le défaut de
+  inserer_entree_175.py : l'insertion à l'INDEX de l'en-tête au lieu
+  d'après la section — le journal portait 173, 175, 174) ; (3) le PLAN
+  INCOMPLET (la phrase Entrée 175 de l'État du programme manquait — le
+  worklog Task 93 la consignait pourtant ; la rangée (d) sans
+  complétion). LES RÈGLEMENTS : inserer_entree_176.py (l'ordre RESTAURÉ
+  par échange pur — les sections byte-identiques, le constat AVANT
+  l'écriture — + l'Entrée 176 déposée depuis le worklog qui fait foi,
+  la note de reprise en tête) ; maj_plan_m9g.py (l'État du programme +
+  les phrases Entrées 175/176, la rangée (d) « RÉALISÉ ») ; rejeu
+  REFUSÉ aux deux. La datation : les présentes portent le 06/11 (les
+  horodatages git des gestes récents : 06/11 00:35-09:07 UTC — les
+  écritures « 07/11 » des Entrées 172-176 demeurent, l'anomalie est
+  nommée, jamais réécrite).
+- LA CÉRÉMONIE ARMÉE (le plan (e) : « LA CÉRÉMONIE DU SCEAU I D'ABORD
+  ... précède construire() ») : preparer — la remise fraîche 13 arbres,
+  DEUX empreintes nouvelles (m8 72aadd38… [README + sys-04/05/06 : 7
+  vivants contre 4 déposés], tls13 42559862… [l'erratum n° 2 : README
+  seul, les 28 specs inchangées]), les ONZE autres inchangées (Ed25519
+  déterministe) ; LISEZMOI-ceremonie-build-1.0.0.txt ÉCRIT (le modèle
+  ere-M9 : POURQUOI, CE QUI A CHANGÉ, LA RÈGLE D'OR [JAMAIS « generer
+  », la clé du 04/11 réutilisée 173fae9c…], le PAS-À-PAS, CE QUE CELA
+  DÉBLOQUE [construire() : l'artefact 1.0.0-dev.1 — le corps 0.9.0
+  INTACT R7, .text5 le socle dans la réserve 0xA240+, .text6 les 28
+  blocs + fixtures 0xC000..0x10CF0, la version 0x01000001 @0x2820,
+  l'oracle : le socket natif SANS une seule entrée d'import réseau, la
+  carte génération 9] ; la clé privée ne traverse JAMAIS le bac à
+  sable) ; maj_kit.py ÉTENDU (RACINE_KIT + NOTE_D130 RÉORIENTÉE — la
+  mention M8 était périmée) et REJOUÉ : 1 téléversé (le LISEZMOI),
+  2 mis à jour (MANIFESTE + a-signer), 56 inchangés, 59/59 ALLER-
+  RETOUR md5 ; le recoup indépendant : le a-signer du kit == le local
+  (MATCH), les DEUX empreintes présentes, le MANIFESTE orienté.
+- FRONTIÈRES : AUCUN artefact (le build attend le geste du développeur),
+  les signatures/manifestes déposés INTACTS (l'état « reelle », la clé
+  173fae9c…), le scellé 0.9.0 INTACT, aucune balise posée, les arbres I
+  inchangés (la remise porte leurs empreintes vivantes — la couche I est
+  FINALE) ; consignations : Entrées 176+177 PAR SCRIPT, PLAN (m9g :
+  l'État du programme + la rangée (d) ; m9h : la rangée (e)), worklog
+  +Task ID 95.
+- SUITE : LE GESTE DU DÉVELOPPEUR (la cérémonie hors-ligne : signer
+  a-signer.txt avec la clé du 04/11, ramener signatures-I.txt +
+  cle-publique-I.txt au /test) → LE DÉPÔT (sceau_I.py deposer) → LE
+  GARDE REPASSÉ (13/13) → LE BUILD EXÉCUTÉ (construire : 1.0.0-dev.1 +
+  la carte génération 9 + le verrou croisé) ; puis (f) le terrain — LA
+  GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 95) : le bundle courant
+  triade-history-090-<pointe>.bundle (branche jalon == la pointe [le
+  geste + sa consignation]) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH : il
+  porte LA CÉRÉMONIE ARMÉE [Entrée 177 — la dette de consignation
+  soldée, la remise fraîche 13 arbres : m8 72aadd38… + tls13
+  42559862…, le kit 59/59 recoupé, le LISEZMOI du geste] + le worklog
+  Task 95), l'ancien 090-686b33e (LE SOCLE SOCKET) ARCHIVÉ VERSIONNÉ,
+  /test sans copie, le push GitHub à la pointe ; LA SÉRIE 090 POURSUIT
+  — le geste est PASSÉ.
+
+Stage Summary:
+- LA CÉRÉMONIE DU BUILD 1.0.0 EST ARMÉE : le kit /Cérémonie porte la
+  remise fraîche (13 arbres, les DEUX empreintes nouvelles m8 + tls13),
+  le LISEZMOI du geste, le MANIFESTE réorienté — le développeur signe
+  hors-ligne avec sa clé du 04/11, le build suivra le garde VERT.
+- LA DETTE DE CONSIGNATION DES TASKS 93/94 EST SOLDÉE : l'ordre du
+  journal restauré, l'Entrée 176 déposée, le plan complété — la
+  passation revendiquait un MATCH jamais constaté : nommé, réparé, la
+  règle demeure (un verdict sans ses faits est un échec muet).
+- LA NOTATION EST COMPLÈTE, LA COUCHE I EST FINALE : la cérémonie est
+  la DERNIÈRE pièce avant l'artefact — puis le terrain, LA GRANDE
+  ŒUVRE.

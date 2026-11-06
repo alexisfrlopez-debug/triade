@@ -81,6 +81,15 @@ RACINE_KIT = [
     # « generer », la clé du 04/11 est réutilisée — 173fae9c…).
     ("LISEZMOI-ceremonie-ere-M8.txt",
      DOWNLOAD / "LISEZMOI-ceremonie-ere-M8.txt", False),
+    # LE BUILD 1.0.0 (chantier (e) M9, Task 95) : la cérémonie de
+    # re-signature m8 + tls13 qui PRÉCÈDE construire() — la notation est
+    # COMPLÈTE (les 28 blocs + le socle socket), la couche I est FINALE,
+    # la remise fraîche vit dans v06/sceau-I/a-signer.txt (source git,
+    # 13 arbres) ; ce LISEZMOI est le mode d'emploi qui va avec (règle
+    # d'or : JAMAIS « generer », la clé du 04/11 est réutilisée —
+    # 173fae9c…).
+    ("LISEZMOI-ceremonie-build-1.0.0.txt",
+     DOWNLOAD / "LISEZMOI-ceremonie-build-1.0.0.txt", False),
 ]
 
 NOTE_D130 = (
@@ -111,11 +120,15 @@ NOTE_D130 = (
     "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
     "le SIGNAL, pas la panne).\n"
     "\n"
-    "CÉRÉMONIE DE L'ÈRE M8 (M8-(c), D162) : le build 0.9.0-dev.1 attend\n"
-    "la re-signature m0 (registre étendu) + m8 (domaine sys). Suivez\n"
-    "LISEZMOI-ceremonie-ere-M8.txt : la remise est v06/sceau-I/a-signer.txt\n"
-    "(DOUZE arbres), à signer HORS LIGNE avec votre clé du 04/11 — la\n"
-    "règle d'or : JAMAIS « generer » (la clé 173fae9c… est réutilisée).")
+    "CÉRÉMONIE DU BUILD 1.0.0 (chantier (e) M9, Task 95) : le build\n"
+    "1.0.0-dev.1 attend la re-signature m8 (la révision M9-(d) — le\n"
+    "socle socket sys-04..06) + tls13 (l'erratum n° 2 de la notation).\n"
+    "Suivez LISEZMOI-ceremonie-build-1.0.0.txt : la remise est\n"
+    "v06/sceau-I/a-signer.txt (TREIZE arbres), à signer HORS LIGNE avec\n"
+    "votre clé du 04/11 — la règle d'or : JAMAIS « generer » (la clé\n"
+    "173fae9c… est réutilisée). La notation est COMPLÈTE : cette\n"
+    "cérémonie est la DERNIÈRE avant l'artefact (construire() suit le\n"
+    "garde VERT).")
 
 
 # ---------------------------------------------------------------- utilitaires
