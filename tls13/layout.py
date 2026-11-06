@@ -226,9 +226,13 @@ TLS21_VA = 0xEB40        # h100021 — l'enregistrement déprotéger (slot 0x1C0
 
 # --- La famille poignée + le principal ARRÊTÉS (chantier (b), le geste six —
 # D161 rejoué : la mesure auteur décide, la préfiguration s'incline) ------------
-# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py : multiples
-# de 64 (D8), tassés depuis la fin enregistrement (0xED00), padding >= 16 — le
-# MINIMUM admissible par longueur :
+# MÊME ARRÊT sur les longueurs réelles MESURÉES par outils/auteur.py : D8 tenu
+# (le padding >= 16 — LA DÉCISION), alignés 16, tassés depuis la fin
+# enregistrement (0xED00) — le MINIMUM admissible par longueur ; NOTE du
+# chantier du build M9 : le « multiple de 64 » des familles précédentes est
+# la CONVENTION de l'ère M8 (tenue par les 26 autres slots) — l'arrêt a posé
+# 0x120 (288, aligné 16) à tls13-22 et 0xB0 (176, aligné 16) à tls13-28, les
+# minimums D8 : la convention est déclinée, D8 demeure :
 #   tls13-22 :  241 o notés -> slot 0x120 (padding 47)
 #   tls13-23 :  532 o notés -> slot 0x240 (padding 44 — le re-arrêt en
 #                              cours de geste : la lecture GROS-BOUTISTE de la
@@ -246,19 +250,35 @@ TLS21_VA = 0xEB40        # h100021 — l'enregistrement déprotéger (slot 0x1C0
 # R7 — la famille poignée s'arrête AVANT eux) ; le principal suit À 0xFF40 —
 # la marge a franchi 0xF000 comme le plan l'avait nommé (« la mesure décidera,
 # jamais la négociation ») :
-#   tls13-27 : 2864 o notés -> slot 0xB40 (padding 16 — LE PLUS GRAND bloc du
-#                              domaine : la machine d'états, 563 instructions,
-#                              33 étiquettes, le cadre 0x43C8)
-#   tls13-28 :  144 o notés -> slot 0xB0  (padding 32)
-# — fin du principal : 0x10B30 ; les fixtures poignée suivent à leur ARRÊT.
+#   tls13-27 : 2906 o notés -> slot 0xB80 (padding 38 — LE PLUS GRAND bloc du
+#                              domaine : la machine d'états, le cadre 0x43C8 ;
+#                              ERRATUM n° 4 consigné au chantier du build M9 :
+#                              la première mesure disait 2864 o -> 0xB40 — les
+#                              DOUZE fautes corrigées du geste poignée l'ont
+#                              fait croître, le slot fut ré-arrêté 0xB80 SANS
+#                              DÉPLACER tls13-28 : le CHEVAUCHEMENT de code
+#                              nommé sur pièces au build M9 (la fin du code
+#                              0x10A9A recouvrait le socle posé à 0x10A80 —
+#                              .refus_pre_taille @0x10A80 et
+#                              .refus_contexte_nul @0x10A92 vivaient DANS
+#                              tls13-28 ; le harnais n'a pas vu : la pose
+#                              n'écrit que le code, les chemins -1/-2 jamais
+#                              exercés) — le socle DÉPLACÉ 0x10AC0, les
+#                              notations 27/28 re-générées par l'auteur)
+#   tls13-28 :  144 o notés -> slot 0xB0  (padding 32 ; ERRATUM n° 4 : le
+#                              socle DÉPLACÉ 0x10A80 -> 0x10AC0, à la fin du
+#                              slot ré-arrêté du principal)
+# — fin du principal : 0x10B70 ; les fixtures poignée suivent à leur ARRÊT.
 TLS22_VA = 0xED00        # h100022 — le ClientHello composé (slot 0x120)
 TLS23_VA = 0xEE20        # h100023 — le ServerHello traité (slot 0x240)
 TLS24_VA = 0xF060        # h100024 — le calendrier de clés (slot 0x880)
 TLS25_VA = 0xF8E0        # h100025 — le Finished calculé/vérifié (slot 0x100)
 TLS26_VA = 0xF9E0        # h100026 — l'épinglage du certificat (slot 0x140)
-TLS27_VA = 0xFF40        # h100027 — la machine d'états (slot 0xB40)
-TLS28_VA = 0x10A80       # h100028 — le socle d'appel (slot 0xB0)
-# fin du principal : 0x10B30 — les fixtures poignée suivent
+TLS27_VA = 0xFF40        # h100027 — la machine d'états (slot 0xB80, l'erratum
+                         # n° 3 : le re-arrêt après les douze fautes, 2906 o)
+TLS28_VA = 0x10AC0       # h100028 — le socle d'appel (slot 0xB0 ; DÉPLACÉ de
+                         # 0x10A80 à l'erratum n° 4 : la fin du slot de 27)
+# fin du principal : 0x10B70 — les fixtures poignée suivent
 
 SLOTS_TLS13 = {
     "h100001": (TLS01_VA, 0x80),

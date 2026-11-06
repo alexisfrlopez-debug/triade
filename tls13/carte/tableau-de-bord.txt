@@ -1,0 +1,14 @@
+[tableau] jalon=M9 artefact=proxy.exe version=1.0.0-dev.1
+  blocs_avec_spec_a_jour        : 86/86 : audit de tracabilite I->C->B (8 artefacts)
+  chaines_I_C_B_tests           : 86/86 : specs, carte, exe, vecteurs
+  construction                  : 0 erreur / 0 avertissement : build script
+  tests_differentiels           : oracle M4 (heritage rejoue) 560 cas verts + oracle M5 (scenarios etendus D136) 365 cas verts + harnais sys (domaine sys + socle socket AFD M9-(d)) 131 cas verts (complet, graine 20261106) ; oracle structurel M3 524 + M4 492 + M5 312 + M8 54 + socle 71 + tls13 589 verrous PASS (LA RÈGLE AUCUN IAT PAR BLOC tls13 + LES SLOTS DISJOINTS — l'erratum n° 4 : le contrôle qui nomme) ; le domaine tls13 prouvé bloc par bloc aux gestes de notation (six harnais, 282 contrôles × 3 graines)
+  reutilisation_heritage        : 44 blocs embarques octet-identiques au scelle 0.9.0 (R7, deltas .rdata [version + K[64] dans la reserve VIERGE VERIFIEE]/.text5 [le socle socket dans la reserve int3]/.text6 NOUVELLE/PE documentes — version 0x01000001 : geste de BUILD)
+  empreintes_donnees_embarquees : conforme (fixtures http + tls + CLI/flux M5 + span-nom/fixture-ligne M8 + K[64] @0x2F00 + les fixtures .text6 [U9/EXP_INV, les HUIT libelles + HRR, le transport AFD], table R10 28 entrees archee, porte M5, version 0x1000001)
+  defauts_T1_T6_ouverts         : 0 : journal des decisions D77-D177 (l'erratum n° 4 NOMME et REPARE : tls13-28 deplace 0x10AC0, le controle slots-disjoints PERMANENT)
+  optimisations_sans_mesure     : 0 : aucune optimisation M9 (R11)
+  changements_hors_journal      : 0 : D77 a D177 consignees
+  preversions                   : 1.0.0-dev.1 conforme (schema dev, monotonie R10 : 0x01000001 > 0x00090001 — la finale 1.0.0 attend le terrain vert du chantier (f), jamais un scellage ici)
+  entrees_non_fiables           : comportement defini par contrat (les HUIT verdicts nommes du domaine sys ET du domaine tls13 [V_TRANSPORT_ECHEC -7 a M9-(d)], le NTSTATUS jamais muet, l'echec de resolution = AUCUN syscall emis) ; falsification : les six harnais du domaine (zéro silence — chaque mutation attrapee)
+  artefact                      : 65024 octets ; empreinte sha256:9ed63f3901d044b3... ; 8 sections (.text6 nouvelle 0xC000 — le domaine tls13 + les fixtures) ; AUCUN import nouveau (le socket natif SANS une seule entree d'import reseau — la preuve structurelle : le domaine ne declare RIEN) ; entree PE 0x8C80 inchangee
+  verrou_croise                 : 86 empreintes reverifiees (8 artefacts + notations non embarquees) + signature Ed25519 (graine durable D144, pub e9cd8c549485... — le temoin ne bouge pas) + racine (R8/R9)

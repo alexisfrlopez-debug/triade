@@ -5185,3 +5185,82 @@ Stage Summary:
 - LA NOTATION EST COMPLÈTE, LA COUCHE I EST FINALE : la cérémonie est
   la DERNIÈRE pièce avant l'artefact — puis le terrain, LA GRANDE
   ŒUVRE.
+
+## Task ID 96 — LA CÉRÉMONIE DU BUILD 1.0.0 SOLDÉE ; L'ERRATUM n° 4 (le chevauchement tls13-27/28) NOMMÉ AU CHANTIER ET RÉPARÉ À LA SOURCE ; LE BUILD EXÉCUTÉ : tls13/proxy.exe 1.0.0-dev.1 NÉ, la carte GÉNÉRATION 9, le verrou croisé 86/86 (06/11)
+
+- LA CÉRÉMONIE SOLDÉE (« signatures déposées dans le drive /test ») :
+  rapatrier_remise_ceremonie.py — les DEUX pièces md5 contrôlés par pièce
+  contre le Drive, la clé du 04/11 CONSTATÉE (173fae9c…, réutilisée), la
+  remise recoupée (13 lignes == a-signer local, les DEUX empreintes
+  nouvelles) ; sceau_I.py deposer --cle : L'ATOMICITÉ DE CÉRÉMONIE (tout
+  vérifié AVANT toute écriture) — 13 signatures installées, l'état
+  « reelle » ; LE GARDE REPASSÉ : 13/13 arbres VERTS. La clé privée
+  n'a JAMAIS traversé le bac à sable (D87).
+- L'ERRATUM n° 4 NOMMÉ AU CHANTIER (la sonde avant l'artefact) : tls13-27
+  mesuré 2906 o (après les douze fautes du geste poignée), le slot
+  ré-arrêté 0xB80 SANS déplacer tls13-28 — le chevauchement de code
+  [0x10A80, 0x10A9A) recouvrait le socle : .refus_pre_taille @0x10A80 et
+  .refus_contexte_nul @0x10A92 de la machine d'états VIVAIENT DANS
+  tls13-28 (le harnais n'a pas vu : la pose n'écrit que le code, les
+  chemins -1/-2 jamais exercés). RÉPARÉ À LA SOURCE : TLS28_VA → 0x10AC0
+  (layout), auteur re-joué (notations 27/28 : seules les cibles des 10
+  appels + le socle décalé changent, les 26 autres byte-identiques),
+  harnais poignée re-joué 52/52 × 3 graines ; LE CONTRÔLE slots-disjoints
+  PERMANENT à l'oracle M9. NOTE D8 : padding >= 16 + aligné 16 (LA
+  DÉCISION) ; le multiple-de-64 est la convention M8 (tenue par les 26
+  autres + le socle, déclinée par l'arrêt consigné 0x120/0xB0).
+- LE BUILD EXÉCUTÉ (tls13/build_m9.py + tls13/carte_m9.py) : garde 13/13
+  AVANT construire() ; l'héritage re-vérifié (M3 524 + M4 492 + M5 312
+  verrous, l'ancre 0.6.0, PUIS la recomposition 0.9.0 CONFRONTÉE OCTET
+  PAR OCTET au scellé 1492b0bc… AVANT l'extension) ; le socle sys-04..06
+  (oracle 71 verrous, la convention multiple-de-64 tenue) ; les 28 blocs
+  (oracle 589 verrous : AUCUN IAT, AUCUN syscall, les appels fermés, les
+  RIP == fixtures, LES SLOTS DISJOINTS) ; la composition (.text5 : le
+  socle dans la réserve int3 VÉRIFIÉE ; .rdata : K[64] dans la réserve
+  VIERGE vérifiée + la version 0x01000001 — LE delta R10 ; .text6
+  NOUVELLE 0xC000-0x10FFF : les 28 slots + les 17 fixtures DÉRIVÉS du
+  plan) ; le PE 8 sections (648 o <= 0x400), SizeOfImage 0x11000,
+  l'entrée 0x8C80 inchangée, AUCUN import nouveau ; la validation
+  INTÉGRALE (chaque octet de .text6 compté : slot, fixture ou int3) ; la
+  preuve R7 (44 blocs embarqués octet-identiques au scellé 0.9.0, les
+  deltas documentés) ; les oracles M4 560 + M5 365 + sys 131 cas verts ;
+  L'ARTEFACT : tls13/proxy.exe 1.0.0-dev.1, 65 024 o, sha256
+  9ed63f3901d044b32de8bd350ab3209303ea1c63167a4752801712a4bd45d283,
+  DÉTERMINISTE (re-construit byte-identique) ; LA CARTE GÉNÉRATION 9 :
+  86 blocs sur 8 artefacts (la relève au coffre : lignée D80 + graine
+  durable, LE TÉMOIN e9cd8c549485… TENU), les contrats des 31 nouveaux
+  PARSÉS des specs I (R2) ; le verrou croisé 86/86 (R8/R9) + le tableau
+  de bord.
+- FRONTIÈRES : le scellé 0.9.0 INTACT (relu par la confrontation), la
+  carte génération 8 INTACTE, les arbres I inchangés (l'erratum touche
+  layout + notation : HORS du sceau), aucune balise posée (la finale
+  1.0.0 attend le terrain vert du (f) — le scellage sera un fait de
+  carte, D104) ; livrables : rapatrier_remise_ceremonie.py,
+  sonde_erratum_tls13_27.py, sonde_ancre_090.py, layout.py corrigé,
+  notations 27/28, carte_m9.py, build_m9.py, proxy.exe 1.0.0-dev.1,
+  carte/ (la génération 9) ; consignations : Entrée 178 PAR SCRIPT, PLAN
+  (maj_plan_m9i.py : la rangée (e) + l'État du programme), worklog
+  +Task ID 96.
+- SUITE : le chantier (f) — LE TERRAIN, LA GRANDE ŒUVRE : le kit au
+  coffre /test (l'artefact + le scénario : la session RÉELLE — le VRAI
+  ntdll lu par sys-02, les sockets par les syscalls AFD directs,
+  l'épinglage de l'empreinte attendue, la ligne applicative chiffrée
+  échangée par LE CLIENT TLS 1.3 ENTIER) ; si vert : la finale 1.0.0 (le
+  fait de carte) et le jalon M9 franchi.
+
+Stage Summary:
+- LE BUILD 1.0.0-dev.1 EST NÉ : tls13/proxy.exe (65 024 o, sha256
+  9ed63f39…) sur le corps 0.9.0 INTACT, le socle socket dans la réserve
+  .text5, les 28 blocs + les fixtures en .text6 NOUVELLE, la carte
+  génération 9 (86 blocs, 8 artefacts), le verrou croisé 86/86 —
+  l'artefact DÉTERMINISTE, oracles verts de bout en bout.
+- LA CÉRÉMONIE DU BUILD 1.0.0 EST SOLDÉE : la remise du développeur
+  rapatriée du /test (md5 contrôlés), déposée par l'atomicité de
+  cérémonie, le garde repassé VERT 13/13 — l'état « reelle » tient.
+- L'ERRATUM n° 4 EST LA PREUVE DE LA MÉTHODE : la sonde a nommé le
+  chevauchement AVANT l'artefact, la réparation est À LA SOURCE (layout +
+  re-notation + harnais re-joué), le contrôle slots-disjoints est
+  PERMANENT — la faute ne peut plus dormir.
+- LA GRANDE ŒUVRE ATTEND : le chantier (f), le terrain — la session
+  RÉELLE avec le VRAI afd.sys, la ligne chiffrée de bout en bout ; si
+  vert : la finale 1.0.0.
