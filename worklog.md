@@ -5352,6 +5352,25 @@ Stage Summary:
   ~10 s) → renvoyer preuves-m9f/ au coffre /test/preuves-m9f/ → le
   labo recoupe (D138/D145/D148) → si vert : LA FINALE 1.0.0 (fait de
   carte) — le jalon M9 franchi, LA GRANDE ŒUVRE.
+- PASSATION (le même geste, Task ID 97) : le bundle courant
+  triade-history-090-ba237f3.bundle (18 279 807 o, md5 90b49eab…,
+  branche jalon == ba237f3 [le geste b3fe063 + ses consignations : Entrée
+  179 — l'erratum n° 5 nommé par la sonde terrain du labo AVANT le kit,
+  l'octet du record CH 0x76 → 0x72 [le SILENCE des serveurs réels prouvé
+  sur pièces], le CCS hérité ignoré [RFC 8446 § 4.1.3, un faux CCS = le
+  refus -2], les verdicts internes 64 bits ; le build 1.0.0-dev.2 NÉ
+  [tls13/proxy.exe 65 024 o, sha256 d8928934…, DÉTERMINISTE ; la carte
+  GÉNÉRATION 10, le verrou croisé 86/86] ; le kit terrain m9f DÉPOSÉ au
+  coffre /test [kit-m9f.zip md5 a73fb526… MATCH relu, la cible figée
+  www.cloudflare.com + l'empreinte épinglée 045d0758…] + le worklog
+  Task 97]) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH : il porte LE KIT
+  DÉPOSÉ), l'ancien 090-3fa7168 (LE BUILD NÉ) ARCHIVÉ VERSIONNÉ (md5
+  60401423… recoupé — 41 archives, rien supprimé), /test sans copie
+  (recoupé), le push GitHub à la pointe (origin == ba237f3 relu MATCH —
+  les trois miroirs alignés) ; script suivi : passe_bundle_m9k.py (LA
+  POINTE LUE DYNAMIQUEMENT : le geste + ses consignations la portent
+  toujours — la leçon des pointes mouvantes) ; LA SÉRIE 090 POURSUIT —
+  le geste est PASSÉ.
 
 Stage Summary:
 - L'ERRATUM n° 5 EST LA PREUVE DE LA MÉTHODE ENCORE : la sonde a
