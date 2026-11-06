@@ -1,4 +1,12 @@
-sys-05 · l'émission du transport — le send AFD par syscall direct · révision 1
+sys-05 · l'émission du transport — le send AFD par syscall direct · révision 2
+Révision 2 (07/11/2026, le recoup du premier run de la sonde sys-05 —
+Entrée 185) : Q3 portait « 12 o » pour le WSABUF — UN WSABUF « PACKÉ »
+(len 4 + buf 8, SANS le padding d'alignement). Le WSABUF canonique x64
+fait SEIZE octets (len à +0, PADDING d'alignement 4 o, buf à +8) : le
+noyau lit buf à +8, quatre octets TROP TÔT — l'adresse lue est folle et
+le noyau rend STATUS_ACCESS_VIOLATION (0xC0000005), la mesure même de la
+sonde (le -6 des cinq runs, nommé à l'instruction près). I2 suit :
+40 octets de structure, non 36. Révision 1 : la pose initiale.
 Intention : LE GESTE D'ÉMISSION du socle socket — émettre une charge sur
 l'endpoint établi par sys-04 par NtDeviceIoControlFile(IOCTL_AFD_SEND),
 le WSABUF unique pointant la charge DU KIT (aucune copie : les octets
@@ -41,9 +49,12 @@ Contrat :
              transport que le domaine n'a pas : le refus nommé est la
              règle, miroir de l'échec propre — charte § 5) ;
          Q3 le WSABUF et l'AFD_SEND_INFO sont construits sur la PILE
-             du bloc (12 o + 24 o, zones mortes au retour) : le
-             BufferArray pointe le WSABUF de pile, le WSABUF pointe la
-             charge du kit (P3), BufferCount = 1, AfdFlags = 0,
+             du bloc (16 o + 24 o, zones mortes au retour) : le WSABUF
+             CANONIQUE x64 — len à +0 (4 o), le PADDING d'alignement
+             4 o, buf à +8 (8 o) : JAMAIS un « packé » de 12 o, le
+             noyau lit buf à +8 ; le BufferArray pointe le WSABUF de
+             pile, le WSABUF pointe la charge du kit (P3),
+             BufferCount = 1, AfdFlags = 0,
              TdiFlags = 0 (la MESURE du send — leftarcode p.3 : aucun
              drapeau, le Fast I/O du noyau) ;
          Q4 l'appel porte les DIX arguments NT dans l'ordre (handle,
@@ -61,7 +72,7 @@ Contrat :
   inv  : I1 AUCUN IAT (charte § 3 — le send SANS ws2_32.send, la
              règle structurelle TENUE) ;
          I2 AUCUNE COPIE de la charge (les octets appartiennent à
-             l'appelant — le bloc ne touche que les 36 octets de
+             l'appelant — le bloc ne touche que les 40 octets de
              structure de sa pile : miroir tls13-28 Q4, l'adaptateur) ;
          I3 le SSN de « NtDeviceIoControlFile » est résolu AU GESTE
              MÊME par sys-02 (jamais un numéro en cache — charte § 6) ;

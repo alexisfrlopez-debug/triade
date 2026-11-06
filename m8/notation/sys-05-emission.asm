@@ -1,4 +1,9 @@
-; sys-05-emission · bloc l'émission du transport — le send AFD par syscall direct, TOTALE ou refus -7 · spec sys-05:R1 · bloc carte g90005
+; sys-05-emission · bloc l'émission du transport — le send AFD par syscall direct, TOTALE ou refus -7 · spec sys-05:R2 · bloc carte g90005
+; Révision 2 (07/11/2026, le recoup du run 1 de la sonde sys-05 — Entrée 185) :
+;   le WSABUF passe de « packé » 12 o (buf à +4) à CANONIQUE 16 o (buf à +8,
+;   le padding d'alignement 4 o) — le noyau lisait buf à +8 : l'adresse
+;   folle, STATUS_ACCESS_VIOLATION 0xC0000005, le -6 des cinq runs NOMMÉ ;
+;   le MÊME encode (48 89 7c 24 68, 5 o) — le slot ne bouge pas d'un octet.
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0xa540, taille 384 octets
 ; Dépendances : sys-02 PUIS sys-01 (IOCTL_AFD_SEND) — TOTALE ou refus -7 (Q2) ; AUCUNE copie de la charge (I2) ; le fixture .text6 NOM_DEVICEIOCTL cité par déplacement (T5)
 ; Notation explicite générée par outils/auteur.py depuis brouillons/sys-05-emission.asm
@@ -27,7 +32,7 @@ call 0xa040
 test rax, rax
 js 0xa643
 mov dword ptr [rsp + 0x60], esi
-mov qword ptr [rsp + 0x64], rdi
+mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1

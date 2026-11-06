@@ -1,4 +1,4 @@
-; sys-05-emission · l'émission du transport · spec sys-05:R1 · bloc carte g90005
+; sys-05-emission · l'émission du transport · spec sys-05:R2 · bloc carte g90005
 ; LE GESTE D'ÉMISSION du socle socket : IOCTL_AFD_SEND par syscall direct
 ; (I1 : AUCUN IAT — le send SANS ws2_32.send, la règle structurelle TENUE).
 ; LA RÈGLE DU KIT (Q1/Q2) : l'émission est TOTALE ou refusée — le compteur
@@ -43,7 +43,7 @@ js .resolution_echouee
 ; WSABUF, le WSABUF pointe LA CHARGE DU KIT, BufferCount 1, AfdFlags 0,
 ; TdiFlags 0 (LA MESURE : aucun drapeau, le Fast I/O du noyau)
 mov dword ptr [rsp + 0x60], esi
-mov qword ptr [rsp + 0x64], rdi
+mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1

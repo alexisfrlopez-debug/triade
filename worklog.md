@@ -5857,3 +5857,70 @@ Stage Summary:
   SÉRIE 090 POURSUIT — le geste est PASSÉ (Drive + local), GitHub en
   retard NOMMÉ, LE GESTE DU DÉVELOPPEUR SUR LA SONDE ATTENDU.
 
+## Task ID 103 — LE RUN DE LA SONDE SYS-05 (g) REÇU (« les preuves sont déposées dans le drive /test ») : LA MESURE RENDUE — LE NTSTATUS BRUT DU GESTE M9F EST 0xC0000005 (STATUS_ACCESS_VIOLATION), TROIS FOIS, DÉTERMINISTE ; LE COUPABLE NOMMÉ À L'INSTRUCTION PRÈS : (b) LE CONTRAT D'APPEL — LA POSE DU WSABUF (SPEC R1-Q3 « 12 o », LE NOYAU LIT buf À +8) ; LE VERDICT MANQUANT EXPLIQUÉ (L'ERRATUM n° 8 : LE JMP REL32 DU TROMPHONE T6) ; LA RÉVISION 2 DE LA SPEC + LA RÉPARATION À LA SOURCE — LE REBUILD 1.0.0-dev.3 EST LE GESTE SUIVANT (07/11 au soir)
+
+Work Log:
+- LE RAPATRIEMENT (ramasse_sonde1.py) : les QUATRE pièces au réceptacle
+  /test/preuves-sonde-sys05/ (temoin 3 562 o dbfce3f7…, journal 1 054 o
+  a860c870…, journal-emissions 119 o 42b60aa7…, LISEZMOI ec84082c…), md5
+  aller-retour OK ; les DEUX kits de la racine recoupés INTACTS
+  (215c2caa… + 90a1d022…) ; l'artefact re-haché : d8928934… INTACT ; le
+  scénario exécuté == la source, octet pour octet (cbc599ea…) ; LA MÊME
+  MACHINE QUE LE RUN 4 (build 26300, Python 3.14.3, ntdll b072efae…).
+- LA MESURE (le cœur) : le trampoline 33 o posé et consigné ; LE COMPAS
+  étalonné (le handle invalide rend -6 + STATUS_INVALID_HANDLE
+  0xC0000008 : la capture lit VRAIMENT rdx) ; LE NTSTATUS BRUT DU GESTE
+  M9F = 0xC0000005 STATUS_ACCESS_VIOLATION, classe ERREUR (sévérité 11),
+  TROIS fois (la mesure 119 o, la variation taille UN octet sur session
+  sacrifiée fraîche, la variation délai après 2 s : l'horloge du journal
+  porte le délai 20:34:30 → 20:34:32) — DÉTERMINISTE ; S4 : le chemin
+  standard meurt AU MÊME GESTE (le rappel émission rend -6, la machine
+  propage -7, état 5 — LA MÊME MORT QUE LES QUATRE RUNS M9F :
+  NON-RÉGRESSION, le refus est AU BLOC) ; journal-emissions.txt : le CH
+  refusé, 119 o, UN enregistrement.
+- LE COUPABLE (nommé à l'instruction près) : le WSABUF canonique x64
+  fait SEIZE octets (len à +0, PADDING d'alignement 4 o, buf à +8) — LA
+  SPEC sys-05:R1 Q3 AVAIT DÉCRÉTÉ « 12 o » : la notation a posé buf à
+  +4 (mov qword [rsp+0x64],rdi — relu dans l'ARTEFACT SCELLÉ à
+  sys-05+0x46) ; le noyau lit buf à +8 : les 4 octets HAUTS du vrai
+  pointeur collés aux immondices de pile → L'ADRESSE FOLLE →
+  ACCESS_VIOLATION ; le bloc copie le status dans rdx (mov rdx,rax ;
+  mov rax,-6 — la spec Q5 l'avait NOMMÉ) : LE -6 DES CINQ RUNS EXPLIQUÉ
+  — le noyau n'a jamais refusé l'émission sur ses mérites, il a fait
+  faute en lisant la structure que le bloc lui tendait ; LES CANDIDATS
+  ÉLIMINÉS : (a) dès le run 4 ; (c) l'endpoint ; (d) le réseau ; le
+  PENDING (pas 0x103) ; le trampoline (S4).
+- LE VERDICT MANQUANT EXPLIQUÉ (l'erratum n° 8) : le run meurt DANS T6
+  avant _verdict() — le jmp rel32 du tromphone NtClose ne peut pas coder
+  la distance zone→artefact (0x7ff68fbb0000 − 0x1bec7ec0000 ≈ 126 Tio ≫
+  2 Gio : struct.error) ; le T6 n'avait JAMAIS couru sur le terrain (les
+  QUATRE runs m9f retournaient à _verdict() dès la mort de T3) ; le
+  dessein a TENU : le témoin écrit au fur et à mesure, LA MESURE A
+  SURVÉCU À LA MORT DU RUN.
+- LE RECOUP 31/31 (recouper_sonde1.py) : le trampoline DÉCODÉ == le
+  squelette (la cible == base+0xa540 == le slot relu au T0) ; l'échelle
+  DE LA SOURCE (éprouvée contre le vecteur RFC 7748 § 6.1 Alice) re-jouée
+  sur la clé privée DU RUN rend la clé publique du témoin ; la chaîne -6
+  → -7 reconstituée depuis les contrats ; le coupable LU dans l'artefact
+  scellé ; la mort en T6 nommée sur les adresses consignées.
+- LA RÉPARATION SELON LA CHARTE : LA RÉVISION 2 DE LA SPEC SYS-05 (Q3 :
+  le WSABUF canonique 16 o, le padding NOMMÉ, buf à +8 ; I2 : 40 o) ; LA
+  NOTATION corrigée (m8/notation + brouillon : mov qword [rsp+0x68], rdi
+  — le MÊME encode 5 o, le slot ne bouge pas) ; L'ERRATUM n° 8 réparé à
+  la source dans les DEUX scénarios (L'ADRESSAGE ABSOLU : mov rax,SSN ;
+  mov rdx,sys-01 ; jmp rdx — le MÊME patron que le trampoline de
+  capture) ; LA RE-CÉRÉMONIE nommée (la révision 2 fait évoluer v06/I/ :
+  LE SIGNAL « signature requise » attendu, la cérémonie du build 1.0.0
+  l'absorbe avec la révision M9-(d) et l'erratum tls13 n° 2).
+- LE RUN ARCHIVÉ (archiver_sonde1.py) : preuves-sonde-sys05-1/ créé dans
+  archives-preuves/, le trio DÉPLACÉ (D143), le VERDICT-recoup-labo
+  déposé AVEC les pièces (31/31), preuves-sonde-sys05/ ré-armé, les DEUX
+  INDEX mis à jour, la racine 16 entrées, les DEUX kits ACQUITTÉS
+  INCHANGÉS.
+- FRONTIÈRES : l'artefact INTACT (d8928934… — le rebuild est LE GESTE
+  SUIVANT, pas une reconstruction tacite), le scellé 0.9.0 INTACT,
+  AUCUNE balise posée (D104), la clé privée jamais traversée (D87).
+- SUITE : LE REBUILD 1.0.0-dev.3 (le bloc sys-05 réparé, les portes de
+  l'assemblage re-passées) — puis LE KIT M9F RÉPARÉ livré au /test, le
+  run du développeur, ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9
+  — LA GRANDE ŒUVRE.

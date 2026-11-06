@@ -762,9 +762,15 @@ def main():
     # jmp sys-01) — la fermeture est LE GESTE DU KIT (I8 de sys-04)
     trampoline_zone = k32.VirtualAlloc(None, 64, MEM_COMMIT,
                                        PAGE_EXECUTE_READWRITE)
+    # l'erratum n° 8 (le recoup du run 1 de la sonde, Entrée 185) : le jmp
+    # rel32 NE PEUT PAS coder la distance zone→artefact — VirtualAlloc
+    # atterrit à ~126 Tio de la base (la zone du run : 0x1bec7ec0000 contre
+    # la base 0x7ff68fbb0000) : struct.error, le run meurt dans T6 AVANT
+    # le verdict. L'ADRESSAGE ABSOLU (le MÊME patron que le trampoline de
+    # capture : lui, a traversé) : mov rax,SSN ; mov rdx,sys-01 ; jmp rdx
     corps = (b"\x48\xb8" + struct.pack("<Q", ssn_close)
-             + b"\xe9" + struct.pack("<i", (base + R_SYS01)
-                                     - (trampoline_zone + 15)))
+             + b"\x48\xba" + struct.pack("<Q", base + R_SYS01)
+             + b"\xff\xe2")
     ctypes.memmove(trampoline_zone, corps, len(corps))
     fermer = ctypes.CFUNCTYPE(ctypes.c_int64, ctypes.c_void_p)(
         trampoline_zone)
