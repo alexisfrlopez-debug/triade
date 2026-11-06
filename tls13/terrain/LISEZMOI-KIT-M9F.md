@@ -47,6 +47,40 @@
 > diverge, le refus sera NOMMÉ (-6, l'étape en cause) — un échec honnête
 > vaut plus qu'un vert muet.
 
+> **L'ERRATUM n° 7 (le kit corrigé le 07/11, après le second run)** : le
+> second run (le 06/11 à 16:56, Windows 10.0 build 19045, Python 3.14.6)
+> avait traversé T0/T1/T2 VERT — la réparation de l'erratum n° 6 PROUVÉE
+> sur la machine réelle, le VRAI afd.sys franchi pour la première fois —
+> puis est MORT d'un crash PYTHON nommé sur la console du développeur :
+> `TypeError: 'bytes' object does not support item assignment` à la
+> ligne 593 (`kit96.raw[:32] = alea`). LA FAUTE ÉTAIT AU KIT, jamais au
+> terrain : l'analyse du journal seul (l'Entrée 181) avait acquitté le
+> kit « par élimination » (console gelée ? mort du processus ?) — la
+> pièce console RENVERSE l'acquittement : `.raw` est une copie bytes
+> IMMUABLE, l'écriture par tranches échoue sur TOUTE machine — un crash
+> DÉTERMINISTE, jamais une console gelée. TROIS fautes vivaient dans le
+> même segment Python pur (aucune machine en vol) : (1) LA POSE DU KIT
+> par tranches sur `.raw` — le crash nommé, ligne 593 ; (2) L'ÉCHELLE
+> RFC 7748 du recoup : x_3 né à 0 (le point à l'infini — la « clé
+> publique attendue » imprimée NULLE, 000…0, le symptôme lisible sur la
+> console) ET a24 = (p+1)//4 au lieu de 121665 (la fausse courbe) — le
+> recoup T3 aurait été IMPOSSIBLE même sans le crash ; (3) LES SITES
+> OUVRIR passaient la TAILLE (96) en r9 là où tls13-27 É1 exige LE
+> POINTEUR des 96 o — la machine aurait lu à l'adresse 0x60, la mort au
+> premier geste si le crash (1) ne l'avait pas devancée de quatre
+> lignes. La réparation est À LA SOURCE (les 96 o posés EN UN GESTE par
+> `create_string_buffer` ; `r9 = ctypes.addressof(kit96)` aux DEUX
+> sites OUVRIR ; l'échelle == le pseudocode officiel RFC 7748 § 5, LA
+> RÉFÉRENCE DU DÉPÔT, éprouvée contre les vecteurs officiels § 6.1 et
+> le couple RFC 8448 § 3) avec le CONTRÔLE PERMANENT à l'assemblage
+> (l'assembleur porte TROIS portes : AUCUNE écriture `.raw[...]`, LE
+> POINTEUR aux DEUX sites OUVRIR, l'échelle re-jouée contre les
+> vecteurs officiels — la preuve négative sur la pointe pré-réparation
+> 35706ef : les TROIS refus nommés). Le terrain demeure LAVÉ et
+> L'ARTEFACT n'a pas bougé d'un octet : proxy.exe demeure le build
+> 1.0.0-dev.2 (sha256 d8928934… — relu VERT au T0 du run mort lui-même).
+> **LE TROISIÈME GESTE est attendu.**
+
 ## 1. Ce que ce kit contient
 
 ```

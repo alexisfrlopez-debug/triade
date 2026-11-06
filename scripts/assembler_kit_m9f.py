@@ -26,6 +26,7 @@ import hashlib
 import os
 import pathlib
 import py_compile
+import random
 import shutil
 import sys
 import tempfile
@@ -86,6 +87,21 @@ def _litteral(noeud):
     return ast.literal_eval(noeud)
 
 
+def _extraire_fonction(chemin, nom, namespace=None):
+    """Une FunctionDef du fichier, extraite PAR AST et rendue exécutable
+    (l'erratum n° 7 porte 3 rejoue l'échelle du scénario CONTRE LES
+    VECTEURS OFFICIELS — aucun import du module hôte n'est requis)."""
+    arbre = ast.parse(pathlib.Path(chemin).read_text(encoding="utf-8"))
+    for noeud in arbre.body:
+        if isinstance(noeud, ast.FunctionDef) and noeud.name == nom:
+            module = ast.Module(body=[noeud], type_ignores=[])
+            code = compile(module, filename=str(chemin), mode="exec")
+            ns = {} if namespace is None else namespace
+            exec(code, ns)
+            return ns[nom]
+    refus("AST", f"la fonction {nom} est absente de {chemin}")
+
+
 def constantes_du_scénario(chemin):
     """Extrait les constantes nommées du scénario PAR AST (jamais gravées)."""
     arbre = ast.parse(chemin.read_text(encoding="utf-8"))
@@ -110,6 +126,124 @@ def constantes_du_scénario(chemin):
     if manquantes:
         refus("AST", f"constantes absentes du scénario : {sorted(manquantes)}")
     return trouves
+
+
+# --- LE CONTRÔLE PERMANENT DE L'ERRATUM n° 7 (les TROIS portes) ------------------
+#
+# La pièce (la console du développeur, le paste du 07/11 — l'Entrée 181
+# RENVERSÉE) : le second run du 06/11 16:56 est mort d'un TypeError PYTHON
+# NOMMÉ — scenario-m9f.py:593 `kit96.raw[:32] = alea` — après l'impression
+# d'une « clé publique attendue » NULLE (000…0), le symptôme de la seconde
+# faute ; la troisième vivait à quatre lignes en aval (r9 = la TAILLE au
+# lieu du POINTEUR). Une faute par porte, le REFUS est nommé.
+
+def _porte_e7_1_raw(arbre):
+    """Porte 1 — le TypeError NOMMÉ du run : AUCUNE écriture par tranches
+    sur `.raw` (une copie bytes IMMUABLE, l'échec est sur TOUTE machine)."""
+    for noeud in ast.walk(arbre):
+        if isinstance(noeud, ast.Assign):
+            for cible in noeud.targets:
+                if isinstance(cible, ast.Subscript) \
+                        and isinstance(cible.value, ast.Attribute) \
+                        and cible.value.attr == "raw":
+                    return ("ERRATUM-7 porte 1",
+                            f"ligne {noeud.lineno} : écriture par tranches "
+                            "sur `.raw` — une copie bytes IMMUABLE (le "
+                            "TypeError NOMMÉ du second run, ligne 593 : le "
+                            "kit doit poser ses tampons EN UN GESTE, "
+                            "create_string_buffer)")
+    return None
+
+
+def _porte_e7_2_ouvrir(arbre):
+    """Porte 2 — les DEUX sites OUVRIR portent LE POINTEUR des 96 o en r9
+    (tls13-27 P2 É1 : « r9 = le pointeur des 96 o »), jamais la taille."""
+    sites = []
+    for noeud in ast.walk(arbre):
+        if isinstance(noeud, ast.Call) and isinstance(noeud.func, ast.Name) \
+                and noeud.func.id == "TLS27" and len(noeud.args) >= 4 \
+                and isinstance(noeud.args[1], ast.Constant) \
+                and noeud.args[1].value == 1:
+            r9 = noeud.args[3]
+            sites.append(isinstance(r9, ast.Call)
+                         and isinstance(r9.func, ast.Attribute)
+                         and r9.func.attr == "addressof"
+                         and isinstance(r9.func.value, ast.Name)
+                         and r9.func.value.id == "ctypes"
+                         and r9.args and isinstance(r9.args[0], ast.Name)
+                         and r9.args[0].id in ("kit96", "kit96_2"))
+    if len(sites) != 2 or not all(sites):
+        return ("ERRATUM-7 porte 2",
+                f"les sites OUVRIR : {len(sites)} trouvé(s), "
+                f"{sites.count(True)} portant ctypes.addressof(kit…) en r9 "
+                "— tls13-27 P2 É1 exige LE POINTEUR des 96 o (96 pour "
+                "pointeur : la machine lirait à l'adresse 0x60, la mort au "
+                "premier geste)")
+    return None
+
+
+def _porte_e7_3_echelle(chemin_scenario):
+    """Porte 3 — l'échelle re-jouée CONTRE LES VECTEURS OFFICIELS du dépôt
+    (harnais_x25519.py : RFC 7748 § 6.1 Alice/Bob, le couple RFC 8448 § 3,
+    la référence ref_x25519 sur 16 clés semées) : la « clé attendue » du
+    recoup doit être LA VRAIE — jamais 000…0 (x_3 né à 0 : le point à
+    l'infini ; a24 = (p+1)//4 : la fausse courbe)."""
+    echelle = _extraire_fonction(chemin_scenario, "x25519_echelle")
+    harnais_x = REPO / "tls13" / "harnais_x25519.py"
+    arbre_x = ast.parse(harnais_x.read_text(encoding="utf-8"))
+    officiels, transfert = {}, {}
+    for noeud in arbre_x.body:
+        if isinstance(noeud, ast.Assign) and len(noeud.targets) == 1 \
+                and isinstance(noeud.targets[0], ast.Name):
+            nom = noeud.targets[0].id
+            if nom in ("ALICE_PRIV", "ALICE_PUB", "BOB_PRIV", "BOB_PUB"):
+                officiels[nom] = bytes.fromhex(ast.literal_eval(noeud.value))
+            elif nom == "TRANSFERT_8448":
+                transfert = {k: bytes.fromhex(v) for k, v in
+                             ast.literal_eval(noeud.value).items()}
+    if len(officiels) != 4 or "client_priv" not in transfert:
+        return ("ERRATUM-7 porte 3",
+                "les VECTEURS OFFICIELS du dépôt (harnais_x25519.py) sont "
+                "introuvables — la source unique est cassée")
+    if echelle(officiels["ALICE_PRIV"]) != officiels["ALICE_PUB"]:
+        return ("ERRATUM-7 porte 3",
+                "l'échelle du scénario rate le vecteur OFFICIEL "
+                "RFC 7748 § 6.1 Alice — la « clé attendue » du recoup "
+                "serait FAUSSE (le second run imprimait 000…0)")
+    if echelle(officiels["BOB_PRIV"]) != officiels["BOB_PUB"]:
+        return ("ERRATUM-7 porte 3",
+                "l'échelle du scénario rate le vecteur OFFICIEL "
+                "RFC 7748 § 6.1 Bob")
+    if echelle(transfert["client_priv"]) != transfert["client_pub"]:
+        return ("ERRATUM-7 porte 3",
+                "l'échelle du scénario rate le couple OFFICIEL "
+                "RFC 8448 § 3 (le client du transfert)")
+    ref = _extraire_fonction(harnais_x, "ref_x25519", {"P": 2 ** 255 - 19})
+    u9 = (9).to_bytes(32, "little")
+    rng = random.Random(20261107)
+    for _ in range(16):
+        cle = bytes(rng.randrange(256) for _ in range(32))
+        if echelle(cle) != ref(cle, u9):
+            return ("ERRATUM-7 porte 3",
+                    "l'échelle du scénario diverge de LA RÉFÉRENCE DU "
+                    "DÉPÔT (ref_x25519) sur une clé semée — les DEUX "
+                    "lecteurs du recoup ne s'accorderaient pas")
+    return None
+
+
+def portes_erratum_7(chemin_scenario):
+    """L'ERRATUM n° 7 ne peut plus dormir : TROIS portes, une faute par
+    porte, le REFUS est nommé (le contrôle négatif est prouvé sur la
+    pointe pré-réparation 35706ef par scripts/preuve_negative_e7.py)."""
+    arbre = ast.parse(pathlib.Path(chemin_scenario).read_text(
+        encoding="utf-8"))
+    for porte in (_porte_e7_1_raw, _porte_e7_2_ouvrir):
+        verdict = porte(arbre)
+        if verdict:
+            refus(*verdict)
+    verdict = _porte_e7_3_echelle(chemin_scenario)
+    if verdict:
+        refus(*verdict)
 
 
 def main():
@@ -206,6 +340,26 @@ def main():
     print("[2b] LE CONTRÔLE PERMANENT erratum n° 6 : les TROIS lecteurs de "
           "SSN reçoivent `ntdll_base` — constaté PAR AST (le refus -3 du "
           "premier run ne peut plus dormir)")
+
+    # -- 2c. LE CONTRÔLE PERMANENT DE L'ERRATUM n° 7 (la faute ne peut plus
+    # dormir) : le second run du 06/11 (16:56) est mort d'un TypeError
+    # PYTHON NOMMÉ sur la console du développeur — `kit96.raw[:32] = alea`
+    # (ligne 593 : `.raw` est une copie bytes IMMUABLE, l'écriture par
+    # tranches échoue sur TOUTE machine — le kit N'ÉTAIT PAS acquitté,
+    # l'Entrée 181 est RENVERSÉE par la pièce) ; l'échelle du recoup
+    # rendait la « clé attendue » NULLE (x_3 né à 0 : le point à l'infini ;
+    # a24 = (p+1)//4 : la fausse courbe) ; ET les sites OUVRIR passaient
+    # la TAILLE (96) en r9 où tls13-27 P2 É1 exige LE POINTEUR des 96 o
+    # (la machine lirait à l'adresse 0x60). TROIS portes, une faute par
+    # porte — le contrôle négatif est prouvé sur la pointe pré-réparation
+    # (35706ef) par scripts/preuve_negative_e7.py : les TROIS refus.
+    portes_erratum_7(SCENARIO)
+    print("[2c] LE CONTRÔLE PERMANENT erratum n° 7 : AUCUNE écriture "
+          "`.raw[...]` ; les DEUX sites OUVRIR portent "
+          "ctypes.addressof(kit96|kit96_2) en r9 ; l'échelle re-jouée "
+          "CONTRE LES VECTEURS OFFICIELS du dépôt (RFC 7748 § 6.1 "
+          "Alice/Bob, le couple RFC 8448 § 3, 16 clés semées contre "
+          "ref_x25519) — le TypeError du second run ne peut plus dormir")
 
     # -- 3. la compilation du scénario -----------------------------------------
     with tempfile.TemporaryDirectory() as tmp:

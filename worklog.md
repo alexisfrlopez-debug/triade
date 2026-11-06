@@ -5554,3 +5554,77 @@ Stage Summary:
   DE LA MORT DU PROCESSUS (relancer) : le geste rendu au développeur
   couvre les deux — puis preuves-m9f/ ENTIER, et si vert : LA FINALE
   1.0.0, le jalon M9 franchi — LA GRANDE ŒUVRE.
+
+## Task ID 100 — LA CONSOLE DU DÉVELOPPEUR REÇUE (le paste du 07/11) : LE CRASH DU SECOND RUN NOMMÉ — L'ERRATUM n° 7 DU KIT (TROIS FAUTES DANS LE SEGMENT PYTHON PUR : la pose du kit par tranches sur `.raw`, l'échelle du recoup rendant la clé attendue NULLE, la TAILLE au lieu du POINTEUR aux sites OUVRIR), l'acquittement « par élimination » de l'Entrée 181 RENVERSÉ PAR LA PIÈCE ; LE KIT RÉPARÉ À LA SOURCE + LE CONTRÔLE PERMANENT AUX TROIS PORTES, MIS À JOUR EN PLACE AU COFFRE — LE TROISIÈME GESTE ATTENDU (07/11)
+
+Work Log:
+- LA PIÈCE : la console intégrale du développeur (console-run-m9f.txt,
+  md5 d6d1e931…) — les SEIZE T0 [ok], T1 SSN 85/7/15, T2 rax 0
+  handle 0x304, T3 imprimant l'aléa/la clé privée DU RUN puis la « clé
+  publique attendue » 000…0 (LE SYMPTÔME), le TypeError ligne 593
+  (`kit96.raw[:32] = alea`), le prompt REVENU ; les lignes 832/593 ==
+  la pointe 35706ef OCTET POUR OCTET : le scénario du labo exécuté
+  fidèlement ; les candidats console gelée / mort inexpliquée de
+  l'Entrée 181 ÉLIMINÉS — la faute est AU LABO.
+- L'ERRATUM n° 7, TROIS FAUTES AU KIT (le même segment Python pur,
+  aucune machine en vol) : (1) `.raw` est une copie bytes IMMUABLE —
+  la pose du kit par tranches est un TypeError DÉTERMINISTE sur toute
+  machine ; (2) l'échelle RFC 7748 : x_3 né à 0 (le point à l'infini
+  — la « clé attendue » NULLE imprimée) ET a24 = (p+1)//4 au lieu de
+  121665 (la fausse courbe) — le recoup T3 eût été IMPOSSIBLE ; (3)
+  les DEUX sites OUVRIR passaient la TAILLE (96) en r9 où tls13-27
+  P2 É1 exige LE POINTEUR des 96 o — la machine eût lu à l'adresse
+  0x60 (devancée de quatre lignes par la faute (1)).
+- LE POST-MORTEM REJOUÉ AU LABO (eprouver_fix_m9f.py, 15/15 VERT) :
+  le TypeError EXACT reproduit ; la clé privée DU RUN par l'échelle
+  pré-réparation (pointe 35706ef extraite et rejouée) rend 000…0 —
+  le symptôme EXPLIQUÉ sur pièces (la vraie clé attendue eût été
+  1227429d…) ; la construction CH == la référence du harnais octet
+  pour octet (114 o, l'aléa @ +6, la clé @ +82) ; les 96 o posés en
+  un geste, exactement TAILLE octets.
+- LA RÉPARATION À LA SOURCE : create_string_buffer EN UN GESTE aux
+  DEUX sites, r9 = ctypes.addressof(kit96|kit96_2), l'échelle == le
+  pseudocode officiel RFC 7748 § 5 == la référence du dépôt ;
+  LE CONTRÔLE PERMANENT (assembler_kit_m9f.py [2c], TROIS portes :
+  aucune écriture `.raw[...]`, LE POINTEUR aux OUVRIR, l'échelle
+  contre les vecteurs officiels) ; LA PREUVE NÉGATIVE
+  (preuve_negative_e7.py, 6/6) : les TROIS portes refusent la source
+  pré-réparation (la porte 1 NOMME la ligne 593) et passent la source
+  réparée.
+- LE KIT CORRIGÉ réassemblé et rééprouvé (26 constantes PAR AST,
+  portes [2b]/[2c], py_compile, extraction vierge — kit-m9f.zip
+  37 134 o, md5 90a1d022…, sha256 3666b1d7…) ; LE COFFRE MIS À JOUR
+  EN PLACE (corriger_kit_m9f_e7.py) : kit-m9f.zip 7d5380ce… →
+  90a1d022…, LISEZMOI-m9f.txt à l'erratum (d5e7a4f5…), le run 2
+  archivé → archives-preuves/preuves-run-m9f-2/ (le journal DU RUN
+  DÉPLACÉ + la pièce console + le VERDICT-recoup-labo-m9f-2.txt
+  12/12), preuves-m9f/ ré-armé, les DEUX index à jour, la racine
+  vérifiée (13 entrées).
+- FRONTIÈRES : l'artefact INTACT (d8928934… relu VERT au T0 du run
+  mort lui-même), le terrain LAVÉ (les acquis de l'Entrée 181
+  demeurent : l'erratum n° 6 prouvé réparé, LE VRAI afd.sys franchi),
+  le scellé 0.9.0 INTACT, AUCUNE balise (la finale attend le
+  TROISIÈME run complet vert), l'archive du premier run intacte ;
+  livrables : download/kit-m9f.zip (md5 90a1d022…) +
+  download/preuves-run-m9f-2/ (la console + le verdict) ;
+  consignations : Entrée 182 PAR SCRIPT, PLAN (maj_plan_m9n.py :
+  rangée (f) + État), worklog +Task ID 100.
+- SUITE : LE TROISIÈME GESTE DU DÉVELOPPEUR — dézipper kit-m9f.zip
+  dans un dossier NEUF (D99), python scenario-m9f.py, renvoyer
+  preuves-m9f/ ENTIER au coffre → le recoup → si vert : LA FINALE
+  1.0.0, le jalon M9 franchi — LA GRANDE ŒUVRE.
+
+Stage Summary:
+- LA PIÈCE CONSOLE RENVERSE L'ACQUITTEMENT : le second run n'était
+  ni gelé ni inexpliqué — il est mort d'un crash PYTHON NOMMÉ DANS
+  LE KIT (TypeError ligne 593), après l'impression d'une « clé
+  attendue » NULLE, symptôme de la seconde faute ; TROIS fautes au
+  kit, aucune au terrain ni à l'artefact.
+- LA RÉPARATION EST À LA SOURCE ET GARANTIE : les TROIS portes du
+  contrôle permanent à l'assemblage (preuve négative 6/6) ; le kit
+  corrigé (md5 90a1d022…) est EN PLACE au coffre, le run 2 archivé
+  avec sa pièce console et le verdict du recoup (12/12).
+- LE TROISIÈME GESTE EST ATTENDU : dézipper le kit corrigé dans un
+  dossier NEUF, python scenario-m9f.py, renvoyer preuves-m9f/
+  ENTIER — et si le run est vert : LA FINALE 1.0.0, le jalon M9
+  franchi — LA GRANDE ŒUVRE.

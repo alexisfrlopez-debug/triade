@@ -269,17 +269,24 @@ def ssn_par_deux_lecteurs(base, nom):
 
 def x25519_echelle(priv, point_base=9):
     """L'échelle de Montgomery EN PUR PYTHON — le second lecteur du couple
-    (le premier est tls13-14, dans l'artefact)."""
+    (le premier est tls13-14, dans l'artefact) ; le pseudocode officiel
+    RFC 7748 § 5, LA RÉFÉRENCE DU DÉPÔT (tls13/harnais_x25519.py
+    ref_x25519, vecteurs officiels § 6.1). L'ERRATUM n° 7 (le second run
+    du 06/11, la console du développeur sur pièces) : x_3 NAÎT AU POINT
+    DE BASE — jamais 0 (le point 0 tient le résultat à l'infini : la
+    « clé attendue » NULLE imprimée par le run mort) — ET a24 = 121665,
+    JAMAIS (p+1)//4 (la fausse courbe : a24 = (486662-2)/4)."""
     p = 2 ** 255 - 19
 
     def cswap(swap, a, b):
         return (b, a) if swap else (a, b)
 
     k = int.from_bytes(priv, "little")
-    k &= (1 << 254) - 8
+    k &= (1 << 254) - 8             # le clamp RFC 7748 § 5 (248/127/64)
     k |= 1 << 254
-    x1 = point_base
-    x2, z2, x3, z3 = 1, 0, 0, 1
+    u = point_base % p
+    x1 = u
+    x2, z2, x3, z3 = 1, 0, u, 1     # x_3 = u — LE POINT DE BASE
     swap = 0
     for t in range(254, -1, -1):
         k_t = (k >> t) & 1
@@ -299,7 +306,7 @@ def x25519_echelle(priv, point_base=9):
         x3 = (da + cb) ** 2 % p
         z3 = x1 * (da - cb) ** 2 % p
         x2 = aa * bb % p
-        z2 = e * (aa + ((p + 1) // 4) * e) % p
+        z2 = e * (aa + 121665 * e) % p   # a24 = (486662-2)/4 = 121665
     x2, x3 = cswap(swap, x2, x3)
     z2, z3 = cswap(swap, z2, z3)
     return (x2 * pow(z2, p - 2, p) % p).to_bytes(32, "little")
@@ -589,15 +596,23 @@ def main():
         ctypes.addressof(ctx_neutre))
 
     session = ctypes.create_string_buffer(SESSION_TAILLE)
-    kit96 = ctypes.create_string_buffer(KIT96)
-    kit96.raw[:32] = alea
-    kit96.raw[32:64] = privee
-    kit96.raw[64:96] = EMPREINTE_EPINGLEE
+    # L'ERRATUM n° 7 : `.raw` est une COPIE bytes IMMUABLE — l'écriture
+    # par tranches (`kit96.raw[:32] = alea`) est un TypeError SUR TOUTE
+    # machine (le crash nommé du second run, la ligne 593 de la console) ;
+    # les 96 o DU KIT sont posés EN UN GESTE : create_string_buffer pose
+    # exactement TAILLE octets quand la taille est donnée (aucun NUL
+    # ajouté) — aléa 32 + clé privée 32 + empreinte 32.
+    kit96 = ctypes.create_string_buffer(alea + privee + EMPREINTE_EPINGLEE,
+                                        KIT96)
 
     journal("T3 : OUVRIR — la poignée ENTIÈRE par la machine d'états "
             "(le socle câblé aux SYSCALLS DIRECTS)")
+    # L'ERRATUM n° 7 : É1 OUVRIR (tls13-27 P2) — r9 = LE POINTEUR des
+    # 96 o (aléa + clé privée + empreinte attendue), JAMAIS la taille :
+    # 96 pour pointeur ferait lire la machine à l'adresse 0x60 (la mort
+    # au premier geste, le kit corrigé ne l'aurait jamais franchi).
     r = TLS27(ctypes.cast(session, ctypes.c_void_p), 1,
-              ctypes.cast(socle, ctypes.c_void_p), KIT96)
+              ctypes.cast(socle, ctypes.c_void_p), ctypes.addressof(kit96))
     etat = struct.unpack_from("<I", session.raw, 1120)[0]
     verifie("T3.ouvrir : rax == 0, l'état 3 (CONNECTÉ)",
             r == 0 and etat == 3, f"rax {r}, état {etat}")
@@ -708,14 +723,15 @@ def main():
         ctypes.cast(cb_r2, ctypes.c_void_p).value,
         ctypes.addressof(ctx_neutre))
     session2 = ctypes.create_string_buffer(SESSION_TAILLE)
-    kit96_2 = ctypes.create_string_buffer(KIT96)
-    kit96_2.raw[:32] = alea2
-    kit96_2.raw[32:64] = privee2
-    kit96_2.raw[64:96] = bytes(empreinte_mutee)
+    # l'erratum n° 7 au site de la falsification : les 96 o posés EN UN
+    # GESTE (l'empreinte MUTÉE au troisième champ), r9 = LE POINTEUR
+    kit96_2 = ctypes.create_string_buffer(alea2 + privee2
+                                          + bytes(empreinte_mutee), KIT96)
 
     n_avant = len(journal_emissions)
     r = TLS27(ctypes.cast(session2, ctypes.c_void_p), 1,
-              ctypes.cast(socle2, ctypes.c_void_p), KIT96)
+              ctypes.cast(socle2, ctypes.c_void_p),
+              ctypes.addressof(kit96_2))
     etat2 = struct.unpack_from("<I", session2.raw, 1120)[0]
     verifie("T5.falsification : -6 NOMMÉ (l'épinglage divergent), "
             "l'état 5", r == -6 and etat2 == 5, f"rax {r}, état {etat2}")
