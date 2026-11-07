@@ -6736,3 +6736,34 @@ Work Log:
 - SUITE : LA PASSATION D141 (la série 090 poursuit : le bundle à la
   pointe, l'ancien 090-96d2b8d archivé versionné) + LE PUSH GITHUB À
   LA POINTE — LES TROIS MIROIRS ALIGNÉS À LA FINALE 1.0.0.
+
+- LA PASSATION (passe_bundle_m9z.py) : le bundle courant
+  triade-history-090-db00005 (19 479 879 o, md5 1f6b98ac…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE SEPTIÈME RUN M9-(f) VERT
+  SUR PIÈCES [Entrée 193 — le recoup labo 34/34 sur pièces croisées :
+  l'échelle rejouée sur la clé du run, LA LIGNE REÇUE LUE EN CLAIR
+  (1369 o — la première ligne applicative en clair du projet), les
+  CINQ émissions recadrées SANS RESTE ; LA POIGNÉE OUVERTE (la mort
+  -7 des runs 5/6 franchie), la ligne applicative chiffrée échangée,
+  la garde -6 nommée, la fermeture propre] + LA FINALE 1.0.0 SCELLÉE
+  [fait de carte — la carte à la pointe porte la balise 1.0.0
+  (frag-bld basculé, l'entête la porte, la signature Ed25519
+  re-signée), l'artefact 446279f3… INTACT (LE MÊME binaire que LE
+  SEPTIÈME RUN a couru), l'anti-rollback armé : la reconstruction
+  interdite, la re-vérification sous 1.0.0 VERTE] + LA CLÔTURE D143
+  [le run archivé AVEC son jugement : preuves-run-m9f-7/ porte les
+  SIX pièces + LE VERDICT 34/34] + le worklog Task 111 + la D170 + le
+  plan rangée (f) + État — LE JALON M9 FRANCHI), l'ancien
+  090-96d2b8d (LA TROISIÈME SIGNATURE DE LA RÉVISION 3 INSTALLÉE +
+  LE REBUILD dev.4 + LE KIT RÉPARÉ) ARCHIVÉ VERSIONNÉ (md5 09ee7a1d…
+  recoupé — 56 archives, rien supprimé), /test sans copie de bundle
+  ET le kit réparé recoupé (92098687… — LA PIÈCE DU JALON) + les
+  DEUX sondes (215c2caa… + 67e2014d…) + le réceptacle preuves-m9f/
+  RÉ-ARMÉ + LES PIÈCES DE CÉRÉMONIE demeurées (signatures-I.txt
+  0978c117… la TROISIÈME remise INSTALLÉE + cle-publique-I.txt
+  188a7d42… l'ancre des ères) ; LE PUSH GITHUB RÉUSSI : origin ==
+  db00005 relu MATCH — LES TROIS MIROIRS ALIGNÉS ; script suivi :
+  passe_bundle_m9z.py ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ
+  (Drive + local + GitHub), LE JALON M9 FRANCHI : LA GRANDE ŒUVRE —
+  l'ère 1.0.0 SCELLÉE, le programme des deux premières familles
+  (D160) ACCOMPLI.
