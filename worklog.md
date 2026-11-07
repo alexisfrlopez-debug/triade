@@ -6525,3 +6525,36 @@ Work Log:
   garde 13/13, LE REBUILD 1.0.0-dev.4 (le bloc sys-06 réparé SUR LE
   TERRAIN), LE KIT M9F RÉPARÉ au /test, le run — ET SI LE VERT
   TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
+
+- PASSATION : le bundle courant triade-history-090-c22db32 (18 923 578 o,
+  md5 e606f8eb…) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH : il porte LE RUN
+  DE LA SONDE SYS-06 ANALYSÉ SUR PIÈCES [Entrée 191 — LE MOT
+  D'INFORMATION EST VENU : le code exact de la première lecture réelle
+  LU (-6, STATUS_INVALID_PARAMETER, DÉTERMINISTE), L'A/B DES NOTATIONS
+  NOMME LE CHAMP (AfdFlags 0x20 REFUSÉ PAR LE VRAI NOYAU — l'erratum de
+  lecture de l'Entrée 187 RÉFUTÉ PAR LE TERRAIN), le -7 des SIX runs
+  DÉSORMAIS LU] + LA RÉPARATION [l'erratum n° 10 + la révision 3 de la
+  spec sys-06 + la notation corrigée + le harnais suivi 131 · 131 × 3
+  graines] + LA REMISE RÉGÉNÉRÉE m8 e36141f7… + LE RUN ARCHIVÉ [le
+  QUATUOR + le verdict 17/17 → archives-preuves/preuves-sonde-sys06-1/,
+  le réceptacle ré-armé] + le worklog Task 109), l'ancien 090-eb1479e
+  (LE SIXIÈME RUN ANALYSÉ SUR PIÈCES : LE JUMEAU — le passager éliminé,
+  la sonde sys-06 livrée) ARCHIVÉ VERSIONNÉ (md5 1e9f2e68… recoupé — 54
+  archives, rien supprimé), /test sans copie de bundle ET les TROIS kits
+  recoupés (79d44284… + 215c2caa… + 67e2014d…) + le réceptacle
+  preuves-sonde-sys06/ RÉ-ARMÉ (son LISEZMOI seul) + l'archive
+  preuves-sonde-sys06-1/ (le QUATUOR + LE VERDICT DU RECOUP 17/17) +
+  LES PIÈCES DE CÉRÉMONIE demeurées (signatures-I.txt 503f3822… la
+  seconde remise INSTALLÉE + cle-publique-I.txt 188a7d42… l'ancre) ; LE
+  PUSH GITHUB RÉUSSI : origin == c22db32 relu MATCH — LES TROIS MIROIRS
+  ALIGNÉS (le push réparé du geste précédent TENU à l'ouverture : origin
+  == 43f942d, la passation 108 — le flux tenu) ; script suivi :
+  passe_bundle_m9x.py ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ
+  (Drive + local + GitHub), LA TROISIÈME SIGNATURE DU DÉVELOPPEUR EST
+  ATTENDUE (la remise m8 e36141f7… — v06/sceau-I/a-signer.txt, TREIZE
+  arbres, UNE seule empreinte nouvelle — à signer HORS LIGNE avec la
+  clé du 04/11 (JAMAIS « generer », la clé 173fae9c… réutilisée),
+  ramener signatures-I.txt + cle-publique-I.txt au /test) — puis
+  deposer, le garde 13/13, LE REBUILD 1.0.0-dev.4 (le bloc sys-06
+  réparé SUR LE TERRAIN), LE KIT M9F RÉPARÉ au /test, le run — ET SI
+  LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
