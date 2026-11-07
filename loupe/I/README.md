@@ -168,16 +168,41 @@ défaire. Les raisons de l'arbitrage :
 L'héritage PAR LA CARTE (charte § 2) déclaré au plan d'adressage : la
 famille sha tls13 (tls13-01..04, scellée 1.0.0), la minilibc M1
 (libc-01 memcpy, libc-02 memcmp, libc-07 memset) et la
-boucle de messages de la démo (win-03, scellée) — embarqués au build
-byte-identiques, jamais copiés (l'héritage déclaré est l'héritage
-utilisé : chaque entrée est citée par ses specs). **Le chantier (a) est COMPLET : les 18
+boucle de messages de la démo (win-03, scellée) — **embarqués au build
+byte-identiques AUX ADRESSES SCELLÉES D'ORIGINE** (la règle du chantier
+(b) : les octets hérités ne bougent JAMAIS d'un pouce — le tls13-02
+scellé porte « lea rbp, [rip - 0x91a4] », un déplacement RIP codé pour
+son adresse 0xC080 qui vise la table K[64] @0x2F00 : une relocalisation
+ré-écrite serait une contrebande de R7 ET un déplacement faux ; le plan
+d'adressage réserve donc .text 0x1000-0x1FFF la minilibc aux adresses M1,
+0xC000-0xC3C0 la famille sha aux adresses M9, K[64] @0x2F00 la table du
+scellé), jamais copiés (l'héritage déclaré est l'héritage utilisé :
+chaque entrée est citée par ses specs). **Le chantier (a) est COMPLET : les 18
 spécifications sont POSÉES** (révision 1, provenance écrite-avant-code,
 le gabarit § 2.2 aux sept blocs, chaque exigence reliée à son vecteur)
 — le plan d'adressage (loupe/layout.py) arrête la table des verdicts,
 le cadre, le format de ligne, les tables MD5 dérivées par arithmétique,
 les zones .data, l'héritage et l'IAT ; l'instrument du chantier
-(scripts/verifier_specs_m10a.py) constate le tout sur pièces. R2 tenue :
-AUCUN octet de notation — la cérémonie d'ère précède tout build.
+(scripts/verifier_specs_m10a.py) constate le tout sur pièces. **Le
+chantier (b) est COMPLET : le noyau loupe-01..07 NOTÉ-MESURÉ-PROUVÉ**
+(fichier + empreintes : la notation 47/388/296/122/312/879/102 o aux
+slots ARRÊTÉS sur les mesures — D161 rejoué, le mode --mesurer de
+l'auteur ; loupe-06 LA NOTATION NEUVE RFC 1321 : les 64 tours, les 4
+rounds, le couplage, le bourre, l'extraction — le plus grand bloc du
+noyau, 879 o ; les révisions nommées de loupe-01 : r2 l'erratum de la
+taille de la pièce [65 024 o], r3 LE VIDE [le fichier de taille zéro
+s'ouvre sans fenêtre, son panneau existe : d41d8cd9… + e3b0c442…]) ;
+l'instrument loupe/harnais_noyau.py — LE MINI-OS VIRTUEL (les six shims
+kernel32 du noyau, le système de fichiers virtuel aux témoins réels
+dont proxy.exe scellé, les échecs paramétrables, le journal des gle)
+— 59 contrôles · 59 VERTS × 3 graines : les SEPT vecteurs RFC 1321 au
+fichier, 1 000 gammes md5 + 200 sha contre hashlib, LA PIÈCE DE L'ÈRE
+JUGÉE PAR SA PROPRE APPLICATION (loupe-05 sur proxy.exe scellé ==
+446279f3…), l'héritage R7 CONSTATÉ BYTE-IDENTIQUE (la double preuve :
+les extraits des scellés ET les notations d'origine ré-assemblées),
+les ONZE rejets nommés, la falsification attrapée par les vecteurs
+officiels. R2 tenue : AUCUN build — la cérémonie d'ère précède (le 14e
+arbre, la dette D166/D171 demeure).
 
 ## Ce que le domaine promet (et comment il se preuve)
 

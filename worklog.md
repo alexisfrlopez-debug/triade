@@ -6874,3 +6874,50 @@ Work Log:
   le harnais différentiel, l'héritage sha byte-identique — R7) ; la
   cérémonie d'ère du TGN attend son geste ; le projet fils attend son
   premier geste à son message propre.
+
+## Task ID 114 — LE CHANTIER M10-(b) RÉALISÉ : LE NOYAU LOUPE-01..07 NOTÉ-MESURÉ-PROUVÉ (FICHIER + EMPREINTES — LA NOTATION AUX SLOTS ARRÊTÉS SUR LES MESURES, LES HÉRITAGES AUX ADRESSES SCELLÉES, LE HARNAIS AU MINI-OS VIRTUEL 59 VERTS × 3 GRAINES) ; LES RÉVISIONS NOMMÉES DE LOUPE-01 (R2/R3) (08/11)
+
+- La suite annoncée à l'Entrée 195 ; le développeur commande (« continue »).
+  AUCUN build : la cérémonie d'ère précède (D168), la dette D166/D171
+  demeure, le garde à 13 arbres.
+- LES SEPT NOTATIONS : 04 le cadre (47 o, memset hérité) · 01 ouvrir
+  (388 o : l'ordre des refus, la borne 2 Gio, la copie libc-01, la
+  session née entière) · 02 lire (296 o : la double borne, LE
+  RECOUVREMENT du journal, fail-closed) · 03 fermer (122 o :
+  idempotence, l'hygiène, l'échec CONSOMMÉ) · 05 sha256 (312 o : la
+  composition tls13-01/03/04 PAR LA CARTE, les fenêtres 64 Kio) · 06
+  md5 LA NOTATION NEUVE (879 o : RFC 1321, les 64 tours aux 4 rounds,
+  les tables publiques .rdata par déplacement RIP, le couplage, le
+  bourre, l'extraction) · 07 le cumul (102 o : la composition seule,
+  le panneau du disque).
+- LA DÉCOUVERTE : LES HÉRITAGES VIVENT À LEURS ADRESSES SCELLÉES — le
+  tls13-02 scellé porte un déplacement RIP codé pour 0xC080 (visant
+  K[64] @0x2F00) ; l'image loupe réserve .text M1, .rdata (K laissée au
+  scellé), 0xC000-0xC3C0 la famille sha ; les octets extraits des
+  scellés posés À LEURS ADRESSES D'ORIGINE — R7 au sens propre. La
+  règle pour les chantiers suivants : tout héritage à SON adresse
+  scellée (win-03 et son IAT démo au chantier rendu).
+- LE MINI-OS VIRTUEL : les six shims kernel32 (la liste fermée), le FS
+  virtuel aux témoins réels (proxy.exe scellé inclus), les échecs
+  paramétrables, le journal des gle, le compteur du mort (28 feuilles
+  dénoncées, zéro appel constaté).
+- LE VERDICT : 59 contrôles · 59 VERTS × 3 graines — les SEPT
+  vecteurs RFC 1321 au fichier (recroisés à hashlib), 1 000 gammes md5
+  + 200 sha, LA PIÈCE DE L'ÈRE JUGÉE PAR SA PROPRE APPLICATION
+  (loupe-05 sur proxy.exe == 446279f3…), l'héritage R7 CONSTATÉ (la
+  double preuve), les ONZE rejets nommés, la falsification attrapée
+  (T[1] d'un ulp : 7/7, rax = 0 exigé).
+- LES RÉVISIONS DE LA COUCHE I : loupe-01 r2 (la taille de la pièce :
+  65 024 o) ; loupe-01 r3 (LE VIDE s'ouvre sans fenêtre, son panneau
+  existe). LES LEÇONS : le verdict vit dans eax ; l'ordre des registres
+  au réseau des appels (rcx détruit par loupe-04 — sauvé AVANT,
+  rechargé) ; le cadre à l'image naît poignée INVALIDE.
+- FRONTIÈRES : AUCUN arbre signé touché ; le garde sceau I : 13 arbres
+  VERTS (cle deposee reelle) vérifié AVANT consignation ; le proxy
+  1.0.0 et la carte tls13 INTACTS. Livrables : les brouillons + les
+  notations loupe-01..07, loupe/outils/auteur.py (--mesurer),
+  loupe/layout.py, loupe/harnais_noyau.py, loupe-01-ouvrir.md (r2/r3),
+  loupe/I/README.md, scripts/consigner_m10b.py.
+- SUITE : M10-(c) le rendu + la navigation (l'oracle à scénarios) ; la
+  cérémonie d'ère du TGN attend son geste (le 14e arbre, avant tout
+  build) ; le projet fils attend son premier geste à son message propre.

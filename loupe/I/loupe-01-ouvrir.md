@@ -1,4 +1,10 @@
-loupe-01 · ouvrir : le fichier donné à la session · révision 1
+loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+fixtures — la taille de la pièce ; r3 : LE VIDE — le fichier de taille zéro
+est un fichier réel du quotidien que l'éditeur DOIT ouvrir : la fenêtre
+n'existe pas pour lui [loupe-02 P3 : tout décalage ≥ taille 0], le
+remplissage demeure 0 et LE PANNEAU DU VIDE EXISTE — d41d8cd9… +
+e3b0c442…, la session née entière sans la fenêtre ; la découverte du
+geste (b), la couche I n'avait pas vu le vide)
 Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
 de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
 faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
@@ -22,8 +28,11 @@ Contrat :
              jamais octet par octet réécrit), la vue = 0, le curseur = 0
              (loupe-04 a posé le vierge) ;
          Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
-             puis loupe-07 (les empreintes du fichier entier au panneau)
-             — la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+             SEULEMENT SI la taille > 0 — le vide n'a PAS de fenêtre
+             (révision 3 : le remplissage 0 posé, la grille vide est un
+             état légitime) — puis loupe-07 (les empreintes du fichier
+             entier au panneau, LE VIDE AUSSI : son panneau est défini) ;
+             la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
          Q5 rax = 0 (la table des verdicts, charte § 9).
   inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
              aux autres, jamais reçu : Loupe est seul maître des octets
@@ -67,8 +76,9 @@ Vecteurs :
 Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
               384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
               formes du remplissage) + proxy.exe scellé (sha256
-              446279f3…, 44 544 o — la pièce de l'ère, ouverte par
-              l'application qui la juge).
+              446279f3…, 65 024 o — la pièce de l'ère [erratum r2 :
+              la taille fautive 44 544 o était celle du scellé 0.9.0],
+              ouverte par l'application qui la juge).
 Provenance  : écrite-avant-code.
 Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
               notation), D7/D35 (l'IAT), D137 (la lignée de balises —

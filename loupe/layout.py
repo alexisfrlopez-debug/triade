@@ -304,3 +304,155 @@ def recadre(curseur):
     if cible < 0:
         cible = 0
     return cible & ~15             # aligne16_inf
+
+
+
+
+# =================================================================================
+# L'ADRESSAGE DE L'IMAGE loupe.exe — ARRÊTÉ au chantier de la notation M10-(b)
+# (D161 rejoué : la mesure auteur décide, la préfiguration s'incline ; les
+# ZONES .data étaient ARRÊTÉES EN TAILLES au geste (a) — le geste (b) leur
+# donne l'ADRESSE, la disposition ne bouge plus).
+#
+# LA RÈGLE DU GESTE (b) — LES HÉRITAGES VIVENT À LEURS ADRESSES SCELLÉES :
+# les octets hérités ne bougent JAMAIS d'un pouce. Le tls13-02 scellé porte
+# « lea rbp, [rip - 0x91a4] » — un déplacement RIP CODÉ POUR SON ADRESSE
+# SCELLÉE (0xC080, visant la table K[64] @0x2F00) ; une relocalisation
+# ré-écrite serait une contrebande de R7 ET un déplacement faux. L'image
+# neuve RÉSERVE donc : .text 0x1000-0x1FFF la minilibc aux adresses M1
+# (libc-01 @0x1100, la réserve libc-02 @0x1180 pour le chantier navigation,
+# libc-07 @0x13C0 — le reste : la réserve M1 vierge) · .rdata 0x2000-0x2FFF
+# (les tables MD5 puis l'IAT, K[64] @0x2F00 LA TABLE DU SCELLÉ que le
+# déplacement hérité vise — l'IAT démo @0x2810+ sera réservée au chantier
+# rendu pour win-03) · .text2 0x4000-0xBFFF LES BLOCS DU DOMAINE (0x4000
+# la réserve d'entrée — WinMain vivra à loupe-09) · 0xC000-0xC3C0 la
+# famille sha aux adresses M9 (tls13-01..04) · .data @0xE000 les zones du
+# domaine (la marge 0xC3C0-0xE000 VIERGE, la famille sha s'arrête à 0xC3C0).
+# =================================================================================
+
+# --- .text @0x1000 : LA MINILIBC AUX ADRESSES SCELLÉES M1 (R7 — les octets
+# --- du selftest.exe, jamais une copie ré-écrite ; seuls les héritages REQUIS
+# --- PAR LE NOYAU (b) sont posés — libc-02 memcmp vivra à SON adresse
+# --- scellée au chantier navigation, win-03 la boucle au chantier rendu)
+
+R_LIBC01 = 0x1100             # libc-01 memcpy — L'ADRESSE SCELLÉE M1 (slot
+                              # 0x80 : b20001) ; feuille pure, aucun
+                              # déplacement RIP ; loupe-01 Q3 (la copie du
+                              # chemin)
+R_LIBC02 = 0x1180             # libc-02 memcmp — L'ADRESSE SCELLÉE RÉSERVÉE
+                              # (b20002) : loupe-13 l'occupera au chantier
+                              # navigation, l'octet scellé ne bouge pas
+R_LIBC07 = 0x13C0             # libc-07 memset — l'adresse scellée M1 (slot
+                              # 0x80 : b20007) ; loupe-04 Q2 (le cadre
+                              # vierge), loupe-03 Q3 (l'hygiène) et loupe-06
+                              # (les zéros du bourre)
+
+# --- .rdata @0x2000 : LES TABLES MD5 PUBLIQUES (I2 de loupe-06 — la source
+# --- unique du plan ; T ADJACENTE à S à +0x100 : la notation de loupe-06 lit
+# --- les deux tables d'UNE seule base — [base + i*4] et [base + i*4 + 0x100])
+
+R_MD5_S = 0x2100              # MD5_S[64] u32 — les décalages (RFC 1321 § 3.4)
+R_MD5_T = 0x2200              # MD5_T[64] u32 — floor(2^32·|sin(i+1)|), la
+                              # table DÉRIVÉE PAR ARITHMÉTIQUE au geste (a)
+
+# --- .rdata : L'IAT DU DOMAINE (D7/D35 : les feuilles déclarées au geste (a),
+# --- l'ordre des listes est FIGÉ ; chaque feuille son qword — le miroir de la
+# --- lignée démo ; la marge 0x2510-0x2EFF est VIERGE, l'IAT démo scellée
+# --- @0x2810+ sera réservée au chantier rendu pour win-03)
+
+R_IAT_K32 = 0x2400            # IAT kernel32 (10 feuilles : 0x2400-0x2450)
+R_IAT_U32 = 0x2450            # IAT user32 (18 feuilles : 0x2450-0x24E0)
+R_IAT_GDI = 0x24E0            # IAT gdi32 (6 feuilles : 0x24E0-0x2510)
+
+IAT_SLOTS = {}
+for _nom in IAT_KERNEL32:
+    IAT_SLOTS[_nom] = R_IAT_K32 + 8 * IAT_KERNEL32.index(_nom)
+for _nom in IAT_USER32:
+    IAT_SLOTS[_nom] = R_IAT_U32 + 8 * IAT_USER32.index(_nom)
+for _nom in IAT_GDI32:
+    IAT_SLOTS[_nom] = R_IAT_GDI + 8 * IAT_GDI32.index(_nom)
+del _nom
+
+# --- .rdata : LA TABLE DU SCELLÉ — K[64] @0x2F00 (LA MÊME ADRESSE que le
+# --- scellé M9 : le déplacement RIP de tls13-02 hérité la vise TELLE QUELLE ;
+# --- les 64 constantes FIPS 180-4 § 4.2.2 vivent à tls13/layout.py, la
+# --- source unique — le plan loupe RENVOIE, jamais re-déclare)
+
+R_K = 0x2F00                  # K[64] u32 — la table de tls13-02 (le scellé)
+
+# --- .text2 @0x4000 : LES BLOCS DU DOMAINE ARRÊTÉS sur les longueurs réelles
+# --- MESURÉES par outils/auteur.py au chantier (b) (D161 : multiples de 64,
+# --- padding >= 16, tassés depuis 0x4040 — 0x4000-0x403F la réserve d'entrée
+# --- [WinMain à loupe-09] ; le MINIMUM admissible par longueur ; les familles
+# --- rendu/navigation/édition s'arrêteront au geste de LEUR notation) :
+# ---   loupe-04 :  47 o notés -> slot 0x40  (padding 17 — la fondation)
+# ---   loupe-01 : 388 o notés -> slot 0x1C0 (padding 60 — la session née
+# ---                              entière : CreateFileW + la borne + la copie
+# ---                              + les TROIS compositions 02/07/03-sur-refus)
+# ---   loupe-02 : 296 o notés -> slot 0x140 (padding 24 — la double borne +
+# ---                              LE RECOUVREMENT du journal)
+# ---   loupe-03 : 122 o notés -> slot 0xC0  (padding 70 — l'idempotence +
+# ---                              l'hygiène)
+# ---   loupe-05 : 312 o notés -> slot 0x180 (padding 72 — la composition
+# ---                              héritée aux fenêtres glissantes)
+# ---   loupe-06 : 879 o notés -> slot 0x380 (padding 17 — LA NOTATION NEUVE :
+# ---                              les 64 tours, les 4 rounds, le couplage, le
+# ---                              bourre, l'extraction — le plus grand bloc du
+# ---                              noyau)
+# ---   loupe-07 : 102 o notés -> slot 0x80  (padding 26 — la composition seule)
+# --- fin du noyau : 0x49C0 — les familles suivantes suivent à la contiguïté
+
+LOUPE04_VA = 0x4040           # i110004 — le cadre (la fondation, posée la
+                              # première : loupe-01 l'appelle À SA TÊTE)
+LOUPE01_VA = 0x4080           # i110001 — ouvrir (la session née entière)
+LOUPE02_VA = 0x4240           # i110002 — lire (la fenêtre bornée + le
+                              # recouvrement du journal)
+LOUPE03_VA = 0x4380           # i110003 — fermer (idempotent, l'hygiène)
+LOUPE05_VA = 0x4440           # i110005 — sha256 (la composition héritée)
+LOUPE06_VA = 0x45C0           # i110006 — md5 (la notation neuve, RFC 1321)
+LOUPE07_VA = 0x4940           # i110007 — le cumul (la composition seule)
+
+SLOTS_LOUPE = {
+    "i110001": (LOUPE01_VA, 0x1C0),
+    "i110002": (LOUPE02_VA, 0x140),
+    "i110003": (LOUPE03_VA, 0xC0),
+    "i110004": (LOUPE04_VA, 0x40),
+    "i110005": (LOUPE05_VA, 0x180),
+    "i110006": (LOUPE06_VA, 0x380),
+    "i110007": (LOUPE07_VA, 0x80),
+}
+
+# --- 0xC000-0xC3C0 : LA FAMILLE SHA AUX ADRESSES SCELLÉES M9 (R7 — les octets
+# --- du proxy.exe 1.0.0 POSÉS À LEURS ADRESSES D'ORIGINE : les déplacements
+# --- RIP et l'appel absolu scellé [call 0xC080 de tls13-03/04] demeurent
+# --- JUSTES TELS QUELS ; la table K @0x2F00 est la cible du déplacement
+# --- scellé — posée identique en .rdata)
+
+R_TLS01 = 0xC000              # tls13-01 sha256-init — l'adresse scellée M9
+                              # (slot 0x80 : h100001) ; loupe-05 Q2
+R_TLS02 = 0xC080              # tls13-02 sha256-comprimer — l'adresse scellée
+                              # (slot 0x1C0 : h100002) ; vit à l'intérieur de
+                              # tls13-03 (l'appel ABSOLU scellé la vise)
+R_TLS03 = 0xC240              # tls13-03 sha256-absorber — l'adresse scellée
+                              # (slot 0xC0 : h100003) ; loupe-05 Q2
+R_TLS04 = 0xC300              # tls13-04 sha256-finaliser — l'adresse scellée
+                              # (slot 0xC0 : h100004) ; loupe-05 Q2
+
+# --- .data @0xE000 : LES ZONES DU DOMAINE (les tailles ARRÊTÉES au geste (a) —
+# --- les adresses ARRÊTÉES ICI ; la disposition source unique, jamais bougée)
+
+R_CADRE = 0xE000              # loupe-04 : le cadre de session 960 o
+R_EMPREINTES = 0xE3C0         # loupe-07 : le panneau (md5[16] + sha256[32])
+R_SAISIE = 0xE400             # loupe-12 : la barre-saisie 96 o
+R_MOTIF = 0xE460              # loupe-13/14 : le motif 48 o
+R_JOURNAL = 0xE4A0            # loupe-16 : le journal 4112 o (256 × 16 + 8)
+R_ECRAN = 0xF4C0              # loupe-09 : l'écran 2320 o (fin 0xFDD0)
+R_HWND = 0xFDE0               # loupe-09 : HWND_PRINCIPAL (fin 0xFDE8)
+R_METRIQUES = 0xFDF0          # loupe-10 : la police mesurée une fois
+R_CUMUL = 0x10000             # LA fenêtre de lecture 64 Kio (l'exclusion de
+                              # famille : empreintes 05/06/07 + recherche 14)
+# LE CADRE À L'IMAGE naît poignée INVALIDE : l'initialiseur .data du build
+# posera 0xFFFF…FFFF à +528 (le miroir du harnais, qui pose le même état
+# AVANT tout appel — le zéro de la mémoire vierge serait une session
+# fantôme : loupe-02 y croirait) ; loupe-04 reste LE geste de remise au
+# vierge en cours de vie (loupe-01/03 l'appellent)
