@@ -1,4 +1,10 @@
-; sys-06-reception · bloc la réception du transport — le recv AFD bloquant, le zéro est LA DEMI-FIN -7 · spec sys-06:R1 · bloc carte g90006
+; sys-06-reception · bloc la réception du transport — le recv AFD bloquant, le zéro est LA DEMI-FIN -7 · spec sys-06:R2 · bloc carte g90006
+; Révision 2 (07/11/2026, l'erratum n° 9 — le miroir exact de la sonde
+;   sys-05, Entrée 185) : le WSABUF passe de « packé » 12 o (buf à +4) à
+;   CANONIQUE 16 o (buf à +8, le padding d'alignement 4 o) — le noyau
+;   lit buf à +8 : à la réception il ÉCRIRAIT chez l'adresse folle, le
+;   miroir de la mesure 0xC0000005 ; le MÊME encode (48 89 7c 24 68,
+;   5 o) — le slot ne bouge pas d'un octet.
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0xa6c0, taille 384 octets
 ; Dépendances : sys-02 PUIS sys-01 (IOCTL_AFD_RECEIVE bloquant) — LE ZÉRO EST LA DEMI-FIN -7 (Q2) ; le noyau ÉCRIT chez le kit (I2) ; AfdFlags 0x20 LA MESURE (l'erratum) ; le fixture .text6 NOM_DEVICEIOCTL cité par déplacement (T5)
 ; Notation explicite générée par outils/auteur.py depuis brouillons/sys-06-reception.asm
@@ -27,7 +33,7 @@ call 0xa040
 test rax, rax
 js 0xa7c1
 mov dword ptr [rsp + 0x60], esi
-mov qword ptr [rsp + 0x64], rdi
+mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1

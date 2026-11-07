@@ -1,4 +1,6 @@
-; sys-06-reception · la réception du transport · spec sys-06:R1 · bloc carte g90006
+; sys-06-reception · la réception du transport · spec sys-06:R2 · bloc carte g90006
+; Révision 2 (l'erratum n° 9, le miroir de la sonde sys-05 — Entrée 185) :
+;   le WSABUF canonique 16 o (buf à +8), JAMAIS un « packé » de 12 o.
 ; LE GESTE DE RÉCEPTION du socle socket : IOCTL_AFD_RECEIVE par syscall
 ; direct, la lecture BLOQUANTE sur le handle SYNCHRONE (posé par sys-04 —
 ; Q1 : le syscall ATTEND les données, jamais un compte nul silencieux).
@@ -42,7 +44,7 @@ js .resolution_echouee
 ; AfdFlags = TDI_RECEIVE_NORMAL 0x20 (L'ERRATUM : LA MESURE — le
 ; TROISIÈME champ, PAS le quatrième), TdiFlags 0
 mov dword ptr [rsp + 0x60], esi
-mov qword ptr [rsp + 0x64], rdi
+mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1

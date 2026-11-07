@@ -1,4 +1,21 @@
-sys-06 · la réception du transport — le recv AFD bloquant par syscall direct · révision 1
+sys-06 · la réception du transport — le recv AFD bloquant par syscall direct · révision 2
+Révision 2 (07/11/2026, l'erratum n° 9 — consigné AVANT le kit, la faute
+nommée PAR LA MESURE DE LA MÊME STRUCTURE) : le recoup du premier run
+de la sonde sys-05 (Entrée 185) a nommé le coupable à l'instruction
+près — le noyau lit buf à +8. Q3 portait « 12 o » pour le WSABUF — UN
+WSABUF « PACKÉ » (len 4 + buf 8, SANS le padding d'alignement). Le
+WSABUF canonique x64 fait SEIZE octets (len à +0, PADDING d'alignement
+4 o, buf à +8) : la pose de la révision 1 (buf à +4) tend au noyau
+l'adresse folle — à la réception il ÉCRIRAIT la réponse chez une
+adresse folle, STATUS_ACCESS_VIOLATION (0xC0000005), le miroir exact
+de la mesure de la sonde à l'émission. La réception n'a JAMAIS couru
+sur le terrain réel (les cinq runs mouraient à l'émission, sys-05) :
+la faute est nommée AVANT le kit — le C_ASSERT send/recv (la taille de
+l'un EST celle de l'autre, 24 o) et le MÊME patron d'instruction (la
+pose à +4, relu dans l'artefact scellé) scellent la symétrie du
+contrat : le même WSABUF, le même +8. Q3 suit : 16 o + 24 o — la
+structure totale fait 40 octets, non 36. Révision 1 : la pose
+initiale (l'erratum de lecture AfdFlags/TdiFlags demeure, lui, intact).
 Intention : LE GESTE DE RÉCEPTION du socle socket — lire les octets de
 l'endpoint établi par NtDeviceIoControlFile(IOCTL_AFD_RECEIVE), le
 WSABUF unique pointant LE TAMPON DU KIT (le noyau écrit chez l'appelant :
@@ -46,9 +63,12 @@ Contrat :
              kit doit trancher ; le bloc ne le masque JAMAIS en
              succès) ;
          Q3 le WSABUF et l'AFD_RECV_INFO sont construits sur la PILE
-             du bloc (12 o + 24 o, zones mortes au retour) : le
-             BufferArray pointe le WSABUF de pile, le WSABUF porte la
-             capacité et LE TAMPON DU KIT (P3), BufferCount = 1,
+             du bloc (16 o + 24 o, zones mortes au retour) : le WSABUF
+             CANONIQUE x64 — len à +0 (4 o), le PADDING d'alignement
+             4 o, buf à +8 (8 o) : JAMAIS un « packé » de 12 o, le
+             noyau lit buf à +8 ; le BufferArray pointe le WSABUF de
+             pile, le WSABUF porte la capacité et LE TAMPON DU KIT
+             (P3), BufferCount = 1,
              AfdFlags = TDI_RECEIVE_NORMAL (0x20 — LA MESURE, l'erratum
              ci-dessus : la réception NORMALE qui purge la file du
              noyau), TdiFlags = 0 ;

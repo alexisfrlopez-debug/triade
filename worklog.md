@@ -6023,3 +6023,71 @@ Work Log:
   de l'assemblage re-passées], LE KIT M9F RÉPARÉ livré au /test, le run
   — ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE
   ŒUVRE.
+
+## Task ID 105 — LA PREMIÈRE SIGNATURE DE LA RÉVISION 2 REÇUE, RECROPÉE 13/13 ET INSTALLÉE (LE GARDE 13/13 VERTS) ; PUIS L'ERRATUM n° 9 NOMMÉ AVANT LE KIT : SYS-06 LE MÊME WSABUF « PACKÉ » — LA RÉVISION 2 ÉTENDUE (SPEC R2 + NOTATION + HARNAIS RÉVISÉ, 131 · 131 VERTS × 3 graines), LA REMISE RÉGÉNÉRÉE m8 c444d730… — LA SECONDE SIGNATURE ATTENDUE (07/11 au soir)
+
+Work Log:
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR (lister_drive.py, lecture seule) :
+  le /test porte les DEUX pièces — signatures-I.txt md5 af382476…
+  (NOUVELLE ≠ l'ancienne 62c43222… : la remise déposée est bien la
+  remise régénérée de l'Entrée 186) et cle-publique-I.txt == 188a7d42…
+  (LA clé du kit) ; les DEUX kits INTACTS (90a1d022… + 215c2caa…), les
+  réceptacles ré-armés, la racine 16 entrées.
+- LA REMISE RECROPÉE SUR PIÈCES AVANT TOUT DÉPÔT
+  (rapatrier_ceremonie_rev2.py — D166 règle 8 rejouée, lecture seule
+  sur v06/) : rapatriement avec contrôle md5 MATCH ; l'ancre de clé ==
+  173fae9c… l'ancre des ères (la règle d'or tenue) ; le format 13/13 ;
+  LE RECOUP D163 REJOINT UNE TROISIÈME FOIS : les DOUZE arbres
+  inchangés == les signatures du build 1.0.0 BYTE-IDENTIQUES (Ed25519
+  déterministe, la clé du 04/11 réutilisée) ; m8 RE-SIGNÉ : la
+  signature nouvelle vérifie Ed25519 contre l'empreinte vivante
+  3e778fa0e7ff4a7e… ; les empreintes vivantes == a-signer.txt 13/13 —
+  RECOUPE INTÉGRAL VERT.
+- LE DÉPÔT CANONIQUE (sceau_I.py deposer --cle : l'atomicité — tout
+  vérifié avant toute écriture, 13 signatures installées, les manifestes
+  vivants, la clé réelle) ET LA GARDE REPASSÉE : **13/13 arbres
+  VERTS** — la dette de cérémonie de la révision 2 (sys-05 seul)
+  SOLDÉE pour l'état signé.
+- L'ERRATUM n° 9 NOMMÉ AVANT LE KIT, à la préparation des portes de
+  l'assemblage : la porte V1 du harnais attendait encore la pose
+  « packée » (0x64) que la notation réparée de sys-05 ne pose plus
+  (0x68) — L'INSTRUMENT DOIT SUIVRE LA RÉVISION 2 ; et le noyau AFD
+  simulé lisant buf à +8 (comme le noyau réel MESURÉ PAR LA SONDE)
+  condamne MÉCANIQUEMENT la notation sys-06 : la MÊME pose 0x64, la
+  spec R1 « 12 o + 24 o », la symétrie CONSIGNÉE (le C_ASSERT
+  send/recv — AFD_SENDRECV_TAILLE 0x18, la spec sys-06 le dit
+  elle-même) : à la réception le noyau ÉCRIRAIT chez l'adresse folle —
+  la mort à T3 du run, un cran après la réparation de l'émission ; la
+  faute nommée PAR LA MESURE DE LA MÊME STRUCTURE, jamais une
+  devinette, AVANT le kit (la charte).
+- LA RÉPARATION SELON LA CHARTE : LA RÉVISION 2 DE LA SPEC SYS-06
+  (Q3 réécrit — le WSABUF canonique 16 o, le padding NOMMÉ, buf à
+  +8, la structure totale 40 o non 36, la note de révision consignant
+  la symétrie ; l'erratum de lecture AfdFlags/TdiFlags intact) + la
+  notation et le brouillon corrigés (0x64 → 0x68, le MÊME encode 5 o,
+  le slot intact, la carte demeure) + LE HARNAIS RÉVISÉ (_wsabuf lit
+  buf à +8, les attendus V1 de sys-05 ET sys-06 à 0x68, la mutante
+  V4b ré-encodée).
+- LA PREUVE RE-PASSÉE : **131 contrôles · 131 VERTS × 3 graines**
+  (20261105, 424242, 777777 — zéro échec, les mutantes toutes
+  trahies, les témoins intacts).
+- LA REMISE RÉGÉNÉRÉE (preparer) : m8 sys.1 c444d73059af33ce…
+  (sys-06-reception.md SEUL diverge du manifeste signé :
+  942907fd… → caa17ed6…, diff contrôlé) ; les DOUZE autres arbres
+  inchangés ; la balise demeure sys.1 ; le garde relit m8 CODE 10 —
+  LE SIGNAL, pas la panne.
+- LA MAIN DU DÉVELOPPEUR RE-SERVIE : LISEZMOI-ceremonie-revision2-
+  sys05.txt RÉÉCRIT (OÙ NOUS EN SOMMES ; POURQUOI la révision
+  s'étend ; CE QUI A CHANGÉ : m8 c444d730…, DEUX fichiers de l'arbre
+  m8, l'empreinte 3e778fa0… PÉRIMÉE ; LA RÈGLE D'OR inchangée ;
+  LES CINQ PAS — le pas 3 exige c444d730…) ; le NOTE_D130 réécrit —
+  déployés au commit même (hook post-commit : le miroir PUIS le kit).
+- FRONTIÈRES : l'artefact INTACT (d8928934…), le scellé 0.9.0
+  INTACT, les signatures déposées de la première cérémonie demeurent
+  le dossier honnête de l'état signé (sys-05 R2 + sys-06 R1), aucune
+  balise (D104), la clé privée jamais traversée (D87). SUITE : LA
+  SECONDE SIGNATURE DU DÉVELOPPEUR (la remise étendue →
+  signatures-I.txt + cle-publique-I.txt au /test) — puis deposer, le
+  garde 13/13, LE REBUILD 1.0.0-dev.3 [sys-05 ET sys-06 réparés], LE
+  KIT M9F RÉPARÉ au /test, le run — ET SI LE VERT TIENT : LA FINALE
+  1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.

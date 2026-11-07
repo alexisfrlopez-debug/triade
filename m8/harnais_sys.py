@@ -537,17 +537,19 @@ class NoyauAFD:
             self.ecarts.append("OutputBuffer/Length")
 
     def _wsabuf(self, uc, a, attendu_len, attendu_buf, nom_len, nom_buf):
-        """Le WSABUF 12 o (len u32 + buf ptr, la MESURE) + l'AFD_*_INFO 24 o :
-        BufferArray → le WSABUF, BufferCount 1, les drapeaux du plan."""
+        """Le WSABUF CANONIQUE 16 o (len à +0, PADDING 4 o, buf à +8 — la
+        Révision 2 des specs sys-05/sys-06, la MESURE de la sonde Entrée 185 :
+        le noyau lit buf à +8) + l'AFD_*_INFO 24 o : BufferArray → le WSABUF,
+        BufferCount 1, les drapeaux du plan."""
         info = a["arg7"]
         if a["arg8"] != L.AFD_SENDRECV_TAILLE:
             self.ecarts.append("AFD_INFO taille")
         wsabuf = self._q(uc, info)
         if self._d(uc, wsabuf) != attendu_len:
             self.ecarts.append(nom_len)
-        if self._q(uc, wsabuf, 4) != attendu_buf:
+        if self._q(uc, wsabuf, 8) != attendu_buf:
             self.ecarts.append(nom_buf)
-        self.charge_vue = self._q(uc, wsabuf, 4)
+        self.charge_vue = self._q(uc, wsabuf, 8)
         if self._d(uc, info, 8) != 1:
             self.ecarts.append("BufferCount")
         return info
@@ -1124,7 +1126,9 @@ def vecteur_v1(ks: Ks, cs: capstone.Cs):
         ("mov dword ptr [rsp + 0x7c], 0", "AfdFlags 0 (la MESURE p.3)"),
         ("mov dword ptr [rsp + 0x80], 0", "TdiFlags 0"),
         ("mov dword ptr [rsp + 0x60], esi", "WSABUF.len = la longueur demandée"),
-        ("mov qword ptr [rsp + 0x64], rdi", "WSABUF.buf = LA CHARGE du kit (I2)"),
+        ("mov qword ptr [rsp + 0x68], rdi",
+         "WSABUF.buf = LA CHARGE du kit, le CANONIQUE +8 "
+         "(I2 — la Révision 2, la MESURE de la sonde)"),
         (f"mov edx, {L.LEN_NT_DEVICEIOCTL}", "LEN_NT_DEVICEIOCTL 21"),
     ]
     manquants = [nom for morceau, nom in attendus_5 if morceau not in n5]
@@ -1147,7 +1151,9 @@ def vecteur_v1(ks: Ks, cs: capstone.Cs):
          "serait REFUSÉE par le noyau strict du harnais)"),
         ("mov dword ptr [rsp + 0x78], 1", "BufferCount 1"),
         ("mov dword ptr [rsp + 0x60], esi", "WSABUF.len = la capacité"),
-        ("mov qword ptr [rsp + 0x64], rdi", "WSABUF.buf = LE TAMPON du kit"),
+        ("mov qword ptr [rsp + 0x68], rdi",
+         "WSABUF.buf = LE TAMPON du kit, le CANONIQUE +8 "
+         "(la Révision 2 — l'erratum n° 9, le miroir de la sonde)"),
         (f"mov edx, {L.LEN_NT_DEVICEIOCTL}", "LEN_NT_DEVICEIOCTL 21"),
     ]
     manquants = [nom for morceau, nom in attendus_6 if morceau not in n6]
@@ -2495,7 +2501,7 @@ def vecteur_v4_transport(emu: Emulateur, noyau: Noyau):
     a_erratum = octets_de("mov dword ptr [rsp + 0x7C], 0x20")
     a_litterature = octets_de("mov dword ptr [rsp + 0x80], 0")
     a_ioctl_recv = octets_de("mov qword ptr [rsp + 0x28], 0x12017")
-    a_wsabuf_buf = octets_de("mov qword ptr [rsp + 0x64], rdi")
+    a_wsabuf_buf = octets_de("mov qword ptr [rsp + 0x68], rdi")
     jz_demifin = _offsets_saut(sys06, L.SYS06_VA, 0x74, 0x84,
                                etiquette("sys-06-reception", "demi_fin"))
     assert len(jz_demifin) == 1, f"{len(jz_demifin)} jz vers .demi_fin"
@@ -2510,7 +2516,7 @@ def vecteur_v4_transport(emu: Emulateur, noyau: Noyau):
         ("ioctl-recv-confondu-send (0x12017→0x1201F)",
          trouve06(a_ioctl_recv) + len(a_ioctl_recv) - 4, struct.pack("<I", 0x1201F)),
         ("wsabuf-buf-pour-capacite (rdi→rsi : le tampon perdu)",
-         trouve06(a_wsabuf_buf), bytes.fromhex("4889742464")),
+         trouve06(a_wsabuf_buf), bytes.fromhex("4889742468")),
     ]
 
     for nom, offset, patch in mutations_06:
