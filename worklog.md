@@ -6767,3 +6767,50 @@ Work Log:
   (Drive + local + GitHub), LE JALON M9 FRANCHI : LA GRANDE ŒUVRE —
   l'ère 1.0.0 SCELLÉE, le programme des deux premières familles
   (D160) ACCOMPLI.
+
+## Task ID 112 — LE TEST GRANDEUR NATURE OUVERT : L'APPLICATION « LOUPE » ARBITRÉE (l'éditeur hexadécimal natif au panneau d'empreintes), LE DOMAINE loupe FONDÉ ; LE PROJET COFFRE-FORT DÉGELÉ EN PARALLÈLE ; LA COHÉRENCE RE-VÉRIFIÉE À LA POINTE (R4 17/17) (07/11)
+
+- La reprise (l'ouverture de session) : la cohérence git ↔ Drive re-vérifiée
+  à la pointe 011ba3c — verifier_coherence_git_drive_r4.py [labo] : GIT 5/5
+  (HEAD == origin relu EN DIRECT par ls-remote), LE COFFRE /test 10/10 (la
+  racine 19 entrées, le kit RÉPARÉ, les DEUX sondes, LA TROISIÈME remise +
+  l'ancre, le run 7 archivé AVEC ses SIX pièces + LE VERDICT, SANS copie de
+  bundle), LE MIROIR 2/2 (090-db00005 == 1f6b98ac… distant ET local ;
+  56 archives, rien supprimé) — 17/17 PORTES VERTES, LES TROIS MIROIRS
+  ALIGNÉS.
+- Le message du développeur ouvre DEUX chantiers d'un seul geste : LE TEST
+  GRANDEUR NATURE (coder une application ENTIÈREMENT avec Triade) ET LE
+  PROJET COFFRE-FORT EN PARALLÈLE (« ça n'empêchera pas de continuer le
+  projet Coffre Fort en parallèle » — D135 amendée : le dégel).
+- L'ARBITRAGE (D171) : « Loupe » — l'éditeur hexadécimal natif au panneau
+  d'empreintes. L'outil du quotidien du projet (toutes ses pièces vivent
+  par leurs empreintes), l'épreuve complète de la méthode (GUI + fichiers +
+  hachage + libc + recherche + édition), le périmètre tenable (18 blocs, un
+  jalon, un kit terrain), LE NEUF (le modèle RoomEq s'arrêtait au recodage
+  — le TGN exige la création). CONTREDISIBLE au message suivant (la couche
+  I seule vit, rien n'est scellé).
+- LA FONDATION du domaine `loupe` : loupe/I/README.md — la charte (R2) +
+  LE TABLEAU DES 18 BLOCS EN CINQ FAMILLES (fichier 01-04 · empreintes
+  05-07 · rendu 08-11 · navigation 12-14 · édition 15-18) + les
+  conventions transverses (l'oracle à scénarios + le harnais
+  différentiel, les budgets déclarés avant la notation — D161, le kit
+  terrain modèle m9f, la balise loupe 0.1.0-dev.1 au premier build, les
+  frontières).
+- LA DETTE DE CÉRÉMONIE NOMMÉE À LA NAISSANCE (le modèle D166) : le 14e
+  arbre (loupe) + l'extension du registre figé (m0/I § 2.1) attendent LA
+  CÉRÉMONIE D'ÈRE du TGN (le geste hors-ligne du développeur, la
+  re-signature de m0 au registre étendu — le modèle de l'ère M8) ; le
+  garde demeure à 13 arbres VERTS, AUCUN arbre signé touché.
+- LE DÉGEL DU FILS : Coffre-Fort vit en parallèle du TGN, chacun son
+  rythme, sans dépendance vivante (D135 tenue : aucun code forké) ; le
+  premier geste du fils viendra à son message propre.
+- FRONTIÈRES : le proxy 1.0.0 INTACT ; la carte tls13 1.0.0 demeurée
+  (l'anti-rollback armé) ; AUCUNE clé, AUCUN coffre réel, AUCUN fragment
+  touchés ; le sceau I : 13 arbres VERTS (cle deposee reelle) vérifié
+  AVANT consignation. Livrables : loupe/I/README.md,
+  scripts/consigner_tgn_d171.py, scripts/verifier_coherence_git_drive_r4.py
+  [labo]. Consignations : l'Entrée 194 PAR SCRIPT, la D171 PAR SCRIPT, le
+  PLAN (la section TGN + l'État + le dégel), la présente Task ID 112.
+- SUITE : M10-(a) LES DIX-HUIT SPÉCIFICATIONS POSÉES (la couche I complète,
+  R2) ; la cérémonie d'ère du TGN (le 14e arbre) attend son geste ; le
+  projet fils attend son premier geste à son message propre.
