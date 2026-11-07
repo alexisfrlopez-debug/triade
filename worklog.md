@@ -6625,3 +6625,37 @@ Work Log:
   dossier NEUF D99, python scenario-m9f.py, preuves-m9f/ ENTIER au
   coffre) — ET SI LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA
   GRANDE ŒUVRE.
+
+- LA PASSATION (passe_bundle_m9y.py) : le bundle courant
+  triade-history-090-96d2b8d (19 183 316 o, md5 09ee7a1d…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LA TROISIÈME SIGNATURE DE LA
+  RÉVISION 3 REÇUE ET INSTALLÉE [Entrée 192 — la remise recoupée
+  13/13 : l'ancre de clé 173fae9c… tenue, les DOUZE arbres inchangés
+  == les signatures déposées == build 1.0.0 (LA PREUVE DE D163
+  REJOINTE UNE CINQUIÈME FOIS), m8 re-signé contre e36141f7… ;
+  deposer joué, LE GARDE 13/13 VERTS] + LE REBUILD 1.0.0-dev.4 NÉ SUR
+  LE TERRAIN [les portes re-passées sys-06:R3, la version R10
+  0x01000004, l'héritage 0.9.0 recomposé OCTET PAR OCTET (R7), le
+  harnais suivi 131 VERTS, la carte génération 12, le verrou croisé
+  86/86 — l'artefact 446279f3…, LE DIFF CONTRÔLÉ : TROIS octets sur
+  65 024 (la version R10 + LES DEUX IMMÉDIATES du contrat d'appel
+  dans sys-06)] + LE KIT M9F RÉPARÉ [scenario-m9f.py re-épinglé + LE
+  T0.erratum-10 (le contrat relu dans l'image au bloc sys-06),
+  LISEZMOI réécrit, l'assembleur 32 constantes PAR AST + LE CONTRÔLE
+  PERMANENT — kit-m9f.zip md5 92098687…] livré au coffre /test + le
+  worklog Task 110), l'ancien 090-c22db32 (LE RUN DE LA SONDE SYS-06
+  ANALYSÉ SUR PIÈCES : le mot d'information venu, l'erratum n° 10 +
+  la révision 3 + la remise e36141f7…) ARCHIVÉ VERSIONNÉ (md5
+  e606f8eb… recoupé — 55 archives, rien supprimé), /test sans copie
+  de bundle ET le kit réparé recoupé (92098687…) + les DEUX sondes
+  (215c2caa… + 67e2014d…) + le réceptacle preuves-m9f/ RÉ-ARMÉ (le
+  SEPTIÈME run) + LES PIÈCES DE CÉRÉMONIE demeurées (signatures-I.txt
+  0978c117… la troisième remise INSTALLÉE + cle-publique-I.txt
+  188a7d42… l'ancre des ères) ; LE PUSH GITHUB RÉUSSI : origin ==
+  96d2b8d relu MATCH — LES TROIS MIROIRS ALIGNÉS ; script suivi :
+  passe_bundle_m9y.py ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ
+  (Drive + local + GitHub), LE SEPTIÈME RUN DU DÉVELOPPEUR EST
+  ATTENDU (le premier du contrat réparé : kit-m9f.zip au /test, un
+  dossier NEUF D99, python scenario-m9f.py — réseau vivant —
+  renvoyer preuves-m9f/ ENTIER au coffre /test) — ET SI LE VERT
+  TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
