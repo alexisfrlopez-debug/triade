@@ -6419,3 +6419,29 @@ Work Log:
   DEMI-FIN NOMMÉE SUR PIÈCES ; SI LE -6 : LE NTSTATUS NOMME LE
   COUPABLE (PENDING le bug du contrat, INVALID_PARAMETER le contrat
   d'appel, RESET/DISCONNECT le pair).
+- PASSATION : le bundle courant triade-history-090-eb1479e (18 879 457 o,
+  md5 1e9f2e68…) DÉPOSÉ AU MIROIR ASSERTÉ (relu MATCH : il porte LE
+  SIXIÈME RUN ANALYSÉ SUR PIÈCES [Entrée 190 — LE JUMEAU : le journal
+  du run 6 == le journal du run 5 LIGNE À LIGNE, le -7 reproduit
+  identique, LE PASSAGER ÉLIMINÉ SUR PIÈCES] + LA SONDE SYS-06 LIVRÉE
+  [kit-sonde-sys06.zip 67e2014d…, le geste m9f décomposé, le miroir de
+  l'Entrée 185] + le worklog Task 108), l'ancien 090-17fb911 (LE
+  CINQUIÈME RUN ANALYSÉ SUR PIÈCES : LA PREMIÈRE ÉMISSION RÉELLE DU
+  PROJET) ARCHIVÉ VERSIONNÉ (md5 b2817e48… recoupé — 53 archives, rien
+  supprimé), /test sans copie de bundle ET le kit réparé recoupé
+  (79d44284…) + la sonde sys-05 (215c2caa…) + LA SONDE SYS-06
+  (67e2014d… + LISEZMOI-sonde-sys06.txt + le réceptacle
+  preuves-sonde-sys06/) + LES PIÈCES DE CÉRÉMONIE demeurées
+  (signatures-I.txt 503f3822… + cle-publique-I.txt 188a7d42…) ; LE PUSH
+  GITHUB RÉUSSI : origin == eb1479e relu MATCH — LES TROIS MIROIRS
+  ALIGNÉS (le commit de passation 9db461b du geste précédent DÉJÀ PARTI
+  à l'ouverture — le flux tenu) ; script suivi : passe_bundle_m9w.py ;
+  LA SÉRIE 090 POURSUIT — le geste est PASSÉ (Drive + local + GitHub),
+  LE RUN DE LA SONDE SYS-06 EST ATTENDU (kit-sonde-sys06.zip au /test,
+  un dossier NEUF D99, python scenario-sonde-sys06.py — Python 64 bits,
+  réseau vivant — renvoyer preuves-sonde-sys06/ ENTIER au coffre
+  /test/preuves-sonde-sys06/) — SI LA LECTURE REND DES OCTETS : LA
+  PERCÉE, LA FINALE 1.0.0 EN VUE, LE JALON M9 — LA GRANDE ŒUVRE ; SI LE
+  ZÉRO (-7) : LA DEMI-FIN NOMMÉE SUR PIÈCES ; SI LE -6 : LE NTSTATUS
+  NOMME LE COUPABLE (PENDING le contrat du bloc, INVALID_PARAMETER le
+  contrat d'appel, RESET/DISCONNECT le pair).
