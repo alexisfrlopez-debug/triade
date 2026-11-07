@@ -3,8 +3,8 @@
 r"""scenario-m9f.py — LE TERRAIN M9-(f) : LA SESSION RÉELLE, LA GRANDE ŒUVRE.
 
 Le kit porte UN artefact et UN scénario :
-  proxy.exe   le build 1.0.0-dev.3 du jalon M9 — 65 024 o, sha256
-              de23e577498d5cbfb711852df241b938a47793c57029c6f98d168be66b29226f
+  proxy.exe   le build 1.0.0-dev.4 du jalon M9 — 65 024 o, sha256
+              446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
               (lecture seule pour le run — le scénario ne l'écrit JAMAIS ;
               la carte privée ne voyage JAMAIS avec l'artefact, R1) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, socket,
@@ -21,7 +21,10 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                  entier) ; les octets attendus constatés UN PAR UN (le
                  trombone sys-01, les fixtures transport AFD, l'OCTET
                  DE LONGUEUR DU RECORD CH — l'erratum n° 5 relu dans
-                 l'image, les slots scellés) ; la cible résolue (DNS) et
+                 l'image, LA POSE DU WSABUF canonique — l'erratum n° 9,
+                 LE CONTRAT D'APPEL sys-06 — l'erratum n° 10 : AfdFlags
+                 = 0, TdiFlags = TDI_RECEIVE_NORMAL 0x20, les slots
+                 scellés) ; la cible résolue (DNS) et
                  l'EMPREINTE ÉPINGLÉE consignée.
   T1 LA RÉSOLUTION le VRAI ntdll lu par DEUX lecteurs indépendants : la
                  marche EAT refaite en PYTHON et le BLOC sys-02 (le code
@@ -101,11 +104,14 @@ import time
 ICI = os.path.dirname(os.path.abspath(__file__))
 PREUVES = os.path.join(ICI, "preuves-m9f")
 
-# --- l'artefact : la carte génération 11 prouve CES octets -----------------------
-# la révision 2 étendue (l'erratum n° 9) : LE REBUILD dev.3 — le socle
-# socket re-noté, le WSABUF CANONIQUE x64 (buf à +8 : la pose 0x68)
-SHA_PROXY = ("de23e577498d5cbfb711852df241b938a47793c57029c6f98d1"
-             "68be66b29226f")
+# --- l'artefact : la carte génération 12 prouve CES octets -----------------------
+# la révision 3 (l'erratum n° 10) : LE REBUILD dev.4 — le bloc sys-06
+# re-noté R3 : LE CONTRAT D'APPEL RÉPARÉ SUR LE TERRAIN (AfdFlags = 0,
+# TdiFlags = TDI_RECEIVE_NORMAL 0x20 — le VRAI afd.sys REFUSE le bit
+# 0x20 dans AfdFlags, la mesure de la sonde sys-06) ; l'erratum n° 9
+# demeure (le WSABUF CANONIQUE x64, buf à +8 : la pose 0x68)
+SHA_PROXY = ("446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453d"
+             "b3b00d93d")
 TAILLE_PROXY = 65024
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
@@ -133,6 +139,18 @@ OCTETS_TETE_CH = bytes.fromhex("41c7021603030041c6420472")
 # (sys-05 l'émission, sys-06 la réception — la symétrie send/recv).
 POSE_WSABUF_OFF = 0x46                 # sys-05/+0x46 ET sys-06+0x46
 OCTETS_POSE_WSABUF = bytes.fromhex("8974246048897c2468")
+# LE CONTRAT D'APPEL (l'erratum n° 10 — la révision 3, relu dans
+# l'image au T0) : sys-06 pose AfdFlags = 0 (le TROISIÈME champ —
+# encode disp8) PUIS TdiFlags = TDI_RECEIVE_NORMAL 0x20 (le QUATRIÈME
+# champ — encode disp32 : 0x80 DÉPASSE la portée disp8). La sonde
+# sys-06 a LU le code exact de la première lecture réelle : -6,
+# STATUS_INVALID_PARAMETER, DÉTERMINISTE ×3 — le VRAI afd.sys REFUSE
+# le bit 0x20 dans AfdFlags ; l'erratum de lecture de la révision 2
+# (0x20 au TROISIÈME champ) RÉFUTÉ PAR LE TERRAIN.
+POSE_AFDFLAGS_OFF = 0x61               # sys-06+0x61 : c7 44 24 7c 00 00 00 00
+OCTETS_AFDFLAGS = bytes.fromhex("c744247c00000000")
+POSE_TDIFLAGS_OFF = 0x69               # sys-06+0x69 : c7 84 24 80 00 00 00 20 00 00 00
+OCTETS_TDIFLAGS = bytes.fromhex("c784248000000020000000")
 NOM_DEVICE = "\\Device\\Afd\\Endpoint"     # le nom du périphérique AFD
 FIXTURE_DEVICE = NOM_DEVICE.encode("utf-16le") + b"\x00\x00"   # 42 o
 MOTIF_STUB = bytes.fromhex("4c8bd1b8")        # mov r10,rcx ; mov eax —
@@ -492,6 +510,25 @@ def main():
                 ctypes.string_at(base + rva + POSE_WSABUF_OFF, 9)
                 == OCTETS_POSE_WSABUF,
                 f"@{rva + POSE_WSABUF_OFF:#x}")
+    # LE CONTRAT D'APPEL (l'erratum n° 10 — la révision 3) relu dans
+    # l'image au bloc sys-06 : le VRAI afd.sys REFUSE le bit 0x20 dans
+    # AfdFlags (la sonde sys-06 a lu -6, STATUS_INVALID_PARAMETER,
+    # DÉTERMINISTE ×3 sur la première lecture réelle) — le build réparé
+    # pose AfdFlags = 0 (le TROISIÈME champ) et TdiFlags =
+    # TDI_RECEIVE_NORMAL 0x20 (le QUATRIÈME champ). Les SIX runs
+    # précédents mouraient DU CONTRAT D'APPEL — LE KIT EMPORTE LA
+    # PREUVE QUE CES OCTETS SONT LES RÉPARÉS.
+    verifie("T0.erratum-10 : LE CONTRAT D'APPEL relu dans sys-06 — "
+            "AfdFlags = 0 (c7 44 24 7c 00 00 00 00, le TROISIÈME champ)",
+            ctypes.string_at(base + R_SYS06 + POSE_AFDFLAGS_OFF, 8)
+            == OCTETS_AFDFLAGS,
+            f"@{R_SYS06 + POSE_AFDFLAGS_OFF:#x}")
+    verifie("T0.erratum-10 : LE CONTRAT D'APPEL relu dans sys-06 — "
+            "TdiFlags = TDI_RECEIVE_NORMAL 0x20 (c7 84 24 80 00 00 00 "
+            "20 00 00 00, le QUATRIÈME champ)",
+            ctypes.string_at(base + R_SYS06 + POSE_TDIFLAGS_OFF, 11)
+            == OCTETS_TDIFLAGS,
+            f"@{R_SYS06 + POSE_TDIFLAGS_OFF:#x}")
     # les têtes des slots scellés (le constat que le plan vit dans l'image)
     for rva, nom in ((R_SYS02, "sys-02"), (R_SYS04, "sys-04"),
                      (R_SYS05, "sys-05"), (R_SYS06, "sys-06"),

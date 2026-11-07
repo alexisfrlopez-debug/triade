@@ -6,10 +6,12 @@ Modèle : scripts/assembler_kit_m8d.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + le VRAI ntdll + le VRAI afd.sys + le
 réseau exigés, le cœur même du chantier (f)) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : m9-kit/ = proxy.exe (l'artefact 1.0.0-dev.3,
-     sha256 de23e577… ASSERTÉ — LE REBUILD de la révision 2 étendue :
-     le WSABUF canonique posé à 0x68 dans sys-05 ET sys-06, l'erratum
-     n° 9) + scenario-m9f.py + LISEZMOI-KIT-M9F.md ;
+  1. L'ASSEMBLAGE : m9-kit/ = proxy.exe (l'artefact 1.0.0-dev.4,
+     sha256 446279f3… ASSERTÉ — LE REBUILD de la révision 3 : le
+     contrat d'appel réparé SUR LE TERRAIN dans sys-06 — AfdFlags = 0,
+     TdiFlags = TDI_RECEIVE_NORMAL 0x20, l'erratum n° 10 ; l'erratum
+     n° 9 demeure : le WSABUF canonique posé à 0x68 dans sys-05 ET
+     sys-06) + scenario-m9f.py + LISEZMOI-KIT-M9F.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario
      (les adresses scellées, le trombone, l'OCTET DE L'ERRATUM n° 5,
      les fixtures transport, le motif du stub, l'empreinte épinglée,
@@ -39,8 +41,8 @@ KIT = "m9-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-m9f.zip"
 
-SHA_PROXY = ("de23e577498d5cbfb711852df241b938a47793c57029c6f98d1"
-             "68be66b29226f")
+SHA_PROXY = ("446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453d"
+             "b3b00d93d")
 TAILLE_PROXY = 65024
 SCENARIO = REPO / "tls13" / "terrain" / "scenario-m9f.py"
 LISEZMOI = REPO / "tls13" / "terrain" / "LISEZMOI-KIT-M9F.md"
@@ -112,7 +114,8 @@ def constantes_du_scénario(chemin):
               "R_SYS_NOM_CREATEFILE", "R_SYS_NOM_DEVICEIOCTL",
               "R_SYS_NOM_CLOSE", "R_TETE_CH", "OCTETS_SYS01",
               "OCTETS_TETE_CH", "POSE_WSABUF_OFF", "OCTETS_POSE_WSABUF",
-              "NOM_DEVICE", "MOTIF_STUB",
+              "POSE_AFDFLAGS_OFF", "OCTETS_AFDFLAGS", "POSE_TDIFLAGS_OFF",
+              "OCTETS_TDIFLAGS", "NOM_DEVICE", "MOTIF_STUB",
               "EMPREINTE_EPINGLEE", "CIBLE", "CIBLE_PORT",
               "SESSION_TAILLE", "KIT96", "CH_TAILLE", "CH_RECORD",
               "TEMOIN_APPLICATIF"}
@@ -257,8 +260,8 @@ def main():
         refus("ARTEFACT", f"proxy.exe sha256 {sha256_fichier(PROXY)[:16]}… "
                           f"!= {SHA_PROXY[:16]}…")
     print(f"[1] l'artefact : {TAILLE_PROXY} o, sha256 {SHA_PROXY[:16]}… — "
-          f"la carte génération 11 prouve CES octets (le rebuild de la "
-          f"révision 2 étendue)")
+          f"la carte génération 12 prouve CES octets (le rebuild de la "
+          f"révision 3 : le contrat d'appel réparé SUR LE TERRAIN)")
 
     # -- 2. le recoup des constantes (AST du scénario contre l'artefact) ------
     data = PROXY.read_bytes()
@@ -305,6 +308,33 @@ def main():
     print("    le contrôle permanent erratum n° 9 : LA POSE DU WSABUF "
           "canonique (buf à +8) relue dans l'image aux DEUX blocs — "
           "le STATUS_ACCESS_VIOLATION de la sonde ne peut plus dormir")
+    # LE CONTRÔLE PERMANENT DE L'ERRATUM n° 10 (la révision 3) : LE
+    # CONTRAT D'APPEL réparé SUR LE TERRAIN (AfdFlags = 0 — le VRAI
+    # afd.sys REFUSE le bit 0x20 ; TdiFlags = TDI_RECEIVE_NORMAL 0x20 —
+    # le placement rétabli) relu DANS L'IMAGE au bloc sys-06 — les SIX
+    # runs précédents mouraient DU CONTRAT D'APPEL (-7/état 5 == -6
+    # == INVALID_PARAMETER) : le kit embarque le build réparé
+    if c["OCTETS_AFDFLAGS"] != bytes.fromhex("c744247c00000000"):
+        refus("RECOUP", "OCTETS_AFDFLAGS != l'encode canonique attendu "
+                        "(mov dword ptr [rsp+0x7C], 0)")
+    if c["OCTETS_TDIFLAGS"] != bytes.fromhex("c784248000000020000000"):
+        refus("RECOUP", "OCTETS_TDIFLAGS != l'encode canonique attendu "
+                        "(mov dword ptr [rsp+0x80], 0x20 — disp32)")
+    off = rva_vers_offset(data, 0xA6C0) + c["POSE_AFDFLAGS_OFF"]
+    if data[off:off + 8] != c["OCTETS_AFDFLAGS"]:
+        refus("ERRATUM-10", f"la pose AfdFlags dans sys-06 != le canonique "
+                            f"relu dans l'image : {data[off:off + 8].hex()} "
+                            f"— le kit n'embarque PAS le build réparé")
+    off = rva_vers_offset(data, 0xA6C0) + c["POSE_TDIFLAGS_OFF"]
+    if data[off:off + 11] != c["OCTETS_TDIFLAGS"]:
+        refus("ERRATUM-10", f"la pose TdiFlags dans sys-06 != le canonique "
+                            f"relu dans l'image : {data[off:off + 11].hex()} "
+                            f"— le kit n'embarque PAS le build réparé")
+    print("    le contrôle permanent erratum n° 10 : LE CONTRAT D'APPEL "
+          "relu dans l'image au bloc sys-06 — AfdFlags = 0 (c7 44 24 7c "
+          "00 00 00 00), TdiFlags = TDI_RECEIVE_NORMAL 0x20 (c7 84 24 "
+          "80 00 00 00 20 00 00 00) — le INVALID_PARAMETER du noyau ne "
+          "peut plus dormir")
     fixture_attendu = c["NOM_DEVICE"].encode("utf-16le") + b"\x00\x00"
     if fixture_attendu != data[rva_vers_offset(data, 0x10C20):
                                rva_vers_offset(data, 0x10C20) + 42]:

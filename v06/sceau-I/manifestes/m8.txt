@@ -3,10 +3,10 @@ arbre: m8
 artefact: proxy.exe (domaine sys, syscalls directs)
 balise: sys.1
 fichiers: 7
-sha256:385fcbda0070a56483ceab65fd5fcda53e4ee0b954184c4ebd4c56176cac2491  README.md
+sha256:7e46d035c1be3dcd4ac4857be752c0dfc35c35d5abff22798a7ffb0b7560a766  README.md
 sha256:e764c67fbd591c31110e75a066638df4fa7714595be85e082a1afc9f8315f032  sys-01-emetteur.md
 sha256:ad9a7c0a4d172a7386baf26c7f868f7bc2bd7767ae50048e81a42386f8c6208b  sys-02-resolveur.md
 sha256:d5242c3d7024b4f3f50b926273e96bda2772d6b0df0a0c634343cc5a99762120  sys-03-ecriture.md
 sha256:af2a67cb310b66e60b96b9b5d5c27b95c68ab1849b22c53c57ba351f15161660  sys-04-transport.md
 sha256:8959c3954e1c7b74377a090c45123a4363333abfd5539be4612f9d61d26c871e  sys-05-emission.md
-sha256:caa17ed6b3d8caa6f09dbe54db429f9bf4fb19acb98131d2ed5fb37c06d840a8  sys-06-reception.md
+sha256:e8f06fb2cb85378e6600af60dc7b00f422d44a9477b1527690987a59eacf7e00  sys-06-reception.md

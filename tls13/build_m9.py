@@ -175,7 +175,13 @@ BLOCS_SOCLE = [
     # re-notés — le WSABUF CANONIQUE x64 (SEIZE o : len à +0, padding 4 o,
     # buf à +8 — la pose 0x68, le MÊME encode, le slot intact)
     ("g90005", "sys-05:R2", "sys-05-emission", L8.SYS05_VA, L8.SLOTS_SYS["g90005"][1]),
-    ("g90006", "sys-06:R2", "sys-06-reception", L8.SYS06_VA, L8.SLOTS_SYS["g90006"][1]),
+    # la révision 3 (l'erratum n° 10, Entrée 191) : sys-06 re-noté — le
+    # VRAI afd.sys REFUSE le bit 0x20 dans AfdFlags (la sonde sys-06 a lu
+    # -6, STATUS_INVALID_PARAMETER, DÉTERMINISTE ×3) : AfdFlags = 0,
+    # TdiFlags = TDI_RECEIVE_NORMAL 0x20 — le QUATRIÈME champ porte le
+    # 0x20, le TROISIÈME porte 0 (le MÊME encode mov dword 8 o, le slot
+    # intact, la structure 40 o inchangée)
+    ("g90006", "sys-06:R3", "sys-06-reception", L8.SYS06_VA, L8.SLOTS_SYS["g90006"][1]),
 ]
 assert all((b[3], b[4]) == L8.SLOTS_SYS[b[0]] for b in BLOCS_SOCLE), \
     "BLOCS_SOCLE diverge du plan M8 (layout.py, source unique — D161)"
@@ -1244,7 +1250,7 @@ def construire(volume: str, graine: int) -> int:
                         h9["verrous_m8"], verrous_socle, verrous_tls13,
                         version, verdict_m4, verdict_m5, verdict_sys,
                         compteurs, journal)
-    print(f"[carte] génération 11 écrite (lignée D80, graine durable D144) : "
+    print(f"[carte] génération 12 écrite (lignée D80, graine durable D144) : "
           f"4 fragments chiffrés, signature Ed25519, {len(TOUS_BLOCS_M9)} blocs "
           f"indexés sur 8 artefacts")
     nb, manifeste = verrou_croise_m9()
@@ -1260,7 +1266,7 @@ def construire(volume: str, graine: int) -> int:
           f"sha256:{hashlib.sha256(exe).hexdigest()}")
     print(f"=== M9-dev (oracle vert) : {version} — le domaine tls13 composé sur "
           f"le corps 0.9.0 INTACT (R7), le socle socket dans la réserve .text5, "
-          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 11 "
+          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 12 "
           f"vivante ; le chantier (f) (le terrain — LA GRANDE ŒUVRE : la "
           f"session RÉELLE) attend ; la finale 1.0.0 attend le terrain vert ===")
     return 0

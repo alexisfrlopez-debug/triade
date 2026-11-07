@@ -6558,3 +6558,70 @@ Work Log:
   deposer, le garde 13/13, LE REBUILD 1.0.0-dev.4 (le bloc sys-06
   réparé SUR LE TERRAIN), LE KIT M9F RÉPARÉ au /test, le run — ET SI
   LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
+
+## Task ID 110 — LA TROISIÈME SIGNATURE DE LA RÉVISION 3 REÇUE ET INSTALLÉE (LE GARDE 13/13 VERTS) ; LE REBUILD 1.0.0-dev.4 NÉ (LE DIFF CONTRÔLÉ : TROIS octets — la version R10 + LES DEUX IMMÉDIATES DU CONTRAT D'APPEL dans sys-06), LA CARTE GÉNÉRATION 12 ; LE KIT M9F RÉPARÉ LIVRÉ AU /test — LE SEPTIÈME RUN ATTENDU (07/11)
+
+Work Log:
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR (lecture seule) : signatures-I.txt
+  md5 0978c117… NOUVEAU (≠ la seconde remise 503f3822… ≠ la build
+  62c43222…), cle-publique-I.txt == 188a7d42… l'ancre ; la racine 19
+  entrées, les TROIS kits recoupés.
+- LA REMISE RECROPÉE SUR PIÈCES AVANT TOUT DÉPÔT
+  (rapatrier_ceremonie_revision3.py — la remise PÉRIMÉE 503f3822…
+  REFUSÉE NOMMÉE par avance) : rapatriement md5 MATCH ; l'ancre de clé
+  == 173fae9c… ; le format 13/13 ; LE RECOUP D163 REJOINT UNE
+  CINQUIÈME FOIS : les DOUZE arbres inchangés == les signatures
+  DÉPOSÉES == build 1.0.0 (Ed25519 déterministe) ; m8 RE-SIGNÉ :
+  diverge de la déposée (la seconde remise, contre c444d730…),
+  vérifie Ed25519 contre l'empreinte vivante e36141f7… ; LE DIFF
+  CONTRÔLÉ vs la seconde remise : UNE ligne changée, LA m8, les DOUZE
+  autres byte-identiques ; les empreintes vivantes == a-signer.txt
+  13/13 — RECOUPE INTÉGRAL VERT.
+- LE DÉPÔT CANONIQUE (sceau_I.py deposer --cle : l'atomicité — tout
+  vérifié avant toute écriture) ET LA GARDE REPASSÉE : **13/13 arbres
+  VERTS** — m8 vert (e36141f7…) : la dette de cérémonie de la
+  révision 3 SOLDÉE.
+- LE REBUILD 1.0.0-dev.4, LES PORTES RE-PASSÉES : BLOCS_SOCLE porte
+  sys-06:R3 (la révision 3 à la source du build — AfdFlags = 0,
+  TdiFlags = TDI_RECEIVE_NORMAL 0x20, sys-05:R2 inchangé), la version
+  R10 0x01000004, GENERATION 12 ; la chaîne rejouée : le garde 13/13
+  AVANT construire, l'héritage M3+M4+M5+M8 re-vérifié (le scellé
+  0.9.0 recomposé OCTET PAR OCTET — R7), le socle re-assemblé de la
+  notation réparée, l'oracle structurel, les 28 blocs tls13, le PE
+  validé, les oracles M4+M5+LE HARNAIS SUIVI 131 VERTS (empreinte
+  b8373757… — dont LES DEUX NOUVELLES MUTANTES DU TERRAIN : AfdFlags
+  0→0x20 rétablie ET TdiFlags 0x20→0 vidée, TOUTES DEUX TRAHIES), la
+  carte génération 12, le verrou croisé 86/86 — L'ARTEFACT :
+  446279f3… (65 024 o).
+- LE DIFF CONTRÔLÉ dev.3 ↔ dev.4 (diff_dev3_dev4.py, le dev.3 extrait
+  du kit ACQUITTÉ 79d44284…) : **TROIS octets sur 65 024** — la
+  version R10 @RVA 0x2820 (0x03 → 0x04) + LES DEUX IMMÉDIATES du
+  contrat d'appel dans sys-06 (@RVA 0xa725 : AfdFlags 0x20 → 0, en
+  encode disp8 ; @RVA 0xa730 : TdiFlags 0 → 0x20, en encode disp32 —
+  0x80 DÉPASSE la portée disp8, l'encode canonique nommé) ; RIEN
+  d'autre ne bouge ; le contrat réparé relu dans l'image aux DEUX
+  sites (c7 44 24 7c 00 00 00 00 / c7 84 24 80 00 00 00 20 00 00 00).
+- LE KIT M9F RÉPARÉ : scenario-m9f.py re-épinglé (SHA_PROXY
+  446279f3…, génération 12) + LE T0 PORTE LA PREUVE
+  (T0.erratum-10 : le contrat d'appel relu dans l'image au bloc
+  sys-06, aux DEUX sites) ; LISEZMOI-KIT-M9F.md RÉÉCRIT (l'erratum
+  n° 10 + la révision 3, LE SEPTIÈME RUN) ; l'assembleur re-passé :
+  32 constantes PAR AST + LE CONTRÔLE PERMANENT erratum n° 10 + les
+  portes 6/7 + py_compile + extraction vierge — kit-m9f.zip md5
+  92098687…, sha256 c0883c87…
+- LA LIVRAISON AU COFFRE (corriger_kit_m9f_e10.py, modèle e9) :
+  kit-m9f.zip MIS À JOUR EN PLACE (md5 92098687… MATCH par relecture,
+  l'ancien vit dans l'histoire git) ; LISEZMOI-m9f.txt à jour
+  (41add303…) ; preuves-m9f/LISEZMOI-preuves.txt à jour (dev.4,
+  génération 12, LE SEPTIÈME RUN), le réceptacle RÉ-ARMÉ ; l'index
+  des livraisons porte la note de la révision 3 ; la vérification
+  finale (19 entrées, LES PIÈCES DE CÉRÉMONIE demeurées : la
+  TROISIÈME remise 0978c117… + la clé ancre 188a7d42…).
+- FRONTIÈRES : le scellé 0.9.0 INTACT (R7 recomposé au build même),
+  l'artefact dev.3 remplacé PAR LE DIFF CONTRÔLÉ (il demeure la pièce
+  des archives des runs 5-6 et de la sonde sys-06), aucune balise
+  (D104), la clé privée jamais traversée (D87). SUITE : LE SEPTIÈME
+  RUN DU DÉVELOPPEUR (le premier du contrat réparé : kit-m9f.zip →
+  dossier NEUF D99, python scenario-m9f.py, preuves-m9f/ ENTIER au
+  coffre) — ET SI LE VERT TIENT : LA FINALE 1.0.0, LE JALON M9 — LA
+  GRANDE ŒUVRE.

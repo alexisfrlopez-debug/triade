@@ -21,19 +21,23 @@ PREFIXE_ETIQUETTE = b"tls13 "      # RFC 8446 §7.1 (le NUL de terminaison
 
 # --- Les versions de l'ère (le miroir m8 : 0x00090001 = 0.9.0-dev.1) ----------
 
-VERSION_DEV = 0x01000003           # 1.0.0-dev.3 (geste de BUILD, jamais scellage ;
-                                   # dev.3 = la révision 2 étendue : sys-05 ET
-                                   # sys-06 re-notés — le WSABUF CANONIQUE x64
-                                   # [SEIZE octets : len à +0, PADDING
-                                   # d'alignement 4 o, buf à +8 — la pose
-                                   # 0x64 → 0x68, le MÊME encode 5 o, le slot
-                                   # intact, la carte demeure] ; la sonde
-                                   # sys-05 a mesuré 0xC0000005 à la pose du
-                                   # WSABUF « packé » (Entrée 185, l'erratum
-                                   # n° 8), la symétrie send/recv a étendu la
-                                   # réparation à sys-06 (Entrée 187, l'erratum
-                                   # n° 9) ; dev.2 = l'erratum n° 5 : le record
-                                   # CH + le CCS hérité])
+VERSION_DEV = 0x01000004           # 1.0.0-dev.4 (geste de BUILD, jamais scellage ;
+                                   # dev.4 = la révision 3 : sys-06 re-noté —
+                                   # AfdFlags = 0, TdiFlags =
+                                   # TDI_RECEIVE_NORMAL (0x20) [la sonde
+                                   # sys-06 a LU le code exact de la première
+                                   # lecture réelle : -6,
+                                   # STATUS_INVALID_PARAMETER, DÉTERMINISTE ×3
+                                   # — le VRAI afd.sys REFUSE le bit 0x20 dans
+                                   # AfdFlags ; l'erratum de lecture de
+                                   # l'Entrée 187 RÉFUTÉ PAR LE TERRAIN :
+                                   # TDI_RECEIVE_NORMAL RETOURNE au champ
+                                   # TdiFlags ; le QUATRIÈME champ porte le
+                                   # 0x20, le TROISIÈME porte 0 — le MÊME
+                                   # encode mov dword 8 o, le slot intact
+                                   # (Entrée 191, l'erratum n° 10)] ; dev.3 =
+                                   # la révision 2 étendue : le WSABUF
+                                   # canonique ; dev.2 = l'erratum n° 5])
 VERSION_FINALE = 0x01000000        # 1.0.0 (le scellage est un fait de carte, D165)
 
 # --- La table des SEPT verdicts du domaine (charte § 5 : l'échec nommé) --------

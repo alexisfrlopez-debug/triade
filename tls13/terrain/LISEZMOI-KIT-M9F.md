@@ -1,14 +1,16 @@
 # KIT TERRAIN M9-(f) — LA SESSION RÉELLE, LA GRANDE ŒUVRE (win)
 
-> Préparé au laboratoire le 06/11/2026, **RÉPARÉ le 07/11/2026 au soir**
+> Préparé au laboratoire le 06/11/2026, **RÉPARÉ le 07/11/2026 au
+> soir** (l'erratum n° 9), **RÉPARÉ ENCORE le 07/11/2026 (la révision
+> 3 — l'erratum n° 10)**
 > (le chantier (f) : le dernier du jalon — la finale `1.0.0` attend le vert
 > de CE run, D104 : le scellage est un fait de carte).
 >
-> **Deux pièces** : `proxy.exe` est L'ARTEFACT **1.0.0-dev.3** du jalon M9 —
+> **Deux pièces** : `proxy.exe` est L'ARTEFACT **1.0.0-dev.4** du jalon M9 —
 > 65 024 o, sha256
-> `de23e577498d5cbfb711852df241b938a47793c57029c6f98d168be66b29226f` —
+> `446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d` —
 > le CLIENT TLS 1.3 ENTIER en blocs scellés sur le corps 0.9.0 INTACT
-> (la carte génération 11 le prouve, le verrou croisé 86/86 est vert) ;
+> (la carte génération 12 le prouve, le verrou croisé 86/86 est vert) ;
 > `scenario-m9f.py` est LE SCÉNARIO (python SEUL — aucun paquet à
 > installer, aucun droit particulier ; le réseau vers
 > www.cloudflare.com:443 EST requis, c'est le but même du run).
@@ -117,12 +119,54 @@
 > 24 60 48 89 7c 24 68`) : la preuve que le kit embarque le build
 > réparé. **LE CINQUIÈME RUN est attendu — le premier du build réparé.**
 
+> **L'ERRATUM n° 10 + LA RÉVISION 3 (le kit RÉPARÉ ENCORE le 07/11,
+> après les runs 5-6 et la sonde sys-06)** : les cinquième et sixième
+> runs (le 07/11) ont ENFIN ÉMIS le ClientHello SUR LE RÉSEAU RÉEL
+> (l'émission VERT ×2, la première émission réelle du projet — la
+> réparation de l'erratum n° 9 VALIDÉE SUR LE VRAI NOYAU) — puis sont
+> morts À LA PREMIÈRE LECTURE : **-7 NOMMÉ** (rax -7, état 5),
+> DÉTERMINISTE, reproductible LIGNE À LIGNE (le jumeau : deux runs
+> identiques, le passager ÉLIMINÉ SUR PIÈCES). LA SONDE SYS-06 (le
+> miroir de l'Entrée 185) a LU LE CODE EXACT de cette première lecture
+> réelle PAR LE TRAMPOLINE DE CAPTURE — le compas étalonné avant la
+> mesure (STATUS_INVALID_HANDLE sur handle invalide) : **-6,
+> 0xC000000D STATUS_INVALID_PARAMETER, DÉTERMINISTE ×3** (la mesure,
+> la variation taille 1, la variation délai 2 s — les TROIS
+> identiques), l'offre sys-05 VERT au même geste. LA TABLE DE LA
+> PASSATION 108 TRANCHE : **INVALID_PARAMETER NOMME LE CONTRAT
+> D'APPEL** ; l'A/B des notations le resserre AU CHAMP : **sys-05
+> (AfdFlags = 0) PASSE, sys-06 (AfdFlags = 0x20) REFUSÉ — LE VRAI
+> afd.sys REFUSE le bit 0x20 dans AfdFlags**. L'erratum de lecture de
+> la révision 2 (la mesure WinDbg citée : 0x20 au TROISIÈME champ) EST
+> RÉFUTÉ PAR LE TERRAIN : **TDI_RECEIVE_NORMAL (0x20) RETOURNE au
+> champ TdiFlags** — le placement de la littérature rétabli. LE -7 DES
+> SIX RUNS EST DÉSORMAIS LU : la machine -7/état 5 == sys-06 -6 == le
+> noyau INVALID_PARAMETER — les SIX runs mouraient DU CONTRAT D'APPEL.
+> LA RÉPARATION SELON LA CHARTE : LA RÉVISION 3 DE LA SPEC SYS-06
+> (AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL 0x20 — la structure
+> totale 40 o inchangée), la notation corrigée (le QUATRIÈME champ
+> porte le 0x20, le TROISIÈME porte 0 — le même encode, le slot
+> intact), le harnais suivi (le noyau simulé AFD STRICT REFUSE
+> désormais ce que le VRAI refuse — 131 contrôles · 131 VERTS × 3
+> graines). PUIS LA CÉRÉMONIE : la TROISIÈME signature du développeur
+> (la remise m8 `e36141f7…` re-signée hors-ligne, l'ancre des ères
+> `173fae9c…` tenue, les DOUZE arbres inchangés byte-identiques), la
+> garde **13/13 VERTS**. **LE REBUILD 1.0.0-dev.4** : l'héritage 0.9.0
+> recomposé octet par octet (R7), et LE DIFF CONTRÔLÉ — **TROIS octets
+> sur 65 024** : la version R10 (0x01000003 → 0x01000004) et LES DEUX
+> IMMÉDIATES DU CONTRAT D'APPEL dans sys-06 (AfdFlags `0x20` → `0` au
+> TROISIÈME champ ; TdiFlags `0` → `0x20` au QUATRIÈME champ) — RIEN
+> d'autre ne bouge. Le T0 de CE kit RELIT LE CONTRAT dans l'image au
+> bloc sys-06 (`c7 44 24 7c 00 00 00 00` puis `c7 84 24 80 00 00 00
+> 20 00 00 00`) : la preuve que le kit embarque le build réparé.
+> **LE SEPTIÈME RUN est attendu — le premier du contrat réparé.**
+
 ## 1. Ce que ce kit contient
 
 ```
 m9-kit/
-├── proxy.exe         l'ARTEFACT 1.0.0-dev.3 (65 024 o, sha256
-│                     de23e577… — lecture seule pour le run ; la carte
+├── proxy.exe         l'ARTEFACT 1.0.0-dev.4 (65 024 o, sha256
+│                     446279f3… — lecture seule pour le run ; la carte
 │                     privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-m9f.py   LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
 │                     platform, socket, struct, sys, threading, time —
@@ -222,13 +266,17 @@ m9-kit/
   L'analyse X.509 complète reste le CHANTIER FUTUR NOMMÉ (tls13-26) :
   le jalon COMPARE, il ne fait pas confiance en silence.
 - **Le socle socket (sys-04/05/06)** fut prouvé au labo sur le MODÈLE
-  STRICT du noyau — **le harnais RÉVISÉ de la révision 2** (le noyau
-  simulé lit buf à +8 comme le VRAI) re-passe 131 contrôles · 131 VERTS
-  × 3 graines ; la séquence create/bind/connect vient des mesures
-  WinDbg de Windows 11 (« Under the Hood of AFD.sys », leftarcode 2025).
-  LA POSE DU WSABUF fut MESURÉE SUR LE VRAI NOYAU par la sonde sys-05
-  (le STATUS_ACCESS_VIOLATION déterministe, trois fois) : la réparation
-  est NOMMÉE à l'instruction, jamais une devinette. Si votre afd.sys
+  STRICT du noyau — **le harnais RÉVISÉ de la révision 3** (le noyau
+  simulé lit buf à +8 comme le VRAI ET REFUSE le 0x20 dans AfdFlags
+  comme le VRAI) re-passe 131 contrôles · 131 VERTS × 3 graines ; la
+  séquence create/bind/connect vient des mesures WinDbg de Windows 11
+  (« Under the Hood of AFD.sys », leftarcode 2025). LA POSE DU WSABUF
+  fut MESURÉE SUR LE VRAI NOYAU par la sonde sys-05 (le
+  STATUS_ACCESS_VIOLATION déterministe, trois fois) ; LE CONTRAT
+  D'APPEL fut MESURÉ SUR LE VRAI NOYAU par la sonde sys-06 (le
+  STATUS_INVALID_PARAMETER déterministe, trois fois — le code exact
+  lu dans rdx par le trampoline de capture) : les réparations sont
+  NOMMÉES à l'instruction, jamais des devinettes. Si votre afd.sys
   diverge, le verdict sera -6 NOMMÉ avec l'étape
   nommée — un échec honnête vaut plus qu'un vert muet.
 - **Les causes NTSTATUS vivent dans rdx** au moment des verdicts -6 de
