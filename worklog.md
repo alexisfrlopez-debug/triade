@@ -6288,3 +6288,39 @@ Work Log:
   ENTIER au coffre — SI LE VERT VIENT : LA FINALE 1.0.0, le jalon M9 —
   LA GRANDE ŒUVRE ; SI LE -7 SE REPRODUIT IDENTIQUE : LA SONDE sys-06
   (nommée d'avance).
+
+- LA PASSATION (passe_bundle_m9v.py) : le bundle courant
+  triade-history-090-17fb911 (18 817 695 o, md5 b2817e48…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LE CINQUIÈME RUN ANALYSÉ SUR
+  PIÈCES [Entrée 189 — LA PREMIÈRE ÉMISSION RÉELLE DU PROJET : le CH
+  119 o PARTI SUR LE RÉSEAU par le VRAI afd.sys, l'erratum n° 9 validé
+  sur le vrai noyau, L'A/B CONCLUT (la pose canonique est la cause de la
+  guérison) ; LE ROUGE TENU : T3.ouvrir rax -7, état 5 — LA MORT A
+  RECULÉ D'UN CRAN, à la première lecture (la frontière de l'Entrée
+  187) ; LE TEMPS ÉLIMINE LE SILENCE ; les TROIS candidats (le passager
+  affaibli pas éliminé, le contrat de réception jamais mesuré par sonde,
+  LA DEMI-FIN) ; LA SONDE sys-06 NOMMÉE D'AVANCE] + LE RUN ARCHIVÉ [le
+  trio DU RUN + LE VERDICT DU RECOUP 33/33 → archives-preuves/
+  preuves-run-m9f-5/, preuves-m9f/ ré-armé (son LISEZMOI seul), les DEUX
+  index, la racine 16 entrées, LE KIT ACQUITTÉ INCHANGÉ 79d44284… (le
+  kit du run 5 est celui du run 6)] + le worklog Task 107), l'ancien
+  090-3dc3d3e (LA SECONDE SIGNATURE + LE REBUILD dev.3 + LE KIT RÉPARÉ)
+  ARCHIVÉ VERSIONNÉ (md5 4f445352… recoupé — 52 archives, rien
+  supprimé), /test sans copie de bundle ET le kit réparé recoupé
+  (79d44284…) + le kit sonde (215c2caa…) + LES PIÈCES DE CÉRÉMONIE
+  demeurées (signatures-I.txt 503f3822… la seconde remise +
+  cle-publique-I.txt 188a7d42… l'ancre) ; LE PUSH GITHUB RÉUSSI :
+  origin == 17fb911 relu MATCH — LES TROIS MIROIRS ALIGNÉS (le commit de
+  passation 5dcd1f9 du geste précédent DÉJÀ PARTI à l'ouverture — LE
+  PUSH RÉPARÉ à la demande du développeur, un fast-forward propre — le
+  flux ré-aligné à la pointe du geste) ; script suivi :
+  passe_bundle_m9v.py ; LA SÉRIE 090 POURSUIT — le geste est PASSÉ
+  (Drive + local + GitHub), LE SIXIÈME RUN DU DÉVELOPPEUR EST ATTENDU
+  (le MÊME kit 79d44284…, un dossier NEUF D99, réseau vivant — UN AUTRE
+  réseau si possible : le discriminant du passager, et la chance du
+  vert — renvoyer preuves-m9f/ ENTIER au coffre /test/preuves-m9f/) —
+  SI LE VERT VIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE ;
+  SI LE -7 SE REPRODUIT IDENTIQUE (l'émission VERT, la réception
+  immédiate -7, le run en SA seconde) : LE PASSAGER ÉLIMINÉ SUR PIÈCES
+  ET LA SONDE sys-06 S'OUVRE (lire le NTSTATUS brut ou LE ZÉRO de la
+  réception, le miroir de l'Entrée 185).
