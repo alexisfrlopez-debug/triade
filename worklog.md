@@ -6091,3 +6091,36 @@ Work Log:
   garde 13/13, LE REBUILD 1.0.0-dev.3 [sys-05 ET sys-06 réparés], LE
   KIT M9F RÉPARÉ au /test, le run — ET SI LE VERT TIENT : LA FINALE
   1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
+
+- LA PASSATION (passe_bundle_m9t.py) : le bundle courant
+  triade-history-090-ffcdf19 (18 533 988 o, md5 5beab6b7…) DÉPOSÉ AU
+  MIROIR ASSERTÉ (relu MATCH : il porte LA PREMIÈRE SIGNATURE DE LA
+  RÉVISION 2 REÇUE ET INSTALLÉE [Entrée 187 — la remise recoupée 13/13
+  (l'ancre de clé 173fae9c… tenue, les DOUZE arbres inchangés == les
+  signatures du build 1.0.0 — LA PREUVE DE D163 REJOINTE UNE TROISIÈME
+  FOIS, m8 re-signé contre 3e778fa0…), deposer joué, LE GARDE 13/13
+  VERTS] + L'ERRATUM n° 9 NOMMÉ AVANT LE KIT [sys-06 porte le MÊME
+  WSABUF « packé » — le C_ASSERT send/recv, le même patron à
+  l'instruction près ; la RÉVISION 2 DE LA SPEC SYS-06 + la notation
+  corrigée (0x64 → 0x68, le même encode, le slot intact) + LE HARNAIS
+  RÉVISÉ (le noyau simulé lit buf à +8 — 131 contrôles · 131 VERTS × 3
+  graines)] + LA REMISE RÉGÉNÉRÉE m8 sys.1 c444d730… (sys-06-reception.md
+  seul diverge du manifeste signé) + le worklog Task 105 + le LISEZMOI
+  de cérémonie RÉÉCRIT (la révision 2 étendue) + le NOTE_D130 réécrit +
+  le plan à jour [rangée (f) + État]), l'ancien 090-81f2beb (LA
+  RE-CÉRÉMONIE DE LA RÉVISION 2 ARMÉE) ARCHIVÉ VERSIONNÉ (md5
+  2c3780bd… recoupé — 50 archives, rien supprimé), /test sans copie de
+  bundle ET les DEUX kits recoupés (kit-m9f.zip == l'ACQUITTÉ
+  90a1d022…, kit-sonde-sys05.zip == le livré 215c2caa…) + les PIÈCES DE
+  CÉRÉMONIE demeurées (signatures-I.txt af382476… + cle-publique-I.txt
+  188a7d42… — le dossier du geste reçu) ; LE PUSH GITHUB RÉUSSI :
+  origin == ffcdf19 relu MATCH — LES TROIS MIROIRS ALIGNÉS (le commit
+  de passation 9854526 du geste précédent EMBARQUÉ, le flux tenu) ;
+  script suivi : passe_bundle_m9t.py ; LA SÉRIE 090 POURSUIT — le geste
+  est PASSÉ (Drive + local + GitHub), LA SECONDE SIGNATURE DU
+  DÉVELOPPEUR EST ATTENDUE : la remise étendue (signatures-I.txt +
+  cle-publique-I.txt au /test) — puis deposer, le garde 13/13, LE
+  REBUILD 1.0.0-dev.3 [sys-05 ET sys-06 réparés, les portes re-passées
+  sur l'instrument révisé], LE KIT M9F RÉPARÉ livré au /test, le run du
+  développeur — ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9 —
+  LA GRANDE ŒUVRE.
