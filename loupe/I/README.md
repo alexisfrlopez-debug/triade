@@ -113,6 +113,71 @@ défaire. Les raisons de l'arbitrage :
    développeur, la re-signature de m0 au registre étendu (le modèle de
    l'ère M8), le garde passant à 14 arbres VERTS. Jusque-là le garde
    demeure à 13 arbres VERTS — AUCUN arbre signé n'est touché.
+9. **L'ABI et la table des verdicts (posée au chantier (a))** — ABI msx64
+   du profil primaire `x86-64-win11-pe` : les arguments en rcx/rdx/r8/r9
+   puis la pile, le verdict en rax ; l'image PI (D33 — aucune adresse
+   absolue), l'IAT kernel32/user32/gdi32 (D7/D35 — 34 feuilles au plan
+   d'adressage). LA TABLE DES SEPT VERDICTS (0, −1..−7 — l'échec nommé) :
+   **0** OK · **−1** FIN (la fin nommée : la plage est épuisée) · **−2**
+   ABSENT (le chemin ne désigne rien) · **−3** HORS-BORNES (hors du
+   fichier ou du périmètre 0.1.0) · **−4** SESSION (aucun fichier ouvert)
+   · **−5** ENTRÉE (l'ordre est refusé en l'état) · **−6** SYSTÈME (l'OS
+   refuse, GetLastError consigné) · **−7** VERROUILLÉ (le partage
+   refuse). Les blocs SANS entrée IAT propre : loupe-04 (le memset
+   hérité), loupe-07 (la composition), loupe-08 et loupe-13 (les
+   feuilles pures — le miroir de la charte tls13 § 7) ; la croissance du
+   slot est NOP, 0x90 (la convention de la lignée depuis M0) ; tout
+   verdict négatif MONTE À LA BARRE (l'écran nomme ce que le domaine
+   refuse).
+10. **La barre-saisie et le journal (posées au chantier (a))** — la
+   saisie d'aller et de recherche vit À LA BARRE (aucun contrôle enfant :
+   l'écran appartient à Loupe) ; l'édition vit AU JOURNAL (256 octets
+   distincts, l'entrée par décalage, le disque intact jusqu'à la
+   sauvegarde) ; la sortie exige le DOUBLE-GESTE quand la marque sale
+   est posée (la perte est une volonté deux fois nommée, jamais un
+   accident d'un seul Alt+F4).
+
+## Le tableau du domaine (la découpe préfigurée — D161 : la
+## préfiguration n'est pas un droit, les slots/tailles s'arrêtent à la
+## notation sur les longueurs réelles ; les identifiants machine i11xxxx
+## naissent de la table) — la lignée des identifiants :
+## g9 [M8] → h10 [M9] → i11 [M10] — la carte du domaine les portera
+## dès sa première génération
+
+| Spécification | Bloc machine (carte) | Rôle | Famille |
+|---|---|---|---|
+| loupe-01 | i110001 | ouvrir : CreateFileW + la taille, la session née entière (le cadre, la vue, le panneau) | fichier |
+| loupe-02 | i110002 | lire : la fenêtre de 384 o au tampon, bornée, le recouvrement du journal | fichier |
+| loupe-03 | i110003 | fermer : la poignée rendue, les zones d'hygiène vidées, idempotent | fichier |
+| loupe-04 | i110004 | le cadre : la structure unique (960 o) posée vierge — la disposition source unique | fichier |
+| loupe-05 | i110005 | sha256 d'une gamme : tls13-01..04 PAR LA CARTE, les fenêtres de 64 Kio | empreintes |
+| loupe-06 | i110006 | md5 d'une gamme : la notation neuve (RFC 1321, les tables dérivées par arithmétique) | empreintes |
+| loupe-07 | i110007 | le cumul : MD5 + SHA-256 du fichier entier au panneau (la composition seule) | empreintes |
+| loupe-08 | i110008 | la ligne : 77 o exacts — le décalage, les 16 groupes, le miroir ASCII (feuille pure) | rendu |
+| loupe-09 | i110009 | l'écran : WinMain, la vitrine, LA PROCÉDURE, les trois zones déclarées (2320 o) | rendu |
+| loupe-10 | i110010 | peinture : WM_PAINT, l'unique peintre — composer l'ECRAIN puis TextOutW, la cellule en inverse | rendu |
+| loupe-11 | i110011 | défilement : la molette (3 lignes/cran) et l'ascenseur, bornés — la dernière fenêtre voit la fin | rendu |
+| loupe-12 | i110012 | aller : la barre-saisie hexa, le saut exact, LA RÈGLE DE RECADRAGE (citée par 14/15) | navigation |
+| loupe-13 | i110013 | recherche : l'algorithme pur — la première occurrence par memcmp hérité, ou FIN (feuille pure) | navigation |
+| loupe-14 | i110014 | suivant : l'occurrence suivante au fichier, le recouvrement de frontière, la FIN nommée | navigation |
+| loupe-15 | i110015 | curseur : la cellule active, les bords nommés (le clamp), la vue suit — jamais perdue | édition |
+| loupe-16 | i110016 | saisie : l'octet au journal (par décalage, remplace), la marque sale, le disque intact | édition |
+| loupe-17 | i110017 | sauver : chaque octet à son décalage (WriteFile 1 o), la marque levée, le panneau re-naît, le témoin | édition |
+| loupe-18 | i110018 | quitter : le double-geste garanti (la perte est une volonté), DestroyWindow, la sortie sans fuite | édition |
+
+L'héritage PAR LA CARTE (charte § 2) déclaré au plan d'adressage : la
+famille sha tls13 (tls13-01..04, scellée 1.0.0), la minilibc M1
+(libc-01 memcpy, libc-02 memcmp, libc-07 memset) et la
+boucle de messages de la démo (win-03, scellée) — embarqués au build
+byte-identiques, jamais copiés (l'héritage déclaré est l'héritage
+utilisé : chaque entrée est citée par ses specs). **Le chantier (a) est COMPLET : les 18
+spécifications sont POSÉES** (révision 1, provenance écrite-avant-code,
+le gabarit § 2.2 aux sept blocs, chaque exigence reliée à son vecteur)
+— le plan d'adressage (loupe/layout.py) arrête la table des verdicts,
+le cadre, le format de ligne, les tables MD5 dérivées par arithmétique,
+les zones .data, l'héritage et l'IAT ; l'instrument du chantier
+(scripts/verifier_specs_m10a.py) constate le tout sur pièces. R2 tenue :
+AUCUN octet de notation — la cérémonie d'ère précède tout build.
 
 ## Ce que le domaine promet (et comment il se preuve)
 

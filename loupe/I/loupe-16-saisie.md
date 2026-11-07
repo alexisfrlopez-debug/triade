@@ -1,0 +1,87 @@
+loupe-16 · saisie : l'octet écrit au journal, la marque sale posée · révision 1
+Intention : écrire un octet dans la cellule active — DEUX chiffres hexa
+successifs composent l'octet (le premier attend, le second engage),
+l'octet va AU JOURNAL DES ÉCRITURES (l'entrée par décalage, la
+réécriture du même octet REMPLACE) ET au tampon de vue (l'octet visible
+immédiatement), la marque SALE est posée — et LE DISQUE DEMEURE INTACT
+: tout est réversible avant la sauvegarde de loupe-17 (l'invariant du
+README). La garde de sortie est ré-armée à CHAQUE écriture (refus_
+quitter = 0 — la décision de loupe-18).
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_CHAR hors
+             mode saisie — les SEIZE chiffres hexa écoutent, tout
+             autre caractère est ignoré proprement ; P2 la session
+             est ouverte ; P3 la zone JOURNAL du plan (4 112 o : 256
+             entrées de 16 o — u64 décalage · u8 octet · 7 réserve —
+             et le nombre) + le nibble de la zone SAISIE.
+  post : Q1 LE PREMIER CHIFFRE : nibble actif, la valeur (0 à 15)
+             posée — la cellule attend (rien n'est écrit : un demi-
+             octet n'existe pas au disque ni au journal) ;
+         Q2 LE SECOND CHIFFRE : l'octet = (premier << 4) | second —
+             écrit AU JOURNAL : l'entrée du décalage du curseur
+             (l'entrée PAR DÉCALAGE : si le décalage est déjà au
+             journal, l'octet REMPLACÉ, le nombre n'augmente pas) ;
+             le journal PLEIN (256 distincts) → verdict -3 (la borne
+             nommée : « journal plein — Ctrl+S pour sauver ») ;
+         Q3 ET À LA VUE : si la cellule est dans la fenêtre (curseur
+             − vue < remplissage) : tampon[curseur − vue] = l'octet —
+             l'octet visible IMMÉDIATEMENT (jamais une édition
+             invisible) ;
+         Q4 LA MARQUE : cadre.sale = 1 ET refus_quitter = 0 (la garde
+             de loupe-18 ré-armée : après une NOUVELLE écriture, le
+             premier Alt+F4 re-vient avertir) ; le curseur AVANCE
+             (+1, clampé à taille − 1) — la cellule suivante attend ;
+         Q5 rax = 0 ; VK_SUPPR pendant l'attente (Q1) → le nibble
+             effacé (l'attente annulée proprement — le premier
+             chiffre repart).
+  inv  : I1 LE DISQUE INTACT : aucune écriture fichier ici (WriteFile
+             vit chez loupe-17 SEUL — la liste IAT du plan le
+             garantit : la contrebande d'écriture est un refus de
+             build) ;
+         I2 le journal est PAR DÉCALAGE (une entrée par octet — la
+             seconde écriture remplace : la sauvegarde écrit chaque
+             octet UNE fois, l'ordre interne du journal est celui de
+             la saisie) ;
+         I3 la cohérence de vue est tendue par loupe-02 Q2 (le
+             recouvrement : l'octet édité survit au défilement) —
+             ici la moitié locale : l'octet posé au tampon SI
+             visible ;
+         I4 le curseur reste BORNÉ [0, taille−1] (l'invariant du
+             cadre) ; AUCUNE entrée IAT propre (l'édition est pure
+             état : le journal, le tampon, la marque) ; NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P2) → verdict -4 SESSION, rax = -4.
+  E2 : la cellule hors fenêtre valide (curseur − vue ≥ remplissage :
+       la cellule n'existe pas à la vue) → verdict -3 HORS-BORNES —
+       l'écriture AU JOURNAL a quand même lieu ? NON : RIEN n'est
+       écrit (le refus précède le journal — la cellule fantôme
+       n'existe pas, l'oracle le constate).
+  E3 : le journal PLEIN (256 octets DISTINCTS en attente) → verdict
+       -3, la borne nommée à la barre (« journal plein — Ctrl+S »),
+       RIEN perdu (l'octet refusé n'entre pas, l'état demeure).
+  E4 : le caractère non hexa → IGNORÉ proprement (repli documenté :
+       rax = 0, rien — les seize chiffres seuls écoutent).
+Vecteurs :
+  V1 : différentiel — 10 000 saisies aléatoires (séquences de
+       chiffres, ré-écritures des mêmes décalés, la frontière du
+       journal) : le journal ET le tampon comparés au modèle Python
+       (l'entrée par décalage, le remplacement, le compte) (couvre
+       Q1, Q2, Q3, Q4, Q5).
+  V2 : scénario — « 4d5a » au curseur 0x22 : l'octet visible à la
+       vue, « MODIFIÉ » à la barre, l'astérisque au panneau, la
+       cellule suivante active — l'écran attendu (couvre Q3, Q4).
+  V3 : rejet — sans session : -4 ; la cellule au-delà du
+       remplissage : -3 RIEN au journal ; le 257e distinct : -3 nommé
+       (couvre E1, E2, E3).
+  V4 : scénario du repli — « z », « ! », l'espace : ignorés, rien
+       bougé (le différentiel constate l'inaction) ; VK_SUPPR à
+       l'attente : le premier chiffre repart (couvre E4, Q5).
+  V5 : falsification — la garde refus_quitter non ré-armée à
+       l'écriture : le scénario de loupe-18 (éditer PUIS Alt+F4
+       une seule fois doit avertir) échoue — la falsification
+       traverse les blocs, l'oracle à scénarios l'attrape.
+Fixtures    : le témoin du kit (les saisies aux bords de fenêtre) —
+              la cellule fantôme du E2 y vit.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (la zone JOURNAL déclarée), D7 (aucune IAT —
+              le disque demeure intact).

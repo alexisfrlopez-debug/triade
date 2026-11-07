@@ -1,0 +1,75 @@
+loupe-01 · ouvrir : le fichier donné à la session · révision 1
+Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
+de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
+faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
+fenêtre lue (loupe-02), le panneau d'empreintes calculé (loupe-07). Les
+refus sont NOMMÉS (absent, verrouillé, hors périmètre) — la barre les
+porte, jamais un silence. Loupe vit de ses pièces : tout fichier du projet
+s'ouvre à l'œil.
+Contrat :
+  pre  : P1 rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+             la capacité du cadre, MAX_PATH) ; P2 la session n'est pas
+             déjà ouverte (la poignée du cadre = INVALIDE — sinon le
+             refus -5 : un fichier à la fois, le périmètre 0.1.0) ;
+         P3 l'IAT kernel32 résolue (D7/D35) ; P4 la pile alignée 16.
+  post : Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+             OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la
+             taille par GetFileSizeEx au cadre (+520) ;
+         Q2 la BORNE NOMMÉE : taille > BORNE_TAILLE (2 Gio) → verdict -3,
+             la poignée FERMÉE AVANT le retour (jamais une poignée
+             pendante), la barre porte « hors périmètre 0.1.0 : 2 Gio » ;
+         Q3 le chemin COPIÉ au cadre (+0, libc-01 hérité PAR LA CARTE —
+             jamais octet par octet réécrit), la vue = 0, le curseur = 0
+             (loupe-04 a posé le vierge) ;
+         Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
+             puis loupe-07 (les empreintes du fichier entier au panneau)
+             — la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+         Q5 rax = 0 (la table des verdicts, charte § 9).
+  inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
+             aux autres, jamais reçu : Loupe est seul maître des octets
+             qu'il montrera modifiables) ;
+         I2 AUCUNE écriture au fichier à l'ouverture (lecture seule —
+             l'écriture vivra à loupe-17) ;
+         I3 le coût de Q4 est NOMMÉ : le panneau d'un fichier de 2 Gio
+             prend le temps de ses empreintes (deux passages) — la
+             vitrine née vraie, jamais un panneau mensonger ;
+         I4 tout refus d'OS est TRADUIT par la table (gle consigné au
+             journal du labo par le harnais) : jamais un code brut à
+             la barre ;
+         I5 l'IAT déclarée au plan (D161) : CreateFileW, GetFileSizeEx,
+             CloseHandle, GetLastError — la liste est fermée pour ce
+             bloc ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : ERROR_FILE_NOT_FOUND ou ERROR_PATH_NOT_FOUND → verdict -2 ABSENT
+       (le chemin ne désigne rien) — la barre le nomme, rax = -2.
+  E2 : ERROR_SHARING_VIOLATION → verdict -7 VERROUILLÉ (le partage
+       refuse : un autre détenteur tient le fichier) — la barre le
+       nomme, rax = -7.
+  E3 : tout autre refus d'OS (accès refusé, lecteur absent…) → verdict
+       -6 SYSTÈME, le code GetLastError consigné — rax = -6.
+  E4 : la session déjà ouverte (P2) → verdict -5, RIEN TOUCHÉ (le
+       fichier courant demeure) — un fichier à la fois, le nommé.
+Vecteurs :
+  V1 : scénario — le témoin du kit ouvert : le cadre lu champ à champ
+       (chemin, taille, vue 0, curseur 0, remplissage = min(384,
+       taille)), l'écran attendu composé octet par octet (couvre Q1,
+       Q3, Q4, Q5).
+  V2 : rejet — un chemin absent, un fichier tenu par un autre
+       détenteur, un fichier de 2 Gio + 1 : les TROIS verdicts nommés
+       à la barre, la poignée refermée dans le second cas (couvre Q2,
+       E1, E2, E3).
+  V3 : rejet — l'ouverture sur session ouverte : verdict -5, l'ancien
+       fichier INTACT (le tampon inchangé, l'oracle différentiel le
+       constate octet par octet) (couvre E4).
+  V4 : falsification — la taille mutée d'un octet au cadre après
+       l'ouverture : l'écran attendu diverge, l'oracle à scénarios
+       échoue (la falsification DEMANDÉE, charte § 3).
+Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
+              384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
+              formes du remplissage) + proxy.exe scellé (sha256
+              446279f3…, 44 544 o — la pièce de l'ère, ouverte par
+              l'application qui la juge).
+Provenance  : écrite-avant-code.
+Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
+              notation), D7/D35 (l'IAT), D137 (la lignée de balises —
+              un projet de développement).

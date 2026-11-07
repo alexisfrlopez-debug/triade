@@ -6814,3 +6814,63 @@ Work Log:
 - SUITE : M10-(a) LES DIX-HUIT SPÉCIFICATIONS POSÉES (la couche I complète,
   R2) ; la cérémonie d'ère du TGN (le 14e arbre) attend son geste ; le
   projet fils attend son premier geste à son message propre.
+
+## Task ID 113 — LE CHANTIER M10-(a) RÉALISÉ : LES DIX-HUIT SPÉCIFICATIONS LOUPE-01..18 POSÉES (LA COUCHE I COMPLÈTE DU TGN, R2 TENUE — LE GABARIT § 2.2 AUX SEPT BLOCS, CHAQUE EXIGENCE RELIÉE À SON VECTEUR) ; LE PLAN D'ADRESSAGE loupe/layout.py ARRÊTÉ AVANT LA NOTATION ; L'HÉRITAGE DÉCLARÉ PAR LA CARTE (libc-03 RETIRÉ) ; LA TABLE i11xxxx ; L'INSTRUMENT 150 CONTRÔLES VERTS (07/11)
+
+- Le message du développeur : « continue sur M10-(a) » — la suite
+  annoncée à l'Entrée 194. Le geste pose LES CONTRATS de l'application
+  entière : AUCUN octet de notation ne naît (R2 : la cérémonie d'ère
+  précède tout build).
+- LES 18 SPÉCIFICATIONS aux CINQ familles du tableau fondateur :
+  fichier (01 ouvrir · 02 lire + le recouvrement du journal · 03
+  fermer idempotent · 04 le cadre 960 o, la disposition source unique)
+  · empreintes (05 sha256 PAR LA CARTE tls13-01..04 · 06 md5 LA
+  NOTATION NEUVE [RFC 1321, les sept vecteurs officiels, « jamais une
+  preuve de sécurité » nommé] · 07 le cumul, le panneau TOUJOURS
+  celui du disque) · rendu (08 la ligne 77 o, feuille pure · 09
+  l'écran : LA VITRINE ENTIÈRE [WinMain + fenêtre + LA PROCÉDURE +
+  les trois zones déclarées] · 10 peinture, l'unique peintre · 11
+  défilement : la dernière fenêtre VOIT le dernier octet) ·
+  navigation (12 aller : la barre-saisie, LE REFUS NOMMÉ hors bornes,
+  LA RÈGLE DE RECADRAGE · 13 recherche : l'algorithme PUR par memcmp
+  hérité, ou LA FIN NOMMÉE [-1] · 14 suivant : le recouvrement de
+  frontière prouvé par construction) · édition (15 curseur : jamais
+  perdu hors écran · 16 saisie : le journal par décalage, LE DISQUE
+  INTACT · 17 sauver : l'écriture À L'OCTET, le panneau re-naît, LE
+  TÉMOIN rendu · 18 quitter : LE DOUBLE-GESTE garanti, la garde
+  refus_quitter tenue par le réseau 16/17/18).
+- LE PLAN D'ADRESSAGE (loupe/layout.py, D161 rejoué) : la table des
+  SEPT verdicts (−1 LA FIN NOMMÉE) · le cadre (952 o, la zone 960) ·
+  la ligne (77 o recomposée) · LES 64 CONSTANTES MD5_T DÉRIVÉES PAR
+  ARITHMÉTIQUE (T[0] D76AA478, T[63] EB86D391 — RFC 1321 recoupé, le
+  juge est le code) · les bornes 0.1.0 (2 Gio, 24 lignes, 64 Kio,
+  motif ≤ 32, journal ≤ 256) · les zones .data (960 · 2320 · 96 · 48
+  · 4112 · 48 · 8 · 16 · 65 536) · l'IAT 34 feuilles (kernel32 10 ·
+  user32 18 · gdi32 6, WriteFile chez loupe-17 SEUL) · LES RÈGLES
+  EXÉCUTABLES (vue_max, recadre — des fonctions re-jouées par le
+  vérificateur).
+- L'HÉRITAGE DÉCLARÉ EST L'HÉRITAGE UTILISÉ : tls13-01..04 + libc-01/
+  02/07 + win-03, CHAQUE entrée citée par ses specs ; libc-03 RETIRÉ
+  (aucune spec ne le cite — la contrebande de périmètre est un défaut
+  nommé).
+- L'INSTRUMENT verifier_specs_m10a.py : 150 CONTRÔLES VERTS — les
+  têtes et les sept blocs, la pureté déclarée (04/07/08/13), LA
+  COUVERTURE de chaque Qn/En par un vecteur, les verdicts dans la
+  table, les renvois et le réseau structurant, la table i11xxxx, les
+  constantes RE-DÉRIVÉES (64 MD5_T par sinus, le format, le cadre, les
+  zones, vue_max sur 18 tailles, recadre sur 9 curseurs), les
+  décisions au registre.
+- FRONTIÈRES : AUCUN octet de notation ; AUCUNE clé, AUCUN coffre
+  réel, AUCUN fragment, AUCUN arbre signé touchés ; le garde sceau I :
+  13 arbres VERTS (cle deposee reelle) vérifié AVANT consignation ; le
+  proxy 1.0.0 et la carte tls13 INTACTS ; la dette de cérémonie
+  D166/D171 DEMEURE (le 14e arbre attend la cérémonie d'ère, avant
+  tout build). Livrables : loupe/I/loupe-01..18, loupe/I/README.md
+  (§ 9 + § 10 + la table i11), loupe/layout.py,
+  scripts/verifier_specs_m10a.py, scripts/consigner_m10a.py.
+  Consignations : l'Entrée 195 PAR SCRIPT, la D172 PAR SCRIPT, le PLAN
+  (la rangée (a) RÉALISÉE + l'État), la présente Task ID 113.
+- SUITE : M10-(b) LE NOYAU NOTÉ-MESURÉ-PROUVÉ (fichier + empreintes,
+  le harnais différentiel, l'héritage sha byte-identique — R7) ; la
+  cérémonie d'ère du TGN attend son geste ; le projet fils attend son
+  premier geste à son message propre.
