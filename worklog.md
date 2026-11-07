@@ -6324,3 +6324,98 @@ Work Log:
   immédiate -7, le run en SA seconde) : LE PASSAGER ÉLIMINÉ SUR PIÈCES
   ET LA SONDE sys-06 S'OUVRE (lire le NTSTATUS brut ou LE ZÉRO de la
   réception, le miroir de l'Entrée 185).
+
+## Task ID 108 — LE SIXIÈME RUN REÇU ET ANALYSÉ SUR PIÈCES : LE JUMEAU (LE JUMELA CONSTATÉ PAR CODE — LE -7 REPRODUIT IDENTIQUE, LE PASSAGER ÉLIMINÉ SUR PIÈCES) ; LE RUN ARCHIVÉ ; LA SONDE SYS-06 LIVRÉE AU /TEST PAR LE MÊME GESTE (LE MIROIR DE L'ENTRÉE 185) (07/11)
+
+Work Log:
+- LE PUSH GITHUB TENU À L'OUVERTURE DU GESTE : le commit de passation
+  Task 107 (9db461b) parti EN AVANCE du flux — origin ré-aligné
+  (17fb911..9db461b, un fast-forward propre ; les trois miroirs à la
+  pointe).
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR (lecture seule,
+  sonder_run6_m9f.py) : preuves-m9f/ porte le trio DU RUN + le LISEZMOI
+  du réceptacle, AUCUNE pièce conditionnelle née ; la racine 16
+  entrées ; le kit RÉPARÉ INCHANGÉ (79d44284…) ; les pièces de
+  cérémonie demeurées (503f3822… + 188a7d42…).
+- LE RUN RAPATRIÉ (ramasse_run6_m9f.py, dossier NEUF
+  download/preuves-run-m9f-6/, D99) : les TROIS pièces, md5
+  aller-retour MATCH (temoin 9351b2bf…, journal acdc0fe8…, verdict
+  f432bc45…), toutes inédites.
+- LE RECOUP 33/33 SUR PIÈCES CROISÉES (recouper_run6_m9f.py,
+  D138/D145/D148) : les DIX-HUIT T0 [ok] (dont LES DEUX T0.erratum-9) ;
+  l'artefact INTACT == de23e577… (LE MÊME rebuild dev.3 que le run 5 —
+  le jumeau court le MÊME binaire) ; LE TERRAIN TENU (Win11 build
+  26300, ntdll b072efae… — LE MÊME que les runs 4/5 ; Python 3.14.3) ;
+  T1 + T2 VERT (handle 0x338) ; la clé attendue NON-NULLE (000a6be0…) ;
+  l'échec NOMMÉ T3.ouvrir (rax -7, état 5 — LE MÊME NOM que le run 5) ;
+  le recoup du jalon VERT (le CH == la construction re-jouée, 119 o) ;
+  LA SECONDE ÉMISSION RÉELLE DU PROJET (AUCUN rappel émission → sys-05
+  rend 0 ENCORE : l'émission réparée N'ÉTAIT PAS UN PASSAGER, elle
+  TIENT) ; l'échelle REJOUÉE sur la clé privée DU RUN (0824c1e4… →
+  000a6be0…) ; le témoin == le verdict LIGNE POUR LIGNE (34) ; le kit
+  du coffre ACQUITTÉ INCHANGÉ.
+- LE JUMEAU CONSTATÉ PAR CODE (F1/F2) : le journal du run 6 == le
+  journal DU RUN 5 LIGNE À LIGNE, les horodatements exceptés (07:23:36
+  ↔ 08:31:42 : soixante-huit minutes d'écart, PAS UNE LETTRE de
+  différence) ; les témoins divergent sur les invariants seuls —
+  l'interpréteur (3.13.9 → 3.14.3), l'ASLR, le handle (0x284 →
+  0x338), LE BORD DNS CHANGÉ (104.16.124.96 → 104.16.123.96 : une
+  AUTRE arête Cloudflare a répondu au run — le DNS résolu AU RUN), les
+  clés ; LE NOYAU ET L'ARTEFACT TENUS.
+- LE -7 REPRODUIT IDENTIQUE (F3) — LA CONDITION NOMMÉE D'AVANCE PAR LE
+  RECOUP-5 ET LA PASSATION 107 EST REMPLIE : l'émission VERT ×2, la
+  réception immédiate -7 ×2, le run en SA seconde ×2 → LE PASSAGER
+  ÉLIMINÉ SUR PIÈCES (un état transitoire du chemin ne revient pas
+  deux fois à l'identique, sur des poignées synchrones vivantes, vers
+  deux arêtes du bord) ; restent DEUX candidats : le contrat de
+  réception sys-06 [la spec R2 : « La réception n'a JAMAIS couru sur
+  le terrain réel » — réparée PAR SYMÉTRIE, jamais mesurée par sonde]
+  et LA DEMI-FIN [le zéro de sys-06 Q2 : le pair a refermé proprement
+  à l'offre sans SNI].
+- LE TEMPS ENCORE (F5) : le run entier dans SA seconde (08:31:42), T2
+  venant de réussir le three-way handshake synchrone : le verdict de
+  réception fut SEC, ENCORE ; LA COHÉRENCE UNANIME (F6) : aucune pièce
+  conditionnelle née aux DEUX runs — la lecture n'a JAMAIS rendu un
+  octet.
+- L'ARCHIVAGE (archiver_run6_m9f.py, modèle archiver_run5, D143 : par
+  DÉPLACEMENT) : le trio + LE VERDICT DU RECOUP (33/33) →
+  archives-preuves/preuves-run-m9f-6/ ; preuves-m9f/ ré-armé puis CLOS
+  (son LISEZMOI seul) ; les DEUX index mis à jour ; la racine 16
+  entrées ; le kit ACQUITTÉ INCHANGÉ (79d44284… — AUCUN dépôt).
+- LA SONDE SYS-06 OUVERTE (scenario-sonde-sys06.py, le miroir de
+  l'Entrée 185) : LE GESTE M9F DÉCOMPOSÉ — l'offre du CH de référence
+  par sys-05 DIRECT (le chemin réparé, vert aux runs 5/6) PUIS LA
+  PREMIÈRE LECTURE PAR LE TRAMPOLINE DE CAPTURE (33 o posés au run,
+  l'artefact INTACT : le code ET le NTSTATUS de rdx empaquetés) ; LE
+  COMPAS ÉTALONNÉ AVANT LA MESURE (handle invalide → -6 +
+  STATUS_INVALID_HANDLE) ; LA TABLE NTSTATUS canonique (23 valeurs,
+  Wine ET ReactOS au bit près) ; LES VARIATIONS (taille : capacité 1
+  sur session sacrifiée ; délai : après 2 s) ; LA CONTRE-ÉPREUVE S4
+  (la poignée par LE RAPPEL STANDARD, session NEUVE — si la lecture
+  rend des octets : LA PERCÉE, la ligne applicative suit DANS LE MÊME
+  RUN).
+- L'ASSEMBLAGE ÉPROUVÉ (assembler_kit_sondesys06.py) : le recoup PAR
+  AST de 31 constantes == l'artefact/le plan (dont LA POSE DU WSABUF
+  relue DANS L'IMAGE aux DEUX blocs @0xA586/@0xA706) ; LES PORTES
+  passées (erratum n° 7 hérité ; S1 le squelette EXACT vers sys-06 ;
+  S2 la table canonique ; S3 le compas avant la mesure ; S4 le témoin
+  vivant ; S5 LE GESTE DÉCOMPOSÉ : l'offre AVANT la lecture) ;
+  py_compile ; l'extraction vierge VERT — kit-sonde-sys06.zip md5
+  67e2014d… (39 262 o).
+- LA LIVRAISON (deposer_kit_sondesys06.py) : kit-sonde-sys06.zip +
+  LISEZMOI-sonde-sys06.txt + le réceptacle preuves-sonde-sys06/ NÉ au
+  coffre /test (la racine 19 entrées) ; la vague m9f INTACTE constatée
+  AVANT le geste (kit-m9f.zip 79d44284… + la sonde sys-05 215c2caa…
+  demeurée) ; l'index des livraisons mis à jour (la note de la sonde).
+- FRONTIÈRES : LA FINALE 1.0.0 REFUSÉE pour CE run (fail-closed — le
+  critère exige le vert ; D104 : aucune balise) ; le kit m9f INCHANGÉ
+  (l'offre parfaite ET ÉMISE DEUX FOIS) ; le scellé 0.9.0 INTACT ; la
+  clé privée jamais traversée (D87). SUITE : LE RUN DE LA SONDE SYS-06
+  AU DÉVELOPPEUR — dézipper kit-sonde-sys06.zip dans un dossier NEUF
+  D99, python scenario-sonde-sys06.py (Python 64 bits, réseau vivant),
+  renvoyer preuves-sonde-sys06/ ENTIER au coffre /test/preuves-sonde-
+  sys06/ — SI LA LECTURE REND DES OCTETS : LA PERCÉE, LA FINALE 1.0.0
+  EN VUE, LE JALON M9 — LA GRANDE ŒUVRE ; SI LE ZÉRO (-7) : LA
+  DEMI-FIN NOMMÉE SUR PIÈCES ; SI LE -6 : LE NTSTATUS NOMME LE
+  COUPABLE (PENDING le bug du contrat, INVALID_PARAMETER le contrat
+  d'appel, RESET/DISCONNECT le pair).
