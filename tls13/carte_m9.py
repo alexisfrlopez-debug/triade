@@ -74,6 +74,10 @@ PROFILS = "x86-64-win11-pe"
 VERSION_DEV1 = "1.0.0-dev.4"   # la révision 3 : le build dev.4 (sys-06
                                 # re-noté R3 : AfdFlags = 0, TdiFlags =
                                 # TDI_RECEIVE_NORMAL 0x20 — l'erratum n° 10)
+VERSION_FINALE = "1.0.0"       # la finale (le miroir layout.VERSION_FINALE
+                                # 0x01000000 — le scellage est un fait de
+                                # carte, D165 : elle attend le terrain vert
+                                # du chantier (f), jamais un build ici)
 
 
 class ErreurCarte(Exception):

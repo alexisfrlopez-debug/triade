@@ -1355,6 +1355,160 @@ def verifier(volume: str, graine: int) -> int:
     return 0
 
 
+VERDICT_RECOUP_M9F = os.path.join(
+    TRIADE, "..", "download", "preuves-run-m9f-7", "VERDICT-recoup-labo-m9f-7.txt")
+
+
+def _sceller_final_m9() -> int:
+    """Scellage de la finale 1.0.0 (modèle D147/corpus, le miroir M8 Entrée
+    164 : le scellage est un FAIT DE CARTE — l'artefact ne bouge JAMAIS,
+    proxy.exe demeure byte-identique au dev.4 que LE SEPTIÈME RUN a couru).
+    Les portes, tranchées binaires AVANT l'unique écriture : le garde sceau
+    I (D87/D162), LE RECOUP TERRAIN VERT SUR PIÈCES (le run M9-(f) consigné
+    — D138/D145/D148/D154), la cristallisation R6 10/10, le verrou croisé
+    R8, la balise encore dev ; puis la bascule de balise dans frag-bld
+    (occurrence unique, vérifiée EN MÉMOIRE avant l'écriture)."""
+    print("=== M9-(f) : SCELLAGE de la finale 1.0.0 "
+          "(la session réelle consignée — LE SEPTIÈME RUN VERT SUR PIÈCES) ===")
+
+    # 1. le garde sceau I (D87) — l'état « réelle » tenu avant tout geste
+    _garde_sceau_I()
+
+    # 2. LE RECOUP TERRAIN sur pièces (la seule porte que le terrain ouvre)
+    if not os.path.isfile(VERDICT_RECOUP_M9F):
+        raise EchecBuild(
+            f"le verdict du recoup terrain est ABSENT ({VERDICT_RECOUP_M9F}) — "
+            "le recoup labo d'abord : la finale ne se scelle QUE sur pièces "
+            "(D138/D145/D148)")
+    with open(VERDICT_RECOUP_M9F, encoding="utf-8") as f:
+        verdict_recoup = f.read()
+    if "BILAN DU RECOUP : 34 PASS" not in verdict_recoup:
+        raise EchecBuild(
+            "le verdict du recoup terrain n'est pas « 34 PASS » — scellage "
+            "REFUSÉ (fail-closed)")
+    if verdict_recoup.count("[recoup-m9f7] PASS : A :") != 6:
+        raise EchecBuild("les six pièces du run ne sont pas attestées PASS au "
+                         "verdict du recoup — scellage refusé")
+    print("[terrain] le recoup M9-(f) VERT 34/34 sur pièces croisées : LE "
+          "SEPTIÈME RUN du 2026-11-07 (Windows 10.0 build 26300, le VRAI "
+          "ntdll lu par les DEUX lecteurs, le socket par LE VRAI afd.sys "
+          "zéro ws2_32, la poignée ENTIÈRE par LE CLIENT TLS 1.3 DE "
+          "L'ARTEFACT, LA LIGNE APPLICATIVE CHIFFRÉE ÉCHANGÉE — le témoin "
+          "HTTP/1.1 200 OK DÉCHIFFRÉ PAR LA MACHINE, l'épinglage divergent "
+          "-6 NOMMÉ CONTRE LE VRAI SERVEUR — les pièces au coffre "
+          "/test/preuves-m9f)")
+
+    # 3. la cristallisation R6 10/10 (exigée au scellage)
+    phrase, graine_cles = cm9.charger_secrets(interactif=False)
+    maitre = cm9.cle_maitresse(phrase)
+    _, fragments, _, _ = cm9.lire_carte()
+    prf = cm9.dechiffrer_fragment(maitre, "frag-prf",
+                                  fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            compteurs[champs["id"]] = int(
+                re.match(r"(\d+)/10", champs.get("crist", "0/10")).group(1))
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplète : {incomplets} — "
+                         "10 vérifications requises (R6)")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # 4. le verrou croisé R8 AVANT l'édition + la balise encore dev
+    nb, manifeste = verrou_croise_m9()
+    if manifeste.get("version") != cm9.VERSION_DEV1:
+        raise EchecBuild(
+            f"la carte porte déjà « {manifeste.get('version')} » — la balise "
+            "n'est pas dev.4 : scellage refusé (anti-rollback R6, idempotence)")
+    with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
+        exe = f.read()
+    sha_exe = "sha256:" + hashlib.sha256(exe).hexdigest()
+    if manifeste.get("empreinte") != sha_exe:
+        raise EchecBuild(
+            f"l'artefact diverge du scellé attendu "
+            f"({(manifeste.get('empreinte') or '?')[:24]}…) — le scellage est "
+            "un fait de carte, proxy.exe ne bouge pas")
+    print(f"[R8] verrou croisé : {nb} empreintes conformes ; artefact "
+          f"{manifeste.get('version')} INTACT ({sha_exe[7:23]}…, "
+          f"{len(exe)} o)")
+
+    # 5. la bascule de balise (occurrence unique, EN MÉMOIRE avant l'écriture)
+    bld = cm9.dechiffrer_fragment(maitre, "frag-bld",
+                                  fragments["frag-bld"]).decode("utf-8")
+    occurrences = bld.count(f"version={cm9.VERSION_DEV1}")
+    if occurrences != 1:
+        raise EchecBuild(f"balise {cm9.VERSION_DEV1} attendue une fois dans "
+                         f"frag-bld ({occurrences} occurrence(s)) — scellage "
+                         "refusé (fail-closed)")
+    bld = bld.replace(f"version={cm9.VERSION_DEV1}",
+                      f"version={cm9.VERSION_FINALE}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm9.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm9.chiffrer_fragment(maitre, n, clairs[n])
+                for n in cm9.FRAGMENTS}
+    racine = cm9.empreinte_racine(nouveaux)
+    entete = cm9.construire_entete(racine, cm9.VERSION_FINALE)
+    prive, pub = cm9.paire_cles(graine_cles)
+    signature = cm9.signer(prive, entete, nouveaux)
+
+    # 6. vérification EN MÉMOIRE avant l'unique écriture (modèle D144/D147)
+    cm9.verifier_listes_blanches(entete.decode("ascii"))
+    cm9.verifier_signature(pub, entete, nouveaux, signature)
+    if cm9.empreinte_racine(nouveaux).hex() not in entete.decode("ascii"):
+        raise EchecBuild("contrôle en mémoire : empreinte racine divergente")
+    controle = cm9.dechiffrer_fragment(maitre, "frag-bld",
+                                       nouveaux["frag-bld"]).decode("utf-8")
+    if (f"version={cm9.VERSION_FINALE}" not in controle
+            or f"version={cm9.VERSION_DEV1}" in controle):
+        raise EchecBuild("contrôle en mémoire : bascule de balise non constatée")
+    cm9.ecrire_carte(entete, nouveaux, signature, pub)
+
+    # 7. le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm9.CARTE_DIR, "tableau-de-bord.txt")
+    if os.path.exists(chemin_tab):
+        with open(chemin_tab, encoding="utf-8") as f:
+            tab = f.read()
+        tab = tab.replace(f"version={cm9.VERSION_DEV1}",
+                          f"version={cm9.VERSION_FINALE}")
+        tab = tab.replace(
+            f"{cm9.VERSION_DEV1} conforme (schema dev, monotonie R10 : "
+            "0x01000002 > 0x00090001 — la finale 1.0.0 attend le terrain vert "
+            "du chantier (f), jamais un scellage ici)",
+            f"{cm9.VERSION_FINALE} SCELLÉE sur le recoup terrain M9-(f) VERT "
+            "34/34 sur pièces croisées (le fait de carte D104/D165 ; "
+            "monotonie R10 : 0x01000004 > 0x00090001 tenue)")
+        if (f"version={cm9.VERSION_FINALE}" not in tab
+                or "SCELLÉE" not in tab
+                or f"{cm9.VERSION_DEV1} conforme" in tab):
+            raise EchecBuild("le tableau de bord n'a pas suivi la balise — "
+                             "constater avant d'aller plus loin")
+        with open(chemin_tab, "w", encoding="utf-8") as f:
+            f.write(tab)
+
+    # 8. le verrou croisé POST-scellage + l'artefact INTACT (le fait de carte)
+    nb2, manifeste2 = verrou_croise_m9()
+    if manifeste2.get("version") != cm9.VERSION_FINALE:
+        raise EchecBuild(f"la carte scellée porte « {manifeste2.get('version')} » "
+                         "— la bascule n'est pas constatée après écriture")
+    with open(os.path.join(ICI, "proxy.exe"), "rb") as f:
+        exe2 = f.read()
+    if "sha256:" + hashlib.sha256(exe2).hexdigest() != sha_exe:
+        raise EchecBuild("l'artefact a bougé — le scellage est un fait de "
+                         "carte, proxy.exe demeure byte-identique")
+    print(f"[R8] verrou croisé post-scellage : {nb2} empreintes conformes ; "
+          f"balise {manifeste2.get('version')}")
+    print(f"[balise] {cm9.VERSION_FINALE} SCELLÉE (immuable § 9 ; défaut → "
+          "X.Y.Z+1 à contrat stable, R4 ; anti-rollback R6 vivant — la "
+          "reconstruction est désormais REFUSÉE) ; proxy.exe INTACT (sha256 "
+          f"{sha_exe[7:23]}…, {len(exe2)} o — le scellage est un fait de "
+          "carte, LE SEPTIÈME RUN A ÉTABLI LE CRITÈRE : LE JALON M9 — "
+          "LA GRANDE ŒUVRE)")
+    return 0
+
+
 def main() -> int:
     args = sys.argv[1:]
     graine = 20261106
@@ -1363,6 +1517,8 @@ def main() -> int:
         graine = int(args[args.index("--graine") + 1])
     if "--volume" in args:
         volume = args[args.index("--volume") + 1]
+    if "--sceller-final" in args:
+        return _sceller_final_m9()
     if "--verifier" in args:
         return verifier(volume, graine)
     return construire(volume, graine)

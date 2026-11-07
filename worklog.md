@@ -6659,3 +6659,80 @@ Work Log:
   dossier NEUF D99, python scenario-m9f.py — réseau vivant —
   renvoyer preuves-m9f/ ENTIER au coffre /test) — ET SI LE VERT
   TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.
+
+## Task ID 111 — LE SEPTIÈME RUN VERT SUR PIÈCES (LA SESSION RÉELLE ÉTABLIE) ; LE RECOUP LABO VERT 34/34 SUR PIÈCES CROISÉES ; LA FINALE 1.0.0 SCELLÉE (FAIT DE CARTE — L'ARTEFACT 446279f3… INTACT) — LE JALON M9 FRANCHI, LA GRANDE ŒUVRE (07/11)
+
+Work Log:
+- LA REPRISE DU GESTE : LE PUSH GITHUB RÉPARÉ (la demande du
+  développeur « répare le push git ») — les jetons .gdrive/ perdus au
+  recyclage RAPATRIÉS du coffre Drive /Tokens (la procédure Task 79 :
+  octets identiques, 600, JAMAIS affichés), git-credentials régénéré
+  (133 o, la mécanique Entrée 133), check_auth.py : OAuth Drive 200 +
+  GitHub 200 (alexisfrlopez-debug) ; la pointe locale EN RETARD DE DIX
+  commits (zéro divergence) — fast-forward PROPRE ffcdf19 → 9ac03eb,
+  LE PUSH VERT (origin == HEAD, exit 0) ; la cohérence git ↔ Drive
+  re-vérifiée (verifier_coherence_git_drive_r3.py [labo] : 15 portes —
+  git 4/4, le coffre /test 9/9, le miroir 2/2) ; la réserve
+  instrumentale D149 réinstallée (pynacl, keystone, capstone, pefile,
+  unicorn).
+- LE SEPTIÈME RUN REÇU (« preuves déposées dans le drive /test ») :
+  LES CINQ pièces au réceptacle preuves-m9f/ — le run ENTIER A VÉCU
+  (les pièces T4/T6 nées : ligne-recue.txt + journal-emissions.txt).
+  LE TÉMOIN : LES VINGT T0 [ok] (les DEUX erratum-9 + LES DEUX
+  erratum-10 relus DANS L'IMAGE), le VRAI ntdll (SSN 85/7/15), le
+  socket par LE VRAI afd.sys (zéro ws2_32), **LA POIGNÉE OUVERTE
+  (T3.ouvrir rax 0 état 3 — LA MORT -7 DES RUNS 5/6 FRANCHIE)**, LE
+  RECOUP DU CH (119 o), LA LIGNE APPLICATIVE ÉCHANGÉE (le témoin
+  « HTTP/1.1 200 OK » DÉCHIFFRÉ PAR LA MACHINE — 1369 o), LA GARDE -6
+  NOMMÉE, LA FERMETURE PROPRE (close_notify 24 o, NtClose ×2,
+  l'artefact relu inchangé) ; le journal HUIT lignes TOUTES VERTES
+  dans SA seconde (12:21:26) — VERDICT DU RUN : VERT, LA SESSION
+  RÉELLE ÉTABLIE.
+- LE RECOUP LABO (recouper_run7_m9f.py — le juge est le code) : LES
+  SIX pièces md5 == Drive ; TRENTE-QUATRE contrôles VERTS — l'échelle
+  REJOUÉE sur la clé privée DU RUN rend la clé du témoin (RFC 7748),
+  la construction CH re-jouée (114 o), **LA LIGNE REÇUE LUE EN CLAIR
+  sur la pièce (1369 o — LA PREMIÈRE LIGNE APPLICATIVE EN CLAIR DU
+  PROJET)**, LES CINQ ÉMISSIONS RECADRÉES SANS RESTE (436 o :
+  119/58/116/119/24), le kit 92098687… INCHANGÉ + l'empreinte
+  épinglée dans la source ; LA CONDITION NOMMÉE D'AVANCE lue au
+  worklog + au JOURNAL (Entrée 192) — VERDICT : RECOUP VERT 34/34,
+  la finale DÉBLOQUÉE. (DEUX défauts d'instrument nommés par le
+  fail-closed en cours de geste : une clé publique recopiée à la main
+  FAUTIVE — corrigée : les TROIS valeurs du run PARSÉES de la pièce ;
+  la ligne BILAN absente du verdict écrit — corrigée : le bilan vit
+  dans la pièce. Les pièces immuables, D154.)
+- LA CRISTALLISATION R6 : dix passes --verifier (graine 20261106,
+  volume complet : M4 560 + M5 365 + harnais 131 à chaque passe,
+  verrou croisé 86/86) — 86 blocs à 10/10.
+- LE SCELLAGE (build_m9.py --sceller-final — né au geste, le miroir
+  M8 Entrée 164) : le garde 13/13 AVANT ; LE RECOUP TERRAIN EXIGÉ SUR
+  PIÈCES (VERT 34/34 + les six attestations A) ; la cristallisation
+  86×10/10 ; le verrou croisé + la balise encore dev.4 ; la bascule
+  version=1.0.0-dev.4 → version=1.0.0 dans frag-bld (occurrence
+  UNIQUE, EN MÉMOIRE) ; les fragments re-chiffrés, la racine
+  re-dérivée, L'ENTÊTE PORTE LA BALISE, la signature Ed25519
+  re-signée (graine durable D144) ; le tableau de bord suit ;
+  POST-SCELLAGE : verrou croisé 86/86, **proxy.exe INTACT
+  (446279f3…, 65 024 o — LE MÊME binaire que LE SEPTIÈME RUN a
+  couru)**, la reconstruction REFUSÉE par l'anti-rollback (constaté),
+  la re-vérification sous 1.0.0 VERTE.
+- LA CLÔTURE D143 (archiver_run7_m9f.py) : preuves-run-m9f-7/ créé
+  (D99), les CINQ pièces DÉPLACÉES (md5 constatés après — jamais un
+  jet), le VERDICT-recoup-labo-m9f-7.txt déposé AVEC les pièces,
+  preuves-m9f/ ré-armé (son LISEZMOI seul), LES DEUX INDEX mis à
+  jour, la racine 19 entrées en ordre (le kit RÉPARÉ 92098687…
+  INCHANGÉ).
+- FRONTIÈRES : le scellé 0.9.0 INTACT (l'ancre R7) ; l'artefact
+  446279f3… DEMEURE L'ARTEFACT FINAL 1.0.0 (le fait de carte) ; le
+  kit RÉPARÉ demeure au /test (la pièce du jalon) ; les pièces de
+  cérémonie demeurées (la TROISIÈME remise 0978c117… + l'ancre
+  188a7d42…) ; la clé privée jamais traversée (D87) ; les balises
+  sœurs INTACTES (linux 0.7.0 / riscv 0.8.0). Consignations :
+  l'Entrée 193 PAR SCRIPT, D170 PAR SCRIPT, PLAN (la rangée (f) +
+  l'État — LE JALON M9 FRANCHI), la présente Task ID 111 ;
+  scripts : recouper_run7_m9f.py, archiver_run7_m9f.py,
+  consigner_entree193.py.
+- SUITE : LA PASSATION D141 (la série 090 poursuit : le bundle à la
+  pointe, l'ancien 090-96d2b8d archivé versionné) + LE PUSH GITHUB À
+  LA POINTE — LES TROIS MIROIRS ALIGNÉS À LA FINALE 1.0.0.
