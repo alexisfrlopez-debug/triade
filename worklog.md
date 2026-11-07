@@ -6215,3 +6215,76 @@ Work Log:
   dézipper kit-m9f.zip dans un dossier NEUF D99, python
   scenario-m9f.py, renvoyer preuves-m9f/ ENTIER au coffre) — ET SI LE
   VERT TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.
+
+## Task ID 107 — LE CINQUIÈME RUN REÇU ET ANALYSÉ SUR PIÈCES : LA PREMIÈRE ÉMISSION RÉELLE DU PROJET (L'ERRATUM n° 9 VALIDÉ SUR LE VRAI NOYAU) — MAIS LE ROUGE TIENT : T3.ouvrir, LA PREMIÈRE LECTURE (rax -7, état 5), LA MORT A RECULÉ D'UN CRAN ; LE PUSH GITHUB RÉPARÉ À L'OUVERTURE ; LE RUN ARCHIVÉ — LE SIXIÈME RUN ATTENDU (07/11)
+
+Work Log:
+- LE PUSH GITHUB RÉPARÉ À L'OUVERTURE DU GESTE (la demande du
+  développeur : « répare le push git ») : le push re-tenté —
+  origin == 5dcd1f9 (la passation 106 partie EN AVANCE du flux : un
+  fast-forward propre, rien défait ; la passation du présent geste
+  ré-aligne les trois miroirs à sa pointe).
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR (lecture seule) : preuves-m9f/
+  porte le trio DU RUN + le LISEZMOI du réceptacle ; la racine 16
+  entrées ; le kit RÉPARÉ INCHANGÉ (79d44284…) ; les pièces de
+  cérémonie demeurées (503f3822… + 188a7d42…).
+- LE RUN RAPATRIÉ (ramasse_run5_m9f.py, dossier NEUF
+  download/preuves-run-m9f-5/) : les QUATRE pièces, md5 aller-retour
+  MATCH, toutes inédites.
+- LE RECOUP 33/33 SUR PIÈCES CROISÉES (recouper_run5_m9f.py,
+  D138/D145/D148) : les DIX-HUIT T0 [ok] (dont LES DEUX T0.erratum-9 :
+  la pose relue DANS L'IMAGE aux DEUX blocs) ; l'artefact INTACT ==
+  de23e577… (le premier run du build réparé) ; LE TERRAIN TENU (Win11
+  build 26300, ntdll b072efae… — LE MÊME que le run 4 ; Python 3.13.9) ;
+  T1 + T2 VERT (handle 0x284) ; la clé attendue NON-NULLE (ca6cf4ba…) ;
+  l'échec NOMMÉ T3.ouvrir (rax -7, état 5) ; le recoup du jalon VERT
+  (le CH == la construction re-jouée, 119 o) ; l'échelle REJOUÉE sur la
+  clé privée DU RUN (c757a3b5… → ca6cf4ba…) ; le témoin == le verdict
+  LIGNE POUR LIGNE (34) ; le kit du coffre ACQUITTÉ INCHANGÉ.
+- LA PREMIÈRE ÉMISSION RÉELLE DU PROJET : la ligne « le rappel
+  émission : sys-05 rend -6 » des runs 1/3/4 a DISPARU (la source ne
+  journalise QUE si r != 0 → sys-05 a rendu 0) — le CH 119 o, composé
+  PARFAIT, EST PARTI SUR LE RÉSEAU par le VRAI afd.sys, zéro ws2_32.
+- L'A/B CONCLUT (F1/F2/F3) : le journal du run 5 == le journal du run
+  4 MOINS la ligne « sys-05 rend -6 », les horodatements exceptés, sur
+  LE MÊME noyau (Win11 26300, ntdll b072efae…), l'artefact seul ayant
+  changé (d8928934… → de23e577… : les TROIS octets du diff contrôlé) :
+  LA RÉPARATION (la pose canonique 0x68, buf à +8) EST LA CAUSE DE LA
+  GUÉRISON — L'ERRATUM n° 9 VALIDÉ SUR LE TERRAIN RÉEL ; le refus -6
+  ACCESS_VIOLATION (la sonde Entrée 185) EST MORT.
+- LA MORT A RECULÉ D'UN CRAN (F4/F5) : de l'émission (sys-05) à LA
+  PREMIÈRE LECTURE (sys-06, le ServerHello attendu : le rappel
+  réception, jamais journalé, rend non-nul → « la coupure du socle →
+  -7 », tls13-27 Q3, l'état 5) — EXACTEMENT la frontière que l'Entrée
+  187 nommait d'avance ; LE -7 A CHANGÉ DE CHAÎNE (run 4 : le CH
+  jamais parti ; run 5 : le CH PARTI, la réception en échec).
+- LE TEMPS ÉLIMINE LE SILENCE (F6) : le run entier dans SA seconde
+  (07:23:36), T2 venant de réussir le three-way handshake synchrone :
+  la lecture BLOQUANTE est revenue IMMÉDIATEMENT — un serveur muet
+  aurait TENU la lecture (la garde-chien tire à 300 s) : le verdict de
+  réception fut SEC (un refus du noyau ou une fermeture vive du pair).
+- LES CANDIDATS (évidence avant correctif — D54/D68/D98) : (a) le
+  passager réseau [AFFAIBLI PAR LE TEMPS, PAS ÉLIMINÉ — un middlebox
+  peut refermer VITE l'offre sans SNI ; le scénario le suggère :
+  « réessayez réseau vivant »] ; (b) le contrat de réception sys-06
+  refusé STRUCTURELLEMENT [la spec R2 le nomme : « La réception n'a
+  JAMAIS couru sur le terrain réel » — réparée PAR SYMÉTRIE, jamais
+  mesurée par sonde] ; (c) LA DEMI-FIN [le pair a refermé proprement à
+  l'offre : le zéro de sys-06 Q2]. LE CODE EXACT vit dans rdx (sys-06
+  Q5) : UN SEUL MOT D'INFORMATION MANQUE — LA SONDE sys-06 LE LIRAIT
+  (le miroir de l'Entrée 185).
+- L'ARCHIVAGE (archiver_run5_m9f.py, modèle archiver_run4, D143 : par
+  DÉPLACEMENT) : le trio + LE VERDICT DU RECOUP (33/33) →
+  archives-preuves/preuves-run-m9f-5/ ; preuves-m9f/ RÉ-ARMÉ (son
+  LISEZMOI seul) ; les DEUX index mis à jour ; la racine 16 entrées ;
+  le kit ACQUITTÉ INCHANGÉ (79d44284… — AUCUN dépôt : le kit du run 5
+  est celui du run 6).
+- FRONTIÈRES : LA FINALE 1.0.0 REFUSÉE pour CE run (fail-closed — le
+  critère exige le vert ; D104 : aucune balise) ; le kit INCHANGÉ (le
+  terrain lavé, l'offre parfaite ET ÉMISE) ; le scellé 0.9.0 INTACT ;
+  la clé privée jamais traversée (D87). SUITE : LE SIXIÈME RUN DU
+  DÉVELOPPEUR — le MÊME kit, un dossier NEUF D99, réseau vivant (UN
+  AUTRE réseau si possible : le discriminant du passager), preuves-m9f/
+  ENTIER au coffre — SI LE VERT VIENT : LA FINALE 1.0.0, le jalon M9 —
+  LA GRANDE ŒUVRE ; SI LE -7 SE REPRODUIT IDENTIQUE : LA SONDE sys-06
+  (nommée d'avance).
