@@ -61,6 +61,8 @@ SAISIE_MAX = 79                    # la barre-saisie : 79 chiffres + NUL
 DEFILEMENT_LIGNES = 3              # la molette : TROIS lignes par cran
                                    # (WHEEL_DELTA = 120, le cran canonique)
 PAGE_LIGNES = GRILLE_LIGNES - 2    # la page : la grille − 2 lignes de repère
+PAS_LIGNE = LIGNE_OCTETS           # SB_LINEUP/DOWN : ±16 o (une ligne)
+PAS_PAGE = PAGE_LIGNES * LIGNE_OCTETS   # SB_PAGEUP/DOWN : ±352 o (22 lignes)
 
 # --- La ligne hexadécimale (loupe-08) : le format ARRÊTÉ ------------------------
 # « SSSSSSSS  HH HH HH HH HH HH HH HH  HH HH HH HH HH HH HH HH  AAAAAAAAAAAAAAAA »
@@ -125,6 +127,57 @@ ZONE_CUMUL = CUMUL_FENETRE         # 64 Kio : LA fenêtre de lecture du domaine
                                    # (empreintes 05/06/07 + recherche 14 —
                                    # l'exclusion de famille : jamais deux flux
                                    # simultanés, l'application est monofile)
+
+# --- La disposition des zones (ARRÊTÉE au geste (c) — la source unique) -----------
+# LA BARRE-ÉTAT DU GESTE (c) : la ligne 1 de la barre porte QUATRE états nommés —
+# mode MESSAGE → le texte du tampon (le refus NOMMÉ monte à la barre, I4 de
+# loupe-09 : « la barre le porte au prochain WM_PAINT ») ; mode ALLER/CHERCHER →
+# le libellé du mode + le tampon (la saisie vit À LA BARRE, I1 de loupe-12) ;
+# mode RIEN + session → la balise ligne (D137) ; mode RIEN + vide → l'usage.
+# Le tiret de la balise est le trait d'union ASCII « - » et le point médian
+# « · » le byte 0xB7 : l'expansion latin-1 EXACTE (I4 de loupe-10) n'élève
+# que 0x00-0xFF — U+2014 n'y vit pas, la spec l'écrit « — » à la française.
+
+SAISIE_MODE = 0                    # u32 @ +0 : 0 RIEN · 1 ALLER · 2 CHERCHER
+                                   # · 3 MESSAGE (la barre-état du geste (c))
+SAISIE_ACTIF = 4                   # u32 @ +4 : le nibble en attente
+                                   # (loupe-16, chantier (d) — déclaré, vivant)
+SAISIE_NIBBLE = 8                  # u32 @ +8 : sa valeur
+SAISIE_TAMPON = 12                 # octets @ +12 : les chiffres frappés (le
+                                   # message en mode MESSAGE — 79 + NUL)
+MODE_RIEN = 0
+MODE_ALLER = 1
+MODE_CHERCHER = 2
+MODE_MESSAGE = 3
+ALLER_CHIFFRES = 8                 # 8 chiffres hex max (la borne du format
+                                   # 0x7FFFFFFF à 8 chiffres — Q2 de loupe-12)
+CHERCHER_CHIFFRES = 64             # 64 chiffres = 32 octets (MOTIF_MAX)
+
+MOTIF_OCTETS = 0                   # motif[32] @ +0 (la zone MOTIF)
+MOTIF_LONGUEUR = 32                # u32 @ +32 (F3 reprend le dernier motif)
+
+METRIQUES_CHAR_W = 0               # u32 @ +0 : la chasse mesurée UNE fois
+METRIQUES_LIGNE_H = 4              # u32 @ +4 : la hauteur de ligne
+METRIQUES_LIGNES = 8               # u32 @ +8 : les lignes visibles (WM_SIZE)
+METRIQUES_DRAPEAUX = 12            # u32 @ +12 : bit 0 = la police mesurée
+
+ECRAN_ENTETE = 0                   # 80 o @ +0 : l'entête (65 utiles + NUL)
+ECRAN_GRILLE = 80                  # 24 × 80 @ +80 : une ligne par slot de 80
+ECRAN_BARRE = 2000                 # 2 × 160 @ +2000 : la barre-état (2 lignes)
+
+# --- Les messages du domaine (les WM/SB auxquels la procédure route) --------------
+WM_TAILLE = 0x0005                 # WM_SIZE (lParam : cx | cy << 16)
+WM_PEINTURE = 0x000F               # WM_PAINT → loupe-10 (l'unique peintre)
+WM_FERMETURE = 0x0010              # WM_CLOSE → loupe-18 (chantier (d))
+WM_VSCROLL = 0x0115                # WM_VSCROLL → loupe-11
+WM_TOUCHE = 0x0100                 # WM_KEYDOWN : la table de commandes
+WM_CARACT = 0x0102                 # WM_CHAR : la saisie active ?
+WM_MOLETTE = 0x020A                # WM_MOUSEWHEEL → loupe-11
+WM_QUITTE = 0x0012                 # WM_QUIT : la boucle win-03 rend
+SB_VERT = 1                        # l'ascenseur vertical
+UTILISATION_DEFAUT = 0x80000000    # CW_USEDEFAULT (la position de la vitrine)
+COULEUR_FENETRE = 5                # COLOR_WINDOW + 1 (le pinceau de la classe)
+SB_SUIVANT = 5                     # SB_THUMBTRACK (GetScrollInfo nTrackPos)
 
 # --- Les constantes publiques de la famille sha (loupe-05) : LE RENVOI ----------
 # L'HÉRITAGE PAR LA CARTE (R7, charte § 2) : la famille sha tls13 est embarquée
@@ -219,7 +272,11 @@ IAT_USER32 = (
     "DefWindowProcW",              # loupe-09 (le reste délégué)
     "BeginPaint",                  # loupe-10 (le seul peintre)
     "EndPaint",                    # loupe-10
-    "InvalidateRect",              # loupe-10/11/12/14/15/16/17 (le repaint)
+    "InvalidateRect",              # loupe-11/12/14/15/16/17 (le repaint
+                                   # demandé — JAMAIS loupe-10 : le peintre
+                                   # ne s'invalide pas lui-même, I3 de
+                                   # loupe-09 : l'invalidation vit chez les
+                                   # APPELANTS ; retiré de 10 au geste (c))
     "GetClientRect",               # loupe-10 (le clipping par lignes visibles)
     "GetScrollInfo",               # loupe-11 (SB_THUMBTRACK/END)
     "SetScrollInfo",               # loupe-11 (l'ascenseur TOUJOURS synchrone)
@@ -333,7 +390,9 @@ def recadre(curseur):
 # --- .text @0x1000 : LA MINILIBC AUX ADRESSES SCELLÉES M1 (R7 — les octets
 # --- du selftest.exe, jamais une copie ré-écrite ; seuls les héritages REQUIS
 # --- PAR LE NOYAU (b) sont posés — libc-02 memcmp vivra à SON adresse
-# --- scellée au chantier navigation, win-03 la boucle au chantier rendu)
+# --- scellée au chantier navigation, win-03 la boucle au chantier rendu) ;
+# --- AU GESTE (c) : libc-02 POSEE @0x1180 (loupe-13) et win-03 POSEE @0x15C0
+# --- (loupe-09) — le reste de la plage demeure LA RÉSERVE M1 VIERGE
 
 R_LIBC01 = 0x1100             # libc-01 memcpy — L'ADRESSE SCELLÉE M1 (slot
                               # 0x80 : b20001) ; feuille pure, aucun
@@ -346,6 +405,12 @@ R_LIBC07 = 0x13C0             # libc-07 memset — l'adresse scellée M1 (slot
                               # 0x80 : b20007) ; loupe-04 Q2 (le cadre
                               # vierge), loupe-03 Q3 (l'hygiène) et loupe-06
                               # (les zéros du bourre)
+R_WIN03 = 0x15C0              # win-03 LA BOUCLE DE MESSAGES — l'adresse
+                              # scellée DÉMO (d40003, slot 0x80, 75 o de
+                              # code) ; loupe-09 Q4 l'appelle PAR LA CARTE
+                              # (R7 : les octets de demo.exe 0.3.0, jamais
+                              # une ré-écriture — ses TROIS déplacements RIP
+                              # visent l'IAT démo @0x2818/0x2820/0x2828)
 
 # --- .rdata @0x2000 : LES TABLES MD5 PUBLIQUES (I2 de loupe-06 — la source
 # --- unique du plan ; T ADJACENTE à S à +0x100 : la notation de loupe-06 lit
@@ -355,10 +420,59 @@ R_MD5_S = 0x2100              # MD5_S[64] u32 — les décalages (RFC 1321 § 3.
 R_MD5_T = 0x2200              # MD5_T[64] u32 — floor(2^32·|sin(i+1)|), la
                               # table DÉRIVÉE PAR ARITHMÉTIQUE au geste (a)
 
+# --- .rdata @0x2000-0x20FF : LES PIÈCES DU RENDU (ARRÊTÉES au geste (c)) ----------
+# L'entête de la grille (65 o utiles + NUL — la chaîne que loupe-10 pose à
+# ECRAN+0) et LES DEUX TABLES HEXA (I4 de loupe-08 : « la table du plan ») :
+# la MAJUSCULE pour la ligne et le curseur (la convention du journal des
+# builds), la minuscule pour le PANNEAU (les empreintes du quotidien du
+# projet, md5sum/sha256sum à minuscules).
+
+R_ENTETE = 0x2000             # « Décalage  00 01 … 0F  ASCII » (65 + NUL)
+R_HEX = 0x2050                # « 0123456789ABCDEF » (17 o)
+R_HEXL = 0x2070               # « 0123456789abcdef » (17 o)
+
+# --- .rdata @0x2300-0x23FA : LES LIBELLÉS DE LA BARRE (latin-1, NUL-terminés) -----
+# Les textes nommés des specs : l'usage, la balise, les refus nommés de 12/14,
+# les préfixes des modes, les fragments de la ligne de balise. Chaque adresse
+# ARRÊTÉE ici (la source unique — la notation de loupe-10/12/14 la lit PAR
+# DÉPLACEMENT RIP, le « · » y est le byte 0xB7 latin-1).
+
+L_USAGE = 0x2300              # « loupe <fichier> » (16 o) — la vitrine vide
+L_BALISE = 0x2310             # « Loupe 0.1.0-dev.1 » (18 o) — la lignée (D137)
+L_TIRET = 0x2322              # « - » encadré (4 o) — le séparateur de balise
+L_MID = 0x2326                # « · » encadré (4 o) — le séparateur des champs
+L_OCT = 0x232A                # « o · curseur 0x » (16 o) — après la taille
+L_MODIF = 0x233A              # « · MODIFIÉ » (11 o) — la marque sale (barre 1)
+L_MD5 = 0x2345                # « md5 » (5 o) — le panneau
+L_SHA = 0x234A                # « · sha256 » (11 o)
+L_AST = 0x2355                # « * » (3 o) — l'astérisque du panneau (barre 2)
+L_VIDE = 0x2358               # « - » (2 o) — le panneau de la vitrine vide
+L_ALLER = 0x235A              # « ALLER (hexa) : » (16 o) — le mode de loupe-12
+L_CHERCHER = 0x236A           # « CHERCHER (hexa) : » (19 o) — le mode de 14
+L_MALFORMEE = 0x237D          # « saisie mal formée » (18 o) — E1 de loupe-12
+L_HORSBORNES = 0x238F         # « hors bornes » (12 o) — E2 de loupe-12
+L_SESSION = 0x239B            # « aucun fichier ouvert » (21 o) — E3 de 12/E2 14
+L_FIN = 0x23B0                # « plus d'occurrence » (18 o) — la FIN de 14
+L_PAIRES = 0x23C2             # « paires hexa attendues » (22 o) — E1 de 14
+L_SYSTEME = 0x23D8            # « refus système » (14 o) — le -6 générique
+L_ABSENT = 0x23E6             # « fichier introuvable » (20 o) — le -2 de 01
+
+# --- .rdata @0x2600 : LES CHAÎNES UTF-16 (pilotées AUX API, hors expansion) -------
+# La classe, le titre et l'explication fatale passent AUX API UTF-16 telles
+# quelles (CreateWindowExW lit l'UTF-16 DIRECTEMENT — l'ém-dash U+2014 du
+# titre y vit légitimement, lui qui ne passe pas l'expansion latin-1).
+
+R_CLASSE = 0x2600             # « LoupeHexa » (20 o)
+R_TITRE = 0x2614              # « Loupe — l'éditeur hexadécimal » (60 o)
+R_ERREUR = 0x2650             # « La fenêtre de Loupe ne peut pas être créée. »
+                              # (88 o — l'explication fatale, E1/E2 de 09)
+
 # --- .rdata : L'IAT DU DOMAINE (D7/D35 : les feuilles déclarées au geste (a),
 # --- l'ordre des listes est FIGÉ ; chaque feuille son qword — le miroir de la
-# --- lignée démo ; la marge 0x2510-0x2EFF est VIERGE, l'IAT démo scellée
-# --- @0x2810+ sera réservée au chantier rendu pour win-03)
+# --- lignée démo ; la marge 0x2510-0x25FF est VIERGE, les chaînes UTF-16 du
+# --- rendu vivent @0x2600+, l'IAT démo scellée @0x2818+ est RÉSERVÉE au geste
+# --- (c) pour win-03 — LA RÈGLE DU GESTE (b) exécutée : les trois slots que
+# --- les déplacements scellés de la boucle visent, TELS QUELS)
 
 R_IAT_K32 = 0x2400            # IAT kernel32 (10 feuilles : 0x2400-0x2450)
 R_IAT_U32 = 0x2450            # IAT user32 (18 feuilles : 0x2450-0x24E0)
@@ -379,6 +493,21 @@ del _nom
 # --- source unique — le plan loupe RENVOIE, jamais re-déclare)
 
 R_K = 0x2F00                  # K[64] u32 — la table de tls13-02 (le scellé)
+
+# --- .rdata @0x2818-0x282F : L'IAT DÉMO SCELLÉE (les TROIS slots de win-03) -------
+# LA RÈGLE DU GESTE (b) EXÉCUTÉE AU GESTE (c) : « tout héritage à SON adresse
+# scellée (win-03 et son IAT démo au chantier rendu) ». La boucle scellée
+# (demo.exe 0.3.0, 75 o @0x15C0) porte TROIS déplacements RIP codés pour les
+# slots IAT user32 DE L'IMAGE DÉMO : 0x15dd+0x6+0x1235 = 0x2818 (GetMessageW),
+# 0x15ea+0x6+0x1230 = 0x2820 (TranslateMessage), 0x15f3+0x6+0x122f = 0x2828
+# (DispatchMessageW). L'image loupe RÉSERVE les TROIS qwords À LEURS ADRESSES
+# D'ORIGINE : le build y posera les adresses résolues (les MÊMES feuilles que
+# l'IAT loupe @0x2468/0x2470/0x2478 — la double entrée n'est pas une
+# redondance, c'est le PRIX du déplacement scellé : R7 au sens propre).
+
+R_IAT_DEMO_GMW = 0x2818       # GetMessageW (le slot que win-03 vise)
+R_IAT_DEMO_TM = 0x2820        # TranslateMessage
+R_IAT_DEMO_DMW = 0x2828       # DispatchMessageW
 
 # --- .text2 @0x4000 : LES BLOCS DU DOMAINE ARRÊTÉS sur les longueurs réelles
 # --- MESURÉES par outils/auteur.py au chantier (b) (D161 : multiples de 64,
@@ -421,6 +550,58 @@ SLOTS_LOUPE = {
     "i110006": (LOUPE06_VA, 0x380),
     "i110007": (LOUPE07_VA, 0x80),
 }
+
+# =================================================================================
+# L'ADRESSAGE DU GESTE (c) — LES FAMILLES RENDU + NAVIGATION (loupe-08..14)
+# (D161 rejoué une troisième fois : les slots ci-dessous sont PRÉFIGURÉS à la
+# plume pour la première passe de mesure, la MESURE de l'auteur les ARRÊTERA
+# aux minimums admissibles — multiples de 64, padding >= 16, tassés à la
+# contiguïté du noyau depuis 0x49C0).
+#
+# L'ORDRE DU TASSEMENT (arrêté au geste (c), une raison d'architecture) :
+#   loupe-08 (la feuille pure, la fondation du rendu) · loupe-10 (le peintre)
+#   · loupe-11 (le défilement) · loupe-12 (l'aller) · loupe-13 (la feuille
+#   pure de la recherche) · loupe-14 (le suivant, qui compose 12 et 13) ·
+#   LOUPE-09 DERNIER — le bloc d'entrée (WinMain + LA PROCÉDURE) : sa table
+#   de routage S'ÉTENDRA au chantier (d) (les blocs 15-18 n'existent pas
+#   encore : leurs messages demeurent chez DefWindowProcW à (c), révision
+#   nommée à venir) ; placé DERNIER, l'extension ne bougera QUE son propre
+#   slot — les notations (c) de 08/10/11/12/13/14 demeurent INTACTES, la
+#   famille édition suivra à sa suite. Les appelés précèdent l'appelant.
+#
+# La réserve d'entrée 0x4000-0x403F (la préfiguration du geste (b), 64 o)
+# S'INCLINE : l'écran mesuré ne tient pas en 64 o — WinMain vivra à SON slot
+# (loupe-09, le dernier du tassement) et l'AddressOfEntryPoint du futur build
+# visera LOUPE09_VA TEL QUEL (aucune fiction de trampoline : l'entrée est UNE
+# adresse, celle du bloc — D33 l'image PI, D161 la mesure décide).
+# =================================================================================
+
+LOUPE08_VA = 0x49C0           # i110008 — la ligne (feuille pure, 77 o)
+LOUPE10_VA = 0x4B00           # i110010 — la peinture (l'unique peintre)
+LOUPE11_VA = 0x5180           # i110011 — le défilement (borné à la fin)
+LOUPE12_VA = 0x5400           # i110012 — l'aller (la barre-saisie)
+LOUPE13_VA = 0x5740           # i110013 — la recherche (feuille pure)
+LOUPE14_VA = 0x5800           # i110014 — le suivant (le recouvrement)
+LOUPE09_VA = 0x5C00           # i110009 — l'écran (WinMain + LA PROCÉDURE,
+                              # DERNIER du tassement : la table s'étend à (d))
+# L'ARRÊT SUR LES MESURES (D161, la troisième passe — 08/11 : 271/568/796/
+# 126/983/874/1614 o notés (14 : LE PLANCHER QUI NE RECULE JAMIS —
+# la correction du premier jet, attrapée par le témoin à frontières) → les slots MINIMUMS, tassés à la contiguïté du
+# noyau depuis 0x49C0 : 08 @0x49C0 [0x140, padding 49] · 10 @0x4B00 [0x680,
+# padding 50 — le plus grand bloc du geste] · 11 @0x5180 [0x280, padding 72]
+# · 12 @0x5400 [0x340, padding 36] · 13 @0x5740 [0xC0, padding 66] · 14
+# @0x5800 [0x400, padding 41] · 09 @0x5C00 [0x380, padding 22] — fin du
+# geste (c) : 0x5F80, la marge jusqu'aux sha @0xC000 VIERGE)
+
+SLOTS_LOUPE.update({
+    "i110008": (LOUPE08_VA, 0x140),
+    "i110009": (LOUPE09_VA, 0x380),
+    "i110010": (LOUPE10_VA, 0x680),
+    "i110011": (LOUPE11_VA, 0x280),
+    "i110012": (LOUPE12_VA, 0x340),
+    "i110013": (LOUPE13_VA, 0xC0),
+    "i110014": (LOUPE14_VA, 0x400),
+})
 
 # --- 0xC000-0xC3C0 : LA FAMILLE SHA AUX ADRESSES SCELLÉES M9 (R7 — les octets
 # --- du proxy.exe 1.0.0 POSÉS À LEURS ADRESSES D'ORIGINE : les déplacements

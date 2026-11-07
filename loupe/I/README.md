@@ -204,6 +204,66 @@ les ONZE rejets nommés, la falsification attrapée par les vecteurs
 officiels. R2 tenue : AUCUN build — la cérémonie d'ère précède (le 14e
 arbre, la dette D166/D171 demeure).
 
+**Le chantier (c) est COMPLET : les familles rendu + navigation
+loupe-08..14 NOTÉES-MESURÉES-PROUVÉES** — LE CRITÈRE DU PLAN TENU :
+*l'oracle à scénarios VERT (l'écran attendu octet par octet pour des
+états donnés) ; la falsification attrapée*. La notation 271/1614/568/
+796/126/983/874 o aux slots ARRÊTÉS sur les mesures (D161, la troisième
+passe : tassés à la contiguïté du noyau 0x49C0→0x5F80 — loupe-10 LE
+PLUS GRAND BLOC DU GESTE, 1614 o ; loupe-09 DERNIER du tassement : le
+bloc d'entrée dont la table de routage S'ÉTENDRA au chantier (d) sans
+cascade sur les autres notations, la révision nommée à venir). LES
+HÉRITAGES AUX ADRESSES SCELLÉES (la règle du geste (b) exécutée) :
+libc-02 memcmp @0x1180 (loupe-13 — chaque candidat du scellé M1) et
+win-03 LA BOUCLE @0x15C0 (loupe-09 — les octets de demo.exe 0.3.0, ses
+TROIS déplacements RIP visant l'IAT démo réservée @0x2818/0x2820/
+0x2828 : la double entrée n'est pas une redondance, c'est le PRIX du
+déplacement scellé) — la DOUBLE PREUVE R7 : les extraits des scellés ==
+les octets émulés ET les notations d'origine ré-assemblées == les
+extraits. L'INSTRUMENT loupe/harnais_rendu.py — LE MINI-GUI VIRTUEL
+(la file de messages SCRIPTÉE, le Dispatch qui APPELLE LA PROCÉDURE au
+pointeur enregistré — la mécanique d'USER32 réduite au laboratoire,
+la réponse par l'adresse magique ; le DC qui ENREGISTRE chaque goutte
+avec ses couleurs ; la police mesurée une fois ; les échecs
+paramétrables ; ExitProcess qui termine) — 53 contrôles · 53 VERTS ×
+3 graines (20261108, 424242, 777777) : le doré (la première ligne de
+proxy.exe + la ligne finale incomplète du témoin 3f) + 1 500 lignes
+différentielles == le modèle indépendant ; le corpus de l'école +
+1 500 cas == bytes.find ; LA CHAÎNE au fichier entier + LE
+RECOUVREMENT PAR CONSTRUCTION (un témoin où l'occurrence n'existe QU'à
+cheval sur chaque frontière de 64 Kio : TROUVÉE — **LE PLANCHER QUI NE
+RECULE JAMAIS**, la correction du premier jet, attrapée par le témoin
+à frontières : une fenêtre manquée y avance le premier départ non
+examiné, jamais le muté ne re-trouve l'occurrence courante) ; les
+bornes rejouées (vue_max/clamp sur 10 000 tailles) ; LES SCÉNARIOS DE
+LA VITRINE (la file scriptée : WM_PAINT/WM_SIZE/WM_VSCROLL/
+WM_MOUSEWHEEL/F5/F3/WM_CHAR chez leurs blocs, les appels comptés,
+DefWindowProcW pour le reste ; l'écran attendu OCTET PAR OCTET sur les
+2320 o — la vitrine vide, le témoin ouvert par la ligne de commande
+lue À LA MAIN, la cellule active INVERSÉE à l'abscisse exacte, la
+marque sale nommée ; le refus à l'ouverture « fichier introuvable » à
+la barre, la vitrine VIDE VRAIE ; E1/E2 : l'explication fatale PUIS
+ExitProcess(1), la boucle jamais lancée) ; LA FALSIFICATION DANS LES
+DEUX SENS (le remplissage d'espaces muté → l'écran diverge ; la
+constante de recadrage mutée → le saut diverge ; la table HEX mutée →
+chaque ligne diverge ; LE RECOUVREMENT MUTÉ → l'occurrence à cheval
+MANQUÉE puis, restauré, TROUVÉE — l'anti-muet aux 332 positions). LES
+LECTURES DU GESTE consignées (D174) : la barre-état aux QUATRE modes
+(MESSAGE = aucune saisie + le refus nommé au tampon — le « mode = 0 »
+des specs se lit LA SAISIE FERMÉE) ; la barre ANCRÉE AU BAS (le
+panneau d'empreintes TOUJOURS visible — la grille cède la place,
+lignes_affichables − 3) ; le tiret ASCII et le point médian 0xB7
+(l'expansion latin-1 I4 de loupe-10 n'élève que 0x00-0xFF, l'ém-dash
+U+2014 ne vit qu'aux chaînes UTF-16 pilotées aux API) ; les codes de
+contrôle 0x06/0x07 par WM_CHAR (Ctrl+F/Ctrl+G — aucune feuille
+GetKeyState au plan, l'état du clavier ne se sonde pas) ; le cadre RBP
+de loupe-10 (les sous-routines locales partagent le cadre — chaque
+local à son déplacement STABLE, le 5e argument des TextOutW dans la
+zone libre du bas) ; le hInstance de l'ABI de WinMain
+(GetModuleHandleW attend son geste, le mort le garde). R2 tenue :
+AUCUN build — la cérémonie d'ère précède (le 14e arbre, la dette
+D166/D171 demeure).
+
 ## Ce que le domaine promet (et comment il se preuve)
 
 La promesse est MESURABLE et TRIPLE :

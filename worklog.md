@@ -6921,3 +6921,54 @@ Work Log:
 - SUITE : M10-(c) le rendu + la navigation (l'oracle à scénarios) ; la
   cérémonie d'ère du TGN attend son geste (le 14e arbre, avant tout
   build) ; le projet fils attend son premier geste à son message propre.
+
+## Task ID 115 — LE CHANTIER M10-(c) RÉALISÉ : LES FAMILLES RENDU + NAVIGATION LOUPE-08..14 NOTÉ-MESURÉ-PROUVÉES (L'ORACLE À SCÉNARIOS VERT — L'ÉCRAN ATTENDU OCTET PAR OCTET ; LE MINI-GUI VIRTUEL ; LE RECOUVREMENT PAR CONSTRUCTION ; LA FALSIFICATION DANS LES DEUX SENS) (08/11)
+
+- La suite annoncée à l'Entrée 196 ; le développeur commande (« ok
+  continue »). AUCUN build : la cérémonie d'ère précède (D168), la dette
+  D166/D171 demeure, le garde à 13 arbres.
+- LES SEPT NOTATIONS : 08 la ligne (271 o, la feuille pure, la table HEX
+  du plan) · 10 la peinture (1614 o, L'UNIQUE PEINTRE — le plus grand
+  bloc du geste : la composition VIERGE, la grille par loupe-08 bornée
+  lignes_aff − 3 [la barre ancrée au bas], l'expansion latin-1, la
+  cellule en inverse explicite) · 11 le défilement (568 o : le pas, la
+  poignée, LA BORNE, loupe-02 la première, l'ascenseur synchrone) · 12
+  l'aller (796 o : la barre-saisie partagée, le saut exact, LA RÈGLE DE
+  RECADRAGE, les refus nommés) · 13 la recherche (126 o, la feuille pure
+  : chaque candidat par LE SCELLÉ M1) · 14 le suivant (983 o : LE
+  PLANCHER QUI NE RECULE JAMAIS, LE RECOUVREMENT, la FIN nommée) · 09
+  l'écran (874 o, DERNIER : WinMain + LA PROCÉDURE, la table s'étendra à
+  (d) sans cascade).
+- LES HÉRITAGES AUX ADRESSES SCELLÉES : libc-02 @0x1180 (loupe-13) et
+  win-03 @0x15C0 (loupe-09 — les octets de demo.exe 0.3.0, l'IAT démo
+  @0x2818/0x2820/0x2828 réservée : le prix du déplacement scellé) ; la
+  DOUBLE PREUVE R7 (les extraits == les émulés ET les notations
+  d'origine ré-assemblées == les extraits).
+- LE MINI-GUI VIRTUEL : la file scriptée, le Dispatch qui appelle LA
+  PROCÉDURE au pointeur enregistré, le DC qui enregistre, les échecs
+  paramétrables, ExitProcess qui termine ; les 5 feuilles du (d) +
+  GetModuleHandleW au mort.
+- LE VERDICT : 53 contrôles · 53 VERTS × 3 graines — le doré proxy, les
+  différentiels (1 500 + 1 500 == le modèle et bytes.find), LA CHAÎNE au
+  fichier entier, LE RECOUVREMENT PAR CONSTRUCTION (le témoin à
+  frontières), les bornes sur 10 000 tailles, LES SCÉNARIOS (l'écran
+  attendu OCTET PAR OCTET : la vitrine vide, le témoin par la ligne de
+  commande, la cellule inversée, la marque sale, le routage compté, le
+  refus à l'ouverture, E1/E2), LA FALSIFICATION (quatre mutations + le
+  recouvrement muté manqué puis trouvé + l'anti-muet ; ctl_flush_tb à
+  chaque geste).
+- LES LEÇONS DU GESTE : le plancher qui ne recule jamais (le premier jet
+  re-trouvait l'occurrence courante — le témoin à frontières l'a
+  attrapé) ; le cache de traduction vidé à chaque mutation (la voie
+  officielle, jamais une falsification muette par l'outil) ; l'immédiat
+  32 bits à adresse+3.
+- FRONTIÈRES : AUCUN arbre signé touché ; le garde sceau I : 13 arbres
+  VERTS (cle deposee reelle) vérifié AVANT consignation ; le proxy 1.0.0
+  et la carte tls13 INTACTS. Livrables : les brouillons + les notations
+  loupe-08..14, loupe/layout.py (l'adressage ARRÊTÉ du geste), loupe/
+  outils/auteur.py, loupe/harnais_rendu.py (l'oracle), loupe/I/README.md,
+  scripts/consigner_m10c.py.
+- SUITE : M10-(d) l'édition + le kit terrain (15-18, la table de loupe-09
+  étendue, le kit au /test modèle m9f) ; la cérémonie d'ère du TGN attend
+  son geste (le 14e arbre, avant tout build) ; le projet fils attend son
+  premier geste à son message propre.

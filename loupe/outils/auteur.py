@@ -84,6 +84,67 @@ _FICHIERS = {
                 "MD5) — LA COMPOSITION SEULE, DEUX passages l'un après "
                 "l'autre (I2 : l'exclusion de famille) ; AUCUNE entrée IAT "
                 "(le miroir des feuilles pures, charte § 9)"),
+    "i110008": ("loupe-08-ligne", "loupe-08:R1",
+                "AUCUNE entrée IAT (la feuille pure — le miroir exact des "
+                "feuilles tls13, charte § 9) ; la table hexa « 0123456789"
+                "ABCDEF » du plan (I4 — R_HEX .rdata, lue par déplacement "
+                "RIP) ; les bornes P2/P4 vérifiées AVANT la première "
+                "écriture (I2 : exactement 77 o, jamais un de plus) ; la "
+                "source LUE SEULE (I3)"),
+    "i110010": ("loupe-10-peinture", "loupe-10:R1",
+                "IAT user32 : BeginPaint, EndPaint, GetClientRect, "
+                "InvalidateRect ; IAT gdi32 : GetStockObject, SelectObject, "
+                "GetTextMetricsW, TextOutW, SetTextColor, SetBkColor "
+                "(L'UNIQUE PEINTRE — I1 : la liste fermée, la contrebande "
+                "de peinture est un refus de build) ; loupe-08 (les lignes "
+                "de la grille PAR LA CARTE) ; l'entête et les libellés "
+                ".rdata du plan ; la composition est PURE LECTURE d'état "
+                "(I5) ; l'expansion latin-1 octet→mot EXACTE (I4)"),
+    "i110011": ("loupe-11-defilement", "loupe-11:R1",
+                "IAT user32 : GetScrollInfo, SetScrollInfo, InvalidateRect "
+                "; IAT kernel32 : GetLastError (E1 le refus nommé) ; "
+                "loupe-02 (la fenêtre relue — le recouvrement du journal y "
+                "vit) ; le pas et la borne de la spec (vue_max : LA DERNIÈRE "
+                "fenêtre voit le dernier octet) ; l'alignement 16 inviolable "
+                "(I1) ; jamais une lecture hors fichier (I2 : le clamp "
+                "PRÉCÈDE la lecture)"),
+    "i110012": ("loupe-12-aller", "loupe-12:R1",
+                "IAT user32 : InvalidateRect (le repaint demandé — le "
+                "peintre est loupe-10) ; loupe-02 (la fenêtre relue au "
+                "saut) ; loupe-14 (le commit CHERCHER délégué — le mode "
+                "partagé, RENVOI) ; la zone SAISIE du plan (mode/actif/"
+                "nibble/tampon) ; la règle de recadrage du plan (Q3 — "
+                "recadre, la règle EXÉCUTABLE) ; le refus NOMMÉ monte à la "
+                "barre (mode MESSAGE)"),
+    "i110013": ("loupe-13-recherche", "loupe-13:R1",
+                "libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : "
+                "chaque candidat testé par le scellé, JAMAIS une boucle "
+                "réécrite) ; AUCUNE entrée IAT (la feuille pure, charte "
+                "§ 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; "
+                "la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA "
+                "FIN NOMMÉE)"),
+    "i110014": ("loupe-14-suivant", "loupe-14:R1",
+                "IAT kernel32 : SetFilePointerEx, ReadFile, GetLastError "
+                "(E3 relayé) ; IAT user32 : InvalidateRect ; loupe-13 (le "
+                "pur, fenêtre par fenêtre) ; loupe-02 (la fenêtre relue à "
+                "l'occurrence) ; la zone MOTIF du plan (F3 reprend le "
+                "dernier motif) ; LE RECOUVREMENT de frontière (Q3 : la "
+                "fenêtre suivante commence à bord + 64 Kio − (longueur − 1) "
+                "— l'occurrence à cheval JAMAIS manquée) ; TAMPON_CUMUL "
+                "partagé (I1 : l'exclusion de famille)"),
+    "i110009": ("loupe-09-ecran", "loupe-09:R1",
+                "WinMain + LA PROCÉDURE (le bloc DERNIER du tassement : la "
+                "table de routage s'étendra au chantier (d)) ; IAT "
+                "kernel32 : GetModuleHandleW, GetCommandLineW, ExitProcess "
+                "; IAT user32 : RegisterClassExW, CreateWindowExW, "
+                "ShowWindow, LoadCursorW, MessageBoxW (l'explication fatale "
+                "E1/E2, D36) ; win-03 LA BOUCLE HÉRITÉE PAR LA CARTE "
+                "(l'adresse scellée démo @0x15C0, R7 — ses déplacements "
+                "visent l'IAT démo @0x2818/0x2820/0x2828) ; loupe-01 (la "
+                "session née à la ligne de commande lue À LA MAIN) ; "
+                "loupe-10/11/12/14 (les blocs routés) ; l'image PI (D33 : "
+                "aucune adresse absolue — la procédure par lea rip) ; les "
+                "zones DÉCLARÉES avant la première goutte (I1)"),
 }
 
 
@@ -106,6 +167,13 @@ SYMBOLES = {
     "LOUPE05": L.LOUPE05_VA,
     "LOUPE06": L.LOUPE06_VA,
     "LOUPE07": L.LOUPE07_VA,
+    "LOUPE08": L.LOUPE08_VA,
+    "LOUPE09": L.LOUPE09_VA,
+    "LOUPE10": L.LOUPE10_VA,
+    "LOUPE11": L.LOUPE11_VA,
+    "LOUPE12": L.LOUPE12_VA,
+    "LOUPE13": L.LOUPE13_VA,
+    "LOUPE14": L.LOUPE14_VA,
     # les héritages PAR LA CARTE (R7 — embarqués au build byte-identiques,
     # aux slots loupe du plan ; les octets viennent des SCELLÉS, jamais de
     # la ré-écriture)
@@ -113,9 +181,38 @@ SYMBOLES = {
     "TLS03": L.R_TLS03,          # tls13-03 sha256-absorber (idem)
     "TLS04": L.R_TLS04,          # tls13-04 sha256-finaliser (idem)
     "LIBC01": L.R_LIBC01,        # libc-01 memcpy (le scellé M1)
+    "LIBC02": L.R_LIBC02,        # libc-02 memcmp (le scellé M1 — loupe-13)
     "LIBC07": L.R_LIBC07,        # libc-07 memset (idem)
+    "WIN03": L.R_WIN03,          # win-03 la boucle (le scellé démo — loupe-09)
     # les tables MD5 publiques (I2 de loupe-06 — le plan, source unique)
     "MD5_S": L.R_MD5_S,
+    # les pièces du rendu .rdata (le plan, source unique — geste (c))
+    "HEX": L.R_HEX,              # « 0123456789ABCDEF » (I4 de loupe-08)
+    "HEXL": L.R_HEXL,            # « 0123456789abcdef » (le panneau)
+    "ENTETE": L.R_ENTETE,        # l'entête de la grille (loupe-10 Q1)
+    "CLASSE": L.R_CLASSE,        # « LoupeHexa » UTF-16 (loupe-09 Q2)
+    "TITRE": L.R_TITRE,          # le titre UTF-16 (loupe-09 Q2)
+    "ERREUR": L.R_ERREUR,        # l'explication fatale (E1/E2, D36)
+    # les libellés de la barre (latin-1 — la barre-état du geste (c))
+    "L_USAGE": L.L_USAGE,
+    "L_BALISE": L.L_BALISE,
+    "L_TIRET": L.L_TIRET,
+    "L_MID": L.L_MID,
+    "L_OCT": L.L_OCT,
+    "L_MODIF": L.L_MODIF,
+    "L_MD5": L.L_MD5,
+    "L_SHA": L.L_SHA,
+    "L_AST": L.L_AST,
+    "L_VIDE": L.L_VIDE,
+    "L_ALLER": L.L_ALLER,
+    "L_CHERCHER": L.L_CHERCHER,
+    "L_MALFORMEE": L.L_MALFORMEE,
+    "L_HORSBORNES": L.L_HORSBORNES,
+    "L_SESSION": L.L_SESSION,
+    "L_FIN": L.L_FIN,
+    "L_PAIRES": L.L_PAIRES,
+    "L_SYSTEME": L.L_SYSTEME,
+    "L_ABSENT": L.L_ABSENT,
     # les zones .data du domaine (le plan, source unique — D161)
     "CADRE": L.R_CADRE,
     "EMPREINTES": L.R_EMPREINTES,
@@ -346,6 +443,13 @@ NOMS_COURTS = {
     "loupe-05-sha256": "sha256 d'une gamme : l'héritage tls13 PAR LA CARTE",
     "loupe-06-md5": "md5 d'une gamme : l'empreinte du quotidien, notée neuve (RFC 1321)",
     "loupe-07-cumul": "le cumul : les empreintes du fichier entier au panneau",
+    "loupe-08-ligne": "la ligne : 77 o exacts — le décalage, les 16 groupes, le miroir",
+    "loupe-09-ecran": "l'écran : WinMain + LA PROCÉDURE + la vitrine (l'entrée du domaine)",
+    "loupe-10-peinture": "la peinture : WM_PAINT, l'unique peintre — l'écran attendu",
+    "loupe-11-defilement": "le défilement : borné à la fin réelle (la dernière fenêtre voit)",
+    "loupe-12-aller": "l'aller : la barre-saisie hexa, le saut exact, le refus nommé",
+    "loupe-13-recherche": "la recherche : la première occurrence par memcmp hérité (pur)",
+    "loupe-14-suivant": "le suivant : le recouvrement de frontière, la FIN nommée",
 }
 
 
