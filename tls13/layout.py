@@ -21,16 +21,19 @@ PREFIXE_ETIQUETTE = b"tls13 "      # RFC 8446 §7.1 (le NUL de terminaison
 
 # --- Les versions de l'ère (le miroir m8 : 0x00090001 = 0.9.0-dev.1) ----------
 
-VERSION_DEV = 0x01000002           # 1.0.0-dev.2 (geste de BUILD, jamais scellage ;
-                                   # dev.2 = l'erratum n° 5 : la sonde terrain
-                                   # du 06/11 a nommé l'octet de longueur du
-                                   # record CH [0x76 → 0x72 : la spec P1 dit
-                                   # 114, le vol 119 = 5 + 114 — le brouillon
-                                   # se contredisait] et le CCS hérité que les
-                                   # serveurs réels émettent [google/github/
-                                   # cloudflare/debian TOUS — la machine
-                                   # l'avalait sans le déverrouiller, RFC 8446
-                                   # § 4.1.3 : IGNORÉ])
+VERSION_DEV = 0x01000003           # 1.0.0-dev.3 (geste de BUILD, jamais scellage ;
+                                   # dev.3 = la révision 2 étendue : sys-05 ET
+                                   # sys-06 re-notés — le WSABUF CANONIQUE x64
+                                   # [SEIZE octets : len à +0, PADDING
+                                   # d'alignement 4 o, buf à +8 — la pose
+                                   # 0x64 → 0x68, le MÊME encode 5 o, le slot
+                                   # intact, la carte demeure] ; la sonde
+                                   # sys-05 a mesuré 0xC0000005 à la pose du
+                                   # WSABUF « packé » (Entrée 185, l'erratum
+                                   # n° 8), la symétrie send/recv a étendu la
+                                   # réparation à sys-06 (Entrée 187, l'erratum
+                                   # n° 9) ; dev.2 = l'erratum n° 5 : le record
+                                   # CH + le CCS hérité])
 VERSION_FINALE = 0x01000000        # 1.0.0 (le scellage est un fait de carte, D165)
 
 # --- La table des SEPT verdicts du domaine (charte § 5 : l'échec nommé) --------

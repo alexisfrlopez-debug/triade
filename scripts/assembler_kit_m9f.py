@@ -6,8 +6,10 @@ Modèle : scripts/assembler_kit_m8d.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + le VRAI ntdll + le VRAI afd.sys + le
 réseau exigés, le cœur même du chantier (f)) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : m9-kit/ = proxy.exe (l'artefact 1.0.0-dev.2,
-     sha256 d8928934… ASSERTÉ) + scenario-m9f.py + LISEZMOI-KIT-M9F.md ;
+  1. L'ASSEMBLAGE : m9-kit/ = proxy.exe (l'artefact 1.0.0-dev.3,
+     sha256 de23e577… ASSERTÉ — LE REBUILD de la révision 2 étendue :
+     le WSABUF canonique posé à 0x68 dans sys-05 ET sys-06, l'erratum
+     n° 9) + scenario-m9f.py + LISEZMOI-KIT-M9F.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario
      (les adresses scellées, le trombone, l'OCTET DE L'ERRATUM n° 5,
      les fixtures transport, le motif du stub, l'empreinte épinglée,
@@ -37,8 +39,8 @@ KIT = "m9-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-m9f.zip"
 
-SHA_PROXY = ("d892893469608fd69e381b92b8e18623107bd2bc694f43a512"
-             "bc5900773dc314")
+SHA_PROXY = ("de23e577498d5cbfb711852df241b938a47793c57029c6f98d1"
+             "68be66b29226f")
 TAILLE_PROXY = 65024
 SCENARIO = REPO / "tls13" / "terrain" / "scenario-m9f.py"
 LISEZMOI = REPO / "tls13" / "terrain" / "LISEZMOI-KIT-M9F.md"
@@ -109,7 +111,8 @@ def constantes_du_scénario(chemin):
               "R_SYS05", "R_SYS06", "R_TLS27", "R_TLS28", "R_SYS_DEVICE",
               "R_SYS_NOM_CREATEFILE", "R_SYS_NOM_DEVICEIOCTL",
               "R_SYS_NOM_CLOSE", "R_TETE_CH", "OCTETS_SYS01",
-              "OCTETS_TETE_CH", "NOM_DEVICE", "MOTIF_STUB",
+              "OCTETS_TETE_CH", "POSE_WSABUF_OFF", "OCTETS_POSE_WSABUF",
+              "NOM_DEVICE", "MOTIF_STUB",
               "EMPREINTE_EPINGLEE", "CIBLE", "CIBLE_PORT",
               "SESSION_TAILLE", "KIT96", "CH_TAILLE", "CH_RECORD",
               "TEMOIN_APPLICATIF"}
@@ -254,7 +257,8 @@ def main():
         refus("ARTEFACT", f"proxy.exe sha256 {sha256_fichier(PROXY)[:16]}… "
                           f"!= {SHA_PROXY[:16]}…")
     print(f"[1] l'artefact : {TAILLE_PROXY} o, sha256 {SHA_PROXY[:16]}… — "
-          f"la carte génération 10 prouve CES octets")
+          f"la carte génération 11 prouve CES octets (le rebuild de la "
+          f"révision 2 étendue)")
 
     # -- 2. le recoup des constantes (AST du scénario contre l'artefact) ------
     data = PROXY.read_bytes()
@@ -286,6 +290,21 @@ def main():
     if c["OCTETS_TETE_CH"][-5:] != bytes.fromhex("41c6420472") \
             or c["OCTETS_TETE_CH"][-1:] != b"\x72":
         refus("RECOUP", "l'octet de longueur du record CH != 0x72")
+    # LE CONTRÔLE PERMANENT DE L'ERRATUM n° 9 (la révision 2 étendue) :
+    # LA POSE DU WSABUF canonique (buf à +8 : 89 74 24 60 48 89 7c 24 68)
+    # relue DANS L'IMAGE aux DEUX blocs — le kit embarque le build réparé
+    if c["OCTETS_POSE_WSABUF"] != bytes.fromhex("8974246048897c2468"):
+        refus("RECOUP", "OCTETS_POSE_WSABUF != la pose canonique attendue")
+    for rva, nom in ((0xA540, "sys-05"), (0xA6C0, "sys-06")):
+        off = rva_vers_offset(data, rva) + c["POSE_WSABUF_OFF"]
+        if data[off:off + 9] != c["OCTETS_POSE_WSABUF"]:
+            refus("ERRATUM-9", f"la pose du WSABUF dans {nom} != le "
+                               f"canonique relu dans l'image : "
+                               f"{data[off:off + 9].hex()} — le kit "
+                               f"n'embarque PAS le build réparé")
+    print("    le contrôle permanent erratum n° 9 : LA POSE DU WSABUF "
+          "canonique (buf à +8) relue dans l'image aux DEUX blocs — "
+          "le STATUS_ACCESS_VIOLATION de la sonde ne peut plus dormir")
     fixture_attendu = c["NOM_DEVICE"].encode("utf-16le") + b"\x00\x00"
     if fixture_attendu != data[rva_vers_offset(data, 0x10C20):
                                rva_vers_offset(data, 0x10C20) + 42]:

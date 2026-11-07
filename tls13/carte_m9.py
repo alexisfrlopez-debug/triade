@@ -49,9 +49,10 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 10   # l'erratum n° 5 : la carte régénérée [tls13-27 réparé,
-                   # tls13-28 déplacé 0x10D00] — la lignée D80 tient, la
-                   # graine durable tient, la génération AVANCE (dev.2)
+GENERATION = 11   # la révision 2 étendue : la carte régénérée [sys-05 +
+                   # sys-06 re-notés 0x68 — le WSABUF canonique, l'erratum
+                   # n° 9] — la lignée D80 tient, la graine durable tient,
+                   # la génération AVANCE (dev.3)
 
 # Sel Argon2id propre à l'ère M9 (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
@@ -70,7 +71,9 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV1 = "1.0.0-dev.2"   # l'erratum n° 5 : le build dev.2
+VERSION_DEV1 = "1.0.0-dev.3"   # la révision 2 étendue : le build dev.3
+                                # (sys-05 + sys-06 re-notés 0x68, le WSABUF
+                                # canonique 16 o — l'erratum n° 9)
 
 
 class ErreurCarte(Exception):

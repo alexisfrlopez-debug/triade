@@ -1,14 +1,14 @@
 # KIT TERRAIN M9-(f) — LA SESSION RÉELLE, LA GRANDE ŒUVRE (win)
 
-> Préparé au laboratoire le 06/11/2026 (le chantier (f) : le dernier du jalon —
-> la finale `1.0.0` attend le vert de CE run, D104 : le scellage est un fait
-> de carte).
+> Préparé au laboratoire le 06/11/2026, **RÉPARÉ le 07/11/2026 au soir**
+> (le chantier (f) : le dernier du jalon — la finale `1.0.0` attend le vert
+> de CE run, D104 : le scellage est un fait de carte).
 >
-> **Deux pièces** : `proxy.exe` est L'ARTEFACT **1.0.0-dev.2** du jalon M9 —
+> **Deux pièces** : `proxy.exe` est L'ARTEFACT **1.0.0-dev.3** du jalon M9 —
 > 65 024 o, sha256
-> `d892893469608fd69e381b92b8e18623107bd2bc694f43a512bc5900773dc314` —
+> `de23e577498d5cbfb711852df241b938a47793c57029c6f98d168be66b29226f` —
 > le CLIENT TLS 1.3 ENTIER en blocs scellés sur le corps 0.9.0 INTACT
-> (la carte génération 10 le prouve, le verrou croisé 86/86 est vert) ;
+> (la carte génération 11 le prouve, le verrou croisé 86/86 est vert) ;
 > `scenario-m9f.py` est LE SCÉNARIO (python SEUL — aucun paquet à
 > installer, aucun droit particulier ; le réseau vers
 > www.cloudflare.com:443 EST requis, c'est le but même du run).
@@ -79,14 +79,50 @@
 > 35706ef : les TROIS refus nommés). Le terrain demeure LAVÉ et
 > L'ARTEFACT n'a pas bougé d'un octet : proxy.exe demeure le build
 > 1.0.0-dev.2 (sha256 d8928934… — relu VERT au T0 du run mort lui-même).
-> **LE TROISIÈME GESTE est attendu.**
+
+> **L'ERRATUM n° 9 + LA RÉVISION 2 ÉTENDUE (le kit RÉPARÉ le 07/11 au
+> soir, après les runs 3-4 et la sonde)** : les troisième et quatrième
+> runs (le 07/11) ont traversé T0/T1/T2 VERT — puis sont morts À
+> L'ÉMISSION du ClientHello : **-6 NOMMÉ**, chaîne -6 → -7, déterministe
+> sur DEUX générations de Windows (10 ET 11 — le suspect
+> afd.sys-divergent ÉLIMINÉ SUR PIÈCES). La sonde sys-05 (l'instrument
+> livré au quatrième geste) a MESURÉ le NTSTATUS brut :
+> **0xC0000005 STATUS_ACCESS_VIOLATION, trois fois, déterministe**.
+> LE COUPABLE NOMMÉ À L'INSTRUCTION PRÈS : **LA POSE DU WSABUF** — la
+> spec disait « 12 o » (un WSABUF « packé » : len à +0, buf posé à +4)
+> alors que le WSABUF CANONIQUE x64 fait **SEIZE octets** (len à +0,
+> PADDING d'alignement 4 o, **buf à +8**) : le noyau lit buf à +8, les
+> quatre octets hauts du vrai pointeur collés aux immondices de pile →
+> l'adresse folle → ACCESS_VIOLATION. Lu dans l'artefact scellé à
+> sys-05+0x46 (`89 74 24 60 48 89 7c 24 64`). **La réception sys-06
+> portait LE MÊME défaut** (l'erratum n° 9 : le contrat AFD est
+> SYMÉTRIQUE, le C_ASSERT send/recv — à la réception le noyau
+> ÉCRIRAIT la réponse chez l'adresse folle, la mort à T3 un cran plus
+> loin). LA RÉPARATION SELON LA CHARTE : la RÉVISION 2 des DEUX specs
+> (sys-05 ET sys-06 — le WSABUF canonique 16 o NOMMÉ, la structure
+> totale 40 o), les DEUX notations corrigées (`mov qword ptr
+> [rsp+0x68], rdi` — le MÊME encode 5 o, le slot intact), le harnais
+> RÉVISÉ (le noyau simulé lit buf à +8 comme le vrai — 131 contrôles ·
+> 131 VERTS × 3 graines), l'erratum n° 8 (le jmp rel32 du T6) réparé
+> à la source. PUIS LA CÉRÉMONIE : l'arbre m8 a évolué — le garde-sceau
+> REFUSAIT tout build (LE SIGNAL, jamais la panne) — la remise étendue
+> (m8 sys.1 `c444d730…`) re-signée hors-ligne par la clé du développeur
+> (l'ancre des ères `173fae9c…` tenue, les DOUZE arbres inchangés
+> byte-identiques — Ed25519 déterministe), la garde **13/13 VERTS**.
+> **LE REBUILD 1.0.0-dev.3** : l'héritage 0.9.0 recomposé octet par
+> octet (R7), et LE DIFF CONTRÔLÉ — **TROIS octets sur 65 024** : la
+> version R10 (0x01000002 → 0x01000003) et LA POSE DU WSABUF dans
+> sys-05 ET sys-06 (le disp8 `0x64` → `0x68`) — RIEN d'autre ne bouge.
+> Le T0 de CE kit RELIT LA POSE dans l'image aux DEUX blocs (`89 74
+> 24 60 48 89 7c 24 68`) : la preuve que le kit embarque le build
+> réparé. **LE CINQUIÈME RUN est attendu — le premier du build réparé.**
 
 ## 1. Ce que ce kit contient
 
 ```
 m9-kit/
-├── proxy.exe         l'ARTEFACT 1.0.0-dev.2 (65 024 o, sha256
-│                     d8928934… — lecture seule pour le run ; la carte
+├── proxy.exe         l'ARTEFACT 1.0.0-dev.3 (65 024 o, sha256
+│                     de23e577… — lecture seule pour le run ; la carte
 │                     privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-m9f.py   LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
 │                     platform, socket, struct, sys, threading, time —
@@ -185,11 +221,15 @@ m9-kit/
   l'épinglage — renvoyez les pièces, le labo re-gèle l'empreinte.
   L'analyse X.509 complète reste le CHANTIER FUTUR NOMMÉ (tls13-26) :
   le jalon COMPARE, il ne fait pas confiance en silence.
-- **Le socle socket (sys-04/05/06) court POUR LA PREMIÈRE FOIS sur le
-  VRAI afd.sys** : il fut prouvé au labo sur le MODÈLE STRICT du noyau
-  (131 contrôles) — la séquence create/bind/connect vient des mesures
+- **Le socle socket (sys-04/05/06)** fut prouvé au labo sur le MODÈLE
+  STRICT du noyau — **le harnais RÉVISÉ de la révision 2** (le noyau
+  simulé lit buf à +8 comme le VRAI) re-passe 131 contrôles · 131 VERTS
+  × 3 graines ; la séquence create/bind/connect vient des mesures
   WinDbg de Windows 11 (« Under the Hood of AFD.sys », leftarcode 2025).
-  Si votre afd.sys diverge, le verdict sera -6 NOMMÉ avec l'étape
+  LA POSE DU WSABUF fut MESURÉE SUR LE VRAI NOYAU par la sonde sys-05
+  (le STATUS_ACCESS_VIOLATION déterministe, trois fois) : la réparation
+  est NOMMÉE à l'instruction, jamais une devinette. Si votre afd.sys
+  diverge, le verdict sera -6 NOMMÉ avec l'étape
   nommée — un échec honnête vaut plus qu'un vert muet.
 - **Les causes NTSTATUS vivent dans rdx** au moment des verdicts -6 de
   sys-04/05/06 (le contrat) : ctypes ne restitue que rax — le kit NOMME

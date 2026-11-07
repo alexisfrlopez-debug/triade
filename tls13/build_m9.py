@@ -171,8 +171,11 @@ TAILLE_FICHIER_M9 = 0xFE00         # 0xAE00 + 0x5000
 
 BLOCS_SOCLE = [
     ("g90004", "sys-04:R1", "sys-04-transport", L8.SYS04_VA, L8.SLOTS_SYS["g90004"][1]),
-    ("g90005", "sys-05:R1", "sys-05-emission", L8.SYS05_VA, L8.SLOTS_SYS["g90005"][1]),
-    ("g90006", "sys-06:R1", "sys-06-reception", L8.SYS06_VA, L8.SLOTS_SYS["g90006"][1]),
+    # la révision 2 étendue (l'erratum n° 9, Entrée 187) : sys-05 ET sys-06
+    # re-notés — le WSABUF CANONIQUE x64 (SEIZE o : len à +0, padding 4 o,
+    # buf à +8 — la pose 0x68, le MÊME encode, le slot intact)
+    ("g90005", "sys-05:R2", "sys-05-emission", L8.SYS05_VA, L8.SLOTS_SYS["g90005"][1]),
+    ("g90006", "sys-06:R2", "sys-06-reception", L8.SYS06_VA, L8.SLOTS_SYS["g90006"][1]),
 ]
 assert all((b[3], b[4]) == L8.SLOTS_SYS[b[0]] for b in BLOCS_SOCLE), \
     "BLOCS_SOCLE diverge du plan M8 (layout.py, source unique — D161)"
@@ -1241,7 +1244,7 @@ def construire(volume: str, graine: int) -> int:
                         h9["verrous_m8"], verrous_socle, verrous_tls13,
                         version, verdict_m4, verdict_m5, verdict_sys,
                         compteurs, journal)
-    print(f"[carte] génération 10 écrite (lignée D80, graine durable D144) : "
+    print(f"[carte] génération 11 écrite (lignée D80, graine durable D144) : "
           f"4 fragments chiffrés, signature Ed25519, {len(TOUS_BLOCS_M9)} blocs "
           f"indexés sur 8 artefacts")
     nb, manifeste = verrou_croise_m9()
@@ -1257,7 +1260,7 @@ def construire(volume: str, graine: int) -> int:
           f"sha256:{hashlib.sha256(exe).hexdigest()}")
     print(f"=== M9-dev (oracle vert) : {version} — le domaine tls13 composé sur "
           f"le corps 0.9.0 INTACT (R7), le socle socket dans la réserve .text5, "
-          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 10 "
+          f"les 28 blocs + les fixtures en .text6 NOUVELLE, carte génération 11 "
           f"vivante ; le chantier (f) (le terrain — LA GRANDE ŒUVRE : la "
           f"session RÉELLE) attend ; la finale 1.0.0 attend le terrain vert ===")
     return 0

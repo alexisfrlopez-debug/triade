@@ -6124,3 +6124,62 @@ Work Log:
   sur l'instrument révisé], LE KIT M9F RÉPARÉ livré au /test, le run du
   développeur — ET SI LE VERT TIENT : LA FINALE 1.0.0, le jalon M9 —
   LA GRANDE ŒUVRE.
+
+## Task ID 106 — LA SECONDE SIGNATURE DE LA RÉVISION 2 ÉTENDUE REÇUE ET INSTALLÉE (LE GARDE 13/13 VERTS) ; LE REBUILD 1.0.0-dev.3 NÉ (LE DIFF CONTRÔLÉ : TROIS octets — la version R10 + LES DEUX POSES DU WSABUF), LA CARTE GÉNÉRATION 11 ; LE KIT M9F RÉPARÉ LIVRÉ AU /test — LE CINQUIÈME RUN ATTENDU (07/11 au soir)
+
+Work Log:
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR (lecture seule) : signatures-I.txt
+  md5 503f3822… NOUVEAU (≠ la première remise af382476… ≠ la build
+  62c43222…), cle-publique-I.txt == 188a7d42… l'ancre ; la racine 16
+  entrées.
+- LA REMISE RECROPÉE SUR PIÈCES AVANT TOUT DÉPÔT
+  (rapatrier_ceremonie_rev2_etendue.py — la remise PÉRIMÉE af382476…
+  REFUSÉE NOMMÉE par avance) : rapatriement md5 MATCH ; l'ancre de clé
+  == 173fae9c… ; le format 13/13 ; LE RECOUP D163 REJOINT UNE
+  QUATRIÈME FOIS : les DOUZE arbres inchangés == les signatures
+  DÉPOSÉES == build 1.0.0 (Ed25519 déterministe) ; m8 RE-SIGNÉ ENCORE :
+  diverge de la déposée a7a787a0… (la première signature rév. 2),
+  vérifie Ed25519 contre l'empreinte vivante c444d730… ; LE DIFF
+  CONTRÔLÉ vs la première remise : UNE ligne changée, LA m8, les DOUZE
+  autres byte-identiques ; les empreintes vivantes == a-signer.txt
+  13/13 — RECOUPE INTÉGRAL VERT.
+- LE DÉPÔT CANONIQUE (sceau_I.py deposer --cle : l'atomicité — tout
+  vérifié avant toute écriture) ET LA GARDE REPASSÉE : **13/13 arbres
+  VERTS** — m8 vert (c444d730…) : la dette de cérémonie de la
+  révision 2 ÉTENDUE (sys-05 R2 + sys-06 R2) SOLDÉE.
+- LE REBUILD 1.0.0-dev.3, LES PORTES RE-PASSÉES : BLOCS_SOCLE porte
+  sys-05:R2 + sys-06:R2 (la révision à la source du build), la version
+  R10 0x01000003, GENERATION 11 ; la chaîne rejouée : le garde 13/13
+  AVANT construire, l'héritage M3+M4+M5+M8 re-vérifié (le scellé 0.9.0
+  recomposé OCTET PAR OCTET — R7), le socle socket re-assemblé des
+  notations réparées, l'oracle structurel, les 28 blocs tls13, le PE
+  validé (AUCUN import nouveau, l'entrée 0x8C80 inchangée), les
+  oracles M4+M5+LE HARNAIS RÉVISÉ 131 VERTS, la carte génération 11,
+  le verrou croisé 86/86 — L'ARTEFACT : de23e577… (65 024 o).
+- LE DIFF CONTRÔLÉ dev.2 ↔ dev.3 (diff_dev2_dev3.py, le dev.2 extrait
+  du kit ACQUITTÉ) : **TROIS octets sur 65 024** — la version R10
+  @0x2820 + LA POSE DU WSABUF dans sys-05 (@0xa58e) ET sys-06
+  (@0xa70e) : 0x64 → 0x68 ; RIEN d'autre ne bouge ; la pose canonique
+  relue dans l'image (89 74 24 60 48 89 7c 24 68) aux DEUX blocs
+  @+0x46.
+- LE KIT M9F RÉPARÉ : scenario-m9f.py re-épinglé (SHA_PROXY
+  de23e577… ; LE T0 PORTE LA PREUVE : « T0.erratum-9 : LA POSE DU
+  WSABUF canonique relu » aux DEUX blocs) ; LISEZMOI-KIT-M9F.md
+  RÉÉCRIT (l'erratum n° 9 + la révision 2 étendue, LE CINQUIÈME RUN) ;
+  l'assembleur re-passé : 28 constantes PAR AST + LE CONTRÔLE
+  PERMANENT erratum n° 9 + les portes 6/7 + py_compile + extraction
+  vierge — kit-m9f.zip md5 79d44284…, sha256 1ced6ca0…
+- LA LIVRAISON AU COFFRE (corriger_kit_m9f_e9.py, modèle e7) :
+  kit-m9f.zip MIS À JOUR EN PLACE (md5 79d44284… MATCH par relecture,
+  l'ancien vit dans l'histoire git) ; LISEZMOI-m9f.txt à jour ;
+  preuves-m9f/LISEZMOI-preuves.txt à jour (dev.3, génération 11, LE
+  CINQUIÈME RUN), le réceptacle RÉ-ARMÉ ; l'index des livraisons ; la
+  vérification finale (16 entrées, LES PIÈCES DE CÉRÉMONIE demeurées :
+  la seconde remise 503f3822… + l'ancre 188a7d42…).
+- FRONTIÈRES : le scellé 0.9.0 INTACT (R7 recomposé au build même),
+  l'artefact dev.2 remplacé PAR LE DIFF CONTRÔLÉ (il demeure la pièce
+  des archives des runs 3-4), aucune balise (D104), la clé privée
+  jamais traversée (D87). SUITE : LE CINQUIÈME RUN DU DÉVELOPPEUR (le
+  premier du build réparé : kit-m9f.zip → dossier NEUF D99, python
+  scenario-m9f.py, preuves-m9f/ ENTIER au coffre) — ET SI LE VERT
+  TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.
