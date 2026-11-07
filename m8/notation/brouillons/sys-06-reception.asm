@@ -1,4 +1,9 @@
-; sys-06-reception · la réception du transport · spec sys-06:R2 · bloc carte g90006
+; sys-06-reception · la réception du transport · spec sys-06:R3 · bloc carte g90006
+; Révision 3 (l'erratum n° 10 — LE TERRAIN A JUGÉ LA MESURE, la sonde
+;   sys-06 Entrée 191) : le VRAI noyau REFUSE le bit 0x20 dans AfdFlags
+;   (STATUS_INVALID_PARAMETER, trois lectures identiques) — TDI_RECEIVE_
+;   NORMAL (0x20) RETOURNE au champ TdiFlags (la littérature avait raison
+;   du placement), AfdFlags = 0 ; le MÊME encode, le slot intact.
 ; Révision 2 (l'erratum n° 9, le miroir de la sonde sys-05 — Entrée 185) :
 ;   le WSABUF canonique 16 o (buf à +8), JAMAIS un « packé » de 12 o.
 ; LE GESTE DE RÉCEPTION du socle socket : IOCTL_AFD_RECEIVE par syscall
@@ -9,10 +14,12 @@
 ; masqué — l'ÉVÉNEMENT TRANSPORT que le kit tranche. AUCUNE COPIE (I2) :
 ; le noyau ÉCRIT DIRECTEMENT chez l'appelant (le WSABUF pointe LE TAMPON
 ; DU KIT, P3 traverse) ; I8 : le reçu est INTÈGRE (le bloc ne touche
-; JAMAIS les octets écrits par le noyau). L'ERRATUM DE LECTURE consigné
-; sur pièces AVANT la notation (le modèle libc-02) : TDI_RECEIVE_NORMAL
-; (0x20) vit au champ AfdFlags (+12) — LA MESURE WinDbg (« I have
-; experimentally checked », p.4), PAS la littérature (TdiFlags) ; les
+; JAMAIS les octets écrits par le noyau). L'ERRATUM n° 10 (LE TERRAIN A
+; JUGÉ LA MESURE — le modèle libc-02 tenu) : TDI_RECEIVE_NORMAL (0x20)
+; vit au champ TdiFlags (+16) — LE TERRAIN l'a tranché (la sonde
+; sys-06, Entrée 191 : le VRAI noyau REFUSE le 0x20 posé en AfdFlags —
+; STATUS_INVALID_PARAMETER, trois fois ; la révision 2 avait suivi la
+; mesure WinDbg citée, le noyau réel a le dernier mot) ; les
 ; constantes au plan (m8/layout.py — T5), le harnais re-vérifie. La garde
 ; d'abord : -5 le span invalide (P3/P4 nuls — aucun syscall) ; le cadre
 ; 0x88 comme sys-05 (l'ombre, SIX arguments de pile, l'IOSB, le WSABUF,
@@ -41,15 +48,16 @@ test rax, rax
 js .resolution_echouee
 ; Q3/I2 : le WSABUF (12 o) porte LA CAPACITÉ et LE TAMPON DU KIT ;
 ; l'AFD_RECV_INFO (24 o) : BufferArray le WSABUF de pile, BufferCount 1,
-; AfdFlags = TDI_RECEIVE_NORMAL 0x20 (L'ERRATUM : LA MESURE — le
-; TROISIÈME champ, PAS le quatrième), TdiFlags 0
+; AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL 0x20 (L'ERRATUM n° 10 :
+; LE TERRAIN A JUGÉ — le VRAI noyau refuse le 0x20 en AfdFlags, le
+; QUATRIÈME champ le porte, le placement de la littérature)
 mov dword ptr [rsp + 0x60], esi
 mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1
-mov dword ptr [rsp + 0x7C], 0x20
-mov dword ptr [rsp + 0x80], 0
+mov dword ptr [rsp + 0x7C], 0
+mov dword ptr [rsp + 0x80], 0x20
 ; Q4 : les DIX arguments NT dans l'ordre — handle, Event NULL (le handle
 ; synchrone : le syscall ATTEND), ApcRoutine NULL, ApcContext NULL,
 ; l'IOSB de pile, l'IOCTL du plan, l'AFD_RECV_INFO de pile, 24, NULL, 0

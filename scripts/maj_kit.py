@@ -100,6 +100,20 @@ RACINE_KIT = [
     # 04/11 est réutilisée — 173fae9c…).
     ("LISEZMOI-ceremonie-revision2-sys05.txt",
      DOWNLOAD / "LISEZMOI-ceremonie-revision2-sys05.txt", False),
+    # LA RE-CÉRÉMONIE DE LA RÉVISION 3 (Entrée 191, la rangée (f)) : le
+    # run de la sonde sys-06 a LU LE CODE EXACT de la première lecture
+    # réelle (Entrée 191 : -6, STATUS_INVALID_PARAMETER — l'A/B des
+    # notations nomme LE CHAMP : le VRAI noyau REFUSE le 0x20 en
+    # AfdFlags) : l'erratum n° 10 fait évoluer l'arbre m8 ENCORE — la
+    # révision 3 de la spec sys-06 (AfdFlags = 0, TdiFlags =
+    # TDI_RECEIVE_NORMAL 0x20), la remise régénérée (m8 e36141f7…)
+    # attend la signature HORS LIGNE du développeur AVANT le rebuild
+    # 1.0.0-dev.4 (construire() suit le garde VERT — LE SIGNAL, pas la
+    # panne) ; ce LISEZMOI est le mode d'emploi qui va avec (règle
+    # d'or : JAMAIS « generer », la clé du 04/11 est réutilisée —
+    # 173fae9c…).
+    ("LISEZMOI-ceremonie-revision3-sys06.txt",
+     DOWNLOAD / "LISEZMOI-ceremonie-revision3-sys06.txt", False),
 ]
 
 NOTE_D130 = (
@@ -130,26 +144,31 @@ NOTE_D130 = (
     "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
     "le SIGNAL, pas la panne).\n"
     "\n"
-    "RE-CÉRÉMONIE DE LA RÉVISION 2 ÉTENDUE (Entrées 186-187, la suite\n"
-    "du chantier (f)) : la révision 2 du WSABUF canonique (la mesure de\n"
-    "la sonde, Entrée 185 : 0xC0000005) s'ÉTEND à la réception —\n"
-    "L'ERRATUM n° 9 (Entrée 187) : sys-06 porte le MÊME « packé » (le\n"
-    "C_ASSERT send/recv, le même patron à l'instruction près), nommé\n"
-    "AVANT le kit ; les specs sys-05 ET sys-06 sont en R2, les notations\n"
-    "réparées, le harnais révisé (131 contrôles · 131 VERTS × 3\n"
-    "graines) : le garde REFUSE le rebuild 1.0.0-dev.3 (LE SIGNAL\n"
-    "« signature requise », pas la panne). La première signature (m8\n"
-    "3e778fa0…, sys-05 seul) fut reçue, recoupée 13/13 et INSTALLÉE —\n"
-    "puis l'erratum n° 9 a étendu la révision : la remise RÉGÉNÉRÉE\n"
-    "(m8 c444d730…) attend la signature HORS LIGNE du développeur.\n"
-    "Suivez LISEZMOI-ceremonie-revision2-sys05.txt : la remise est\n"
+    "RE-CÉRÉMONIE DE LA RÉVISION 3 (Entrée 191, la suite du chantier\n"
+    "(f)) : votre run de la SONDE SYS-06 a LU LE CODE EXACT de la\n"
+    "première lecture réelle (-6, STATUS_INVALID_PARAMETER 0xC000000D,\n"
+    "DÉTERMINISTE — trois mesures identiques, le compas étalonné,\n"
+    "l'offre sys-05 verte au même geste) : LA TABLE nommée d'avance\n"
+    "TRANCHE — LE CONTRAT D'APPEL ; l'A/B des notations nomme LE CHAMP\n"
+    "(sys-05 passe AfdFlags 0 sur LE MÊME montage, sys-06 posait le\n"
+    "0x20 en AfdFlags : LE VRAI NOYAU LE REFUSE — la mesure WinDbg\n"
+    "citée avait raison de la VALEUR mais tort du CHAMP). L'ERRATUM\n"
+    "n° 10 : la révision 3 de la spec sys-06 (AfdFlags = 0, TdiFlags =\n"
+    "TDI_RECEIVE_NORMAL 0x20) + la notation corrigée (le même encode\n"
+    "8 o, le slot intact) + le harnais suivi (131 contrôles · 131\n"
+    "VERTS × 3 graines) : le garde REFUSE le rebuild 1.0.0-dev.4 (LE\n"
+    "SIGNAL « signature requise », pas la panne). La seconde signature\n"
+    "(m8 c444d730…) fut reçue, recoupée 13/13 et INSTALLÉE — puis le\n"
+    "terrain a jugé la mesure : la remise RÉGÉNÉRÉE (m8 e36141f7…)\n"
+    "attend la signature HORS LIGNE du développeur.\n"
+    "Suivez LISEZMOI-ceremonie-revision3-sys06.txt : la remise est\n"
     "v06/sceau-I/a-signer.txt (TREIZE arbres, UNE seule empreinte\n"
-    "nouvelle — m8 c444d730…), à signer HORS LIGNE avec votre clé du\n"
+    "nouvelle — m8 e36141f7…), à signer HORS LIGNE avec votre clé du\n"
     "04/11 — la règle d'or : JAMAIS « generer » (la clé 173fae9c… est\n"
     "réutilisée). Le dépôt de signatures-I.txt au /test débloque : LE\n"
-    "REBUILD 1.0.0-dev.3 (les blocs sys-05 ET sys-06 réparés), LE KIT\n"
-    "M9F RÉPARÉ au /test, le run du développeur — ET SI LE VERT TIENT :\n"
-    "LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.")
+    "REBUILD 1.0.0-dev.4 (le bloc sys-06 réparé SUR LE TERRAIN), LE\n"
+    "KIT M9F RÉPARÉ au /test, le run du développeur — ET SI LE VERT\n"
+    "TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.")
 
 
 # ---------------------------------------------------------------- utilitaires

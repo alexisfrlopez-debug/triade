@@ -6445,3 +6445,83 @@ Work Log:
   ZÉRO (-7) : LA DEMI-FIN NOMMÉE SUR PIÈCES ; SI LE -6 : LE NTSTATUS
   NOMME LE COUPABLE (PENDING le contrat du bloc, INVALID_PARAMETER le
   contrat d'appel, RESET/DISCONNECT le pair).
+
+## Task ID 109 — LE RUN DE LA SONDE SYS-06 REÇU ET ANALYSÉ SUR PIÈCES : LE MOT D'INFORMATION EST VENU (LE CODE EXACT DE LA PREMIÈRE LECTURE RÉELLE LU : -6, STATUS_INVALID_PARAMETER — L'A/B NOMME LE CHAMP : AfdFlags 0x20 REFUSÉ PAR LE VRAI NOYAU) ; L'ERRATUM n° 10 + LA RÉVISION 3 + LA REMISE RÉGÉNÉRÉE m8 e36141f7… — LA TROISIÈME SIGNATURE ATTENDUE ; LE RUN ARCHIVÉ (07/11)
+
+Work Log:
+- LA PORTE UNIQUE DU GESTE JOUÉE (verifier_coherence_git_drive.py,
+  lecture seule) : g1/g2/g4 + d1..d10 + m1/m2 VERTS — LES TROIS
+  MIROIRS ALIGNÉS (HEAD == 43f942d == origin : LE PUSH RÉPARÉ tenu,
+  le flux à la pointe ; le /test 19 entrées, les TROIS kits
+  acquittés, le miroir bundle + 53 archives) ; la seule ROUGE g3 :
+  l'arbre SALE — la réparation en vol, constatée et nommée.
+- LE RUN RAPATRIÉ (ramasse_sondesys06.py, dossier dédiété D99) : le
+  QUATUOR md5 aller-retour MATCH (temoin 69122e4d…, journal
+  05b499b7…, VERDICT a4f68279…, émissions 1bd8f538… — la pièce
+  conditionnelle émissions NÉE : le CH de S4, 119 o, UN
+  enregistrement ; ligne-recue.txt ABSENTE : la mesure, pas la
+  percée).
+- LE RECOUP 17/17 SUR PIÈCES CROISÉES (recouper_sondesys06.py) :
+  l'artefact IDENTIQUE de23e577…, le VRAI ntdll b072efae… (le même
+  noyau que les runs 5/6 — Win11 build 26300, Python 3.13.9), le
+  trampoline 33 o == le squelette de la source, le compas étalonné
+  (STATUS_INVALID_HANDLE : la capture lit VRAIMENT rdx) ; l'offre
+  sys-05 VERT (rax 0 au même geste — le chemin lavé) ; LA MESURE :
+  code -6, NTSTATUS STATUS_INVALID_PARAMETER (0xC000000D), CLASSE
+  ERREUR, TROIS fois (la mesure + la variation taille + la variation
+  délai : DÉTERMINISTE) ; S4 : le chemin standard meurt AU MÊME
+  GESTE (rax -7, état 5 — le -7 de la machine EST le -6 de sys-06) ;
+  l'émission 119 o == le CH de référence ; T6 PROPRE.
+- LE COUPABLE NOMMÉ SUR PIÈCES (r13..r17, L'A/B) : les notations
+  sys-05 (l'émission RÉUSSIE : rax 0) et sys-06 (la réception
+  REFUSÉE) LUES octet par octet — IDENTIQUES au montage près ; UNE
+  SEULE écriture diffère : AfdFlags 0x20 (sys-06) contre AfdFlags 0
+  (sys-05). LA TABLE DE LA PASSATION 108 TRANCHE :
+  INVALID_PARAMETER NOMME LE CONTRAT D'APPEL ; L'A/B NOMME LE CHAMP :
+  LE VRAI afd.sys REFUSE le bit 0x20 dans AfdFlags — l'erratum de
+  lecture de l'Entrée 187 (la mesure WinDbg citée : 0x20 en
+  TROISIÈME champ) EST RÉFUTÉ PAR LE TERRAIN ; TDI_RECEIVE_NORMAL
+  (0x20) RETOURNE au champ TdiFlags (le placement de la littérature)
+  ; LE -7 DES SIX RUNS DÉSORMAIS LU : la machine -7/état 5 == sys-06
+  -6 == le noyau INVALID_PARAMETER — les SIX runs mouraient DU
+  CONTRAT D'APPEL.
+- LA RÉPARATION SELON LA CHARTE : LA RÉVISION 3 DE LA SPEC SYS-06
+  (Q3 : AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL 0x20 ; l'erratum
+  de lecture n° 1 nommé avec son jugement par le terrain) + le
+  README de l'arbre m8 suivi (l'erratum n° 10 tenu) + la notation et
+  le brouillon corrigés (le QUATRIÈME champ porte le 0x20, le
+  TROISIÈME porte 0 — le même encode 8 o, le slot intact ; auteur.py
+  rejoué : 287 o, 71 instructions, 97 o de padding) + LE HARNAIS
+  SUIVI (le noyau simulé AFD STRICT refuse le 0x20 en AfdFlags, la
+  mutante V4b ré-encodée DANS LES DEUX SENS).
+- LA PREUVE RE-PASSÉE : 131 contrôles · 131 VERTS × 3 graines
+  (20261105 empreinte 103da725…, 424242 e3281042…, 777777
+  283b938c… — zéro échec, les mutantes toutes trahies).
+- LA REMISE RÉGÉNÉRÉE (sceau_I.py preparer) : a-signer.txt porte m8
+  sys.1 e36141f75ebd8e615c53ff1bd59a4f4cee45b9397eefa66773ffbf54580b
+  3536 — README.md ET sys-06-reception.md seuls divergent (DEUX
+  fichiers, diff contrôlé) ; les DOUZE autres arbres INCHANGÉS ; la
+  balise demeure sys.1 ; le garde relit : m8 CODE 10 — LE SIGNAL,
+  pas la panne.
+- LA MAIN DU DÉVELOPPEUR RE-SERVIE :
+  LISEZMOI-ceremonie-revision3-sys06.txt ÉCRIT (OÙ NOUS EN SOMMES ;
+  POURQUOI la révision 3 — LE TERRAIN A JUGÉ LA MESURE ; CE QUI A
+  CHANGÉ : m8 e36141f7…, l'empreinte c444d730… PÉRIMÉE ; LA RÈGLE
+  D'OR inchangée ; LES CINQ PAS — le pas 3 exige e36141f7… ; CE QUE
+  CELA DÉBLOQUE) ; le NOTE_D130 réécrit (maj_kit.py : RACINE_KIT +
+  manifeste) — déployés au commit même (hook post-commit).
+- L'ARCHIVAGE (archiver_sondesys06.py, modèle archiver_sonde1,
+  D143 : par DÉPLACEMENT) : le QUATUOR + LE VERDICT DU RECOUP
+  (17/17) → archives-preuves/preuves-sonde-sys06-1/ ; le réceptacle
+  ré-armé (son LISEZMOI seul) ; les DEUX index mis à jour ; la
+  racine 19 entrées ; les TROIS kits INCHANGÉS (79d44284… +
+  215c2caa… + 67e2014d… — AUCUN dépôt).
+- FRONTIÈRES : LA FINALE 1.0.0 REFUSÉE pour ce geste (fail-closed —
+  le critère exige le vert ; D104 : aucune balise) ; les kits
+  INCHANGÉS ; le scellé 0.9.0 INTACT ; la clé privée jamais traversée
+  (D87). SUITE : LA TROISIÈME SIGNATURE DU DÉVELOPPEUR (la remise
+  e36141f7… à signer HORS LIGNE avec la clé du 04/11 →
+  signatures-I.txt + cle-publique-I.txt au /test) — puis deposer, le
+  garde 13/13, LE REBUILD 1.0.0-dev.4 (le bloc sys-06 réparé SUR LE
+  TERRAIN), LE KIT M9F RÉPARÉ au /test, le run — ET SI LE VERT
+  TIENT : LA FINALE 1.0.0, LE JALON M9 — LA GRANDE ŒUVRE.

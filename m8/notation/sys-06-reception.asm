@@ -1,12 +1,16 @@
-; sys-06-reception · bloc la réception du transport — le recv AFD bloquant, le zéro est LA DEMI-FIN -7 · spec sys-06:R2 · bloc carte g90006
-; Révision 2 (07/11/2026, l'erratum n° 9 — le miroir exact de la sonde
-;   sys-05, Entrée 185) : le WSABUF passe de « packé » 12 o (buf à +4) à
-;   CANONIQUE 16 o (buf à +8, le padding d'alignement 4 o) — le noyau
-;   lit buf à +8 : à la réception il ÉCRIRAIT chez l'adresse folle, le
-;   miroir de la mesure 0xC0000005 ; le MÊME encode (48 89 7c 24 68,
-;   5 o) — le slot ne bouge pas d'un octet.
+; sys-06-reception · bloc la réception du transport — le recv AFD bloquant, le zéro est LA DEMI-FIN -7 · spec sys-06:R3 · bloc carte g90006
+; Révision 3 (07/11/2026, l'erratum n° 10 — LE TERRAIN A JUGÉ LA MESURE) :
+;   le run de la sonde sys-06 (Entrée 191) a lu LE CODE EXACT de la
+;   première lecture réelle : -6, STATUS_INVALID_PARAMETER (0xC000000D),
+;   DÉTERMINISTE (trois lectures identiques — dont la capacité 1 et le
+;   délai 2 s ; le compas étalonné, l'offre sys-05 VERT au même geste) ;
+;   l'A/B des notations nomme le coupable au CHAMP : le VRAI afd.sys
+;   (Win11 26300) REFUSE le bit 0x20 dans AfdFlags — l'erratum de lecture
+;   de la révision 2 (la mesure WinDbg citée) est RÉFUTÉ PAR LE TERRAIN :
+;   TDI_RECEIVE_NORMAL (0x20) RETOURNE au champ TdiFlags, AfdFlags = 0 —
+;   le MÊME encode (mov dword, 8 o), le slot ne bouge pas d'un octet.
 ; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0xa6c0, taille 384 octets
-; Dépendances : sys-02 PUIS sys-01 (IOCTL_AFD_RECEIVE bloquant) — LE ZÉRO EST LA DEMI-FIN -7 (Q2) ; le noyau ÉCRIT chez le kit (I2) ; AfdFlags 0x20 LA MESURE (l'erratum) ; le fixture .text6 NOM_DEVICEIOCTL cité par déplacement (T5)
+; Dépendances : sys-02 PUIS sys-01 (IOCTL_AFD_RECEIVE bloquant) — LE ZÉRO EST LA DEMI-FIN -7 (Q2) ; le noyau ÉCRIT chez le kit (I2) ; TdiFlags 0x20 LE TERRAIN (l'erratum n° 10) ; le fixture .text6 NOM_DEVICEIOCTL cité par déplacement (T5)
 ; Notation explicite générée par outils/auteur.py depuis brouillons/sys-06-reception.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
 ; Code : 287 o · padding : 97 o (NOP)
@@ -37,8 +41,8 @@ mov qword ptr [rsp + 0x68], rdi
 lea r10, [rsp + 0x60]
 mov qword ptr [rsp + 0x70], r10
 mov dword ptr [rsp + 0x78], 1
-mov dword ptr [rsp + 0x7C], 0x20
-mov dword ptr [rsp + 0x80], 0
+mov dword ptr [rsp + 0x7C], 0
+mov dword ptr [rsp + 0x80], 0x20
 mov rcx, rbx
 xor edx, edx
 xor r8d, r8d

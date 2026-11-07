@@ -288,10 +288,12 @@ notation suit. Les brouillons sont assemblés par `outils/auteur.py`
   traverse, AUCUNE copie), TOTALE ou refus -7 (le compte du IOSB
   consigné), la garde -5 AVANT tout ;
 - **sys-06-reception** — 287 o MESURÉS, slot 0xA6C0/0x180 ARRÊTÉ
-  (97 o de NOP) : AfdFlags = TDI_RECEIVE_NORMAL 0x20 — L'ERRATUM
-  TENU (LA MESURE en TROISIÈME champ : la littérature, qui le met en
-  TdiFlags, serait REFUSÉE par le noyau strict du harnais), LE ZÉRO
-  EST LA DEMI-FIN -7, le noyau ÉCRIT chez le kit.
+  (97 o de NOP) : AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL 0x20 —
+  L'ERRATUM n° 10 TENU (LE TERRAIN A JUGÉ, Entrée 191 : la sonde
+  sys-06 a lu le refus du VRAI noyau sur le 0x20 posé en AfdFlags —
+  STATUS_INVALID_PARAMETER, trois fois ; le placement de la
+  littérature RÉTABLI, la mesure WinDbg citée avait tort du champ),
+  LE ZÉRO EST LA DEMI-FIN -7, le noyau ÉCRIT chez le kit.
 
 L'ERRATUM DE NOTATION n° 3 consigné sur pièces : le DesiredAccess
 0xC0140000 (bit 31 posé) se charge en `mov edx` ZÉRO-étendu — le

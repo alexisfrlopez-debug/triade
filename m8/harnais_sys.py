@@ -41,12 +41,13 @@ Vecteurs (les specs m8/I/sys-0{1,2,3}:
       résoudre-puis-émettre (structure), I5 échec de résolution = AUCUN
       syscall (compteur), -6 le STATUS non nul consigné en rdx, -6 la
       divergence iosb (le noyau ne parle pas deux fois), I6 non-volatils ;
-
   V2d/e/f  LE SOCLE SOCKET (chantier M9-(d)) sur FIXTURES AFD
       SYNTHÉTIQUES — le noyau simulé devient AFD STRICT : chaque geste
       transport VALIDE ses arguments contre le plan (la séquence MESURÉE
-      mswsock, les VECTEURS DORÉS, l'erratum AfdFlags 0x20 au receive —
-      la notation suit la MESURE, la littérature serait REFUSÉE) : sys-04
+      mswsock, les VECTEURS DORÉS, l'erratum n° 10 au receive — LE
+      TERRAIN A JUGÉ LA MESURE : TDI_RECEIVE_NORMAL 0x20 vit en TdiFlags,
+      le 0x20 en AfdFlags serait REFUSÉ par le VRAI noyau — la notation
+      suit LE TERRAIN, la mesure WinDbg citée serait REFUSÉE) : sys-04
       — create + bind WILDCARD + connect (la marche, les ONZE/DIX
       arguments, le handle en LOCALE posé à [P3] au succès SEULEMENT,
       Q4 : au -6 AUCUNE possession partielle — le canari de P3 le
@@ -73,10 +74,11 @@ Vecteurs (les specs m8/I/sys-0{1,2,3}:
   V4  falsification : les mutations D'UN SEUL point de chaque notation
       (stables en taille — leçon D82) doivent être ATTRAPÉES par le
       différentiel ; le témoin intact reste VERT — une suite qui ne peut
-      pas échouer ne prouve rien. LE SOCLE EN SUITE : l'erratum AfdFlags
-      falsifié DANS LES DEUX SENS (0x20→0 et 0→0x20 au receive : la MESURE
-      est la seule écriture qui passe le noyau strict, la littérature
-      serait refusée), les IOCTL échangés, le sockaddr décalé, la garde
+      pas échouer ne prouve rien. LE SOCLE EN SUITE : l'erratum n° 10
+      falsifié DANS LES DEUX SENS (0→0x20 en AfdFlags — la mesure WinDbg
+      rétablie, REFUSÉE par le VRAI noyau — et 0x20→0 en TdiFlags au
+      receive : LE TERRAIN est la seule écriture qui passe le noyau
+      strict), les IOCTL échangés, le sockaddr décalé, la garde
       span inversée, la demi-fin masquée (jz→jnz) — chaque mutante trahit
       la batterie.
 
@@ -649,15 +651,21 @@ class NoyauAFD:
         info = self._wsabuf(uc, a, self.capacite_attendue, KIT_TAMPON,
                             "WSABUF.len (la capacité)",
                             "WSABUF.buf (LE TAMPON du kit — le noyau ÉCRIT chez lui, I2)")
-        # L'ERRATUM DE LECTURE : TDI_RECEIVE_NORMAL vit au champ AfdFlags
-        # (+12 — LA MESURE p.4), PAS en TdiFlags (+16 — la littérature) — le
-        # noyau strict est LE JUGE : la notation suit la MESURE ou est REFUSÉE
-        if self._d(uc, info, 12) != L.TDI_RECEIVE_NORMAL:
-            self.ecarts.append(f"AfdFlags {self._d(uc, info, 12):#x} ≠ 0x20 "
-                               "(L'ERRATUM : LA MESURE en TROISIÈME champ)")
-        if self._d(uc, info, 16) != 0:
-            self.ecarts.append(f"TdiFlags {self._d(uc, info, 16):#x} ≠ 0 "
-                               "(la littérature serait REFUSÉE)")
+        # L'ERRATUM n° 10 : LE TERRAIN A JUGÉ LA MESURE — la sonde sys-06
+        # (Entrée 191) a lu le refus du VRAI noyau sur le 0x20 posé en
+        # AfdFlags (STATUS_INVALID_PARAMETER, trois fois) : TDI_RECEIVE_NORMAL
+        # vit au champ TdiFlags (+16 — le placement de la littérature),
+        # AfdFlags (+12) = 0 — le noyau strict est LE JUGE : il refuse ce
+        # que le VRAI noyau refuse, la notation suit LE TERRAIN ou est
+        # REFUSÉE (l'erratum de lecture de la révision 2 est MORT)
+        if self._d(uc, info, 12) != 0:
+            self.ecarts.append(f"AfdFlags {self._d(uc, info, 12):#x} ≠ 0 "
+                               "(L'ERRATUM n° 10 : LE TERRAIN — le 0x20 "
+                               "ici serait REFUSÉ par le VRAI noyau)")
+        if self._d(uc, info, 16) != L.TDI_RECEIVE_NORMAL:
+            self.ecarts.append(f"TdiFlags {self._d(uc, info, 16):#x} ≠ 0x20 "
+                               "(LE TERRAIN A JUGÉ : TDI_RECEIVE_NORMAL "
+                               "vit ICI, le placement de la littérature)")
         if self.ecarts:
             return self._refus_param(uc, a)
         mode, n = self.modes["recv"]
@@ -1144,11 +1152,12 @@ def vecteur_v1(ks: Ks, cs: capstone.Cs):
     attendus_6 = [
         (f"mov qword ptr [rsp + 0x28], {L.IOCTL_AFD_RECEIVE:#x}",
          "IOCTL_AFD_RECEIVE"),
-        (f"mov dword ptr [rsp + 0x7c], {L.TDI_RECEIVE_NORMAL:#x}",
-         "AfdFlags = TDI_RECEIVE_NORMAL 0x20 (L'ERRATUM : LA MESURE en "
-         "TROISIÈME champ)"),
-        ("mov dword ptr [rsp + 0x80], 0", "TdiFlags 0 (la littérature ici "
-         "serait REFUSÉE par le noyau strict du harnais)"),
+        ("mov dword ptr [rsp + 0x7c], 0",
+         "AfdFlags 0 (L'ERRATUM n° 10 : LE TERRAIN A JUGÉ — le VRAI noyau "
+         "refuse le 0x20 ici, la sonde sys-06 l'a mesuré)"),
+        (f"mov dword ptr [rsp + 0x80], {L.TDI_RECEIVE_NORMAL:#x}",
+         "TdiFlags = TDI_RECEIVE_NORMAL 0x20 (LE TERRAIN : le placement "
+         "de la littérature, la mesure WinDbg citée avait tort du champ)"),
         ("mov dword ptr [rsp + 0x78], 1", "BufferCount 1"),
         ("mov dword ptr [rsp + 0x60], esi", "WSABUF.len = la capacité"),
         ("mov qword ptr [rsp + 0x68], rdi",
@@ -1160,7 +1169,7 @@ def vecteur_v1(ks: Ks, cs: capstone.Cs):
     controle("V1.sys-06:concordance-plan", not manquants,
              f"{len(attendus_6) - len(manquants)}/{len(attendus_6)} immédiats"
              + (f" — MANQUANTS : {manquants}" if manquants else
-                " — l'erratum tenu : 0x20 en AfdFlags, RIEN en TdiFlags"))
+                " — l'erratum n° 10 tenu : RIEN en AfdFlags, 0x20 en TdiFlags"))
     controle("V1.sys-06:citation-fixture",
              citations_rip("sys-06-reception") == [L.R_SYS_NOM_DEVICEIOCTL],
              f"l'unique [rip] résout à {L.R_SYS_NOM_DEVICEIOCTL:#x} (T5)")
@@ -2498,8 +2507,8 @@ def vecteur_v4_transport(emu: Emulateur, noyau: Noyau):
         assert i >= 0, f"{morceau.hex()} introuvable dans sys-06"
         return i
 
-    a_erratum = octets_de("mov dword ptr [rsp + 0x7C], 0x20")
-    a_litterature = octets_de("mov dword ptr [rsp + 0x80], 0")
+    a_erratum = octets_de("mov dword ptr [rsp + 0x7C], 0")
+    a_litterature = octets_de("mov dword ptr [rsp + 0x80], 0x20")
     a_ioctl_recv = octets_de("mov qword ptr [rsp + 0x28], 0x12017")
     a_wsabuf_buf = octets_de("mov qword ptr [rsp + 0x68], rdi")
     jz_demifin = _offsets_saut(sys06, L.SYS06_VA, 0x74, 0x84,
@@ -2507,10 +2516,11 @@ def vecteur_v4_transport(emu: Emulateur, noyau: Noyau):
     assert len(jz_demifin) == 1, f"{len(jz_demifin)} jz vers .demi_fin"
     off_patch, patch_sens = _patch_saut_inverse(sys06, jz_demifin[0])
     mutations_06 = [
-        ("L'ERRATUM-falsifie (AfdFlags 0x20→0 : la MESURE trahie)",
-         trouve06(a_erratum) + len(a_erratum) - 4, struct.pack("<I", 0)),
-        ("LA-LITTERATURE (TdiFlags 0→0x20 : l'écriture faussière)",
-         trouve06(a_litterature) + len(a_litterature) - 4, struct.pack("<I", 0x20)),
+        ("LE-TERRAIN-falsifie (AfdFlags 0→0x20 : la mesure WinDbg "
+         "rétablie — REFUSÉE par le VRAI noyau, Entrée 191)",
+         trouve06(a_erratum) + len(a_erratum) - 4, struct.pack("<I", 0x20)),
+        ("LE-TERRAIN-VIDÉ (TdiFlags 0x20→0 : le placement perdu)",
+         trouve06(a_litterature) + len(a_litterature) - 4, struct.pack("<I", 0)),
         ("demi-fin-masquee (jz→jnz : le zéro déguisé en succès)",
          off_patch, patch_sens),
         ("ioctl-recv-confondu-send (0x12017→0x1201F)",

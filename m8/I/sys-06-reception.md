@@ -1,4 +1,22 @@
-sys-06 · la réception du transport — le recv AFD bloquant par syscall direct · révision 2
+sys-06 · la réception du transport — le recv AFD bloquant par syscall direct · révision 3
+Révision 3 (07/11/2026, l'erratum n° 10 — LE TERRAIN A JUGÉ LA MESURE) :
+le run de la sonde sys-06 (Entrée 191, m9-(g)) a LU LE CODE EXACT de la
+première lecture réelle : -6, NTSTATUS STATUS_INVALID_PARAMETER
+(0xC000000D), CLASSE ERREUR — UN VRAI REFUS DU NOYAU, DÉTERMINISTE
+(la mesure + la variation taille capacité 1 + la variation délai 2 s,
+les TROIS identiques ; le compas étalonné : la capture lit VRAIMENT
+rdx ; l'offre sys-05 VERT : le handle et le chemin sont lavés ; la
+contre-épreuve S4 : le chemin standard meurt AU MÊME GESTE — le refus
+est AU BLOC). L'A/B des notations resserre le coupable au CHAMP :
+sys-05 (l'émission, AfdFlags 0) PASSE sur LE MÊME montage ; sys-06
+(AfdFlags 0x20) est REFUSÉ — LE VRAI afd.sys (Win11 build 26300)
+REFUSE le bit 0x20 dans le champ AfdFlags. L'ERRATUM DE LECTURE de la
+révision 2 (la mesure WinDbg citée : « 0x20 en TROISIÈME champ ») EST
+RÉFUTÉ PAR LE TERRAIN : TDI_RECEIVE_NORMAL (0x20) RETOURNE au champ
+TdiFlags (le placement de la littérature écartée), AfdFlags = 0. LE
+JUGE EST LE CODE : le noyau réel a le dernier mot sur le dump
+interprété — la même valeur, l'AUTRE champ ; le MÊME encode (mov
+dword, 8 o), le slot ne bouge pas d'un octet.
 Révision 2 (07/11/2026, l'erratum n° 9 — consigné AVANT le kit, la faute
 nommée PAR LA MESURE DE LA MÊME STRUCTURE) : le recoup du premier run
 de la sonde sys-05 (Entrée 185) a nommé le coupable à l'instruction
@@ -14,8 +32,7 @@ la faute est nommée AVANT le kit — le C_ASSERT send/recv (la taille de
 l'un EST celle de l'autre, 24 o) et le MÊME patron d'instruction (la
 pose à +4, relu dans l'artefact scellé) scellent la symétrie du
 contrat : le même WSABUF, le même +8. Q3 suit : 16 o + 24 o — la
-structure totale fait 40 octets, non 36. Révision 1 : la pose
-initiale (l'erratum de lecture AfdFlags/TdiFlags demeure, lui, intact).
+structure totale fait 40 octets, non 36.
 Intention : LE GESTE DE RÉCEPTION du socle socket — lire les octets de
 l'endpoint établi par NtDeviceIoControlFile(IOCTL_AFD_RECEIVE), le
 WSABUF unique pointant LE TAMPON DU KIT (le noyau écrit chez l'appelant :
@@ -28,16 +45,23 @@ qui rend zéro octet est LE REFUS -7 NOMMÉ (Q2 du socle tls13-28 : « le
 zéro de réception [la demi-fin] est le refus -7 du KIT, jamais une
 lecture vide silencieuse » — le pair a fermé, le kit tranche).
 Provenance : phnt/ntafd.h (AFD_RECV_INFO — le C_ASSERT : la taille du
-send EST celle du recv, 24 o) et la mesure WinDbg Windows 11
-(leftarcode, partie 4, août 2025). ERRATUM DE LECTURE consigné sur
-pièces AVANT la notation (le modèle M8-(b) libc-02, jamais une écriture
-faussière laissée debout) : la littérature courante (unknowncheats,
-« Native TCP Client Socket ») pose TDI_RECEIVE_NORMAL (0x20) dans le
-champ TdiFlags ; LA MESURE WinDbg le pose dans le champ AfdFlags (« I
-have experimentally checked and our version is the one that works » —
-le dump : BufferArray, BufferCount 1, puis 0x20 en TROISIÈME champ) ;
-l'instrument recoupe le dump octet par octet, la notation suivra la
-MESURE, le terrain recoupera sur le VRAI — le juge est le code.
+send EST celle du recv, 24 o). ERRATUM DE LECTURE n° 1 (révision 1,
+consigné sur pièces AVANT la notation — le modèle M8-(b) libc-02,
+jamais une écriture faussière laissée debout) : la littérature courante
+(unknowncheats, « Native TCP Client Socket ») pose TDI_RECEIVE_NORMAL
+(0x20) dans le champ TdiFlags ; la mesure WinDbg citée (leftarcode,
+partie 4, août 2025) le posait dans le champ AfdFlags — la révision 2
+AVAIT SUIVI LA MESURE (« I have experimentally checked and our version
+is the one that works » — le dump : BufferArray, BufferCount 1, puis
+0x20 en TROISIÈME champ). ERRATUM n° 10 (révision 3, LE TERRAIN A JUGÉ) :
+la sonde sys-06 (Entrée 191) a mesuré le VRAI noyau — AfdFlags 0x20 →
+STATUS_INVALID_PARAMETER (0xC000000D), DÉTERMINISTE, TROIS fois, le
+compas étalonné et l'offre sys-05 VERT au même geste : la mesure
+WinDbg citée avait raison de la VALEUR (0x20) mais tort du CHAMP — le
+VRAI afd.sys refuse le bit en AfdFlags ; la notation RETOURNE au
+placement de la littérature : AfdFlags = 0, TdiFlags =
+TDI_RECEIVE_NORMAL (0x20). Le juge est le code — le noyau réel a le
+dernier mot sur le dump interprété.
 Contrat :
   pre  : P1 rcx = la base du module ntdll (l'appelant fournit) ;
          P2 rdx = le handle de l'endpoint (posé par sys-04 — le bloc
@@ -69,9 +93,12 @@ Contrat :
              noyau lit buf à +8 ; le BufferArray pointe le WSABUF de
              pile, le WSABUF porte la capacité et LE TAMPON DU KIT
              (P3), BufferCount = 1,
-             AfdFlags = TDI_RECEIVE_NORMAL (0x20 — LA MESURE, l'erratum
-             ci-dessus : la réception NORMALE qui purge la file du
-             noyau), TdiFlags = 0 ;
+             AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL (0x20 —
+             LE TERRAIN A JUGÉ, l'erratum n° 10 : le VRAI noyau refuse
+             le bit 0x20 dans AfdFlags — STATUS_INVALID_PARAMETER, la
+             sonde sys-06 l'a mesurée ; la valeur reste LA MESURE, le
+             CHAMP retourne à la littérature ; la réception NORMALE
+             qui purge la file du noyau) ;
          Q4 l'appel porte les DIX arguments NT dans l'ordre (handle,
              Event NULL, ApcRoutine NULL, ApcContext NULL, l'IOSB de
              pile, l'IOCTL_AFD_RECEIVE du plan, l'AFD_RECV_INFO de
