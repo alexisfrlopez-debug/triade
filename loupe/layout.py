@@ -156,6 +156,20 @@ CHERCHER_CHIFFRES = 64             # 64 chiffres = 32 octets (MOTIF_MAX)
 MOTIF_OCTETS = 0                   # motif[32] @ +0 (la zone MOTIF)
 MOTIF_LONGUEUR = 32                # u32 @ +32 (F3 reprend le dernier motif)
 
+# --- Le journal des écritures (loupe-16, la disposition ARRÊTÉE au geste (a)) ---
+# L'entrée PAR DÉCALAGE (I2 de loupe-16 : une entrée par octet, la seconde
+# écriture REMPLACE — la sauvegarde écrit chaque octet UNE fois ; l'ordre
+# interne du journal est L'ORDRE DE SAISIE, I2 de loupe-17 le suit tel quel).
+
+JOUR_PAS = 16                      # l'entrée : u64 décalage · u8 octet · 7
+                                   # réserve
+JOUR_DECALAGE = 0                  # u64 @ +0 de l'entrée
+JOUR_OCTET = 8                     # u8 @ +8 de l'entrée
+JOUR_NOMBRE = 4096                 # u32 @ +4096 de la zone (le compte des
+                                   # entrées distinctes, 256 max — EDITS_MAX)
+JOUR_PREMIER = 0                   # l'entrée 0 @ +0 (le témoin de loupe-17
+                                   # la lit : la première adresse écrite)
+
 METRIQUES_CHAR_W = 0               # u32 @ +0 : la chasse mesurée UNE fois
 METRIQUES_LIGNE_H = 4              # u32 @ +4 : la hauteur de ligne
 METRIQUES_LIGNES = 8               # u32 @ +8 : les lignes visibles (WM_SIZE)
@@ -167,8 +181,17 @@ ECRAN_BARRE = 2000                 # 2 × 160 @ +2000 : la barre-état (2 lignes
 
 # --- Les messages du domaine (les WM/SB auxquels la procédure route) --------------
 WM_TAILLE = 0x0005                 # WM_SIZE (lParam : cx | cy << 16)
+WM_DESTRUCTION = 0x0002            # WM_DESTROY → loupe-18 Q3 (la fin de
+                                   # fenêtre : la session close, la file
+                                   # quittée — le geste (d))
 WM_PEINTURE = 0x000F               # WM_PAINT → loupe-10 (l'unique peintre)
-WM_FERMETURE = 0x0010              # WM_CLOSE → loupe-18 (chantier (d))
+WM_FERMETURE = 0x0010              # WM_CLOSE → loupe-18 (Alt+F4, le menu
+                                   # système — LE DOUBLE-GESTE, chantier (d))
+CTRL_S = 0x13                      # le CODE DE CONTRÔLE Ctrl+S (WM_CHAR —
+                                   # la voie des codes : aucune feuille
+                                   # GetKeyState au plan, la leçon du geste
+                                   # (c) pour 0x06/0x07 ; DC3 = 0x13)
+                                   # → loupe-17 la sauvegarde
 WM_VSCROLL = 0x0115                # WM_VSCROLL → loupe-11
 WM_TOUCHE = 0x0100                 # WM_KEYDOWN : la table de commandes
 WM_CARACT = 0x0102                 # WM_CHAR : la saisie active ?
@@ -457,6 +480,24 @@ L_PAIRES = 0x23C2             # « paires hexa attendues » (22 o) — E1 de 14
 L_SYSTEME = 0x23D8            # « refus système » (14 o) — le -6 générique
 L_ABSENT = 0x23E6             # « fichier introuvable » (20 o) — le -2 de 01
 
+# --- .rdata @0x2520-0x259E : LES LIBELLÉS DU GESTE (d) (la suite du bloc ----------
+# --- 0x2300, la marge 0x23FA-0x251F VIERGE) : les textes nommés des specs
+# --- 15-18 — chaque adresse ARRÊTÉE ici (la source unique ; le tiret ASCII et
+# --- le point médian 0xB7, la leçon du geste (c) : l'ém-dash ne vit qu'aux
+# --- chaînes UTF-16 pilotées aux API, la barre l'écrit « - » à la française)
+
+L_JOURNALPLEIN = 0x2520       # « journal plein - Ctrl+S » (23 o) — E3 de
+                              # loupe-16 (la borne nommée : rien perdu)
+L_RIENSAUVER = 0x2537         # « rien à sauver » (14 o) — Q1 de loupe-17 (le
+                              # repli documenté, l'état nommé pas un échec)
+L_ECRITS = 0x2545             # « o écrits · 0x » (15 o) — Q5 de loupe-17 (le
+                              # témoin : le compte puis la première adresse)
+L_JUSQUA = 0x2554             # « ..0x » (5 o) — le milieu du témoin (la
+                              # dernière adresse écrite)
+L_QUITTER = 0x2559            # « MODIFIÉ - Alt+F4 encore pour quitter sans
+                              # sauver, Ctrl+S pour sauver » (69 o) — Q1 de
+                              # loupe-18 (la phrase du double-geste)
+
 # --- .rdata @0x2600 : LES CHAÎNES UTF-16 (pilotées AUX API, hors expansion) -------
 # La classe, le titre et l'explication fatale passent AUX API UTF-16 telles
 # quelles (CreateWindowExW lit l'UTF-16 DIRECTEMENT — l'ém-dash U+2014 du
@@ -595,12 +636,58 @@ LOUPE09_VA = 0x5C00           # i110009 — l'écran (WinMain + LA PROCÉDURE,
 
 SLOTS_LOUPE.update({
     "i110008": (LOUPE08_VA, 0x140),
-    "i110009": (LOUPE09_VA, 0x380),
+    "i110009": (LOUPE09_VA, 0x480),
     "i110010": (LOUPE10_VA, 0x680),
     "i110011": (LOUPE11_VA, 0x280),
     "i110012": (LOUPE12_VA, 0x340),
     "i110013": (LOUPE13_VA, 0xC0),
     "i110014": (LOUPE14_VA, 0x400),
+})
+
+# =================================================================================
+# L'ADRESSAGE DU GESTE (d) — LA FAMILLE ÉDITION (loupe-15..18) + LA TABLE DE
+# ROUTAGE ÉTENDUE (loupe-09 r2, LA RÉVISION NOMMÉE du geste (c) : « la table
+# de routage s'étendra au chantier (d) sans cascade sur les autres notations
+# » — tenue : les six notations (c) de 08/10/11/12/13/14 demeurent INTACTES,
+# seul le slot de loupe-09 BOUGE [il croît : WM_CLOSE/WM_DESTROY → loupe-18,
+# les huit flèches → loupe-15, Ctrl+S → loupe-17, les chiffres hexa →
+# loupe-16] et la famille édition suit À SA SUITE à la contiguïté).
+# (D161 rejoué une quatrième fois : les slots ci-dessous sont PRÉFIGURÉS à la
+# plume pour la première passe de mesure, la MESURE de l'auteur les ARRÊTERA
+# aux minimums admissibles — multiples de 64, padding >= 16, tassés depuis la
+# nouvelle fin de loupe-09.)
+#
+# L'ORDRE DU TASSEMENT (arrêté au geste (d)) : loupe-15 (le curseur — la
+# position pure) · loupe-16 (la saisie — l'état pur : journal, tampon, marque)
+# · loupe-17 (la sauvegarde — l'écriture disque + le panneau re-né + le
+# témoin composé) · loupe-18 (la sortie — la plus courte, la dernière : le
+# bloc de la mort). Les quatre sont appelés PAR loupe-09 (le routeur, à leur
+# suite en adresse — les appels directs AVANTS, la carte les résout).
+# =================================================================================
+
+LOUPE15_VA = 0x6080           # i110015 — le curseur (la cellule active, la
+                              # vue qui suit — jamais perdue hors écran)
+LOUPE16_VA = 0x6240           # i110016 — la saisie (l'octet au journal, la
+                              # marque sale, le disque intact)
+LOUPE17_VA = 0x6500           # i110017 — la sauvegarde (l'écriture À
+                              # L'OCTET, le panneau re-né, le témoin)
+LOUPE18_VA = 0x6740           # i110018 — la sortie (le double-geste, la
+                              # session close, la file quittée)
+# L'ARRÊT SUR LES MESURES (D161, la quatrième passe — 08/11 : 1135/391/660/
+# 521/163 o notés (loupe-16 : 657 o — l'attente CONSOMMÉE, → les slots MINIMUMS, tassés à la contiguïté : loupe-09 r2
+# [la table étendue] @0x5C00 [0x480, padding 17 — la révision nommée : il
+# croît de 874 → 1135 o, les notations (c) voisines INTACTES] · 15 @0x6080
+# [0x1C0, padding 57] · 16 @0x6240 [0x2C0, padding 44 — l'attente CONSOMMÉE
+# par l'engagement : le second chiffre engage, le premier SAUVÉ À r10d
+# avant la consommation, actif ET valeur effacés, 660 o] · 17 @0x6500 [0x240,
+# padding 55] · 18 @0x6740 [0xC0, padding 29] — fin du geste (d) : 0x6800,
+# la marge jusqu'aux sha @0xC000 VIERGE
+
+SLOTS_LOUPE.update({
+    "i110015": (LOUPE15_VA, 0x1C0),
+    "i110016": (LOUPE16_VA, 0x2C0),
+    "i110017": (LOUPE17_VA, 0x240),
+    "i110018": (LOUPE18_VA, 0xC0),
 })
 
 # --- 0xC000-0xC3C0 : LA FAMILLE SHA AUX ADRESSES SCELLÉES M9 (R7 — les octets

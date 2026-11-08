@@ -27,13 +27,23 @@
 ; LA PROCÉDURE (Q3, D38 — les quatre arguments aux NON-VOLATILS avant
 ; tout appel) : WM_PAINT → loupe-10 ; WM_SIZE/WM_VSCROLL/WM_MOUSEWHEEL
 ; → loupe-11 (les quatre passés) ; WM_KEYDOWN : F5 → loupe-12, F3 →
-; loupe-14 ; WM_CHAR : la saisie active → loupe-12 (le gestionnaire
-; partagé), 0x06 → loupe-14, 0x07 → loupe-12, le reste → DefWindowProcW
-; (loupe-16 au chantier (d) — la table s'y étendra, révision nommée) ;
-; TOUT LE RESTE → DefWindowProcW (son rax retourné tel quel) ; TOUT
-; verdict négatif des blocs routés monte à la barre (.monter : le -6
-; générique « refus système » SI aucun message ne vit déjà — jamais un
-; refus muet, jamais un crash, I4) ; les messages traités rendent 0.
+; loupe-14, LES HUIT FLÈCHES (VK_PRIOR/NEXT/END/HOME/LEFT/UP/RIGHT/DOWN,
+; 0x21..0x28 d'un seul encadrement) HORS SAISIE (mode = 0) → loupe-15 ;
+; WM_CHAR : la saisie active → loupe-12 (le gestionnaire partagé), 0x06 →
+; loupe-14, 0x07 → loupe-12, 0x13 (Ctrl+S, LE CODE DE CONTRÔLE — aucune
+; feuille GetKeyState au plan) → loupe-17, VK_SUPPR et LES SEIZE CHIFFRES
+; HEXA (minuscules portées aux majuscules) → loupe-16 ; WM_CLOSE (Alt+F4,
+; le menu système) → loupe-18 LE DOUBLE-GESTE ; WM_DESTROY (la fin de
+; fenêtre, DestroyWindow l'envoie) → loupe-18 la sortie propre ; TOUT LE
+; RESTE → DefWindowProcW (son rax retourné tel quel) ; TOUT verdict
+; négatif des blocs routés monte à la barre (.monter : le -6 générique
+; « refus système » SI aucun message ne vit déjà — jamais un refus muet,
+; jamais un crash, I4) ; les messages traités rendent 0.
+; LA RÉVISION NOMMÉE DU GESTE (d) — la table ÉTENDUE, la promesse du geste
+; (c) tenue : « la table de routage s'étendra au chantier (d) SANS
+; CASCADE sur les autres notations » — les notations (c) de 08/10/11/12/
+; 13/14 demeurent INTACTES (aucun octet bougé), seul le slot de 09 croît ;
+; les quatre blocs de l'édition vivent À SA SUITE (le plan, geste (d)).
 ; AUCUNE goutte de peinture hors WM_PAINT (I3) ; l'IAT fermée du bloc
 ; (GetCommandLineW, LoadCursorW, RegisterClassExW, CreateWindowExW,
 ; ShowWindow, MessageBoxW, ExitProcess, DefWindowProcW) ; NOP, 0x90.
@@ -156,6 +166,10 @@ mov r12, rcx
 mov rbx, rdx
 mov rsi, r8
 mov rdi, r9
+cmp rbx, 2
+je .r_destruction
+cmp rbx, 0x10
+je .r_fermeture
 cmp rbx, 0x0f
 je .r_peinture
 cmp rbx, 5
@@ -189,7 +203,24 @@ cmp rsi, 0x74
 je .r_aller
 cmp rsi, 0x72
 je .r_suivant
-jmp .r_defaut
+; --- la table étendue (r2) : les huit flèches → loupe-15 HORS SAISIE ---
+mov eax, esi
+sub eax, 0x21
+cmp eax, 7
+ja .r_defaut
+lea rax, [rip + SAISIE]
+cmp dword ptr [rax], 0
+jne .r_defaut
+jmp .r_curseur
+.r_curseur:
+mov rcx, r12
+mov edx, 0x100
+mov r8, rsi
+mov r9, rdi
+call LOUPE15
+call .monter
+xor eax, eax
+jmp .r_retour
 .r_aller:
 mov rcx, r12
 mov edx, 0x100
@@ -226,7 +257,45 @@ cmp rsi, 0x06
 je .r_libre_suivant
 cmp rsi, 0x07
 je .r_libre_aller
+cmp rsi, 0x13
+je .r_sauver
+cmp rsi, 0x08
+je .r_saisie
+; --- la table étendue (r2) : les seize chiffres hexa → loupe-16 ---
+mov eax, esi
+cmp eax, 0x61
+jb .hex_maj
+cmp eax, 0x66
+ja .hex_maj
+sub eax, 0x20
+.hex_maj:
+cmp eax, 0x30
+jb .r_defaut
+cmp eax, 0x39
+jbe .r_saisie
+cmp eax, 0x41
+jb .r_defaut
+cmp eax, 0x46
+jbe .r_saisie
 jmp .r_defaut
+.r_sauver:
+mov rcx, r12
+mov edx, 0x102
+mov r8, rsi
+mov r9, rdi
+call LOUPE17
+call .monter
+xor eax, eax
+jmp .r_retour
+.r_saisie:
+mov rcx, r12
+mov edx, 0x102
+mov r8, rsi
+mov r9, rdi
+call LOUPE16
+call .monter
+xor eax, eax
+jmp .r_retour
 .r_libre_suivant:
 mov rcx, r12
 mov edx, 0x102
@@ -242,6 +311,25 @@ mov edx, 0x102
 mov r8, rsi
 mov r9, rdi
 call LOUPE12
+call .monter
+xor eax, eax
+jmp .r_retour
+; ==================== les chemins du geste (d) : 18 la sortie ================
+.r_fermeture:
+mov rcx, r12
+mov rdx, rbx
+mov r8, rsi
+mov r9, rdi
+call LOUPE18
+call .monter
+xor eax, eax
+jmp .r_retour
+.r_destruction:
+mov rcx, r12
+mov rdx, rbx
+mov r8, rsi
+mov r9, rdi
+call LOUPE18
 call .monter
 xor eax, eax
 jmp .r_retour

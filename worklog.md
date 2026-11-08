@@ -6972,3 +6972,55 @@ Work Log:
   étendue, le kit au /test modèle m9f) ; la cérémonie d'ère du TGN attend
   son geste (le 14e arbre, avant tout build) ; le projet fils attend son
   premier geste à son message propre.
+
+## Task ID 116 — LE CHANTIER M10-(d), PREMIÈRE MOITIÉ, RÉALISÉ : LA FAMILLE ÉDITION LOUPE-15..18 + LA TABLE DE ROUTAGE DE LOUPE-09 ÉTENDUE (r2) NOTÉES-MESURÉES-PROUVÉES (LE DISQUE SAISISSABLE ET LA MORT ; LE RÉSEAU DE LA GARDE ; L'ÉCRITURE À L'OCTET PROUVÉE DIFFÉRENTIELLE) — LE KIT ATTEND LA CÉRÉMONIE (08/11 au soir)
+
+- La suite annoncée à l'Entrée 197 ; le développeur commande (« continue
+  M10 »). La notation est un geste de LABO, le kit un geste de BUILD — la
+  cérémonie d'ère précède le build : le chantier coupé en deux, la
+  première moitié réalisée. AUCUN build, le garde à 13 arbres.
+- LOUPE-09 r2 : LA TABLE ÉTENDUE (1135 o, 874 → : WM_CLOSE/WM_DESTROY →
+  18, les huit flèches HORS SAISIE → 15, Ctrl+S 0x13 par WM_CHAR → 17,
+  VK_SUPPR et les seize chiffres → 16) — SANS CASCADE : les notations
+  (c) de 08/10/11/12/13/14 INTACTES, la promesse du geste (c) tenue.
+- LES QUATRE NOTATIONS : 15 le curseur (391 o : le pas, la borne les
+  arrêts NOMMÉS, LA VUE SUIT aux lignes visibles — la lecture stricte,
+  jamais perdu hors écran y compris la vitrine rétrécie ; la relecture
+  SEULEMENT au recadrage) · 16 la saisie (660 o : l'attente CONSOMMÉE par
+  l'engagement — le premier chiffre SAUVÉ À r10d avant la consommation ;
+  le journal PAR DÉCALAGE, la borne 256, LA GARDE RÉ-ARMÉE, LA VUE SUIT
+  L'AVANCE — l'invariant du domaine ; la cellule fantôme le refus
+  PRÉCÈDE ; LE DISQUE INTACT) · 17 la sauvegarde (521 o : l'écriture À
+  L'OCTET une par une, l'échec FAIL-CLOSED, LE PANNEAU RE-NÉ, LE TÉMOIN
+  composé avant la vidange) · 18 la sortie (163 o : LE DOUBLE-GESTE
+  GARANTI, la phrase + le beep au refus, loupe-03 + PostQuitMessage à la
+  mort, la sortie ne sauvegarde JAMAIS elle-même).
+- LE HARNAIS — LE DISQUE SAISISSABLE ET LA MORT : WriteFile à l'ABI
+  msx64 (l'échec armé au Nième appel) ; DestroyWindow qui ENVOIE
+  WM_DESTROY PAR LA MÊME MÉCANIQUE que le Dispatch ; PostQuitMessage ;
+  MessageBeep ; les QUATRE feuilles du (d) VIVANTES à l'IAT,
+  GetModuleHandleW seul au mort.
+- LE VERDICT : 45 contrôles · 45 VERTS × 3 graines (20261108, 424242,
+  777777) — le différentiel 10 000 touches + 10 000 frappes + 1 000
+  scénarios == le modèle (le disque APRÈS : SEULEMENT les N octets, la
+  taille CONSTANTE), LE TÉMOIN composé et peint, LE RÉSEAU DE LA GARDE
+  par tous les chemins, LA BOUCLE COMPLÈTE au scénario (sauvé ET abandon,
+  la persistance recoupée hashlib), LA FALSIFICATION (quatre mutants :
+  la vue qui suit, les deux gardes, l'octet de trop).
+- LES LEÇONS DU PREMIER JET : l'attente consommée (le sauvé à r10d
+  AVANT l'effacement — l'écran attendu a attrapé l'octet 0x0D pour
+  « 4d ») ; la zone SAISIE remise au vierge entre les scénarios (l'état
+  qui fuit) ; les bytes au lecteur (unicorn refuse les bytearray) ; les
+  déplacements capstone en HEXA.
+- FRONTIÈRES : AUCUN arbre signé touché ; le garde sceau I : 13 arbres
+  VERTS (cle deposee reelle) vérifié AVANT consignation ; le proxy 1.0.0
+  et la carte tls13 INTACTS. Livrables : les brouillons + les notations
+  loupe-15..18 + loupe-09 r2, loupe/layout.py (les slots (d) ARRÊTÉS,
+  les 5 libellés @0x2520+, les constantes du journal), loupe/outils/
+  auteur.py (les 18 blocs), loupe/harnais_edition.py,
+  scripts/consigner_m10d.py.
+- SUITE : LA CÉRÉMONIE D'ÈRE DU TGN (le geste hors-ligne du développeur
+  — la remise 14 arbres, la clé du 04/11, les pièces au /test) PUIS le
+  build + le kit terrain (M10-(d) seconde moitié) et le run terrain
+  (M10-(e)) ; le projet fils attend son premier geste à son message
+  propre.

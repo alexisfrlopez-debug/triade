@@ -133,8 +133,13 @@ _FICHIERS = {
                 "— l'occurrence à cheval JAMAIS manquée) ; TAMPON_CUMUL "
                 "partagé (I1 : l'exclusion de famille)"),
     "i110009": ("loupe-09-ecran", "loupe-09:R1",
-                "WinMain + LA PROCÉDURE (le bloc DERNIER du tassement : la "
-                "table de routage s'étendra au chantier (d)) ; IAT "
+                "WinMain + LA PROCÉDURE (le bloc DERNIER du tassement (c), "
+                "SA TABLE DE ROUTAGE ÉTENDUE AU GESTE (d) — LA RÉVISION NOMMÉE "
+                "tenue : WM_CLOSE/WM_DESTROY → loupe-18, les huit "
+                "flèches/PgUp/PgDn/Home/End HORS SAISIE → loupe-15, Ctrl+S "
+                "0x13 par WM_CHAR → loupe-17, VK_SUPPR et les seize chiffres "
+                "hexa → loupe-16 — sans cascade : les notations (c) de "
+                "08/10/11/12/13/14 INTACTES, seul le slot de 09 croît) ; IAT "
                 "kernel32 : GetModuleHandleW, GetCommandLineW, ExitProcess "
                 "; IAT user32 : RegisterClassExW, CreateWindowExW, "
                 "ShowWindow, LoadCursorW, MessageBoxW (l'explication fatale "
@@ -142,9 +147,80 @@ _FICHIERS = {
                 "(l'adresse scellée démo @0x15C0, R7 — ses déplacements "
                 "visent l'IAT démo @0x2818/0x2820/0x2828) ; loupe-01 (la "
                 "session née à la ligne de commande lue À LA MAIN) ; "
-                "loupe-10/11/12/14 (les blocs routés) ; l'image PI (D33 : "
-                "aucune adresse absolue — la procédure par lea rip) ; les "
-                "zones DÉCLARÉES avant la première goutte (I1)"),
+                "loupe-10/11/12/14/15/16/17/18 (les blocs routés) ; l'image PI "
+                "(D33 : aucune adresse absolue — la procédure par lea rip) ; "
+                "les zones DÉCLARÉES avant la première goutte (I1)"),
+    "i110015": ("loupe-15-curseur", "loupe-15:R1",
+                "LE PAS (Q1 : ±1/±16/±352, VK_DEBUT l'aligne16_inf, VK_FIN "
+                "min(aligne16+15, taille-1) — la fin de ligne RÉELLE) ; LA "
+                "BORNE (Q2 : le clamp [0, taille-1], les bords SONT DES ARRÊTS "
+                "— rax = 0 QUAND MÊME, le bord n'est pas un échec) ; LA VUE "
+                "SUIT (Q3 : la fenêtre visible LUE AUX LIGNES VISIBLES de la "
+                "vitrine [METRIQUES.lignes - 3, capée 24 — la lecture STRICTE "
+                "de la spec : le curseur JAMAIS perdu hors écran, y compris "
+                "la vitrine rétrécie ; à la vitrine 0.1.0 la fenêtre == le "
+                "remplissage 384, le miroir du commit de loupe-12] ; le "
+                "recadrage par LA RÈGLE DU PLAN — curseur - 176 aligné16_inf, "
+                "clapé vue_max) ; loupe-02 (la fenêtre relue, SEULEMENT au "
+                "recadrage — I2 : le harnais compte les lectures) ; "
+                "InvalidateRect (le repaint demandé : la surbrillance suit, "
+                "le bloc ne peint RIEN — I3) ; le repli SANS session (P2 : "
+                "rien bougé, la vitrine vide) ; AUCUNE entrée IAT PROPRE au "
+                "delà de la feuille partagée (I4 — la composition seule, "
+                "charte § 9)"),
+    "i110016": ("loupe-16-saisie", "loupe-16:R1",
+                "LE PREMIER CHIFFRE (Q1 : l'attente au nibble — la zone "
+                "SAISIE actif/nibble du plan, déclaré au geste (a)) ; LE "
+                "SECOND (Q2 : l'octet = (premier << 4) | second AU JOURNAL "
+                "PAR DÉCALAGE — la réécriture REMPLACE, le compte n'augmente "
+                "pas ; la borne E3 : 256 DISTINCTS → -3 « journal plein - "
+                "Ctrl+S », RIEN perdu) ; ET À LA VUE (Q3 : l'octet au tampon "
+                "— visible IMMÉDIATEMENT) ; LA MARQUE (Q4 : sale = 1, "
+                "refus_quitter = 0 — LA GARDE DE loupe-18 RÉ-ARMÉE à CHAQUE "
+                "écriture ; le curseur AVANCE clampé, LA VUE SUIT L'AVANCE — "
+                "le renvoi de loupe-15 Q3 : l'INVARIANT DU DOMAINE [« le "
+                "curseur ne sort JAMAIS de l'écran », README § le tableau] "
+                "tient AUSSI à la saisie) ; VK_SUPPR à l'attente (Q5 : le "
+                "nibble effacé) ; E1 SANS SESSION -4 nommé ; E2 LA CELLULE "
+                "FANTÔME : hors [vue, vue+remplissage) → -3, RIEN au journal "
+                "(le refus PRÉCÈDE) ; E4 le non-hexa IGNORÉ ; LE DISQUE "
+                "INTACT (I1 : WriteFile vit chez loupe-17 SEUL — la liste "
+                "IAT fermée) ; AUCUNE entrée IAT propre au-delà de la feuille "
+                "partagée (I4)"),
+    "i110017": ("loupe-17-sauver", "loupe-17:R1",
+                "LE JOURNAL VIDE (Q1 : « rien à sauver », AUCUN appel — les "
+                "appels comptés) ; SINON (Q2 : CHAQUE entrée DANS SON ORDRE "
+                "DE SAISIE — SetFilePointerEx(décalage, DEBUT_FICHIER) puis "
+                "WriteFile d'UN octet : L'ÉCRITURE À L'OCTET, jamais une "
+                "plage ; le pointeur d'écrits NUL — la poignée synchrone ; "
+                "l'échec -6 FAIL-CLOSED : le journal DEMEURE, la marque "
+                "demeure, les octets déjà écrits le restent — le geste se "
+                "reprend) ; LE SUCCÈS (Q3 : journal vidé, marque levée, "
+                "garde levée) ; LE PANNEAU RE-NAÎT (Q4 : loupe-07 rappelé — "
+                "les empreintes du DISQUE, le coût NOMMÉ : un passage de "
+                "plus) ; LE TÉMOIN (Q5 : « N o écrits · 0xA..0xB » à la barre "
+                "— le compte exact, la première et la dernière adresses "
+                "écrites, composés AVANT la vidange [dec + hex8, les "
+                "sous-routines locales au cadre RBP, le modèle loupe-10]) ; "
+                "la taille DEMEURE (Q6 : l'oracle le constate) ; E1 -4 nommé ; "
+                "IAT kernel32 : SetFilePointerEx, WriteFile, GetLastError ; "
+                "IAT user32 : InvalidateRect (WriteFile vit ICI SEUL dans le "
+                "domaine — I3 : la contrebande d'écriture est un refus de "
+                "build)"),
+    "i110018": ("loupe-18-quitter", "loupe-18:R1",
+                "LE DOUBLE-GESTE GARANTI (Q1/Q2 : marque sale + garde "
+                "armée → le premier WM_CLOSE REFUSÉ NOMMÉMENT -5 — la "
+                "phrase à la barre, MessageBeep : le refus s'entend — la "
+                "fenêtre DEMEURE ; le second TRANSCHE : DestroyWindow) ; WM "
+                "_DESTROY (Q3 : loupe-03 la session close PROPREMENT — le "
+                "journal ABANDONNÉ DÉLIBÉRÉMENT, les octets non sauvés sont "
+                "une VOLONTÉ — puis PostQuitMessage(0) : la boucle héritée "
+                "win-03 rend, WinMain retourne, ExitProcess(0)) ; LA SORTIE "
+                "NE SAUVEGARDE JAMAIS (I2 : la sauvegarde est un geste "
+                "explicite de loupe-17) ; AUCUNE fuite (I3 : la poignée "
+                "close, la file quittée UNE fois, le code de sortie 0 — "
+                "même l'abandon délibéré est une sortie PROPRE) ; IAT "
+                "user32 : DestroyWindow, PostQuitMessage, MessageBeep"),
 }
 
 
@@ -174,6 +250,10 @@ SYMBOLES = {
     "LOUPE12": L.LOUPE12_VA,
     "LOUPE13": L.LOUPE13_VA,
     "LOUPE14": L.LOUPE14_VA,
+    "LOUPE15": L.LOUPE15_VA,
+    "LOUPE16": L.LOUPE16_VA,
+    "LOUPE17": L.LOUPE17_VA,
+    "LOUPE18": L.LOUPE18_VA,
     # les héritages PAR LA CARTE (R7 — embarqués au build byte-identiques,
     # aux slots loupe du plan ; les octets viennent des SCELLÉS, jamais de
     # la ré-écriture)
@@ -213,6 +293,11 @@ SYMBOLES = {
     "L_PAIRES": L.L_PAIRES,
     "L_SYSTEME": L.L_SYSTEME,
     "L_ABSENT": L.L_ABSENT,
+    "L_JOURNALPLEIN": L.L_JOURNALPLEIN,
+    "L_RIENSAUVER": L.L_RIENSAUVER,
+    "L_ECRITS": L.L_ECRITS,
+    "L_JUSQUA": L.L_JUSQUA,
+    "L_QUITTER": L.L_QUITTER,
     # les zones .data du domaine (le plan, source unique — D161)
     "CADRE": L.R_CADRE,
     "EMPREINTES": L.R_EMPREINTES,
@@ -450,6 +535,10 @@ NOMS_COURTS = {
     "loupe-12-aller": "l'aller : la barre-saisie hexa, le saut exact, le refus nommé",
     "loupe-13-recherche": "la recherche : la première occurrence par memcmp hérité (pur)",
     "loupe-14-suivant": "le suivant : le recouvrement de frontière, la FIN nommée",
+    "loupe-15-curseur": "le curseur : la cellule active, la vue qui suit — jamais perdue",
+    "loupe-16-saisie": "la saisie : l'octet au journal, la marque sale, le disque intact",
+    "loupe-17-sauver": "la sauvegarde : l'écriture à l'octet, le panneau re-né, le témoin",
+    "loupe-18-quitter": "la sortie : le double-geste garanti, aucune fuite (le bloc de la mort)",
 }
 
 
