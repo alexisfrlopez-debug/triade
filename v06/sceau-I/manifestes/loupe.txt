@@ -1,0 +1,24 @@
+TRIADE-SCEAU-I v1
+arbre: loupe
+artefact: loupe.exe (domaine loupe, l'éditeur hexadécimal au panneau d'empreintes)
+balise: loupe.1
+fichiers: 19
+sha256:53c54b992b7deddc8bdf5d3077c22ad0b919aea000892f375c06d2f13e7fcdbd  README.md
+sha256:73eb2cba7e08be20fb1786c2fc1562b1ecb94560646ab009efd8be247f9cbf48  loupe-01-ouvrir.md
+sha256:898cd4bca4fe087ea7c415b7764734e3096d53088f8c1040cfbd7c3835b1961c  loupe-02-lire.md
+sha256:2b992a47b150c13a904659584f441fc54ed312941eb12350a543ddb6b493838f  loupe-03-fermer.md
+sha256:ae040cb8e92aeb0cbd8f5bc7cc2981c75348ddfe4f690abdb0b2c4cae2783f90  loupe-04-cadre.md
+sha256:1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe  loupe-05-sha256.md
+sha256:b1f8b5d7219407f3cd569c1b411d1c1829ffdd47ba555f1a610bc5a0cf0f21d2  loupe-06-md5.md
+sha256:d8bb26f0d93fa62bc74b1463d1a698e7a782c9cb04e02305e6430b0d011c680f  loupe-07-cumul.md
+sha256:92d3e02ca41a5523db95e9f6b4c6c7d4ec62e3fded1cf6f5ecece9c47cf53174  loupe-08-ligne.md
+sha256:2eb98dd0c004c81b788952fe6930a26686ea123498a5ee8e1d229e697797e3ee  loupe-09-ecran.md
+sha256:690fefe9cab45ee7caee6c2dfebb52cc392852db9cfd233e0b39a682ad66d27a  loupe-10-peinture.md
+sha256:a0eae9c969146730256451d9decdafee735f3575a95e0d40cabc381a08215dcb  loupe-11-defilement.md
+sha256:b49d636c381479b8ef3a84e856d381e2283a3d1bf1af2a26abe67d48e00b5320  loupe-12-aller.md
+sha256:01ee2ec41fdf1188758a2fa7f5e24bad302123fefc45a51bcb5868e60c31b101  loupe-13-recherche.md
+sha256:cd30b9241caf8abeecca8b8f2102829bc4f82e24ba360ce980c71b6a9482515f  loupe-14-suivant.md
+sha256:7fb955fea6afc96b418cc92ff17dbf642ee280570354afd7bf1f20b8c58e43e2  loupe-15-curseur.md
+sha256:867907af24a0004632169e8b83cda9b8b73284fcf95c2dc88c308ce51c4725f3  loupe-16-saisie.md
+sha256:3f93c3e2fd83a3cdeb4a250ce1709a2cf30daa40d6d35529051b36bfc11cdbcf  loupe-17-sauver.md
+sha256:06ce11a1976798d2739f04965541acc4ce4c710cc157974a7a5b630212698ffe  loupe-18-quitter.md

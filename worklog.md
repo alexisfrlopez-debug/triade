@@ -7090,3 +7090,37 @@ Work Log:
   signatures-I.txt + cle-publique-I.txt au /test) ; le labo recoupe et
   installe — le garde à QUATORZE VERTS ; puis le build loupe 0.1.0-dev.1,
   le kit terrain (M10-(d) seconde moitié) et le run (M10-(e)).
+
+
+## Task ID 119 — LA CÉRÉMONIE D'ÈRE DU TGN PASSÉE SUR PIÈCES : la remise du développeur recoupée 14/14 et installée, le garde QUATORZE arbres VERTS, la dette D166/D171 soldée — l'ère ouverte au build (09/11)
+
+- LA DEMANDE : « signatures déposées dans le dossier /test du drive » — le
+  geste hors-ligne du développeur annoncé (la ligne SUITE du Task 118
+  l'attendait : signer la remise des 14 arbres à la clé du 04/11).
+- LE TERRAIN VÉRIFIÉ AVANT DE RECEVOIR : le sondage /test —
+  signatures-I.txt md5 f33c803a… NOUVEAU (≠ les remises de l'ère close :
+  62c43222… le build 1.0.0, af382476… la révision 2 étendue),
+  cle-publique-I.txt 188a7d42… (l'ancre, inchangée).
+- LE RAPATRIEMENT : rapatrier_ceremonie_tgn.py (modèle D166 r.8, LECTURE
+  SEULE sur v06/) — les DEUX pièces vers download/ceremonie-tgn/, md5
+  contrôlés APRÈS écriture (MATCH les métadonnées Drive), les remises
+  PÉRIMÉES refusées nommées par avance.
+- LE RECOUP INTÉGRAL AVANT DÉPÔT : l'ancre de clé 173fae9c… tenue (==
+  l'ancre locale) ; le format 14/14 ; LE RECOUP D163 LA SIXIÈME FOIS (les
+  DOUZE inchangés == les déposées — Ed25519 déterministe, la clé du
+  04/11 réutilisée) ; m0 re-signé 9090752d… contre 667fb5ae… (le registre
+  étendu — la signature diverge de c71bf747… l'ère close) ; LOUPE l'arbre
+  neuf signé 08caf05f… contre 59e4871a… (SA PREMIÈRE signature) ; le diff
+  contrôlé (m0 changée + loupe ajoutée, les douze autres
+  byte-identiques) ; les empreintes vivantes == a-signer.txt 14/14 ;
+  14/14 VERT Ed25519.
+- LE DÉPÔT CANONIQUE : sceau_I.py deposer --cle (l'atomicité — tout
+  vérifié AVANT toute écriture) ; verifier : QUATORZE arbres VERTS code
+  0 ; etat : « reelle » — LA DETTE D166/D171 SOLDÉE, l'ère du TGN
+  OUVERTE AU BUILD.
+- FRONTIÈRES : aucune balise ne bouge, AUCUN build à ce geste (le build
+  loupe 0.1.0-dev.1 est le geste suivant), aucun octet de notation (R2),
+  la clé privée jamais traversée (D87 — le labo n'a rien signé).
+- SUITE : LE BUILD DE LOUPE (loupe 0.1.0-dev.1 — construire(), la carte
+  génération, le verrou croisé, la cristallisation) ; puis le kit terrain
+  (M10-(d) seconde moitié, modèle m9f) et le run (M10-(e)).
