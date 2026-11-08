@@ -7024,3 +7024,37 @@ Work Log:
   build + le kit terrain (M10-(d) seconde moitié) et le run terrain
   (M10-(e)) ; le projet fils attend son premier geste à son message
   propre.
+
+
+## Task ID 117 — LA SPÉCIFICATION v0.8.0 LIVRÉE : la consolidation du programme d'après M9 (la demande du développeur : la mise à jour du document PDF Protocole TRIADE) (08/11)
+
+- LA DEMANDE : la mise à jour du document PDF Protocole TRIADE, au geste qui
+  suit les quatre chantiers de notation du TGN ; le constat : la v0.7.0 était
+  en retard sur le programme (M9 « ouvert » au § 18 alors que FRANCHI, le TGN
+  et ses 18 blocs absents du document, le § 13.5 arrêté aux ères M8/M9, le
+  fils COFFRE-FORT encore « différé »).
+- LA RÉVISION : revision_v080_md.py — 11 remplacements ASSERTÉS (titre,
+  en-tête, § 1.10 NOUVEAU, § 12.4 la dette du 14e, § 13.5 l'ère TGN,
+  § 18 M0-M10 + M9 franchi + rangée M10, § 19.10 NOUVEAU + 4 rejets,
+  journal des versions, clôture réécrite).
+- LA CHAÎNE : spec_v070 → spec_v080 par COPIE (l'archive v070 demeure) ;
+  revision_v080_tex.py — 23 remplacements LaTeX ASSERTÉS (main 4, sec-a 1,
+  sec-c 1, sec-cf 2, sec-d 8, cover 4, merge 3) ; l'annexe décisionnelle
+  étendue D170–D176 (SEPT lignes).
+- LES PREUVES : le PDF 45 pages, 1 016 024 o, sha256 95226c2b24dd…, md5
+  9c5a47b3fdf4…, empreinte CONSIGNÉE PAR LE BUILD (n°26, stamp c40efb95…) ;
+  empreintes verifier VERT (14 PDF, 26 consignations, 0 refus) ; LE CAHIER
+  V1–V16 : 104 CONTRÔLES TOUT PASSÉ ; contrôle visuel par code : 45 pages
+  rendues, AUCUNE quasi blanche, la couverture pleine page sombre validée
+  SANS chevauchement ; les pages clés constatées (couverture 0.8.0, § 1.10
+  p.7, § 13.5 p.25-26 l'ère du TGN, jalons p.29-31 M10 ouvert, la
+  correspondance p.37, l'annexe close sur D176 p.45).
+- FRONTIÈRES : aucune balise ne bouge, AUCUNE règle modifiée, AUCUNE couche
+  d'exécution ajoutée, hiérarchie inchangée ; l'archive v0.7.0 DEMEURE
+  (dd36eb41…), le Livre du Coffre v1.1 INCHANGÉ ; le garde sceau I vérifié
+  AVANT consignation : 13 arbres VERTS (la dette D166/D171 demeure — la
+  cérémonie d'ère du TGN précède tout build).
+- SUITE : LA CÉRÉMONIE D'ÈRE DU TGN (le kit au /Cérémonie, la remise FRAÎCHE
+  des 14 arbres régénérée au geste, le geste hors-ligne du développeur à la
+  clé du 04/11, les pièces au /test) PUIS le build loupe 0.1.0-dev.1 + le
+  kit terrain (M10-(d) seconde moitié) et le run (M10-(e)).
