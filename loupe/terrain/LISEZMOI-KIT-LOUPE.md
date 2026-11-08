@@ -5,15 +5,20 @@
 > ont noté-mesuré-prouvé chaque bloc (157 contrôles verts aux trois
 > graines) ; la cérémonie d'ère a ouvert le build (le garde à QUATORZE
 > arbres verts, la dette soldée — Entrée 201) ; le build est NÉ
-> (**loupe.exe 0.1.0-dev.2**, 50 688 o, sha256
-> `a8a65ed4cc3778c691dffbd104ef838585bcb5df206b0c5c79a0283f1f74c71d`,
-> la carte génération 13, le verrou croisé 26/26 — Entrées 202 puis 204 :
-> LA RETOUCHE BASERELOC — le terrain a REFUSÉ dev.1 [0xc000007b, l'image
-> ASLR sans table de relocalisation : le VRAI chargeur Windows ne peut
-> pas la reloger — l'oubli nommé du premier build ; tous les artefacts
-> M1..M9 portent la table, dev.1 non] ; le BASERELOC minimal est rendu
-> au plan — 12 o d'entrées ABSOLUTE, l'image PI que le chargeur PEUT
-> reloger). Il reste
+> (**loupe.exe 0.1.0-dev.3**, 127 488 o, sha256
+> `b494ff906bc60277c30dd427119e0546b5865d3e37c751a691d19c109f5da71a`,
+> la carte génération 13, le verrou croisé 26/26 — Entrées 202 → 204 →
+> 205 : le terrain a REFUSÉ dev.1 [0xc000007b : l'image ASLR sans table
+> de relocalisation, l'oubli nommé du premier build] PUIS dev.2 DU MÊME
+> REFUS [le BASERELOC rendu était NÉCESSAIRE mais PAS SUFFISANT] ; LA
+> RETOUCHE DE L'ENTRÉE 205 ramène l'image DANS l'enveloppe prouvée des
+> HUIT artefacts de la lignée passés au terrain : .rdata étendue 0x1000
+> → 0x2000 [plus AUCUN trou de page] et .data VS == RS [plus AUCUN
+> BSS] — AUCUNE adresse scellée ne bouge ; ET LE KIT PORTE DÉSORMAIS
+> SON BISSECTEUR : LA CASCADE DIAGNOSTIQUE du scénario reconstitue UN À
+> UN les axes de dev.2 sur des copies %TEMP% — le VRAI chargeur NOMME
+> l'axe fautif, et les boîtes bloquantes « Image incorrecte » sont
+> coupées : le refus est nommé PAR LE TÉMOIN). Il reste
 > LE GESTE QUI NE PEUT ÊTRE FAIT QU'ICI : l'application vit chez son
 > utilisateur — LE VRAI Windows 11, les VRAIS fichiers, la VRAIE vitrine.
 
@@ -21,14 +26,14 @@
 
 ```
 loupe-kit/
-├── loupe.exe          l'ARTEFACT 0.1.0-dev.2 (50 688 o, sha256
-│                      a8a65ed4… — lecture seule pour le run ; la carte
+├── loupe.exe          l'ARTEFACT 0.1.0-dev.3 (127 488 o, sha256
+│                      b494ff90… — lecture seule pour le run ; la carte
 │                      privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-loupe.py  LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
-│                      platform, struct, sys — les constantes FIGÉES au
-│                      laboratoire depuis le plan du dépôt, recoupées à
-│                      l'assemblage — un kit corrompu est un refus nommé
-│                      AVANT tout geste) ;
+│                      platform, struct, sys, tempfile — les constantes
+│                      FIGÉES au laboratoire depuis le plan du dépôt,
+│                      recoupées à l'assemblage — un kit corrompu est un
+│                      refus nommé AVANT tout geste) ;
 └── LISEZMOI-KIT-LOUPE.md  le présent document.
 ```
 
@@ -36,14 +41,20 @@ loupe-kit/
 
 1. **Extraire** le zip COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1 par exemple — créez-en un NEUF, `loupe-kit-2/`
-   par exemple : l'artefact refusé ne se réutilise jamais). Sur votre
-   Windows 11 : `loupe-kit/`.
+   déjà — celui de dev.1 ou de dev.2 par exemple — créez-en un NEUF,
+   `loupe-kit-3/` par exemple : l'artefact refusé ne se réutilise
+   jamais). Sur votre Windows 11 : `loupe-kit/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
    quelques secondes et dit tout à l'écran ; chaque constat est tranché
-   binaire, le verdict se rend POST-MORTEM.
+   binaire, le verdict se rend POST-MORTEM. NOTE DE L'ENTRÉE 205 : les
+   boîtes bloquantes du chargeur (« python.exe — Image incorrecte »)
+   sont COUPÉES par le mode d'erreur du scénario — un refus éventuel
+   est nommé AU TÉMOIN (GetLastError + NTSTATUS consignés), jamais
+   muré derrière un bouton OK ; ET LA CASCADE DIAGNOSTIQUE se joue
+   toute seule (voir S0 ci-dessous) : laissez-la finir, le témoin
+   part au coffre QUEL QUE SOIT le verdict.
 3. **Vivre la vitrine** (le cœur du grandeur nature) :
    **double-cliquez `loupe.exe`** — la fenêtre s'ouvre, la barre
    d'état porte l'usage (`loupe <fichier>`) et l'ascenseur ; fermez-la
@@ -103,6 +114,16 @@ loupe-kit/
   le décalage hors bornes → -3 (un refus vaut plus qu'un vert muet).
 - **T7 LA CLÔTURE** : loupe-03 le cadre re-vierge, idempotent ;
   l'artefact relu INCHANGÉ (le run ne touche pas la pièce).
+- **S0 LA SONDE (l'Entrée 205 — LA CASCADE DIAGNOSTIQUE)** : après le
+  run (ou à l'échec de la cartographie), le scénario reconstitue UN À
+  UN les axes par lesquels dev.2 sortait de l'enveloppe de la
+  lignée — P0 la copie identique (le contrôle), P1 LE TROU DE PAGE
+  (.rdata 0x1000), P2 LE BSS MASSIF (.data RS 0x400), P3 LE
+  SOUS-SYSTÈME CUI, P4 LA GÉOMÉTRIE dev.2 ENTIÈRE — sur des COPIES
+  TEMPORAIRES nées et mortes dans %TEMP% (loupe.exe n'est JAMAIS
+  écrit) : **le VRAI chargeur Windows NOMME l'axe fautif** — le
+  témoin consigne chaque verdict VERTE/REFUS + GetLastError +
+  NTSTATUS ; la leçon de l'Entrée 205 rentre au dépôt avec le run.
 
 ## 4. Les frontières nommées (l'honnêteté du terrain)
 
@@ -110,7 +131,9 @@ loupe-kit/
   les blocs sont appelés à leurs adresses scellées, la main du kit sur
   la pédale — la vitrine se vit AUSSI, à côté, au double-clic ;
 - le scénario n'écrit JAMAIS loupe.exe (lecture seule, relu à la
-  clôture) ; la carte privée ne voyage pas (R1) ;
+  clôture) ; LA SONDE de l'Entrée 205 écrit ses copies de diagnostic
+  dans %TEMP% uniquement, et les EFFACE (loupe.exe n'est jamais
+  touché) ; la carte privée ne voyage pas (R1) ;
 - les blocs d'empreintes appellent la famille sha du SCELLÉ M9 aux
   adresses d'origine (R7 : jamais une copie ré-écrite) — le panneau
   sha256 de l'application EST le sha256 prouvé au jalon M9 ;

@@ -4,16 +4,19 @@ r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
 NATURE.
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.2 du jalon M10 — 50 688 o, sha256
-              a8a65ed4cc3778c691dffbd104ef838585bcb5df206b0c5c79a0283f1f74c71d
-              (la RETOUCHE BASERELOC de l'Entrée 204 :
-              le terrain a REFUSÉ dev.1 — 0xc000007b, le VRAI chargeur
-              Windows ne peut pas reloger une image ASLR sans table de
-              relocalisation ; lecture seule pour le run — le scénario ne
-              l'écrit JAMAIS ; la carte privée ne voyage JAMAIS avec
+  loupe.exe   le build 0.1.0-dev.3 du jalon M10 — 127 488 o, sha256
+              b494ff906bc60277c30dd427119e0546b5865d3e37c751a691d19c109f5da71a
+              (LA RETOUCHE DE L'ENTRÉE 205 : le terrain a REFUSÉ dev.2 du
+              MÊME refus 0xc000007b que dev.1 — le BASERELOC de l'Entrée
+              204 était NÉCESSAIRE mais PAS SUFFISANT ; dev.3 ramène
+              l'image DANS l'enveloppe prouvée des HUIT artefacts de la
+              lignée : plus AUCUN trou de page [.rdata 0x1000 → 0x2000],
+              plus AUCUN BSS [.data VS == RS 0x12000] — AUCUNE adresse
+              scellée ne bouge ; lecture seule pour le run — le scénario
+              ne l'écrit JAMAIS ; la carte privée ne voyage JAMAIS avec
               l'artefact, R1) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
-              sys — AUCUN paquet à installer).
+              sys, tempfile — AUCUN paquet à installer).
 
 LE GESTE DU SCÉNARIO : le scénario est LE CHARGEUR (LoadLibraryEx
 DONT_RESOLVE — aucune entrée résolue, AUCUN point d'entrée exécuté : la
@@ -25,6 +28,17 @@ kit. LA VITRINE se vit À CÔTÉ : double-cliquez loupe.exe — la fenêtre
 réelle, les octets à l'œil, le panneau d'empreintes (le LISEZMOI du kit
 documente les gestes : la molette, F5 l'aller, F3 la recherche, la
 saisie hexa, Ctrl+S, le double Alt+F4).
+
+LA SONDE DE L'ENTRÉE 205 (LA CASCADE DIAGNOSTIQUE — le kit porte SON
+PROPRE BISSECTEUR) : après le run (ou à l'échec de la cartographie), le
+scénario reconstitue UN À UN les axes par lesquels dev.2 sortait de
+l'enveloppe de la lignée — LE TROU DE PAGE (.rdata 0x1000), LE BSS
+MASSIF (.data RS 0x400), LE SOUS-SYSTÈME GUI (→ CUI), PUIS LA
+GÉOMÉTRIE dev.2 ENTIÈRE — sur des COPIES TEMPORAIRES nées et mortes
+dans %TEMP% (loupe.exe lui-même n'est JAMAIS écrit) : le VRAI
+chargeur Windows NOMME l'axe fautif. Le mode d'erreur du processus
+coupe les boîtes bloquantes du chargeur : le refus est nommé PAR LE
+TÉMOIN, pas muré derrière un bouton OK.
 
 CE QUE LE RUN DÉMONTRE (chaque constat tranché binaire, le verdict
 POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
@@ -51,7 +65,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   a8a65ed4cc3778c6….
+                   b494ff906bc60277….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -73,6 +87,11 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
   T7 LA CLÔTURE     loupe-03 : le cadre re-vierge, la poignée
                    INVALIDE, idempotent ; l'artefact relu INCHANGÉ
                    (sha256 re-asserté — le run ne touche pas la pièce).
+  S0 LA SONDE      LA CASCADE DIAGNOSTIQUE DE L'ENTRÉE 205 : les axes
+     (205)         de dev.2 reconstitués UN À UN sur des copies %TEMP%
+                   (le trou de page, le BSS, le sous-système, la
+                   géométrie entière) — le VRAI chargeur NOMME l'axe
+                   fautif ; loupe.exe n'est jamais écrit.
 
 Le journal du run : preuves-loupe/temoin-loupe.txt (créé par le
 scénario, à renvoyer au coffre avec les éventuelles captures de la
@@ -95,11 +114,12 @@ PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
 # --- l'artefact : la carte génération 13 prouve CES octets -----------------------
-SHA_EXE = ("a8a65ed4cc3778c691dffbd104ef8385"
-           "85bcb5df206b0c5c79a0283f1f74c71d")
-TAILLE_EXE = 50688
-VERSION_R10 = 0x00010002          # loupe 0.1.0-dev.2 (le qword @0x2E80 —
-                                   # la retouche BASERELOC de l'Entrée 204)
+SHA_EXE = ("b494ff906bc60277c30dd427119e0546"
+           "b5865d3e37c751a691d19c109f5da71a")
+TAILLE_EXE = 127488
+VERSION_R10 = 0x00010003          # loupe 0.1.0-dev.3 (le qword @0x2E80 —
+                                   # la retouche de l'Entrée 205 : l'image
+                                   # ramenée DANS l'enveloppe de la lignée)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
 R_LIBC01 = 0x1100      # memcpy M1 (le scellé selftest.exe)
@@ -196,6 +216,111 @@ def echec(nom, detail):
     conclure(1)
 
 
+# --- LA SONDE DE L'ENTRÉE 205 : LA CASCADE DIAGNOSTIQUE ----------------------------
+#
+# Le terrain a refusé dev.1 (l'Entrée 204 : l'oubli du BASERELOC) PUIS dev.2
+# du MÊME refus 0xc000007b — la table était NÉCESSAIRE mais PAS SUFFISANTE.
+# L'autopsie de labo dit l'image conforme ; la preuve par la lignée isole
+# les axes par lesquels dev.2 SORTAIT de l'enveloppe des HUIT artefacts
+# passés au terrain (hello M0, selftest M1, echo M2, proxy M3/M4/M5/M8/M9) :
+# LE TROU DE PAGE 0x3000-0x4000, LE BSS MASSIF .data VS 0x12000 ≫ RS 0x400,
+# et le sous-système GUI (le seul que la vitrise exige de garder). LA
+# SONDE reconstitue ces axes UN À UN sur des COPIES TEMPORAIRES (nées et
+# mortes dans %TEMP% — loupe.exe n'est JAMAIS écrit) : le VRAI chargeur
+# Windows NOMME l'axe fautif. Un échec nommé vaut plus qu'un vert muet.
+
+def sonde_entree_205(k32, donnees):
+    """-> la liste des consignes de la cascade. Chaque essai : une copie de
+    l'image patchée d'un SEUL axe (puis la géométrie dev.2 entière),
+    LoadLibraryEx DONT_RESOLVE, le verdict VERTE/REFUS + GetLastError +
+    NTSTATUS — tout est effacé à la fin."""
+    lignes = []
+    e_lfanew = struct.unpack_from("<I", donnees, 0x3C)[0]
+    opt = e_lfanew + 4 + 20                    # l'Optional Header
+    sz_opt = struct.unpack_from("<H", donnees, opt - 4)[0]
+    off_sec = opt + sz_opt                     # le tableau des sections
+    ntdll = ctypes.WinDLL("ntdll")
+    try:
+        ntdll.RtlGetLastNtStatus.restype = ctypes.c_uint32
+        statut_nt = lambda: ntdll.RtlGetLastNtStatus()
+    except Exception:                          # jamais vu — la chute est douce
+        statut_nt = lambda: 0
+
+    def p(off, fmt, valeur):
+        return off, struct.pack(fmt, valeur)
+
+    essais = [
+        ("P0 LA PIÈCE IDENTIQUE",
+         "la copie INTACTE : le contrôle du mécanisme de la sonde",
+         []),
+        ("P1 LE TROU RECONSTITUÉ",
+         ".rdata VS/RS 0x2000 → 0x1000 : le trou de page 0x3000-0x4000 "
+         "de dev.2 revient",
+         [p(off_sec + 40 + 8, "<I", 0x1000),
+          p(off_sec + 40 + 16, "<I", 0x1000)]),
+        ("P2 LE BSS RECONSTITUÉ",
+         ".data RS 0x12000 → 0x400 : le BSS massif de dev.2 revient "
+         "(VS ≫ RS)",
+         [p(off_sec + 3 * 40 + 16, "<I", 0x400)]),
+        ("P3 LE SOUS-SYSTÈME CUI",
+         "Subsystem 2 (GUI) → 3 (CUI) — l'axe fenêtré, le seul que la "
+         "vitrine exige de garder",
+         [p(opt + 68, "<H", 3)]),
+        ("P4 LA GÉOMÉTRIE dev.2 ENTIÈRE",
+         "le trou + le BSS ENSEMBLE — la géométrie exacte refusée DEUX "
+         "FOIS par le terrain",
+         [p(off_sec + 40 + 8, "<I", 0x1000),
+          p(off_sec + 40 + 16, "<I", 0x1000),
+          p(off_sec + 3 * 40 + 16, "<I", 0x400)]),
+    ]
+    refus = []
+    p0_refus = False
+    dossier = tempfile.mkdtemp(prefix="loupe-sonde-205-")
+    try:
+        for nom, description, patchs in essais:
+            image = bytearray(donnees)
+            for off, octets in patchs:
+                image[off:off + len(octets)] = octets
+            chemin_sonde = os.path.join(dossier, "loupe-sonde.exe")
+            with open(chemin_sonde, "wb") as f:
+                f.write(bytes(image))
+            ctypes.SetLastError(0)
+            base = k32.LoadLibraryExW(chemin_sonde, None, 0x00000001)
+            err = ctypes.GetLastError()
+            etat = statut_nt()
+            if base:
+                lignes.append(f"[sonde] {nom} : cartographie VERTE @ "
+                              f"{base:#x} — {description}")
+            else:
+                refus.append(nom)
+                if nom.startswith("P0"):
+                    p0_refus = True
+                lignes.append(f"[sonde] {nom} : REFUS DU CHARGEUR — "
+                              f"GetLastError {err}, NTSTATUS {etat:#010x} "
+                              f"— {description}")
+            os.remove(chemin_sonde)
+    finally:
+        try:
+            os.rmdir(dossier)
+        except OSError:
+            pass
+    if p0_refus:
+        lignes.append("[sonde] LE VERDICT : la copie IDENTIQUE elle-même "
+                      "est refusée — l'axe n'est PAS dans l'image (chemin, "
+                      "antivirus, stratégie de la machine) : le témoin le "
+                      "consigne, le labo recoupe")
+    elif refus:
+        lignes.append("[sonde] LE VERDICT DE LA SONDE : le VRAI chargeur "
+                      "refuse " + " · ".join(refus) + " — L'AXE EST NOMMÉ "
+                      "(les copies %TEMP% sont mortes, loupe.exe INTACT)")
+    else:
+        lignes.append("[sonde] LE VERDICT DE LA SONDE : AUCUN axe "
+                      "reconstitué n'est refusé — le refus de dev.2 était "
+                      "la COMBINAISON ou hors image : le témoin le "
+                      "consigne, le labo recoupe")
+    return lignes
+
+
 def conclure(code):
     os.makedirs(PREUVES, exist_ok=True)
     chemin = os.path.join(PREUVES, "temoin-loupe.txt")
@@ -209,13 +334,22 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.2) ===")
+    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.3) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")
     bits = struct.calcsize("P") * 8
     consigne(f"[env] {platform.system()} {platform.release()} · Python "
              f"{bits} bits · {platform.machine()}")
+
+    # LE MODE D'ERREUR (l'Entrée 205) : les boîtes bloquantes du chargeur
+    # (python.exe — Image incorrecte) sont COUPÉES — un refus est nommé PAR
+    # LE TÉMOIN (GetLastError + NTSTATUS consignés), jamais muré derrière
+    # un bouton OK : le run continue et la sonde diagnostique
+    k32 = ctypes.WinDLL("kernel32")
+    SEM = 0x0001 | 0x8000        # FAILCRITICALERRORS | NOOPENFILEERRORBOX
+    global ANCIEN_MODE_DERREUR
+    ANCIEN_MODE_DERREUR = k32.SetErrorMode(SEM)
 
     # --- T0 LE TÉMOIN : l'empreinte ASSERTÉE + les adresses scellées ----------
     consigne("[T0] LE TÉMOIN — l'artefact relu avant tout geste")
@@ -230,7 +364,6 @@ def main():
     consigne(f"[T0] loupe.exe : {TAILLE_EXE} o, sha256 {sha[:16]}… — "
              f"L'EMPREINTE ASSERTÉE (la carte génération 13 prouve CES octets)")
 
-    k32 = ctypes.WinDLL("kernel32")
     k32.LoadLibraryExW.restype = ctypes.c_void_p
     k32.LoadLibraryExW.argtypes = [wt.LPCWSTR, ctypes.c_void_p, wt.DWORD]
     k32.VirtualProtect.argtypes = [ctypes.c_void_p, ctypes.c_size_t,
@@ -238,8 +371,17 @@ def main():
     DONT_RESOLVE = 0x00000001
     base = k32.LoadLibraryExW(chemin_exe, None, DONT_RESOLVE)
     if not base:
+        # LA CASCADE DIAGNOSTIQUE D'ABORD (l'Entrée 205) : le kit porte
+        # son bissecteur — les axes de dev.2 reconstitués UN À UN, le
+        # VRAI chargeur nomme le fautif AVANT le refus du run
+        consigne("[sonde] LA CARTOGRAPHIE DE dev.3 A ÉTÉ REFUSÉE — LA "
+                 "CASCADE DIAGNOSTIQUE DE L'ENTRÉE 205 SE JOUE (les axes "
+                 "reconstitués sur des copies %TEMP%, l'artefact intact)")
+        for ligne in sonde_entree_205(k32, donnees):
+            consigne(ligne)
         echec("CARTOGRAPHIE", f"LoadLibraryEx a rendu {base:#x} (GetLastError "
-             f"{ctypes.GetLastError()})")
+             f"{ctypes.GetLastError()}) — LA SONDE a nommé les axes "
+             f"ci-dessus : le témoin part au coffre, le labo recoupe")
     consigne(f"[T0] l'image cartographiée DONT_RESOLVE @ {base:#x} — le "
              f"scénario est LE CHARGEUR, aucun point d'entrée exécuté")
 
@@ -264,7 +406,7 @@ def main():
              "180-4 § 4.2.2 (la table du scellé M9)")
     if struct.unpack("<Q", lire(R_VERSION, 8))[0] != VERSION_R10:
         echec("PORTE-R10", f"le qword version @0x2E80 != {VERSION_R10:#x} "
-             f"(loupe 0.1.0-dev.2)")
+             f"(loupe 0.1.0-dev.3)")
     if struct.unpack("<Q", lire(R_CADRE + CADRE_POIGNEE, 8))[0] != INVALIDE:
         echec("CADRE-NÉ", "le CADRE .data n'est pas né poignée INVALIDE "
              "(l'initialiseur du build)")
@@ -282,7 +424,7 @@ def main():
     consigne("[T0] les adresses scellées CONSTATÉES : la minilibc M1 "
              "@0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille "
              "sha M9 @0xC000+ (H0[0] 0x6A09E667 posé par le scellé) · LA "
-             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010002 · "
+             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010003 · "
              "le CADRE né poignée INVALIDE · LE BASERELOC minimal déclaré "
              "dirs[5] (0x2E90, 12 o — la leçon de l'Entrée 204)")
 
@@ -391,7 +533,7 @@ def main():
              f"rend pas l'empreinte de sa propre pièce")
     consigne(f"[T2] LE PANNEAU : md5 {md5_app[:12]}… · sha256 "
              f"{sha_app[:12]}… == hashlib — ET LA PIÈCE DE L'ÈRE JUGÉE PAR "
-             f"SA PROPRE APPLICATION (sha256 == l'asserté f07dd2cf…)")
+             f"SA PROPRE APPLICATION (sha256 == l'asserté {SHA_EXE[:12]}…)")
     r = fermer()
     if r != 0:
         echec("CLÔTURE-PRÉALABLE", f"loupe-03 → {verdict(r)}")
@@ -526,6 +668,14 @@ def main():
              "run ne touche pas la pièce")
     consigne("[T7] loupe.exe relu INCHANGÉ (sha256 identique — le run ne "
              "touche pas la pièce)")
+
+    # --- S0 LA SONDE DE L'ENTRÉE 205 : la cascade diagnostic ---------------------
+    consigne("[S0] LA SONDE DE L'ENTRÉE 205 — les axes de dev.2 "
+             "reconstitués UN À UN sur des copies %TEMP% (l'artefact "
+             "n'est JAMAIS écrit, tout est effacé) : le VRAI chargeur "
+             "NOMME l'axe du refus passé — la leçon consignée au témoin")
+    for ligne in sonde_entree_205(k32, donnees):
+        consigne(ligne)
 
     consigne("=== LE RUN DE LOUPE : VERT SUR PIÈCES — l'application née "
              "de TRIADE a vécu chez son utilisateur : la session, le "

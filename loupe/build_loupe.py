@@ -1,7 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.2 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+loupe.exe 0.1.0-dev.3 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+
+LA RETOUCHE DE L'ENTRÉE 205 (dev.2 → dev.3) : le terrain a REFUSÉ dev.2
+du MÊME refus que dev.1 — 0xc000007b au geste de cartographie
+(LoadLibraryEx DONT_RESOLVE), l'empreinte dev.2 a8a65ed4… ASSERTÉE par
+le témoin (le BASERELOC de l'Entrée 204 était NÉCESSAIRE mais PAS
+SUFFISANT). L'AUTOPSIE DE LABO (pefile + le décodage champ à champ)
+dit l'image CONFORME ; la PREUVE PAR LA LIGNÉE isole TROIS axes sur
+lesquels loupe dev.2 SORTAIT de l'enveloppe des HUIT artefacts passés
+au terrain (hello M0, selftest M1, echo M2, proxy M3/M4/M5/M8/M9) :
+  (1) LE TROU DE PAGE 0x3000-0x4000 (aucun artefact de la lignée n'en
+      avait — dev.2 avait déplacé .data de 0x3000 à 0xE000 en laissant
+      le vide) ;
+  (2) LE BSS MASSIF .data VS 0x12000 > RS 0x400 (la lignée n'avait
+      jamais dépassé la page partielle) ;
+  (3) Subsystem GUI (aucun artefact cartographié n'était fenêtré —
+      conservé : la vitrine l'exige ; LE KIT dev.3 PORTE SON
+      BISSECTEUR : la cascade diagnostic du scénario nommera l'axe au
+      terrain si le refus persistait).
+LA RETOUCHE ramène l'image DANS l'enveloppe : .rdata 0x1000 → 0x2000
+(l'extension 0x3000-0x3FFF est une MARGE ZÉRO — plus AUCUN trou) et
+.data VS == RS 0x12000 (le RAW ENTIER — plus AUCUN BSS) ; AUCUNE
+adresse scellée ne bouge, AUCUN octet de notation (R2), la taille du
+fichier passe 0xC600 → 0x1F200.
 
 LA RETOUCHE DE L'ENTRÉE 204 (dev.1 → dev.2) : le run terrain M10-(e) a
 REFUSÉ dev.1 par le VRAI chargeur Windows — 0xc000007b au geste de
@@ -78,7 +101,7 @@ La carte : GÉNÉRATION 13 (la lignée D80, la graine durable D144 — la
 première génération du DOMAINE loupe : les i11xxxx entrent à la carte).
 
 Usage :
-  python3 build_loupe.py             # construction 0.1.0-dev.2 (+ carte gén. 13)
+  python3 build_loupe.py             # construction 0.1.0-dev.3 (+ carte gén. 13)
   python3 build_loupe.py --verifier  # re-vérification sans écriture
 """
 
@@ -536,7 +559,7 @@ ENTETE_TEXTE = ("Décalage  00 01 02 03 04 05 06 07"
                 "  08 09 0A 0B 0C 0D 0E 0F  ASCII")
 LIBELLES = [
     (L.L_USAGE, "loupe <fichier>"),
-    (L.L_BALISE, "Loupe 0.1.0-dev.2"),
+    (L.L_BALISE, "Loupe 0.1.0-dev.3"),
     (L.L_TIRET, " - "),
     (L.L_MID, " · "),
     (L.L_OCT, " o · curseur 0x"),
@@ -849,7 +872,7 @@ def valider_pe(exe: bytes, code: dict, extraits: dict, poses_rdata, table_r10):
         raise EchecBuild("le CADRE à l'image n'est pas né poignée INVALIDE "
                          "(le miroir du harnais — le zéro serait une session fantôme)")
     if len(exe) != L.TAILLE_FICHIER:
-        raise EchecBuild("la taille du fichier != 0xC600")
+        raise EchecBuild(f"la taille du fichier != {L.TAILLE_FICHIER:#x}")
     print(f"[PE] loupe.exe : {len(exe):,} o, QUATRE sections (.text la minilibc + "
           f"la boucle scellées · .rdata les pièces + l'IAT + la machinerie + la "
           f"porte R10 + K[64] · .text2 les 18 blocs + la famille sha scellée · "
@@ -973,9 +996,9 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.2 (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.3 (le TGN « Loupe », M10) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.2')} "
+        f"version      : {manifeste.get('version', '0.1.0-dev.3')} "
         f"(geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
@@ -1003,7 +1026,7 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.2 (le TGN, "
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.3 (le TGN, "
           "l'application née de TRIADE entière) ===")
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
@@ -1021,7 +1044,7 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.2 le "
+    journal = [f"build 0.1.0-dev.3 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]

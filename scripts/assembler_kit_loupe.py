@@ -6,9 +6,11 @@ Modèle : scripts/assembler_kit_m9f.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + les VRAIS kernel32/user32/gdi32 exigés,
 le cœur même du run terrain) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.2,
-     sha256 a8a65ed4… ASSERTÉ — la RETOUCHE BASERELOC de l'Entrée 204 :
-     le terrain a refusé dev.1 [0xc000007b]) + scenario-loupe.py +
+  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.3,
+     sha256 b494ff90… ASSERTÉ — LA RETOUCHE DE L'ENTRÉE 205 : le terrain
+     a refusé dev.1 PUIS dev.2 du même refus 0xc000007b ; l'image est
+     ramenée DANS l'enveloppe de la lignée [.rdata 0x2000, .data VS==RS],
+     ET LE SCÉNARIO PORTE LA CASCADE DIAGNOSTIQUE) + scenario-loupe.py +
      LISEZMOI-KIT-LOUPE.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario (les
      adresses scellées, l'empreinte, la version R10, les listes IAT, la
@@ -38,9 +40,9 @@ KIT = "loupe-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-loupe.zip"
 
-SHA_EXE = ("a8a65ed4cc3778c691dffbd104ef8385"
-           "85bcb5df206b0c5c79a0283f1f74c71d")
-TAILLE_EXE = 50688
+SHA_EXE = ("b494ff906bc60277c30dd427119e0546"
+           "b5865d3e37c751a691d19c109f5da71a")
+TAILLE_EXE = 127488
 EXE = REPO / "loupe" / "loupe.exe"
 SCENARIO = REPO / "loupe" / "terrain" / "scenario-loupe.py"
 LISEZMOI = REPO / "loupe" / "terrain" / "LISEZMOI-KIT-LOUPE.md"
@@ -235,6 +237,10 @@ def recoup(kit_dir):
     print(f"[recoup] LES CONSTANTES DU SCÉNARIO RECOUPÉES : {35} adresses et "
           f"listes == le plan · l'empreinte == l'artefact · les têtes scellées "
           f"et la table K == les octets — la source unique est le dépôt")
+    # LA SONDE DE L'ENTRÉE 205 : ses cibles se CALCULENT depuis l'image
+    # (e_lfanew → l'Optional → le tableau des sections) : RIEN à recouper
+    # contre le plan — les valeurs patchées (0x1000, 0x400, 3) sont LES
+    # FAITS HISTORIQUES de la géométrie dev.2 refusée par le terrain
 
 
 def main():

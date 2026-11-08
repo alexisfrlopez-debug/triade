@@ -7232,3 +7232,69 @@ Work Log:
 - SUITE : LE RUN REJOUÉ — kit NEUF, dossier NEUF D99, scénario +
   VITRINE, preuves-loupe/ ENTIER au coffre ; si le vert tient : la
   balise `loupe 0.1.0` scellée — LE JALON M10.
+
+## Task ID 123 — LA RETOUCHE dev.3 APRÈS LE SECOND REFUS TERRAIN : le terrain a refusé dev.2 du même refus (0xc000007b — la table BASERELOC nécessaire mais PAS suffisante), l'image ramenée DANS l'enveloppe prouvée de la lignée ET LE KIT PORTE SA CASCADE DIAGNOSTIQUE (le VRAI chargeur nommera l'axe au témoin) ; LE PROTOCOLE v0.8.1 — LA RÉVISION DE TERRAIN DU TGN (09/11 au soir, seconde)
+
+- LE FAIT (la seconde capture du développeur) : le run rejoué a REFUSÉ
+  dev.2 AU MÊME GESTE — 0xc000007b à la cartographie, l'empreinte
+  a8a65ed4… ASSERTÉE par le témoin : la retouche BASERELOC de l'Entrée
+  204 était NÉCESSAIRE mais PAS SUFFISANTE ; un défaut AUTRE demeurait,
+  et SEUL le VRAI chargeur Windows pouvait le nommer (le labo est
+  Linux : le harnais PARSE l'image, il ne la charge jamais).
+- LE DIAGNOSTIC PAR LA LIGNÉE : l'image dev.2 conforme aux parseurs
+  (pefile + le décodage champ à champ — le BASERELOC présent et bien
+  formé, le miroir exact des HUIT) MAIS sortant de l'enveloppe des
+  HUIT artefacts passés au terrain : (1) LE TROU DE PAGE 0x3000-0x4000
+  (.data déplacé de 0x3000 à 0xE000 en laissant le vide), (2) LE BSS
+  MASSIF .data VS 0x12000 ≫ RS 0x400, (3) le sous-système GUI (le
+  seul que la vitrine exige — conservé, la sonde tranchera). L'ÈRE DES
+  SCRIPTS DE DIAGNOSTIC : diag_loupe.py + cmp_pe.py + dump_pe.py
+  (l'autopsie champ par champ, le différentiel contre proxy.exe M9F
+  validé au terrain [cartographié relogé @0x7ff7e4470000]).
+- LA RETOUCHE dev.3 : RDATA_VSIZE 0x1000→0x2000 (plus AUCUN trou —
+  l'extension 0x3000-0x3FFF est une marge zéro), DATA_RAW 0x400→0x12000
+  (VS==RS — le RAW entier, plus AUCUN BSS), TEXT2_FILE/DATA_FILE
+  0x3200/0xD200 (la chaîne raw contiguë), TAILLE_FICHIER 0x1F200,
+  VERSION_DEV 0x00010003 — AUCUNE adresse scellée ne bouge, aucun
+  octet de notation (R2) ; LE BUILD REJOUÉ : garde 14/14, oracle 43
+  verrous, R7, LES TROIS HARNAIS 157 VERTS (59/59 · 53/53 · 45/45),
+  loupe.exe 0.1.0-dev.3 NÉ (127 488 o, sha256 b494ff906bc60277…, carte
+  génération 13 réécrite, verrou croisé 26/26).
+- LA SONDE DE L'ENTRÉE 205 (le kit porte son bissecteur) : LA CASCADE
+  DIAGNOSTIQUE du scénario — P0 LA PIÈCE IDENTIQUE (le contrôle) · P1
+  LE TROU RECONSTITUÉ (.rdata 0x1000) · P2 LE BSS RECONSTITUÉ (.data
+  RS 0x400) · P3 LE SOUS-SYSTÈME CUI (2→3) · P4 LA GÉOMÉTRIE dev.2
+  ENTIÈRE — sur des copies %TEMP% nées et mortes au geste (l'artefact
+  JAMAIS écrit), chaque verdict VERTE/REFUS + GetLastError + NTSTATUS
+  consigné AU TÉMOIN ; ET le mode d'erreur du processus coupe les
+  boîtes bloquantes du chargeur (SEM_FAILCRITICALERRORS |
+  SEM_NOOPENFILEERRORBOX) : le refus est nommé PAR LE TÉMOIN, jamais
+  muré derrière un bouton OK — la leçon des deux captures.
+- LE KIT REJOUÉ : le scénario à l'empreinte dev.3 + VERSION_R10
+  0x00010003 + LA SONDE, le LISEZMOI raconté (la seconde leçon + la
+  sonde), le recoup 35 constantes, l'extraction vierge — kit-loupe.zip
+  25 501 o, md5 13dbe746…, sha256 71364993….
+- LE COFFRE (D143 : archivage par DÉPLACEMENT) : la vague dev.2
+  REFUSÉE archivée → vagues-m10/ EN PIÈCES VERSIONNÉES (kit-loupe-
+  dev.1.zip + kit-loupe-dev.2.zip + LISEZMOI-loupe-dev.1/dev.2.txt —
+  l'ambiguïté des noms partagés levée, chaque pièce demeure) ; la
+  vague dev.3 à la racine (md5 MATCH par relecture) ; le réceptacle
+  preuves-loupe/LISEZMOI à l'artefact dev.3 (la sonde nommée) ; l'index
+  mis à jour ; LES PIÈCES DE L'ÈRE DEMEURENT (signatures-I.txt
+  f33c803a… + cle-publique-I.txt 188a7d42…).
+- LE PROTOCOLE v0.8.1 — LA RÉVISION DE TERRAIN DU TGN : la chaîne
+  spec_v081 née de spec_v080 (les passages M10 passés à l'état vécu :
+  la cérémonie passée, le build né, les DEUX refus nommés, la retouche
+  dev.3, LA CASCADE DIAGNOSTIQUE + la correspondance v0.8.0→v0.8.1 +
+  les rejets nommés) ; PROTOCOLE_TRIADE.md en v0.8.1 (l'en-tête, la
+  rangée M10, le journal des versions, le paragraphe de clôture) ; le
+  PDF formel régénéré — Protocole_TRIADE_v0.8.1_Specification.pdf
+  1 023 323 o, sha256 8907d50d…, md5 8cd587d5…, empreinte consignée
+  n°29 ; l'Entrée 205 au journal + la rangée (e) du plan à l'état
+  dev.3 + la sonde.
+- SUITE : LE RUN REJOUÉ — kit NEUF au coffre /test, dossier NEUF D99,
+  python scenario-loupe.py (LA SONDE se joue seule et consigne AU
+  TÉMOIN), VIVRE LA VITRINE, preuves-loupe/ ENTIER au coffre QUEL QUE
+  SOIT le verdict ; si le vert tient : la balise `loupe 0.1.0` scellée
+  — LE JALON M10 ; si le refus demeure : la sonde a nommé l'axe, la
+  retouche suivante est un fait.

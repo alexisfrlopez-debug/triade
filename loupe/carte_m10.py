@@ -21,9 +21,11 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE BUILD du domaine : loupe.exe 0.1.0-dev.2 (la RETOUCHE BASERELOC de
-    l'Entrée 204 — dev.1 refusé par le terrain : 0xc000007b, l'image
-    ASLR sans table de relocalisation ; le geste de BUILD, jamais
+  - LE BUILD du domaine : loupe.exe 0.1.0-dev.3 (LA RETOUCHE DE
+    L'ENTRÉE 205 — dev.2 refusé par le terrain du MÊME refus
+    0xc000007b : le BASERELOC était nécessaire mais pas suffisant ;
+    dev.3 ramène l'image dans l'enveloppe de la lignée — plus de trou
+    de page, plus de BSS ; le geste de BUILD, jamais
     scellage — la balise `loupe 0.1.0` se scellera sur le run
     terrain vert recoupé, M10-(e) : la porte est de processus).
 
@@ -52,8 +54,9 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 13   # la génération du domaine loupe (les builds dev.1 puis dev.2 —
-                   # le miroir M8 : une génération par domaine, les builds la réécrivent)
+GENERATION = 13   # la génération du domaine loupe (les builds dev.1 → dev.2 →
+                   # dev.3 — le miroir M8 : une génération par domaine, les
+                   # builds la réécrivent)
 
 # Sel Argon2id propre au domaine (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
@@ -72,8 +75,8 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV = "0.1.0-dev.2"     # la retouche BASERELOC de l'Entrée 204 (dev.1
-                                 # refusé par le terrain — le geste de BUILD)
+VERSION_DEV = "0.1.0-dev.3"     # la retouche de l'Entrée 205 (dev.2 refusé
+                                 # par le terrain — le geste de BUILD)
 VERSION_FINALE = "0.1.0"        # la finale (le miroir layout.VERSION_FINALE
                                 # 0x00010000 — le scellage est un fait de
                                 # carte : la 0.1.0 attend le run terrain vert

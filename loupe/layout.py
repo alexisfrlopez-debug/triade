@@ -18,14 +18,21 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010002           # loupe 0.1.0-dev.2 (la RETOUCHE BASERELOC
-                                   # de l'Entrée 204 : le terrain a REFUSÉ
-                                   # dev.1 — 0xc000007b, l'image ASLR sans
-                                   # table de relocalisation ne peut pas être
-                                   # relogée par le VRAI chargeur Windows ; le
-                                   # miroir du format 0xJJNNPPDD : 0.9.0-dev.1
-                                   # == 0x00090001 [M8], 1.0.0-dev.4 ==
-                                   # 0x01000004 [M9] ; 0.1.0-dev.2 == 0x00010002)
+VERSION_DEV = 0x00010003           # loupe 0.1.0-dev.3 (LA RETOUCHE DE
+                                   # L'ENTRÉE 205 : le terrain a REFUSÉ dev.2
+                                   # du MÊME refus 0xc000007b au geste de
+                                   # cartographie — le BASERELOC dev.2 était
+                                   # NÉCESSAIRE mais PAS SUFFISANT ; dev.3
+                                   # ramène l'image DANS l'enveloppe prouvée
+                                   # de la lignée : .rdata étendue 0x2000
+                                   # (plus AUCUN trou de page) et .data
+                                   # VS==RS 0x12000 (plus AUCUN BSS) — les
+                                   # HUIT artefacts M0..M9 passés au terrain
+                                   # n'avaient NI trou NI BSS ; le miroir du
+                                   # format 0xJJNNPPDD : 0.9.0-dev.1 ==
+                                   # 0x00090001 [M8], 1.0.0-dev.4 ==
+                                   # 0x01000004 [M9] ; 0.1.0-dev.3 ==
+                                   # 0x00010003)
 VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
                                    # terrain vert recoupé)
@@ -745,16 +752,20 @@ R_CUMUL = 0x10000             # LA fenêtre de lecture 64 Kio (l'exclusion de
 # L'IMAGE (quatre sections, l'ordre des VA croissantes — le miroir démo) :
 #   .text  0x1000-0x1FFF  la minilibc + win-03 AUX ADRESSES SCELLÉES, le
 #                         reste int3 (la réserve M1 vierge)
-#   .rdata 0x2000-0x2FFF  les tables, les libellés, l'UTF-16, l'IAT loupe,
+#   .rdata 0x2000-0x3FFF  les tables, les libellés, l'UTF-16, l'IAT loupe,
 #                         l'IAT démo, la machinerie, LA PORTE R10, K[64]
+#                         (@0x2F00) — puis la marge zéro 0x3000-0x3FFF
+#                         (l'Entrée 205 : l'image SANS AUCUN TROU DE PAGE,
+#                         le miroir de la lignée prouvée au terrain)
 #   .text2 0x4000-0xDFFF  les 18 blocs du domaine (0x4040-0x6800) + la marge
 #                         int3 + la famille sha AUX ADRESSES SCELLÉES M9
 #                         (0xC000-0xC3C0) — la convention .text5 : la zone
 #                         réservée int3 DANS le fichier
 #   .data  0xE000-0x1FFFF les zones du domaine (vsize 0x12000, le CUMUL
-#                         finit 0x20000) ; le RAW committé 0x400 : le CADRE
-#                         seul (la poignée INVALIDE à +528), le reste
-#                         zéro-initialisé au chargement
+#                         finit 0x20000) ; le RAW ENTIER 0x12000 (l'Entrée
+#                         205 : VS == RS — le CADRE seul habité (la poignée
+#                         INVALIDE à +528), le reste zéro AU FICHIER, plus
+#                         AUCUN BSS — le miroir de la lignée)
 # =================================================================================
 
 IMAGE_BASE = 0x140000000         # le miroir de la lignée (D33 : l'image PI)
@@ -766,16 +777,26 @@ DLL_CHARACTERISTICS = 0x0040 | 0x0020 | 0x0100   # DYNAMICBASE | HEVA | NX
 TEXT_RVA, RDATA_RVA = 0x1000, 0x2000
 TEXT2_RVA, DATA_RVA = 0x4000, 0xE000
 TEXT_VSIZE = 0x1000              # la minilibc + win-03, le reste int3
-RDATA_VSIZE = 0x1000             # les pièces du plan + K[64] @0x2F00
+RDATA_VSIZE = 0x2000             # les pièces du plan + K[64] @0x2F00 (l'Entrée
+                                 # 205 : 0x1000 → 0x2000 — l'extension
+                                 # 0x3000-0x3FFF est une MARGE ZÉRO : plus
+                                 # AUCUN trou de page dans l'image, le miroir
+                                 # de la lignée M0..M9 — AUCUNE adresse
+                                 # scellée ne bouge)
 TEXT2_VSIZE = 0xA000             # 0x4000-0xDFFF (le domaine + les sha scellées)
 DATA_VSIZE = 0x12000             # 0xE000-0x1FFFF (CUMUL finit 0x20000)
-DATA_RAW = 0x400                 # le CADRE committé (960 o, la poignée à +528)
+DATA_RAW = 0x12000               # l'Entrée 205 : le RAW couvre TOUTE la zone
+                                 # (VS == RS — plus AUCUN BSS ; le CADRE né
+                                 # poignée INVALIDE à +528 demeure, le reste
+                                 # zéro AU FICHIER, le miroir des HUIT artefacts
+                                 # de la lignée)
 SIZE_OF_IMAGE = 0x20000
 
 # les offsets fichier (l'ordre des sections au tableau : VA croissantes)
 TEXT_FILE, RDATA_FILE = 0x200, 0x1200
-TEXT2_FILE, DATA_FILE = 0x2200, 0xC200
-TAILLE_FICHIER = 0xC600          # 0xC200 + 0x400
+TEXT2_FILE, DATA_FILE = 0x3200, 0xD200   # l'Entrée 205 : +0x1000 (le raw
+                                           # .rdata étendu)
+TAILLE_FICHIER = 0x1F200        # 0xD200 + 0x12000 (le .data raw entier)
 
 ENTREE = LOUPE09_VA              # WinMain — l'entrée EST le bloc (D161 : la
                                  # mesure a décidé, aucune fiction de
