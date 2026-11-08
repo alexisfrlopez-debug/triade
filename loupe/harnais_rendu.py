@@ -32,7 +32,11 @@ falsification, zéro silence) :
   V0 — LES PIÈCES DU PLAN : le scellé démo relu (demo.exe 0.3.0, la source
        R7 de win-03), le scellé M1 relu (selftest.exe, la source de
        libc-02), les SEPT specs du geste relues, le plan recompté (les
-       slots (c) ARRÊTÉS sur les mesures 271/1614/568/796/126/967/874 o,
+       slots (c) ARRÊTÉS sur les mesures 271/1614/568/796/126/967 o et
+       loupe-09 RÉVISÉ r2 au geste (d) — 874 → 1135 o, LA RÉVISION
+       NOMMÉE : la table de routage étendue SANS cascade, le slot croît
+       0x380 → 0x480, la famille édition suit à 0x6080 — l'instrument
+       retoqué aux attentes r2 au geste du build, le miroir de la spec ;
        les adresses .rdata du rendu, les libellés, l'IAT démo win-03) ;
   V1 — LE ROUND-TRIP + LA STRUCTURE : chaque notation ré-assemblée
        (keystone == capstone, R5), les déplacements RIP aux symboles du
@@ -183,9 +187,9 @@ NOMS_RENDU = {
     "i110012": "loupe-12-aller", "i110013": "loupe-13-recherche",
     "i110014": "loupe-14-suivant",
 }
-MESURES_RENDU = {"i110008": 271, "i110009": 874, "i110010": 1614,
+MESURES_RENDU = {"i110008": 271, "i110009": 1135, "i110010": 1614,
                  "i110011": 568, "i110012": 796, "i110013": 126,
-                 "i110014": 983}
+                 "i110014": 983}   # i110009 : la mesure r2 du geste (d)
 
 FEUILLES_GUI_USER32 = (
     "RegisterClassExW", "CreateWindowExW", "ShowWindow", "GetMessageW",
@@ -710,7 +714,7 @@ def vecteur_v0():
     attendus = {"i110008": (0x49C0, 0x140, 271), "i110010": (0x4B00, 0x680, 1614),
                 "i110011": (0x5180, 0x280, 568), "i110012": (0x5400, 0x340, 796),
                 "i110013": (0x5740, 0xC0, 126), "i110014": (0x5800, 0x400, 967),
-                "i110009": (0x5C00, 0x380, 874)}
+                "i110009": (0x5C00, 0x480, 1135)}
     ordre = ("i110008", "i110010", "i110011", "i110012", "i110013",
              "i110014", "i110009")
     ok_slots = all(L.SLOTS_LOUPE[b][0] == va and L.SLOTS_LOUPE[b][1] == sl
@@ -719,13 +723,14 @@ def vecteur_v0():
     ok_tasse = all(L.SLOTS_LOUPE[a][0] + L.SLOTS_LOUPE[a][1] == L.SLOTS_LOUPE[b][0]
                    for a, b in zip(ordre, ordre[1:])) \
         and L.SLOTS_LOUPE["i110008"][0] == 0x49C0 \
-        and L.SLOTS_LOUPE["i110009"][0] + L.SLOTS_LOUPE["i110009"][1] == 0x5F80
+        and L.SLOTS_LOUPE["i110009"][0] + L.SLOTS_LOUPE["i110009"][1] == 0x6080
     controle("V0.d:les-slots-du-geste-arretes-sur-les-mesures",
              ok_slots and ok_tasse,
              "08@0x49C0 [271 o] → 10@0x4B00 [1614] → 11@0x5180 [568] → "
              "12@0x5400 [796] → 13@0x5740 [126] → 14@0x5800 [967] → "
-             "09@0x5C00 [874, DERNIER — la table s'étend à (d)] — fin "
-             "0x5F80, multiples de 64, padding >= 16")
+             "09@0x5C00 [1135, r2 LA TABLE ÉTENDUE au geste (d) — la "
+             "famille édition suit à sa suite] — fin 0x6080, multiples de "
+             "64, padding >= 16")
     # les adresses .rdata du rendu + l'IAT démo
     ok_rdata = (L.R_ENTETE == 0x2000 and L.R_HEX == 0x2050 and L.R_HEXL == 0x2070
                 and L.L_USAGE == 0x2300 and L.L_ABSENT == 0x23E6
@@ -800,7 +805,8 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
         "i110013": {L.R_LIBC02},
         "i110014": {L.LOUPE13_VA, L.LOUPE02_VA},
         "i110009": {L.LOUPE01_VA, L.LOUPE10_VA, L.LOUPE11_VA, L.LOUPE12_VA,
-                    L.LOUPE14_VA, L.R_WIN03},
+                    L.LOUPE14_VA, L.LOUPE15_VA, L.LOUPE16_VA, L.LOUPE17_VA,
+                    L.LOUPE18_VA, L.R_WIN03},
     }
     ok_appels = True
     for bid, attendu_set in appels_attendus.items():
@@ -813,8 +819,9 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
     controle("V1.c:les-appels-directs-a-la-liste-fermee", ok_appels,
              "loupe-10 → 08 · loupe-11 → 02 · loupe-12 → 02+14 (le commit "
              "CHERCHER délégué) · loupe-13 → libc-02 (LE SCELLÉ M1) · "
-             "loupe-14 → 13+02 · loupe-09 → 01/10/11/12/14+win-03 (LA "
-             "BOUCLE SCELLÉE DÉMO) — le réseau des specs")
+             "loupe-14 → 13+02 · loupe-09 → 01/10/11/12/14+15/16/17/18+"
+             "win-03 (LA BOUCLE SCELLÉE DÉMO) — le réseau des specs, la "
+             "table r2 étendue au geste (d)")
 
     # les feuilles IAT par bloc (la liste fermée de chaque bloc)
     iat_attendues = {

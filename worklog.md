@@ -7124,3 +7124,75 @@ Work Log:
 - SUITE : LE BUILD DE LOUPE (loupe 0.1.0-dev.1 — construire(), la carte
   génération, le verrou croisé, la cristallisation) ; puis le kit terrain
   (M10-(d) seconde moitié, modèle m9f) et le run (M10-(e)).
+
+## Task ID 120 — LE BUILD DE LOUPE NÉ : loupe.exe 0.1.0-dev.1 (50 688 o, sha256 f07dd2cf…), la carte génération 13, le verrou croisé 26/26 — la première application née de TRIADE entière (09/11)
+
+- LA DEMANDE : « ok pour la suite » — la SUITE nommée de l'Entrée 201 (LE
+  BUILD DE LOUPE, le garde était VERT).
+- LE GARDE D'ABORD (D87 fail-closed) : sceau_I.garde(les QUATORZE arbres)
+  AVANT construire() — 14/14 VERTS, l'état « reelle » ; les TROIS scellés
+  d'origine confrontés à leurs ancres (selftest.exe · demo.exe ·
+  proxy.exe 1.0.0 — INTACTS).
+- LA CHAÎNE : loupe/build_loupe.py — la couche I relue (18 specs, R2) ;
+  l'assemblage 18/18 (round-trip R5, les longueurs == les mesures D161) ;
+  l'oracle structurel 43 verrous (le réseau des specs, les listes fermées
+  IAT, les déplacements RIP aux symboles, AUCUN syscall, les slots
+  disjoints) ; L'HÉRITAGE R7 LA DOUBLE PREUVE (les 8 extraits des scellés
+  == les notations d'origine ré-assemblées == les octets posés AUX MÊMES
+  adresses + la table K[64] @0x2F00).
+- LA COMPOSITION : quatre sections (le miroir démo) — .text la minilibc +
+  la boucle scellées · .rdata les pièces + l'IAT 34 feuilles + l'IAT démo
+  @0x2818 (le prix du déplacement scellé) + la machinerie + LA PORTE R10 +
+  K[64] · .text2 les 18 blocs + la famille sha scellée · .data le CADRE né
+  poignée INVALIDE ; l'entrée == LOUPE09_VA 0x5C00 (WinMain — D161),
+  WINDOWS_GUI, l'image PI.
+- LA VALIDATION : LA COMPOSITION INTÉGRALE (chaque octet compté : bloc,
+  pièce, int3 ou marge zéro) + pefile (le marché des imports 10+18+6+3,
+  les FirstThunk == les slots du plan) + la porte R10 relue de l'image.
+- LES PREUVES D'OBSERVABLE : LES TROIS HARNAIS REJOUÉS AU GESTE MÊME —
+  noyau 59/59 + rendu 53/53 (L'INSTRUMENT RETOQUÉ r2 : la révision nommée
+  de loupe-09, 874 → 1135 o, la famille édition au réseau — les notations
+  (c) voisines INTACTES) + édition 45/45 — 157 contrôles VERTS.
+- L'ARTEFACT : loupe/loupe.exe 50 688 o, sha256
+  f07dd2cfc6cab97598657a8488a33ba0f7de2d1509a84d6b008ad4c1c1965499 — LE
+  DÉTERMINISME CONSTATÉ (--verifier : la recomposition == l'octet).
+- LA CARTE : GÉNÉRATION 13 (lignée D80, la graine durable D144 — la
+  PREMIÈRE du domaine, les i11xxxx entrent) : 4 fragments chiffrés, la
+  signature Ed25519, les 26 blocs (18 + 8 hérités), les contrats PARSÉS
+  des specs ; LE VERROU CROISÉ 26/26 (R8) ; le tableau de bord écrit.
+- FRONTIÈRES : aucune balise ne bouge, AUCUN arbre signé touché, AUCUN
+  octet de notation (R2), la clé privée jamais traversée (D87), le proxy
+  1.0.0 et la carte tls13 INTACTS.
+- SUITE : LE KIT TERRAIN (M10-(d) seconde moitié, modèle m9f — loupe.exe
+  + le LISEZMOI + le réceptacle au coffre /test) ; puis LE RUN (M10-(e) —
+  le geste du développeur : la 0.1.0 se scellera sur le vert recoupé).
+
+## Task ID 121 — LE KIT TERRAIN LOUPE LIVRÉ AU COFFRE /test : la rangée M10-(d) accomplie (le scénario-chargeur, le recoup AST à double ancre, le réceptacle armé) — la rangée (e) LE RUN attend le développeur (09/11)
+
+- LA DEMANDE : la SUITE de l'Entrée 202 (LE KIT TERRAIN, le geste
+  suivant du programme M10).
+- LE SCÉNARIO (loupe/terrain/scenario-loupe.py — python seul) : LE
+  SCÉNARIO EST LE CHARGEUR (DONT_RESOLVE, l'IAT résolue par le kit aux
+  slots du plan), LES BLOCS APPELÉS À LEURS ADRESSES SCELLÉES : la
+  session, LA DOUBLE LECTURE (le panneau == hashlib ET loupe-07 sur
+  loupe.exe rend son sha256 asserté — la pièce jugée par sa propre
+  application), les lignes, la recherche (le memcmp scellé), L'ÉDITION
+  LA BOUCLE ENTIÈRE à l'octet, les rejets nommés, la clôture.
+- L'ÉPREUVE DE LABO : le recoup des constantes PAR AST (25 adresses ==
+  le plan, les listes IAT == l'ordre figé, la table K == FIPS, LES
+  TÊTES SCELLÉES À DOUBLE ANCRE == l'artefact ET les scellés d'origine
+  — les têtes supposées du premier jet RÉFUTÉES par le recoup même),
+  py_compile, l'extraction vierge — kit-loupe.zip 21 095 o, md5
+  ee43c991…, sha256 1689fc20….
+- LA LIVRAISON (D143 : archivage par déplacement) : la vague m9f
+  archivée → vagues-m9/ ; preuves-loupe/ NÉ armé (le témoin + les
+  captures de la vitrine bienvenues) ; kit-loupe.zip + LISEZMOI-
+  loupe.txt à la racine (md5 MATCH par relecture) ; l'index mis à
+  jour ; LES PIÈCES DE L'ÈRE DEMEURENT (signatures-I.txt f33c803a… +
+  cle-publique-I.txt 188a7d42…, vérifié).
+- LA RANGÉE M10-(d) ACCOMPLIE : la notation + la cérémonie + le build
+  + LE KIT DÉPLOYÉ, le réceptacle armé, l'artefact empreinté.
+- SUITE : LE RUN M10-(e) — LE GESTE DU DÉVELOPPEUR (le scénario +
+  VIVRE LA VITRINE ; preuves-loupe/ ENTIER au coffre) ; le labo
+  recoupe (D138/D145/D148) ; si le vert tient : la balise
+  `loupe 0.1.0` scellée — LE JALON M10.

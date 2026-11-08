@@ -724,3 +724,79 @@ R_CUMUL = 0x10000             # LA fenêtre de lecture 64 Kio (l'exclusion de
 # AVANT tout appel — le zéro de la mémoire vierge serait une session
 # fantôme : loupe-02 y croirait) ; loupe-04 reste LE geste de remise au
 # vierge en cours de vie (loupe-01/03 l'appellent)
+
+# =================================================================================
+# L'ADRESSAGE DU GESTE (e) — LE BUILD loupe 0.1.0-dev.1 (ARRÊTÉ au geste du
+# build : la machinerie d'imports + LA PORTE R10 vivent dans la marge .rdata
+# libre 0x2830-0x2EFF — APRÈS l'IAT démo scellée @0x2818-0x282F, AVANT la
+# table K du scellé @0x2F00 ; la marge 0x26A8-0x2817 demeure VIERGE).
+#
+# LE MARCHÉ DES IMPORTS (le miroir de la lignée démo, D7/D35) : kernel32 (10
+# feuilles, FT = R_IAT_K32) · user32 (18, FT = R_IAT_U32) · gdi32 (6, FT =
+# R_IAT_GDI) · user32#2 LA DOUBLE ENTRÉE DÉMO (FT = 0x2818 : les TROIS slots
+# que les déplacements SCELLÉS de win-03 visent — le prix du déplacement
+# scellé, R7 au sens propre : le chargeur y posera les MÊMES adresses résolues
+# que l'IAT loupe @0x2468/0x2470/0x2478).
+#
+# L'IMAGE (quatre sections, l'ordre des VA croissantes — le miroir démo) :
+#   .text  0x1000-0x1FFF  la minilibc + win-03 AUX ADRESSES SCELLÉES, le
+#                         reste int3 (la réserve M1 vierge)
+#   .rdata 0x2000-0x2FFF  les tables, les libellés, l'UTF-16, l'IAT loupe,
+#                         l'IAT démo, la machinerie, LA PORTE R10, K[64]
+#   .text2 0x4000-0xDFFF  les 18 blocs du domaine (0x4040-0x6800) + la marge
+#                         int3 + la famille sha AUX ADRESSES SCELLÉES M9
+#                         (0xC000-0xC3C0) — la convention .text5 : la zone
+#                         réservée int3 DANS le fichier
+#   .data  0xE000-0x1FFFF les zones du domaine (vsize 0x12000, le CUMUL
+#                         finit 0x20000) ; le RAW committé 0x400 : le CADRE
+#                         seul (la poignée INVALIDE à +528), le reste
+#                         zéro-initialisé au chargement
+# =================================================================================
+
+IMAGE_BASE = 0x140000000         # le miroir de la lignée (D33 : l'image PI)
+SECT_ALIGN = 0x1000
+FILE_ALIGN = 0x200
+SUBSYSTEM_GUI = 2                # WINDOWS_GUI — l'application fenêtrée
+DLL_CHARACTERISTICS = 0x0040 | 0x0020 | 0x0100   # DYNAMICBASE | HEVA | NX
+
+TEXT_RVA, RDATA_RVA = 0x1000, 0x2000
+TEXT2_RVA, DATA_RVA = 0x4000, 0xE000
+TEXT_VSIZE = 0x1000              # la minilibc + win-03, le reste int3
+RDATA_VSIZE = 0x1000             # les pièces du plan + K[64] @0x2F00
+TEXT2_VSIZE = 0xA000             # 0x4000-0xDFFF (le domaine + les sha scellées)
+DATA_VSIZE = 0x12000             # 0xE000-0x1FFFF (CUMUL finit 0x20000)
+DATA_RAW = 0x400                 # le CADRE committé (960 o, la poignée à +528)
+SIZE_OF_IMAGE = 0x20000
+
+# les offsets fichier (l'ordre des sections au tableau : VA croissantes)
+TEXT_FILE, RDATA_FILE = 0x200, 0x1200
+TEXT2_FILE, DATA_FILE = 0x2200, 0xC200
+TAILLE_FICHIER = 0xC600          # 0xC200 + 0x400
+
+ENTREE = LOUPE09_VA              # WinMain — l'entrée EST le bloc (D161 : la
+                                 # mesure a décidé, aucune fiction de
+                                 # trampoline — la réserve 64 o s'est inclinée)
+
+# --- La machinerie d'imports (le marché des 34 feuilles + la double entrée) -------
+
+R_DESC_IMPORT = 0x2830           # 5 descripteurs × 20 o (k32, u32, gdi32,
+                                 # u32-démo, terminateur) — 0x2830-0x2894
+R_INT_K32 = 0x28A0               # INT kernel32 (10 hints + terme) — 88 o
+R_INT_U32 = 0x2900               # INT user32 (18 + terme) — 152 o
+R_INT_GDI = 0x29A0               # INT gdi32 (6 + terme) — 56 o
+R_INT_U32B = 0x29E0              # INT user32#2 (les TROIS de l'IAT démo +
+                                 # terme) — 32 o
+R_NOM_DLL = 0x2A10               # « kernel32.dll\0 » (13 o)
+R_NOM_U32 = 0x2A20               # « user32.dll\0 » (11 o)
+R_NOM_GDI = 0x2A2C               # « gdi32.dll\0 » (10 o)
+R_HN = 0x2A40                    # les hints/noms des 34 feuilles, contigus
+                                 # (2 + nom + NUL chacun — ~519 o, fin ~0x2C47)
+
+# --- LA PORTE R10 (le miroir de la lignée : la monotonie de version) ---------------
+
+R_TAB_SUM = 0x2C60               # (rva u32, taille u32, somme u64) PAR BLOC
+                                 # EMBARQUÉ (les 18 du domaine + les 8 hérités)
+                                 # + terminateur — 27 × 20 = 540 o, fin 0x2E7C
+R_VERSION = 0x2E80               # qword VERSION_DEV (R10 : geste de BUILD,
+                                 # jamais scellage — la 0.1.0 attend le terrain)
+R_ANCRE = 0x2E88                 # l'ancre de calcul de base (l'image PI, D33)
