@@ -7058,3 +7058,35 @@ Work Log:
   des 14 arbres régénérée au geste, le geste hors-ligne du développeur à la
   clé du 04/11, les pièces au /test) PUIS le build loupe 0.1.0-dev.1 + le
   kit terrain (M10-(d) seconde moitié) et le run (M10-(e)).
+
+
+## Task ID 118 — LA CÉRÉMONIE D'ÈRE DU TGN ARMÉE : le kit servi au /Cérémonie, la remise fraîche des quatorze arbres, le geste hors-ligne du développeur attendu (08/11 au soir)
+
+- LA DEMANDE : « go pour la cérémonie » — armer la cérémonie d'ère du TGN
+  (le 14e arbre, la dette D166/D171 échue au build — la ligne SUITE de
+  l'Entrée 199 l'annonçait).
+- LE GESTE SOURCE : le registre figé de m0 ÉTENDU (`loupe` M10 —
+  l'extension promise par loupe/I/README.md à la cérémonie, D171/D168) ;
+  la table canonique de sceau_I.py à QUATORZE arbres (loupe.1 après
+  tls13.1, l'ordre des ères) ; l'outil hors-ligne AGNOSTIQUE de la table —
+  aucune pièce du kit à changer pour lui.
+- LA REMISE : preparer AU GESTE (D168 rejouée) — 14 arbres, DEUX
+  empreintes nouvelles (m0 667fb5ae… le registre étendu ; loupe
+  59e4871a… l'arbre neuf, 19 fichiers), les douze autres inchangées ; le
+  constat sur pièces : m0 CODE 10 + loupe CODE 12, les douze autres
+  VERTS — le miroir exact de l'ère M9 (Entrée 165).
+- LE KIT : LISEZMOI-ceremonie-ere-TGN.txt écrit (le pourquoi, les deux
+  empreintes, la règle d'or « JAMAIS generer », le pas à pas console +
+  graphique, ce que cela débloque, le contrat D87) ; maj_kit.py étendu
+  (RACINE_KIT + NOTE_D130 réorientée vers la cérémonie courante) ; le kit
+  déposé au geste du commit (hook D130), le recoup indépendant par
+  scripts/deposer_lisezmoi_ere_tgn.py (md5 par relecture, la remise du
+  kit == celle du dépôt).
+- FRONTIÈRES : aucune balise ne bouge, AUCUN build, aucun octet de
+  notation (R2 — les écrits intacts, la cérémonie les signe) ; la dette
+  demeure jusqu'à la remise du développeur (le garde constate m0 CODE 10
+  + loupe CODE 12, les douze autres VERTS).
+- SUITE : le geste hors-ligne du développeur (la clé du 04/11,
+  signatures-I.txt + cle-publique-I.txt au /test) ; le labo recoupe et
+  installe — le garde à QUATORZE VERTS ; puis le build loupe 0.1.0-dev.1,
+  le kit terrain (M10-(d) seconde moitié) et le run (M10-(e)).

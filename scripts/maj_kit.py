@@ -114,6 +114,16 @@ RACINE_KIT = [
     # 173fae9c…).
     ("LISEZMOI-ceremonie-revision3-sys06.txt",
      DOWNLOAD / "LISEZMOI-ceremonie-revision3-sys06.txt", False),
+    # LA CÉRÉMONIE D'ÈRE DU TGN (Entrée 200, le jalon M10) : le
+    # QUATORZIÈME arbre — le registre figé de m0 étendu au domaine `loupe`
+    # et l'arbre `loupe` neuf (le README + les 18 spécifications) — la
+    # remise fraîche (14 arbres, m0 667fb5ae… + loupe 59e4871a…) attend la
+    # signature HORS LIGNE du développeur AVANT tout build de Loupe (le
+    # garde suit le calendrier de la cérémonie, jamais l'inverse — spec
+    # § 13.5) ; ce LISEZMOI est le mode d'emploi qui va avec (règle d'or :
+    # JAMAIS « generer », la clé du 04/11 est réutilisée — 173fae9c…).
+    ("LISEZMOI-ceremonie-ere-TGN.txt",
+     DOWNLOAD / "LISEZMOI-ceremonie-ere-TGN.txt", False),
 ]
 
 NOTE_D130 = (
@@ -144,31 +154,22 @@ NOTE_D130 = (
     "re-cérémonie (verifier le dirait : « signature requise » sur v06 —\n"
     "le SIGNAL, pas la panne).\n"
     "\n"
-    "RE-CÉRÉMONIE DE LA RÉVISION 3 (Entrée 191, la suite du chantier\n"
-    "(f)) : votre run de la SONDE SYS-06 a LU LE CODE EXACT de la\n"
-    "première lecture réelle (-6, STATUS_INVALID_PARAMETER 0xC000000D,\n"
-    "DÉTERMINISTE — trois mesures identiques, le compas étalonné,\n"
-    "l'offre sys-05 verte au même geste) : LA TABLE nommée d'avance\n"
-    "TRANCHE — LE CONTRAT D'APPEL ; l'A/B des notations nomme LE CHAMP\n"
-    "(sys-05 passe AfdFlags 0 sur LE MÊME montage, sys-06 posait le\n"
-    "0x20 en AfdFlags : LE VRAI NOYAU LE REFUSE — la mesure WinDbg\n"
-    "citée avait raison de la VALEUR mais tort du CHAMP). L'ERRATUM\n"
-    "n° 10 : la révision 3 de la spec sys-06 (AfdFlags = 0, TdiFlags =\n"
-    "TDI_RECEIVE_NORMAL 0x20) + la notation corrigée (le même encode\n"
-    "8 o, le slot intact) + le harnais suivi (131 contrôles · 131\n"
-    "VERTS × 3 graines) : le garde REFUSE le rebuild 1.0.0-dev.4 (LE\n"
-    "SIGNAL « signature requise », pas la panne). La seconde signature\n"
-    "(m8 c444d730…) fut reçue, recoupée 13/13 et INSTALLÉE — puis le\n"
-    "terrain a jugé la mesure : la remise RÉGÉNÉRÉE (m8 e36141f7…)\n"
-    "attend la signature HORS LIGNE du développeur.\n"
-    "Suivez LISEZMOI-ceremonie-revision3-sys06.txt : la remise est\n"
-    "v06/sceau-I/a-signer.txt (TREIZE arbres, UNE seule empreinte\n"
-    "nouvelle — m8 e36141f7…), à signer HORS LIGNE avec votre clé du\n"
-    "04/11 — la règle d'or : JAMAIS « generer » (la clé 173fae9c… est\n"
-    "réutilisée). Le dépôt de signatures-I.txt au /test débloque : LE\n"
-    "REBUILD 1.0.0-dev.4 (le bloc sys-06 réparé SUR LE TERRAIN), LE\n"
-    "KIT M9F RÉPARÉ au /test, le run du développeur — ET SI LE VERT\n"
-    "TIENT : LA FINALE 1.0.0, le jalon M9 — LA GRANDE ŒUVRE.")
+    "LA CÉRÉMONIE D'ÈRE DU TGN (Entrée 200, le jalon M10) : le sceau\n"
+    "porte treize arbres et LA DETTE DU QUATORZIÈME est ÉCHUE AU\n"
+    "BUILD — les 18 blocs de « Loupe » sont NOTÉS-MESURÉS-PROUVÉS\n"
+    "(D172–D175), la couche I est FINALE, AUCUN build ne naîtra avant\n"
+    "la signature. Le registre figé de m0 est ÉTENDU au domaine `loupe`\n"
+    "(M10) et l'arbre `loupe` est NEUF (le README + les 18\n"
+    "spécifications — 19 fichiers) : DEUX empreintes exigent votre\n"
+    "signature, les douze autres sont re-signées à l'identique par le\n"
+    "déterminisme Ed25519 (la preuve D163, rejouée à chaque cérémonie).\n"
+    "Suivez LISEZMOI-ceremonie-ere-TGN.txt : la remise est\n"
+    "v06/sceau-I/a-signer.txt (QUATORZE arbres), à signer HORS LIGNE\n"
+    "avec votre clé du 04/11 — la règle d'or : JAMAIS « generer » (la\n"
+    "clé 173fae9c… est réutilisée). Le dépôt de signatures-I.txt au\n"
+    "/test débloque : LE BUILD DE LOUPE (0.1.0-dev.1), le kit terrain\n"
+    "(M10-(d) seconde moitié), le run (M10-(e)) — et si le vert tient :\n"
+    "la balise `loupe 0.1.0` scellée sur run recoupé, LE JALON M10.")
 
 
 # ---------------------------------------------------------------- utilitaires

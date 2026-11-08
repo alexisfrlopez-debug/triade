@@ -5,8 +5,9 @@ Elles instancient le gabarit § 2.2 de la spécification v0.4.0.
 
 Registre des domaines du projet (figé, § 2.1) — l'outil de validation TRIADE :
 `hello` (M0), `libc` (M1), `tcp` (M2), `http` (M3), `tls` (M4), `outil` (M5),
-`sys` (M8), `tls13` (M9), `notation`, `carte`, `crypto`, `securite`. Un
-identifiant n'est jamais réutilisé.
+`sys` (M8), `tls13` (M9), `loupe` (M10, le test grandeur nature — l'extension
+vit à la cérémonie d'ère du TGN, D171/D168), `notation`, `carte`, `crypto`,
+`securite`. Un identifiant n'est jamais réutilisé.
 
 | Spécification | Bloc machine (carte) | Rôle |
 |---|---|---|

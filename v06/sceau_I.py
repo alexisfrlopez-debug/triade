@@ -51,6 +51,10 @@ ARBRES = {
     "m7": ("sceau", "sceau.1"),
     "m8": ("proxy.exe (domaine sys, syscalls directs)", "sys.1"),
     "tls13": ("proxy.exe (domaine tls13, client TLS 1.3 pur)", "tls13.1"),
+    # L'ère du TGN (D171, la cérémonie d'ère précède tout build — spec
+    # § 13.5) : le quatorzième arbre — l'application « Loupe », l'éditeur
+    # hexadécimal au panneau d'empreintes (le test grandeur nature M10).
+    "loupe": ("loupe.exe (domaine loupe, l'éditeur hexadécimal au panneau d'empreintes)", "loupe.1"),
     "demo": ("demo.exe", "0.3.0"),
     "terrain": ("superviseur.exe", "terrain.19/17-H"),
     "v06": ("coffre CF2 + CF3 + sceau-I (transversal)", "v0.6.0-axes2-3-4"),
