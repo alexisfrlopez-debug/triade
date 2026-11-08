@@ -1,7 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.1 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+loupe.exe 0.1.0-dev.2 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+
+LA RETOUCHE DE L'ENTRÉE 204 (dev.1 → dev.2) : le run terrain M10-(e) a
+REFUSÉ dev.1 par le VRAI chargeur Windows — 0xc000007b au geste de
+cartographie (LoadLibraryEx DONT_RESOLVE) : l'image déclare DYNAMIC_BASE
+(DllCharacteristics 0x0160) mais N'AVAIT AUCUNE TABLE DE RELOCALISATION ;
+la base de prédilection 0x140000000 étant occupée chez l'utilisateur
+(son propre python.exe), le chargeur devait reloger l'image — sans
+table, il refuse : « n'est pas conçu pour s'exécuter sous Windows ».
+TOUS les artefacts de la lignée M1..M9 portent le BASERELOC minimal
+(12 o, entrées ABSOLUTE — l'image PI que le chargeur PEUT reloger) ;
+l'éditeur de dev.1 l'avait omis — LE TERRAIN L'A NOMMÉ, la retouche
+le rend au plan (R_RELOC @0x2E90, dirs[5] — le miroir m2/build_m2.py).
 
 L'ère du TGN est OUVERTE AU BUILD (la cérémonie d'ère PASSÉE SUR PIÈCES,
 Entrée 201 : le garde à QUATORZE arbres VERTS, la dette D166/D171 SOLDÉE,
@@ -23,8 +35,10 @@ La composition 0.1.0-dev.1 (charte loupe/I/README.md, le plan layout.py) :
     loupe (34 feuilles : kernel32 10 · user32 18 · gdi32 6), l'IAT démo
     scellée, LA MACHINERIE D'IMPORTS (5 descripteurs — user32 DEUX FOIS :
     le marché + la double entrée), LA PORTE R10 (la table des sommes des
-    26 blocs embarqués + le qword version + l'ancre) et K[64] @0x2F00 LA
-    TABLE DU SCELLÉ M9 (le déplacement hérité de tls13-02 la vise) ;
+    26 blocs embarqués + le qword version + l'ancre), LE BASERELOC MINIMAL
+    (12 o @0x2E90, entrées ABSOLUTE — l'image PI que le chargeur PEUT
+    reloger : le miroir M1..M9, l'oubli nommé de dev.1 soldé) et K[64]
+    @0x2F00 LA TABLE DU SCELLÉ M9 (le déplacement hérité de tls13-02 la vise) ;
   - .text2 0x4000-0xDFFF : LES 18 BLOCS DU DOMAINE (0x4040-0x6800, les
     slots ARRÊTÉS sur les mesures D161) + la marge int3 + LA FAMILLE SHA
     AUX ADRESSES SCELLÉES M9 (tls13-01..04 @0xC000-0xC3C0, les octets du
@@ -64,7 +78,7 @@ La carte : GÉNÉRATION 13 (la lignée D80, la graine durable D144 — la
 première génération du DOMAINE loupe : les i11xxxx entrent à la carte).
 
 Usage :
-  python3 build_loupe.py             # construction 0.1.0-dev.1 (+ carte gén. 13)
+  python3 build_loupe.py             # construction 0.1.0-dev.2 (+ carte gén. 13)
   python3 build_loupe.py --verifier  # re-vérification sans écriture
 """
 
@@ -522,7 +536,7 @@ ENTETE_TEXTE = ("Décalage  00 01 02 03 04 05 06 07"
                 "  08 09 0A 0B 0C 0D 0E 0F  ASCII")
 LIBELLES = [
     (L.L_USAGE, "loupe <fichier>"),
-    (L.L_BALISE, "Loupe 0.1.0-dev.1"),
+    (L.L_BALISE, "Loupe 0.1.0-dev.2"),
     (L.L_TIRET, " - "),
     (L.L_MID, " · "),
     (L.L_OCT, " o · curseur 0x"),
@@ -667,6 +681,17 @@ def composer_image(code: dict, extraits: dict):
     poser(L.R_VERSION, struct.pack("<Q", L.VERSION_DEV), "version R10")
     poser(L.R_ANCRE, struct.pack("<Q", 0), "ancre")
 
+    # LE BASERELOC MINIMAL — le miroir M1..M9 (m2/build_m2.py:561) : douze
+    # octets, la page .text, BlockSize 12, deux entrées ABSOLUTE (type 0,
+    # sans effet). L'image est PI : la table ne reloge RIEN ; mais le
+    # DllCharacteristics DYNAMIC_BASE invite le chargeur à déplacer
+    # l'image, et SANS table déclarée il la REFUSE au premier relogement
+    # exigé — 0xc000007b, le refus nommé du terrain M10-(e) sur dev.1
+    # (l'Entrée 204 : la base 0x140000000 occupée par python.exe chez
+    # l'utilisateur, le chargeur doit reloger — il ne peut pas).
+    poser(L.R_RELOC, struct.pack("<II", L.TEXT_RVA, 12) + struct.pack("<HH", 0, 0),
+          "BASERELOC minimal")
+
     # -- .data : le CADRE committé né poignée INVALIDE ------------------------
     data = bytearray(b"\x00" * L.DATA_RAW)
     struct.pack_into("<Q", data, L.CADRE_POIGNEE, L.INVALIDE)
@@ -696,6 +721,8 @@ def ecrire_pe32plus(texte: bytes, rdata: bytes, data: bytes, text2: bytes) -> by
     )
     dirs = [(0, 0)] * 16
     dirs[1] = (L.R_DESC_IMPORT, 100)   # 5 descripteurs (4 marchés + terminateur)
+    dirs[5] = (L.R_RELOC, 12)         # BASERELOC minimal (l'image PI que le
+                                      # chargeur PEUT reloger — le miroir M1..M9)
     dirs[12] = (L.R_IAT_K32, 0x110)    # l'IAT loupe (les trois tables contiguës)
     opt = bytes(opt_fixe) + b"".join(struct.pack("<II", *d) for d in dirs)
 
@@ -794,6 +821,18 @@ def valider_pe(exe: bytes, code: dict, extraits: dict, poses_rdata, table_r10):
         raise EchecBuild("la porte R10 relue de l'image != la table composée")
     if struct.unpack_from("<Q", tranche(L.R_VERSION, 8))[0] != L.VERSION_DEV:
         raise EchecBuild("le qword version != VERSION_DEV (R10)")
+    # LE BASERELOC MINIMAL (le miroir M1..M9 — le refus 0xc000007b du terrain
+    # sur dev.1 ne reviendra plus) : le répertoire DÉCLARÉ au plan, les douze
+    # octets relus — l'image PI que le VRAI chargeur PEUT reloger
+    reloc_dir = pe.OPTIONAL_HEADER.DATA_DIRECTORY[5]
+    if reloc_dir.VirtualAddress != L.R_RELOC or reloc_dir.Size != 12:
+        raise EchecBuild("le répertoire BASERELOC != le plan (R_RELOC, 12 o — "
+                         "le miroir M1..M9 : sans lui le VRAI chargeur ne peut "
+                         "pas reloger l'image ASLR, le refus 0xc000007b du terrain)")
+    if tranche(L.R_RELOC, 12) != struct.pack("<II", L.TEXT_RVA, 12) \
+            + struct.pack("<HH", 0, 0):
+        raise EchecBuild("le bloc BASERELOC != les douze octets de la lignée "
+                         "(la page .text, deux entrées ABSOLUTE — l'image PI)")
     couvert = bytearray(L.RDATA_VSIZE)
     for rva, fin, _nom in poses_rdata:
         for i in range(rva - L.RDATA_RVA, fin - L.RDATA_RVA):
@@ -831,14 +870,29 @@ HARNAIS = [
 def rejouer_harnais() -> list[dict]:
     """LES TROIS HARNAIS rejoués au geste même du build — le verdict TRANCHÉ
     par les instruments (les vecteurs officiels, le différentiel, les
-    scénarios, la falsification) ; l'empreinte du run consignée à la carte."""
-    verdicts = []
-    for script, description in HARNAIS:
+    scénarios, la falsification) ; l'empreinte du run consignée à la carte.
+
+    LES TROIS EN CONCURRENCE (l'Entrée 204) : des instruments INDÉPENDANTS —
+    aucun chemin partagé (aucun fichier écrit, la sortie seule), chacun dans
+    son propre sous-processus ; les empreintes et l'ordre de consignation
+    sont CEUX DE LA LIGNÉE (l'ordre HARNAIS, pas l'ordre d'arrivée) — la
+    fenêtre du labo est bornée, l'édition (5 min 20) ne peut plus tenir
+    APRÈS le rendu en une seule vie."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    def jouer(script: str, description: str) -> tuple[str, str, int, str]:
         chemin = os.path.join(ICI, script)
         proc = subprocess.run([sys.executable, chemin], capture_output=True,
                               text=True, timeout=1800, cwd=ICI)
-        sortie = proc.stdout + proc.stderr
-        if proc.returncode != 0 or "VERDICT : VERT" not in sortie:
+        return script, description, proc.returncode, proc.stdout + proc.stderr
+
+    verdicts = []
+    with ThreadPoolExecutor(max_workers=len(HARNAIS)) as pool:
+        resultats = list(pool.map(lambda h: jouer(*h), HARNAIS))
+    sorties = {script: (rc, sortie) for script, _d, rc, sortie in resultats}
+    for script, description in HARNAIS:            # l'ordre de la lignée
+        retour, sortie = sorties[script]
+        if retour != 0 or "VERDICT : VERT" not in sortie:
             raise EchecBuild(f"{script} ({description}) : le harnais n'est pas "
                              f"VERT au geste du build — le domaine n'est pas "
                              f"prouvé, RIEN n'est écrit")
@@ -866,7 +920,7 @@ def construire_carte(exe: bytes, specs: dict, code: dict, verrous: int,
     fragments = {n: cm10.chiffrer_fragment(maitre, n, clairs[n])
                  for n in cm10.FRAGMENTS}
     racine = cm10.empreinte_racine(fragments)
-    entete = cm10.construire_entete(racine, cm10.VERSION_DEV1)
+    entete = cm10.construire_entete(racine, cm10.VERSION_DEV)
     prive, pub = cm10.paire_cles(graine)
     signature = cm10.signer(prive, entete, fragments)
     cm10.ecrire_carte(entete, fragments, signature, pub)
@@ -919,9 +973,9 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.1 (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.2 (le TGN « Loupe », M10) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.1')} "
+        f"version      : {manifeste.get('version', '0.1.0-dev.2')} "
         f"(geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
@@ -949,7 +1003,7 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.1 (le TGN, "
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.2 (le TGN, "
           "l'application née de TRIADE entière) ===")
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
@@ -967,7 +1021,7 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.1 le "
+    journal = [f"build 0.1.0-dev.2 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]

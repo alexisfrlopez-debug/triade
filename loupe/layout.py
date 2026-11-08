@@ -18,10 +18,14 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010001           # loupe 0.1.0-dev.1 (au premier build — le
+VERSION_DEV = 0x00010002           # loupe 0.1.0-dev.2 (la RETOUCHE BASERELOC
+                                   # de l'Entrée 204 : le terrain a REFUSÉ
+                                   # dev.1 — 0xc000007b, l'image ASLR sans
+                                   # table de relocalisation ne peut pas être
+                                   # relogée par le VRAI chargeur Windows ; le
                                    # miroir du format 0xJJNNPPDD : 0.9.0-dev.1
                                    # == 0x00090001 [M8], 1.0.0-dev.4 ==
-                                   # 0x01000004 [M9] ; 0.1.0-dev.1 == 0x00010001)
+                                   # 0x01000004 [M9] ; 0.1.0-dev.2 == 0x00010002)
 VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
                                    # terrain vert recoupé)
@@ -800,3 +804,11 @@ R_TAB_SUM = 0x2C60               # (rva u32, taille u32, somme u64) PAR BLOC
 R_VERSION = 0x2E80               # qword VERSION_DEV (R10 : geste de BUILD,
                                  # jamais scellage — la 0.1.0 attend le terrain)
 R_ANCRE = 0x2E88                 # l'ancre de calcul de base (l'image PI, D33)
+R_RELOC = 0x2E90                 # BASERELOC minimal (12 o, entrées ABSOLUTE —
+                                 # le miroir M1..M9 : l'image est PI, la table
+                                 # ne reloge RIEN, mais sa SEULE EXISTENCE dit au
+                                 # chargeur qu'il PEUT déplacer l'image — le
+                                 # DllCharacteristics DYNAMIC_BASE l'y invite ;
+                                 # SANS elle, le premier relogement exigé (base
+                                 # 0x140000000 occupée chez l'utilisateur) rend
+                                 # 0xc000007b — le refus nommé du terrain, l'Entrée 204)

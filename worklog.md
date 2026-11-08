@@ -7196,3 +7196,39 @@ Work Log:
   VIVRE LA VITRINE ; preuves-loupe/ ENTIER au coffre) ; le labo
   recoupe (D138/D145/D148) ; si le vert tient : la balise
   `loupe 0.1.0` scellée — LE JALON M10.
+
+## Task ID 122 — LA RETOUCHE dev.2 APRÈS LE REFUS TERRAIN DE dev.1 : le défaut nommé par le VRAI chargeur (0xc000007b), le BASERELOC minimal rendu au plan, le kit dev.2 livré au coffre (09/11 au soir)
+
+- LE FAIT : le run M10-(e) chez le développeur — [T0] l'empreinte
+  ASSERTÉE puis la boîte dure « python.exe — Image incorrecte …
+  0xc000007b » AU GESTE DE CARTOGRAPHIE (LoadLibraryEx DONT_RESOLVE).
+- LE DIAGNOSTIC : l'image déclare DYNAMIC_BASE|HIGH_ENTROPY_VA SANS
+  table de relocalisation ; la base 0x140000000 occupée par python.exe
+  chez l'utilisateur → le chargeur DOIT reloger, il ne PEUT pas →
+  STATUS_INVALID_IMAGE_FORMAT. LA PREUVE PAR LA LIGNÉE : les HUIT
+  artefacts M0..M9 portent TOUS le BASERELOC minimal (12 o, entrées
+  ABSOLUTE — image PI) ; dev.1 était LE SEUL sans table (l'éditeur PE
+  avait omis la pose + dirs[5] — invisible au labo Linux : le harnais
+  PARSE, il ne charge jamais).
+- LA RETOUCHE : R_RELOC 0x2E90 (la marge machinerie, AUCUNE adresse
+  scellée touchée) + VERSION_DEV 0x00010002 + la pose des douze octets
+  de la lignée + dirs[5] + LA VALIDATION NEUVE au build ; LE BUILD
+  REJOUÉ : garde 14/14, 43 verrous, LES TROIS HARNAIS 157 VERTS (en
+  concurrence — la fenêtre du labo bornée : instruments indépendants,
+  empreintes et ordre de la lignée), loupe.exe 0.1.0-dev.2 NÉ
+  (50 688 o, sha256 a8a65ed4…, carte génération 13 réécrite, verrou
+  croisé 26/26) ; LE DIFF CHIRURGICAL : 7 octets en 6 plages (dirs[5],
+  la balise, le qword version, le bloc BASERELOC) — la taille
+  CONSTANTE.
+- LE KIT REJOUÉ : le scénario à l'empreinte dev.2 + LE CONSTAT NEUF
+  T0 (dirs[5] == (0x2E90, 12), refus nommé BASERELOC sinon — la
+  leçon garde la porte), le LISEZMOI raconté + D99 renforcé, le recoup
+  PORTÉ À 35 constantes, l'extraction vierge — kit-loupe.zip 21 949 o,
+  md5 d50288d8…, sha256 62b1a080….
+- LE COFFRE (D143) : la vague dev.1 REFUSÉE archivée → vagues-m10/
+  (md5 recoupés après déplacement — le refus est un FAIT, la pièce
+  demeure) ; la vague dev.2 à la racine (md5 MATCH) ; le réceptacle et
+  l'index mis à jour ; LES PIÈCES DE L'ÈRE DEMEURENT.
+- SUITE : LE RUN REJOUÉ — kit NEUF, dossier NEUF D99, scénario +
+  VITRINE, preuves-loupe/ ENTIER au coffre ; si le vert tient : la
+  balise `loupe 0.1.0` scellée — LE JALON M10.

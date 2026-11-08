@@ -6,8 +6,10 @@ Modèle : scripts/assembler_kit_m9f.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + les VRAIS kernel32/user32/gdi32 exigés,
 le cœur même du run terrain) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.1,
-     sha256 f07dd2cf… ASSERTÉ) + scenario-loupe.py + LISEZMOI-KIT-LOUPE.md ;
+  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.2,
+     sha256 a8a65ed4… ASSERTÉ — la RETOUCHE BASERELOC de l'Entrée 204 :
+     le terrain a refusé dev.1 [0xc000007b]) + scenario-loupe.py +
+     LISEZMOI-KIT-LOUPE.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario (les
      adresses scellées, l'empreinte, la version R10, les listes IAT, la
      table K, les champs du cadre) relue DANS L'ARTEFACT ou DANS LE PLAN —
@@ -36,8 +38,8 @@ KIT = "loupe-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-loupe.zip"
 
-SHA_EXE = ("f07dd2cfc6cab97598657a8488a33ba0"
-           "f7de2d1509a84d6b008ad4c1c1965499")
+SHA_EXE = ("a8a65ed4cc3778c691dffbd104ef8385"
+           "85bcb5df206b0c5c79a0283f1f74c71d")
 TAILLE_EXE = 50688
 EXE = REPO / "loupe" / "loupe.exe"
 SCENARIO = REPO / "loupe" / "terrain" / "scenario-loupe.py"
@@ -121,7 +123,8 @@ def recoup(kit_dir):
                         ("R_IAT_K32", L.R_IAT_K32), ("R_IAT_U32", L.R_IAT_U32),
                         ("R_IAT_GDI", L.R_IAT_GDI),
                         ("R_IAT_DEMO", L.R_IAT_DEMO_GMW),
-                        ("R_VERSION", L.R_VERSION), ("R_K", L.R_K),
+                        ("R_VERSION", L.R_VERSION), ("R_RELOC", L.R_RELOC),
+                        ("R_K", L.R_K),
                         ("R_TLS01", L.R_TLS01), ("R_TLS02", L.R_TLS02),
                         ("R_TLS03", L.R_TLS03), ("R_TLS04", L.R_TLS04),
                         ("R_LOUPE01", L.LOUPE01_VA), ("R_LOUPE02", L.LOUPE02_VA),
@@ -229,7 +232,7 @@ def recoup(kit_dir):
             struct.unpack("<Q", exe[rva_vers_raw(L.R_VERSION):
                                     rva_vers_raw(L.R_VERSION) + 8])[0],
             L.VERSION_DEV, "les octets de l'artefact")
-    print(f"[recoup] LES CONSTANTES DU SCÉNARIO RECOUPÉES : {34} adresses et "
+    print(f"[recoup] LES CONSTANTES DU SCÉNARIO RECOUPÉES : {35} adresses et "
           f"listes == le plan · l'empreinte == l'artefact · les têtes scellées "
           f"et la table K == les octets — la source unique est le dépôt")
 

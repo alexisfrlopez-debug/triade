@@ -5,9 +5,15 @@
 > ont noté-mesuré-prouvé chaque bloc (157 contrôles verts aux trois
 > graines) ; la cérémonie d'ère a ouvert le build (le garde à QUATORZE
 > arbres verts, la dette soldée — Entrée 201) ; le build est NÉ
-> (**loupe.exe 0.1.0-dev.1**, 50 688 o, sha256
-> `f07dd2cfc6cab97598657a8488a33ba0f7de2d1509a84d6b008ad4c1c1965499`,
-> la carte génération 13, le verrou croisé 26/26 — Entrée 202). Il reste
+> (**loupe.exe 0.1.0-dev.2**, 50 688 o, sha256
+> `a8a65ed4cc3778c691dffbd104ef838585bcb5df206b0c5c79a0283f1f74c71d`,
+> la carte génération 13, le verrou croisé 26/26 — Entrées 202 puis 204 :
+> LA RETOUCHE BASERELOC — le terrain a REFUSÉ dev.1 [0xc000007b, l'image
+> ASLR sans table de relocalisation : le VRAI chargeur Windows ne peut
+> pas la reloger — l'oubli nommé du premier build ; tous les artefacts
+> M1..M9 portent la table, dev.1 non] ; le BASERELOC minimal est rendu
+> au plan — 12 o d'entrées ABSOLUTE, l'image PI que le chargeur PEUT
+> reloger). Il reste
 > LE GESTE QUI NE PEUT ÊTRE FAIT QU'ICI : l'application vit chez son
 > utilisateur — LE VRAI Windows 11, les VRAIS fichiers, la VRAIE vitrine.
 
@@ -15,8 +21,8 @@
 
 ```
 loupe-kit/
-├── loupe.exe          l'ARTEFACT 0.1.0-dev.1 (50 688 o, sha256
-│                      f07dd2cf… — lecture seule pour le run ; la carte
+├── loupe.exe          l'ARTEFACT 0.1.0-dev.2 (50 688 o, sha256
+│                      a8a65ed4… — lecture seule pour le run ; la carte
 │                      privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-loupe.py  LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
 │                      platform, struct, sys — les constantes FIGÉES au
@@ -29,7 +35,10 @@ loupe-kit/
 ## 2. Le geste (quatre temps)
 
 1. **Extraire** le zip COMPLET dans un NOUVEAU dossier (ne jamais
-   mélanger les runs — D99). Sur votre Windows 11 : `loupe-kit/`.
+   mélanger les runs — D99 ; si le dossier d'un run ancien existe
+   déjà — celui de dev.1 par exemple — créez-en un NEUF, `loupe-kit-2/`
+   par exemple : l'artefact refusé ne se réutilise jamais). Sur votre
+   Windows 11 : `loupe-kit/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
@@ -66,7 +75,10 @@ loupe-kit/
   adresses scellées CONSTATÉES UN PAR UN (la minilibc M1
   @0x1100/0x1180/0x13C0, la boucle démo @0x15C0, la famille sha M9
   @0xC000+, LA TABLE K[64] @0x2F00 de FIPS 180-4, le qword version R10
-  @0x2E80, le CADRE né poignée INVALIDE) ; l'IAT RÉSOLUE par le
+  @0x2E80, le CADRE né poignée INVALIDE) ; **LE BASERELOC MINIMAL
+  DÉCLARÉ (dirs[5] — la leçon de l'Entrée 204 : sans table, le VRAI
+  chargeur refuse de reloger l'image ASLR, c'est le refus 0xc000007b
+  que le terrain a nommé sur dev.1)** ; l'IAT RÉSOLUE par le
   scénario (34 feuilles + la double entrée démo — VirtualProtect le
   temps de la pose : ce que fait le chargeur réel à la liaison).
 - **T1 LA SESSION** : loupe-01 à son adresse scellée — le VRAI fichier

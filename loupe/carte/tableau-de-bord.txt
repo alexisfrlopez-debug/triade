@@ -1,7 +1,7 @@
-=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.1 (le TGN « Loupe », M10) ===
+=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.2 (le TGN « Loupe », M10) ===
 artefact     : loupe.exe (50 688 o)
-version      : 0.1.0-dev.1 (geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)
-empreinte    : sha256:f07dd2cfc6cab97598657a8488a33ba0f7de2d1509a84d6b008ad4c1c1965499
+version      : 0.1.0-dev.2 (geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)
+empreinte    : sha256:a8a65ed4cc3778c691dffbd104ef838585bcb5df206b0c5c79a0283f1f74c71d
 profil       : x86-64-win11-pe · WINDOWS_GUI · entrée 0x5c00 (WinMain)
 sections     : .text 0x1000 (la minilibc + la boucle SCELLÉES) ·
                .rdata 0x2000 (les pièces, l'IAT 34 feuilles, la porte R10, K[64])

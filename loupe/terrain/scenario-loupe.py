@@ -4,10 +4,14 @@ r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
 NATURE.
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.1 du jalon M10 — 50 688 o, sha256
-              f07dd2cfc6cab97598657a8488a33ba0f7de2d1509a84d6b008ad4c1c1965499
-              (lecture seule pour le run — le scénario ne l'écrit JAMAIS ;
-              la carte privée ne voyage JAMAIS avec l'artefact, R1) ;
+  loupe.exe   le build 0.1.0-dev.2 du jalon M10 — 50 688 o, sha256
+              a8a65ed4cc3778c691dffbd104ef838585bcb5df206b0c5c79a0283f1f74c71d
+              (la RETOUCHE BASERELOC de l'Entrée 204 :
+              le terrain a REFUSÉ dev.1 — 0xc000007b, le VRAI chargeur
+              Windows ne peut pas reloger une image ASLR sans table de
+              relocalisation ; lecture seule pour le run — le scénario ne
+              l'écrit JAMAIS ; la carte privée ne voyage JAMAIS avec
+              l'artefact, R1) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
               sys — AUCUN paquet à installer).
 
@@ -32,7 +36,10 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    boucle démo @0x15C0, la famille sha M9 @0xC000+, LA
                    TABLE K[64] @0x2F00 — les constantes FIPS 180-4, le
                    qword version R10 @0x2E80, le CADRE .data né poignée
-                   INVALIDE, l'IAT démo réservée @0x2818).
+                   INVALIDE, l'IAT démo réservée @0x2818, LE BASERELOC
+                   minimal déclaré dirs[5] (la leçon de l'Entrée 204 :
+                   sans table, le VRAI chargeur refuse de reloger
+                   l'image ASLR).
   T1 LA SESSION     loupe-01 à SON adresse scellée : le VRAI fichier
                    ouvert par l'application (CreateFileW par l'IAT
                    résolue), le cadre relu champ à champ (le chemin, la
@@ -44,7 +51,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   f07dd2cf….
+                   a8a65ed4cc3778c6….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -88,10 +95,11 @@ PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
 # --- l'artefact : la carte génération 13 prouve CES octets -----------------------
-SHA_EXE = ("f07dd2cfc6cab97598657a8488a33ba0"
-           "f7de2d1509a84d6b008ad4c1c1965499")
+SHA_EXE = ("a8a65ed4cc3778c691dffbd104ef8385"
+           "85bcb5df206b0c5c79a0283f1f74c71d")
 TAILLE_EXE = 50688
-VERSION_R10 = 0x00010001          # loupe 0.1.0-dev.1 (le qword @0x2E80)
+VERSION_R10 = 0x00010002          # loupe 0.1.0-dev.2 (le qword @0x2E80 —
+                                   # la retouche BASERELOC de l'Entrée 204)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
 R_LIBC01 = 0x1100      # memcpy M1 (le scellé selftest.exe)
@@ -105,6 +113,9 @@ R_IAT_U32 = 0x2450     # l'IAT user32 (18 feuilles)
 R_IAT_GDI = 0x24E0     # l'IAT gdi32 (6 feuilles)
 R_IAT_DEMO = 0x2818    # les TROIS slots scellés de win-03
 R_VERSION = 0x2E80     # le qword version (la porte R10)
+R_RELOC = 0x2E90       # le BASERELOC minimal (12 o, entrées ABSOLUTE —
+                       # l'image PI que le chargeur PEUT reloger : la
+                       # leçon de l'Entrée 204, dirs[5])
 R_K = 0x2F00           # la table K[64] du scellé M9 (FIPS 180-4 § 4.2.2)
 R_TLS01 = 0xC000       # sha256-init (le scellé proxy.exe 1.0.0)
 R_TLS02 = 0xC080       # sha256-comprimer
@@ -198,7 +209,7 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.1) ===")
+    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.2) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")
@@ -253,15 +264,27 @@ def main():
              "180-4 § 4.2.2 (la table du scellé M9)")
     if struct.unpack("<Q", lire(R_VERSION, 8))[0] != VERSION_R10:
         echec("PORTE-R10", f"le qword version @0x2E80 != {VERSION_R10:#x} "
-             f"(loupe 0.1.0-dev.1)")
+             f"(loupe 0.1.0-dev.2)")
     if struct.unpack("<Q", lire(R_CADRE + CADRE_POIGNEE, 8))[0] != INVALIDE:
         echec("CADRE-NÉ", "le CADRE .data n'est pas né poignée INVALIDE "
              "(l'initialiseur du build)")
+    # LE BASERELOC MINIMAL DÉCLARÉ (la leçon de l'Entrée 204) : le répertoire
+    # dirs[5] de l'image MAPPÉE — sans lui le VRAI chargeur refuse de reloger
+    # l'image ASLR : 0xc000007b, LE REFUS NOMMÉ DU TERRAIN sur dev.1
+    e_lfanew = struct.unpack("<I", lire(0x3C, 4))[0]
+    reloc_rva, reloc_taille = struct.unpack(
+        "<II", lire(e_lfanew + 24 + 112 + 40, 8))
+    if reloc_rva != R_RELOC or reloc_taille != 12:
+        echec("BASERELOC", f"le répertoire dirs[5] = ({reloc_rva:#x}, "
+             f"{reloc_taille}) != ({R_RELOC:#x}, 12) — sans table, le VRAI "
+             f"chargeur refuse de reloger l'image ASLR (0xc000007b, le refus "
+             f"nommé du terrain sur dev.1 — l'Entrée 204)")
     consigne("[T0] les adresses scellées CONSTATÉES : la minilibc M1 "
              "@0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille "
              "sha M9 @0xC000+ (H0[0] 0x6A09E667 posé par le scellé) · LA "
-             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010001 · "
-             "le CADRE né poignée INVALIDE")
+             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010002 · "
+             "le CADRE né poignée INVALIDE · LE BASERELOC minimal déclaré "
+             "dirs[5] (0x2E90, 12 o — la leçon de l'Entrée 204)")
 
     # le scénario-chargeur : LES 34 FEUILLES RÉSOLUES + posées aux slots du
     # plan (+ les TROIS de l'IAT démo scellée) — VirtualProtect le temps de

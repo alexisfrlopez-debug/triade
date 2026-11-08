@@ -21,8 +21,10 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE PREMIER BUILD du domaine : loupe.exe 0.1.0-dev.1 (le geste de BUILD,
-    jamais scellage — la balise `loupe 0.1.0` se scellera sur le run
+  - LE BUILD du domaine : loupe.exe 0.1.0-dev.2 (la RETOUCHE BASERELOC de
+    l'Entrée 204 — dev.1 refusé par le terrain : 0xc000007b, l'image
+    ASLR sans table de relocalisation ; le geste de BUILD, jamais
+    scellage — la balise `loupe 0.1.0` se scellera sur le run
     terrain vert recoupé, M10-(e) : la porte est de processus).
 
 Les secrets ne sont jamais committés (chmod 600, .gitignore).
@@ -50,7 +52,8 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 13   # la première génération du domaine loupe (le build 0.1.0-dev.1)
+GENERATION = 13   # la génération du domaine loupe (les builds dev.1 puis dev.2 —
+                   # le miroir M8 : une génération par domaine, les builds la réécrivent)
 
 # Sel Argon2id propre au domaine (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
@@ -69,7 +72,8 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV1 = "0.1.0-dev.1"    # le premier build du jalon (le geste de BUILD)
+VERSION_DEV = "0.1.0-dev.2"     # la retouche BASERELOC de l'Entrée 204 (dev.1
+                                 # refusé par le terrain — le geste de BUILD)
 VERSION_FINALE = "0.1.0"        # la finale (le miroir layout.VERSION_FINALE
                                 # 0x00010000 — le scellage est un fait de
                                 # carte : la 0.1.0 attend le run terrain vert
@@ -180,7 +184,7 @@ def verifier_signature(pub: bytes, entete: bytes,
 
 # --- En-tête normalisé -------------------------------------------------------
 
-def construire_entete(racine: bytes, version: str = VERSION_DEV1) -> bytes:
+def construire_entete(racine: bytes, version: str = VERSION_DEV) -> bytes:
     """L'en-tête porte la version de l'ARTEFACT (dev au fil des builds, la
     balise scellée au geste final — le scellage est un fait de carte)."""
     lignes = [
@@ -462,7 +466,7 @@ def fragments_clairs(exe: bytes, specs_loupe: dict, code: dict, verrous: int,
         bld.append(f"[bloc] id={bid} addr={0x140000000 + rva:#x} "
                    f"empreinte={sha(tranche(rva, taille))}")
     bld += [
-        f"[build] artefact=loupe.exe version={VERSION_DEV1} "
+        f"[build] artefact=loupe.exe version={VERSION_DEV} "
         f"profil=x86-64-win11-pe taille={len(exe)} empreinte={sha(exe)}",
         f"  outils : keystone-engine + capstone ; verrous structurels : "
         f"{verrous} ; oracles : "
