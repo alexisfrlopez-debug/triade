@@ -1,22 +1,50 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
-NATURE.
+NATURE (kit dev.8, l'Entrée 210).
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.4 du jalon M10 — 127 488 o, sha256
-              6f830f9c738265dfd23a8406bf1060bbc932923f3fc10631138ed6457c179590
-              (LA RETOUCHE DE L'ENTRÉE 206 : LE VRAI CHARGEUR A
-              CARTOGRAPHIÉ dev.3 — la PREMIÈRE fois au terrain, l'enveloppe
-              PROUVÉE — puis LE TÉMOIN A NOMMÉ [CADRE-NÉ] : le CADRE .data
-              n'était pas né poignée INVALIDE, l'initialiseur du build avait
-              posé le sentinel à +8 au lieu de +528 [la chaîne des tailles
-              du plan] ; dev.4 fait de l'initialiseur .data LE MIROIR EXACT
-              du CADRE_VIERGE du harnais — zéros partout SAUF la poignée
-              INVALIDE à +528 — ET le scénario relit désormais LE CADRE
-              ENTIER contre le miroir ; AUCUNE adresse scellée ne bouge ;
-              lecture seule pour le run — le scénario ne l'écrit JAMAIS ;
-              la carte privée ne voyage JAMAIS avec l'artefact, R1) ;
+  loupe.exe   le build 0.1.0-dev.7 du jalon M10 — 127 488 o, sha256
+              388d468067cbf05411a6227c5906baa27d5cbf8a6f862e4cec6a051cab4d9bbc
+              (LA RETOUCHE DOUBLE DE L'ENTRÉE 210 : le run terrain du kit
+              dev.7 a tenu T0 → T5 TOUT VERT — la sauvegarde de l'Entrée
+              209 PROUVÉE — puis a nommé DEUX défauts D'UN MÊME TÉMOIN.
+              PREMIER DÉFAUT [EAX-SANS-SIGNE] AU KIT : T6 lisait
+              « 0xfffffffe != -2 ABSENT » — la pièce rendait SES codes
+              d'échec par « mov eax, imm32 » — EAX seul, les 32 bits
+              hauts de RAX à zéro — et le contrat publié du scénario
+              [c_int64] lisait le qword ENTIER : dev.7 étend chaque
+              rendu négatif au 64 bits [« push imm8 ; pop rax » — 20
+              sites — et les deux passages de loupe-01 passés movsxd] ;
+              SECOND DÉFAUT [D54-QUATRIÈME] À LA PIÈCE : la vitrine
+              demeurait MORTE 0xC0000005 sur LES DEUX fenêtres, AUCUN
+              rapport WER, alors que TOUT était propre — l'entrée, le
+              WndProc, la boucle, les 63 appels couverts, la table
+              d'imports PARFAITE — LE DIFFÉRENTIEL A NOMMÉ : la lignée
+              prouvée [demo.exe 0.3.0, le scellé M2 dont la fenêtre
+              VÉCUT au terrain] termine CHAQUE plage FirstThunk par un
+              slot NULL ; le build dev.6 posait les QUATRE plages
+              CONTIGUËS [kernel32@0x2400, user32@0x2450, gdi32@0x24E0,
+              double@0x2818 — le chargeur du terrain (Windows 11 build
+              26300, le CHEMIN FirstThunk de la leçon D97) marche chaque
+              plage jusqu'au slot NULL : la marche de kernel32 déborde
+              dans les noms user32, RegisterClassExW résout à NULL, et
+              l'entrée APPELLE LE NUL — 0xC0000005 sans dialogue ;
+              QUATRIÈME manifestation de la dérive de dépôt [D54, D68,
+              D98, et celle-ci] ; LA RETOUCHE : l'IAT ENTIÈRE relogée à
+              0x3100 [région née zéro], QUATRE plages SÉPARÉES PAR NULL
+              et PRÉREMLIES des RVA de noms [le motif D54 au complet],
+              les descripteurs dirigés, dir[12] mis à jour, les 63 sites
+              d'appel repointés, les vieilles plages VIDÉES — la taille
+              DEMEURE 127 488 o, AUCUNE adresse scellée ne bouge [R7 :
+              le WndProc @0x5DCB, la famille sha M9, la minilibc, la
+              table K[64], le CADRE — octets inchangés] ; ET LA LEÇON
+              INSTITUTIONNALISÉE : le scénario dev.8 VÉRIFIE LUI-MÊME
+              l'habillage [chaque plage marchée au compte exact, les
+              séparateurs NULL, les slots préremplis] — l'habillage
+              d'import fait partie de la surface de test, la leçon D97
+              ENTRE AU SCÉNARIO ; le qword version 0x00010006 →
+              0x00010007) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
               sys, tempfile — AUCUN paquet à installer).
 
@@ -84,7 +112,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   6f830f9c738265df….
+                   13a869a3b31b41d6….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -96,9 +124,10 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
   T5 L'ÉDITION      LA BOUCLE ENTIÈRE sur une copie : loupe-16 la
                    saisie (« 4 » puis « d » — l'attente CONSOMMÉE par
                    l'engagement), loupe-17 la sauvegarde (Ctrl+S :
-                   l'écriture À L'OCTET) ; le fichier revérifié :
-                   EXACTEMENT l'octet changé, la taille CONSTANTE, le
-                   journal vidé, la marque levée.
+                   l'écriture À L'OCTET, le contrat publié : 0 = OK, le
+                   compte à la barre d'état — l'Entrée 209) ; le fichier
+                   revérifié : EXACTEMENT l'octet changé, la taille
+                   CONSTANTE, le journal vidé, la marque levée.
   T6 LES REJETS     L'ÉCHEC NOMMÉ : le motif absent → -1 FIN ; le
                    chemin qui ne désigne rien → -2 ABSENT ; la session
                    double → -5 (un fichier à la fois — l'offrande est
@@ -135,13 +164,14 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
-# --- l'artefact : la carte génération 13 prouve CES octets -----------------------
-SHA_EXE = ("6f830f9c738265dfd23a8406bf1060bbc932923f3fc10631"
-           "138ed6457c179590")
+# --- l'artefact : la carte génération 14 prouve CES octets -----------------------
+SHA_EXE = ("388d468067cbf05411a6227c5906baa27d5cbf8a6f862e4c"
+           "ec6a051cab4d9bbc")
 TAILLE_EXE = 127488
-VERSION_R10 = 0x00010005          # loupe 0.1.0-dev.5 (le qword @0x2E80 —
-                                   # la retouche de l'Entrée 206 : le CADRE
-                                   # né LE MIROIR DU CADRE_VIERGE du harnais)
+VERSION_R10 = 0x00010007          # loupe 0.1.0-dev.7 (le qword @0x2E80 —
+                                   # la retouche de l'Entrée 210 : [D54-QUATRIÈME]
+                                   # chassé, l'IAT relogée séparée à 0x3100,
+                                   # et [EAX-SANS-SIGNE] étendu au 64 bits)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
 R_LIBC01 = 0x1100      # memcpy M1 (le scellé selftest.exe)
@@ -150,10 +180,16 @@ R_LIBC07 = 0x13C0      # memset M1 (le scellé selftest.exe)
 R_WIN03 = 0x15C0       # la boucle de messages (le scellé demo.exe 0.3.0)
 R_MD5_S = 0x2100       # les 64 décalages RFC 1321 § 3.4
 R_MD5_T = 0x2200       # les 64 sinus dérivés floor(2^32·|sin(i+1)|)
-R_IAT_K32 = 0x2400     # l'IAT kernel32 (10 feuilles)
-R_IAT_U32 = 0x2450     # l'IAT user32 (18 feuilles)
-R_IAT_GDI = 0x24E0     # l'IAT gdi32 (6 feuilles)
-R_IAT_DEMO = 0x2818    # les TROIS slots scellés de win-03
+R_IAT_K32 = 0x3100     # l'IAT kernel32 (10 feuilles — l'Entrée 210 :
+                       # QUATRE plages SÉPARÉES PAR NULL à 0x3100, le
+                       # motif D54 complet — préremplies + terminées)
+R_IAT_U32 = 0x3158     # l'IAT user32 (18 feuilles)
+R_IAT_GDI = 0x31F0     # l'IAT gdi32 (6 feuilles)
+R_IAT_DEMO = 0x3228    # les TROIS slots de win-03 (la double entrée)
+IAT_SEPARATEURS = (0x3150, 0x31E8, 0x3220, 0x3240)  # les NULL qui
+                       # terminent chaque plage — LA CLÉ DU TERRAIN
+                       # (le chargeur 26300 marche au premier NULL : la
+                       # leçon D97, la quatrième manifestation nommée)
 R_VERSION = 0x2E80     # le qword version (la porte R10)
 R_RELOC = 0x2E90       # le BASERELOC minimal (12 o, entrées ABSOLUTE —
                        # l'image PI que le chargeur PEUT reloger : la
@@ -359,7 +395,7 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.5) ===")
+    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.6) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")
@@ -387,7 +423,7 @@ def main():
         echec("EMPREINTE-DIVERGENTE",
               f"{len(donnees)} o, sha256 {sha} != l'asserté {SHA_EXE}")
     consigne(f"[T0] loupe.exe : {TAILLE_EXE} o, sha256 {sha[:16]}… — "
-             f"L'EMPREINTE ASSERTÉE (la carte génération 13 prouve CES octets)")
+             f"L'EMPREINTE ASSERTÉE (la carte génération 14 prouve CES octets)")
 
     k32.LoadLibraryExW.restype = ctypes.c_void_p
     k32.LoadLibraryExW.argtypes = [wt.LPCWSTR, ctypes.c_void_p, wt.DWORD]
@@ -399,7 +435,7 @@ def main():
         # LA CASCADE DIAGNOSTIQUE D'ABORD (l'Entrée 205) : le kit porte
         # son bissecteur — les axes de dev.2 reconstitués UN À UN, le
         # VRAI chargeur nomme le fautif AVANT le refus du run
-        consigne("[sonde] LA CARTOGRAPHIE DE dev.4 A ÉTÉ REFUSÉE — LA "
+        consigne("[sonde] LA CARTOGRAPHIE DE dev.6 A ÉTÉ REFUSÉE — LA "
                  "CASCADE DIAGNOSTIQUE DE L'ENTRÉE 205 SE JOUE (les axes "
                  "reconstitués sur des copies %TEMP%, l'artefact intact)")
         for ligne in sonde_entree_205(k32, donnees):
@@ -431,7 +467,7 @@ def main():
              "180-4 § 4.2.2 (la table du scellé M9)")
     if struct.unpack("<Q", lire(R_VERSION, 8))[0] != VERSION_R10:
         echec("PORTE-R10", f"le qword version @0x2E80 != {VERSION_R10:#x} "
-             f"(loupe 0.1.0-dev.4)")
+             f"(loupe 0.1.0-dev.6)")
     # LE CADRE NÉ MIROIR DU CADRE_VIERGE (LA LEÇON DE L'ENTRÉE 206 : le
     # terrain a nommé [CADRE-NÉ] sur dev.3 — l'initialiseur du build avait
     # posé le sentinel à +8 [une TAILLE prise pour un offset] au lieu de
@@ -456,10 +492,69 @@ def main():
              f"{reloc_taille}) != ({R_RELOC:#x}, 12) — sans table, le VRAI "
              f"chargeur refuse de reloger l'image ASLR (0xc000007b, le refus "
              f"nommé du terrain sur dev.1 — l'Entrée 204)")
+
+    # L'HABILLAGE D'IMPORT VÉRIFIÉ (la leçon D97 institutionnalisée —
+    # l'Entrée 210 : le chargeur du terrain [Windows 11 build 26300]
+    # résout les tables par le CHEMIN FirstThunk — il MARCHE chaque
+    # plage jusqu'au premier slot NULL ; des plages CONTIGUËS font
+    # déborder la marche de kernel32 chez les noms user32 :
+    # RegisterClassExW résout à NULL, l'entrée APPELLE LE NUL — la
+    # vitrine meurt 0xC0000005 SANS dialogue, AVANT l'entrée. La
+    # quatrième manifestation de la dérive D54 ne passera PLUS ici.)
+    imp_rva, imp_taille = struct.unpack(
+        "<II", lire(e_lfanew + 24 + 112 + 8, 8))
+    plages_attendues = ((R_IAT_K32, 10, "kernel32"),
+                        (R_IAT_U32, 18, "user32"),
+                        (R_IAT_GDI, 6, "gdi32"),
+                        (R_IAT_DEMO, 3, "user32 (double entrée)"))
+    desc, vus = imp_rva, 0
+    while True:
+        oft, tds, fwd, nom_rva, ft = struct.unpack("<IIIII", lire(desc, 20))
+        if oft == 0 and ft == 0:
+            break
+        if vus >= 4:
+            echec("D54-DESCLIER", f"un 5e descripteur inattendu @{desc:#x}")
+            break
+        rva_att, n_att, dll_att = plages_attendues[vus]
+        if ft != rva_att:
+            echec("D54-DESCLIER", f"le descripteur #{vus} ({dll_att}) lie "
+                 f"FirstThunk @{ft:#x} != {rva_att:#x} (le plan)")
+        n = 0
+        while struct.unpack("<Q", lire(ft + 8*n, 8))[0] != 0:
+            n += 1
+            if n > 40:
+                echec("D54-MARCHE", f"la plage @{ft:#x} marche au-delà de 40 "
+                     f"feuilles — le séparateur NULL est ABSENT (la marche "
+                     f"du terrain déborderait chez la voisine)")
+                break
+        if n != n_att:
+            echec("D54-SÉPARATEUR", f"la plage @{ft:#x} du descripteur #{vus} "
+                 f"({dll_att}) marche {n} feuilles != {n_att} — les plages "
+                 f"CONTIGUËS (le chargeur 26300 y lirait les noms de "
+                 f"l'AUTRE dll : la vitrine mourrait avant l'entrée, "
+                 f"0xC0000005 sans dialogue — la leçon D97/210)")
+        for i in range(n_att):
+            if struct.unpack("<Q", lire(ft + 8*i, 8))[0] == 0:
+                echec("D54-PRÉREMPLI", f"le slot @{ft + 8*i:#x} est VIDE "
+                     f"dans le fichier — le chemin FirstThunk du terrain y "
+                     f"lirait la fin de plage avant l'heure (D97)")
+        vus += 1
+        desc += 20
+    if vus != 4:
+        echec("D54-DESCLIER", f"{vus} descripteurs d'import != 4 (le plan)")
+    for sep in IAT_SEPARATEURS:
+        if struct.unpack("<Q", lire(sep, 8))[0] != 0:
+            echec("D54-SÉPARATEUR", f"le séparateur @{sep:#x} != NULL — la "
+                 f"plage précédente déborde (la marche du terrain)")
+    consigne("[T0] l'habillage d'import VÉRIFIÉ : QUATRE plages FirstThunk "
+             "marchées au compte exact [10 · 18 · 6 · 3], les séparateurs "
+             "NULL en place, les slots PRÉREMLIS du fichier — le motif D54 "
+             "ENTIER (la leçon D97 entre au scénario — l'Entrée 210)")
+
     consigne("[T0] les adresses scellées CONSTATÉES : la minilibc M1 "
              "@0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille "
              "sha M9 @0xC000+ (H0[0] 0x6A09E667 posé par le scellé) · LA "
-             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010004 · "
+             f"TABLE K[64] @0x2F00 (FIPS) · le qword version {VERSION_R10:#010x} · "
              "le CADRE né LE MIROIR DU CADRE_VIERGE (la poignée INVALIDE "
              "@+528, le .data entier relu — l'Entrée 206) · LE BASERELOC "
              "minimal déclaré dirs[5] (0x2E90, 12 o — la leçon de l'Entrée "
@@ -469,7 +564,7 @@ def main():
     # plan (+ les TROIS de l'IAT démo scellée) — VirtualProtect le temps de
     # la pose (.rdata est lisible seule, le chargeur réel écrit à la liaison)
     ancien = wt.DWORD(0)
-    zones = (R_IAT_K32, 0x110)          # les trois tables contiguës
+    zones = (R_IAT_K32, 0x148)          # les quatre plages contiguës à 0x3100
     k32.VirtualProtect(ctypes.c_void_p(base + zones[0]), zones[1], 0x40,
                        ctypes.byref(ancien))     # PAGE_READWRITE
     poses = 0
@@ -664,9 +759,10 @@ def main():
     if struct.unpack("<I", cadre_champ(CADRE_SALE, 4))[0] == 0:
         echec("MARQUE-SALE", "la marque sale n'est pas posée par la saisie")
     r = sauver(hwnd, WM_CHAR, CTRL_S, 0)
-    if r != 1:
+    if r != 0:
         echec("SAUVEGARDE", f"loupe-17 → {verdict(r) if r <= 0 else r} "
-             f"(1 octet écrit attendu)")
+             f"(0 = OK attendu — le compte des octets part à la barre "
+             f"d'état, l'Entrée 209)")
     relu = open(chemin_copie, "rb").read()
     attendu_f = bytearray(original)
     attendu_f[0] = 0x4D
