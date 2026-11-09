@@ -7364,3 +7364,65 @@ Work Log:
   refus demeure : le témoin nommera le défaut comme il l'a fait
   trois fois — chaque refus a nommé son défaut, chaque défaut a reçu
   sa retouche.
+
+Task: LA SESSION DES JETONS (Entrées 209-210 consignées, Entrée 211) —
+« tu as dans le drive un dossier /tokens où sont tous les jetons
+nécessaires pour la synchro drive et git » : les jetons installés à
+.gdrive/, LE COFFRE /test PASSÉ À LA VAGUE dev.8 PAR LE LABO LUI-MÊME
+(la réponse au constat du terrain « le kit n'était pas dans le drive,
+il faudrait que le prochain y soit »), les runs 6-7 archivés, la vague
+dev.7 rattrapée aux archives, L'HISTOIRE PERDUE RÉCUPÉRÉE DU BUNDLE
+(152 commits des Entrées 126→208), le dépôt rejoint et les Entrées
+209-211 consignées — le push GitHub SEUL en attente (jeton mort en
+cours de session, nommé).
+
+Work Log:
+- JETONS : les quatre pièces du /tokens rapatriées à triade/.gdrive/
+  (600, D12 — jamais affichées, jamais commises) ; le droit
+  d'écriture au /test sondé par dépôt+corbeille ; l'API Drive
+  opérée par scripts/drive_api.py (l'outillage de la session, commis).
+- LE COFFRE (deposer_kit_loupe_r7.py) : la vague dev.6 archivée
+  VERSIONNÉE (kit-loupe-dev.6.zip 0a50bd7a… + LISEZMOI 67af4da…,
+  md5 recoupés après déplacement) ; LA VAGUE dev.7 RATTRAPÉE (elle
+  voyagea par le canal du bac à sable — kit-loupe-dev.7.zip
+  5f935223… + LISEZMOI-loupe-dev.7.txt joints à vagues-m10/ pour
+  l'histoire, l'archive est COMPLÈTE dev.1→dev.7) ; LA VAGUE dev.8
+  DÉPOSÉE À LA RACINE (kit-loupe.zip 32057 o, md5 33b7ff3e…, sha256
+  28bafb65… — la pièce interne dev.7 ASSERTÉE avant le dépôt, le
+  MATCH par relecture après) + LISEZMOI-loupe.txt ; LE KIT VISIBLE
+  loupe-kit-8/ aux QUATRE pièces du contrat du LISEZMOI (les témoins
+  prématurés retirés : temoin-fichier.bin naît du bat,
+  temoin-session.bin naît du scénario) ; le réceptacle ré-armé
+  (l'artefact attendu 0.1.0-dev.7, LE CONTRÔLE D54 en tête, LE
+  TÉMOIN VITRINE REQUIS) ; l'index des livraisons mis à jour ; LES
+  PIÈCES DE L'ÈRE DEMEURÉES (f33c803a… + 188a7d42…).
+- LES ARCHIVES DES RUNS (archiver_run_loupe_dev6.py + dev7.py, D143
+  déplacement) : le sixième run → preuves-run-loupe-dev6/ (temoin
+  5cb3014f… + vitrine bebad29e… + VERDICT : ROUGE AU T5 SUR UNE
+  FAUSSE ERREUR, la sauvegarde PROUVÉE PAR LE FICHIER) ; le
+  septième → preuves-run-loupe-dev7/ (temoin c199de74… + vitrine
+  4077286f… + VERDICT : T0→T5 TOUT VERT puis [EAX-SANS-SIGNE] +
+  [D54-QUATRIÈME]) ; les dossiers des runs DEMEURENT au /test.
+- LE DÉPÔT REJOINT : origin/main était resté à f62711b (E125) alors
+  que le miroir portait E208 — les sessions 126→208 committaient en
+  bacs à sable recyclés sans jamais pousser ; le bundle vivant du
+  miroir rapatrié et vérifié (la branche porte LES 152 COMMITS,
+  fa21431 ancêtre) ; reset sur l'état vrai 3397124 (fast-forward
+  possible), l'arbre recoupé (loupe.exe dev.5, journal à E208) ; le
+  travail 209-210 posé par-dessus (la pièce dev.7, le kit dev.8 à
+  loupe/terrain/, les scripts de session) ; les Entrées 209/210/211
+  CONSIGNÉES au journal (les narrations vivaient à download/, la
+  consignation différée est un fait nommé).
+- LA DETTE NOMMÉE : la carte DEMEURE en génération 13 (les
+  générations 14/15 des retouches dev.6/dev.7 restent à régénérer) ;
+  le jeton GitHub est MORT en session (« Bad credentials » — il
+  authentifia le clone puis cessa d'être reçu) : LE PUSH GITHUB
+  ATTEND UN JETON FRAIS, le miroir Drive porte déjà l'état complet
+  (fichiers + bundle) ; le double marqueur du journal constaté et
+  laissé en place.
+- SUITE : LE RUN DU KIT dev.8 AU COFFRE (kit-loupe.zip ou
+  loupe-kit-8/, dossier NEUF D99, python scenario-loupe.py, LA
+  VITRINE PAR SON TÉMOIN, preuves-loupe/ ENTIER) ; si le vert tient
+  : la balise `loupe 0.1.0` scellée — LE JALON M10 ; côté labo : un
+  jeton GitHub frais (le dépôt est prêt), la carte génération 15 à
+  régénérer.
