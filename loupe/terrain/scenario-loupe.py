@@ -68,7 +68,15 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
   T1 LA SESSION     loupe-01 à SON adresse scellée : le VRAI fichier
                    ouvert par l'application (CreateFileW par l'IAT
                    résolue), le cadre relu champ à champ (le chemin, la
-                   taille EXACTE, la poignée vivante).
+                   taille EXACTE, la poignée vivante) — sur L'OMBRE
+                   BYTE-À-BYTE DE LA PIÈCE (l'Entrée 208 : le scénario
+                   EST LE CHARGEUR, l'image TIENT loupe.exe sans partage
+                   d'écriture, le VRAI Windows refuse gle 32 et loupe-01
+                   l'a NOMMÉ -7 VERROUILLÉ — LA PIÈCE ACQUITÉE, le
+                   refus traduit AU NOM PRÈS : la session naît sur
+                   temoin-session.bin, LA COPIE byte-à-byte née et morte
+                   au run — même loi que la sonde 205 et le témoin
+                   vitrine).
   T2 LA DOUBLE      LE NOYAU EMPREINTES : loupe-02 la fenêtre lue au
      LECTURE       tampon == le fichier lu par Python (les DEUX lecteurs
                    indépendants) ; loupe-07 le panneau (md5 + sha256 du
@@ -93,8 +101,11 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    journal vidé, la marque levée.
   T6 LES REJETS     L'ÉCHEC NOMMÉ : le motif absent → -1 FIN ; le
                    chemin qui ne désigne rien → -2 ABSENT ; la session
-                   double → -5 (un fichier à la fois) ; le décalage
-                   hors bornes → -3 ; la ligne de longueur 0 → -5.
+                   double → -5 (un fichier à la fois — l'offrande est
+                   L'OMBRE rouvrable, jamais la pièce scellée sous le
+                   chargeur : le frère du défaut T1 chassé par la
+                   classe, l'Entrée 208) ; le décalage hors bornes →
+                   -3 ; la ligne de longueur 0 → -5.
   T7 LA CLÔTURE     loupe-03 : le cadre re-vierge, la poignée
                    INVALIDE, idempotent ; l'artefact relu INCHANGÉ
                    (sha256 re-asserté — le run ne touche pas la pièce).
@@ -341,8 +352,9 @@ def conclure(code):
         f.write("\n".join(JOURNAL) + "\n")
     print()
     print(f"[run] le journal du run : {chemin}")
-    print("[run] LA VITRINE À CÔTÉ : double-cliquez loupe.exe — la fenêtre "
-          "réelle ; les captures éventuelles vont au réceptacle preuves-loupe/")
+    print("[run] LA VITRINE SE VIT PAR SON TÉMOIN : double-cliquez "
+          "temoin-vitrine.bat — les deux fenêtres, Alt+F4 chacune, les "
+          "codes capturés ; renvoyez preuves-loupe/ ENTIER au coffre")
     sys.exit(code)
 
 
@@ -514,12 +526,28 @@ def main():
     def cadre_champ(off, n=8):
         return lire(R_CADRE + off, n)
 
-    # --- T1 LA SESSION : loupe-01 sur le VRAI fichier ---------------------------
-    consigne("[T1] LA SESSION — loupe-01 à son adresse scellée 0x4080")
-    chemin_u16 = ctypes.create_unicode_buffer(chemin_exe)
+    # --- T1 LA SESSION : loupe-01 sur L'OMBRE BYTE-À-BYTE DE LA PIÈCE -----------
+    # (l'Entrée 208 : le scénario EST LE CHARGEUR — l'image cartographiée
+    # TIENT loupe.exe ouvert SANS partage d'écriture, et le VRAI Windows
+    # refuse gle 32 : loupe-01 l'a NOMMÉ -7 VERROUILLÉ, LE REFUS AU NOM
+    # PRÈS — LA PIÈCE ACQUITÉE, le geste du kit corrigé : la session naît
+    # sur temoin-session.bin, LA COPIE byte-à-byte née et morte au run —
+    # même loi que la sonde 205 (les copies %TEMP%) et le témoin vitrine
+    # (temoin-fichier.bin) ; l'empreinte de l'ombre ASSERTÉE avant le
+    # geste — un kit fauté est un refus nommé AVANT tout geste)
+    consigne("[T1] LA SESSION — loupe-01 à son adresse scellée 0x4080, "
+             "sur L'OMBRE byte-à-byte de la pièce (temoin-session.bin)")
+    chemin_session = os.path.join(ICI, "temoin-session.bin")
+    with open(chemin_exe, "rb") as src, open(chemin_session, "wb") as dst:
+        dst.write(src.read())            # la copie byte-à-byte de la pièce
+    with open(chemin_session, "rb") as f:
+        if hashlib.sha256(f.read()).hexdigest() != SHA_EXE:
+            echec("SESSION-OMBRE", "temoin-session.bin != loupe.exe (la "
+                 "copie fautive — refus nommé AVANT tout geste)")
+    chemin_u16 = ctypes.create_unicode_buffer(chemin_session)
     r = ouvrir(ctypes.cast(chemin_u16, ctypes.c_void_p))
     if r != 0:
-        echec("SESSION", f"loupe-01 a rendu {verdict(r)} (le fichier "
+        echec("SESSION", f"loupe-01 a rendu {verdict(r)} (la copie "
              f"pourtant relu à l'instant)")
     taille_lue = struct.unpack("<Q", cadre_champ(CADRE_TAILLE))[0]
     poignee = struct.unpack("<Q", cadre_champ(CADRE_POIGNEE))[0]
@@ -527,7 +555,8 @@ def main():
         echec("CADRE", f"le cadre relu : taille {taille_lue} != "
              f"{TAILLE_EXE}, poignée {poignee:#x} (la session n'est pas née)")
     consigne(f"[T1] la session NÉE : taille {taille_lue} o == l'asserté, la "
-             f"poignée vivante {poignee:#x} — le VRAI CreateFileW par l'IAT")
+             f"poignée vivante {poignee:#x} — le VRAI CreateFileW par "
+             f"l'IAT, sur l'ombre byte-à-byte de la pièce")
 
     # --- T2 LA DOUBLE LECTURE : le noyau empreintes ------------------------------
     consigne("[T2] LA DOUBLE LECTURE — loupe-02 puis loupe-07, les DEUX "
@@ -558,7 +587,8 @@ def main():
              f"rend pas l'empreinte de sa propre pièce")
     consigne(f"[T2] LE PANNEAU : md5 {md5_app[:12]}… · sha256 "
              f"{sha_app[:12]}… == hashlib — ET LA PIÈCE DE L'ÈRE JUGÉE PAR "
-             f"SA PROPRE APPLICATION (sha256 == l'asserté {SHA_EXE[:12]}…)")
+             f"SA PROPRE APPLICATION SUR SON OMBRE byte-à-byte (sha256 == "
+             f"l'asserté {SHA_EXE[:12]}…)")
     r = fermer()
     if r != 0:
         echec("CLÔTURE-PRÉALABLE", f"loupe-03 → {verdict(r)}")
@@ -663,13 +693,20 @@ def main():
         echec("REJET-ABSENT", f"le chemin qui ne désigne rien → "
              f"{verdict(r)} != -2 ABSENT")
     consigne("[T6] le chemin qui ne désigne rien → -2 ABSENT")
-    chemin_u16 = ctypes.create_unicode_buffer(chemin_exe)
-    ouvrir(ctypes.cast(chemin_u16, ctypes.c_void_p))
+    # (l'Entrée 208 — LE FRÈRE DU DÉFAUT T1 chassé par la classe : offrir
+    # loupe.exe LUI-MÊME eût rendu le même -7 VERROUILLÉ — le chargeur
+    # tient la pièce ; l'offrande est L'OMBRE, rouvrable, déjà prouvée)
+    chemin_u16 = ctypes.create_unicode_buffer(chemin_session)
+    r = ouvrir(ctypes.cast(chemin_u16, ctypes.c_void_p))
+    if r != 0:
+        echec("REJET-SESSION-OFFRANTE", f"loupe-01 sur l'ombre → "
+             f"{verdict(r)} (la session double exige une première née)")
     r = ouvrir(ctypes.cast(chemin_u16, ctypes.c_void_p))
     if r != -5:
         echec("REJET-SESSION-DOUBLE", f"la session double → {verdict(r)} "
              f"!= -5 (un fichier à la fois, le périmètre 0.1.0)")
-    consigne("[T6] la session double → -5 ENTRÉE (un fichier à la fois)")
+    consigne("[T6] la session double → -5 ENTRÉE (un fichier à la fois, "
+             "l'offrande est l'ombre de la pièce — jamais la pièce scellée)")
     r = lire_fenetre(0x7FFFFFF0)
     if r != -3:
         echec("REJET-HORS-BORNES", f"le décalage hors bornes → {verdict(r)} "
@@ -684,6 +721,9 @@ def main():
     r = fermer()
     if r != 0:
         echec("REJET-CLÔTURE", f"loupe-03 final → {verdict(r)}")
+    os.remove(chemin_session)           # l'ombre meurt, la pièce demeure
+    consigne("[T6] l'ombre temoin-session.bin MORTE — la pièce loupe.exe "
+             "demeure INTACTE, jamais offerte en écriture au run")
 
     # --- T7 LA CLÔTURE : l'artefact inchangé ---------------------------------------
     consigne("[T7] LA CLÔTURE — l'artefact relu inchangé")
@@ -706,9 +746,14 @@ def main():
              "de TRIADE a vécu chez son utilisateur : la session, le "
              "panneau, les lignes, la recherche, l'édition à l'octet, les "
              "rejets nommés ===")
-    consigne("[suite] LA VITRINE : double-cliquez loupe.exe (ou « loupe.exe "
-             "monfichier ») — la fenêtre réelle ; les captures éventuelles "
-             "vont au réceptacle preuves-loupe/ avec le présent témoin")
+    consigne("[suite] LA VITRINE SE VIT PAR SON TÉMOIN : double-cliquez "
+             "temoin-vitrine.bat — LA PREMIÈRE fenêtre (sans fichier), "
+             "Alt+F4 ; LA SECONDE (avec temoin-fichier.bin), Alt+F4 — les "
+             "DEUX codes de sortie capturés au témoin, la mort éventuelle "
+             "NOMMÉE (l'Entrée 208 : la vitrine a vécu SANS témoin, "
+             "jamais plus) ; le témoin part au coffre AVEC le présent, "
+             "QUEL QUE SOIT le verdict ; les captures éventuelles de la "
+             "vitrine vont au réceptacle preuves-loupe/")
     conclure(0)
 
 
