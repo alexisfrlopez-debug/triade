@@ -7499,3 +7499,38 @@ Work Log:
 - SUITE : LE RUN DU KIT dev.9 — si le vert tient : la balise loupe
   0.1.0 scellée, LE JALON M10 ; si la mort vient encore : le journal
   d'événements la nommera — module fautif, décalage.
+Task: Entrée 214 — le run du kit dev.9 (kit-loupe avec les preuves au
+/test) : T0→T7 tout vert pour la seconde fois, puis la sixième mort de
+la vitrine NOMMÉE par le journal d'événements [4/4] (BEX64, module
+« unknown », exécution sur mémoire non exécutable) — et par le labo :
+[OFT-QWORD], les QUATRE tableaux OriginalFirstThunk écrits à pas de
+qword, le chargeur lisant OFT[1]=0 et ne résolvant qu'une fonction par
+DLL, 33 slots périmés, le second appel de l'entrée sautant à 0x2A53.
+Work Log:
+- LE RECOUP : l'entrée démontée (pile, WNDCLASSEXW, les 12 arguments,
+  la boucle 0x15C0, le WndProc — tous propres), l'en-tête PE revérifié
+  aux BONS offsets après une fausse piste nommée (ASLR 0x0160, zéro
+  pointeur absolu, basereloc vide d'entrées réelles), puis LES OCTETS
+  DES OFT : 40 2a 00 00 | 00 00 00 00 — le pas de qword, la cause.
+- LA RETOUCHE : les QUATRE OFT compactés au pas DWORD [10·18·6·3 +
+  terminateurs], 89 octets en tout, le qword version → dev.8 ;
+  loupe.exe 0.1.0-dev.8 sha256 054de960…, la carte génération 16 ;
+  la marche du chargeur rejouée : VERT, chaque entrée == le
+  préremplissage de son slot.
+- LE KIT dev.10 : la sonde 205 réparée de son propre nettoyage
+  [FreeLibrary avant suppression, chaque essai dans son try], LE
+  CONTRÔLE D54 ÉTENDU [les OFT marchés au pas DWORD — la dev.7 eût
+  été nommée, la dev.8 passe], LA NOUVELLE SONDE DE LIAISON [copie
+  chargée SANS DONT_RESOLVE, entrée neutralisée d'un octet ret, les
+  37 slots relus], les littéraux portés.
+- LE COFFRE (depot_entree_214.py) : run 9 → preuves-run-loupe-dev9/
+  [verdict + les deux témoins] ; vague dev.9 versionnée → vagues-m10/
+  ; LA VAGUE dev.10 À LA RACINE [kit-loupe.zip 4b5e3931… +
+  loupe-kit-10/ aux quatre pièces + LISEZMOI] ; réceptacle ré-armé ;
+  index mis à jour ; un défaut du dépôt (corbeille au corps vide)
+  nommé et réparé dans la session — l'état final recontré.
+- SUITE : LE RUN DU KIT dev.10 — si le vert tient (le scénario entier
+  avec LA LIAISON + la vitrine vivante) : la balise loupe 0.1.0
+  scellée, LE JALON M10 ; si la septième mort vient : le journal la
+  nommera.
+
