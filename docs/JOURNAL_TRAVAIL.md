@@ -9136,6 +9136,7 @@ LES COMPOSANTS VÉRIFIÉS SUR PIÈCES DÉTACHÉES (le garde n'est PAS appelé �
 - 2026-10-30T21:41:37Z · a52d54b · docs/Protocole_TRIADE_v0.2_Specification.pdf · sha256 d9946ea1b1239584b53a6d1019d0eb50764858efdfc2f94b697cd8f1688029e8 · md5 eb6a5316fc62e1b6414ee3dc39514724 · 560975 o · rattrapage M5-a (archive, version gelée)
 
 <!-- m5a:journal-des-builds v1 — consignation automatique des empreintes par build (D134). Les entrées numérotées du journal s'insèrent TOUJOURS AVANT la présente ligne ; les lignes de build s'ajoutent SOUS elle, la plus récente en tête. Ne pas édier à la main. -->
+- 2026-11-09T08:14:06Z · 1b13a44 · docs/Protocole_TRIADE_v0.8.3_Specification.pdf · sha256 bc19403ff7f418705d748d86e9446ddd03d9f1f9469ff3933f75b3b2ee83bdea · md5 3cd3927f87b94109902fc6f9ba10f0db · 1061337 o · build_pdf.sh (chaîne spec_v083)
 - 2026-11-09T08:09:33Z · 04714ad · docs/Protocole_TRIADE_v0.8.3_Specification.pdf · sha256 82355d470eab0533c515275a9cabf834c5f59700a15eab9568f98d05a4963946 · md5 bb6ccb4a8daa5d5664e8fd1168b58bde · 1061335 o · build_pdf.sh (chaîne spec_v083)
 - 2026-11-09T08:07:27Z · 04714ad · docs/Protocole_TRIADE_v0.8.3_Specification.pdf · sha256 8147edd6b0fb4e46825d1af08eb60c2b54c6ffa325cc04c14e8c183d8e912bd3 · md5 ee154ba0ec61491510e95342451ba03d · 1056920 o · build_pdf.sh (chaîne spec_v083)
 - 2026-11-09T08:06:45Z · 04714ad · docs/Protocole_TRIADE_v0.8.3_Specification.pdf · sha256 8147edd6b0fb4e46825d1af08eb60c2b54c6ffa325cc04c14e8c183d8e912bd3 · md5 ee154ba0ec61491510e95342451ba03d · 1056920 o · build_pdf.sh (chaîne spec_v082)
