@@ -518,9 +518,20 @@ class Emulation:
         rdx = uc.reg_read(UC_X86_REG_RDX)
         r8 = uc.reg_read(UC_X86_REG_R8)
         r9 = uc.reg_read(UC_X86_REG_R9)
+        rsp = uc.reg_read(UC_X86_REG_RSP)   # AU SHIM : le retour poussé —
+        # l'argument 5 du VRAI appel vit à [rsp+0x28] = [rsp_appel+0x20]
+        # (LA LEÇON DE L'ENTRÉE 207 : le garde dérive de la CONVENTION msx64,
+        # jamais de la pièce qu'il croyait garder — le miroir du shim
+        # TextOutW du harnais rendu qui, lui, lisait déjà le compte au vrai
+        # slot : c'est pourquoi loupe-10 était juste et loupe-01/05/06 non)
         if feuille == "CreateFileW":
             chemin = self._lire_utf16(rcx)
-            self._retour(uc, os_v.create_file_w(chemin))
+            disposition = struct.unpack("<I", uc.mem_read(rsp + 0x28, 4))[0]
+            if disposition != 3:          # OUVRIR_EXISTANT — la convention
+                os_v._erreur(87)          # ERROR_INVALID_PARAMETER
+                self._retour(uc, 0xFFFFFFFFFFFFFFFF)
+            else:
+                self._retour(uc, os_v.create_file_w(chemin))
         elif feuille == "GetFileSizeEx":
             os_v.compteurs["GetFileSizeEx"] += 1
             taille = os_v.taille_de(rcx)
@@ -542,6 +553,12 @@ class Emulation:
                     uc.mem_write(r8, struct.pack("<Q", rdx))
                 self._retour(uc, 1)
         elif feuille == "ReadFile":
+            lp_overlapped = struct.unpack(
+                "<Q", uc.mem_read(rsp + 0x28, 8))[0]
+            if lp_overlapped != 0:         # le VRAI ReadFile : le handle
+                os_v._erreur(87)          # synchrone EXIGE le NUL au slot
+                self._retour(uc, 0)      # — un pointeur fantôme (le contexte
+                return                   # condensé au slot) serait DÉRÉFÉRÉ
             pos = os_v.poignees.get(rcx, ("", 0))[1]
             donnees, ok = os_v.read_file(rcx, pos, r8)
             if not ok:
@@ -744,9 +761,9 @@ def vecteur_v0():
              "les têtes des spécifications loupe-01..07 (la révision 2 de "
              "loupe-01 porte l'erratum de la taille de la pièce)")
     # le plan d'adressage : les slots du noyau ARRÊTÉS sur les mesures (D161)
-    mesures = {"i110004": (47, 0x40), "i110001": (388, 0x1C0),
+    mesures = {"i110004": (47, 0x40), "i110001": (389, 0x1C0),
                "i110002": (296, 0x140), "i110003": (122, 0xC0),
-               "i110005": (312, 0x180), "i110006": (879, 0x380),
+               "i110005": (313, 0x180), "i110006": (871, 0x380),
                "i110007": (102, 0x80)}
     ordre = ("i110004", "i110001", "i110002", "i110003",
              "i110005", "i110006", "i110007")
@@ -794,8 +811,8 @@ def vecteur_v0():
 def vecteur_v1(emul: Emulation, donnees_m9: bytes, donnees_m1: bytes):
     section("V1 — round-trip + concordance au plan + l'héritage R7 constaté")
     insns_par_bloc = {}
-    attendus = {"i110001": 388, "i110002": 296, "i110003": 122,
-                "i110004": 47, "i110005": 312, "i110006": 879, "i110007": 102}
+    attendus = {"i110001": 389, "i110002": 296, "i110003": 122,
+                "i110004": 47, "i110005": 313, "i110006": 871, "i110007": 102}
     for bid, attendu in attendus.items():
         rva, slot = L.SLOTS_LOUPE[bid]
         chemin = os.path.join(ICI, "notation", NOMS_NOYAU[bid] + ".asm")
@@ -1488,6 +1505,50 @@ def vecteur_v6(emul: Emulation, temoins: dict[str, bytes]):
 GRAINE = 20261108
 
 
+def vecteur_v7(emul: Emulation, temoins: dict[str, bytes]):
+    """LA FALSIFICATION DE LA CLASSE (l'Entrée 207) : UN octet de loupe-01
+    muté — le store de la disposition rapatriÉ AU HOME SPACE [rsp+0] (le
+    défaut exact de dev.4) — et LE GARDE GUÉRI LE NOMME : le shim
+    CreateFileW relit LE VRAI SLOT [rsp+0x28 au shim] = pile non écrite →
+    gle 87 → loupe-01 rend -6 SYSTÈME. Le dentition du garde se PROUVE
+    sur la falsification demandée (charte § 3) : le vieux défaut ne
+    passerait PLUS jamais le labo."""
+    section("V7 — LA FALSIFICATION DE LA CLASSE (le garde guéri nomme)")
+    os_v = emul.os
+    rva, slot = L.SLOTS_LOUPE["i110001"]
+    bloc = bytes(emul.uc.mem_read(rva, slot))
+    # le store de la disposition : C7 44 24 20 03 00 00 00 (mov dword
+    # [rsp+0x20], 3) — UN octet : le disp8 0x20 → 0x00 = [rsp] le home
+    motif = bytes.fromhex("c744242003000000")
+    i = bloc.find(motif)
+    if i < 0:
+        controle("V7.a:le-store-de-la-disposition-trouve", False,
+                 "le motif mov dword [rsp+0x20], 3 introuvable — la "
+                 "notation a-t-elle bougé ?")
+        return
+    emul.uc.mem_write(rva + i + 3, b"\x00")      # le disp8 : 0x20 → 0x00
+    try:
+        os_v.declarer("temoin-falsifie.bin",
+                      FichierVirtuel(contenu=temoins["temoin-384.bin"]))
+        emul.uc.mem_write(ADRESSE_CHEMIN,
+                          "temoin-falsifie.bin".encode("utf-16-le") + b"\x00\x00")
+        os_v.journal_gle.clear()
+        r = emul.appeler(L.LOUPE01_VA, {"rcx": ADRESSE_CHEMIN})
+        controle("V7.a:le-défaut-de-dev.4-nomme-par-le-garde",
+                 r["rax"] == -6 and any(c == 87 for _, c in os_v.journal_gle),
+                 "la disposition mutée AU HOME SPACE → le shim lit LE VRAI "
+                 "SLOT (pile non écrite) → gle 87 → -6 SYSTÈME : LE DÉFAUT "
+                 "DE dev.4 NE PASSE PLUS LE LABO (le garde dérive de la "
+                 "CONVENTION, jamais de la pièce — la leçon de l'Entrée 207 "
+                 "tenue par les dents)")
+    finally:
+        emul.uc.mem_write(rva + i + 3, b"\x20")  # la pièce rendue INTACTE
+    r = emul.appeler(L.LOUPE01_VA, {"rcx": ADRESSE_CHEMIN})
+    controle("V7.b:la-piece-rendue-la-session-nait",
+             r["rax"] == 0, "l'octet rendu : la session naît — la "
+             "falsification n'a laissé AUCUNE trace (la pièce INTACTE)")
+
+
 def main() -> int:
     global GRAINE
     if "--graine" in sys.argv:
@@ -1506,6 +1567,7 @@ def main() -> int:
     vecteur_v4(emul, temoins)
     vecteur_v5(emul, temoins)
     vecteur_v6(emul, temoins)
+    vecteur_v7(emul, temoins)
 
     # le compte final : AUCUNE feuille hors noyau n'a été appelée
     controle("FINAL:aucune-feuille-hors-noyau-appellee",
@@ -1524,7 +1586,8 @@ def main() -> int:
     print("VERDICT : VERT — le noyau loupe-01..07 est NOTÉ-MESURÉ-PROUVÉ "
           "sur pièces (les vecteurs officiels, le différentiel hashlib, "
           "l'héritage sha byte-identique — R7, les rejets nommés, la "
-          "falsification attrapée)")
+          "falsification attrapée, LA CLASSE msx64 gardée par les dents "
+          "— l'Entrée 207)")
     return 0
 
 

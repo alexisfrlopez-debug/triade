@@ -32,7 +32,7 @@ falsification, zéro silence) :
   V0 — LES PIÈCES DU PLAN : le scellé démo relu (demo.exe 0.3.0, la source
        R7 de win-03), le scellé M1 relu (selftest.exe, la source de
        libc-02), les SEPT specs du geste relues, le plan recompté (les
-       slots (c) ARRÊTÉS sur les mesures 271/1614/568/796/126/967 o et
+       slots (c) ARRÊTÉS sur les mesures 271/1622/568/796/126/967 o et
        loupe-09 RÉVISÉ r2 au geste (d) — 874 → 1135 o, LA RÉVISION
        NOMMÉE : la table de routage étendue SANS cascade, le slot croît
        0x380 → 0x480, la famille édition suit à 0x6080 — l'instrument
@@ -187,7 +187,7 @@ NOMS_RENDU = {
     "i110012": "loupe-12-aller", "i110013": "loupe-13-recherche",
     "i110014": "loupe-14-suivant",
 }
-MESURES_RENDU = {"i110008": 271, "i110009": 1135, "i110010": 1614,
+MESURES_RENDU = {"i110008": 271, "i110009": 1135, "i110010": 1622,
                  "i110011": 568, "i110012": 796, "i110013": 126,
                  "i110014": 983}   # i110009 : la mesure r2 du geste (d)
 
@@ -711,7 +711,7 @@ def vecteur_v0():
     controle("V0.c:les-sept-specs-du-geste-relues", ok_specs,
              "les têtes loupe-08..14 (la couche I du geste, révision 1)")
     # le plan : les slots (c) ARRÊTÉS sur les mesures (D161)
-    attendus = {"i110008": (0x49C0, 0x140, 271), "i110010": (0x4B00, 0x680, 1614),
+    attendus = {"i110008": (0x49C0, 0x140, 271), "i110010": (0x4B00, 0x680, 1622),
                 "i110011": (0x5180, 0x280, 568), "i110012": (0x5400, 0x340, 796),
                 "i110013": (0x5740, 0xC0, 126), "i110014": (0x5800, 0x400, 967),
                 "i110009": (0x5C00, 0x480, 1135)}

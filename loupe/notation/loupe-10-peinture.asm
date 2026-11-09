@@ -3,8 +3,8 @@
 ; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : IAT user32 : BeginPaint, EndPaint, GetClientRect, InvalidateRect ; IAT gdi32 : GetStockObject, SelectObject, GetTextMetricsW, TextOutW, SetTextColor, SetBkColor (L'UNIQUE PEINTRE — I1 : la liste fermée, la contrebande de peinture est un refus de build) ; loupe-08 (les lignes de la grille PAR LA CARTE) ; l'entête et les libellés .rdata du plan ; la composition est PURE LECTURE d'état (I5) ; l'expansion latin-1 octet→mot EXACTE (I4)
 ; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-10-peinture.asm
 ; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
-; Code : 1614 o · padding : 50 o (NOP, 0x90)
-; Étiquettes résolues : .police_la=0x4bac, .client_zero=0x4be1, .client_div=0x4be3, .raz=0x4bf5, .entete_copie=0x4c15, .grille_remplie=0x4c4d, .grille_zero=0x4c60, .grille_G=0x4c62, .grille_boucle=0x4c6b, .grille_len=0x4c96, .grille_fin=0x4cb6, .barre_usage=0x4d53, .barre_message=0x4d61, .barre_aller=0x4d73, .barre_chercher=0x4d91, .barre1_fin=0x4dad, .panneau_vide=0x4e25, .panneau_fin=0x4e31, .peint_grille=0x4e45, .peint_grille_suivant=0x4e85, .peint_grille_fin=0x4e8a, .barre_saute=0x4ee1, .cellule_col=0x4f3d, .cellule_pos=0x4f94, .cellule_fin=0x4fea, .refus_begin=0x4ffe, .avorte_police=0x500b, .sortie=0x5026, .chaine=0x5037, .chaine_fin=0x5047, .chemin16=0x5048, .chemin16_point=0x5058, .chemin16_poser=0x505a, .chemin16_fin=0x5065, .hex8=0x5066, .hex8_boucle=0x5076, .hex_octets=0x5097, .dec=0x50c2, .dec_boucle=0x50cf, .dec_copie=0x50e5, .peindre=0x50f6, .peindre_compte=0x50fe, .peindre_expanse=0x5108, .peindre_goutte=0x510b
+; Code : 1622 o · padding : 42 o (NOP, 0x90)
+; Étiquettes résolues : .police_la=0x4bac, .client_zero=0x4be1, .client_div=0x4be3, .raz=0x4bf5, .entete_copie=0x4c15, .grille_remplie=0x4c4d, .grille_zero=0x4c60, .grille_G=0x4c62, .grille_boucle=0x4c6b, .grille_len=0x4c96, .grille_fin=0x4cb6, .barre_usage=0x4d53, .barre_message=0x4d61, .barre_aller=0x4d73, .barre_chercher=0x4d91, .barre1_fin=0x4dad, .panneau_vide=0x4e25, .panneau_fin=0x4e31, .peint_grille=0x4e45, .peint_grille_suivant=0x4e85, .peint_grille_fin=0x4e8a, .barre_saute=0x4ee1, .cellule_col=0x4f3d, .cellule_pos=0x4f94, .cellule_fin=0x4fea, .refus_begin=0x4ffe, .avorte_police=0x500b, .sortie=0x5026, .chaine=0x5037, .chaine_fin=0x5047, .chemin16=0x5048, .chemin16_point=0x5058, .chemin16_poser=0x505a, .chemin16_fin=0x5065, .hex8=0x5066, .hex8_boucle=0x5076, .hex_octets=0x5097, .dec=0x50c2, .dec_boucle=0x50cf, .dec_copie=0x50e5, .peindre=0x50f6, .peindre_compte=0x5102, .peindre_expanse=0x510c, .peindre_goutte=0x510f
 ; Déplacements RIP (cible = adresse + taille + disp) :
 ;   0x4b19 + 0x7 + 0x94e0 = 0xe000
 ;   0x4b20 + 0x7 + 0xa999 = 0xf4c0
@@ -52,8 +52,8 @@
 ;   0x5015 + 0x6 - 0x2b8b = 0x2490
 ;   0x501b + 0x6 - 0x2bd9 = 0x2448
 ;   0x5066 + 0x7 - 0x301d = 0x2050
-;   0x5147 + 0x6 - 0x2c55 = 0x24f8
-; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x26af], call qword ptr [rip - 0x2680], call qword ptr [rip - 0x2690], call qword ptr [rip - 0x2698], call qword ptr [rip - 0x271c], call 0x49c0, call 0x5037, call 0x5037, call 0x5048, call 0x5037, call 0x50c2, call 0x5037, call 0x5066, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5097, call 0x5037, call 0x5097, call 0x5037, call 0x5037, call 0x50f6, call 0x50f6, call 0x50f6, call 0x50f6, call qword ptr [rip - 0x2a6f], call qword ptr [rip - 0x2a72], call qword ptr [rip - 0x2ad9], call qword ptr [rip - 0x2adc], call qword ptr [rip - 0x2ae2], call qword ptr [rip - 0x2b6a], call qword ptr [rip - 0x2bbc], call qword ptr [rip - 0x2b8b], call qword ptr [rip - 0x2bd9], call qword ptr [rip - 0x2c55]
+;   0x514b + 0x6 - 0x2c59 = 0x24f8
+; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x26af], call qword ptr [rip - 0x2680], call qword ptr [rip - 0x2690], call qword ptr [rip - 0x2698], call qword ptr [rip - 0x271c], call 0x49c0, call 0x5037, call 0x5037, call 0x5048, call 0x5037, call 0x50c2, call 0x5037, call 0x5066, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5037, call 0x5097, call 0x5037, call 0x5097, call 0x5037, call 0x5037, call 0x50f6, call 0x50f6, call 0x50f6, call 0x50f6, call qword ptr [rip - 0x2a6f], call qword ptr [rip - 0x2a72], call qword ptr [rip - 0x2ad9], call qword ptr [rip - 0x2adc], call qword ptr [rip - 0x2ae2], call qword ptr [rip - 0x2b6a], call qword ptr [rip - 0x2bbc], call qword ptr [rip - 0x2b8b], call qword ptr [rip - 0x2bd9], call qword ptr [rip - 0x2c59]
 push rbx
 push rdi
 push rsi
@@ -427,18 +427,19 @@ inc rdi
 dec r11d
 jnz 0x50e5
 ret
+sub rsp, 8
 mov dword ptr [rbp - 0xD4], edx
 xor ecx, ecx
 cmp byte ptr [rsi + rcx], 0
-je 0x5108
+je 0x510c
 inc ecx
-jmp 0x50fe
+jmp 0x5102
 xor r8d, r8d
 movzx eax, byte ptr [rsi + r8]
 mov word ptr [rbp + r8*2 - 0xC8], ax
 inc r8
 cmp r8d, ecx
-jb 0x510b
+jb 0x510f
 mov dword ptr [rbp - 0xD8], ecx
 mov rcx, r13
 mov edx, 8
@@ -446,5 +447,6 @@ mov r8d, dword ptr [rbp - 0xD4]
 lea r9, [rbp - 0xC8]
 mov eax, dword ptr [rbp - 0xD8]
 mov dword ptr [rsp + 0x20], eax
-call qword ptr [rip - 0x2c55]
+call qword ptr [rip - 0x2c59]
+add rsp, 8
 ret

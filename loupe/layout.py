@@ -18,30 +18,35 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010004           # loupe 0.1.0-dev.4 (LA RETOUCHE DE
-                                   # L'ENTRÉE 206 : LE VRAI CHARGEUR A
-                                   # CARTOGRAPHIÉ dev.3 — l'enveloppe de
-                                   # l'Entrée 205 PROUVÉE AU TERRAIN, la
-                                   # PREMIÈRE fois — puis LE TÉMOIN A NOMMÉ
-                                   # [CADRE-NÉ] : le CADRE .data n'était pas
-                                   # né poignée INVALIDE, l'initialiseur du
-                                   # build avait pris LA TAILLE
-                                   # CADRE_POIGNEE (8) pour un offset et posé
-                                   # le sentinel à +8 au lieu de +528 (la
-                                   # chaîne des tailles du plan : chemin
-                                   # 520 + taille_f 8 — le harnais, le
-                                   # scénario et l'assembleur disaient TOUS
-                                   # +528) ; dev.4 fait de l'initialiseur LE
-                                   # MIROIR EXACT du CADRE_VIERGE du harnais,
-                                   # offset CALCULÉ par la chaîne, jamais
-                                   # gravé de tête — et le validateur du
-                                   # build relit LE MÊME miroir (dev.3
-                                   # validait à +8 : le garde blessé par le
-                                   # défaut qu'il croyait garder) ; le miroir
+VERSION_DEV = 0x00010005           # loupe 0.1.0-dev.5 (LA RETOUCHE DE
+                                   # L'ENTRÉE 207 — LE TÉMOIN T1 A NOMMÉ
+                                   # [SESSION] : loupe-01 a rendu -6 SYSTÈME
+                                   # sur un fichier pourtant relu à
+                                   # l'instant ; L'AUTOPSIE SUR LA PIÈCE :
+                                   # les arguments 5+ de l'ABI msx64 vivaient
+                                   # DANS LE HOME SPACE [rsp..0x18] au lieu
+                                   # de [rsp+0x20]+ — le VRAI CreateFileW
+                                   # lisait dwCreationDisposition À LA PILE
+                                   # NON INITIALISÉE ; LA CLASSE COMPLÈTE :
+                                   # loupe-01 R4 (les trois slots à leur
+                                   # place), loupe-05 R2 (le contexte SHA
+                                   # déménage [rsp+0x20]→[rsp+0x40], le
+                                   # cadre 0xa0→0xc0, lpOverlapped NÉ à son
+                                   # vrai slot — le VRAI ReadFile lisait
+                                   # H0[0] 0x6A09E667… COMME POINTEUR),
+                                   # loupe-06 R2 (le contexte MD5 pareil —
+                                   # A=0x67452301… au vrai slot) ; ET LE
+                                   # GARDE GUÉRI PAR LA CONVENTION : les shims
+                                   # CreateFileW/ReadFile/WriteFile relisent
+                                   # désormais LES MÊMES SLOTS QUE LE VRAI
+                                   # (le miroir du shim TextOutW du rendu,
+                                   # qui avait TOUJOURS eu raison) — le garde
+                                   # dérive de la CONVENTION, jamais de la
+                                   # pièce qu'il croyait garder ; le miroir
                                    # du format 0xJJNNPPDD : 0.9.0-dev.1 ==
                                    # 0x00090001 [M8], 1.0.0-dev.4 ==
-                                   # 0x01000004 [M9] ; 0.1.0-dev.4 ==
-                                   # 0x00010004)
+                                   # 0x01000004 [M9] ; 0.1.0-dev.5 ==
+                                   # 0x00010005)
 VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
                                    # terrain vert recoupé)

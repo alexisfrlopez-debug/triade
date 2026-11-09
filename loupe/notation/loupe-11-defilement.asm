@@ -20,7 +20,7 @@ push r12
 push r13
 push r14
 push r15
-sub rsp, 0x38
+sub rsp, 0x40
 mov r14, rcx
 lea rbx, [rip + 0x8e69]
 cmp qword ptr [rbx + 528], -1
@@ -153,7 +153,7 @@ xor eax, eax
 jmp 0x53aa
 call qword ptr [rip - 0x2f5d]
 mov eax, -6
-add rsp, 0x38
+add rsp, 0x40
 pop r15
 pop r14
 pop r13

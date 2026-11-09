@@ -1,4 +1,18 @@
-; loupe-01 · ouvrir : le fichier donné à la session · spec loupe-01:R1
+; loupe-01 · ouvrir : le fichier donné à la session · spec loupe-01:R4
+; LA RÉVISION R4 (l'Entrée 207 — LE TÉMOIN T1 A NOMMÉ [SESSION] : loupe-01
+; a rendu -6 SYSTÈME sur un fichier pourtant relu à l'instant. L'AUTOPSIE
+; SUR LA PIÈCE : les arguments 5/6/7 de CreateFileW (la disposition
+; OUVRIR_EXISTANT, les attributs, le gabarit) vivaient à [rsp]/[rsp+8]/
+; [rsp+0x10] — DANS LE HOME SPACE des quatre registres — alors que l'ABI
+; msx64 les exige à [rsp+0x20]+ : le VRAI chargeur de fonctions lisait
+; dwCreationDisposition À [rsp+0x20], pile non initialisée → refus OS →
+; -6. LA CLASSE : loupe-05/06 portaient le même défaut (lpOverlapped au
+; home space, le contexte condensé AU VRAI SLOT) — les TROIS notations
+; sont retouchées ensemble ; le harnais relit désormais LES MÊMES SLOTS
+; QUE LE VRAI (shims CreateFileW/ReadFile/WriteFile) — le garde dérive
+; de la convention, jamais de la pièce qu'il croyait garder. La taille
+; GetFileSizeEx réutilise [rsp+0x20] APRÈS le retour de CreateFileW — la
+; vie séquentielle du slot, consommé à l'appel, repris comme sortie.
 ; L'ORDRE DES REFUS (le réseau des specs) : P2 la session pas déjà ouverte
 ; (E4 : -5, RIEN TOUCHÉ — le test AVANT loupe-04, l'ancien fichier INTACT) ;
 ; loupe-04 D'ABORD (le cadre vierge — Q3 : « loupe-04 a posé le vierge ») ;
@@ -28,9 +42,9 @@ mov rcx, r12
 mov edx, 0xc0000000
 mov r8d, 1
 xor r9d, r9d
-mov dword ptr [rsp], 3
-mov dword ptr [rsp + 8], 0
-mov qword ptr [rsp + 0x10], 0
+mov dword ptr [rsp + 0x20], 3
+mov dword ptr [rsp + 0x28], 0
+mov qword ptr [rsp + 0x30], 0
 call qword ptr [rip + IAT_CREATEFILEW]
 cmp rax, -1
 je .refus_os

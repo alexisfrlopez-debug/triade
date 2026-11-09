@@ -1,4 +1,7 @@
-; loupe-11 · défilement : la molette et l'ascenseur, bornés à la fin réelle · spec loupe-11:R1
+; loupe-11 · défilement : la molette et l'ascenseur · LA RÉVISION R2 (l'Entrée 207 — l'AUDIT D'ABI du build a
+; NOMMÉ L'AXE : le cadre 5 pushes + 0x38 laissait la pile ≡8 AU call — le VRAI
+; user32 (SSE) peut fautter là où l'émulation passe ; 0x38 → 0x40, la pile alignée
+; 16 — la convention, jamais la pièce)
 ; LE PAS (Q1) : SB_LIGNE_HAUT/BAS = ±16 o (une ligne) ; SB_PAGE_HAUT/BAS =
 ; ±352 o (22 lignes — la grille moins les deux de repère) ; SB_POIGNEE/
 ; SB_POIGNEE_COURSE = la position demandée × 16 (GetScrollInfo au
@@ -30,7 +33,7 @@ push r12
 push r13
 push r14
 push r15
-sub rsp, 0x38
+sub rsp, 0x40
 mov r14, rcx
 lea rbx, [rip + CADRE]
 cmp qword ptr [rbx + 528], -1
@@ -193,7 +196,7 @@ jmp .sortie
 call qword ptr [rip + IAT_GETLASTERROR]
 mov eax, -6
 .sortie:
-add rsp, 0x38
+add rsp, 0x40
 pop r15
 pop r14
 pop r13

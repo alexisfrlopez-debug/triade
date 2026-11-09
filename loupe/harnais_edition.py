@@ -289,6 +289,16 @@ class EmulationEdition(HR.EmulationRendu):
 
         if feuille == "WriteFile":
             gui.compteurs[feuille] = gui.compteurs.get(feuille, 0) + 1
+            # LA LEÇON DE L'ENTRÉE 207 : lpOverlapped (l'argument 5) vit à
+            # [rsp+0x28] AU SHIM (le retour poussé) — le VRAI WriteFile
+            # l'EXIGE NUL sur un handle synchrone : le garde lit LE VRAI
+            # SLOT, comme le shim TextOutW du rendu et les shims du noyau
+            lp_overlapped = struct.unpack(
+                "<Q", uc.mem_read(rsp + 0x28, 8))[0]
+            if lp_overlapped != 0:
+                self.os._erreur(87)      # ERROR_INVALID_PARAMETER
+                self._retour(uc, 0)
+                return
             n = r8 & 0xFFFFFFFF
             donnees = bytes(uc.mem_read(rdx, n)) if n else b""
             ok = self.os.write_file(rcx, n, donnees)

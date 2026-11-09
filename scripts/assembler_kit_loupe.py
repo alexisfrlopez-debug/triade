@@ -6,13 +6,17 @@ Modèle : scripts/assembler_kit_m9f.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + les VRAIS kernel32/user32/gdi32 exigés,
 le cœur même du run terrain) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.4,
-     sha256 1f2da283… ASSERTÉ — LA RETOUCHE DE L'ENTRÉE 206 : LE VRAI
-     CHARGEUR A CARTOGRAPHIÉ dev.3, puis le témoin a nommé [CADRE-NÉ]
-     — l'initialiseur .data devient LE MIROIR EXACT du CADRE_VIERGE du
-     harnais, le sentinel à +528 par LA CHAÎNE DES TAILLES, jamais gravé
-     de tête ; le scénario relit LE .data ENTIER contre le miroir) +
-     scenario-loupe.py + LISEZMOI-KIT-LOUPE.md ;
+  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.5,
+     sha256 6f830f9c… ASSERTÉ — LA RETOUCHE DE L'ENTRÉE 207 : LE TÉMOIN
+     T1 A NOMMÉ [SESSION] -6, l'autopsie a nommé LA CLASSE DES ARGUMENTS
+     PILE [les 5+ au home space au lieu de [rsp+0x20]+] : loupe-01/05/06
+     retouchés, loupe-10/11 réalignés par l'AUDIT D'ABI du build, et
+     les shims du harnais relisent LES MÊMES SLOTS QUE LE VRAI — le
+     garde dérive de la convention) +
+     scenario-loupe.py + temoin-vitrine.bat (LE TÉMOIN VITRINE —
+     l'Entrée 207 : la vitrine a vécu sa première mort SANS témoin :
+     le run console capture les codes de sortie + le rapport WER) +
+     LISEZMOI-KIT-LOUPE.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario (les
      adresses scellées, l'empreinte, la version R10, les listes IAT, la
      table K, les champs du cadre) relue DANS L'ARTEFACT ou DANS LE PLAN —
@@ -41,8 +45,8 @@ KIT = "loupe-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-loupe.zip"
 
-SHA_EXE = ("1f2da2833b47265e9b956ee83a5cc246"
-           "b68455f06f5b7bb03a69045f03503e03")
+SHA_EXE = ("6f830f9c738265dfd23a8406bf1060bbc932923f3fc10631"
+           "138ed6457c179590")
 TAILLE_EXE = 127488
 EXE = REPO / "loupe" / "loupe.exe"
 SCENARIO = REPO / "loupe" / "terrain" / "scenario-loupe.py"
@@ -255,9 +259,11 @@ def main():
     racine.mkdir(parents=True)
     shutil.copy2(EXE, racine / "loupe.exe")
     shutil.copy2(SCENARIO, racine / "scenario-loupe.py")
+    shutil.copy2(REPO / "loupe" / "terrain" / "temoin-vitrine.bat",
+                 racine / "temoin-vitrine.bat")
     shutil.copy2(LISEZMOI, racine / "LISEZMOI-KIT-LOUPE.md")
     print(f"[assemblage] {racine} : loupe.exe + scenario-loupe.py + "
-          f"LISEZMOI-KIT-LOUPE.md")
+          f"temoin-vitrine.bat + LISEZMOI-KIT-LOUPE.md")
 
     recoup(racine)
 
@@ -269,7 +275,8 @@ def main():
     if KIT_ZIP.exists():
         KIT_ZIP.unlink()
     with zipfile.ZipFile(KIT_ZIP, "w", zipfile.ZIP_DEFLATED) as z:
-        for nom in ("loupe.exe", "scenario-loupe.py", "LISEZMOI-KIT-LOUPE.md"):
+        for nom in ("loupe.exe", "scenario-loupe.py", "temoin-vitrine.bat",
+                    "LISEZMOI-KIT-LOUPE.md"):
             z.write(racine / nom, arcname=f"{KIT}/{nom}")
     taille = KIT_ZIP.stat().st_size
     md5 = hashlib.md5(KIT_ZIP.read_bytes()).hexdigest()

@@ -457,6 +457,12 @@ dec r11d
 jnz .dec_copie
 ret
 .peindre:
+; LA RÉVISION R2 DE LOUPE-10 (l'Entrée 207 — l'AUDIT D'ABI du build a
+; NOMMÉ L'AXE : le sous-programme entre rsp≡8 (l'appel direct à cadre
+; aligné pousse le retour) ET APPELLE TextOutW SANS RÉALIGNER — le VRAI
+; gdi32 (SSE) peut fautter là où l'émulation passe ; les huit octets
+; rendent la pile alignée 16 AU call — la convention, jamais la pièce)
+sub rsp, 8
 mov dword ptr [rbp - 0xD4], edx
 xor ecx, ecx
 .peindre_compte:
@@ -480,4 +486,5 @@ lea r9, [rbp - 0xC8]
 mov eax, dword ptr [rbp - 0xD8]
 mov dword ptr [rsp + 0x20], eax
 call qword ptr [rip + IAT_TEXTOUTW]
+add rsp, 8
 ret

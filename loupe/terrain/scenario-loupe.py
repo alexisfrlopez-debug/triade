@@ -5,7 +5,7 @@ NATURE.
 
 Le kit porte UN artefact et UN scénario :
   loupe.exe   le build 0.1.0-dev.4 du jalon M10 — 127 488 o, sha256
-              1f2da2833b47265e9b956ee83a5cc246b68455f06f5b7bb03a69045f03503e03
+              6f830f9c738265dfd23a8406bf1060bbc932923f3fc10631138ed6457c179590
               (LA RETOUCHE DE L'ENTRÉE 206 : LE VRAI CHARGEUR A
               CARTOGRAPHIÉ dev.3 — la PREMIÈRE fois au terrain, l'enveloppe
               PROUVÉE — puis LE TÉMOIN A NOMMÉ [CADRE-NÉ] : le CADRE .data
@@ -26,10 +26,17 @@ vitrine n'est pas lancée ici), puis il RÉSOUT LUI-MÊME les 34 feuilles de
 l'IAT du plan (VirtualProtect sur les slots .rdata — le chargeur réel
 fait de même à la liaison) et APPELLE LES BLOCS À LEURS ADRESSES
 SCELLÉES : l'application née des blocs notés, conduite par la main du
-kit. LA VITRINE se vit À CÔTÉ : double-cliquez loupe.exe — la fenêtre
-réelle, les octets à l'œil, le panneau d'empreintes (le LISEZMOI du kit
-documente les gestes : la molette, F5 l'aller, F3 la recherche, la
-saisie hexa, Ctrl+S, le double Alt+F4).
+kit. LA VITRINE se vit À CÔTÉ, ET SON TÉMOIN EST NOUVEAU AU KIT (l'Entrée
+207 : la vitrine a VÉCU sa première fois au terrain et sa mort fut
+sans témoin — « la fenêtre s'ouvre et se referme immédiatement ») :
+lancez temoin-vitrine.bat — le run console de la vitrine, LES DEUX
+façons (sans fichier puis avec un fichier), le CODE DE SORTIE capturé
+(%ERRORLEVEL% : 0 la sortie propre · 1 l'explication MessageBox ·
+0xC0000005 le crash — le rapport WER du système le nomme alors) — les
+pièces vont au réceptacle preuves-loupe/ ; puis double-cliquez
+loupe.exe — la fenêtre réelle, les octets à l'œil, le panneau
+d'empreintes (le LISEZMOI du kit documente les gestes : la molette, F5
+l'aller, F3 la recherche, la saisie hexa, Ctrl+S, le double Alt+F4).
 
 LA SONDE DE L'ENTRÉE 205 (LA CASCADE DIAGNOSTIQUE — le kit porte SON
 PROPRE BISSECTEUR) : après le run (ou à l'échec de la cartographie), le
@@ -69,7 +76,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   1f2da2833b47265e….
+                   6f830f9c738265df….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -118,10 +125,10 @@ PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
 # --- l'artefact : la carte génération 13 prouve CES octets -----------------------
-SHA_EXE = ("1f2da2833b47265e9b956ee83a5cc246"
-           "b68455f06f5b7bb03a69045f03503e03")
+SHA_EXE = ("6f830f9c738265dfd23a8406bf1060bbc932923f3fc10631"
+           "138ed6457c179590")
 TAILLE_EXE = 127488
-VERSION_R10 = 0x00010004          # loupe 0.1.0-dev.4 (le qword @0x2E80 —
+VERSION_R10 = 0x00010005          # loupe 0.1.0-dev.5 (le qword @0x2E80 —
                                    # la retouche de l'Entrée 206 : le CADRE
                                    # né LE MIROIR DU CADRE_VIERGE du harnais)
 
@@ -340,7 +347,7 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.4) ===")
+    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.5) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")

@@ -30,14 +30,18 @@
 
 ```
 loupe-kit/
-├── loupe.exe          l'ARTEFACT 0.1.0-dev.4 (127 488 o, sha256
-│                      1f2da283… — lecture seule pour le run ; la carte
+├── loupe.exe          l'ARTEFACT 0.1.0-dev.5 (127 488 o, sha256
+│                      6f830f9c… — lecture seule pour le run ; la carte
 │                      privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-loupe.py  LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
 │                      platform, struct, sys, tempfile — les constantes
 │                      FIGÉES au laboratoire depuis le plan du dépôt,
 │                      recoupées à l'assemblage — un kit corrompu est un
 │                      refus nommé AVANT tout geste) ;
+├── temoin-vitrine.bat LE TÉMOIN VITRINE (l'Entrée 207 : la vitrine a
+│                      vécu sa première mort SANS témoin — ce run
+│                      console capture LES DEUX codes de sortie et le
+│                      rapport WER éventuel) ;
 └── LISEZMOI-KIT-LOUPE.md  le présent document.
 ```
 
@@ -45,8 +49,8 @@ loupe-kit/
 
 1. **Extraire** le zip COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1, de dev.2 ou de dev.3 par exemple — créez-en
-   un NEUF, `loupe-kit-4/` par exemple : l'artefact refusé ne
+   déjà — celui de dev.1 à dev.4 par exemple — créez-en
+   un NEUF, `loupe-kit-5/` par exemple : l'artefact refusé ne
    se réutilise pas). Sur votre Windows 11 : `loupe-kit/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
@@ -60,7 +64,13 @@ loupe-kit/
    toute seule (voir S0 ci-dessous) : laissez-la finir, le témoin
    part au coffre QUEL QUE SOIT le verdict.
 3. **Vivre la vitrine** (le cœur du grandeur nature) :
-   **double-cliquez `loupe.exe`** — la fenêtre s'ouvre, la barre
+   **D'ABORD le témoin vitrine** : double-cliquez
+   `temoin-vitrine.bat` — le run console capture LE CODE DE SORTIE de
+   la vitrine des deux façons (sans fichier, puis avec la copie
+   `temoin-fichier.bin` : la session naît entière — loupe-01 → le
+   panneau → les empreintes) et le rapport WER s'il y eut crash ; les
+   pièces vont au réceptacle (`preuves-loupe/temoin-vitrine.txt`).
+   **PUIS double-cliquez `loupe.exe`** — la fenêtre s'ouvre, la barre
    d'état porte l'usage (`loupe <fichier>`) et l'ascenseur ; fermez-la
    (Alt+F4). Puis ouvrez un VRAI fichier **depuis la ligne de
    commande** : `loupe.exe monfichier.bin` (ou glissez-déposez un
@@ -79,8 +89,9 @@ loupe-kit/
    au réceptacle.
 4. **Renvoyer** le dossier `preuves-loupe/` ENTIER au coffre
    `/test/preuves-loupe/` (dossier Drive « Triade » → « test ») : le
-   témoin naît tout seul (`temoin-loupe.txt`) ; ajoutez-y les captures
-   éventuelles de la vitrine (PNG/JPG, nommées `capture-*.png`).
+   témoin naît tout seul (`temoin-loupe.txt`), LE TÉMOIN VITRINE aussi
+   (`temoin-vitrine.txt`) ; ajoutez-y les captures éventuelles de la
+   vitrine (PNG/JPG, nommées `capture-*.png`).
 
 ## 3. Ce que le scénario démontre (les temps du run)
 

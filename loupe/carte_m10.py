@@ -21,7 +21,7 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE BUILD du domaine : loupe.exe 0.1.0-dev.4 (LA RETOUCHE DE
+  - LE BUILD du domaine : loupe.exe 0.1.0-dev.5 (LA RETOUCHE DE
     L'ENTRÉE 206 : LE VRAI CHARGEUR A CARTOGRAPHIÉ dev.3 — la
     PREMIÈRE fois au terrain — puis le témoin a nommé [CADRE-NÉ] :
     le CADRE .data n'était pas né poignée INVALIDE, l'initialiseur
@@ -79,7 +79,7 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV = "0.1.0-dev.4"     # la retouche de l'Entrée 206 (dev.3 :
+VERSION_DEV = "0.1.0-dev.5"     # la retouche de l'Entrée 207 (la classe
                                  # [CADRE-NÉ] nommé au témoin —
                                  # l'initialiseur .data devient LE MIROIR
                                  # EXACT du CADRE_VIERGE du harnais)

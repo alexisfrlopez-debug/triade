@@ -1,7 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.4 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+loupe.exe 0.1.0-dev.5 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+
+LA RETOUCHE DE L'ENTRÉE 207 (dev.4 → dev.5) : LE TÉMOIN T1 A NOMMÉ
+[SESSION] — « loupe-01 a rendu 0xfffffffa (-6 SYSTÈME), le fichier
+pourtant relu à l'instant » ; ET LA VITRINE A VÉCU SA PREMIÈRE FOIS AU
+TERRAIN (« la fenêtre s'ouvre et se referme immédiatement »). LES
+PIÈCES RAPATRIÉES DU /test (temoin-loupe.txt 1 209 o — LE RUN LE PLUS
+LOIN JAMAIS VÊCU : image cartographiée ✓, CADRE né MIROIR ✓ (la
+retouche de l'Entrée 206 TIENT, preuve au terrain), IAT 37 feuilles
+posées ✓) PUIS L'AUTOPSIE SUR LA PIÈCE (capstone, les notations, le
+harnais) NOMME LA CLASSE : LES ARGUMENTS 5+ DE L'ABI msx64 VIVAIENT
+DANS LE HOME SPACE [rsp..0x18] au lieu de [rsp+0x20]+ :
+  - loupe-01 R4 : CreateFileW relisait dwCreationDisposition À LA PILE
+    NON INITIALISÉE (le -6 du T1) — les trois slots déménagent à leur
+    place ; [rsp+0x20] REPRIS par la sortie GetFileSizeEx APRÈS le
+    retour (la vie séquentielle du slot) ;
+  - loupe-05 R2 : le contexte SHA (112 o) vivait SUR LE VRAI SLOT — le
+    VRAI ReadFile lisait H0[0] 0x6A09E667… COMME UN POINTEUR — le
+    contexte déménage [rsp+0x20]→[rsp+0x40], le cadre 0xa0→0xc0,
+    lpOverlapped NÉ NUL à son vrai slot ;
+  - loupe-06 R2 : le contexte MD5 (88 o) pareil (A = 0x67452301… au
+    vrai slot) — le même déménagement, le cadre 0xa0→0xc0.
+LE GARDE GUÉRI PAR LA CONVENTION (la leçon de jauge, deuxième du nom) :
+les shims CreateFileW/ReadFile (noyau) et WriteFile (édition) RELISENT
+LES MÊMES SLOTS QUE LE VRAI — ERROR_INVALID_PARAMETER sinon (87) — le
+miroir du shim TextOutW du rendu qui, LUI, avait toujours eu raison
+(c'est pourquoi loupe-10 était juste et 01/05/06 non) ; LE CONTRÔLE
+DÉRIVE DE LA CONVENTION msx64, jamais de la pièce qu'il croyait garder.
+LA VITRINE AU LABO : le flot réel complet rejoué sur l'émulation aux
+18 blocs (naissance → vie → WM_CLOSE/WM_DESTROY) VERT des deux façons
+(vide et avec fichier) — la mort terrain de la vitrine-avec-fichier
+s'explique par loupe-05 (le pointeur fantôme : l'access violation
+tuerait le processus — « s'ouvre et se referme immédiatement ») ; la
+vitrine vide tient au labo : LE KIT dev.5 PORTE SON TÉMOIN VITRINE
+(la console + %ERRORLEVEL% + le rapport WER — l'axe restant sera nommé
+par le terrain). AUCUNE adresse scellée ne bouge, les héritages
+INTACTS (R7), la carte GÉNÉRATION 13 réécrite ; le qword version R10 :
+0x00010004 → 0x00010005.
 
 LA RETOUCHE DE L'ENTRÉE 206 (dev.3 → dev.4) : LE VRAI CHARGEUR A
 CARTOGRAPHIÉ dev.3 — LA PREMIÈRE FOIS AU TERRAIN : l'enveloppe de
@@ -130,7 +167,7 @@ La carte : GÉNÉRATION 13 (la lignée D80, la graine durable D144 — la
 première génération du DOMAINE loupe : les i11xxxx entrent à la carte).
 
 Usage :
-  python3 build_loupe.py             # construction 0.1.0-dev.4 (+ carte gén. 13)
+  python3 build_loupe.py             # construction 0.1.0-dev.5 (+ carte gén. 13)
   python3 build_loupe.py --verifier  # re-vérification sans écriture
 """
 
@@ -283,9 +320,9 @@ BLOCS_LOUPE = [
 # Les longueurs mesurées à l'arrêt (D161 — les quatre passes de l'auteur :
 # le noyau, le rendu r2 [loupe-09 874 → 1135], l'édition).
 MESURES_LOUPE = {
-    "i110001": 388, "i110002": 296, "i110003": 122, "i110004": 47,
-    "i110005": 312, "i110006": 879, "i110007": 102, "i110008": 271,
-    "i110009": 1135, "i110010": 1614, "i110011": 568, "i110012": 796,
+    "i110001": 389, "i110002": 296, "i110003": 122, "i110004": 47,
+    "i110005": 313, "i110006": 871, "i110007": 102, "i110008": 271,
+    "i110009": 1135, "i110010": 1622, "i110011": 568, "i110012": 796,
     "i110013": 126, "i110014": 983, "i110015": 391, "i110016": 660,
     "i110017": 521, "i110018": 163,
 }
@@ -469,8 +506,9 @@ def assembler_blocs(ks) -> tuple[dict, dict]:
         code[bid] = octets
         insns_par_bloc[bid] = insns
     print(f"[assemblage] 18/18 notations : round-trip R5 vert, les longueurs == "
-          f"les mesures de l'arrêt (47/296/122/388/312/879/102 + 271/1614/568/"
-          f"796/126/983/1135 + 391/660/521/163 o — D161 tenu)")
+          f"les mesures de l'arrêt (47/296/122/389/313/871/102 + 271/1622/568/"
+          f"796/126/983/1135 + 391/660/521/163 o — D161 tenu, l'Entrée 207 : "
+          f"1622 pour le peintre)")
     return code, insns_par_bloc
 
 
@@ -508,6 +546,116 @@ def heritage_scelle(m9: bytes, m1: bytes, demo: bytes, ks) -> dict[str, bytes]:
           f"des SCELLÉS == les notations d'origine ré-assemblées == les octets "
           f"qui seront posés AUX MÊMES adresses")
     return extraits
+
+
+# --- L'AUDIT D'ABI msx64 (l'Entrée 207 : le garde STRUCTUREL de la classe) ----------
+
+# les feuilles IAT qui prennent des arguments AU-DELÀ du quatrième (la
+# CONVENTION msx64 — jamais la pièce) : la source = les tables des API de
+# Windows ; toutes les autres feuilles vivent aux quatre registres.
+ARGS_PILE_IAT = {
+    "CreateFileW": 3,        # disposition, attributs, gabarit
+    "ReadFile": 1,           # lpOverlapped
+    "WriteFile": 1,          # lpOverlapped
+    "TextOutW": 1,           # c — le compte
+    "CreateWindowExW": 8,    # X, Y, L, H, parent, menu, instance, param
+}
+
+
+def audit_msx64(insns_par_bloc: dict) -> int:
+    """L'AUDIT DE LA CLASSE DE L'ENTRÉE 207 (structurel, AVANT tout harnais) :
+    à CHAQUE appel IAT de CHAQUE bloc —
+      (1) L'ALIGNEMENT : rsp ≡ 0 (mod 16) au call (le VRAI kernel32/user32
+          est SSE : movaps faute là où le labo (Unicorn + shims Python)
+          passe — l'axe que seul l'audit statique voit) ;
+      (2) LES SLOTS DES ARGUMENTS PILE : pour chaque feuille à arguments
+          5+, chaque slot [rsp+0x20+8k] DOIT être écrit depuis la dernière
+          cible de saut / le dernier appel IAT / tout ret — sinon
+          l'argument part au hasard de la pile non initialisée (LE DÉFAUT
+          DE dev.4 : trois slots au home space, un pointeur fantôme).
+    Le garde dérive de la CONVENTION, jamais de la pièce qu'il contrôle."""
+    verrous = 0
+    inverse_iat = {v: k for k, v in L.IAT_SLOTS.items()}
+    exit_slot = L.IAT_SLOTS["ExitProcess"]
+    for bid, _sid, _fichier, _famille in BLOCS_LOUPE:
+        insns = insns_par_bloc[bid]
+        # les cibles de saut internes (les « étiquettes ») coupent la fenêtre
+        cibles = set()
+        for insn in insns:
+            if insn.mnemonic.startswith("j") and insn.op_str.startswith("0x"):
+                cibles.add(int(insn.op_str, 0))
+        # les appels internes (call direct) ne coupent PAS la fenêtre : le
+        # délégué ne touche JAMAIS [rsp+0x20+] de son appelant (son home
+        # space à LUI vit à [rsp..0x18] du même cadre — l'ABI)
+        depile = 8               # l'entrée msx64 ≡ 8 (mod 16) — le cadre
+        ecrits = set()           # les slots écrits dans la fenêtre courante
+        for insn in insns:
+            adresse = insn.address
+            if adresse in cibles:
+                # une étiquette coupe la FENÊTRE DES SLOTS (les stores
+                # doivent vivre DANS la branche qui appelle) — le CADRE
+                # lui-même PERSISTE : l'alignement ne se réinitialise
+                # JAMAIS à une étiquette (une boucle ré-entre avec le
+                # même cadre — l'erratum de l'auditeur lui-même)
+                ecrits = set()
+                continue
+            if insn.mnemonic == "ret":
+                depile, ecrits = 8, set()      # une fonction nouvelle naît
+                continue
+            m, ops = insn.mnemonic, insn.op_str
+            if m == "push":
+                depile -= 8
+            elif m == "pop":
+                depile += 8
+            elif m == "sub" and ops.startswith("rsp,"):
+                depile -= int(ops.split(",")[1], 0)
+            elif m == "add" and ops.startswith("rsp,"):
+                depile += int(ops.split(",")[1], 0)
+            elif m == "lea":
+                continue          # le lea pose des POINTEURS, jamais un slot
+            elif m in ("mov", "movzx") and "rsp" in ops and "," in ops:
+                cible = ops.split(",")[0].strip()
+                if "ptr" in cible:      # « dword ptr [rsp + 0x20] » — le préfixe
+                    cible = cible.split("ptr", 1)[1].strip()
+                if cible.startswith("[rsp"):
+                    import re as _re
+                    mm = _re.match(r"\[rsp(?: \+ (0x[0-9a-f]+|\d+))?\]", cible)
+                    if mm:
+                        off = int(mm.group(1), 0) if mm.group(1) else 0
+                        ecrits.add(off)
+            elif m == "call" and "[rip" in ops:
+                cible = B4.operande_rip_cible(insn)
+                if cible is None or cible not in L.IAT_SLOTS.values():
+                    continue          # l'appel direct demeure (fenêtre ouverte)
+                feuille = inverse_iat[cible]
+                if depile % 16 != 0:
+                    raise EchecBuild(
+                        f"{bid} : appel IAT {feuille} @{adresse:#x} PILE "
+                        f"MISALIGNÉE rsp≡{depile % 16} (mod 16) — le VRAI "
+                        f"chargeur de fonctions (SSE) peut fautter là où "
+                        f"l'émulation passe (la classe de l'Entrée 207)")
+                n = ARGS_PILE_IAT.get(feuille, 0)
+                for k in range(n):
+                    off = 0x20 + 8 * k
+                    if off not in ecrits:
+                        raise EchecBuild(
+                            f"{bid} : appel IAT {feuille} @{adresse:#x} — "
+                            f"l'argument {5 + k} attendu à [rsp+{off:#x}] "
+                            f"N'EST PAS ÉCRIT depuis la dernière étiquette : "
+                            f"il part AU HASARD de la pile non initialisée "
+                            f"(LE DÉFAUT DE dev.4 : les slots au home space "
+                            f"— la classe de l'Entrée 207)")
+                ecrits = set()        # l'appelé consomme ses arguments
+                if cible == exit_slot and (insn.address + insn.size) not in cibles:
+                    depile, ecrits = 8, set()   # noreturn ET le code qui suit
+                verrous += 1          # n'est PAS atteint par saut : une
+        verrous += 1                  # fonction nouvelle naît (WinMain →
+                                       # LA PROCÉDURE par pointeur enregistré)
+    print(f"[audit msx64] {verrous} appels IAT AUDITÉS — l'alignement 16 "
+          f"VERT partout, chaque argument 5+ ÉCRIT À SON SLOT [rsp+0x20+] "
+          f"(la convention, jamais la pièce — la classe de l'Entrée 207 "
+          f"gardée pour toujours)")
+    return verrous
 
 
 # --- L'oracle structurel (le plan rangée (d)/(e) — LA RÈGLE du domaine) ------------
@@ -588,7 +736,7 @@ ENTETE_TEXTE = ("Décalage  00 01 02 03 04 05 06 07"
                 "  08 09 0A 0B 0C 0D 0E 0F  ASCII")
 LIBELLES = [
     (L.L_USAGE, "loupe <fichier>"),
-    (L.L_BALISE, "Loupe 0.1.0-dev.4"),
+    (L.L_BALISE, "Loupe 0.1.0-dev.5"),
     (L.L_TIRET, " - "),
     (L.L_MID, " · "),
     (L.L_OCT, " o · curseur 0x"),
@@ -1045,9 +1193,9 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.4 (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.5 (le TGN « Loupe », M10) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.4')} "
+        f"version      : {manifeste.get('version', '0.1.0-dev.5')} "
         f"(geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
@@ -1075,7 +1223,7 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.4 (le TGN, "
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.5 (le TGN, "
           "l'application née de TRIADE entière) ===")
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
@@ -1084,6 +1232,7 @@ def construire() -> int:
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
     code, insns_par_bloc = assembler_blocs(ks)
     verrous = oracle_structurel(code, insns_par_bloc)
+    verrous += audit_msx64(insns_par_bloc)     # l'Entrée 207 : la classe
     extraits = heritage_scelle(m9, m1, demo, ks)
 
     sections = composer_image(code, extraits)
@@ -1093,7 +1242,7 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.4 le "
+    journal = [f"build 0.1.0-dev.5 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]
@@ -1131,6 +1280,7 @@ def verifier() -> int:
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
     code, insns_par_bloc = assembler_blocs(ks)
     oracle_structurel(code, insns_par_bloc)
+    audit_msx64(insns_par_bloc)               # l'Entrée 207 : la classe
     extraits = heritage_scelle(m9, m1, demo, ks)
     sections = composer_image(code, extraits)
     exe = ecrire_pe32plus(*sections[:4])

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # TRIADE — Régénération systématique du PDF formel du protocole (décisions D17, D25).
 #
-# Depuis la v0.8.2 (la seconde révision de terrain du TGN), le PDF formel de
-# la version courante est docs/Protocole_TRIADE_v0.8.2_Specification.pdf,
-# produit par la chaîne LaTeX/Tectonic (scripts/spec_v082/, née spec_v081
+# Depuis la v0.8.3 (la troisième révision de terrain du TGN), le PDF formel de
+# la version courante est docs/Protocole_TRIADE_v0.8.3_Specification.pdf,
+# produit par la chaîne LaTeX/Tectonic (scripts/spec_v083/, née spec_v082
 # [la révision de terrain v0.8.1] — elle-même née spec_v080 [D176] —
 # et avant : spec_v040 → spec_v050 → spec_v051 → spec_v052 → spec_v060 →
 # spec_v061 → spec_v070) : corps
@@ -32,10 +32,10 @@ cd "$ROOT"
 BASE="${TRIADE_BASE:-/home/z/my-project}"
 SKILL="$BASE/skills/pdf"
 
-SPEC_DIR=scripts/spec_v082
+SPEC_DIR=scripts/spec_v083
 COVER_HTML="$SPEC_DIR/cover.html"
 COVER_PDF="$SPEC_DIR/cover.pdf"
-FINAL_PDF=docs/Protocole_TRIADE_v0.8.2_Specification.pdf
+FINAL_PDF=docs/Protocole_TRIADE_v0.8.3_Specification.pdf
 STAMP=.pdf_build.stamp
 
 # Sources dont la modification déclenche la reconstruction.
@@ -70,7 +70,7 @@ if [ "$CHECK" -eq 1 ]; then
   exit 2
 fi
 
-echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel v0.8.2"
+echo "[pdf] sources modifiées (ou build forcé) — régénération du PDF formel v0.8.3"
 
 # 1) Validation de la couverture (HTML puis chevauchements au rendu réel)
 if [ ! -d "$SKILL" ]; then
@@ -122,10 +122,10 @@ echo "$CURRENT" > "$STAMP"
 #       divergence est un refus nommé.
 if [ -f scripts/empreintes_build.py ]; then
   python3 scripts/empreintes_build.py consigner \
-    --artefact "$FINAL_PDF" --build "build_pdf.sh (chaîne spec_v082)" \
+    --artefact "$FINAL_PDF" --build "build_pdf.sh (chaîne spec_v083)" \
     --stamp-file "$STAMP" || \
     echo "[pdf] AVERTISSEMENT : consignation de l'empreinte impossible (non bloquant)"
 else
   echo "[pdf] AVERTISSEMENT : scripts/empreintes_build.py absent (M5-a non porté)"
 fi
-echo "[pdf] PDF formel v0.8.2 régénéré -> $FINAL_PDF (empreinte consignée)"
+echo "[pdf] PDF formel v0.8.3 régénéré -> $FINAL_PDF (empreinte consignée)"
