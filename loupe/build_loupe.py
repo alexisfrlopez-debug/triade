@@ -1,7 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.3 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+loupe.exe 0.1.0-dev.4 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+
+LA RETOUCHE DE L'ENTRÉE 206 (dev.3 → dev.4) : LE VRAI CHARGEUR A
+CARTOGRAPHIÉ dev.3 — LA PREMIÈRE FOIS AU TERRAIN : l'enveloppe de
+l'Entrée 205 est PROUVÉE (LoadLibraryEx DONT_RESOLVE @0x7ff740e20000,
+les adresses scellées CONSTATÉES, la table K, la porte R10 relues
+VERTES au témoin) — puis LE RUN S'EST ARRÊTÉ AU T0 : ÉCHEC NOMMÉ
+[CADRE-NÉ], « le CADRE .data n'est pas né poignée INVALIDE
+(l'initialiseur du build) ». L'AUTOPSIE SUR PIÈCES (le témoin
+rapatrié du /test + l'artefact relu champ à champ) : le sentinel
+INVALIDE posé à +8 (DANS le chemin UTF-16 !) et ZÉRO à +528 —
+l'initialiseur avait pris CADRE_POIGNEE (= 8, UNE TAILLE de la
+chaîne des tailles du plan) pour un OFFSET ; le harnais
+(CADRE_VIERGE : les FF à +528), le scénario (CADRE_POIGNEE = 528)
+et l'assembleur (« les offsets se CALCULENT par la chaîne des
+tailles, jamais gravés de tête ») disaient TOUS +528 — le plan
+documentait +528 noir sur blanc, la main du build a gravé 8.
+LA RETOUCHE : l'initialiseur .data devient LE MIROIR EXACT du
+CADRE_VIERGE du harnais (offset CALCULÉ : CADRE_CHEMIN +
+CADRE_TAILLE_F = 528) ET le validateur relit LE MÊME miroir —
+dev.3 validait à +8 : UN GARDE BLESSÉ PAR LE DÉFAUT QU'IL CROYAIT
+GARDER NE GARDE RIEN (le contrôle doit dériver du plan, jamais de
+la pièce qu'il contrôle) ; le zéro à +528 aurait été UNE SESSION
+FANTÔME au premier ouvrir() — le T0 du scénario l'a nommé AVANT
+tout bloc. AUCUN octet de notation (R2), aucune adresse scellée,
+aucune balise ne bouge ; la taille du fichier demeure 0x1F200 ; le
+qword version R10 : 0x00010003 → 0x00010004.
 
 LA RETOUCHE DE L'ENTRÉE 205 (dev.2 → dev.3) : le terrain a REFUSÉ dev.2
 du MÊME refus que dev.1 — 0xc000007b au geste de cartographie
@@ -68,10 +94,13 @@ La composition 0.1.0-dev.1 (charte loupe/I/README.md, le plan layout.py) :
     scellé proxy.exe 1.0.0) — la convention .text5 : la zone réservée
     int3 DANS le fichier ;
   - .data 0xE000-0x1FFFF : les zones du domaine (le CADRE 960 o — né
-    poignée INVALIDE à +528, l'initialiseur du build — le panneau, la
+    LE MIROIR du CADRE_VIERGE du harnais : zéros partout SAUF la
+    poignée INVALIDE à +528 [l'Entrée 206 — l'offset CALCULÉ par la
+    chaîne des tailles : chemin 520 + taille_f 8], l'initialiseur du
+    build — le panneau, la
     saisie, le motif, le journal, l'écran, HWND, les métriques, CUMUL 64
-    Kio finissant 0x20000) ; le RAW committé 0x400 : le CADRE seul, le
-    reste zéro-initialisé au chargement ;
+    Kio finissant 0x20000) ; LE RAW ENTIER 0x12000 COMMITTÉ (VS == RS —
+    l'Entrée 205 : plus AUCUN BSS, l'image DANS l'enveloppe de la lignée) ;
   - PE32+ QUATRE sections (VA croissantes — le miroir démo), entrée =
     LOUPE09_VA (WinMain — l'entrée EST le bloc, D161 : la réserve 64 o
     s'est inclinée, aucune fiction de trampoline), WINDOWS_GUI, image PI.
@@ -101,7 +130,7 @@ La carte : GÉNÉRATION 13 (la lignée D80, la graine durable D144 — la
 première génération du DOMAINE loupe : les i11xxxx entrent à la carte).
 
 Usage :
-  python3 build_loupe.py             # construction 0.1.0-dev.3 (+ carte gén. 13)
+  python3 build_loupe.py             # construction 0.1.0-dev.4 (+ carte gén. 13)
   python3 build_loupe.py --verifier  # re-vérification sans écriture
 """
 
@@ -559,7 +588,7 @@ ENTETE_TEXTE = ("Décalage  00 01 02 03 04 05 06 07"
                 "  08 09 0A 0B 0C 0D 0E 0F  ASCII")
 LIBELLES = [
     (L.L_USAGE, "loupe <fichier>"),
-    (L.L_BALISE, "Loupe 0.1.0-dev.3"),
+    (L.L_BALISE, "Loupe 0.1.0-dev.4"),
     (L.L_TIRET, " - "),
     (L.L_MID, " · "),
     (L.L_OCT, " o · curseur 0x"),
@@ -715,9 +744,14 @@ def composer_image(code: dict, extraits: dict):
     poser(L.R_RELOC, struct.pack("<II", L.TEXT_RVA, 12) + struct.pack("<HH", 0, 0),
           "BASERELOC minimal")
 
-    # -- .data : le CADRE committé né poignée INVALIDE ------------------------
+    # -- .data : le CADRE committé né LE MIROIR DU CADRE_VIERGE (l'Entrée 206) --
+    # LE MIROIR EXACT du harnais (harnais_noyau.py CADRE_VIERGE : zéros
+    # partout SAUF la poignée INVALIDE) — l'offset de la poignée CALCULÉ par
+    # la chaîne des tailles du plan (CADRE_CHEMIN 520 + CADRE_TAILLE_F 8 =
+    # 528), JAMAIS gravé de tête : CADRE_POIGNEE est une TAILLE (8) — dev.3
+    # l'avait prise pour un offset, le terrain a nommé [CADRE-NÉ] au témoin.
     data = bytearray(b"\x00" * L.DATA_RAW)
-    struct.pack_into("<Q", data, L.CADRE_POIGNEE, L.INVALIDE)
+    struct.pack_into("<Q", data, L.CADRE_CHEMIN + L.CADRE_TAILLE_F, L.INVALIDE)
     return bytes(texte), bytes(rdata), bytes(data), bytes(text2), _poses, table
 
 
@@ -867,16 +901,31 @@ def valider_pe(exe: bytes, code: dict, extraits: dict, poses_rdata, table_r10):
             if exe[pe.get_offset_from_rva(L.RDATA_RVA) + i] != 0:
                 raise EchecBuild(f".rdata @{rva:#x} : hors des pièces du plan "
                                  f"(la composition intégrale)")
-    # (d) .data : le CADRE né poignée INVALIDE, le reste zéro
-    if struct.unpack_from("<Q", tranche(L.R_CADRE + L.CADRE_POIGNEE, 8))[0] != L.INVALIDE:
+    # (d) .data : LE CADRE né LE MIROIR DU CADRE_VIERGE, le reste zéro —
+    # l'offset RE-LU CALCULÉ PAR LA MÊME chaîne des tailles que
+    # l'initialiseur (l'Entrée 206 : dev.3 relisait à +8 — un garde blessé
+    # par le défaut qu'il croyait garder ne garde rien ; le contrôle
+    # dérive du plan, jamais de la pièce qu'il contrôle)
+    o_poignee = L.CADRE_CHEMIN + L.CADRE_TAILLE_F
+    if struct.unpack_from("<Q", tranche(L.R_CADRE + o_poignee, 8))[0] != L.INVALIDE:
         raise EchecBuild("le CADRE à l'image n'est pas né poignée INVALIDE "
-                         "(le miroir du harnais — le zéro serait une session fantôme)")
+                         "(le miroir du harnais à +528 — le zéro serait une "
+                         "session fantôme : loupe-02 y croirait ; l'offset "
+                         "CALCULÉ par la chaîne des tailles, jamais gravé)")
+    attendu_data = bytearray(L.DATA_RAW)
+    struct.pack_into("<Q", attendu_data, o_poignee, L.INVALIDE)
+    if tranche(L.R_CADRE, L.DATA_RAW) != bytes(attendu_data):
+        raise EchecBuild("le .data né != le miroir du harnais (zéros partout "
+                         "SAUF la poignée INVALIDE à +528 — l'Entrée 206 : "
+                         "l'initialiseur .data est LE MIROIR EXACT, le reste "
+                         "des zones né zéro)")
     if len(exe) != L.TAILLE_FICHIER:
         raise EchecBuild(f"la taille du fichier != {L.TAILLE_FICHIER:#x}")
     print(f"[PE] loupe.exe : {len(exe):,} o, QUATRE sections (.text la minilibc + "
           f"la boucle scellées · .rdata les pièces + l'IAT + la machinerie + la "
           f"porte R10 + K[64] · .text2 les 18 blocs + la famille sha scellée · "
-          f".data le CADRE né poignée INVALIDE), entrée {L.ENTREE:#x} (WinMain), "
+          f".data LE CADRE né MIROIR DU CADRE_VIERGE [zéros + la poignée "
+          f"INVALIDE @+528 — l'Entrée 206]), entrée {L.ENTREE:#x} (WinMain), "
           f"WINDOWS_GUI, LA COMPOSITION INTÉGRALE comptée (chaque octet : bloc, "
           f"pièce, int3 ou marge zéro)".replace(",", " "))
 
@@ -996,9 +1045,9 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.3 (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.4 (le TGN « Loupe », M10) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.3')} "
+        f"version      : {manifeste.get('version', '0.1.0-dev.4')} "
         f"(geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
@@ -1026,7 +1075,7 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.3 (le TGN, "
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.4 (le TGN, "
           "l'application née de TRIADE entière) ===")
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
@@ -1044,7 +1093,7 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.3 le "
+    journal = [f"build 0.1.0-dev.4 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]

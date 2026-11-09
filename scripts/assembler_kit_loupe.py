@@ -6,12 +6,13 @@ Modèle : scripts/assembler_kit_m9f.py (D153) — le labo NE PEUT PAS
 exécuter le scénario (Windows + les VRAIS kernel32/user32/gdi32 exigés,
 le cœur même du run terrain) ; l'épreuve de labo est :
 
-  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.3,
-     sha256 b494ff90… ASSERTÉ — LA RETOUCHE DE L'ENTRÉE 205 : le terrain
-     a refusé dev.1 PUIS dev.2 du même refus 0xc000007b ; l'image est
-     ramenée DANS l'enveloppe de la lignée [.rdata 0x2000, .data VS==RS],
-     ET LE SCÉNARIO PORTE LA CASCADE DIAGNOSTIQUE) + scenario-loupe.py +
-     LISEZMOI-KIT-LOUPE.md ;
+  1. L'ASSEMBLAGE : loupe-kit/ = loupe.exe (l'artefact 0.1.0-dev.4,
+     sha256 1f2da283… ASSERTÉ — LA RETOUCHE DE L'ENTRÉE 206 : LE VRAI
+     CHARGEUR A CARTOGRAPHIÉ dev.3, puis le témoin a nommé [CADRE-NÉ]
+     — l'initialiseur .data devient LE MIROIR EXACT du CADRE_VIERGE du
+     harnais, le sentinel à +528 par LA CHAÎNE DES TAILLES, jamais gravé
+     de tête ; le scénario relit LE .data ENTIER contre le miroir) +
+     scenario-loupe.py + LISEZMOI-KIT-LOUPE.md ;
   2. LE RECOUP DES CONSTANTES PAR AST : chaque constante du scénario (les
      adresses scellées, l'empreinte, la version R10, les listes IAT, la
      table K, les champs du cadre) relue DANS L'ARTEFACT ou DANS LE PLAN —
@@ -40,8 +41,8 @@ KIT = "loupe-kit"
 SORTIE = pathlib.Path("/home/z/my-project/download")
 KIT_ZIP = SORTIE / "kit-loupe.zip"
 
-SHA_EXE = ("b494ff906bc60277c30dd427119e0546"
-           "b5865d3e37c751a691d19c109f5da71a")
+SHA_EXE = ("1f2da2833b47265e9b956ee83a5cc246"
+           "b68455f06f5b7bb03a69045f03503e03")
 TAILLE_EXE = 127488
 EXE = REPO / "loupe" / "loupe.exe"
 SCENARIO = REPO / "loupe" / "terrain" / "scenario-loupe.py"
@@ -156,6 +157,7 @@ def recoup(kit_dir):
                         ("CADRE_REMPLISSAGE", o_rempl),
                         ("CADRE_SALE", o_sale),
                         ("CADRE_TAMPON", o_tampon),
+                        ("DATA_VSIZE", L.DATA_VSIZE),
                         ("VERSION_R10", L.VERSION_DEV),
                         ("LIGNE_TAILLE", L.LIGNE_TAILLE),
                         ("TAMPON_SESSION", L.TAMPON_SESSION),
@@ -234,7 +236,7 @@ def recoup(kit_dir):
             struct.unpack("<Q", exe[rva_vers_raw(L.R_VERSION):
                                     rva_vers_raw(L.R_VERSION) + 8])[0],
             L.VERSION_DEV, "les octets de l'artefact")
-    print(f"[recoup] LES CONSTANTES DU SCÉNARIO RECOUPÉES : {35} adresses et "
+    print(f"[recoup] LES CONSTANTES DU SCÉNARIO RECOUPÉES : {36} adresses et "
           f"listes == le plan · l'empreinte == l'artefact · les têtes scellées "
           f"et la table K == les octets — la source unique est le dépôt")
     # LA SONDE DE L'ENTRÉE 205 : ses cibles se CALCULENT depuis l'image

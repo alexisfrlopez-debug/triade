@@ -25,6 +25,7 @@
 | docs/Protocole_TRIADE_v0.7.0_Specification.pdf | 2026-11-06T12:45:20Z | 54e66f0 | dd36eb41e36180a8f36b3d45dff912741177f3ca0fad39caad62bdc1045680fc | 99423a6b67d2e8f7b7a2514d633c3240 | 999631 | 5e5cd13fb5a7cd97ac751b3fe255f28f1b27d2214b1feb2aa3a3b12661c66cd0 | build_pdf.sh (chaîne spec_v070) |
 | docs/Protocole_TRIADE_v0.8.0_Specification.pdf | 2026-11-08T19:07:01Z | 4fb3c2e | 95226c2b24dd37355ded83ce94ff15d94be513b9b4dcbc9e8473adebd66405b4 | 9c5a47b3fdf4198e894918886f959b9a | 1016024 | 7dbdf512eda9cf922febadb8099c76c27f9c62cc4c1cdd5eb6cc92b43fac3457 | build_pdf.sh (chaîne spec_v080) |
 | docs/Protocole_TRIADE_v0.8.1_Specification.pdf | 2026-11-08T23:15:43Z | c5d8092 | 8907d50d273e8dc6e83f53e07e028262783267e5fe8bf0d6346ee0a496fb8cf1 | 8cd587d5e16e0603fc6eace60c23afc3 | 1023323 | 7b28ded7ca17b9669d035b6e1ac18018fb01bfbf6c4b2b9d791f994a6e3edcbd | build_pdf.sh (chaîne spec_v081) |
+| docs/Protocole_TRIADE_v0.8.2_Specification.pdf | 2026-11-09T06:50:32Z | 8591444 | 2c5abe4b6bc4d168157bca895f4846d06217f2c94f8ce78665768a0dacd35c6a | d173723d936a4ccb60f959cf4dfce6b0 | 1044681 | a0ea0fb88d41f63bd82b45d642d2f850cd668a6d31b6b8f926a92a3cd9b50f0f | build_pdf.sh (chaîne spec_v082) |
 
 ## Registre des consignations (chronologique)
 
@@ -60,3 +61,5 @@
 | 28 | 2026-11-08T19:07:01Z | 4fb3c2e | docs/Protocole_TRIADE_v0.8.0_Specification.pdf | 95226c2b24dd37355ded83ce94ff15d94be513b9b4dcbc9e8473adebd66405b4 | 9c5a47b3fdf4198e894918886f959b9a | 1016024 | 7dbdf512eda9cf922febadb8099c76c27f9c62cc4c1cdd5eb6cc92b43fac3457 | build_pdf.sh (chaîne spec_v080) |
 | 29 | 2026-11-08T23:10:11Z | c5d8092 | docs/Protocole_TRIADE_v0.8.1_Specification.pdf | 8907d50d273e8dc6e83f53e07e028262783267e5fe8bf0d6346ee0a496fb8cf1 | 8cd587d5e16e0603fc6eace60c23afc3 | 1023323 | e1f0b913a9c41ad3fcb4d04bc304ef17de5b85c045e74613b08ee0209784926a | build_pdf.sh (chaîne spec_v081) |
 | 30 | 2026-11-08T23:15:43Z | c5d8092 | docs/Protocole_TRIADE_v0.8.1_Specification.pdf | 8907d50d273e8dc6e83f53e07e028262783267e5fe8bf0d6346ee0a496fb8cf1 | 8cd587d5e16e0603fc6eace60c23afc3 | 1023323 | 7b28ded7ca17b9669d035b6e1ac18018fb01bfbf6c4b2b9d791f994a6e3edcbd | build_pdf.sh (chaîne spec_v081) |
+| 31 | 2026-11-09T06:49:03Z | 8591444 | docs/Protocole_TRIADE_v0.8.2_Specification.pdf | 2d5542411fb797c54170e13bef885ea33071c22421049873cb35d20514bee6b1 | daccb9f870d3d20f6a38ffd608e48625 | 1044681 | 3cb1cb1d29c7de10407e1fbfe5a05ba38c663e3fe8f6712a065c328dcd9696aa | build_pdf.sh (chaîne spec_v082) |
+| 32 | 2026-11-09T06:50:32Z | 8591444 | docs/Protocole_TRIADE_v0.8.2_Specification.pdf | 2c5abe4b6bc4d168157bca895f4846d06217f2c94f8ce78665768a0dacd35c6a | d173723d936a4ccb60f959cf4dfce6b0 | 1044681 | a0ea0fb88d41f63bd82b45d642d2f850cd668a6d31b6b8f926a92a3cd9b50f0f | build_pdf.sh (chaîne spec_v082) |

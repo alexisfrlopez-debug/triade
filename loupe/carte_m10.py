@@ -21,11 +21,15 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE BUILD du domaine : loupe.exe 0.1.0-dev.3 (LA RETOUCHE DE
-    L'ENTRÉE 205 — dev.2 refusé par le terrain du MÊME refus
-    0xc000007b : le BASERELOC était nécessaire mais pas suffisant ;
-    dev.3 ramène l'image dans l'enveloppe de la lignée — plus de trou
-    de page, plus de BSS ; le geste de BUILD, jamais
+  - LE BUILD du domaine : loupe.exe 0.1.0-dev.4 (LA RETOUCHE DE
+    L'ENTRÉE 206 : LE VRAI CHARGEUR A CARTOGRAPHIÉ dev.3 — la
+    PREMIÈRE fois au terrain — puis le témoin a nommé [CADRE-NÉ] :
+    le CADRE .data n'était pas né poignée INVALIDE, l'initialiseur
+    du build avait pris la TAILLE CADRE_POIGNEE (8) pour un offset
+    et posé le sentinel à +8 au lieu de +528 (la chaîne des
+    tailles du plan) ; dev.4 fait de l'initialiseur .data LE
+    MIROIR EXACT du CADRE_VIERGE du harnais, offset CALCULÉ — et le
+    validateur relit LE MÊME miroir ; le geste de BUILD, jamais
     scellage — la balise `loupe 0.1.0` se scellera sur le run
     terrain vert recoupé, M10-(e) : la porte est de processus).
 
@@ -75,8 +79,10 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV = "0.1.0-dev.3"     # la retouche de l'Entrée 205 (dev.2 refusé
-                                 # par le terrain — le geste de BUILD)
+VERSION_DEV = "0.1.0-dev.4"     # la retouche de l'Entrée 206 (dev.3 :
+                                 # [CADRE-NÉ] nommé au témoin —
+                                 # l'initialiseur .data devient LE MIROIR
+                                 # EXACT du CADRE_VIERGE du harnais)
 VERSION_FINALE = "0.1.0"        # la finale (le miroir layout.VERSION_FINALE
                                 # 0x00010000 — le scellage est un fait de
                                 # carte : la 0.1.0 attend le run terrain vert

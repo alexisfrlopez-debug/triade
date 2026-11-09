@@ -4,17 +4,19 @@ r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
 NATURE.
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.3 du jalon M10 — 127 488 o, sha256
-              b494ff906bc60277c30dd427119e0546b5865d3e37c751a691d19c109f5da71a
-              (LA RETOUCHE DE L'ENTRÉE 205 : le terrain a REFUSÉ dev.2 du
-              MÊME refus 0xc000007b que dev.1 — le BASERELOC de l'Entrée
-              204 était NÉCESSAIRE mais PAS SUFFISANT ; dev.3 ramène
-              l'image DANS l'enveloppe prouvée des HUIT artefacts de la
-              lignée : plus AUCUN trou de page [.rdata 0x1000 → 0x2000],
-              plus AUCUN BSS [.data VS == RS 0x12000] — AUCUNE adresse
-              scellée ne bouge ; lecture seule pour le run — le scénario
-              ne l'écrit JAMAIS ; la carte privée ne voyage JAMAIS avec
-              l'artefact, R1) ;
+  loupe.exe   le build 0.1.0-dev.4 du jalon M10 — 127 488 o, sha256
+              1f2da2833b47265e9b956ee83a5cc246b68455f06f5b7bb03a69045f03503e03
+              (LA RETOUCHE DE L'ENTRÉE 206 : LE VRAI CHARGEUR A
+              CARTOGRAPHIÉ dev.3 — la PREMIÈRE fois au terrain, l'enveloppe
+              PROUVÉE — puis LE TÉMOIN A NOMMÉ [CADRE-NÉ] : le CADRE .data
+              n'était pas né poignée INVALIDE, l'initialiseur du build avait
+              posé le sentinel à +8 au lieu de +528 [la chaîne des tailles
+              du plan] ; dev.4 fait de l'initialiseur .data LE MIROIR EXACT
+              du CADRE_VIERGE du harnais — zéros partout SAUF la poignée
+              INVALIDE à +528 — ET le scénario relit désormais LE CADRE
+              ENTIER contre le miroir ; AUCUNE adresse scellée ne bouge ;
+              lecture seule pour le run — le scénario ne l'écrit JAMAIS ;
+              la carte privée ne voyage JAMAIS avec l'artefact, R1) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
               sys, tempfile — AUCUN paquet à installer).
 
@@ -49,8 +51,10 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    l'image (la minilibc M1 @0x1100/0x1180/0x13C0, la
                    boucle démo @0x15C0, la famille sha M9 @0xC000+, LA
                    TABLE K[64] @0x2F00 — les constantes FIPS 180-4, le
-                   qword version R10 @0x2E80, le CADRE .data né poignée
-                   INVALIDE, l'IAT démo réservée @0x2818, LE BASERELOC
+                   qword version R10 @0x2E80, le CADRE .data né LE MIROIR
+                   du harnais [la poignée INVALIDE à +528, le reste né
+                   zéro — la leçon de l'Entrée 206, le .data ENTIER
+                   relu], l'IAT démo réservée @0x2818, LE BASERELOC
                    minimal déclaré dirs[5] (la leçon de l'Entrée 204 :
                    sans table, le VRAI chargeur refuse de reloger
                    l'image ASLR).
@@ -65,7 +69,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   b494ff906bc60277….
+                   1f2da2833b47265e….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -114,12 +118,12 @@ PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
 # --- l'artefact : la carte génération 13 prouve CES octets -----------------------
-SHA_EXE = ("b494ff906bc60277c30dd427119e0546"
-           "b5865d3e37c751a691d19c109f5da71a")
+SHA_EXE = ("1f2da2833b47265e9b956ee83a5cc246"
+           "b68455f06f5b7bb03a69045f03503e03")
 TAILLE_EXE = 127488
-VERSION_R10 = 0x00010003          # loupe 0.1.0-dev.3 (le qword @0x2E80 —
-                                   # la retouche de l'Entrée 205 : l'image
-                                   # ramenée DANS l'enveloppe de la lignée)
+VERSION_R10 = 0x00010004          # loupe 0.1.0-dev.4 (le qword @0x2E80 —
+                                   # la retouche de l'Entrée 206 : le CADRE
+                                   # né LE MIROIR DU CADRE_VIERGE du harnais)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
 R_LIBC01 = 0x1100      # memcpy M1 (le scellé selftest.exe)
@@ -150,6 +154,8 @@ R_LOUPE13 = 0x5740     # la recherche
 R_LOUPE16 = 0x6240     # la saisie
 R_LOUPE17 = 0x6500     # la sauvegarde
 R_CADRE = 0xE000       # le cadre de session 960 o
+DATA_VSIZE = 0x12000   # la taille .data du plan (VS == RS — l'Entrée 205 :
+                       # le .data ENTIER relu contre le miroir à la naissance)
 CADRE_CHEMIN = 0       # UTF-16[260] @ +0
 CADRE_TAILLE = 520     # u64 @ +520
 CADRE_POIGNEE = 528    # u64 @ +528 (INVALIDE hors session)
@@ -334,7 +340,7 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.3) ===")
+    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.4) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")
@@ -374,7 +380,7 @@ def main():
         # LA CASCADE DIAGNOSTIQUE D'ABORD (l'Entrée 205) : le kit porte
         # son bissecteur — les axes de dev.2 reconstitués UN À UN, le
         # VRAI chargeur nomme le fautif AVANT le refus du run
-        consigne("[sonde] LA CARTOGRAPHIE DE dev.3 A ÉTÉ REFUSÉE — LA "
+        consigne("[sonde] LA CARTOGRAPHIE DE dev.4 A ÉTÉ REFUSÉE — LA "
                  "CASCADE DIAGNOSTIQUE DE L'ENTRÉE 205 SE JOUE (les axes "
                  "reconstitués sur des copies %TEMP%, l'artefact intact)")
         for ligne in sonde_entree_205(k32, donnees):
@@ -406,10 +412,20 @@ def main():
              "180-4 § 4.2.2 (la table du scellé M9)")
     if struct.unpack("<Q", lire(R_VERSION, 8))[0] != VERSION_R10:
         echec("PORTE-R10", f"le qword version @0x2E80 != {VERSION_R10:#x} "
-             f"(loupe 0.1.0-dev.3)")
-    if struct.unpack("<Q", lire(R_CADRE + CADRE_POIGNEE, 8))[0] != INVALIDE:
-        echec("CADRE-NÉ", "le CADRE .data n'est pas né poignée INVALIDE "
-             "(l'initialiseur du build)")
+             f"(loupe 0.1.0-dev.4)")
+    # LE CADRE NÉ MIROIR DU CADRE_VIERGE (LA LEÇON DE L'ENTRÉE 206 : le
+    # terrain a nommé [CADRE-NÉ] sur dev.3 — l'initialiseur du build avait
+    # posé le sentinel à +8 [une TAILLE prise pour un offset] au lieu de
+    # +528 [la chaîne des tailles] ; dev.4 fait de l'initialiseur LE
+    # MIROIR EXACT du harnais — zéros partout SAUF la poignée INVALIDE
+    # à +528, et les zones .data au-delà du cadre NÉES ZÉRO) : le .data
+    # ENTIER relu contre LE MÊME miroir — la porte demeure pour toujours
+    cadre_vierge = bytearray(DATA_VSIZE)
+    struct.pack_into("<Q", cadre_vierge, CADRE_POIGNEE, INVALIDE)
+    if lire(R_CADRE, DATA_VSIZE) != bytes(cadre_vierge):
+        echec("CADRE-NÉ", "le CADRE .data n'est pas né LE MIROIR du harnais "
+             "(zéros partout SAUF la poignée INVALIDE à +528 — "
+             "l'initialiseur du build, la leçon de l'Entrée 206)")
     # LE BASERELOC MINIMAL DÉCLARÉ (la leçon de l'Entrée 204) : le répertoire
     # dirs[5] de l'image MAPPÉE — sans lui le VRAI chargeur refuse de reloger
     # l'image ASLR : 0xc000007b, LE REFUS NOMMÉ DU TERRAIN sur dev.1
@@ -424,9 +440,11 @@ def main():
     consigne("[T0] les adresses scellées CONSTATÉES : la minilibc M1 "
              "@0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille "
              "sha M9 @0xC000+ (H0[0] 0x6A09E667 posé par le scellé) · LA "
-             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010003 · "
-             "le CADRE né poignée INVALIDE · LE BASERELOC minimal déclaré "
-             "dirs[5] (0x2E90, 12 o — la leçon de l'Entrée 204)")
+             "TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010004 · "
+             "le CADRE né LE MIROIR DU CADRE_VIERGE (la poignée INVALIDE "
+             "@+528, le .data entier relu — l'Entrée 206) · LE BASERELOC "
+             "minimal déclaré dirs[5] (0x2E90, 12 o — la leçon de l'Entrée "
+             "204)")
 
     # le scénario-chargeur : LES 34 FEUILLES RÉSOLUES + posées aux slots du
     # plan (+ les TROIS de l'IAT démo scellée) — VirtualProtect le temps de

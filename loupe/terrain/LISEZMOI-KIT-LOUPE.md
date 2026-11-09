@@ -5,20 +5,24 @@
 > ont noté-mesuré-prouvé chaque bloc (157 contrôles verts aux trois
 > graines) ; la cérémonie d'ère a ouvert le build (le garde à QUATORZE
 > arbres verts, la dette soldée — Entrée 201) ; le build est NÉ
-> (**loupe.exe 0.1.0-dev.3**, 127 488 o, sha256
-> `b494ff906bc60277c30dd427119e0546b5865d3e37c751a691d19c109f5da71a`,
+> (**loupe.exe 0.1.0-dev.4**, 127 488 o, sha256
+> `1f2da2833b47265e9b956ee83a5cc246b68455f06f5b7bb03a69045f03503e03`,
 > la carte génération 13, le verrou croisé 26/26 — Entrées 202 → 204 →
-> 205 : le terrain a REFUSÉ dev.1 [0xc000007b : l'image ASLR sans table
-> de relocalisation, l'oubli nommé du premier build] PUIS dev.2 DU MÊME
-> REFUS [le BASERELOC rendu était NÉCESSAIRE mais PAS SUFFISANT] ; LA
-> RETOUCHE DE L'ENTRÉE 205 ramène l'image DANS l'enveloppe prouvée des
-> HUIT artefacts de la lignée passés au terrain : .rdata étendue 0x1000
-> → 0x2000 [plus AUCUN trou de page] et .data VS == RS [plus AUCUN
-> BSS] — AUCUNE adresse scellée ne bouge ; ET LE KIT PORTE DÉSORMAIS
-> SON BISSECTEUR : LA CASCADE DIAGNOSTIQUE du scénario reconstitue UN À
-> UN les axes de dev.2 sur des copies %TEMP% — le VRAI chargeur NOMME
-> l'axe fautif, et les boîtes bloquantes « Image incorrecte » sont
-> coupées : le refus est nommé PAR LE TÉMOIN). Il reste
+> 205 → 206 : le terrain a REFUSÉ dev.1 [0xc000007b : l'image ASLR sans
+> table de relocalisation, l'oubli nommé du premier build] PUIS dev.2 DU
+> MÊME REFUS [le BASERELOC rendu était NÉCESSAIRE mais PAS SUFFISANT —
+> l'Entrée 205 a ramené l'image DANS l'enveloppe prouvée de la lignée
+> ET PORTÉ LA CASCADE DIAGNOSTIQUE] ; LE RUN dev.3 A ÉTÉ LE PAS
+> DÉCISIF : **LE VRAI CHARGEUR A CARTOGRAPHIÉ L'IMAGE** — la première
+> fois au terrain, l'enveloppe PROUVÉE — puis le témoin a nommé
+> **[CADRE-NÉ]** : le CADRE .data n'était pas né poignée INVALIDE,
+> l'initialiseur du build avait pris la TAILLE CADRE_POIGNEE (8) pour
+> un offset et posé le sentinel à +8 au lieu de +528 [la chaîne des
+> tailles du plan] ; LA RETOUCHE DE L'ENTRÉE 206 fait de l'initialiseur
+> .data LE MIROIR EXACT du CADRE_VIERGE du harnais [zéros partout SAUF
+> la poignée INVALIDE à +528, l'offset CALCULÉ — jamais gravé de tête]
+> ET le scénario relit désormais LE .data ENTIER contre le miroir). Il
+> reste
 > LE GESTE QUI NE PEUT ÊTRE FAIT QU'ICI : l'application vit chez son
 > utilisateur — LE VRAI Windows 11, les VRAIS fichiers, la VRAIE vitrine.
 
@@ -26,8 +30,8 @@
 
 ```
 loupe-kit/
-├── loupe.exe          l'ARTEFACT 0.1.0-dev.3 (127 488 o, sha256
-│                      b494ff90… — lecture seule pour le run ; la carte
+├── loupe.exe          l'ARTEFACT 0.1.0-dev.4 (127 488 o, sha256
+│                      1f2da283… — lecture seule pour le run ; la carte
 │                      privée ne voyage JAMAIS avec l'artefact, R1) ;
 ├── scenario-loupe.py  LE SCÉNARIO (python SEUL : ctypes, hashlib, os,
 │                      platform, struct, sys, tempfile — les constantes
@@ -41,9 +45,9 @@ loupe-kit/
 
 1. **Extraire** le zip COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1 ou de dev.2 par exemple — créez-en un NEUF,
-   `loupe-kit-3/` par exemple : l'artefact refusé ne se réutilise
-   jamais). Sur votre Windows 11 : `loupe-kit/`.
+   déjà — celui de dev.1, de dev.2 ou de dev.3 par exemple — créez-en
+   un NEUF, `loupe-kit-4/` par exemple : l'artefact refusé ne
+   se réutilise pas). Sur votre Windows 11 : `loupe-kit/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure

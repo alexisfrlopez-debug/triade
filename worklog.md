@@ -7298,3 +7298,69 @@ Work Log:
   SOIT le verdict ; si le vert tient : la balise `loupe 0.1.0` scellée
   — LE JALON M10 ; si le refus demeure : la sonde a nommé l'axe, la
   retouche suivante est un fait.
+## Task ID 124 — LE TROISIÈME REFUS TERRAIN REÇU ET LA RETOUCHE dev.4 NÉE : LE VRAI CHARGEUR A CARTOGRAPHIÉ dev.3 (l'enveloppe PROUVÉE — la première fois au terrain), puis le témoin a nommé [CADRE-NÉ] (l'initialiseur du build, le sentinel à +8 au lieu de +528) ; l'initialiseur .data devient LE MIROIR EXACT du CADRE_VIERGE du harnais ET le garde est guéri (le validateur relit LE MÊME miroir) ; le kit dev.4 livré au coffre (09/11, troisième)
+
+- LE FAIT DU TERRAIN (« preuves-loupe déposées dans le dossier /test du
+  drive ») : le témoin rapatrié (temoin-loupe.txt 522 o, md5 72761cd6…)
+  — [env] Windows 11 · Python 64 bits · AMD64 ; [T0] l'empreinte
+  ASSERTÉE (loupe.exe 127 488 o, sha256 b494ff90… — dev.3
+  AUTHENTIQUE) ; [T0] L'IMAGE CARTOGRAPHIÉE DONT_RESOLVE @
+  0x7ff740e20000 — LE VRAI CHARGEUR DE WINDOWS A ACCEPTÉ L'IMAGE :
+  LA PREMIÈRE FOIS AU TERRAIN (dev.1 et dev.2 mouraient à ce geste —
+  0xc000007b : LE BASERELOC + L'ENVELOPPE DE L'ENTRÉE 205 PROUVÉS) ;
+  les adresses scellées CONSTATÉES VERTES — puis ÉCHEC NOMMÉ
+  [CADRE-NÉ] : « le CADRE .data n'est pas né poignée INVALIDE
+  (l'initialiseur du build) ». La sonde n'a pas eu à se jouer : le
+  défaut était DANS LA PIÈCE, le T0 l'a nommé AVANT tout bloc.
+- LE DIAGNOSTIC SUR PIÈCES : le qword @0xE210 (+528) vaut ZÉRO, le
+  sentinel INVALIDE est @0xE008 (+8 — DANS le chemin UTF-16) :
+  L'INITIALISEUR AVAIT PRIS `L.CADRE_POIGNEE` (UNE TAILLE, 8) POUR UN
+  OFFSET ; la chaîne des tailles du plan dit +528 (CADRE_CHEMIN 520 +
+  CADRE_TAILLE_F 8) — le plan [« u64 @ +528 »], le harnais
+  [CADRE_VIERGE : `b"\x00"*528 + b"\xFF"*8 + b"\x00"*424`], le
+  scénario [CADRE_POIGNEE = 528] et l'assembleur [« les offsets se
+  CALCULENT, jamais gravés de tête »] disaient TOUS +528. LE COÛT SI
+  LE T0 N'AVAIT PAS NOMMÉ : session fantôme au premier ouvrir() —
+  loupe-01 croirait une session vivante, l'application ne pourrait
+  JAMAIS ouvrir un fichier.
+- LA RETOUCHE dev.4 : build_loupe.py l'initialiseur `struct.pack_into
+  ("<Q", data, L.CADRE_CHEMIN + L.CADRE_TAILLE_F, L.INVALIDE)`
+  (l'offset CALCULÉ, jamais gravé) ; layout.py + carte_m10.py
+  VERSION_DEV 0x00010004, balise « Loupe 0.1.0-dev.4 » ; AUCUNE
+  adresse scellée, aucun octet de notation, la taille 0x1F200
+  demeure. LE BUILD REJOUÉ : garde 14/14 VERT · oracle 43 verrous ·
+  R7 double preuve · LES TROIS HARNAIS VERTS AU GESTE (59/53/45 — 157
+  contrôles) · loupe.exe 0.1.0-dev.4 NÉ (127 488 o, sha256
+  1f2da283…, carte génération 13 réécrite, verrou croisé 26/26,
+  re-vérification IDENTIQUE — DÉTERMINISTE).
+- LE GARDE GUÉRI (le correctif STRUCTUREL) : dev.3 validait à +8 —
+  LA MÊME CONSTANTE FAUTIVE que l'initialiseur : UN GARDE BLESSÉ PAR
+  LE DÉFAUT QU'IL CROYAIT GARDER NE GARDE RIEN. Le validateur relit
+  désormais LE MÊME MIROIR QUE L'INITIALISEUR ET LA COMPARAISON
+  DEVIENT ENTIÈRE (les 0x12000 o du .data contre zéros + sentinel à
+  +528 : le CADRE ET TOUTES LES ZONES relu à l'octet près). LE
+  CONTRÔLE DÉRIVE DU PLAN, JAMAIS DE LA PIÈCE QU'IL CONTRÔLE.
+- LE KIT REJOUÉ : le scénario à l'empreinte dev.4 + VERSION_R10
+  0x00010004 + LE T0 RENFORCÉ EN MIROIR (le .data ENTIER relu contre
+  le miroir — un écart d'UN OCTET serait nommé) ; le LISEZMOI
+  raconté (le pas décisif ET l'échec nommé), le geste D99 à
+  `loupe-kit-4/` ; le recoup PORTÉ À 36 CONSTANTES (DATA_VSIZE),
+  py_compile, l'extraction vierge — kit-loupe.zip 26 048 o, md5
+  7175e90a…, sha256 2fc805e2….
+- LE COFFRE (D143 — archiver_run_loupe_dev3.py + deposer_kit_loupe_
+  r4.py) : LE TÉMOIN ROUGE ARCHIVÉ AVEC LE VERDICT → archives-preuves/
+  preuves-run-loupe-dev3/ (temoin + VERDICT-run-loupe-dev3.txt :
+  ROUGE, l'échec nommé) ; la vague dev.3 REFUSÉE archivée VERSIONNÉE
+  → vagues-m10/ (kit-loupe-dev.3.zip 13dbe746… + LISEZMOI-loupe-
+  dev.3.txt 98085071…) ; LA VAGUE dev.4 à la racine (kit-loupe.zip
+  7175e90a… + LISEZMOI-loupe.txt) ; le réceptacle preuves-loupe/
+  LISEZMOI à l'artefact dev.4 (1f2da283…) ; les index mis à jour ;
+  LES PIÈCES DE L'ÈRE DEMEURENT (signatures-I.txt f33c803a… +
+  cle-publique-I.txt 188a7d42…).
+- SUITE : LE RUN REJOUÉ — kit NEUF au coffre /test, dossier NEUF
+  D99 (`loupe-kit-4/`), python scenario-loupe.py, VIVRE LA VITRINE,
+  preuves-loupe/ ENTIER au coffre QUEL QUE SOIT le verdict ; si le
+  vert tient : la balise `loupe 0.1.0` scellée — LE JALON M10 ; si le
+  refus demeure : le témoin nommera le défaut comme il l'a fait
+  trois fois — chaque refus a nommé son défaut, chaque défaut a reçu
+  sa retouche.

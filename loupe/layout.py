@@ -18,21 +18,30 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010003           # loupe 0.1.0-dev.3 (LA RETOUCHE DE
-                                   # L'ENTRÉE 205 : le terrain a REFUSÉ dev.2
-                                   # du MÊME refus 0xc000007b au geste de
-                                   # cartographie — le BASERELOC dev.2 était
-                                   # NÉCESSAIRE mais PAS SUFFISANT ; dev.3
-                                   # ramène l'image DANS l'enveloppe prouvée
-                                   # de la lignée : .rdata étendue 0x2000
-                                   # (plus AUCUN trou de page) et .data
-                                   # VS==RS 0x12000 (plus AUCUN BSS) — les
-                                   # HUIT artefacts M0..M9 passés au terrain
-                                   # n'avaient NI trou NI BSS ; le miroir du
-                                   # format 0xJJNNPPDD : 0.9.0-dev.1 ==
+VERSION_DEV = 0x00010004           # loupe 0.1.0-dev.4 (LA RETOUCHE DE
+                                   # L'ENTRÉE 206 : LE VRAI CHARGEUR A
+                                   # CARTOGRAPHIÉ dev.3 — l'enveloppe de
+                                   # l'Entrée 205 PROUVÉE AU TERRAIN, la
+                                   # PREMIÈRE fois — puis LE TÉMOIN A NOMMÉ
+                                   # [CADRE-NÉ] : le CADRE .data n'était pas
+                                   # né poignée INVALIDE, l'initialiseur du
+                                   # build avait pris LA TAILLE
+                                   # CADRE_POIGNEE (8) pour un offset et posé
+                                   # le sentinel à +8 au lieu de +528 (la
+                                   # chaîne des tailles du plan : chemin
+                                   # 520 + taille_f 8 — le harnais, le
+                                   # scénario et l'assembleur disaient TOUS
+                                   # +528) ; dev.4 fait de l'initialiseur LE
+                                   # MIROIR EXACT du CADRE_VIERGE du harnais,
+                                   # offset CALCULÉ par la chaîne, jamais
+                                   # gravé de tête — et le validateur du
+                                   # build relit LE MÊME miroir (dev.3
+                                   # validait à +8 : le garde blessé par le
+                                   # défaut qu'il croyait garder) ; le miroir
+                                   # du format 0xJJNNPPDD : 0.9.0-dev.1 ==
                                    # 0x00090001 [M8], 1.0.0-dev.4 ==
-                                   # 0x01000004 [M9] ; 0.1.0-dev.3 ==
-                                   # 0x00010003)
+                                   # 0x01000004 [M9] ; 0.1.0-dev.4 ==
+                                   # 0x00010004)
 VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
                                    # terrain vert recoupé)
@@ -730,9 +739,11 @@ R_HWND = 0xFDE0               # loupe-09 : HWND_PRINCIPAL (fin 0xFDE8)
 R_METRIQUES = 0xFDF0          # loupe-10 : la police mesurée une fois
 R_CUMUL = 0x10000             # LA fenêtre de lecture 64 Kio (l'exclusion de
                               # famille : empreintes 05/06/07 + recherche 14)
-# LE CADRE À L'IMAGE naît poignée INVALIDE : l'initialiseur .data du build
-# posera 0xFFFF…FFFF à +528 (le miroir du harnais, qui pose le même état
-# AVANT tout appel — le zéro de la mémoire vierge serait une session
+# LE CADRE À L'IMAGE naît LE MIROIR EXACT du harnais (CADRE_VIERGE :
+# zéros partout SAUF la poignée INVALIDE à +528 — l'Entrée 206 : dev.3
+# l'avait posée à +8, le terrain l'a nommé [CADRE-NÉ] ; l'offset se
+# CALCULE par la chaîne des tailles : CADRE_CHEMIN + CADRE_TAILLE_F,
+# jamais gravé de tête — le zéro de la mémoire vierge serait une session
 # fantôme : loupe-02 y croirait) ; loupe-04 reste LE geste de remise au
 # vierge en cours de vie (loupe-01/03 l'appellent)
 

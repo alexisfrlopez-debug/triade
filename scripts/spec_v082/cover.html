@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 794px 1123px; margin: 0; }
+    :root {
+      /* Palette : famille bleu nuit (série TRIADE) — Template 03 */
+      --c-bg: #162032;
+      --c-accent: #4A90C4;
+      --c-text: #FFFFFF;
+      --c-muted: #90A8C0;
+      --c-footer: #607080;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      width: 794px; height: 1123px;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: 'Inter', 'Liberation Sans', sans-serif;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); }
+      body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); }
+    }
+    .cover { width: 794px; height: 1123px; position: relative; box-sizing: border-box; }
+    .vline { position: absolute; left: 57px; top: 76px; bottom: 76px; width: 2.5px; background: var(--c-accent); }
+    .content { position: absolute; left: 102px; right: 76px; top: 0; bottom: 0; }
+    .label {
+      position: absolute; top: 132px;
+      font-size: 9pt; color: var(--c-accent);
+      letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Inter', 'Liberation Sans', sans-serif;
+    }
+    .title {
+      position: absolute; top: 228px;
+      font-size: 32pt; font-weight: 700; line-height: 1.3;
+      font-family: 'Playfair Display', 'Liberation Serif', serif;
+      color: var(--c-text); max-width: 580px;
+    }
+    .subtitle {
+      position: absolute; top: 560px;
+      font-size: 12pt; line-height: 1.55;
+      color: var(--c-muted); max-width: 520px;
+    }
+    .authors { position: absolute; top: 800px; font-size: 12pt; color: var(--c-text); }
+    .institution { position: absolute; top: 848px; font-size: 10pt; color: var(--c-muted); line-height: 1.4; }
+    .footer {
+      position: absolute; bottom: 76px; left: 0; right: 0;
+      display: flex; justify-content: space-between;
+      font-size: 9pt; color: var(--c-footer);
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="vline"></div>
+    <div class="content">
+      <div class="label">Sp&eacute;cification technique &middot; Version 0.8.2</div>
+      <div class="title">Protocole TRIADE&nbsp;: gouvernance v&eacute;rifiable du d&eacute;veloppement logiciel assist&eacute; par IA</div>
+      <div class="subtitle">
+        Seconde r&eacute;vision de terrain du TGN (Entr&eacute;es 201&ndash;206)&nbsp;: la
+        c&eacute;r&eacute;monie d&rsquo;&egrave;re PASS&Eacute;E SUR PI&Egrave;CES (le garde &agrave; quatorze
+        arbres), le build loupe.exe N&Eacute; — et LE TERRAIN A DIT TROIS FOIS, chaque
+        refus nomm&eacute;&nbsp;: deux refus du chargeur (0xc000007b — l&rsquo;oubli du
+        BASERELOC, puis la table n&eacute;cessaire mais pas suffisante), puis LE PAS
+        D&Eacute;CISIF&nbsp;: LE VRAI CHARGEUR A CARTOGRAPHI&Eacute; L&rsquo;IMAGE (la premi&egrave;re
+        fois au terrain) et le t&eacute;moin a nomm&eacute; [CADRE-N&Eacute;] — l&rsquo;initialiseur du
+        build. LA RETOUCHE dev.4&nbsp;: l&rsquo;initialiseur .data MIROIR EXACT du
+        CADRE_VIERGE du harnais, LE GARDE GU&Eacute;RI (le validateur relit le m&ecirc;me
+        miroir&nbsp;: le contr&ocirc;le d&eacute;rive du plan, jamais de la pi&egrave;ce qu&rsquo;il
+        contr&ocirc;le). M0&ndash;M9 franchis, M10 ouvert. Hi&eacute;rarchie
+        inchang&eacute;e&nbsp;: S&eacute;curit&eacute; &gt; Performance &gt; Optimisation &gt;
+        Co&ucirc;t en tokens.
+      </div>
+      <div class="authors">Alexis FR-LOPEZ &middot; Agent Z.ai (GLM)</div>
+      <div class="institution">Projet TRIADE &mdash; d&eacute;veloppement agent-first<br>
+        Souverainet&eacute; cryptographique &middot; coffre-fort CF1&nbsp;&rarr;&nbsp;CF3 &middot; sceau de l&rsquo;Intention &middot; c&eacute;r&eacute;monies et kit du terrain&nbsp;: jalons M0&ndash;M10</div>
+      <div class="footer">
+        <span>Document normatif &middot; s&eacute;rie TRIADE &middot; r&eacute;vision v0.8.2 (la seconde r&eacute;vision de terrain du TGN)</span>
+        <span>9 novembre 2026</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
