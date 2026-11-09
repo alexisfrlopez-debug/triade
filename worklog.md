@@ -7426,3 +7426,35 @@ Work Log:
   : la balise `loupe 0.1.0` scellée — LE JALON M10 ; côté labo : un
   jeton GitHub frais (le dépôt est prêt), la carte génération 15 à
   régénérer.
+
+Task: LE JETON GIT RENOUVELÉ (Entrée 212) — « nouveau token pour git
+dans le dossier /tokens du drive » : le jeton frais rapatrié du /tokens,
+LE PUSH GITHUB VÉCU — les 155 commits sur origin/main (f62711b..05e523e),
+LES TROIS MIROIRS ALIGNÉS (local, Drive, GitHub) ; le crochet post-commit
+rebranché (miroir + kit Cérémonie au même geste, D130) (09/11).
+
+Work Log:
+- JETON : le nouveau jeton GitHub lu au /tokens du Drive (public au
+  lien — les quatre pièces relues, le relais Drive revalidé :
+  access_token OK), installé à .gdrive/token_git.txt (600, D12 —
+  remplaçant le mort ca8c146b… « Bad credentials ») ; le bac à sable
+  recyclé avait perdu son .gdrive/ racine, triade/.gdrive/ survécut.
+- L'AUTHENTIFICATION : scripts/git_cred_helper.sh (commis) — l'aide
+  d'identification lit le jeton à .gdrive/ au moment du push, le
+  jeton JAMAIS affiché, JAMAIS commis (D12) ; premier recoup
+  ls-remote VERT.
+- LE PUSH : fast-forward vérifié (f62711b ancêtre), push origin main
+  → f62711b..05e523e (LES 155 COMMITS : les 152 de l'histoire
+  récupérée du bundle + les Entrées 209-211) ; recoup après :
+  origin/main == 05e523e == main local — GITHUB REJOINT, les trois
+  miroirs disent LA MÊME CHOSE.
+- LE HOOK REBRANCHÉ : .git/hooks/post-commit réinstallé depuis
+  git-hooks/ (le dépôt reconstruit du bundle en était dépourvu) — le
+  présent commit embarque drive_sync.py (miroir) + maj_kit.py (kit
+  Cérémonie), le même geste D130, sorties à .gdrive/last_sync.log.
+- LE BRUIT DE PERMISSIONS : 618 fichiers suivis passés 644→755 au
+  recyclage du bac à sable, contenu IDENTIQUE (zéro octet changé) —
+  constaté, neutralisé SANS commit (core.fileMode false).
+- SUITE : LE RUN DU KIT dev.8 AU COFFRE — si le vert tient : la
+  balise loupe 0.1.0 scellée — LE JALON M10 ; côté labo : la carte
+  génération 15 à régénérer, la vitrine attend son témoin.

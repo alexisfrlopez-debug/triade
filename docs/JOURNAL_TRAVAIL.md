@@ -9167,6 +9167,22 @@ LES COMPOSANTS VÉRIFIÉS SUR PIÈCES DÉTACHÉES (le garde n'est PAS appelé �
 
 - SUITE : LE RUN DU KIT dev.8 AU COFFRE (kit-loupe.zip ou loupe-kit-8/ — dossier NEUF D99, python scenario-loupe.py, LA VITRINE PAR SON TÉMOIN, preuves-loupe/ ENTIER QUEL QUE SOIT LE VERDICT) ; SI LE VERT TIENT : la balise `loupe 0.1.0` scellée — LE JALON M10 ; ET CÔTÉ LABO : un jeton GitHub frais pour le push (le dépôt est prêt, l'histoire est complète), la carte génération 15 à régénérer, la vitrine attend son témoin.
 
+## Entrée 212 — « nouveau token pour git dans le dossier /tokens du drive » : LE JETON FRAIS REÇU, LE PUSH GITHUB VÉCU — LES 155 COMMITS SUR origin/main, LES TROIS MIROIRS ALIGNÉS (09/11, la session du jeton renouvelé)
+
+**Le fait du développeur (la réponse à la dette nommée).** L'Entrée 211 avait nommé : « LE PUSH GITHUB DEMEURE EN ATTENTE d'un jeton frais » (l'ancien rendit « Bad credentials » — il authentifia le clone puis cessa d'être reçu). Le développeur déposa LE REMPLACEMENT au /tokens du Drive : token_git.txt renouvelé (40 o, format ghp_, md5 09ac2fbc…) — la dette est payée au geste même.
+
+**Le rapatriement (le dossier /tokens lu au lien public du coffre).** Le bac à sable recyclé avait perdu son .gdrive/ racine (triade/.gdrive/ survécut) : les QUATRE PIÈCES furent relues au lien du /tokens (le secret client, le relais, le compte de service, ET le jeton git neuf) — le relais REVALIDÉ au passage (access_token OK), le jeton mort remplacé à .gdrive/token_git.txt (l'ancien, 93 o, md5 ca8c146b… ; le neuf, 40 o, md5 09ac2fbc…). Permissions 600, exclus du dépôt (D12 : JAMAIS affichés, JAMAIS commis, JAMAIS synchronisés).
+
+**L'authentification (scripts/git_cred_helper.sh — l'outillage de la session, commis).** Une aide d'identification git lit le jeton à .gdrive/token_git.txt au moment du push (store/erre no-op : le jeton ne vit QUE dans .gdrive/) ; le premier recoup par `git ls-remote` fut VERT — le jeton neuf est reçu.
+
+**LE PUSH (la dette de synchro soldée sur pièces).** Fast-forward vérifié AVANT (f62711b ancêtre de 05e523e — le dépôt ne peut que couronner l'histoire, jamais la réécrire) ; `git push origin main` : **f62711b..05e523e main -> main — LES 155 COMMITS** (les 152 de l'histoire récupérée du bundle des Entrées 126→208, plus les Entrées 209, 210 et 211). Recoup APRÈS par ls-remote : origin/main == 05e523e == main local. GITHUB REJOINT : les TROIS MIROIRS ALIGNÉS — le clone local, le miroir Drive (fichiers + bundle vivant), et origin/main disent LA MÊME CHOSE.
+
+**Le crochet rebranché (le dépôt reconstruit en était dépourvu).** Le reset sur l'état vrai de l'Entrée 211 avait laissé .git/hooks/ vide de ses crochets : git-hooks/post-commit RÉINSTALLÉ — le présent commit embarque LA SYNCHRO MIROIR + KIT CÉRÉMONIE au MÊME GESTE (drive_sync.py + maj_kit.py, D130), les sorties journalisées à .gdrive/last_sync.log (D12).
+
+**Détail.** FRONTIÈRES : aucun arbre signé touché, aucune notation touchée, aucun secret lu-affiché-commité (D12) ; le bruit de permissions du bac à sable CONSTATÉ ET NEUTRALISÉ SANS COMMIT (618 fichiers suivis passés mode 644→755 au recyclage — contenu IDENTIQUE, zéro octet changé, zéro insertion : core.fileMode false, aucun faux changement ne voyagea) ; la carte demeure en GÉNÉRATION 13 (inchangée — la génération 15 reste à régénérer au labo).
+
+- SUITE : LE RUN DU KIT dev.8 AU COFFRE (kit-loupe.zip ou loupe-kit-8/ — dossier NEUF D99, python scenario-loupe.py, LA VITRINE PAR SON TÉMOIN, preuves-loupe/ ENTIER QUEL QUE SOIT LE VERDICT) ; SI LE VERT TIENT : la balise `loupe 0.1.0` scellée — LE JALON M10 ; ET CÔTÉ LABO : la carte génération 15 à régénérer, la vitrine attend son témoin.
+
 <!-- m5a:journal-des-builds v1 — consignation automatique des empreintes par build (D134). Les entrées numérotées du journal s'insèrent TOUJOURS AVANT la présente ligne ; les lignes de build s'ajoutent SOUS elle, la plus récente en tête. Ne pas éditer à la main. -->
 - 2026-11-08T23:15:43Z · c5d8092 · docs/Protocole_TRIADE_v0.8.1_Specification.pdf · sha256 8907d50d273e8dc6e83f53e07e028262783267e5fe8bf0d6346ee0a496fb8cf1 · md5 8cd587d5e16e0603fc6eace60c23afc3 · 1023323 o · build_pdf.sh (chaîne spec_v081)
 - 2026-11-08T23:10:11Z · c5d8092 · docs/Protocole_TRIADE_v0.8.1_Specification.pdf · sha256 8907d50d273e8dc6e83f53e07e028262783267e5fe8bf0d6346ee0a496fb8cf1 · md5 8cd587d5e16e0603fc6eace60c23afc3 · 1023323 o · build_pdf.sh (chaîne spec_v081)
