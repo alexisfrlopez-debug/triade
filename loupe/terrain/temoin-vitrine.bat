@@ -30,24 +30,29 @@ echo === LE TEMOIN VITRINE - loupe.exe 0.1.0-dev.7 ^(kit dev.8, Entree 210^) ===
 ver >> preuves-loupe\temoin-vitrine.txt
 echo. >> preuves-loupe\temoin-vitrine.txt
 
-echo [1/3] LA VITRINE VIDE (sans fichier) : la fenetre s'ouvre...
+echo [1/4] LA VITRINE VIDE (sans fichier) : la fenetre s'ouvre...
 echo       la barre d'etat porte l'usage ; FERMEZ la fenetre par Alt+F4.
 loupe.exe
-echo [1/3] LA VITRINE VIDE - code de sortie ci-dessous >> preuves-loupe\temoin-vitrine.txt
+echo [1/4] LA VITRINE VIDE - code de sortie ci-dessous >> preuves-loupe\temoin-vitrine.txt
 echo code de sortie = %ERRORLEVEL% >> preuves-loupe\temoin-vitrine.txt
 echo. >> preuves-loupe\temoin-vitrine.txt
 
-echo [2/3] LA VITRINE AVEC FICHIER (une COPIE : la session nait entiere)...
+echo [2/4] LA VITRINE AVEC FICHIER (une COPIE : la session nait entiere)...
 copy /y loupe.exe temoin-fichier.bin >nul
 loupe.exe temoin-fichier.bin
-echo [2/3] LA VITRINE AVEC FICHIER (loupe.exe temoin-fichier.bin) - code de sortie ci-dessous >> preuves-loupe\temoin-vitrine.txt
+echo [2/4] LA VITRINE AVEC FICHIER (loupe.exe temoin-fichier.bin) - code de sortie ci-dessous >> preuves-loupe\temoin-vitrine.txt
 echo code de sortie = %ERRORLEVEL% >> preuves-loupe\temoin-vitrine.txt
 echo. >> preuves-loupe\temoin-vitrine.txt
 
-echo [3/3] LE RAPPORT WER (si un crash fut consigne)...
-echo [3/3] LES RAPPORTS WER RECENTS (les 5 derniers) : >> preuves-loupe\temoin-vitrine.txt
+echo [3/4] LE RAPPORT WER (si un crash fut consigne)...
+echo [3/4] LES RAPPORTS WER RECENTS (les 5 derniers) : >> preuves-loupe\temoin-vitrine.txt
 dir /b /o-d "%LOCALAPPDATA%\Microsoft\Windows\WER\ReportArchive" 2>nul | findstr /i "loupe" >> preuves-loupe\temoin-vitrine.txt
 dir /b /o-d "%LOCALAPPDATA%\Microsoft\Windows\WER\ReportQueue" 2>nul | findstr /i "loupe" >> preuves-loupe\temoin-vitrine.txt
+
+echo [4/4] LE JOURNAL D EVENEMENTS (la piece nommee par le systeme)...
+echo. >> preuves-loupe\temoin-vitrine.txt
+echo [4/4] LE JOURNAL D EVENEMENTS - Application Error 1000 : le module fautif et le decalage de l exception NOMMES ci-dessous : >> preuves-loupe\temoin-vitrine.txt
+wevtutil qe Application /q:"*[System[(EventID=1000 or EventID=1001)]]" /c:3 /rd:true /f:text >> preuves-loupe\temoin-vitrine.txt 2>nul
 
 echo.
 echo LE TEMOIN VITRINE ECRIT : preuves-loupe\temoin-vitrine.txt

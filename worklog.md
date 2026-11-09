@@ -7458,3 +7458,44 @@ Work Log:
 - SUITE : LE RUN DU KIT dev.8 AU COFFRE — si le vert tient : la
   balise loupe 0.1.0 scellée — LE JALON M10 ; côté labo : la carte
   génération 15 à régénérer, la vitrine attend son témoin.
+
+Task: LE HUITIÈME RUN, L'ACQUITTMENT ET LE TÉMOIN PORTANT (Entrée 213) —
+« dossier loupe-kit-8 avec les preuves déposé dans le dossier /test du
+drive » : T0→T7 TOUT VERT LA PREMIÈRE FOIS (le contrat fonctionnel
+ENTIÈREMENT prouvé, [EAX-SANS-SIGNE] acquitté, le contrôle D54 vécu),
+puis [SONDE-PYTHON] au S0 (ctypes.SetLastError inexistant) et la
+vitrine morte pour la cinquième fois — LA PIÈCE ACQUITTÉE AU LABO
+(autopsie exhaustive + LE SIMULATEUR DE VITRINE né : les deux vitrines
+vécues vertes sous Unicorn), la pièce DEMEURE dev.7 ; LE KIT dev.9 :
+la sonde réparée, les littéraux chassés, ET LE TÉMOIN VITRINE PORTANT
+[4/4] le journal d'événements — la sixième mort, si elle vient, sera
+NOMMÉE (09/11).
+
+Work Log:
+- LE TÉMOIN RAPATRIÉ : loupe-kit-8/preuves-loupe/ (temoin-loupe.txt
+  3 636 o c8a0de8c… + temoin-vitrine.txt 389 o d5a792f0…) ; le kit
+  recoupé pièce à pièce contre le dépôt (scenario 783d8157… ==
+  terrain, loupe.exe 58acff81… == dev.7, le bat 3ee8f258…).
+- L'AUTOPSIE COMPLÈTE : imports descripteur par descripteur, entrée
+  instruction par instruction, WndProc/peintre/WM_SIZE/boucle, ZÉRO
+  SSE, ZÉRO pointeur absolu, 63 sites tous sur la nouvelle IAT,
+  aucune écriture en page read-only ; LE SIMULATEUR (Unicorn) : les
+  deux vitrines vécues vertes, sortie ExitProcess(0) — la pièce est
+  ACQUITTÉE, le défaut vit dans l'interaction avec le vrai système.
+- LA RETOUCHE dev.9 (retouche_kit_dev9.py) : la sonde S0 réparée
+  [k32.SetLastError + ctypes.get_last_error + use_last_error],
+  VERSION_TXT dérivé de VERSION_R10 [littéraux « dev.6 » chassés de
+  l'en-tête et de PORTE-R10], le texte T0 nomme la carte à sa
+  génération réelle [13] ; le bat PORTANT : [4/4] wevtutil
+  consigne l'Application Error 1000/1001 — module fautif et décalage
+  de l'exception NOMMÉS PAR LE SYSTÈME.
+- LE COFFRE (deposer_kit_dev9.py, D143 déplacement) : le run 8 →
+  preuves-run-loupe-dev8/ [les deux témoins + VERDICT-run-loupe-
+  dev8.txt] ; la vague dev.8 versionnée → vagues-m10/ [kit-loupe-
+  dev.8.zip 33b7ff3e… + LISEZMOI-loupe-dev.8.txt] ; LA VAGUE dev.9
+  À LA RACINE [kit-loupe.zip a7a6bb76… + LISEZMOI-loupe.txt
+  44a36c85…] ; loupe-kit-9/ aux quatre pièces ; le réceptacle
+  ré-armé ; les deux index mis à jour.
+- SUITE : LE RUN DU KIT dev.9 — si le vert tient : la balise loupe
+  0.1.0 scellée, LE JALON M10 ; si la mort vient encore : le journal
+  d'événements la nommera — module fautif, décalage.

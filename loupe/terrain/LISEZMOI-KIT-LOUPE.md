@@ -4,86 +4,93 @@
 > avec TRIADE. La couche I a posé les 18 spécifications ; quatre chantiers
 > ont noté-mesuré-prouvé chaque bloc (157 contrôles verts aux trois
 > graines) ; la cérémonie d'ère a ouvert le build (le garde à QUATORZE
-> arbres verts, la dette soldée — Entrée 201) ; le build est NÉ et a vécu
-> SEPT RUNS terrain (**loupe.exe 0.1.0-dev.7**, 127 488 o, sha256
-> `388d468067cbf054…4d9bbc`, la carte génération 15 —
-> Entrées 202 → … → 209 → **210** : le run du kit dev.7 a tenu **T0 → T5
-> TOUT VERT** — la sauvegarde de l'Entrée 209 PROUVÉE au terrain, la
-> boucle d'édition ENTIÈRE vivante — puis le témoin a nommé DEUX DÉFAUTS
-> D'UN MÊME GESTE : **[EAX-SANS-SIGNE] AU KIT** — T6 lisait « 0xfffffffe
-> != -2 ABSENT » : la pièce rendait ses codes d'échec par `mov eax,
-> imm32` — EAX seul, les 32 bits hauts de RAX à zéro — et le contrat
-> publié du scénario [c_int64] lit le qword ENTIER : la pièce disait -2,
-> le kit entendait 4294967294 ; ET **[D54-QUATRIÈME] À LA PIÈCE** — la
-> vitrine demeurait MORTE : 0xC0000005 sur LES DEUX fenêtres, AUCUN
-> rapport WER, alors que l'autopsie avait tout vérifié — l'entrée [le fil
-> GetModuleHandleW CÂBLÉ, r12 le vrai module aux deux appels], le WndProc
-> @0x5DCB, la boucle démo, les 63 appels indirects TOUS couverts, la
-> table d'imports PARFAITE, les chaînes larges, l'alignement, les gardes
-> de session, le CADRE_VIERGE — **LE DIFFÉRENTIEL A NOMMÉ** : la lignée
-> prouvée [demo.exe 0.3.0, le scellé M2 dont la fenêtre VÉCUT au terrain]
-> termine CHAQUE plage FirstThunk par un slot NULL ; le build posait les
-> QUATRE plages CONTIGUËS — et le chargeur du terrain (Windows 11 build
-> 26300, le CHEMIN FirstThunk de la leçon D97) MARCHE chaque plage
-> jusqu'au premier NULL : la marche de kernel32 déborde chez les noms
-> user32, RegisterClassExW résout à NULL, **et l'entrée APPELLE LE NUL**
-> — 0xC0000005 sans dialogue, avant même la première fenêtre ;
-> QUATRIÈME manifestation de la dérive de dépôt [D54, D68, D98, et
-> celle-ci]. LA RETOUCHE DE L'ENTRÉE 210 EST DOUBLE : la pièce **dev.7**
-> [l'IAT ENTIÈRE relogée à 0x3100 — région née zéro — QUATRE plages
-> SÉPARÉES PAR NULL et PRÉREMLIES des RVA de noms, le motif D54 au
-> complet ; les descripteurs dirigés, dir[12] mis à jour, les 63 sites
-> d'appel repointés, les vieilles plages VIDÉES ; les 20 rendus négatifs
-> étendus au 64 bits par « push imm8 ; pop rax » et les deux passages de
-> loupe-01 passés movsxd ; la taille DEMEURE 127 488 o, AUCUNE adresse
-> scellée ne bouge — R7 tenue : le WndProc, la famille sha M9, la
-> minilibc, la table K[64], le CADRE, octets inchangés ; le qword version
-> 0x00010007] ET le kit **dev.8** [la leçon institutionnalisée : le
-> scénario VÉRIFIE LUI-MÊME l'habillage d'import — chaque plage marchée
-> au compte exact, les séparateurs NULL, les slots préremplis — la
-> quatrième manifestation ne passera PLUS jamais un run ; l'affichage T0
-> de la version rendu DYNAMIQUE — le littéral périmé nommé]. Il reste LE
-> GESTE QUI NE PEUT ÊTRE FAIT QU'ICI : la vitrine VIVANTE — les DEUX
-> codes de sortie à 0, l'application sous les yeux de son utilisateur —
-> ET LA VITRINE SE VIT PAR SON TÉMOIN (temoin-vitrine.bat : une mort
-> sans témoin ne recoupe pas, l'Entrée 208).
+> arbres verts — Entrée 201) ; le build est NÉ et a vécu HUIT RUNS
+> terrain. **LE HUITIÈME EST LE PLUS LOIN JAMAIS VÊCU : T0 → T7 TOUT
+> VERT — LA PREMIÈRE FOIS** (**loupe.exe 0.1.0-dev.7**, 127 488 o,
+> sha256 `388d468067cbf054…4d9bbc`, la carte génération 13 — Entrées
+> 202 → … → 210 → 211 → **213**) : le contrôle D54 en tête [les QUATRE
+> plages FirstThunk marchées au compte exact, les séparateurs NULL, les
+> slots préremplis], la session sur L'OMBRE, la double lecture, LE
+> PANNEAU [la pièce jugée par sa propre application], les lignes, la
+> recherche, LA BOUCLE D'ÉDITION ENTIÈRE, **puis LES QUATRE REJETS DU
+> T6 — TOUS VERTS POUR LA PREMIÈRE FOIS** [le chemin qui ne désigne
+> rien → -2 ; la session double → -5 ; le décalage hors bornes → -3 ;
+> le motif absent → -1 : **[EAX-SANS-SIGNE] ACQUITTÉ** — l'extension
+> 64 bits de l'Entrée 210 rendue au terrain], la clôture T7 [l'artefact
+> relu INCHANGÉ]. **LE CONTRAT FONCTIONNEL DE LOUPE EST PROUVÉ AU
+> TERRAIN, ENTIÈREMENT — loupe-01 à loupe-17, les dix-huit
+> spécifications de la couche I vécues par le VRAI Windows.**
+> PUIS DEUX FAITS DEMEURENT : **[SONDE-PYTHON] À LA SONDE S0** — le
+> scénario dev.8 appelait `ctypes.SetLastError` / `ctypes.GetLastError`
+> qui N'EXISTENT PAS dans le module ctypes : la cascade diagnostique de
+> l'Entrée 205 mourut sur place, ses sondes jamais jouées (le défaut
+> était latent depuis l'origine de S0 — invisible tant que le run
+> n'avait jamais atteint S0) ; ET **LA VITRINE MORTE POUR LA CINQUIÈME
+> FOIS** : 0xC0000005 sur LES DEUX fenêtres, AUCUN rapport WER — la
+> fenêtre jamais née. **LA PIÈCE EST ACQUITTÉE DE TOUTE CHARGE NOMMABLE
+> AU LABO** (l'autopsie de l'Entrée 213, la plus complète jamais vécue :
+> la table d'imports vérifiée DESCRIPTEUR PAR DESCRIPTEUR [OFT/FT/noms,
+> plages séparées, terminateurs], le chemin d'entrée démonté
+> INSTRUCTION PAR INSTRUCTION [la classe WNDCLASSEXW champ à champ, les
+> 12 arguments de CreateWindowExW, chaque lea/call résolu], le WndProc,
+> le peintre, la boucle, l'alignement de pile à chaque frontière, ZÉRO
+> SSE dans l'image, ZÉRO pointeur absolu, les 63 sites d'appel
+> recoupés, aucune écriture en page lecture-seule ; ET **LE SIMULATEUR
+> DE VITRINE NÉ AU LABO** : la pièce exécutée sous émulation complète —
+> l'entrée, la classe, la fenêtre, la boucle à messages, WM_SIZE AVEC
+> SESSION, WM_PAINT LE PEINTRE LECTEUR, WM_VSCROLL — **LES DEUX
+> VITRINES VÉCUES VERTES, SORTIE PROPRE ExitProcess(0)** : le défaut
+> vit dans l'interaction avec le VRAI système, pas dans les octets que
+> le labo peut lire). **LA NEUVIÈME VAGUE EST CELLE DU TÉMOIN
+> PORTANT** : la pièce demeure dev.7 — l'ACQUITTÉE, aucune retouche
+> aveugle (un défaut sans nom ne reçoit pas de correctif, la méthode) —
+> ET LE KIT dev.9 porte TROIS GESTES : **la sonde S0 RÉPARÉE**
+> (`k32.SetLastError` + `ctypes.get_last_error` + `use_last_error` :
+> la cascade de l'Entrée 205 vivra ENFIN son terrain), **les littéraux
+> périmés chassés** (l'en-tête du témoin et le message PORTE-R10
+> disaient « dev.6 » : VERSION_TXT est désormais DÉRIVÉ de VERSION_R10,
+> le littéral ne dérivera plus jamais), et **LE TÉMOIN VITRINE PORTANT
+> [4/4]** : si la mort vient encore, **LE JOURNAL D'ÉVÉNEMENTS DE
+> WINDOWS LA NOMMERA** — wevtutil consigne l'Application Error 1000 :
+> le module fautif et le décalage de l'exception, la pièce du système
+> que le témoin muet ne pouvait pas rendre.
 
 ## 1. Ce que ce kit contient
 
 ```
-loupe-kit-8/
+loupe-kit-9/
 ├── loupe.exe          l'ARTEFACT 0.1.0-dev.7 (127 488 o, sha256
-│                      388d4680… — LA RETOUCHE DE L'ENTRÉE 210 :
-│                      [D54-QUATRIÈME] chassé — l'IAT relogée à 0x3100,
-│                      QUATRE plages SÉPARÉES PAR NULL, préremplies du
-│                      motif D54 [le chargeur du terrain marche le
-│                      chemin FirstThunk : des plages contiguës
-│                      tuaient la vitrine avant l'entrée, 0xC0000005
-│                      sans dialogue] ; ET [EAX-SANS-SIGNE] étendu —
-│                      chaque rendu négatif au 64 bits, le contrat
-│                      c_int64 lu exact ; lecture seule pour le run ;
-│                      la carte privée ne voyage JAMAIS avec l'artefact,
-│                      R1) ;
-├── scenario-loupe.py  LE SCÉNARIO dev.8 (python SEUL : ctypes, hashlib,
-│                      os, platform, struct, sys, tempfile — les
-│                      constantes FIGÉES au laboratoire depuis le plan
-│                      du dépôt, recoupées à l'assemblage — un kit
-│                      corrompu est un refus nommé AVANT tout geste ;
-│                      L'ENTRÉE 210 : LE CONTRÔLE D54 NEUF — le
-│                      scénario MARCHE lui-même les quatre plages
-│                      FirstThunk au compte exact [10 · 18 · 6 · 3],
-│                      constate les séparateurs NULL et les slots
-│                      préremplis : l'habillage d'import fait partie de
-│                      la surface de test, la leçon D97 ENTRE AU
-│                      SCÉNARIO ; la session naît sur temoin-session.bin,
-│                      L'OMBRE byte-à-byte de la pièce — le chargeur
-│                      tient loupe.exe, jamais on n'écrit sur une
-│                      section vivante) ;
-├── temoin-vitrine.bat LE TÉMOIN VITRINE (l'Entrée 207 : la vitrine a
-│                      vécu sa première mort SANS témoin — ce run
-│                      console capture LES DEUX codes de sortie et le
-│                      rapport WER éventuel ; l'Entrée 210 : la vitrine
-│                      dev.7 doit VIVRE — 0 et 0 attendus au témoin) ;
+│                      388d4680… — INCHANGÉ DEPUIS L'ENTRÉE 210 :
+│                      l'ACQUITTÉE du huitième run — l'IAT relogée à
+│                      0x3100 en QUATRE plages SÉPARÉES PAR NULL
+│                      préremplies du motif D54, les rendus négatifs
+│                      étendus au 64 bits [les QUATRE rejets du T6
+│                      ONT VÉCU VERTS au terrain] ; lecture seule
+│                      pour le run ; la carte privée ne voyage JAMAIS
+│                      avec l'artefact, R1) ;
+├── scenario-loupe.py  LE SCÉNARIO dev.9 (python SEUL : ctypes,
+│                      hashlib, os, platform, struct, sys, tempfile —
+│                      les constantes FIGÉES au laboratoire depuis le
+│                      plan du dépôt, recoupées à l'assemblage) :
+│                      LE CONTRÔLE D54 en tête [les quatre plages
+│                      marchées au compte exact — VERT au huitième
+│                      run] ; LA SONDE S0 RÉPARÉE [k32.SetLastError +
+│                      ctypes.get_last_error sur un WinDLL né
+│                      use_last_error=True : les cinq axes de dev.2
+│                      reconstitués UN À UN vivront ENFIN leur
+│                      terrain] ; VERSION_TXT DÉRIVÉ de VERSION_R10
+│                      [l'en-tête du témoin ne portera plus jamais un
+│                      littéral périmé] ; le texte T0 nomme la carte à
+│                      sa GÉNÉRATION RÉELLE [13 — la régénération est
+│                      dette au labo, l'Entrée 211] ;
+├── temoin-vitrine.bat LE TÉMOIN VITRINE dev.9 — PORTANT : les quatre
+│                      temps [1/4] la vitrine vide, [2/4] la vitrine
+│                      avec fichier, [3/4] les rapports WER éventuels,
+│                      **[4/4] LE JOURNAL D'ÉVÉNEMENTS — wevtutil
+│                      consigne les trois derniers Application Error
+│                      (1000/1001) : LE MODULE FAUTIF ET LE DÉCALAGE
+│                      DE L'EXCEPTION NOMMÉS** — si la sixième mort
+│                      vient, elle sera NOMMÉE PAR LE SYSTÈME ;
 └── LISEZMOI-KIT-LOUPE.md  le présent document.
 ```
 
@@ -91,9 +98,9 @@ loupe-kit-8/
 
 1. **Extraire** le kit COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1 à dev.7 par exemple — créez-en un NEUF,
-   `loupe-kit-8b/` si besoin : l'artefact refusé ne se réutilise pas).
-   Sur votre Windows 11 : `loupe-kit-8/`.
+   déjà — celui de dev.1 à dev.8 par exemple — créez-en un NEUF,
+   `loupe-kit-9b/` si besoin : l'artefact refusé ne se réutilise pas).
+   Sur votre Windows 11 : `loupe-kit-9/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
@@ -101,8 +108,9 @@ loupe-kit-8/
    binaire, le verdict se rend POST-MORTEM. Les boîtes bloquantes du
    chargeur sont COUPÉES par le mode d'erreur du scénario — un refus
    éventuel est nommé AU TÉMOIN (GetLastError + NTSTATUS consignés) ;
-   ET LA CASCADE DIAGNOSTIQUE se joue toute seule (voir S0 ci-dessous) :
-   laissez-la finir, le témoin part au coffre QUEL QUE SOIT le verdict.
+   ET LA CASCADE DIAGNOSTIQUE S0 se joue toute seule cette fois —
+   réparée au dev.9 : laissez-la finir, le témoin part au coffre QUEL
+   QUE SOIT le verdict.
 3. **Vivre la vitrine** (le cœur du grandeur nature) — **LA VITRINE SE
    VIT PAR SON TÉMOIN** : double-cliquez `temoin-vitrine.bat` — LA
    PREMIÈRE fenêtre s'ouvre VIDE (la barre d'état porte l'usage,
@@ -112,9 +120,11 @@ loupe-kit-8/
    sha256 du fichier entier — la barre du bas), la cellule active
    inversée : fermez-la par Alt+F4. Les DEUX codes de sortie sont
    capturés au témoin (`preuves-loupe/temoin-vitrine.txt`) — **0 et 0
-   sont attendus à l'Entrée 210 : la vitrine dev.7 est née pour VIVRE**
-   (si un code nommait encore une mort, le témoin le consigne et le
-   rapport WER s'il existe — une mort sans témoin ne recoupe pas).
+   sont attendus : la vitrine dev.7 est née pour VIVRE** (cinq morts
+   déjà — les quatre premières ont nommé leur défaut, la cinquième a
+   ACQUITTÉ la pièce au labo : **si la sixième vient, LE JOURNAL
+   D'ÉVÉNEMENTS [4/4] LA NOMMERA** — module fautif, décalage de
+   l'exception).
    **PUIS, si le cœur vous en dit, vivez la vitrine à la main** :
    ouvrez un VRAI fichier **depuis la ligne de commande** :
    `loupe.exe monfichier.bin` (ou glissez-déposez un fichier sur
@@ -132,61 +142,34 @@ loupe-kit-8/
 4. **Renvoyer** le dossier `preuves-loupe/` ENTIER au coffre
    `/test/preuves-loupe/` (dossier Drive « Triade » → « test ») : le
    témoin naît tout seul (`temoin-loupe.txt`), LE TÉMOIN VITRINE est
-   REQUIS (`temoin-vitrine.txt`) ; ajoutez-y les captures éventuelles de
-   la vitrine (PNG/JPG, nommées `capture-*.png`).
+   REQUIS (`temoin-vitrine.txt` — avec son [4/4]) ; ajoutez-y les
+   captures éventuelles de la vitrine (PNG/JPG, nommées
+   `capture-*.png`).
 
 ## 3. Ce que le scénario démontre (les temps du run)
 
-- **T0 LE TÉMOIN** : l'empreinte de l'artefact ASSERTÉE avant tout
-  geste ; l'image cartographiée (LoadLibraryEx DONT_RESOLVE — le
-  scénario est LE CHARGEUR, aucun point d'entrée exécuté) ; les
-  adresses scellées CONSTATÉES UN PAR UN (la minilibc M1
-  @0x1100/0x1180/0x13C0, la boucle démo @0x15C0, la famille sha M9
-  @0xC000+, LA TABLE K[64] @0x2F00 de FIPS 180-4, le qword version R10
-  @0x2E80 [0x00010007 — dev.7], le CADRE né poignée INVALIDE) ; LE
-  BASERELOC MINIMAL DÉCLARÉ (dirs[5] — la leçon de l'Entrée 204) ;
-  **L'HABILLAGE D'IMPORT VÉRIFIÉ (le contrôle D54 de l'Entrée 210 : les
-  QUATRE plages FirstThunk marchées au compte exact [10 · 18 · 6 · 3],
-  les séparateurs NULL constatés, les slots préremplis — le motif D54
-  ENTIER, la leçon D97 au scénario)** ; l'IAT RÉSOLUE par le scénario
-  (37 feuilles aux QUATRE plages du plan — VirtualProtect le temps de
-  la pose).
-- **T1 LA SESSION** : loupe-01 à son adresse scellée — le VRAI fichier
-  ouvert par l'application (CreateFileW par l'IAT résolue), le cadre
-  relu champ à champ — sur **L'OMBRE BYTE-À-BYTE DE LA PIÈCE**
-  (`temoin-session.bin`, la copie née et morte au run : l'Entrée 208).
-- **T2 LA DOUBLE LECTURE** : loupe-02 la fenêtre au tampon == le
-  fichier lu par Python (les DEUX lecteurs indépendants) ; loupe-07 le
-  panneau (md5 + sha256 du fichier ENTIER par fenêtres glissantes) ==
-  hashlib — **ET LA PIÈCE DE L'ÈRE JUGÉE PAR SA PROPRE APPLICATION SUR
-  SON OMBRE : loupe-07 rend le sha256 asserté de la pièce**.
-- **T3 LES LIGNES** : loupe-08 la ligne == le format composé en Python
-  pur ; la ligne finale incomplète garde le FORMAT.
-- **T4 LA RECHERCHE** : loupe-13 (le memcmp SCELLÉ M1 à l'œuvre) ==
-  bytes.find sur les octets vrais.
-- **T5 L'ÉDITION** : la boucle ENTIÈRE sur une copie — ouvrir, la
-  saisie « 4d » (l'attente consommée par l'engagement), Ctrl+S
-  (l'écriture À L'OCTET par le VRAI WriteFile — **le contrat publié de
-  loupe-17 : 0 = OK, le compte des octets part à la barre d'état —
-  PROUVÉ AU TERRAIN par le run dev.7, l'Entrée 209**) ; le fichier
-  revérifié : EXACTEMENT l'octet changé, la taille CONSTANTE, la marque
-  levée.
-- **T6 LES REJETS** : l'échec NOMMÉ — le motif absent → -1 FIN ; le
-  chemin qui ne désigne rien → -2 ABSENT (**le contrat c_int64 ENFIN
-  tenu des deux mains : la pièce étend ses rendus au 64 bits, le kit
-  lit le qword entier — [EAX-SANS-SIGNE] chassé, l'Entrée 210**) ; la
-  session double → -5 (l'offrande est L'OMBRE rouvrable, jamais la
-  pièce sous le chargeur) ; le décalage hors bornes → -3 (un refus
-  vaut plus qu'un vert muet).
-- **T7 LA CLÔTURE** : loupe-03 le cadre re-vierge, idempotent ;
-  l'artefact relu INCHANGÉ (le run ne touche pas la pièce).
-- **S0 LA SONDE (l'Entrée 205 — LA CASCADE DIAGNOSTIQUE)** : après le
-  run (ou à l'échec de la cartographie), le scénario reconstitue UN À
-  UN les axes par lesquels dev.2 sortait de l'enveloppe de la lignée —
-  sur des COPIES TEMPORAIRES nées et mortes dans %TEMP% (loupe.exe
-  n'est JAMAIS écrit) : **le VRAI chargeur Windows NOMME l'axe fautif**
-  — le témoin consigne chaque verdict VERTE/REFUS + GetLastError +
-  NTSTATUS.
+- **T0 LE TÉMOIN** : l'empreinte ASSERTÉE (sha256/taille de la pièce),
+  l'image cartographiée DONT_RESOLVE [le scénario est LE CHARGEUR,
+  aucun point d'entrée exécuté], **LE CONTRÔLE D54** [l'habillage
+  d'import MARCHE : les QUATRE plages au compte exact, les
+  séparateurs NULL, les slots préremplis — VERT au huitième run], les
+  adresses scellées, l'IAT résolue aux slots du plan ;
+- **T1 → T7 LE CONTRAT ENTIÈREMENT VÉCU** (la première fois au
+  huitième run) : la session sur L'OMBRE byte-à-byte, la double
+  lecture, LE PANNEAU [la pièce jugée par sa propre application : le
+  sha256 du témoin == hashlib], les lignes au format composé, la
+  recherche == bytes.find, LA BOUCLE D'ÉDITION [l'octet mûté SEUL, la
+  taille constante, la marque levée, la session close], LES QUATRE
+  REJETS NOMMÉS [-2 ABSENT, -5 ENTRÉE, -3 HORS-BORNES, -1 FIN —
+  l'offrande de la session double est L'OMBRE, jamais la pièce], la
+  clôture [l'artefact relu INCHANGÉ] ;
+- **S0 LA SONDE (l'Entrée 205 — LA CASCADE DIAGNOSTIQUE, RÉPARÉE au
+  dev.9)** : après le run (ou à l'échec de la cartographie), le
+  scénario reconstitue UN À UN les axes par lesquels dev.2 sortait de
+  l'enveloppe de la lignée — sur des COPIES TEMPORAIRES nées et mortes
+  dans %TEMP% (loupe.exe n'est JAMAIS écrit) : **le VRAI chargeur
+  Windows NOMME l'axe fautif** — le témoin consigne chaque verdict
+  VERTE/REFUS + GetLastError + NTSTATUS.
 
 ## 4. Les frontières nommées (l'honnêteté du terrain)
 
@@ -208,9 +191,10 @@ loupe-kit-8/
 ## 5. Après le run
 
 Le labo recoupe sur pièces (D138/D145/D148) : le témoin relu, LE
-TÉMOIN VITRINE REQUIS, les constats croisés contre le dépôt, les
-empreintes recalculées. **ET SI LE VERT TIENT — le scénario ENTIER
-(T0 → S0, le contrôle D54 en tête) ET LA VITRINE VIVANTE (les deux
-codes à 0) : LA BALISE `loupe 0.1.0` SCELLÉE sur run terrain recoupé —
-LE JALON M10, la méthode TRIADE entière prouvée par la CRÉATION : de
-l'intention (la couche I) à l'octet vécu chez son utilisateur.**
+TÉMOIN VITRINE REQUIS (avec son [4/4] — le journal d'événements), les
+constats croisés contre le dépôt, les empreintes recalculées. **ET SI
+LE VERT TIENT — le scénario ENTIER (T0 → S0, le contrôle D54 en tête,
+LA CASCADE RÉPARÉE) ET LA VITRINE VIVANTE (les deux codes à 0) : LA
+BALISE `loupe 0.1.0` SCELLÉE sur run terrain recoupé — LE JALON M10,
+la méthode TRIADE entière prouvée par la CRÉATION : de l'intention
+(la couche I) à l'octet vécu chez son utilisateur.**

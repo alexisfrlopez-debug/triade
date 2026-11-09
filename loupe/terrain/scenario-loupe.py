@@ -164,7 +164,8 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
-# --- l'artefact : la carte génération 14 prouve CES octets -----------------------
+# --- l'artefact : l'empreinte ASSERTÉE prouve CES octets (la carte demeure
+#     en génération 13 — la régénération est dette au labo, l'Entrée 211) -----
 SHA_EXE = ("388d468067cbf05411a6227c5906baa27d5cbf8a6f862e4c"
            "ec6a051cab4d9bbc")
 TAILLE_EXE = 127488
@@ -172,6 +173,7 @@ VERSION_R10 = 0x00010007          # loupe 0.1.0-dev.7 (le qword @0x2E80 —
                                    # la retouche de l'Entrée 210 : [D54-QUATRIÈME]
                                    # chassé, l'IAT relogée séparée à 0x3100,
                                    # et [EAX-SANS-SIGNE] étendu au 64 bits)
+VERSION_TXT = f"0.1.0-dev.{VERSION_R10 & 0xFFFF}"   # dynamique — le littéral périmé chassé (dev.9, l'Entrée 213)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
 R_LIBC01 = 0x1100      # memcpy M1 (le scellé selftest.exe)
@@ -344,9 +346,9 @@ def sonde_entree_205(k32, donnees):
             chemin_sonde = os.path.join(dossier, "loupe-sonde.exe")
             with open(chemin_sonde, "wb") as f:
                 f.write(bytes(image))
-            ctypes.SetLastError(0)
+            k32.SetLastError(0)
             base = k32.LoadLibraryExW(chemin_sonde, None, 0x00000001)
-            err = ctypes.GetLastError()
+            err = ctypes.get_last_error()
             etat = statut_nt()
             if base:
                 lignes.append(f"[sonde] {nom} : cartographie VERTE @ "
@@ -395,7 +397,7 @@ def conclure(code):
 
 
 def main():
-    consigne("=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.6) ===")
+    consigne(f"=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe {VERSION_TXT}) ===")
     if platform.system() != "Windows":
         echec("ENVIRONNEMENT", "le run exige le VRAI Windows (kernel32/"
              "user32/gdi32) — c'est le grandeur nature")
@@ -407,7 +409,7 @@ def main():
     # (python.exe — Image incorrecte) sont COUPÉES — un refus est nommé PAR
     # LE TÉMOIN (GetLastError + NTSTATUS consignés), jamais muré derrière
     # un bouton OK : le run continue et la sonde diagnostique
-    k32 = ctypes.WinDLL("kernel32")
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
     SEM = 0x0001 | 0x8000        # FAILCRITICALERRORS | NOOPENFILEERRORBOX
     global ANCIEN_MODE_DERREUR
     ANCIEN_MODE_DERREUR = k32.SetErrorMode(SEM)
@@ -423,7 +425,8 @@ def main():
         echec("EMPREINTE-DIVERGENTE",
               f"{len(donnees)} o, sha256 {sha} != l'asserté {SHA_EXE}")
     consigne(f"[T0] loupe.exe : {TAILLE_EXE} o, sha256 {sha[:16]}… — "
-             f"L'EMPREINTE ASSERTÉE (la carte génération 14 prouve CES octets)")
+             f"L'EMPREINTE ASSERTÉE (l'empreinte prouve CES octets — "
+             f"la carte, génération 13, à régénérer au labo)")
 
     k32.LoadLibraryExW.restype = ctypes.c_void_p
     k32.LoadLibraryExW.argtypes = [wt.LPCWSTR, ctypes.c_void_p, wt.DWORD]
@@ -441,7 +444,7 @@ def main():
         for ligne in sonde_entree_205(k32, donnees):
             consigne(ligne)
         echec("CARTOGRAPHIE", f"LoadLibraryEx a rendu {base:#x} (GetLastError "
-             f"{ctypes.GetLastError()}) — LA SONDE a nommé les axes "
+             f"{ctypes.get_last_error()}) — LA SONDE a nommé les axes "
              f"ci-dessus : le témoin part au coffre, le labo recoupe")
     consigne(f"[T0] l'image cartographiée DONT_RESOLVE @ {base:#x} — le "
              f"scénario est LE CHARGEUR, aucun point d'entrée exécuté")
@@ -467,7 +470,7 @@ def main():
              "180-4 § 4.2.2 (la table du scellé M9)")
     if struct.unpack("<Q", lire(R_VERSION, 8))[0] != VERSION_R10:
         echec("PORTE-R10", f"le qword version @0x2E80 != {VERSION_R10:#x} "
-             f"(loupe 0.1.0-dev.6)")
+             f"(loupe {VERSION_TXT})")
     # LE CADRE NÉ MIROIR DU CADRE_VIERGE (LA LEÇON DE L'ENTRÉE 206 : le
     # terrain a nommé [CADRE-NÉ] sur dev.3 — l'initialiseur du build avait
     # posé le sentinel à +8 [une TAILLE prise pour un offset] au lieu de
