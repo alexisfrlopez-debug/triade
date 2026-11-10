@@ -4,12 +4,12 @@
 > avec TRIADE. La couche I a posé les 18 spécifications ; quatre chantiers
 > ont noté-mesuré-prouvé chaque bloc (157 contrôles verts aux trois
 > graines) ; la cérémonie d'ère a ouvert le build (le garde à QUATORZE
-> arbres verts — Entrée 201) ; le build est NÉ et a vécu NEUF RUNS
+> arbres verts — Entrée 201) ; le build est NÉ et a vécu DIX RUNS
 > terrain. **LE NEUVIÈME RUN : T0 → T7 TOUT VERT POUR LA SECONDE FOIS —
 > ET LA SIXIÈME MORT DE LA VITRINE NOMMÉE, PAR LE SYSTÈME PUIS PAR LE
 > LABO** (**loupe.exe 0.1.0-dev.8**, 127 488 o, sha256
-> `054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69`, la carte génération 16 — Entrées 202 → … → 211 → 213 →
-> **214**) : [T0] le contrôle D54 vécu vert [les QUATRE plages FirstThunk
+> `054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69`, la carte génération 16 — Entrées 202 → … → 211 → 213 → 214 →
+> 215 → **216**) : [T0] le contrôle D54 vécu vert [les QUATRE plages FirstThunk
 > au compte exact 10 · 18 · 6 · 3] ; [T1]→[T5] le contrat tenu [la
 > session, la double lecture, LE PANNEAU, les lignes, la recherche, la
 > boucle d'édition] ; [T6] LES QUATRE REJETS NOMMÉS pour la seconde
@@ -76,10 +76,37 @@
 > chaque défaut a reçu sa retouche : **celui-ci AVANT le run, pas
 > après**.)
 
+> **LE DIXIÈME RUN : LA VITRINE A VÉCU — ET LE SEPTIÈME DÉFAUT EST
+> CELUI DU KIT, NOMMÉ PAR LA LIGNE D'ÉCHEC** (l'Entrée 216, le
+> recoup sur pièces : T0 → T7 TOUT VERT POUR LA TROISIÈME FOIS,
+> ET **LA VITRINE VIVANTE LA PREMIÈRE FOIS — 0 et 0**, les deux
+> fenêtres vécues, Alt+F4 chacune, aucun WER, le [4/4] ne portant
+> que de vieux LiveKernelEvent — après six morts, **L'APPLICATION
+> NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR** ; MAIS le scénario
+> n'était pas ENTIER : la cascade 205 mourut à son PREMIER geste
+> — **[FREE-SANS-TYPE]** : `k32.FreeLibrary(base)` appelé SANS
+> argtypes avec le HMODULE 64 bits du `restype c_void_p` — ctypes
+> convertit l'argument nu en int 32 bits :
+> `ArgumentError('argument 1: OverflowError: int too long to
+> convert')` — et l'ArgumentError n'est PAS un OSError : l'essai
+> isolé ne tenait que pour OSError, la cascade mourut, **LA
+> LIAISON ne courut jamais** ; LA PIÈCE EST ACQUITTÉE DE TOUTE
+> CHARGE [T7 la relut inchangée ; la vitrine vivante prouve la
+> liaison MIEUX que toute sonde — la fenêtre n'eût pas vécu d'un
+> import non résolu] ; LA RETOUCHE dev.12, DU KIT SEUL :
+> `FreeLibrary.argtypes = [c_void_p]` posé au T0 [le POINTEUR
+> passe, aux DEUX sondes d'un seul geste], l'essai élargi à TOUTE
+> classe d'exception [la cascade ne meurt JAMAIS sur son propre
+> geste, quelle que soit la classe], la sonde de liaison blindée
+> de même [aucune exception de sonde ne tue le run] ; la pièce
+> n'a pas bougé d'un octet — sha256 054de960…, la carte demeure
+> génération 16 ; la balise attend le vert ENTIER : le scénario
+> T0 → S0 → LA LIAISON ET la vitrine vivante.)
+
 ## 1. Ce que ce kit contient
 
 ```
-loupe-kit-11/
+loupe-kit-12/
 ├── loupe.exe          l'ARTEFACT 0.1.0-dev.8 (127 488 o, sha256
 │                      054de960… — LA RETOUCHE DE L'ENTRÉE 214 : les
 │                      QUATRE OFT compactés au pas DWORD du chargeur —
@@ -89,7 +116,7 @@ loupe-kit-11/
 │                      INTACTES, la taille CONSTANTE ; lecture seule
 │                      pour le run ; la carte privée ne voyage JAMAIS
 │                      avec l'artefact, R1) ;
-├── scenario-loupe.py  LE SCÉNARIO dev.11 (python SEUL : ctypes,
+├── scenario-loupe.py  LE SCÉNARIO dev.12 (python SEUL : ctypes,
 │                      hashlib, os, platform, struct, sys, tempfile —
 │                      les constantes FIGÉES au laboratoire depuis le
 │                      plan du dépôt, recoupées à l'assemblage) :
@@ -114,7 +141,7 @@ loupe-kit-11/
 │                      VERSION_R10 ; le texte T0 nomme la carte à sa
 │                      GÉNÉRATION RÉELLE [16 — la régénération est
 │                      dette au labo, l'Entrée 211] ;
-├── temoin-vitrine.bat LE TÉMOIN VITRINE dev.11 — PORTANT : les quatre
+├── temoin-vitrine.bat LE TÉMOIN VITRINE dev.12 — PORTANT : les quatre
 │                      temps [1/4] la vitrine vide, [2/4] la vitrine
 │                      avec fichier, [3/4] les rapports WER éventuels,
 │                      **[4/4] LE JOURNAL D'ÉVÉNEMENTS — wevtutil
@@ -130,9 +157,9 @@ loupe-kit-11/
 
 1. **Extraire** le kit COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1 à dev.10 par exemple — créez-en un NEUF,
-   `loupe-kit-11b/` si besoin : l'artefact refusé ne se réutilise pas).
-   Sur votre Windows 11 : `loupe-kit-11/`.
+   déjà — celui de dev.1 à dev.11 par exemple — créez-en un NEUF,
+   `loupe-kit-12b/` si besoin : l'artefact refusé ne se réutilise pas).
+   Sur votre Windows 11 : `loupe-kit-12/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
@@ -141,8 +168,10 @@ loupe-kit-11/
    chargeur sont COUPÉES par le mode d'erreur du scénario — un refus
    éventuel est nommé AU TÉMOIN (GetLastError + NTSTATUS consignés) ;
    ET LES CASCADES DIAGNOSTIQUES se jouent toutes seules cette fois —
-   la 205 réparée ET la liaison de l'Entrée 214 RETOUCHÉE dev.11 : laissez-les finir, le
-   témoin part au coffre QUEL QUE SOIT le verdict.
+   la 205 réparée ET la liaison RETOUCHÉE dev.12 — [FREE-SANS-TYPE], la
+   leçon du run 10 : le FreeLibrary en POINTEUR, l'essai isolé pour
+   TOUTE classe — laissez-les finir, le témoin part au coffre QUEL
+   QUE SOIT le verdict.
 3. **Vivre la vitrine** (le cœur du grandeur nature) — **LA VITRINE SE
    VIT PAR SON TÉMOIN** : double-cliquez `temoin-vitrine.bat` — LA
    PREMIÈRE fenêtre s'ouvre VIDE (la barre d'état porte l'usage,
@@ -152,8 +181,10 @@ loupe-kit-11/
    sha256 du fichier entier — la barre du bas), la cellule active
    inversée : fermez-la par Alt+F4. Les DEUX codes de sortie sont
    capturés au témoin (`preuves-loupe/temoin-vitrine.txt`) — **0 et 0
-   sont attendus : la vitrine dev.8 est née pour VIVRE** (six morts
-   déjà — les cinq premières ont nommé leur défaut ou acquitté la
+   sont attendus : la vitrine dev.8 A DÉJÀ VÉCU AU DIXIÈME RUN** (0 et
+   0, la première fois après six morts — le onzième run la reverra
+   vivre, la dette du kit n'étant que le scénario ENTIER ; la pièce
+   est acquittée : le défaut [FREE-SANS-TYPE] fut celui du KIT — les cinq premières ont nommé leur défaut ou acquitté la
    pièce, LA SIXIÈME A NOMMÉ LE SIEN : [OFT-QWORD] — la retouche est
    portée, la liaison sera VÉCUE par la sonde avant même la fenêtre :
    **si la septième mort vient, LE JOURNAL D'ÉVÉNEMENTS [4/4] LA
@@ -204,7 +235,9 @@ loupe-kit-11/
   Windows NOMME l'axe fautif** — le témoin consigne chaque verdict
   VERTE/REFUS + GetLastError + NTSTATUS, et le module chargé est
   LIBÉRÉ avant sa suppression — la cascade ne meurt JAMAIS sur son
-  propre geste ;
+  propre geste, l'essai isolé valant pour TOUTE classe d'exception
+  (la leçon du run 10 : [FREE-SANS-TYPE] — l'ArgumentError n'est
+  pas un OSError) ;
 - **LA LIAISON (LA SONDE DE L'ENTRÉE 214)** : une copie chargée SANS
   DONT_RESOLVE — l'entrée de la copie neutralisée d'un seul octet ret
   (la fenêtre n'y est jamais lancée) — LES 37 SLOTS RELUS : le VRAI
@@ -234,8 +267,11 @@ loupe-kit-11/
 
 Le labo recoupe sur pièces (D138/D145/D148) : le témoin relu, LE
 TÉMOIN VITRINE REQUIS (avec son [4/4] — le journal d'événements), les
-constats croisés contre le dépôt, les empreintes recalculées. **ET SI
-LE VERT TIENT — le scénario ENTIER (T0 → S0 → LA LIAISON, le contrôle
+constats croisés contre le dépôt, les empreintes recalculées — **LE
+DIXIÈME RUN A DÉJÀ VÉCU LA VITRINE (0 et 0, la première fois :
+l'application née de TRIADE a vécu chez son utilisateur) ; LA DETTE
+RESTANTE EST LE SCÉNARIO ENTIER : S0 ET LA LIAISON, jamais courus à
+ce jour**. ET SI LE VERT TIENT — le scénario ENTIER (T0 → S0 → LA LIAISON, le contrôle
 D54 ÉTENDU en tête, LA CASCADE RÉPARÉE) ET LA VITRINE VIVANTE (les deux
 codes à 0) : LA BALISE `loupe 0.1.0` SCELLÉE sur run terrain recoupé —
 LE JALON M10, la méthode TRIADE entière prouvée par la CRÉATION : de

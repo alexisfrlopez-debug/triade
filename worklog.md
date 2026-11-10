@@ -7610,3 +7610,47 @@ Work Log:
   codes, le [4/4]), preuves-loupe/ ENTIER au coffre QUEL QUE SOIT le
   verdict ; si le vert tient : la balise `loupe 0.1.0` scellée — LE
   JALON M10 ; si la septième mort vient : le journal la nommera.
+
+Task: Entrée 216 — « dossier kit-loupe avec les preuves déposé dans le
+dossier /test du drive » : LE DIXIÈME RUN — T0→T7 TOUT VERT POUR LA
+TROISIÈME FOIS ET LA VITRINE A VÉCU LA PREMIÈRE FOIS (0 et 0) — MAIS
+la cascade 205 mourut à son premier geste ([FREE-SANS-TYPE] :
+ArgumentError, int too long to convert — le FreeLibrary SANS argtypes
+avec le HMODULE 64 bits du restype c_void_p, et l'ArgumentError n'est
+pas un OSError) et LA LIAISON ne courut jamais.
+Work Log:
+- LE RECOUP : les SEPT pièces du dossier du run kit-loupe/ rapatriées
+  et recoupées (les QUATRE pièces == la vague dev.11 octet pour octet,
+  temoin-fichier.bin == loupe.exe — la pièce ACQUITTÉE) ; les DEUX
+  témoins lus : T0→T7 TOUT VERT (le D54 ÉTENDU avec les OFT, LE
+  PANNEAU, la boucle d'édition, les QUATRE rejets), LA VITRINE VIVANTE
+  (0 et 0, aucun WER, le [4/4] ne portant que de vieux LiveKernelEvent)
+  — L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR ; la
+  balise N'EST PAS scellée (le critère exige le scénario ENTIER).
+- LA RETOUCHE dev.12 (genere_kit_dev12.py, du KIT SEUL — la pièce
+  054de960… INTACTE, la carte génération 16) : FreeLibrary.argtypes =
+  [c_void_p] + restype au T0 (le POINTEUR passe, aux DEUX sondes d'un
+  seul geste), l'essai de la cascade 205 élargi à except Exception
+  (TOUTE classe : l'essai meurt, JAMAIS la cascade), la sonde de
+  liaison blindée (try/finally + except Exception : aucune exception
+  de sonde ne tue le run), le littéral périmé 13a869a3 (dev.6) porté à
+  054de960 ; py_compile VERT — kit-loupe.zip 37 286 o md5 a3d9ea3c…,
+  extraction VIERGE.
+- LE SECOND DÉFAUT DU COFFRE NOMMÉ : [CORBEILLE-VIDE] — la corbeille
+  de l'Entrée 215 envoyait PATCH au corps vide : RIEN n'était corbeillé,
+  DEUX kit-loupe.zip et DEUX LISEZMOI-loupe.txt à la racine (dev.10 +
+  dev.11), DEUX LISEZMOI-preuves.txt au réceptacle, DOUBLÉS aux DEUX
+  index (le listing par nom les cachait) ; la retouche : le corps
+  porte {"trashed": true} + l'unicité de chaque nom VÉRIFIÉE.
+- LE COFFRE (depot_entree_216.py) : le run 10 archivé → preuves-run-
+  loupe-dev11/ [VERDICT 4e3d3855… + les DEUX témoins] ; kit-loupe/
+  recoupé puis corbeillé (D99) ; la vague dev.11 versionnée →
+  vagues-m10/ (COMPLÈTE dev.1 → dev.11) ; LA VAGUE dev.12 à la racine
+  [kit-loupe.zip a3d9ea3c… + LISEZMOI 8ec9553b… + loupe-kit-12/ aux
+  QUATRE pièces] ; LES DOUBLONS PURGÉS (la racine : 27 entrées, aucun
+  doublon) ; le réceptacle ré-armé [LISEZMOI-preuves.txt edd8ec41…] ;
+  les DEUX index mis à jour ; l'arbre porté (loupe/terrain/ == dev.12).
+- SUITE : LE ONZIÈME RUN — kit NEUF loupe-kit-12/, python
+  scenario-loupe.py (T0 → S0 → LA LIAISON), la vitrine par son témoin,
+  preuves-loupe/ ENTIER au coffre QUEL QUE SOIT le verdict ; si le
+  vert TIENT ENTIER : la balise `loupe 0.1.0` scellée — LE JALON M10.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
-NATURE (kit dev.11, l'Entrée 215).
+NATURE (kit dev.12, l'Entrée 216).
 
 Le kit porte UN artefact et UN scénario :
   loupe.exe   le build 0.1.0-dev.8 du jalon M10 — 127 488 o, sha256
@@ -41,7 +41,7 @@ Le kit porte UN artefact et UN scénario :
               .text/.text2/.data/les en-têtes OCTET-IDENTIQUES, les
               adresses scellées INTACTES, la taille CONSTANTE — 89
               octets modifiés en tout ; ET LA LEÇON INSTITUTIONNALISÉE
-              : le présent scénario dev.11 MARCHE LUI-MÊME LES QUATRE
+              : le présent scénario dev.12 MARCHE LUI-MÊME LES QUATRE
               OFT au pas DWORD du chargeur [chaque entrée == le
               préremplissage de son slot — [OFT-QWORD] ne passera
               plus jamais], ET LA NOUVELLE SONDE DE LIAISON VIT LE
@@ -62,6 +62,24 @@ Le kit porte UN artefact et UN scénario :
               DETACH indifférent, la fenêtre toujours jamais lancée ;
               la pièce n'a pas bougé d'un octet, la carte demeure
               génération 16, la vague dev.10 archivée versionnée) ;
+              (INCHANGÉ DEPUIS L'ENTRÉE 214 — la vague dev.12 est encore
+              UNE RETOUCHE DU KIT SEUL : le DIXIÈME RUN VÉCUT LA
+              VITRINE LA PREMIÈRE FOIS [0 et 0, les deux fenêtres,
+              Alt+F4 chacune, aucun WER — après six morts, la vitrine
+              A VÉCU] et tint T0 → T7 TOUT VERT POUR LA TROISIÈME
+              FOIS, mais la cascade 205 mourut à son PREMIER geste :
+              [FREE-SANS-TYPE] — k32.FreeLibrary appelé SANS argtypes
+              avec le HMODULE 64 bits du restype c_void_p, ctypes
+              convertissant l'argument nu en int 32 bits :
+              ArgumentError('argument 1: OverflowError: int too long
+              to convert') — et l'ArgumentError n'est PAS un OSError :
+              l'essai isolé ne tenait que pour OSError, LA LIAISON ne
+              courut jamais ; LA RETOUCHE : FreeLibrary.argtypes =
+              [c_void_p] posé au T0 [le POINTEUR passe, aux DEUX
+              sondes d'un seul geste], l'essai élargi à TOUTE classe
+              d'exception, la sonde de liaison blindée de même ; la
+              pièce n'a pas bougé d'un octet, la carte demeure
+              génération 16, la vague dev.11 archivée versionnée) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
               sys, tempfile — AUCUN paquet à installer).
 
@@ -101,7 +119,12 @@ les 37 slots RELUS — le VRAI
 chargeur doit y avoir posé LES ADRESSES DES FONCTIONS, plus AUCUNE
 valeur fichier : la sixième mort [OFT-QWORD] y était invisible, jamais
 plus. (Et la cascade 205 réparée de son propre nettoyage : le module
-chargé se LIBÈRE avant sa suppression — le PermissionError du run 9.)
+chargé se LIBÈRE avant sa suppression — le PermissionError du run 9 —
+PUIS le run 10 nomma [FREE-SANS-TYPE] : le FreeLibrary SANS argtypes
+ne passait pas le HMODULE 64 bits [ArgumentError, int too long to
+convert] ; l'argtypes c_void_p est posé au T0 et l'essai isolé vaut
+pour TOUTE classe d'exception : la cascade ne meurt JAMAIS sur son
+propre geste, quelle que soit la classe.)
 
 CE QUE LE RUN DÉMONTRE (chaque constat tranché binaire, le verdict
 POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
@@ -138,7 +161,7 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
                    hashlib.md5 + hashlib.sha256 — ET LA PIÈCE DE L'ÈRE
                    JUGÉE PAR SA PROPRE APPLICATION : loupe-07 sur
                    loupe.exe LUI-MÊME rend son sha256_asserté
-                   13a869a3b31b41d6….
+                   054de960c31425d0….
   T3 LES LIGNES     loupe-08 la ligne : la première ligne de loupe.exe
                    == le format composé en Python pur (les DEUX
                    lecteurs encore) ; la ligne finale incomplète garde
@@ -168,7 +191,17 @@ POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
      (205)         de dev.2 reconstitués UN À UN sur des copies %TEMP%
                    (le trou de page, le BSS, le sous-système, la
                    géométrie entière) — le VRAI chargeur NOMME l'axe
-                   fautif ; loupe.exe n'est jamais écrit.
+                   fautif ; chaque essai vit dans son try POUR TOUTE
+                   classe d'exception (la leçon du run 10 :
+                   [FREE-SANS-TYPE] — l'ArgumentError n'est pas un
+                   OSError) ; loupe.exe n'est jamais écrit.
+  LA LIAISON       LA SONDE DE L'ENTRÉE 214 : une copie chargée SANS
+     (214)         DONT_RESOLVE, l'entrée neutralisée de SIX octets
+                   (mov eax, 1 ; ret — [RET-NU, l'Entrée 215]) — les
+                   37 slots RELUS : le VRAI chargeur doit y avoir posé
+                   LES ADRESSES DES FONCTIONS ; JAMAIS courue à ce
+                   jour (le run 10 mourut avant, à la cascade 205) ;
+                   aucune exception de sonde ne tue le run.
 
 Le journal du run : preuves-loupe/temoin-loupe.txt (créé par le
 scénario, à renvoyer au coffre avec les éventuelles captures de la
@@ -390,9 +423,22 @@ def sonde_entree_205(k32, donnees):
                     k32.FreeLibrary(base)   # LA LEÇON DU RUN 9 : un module
                                             # CHARGÉ ne se supprime pas —
                                             # le PermissionError(13) du
-                                            # neuvième run ne passera plus
+                                            # neuvième run ne passera plus ;
+                                            # LA LEÇON DU RUN 10
+                                            # [FREE-SANS-TYPE] : le HMODULE
+                                            # passe désormais en POINTEUR
+                                            # (argtypes posé au T0) —
+                                            # l'ArgumentError du dixième
+                                            # run ne passera plus
                 os.remove(chemin_sonde)
-            except OSError as exc:
+            except Exception as exc:      # LA LEÇON DU RUN 10 : une
+                                          # exception de sonde n'est pas
+                                          # forcément un OSError
+                                          # (l'ArgumentError n'en est pas)
+                                          # — la promesse « chaque essai
+                                          # dans son try » vaut pour
+                                          # TOUTE classe : l'essai meurt,
+                                          # JAMAIS la cascade
                 lignes.append(f"[sonde] {nom} : ÉCHEC DE LA SONDE — "
                               f"{exc!r} — la cascade CONTINUE (l'essai "
                               f"est mort, PAS la pièce : le labo recoupe "
@@ -467,28 +513,41 @@ def sonde_resolution_imports(k32, donnees):
                           f"le labo recoupe)")
             return lignes
         try:
-            non_resolus = 0
-            for ft, n in ((0x3100, 10), (0x3158, 18), (0x31F0, 6),
-                          (0x3228, 3)):
-                for i in range(n):
-                    brut = ctypes.string_at(base + ft + 8 * i, 8)
-                    slot, = struct.unpack("<Q", bytes(brut))
-                    if slot == 0 or slot < 0x10000:   # NULL ou la valeur
-                        non_resolus += 1              # fichier (un RVA)
-            if non_resolus:
-                lignes.append(f"[sonde-214] LA LIAISON : {non_resolus} "
-                              f"slots NON résolus (NULL ou valeur fichier) "
-                              f"— LE CHARGEUR N'A PAS POSÉ LES FONCTIONS "
-                              f"([OFT-QWORD] ?) — la pièce mourrait à la "
-                              f"vitrine : LE DÉFAUT EST NOMMÉ AU TÉMOIN")
-            else:
-                lignes.append("[sonde-214] LA LIAISON : les 37 slots "
-                              "RELUS CHARGÉS — plus AUCUNE valeur fichier : "
-                              "le VRAI chargeur a posé LES ADRESSES DES "
-                              "FONCTIONS aux slots du plan — LA PIÈCE EST "
-                              "LIÉE, la vitrine est LIBRE DE VIVRE")
-        finally:
-            k32.FreeLibrary(base)
+            try:
+                non_resolus = 0
+                for ft, n in ((0x3100, 10), (0x3158, 18), (0x31F0, 6),
+                              (0x3228, 3)):
+                    for i in range(n):
+                        brut = ctypes.string_at(base + ft + 8 * i, 8)
+                        slot, = struct.unpack("<Q", bytes(brut))
+                        if slot == 0 or slot < 0x10000:   # NULL ou valeur
+                            non_resolus += 1              # fichier (un RVA)
+                if non_resolus:
+                    lignes.append(f"[sonde-214] LA LIAISON : {non_resolus} "
+                                  f"slots NON résolus (NULL ou valeur fichier) "
+                                  f"— LE CHARGEUR N'A PAS POSÉ LES FONCTIONS "
+                                  f"([OFT-QWORD] ?) — la pièce mourrait à la "
+                                  f"vitrine : LE DÉFAUT EST NOMMÉ AU TÉMOIN")
+                else:
+                    lignes.append("[sonde-214] LA LIAISON : les 37 slots "
+                                  "RELUS CHARGÉS — plus AUCUNE valeur "
+                                  "fichier : le VRAI chargeur a posé LES "
+                                  "ADRESSES DES FONCTIONS aux slots du "
+                                  "plan — LA PIÈCE EST LIÉE, la vitrine "
+                                  "est LIBRE DE VIVRE")
+            finally:
+                k32.FreeLibrary(base)   # [FREE-SANS-TYPE] : le HMODULE
+                                        # passe en POINTEUR (argtypes au
+                                        # T0) — la leçon du run 10,
+                                        # aux DEUX sondes d'un seul geste
+        except Exception as exc:        # LA LEÇON DU RUN 10 : AUCUNE
+                                        # exception de la sonde ne tue
+                                        # le run — la sonde meurt, le
+                                        # témoin consigne, le verdict
+                                        # se rend POST-MORTEM au labo
+            lignes.append(f"[sonde-214] LA LIAISON : ÉCHEC DE LA SONDE — "
+                          f"{exc!r} — la sonde meurt, PAS le run : le "
+                          f"témoin le consigne, le labo recoupe sur pièces")
         return lignes
     finally:
         try:
@@ -547,6 +606,15 @@ def main():
     k32.LoadLibraryExW.argtypes = [wt.LPCWSTR, ctypes.c_void_p, wt.DWORD]
     k32.VirtualProtect.argtypes = [ctypes.c_void_p, ctypes.c_size_t,
                                    wt.DWORD, ctypes.POINTER(wt.DWORD)]
+    k32.FreeLibrary.argtypes = [ctypes.c_void_p]
+    # ^ LA LEÇON DU RUN 10 [FREE-SANS-TYPE, l'Entrée 216] : le HMODULE
+    #   64 bits (le restype c_void_p ci-dessus) ne passe PAS la
+    #   conversion C int 32 bits de ctypes — ArgumentError('argument
+    #   1: OverflowError: int too long to convert') : la cascade 205
+    #   mourut à son PREMIER geste au dixième run ; le POINTEUR passe,
+    #   par construction — aux DEUX sondes (205 et 214) d'un seul
+    #   geste, l'argtypes étant posé ICI avant toute sonde.
+    k32.FreeLibrary.restype = wt.BOOL
     DONT_RESOLVE = 0x00000001
     base = k32.LoadLibraryExW(chemin_exe, None, DONT_RESOLVE)
     if not base:
