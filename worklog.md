@@ -7663,3 +7663,81 @@ Work Log:
   corbeillé (ses pièces == la vague dev.6 versionnée, les témoins
   fichiers == loupe.exe dev.6 — l'identité) ; la racine du /test :
   26 entrées, AUCUN résidu, AUCUN doublon.
+
+Task: Entrée 217 — « dossier kit-loupe avec les preuves déposé dans le
+dossier /test du drive » : LE ONZIÈME RUN, celui du kit dev.12 — T0→T7
+tout vert pour la quatrième fois, la cascade 205 vécue ENTIÈRE pour la
+première fois, la vitrine vivante la seconde fois (0 et 0) — et le
+huitième défaut nommé sur pièces par le labo : [SONDE-EXE], le faux
+négatif STRUCTUREL de la sonde de liaison (loupe.exe est un EXE : le
+bit DLL absent du COFF, et le chargeur de bibliothèque ne résout
+JAMAIS les imports d'un module exécutable — Microsoft Learn,
+LoadLibraryExA) ; la liaison PROUVÉE PAR LE VIVANT (la vitrine vécue
+deux fois, la même pièce) : LE VERT TIENT ENTIER — LA BALISE
+`loupe 0.1.0` DÉBLOQUÉE sur le run recoupé (39/39) ; le scellage, fait
+de carte (D104), attend son chantier au labo.
+
+Work Log:
+- LE RECOUP : les SEPT pièces du dossier du run kit-loupe/ rapatriées
+  par ID et recoupées (les QUATRE == la vague dev.12 == l'arbre, octet
+  pour octet ; temoin-fichier.bin == loupe.exe 054de960…) ;
+  recouper_run11_loupe.py : 39/39 VERT — le juge est le code, le
+  VERDICT-run-loupe-dev12.txt écrit (5cdbfceb…).
+- LE TÉMOIN LU : T0→T7 tout vert pour la quatrième fois [le D54 ÉTENDU
+  avec les OFT, LE PANNEAU, la boucle d'édition, les 4 rejets, la
+  clôture] ; S0 LA CASCADE VÉCUE ENTIÈRE pour la première fois [P0
+  VERTE · P1 REFUSÉ 193/0xc000007b · P2 VERTE · P3 VERTE · P4 REFUSÉ —
+  les axes NOMMÉS, la dette du run 10 éteinte, la retouche
+  [FREE-SANS-TYPE] portée] ; LA LIAISON courue : « 37 slots NON
+  résolus » — la ligne renvoyée TELLE QUELLE.
+- LE TÉMOIN VITRINE : LA VITRINE VIVANTE LA SECONDE FOIS (0 et 0,
+  aucun WER, le [4/4] ne portant que les trois vieux watchdog 30/10,
+  02/11, 03/11) — l'application née de TRIADE a vécu deux runs de
+  suite, la même pièce.
+- LE HUITIÈME DÉFAUT NOMMÉ SUR PIÈCES : [SONDE-EXE] — le COFF relu
+  (Characteristics 0x0002, le bit DLL 0x2000 absent : la pièce EST un
+  EXE ; IMPORT 0x2830/0x64 et IAT 0x3100/0x148 conformes au plan), LA
+  DOC du chargeur (« If the specified module is an executable module,
+  static imports are not loaded; instead, the module is loaded as if
+  DONT_RESOLVE_DLL_REFERENCES was specified » — Microsoft Learn,
+  LoadLibraryExA : le chargeur de bibliothèque ne résout JAMAIS les
+  imports d'un EXE — la sonde ne pouvait JAMAIS rendre son vert, quel
+  que soit l'état de la pièce), LA CORROBORATION (le comportement
+  constaté == le comportement documenté : aucun autre défaut à
+  chercher ; la mention « [OFT-QWORD] ? » était une prédiction
+  d'avant-run, démentie par le D54 ÉTENDU), LA PREUVE DU VIVANT (la
+  sixième mort prouva que la fenêtre ne vit pas d'une IAT non résolue ;
+  la vitrine vécue DEUX fois → le chargeur de processus a résolu
+  l'IAT — la doctrine de l'Entrée 216), [RET-NU] revu (le DllMain
+  n'est appelé que pour les DLL : les six octets de l'Entrée 215,
+  prudence sans coût, acquittée) — LA PIÈCE ACQUITTÉE DE TOUTE CHARGE,
+  le défaut est DU KIT.
+- LE VERDICT : le critère publié (le scénario ENTIER T0 → S0 → LA
+  LIAISON et la vitrine vivante) EST TENU — LE VERT TIENT ENTIER : LA
+  BALISE `loupe 0.1.0` DÉBLOQUÉE sur le onzième run recoupé (la
+  condition nommée d'avance par l'Entrée 216 satisfaite) ; MAIS le
+  scellage est un FAIT DE CARTE (D104) et la carte du dépôt est en
+  retard de trois époques (génération 13 / dev.5 — la dette de
+  l'Entrée 211, répétée par le T0 du témoin) : LE CHANTIER DU
+  SCELLEMENT EST LA SUITE.
+- LE COFFRE (depot_entree_217.py) : le run 11 archivé →
+  preuves-run-loupe-dev12/ [VERDICT 5cdbfceb… + les DEUX témoins],
+  kit-loupe/ recoupé puis corbeillé (D99/D143), la vague dev.12
+  versionnée → vagues-m10/ [COMPLÈTE dev.1 → dev.12], LA RACINE
+  DEMEURE à la vague du scellement [26 entrées, aucun doublon — plus
+  AUCUNE vague neuve : le jalon n'attend plus un run], le réceptacle
+  ré-armé [LISEZMOI-preuves.txt a14bbda2… — l'ère du JALON DÉBLOQUÉ :
+  plus aucune pièce attendue, les captures bienvenues], les DEUX index
+  mis à jour.
+- SUITE : LE CHANTIER DU SCELLEMENT, AU LABO — la dette de la carte
+  d'abord (l'Entrée 211 : le layout porté à l'époque dev.8, la carte
+  régénérée à sa génération réelle 16), PUIS LA CÉRÉMONIE DU
+  SCELLEMENT (modèle D104/M9 : la cristallisation R6 des 18 blocs à
+  10/10, les portes --sceller-final portées au build, LA BASCULE
+  version=0.1.0-dev.8 → 0.1.0 dans frag-bld [occurrence unique], les
+  fragments re-chiffrés, l'entête balise, la signature Ed25519
+  re-signée [graine durable D144], l'anti-rollback ARMÉ, le tableau de
+  bord « loupe 0.1.0 SCELLÉE sur le onzième run vert recoupé » —
+  loupe.exe INTACT 054de960…) : LA BALISE `loupe 0.1.0` SCELLÉE — LE
+  JALON M10, la méthode TRIADE entière prouvée par la CRÉATION ; ONZE
+  RUNS, ONZE LEÇONS.
