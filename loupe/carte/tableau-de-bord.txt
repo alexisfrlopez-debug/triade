@@ -1,11 +1,12 @@
 === TABLEAU DE BORD — loupe.exe 0.1.1-dev.1 (le TGN « Loupe », M10 — LA VERSION COMMANDÉE D179) ===
 artefact     : loupe.exe (127 488 o)
-version      : 0.1.1-dev.1 (LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR — D178/D179 : la
-               dette [R10-PÉRIMÉE] SOLDÉE à la naissance — la porte
-               R10 véridique, le code byte-identique au vécu des
-               ONZE RUNS de l'ère 0.1.0 ; la balise `loupe 0.1.1` se
-               scellera PAR FAIT DE CARTE sur le vert recoupé du
-               DOUZIÈME run)
+version      : 0.1.1 SCELLÉE sur le douzième run vert recoupé (l'Entrée 222 :
+               LE VERT TIENT ENTIER — T0→T7 TOUT VERT POUR LA CINQUIÈME
+               FOIS, la cascade 205 vécue pour la deuxième, LA VITRINE
+               VIVANTE LA TROISIÈME FOIS [0 ET 0] — LA PREMIÈRE DE LA
+               PIÈCE 0.1.1 ; LA DETTE [R10-PÉRIMÉE] DEMEURE SOLDÉE —
+               la balise vit dans la CARTE — fait de carte D104/M9,
+               le qword de l'artefact ne bouge pas)
 empreinte    : sha256:c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
 profil       : x86-64-win11-pe · WINDOWS_GUI · entrée 0x5c00 (WinMain)
 sections     : .text 0x1000 (la minilibc + la boucle SCELLÉES) ·

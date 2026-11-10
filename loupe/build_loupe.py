@@ -6,7 +6,7 @@ ET LA VERSION COMMANDÉE PAR LE DÉVELOPPEUR (D178/D179 : la dette
 [R10-PÉRIMÉE] soldée à la naissance — la porte R10 rafraîchie à la
 vérité des blocs, le code BYTE-IDENTIQUE au vécu des onze runs de
 l'ère 0.1.0 SCELLÉE ; la 0.1.1 attend le DOUZIÈME run, la balise se
-scellera PAR FAIT DE CARTE sur le vert recoupé — D165/D170).
+scelle PAR FAIT DE CARTE sur le vert recoupé — D165/D170, l'Entrée 222).
 
 LE PLAN PORTÉ À L'ÉPOQUE dev.8 (la dette de la carte de l'Entrée 211
 SOLDÉE — les retouches dev.6/7/8, nées de patchs en place HORS de cette
@@ -1477,9 +1477,12 @@ def _porte_ere_011(exe_neuf: bytes, deploye: bytes,
 # LA PIÈCE DU RECOUP VIT AU DÉPÔT (l'Entrée 219 : le modèle M9 — le verdict
 # de preuves-run-m9f-7 vivait au download/ ; le chemin du bac à sable mort
 # de la session du scellage ne se re-vit JAMAIS : la porte est de PROCESSUS,
-# la pièce est du DÉPÔT)
-VERDICT_RECOUP_M10E = os.path.join(
-    TRIADE, "download", "preuves-run-loupe-dev12", "VERDICT-run-loupe-dev12.txt")
+# la pièce est du DÉPÔT). À l'ère 0.1.1 : le verdict du DOUZIÈME run
+# (l'Entrée 222 — le miroir D165/D170 ; celui du onzième demeure à
+# preuves-run-loupe-dev12/ pour l'histoire de la balise 0.1.0)
+VERDICT_RECOUP_011 = os.path.join(
+    TRIADE, "download", "preuves-run-loupe-011-dev1",
+    "VERDICT-run-loupe-011-dev1.txt")
 
 
 def _version_carte(cm10) -> str | None:
@@ -1529,47 +1532,52 @@ def _anti_rollback() -> None:
 
 
 def _sceller_final() -> int:
-    """Scellage de la finale 0.1.0 (modèle D104/M9 — Entrées 193/217 : le
+    """Scellage de la finale 0.1.1 (modèle D104/M9 — Entrées 218/222 : le
     scellage est un FAIT DE CARTE — l'artefact ne bouge JAMAIS, loupe.exe
-    demeure byte-identique au dev.8 que LE ONZIÈME RUN a couru et vécu).
-    Les portes, tranchées binaires AVANT l'unique écriture : le garde sceau
-    I (D87), LE RECOUP TERRAIN VERT SUR PIÈCES (le onzième run consigné —
-    l'Entrée 217 : LE VERT TIENT ENTIER, 39/39, la vitrine vivante la
-    seconde fois), la cristallisation R6 10/10, le verrou croisé R8, la
-    balise encore dev ; puis la bascule de balise dans frag-bld (occurrence
-    unique, vérifiée EN MÉMOIRE avant l'écriture), l'entête portant LA
-    BALISE, la signature Ed25519 re-signée (graine durable D144 : LE TÉMOIN
-    NE BOUGE PAS), l'anti-rollback ARMÉ (constaté au geste même), le tableau
-    de bord « loupe 0.1.0 SCELLÉE sur le onzième run vert recoupé »."""
+    demeure byte-identique à la 0.1.1-dev.1 que LE DOUZIÈME RUN a courue
+    et vécue). Les portes, tranchées binaires AVANT l'unique écriture : le
+    garde sceau I (D87), LE RECOUP TERRAIN VERT SUR PIÈCES (le douzième
+    run consigné — l'Entrée 222 : LE VERT TIENT ENTIER, 39/39, la
+    vitrine vivante la troisième fois), la cristallisation R6 10/10, le
+    verrou croisé R8, la balise encore dev ; puis la bascule de balise
+    dans frag-bld (occurrence unique, vérifiée EN MÉMOIRE avant
+    l'écriture), l'entête portant LA BALISE, la signature Ed25519
+    re-signée (graine durable D144 : LE TÉMOIN NE BOUGE PAS),
+    l'anti-rollback ARMÉ (constaté au geste même — la 0.1.0 scellée
+    demeurée, la monotonie R10 n'ouvre jamais l'ancienne), le tableau de
+    bord « loupe 0.1.1 SCELLÉE sur le douzième run vert recoupé » — LA
+    VERSION DE LA DETTE [R10-PÉRIMÉE] SOLDÉE."""
     import carte_m10 as cm10
-    print("=== M10 : SCELLAGE de la finale 0.1.0 (le fait de carte — le "
-          "onzième run vert recoupé, l'Entrée 217 : LE VERT TIENT ENTIER) ===")
+    print("=== M10 : SCELLAGE de la finale 0.1.1 (le fait de carte — le "
+          "douzième run vert recoupé, l'Entrée 222 : LE VERT TIENT ENTIER) "
+          "===")
 
     # 1. le garde sceau I (D87) — l'état « réelle » tenu avant tout geste
     _garde_sceau_I()
 
     # 2. LE RECOUP TERRAIN sur pièces (la seule porte que le terrain ouvre)
-    if not os.path.isfile(VERDICT_RECOUP_M10E):
+    if not os.path.isfile(VERDICT_RECOUP_011):
         raise EchecBuild(
-            f"le verdict du recoup terrain est ABSENT ({VERDICT_RECOUP_M10E})"
+            f"le verdict du recoup terrain est ABSENT ({VERDICT_RECOUP_011})"
             " — le recoup labo d'abord : la finale ne se scelle QUE sur "
             "pièces (D138/D145/D148)")
-    with open(VERDICT_RECOUP_M10E, encoding="utf-8") as f:
+    with open(VERDICT_RECOUP_011, encoding="utf-8") as f:
         verdict_recoup = f.read()
     for porte, attendu in (
             ("le vert", "LE VERT TIENT ENTIER"),
             ("le recoup", "39/39 contrôles VERTS"),
             ("la condition", "EST SATISFAITE"),
-            ("l'empreinte", "054de960c31425d0"),
-            ("la vitrine", "LA VITRINE VIVANTE LA SECONDE FOIS")):
+            ("l'empreinte", "c111510535767a40"),
+            ("la vitrine", "LA VITRINE VIVANTE LA TROISIÈME FOIS")):
         if attendu not in verdict_recoup:
             raise EchecBuild(f"la porte « {porte} » ({attendu!r}) manque au "
-                             f"verdict du onzième run — scellage REFUSÉ "
+                             f"verdict du douzième run — scellage REFUSÉ "
                              f"(fail-closed)")
-    print("[terrain] LE ONZIÈME RUN recoupé 39/39 sur pièces croisées : "
-          "T0→T7 TOUT VERT POUR LA QUATRIÈME FOIS, LA CASCADE 205 VÉCUE "
-          "ENTIÈRE, LA VITRINE VIVANTE LA SECONDE FOIS (0 ET 0) — LE VERT "
-          "TIENT ENTIER : la condition de l'Entrée 216 EST SATISFAITE")
+    print("[terrain] LE DOUZIÈME RUN recoupé 39/39 sur pièces croisées : "
+          "T0→T7 TOUT VERT POUR LA CINQUIÈME FOIS, LA CASCADE 205 VÉCUE "
+          "ENTIÈRE POUR LA DEUXIÈME FOIS, LA VITRINE VIVANTE LA TROISIÈME "
+          "FOIS (0 ET 0 — LA PREMIÈRE DE LA PIÈCE 0.1.1) — LE VERT TIENT "
+          "ENTIER : la condition de l'Entrée 221 EST SATISFAITE")
 
     # 3. la cristallisation R6 10/10 (exigée au scellage)
     phrase, graine_cles = cm10.charger_secrets(interactif=False)
@@ -1605,14 +1613,15 @@ def _sceller_final() -> int:
             f"l'artefact diverge du scellé attendu "
             f"({(manifeste.get('empreinte') or '?')[:24]}…) — le scellage "
             f"est un fait de carte, loupe.exe ne bouge pas")
-    if sha_exe != "sha256:" + ("054de960c31425d022f6900f27e59bdd"
-                               "82a120b0b3fe543a67e778867e9c7a69"):
+    if sha_exe != "sha256:" + ("c111510535767a40b0122d4e42261c9d8e"
+                               "1ec10d94d95ef666fd76ceb93e61d1"):
         raise EchecBuild(f"loupe.exe ({sha_exe[7:23]}…) != LA PIÈCE DU "
-                         f"TERRAIN (054de960… — le binaire que LE ONZIÈME "
+                         f"TERRAIN (c1115105… — le binaire que LE DOUZIÈME "
                          f"RUN a couru) — le scellage scelle LE VÉCU")
     print(f"[R8] verrou croisé : {nb} empreintes conformes ; artefact "
           f"{manifeste.get('version')} INTACT ({sha_exe[7:23]}…, "
-          f"{len(exe)} o — LA PIÈCE DU ONZIÈME RUN)")
+          f"{len(exe)} o — LA PIÈCE DU DOUZIÈME RUN, LA DETTE "
+          f"[R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE)")
 
     # 5. la bascule de balise (occurrence unique, EN MÉMOIRE avant l'écriture)
     bld = cm10.dechiffrer_fragment(maitre, "frag-bld",
@@ -1651,16 +1660,21 @@ def _sceller_final() -> int:
     with open(chemin_tab, encoding="utf-8") as f:
         tab = f.read()
     tab = tab.replace(
-        "version      : 0.1.0-dev.8 (LA PIÈCE VÉCUE aux 10e/11e runs — le plan PORTÉ à l'époque dev.8,",
-        "version      : 0.1.0 SCELLÉE sur le onzième run vert recoupé (l'Entrée 217 :")
-    tab = tab.replace(
-        "               la dette de la carte [l'Entrée 211] SOLDÉE ; la 0.1.0\n"
-        "               se scellera par FAIT DE CARTE sur le vert recoupé)",
-        "               LE VERT TIENT ENTIER — T0→T7, la cascade 205, la vitrine\n"
-        "               vivante 0 ET 0 ; la balise vit dans la CARTE — fait de\n"
-        "               carte D104/M9, le qword de l'artefact ne bouge pas)")
+        "version      : 0.1.1-dev.1 (LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR — D178/D179 : la\n"
+        "               dette [R10-PÉRIMÉE] SOLDÉE à la naissance — la porte\n"
+        "               R10 véridique, le code byte-identique au vécu des\n"
+        "               ONZE RUNS de l'ère 0.1.0 ; la balise `loupe 0.1.1` se\n"
+        "               scellera PAR FAIT DE CARTE sur le vert recoupé du\n"
+        "               DOUZIÈME run)",
+        "version      : 0.1.1 SCELLÉE sur le douzième run vert recoupé (l'Entrée 222 :\n"
+        "               LE VERT TIENT ENTIER — T0→T7 TOUT VERT POUR LA CINQUIÈME\n"
+        "               FOIS, la cascade 205 vécue pour la deuxième, LA VITRINE\n"
+        "               VIVANTE LA TROISIÈME FOIS [0 ET 0] — LA PREMIÈRE DE LA\n"
+        "               PIÈCE 0.1.1 ; LA DETTE [R10-PÉRIMÉE] DEMEURE SOLDÉE —\n"
+        "               la balise vit dans la CARTE — fait de carte D104/M9,\n"
+        "               le qword de l'artefact ne bouge pas)")
     if (f"version      : {cm10.VERSION_FINALE} SCELLÉE" not in tab
-            or "0.1.0-dev.8" in tab and "SCELLÉE" not in tab):
+            or "se scellera PAR FAIT DE CARTE" in tab):
         raise EchecBuild("le tableau de bord n'a pas suivi la balise — "
                          "constater avant d'aller plus loin")
     with open(chemin_tab, "w", encoding="utf-8") as f:
@@ -1677,7 +1691,8 @@ def _sceller_final() -> int:
                          "carte, loupe.exe demeure byte-identique")
 
     # 9. L'ANTI-ROLLBACK ARMÉ — CONSTATÉ AU GESTE MÊME (la reconstruction
-    #    REFUSÉE : la carte scellée 0.1.0 interdit construire())
+    #    REFUSÉE : la carte scellée 0.1.1 interdit construire() ; la 0.1.0
+    #    scellée demeure — la monotonie R10 n'ouvre jamais l'ancienne)
     try:
         _anti_rollback()
         raise EchecBuild("l'anti-rollback n'a pas refusé la reconstruction — "
@@ -1689,13 +1704,14 @@ def _sceller_final() -> int:
 
     print(f"[R8] verrou croisé post-scellage : {nb2} empreintes conformes ; "
           f"balise {manifeste2.get('version')}")
-    print(f"[balise] loupe {cm10.VERSION_FINALE} SCELLÉE sur le onzième run "
-          f"vert recoupé (immuable § 9 ; défaut → 0.1.1 à contrat stable, "
-          f"R4 ; anti-rollback R6 vivant — la reconstruction est désormais "
-          f"REFUSÉE) ; loupe.exe INTACT (sha256 {sha_exe[7:23]}…, {len(exe2)} "
-          f"o — le scellage est un fait de carte, LE ONZIÈME RUN A ÉTABLI "
-          f"LE CRITÈRE : LE JALON M10 — la méthode TRIADE entière prouvée "
-          f"par la CRÉATION)")
+    print(f"[balise] loupe {cm10.VERSION_FINALE} SCELLÉE sur le douzième "
+          f"run vert recoupé (immuable § 9 ; défaut → 0.1.2 à contrat "
+          f"stable, R4 ; anti-rollback R6 vivant — la reconstruction est "
+          f"désormais REFUSÉE) ; loupe.exe INTACT (sha256 "
+          f"{sha_exe[7:23]}…, {len(exe2)} o — le scellage est un fait de "
+          f"carte, LE DOUZIÈME RUN A ÉTABLI LE CRITÈRE : LA VERSION DE LA "
+          f"DETTE [R10-PÉRIMÉE] SOLDÉE — la balise 0.1.0 scellée demeurée, "
+          f"l'ère ouverte par la monotonie R10)")
     return 0
 
 
@@ -1828,8 +1844,8 @@ def verifier() -> int:
     # LA CRISTALLISATION R6 : chaque passage incrémente les compteurs — la
     # carte est re-signée à chaque passage (fragments re-chiffrés, graine
     # durable D144), le verrou croisé re-vérifié (R8). La 10/10 sera exigée
-    # au scellage de la 0.1.0 (qui attend le fait de carte sur le vert
-    # recoupé du onzième run — l'Entrée 217).
+    # au scellage de la 0.1.1 (qui attend le fait de carte sur le vert
+    # recoupé du douzième run — l'Entrée 222).
     import carte_m10 as cm10
     version_carte = _version_carte(cm10)
     if version_carte and ("-rc" in version_carte
@@ -1884,8 +1900,8 @@ if __name__ == "__main__":
     ap.add_argument("--verifier", action="store_true",
                     help="re-vérifier + cristallisation R6 (les compteurs)")
     ap.add_argument("--sceller-final", action="store_true",
-                    help="sceller la 0.1.0 (fait de carte — le vert recoupé "
-                         "du onzième run, la cristallisation 10/10 exigés)")
+                    help="sceller la 0.1.1 (fait de carte — le vert recoupé "
+                         "du douzième run, la cristallisation 10/10 exigés)")
     args = ap.parse_args()
     try:
         if args.sceller_final:

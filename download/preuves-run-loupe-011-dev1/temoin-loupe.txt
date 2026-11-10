@@ -1,0 +1,38 @@
+=== LE TERRAIN M10-(e) : LE RUN DE LOUPE (loupe.exe 0.1.0-dev.257) ===
+[env] Windows 11 · Python 64 bits · AMD64
+[T0] LE TÉMOIN — l'artefact relu avant tout geste
+[T0] loupe.exe : 127488 o, sha256 c111510535767a40… — L'EMPREINTE ASSERTÉE (l'empreinte prouve CES octets — la carte, génération 16, à régénérer au labo)
+[T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6f2890000 — le scénario est LE CHARGEUR, aucun point d'entrée exécuté
+[T0] l'habillage d'import VÉRIFIÉ : QUATRE plages FirstThunk marchées au compte exact [10 · 18 · 6 · 3], les séparateurs NULL en place, les slots PRÉREMLIS du fichier — ET LES QUATRE OFT MARCHÉS AU PAS DWORD DU CHARGEUR [10 · 18 · 6 · 3, chaque entrée == le préremplissage de son slot — la leçon de l'Entrée 214 : [OFT-QWORD] ne passera plus jamais]
+[T0] les adresses scellées CONSTATÉES : la minilibc M1 @0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille sha M9 @0xC000+ (H0[0] 0x6A09E667 posé par le scellé) · LA TABLE K[64] @0x2F00 (FIPS) · le qword version 0x00010101 · le CADRE né LE MIROIR DU CADRE_VIERGE (la poignée INVALIDE @+528, le .data entier relu — l'Entrée 206) · LE BASERELOC minimal déclaré dirs[5] (0x2E90, 12 o — la leçon de l'Entrée 204)
+[T0] l'IAT RÉSOLUE par le scénario-chargeur : 37 feuilles posées aux slots du plan (kernel32 10 · user32 18 · gdi32 6 · la double entrée démo 3 — VirtualProtect le temps de la pose)
+[T1] LA SESSION — loupe-01 à son adresse scellée 0x4080, sur L'OMBRE byte-à-byte de la pièce (temoin-session.bin)
+[T1] la session NÉE : taille 127488 o == l'asserté, la poignée vivante 0x234 — le VRAI CreateFileW par l'IAT, sur l'ombre byte-à-byte de la pièce
+[T2] LA DOUBLE LECTURE — loupe-02 puis loupe-07, les DEUX lecteurs indépendants
+[T2] la fenêtre 0 : le tampon du cadre == Python — les 384 octets IDENTIQUES
+[T2] LE PANNEAU : md5 5fc07b786150… · sha256 c11151053576… == hashlib — ET LA PIÈCE DE L'ÈRE JUGÉE PAR SA PROPRE APPLICATION SUR SON OMBRE byte-à-byte (sha256 == l'asserté c11151053576…)
+[T3] LES LIGNES — loupe-08 à son adresse scellée 0x49C0
+[T3] la ligne 0 : « 00000000  4D 5A 00 00 00 00 00 00  00 00 00 00 00 00 00 00  MZ.............. » == le format composé en Python pur
+[T3] la ligne finale incomplète garde LE FORMAT — les groupes absents sont deux espaces, le miroir absent un point
+[T4] LA RECHERCHE — loupe-13 à son adresse scellée 0x5740
+[T4] le motif trouvé à 577 == bytes.find — l'algorithme pur sur les octets vrais
+[T5] L'ÉDITION — la boucle entière : ouvrir, saisir « 4d », sauver (Ctrl+S), vérifier, fermer
+[T5] la boucle ENTIÈRE : l'octet 0 mûté 0x00 → 0x4D SEUL, la taille CONSTANTE, la marque levée, la session close — l'écriture À L'OCTET par le VRAI WriteFile
+[T6] LES REJETS — l'échec NOMMÉ (un refus vaut plus qu'un vert muet)
+[T6] le chemin qui ne désigne rien → -2 ABSENT
+[T6] la session double → -5 ENTRÉE (un fichier à la fois, l'offrande est l'ombre de la pièce — jamais la pièce scellée)
+[T6] le décalage hors bornes → -3 HORS-BORNES (la borne nommée)
+[T6] le motif absent → -1 FIN (la fin nommée)
+[T6] l'ombre temoin-session.bin MORTE — la pièce loupe.exe demeure INTACTE, jamais offerte en écriture au run
+[T7] LA CLÔTURE — l'artefact relu inchangé
+[T7] loupe.exe relu INCHANGÉ (sha256 identique — le run ne touche pas la pièce)
+[S0] LA SONDE DE L'ENTRÉE 205 — les axes de dev.2 reconstitués UN À UN sur des copies %TEMP% (l'artefact n'est JAMAIS écrit, tout est effacé) : le VRAI chargeur NOMME l'axe du refus passé — la leçon consignée au témoin
+[sonde] P0 LA PIÈCE IDENTIQUE : cartographie VERTE @ 0x7ff675520000 — la copie INTACTE : le contrôle du mécanisme de la sonde
+[sonde] P1 LE TROU RECONSTITUÉ : REFUS DU CHARGEUR — GetLastError 193, NTSTATUS 0xc000007b — .rdata VS/RS 0x2000 → 0x1000 : le trou de page 0x3000-0x4000 de dev.2 revient
+[sonde] P2 LE BSS RECONSTITUÉ : cartographie VERTE @ 0x7ff630900000 — .data RS 0x12000 → 0x400 : le BSS massif de dev.2 revient (VS ≫ RS)
+[sonde] P3 LE SOUS-SYSTÈME CUI : cartographie VERTE @ 0x7ff600190000 — Subsystem 2 (GUI) → 3 (CUI) — l'axe fenêtré, le seul que la vitrine exige de garder
+[sonde] P4 LA GÉOMÉTRIE dev.2 ENTIÈRE : REFUS DU CHARGEUR — GetLastError 193, NTSTATUS 0xc000007b — le trou + le BSS ENSEMBLE — la géométrie exacte refusée DEUX FOIS par le terrain
+[sonde] LE VERDICT DE LA SONDE : le VRAI chargeur refuse P1 LE TROU RECONSTITUÉ · P4 LA GÉOMÉTRIE dev.2 ENTIÈRE — L'AXE EST NOMMÉ (les copies %TEMP% sont mortes, loupe.exe INTACT)
+[sonde-214] LA LIAISON : 37 slots NON résolus (NULL ou valeur fichier) — LE CHARGEUR N'A PAS POSÉ LES FONCTIONS ([OFT-QWORD] ?) — la pièce mourrait à la vitrine : LE DÉFAUT EST NOMMÉ AU TÉMOIN
+=== LE RUN DE LOUPE : VERT SUR PIÈCES — l'application née de TRIADE a vécu chez son utilisateur : la session, le panneau, les lignes, la recherche, l'édition à l'octet, les rejets nommés ===
+[suite] LA VITRINE SE VIT PAR SON TÉMOIN : double-cliquez temoin-vitrine.bat — LA PREMIÈRE fenêtre (sans fichier), Alt+F4 ; LA SECONDE (avec temoin-fichier.bin), Alt+F4 — les DEUX codes de sortie capturés au témoin, la mort éventuelle NOMMÉE (l'Entrée 208 : la vitrine a vécu SANS témoin, jamais plus) ; le témoin part au coffre AVEC le présent, QUEL QUE SOIT le verdict ; les captures éventuelles de la vitrine vont au réceptacle preuves-loupe/

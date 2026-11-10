@@ -7894,3 +7894,46 @@ Work Log:
   coffre) ; puis le scellage 0.1.1 au labo (le recoup, la
   cristallisation 10/10, les portes adaptées, la balise `loupe 0.1.1`
   sur le vert recoupé).
+
+Task ID: 129
+Agent: Z.ai (agent principal)
+Task: LE DOUZIÈME RUN RECOUPÉ 39/39 ET LA BALISE `loupe 0.1.1` SCELLÉE —
+LA VERSION DE LA DETTE [R10-PÉRIMÉE] SOLDÉE (D181).
+
+Work Log:
+- LE RAPATRIEMENT (rapatrier_run_011_dev1.py) : les SEPT pièces de
+  /test/kit-loupe/ (les QUATRE du kit == l'Entrée 221 : loupe.exe
+  c1115105… / md5 5fc07b78…, scenario 77872b71…, bat 2a3f22f4…,
+  LISEZMOI 70340163… ; temoin-fichier.bin == loupe.exe ; les DEUX
+  témoins nés du run 46db2210… / d83ae8cb…) — md5 recoupés à
+  l'arrivée.
+- LE RECOUP (recouper_run12_011.py) 39/39 VERT : T0→T7 TOUT VERT POUR
+  LA CINQUIÈME FOIS (le qword 0x00010101 lu sur la pièce — l'ère
+  0.1.1), la cascade 205 POUR LA DEUXIÈME FOIS, LA VITRINE VIVANTE LA
+  TROISIÈME FOIS (0 et 0 — la première de la pièce 0.1.1) ; la
+  doctrine [SONDE-EXE] tenue (D178), le résidu [T0-PÉRIMÉ] nommé (le
+  bandeau dev.12 du scénario porté, AUCUNE porte touchée) — LE VERT
+  TIENT ENTIER ; VERDICT e553ac8c… + les DEUX témoins →
+  download/preuves-run-loupe-011-dev1/.
+- LA CRISTALLISATION : les HUIT passes (les compteurs 2/10 → 26 blocs
+  à 10/10), la recomposition == la pièce à chaque passe (PLUS AUCUN
+  écart — la dette n'existe pas à cette ère), les harnais 61/61 ·
+  53/53 · 45/45 rejoués à chaque passe, la carte re-signée (D144).
+- LE SCELLAGE (--sceller-final, le miroir D165/D170, les portes
+  adaptées au verdict du douzième run) : le garde 14/14, LE VERDICT
+  EXIGÉ COMME PIÈCE (les cinq portes assertées), la cristallisation
+  10/10, le verrou croisé 26, la bascule 0.1.1-dev.1 → 0.1.1 dans
+  frag-bld, l'entête version=0.1.1 génération 17 (racine 1f25afae…),
+  la re-signature D144, l'anti-rollback ARMÉ constaté au geste même —
+  **LA BALISE `loupe 0.1.1` SCELLÉE, loupe.exe INTACT (c1115105…,
+  127 488 o)**.
+- LE COFFRE (depot_entree_222.py) : le run 12 archivé
+  (preuves-run-loupe-011-dev1/ au /test), kit-loupe/ recoupé puis
+  corbeillé, la racine à la vague du scellement (27 entrées, AUCUN
+  doublon), le réceptacle ré-armé à l'ère scellée (fd6deab4…), les
+  DEUX index reversés.
+- CONSIGNATIONS : D181, l'Entrée 222, le PLAN (l'État + la rangée
+  (e)), le présent worklog.
+- SUITE : au développeur — l'ère 0.1.1 scellée (M10 franchi depuis la
+  0.1.0, douze runs au total) ; les options du programme d'après M10
+  (§ 1.10 de la v0.9.0).

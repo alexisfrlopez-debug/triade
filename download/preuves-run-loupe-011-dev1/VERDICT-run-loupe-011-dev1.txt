@@ -1,0 +1,107 @@
+VERDICT DU DOUZIÈME RUN TERRAIN — kit 0.1.1-dev.1 (l'Entrée 222, recoupé sur pièces)
+================================================================================
+L'ENVIRONNEMENT : Windows 11 (10.0.26300.9818) · Python 64 bits · AMD64.
+LE KIT COURU : la vague 0.1.1-dev.1 (LA VERSION COMMANDÉE D179) — les
+QUATRE pièces recoupées contre le dépôt octet pour octet : loupe.exe md5
+5fc07b78… (sha256 c111510535767a40…), scenario-loupe.py md5
+77872b71…, temoin-vitrine.bat md5 2a3f22f4…, LISEZMOI md5
+70340163… ; temoin-fichier.bin == loupe.exe (la copie que la seconde
+fenêtre ouvrit) — LA PIÈCE ACQUITTÉE DE TOUTE CHARGE ; le kit du coffre
+INTACT (kit-loupe.zip dadfb48c…, loupe-kit-13/ == les QUATRE mêmes pièces).
+
+LE TÉMOIN (temoin-loupe.txt) : T0 → T7 TOUT VERT POUR LA CINQUIÈME FOIS
+— [T0] l'empreinte ASSERTÉE (sha256 c111510535767a40…), LE CONTRÔLE D54
+ÉTENDU [les QUATRE plages FirstThunk au compte exact 10 · 18 · 6 · 3 ET
+LES QUATRE OFT marchés au pas DWORD du chargeur], les adresses scellées
+(LE QWORD VERSION 0x00010101 — L'ÈRE 0.1.1 LUE SUR LA PIÈCE, la dette
+[R10-PÉRIMÉE] soldée à la naissance), l'IAT résolue aux 37 slots du
+plan ; [T1] la session sur L'OMBRE ; [T2] la double lecture + LE PANNEAU
+(la pièce jugée par sa propre application : sha256 == hashlib ==
+l'asserté) ; [T3] les lignes ; [T4] la recherche == bytes.find ; [T5] LA
+BOUCLE D'ÉDITION ENTIÈRE ; [T6] LES QUATRE REJETS NOMMÉS ; [T7] la
+clôture, l'artefact relu INCHANGÉ. PUIS [S0] LA CASCADE 205 VÉCUE
+ENTIÈRE POUR LA DEUXIÈME FOIS : P0 la pièce identique cartographiée
+VERTE, P1 LE TROU RECONSTITUÉ REFUSÉ (GetLastError 193, NTSTATUS
+0xc000007b), P2 LE BSS VERTE, P3 LE SOUS-SYSTÈME CUI VERTE, P4 LA
+GÉOMÉTRIE dev.2 ENTIÈRE REFUSÉE — les axes NOMMÉS, les copies %TEMP%
+mortes, la pièce INTACTE. PUIS [sonde-214] LA LIAISON COURUE : « 37
+slots NON résolus (NULL ou valeur fichier) — LE CHARGEUR N'A PAS POSÉ
+LES FONCTIONS ([OFT-QWORD] ?) — la pièce mourrait à la vitrine : LE
+DÉFAUT EST NOMMÉ AU TÉMOIN » — LA LIGNE EST RENVOYÉE TELLE QUELLE.
+
+LE TÉMOIN VITRINE (temoin-vitrine.txt) : LA VITRINE VIVANTE LA TROISIÈME
+FOIS — [1/4] la vitrine vide : code 0 ; [2/4] la vitrine avec
+temoin-fichier.bin : code 0 ; [3/4] AUCUN rapport WER ; [4/4] le journal
+d'événements ne portant que les trois vieux LiveKernelEvent 1001 watchdog
+(les mêmes qu'aux dixième ET onzième runs : 30/10, 02/11, 03/11) :
+AUCUNE mort de loupe.exe — L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON
+UTILISATEUR TROIS RUNS DE SUITE, LA PREMIÈRE DE LA PIÈCE 0.1.1.
+
+LE LABO PARLE — LA DOCTRINE [SONDE-EXE] TENUE (D178), LE RÉSIDU NOMMÉ :
+  1. SUR LES OCTETS : le COFF de la pièce relu — Characteristics
+     0x0002 (IMAGE_FILE_EXECUTABLE_IMAGE seul) et LE BIT
+     IMAGE_FILE_DLL (0x2000) ABSENT (l'octet 0x57 == 0x00) : loupe.exe
+     0.1.1-dev.1 EST un EXE (le DataDirectory IMPORT 0x2830/
+     0x64 et IAT 0x3100/0x148 déclarés
+     conformes au plan) — le geste D179 n'a touché QUE les 17 sommes de
+     la porte R10 et le qword (0x00010101), 0 octet ailleurs.
+  2. DANS LA DOC DU CHARGEUR (Microsoft Learn, LoadLibraryExA) : « If the specified module is an executable module, static imports are not loaded; instead, the module is loaded as if DONT_RESOLVE_DLL_REFERENCES was specified.
+     » — LE CHARGEUR DE BIBLIOTHÈQUE NE RÉSOUD JAMAIS LES IMPORTS D'UN
+     MODULE EXÉCUTABLE : la sonde-214 ne peut JAMAIS y lire les
+     fonctions posées, QUEL QUE SOIT l'état de la pièce (D178).
+  3. LA CORROBORATION : le comportement constaté (le mapping RÉUSSI, les
+     37 slots AUX VALEURS FICHIER) est EXACTEMENT le comportement
+     documenté pour tout EXE chargé par bibliothèque — il n'y a AUCUN
+     autre défaut à chercher. La mention « ([OFT-QWORD] ?) » demeure la
+     PRÉDICTION D'AVANT-RUN d'origine, DÉMENTIE par les pièces dès le
+     onzième run (le D54 ÉTENDU au T0 a marché les QUATRE OFT).
+  4. LA PREUVE DU VIVANT : la sixième mort (neuvième run, dev.7 : 33
+     slots périmés → BEX64 au SECOND appel IAT) a prouvé que la vitrine
+     ne peut PAS vivre d'une IAT non résolue ; la vitrine A VÉCU aux
+     dixième, onzième ET douzième runs (0 et 0 chacun — la pièce
+     c111510535767a40… au douzième : le code BYTE-IDENTIQUE au vécu des
+     onze runs, R4/R7, la dette soldée à la naissance) ⇒ LE CHARGEUR DE
+     PROCESSUS A RÉSOLU L'IAT DE LA PIÈCE — LA LIAISON PROUVÉE PAR LE
+     VIVANT, LA TROISIÈME FOIS, LA PREMIÈRE DE L'ÈRE 0.1.1.
+  5. LA PREUVE DU TÉMOIN : T1 → T7 vécus IAT posée (les 37 feuilles aux
+     slots du plan, tous les blocs fonctionnent) ; S0-P0 la pièce intacte
+     cartographiée VERTE : le mécanisme de la sonde est SAIN — seule sa
+     PRÉSUPPOSITION (un EXE lié par le chargeur de bibliothèque) était
+     fausse.
+  6. LE RÉSIDU DU PORT NOMMÉ [T0-PÉRIMÉ] : le bandeau du témoin porte
+     « la carte, génération 16, à régénérer au labo » — le TEXTE DE
+     L'ÈRE dev.12 (la dette était réelle alors, l'Entrée 211), périmé
+     deux fois à l'ère 0.1.1 (la dette SOLDÉE à l'Entrée 218, la carte
+     GÉNÉRATION 17 écrite à la naissance — D179) ; le bandeau version
+     « 0.1.0-dev.257 » est le RENDU DYNAMIQUE du qword 0x00010101
+     (VERSION_TXT — l'Entrée 213 : le littéral périmé chassé). AUCUNE
+     PORTE TOUCHÉE : les gates EMPREINTE-DIVERGENTE et PORTE-R10 sont
+     exactes (l'asserté c111510535767a40…, le qword 0x00010101)
+     — le résidu est COSMÉTIQUE, consigné au présent verdict, jamais un
+     refus (les pièces du run sont immuables, D154).
+
+LE VERDICT : LE CRITÈRE PUBLIÉ (le scénario ENTIER T0 → S0 → LA LIAISON
+ET LA VITRINE VIVANTE) — T0 → T7 TOUT VERT POUR LA CINQUIÈME FOIS, S0 LA
+CASCADE VÉCUE ENTIÈRE POUR LA DEUXIÈME FOIS, LA LIAISON COURUE ET SON
+CONSTAT NOMMÉ FAUX SUR LES PIÈCES ELLES-MÊMES (l'octet, la doc, le
+terrain), LA VITRINE VIVANTE LA TROISIÈME FOIS, LA PREMIÈRE DE LA PIÈCE
+0.1.1-dev.1 : **LE VERT TIENT ENTIER — LA BALISE `loupe 0.1.1` EST
+DÉBLOQUÉE SUR LE DOUZIÈME RUN RECOUPÉ** (le recoup rend
+39/39 contrôles VERTS). LA CONDITION NOMMÉE D'AVANCE (l'Entrée 221 : « si le
+vert tient : LA BALISE `loupe 0.1.1` SCELLÉE — LA VERSION DE LA DETTE
+SOLDÉE ») EST SATISFAITE.
+
+LE SCELLAGE EST UN FAIT DE CARTE (D104 : l'artefact n'est PAS touché) —
+LA CÉRÉMONIE EST LA SUITE AU MIROIR D165/D170 : la cristallisation R6
+10/10 d'abord (--verifier — les compteurs partis à 2/10, D178 règle 2 :
+les passes se jouent au scellage), puis les portes --sceller-final
+adaptées au présent verdict (le vert, le recoup 39/39, la condition,
+l'empreinte c1115105…, la vitrine la troisième fois), LA BASCULE
+version=0.1.1-dev.1 → 0.1.1 dans frag-bld (occurrence unique, vérifiée
+en mémoire), les fragments re-chiffrés, l'entête portant LA BALISE
+(version=0.1.1, génération 17 — la lignée D80), la signature Ed25519
+re-signée (graine durable D144 : LE TÉMOIN NE BOUGE PAS), l'anti-rollback
+ARMÉ (la 0.1.0 scellée demeurée — la monotonie R10 n'ouvre jamais
+l'ancienne), le tableau de bord « loupe 0.1.1 SCELLÉE sur le douzième
+run vert recoupé » — loupe.exe INTACT (c111510535767a40… — LE MÊME binaire
+que le run a couru) : LA VERSION DE LA DETTE [R10-PÉRIMÉE] SOLDÉE.
