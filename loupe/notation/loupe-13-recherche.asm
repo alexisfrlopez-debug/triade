@@ -42,9 +42,15 @@ inc r15
 jmp 0x577c
 mov rax, r15
 jmp 0x57b0
-mov eax, -1
+push -1
+pop rax
+nop
+nop
 jmp 0x57b0
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 add rsp, 0x20
 pop r15
 pop r14

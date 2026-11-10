@@ -69,18 +69,30 @@ jmp .recouvre
 xor eax, eax
 jmp .sortie
 .refus_session:
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp .sortie
 .refus_entree:
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 jmp .sortie
 .refus_bornes:
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp .sortie
 .refus_systeme:
 call qword ptr [rip + IAT_GETLASTERROR]
 mov dword ptr [rbx + 552], 0
-mov eax, -6
+push -6
+pop rax
+nop
+nop
 jmp .sortie
 .sortie:
 add rsp, 0x28

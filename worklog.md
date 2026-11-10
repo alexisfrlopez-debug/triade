@@ -7741,3 +7741,52 @@ Work Log:
   loupe.exe INTACT 054de960…) : LA BALISE `loupe 0.1.0` SCELLÉE — LE
   JALON M10, la méthode TRIADE entière prouvée par la CRÉATION ; ONZE
   RUNS, ONZE LEÇONS.
+
+Task ID 125 — LE CHANTIER DU SCELLEMENT M10 : la dette de la carte soldée
+(le plan porté à dev.8, la pièce renée de ses notations octet pour octet),
+les errata de l'auditeur guéris, [R10-PÉRIMÉE] nommée, dix passes de
+cristallisation, LA CÉRÉMONIE PASSÉE — la balise `loupe 0.1.0` SCELLÉE.
+
+- LA RELÈVE (D144) : coffre_fort.bin 23a2987a… → lignee-D80 +
+  graine-ed25519-cartes → .keys/ (600) — LE TÉMOIN TENU : pub
+  e9cd8c549485…
+- LA DETTE (Entrée 211) SOLDÉE : layout.py porté (VERSION 0x00010008,
+  l'IAT relogée @0x3100 en QUATRE plages séparées par NULL, la démo
+  @0x3228+, les OFT au pas DWORD) ; les 20 rendus « push imm8 ; pop
+  rax », les 2 movsxd, l'entrée dev.6 réécrite (GetModuleHandleW, le
+  CADRE né memset-zéro, 37 NOP avant le WndProc @0x5DCB INTACT) —
+  l'auteur rejoué : 18/18 notations == la pièce OCTET POUR OCTET
+  (587 → 0 écarts).
+- L'ÉCART NOMMÉ porté : win-03 +6 octets (les TROIS disp32 → la
+  quatrième plage), la double preuve R7 sur l'extrait brut, le harnais
+  rendu le même écart (V1.f).
+- LES DEUX ERRATA DE L'AUDITEUR dev.5 : (a) l'instruction à l'étiquette
+  sautée (exposée par les rendus push/pop aux étiquettes) ; (b) le reset
+  à 8 après chaque ret — faux au sous-programme interne (loupe-06) → LE
+  MODÈLE MATÉRIEL (entrée ABI ≡ 8, cadres sauvés/restaurés, appel
+  externe net zéro) — 78 appels IAT verts.
+- LA MARCHE DU CHARGEUR à valider_pe (pefile aveugle au 4e descripteur
+  au pas DWORD) : les plages FT marchées, le préremplissage D54, la
+  double entrée comptée deux fois, dir[12] relue.
+- [R10-PÉRIMÉE] NOMMÉE : la porte de la pièce porte 17 sommes dev.5
+  (210/214 ne rafraîchit pas la table) — la recomposition véridique,
+  l'écart confiné aux 17 champs, LA PIÈCE INTACTE (réparable à 0.1.1+,
+  R4).
+- LES HARNAIS : GetModuleHandleW vivant, win-03 repointé, libc-07 au
+  réseau, la zone .rdata étendue — 61/61 · 53/53 · 45/45, rejoués à
+  chaque passe.
+- LA CRISTALLISATION : DIX passes du --verifier — 26 blocs à 10/10, la
+  carte re-signée à chaque passe.
+- LA CÉRÉMONIE (--sceller-final) : les portes tranchées avant l'écriture
+  (le garde 14/14, le verdict du onzième run sur pièces — LE VERT TIENT
+  ENTIER, 39/39 —, la cristallisation 10/10, le verrou croisé, la
+  balise encore dev.8, la pièce == LE VÉCU 054de960…) ; LA BASCULE
+  0.1.0-dev.8 → 0.1.0 dans frag-bld (occurrence unique, en mémoire),
+  les fragments re-chiffrés, l'entête balise, la signature re-signée
+  (LE TÉMOIN D144 TENU), le tableau de bord « loupe 0.1.0 SCELLÉE » ;
+  L'ANTI-ROLLBACK ARMÉ — CONSTATÉ AU GESTE MÊME (« reconstruction
+  interdite ») ; loupe.exe INTACT (054de960…, 127 488 o).
+- **LE JALON M10 FRANCHI** : la méthode TRIADE entière prouvée par la
+  CRÉATION — onze runs, onze leçons ; la balise immuable § 9.
+- SUITE : la consignation au coffre (journal + worklog + git + Drive),
+  la passation D141 de la finale 0.1.0, la clôture au PLAN_MILESTONES.

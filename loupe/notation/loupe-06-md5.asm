@@ -7,13 +7,13 @@
 ; Étiquettes résolues : .boucle=0x4639, .fenetre_taille=0x4650, .absorbe=0x46b2, .k_ok=0x46e3, .fenetre_fin=0x4763, .bourre=0x476e, .zeros56=0x47b2, .comprimer=0x4810, .tour=0x4838, .r1=0x4867, .r2=0x487c, .r3=0x4897, .pas=0x48a9, .refus_session=0x48f4, .refus_bornes=0x48fb, .refus_sortie=0x4902, .refus_systeme=0x4909, .sortie=0x4916
 ; Déplacements RIP (cible = adresse + taille + disp) :
 ;   0x45d0 + 0x7 + 0x9a29 = 0xe000
-;   0x4660 + 0x6 - 0x223e = 0x2428
+;   0x4660 + 0x6 - 0x153e = 0x3128
 ;   0x4686 + 0x7 + 0xb973 = 0x10000
-;   0x4690 + 0x6 - 0x2266 = 0x2430
+;   0x4690 + 0x6 - 0x1566 = 0x3130
 ;   0x46fb + 0x7 + 0xb8fe = 0x10000
 ;   0x482e + 0x7 - 0x2735 = 0x2100
-;   0x4909 + 0x6 - 0x24c7 = 0x2448
-; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x223e], call qword ptr [rip - 0x2266], call 0x1100, call 0x4810, call 0x13c0, call 0x4810, call 0x13c0, call 0x4810, call qword ptr [rip - 0x24c7]
+;   0x4909 + 0x6 - 0x17c7 = 0x3148
+; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x153e], call qword ptr [rip - 0x1566], call 0x1100, call 0x4810, call 0x13c0, call 0x4810, call 0x13c0, call 0x4810, call qword ptr [rip - 0x17c7]
 push rbx
 push r12
 push r13
@@ -48,7 +48,7 @@ mov rcx, qword ptr [rbx + 528]
 mov rdx, r12
 xor r8d, r8d
 xor r9d, r9d
-call qword ptr [rip - 0x223e]
+call qword ptr [rip - 0x153e]
 test eax, eax
 jz 0x4909
 lea r9, [rsp + 0xA0]
@@ -56,7 +56,7 @@ mov qword ptr [rsp + 0x20], 0
 mov rcx, qword ptr [rbx + 528]
 lea rdx, [rip + 0xb973]
 mov r8, r15
-call qword ptr [rip - 0x2266]
+call qword ptr [rip - 0x1566]
 test eax, eax
 jz 0x4909
 mov r15, qword ptr [rsp + 0xA0]
@@ -218,7 +218,7 @@ mov eax, -3
 jmp 0x4916
 mov eax, -5
 jmp 0x4916
-call qword ptr [rip - 0x24c7]
+call qword ptr [rip - 0x17c7]
 mov eax, -6
 jmp 0x4916
 add rsp, 0xc0

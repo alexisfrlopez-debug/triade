@@ -149,7 +149,9 @@ REGS = {"rax": UC_X86_REG_RAX, "rbx": UC_X86_REG_RBX, "rcx": UC_X86_REG_RCX,
 # --- La mémoire du harnais (l'image loupe aux RVA du plan, mécanisme D79) --------
 
 ZONE_LIBC = (0x1000, 0x1000)    # .text 0x1000-0x1FFF : la minilibc aux adresses scellées M1
-ZONE_RDATA = (0x2000, 0x1000)    # .rdata : MD5_S/T + l'IAT + K[64] @0x2F00 (la table du scellé)
+ZONE_RDATA = (0x2000, 0x2000)    # .rdata : MD5_S/T + la machinerie + K[64]
+                                  # @0x2F00 + L'IAT RELOGÉE @0x3100-0x3247 (les
+                                  # QUATRE plages du motif D54 — l'Entrée 210)
 ZONE_IMAGE = (0x4000, 0x9000)    # .text2 0x4000-0xBFFF (le domaine) + les sha héritées 0xC000-0xC3C0
 ZONE_DATA = (0xE000, 0x12000)    # .data : les zones du domaine (CUMUL finit 0x20000)
 ZONE_SHIMS = (0x900000, 0x2000)  # les adresses shims (0x900000+) + le mort (0x901000)
@@ -781,13 +783,16 @@ def vecteur_v0():
     ok_iat = (len(L.IAT_SLOTS) == 34
               and len(L.IAT_KERNEL32) == 10 and len(L.IAT_USER32) == 18
               and len(L.IAT_GDI32) == 6
-              and L.IAT_SLOTS["CreateFileW"] == 0x2418
-              and L.IAT_SLOTS["ReadFile"] == 0x2430
-              and L.IAT_SLOTS["GetLastError"] == 0x2448
-              and L.IAT_SLOTS["GetStockObject"] == 0x24E0)
+              and L.IAT_SLOTS["CreateFileW"] == 0x3118
+              and L.IAT_SLOTS["ReadFile"] == 0x3130
+              and L.IAT_SLOTS["GetLastError"] == 0x3148
+              and L.IAT_SLOTS["GetStockObject"] == 0x31F0
+              and L.IAT_SLOTS["GetModuleHandleW"] == 0x3100)
     controle("V0.g:l'IAT-34-feuilles-recomptee", ok_iat,
-             "kernel32 10 @0x2400 · user32 18 @0x2450 · gdi32 6 @0x24E0 — "
-             "l'ordre figé du plan (a)")
+             "kernel32 10 @0x3100 · user32 18 @0x3158 · gdi32 6 @0x31F0 — "
+             "les QUATRE plages RELOGÉES séparées par NULL, préremplies du "
+             "motif D54 (l'Entrée 210 ; GetModuleHandleW LE FIL CÂBLÉ, "
+             "l'Entrée 209)")
     # les zones .data aux adresses ARRÊTÉES (les tailles du geste (a))
     ok_zones = (L.R_CADRE == 0xE000 and L.R_EMPREINTES == 0xE3C0
                 and L.R_SAISIE == 0xE400 and L.R_MOTIF == 0xE460

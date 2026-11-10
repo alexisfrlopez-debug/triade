@@ -13,10 +13,10 @@
 ;   0x6355 + 0x7 + 0x8144 = 0xe4a0
 ;   0x6383 + 0x7 - 0x3e6a = 0x2520
 ;   0x63f3 + 0x7 + 0x99f6 = 0xfdf0
-;   0x6485 + 0x6 - 0x3ff3 = 0x2498
+;   0x6485 + 0x6 - 0x32eb = 0x31a0
 ;   0x64ab + 0x7 + 0x7f4e = 0xe400
 ;   0x64c6 + 0x7 + 0x7f33 = 0xe400
-; Appels directs (l'adresse du plan — I1) : call 0x64ab, call 0x64ab, call 0x64ab, call 0x4240, call qword ptr [rip - 0x3ff3]
+; Appels directs (l'adresse du plan — I1) : call 0x64ab, call 0x64ab, call 0x64ab, call 0x4240, call qword ptr [rip - 0x32eb]
 push rbx
 push r12
 push r13
@@ -30,7 +30,10 @@ cmp qword ptr [rbx + 528], -1
 jne 0x627e
 lea rsi, [rip - 0x3ed4]
 call 0x64ab
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp 0x649d
 mov r14, qword ptr [rbx + 544]
 cmp r8d, 0x08
@@ -77,7 +80,10 @@ cmp r14, rax
 jb 0x6348
 lea rsi, [rip - 0x3faa]
 call 0x64ab
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp 0x649d
 mov eax, r10d
 shl eax, 4
@@ -98,7 +104,10 @@ cmp ecx, 256
 jb 0x6399
 lea rsi, [rip - 0x3e6a]
 call 0x64ab
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp 0x649d
 mov qword ptr [r9], r14
 mov byte ptr [r9 + 8], r15b
@@ -160,7 +169,7 @@ mov qword ptr [rbx + 536], r15
 mov rcx, r12
 xor edx, edx
 mov r8d, 1
-call qword ptr [rip - 0x3ff3]
+call qword ptr [rip - 0x32eb]
 xor eax, eax
 jmp 0x649d
 add rsp, 0x20

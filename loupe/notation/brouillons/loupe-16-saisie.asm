@@ -51,7 +51,10 @@ cmp qword ptr [rbx + 528], -1
 jne .session
 lea rsi, [rip + L_SESSION]
 call .message
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp .sortie
 .session:
 mov r14, qword ptr [rbx + 544]
@@ -115,7 +118,10 @@ cmp r14, rax
 jb .cellule_ok
 lea rsi, [rip + L_HORSBORNES]
 call .message
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp .sortie
 .cellule_ok:
 ; ==================== Q2 : l'octet au journal (par décalage) =================
@@ -140,7 +146,10 @@ cmp ecx, 256
 jb .ajoute
 lea rsi, [rip + L_JOURNALPLEIN]
 call .message
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp .sortie
 .ajoute:
 mov qword ptr [r9], r14

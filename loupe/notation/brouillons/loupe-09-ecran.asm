@@ -51,7 +51,10 @@ push rdi
 push rsi
 push r12
 sub rsp, 0xb0
-mov r12, rcx
+; ============ LE VRAI MODULE (dev.6 — [HINSTANCE-PEB] chassé) =================
+xor ecx, ecx
+call qword ptr [rip + IAT_GETMODULEHANDLEW]
+mov r12, rax
 ; ==================== LA LIGNE DE COMMANDE LUE À LA MAIN (Q1) =================
 call qword ptr [rip + IAT_GETCOMMANDLINEW]
 mov rdx, rax
@@ -81,41 +84,38 @@ jne .chemin_pre
 add rdx, 2
 jmp .programme_apres
 .chemin_pre:
-movzx eax, word ptr [rdx]
 test eax, eax
 jz .sans_chemin
 mov rcx, rdx
 call LOUPE01
 test eax, eax
-jns .suite_vitrine
+jns .sans_chemin
 cmp eax, -2
 jne .refus_gen
 lea rsi, [rip + L_ABSENT]
 call .message
-jmp .suite_vitrine
+jmp .sans_chemin
 .refus_gen:
 lea rsi, [rip + L_SYSTEME]
 call .message
 .sans_chemin:
 .suite_vitrine:
-; ==================== LA CLASSE (Q2 — WNDCLASSEXW sur la pile) ================
+; ============ LA CLASSE (Q2 — le CADRE né memset-zéro, dev.6) ==================
+lea rcx, [rsp + 0x60]
+xor edx, edx
+mov r8d, 80
+call LIBC07
+mov dword ptr [rsp + 0x60], 80
 lea rax, [.procedure]
 mov qword ptr [rsp + 0x68], rax
-mov dword ptr [rsp + 0x60], 80
-mov dword ptr [rsp + 0x64], 0
-mov dword ptr [rsp + 0x70], 0
-mov dword ptr [rsp + 0x74], 0
 mov qword ptr [rsp + 0x78], r12
-mov qword ptr [rsp + 0x80], 0
 xor ecx, ecx
 mov edx, 32512
 call qword ptr [rip + IAT_LOADCURSORW]
 mov qword ptr [rsp + 0x88], rax
 mov qword ptr [rsp + 0x90], 5
-mov qword ptr [rsp + 0x98], 0
 lea rax, [rip + CLASSE]
 mov qword ptr [rsp + 0xa0], rax
-mov qword ptr [rsp + 0xa8], 0
 lea rcx, [rsp + 0x60]
 call qword ptr [rip + IAT_REGISTERCLASSEXW]
 test eax, eax
@@ -155,6 +155,44 @@ mov r9d, 0x10
 call qword ptr [rip + IAT_MESSAGEBOXW]
 mov ecx, 1
 call qword ptr [rip + IAT_EXITPROCESS]
+; ============ LE PAS DU WNDPROC (R7 — @0x5DCB INTACT, dev.6) ==================
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
 ; ==================== LA PROCÉDURE (Q3 — le callback msx64) ===================
 .procedure:
 push rbx

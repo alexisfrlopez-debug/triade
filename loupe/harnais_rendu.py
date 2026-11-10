@@ -198,7 +198,7 @@ FEUILLES_GUI_USER32 = (
     "SetScrollInfo", "LoadCursorW", "MessageBoxW")
 FEUILLES_GUI_GDI = ("GetStockObject", "SelectObject", "GetTextMetricsW",
                     "TextOutW", "SetTextColor", "SetBkColor")
-FEUILLES_GUI_K32 = ("GetCommandLineW", "ExitProcess")
+FEUILLES_GUI_K32 = ("GetModuleHandleW", "GetCommandLineW", "ExitProcess")
 
 
 # --- le mini-GUI virtuel (la pièce neuve du geste) --------------------------------
@@ -250,8 +250,10 @@ class GUIVirtuel:
 
 class EmulationRendu(HN.Emulation):
     """L'image loupe du geste (c) : les QUATORZE notations, libc-02 et win-03
-    posés AUX ADRESSES SCELLÉES, l'IAT démo @0x2818+, les 29 shims vivants
-    (les 5 feuilles du chantier (d) demeurent au mort)."""
+    posés AUX ADRESSES SCELLÉES, l'IAT démo RELOGÉE @0x3228+ (les déplacements
+    de win-03 REPOINTÉS — le prix du relogement, l'Entrée 210), les 30 shims
+    vivants (les 5 feuilles du chantier (d) demeurent au mort ;
+    GetModuleHandleW VIVANT depuis dev.6 — le fil câblé, l'Entrée 209)."""
 
     def __init__(self, os_virtuel, donnees_m9: bytes, donnees_m1: bytes,
                  donnees_demo: bytes):
@@ -289,13 +291,22 @@ class EmulationRendu(HN.Emulation):
 
         # -- LES HÉRITAGES DU GESTE (c) aux adresses scellées (la règle (b)) --
         libc02 = self.extraire(donnees_m1, L.R_LIBC02, 0x80)
-        win03 = self.extraire(donnees_demo, L.R_WIN03, 0x80)
+        win03 = bytearray(self.extraire(donnees_demo, L.R_WIN03, 0x80))
+        # LE REPOINTAGE DE WIN-03 (l'écart nommé de l'Entrée 210 — le prix
+        # du relogement de l'IAT dev.7) : les TROIS disp32 de la boucle
+        # scellée relogés vers la QUATRIÈME PLAGE @0x3228+, 6 octets en
+        # tout, AUCUNE taille d'instruction ne change — le posé == la pièce
+        for site, cible in ((0x15DD, L.R_IAT_DEMO_GMW), (0x15EA, L.R_IAT_DEMO_TM),
+                            (0x15F3, L.R_IAT_DEMO_DMW)):
+            assert win03[site - 0x15C0] == 0xFF and win03[site - 0x15C0 + 1] == 0x15
+            struct.pack_into("<i", win03, site - 0x15C0 + 2, cible - (site + 6))
         self.uc.mem_write(L.R_LIBC02, libc02)
-        self.uc.mem_write(L.R_WIN03, win03)
-        self.heritages_rendu = {"libc-02": libc02, "win-03": win03}
+        self.uc.mem_write(L.R_WIN03, bytes(win03))
+        self.heritages_rendu = {"libc-02": libc02, "win-03": bytes(win03)}
 
-        # -- l'IAT : les 29 feuilles vivantes du geste (c) ----------------------
-        #    les 5 du chantier (d) + GetModuleHandleW demeurent AU MORT
+        # -- l'IAT : les 30 feuilles vivantes du geste (c) ----------------------
+        #    les 5 du chantier (d) demeurent AU MORT ; GetModuleHandleW
+        #    VIVANT depuis dev.6 (l'Entrée 209 : r12 = LE VRAI MODULE)
         base = HN.ZONE_SHIMS[0]
         self.adr_shims_mort: set[int] = set()
         i = 8                       # les 6 shims noyau vivent à base+0..0x38
@@ -306,12 +317,12 @@ class EmulationRendu(HN.Emulation):
             self.adr_shims[adr] = feuille
             self.uc.mem_write(L.IAT_SLOTS[feuille], struct.pack("<Q", adr))
         # les feuilles du (d) : le mort les garde (l'appel DÉNONCÉ)
-        for feuille in ("GetModuleHandleW", "WriteFile", "DestroyWindow",
+        for feuille in ("WriteFile", "DestroyWindow",
                         "PostQuitMessage", "MessageBeep"):
             self.uc.mem_write(L.IAT_SLOTS[feuille], struct.pack("<Q", HN.SHIM_MORT))
-        # L'IAT DÉMO : les TROIS slots que les déplacements scellés de win-03
-        # visent — les MÊMES shims que l'IAT loupe (la double entrée n'est pas
-        # une redondance, c'est le prix du déplacement scellé)
+        # L'IAT DÉMO : les TROIS slots que les déplacements REPOINTÉS de
+        # win-03 visent — les MÊMES shims que l'IAT loupe (la double entrée
+        # n'est pas une redondance : c'est le prix du déplacement scellé)
         for slot, feuille in ((L.R_IAT_DEMO_GMW, "GetMessageW"),
                               (L.R_IAT_DEMO_TM, "TranslateMessage"),
                               (L.R_IAT_DEMO_DMW, "DispatchMessageW")):
@@ -422,6 +433,12 @@ class EmulationRendu(HN.Emulation):
         def qword(adr):
             return struct.unpack("<Q", uc.mem_read(adr, 8))[0]
 
+        if feuille == "GetModuleHandleW":
+            gui.compteurs[feuille] += 1
+            # dev.6 (l'Entrée 209) : r12 = LE VRAI MODULE — la base nominale
+            # du plan (D33 : l'image PI) ; l'argument rcx est NUL par contrat
+            self._retour(uc, L.IMAGE_BASE)
+            return True
         if feuille == "GetMessageW":
             gui.compteurs[feuille] += 1
             if gui.file:
@@ -737,17 +754,21 @@ def vecteur_v0():
                 and L.R_CLASSE == 0x2600 and L.R_TITRE == 0x2614
                 and L.R_ERREUR == 0x2650
                 and L.R_WIN03 == 0x15C0 and L.R_LIBC02 == 0x1180
-                and L.R_IAT_DEMO_GMW == 0x2818 and L.R_IAT_DEMO_TM == 0x2820
-                and L.R_IAT_DEMO_DMW == 0x2828
+                and L.R_IAT_DEMO_GMW == 0x3228 and L.R_IAT_DEMO_TM == 0x3230
+                and L.R_IAT_DEMO_DMW == 0x3238
                 and L.R_MD5_T + 256 == L.L_USAGE
-                and L.L_ABSENT + 20 <= 0x2400)
+                and L.L_ABSENT + 20 <= 0x2520
+                and L.R_IAT_K32 == 0x3100 and L.R_IAT_U32 == 0x3158
+                and L.R_IAT_GDI == 0x31F0)
     controle("V0.e:les-adresses-rdata-du-rendu", ok_rdata,
              "l'entête @0x2000 · les tables HEX/HEXL @0x2050/0x2070 · les 19 "
              "libellés @0x2300-0x23FA · l'UTF-16 (classe, titre, l'erreur "
              "fatale) @0x2600+ — LA RÈGLE DU GESTE (b) EXÉCUTÉE : win-03 "
-             "@0x15C0 À SON ADRESSE SCELLÉE DÉMO, libc-02 @0x1180 à son "
-             "adresse scellée M1, l'IAT démo @0x2818/0x2820/0x2828 (les "
-             "TROIS déplacements scellés de la boucle)")
+             "@0x15C0 À SON ADRESSE SCELLÉE DÉMO (les TROIS déplacements "
+             "REPOINTÉS — le prix du relogement, l'Entrée 210), libc-02 "
+             "@0x1180 à son adresse scellée M1, l'IAT ENTIERE RELOGÉE "
+             "@0x3100/0x3158/0x31F0/0x3228 (les QUATRE plages séparées par "
+             "NULL du motif D54)")
     return donnees_demo, donnees_m1
 
 
@@ -806,7 +827,7 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
         "i110014": {L.LOUPE13_VA, L.LOUPE02_VA},
         "i110009": {L.LOUPE01_VA, L.LOUPE10_VA, L.LOUPE11_VA, L.LOUPE12_VA,
                     L.LOUPE14_VA, L.LOUPE15_VA, L.LOUPE16_VA, L.LOUPE17_VA,
-                    L.LOUPE18_VA, L.R_WIN03},
+                    L.LOUPE18_VA, L.R_WIN03, L.R_LIBC07},
     }
     ok_appels = True
     for bid, attendu_set in appels_attendus.items():
@@ -820,8 +841,9 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
              "loupe-10 → 08 · loupe-11 → 02 · loupe-12 → 02+14 (le commit "
              "CHERCHER délégué) · loupe-13 → libc-02 (LE SCELLÉ M1) · "
              "loupe-14 → 13+02 · loupe-09 → 01/10/11/12/14+15/16/17/18+"
-             "win-03 (LA BOUCLE SCELLÉE DÉMO) — le réseau des specs, la "
-             "table r2 étendue au geste (d)")
+             "win-03 (LA BOUCLE SCELLÉE DÉMO) + libc-07 (LE CADRE NÉ "
+             "MEMSET-ZÉRO, dev.6) — le réseau des specs, la table r2 "
+             "étendue au geste (d)")
 
     # les feuilles IAT par bloc (la liste fermée de chaque bloc)
     iat_attendues = {
@@ -835,9 +857,9 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
         "i110013": set(),
         "i110014": {"SetFilePointerEx", "ReadFile", "GetLastError",
                     "InvalidateRect"},
-        "i110009": {"GetCommandLineW", "LoadCursorW", "RegisterClassExW",
-                    "CreateWindowExW", "ShowWindow", "MessageBoxW",
-                    "ExitProcess", "DefWindowProcW"},
+        "i110009": {"GetModuleHandleW", "GetCommandLineW", "LoadCursorW",
+                    "RegisterClassExW", "CreateWindowExW", "ShowWindow",
+                    "MessageBoxW", "ExitProcess", "DefWindowProcW"},
     }
     ok_iat = True
     for bid, attendues in iat_attendues.items():
@@ -878,13 +900,29 @@ def vecteur_v1(emul: EmulationRendu, donnees_m1: bytes, donnees_demo: bytes):
                                               rva_origine, 0x80)
         if bytes(octets_origine) != extraits[nom][:len(octets_origine)]:
             ok_double = False
-        if bytes(emul.uc.mem_read(rva_origine, 0x80)) != extraits[nom]:
+        # LE POSÉ (émulé) : == l'extrait POUR libc-02 ; pour win-03, == le
+        # REPOINTÉ (l'écart nommé de l'Entrée 210 — le prix du relogement :
+        # les TROIS disp32 relogés vers la quatrième plage @0x3228+, 6
+        # octets en tout, AUCUNE taille d'instruction ne change)
+        if nom == "win-03":
+            attendu_pose = bytearray(extraits[nom])
+            for site, cible in ((0x15DD, L.R_IAT_DEMO_GMW),
+                                (0x15EA, L.R_IAT_DEMO_TM),
+                                (0x15F3, L.R_IAT_DEMO_DMW)):
+                struct.pack_into("<i", attendu_pose,
+                                 site - 0x15C0 + 2, cible - (site + 6))
+            attendu_pose = bytes(attendu_pose)
+        else:
+            attendu_pose = extraits[nom]
+        if bytes(emul.uc.mem_read(rva_origine, 0x80)) != attendu_pose:
             ok_double = False
     controle("V1.f:l'heritage-r7-constate-byte-identique", ok_double,
-             "LA DOUBLE PREUVE : les extraits des SCELLÉS == les octets "
-             "émulés ET les notations d'origine (m1/libc-02-memcmp, "
-             "demo/win-03-boucle) ré-assemblées == les extraits — R7 au sens "
-             "propre, JAMAIS une ré-écriture")
+             "LA DOUBLE PREUVE : les extraits des SCELLÉS == les notations "
+             "d'origine (m1/libc-02-memcmp, demo/win-03-boucle) ré-assemblées "
+             "== les extraits — ET le POSÉ : libc-02 byte-identique, win-03 "
+             "aux TROIS disp32 REPOINTÉS près (l'écart nommé de l'Entrée "
+             "210, le prix du relogement — 6 octets, R7 au sens propre, "
+             "JAMAIS une ré-écriture au-delà du nommé)")
 
     # LA PROCÉDURE : le pointeur enregistré == l'étiquette de la notation
     controle("V1.g:la-procedure-relue-depuis-la-notation",

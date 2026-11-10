@@ -56,10 +56,16 @@ jmp .boucle
 mov rax, r15
 jmp .sortie
 .fin_nomme:
-mov eax, -1
+push -1
+pop rax
+nop
+nop
 jmp .sortie
 .refus_entree:
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 .sortie:
 add rsp, 0x20
 pop r15

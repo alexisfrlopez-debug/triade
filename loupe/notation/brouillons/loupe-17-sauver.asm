@@ -51,7 +51,10 @@ cmp qword ptr [rbx + 528], -1
 jne .session
 lea rsi, [rip + L_SESSION]
 call .message
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp .sortie
 .session:
 ; ==================== Q1 : le journal vide → « rien à sauver » ===============
@@ -120,7 +123,10 @@ jmp .sortie
 ; ==================== E2 : -6 FAIL-CLOSED (le journal demeure) ==============
 .refus_systeme:
 call qword ptr [rip + IAT_GETLASTERROR]
-mov eax, -6
+push -6
+pop rax
+nop
+nop
 jmp .sortie
 .sortie_relaye:
 ; (le verdict de loupe-07 relayé TEL QUEL — eax traverse, le panneau ne publie RIEN)

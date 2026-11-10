@@ -8,8 +8,8 @@
 ; Déplacements RIP (cible = adresse + taille + disp) :
 ;   0x6090 + 0x7 + 0x7f69 = 0xe000
 ;   0x6153 + 0x7 + 0x9c96 = 0xfdf0
-;   0x61e1 + 0x6 - 0x3d4f = 0x2498
-; Appels directs (l'adresse du plan — I1) : call 0x4240, call qword ptr [rip - 0x3d4f]
+;   0x61e1 + 0x6 - 0x3047 = 0x31a0
+; Appels directs (l'adresse du plan — I1) : call 0x4240, call qword ptr [rip - 0x3047]
 push rbx
 push r12
 push r13
@@ -112,7 +112,7 @@ mov qword ptr [rbx + 536], r15
 mov rcx, r12
 xor edx, edx
 mov r8d, 1
-call qword ptr [rip - 0x3d4f]
+call qword ptr [rip - 0x3047]
 xor eax, eax
 jmp 0x61f9
 add rsp, 0x20

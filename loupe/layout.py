@@ -18,35 +18,33 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010005           # loupe 0.1.0-dev.5 (LA RETOUCHE DE
-                                   # L'ENTRÉE 207 — LE TÉMOIN T1 A NOMMÉ
-                                   # [SESSION] : loupe-01 a rendu -6 SYSTÈME
-                                   # sur un fichier pourtant relu à
-                                   # l'instant ; L'AUTOPSIE SUR LA PIÈCE :
-                                   # les arguments 5+ de l'ABI msx64 vivaient
-                                   # DANS LE HOME SPACE [rsp..0x18] au lieu
-                                   # de [rsp+0x20]+ — le VRAI CreateFileW
-                                   # lisait dwCreationDisposition À LA PILE
-                                   # NON INITIALISÉE ; LA CLASSE COMPLÈTE :
-                                   # loupe-01 R4 (les trois slots à leur
-                                   # place), loupe-05 R2 (le contexte SHA
-                                   # déménage [rsp+0x20]→[rsp+0x40], le
-                                   # cadre 0xa0→0xc0, lpOverlapped NÉ à son
-                                   # vrai slot — le VRAI ReadFile lisait
-                                   # H0[0] 0x6A09E667… COMME POINTEUR),
-                                   # loupe-06 R2 (le contexte MD5 pareil —
-                                   # A=0x67452301… au vrai slot) ; ET LE
-                                   # GARDE GUÉRI PAR LA CONVENTION : les shims
-                                   # CreateFileW/ReadFile/WriteFile relisent
-                                   # désormais LES MÊMES SLOTS QUE LE VRAI
-                                   # (le miroir du shim TextOutW du rendu,
-                                   # qui avait TOUJOURS eu raison) — le garde
-                                   # dérive de la CONVENTION, jamais de la
-                                   # pièce qu'il croyait garder ; le miroir
-                                   # du format 0xJJNNPPDD : 0.9.0-dev.1 ==
-                                   # 0x00090001 [M8], 1.0.0-dev.4 ==
-                                   # 0x01000004 [M9] ; 0.1.0-dev.5 ==
-                                   # 0x00010005)
+VERSION_DEV = 0x00010008           # loupe 0.1.0-dev.8 (LA TRIPLE RETOUCHE
+                                   # DES ENTRÉES 209/210/214, la pièce que le
+                                   # terrain A VÉCUE aux dixième et onzième
+                                   # runs — dev.6 [HINSTANCE-PEB] : r12 =
+                                   # GetModuleHandleW(NULL) LE VRAI MODULE,
+                                   # le slot importé mais jamais câblé de
+                                   # dev.5 ; dev.7 [D54-QUATRIÈME] : L'IAT
+                                   # ENTIÈRE relogée à 0x3100 — QUATRE plages
+                                   # FirstThunk SÉPARÉES PAR NULL, préremplies
+                                   # des RVA de noms (le motif D54 au complet),
+                                   # descripteurs dirigés, dir[12] =
+                                   # (0x3100, 0x148), les 63 sites d'appel
+                                   # repointés [disp32, aucune instruction ne
+                                   # change de taille], les vieilles plages
+                                   # VIDÉES — ET [EAX-SANS-SIGNE] : les 20
+                                   # rendus négatifs étendus au 64 bits par
+                                   # « push imm8 ; pop rax » [5 → 5 octets],
+                                   # les deux passages d'erreur de loupe-01
+                                   # passés movsxd ; dev.8 [OFT-QWORD] : les
+                                   # QUATRE OFT compactés au pas DWORD
+                                   # [10·18·6·3 + terminateurs] — le chargeur
+                                   # lisait OFT[1]=0 et ne résolvait qu'une
+                                   # fonction par DLL ; le miroir du format
+                                   # 0.1.0-dev.8 == 0x00010008 ; LA DETTE DE
+                                   # LA CARTE (l'Entrée 211) SOLDÉE AU LABO :
+                                   # le plan porte la pièce, la carte
+                                   # régénérée à sa génération réelle 16)
 VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
                                    # terrain vert recoupé)
@@ -533,16 +531,30 @@ R_TITRE = 0x2614              # « Loupe — l'éditeur hexadécimal » (60 o)
 R_ERREUR = 0x2650             # « La fenêtre de Loupe ne peut pas être créée. »
                               # (88 o — l'explication fatale, E1/E2 de 09)
 
-# --- .rdata : L'IAT DU DOMAINE (D7/D35 : les feuilles déclarées au geste (a),
-# --- l'ordre des listes est FIGÉ ; chaque feuille son qword — le miroir de la
-# --- lignée démo ; la marge 0x2510-0x25FF est VIERGE, les chaînes UTF-16 du
-# --- rendu vivent @0x2600+, l'IAT démo scellée @0x2818+ est RÉSERVÉE au geste
-# --- (c) pour win-03 — LA RÈGLE DU GESTE (b) exécutée : les trois slots que
-# --- les déplacements scellés de la boucle visent, TELS QUELS)
+# --- .rdata : L'IAT DU DOMAINE RELOGÉE À 0x3100 (D7/D35 + [D54-QUATRIÈME],
+# --- l'Entrée 210) : le build dev.5 posait les QUATRE plages FirstThunk
+# --- CONTIGUËS @0x2400-0x2510 (+ la double entrée démo @0x2818) — le
+# --- chargeur du terrain MARCHE chaque plage jusqu'au premier NULL : la
+# --- marche de kernel32 débordait chez les noms user32, RegisterClassExW
+# --- résolvait à NULL, l'entrée appelait le NUL (0xC0000005 ×2, la
+# --- quatrième manifestation de la dérive de dépôt [D54, D68, D98]).
+# --- LA RETOUCHE dev.7 : l'IAT ENTIÈRE relogée dans la marge zéro née
+# --- .rdata — QUATRE plages SÉPARÉES PAR NULL, PRÉREMLIES des RVA de
+# --- noms (le motif D54 au complet : le chargeur lit le nom, le résout,
+# --- l'y pose), les 63 sites d'appel repointés, les vieilles plages
+# --- VIDÉES (0x2400-0x250F et 0x2818-0x282F : un slot mort doit être
+# --- VIDE) ; les bornes :
+# ---   kernel32  0x3100-0x3147 (10 feuilles) · NULL @0x3148
+# ---   user32    0x3158-0x31E7 (18 feuilles) · NULL @0x31E8
+# ---   gdi32     0x31F0-0x321F ( 6 feuilles) · NULL @0x3220
+# ---   démo#2    0x3228-0x323F ( 3 feuilles) · NULL @0x3240
+# ---   (dir[12] = 0x3100, taille 0x148 : 41 qwords = 37 + 4 séparateurs)
 
-R_IAT_K32 = 0x2400            # IAT kernel32 (10 feuilles : 0x2400-0x2450)
-R_IAT_U32 = 0x2450            # IAT user32 (18 feuilles : 0x2450-0x24E0)
-R_IAT_GDI = 0x24E0            # IAT gdi32 (6 feuilles : 0x24E0-0x2510)
+R_IAT_K32 = 0x3100            # IAT kernel32 (10 feuilles : 0x3100-0x3147)
+R_IAT_U32 = 0x3158            # IAT user32 (18 feuilles : 0x3158-0x31E7)
+R_IAT_GDI = 0x31F0            # IAT gdi32 (6 feuilles : 0x31F0-0x321F)
+R_IAT_DIR = 0x3100            # le DataDirectory IAT (dir[12], 0x148 o)
+IAT_DIR_TAILLE = 0x148        # 41 qwords : les 37 feuilles + 4 NULL
 
 IAT_SLOTS = {}
 for _nom in IAT_KERNEL32:
@@ -560,20 +572,24 @@ del _nom
 
 R_K = 0x2F00                  # K[64] u32 — la table de tls13-02 (le scellé)
 
-# --- .rdata @0x2818-0x282F : L'IAT DÉMO SCELLÉE (les TROIS slots de win-03) -------
-# LA RÈGLE DU GESTE (b) EXÉCUTÉE AU GESTE (c) : « tout héritage à SON adresse
-# scellée (win-03 et son IAT démo au chantier rendu) ». La boucle scellée
-# (demo.exe 0.3.0, 75 o @0x15C0) porte TROIS déplacements RIP codés pour les
-# slots IAT user32 DE L'IMAGE DÉMO : 0x15dd+0x6+0x1235 = 0x2818 (GetMessageW),
-# 0x15ea+0x6+0x1230 = 0x2820 (TranslateMessage), 0x15f3+0x6+0x122f = 0x2828
-# (DispatchMessageW). L'image loupe RÉSERVE les TROIS qwords À LEURS ADRESSES
-# D'ORIGINE : le build y posera les adresses résolues (les MÊMES feuilles que
-# l'IAT loupe @0x2468/0x2470/0x2478 — la double entrée n'est pas une
-# redondance, c'est le PRIX du déplacement scellé : R7 au sens propre).
+# --- .rdata : LA DOUBLE ENTRÉE DÉMO — LA QUATRIÈME PLAGE @0x3228 (win-03) ----------
+# La boucle scellée (demo.exe 0.3.0, 75 o @0x15C0) porte TROIS déplacements
+# RIP codés pour les slots IAT user32 DE L'IMAGE DÉMO : 0x15dd+0x6+0x1235 =
+# 0x2818 (GetMessageW), 0x15ea+0x6+0x1230 = 0x2820 (TranslateMessage),
+# 0x15f3+0x6+0x122f = 0x2828 (DispatchMessageW). Le plan dev.5 RÉSERVAIT les
+# TROIS qwords À LEURS ADRESSES D'ORIGINE (la double entrée : le prix du
+# déplacement scellé) — MAIS la retouche dev.7 [D54-QUATRIÈME] a RELOGÉ
+# l'IAT entière : les TROIS déplacements de win-03 sont REPOINTÉS vers la
+# QUATRIÈME PLAGE (disp32 seuls — 6 octets en tout, AUCUNE taille
+# d'instruction ne change : le prix du RELOGEMENT, l'écart nommé de
+# l'Entrée 210 — win-03 est le seul héritage auquel le plan touche, la
+# minilibc M1, la famille sha M9, la table K et le CADRE demeurent
+# octet-identiques aux scellés) ; les vieux slots @0x2818-0x282F sont
+# VIDÉS (un slot mort doit être VIDE).
 
-R_IAT_DEMO_GMW = 0x2818       # GetMessageW (le slot que win-03 vise)
-R_IAT_DEMO_TM = 0x2820        # TranslateMessage
-R_IAT_DEMO_DMW = 0x2828       # DispatchMessageW
+R_IAT_DEMO_GMW = 0x3228       # GetMessageW (le slot que win-03 vise — reprpointé)
+R_IAT_DEMO_TM = 0x3230        # TranslateMessage
+R_IAT_DEMO_DMW = 0x3238       # DispatchMessageW
 
 # --- .text2 @0x4000 : LES BLOCS DU DOMAINE ARRÊTÉS sur les longueurs réelles
 # --- MESURÉES par outils/auteur.py au chantier (b) (D161 : multiples de 64,
@@ -753,26 +769,32 @@ R_CUMUL = 0x10000             # LA fenêtre de lecture 64 Kio (l'exclusion de
 # vierge en cours de vie (loupe-01/03 l'appellent)
 
 # =================================================================================
-# L'ADRESSAGE DU GESTE (e) — LE BUILD loupe 0.1.0-dev.1 (ARRÊTÉ au geste du
-# build : la machinerie d'imports + LA PORTE R10 vivent dans la marge .rdata
-# libre 0x2830-0x2EFF — APRÈS l'IAT démo scellée @0x2818-0x282F, AVANT la
-# table K du scellé @0x2F00 ; la marge 0x26A8-0x2817 demeure VIERGE).
+# L'ADRESSAGE DU GESTE (e) — LE BUILD loupe, PORTÉ À L'ÉPOQUE dev.8 (la
+# dette de la carte de l'Entrée 211 soldée : la machinerie d'imports + LA
+# PORTE R10 vivent dans la marge .rdata 0x2830-0x2EFF — AVANT la table K du
+# scellé @0x2F00 ; les marges 0x2510-0x2817 et 0x2848-0x289F demeurent
+# VIERGES — les vieilles plages IAT @0x2400-0x250F et @0x2818-0x282F VIDÉES
+# par la retouche dev.7 : un slot mort doit être VIDE).
 #
-# LE MARCHÉ DES IMPORTS (le miroir de la lignée démo, D7/D35) : kernel32 (10
-# feuilles, FT = R_IAT_K32) · user32 (18, FT = R_IAT_U32) · gdi32 (6, FT =
-# R_IAT_GDI) · user32#2 LA DOUBLE ENTRÉE DÉMO (FT = 0x2818 : les TROIS slots
-# que les déplacements SCELLÉS de win-03 visent — le prix du déplacement
-# scellé, R7 au sens propre : le chargeur y posera les MÊMES adresses résolues
-# que l'IAT loupe @0x2468/0x2470/0x2478).
+# LE MARCHÉ DES IMPORTS (D7/D35 + [D54-QUATRIÈME]/[OFT-QWORD]) : kernel32
+# (10 feuilles, FT = 0x3100) · user32 (18, FT = 0x3158) · gdi32 (6, FT =
+# 0x31F0) · user32#2 LA DOUBLE ENTRÉE DÉMO (FT = 0x3228 : les TROIS slots
+# que les déplacements REPOINTÉS de win-03 visent — le prix du relogement,
+# l'écart nommé de l'Entrée 210 : le chargeur y posera les MÊMES adresses
+# résolues que l'IAT loupe @0x3170/0x3178/0x3180) ; les QUATRE OFT compactés
+# AU PAS DE DWORD (la retouche dev.8 : le chargeur de bibliothèque lisait
+# OFT[1]=0 au pas de qword et ne résolvait qu'une fonction par DLL).
 #
 # L'IMAGE (quatre sections, l'ordre des VA croissantes — le miroir démo) :
 #   .text  0x1000-0x1FFF  la minilibc + win-03 AUX ADRESSES SCELLÉES, le
 #                         reste int3 (la réserve M1 vierge)
-#   .rdata 0x2000-0x3FFF  les tables, les libellés, l'UTF-16, l'IAT loupe,
-#                         l'IAT démo, la machinerie, LA PORTE R10, K[64]
-#                         (@0x2F00) — puis la marge zéro 0x3000-0x3FFF
-#                         (l'Entrée 205 : l'image SANS AUCUN TROU DE PAGE,
-#                         le miroir de la lignée prouvée au terrain)
+#   .rdata 0x2000-0x3FFF  les tables, les libellés, l'UTF-16, la machinerie
+#                         d'imports (descripteurs + OFT au pas DWORD +
+#                         hints/noms), LA PORTE R10, K[64] (@0x2F00), PUIS
+#                         L'IAT RELOGÉE @0x3100-0x3247 (les QUATRE plages
+#                         séparées par NULL, préremplies du motif D54) —
+#                         l'image SANS AUCUN TROU DE PAGE (l'Entrée 205),
+#                         le miroir de la lignée prouvée au terrain
 #   .text2 0x4000-0xDFFF  les 18 blocs du domaine (0x4040-0x6800) + la marge
 #                         int3 + la famille sha AUX ADRESSES SCELLÉES M9
 #                         (0xC000-0xC3C0) — la convention .text5 : la zone
@@ -819,13 +841,16 @@ ENTREE = LOUPE09_VA              # WinMain — l'entrée EST le bloc (D161 : la
                                  # trampoline — la réserve 64 o s'est inclinée)
 
 # --- La machinerie d'imports (le marché des 34 feuilles + la double entrée) -------
+# Les OFT (les INT) : AU PAS DE DWORD depuis la retouche dev.8 [OFT-QWORD]
+# (l'Entrée 214) — 4 octets par entrée + le terminateur NULL, le slack rendu
+# zéro ; les adresses demeurent celles du geste (e).
 
 R_DESC_IMPORT = 0x2830           # 5 descripteurs × 20 o (k32, u32, gdi32,
                                  # u32-démo, terminateur) — 0x2830-0x2894
-R_INT_K32 = 0x28A0               # INT kernel32 (10 hints + terme) — 88 o
-R_INT_U32 = 0x2900               # INT user32 (18 + terme) — 152 o
-R_INT_GDI = 0x29A0               # INT gdi32 (6 + terme) — 56 o
-R_INT_U32B = 0x29E0              # INT user32#2 (les TROIS de l'IAT démo +
+R_INT_K32 = 0x28A0               # OFT kernel32 (10 RVA + terme DWORD) — 44 o
+R_INT_U32 = 0x2900               # OFT user32 (18 + terme) — 76 o
+R_INT_GDI = 0x29A0               # OFT gdi32 (6 + terme) — 28 o
+R_INT_U32B = 0x29E0              # OFT user32#2 (les TROIS de l'IAT démo +
                                  # terme) — 32 o
 R_NOM_DLL = 0x2A10               # « kernel32.dll\0 » (13 o)
 R_NOM_U32 = 0x2A20               # « user32.dll\0 » (11 o)

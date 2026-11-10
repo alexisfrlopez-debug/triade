@@ -9,12 +9,12 @@
 ;   0x5190 + 0x7 + 0x8e69 = 0xe000
 ;   0x51ef + 0x7 + 0xabfa = 0xfdf0
 ;   0x5205 + 0x7 + 0xabe4 = 0xfdf0
-;   0x52a3 + 0x6 - 0x2e01 = 0x24a8
+;   0x52a3 + 0x6 - 0x20f9 = 0x31b0
 ;   0x5321 + 0x7 + 0xaac8 = 0xfdf0
-;   0x5357 + 0x6 - 0x2ead = 0x24b0
-;   0x5368 + 0x6 - 0x2ed6 = 0x2498
-;   0x539f + 0x6 - 0x2f5d = 0x2448
-; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x2e01], call 0x4240, call qword ptr [rip - 0x2ead], call qword ptr [rip - 0x2ed6], call qword ptr [rip - 0x2f5d]
+;   0x5357 + 0x6 - 0x21a5 = 0x31b8
+;   0x5368 + 0x6 - 0x21ce = 0x31a0
+;   0x539f + 0x6 - 0x225d = 0x3148
+; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x20f9], call 0x4240, call qword ptr [rip - 0x21a5], call qword ptr [rip - 0x21ce], call qword ptr [rip - 0x225d]
 push rbx
 push r12
 push r13
@@ -89,7 +89,7 @@ mov dword ptr [rsp + 24], 0
 mov rcx, r14
 mov edx, 1
 mov r8, rsp
-call qword ptr [rip - 0x2e01]
+call qword ptr [rip - 0x20f9]
 test eax, eax
 jz 0x539f
 mov eax, dword ptr [rsp + 24]
@@ -129,11 +129,11 @@ mov rcx, r14
 mov edx, 1
 mov r8, rsp
 mov r9d, 1
-call qword ptr [rip - 0x2ead]
+call qword ptr [rip - 0x21a5]
 mov rcx, r14
 xor edx, edx
 mov r8d, 1
-call qword ptr [rip - 0x2ed6]
+call qword ptr [rip - 0x21ce]
 xor eax, eax
 jmp 0x53aa
 mov eax, r8d
@@ -151,7 +151,7 @@ xor eax, eax
 jmp 0x53aa
 xor eax, eax
 jmp 0x53aa
-call qword ptr [rip - 0x2f5d]
+call qword ptr [rip - 0x225d]
 mov eax, -6
 add rsp, 0x40
 pop r15

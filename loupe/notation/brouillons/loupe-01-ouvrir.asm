@@ -61,7 +61,10 @@ jbe .taille_ok
 mov rcx, qword ptr [rbx + 528]
 call qword ptr [rip + IAT_CLOSEHANDLE]
 call LOUPE04
-mov eax, -3
+push -3
+pop rax
+nop
+nop
 jmp .sortie
 .taille_ok:
 mov qword ptr [rbx + 520], r13
@@ -76,7 +79,10 @@ jb .mesure
 mov rcx, qword ptr [rbx + 528]
 call qword ptr [rip + IAT_CLOSEHANDLE]
 call LOUPE04
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 jmp .sortie
 .mesure_fin:
 mov rcx, rbx
@@ -103,12 +109,15 @@ js .propage
 xor eax, eax
 jmp .sortie
 .propage:
-mov r13d, eax
+movsxd r13, eax
 call LOUPE03
-mov eax, r13d
+movsxd rax, r13d
 jmp .sortie
 .refus_session:
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 jmp .sortie
 .refus_os:
 call qword ptr [rip + IAT_GETLASTERROR]
@@ -118,19 +127,31 @@ cmp eax, 3
 je .absent
 cmp eax, 32
 je .verrouille
-mov eax, -6
+push -6
+pop rax
+nop
+nop
 jmp .sortie
 .absent:
-mov eax, -2
+push -2
+pop rax
+nop
+nop
 jmp .sortie
 .verrouille:
-mov eax, -7
+push -7
+pop rax
+nop
+nop
 jmp .sortie
 .refus_taille_os:
 mov rcx, qword ptr [rbx + 528]
 call qword ptr [rip + IAT_CLOSEHANDLE]
 call LOUPE04
-mov eax, -6
+push -6
+pop rax
+nop
+nop
 jmp .sortie
 .sortie:
 add rsp, 0x40

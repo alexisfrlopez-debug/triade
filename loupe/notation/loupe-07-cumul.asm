@@ -31,9 +31,15 @@ test eax, eax
 js 0x499e
 xor eax, eax
 jmp 0x499e
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp 0x499e
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 jmp 0x499e
 add rsp, 0x28
 pop r12

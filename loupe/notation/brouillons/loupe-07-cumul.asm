@@ -33,10 +33,16 @@ js .sortie
 xor eax, eax
 jmp .sortie
 .refus_session:
-mov eax, -4
+push -4
+pop rax
+nop
+nop
 jmp .sortie
 .refus_sortie:
-mov eax, -5
+push -5
+pop rax
+nop
+nop
 jmp .sortie
 .sortie:
 add rsp, 0x28

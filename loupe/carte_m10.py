@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""carte_m10.py — Couche C du domaine loupe : carte, GÉNÉRATION 13 (lignée
-D80) — LA PREMIÈRE GÉNÉRATION DU DOMAINE (les i11xxxx entrent à la carte).
+"""carte_m10.py — Couche C du domaine loupe : carte, GÉNÉRATION 16 (lignée
+D80) — LA GÉNÉRATION RÉELLE DE LA PIÈCE dev.8 (la dette de l'Entrée 211
+soldée : les générations 14/15/16 des retouches dev.6/7/8, nées de patchs
+en place hors de la chaîne build_loupe.py, ENFIN régénérées au geste —
+13 → 16, la carte rejoint la pièce que le terrain a vécue).
 
 Même format que les cartes M0-M9 (docs/FORMAT_CARTE.md) — quatre fragments
 chiffrés XChaCha20-Poly1305, clés dérivées de la phrase maîtresse par
 Argon2id puis HKDF, empreinte racine SHA-256, signature Ed25519 — avec les
 spécificités du domaine loupe (M10, le TGN « Loupe ») :
 
-  - GÉNÉRATION 13 : les 18 blocs i110001..18 (le domaine `loupe` — l'éditeur
+  - GÉNÉRATION 16 : les 18 blocs i110001..18 (le domaine `loupe` — l'éditeur
     hexadécimal au panneau d'empreintes, le test grandeur nature D171) et les
     HUIT hérités embarqués À LEURS ADRESSES SCELLÉES (b20001/02/07 la
     minilibc M1 · d40003 la boucle démo · h100001..04 la famille sha M9) ;
@@ -21,17 +24,16 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE BUILD du domaine : loupe.exe 0.1.0-dev.5 (LA RETOUCHE DE
-    L'ENTRÉE 206 : LE VRAI CHARGEUR A CARTOGRAPHIÉ dev.3 — la
-    PREMIÈRE fois au terrain — puis le témoin a nommé [CADRE-NÉ] :
-    le CADRE .data n'était pas né poignée INVALIDE, l'initialiseur
-    du build avait pris la TAILLE CADRE_POIGNEE (8) pour un offset
-    et posé le sentinel à +8 au lieu de +528 (la chaîne des
-    tailles du plan) ; dev.4 fait de l'initialiseur .data LE
-    MIROIR EXACT du CADRE_VIERGE du harnais, offset CALCULÉ — et le
-    validateur relit LE MÊME miroir ; le geste de BUILD, jamais
-    scellage — la balise `loupe 0.1.0` se scellera sur le run
-    terrain vert recoupé, M10-(e) : la porte est de processus).
+  - LE BUILD du domaine : loupe.exe 0.1.0-dev.8 (LA PIÈCE VÉCUE aux
+    dixième et onzième runs — l'Entrée 217 : T0→T7 TOUT VERT, la vitrine
+    vivante 0 ET 0, LE VERT TIENT ENTIER ; le plan PORTÉ à l'époque
+    dev.8 : [HINSTANCE-PEB] l'entrée réécrite · [D54-QUATRIÈME] l'IAT
+    relogée à 0x3100 en QUATRE plages séparées par NULL + [EAX-SANS-SIGNE]
+    les 20 rendus au 64 bits · [OFT-QWORD] les QUATRE OFT au pas DWORD —
+    la dette de la carte [l'Entrée 211] SOLDÉE : le build recompose LA
+    PIÈCE OCTET POUR OCTET, sha256 054de960…) ; le geste de BUILD, jamais
+    scellage — la balise `loupe 0.1.0` se scellera PAR FAIT DE CARTE sur
+    le vert recoupé (M10-(e) : la porte est de processus).
 
 Les secrets ne sont jamais committés (chmod 600, .gitignore).
 """
@@ -58,9 +60,10 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 13   # la génération du domaine loupe (les builds dev.1 → dev.2 →
-                   # dev.3 — le miroir M8 : une génération par domaine, les
-                   # builds la réécrivent)
+GENERATION = 16   # la génération du domaine loupe (les retouches dev.1 →
+                   # dev.8 ; 13 = dev.5, 14 = dev.6, 15 = dev.7, 16 = dev.8 —
+                   # LA GÉNÉRATION RÉELLE DE LA PIÈCE, la dette de l'Entrée
+                   # 211 soldée : le plan porté, la carte rejoint la pièce)
 
 # Sel Argon2id propre au domaine (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
@@ -79,10 +82,10 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV = "0.1.0-dev.5"     # la retouche de l'Entrée 207 (la classe
-                                 # [CADRE-NÉ] nommé au témoin —
-                                 # l'initialiseur .data devient LE MIROIR
-                                 # EXACT du CADRE_VIERGE du harnais)
+VERSION_DEV = "0.1.0-dev.8"     # la pièce vécue aux 10e/11e runs (l'Entrée
+                                 # 217 : LE VERT TIENT ENTIER — la triple
+                                 # retouche des Entrées 209/210/214 portée
+                                 # au plan, la dette de l'Entrée 211 soldée)
 VERSION_FINALE = "0.1.0"        # la finale (le miroir layout.VERSION_FINALE
                                 # 0x00010000 — le scellage est un fait de
                                 # carte : la 0.1.0 attend le run terrain vert
@@ -305,16 +308,20 @@ _ROLE_PAR_BLOC = {b[0]: b[2] for b in BLOCS_CARTE_LOUPE}
 _ZONES_CARTE_M10 = (
     "[zones] libc=0x1100-0x11ff (libc-01/02 scellés M1) "
     "libc-suite=0x13c0-0x143f (libc-07 scellé M1) reserve-libc=0x1200-0x13bf "
-    "reserve-m1=0x1440-0x15bf win-demo=0x15c0-0x163f (win-03 scellé démo) "
+    "reserve-m1=0x1440-0x15bf win-demo=0x15c0-0x163f (win-03 scellé démo, "
+    "les TROIS disp reprpointés — le prix du relogement, l'Entrée 210) "
     "reserve-text=0x1640-0x1fff (int3 défensif) "
     "rdata-rendu=0x2000-0x20ff rdata-md5=0x2100-0x22ff "
-    "rdata-libelles=0x2300-0x23fa iat-k32=0x2400-0x244f "
-    "iat-u32=0x2450-0x24df iat-gdi=0x24e0-0x250f "
+    "rdata-libelles=0x2300-0x23fa "
+    "vieilles-plages=0x2400-0x250f+0x2818-0x282f (VIDÉES : le relogement "
+    "dev.7, un slot mort doit être VIDE) "
     "rdata-libelles-d=0x2520-0x259e rdata-utf16=0x2600-0x26a7 "
-    "iat-demo=0x2818-0x282f (les TROIS slots scellés de win-03) "
-    "imports=0x2830-0x2c57 (descripteurs, INT, hints, noms) "
+    "imports=0x2830-0x2c57 (descripteurs, OFT au pas DWORD, hints, noms) "
     "porte-r10=0x2c60-0x2e8f k-table=0x2f00-0x2fff (la table du scellé M9) "
     "marge-rdata=0x26a8-0x2817 "
+    "iat-k32=0x3100-0x314f iat-u32=0x3158-0x31ef iat-gdi=0x31f0-0x3227 "
+    "iat-demo=0x3228-0x3247 (les QUATRE plages du motif D54, séparées par "
+    "NULL, préremplies des RVA de noms — le relogement dev.7) "
     "domaine=0x4040-0x67ff (les 18 blocs, les slots arrêtés D161) "
     "reserve-t2=0x6800-0xbfff (int3 défensif) "
     "sha-m9=0xc000-0xc3bf (la famille scellée M9) "
@@ -373,10 +380,13 @@ _SPECS_HERITES = {
 
 
 def fragments_clairs(exe: bytes, specs_loupe: dict, code: dict, verrous: int,
-                     verdicts: list[dict], journal_runs: list[str]) -> dict[str, bytes]:
+                     verdicts: list[dict], journal_runs: list[str],
+                     compteurs: dict | None = None) -> dict[str, bytes]:
     """Les QUATRE fragments clairs du domaine (FORMAT_CARTE § 3.2) — la
     couche I est la source (R2) : les contrats PARSÉS des spécifications,
-    jamais une copie d'écriture."""
+    jamais une copie d'écriture. Les COMPTEURS de cristallisation (R6) :
+    chaque passage du --verifier les incrémente (min 10) — la 10/10 sera
+    exigée au scellage de la 0.1.0."""
     sha = lambda b: "sha256:" + hashlib.sha256(b).hexdigest()
 
     # -- frag-loc : les zones + un par bloc (id, spec, cible, exe, addr, état)
@@ -455,8 +465,12 @@ def fragments_clairs(exe: bytes, specs_loupe: dict, code: dict, verrous: int,
     for bid in TOUS_BLOCS_CARTE:
         with open(chemins_notation[bid], "rb") as f:
             empreinte_notation = sha(f.read())
+        crist = min(compteurs.get(bid, 1), 10) if compteurs else 1
+        etat = ("scelle" if bid in ("b20001", "b20002", "b20007", "d40003",
+                                    "h100001", "h100002", "h100003", "h100004")
+                else "cristallise" if crist >= 10 else "verifie")
         prf += [
-            f"[bloc] id={bid} etat=verifie crist=1/10",
+            f"[bloc] id={bid} etat={etat} crist={crist}/10",
             f"  vecteurs : roundtrip=ok structure=ok notation={empreinte_notation}",
         ]
     prf.append("[verifications] runs=" + str(len(journal_runs)))

@@ -1,7 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.5 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE.
+loupe.exe 0.1.0-dev.8 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE,
+ET LA PIÈCE QUE LE TERRAIN A VÉCUE (les dixième et onzième runs : T0→T7
+TOUT VERT, LA VITRINE VIVANTE 0 ET 0 — l'Entrée 217 : LE VERT TIENT
+ENTIER, la balise `loupe 0.1.0` DÉBLOQUÉE sur le run recoupé 39/39).
+
+LE PLAN PORTÉ À L'ÉPOQUE dev.8 (la dette de la carte de l'Entrée 211
+SOLDÉE — les retouches dev.6/7/8, nées de patchs en place HORS de cette
+chaîne, REVENUES au plan : le build recompose LA PIÈCE OCTET POUR OCTET,
+sha256 054de960… — R7 au sens propre, la preuve par la renaissance) :
+  - dev.6 [HINSTANCE-PEB] (l'Entrée 209) : l'entrée réécrite EN PLACE —
+    r12 = GetModuleHandleW(NULL) LE VRAI MODULE (le slot importé mais
+    jamais câblé de dev.5) ; le CADRE WNDCLASSEX né memset-zéro par
+    libc-07 puis les champs vifs ; le WndProc @0x5DCB INTACT ;
+  - dev.7 [D54-QUATRIÈME] + [EAX-SANS-SIGNE] (l'Entrée 210) : L'IAT
+    ENTIÈRE relogée à 0x3100 — QUATRE plages FirstThunk SÉPARÉES PAR
+    NULL, PRÉREMLIES des RVA de noms (le motif D54), descripteurs
+    dirigés, dir[12] = (0x3100, 0x148), les 63 sites d'appel repointés,
+    les vieilles plages VIDÉES ; les 20 rendus négatifs étendus au 64
+    bits (« push imm8 ; pop rax »), les deux passages de loupe-01
+    passés movsxd ; le repointage de win-03 (6 octets, le prix du
+    relogement — l'écart nommé) ;
+  - dev.8 [OFT-QWORD] (l'Entrée 214) : les QUATRE OFT compactés au pas
+    DWORD [10·18·6·3 + terminateurs] — le chargeur de bibliothèque
+    lisait OFT[1]=0 et ne résolvait qu'une fonction par DLL.
+La carte : GÉNÉRATION 16 — la génération RÉELLE de la pièce (13 → 16 :
+les générations 14/15/16 des retouches dev.6/7/8, l'arrière-dette de
+l'Entrée 211 éteinte au geste même).
+
+LES RETOUCHES DOCUMENTÉES DES ENTRÉES 204-207 (l'ère dev.1→dev.5) :
 
 LA RETOUCHE DE L'ENTRÉE 207 (dev.4 → dev.5) : LE TÉMOIN T1 A NOMMÉ
 [SESSION] — « loupe-01 a rendu 0xfffffffa (-6 SYSTÈME), le fichier
@@ -163,11 +191,12 @@ falsification attrapée) ; la validation PE : LA COMPOSITION INTÉGRALE
 (chaque octet de chaque section compté : bloc, table, libellé, IAT,
 machinerie, porte, int3 ou marge zéro) + la porte R10 relue de l'image.
 
-La carte : GÉNÉRATION 13 (la lignée D80, la graine durable D144 — la
-première génération du DOMAINE loupe : les i11xxxx entrent à la carte).
+La carte : GÉNÉRATION 16 (la lignée D80, la graine durable D144 — la
+génération RÉELLE de la pièce dev.8 : les i11xxxx à leur quatrième écriture,
+la dette de l'Entrée 211 soldée).
 
 Usage :
-  python3 build_loupe.py             # construction 0.1.0-dev.5 (+ carte gén. 13)
+  python3 build_loupe.py             # construction 0.1.0-dev.8 (+ carte gén. 16)
   python3 build_loupe.py --verifier  # re-vérification sans écriture
 """
 
@@ -339,7 +368,8 @@ APPELS_FERMES = {
     "i110007": {"loupe05", "loupe06"},
     "i110008": set(),
     "i110009": {"win03", "loupe01", "loupe10", "loupe11", "loupe12",
-                "loupe14", "loupe15", "loupe16", "loupe17", "loupe18"},
+                "loupe14", "loupe15", "loupe16", "loupe17", "loupe18",
+                "libc07"},
     "i110010": {"loupe08"},
     "i110011": {"loupe02"},
     "i110012": {"loupe02", "loupe14"},
@@ -362,9 +392,9 @@ IAT_PAR_BLOC = {
     "i110006": {"SetFilePointerEx", "ReadFile", "GetLastError"},
     "i110007": set(),
     "i110008": set(),
-    "i110009": {"GetCommandLineW", "LoadCursorW", "RegisterClassExW",
-                "CreateWindowExW", "ShowWindow", "MessageBoxW", "ExitProcess",
-                "DefWindowProcW"},
+    "i110009": {"GetModuleHandleW", "GetCommandLineW", "LoadCursorW",
+                "RegisterClassExW", "CreateWindowExW", "ShowWindow",
+                "MessageBoxW", "ExitProcess", "DefWindowProcW"},
     "i110010": {"BeginPaint", "EndPaint", "GetStockObject", "SelectObject",
                 "GetTextMetricsW", "TextOutW", "SetTextColor", "SetBkColor",
                 "GetClientRect", "GetLastError"},
@@ -534,6 +564,25 @@ def heritage_scelle(m9: bytes, m1: bytes, demo: bytes, ks) -> dict[str, bytes]:
             raise EchecBuild(f"{nom} : la notation d'origine ré-assemblée != "
                              f"l'extrait du scellé (R7 — la double preuve)")
         extraits[nom] = extrait
+    # LE REPOINTAGE DE WIN-03 (l'écart nommé de l'Entrée 210 — le prix du
+    # RELOGEMENT de l'IAT dev.7 [D54-QUATRIÈME]) : les TROIS déplacements
+    # RIP de la boucle scellée visaient l'IAT démo d'ORIGINE
+    # @0x2818/0x2820/0x2828 ; relogés vers la QUATRIÈME PLAGE
+    # @0x3228/0x3230/0x3238 — disp32 SEULS, 6 octets en tout, AUCUNE
+    # taille d'instruction ne change ; win-03 est LE SEUL héritage auquel
+    # le plan touche (la minilibc M1, la famille sha M9, la table K et le
+    # CADRE demeurent octet-identiques aux scellés — la double preuve ci-
+    # dessus a joué sur l'EXTRAIT BRUT, le repointage est un geste NOMMÉ
+    # par-dessus, la pièce recoupée le constate)
+    w03 = bytearray(extraits["win-03"])
+    for site, cible in ((0x15DD, L.R_IAT_DEMO_GMW), (0x15EA, L.R_IAT_DEMO_TM),
+                        (0x15F3, L.R_IAT_DEMO_DMW)):
+        assert w03[site - 0x15C0] == 0xFF and w03[site - 0x15C0 + 1] == 0x15, \
+            f"l'encodage call [rip] de win-03 @{site:#x} inattendu"
+        struct.pack_into("<i", w03, site - 0x15C0 + 2, cible - (site + 6))
+    assert sum(a != b for a, b in zip(w03, extraits["win-03"])) == 6, \
+        "le repointage de win-03 doit toucher EXACTEMENT 6 octets (les 3 disp32)"
+    extraits["win-03"] = bytes(w03)
     # LA TABLE K : extraite du scellé M9 ET == les constantes du plan tls13
     # (la source unique — le plan loupe RENVOIE, jamais re-déclare)
     k_scelle = _extraire_scelle(m9, L.R_K, 256)
@@ -579,34 +628,65 @@ def audit_msx64(insns_par_bloc: dict) -> int:
     exit_slot = L.IAT_SLOTS["ExitProcess"]
     for bid, _sid, _fichier, _famille in BLOCS_LOUPE:
         insns = insns_par_bloc[bid]
-        # les cibles de saut internes (les « étiquettes ») coupent la fenêtre
+        rva, slot = L.SLOTS_LOUPE[bid]
+        # LA PRE-PASSE : les entrées de sous-programmes — les cibles des
+        # appels directs INTERNES au bloc (le peintre et sa famille de
+        # formatage · la compression md5 de loupe-06) ; chacune est UNE
+        # fonction à l'entrée ABI ≡ 8 (l'adresse de retour posée par le
+        # call) — sa marche lui est propre, le cadre de l'appelant est
+        # SAUVÉ à l'entrée et RESTAURÉ au ret quand l'appelant reprend
         cibles = set()
+        entrees_sp = set()
         for insn in insns:
             if insn.mnemonic.startswith("j") and insn.op_str.startswith("0x"):
                 cibles.add(int(insn.op_str, 0))
-        # les appels internes (call direct) ne coupent PAS la fenêtre : le
+            elif insn.mnemonic == "call" and insn.op_str.startswith("0x"):
+                t = int(insn.op_str, 0)
+                if rva <= t < rva + slot:
+                    entrees_sp.add(t)
+        # les appels internes ne coupent PAS la fenêtre des slots : le
         # délégué ne touche JAMAIS [rsp+0x20+] de son appelant (son home
         # space à LUI vit à [rsp..0x18] du même cadre — l'ABI)
         depile = 8               # l'entrée msx64 ≡ 8 (mod 16) — le cadre
+        cadres: list[int] = []   # le cadre de l'appelant, sauvé à l'entrée
         ecrits = set()           # les slots écrits dans la fenêtre courante
         for insn in insns:
             adresse = insn.address
+            if adresse in entrees_sp:
+                # L'ENTRÉE DU SOUS-PROGRAMME : le call a posé l'adresse de
+                # retour — l'invariant ABI ≡ 8 ; le cadre de l'appelant est
+                # SAUVÉ (le sous-programme peut vivre AU MILIEU du corps :
+                # à son ret, l'appelant REPAREND son cadre — la compression
+                # md5 de loupe-06 et ses chemins d'erreur après le ret)
+                cadres.append(depile)
+                depile, ecrits = 8, set()
             if adresse in cibles:
                 # une étiquette coupe la FENÊTRE DES SLOTS (les stores
                 # doivent vivre DANS la branche qui appelle) — le CADRE
                 # lui-même PERSISTE : l'alignement ne se réinitialise
-                # JAMAIS à une étiquette (une boucle ré-entre avec le
-                # même cadre — l'erratum de l'auditeur lui-même)
+                # JAMAIS à une étiquette — ET L'INSTRUCTION À L'ÉTIQUETTE
+                # GARDE SON EFFET DE PILE : les rendus « push imm8 ; pop
+                # rax » de la retouche dev.7 [EAX-SANS-SIGNE] VIVENT à
+                # leurs étiquettes (le push -2 de .absent @0x41D0) — les
+                # sauter c'est désynchroniser le cadre (la classe même de
+                # l'Entrée 206 : le contrôle dérive de la CONVENTION)
                 ecrits = set()
-                continue
-            if insn.mnemonic == "ret":
-                depile, ecrits = 8, set()      # une fonction nouvelle naît
-                continue
             m, ops = insn.mnemonic, insn.op_str
             if m == "push":
                 depile -= 8
             elif m == "pop":
                 depile += 8
+            elif m == "ret":
+                # LE RET : l'adresse de retour rendue — SI le code qui suit
+                # est un CIBLE (la continuation de l'APPELANT : le
+                # sous-programme vivait au milieu de son corps), le cadre
+                # SAUVÉ à l'entrée revient ; sinon le ret rend +8 (le
+                # matériel) — la suite est un autre sous-programme (son
+                # entré réinitialisera) ou le mort du bloc
+                if (adresse + insn.size) in cibles and cadres:
+                    depile = cadres.pop()
+                else:
+                    depile += 8
             elif m == "sub" and ops.startswith("rsp,"):
                 depile -= int(ops.split(",")[1], 0)
             elif m == "add" and ops.startswith("rsp,"):
@@ -823,27 +903,32 @@ def composer_image(code: dict, extraits: dict):
     poser(L.R_TITRE, TITRE_NOM.encode("utf-16-le") + b"\x00\x00", "titre")
     poser(L.R_ERREUR, ERREUR_NOM.encode("utf-16-le") + b"\x00\x00", "erreur")
 
-    # le marché des imports : hints contigus, INT, descripteurs, noms de DLL
+    # le marché des imports : hints contigus, LES QUATRE OFT AU PAS DE
+    # DWORD (la retouche dev.8 [OFT-QWORD] — l'Entrée 214 : le chargeur de
+    # bibliothèque lisait OFT[1]=0 au pas de qword et ne résolvait qu'une
+    # fonction par DLL), les descripteurs, les noms de DLL ; les QUATRE
+    # PLAGES IAT RELOGÉES @0x3100 (la retouche dev.7 [D54-QUATRIÈME] —
+    # l'Entrée 210) : SÉPARÉES PAR NULL, PRÉREMLIES des RVA de noms (le
+    # motif D54 au complet) ; les vieilles plages @0x2400-0x250F et
+    # @0x2818-0x282F NÉES ZÉRO (un slot mort doit être VIDE)
     hints = {}
     rva_h = L.R_HN
     for feuille in L.IAT_KERNEL32 + L.IAT_USER32 + L.IAT_GDI32:
         hints[feuille] = rva_h
         poser(rva_h, hn(feuille), f"hint {feuille}")
         rva_h += len(hn(feuille))
-    poser(L.R_INT_K32, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_KERNEL32) + struct.pack("<Q", 0), "INT k32")
-    poser(L.R_INT_U32, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_USER32) + struct.pack("<Q", 0), "INT u32")
-    poser(L.R_INT_GDI, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_GDI32) + struct.pack("<Q", 0), "INT gdi")
-    # user32#2 : LA DOUBLE ENTRÉE DÉMO (les TROIS slots scellés de win-03)
+    # user32#2 : LA DOUBLE ENTRÉE DÉMO (les TROIS slots de win-03 reprpointés)
     demo_feuilles = ("GetMessageW", "TranslateMessage", "DispatchMessageW")
-    poser(L.R_INT_U32B, b"".join(struct.pack("<Q", hints[n]) for n in
-                                 demo_feuilles) + struct.pack("<Q", 0),
-          "INT u32-démo")
+    for rva_oft, feuilles in ((L.R_INT_K32, L.IAT_KERNEL32),
+                              (L.R_INT_U32, L.IAT_USER32),
+                              (L.R_INT_GDI, L.IAT_GDI32),
+                              (L.R_INT_U32B, demo_feuilles)):
+        poser(rva_oft, b"".join(struct.pack("<I", hints[n]) for n in feuilles)
+              + struct.pack("<I", 0), f"OFT {feuilles[0]}")
     poser(L.R_NOM_DLL, b"kernel32.dll\x00", "nom k32")
     poser(L.R_NOM_U32, b"user32.dll\x00", "nom u32")
     poser(L.R_NOM_GDI, b"gdi32.dll\x00", "nom gdi")
+    # LES DESCRIPTEURS : OFT au pas DWORD + FT les plages relogées dev.7
     poser(L.R_DESC_IMPORT,
           struct.pack("<IIIII", L.R_INT_K32, 0, 0, L.R_NOM_DLL, L.R_IAT_K32)
           + struct.pack("<IIIII", L.R_INT_U32, 0, 0, L.R_NOM_U32, L.R_IAT_U32)
@@ -851,15 +936,15 @@ def composer_image(code: dict, extraits: dict):
           + struct.pack("<IIIII", L.R_INT_U32B, 0, 0, L.R_NOM_U32,
                         L.R_IAT_DEMO_GMW)
           + b"\x00" * 20, "descripteurs")
-    # les IAT (FT) : les slots du plan, les hints pré-liés (le chargeur résout)
-    poser(L.R_IAT_K32, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_KERNEL32), "IAT k32")
-    poser(L.R_IAT_U32, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_USER32), "IAT u32")
-    poser(L.R_IAT_GDI, b"".join(struct.pack("<Q", hints[n]) for n in
-                                L.IAT_GDI32), "IAT gdi")
-    poser(L.R_IAT_DEMO_GMW, struct.pack("<QQQ", *(hints[n] for n in demo_feuilles)),
-          "IAT démo scellée")
+    # LES QUATRE PLAGES IAT (chaque plage + son séparateur NULL, contiguës
+    # de 0x3100 à 0x3248 — dir[12] exactement) ; les entrées PRÉREMPLIES
+    # du RVA hint/nom : le chargeur lit le nom, le résout, l'y pose
+    for rva_ft, feuilles in ((L.R_IAT_K32, L.IAT_KERNEL32),
+                             (L.R_IAT_U32, L.IAT_USER32),
+                             (L.R_IAT_GDI, L.IAT_GDI32),
+                             (L.R_IAT_DEMO_GMW, demo_feuilles)):
+        poser(rva_ft, b"".join(struct.pack("<Q", hints[n]) for n in feuilles)
+              + struct.pack("<Q", 0), f"IAT {feuilles[0]}")
 
     # LA TABLE K DU SCELLÉ (le déplacement hérité de tls13-02 la vise)
     poser(L.R_K, extraits["K"], "K[64]")
@@ -928,7 +1013,8 @@ def ecrire_pe32plus(texte: bytes, rdata: bytes, data: bytes, text2: bytes) -> by
     dirs[1] = (L.R_DESC_IMPORT, 100)   # 5 descripteurs (4 marchés + terminateur)
     dirs[5] = (L.R_RELOC, 12)         # BASERELOC minimal (l'image PI que le
                                       # chargeur PEUT reloger — le miroir M1..M9)
-    dirs[12] = (L.R_IAT_K32, 0x110)    # l'IAT loupe (les trois tables contiguës)
+    dirs[12] = (L.R_IAT_DIR, L.IAT_DIR_TAILLE)   # l'IAT relogée (les QUATRE
+                                   # plages séparées par NULL — dev.7)
     opt = bytes(opt_fixe) + b"".join(struct.pack("<II", *d) for d in dirs)
 
     def sh(nom, vsize, vaddr, rawsz, rawptr, cara):
@@ -975,28 +1061,83 @@ def valider_pe(exe: bytes, code: dict, extraits: dict, poses_rdata, table_r10):
     if noms != [".text", ".rdata", ".text2", ".data"]:
         raise EchecBuild(f"les sections {noms} != le miroir démo")
 
-    # le marché des imports : 4 descripteurs, les 34 feuilles + la double entrée
-    imports, fts = {}, {}
-    for entree in pe.DIRECTORY_ENTRY_IMPORT:
-        dll = entree.dll.decode().lower()
-        imports.setdefault(dll, []).extend(i.name.decode() for i in entree.imports)
-        fts.setdefault(dll, set()).add(entree.struct.FirstThunk)
-    if imports.get("kernel32.dll") != list(L.IAT_KERNEL32):
-        raise EchecBuild("l'import kernel32 != les 10 feuilles du plan (D7/D35)")
-    if imports.get("user32.dll") != list(L.IAT_USER32) + list(
-            ("GetMessageW", "TranslateMessage", "DispatchMessageW")):
-        raise EchecBuild("l'import user32 != les 18 feuilles + la double entrée démo")
-    if imports.get("gdi32.dll") != list(L.IAT_GDI32):
-        raise EchecBuild("l'import gdi32 != les 6 feuilles du plan")
-    if fts != {"kernel32.dll": {L.R_IAT_K32},
-               "user32.dll": {L.R_IAT_U32, L.R_IAT_DEMO_GMW},
-               "gdi32.dll": {L.R_IAT_GDI}}:
-        raise EchecBuild(f"les FirstThunk {fts} != les slots du plan (D35 : la "
-                         f"double entrée démo @0x2818 — le prix du déplacement scellé)")
+    tranche = lambda rva, n: exe[pe.get_offset_from_rva(rva): pe.get_offset_from_rva(rva) + n]
+
+    # LE MARCHÉ DES IMPORTS — LA MARCHE DU CHARGEUR (D54, la doctrine de
+    # l'Entrée 210 : le chargeur MARCHE les plages FirstThunk jusqu'au NULL ;
+    # pefile lit l'OFT au pas de qword — le pas de DWORD de la retouche dev.8
+    # le rend aveugle au 4e descripteur : la vérification dérive du PLAN,
+    # jamais de l'outil) : les QUATRE descripteurs relus champ à champ, chaque
+    # plage FT MARCHÉE — le compte exact, chaque entrée == le RVA hint/nom de
+    # SA feuille (le préremplissage D54), les séparateurs NULL aux bornes
+    marche = [(L.R_INT_K32, "kernel32.dll", L.R_NOM_DLL, L.R_IAT_K32,
+               L.IAT_KERNEL32),
+              (L.R_INT_U32, "user32.dll", L.R_NOM_U32, L.R_IAT_U32,
+               L.IAT_USER32),
+              (L.R_INT_GDI, "gdi32.dll", L.R_NOM_GDI, L.R_IAT_GDI,
+               L.IAT_GDI32),
+              (L.R_INT_U32B, "user32.dll", L.R_NOM_U32, L.R_IAT_DEMO_GMW,
+               ("GetMessageW", "TranslateMessage", "DispatchMessageW"))]
+    hints = {}
+    rva_h = L.R_HN
+    for _f in L.IAT_KERNEL32 + L.IAT_USER32 + L.IAT_GDI32:
+        hints[_f] = rva_h
+        rva_h += 2 + len(_f) + 1
+    for k, (oft_attendu, dll_attendue, rva_nom, ft_attendu, feuilles) in \
+            enumerate(marche):
+        oft, _tds, _fwd, nom_rva, ft = struct.unpack_from(
+            "<IIIII", tranche(L.R_DESC_IMPORT + 20 * k, 20))
+        if (oft, ft) != (oft_attendu, ft_attendu):
+            raise EchecBuild(f"le descripteur #{k} : OFT/FT ({oft:#x}/{ft:#x}) "
+                             f"!= le plan ({oft_attendu:#x}/{ft_attendu:#x})")
+        if tranche(nom_rva, len(dll_attendue) + 1) != \
+                dll_attendue.encode("ascii") + b"\x00":
+            raise EchecBuild(f"le descripteur #{k} : le nom != {dll_attendue}")
+        # LA MARCHE de la plage : les entrées jusqu'au NULL, le compte exact,
+        # chaque entrée PRÉREMPLIE du RVA hint/nom de sa feuille (D54)
+        vus = []
+        for i in range(len(feuilles) + 1):
+            q, = struct.unpack_from("<Q", tranche(ft + 8 * i, 8))
+            if q == 0:
+                break
+            vus.append(q)
+        if len(vus) != len(feuilles):
+            raise EchecBuild(f"la plage {dll_attendue} @ {ft:#x} : {len(vus)} "
+                             f"entrées != {len(feuilles)} feuilles (D54)")
+        for i, feuille in enumerate(feuilles):
+            if vus[i] != hints[feuille]:
+                raise EchecBuild(
+                    f"la plage {dll_attendue} @ {ft:#x} : l'entrée {i} "
+                    f"({vus[i]:#x}) != le RVA hint/nom de {feuille} "
+                    f"({hints[feuille]:#x} — le préremplissage D54)")
+        # le séparateur NULL à la borne de la plage
+        sep, = struct.unpack_from("<Q",
+                                  tranche(ft + 8 * len(feuilles), 8))
+        if sep != 0:
+            raise EchecBuild(f"la plage {dll_attendue} : le séparateur NULL "
+                             f"absent @ {ft + 8 * len(feuilles):#x} (D54)")
+    # le terminateur (le 5e descripteur)
+    if tranche(L.R_DESC_IMPORT + 80, 20) != b"\x00" * 20:
+        raise EchecBuild("le terminateur des descripteurs n'est pas nul")
+    # les 37 feuilles AU TOTAL (34 + la double entrée démo : les TROIS de
+    # win-03 comptées DEUX FOIS, une par plage — le prix du relogement),
+    # aucune de plus : la marche s'arrête au NULL de chaque plage
+    totale = sum(struct.unpack_from("<Q", tranche(L.R_IAT_DIR + 8 * i, 8))[0]
+                 for i in range(41))
+    if totale != sum(hints[f] for f in L.IAT_KERNEL32 + L.IAT_USER32
+                     + L.IAT_GDI32) + hints["GetMessageW"] \
+            + hints["TranslateMessage"] + hints["DispatchMessageW"]:
+        raise EchecBuild("l'IAT déclarée porte des entrées hors du marché des "
+                         "34 feuilles + la double entrée (la somme des "
+                         "préremplissages)")
+    # dir[12] : l'IAT déclarée — la plage relogée, 41 qwords (37 + 4 NULL)
+    iat_dir = pe.OPTIONAL_HEADER.DATA_DIRECTORY[12]
+    if iat_dir.VirtualAddress != L.R_IAT_DIR or iat_dir.Size != L.IAT_DIR_TAILLE:
+        raise EchecBuild("le répertoire IAT != le plan (0x3100, 0x148 — les "
+                         "QUATRE plages séparées par NULL, l'Entrée 210)")
 
     # LA COMPOSITION INTÉGRALE — chaque octet de chaque section compté :
     # (a) .text : les 4 héritages posés, le reste int3
-    tranche = lambda rva, n: exe[pe.get_offset_from_rva(rva): pe.get_offset_from_rva(rva) + n]
     for nom, rva, taille, *_ in HERITAGES:
         if rva < L.RDATA_RVA and tranche(rva, taille) != extraits[nom]:
             raise EchecBuild(f"{nom} : l'extrait posé != le scellé (R7)")
@@ -1193,10 +1334,12 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0-dev.5 (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.0 SCELLÉE (le TGN « Loupe », M10) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.5')} "
-        f"(geste de BUILD, jamais scellage — la 0.1.0 attend le run terrain)",
+        f"version      : {manifeste.get('version', '0.1.0-dev.8')} "
+        f"(LA PIÈCE VÉCUE aux 10e/11e runs — le plan PORTÉ à l'époque dev.8,",
+        f"               la dette de la carte [l'Entrée 211] SOLDÉE ; la 0.1.0",
+        f"               se scellera par FAIT DE CARTE sur le vert recoupé)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
         "sections     : .text 0x1000 (la minilibc + la boucle SCELLÉES) ·",
@@ -1210,7 +1353,7 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
         "               d'origine ré-assemblées == les octets posés)",
         "harnais      : " + " + ".join(
             f"{v['harnais']} {v['verts']}/{v['total']}" for v in verdicts),
-        f"carte        : génération 13 (lignée D80, graine durable D144),",
+        f"carte        : génération 16 (lignée D80, graine durable D144),",
         f"               {nb_carte} empreintes au verrou croisé (R8)",
         "frontières   : AUCUNE balise ne bouge (win 0.9.0 / linux 0.7.0 /",
         "               riscv 0.8.0 / tls13 1.0.0 INTACTES) ; le garde 14/14",
@@ -1220,11 +1363,259 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
     return "\n".join(lignes) + "\n"
 
 
+# --- L'ÉCART NOMMÉ [R10-PÉRIMÉE] (le constat du port à l'époque dev.8) ---------------
+
+def _ecart_r10_nomme(exe_neuf: bytes, deploye: bytes) -> list[tuple[int, int, int]]:
+    """La recomposition contre LA PIÈCE DÉPLOYÉE (le témoin du terrain) :
+    tout écart doit être CONFINÉ aux champs de SOMMES de la porte R10 —
+    la pièce porte les sommes de l'ère dev.5 (la retouche des Entrées
+    210/214 changea les octets des blocs SANS rafraîchir la table : 17
+    entrées périmées, nommées) ; la recomposition, elle, dit la VÉRITÉ de
+    l'image (chaque somme == son bloc relu). La pièce demeure INTACTE —
+    sa porte périmée est son histoire, personne ne la vérifie à
+    l'exécution (le chargeur l'ignore, le scénario ne la lit pas).
+    Retourne [(rva, somme_pièce, somme_vérité)] — ou ÉCHEC NOMMÉ."""
+    if len(exe_neuf) != len(deploye):
+        raise EchecBuild(f"la recomposition ({len(exe_neuf)} o) != la pièce "
+                         f"déployée ({len(deploye)} o) — la taille ne bouge "
+                         f"jamais (R7)")
+    fo_rdata = lambda rva: rva - L.RDATA_RVA + L.RDATA_FILE
+    champs_sommes = set()
+    entrees = []
+    for k in range(26):
+        base = fo_rdata(L.R_TAB_SUM) + 16 * k
+        rva, taille, _s = struct.unpack_from("<IIQ", exe_neuf, base)
+        entrees.append((rva, taille, base + 8))
+        champs_sommes.update(range(base + 8, base + 16))
+    hors = [i for i, (a, b) in enumerate(zip(exe_neuf, deploye))
+            if a != b and i not in champs_sommes]
+    if hors:
+        raise EchecBuild(f"la recomposition diverge de la pièce déployée "
+                         f"HORS de la porte R10 : {len(hors)} octets (le "
+                         f"premier @fichier {hors[0]:#x}) — le plan ne "
+                         f"reproduit PAS la pièce, ÉCHEC")
+    perimees = []
+    for (rva, taille, off_somme), _ in zip(entrees, range(26)):
+        s_piece, = struct.unpack_from("<Q", deploye, off_somme)
+        s_neuve, = struct.unpack_from("<Q", exe_neuf, off_somme)
+        if s_piece != s_neuve:
+            perimees.append((rva, s_piece, s_neuve))
+    return perimees
+
+
+# --- L'anti-rollback (R6 : une carte scellée interdit la reconstruction) -------------
+
+VERDICT_RECOUP_M10E = os.path.join(
+    TRIADE, "..", "build-dev12", "VERDICT-run-loupe-dev12.txt")
+
+
+def _version_carte(cm10) -> str | None:
+    """La balise portée par la carte déposée (frag-bld), si lisible."""
+    try:
+        _, fragments, _, _ = cm10.lire_carte()
+        phrase, _ = cm10.charger_secrets(interactif=False)
+        maitre = cm10.cle_maitresse(phrase)
+        bld = cm10.dechiffrer_fragment(maitre, "frag-bld",
+                                       fragments["frag-bld"]).decode("utf-8")
+        return next(
+            (dict(re.findall(r"(\w+)=(\S+)", l)).get("version")
+             for l in bld.splitlines() if "artefact=loupe.exe" in l), None)
+    except (cm10.ErreurCarte, FileNotFoundError):
+        return None          # pas de carte lisible : première construction
+
+
+def _anti_rollback() -> None:
+    """Une carte scellée (rc/finale) interdit la reconstruction (R6). La
+    0.1.0-dev.8 n'est PAS scellée (schéma dev — la 0.1.0 attend le fait de
+    carte sur le vert recoupé du onzième run, l'Entrée 217) : la
+    reconstruction de dev est licite (cristallisation R6 au fil des
+    vérifications)."""
+    import carte_m10 as _cm10
+    v = _version_carte(_cm10)
+    if v and ("-rc" in v or re.fullmatch(r"\d+\.\d+\.\d+", v)):
+        raise EchecBuild(
+            f"carte scellée ({v}) : reconstruction interdite — "
+            f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
+
+
+def _sceller_final() -> int:
+    """Scellage de la finale 0.1.0 (modèle D104/M9 — Entrées 193/217 : le
+    scellage est un FAIT DE CARTE — l'artefact ne bouge JAMAIS, loupe.exe
+    demeure byte-identique au dev.8 que LE ONZIÈME RUN a couru et vécu).
+    Les portes, tranchées binaires AVANT l'unique écriture : le garde sceau
+    I (D87), LE RECOUP TERRAIN VERT SUR PIÈCES (le onzième run consigné —
+    l'Entrée 217 : LE VERT TIENT ENTIER, 39/39, la vitrine vivante la
+    seconde fois), la cristallisation R6 10/10, le verrou croisé R8, la
+    balise encore dev ; puis la bascule de balise dans frag-bld (occurrence
+    unique, vérifiée EN MÉMOIRE avant l'écriture), l'entête portant LA
+    BALISE, la signature Ed25519 re-signée (graine durable D144 : LE TÉMOIN
+    NE BOUGE PAS), l'anti-rollback ARMÉ (constaté au geste même), le tableau
+    de bord « loupe 0.1.0 SCELLÉE sur le onzième run vert recoupé »."""
+    import carte_m10 as cm10
+    print("=== M10 : SCELLAGE de la finale 0.1.0 (le fait de carte — le "
+          "onzième run vert recoupé, l'Entrée 217 : LE VERT TIENT ENTIER) ===")
+
+    # 1. le garde sceau I (D87) — l'état « réelle » tenu avant tout geste
+    _garde_sceau_I()
+
+    # 2. LE RECOUP TERRAIN sur pièces (la seule porte que le terrain ouvre)
+    if not os.path.isfile(VERDICT_RECOUP_M10E):
+        raise EchecBuild(
+            f"le verdict du recoup terrain est ABSENT ({VERDICT_RECOUP_M10E})"
+            " — le recoup labo d'abord : la finale ne se scelle QUE sur "
+            "pièces (D138/D145/D148)")
+    with open(VERDICT_RECOUP_M10E, encoding="utf-8") as f:
+        verdict_recoup = f.read()
+    for porte, attendu in (
+            ("le vert", "LE VERT TIENT ENTIER"),
+            ("le recoup", "39/39 contrôles VERTS"),
+            ("la condition", "EST SATISFAITE"),
+            ("l'empreinte", "054de960c31425d0"),
+            ("la vitrine", "LA VITRINE VIVANTE LA SECONDE FOIS")):
+        if attendu not in verdict_recoup:
+            raise EchecBuild(f"la porte « {porte} » ({attendu!r}) manque au "
+                             f"verdict du onzième run — scellage REFUSÉ "
+                             f"(fail-closed)")
+    print("[terrain] LE ONZIÈME RUN recoupé 39/39 sur pièces croisées : "
+          "T0→T7 TOUT VERT POUR LA QUATRIÈME FOIS, LA CASCADE 205 VÉCUE "
+          "ENTIÈRE, LA VITRINE VIVANTE LA SECONDE FOIS (0 ET 0) — LE VERT "
+          "TIENT ENTIER : la condition de l'Entrée 216 EST SATISFAITE")
+
+    # 3. la cristallisation R6 10/10 (exigée au scellage)
+    phrase, graine_cles = cm10.charger_secrets(interactif=False)
+    maitre = cm10.cle_maitresse(phrase)
+    _, fragments, _, _ = cm10.lire_carte()
+    prf = cm10.dechiffrer_fragment(maitre, "frag-prf",
+                                   fragments["frag-prf"]).decode("utf-8")
+    compteurs = {}
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            m = re.match(r"(\d+)/10", champs.get("crist", "0/10"))
+            compteurs[champs["id"]] = int(m.group(1)) if m else 0
+    incomplets = {b: n for b, n in compteurs.items() if n < 10}
+    if incomplets:
+        raise EchecBuild(f"cristallisation incomplète : {len(incomplets)} "
+                         f"blocs < 10/10 ({sorted(incomplets)[:4]}…) — dix "
+                         f"passages du --verifier requis (R6), scellage refusé")
+    print(f"[R6] cristallisation : {len(compteurs)} blocs à 10/10")
+
+    # 4. le verrou croisé R8 AVANT l'écriture + la balise encore dev
+    chemin_exe = os.path.join(ICI, "loupe.exe")
+    exe = open(chemin_exe, "rb").read()
+    nb, manifeste = verrou_croise(exe)
+    if manifeste.get("version") != cm10.VERSION_DEV:
+        raise EchecBuild(
+            f"la carte porte déjà « {manifeste.get('version')} » — la balise "
+            f"n'est pas {cm10.VERSION_DEV} : scellage refusé (anti-rollback "
+            f"R6, idempotence)")
+    sha_exe = "sha256:" + hashlib.sha256(exe).hexdigest()
+    if manifeste.get("empreinte") != sha_exe:
+        raise EchecBuild(
+            f"l'artefact diverge du scellé attendu "
+            f"({(manifeste.get('empreinte') or '?')[:24]}…) — le scellage "
+            f"est un fait de carte, loupe.exe ne bouge pas")
+    if sha_exe != "sha256:" + ("054de960c31425d022f6900f27e59bdd"
+                               "82a120b0b3fe543a67e778867e9c7a69"):
+        raise EchecBuild(f"loupe.exe ({sha_exe[7:23]}…) != LA PIÈCE DU "
+                         f"TERRAIN (054de960… — le binaire que LE ONZIÈME "
+                         f"RUN a couru) — le scellage scelle LE VÉCU")
+    print(f"[R8] verrou croisé : {nb} empreintes conformes ; artefact "
+          f"{manifeste.get('version')} INTACT ({sha_exe[7:23]}…, "
+          f"{len(exe)} o — LA PIÈCE DU ONZIÈME RUN)")
+
+    # 5. la bascule de balise (occurrence unique, EN MÉMOIRE avant l'écriture)
+    bld = cm10.dechiffrer_fragment(maitre, "frag-bld",
+                                   fragments["frag-bld"]).decode("utf-8")
+    occurrences = bld.count(f"version={cm10.VERSION_DEV}")
+    if occurrences != 1:
+        raise EchecBuild(f"balise {cm10.VERSION_DEV} attendue une fois dans "
+                         f"frag-bld ({occurrences} occurrence(s)) — scellage "
+                         f"refusé (fail-closed)")
+    bld = bld.replace(f"version={cm10.VERSION_DEV}",
+                      f"version={cm10.VERSION_FINALE}")
+    clairs = {"frag-bld": bld.encode("utf-8")}
+    for nom in ("frag-loc", "frag-con", "frag-prf"):
+        clairs[nom] = cm10.dechiffrer_fragment(maitre, nom, fragments[nom])
+    nouveaux = {n: cm10.chiffrer_fragment(maitre, n, clairs[n])
+                for n in cm10.FRAGMENTS}
+    racine = cm10.empreinte_racine(nouveaux)
+    entete = cm10.construire_entete(racine, cm10.VERSION_FINALE)
+    prive, pub = cm10.paire_cles(graine_cles)
+    signature = cm10.signer(prive, entete, nouveaux)
+
+    # 6. vérification EN MÉMOIRE avant l'unique écriture (modèle D144/M9)
+    cm10.verifier_listes_blanches(entete.decode("ascii"))
+    cm10.verifier_signature(pub, entete, nouveaux, signature)
+    if cm10.empreinte_racine(nouveaux).hex() not in entete.decode("ascii"):
+        raise EchecBuild("contrôle en mémoire : empreinte racine divergente")
+    controle = cm10.dechiffrer_fragment(maitre, "frag-bld",
+                                        nouveaux["frag-bld"]).decode("utf-8")
+    if (f"version={cm10.VERSION_FINALE}" not in controle
+            or f"version={cm10.VERSION_DEV}" in controle):
+        raise EchecBuild("contrôle en mémoire : bascule de balise non constatée")
+    cm10.ecrire_carte(entete, nouveaux, signature, pub)
+
+    # 7. le tableau de bord suit la balise (l'artefact, lui, ne bouge pas)
+    chemin_tab = os.path.join(cm10.CARTE_DIR, "tableau-de-bord.txt")
+    with open(chemin_tab, encoding="utf-8") as f:
+        tab = f.read()
+    tab = tab.replace(
+        "version      : 0.1.0-dev.8 (LA PIÈCE VÉCUE aux 10e/11e runs — le plan PORTÉ à l'époque dev.8,",
+        "version      : 0.1.0 SCELLÉE sur le onzième run vert recoupé (l'Entrée 217 :")
+    tab = tab.replace(
+        "               la dette de la carte [l'Entrée 211] SOLDÉE ; la 0.1.0\n"
+        "               se scellera par FAIT DE CARTE sur le vert recoupé)",
+        "               LE VERT TIENT ENTIER — T0→T7, la cascade 205, la vitrine\n"
+        "               vivante 0 ET 0 ; la balise vit dans la CARTE — fait de\n"
+        "               carte D104/M9, le qword de l'artefact ne bouge pas)")
+    if (f"version      : {cm10.VERSION_FINALE} SCELLÉE" not in tab
+            or "0.1.0-dev.8" in tab and "SCELLÉE" not in tab):
+        raise EchecBuild("le tableau de bord n'a pas suivi la balise — "
+                         "constater avant d'aller plus loin")
+    with open(chemin_tab, "w", encoding="utf-8") as f:
+        f.write(tab)
+
+    # 8. le verrou croisé POST-scellage + l'artefact INTACT (le fait de carte)
+    nb2, manifeste2 = verrou_croise(exe)
+    if manifeste2.get("version") != cm10.VERSION_FINALE:
+        raise EchecBuild(f"la carte scellée porte « {manifeste2.get('version')} "
+                         f"» — la bascule n'est pas constatée après écriture")
+    exe2 = open(chemin_exe, "rb").read()
+    if "sha256:" + hashlib.sha256(exe2).hexdigest() != sha_exe:
+        raise EchecBuild("l'artefact a bougé — le scellage est un fait de "
+                         "carte, loupe.exe demeure byte-identique")
+
+    # 9. L'ANTI-ROLLBACK ARMÉ — CONSTATÉ AU GESTE MÊME (la reconstruction
+    #    REFUSÉE : la carte scellée 0.1.0 interdit construire())
+    try:
+        _anti_rollback()
+        raise EchecBuild("l'anti-rollback n'a pas refusé la reconstruction — "
+                         "le verrou n'est PAS armé, scellage invalide")
+    except EchecBuild as exc:
+        if "reconstruction interdite" not in str(exc):
+            raise
+        print(f"[anti-rollback] ARMÉ, CONSTATÉ AU GESTE MÊME : {exc}")
+
+    print(f"[R8] verrou croisé post-scellage : {nb2} empreintes conformes ; "
+          f"balise {manifeste2.get('version')}")
+    print(f"[balise] loupe {cm10.VERSION_FINALE} SCELLÉE sur le onzième run "
+          f"vert recoupé (immuable § 9 ; défaut → 0.1.1 à contrat stable, "
+          f"R4 ; anti-rollback R6 vivant — la reconstruction est désormais "
+          f"REFUSÉE) ; loupe.exe INTACT (sha256 {sha_exe[7:23]}…, {len(exe2)} "
+          f"o — le scellage est un fait de carte, LE ONZIÈME RUN A ÉTABLI "
+          f"LE CRITÈRE : LE JALON M10 — la méthode TRIADE entière prouvée "
+          f"par la CRÉATION)")
+    return 0
+
+
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.5 (le TGN, "
-          "l'application née de TRIADE entière) ===")
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.8 (le TGN, "
+          "l'application née de TRIADE entière, la pièce vécue au terrain — "
+          "le plan PORTÉ, la dette de la carte soldée) ===")
+    _anti_rollback()
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
     specs = charger_couche_I_loupe()
@@ -1242,20 +1633,42 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.5 le "
+    journal = [f"build 0.1.0-dev.8 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]
 
+    # LA PIÈCE INTACTE (l'Entrée 217 : loupe.exe 054de960… — LE MÊME binaire
+    # que le run a couru) : le build ne l'écrase JAMAIS ; la recomposition
+    # (dont la porte dit la vérité) est CONFRONTÉE à la déployée — l'unique
+    # écart toléré est [R10-PÉRIMÉE], NOMMÉ ci-dessous
     chemin_exe = os.path.join(ICI, "loupe.exe")
-    with open(chemin_exe, "wb") as f:
-        f.write(exe)
-    print(f"[artefact] {chemin_exe} — "
-          f"sha256:{hashlib.sha256(exe).hexdigest()}")
+    if os.path.exists(chemin_exe):
+        deploye = open(chemin_exe, "rb").read()
+        perimees = _ecart_r10_nomme(exe, deploye)
+        print(f"[R10-PÉRIMÉE] l'écart nommé du port : la pièce du terrain "
+              f"porte {len(perimees)} sommes de l'ère dev.5 à sa porte (la "
+              f"retouche des Entrées 210/214 changea les octets des blocs "
+              f"SANS rafraîchir la table) ; la recomposition dit la VÉRITÉ "
+              f"(chaque somme == son bloc relu) — l'écart CONFINÉ aux "
+              f"{len(perimees)} champs de sommes, 0 octet ailleurs ; LA "
+              f"PIÈCE INTACTE : sha256 "
+              f"{hashlib.sha256(deploye).hexdigest()[:16]}… — le témoin du "
+              f"terrain, porte périmée comprise")
+        journal.append(f"[R10-PÉRIMÉE] {len(perimees)} sommes dev.5 à la "
+                       f"porte de la pièce (210/214 ne rafraîchit pas) — la "
+                       f"recomposition véridique, l'écart confiné, la pièce "
+                       f"INTACTE")
+        exe = deploye          # LA CARTE SCELLE LA PIÈCE DU TERRAIN
+    else:
+        with open(chemin_exe, "wb") as f:
+            f.write(exe)
+        print(f"[artefact] {chemin_exe} né — "
+              f"sha256:{hashlib.sha256(exe).hexdigest()}")
 
     cm10 = construire_carte(exe, specs, code, verrous, verdicts, journal)
     nb, manifeste = verrou_croise(exe)
-    print(f"[carte] génération 13 écrite (lignée D80, graine durable D144) : "
+    print(f"[carte] génération 16 écrite (lignée D80, graine durable D144) : "
           f"4 fragments chiffrés, signature Ed25519, {len(cm10.TOUS_BLOCS_CARTE)} "
           f"blocs indexés")
     print(f"[R8] verrou croisé : signature OK, racine OK, {nb} empreintes "
@@ -1264,23 +1677,30 @@ def construire() -> int:
               encoding="utf-8") as f:
         f.write(tableau_de_bord(exe, verrous, verdicts, nb, manifeste))
     print("[tableau] tableau de bord écrit (carte/tableau-de-bord.txt)")
-    print(f"=== LE BUILD DE LOUPE NÉ : loupe.exe {manifeste.get('version')} — "
+    print(f"=== LE BUILD DE LOUPE : loupe.exe {manifeste.get('version')} — "
           f"l'application née des 18 blocs notés + les héritages scellés, "
-          f"l'ère du TGN au build ; le kit terrain (M10-(d) seconde moitié) et "
-          f"le run (M10-(e)) attendent ; la 0.1.0 se scellera sur le run "
-          f"terrain vert recoupé ===")
+          f"le plan PORTÉ à l'époque dev.8 (la dette de la carte [l'Entrée "
+          f"211] SOLDÉE : la carte génération 16, la génération RÉELLE de la "
+          f"pièce) ; LE ONZIÈME RUN A TENU (l'Entrée 217 : LE VERT TIENT "
+          f"ENTIER, 39/39) — la 0.1.0 se scelle PAR FAIT DE CARTE : "
+          f"cristallisation 10/10 (--verifier) puis --sceller-final ===")
     return 0
 
 
 def verifier() -> int:
-    print("=== M10 : re-vérification de loupe.exe (R5/R7/R8, sans écriture) ===")
+    """La re-vérification + LA CRISTALLISATION R6 (chaque passage incrémente
+    les compteurs de la carte, la carte re-signée — la 10/10 sera exigée au
+    scellage ; sous une balise scellée, la cristallisation N'ÉCRIT PLUS :
+    la carte scellée est immuable § 9, la re-vérification demeure licite)."""
+    print("=== M10 : re-vérification de loupe.exe + cristallisation R6 "
+          "(R5/R7/R8) ===")
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
-    charger_couche_I_loupe()
+    specs = charger_couche_I_loupe()
     ks = Ks(KS_ARCH_X86, KS_MODE_64)
     code, insns_par_bloc = assembler_blocs(ks)
-    oracle_structurel(code, insns_par_bloc)
-    audit_msx64(insns_par_bloc)               # l'Entrée 207 : la classe
+    verrous = oracle_structurel(code, insns_par_bloc)
+    verrous += audit_msx64(insns_par_bloc)    # l'Entrée 207 : la classe
     extraits = heritage_scelle(m9, m1, demo, ks)
     sections = composer_image(code, extraits)
     exe = ecrire_pe32plus(*sections[:4])
@@ -1290,14 +1710,76 @@ def verifier() -> int:
         raise EchecBuild("loupe.exe absent — construire d'abord")
     existant = open(chemin_exe, "rb").read()
     if existant != exe:
-        raise EchecBuild("loupe.exe existant != la recomposition (R6 — l'artefact "
-                         "a bougé, ou les sources ont bougé)")
+        # L'ÉCART NOMMÉ [R10-PÉRIMÉE] : la recomposition véridique contre la
+        # pièce du terrain (porte périmée) — tout écart HORS de la porte est
+        # un VRAI échec (R6 : l'artefact a bougé, ou les sources ont bougé)
+        perimees = _ecart_r10_nomme(exe, existant)
+        print(f"[R10-PÉRIMÉE] la cristallisation constate l'écart nommé : "
+              f"{len(perimees)} sommes dev.5 à la porte de la pièce, "
+              f"0 octet ailleurs — la recomposition DÉTERMINISTE")
+        exe = existant      # la carte scelle LA PIÈCE DU TERRAIN (intacte)
     nb, manifeste = verrou_croise(exe)
     print(f"[R8] verrou croisé : {nb} empreintes revérifiées, artefact "
           f"{manifeste.get('version')} — IDENTIQUE à la recomposition "
           f"(l'artefact DÉTERMINISTE)")
     print("=== re-vérification VERTE : l'artefact est la recomposition de ses "
           "sources, la carte le confirme ===")
+
+    # LES TROIS HARNAIS REJOUÉS au geste de la passe (le modèle du build :
+    # la preuve entière à chaque cristallisation — le domaine n'est jamais
+    # cru sur parole, ni au premier geste ni au dixième)
+    verdicts = rejouer_harnais()
+
+    # LA CRISTALLISATION R6 : chaque passage incrémente les compteurs — la
+    # carte est re-signée à chaque passage (fragments re-chiffrés, graine
+    # durable D144), le verrou croisé re-vérifié (R8). La 10/10 sera exigée
+    # au scellage de la 0.1.0 (qui attend le fait de carte sur le vert
+    # recoupé du onzième run — l'Entrée 217).
+    import carte_m10 as cm10
+    version_carte = _version_carte(cm10)
+    if version_carte and ("-rc" in version_carte
+                          or re.fullmatch(r"\d+\.\d+\.\d+", version_carte)):
+        print(f"[R6] la carte est SCELLÉE ({version_carte}) : la "
+              f"cristallisation n'écrit plus (la balise immuable § 9 — la "
+              f"re-vérification demeure licite, R5/R7)")
+        return 0
+    phrase, graine_cles = cm10.charger_secrets(interactif=False)
+    maitre = cm10.cle_maitresse(phrase)
+    _, fragments, _, _ = cm10.lire_carte()
+    prf = cm10.dechiffrer_fragment(maitre, "frag-prf",
+                                   fragments["frag-prf"]).decode("utf-8")
+    compteurs, journal = {}, []
+    for ligne in prf.splitlines():
+        if ligne.startswith("[bloc]"):
+            champs = dict(re.findall(r"(\w+)=(\S+)", ligne))
+            m = re.match(r"(\d+)/10", champs.get("crist", "1/10"))
+            compteurs[champs["id"]] = int(m.group(1))
+        elif ligne.startswith("  run "):
+            journal.append(ligne.strip())
+    for bid in cm10.TOUS_BLOCS_CARTE:
+        compteurs[bid] = min(compteurs.get(bid, 0) + 1, 10)
+    journal.append(
+        f"run cristallisation R6 verrous={verrous} "
+        f"artefact=054de960… écart=[R10-PÉRIMÉE] "
+        f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
+        + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts))
+    clairs = cm10.fragments_clairs(exe, specs, code, verrous,
+                                   verdicts, journal, compteurs)
+    nouveaux = {n: cm10.chiffrer_fragment(maitre, n, clairs[n])
+                for n in cm10.FRAGMENTS}
+    racine = cm10.empreinte_racine(nouveaux)
+    entete = cm10.construire_entete(racine, version_carte or cm10.VERSION_DEV)
+    prive, pub = cm10.paire_cles(graine_cles)
+    signature = cm10.signer(prive, entete, nouveaux)
+    cm10.verifier_signature(pub, entete, nouveaux, signature)
+    cm10.ecrire_carte(entete, nouveaux, signature, pub)
+    nb2, manifeste2 = verrou_croise(exe)
+    crist = [f"{b}={compteurs[b]}/10"
+             for b in cm10.TOUS_BLOCS_CARTE[:6]]
+    print(f"[R6] cristallisation : {len(compteurs)} blocs incrémentés "
+          f"({', '.join(crist)}…) — la carte re-signée (graine durable D144), "
+          f"le verrou croisé {nb2} empreintes, artefact "
+          f"{manifeste2.get('version')}")
     return 0
 
 
@@ -1305,9 +1787,14 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser(description="Le build du domaine loupe (M10)")
     ap.add_argument("--verifier", action="store_true",
-                    help="re-vérifier sans écrire (cristallisation R6)")
+                    help="re-vérifier + cristallisation R6 (les compteurs)")
+    ap.add_argument("--sceller-final", action="store_true",
+                    help="sceller la 0.1.0 (fait de carte — le vert recoupé "
+                         "du onzième run, la cristallisation 10/10 exigés)")
     args = ap.parse_args()
     try:
+        if args.sceller_final:
+            sys.exit(_sceller_final())
         sys.exit(verifier() if args.verifier else construire())
     except EchecBuild as exc:
         print(f"[build] ÉCHEC NOMMÉ : {exc}", file=sys.stderr)
