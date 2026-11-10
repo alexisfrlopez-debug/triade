@@ -1,6 +1,6 @@
 @echo off
 rem ============================================================================
-rem temoin-vitrine.bat - LE TEMOIN VITRINE DU KIT LOUPE (Entree 210)
+rem temoin-vitrine.bat - LE TEMOIN VITRINE DU KIT LOUPE (Entree 215)
 rem
 rem La vitrine a vecu TROIS fois SANS temoin : "la fenetre s'ouvre et se
 rem referme immediatement" - jamais plus. CE TEMOIN nomme chaque mort :
@@ -26,7 +26,7 @@ if not exist loupe.exe (
 )
 if not exist preuves-loupe mkdir preuves-loupe
 
-echo === LE TEMOIN VITRINE - loupe.exe 0.1.0-dev.7 ^(kit dev.8, Entree 210^) === > preuves-loupe\temoin-vitrine.txt
+echo === LE TEMOIN VITRINE - loupe.exe 0.1.0-dev.8 ^(kit dev.11, Entree 215^) === > preuves-loupe\temoin-vitrine.txt
 ver >> preuves-loupe\temoin-vitrine.txt
 echo. >> preuves-loupe\temoin-vitrine.txt
 

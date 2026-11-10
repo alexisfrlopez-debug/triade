@@ -7534,3 +7534,79 @@ Work Log:
   scellée, LE JALON M10 ; si la septième mort vient : le journal la
   nommera.
 
+
+Task: LA REPRISE SUR PIÈCES ET LE DÉFAUT DU KIT NOMMÉ AVANT LE RUN (Entrée
+215) — « on reprend ce projet… on en était là : diff dev.7/dev.8 de la
+région d'import, démontage de 0x6740 (PostQuitMessage) et 0x6046, puis
+nommage du défaut à l'octet près et retouche dev.9 » : la session morte
+d'infrastructure, l'audit INDEPENDANT rejoué sur pièces (dev.7 extraite
+de git, dev.8 du kit loupe-kit-10/) — le diff re-joué (89 octets en 52
+plages, confinés), les deux blocs re-démontés (loupe-18 + .message :
+conformes au plan, 587 octets d'écarts pièce↔notations tous expliqués
+par les patchs documentés), ET DEUX FAITS NOMMÉS : [DÉPÔT-PIÈCE] (le
+commit 214 n'avait pas embarqué la pièce dev.8 ni le kit — l'arbre
+disait dev.7, la consignation dev.8) ET [RET-NU] (la sonde de liaison
+neutralisait l'entrée de sa copie d'un seul octet ret : sans
+DONT_RESOLVE le VRAI chargeur appelle l'entrée en sémantique DllMain
+ET LIT SON RETOUR — l'octet de poids faible de l'adresse d'entrée =
+0x00 → REFUS FAUX, la liaison perdue au run de scellement) ; LA
+RETOUCHE : six octets mov eax, 1 ; ret — la pièce dev.8 INTACTE, la
+vague dev.11 (KIT SEUL) (10/11).
+
+Work Log:
+- LE RÉCIT REJOUÉ : le diff dev.7/dev.8 de la région d'import (89
+  octets, les QUATRE OFT + le qword version, la marche du chargeur
+  10·18·6·3 VERTE) ; le démontage de 0x6740 (loupe-18 : WM_CLOSE
+  marque+garde → phrase+beep → -5, WM_DESTROY → loupe-03 →
+  PostQuitMessage @0x67AA → slot 0x31C8) et 0x6046 (.message →
+  saisie @0xE40C, libellé ← 3) ; l'audit pièce↔plan aux 18 notations
+  (587 octets d'écart, tous les patchs documentés dev.5/6/7 : le
+  relogement IAT, l'extension 64 bits, l'entrée réécrite) ; les 61+3
+  sites d'appel recoupés aux slots justes ; l'IAT/les
+  descripteurs/les OFT/la version qword relus.
+- [DÉPÔT-PIÈCE] NOMMÉ : l'arbre à 69845b2 portait loupe.exe dev.7
+  (388d4680…) alors que l'Entrée 214 consignait dev.8 (054de960…) à
+  loupe/loupe.exe — et loupe/terrain/ portait le scénario dev.9 : le
+  commit n'avait pas embarqué la retouche ; la consignation et
+  l'arbre se contredisaient.
+- [RET-NU] NOMMÉ À L'OCTET PRÈS DANS LE KIT : la sonde-214
+  neutralisait l'entrée de sa copie d'un seul octet ret
+  (image[0x4E00] = 0xC3) — sans DONT_RESOLVE, le chargeur appelle
+  l'entrée en sémantique DllMain ET LIT SON RETOUR (Microsoft Learn :
+  « If the return value is FALSE … LoadLibrary returns NULL ») : un
+  ret nu rend AL tel qu'il fut à l'appel, l'octet de poids faible de
+  l'adresse d'entrée (RVA 0x5C00, base 64 Kio-alignée) = 0x00 → le
+  chargeur eût cru l'initialisation ÉCHOUÉE → LoadLibraryExW NULL →
+  « REFUS DU CHARGEUR » de fausse cause, LES 37 SLOTS JAMAIS RELUS :
+  LA LIAISON PERDUE au run de scellement. LA RETOUCHE : SIX OCTETS
+  mov eax, 1 ; ret (B8 01 00 00 00 C3) au même offset — le verdict
+  ATTACH VRAI PAR CONSTRUCTION, le DETACH indifférent, la pièce
+  INTACTE.
+- LE KIT dev.11 NÉ (genere_kit_dev11.py, le modèle du 214) : le
+  scénario retouché (md5 f2766d6c…, py_compile VERT, l'histoire
+  portée au docstring, la ligne REFUS désormais SANS fausse cause
+  possible), le bat (deux lignes portées, LF préservé — 3336 o),
+  le LISEZMOI ([RET-NU] raconté, loupe-kit-11), la pièce recopiée
+  octet pour octet (054de960…) — kit-loupe.zip 35 330 o md5
+  a92ddcc8…, extraction VIERGE, les QUATRE pièces du contrat.
+- LE COFFRE (depot_entree_215.py, D143) : LA VAGUE dev.10 VERSIONNÉE
+  → vagues-m10/ [kit-loupe-dev.10.zip 4b5e3931… + LISEZMOI-loupe-
+  dev.10.txt 8908377d…, recoupés APRÈS — l'archive COMPLÈTE dev.1 →
+  dev.10, elle ne courut JAMAIS : les archives-preuves n'ont rien
+  reçu] ; LA VAGUE dev.11 À LA RACINE [kit-loupe.zip a92ddcc8… +
+  LISEZMOI-loupe.txt + loupe-kit-11/ aux QUATRE pièces recoupées] ;
+  le réceptacle preuves-loupe/ ré-armé [LISEZMOI-preuves.txt
+  cb9dab10…] ; les DEUX index mis à jour ; loupe-kit-10/ demeuré
+  (le dossier de la vague archivée).
+- LA RÉPARATION DU DÉPÔT : la pièce dev.8 et les QUATRE pièces du
+  kit dev.11 ENFIN EMBARQUÉES (loupe/loupe.exe == 054de960… == le
+  kit du coffre ; loupe/terrain/ == le kit dev.11) — la consignation
+  et l'arbre disent LA MÊME CHOSE ; l'outillage commis ; les jetons
+  réinstallés du /tokens (D12 : 600, jamais affichés) ; le remote
+  GitHub rejoint (ls-remote == 69845b2) ; worklog + l'Entrée 215.
+- SUITE : LE RUN DU KIT dev.11 — kit NEUF loupe-kit-11/ au coffre,
+  python scenario-loupe.py (T0→T7 + la cascade 205 + LA LIAISON
+  VRAIE), LA VITRINE PAR SON TÉMOIN (temoin-vitrine.bat, les deux
+  codes, le [4/4]), preuves-loupe/ ENTIER au coffre QUEL QUE SOIT le
+  verdict ; si le vert tient : la balise `loupe 0.1.0` scellée — LE
+  JALON M10 ; si la septième mort vient : le journal la nommera.

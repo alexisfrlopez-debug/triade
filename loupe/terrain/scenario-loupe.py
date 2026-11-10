@@ -1,56 +1,73 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
-NATURE (kit dev.8, l'Entrée 210).
+NATURE (kit dev.11, l'Entrée 215).
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.7 du jalon M10 — 127 488 o, sha256
-              388d468067cbf05411a6227c5906baa27d5cbf8a6f862e4cec6a051cab4d9bbc
-              (LA RETOUCHE DOUBLE DE L'ENTRÉE 210 : le run terrain du kit
-              dev.7 a tenu T0 → T5 TOUT VERT — la sauvegarde de l'Entrée
-              209 PROUVÉE — puis a nommé DEUX défauts D'UN MÊME TÉMOIN.
-              PREMIER DÉFAUT [EAX-SANS-SIGNE] AU KIT : T6 lisait
-              « 0xfffffffe != -2 ABSENT » — la pièce rendait SES codes
-              d'échec par « mov eax, imm32 » — EAX seul, les 32 bits
-              hauts de RAX à zéro — et le contrat publié du scénario
-              [c_int64] lisait le qword ENTIER : dev.7 étend chaque
-              rendu négatif au 64 bits [« push imm8 ; pop rax » — 20
-              sites — et les deux passages de loupe-01 passés movsxd] ;
-              SECOND DÉFAUT [D54-QUATRIÈME] À LA PIÈCE : la vitrine
-              demeurait MORTE 0xC0000005 sur LES DEUX fenêtres, AUCUN
-              rapport WER, alors que TOUT était propre — l'entrée, le
-              WndProc, la boucle, les 63 appels couverts, la table
-              d'imports PARFAITE — LE DIFFÉRENTIEL A NOMMÉ : la lignée
-              prouvée [demo.exe 0.3.0, le scellé M2 dont la fenêtre
-              VÉCUT au terrain] termine CHAQUE plage FirstThunk par un
-              slot NULL ; le build dev.6 posait les QUATRE plages
-              CONTIGUËS [kernel32@0x2400, user32@0x2450, gdi32@0x24E0,
-              double@0x2818 — le chargeur du terrain (Windows 11 build
-              26300, le CHEMIN FirstThunk de la leçon D97) marche chaque
-              plage jusqu'au slot NULL : la marche de kernel32 déborde
-              dans les noms user32, RegisterClassExW résout à NULL, et
-              l'entrée APPELLE LE NUL — 0xC0000005 sans dialogue ;
-              QUATRIÈME manifestation de la dérive de dépôt [D54, D68,
-              D98, et celle-ci] ; LA RETOUCHE : l'IAT ENTIÈRE relogée à
-              0x3100 [région née zéro], QUATRE plages SÉPARÉES PAR NULL
-              et PRÉREMLIES des RVA de noms [le motif D54 au complet],
-              les descripteurs dirigés, dir[12] mis à jour, les 63 sites
-              d'appel repointés, les vieilles plages VIDÉES — la taille
-              DEMEURE 127 488 o, AUCUNE adresse scellée ne bouge [R7 :
-              le WndProc @0x5DCB, la famille sha M9, la minilibc, la
-              table K[64], le CADRE — octets inchangés] ; ET LA LEÇON
-              INSTITUTIONNALISÉE : le scénario dev.8 VÉRIFIE LUI-MÊME
-              l'habillage [chaque plage marchée au compte exact, les
-              séparateurs NULL, les slots préremplis] — l'habillage
-              d'import fait partie de la surface de test, la leçon D97
-              ENTRE AU SCÉNARIO ; le qword version 0x00010006 →
-              0x00010007) ;
+  loupe.exe   le build 0.1.0-dev.8 du jalon M10 — 127 488 o, sha256
+              054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69
+              (LA RETOUCHE DE L'ENTRÉE 214 : le neuvième run a tenu
+              T0 → T7 TOUT VERT POUR LA SECONDE FOIS, puis a nommé
+              DEUX faits. PREMIER FAIT [PERMISSION-SONDE] À LA SONDE :
+              la réparation dev.9 VÉCUT (l'AttributeError de ctypes
+              est morte) mais la cascade mourut sur SON PROPRE
+              NETTOYAGE — un module LoadLibraryEx-é est CHARGÉ : il se
+              LIBÈRE (FreeLibrary) avant de se supprimer, le
+              PermissionError(13) du run 9 ne passera plus, et chaque
+              essai vit dans son try : la cascade ne meurt JAMAIS sur
+              son propre geste. SECOND FAIT — LA SIXIÈME MORT DE LA
+              VITRINE, NOMMÉE PAR LE SYSTÈME PUIS PAR LE LABO : le
+              témoin portant [4/4] livra LE JOURNAL D'ÉVÉNEMENTS —
+              BEX64, module fautif « unknown », 0xC0000005, exécution
+              sur mémoire non exécutable — et le recoup labo nomma LA
+              CAUSE SUR LES OCTETS : [OFT-QWORD] — les QUATRE tableaux
+              OriginalFirstThunk étaient écrits à PAS DE QWORD (RVA +
+              quatre octets de zéro) au lieu du PAS DE DWORD du format
+              PE : le VRAI chargeur lit OFT[1] = 0, croit chaque liste
+              terminée, résout UNE fonction par DLL — les 33 autres
+              slots IAT gardent leur valeur fichier (les RVA des
+              noms) — le SECOND appel de l'entrée (GetCommandLineW,
+              slot 0x3108) saute à l'adresse absolue 0x2A53, page non
+              mappée, aucun module : LA MORT NOMMÉE, la cinquième
+              comme elle. LA CÉCITÉ DES VERTS EXPLIQUÉE : le
+              scénario-chargeur pose les 37 feuilles À LA MAIN (il ne
+              lit jamais l'OFT), le simulateur branche des relais, la
+              sonde 205 cartographie DONT_RESOLVE (le drapeau qui
+              SAUTE la résolution des imports), le contrôle D54
+              marchait la FirstThunk — jamais l'OFT. LA RETOUCHE :
+              les QUATRE OFT COMPACTÉS AU PAS DE DWORD [10 · 18 · 6 · 3
+              + terminateurs], en place — les pointeurs de
+              descripteurs inchangés, la table de noms inchangée, le
+              .text/.text2/.data/les en-têtes OCTET-IDENTIQUES, les
+              adresses scellées INTACTES, la taille CONSTANTE — 89
+              octets modifiés en tout ; ET LA LEÇON INSTITUTIONNALISÉE
+              : le présent scénario dev.11 MARCHE LUI-MÊME LES QUATRE
+              OFT au pas DWORD du chargeur [chaque entrée == le
+              préremplissage de son slot — [OFT-QWORD] ne passera
+              plus jamais], ET LA NOUVELLE SONDE DE LIAISON VIT LE
+              VRAI CHARGEUR POSER LES FONCTIONS ; le qword version
+              0x00010007 → 0x00010008) ;
+              (INCHANGÉ DEPUIS L'ENTRÉE 214 — la vague dev.11 est UNE
+              RETOUCHE DU KIT SEUL : [RET-NU] NOMMÉ À L'OCTET PRÈS
+              AVANT LE RUN, l'Entrée 215 — la sonde de liaison
+              neutralisait l'entrée de sa copie d'un seul octet ret ;
+              sans DONT_RESOLVE, le VRAI chargeur appelle l'entrée en
+              sémantique DllMain ET LIT SON RETOUR : un ret nu rend
+              AL tel qu'il fut à l'appel — l'octet de poids faible de
+              l'adresse d'entrée étant 0x00, le chargeur eût cru
+              l'initialisation ÉCHOUÉE : REFUS FAUX, LoadLibraryExW
+              NULL, LES 37 SLOTS JAMAIS RELUS, LA LIAISON PERDUE AU
+              RUN DE SCELLEMENT ; la retouche : SIX OCTETS mov eax, 1
+              ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION, le
+              DETACH indifférent, la fenêtre toujours jamais lancée ;
+              la pièce n'a pas bougé d'un octet, la carte demeure
+              génération 16, la vague dev.10 archivée versionnée) ;
   le présent script — python SEUL (ctypes, hashlib, os, platform, struct,
               sys, tempfile — AUCUN paquet à installer).
 
 LE GESTE DU SCÉNARIO : le scénario est LE CHARGEUR (LoadLibraryEx
 DONT_RESOLVE — aucune entrée résolue, AUCUN point d'entrée exécuté : la
-vitrine n'est pas lancée ici), puis il RÉSOUT LUI-MÊME les 34 feuilles de
+vitrine n'est pas lancée ici), puis il RÉSOUT LUI-MÊME les 37 feuilles de
 l'IAT du plan (VirtualProtect sur les slots .rdata — le chargeur réel
 fait de même à la liaison) et APPELLE LES BLOCS À LEURS ADRESSES
 SCELLÉES : l'application née des blocs notés, conduite par la main du
@@ -75,7 +92,16 @@ GÉOMÉTRIE dev.2 ENTIÈRE — sur des COPIES TEMPORAIRES nées et mortes
 dans %TEMP% (loupe.exe lui-même n'est JAMAIS écrit) : le VRAI
 chargeur Windows NOMME l'axe fautif. Le mode d'erreur du processus
 coupe les boîtes bloquantes du chargeur : le refus est nommé PAR LE
-TÉMOIN, pas muré derrière un bouton OK.
+TÉMOIN, pas muré derrière un bouton OK. ET LA SONDE DE L'ENTRÉE
+214 COMPLÈTE LE TABLEAU : LA LIAISON VÉCUE — une copie chargée SANS
+DONT_RESOLVE (l'entrée de la copie neutralisée de SIX octets, mov
+eax, 1 ; ret : la fenêtre n'y est jamais lancée, et le verdict ATTACH
+VRAI PAR CONSTRUCTION — [RET-NU] nommé avant le run, l'Entrée 215),
+les 37 slots RELUS — le VRAI
+chargeur doit y avoir posé LES ADRESSES DES FONCTIONS, plus AUCUNE
+valeur fichier : la sixième mort [OFT-QWORD] y était invisible, jamais
+plus. (Et la cascade 205 réparée de son propre nettoyage : le module
+chargé se LIBÈRE avant sa suppression — le PermissionError du run 9.)
 
 CE QUE LE RUN DÉMONTRE (chaque constat tranché binaire, le verdict
 POST-MORTEM — un échec nommé vaut plus qu'un vert muet) :
@@ -165,14 +191,13 @@ PREUVES = os.path.join(ICI, "preuves-loupe")
 JOURNAL = []
 
 # --- l'artefact : l'empreinte ASSERTÉE prouve CES octets (la carte demeure
-#     en génération 13 — la régénération est dette au labo, l'Entrée 211) -----
-SHA_EXE = ("388d468067cbf05411a6227c5906baa27d5cbf8a6f862e4c"
-           "ec6a051cab4d9bbc")
+#     en génération 16 — la régénération est dette au labo, l'Entrée 211) -----
+SHA_EXE = ("054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69")
 TAILLE_EXE = 127488
-VERSION_R10 = 0x00010007          # loupe 0.1.0-dev.7 (le qword @0x2E80 —
-                                   # la retouche de l'Entrée 210 : [D54-QUATRIÈME]
-                                   # chassé, l'IAT relogée séparée à 0x3100,
-                                   # et [EAX-SANS-SIGNE] étendu au 64 bits)
+VERSION_R10 = 0x00010008          # loupe 0.1.0-dev.8 (le qword @0x2E80 —
+                                   # la retouche de l'Entrée 214 : [OFT-QWORD]
+                                   # nommé sur les octets du run 9, les QUATRE
+                                   # OFT compactés au pas DWORD du chargeur)
 VERSION_TXT = f"0.1.0-dev.{VERSION_R10 & 0xFFFF}"   # dynamique — le littéral périmé chassé (dev.9, l'Entrée 213)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------
@@ -346,21 +371,32 @@ def sonde_entree_205(k32, donnees):
             chemin_sonde = os.path.join(dossier, "loupe-sonde.exe")
             with open(chemin_sonde, "wb") as f:
                 f.write(bytes(image))
-            k32.SetLastError(0)
-            base = k32.LoadLibraryExW(chemin_sonde, None, 0x00000001)
-            err = ctypes.get_last_error()
-            etat = statut_nt()
-            if base:
-                lignes.append(f"[sonde] {nom} : cartographie VERTE @ "
-                              f"{base:#x} — {description}")
-            else:
-                refus.append(nom)
-                if nom.startswith("P0"):
-                    p0_refus = True
-                lignes.append(f"[sonde] {nom} : REFUS DU CHARGEUR — "
-                              f"GetLastError {err}, NTSTATUS {etat:#010x} "
-                              f"— {description}")
-            os.remove(chemin_sonde)
+            try:
+                k32.SetLastError(0)
+                base = k32.LoadLibraryExW(chemin_sonde, None, 0x00000001)
+                err = ctypes.get_last_error()
+                etat = statut_nt()
+                if base:
+                    lignes.append(f"[sonde] {nom} : cartographie VERTE @ "
+                                  f"{base:#x} — {description}")
+                else:
+                    refus.append(nom)
+                    if nom.startswith("P0"):
+                        p0_refus = True
+                    lignes.append(f"[sonde] {nom} : REFUS DU CHARGEUR — "
+                                  f"GetLastError {err}, NTSTATUS "
+                                  f"{etat:#010x} — {description}")
+                if base:
+                    k32.FreeLibrary(base)   # LA LEÇON DU RUN 9 : un module
+                                            # CHARGÉ ne se supprime pas —
+                                            # le PermissionError(13) du
+                                            # neuvième run ne passera plus
+                os.remove(chemin_sonde)
+            except OSError as exc:
+                lignes.append(f"[sonde] {nom} : ÉCHEC DE LA SONDE — "
+                              f"{exc!r} — la cascade CONTINUE (l'essai "
+                              f"est mort, PAS la pièce : le labo recoupe "
+                              f"sur pièces)")
     finally:
         try:
             os.rmdir(dossier)
@@ -381,6 +417,85 @@ def sonde_entree_205(k32, donnees):
                       "la COMBINAISON ou hors image : le témoin le "
                       "consigne, le labo recoupe")
     return lignes
+
+
+def sonde_resolution_imports(k32, donnees):
+    """LA SONDE DE L'ENTRÉE 214 — LA LIAISON VÉCUE : la sixième mort
+    [OFT-QWORD] était invisible à la sonde 205 (sa cartographie est
+    DONT_RESOLVE : le drapeau SAUTE la résolution des imports). ICI :
+    une copie chargée SANS DONT_RESOLVE — l'entrée de la copie
+    neutralisée de SIX OCTETS (mov eax, 1 ; ret — [RET-NU, l'Entrée
+    215] : le VRAI chargeur appelle l'entrée en sémantique DllMain et
+    LIT SON RETOUR, le ret nu eût rendu un verdict FAUX ; la fenêtre
+    n'y est jamais lancée), les 37 slots RELUS : le VRAI chargeur doit
+    y avoir posé LES ADRESSES DES FONCTIONS — plus AUCUNE valeur
+    fichier."""
+    lignes = []
+    dossier = tempfile.mkdtemp(prefix="loupe-sonde-214-")
+    chemin = os.path.join(dossier, "loupe-sonde.exe")
+    try:
+        image = bytearray(donnees)
+        image[0x4E00:0x4E06] = (b"\xb8\x01\x00\x00\x00\xc3"
+            )                             # SIX OCTETS mov eax, 1 ; ret —
+                                         # LA RETOUCHE [RET-NU, Entrée
+                                         # 215] : sans DONT_RESOLVE le
+                                         # VRAI chargeur appelle
+                                         # l'entrée en sémantique DllMain
+                                         # ET LIT SON RETOUR — un ret nu
+                                         # eût rendu AL tel qu'il était
+                                         # à l'appel (l'octet de poids
+                                         # faible de l'adresse d'entrée
+                                         # = 0x00) : REFUS FAUX DU
+                                         # CHARGEUR, les 37 slots jamais
+                                         # relus, la liaison PERDUE ;
+                                         # mov eax, 1 rend le verdict
+                                         # ATTACH VRAI PAR CONSTRUCTION
+                                         # (le DETACH n'est pas lu) —
+                                         # l'original n'est JAMAIS
+                                         # écrit (même loi que la 205)
+        with open(chemin, "wb") as f:
+            f.write(bytes(image))
+        k32.SetLastError(0)
+        base = k32.LoadLibraryExW(chemin, None, 0)    # SANS DONT_RESOLVE
+        err = ctypes.get_last_error()
+        if not base:
+            lignes.append(f"[sonde-214] LA LIAISON : REFUS DU CHARGEUR — "
+                          f"GetLastError {err} — la copie n'est pas même "
+                          f"liée (VRAI refus désormais : l'entrée rend "
+                          f"VRAI par construction, un refus ici ne peut "
+                          f"plus être [RET-NU] — le témoin le consigne, "
+                          f"le labo recoupe)")
+            return lignes
+        try:
+            non_resolus = 0
+            for ft, n in ((0x3100, 10), (0x3158, 18), (0x31F0, 6),
+                          (0x3228, 3)):
+                for i in range(n):
+                    brut = ctypes.string_at(base + ft + 8 * i, 8)
+                    slot, = struct.unpack("<Q", bytes(brut))
+                    if slot == 0 or slot < 0x10000:   # NULL ou la valeur
+                        non_resolus += 1              # fichier (un RVA)
+            if non_resolus:
+                lignes.append(f"[sonde-214] LA LIAISON : {non_resolus} "
+                              f"slots NON résolus (NULL ou valeur fichier) "
+                              f"— LE CHARGEUR N'A PAS POSÉ LES FONCTIONS "
+                              f"([OFT-QWORD] ?) — la pièce mourrait à la "
+                              f"vitrine : LE DÉFAUT EST NOMMÉ AU TÉMOIN")
+            else:
+                lignes.append("[sonde-214] LA LIAISON : les 37 slots "
+                              "RELUS CHARGÉS — plus AUCUNE valeur fichier : "
+                              "le VRAI chargeur a posé LES ADRESSES DES "
+                              "FONCTIONS aux slots du plan — LA PIÈCE EST "
+                              "LIÉE, la vitrine est LIBRE DE VIVRE")
+        finally:
+            k32.FreeLibrary(base)
+        return lignes
+    finally:
+        try:
+            os.remove(chemin)
+            os.rmdir(dossier)
+        except OSError:
+            pass
 
 
 def conclure(code):
@@ -426,7 +541,7 @@ def main():
               f"{len(donnees)} o, sha256 {sha} != l'asserté {SHA_EXE}")
     consigne(f"[T0] loupe.exe : {TAILLE_EXE} o, sha256 {sha[:16]}… — "
              f"L'EMPREINTE ASSERTÉE (l'empreinte prouve CES octets — "
-             f"la carte, génération 13, à régénérer au labo)")
+             f"la carte, génération 16, à régénérer au labo)")
 
     k32.LoadLibraryExW.restype = ctypes.c_void_p
     k32.LoadLibraryExW.argtypes = [wt.LPCWSTR, ctypes.c_void_p, wt.DWORD]
@@ -442,6 +557,8 @@ def main():
                  "CASCADE DIAGNOSTIQUE DE L'ENTRÉE 205 SE JOUE (les axes "
                  "reconstitués sur des copies %TEMP%, l'artefact intact)")
         for ligne in sonde_entree_205(k32, donnees):
+            consigne(ligne)
+        for ligne in sonde_resolution_imports(k32, donnees):
             consigne(ligne)
         echec("CARTOGRAPHIE", f"LoadLibraryEx a rendu {base:#x} (GetLastError "
              f"{ctypes.get_last_error()}) — LA SONDE a nommé les axes "
@@ -541,6 +658,35 @@ def main():
                 echec("D54-PRÉREMPLI", f"le slot @{ft + 8*i:#x} est VIDE "
                      f"dans le fichier — le chemin FirstThunk du terrain y "
                      f"lirait la fin de plage avant l'heure (D97)")
+        # LA MARCHE DE L'OFT AU PAS DU CHARGEUR (la leçon de l'Entrée
+        # 214 : [OFT-QWORD] — un OFT à pas de qword tue la vitrine sans
+        # jamais toucher le scénario : le chargeur lit OFT[1] = 0, croit
+        # la liste finie, laisse les slots périmés — l'entrée saute à
+        # l'adresse du NOM. Le contrôle D54 marchait la FirstThunk ;
+        # désormais L'OFT AUSTREMENT est marché au pas DWORD, arrêt au
+        # premier NULL — ET chaque entrée doit être le préremplissage
+        # du slot correspondant : le chargeur posera exactement le plan)
+        j = 0
+        while struct.unpack("<I", lire(oft + 4 * j, 4))[0] != 0:
+            j += 1
+            if j > 40:
+                echec("D54-OFT", f"l'OFT @{oft:#x} marche au-delà de 40 — "
+                     f"le terminateur DWORD est ABSENT")
+                break
+        if j != n_att:
+            echec("D54-OFT", f"l'OFT @{oft:#x} du descripteur #{vus} "
+                 f"({dll_att}) marche {j} entrées != {n_att} AU PAS DWORD "
+                 f"DU CHARGEUR — [OFT-QWORD, l'Entrée 214] : le chargeur "
+                 f"lirait OFT[1] = 0, croirait la liste finie, laisserait "
+                 f"les slots à leur valeur fichier — l'entrée sauterait à "
+                 f"l'adresse du NOM : 0xC0000005, module unknown — LA "
+                 f"SIXIÈME MORT ne passera plus jamais ici")
+        for i2 in range(j):
+            if struct.unpack("<I", lire(oft + 4 * i2, 4))[0] != \
+                    struct.unpack("<Q", lire(ft + 8 * i2, 8))[0]:
+                echec("D54-OFT", f"l'OFT[{i2}] @{oft + 4*i2:#x} != le "
+                     f"préremplissage FT[{i2}] @{ft + 8*i2:#x} — le "
+                     f"chargeur poserait un AUTRE nom que le plan au slot")
         vus += 1
         desc += 20
     if vus != 4:
@@ -551,8 +697,10 @@ def main():
                  f"plage précédente déborde (la marche du terrain)")
     consigne("[T0] l'habillage d'import VÉRIFIÉ : QUATRE plages FirstThunk "
              "marchées au compte exact [10 · 18 · 6 · 3], les séparateurs "
-             "NULL en place, les slots PRÉREMLIS du fichier — le motif D54 "
-             "ENTIER (la leçon D97 entre au scénario — l'Entrée 210)")
+             "NULL en place, les slots PRÉREMLIS du fichier — ET LES "
+             "QUATRE OFT MARCHÉS AU PAS DWORD DU CHARGEUR [10 · 18 · 6 · "
+             "3, chaque entrée == le préremplissage de son slot — la "
+             "leçon de l'Entrée 214 : [OFT-QWORD] ne passera plus jamais]")
 
     consigne("[T0] les adresses scellées CONSTATÉES : la minilibc M1 "
              "@0x1100/0x1180/0x13C0 · la boucle démo @0x15C0 · la famille "
@@ -839,6 +987,8 @@ def main():
              "n'est JAMAIS écrit, tout est effacé) : le VRAI chargeur "
              "NOMME l'axe du refus passé — la leçon consignée au témoin")
     for ligne in sonde_entree_205(k32, donnees):
+        consigne(ligne)
+    for ligne in sonde_resolution_imports(k32, donnees):
         consigne(ligne)
 
     consigne("=== LE RUN DE LOUPE : VERT SUR PIÈCES — l'application née "
