@@ -7654,3 +7654,12 @@ Work Log:
   scenario-loupe.py (T0 → S0 → LA LIAISON), la vitrine par son témoin,
   preuves-loupe/ ENTIER au coffre QUEL QUE SOIT le verdict ; si le
   vert TIENT ENTIER : la balise `loupe 0.1.0` scellée — LE JALON M10.
+- LE COMPLÉMENT : le résidu loupe-kit/ (le dossier du SIXIÈME RUN,
+  l'Entrée 209 — ses preuves furent archivées par DÉPLACEMENT à
+  l'Entrée 211 MAIS le dossier demeura) nommé et nettoyé :
+  temoin-edition.bin — LA PREUVE de l'Entrée 209 (« la sauvegarde
+  PROUVÉE PAR LE FICHIER », 0x4D à l'octet 0) — rapatriée et archivée
+  à preuves-run-loupe-dev6/ [md5 57f4cd46… recoupé], le dossier du run
+  corbeillé (ses pièces == la vague dev.6 versionnée, les témoins
+  fichiers == loupe.exe dev.6 — l'identité) ; la racine du /test :
+  26 entrées, AUCUN résidu, AUCUN doublon.
