@@ -1,0 +1,107 @@
+VERDICT DU ONZIÈME RUN TERRAIN — kit dev.12 (l'Entrée 217, recoupé sur pièces)
+================================================================================
+L'ENVIRONNEMENT : Windows 11 (10.0.26300.9818) · Python 64 bits · AMD64.
+LE KIT COURU : la vague dev.12 — les QUATRE pièces recoupées contre le
+dépôt octet pour octet : loupe.exe md5 074881be…, scenario-loupe.py
+md5 7353e734…, temoin-vitrine.bat md5 2d3bc31f…, LISEZMOI
+md5 8ec9553b… ; temoin-fichier.bin == loupe.exe (la copie que la
+seconde fenêtre ouvrit) — LA PIÈCE ACQUITTÉE DE TOUTE CHARGE.
+
+LE TÉMOIN (temoin-loupe.txt) : T0 → T7 TOUT VERT POUR LA QUATRIÈME FOIS
+— [T0] l'empreinte ASSERTÉE (sha256 054de960c31425d0…), LE CONTRÔLE D54
+ÉTENDU [les QUATRE plages FirstThunk au compte exact 10 · 18 · 6 · 3 ET
+LES QUATRE OFT marchés au pas DWORD du chargeur, chaque entrée == le
+préremplissage de son slot], les adresses scellées (le qword version
+0x00010008), l'IAT résolue aux 37 slots du plan ; [T1] la session sur
+L'OMBRE ; [T2] la double lecture + LE PANNEAU (la pièce jugée par sa
+propre application : sha256 == hashlib == l'asserté) ; [T3] les lignes ;
+[T4] la recherche == bytes.find ; [T5] LA BOUCLE D'ÉDITION ENTIÈRE ;
+[T6] LES QUATRE REJETS NOMMÉS ; [T7] la clôture, l'artefact relu
+INCHANGÉ. PUIS — LA PREMIÈRE FOIS — [S0] LA CASCADE 205 A VÉCU SON
+ENTIER : P0 la pièce identique cartographiée VERTE, P1 LE TROU
+RECONSTITUÉ REFUSÉ (GetLastError 193, NTSTATUS 0xc000007b), P2 LE BSS
+cartographié VERTE, P3 LE SOUS-SYSTÈME CUI cartographié VERTE, P4 LA
+GÉOMÉTRIE dev.2 ENTIÈRE REFUSÉE — les axes NOMMÉS, les copies %TEMP%
+mortes, la pièce INTACTE : LA DETTE DU RUN 10 EST ÉTEINTE, la retouche
+[FREE-SANS-TYPE] A PORTÉ. PUIS [sonde-214] LA LIAISON COURUE : « 37
+slots NON résolus (NULL ou valeur fichier) — LE CHARGEUR N'A PAS POSÉ
+LES FONCTIONS ([OFT-QWORD] ?) — la pièce mourrait à la vitrine : LE
+DÉFAUT EST NOMMÉ AU TÉMOIN » — LA LIGNE EST RENVOYÉE TELLE QUELLE.
+
+LE TÉMOIN VITRINE (temoin-vitrine.txt) : LA VITRINE VIVANTE LA SECONDE
+FOIS — [1/4] la vitrine vide : code 0 ; [2/4] la vitrine avec
+temoin-fichier.bin : code 0 ; [3/4] AUCUN rapport WER ; [4/4] le journal
+d'événements ne portant que les trois vieux LiveKernelEvent 1001 watchdog
+(les mêmes qu'au dixième run : 30/10, 02/11, 03/11) : AUCUNE mort de
+loupe.exe — L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR
+DEUX RUNS DE SUITE, LA MÊME PIÈCE.
+
+LE LABO PARLE — LE HUITIÈME DÉFAUT NOMMÉ SUR PIÈCES : [SONDE-EXE], LE
+FAUX NÉGATIF STRUCTUREL, LE DÉFAUT DU KIT, PAS DE LA PIÈCE.
+  1. SUR LES OCTETS : le COFF de la pièce relu — Characteristics
+     0x0002 (IMAGE_FILE_EXECUTABLE_IMAGE seul, le pas du
+     format) et LE BIT IMAGE_FILE_DLL (0x2000) ABSENT (l'octet 0x57 ==
+     0x00) : loupe.exe EST un EXE (le DataDirectory IMPORT 0x2830/
+     0x64 et IAT 0x3100/0x148 sont déclarés
+     et CONFORMES au plan).
+  2. DANS LA DOC DU CHARGEUR (Microsoft Learn, LoadLibraryExA) : « If the specified module is an executable module, static imports are not loaded; instead, the module is loaded as if DONT_RESOLVE_DLL_REFERENCES was specified. »
+     — LE CHARGEUR DE BIBLIOTHÈQUE NE RÉSOUD JAMAIS LES IMPORTS D'UN
+     MODULE EXÉCUTABLE : la sonde-214 (LoadLibraryExW drapeau 0 sur une
+     copie EXE) ne peut JAMAIS y lire les fonctions posées, QUEL QUE
+     SOIT l'état de la pièce.
+  3. LA CORROBORATION : le comportement constaté (le mapping RÉUSSI, base
+     non nulle + les 37 slots AUX VALEURS FICHIER) est EXACTEMENT le
+     comportement documenté pour tout EXE chargé par bibliothèque : il n'y
+     a AUCUN autre défaut à chercher — la pièce se comporte comme la doc
+     le prédit. La mention « ([OFT-QWORD] ?) » était une PRÉDICTION
+     d'avant-run : DÉMENTIE par les pièces (le D54 ÉTENDU au T0 a marché
+     les QUATRE OFT au pas DWORD — la mécanique d'import est VERTE).
+  4. LA PREUVE DU VIVANT : la sixième mort (neuvième run, dev.7 : 33
+     slots périmés → BEX64 au SECOND appel IAT) a prouvé que la vitrine
+     ne peut PAS vivre d'une IAT non résolue ; la vitrine dev.8 A VÉCU
+     aux dixième ET onzième runs (0 et 0 chacun, la MÊME pièce
+     054de960c31425d0…) ⇒ LE CHARGEUR DE PROCESSUS A RÉSOLU L'IAT DE LA
+     PIÈCE — LA LIAISON EST PROUVÉE PAR LE VIVANT. C'est la doctrine
+     consignée à l'Entrée 216 : « la vitrine vivante prouve la liaison
+     MIEUX que toute sonde — la fenêtre n'eût pas vécu d'un import non
+     résolu ».
+  5. LA PREUVE DU TÉMOIN : T1 → T7 vécus IAT posée (les 37 feuilles aux
+     slots du plan, tous les blocs fonctionnent) ; S0-P0 la pièce intacte
+     cartographiée VERTE : le mécanisme de la sonde est SAIN — seule sa
+     PRÉSUPPOSITION (un EXE lié par le chargeur de bibliothèque) était
+     fausse.
+  6. [RET-NU] REVU : la doc (DONT_RESOLVE_DLL_REFERENCES : « If this
+     value is used, and the executable module is a DLL, the system does
+     not call DllMain ») — le DllMain n'est appelé QUE pour les DLL :
+     les six octets mov eax, 1 ; ret de l'Entrée 215 furent une prudence
+     SANS COÛT (l'entrée de la copie n'est jamais appelée pour un EXE) —
+     LA PRUDENCE ACQUITTÉE, SANS REGRET.
+
+LE VERDICT : LE CRITÈRE PUBLIÉ (le scénario ENTIER T0 → S0 → LA LIAISON
+ET LA VITRINE VIVANTE) — T0 → T7 TOUT VERT, S0 LA CASCADE VÉCUE ENTIÈRE,
+LA LIAISON COURUE ET SON CONSTAT NOMMÉ FAUX SUR LES PIÈCES ELLES-MÊMES
+(l'octet, la doc, le terrain), LA VITRINE VIVANTE LA SECONDE FOIS :
+**LE VERT TIENT ENTIER — LA BALISE `loupe 0.1.0` EST DÉBLOQUÉE SUR LE
+ONZIÈME RUN RECOUPÉ** (le recoup rend 39/39 contrôles VERTS).
+LA CONDITION NOMMÉE D'AVANCE (l'Entrée 216 : « si le vert TIENT ENTIER :
+LA BALISE `loupe 0.1.0` SCELLÉE sur run recoupé — LE JALON M10, la
+méthode TRIADE entière prouvée par la CRÉATION ») EST SATISFAITE.
+
+MAIS LE SCELLAGE EST UN FAIT DE CARTE (D104 : « l'artefact n'est PAS
+touché, le scellage est un fait de carte ») — ET LA CARTE DU DÉPÔT EST
+EN RETARD DE TROIS ÉPOQUES (génération 13 / dev.5 ; la dette nommée à
+l'Entrée 211, répétée par le T0 du témoin : « la carte, génération 16, à
+régénérer au labo »). LE CHANTIER DU SCELLEMENT EST LA SUITE : le layout
+porté à l'époque dev.8 (les retouches documentées dev.6/7/8 : le
+relogement IAT, l'extension 64 bits, l'entrée réécrite, les QUATRE OFT
+au pas DWORD), la carte régénérée à sa génération réelle (16), la
+cristallisation R6 des 18 blocs à 10/10, les portes --sceller-final
+portées au build (modèle D104/M9), LA BASCULE version=0.1.0-dev.8 →
+0.1.0 dans frag-bld (occurrence unique, vérifiée en mémoire), les
+fragments re-chiffrés, l'entête portant LA BALISE, la signature Ed25519
+re-signée (graine durable D144), l'anti-rollback ARMÉ, le tableau de
+bord « loupe 0.1.0 SCELLÉE sur le onzième run vert recoupé » — LOUPE.EXE
+INTACT (054de960c31425d0… — LE MÊME binaire que le run a couru). LE JALON
+M10 SERA ALORS FRANCHI : la méthode TRIADE entière prouvée par la
+CRÉATION — de l'intention (la couche I, les 18 spécifications) à
+l'octet vécu chez son utilisateur.

@@ -1405,8 +1405,12 @@ def _ecart_r10_nomme(exe_neuf: bytes, deploye: bytes) -> list[tuple[int, int, in
 
 # --- L'anti-rollback (R6 : une carte scellée interdit la reconstruction) -------------
 
+# LA PIÈCE DU RECOUP VIT AU DÉPÔT (l'Entrée 219 : le modèle M9 — le verdict
+# de preuves-run-m9f-7 vivait au download/ ; le chemin du bac à sable mort
+# de la session du scellage ne se re-vit JAMAIS : la porte est de PROCESSUS,
+# la pièce est du DÉPÔT)
 VERDICT_RECOUP_M10E = os.path.join(
-    TRIADE, "..", "build-dev12", "VERDICT-run-loupe-dev12.txt")
+    TRIADE, "download", "preuves-run-loupe-dev12", "VERDICT-run-loupe-dev12.txt")
 
 
 def _version_carte(cm10) -> str | None:

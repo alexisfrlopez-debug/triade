@@ -7790,3 +7790,41 @@ cristallisation, LA CÉRÉMONIE PASSÉE — la balise `loupe 0.1.0` SCELLÉE.
   CRÉATION — onze runs, onze leçons ; la balise immuable § 9.
 - SUITE : la consignation au coffre (journal + worklog + git + Drive),
   la passation D141 de la finale 0.1.0, la clôture au PLAN_MILESTONES.
+
+---
+Task ID: 126
+Agent: Z.ai (agent principal)
+Task: « continue jalon M10 » (la session parallèle de la Task 125) — LA
+CLÔTURE COMPLÉMENTAIRE : l'alignement D164 sur la pointe GitHub (66fa17c,
+la session sœur avait scellé la balise loupe 0.1.0 par la régénération des
+notations), le geste parallèle nommé et DISCARDÉ, et LA SUITE INTERROMPUE
+accomplie : les pièces du recoup AU DÉPÔT, la porte du scellage réparée,
+D178, la clôture du PLAN, la passation D141, le push à la pointe.
+
+Work Log:
+- LE GESTE PARALLÈLE (vécu jusqu'au même constat, puis rendu) : les
+  retouches documentées dev.6/7/8 portées à la chaîne EN STAGES assertés
+  (les notations demeurant le record R5 de l'ère de notation) — la
+  recomposition == la pièce 054de960… octet pour octet, [R10-PÉRIMÉE]
+  nommée (17/26 sommes dev.5 — le MÊME constat que la pointe), la carte
+  gen 16, la cristallisation 26 × 10/10, la cérémonie vécue (balise
+  scellée, anti-rollback constaté), les consignations posées — PUIS LE
+  PUSH RÉVÉLA LA POINTE : « fetch first », 66fa17c déjà là.
+- L'ALIGNEMENT (D164) : reset sur la pointe ; l'architecture de la
+  session sœur (les notations == la pièce, 587 → 0, les harnais à l'ère
+  dev.8) CANONIQUE ; la chaîne de la pointe re-vérifiée VERTE sous la
+  balise 0.1.0 (garde 14/14, 78 appels IAT audités, [R10-PÉRIMÉE]
+  constatée par la cristallisation même, le verrou croisé 26/26,
+  l'artefact DÉTERMINISTE) ; l'alternative nommée à l'Entrée 219 et
+  rendue.
+- LES COMPLÉMENTS (la suite interrompue de la Task 125) : le VERDICT du
+  onzième run + les DEUX témoins au download/preuves-run-loupe-dev12/
+  (md5 5cdbfceb…/cfb9a299…/e6bd7e3b… recoupés) ; LA PORTE DU SCELLAGE
+  RÉPARÉE (VERDICT_RECOUP_M10E : ../build-dev12/ → le chemin du dépôt —
+  la cérémonie re-expérimentable d'un clone frais) ; D178 consignée ; le
+  PLAN clos (la rangée (e) + l'État du programme — M10 FRANCHI en tête) ;
+  la passation D141 (le bundle 090 à la pointe, l'ancien archivé
+  versionné) ; le push — LES TROIS MIROIRS ALIGNÉS.
+- SUITE : LE PROGRAMME D'APRÈS M10 APPARTIENT AU DÉVELOPPEUR (le projet
+  fils COFFRE-FORT dégeler, ou la consolidation v0.9.0 — le modèle
+  D169/D176 ; la dette [R10-PÉRIMÉE] réparable à 0.1.1+, R4).
