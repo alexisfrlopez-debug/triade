@@ -1,10 +1,12 @@
-=== TABLEAU DE BORD — loupe.exe 0.1.0 SCELLÉE (le TGN « Loupe », M10) ===
+=== TABLEAU DE BORD — loupe.exe 0.1.1-dev.1 (le TGN « Loupe », M10 — LA VERSION COMMANDÉE D179) ===
 artefact     : loupe.exe (127 488 o)
-version      : 0.1.0 SCELLÉE sur le onzième run vert recoupé (l'Entrée 217 :
-               LE VERT TIENT ENTIER — T0→T7, la cascade 205, la vitrine
-               vivante 0 ET 0 ; la balise vit dans la CARTE — fait de
-               carte D104/M9, le qword de l'artefact ne bouge pas)
-empreinte    : sha256:054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69
+version      : 0.1.1-dev.1 (LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR — D178/D179 : la
+               dette [R10-PÉRIMÉE] SOLDÉE à la naissance — la porte
+               R10 véridique, le code byte-identique au vécu des
+               ONZE RUNS de l'ère 0.1.0 ; la balise `loupe 0.1.1` se
+               scellera PAR FAIT DE CARTE sur le vert recoupé du
+               DOUZIÈME run)
+empreinte    : sha256:c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
 profil       : x86-64-win11-pe · WINDOWS_GUI · entrée 0x5c00 (WinMain)
 sections     : .text 0x1000 (la minilibc + la boucle SCELLÉES) ·
                .rdata 0x2000 (les pièces, l'IAT 34 feuilles, la porte R10, K[64])
@@ -16,7 +18,8 @@ héritage R7  : libc-01/02/07 (M1) + win-03 (démo) + tls13-01..04 (M9)
                + K[64] — LA DOUBLE PREUVE (les scellés == les notations
                d'origine ré-assemblées == les octets posés)
 harnais      : harnais_noyau.py 61/61 + harnais_rendu.py 53/53 + harnais_edition.py 45/45
-carte        : génération 16 (lignée D80, graine durable D144),
+carte        : génération 17 (lignée D80, graine durable D144 — la
+               16 demeure celle de la balise 0.1.0 SCELLÉE),
                26 empreintes au verrou croisé (R8)
 frontières   : AUCUNE balise ne bouge (win 0.9.0 / linux 0.7.0 /
                riscv 0.8.0 / tls13 1.0.0 INTACTES) ; le garde 14/14

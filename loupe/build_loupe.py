@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """build_loupe.py — LE GESTE DE BUILD DU DOMAINE loupe (M10, le TGN) :
-loupe.exe 0.1.0-dev.8 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE,
-ET LA PIÈCE QUE LE TERRAIN A VÉCUE (les dixième et onzième runs : T0→T7
-TOUT VERT, LA VITRINE VIVANTE 0 ET 0 — l'Entrée 217 : LE VERT TIENT
-ENTIER, la balise `loupe 0.1.0` DÉBLOQUÉE sur le run recoupé 39/39).
+loupe.exe 0.1.1-dev.1 — LA PREMIÈRE APPLICATION NÉE DE TRIADE ENTIÈRE,
+ET LA VERSION COMMANDÉE PAR LE DÉVELOPPEUR (D178/D179 : la dette
+[R10-PÉRIMÉE] soldée à la naissance — la porte R10 rafraîchie à la
+vérité des blocs, le code BYTE-IDENTIQUE au vécu des onze runs de
+l'ère 0.1.0 SCELLÉE ; la 0.1.1 attend le DOUZIÈME run, la balise se
+scellera PAR FAIT DE CARTE sur le vert recoupé — D165/D170).
 
 LE PLAN PORTÉ À L'ÉPOQUE dev.8 (la dette de la carte de l'Entrée 211
 SOLDÉE — les retouches dev.6/7/8, nées de patchs en place HORS de cette
@@ -1334,12 +1336,16 @@ def verrou_croise(exe: bytes) -> tuple[int, dict]:
 def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
                     nb_carte: int, manifeste: dict) -> str:
     lignes = [
-        "=== TABLEAU DE BORD — loupe.exe 0.1.0 SCELLÉE (le TGN « Loupe », M10) ===",
+        "=== TABLEAU DE BORD — loupe.exe 0.1.1-dev.1 (le TGN « Loupe », M10 — "
+        "LA VERSION COMMANDÉE D179) ===",
         f"artefact     : loupe.exe ({len(exe):,} o)".replace(",", " "),
-        f"version      : {manifeste.get('version', '0.1.0-dev.8')} "
-        f"(LA PIÈCE VÉCUE aux 10e/11e runs — le plan PORTÉ à l'époque dev.8,",
-        f"               la dette de la carte [l'Entrée 211] SOLDÉE ; la 0.1.0",
-        f"               se scellera par FAIT DE CARTE sur le vert recoupé)",
+        f"version      : {manifeste.get('version', '0.1.1-dev.1')} "
+        f"(LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR — D178/D179 : la",
+        f"               dette [R10-PÉRIMÉE] SOLDÉE à la naissance — la porte",
+        f"               R10 véridique, le code byte-identique au vécu des",
+        f"               ONZE RUNS de l'ère 0.1.0 ; la balise `loupe 0.1.1` se",
+        f"               scellera PAR FAIT DE CARTE sur le vert recoupé du",
+        f"               DOUZIÈME run)",
         f"empreinte    : {manifeste.get('empreinte', '')}",
         f"profil       : x86-64-win11-pe · WINDOWS_GUI · entrée {L.ENTREE:#x} (WinMain)",
         "sections     : .text 0x1000 (la minilibc + la boucle SCELLÉES) ·",
@@ -1353,7 +1359,8 @@ def tableau_de_bord(exe: bytes, verrous: int, verdicts: list[dict],
         "               d'origine ré-assemblées == les octets posés)",
         "harnais      : " + " + ".join(
             f"{v['harnais']} {v['verts']}/{v['total']}" for v in verdicts),
-        f"carte        : génération 16 (lignée D80, graine durable D144),",
+        f"carte        : génération 17 (lignée D80, graine durable D144 — la",
+        f"               16 demeure celle de la balise 0.1.0 SCELLÉE),",
         f"               {nb_carte} empreintes au verrou croisé (R8)",
         "frontières   : AUCUNE balise ne bouge (win 0.9.0 / linux 0.7.0 /",
         "               riscv 0.8.0 / tls13 1.0.0 INTACTES) ; le garde 14/14",
@@ -1403,6 +1410,68 @@ def _ecart_r10_nomme(exe_neuf: bytes, deploye: bytes) -> list[tuple[int, int, in
     return perimees
 
 
+# --- Le port de l'ère 0.1.1 (D179 — la dette soldée à la naissance) ----------------
+
+def _porte_ere_011(exe_neuf: bytes, deploye: bytes,
+                   journal: list[str]) -> bytes:
+    """LE PORT DE L'ÈRE 0.1.1 (D179, la version commandée) : la pièce
+    déployée porte l'ère 0.1.0 (qword 0x00010008, LA SCELLÉE du onzième
+    run — 054de960…, ASSERTÉE) ; la recomposition porte l'ère 0.1.1-dev.1
+    (qword 0x00010101). L'ÉCART doit être CONFINÉ aux champs NOMMÉS : les
+    sommes de la porte R10 (la dette [R10-PÉRIMÉE] rafraîchie à la
+    vérité des blocs) + le qword version — 0 octet ailleurs (R4 : le
+    contrat stable, le code BYTE-IDENTIQUE au vécu des onze runs ;
+    R7 : les adresses intactes). La nouvelle pièce est ÉCRITE ;
+    l'ancienne demeure au git et au coffre."""
+    SHA_010 = ("054de960c31425d022f6900f27e59bdd"
+               "82a120b0b3fe543a67e778867e9c7a69")
+    if len(exe_neuf) != len(deploye):
+        raise EchecBuild(f"la recomposition ({len(exe_neuf)} o) != la pièce "
+                         f"déployée ({len(deploye)} o) — la taille ne bouge "
+                         f"jamais (R7)")
+    sha_deploye = hashlib.sha256(deploye).hexdigest()
+    if sha_deploye != SHA_010:
+        raise EchecBuild(f"la pièce déployée ({sha_deploye[:16]}…) n'est pas "
+                         f"LA SCELLÉE 0.1.0 (054de960…) — le port d'ère ne "
+                         f"vit que de la pointe canonique (D164/D179)")
+    fo_rdata = lambda rva: rva - L.RDATA_RVA + L.RDATA_FILE
+    off_version = fo_rdata(L.R_VERSION)
+    q_deploye, = struct.unpack_from("<Q", deploye, off_version)
+    q_neuf, = struct.unpack_from("<Q", exe_neuf, off_version)
+    if q_deploye != 0x00010008:
+        raise EchecBuild(f"le qword de la déployée ({q_deploye:#x}) != "
+                         f"l'ère 0.1.0 (0x00010008) — port d'ère REFUSÉ")
+    if q_neuf != L.VERSION_DEV:
+        raise EchecBuild(f"le qword de la recomposition ({q_neuf:#x}) != "
+                         f"VERSION_DEV ({L.VERSION_DEV:#x})")
+    champs_nommes = set(range(off_version, off_version + 8))     # le qword
+    for k in range(26):                        # les sommes de la porte R10
+        base = fo_rdata(L.R_TAB_SUM) + 16 * k
+        champs_nommes.update(range(base + 8, base + 16))
+    hors = [i for i, (a, b) in enumerate(zip(exe_neuf, deploye))
+            if a != b and i not in champs_nommes]
+    if hors:
+        raise EchecBuild(f"le port de l'ère 0.1.1 diverge HORS des champs "
+                         f"nommés : {len(hors)} octets (le premier @fichier "
+                         f"{hors[0]:#x}) — R4/R7 blessés, ÉCHEC")
+    rafraichies = 0
+    for k in range(26):
+        base = fo_rdata(L.R_TAB_SUM) + 16 * k
+        s_v, = struct.unpack_from("<Q", deploye, base + 8)
+        s_n, = struct.unpack_from("<Q", exe_neuf, base + 8)
+        rafraichies += (s_v != s_n)
+    print(f"[0.1.1] LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE : "
+          f"{rafraichies} sommes rafraîchies à la vérité des blocs, le "
+          f"qword porté {q_deploye:#x} → {q_neuf:#x}, 0 octet ailleurs — "
+          f"le code BYTE-IDENTIQUE au vécu des onze runs (R4/R7) ; la "
+          f"pièce 0.1.0 (054de960…) demeure au git et au coffre")
+    journal.append(f"[0.1.1] la version COMMANDÉE (D179) née : "
+                   f"{rafraichies} sommes véridiques + le qword "
+                   f"{q_deploye:#x} → {q_neuf:#x}, 0 octet ailleurs — la "
+                   f"dette [R10-PÉRIMÉE] soldée, la 0.1.0 scellée demeurée")
+    return exe_neuf
+
+
 # --- L'anti-rollback (R6 : une carte scellée interdit la reconstruction) -------------
 
 # LA PIÈCE DU RECOUP VIT AU DÉPÔT (l'Entrée 219 : le modèle M9 — le verdict
@@ -1414,29 +1483,46 @@ VERDICT_RECOUP_M10E = os.path.join(
 
 
 def _version_carte(cm10) -> str | None:
-    """La balise portée par la carte déposée (frag-bld), si lisible."""
+    """La balise portée par la carte déposée — L'EN-TÊTE SIGNÉ (en clair :
+    génération-indépendant, l'ère se lit d'une génération à l'autre —
+    D179 : le passage 16 → 17 ne doit JAMAIS aveugler l'anti-rollback) ;
+    frag-bld demeurant l'autorité du manifeste au scellage."""
     try:
-        _, fragments, _, _ = cm10.lire_carte()
-        phrase, _ = cm10.charger_secrets(interactif=False)
-        maitre = cm10.cle_maitresse(phrase)
-        bld = cm10.dechiffrer_fragment(maitre, "frag-bld",
-                                       fragments["frag-bld"]).decode("utf-8")
-        return next(
-            (dict(re.findall(r"(\w+)=(\S+)", l)).get("version")
-             for l in bld.splitlines() if "artefact=loupe.exe" in l), None)
-    except (cm10.ErreurCarte, FileNotFoundError):
+        entete, _fragments, _signature, _pub = cm10.lire_carte()
+        m = re.search(rb"\[carte\] version=(\S+)", entete)
+        return m.group(1).decode("ascii") if m else None
+    except FileNotFoundError:
         return None          # pas de carte lisible : première construction
 
 
+def _version_ordre(v: str) -> tuple[int, ...]:
+    """"0.1.0" → (0,1,0,0,0) ; "0.1.0-dev.8" → (0,1,0,-1,8) — une
+    pré-version est MOINDRE que sa balise, une balise supérieure OUvre
+    l'ère suivante (R10 : la monotonie)."""
+    m = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)(?:-dev\.(\d+))?", v or "")
+    if not m:
+        return (-1, -1, -1, -1, -1)
+    X, Y, Z, d = m.groups()
+    return (int(X), int(Y), int(Z), 0 if d is None else -1,
+            0 if d is None else int(d))
+
+
 def _anti_rollback() -> None:
-    """Une carte scellée (rc/finale) interdit la reconstruction (R6). La
-    0.1.0-dev.8 n'est PAS scellée (schéma dev — la 0.1.0 attend le fait de
-    carte sur le vert recoupé du onzième run, l'Entrée 217) : la
-    reconstruction de dev est licite (cristallisation R6 au fil des
-    vérifications)."""
+    """Une carte scellée (rc/finale) interdit la reconstruction (R6) — SAUF
+    LA VERSION STRICTEMENT SUPÉRIEURE commandée par le développeur (R10 :
+    la monotonie ; D178/D179 : « nouvelle version X.Y.Z+1 requise » — la
+    0.1.1-dev.1 après la 0.1.0 scellée, la dette [R10-PÉRIMÉE] soldée à
+    la naissance ; une pré-version de la balise scellée demeure REFUSÉE :
+    (0,1,0,-1,N) < (0,1,0,0,0) — jamais de retour en arrière)."""
     import carte_m10 as _cm10
     v = _version_carte(_cm10)
     if v and ("-rc" in v or re.fullmatch(r"\d+\.\d+\.\d+", v)):
+        if _version_ordre(_cm10.VERSION_DEV) > _version_ordre(v):
+            print(f"[anti-rollback] la carte scellée ({v}) demeure — la "
+                  f"version commandée {_cm10.VERSION_DEV} est STRICTEMENT "
+                  f"SUPÉRIEURE : la monotonie R10 OUvre la nouvelle ère "
+                  f"(D179 — la dette [R10-PÉRIMÉE] soldée à la naissance)")
+            return
         raise EchecBuild(
             f"carte scellée ({v}) : reconstruction interdite — "
             f"procedure lourde R6 ou nouvelle version X.Y.Z+1 requise")
@@ -1616,9 +1702,9 @@ def _sceller_final() -> int:
 # --- Modes -------------------------------------------------------------------------
 
 def construire() -> int:
-    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.0-dev.8 (le TGN, "
-          "l'application née de TRIADE entière, la pièce vécue au terrain — "
-          "le plan PORTÉ, la dette de la carte soldée) ===")
+    print("=== M10 : LE BUILD DE LOUPE — loupe.exe 0.1.1-dev.1 (le TGN, "
+          "l'application née de TRIADE entière — LA VERSION COMMANDÉE "
+          "D178/D179 : la dette [R10-PÉRIMÉE] soldée à la naissance) ===")
     _anti_rollback()
     _garde_sceau_I()
     m9, m1, demo = _lire_scelles()
@@ -1637,33 +1723,35 @@ def construire() -> int:
           f"scellées, confrontés au geste même — la recomposition est la preuve")
 
     verdicts = rejouer_harnais()
-    journal = [f"build 0.1.0-dev.8 le "
+    journal = [f"build 0.1.1-dev.1 le "
                f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
                f"garde 14/14 VERT · verrous {verrous} · "
                + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts)]
 
-    # LA PIÈCE INTACTE (l'Entrée 217 : loupe.exe 054de960… — LE MÊME binaire
-    # que le run a couru) : le build ne l'écrase JAMAIS ; la recomposition
-    # (dont la porte dit la vérité) est CONFRONTÉE à la déployée — l'unique
-    # écart toléré est [R10-PÉRIMÉE], NOMMÉ ci-dessous
+    # LA PIÈCE DE L'ÈRE (l'Entrée 219 : la 0.1.0 SCELLÉE, 054de960… — le
+    # témoin du onzième run ; D179 : la version 0.1.1 COMMANDÉE) : le build
+    # confronte la recomposition à la déployée —
+    #   - ÈRE IDENTIQUE : la déployée demeure (la carte scelle LA PIÈCE
+    #     VÉCUE, le build ne l'écrase jamais) ;
+    #   - ÈRE NOUVELLE (le qword de la déployée == 0x00010008, l'ère 0.1.0
+    #     SCELLÉE, et la version commandée > la balise — l'anti-rollback a
+    #     déjà tranché) : la 0.1.1-dev.1 NAÎT — la dette [R10-PÉRIMÉE]
+    #     soldée à la naissance (la table == la vérité des blocs), le qword
+    #     porté, l'écart CONFINÉ aux champs nommés, la pièce 0.1.0
+    #     demeurant au git et au coffre.
     chemin_exe = os.path.join(ICI, "loupe.exe")
     if os.path.exists(chemin_exe):
         deploye = open(chemin_exe, "rb").read()
-        perimees = _ecart_r10_nomme(exe, deploye)
-        print(f"[R10-PÉRIMÉE] l'écart nommé du port : la pièce du terrain "
-              f"porte {len(perimees)} sommes de l'ère dev.5 à sa porte (la "
-              f"retouche des Entrées 210/214 changea les octets des blocs "
-              f"SANS rafraîchir la table) ; la recomposition dit la VÉRITÉ "
-              f"(chaque somme == son bloc relu) — l'écart CONFINÉ aux "
-              f"{len(perimees)} champs de sommes, 0 octet ailleurs ; LA "
-              f"PIÈCE INTACTE : sha256 "
-              f"{hashlib.sha256(deploye).hexdigest()[:16]}… — le témoin du "
-              f"terrain, porte périmée comprise")
-        journal.append(f"[R10-PÉRIMÉE] {len(perimees)} sommes dev.5 à la "
-                       f"porte de la pièce (210/214 ne rafraîchit pas) — la "
-                       f"recomposition véridique, l'écart confiné, la pièce "
-                       f"INTACTE")
-        exe = deploye          # LA CARTE SCELLE LA PIÈCE DU TERRAIN
+        if deploye == exe:
+            print("[artefact] la recomposition == la pièce déployée — la "
+                  "porte R10 véridique (la dette [R10-PÉRIMÉE] n'existe "
+                  "plus à cette ère)")
+        else:
+            exe = _porte_ere_011(exe, deploye, journal)   # la 0.1.1 NAÎT
+            with open(chemin_exe, "wb") as f:
+                f.write(exe)
+            print(f"[artefact] loupe.exe 0.1.1-dev.1 NÉE — "
+                  f"sha256:{hashlib.sha256(exe).hexdigest()}")
     else:
         with open(chemin_exe, "wb") as f:
             f.write(exe)
@@ -1672,7 +1760,7 @@ def construire() -> int:
 
     cm10 = construire_carte(exe, specs, code, verrous, verdicts, journal)
     nb, manifeste = verrou_croise(exe)
-    print(f"[carte] génération 16 écrite (lignée D80, graine durable D144) : "
+    print(f"[carte] génération 17 écrite (lignée D80, graine durable D144) : "
           f"4 fragments chiffrés, signature Ed25519, {len(cm10.TOUS_BLOCS_CARTE)} "
           f"blocs indexés")
     print(f"[R8] verrou croisé : signature OK, racine OK, {nb} empreintes "
@@ -1683,11 +1771,12 @@ def construire() -> int:
     print("[tableau] tableau de bord écrit (carte/tableau-de-bord.txt)")
     print(f"=== LE BUILD DE LOUPE : loupe.exe {manifeste.get('version')} — "
           f"l'application née des 18 blocs notés + les héritages scellés, "
-          f"le plan PORTÉ à l'époque dev.8 (la dette de la carte [l'Entrée "
-          f"211] SOLDÉE : la carte génération 16, la génération RÉELLE de la "
-          f"pièce) ; LE ONZIÈME RUN A TENU (l'Entrée 217 : LE VERT TIENT "
-          f"ENTIER, 39/39) — la 0.1.0 se scelle PAR FAIT DE CARTE : "
-          f"cristallisation 10/10 (--verifier) puis --sceller-final ===")
+          f"LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR (D179 : la dette "
+          f"[R10-PÉRIMÉE] SOLDÉE à la naissance — la porte R10 véridique, "
+          f"le code byte-identique au vécu des onze runs, R4/R7) ; la "
+          f"balise `loupe 0.1.1` se scellera PAR FAIT DE CARTE sur le vert "
+          f"recoupé du DOUZIÈME RUN : cristallisation 10/10 (--verifier) "
+          f"puis le scellage au miroir D165/D170 ===")
     return 0
 
 
@@ -1713,6 +1802,7 @@ def verifier() -> int:
     if not os.path.exists(chemin_exe):
         raise EchecBuild("loupe.exe absent — construire d'abord")
     existant = open(chemin_exe, "rb").read()
+    ecart_txt = "porte-r10=véridique (la dette [R10-PÉRIMÉE] soldée, D179)"
     if existant != exe:
         # L'ÉCART NOMMÉ [R10-PÉRIMÉE] : la recomposition véridique contre la
         # pièce du terrain (porte périmée) — tout écart HORS de la porte est
@@ -1722,6 +1812,7 @@ def verifier() -> int:
               f"{len(perimees)} sommes dev.5 à la porte de la pièce, "
               f"0 octet ailleurs — la recomposition DÉTERMINISTE")
         exe = existant      # la carte scelle LA PIÈCE DU TERRAIN (intacte)
+        ecart_txt = f"écart=[R10-PÉRIMÉE] {len(perimees)} sommes dev.5"
     nb, manifeste = verrou_croise(exe)
     print(f"[R8] verrou croisé : {nb} empreintes revérifiées, artefact "
           f"{manifeste.get('version')} — IDENTIQUE à la recomposition "
@@ -1764,7 +1855,7 @@ def verifier() -> int:
         compteurs[bid] = min(compteurs.get(bid, 0) + 1, 10)
     journal.append(
         f"run cristallisation R6 verrous={verrous} "
-        f"artefact=054de960… écart=[R10-PÉRIMÉE] "
+        f"artefact={hashlib.sha256(exe).hexdigest()[:8]}… {ecart_txt} "
         f"date={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} · "
         + " · ".join(f"{v['harnais']}={v['empreinte']}" for v in verdicts))
     clairs = cm10.fragments_clairs(exe, specs, code, verrous,

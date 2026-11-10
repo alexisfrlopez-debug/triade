@@ -1,12 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""scenario-loupe.py — LE TERRAIN M10-(e) : LE RUN DE LOUPE, LE GRANDEUR
-NATURE (kit dev.12, l'Entrée 216).
+NATURE (kit 0.1.1-dev.1, l'Entrée 221).
 
 Le kit porte UN artefact et UN scénario :
-  loupe.exe   le build 0.1.0-dev.8 du jalon M10 — 127 488 o, sha256
-              054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69
-              (LA RETOUCHE DE L'ENTRÉE 214 : le neuvième run a tenu
+  loupe.exe   le build 0.1.1-dev.1 du jalon M10 — 127 488 o, sha256
+              c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+              (LA VERSION COMMANDÉE PAR LE DÉVELOPPEUR — D178/D179 :
+              l'ère 0.1.0 est REFERMÉE sur sa balise SCELLÉE [le
+              onzième run recoupé 39/39, la vitrine vivante la
+              seconde fois — loupe.exe 054de960… INTACT au git et au
+              coffre] ; la 0.1.1 naît de LA RECOMPOSITION MÊME : LA
+              DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE [les 17
+              sommes de l'ère dev.5 rafraîchies à la vérité des
+              blocs — chaque somme == son bloc relu, par
+              construction], LE QWORD VERSION PORTÉ 0x00010008 →
+              0x00010101, 0 OCTET AILLEURS [le code BYTE-IDENTIQUE
+              au vécu des onze runs — R4 : le contrat stable, R7 :
+              les adresses intactes] ; la carte est à sa GÉNÉRATION
+              RÉELLE 17 ; LA BALISE `loupe 0.1.1` se scellera PAR
+              FAIT DE CARTE sur le vert recoupé DU DOUZIÈME RUN.
+              L'HISTOIRE DE L'ÈRE 0.1.0 (LA RETOUCHE DE L'ENTRÉE
+              214 : le neuvième run a tenu
               T0 → T7 TOUT VERT POUR LA SECONDE FOIS, puis a nommé
               DEUX faits. PREMIER FAIT [PERMISSION-SONDE] À LA SONDE :
               la réparation dev.9 VÉCUT (l'AttributeError de ctypes
@@ -41,7 +56,7 @@ Le kit porte UN artefact et UN scénario :
               .text/.text2/.data/les en-têtes OCTET-IDENTIQUES, les
               adresses scellées INTACTES, la taille CONSTANTE — 89
               octets modifiés en tout ; ET LA LEÇON INSTITUTIONNALISÉE
-              : le présent scénario dev.12 MARCHE LUI-MÊME LES QUATRE
+              : le présent scénario 0.1.1-dev.1 MARCHE LUI-MÊME LES QUATRE
               OFT au pas DWORD du chargeur [chaque entrée == le
               préremplissage de son slot — [OFT-QWORD] ne passera
               plus jamais], ET LA NOUVELLE SONDE DE LIAISON VIT LE
@@ -225,12 +240,12 @@ JOURNAL = []
 
 # --- l'artefact : l'empreinte ASSERTÉE prouve CES octets (la carte demeure
 #     en génération 16 — la régénération est dette au labo, l'Entrée 211) -----
-SHA_EXE = ("054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69")
+SHA_EXE = ("c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1")
 TAILLE_EXE = 127488
-VERSION_R10 = 0x00010008          # loupe 0.1.0-dev.8 (le qword @0x2E80 —
-                                   # la retouche de l'Entrée 214 : [OFT-QWORD]
-                                   # nommé sur les octets du run 9, les QUATRE
-                                   # OFT compactés au pas DWORD du chargeur)
+VERSION_R10 = 0x00010101          # loupe 0.1.1-dev.1 (le qword @0x2E80 —
+                                   # la version commandée D179 : la dette
+                                   # [R10-PÉRIMÉE] soldée, l'ère 0.1.1 ouverte)
+                                   # (l'ère 0.1.0 SCELLÉE demeure : 054de960…)
 VERSION_TXT = f"0.1.0-dev.{VERSION_R10 & 0xFFFF}"   # dynamique — le littéral périmé chassé (dev.9, l'Entrée 213)
 
 # --- les adresses scellées (le plan, source unique — R7) -------------------------

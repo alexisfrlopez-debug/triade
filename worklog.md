@@ -7855,3 +7855,42 @@ Work Log:
   projet fils COFFRE-FORT dégeler (D171/D135 amendée), (b) la
   consolidation v0.9.0 de la spécification (le modèle D169/D176), (c) la
   dette [R10-PÉRIMÉE] à 0.1.1+ (R4, la commande au développeur).
+
+---
+Task ID: 128
+Agent: Z.ai (agent principal)
+Task: « b et c » — LA VERSION 0.1.1 NÉE DE LA RECOMPOSITION (la dette
+[R10-PÉRIMÉE] soldée à la naissance, D179) ET LA CONSOLIDATION v0.9.0
+de la spécification (D180) — le douzième run attendu.
+
+Work Log:
+- (c) LE GESTE 0.1.1 : layout/carte_m10 portés à l'ère (0x00010101,
+  GÉNÉRATION 17), _version_carte génération-indépendante (l'en-tête
+  signé — le passage d'ère n'aveugle jamais l'anti-rollback),
+  _anti_rollback ouvert à LA MONOTONIE R10, _porte_ere_011 (la
+  déployée ASSERTÉE scellée 0.1.0, l'écart confiné aux champs nommés) ;
+  LE BUILD VERT : garde 14/14, 18/18 round-trip, 43 verrous, 78 IAT,
+  harnais 61/61 · 53/53 · 45/45 — LA DETTE SOLDÉE À LA NAISSANCE :
+  17 sommes rafraîchies, le qword porté, 0 octet ailleurs ;
+  loupe.exe 0.1.1-dev.1 NÉE (c1115105…, 127 488 o), la carte
+  génération 17, le verrou croisé 26/26 ; une passe de cristallisation
+  (la recomposition == la pièce, PLUS AUCUN écart — compteurs 2/10,
+  les passes au scellage).
+- LE KIT + LE COFFRE : kit-loupe.zip 38 585 o dadfb48c… (les QUATRE
+  pièces, extraction vierge, py_compile) ; la vague versionnée
+  vagues-m10/, la racine portée (kit-loupe.zip + LISEZMOI +
+  loupe-kit-13/), le réceptacle ARMÉ (le douzième run), l'index à
+  jour — 27 entrées, AUCUN doublon.
+- (b) LA CONSOLIDATION v0.9.0 : le md révisé (§ 1.10, la rangée M10
+  FRANCHIE, § 19.11 la correspondance + 4 rejets, le journal, la
+  clôture) ; la chaîne spec_v090 née de spec_v084 (cover, sec-a/cf/d,
+  l'annexe D177–D180) ; LE PDF 51 pages sha256 465331b2… consigné
+  n°39 ; LE CAHIER TOUT PASSÉ ; le contrôle visuel par code (51
+  pages, aucune quasi blanche) + les pages clés constatées.
+- CONSIGNATIONS : D179, D180, l'Entrée 221, le PLAN (l'État + la
+  rangée (e)), le présent worklog.
+- SUITE : LE DOUZIÈME RUN (le kit loupe-kit-13/ au /test — python
+  scenario-loupe.py puis temoin-vitrine.bat, preuves-loupe/ ENTIER au
+  coffre) ; puis le scellage 0.1.1 au labo (le recoup, la
+  cristallisation 10/10, les portes adaptées, la balise `loupe 0.1.1`
+  sur le vert recoupé).

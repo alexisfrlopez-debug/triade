@@ -103,20 +103,56 @@
 > génération 16 ; la balise attend le vert ENTIER : le scénario
 > T0 → S0 → LA LIAISON ET la vitrine vivante.)
 
+> **LE ONZIÈME RUN A TENU — L'ÈRE 0.1.0 EST REFERMÉE SUR SA BALISE
+> SCELLÉE** (l'Entrée 217 : T0 → T7 TOUT VERT POUR LA QUATRIÈME
+> FOIS, LA CASCADE 205 VÉCUE ENTIÈRE LA PREMIÈRE FOIS, LA VITRINE
+> VIVANTE LA SECONDE FOIS — 0 et 0 — le vert recoupé 39/39 : LA
+> BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE [D178], loupe.exe
+> 054de960… INTACT — **LE JALON M10 FRANCHI, la méthode TRIADE
+> entière prouvée par la CRÉATION : onze runs, onze leçons**).
+>
+> **LA PRÉSENTE VAGUE EST CELLE DE LA VERSION COMMANDÉE : 0.1.1-dev.1
+> (D178/D179 — le développeur a commandé le soldage de la dette
+> [R10-PÉRIMÉE] à la version 0.1.1+)** : la pièce 0.1.0 scellée
+> portait à sa porte R10 les SOMMES DE L'ÈRE dev.5 — les retouches
+> des Entrées 210/214 changèrent les octets des blocs SANS
+> rafraîchir la table (dette nommée au scellage même, jamais un
+> hot-fix d'un scellé) ; la 0.1.1 naît de LA RECOMPOSITION : **LA
+> DETTE SOLDÉE À LA NAISSANCE** — les 17 sommes rafraîchies à la
+> VÉRITÉ des blocs (chaque somme == son bloc relu, par
+> construction), le qword version porté 0x00010008 → 0x00010101,
+> **0 OCTET AILLEURS** — le code BYTE-IDENTIQUE au vécu des ONZE
+> RUNS (R4 : le contrat stable ; R7 : les adresses intactes) ;
+> **loupe.exe 0.1.1-dev.1**, 127 488 o, sha256
+> `c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1`,
+> la carte GÉNÉRATION 17 (la 16 demeure celle de la balise 0.1.0
+> scellée) ; la pièce 0.1.0 (054de960…) demeure AU GIT ET AU
+> COFFRE.
+>
+> **LE DOUZIÈME RUN — LE MÊME CRITÈRE, LA BALISE 0.1.1** : le
+> scénario ENTIER (T0 → S0 → LA LIAISON — tous les temps déjà vécus
+> verts au onzième run, la MÊME mécanique, la pièce nouvelle à la
+> place de l'ancienne) ET LA VITRINE VIVANTE (les deux codes à 0 —
+> la vitrine a déjà vécu deux fois, la même pièce au code près) ;
+> SI LE VERT TIENT : LA BALISE `loupe 0.1.1` SCELLÉE sur run
+> terrain recoupé — la version de la dette soldée, le miroir
+> D165/D170 (la porte est de processus) ; si une mort vient : le
+> journal la nommera — chaque défaut a été nommé, chaque défaut a
+> reçu sa retouche.
+
 ## 1. Ce que ce kit contient
 
 ```
-loupe-kit-12/
-├── loupe.exe          l'ARTEFACT 0.1.0-dev.8 (127 488 o, sha256
-│                      054de960… — LA RETOUCHE DE L'ENTRÉE 214 : les
-│                      QUATRE OFT compactés au pas DWORD du chargeur —
-│                      [OFT-QWORD] nommé au run 9, la sixième mort
-│                      reçut SA retouche ; le .text/.text2/.data
-│                      octet-identiques au dev.7, les adresses scellées
-│                      INTACTES, la taille CONSTANTE ; lecture seule
-│                      pour le run ; la carte privée ne voyage JAMAIS
-│                      avec l'artefact, R1) ;
-├── scenario-loupe.py  LE SCÉNARIO dev.12 (python SEUL : ctypes,
+loupe-kit-13/
+├── loupe.exe          l'ARTEFACT 0.1.1-dev.1 (127 488 o, sha256
+│                      c1115105… — LA VERSION COMMANDÉE D179 : la
+│                      dette [R10-PÉRIMÉE] SOLDÉE à la naissance [les
+│                      17 sommes rafraîchies à la vérité des blocs],
+│                      le qword porté 0x00010101, 0 OCTET AILLEURS
+│                      [le code byte-identique au vécu des ONZE RUNS
+│                      — R4/R7] ; lecture seule pour le run ; la carte
+│                      privée ne voyage JAMAIS avec l'artefact, R1) ;
+├── scenario-loupe.py  LE SCÉNARIO 0.1.1-dev.1 (python SEUL : ctypes,
 │                      hashlib, os, platform, struct, sys, tempfile —
 │                      les constantes FIGÉES au laboratoire depuis le
 │                      plan du dépôt, recoupées à l'assemblage) :
@@ -141,7 +177,7 @@ loupe-kit-12/
 │                      VERSION_R10 ; le texte T0 nomme la carte à sa
 │                      GÉNÉRATION RÉELLE [16 — la régénération est
 │                      dette au labo, l'Entrée 211] ;
-├── temoin-vitrine.bat LE TÉMOIN VITRINE dev.12 — PORTANT : les quatre
+├── temoin-vitrine.bat LE TÉMOIN VITRINE 0.1.1-dev.1 — PORTANT : les quatre
 │                      temps [1/4] la vitrine vide, [2/4] la vitrine
 │                      avec fichier, [3/4] les rapports WER éventuels,
 │                      **[4/4] LE JOURNAL D'ÉVÉNEMENTS — wevtutil
@@ -157,9 +193,9 @@ loupe-kit-12/
 
 1. **Extraire** le kit COMPLET dans un NOUVEAU dossier (ne jamais
    mélanger les runs — D99 ; si le dossier d'un run ancien existe
-   déjà — celui de dev.1 à dev.11 par exemple — créez-en un NEUF,
-   `loupe-kit-12b/` si besoin : l'artefact refusé ne se réutilise pas).
-   Sur votre Windows 11 : `loupe-kit-12/`.
+   déjà — celui de dev.1 à dev.12 par exemple — créez-en un NEUF,
+   `loupe-kit-13b/` si besoin : l'artefact refusé ne se réutilise pas).
+   Sur votre Windows 11 : `loupe-kit-13/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
@@ -181,10 +217,10 @@ loupe-kit-12/
    sha256 du fichier entier — la barre du bas), la cellule active
    inversée : fermez-la par Alt+F4. Les DEUX codes de sortie sont
    capturés au témoin (`preuves-loupe/temoin-vitrine.txt`) — **0 et 0
-   sont attendus : la vitrine dev.8 A DÉJÀ VÉCU AU DIXIÈME RUN** (0 et
-   0, la première fois après six morts — le onzième run la reverra
-   vivre, la dette du kit n'étant que le scénario ENTIER ; la pièce
-   est acquittée : le défaut [FREE-SANS-TYPE] fut celui du KIT — les cinq premières ont nommé leur défaut ou acquitté la
+   sont attendus : la vitrine A DÉJÀ VÉCU DEUX FOIS (0 et 0 au
+   dixième, 0 et 0 au onzième run — le code est le MÊME à la porte
+   R10 près : la 0.1.1 doit vivre pareil ; la pièce est acquittée
+   de toute charge : les défauts restants furent ceux du KIT — les cinq premières ont nommé leur défaut ou acquitté la
    pièce, LA SIXIÈME A NOMMÉ LE SIEN : [OFT-QWORD] — la retouche est
    portée, la liaison sera VÉCUE par la sonde avant même la fenêtre :
    **si la septième mort vient, LE JOURNAL D'ÉVÉNEMENTS [4/4] LA
@@ -268,11 +304,12 @@ loupe-kit-12/
 Le labo recoupe sur pièces (D138/D145/D148) : le témoin relu, LE
 TÉMOIN VITRINE REQUIS (avec son [4/4] — le journal d'événements), les
 constats croisés contre le dépôt, les empreintes recalculées — **LE
-DIXIÈME RUN A DÉJÀ VÉCU LA VITRINE (0 et 0, la première fois :
-l'application née de TRIADE a vécu chez son utilisateur) ; LA DETTE
-RESTANTE EST LE SCÉNARIO ENTIER : S0 ET LA LIAISON, jamais courus à
-ce jour**. ET SI LE VERT TIENT — le scénario ENTIER (T0 → S0 → LA LIAISON, le contrôle
-D54 ÉTENDU en tête, LA CASCADE RÉPARÉE) ET LA VITRINE VIVANTE (les deux
-codes à 0) : LA BALISE `loupe 0.1.0` SCELLÉE sur run terrain recoupé —
-LE JALON M10, la méthode TRIADE entière prouvée par la CRÉATION : de
-l'intention (la couche I) à l'octet vécu chez son utilisateur.**
+ONZIÈME RUN A TOUT VÉCU : le scénario ENTIER (T0 → S0 → LA LIAISON)
+ET LA VITRINE (0 et 0 la seconde fois) — la 0.1.0 est SCELLÉE
+(D178) ; la 0.1.1 porte LE MÊME MÉCANISME à la pièce près [la
+porte R10 véridique, le qword porté — 0 octet de code changé]**.
+ET SI LE VERT TIENT — le scénario ENTIER (T0 → S0 → LA LIAISON, le
+contrôle D54 ÉTENDU en tête, LA CASCADE RÉPARÉE) ET LA VITRINE
+VIVANTE (les deux codes à 0) : LA BALISE `loupe 0.1.1` SCELLÉE sur
+run terrain recoupé — LA VERSION DE LA DETTE SOLDÉE (D179), le
+miroir D165/D170 : la porte est de processus.**

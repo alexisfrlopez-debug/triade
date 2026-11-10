@@ -1,7 +1,9 @@
-# PROTOCOLE TRIADE v0.8.0 — Spécification technique
+# PROTOCOLE TRIADE v0.9.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.8.0. Les archives formelles des versions
-> précédentes demeurent : `docs/Protocole_TRIADE_v0.7.0_Specification.pdf` (v0.7.0),
+> Source de travail faisant autorité pour la v0.9.0. Les archives formelles des versions
+> précédentes demeurent : `docs/Protocole_TRIADE_v0.8.4_Specification.pdf` (v0.8.4 — dernière révision de terrain du TGN),
+> `docs/Protocole_TRIADE_v0.8.0_Specification.pdf` (v0.8.0),
+> `docs/Protocole_TRIADE_v0.7.0_Specification.pdf` (v0.7.0),
 > `docs/Protocole_TRIADE_v0.6.1_Specification.pdf` (v0.6.1),
 > `docs/Protocole_TRIADE_v0.6.0_Specification.pdf` (v0.6.0),
 > `docs/Protocole_TRIADE_v0.5.2_Specification.pdf` (v0.5.2),
@@ -18,16 +20,23 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
-> La v0.8.0 consolide le programme d'après M9 (D170/D171) : le jalon M9 — TLS 1.3 pur
-> en blocs scellés, le domaine `tls13` — est FRANCHI (finale `1.0.0` scellée sur le
-> run terrain vert recoupé et LA SESSION RÉELLE — la ligne applicative chiffrée
-> échangée avec un serveur réel, D170), et LE TEST GRANDEUR NATURE est ouvert (D171) :
-> le jalon M10 — coder une application réelle NEUVE entièrement avec TRIADE — porte
-> l'application « Loupe » (l'éditeur hexadécimal au panneau d'empreintes, le domaine
-> `loupe`), sa couche I de 18 spécifications et ses QUATRE chantiers de notation
-> accomplis (le noyau, le rendu + la navigation, l'édition + la table de routage
-> étendue — les 18 blocs NOTÉS-MESURÉS-PROUVÉS) ; le kit terrain attend LA CÉRÉMONIE
-> D'ÈRE du TGN (le quatorzième arbre, la dette D166/D171) ; la
+> La v0.9.0 consolide le programme d'après M10 (D178/D179) : LE JALON M10 — le test
+> grandeur nature, l'application « Loupe » (l'éditeur hexadécimal au panneau
+> d'empreintes, le domaine `loupe`) — est FRANCHI : l'application est NÉE ENTIÈREMENT
+> DE LA MÉTHODE (la cérémonie d'ère passée sur pièces — le garde à QUATORZE arbres,
+> les 18 blocs NOTÉS-MESURÉS-PROUVÉS, le kit déployé au coffre /test), ONZE RUNS
+> TERRAIN l'ont VÉCUE — onze défauts nommés, onze retouches documentées (chaque
+> défaut du kit ou de la pièce NOMMÉ sur pièces, jamais un vert muet) — ET LA
+> VITRINE A VÉCU CHEZ SON UTILISATEUR (les deux codes à 0, deux runs de suite) :
+> LE ONZIÈME RUN recoupé 39/39, LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE
+> CARTE (D178 — l'artefact INTACT, la dette de la carte soldée par la
+> régénération des notations, la cristallisation 26 × 10/10, l'anti-rollback
+> ARMÉ) : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION. LE PROGRAMME
+> D'APRÈS M10 est ouvert à la commande du développeur (D179) : la version
+> `0.1.1-dev.1` est NÉE DE LA RECOMPOSITION — la dette [R10-PÉRIMÉE] (les 17
+> sommes de l'ère dev.5) SOLDÉE À LA NAISSANCE, le code BYTE-IDENTIQUE au vécu
+> des onze runs (R4/R7), le DOUZIÈME RUN attendu : la balise `loupe 0.1.1` se
+> scellera sur le vert recoupé (le miroir D165/D170) ; la
 > v0.6.1 consigne l'arbitrage du niveau de naissance d'un coffre neuf (D137) ; la
 > v0.6.0 avait consigné la passation du programme de souveraineté cryptographique (D133) :
 > axes 2-3-4 accomplis et prouvés sur terrain — la chaîne réelle du coffre a migré
@@ -36,8 +45,8 @@
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.8.4 — la quatrième révision de terrain du TGN (Entrées 201–208) : la cérémonie d'ère est PASSÉE SUR PIÈCES le 09/11 (le garde à QUATORZE arbres verts, la dette D166/D171 SOLDÉE, la remise du développeur INSTALLÉE au coffre /test), le build `loupe.exe` est NÉ (la composition intégrale comptée, la carte génération 13, le verrou croisé 26/26) — et LE TERRAIN A DIT CINQ FOIS, CHAQUE REFUS NOMMÉ : dev.1 puis dev.2 refusés du même refus 0xc000007b au geste de cartographie (l'oubli du BASERELOC, puis la table nécessaire mais PAS suffisante) ; LA RETOUCHE dev.3 A PROUVÉ L'ENVELOPPE : **LE VRAI CHARGEUR DE WINDOWS A CARTOGRAPHIÉ L'IMAGE** — puis LE TÉMOIN A NOMMÉ AU T0 [CADRE-NÉ] (le sentinel à +8 au lieu de +528 : une TAILLE prise pour un offset) ; LA RETOUCHE dev.4 (l'initialiseur .data MIROIR EXACT du CADRE_VIERGE, LE GARDE GUÉRI) A TENU AU TERRAIN, LE QUATRIÈME RUN A NOMMÉ AU T1 [SESSION] -6 SYSTÈME ET LA CLASSE DES ARGUMENTS PILE fut corrigée (les 5+ de l'ABI msx64 à leurs vrais slots, l'audit d'ABI au build, le témoin vitrine au kit) ; **LE CINQUIÈME RUN A NOMMÉ -7 VERROUILLÉ — ET LA PIÈCE EST ACQUITÉE** : l'appel CreateFileW était NÉ PARFAIT dans la pièce (LA PREUVE PAR LE NOM CHANGÉ : -6 devint -7 — la classe de l'Entrée 207 TENUE au terrain), c'était LE KIT QUI FAUTAIT (le scénario EST LE CHARGEUR : LoadLibraryEx TIENT loupe.exe comme section vivante, et le VRAI Windows refuse gle 32 l'écriture sur le fichier d'une image mappée — T1 offrait LA PIÈCE à l'écriture, impossible PAR CONSTRUCTION), loupe-01 A TRADUIT LE REFUS AU NOM PRÈS (I4/E2) — LA VOIE NOMMÉE DE L'ÈRE A VÉCU SON PREMIER TERRAIN ; **LA RETOUCHE dev.6 EST AU KIT SEUL — L'ARTEFACT INCHANGÉ** (loupe.exe 0.1.0-dev.5, sha256 `6f830f9c…`, aucun arbre signé touché) : L'OMBRE `temoin-session.bin` (la session T1 naît sur la copie byte-à-byte de la pièce, née et morte au run — même loi que la sonde 205 et le témoin vitrine), LE FRÈRE DU DÉFAUT CHASSÉ (la session double de T6 offrait elle aussi la pièce sous le chargeur : l'offrande est l'ombre, le premier appel vérifié), ET LA VITRINE SE VIT PAR SON TÉMOIN (`temoin-vitrine.txt` REQUIS au réceptacle : une mort sans témoin ne recoupe pas). Sous la v0.8.3 demeure la classe des arguments pile (l'Entrée 207) ; sous la v0.8.2, la consolidation du programme d'après M9 (D170/D171) : le jalon M9 (TLS 1.3 pur en blocs scellés) FRANCHI le 07/11 (la finale `1.0.0` scellée sur recoup exigé comme pièce, LA SESSION RÉELLE la ligne applicative chiffrée avec un serveur réel) ; LE TEST GRANDEUR NATURE ouvert (D171) : le jalon M10 porte « Loupe », l'éditeur hexadécimal au panneau d'empreintes — la couche I de 18 spécifications (D172) et les QUATRE chantiers de notation accomplis (D173–D175 : les 18 blocs NOTÉS-MESURÉS-PROUVÉS) ; le projet fils COFFRE-FORT dégelé en parallèle (D135 amendée par D171)
-- Date : 9 novembre 2026
+- Version : v0.9.0 — la révision de consolidation du programme d'après M10 (D178/D179) : **LE JALON M10 FRANCHI le 11/11/2026** — l'application « Loupe » NÉE ENTIÈREMENT DE LA MÉTHODE (la couche I de 18 spécifications écrites-avant-code, les QUATRE chantiers de notation — 159 contrôles verts aux trois graines —, la cérémonie d'ère PASSÉE : le garde 14/14, le kit déployé au coffre /test), ONZE RUNS TERRAIN (Entrées 202–219 : ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur 0xc000007b [l'enveloppe de la lignée NORME DE FAIT], [CADRE-NÉ] [l'initialiseur .data MIROIR EXACT du CADRE_VIERGE — LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle], la classe des arguments pile [l'audit d'ABI msx64 NÉ AU BUILD], [SESSION] -7 [L'OMBRE au kit, l'artefact acquitté], [HINSTANCE-PEB] [r12 = GetModuleHandleW(NULL) LE VRAI MODULE], [D54-QUATRIÈME] + [EAX-SANS-SIGNE] [l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus étendus au 64 bits], [OFT-QWORD] [les QUATRE OFT au pas DWORD — la sixième mort NOMMÉE par le journal d'événements [4/4]], [FREE-SANS-TYPE] [le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe], [RET-NU] [mov eax, 1 ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION], [SONDE-EXE] [le faux négatif structurel : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT]) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE** (D178 — la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, l'écart 587 → 0], la cristallisation 26 × 10/10, la re-signature à la graine durable [LE TÉMOIN NE BOUGE PAS], l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179, la commande du développeur) : la version `0.1.1-dev.1` NÉE DE LA RECOMPOSITION — LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (les 17 sommes rafraîchies à la VÉRITÉ des blocs, le qword porté 0x00010008 → 0x00010101, 0 OCTET AILLEURS — le code byte-identique au vécu des onze runs, R4/R7), la carte GÉNÉRATION 17, le kit 0.1.1-dev.1 DÉPOSÉ au coffre /test (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU : si le vert tient, LA BALISE `loupe 0.1.1` SCELLÉE sur run recoupé (le miroir D165/D170). Sous les révisions de terrain v0.8.1 à v0.8.4, les enseignements des runs un à un ; sous la v0.8.0, la consolidation du programme d'après M9 (D170/D171)
+- Date : 11 novembre 2026
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -252,44 +261,54 @@ geste qui sert la main du développeur (D168). Aucune règle du cœur n'est modi
 aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif
 est inchangée.
 
-### 1.10 Ce que change la v0.8.0
+### 1.10 Ce que change la v0.9.0
 
-La révision de consolidation du programme d'après M9 (D170/D171). Le **jalon M9**
-(TLS 1.3 pur en blocs scellés — le domaine `tls13`, l'ère 1.0.0) est **franchi** :
-les 28 blocs notés-mesurés-prouvés — les primitives aux vecteurs officiels octet
-pour octet (FIPS 180-4, RFC 2104/4231, 5869, 7748, SP 800-38D), la poignée
-rejouée sur le transcript RFC 8448, les héritages PAR LA CARTE (R7) —, le socle
-socket par syscalls directs, le septième run terrain vert sur pièces et recoupé,
-LA SESSION RÉELLE (la ligne applicative chiffrée ÉCHANGÉE avec un serveur réel,
-le témoin « HTTP/1.1 200 OK » DÉCHIFFRÉ PAR LA MACHINE, l'épinglage -6 NOMMÉ
-contre le vrai serveur, la fermeture propre), la finale `1.0.0` scellée sur le
-recoup exigé comme pièce (D170 : le scellage est un fait de carte, l'artefact ne
-bouge jamais) — et l'ère M8 refermée propre par l'export de continuité. **LE TEST
-GRANDEUR NATURE est ouvert (D171)** : le protocole avait prouvé chaque capacité,
-M0 à M9 — il reste à prouver qu'il DÉVELOPPE une application réelle NEUVE, de
-l'intention à l'octet livré (le modèle RoomEq s'arrêtait au recodage ; le TGN
-exige la CRÉATION). L'application — arbitrée à D171, contredisible — est
-« Loupe », l'éditeur hexadécimal au panneau d'empreintes sur le profil primaire
-(l'outil du quotidien du projet : voir les octets, leurs lignes, leurs empreintes
-md5/sha-256, leur place) : le domaine `loupe` fondé (la charte + le tableau des
-18 blocs en cinq familles), la couche I posée écrite-avant-code (D172 : les 18
-spécifications, le plan d'adressage arrêté avant toute notation, la table des
-sept verdicts), et les QUATRE chantiers de notation accomplis — le noyau
-fichier + empreintes (D173 : les héritages vivent à leurs adresses scellées, le
-mini-OS virtuel du harnais), le rendu + la navigation (D174 : l'oracle à
-scénarios — l'écran attendu octet par octet —, le mini-GUI virtuel, le plancher
-qui ne recule jamais), l'édition + la table de routage étendue de loupe-09 r2
-(D175 : le disque saisissable et la mort du harnais, le réseau de la garde
-16↔17↔18, l'écriture à l'octet prouvée différentielle) — les 18 blocs
-NOTÉS-MESURÉS-PROUVÉS, 45 + 53 + 59 contrôles verts aux trois graines sur les
-trois harnais. Le **kit terrain attend LA CÉRÉMONIE D'ÈRE du TGN** : la dette
-D166/D171 est nommée à la naissance — le quatorzième arbre (`loupe`) et
-l'extension du registre figé exigent la clé hors-ligne du développeur AVANT
-tout build (§ 13.5) ; le garde demeure à treize arbres. Le projet fils
-COFFRE-FORT est dégelé en parallèle (D135 amendée par D171) : le père continue
-sans ralentir, la frontière fondatrice demeure INTACTE. Aucune règle du cœur
-n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la
-fonction objectif est inchangée.
+La révision de consolidation du programme d'après M10 (D178/D179). Le **jalon M10**
+(le test grandeur nature — le domaine `loupe`) est **franchi** : l'application
+« Loupe », l'éditeur hexadécimal au panneau d'empreintes, est NÉE ENTIÈREMENT DE
+LA MÉTHODE — la cérémonie d'ère passée sur pièces (le garde à QUATORZE arbres,
+la dette D166/D171 soldée), la couche I de 18 spécifications écrites-avant-code
+(D172), les QUATRE chantiers de notation (D173–D175 : les 18 blocs
+NOTÉS-MESURÉS-PROUVÉS, 159 contrôles verts aux trois graines), le kit déployé au
+coffre `/test` (M10-(d)) — ET ONZE RUNS TERRAIN (M10-(e), Entrées 202–219) :
+ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur
+(l'enveloppe prouvée de la lignée NORME DE FAIT), [CADRE-NÉ] (l'initialiseur
+`.data` MIROIR EXACT du `CADRE_VIERGE` du harnais — LE GARDE GUÉRI : le contrôle
+dérive du plan, jamais de la pièce qu'il contrôle), la classe des arguments pile
+(l'audit d'ABI msx64 NÉ AU BUILD), [SESSION] -7 VERROUILLÉ (L'OMBRE au kit,
+l'artefact acquitté), [HINSTANCE-PEB] (l'entrée réécrite : r12 =
+GetModuleHandleW(NULL) LE VRAI MODULE), [D54-QUATRIÈME] + [EAX-SANS-SIGNE]
+(l'IAT relogée à 0x3100 en QUATRE plages séparées par NULL, les 20 rendus
+négatifs étendus au 64 bits), [OFT-QWORD] (les QUATRE OFT au pas DWORD du
+chargeur — la sixième mort NOMMÉE par le journal d'événements [4/4]),
+[FREE-SANS-TYPE] (le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe
+d'exception), [RET-NU] (`mov eax, 1 ; ret` — le verdict ATTACH VRAI PAR
+CONSTRUCTION), [SONDE-EXE] (le faux négatif STRUCTUREL de la sonde de liaison :
+le chargeur de bibliothèque ne résout JAMAIS les imports d'un module exécutable —
+LA LIAISON PROUVÉE PAR LE VIVANT) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et
+onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR). LE
+ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE
+CARTE** (D178 : la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS —
+18/18 notations == la pièce OCTET POUR OCTET, l'écart de l'audit 587 → 0 ; la
+cristallisation 26 × 10/10 ; la re-signature à la graine durable D144 — LE
+TÉMOIN NE BOUGE PAS ; l'anti-rollback ARMÉ ; loupe.exe INTACT 054de960… — LE
+MÊME binaire que le run a couru) : **LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA
+CRÉATION — de l'intention (la couche I) à l'octet vécu chez son utilisateur**.
+LE PROGRAMME D'APRÈS M10 APPARTIENT AU DÉVELOPPEUR : la version `0.1.1-dev.1`
+est COMMANDÉE (D179) — la dette [R10-PÉRIMÉE] (les 17 sommes de l'ère dev.5 que
+les retouches des Entrées 210/214 changèrent sans rafraîchir la table) SOLDÉE À
+LA NAISSANCE : la pièce naît de LA RECOMPOSITION même (chaque somme == son bloc
+relu, par construction), le qword version porté 0x00010101, 0 OCTET AILLEURS —
+le code BYTE-IDENTIQUE au vécu des onze runs (R4 : le contrat stable ; R7 : les
+adresses intactes), la carte GÉNÉRATION 17 ; le kit 0.1.1-dev.1 DÉPOSÉ au
+coffre `/test` (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU :
+si le vert tient (le scénario ENTIER T0 → S0 → LA LIAISON ET la vitrine
+vivante), LA BALISE `loupe 0.1.1` SCELLÉE sur run terrain recoupé (le miroir
+D165/D170 : la porte est de processus). Le projet fils COFFRE-FORT demeure
+dégelable au rythme du développeur (D135 amendée par D171) : la frontière
+fondatrice demeure INTACTE. Aucune règle du cœur n'est modifiée ; aucune couche
+n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif est
+inchangée.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -1302,7 +1321,7 @@ vert, suite de conformité verte pour les éléments couverts, tableau de bord c
 | M7 | Portabilité inter-ISA | profil `riscv64-linux-elf64` : round-trip 100 % sur la nouvelle ISA ; patch à chaud conforme (scratch + `fence.i`) ; verrou croisé multi-profils ; export de continuité multi-profils vérifié | **franchi** 05/11/2026 — balise `0.8.0` (Entrée 155 : run terrain M7-(d) vert sur pièces, recoup labo 29/29 sur pièces croisées, export multi-profils de bout en bout — l'universalité démontrée : win `0.6.0` / linux `0.7.0` / riscv `0.8.0`) |
 | M8 | Syscalls directs (domaine `sys`) | la charte à huit règles et les spécifications sys-01…03 écrites-avant-code ; le harnais différentiel sur fixtures ntdll synthétiques (le labo ne connaît jamais le SSN du terrain) ; le motif du stub vérifié avant toute extraction ; le run terrain sur le VRAI ntdll — la même observable par les DEUX chemins, les refus nommés ; la cérémonie de l'ère avant le build | **franchi** 05/11/2026 — balise `0.9.0` (Entrées 156–164, D160–D165 : harnais 61 verts ; cérémonie de l'ère passée 12/12 ; run terrain m8d VERT — 35 verts / 0 échec, la twin octet pour octet, le refus -4 du stub crocheté ; recoup labo 30/30 ; finale `0.9.0` scellée sur recoup exigé comme pièce) |
 | M9 | TLS 1.3 pur (domaine `tls13`) | la charte à huit règles et les 28 spécifications en six familles écrites-avant-code ; les primitives aux vecteurs officiels (FIPS 180-4, RFC 2104/4231, RFC 5869, RFC 7748, SP 800-38D) ; la poignée rejouée sur le transcript RFC 8448 ; le socle socket par syscalls directs (sys-04+) ; la cérémonie de l'ère avant construire() ; la session réelle avec un serveur réel — la ligne applicative chiffrée | **franchi** 07/11/2026 — finale `1.0.0` (Entrées 170–194, D166–D170 : les 28 blocs notés-mesurés-prouvés, le run terrain vert recoupé EXIGÉ COMME PIÈCE du scellage, LA SESSION RÉELLE — la ligne applicative chiffrée échangée avec un serveur réel, le témoin déchiffré par la machine, l'épinglage -6 nommé ; le scellage un fait de carte, proxy.exe byte-identique `446279f3…`) |
-| M10 | Le test grandeur nature — « Loupe » (domaine `loupe`) | coder une application réelle NEUVE entièrement avec TRIADE, de l'intention (la couche I) à l'octet livré (le kit terrain) ; les 18 spécifications écrites-avant-code avant tout octet de notation (R2) ; les héritages PAR LA CARTE byte-identiques aux adresses scellées (R7) ; l'oracle à scénarios vert — l'écran attendu octet par octet ; le kit déployé au coffre `/test` (modèle m9f) ; la balise `loupe 0.1.0` scellée sur run terrain recoupé | **ouvert** 07/11/2026 (D171) — la couche I complète (18 spécifications, D172) et les QUATRE chantiers de notation accomplis : le noyau (D173), le rendu + la navigation (D174), l'édition + la table de routage étendue de loupe-09 r2 (D175) — les 18 blocs NOTÉS-MESURÉS-PROUVÉS (59 + 53 + 45 contrôles verts aux trois graines) ; LA CÉRÉMONIE D'ÈRE du TGN PASSÉE SUR PIÈCES (le 14e arbre, la dette D166/D171 SOLDÉE — le garde 14/14, la remise du développeur INSTALLÉE) ; le kit terrain livré (M10-(d)) ; LE RUN (M10-(e)) REFUSÉ TROIS FOIS, CHAQUE REFUS NOMMÉ : dev.1 puis dev.2 du refus du chargeur 0xc000007b (l'oubli du BASERELOC, puis la table nécessaire mais PAS suffisante — l'image hors de l'enveloppe de la lignée), puis LE PAS DÉCISIF : LE VRAI CHARGEUR A CARTOGRAPHIÉ dev.3 (l'enveloppe PROUVÉE au terrain) et LE TÉMOIN A NOMMÉ AU T0 [CADRE-NÉ] — le CADRE .data pas né poignée INVALIDE, l'initialiseur du build (le sentinel à +8, une TAILLE prise pour un offset, au lieu de +528 la chaîne des tailles) ; LA RETOUCHE dev.4 DÉPOSÉE : l'initialiseur .data MIROIR EXACT du CADRE_VIERGE du harnais, LE GARDE GUÉRI (le validateur relit LE MÊME miroir — le contrôle dérive du plan, jamais de la pièce qu'il contrôle) ET le scénario relit LE .data ENTIER contre le miroir ; LE QUATRIÈME RUN EST LE PAS LE PLUS LOIN JAMAIS VÊCU : [T0] TOUT VERT (l'image cartographiée, LE CADRE NÉ MIROIR — la retouche TENUE au terrain, l'IAT 37 feuilles posées) PUIS [T1] ÉCHEC NOMMÉ [SESSION] : loupe-01 a rendu -6 SYSTÈME (le fichier pourtant relu à l'instant) — ET LA VITRINE A VÉCU SA PREMIÈRE FOIS (« la fenêtre s'ouvre et se referme immédiatement » : la mort SANS TÉMOIN) ; L'AUTOPSIE NOMME LA CLASSE DES ARGUMENTS PILE (les 5+ de l'ABI msx64 AU HOME SPACE au lieu de [rsp+0x20]+ : loupe-01/05/06 — le VRAI ReadFile lisait le contexte condensé COMME UN POINTEUR), L'AUDIT D'ABI msx64 NÉ AU BUILD nomme DEUX AXES D'ALIGNEMENT (loupe-10 le sous-programme .peindre pile ≡8 — le VRAI gdi32 SSE ; loupe-11 le cadre 0x38), LE GARDE GUÉRI PAR LA CONVENTION (les shims relisent LES MÊMES SLOTS QUE LE VRAI — V7 : la falsification demandée, attrapée), ET LE KIT PORTE SON TÉMOIN VITRINE (temoin-vitrine.bat — la prochaine mort sera nommée) ; LA RETOUCHE dev.5 DÉPOSÉE : loupe.exe 0.1.0-dev.5 (127 488 o, sha256 6f830f9c…), 159 contrôles verts (61+53+45 — V7 NÉ) — le run rejoué attend le développeur |
+| M10 | Le test grandeur nature — « Loupe » (domaine `loupe`) | coder une application réelle NEUVE entièrement avec TRIADE, de l'intention (la couche I) à l'octet livré (le kit terrain) ; les 18 spécifications écrites-avant-code avant tout octet de notation (R2) ; les héritages PAR LA CARTE byte-identiques aux adresses scellées (R7) ; l'oracle à scénarios vert — l'écran attendu octet par octet ; le kit déployé au coffre `/test` (modèle m9f) ; la balise `loupe 0.1.0` scellée sur run terrain recoupé | **franchi** 11/11/2026 (Entrées 218/219, D178) — l'application est NÉE ENTIÈREMENT DE LA MÉTHODE : la cérémonie d'ère PASSÉE SUR PIÈCES (le 14e arbre, la dette D166/D171 SOLDÉE — le garde 14/14), les 18 blocs NOTÉS-MESURÉS-PROUVÉS (59 + 53 + 45 contrôles verts aux trois graines), le kit déployé (M10-(d)) — ET ONZE RUNS TERRAIN, ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES : les refus du chargeur 0xc000007b (dev.1/dev.2 — l'enveloppe de la lignée NORME DE FAIT), [CADRE-NÉ] (dev.4 — l'initialiseur .data MIROIR EXACT du CADRE_VIERGE, LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle), la classe des arguments pile (dev.5 — l'audit d'ABI msx64 NÉ AU BUILD), [SESSION] -7 VERROUILLÉ (dev.6 kit — L'OMBRE temoin-session.bin, la pièce ACQUITTÉE), [HINSTANCE-PEB] (dev.6 — l'entrée réécrite r12 = GetModuleHandleW(NULL)), [D54-QUATRIÈME] + [EAX-SANS-SIGNE] (dev.7 — l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus au 64 bits), [OFT-QWORD] (dev.8 — les QUATRE OFT au pas DWORD : la sixième mort nommée par le journal d'événements [4/4]), [FREE-SANS-TYPE] (dev.12 kit — le HMODULE en POINTEUR, l'essai pour TOUTE classe), [RET-NU] (dev.11 kit — mov eax, 1 ; ret), [SONDE-EXE] (le faux négatif STRUCTUREL : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT) ; LA VITRINE VIVANTE (0 et 0 aux 10e/11e runs — après six morts, L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 (T0→T7 TOUT VERT la quatrième fois, LA CASCADE 205 VÉCUE ENTIÈRE la première, la vitrine la seconde) : LE VERT TIENT ENTIER — LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE (D178 : la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, 587 → 0], la cristallisation 26 × 10/10, l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LA SUITE COMMANDÉE (D179) : la version 0.1.1-dev.1 née de la recomposition — la dette [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (17 sommes rafraîchies à la vérité des blocs, le qword porté 0x00010101, 0 octet de code changé), le douzième run attendu : la balise `loupe 0.1.1` sur le vert recoupé |
 
 M0 est le jalon existentiel — il prouve la chaîne notation, octets, exécutable, exécution
 sans compilateur ; il est franchi. M2 est le jalon de vérité — le patch à chaud sur code
@@ -1318,8 +1337,10 @@ condition d'une pile TLS 1.3 qui n'émettrait plus par l'IAT userland ; chaque
 famille s'appuie sur les résultats mesurés de la précédente. M10 est l'épreuve de
 la MÉTHODE ENTIÈRE (D171) : non plus une capacité, mais une application réelle
 neuve — l'outil du quotidien du projet — développée de l'intention à l'octet
-livré, chaque geste prouvé ; la notation entière (18 blocs) est déjà
-notée-mesurée-prouvée, le build attend la cérémonie d'ère du TGN.
+livré, chaque geste prouvé — ET ELLE EST FRANCHIE (D178) : onze runs terrain,
+onze leçons, la balise `loupe 0.1.0` scellée sur le onzième run recoupé — la
+création a vécu chez son utilisateur ; la version 0.1.1 (D179) poursuit : la
+dette [R10-PÉRIMÉE] soldée à la naissance, le douzième run attendu.
 
 ## 19. Correspondance des versions
 
@@ -1500,6 +1521,26 @@ Sceller la 0.1.0 de Loupe au build — rejeté : la balise de développement na�
 build (geste de BUILD jamais scellage, miroir M6/M7/M8) ; la 0.1.0 se scellera sur
 le run terrain vert recoupé.
 
+### 19.11 Correspondance v0.8.4 → v0.9.0
+
+| Évolution | En v0.8.4 | En v0.9.0 | Statut |
+|---|---|---|---|
+| Jalon M10 (le TGN « Loupe ») | ouvert : cinq runs vécus, cinq défauts nommés (les refus du chargeur, [CADRE-NÉ], la classe des arguments pile, [SESSION] -7 — la pièce acquittée), la retouche dev.6 au kit seul | FRANCHI : ONZE RUNS TERRAIN, ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES ([HINSTANCE-PEB], [D54-QUATRIÈME] + [EAX-SANS-SIGNE], [OFT-QWORD], [FREE-SANS-TYPE], [RET-NU], [SONDE-EXE] — la liaison prouvée par le vivant) ; LA VITRINE VIVANTE (0 et 0 aux dixième et onzième runs — l'application née de TRIADE a vécu chez son utilisateur) ; le onzième run recoupé 39/39 | révisé (D178, Entrées 209–219) |
+| La balise `loupe 0.1.0` | attend le vert entier (la dette de la carte nommée : génération 13/dev.5, la pièce dev.8) | SCELLÉE PAR FAIT DE CARTE : la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS (18/18 == la pièce octet pour octet, l'écart 587 → 0), la cristallisation 26 × 10/10, la re-signature à la graine durable (le témoin ne bouge pas), l'anti-rollback ARMÉ, loupe.exe INTACT (054de960…) — le même binaire que le onzième run a couru | révisé (D178) |
+| La dette [R10-PÉRIMÉE] | nommée au scellage (17 sommes de l'ère dev.5 à la porte de la pièce — réparable à 0.1.1+, jamais un hot-fix d'un scellé) | SOLDÉE À LA NAISSANCE : la version `0.1.1-dev.1` COMMANDÉE (D179) naît de la recomposition même — les 17 sommes rafraîchies à la vérité des blocs, le qword porté 0x00010101, 0 octet de code changé (R4/R7) ; la carte GÉNÉRATION 17 ; le kit 0.1.1-dev.1 déposé au coffre `/test`, LE DOUZIÈME RUN ATTENDU — la balise `loupe 0.1.1` se scellera sur le vert recoupé (le miroir D165/D170) | révisé (D179) |
+| Programme d'après M10 | — (le jalon attend son scellage) | OUVERT À LA COMMANDE DU DÉVELOPPEUR : la consolidation v0.9.0 (le modèle D169/D176), la version 0.1.1 (D179) ; le projet fils COFFRE-FORT demeure dégélable au rythme du développeur (D135 amendée par D171) | nouveau (D179) |
+| Chaîne PDF | spec_v084 (née spec_v083 — les révisions de terrain v0.8.1 à v0.8.4) ; les archives v0.7.0 à v0.8.3 demeurent | chaîne spec_v090 (née spec_v084) ; les archives v0.7.0 à v0.8.4 demeurent | révisé (D180) |
+
+Modifications explicitement rejetées (v0.9.0) : rafraîchir la table R10 au scellage
+de la 0.1.0 — rejeté : LA PIÈCE ne bouge jamais au scellage (fait de carte) ; la
+dette se nomme et se paie à la version suivante, jamais un hot-fix d'un scellé
+(D178). Sceller la 0.1.1 au build sans le run terrain — rejeté : le miroir
+D165/D170 exige le verdict du recoup vert COMME PIÈCE, la porte est de processus.
+Rouvrir le jalon M10 pour la 0.1.1 — rejeté : M10 est clos sur sa balise ; la 0.1.1
+est une version de maintenance à contrat stable (R4), pas une réépreuve du jalon.
+Modifier les notations D172–D175 pour la 0.1.1 — rejeté : le code est
+byte-identique au vécu des onze runs ; les notations décrivent LA PIÈCE (R2/R5).
+
 ## 20. Glossaire
 
 | Terme | Définition |
@@ -1551,6 +1592,7 @@ le run terrain vert recoupé.
 
 | Version | Date | Contenu |
 |---|---|---|
+| v0.9.0 | 11 nov. 2026 | Révision de consolidation du programme d'après M10 (D178/D179) : LE JALON M10 — le test grandeur nature « Loupe » — est FRANCHI (l'application NÉE ENTIÈREMENT DE LA MÉTHODE : onze runs terrain, onze défauts nommés, onze retouches documentées, LA VITRINE VIVANTE chez son utilisateur, le onzième run recoupé 39/39 — la balise `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE, la dette de la carte soldée par la régénération des notations, la cristallisation 26 × 10/10, l'anti-rollback ARMÉ) : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179) : la version `0.1.1-dev.1` COMMANDÉE — la dette [R10-PÉRIMÉE] (17 sommes de l'ère dev.5) SOLDÉE À LA NAISSANCE (la pièce née de la recomposition, le qword porté 0x00010101, 0 octet de code changé — R4/R7), le kit 0.1.1-dev.1 déposé au coffre /test, LE DOUZIÈME RUN ATTENDU (la balise `loupe 0.1.1` sur le vert recoupé, le miroir D165/D170). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.8.2 | 9 nov. 2026 | SECONDE RÉVISION DE TERRAIN DU TGN (Entrées 201–206) : le run M10-(e) REFUSÉ TROIS FOIS, CHAQUE REFUS NOMMÉ — dev.1 puis dev.2 du refus du chargeur 0xc000007b (l'oubli du BASERELOC, puis la table nécessaire mais PAS suffisante), puis LE PAS DÉCISIF : **LE VRAI CHARGEUR DE WINDOWS A CARTOGRAPHIÉ dev.3 — la première fois au terrain, l'enveloppe prouvée de la lignée DEMEURE NORME DE FAIT** — et LE TÉMOIN A NOMMÉ AU T0 [CADRE-NÉ] : le CADRE .data pas né poignée INVALIDE, l'initialiseur du build (le sentinel à +8 — UNE TAILLE CADRE_POIGNEE prise pour un offset — au lieu de +528, la chaîne des tailles du plan ; le zéro aurait été UNE SESSION FANTÔME au premier ouvrir()) ; LA RETOUCHE dev.4 : l'initialiseur .data devient LE MIROIR EXACT du CADRE_VIERGE du harnais (l'offset CALCULÉ, jamais gravé de tête), LE GARDE EST GUÉRI (le validateur du build validait à +8 — la même constante fautive : un garde blessé par le défaut qu'il croyait garder ne garde rien ; il relit désormais LE MÊME miroir, la comparaison ENTIÈRE : le .data des 0x12000 octets relu à l'octet près) ET le scénario relit LE .data ENTIER contre le miroir. LES ENSEIGNEMENTS CONSIGNÉS : LE CONTRÔLE DÉRIVE DU PLAN, JAMAIS DE LA PIÈCE QU'IL CONTRÔLE ; l'initialiseur de l'image est LE MIROIR de l'état de naissance prouvé par le harnais. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.8.1 | 9 nov. 2026 | RÉVISION DE TERRAIN DU TGN (Entrées 201–205) : la cérémonie d'ère PASSÉE SUR PIÈCES (le garde à QUATORZE arbres, la dette D166/D171 soldée, la remise du développeur installée au coffre /test) ; le build `loupe.exe 0.1.0-dev.1` NÉ (la carte génération 13, le verrou croisé 26/26, les trois harnais verts au geste du build) ; LE RUN TERRAIN REFUSÉ DEUX FOIS par le VRAI chargeur Windows — 0xc000007b au geste de cartographie : dev.1 (l'oubli du BASERELOC minimal, l'Entrée 204) puis dev.2 (la table nécessaire mais PAS suffisante — l'image sortait de l'enveloppe des HUIT artefacts de la lignée : le trou de page 0x3000-0x4000, le BSS massif .data, le sous-système GUI) ; LA RETOUCHE dev.3 : l'image ramenée DANS l'enveloppe prouvée (plus de trou, plus de BSS — aucune adresse scellée ne bouge) ET LE KIT PORTE SA CASCADE DIAGNOSTIQUE (les axes reconstitués UN À UN sur des copies éphémères %TEMP%, le VRAI chargeur NOMME l'axe au témoin ; le mode d'erreur coupe les boîtes bloquantes — le refus est nommé PAR LE TÉMOIN). L'enseignement consigné : l'enveloppe prouvée de la lignée devient NORME DE FAIT pour l'éditeur PE — ce que le terrain n'a pas prouvé, le build ne l'ose pas ; un échec nommé vaut plus qu'un vert muet. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.8.0 | 8 nov. 2026 | Révision de consolidation du programme d'après M9 (D170/D171) : le jalon M9 — TLS 1.3 pur en blocs scellés — est FRANCHI (les 28 blocs notés-mesurés-prouvés, la finale `1.0.0` scellée sur recoup exigé comme pièce, LA SESSION RÉELLE la ligne applicative chiffrée avec un serveur réel — D170) ; LE TEST GRANDEUR NATURE ouvert (D171) : le jalon M10 porte « Loupe », l'éditeur hexadécimal au panneau d'empreintes — la couche I de 18 spécifications (D172) et les QUATRE chantiers de notation accomplis (D173–D175 : les 18 blocs notés-mesurés-prouvés, la table de routage de loupe-09 étendue) ; la dette du quatorzième arbre nommée (la cérémonie d'ère du TGN précède le build) ; le projet fils COFFRE-FORT dégelé en parallèle. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
@@ -1565,6 +1607,6 @@ le run terrain vert recoupé.
 | v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne LA SECONDE RÉVISION DE TERRAIN du TGN (v0.8.2, Entrées 201–206) : jalons M0 à M9 franchis sur validations terrain (balises finales 0.2.0, 0.9.0 et `1.0.0` — la session réelle la ligne applicative chiffrée), le programme de souveraineté cryptographique accompli (axes 2-3-4, D133) ; LE TEST GRANDEUR NATURE (M10, D171) porte « Loupe » — la cérémonie d'ère PASSÉE (le sceau de l'Intention porte QUATORZE arbres), le build `loupe` NÉ, et LE TERRAIN A REFUSÉ LE RUN TROIS FOIS — chaque refus NOMMÉ : deux refus du chargeur (0xc000007b — dev.1 sans BASERELOC, dev.2 : la table nécessaire mais PAS suffisante), puis LE PAS DÉCISIF : le VRAI chargeur A CARTOGRAPHIÉ dev.3 (l'enveloppe prouvée de la lignée DEMEURE) et LE TÉMOIN A NOMMÉ [CADRE-NÉ] — l'initialiseur du build avait posé le sentinel à +8 (une taille prise pour un offset) au lieu de +528 : la retouche dev.4 fait de l'initialiseur .data LE MIROIR EXACT du CADRE_VIERGE du harnais, guérit LE GARDE (le validateur relit le même miroir — le contrôle dérive du plan, jamais de la pièce qu'il contrôle), et le scénario relit LE .data ENTIER contre le miroir. Les profils additionnels après M7 restent volontairement hors du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).
+La présente version consigne LA RÉVISION DE CONSOLIDATION DU PROGRAMME D'APRÈS M10 (v0.9.0, D178/D179) : les jalons M0 à M10 sont TOUS franchis sur validations terrain (balises finales 0.2.0, 0.9.0, `1.0.0` et `loupe 0.1.0` — la session réelle la ligne applicative chiffrée, la création l'application née de TRIADE vécue chez son utilisateur), le programme de souveraineté cryptographique accompli (axes 2-3-4, D133) ; LE JALON M10 est l'épreuve de la MÉTHODE ENTIÈRE — onze runs terrain, onze défauts nommés, onze retouches documentées : chaque défaut du kit ou de la pièce nommé sur pièces (le chargeur, le CADRE-NÉ, la classe des arguments pile, L'OMBRE, le HINSTANCE, l'IAT relogée, les OFT au pas DWORD, le POINTEUR du FreeLibrary, le RET-NU, le SONDE-EXE), chaque enseignement consigné (le contrôle dérive du plan, jamais de la pièce qu'il contrôle ; l'échec nommé vaut plus que le vert muet ; la vitrine vivante prouve la liaison mieux que toute sonde) — et la balise `loupe 0.1.0` scellée sur le onzième run recoupé 39/39 : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION. Le programme d'après M10 est ouvert à la commande du développeur : la version 0.1.1-dev.1 (D179) porte la dette [R10-PÉRIMÉE] soldée à la naissance — le douzième run attendu scellera la balise `loupe 0.1.1` sur le vert recoupé. Les profils additionnels après M7 restent volontairement hors du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).
 
 

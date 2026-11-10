@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""carte_m10.py — Couche C du domaine loupe : carte, GÉNÉRATION 16 (lignée
-D80) — LA GÉNÉRATION RÉELLE DE LA PIÈCE dev.8 (la dette de l'Entrée 211
-soldée : les générations 14/15/16 des retouches dev.6/7/8, nées de patchs
-en place hors de la chaîne build_loupe.py, ENFIN régénérées au geste —
-13 → 16, la carte rejoint la pièce que le terrain a vécue).
+"""carte_m10.py — Couche C du domaine loupe : carte, GÉNÉRATION 17 (lignée
+D80) — LA VERSION 0.1.1 COMMANDÉE PAR LE DÉVELOPPEUR (D178/D179 : la dette
+[R10-PÉRIMÉE] soldée à la naissance — la porte R10 de la pièce rafraîchie
+à la VÉRITÉ des blocs ; la génération 16 demeure celle de la balise
+`loupe 0.1.0` SCELLÉE sur le onzième run, la pièce 054de960… vivant au git
+et au coffre — la monotonie R10 ouvre la nouvelle ère, jamais elle ne
+referme l'ancienne).
 
 Même format que les cartes M0-M9 (docs/FORMAT_CARTE.md) — quatre fragments
 chiffrés XChaCha20-Poly1305, clés dérivées de la phrase maîtresse par
 Argon2id puis HKDF, empreinte racine SHA-256, signature Ed25519 — avec les
 spécificités du domaine loupe (M10, le TGN « Loupe ») :
 
-  - GÉNÉRATION 16 : les 18 blocs i110001..18 (le domaine `loupe` — l'éditeur
+  - GÉNÉRATION 17 : les 18 blocs i110001..18 (le domaine `loupe` — l'éditeur
     hexadécimal au panneau d'empreintes, le test grandeur nature D171) et les
     HUIT hérités embarqués À LEURS ADRESSES SCELLÉES (b20001/02/07 la
     minilibc M1 · d40003 la boucle démo · h100001..04 la famille sha M9) ;
@@ -24,16 +26,14 @@ spécificités du domaine loupe (M10, le TGN « Loupe ») :
     e9cd8c549485…) ; le TÉMOIN NE BOUGE PAS d'une ère à l'autre ;
   - charger_secrets est FAIL-CLOSED (D144) : aucun secret n'est jamais
     généré ici (miroir carte_m5/carte_m8/carte_m9) ;
-  - LE BUILD du domaine : loupe.exe 0.1.0-dev.8 (LA PIÈCE VÉCUE aux
-    dixième et onzième runs — l'Entrée 217 : T0→T7 TOUT VERT, la vitrine
-    vivante 0 ET 0, LE VERT TIENT ENTIER ; le plan PORTÉ à l'époque
-    dev.8 : [HINSTANCE-PEB] l'entrée réécrite · [D54-QUATRIÈME] l'IAT
-    relogée à 0x3100 en QUATRE plages séparées par NULL + [EAX-SANS-SIGNE]
-    les 20 rendus au 64 bits · [OFT-QWORD] les QUATRE OFT au pas DWORD —
-    la dette de la carte [l'Entrée 211] SOLDÉE : le build recompose LA
-    PIÈCE OCTET POUR OCTET, sha256 054de960…) ; le geste de BUILD, jamais
-    scellage — la balise `loupe 0.1.0` se scellera PAR FAIT DE CARTE sur
-    le vert recoupé (M10-(e) : la porte est de processus).
+  - LE BUILD du domaine : loupe.exe 0.1.1-dev.1 (LA VERSION COMMANDÉE —
+    D178/D179 : la dette [R10-PÉRIMÉE] soldée à la naissance, la porte R10
+    rafraîchie à la vérité des blocs, le qword porté 0x00010101 ; le code
+    BYTE-IDENTIQUE au vécu des onze runs de l'ère 0.1.0 [R4 : contrat
+    stable, R7 : adresses intactes]) ; le geste de BUILD, jamais scellage
+    — la balise `loupe 0.1.1` se scellera PAR FAIT DE CARTE sur le vert
+    recoupé du DOUZIÈME run (le miroir D165/D170 : la porte est de
+    processus).
 
 Les secrets ne sont jamais committés (chmod 600, .gitignore).
 """
@@ -60,10 +60,11 @@ KEYS_DIR = os.path.join(_RACINE, ".keys")
 CARTE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "carte")
 
 FRAGMENTS = ("frag-loc", "frag-con", "frag-prf", "frag-bld")
-GENERATION = 16   # la génération du domaine loupe (les retouches dev.1 →
-                   # dev.8 ; 13 = dev.5, 14 = dev.6, 15 = dev.7, 16 = dev.8 —
-                   # LA GÉNÉRATION RÉELLE DE LA PIÈCE, la dette de l'Entrée
-                   # 211 soldée : le plan porté, la carte rejoint la pièce)
+GENERATION = 17   # la génération du domaine loupe (13 = dev.5, 14 = dev.6,
+                   # 15 = dev.7, 16 = dev.8 [la balise 0.1.0 SCELLÉE sur le
+                   # onzième run], 17 = 0.1.1-dev.1 — LA VERSION COMMANDÉE
+                   # [D178/D179] : la dette [R10-PÉRIMÉE] soldée, la table
+                   # rafraîchie à la vérité des blocs, le code identique)
 
 # Sel Argon2id propre au domaine (public par conception — la phrase
 # maîtresse est le secret ; le sel fixe garantit la dérivation reproductible).
@@ -82,14 +83,17 @@ ALGO_SIGNATURE = "ed25519"
 ALGO_CHIFFREMENT = "xchacha20poly1305"
 PROFILS = "x86-64-win11-pe"
 
-VERSION_DEV = "0.1.0-dev.8"     # la pièce vécue aux 10e/11e runs (l'Entrée
-                                 # 217 : LE VERT TIENT ENTIER — la triple
-                                 # retouche des Entrées 209/210/214 portée
-                                 # au plan, la dette de l'Entrée 211 soldée)
-VERSION_FINALE = "0.1.0"        # la finale (le miroir layout.VERSION_FINALE
-                                # 0x00010000 — le scellage est un fait de
-                                # carte : la 0.1.0 attend le run terrain vert
-                                # recoupé M10-(e), jamais un build ici)
+VERSION_DEV = "0.1.1-dev.1"     # la version commandée par le développeur
+                                 # (D178/D179 — l'anti-rollback R6 s'ouvre à
+                                 # la monotonie R10 : 0.1.1-dev.1 > 0.1.0
+                                 # scellée) : la dette [R10-PÉRIMÉE] soldée
+                                 # à la naissance — la porte R10 de la pièce
+                                 # rafraîchie à la vérité des blocs, le code
+                                 # byte-identique au vécu des onze runs (R4)
+VERSION_FINALE = "0.1.1"        # la finale (le miroir layout.VERSION_FINALE
+                                # 0x00010100 — le scellage est un fait de
+                                # carte : la 0.1.1 attend le run terrain vert
+                                # recoupé DU DOUZIÈME RUN, jamais un build ici)
 
 
 class ErreurCarte(Exception):

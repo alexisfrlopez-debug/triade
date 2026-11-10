@@ -18,36 +18,25 @@ la carte du domaine portera les i11xxxx dès sa première génération."""
 
 # --- La balise de la lignée (charte § 6 : geste de BUILD, jamais scellage) ------
 
-VERSION_DEV = 0x00010008           # loupe 0.1.0-dev.8 (LA TRIPLE RETOUCHE
-                                   # DES ENTRÉES 209/210/214, la pièce que le
-                                   # terrain A VÉCUE aux dixième et onzième
-                                   # runs — dev.6 [HINSTANCE-PEB] : r12 =
-                                   # GetModuleHandleW(NULL) LE VRAI MODULE,
-                                   # le slot importé mais jamais câblé de
-                                   # dev.5 ; dev.7 [D54-QUATRIÈME] : L'IAT
-                                   # ENTIÈRE relogée à 0x3100 — QUATRE plages
-                                   # FirstThunk SÉPARÉES PAR NULL, préremplies
-                                   # des RVA de noms (le motif D54 au complet),
-                                   # descripteurs dirigés, dir[12] =
-                                   # (0x3100, 0x148), les 63 sites d'appel
-                                   # repointés [disp32, aucune instruction ne
-                                   # change de taille], les vieilles plages
-                                   # VIDÉES — ET [EAX-SANS-SIGNE] : les 20
-                                   # rendus négatifs étendus au 64 bits par
-                                   # « push imm8 ; pop rax » [5 → 5 octets],
-                                   # les deux passages d'erreur de loupe-01
-                                   # passés movsxd ; dev.8 [OFT-QWORD] : les
-                                   # QUATRE OFT compactés au pas DWORD
-                                   # [10·18·6·3 + terminateurs] — le chargeur
-                                   # lisait OFT[1]=0 et ne résolvait qu'une
-                                   # fonction par DLL ; le miroir du format
-                                   # 0.1.0-dev.8 == 0x00010008 ; LA DETTE DE
-                                   # LA CARTE (l'Entrée 211) SOLDÉE AU LABO :
-                                   # le plan porte la pièce, la carte
-                                   # régénérée à sa génération réelle 16)
-VERSION_FINALE = 0x00010000        # loupe 0.1.0 (le scellage sera un fait de
+VERSION_DEV = 0x00010101           # loupe 0.1.1-dev.1 (LA VERSION COMMANDÉE
+                                   # PAR LE DÉVELOPPEUR — D178/D179 : la dette
+                                   # [R10-PÉRIMÉE] soldée À LA NAISSANCE — la
+                                   # porte R10 rafraîchie à la VÉRITÉ des
+                                   # blocs [les 17 sommes de l'ère dev.5 que
+                                   # les retouches des Entrées 210/214
+                                   # changèrent sans rafraîchir la table : la
+                                   # recomposition dit la vérité DEPUIS
+                                   # toujours, la 0.1.1 la VIT], le qword
+                                   # porté 0x00010008 → 0x00010101 — LE CODE
+                                   # BYTE-IDENTIQUE au vécu des onze runs
+                                   # [R4 : le contrat stable, R7 : les
+                                   # adresses intactes], la pièce 0.1.0
+                                   # [054de960…, la scellée du onzième run]
+                                   # demeurant au git et au coffre ; le miroir
+                                   # du format 0.1.1-dev.1 == 0x00010101)
+VERSION_FINALE = 0x00010100        # loupe 0.1.1 (le scellage sera un fait de
                                    # carte — le miroir D165/D170, sur le run
-                                   # terrain vert recoupé)
+                                   # terrain vert recoupé du DOUZIÈME run)
 
 # --- La table des SEPT verdicts du domaine (l'échec nommé, charte § 9) ---------
 
