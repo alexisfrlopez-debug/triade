@@ -8267,3 +8267,34 @@ Work Log:
   fence.i / terrain tiers), la cérémonie du séquestre D183 (le kit VERT,
   le LISEZMOI pas à pas), la cérémonie d'ère, le recrutement de
   l'annotateur R2, le second domaine à la vraie commande.
+
+
+Task ID: 139
+Agent: Z.ai (agent principal)
+Task: LE MANUSCRIT v0.15.0 INTROUVABLE AU COFFRE — le constat du
+développeur, le diagnostic (le PDF intègre mais invisible : la convention
+docs/ rompue par la chaîne v0.15.0, le coffre ne portait que les zips), la
+réparation double (docs/ rétablie + le dépôt en clair à la racine).
+
+Work Log:
+- LE DIAGNOSTIC : le PDF INTÈGRE aux trois endroits (sha256 e8e075df… ==
+  l'empreinte consignée : scripts/manuscrit_v150/main.pdf, le zip
+  soumission, le zip complet) mais INVISIBLE (le nom générique main.pdf de
+  la chaîne v0.15.0 ; au miroir /docs les manuscrits s'arrêtaient à
+  v0.14.0 ; à la racine du coffre le manuscrit n'existait que dans les
+  zips).
+- LA CONVENTION RÉTABLIE : docs/TRIADE_manuscrit_v0.15.0.pdf (copie
+  VÉRIFIÉE, sha256 == consigné avant le geste) — le manuscrit TROUVABLE
+  au miroir à côté de ses cinq aînés.
+- LE DÉPÔT EN CLAIR : TRIADE_manuscrit_v0.15.0.pdf (181 335 o) à la
+  racine du coffre (scripts/deposer_manuscrit_v150.py : empreinte
+  recoupée avant, doublon divergent refusé, md5 6dd1d74c… recoupé après).
+- LA RÈGLE (D197 étendue) : à la prochaine édition, l'ancien manuscrit en
+  clair sera archivé racine → /ARCHIVE (la racine ne porte que les
+  versions courantes) ; un livrable de lecture porte SON NOM de version,
+  jamais un nom de chaîne interne.
+- Frontières : aucun zip touché, aucun octet du PDF modifié, aucune pièce
+  scellée touchée.
+- SUITE : au développeur — les trois runs matériels, la cérémonie du
+  séquestre D183, la cérémonie d'ère, la réplication (l'annotateur, le
+  second domaine).
