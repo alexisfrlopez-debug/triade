@@ -8177,3 +8177,26 @@ Work Log:
   recoupé).
 - SUITE : le sixième fichier (v0.15.0 — ysddxpk0o : le modèle formel
   non borné, les kits matériels, la réplication).
+
+Task ID: 136
+Agent: Z.ai (agent principal)
+Task: LA v0.15.0 OUVERTE par les faits exécutables — les constats, les
+trois kits de mesure matérielle EN ATTENTE, l'état de la réplication ;
+la suite (preuves non bornées, raffinement, statuts) nommée à D196.
+
+Work Log:
+- LE CONSTAT : Tamarin ET ProVerif ABSENTS (re-vérifié au geste) — la
+  déviation consignée, la voie de l'invariant inductif (époques non
+  bornées) la route de P1-P4.
+- LES TROIS KITS (scripts/kits_mesure_v150/) : le dudect temps réel
+  (RDTSC/QPC, affinité, turbo, N≥60, |t|>5, les crypto par pièce
+  scellée) ; le fence.i sur SILICIUM (ce que qemu ne pouvait pas) ;
+  le terrain tiers Loupe (le scénario intégral, l'autre machine).
+  EN ATTENTE — jamais un chiffre fabriqué.
+- LA RÉPLICATION : la grille D189 INCHANGÉE, le second annotateur À
+  RECRUTER (consigné), le second domaine EN ATTENTE d'une vraie
+  commande.
+- LE GARDE : 14/14 VERT au geste — aucun artefact scellé touché.
+- SUITE (D196) : les preuves non bornées, les tests de raffinement,
+  les bornes étendues, les statuts systématiques, les documents, les
+  zips, l'archivage ysddxpk0o — À LA CONTINUATION.

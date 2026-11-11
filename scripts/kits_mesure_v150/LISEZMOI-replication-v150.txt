@@ -1,0 +1,19 @@
+LA RÉPLICATION (v0.15.0, point 3) — L'ÉTAT NOMMÉ
+=================================================
+
+LA GRILLE T/X : finalisée à D189 (les cinq classes terrain T1-T5 == les
+cinq familles du RQ3, les trois classes laboratoire X1-X3, la double
+annotation, le κ de Cohen ≥ 0,61, les critères d'acceptation
+pré-enregistrés) — INCHANGÉE (la commande : « inchangés »).
+
+LE SECOND ANNOTATEUR : À RECRUTER (le statut consigné) — aucun annotateur
+indépendant n'est disponible au laboratoire ; le κ sera calculé dès les
+deux jeux d'annotation disponibles.
+
+L'AXE « SECOND DOMAINE » : EN ATTENTE — réalisable au laboratoire SEULEMENT
+si un second domaine applicatif est commandé par le développeur (le
+protocole exige que le domaine soit une vraie demande, jamais un exercice
+démonstratif) ; le kit est prêt (la grille, les critères, la méthode).
+
+L'AXE « SECOND DÉVELOPPEUR » (R1) : au développeur — le dépôt public est
+la pièce, la passation D13/D141 le modèle.

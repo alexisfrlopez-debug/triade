@@ -1,0 +1,51 @@
+LISEZMOI — LES TROIS KITS DE MESURE MATÉRIELLE (v0.15.0, la commande ysddxpk0o)
+===============================================================================
+
+ÉTAT GLOBAL : TROIS KITS PRÉPARÉS AU LABORATOIRE, EN ATTENTE DES RUNS
+TERRAIN (le développeur). Aucun résultat matériel n'existe : la commande
+est explicite (« marquer "en attente" tant que non exécutés, ne jamais
+fabriquer de chiffre »). L'écart fondateur : Tamarin ET ProVerif sont
+ABSENTS du laboratoire (constat re-vérifié au geste) — la voie de
+l'invariant inductif dans l'explorateur (un nombre NON BORNÉ d'époques)
+est la route consignée pour les preuves P1-P4, À LA CONTINUATION.
+
+LE KIT 1 — DUDECT TEMPS RÉEL (les familles crypto sur la machine Windows)
+  L'objet : mesurer le temps d'HORLOGE réel (le complément du t=0
+  structurel de v0.11.0 — la limite nommée depuis deux éditions).
+  Le protocole : RDTSC (ou QueryPerformanceCounter), l'affinité posée à
+  UN cœur (SetThreadAffinityMask), le turbo désactivé si le BIOS le
+  permet (consigner l'état EFFECTIF), N ≥ 60 mesures par classe
+  (secret-fixe / secret-aléatoire), le t de Welch au seuil |t| > 5 — les
+  mêmes paramètres que l'édition structurelle, la métrique change.
+  Les cibles : tls13-01..06 (sha/hmac/hkdf), tls13-13/14 (x25519),
+  tls13-15..19 (aes-gcm), loupe-06 (md5) — via loupe.exe scellé
+  (la pièce 0.1.1, c1115105…) et proxy.exe (446279f3…).
+  Les témoins attendus : le journal de run (les comptes par classe, le
+  t, la config CPU) — renvoyés au coffre /test.
+
+LE KIT 2 — LE PATCH À CHAUD RISC-V SUR MATÉRIEL PHYSIQUE (fence.i)
+  L'objet : la sémantique I-cache de fence.i sur SILICIUM (la
+  requalification M7 de v0.13.0 : prouvée sous qemu TCG, NON prouvée
+  sur matériel — jamais revendiquée).
+  Le protocole : la cible RISC-V physique (une carte SBC ou un serveur
+  RV64), le démonstrateur du M7 (la bascule pendant le trafic, la
+  transcription octet pour octet), fence.i exécuté sur le VRAI cœur ;
+  les témoins : la transcription, le code de sortie, le journal
+  dmesg — recoupés par empreintes.
+  La référence croisée : le run M7 vécu (WSL2/qemu, l'Entrée 155) —
+  le kit mesure CE QUE L'ÉMULATION NE POUVAIT PAS.
+
+LE KIT 3 — TERRAIN TIERS POUR LOUPE (une seconde machine Windows)
+  L'objet : Loupe sur une AUTRE machine (un autre build, une autre
+  locale) — la généralisation au-delà du poste du développeur.
+  Le protocole : le kit loupe-kit-13 (le modèle établi), la machine
+  tierce propre (VM ou poste de confiance), le scénario T0→T7 + S0
+  INTÉGRAL (le même critère que les douze runs), les témoins signés
+  (les empreintes des pièces, le code de sortie, la vitrine).
+  Les témoins attendus : temoin-loupe.txt + temoin-vitrine.txt +
+  VERDICT — au coffre /test, recoupés par le labo.
+
+LA CONSIGNATION : chaque kit exécuté fera l'objet d'une entrée de
+journal avec ses témoins recoupés — jamais avant le run, jamais sans
+pièces. Les empreintes des artefacts scellés (loupe.exe c1115105…,
+proxy.exe 446279f3…) demeurent les mêmes — le garde 14/14 le constate.
