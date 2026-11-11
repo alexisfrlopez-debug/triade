@@ -1,0 +1,167 @@
+===== jalons.csv =====
+jalon,capacite,date,balise,sources,preuve_labo,preuve_terrain
+M0,"Artefact chain (notation, bytes, PE, execution)",2026-10-26,0.1.0,"Entrées 1-13, D26",round-trip 100\%; executable < 4 KiB,Windows 11 real machine execution
+M1,Reusable blocks (mini-libc),2026-10-26,0.2.0,"Entrées 14-20, D32",oracle 21/21; first crystallisation,terrain line « TRIADE M1 : minilibc 21/21 OK »
+M2,Hot patching,2026-10-27,0.3.0,"Entrées 21-38, D43",conformity 68/68; 8 instrumented iterations,"live patch + rollback on real machine, zero post-patch regression"
+M3,Untrusted inputs,2026-10-28,0.4.0,"Entrées 39-64, D72-D74",$10^6$ fuzzed cases x2 seeds; 161 conformity controls,transparent proxy for curl validated 6x on terrain
+M4,Encrypted tunnel (Schannel),2026-10-29,0.5.0,"Entrées 66-90, D104",560-case SSPI scenario oracle x4 seeds; 12 mutations caught,run 17-H: HTTPS transit + clean failure on invalid certificate
+M5,Complete tool (VM interception),2026-11-04,0.6.0,"Entrées 100-143, D148",per-build fingerprints active,"browser flow intercepted in isolated VM (run e4, criterion (b) D136)"
+M6,Cross-OS portability (ELF64),2026-11-05,0.7.0,"Entrées 144-149, D154",7/7 conformity suite; layer-I diff zero,"WSL2 terrain run on developer kernel distinct from lab, 22/22 recoup"
+M7,Cross-ISA portability (RISC-V),2026-11-05,0.8.0,"Entrées 150-155, D155",round-trip 100 % on new ISA; fence.i patch,"terrain run green, 29/29 recoup on crossed pieces"
+M8,Direct syscalls (domain sys),2026-11-05,0.9.0,"Entrées 156-164, D160-D165",61 harness greens; 131 socket-socle controls,"run on real ntdll: 35 greens/0 failure, hooked-stub refusal -4, 30/30 recoup"
+M9,Pure TLS 1.3 (domain tls13),2026-11-07,1.0.0,"Entrées 166-194, D166-D170",28 blocks; 589 structural locks; handshake 54/54 x3 seeds; cross-lock 86/86,REAL session with a real server; sealed on terrain run recoup 34/34
+M10,Full-scale test: the Loupe application,2026-11-11,loupe 0.1.0 / 0.1.1,"Entrées 195-222, D171-D181",18 blocks; 159 controls x3 seeds; cross-lock 26/26; seal guard 14/14,12 terrain runs; 11 named defects; showcase alive (0/0) runs 10-12; seal on recoup 39/39
+
+===== budgets.csv =====
+operation,cible_tokens,mesure_tokens,source
+Locate a block,64,51,"D31/D34, M1 measurement (cl100k_base)"
+Edit a block,3000,719,"D31/D34, M1 measurement"
+Add a block,6000,1088,"D34, M1 (draft 1086, +2 drift re-measured)"
+Whole lineage (specs),-,8774,"D34, generation-1 card"
+Whole lineage (drafts),-,3973,D34
+Whole lineage (delivered notations),-,5099,D34
+Whole lineage (TOTAL),-,13873,D34
+
+===== oracles.csv =====
+jalon,instrument,volume,source
+M1,mini-libc oracle,21/21,D32; tag 0.2.0
+M2,echo conformity + differential,"68/68; 8 iterations, 8 defect classes",D43; tag 0.3.0
+M3,fuzz campaign + profile conformity suite,"1,000,000 cases x2 seeds; 161 controls",D72/D73
+M4,SSPI scenario oracle + per-block differential,"560 cases x4 seeds; 10,000 fuzzed cases x2 seeds per block; 165k leaf differentials",D68-D93
+M5,build fingerprint registry + verifier,per-build sha256 registers,"D134, D148"
+M6,profile conformity suite (Linux),7/7; lab recoup 22/22,D154
+M7,RISC-V round-trip + cross-profile lock,100 % round-trip; 29/29 recoup,D155
+M8,sys harness on synthetic ntdll fixtures,61 greens; 131 socle controls; 30/30 recoup,D160-D165
+M9,tls13 structural oracle + handshake harness + cross-lock,589 structural locks; handshake 54/54 x3 seeds; cross-lock 86/86; 560+365+131 replayed,D166-D170
+M10,Loupe: 3 Unicorn harnesses + structural oracle + seal guard,159 controls x3 seeds (61+53+45); 121 structural locks; cross-lock 26/26; seal guard 14/14; crystallisation 26 x 10/10,D172-D181
+
+===== runs_loupe.csv =====
+run,kit,piece_sha256,date,verdict,defaut_nomme,retouche,entree
+1,dev.1,f07dd2cf,2026-11-09,loader refusal 0xc000007b,"Missing BASERELOC: ASLR image without relocation table (lab harness parses, never loads)","dev.2: minimal 12-byte BASERELOC, 7 bytes in 6 ranges",204
+2,dev.2,a8a65ed4,2026-11-09,same refusal 0xc000007b,Necessary-not-sufficient: page hole 0x3000-0x4000 + massive BSS outside the proven envelope of 8 prior artifacts,"dev.3: image within envelope (VS==RS, no BSS)",205
+3,dev.3,b494ff90,2026-11-09,loader mapped the image (decisive step); T0 witness failed,[CADRE-NE]: .data initializer wrong (sentinel at +8 - a SIZE read as an offset instead of +528),"dev.4: initializer = exact mirror of harness CADRE_VIERGE; guard healed (control derives from plan, never from the piece it guards)",206
+4,dev.4,388d4680,2026-11-09,T0 all green; T1 named -6; showcase died instantly,Stack-argument class: msx64 args 5+ at home space instead of [rsp+0x20]+ (loupe-01/05/06) + SSE alignment (loupe-10/11),"dev.5: slots fixed; msx64 ABI audit born at build (static, catches SSE class); falsification control V7 added",207
+5,dev.5,6f830f9c,2026-11-09,first run acquitting the piece; T1 named -7 VERROUILLE,"[SESSION]: kit itself - scenario-as-loader holds loupe.exe as a live section, Windows refuses gle 32 to open it for write",dev.6 KIT-ONLY (artifact unchanged): byte-copy shadow temoin-session.bin,208
+6,dev.6,6f830f9c,2026-11-09,two defects from one witness,False save error + missing showcase thread; [HINSTANCE-PEB]: hInstance read from PEB instead of GetModuleHandleW(NULL),piece dev.6 (r12 = GetModuleHandleW(NULL)) + kit dev.7,209
+7,dev.7,388d4680,2026-11-09,T0-T5 all green (save proven on terrain); then two defects,[EAX-SANS-SIGNE] at kit (unsigned 32-bit reads of negative codes) + [D54-QUATRIEME] at piece (4 contiguous FirstThunk ranges without NULL separators),"piece dev.7 (IAT relocated 0x3100, 4 ranges separated by NULL, 63 call sites repointed) + kit dev.8",210
+8,dev.8,388d4680,2026-11-09,T0-T7 all green for the FIRST time (functional contract fully proven),Probe died on its own Python; showcase still mute (5th death),kit dev.9 (probe made load-bearing),213
+9,dev.9,388d4680,2026-11-09,T0-T7 all green second time; 6th showcase death named by system then by lab,[OFT-QWORD]: 4 OFT tables at QWORD stride instead of DWORD - the loader walks 10.18.6.3 entries at DWORD stride; first cause of ALL deaths found on the piece bytes,"piece dev.8 (89 bytes in 52 ranges, sealed 0.1.0 candidate) + kit dev.10",214
+10,dev.11,054de960,2026-11-09,"T0-T7 all green third time; SHOWCASE ALIVE FIRST TIME (0 and 0, no WER)","[FREE-SANS-TYPE] at kit: FreeLibrary called without argtypes, 64-bit HMODULE truncated to C int - ArgumentError killed cascade 205","kit dev.12 (argtypes=[c_void_p], except Exception widened, probe armored try/finally)",216
+11,dev.12,054de960,2026-11-10,T0-T7 all green 4th time; cascade 205 complete 1st time; showcase alive 2nd time; green holds entire,[SONDE-EXE] named by lab on pieces: structural false negative - library loader NEVER resolves an EXE's imports; liaison proven by the living showcase,"seal loupe 0.1.0 on recouped run 39/39 (D178): notation debt paid (587->0), crystallisation 26x10/10, anti-rollback armed",217
+12,0.1.1-dev.1,c1115105,2026-11-11,"T0-T7 all green 5th time; cascade 205 2nd time; showcase alive 3rd time (0 and 0, first of piece 0.1.1)",[T0-PERIME] residual named (dev.12-era banner text - no gate touched),"seal loupe 0.1.1 (D181): [R10-PERIMEE] debt paid at birth (17 sums refreshed), card generation 17, artifact intact",222
+
+===== empreintes.csv =====
+artefact,taille,sha256,attendu,conforme,source
+"loupe.exe 0.1.1 (sealed, D181)",127488,c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1,c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1,True,carte loupe tableau-de-bord; D181
+"loupe.exe 0.1.0 (sealed, D178 - run-11 piece)",127488,054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69,054de960c31425d022f6900f27e59bdd82a120b0b3fe543a67e778867e9c7a69,True,recouper_run11_loupe.py; journal line 9240; D178
+"proxy.exe 1.0.0 (sealed, D170)",65024,446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d,446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d,True,D170; tls13 card
+
+===== preuves_v110/mutation.csv =====
+domaine,bloc,octets,mutants,k1_roundtrip,k2_structurel,k3_semantique,k3_crash,vivants,taux_tue_pct,vivants_details
+loupe,loupe-01,389,16,8,5,0,0,3,81.2,"[{""offset"": 97, ""octet"": ""0x00->0x51""}, {""offset"": 323, ""octet"": ""0x0c->0x17""}, {""offset"": 202, ""octet"": ""0xeb->0xe6""}]"
+loupe,loupe-02,296,16,5,11,0,0,0,100.0,[]
+loupe,loupe-03,122,16,2,7,0,0,7,56.2,"[{""offset"": 27, ""octet"": ""0x00->0xd0""}, {""offset"": 59, ""octet"": ""0x00->0xc4""}, {""offset"": 65, ""octet"": ""0x00->0x42""}, {""offset"": 17, ""octet"": ""0x00->0xa1""}]"
+loupe,loupe-04,47,16,6,7,0,0,3,81.2,"[{""offset"": 40, ""octet"": ""0xc0->0xcd""}, {""offset"": 16, ""octet"": ""0xd2->0x3f""}, {""offset"": 14, ""octet"": ""0xd9->0x39""}]"
+loupe,loupe-05,313,16,4,10,0,0,2,87.5,"[{""offset"": 203, ""octet"": ""0x40->0x76""}, {""offset"": 291, ""octet"": ""0xff->0x7f""}]"
+loupe,loupe-06,871,16,7,4,0,5,0,100.0,[]
+loupe,loupe-07,102,16,7,4,0,0,5,68.8,"[{""offset"": 23, ""octet"": ""0x38->0x31""}, {""offset"": 62, ""octet"": ""0x00->0x93""}, {""offset"": 26, ""octet"": ""0xc9->0xe4""}, {""offset"": 17, ""octet"": ""0x10->0x25""}]"
+loupe,loupe-08,271,16,4,7,0,0,5,68.8,"[{""offset"": 228, ""octet"": ""0x20->0x0d""}, {""offset"": 124, ""octet"": ""0x3c->0x5d""}, {""offset"": 142, ""octet"": ""0x4c->0x81""}, {""offset"": 215, ""octet"": ""0xd2->0xc9""}]"
+loupe,loupe-09,1135,16,8,7,0,0,1,93.8,"[{""offset"": 903, ""octet"": ""0x01->0xd9""}]"
+loupe,loupe-10,1622,16,7,7,0,0,2,87.5,"[{""offset"": 1397, ""octet"": ""0x00->0x50""}, {""offset"": 192, ""octet"": ""0xff->0x00""}]"
+loupe,loupe-11,568,16,5,4,0,0,7,56.2,"[{""offset"": 311, ""octet"": ""0x04->0xb7""}, {""offset"": 323, ""octet"": ""0x18->0x5b""}, {""offset"": 12, ""octet"": ""0x40->0x88""}, {""offset"": 469, ""octet"": ""0x00->0xc5""}]"
+loupe,loupe-12,796,16,1,10,0,0,5,68.8,"[{""offset"": 162, ""octet"": ""0x61->0xd9""}, {""offset"": 635, ""octet"": ""0xe1->0xc9""}, {""offset"": 687, ""octet"": ""0xff->0x2d""}, {""offset"": 436, ""octet"": ""0x17->0xb8""}]"
+loupe,loupe-13,126,16,4,11,0,0,1,93.8,"[{""offset"": 115, ""octet"": ""0x20->0x24""}]"
+loupe,loupe-14,983,16,5,4,0,0,7,56.2,"[{""offset"": 753, ""octet"": ""0x00->0xfe""}, {""offset"": 235, ""octet"": ""0x00->0xad""}, {""offset"": 933, ""octet"": ""0x39->0x33""}, {""offset"": 0, ""octet"": ""0x53->0x52""}]"
+loupe,loupe-15,391,16,6,7,0,0,3,81.2,"[{""offset"": 27, ""octet"": ""0x02->0xe2""}, {""offset"": 251, ""octet"": ""0xd0->0xc1""}, {""offset"": 29, ""octet"": ""0x00->0xe1""}]"
+loupe,loupe-16,660,16,2,8,0,0,6,62.5,"[{""offset"": 485, ""octet"": ""0x54->0xea""}, {""offset"": 322, ""octet"": ""0x16->0x4a""}, {""offset"": 568, ""octet"": ""0x00->0x4f""}, {""offset"": 74, ""octet"": ""0x20->0x77""}]"
+loupe,loupe-17,521,16,3,12,0,0,1,93.8,"[{""offset"": 519, ""octet"": ""0xe0->0xcc""}]"
+loupe,loupe-18,163,16,3,13,0,0,0,100.0,[]
+tls13,tls13-01,74,16,4,1,10,1,0,100.0,[]
+tls13,tls13-02,387,16,2,8,4,2,0,100.0,[]
+tls13,tls13-03,139,16,4,9,1,2,0,100.0,[]
+tls13,tls13-04,165,16,10,4,2,0,0,100.0,[]
+tls13,tls13-05,435,16,3,11,2,0,0,100.0,[]
+tls13,tls13-06,151,16,3,7,5,1,0,100.0,[]
+tls13,tls13-07,347,16,6,5,5,0,0,100.0,[]
+tls13,tls13-08,310,16,8,3,5,0,0,100.0,[]
+tls13,tls13-09,54,16,5,3,4,4,0,100.0,[]
+tls13,tls13-10,252,16,7,4,4,1,0,100.0,[]
+tls13,tls13-11,1078,16,5,3,3,5,0,100.0,[]
+tls13,tls13-12,281,16,7,6,0,3,0,100.0,[]
+tls13,tls13-13,2887,16,7,4,2,3,0,100.0,[]
+tls13,tls13-14,23,16,5,9,0,2,0,100.0,[]
+tls13,tls13-15,520,16,7,3,0,6,0,100.0,[]
+tls13,tls13-16,129,16,7,7,0,2,0,100.0,[]
+tls13,tls13-17,162,16,4,6,0,6,0,100.0,[]
+tls13,tls13-18,1076,16,3,5,0,8,0,100.0,[]
+tls13,tls13-19,1163,16,0,9,0,7,0,100.0,[]
+tls13,tls13-20,349,16,4,5,0,0,7,56.2,"[{""offset"": 121, ""octet"": ""0x00->0xec""}, {""offset"": 50, ""octet"": ""0x09->0xcf""}, {""offset"": 19, ""octet"": ""0x00->0x05""}, {""offset"": 9, ""octet"": ""0xc9->0xdd""}]"
+tls13,tls13-21,403,16,8,5,0,0,3,81.2,"[{""offset"": 18, ""octet"": ""0xd2->0x0f""}, {""offset"": 202, ""octet"": ""0x4d->0x45""}, {""offset"": 280, ""octet"": ""0x70->0x44""}]"
+tls13,tls13-22,241,16,4,2,0,0,10,37.5,"[{""offset"": 231, ""octet"": ""0xff->0xa7""}, {""offset"": 14, ""octet"": ""0xcf->0xa6""}, {""offset"": 61, ""octet"": ""0x08->0x75""}, {""offset"": 180, ""octet"": ""0x00->0x0a""}]"
+tls13,tls13-23,532,16,6,8,0,0,2,87.5,"[{""offset"": 380, ""octet"": ""0x28->0xcd""}, {""offset"": 18, ""octet"": ""0xda->0x54""}]"
+tls13,tls13-24,2130,16,6,5,0,0,5,68.8,"[{""offset"": 1780, ""octet"": ""0x01->0xb3""}, {""offset"": 1193, ""octet"": ""0x7f->0x02""}, {""offset"": 904, ""octet"": ""0x00->0xfe""}, {""offset"": 162, ""octet"": ""0x00->0x40""}]"
+tls13,tls13-25,239,16,4,7,0,0,5,68.8,"[{""offset"": 59, ""octet"": ""0x24->0x35""}, {""offset"": 91, ""octet"": ""0x00->0xfd""}, {""offset"": 118, ""octet"": ""0x60->0x33""}, {""offset"": 88, ""octet"": ""0x28->0x18""}]"
+tls13,tls13-26,285,16,5,6,0,0,5,68.8,"[{""offset"": 18, ""octet"": ""0xc0->0xea""}, {""offset"": 72, ""octet"": ""0x24->0x90""}, {""offset"": 113, ""octet"": ""0x00->0xaa""}, {""offset"": 36, ""octet"": ""0x00->0x16""}]"
+tls13,tls13-27,2975,16,4,3,0,0,9,43.8,"[{""offset"": 2844, ""octet"": ""0xfe->0x15""}, {""offset"": 298, ""octet"": ""0x00->0x5f""}, {""offset"": 1096, ""octet"": ""0x58->0x77""}, {""offset"": 2159, ""octet"": ""0x00->0xda""}]"
+tls13,tls13-28,144,16,4,7,0,0,5,68.8,"[{""offset"": 51, ""octet"": ""0xda->0x30""}, {""offset"": 26, ""octet"": ""0x11->0x0a""}, {""offset"": 48, ""octet"": ""0xc8->0x02""}, {""offset"": 75, ""octet"": ""0x34->0x92""}]"
+sys,sys-01,6,16,10,6,0,0,0,100.0,[]
+sys,sys-02,293,16,8,7,0,0,1,93.8,"[{""offset"": 289, ""octet"": ""0xff->0xbc""}]"
+sys,sys-03,164,16,5,6,0,0,5,68.8,"[{""offset"": 56, ""octet"": ""0x24->0x84""}, {""offset"": 34, ""octet"": ""0xc0->0xe0""}, {""offset"": 130, ""octet"": ""0xff->0x9b""}, {""offset"": 48, ""octet"": ""0x4c->0x36""}]"
+sys,sys-04,676,16,4,2,0,0,10,37.5,"[{""offset"": 383, ""octet"": ""0xd6->0xdb""}, {""offset"": 662, ""octet"": ""0xff->0x6d""}, {""offset"": 470, ""octet"": ""0xe8->0xdc""}, {""offset"": 495, ""octet"": ""0xc0->0x20""}]"
+sys,sys-05,289,16,6,4,0,0,6,62.5,"[{""offset"": 29, ""octet"": ""0x48->0x41""}, {""offset"": 182, ""octet"": ""0x00->0x3c""}, {""offset"": 103, ""octet"": ""0x00->0xcb""}, {""offset"": 40, ""octet"": ""0xce->0x08""}]"
+sys,sys-06,287,16,6,3,0,0,7,56.2,"[{""offset"": 191, ""octet"": ""0x28->0x3e""}, {""offset"": 34, ""octet"": ""0xd3->0x27""}, {""offset"": 96, ""octet"": ""0x00->0x28""}, {""offset"": 191, ""octet"": ""0x28->0x19""}]"
+
+===== preuves_v110/benchmarks.csv =====
+implementation,primitive,taille_octets,instructions_par_op,debit_ops_s_emulation
+"gcc -O2 (référence, contrat équivalent)",sha256(1024 o),5436,69132,31.0
+"gcc -Os (référence, contrat équivalent)",sha256(1024 o),3072,77505,26.6
+"tls13-01..04 (blocs scellés, notés à la main)",sha256(1024 o),765,4524,27.4
+
+===== preuves_v130/audit_benchmark.csv =====
+implementation,perimetre,instructions_par_op,instr_par_ronde,taille_code_o,taille_table_o,debit_ops_s_emulation,digest_ok,parite_isa
+tls13-01..04 (blocs),op complète (init+absorb+final),75983,69.84,765,256,27.6,oui,scalaire GPR
+gcc -O2 (fonction),op complète,69132,63.54,1226,256,30.3,oui,SSE2 baseline (mouvements de tampons)
+gcc -Os (fonction),op complète,77505,71.24,292,256,26.4,oui,scalaire GPR
+ARTÉFACT v0.11.0 (blocs),finalisation SEULE,4524,"4,16 (implausible)",,,,,
+
+===== preuves_v130/stats_v130.csv =====
+n,P_sceller_q50,P_sceller_q01,LR_05_099,quantile_unilateral_sigma
+5,0.03125,0.9509900498999999,0.0328604910254172,1.86
+10,0.0009765625,0.9043820750088044,0.0010798118704315248,3.1
+11/12,,,,IC95=[0.615;0.998]
+
+===== preuves_v140/bras_c.csv =====
+niveau,bloc,ins_A_min,ins_A_med,ins_A_q1,ins_A_q3,ins_A_max,ins_C_min,ins_C_med,ins_C_q1,ins_C_q3,ins_C_max,taille_A,taille_C,rapport_taille,mut_A_K3,mut_A_dec,mut_A_tot,mut_C_K3,mut_C_os,mut_C_tot
+-O2,loupe-01,21,1025,1021,2015,102176,5,32,31,40,75560,448,494,0.91,5,0,16,8,8,16
+-O2,loupe-02,21,48,48,49,65,16,47,47,47,63,320,306,1.05,5,0,16,9,7,16
+-O2,loupe-05,4571,9089,4640,9104,71600,4424,9146,4757,9577,75347,384,1707,0.22,6,0,16,14,2,16
+-O2,loupe-08,18,641,553,710,827,11,477,429,518,578,320,351,0.91,13,0,16,12,0,16
+-O2,loupe-13,20,193,34,922,8282,6,69,12,366,3222,192,105,1.83,9,0,16,13,0,16
+-O2,loupe-16,28,39,36,117,128,14,16,14,49,61,704,413,1.7,9,0,16,14,0,16
+-Os,loupe-01,21,1025,1021,2015,102176,5,33,29,39,84948,448,394,1.14,3,0,16,7,9,16
+-Os,loupe-02,21,48,48,49,65,19,57,57,57,69,320,278,1.15,8,0,16,13,3,16
+-Os,loupe-05,4571,4640,4640,9104,71600,5432,6276,6055,10956,84727,384,764,0.5,6,0,16,16,0,16
+-Os,loupe-08,18,641,573,756,825,11,520,482,574,614,320,238,1.34,11,0,16,11,0,16
+-Os,loupe-13,20,767,59,2608,5363,34,587,78,1923,3856,192,239,0.8,8,0,16,13,0,16
+-Os,loupe-16,28,39,36,117,128,18,18,18,56,69,704,327,2.15,7,0,16,13,0,16
+
+===== preuves_v140/remesure_rq2.csv =====
+operation,min,q1,mediane,q3,max,n,note
+localiser (plan + en-tête),386,496,580,706,1046,10,le contenu exact, cl100k_base
+éditer (notation relue + réécrite),636,1085,2143,3463,6495,10,le contenu exact + le raisonnement estimé (×1,08 — le diff moyen de l'ère Loupe)
+ajouter (spec + notation écrites),2689,3128,3510,4091,4934,10,le contenu exact + le raisonnement estimé (×1,08)
+baseline naive (désassemblage complet),300304,300304,300304,300304,300304,1,37 538 lignes de désassemblage de loupe.exe
+
+===== preuves_v140/independance_agent.csv =====
+confrontation,volume,verdict
+MD5 T[64] (agent ↔ plan ↔ définition sin),64,0 divergence
+MD5 S[64] (plan ↔ RFC 1321 citée),64,0 divergence
+SHA-256 K[64] (agent ↔ plan ↔ Newton entier),64,0 divergence
+différentiels système (hashlib, 200 messages),200,les condensés des blocs re-vérifiés aux tables ci-dessus (la chaîne agent==plan==blocs)
+
+===== preuves_v140/rejeu_survivants.csv =====
+domaine,tues,total,taux,vivants
+loupe,232,288,80.6,56
+tls13,448,448,100.0,0
+sys,96,96,100.0,0
+

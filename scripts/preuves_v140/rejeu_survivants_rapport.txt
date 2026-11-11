@@ -1,0 +1,23 @@
+LE RE-JEU DES 832 MUTANTS — v0.14.0 (les tueurs de composition, le point 4 de la commande)
+
+LA MÉTHODE : les MÊMES mutants que v0.11.0 (la graine 20261111, le module même, la boucle répliquée) ; les tueurs historiques K1/K2 INTACTS ; LE NOUVEAU K3-COMPOSITION : la boucle winmain complète pour loupe (l'ouverture, la cascade, la peinture, la saisie, le défilement, le curseur, la sauvegarde, la fermeture — le DISQUE et l'ÉCRAN confrontés à la base saine), la composition de la poignée + l'enregistrement protégé pour l'orchestration tls13, les harnais de famille pour les crypto, le harnais sys autonome pour le domaine sys.
+
+  loupe : 232/288 tués (80.6 %) — 56 vivants
+    vivant : loupe-01 0x143: 0x0c→0x17
+    vivant : loupe-01 0xca: 0xeb→0xe6
+    vivant : loupe-03 0x1b: 0x00→0xd0
+    vivant : loupe-03 0x3b: 0x00→0xc4
+    vivant : loupe-03 0x41: 0x00→0x42
+    vivant : loupe-03 0x19: 0x10→0x2c
+    vivant : loupe-03 0x5a: 0x00→0xf1
+    vivant : loupe-03 0x41: 0x00→0xff
+    vivant : loupe-04 0x28: 0xc0→0xcd
+    vivant : loupe-04 0xe: 0xd9→0x39
+    vivant : loupe-05 0xcb: 0x40→0x76
+    vivant : loupe-05 0x123: 0xff→0x7f
+  tls13 : 448/448 tués (100.0 %) — 0 vivants
+  sys : 96/96 tués (100.0 %) — 0 vivants
+
+  TOTAL : 776/832 tués (93.3 %) — 56 vivants nommés
+
+LA COMPARAISON À v0.11.0 : 694/832 (83,4 %) → le nouveau taux ci-dessus — les survivants d'orchestration que la composition attrape sont la MESURE du gain ; ceux qui demeurent sont nommés.

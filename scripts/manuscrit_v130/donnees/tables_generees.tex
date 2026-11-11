@@ -122,9 +122,9 @@ Oracle independence (fresh seed 20261113) & MD5/SHA-256 tables re-derived (decim
 \addlinespace[1.5pt]
 Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & tls13-01..04 blocks (hand notation, complete operation init+absorb+final) & 75\,983 instructions/op (69.84 instr/round); 765 B code + 256 B table; 27.6 ops/s (emulated) & \code{preuves\_\allowbreak{}v130/\allowbreak{}audit\_\allowbreak{}benchmark.csv} \\
 \addlinespace[1.5pt]
-Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -O2 reference (same emulator, same 1,024-byte input) & 69\,132 instructions/op (63.54 instr/round); 1\,226 B code + 256 B table; 30.6 ops/s (emulated) & \code{preuves\_\allowbreak{}v130/\allowbreak{}audit\_\allowbreak{}benchmark.csv} \\
+Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -O2 reference (same emulator, same 1,024-byte input) & 69\,132 instructions/op (63.54 instr/round); 1\,226 B code + 256 B table; 30.3 ops/s (emulated) & \code{preuves\_\allowbreak{}v130/\allowbreak{}audit\_\allowbreak{}benchmark.csv} \\
 \addlinespace[1.5pt]
-Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -Os reference (same emulator, same input) & 77\,505 instructions/op (71.24 instr/round); 292 B code + 256 B table; 27.4 ops/s (emulated) & \code{preuves\_\allowbreak{}v130/\allowbreak{}audit\_\allowbreak{}benchmark.csv} \\
+Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -Os reference (same emulator, same input) & 77\,505 instructions/op (71.24 instr/round); 292 B code + 256 B table; 26.4 ops/s (emulated) & \code{preuves\_\allowbreak{}v130/\allowbreak{}audit\_\allowbreak{}benchmark.csv} \\
 \addlinespace[1.5pt]
 Formal model of CF3 (v0.12.0, D187 — explicit-state exploration) & P1 secret under threshold; P2 roll-back refusal; P3 no destruction on wrong phrase; P4 bounded blast radius & all 4 properties PROVED IN THE MODEL (0 counterexamples); 154 states, 1\,152 transitions, depth 6; adversary at most 2 of 3 elements with epoch replay & \code{preuves\_\allowbreak{}v120/\allowbreak{}modele\_\allowbreak{}formel.csv} \\
 \addlinespace[1.5pt]

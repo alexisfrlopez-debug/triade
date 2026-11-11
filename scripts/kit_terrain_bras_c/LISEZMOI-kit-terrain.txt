@@ -1,0 +1,29 @@
+LISEZMOI — LE KIT TERRAIN DU BRAS DE RÉFÉRENCE (v0.14.0)
+=========================================================
+
+ÉTAT : EN ATTENTE DU RUN TERRAIN (le développeur). Aucun résultat terrain
+n'existe : les runs terrain appartiennent au développeur, le laboratoire
+ne fabrique JAMAIS un chiffre (la commande ic09ydeli, point 1).
+
+L'OBJET : mesurer sur VOTRE machine réelle ce que le laboratoire a mesuré
+en émulation — la comparaison des six blocs de Loupe (la notation scellée)
+contre la référence C compilée depuis les MÊMES contrats (D193/D195).
+
+LE CONTENU :
+  - bras_c.c      : la référence (six blocs, les mêmes contrats) ;
+  - bras_O2.bin   : l'image compilée gcc -O2 (plate, base 0x1400000) ;
+  - bras_Os.bin   : l'image compilée gcc -Os.
+
+LE GESTE (sur votre machine, quand vous le voudrez) :
+  1. compiler : gcc -O2 -fno-pic -no-pie -ffreestanding -c bras_c.c
+     (ou utiliser les .bin fournis — comparez les empreintes) ;
+  2. instrumenter : le harnais du dépôt (scripts/bras_c_v140/
+     comparer_v140.py) peut être adapté à un exécutable réel en remplaçant
+     l'émulation par des appels natifs — le protocole et les vecteurs
+     demeurent (le plan pré-enregistré D193) ;
+  3. renvoyer les témoins (les comptes d'instructions, les tailles, les
+     verdicts) au coffre /test : le labo les recoupera et les consignera
+     ENTRÉE DE JOURNAL — jamais avant.
+
+Les empreintes (recoupées au dépôt) :
+  bras_O2.bin / bras_Os.bin — celles du build consigné à l'Entrée 228.

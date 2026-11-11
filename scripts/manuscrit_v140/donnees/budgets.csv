@@ -1,0 +1,8 @@
+operation,cible_tokens,mesure_tokens,source
+Locate a block,64,51,"D31/D34, M1 measurement (cl100k_base)"
+Edit a block,3000,719,"D31/D34, M1 measurement"
+Add a block,6000,1088,"D34, M1 (draft 1086, +2 drift re-measured)"
+Whole lineage (specs),-,8774,"D34, generation-1 card"
+Whole lineage (drafts),-,3973,D34
+Whole lineage (delivered notations),-,5099,D34
+Whole lineage (TOTAL),-,13873,D34

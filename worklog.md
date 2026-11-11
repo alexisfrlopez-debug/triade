@@ -8146,3 +8146,34 @@ Work Log:
 - L'ÉTAT : les documents d'édition v0.14.0 (manuscrit, spec, zips,
   archivage ic09ydeli) À LA CONTINUATION — l'instruction demeure à
   /instructions, l'achèvement n'est PAS simulé.
+
+Task ID: 135
+Agent: Z.ai (agent principal)
+Task: LE CINQUIÈME FICHIER D'INSTRUCTION MENÉ À TERME — le programme
+empirique v0.14.0 complet : le re-jeu des 832 mutants, les documents
+d'édition, les livrables, l'instruction archivée.
+
+Work Log:
+- LE RE-JEU DES 832 MUTANTS (rejeu_survivants_v140.py) : les mêmes
+  tirages que v0.11.0 (le module importé, la boucle répliquée), les
+  tueurs de composition par mutant (la boucle winmain — disque et
+  écran confrontés à la base saine ; la poignée composée +
+  l'enregistrement protégé ; le harnais sys autonome) : 776/832 =
+  93,3 % — tls13 et sys à 100 %, les 56 loupe NOMMÉS (les chemins
+  hors scénario).
+- LE MANUSCRIT v0.14.0 (17 pages) : § 3.6 la comparaison contrôlée,
+  RQ2 reformulée aux distributions, la mutation re-jeuée,
+  l'indépendance, la conclusion alignée ; la table des preuves à 29
+  lignes GÉNÉRÉES (bras_c, remesure, indépendance, rejeu) ; deux
+  fautes d'échappement attrapées par la compilation et guéries.
+- LE DÉFAUT HÉRITÉ guéri : le « tbp] » parasite du générateur v130
+  (un [htbp] amputé) — le PDF v0.13.0 REPUBLIÉ propre.
+- LA SPÉCIFICATION v0.14.0 : la chaîne spec_v140 (§ 1.15, § 19.16,
+  l'annexe D195), le PDF 62 pages consigné n°53 ; le md v0.14.0 (le
+  préambule, les sections, les versions).
+- LE KIT TERRAIN du bras C (scripts/kit_terrain_bras_c/) : les
+  binaires + la source + le LISEZMOI — EN ATTENTE du développeur.
+- LES LIVRABLES au coffre + l'instruction ic09ydeli ARCHIVÉE (md5
+  recoupé).
+- SUITE : le sixième fichier (v0.15.0 — ysddxpk0o : le modèle formel
+  non borné, les kits matériels, la réplication).

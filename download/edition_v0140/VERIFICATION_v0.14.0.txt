@@ -1,0 +1,215 @@
+CONSTAT DE VÉRIFICATION — v0.14.0
+==================================
+
+Le manuscrit : 17 pages, zéro placeholder, zéro
+débordement de marge, l'exposant 10^6 confirmé rendu,
+les 12 valeurs-clés présentes, les macros résolues.
+
+--- le plan pré-enregistré (CA5, l'empreinte D193) ---
+# PLAN PRÉ-ENREGISTRÉ — v0.14.0 : LE BRAS DE RÉFÉRENCE COMPILATEUR
+
+**Statut : PRÉ-ENREGISTREMENT — consigné AVANT TOUTE MESURE (la commande
+ic09ydeli, point 1 : « rédiger et consigner un plan de comparaison avec
+hypothèses et critères d'acceptation AVANT toute mesure »). L'empreinte
+sha256 du présent fichier est consignée à la décision D193 ; toute
+modification APRÈS le début des mesures serait une fraude nommée
+(l'étape de vérification confronte l'empreinte).**
+
+## 1. L'OBJET DE LA COMPARAISON
+
+Les blocs scellés de Loupe (la notation à la main, msx64) contre une
+RÉFÉRENCE COMPILÉE depuis les MÊMES CONTRATS de couche I (le C ci-dessous),
+soumise aux MÊMES INSTRUMENTS. La question de recherche : **que coûte,
+en vérifiabilité et en volume, l'écriture directe de la notation — et
+que gagne-t-on ou perd-on contre un compilateur partant du même
+contrat ?** La comparaison est contrôlée : mêmes contrats, mêmes shims
+OS, mêmes vecteurs, mêmes graines, mêmes tueurs.
+
+## 2. LES BLOCS (six, les cinq familles couvertes)
+
+| Bloc | Famille | Contrat I |
+|---|---|---|
+| loupe-01 ouvrir | noyau/fichier | loupe/I/loupe-01-ouvrir.md (r3) |
+| loupe-02 lire | noyau/fichier | loupe/I/loupe-02-lire.md |
+| loupe-05 sha256 | empreintes | loupe/I/loupe-05-sha256.md |
+| loupe-08 ligne | rendu | loupe/I/loupe-08-ligne.md |
+| loupe-13 recherche | navigation | loupe/I/loupe-13-recherche.md |
+| loupe-16 saisie | édition | loupe/I/loupe-16-saisie.md |
+
+## 3. LES HYPOTHÈSES (pré-enregistrées)
+
+- **H1 (référence saine)** : la référence C passe son auto-vérification
+  contre les vecteurs officiels AVANT toute mesure (FIPS 180-4 pour
+  sha-256 ; les verdicts nommés des contrats pour les blocs OS). Si H1
+  échoue : AUCUN chiffre publié pour le bloc fautif (la doctrine md5/aes
+  de v0.11.0 : mieux aucun chiffre qu'un chiffre faux).
+- **H2 (compacité)** : la notation à la main est plus compacte que la
+  référence compilée -O2 (l'audit v0.13.0 a établi 1,45× sur sha256 ;
+  l'hypothèse est re-testée sur les six blocs — elle peut être INVALIDÉE,
+  notamment contre -Os).
+- **H3 (instructions exécutées)** : la notation est dans le MÊME ordre de
+  grandeur que la référence en instructions par opération (l'audit v0.13.0
+  a établi −9 %/+2 % sur sha256 ; l'hypothèse est qu'il n'y a pas de
+  facteur spectaculaire dans AUCUN sens sur les six blocs).
+- **H4 (testabilité)** : le taux de mort par mutation est du même ordre
+  pour les deux camps sous les MÊMES tueurs (la question n'est pas « qui
+  est le mieux testé » mais « la notation est-elle testable au même
+  degré »).
+
+## 4. LES CRITÈRES D'ACCEPTATION (pré-enregistrés, binaires)
+
+- **CA1** : chaque fonction C est AUTO-VÉRIFIÉE contre les vecteurs
+  officiels AVANT la mesure ; un échec = le bloc est exclu des chiffres
+  et l'écart consigné.
+- **CA2** : les deux camps sont mesurés par le MÊME harnais Unicorn sur
+  les MÊMES shims (le mini-OS du harnais noyau de Loupe, les primitives
+  OS servies aux DEUX camps par la même table), les MÊMES vecteurs, à la
+  même graine (20261113).
+- **CA3** : les résultats sont rapportés TELS QUELS — y compris
+  DÉFAVORABLES au protocole (la consigne explicite de la commande).
+- **CA4** : toute adaptation d'instrument est NOMMÉE dans le rapport
+  (l'oracle structurel du camp C vérifie la SÉQUENCE des appels OS du
+  contrat — le plan des notations n'existe pas pour du code compilé ;
+  le round-trip est EXCLU du camp C par nature — la commande le dit).
+- **CA5** : le plan n'est pas modifié après le début des mesures
+  (confrontation de l'empreinte sha256 consignée à D193).
+
+## 5. LA MÉTHODE
+
+1. **La référence C** (`scripts/bras_c_v140/bras_c.c`) : les six fonctions
+   écrites DEPUIS LES CONTRATS (chaque pre/post/inv relu avant l'écriture,
+   les verdicts nommés −1..−7 identiques, les mêmes bornes). Les
+   primitives OS (CreateFileW, ReadFile, GetFileSizeEx, CloseHandle,
+   GetLastError) sont appelées via une TABLE DE POINTEURS posée par le
+   harnais — les DEUX camps consomment les MÊMES shims du mini-OS.
+   Compilation : gcc 14.2 -O2 et -Os (clang si installable, sinon
+   l'écart NOMMÉ — le précédent v0.11.0 vaut).
+2. **Le harnais commun** (`scripts/bras_c_v140/comparer_v140.py`) : le
+   mini-OS du harnais noyau de Loupe (loupe/harnais_noyau.py) sert les
+   fichiers virtuels, les échecs paramétrables et le journal des appels ;
+   le camp notation est posé à ses RVA du plan ; le camp C est chargé à
+   une base distincte. Pour CHAQUE bloc et CHAQUE vecteur : les mêmes
+   entrées, les sorties CONFRONTÉES (verdicts, tampons, empreintes),
+   le comptage d'instructions au même crochet, la SÉQUENCE des appels OS
+   journalisée et confrontée au contrat (l'oracle structurel adapté).
+3. **Les vecteurs** (pré-enregistrés) : le vide (taille 0), « abc », les
+   NIST 448/896 bits (sha-256), un fichier de 1 Kio pseudo-aléatoire à la
+   graine 20261113 (recherche de motifs présents/absents, lignes aux
+   bornes 15/16/17, saisie aux bornes, ouverture absente/verrouillée/
+   hors périmètre, session déjà ouverte) — chaque vecteur attend un
+   verdict NOMMÉ et des octets exacts.
+4. **La mutation** : les MÊMES mutations à un octet que la campagne
+   v0.11.0 (16 mutants par bloc, la graine 20261111, les mêmes sites :
+   instructions, opérandes, offsets) appliquées aux DEUX camps (les
+   notations assemblées pour le camp notation ; le .text compilé pour le
+   camp C), tuées par les MÊMES tueurs : K3 le sémantique (les vecteurs
+   ci-dessus) et K2 adapté (la séquence d'appels OS du contrat pour le
+   camp C ; l'oracle structurel du plan pour le camp notation). Le taux
+   rapporté par bloc et par famille.
+5. **Les métriques** : instructions par opération complète (la même
+   convention que l'audit v0.13.0 : tout le pipeline du bloc, compté au
+   crochet, zéro lecture de compteur intermédiaire — la leçon D191),
+   tailles de code au bon périmètre (la fonction seule pour le C,
+   l'objet notation + ses tables), le taux de mort par mutation, la
+   fidélité de séquence OS.
+6. **L'analyse** : les rapports par bloc (notation vs -O2 vs -Os), les
+   agrégats par famille, les distributions (médiane, quartiles, min/max)
+   — jamais une valeur unique. Les écarts interprétés avec prudence :
+   la comparaison est UN échantillon de six blocs, pas une loi.
+
+## 6. CE QUI N'EST PAS MESURÉ ICI (les frontières)
+
+- Les tokens (mesurés à part par la re-mesure RQ2, point 2 de la
+  commande — jamais confondus avec le présent bras).
+- Les kits terrain (préparés, marqués « EN ATTENTE » : les runs terrain
+  appartiennent au développeur ; AUCUN résultat terrain ne sera
+  fabriqué).
+- Le temps d'horloge (le débit d'émulation appartient à l'outil — la
+  métrique est le compte d'instructions, la convention v0.13.0).
+
+## 7. LA CONSIGNATION
+
+Le présent plan est consigné (sha256 à D193) AVANT les mesures ; les
+sorties brutes vivront à scripts/preuves_v140/ (bras_c.csv, le rapport) ;
+les résultats entreront au manuscrit v0.14.0 par le générateur, jamais
+tapés à la main.
+
+
+--- le re-jeu des 832 mutants ---
+LE RE-JEU DES 832 MUTANTS — v0.14.0 (les tueurs de composition, le point 4 de la commande)
+
+LA MÉTHODE : les MÊMES mutants que v0.11.0 (la graine 20261111, le module même, la boucle répliquée) ; les tueurs historiques K1/K2 INTACTS ; LE NOUVEAU K3-COMPOSITION : la boucle winmain complète pour loupe (l'ouverture, la cascade, la peinture, la saisie, le défilement, le curseur, la sauvegarde, la fermeture — le DISQUE et l'ÉCRAN confrontés à la base saine), la composition de la poignée + l'enregistrement protégé pour l'orchestration tls13, les harnais de famille pour les crypto, le harnais sys autonome pour le domaine sys.
+
+  loupe : 232/288 tués (80.6 %) — 56 vivants
+    vivant : loupe-01 0x143: 0x0c→0x17
+    vivant : loupe-01 0xca: 0xeb→0xe6
+    vivant : loupe-03 0x1b: 0x00→0xd0
+    vivant : loupe-03 0x3b: 0x00→0xc4
+    vivant : loupe-03 0x41: 0x00→0x42
+    vivant : loupe-03 0x19: 0x10→0x2c
+    vivant : loupe-03 0x5a: 0x00→0xf1
+    vivant : loupe-03 0x41: 0x00→0xff
+    vivant : loupe-04 0x28: 0xc0→0xcd
+    vivant : loupe-04 0xe: 0xd9→0x39
+    vivant : loupe-05 0xcb: 0x40→0x76
+    vivant : loupe-05 0x123: 0xff→0x7f
+  tls13 : 448/448 tués (100.0 %) — 0 vivants
+  sys : 96/96 tués (100.0 %) — 0 vivants
+
+  TOTAL : 776/832 tués (93.3 %) — 56 vivants nommés
+
+LA COMPARAISON À v0.11.0 : 694/832 (83,4 %) → le nouveau taux ci-dessus — les survivants d'orchestration que la composition attrape sont la MESURE du gain ; ceux qui demeurent sont nommés.
+
+
+--- le bras de référence ---
+LE BRAS DE RÉFÉRENCE COMPILATEUR — v0.14.0 (le plan pré-enregistré D193 ; les critères CA1-CA5)
+
+NOTE D'INTERPRÉTATION : loupe-01 « saine » est la session née entière — la cascade complète (fenêtre + panneau d'empreintes) ; sa médiane élevée cache la queue légère des refus, le CSV porte min/max. ADAPTATION DU PANNEAU : le camp C calcule la moitié sha256 du panneau (le md5 C du banc v0.11.0 fut écarté comme fautif — aucun md5 C audité n'existe au labo) : les comptes de loupe-01 saine ne sont PAS à travail égal, l'écart est nommé. La taille de loupe-05 A (384 o) EXCLUT les blocs sha hérités (tls13-01..04, ~765 o au scellé) que le camp C embarque (1707 o) — l'héritage PAR LA CARTE est un partage, pas une copie : la comparaison honnête est 384+765 contre 1707.
+écart nommé : clang ABSENT du laboratoire — gcc 14.2 -O2/-Os tient la place (le précédent v0.11.0)
+adaptations nommées (CA4) : le round-trip EXCLU du camp C (la commande) ; K2 camp A = le DÉCODAGE capstone (le round-trip keystone de v0.11.0 non rejoué, l'écart nommé) ; K2 camp C = les comptes d'appels OS contre la référence (les blocs OS seuls) ; la comparaison de loupe-13 par memcmp du C (l'équivalent compilé du libc-02 hérité).
+
+LES INSTRUCTIONS PAR OPÉRATION COMPLÈTE (le même crochet, la convention D191) — médiane [q1..q3] :
+-O2 loupe-01 : A 1025 [1021..2015] / C 32 [31..40] (n=5/5) — tailles A 448 o / C 494 o (0.91×) — mutation A 5/16 [K3 5, déc 0] / C 16/16 [K3 8, OS 8] — vivant A : 0x17c: 0x5f→0x58
+-O2 loupe-02 : A 48 [48..49] / C 47 [47..47] (n=7/7) — tailles A 320 o / C 306 o (1.05×) — mutation A 5/16 [K3 5, déc 0] / C 16/16 [K3 9, OS 7] — vivant A : 0x12c: 0x00→0x96
+-O2 loupe-05 : A 9089 [4640..9104] / C 9146 [4757..9577] (n=22/22) — tailles A 384 o / C 1707 o (0.22×) — mutation A 6/16 [K3 6, déc 0] / C 16/16 [K3 14, OS 2] — vivant A : 0x142: 0x00→0x2a
+-O2 loupe-08 : A 641 [553..710] / C 477 [429..518] (n=26/26) — tailles A 320 o / C 351 o (0.91×) — mutation A 13/16 [K3 13, déc 0] / C 12/16 [K3 12, OS 0] — vivant A : 0x89: 0x20→0x77 — vivant C : 0x101: 0x00→0xda
+-O2 loupe-13 : A 193 [34..922] / C 69 [12..366] (n=31/31) — tailles A 192 o / C 105 o (1.83×) — mutation A 9/16 [K3 9, déc 0] / C 13/16 [K3 13, OS 0] — vivant A : 0x84: 0x00→0xd1 — vivant C : 0x67: 0xff→0xb5
+-O2 loupe-16 : A 39 [36..117] / C 16 [14..49] (n=10/10) — tailles A 704 o / C 413 o (1.70×) — mutation A 9/16 [K3 9, déc 0] / C 14/16 [K3 14, OS 0] — vivant A : 0x180: 0x88→0x48 — vivant C : 0x18c: 0x48→0x2a
+-Os loupe-01 : A 1025 [1021..2015] / C 33 [29..39] (n=5/5) — tailles A 448 o / C 394 o (1.14×) — mutation A 3/16 [K3 3, déc 0] / C 16/16 [K3 7, OS 9] — vivant A : 0x17c: 0x5f→0x58
+-Os loupe-02 : A 48 [48..49] / C 57 [57..57] (n=7/7) — tailles A 320 o / C 278 o (1.15×) — mutation A 8/16 [K3 8, déc 0] / C 16/16 [K3 13, OS 3] — vivant A : 0x39: 0xc1→0xa0
+-Os loupe-05 : A 4640 [4640..9104] / C 6276 [6055..10956] (n=22/22) — tailles A 384 o / C 764 o (0.50×) — mutation A 6/16 [K3 6, déc 0] / C 16/16 [K3 16, OS 0] — vivant A : 0x123: 0xff→0x7f
+-Os loupe-08 : A 641 [573..756] / C 520 [482..574] (n=26/26) — tailles A 320 o / C 238 o (1.34×) — mutation A 11/16 [K3 11, déc 0] / C 11/16 [K3 11, OS 0] — vivant A : 0x52: 0xd3→0xa9 — vivant C : 0x89: 0x20→0x42
+-Os loupe-13 : A 767 [59..2608] / C 587 [78..1923] (n=31/31) — tailles A 192 o / C 239 o (0.80×) — mutation A 8/16 [K3 8, déc 0] / C 13/16 [K3 13, OS 0] — vivant A : 0x84: 0x00→0xd1 — vivant C : 0x4d: 0x0f→0x36
+-Os loupe-16 : A 39 [36..117] / C 18 [18..56] (n=10/10) — tailles A 704 o / C 327 o (2.15×) — mutation A 7/16 [K3 7, déc 0] / C 13/16 [K3 13, OS 0] — vivant A : 0x156: 0x01→0x73 — vivant C : 0x99: 0x20→0x8a
+
+divergences des vecteurs (A ≠ C ou ≠ modèle) : AUCUNE — les camps s'accordent sur tous les vecteurs
+
+
+--- la re-mesure RQ2 ---
+LA RE-MESURE RQ2 — v0.14.0 (la carte finale, l'ère Loupe)
+
+LA MÉTHODE : le contenu de contexte mesuré EXACTEMENT au cl100k_base (le tokenizer de M1) sur le VRAI matériau de l'ère Loupe (le plan, les notations, les spécifications) ; le RAISONNEMENT estimé par le rapport génération/contenu des retouches réelles de l'ère (×1,08 — l'estimation NOMMÉE, jamais une mesure) ; la baseline naive = le désassemblage complet.
+
+  localiser (plan + en-tête) : médiane 580 [q1 496 .. q3 706] min 386 max 1046 (n=10) — le contenu exact, cl100k_base
+  éditer (notation relue + réécrite) : médiane 2143 [q1 1085 .. q3 3463] min 636 max 6495 (n=10) — le contenu exact + le raisonnement estimé (×1,08 — le diff moyen de l'ère Loupe)
+  ajouter (spec + notation écrites) : médiane 3510 [q1 3128 .. q3 4091] min 2689 max 4934 (n=10) — le contenu exact + le raisonnement estimé (×1,08)
+  baseline naive (désassemblage complet) : médiane 300304 [q1 300304 .. q3 300304] min 300304 max 300304 (n=1) — 37 538 lignes de désassemblage de loupe.exe
+
+LES VALEURS M1 (HISTORIQUES, jamais remplacées) : localiser 51 / éditer 719 / ajouter 1 088 (la carte de génération 1, D31/D34).
+LA LECTURE : les opérations de l'ère Loupe coûtent PLUS que M1 (les notations sont plus longues, les contrats plus denses) — la carte indexed épargne toujours la baseline naive (le désassemblage complet, un ordre de grandeur au-dessus).
+
+
+--- l'indépendance ---
+L'INDÉPENDANCE DE L'ORACLE — v0.14.0 (le second agent)
+
+L'ÉCART NOMMÉ : l'infrastructure d'agents du laboratoire n'expose PAS d'autre famille — le sous-agent a tourné sur le MÊME modèle (glm-5.3). L'indépendance obtenue est celle de l'INSTANCE : un contexte NEUF, aucune conversation partagée, la dérivation depuis les DÉFINITIONS mathématiques (le sin de Rivest pour MD5, la racine cubique exacte pour SHA-256) — une forme PLUS FAIBLE que l'inter-familles, dite telle quelle. La réplication par un agent d'une AUTRE famille DEMEURE ouverte.
+
+LES CONFRONTATIONS (le juge est le code) :
+  MD5 T[64] (agent ↔ plan ↔ définition sin) : 0 divergence
+  MD5 S[64] (plan ↔ RFC 1321 citée) : 0 divergence
+  SHA-256 K[64] (agent ↔ plan ↔ Newton entier) : 0 divergence
+  différentiels système (hashlib, 200 messages) : les condensés des blocs re-vérifiés aux tables ci-dessus (la chaîne agent==plan==blocs)
+
+LA VOIE ALTERNATIVE SUPPLÉMENTAIRE (exécutée au geste) : la racine cubique ENTIÈRE (Newton sur p·2^96, aucun flottant) — elle confirme les 64 constantes indépendamment de l'agent ET du plan.
+
+VERDICT : ZÉRO DIVERGENCE — les tables de l'agent == le plan == les définitions (les 128 confrontations de constantes).
