@@ -1,0 +1,5 @@
+operation,min,q1,mediane,q3,max,n,note
+localiser (plan + en-tête),386,496,580,706,1046,10,le contenu exact, cl100k_base
+éditer (notation relue + réécrite),636,1085,2143,3463,6495,10,le contenu exact + le raisonnement estimé (×1,08 — le diff moyen de l'ère Loupe)
+ajouter (spec + notation écrites),2689,3128,3510,4091,4934,10,le contenu exact + le raisonnement estimé (×1,08)
+baseline naive (désassemblage complet),300304,300304,300304,300304,300304,1,37 538 lignes de désassemblage de loupe.exe

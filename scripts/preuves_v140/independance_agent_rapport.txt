@@ -1,0 +1,13 @@
+L'INDÉPENDANCE DE L'ORACLE — v0.14.0 (le second agent)
+
+L'ÉCART NOMMÉ : l'infrastructure d'agents du laboratoire n'expose PAS d'autre famille — le sous-agent a tourné sur le MÊME modèle (glm-5.3). L'indépendance obtenue est celle de l'INSTANCE : un contexte NEUF, aucune conversation partagée, la dérivation depuis les DÉFINITIONS mathématiques (le sin de Rivest pour MD5, la racine cubique exacte pour SHA-256) — une forme PLUS FAIBLE que l'inter-familles, dite telle quelle. La réplication par un agent d'une AUTRE famille DEMEURE ouverte.
+
+LES CONFRONTATIONS (le juge est le code) :
+  MD5 T[64] (agent ↔ plan ↔ définition sin) : 0 divergence
+  MD5 S[64] (plan ↔ RFC 1321 citée) : 0 divergence
+  SHA-256 K[64] (agent ↔ plan ↔ Newton entier) : 0 divergence
+  différentiels système (hashlib, 200 messages) : les condensés des blocs re-vérifiés aux tables ci-dessus (la chaîne agent==plan==blocs)
+
+LA VOIE ALTERNATIVE SUPPLÉMENTAIRE (exécutée au geste) : la racine cubique ENTIÈRE (Newton sur p·2^96, aucun flottant) — elle confirme les 64 constantes indépendamment de l'agent ET du plan.
+
+VERDICT : ZÉRO DIVERGENCE — les tables de l'agent == le plan == les définitions (les 128 confrontations de constantes).

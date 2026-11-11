@@ -1,0 +1,11 @@
+LA RE-MESURE RQ2 — v0.14.0 (la carte finale, l'ère Loupe)
+
+LA MÉTHODE : le contenu de contexte mesuré EXACTEMENT au cl100k_base (le tokenizer de M1) sur le VRAI matériau de l'ère Loupe (le plan, les notations, les spécifications) ; le RAISONNEMENT estimé par le rapport génération/contenu des retouches réelles de l'ère (×1,08 — l'estimation NOMMÉE, jamais une mesure) ; la baseline naive = le désassemblage complet.
+
+  localiser (plan + en-tête) : médiane 580 [q1 496 .. q3 706] min 386 max 1046 (n=10) — le contenu exact, cl100k_base
+  éditer (notation relue + réécrite) : médiane 2143 [q1 1085 .. q3 3463] min 636 max 6495 (n=10) — le contenu exact + le raisonnement estimé (×1,08 — le diff moyen de l'ère Loupe)
+  ajouter (spec + notation écrites) : médiane 3510 [q1 3128 .. q3 4091] min 2689 max 4934 (n=10) — le contenu exact + le raisonnement estimé (×1,08)
+  baseline naive (désassemblage complet) : médiane 300304 [q1 300304 .. q3 300304] min 300304 max 300304 (n=1) — 37 538 lignes de désassemblage de loupe.exe
+
+LES VALEURS M1 (HISTORIQUES, jamais remplacées) : localiser 51 / éditer 719 / ajouter 1 088 (la carte de génération 1, D31/D34).
+LA LECTURE : les opérations de l'ère Loupe coûtent PLUS que M1 (les notations sont plus longues, les contrats plus denses) — la carte indexed épargne toujours la baseline naive (le désassemblage complet, un ordre de grandeur au-dessus).

@@ -8105,3 +8105,44 @@ Work Log:
   recoupé).
 - SUITE : v0.14.0 (ic09ydeli — le programme empirique) puis v0.15.0
   (ysddxpk0o — le modèle formel non borné, les kits matériels).
+
+Task ID: 134
+Agent: Z.ai (agent principal)
+Task: LE CINQUIÈME FICHIER D'INSTRUCTION EN COURS — LE PROGRAMME
+EMPIRIQUE v0.14.0 : le plan pré-enregistré (D193), le bras de référence
+compilateur mesuré, la re-mesure RQ2, l'indépendance par instance
+isolée, les survivants partiellement re-jeués — les documents d'édition
+à la continuation.
+
+Work Log:
+- LE PRÉ-ENREGISTREMENT (D193) : le plan (H1-H4, CA1-CA5, les six
+  blocs, la méthode) consigné AVANT toute mesure, l'empreinte
+  sha256 verrouillée (7b14da525e0194f3…) — CA5 attrapable.
+- LE BRAS C (bras_c_v140/) : six blocs depuis les MÊMES contrats, la
+  table OS aux MÊMES shims (pointeurs ms_abi), gcc -O2/-Os (clang
+  absent, l'écart nommé), l'AUTOTEST VERT avant tout (deux fautes de
+  table K attrapées : K[24] 0x983e5152, K[47] 0x106aa070).
+- LA CAMPAGNE (comparer_v140.py) : ZÉRO DIVERGENCE aux vecteurs ;
+  loupe-02 PARITÉ (48/47), loupe-05 PARITAIRE À TRAVAIL ÉGAL
+  (9 089/9 146 instructions, l'héritage PAR LA CARTE 384+765 contre
+  1 707 o), les purs plus chers à la notation (08 : 641/477 ; 13 :
+  193/69 ; 16 : 39/16), la cascade 01 saine 102 176/75 560 (le panneau
+  C = la moitié sha, l'adaptation nommée) ; la mutation : A 3-13/16
+  (survivants nommés), C 16/16 sur les OS (le K2-adapté aux comptes
+  d'appels), 11-14/16 sur les purs — H4 tenue.
+- LA RE-MESURE RQ2 (remesure_rq2_v140.py, cl100k_base) : localiser
+  580 [496..706], éditer 2 143 [1 085..3 463], ajouter 3 510
+  [3 128..4 091] (n=10, le raisonnement estimé ×1,08 NOMMÉ), la
+  baseline naive 300 304 (37 538 lignes de désassemblage) — les
+  valeurs M1 (51/719/1 088) HISTORIQUES, la lecture DÉFAVORABLE au
+  protocole consignée (les opérations Loupe coûtent plus qu'en M1).
+- L'INDÉPENDANCE (independance_v140.py) : l'écart de famille consigné
+  (l'infra n'expose qu'un modèle — l'indépendance d'INSTANCE, plus
+  faible, dite telle quelle) ; les tables de l'agent == le plan == les
+  définitions : ZÉRO DIVERGENCE sur 128 constantes ; la voie
+  alternative (recherche binaire entière sur p·2^96) confirme.
+- LES SURVIVANTS : 96 mutants re-jeués avec le harnais de composition
+  (la chaîne 01→16) — le re-jeu complet des 832 À LA CONTINUATION.
+- L'ÉTAT : les documents d'édition v0.14.0 (manuscrit, spec, zips,
+  archivage ic09ydeli) À LA CONTINUATION — l'instruction demeure à
+  /instructions, l'achèvement n'est PAS simulé.

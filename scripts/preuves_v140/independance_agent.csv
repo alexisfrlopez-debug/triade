@@ -1,0 +1,5 @@
+confrontation,volume,verdict
+MD5 T[64] (agent ↔ plan ↔ définition sin),64,0 divergence
+MD5 S[64] (plan ↔ RFC 1321 citée),64,0 divergence
+SHA-256 K[64] (agent ↔ plan ↔ Newton entier),64,0 divergence
+différentiels système (hashlib, 200 messages),200,les condensés des blocs re-vérifiés aux tables ci-dessus (la chaîne agent==plan==blocs)
