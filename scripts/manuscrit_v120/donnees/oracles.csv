@@ -1,0 +1,11 @@
+jalon,instrument,volume,source
+M1,mini-libc oracle,21/21,D32; tag 0.2.0
+M2,echo conformity + differential,"68/68; 8 iterations, 8 defect classes",D43; tag 0.3.0
+M3,fuzz campaign + profile conformity suite,"1,000,000 cases x2 seeds; 161 controls",D72/D73
+M4,SSPI scenario oracle + per-block differential,"560 cases x4 seeds; 10,000 fuzzed cases x2 seeds per block; 165k leaf differentials",D68-D93
+M5,build fingerprint registry + verifier,per-build sha256 registers,"D134, D148"
+M6,profile conformity suite (Linux),7/7; lab recoup 22/22,D154
+M7,RISC-V round-trip + cross-profile lock,100 % round-trip; 29/29 recoup,D155
+M8,sys harness on synthetic ntdll fixtures,61 greens; 131 socle controls; 30/30 recoup,D160-D165
+M9,tls13 structural oracle + handshake harness + cross-lock,589 structural locks; handshake 54/54 x3 seeds; cross-lock 86/86; 560+365+131 replayed,D166-D170
+M10,Loupe: 3 Unicorn harnesses + structural oracle + seal guard,159 controls x3 seeds (61+53+45); 121 structural locks; cross-lock 26/26; seal guard 14/14; crystallisation 26 x 10/10,D172-D181

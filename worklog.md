@@ -8009,3 +8009,36 @@ Work Log:
   recoupé).
 - SUITE : le troisième fichier (v0.12.0 — la vérification formelle
   CF3, le modèle de menace en deux plans, la cristallisation, D187+).
+
+Task ID: 132
+Agent: Z.ai (agent principal)
+Task: LE TROISIÈME FICHIER D'INSTRUCTION EXÉCUTÉ — LE MODÈLE FORMEL
+ET LA GOUVERNANCE ASSAINIE v0.12.0 : les quatre propriétés prouvées,
+les deux plans, le SPRT, le protocole de réplication, D187/D188/D189,
+les deux livrables, l'instruction archivée.
+
+Work Log:
+- LE MODÈLE FORMEL (modele_formel_v120.py — le script EST le modèle) :
+  154 états, 1 152 transitions, adversaire ≤ 2 éléments + rejeu —
+  P1 secret sous seuil / P2 refus du roll-back / P3 pas de destruction
+  sur phrase erronée / P4 rayon borné : les quatre PROUVÉES DANS LE
+  MODÈLE ; hypothèses A1-A5 explicites, le hors modèle nommé ;
+  Tamarin/ProVerif absents — l'explorateur nommé.
+- LE MODÈLE DE MENACE EN DEUX PLANS (D188) : IP (remédiable) /
+  sûreté (irrémédiable), l'ordre intra-sécurité EXPLICITE (le plan
+  sûreté gagne), D81↔D183 chiffrée (facteur ≈ 40 — D81 demeure).
+- LA CRISTALLISATION (D189) : le SPRT justifie le seuil 10 (α = 1,08 ×
+  10⁻³, 46× plus strict) — le seuil DEMEURE ; le protocole de
+  réplication proposé (trois axes, grille T/X == les cinq familles du
+  RQ3, double annotation, κ de Cohen ≥ 0,61) — jamais exécuté.
+- LES MANIFESTES à sha256 (maj_kit.py, la suite de D184 — les kits
+  livrés demeurent, preuves).
+- LES AUTOTESTS rejoués aux répertoires temporaires : CF3 28 + 92,
+  CF2 54, sceau 54 + dépôt réel VERT — le coffre réel constaté
+  IDENTIQUE avant/après, aucun chemin réel touché.
+- LE MANUSCRIT v0.12.0 (§ 4.6, 14 pages) + la chaîne spec_v120 + le md
+  (§ 1.13, § 19.14) + le PDF consigné n°48.
+- LES LIVRABLES au coffre + l'instruction ruim4qzsd ARCHIVÉE (md5
+  recoupé) — le dossier /instructions VIDE : les trois exécutés.
+- SUITE : au développeur — la cérémonie d'ère (tls13-29), l'arbitrage
+  D183, le SPRT éventuel, la réplication, le DOI Zenodo.

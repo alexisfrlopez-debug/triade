@@ -1,0 +1,19 @@
+LE MODÈLE FORMEL DE CF3 — v0.12.0
+
+LE VÉRIFICATEUR, un choix nommé : Tamarin/ProVerif ABSENTS du laboratoire — l'explorateur d'états explicites (model checking borné) tient la place : la sémantique opérationnelle de CF3 en machine à états finie abstraite, les primitives cryptographiques SYMBOLIQUES (parfaites), l'espace énuméré exhaustivement.
+
+LES BORNES : 154 états, 1152 transitions, profondeur 6, époques ≤ 3 (reproductible : le script est le modèle).
+
+LES HYPOTHÈSES D'ADVERSAIRE EXPLICITES :
+  A1 SYMBOLIQUE — HKDF/AEAD/SHA-256 parfaits, Argon2id : la phrase inconnue sans le secret utilisateur ;
+  A2 SEUIL — l'adversaire détient au plus DEUX des trois éléments (tous les sous-ensembles ≤ 2 explorés) ;
+  A3 MÉDIA — la falsification du média est modélisée (tag), le média ne peut pas être ENRICHI (les moitiés futures naissent hors machine) ;
+  A4 ANCIENS COUPLES — le rejeu complet (conteneur+piège d'une époque passée) est modélisé ;
+  A5 HORS MODÈLE — canaux auxiliaires (temps, caches, puissance), failles d'implémentation (RAM, GC), le vol des TROIS éléments (seuil dépassé), la cryptographie quantique.
+
+P1 PROUVÉE DANS LE MODÈLE — secret sous seuil (≤ 2 éléments : le secret jamais appris) (0 contre-exemple(s))
+P2 PROUVÉE DANS LE MODÈLE — refus du roll-back conteneur+piège (l'époque ne décroît jamais ; le rejeu d'époque passée est refusé nommé) (monotonie structurelle constatée, le rejeu modélisé A4 (action rejoue_époque_passée : refus))
+P3 PROUVÉE DANS LE MODÈLE — absence de destruction sur phrase erronnée (0 destruction(s) injuste(s) sur 154 états)
+P4 PROUVÉE DANS LE MODÈLE — rayon borné à une époque (le média et CF2 jamais touchés) (0 violation(s))
+
+LECTURE : PROUVÉE DANS LE MODÈLE signifie exactement cela — sous A1-A4 et dans les bornes déclarées ; ce qui sort (A5) est HORS MODÈLE et le dit. Le modèle et le vérificateur sont LE MÊME FICHIER : la re-productibilité est totale (python3 scripts/modele_formel_v120.py).

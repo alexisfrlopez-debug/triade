@@ -1,0 +1,5 @@
+propriété,énoncé,verdict,détail,hypothèses
+P1,secret sous seuil (≤ 2 éléments : le secret jamais appris),PROUVÉE DANS LE MODÈLE,0 contre-exemple(s),"A1 symbolique (HKDF/AEAD/Argon2id parfaits), A2 seuul ≤ 2"
+P2,refus du roll-back conteneur+piège (l'époque ne décroît jamais ; le rejeu d'époque passée est refusé nommé),PROUVÉE DANS LE MODÈLE,"monotonie structurelle constatée, le rejeu modélisé A4 (action rejoue_époque_passée : refus)",A4 anciens couples (le rejeu complet est modélisé)
+P3,absence de destruction sur phrase erronnée,PROUVÉE DANS LE MODÈLE,0 destruction(s) injuste(s) sur 154 états,"la phrase erronnée mène à PhraseErronee (réessai), jamais à détruire"
+P4,rayon borné à une époque (le média et CF2 jamais touchés),PROUVÉE DANS LE MODÈLE,0 violation(s),"la destruction (falsification prouvée, piège intact) ne touche que l'état local ; le média est le TÉMOIN, jamais le coupable"

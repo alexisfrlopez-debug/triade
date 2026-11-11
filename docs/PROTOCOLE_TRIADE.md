@@ -1,6 +1,6 @@
-# PROTOCOLE TRIADE v0.11.0 — Spécification technique
+# PROTOCOLE TRIADE v0.12.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.11.0. Les archives formelles des versions
+> Source de travail faisant autorité pour la v0.12.0. Les archives formelles des versions
 > précédentes demeurent : `docs/Protocole_TRIADE_v0.8.4_Specification.pdf` (v0.8.4 — dernière révision de terrain du TGN),
 > `docs/Protocole_TRIADE_v0.8.0_Specification.pdf` (v0.8.0),
 > `docs/Protocole_TRIADE_v0.7.0_Specification.pdf` (v0.7.0),
@@ -20,6 +20,23 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
+> La v0.12.0 consigne LE MODÈLE FORMEL ET LA GOUVERNANCE ASSAINIE
+> (D187/D188/D189, le troisième fichier d'instructions) : CF3 modélisé en
+> machine à états et vérifié par exploration exhaustive — les QUATRE
+> propriétés PROUVÉES DANS LE MODÈLE (le secret sous seuil, le refus du
+> roll-back, l'absence de destruction sur phrase erronée, le rayon borné à
+> une époque), les hypothèses d'adversaire EXPLICITES (A1-A5, le hors
+> modèle nommé), le vérificateur nommé (l'explorateur d'états —
+> Tamarin/ProVerif absents du labo) ; le modèle de menace RESTRUCTURÉ EN
+> DEUX PLANS (IP contre sûreté d'exécution) avec l'ordre intra-sécurité
+> EXPLICITE (le plan sûreté gagne) et la tension D81↔D183 consignée avec
+> l'analyse chiffrée ; la cristallisation ÉVALUÉE (le seuil 10 justifié
+> par le SPRT : α = 1,08 × 10⁻³, 46× plus strict que le canonique — le
+> seuil demeure, la politique jamais changée en silence) et le protocole
+> de réplication PROPOSÉ (trois axes, grille T/X, κ de Cohen ≥ 0,61) ;
+> les manifestes de kit à sha256 (la suite de D184). Aucune règle
+> modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée.
+
 > La v0.11.0 consigne LES PREUVES RENFORCÉES (D185/D186, le deuxième
 > fichier d'instructions du coffre) : SIX instruments au laboratoire
 > (graines consignées, reproductibles) — le mutation testing (832 mutants,
@@ -86,8 +103,8 @@
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.11.0 — la révision des PREUVES RENFORCÉES (D185/D186) : les six instruments de laboratoire (mutation 83,4 %, fuzzage guidé, sûreté mémoire bornée zéro hors-cadre, temps constant structurel, benchmarks facteur 15,3, indépendance zéro divergence), la spec CSPRNG en brouillon (tls13-29 — la cérémonie d'ère attend le geste du développeur), les vecteurs RFC 8446 au corpus, le manuscrit v0.11.0 (§ 4.5 les preuves renforcées). Sous la v0.10.0, l'édition académique (D182 : le manuscrit IMRAD né du dépôt, la formulation corrigée ; D183 : la proposition de séquestre chiffré, non appliquée ; D184 : l'annexe A à sha-256) le manuscrit IMRAD en anglais (résumé français) né du dépôt — quatre questions de recherche, les données du journal extraites par script (`extraire_donnees_v100.py`, le manuscrit n'affirme rien qui ne soit vérifié), la formulation corrigée dans les termes standards de l'ingénierie, l'auteur humain unique, les déclarations Ethics/Data/Limitations ; la proposition D183 (séquestre chiffré de la phrase de contrôle — alternative documentée à la garde durable D81, NON appliquée au coffre réel) ; l'annexe A de gouvernance portée à sha-256 (D184 — md5 demeure une fonctionnalité d'affichage de Loupe) ; les livrables soumission (cinq fichiers au plus) et complet. Sous la v0.9.0, la consolidation du programme d'après M10 (D178/D179/D180/D181 : la balise `loupe 0.1.1` scellée sur le douzième run recoupé 39/39) **LE JALON M10 FRANCHI le 11/11/2026** — l'application « Loupe » NÉE ENTIÈREMENT DE LA MÉTHODE (la couche I de 18 spécifications écrites-avant-code, les QUATRE chantiers de notation — 159 contrôles verts aux trois graines —, la cérémonie d'ère PASSÉE : le garde 14/14, le kit déployé au coffre /test), ONZE RUNS TERRAIN (Entrées 202–219 : ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur 0xc000007b [l'enveloppe de la lignée NORME DE FAIT], [CADRE-NÉ] [l'initialiseur .data MIROIR EXACT du CADRE_VIERGE — LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle], la classe des arguments pile [l'audit d'ABI msx64 NÉ AU BUILD], [SESSION] -7 [L'OMBRE au kit, l'artefact acquitté], [HINSTANCE-PEB] [r12 = GetModuleHandleW(NULL) LE VRAI MODULE], [D54-QUATRIÈME] + [EAX-SANS-SIGNE] [l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus étendus au 64 bits], [OFT-QWORD] [les QUATRE OFT au pas DWORD — la sixième mort NOMMÉE par le journal d'événements [4/4]], [FREE-SANS-TYPE] [le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe], [RET-NU] [mov eax, 1 ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION], [SONDE-EXE] [le faux négatif structurel : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT]) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE** (D178 — la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, l'écart 587 → 0], la cristallisation 26 × 10/10, la re-signature à la graine durable [LE TÉMOIN NE BOUGE PAS], l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179, la commande du développeur) : la version `0.1.1-dev.1` NÉE DE LA RECOMPOSITION — LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (les 17 sommes rafraîchies à la VÉRITÉ des blocs, le qword porté 0x00010008 → 0x00010101, 0 OCTET AILLEURS — le code byte-identique au vécu des onze runs, R4/R7), la carte GÉNÉRATION 17, le kit 0.1.1-dev.1 DÉPOSÉ au coffre /test (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU : si le vert tient, LA BALISE `loupe 0.1.1` SCELLÉE sur run recoupé (le miroir D165/D170). Sous les révisions de terrain v0.8.1 à v0.8.4, les enseignements des runs un à un ; sous la v0.8.0, la consolidation du programme d'après M9 (D170/D171)
-- Date : 11 novembre 2026 (preuves renforcées)
+- Version : v0.12.0 — la révision du MODÈLE FORMEL ET DE LA GOUVERNANCE ASSAINIE (D187/D188/D189) : CF3 vérifié par exploration exhaustive (quatre propriétés prouvées dans le modèle, hypothèses A1-A5 explicites) ; le modèle de menace en deux plans avec l'ordre intra-sécurité explicite ; la cristallisation justifiée par le SPRT (le seuil 10 demeure) ; le protocole de réplication proposé (grille T/X, κ de Cohen) ; les manifestes de kit à sha256 ; le manuscrit v0.12.0 § 4.6. Sous la v0.11.0, les preuves renforcées (D185/D186) : les six instruments de laboratoire (mutation 83,4 %, fuzzage guidé, sûreté mémoire bornée zéro hors-cadre, temps constant structurel, benchmarks facteur 15,3, indépendance zéro divergence), la spec CSPRNG en brouillon (tls13-29 — la cérémonie d'ère attend le geste du développeur), les vecteurs RFC 8446 au corpus, le manuscrit v0.11.0 (§ 4.5 les preuves renforcées). Sous la v0.10.0, l'édition académique (D182 : le manuscrit IMRAD né du dépôt, la formulation corrigée ; D183 : la proposition de séquestre chiffré, non appliquée ; D184 : l'annexe A à sha-256) le manuscrit IMRAD en anglais (résumé français) né du dépôt — quatre questions de recherche, les données du journal extraites par script (`extraire_donnees_v100.py`, le manuscrit n'affirme rien qui ne soit vérifié), la formulation corrigée dans les termes standards de l'ingénierie, l'auteur humain unique, les déclarations Ethics/Data/Limitations ; la proposition D183 (séquestre chiffré de la phrase de contrôle — alternative documentée à la garde durable D81, NON appliquée au coffre réel) ; l'annexe A de gouvernance portée à sha-256 (D184 — md5 demeure une fonctionnalité d'affichage de Loupe) ; les livrables soumission (cinq fichiers au plus) et complet. Sous la v0.9.0, la consolidation du programme d'après M10 (D178/D179/D180/D181 : la balise `loupe 0.1.1` scellée sur le douzième run recoupé 39/39) **LE JALON M10 FRANCHI le 11/11/2026** — l'application « Loupe » NÉE ENTIÈREMENT DE LA MÉTHODE (la couche I de 18 spécifications écrites-avant-code, les QUATRE chantiers de notation — 159 contrôles verts aux trois graines —, la cérémonie d'ère PASSÉE : le garde 14/14, le kit déployé au coffre /test), ONZE RUNS TERRAIN (Entrées 202–219 : ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur 0xc000007b [l'enveloppe de la lignée NORME DE FAIT], [CADRE-NÉ] [l'initialiseur .data MIROIR EXACT du CADRE_VIERGE — LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle], la classe des arguments pile [l'audit d'ABI msx64 NÉ AU BUILD], [SESSION] -7 [L'OMBRE au kit, l'artefact acquitté], [HINSTANCE-PEB] [r12 = GetModuleHandleW(NULL) LE VRAI MODULE], [D54-QUATRIÈME] + [EAX-SANS-SIGNE] [l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus étendus au 64 bits], [OFT-QWORD] [les QUATRE OFT au pas DWORD — la sixième mort NOMMÉE par le journal d'événements [4/4]], [FREE-SANS-TYPE] [le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe], [RET-NU] [mov eax, 1 ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION], [SONDE-EXE] [le faux négatif structurel : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT]) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE** (D178 — la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, l'écart 587 → 0], la cristallisation 26 × 10/10, la re-signature à la graine durable [LE TÉMOIN NE BOUGE PAS], l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179, la commande du développeur) : la version `0.1.1-dev.1` NÉE DE LA RECOMPOSITION — LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (les 17 sommes rafraîchies à la VÉRITÉ des blocs, le qword porté 0x00010008 → 0x00010101, 0 OCTET AILLEURS — le code byte-identique au vécu des onze runs, R4/R7), la carte GÉNÉRATION 17, le kit 0.1.1-dev.1 DÉPOSÉ au coffre /test (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU : si le vert tient, LA BALISE `loupe 0.1.1` SCELLÉE sur run recoupé (le miroir D165/D170). Sous les révisions de terrain v0.8.1 à v0.8.4, les enseignements des runs un à un ; sous la v0.8.0, la consolidation du programme d'après M9 (D170/D171)
+- Date : 11 novembre 2026 (modèle formel)
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -452,6 +469,48 @@ recroisé (SUITE, GROUPE, HRR conformes).
 instruments, la table générée depuis les preuves), les limites mises à
 jour (la sûreté mémoire BORNÉE pas prouvée, le temps constant STRUCTUREL
 pas réel, la réplication par second agent à venir).
+
+
+### 1.13 Ce que change la v0.12.0
+
+La révision du **modèle formel et de la gouvernance assainie** (D187/D188/D189,
+le troisième fichier d'instruction). Aucune règle modifiée, aucune couche
+d'exécution ajoutée, hiérarchie inchangée.
+
+**Le modèle formel de CF3** (`scripts/modele_formel_v120.py`, le script EST le
+modèle — reproductible) : la chaîne du coffre scellé en machine à états
+explicite, l'exploration EXHAUSTIVE (154 états, 1 152 transitions, époques ≤ 3,
+adversaire à seuil ≤ 2 éléments avec rejeu d'époques passées) — P1 le secret
+sous seuil, P2 le refus du roll-back (la monotonie structurelle constatée
+mécaniquement), P3 l'absence de destruction sur phrase erronée, P4 le rayon
+borné à une époque : **les quatre PROUVÉES DANS LE MODÈLE** ; les hypothèses
+A1-A5 explicites (le modèle symbolique, le seuil, le média, les anciens
+couples, le HORS MODÈLE : canaux auxiliaires, implémentation, trois éléments,
+quantique) ; le vérificateur NOMMÉ (Tamarin/ProVerif absents — l'explorateur
+d'états tient la place).
+
+**Le modèle de menace en deux plans** (D188) : le plan IP (la propriété
+intellectuelle — la confidentialité d'abord, les pertes REMÉDIABLES) et le plan
+sûreté d'exécution (la corruption, le rollback, l'environnement — l'intégrité
+et la disponibilité d'abord, les pertes IRRÉMÉDIABLES) ; **l'ordre
+intra-sécurité explicite** (la politique de projet : quand les deux plans se
+rencontrent, le plan sûreté GAGNE — un coffre cassé ne protège rien) ; la
+tension D81 ↔ D183 consignée avec l'analyse chiffrée (facteur ≈ 40 en faveur
+du séquestre Shamir — D81 DEMEURE, le geste appartient au développeur).
+
+**La cristallisation évaluée** (D189) : le seuil de 10 rebuilds analysé comme
+test séquentiel (SPRT : 5 rebuilds identiques atteignent α = 5 %, le seuil 10
+atteint α = 1,08 × 10⁻³ — 46× plus strict) ; **le seuil demeure 10** (la
+politique de projet, jamais changée en silence) ; le protocole de réplication
+proposé (`scripts/preuves_v120/protocole_replication.md` : les trois axes —
+second développeur, second domaine, second profil — la grille T/X à double
+annotation, le κ de Cohen ≥ 0,61, les critères pré-enregistrés) — proposé,
+jamais exécuté.
+
+**Les manifestes de kit à sha256** (D187) : le manifeste du kit de cérémonie
+consigne désormais sha256 (la suite de la migration D184) ; les kits déjà
+livrés demeurent (leurs manifestes md5 sont des preuves) ; md5 demeure à
+l'idempotence Drive et à l'affichage Loupe.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -1726,6 +1785,24 @@ développeur (D87/D177). Mesurer le temps réel des blocs — rejeté pour cette
 consignée. Publier les chiffres md5/aes du banc — rejeté : l'auto-
 vérification a attrapé la référence fautive, jamais un chiffre faux.
 
+### 19.14 Correspondance v0.11.0 → v0.12.0
+
+| Évolution | En v0.11.0 | En v0.12.0 | Statut |
+|---|---|---|---|
+| Modèle formel CF3 | — (hors périmètre) | quatre propriétés PROUVÉES DANS LE MODÈLE (154 états, 1 152 transitions, adversaire ≤ 2 éléments) ; hypothèses A1-A5 explicites ; le hors modèle nommé | nouveau (D187) |
+| Modèle de menace | tableau unique (§ 15.1) | DEUX PLANS : IP (remédiable) / sûreté d'exécution (irrémédiable) ; l'ordre intra-sécurité explicite ; D81↔D183 chiffrée (facteur ≈ 40) | révisé (D188) |
+| Cristallisation | règle R6 (10 rebuilds) | le seuil JUSTIFIÉ par le SPRT (α = 1,08 × 10⁻³) — le seuil DEMEURE | évalué (D189) |
+| Réplication | « N=1, la limite déclarée » | le protocole PROPOSÉ (trois axes, grille T/X, κ de Cohen ≥ 0,61) — jamais exécuté | proposé (D189) |
+| Manifestes de kit | md5 (le manifeste du kit de cérémonie) | sha256 (maj_kit.py, la suite de D184) ; les kits livrés demeurent ; md5 à l'idempotence et à l'affichage | révisé (D187) |
+| Chaîne PDF | spec_v110 + manuscrit_v110 | chaîne spec_v120 (née spec_v110) + manuscrit_v120 | révisé (D187) |
+
+Modifications explicitement rejetées (v0.12.0) : remplacer le seuil de 10 par
+le critère séquentiel à 5 — rejeté : le seuil est la politique de projet,
+l'analyse la justifie sans la remplacer. Exécuter la réplication — rejeté :
+le protocole est proposé, l'arbitrage appartient au développeur. Modifier la
+hiérarchie D19 — rejeté : la restructuration en deux plans porte l'ordre
+intra-sécurité en POLITIQUE EXPLICITE, la hiérarchie demeure la règle.
+
 ## 20. Glossaire
 
 | Terme | Définition |
@@ -1777,6 +1854,7 @@ vérification a attrapé la référence fautive, jamais un chiffre faux.
 
 | Version | Date | Contenu |
 |---|---|---|
+| v0.12.0 | 11 nov. 2026 | Révision du MODÈLE FORMEL ET DE LA GOUVERNANCE ASSAINIE (D187/D188/D189) : CF3 modélisé et vérifié par exploration exhaustive — quatre propriétés prouvées dans le modèle (secret sous seuil, refus du roll-back, pas de destruction sur phrase erronée, rayon borné), hypothèses A1-A5 explicites, hors modèle nommé ; le modèle de menace en deux plans (IP/sûreté) avec l'ordre intra-sécurité explicite et la tension D81↔D183 chiffrée ; la cristallisation justifiée par le SPRT (le seuil 10 demeure) ; le protocole de réplication proposé (grille T/X, κ de Cohen) ; les manifestes de kit à sha256 ; le manuscrit v0.12.0 § 4.6. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.11.0 | 11 nov. 2026 | Révision des PREUVES RENFORCÉES (D185/D186) : les six instruments de laboratoire — mutation testing (832 mutants, 83,4 % tués, crypto 100 %, survivants nommés), fuzzage guidé par couverture (loupe-01 60,5 %, zéro crash ; http-10 zéro faute), sûreté mémoire statique bornée (2 098 accès, zéro hors-cadre, 463 non résolus nommés), temps constant d'émulation (structurel, le temps réel non mesuré), benchmarks comparatifs (sha256 facteur 15,3 en instructions contre gcc -O2 au même émulateur ; md5/aes écartés par l'auto-vérification), indépendance de l'oracle (zéro divergence par voies distinctes) ; la spec CSPRNG manquante en brouillon (tls13-29, la cérémonie d'ère attend le geste du développeur) ; les vecteurs RFC 8446 au corpus de fixtures ; le manuscrit v0.11.0 (Results § 4.5 étendu, limites mises à jour). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.10.0 | 11 nov. 2026 | Révision de L'ÉDITION ACADÉMIQUE (D182/D183/D184) : le manuscrit IMRAD en anglais (résumé français) — quatre questions de recherche, les données réelles du journal extraites par script, la formulation corrigée (WYSIWYG par round-trip ; l'évolution du code volé bloquée, son exécution non ; termes standards ; D19 requalifiée politique de projet), l'auteur humain unique, l'agent IA en méthodes et remerciements, les déclarations Ethics/Data/Limitations ; la proposition D183 (séquestre chiffré de la phrase de contrôle — documentée, non appliquée) ; l'annexe A portée à sha-256 (D184 — md5 demeure une fonctionnalité de Loupe) ; les livrables soumission et complet. La balise `loupe 0.1.1` scellée sur le douzième run recoupé (D181) est consignée à la rangée M10. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.9.0 | 11 nov. 2026 | Révision de consolidation du programme d'après M10 (D178/D179) : LE JALON M10 — le test grandeur nature « Loupe » — est FRANCHI (l'application NÉE ENTIÈREMENT DE LA MÉTHODE : onze runs terrain, onze défauts nommés, onze retouches documentées, LA VITRINE VIVANTE chez son utilisateur, le onzième run recoupé 39/39 — la balise `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE, la dette de la carte soldée par la régénération des notations, la cristallisation 26 × 10/10, l'anti-rollback ARMÉ) : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179) : la version `0.1.1-dev.1` COMMANDÉE — la dette [R10-PÉRIMÉE] (17 sommes de l'ère dev.5) SOLDÉE À LA NAISSANCE (la pièce née de la recomposition, le qword porté 0x00010101, 0 octet de code changé — R4/R7), le kit 0.1.1-dev.1 déposé au coffre /test, LE DOUZIÈME RUN ATTENDU (la balise `loupe 0.1.1` sur le vert recoupé, le miroir D165/D170). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
@@ -1794,7 +1872,7 @@ vérification a attrapé la référence fautive, jamais un chiffre faux.
 | v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne LA RÉVISION DES PREUVES RENFORCÉES (v0.11.0, D185) : le
+La présente version consigne LA RÉVISION DU MODÈLE FORMEL ET DE LA GOUVERNANCE ASSAINIE (v0.12.0, D187) : le
 protocole entre en manuscrit — quatre questions de recherche, les données réelles
 du journal extraites par script, la formulation corrigée dans les termes standards
 de l'ingénierie, l'auteur humain unique, l'agent IA décrit en méthodes et

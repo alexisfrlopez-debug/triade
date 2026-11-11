@@ -1,0 +1,7 @@
+L'ÉVALUATION DE LA CRISTALLISATION — v0.12.0
+
+LE MODÈLE : épreuves de Bernoulli (divergence q), SPRT de Wald (H0 : q ≤ 0.01 contre H1 : q ≥ 0.5).
+LE RÉSULTAT : α = 0.05 atteint à n = 5 rebuilds identiques ; le seuil historique 10 (R6) atteint α = 1.08e-03 — 46× plus strict que le canonique 5 %.
+LA PROPOSITION : le seuil DEMEURE 10 (la politique de projet, jamais changée en silence) ; le critère séquentiel est l'ANALYSE qui le justifie — et la voie documentée d'un relâchement futur (5 rebuilds) SI le projet l'arbitre.
+
+LE PROTOCOLE DE RÉPLICATION : protocole_replication.md (les trois axes, la grille T/X, le κ de Cohen, les critères d'acceptation).

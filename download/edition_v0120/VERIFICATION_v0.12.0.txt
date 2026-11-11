@@ -1,0 +1,104 @@
+CONSTAT DE VÉRIFICATION — édition v0.12.0 (l'étape obligatoire du troisième fichier d'instruction, exécutée avant la livraison)
+==================================================================
+
+--- (a) le modèle formel EXÉCUTÉ — les sorties brutes du vérificateur ---
+=== LE MODÈLE FORMEL DE CF3 — l'explorateur d'états explicites ===
+[modèle] 154 états, 1152 transitions (257 refus nommés), profondeur 6, époques ≤ 3
+[P1] PROUVÉE DANS LE MODÈLE — 0 contre-exemple(s)
+[P2] PROUVÉE DANS LE MODÈLE — monotonie structurelle constatée, le rejeu modélisé A4 (action rejoue_époque_passée : refus)
+[P3] PROUVÉE DANS LE MODÈLE — 0 destruction(s) injuste(s) sur 154 états
+[P4] PROUVÉE DANS LE MODÈLE — 0 violation(s)
+  A5 HORS MODÈLE — canaux auxiliaires (temps, caches, puissance), failles d'implémentation (RAM, GC), le vol des TROIS éléments (seuil dépassé), la cryptographie quantique.
+
+P1 PROUVÉE DANS LE MODÈLE — secret sous seuil (≤ 2 éléments : le secret jamais appris) (0 contre-exemple(s))
+P2 PROUVÉE DANS LE MODÈLE — refus du roll-back conteneur+piège (l'époque ne décroît jamais ; le rejeu d'époque passée est refusé nommé) (monotonie structurelle constatée, le rejeu modélisé A4 (action rejoue_époque_passée : refus))
+P3 PROUVÉE DANS LE MODÈLE — absence de destruction sur phrase erronnée (0 destruction(s) injuste(s) sur 154 états)
+P4 PROUVÉE DANS LE MODÈLE — rayon borné à une époque (le média et CF2 jamais touchés) (0 violation(s))
+
+LECTURE : PROUVÉE DANS LE MODÈLE signifie exactement cela — sous A1-A4 et dans les bornes déclarées ; ce qui sort (A5) est HORS MODÈLE et le dit. Le modèle et le vérificateur sont LE MÊME FICHIER : la re-productibilité est totale (python3 scripts/modele_formel_v120.py).
+
+--- (a bis) la cristallisation et le SPRT ---
+=== L'ÉVALUATION DE LA CRISTALLISATION — v0.12.0 ===
+  n =  1 → α = 5.05e-01
+  n =  2 → α = 2.55e-01
+  n =  3 → α = 1.29e-01
+  n =  4 → α = 6.51e-02
+  n =  5 → α = 3.29e-02
+  n =  6 → α = 1.66e-02
+  n =  8 → α = 4.23e-03
+  n = 10 → α = 1.08e-03
+  n = 12 → α = 2.75e-04
+  n = 15 → α = 3.55e-05
+  n = 20 → α = 1.17e-06
+  n = 26 → α = 1.94e-08
+
+[SPRT] pour α = 0.05 (q₀ = 0.01, q₁ = 0.5) : n = 5 rebuilds suffisent
+[R6]   le seuil HISTORIQUE 10 → α = 1.08e-03 (46× plus strict que le canonique 5%)
+L'ÉVALUATION DE LA CRISTALLISATION — v0.12.0
+
+LE MODÈLE : épreuves de Bernoulli (divergence q), SPRT de Wald (H0 : q ≤ 0.01 contre H1 : q ≥ 0.5).
+LE RÉSULTAT : α = 0.05 atteint à n = 5 rebuilds identiques ; le seuil historique 10 (R6) atteint α = 1.08e-03 — 46× plus strict que le canonique 5 %.
+LA PROPOSITION : le seuil DEMEURE 10 (la politique de projet, jamais changée en silence) ; le critère séquentiel est l'ANALYSE qui le justifie — et la voie documentée d'un relâchement futur (5 rebuilds) SI le projet l'arbitre.
+
+LE PROTOCOLE DE RÉPLICATION : protocole_replication.md (les trois axes, la grille T/X, le κ de Cohen, les critères d'acceptation).
+
+--- (b) les autotests CF2/CF3/sceau aux répertoires temporaires (la session v0.12.0) ---
+coffre_cf3.py autotest : 28 PASS / 0 ÉCHEC
+test_coffre_cf3.py : 92 PASS / 0 ÉCHEC
+test_cf2.py : 54 PASS, 0 ÉCHEC
+test_sceau_I.py : 54 PASS + dépôt réel VERT (14 arbres)
+le conteneur RÉEL constaté IDENTIQUE avant/après (md5) — AUCUN chemin réel touché (discipline D105)
+
+--- (c) le rejeu intégral des harnais (la session v0.11.0, la référence courante) + le garde au geste ---
+=== (a) LE REJEU INTÉGRAL DES HARNAIS EXISTANTS — v0.11.0 ===
+loupe/harnais_noyau.py : VERDICT : VERT — le noyau loupe-01..07 est NOTÉ-MESURÉ-PROUVÉ sur pièces (les vecteurs officiels, le différentiel hashlib, l'héritage sha byte-identique
+loupe/harnais_rendu.py : VERDICT : VERT — les familles rendu + navigation loupe-08..14 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (l'oracle à scénarios vert : l'écran attendu oct
+loupe/harnais_edition.py : VERDICT : VERT — la famille édition loupe-15..18 et la table de routage étendue de loupe-09 r2 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (le différentie
+tls13/harnais_sha.py : VERDICT : VERT
+tls13/harnais_hkdf.py : VERDICT : VERT
+tls13/harnais_x25519.py : VERDICT : VERT
+tls13/harnais_aead.py :   [ok] V1.k:temps-constant-structurel — les sauts conditionnels : {'h100015': 0, 'h100016': 0, 'h100017': 1, 'h100018'
+tls13/harnais_poignee.py : VERDICT : VERT — 54 contrôles · 54 VERTS : la famille poignée + le principal NOTÉES-MESURÉES-PROUVÉES — le Cli
+tls13/harnais_enregistrement.py : VERDICT : VERT
+tls13/harnais_aead.py : VERDICT : VERT (49 verts · 0 échecs)
+m8/harnais_sys.py : BILAN : 131 contrôles · 131 verts · 0 échec(s) · empreinte 103da7250cdb46b4 · graine 20261105
+
+=== le garde du sceau ===
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+=== (b) les empreintes des artefacts scellés ===
+c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1  loupe/loupe.exe
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  tls13/proxy.exe
+
+[sceau-I] m0: vert (667fb5ae36e4ab3c…)
+[sceau-I] m1: vert (e0e084402b497bde…)
+[sceau-I] m2: vert (752c58a8ce37ddc5…)
+[sceau-I] m3: vert (8ac66a299e46567c…)
+[sceau-I] m4: vert (7e5c61fbce15d3ec…)
+[sceau-I] m5: vert (1869422eca104a6a…)
+[sceau-I] m6: vert (88e8c5444fa7c89a…)
+[sceau-I] m7: vert (f35a0ae948351a6d…)
+[sceau-I] m8: vert (e36141f75ebd8e61…)
+[sceau-I] tls13: vert (4255986216f8b459…)
+[sceau-I] loupe: vert (59e4871ab5b47623…)
+[sceau-I] demo: vert (96e6fd4eaccd7c3f…)
+[sceau-I] terrain: vert (754cb03c967e51d3…)
+[sceau-I] v06: vert (a8166442abe2d98f…)
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+--- (d) l'audit de gouvernance (D1..D189, la cohérence D81/D183 au tableau restructuré) ---
+[A1] les décisions D100+ portent une structure reconnaissable et D1..D189 vivent au corpus : VERT — 146 entrées à DECISIONS.md, 0 hors corpus ; sans structure : aucune
+[A2] aucun ID de décision réutilisé (formes titres) : VERT — doublons : aucun
+[A3] les références d'amendement se résolvent (3 sources) : VERT — 5 références ; irrésolues : aucune
+[A4] la plus haute décision consignée est D189 (le modèle formel v0.12.0) : VERT — max = D189
+[A5] entrées du journal uniques et continues (3 ères : Task ID, Journal, Entrée ; trous historiques 4-7/54 documentés) : VERT — 221 entrées (max 225 : 17 Task ID + 204 Journal/Entrée), doublons aucun, trous aucun
+[A6] la décision D182 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D183 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D184 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D185 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D186 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D187 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D188 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D189 porte son contenu attendu : VERT — absents : aucun
+
+AUDIT DE GOUVERNANCE : VERT — structure, unicité, chaînage, append-only, entrées du journal et contenu de l'édition constatés.

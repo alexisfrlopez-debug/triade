@@ -220,6 +220,16 @@ def carte_du_kit(folder_id, prefix=""):
 
 # ---------------------------------------------------------------- manifeste
 
+def sha256_de(chemin: pathlib.Path) -> str:
+    """L'empreinte de GOUVERNANCE du manifeste — sha256 depuis la v0.12.0
+    (D187 : la migration md5 → sha256 des empreintes de gouvernance ; les
+    kits DÉJÀ LIVRÉS demeurent — leurs manifestes md5 sont des PREUVES,
+    les preuves ne se réécrivent jamais ; md5 demeure pour l'IDEMPOTENCE
+    Drive [l'API donne le md5] et l'affichage Loupe [fonctionnalité])."""
+    import hashlib
+    return hashlib.sha256(chemin.read_bytes()).hexdigest()
+
+
 def constituer_manifeste(emp, commit):
     lignes = [
         "MANIFESTE du KIT UNIQUE DE CÉRÉMONIE TRIADE (D130)",
@@ -228,7 +238,8 @@ def constituer_manifeste(emp, commit):
         "=" * 62,
         f"Commit de référence : {commit} — le v06/ de ce kit est identique",
         "octet pour octet à TRIADE-sauvegarde-git/v06 à CE commit.",
-        f"Généré le {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} — empreintes md5 :",
+        f"Généré le {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} "
+        "— empreintes sha256 (gouvernance, D187 — md5 demeure à l'affichage) :",
         "",
     ]
     for nom, valeur in emp.items():
@@ -303,7 +314,7 @@ def deployer(quiet=False):
                         "conservé tel quel côté Drive", quiet)
 
     manifeste_txt = constituer_manifeste(
-        {nom: ds.md5_of(c) for nom, c in sorted(cibles.items())}, commit)
+        {nom: sha256_de(c) for nom, c in sorted(cibles.items())}, commit)
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="maj_kit_"))
     chemin_man = tmp / "MANIFESTE.txt"
     chemin_man.write_text(manifeste_txt, encoding="utf-8")
