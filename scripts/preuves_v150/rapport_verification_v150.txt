@@ -1,0 +1,22 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.15.0
+(le clone frais, les comptes, les pièces, le PDF)
+  V1a le garde des QUATORZE arbres signés : VERT — sceau_I.verifier() == OK
+  V1b la pièce scellée loupe.exe 0.1.1 : VERT — sha256 c111510535767a40…
+  V1b la pièce scellée proxy.exe 1.0.0 : VERT — sha256 446279f3ab356900…
+  V2a le model-checking re-exécuté (clone frais) : VERT — code 0
+  V2b compte « D187 reproduit » : VERT — confronté au clone
+  V2b compte « la préservation » : VERT — confronté au clone
+  V2b compte « bornes étendues e≤5 » : VERT — confronté au clone
+  V2b compte « bornes étendues e≤7 » : VERT — confronté au clone
+  V2b compte « les 4 verdicts » : VERT — confronté au clone
+  V3 le raffinement re-exécuté (clone frais) : VERT — 34 pas, 0 écart
+  V4 le κ autotesté (clone frais) : VERT — trois cas synthétiques
+  V5a les tableaux régénérés identiques (statuts_v150.tex) : VERT — bit à bit
+  V5b la table des preuves LONGTABLE rendue : VERT — 34 lignes
+  V6a les statuts P1-P4 relus de la pièce : VERT — modele_invariant.csv (jamais gravés)
+  V6b le raffinement relu de la pièce : VERT — raffinement.csv : 34/0
+  V7a le manuscrit v0.15.0 relu : VERT — 21 pages
+  V7b les statuts rendus : VERT — 9+ « proved unbounded », les kits en attente
+  V7c aucune référence cassée : VERT — zéro « ?? »
+
+LE BILAN : VERT — l'édition est vérifiée de bout en bout.

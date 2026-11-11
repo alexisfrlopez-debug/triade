@@ -8200,3 +8200,39 @@ Work Log:
 - SUITE (D196) : les preuves non bornées, les tests de raffinement,
   les bornes étendues, les statuts systématiques, les documents, les
   zips, l'archivage ysddxpk0o — À LA CONTINUATION.
+
+Task ID: 137
+Agent: Z.ai (agent principal)
+Task: LA v0.15.0 MENÉE À TERME — les preuves non bornées, le
+raffinement, les kits, la réplication, les statuts systématiques, les
+documents, les livrables ; l'étape de vérification 18/18 ; la règle
+D197 appliquée (les quinze anciens livrables archivés) ; l'instruction
+ic09ydeli archivée après exécution.
+
+Work Log:
+- LE RECOUPEMENT d'abord (Entrée 230/D197) : le croisement
+  d'attribution ic09ydeli↔ysddxpk0o constaté aux métadonnées Drive
+  (jamais modifiés depuis le dépôt 11/11 13:21 UTC), corrigé aux gestes
+  (ysddxpk0o → ARCHIVE, ic09ydeli → /instructions), la règle du contenu
+  cité consignée.
+- L'INVARIANT INDUCTIF : le plafond retiré, I1-I4, la préservation par
+  les 13 règles sur 288 formes, la translation δ, la monotonie
+  inconditionnelle — P1-P4 PROUVÉES NON BORNÉES ; D187 reproduit
+  exactement (154/1 152) ; les bornes étendues zéro hors I.
+- LE RAFFINEMENT : 34 pas contre coffre_cf3.py, zéro écart, les chemins
+  d'échec inclus, cinq époques vécues aux deux niveaux.
+- LES TROIS KITS : le dudect (l'image mémoire étendue, le FIPS abc
+  EXACT natif, l'autotest POSIX), le fence.i silicium, le terrain tiers
+  — EN ATTENTE, aucun chiffre.
+- LA RÉPLICATION : la grille finalisée, le κ autotesté, les critères
+  inchangés, les statuts consignés.
+- LES DOCUMENTS : le manuscrit 21 pages (la table des statuts générée,
+  la dette de la table des preuves GUÉRIE — longtable), la spec 64
+  pages (§ 1.16, § 19.17, D197/D198, consignée n°56), le md.
+- L'ÉTAPE DE VÉRIFICATION : 18/18 VERT (le garde 14/14, les pièces
+  intactes, le clone frais, les comptes, les tableaux, le PDF).
+- LES LIVRABLES : soumission (5 fichiers) + complet (58 entrées) au
+  coffre ; LA RÈGLE D197 APPLIQUÉE : les 15 livrables v0.10.0–v0.14.0
+  archivés ; ic09ydeli archivée après exécution.
+- SUITE : les runs matériels du développeur (les trois kits), le
+  séquestre D183, la cérémonie d'ère, la réplication.

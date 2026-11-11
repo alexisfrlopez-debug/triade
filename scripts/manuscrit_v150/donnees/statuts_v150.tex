@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering\small
+\caption{Systematic proof statuses (the v0.15.0 requirement): every claim carries its status and its evidence piece.}
+\label{tab:statuts}
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+Claim & Status & Evidence \\
+\midrule
+P1 secret below threshold & proved unbounded & inductive invariant $I_1$ (secret $\Rightarrow$ threshold 3); preservation by all 13 rules over 288 state shapes; epoch translation $\delta\in\{7,50,1000\}$ uniform \\
+P2 rollback refusal & proved unbounded & unconditional epoch monotonicity (4{,}096 shapes, zero decrease); replay rules return the state unchanged \\
+P3 no destruction on wrong phrase & proved unbounded & inductive invariant $I_2$: no rule ever writes unjust destruction \\
+P4 blast radius one epoch & proved unbounded & inductive invariant $I_3$: no rule ever touches the trap media or the CF2 fragments \\
+Model $\leftrightarrow$ implementation & verified in the laboratory & 34 refinement steps, 0 gap(s); five epochs lived at both levels, every failure path replayed \\
+Bounded cross-checks & proved bounded & the v0.12.0 explorer reproduced exactly (154 states / 1{,}152 transitions); extended bounds 228/1{,}902 ($e\le5$, $d\le8$) and 372/3{,}342 ($e\le7$, $d\le12$), zero states outside $I$ \\
+Structural constant time & proved bounded & secret-independent instruction traces under emulation (v0.11.0) \\
+Wall-clock constant time & awaiting hardware run & the dudect kit: four targets extracted from the sealed piece, FIPS-validated native call, dual-backend measurer --- no number exists until the developer runs it \\
+\code{fence.i} on silicon & awaiting hardware run & the M7 scenario retargeted at a physical RV64 board; the TCG emulation could not prove instruction-cache semantics \\
+Third-machine field liveness & awaiting hardware run & the Loupe kit on a second Windows machine, full T0--T7+S0 scenario \\
+Compiler-reference comparison & measured (v0.14.0) & zero divergence, SHA-256 parity at equal work; H4 holds \\
+Independent replication & awaiting (recruitment / real command) & the T/X grid finalised, the $\kappa$ calculator autotested (synthetic cases), criteria pre-registered unchanged \\
+\bottomrule
+\end{tabularx}
+\end{table}

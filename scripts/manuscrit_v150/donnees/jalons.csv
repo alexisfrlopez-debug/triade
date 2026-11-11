@@ -1,0 +1,12 @@
+jalon,capacite,date,balise,sources,preuve_labo,preuve_terrain
+M0,"Artefact chain (notation, bytes, PE, execution)",2026-10-26,0.1.0,"Entrées 1-13, D26",round-trip 100\%; executable < 4 KiB,Windows 11 real machine execution
+M1,Reusable blocks (mini-libc),2026-10-26,0.2.0,"Entrées 14-20, D32",oracle 21/21; first crystallisation,terrain line « TRIADE M1 : minilibc 21/21 OK »
+M2,Hot patching,2026-10-27,0.3.0,"Entrées 21-38, D43",conformity 68/68; 8 instrumented iterations,"live patch + rollback on real machine, zero post-patch regression"
+M3,Untrusted inputs,2026-10-28,0.4.0,"Entrées 39-64, D72-D74",$10^6$ fuzzed cases x2 seeds; 161 conformity controls,transparent proxy for curl validated 6x on terrain
+M4,Encrypted tunnel (Schannel),2026-10-29,0.5.0,"Entrées 66-90, D104",560-case SSPI scenario oracle x4 seeds; 12 mutations caught,run 17-H: HTTPS transit + clean failure on invalid certificate
+M5,Complete tool (VM interception),2026-11-04,0.6.0,"Entrées 100-143, D148",per-build fingerprints active,"browser flow intercepted in isolated VM (run e4, criterion (b) D136)"
+M6,Cross-OS portability (ELF64),2026-11-05,0.7.0,"Entrées 144-149, D154",7/7 conformity suite; layer-I diff zero,"WSL2 terrain run on developer kernel distinct from lab, 22/22 recoup"
+M7,Cross-ISA portability (RISC-V),2026-11-05,0.8.0,"Entrées 150-155, D155",round-trip 100 % on new ISA; fence.i patch,"terrain run green, 29/29 recoup on crossed pieces"
+M8,Direct syscalls (domain sys),2026-11-05,0.9.0,"Entrées 156-164, D160-D165",61 harness greens; 131 socket-socle controls,"run on real ntdll: 35 greens/0 failure, hooked-stub refusal -4, 30/30 recoup"
+M9,Pure TLS 1.3 (domain tls13),2026-11-07,1.0.0,"Entrées 166-194, D166-D170",28 blocks; 589 structural locks; handshake 54/54 x3 seeds; cross-lock 86/86,REAL session with a real server; sealed on terrain run recoup 34/34
+M10,Full-scale test: the Loupe application,2026-11-11,loupe 0.1.0 / 0.1.1,"Entrées 195-222, D171-D181",18 blocks; 159 controls x3 seeds; cross-lock 26/26; seal guard 14/14,12 terrain runs; 11 named defects; showcase alive (0/0) runs 10-12; seal on recoup 39/39

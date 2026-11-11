@@ -1,0 +1,889 @@
+% =====================================================================
+%  CH 1-4 : Vision · Couche I et taxonomie · Couches et traçabilité · Carte
+% =====================================================================
+\section{Vision et objectifs}\label{sec:vision}
+
+Le développement logiciel est entré dans l’ère \emph{agent-first} : une part croissante du
+code est écrite, relue et modifiée par des modèles de langage plutôt que par des humains.
+Cette bascule remet en question une hypothèse centrale de nos outils — que le code source
+est optimisé pour la lecture humaine. TRIADE est la réponse disciplinée à ce réexamen :
+plutôt que de supprimer les langages (une impossibilité de principe, puisqu’un modèle de
+langage manipule des symboles textuels et que tout format binaire rendu lisible par un
+agent constitue de facto un langage), TRIADE déplace le langage vers une fine couche de
+spécification maintenue par l’agent, tandis que l’artefact livré est du code machine natif
+pur. Le compilateur disparaît du pipeline de livraison : ce que l’agent écrit est ce qui
+s’exécute — et rien d’autre.
+
+Le nom encode l’architecture : trois couches indissociables — Intention (I), Binaire (B),
+Carte (C) — unies par un verrou croisé cryptographique. La couche I contient le quoi et le
+pourquoi : contrats typés, pré et post-conditions, invariants, cas d’échec, vecteurs de
+vérification. La couche B contient le comment : des octets scellés, versionnés, à adresses
+stables. La couche C est l’index naviguable qui lie les deux et sert d’unique interface de
+développement à l’agent.
+
+La v0.4.0 tire les enseignements de la première validation à l’échelle — le recodage
+complet de RoomEq (démonstration v0.3) — et les convertit en normes : ce que la
+démonstration a pratiqué (reverse-specs, pré-versions, partage de fixtures, mesure avant
+optimisation) devient exigence ; ce que son analyse des défauts a révélé devient
+taxonomie ; ce que son étude de cas établit et ne prouve pas reste explicitement hors
+périmètre de preuve.
+
+La v0.5.0 est la révision du retour du terrain. Les jalons M0 (chaîne artefact), M1
+(mini-libc scellée) et M2 (patch à chaud en production, avec retour arrière) sont
+franchis — chacun sur validation terrain Windows 11, chacun scellé par une balise
+finale immuable (0.2.0, 0.3.0). La campagne M2 a coûté huit classes de défauts
+invisibles à l’émulation (§\ref{sec:taxonomieX}) — le prix d’une leçon : un oracle
+valide un artefact contre un modèle d’environnement, et la complétude du modèle ne se
+démontre qu’en exécutant le binaire sur le système réel. Ce que le terrain a appris
+devient norme : la boucle d’évidence (§\ref{sec:terrain}), la taxonomie X,
+l’instrumentation contractualisée — et l’ouverture du jalon M3, contrats renforcés
+sur entrées non fiables.
+
+\subsection{Fonction objectif hiérarchisée — invariant de révision}\label{sec:objectif}
+
+\begin{center}
+\large\bfseries Sécurité $>$ Performance $>$ Optimisation $>$ Coût en tokens
+\end{center}
+
+\medskip
+
+Arbitrage lexicographique : un objectif n’est jamais sacrifié au profit d’un objectif de
+rang inférieur. La v0.4.0 consigne cette hiérarchie comme \textbf{invariant de révision}
+(D19) : aucune révision future du protocole ne peut la modifier sans invalider
+explicitement le protocole entier — pas l’ordre, pas les rangs, pas la non-compensation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{La fonction objectif et ses métriques de validation.}
+\label{tab:objectif}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Objectif} & \textbf{Signification concrète} & \textbf{Métrique de validation} \\
+\midrule
+Sécurité & Sûreté mémoire validée par oracle ; intégrité carte $\leftrightarrow$ binaire ;
+durcissement au chargement & 0 corruption détectée ; tout échec de verrou bloque la
+session ; échec au lancement = arrêt propre \\
+Performance & 100 \% code machine natif ; zéro abstraction intermédiaire &
+Comparaison par bloc scellé face à une référence compilée \\
+Optimisation & Descente à l’ISA sur hot paths identifiés — jamais sans mesure (R11) &
+Gain mesuré et journalisé par bloc optimisé \\
+Coût en tokens & Édition ciblée via la carte ; jamais de lecture intégrale du binaire &
+Budgets par type d’opération (§\ref{sec:carte}) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Périmètre et non-objectifs}\label{sec:perimetre}
+
+Cinq non-objectifs. Premièrement, TRIADE ne prétend pas remplacer les langages dans
+l’industrie : c’est une architecture de laboratoire. Deuxièmement, la furtivité face aux
+EDR n’est pas recherchée : l’outil cible est un utilitaire de pentest pour tests autorisés
+en laboratoire, appelant les API du système via les interfaces standards du profil.
+Troisièmement, l’universalité est structurelle mais progressive : chaque profil doit être
+instancié et validé (M6, M7) avant d’être déclaré supporté — le protocole ne promet pas la
+portabilité, il la vérifie. Quatrièmement, aucune couche d’abstraction à l’exécution
+(bytecode portable, machine virtuelle, traduction à la volée) n’est introduite : elle
+trahirait la fonction objectif Performance. Cinquièmement, la couche de gouvernance
+validée par la démonstration et le cœur natif du protocole (notation, verrou
+cryptographique sur octets, patch à chaud) restent des niveaux de preuve distincts : les
+jalons M0 à M7 demeurent la charge de validation du cœur natif.
+
+\subsection{Ce que change la v0.4.0}\label{sec:nouveautes}
+
+Dix-sept évolutions, toutes tracées dans la correspondance du §\ref{sec:correspondance} et
+dans le journal des versions, toutes rattachées aux décisions D19 à D24 : normalisation de
+la couche I, taxonomie des défauts, traçabilité I $\leftrightarrow$ C $\leftrightarrow$
+B $\leftrightarrow$ tests, norme de fragmentation, localisation par intention, R10
+renforcée, R11 nouvelle, suite de conformité par profil, parité inter-profils,
+pré-versions, reverse-specs, journal d’optimisation, modèle de menace étendu, journal des
+décisions normalisé, tableau de bord de conformité. Aucune règle existante n’est
+affaiblie ; aucune couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction
+objectif est inchangée.
+
+\subsection{Ce que change la v0.5.0}
+
+Huit évolutions, toutes tracées dans la correspondance (§\ref{sec:evolutions050}) et le
+journal des versions, toutes rattachées aux décisions D26 à D45 : la validation
+terrain devient une couche de vérification normée — boucle d’évidence, journal
+d’exécution, instrumentation contractualisée, diff chirurgical (§\ref{sec:terrain}) ;
+la taxonomie des défauts s’étend des classes T (contrat non écrit) aux classes X —
+défauts invisibles à l’émulation, huit classes nommées par la campagne M2
+(§\ref{sec:taxonomieX}) ; l’état des jalons est constaté — M0, M1 et M2 franchis sur
+validations terrain Windows 11, balises finales 0.2.0 et 0.3.0 posées
+(§\ref{sec:jalons}) ; le budget de localisation est corrigé à 64 tokens (D31) et les
+budgets affichent leurs valeurs mesurées ; les volumes d’oracle effectifs sont
+consignés ; les preuves terrain sont archivées brutes avec leurs empreintes ; le
+corpus de démonstration (huit itérations instrumentées) devient l’occurrence de
+référence de la méthode ; le jalon M3 est ouvert — contrats renforcés sur entrées non
+fiables et fuzzing à propriétés (D45). Aucune règle n’est modifiée ; aucune couche
+n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
+
+\subsection{Ce que change la v0.5.1}\label{sec:nouveautes051}
+
+Un composant nouveau et deux constats, tous tracés dans la correspondance
+(§\ref{sec:evolutions051}) et le journal des versions, rattachés à la décision D75 : le
+\textbf{coffre-fort des phrases maîtresses} — conteneur chiffré TRIADE-CF1 centralisant
+toutes les phrases maîtresses par projet, sur la pile cryptographique de la carte au
+repos (Argon2id aux planchers, HKDF à contexte dédié, XChaCha20-Poly1305), doté d’un
+autotest de falsification et de règles d’export/import (continuité,
+§\ref{sec:gouvernance} ; FORMAT\_CARTE § 11) ; l’état des jalons est constaté — M3
+franchi le 28 octobre 2026 sur la campagne million (D72), la conformité permanente
+(D73) et le scellage de la balise finale 0.4.0 (D74) ; le modèle de menace gagne la
+ligne du vol du coffre-fort (§\ref{sec:menaces}). Aucune règle n’est modifiée ; aucune
+couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est inchangée.
+
+\subsection{Ce que change la v0.5.2}\label{sec:nouveautes052}
+
+Une évolution de discipline, tracée dans la correspondance (§\ref{sec:evolutions052}) et
+le journal des versions, rattachée à la décision D81 : la \textbf{phrase de contrôle du
+coffre-fort passe sous garde durable} — dès sa production (init, rotation,
+changement), elle est sauvegardée dans le dépôt git (commit dédié, push GitHub, miroir
+du coffre Drive par le hook) et au racine du coffre Drive \emph{avant} toute autre action
+de la session ; le fichier \code{PHRASE-CONTROLE-COFFRE.txt} (phrase seule sur une
+ligne, lisible tel quel par \code{--phrase-fichier}) \emph{est} la remise — l’affichage
+unique de cérémonie (D27/D30) cesse d’être le canal de survie. Le constat fondateur : la
+rotation D80 avait produit une phrase neuve dont la remise prévue en fin de tour n’a
+jamais eu lieu — la session d’exécution est morte avant (pannes d’infrastructure
+récurrentes) — et la phrase ne vivait plus que dans le bac à sable éphémère : un décès
+d’infra de plus et le coffre entier devenait indéchiffrable à jamais. L’arbitrage est
+consigné : le risque de \textsc{perte} (vécu, répété) est jugé supérieur au risque
+d’\textsc{exposition} (URL non devinable) ; le modèle de menace en tire la conséquence
+honnête — la confidentialité des phrases au repos repose désormais sur le contrôle
+d’accès au dossier du coffre Drive, la mitigation première devient la restriction du
+partage par lien, et une phrase entrée dans l’historique git y demeure à vie : on ne
+compte plus sur sa confidentialité, la rotation reste le remède. L’état des jalons est
+constaté — M4 ouvert le 28 octobre 2026 (D77, couche I écrite-avant-code : huit
+spécifications \code{tls} et deux révisions \code{http}). Aucune règle n’est modifiée ;
+aucune couche n’est ajoutée à l’exécution ; la hiérarchie de la fonction objectif est
+inchangée.
+
+\subsection{Ce que change la v0.6.0}\label{sec:nouveautes060}
+
+La révision de génération attendue par le plan : le \textbf{programme de souveraineté
+cryptographique est accompli et prouvé sur terrain} — décision de passation D133,
+arbitrage du développeur. Trois axes livrés (§\ref{sec:souverainete}) : l'\textbf{axe 2}
+(D86) — le coffre CF2 à clé maîtresse répartie par Shamir, cinq gardes seuil trois,
+sentinelle à double seuil puis PORTE D120 ; l'\textbf{axe 3} (D87) — le sceau de
+l'Intention : dix arbres de couche I signés par la clé Ed25519 hors-ligne du
+développeur, gardes de build et de patch ; l'\textbf{axe 4} (D121, né du terrain) — le
+coffre CF3 : la serrure à triple scellement, le piège sur média séparé, la sentinelle
+instantanée \emph{par invocation} et le cycle en deux actes. L'\textbf{axe 1} (D85,
+attestation TEE) demeure une exigence consignée : l'infrastructure sans racine de
+confiance matérielle ne peut pas la satisfaire et le dit. La \textbf{chaîne réelle du
+coffre} a migré sur le terrain du développeur les 30--31 octobre 2026 — CF1 vérifié
+INTÈGRE, phrase de contrôle changée (D110), CF2 migré (cinq gardes, seuil 3, trois
+copies hors-ligne), CF3 migré (époque 1, checksum \code{0cc89a96}), verdict à froid
+VERT deux fois — les cérémonies étant conduites par le maître de cérémonie graphique
+(D107--D118) avec le kit Drive tenu identique au miroir par construction (D130). Un
+\textbf{coffre neuf naissait CF3} : \code{init} direct à l'époque 1 — la chaîne
+de migration est l'histoire du coffre réel, pas un rite obligé (la v0.6.1 remet ce
+choix au développeur — §\ref{sec:nouveautes061}, §\ref{sec:initniveau}). Un document
+complémentaire, le \emph{Livre du Coffre} (même date, même dépôt), porte la posture
+opératoire du maître : cérémonies pas à pas, runbook, mode dégradé. Aucune règle du
+cœur n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie de la
+fonction objectif est inchangée.
+
+\subsection{Ce que change la v0.6.1}\label{sec:nouveautes061}
+
+Une seule règle, explicitement invalidée et remplacée (§\ref{sec:evolutions061}) :
+le niveau de sécurité d'un coffre neuf. La v0.6.0 (D133) l'avait fixé — un coffre
+neuf naît CF3, \code{init} direct à l'époque 1 ; la v0.6.1 (D137) en fait
+\textbf{l'arbitrage du développeur au moment de créer son projet de développement} :
+CF1, CF2 ou CF3, chacun avec son acte de naissance, ses obligations et son guide
+(§\ref{sec:initniveau}) — imposer CF3 par défaut risque d'être trop contraignant
+selon le projet : média du piège à produire dès le premier jour, cycle en deux actes
+à chaque session, sachet physique à tenir — la contrainte se justifie quand le secret
+la mérite. La chaîne de migration CF1 $\to$ CF2 $\to$ CF3 demeure disponible à tout
+moment pour un coffre dont les besoins grandissent ; le coffre réel de TRIADE reste
+CF3 (époque 1, checksum \code{0cc89a96}). Aucune autre règle n'est modifiée ; aucune
+couche n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif est
+inchangée.
+
+\subsection{Ce que change la v0.7.0}\label{sec:nouveautes070}
+
+La révision de consolidation du programme d'après M7 (D160) : ce que la clôture de la
+v0.6.1 tenait « hors périmètre courant » entre dans la spécification, sur résultats
+mesurés — la clause est levée NOMMÉMENT pour les deux premières familles, les profils
+additionnels demeurent hors périmètre. Le \textbf{jalon M8} (le bloc optionnel de
+syscalls directs — le domaine \code{sys}) est franchi : la charte à huit règles (le SSN
+est une donnée, jamais un octet de code ; le motif du stub vérifié avant toute
+extraction ; un stub divergent est un refus nommé — le résolveur ne devine jamais, il ne
+s'adapte jamais en silence), les spécifications sys-01…03 écrites-avant-code, le harnais
+différentiel 61 contrôles verts sur fixtures \code{ntdll} synthétiques (le laboratoire
+ne connaît jamais le SSN du terrain), la cérémonie de l'ère passée avant le build (12
+arbres, D162/D163), le run terrain sur le VRAI \code{ntdll} — la twin de la ligne
+hello-02 par les DEUX chemins (l'IAT \code{kernel32} et le syscall direct
+\code{NtWriteFile}), le refus $-4$ nommé du stub crocheté — recoupé 30/30 sur pièces
+croisées, la finale \code{0.9.0} scellée (Entrée 164, D165 : le scellage exige le
+verdict du recoup comme pièce ; le scellage est un fait de carte, l'artefact ne bouge
+jamais). Le \textbf{jalon M9} (TLS 1.3 pur en blocs scellés — le domaine \code{tls13},
+l'ère 1.0.0) est ouvert (D166) : la couche I complète — 28 spécifications en six
+familles (sha, hkdf, x25519, aead, enregistrement, poignée, principal), l'instrument
+\code{verifier\_specs\_m9a.py} 117 contrôles verts (D167) — et la cérémonie de l'ère
+passée le 05/11 : la remise du développeur, TREIZE arbres signés hors ligne à la clé du
+04/11 (la continuité prouvée par le déterminisme Ed25519, D163 : les onze arbres
+inchangés rendent les signatures de l'ère M8), le garde repassé VERT 13/13 — la dette
+D166 soldée sur pièces. Le \textbf{sceau de l'Intention} porte désormais treize arbres
+(§\ref{sec:sceauI}) et les cérémonies d'ère entrent au protocole
+(§\ref{sec:ceremoniesere}) : la dette se nomme à la naissance, jamais après coup (D166,
+règle 8) ; la charge se prépare au geste qui sert la main du développeur (D168). Aucune
+règle du cœur n'est modifiée ; aucune couche n'est ajoutée à l'exécution ; la hiérarchie
+de la fonction objectif est inchangée.
+
+\subsection{Ce que change la v0.9.0}\label{sec:nouveautes090}
+
+La révision de consolidation du programme d'après M10 (D178/D179). Le \textbf{jalon
+M10} (le test grandeur nature — le domaine \code{loupe}) est \textbf{franchi} :
+l'application « Loupe », l'éditeur hexadécimal au panneau d'empreintes, est NÉE
+ENTIÈREMENT DE LA MÉTHODE — la cérémonie d'ère passée sur pièces (le garde à
+QUATORZE arbres, la dette D166/D171 soldée), la couche I de 18 spécifications
+écrites-avant-code (D172), les QUATRE chantiers de notation (D173–D175 : les 18
+blocs NOTÉS-MESURÉS-PROUVÉS, 159 contrôles verts aux trois graines), le kit déployé
+au coffre \code{/test} (M10-(d)) — ET DOUZE RUNS TERRAIN (M10-(e), Entrées 202–222) :
+ONZE DÉFAUTS NOMMÉS SUR ONZE RUNS FAUTIFS (le douzième vert de bout en bout —
+le résidu [T0-PÉRIMÉ] divulgué, non compté : une bannière de texte, aucune
+porte touchée), ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur
+0xc000007b (l'enveloppe prouvée de la lignée NORME DE FAIT), [CADRE-NÉ]
+(l'initialiseur \code{.data} MIROIR EXACT du \code{CADRE\_VIERGE} du harnais — LE
+GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle), la
+classe des arguments pile (l'audit d'ABI msx64 NÉ AU BUILD), [SESSION] $-7$
+VERROUILLÉ (L'OMBRE au kit, l'artefact acquitté), [HINSTANCE-PEB] (l'entrée
+réécrite : r12 = GetModuleHandleW(NULL) LE VRAI MODULE), [D54-QUATRIÈME] +
+[EAX-SANS-SIGNE] (l'IAT relogée à 0x3100 en QUATRE plages séparées par NULL, les 20
+rendus négatifs étendus au 64 bits), [OFT-QWORD] (les QUATRE OFT au pas DWORD du
+chargeur — la sixième mort NOMMÉE par le journal d'événements [4/4]),
+[FREE-SANS-TYPE] (le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe
+d'exception), [RET-NU] (\code{mov eax, 1 ; ret} — le verdict ATTACH VRAI PAR
+CONSTRUCTION), [SONDE-EXE] (le faux négatif STRUCTUREL de la sonde de liaison : le
+chargeur de bibliothèque ne résout JAMAIS les imports d'un module exécutable — LA
+LIAISON PROUVÉE PAR LE VIVANT) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et
+onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR).
+
+LE ONZIÈME RUN recoupé 39/39 : \textbf{LA BALISE \code{loupe 0.1.0} SCELLÉE PAR
+FAIT DE CARTE} (D178 : la dette de la carte soldée par la RÉGÉNÉRATION DES
+NOTATIONS — 18/18 notations == la pièce OCTET POUR OCTET, l'écart de l'audit
+$587 \to 0$ ; la cristallisation $26 \times 10/10$ ; la re-signature à la graine
+durable D144 — LE TÉMOIN NE BOUGE PAS ; l'anti-rollback ARMÉ ; \code{loupe.exe}
+INTACT \code{054de960…} — LE MÊME binaire que le run a couru) : \textbf{LA MÉTHODE
+TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION — de l'intention (la couche I) à l'octet
+vécu chez son utilisateur}.
+
+\textbf{LE PROGRAMME D'APRÈS M10 APPARTIENT AU DÉVELOPPEUR} : la version
+\code{0.1.1-dev.1} est COMMANDÉE (D179) — la dette [R10-PÉRIMÉE] (les 17 sommes de
+l'ère dev.5 que les retouches des Entrées 210/214 changèrent sans rafraîchir la
+table) SOLDÉE À LA NAISSANCE : la pièce naît de LA RECOMPOSITION même (chaque
+somme == son bloc relu, par construction), le qword version porté 0x00010101,
+0 OCTET AILLEURS — le code BYTE-IDENTIQUE au vécu des douze runs (R4 : le contrat
+stable ; R7 : les adresses intactes), la carte GÉNÉRATION 17 ; le kit
+\code{0.1.1-dev.1} DÉPOSÉ au coffre \code{/test} (loupe-kit-13, le réceptacle
+ARMÉ) — LE DOUZIÈME RUN VÉCU ET RECOUPÉ 39/39 (l'Entrée 222 : T0$\to$T7 tout
+vert pour la cinquième fois, la cascade 205 vécue pour la deuxième, la vitrine
+vivante la troisième — 0 et 0, aucune porte touchée) : LA BALISE
+\code{loupe 0.1.1} SCELLÉE PAR FAIT DE CARTE sur run terrain recoupé (D181 :
+la dette [R10-PÉRIMÉE] soldée à la naissance, la cristallisation 26 × 10/10,
+l'anti-rollback armé — \code{loupe.exe} INTACT \code{c1115105…}, LE MÊME
+binaire que le douzième run a couru). Le projet fils COFFRE-FORT demeure dégelable au rythme du
+développeur (D135 amendée par D171) : la frontière fondatrice demeure INTACTE.
+Aucune règle du cœur n'est modifiée ; aucune couche n'est ajoutée à l'exécution ;
+la hiérarchie de la fonction objectif est inchangée.
+
+\subsection{Ce que change la v0.10.0}\label{sec:nouveautes100}
+
+La révision de L'ÉDITION ACADÉMIQUE (D182, la commande du développeur du
+11/11 : trois fichiers d'instructions au dossier \code{/instructions} du
+coffre). La présente révision \textbf{consigne} l'édition académique du
+protocole ; elle ne modifie AUCUNE règle, n'ajoute AUCUNE couche
+d'exécution, laisse la hiérarchie de la fonction objectif inchangée — le
+modèle D180 : le protocole consigne, il ne légifère pas.
+
+\textbf{LE MANUSCRIT ACADÉMIQUE} (\code{docs/TRIADE\_manuscrit\_v0.10.0.pdf},
+la chaîne \code{scripts/manuscrit\_v100/}) : une édition IMRAD en anglais
+(résumé français inclus), structureée autour de QUATRE questions de
+recherche — le taux de défauts échappés (onze classes nommées sur douze
+runs terrain), le coût en tokens par changement validé (51 / 719 / 1 088
+mesurés M1, D31/D34), les classes de défauts invisibles à l'émulation (les
+cinq familles : chargeur/image, ABI/SSE, sémantique du chargeur de
+bibliothèque, conventions de codes d'erreur, hypothèses du harnais), la
+sûreté du patch à chaud (zéro régression post-patch, monotonie signée,
+anti-rollback armé) ; l'auteur humain unique (l'agent IA décrit en
+méthodes et remerciements, JAMAIS co-auteur) ; les déclarations
+Ethics/dual-use, Data Availability, Limitations (N=1, circularité de
+l'oracle, absence de baseline, sécurité mémoire non prouvée, temps
+constant non analysé) ; chaque donnée du manuscrit est GÉNÉRÉE depuis le
+journal par \code{scripts/extraire\_donnees\_v100.py} — le manuscrit
+n'affirme rien qui ne soit extrait et vérifié.
+
+\textbf{LA FORMULATION CORRIGÉE} (le manuscrit et, par lui, le protocole) :
+« le compilateur disparaît » devient « AUCUNE chaîne de traduction
+optimisante ni opaque ; assemblage WYSIWYG vérifié par round-trip » ;
+« code volé inexploitable » devient « l'évolution du code volé est
+bloquée, son exécution ne l'est pas » ; les majuscules emphatiques et le
+vocabulaire sacralisant cèdent aux termes standards (key ceremony, signed
+manifest, sealed build) ; l'invariant D19 (Sécurité > Performance >
+Optimisation > Coût en tokens) est requalifié POLITIQUE DE PROJET
+EXPLICITE — non un invariant de révision : la hiérarchie demeure la règle
+du projet, et le document le dit dans les termes de l'ingénierie.
+
+\textbf{LA PROPOSITION D183 (documentée, NON appliquée au coffre réel)} :
+le séquestre chiffré de la phrase de contrôle — l'alternative à la garde
+durable D81 (la phrase en clair au dépôt et au coffre Drive, l'arbitrage
+PERTE > EXPOSITION) : la phrase chiffrée vers une clé hors-ligne, ou
+partagée en parts Shamir à seuil, la phrase en clair RETIRÉE du dépôt ;
+l'analyse comparative chiffrée des risques perte/exposition vit dans la
+décision D183 ; le coffre réel du développeur DEMEURE à la garde D81 —
+aucune clé touchée, aucun conteneur réécrit, la proposition attend le
+geste du développeur.
+
+\textbf{L'ANNEXE A PORÉE À SHA-256} (D184) : les empreintes de gouvernance
+de l'annexe A (les modules du coffre) passent de md5 à sha-256, calculées
+au contenu canonique LF du dépôt (la même méthode, l'empreinte longue) ;
+md5 demeure UNIQUEMENT une fonctionnalité d'affichage de Loupe (le panneau
+d'empreintes, loupe-06) — AUCUN octet de la pièce ne change, et les
+empreintes md5 des preuves historiques (le journal, les archives) demeurent
+ce qu'elles sont : les preuves ne se réécrivent jamais.
+
+\textbf{LES LIVRABLES} : \code{TRIADE\_soumission\_v0.10.0.zip} (cinq
+fichiers au plus, readme inclus, le manuscrit en pdf — prêt pour un comité
+de révision) et \code{TRIADE\_complet\_v0.10.0.zip} (l'intégralité :
+sources LaTeX, bibliographie, tableaux de données, script d'extraction,
+extraits de journal, empreintes). La v0.9.0 demeure : ses sources et son
+PDF archivés à \code{docs/}, la chaîne \code{spec\_v090} intacte — chaque
+édition vit à sa chaîne.
+
+\subsection{Ce que change la v0.11.0}\label{sec:nouveautes110}
+
+La révision des PREUVES RENFORCÉES (D185/D186, la commande du développeur :
+le deuxième fichier d'instructions). AUCUNE règle modifiée, AUCUNE couche
+d'exécution ajoutée, hiérarchie inchangée ; les instruments nouveaux
+VIVENT AU LABORATOIRE uniquement (l'exigence de la commande), aucun
+artefact scellé ne bouge, aucun arbre signé ne bouge.
+
+\textbf{LES SIX INSTRUMENTS} (les graines consignées, reproductibles —
+\code{scripts/preuves\_v110/}) : (1) LE MUTATION TESTING — 832 mutants
+d'un octet des blocs scellés (copies de laboratoire), tués par les
+instruments EXISTANTS dans l'ordre du coût : 694/832 (83,4 \%), les
+familles cryptographiques à 100 \%, les 138 survivants CONCENTRÉS dans
+les blocs d'orchestration NOMMÉS (la limite mesurée, jamais cachée) ;
+(2) LE FUZZING GUIDÉ PAR COUVERTURE — loupe-01 (le chemin non fiable,
+l'OS virtuel, les canaris) : 60,5 \% de couverture du bloc, zéro crash,
+zéro violation de canaris ; http-10 (la pièce 0.4.0 scellée) : 358
+instructions couvertes, zéro faute nommée ; (3) LA SÛRETÉ MÉMOIRE
+STATIQUE BORNÉE — l'extension de l'audit msx64 : 2~098 accès classés,
+1~181 vérifiés au cadre (zéro hors-cadre : la classe du stack-smash
+ABSENTE), 463 non résolus NOMMÉS, les limites consignées (analyse
+linéaire, aucun alias) ; (4) LE TEMPS CONSTANT — le dudect
+D'ÉMULATION : toutes les familles crypto CONSTANTES (traces
+indépendantes du secret — x25519 : 1~238~959 instructions pour TOUTE
+clé), le temps réel du terrain NON MESURÉ (la limite explicite) ;
+(5) LES BENCHMARKS COMPARATIFS — la référence C à contrat équivalent
+(gcc 14.2 -O2/-Os, la référence clang ABSENTE du labo : l'écart nommé),
+LE MÊME émulateur pour les deux camps : sha256 4~524 instructions/op
+(blocs) contre 69~132 (gcc -O2) — un facteur 15,3 — pour 765 o contre
+5~436 ; md5/aes ÉCARTÉS par l'AUTO-VÉRIFICATION de l'instrument (le C
+de référence fautif REFUSÉ : jamais un chiffre faux) ; (6)
+L'INDÉPENDANCE DE L'ORACLE — les voies distinctes (dérivation décimale,
+os.urandom, spec ↔ harnais ↔ hashlib) : ZÉRO divergence.
+
+\textbf{LA SPÉCIFICATION CSPRNG (D186)} : la couche I manquante de la
+source d'aléa COMBLÉE AU LABORATOIRE — le brouillon
+\code{tls13-29-source-csprng.md} (le générateur = le CSPRNG de l'OS
+hôte via le kit, le reseed = la politique du noyau, l'échec
+FAIL-CLOSED, le KIT96 seule interface) ; l'entrée à l'arbre signé
+EXIGE la cérémonie d'ère du développeur (le quinzième arbre, le modèle
+D177) — jusqu'alors le brouillon est la référence de laboratoire.
+
+\textbf{LES VECTEURS RFC 8446} (\code{tls13/fixtures/rfc8446.py}) : les
+constantes normatives natives (les sentinelles DOWNGRD, la valeur
+magique HRR, les types d'enregistrement, la suite et le groupe) posées
+au corpus de fixtures partagées avec leur paragraphe d'origine — le
+plan RECOISÉ (SUITE, GROUPE, HRR : conformes).
+
+\textbf{LE MANUSCRIT v0.11.0} : la section Results étendue (le § 3.5 du
+manuscrit — les six instruments, la table générée), les limites MISSES à
+JOUR (la sûreté mémoire BORNÉE pas prouvée, le temps constant
+STRUCTUREL pas réel, la réplication par second agent à venir), la
+conclusion réécrite sur CE QUI RESTE OUVERT précisément mesuré.
+
+\subsection{Ce que change la v0.12.0}\label{sec:nouveautes120}
+
+La révision du MODÈLE FORMEL ET DE LA GOUVERNANCE ASSAINIE (D187/D188/D189,
+le troisième fichier d'instruction). AUCUNE règle modifiée, AUCUNE couche
+d'exécution ajoutée, hiérarchie inchangée.
+
+\textbf{LE MODÈLE FORMEL DE CF3} (D187) : la chaîne du coffre scellé
+modélisée en machine à états explicite et vérifiée par EXPLORATION
+EXHAUSTIVE (154 états, 1~152 transitions, époques ≤ 3, adversaire à seuul
+≤ 2 éléments avec rejeu d'époques passées) — LES QUATRE PROPRIÉTÉS
+PROUVÉES DANS LE MODÈLE : P1 le secret sous seuil (0 contre-exemple),
+P2 le refus du roll-back (la monotonie structurelle, constatée
+mécaniquement transition par transition), P3 l'absence de destruction sur
+phrase erronée (0 contre-exemple), P4 le rayon borné à une époque (0
+violation) ; LES HYPOTHÈSES EXPLICITES A1--A5 (le modèle symbolique, le
+seuil, le média, les anciens couples, le HORS MODÈLE : canaux
+auxiliaires, implémentation, trois éléments, quantique) ; LE
+VÉRIFICATEUR NOMMÉ : Tamarin/ProVerif ABSENTS du laboratoire —
+l'explorateur d'états explicites tient la place, le script EST le modèle
+(reproductible d'un clone frais).
+
+\textbf{LE MODÈLE DE MENACE EN DEUX PLANS} (D188) : le tableau unique
+restructuré selon la distinction fondatrice du protocole — le PLAN IP
+(la propriété intellectuelle : rétro-ingénierie, expropriation,
+redistribution — la confidentialité d'abord, les pertes REMÉDIABLES) et
+le PLAN SÛRETÉ D'EXÉCUTION (la corruption, le rollback, l'environnement
+— l'intégrité et la disponibilité d'abord, les pertes IRRÉMÉDIABLES) ;
+L'ORDRE INTRA-SÉCURITÉ EXPLICITE (la politique de projet) : quand les
+deux plans se rencontrent, le plan sûreté GAGNE (un coffre cassé ne
+protège rien) ; LA TENSION D81 consignée avec la contre-proposition D183
+et l'analyse chiffrée (l'espérance de perte annuelle ≈ 4,0 ×
+10\textsuperscript{−2}·C\textsubscript{exposition} sous D81 contre ≈ 1,0
+× 10\textsuperscript{−3} sous le séquestre Shamir — un facteur ≈ 40) —
+D81 DEMEURE la décision active, le geste appartient au développeur.
+
+\textbf{LA CRISTALLISATION ÉVALUÉE} (D189, CORRIGÉE par D190) : les
+caractéristiques opérationnelles de la règle réelle (sceller ssi $n$
+rebuilds consécutifs identiques) : P(sceller$|q$) = $(1-q)^n$ — à
+$q = 50$\,\% : 3,1 \% ($n{=}5$), 0,098 \% ($n{=}10$), soit 32× plus
+strict (les quantiles unilatéraux exacts 1,87σ/3,10σ) ; à $q = 1$\,\% :
+la règle scelle un build sain avec probabilité 95,1 \%/90,4 \% — les
+valeurs « α = 3,29·10\textsuperscript{−2} / 1,08·10\textsuperscript{−3} »
+de D189 étaient des RAPPORTS DE VRAISEMBLANCE $(0,5/0,99)^n$ mal
+étiquetés (la correction D190) ; LE SEUIL DEMEURE 10 (la politique de projet, jamais changée
+en silence) — l'analyse est la JUSTIFICATION consignée et la voie
+documentée d'un relâchement futur ; LE PROTOCOLE DE RÉPLICATION proposé
+(les trois axes : second développeur, second domaine, second profil ;
+la grille T/X à cinq classes terrain + trois classes laboratoire ; la
+double annotation ; le κ de Cohen ≥ 0,61 ; les critères d'acceptation
+pré-enregistrés) — PROPOSÉ, jamais exécuté : l'arbitrage appartient au
+développeur.
+
+\textbf{LES MANIFESTES DE KIT À SHA-256} (D187) : le manifeste du kit de
+cérémonie (maj\_kit.py) consigne désormais sha256 — la suite de la
+migration D184 ; les kits DÉJÀ LIVRÉS demeurent (leurs manifestes md5
+sont des PREUVES, les preuves ne se réécrivent jamais) ; md5 demeure à
+l'idempotence Drive (l'API donne le md5) et à l'affichage Loupe
+(fonctionnalité).
+
+\textbf{LE MANUSCRIT v0.12.0} : la section § 4.1 (le modèle formel et
+ses quatre propriétés avec leurs statuts, le modèle de menace en deux
+plans avec l'ordre intra-sécurité, la cristallisation, le protocole de
+réplication), la table des preuves étendue (v0.10.0 + v0.11.0 + v0.12.0).
+
+\subsection{Ce que change la v0.13.0}\label{sec:nouveautes130}
+
+LA RÉVISION DES CORRECTIONS DE L'ÉDITION (D190/D191/D192) — la commande du
+développeur : une liste exhaustive d'incohérences vérifiées une par une, des
+statistiques reformulées, la neutralité documentaire, un benchmark audité, un
+état de l'art étendu. AUCUNE règle du cœur modifiée, AUCUNE couche d'exécution
+ajoutée, AUCUN artefact scellé touché — l'édition CORRIGE les documents, elle
+ne légifère pas (le modèle D180/D182).
+
+\textbf{LES INCOHÉRENCES CORRIGÉES} (la liste de la commande, vérifiée une à
+une) : les quatorze arbres signés (la cohérence avec le garde 14/14) ; la
+référence au manuscrit accompagnant portée v0.13.0 ; le compte de lignes du
+journal UNIFIÉ en valeur exacte extraite (les macros générées par le script
+d'extraction — jamais un arrondi) ; « Fig.~5 » devient « Table 5 » ; la Data
+Availability portée aux archives v0.13.0 ; la Table 6 des preuves RÉGÉNÉRÉE
+intégralement en anglais par le générateur ANTI-TRONCATURE (les cellules ne
+sont jamais coupées, chaque ligne est PARSÉE depuis les sorties brutes des
+instruments) ; la note TOTAL/brouillons au tableau des budgets ($8\,774 +
+5\,099 = 13\,873$, les brouillons exclus) ; le paragraphe de consolidation
+du § 1.10 ALIGNÉ sur D181 (douze runs, la balise \code{loupe 0.1.1} scellée) ;
+le tableau de menaces : « le code volé est inexploitable » devient
+« l'évolution du code volé est bloquée, son exécution ne l'est pas » ; les
+renvois au manuscrit recalés (§ 3.5 les preuves renforcées, § 4.1 le modèle
+formel).
+
+\textbf{LES STATISTIQUES REFORMULÉES} (D190) : la cristallisation — les
+caractéristiques opérationnelles P(sceller$|q$) = $(1-q)^n$ remplacent les
+« α » de D189 (des rapports de vraisemblance mal étiquetés) ; les conversions
+sigma $\sqrt{-2\ln p}$ remplacées par les quantiles normaux unilatéraux
+exacts (1,87σ/3,10σ) ; l'IC95~\% EXACT de 11/12 (Clopper-Pearson
+$[0,615 ; 0,998]$, avec la réserve de non-indépendance des itérations
+séquentielles) ; la règle de comptage opérationnelle des défauts échappés
+DÉFINIE en méthodes du manuscrit (les runs 6/7 à deux défauts comptés une
+fois chacun ; le résidu [T0-PÉRIMÉ] du run 12 divulgué, non compté — et
+pourquoi).
+
+\textbf{LA NEUTRALITÉ DOCUMENTAIRE} (D190) : l'anti-debug léger par mesure
+de temps DOCUMENTÉ HONNÊTEMENT dans les deux documents (la portée : la
+dissuasion, jamais la résistance — le résiduel « assumé » du tableau des
+menaces demeure) ; la conséquence de D81 AJOUTÉE au modèle de menace (la
+phrase de contrôle au dépôt + S\_serrure en en-tête clair = deux éléments
+trivialement disponibles ; la confidentialité effective repose sur le seul
+média piège) ; la frontière D105/D81 pour le clone du laboratoire (les tests
+du labo tournent sur des clones temporaires à phrases de test visiblement
+marquées — le conteneur réel jamais ouvert par un test) ; LE KIT DE LA
+CÉRÉMONIE D183 PRÉPARÉ SANS L'APPLIQUER (\code{scripts/kit\_ceremonie\_d183/} :
+l'outil au partage CF2 D120 TEL QUEL, l'autotest VERT sur phrase de test
+publique — les 10 combinaisons de 3 parts exactes, les 10 paires sous le
+seuil sans fuite —, le LISEZMOI pas à pas, le manifeste et les listes de
+contrôle ; le geste appartient au développeur).
+
+\textbf{LE BENCHMARK AUDITÉ} (D191) : le facteur « 15,3× » de v0.11.0
+RETIRÉ — un ARTEFACT DE PÉRIMÈTRE (l'instrument lisait le compteur de la
+FINALISATION SEULE après le retour du pipeline, comparé à l'opération
+COMPLÈTE de la référence ; 4,16 instructions/ronde était le signe — sous
+tout minimum scalaire plausible) ; les chiffres corrigés : l'opération
+complète des blocs 75\,983 instructions contre 69\,132 (gcc~14.2 -O2) et
+77\,505 (-Os), dans le même émulateur sur la même entrée, le condensé
+vérifié AVANT le comptage et les 17 invocations de compression confirmées
+mécaniquement — la notation WYSIWYG est COMPÉTITIVE ($-9$~\%/$+2$~\% en
+instructions), plus compacte que -O2 (1\,021 contre 1\,482 octets, tables
+comprises), moins que -Os (548) ; AUCUNE extension ISA au-delà du baseline
+des deux côtés (gcc emploie des mouvements SSE2 du baseline que la notation
+GPR pure n'emploie pas — l'écart rapporté sans ajustement) ; le terrain M7
+REQUALIFIÉ (qemu-riscv64 TCG au noyau réel, la réserve instrumentale D149
+nommée — la sémantique matérielle I-cache de \code{fence.i} NON prouvée sur
+silicium, jamais revendiquée).
+
+\textbf{L'ÉTAT DE L'ART ÉTENDU} (D192) : LLM Compiler (Meta 2024), CompCert
+(Leroy 2009), Kitsune (2012) et POLUS (2007) pour la mise à jour dynamique,
+SWE-agent (2024), la lignée sim-to-real (Jakobi 1995, Peng 2018) et le
+hardware-in-the-loop (Bacic 2005) — chaque référence vérifiée DOI/arXiv ;
+la revendication « first quantified account » SCOPÉE (le niveau notation
+scellée sous gouvernance à intention signée) ; RQ3 RECADRÉE : la
+quantification des GARANTIES SILENCIEUSES DU COMPILATEUR (ce que le
+compilateur fournit gratuitement et que la notation à la main doit
+re-dériver, leçon nommée par leçon).
+
+\subsection{Ce que change la v0.14.0}\label{sec:nouveautes140}
+
+LA RÉVISION DU PROGRAMME EMPIRIQUE (D193/D194/D195, le cinquième fichier
+d'instructions) : le bras de référence compilateur PRÉ-ENREGISTRÉ, la
+re-mesure RQ2, l'indépendance par instance isolée, le re-jeu des
+survivants de mutation. AUCUNE règle du cœur modifiée, AUCUNE couche
+d'exécution ajoutée, AUCUN artefact scellé touché.
+
+\textbf{LE PRÉ-ENREGISTREMENT} (D193) : le plan de comparaison (les
+hypothèses H1-H4, les critères CA1-CA5, la méthode, les six blocs, les
+vecteurs) consigné AVANT toute mesure, son empreinte sha256 verrouillée —
+toute modification postérieure du plan serait une fraude attrapable.
+
+\textbf{LE BRAS DE RÉFÉRENCE} (D195) : SIX blocs de Loupe réimplémentés
+EN C depuis les MÊMES CONTRATS (les cinq familles couvertes), compilés
+gcc 14.2 -O2/-Os (clang absent, l'écart nommé), les primitives OS prises
+par table de pointeurs aux MÊMES shims du mini-OS, AUTO-VÉRIFIÉS contre
+les vecteurs dorés AVANT toute mesure (l'autotest a attrapé deux fautes
+de table K au geste — la méthode appliquée à elle-même). LA MESURE :
+ZÉRO DIVERGENCE aux vecteurs (la notation scellée et la référence
+compilée sont observationnellement équivalentes aux contrats) ; les
+instructions à travail égal : sha-256 PARITAIRE (9~089 contre 9~146 —
+l'héritage PAR LA CARTE), la lecture paritaire (48/47), les blocs purs
+plus chers à la notation (641/477, 193/69, 39/16), la cascade saine
+102~176/75~560 (l'adaptation du panneau nommée : le camp C calcule la
+moitié sha seulement) ; les tailles MIXTES ; la mutation aux mêmes
+tirages : la notation testable au MÊME DEGRÉ (H4 tenue), le camp compilé
+plus fragile aux mutants d'appels OS (16/16 par le tueur de séquence).
+
+\textbf{LA RE-MESURE RQ2} (D195) : les budgets de bout en bout sur la
+carte de l'ère Loupe, distributions complètes (n=10/opération,
+cl100k\_base) : localiser 580 [496..706], éditer 2~143 [1~085..3~463],
+ajouter 3~510 [3~128..4~091], la baseline naive 300~304 tokens (le
+désassemblage complet) — les valeurs M1 (51/719/1~088) HISTORIQUES,
+jamais remplacées ; LA LECTURE DÉFAVORABLE AU PROTOCOLE consignée telle
+quelle (les opérations coûtent 4-11$\times$ leur M1 : les notations plus
+longues, les contrats plus denses) ; le raisonnement ESTIMÉ
+($\times$1,08, le rapport génération/contenu des retouches réelles —
+l'estimation nommée, jamais une mesure).
+
+\textbf{L'INDÉPENDANCE} (D195) : l'oracle régénéré par une instance
+isolée (un contexte neuf, la dérivation depuis les définitions
+mathématiques) — ZÉRO DIVERGENCE sur les 128 constantes ; L'ÉCART NOMMÉ :
+l'infrastructure d'agents du labo n'expose QU'UNE famille — l'indépendance
+inter-familles DEMEURE ouverte ; la voie alternative (la racine cubique
+entière exacte) confirme indépendamment.
+
+\textbf{LE RE-JEU DES SURVIVANTS} (D195) : les 832 mutants de v0.11.0
+re-jeués aux MÊMES tirages avec les tueurs de COMPOSITION (la boucle
+winmain complète pour loupe, la composition de la poignée +
+l'enregistrement pour l'orchestration tls13, le harnais autonome pour
+sys) : 776/832 tués (93,3 \% — contre 83,4 \%), tls13 et sys à
+100 \%, les 56 survivants loupe NOMMÉS (les chemins hors scénario).
+
+\textbf{LE KIT TERRAIN} (\code{scripts/kit\_terrain\_bras\_c/} : les
+binaires -O2/-Os + la source + le LISEZMOI) : EN ATTENTE DU RUN TERRAIN —
+les runs appartiennent au développeur, le labo ne fabrique JAMAIS un
+résultat.
+
+\subsection{Ce que change la v0.15.0}\label{sec:nouveautes150}
+
+LES PREUVES NON BORNÉES ET LE RAFFINEMENT (le sixième fichier
+d'instructions, ic09ydeli sous son vrai nom — le croisement
+d'attribution d'hier RECROUPÉ et CORRIGÉ, D197) : le modèle formel
+généralisé, l'équivalence modèle--implémentation vérifiée, les statuts
+de preuve systématiques. AUCUNE règle du cœur modifiée, AUCUNE couche
+d'exécution ajoutée, AUCUN artefact scellé touché.
+
+\textbf{LA DÉVIATION CONSTATÉE} : Tamarin ET ProVerif demeurent ABSENTS
+du laboratoire (constat re-vérifié au geste à l'ouverture de l'édition)
+— la route consignée à D196 est suivie : la preuve par INVARIANT
+INDUCTIF dans l'explorateur.
+
+\textbf{L'INVARIANT INDUCTIF} (\code{scripts/preuves\_v150/
+modele\_invariant\_v150.py}) : le plafond d'époque de l'explorateur
+v0.12.0 (un artefact d'exploration, jamais du design — l'implémentation
+fait $e \leftarrow e+1$ sans borne) est RETIRÉ ; l'invariant $I$
+(I$_1$ secret $\Rightarrow$ seuil $=3$ ; I$_2$ aucune destruction
+injuste ; I$_3$ média du piège et fragments CF2 intacts ; I$_4$ époque
+$\ge 1$) est initialisé à l'état initial, PRÉSERVÉ par chacune des 13
+règles sur l'ensemble FINI des formes d'état (288 formes, les valeurs
+contraintes par $I$ énumérées dans le domaine $I$, les deux classes
+d'époque $\{1\}$ et $\{\ge 2\}$), l'uniformité de la classe $\ge 2$
+témoignée mécaniquement par translations $\delta \in \{7, 50, 1000\}$
+aux verdicts IDENTIQUES ; la monotonie de l'époque vérifiée
+INCONDITIONNELLEMENT (4\,096 formes, zéro décroissance) ; le rejeu
+retourne l'état inchangé. LES QUATRE PROPRIÉTÉS P1--P4 SONT PROUVÉES
+NON BORNÉES (toute époque, toute profondeur, sous A1--A4 ; A5 hors
+modèle nommé). La FIDÉLITÉ du portage : l'explorateur aux bornes et au
+plafond historiques reproduit EXACTEMENT D187 (154 états, 1~152
+transitions) ; les bornes étendues (époques $\le 5$ profondeur 8 :
+228/1~902 ; époques $\le 7$ profondeur 12 : 372/3~342) trouvent ZÉRO
+état atteignable hors de $I$ — la preuve bornée CONFIRME désormais la
+preuve non bornée au lieu d'y suppléer.
+
+\textbf{LE RAFFINEMENT} (\code{scripts/preuves\_v150/
+raffinement\_v150.py}) : chaque règle abstraite REJOUÉE contre
+l'implémentation Python (un coffre de TEST à phrase publique marquée,
+D192 — le coffre réel n'est jamais ouvert par un test) : le cycle
+honnête sur CINQ époques VÉCUES aux deux niveaux (la borne v0.12.0
+dépassée), la phrase erronée aux deux actes (quinze essais, zéro
+destruction), la falsification du conteneur (une destruction LOCALE,
+un procès-verbal, le média intact), la falsification du piège (refus
+nommé, rien détruit), le rejeu d'époque passée en TROIS variantes (le
+miroir local, les époques croisées, le témoin hors-bande), le piège
+absent (IMPOSSIBLE, pas refusé), le piège d'un autre coffre, et
+l'adversaire sous le seuil (32 triplets de moitiés forgées, zéro
+passage du verif) : \textbf{34 pas de raffinement, ZÉRO ÉCART} — les
+chemins d'échec inclus ; trois gestes hors modèle consignés comme
+tels.
+
+\textbf{LES TROIS KITS DE MESURE MATÉRIELLE} : le dudect temps réel
+(quatre cibles extraites de la pièce scellée, l'appel natif VALIDÉ au
+vecteur FIPS « abc », le mesureur C double backend dont l'autotest
+POSIX n'éprouve que le mécanisme), le \code{fence.i} sur silicium (le
+scénario M7, la cible changée), le terrain tiers Loupe (T0$\to$T7+S0
+intégral) — TOUS \emph{EN ATTENTE DE RUN MATÉRIEL} : aucun chiffre
+n'existe, aucun n'est fabriqué.
+
+\textbf{LA RÉPLICATION} : la grille T/X FINALISÉE (les cinq classes
+terrain et trois laboratoire, définitions opérationnelles, exemples
+vécus), le calculateur $\kappa$ de Cohen AUTOTESTÉ (trois cas
+synthétiques au $\kappa$ calculable à la main), les critères
+pré-enregistrés D189 INCHANGÉS ; le second annotateur À RECRUTER, le
+second domaine EN ATTENTE d'une vraie commande — les statuts consignés.
+
+\textbf{LES STATUTS SYSTÉMATIQUES} (la commande, point 4) : chaque
+affiliation de preuve porte son statut — \emph{prouvé non borné} /
+\emph{prouvé borné} / \emph{en attente de run matériel} — la table
+générée depuis les pièces (\code{scripts/statuts\_preuves\_v150.py}),
+AUCUNE revendication matérielle tant que le run n'est pas recoupé.
+
+\textbf{LA DETTE DOCUMENTAIRE GUÉRIE} : la table des preuves du
+manuscrit (29 lignes en v0.13.0/v0.14.0) n'était JAMAIS RENDUE — le
+flot dépassait la page et \LaTeX{} le rejetait silencieusement (« Float
+too large », le constat de l'édition) : la table devient LONGTABLE,
+les 34 lignes sont rendues, toutes les éditions sont relues.
+
+\textbf{LA GOUVERNANCE} (D197) : le croisement d'attribution des
+instructions n°5/n°6 recoupé aux métadonnées Drive (les deux fichiers
+déposés 11/11 13:21 UTC, jamais modifiés — ysddxpk0o porte le programme
+v0.14.0 exécuté, ic09ydeli porte le programme v0.15.0 ouvert) et
+corrigé aux gestes (ysddxpk0o archivé, ic09ydeli rappelé d'ARCHIVE
+vers \code{/instructions} — l'instruction active sous son vrai nom) ;
+LA RÈGLE DU CONTENU CITÉ (à l'ouverture de toute instruction : lecture
+intégrale, empreinte confrontée, le contenu cité à l'entrée qui ouvre
+l'exécution) ; LA RÈGLE DU DÉVELOPPEUR (12/11) : à chaque livraison
+d'une nouvelle version d'un document, les anciennes versions sont
+archivées (racine $\to$ \code{/ARCHIVE}, déplacement vérifié — la
+racine du coffre ne porte que les versions courantes).
+
+\section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
+
+La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —
+la légèreté demeure, la structure devient normative (D19). Une spécification I n’est pas un
+document libre : c’est un artefact diffable dont la structure conditionne la vérification.
+
+\subsection{Identifiants stables}
+
+Chaque spécification reçoit à sa création un identifiant \code{<DOM>-<NN>} : un domaine
+parmi une liste figée par projet et un numéro séquentiel. L’identifiant est immuable et
+jamais réutilisé ; un module supprimé laisse son identifiant vacant à jamais. C’est
+l’équivalent exact, côté intention, de l’adresse stable côté binaire (R7) : les références
+croisées — dépendances, carte, tests — ne cassent jamais. Le couple (identifiant,
+révision) est la clé de traçabilité du §\ref{sec:traceabilite}.
+
+\subsection{Gabarit obligatoire}
+
+\begin{lstlisting}
+<DOM>-<NN> . <nom court> . revision <R>
+Intention : <une phrase — le pourquoi>
+Contrat :
+  pre  : P1..Pn    (preconditions numerotees, une phrase chacune)
+  post : Q1..Qn    (postconditions numerotees)
+  inv  : I1..In    (invariants)
+Echecs :
+  E1 : <condition> -> <sanction nommee : exception | arret propre | repli>
+Vecteurs :
+  V1 : <vecteur dore | propriete differentielle | test de rejet>
+Fixtures    : <references aux fixtures contractuelles partagees>
+Provenance  : ecrite-avant-code | reverse-spec de <binaire scelle @ tag>
+Decisions   : <Dxx...>
+\end{lstlisting}
+
+Sept blocs, tous obligatoires — les échecs et vecteurs ne peuvent être vides que pour un
+module sans effet observable, situation rare à justifier dans le champ Intention. Trois
+règles de rédaction conditionnent la diffabilité exigée par R2 : \textbf{une exigence par
+phrase numérotée} (le diff montre exactement quelle exigence change) ; \textbf{aucune
+connaissance dupliquée} (renvoi par identifiant, sinon défaut T5) ; \textbf{chaque
+pre/post/invariant relie au moins un vecteur} (une exigence invérifiable est une exigence
+mal formulée). La provenance distingue les spécifications écrites avant le code — le cas
+normal, exigé par R2 — des reverse-specs (§\ref{sec:reversespecs}).
+
+\subsection{Révision et cycle de vie}
+
+La révision s’incrémente à chaque changement du contrat. Une évolution qui rompt un
+contrat existant ne modifie pas la spécification — elle en crée une nouvelle, l’ancienne
+étant dépréciée avec renvoi : miroir exact du cycle de vie des blocs. Les appelants
+dépendent du couple (identifiant, révision) ; la carte porte ce couple dans chaque entrée.
+
+\subsection{Fixtures contractuelles partagées}
+
+Quand plusieurs consommateurs se lient au même contrat externe — sortie d’un outil
+système, format de fichier, API distante — les échantillons qui définissent ce contrat
+appartiennent à la spécification, pas aux consommateurs. Le champ Fixtures référence un
+jeu unique ; toute copie privée est un défaut de classe T5. Le mécanisme est né dans la
+démonstration RoomEq : l’installateur scellé et l’application recodée partagent les
+fixtures de parsing de pnputil — le défaut historique qui a survécu à trois versions
+vivait précisément de la duplication.
+
+\subsection{Taxonomie des défauts de contrat non écrit}\label{sec:taxonomie}
+
+La classe de défauts que le protocole existe pour éliminer a un nom : \emph{contrat non
+écrit}. La v0.4.0 en fixe la taxonomie (D19), née de l’analyse des défauts historiques de
+la démonstration.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Taxonomie des défauts de contrat non écrit.}
+\label{tab:taxonomie}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Classe} & \textbf{Définition} & \textbf{Verrou} \\
+\midrule
+T1 — valeur-seuil enfouie & Constante critique sans nom ni justification & constante
+nommée + rationale dans la spec I \\
+T2 — convention d’interface implicite & Structure ou ABI déclarée de mémoire & contrat
+typé + invariant de taille testé \\
+T3 — dépendance à l’hôte & Comportement dépendant de l’OS d’exécution & contrat
+indépendant de l’hôte, union fixée \\
+T4 — parsing de surface fragile & Analyse de libellés localisés ou volatils & fragments
+indépendants des libellés + fixtures partagées \\
+T5 — contrat dupliqué & Même connaissance codée en N exemplaires divergents & source
+unique : spec I + fixtures \\
+T6 — garantie non testée & Comportement critique sans vecteur de rejet & cas d’échec
+nommé + test de rejet \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Deux règles d’usage : tout défaut corrigé est classé dans cette taxonomie au journal des
+décisions (la métrique « défauts ouverts par classe » du tableau de bord en dérive) ; la
+taxonomie sert de liste de contrôle de rédaction — chaque bloc du gabarit verrouille au
+moins une classe. Les occurrences de référence viennent de la démonstration : le seuil de
+détection non justifié (T1+T6), la structure \code{SP\_DEVINFO\_DATA} de 424 octets au
+lieu de 32 (T2, échec \code{0x6F8}), la sanitisation de noms dépendante de l’hôte (T3), le
+parsing de pnputil sur libellés français (T4+T5, trois copies).
+
+\section{Les trois couches : architecture et traçabilité}\label{sec:couches}
+
+Le diff d’intention descend de I vers C, le verrou croisé relie C et B dans les deux sens,
+et la couche B seule quitte le laboratoire. \textbf{Aucune couche n’est optionnelle} —
+c’est une propriété normative : privé de I, le système perd son ancrage sémantique ; privé
+de C, l’agent devient aveugle ; privé de B, il n’y a plus rien à exécuter. Toute
+implémentation qui livrerait B sans I et C à jour viole R1 ; toute évolution qui
+contournerait C pour éditer B directement viole R3 et la boucle.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les trois couches.}
+\label{tab:couches}
+\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
+\toprule
+\textbf{Couche} & \textbf{Visibilité} & \textbf{Contenu} & \textbf{Rôle} \\
+\midrule
+I & Privée & Spécifications normalisées : contrats pré/post, invariants, cas d’échec,
+vecteurs & Compression de l’intention \\
+C & Privée, signée, chiffrée & Index des blocs, adresses, preuves, manifestes,
+traçabilité & Unique interface de développement \\
+B & Livrée & Code machine scellé, padding, checksums runtime & Exécution pure,
+sémantiquement muette \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La séparation croise une seconde dimension : la cible. La couche I est indépendante de la
+cible — un contrat s’écrit une fois, ses types abstraits étant paramétrés par le profil.
+La couche B est par profil. La couche C indexe l’ensemble : chaque entrée porte son
+profil, et frag-bld organise les empreintes par profil. Quatre invariants structurels,
+vérifiés à chaque cycle — leur violation est un refus de build : B n’est jamais nu (R1) ;
+les adresses exposées sont stables (R7, par profil) ; la signature couvre la carte entière
+(R9) ; B est auto-vérifiant au chargement (R10 renforcée).
+
+\subsection{Traçabilité I $\leftrightarrow$ C $\leftrightarrow$ B $\leftrightarrow$
+tests}\label{sec:traceabilite}
+
+Chaque entrée de la carte référence quatre maillons : la spécification (identifiant +
+révision), l’entrée d’index et le contrat embarqué, le(s) bloc(s) instancié(s) avec
+empreinte(s) par profil, et les vecteurs exécutés avec le verdict du dernier cycle. Trois
+propriétés sont contrôlées mécaniquement par la \textbf{commande d’audit de traçabilité} :
+aucune spécification sans entrée de carte (l’exception visible étant la reverse-spec en
+statut « prête ») ; aucun bloc scellé sans spécification référencée ; aucun vecteur
+orphelin. Une chaîne incomplète est un refus de build — au même titre qu’un binaire nu.
+La traçabilité est la condition de l’audit par des tiers : elle permet de répondre à
+« quelle exigence ce bloc implémente-t-il, et quel test la défend ? » sans lecture du
+binaire.
+
+\section{La carte : fragmentation et budgets}\label{sec:carte}
+
+\begin{sloppypar}
+La carte est le cœur opérationnel du protocole : elle rend le binaire navigable, porte les
+preuves et concentre la valeur intellectuelle. Elle est autodescriptive : un en-tête
+normalisé consigne la version du protocole, la suite cryptographique~— hachage, signature,
+chiffrement, chacun dans une liste blanche (D15)~— et les profils actifs. Sa spécification
+détaillée fait l’objet de \code{FORMAT\_CARTE.md} — fragments, format d’entrée, verrou,
+cycle de vie, export, re-cryptage —, mise à jour avec la présente révision : l’en-tête
+porte \code{version=0.4.0} et chaque entrée de bloc porte le champ de traçabilité
+\code{spec=<DOM>-<NN>:R}.
+\end{sloppypar}
+
+\paragraph{Norme de fragmentation.} La carte est fragmentée en quatre — frag-loc, frag-con,
+frag-prf, frag-bld — et la v0.4.0 pose la norme : aucune opération de la boucle n’exige la
+lecture de plus d’un fragment ; \textbf{aucune opération n’exige la lecture intégrale du
+binaire} — le balayage est interdit (§\ref{sec:boucle}) ; l’audit complet de la carte est
+une opération exceptionnelle, non budgétée, journalisée.
+
+\paragraph{Budgets par type d’opération.}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Budgets en tokens par opération (localiser amendé à 64 tokens par D31 après la mesure M1 — le gabarit canonique v0.4.0 mesurait 43 tokens en cl100k\_base ; autres budgets inchangés depuis la v0.3).}
+\label{tab:budgets}
+\begin{tabularx}{\textwidth}{@{}Y Y l@{}}
+\toprule
+\textbf{Opération} & \textbf{Données lues} & \textbf{Budget} \\
+\midrule
+Localiser un bloc & frag-loc — une entrée & 64 tokens max (D31) \\
+Éditer simplement un bloc & frag-loc + frag-con + notation & 3 000 tokens max \\
+Ajouter un bloc & frag-loc + frag-con + seuils frag-prf & 6 000 tokens max \\
+Instancier un profil nouveau & I partagée + frag-con + notation du profil & 6 000 tokens
+max par bloc \\
+Audit complet (rare) & carte entière déchiffrée & non budgété \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Indicateurs de santé : précision de localisation (cible 95 \% dès M0), coût moyen d’une
+édition simple (cible 5 000 tokens), taux de régression post-patch (cible zéro).
+Instrumentés depuis M1 : la mesure effective (51 / 719 / 1 088 tokens, D31) a corrigé
+le budget de localisation à 64 et valide les deux autres ; le tableau de bord les
+affiche comme métriques mesurées, avec leur écart.

@@ -1,0 +1,8 @@
+LIVRABLES v0.15.0
+
+237449e69741c62e2fb0d7c17cde71af3435df61ba06251a46367780a5a116b0  soumission (5 fichiers)
+75230d486e7d5e4a6c8f3f7d516009e37bb15480e51f5fc176c7d5c90b10159f  complet (58 entrées)
+e8e075df81fafd06ce0ab1799bceb83a014484507fc4e4a00edbc6b7dd986ec6  manuscrit (21 pages, la table des preuves rendue)
+8562986be15006eaceba38bd3110e29f7e8e1f6f0f17bacb75c452097d3e83c9  specification (64 pages, consignee n°56)
+c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1  loupe.exe 0.1.1 (la piece scellee, INTACTE)
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe 1.0.0 (la piece scellee, INTACTE)
