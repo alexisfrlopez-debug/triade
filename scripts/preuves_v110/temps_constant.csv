@@ -1,0 +1,7 @@
+bloc,metrique,t_welch,verdict
+tls13-01..04 (sha-256),instructions,0.0,CONSTANT
+"tls13-05 (hmac-sha256, la clé)",instructions,0.0,CONSTANT
+"tls13-06 (hkdf-extract, l'IKM)",instructions,0.0,CONSTANT
+"tls13-13/14 (x25519, la clé privée)",instructions,0.0,CONSTANT
+"tls13-15..19 (aes-gcm, la clé)",instructions,0.0,CONSTANT
+"loupe-06 (md5, le contenu)",instructions,0.0,CONSTANT

@@ -1,0 +1,17 @@
+TEMPS CONSTANT (dudect D'ÉMULATION) — v0.11.0
+  (N = 60 par classe, seuil |t| > 5.0, graine 20261111)
+
+tls13-01..04 (sha-256)                 t =   +0.00 → CONSTANT
+tls13-05 (hmac-sha256, la clé)         t =   +0.00 → CONSTANT
+tls13-06 (hkdf-extract, l'IKM)         t =   +0.00 → CONSTANT
+tls13-13/14 (x25519, la clé privée)    t =   +0.00 → CONSTANT
+tls13-15..19 (aes-gcm, la clé)         t =   +0.00 → CONSTANT
+loupe-06 (md5, le contenu)             t =   +0.00 → CONSTANT
+
+LA LIMITE CONSIGNÉE : la métrique est le NOMBRE D'INSTRUCTIONS
+exécutées sous émulation (et la forme de la trace), PAS le temps
+d'horloge du terrain — un code constant-en-trace peut demeurer
+variable en temps réel (caches, prédiction de branchement). La
+propriété démontrée est STRUCTURELLE : aucune branche, aucun
+compteur ne dépend du secret. Le temps réel reste NON ANALYSÉ —
+l'édition le marque explicitement non prouvé.

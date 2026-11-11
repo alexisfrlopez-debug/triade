@@ -1,0 +1,13 @@
+L'INDÉPENDANCE DE L'ORACLE — v0.11.0
+(graine neuve 20261113, générateur os.urandom, voies de dérivation distinctes de celles du geste)
+
+I1 tables MD5 T[64] : plan ↔ dérivation décimale                 → 0 divergence(s) (zéro)
+I1 décalages MD5 S[64] : plan ↔ RFC 1321                         → 0 divergence(s) (zéro)
+I2 vecteurs RFC 1321 : spec (par citation) ↔ harnais (la table) ↔ hashlib (le modèle) → 0 divergence(s) (7 vecteurs : harnais == hashlib en clair, la spec cite la RFC)
+I3 différentiel sha256 : 200 messages os.urandom (graine neuve, générateur distinct) → 0 divergence(s) (zéro écart)
+I3 différentiel md5 : 200 messages os.urandom                    → 0 divergence(s) (zéro écart)
+I4 K[64] SHA-256 : plan ↔ racines cubiques décimales             → 0 divergence(s) (zéro)
+
+BILAN : 0 divergence(s) au total — l'oracle re-généré par des voies indépendantes dit LA MÊME CHOSE que l'oracle du geste.
+
+LA LIMITE CONSIGNÉE : le « modèle distinct » est ici un modèle de CALCUL distinct (décimal vs entier, os.urandom vs random, spec ↔ harnais ↔ hashlib) — pas un agent codeur distinct ; la re-génération par un second agent reste la réplication à venir (l'édition v0.12.0 en pose le protocole).

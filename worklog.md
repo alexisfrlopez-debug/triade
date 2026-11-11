@@ -7973,3 +7973,39 @@ Work Log:
 - SUITE : le deuxième fichier (v0.11.0 — renforcer le niveau de
   preuve, D185+), puis le troisième (v0.12.0 — la vérification
   formelle, D186+).
+
+Task ID: 131
+Agent: Z.ai (agent principal)
+Task: LE DEUXIÈME FICHIER D'INSTRUCTION EXÉCUTÉ — LES PREUVES
+RENFORCÉES v0.11.0 : les six instruments, D185/D186, les deux
+livrables, l'instruction archivée.
+
+Work Log:
+- LES SIX INSTRUMENTS (preuves_v110/, graines consignées) :
+  mutation 832 mutants → 694 tués (83,4 %, crypto 100 %, les 138
+  survivants d'orchestration NOMMÉS) ; fuzzage guidé (loupe-01 60,5 %,
+  zéro crash/canari ; http-10 358 instructions, zéro faute) ; sûreté
+  mémoire bornée (2 098 accès, ZÉRO hors-cadre, 463 non résolus
+  nommés) ; temps constant d'émulation (t=0 partout, x25519 1 238 959
+  instructions pour toute clé — le temps réel NON MESURÉ, limite
+  explicite) ; benchmarks (sha256 : blocs 4 524 ins/op vs gcc -O2
+  69 132 — facteur 15,3 — pour 765 o vs 5 436 ; md5/aes ÉCARTÉS par
+  l'auto-vérification : le C fautif refusé, jamais un chiffre faux) ;
+  indépendance (zéro divergence : décimal, os.urandom, tripartite).
+- LA SPEC CSPRNG (D186) : le brouillon tls13-29 (générateur OS-hôte
+  via le kit, reseed noyau, fail-closed, KIT96) — la cérémonie d'ère
+  attend le développeur ; les vecteurs RFC 8446 au corpus (DOWNGRD,
+  HRR, types, suite, groupe — le plan recroisé conforme).
+- LES VÉRIFICATEURS FIGÉS ramenés à l'ère (m9a : dev.4 ; m9d : sys-05
+  R2 / sys-06 R3) — l'obligation de rejeu honorée : 159 + 284 + 131
+  contrôles VERTS + le garde 14/14 ; loupe.exe c1115105… et proxy.exe
+  446279f3… byte pour byte.
+- LE MANUSCRIT v0.11.0 (manuscrit_v110/) : § 4.5 les preuves
+  renforcées (table GÉNÉRÉE), limites mises à jour, conclusion sur ce
+  qui reste ouvert MESURÉ ; 13 pages.
+- LA SPÉCIFICATION v0.11.0 : md (§ 1.12, § 19.13, versions), chaîne
+  spec_v110, le PDF consigné n°46.
+- LES LIVRABLES au coffre + l'instruction ps1kczuy8 ARCHIVÉE (md5
+  recoupé).
+- SUITE : le troisième fichier (v0.12.0 — la vérification formelle
+  CF3, le modèle de menace en deux plans, la cristallisation, D187+).

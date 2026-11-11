@@ -1,0 +1,7 @@
+confrontation,divergences,detail
+I1 tables MD5 T[64] : plan ↔ dérivation décimale,0,zéro
+I1 décalages MD5 S[64] : plan ↔ RFC 1321,0,zéro
+I2 vecteurs RFC 1321 : spec (par citation) ↔ harnais (la table) ↔ hashlib (le modèle),0,"7 vecteurs : harnais == hashlib en clair, la spec cite la RFC"
+"I3 différentiel sha256 : 200 messages os.urandom (graine neuve, générateur distinct)",0,zéro écart
+I3 différentiel md5 : 200 messages os.urandom,0,zéro écart
+I4 K[64] SHA-256 : plan ↔ racines cubiques décimales,0,zéro

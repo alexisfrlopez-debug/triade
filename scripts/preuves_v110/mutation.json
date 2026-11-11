@@ -1,0 +1,440 @@
+{
+ "graine": 20261111,
+ "mutants_par_bloc": 16,
+ "domaines": {
+  "loupe": {
+   "blocs": {
+    "loupe-01": {
+     "k1_roundtrip": 8,
+     "k2_structurel": 5,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 3,
+     "total": 16
+    },
+    "loupe-02": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 11,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "loupe-03": {
+     "k1_roundtrip": 2,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 7,
+     "total": 16
+    },
+    "loupe-04": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 3,
+     "total": 16
+    },
+    "loupe-05": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 10,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 2,
+     "total": 16
+    },
+    "loupe-06": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 4,
+     "k3_semantique": 0,
+     "k3_crash": 5,
+     "vivants": 0,
+     "total": 16
+    },
+    "loupe-07": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 4,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "loupe-08": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "loupe-09": {
+     "k1_roundtrip": 8,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 1,
+     "total": 16
+    },
+    "loupe-10": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 2,
+     "total": 16
+    },
+    "loupe-11": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 4,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 7,
+     "total": 16
+    },
+    "loupe-12": {
+     "k1_roundtrip": 1,
+     "k2_structurel": 10,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "loupe-13": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 11,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 1,
+     "total": 16
+    },
+    "loupe-14": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 4,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 7,
+     "total": 16
+    },
+    "loupe-15": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 3,
+     "total": 16
+    },
+    "loupe-16": {
+     "k1_roundtrip": 2,
+     "k2_structurel": 8,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 6,
+     "total": 16
+    },
+    "loupe-17": {
+     "k1_roundtrip": 3,
+     "k2_structurel": 12,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 1,
+     "total": 16
+    },
+    "loupe-18": {
+     "k1_roundtrip": 3,
+     "k2_structurel": 13,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    }
+   },
+   "tues": 230,
+   "mutants": 288
+  },
+  "tls13": {
+   "blocs": {
+    "tls13-01": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 1,
+     "k3_semantique": 10,
+     "k3_crash": 1,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-02": {
+     "k1_roundtrip": 2,
+     "k2_structurel": 8,
+     "k3_semantique": 4,
+     "k3_crash": 2,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-03": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 9,
+     "k3_semantique": 1,
+     "k3_crash": 2,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-04": {
+     "k1_roundtrip": 10,
+     "k2_structurel": 4,
+     "k3_semantique": 2,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-05": {
+     "k1_roundtrip": 3,
+     "k2_structurel": 11,
+     "k3_semantique": 2,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-06": {
+     "k1_roundtrip": 3,
+     "k2_structurel": 7,
+     "k3_semantique": 5,
+     "k3_crash": 1,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-07": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 5,
+     "k3_semantique": 5,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-08": {
+     "k1_roundtrip": 8,
+     "k2_structurel": 3,
+     "k3_semantique": 5,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-09": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 3,
+     "k3_semantique": 4,
+     "k3_crash": 4,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-10": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 4,
+     "k3_semantique": 4,
+     "k3_crash": 1,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-11": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 3,
+     "k3_semantique": 3,
+     "k3_crash": 5,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-12": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 6,
+     "k3_semantique": 0,
+     "k3_crash": 3,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-13": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 4,
+     "k3_semantique": 2,
+     "k3_crash": 3,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-14": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 9,
+     "k3_semantique": 0,
+     "k3_crash": 2,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-15": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 3,
+     "k3_semantique": 0,
+     "k3_crash": 6,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-16": {
+     "k1_roundtrip": 7,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 2,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-17": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 6,
+     "k3_semantique": 0,
+     "k3_crash": 6,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-18": {
+     "k1_roundtrip": 3,
+     "k2_structurel": 5,
+     "k3_semantique": 0,
+     "k3_crash": 8,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-19": {
+     "k1_roundtrip": 0,
+     "k2_structurel": 9,
+     "k3_semantique": 0,
+     "k3_crash": 7,
+     "vivants": 0,
+     "total": 16
+    },
+    "tls13-20": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 5,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 7,
+     "total": 16
+    },
+    "tls13-21": {
+     "k1_roundtrip": 8,
+     "k2_structurel": 5,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 3,
+     "total": 16
+    },
+    "tls13-22": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 2,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 10,
+     "total": 16
+    },
+    "tls13-23": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 8,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 2,
+     "total": 16
+    },
+    "tls13-24": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 5,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "tls13-25": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "tls13-26": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 6,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "tls13-27": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 3,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 9,
+     "total": 16
+    },
+    "tls13-28": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    }
+   },
+   "tues": 397,
+   "mutants": 448
+  },
+  "sys": {
+   "blocs": {
+    "sys-01": {
+     "k1_roundtrip": 10,
+     "k2_structurel": 6,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 0,
+     "total": 16
+    },
+    "sys-02": {
+     "k1_roundtrip": 8,
+     "k2_structurel": 7,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 1,
+     "total": 16
+    },
+    "sys-03": {
+     "k1_roundtrip": 5,
+     "k2_structurel": 6,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 5,
+     "total": 16
+    },
+    "sys-04": {
+     "k1_roundtrip": 4,
+     "k2_structurel": 2,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 10,
+     "total": 16
+    },
+    "sys-05": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 4,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 6,
+     "total": 16
+    },
+    "sys-06": {
+     "k1_roundtrip": 6,
+     "k2_structurel": 3,
+     "k3_semantique": 0,
+     "k3_crash": 0,
+     "vivants": 7,
+     "total": 16
+    }
+   },
+   "tues": 67,
+   "mutants": 96
+  }
+ }
+}

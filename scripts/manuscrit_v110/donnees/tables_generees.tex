@@ -1,0 +1,126 @@
+% Fichier GÉNÉRÉ par extraire_donnees_v100.py — ne pas éditer à la main.
+% Chaque valeur est extraite/validée depuis docs/JOURNAL_TRAVAIL.md et docs/DECISIONS.md (édition académique v0.10.0, D182).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Milestones M0--M10 of the TRIADE validation programme (26 Oct -- 11 Nov 2026). Every milestone was closed on measured exit criteria; sources: work journal entries and decision log.}
+\label{tab:jalons}
+\begin{tabularx}{\textwidth}{@{}ll lX@{}}
+\toprule
+\textbf{Milestone} & \textbf{Sealed tag} & \textbf{Date} & \textbf{Lab evidence (exit criteria met)} \\
+\midrule
+\textbf{M0} & \code{0.1.0} & 10-26 & round-trip 100\\%; executable < 4 KiB \\
+\textbf{M1} & \code{0.2.0} & 10-26 & oracle 21/21; first crystallisation \\
+\textbf{M2} & \code{0.3.0} & 10-27 & conformity 68/68; 8 instrumented iterations \\
+\textbf{M3} & \code{0.4.0} & 10-28 & $10^6$ fuzzed cases $\times$2 seeds; 161 conformity controls \\
+\textbf{M4} & \code{0.5.0} & 10-29 & 560-case SSPI scenario oracle $\times$4 seeds; 12 mutations caught \\
+\textbf{M5} & \code{0.6.0} & 11-04 & per-build fingerprints active \\
+\textbf{M6} & \code{0.7.0} & 11-05 & 7/7 conformity suite; layer-I diff zero \\
+\textbf{M7} & \code{0.8.0} & 11-05 & round-trip 100 \% on new ISA; fence.i patch \\
+\textbf{M8} & \code{0.9.0} & 11-05 & 61 harness greens; 131 socket-socle controls \\
+\textbf{M9} & \code{1.0.0} & 11-07 & 28 blocks; 589 structural locks; handshake 54/54 $\times$3 seeds; cross-lock 86/86 \\
+\textbf{M10} & \code{loupe 0.1.0 / 0.1.1} & 11-11 & 18 blocks; 159 controls $\times$3 seeds; cross-lock 26/26; seal guard 14/14 \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Measured token budgets (M1 instrumentation, tokenizer cl100k\_base) against design targets, and generation-1 lineage volumes (D34).}
+\label{tab:budgets}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+\textbf{Operation} & \textbf{Target} & \textbf{Measured} & \textbf{Source} \\
+\midrule
+Locate a block & 64 & 51 & D31/D34, M1 measurement (cl100k\_base) \\
+Edit a block & 3000 & 719 & D31/D34, M1 measurement \\
+Add a block & 6000 & 1,088 & D34, M1 (draft 1086, +2 drift re-measured) \\
+Whole lineage (specs) & --- & 8,774 & D34, generation-1 card \\
+Whole lineage (drafts) & --- & 3,973 & D34 \\
+Whole lineage (delivered notations) & --- & 5,099 & D34 \\
+Whole lineage (TOTAL) & --- & 13,873 & D34 \\
+\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Verification instruments and volumes per milestone. All numbers are drawn from the corresponding journal entries.}
+\label{tab:oracles}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Milestone} & \textbf{Instrument (measured volume)} \\
+\midrule
+\textbf{M1} & mini-libc oracle — 21/21 \emph{(D32; tag 0.2.0)} \\
+\textbf{M2} & echo conformity + differential — 68/68; 8 iterations, 8 defect classes \emph{(D43; tag 0.3.0)} \\
+\textbf{M3} & fuzz campaign + profile conformity suite — 1,000,000 cases $\times$2 seeds; 161 controls \emph{(D72/D73)} \\
+\textbf{M4} & SSPI scenario oracle + per-block differential — 560 cases $\times$4 seeds; 10,000 fuzzed cases $\times$2 seeds per block; 165k leaf differentials \emph{(D68-D93)} \\
+\textbf{M5} & build fingerprint registry + verifier — per-build sha256 registers \emph{(D134, D148)} \\
+\textbf{M6} & profile conformity suite (Linux) — 7/7; lab recoup 22/22 \emph{(D154)} \\
+\textbf{M7} & RISC-V round-trip + cross-profile lock — 100 \% round-trip; 29/29 recoup \emph{(D155)} \\
+\textbf{M8} & sys harness on synthetic ntdll fixtures — 61 greens; 131 socle controls; 30/30 recoup \emph{(D160-D165)} \\
+\textbf{M9} & tls13 structural oracle + handshake harness + cross-lock — 589 structural locks; handshake 54/54 $\times$3 seeds; cross-lock 86/86; 560+365+131 replayed \emph{(D166-D170)} \\
+\textbf{M10} & Loupe: 3 Unicorn harnesses + structural oracle + seal guard — 159 controls $\times$3 seeds (61+53+45); 121 structural locks; cross-lock 26/26; seal guard 14/14; crystallisation 26 x 10/10 \emph{(D172-D181)} \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\scriptsize
+\caption{The twelve terrain runs of the Loupe field test (M10). Every failure was \emph{named} (a class, a mechanism, an evidence piece) before being fixed; every fix was documented as a surgical revision. The sealed artifacts never changed after their sealing run. Sources: journal entries 204--222, decisions D178/D181.}
+\label{tab:runs}
+\begin{tabularx}{\textwidth}{@{}r l X X@{}}
+\toprule
+\textbf{\#} & \textbf{Kit} & \textbf{Outcome (named defect)} & \textbf{Documented fix} \\
+\midrule
+1 & \code{dev.1} & loader refusal 0xc000007b. Missing BASERELOC: ASLR image without relocation table (lab harness parses, never loads) & dev.2: minimal 12-byte BASERELOC, 7 bytes in 6 ranges \\
+2 & \code{dev.2} & same refusal 0xc000007b. Necessary-not-sufficient: page hole 0x3000-0x4000 + massive BSS outside the proven envelope of 8 prior artifacts & dev.3: image within envelope (VS==RS, no BSS) \\
+3 & \code{dev.3} & loader mapped the image (decisive step); T0 witness failed. [CADRE-NE]: .data initializer wrong (sentinel at +8 - a SIZE read as an offset instead of +528) & dev.4: initializer = exact mirror of harness CADRE\_VIERGE; guard healed (control derives from plan, never from the piece it guards) \\
+4 & \code{dev.4} & T0 all green; T1 named -6; showcase died instantly. Stack-argument class: msx64 args 5+ at home space instead of [rsp+0x20]+ (loupe-01/05/06) + SSE alignment (loupe-10/11) & dev.5: slots fixed; msx64 ABI audit born at build (static, catches SSE class); falsification control V7 added \\
+5 & \code{dev.5} & first run acquitting the piece; T1 named -7 VERROUILLE. [SESSION]: kit itself - scenario-as-loader holds loupe.exe as a live section, Windows refuses gle 32 to open it for write & dev.6 KIT-ONLY (artifact unchanged): byte-copy shadow temoin-session.bin \\
+6 & \code{dev.6} & two defects from one witness. False save error + missing showcase thread; [HINSTANCE-PEB]: hInstance read from PEB instead of GetModuleHandleW(NULL) & piece dev.6 (r12 = GetModuleHandleW(NULL)) + kit dev.7 \\
+7 & \code{dev.7} & T0-T5 all green (save proven on terrain); then two defects. [EAX-SANS-SIGNE] at kit (unsigned 32-bit reads of negative codes) + [D54-QUATRIEME] at piece (4 contiguous FirstThunk ranges without NULL separators) & piece dev.7 (IAT relocated 0x3100, 4 ranges separated by NULL, 63 call sites repointed) + kit dev.8 \\
+8 & \code{dev.8} & T0-T7 all green for the FIRST time (functional contract fully proven). Probe died on its own Python; showcase still mute (5th death) & kit dev.9 (probe made load-bearing) \\
+9 & \code{dev.9} & T0-T7 all green second time; 6th showcase death named by system then by lab. [OFT-QWORD]: 4 OFT tables at QWORD stride instead of DWORD - the loader walks 10.18.6.3 entries at DWORD stride; first cause of ALL deaths found on the piece bytes & piece dev.8 (89 bytes in 52 ranges, sealed 0.1.0 candidate) + kit dev.10 \\
+10 & \code{dev.11} & T0-T7 all green third time; SHOWCASE ALIVE FIRST TIME (0 and 0, no WER). [FREE-SANS-TYPE] at kit: FreeLibrary called without argtypes, 64-bit HMODULE truncated to C int - ArgumentError killed cascade 205 & kit dev.12 (argtypes=[c\_void\_p], except Exception widened, probe armored try/finally) \\
+11 & \code{dev.12} & T0-T7 all green 4th time; cascade 205 complete 1st time; showcase alive 2nd time; green holds entire. [SONDE-EXE] named by lab on pieces: structural false negative - library loader NEVER resolves an EXE's imports; liaison proven by the living showcase & seal loupe 0.1.0 on recouped run 39/39 (D178): notation debt paid (587$\rightarrow$0), crystallisation 26x10/10, anti-rollback armed \\
+12 & \code{dev.1} & T0-T7 all green 5th time; cascade 205 2nd time; showcase alive 3rd time (0 and 0, first of piece 0.1.1). [T0-PERIME] residual named (dev.12-era banner text - no gate touched) & seal loupe 0.1.1 (D181): [R10-PERIMEE] debt paid at birth (17 sums refreshed), card generation 17, artifact intact \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Sealed artifacts (SHA-256, verified byte for byte against the card and journal at edition time).}
+\label{tab:empreintes}
+\begin{tabular}{@{}l r l@{}}
+\toprule
+\textbf{Artifact} & \textbf{Bytes} & \textbf{SHA-256 (first 16 hex)} \\
+\midrule
+\code{loupe.exe 0.1.1} & 127,488 & \code{c111510535767a40\ldots} \\
+\code{loupe.exe 0.1.0} & 127,488 & \code{054de960c31425d0\ldots} \\
+\code{proxy.exe 1.0.0} & 65,024 & \code{446279f3ab356900\ldots} \\
+\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Strengthened evidence (v0.11.0, D185): six new instruments, all run with fixed seeds and reproducible. Sources: scripts/preuves\_v110/.}
+\label{tab:preuves110}
+\begin{tabularx}{\textwidth}{@{}l l X l@{}}
+\toprule
+\textbf{Instrument} & \textbf{Target} & \textbf{Measured} & \textbf{Detail} \\
+\midrule
+Mutation testing (16 mutants/bloc, graine  & loupe & 230/288 killed (79.9\%) & 18 blocks \\
+Mutation testing (16 mutants/bloc, graine  & tls13 & 397/448 killed (88.6\%) & 28 blocks \\
+Mutation testing (16 mutants/bloc, graine  & sys & 67/96 killed (69.8\%) & 6 blocks \\
+Constant-time (dudect d'émulation, N=60) & tls13-01..04 (sha-256) & t = 0.0 & CONSTANT \\
+Constant-time (dudect d'émulation, N=60) & tls13-05 (hmac-sha256, la clé) & t = 0.0 & CONSTANT \\
+Constant-time (dudect d'émulation, N=60) & tls13-06 (hkdf-extract, l'IKM) & t = 0.0 & CONSTANT \\
+Constant-time (dudect d'émulation, N=60) & tls13-13/14 ($\times$25519, la clé privée) & t = 0.0 & CONSTANT \\
+Constant-time (dudect d'émulation, N=60) & tls13-15..19 (aes-gcm, la clé) & t = 0.0 & CONSTANT \\
+Constant-time (dudect d'émulation, N=60) & loupe-06 (md5, le contenu) & t = 0.0 & CONSTANT \\
+Coverage-guided fuzzing (graines 20261111/ & loupe-01 & 60.5\% coverage, 0 crashes, 0 canary violations & corpus 18 \\
+Coverage-guided fuzzing (graines 20261111/ & http-10 & 358 instructions covered, 0 crashes & corpus 17 \\
+Oracle independence (distinct seed and mod & I1 tables MD5 T[64] : plan ↔ dérivation  & 0 divergence(s) & zéro \\
+Oracle independence (distinct seed and mod & I1 décalages MD5 S[64] : plan ↔ RFC 1321 & 0 divergence(s) & zéro \\
+Oracle independence (distinct seed and mod & I2 vecteurs RFC 1321 : spec (par citatio & 0 divergence(s) & 7 vecteurs : harnais == hashlib en clair \\
+Oracle independence (distinct seed and mod & I3 différentiel sha256 : 200 messages os & 0 divergence(s) & zéro écart \\
+Oracle independence (distinct seed and mod & I3 différentiel md5 : 200 messages os.ur & 0 divergence(s) & zéro écart \\
+Oracle independence (distinct seed and mod & I4 K[64] SHA-256 : plan ↔ racines cubiqu & 0 divergence(s) & zéro \\
+Bounded static memory safety & 52 blocks & 1181 stack accesses verified, 0 out-of-frame & 463 unresolved (named) \\
+Comparative benchmarks (same emulator) & sha256(1024 o) & 69132 ins/op & 5436 bytes \\
+Comparative benchmarks (same emulator) & sha256(1024 o) & 77505 ins/op & 3072 bytes \\
+Comparative benchmarks (same emulator) & sha256(1024 o) & 4524 ins/op & 765 bytes \\
+\bottomrule
+\end{tabularx}\end{table}

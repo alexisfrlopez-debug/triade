@@ -1,0 +1,19 @@
+=== (a) LE REJEU INTÉGRAL DES HARNAIS EXISTANTS — v0.11.0 ===
+loupe/harnais_noyau.py : VERDICT : VERT — le noyau loupe-01..07 est NOTÉ-MESURÉ-PROUVÉ sur pièces (les vecteurs officiels, le différentiel hashlib, l'héritage sha byte-identique
+loupe/harnais_rendu.py : VERDICT : VERT — les familles rendu + navigation loupe-08..14 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (l'oracle à scénarios vert : l'écran attendu oct
+loupe/harnais_edition.py : VERDICT : VERT — la famille édition loupe-15..18 et la table de routage étendue de loupe-09 r2 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (le différentie
+tls13/harnais_sha.py : VERDICT : VERT
+tls13/harnais_hkdf.py : VERDICT : VERT
+tls13/harnais_x25519.py : VERDICT : VERT
+tls13/harnais_aead.py :   [ok] V1.k:temps-constant-structurel — les sauts conditionnels : {'h100015': 0, 'h100016': 0, 'h100017': 1, 'h100018'
+tls13/harnais_poignee.py : VERDICT : VERT — 54 contrôles · 54 VERTS : la famille poignée + le principal NOTÉES-MESURÉES-PROUVÉES — le Cli
+tls13/harnais_enregistrement.py : VERDICT : VERT
+tls13/harnais_aead.py : VERDICT : VERT (49 verts · 0 échecs)
+m8/harnais_sys.py : BILAN : 131 contrôles · 131 verts · 0 échec(s) · empreinte 103da7250cdb46b4 · graine 20261105
+
+=== le garde du sceau ===
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+=== (b) les empreintes des artefacts scellés ===
+c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1  loupe/loupe.exe
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  tls13/proxy.exe

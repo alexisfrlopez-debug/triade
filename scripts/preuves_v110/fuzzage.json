@@ -1,0 +1,23 @@
+{
+ "loupe-01": {
+  "bloc": "loupe-01 (ouvrir — le chemin non fiable)",
+  "iterations": 400,
+  "couverture_instructions": 72,
+  "instructions_du_bloc": 119,
+  "couverture_pct": 60.5,
+  "crashes": 0,
+  "violations_canaris": 0,
+  "corpus_final": 18,
+  "graine": 20261111
+ },
+ "http-10": {
+  "bloc": "http-10 (le parseur d'entrée, r3 — la pièce 0.4.0)",
+  "iterations": 400,
+  "couverture_instructions": 358,
+  "crashes_emulation": 0,
+  "fautes_nommees": 0,
+  "familles_de_fautes": [],
+  "corpus_final": 17,
+  "graine": 20261112
+ }
+}

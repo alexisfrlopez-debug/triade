@@ -1,0 +1,4 @@
+implementation,primitive,taille_octets,instructions_par_op,debit_ops_s_emulation
+"gcc -O2 (référence, contrat équivalent)",sha256(1024 o),5436,69132,31.0
+"gcc -Os (référence, contrat équivalent)",sha256(1024 o),3072,77505,26.6
+"tls13-01..04 (blocs scellés, notés à la main)",sha256(1024 o),765,4524,27.4

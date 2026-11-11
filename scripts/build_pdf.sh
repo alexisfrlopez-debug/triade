@@ -3,7 +3,7 @@
 #
 # Depuis la v0.9.0 (la consolidation du programme d'après M10, D180), le PDF
 # formel de la version courante est docs/Protocole_TRIADE_v0.9.0_Specification.pdf,
-# produit par la chaîne LaTeX/Tectonic (scripts/spec_v100/, née spec_v090 par
+# produit par la chaîne LaTeX/Tectonic (scripts/spec_v110/, née spec_v100 par
 # copie [la quatrième révision de terrain du TGN] — la série spec_v081–v084
 # née spec_v080 [D176] —
 # et avant : spec_v040 → spec_v050 → spec_v051 → spec_v052 → spec_v060 →
@@ -33,10 +33,10 @@ cd "$ROOT"
 BASE="${TRIADE_BASE:-/home/z/my-project}"
 SKILL="$BASE/skills/pdf"
 
-SPEC_DIR=scripts/spec_v100
+SPEC_DIR=scripts/spec_v110
 COVER_HTML="$SPEC_DIR/cover.html"
 COVER_PDF="$SPEC_DIR/cover.pdf"
-FINAL_PDF=docs/Protocole_TRIADE_v0.10.0_Specification.pdf
+FINAL_PDF=docs/Protocole_TRIADE_v0.11.0_Specification.pdf
 STAMP=.pdf_build.stamp
 
 # Sources dont la modification déclenche la reconstruction.

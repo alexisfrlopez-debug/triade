@@ -1,0 +1,6 @@
+FUZZAGE GUIDÉ PAR COUVERTURE — v0.11.0 (graines fixées, reproductible)
+
+LOUPE-01 : 72/119 instructions couvertes (60.5 %), 0 crashes, 0 violations de canaris, corpus 18 entrées (graine 20261111)
+HTTP-10  : 358 instructions couvertes, 0 crashes, 0 fautes nommées (familles : ), corpus 17 entrées (graine 20261112)
+
+LIMITES CONSTATÉES : la couverture est celle du BLOC en émulation (les adresses exécutées, par traduction) ; les crashes sont les fautes d'émulation (pas les morts du terrain) ; le parseur http-10 est jugé sur la pièce 0.4.0 scellée (la révision r3 du M5).

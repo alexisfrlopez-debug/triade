@@ -1,0 +1,56 @@
+MUTATION TESTING v0.11.0 — graine 20261111, 16 mutants/bloc
+
+[loupe] loupe-01      16 mutants : K1   8 · K2   5 · K3   0 · crash  0 · vivants  3 → 81.2 %
+[loupe] loupe-02      16 mutants : K1   5 · K2  11 · K3   0 · crash  0 · vivants  0 → 100.0 %
+[loupe] loupe-03      16 mutants : K1   2 · K2   7 · K3   0 · crash  0 · vivants  7 → 56.2 %
+[loupe] loupe-04      16 mutants : K1   6 · K2   7 · K3   0 · crash  0 · vivants  3 → 81.2 %
+[loupe] loupe-05      16 mutants : K1   4 · K2  10 · K3   0 · crash  0 · vivants  2 → 87.5 %
+[loupe] loupe-06      16 mutants : K1   7 · K2   4 · K3   0 · crash  5 · vivants  0 → 100.0 %
+[loupe] loupe-07      16 mutants : K1   7 · K2   4 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[loupe] loupe-08      16 mutants : K1   4 · K2   7 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[loupe] loupe-09      16 mutants : K1   8 · K2   7 · K3   0 · crash  0 · vivants  1 → 93.8 %
+[loupe] loupe-10      16 mutants : K1   7 · K2   7 · K3   0 · crash  0 · vivants  2 → 87.5 %
+[loupe] loupe-11      16 mutants : K1   5 · K2   4 · K3   0 · crash  0 · vivants  7 → 56.2 %
+[loupe] loupe-12      16 mutants : K1   1 · K2  10 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[loupe] loupe-13      16 mutants : K1   4 · K2  11 · K3   0 · crash  0 · vivants  1 → 93.8 %
+[loupe] loupe-14      16 mutants : K1   5 · K2   4 · K3   0 · crash  0 · vivants  7 → 56.2 %
+[loupe] loupe-15      16 mutants : K1   6 · K2   7 · K3   0 · crash  0 · vivants  3 → 81.2 %
+[loupe] loupe-16      16 mutants : K1   2 · K2   8 · K3   0 · crash  0 · vivants  6 → 62.5 %
+[loupe] loupe-17      16 mutants : K1   3 · K2  12 · K3   0 · crash  0 · vivants  1 → 93.8 %
+[loupe] loupe-18      16 mutants : K1   3 · K2  13 · K3   0 · crash  0 · vivants  0 → 100.0 %
+[tls13] tls13-01      16 mutants : K1   4 · K2   1 · K3  10 · crash  1 · vivants  0 → 100.0 %
+[tls13] tls13-02      16 mutants : K1   2 · K2   8 · K3   4 · crash  2 · vivants  0 → 100.0 %
+[tls13] tls13-03      16 mutants : K1   4 · K2   9 · K3   1 · crash  2 · vivants  0 → 100.0 %
+[tls13] tls13-04      16 mutants : K1  10 · K2   4 · K3   2 · crash  0 · vivants  0 → 100.0 %
+[tls13] tls13-05      16 mutants : K1   3 · K2  11 · K3   2 · crash  0 · vivants  0 → 100.0 %
+[tls13] tls13-06      16 mutants : K1   3 · K2   7 · K3   5 · crash  1 · vivants  0 → 100.0 %
+[tls13] tls13-07      16 mutants : K1   6 · K2   5 · K3   5 · crash  0 · vivants  0 → 100.0 %
+[tls13] tls13-08      16 mutants : K1   8 · K2   3 · K3   5 · crash  0 · vivants  0 → 100.0 %
+[tls13] tls13-09      16 mutants : K1   5 · K2   3 · K3   4 · crash  4 · vivants  0 → 100.0 %
+[tls13] tls13-10      16 mutants : K1   7 · K2   4 · K3   4 · crash  1 · vivants  0 → 100.0 %
+[tls13] tls13-11      16 mutants : K1   5 · K2   3 · K3   3 · crash  5 · vivants  0 → 100.0 %
+[tls13] tls13-12      16 mutants : K1   7 · K2   6 · K3   0 · crash  3 · vivants  0 → 100.0 %
+[tls13] tls13-13      16 mutants : K1   7 · K2   4 · K3   2 · crash  3 · vivants  0 → 100.0 %
+[tls13] tls13-14      16 mutants : K1   5 · K2   9 · K3   0 · crash  2 · vivants  0 → 100.0 %
+[tls13] tls13-15      16 mutants : K1   7 · K2   3 · K3   0 · crash  6 · vivants  0 → 100.0 %
+[tls13] tls13-16      16 mutants : K1   7 · K2   7 · K3   0 · crash  2 · vivants  0 → 100.0 %
+[tls13] tls13-17      16 mutants : K1   4 · K2   6 · K3   0 · crash  6 · vivants  0 → 100.0 %
+[tls13] tls13-18      16 mutants : K1   3 · K2   5 · K3   0 · crash  8 · vivants  0 → 100.0 %
+[tls13] tls13-19      16 mutants : K1   0 · K2   9 · K3   0 · crash  7 · vivants  0 → 100.0 %
+[tls13] tls13-20      16 mutants : K1   4 · K2   5 · K3   0 · crash  0 · vivants  7 → 56.2 %
+[tls13] tls13-21      16 mutants : K1   8 · K2   5 · K3   0 · crash  0 · vivants  3 → 81.2 %
+[tls13] tls13-22      16 mutants : K1   4 · K2   2 · K3   0 · crash  0 · vivants 10 → 37.5 %
+[tls13] tls13-23      16 mutants : K1   6 · K2   8 · K3   0 · crash  0 · vivants  2 → 87.5 %
+[tls13] tls13-24      16 mutants : K1   6 · K2   5 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[tls13] tls13-25      16 mutants : K1   4 · K2   7 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[tls13] tls13-26      16 mutants : K1   5 · K2   6 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[tls13] tls13-27      16 mutants : K1   4 · K2   3 · K3   0 · crash  0 · vivants  9 → 43.8 %
+[tls13] tls13-28      16 mutants : K1   4 · K2   7 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[sys] sys-01        16 mutants : K1  10 · K2   6 · K3   0 · crash  0 · vivants  0 → 100.0 %
+[sys] sys-02        16 mutants : K1   8 · K2   7 · K3   0 · crash  0 · vivants  1 → 93.8 %
+[sys] sys-03        16 mutants : K1   5 · K2   6 · K3   0 · crash  0 · vivants  5 → 68.8 %
+[sys] sys-04        16 mutants : K1   4 · K2   2 · K3   0 · crash  0 · vivants 10 → 37.5 %
+[sys] sys-05        16 mutants : K1   6 · K2   4 · K3   0 · crash  0 · vivants  6 → 62.5 %
+[sys] sys-06        16 mutants : K1   6 · K2   3 · K3   0 · crash  0 · vivants  7 → 56.2 %
+
+[TOTAL] 694/832 (83.4 %)

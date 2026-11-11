@@ -1,0 +1,9 @@
+SÛRETÉ MÉMOIRE STATIQUE BORNÉE — v0.11.0 (l'extension de l'audit msx64, l'Entrée 207)
+
+Blocs analysés : 52 (loupe + tls13 + sys) ; 2098 accès mémoire :
+  — PILE : 1181 accès [rsp±k] vérifiés contre la borne du cadre (HORS-CADRE : 0 — attendu 0 : la classe du stack-smash)
+  — MÉDIÉS-CONTRAT : 263 accès via pointeurs d'arguments, bornes au PRE de la spécification I (citées, pas re-prouvées)
+  — CONSTANTS : 191 accès [rip+disp] vers les zones du layout
+  — NON-RÉSOLUS : 463 accès à base non suivie (volatils recomputés, indexations composées) — NOMMÉS, jamais classés sûrs
+
+LES LIMITES CONSIGNÉES : analyse linéaire (aucune énumération de chemins ; registres fusionnés aux jonctions) ; corps de boucle vérifiés une fois (l'invariant) ; bornes des tampons d'argument croisées au contrat I ; aucune analyse d'alias ; les appels IAT détruisent les volatils (modélisé) — c'est une vérification BORNÉE, pas une preuve de sûreté mémoire.

@@ -70,7 +70,7 @@ for m in re.finditer(r"^## (D1[0-8][0-9]) —.*?(?=^## D|\Z)", D,
         sans_structure.append(m.group(1))
 # couverture : chaque D1..D184 vit quelque part dans le corpus de gouvernance
 ids_corpus = set(tous)
-for n in range(1, 185):
+for n in range(1, 187):
     d = f"D{n}"
     if d in ids_corpus:
         continue
@@ -78,9 +78,9 @@ for n in range(1, 185):
             or re.search(rf"\*\*[^*]*\b{d}\b[^*]*\*\*", J)  # marqueur gras au corps
             or d in S):
         ids_corpus.add(d)
-hors_corpus = [f"D{n}" for n in range(1, 185) if f"D{n}" not in ids_corpus]
+hors_corpus = [f"D{n}" for n in range(1, 187) if f"D{n}" not in ids_corpus]
 verifie("A1", "les décisions D100+ portent une structure reconnaissable "
-        "et D1..D184 vivent au corpus",
+        "et D1..D186 vivent au corpus",
         not sans_structure and not hors_corpus,
         f"{len(tous)} entrées à DECISIONS.md, {len(hors_corpus)} hors corpus ; "
         f"sans structure : {sans_structure[:5] or 'aucune'}")
@@ -113,8 +113,9 @@ verifie("A3", "les références d'amendement se résolvent (3 sources)",
         f"{len(refs)} références ; irrésolues : {inconnues or 'aucune'}")
 
 # --- A4 : append-only au geste ---
-verifie("A4", "la plus haute décision consignée est D184 (l'édition)",
-        numeros and numeros[-1] == 184, f"max = D{numeros[-1] if numeros else '?'}")
+verifie("A4", "la plus haute décision consignée est D186 (les preuves "
+        "renforcées v0.11.0)",
+        numeros and numeros[-1] == 186, f"max = D{numeros[-1] if numeros else '?'}")
 
 # --- A5 : les entrées du journal ---
 entrees = re.findall(r"^## (?:Entrée|Journal) (\d+) —", J, re.MULTILINE)
@@ -143,6 +144,9 @@ attendus = {
     "D183": ["séquestre", "Shamir", "NON appliquée", "perte/exposition",
              "demeure", "décision active"],
     "D184": ["sha-256", "loupe-06", "les preuves ne se réécrivent jamais"],
+    "D185": ["MUTATION TESTING", "83,4", "JAMAIS UN CHIFFRE FAUX",
+             "graine", "six instruments"],
+    "D186": ["CSPRNG", "tls13-29", "fail-closed", "KIT96", "DOWNGRD"],
 }
 for did, mots in attendus.items():
     m = re.search(rf"^## {did} —.*?(?=^## D|\Z)", D, re.MULTILINE | re.DOTALL)

@@ -1,0 +1,9 @@
+BENCHMARKS COMPARATIFS — v0.11.0 (l'entrée consignée : message de 1024 o = bytes(range(256))*4 ; clé aes = bytes(range(16)) ; le vecteur FIPS 197 C.1 pour la vérification)
+
+LES ÉCARTS NOMMÉS : la référence clang est ABSENTE du laboratoire — gcc 14.2 -O2/-Os tient la place ; la référence x25519 est REPORTÉE (le risque d'une référence fautive dépasse la valeur du chiffre) ; le débit est celui de l'ÉMULATION (le même émulateur pour les deux camps — la comparaison est honnête, le chiffre absolu appartient à l'émulateur, jamais au terrain).
+
+Format OPT-NN (§ 11) : chaque ligne = hot path mesuré, mesure avant (la référence), mesure après (les blocs), gain, décision.
+
+gcc -O2 (référence, contrat équivalent)          | sha256(1024 o) | taille   5436 o |    69132 ins/op |      31.0 ops/s (émul.)
+gcc -Os (référence, contrat équivalent)          | sha256(1024 o) | taille   3072 o |    77505 ins/op |      26.6 ops/s (émul.)
+tls13-01..04 (blocs scellés, notés à la main)    | sha256(1024 o) | taille    765 o |     4524 ins/op |      27.4 ops/s (émul.)

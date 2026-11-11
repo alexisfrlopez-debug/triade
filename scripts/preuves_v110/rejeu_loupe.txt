@@ -1,0 +1,4 @@
+=== (a) LE REJEU INTÉGRAL DES HARNAIS EXISTANTS — v0.11.0 ===
+loupe/harnais_noyau.py : VERDICT : VERT — le noyau loupe-01..07 est NOTÉ-MESURÉ-PROUVÉ sur pièces (les vecteurs officiels, le différentiel hashlib, l'héritage sha byte-identique
+loupe/harnais_rendu.py : VERDICT : VERT — les familles rendu + navigation loupe-08..14 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (l'oracle à scénarios vert : l'écran attendu oct
+loupe/harnais_edition.py : VERDICT : VERT — la famille édition loupe-15..18 et la table de routage étendue de loupe-09 r2 sont NOTÉES-MESURÉES-PROUVÉES sur pièces (le différentie

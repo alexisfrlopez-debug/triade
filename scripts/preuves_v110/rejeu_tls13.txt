@@ -1,0 +1,6 @@
+tls13/harnais_sha.py : VERDICT : VERT
+tls13/harnais_hkdf.py : VERDICT : VERT
+tls13/harnais_x25519.py : VERDICT : VERT
+tls13/harnais_aead.py :   [ok] V1.k:temps-constant-structurel — les sauts conditionnels : {'h100015': 0, 'h100016': 0, 'h100017': 1, 'h100018'
+tls13/harnais_poignee.py : VERDICT : VERT — 54 contrôles · 54 VERTS : la famille poignée + le principal NOTÉES-MESURÉES-PROUVÉES — le Cli
+tls13/harnais_enregistrement.py : VERDICT : VERT

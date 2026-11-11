@@ -386,9 +386,17 @@ controle("les TROIS specs portent la PROVENANCE (phnt + les mesures — "
          all(("leftarcode" in textes[n] or "diversenok" in textes[n]
               or "Hunt & Hackett" in textes[n] or "mesure" in textes[n].lower())
              for n in SPECS))
-controle("les révisions : les TROIS à R1 (les identifiants stables)",
+# v0.11.0 (D185) : le contrôle suit l'ère COURANTE des spécifications —
+# sys-04 R1, sys-05 R2 (l'erratum d'étiquette), sys-06 R3 (ERRATUM n° 10 :
+# LE TERRAIN A JUGÉ — AfdFlags = 0, TdiFlags = TDI_RECEIVE_NORMAL).
+REVISIONS_ATTENDUES = {"sys-04-transport": "révision 1",
+                       "sys-05-emission": "révision 2",
+                       "sys-06-reception": "révision 3"}
+controle("les révisions : les identifiants stables à l'ère courante "
+         "(sys-04 R1 · sys-05 R2 · sys-06 R3)",
          all(textes[n].split("·")[0].strip().startswith("sys-0")
-             and "révision 1" in textes[n].split("\n")[0] for n in SPECS))
+             and REVISIONS_ATTENDUES[n] in textes[n].split("\n")[0]
+             for n in SPECS))
 
 # ---------------------------------------------------------------------------
 # (4) C4 — le README révisé
@@ -595,11 +603,13 @@ for morceau, nom in (
 for morceau, nom in (
     (f"mov qword ptr [rsp + 0x28], {L8.IOCTL_AFD_RECEIVE:#x}",
      "IOCTL_AFD_RECEIVE"),
-    (f"mov dword ptr [rsp + 0x7c], {L8.TDI_RECEIVE_NORMAL:#x}",
-     "AfdFlags = TDI_RECEIVE_NORMAL 0x20 — L'ERRATUM TENU (LA MESURE en "
-     "TROISIÈME champ, la littérature serait refusée par le noyau strict)"),
-    ("mov dword ptr [rsp + 0x80], 0", "TdiFlags 0 (RIEN ici : la "
-     "littérature faussière serait refusée)"),
+    ("mov dword ptr [rsp + 0x7c], 0",
+     "AfdFlags = 0 (révision 3, ERRATUM n° 10 — LE TERRAIN A JUGÉ : le VRAI "
+     "afd.sys REFUSE le bit 0x20 en AfdFlags, la mesure WinDbg avait tort "
+     "du champ)"),
+    (f"mov dword ptr [rsp + 0x80], {L8.TDI_RECEIVE_NORMAL:#x}",
+     "TdiFlags = TDI_RECEIVE_NORMAL 0x20 (révision 3 — le placement de la "
+     "littérature, le noyau réel a le dernier mot)"),
 ):
     controle(f"sys-06 concorde : {nom}", morceau in notation_06)
 
