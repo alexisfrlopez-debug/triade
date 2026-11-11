@@ -112,6 +112,14 @@ Mutation testing (16 mutants/block, seed 20261111) & sys domain (6 sealed blocks
 \addlinespace[1.5pt]
 Mutation testing (same campaign) & cryptographic families (sha-256, hmac/hkdf, x25519, aes-gcm, md5) & 100\% killed (224/224 mutants, 0 survivors) & \code{preuves\_ \allowbreak{}v110/\allowbreak{}mutation.csv} \\
 \addlinespace[1.5pt]
+Mutation testing, extended (200 mutants/block, seed 20261112, four operators, killers in cost order) & loupe domain (18 sealed blocks) & 2863/3600 killed (79.5\%), 95\% CI [78.2\%, 80.8\%]; 737 survivors, all classified (uncovered paths) & \code{preuves\_ \allowbreak{}v150/\allowbreak{}mutation\_ \allowbreak{}vague3/\allowbreak{}taux.csv} \\
+\addlinespace[1.5pt]
+Mutation testing, extended (200 mutants/block, seed 20261112, four operators, killers in cost order) & tls13 domain (28 sealed blocks) & 5600/5600 killed (100.0\%), 95\% CI [99.9\%, 100.0\%]; 0 survivors, all classified (uncovered paths) & \code{preuves\_ \allowbreak{}v150/\allowbreak{}mutation\_ \allowbreak{}vague3/\allowbreak{}taux.csv} \\
+\addlinespace[1.5pt]
+Mutation testing, extended (200 mutants/block, seed 20261112, four operators, killers in cost order) & sys domain (6 sealed blocks) & 1200/1200 killed (100.0\%), 95\% CI [99.7\%, 100.0\%]; 0 survivors, all classified (uncovered paths) & \code{preuves\_ \allowbreak{}v150/\allowbreak{}mutation\_ \allowbreak{}vague3/\allowbreak{}taux.csv} \\
+\addlinespace[1.5pt]
+Mutation testing, extended (total, replay bit-identical) & the 52 sealed blocks (10{,}400 mutants) & 9663/10400 killed (92.9\%), 95\% CI [92.4\%, 93.4\%]; 737 survivors named and classified; v0.11.0/v0.14.0 rates cited, history not replaced & \code{preuves\_ \allowbreak{}v150/\allowbreak{}mutation\_ \allowbreak{}vague3/\allowbreak{}} \\
+\addlinespace[1.5pt]
 Coverage-guided fuzzing (seed 20261111) & loupe-01 (untrusted input path) & 72/119 instructions covered (60.5\%); 0 crashes; 0 canary violations; corpus 18 & \code{preuves\_ \allowbreak{}v110/\allowbreak{}fuzzage.json} \\
 \addlinespace[1.5pt]
 Coverage-guided fuzzing (seed 20261112) & http-10 (input parser, sealed 0.4.0) & 358 instructions covered; 0 crashes; 0 named faults; corpus 17 & \code{preuves\_ \allowbreak{}v110/\allowbreak{}fuzzage.json} \\

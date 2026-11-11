@@ -54,6 +54,7 @@ PREUVES_V110 = REPO / "scripts" / "preuves_v110"
 PREUVES_V120 = REPO / "scripts" / "preuves_v120"
 PREUVES = REPO / "scripts" / "preuves_v140"
 PREUVES_V130 = REPO / "scripts" / "preuves_v130"
+PREUVES_V150 = REPO / "scripts" / "preuves_v150"
 DONNEES = REPO / "scripts" / "manuscrit_v150" / "donnees"
 DONNEES.mkdir(parents=True, exist_ok=True)
 
@@ -136,6 +137,33 @@ def table_preuves() -> list[tuple[str, str, str, str]]:
         "cryptographic families (sha-256, hmac/hkdf, x25519, aes-gcm, md5)",
         f"100% killed ({cr_m}/{cr_m} mutants, 0 survivors)",
         "preuves\\_v110/mutation.csv"))
+
+    # --- la campagne étendue (la vague 3, n4kwcs3wa) : 200 mutants/bloc,
+    #     quatre opérateurs, tueurs en ordre de coût K1->K4 ---
+    mvg3 = lire_csv(PREUVES_V150 / "mutation_vague3" / "taux.csv")
+    noms_dom = {"loupe": "loupe domain (18 sealed blocks)",
+                "tls13": "tls13 domain (28 sealed blocks)",
+                "sys": "sys domain (6 sealed blocks)"}
+    for r in mvg3:
+        if r["domaine"] == "TOTAL":
+            continue
+        lignes.append((
+            "Mutation testing, extended (200 mutants/block, seed 20261112, "
+            "four operators, killers in cost order)",
+            noms_dom[r["domaine"]],
+            f"{r['tués']}/{r['mutants']} killed ({r['taux_pct']}%), "
+            f"95% CI [{r['ic95_bas_pct']}%, {r['ic95_haut_pct']}%]; "
+            f"{r['vivants']} survivors, all classified (uncovered paths)",
+            "preuves\\_v150/mutation\\_vague3/taux.csv"))
+    tot = next(r for r in mvg3 if r["domaine"] == "TOTAL")
+    lignes.append((
+        "Mutation testing, extended (total, replay bit-identical)",
+        "the 52 sealed blocks (10{,}400 mutants)",
+        f"{tot['tués']}/{tot['mutants']} killed ({tot['taux_pct']}%), "
+        f"95% CI [{tot['ic95_bas_pct']}%, {tot['ic95_haut_pct']}%]; "
+        f"{tot['vivants']} survivors named and classified; "
+        "v0.11.0/v0.14.0 rates cited, history not replaced",
+        "preuves\\_v150/mutation\\_vague3/"))
 
     # --- fuzzage guidé (v0.11.0) ---
     fz = json.loads((PREUVES_V110 / "fuzzage.json").read_text(encoding="utf-8"))
@@ -586,7 +614,10 @@ def main():
                                                   encoding="utf-8")
 
     n_mut = sum(int(r["mutants"]) for r in lire_csv(PREUVES_V110 / "mutation.csv"))
-    print(f"[extraire_v130] {len(jal)} jalons, {len(bud)} budgets, "
+    n_mut_v3 = sum(int(r["mutants"]) for r in lire_csv(
+        PREUVES_V150 / "mutation_vague3" / "taux.csv"))
+    print(f"[extraire_v130] la mutation étendue : {n_mut_v3} mutants "
+          f"en ligne de table ; {len(jal)} jalons, {len(bud)} budgets, "
           f"{len(orc)} oracles, {len(runs)} runs, {len(emp)} empreintes ; "
           f"table des preuves : {len(preuves)} lignes ({n_mut} mutants "
           f"parsés) ; macros à compte exact")

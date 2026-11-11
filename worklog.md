@@ -8371,3 +8371,34 @@ Work Log:
   ouvert (10 000 coffres de TEST D192), aucun chiffre fabriqué, les
   outils = environnement (empreintes consignées, hors dépôt).
 - SUITE : le paquet 2/6 — la campagne de mutation étendue (n4kwcs3wa).
+
+
+Task ID: 143
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 2/6 DE LA VAGUE 3 (l'instruction n4kwcs3wa) — la campagne
+de mutation étendue : 10 400 mutants, tueurs K1→K4, IC exacts, les 737
+survivants classés, le rejeu bit-identique (D201, Entrée 236).
+
+Work Log:
+- LA CAMPAGNE : 52 blocs × 200 mutants, graine 20261112 (par mutant :
+  Random("GRAIN:bloc:index")), quatre types A/B/C/D (multi-octets,
+  substitutions jz↔jnz/add↔sub/… à longueur conservée, immédiats et
+  déplacements).
+- LES TUEURS : K1 3 339 · K2 4 183 · K3 1 112 · K4 1 029 (le rejeu
+  v0.14.0 réutilisé tel quel) — TOTAL 9 663/10 400 (92,9 %).
+- LES TAUX : loupe 79,5 % IC95 [78,2 ; 80,8] ; tls13 100 % ; sys 100 %
+  (Clopper-Pearson exacts).
+- LA CLASSIFICATION : 737 survivants (tous loupe) — CHEMIN NON COUVERT
+  nommé (scénario + contrôle manquant) ; zéro équivalent PAR
+  CONSTRUCTION (K1 canonicalise l'encodage — la note honnête).
+- LE REJEU : verdicts.csv == verdicts_rejeu.csv BIT-IDENTIQUES
+  (sha256 c47ebe14…).
+- LA COMPARAISON : v0.11.0 83,4 % / v0.14.0 93,3 % cités, l'historique
+  intact ; QUATRE lignes nouvelles à la table des preuves (le
+  générateur extraire_donnees_v150 étendu, tables_generees.tex régénéré).
+- Frontières : pièces scellées INTACTES (sha256 recoupés après :
+  loupe.exe c1115105…, proxy.exe 446279f3…, demo.exe df8f2e50…,
+  selftest.exe 8038585b…), copies de laboratoire uniquement, garde
+  14/14, aucun chiffre fabriqué.
+- SUITE : le paquet 3/6 — le reclassement des défauts Loupe
+  (xboh1kljq).
