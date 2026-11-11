@@ -7937,3 +7937,39 @@ Work Log:
 - SUITE : au développeur — l'ère 0.1.1 scellée (M10 franchi depuis la
   0.1.0, douze runs au total) ; les options du programme d'après M10
   (§ 1.10 de la v0.9.0).
+
+Task ID: 130
+Agent: Z.ai (agent principal)
+Task: LE PREMIER FICHIER D'INSTRUCTION EXÉCUTÉ — L'ÉDITION ACADÉMIQUE
+v0.10.0 : le manuscrit IMRAD en anglais (résumé français) né du dépôt,
+D182/D183/D184, les deux livrables, l'instruction archivée.
+
+Work Log:
+- LE MANUSCRIT (manuscrit_v100/) : IMRAD anglais 10 p., quatre RQ,
+  la formulation corrigée (WYSIWYG par round-trip ; l'évolution du code
+  volé bloquée, son exécution non ; termes standards ; D19 requalifiée
+  politique de projet), l'auteur humain unique (l'agent en méthodes et
+  remerciements), Ethics/Data/Limitations, la bibliographie à DOI
+  vérifiables (auteurs in-toto/Sigstore/RepoCoder recoupés aux sources).
+- LES DONNÉES GÉNÉRÉES (extraire_donnees_v100.py) : 11 jalons, 7
+  budgets (51/719/1088), 10 oracles, 12 runs Loupe, 3 empreintes
+  scellées — chaque valeur ancrée au journal, le script REFUSE si une
+  ancre manque ; les tableaux \input depuis donnees/.
+- LA SPÉCIFICATION v0.10.0 : md porté (§ 1.11, § 19.12, versions) ;
+  chaîne spec_v100 née de spec_v090 ; l'annexe A md5 → sha256 (D184,
+  les 15 modules au contenu canonique LF) ; annexe décisionnelle
+  D181-D184 ; le PDF 54 pages consigné au registre.
+- LES DÉCISIONS : D182 (l'édition), D183 (le séquestre chiffré —
+  PROPOSITION documentée avec l'analyse perte/exposition chiffrée,
+  facteur ~40 en faveur du Shamir 5/3, RIEN d'appliqué), D184
+  (gouvernance sha-256, md5 = fonctionnalité Loupe, les preuves
+  historiques demeurent).
+- LA VÉRIFICATION (l'étape obligatoire de l'instruction) : (a) données
+  générées/vérifiées, citations à DOI ; (b) loupe.exe == c1115105…,
+  proxy.exe == 446279f3… byte pour byte ; (c) l'audit de gouvernance
+  VERT + le sceau 14/14 ; (d) les deux zips contrôlés.
+- LE COFFRE : les deux livrables à la racine du coffre Drive,
+  l'instruction pleo7tfy9 ARCHIVÉE (ARCHIVE/, md5 recoupé après).
+- SUITE : le deuxième fichier (v0.11.0 — renforcer le niveau de
+  preuve, D185+), puis le troisième (v0.12.0 — la vérification
+  formelle, D186+).

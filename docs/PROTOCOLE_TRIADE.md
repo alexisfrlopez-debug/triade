@@ -1,6 +1,6 @@
-# PROTOCOLE TRIADE v0.9.0 — Spécification technique
+# PROTOCOLE TRIADE v0.10.0 — Spécification technique
 
-> Source de travail faisant autorité pour la v0.9.0. Les archives formelles des versions
+> Source de travail faisant autorité pour la v0.10.0. Les archives formelles des versions
 > précédentes demeurent : `docs/Protocole_TRIADE_v0.8.4_Specification.pdf` (v0.8.4 — dernière révision de terrain du TGN),
 > `docs/Protocole_TRIADE_v0.8.0_Specification.pdf` (v0.8.0),
 > `docs/Protocole_TRIADE_v0.7.0_Specification.pdf` (v0.7.0),
@@ -20,6 +20,26 @@
 > le PDF formel de la version courante est **régénéré systématiquement** à chaque
 > modification des sources du protocole : `scripts/build_pdf.sh` compare l'empreinte des
 > sources au stamp du dernier build et reconstruit avant chaque sauvegarde (`sync_backup.sh`).
+> La v0.10.0 consigne L'ÉDITION ACADÉMIQUE (D182, la commande du développeur du
+> 11/11 : trois fichiers d'instructions au dossier `/instructions` du coffre) :
+> le manuscrit IMRAD en anglais (résumé français inclus) — quatre questions de
+> recherche (défauts échappés, coût en tokens par changement validé, classes
+> invisibles à l'émulation, sûreté du patch à chaud), les données réelles du
+> journal EXTRAITES PAR SCRIPT, la formulation corrigée (aucune chaîne de
+> traduction optimisante ni opaque — assemblage WYSIWYG vérifié par round-trip ;
+> l'évolution du code volé est bloquée, son exécution ne l'est pas ; les termes
+> standards de l'ingénierie ; D19 requalifiée politique de projet explicite),
+> l'auteur humain unique (l'agent IA en méthodes et remerciements, jamais
+> co-auteur), les déclarations Ethics/dual-use, Data Availability, Limitations ;
+> la proposition D183 (le séquestre chiffré de la phrase de contrôle —
+> documentée, NON appliquée au coffre réel) ; l'annexe A portée à sha-256
+> (D184 — md5 demeure une fonctionnalité d'affichage de Loupe, aucun octet de
+> la pièce ne change) ; les livrables `TRIADE_soumission_v0.10.0.zip` (cinq
+> fichiers au plus, readme inclus, le manuscrit en pdf) et
+> `TRIADE_complet_v0.10.0.zip` (l'intégralité). Aucune règle modifiée, aucune
+> couche d'exécution ajoutée, hiérarchie inchangée — l'édition consigne, elle
+> ne légifère pas.
+
 > La v0.9.0 consolide le programme d'après M10 (D178/D179) : LE JALON M10 — le test
 > grandeur nature, l'application « Loupe » (l'éditeur hexadécimal au panneau
 > d'empreintes, le domaine `loupe`) — est FRANCHI : l'application est NÉE ENTIÈREMENT
@@ -45,8 +65,8 @@
 > M3 franchi ; la v0.5.0 demeure la révision du retour du terrain (validation normée,
 > taxonomie X1–X8, jalons M0–M2).
 
-- Version : v0.9.0 — la révision de consolidation du programme d'après M10 (D178/D179) : **LE JALON M10 FRANCHI le 11/11/2026** — l'application « Loupe » NÉE ENTIÈREMENT DE LA MÉTHODE (la couche I de 18 spécifications écrites-avant-code, les QUATRE chantiers de notation — 159 contrôles verts aux trois graines —, la cérémonie d'ère PASSÉE : le garde 14/14, le kit déployé au coffre /test), ONZE RUNS TERRAIN (Entrées 202–219 : ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur 0xc000007b [l'enveloppe de la lignée NORME DE FAIT], [CADRE-NÉ] [l'initialiseur .data MIROIR EXACT du CADRE_VIERGE — LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle], la classe des arguments pile [l'audit d'ABI msx64 NÉ AU BUILD], [SESSION] -7 [L'OMBRE au kit, l'artefact acquitté], [HINSTANCE-PEB] [r12 = GetModuleHandleW(NULL) LE VRAI MODULE], [D54-QUATRIÈME] + [EAX-SANS-SIGNE] [l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus étendus au 64 bits], [OFT-QWORD] [les QUATRE OFT au pas DWORD — la sixième mort NOMMÉE par le journal d'événements [4/4]], [FREE-SANS-TYPE] [le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe], [RET-NU] [mov eax, 1 ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION], [SONDE-EXE] [le faux négatif structurel : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT]) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE** (D178 — la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, l'écart 587 → 0], la cristallisation 26 × 10/10, la re-signature à la graine durable [LE TÉMOIN NE BOUGE PAS], l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179, la commande du développeur) : la version `0.1.1-dev.1` NÉE DE LA RECOMPOSITION — LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (les 17 sommes rafraîchies à la VÉRITÉ des blocs, le qword porté 0x00010008 → 0x00010101, 0 OCTET AILLEURS — le code byte-identique au vécu des onze runs, R4/R7), la carte GÉNÉRATION 17, le kit 0.1.1-dev.1 DÉPOSÉ au coffre /test (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU : si le vert tient, LA BALISE `loupe 0.1.1` SCELLÉE sur run recoupé (le miroir D165/D170). Sous les révisions de terrain v0.8.1 à v0.8.4, les enseignements des runs un à un ; sous la v0.8.0, la consolidation du programme d'après M9 (D170/D171)
-- Date : 11 novembre 2026
+- Version : v0.10.0 — la révision de L'ÉDITION ACADÉMIQUE (D182/D183/D184) : le manuscrit IMRAD en anglais (résumé français) né du dépôt — quatre questions de recherche, les données du journal extraites par script (`extraire_donnees_v100.py`, le manuscrit n'affirme rien qui ne soit vérifié), la formulation corrigée dans les termes standards de l'ingénierie, l'auteur humain unique, les déclarations Ethics/Data/Limitations ; la proposition D183 (séquestre chiffré de la phrase de contrôle — alternative documentée à la garde durable D81, NON appliquée au coffre réel) ; l'annexe A de gouvernance portée à sha-256 (D184 — md5 demeure une fonctionnalité d'affichage de Loupe) ; les livrables soumission (cinq fichiers au plus) et complet. Sous la v0.9.0, la consolidation du programme d'après M10 (D178/D179/D180/D181 : la balise `loupe 0.1.1` scellée sur le douzième run recoupé 39/39) **LE JALON M10 FRANCHI le 11/11/2026** — l'application « Loupe » NÉE ENTIÈREMENT DE LA MÉTHODE (la couche I de 18 spécifications écrites-avant-code, les QUATRE chantiers de notation — 159 contrôles verts aux trois graines —, la cérémonie d'ère PASSÉE : le garde 14/14, le kit déployé au coffre /test), ONZE RUNS TERRAIN (Entrées 202–219 : ONZE DÉFAUTS NOMMÉS, ONZE RETOUCHES DOCUMENTÉES — les refus du chargeur 0xc000007b [l'enveloppe de la lignée NORME DE FAIT], [CADRE-NÉ] [l'initialiseur .data MIROIR EXACT du CADRE_VIERGE — LE GARDE GUÉRI : le contrôle dérive du plan, jamais de la pièce qu'il contrôle], la classe des arguments pile [l'audit d'ABI msx64 NÉ AU BUILD], [SESSION] -7 [L'OMBRE au kit, l'artefact acquitté], [HINSTANCE-PEB] [r12 = GetModuleHandleW(NULL) LE VRAI MODULE], [D54-QUATRIÈME] + [EAX-SANS-SIGNE] [l'IAT relogée 0x3100 en QUATRE plages séparées par NULL, les 20 rendus étendus au 64 bits], [OFT-QWORD] [les QUATRE OFT au pas DWORD — la sixième mort NOMMÉE par le journal d'événements [4/4]], [FREE-SANS-TYPE] [le HMODULE en POINTEUR, l'essai isolé pour TOUTE classe], [RET-NU] [mov eax, 1 ; ret — le verdict ATTACH VRAI PAR CONSTRUCTION], [SONDE-EXE] [le faux négatif structurel : le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE — LA LIAISON PROUVÉE PAR LE VIVANT]) — ET LA VITRINE A VÉCU (0 et 0 aux dixième et onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR) ; LE ONZIÈME RUN recoupé 39/39 : **LA BALISE `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE** (D178 — la dette de la carte soldée par la RÉGÉNÉRATION DES NOTATIONS [18/18 == la pièce OCTET POUR OCTET, l'écart 587 → 0], la cristallisation 26 × 10/10, la re-signature à la graine durable [LE TÉMOIN NE BOUGE PAS], l'anti-rollback ARMÉ, loupe.exe INTACT 054de960…) — LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179, la commande du développeur) : la version `0.1.1-dev.1` NÉE DE LA RECOMPOSITION — LA DETTE [R10-PÉRIMÉE] SOLDÉE À LA NAISSANCE (les 17 sommes rafraîchies à la VÉRITÉ des blocs, le qword porté 0x00010008 → 0x00010101, 0 OCTET AILLEURS — le code byte-identique au vécu des onze runs, R4/R7), la carte GÉNÉRATION 17, le kit 0.1.1-dev.1 DÉPOSÉ au coffre /test (loupe-kit-13, le réceptacle ARMÉ) — LE DOUZIÈME RUN ATTENDU : si le vert tient, LA BALISE `loupe 0.1.1` SCELLÉE sur run recoupé (le miroir D165/D170). Sous les révisions de terrain v0.8.1 à v0.8.4, les enseignements des runs un à un ; sous la v0.8.0, la consolidation du programme d'après M9 (D170/D171)
+- Date : 11 novembre 2026 (édition académique)
 - Couches : I/B/C · Profil primaire : x86-64 / Windows 11 / PE32+
 - Hiérarchie de la fonction objectif : **Sécurité > Performance > Optimisation > Coût en tokens** — inchangée et verrouillée (D19)
 
@@ -309,6 +329,63 @@ dégelable au rythme du développeur (D135 amendée par D171) : la frontière
 fondatrice demeure INTACTE. Aucune règle du cœur n'est modifiée ; aucune couche
 n'est ajoutée à l'exécution ; la hiérarchie de la fonction objectif est
 inchangée.
+
+
+### 1.11 Ce que change la v0.10.0
+
+La révision de **l'édition académique** (D182, la commande du développeur du 11/11).
+La présente révision **consigne** ; elle ne modifie AUCUNE règle, n'ajoute AUCUNE
+couche d'exécution, laisse la hiérarchie de la fonction objectif inchangée — le
+modèle D180 : le protocole consigne, il ne légifère pas.
+
+**Le manuscrit académique** (`docs/TRIADE_manuscrit_v0.10.0.pdf`, la chaîne
+`scripts/manuscrit_v100/`) : une édition IMRAD en anglais (résumé français inclus),
+structurée autour de quatre questions de recherche — le taux de défauts échappés
+(onze classes nommées sur douze runs terrain du TGN « Loupe »), le coût en tokens
+par changement validé (51 / 719 / 1 088 mesurés M1, D31/D34), les classes de
+défauts invisibles à l'émulation (cinq familles : chargeur/image, ABI/SSE,
+sémantique du chargeur de bibliothèque, conventions de codes d'erreur, hypothèses
+du harnais), la sûreté du patch à chaud (zéro régression post-patch, monotonie
+signée, anti-rollback armé). L'auteur humain est unique ; l'agent IA est décrit en
+méthodes et remerciements, jamais co-auteur. Les déclarations Ethics/dual-use
+(outil de pentest autorisé — le projet ne porte AUCUN mécanisme de furtivité),
+Data Availability (dépôt + DOI Zenodo à créer au dépôt), Limitations (N=1,
+circularité de l'oracle, absence de baseline, sécurité mémoire non prouvée, temps
+constant non analysé) sont explicites. Chaque donnée du manuscrit est GÉNÉRÉE
+depuis le journal par `scripts/extraire_donnees_v100.py` — le manuscrit n'affirme
+rien qui ne soit extrait et vérifié.
+
+**La formulation corrigée** : « le compilateur disparaît » devient « aucune chaîne
+de traduction optimisante ni opaque ; assemblage WYSIWYG vérifié par round-trip » ;
+« code volé inexploitable » devient « l'évolution du code volé est bloquée, son
+exécution ne l'est pas » ; les majuscules emphatiques et le vocabulaire
+sacralisant cèdent aux termes standards (key ceremony, signed manifest, sealed
+build) ; l'invariant D19 (Sécurité > Performance > Optimisation > Coût en tokens)
+est requalifié **politique de projet explicite** — la hiérarchie demeure la règle
+du projet, dite dans les termes de l'ingénierie.
+
+**La proposition D183** (documentée, NON appliquée au coffre réel) : le séquestre
+chiffré de la phrase de contrôle — l'alternative à la garde durable D81 (la phrase
+en clair au dépôt et au coffre Drive, l'arbitrage PERTE > EXPOSITION). La
+proposition : la phrase chiffrée vers une clé hors-ligne, ou partagée en parts
+Shamir à seuil, la phrase en clair retirée du dépôt. L'analyse comparative
+chiffrée des risques perte/exposition vit dans la décision D183. Le coffre réel
+du développeur DEMEURE à la garde D81 — aucune clé touchée, aucun conteneur
+réécrit : la proposition attend le geste du développeur.
+
+**L'annexe A portée à sha-256** (D184) : les empreintes de gouvernance de l'annexe
+A (les modules du coffre) passent de md5 à sha-256 — la même méthode au contenu
+canonique LF, l'empreinte longue. md5 demeure UNIQUEMENT une fonctionnalité
+d'affichage de Loupe (le panneau d'empreintes, loupe-06) : AUCUN octet de la
+pièce ne change, et les empreintes md5 des preuves historiques (le journal, les
+archives) demeurent ce qu'elles sont — les preuves ne se réécrivent jamais.
+
+**Les livrables** : `TRIADE_soumission_v0.10.0.zip` (cinq fichiers au plus,
+readme inclus, le manuscrit en pdf — prêt pour un comité de révision) et
+`TRIADE_complet_v0.10.0.zip` (l'intégralité : sources LaTeX, bibliographie,
+tableaux de données, script d'extraction, extraits de journal, empreintes). La
+v0.9.0 demeure : ses sources et son PDF archivés à `docs/`, la chaîne
+`spec_v090` intacte — chaque édition vit à sa chaîne.
 
 ## 2. La couche I : format normalisé des spécifications
 
@@ -1541,6 +1618,27 @@ est une version de maintenance à contrat stable (R4), pas une réépreuve du ja
 Modifier les notations D172–D175 pour la 0.1.1 — rejeté : le code est
 byte-identique au vécu des onze runs ; les notations décrivent LA PIÈCE (R2/R5).
 
+### 19.12 Correspondance v0.9.0 → v0.10.0
+
+| Évolution | En v0.9.0 | En v0.10.0 | Statut |
+|---|---|---|---|
+| Édition académique | — (le manuscrit n'existe pas ; l'article v0.4 de la démonstration RoomEq demeure) | LE MANUSCRIT IMRAD en anglais (résumé français), quatre questions de recherche, les données réelles du journal extraites par script, l'auteur humain unique, l'agent IA en méthodes et remerciements, les déclarations Ethics/Data/Limitations (D182) | nouveau (D182) |
+| Formulation | « le compilateur disparaît » ; « code volé inexploitable » ; majuscules emphatiques | « aucune chaîne de traduction optimisante ni opaque ; assemblage WYSIWYG vérifié par round-trip » ; « l'évolution du code volé est bloquée, son exécution ne l'est pas » ; termes standards (key ceremony, signed manifest, sealed build) ; D19 requalifiée politique de projet explicite | révisé (D182) |
+| Garde de la phrase de contrôle | D81 : la phrase en clair au dépôt et au coffre Drive (PERTE > EXPOSITION) | D81 DEMEURE la décision active ; la PROPOSITION D183 (séquestre chiffré : clé hors-ligne ou parts Shamir à seuil, analyse chiffrée perte/exposition) documentée — NON appliquée au coffre réel, aucune clé touchée | proposition (D183) |
+| Annexe A (empreintes de gouvernance) | md5 des 15 modules du coffre (contenu canonique LF, D133) | sha-256 des 15 modules (la même méthode, D184) ; md5 demeure une fonctionnalité d'affichage de Loupe (loupe-06) — AUCUN octet de la pièce ne change ; les preuves historiques md5 demeurent | révisé (D184) |
+| Livrables d'édition | — | `TRIADE_soumission_v0.10.0.zip` (cinq fichiers au plus, readme inclus, le manuscrit en pdf) et `TRIADE_complet_v0.10.0.zip` (l'intégralité) | nouveau (D182) |
+| Chaîne PDF | spec_v090 (née spec_v084) ; les archives v0.7.0 à v0.8.4 demeurent | chaîne spec_v100 (née spec_v090) + la chaîne manuscrit_v100 ; les archives demeurent | révisé (D182) |
+
+Modifications explicitement rejetées (v0.10.0) : appliquer D183 au coffre réel
+sans le geste du développeur — rejeté : la proposition est documentée, l'arbitrage
+PERTE > EXPOSITION demeure la décision active (D81). Réécrire les empreintes md5
+des preuves historiques en sha-256 — rejeté : les preuves sont immuables, la
+migration ne porte que sur la documentation de gouvernance vivante. Toucher à la
+pièce Loupe (le panneau md5) — rejeté : md5 y est une fonctionnalité d'affichage
+(RFC 1321 notée à la spécification loupe-06), l'artefact scellé ne bouge jamais.
+Modifier les règles ou la hiérarchie — rejeté : l'édition consigne, elle ne
+légifère pas (D180).
+
 ## 20. Glossaire
 
 | Terme | Définition |
@@ -1592,6 +1690,7 @@ byte-identique au vécu des onze runs ; les notations décrivent LA PIÈCE (R2/R
 
 | Version | Date | Contenu |
 |---|---|---|
+| v0.10.0 | 11 nov. 2026 | Révision de L'ÉDITION ACADÉMIQUE (D182/D183/D184) : le manuscrit IMRAD en anglais (résumé français) — quatre questions de recherche, les données réelles du journal extraites par script, la formulation corrigée (WYSIWYG par round-trip ; l'évolution du code volé bloquée, son exécution non ; termes standards ; D19 requalifiée politique de projet), l'auteur humain unique, l'agent IA en méthodes et remerciements, les déclarations Ethics/Data/Limitations ; la proposition D183 (séquestre chiffré de la phrase de contrôle — documentée, non appliquée) ; l'annexe A portée à sha-256 (D184 — md5 demeure une fonctionnalité de Loupe) ; les livrables soumission et complet. La balise `loupe 0.1.1` scellée sur le douzième run recoupé (D181) est consignée à la rangée M10. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.9.0 | 11 nov. 2026 | Révision de consolidation du programme d'après M10 (D178/D179) : LE JALON M10 — le test grandeur nature « Loupe » — est FRANCHI (l'application NÉE ENTIÈREMENT DE LA MÉTHODE : onze runs terrain, onze défauts nommés, onze retouches documentées, LA VITRINE VIVANTE chez son utilisateur, le onzième run recoupé 39/39 — la balise `loupe 0.1.0` SCELLÉE PAR FAIT DE CARTE, la dette de la carte soldée par la régénération des notations, la cristallisation 26 × 10/10, l'anti-rollback ARMÉ) : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION ; LE PROGRAMME D'APRÈS M10 (D179) : la version `0.1.1-dev.1` COMMANDÉE — la dette [R10-PÉRIMÉE] (17 sommes de l'ère dev.5) SOLDÉE À LA NAISSANCE (la pièce née de la recomposition, le qword porté 0x00010101, 0 octet de code changé — R4/R7), le kit 0.1.1-dev.1 déposé au coffre /test, LE DOUZIÈME RUN ATTENDU (la balise `loupe 0.1.1` sur le vert recoupé, le miroir D165/D170). Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.8.2 | 9 nov. 2026 | SECONDE RÉVISION DE TERRAIN DU TGN (Entrées 201–206) : le run M10-(e) REFUSÉ TROIS FOIS, CHAQUE REFUS NOMMÉ — dev.1 puis dev.2 du refus du chargeur 0xc000007b (l'oubli du BASERELOC, puis la table nécessaire mais PAS suffisante), puis LE PAS DÉCISIF : **LE VRAI CHARGEUR DE WINDOWS A CARTOGRAPHIÉ dev.3 — la première fois au terrain, l'enveloppe prouvée de la lignée DEMEURE NORME DE FAIT** — et LE TÉMOIN A NOMMÉ AU T0 [CADRE-NÉ] : le CADRE .data pas né poignée INVALIDE, l'initialiseur du build (le sentinel à +8 — UNE TAILLE CADRE_POIGNEE prise pour un offset — au lieu de +528, la chaîne des tailles du plan ; le zéro aurait été UNE SESSION FANTÔME au premier ouvrir()) ; LA RETOUCHE dev.4 : l'initialiseur .data devient LE MIROIR EXACT du CADRE_VIERGE du harnais (l'offset CALCULÉ, jamais gravé de tête), LE GARDE EST GUÉRI (le validateur du build validait à +8 — la même constante fautive : un garde blessé par le défaut qu'il croyait garder ne garde rien ; il relit désormais LE MÊME miroir, la comparaison ENTIÈRE : le .data des 0x12000 octets relu à l'octet près) ET le scénario relit LE .data ENTIER contre le miroir. LES ENSEIGNEMENTS CONSIGNÉS : LE CONTRÔLE DÉRIVE DU PLAN, JAMAIS DE LA PIÈCE QU'IL CONTRÔLE ; l'initialiseur de l'image est LE MIROIR de l'état de naissance prouvé par le harnais. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
 | v0.8.1 | 9 nov. 2026 | RÉVISION DE TERRAIN DU TGN (Entrées 201–205) : la cérémonie d'ère PASSÉE SUR PIÈCES (le garde à QUATORZE arbres, la dette D166/D171 soldée, la remise du développeur installée au coffre /test) ; le build `loupe.exe 0.1.0-dev.1` NÉ (la carte génération 13, le verrou croisé 26/26, les trois harnais verts au geste du build) ; LE RUN TERRAIN REFUSÉ DEUX FOIS par le VRAI chargeur Windows — 0xc000007b au geste de cartographie : dev.1 (l'oubli du BASERELOC minimal, l'Entrée 204) puis dev.2 (la table nécessaire mais PAS suffisante — l'image sortait de l'enveloppe des HUIT artefacts de la lignée : le trou de page 0x3000-0x4000, le BSS massif .data, le sous-système GUI) ; LA RETOUCHE dev.3 : l'image ramenée DANS l'enveloppe prouvée (plus de trou, plus de BSS — aucune adresse scellée ne bouge) ET LE KIT PORTE SA CASCADE DIAGNOSTIQUE (les axes reconstitués UN À UN sur des copies éphémères %TEMP%, le VRAI chargeur NOMME l'axe au témoin ; le mode d'erreur coupe les boîtes bloquantes — le refus est nommé PAR LE TÉMOIN). L'enseignement consigné : l'enveloppe prouvée de la lignée devient NORME DE FAIT pour l'éditeur PE — ce que le terrain n'a pas prouvé, le build ne l'ose pas ; un échec nommé vaut plus qu'un vert muet. Aucune règle modifiée, aucune couche d'exécution ajoutée, hiérarchie inchangée |
@@ -1607,6 +1706,15 @@ byte-identique au vécu des onze runs ; les notations décrivent LA PIÈCE (R2/R
 | v0.6.0 | 31 oct. 2026 | Passation du programme de souveraineté cryptographique (D133) : axes 2-3-4 accomplis et prouvés terrain — la chaîne réelle du coffre a migré CF1 → CF2 → CF3 les 30–31/10 (CF2 : Shamir 5/3, sentinelle/porte D120 ; CF3 : serrure piégée, époque 1, checksum `0cc89a96`, verdict à froid VERT ×2) —, axe 1 TEE consigné ; nouveau chapitre 12 (souveraineté : hiérarchie des gardes, CF2, CF3, sceau de l'Intention, coffre neuf né CF3, bornes) et chapitre 13 (cérémonies et kit du terrain) ; menaces étendues (expropriation, evil maid, roll-back du couple conteneur+piège) ; M5 ouvert ; correspondance § 19.7 ; le PDF formel porte annexe empreintes et tableau décisionnel ; le *Livre du Coffre* accompagne (complément opératoire). Aucune règle modifiée, aucune couche ajoutée à l'exécution, hiérarchie inchangée |
 | v0.4.0 | 26 oct. 2026 | Révision de gouvernance vérifiée : couche I normalisée et taxonomie des défauts T1–T6 (D19) ; threat model étendu et R10 renforcée — checksums, signature de manifeste, anti-rollback, fail-closed explicite (D20) ; R11 optimisation mesurée et journal d'optimisation (D21) ; suite de conformité par profil et parité inter-profils à contrat constant (D22) ; reverse-specs, pré-versions dev.N/rc.N/final et fixtures partagées officialisées (D23) ; traçabilité I↔C↔B↔tests, journal des décisions normalisé, tableau de bord de conformité, norme de fragmentation et localisation par intention, budgets tokens instrumentés (D24). Hiérarchie de la fonction objectif inchangée et verrouillée (D19) ; aucune règle affaiblie ; aucune couche d'exécution ajoutée ; numérotation à trois segments |
 
-La présente version consigne LA RÉVISION DE CONSOLIDATION DU PROGRAMME D'APRÈS M10 (v0.9.0, D178/D179) : les jalons M0 à M10 sont TOUS franchis sur validations terrain (balises finales 0.2.0, 0.9.0, `1.0.0` et `loupe 0.1.0` — la session réelle la ligne applicative chiffrée, la création l'application née de TRIADE vécue chez son utilisateur), le programme de souveraineté cryptographique accompli (axes 2-3-4, D133) ; LE JALON M10 est l'épreuve de la MÉTHODE ENTIÈRE — onze runs terrain, onze défauts nommés, onze retouches documentées : chaque défaut du kit ou de la pièce nommé sur pièces (le chargeur, le CADRE-NÉ, la classe des arguments pile, L'OMBRE, le HINSTANCE, l'IAT relogée, les OFT au pas DWORD, le POINTEUR du FreeLibrary, le RET-NU, le SONDE-EXE), chaque enseignement consigné (le contrôle dérive du plan, jamais de la pièce qu'il contrôle ; l'échec nommé vaut plus que le vert muet ; la vitrine vivante prouve la liaison mieux que toute sonde) — et la balise `loupe 0.1.0` scellée sur le onzième run recoupé 39/39 : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION. Le programme d'après M10 est ouvert à la commande du développeur : la version 0.1.1-dev.1 (D179) porte la dette [R10-PÉRIMÉE] soldée à la naissance — le douzième run attendu scellera la balise `loupe 0.1.1` sur le vert recoupé. Les profils additionnels après M7 restent volontairement hors du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).
+La présente version consigne LA RÉVISION DE L'ÉDITION ACADÉMIQUE (v0.10.0, D182) : le
+protocole entre en manuscrit — quatre questions de recherche, les données réelles
+du journal extraites par script, la formulation corrigée dans les termes standards
+de l'ingénierie, l'auteur humain unique, l'agent IA décrit en méthodes et
+remerciements, les déclarations Ethics/Data/Limitations explicites (N=1, la
+circularité de l'oracle, l'absence de baseline, la sécurité mémoire non prouvée,
+le temps constant non analysé) ; la proposition D183 (le séquestre chiffré de la
+phrase de contrôle) documentée sans être appliquée ; l'annexe A de gouvernance
+portée à sha-256. La version précédente (v0.9.0) avait consigné LA RÉVISION DE
+CONSOLIDATION DU PROGRAMME D'APRÈS M10 (D178/D179) : les jalons M0 à M10 sont TOUS franchis sur validations terrain (balises finales 0.2.0, 0.9.0, `1.0.0` et `loupe 0.1.0` — la session réelle la ligne applicative chiffrée, la création l'application née de TRIADE vécue chez son utilisateur), le programme de souveraineté cryptographique accompli (axes 2-3-4, D133) ; LE JALON M10 est l'épreuve de la MÉTHODE ENTIÈRE — onze runs terrain, onze défauts nommés, onze retouches documentées : chaque défaut du kit ou de la pièce nommé sur pièces (le chargeur, le CADRE-NÉ, la classe des arguments pile, L'OMBRE, le HINSTANCE, l'IAT relogée, les OFT au pas DWORD, le POINTEUR du FreeLibrary, le RET-NU, le SONDE-EXE), chaque enseignement consigné (le contrôle dérive du plan, jamais de la pièce qu'il contrôle ; l'échec nommé vaut plus que le vert muet ; la vitrine vivante prouve la liaison mieux que toute sonde) — et la balise `loupe 0.1.0` scellée sur le onzième run recoupé 39/39 : LA MÉTHODE TRIADE ENTIÈRE PROUVÉE PAR LA CRÉATION. Le programme d'après M10 est ouvert à la commande du développeur : la version 0.1.1-dev.1 (D179) porte la dette [R10-PÉRIMÉE] soldée à la naissance — le douzième run attendu scellera la balise `loupe 0.1.1` sur le vert recoupé. Les profils additionnels après M7 restent volontairement hors du périmètre courant afin que chaque addition s'appuie sur des résultats mesurés. La règle de gouvernance demeure : toute évolution invalide explicitement ce qu'elle remplace, et rien ne se change en silence — le terrain compris : chaque lecture d'exécution est une révision potentielle du modèle, et son enseignement se consigne (§ 8.4, § 8.5).
 
 

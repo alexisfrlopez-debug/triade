@@ -1,0 +1,42 @@
+CONSTAT DE VÉRIFICATION — édition académique v0.10.0 (exigé par le fichier d'instruction, exécuté avant la livraison)
+==================================================================
+
+--- (a) données extraites et vérifiées (le script REFUSE si une ancre manque au journal) ---
+[verifier] 11 jalons, 7 budgets, 10 oracles, 12 runs, 3 empreintes ; 0 écart(s)
+
+--- (b) empreintes des artefacts scellés, byte pour byte ---
+loupe.exe (0.1.1, scellée D181) : c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+attendu                         : c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+  -> CONFORME
+proxy.exe (1.0.0, scellée D170) : 446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+attendu                         : 446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+  -> CONFORME
+
+--- (c) l'audit de gouvernance (champs, unicité, chaînage, append-only, entrées, contenu de l'édition) ---
+[A1] les décisions D100+ portent une structure reconnaissable et D1..D184 vivent au corpus : VERT — 141 entrées à DECISIONS.md, 0 hors corpus ; sans structure : aucune
+[A2] aucun ID de décision réutilisé (formes titres) : VERT — doublons : aucun
+[A3] les références d'amendement se résolvent (3 sources) : VERT — 5 références ; irrésolues : aucune
+[A4] la plus haute décision consignée est D184 (l'édition) : VERT — max = D184
+[A5] entrées du journal uniques et continues (3 ères : Task ID, Journal, Entrée ; trous historiques 4-7/54 documentés) : VERT — 219 entrées (max 223 : 17 Task ID + 202 Journal/Entrée), doublons aucun, trous aucun
+[A6] la décision D182 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D183 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D184 porte son contenu attendu : VERT — absents : aucun
+
+AUDIT DE GOUVERNANCE : VERT — structure, unicité, chaînage, append-only, entrées du journal et contenu de l'édition constatés.
+
+--- (c bis) le vérificateur du sceau I (14/14 attendu) ---
+[sceau-I] m0: vert (667fb5ae36e4ab3c…)
+[sceau-I] m1: vert (e0e084402b497bde…)
+[sceau-I] m2: vert (752c58a8ce37ddc5…)
+[sceau-I] m3: vert (8ac66a299e46567c…)
+[sceau-I] m4: vert (7e5c61fbce15d3ec…)
+[sceau-I] m5: vert (1869422eca104a6a…)
+[sceau-I] m6: vert (88e8c5444fa7c89a…)
+[sceau-I] m7: vert (f35a0ae948351a6d…)
+[sceau-I] m8: vert (e36141f75ebd8e61…)
+[sceau-I] tls13: vert (4255986216f8b459…)
+[sceau-I] loupe: vert (59e4871ab5b47623…)
+[sceau-I] demo: vert (96e6fd4eaccd7c3f…)
+[sceau-I] terrain: vert (754cb03c967e51d3…)
+[sceau-I] v06: vert (a8166442abe2d98f…)
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
