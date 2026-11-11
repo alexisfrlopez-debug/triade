@@ -1,0 +1,67 @@
+AUDIT DU BENCHMARK SHA-256 — v0.13.0 (la commande, point 4 : le
+comptage 4 524 ins/op de v0.11.0 impliquait 4,16 instructions/ronde
+sur 17 blocs de compression — sous tout minimum scalaire plausible).
+
+LE MÉCANISME DE L'ARTEFACT (établi sur le code, rejoué sur pièces) :
+benchmarks_v110.py lisait emul_s.compteur au retour de hacher(), or
+appeler() remet le compteur à zéro À CHAQUE appel — la valeur lue
+était la FINALISATION SEULE (tls13-04), jamais l'opération complète.
+Le facteur 15,3 comparait l'op complète gcc contre la finalisation
+seule des blocs. Second artefact : le « 5 436 o » était l'image
+entière de la référence (trois fonctions + toutes leurs tables), pas
+la fonction sha256.
+
+LE PIPELINE COMPLET DES BLOCS (init + absorb + finaliser, condensé
+CONFRONTÉ à hashlib : JUSTE, deux passes identiques : OUI) :
+  tls13-01 init      :       12 instructions
+  tls13-03 absorb    :    71447 instructions (16 invocations de tls13-02)
+  tls13-04 finaliser :     4524 instructions (1 invocations de tls13-02)
+  TOTAL op complète  :    75983 instructions (17 invocations de la compression, attendues 17)
+  — l'ARTEFACT v0.11.0 rejoué : 4524 instructions
+    (le compteur de la finalisation seule, ce que v0.11.0 publiait
+     comme « sha256(1024 o) » des blocs)
+  — hacher() lui-même sous-comptait l'init : son total disait 75971
+
+LA RÉFÉRENCE (op complète, même émulateur, même entrée, vérifiée
+contre hashlib AVANT la mesure) :
+  gcc -O2 : 69132 instructions — débit 30.3 ops/s (émul.)
+  gcc -Os : 77505 instructions — débit 26.4 ops/s (émul.)
+  blocs   : 75983 instructions — débit 27.6 ops/s (émul.)
+
+LA PLAUSIBILITÉ PAR RONDE (total / ({n_compress} blocs × 64)) :
+  gcc -O2 : 63.54 instr/ronde
+  gcc -Os : 71.24 instr/ronde
+  blocs   : 69.84 instr/ronde — PLAUSIBLE (l'artefact 4,16 l'était : chaque ronde exige au minimum
+  2 additions, 2 sélections Ch/Maj et 2 chaînes sigma)
+
+LA PARITÉ D'EXTENSIONS ISA (les mnémoniques distinctes) :
+  blocs : 25 mnémoniques — GPR pur (aucune SIMD)
+  gcc -O2 (fonction) : 37 mnémoniques — 101 sites SSE2 (mouvements de tampons : movdqa/movaps/pxor %xmm — le BASELINE x86-64, pas une extension)
+  gcc -Os (fonction) : 20 mnémoniques — 0 sites SSE2 (baseline)
+  → AUCUN des deux camps n'emploit d'extension AU-DELÀ du baseline
+  x86-64 (pas d'AVX/AVX2, pas de SHA-NI, pas d'AES-NI) : la parité
+  d'EXTENSIONS est ÉTABLIE ; gcc emploie toutefois les mouvements
+  SSE2 du baseline (memset/memcpy vectorisés des tampons locaux)
+  que la notation, GPR pure, n'emploie pas — l'écart d'instructions
+  (75 983 vs 69 132) en contient une part : le chiffre corrigé est
+  rapporté SANS ajustement, la parité stricte GPR-à-GPR n'est pas
+  revendiquée.
+
+LES TAILLES AU BON PÉRIMÈTRE :
+  blocs : 765 o de code (les 4 notations) + 256 o (table K en .rdata)
+  gcc -O2 : 1226 o de code (la FONCTION bench_sha256, objdump) + 256 o (table K256 en .rodata)
+  gcc -Os : 292 o + 256 o
+  — l'ARTEFACT v0.11.0 rejoué : « 5 436 o » = l'image ENTIÈRE (5436 o : trois fonctions, toutes tables)
+
+LE VERDICT (les chiffres corrigés rapportés tels quels) :
+  instructions/op complète : blocs 75983 vs gcc -O2 69132 (-9 %) et gcc -Os 77505 (+2 % — les blocs DEVANCENT -Os de 2 % en instructions)
+  débit d'émulation : blocs 27.6 vs gcc -O2 30.3 et -Os 26.4 ops/s (cohérent avec les comptes)
+  taille (code+table) : blocs 1021 o vs gcc -O2 1482 o (les blocs 1.45× plus compacts) et gcc -Os 548 o (-Os PLUS PETIT que les blocs : la notation n'est compacte que contre -O2)
+  LE FACTEUR 15,3× DE v0.11.0 EST RETIRÉ : un artefact de périmètre
+  (op complète contre finalisation seule), attrapé par l'audit que
+  la commande a exigé. La revendication honnête : la notation
+  WYSIWYG est COMPÉTITIVE (entre les deux niveaux de gcc sur les
+  DEUX axes : -9 %/+2 % en instructions contre -O2/-Os, plus
+  compacte que -O2, moins que -Os) — elle n'est NI 15× plus
+  efficace NI pénalisante : le prix de l'auditabilité directe est
+  quasi nul, le gain spectaculaire n'existe pas.

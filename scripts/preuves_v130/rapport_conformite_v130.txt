@@ -1,0 +1,46 @@
+RAPPORT DE CONFORMITÉ v0.13.0 — la liste du point 1 de la commande, vérifiée ligne par ligne sur pièces
+==============================================================================
+[VERT] §4 : « constant-time behaviour is not analyzed » SUPPRIMÉ — la limite réécrite : structurel seulement, temps réel non mesuré
+[VERT] Conclusion : la vérification formelle RETIRÉE des travaux futurs — le modèle formel est PRÉSENTÉ en §4.1 (le renvoi du spec recalé)
+[VERT] §2.1 : les QUATORZE arbres signés
+[VERT] §2.1 : la référence à la spécification v0.13.0
+[VERT] Compte de lignes du journal UNIFIÉ en macro exacte — la macro vaut 9{,}417 — plus aucun arrondi tapé
+[VERT] « D1–D181 » → la plage DÉCISIONS extraite (D1–D19x) — la plage vaut D1--D192
+[VERT] « Fig. 5 » → « Table 5 » (tab:empreintes)
+[VERT] Data Availability : les archives v0.13.0
+[VERT] Table 1 : l'exposant 10^6 (M3) RENDU (corps réduit) — le « 6 » en 6 pt sur le « 10 » en 9 pt — le « 106 » des extractions texte était un artefact
+[VERT] Table 6 RÉGÉNÉRÉE (anglais, légende D185/D187/D189, anti-troncature) — 15 lignes parsées des CSV brutes ; aucune cellule coupée
+[VERT] Table 2 : la note TOTAL EXCLUT les brouillons (8 774 + 5 099)
+[VERT] Spec : l'en-tête VERSION v0.13.0 (couverture + corps)
+[VERT] Spec : le paragraphe de consolidation ALIGNÉ sur D181 (douze runs, loupe 0.1.1 scellée)
+[VERT] Spec : le tableau de menaces (« l'évolution du code volé est bloquée, son exécution ne l'est pas »)
+[VERT] Spec : les renvois au manuscrit recalés (§ 3.5 / § 4.1)
+
+LES VALEURS NUMÉRIQUES DU MANUSCRIT CONTRE LES SORTIES BRUTES (aucune valeur tapée à la main)
+[VERT] le manuscrit porte l'opération complète des blocs (75 983) — manuscrit == audit_benchmark.csv
+[VERT] le manuscrit porte gcc -O2 (69 132) — manuscrit == audit_benchmark.csv
+[VERT] le manuscrit porte gcc -Os (77 505) — manuscrit == audit_benchmark.csv
+[VERT] l'IC95 exact [0.615, 0.998] (Clopper-Pearson)
+[VERT] le retrait du facteur 15,3 (4 mentions, toutes en contexte de retrait)
+[VERT] les caractéristiques de scellement (3.1 %/0.098 %/95.1 %/90.4 %)
+[VERT] les quantiles unilatéraux 1.86σ/3.10σ
+
+LES STATISTIQUES RECALCULÉES (le script rejoué, les valeurs identiques)
+[VERT] stats_v130.py rejoué : IC95 [0.615 ; 0.998] et P(sceller|q) identiques
+
+LES PDF : renvois, légendes, numéros de version
+[VERT] le manuscrit v0.13.0 : 17 pages, en-tête v0.13.0, macros résolues
+[VERT] la spécification v0.13.0 : 58 pages, couverture et § 1.14 présents
+[VERT] le md PROTOCOLE_TRIADE.md en v0.13.0
+
+LES ARTEFACTS SCELLÉS ET LES ARBRES SIGNÉS — INTACTS
+[VERT] loupe.exe INTACT (c1115105…) — c111510535767a40…
+[VERT] proxy.exe INTACT (446279f3…) — 446279f3ab356900…
+[VERT] le garde du sceau : 14 arbres VERTS — [sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+LE KIT DE LA CÉRÉMONIE D183 : préparé, prouvé à froid, NON appliqué
+[VERT] l'autotest du kit D183 : VERT (l'outil prouvé à froid)
+[VERT] aucune phrase réelle touchée (aucun part-*.txt au dépôt)
+
+==============================================================================
+VERDICT : 31 VERT, 0 ROUGE — ÉDITION VERT

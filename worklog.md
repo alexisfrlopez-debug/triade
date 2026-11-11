@@ -8042,3 +8042,66 @@ Work Log:
   recoupé) — le dossier /instructions VIDE : les trois exécutés.
 - SUITE : au développeur — la cérémonie d'ère (tls13-29), l'arbitrage
   D183, le SPRT éventuel, la réplication, le DOI Zenodo.
+
+Task ID: 133
+Agent: Z.ai (agent principal)
+Task: LE QUATRIÈME FICHIER D'INSTRUCTION EXÉCUTÉ — LES CORRECTIONS DE
+L'ÉDITION v0.13.0 : les incohérences vérifiées une à une, les statistiques
+reformulées, le benchmark audité, le kit D183 préparé, D190/D191/D192, les
+deux livrables, l'instruction archivée.
+
+Work Log:
+- L'AUDIT DU BENCHMARK (D191) : le facteur 15,3× RETIRÉ — l'instrument
+  de v0.11.0 lisait le compteur de la FINALISATION SEULE (4 524 = le
+  compteur de tls13-04, jamais l'opération complète) ; re-mesure à
+  périmètre correct : l'op complète des blocs 75 983 instructions (init
+  12 + absorb 71 447 + final 4 524, condensé vérifié contre hashlib,
+  17 compressions confirmées mécaniquement, deux passes identiques)
+  contre gcc -O2 69 132 et -Os 77 505 — COMPÉTITIVE (−9 %/+2 %), 1,45×
+  plus compacte que -O2, moins que -Os ; aucune extension ISA au-delà
+  du baseline (gcc : 101 mouvements SSE2 du baseline ; blocs GPR purs) ;
+  second artefact nommé : le « 5 436 o » était l'image ENTIÈRE.
+- LES STATISTIQUES (D190) : l'IC95 EXACT de 11/12 (Clopper-Pearson
+  [0,615 ; 0,998], la réserve de non-indépendance) ; la cristallisation
+  aux caractéristiques opérationnelles P(sceller|q) = (1-q)^n (3,1 %
+  /0,098 % à q = 50 % — 32× ; 95,1 %/90,4 % à q = 1 % ; quantiles
+  1,87σ/3,10σ) — les « α » de D189 étaient des rapports de vraisemblance
+  mal étiquetés ; la règle de comptage opérationnelle DÉFINIE (runs 6/7
+  comptés une fois chacun ; [T0-PÉRIMÉ] divulgué non compté).
+- LA NEUTRALITÉ (D190) : l'anti-debug léger documenté honnêtement dans
+  les DEUX documents ; le M7 requalifié (qemu-riscv64 TCG au noyau
+  réel, réserve D149 — fence.i NON prouvé sur silicium) ; la conséquence
+  D81 au modèle de menace (phrase + S_serrure en clair = deux éléments
+  trivialement disponibles, le média piège seul rempart).
+- LE KIT D183 (D192) : l'outil au partage CF2 D120 TEL QUEL (découpe
+  bloc par bloc pour la phrase libre, l'indice x dans l'en-tête public) ;
+  l'AUTOTEST VERT (10 combinaisons exactes, 10 paires sans fuite) ; le
+  LISEZMOI, le manifeste, les listes de contrôle — le coffre réel
+  INTACT, le geste au développeur.
+- L'ÉTAT DE L'ART (D192) : huit références VÉRIFIÉES DOI/arXiv (LLM
+  Compiler, CompCert, Kitsune [le piège du DOI GPUVerify évité], POLUS,
+  SWE-agent, Jakobi, Peng, Bacic) ; la revendication scopée ; RQ3
+  recadrée en garanties silencieuses du compilateur.
+- LE GÉNÉRATEUR ANTI-TRONCATURE (extraire_donnees_v130.py) : la Table 6
+  RÉGÉNÉRÉE depuis les sorties brutes (15 lignes parsées, jamais une
+  coupe) ; les comptes du journal en MACROS exactes ; la note
+  TOTAL/brouillons ; les cinq tableaux historiques par le module v100
+  (ancres vérifiées, empreintes mesurées).
+- LE MANUSCRIT v0.13.0 (17 pages) : toutes les corrections appliquées
+  (§3.5 le benchmark audité, §4.1 les stats et la D81, la règle de
+  comptage en §2.3, l'IC95 en §3.1, le M7 en §3.4, l'état de l'art, la
+  conclusion, les déclarations) ; AUCUN débordement de marge (12
+  hérités → 0).
+- LA SPÉCIFICATION v0.13.0 : la chaîne spec_v130 (le patcher à 13
+  remplacements ancrés), l'en-tête VERSION 0.9.0 → 0.13.0 (la dette
+  d'identité de spec_v090), le § 1.14, le § 19.15, le § 1.10 aligné
+  sur D181 (douze runs), la cristallisation corrigée, la phrase du
+  tableau de menaces, les renvois § 3.5/§ 4.1 ; le PDF 58 pages ;
+  le md v0.13.0 (préambule corrigé, § 1.14, § 19.15, versions).
+- LA VÉRIFICATION : le rapport de conformité LIGNE PAR LIGNE — 31
+  VERT / 0 ROUGE (verifier_edition_v130.py) ; le garde du sceau 14/14 ;
+  loupe.exe c1115105… et proxy.exe 446279f3… INTACTS.
+- LES LIVRABLES au coffre + l'instruction f3q3x9i7n ARCHIVÉE (md5
+  recoupé).
+- SUITE : v0.14.0 (ic09ydeli — le programme empirique) puis v0.15.0
+  (ysddxpk0o — le modèle formel non borné, les kits matériels).

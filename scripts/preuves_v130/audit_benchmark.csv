@@ -1,0 +1,5 @@
+implementation,perimetre,instructions_par_op,instr_par_ronde,taille_code_o,taille_table_o,debit_ops_s_emulation,digest_ok,parite_isa
+tls13-01..04 (blocs),op complète (init+absorb+final),75983,69.84,765,256,27.6,oui,scalaire GPR
+gcc -O2 (fonction),op complète,69132,63.54,1226,256,30.3,oui,SSE2 baseline (mouvements de tampons)
+gcc -Os (fonction),op complète,77505,71.24,292,256,26.4,oui,scalaire GPR
+ARTÉFACT v0.11.0 (blocs),finalisation SEULE,4524,"4,16 (implausible)",,,,,

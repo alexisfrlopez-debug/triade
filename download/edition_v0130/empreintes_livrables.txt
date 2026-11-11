@@ -1,0 +1,6 @@
+LIVRABLES DE L'ÉDITION v0.13.0 — empreintes sha-256
+
+c7d7ce508f07c75c3b034e1fa9c1f10cc8707bc19beaea902598064450e7c3fd  TRIADE_soumission_v0.13.0.zip (5 fichiers)
+b942bb63aa7f6326c5e73833ff945e6981419ba3c9d73d78c4bd4566d4693c99  TRIADE_complet_v0.13.0.zip (64 entrées)
+035056c2adf1639ac6762126996a02310db77e6924b3652080d93eb9951dcd49  empreintes_soumission.txt
+a7bd8d8260ae842a6da90267ef99bd650d78f2e09c875ed06e224b56316d54b9  empreintes_complet.txt

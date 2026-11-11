@@ -1,0 +1,35 @@
+LES STATISTIQUES CORRIGÉES — v0.13.0 (la commande, point 2)
+
+(a) LA CRISTALLISATION — les caractéristiques opérationnelles de la
+    règle RÉELLE (sceller ssi n rebuilds consécutifs identiques),
+    sous probabilité de divergence q par rebuild (indépendance,
+    l'hypothèse de D189) : P(sceller | q) = (1-q)^n.
+
+    n =  5 : P(sceller | q=0,5) = 0.03125   (quantile unilatéral 1.86 σ)
+            P(sceller | q=0,01) = 0.95099   (la règle scelle un build sain avec cette probabilité)
+            le LR (0,5/0,99)^5 = 0.0329 — la valeur que v0.11.0/v0.12.0 étiquetait « α »
+    n = 10 : P(sceller | q=0,5) = 0.000976562   (quantile unilatéral 3.10 σ)
+            P(sceller | q=0,01) = 0.904382   (la règle scelle un build sain avec cette probabilité)
+            le LR (0,5/0,99)^10 = 0.00108 — la valeur que v0.11.0/v0.12.0 étiquetait « α »
+
+    LA STRICTESSE n=5 → n=10 : 32× (3,125e-2 → 9,77e-4 — la probabilité de sceller un build divergent
+    à q=0,5 chute de 32×) ; le « 46× » de D189 comparait le canonique
+    5 % au LR mal étiqueté — il est retiré.
+    Les conversions sigma sqrt(-2 ln p) (2,6 / 3,7) : RETIRÉES,
+    remplacées par les quantiles unilatéraux exacts ci-dessus
+    (1,87 / 3,10).
+
+(b) L'IC95 % EXACT de 11/12 (Clopper-Pearson, binomiale exacte) :
+    [0.615 ; 0.998]
+    RÉSERVE (exigée) : les douze itérations sont SÉQUENTIELLES, d'un
+    seul binôme développeur+agent — l'IC est un résumé descriptif
+    binomial, PAS une inférence sur une population de développeurs
+    (la non-indépendance des itérations interdit cette lecture).
+
+(c) LES COMPTES DU JOURNAL (extraits en direct à l'instant — la
+    valeur du manuscrit sera RÉGÉNÉRÉE depuis ici, jamais tapée) :
+    journal : 9418 lignes, 205 entrées (numérotation jusqu'à 226),
+    décisions : 149 consignées, numérotation D1..D192 ;
+    worklog+journal : 42 blocs Task ID.
+    L'« un journal de 9 300 lignes » de v0.12.0 était un arrondi
+    périmé — remplacé par le compte exact ci-dessus.

@@ -1,0 +1,197 @@
+CONSTAT DE VÉRIFICATION — édition v0.13.0 (l'étape obligatoire du quatrième fichier d'instruction, exécutée avant la livraison)
+==================================================================
+
+--- (0) LE RAPPORT DE CONFORMITÉ — la liste du point 1 de la commande, ligne par ligne ---
+RAPPORT DE CONFORMITÉ v0.13.0 — la liste du point 1 de la commande, vérifiée ligne par ligne sur pièces
+==============================================================================
+[VERT] §4 : « constant-time behaviour is not analyzed » SUPPRIMÉ — la limite réécrite : structurel seulement, temps réel non mesuré
+[VERT] Conclusion : la vérification formelle RETIRÉE des travaux futurs — le modèle formel est PRÉSENTÉ en §4.1 (le renvoi du spec recalé)
+[VERT] §2.1 : les QUATORZE arbres signés
+[VERT] §2.1 : la référence à la spécification v0.13.0
+[VERT] Compte de lignes du journal UNIFIÉ en macro exacte — la macro vaut 9{,}417 — plus aucun arrondi tapé
+[VERT] « D1–D181 » → la plage DÉCISIONS extraite (D1–D19x) — la plage vaut D1--D192
+[VERT] « Fig. 5 » → « Table 5 » (tab:empreintes)
+[VERT] Data Availability : les archives v0.13.0
+[VERT] Table 1 : l'exposant 10^6 (M3) RENDU (corps réduit) — le « 6 » en 6 pt sur le « 10 » en 9 pt — le « 106 » des extractions texte était un artefact
+[VERT] Table 6 RÉGÉNÉRÉE (anglais, légende D185/D187/D189, anti-troncature) — 15 lignes parsées des CSV brutes ; aucune cellule coupée
+[VERT] Table 2 : la note TOTAL EXCLUT les brouillons (8 774 + 5 099)
+[VERT] Spec : l'en-tête VERSION v0.13.0 (couverture + corps)
+[VERT] Spec : le paragraphe de consolidation ALIGNÉ sur D181 (douze runs, loupe 0.1.1 scellée)
+[VERT] Spec : le tableau de menaces (« l'évolution du code volé est bloquée, son exécution ne l'est pas »)
+[VERT] Spec : les renvois au manuscrit recalés (§ 3.5 / § 4.1)
+
+LES VALEURS NUMÉRIQUES DU MANUSCRIT CONTRE LES SORTIES BRUTES (aucune valeur tapée à la main)
+[VERT] le manuscrit porte l'opération complète des blocs (75 983) — manuscrit == audit_benchmark.csv
+[VERT] le manuscrit porte gcc -O2 (69 132) — manuscrit == audit_benchmark.csv
+[VERT] le manuscrit porte gcc -Os (77 505) — manuscrit == audit_benchmark.csv
+[VERT] l'IC95 exact [0.615, 0.998] (Clopper-Pearson)
+[VERT] le retrait du facteur 15,3 (4 mentions, toutes en contexte de retrait)
+[VERT] les caractéristiques de scellement (3.1 %/0.098 %/95.1 %/90.4 %)
+[VERT] les quantiles unilatéraux 1.86σ/3.10σ
+
+LES STATISTIQUES RECALCULÉES (le script rejoué, les valeurs identiques)
+[VERT] stats_v130.py rejoué : IC95 [0.615 ; 0.998] et P(sceller|q) identiques
+
+LES PDF : renvois, légendes, numéros de version
+[VERT] le manuscrit v0.13.0 : 17 pages, en-tête v0.13.0, macros résolues
+[VERT] la spécification v0.13.0 : 58 pages, couverture et § 1.14 présents
+[VERT] le md PROTOCOLE_TRIADE.md en v0.13.0
+
+LES ARTEFACTS SCELLÉS ET LES ARBRES SIGNÉS — INTACTS
+[VERT] loupe.exe INTACT (c1115105…) — c111510535767a40…
+[VERT] proxy.exe INTACT (446279f3…) — 446279f3ab356900…
+[VERT] le garde du sceau : 14 arbres VERTS — [sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+LE KIT DE LA CÉRÉMONIE D183 : préparé, prouvé à froid, NON appliqué
+[VERT] l'autotest du kit D183 : VERT (l'outil prouvé à froid)
+[VERT] aucune phrase réelle touchée (aucun part-*.txt au dépôt)
+
+==============================================================================
+VERDICT : 31 VERT, 0 ROUGE — ÉDITION VERT
+
+--- (1) L'AUDIT DU BENCHMARK rejoué (sorties brutes) ---
+=== L'AUDIT DU BENCHMARK SHA-256 — v0.13.0 (commande, point 4) ===
+[entrée] sha256(1024 o), l'entrée consignée v0.11.0
+
+AUDIT DU BENCHMARK SHA-256 — v0.13.0 (la commande, point 4 : le
+comptage 4 524 ins/op de v0.11.0 impliquait 4,16 instructions/ronde
+sur 17 blocs de compression — sous tout minimum scalaire plausible).
+
+LE MÉCANISME DE L'ARTEFACT (établi sur le code, rejoué sur pièces) :
+benchmarks_v110.py lisait emul_s.compteur au retour de hacher(), or
+appeler() remet le compteur à zéro À CHAQUE appel — la valeur lue
+était la FINALISATION SEULE (tls13-04), jamais l'opération complète.
+Le facteur 15,3 comparait l'op complète gcc contre la finalisation
+seule des blocs. Second artefact : le « 5 436 o » était l'image
+entière de la référence (trois fonctions + toutes leurs tables), pas
+la fonction sha256.
+
+LE PIPELINE COMPLET DES BLOCS (init + absorb + finaliser, condensé
+CONFRONTÉ à hashlib : JUSTE, deux passes identiques : OUI) :
+  tls13-01 init      :       12 instructions
+  tls13-03 absorb    :    71447 instructions (16 invocations de tls13-02)
+  tls13-04 finaliser :     4524 instructions (1 invocations de tls13-02)
+  TOTAL op complète  :    75983 instructions (17 invocations de la compression, attendues 17)
+  — l'ARTEFACT v0.11.0 rejoué : 4524 instructions
+    (le compteur de la finalisation seule, ce que v0.11.0 publiait
+     comme « sha256(1024 o) » des blocs)
+  — hacher() lui-même sous-comptait l'init : son total disait 75971
+
+LA RÉFÉRENCE (op complète, même émulateur, même entrée, vérifiée
+contre hashlib AVANT la mesure) :
+  gcc -O2 : 69132 instructions — débit 30.3 ops/s (émul.)
+  gcc -Os : 77505 instructions — débit 26.4 ops/s (émul.)
+  blocs   : 75983 instructions — débit 27.6 ops/s (émul.)
+
+LA PLAUSIBILITÉ PAR RONDE (total / ({n_compress} blocs × 64)) :
+  gcc -O2 : 63.54 instr/ronde
+  gcc -Os : 71.24 instr/ronde
+  blocs   : 69.84 instr/ronde — PLAUSIBLE (l'artefact 4,16 l'était : chaque ronde exige au minimum
+  2 additions, 2 sélections Ch/Maj et 2 chaînes sigma)
+
+LA PARITÉ D'EXTENSIONS ISA (les mnémoniques distinctes) :
+  blocs : 25 mnémoniques — GPR pur (aucune SIMD)
+  gcc -O2 (fonction) : 37 mnémoniques — 101 sites SSE2 (mouvements de tampons : movdqa/movaps/pxor %xmm — le BASELINE x86-64, pas une extension)
+  gcc -Os (fonction) : 20 mnémoniques — 0 sites SSE2 (baseline)
+  → AUCUN des deux camps n'emploit d'extension AU-DELÀ du baseline
+  x86-64 (pas d'AVX/AVX2, pas de SHA-NI, pas d'AES-NI) : la parité
+  d'EXTENSIONS est ÉTABLIE ; gcc emploie toutefois les mouvements
+  SSE2 du baseline (memset/memcpy vectorisés des tampons locaux)
+  que la notation, GPR pure, n'emploie pas — l'écart d'instructions
+  (75 983 vs 69 132) en contient une part : le chiffre corrigé est
+  rapporté SANS ajustement, la parité stricte GPR-à-GPR n'est pas
+  revendiquée.
+
+LES TAILLES AU BON PÉRIMÈTRE :
+  blocs : 765 o de code (les 4 notations) + 256 o (table K en .rdata)
+  gcc -O2 : 1226 o de code (la FONCTION bench_sha256, objdump) + 256 o (table K256 en .rodata)
+  gcc -Os : 292 o + 256 o
+  — l'ARTEFACT v0.11.0 rejoué : « 5 436 o » = l'image ENTIÈRE (5436 o : trois fonctions, toutes tables)
+
+LE VERDICT (les chiffres corrigés rapportés tels quels) :
+  instructions/op complète : blocs 75983 vs gcc -O2 69132 (-9 %) et gcc -Os 77505 (+2 % — les blocs DEVANCENT -Os de 2 % en instructions)
+  débit d'émulation : blocs 27.6 vs gcc -O2 30.3 et -Os 26.4 ops/s (cohérent avec les comptes)
+  taille (code+table) : blocs 1021 o vs gcc -O2 1482 o (les blocs 1.45× plus compacts) et gcc -Os 548 o (-Os PLUS PETIT que les blocs : la notation n'est compacte que contre -O2)
+  LE FACTEUR 15,3× DE v0.11.0 EST RETIRÉ : un artefact de périmètre
+  (op complète contre finalisation seule), attrapé par l'audit que
+  la commande a exigé. La revendication honnête : la notation
+  WYSIWYG est COMPÉTITIVE (entre les deux niveaux de gcc sur les
+  DEUX axes : -9 %/+2 % en instructions contre -O2/-Os, plus
+  compacte que -O2, moins que -Os) — elle n'est NI 15× plus
+  efficace NI pénalisante : le prix de l'auditabilité directe est
+  quasi nul, le gain spectaculaire n'existe pas.
+
+[audit] écrit : preuves_v130/audit_benchmark.csv + rapport
+
+--- (2) LES STATISTIQUES recalculées par script ---
+LES STATISTIQUES CORRIGÉES — v0.13.0 (la commande, point 2)
+
+(a) LA CRISTALLISATION — les caractéristiques opérationnelles de la
+    règle RÉELLE (sceller ssi n rebuilds consécutifs identiques),
+    sous probabilité de divergence q par rebuild (indépendance,
+    l'hypothèse de D189) : P(sceller | q) = (1-q)^n.
+
+    n =  5 : P(sceller | q=0,5) = 0.03125   (quantile unilatéral 1.86 σ)
+            P(sceller | q=0,01) = 0.95099   (la règle scelle un build sain avec cette probabilité)
+            le LR (0,5/0,99)^5 = 0.0329 — la valeur que v0.11.0/v0.12.0 étiquetait « α »
+    n = 10 : P(sceller | q=0,5) = 0.000976562   (quantile unilatéral 3.10 σ)
+            P(sceller | q=0,01) = 0.904382   (la règle scelle un build sain avec cette probabilité)
+            le LR (0,5/0,99)^10 = 0.00108 — la valeur que v0.11.0/v0.12.0 étiquetait « α »
+
+    LA STRICTESSE n=5 → n=10 : 32× (3,125e-2 → 9,77e-4 — la probabilité de sceller un build divergent
+    à q=0,5 chute de 32×) ; le « 46× » de D189 comparait le canonique
+    5 % au LR mal étiqueté — il est retiré.
+    Les conversions sigma sqrt(-2 ln p) (2,6 / 3,7) : RETIRÉES,
+    remplacées par les quantiles unilatéraux exacts ci-dessus
+    (1,87 / 3,10).
+
+(b) L'IC95 % EXACT de 11/12 (Clopper-Pearson, binomiale exacte) :
+    [0.615 ; 0.998]
+    RÉSERVE (exigée) : les douze itérations sont SÉQUENTIELLES, d'un
+    seul binôme développeur+agent — l'IC est un résumé descriptif
+    binomial, PAS une inférence sur une population de développeurs
+    (la non-indépendance des itérations interdit cette lecture).
+
+(c) LES COMPTES DU JOURNAL (extraits en direct à l'instant — la
+    valeur du manuscrit sera RÉGÉNÉRÉE depuis ici, jamais tapée) :
+    journal : 9418 lignes, 205 entrées (numérotation jusqu'à 226),
+    décisions : 149 consignées, numérotation D1..D192 ;
+    worklog+journal : 42 blocs Task ID.
+    L'« un journal de 9 300 lignes » de v0.12.0 était un arrondi
+    périmé — remplacé par le compte exact ci-dessus.
+
+[stats] écrit : preuves_v130/stats_v130.csv + rapport
+
+--- (3) le garde du sceau (les arbres signés INTACTS) ---
+[sceau-I] m0: vert (667fb5ae36e4ab3c…)
+[sceau-I] m1: vert (e0e084402b497bde…)
+[sceau-I] m2: vert (752c58a8ce37ddc5…)
+[sceau-I] m3: vert (8ac66a299e46567c…)
+[sceau-I] m4: vert (7e5c61fbce15d3ec…)
+[sceau-I] m5: vert (1869422eca104a6a…)
+[sceau-I] m6: vert (88e8c5444fa7c89a…)
+[sceau-I] m7: vert (f35a0ae948351a6d…)
+[sceau-I] m8: vert (e36141f75ebd8e61…)
+[sceau-I] tls13: vert (4255986216f8b459…)
+[sceau-I] loupe: vert (59e4871ab5b47623…)
+[sceau-I] demo: vert (96e6fd4eaccd7c3f…)
+[sceau-I] terrain: vert (754cb03c967e51d3…)
+[sceau-I] v06: vert (a8166442abe2d98f…)
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
+
+--- (4) l'audit de gouvernance (D1..D192) ---
+[A1] les décisions D100+ portent une structure reconnaissable et D1..D189 vivent au corpus : VERT — 149 entrées à DECISIONS.md, 0 hors corpus ; sans structure : aucune
+[A2] aucun ID de décision réutilisé (formes titres) : VERT — doublons : aucun
+[A3] les références d'amendement se résolvent (3 sources) : VERT — 5 références ; irrésolues : aucune
+[A4] la plus haute décision consignée est D189 (le modèle formel v0.12.0) : ÉCART — max = D192
+[A5] entrées du journal uniques et continues (3 ères : Task ID, Journal, Entrée ; trous historiques 4-7/54 documentés) : VERT — 222 entrées (max 226 : 17 Task ID + 205 Journal/Entrée), doublons aucun, trous aucun
+[A6] la décision D182 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D183 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D184 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D185 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D186 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D187 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D188 porte son contenu attendu : VERT — absents : aucun
+[A6] la décision D189 porte son contenu attendu : VERT — absents : aucun
+
+AUDIT DE GOUVERNANCE : 1 ÉCART(S) — A4 la plus haute décision consignée est D189 (le modèle formel v0.12.0)

@@ -1,0 +1,7 @@
+EMPREINTES SHA-256 — archive de soumission v0.13.0
+
+5a6defd5c88654a794f7b7a3a05f669f7dd18df2fee956b7e97146c3564af617  README.txt
+830e1f3f5d2414cee17451933cdee4f1a08e788cdcaa7a694aa798e6103675d8  TRIADE_manuscrit_v0.13.0.pdf
+80ad16b0da223eb0bd22c94020ff9a63d3432ce347abf7f1ba41eb6f37fb4ffb  tableaux_donnees_v0.13.0.csv
+2c0ce0a880dedfec69a5cb81d125f3713da717b045385ec2d7d4b1f5bcc89fc3  VERIFICATION_v0.13.0.txt
+(empreintes_soumission.txt)  ce fichier — l'empreinte vit au manifeste des livrables
