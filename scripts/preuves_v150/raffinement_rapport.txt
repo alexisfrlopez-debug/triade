@@ -1,0 +1,51 @@
+LES TESTS DE RAFFINEMENT MODÈLE ↔ IMPLÉMENTATION — v0.15.0
+
+LE PRINCIPE : chaque scénario pilote en parallèle l'état abstrait (modele_invariant_v150.py, les 13 règles) et un coffre CONCRET de test (v06/coffre_cf3.py, phrase de test publique marquée D192) ; les verdicts sont confrontés transition par transition, les chemins d'échec inclus ; tout écart est consigné tel quel.
+
+LE BILAN : 34 pas de raffinement, 0 écart(s) — L'ÉQUIVALENCE DES TRANSITIONS TIENT.
+
+LES SCÉNARIOS :
+  S1 le cycle honnête intégral — CINQ époques vécues (quatre clôtures : la borne v120 e ≤ 3 dépassée aux DEUX niveaux), le crash de session, la phrase erronée aux DEUX actes ;
+  S2 la phrase erronée répétée — dix ouvertures, cinq clôtures : JAMAIS de destruction (P3), l'état inchangé ;
+  S3 la falsification du conteneur — la destruction LOCALE (PV unique), le média et CF2 INTACTS (P4) ;
+  S4 la falsification du piège — le refus SANS destruction (le média est le témoin, jamais le coupable) ;
+  S5 le rejeu d'époque passée — le miroir local (RETOUR EN ARRIÈRE), les époques croisées (PÉRIMÉ), le témoin hors-bande (epoque_attendue) ;
+  S6 le piège absent (l'invocation IMPOSSIBLE D120) et le piège d'un autre coffre (H_projet) ;
+  S7 l'adversaire à seuil (P1) — la phrase seule ne dérive jamais le KEK : 32 triplets de moitiés forgées, zéro passage du verif.
+
+LES GESTES HORS MODÈLE (consignés comme tels : le modèle v120/v150 n'a qu'un coffre et pas de témoin hors-bande) : le piège d'un autre coffre, le témoin epoque_attendue, les moitiés forgées — leurs verdicts concrets suivent la spec § 5/§ 9.
+
+  [S1   0] (init) : état initial e=1 / init ok — OUI
+  [S1  1a] verifier : état inchangé / vert e=1 — OUI (l'époque concrète == l'abstraite)
+  [S1  1b] ouvrir_correct : phase→brouillon / session — OUI
+  [S1  1f] clôturer_phrase_erronée : état inchangé (P3) / PhraseErronee — OUI (PhraseErronee, AUCUN scellement (pas de piège N+1))
+  [S1  1g] clôturer_correcte : e 1→2 / fermer → e=2 — OUI (l'époque +1 aux DEUX niveaux — la non-bornitude vécue)
+  [S1  2a] verifier : état inchangé / vert e=2 — OUI (l'époque concrète == l'abstraite)
+  [S1  2b] ouvrir_correct : phase→brouillon / session — OUI
+  [S1  2c] ouvrir_phrase_erronée : état inchangé (P3) / PhraseErronee — OUI (PhraseErronee, RIEN détruit)
+  [S1  2f] clôturer_phrase_erronée : état inchangé (P3) / PhraseErronee — OUI (PhraseErronee, AUCUN scellement (pas de piège N+1))
+  [S1  2g] clôturer_correcte : e 2→3 / fermer → e=3 — OUI (l'époque +1 aux DEUX niveaux — la non-bornitude vécue)
+  [S1  3a] verifier : état inchangé / vert e=3 — OUI (l'époque concrète == l'abstraite)
+  [S1  3b] ouvrir_correct : phase→brouillon / session — OUI
+  [S1  3d] crash_pendant_session : phase→canonique, e inchangé / abandonner() — OUI (le canonique INTACT, l'époque ne bouge pas)
+  [S1  3e] ouvrir_correct : ré-ouverture : phase→brouillon / session — OUI
+  [S1  3f] clôturer_phrase_erronée : état inchangé (P3) / PhraseErronee — OUI (PhraseErronee, AUCUN scellement (pas de piège N+1))
+  [S1  3g] clôturer_correcte : e 3→4 / fermer → e=4 — OUI (l'époque +1 aux DEUX niveaux — la non-bornitude vécue)
+  [S1  4a] verifier : état inchangé / vert e=4 — OUI (l'époque concrète == l'abstraite)
+  [S1  4b] ouvrir_correct : phase→brouillon / session — OUI
+  [S1  4f] clôturer_phrase_erronée : état inchangé (P3) / PhraseErronee — OUI (PhraseErronee, AUCUN scellement (pas de piège N+1))
+  [S1  4g] clôturer_correcte : e 4→5 / fermer → e=5 — OUI (l'époque +1 aux DEUX niveaux — la non-bornitude vécue)
+  [S1  99] (final) : e=5 (5 attendu) / e=5 — OUI (QUATRE clôtures vécues : la borne v120 (e ≤ 3) est dépassée aux DEUX niveaux)
+  [S2   1] ouvrir_phrase_erronée ×10 : état inchangé ×10 / PhraseErronee ×10 — OUI (le conteneur VIVANT, zéro PV — la destruction n'est JAMAIS déclenchée par la phrase)
+  [S2   2] clôturer_phrase_erronée ×5 : état inchangé ×5 / PhraseErronee ×5 — OUI (AUCUN scellement : le conteneur demeure à l'époque 1)
+  [S2  99] (final) : e=1 / e=1 — OUI (l'époque n'a pas bougé)
+  [S3   1] falsifie_conteneur : destruction LOCALE, média+CF2 intacts / ErreurCoffre : conteneur détruit, PV=1, pièges=1 — OUI (la sentinelle point 5 : empreinte divergente APRÈS phrase vérifiée → destruction locale + PV (spec § 7))
+  [S3   2] (après-coup) : le média INTACT (P4) / pièges sur média : 1/1 — OUI (la destruction n'est pas un balai — le média hors limite)
+  [S4   1] falsifie_piège : refus NOMMÉ, aucune destruction / ErreurCoffre (refus SANS destruction) — OUI (le média est le TÉMOIN, jamais le coupable (spec § 5.2))
+  [S5   1] rejoue_époque_passée : refus NOMMÉ, état inchangé / RETOUR EN ARRIÈRE — OUI (le miroir local : le plus faible des trois témoins, il tient)
+  [S5   2] ouvrir_ancien_couple (croisé) : refus NOMMÉ « piège PÉRIMÉ », état inchangé / piège PÉRIMÉ : époque du piège 1 ≠ époqu — OUI (les époques croisées conteneur/piège refusées (spec § 9))
+  [S5   3] (témoin hors-bande) : — / époque du conteneur (1) diverge du témoin ho — OUI (geste HORS MODÈLE (le modèle n'a pas de témoin) : le rejeu nommé même miroir écrasé — la carte papier/journal Git)
+  [S6   1] ouvrir_correct (piège absent) : IMPOSSIBLE (None), rien lu, rien brûlé / déverrouillage IMPOSSIBLE : la seconde m — OUI (l'invocation D120 : sans le piège, l'ouverture est IMPOSSIBLE, pas refusée — le modèle dit trap_ok=False (absence OU falsification : le même prédicat d'indisponibilité))
+  [S6   2] (piège d'un autre coffre) : — / H_projet du piège divergent — piège d'un — OUI (geste HORS MODÈLE (un seul coffre dans le modèle) : H_projet divergent, spec § 5.3)
+  [S7   1] vole_K_user → ouvrir_correct : l'ouverture ÉCHOUE (None) / KEK indérivable (2 moitiés manquantes) — OUI (le modèle : sans les TROIS éléments, l'ouverture échoue)
+  [S7   2] (derive_kek à moitiés fausses ×32) : — / 0/32 triplets forgés passent le verif — OUI (la contrepartie concrète de P1 sous A1 : sans les vraies moitiés, le verif n'est JAMAIS atteint (l'échec AEAD de la spec § 5.5))

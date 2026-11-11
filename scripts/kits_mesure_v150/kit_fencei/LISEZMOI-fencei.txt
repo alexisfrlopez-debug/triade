@@ -1,0 +1,60 @@
+LISEZMOI — LE KIT 2 FENCE.I SUR SILICIUM (v0.15.0, la commande ic09ydeli point 2)
+==================================================================================
+
+L'OBJET : la sémantique I-cache de fence.i sur MATÉRIEL PHYSIQUE — CE
+QUE L'ÉMULATION NE POUVAIT PAS PROUVER. La requalification M7 de
+v0.13.0 (D190) : le patch à chaud fut prouvé sous qemu-riscv64 TCG au
+noyau réel (l'Entrée 155, le run M7 vécu), la réserve instrumentale
+D149 nommée — le TCG n'a pas de cache d'instructions physique : la
+bascule y est « gratuite ». Sur silicium, fence.i DOIT invalider
+l'I-cache du cœur courant : c'est LA question du kit.
+
+L'ÉTAT : PRÉPARÉ AU LABORATOIRE, EN ATTENTE DU RUN TERRAIN (une cible
+RISC-V physique au développeur). Aucun résultat matériel n'existe.
+
+LA PIÈCE EXISTANTE (le socle du kit — le dépôt est la source) :
+  riscv/demo_patch.py       LE scénario host-side du M7 (la bascule
+                            pendant le trafic, 1 200 usages, apply
+                            entre 399/400, rollback entre 799/800, les
+                            refus nommés, la falsification du DEP, la
+                            transcription OCTET POUR OCTET) ;
+  riscv/notation/           la notation du démonstrateur demo-patch
+                            (f72001, 184 instructions) et les blocs du
+                            corpus (les MÊMES slots, la même table
+                            R10, les mêmes fixtures) ;
+  riscv/terrain/LISEZMOI-KIT-M7D.md   le runbook du kit M7D (le
+                            modèle : les commandes qemu).
+LA SEULE DIFFÉRENCE DU SILICIUM : la cible n'est plus qemu — le
+démonstrateur tourne sur le VRAI cœur RV64 : fence.i y coûte ce qu'il
+coûte et invalide ce qu'il invalide. Le scénario, les oracles et les
+verdicts sont LES MÊMES (aucun changement d'instrument : le changement
+de CIBLE est la mesure même).
+
+LE PROTOCOLE (le run, sur la carte) :
+  1. La cible : une carte RV64 Linux (SBC ou serveur) avec gcc local
+     (ou une chaîne croisée riscv64-linux-gnu côté hôte). Consignez :
+     le modèle EXACT de la carte, le noyau (uname -a), la fréquence
+     annoncée, le nombre de cœurs.
+  2. Construisez l'artefact corpus + le démonstrateur DEPUIS LE DÉPÔT
+     (riscv/build_m7.py — la même construction que le M7 vécu) ;
+     consignez les sha256 des pièces produites.
+  3. LE RUN : riscv/demo_patch.py SUR LA CARTE (python3, le scénario
+     host-side pilote le démonstrateur local) — les mêmes pièces de
+     verdict (a)-(g) que le M7 : la transcription intégrale, la
+     bascule effective, les refus nommés, le DEP falsifié qui FAUTE.
+  4. LES TÉMOINS : la transcription (octet pour octet), le code de
+     sortie, le journal dmesg autour du run (les événements mémoire),
+     les sha256 des pièces AVANT/APRÈS (zéro régression sur pièces) —
+     à déposer au coffre /test.
+  5. LA QUESTION DU KIT (la réponse attendue dans le témoin) : la
+     transcription est-elle INTÉGRALE (aucune ligne déchirée, aucune
+     perdue, aucun mélange v1/v2 APRÈS le apply) ? Si OUI : fence.i a
+     invalidé l'I-cache du cœur courant SUR SILICIUM — la réserve D149
+     est levée POUR CETTE CARTE, consignée comme telle. Si une
+     déchirure apparaît : le résultat est consigné TEL QUEL (il est un
+     RÉSULTAT, jamais un échec à maquiller — D189).
+
+LA RÉFÉRENCE CROISÉE : le run M7 vécu (WSL2/qemu TCG, l'Entrée 155) —
+le kit mesure CE QUE L'ÉMULATION NE POUVAIT PAS : la contiguïté du
+flux d'exécution à travers la bascule de page exécutable, sur le VRAI
+matériel, avec le VRAI coût de fence.i.

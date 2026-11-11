@@ -1,0 +1,52 @@
+LISEZMOI — LE KIT 3 TERRAIN TIERS POUR LOUPE (v0.15.0, la commande ic09ydeli point 2)
+=====================================================================================
+
+L'OBJET : Loupe sur une SECONDE machine Windows (un autre build, une
+autre locale) — la généralisation au-delà du poste du développeur :
+l'application née de TRIADE (loupe.exe 0.1.1, la balise D178) doit
+VIVRE sur une machine qui n'a jamais servi au développement.
+
+L'ÉTAT : PRÉPARÉ AU LABORATOIRE, EN ATTENTE DU RUN TERRAIN (la machine
+tierce appartient au développeur). Aucun résultat n'existe.
+
+LA PIÈCE EXISTANTE (le socle — le dépôt et le coffre /test) :
+  loupe.exe 0.1.1  la pièce scellée (sha256 c1115105…b93e61d1, la
+                   balise du douzième run recoupé 39/39 — D178) ;
+  loupe-kit-13     le kit terrain établi, AU COFFRE /test (le
+                   scénario-chargeur, les LISEZMOI, le réceptacle des
+                   témoins — le modèle des DOUZE runs vécus) ;
+  loupe/terrain/   les sources du kit au dépôt (scenario-loupe.py,
+                   LISEZMOI-KIT-LOUPE.md, assembler_kit_loupe.py).
+
+LE PROTOCOLE (le run, sur la machine tierce) :
+  1. La machine : un poste Windows (ou VM) PROPRE — jamais une machine
+     du développement ; consignez : la version de Windows, les
+     locales, le modèle CPU, l'absence/présence des outils de
+     développement (un poste « nu » est le cas le plus probant).
+  2. Prenez le kit loupe-kit-13 AU COFFRE /test (téléchargement),
+     vérifiez l'empreinte de loupe.exe contre le scellé
+     (c1115105…b93e61d1) AVANT tout lancement — la pièce ne doit
+     JAMAIS bouger d'un octet.
+  3. LE SCÉNARIO INTÉGRAL T0 → T7 + S0 (le même critère que les douze
+     runs) : [T0] le contrôle D54 vécu vert ; [T1]→[T5] le contrat tenu
+     (la session, la double lecture, le panneau, les lignes, la
+     recherche, la boucle d'édition) ; [T6] LES QUATRE REJETS NOMMÉS
+     (-2 ABSENT · -5 ENTRÉE · -3 HORS-BORNES · -1 FIN) ; [T7] l'artefact
+     relu INCHANGÉ ; [S0] la sonde de liaison (le ret nu neutralisé,
+     les 37 slots relus).
+  4. LES TÉMOINS SIGNÉS : temoin-loupe.txt + temoin-vitrine.txt (les
+     codes de sortie, le rapport WER si mort) + VERDICT — avec les
+     empreintes des pièces AVANT/APRÈS le run — à déposer au coffre
+     /test. Le labo recoupe et consigne.
+
+LA QUESTION DU KIT (la réponse attendue dans le témoin) : le vert
+tient-il sur une machine qui n'a JAMAIS servi au développement, avec
+d'autres locales et un autre build Windows ? Chaque écart nommé est un
+RÉSULTAT (la classe T5 « environnement » de la grille D189 — une
+classe NOUVELLE est un résultat, jamais un échec).
+
+LA RÉFÉRENCE CROISÉE : les DOUZE runs du poste du développeur
+(Entrées 202–222 : onze défauts nommés, onze retouches documentées, la
+vitrine vécue, la balise 0.1.1 scellée sur run recoupé 39/39) — le kit
+tiers mesure ce que le poste historique NE POUVAIT PAS : la
+généralisation.

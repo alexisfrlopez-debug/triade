@@ -1,0 +1,67 @@
+LISEZMOI — LE KIT 1 DUDECT TEMPS RÉEL (v0.15.0, la commande ic09ydeli point 2)
+==============================================================================
+
+L'OBJET : mesurer le temps d'HORLOGE réel des familles crypto de la
+pièce scellée (le complément du t=0 STRUCTUREL de v0.11.0 — la limite
+nommée depuis deux éditions : le compte d'instructions émulé n'est pas
+le temps du silicium).
+
+L'ÉTAT : PRÉPARÉ ET ÉPROUVÉ AU LABORATOIRE, EN ATTENTE DU RUN TERRAIN
+(le développeur). Aucun résultat matériel n'existe — la commande est
+explicite : « marquer 'en attente' tant que non exécutés, ne jamais
+fabriquer de chiffre ».
+
+CE QUE LE LABO A ÉPROUVÉ (les pièces jointes du kit) :
+  1. extraire_cibles_v150.py : la pièce proxy.exe recoupée SCELLÉE
+     (sha256 446279f3…3b00d93d) puis L'IMAGE MÉMOIRE ÉTENDUE construite
+     (69 632 o, chaque section à son RVA — les blocs ne sont PAS
+     autonomes : tls13-02 lit sa table K en .rdata par RIP-relatif, la
+     leçon vécue du premier essai) ;
+  2. test_appel.c : le condensé FIPS 180-4 « abc » EXACT depuis la
+     pièce scellée mappée (ba7816bf…), la mutation de la table K fait
+     DIVERGER, la restauration rend l'exact — l'image exécutée EST la
+     pièce ;
+  3. dudect_v150.c : l'AUTOTEST laboratoire (backend POSIX, étiqueté
+     comme tel) : les QUATRE cibles exécutées nativement, les plages
+     re-recoupées par le mesureur lui-même, le t de Welch calculé —
+     le mécanisme seul, AUCUN statut terrain n'en découle.
+
+LES QUATRE CIBLES (la sélection — les blocs ISOLABLES, contrats de
+couche I sans contexte d'application) :
+  tls13-02  la compression SHA-256 (le cœur du t=0 structurel)
+  tls13-13  l'échelle X25519 (le secret est LE SCALAIRE)
+  tls13-16  le bloc AES-128 (le secret est LA CLÉ)
+  tls13-17  la multiplication GHASH (le secret est X)
+LA LIMITE CONSIGNÉE : loupe-06 (md5) vit SOUS SESSION (contrat P1) :
+NON isolable sans l'application entière — la mesure pipeline de
+loupe.exe appartient à une itération future du kit. Aucun chiffre
+n'existe pour lui.
+
+LE PROTOCOLE (le run, sur la machine Windows du développeur) :
+  1. Copiez le dossier kit_dudect/ (extraire_cibles_v150.py, les
+     cibles/ déjà extraites, dudect_v150.c, ce LISEZMOI).
+  2. Compilez le mesureur :   cl /O2 dudect_v150.c
+     (ou gcc -O2 -o dudect_v150.exe dudect_v150.c -lm)
+  3. (Optionnel, recommandé) re-exécutez l'extraction pour recouper
+     les pièces :  python extraire_cibles_v150.py
+     — attendu : « scellé INTACT 446279f3… », la même image.
+  4. (Optionnel) l'épreuve d'appel :  gcc -O2 -o test_appel
+     test_appel.c && ./test_appel  — attendu : FIPS abc EXACT,
+     mutation K DIVERGE, restauration EXACT.
+  5. LE RUN :  dudect_v150.exe cibles 200
+     — l'affinité est posée sur le cœur 0 par le mesureur ;
+     — le turbo : le mesureur ne peut PAS le commander : notez l'état
+       EFFECTIF (BIOS désactivé ou non) dans le témoin ;
+     — N = 200 par classe par défaut (la commande exige N ≥ 60).
+  6. LES TÉMOINS : journal-dudect-<horodatage>.csv + temoin-dudect.txt
+     (votre notes : modèle CPU, fréquence, turbo effectif, OS, la
+     sortie console du mesureur) — à déposer au coffre /test.
+     Le labo recoupe et consigne : JAMAIS avant le run, jamais sans
+     pièces.
+
+LA LECTURE HONNÊTE : |t| > 5 = une dépendance temporelle AU SEUIL
+consignée telle quelle (dudect est un OUTIL DE DÉTECTION, pas une
+preuve d'exploitabilité — la consigne v0.13.0 s'applique : rapporter
+les résultats tels quels, y compris défavorables) ; |t| ≤ 5 = aucune
+divergence au seuil sur CET échantillon, CET machine, CETTE session —
+jamais « temps constant prouvé » dans l'absolu.
