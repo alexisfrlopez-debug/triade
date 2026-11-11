@@ -1,0 +1,28 @@
+==========================================================================
+VÉRIFICATION DU PAQUET 5 — LE PLAN DE COMPARAISON PRÉ-ENREGISTRÉ (54wni4hzh, D204)
+==========================================================================
+[VERT] 1. LE VERROU — empreinte consignée à D204 avant tout fichier de résultats
+       l'empreinte du plan : a78caf8c0cb94984…
+         la décision D204 PRÉSENTE ; l'empreinte CONSIGNÉE
+         le dossier des résultats ABSENT — aucune mesure, aucune campagne ouverte : scripts/preuves_v150/comparaison_resultats)
+         le plan n'est plus modifiable après le début des mesures (CA5 — la confrontation à chaque jalon)
+[VERT] 2. L'AUDIT DU PLAN — aucun chiffre de résultat
+       le plan : 227 lignes, 176 chiffres extraits et TOUS classés structurels (identifiants D/H/CA/M/R, versions, dates, étiquettes, tailles et seuils DÉCLARÉS)
+         nombres d'allure mesurée (tokens, durées, comptes) : ZÉRO
+         les seuils du plan (facteur deux, au plus dix) sont des SEUILS pré-enregistrés, jamais des mesures ; le ×1,08 est cité comme l'estimation INTERDITE
+[VERT] 3. LA PREUVE DU DRY-RUN — les compteurs == les logs, à l'unité près
+       spec       : journal 105+25=130 == log api 105+25=130 → ÉGAUX à l unité près
+       notation   : journal 62+26=88 == log api 62+26=88 → ÉGAUX à l unité près
+       revue      : journal 64+42=106 == log api 64+42=106 → ÉGAUX à l unité près
+       les paires confrontées : 3/3 ÉGALES ; phases couvertes : notation, revue, spec
+       le total recalculé du journal : 324 tokens — 100 % lus du log (zéro estimation : source=log-api PARTOUT ; sommes cohérentes PARTOUT)
+       le chronomètre : calibration 1.502 s contre 1,500 s demandée (≤ tolérance 0,05 s) ; la commande réelle « garde-sceau-I » 0.068 s code 0
+       le dry-run est la PREUVE D'INSTRUMENT, PAS une mesure de campagne (les fichiers vivent à comparaison_dryrun/, le dossier des résultats demeure absent)
+[VERT] 4. LE KIT COMPLET — et AUCUNE mesure de campagne
+       les huit pièces du kit : TOUTES PRÉSENTES
+         carnet_temps_humain.csv : 12 lignes — EN-TÊTE SEULE (aucune donnée)
+         livraisons.csv : 11 lignes — EN-TÊTE SEULE (aucune donnée)
+         defauts.csv : 5 lignes — EN-TÊTE SEULE (aucune donnée)
+         le journal de campagne (comparaison_resultats/) : ABSENT — créé par la première mesure (CA1)
+==========================================================================
+BILAN : 4 VERT / 0 ROUGE — LE PAQUET EST CONSIGNÉ, LA CAMPAGNE ATTEND LE DÉVELOPPEUR

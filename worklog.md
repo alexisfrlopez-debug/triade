@@ -8494,3 +8494,48 @@ Work Log:
   append-only, aucun chiffre fabriqué.
 - SUITE : le paquet 5/6 — le plan de comparaison pré-enregistré
   (54wni4hzh).
+
+
+Task ID: 146
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 5/6 DE LA VAGUE 3 (l'instruction 54wni4hzh) — le plan de
+comparaison des workflows PRÉ-ENREGISTRÉ et VERROUILLÉ : sha256 a78caf8c…
+consigné à D204 AVANT tout fichier de résultats, les deux bras, les quatre
+métriques, H1–H5, CA1–CA7, la taille et la règle d'arrêt ; le kit complet ;
+le dry-run prouvant les compteurs à l'unité près (Entrée 239, D204).
+
+Work Log:
+- LE PLAN (PLAN_PREREGISTRE_COMPARAISON.md) : les deux bras définis avant
+  tout (T la discipline TRIADE complète R1–R11 ; C le flux standard
+  C+gcc tel qu'il se pratique) ; les MÊMES constantes (agent, tâches,
+  kit terrain) ; M1 défauts échappés à la règle D202 par côté ; M2
+  tokens RÉELS lus des logs d'usage API (le ×1,08 INTERDIT quand un
+  log existe) ; M3 temps humain au carnet rempli AU GESTE ; M4 temps de
+  vérification au chronomètre monotone aux listes fixées.
+- LES HYPOTHÈSES H1–H5 directionnelles falsifiables ; CA1–CA7 binaires
+  (le verrou, les constantes, les tokens 100 % loggés, la règle de
+  comptage, tels quels, aucune mesure terrain au labo, l'aveugle
+  partiel) ; la taille (six blocs × deux bras ≤ 3 livraisons ; une
+  application réelle × deux bras ≤ 12 ; l'arrêt au premier vert, la cap
+  CENSURE) ; la réserve de non-indépendance écrite d'avance.
+- LES INSTRUMENTS : compter_tokens.py (l'appel instrumenté, la ligne
+  JSONL lue du champ usage, l'incapacité structurelle d'estimer) ;
+  chronometre_verification.py (le temps mural, la calibration) ; les
+  gabarits livraisons/defauts/carnet à l'en-tête seule.
+- LE DRY-RUN : trois appels sur loupe-05 (spec/notation/revue) — le
+  journal == le brut À L'UNITÉ PRÈS (130/88/106, total 324, log-api
+  partout) ; la calibration 1,502 s contre 1,500 s (écart 0,002 s) ;
+  le garde chronométré au code 0. UN DÉFAUT DE L'INSTRUMENT ATTRAPÉ À
+  SA PROPRE ÉPREUVE : la calibration écrivait au journal de campagne
+  (le dossier des résultats naissait d'une preuve — la violation CA1) —
+  redirigée TOUJOURS au dry-run, la ligne rapatriée, le dossier
+  détruit, la re-calibration tenue.
+- LA VÉRIFICATION : verifier_comparaison_v150.py QUATRE contrôles VERTS
+  (le verrou, l'audit — 176 chiffres tous structurels, zéro nombre
+  mesuré —, le dry-run à l'unité près, le kit complet sans aucune
+  mesure) ; le rapport à preuves_v150/comparaison_dryrun/.
+- Frontières : pièces scellées INTACTES (recoupées), garde 14/14, le
+  dossier des résultats ABSENT (il naîtra de la première mesure),
+  aucune mesure terrain, aucun chiffre fabriqué, append-only.
+- SUITE : le paquet 6/6 — le SHA-NI (lfh49a1xf, le hot path mesuré
+  d'abord, l'optimisation refusée sinon).
