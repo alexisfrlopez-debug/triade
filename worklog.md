@@ -8331,3 +8331,43 @@ Work Log:
   chiffre fabriqué, append-only.
 - SUITE : l'exécution paquet par paquet, consignation à l'achèvement de
   chacun, sync aux jalons.
+
+
+Task ID: 141
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 1/6 DE LA VAGUE 3 (l'instruction 6zqo2h60n) — la preuve
+indépendante TLA+/Apalache et le raffinement property-based, exécutés et
+vérifiés au clone frais (D200, Entrée 235).
+
+Work Log:
+- LE PORTAGE : CF3.tla (13 règles, époque Int NON bornée, Inv = TypeOK ∧
+  I1-I4) + CF3Plafond (le plafond v120 pour la fidélité) + CF3Fidelite
+  (profondeur 6 + VIEW abstraite — la convention D187).
+- TLC : 154 états EXACTS aux bornes D187 ; 216 (exploration complète du
+  plafond) et 360 (e ≤ 5, Inv sans violation) — les DEUX concordants à
+  l'explorateur Python aux mêmes conventions.
+- APALACHE : base Init ⟹ Inv NoError ; PAS INDUCTIF Inv ∧ Next ⟹ Inv′
+  NoError sur entiers NON bornés (init=Inv attesté au journal — le piège
+  de la clause SPECIFICATION qui écrase --init découvert et corrigé en
+  configs INIT/NEXT explicites).
+- LES CONTRÔLES NÉGATIFS : l'invariant affaibli ATTRAPÉ (contre-exemple
+  cardinalité 4 — Cardinality réellement raisonné) ; le faux dès
+  l'initial ATTRAPÉ — la non-vacuité prouvée.
+- L'AUDIT MÉCANIQUE : les 13 règles lisent l'époque uniquement par
+  {e > 1, e + 1} — VERT TLA+ et Python (ast).
+- LA CAMPAGNE PBT : 10 000 traces à graine 20261112, chemins d'échec
+  inclus, contre-vérification permanente — 660 écarts d'UNE SEULE
+  classe (falsifie_conteneur en session : le modèle refuse, le concret
+  détruit — écart de couverture d'état, P1-P4 non menacées), shrinking
+  ddmin : 655/660 réduites à [ouvrir_correct, falsifie_conteneur],
+  rejeu 10 000/10 000 (les CSV bit-identiques).
+- LE CLONE FRAIS : 13/13 VERT — les 7 runs rejoués du clone (verdicts
+  identiques), 200 traces PBT du clone (200/200 identiques), D187
+  154/1 152 reproduit du clone.
+- LA TABLE DES STATUTS régénérée depuis les pièces (la ligne nouvelle
+  « Independent model proof (TLA+/SMT) », la ligne modèle↔implémentation
+  devenue witnessed 10,000 traces avec l'écart consigné).
+- Frontières : garde 14/14 aux deux extrémités, coffre réel jamais
+  ouvert (10 000 coffres de TEST D192), aucun chiffre fabriqué, les
+  outils = environnement (empreintes consignées, hors dépôt).
+- SUITE : le paquet 2/6 — la campagne de mutation étendue (n4kwcs3wa).

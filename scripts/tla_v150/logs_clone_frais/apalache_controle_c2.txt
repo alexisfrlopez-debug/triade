@@ -1,0 +1,79 @@
+$ /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCA_base.cfg --inv=Faux --length=0 CF3Controle.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/_apalache-out/CF3Controle.tla/2026-11-11T21-07-11_9359480475879719612
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@21:07:11.410
+  > MCA_base.cfg: Loading TLC configuration                       I@21:07:11.414
+  > Using init predicate(s) Init from the TLC config              I@21:07:11.490
+  > Using next predicate(s) Next from the TLC config              I@21:07:11.490
+checker.inv overrides the value from the TLC configuration.       W@21:07:11.493
+Tuning:                                                           I@21:07:11.494
+PASS #0: SanyParser                                               I@21:07:11.704
+PASS #1: TypeCheckerSnowcat                                       I@21:07:12.073
+ > Running Snowcat .::.                                           I@21:07:12.073
+ > Your types are purrfect!                                       I@21:07:12.564
+ > All expressions are typed                                      I@21:07:12.564
+PASS #2: ConfigurationPass                                        I@21:07:12.565
+  > MCA_base.cfg: found INVARIANTS: Faux                          I@21:07:12.743
+  > Set the initialization predicate to Init                      I@21:07:12.745
+  > Set the transition predicate to Next                          I@21:07:12.746
+  > Set the constant initialization predicate to CInit            I@21:07:12.746
+  > Set an invariant to Faux                                      I@21:07:12.746
+PASS #3: DesugarerPass                                            I@21:07:12.750
+  > Desugaring...                                                 I@21:07:12.750
+PASS #4: InlinePass                                               I@21:07:12.765
+Leaving only relevant operators: CInit, CInitPrimed, Faux, Init, InitPrimed, Next I@21:07:12.765
+PASS #5: TemporalPass                                             I@21:07:12.809
+  > Rewriting temporal operators...                               I@21:07:12.809
+  > No temporal property specified, nothing to encode             I@21:07:12.809
+PASS #6: InlinePass                                               I@21:07:12.809
+Leaving only relevant operators: CInit, CInitPrimed, Faux, Init, InitPrimed, Next I@21:07:12.809
+PASS #7: PrimingPass                                              I@21:07:12.820
+  > Introducing CInitPrimed for CInit'                            I@21:07:12.849
+  > Introducing InitPrimed for Init'                              I@21:07:12.854
+PASS #8: VCGen                                                    I@21:07:12.855
+  > Producing verification conditions from the invariant Faux     I@21:07:12.855
+  > VCGen produced 1 verification condition(s)                    I@21:07:12.861
+PASS #9: PreprocessingPass                                        I@21:07:12.864
+  > Before preprocessing: unique renaming                         I@21:07:12.865
+ > Applying standard transformations:                             I@21:07:12.872
+  > PrimePropagation                                              I@21:07:12.872
+  > Desugarer                                                     I@21:07:12.874
+  > UniqueRenamer                                                 I@21:07:12.876
+  > Normalizer                                                    I@21:07:12.878
+  > SetMembershipSimplifier                                       I@21:07:12.882
+  > Keramelizer                                                   I@21:07:12.885
+  > After preprocessing: UniqueRenamer                            I@21:07:12.891
+PASS #10: TransitionFinderPass                                    I@21:07:12.902
+  > Found 1 initializing transitions                              I@21:07:12.960
+  > Found 14 transitions                                          I@21:07:12.990
+  > Found constant initializer CInit                              I@21:07:12.990
+  > Applying unique renaming                                      I@21:07:12.992
+PASS #11: OptimizationPass                                        I@21:07:13.001
+ > Applying optimizations:                                        I@21:07:13.005
+  > ConstSimplifier                                               I@21:07:13.006
+  > ExprOptimizer                                                 I@21:07:13.013
+  > SetMembershipSimplifier                                       I@21:07:13.049
+  > ConstSimplifier                                               I@21:07:13.050
+PASS #12: AnalysisPass                                            I@21:07:13.055
+ > Marking skolemizable existentials and sets to be expanded...   I@21:07:13.057
+  > Skolemization                                                 I@21:07:13.057
+  > Expansion                                                     I@21:07:13.059
+  > Remove unused let-in defs                                     I@21:07:13.071
+ > Running analyzers...                                           I@21:07:13.073
+  > Introduced expression grades                                  I@21:07:13.076
+PASS #13: BoundedChecker                                          I@21:07:13.077
+State 0: Checking 1 state invariants                              I@21:07:13.430
+Check the trace in: /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/_apalache-out/CF3Controle.tla/2026-11-11T21-07-11_9359480475879719612/violation1.tla, /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/_apalache-out/CF3Controle.tla/2026-11-11T21-07-11_9359480475879719612/MCviolation1.out, /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/_apalache-out/CF3Controle.tla/2026-11-11T21-07-11_9359480475879719612/violation1.json, /tmp/clone_tla_v150_8ct7n9ya/triade/scripts/tla_v150/_apalache-out/CF3Controle.tla/2026-11-11T21-07-11_9359480475879719612/violation1.itf.json I@21:07:13.569
+State 0: state invariant 0 violated.                              I@21:07:13.571
+Found 1 error(s)                                                  I@21:07:13.573
+The outcome is: Error                                             I@21:07:13.575
+Checker has found an error                                        I@21:07:13.595
+It took me 0 days  0 hours  0 min  2 sec                          I@21:07:13.595
+Total time: 2.182 sec                                             I@21:07:13.595
+EXITCODE: ERROR (12)
+
+--- stderr ---

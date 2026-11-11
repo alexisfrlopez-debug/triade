@@ -1,0 +1,20 @@
+LE REJEU DEPUIS UN CLONE FRAIS — le paquet TLA+ (6zqo2h60n)
+
+LE GESTE : git clone neuf du dépôt (l'état committé) ; les outils copiés avec empreintes recoupées (tla2tools.jar e1f11b75c4b5bc4478ba0ac5cb6ae28e40a01b0016bc33e0aa97da22dfdbcd7f ; apalache-0.63.0.tgz a756e96af249bf33cd7629667a49472cb26ac8227c48583da139b414834d59df == le sha256sum.txt de la release amont) ; les sept runs rejoués DEPUIS LE CLONE ; le modèle Python du clone re-exécuté aux bornes D187.
+
+  VERT  le clone frais (git clone, HEAD) — cb3968f PAQUET 1/6 DE LA VAGUE 3 (instruction 6zqo2h60n) — L
+  VERT  l'outil tla2tools.jar : empreinte recoupée — e1f11b75c4b5…
+  VERT  l'outil apalache-0.63.0.tgz : empreinte recoupée — a756e96af249…
+  VERT  Apalache extrait dans le clone
+  VERT  l'artefact CF3.tla identique au clone
+  VERT  l'artefact CF3Plafond.tla identique au clone
+  VERT  l'artefact CF3Fidelite.tla identique au clone
+  VERT  l'artefact CF3Controle.tla identique au clone
+  VERT  l'artefact verdicts.json identique au clone
+  VERT  les 7 runs rejoués depuis le clone : verdicts IDENTIQUES aux consignés — 8/8 VERT (TLC 154/216/360 états)
+  VERT  les journaux du clone conservés (logs_clone_frais/)
+  VERT  la campagne PBT du clone rejouée (200 traces à graine identique) : condensats IDENTIQUES au CSV committé — 200/200
+  VERT  le modèle Python du clone : D187 reproduit EXACTEMENT (154 états / 1 152 transitions) — 154|1152
+
+LE BILAN : 13/13 VERT — l'état committé REJOUE l'intégralité du paquet (la fidélité D187 154/1 152, les espaces 154/216/360, le déchargement Apalache et ses contrôles négatifs) SANS dépendre de l'état de la session.
+

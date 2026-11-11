@@ -1,0 +1,3 @@
+e1f11b75c4b5bc4478ba0ac5cb6ae28e40a01b0016bc33e0aa97da22dfdbcd7f  outils/tla2tools.jar
+a756e96af249bf33cd7629667a49472cb26ac8227c48583da139b414834d59df  outils/apalache-0.63.0.tgz
+# apalache.tgz == a756e96af249bf33cd7629667a49472cb26ac8227c48583da139b414834d59df (sha256sum.txt de la release v0.63.0, apalache-mc/apalache — recoupé au téléchargement)
