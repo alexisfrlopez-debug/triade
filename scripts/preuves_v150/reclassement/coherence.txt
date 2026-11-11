@@ -1,0 +1,30 @@
+LE CONTRÔLE DE COHÉRENCE abstract↔résultats↔conclusion (xboh1kljq)
+
+  [VERT ] abstract EN — la métrique primaire pièce seule (7/12)
+  [VERT ] abstract EN — la métrique de livraison (11/12)
+  [VERT ] abstract EN — le nommage par côté
+  [VERT ] abstract FR — la métrique primaire pièce seule (7/12)
+  [VERT ] abstract FR — la métrique de livraison (11/12)
+  [VERT ] abstract FR — le nommage par côté
+  [VERT ] §2.3       — les deux métriques définies
+  [VERT ] §2.3       — la classification par côté
+  [VERT ] §2.3       — les trois exclusions
+  [VERT ] §3.1       — le taux PRIMAIRE 7/12 en gras
+  [VERT ] §3.1       — l'IC exact de la métrique primaire
+  [VERT ] §3.1       — le taux de livraison 11/12
+  [VERT ] §3.1       — l'IC exact de la métrique de livraison
+  [VERT ] §3.1       — les 13 classes (7 pièce + 6 kit)
+  [VERT ] §3.1       — la réserve de non-indépendance aux DEUX taux
+  [VERT ] §3.1       — l'archive du recompte citée
+  [VERT ] §3.1       — les six défauts de kit ne touchent pas la pièce
+  [VERT ] table 4    — la colonne Side
+  [VERT ] table 4    — les runs 6 et 7 aux deux côtés
+  [VERT ] table 4    — la légende nomme le reclassement
+  [VERT ] conclusion — les 13 classes scindées
+  [VERT ] périmé     — l'ancien compte unique «eleven named defect classes»
+  [VERT ] périmé     — l'ancien «each of the eleven Loupe classes»
+  [VERT ] périmé     — l'ancienne phrase §3.1 «The exact Clopper-Pearson…for eleven of twelve is»
+  [VERT ] périmé     — l'ancienne règle «kit-side and piece-side defects both count» (remplacée par les deux métriques)
+  [VERT ] périmé     — l'ancien abstract FR «onze itérations…chacun nommé par classe et mécanisme»
+
+VERDICT : VERT — les 26 contrôles de cohérence tiennent (chiffres confrontés aux CSV bruts du recompte).

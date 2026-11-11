@@ -1,0 +1,3 @@
+taux,numérateur,dénominateur,valeur,ic95_scipy,ic95_bissection,écart
+pièce seule (métrique primaire RQ1 — le code natif écrit par agent),7,12,0.5833,"[0.2767, 0.8483]","[0.2767, 0.8483]",2.22e-16
+ensemble kit+pièce (métrique de livraison),11,12,0.9167,"[0.6152, 0.9979]","[0.6152, 0.9979]",1.11e-16

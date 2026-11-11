@@ -1,0 +1,29 @@
+LE RECLASSEMENT DES DÉFAUTS DES RUNS LOUPE — le recompte indépendant (l'instruction xboh1kljq, la vague 3)
+
+LA MÉTHODE : chaque classe nommée est RECOMPTÉE depuis les entrées 204-217 du journal (PAS depuis la table existante) — chaque citation ASSERTÉE présente au texte de son entrée (le recompte est CONTRÔLÉ). Les exclusions de la règle §2.3 demeurent : [RET-NU] (Entrée 215) nommé AU LABO avant le run — jamais échappé au terrain, non compté ; [T0-PÉRIMÉ] (run 12) — un résidu de bannière, aucune porte touchée, non compté ; [CORBEILLE-VIDE] — un défaut du coffre, pas de la livraison.
+
+LE RECOMPTE : 13 classes nommées sur 11 runs défaillants (les runs 6 et 7 en ont nommé DEUX chacun — la table par run les porte ensemble) : 7 côté PIÈCE (le code natif scellé), 6 côté KIT (le scénario Python, les sondes).
+
+LE RECLASSEMENT (défauts.csv) :
+  Entrée 204 BASERELOC            PIÈCE  — «l'image ASLR sans table de relocalisation, l'oubli du premier build»
+  Entrée 205 ENVELOPPE            PIÈCE  — «l'image ramenée DANS l'enveloppe prouvée de la lignée»
+  Entrée 206 CADRE-NÉ             PIÈCE  — «le CADRE .data pas né poignée INVALIDE — l'initialiseur du build»
+  Entrée 207 ARGUMENTS-PILE       PIÈCE  — «LA CLASSE DES ARGUMENTS PILE»
+  Entrée 208 SESSION-CHARGEUR     KIT    — «le scénario EST LE CHARGEUR»
+  Entrée 209 SAUVEGARDE-ATTENDU   KIT    — «le scénario attendait 1 (le compte) — fausse erreur»
+  Entrée 209 HINSTANCE-PEB        PIÈCE  — «mov r12, rcx»
+  Entrée 210 EAX-SANS-SIGNE       KIT    — «[EAX-SANS-SIGNE] AU KIT»
+  Entrée 210 D54-QUATRIÈME        PIÈCE  — «[D54-QUATRIÈME] À LA PIÈCE»
+  Entrée 213 SONDE-PYTHON         KIT    — «LA SONDE MORTE SUR SON PROPRE PYTHON»
+  Entrée 214 OFT-QWORD            PIÈCE  — «[OFT-QWORD]»
+  Entrée 216 FREE-SANS-TYPE       KIT    — «[FREE-SANS-TYPE], LE DÉFAUT DU KIT, PAS DE LA PIÈCE»
+  Entrée 217 SONDE-EXE            KIT    — «[SONDE-EXE], LE FAUX NÉGATIF STRUCTUREL DE LA SONDE DE LIAISON»
+
+LES DEUX TAUX PAR LIVRAISON (12 runs, la réserve de non-indépendance : des livraisons séquentielles d'un binôme développeur-agent — un résumé descriptif, PAS une inférence) :
+  pièce seule (métrique primaire RQ1 — le code natif écrit par agent)
+      7/12 = 0.5833 — IC Clopper-Pearson 95 % exact : [0.2767, 0.8483] (scipy) == [0.2767, 0.8483] (bissection) — écart 2.22e-16 (< 10⁻³ exigé)
+  ensemble kit+pièce (métrique de livraison)
+      11/12 = 0.9167 — IC Clopper-Pearson 95 % exact : [0.6152, 0.9979] (scipy) == [0.6152, 0.9979] (bissection) — écart 1.11e-16 (< 10⁻³ exigé)
+
+LA LECTURE : la métrique PRIMAIRE de RQ1 est le taux « code natif écrit par agent » (7/12) — ce que l'AGENT a écrit et que les contrôles de laboratoire n'ont pas retenu ; le taux ENSEMBLE (11/12) est la métrique de LIVRAISON — ce que le développeur a reçu (pièce OU kit). Les six défauts de kit ne touchent JAMAIS le code natif scellé : ils vivent dans le scénario Python et les sondes du kit de terrain.
+

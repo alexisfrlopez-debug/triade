@@ -526,18 +526,36 @@ def main():
     tex.append(r"\caption{The twelve terrain runs of the Loupe field test "
                r"(M10). Every failure was \emph{named} (a class, a "
                r"mechanism, an evidence piece) before being fixed; every fix "
-               r"was documented as a surgical revision. The sealed artifacts "
+               r"was documented as a surgical revision; every named defect is "
+               r"classified by \emph{side} (piece = the sealed native code; "
+               r"kit = the Python scenario and probes; runs 6 and 7 each "
+               r"surfaced one of each side). The sealed artifacts "
                r"never changed after their sealing run. Sources: journal "
-               r"entries 204--222, decisions D178/D181.}")
+               r"entries 204--222, decisions D178/D181; per-side recount: "
+               r"\code{preuves\_v150/reclassement/}.}")
+    # LA COLONNE CATÉGORIE (le reclassement xboh1kljq, la vague 3) : le
+    # côté de CHAQUE défaut nommé — pièce (le code natif scellé) ou kit
+    # (le scénario Python, les sondes) — lu du recompte contrôlé
+    cats_recl = {}
+    if (PREUVES_V150 / "reclassement" / "table_categories.csv").is_file():
+        for cr in lire_csv(PREUVES_V150 / "reclassement"
+                           / "table_categories.csv"):
+            cats_recl[int(cr["run"])] = cr["catégorie"]
+    TRAD_CATEG = {"PIÈCE": "piece", "KIT": "kit", "PIÈCE/KIT": "piece+kit",
+                  "KIT/PIÈCE": "piece+kit",
+                  "aucun (run vert de bout en bout)": "---"}
     tex.append(r"\label{tab:runs}")
-    tex.append(r"\begin{tabularx}{\textwidth}{@{}r l X X@{}}")
+    tex.append(r"\begin{tabularx}{\textwidth}{@{}r l l X X@{}}")
     tex.append(r"\toprule")
-    tex.append(r"\textbf{\#} & \textbf{Kit} & \textbf{Outcome (named "
+    tex.append(r"\textbf{\#} & \textbf{Kit} & \textbf{Side} & "
+               r"\textbf{Outcome (named "
                r"defect)} & \textbf{Documented fix} \\")
     tex.append(r"\midrule")
     for r, k, p, d, v, de, re_, en in runs:
         issue = v if de == "" else f"{v}. {de}"
+        cote = TRAD_CATEG.get(cats_recl.get(int(r), ""), "---")
         tex.append(rf"{r} & \code{{dev.{k.split('dev.')[-1] if 'dev.' in k else k}}} & "
+                   rf"{cote} & "
                    rf"{V100.latex_echappe(issue)} & "
                    rf"{V100.latex_echappe(re_)} \\")
     tex.append(r"\bottomrule")

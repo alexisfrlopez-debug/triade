@@ -8402,3 +8402,42 @@ Work Log:
   14/14, aucun chiffre fabriqué.
 - SUITE : le paquet 3/6 — le reclassement des défauts Loupe
   (xboh1kljq).
+
+
+Task ID: 144
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 3/6 DE LA VAGUE 3 (l'instruction xboh1kljq) — le
+reclassement des défauts Loupe par côté : 13 classes recomptées, les
+deux taux à IC exacts, le manuscrit et la Table 4 mis à jour, la dette
+du générateur « tbp] » guérie à la source (D202, Entrée 237).
+
+Work Log:
+- LE RECOMPTE CONTRÔLÉ : 13 classes nommées depuis les entrées
+  204-217 (citations ASSERTÉES au texte) — 7 PIÈCE, 6 KIT ; runs 6/7
+  deux classes chacun ; rejeu BIT-IDENTIQUE (la WIP 22:04 de la
+  session précédente recoupée puis menée à terme).
+- LES DEUX TAUX : PRIMAIRE RQ1 « code natif écrit par agent » 7/12
+  IC95 [0,2767 ; 0,8483] ; LIVRAISON kit+pièce 11/12 [0,6152 ;
+  0,9979] — scipy ET bisection maison en SCRIPT SÉPARÉ (écarts
+  10⁻⁵-10⁻⁶ < 10⁻³ exigé), réserve de non-indépendance aux DEUX.
+- LE MANUSCRIT : abstract EN+FR scindés par côté, §2.3 aux deux
+  métriques + TROIS exclusions nommées ([RET-NU]/[T0-PÉRIMÉ]/
+  [CORBEILLE-VIDE]), §3.1 les deux taux + 13 classes, Table 4
+  colonne Side COMPLÈTE (runs 6/7 : piece+kit), Threats et conclusion
+  alignées ; COHÉRENCE 26/26 VERT (chiffres confrontés aux CSV
+  bruts).
+- LA DETTE DU GÉNÉRATEUR GUÉRIE À LA SOURCE : le parasite « tbp] »
+  (classe D137) émis par TOUS les générateurs v100→v150 — les
+  guérisons passées furent éphémères (au fichier de sortie) ;
+  extraire_donnees_v150.py porte désormais [htbp] (5 lignes),
+  compilation témoin 22 pages SANS parasite (bac à sable, le main.pdf
+  livré INTACT).
+- LES PIÈCES : preuves_v150/reclassement/ (rapport.txt 9f6f7e5e…,
+  defauts.csv, table_categories.csv, taux.csv, verification_ic.txt,
+  coherence.txt — empreintes consignées à l'Entrée 237).
+- Frontières : pièces scellées INTACTES (loupe.exe c1115105…,
+  proxy.exe 446279f3…, demo.exe df8f2e50… recoupées avant/après),
+  garde sceau-I 14/14 avant/après, zips de l'édition INTACTS,
+  append-only, aucun chiffre fabriqué.
+- SUITE : le paquet 4/6 — la révision manuscrit+spécification
+  (sollwnmae).

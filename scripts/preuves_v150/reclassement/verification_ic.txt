@@ -1,0 +1,12 @@
+LA SECONDE MÉTHODE EN SCRIPT SÉPARÉ — le verdict (l'exigence xboh1kljq : égalité à 10⁻³)
+
+  pièce seule (métrique primaire RQ1 — le code natif écrit par agent)
+      consigné (scipy)      : [0.2767, 0.8483]
+      recalculé (bisection) : [0.2767, 0.8483]
+      écarts borne basse 3.03e-05 / borne haute 4.78e-05 — VERT (tolérance 10⁻³)
+  ensemble kit+pièce (métrique de livraison)
+      consigné (scipy)      : [0.6152, 0.9979]
+      recalculé (bisection) : [0.6152, 0.9979]
+      écarts borne basse 3.83e-06 / borne haute 7.59e-06 — VERT (tolérance 10⁻³)
+
+VERDICT : VERT — les DEUX intervalles concordent à 10⁻³ près par les deux méthodes indépendantes.

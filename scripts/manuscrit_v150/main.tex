@@ -79,9 +79,12 @@ single-case study of the protocol's validation programme: eleven milestones
 Windows hex-editor application written entirely under the protocol and
 delivered to its user. We quantify four research questions on data drawn
 from a \nbLignesJournal-line append-only engineering journal: (RQ1) the
-escaped-defect rate of changes that had passed all laboratory controls ---
-eleven of twelve field iterations surfaced at least one escaped defect,
-each named to a class and a mechanism before any fix; (RQ2) the measured
+escaped-defect rate of changes that had passed all laboratory controls,
+split by side of the delivered ensemble --- the primary metric counts
+the agent-written native code alone (seven of twelve field iterations
+surfaced at least one escaped defect of the sealed piece), the delivery
+metric counts the kit+piece ensemble (eleven of twelve), every defect
+named to a class, a mechanism and a side before any fix; (RQ2) the measured
 token cost per validated change --- re-measured end-to-end on the final
 card with full distributions: medians of 580 tokens to locate a block,
 2{,}143 to edit one, 3{,}510 to add one (the early single-shot M1 values,
@@ -121,9 +124,12 @@ application Windows (éditeur hexadécimal) écrite entièrement sous le
 protocole et livrée à son utilisateur. Nous quantifions quatre questions
 de recherche sur des données tirées d'un journal d'ingénierie append-only
 de \nbLignesJournal{} lignes : (RQ1) le taux de défauts échappés des changements ayant
-passé tous les contrôles de laboratoire — onze itérations de terrain sur
-douze ont révélé au moins un défaut échappé, chacun nommé par classe et
-mécanisme avant toute correction ; (RQ2) le coût mesuré en tokens par
+passé tous les contrôles de laboratoire, scindé par côté de l'ensemble
+livré — la métrique primaire compte le seul code natif écrit par
+l'agent (sept itérations de terrain sur douze ont révélé au moins un
+défaut échappé de la pièce scellée), la métrique de livraison compte
+l'ensemble kit+pièce (onze sur douze), chaque défaut nommé par classe,
+mécanisme et côté avant toute correction ; (RQ2) le coût mesuré en tokens par
 changement validé — re-mesuré de bout en bout sur la carte finale avec distributions : médianes de 580 tokens pour localiser, 2~143 pour éditer, 3~510 pour ajouter (les valeurs M1 51/719/1~088 demeurent historiques) contre une baseline naive de 300~304 ;
 (RQ3) les classes de défauts structurellement invisibles à l'émulation,
 énumérées avec leurs preuves (sémantique du chargeur et du format PE,
@@ -314,20 +320,31 @@ convention (D31/D34) was:
 tokens to locate a block (read one \code{frag-loc} entry), to edit one
 (additional \code{frag-con} + notation), to add one (additional
 profile thresholds). \emph{Escaped defects} are counted per terrain
-iteration under an operational rule defined once and applied uniformly:
-a run counts toward the escaped-defect rate if at least one defect that
-had passed every laboratory control in force at the time was named (a
-class, a mechanism, an archived evidence piece) before any fix ---
-kit-side and piece-side defects both count, the deliverable being the
-kit+piece ensemble; runs~6 and~7 each surfaced two such defects and each
-counts \emph{once} in the run rate (the rate measures escape incidence
-per delivery, not per defect); the run-7 [D54-QUATRI\`EME] recurrence
-is counted as a manifestation of the deposit-drift class first named in
-the M4-era campaign, not as a new class; and the run-12 [T0-P\'ERIM\'E]
-residue --- a stale banner string touching no gate, disclosed in the run
-table --- is \emph{not} counted: it violates no control's contract and
-alters no behaviour any control guards, and counting a text refresh as a
-functional escape would misstate the rate's meaning.
+iteration under an operational rule defined once and applied uniformly,
+and every named defect is classified by \emph{side} of the delivered
+ensemble: the \emph{piece} (the agent-written native code, sealed) or
+the \emph{kit} (the terrain harness --- the Python scenario, the
+probes, the witnesses). Two rates follow. The \emph{primary RQ1
+metric} counts the agent-written native code alone: a run counts if at
+least one \emph{piece-side} defect that had passed every laboratory
+control in force at the time was named (a class, a mechanism, an
+archived evidence piece) before any fix. The \emph{delivery metric}
+counts the kit+piece ensemble --- the deliverable being what the
+developer actually runs: a run counts if at least one defect of either
+side was so named. In both rates, runs~6 and~7 each surfaced one defect
+of each side and each counts \emph{once} per rate (the rates measure
+escape incidence per delivery, not per defect); the run-7
+[D54-QUATRI\`EME] recurrence is counted as a manifestation of the
+deposit-drift class first named in the M4-era campaign, not as a new
+class; the run-12 [T0-P\'ERIM\'E] residue --- a stale banner string
+touching no gate, disclosed in the run table --- is \emph{not} counted:
+it violates no control's contract and alters no behaviour any control
+guards, and counting a text refresh as a functional escape would
+misstate the rate's meaning; the [RET-NU] defect, named at the
+laboratory \emph{before} any run (journal entry 215), never escaped to
+the terrain and is not counted; and [CORBEILLE-VIDE] --- a defect of
+the laboratory's own vault tooling --- belongs to neither delivered
+side and is not counted.
 \emph{Hot-patch safety} is measured as post-patch regressions (target:
 zero) and as the byte-stability of sealed artifacts across patch
 campaigns. All numbers reported in Section~\ref{sec:results} are
@@ -344,23 +361,35 @@ hand-typed data value.
 \subsection{RQ1: escaped-defect rate}\label{sec:rq1}
 
 Table~\ref{tab:runs} reports the twelve terrain runs of the Loupe case
-study. Eleven of the twelve iterations surfaced at least one escaped
-defect --- a defect that had passed every laboratory control in force at
-the time, including the three Unicorn harnesses (159 controls at three
-fixed seeds), the structural oracle (43 then 121 locks) and the seal
-guard. The twelfth run (the 0.1.1 artifact, whose card-debt had been paid
-at birth) was green end-to-end. The exact Clopper-Pearson 95\% interval
-for eleven of twelve is $[0.615, 0.998]$ --- a \emph{descriptive}
-binomial summary only: the twelve iterations are sequential deliveries
-of one developer--agent pair, not independent trials, so the interval
-must not be read as an inference over a population of developers.
-Counting named classes across the
-campaign: eleven named defect classes over eleven failing iterations,
-each with a named mechanism and an archived evidence piece
-(\code{preuves-run-loupe-*} in the evidence vault). The showcase ---
-the application simply being \emph{used} on the terrain --- was alive with
-zero error-reporter events at runs 10, 11 and 12, after six consecutive
-deaths.
+study, every named defect now classified by side. The \emph{primary RQ1
+metric} --- the escaped-defect rate of the agent-written native code
+alone --- is \textbf{seven of twelve}: seven iterations surfaced at
+least one defect of the sealed piece (runs 1--4, 6, 7 and~9), with
+exact Clopper-Pearson 95\% interval $[0.277, 0.848]$. The
+\emph{delivery metric} --- the rate for the kit+piece ensemble the
+developer actually runs --- is \emph{eleven of twelve} (every iteration
+but the twelfth), with exact Clopper-Pearson 95\% interval
+$[0.615, 0.998]$. Every counted defect had passed every laboratory
+control in force at the time, including the three Unicorn harnesses
+(159 controls at three fixed seeds), the structural oracle (43 then 121
+locks) and the seal guard; the twelfth run (the 0.1.1 artifact, whose
+card-debt had been paid at birth) was green end-to-end. Both intervals
+are \emph{descriptive} binomial summaries only: the twelve iterations
+are sequential deliveries of one developer--agent pair, not independent
+trials, so neither interval must be read as an inference over a
+population of developers --- the non-independence reserve applies to
+the piece-alone and the ensemble rate alike. Counting named classes
+across the campaign: \textbf{thirteen} named defect classes over the
+eleven failing iterations --- \emph{seven piece-side} (the sealed
+native code), \emph{six kit-side} (the Python scenario and the probes)
+--- each with a named mechanism and an archived evidence piece
+(\code{preuves-run-loupe-*} in the evidence vault; the per-side
+recount, both rates and both recomputed intervals are archived at
+\code{preuves\_v150/reclassement/}). The six kit-side classes never
+touch the sealed native code: they live in the terrain harness. The
+showcase --- the application simply being \emph{used} on the terrain
+--- was alive with zero error-reporter events at runs 10, 11 and 12,
+after six consecutive deaths.
 
 The earlier milestones show the same shape at smaller scale: the M2
 instrumentation campaign took eight iterations and named eight classes
@@ -372,7 +401,7 @@ emulator could not see. We treat this as the study's central empirical
 finding: \emph{passing a complete laboratory programme does not transfer
 to the terrain}, and the protocol's response is not more laboratory
 coverage but a terrain evidence regime in which every escape becomes a
-named, falsified class --- each of the eleven Loupe classes is now
+named, falsified class --- each of the thirteen Loupe classes is now
 guarded by a control or an audit born from its own mechanism (e.g.\ the
 msx64 ABI audit born at build from the SSE class of run 4).
 
@@ -884,10 +913,18 @@ project, one developer, one agent family; the compiled-reference
 comparison of v0.14.0 exists but shares the laboratory harness and a
 single seed; independent replication (a second developer, a second
 domain) remains future work. \emph{Construct.} The
-escaped-defect count depends on what counts as a ``named'' class --- we
-counted conservatively (a class is counted once even if it killed several
-runs); the token budgets measure the M1-era card, not the final
-10-domain card, and measure \emph{reads}, not agent reasoning overhead.
+escaped-defect count depends on what counts as a ``named'' class and on
+the side split --- the recount is conservative (a class is counted once
+even if it killed several runs; the [D54-QUATRI\`EME] recurrence folds
+into the M4-era deposit-drift class; [RET-NU] was named at the
+laboratory before any run and [T0-P\'ERIM\'E] touches no gate), and
+both reported rates with their exact Clopper-Pearson intervals are
+descriptive summaries of twelve sequential deliveries of one
+developer--agent pair, not independent trials --- the
+non-independence reserve applies to the piece-alone and the ensemble
+intervals alike; the token budgets measure the M1-era card, not the
+final 10-domain card, and measure \emph{reads}, not agent reasoning
+overhead.
 \emph{Conclusion.} The terrain is one real Windows machine and one
 developer's usage of the application; showcase liveness (0 error-reporter
 events) is a weak liveness signal, not a correctness proof. The RISC-V terrain
@@ -1016,8 +1053,9 @@ an LLM agent writes native code by hand under signed-intent governance,
 and a longitudinal single-case evaluation of its eleven-milestone
 validation programme. The data, drawn entirely from the protocol's own
 append-only records, quantifies the cost (51/719/1{,}088 tokens per
-locate/edit/add), the escape dynamics (eleven named defect classes over
-twelve field iterations, all environmental), and the patch safety (zero
+locate/edit/add), the escape dynamics (thirteen named defect classes over
+twelve field iterations --- seven in the sealed piece, six in the
+terrain kit --- all environmental), and the patch safety (zero
 post-patch regression, armed anti-rollback) of the approach. The Loupe
 application --- a real Windows hex editor born entirely from the method,
 sealed twice, and alive on its user's machine --- is the existence proof
