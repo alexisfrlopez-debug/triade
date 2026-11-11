@@ -1,0 +1,625 @@
+==========================================================================
+RAPPORT DIFF COMPLET — LA RÉVISION MANUSCRIT+SPÉCIFICATION
+Paquet 4/6 de la vague 3 (instruction sollwnmae) — D203, Entrée 238
+==========================================================================
+
+LES LIVRÉS DE L'ÉDITION v0.15.0 DEMEURENT INTACTS :
+  les deux zips, les deux PDF de docs/, les main.pdf/final.pdf des chaînes —
+  la révision vit aux SOURCES ; la prochaine édition l'embarquera
+  (compilations témoins au bac à sable /tmp : manuscrit 22 pages,
+   spécification 64 pages avec couverture — zéro chaîne périmée au texte extrait,
+   zéro parasite « tbp] »)
+
+--------------------------------------------------------------------------
+A. LES FICHIERS RÉVISÉS (le diff unifié complet)
+--------------------------------------------------------------------------
+
+### scripts/manuscrit_v150/main.tex
+    avant (git HEAD) : 51e49b0c9044f4a3…
+    après            : 2f824e2502f2e1a8…
+    diff : +47 / -24 lignes
+
+    diff --git a/scripts/manuscrit_v150/main.tex b/scripts/manuscrit_v150/main.tex
+    index 191467a..d887339 100755
+    --- a/scripts/manuscrit_v150/main.tex
+    +++ b/scripts/manuscrit_v150/main.tex
+    @@ -35,7 +35,7 @@
+     \usepackage{fancyhdr}
+     \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+                 urlcolor=liaison, unicode=true,
+    -            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.13.0)},
+    +            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.15.0)},
+                 pdfauthor={Alexis Lopez}]{hyperref}
+     \pagestyle{fancy}
+     \fancyhf{}
+    @@ -246,7 +246,7 @@ optimization without measurement).
+     
+     The development loop itself (update an intention, re-derive the oracle,
+     edit the notation, rebuild, verify, seal) and the seal ceremony model are
+    -described in the protocol specification v0.13.0, which this edition
+    +described in the protocol specification v0.15.0, which this edition
+     accompanies; we summarise only what the evaluation needs.
+     
+     \paragraph{Governance: signed intent and append-only records.}
+    @@ -414,8 +414,12 @@ on the final card (Table~\ref{tab:preuves}): locating a block costs a
+     [1{,}085--3{,}463]; adding one 3{,}510 [3{,}128--4{,}091] ($n{=}10$
+     operations each, real plan entries, notations and specifications, the
+     reasoning estimated as above). The honest reading is \emph{unfavourable
+    -to the protocol}: Loupe-era operations cost 4--11$\times$ their M1
+    -counterparts --- the notations are longer, the contracts denser; the
+    +to the protocol}: Loupe-era operations cost 3--11$\times$ their M1
+    +counterparts ($2{,}143/719 = 3.0\times$ for an edit,
+    +$3{,}510/1{,}088 = 3.2\times$ for an addition, $580/51 = 11.4\times$
+    +for a locate --- the ratios recomputed from \code{remesure\_rq2.csv}
+    +against the M1 budgets) --- the notations are longer, the contracts
+    +denser; the
+     cost grew with the rigour. What the card-fragment indexing still buys is
+     measured by the naive baseline: reading the full disassembly of
+     \code{loupe.exe} costs 300{,}304 tokens (37{,}538 lines) --- two orders
+    @@ -577,7 +581,9 @@ compression invocations confirmed mechanically, the complete operation
+     costs 75{,}983 instructions for the blocks against 69{,}132 for
+     gcc~14.2 -O2 and 77{,}505 for -Os, in the same emulator on the same
+     input: the hand notation sits \emph{between} the two compiler levels
+    -($-9\%$ in executed instructions against -O2, $+2\%$ against -Os), is
+    +--- it executes $+9.9\%$ \emph{more} instructions than gcc -O2
+    +(75{,}983 vs 69{,}132) and $2.0\%$ \emph{fewer} than -Os (75{,}983 vs
+    +77{,}505) --- and is
+     1.45$\times$ more compact than the -O2 function (1{,}021 vs 1{,}482
+     bytes including the shared K table) but less compact than -Os (548
+     bytes), and neither camp uses any ISA extension beyond the x86-64
+    @@ -731,8 +737,10 @@ signed-intent governance.
+     \paragraph{What the data does not support.} The study cannot claim that
+     the protocol is \emph{more} productive or \emph{more} correct than a
+     compiler-based workflow: there is no baseline, one case, one agent
+    -family, one developer. The token budgets were measured once, early, on a
+    -small lineage. The oracle is derived from the same layer I it checks, so
+    +family, one developer. The token budgets are measured on a single
+    +lineage (the early M1 shot and the end-to-end re-measurement of D195
+    +on the final card), never across developers or task families. The
+    +oracle is derived from the same layer I it checks, so
+     specification errors are shared, not caught. Memory safety is enforced
+     only to the depth of the ABI audits and the fuzzing campaigns;
+     constant-time is verified \emph{structurally} (secret-independent
+    @@ -869,7 +877,8 @@ $(1-q)^n$ (independent rebuilds, the standing hypothesis). Its
+     operational characteristics: at $q = 50\%$ --- a badly
+     non-deterministic build --- $n = 5$ would still seal with probability
+     $3.1\%$ and the historical $n = 10$ with $0.098\%$, a $32\times$
+    -strictness increase, the equivalent of moving from $1.86\sigma$ to
+    +strictness increase, the equivalent of moving from $1.86\sigma$
+    +(exactly $1.863$) to
+     $3.10\sigma$ one-sided; at $q = 1\%$ --- a healthy build --- the rule
+     seals with probability $95.1\%$ ($n{=}5$) and $90.4\%$ ($n{=}10$). The
+     values ``$\alpha = 3.29\times10^{-2}$'' and ``$\alpha = 1.08\times
+    @@ -884,12 +893,20 @@ the justification and the documented path to any future relaxation.
+     this edition ships the protocol that would lift it: three independent
+     axes (a second developer running one full milestone; a second real
+     application in a different domain; a port to a second non-primary
+    -profile), a T/X coding grid for every defect (five terrain classes T1--T5
+    ---- loader/image, hardware ABI, loader semantics, system conventions,
+    -environment --- against three laboratory classes X1--X3), double
+    +profile), an F/L coding grid for every defect (five terrain classes
+    +F1--F5 --- loader/image, hardware ABI, loader semantics, system
+    +conventions, environment --- against three laboratory classes L1--L3),
+    +double
+     annotation by two independent coders, Cohen's $\kappa$ with the
+     acceptance threshold $\kappa \ge 0.61$ (substantial agreement), and
+    -pre-registered acceptance criteria. The protocol is proposed, not
+    +pre-registered acceptance criteria. The grid labels were renamed at
+    +D203: the T1--T5/X1--X3 of the original proposal (D189) became
+    +F1--F5 (terrain) and L1--L3 (laboratory) to lift the collision with
+    +the unrelated defect taxonomies T1--T6 (the specification's layer-I
+    +taxonomy) and X1--X8 (its emulation-invisible extension), and with the
+    +T0--T7 terrain scenario steps; the correspondence is one-to-one
+    +($\mathrm{T}i \to \mathrm{F}i$, $\mathrm{X}j \to \mathrm{L}j$) and
+    +is recorded in the replication kit. The protocol is proposed, not
+     executed: the arbitration belongs to the developer.
+     
+     % ------------------------------------------------------------------
+    @@ -902,9 +919,11 @@ derivation routes, system generator, spec$\leftrightarrow$\allowbreak harness
+     $\leftrightarrow$\allowbreak hashlib tripartite confrontation) found zero
+     divergences, but a second \emph{agent} has not yet regenerated the
+     oracle. The crystallisation rule (ten identical rebuilds) checks
+    -determinism, not correctness. The mutation-testing survivors (138/832,
+    -concentrated in orchestration/UI blocks without an isolated-mutant
+    -semantic killer) are a named, measured gap --- and the v0.13.0 audit of
+    +determinism, not correctness. The mutation-testing survivors (138/832
+    +in the original v0.11.0 campaign, 56/832 after the v0.14.0 composition
+    +re-run, 737/10{,}400 in the extended v0.15.0 campaign --- every
+    +survivor named and classified: uncovered paths) are a named, measured
+    +gap --- and the v0.13.0 audit of
+     our own v0.11.0 benchmark, which caught a perimeter artifact that
+     inflated a claim fifteen-fold, is itself evidence of this threat class:
+     instrument defects contaminate results symmetrically, and were caught
+    @@ -922,9 +941,10 @@ both reported rates with their exact Clopper-Pearson intervals are
+     descriptive summaries of twelve sequential deliveries of one
+     developer--agent pair, not independent trials --- the
+     non-independence reserve applies to the piece-alone and the ensemble
+    -intervals alike; the token budgets measure the M1-era card, not the
+    -final 10-domain card, and measure \emph{reads}, not agent reasoning
+    -overhead.
+    +intervals alike; the token budgets measure \emph{reads}, not agent
+    +reasoning overhead (the M1 single-shot values remain history; the D195
+    +re-measurement covers the final card end-to-end, with the reasoning
+    +estimated and named as such).
+     \emph{Conclusion.} The terrain is one real Windows machine and one
+     developer's usage of the application; showcase liveness (0 error-reporter
+     events) is a weak liveness signal, not a correctness proof. The RISC-V terrain
+    @@ -1064,8 +1084,9 @@ evidence: 83.4\% mutation kill with the cryptographic families at
+     100\%, zero-crash coverage-guided fuzzing of the untrusted-input blocks,
+     bounded memory-safety verification with zero out-of-frame accesses,
+     secret-independent instruction traces on the crypto families, an audited
+    -instruction-count parity with a compiled SHA-256 reference (within ten
+    -percent of gcc -O2 and ahead of -Os --- the v0.11.0 ``15.3$\times$''
+    +instruction-count comparison with a compiled SHA-256 reference (the
+    +notation executes $+9.9\%$ more instructions than gcc -O2 and $2.0\%$
+    +fewer than -Os --- the v0.11.0 ``15.3$\times$''
+     claim withdrawn by the v0.13.0 audit as a measurement artifact), and zero divergences in oracle-independent regeneration (now including an
+     isolated-instance regeneration and a binary-search re-derivation). The v0.14.0 empirical programme
+     adds: a pre-registered compiler-reference comparison showing the sealed
+    @@ -1080,12 +1101,13 @@ survivors named). The v0.15.0 programme closes the formal side: the four vault
+     properties proved \emph{unbounded} by an inductive invariant, the model
+     refined against the implementation (34 steps, zero gaps, every failure
+     path), and every claim carrying a systematic status. What remains open
+    -is now precisely measured: the 138 mutation survivors in orchestration
+    -blocks, the emulation-only scope of the constant-time result (the dudect
+    +is now precisely measured: the 56 mutation survivors in orchestration
+    +blocks after the composition re-run (the 138 of the v0.11.0 campaign
+    +are history, quoted as such), the emulation-only scope of the constant-time result (the dudect
+     kit is prepared and waiting), the unmeasured real-hardware timing
+     (the \code{fence.i} kit targets a physical RISC-V board; a third-machine
+     Loupe run is likewise prepared), the missing independent replication
+    -(the T/X grid and the $\kappa$ calculator are ready; the second
+    +(the F/L grid and the $\kappa$ calculator are ready; the second
+     annotator is yet to be recruited) --- and, on the
+     governance side, the D183 escrow ceremony, prepared and waiting for the
+     developer's gesture.
+    @@ -1112,8 +1134,8 @@ then GPL~v3).
+     repository (append-only journal, decision log, evidence vault indexes,
+     extraction script, generated tables). A versioned archival snapshot
+     (Zenodo DOI) will be minted at submission time and referenced here; the
+    -two submission archives of this edition (\code{TRIADE\_soumission\_v0.14.0.zip}
+    -and \code{TRIADE\_complet\_v0.14.0.zip}) contain respectively the
+    +two submission archives of this edition (\code{TRIADE\_soumission\_v0.15.0.zip}
+    +and \code{TRIADE\_complet\_v0.15.0.zip}) contain respectively the
+     manuscript with its data tables, and the complete sources with raw
+     extracts and fingerprints.
+     
+
+### scripts/spec_v150/sec-a.tex
+    avant (git HEAD) : f91caddd96c7e648…
+    après            : 5415cbc2d26c3df2…
+    diff : +18 / -9 lignes
+
+    diff --git a/scripts/spec_v150/sec-a.tex b/scripts/spec_v150/sec-a.tex
+    index 5c058da..070e038 100755
+    --- a/scripts/spec_v150/sec-a.tex
+    +++ b/scripts/spec_v150/sec-a.tex
+    @@ -443,7 +443,8 @@ D81 DEMEURE la décision active, le geste appartient au développeur.
+     caractéristiques opérationnelles de la règle réelle (sceller ssi $n$
+     rebuilds consécutifs identiques) : P(sceller$|q$) = $(1-q)^n$ — à
+     $q = 50$\,\% : 3,1 \% ($n{=}5$), 0,098 \% ($n{=}10$), soit 32× plus
+    -strict (les quantiles unilatéraux exacts 1,87σ/3,10σ) ; à $q = 1$\,\% :
+    +strict (les quantiles unilatéraux exacts 1,86σ [valeur exacte
+    +1,863]/3,10σ) ; à $q = 1$\,\% :
+     la règle scelle un build sain avec probabilité 95,1 \%/90,4 \% — les
+     valeurs « α = 3,29·10\textsuperscript{−2} / 1,08·10\textsuperscript{−3} »
+     de D189 étaient des RAPPORTS DE VRAISEMBLANCE $(0,5/0,99)^n$ mal
+    @@ -451,7 +452,10 @@ de D189 étaient des RAPPORTS DE VRAISEMBLANCE $(0,5/0,99)^n$ mal
+     en silence) — l'analyse est la JUSTIFICATION consignée et la voie
+     documentée d'un relâchement futur ; LE PROTOCOLE DE RÉPLICATION proposé
+     (les trois axes : second développeur, second domaine, second profil ;
+    -la grille T/X à cinq classes terrain + trois classes laboratoire ; la
+    +la grille de codage à cinq classes terrain + trois classes laboratoire
+    +— étiquetée T/X à l'époque, renommée F1--F5/L1--L3 par D203 pour
+    +lever la collision avec les taxonomies de défauts T1--T6/X1--X8 du
+    +§\ref{sec:taxonomie} ; la
+     double annotation ; le κ de Cohen ≥ 0,61 ; les critères d'acceptation
+     pré-enregistrés) — PROPOSÉ, jamais exécuté : l'arbitrage appartient au
+     développeur.
+    @@ -497,7 +501,7 @@ formel).
+     caractéristiques opérationnelles P(sceller$|q$) = $(1-q)^n$ remplacent les
+     « α » de D189 (des rapports de vraisemblance mal étiquetés) ; les conversions
+     sigma $\sqrt{-2\ln p}$ remplacées par les quantiles normaux unilatéraux
+    -exacts (1,87σ/3,10σ) ; l'IC95~\% EXACT de 11/12 (Clopper-Pearson
+    +exacts (1,86σ/3,10σ) ; l'IC95~\% EXACT de 11/12 (Clopper-Pearson
+     $[0,615 ; 0,998]$, avec la réserve de non-indépendance des itérations
+     séquentielles) ; la règle de comptage opérationnelle des défauts échappés
+     DÉFINIE en méthodes du manuscrit (les runs 6/7 à deux défauts comptés une
+    @@ -527,8 +531,9 @@ tout minimum scalaire plausible) ; les chiffres corrigés : l'opération
+     complète des blocs 75\,983 instructions contre 69\,132 (gcc~14.2 -O2) et
+     77\,505 (-Os), dans le même émulateur sur la même entrée, le condensé
+     vérifié AVANT le comptage et les 17 invocations de compression confirmées
+    -mécaniquement — la notation WYSIWYG est COMPÉTITIVE ($-9$~\%/$+2$~\% en
+    -instructions), plus compacte que -O2 (1\,021 contre 1\,482 octets, tables
+    +mécaniquement — la notation WYSIWYG est COMPÉTITIVE (elle exécute
+    +$+9{,}9$~\% d'instructions \emph{de plus} que gcc -O2 [75\,983 contre
+    +69\,132] et $2{,}0$~\% \emph{de moins} que -Os [77\,505]), plus compacte que -O2 (1\,021 contre 1\,482 octets, tables
+     comprises), moins que -Os (548) ; AUCUNE extension ISA au-delà du baseline
+     des deux côtés (gcc emploie des mouvements SSE2 du baseline que la notation
+     GPR pure n'emploie pas — l'écart rapporté sans ajustement) ; le terrain M7
+    @@ -581,7 +586,10 @@ cl100k\_base) : localiser 580 [496..706], éditer 2~143 [1~085..3~463],
+     ajouter 3~510 [3~128..4~091], la baseline naive 300~304 tokens (le
+     désassemblage complet) — les valeurs M1 (51/719/1~088) HISTORIQUES,
+     jamais remplacées ; LA LECTURE DÉFAVORABLE AU PROTOCOLE consignée telle
+    -quelle (les opérations coûtent 4-11$\times$ leur M1 : les notations plus
+    +quelle (les opérations coûtent 3-11$\times$ leur M1 — les ratios
+    +recalculés depuis \code{remesure\_rq2.csv} : éditer $2\,143/719 =
+    +3{,}0\times$, ajouter $3\,510/1\,088 = 3{,}2\times$, localiser
+    +$580/51 = 11{,}4\times$ — les notations plus
+     longues, les contrats plus denses) ; le raisonnement ESTIMÉ
+     ($\times$1,08, le rapport génération/contenu des retouches réelles —
+     l'estimation nommée, jamais une mesure).
+    @@ -665,9 +673,10 @@ scénario M7, la cible changée), le terrain tiers Loupe (T0$\to$T7+S0
+     intégral) — TOUS \emph{EN ATTENTE DE RUN MATÉRIEL} : aucun chiffre
+     n'existe, aucun n'est fabriqué.
+     
+    -\textbf{LA RÉPLICATION} : la grille T/X FINALISÉE (les cinq classes
+    -terrain et trois laboratoire, définitions opérationnelles, exemples
+    -vécus), le calculateur $\kappa$ de Cohen AUTOTESTÉ (trois cas
+    +\textbf{LA RÉPLICATION} : la grille F/L FINALISÉE (les cinq classes
+    +terrain F1--F5 et trois laboratoire L1--L3, définitions
+    +opérationnelles, exemples vécus — l'ancienne grille T/X renommée par
+    +D203, la table de correspondance au kit), le calculateur $\kappa$ de Cohen AUTOTESTÉ (trois cas
+     synthétiques au $\kappa$ calculable à la main), les critères
+     pré-enregistrés D189 INCHANGÉS ; le second annotateur À RECRUTER, le
+     second domaine EN ATTENTE d'une vraie commande — les statuts consignés.
+
+### scripts/spec_v150/sec-d.tex
+    avant (git HEAD) : b80c030e6033bd01…
+    après            : 26a2520cff3b4785…
+    diff : +18 / -7 lignes
+
+    diff --git a/scripts/spec_v150/sec-d.tex b/scripts/spec_v150/sec-d.tex
+    index 4145c45..869c1f0 100755
+    --- a/scripts/spec_v150/sec-d.tex
+    +++ b/scripts/spec_v150/sec-d.tex
+    @@ -1120,9 +1120,10 @@ la tension D81 ↔ D183 consignée avec l'analyse chiffrée (facteur ≈ 40)
+     LA CRISTALLISATION & le seuil 10 justifié par les caractéristiques
+     opérationnelles P(sceller$|q$) = $(1-q)^n$ (à $q = 50$~\% : 3,1~\%
+     à $n{=}5$, 0,098~\% à $n{=}10$ — 32× plus strict ; les quantiles
+    -unilatéraux 1,87σ/3,10σ ; D190 corrige l'étiquetage en α des rapports
+    +unilatéraux 1,86σ/3,10σ ; D190 corrige l'étiquetage en α des rapports
+     de vraisemblance de D189) ; le seuil DEMEURE ; le
+    -protocole de réplication PROPOSÉ (trois axes, grille T/X, κ de Cohen ≥
+    +protocole de réplication PROPOSÉ (trois axes, grille T/X [devenue
+    +F/L, D203], κ de Cohen ≥
+     0,61) (D189). \\
+     LES MANIFESTES & le manifeste du kit de cérémonie à sha256 (la suite de
+     D184) ; les kits livrés demeurent, md5 à l'idempotence et à l'affichage
+    @@ -1161,7 +1162,7 @@ scellée), la phrase du tableau de menaces, les renvois recalés (§ 3.5/§ 4.1)
+     (D190). \\
+     LES STATISTIQUES & la cristallisation aux caractéristiques opérationnelles
+     P(sceller$|q$) = $(1-q)^n$ (3,1~\%/0,098~\% à $q = 50$~\%, 32×, les
+    -quantiles 1,87σ/3,10σ) ; l'IC95 exact de 11/12 ($[0,615 ; 0,998]$, la
+    +quantiles 1,86σ/3,10σ) ; l'IC95 exact de 11/12 ($[0,615 ; 0,998]$, la
+     réserve de non-indépendance) ; la règle de comptage opérationnelle des
+     défauts échappés (D190). \\
+     LE BENCHMARK & le facteur 15,3× RETIRÉ (l'artefact de périmètre : la
+    @@ -1257,7 +1258,8 @@ Les kits matériels & le kit terrain du bras C (en attente) & TROIS kits
+     (dudect temps réel [l'appel natif validé FIPS], fence.i sur silicium,
+     terrain tiers) — EN ATTENTE & préparés \\
+     La réplication & la grille T/X proposée (D189) & la grille FINALISÉE
+    -(définitions opérationnelles, exemples vécus), le $\kappa$ AUTOTESTÉ,
+    +(définitions opérationnelles, exemples vécus ; renommée F1--F5/L1--L3
+    +par D203, la table de correspondance au kit), le $\kappa$ AUTOTESTÉ,
+     les critères INCHANGÉS, les statuts consignés & outillé \\
+     La gouvernance & — & le croisement d'attribution RECOUPÉ et CORRIGÉ
+     (D197), la règle du contenu cité, la règle d'archivage des versions &
+    @@ -1293,7 +1295,14 @@ l'indépendance, le re-jeu des survivants). La v0.15.0 consigne les
+     preuves non bornées et le raffinement : D197 (le croisement
+     d'attribution recoupé, la règle du contenu cité, la règle
+     d'archivage des versions), D198 (l'invariant inductif, le
+    -raffinement, les kits, la réplication, les statuts systématiques). La v0.9.0 avait
+    +raffinement, les kits, la réplication, les statuts systématiques). La
+    +vague d'instructions du 12/11 consigne la reprise et les paquets :
+    +D199 (l'instrument du miroir réparé), D200 (la preuve TLA+/Apalache et
+    +le raffinement property-based), D201 (la campagne de mutation étendue),
+    +D202 (le reclassement des défauts Loupe par côté), D203 (la révision
+    +manuscrit+spécification : les pourcentages du benchmark reformulés sans
+    +ambiguïté, les ratios RQ2 recalculés, le quantile unifié à 1,86σ, les
+    +résidus d'édition purgés, la grille de réplication renommée F/L). La v0.9.0 avait
+     consolidé le programme d'après M10 : D177 (la cérémonie d'ère du TGN
+     armée — le quatorzième arbre), D178 (LE JALON M10 FRANCHI — la balise
+     \code{loupe 0.1.0} scellée par fait de carte sur le onzième run recoupé 39/39,
+    @@ -1710,13 +1719,15 @@ D189 & La cristallisation évaluée et la réplication proposée & le seuil
+     10 justifié par le SPRT (α = 1,08 × 10\textsuperscript{−3}, 46× plus
+     strict que le canonique — le seuil DEMEURE, la politique jamais changée
+     en silence) ; le protocole de réplication (second développeur, second
+    -domaine, second profil ; la grille T/X à double annotation ; le κ de
+    +domaine, second profil ; la grille T/X (renommée F/L par D203) à
+    +double annotation ; le κ de
+     Cohen ≥ 0,61 ; les critères pré-enregistrés) — PROPOSÉ, jamais exécuté ;
+     l'étiquetage « α » des rapports de vraisemblance CORRIGÉ par D190. \\
+    -D190 & Les corrections de l'édition v0.13.0 & la liste exhaustive vérifiée une à une (quatorze arbres, comptes exacts du journal en macros, Table 6 régénérée par le générateur anti-troncature, la note TOTAL/brouillons, le paragraphe de consolidation aligné sur D181, la phrase du tableau de menaces, les renvois recalés) ; les statistiques reformulées (P(sceller$|q$) = $(1-q)^n$, quantiles 1,87σ/3,10σ, IC95 exact de 11/12 avec la réserve de non-indépendance, la règle de comptage opérationnelle) ; la neutralité documentaire (l'anti-debug documenté honnêtement, le terrain M7 requalifié — qemu TCG, fence.i non prouvé sur silicium). \\
+    +D190 & Les corrections de l'édition v0.13.0 & la liste exhaustive vérifiée une à une (quatorze arbres, comptes exacts du journal en macros, Table 6 régénérée par le générateur anti-troncature, la note TOTAL/brouillons, le paragraphe de consolidation aligné sur D181, la phrase du tableau de menaces, les renvois recalés) ; les statistiques reformulées (P(sceller$|q$) = $(1-q)^n$, quantiles 1,86σ/3,10σ, IC95 exact de 11/12 avec la réserve de non-indépendance, la règle de comptage opérationnelle) ; la neutralité documentaire (l'anti-debug documenté honnêtement, le terrain M7 requalifié — qemu TCG, fence.i non prouvé sur silicium). \\
+     D191 & Le benchmark audité : le facteur 15,3× RETIRÉ & l'artefact de périmètre nommé (le compteur de la finalisation seule lu après le pipeline, comparé à l'opération complète de la référence — 4,16 instructions/ronde, le signe) ; les chiffres corrigés sur pièces : l'opération complète 75\,983 instructions contre 69\,132 (-O2) et 77\,505 (-Os), condensé vérifié avant comptage, 17 compressions confirmées, aucune extension ISA au-delà du baseline — la notation COMPÉTITIVE, jamais spectaculaire : la méthode appliquée à sa propre revendication. \\
+     D192 & La conséquence D81 au modèle de menace et le kit D183 préparé & phrase au dépôt + S\_serrure en en-tête clair = deux éléments trivialement disponibles, la confidentialité effective repose sur le seul média piège ; la frontière D105/D81 du clone du laboratoire (clones temporaires à phrases de test) ; le kit de cérémonie PRÉPARÉ SANS L'APPLIQUER (l'outil au partage CF2 D120, l'autotest VERT, le LISEZMOI, les listes de contrôle — le geste au développeur) ; l'état de l'art étendu (huit références vérifiées DOI/arXiv, la revendication scopée, RQ3 recadrée en garanties silencieuses du compilateur). \\
+     D195 & Le programme empirique v0.14.0 & le plan PRÉ-ENREGISTRÉ (D193, l'empreinte verrouillée) ; le bras de référence compilateur (six blocs aux mêmes contrats, les mêmes shims, auto-vérifiés : ZÉRO DIVERGENCE aux vecteurs ; sha-256 PARITAIRE à travail égal [9~089/9~146], les purs plus chers, la mutation au même degré — H4 tenue) ; la re-mesure RQ2 en distributions (580/2~143/3~510, la baseline naive 300~304, le raisonnement estimé nommé, les valeurs M1 historiques, la lecture défavorable consignée) ; l'indépendance par instance isolée (128 constantes, zéro divergence, l'écart de famille nommé) ; le re-jeu des 832 mutants aux composition-killers (93,3 \%, tls13/sys à 100 \%, 56 loupe nommés) ; le kit terrain EN ATTENTE. \\
+     D197 & Le croisement d'attribution recoupé et la règle du contenu cité & les métadonnées Drive font foi (les deux fichiers déposés 11/11 13:21 UTC, jamais modifiés : ysddxpk0o porte le programme v0.14.0 exécuté, ic09ydeli porte le programme v0.15.0 ouvert — les étiquettes d'hier étaient croisées, les travaux intègres) ; la correction aux gestes (ysddxpk0o archivé, ic09ydeli rappelé vers \code{/instructions}, empreintes md5 recoupées avant et après, aucune suppression) ; LA RÈGLE DU CONTENU CITÉ (lecture intégrale, empreinte confrontée, contenu cité à l'entrée d'ouverture) ; LA RÈGLE DU DÉVELOPPEUR 12/11 : les anciennes versions archivées à chaque livraison d'une nouvelle (première application : la v0.15.0). \\
+     D198 & Les preuves non bornées et le raffinement livrés & l'invariant inductif $I$ (quatre propriétés PROUVÉES NON BORNÉES, la fidélité D187 reproduite exactement, les bornes étendues zéro hors $I$) ; le raffinement 34 pas zéro écart (les chemins d'échec inclus, cinq époques vécues aux deux niveaux) ; les trois kits matériels préparés EN ATTENTE (le dudect à l'appel natif validé FIPS, le fence.i silicium, le terrain tiers) ; la réplication outillée (grille finalisée, $\kappa$ autotesté, critères inchangés) ; les statuts systématiques ; la dette de la table des preuves guérie (longtable). \\
+    +D203 & La révision manuscrit+spécification (le paquet 4 de la vague du 12/11) & LES POURCENTAGES DU BENCHMARK REFORMULÉS SANS AMBIGUÏTÉ dans les deux documents (la notation exécute $+9{,}9$~\% d'instructions DE PLUS que gcc -O2 [75\,983 contre 69\,132] et $2{,}0$~\% DE MOINS que -Os [77\,505] — l'ancienne écriture « $-9$~\%/$+2$~\% » lue du point de vue du compilateur était ambiguë) ; LES RATIOS RQ2 RECALCULÉS depuis \code{remesure\_rq2.csv} (« 4-11× » → 3-11× : éditer $3{,}0\times$, ajouter $3{,}2\times$, localiser $11{,}4\times$) ; LE QUANTILE UNIFIÉ à 1,86σ (valeur exacte 1,863 — l'arrondi « 1,87 » des éditions antérieures corrigé) ; LES RÉSIDUS D'ÉDITION PURGÉS (la référence spec v0.13.0 → v0.15.0, les archives de la Data Availability v0.14.0 → v0.15.0, les phrases « budgets mesurés une seule fois / carte de l'ère M1 » contredites par D195 retirées, la conclusion aux médianes courantes et aux 56 survivants [les 138 de v0.11.0 cités comme histoire], la plage de décisions portée à la dernière décision réelle) ; LA GRILLE DE RÉPLICATION RENOMMÉE T1--T5/X1--X3 → F1--F5/L1--L3 (la collision avec les taxonomies T1--T6/X1--X8 levée, la table de correspondance au kit) ; les livrés de l'édition INTACTS (la révision vit aux sources, la prochaine édition l'embarquera). \\
+     \end{longtable}
+    \ No newline at end of file
+
+### scripts/statuts_preuves_v150.py
+    avant (git HEAD) : 18853256d55d557c…
+    après            : 21694e1a67879f1e…
+    diff : +3 / -2 lignes
+
+    diff --git a/scripts/statuts_preuves_v150.py b/scripts/statuts_preuves_v150.py
+    index f0f9ab5..4ec848c 100755
+    --- a/scripts/statuts_preuves_v150.py
+    +++ b/scripts/statuts_preuves_v150.py
+    @@ -150,8 +150,9 @@ def main():
+           "zero divergence, SHA-256 parity at equal work; H4 holds")
+         l("Independent replication", "awaiting (recruitment / real "
+           "command)",
+    -      "the T/X grid finalised, the $\\kappa$ calculator autotested "
+    -      "(synthetic cases), criteria pre-registered unchanged")
+    +      "the F/L grid finalised (renamed from T/X at D203, "
+    +      "correspondence table in the kit), the $\\kappa$ calculator "
+    +      "autotested (synthetic cases), criteria pre-registered unchanged")
+     
+         lignes += [
+             "\\bottomrule",
+
+### scripts/manuscrit_v150/donnees/statuts_v150.tex
+    avant (git HEAD) : b977cf1c1fc69d0a…
+    après            : 32d6a6a94dfabc59…
+    diff : +1 / -1 lignes
+
+    diff --git a/scripts/manuscrit_v150/donnees/statuts_v150.tex b/scripts/manuscrit_v150/donnees/statuts_v150.tex
+    index 0a552a5..5fb8c13 100755
+    --- a/scripts/manuscrit_v150/donnees/statuts_v150.tex
+    +++ b/scripts/manuscrit_v150/donnees/statuts_v150.tex
+    @@ -18,7 +18,7 @@ Wall-clock constant time & awaiting hardware run & the dudect kit: four targets
+     \code{fence.i} on silicon & awaiting hardware run & the M7 scenario retargeted at a physical RV64 board; the TCG emulation could not prove instruction-cache semantics \\
+     Third-machine field liveness & awaiting hardware run & the Loupe kit on a second Windows machine, full T0--T7+S0 scenario \\
+     Compiler-reference comparison & measured (v0.14.0) & zero divergence, SHA-256 parity at equal work; H4 holds \\
+    -Independent replication & awaiting (recruitment / real command) & the T/X grid finalised, the $\kappa$ calculator autotested (synthetic cases), criteria pre-registered unchanged \\
+    +Independent replication & awaiting (recruitment / real command) & the F/L grid finalised (renamed from T/X at D203, correspondence table in the kit), the $\kappa$ calculator autotested (synthetic cases), criteria pre-registered unchanged \\
+     \bottomrule
+     \end{tabularx}
+     \end{table}
+
+### scripts/replication_v150/grille_tx.csv
+    avant (git HEAD) : 41f9e5da9d8a4c55…
+    après            : e94abb200ca1ff44…
+    diff : +9 / -9 lignes
+
+    diff --git a/scripts/replication_v150/grille_tx.csv b/scripts/replication_v150/grille_tx.csv
+    index 79ed6d5..745bc3d 100644
+    --- a/scripts/replication_v150/grille_tx.csv
+    +++ b/scripts/replication_v150/grille_tx.csv
+    @@ -1,9 +1,9 @@
+    -id,plan,classe,définition opérationnelle,exemples vécus (le recul D189)
+    -T1,terrain,T1 chargeur/image,"le format de l'image : en-tête PE, sections, table des imports/relocations, l'enveloppe de la lignée","[OFT-QWORD] les quatre tableaux OriginalFirstThunk au pas QWORD au lieu du pas DWORD du format PE ; l'IAT relogée en quatre plages séparées par NULL"
+    -T2,terrain,T2 ABI/matériel,"la convention d'appel et le matériel : registres, pile, ombre, alignement, codes de retour des registres","[SESSION] -6 la classe des arguments pile [les 5+ au home space au lieu de [rsp+0x20]+] ; [EAX-SANS-SIGNE] les rendus étendus au 64 bits"
+    -T3,terrain,T3 sémantique du chargeur,"ce que le VRAI chargeur fait que le scénario de laboratoire ne modélisait pas : l'entrée appelée en sémantique DllMain, le retour LU, la résolution des imports","[RET-NU] un ret nu rend AL tel qu'il fut : le chargeur CROIT l'initialisation échouée ; [CADRE-NÉ] l'initialiseur .data n'est pas le cadre du harnais ; [SONDE-EXE] le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE"
+    -T4,terrain,T4 conventions système,"les API du système : leurs codes d'erreur, leurs exigences de format, leurs comportements aux limites","[FREE-SANS-TYPE] le HMODULE en POINTEUR ; -2 ABSENT / -5 ENTRÉE / -3 HORS-BORNES / -1 FIN les quatre rejets nommés ; 0xc000007b le refus du chargeur"
+    -T5,terrain,T5 environnement,"l'environnement d'exécution : la version de Windows, les locales, le poste, les outils présents","la vitrine morte par le journal d'événements [4/4] ; les runs tierce machine (l'axe du kit 3 v0.15.0)"
+    -X1,laboratoire,X1 logique,"une faute de la notation elle-même : la sémantique du bloc contredit son contrat de couche I","la faute de table K attrapée avant toute mesure (v0.14.0, D194)"
+    -X2,laboratoire,X2 structure,"l'orchestration : l'agencement des blocs, l'ordre des écritures, les états partagés","la boucle winmain complète confrontée à la base saine (v0.14.0)"
+    -X3,laboratoire,X3 harnais,"l'instrument de mesure, pas la pièce : l'émulateur, l'oracle, le scénario de laboratoire","le compteur de la FINALISATION SEULE (l'artefact de périmètre D191) ; le faux négatif structurel de la sonde"
+    +id,plan,classe,ancien_libelle,définition opérationnelle,exemples vécus (le recul D189)
+    +F1,terrain,F1 chargeur/image,T1 chargeur/image,"le format de l'image : en-tête PE, sections, table des imports/relocations, l'enveloppe de la lignée","[OFT-QWORD] les quatre tableaux OriginalFirstThunk au pas QWORD au lieu du pas DWORD du format PE ; l'IAT relogée en quatre plages séparées par NULL"
+    +F2,terrain,F2 ABI/matériel,T2 ABI/matériel,"la convention d'appel et le matériel : registres, pile, ombre, alignement, codes de retour des registres","[SESSION] -6 la classe des arguments pile [les 5+ au home space au lieu de [rsp+0x20]+] ; [EAX-SANS-SIGNE] les rendus étendus au 64 bits"
+    +F3,terrain,F3 sémantique du chargeur,T3 sémantique du chargeur,"ce que le VRAI chargeur fait que le scénario de laboratoire ne modélisait pas : l'entrée appelée en sémantique DllMain, le retour LU, la résolution des imports","[RET-NU] un ret nu rend AL tel qu'il fut : le chargeur CROIT l'initialisation échouée ; [CADRE-NÉ] l'initialiseur .data n'est pas le cadre du harnais ; [SONDE-EXE] le chargeur de bibliothèque ne résout JAMAIS les imports d'un EXE"
+    +F4,terrain,F4 conventions système,T4 conventions système,"les API du système : leurs codes d'erreur, leurs exigences de format, leurs comportements aux limites","[FREE-SANS-TYPE] le HMODULE en POINTEUR ; -2 ABSENT / -5 ENTRÉE / -3 HORS-BORNES / -1 FIN les quatre rejets nommés ; 0xc000007b le refus du chargeur"
+    +F5,terrain,F5 environnement,T5 environnement,"l'environnement d'exécution : la version de Windows, les locales, le poste, les outils présents","la vitrine morte par le journal d'événements [4/4] ; les runs tierce machine (l'axe du kit 3 v0.15.0)"
+    +L1,laboratoire,L1 logique,X1 logique,"une faute de la notation elle-même : la sémantique du bloc contredit son contrat de couche I","la faute de table K attrapée avant toute mesure (v0.14.0, D194)"
+    +L2,laboratoire,L2 structure,X2 structure,"l'orchestration : l'agencement des blocs, l'ordre des écritures, les états partagés","la boucle winmain complète confrontée à la base saine (v0.14.0)"
+    +L3,laboratoire,L3 harnais,X3 harnais,"l'instrument de mesure, pas la pièce : l'émulateur, l'oracle, le scénario de laboratoire","le compteur de la FINALISATION SEULE (l'artefact de périmètre D191) ; le faux négatif structurel de la sonde"
+
+### scripts/replication_v150/LISEZMOI-replication.txt
+    avant (git HEAD) : cafde8d6fdf3ee33…
+    après            : a0a6c5e343e68bd1…
+    diff : +24 / -6 lignes
+
+    diff --git a/scripts/replication_v150/LISEZMOI-replication.txt b/scripts/replication_v150/LISEZMOI-replication.txt
+    index 2993d76..dd36db2 100644
+    --- a/scripts/replication_v150/LISEZMOI-replication.txt
+    +++ b/scripts/replication_v150/LISEZMOI-replication.txt
+    @@ -2,7 +2,7 @@ LISEZMOI — LE KIT DE RÉPLICATION (v0.15.0, la commande ic09ydeli point 3)
+     ==========================================================================
+     
+     LA COMMANDE : « préparer l'exécution du protocole proposé — grille de
+    -codage T/X finalisée, double annotation (second annotateur à
+    +codage finalisée, double annotation (second annotateur à
+     recruter : consigner le statut), κ de Cohen calculé dès les annotations
+     disponibles, critères d'acceptation pré-enregistrés inchangés ;
+     exécuter l'axe 'second domaine' au laboratoire si un second domaine
+    @@ -11,15 +11,23 @@ kit prêt ».
+     
+     LES PIÈCES DU KIT (ce dossier, scripts/replication_v150/) :
+       grille_tx.csv           LA GRILLE FINALISÉE — les cinq classes
+    -                          terrain T1-T5 et les trois classes
+    -                          laboratoire X1-X3, chacune avec sa définition
+    +                          terrain F1-F5 et les trois classes
+    +                          laboratoire L1-L3, chacune avec sa définition
+                               OPÉRATIONNELLE et ses exemples vécus (le
+                               recul D189 : les défauts des douze runs
+    -                          loupe + les artefacts de laboratoire) ;
+    +                          loupe + les artefacts de laboratoire) ; la
+    +                          colonne ancien_libelle PORTE LA TABLE DE
+    +                          CORRESPONDANCE (le renommage D203 : l'ancienne
+    +                          grille T1-T5/X1-X3 de D189 devient F1-F5/L1-L3
+    +                          pour lever la collision avec les taxonomies de
+    +                          défauts T1-T6/X1-X8 de la spécification) ;
+       kohen_kappa_v150.py     LE CALCULATEUR κ — AUTOTESTÉ sur annotations
+                               SYNTHÉTIQUES (trois cas au κ calculable à la
+                               main : parfait +1, désaccord total −1,
+    -                          partiel +0,4 — VERT) ; le κ réel se calcule
+    +                          partiel +0,4 — VERT) ; les ANCIENNES
+    +                          étiquettes T/X restent ADMISES en lecture
+    +                          (converties à la volée par la table D203) ;
+    +                          le κ réel se calcule
+                               le jour des DEUX jeux (usage :
+                               python3 kohen_kappa_v150.py ann1.csv ann2.csv,
+                               le CSV : « id,classe ») ;
+    @@ -32,7 +40,7 @@ commande le exige) :
+          domaine (R2) / le port d'un bloc vers un profil non primaire (R3) ;
+       2. les défauts codés : CHAQUE écart nommé est codé dans la grille
+          (une classe au moins) — le compte exact, jamais une impression ;
+    -  3. les classes T du réplicant ⊆ celles du premier développeur —
+    +  3. les classes F du réplicant ⊆ celles du premier développeur —
+          une classe NOUVELLE est un RÉSULTAT, jamais un échec ;
+       4. la DOUBLE ANNOTATION par deux codeurs indépendants, le κ DE
+          COHEN ≥ 0,61 (substantiel) sur les items communs.
+    @@ -49,6 +57,16 @@ LES STATUTS (consignés — la commande l'exige) :
+          jeux d'annotations disponibles (le calculateur est prêt et
+          autotesté).
+     
+    +LA TABLE DE CORRESPONDANCE (le renommage D203, un-pour-un) :
+    +  terrain    : T1→F1 chargeur/image, T2→F2 ABI/matériel,
+    +              T3→F3 sémantique du chargeur, T4→F4 conventions système,
+    +              T5→F5 environnement
+    +  laboratoire : X1→L1 logique, X2→L2 structure, X3→L3 harnais
+    +  (les définitions, les critères et le seuil κ ≥ 0,61 sont INCHANGÉS —
+    +  seules les étiquettes changent ; la colonne ancien_libelle du CSV
+    +  porte la correspondance, le calculateur convertit les anciennes
+    +  étiquettes à la volée)
+    +
+     LE MODE D'EMPLOI DE LA DOUBLE ANNOTATION (le jour venu) :
+       1. les DEUX codeurs codent SÉPARÉMENT la même liste de défauts
+          (chaque ligne : un id stable, le défaut nommé, sa description) ;
+
+### scripts/replication_v150/kohen_kappa_v150.py
+    avant (git HEAD) : fe4c703418134b8a…
+    après            : 89f4c5e0dd14660a…
+    diff : +32 / -22 lignes
+
+    diff --git a/scripts/replication_v150/kohen_kappa_v150.py b/scripts/replication_v150/kohen_kappa_v150.py
+    index 61e6141..916bd68 100644
+    --- a/scripts/replication_v150/kohen_kappa_v150.py
+    +++ b/scripts/replication_v150/kohen_kappa_v150.py
+    @@ -9,17 +9,21 @@ réelles) ; le κ RÉEL sera calculé le jour où les DEUX jeux
+     d'annotations existeront (le second annotateur est À RECRUTER — le
+     statut est consigné).
+     
+    -LA GRILLE (D189, inchangée) : les défauts sont codés dans les CINQ
+    -classes terrain T1-T5 et les TROIS classes laboratoire X1-X3 :
+    -  T1 chargeur/image      (le format, l'en-tête, la table des imports…)
+    -  T2 ABI/matériel        (la convention d'appel, les registres, la pile)
+    -  T3 sémantique du chargeur (ce que le VRAI chargeur fait que le
+    +LA GRILLE (D189 ; étiquettes RENOMMÉES par D203 — l'ancienne
+    +T1-T5/X1-X3 devient F1-F5/L1-L3 pour lever la collision avec les
+    +taxonomies de défauts T1-T6/X1-X8 de la spécification ; la
+    +correspondance est un-pour-un, T→F et X→L) : les
+    +défauts sont codés dans les CINQ
+    +classes terrain F1-F5 et les TROIS classes laboratoire L1-L3 :
+    +  F1 chargeur/image      (le format, l'en-tête, la table des imports…)
+    +  F2 ABI/matériel        (la convention d'appel, les registres, la pile)
+    +  F3 sémantique du chargeur (ce que le VRAI chargeur fait que le
+                               scénario ne faisait pas)
+    -  T4 conventions système (les API, leurs codes, leurs retours)
+    -  T5 environnement       (les locales, le build Windows, le poste)
+    -  X1 logique             (une faute de la notation elle-même)
+    -  X2 structure           (l'orchestration, l'agencement des blocs)
+    -  X3 harnais             (l'instrument de mesure, pas la pièce)
+    +  F4 conventions système (les API, leurs codes, leurs retours)
+    +  F5 environnement       (les locales, le build Windows, le poste)
+    +  L1 logique             (une faute de la notation elle-même)
+    +  L2 structure           (l'orchestration, l'agencement des blocs)
+    +  L3 harnais             (l'instrument de mesure, pas la pièce)
+     
+     LE κ DE COHEN (l'accord inter-annotateurs au-delà du hasard) :
+       κ = (po − pe) / (1 − pe)
+    @@ -38,7 +42,10 @@ import csv
+     import pathlib
+     import sys
+     
+    -CLASSES = ["T1", "T2", "T3", "T4", "T5", "X1", "X2", "X3"]
+    +CLASSES = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3"]
+    +# la table de correspondance D203 (l'ancienne grille T/X de D189)
+    +CORRESPONDANCE = {"T1": "F1", "T2": "F2", "T3": "F3", "T4": "F4",
+    +                  "T5": "F5", "X1": "L1", "X2": "L2", "X3": "L3"}
+     SEUIL = 0.61
+     
+     
+    @@ -72,8 +79,11 @@ def lire_annotations(chemin: pathlib.Path) -> dict:
+                 classe = (ligne.get("classe") or "").strip()
+                 if cle and classe:
+                     if classe not in CLASSES:
+    -                    raise ValueError(f"classe {classe!r} hors grille "
+    -                                     f"(T1-T5, X1-X3) — {chemin}")
+    +                    ancienne = CORRESPONDANCE.get(classe)
+    +                    if ancienne is None:
+    +                        raise ValueError(f"classe {classe!r} hors grille "
+    +                                         f"(F1-F5, L1-L3) — {chemin}")
+    +                    classe = ancienne   # l'ancienne étiquette T/X admise
+                     ann[cle.strip()] = classe
+         if not ann:
+             raise ValueError(f"aucune annotation lue dans {chemin}")
+    @@ -88,7 +98,7 @@ def autotest():
+         ok = True
+         # cas 1 : l'accord parfait -> k = 1
+         a1 = {f"d{i}": c for i, c in enumerate(
+    -        ["T1", "T1", "T2", "T3", "T5", "X1", "X2", "T4"])}
+    +        ["F1", "F1", "F2", "F3", "F5", "L1", "L2", "F4"])}
+         k, po, pe, n = kohen_kappa(a1, dict(a1))
+         attendu = 1.0
+         bon = abs(k - attendu) < 1e-12 and po == 1.0
+    @@ -96,20 +106,20 @@ def autotest():
+               f"po={po:.3f} n={n} -> {'OK' if bon else 'ÉCART'}")
+         ok &= bon
+         # cas 2 : le désaccord TOTAL (deux classes équiréparties) -> k < 0
+    -    a2 = {f"d{i}": ("T1" if i % 2 == 0 else "T2") for i in range(10)}
+    -    b2 = {f"d{i}": ("T2" if i % 2 == 0 else "T1") for i in range(10)}
+    +    a2 = {f"d{i}": ("F1" if i % 2 == 0 else "F2") for i in range(10)}
+    +    b2 = {f"d{i}": ("F2" if i % 2 == 0 else "F1") for i in range(10)}
+         k, po, pe, n = kohen_kappa(a2, b2)
+         bon = k < 0 and po == 0.0
+         print(f"  desaccord total     : k = {k:+.4f} (attendu < 0) "
+               f"po={po:.3f} pe={pe:.3f} n={n} -> {'OK' if bon else 'ÉCART'}")
+         ok &= bon
+         # cas 3 : un accord partiel calculable a la main
+    -    #   10 items : 7 accords (5*T1, 2*T2), 3 desaccords (T1 vs T2)
+    -    a3 = {"a": "T1", "b": "T1", "c": "T1", "d": "T1", "e": "T1",
+    -          "f": "T2", "g": "T2", "h": "T1", "i": "T1", "j": "T1"}
+    -    b3 = {"a": "T1", "b": "T1", "c": "T1", "d": "T1", "e": "T1",
+    -          "f": "T2", "g": "T2", "h": "T2", "i": "T2", "j": "T2"}
+    -    # po = 7/10 ; marges a3 : 8 T1, 2 T2 ; b3 : 5 T1, 5 T2
+    +    #   10 items : 7 accords (5*F1, 2*F2), 3 desaccords (F1 vs F2)
+    +    a3 = {"a": "F1", "b": "F1", "c": "F1", "d": "F1", "e": "F1",
+    +          "f": "F2", "g": "F2", "h": "F1", "i": "F1", "j": "F1"}
+    +    b3 = {"a": "F1", "b": "F1", "c": "F1", "d": "F1", "e": "F1",
+    +          "f": "F2", "g": "F2", "h": "F2", "i": "F2", "j": "F2"}
+    +    # po = 7/10 ; marges a3 : 8 F1, 2 F2 ; b3 : 5 F1, 5 F2
+         # pe = (8/10)*(5/10) + (2/10)*(5/10) = 0,40 + 0,10 = 0,50
+         # k = (0,7 - 0,5)/(1 - 0,5) = 0,4
+         k, po, pe, n = kohen_kappa(a3, b3)
+
+--------------------------------------------------------------------------
+B. LES FICHIERS RÉGÉNÉRÉS (par les scripts, jamais à la main)
+--------------------------------------------------------------------------
+  scripts/manuscrit_v150/donnees/macros_v150.tex
+      RÉGÉNÉRÉ — avant 09fc57d99ee8f24a… / après 41cab1a10fe0577a…
+  scripts/manuscrit_v150/donnees/tables_generees.tex
+      identique — avant 5017799f7281957e… / après 5017799f7281957e…
+  scripts/manuscrit_v150/donnees/jalons.csv
+      identique — avant 5606d9214a4d4515… / après 5606d9214a4d4515…
+  scripts/manuscrit_v150/donnees/budgets.csv
+      identique — avant d58c7b8f64585e2e… / après d58c7b8f64585e2e…
+  scripts/manuscrit_v150/donnees/oracles.csv
+      identique — avant 797c7a21de371c68… / après 797c7a21de371c68…
+  scripts/manuscrit_v150/donnees/runs_loupe.csv
+      identique — avant 276fe6e2fdc7d1cb… / après 276fe6e2fdc7d1cb…
+  scripts/manuscrit_v150/donnees/empreintes.csv
+      identique — avant ba1f7c438187fd33… / après ba1f7c438187fd33…
+  scripts/manuscrit_v150/donnees/extraits_journal.txt
+      identique — avant d5b76add7daa4c56… / après d5b76add7daa4c56…
+  le générateur : extraire_donnees_v150.py (la plage de
+  décisions \plageDecisions porte D1--D203, la dernière décision réelle ;
+  les autres comptes exacts du journal suivent)
+
+--------------------------------------------------------------------------
+C. LA VÉRIFICATION (le détail vit au rapport_verification_revision.txt)
+--------------------------------------------------------------------------
+  SIX contrôles VERT : les pourcentages du benchmark (recalculés
+    depuis audit_benchmark.csv), les ratios RQ2 (recalculés depuis
+    remesure_rq2.csv contre budgets.csv), le quantile (1,8627 par
+    bisection maison), les résidus d'édition (chaque occurrence
+    restante classée historique), la grille F/L (zéro T/X courant),
+    les empreintes (scellés == consignées, livrés intacts, garde 14/14).
+

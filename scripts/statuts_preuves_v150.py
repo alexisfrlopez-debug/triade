@@ -150,8 +150,9 @@ def main():
       "zero divergence, SHA-256 parity at equal work; H4 holds")
     l("Independent replication", "awaiting (recruitment / real "
       "command)",
-      "the T/X grid finalised, the $\\kappa$ calculator autotested "
-      "(synthetic cases), criteria pre-registered unchanged")
+      "the F/L grid finalised (renamed from T/X at D203, "
+      "correspondence table in the kit), the $\\kappa$ calculator "
+      "autotested (synthetic cases), criteria pre-registered unchanged")
 
     lignes += [
         "\\bottomrule",

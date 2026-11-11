@@ -35,7 +35,7 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
             urlcolor=liaison, unicode=true,
-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.13.0)},
+            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.15.0)},
             pdfauthor={Alexis Lopez}]{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
@@ -246,7 +246,7 @@ optimization without measurement).
 
 The development loop itself (update an intention, re-derive the oracle,
 edit the notation, rebuild, verify, seal) and the seal ceremony model are
-described in the protocol specification v0.13.0, which this edition
+described in the protocol specification v0.15.0, which this edition
 accompanies; we summarise only what the evaluation needs.
 
 \paragraph{Governance: signed intent and append-only records.}
@@ -414,8 +414,12 @@ on the final card (Table~\ref{tab:preuves}): locating a block costs a
 [1{,}085--3{,}463]; adding one 3{,}510 [3{,}128--4{,}091] ($n{=}10$
 operations each, real plan entries, notations and specifications, the
 reasoning estimated as above). The honest reading is \emph{unfavourable
-to the protocol}: Loupe-era operations cost 4--11$\times$ their M1
-counterparts --- the notations are longer, the contracts denser; the
+to the protocol}: Loupe-era operations cost 3--11$\times$ their M1
+counterparts ($2{,}143/719 = 3.0\times$ for an edit,
+$3{,}510/1{,}088 = 3.2\times$ for an addition, $580/51 = 11.4\times$
+for a locate --- the ratios recomputed from \code{remesure\_rq2.csv}
+against the M1 budgets) --- the notations are longer, the contracts
+denser; the
 cost grew with the rigour. What the card-fragment indexing still buys is
 measured by the naive baseline: reading the full disassembly of
 \code{loupe.exe} costs 300{,}304 tokens (37{,}538 lines) --- two orders
@@ -577,7 +581,9 @@ compression invocations confirmed mechanically, the complete operation
 costs 75{,}983 instructions for the blocks against 69{,}132 for
 gcc~14.2 -O2 and 77{,}505 for -Os, in the same emulator on the same
 input: the hand notation sits \emph{between} the two compiler levels
-($-9\%$ in executed instructions against -O2, $+2\%$ against -Os), is
+--- it executes $+9.9\%$ \emph{more} instructions than gcc -O2
+(75{,}983 vs 69{,}132) and $2.0\%$ \emph{fewer} than -Os (75{,}983 vs
+77{,}505) --- and is
 1.45$\times$ more compact than the -O2 function (1{,}021 vs 1{,}482
 bytes including the shared K table) but less compact than -Os (548
 bytes), and neither camp uses any ISA extension beyond the x86-64
@@ -731,8 +737,10 @@ signed-intent governance.
 \paragraph{What the data does not support.} The study cannot claim that
 the protocol is \emph{more} productive or \emph{more} correct than a
 compiler-based workflow: there is no baseline, one case, one agent
-family, one developer. The token budgets were measured once, early, on a
-small lineage. The oracle is derived from the same layer I it checks, so
+family, one developer. The token budgets are measured on a single
+lineage (the early M1 shot and the end-to-end re-measurement of D195
+on the final card), never across developers or task families. The
+oracle is derived from the same layer I it checks, so
 specification errors are shared, not caught. Memory safety is enforced
 only to the depth of the ABI audits and the fuzzing campaigns;
 constant-time is verified \emph{structurally} (secret-independent
@@ -869,7 +877,8 @@ $(1-q)^n$ (independent rebuilds, the standing hypothesis). Its
 operational characteristics: at $q = 50\%$ --- a badly
 non-deterministic build --- $n = 5$ would still seal with probability
 $3.1\%$ and the historical $n = 10$ with $0.098\%$, a $32\times$
-strictness increase, the equivalent of moving from $1.86\sigma$ to
+strictness increase, the equivalent of moving from $1.86\sigma$
+(exactly $1.863$) to
 $3.10\sigma$ one-sided; at $q = 1\%$ --- a healthy build --- the rule
 seals with probability $95.1\%$ ($n{=}5$) and $90.4\%$ ($n{=}10$). The
 values ``$\alpha = 3.29\times10^{-2}$'' and ``$\alpha = 1.08\times
@@ -884,12 +893,20 @@ the justification and the documented path to any future relaxation.
 this edition ships the protocol that would lift it: three independent
 axes (a second developer running one full milestone; a second real
 application in a different domain; a port to a second non-primary
-profile), a T/X coding grid for every defect (five terrain classes T1--T5
---- loader/image, hardware ABI, loader semantics, system conventions,
-environment --- against three laboratory classes X1--X3), double
+profile), an F/L coding grid for every defect (five terrain classes
+F1--F5 --- loader/image, hardware ABI, loader semantics, system
+conventions, environment --- against three laboratory classes L1--L3),
+double
 annotation by two independent coders, Cohen's $\kappa$ with the
 acceptance threshold $\kappa \ge 0.61$ (substantial agreement), and
-pre-registered acceptance criteria. The protocol is proposed, not
+pre-registered acceptance criteria. The grid labels were renamed at
+D203: the T1--T5/X1--X3 of the original proposal (D189) became
+F1--F5 (terrain) and L1--L3 (laboratory) to lift the collision with
+the unrelated defect taxonomies T1--T6 (the specification's layer-I
+taxonomy) and X1--X8 (its emulation-invisible extension), and with the
+T0--T7 terrain scenario steps; the correspondence is one-to-one
+($\mathrm{T}i \to \mathrm{F}i$, $\mathrm{X}j \to \mathrm{L}j$) and
+is recorded in the replication kit. The protocol is proposed, not
 executed: the arbitration belongs to the developer.
 
 % ------------------------------------------------------------------
@@ -902,9 +919,11 @@ derivation routes, system generator, spec$\leftrightarrow$\allowbreak harness
 $\leftrightarrow$\allowbreak hashlib tripartite confrontation) found zero
 divergences, but a second \emph{agent} has not yet regenerated the
 oracle. The crystallisation rule (ten identical rebuilds) checks
-determinism, not correctness. The mutation-testing survivors (138/832,
-concentrated in orchestration/UI blocks without an isolated-mutant
-semantic killer) are a named, measured gap --- and the v0.13.0 audit of
+determinism, not correctness. The mutation-testing survivors (138/832
+in the original v0.11.0 campaign, 56/832 after the v0.14.0 composition
+re-run, 737/10{,}400 in the extended v0.15.0 campaign --- every
+survivor named and classified: uncovered paths) are a named, measured
+gap --- and the v0.13.0 audit of
 our own v0.11.0 benchmark, which caught a perimeter artifact that
 inflated a claim fifteen-fold, is itself evidence of this threat class:
 instrument defects contaminate results symmetrically, and were caught
@@ -922,9 +941,10 @@ both reported rates with their exact Clopper-Pearson intervals are
 descriptive summaries of twelve sequential deliveries of one
 developer--agent pair, not independent trials --- the
 non-independence reserve applies to the piece-alone and the ensemble
-intervals alike; the token budgets measure the M1-era card, not the
-final 10-domain card, and measure \emph{reads}, not agent reasoning
-overhead.
+intervals alike; the token budgets measure \emph{reads}, not agent
+reasoning overhead (the M1 single-shot values remain history; the D195
+re-measurement covers the final card end-to-end, with the reasoning
+estimated and named as such).
 \emph{Conclusion.} The terrain is one real Windows machine and one
 developer's usage of the application; showcase liveness (0 error-reporter
 events) is a weak liveness signal, not a correctness proof. The RISC-V terrain
@@ -1064,8 +1084,9 @@ evidence: 83.4\% mutation kill with the cryptographic families at
 100\%, zero-crash coverage-guided fuzzing of the untrusted-input blocks,
 bounded memory-safety verification with zero out-of-frame accesses,
 secret-independent instruction traces on the crypto families, an audited
-instruction-count parity with a compiled SHA-256 reference (within ten
-percent of gcc -O2 and ahead of -Os --- the v0.11.0 ``15.3$\times$''
+instruction-count comparison with a compiled SHA-256 reference (the
+notation executes $+9.9\%$ more instructions than gcc -O2 and $2.0\%$
+fewer than -Os --- the v0.11.0 ``15.3$\times$''
 claim withdrawn by the v0.13.0 audit as a measurement artifact), and zero divergences in oracle-independent regeneration (now including an
 isolated-instance regeneration and a binary-search re-derivation). The v0.14.0 empirical programme
 adds: a pre-registered compiler-reference comparison showing the sealed
@@ -1080,12 +1101,13 @@ survivors named). The v0.15.0 programme closes the formal side: the four vault
 properties proved \emph{unbounded} by an inductive invariant, the model
 refined against the implementation (34 steps, zero gaps, every failure
 path), and every claim carrying a systematic status. What remains open
-is now precisely measured: the 138 mutation survivors in orchestration
-blocks, the emulation-only scope of the constant-time result (the dudect
+is now precisely measured: the 56 mutation survivors in orchestration
+blocks after the composition re-run (the 138 of the v0.11.0 campaign
+are history, quoted as such), the emulation-only scope of the constant-time result (the dudect
 kit is prepared and waiting), the unmeasured real-hardware timing
 (the \code{fence.i} kit targets a physical RISC-V board; a third-machine
 Loupe run is likewise prepared), the missing independent replication
-(the T/X grid and the $\kappa$ calculator are ready; the second
+(the F/L grid and the $\kappa$ calculator are ready; the second
 annotator is yet to be recruited) --- and, on the
 governance side, the D183 escrow ceremony, prepared and waiting for the
 developer's gesture.
@@ -1112,8 +1134,8 @@ then GPL~v3).
 repository (append-only journal, decision log, evidence vault indexes,
 extraction script, generated tables). A versioned archival snapshot
 (Zenodo DOI) will be minted at submission time and referenced here; the
-two submission archives of this edition (\code{TRIADE\_soumission\_v0.14.0.zip}
-and \code{TRIADE\_complet\_v0.14.0.zip}) contain respectively the
+two submission archives of this edition (\code{TRIADE\_soumission\_v0.15.0.zip}
+and \code{TRIADE\_complet\_v0.15.0.zip}) contain respectively the
 manuscript with its data tables, and the complete sources with raw
 extracts and fingerprints.
 

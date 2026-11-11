@@ -2,7 +2,7 @@ LISEZMOI — LE KIT DE RÉPLICATION (v0.15.0, la commande ic09ydeli point 3)
 ==========================================================================
 
 LA COMMANDE : « préparer l'exécution du protocole proposé — grille de
-codage T/X finalisée, double annotation (second annotateur à
+codage finalisée, double annotation (second annotateur à
 recruter : consigner le statut), κ de Cohen calculé dès les annotations
 disponibles, critères d'acceptation pré-enregistrés inchangés ;
 exécuter l'axe 'second domaine' au laboratoire si un second domaine
@@ -11,15 +11,23 @@ kit prêt ».
 
 LES PIÈCES DU KIT (ce dossier, scripts/replication_v150/) :
   grille_tx.csv           LA GRILLE FINALISÉE — les cinq classes
-                          terrain T1-T5 et les trois classes
-                          laboratoire X1-X3, chacune avec sa définition
+                          terrain F1-F5 et les trois classes
+                          laboratoire L1-L3, chacune avec sa définition
                           OPÉRATIONNELLE et ses exemples vécus (le
                           recul D189 : les défauts des douze runs
-                          loupe + les artefacts de laboratoire) ;
+                          loupe + les artefacts de laboratoire) ; la
+                          colonne ancien_libelle PORTE LA TABLE DE
+                          CORRESPONDANCE (le renommage D203 : l'ancienne
+                          grille T1-T5/X1-X3 de D189 devient F1-F5/L1-L3
+                          pour lever la collision avec les taxonomies de
+                          défauts T1-T6/X1-X8 de la spécification) ;
   kohen_kappa_v150.py     LE CALCULATEUR κ — AUTOTESTÉ sur annotations
                           SYNTHÉTIQUES (trois cas au κ calculable à la
                           main : parfait +1, désaccord total −1,
-                          partiel +0,4 — VERT) ; le κ réel se calcule
+                          partiel +0,4 — VERT) ; les ANCIENNES
+                          étiquettes T/X restent ADMISES en lecture
+                          (converties à la volée par la table D203) ;
+                          le κ réel se calcule
                           le jour des DEUX jeux (usage :
                           python3 kohen_kappa_v150.py ann1.csv ann2.csv,
                           le CSV : « id,classe ») ;
@@ -32,7 +40,7 @@ commande le exige) :
      domaine (R2) / le port d'un bloc vers un profil non primaire (R3) ;
   2. les défauts codés : CHAQUE écart nommé est codé dans la grille
      (une classe au moins) — le compte exact, jamais une impression ;
-  3. les classes T du réplicant ⊆ celles du premier développeur —
+  3. les classes F du réplicant ⊆ celles du premier développeur —
      une classe NOUVELLE est un RÉSULTAT, jamais un échec ;
   4. la DOUBLE ANNOTATION par deux codeurs indépendants, le κ DE
      COHEN ≥ 0,61 (substantiel) sur les items communs.
@@ -48,6 +56,16 @@ LES STATUTS (consignés — la commande l'exige) :
      n'est disponible au laboratoire ; le κ sera calculé dès les deux
      jeux d'annotations disponibles (le calculateur est prêt et
      autotesté).
+
+LA TABLE DE CORRESPONDANCE (le renommage D203, un-pour-un) :
+  terrain    : T1→F1 chargeur/image, T2→F2 ABI/matériel,
+              T3→F3 sémantique du chargeur, T4→F4 conventions système,
+              T5→F5 environnement
+  laboratoire : X1→L1 logique, X2→L2 structure, X3→L3 harnais
+  (les définitions, les critères et le seuil κ ≥ 0,61 sont INCHANGÉS —
+  seules les étiquettes changent ; la colonne ancien_libelle du CSV
+  porte la correspondance, le calculateur convertit les anciennes
+  étiquettes à la volée)
 
 LE MODE D'EMPLOI DE LA DOUBLE ANNOTATION (le jour venu) :
   1. les DEUX codeurs codent SÉPARÉMENT la même liste de défauts

@@ -9,17 +9,21 @@ réelles) ; le κ RÉEL sera calculé le jour où les DEUX jeux
 d'annotations existeront (le second annotateur est À RECRUTER — le
 statut est consigné).
 
-LA GRILLE (D189, inchangée) : les défauts sont codés dans les CINQ
-classes terrain T1-T5 et les TROIS classes laboratoire X1-X3 :
-  T1 chargeur/image      (le format, l'en-tête, la table des imports…)
-  T2 ABI/matériel        (la convention d'appel, les registres, la pile)
-  T3 sémantique du chargeur (ce que le VRAI chargeur fait que le
+LA GRILLE (D189 ; étiquettes RENOMMÉES par D203 — l'ancienne
+T1-T5/X1-X3 devient F1-F5/L1-L3 pour lever la collision avec les
+taxonomies de défauts T1-T6/X1-X8 de la spécification ; la
+correspondance est un-pour-un, T→F et X→L) : les
+défauts sont codés dans les CINQ
+classes terrain F1-F5 et les TROIS classes laboratoire L1-L3 :
+  F1 chargeur/image      (le format, l'en-tête, la table des imports…)
+  F2 ABI/matériel        (la convention d'appel, les registres, la pile)
+  F3 sémantique du chargeur (ce que le VRAI chargeur fait que le
                           scénario ne faisait pas)
-  T4 conventions système (les API, leurs codes, leurs retours)
-  T5 environnement       (les locales, le build Windows, le poste)
-  X1 logique             (une faute de la notation elle-même)
-  X2 structure           (l'orchestration, l'agencement des blocs)
-  X3 harnais             (l'instrument de mesure, pas la pièce)
+  F4 conventions système (les API, leurs codes, leurs retours)
+  F5 environnement       (les locales, le build Windows, le poste)
+  L1 logique             (une faute de la notation elle-même)
+  L2 structure           (l'orchestration, l'agencement des blocs)
+  L3 harnais             (l'instrument de mesure, pas la pièce)
 
 LE κ DE COHEN (l'accord inter-annotateurs au-delà du hasard) :
   κ = (po − pe) / (1 − pe)
@@ -38,7 +42,10 @@ import csv
 import pathlib
 import sys
 
-CLASSES = ["T1", "T2", "T3", "T4", "T5", "X1", "X2", "X3"]
+CLASSES = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3"]
+# la table de correspondance D203 (l'ancienne grille T/X de D189)
+CORRESPONDANCE = {"T1": "F1", "T2": "F2", "T3": "F3", "T4": "F4",
+                  "T5": "F5", "X1": "L1", "X2": "L2", "X3": "L3"}
 SEUIL = 0.61
 
 
@@ -72,8 +79,11 @@ def lire_annotations(chemin: pathlib.Path) -> dict:
             classe = (ligne.get("classe") or "").strip()
             if cle and classe:
                 if classe not in CLASSES:
-                    raise ValueError(f"classe {classe!r} hors grille "
-                                     f"(T1-T5, X1-X3) — {chemin}")
+                    ancienne = CORRESPONDANCE.get(classe)
+                    if ancienne is None:
+                        raise ValueError(f"classe {classe!r} hors grille "
+                                         f"(F1-F5, L1-L3) — {chemin}")
+                    classe = ancienne   # l'ancienne étiquette T/X admise
                 ann[cle.strip()] = classe
     if not ann:
         raise ValueError(f"aucune annotation lue dans {chemin}")
@@ -88,7 +98,7 @@ def autotest():
     ok = True
     # cas 1 : l'accord parfait -> k = 1
     a1 = {f"d{i}": c for i, c in enumerate(
-        ["T1", "T1", "T2", "T3", "T5", "X1", "X2", "T4"])}
+        ["F1", "F1", "F2", "F3", "F5", "L1", "L2", "F4"])}
     k, po, pe, n = kohen_kappa(a1, dict(a1))
     attendu = 1.0
     bon = abs(k - attendu) < 1e-12 and po == 1.0
@@ -96,20 +106,20 @@ def autotest():
           f"po={po:.3f} n={n} -> {'OK' if bon else 'ÉCART'}")
     ok &= bon
     # cas 2 : le désaccord TOTAL (deux classes équiréparties) -> k < 0
-    a2 = {f"d{i}": ("T1" if i % 2 == 0 else "T2") for i in range(10)}
-    b2 = {f"d{i}": ("T2" if i % 2 == 0 else "T1") for i in range(10)}
+    a2 = {f"d{i}": ("F1" if i % 2 == 0 else "F2") for i in range(10)}
+    b2 = {f"d{i}": ("F2" if i % 2 == 0 else "F1") for i in range(10)}
     k, po, pe, n = kohen_kappa(a2, b2)
     bon = k < 0 and po == 0.0
     print(f"  desaccord total     : k = {k:+.4f} (attendu < 0) "
           f"po={po:.3f} pe={pe:.3f} n={n} -> {'OK' if bon else 'ÉCART'}")
     ok &= bon
     # cas 3 : un accord partiel calculable a la main
-    #   10 items : 7 accords (5*T1, 2*T2), 3 desaccords (T1 vs T2)
-    a3 = {"a": "T1", "b": "T1", "c": "T1", "d": "T1", "e": "T1",
-          "f": "T2", "g": "T2", "h": "T1", "i": "T1", "j": "T1"}
-    b3 = {"a": "T1", "b": "T1", "c": "T1", "d": "T1", "e": "T1",
-          "f": "T2", "g": "T2", "h": "T2", "i": "T2", "j": "T2"}
-    # po = 7/10 ; marges a3 : 8 T1, 2 T2 ; b3 : 5 T1, 5 T2
+    #   10 items : 7 accords (5*F1, 2*F2), 3 desaccords (F1 vs F2)
+    a3 = {"a": "F1", "b": "F1", "c": "F1", "d": "F1", "e": "F1",
+          "f": "F2", "g": "F2", "h": "F1", "i": "F1", "j": "F1"}
+    b3 = {"a": "F1", "b": "F1", "c": "F1", "d": "F1", "e": "F1",
+          "f": "F2", "g": "F2", "h": "F2", "i": "F2", "j": "F2"}
+    # po = 7/10 ; marges a3 : 8 F1, 2 F2 ; b3 : 5 F1, 5 F2
     # pe = (8/10)*(5/10) + (2/10)*(5/10) = 0,40 + 0,10 = 0,50
     # k = (0,7 - 0,5)/(1 - 0,5) = 0,4
     k, po, pe, n = kohen_kappa(a3, b3)

@@ -8441,3 +8441,56 @@ Work Log:
   append-only, aucun chiffre fabriqué.
 - SUITE : le paquet 4/6 — la révision manuscrit+spécification
   (sollwnmae).
+
+
+Task ID: 145
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 4/6 DE LA VAGUE 3 (l'instruction sollwnmae) — la révision
+manuscrit+spécification : les CINQ corrections portées aux sources des
+deux documents de l'édition, le vérificateur six contrôles VERTS, la
+compilation témoin au bac à sable, les livrés INTACTS (D203, Entrée
+238).
+
+Work Log:
+- LES POURCENTAGES DU BENCHMARK : « la notation exécute +9,9 %
+  d'instructions de plus que gcc -O2 (75 983 vs 69 132) et 2,0 % de
+  moins que -Os (77 505) » — l'écriture ambiguë « −9 %/+2 % » retirée
+  du manuscrit ET de la spécification ; les trois nombres recoupés au
+  CSV brut audit_benchmark.csv ; la conclusion alignée (les deux
+  pourcentages exacts, « parity » → « comparison »).
+- LES RATIOS RQ2 : « 4–11× » → 3–11×, recalculés depuis
+  remesure_rq2.csv contre budgets.csv (éditer 2 143/719 = 3,0× ;
+  ajouter 3 510/1 088 = 3,2× ; localiser 580/51 = 11,4×) — l'ancienne
+  borne basse était fausse (le ratio d'édition est 2,98).
+- LE QUANTILE : 1,87σ → 1,86σ partout (valeur exacte 1,863 =
+  Φ⁻¹(1 − 0,5⁵) = 1,8627, recalculée par bisection maison) — cinq
+  occurrences corrigées dans la spécification, la valeur exacte
+  ajoutée au manuscrit ; l'« 1,87 » des éditions antérieures était un
+  arrondi défectueux du même nombre.
+- LES RÉSIDUS D'ÉDITION : référence spec v0.13.0 → v0.15.0 (pdftitle
+  + § gouvernance), les archives Data Availability v0.14.0 → v0.15.0,
+  les phrases « budgets mesurés une seule fois / carte de l'ère M1 »
+  contredites par D195 retirées, la conclusion aux médianes courantes
+  (580/2 143/3 510) et aux 56 survivants (les 138 = historique
+  v0.11.0 cité comme tel ; les 737/10 400 de D201 aux Threats), la
+  plage de décisions D1–D203 (l'instruction disait D198 — périmée à
+  l'exécution, l'Entrée 234 le consigna AVANT).
+- LA GRILLE DE RÉPLICATION : T1–T5/X1–X3 → F1–F5 terrain / L1–L3
+  laboratoire, la collision avec les taxonomies T1–T6/X1–X8 LEVÉE —
+  la table de correspondance un-pour-un au kit (colonne
+  ancien_libelle + LISEZMOI), le calculateur κ convertit les
+  anciennes étiquettes à la volée (autotest VERT, l'épreuve
+  T1→F1/X3→L3 tenue), le manuscrit + la spécification + la table des
+  statuts portent le nouveau nom.
+- LA VÉRIFICATION : verifier_revision_v150.py SIX contrôles VERTS
+  (pourcentages, ratios, quantile, résidus — chaque v0.13.0 restant
+  classé HISTORIQUE —, grille, empreintes) ; les tables RÉGÉNÉRÉES
+  par extraire_donnees_v150.py (\plageDecisions D1–D203) ; la
+  compilation témoin des deux documents au bac à sable /tmp ; le
+  rapport diff complet à preuves_v150/revision_manuscrit/.
+- Frontières : pièces scellées INTACTES (sha256 recoupés avant/après),
+  garde sceau-I 14/14 avant/après, zips et PDF livrés INTACTS (la
+  révision vit aux sources, la prochaine édition l'embarquera),
+  append-only, aucun chiffre fabriqué.
+- SUITE : le paquet 5/6 — le plan de comparaison pré-enregistré
+  (54wni4hzh).

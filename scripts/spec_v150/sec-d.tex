@@ -1120,9 +1120,10 @@ la tension D81 ↔ D183 consignée avec l'analyse chiffrée (facteur ≈ 40)
 LA CRISTALLISATION & le seuil 10 justifié par les caractéristiques
 opérationnelles P(sceller$|q$) = $(1-q)^n$ (à $q = 50$~\% : 3,1~\%
 à $n{=}5$, 0,098~\% à $n{=}10$ — 32× plus strict ; les quantiles
-unilatéraux 1,87σ/3,10σ ; D190 corrige l'étiquetage en α des rapports
+unilatéraux 1,86σ/3,10σ ; D190 corrige l'étiquetage en α des rapports
 de vraisemblance de D189) ; le seuil DEMEURE ; le
-protocole de réplication PROPOSÉ (trois axes, grille T/X, κ de Cohen ≥
+protocole de réplication PROPOSÉ (trois axes, grille T/X [devenue
+F/L, D203], κ de Cohen ≥
 0,61) (D189). \\
 LES MANIFESTES & le manifeste du kit de cérémonie à sha256 (la suite de
 D184) ; les kits livrés demeurent, md5 à l'idempotence et à l'affichage
@@ -1161,7 +1162,7 @@ scellée), la phrase du tableau de menaces, les renvois recalés (§ 3.5/§ 4.1)
 (D190). \\
 LES STATISTIQUES & la cristallisation aux caractéristiques opérationnelles
 P(sceller$|q$) = $(1-q)^n$ (3,1~\%/0,098~\% à $q = 50$~\%, 32×, les
-quantiles 1,87σ/3,10σ) ; l'IC95 exact de 11/12 ($[0,615 ; 0,998]$, la
+quantiles 1,86σ/3,10σ) ; l'IC95 exact de 11/12 ($[0,615 ; 0,998]$, la
 réserve de non-indépendance) ; la règle de comptage opérationnelle des
 défauts échappés (D190). \\
 LE BENCHMARK & le facteur 15,3× RETIRÉ (l'artefact de périmètre : la
@@ -1257,7 +1258,8 @@ Les kits matériels & le kit terrain du bras C (en attente) & TROIS kits
 (dudect temps réel [l'appel natif validé FIPS], fence.i sur silicium,
 terrain tiers) — EN ATTENTE & préparés \\
 La réplication & la grille T/X proposée (D189) & la grille FINALISÉE
-(définitions opérationnelles, exemples vécus), le $\kappa$ AUTOTESTÉ,
+(définitions opérationnelles, exemples vécus ; renommée F1--F5/L1--L3
+par D203, la table de correspondance au kit), le $\kappa$ AUTOTESTÉ,
 les critères INCHANGÉS, les statuts consignés & outillé \\
 La gouvernance & — & le croisement d'attribution RECOUPÉ et CORRIGÉ
 (D197), la règle du contenu cité, la règle d'archivage des versions &
@@ -1293,7 +1295,14 @@ l'indépendance, le re-jeu des survivants). La v0.15.0 consigne les
 preuves non bornées et le raffinement : D197 (le croisement
 d'attribution recoupé, la règle du contenu cité, la règle
 d'archivage des versions), D198 (l'invariant inductif, le
-raffinement, les kits, la réplication, les statuts systématiques). La v0.9.0 avait
+raffinement, les kits, la réplication, les statuts systématiques). La
+vague d'instructions du 12/11 consigne la reprise et les paquets :
+D199 (l'instrument du miroir réparé), D200 (la preuve TLA+/Apalache et
+le raffinement property-based), D201 (la campagne de mutation étendue),
+D202 (le reclassement des défauts Loupe par côté), D203 (la révision
+manuscrit+spécification : les pourcentages du benchmark reformulés sans
+ambiguïté, les ratios RQ2 recalculés, le quantile unifié à 1,86σ, les
+résidus d'édition purgés, la grille de réplication renommée F/L). La v0.9.0 avait
 consolidé le programme d'après M10 : D177 (la cérémonie d'ère du TGN
 armée — le quatorzième arbre), D178 (LE JALON M10 FRANCHI — la balise
 \code{loupe 0.1.0} scellée par fait de carte sur le onzième run recoupé 39/39,
@@ -1710,13 +1719,15 @@ D189 & La cristallisation évaluée et la réplication proposée & le seuil
 10 justifié par le SPRT (α = 1,08 × 10\textsuperscript{−3}, 46× plus
 strict que le canonique — le seuil DEMEURE, la politique jamais changée
 en silence) ; le protocole de réplication (second développeur, second
-domaine, second profil ; la grille T/X à double annotation ; le κ de
+domaine, second profil ; la grille T/X (renommée F/L par D203) à
+double annotation ; le κ de
 Cohen ≥ 0,61 ; les critères pré-enregistrés) — PROPOSÉ, jamais exécuté ;
 l'étiquetage « α » des rapports de vraisemblance CORRIGÉ par D190. \\
-D190 & Les corrections de l'édition v0.13.0 & la liste exhaustive vérifiée une à une (quatorze arbres, comptes exacts du journal en macros, Table 6 régénérée par le générateur anti-troncature, la note TOTAL/brouillons, le paragraphe de consolidation aligné sur D181, la phrase du tableau de menaces, les renvois recalés) ; les statistiques reformulées (P(sceller$|q$) = $(1-q)^n$, quantiles 1,87σ/3,10σ, IC95 exact de 11/12 avec la réserve de non-indépendance, la règle de comptage opérationnelle) ; la neutralité documentaire (l'anti-debug documenté honnêtement, le terrain M7 requalifié — qemu TCG, fence.i non prouvé sur silicium). \\
+D190 & Les corrections de l'édition v0.13.0 & la liste exhaustive vérifiée une à une (quatorze arbres, comptes exacts du journal en macros, Table 6 régénérée par le générateur anti-troncature, la note TOTAL/brouillons, le paragraphe de consolidation aligné sur D181, la phrase du tableau de menaces, les renvois recalés) ; les statistiques reformulées (P(sceller$|q$) = $(1-q)^n$, quantiles 1,86σ/3,10σ, IC95 exact de 11/12 avec la réserve de non-indépendance, la règle de comptage opérationnelle) ; la neutralité documentaire (l'anti-debug documenté honnêtement, le terrain M7 requalifié — qemu TCG, fence.i non prouvé sur silicium). \\
 D191 & Le benchmark audité : le facteur 15,3× RETIRÉ & l'artefact de périmètre nommé (le compteur de la finalisation seule lu après le pipeline, comparé à l'opération complète de la référence — 4,16 instructions/ronde, le signe) ; les chiffres corrigés sur pièces : l'opération complète 75\,983 instructions contre 69\,132 (-O2) et 77\,505 (-Os), condensé vérifié avant comptage, 17 compressions confirmées, aucune extension ISA au-delà du baseline — la notation COMPÉTITIVE, jamais spectaculaire : la méthode appliquée à sa propre revendication. \\
 D192 & La conséquence D81 au modèle de menace et le kit D183 préparé & phrase au dépôt + S\_serrure en en-tête clair = deux éléments trivialement disponibles, la confidentialité effective repose sur le seul média piège ; la frontière D105/D81 du clone du laboratoire (clones temporaires à phrases de test) ; le kit de cérémonie PRÉPARÉ SANS L'APPLIQUER (l'outil au partage CF2 D120, l'autotest VERT, le LISEZMOI, les listes de contrôle — le geste au développeur) ; l'état de l'art étendu (huit références vérifiées DOI/arXiv, la revendication scopée, RQ3 recadrée en garanties silencieuses du compilateur). \\
 D195 & Le programme empirique v0.14.0 & le plan PRÉ-ENREGISTRÉ (D193, l'empreinte verrouillée) ; le bras de référence compilateur (six blocs aux mêmes contrats, les mêmes shims, auto-vérifiés : ZÉRO DIVERGENCE aux vecteurs ; sha-256 PARITAIRE à travail égal [9~089/9~146], les purs plus chers, la mutation au même degré — H4 tenue) ; la re-mesure RQ2 en distributions (580/2~143/3~510, la baseline naive 300~304, le raisonnement estimé nommé, les valeurs M1 historiques, la lecture défavorable consignée) ; l'indépendance par instance isolée (128 constantes, zéro divergence, l'écart de famille nommé) ; le re-jeu des 832 mutants aux composition-killers (93,3 \%, tls13/sys à 100 \%, 56 loupe nommés) ; le kit terrain EN ATTENTE. \\
 D197 & Le croisement d'attribution recoupé et la règle du contenu cité & les métadonnées Drive font foi (les deux fichiers déposés 11/11 13:21 UTC, jamais modifiés : ysddxpk0o porte le programme v0.14.0 exécuté, ic09ydeli porte le programme v0.15.0 ouvert — les étiquettes d'hier étaient croisées, les travaux intègres) ; la correction aux gestes (ysddxpk0o archivé, ic09ydeli rappelé vers \code{/instructions}, empreintes md5 recoupées avant et après, aucune suppression) ; LA RÈGLE DU CONTENU CITÉ (lecture intégrale, empreinte confrontée, contenu cité à l'entrée d'ouverture) ; LA RÈGLE DU DÉVELOPPEUR 12/11 : les anciennes versions archivées à chaque livraison d'une nouvelle (première application : la v0.15.0). \\
 D198 & Les preuves non bornées et le raffinement livrés & l'invariant inductif $I$ (quatre propriétés PROUVÉES NON BORNÉES, la fidélité D187 reproduite exactement, les bornes étendues zéro hors $I$) ; le raffinement 34 pas zéro écart (les chemins d'échec inclus, cinq époques vécues aux deux niveaux) ; les trois kits matériels préparés EN ATTENTE (le dudect à l'appel natif validé FIPS, le fence.i silicium, le terrain tiers) ; la réplication outillée (grille finalisée, $\kappa$ autotesté, critères inchangés) ; les statuts systématiques ; la dette de la table des preuves guérie (longtable). \\
+D203 & La révision manuscrit+spécification (le paquet 4 de la vague du 12/11) & LES POURCENTAGES DU BENCHMARK REFORMULÉS SANS AMBIGUÏTÉ dans les deux documents (la notation exécute $+9{,}9$~\% d'instructions DE PLUS que gcc -O2 [75\,983 contre 69\,132] et $2{,}0$~\% DE MOINS que -Os [77\,505] — l'ancienne écriture « $-9$~\%/$+2$~\% » lue du point de vue du compilateur était ambiguë) ; LES RATIOS RQ2 RECALCULÉS depuis \code{remesure\_rq2.csv} (« 4-11× » → 3-11× : éditer $3{,}0\times$, ajouter $3{,}2\times$, localiser $11{,}4\times$) ; LE QUANTILE UNIFIÉ à 1,86σ (valeur exacte 1,863 — l'arrondi « 1,87 » des éditions antérieures corrigé) ; LES RÉSIDUS D'ÉDITION PURGÉS (la référence spec v0.13.0 → v0.15.0, les archives de la Data Availability v0.14.0 → v0.15.0, les phrases « budgets mesurés une seule fois / carte de l'ère M1 » contredites par D195 retirées, la conclusion aux médianes courantes et aux 56 survivants [les 138 de v0.11.0 cités comme histoire], la plage de décisions portée à la dernière décision réelle) ; LA GRILLE DE RÉPLICATION RENOMMÉE T1--T5/X1--X3 → F1--F5/L1--L3 (la collision avec les taxonomies T1--T6/X1--X8 levée, la table de correspondance au kit) ; les livrés de l'édition INTACTS (la révision vit aux sources, la prochaine édition l'embarquera). \\
 \end{longtable}

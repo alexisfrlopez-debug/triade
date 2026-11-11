@@ -1,0 +1,54 @@
+========================================================================
+VÉRIFICATION DE LA RÉVISION MANUSCRIT+SPÉCIFICATION (paquet 4/6, sollwnmae — D203)
+========================================================================
+[VERT] 1. BENCHMARK — pourcentages reformulés sans ambiguïté
+       recalcul depuis audit_benchmark.csv : la notation exécute +9.9 % vs -O2 (75983 vs 69132) et -2.0 % vs -Os (75983 vs 77505)
+         manuscrit §benchmarks : formulation +9,9 % more / 2,0 % fewer PRÉSENTE ; conclusion : PRÉSENTE
+         spécification sec-a : formulation DE PLUS/DE MOINS PRÉSENTE
+         écriture ambiguë « -9 %/+2 % » : ABSENTE
+         les trois nombres (75 983 / 69 132 / 77 505) recoupés au CSV brut : OUI
+[VERT] 2. RATIOS RQ2 — recalculés depuis remesure_rq2.csv
+       recalcul : localiser 580/51 = 11.37× ; éditer 2143/719 = 2.98× ; ajouter 3510/1088 = 3.23×
+         la plage réelle des médianes : 2.98×–11.37× → l'arrondi entier 3–11 → « ≈3–11× » CORRECT
+         manuscrit : « 3--11× » + les trois ratios affichés PRÉSENTS
+         spécification : « 3-11× » + ratios PRÉSENTS
+         « 4-11 » résiduel INJUSTIFIÉ (corpus entier, sept fichiers) : AUCUN
+         (l'occurrence de la ligne D203 qui CITE « 4-11× » → 3-11× est la consignation même de la correction — justifiée)
+[VERT] 3. QUANTILE — unifié à 1,86σ (valeur exacte 1,863)
+       recalcul : Φ⁻¹(1 − 0,5⁵) = Φ⁻¹(1 − 0.031250) = 1.862732 → 1,86σ (exacte 1,863)
+         manuscrit : 1.86σ + (exactly 1.863) PRÉSENTS
+         spécification sec-a/sec-d : 1,86σ PARTOUT
+         « 1,87 » résiduel INJUSTIFIÉ (corpus entier, six fichiers) : AUCUN
+         (la ligne D203 qui cite « 1,87 » corrigé est la consignation même de la correction — justifiée)
+[VERT] 4. RÉSIDUS D'ÉDITION — purgés, l'histoire préservée
+       v0.13.0 au manuscrit : 7 occurrences HISTORIQUES (les en-têtes de programme, l'audit, l'arbitrage D190)
+         v0.13.0 injustifié : AUCUN
+         archives v0.14.0.zip : AUCUNE (Data Availability à v0.15.0)
+         phrases contredites par D195 : AUCUNE
+         « 138 » : 3 occurrence(s), toutes historiques (v0.11.0 original) : OUI
+         \plageDecisions = D1--D203 ; dernière décision du journal = D203 → COHÉRENT
+         (la plage de l'instruction « D1–D197 → D1–D198 » était périmée à l'exécution : D199–D203 prirent place — l'Entrée 234 le consigna AVANT l'exécution)
+[VERT] 5. GRILLE DE RÉPLICATION — F/L partout, table de correspondance au kit
+       manuscrit : F/L grid + F1--F5/L1--L3 + la phrase du renommage D203 PRÉSENTS
+         T/X courant (sans mention du renommage) : AUCUN
+         grille_tx.csv : colonne ancien_libelle (la table de correspondance) PRÉSENTE ; les id F1-F5/L1-L3
+         autotest κ : VERT (les anciennes étiquettes T/X admises et converties à la volée)
+[VERT] 6. EMPREINTES — scellés, livrés et garde intacts
+       demo.exe : IDENTIQUE avant/après (df8f2e50949b…)
+       loupe.exe : IDENTIQUE avant/après (c11151053576…)
+       selftest.exe : IDENTIQUE avant/après (8038585b7af8…)
+       proxy.exe : IDENTIQUE avant/après (446279f3ab35…)
+       loupe.exe : sha256 == CONSIGNÉE (c11151053576…)
+       proxy.exe : sha256 == CONSIGNÉE (446279f3ab35…)
+       Protocole_TRIADE_v0.15.0_Specification.pdf : IDENTIQUE
+       TRIADE_manuscrit_v0.15.0.pdf : IDENTIQUE
+       TRIADE_complet_v0.15.0.zip : IDENTIQUE
+       TRIADE_soumission_v0.15.0.zip : IDENTIQUE
+       empreintes_livrables.txt : IDENTIQUE
+       main.pdf : IDENTIQUE
+       final.pdf : IDENTIQUE
+       main.pdf : IDENTIQUE
+       garde sceau-I : 14/14 VERT
+       sources révisées (0) : manuscrit main.tex, spec sec-a/sec-d, statuts, kit réplication, macros/tables régénérés
+========================================================================
+BILAN : 6 VERT / 0 ROUGE — LA RÉVISION EST CONSIGNÉE

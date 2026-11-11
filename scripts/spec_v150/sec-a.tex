@@ -443,7 +443,8 @@ D81 DEMEURE la décision active, le geste appartient au développeur.
 caractéristiques opérationnelles de la règle réelle (sceller ssi $n$
 rebuilds consécutifs identiques) : P(sceller$|q$) = $(1-q)^n$ — à
 $q = 50$\,\% : 3,1 \% ($n{=}5$), 0,098 \% ($n{=}10$), soit 32× plus
-strict (les quantiles unilatéraux exacts 1,87σ/3,10σ) ; à $q = 1$\,\% :
+strict (les quantiles unilatéraux exacts 1,86σ [valeur exacte
+1,863]/3,10σ) ; à $q = 1$\,\% :
 la règle scelle un build sain avec probabilité 95,1 \%/90,4 \% — les
 valeurs « α = 3,29·10\textsuperscript{−2} / 1,08·10\textsuperscript{−3} »
 de D189 étaient des RAPPORTS DE VRAISEMBLANCE $(0,5/0,99)^n$ mal
@@ -451,7 +452,10 @@ de D189 étaient des RAPPORTS DE VRAISEMBLANCE $(0,5/0,99)^n$ mal
 en silence) — l'analyse est la JUSTIFICATION consignée et la voie
 documentée d'un relâchement futur ; LE PROTOCOLE DE RÉPLICATION proposé
 (les trois axes : second développeur, second domaine, second profil ;
-la grille T/X à cinq classes terrain + trois classes laboratoire ; la
+la grille de codage à cinq classes terrain + trois classes laboratoire
+— étiquetée T/X à l'époque, renommée F1--F5/L1--L3 par D203 pour
+lever la collision avec les taxonomies de défauts T1--T6/X1--X8 du
+§\ref{sec:taxonomie} ; la
 double annotation ; le κ de Cohen ≥ 0,61 ; les critères d'acceptation
 pré-enregistrés) — PROPOSÉ, jamais exécuté : l'arbitrage appartient au
 développeur.
@@ -497,7 +501,7 @@ formel).
 caractéristiques opérationnelles P(sceller$|q$) = $(1-q)^n$ remplacent les
 « α » de D189 (des rapports de vraisemblance mal étiquetés) ; les conversions
 sigma $\sqrt{-2\ln p}$ remplacées par les quantiles normaux unilatéraux
-exacts (1,87σ/3,10σ) ; l'IC95~\% EXACT de 11/12 (Clopper-Pearson
+exacts (1,86σ/3,10σ) ; l'IC95~\% EXACT de 11/12 (Clopper-Pearson
 $[0,615 ; 0,998]$, avec la réserve de non-indépendance des itérations
 séquentielles) ; la règle de comptage opérationnelle des défauts échappés
 DÉFINIE en méthodes du manuscrit (les runs 6/7 à deux défauts comptés une
@@ -527,8 +531,9 @@ tout minimum scalaire plausible) ; les chiffres corrigés : l'opération
 complète des blocs 75\,983 instructions contre 69\,132 (gcc~14.2 -O2) et
 77\,505 (-Os), dans le même émulateur sur la même entrée, le condensé
 vérifié AVANT le comptage et les 17 invocations de compression confirmées
-mécaniquement — la notation WYSIWYG est COMPÉTITIVE ($-9$~\%/$+2$~\% en
-instructions), plus compacte que -O2 (1\,021 contre 1\,482 octets, tables
+mécaniquement — la notation WYSIWYG est COMPÉTITIVE (elle exécute
+$+9{,}9$~\% d'instructions \emph{de plus} que gcc -O2 [75\,983 contre
+69\,132] et $2{,}0$~\% \emph{de moins} que -Os [77\,505]), plus compacte que -O2 (1\,021 contre 1\,482 octets, tables
 comprises), moins que -Os (548) ; AUCUNE extension ISA au-delà du baseline
 des deux côtés (gcc emploie des mouvements SSE2 du baseline que la notation
 GPR pure n'emploie pas — l'écart rapporté sans ajustement) ; le terrain M7
@@ -581,7 +586,10 @@ cl100k\_base) : localiser 580 [496..706], éditer 2~143 [1~085..3~463],
 ajouter 3~510 [3~128..4~091], la baseline naive 300~304 tokens (le
 désassemblage complet) — les valeurs M1 (51/719/1~088) HISTORIQUES,
 jamais remplacées ; LA LECTURE DÉFAVORABLE AU PROTOCOLE consignée telle
-quelle (les opérations coûtent 4-11$\times$ leur M1 : les notations plus
+quelle (les opérations coûtent 3-11$\times$ leur M1 — les ratios
+recalculés depuis \code{remesure\_rq2.csv} : éditer $2\,143/719 =
+3{,}0\times$, ajouter $3\,510/1\,088 = 3{,}2\times$, localiser
+$580/51 = 11{,}4\times$ — les notations plus
 longues, les contrats plus denses) ; le raisonnement ESTIMÉ
 ($\times$1,08, le rapport génération/contenu des retouches réelles —
 l'estimation nommée, jamais une mesure).
@@ -665,9 +673,10 @@ scénario M7, la cible changée), le terrain tiers Loupe (T0$\to$T7+S0
 intégral) — TOUS \emph{EN ATTENTE DE RUN MATÉRIEL} : aucun chiffre
 n'existe, aucun n'est fabriqué.
 
-\textbf{LA RÉPLICATION} : la grille T/X FINALISÉE (les cinq classes
-terrain et trois laboratoire, définitions opérationnelles, exemples
-vécus), le calculateur $\kappa$ de Cohen AUTOTESTÉ (trois cas
+\textbf{LA RÉPLICATION} : la grille F/L FINALISÉE (les cinq classes
+terrain F1--F5 et trois laboratoire L1--L3, définitions
+opérationnelles, exemples vécus — l'ancienne grille T/X renommée par
+D203, la table de correspondance au kit), le calculateur $\kappa$ de Cohen AUTOTESTÉ (trois cas
 synthétiques au $\kappa$ calculable à la main), les critères
 pré-enregistrés D189 INCHANGÉS ; le second annotateur À RECRUTER, le
 second domaine EN ATTENTE d'une vraie commande — les statuts consignés.
