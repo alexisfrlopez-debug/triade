@@ -1,0 +1,37 @@
+L'AUDIT MÉCANIQUE DES 13 RÈGLES — la lecture de l'époque
+(l'instruction 6zqo2h60n : gardes/actions, PAS les témoins par translation)
+
+LA LOI AUDITÉE : toute lecture décisionnelle de l'époque dans les 13 règles est le prédicat de classe e > 1 (l'école ≥ 2) ou l'opération successeur e + 1 (l'écriture de la clôture) ; la classe e = 1 n'est JAMAIS testée explicitement (le complément du prédicat) ; AUCUNE autre constante d'époque n'apparaît (ni 3, ni 7, ni 50, ni 1000 — les deltas des témoins par translation n'entrent PAS dans les règles).
+
+1. LE PORTAGE TLA+ (CF3.tla — l'artefact Apalache/TLC) :
+  VoleKUser                figée UNCHANGED (ligne 4)
+  VoleSSerrure             figée UNCHANGED (ligne 4)
+  VoleSPiege               figée UNCHANGED (ligne 4)
+  FalsifieConteneur        figée UNCHANGED (ligne 6)
+  FalsifiePiege            figée UNCHANGED (ligne 5)
+  RejoueEpoquePassee       garde e > 1 (ligne 3)
+  OuvrirCorrect            figée UNCHANGED (ligne 12)
+  OuvrirPhraseErronee      aucune occurrence (l'époque n'y figure pas)
+  OuvrirAncienCouple       garde e > 1 (ligne 4)
+  Verifier                 aucune occurrence (l'époque n'y figure pas)
+  CrashPendantSession      figée UNCHANGED (ligne 4)
+  CloturerCorrecte         écriture e' = e + 1 (ligne 5)
+  CloturerPhraseErronee    aucune occurrence (l'époque n'y figure pas)
+  [invariant I4]           e >= 1 — le DOMAINE des époques (pas une règle)
+
+   LES FORMES DISTINCTES RENCONTRÉES :
+     figée UNCHANGED              → 7 règle(s) : VoleKUser, VoleSSerrure, VoleSPiege, FalsifieConteneur, FalsifiePiege, OuvrirCorrect, CrashPendantSession
+     garde e > 1                  → 2 règle(s) : RejoueEpoquePassee, OuvrirAncienCouple
+     écriture e' = e + 1          → 1 règle(s) : CloturerCorrecte
+
+2. LE MODÈLE PYTHON (modele_invariant_v150.py — la source de vérité, analyse syntaxique ast des fonctions actions_possibles et appliquer) :
+  actions_possibles :
+     ligne 95 : e > 1 (le prédicat de classe ≥ 2)
+  appliquer :
+     ligne 139 : e > 1 (le prédicat de classe ≥ 2)
+     ligne 161 : e + 1 (le SUCCESSEUR — la clôture)
+
+   LES lectures s[0] hors reconstruction (l'époque par index) : dans appliquer, s[0] n'apparaît QUE via le dépaquetage initial (e, phase, … = s) et la reconstruction du tuple dans avec() — les GESTES décisionnels portent le nom e ; l'explorateur D187 (fonction explorer) porte le plafond min(e+1, EpoquesMax) — il est HORS RÈGLES (l'artefact de l'époque v120, le contrôle de fidélité), l'audit ne le couvre pas par construction.
+
+LE VERDICT : VERT — les 13 règles ne lisent l'époque que par {e > 1, e + 1}. L'uniformité STRUCTURELLE de la classe e ≥ 2 (D198) est un FAIT DE CODE, audit mécaniquement : c'est l'argument qui rend la preuve par formes finies COMPLÈTE sur l'espace non borné des époques.
+

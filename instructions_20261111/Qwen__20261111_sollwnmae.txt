@@ -1,0 +1,8 @@
+Parcours TRIADE_manuscrit_v0.15.0.pdf (source LaTeX), la spécification v0.15.0 et les CSV de preuves. Corrige sans toucher aux artefacts scellés ni aux arbres signés :
+1) Reformule les pourcentages du benchmark sans ambiguïté : « la notation exécute +9,9 % d'instructions de plus que gcc -O2 (75 983 vs 69 132) et −2,0 % de moins que -Os (77 505) » ; aligne la spécification.
+2) Remplace « 4–11× » par les ratios réels des médianes RQ2 (≈3–11×), recalculés depuis remesure_rq2.csv.
+3) Unifie le quantile à 1,86σ (valeur exacte 1,863) partout.
+4) Purge les résidus d'édition : référence spec « v0.13.0 » → v0.15.0 ; archives « v0.14.0 » → v0.15.0 dans Data Availability ; supprime les phrases « budgets mesurés une seule fois / ère M1 seulement » contredites par D195 ; réécris la conclusion avec les médianes actuelles et 56 survivants (138 = historique v0.11.0, à mentionner comme tel) ; « D1–D197 » → D1–D198.
+5) Renomme la grille de réplication T1–T5/X1–X3 en classes distinctes (ex. F1–F5 terrain, L1–L3 laboratoire) pour lever la collision avec T1–T6/X1–X8, avec table de correspondance.
+Consigne chaque correction dans une nouvelle décision D199 (journal append-only, aucune entrée réécrite).
+Vérification : régénère toutes les tables par le script d'extraction ; recalcule chaque pourcentage depuis les CSV bruts ; recherche par motif les chaînes périmées (« v0.13.0 », « v0.14.0 », « 4–11 », « 1,87 », « 138 survivants » hors contexte historique) et exige zéro occurrence injustifiée ; contrôle que les sha256 des artefacts scellés et des arbres signés sont identiques avant/après ; produis un rapport diff complet.

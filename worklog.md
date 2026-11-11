@@ -8298,3 +8298,36 @@ Work Log:
 - SUITE : au développeur — les trois runs matériels, la cérémonie du
   séquestre D183, la cérémonie d'ère, la réplication (l'annotateur, le
   second domaine).
+
+
+Task ID: 140
+Agent: Z.ai (agent principal)
+Task: LA VAGUE 3 DES INSTRUCTIONS — SIX paquets reçus à /instructions
+(11/11 19:14-19:15 UTC), rapatriés md5 MATCH, lus intégralement et
+CITÉS (D197), l'exécution OUVERTE : TLA+/Apalache + property-based,
+campagne de mutation étendue, recompte Loupe, révision
+manuscrit+spécification, plan de comparaison pré-enregistré, SHA-NI.
+
+Work Log:
+- LA VAGUE : six fichiers (992-1 719 o), /instructions ne porte qu'eux
+  (les six instructions antérieures exécutées demeurent archivées) ;
+  rapatrier_instructions_v3.py : les SIX md5 recoupés MATCH, copies au
+  dépôt instructions_20261111/.
+- LE CONTENU CITÉ (D197) : les six textes intégraux cités à l'Entrée
+  234 — aucune attribution d'héritage, la lecture intégrale AVANT le
+  programme.
+- LA NUMÉROTATION : « nouvelle décision D199 » demandée par sollwnmae
+  mais D199 est PRISE (l'instrument du miroir, ce jour) — les
+  consignations de la vague prendront D200 et suivants.
+- L'ENVIRONNEMENT : Java 21 (TLA+ exécutable), réseau GitHub joignable
+  (TLC/Apalache téléchargeables), CPU SHA-NI natif, hypothesis installé.
+- L'ORDRE : (1) TLA+/PBT — décide le langage du statut ; (2) mutation
+  ≥200×52 ; (3) recompte Loupe depuis les entrées 204-222 ; (4) la
+  révision manuscrit+spécification intégrant tout ; (5) le plan
+  pré-enregistré (empreinte AVANT toute mesure) ; (6) SHA-NI (hot path
+  mesuré d'abord, sinon refus).
+- Frontières : artefacts scellés intouchés (sha256 avant/après par
+  paquet), coffre réel jamais ouvert, aucune mesure terrain, aucun
+  chiffre fabriqué, append-only.
+- SUITE : l'exécution paquet par paquet, consignation à l'achèvement de
+  chacun, sync aux jalons.
