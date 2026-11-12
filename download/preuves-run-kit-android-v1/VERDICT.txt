@@ -1,0 +1,13 @@
+VERDICT CONSTAT-ARM (kit multimachines — le troisième silicium)
+========================================================================
+VERDICT : VERT — LE CONSTAT COMPLET VÉCU : la machine nommée à l'ouverture, le silicium lu par ses propres canaux, le refus des pièces x86-64 nommé avec ses empreintes, le lecteur Python exact
+
+LA PORTÉE : ce constat ne mesure RIEN (aucun protocole pré-enregistré n'existe pour ce silicium, aucun chiffre n'est fabriqué) ; il consigne CE que la machine a dit d'elle-même, CE jour, ces canaux.
+signature du geste : à dater et à signer de la main du développeur.
+machine : localhost · aarch64 · Python 3.8.18
+système : Linux localhost 6.6.66-android15-8-g9b6ad5b4b813-ab13433063-4k #1 SMP PREEMPT Wed Apr 30 09:12:20 UTC 2025 aarch64
+silicium : ARM Cortex-A55 + ARM Cortex-A78 · révision ?
+le silicium porte FEAT_SHA256 (ARM) — une AUTRE famille d'instructions que la SHA-NI x86, aucun déguisement
+le refus : CE silicium ARM64 n'exécute pas l'ISA x86-64 : ni les PE Windows 64 bits, ni la convention Windows x64, ni sha256rnds2 — la mesure avant/après SHA-NI n'existe pas ici, les kits x86-64 sont REFUSÉS PAR NATURE
+lecteur sha256 « abc » : EXACT
+lecteur sha512 « abc » : EXACT

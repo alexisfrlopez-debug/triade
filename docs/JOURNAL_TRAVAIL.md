@@ -10238,3 +10238,43 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   signer le verdict de sa main ; le labo relèvera les preuves au coffre et
   recoupera. Puis les gestes ouverts (le geste B, D204, la cérémonie d'ère,
   le séquestre D183, la réplication).
+
+## Entrée 257 — LE RELEVÉ DU RUN ANDROID — L'APK VÉCU VERT AU TÉLÉPHONE (la commande du développeur du 13/11 : « resultats du run android dans /test du drive ») — VERDICT.txt + TRIADE_kit_android_20261112T214507Z.zip rapatriés du coffre et recoupés : le constat complet VÉCU (la machine nommée, FEAT_SHA256, le refus x86-64, les lecteurs FIPS EXACTS), la chaîne 1-clic vécue de bout en bout (13/11, la session de l'exe 1-clic)
+
+- LA COMMANDE : « resultats du run android dans /test du drive » — le
+  développeur avait vécu le geste 1-clic de l'APK (Entrée 256) et déposait
+  les preuves au coffre ; le labo les relève et recoupe, comme promis.
+
+- LE RELEVÉ (le coffre /test, déposés le 12/11 21:45-21:46 UTC) :
+  VERDICT.txt (1 249 octets) + TRIADE_kit_android_20261112T214507Z.zip
+  (4 692 octets, 4 pièces : le journal du run, le verdict auto-portant, le
+  journal du relais, DEPOT.txt) — rapatriés par le relais OAuth, lus et
+  recoupés. Les pièces du labo au même /test (l'APK, le paquet, le
+  LISEZMOI, les sources) demeurent INTACTES.
+
+- LE VERDICT DU TÉLÉPHONE : VERT — LE CONSTAT COMPLET VÉCU. La machine
+  nommée à l'ouverture (localhost · aarch64 · Python 3.8.18 embarqué ·
+  Linux 6.6.66-android15 · Blackview XPLORE 1 · MT8791V/HZA · mt6877 ·
+  Android 15) ; le silicium lu par ses propres canaux (Cortex-A55 + A78,
+  les extensions ARMv8 aes/pmull/sha1/sha2/crc32/atomics, FEAT_SHA256
+  PRÉSENTE — une AUTRE famille que la SHA-NI x86, les deux mondes
+  constatés) ; le REFUS des pièces x86-64 nommé avec empreintes (loupe.exe
+  c1115105…, proxy-image 0782d7e2…, moteur-shani 761ab194…) ; les lecteurs
+  FIPS 180-4 « abc » EXACTS (sha256 ba7816bf…, sha512 ddaf35a1…). Le
+  journal ligne à ligne vit dans le zip (constat-arm-journal.log,
+  horodaté 2026-11-12T22:45:07 — l'heure locale du téléphone).
+
+- LA CHAÎNE 1-CLIC VÉCUE DE BOUT EN BOUT : installer (sources inconnues),
+  OUVRIR — le test partit seul, l'exe du kit embarqué recoupé 3/3 octet
+  pour octet à l'ouverture (fail-closed vécu VERT), le verdict rendu dans
+  la page, ENVOYER LE ZIP → l'app Drive → le coffre /test. C'est le geste
+  le plus court de la campagne, désormais TÉMOIGNÉ par pièces.
+
+- LA FRONTIÈRE (inchangée, D206) : le constat ne mesure RIEN — aucun
+  protocole pré-enregistré n'existe pour ce silicium, aucun chiffre n'est
+  fabriqué. La signature à la main du développeur demeure attendue sur le
+  verdict (la pièce le dit : « à dater et à signer »).
+
+- SUITE : le kit-2 dudect reste LA MESURE JAMAIS ENCORE COURUE du paquet
+  (CE-QUI-RESTE-A-FAIRE.txt) — l'Entrée 258 en fait le geste le plus
+  court sur Windows.

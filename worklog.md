@@ -9273,3 +9273,25 @@ Work Log:
   embarquée ; aucun jeton ; le geste réel (le tap) reste au développeur.
 - SUITE : le développeur ouvre l'APK, le test part seul, ENVOYER LE ZIP →
   Drive /test ; le labo relèvera et recoupera (Entrée 256).
+
+
+Task ID: 164
+Agent: Z.ai (agent principal — la session de l'exe 1-clic)
+Task: LE RELEVÉ DU RUN ANDROID — l'APK vécu VERT au téléphone : VERDICT.txt
++ TRIADE_kit_android_20261112T214507Z.zip déposés par le développeur au
+coffre /test (12/11 21:45 UTC), rapatriés par le relais OAuth et recoupés —
+la machine nommée (Blackview XPLORE 1, MT8791, Android 15, Python 3.8.18
+embarqué), FEAT_SHA256 constatée, le refus x86-64 nommé avec empreintes,
+les lecteurs FIPS « abc » EXACTS ; la chaîne 1-clic vécue de bout en bout
+(installer, ouvrir, le test part seul, ENVOYER LE ZIP → Drive → coffre).
+
+Work Log:
+- LE RELEVÉ : listing complet du /test (le script relever_run_android.py,
+  tolérant au refus « malware » des vieux exe — un faux positif vécu et
+  nommé), téléchargement des pièces nouvelles, lecture intégrale.
+- LE RECOUP : le verdict VERT auto-portant + le journal horodaté ligne à
+  ligne + le DEPOT.txt du zip (empreintes du kit embarqué citées).
+- LA FRONTIÈRE : le constat ne mesure rien (D206) ; la signature à la main
+  demeure attendue.
+- SUITE : les preuves au dépôt (download/preuves-run-kit-android-v1/),
+  Entrée 257.
