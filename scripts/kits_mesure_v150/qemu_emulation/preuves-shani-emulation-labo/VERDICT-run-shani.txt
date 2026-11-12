@@ -1,0 +1,2 @@
+VERDICT : VERT — LA MESURE AVANT/APRÈS SHA-NI : les pièces scellées recoupées, les trois lecteurs exacts, l'adversaire K tranché, la mesure consignée, la pièce relue intacte
+le témoin est à renvoyer ENTIERS au coffre /test (dossier Drive « Triade » → « test »)

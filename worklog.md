@@ -8776,3 +8776,50 @@ Work Log:
 - SUITE : au développeur — le geste B (aucun obligatoire), les trois
   autres kits EN ATTENTE, la campagne de comparaison D204, la cérémonie
   d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 153
+Agent: Z.ai (agent principal)
+Task: LE PAQUET MULTIMACHINES (la commande du développeur du 12/11/2026 :
+« un zip avec les kits terrain que je peux exécuter sur mes machines —
+téléphone ARM, PC Windows 10 et 11, QEMU ou autre si besoin sur
+Windows ») — le correctif n° 1 du kit-dudect (les défauts latents de
+compilation Windows, guéris à la source), le kit-constat-arm NÉ, la
+voie qemu-shani épreuvée, le kit-3 complété, l'assemblage aux CINQ
+scellés recoupés, l'épreuve bout-en-bout, la livraison au bac et au
+coffre.
+
+Work Log:
+- LE CORRECTIF n° 1 DU KIT-DUDECT : à la cross-compilation Windows,
+  rand_s non déclaré (ni MSVC ni mingw-w64 sans _CRT_RAND_S) et
+  test_appel.c POSIX-seul (mmap) — DEUX défauts latents que l'autotest
+  POSIX ne pouvait pas toucher ; _CRT_RAND_S posé à la source, le
+  backend _WIN32 ajouté, le re-épreuve VERT (test_appel code 0 ;
+  dudect --autotest code 0) ; LES EXE précompilés (gcc 14-win32
+  mingw-w64, PE32+ x86-64, imports KERNEL32+msvcrt) — NON exécutés au
+  labo (wine refusé par le bac, ptrace), l'étiquette honnête au
+  LISEZMOI.
+- LE KIT-CONSTAT-ARM : le téléphone nommé, le silicium lu par ses
+  canaux (/proc/cpuinfo, getprop), le refus des pièces x86-64 nommé
+  avec empreintes, le lecteur FIPS abc exact — kit NOUVEAU hors
+  périmètre scellé, éprouvé au labo (VERT code 0 sur hôte x86-64, le
+  constat « pas un téléphone ARM » honnête).
+- LA VOIE QEMU-SHANI : le kit n° 2 exécuté sous qemu-x86_64 -cpu max —
+  VERT code 0, rapport 0,19× = l'ARTEFACT TCG consigné tel quel (les
+  preuves au paquet et au coffre) ; LE M7D embarqué (scellés corpus/
+  demo MATCH à l'extraction du zip du coffre).
+- LE KIT-3 COMPLÉTÉ : /test/loupe-kit-13 ne portait que 2 pièces sur 4
+  — les sources du dépôt ont complété (scenario-loupe.py 0.1.1-dev.1,
+  temoin-vitrine.bat) ; loupe.exe recoupé c1115105… EXACT.
+- L'ASSEMBLAGE : 32 pièces, 5 scellés recoupés, le zip 3 478 725 o
+  sha256 efff812b… ; L'ÉPREUVE sur extraction vierge : constat-arm
+  VERT, dudect source recompilée VERT, M7D 16 PASS / 0 ÉCHEC VERT —
+  le paquet déposé est le paquet prouvé (D153).
+- LA LIVRAISON : le zip au bac download/ (D197), le dossier au coffre
+  /test 6/6 pièces md5 MATCH (la lettre, le zip, les 4 preuves
+  d'émulation).
+- SUITE : au développeur — LE ZIP EST À LUI (kit-2-dudect sur les
+  siliciums Windows, kit-3 sur la machine tierce, le constat au
+  téléphone, les voies QEMU sous WSL2 — aucun geste obligatoire), le
+  geste B SHA-NI réel, la campagne de comparaison D204, la cérémonie
+  d'ère, le séquestre D183, la réplication.

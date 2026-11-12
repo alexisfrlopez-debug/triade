@@ -36,12 +36,21 @@
  * AU LABORATOIRE (l'autotest, Linux) :
  *   gcc -O2 -o dudect_v150 dudect_v150.c -lm
  *
+ * LE CORRECTIF n° 1 DU KIT (12/11/2026, la préparation multimachines) :
+ *   _CRT_RAND_S posé AVANT stdlib.h — sans lui rand_s n'est PAS déclaré
+ *   (ni MSVC ni mingw-w64 ne le déclarent par défaut) : le défaut latent
+ *   que l'autotest POSIX du laboratoire ne pouvait pas toucher, découvert
+ *   à la cross-compilation Windows du kit. Le backend POSIX est INCHANGÉ
+ *   (octet pour octet à l'exécution — l'autotest re-éprouvé après le geste).
+ *
  * Usage : dudect_v150 [repertoire_cibles] [N_par_classe] [--autotest]
  *         (défauts : cibles, 200)
  */
 
 #ifndef _WIN32
 #define _GNU_SOURCE
+#else
+#define _CRT_RAND_S   /* rand_s : requis avant stdlib.h (MSVC et mingw-w64) */
 #endif
 
 #include <stdio.h>

@@ -1,6 +1,26 @@
 LISEZMOI — LE KIT 1 DUDECT TEMPS RÉEL (v0.15.0, la commande ic09ydeli point 2)
 ==============================================================================
 
+LE CORRECTIF n° 1 DU KIT (12/11/2026, la préparation multimachines) :
+dudect_v150.c n'exécutait rand_s que si _CRT_RAND_S était posé AVANT
+stdlib.h — ni MSVC ni mingw-w64 ne le déclarent par défaut — et
+test_appel.c n'avait QUE le backend mmap POSIX (il ne compilait
+AUCUNEMENT sous Windows). Deux défauts latents que l'autotest POSIX du
+laboratoire ne pouvait pas toucher, découverts à la cross-compilation
+Windows du kit. LE GESTE : _CRT_RAND_S posé à la source, le backend
+_WIN32 (VirtualAlloc/VirtualProtect) ajouté à test_appel.c ; le
+backend POSIX INCHANGÉ et re-éprouvé après le geste (gcc -O2 :
+test_appel VERT code 0 — FIPS abc EXACT, mutation K DIVERGE,
+restauration EXACT ; dudect_v150 --autotest VERT code 0 — les quatre
+cibles recoupées, le t de Welch calculé). LES EXE PRÉCOMPILÉS : le
+paquet multimachines porte dudect_v150.exe et test_appel.exe
+(cross-compilés au labo, gcc 14-win32 mingw-w64, PE32+ x86-64, imports
+KERNEL32+msvcrt uniquement) — éprouvés à la compilation et par le
+backend POSIX du même source, NON exécutés au labo (aucun Windows au
+laboratoire, wine refusé par le bac) : le premier run se vit chez
+vous ; si un compilateur vit sur votre machine, recompilez depuis la
+source et comparez — la source est la vérité.
+
 L'OBJET : mesurer le temps d'HORLOGE réel des familles crypto de la
 pièce scellée (le complément du t=0 STRUCTUREL de v0.11.0 — la limite
 nommée depuis deux éditions : le compte d'instructions émulé n'est pas

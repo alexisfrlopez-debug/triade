@@ -1,0 +1,105 @@
+LISEZMOI — LE PAQUET MULTIMACHINES (v0.15.0, la commande du 12/11/2026)
+========================================================================
+
+LA COMMANDE (le développeur) : « faire un zip avec les kits terrain que
+je peux exécuter sur mes machines (téléphone ARM, PC Windows 10 et 11,
+QEMU ou autre si besoin sur Windows) ».
+
+LA CARTE DES MACHINES → LES KITS (chaque kit porte son LISEZMOI propre) :
+
+  PC WINDOWS 10 (ALEKPC, x86-64 — le poste du geste A) :
+    pc-windows/kit-1-shani/     le kit-shani correctif n° 2 — DÉJÀ VÉCU
+                                (le refus auto-portant T0.silicium, geste A
+                                reçu et recoupé 21/21 le 12/11 — Entrée 245) :
+                                le REJOUER n'est pas requis ; il vit ici
+                                pour l'intégrité du paquet.
+    pc-windows/kit-2-dudect/    LA MESURE À VIVRE : le dudect temps réel
+                                (les quatre familles crypto de la pièce
+                                scellée, RDTSC/QPC, affinité cœur 0,
+                                N ≥ 60, t de Welch |t| > 5) — le correctif
+                                n° 1 du kit est PORTÉ (les exe précompilés
+                                dudect_v150.exe + test_appel.exe, ou la
+                                recompilation depuis la source).
+    pc-windows/kit-3-terrain-tiers-loupe/
+                                LE KIT 3 v0.15.0 : Loupe sur la SECONDE
+                                machine — VOIR CI-DESSOUS (Windows 11).
+
+  PC WINDOWS 11 (le second poste — la machine tierce du kit 3) :
+    pc-windows/kit-3-terrain-tiers-loupe/
+                                LE KIT À VIVRE ICI DE PRÉFÉRENCE : loupe.exe
+                                0.1.1 (la pièce scellée c1115105…), le
+                                scénario T0→T7 + S0 INTÉGRAL, le témoin
+                                vitrine (temoin-vitrine.bat) — la machine
+                                qui n'a JAMAIS servi au développement,
+                                c'est la question même du kit (lisez le
+                                LISEZMOI-KIT-LOUPE.md du dossier).
+    pc-windows/kit-2-dudect/    éventuellement AUSSI sur ce poste : un
+                                second silicium constaté = un second
+                                témoin dudect (aucun geste obligatoire).
+    pc-windows/kit-1-shani/     SI CE SILICIUM A SHA-NI (CPUID feuille 7,
+                                EBX bit 29) : c'est LE GESTE B — la mesure
+                                avant/après sur VRAI SHA-NI (le labo :
+                                5,84× mesuré, 6,37× au témoin). Si ABSENT :
+                                le kit refusera de lui-même, exactement
+                                comme ALEKPC (le refus EST un résultat).
+
+  TÉLÉPHONE ARM (Android + Termux) :
+    telephone-arm/kit-constat-arm/
+                                LE CONSTAT DU TROISIÈME SILICIUM (kit
+                                NOUVEAU, hors périmètre scellé v0.15.0) :
+                                la machine nommée, le silicium lu par ses
+                                propres canaux (/proc/cpuinfo, getprop), le
+                                refus des pièces x86-64 NOMMÉ, le lecteur
+                                FIPS exact — constat, JAMAIS une mesure
+                                fabriquée. python constat-arm.py — le
+                                LISEZMOI dit l'installation Termux.
+
+  QEMU SUR WINDOWS (WSL2 — « ou autre si besoin ») :
+    qemu-wsl2/                  LES DEUX VOIES ÉMULÉES (LISEZMOI-qemu.txt) :
+                                (1) le kit-m7d REJOUÉ — la bascule fence.i
+                                sous qemu-riscv64, kit AUTONOME (binaire
+                                qemu STATIQUE embarqué, les scellés corpus
+                                ec343b4e…/demo e57fc74b… recoupés au labo
+                                le 12/11) — REPRODUCTION de la preuve M7,
+                                la réserve D149 DEMEURE (jamais le métal) ;
+                                (2) le kit-shani SOUS qemu-x86_64 -cpu max —
+                                la chaîne SANS le refus (qemu présente
+                                SHA-NI) : ÉPROUVÉE AU LABO le 12/11 11:17,
+                                VERT code 0, rapport 0,19× = l'ARTEFACT
+                                TCG consigné tel quel (les preuves du labo
+                                jointes à preuves-shani-emulation-labo/) —
+                                la chaîne s'exerce, la mesure n'y existe
+                                pas.
+
+L'ÉTAT DES KITS AU 12/11 (aucun chiffre fabriqué, la règle tient) :
+  kit-1-shani : le correctif n° 2 livré (D206), geste A vécu et recoupé
+                21/21 — le geste B (silicium SHA-NI réel) TOUJOURS AU
+                DÉVELOPPEUR, aucun geste obligatoire ;
+  kit-2-dudect : le correctif n° 1 PORTÉ (défauts de compilation Windows
+                nommés et guéris à la source, autotest POSIX re-éprouvé
+                VERT) — le run terrain EN ATTENTE ;
+  kit-3-terrain-tiers : les QUATRE pièces réunies (loupe.exe scellé
+                recoupé du coffre + scénario 0.1.1-dev.1 + témoin
+                vitrine + LISEZMOI — le dossier /test du coffre n'en
+                portait que deux, les sources du dépôt ont complété) —
+                le run terrain EN ATTENTE ;
+  kit-constat-arm : NOUVEAU, éprouvé au labo (mécanique, hôte x86-64) —
+                le run téléphone EN ATTENTE ;
+  qemu-wsl2 : les deux voies documentées, la voie shani ÉPROUVÉE au
+                labo (VERT, l'artefact TCG consigné) — vos runs EN
+                ATTENTE.
+
+LE GESTE GÉNÉRAL (le même pour tous les kits) : extraire le paquet
+COMPLET dans un dossier NEUF par machine (ne jamais mélanger les runs —
+D99), vivre le kit selon SON LISEZMOI, datez et signez les témoins de
+votre main, renvoyer les dossiers de preuves ENTIERS au coffre /test
+(dossier Drive « Triade » → « test »). Le labo recoupe et consigne :
+JAMAIS avant le run, jamais sans pièces ; chaque écart nommé est un
+RÉSULTAT, jamais un échec à maquiller (D189).
+
+LES EMPREINTES DES PIÈCES SCELLÉES (elles ne bougent JAMAIS) :
+  loupe.exe 0.1.1 ............ c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+  proxy.exe 1.0.0 (scellé) ... 446279f3…3b00d93d (l'image étendue : 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff)
+  moteur-shani.bin ........... 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+  corpus 0.8.0-rc.1 (M7D) .... ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799
+  demo f72001 (M7D) .......... e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9

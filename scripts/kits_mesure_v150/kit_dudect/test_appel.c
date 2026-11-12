@@ -6,12 +6,24 @@
  *   ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
  * L'adversaire de l'épreuve : un octet de l'image muté → le condensé
  * DOIT diverger (la preuve que l'image exécutée EST celle recoupée). */
+#ifndef _WIN32
 #define _GNU_SOURCE
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#ifndef _WIN32
 #include <sys/mman.h>
+#else
+#include <windows.h>
+#endif
+
+/* LE CORRECTIF n° 1 DU KIT (12/11/2026, la préparation multimachines) :
+ *   le backend _WIN32 AJOUTÉ (VirtualAlloc/VirtualProtect — le fichier
+ *   n'avait QUE mmap POSIX et ne compilait AUCUNEMENT sous Windows,
+ *   le défaut latent découvert à la cross-compilation du kit) ; le
+ *   backend POSIX INCHANGÉ (l'autotest re-éprouvé après le geste). */
 
 #if defined(__GNUC__) && !defined(_WIN32)
 #define MSABI __attribute__((ms_abi))
@@ -45,12 +57,23 @@ int main(int argc, char **argv) {
     FILE *f = fopen(chemin, "rb");
     if (!f) { perror("fopen"); return 2; }
     fseek(f, 0, SEEK_END); long t = ftell(f); fseek(f, 0, SEEK_SET);
+#ifdef _WIN32
+    void *image = VirtualAlloc(NULL, (SIZE_T)t, MEM_COMMIT,
+                               PAGE_READWRITE);
+    if (!image) { fprintf(stderr, "[REFUS] VirtualAlloc\n"); return 2; }
+#else
     size_t garde = ((size_t)t + 4095) & ~4095UL;
     void *image = mmap(NULL, garde, PROT_READ|PROT_WRITE|PROT_EXEC,
                        MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
     if (image == MAP_FAILED) { perror("mmap"); return 2; }
+#endif
     if (fread(image, 1, (size_t)t, f) != (size_t)t) return 2;
     fclose(f);
+#ifdef _WIN32
+    {   DWORD old;
+        if (!VirtualProtect(image, (SIZE_T)t, PAGE_EXECUTE_READ, &old)) {
+            fprintf(stderr, "[REFUS] VirtualProtect\n"); return 2; } }
+#endif
     printf("[image] %s : %ld octets mappes a %p\n", chemin, t, image);
 
     static const unsigned char attendu[32] = {
