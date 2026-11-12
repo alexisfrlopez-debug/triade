@@ -1,0 +1,25 @@
+FIPS le vide        : VERT
+FIPS « abc »        : VERT
+FIPS les 448 bits   : VERT
+FIPS les 896 bits   : VERT
+
+TÉMOIN DE LA MESURE AVANT/APRÈS SHA-NI (kit D205, l'instruction lfh49a1xf)
+===================================================================
+machine      : c-6af4bf0d-140d72b5-8bc52ab0ca22 · Linux x86_64 · Python 3.12.16
+la sonde     : rax = 1 (1 = SHA-NI+SSSE3 présents, 0 = le repli scalaire)
+l'entrée     : 8388608 octets de PRNG déterministe (graine 20261112:mesure) — la MÊME aux deux bras
+l'attendu    : sha256 ac6717754ec63a2cf7cea167d443cfec435241fac7e939d606c11dabb93dc494
+la discipline: le condensé VÉRIFIÉ à hashlib AVANT comptage, CHAQUE répétition re-vérifiée (une répétition fausse ABORTE), les opérations COMPLÈTES init+absorb+final, jamais un périmètre partiel
+répétitions  : 15 par bras · les médianes et IQR en cycles RDTSC (lfence+rdtsc)
+fréquence    : ~3.20 GHz (estimation mur/cycles)
+
+l'avant (composition scellée)    médiane    112,582,824 cycles [IQR 112,374,698..113,577,384] · 13.421 cycles/o · ~35.2 ms
+l'après (variante dispatchée)    médiane     17,279,302 cycles [IQR 17,246,298..17,317,908] · 2.060 cycles/o · ~5.4 ms
+la variante à repli forcé        médiane    114,404,828 cycles [IQR 113,093,256..114,899,976] · 13.638 cycles/o · ~35.8 ms
+
+LE GAIN      : 6.52× (l'avant / l'après)
+la surcharge : +1.62 % (la variante à repli forcé contre la composition scellée)
+
+L'IMAGE DU KIT : image-shani.bin sha256 df851b7c0041d700ce6500e401d98a4a6b3c100a2b001d274256f6b7b16da47f
+la famille sha du repli : les octets DÉPLOYÉS de loupe.exe (c1115105…) extraits à leurs RVA scellées — R7
+AUCUN SCELLAGE : la cérémonie d'ère et la décision d'embarquer la variante appartiennent au développeur.

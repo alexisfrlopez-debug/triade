@@ -1,0 +1,21 @@
+taille_fichier,region,instructions,pourcentage
+65536,tls13-02 compression,4489500,98.1148
+65536,tls13-03 absorption,86039,1.8803
+65536,tls13-04 finalisation,144,0.0031
+65536,tls13-01 initialisation,12,0.0003
+65536,loupe-05 corps,63,0.0014
+65536,minilibc heritee (libc-01/07),0,0.0
+65536,shims systeme fichiers,2,0.0
+65536,loupe-01 ouverture,0,0.0
+65536,autre,0,0.0
+65536,TOTAL,4575760,100.0
+262144,tls13-02 compression,17944860,98.1166
+262144,tls13-03 absorption,344156,1.8817
+262144,tls13-04 finalisation,144,0.0008
+262144,tls13-01 initialisation,12,0.0001
+262144,loupe-05 corps,147,0.0008
+262144,minilibc heritee (libc-01/07),0,0.0
+262144,shims systeme fichiers,8,0.0
+262144,loupe-01 ouverture,0,0.0
+262144,autre,0,0.0
+262144,TOTAL,18289327,100.0

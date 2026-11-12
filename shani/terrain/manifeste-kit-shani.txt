@@ -1,0 +1,11 @@
+KIT TERRAIN SHA-NI — LE MANIFESTE (D205, le paquet 6/6)
+=======================================================
+
+image-shani.bin  49152 o  sha256 df851b7c0041d700ce6500e401d98a4a6b3c100a2b001d274256f6b7b16da47f
+  la plage RVA 0x2000-0xE000 : K du scellé @0x2F00, le
+  masque BE @0x2800, la famille sha scellée @0xC000-0xC3C0
+  (extraite de loupe.exe c1115105…, LE REPLI R7), la
+  variante @0xD000-0xD4C0 (les notations shani assemblées)
+
+AUCUN SCELLAGE : pièce de laboratoire — la cérémonie
+d'ère et le run terrain appartiennent au développeur.

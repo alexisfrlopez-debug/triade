@@ -8539,3 +8539,62 @@ Work Log:
   aucune mesure terrain, aucun chiffre fabriqué, append-only.
 - SUITE : le paquet 6/6 — le SHA-NI (lfh49a1xf, le hot path mesuré
   d'abord, l'optimisation refusée sinon).
+
+
+Task ID: 147
+Agent: Z.ai (agent principal)
+Task: LE PAQUET 6/6 DE LA VAGUE 3 (l'instruction lfh49a1xf) — LA VARIANTE
+SHA-NI : le hot path mesuré d'abord (98,11 % — la mesure consignée AVANT),
+les sémantiques épinglées par le code, la famille shani née
+écrite-avant-code, le gain mesuré 5,84× au laboratoire, le vérificateur 18
+contrôles VERTS, le kit terrain livré — JAMAIS SCELLÉE (D205, Entrée 240,
+OPT-01).
+
+Work Log:
+- LA MESURE AVANT TOUT (R11) : le hachage de fichiers volumineux
+  instrumenté DANS LE HARNAIS LOUPE (mesure_hotpath_shani.py) — tls13-02 =
+  98,11 % des instructions exécutées (64/256 Kio, le profil stable, chaque
+  condensé vérifié à hashlib avant verdict) ; la pièce consignée AVANT le
+  premier octet de la variante (preuves_v150/hotpath_shani/, l'ordre
+  constaté sur les heures des fichiers).
+- LES SÉMANTIQUES ÉPINGLÉES PAR LE CODE : experience_semantique_shani.py
+  (rnds2 : l'implicite en XMM0[63:0] — les sommes W+K —, EAU n'y est pour
+  rien ; msg1/msg2 : les fenêtres, msg2 CHAÎNÉ) ; epreuve_compression_shani
+  (MA structure à la main : 100/100 au juge Python, les QUATRE FIPS verts,
+  le corpus aux bords vert — deux défauts de JUGE attrapés par la machine
+  droite : la précédence ^/+ du Python, les faux messages 448/896).
+- LA FAMILLE shani ÉCRITE-AVANT-CODE : la sonde (CPUID SHA ∧ SSSE3), la
+  compression (LE contrat de tls13-02 — 16 phases déroulées, ZÉRO saut, K
+  du scellé en seize groupes RIP, le masque @0x2800), l'absorbeur (LE
+  contrat de tls13-03 — la sonde UNE fois par appel, les DEUX appels
+  directs : 0xD080 la variante, 0xC080 LE SCELLÉ R7) ; l'ARRÊT D161
+  (42/856/159 o → 0x40/0x380/0xC0) ; AUCUN bloc dans la carte (les ids
+  préfigurés g210001..003 — la cérémonie au développeur).
+- LA VÉRIFICATION (verifier_shani_v150.py, 18 VERTS) : round-trip 100 %
+  (345 instructions), temps constant STRUCTUREL, concordance au plan (les
+  20 RIP, les 3 appels), héritage byte-identique ; l'émulation (la sonde
+  NATURELLE 0 sous qemu64, le routage NOMMÉ aux deux sens — le compteur
+  prouve le scellé au verdict 0, le verdict 1 forcé meurt DANS LE SLOT de
+  la variante) ; le natif (la sonde 1 recroisée /proc/cpuinfo, les QUATRE
+  FIPS aux TROIS compositions, l'égalité sur 1 000 tampons aux bords,
+  l'invariance) ; trois défauts d'instrument du vérificateur corrigés en
+  route (l'accès unifié base_img+rva, le trampoline ASSEMBLÉ PAR KEYSTONE —
+  « 4C 89 D0 » hand-derivé était mov rax,r10 —, le pas 32 des gabarits 21).
+- LA MESURE : 8 Mio, la même entrée, le condensé vérifié avant ET pendant
+  le comptage, les opérations COMPLÈTES, 15 répétitions : l'avant 115 858
+  402 cycles (13,811/o) · l'après 19 848 520 (2,366/o) · LE GAIN 5,84× ·
+  la surcharge du dispatch sous le bruit (+0,15 %/−0,69 % aux deux
+  courses) ; le dry-run du kit : 6,52× à charge différente.
+- LE KIT TERRAIN : image-shani.bin (48 Kio, sha256 df851b7c… — la K du
+  scellé, le masque, la famille sha SCELLÉE [R7], la variante), le
+  scénario bifteau sans outil, le LISEZMOI, le manifeste ; la mesure du
+  développeur dans les conditions exactes de l'instruction — le témoin
+  temoin-shani.txt attendu.
+- Frontières : les QUATRE pièces scellées INTACTES (recoupées avant/après),
+  garde sceau-I 14/14, AUCUN scellement (copies de laboratoire, aucune
+  carte, aucune balise), le run terrain au développeur, aucun chiffre
+  fabriqué, append-only.
+- SUITE : la vague 3 est EXÉCUTÉE en ses six paquets (235→240) — au
+  développeur : le témoin du kit SHA-NI, la cérémonie d'ère si la variante
+  s'embarque, et la campagne de comparaison des workflows (le paquet 5,
+  les bras T/C, le plan verrouillé D204).

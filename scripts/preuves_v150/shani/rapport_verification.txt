@@ -1,0 +1,39 @@
+VÉRIFICATION DU PAQUET 6/6 — LA VARIANTE SHA-NI (lfh49a1xf, D205)
+==================================================================
+
+Horodatage : 2026-11-12 00:12:35Z · graine 20261112
+Instrument : keystone/capstone (round-trip), Unicorn 2.1.4 (la direction scalaire), le CPU SHA-NI natif du laboratoire (les deux directions), mmap exécutable + ctypes (l'exécutif natif)
+
+LES CONTRÔLES :
+  [VERT]   V1.a:round-trip-100-pourcent — 345 instructions ré-assemblées de leur transcription capstone — octet pour octet (K1 du rejeu)
+  [VERT]   V1.b:temps-constant-shani-02 — zéro saut et zéro appel dans le corps (218 instructions) ; tout accès mémoire à déplacement fixe (rcx le contexte, rdx le bloc, rip les constantes du plan, rsp la crémaillère) — les 64 tours s'exécutent TOUJOURS, aucune adresse ne lit les données
+  [VERT]   V1.c:sauts-publics-shani-03 — les 3 sauts conditionnels, chacun précédé de son test sur registre PUBLIC (r13 la longueur N, rbp le complément au tampon, r15 le verdict CPU — jamais une donnée absorbée) : je ← test r13, r13 ; jb ← cmp r13, rbp ; je ← test r15, r15
+  [VERT]   V1.d:concordance-appels-au-plan — les TROIS appels directs == le plan (la sonde 0xd000, la variante 0xd080, LE SCELLÉ 0xc080 — R7) ; trouvés : call 0xc080, call 0xd000, call 0xd080
+  [VERT]   V1.e:concordance-rip-au-plan — les 20 déplacements RIP visent le masque @0x2800 (×4) et les SEIZE groupes de la table K du scellé @0x2f00+16·g — la source unique, jamais re-déclarée
+  [VERT]   V1.f:heritage-byte-identique — tls13-01..04 : les notations ré-assemblées == les octets extraits du scellé loupe.exe @0xC000-0xC3C0 (R7) — le repli de la variante appellera CES octets-là
+  [VERT]   V2.a:la-sonde-naturelle-rend-zero — la sonde sous Unicorn (modèle qemu64, sans SHA) rend rax = 0 — le repli scalaire est le chemin NATUREL de l'émulation, aucun forçage
+  [VERT]   V2.b:fips-au-chemin-scalaire-emule — les QUATRE vecteurs dorés par la composition scellé→variante(dispatch naturel 0)→scellé == hashlib
+  [VERT]   V2.c:corpus-scalaire-emule — 120 tampons aux bords — la variante AU CHEMIN SCELLÉ == hashlib octet pour octet
+  [VERT]   V2.d:invariance-decoupage — le témoin de 1 000 o en un appel == par 333 morceaux de 3 + 1 octet — l'invariance au chemin variante-scalaire
+  [VERT]   V2.e:le-routage-nomme-aux-deux-sens — verdict 0 (naturel) : 4 compressions AU SCELLÉ (0xC080), 0 à la variante, la sonde appelée UNE fois ; verdict 1 (forcé, la sonde neutralisée en copie de laboratoire) : le dispatch ROUTE à la variante — l'émulateur meurt DANS LE SLOT de shani-02 sur sha256rnds2 (invalide sous qemu64) : LA PREUVE du routage aux deux sens
+  [VERT]   V3.a:la-sonde-reelle-recroisee — la sonde native rend rax = 1 ; /proc/cpuinfo porte sha_ni ET ssse3 — le verdict RECROISÉ au système, le dispatch vivra le chemin SHA-NI sur cette machine
+  [VERT]   V3.b:fips-dorés-aux-trois-compositions — les QUATRE vecteurs × TROIS compositions (scellée ; variante dispatch réel → SHA-NI ; variante dispatch FORCÉ scalaire — la sonde neutralisée en copie de laboratoire) == l'attendu FIPS == hashlib — « dispatch forcé dans les deux sens » : le vide=VERT · « abc »=VERT · les 448 bits=VERT · les 896 bits=VERT
+  [VERT]   V3.c:egalite-scalaire-shani-corpus — 1000 tampons aléatoires (graine 20261112:corpus, les longueurs aux bords 0..65 537) : scellée == variante-SHA-NI == variante-forcée-scalaire == hashlib — l'égalité exigée
+  [VERT]   V3.d:invariance-decoupage-shani — le témoin de 300 o : en un appel == par 100 morceaux de 3 == par 63/64/65/63/45 — au chemin SHA-NI
+  [VERT]   V4.a:mesure-avant-apres — l'avant (composition scellée) 115,858,402 cycles médiane ; l'après (variante, dispatch réel SHA-NI) 19,848,520 ; le gain 5.84× ; la surcharge du dispatch -0.69 % — 15 répétitions par bras, CHAQUE condensé vérifié à hashlib avant et pendant le comptage, les opérations COMPLÈTES init+absorb+final
+  [VERT]   V5.a:les-quatre-scellés-intacts — loupe.exe c1115105… · proxy.exe 446279f3… · demo.exe df8f2e50… · selftest.exe 8038585b… — identiques AVANT et APRÈS le paquet (la variante vit en copies de laboratoire)
+  [VERT]   V5.b:le-garde-sceau-I — les 14 arbres signés VERTS — l'arbre signé n'est pas touché (aucune cérémonie : elle appartient au développeur)
+  [VERT]   V6.a:la-mesure-avant-la-notation — mesure_hotpath.txt (tls13-02 = 98,11 %, consignée AVANT l'optimisation) existait et fut écrite AVANT la première notation shani — l'ordre de R11 constaté sur les heures des fichiers ; le hot path était MESURÉ avant que le premier octet de la variante n'existe : l'optimisation n'est PAS refusée, elle est FONDÉE
+
+LA MESURE AVANT/APRÈS (l'entrée OPT-01 — les nombres de CE rapport) :
+  l'avant  (composition scellée tls13-01/03/04) : 115,858,402 cycles médiane (13.811 cycles/o, IQR 115,106,742..116,246,490)
+  l'après  (variante, dispatch réel SHA-NI)     : 19,848,520 cycles médiane (2.366 cycles/o)
+  la variante à dispatch FORCÉ scalaire         : 115,058,992 cycles médiane (13.716 cycles/o — le repli exercé sur machine SHA-NI)
+  LE GAIN : 5.84× · la surcharge du dispatch : -0.69 %
+  Conditions : 8 Mio de PRNG déterministe (graine 20261112:mesure), la MÊME entrée aux deux bras, la MÊME machine, les opérations COMPLÈTES init+absorb+final, le condensé VÉRIFIÉ à hashlib avant ET pendant le comptage
+
+PIÈCES : mesures_avant_apres.csv (sha256 4ca633c417e6704941e6dd3c9136cd42c72426557af0f94d39357f9f83d87d0f)
+
+FRONTIÈRES : les QUATRE pièces scellées INTACTES (sha256 identiques avant/après) ; le garde sceau-I 14/14 VERT ; la variante vit en COPIES DE LABORATOIRE aux adresses du plan — AUCUN scellement, la cérémonie d'ère et le run terrain appartiennent au développeur ; aucun chiffre fabriqué — tout nombre est LU d'une pièce ou mesuré devant témoin.
+
+BILAN : 19 contrôles — 19 VERTS, 0 ÉCHECS

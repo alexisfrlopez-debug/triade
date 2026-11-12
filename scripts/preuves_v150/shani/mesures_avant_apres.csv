@@ -1,0 +1,4 @@
+bras,median_cycles,q1_cycles,q3_cycles,cycles_par_octet,repetitions
+scellée (l'avant),115858402,115106742,116246490,13.8114,15
+variante SHA-NI (l'après),19848520,19746148,19948298,2.3661,15
+variante forcée scalaire,115058992,114634654,115734636,13.7161,15

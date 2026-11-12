@@ -1,0 +1,75 @@
+MESURE DU HOT PATH — LE HARNAIS LOUPE INSTRUMENTÉ (R11)
+=========================================================
+
+Horodatage        : 2026-11-11 23:33:52Z
+Instruction       : lfh49a1xf (le paquet 6/6 de la vague 3)
+Règle             : R11 — le hot path identifié PAR MESURE,
+                    la mesure consignée AVANT TOUTE optimisation
+Graine            : 20261112 (la graine de la vague 3)
+Instrument        : loupe/harnais_noyau.py réutilisé tel quel
+                    (l'émulation aux RVA du plan, les héritages
+                    EXTRAITS DES SCELLÉS, le mini-OS virtuel) ;
+                    le comptage dans un hook UC_HOOK_CODE
+                    SÉPARÉ — le juge jamais touché
+Périmètre mesuré  : loupe-05(0, N) — le hachage D'UN FICHIER
+                    volumineux PAR LA COMPOSITION HÉRITÉE :
+                    tls13-01 init → fenêtres 64 Kio → tls13-03
+                    absorption → tls13-02 compression → tls13-04
+                    finalisation (les fenêtres glissantes, le
+                    fichier JAMAIS tenu en mémoire)
+
+LES SCELLÉS RELUS AVANT LA MESURE (l'ancrage R7) :
+  loupe.exe      sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+  proxy.exe      sha256 446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+  demo.exe       sha256 df8f2e50949b14c072f139013a6166a041e573e49b6872d826958f522495e4af
+  selftest.exe   sha256 8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0
+
+LA MESURE (chaque condensé VÉRIFIÉ à hashlib.sha256 AVANT
+le verdict — l'instrument se contrôle avant de juger) :
+
+Fichier 65536 o (1024 blocs) — condensé VÉRIFIÉ :
+  tls13-02 compression                4,489,500   98.11 %
+  tls13-03 absorption                    86,039    1.88 %
+  tls13-04 finalisation                     144    0.00 %
+  tls13-01 initialisation                    12    0.00 %
+  loupe-05 corps                             63    0.00 %
+  minilibc heritee (libc-01/07)               0    0.00 %
+  shims systeme fichiers                      2    0.00 %
+  loupe-01 ouverture                          0    0.00 %
+  autre                                       0    0.00 %
+  TOTAL                               4,575,760
+
+  → LA COMPRESSION tls13-02 : 4,489,500 instructions = 98.11 % du total
+  → LA FAMILLE SHA ENTIÈRE  : 4,575,695 = 100.00 % du total
+
+Fichier 262144 o (4096 blocs) — condensé VÉRIFIÉ :
+  tls13-02 compression               17,944,860   98.12 %
+  tls13-03 absorption                   344,156    1.88 %
+  tls13-04 finalisation                     144    0.00 %
+  tls13-01 initialisation                    12    0.00 %
+  loupe-05 corps                            147    0.00 %
+  minilibc heritee (libc-01/07)               0    0.00 %
+  shims systeme fichiers                      8    0.00 %
+  loupe-01 ouverture                          0    0.00 %
+  autre                                       0    0.00 %
+  TOTAL                              18,289,327
+
+  → LA COMPRESSION tls13-02 : 17,944,860 instructions = 98.12 % du total
+  → LA FAMILLE SHA ENTIÈRE  : 18,289,172 = 100.00 % du total
+
+LE VERDICT DE LA MESURE (R11) : le hachage d'un fichier
+volumineux dans loupe-05 vit DANS LA COMPRESSION tls13-02
+— la seule région dont la part croît linéairement avec la
+taille (chaque bloc de 64 o la vit intégralement ;
+l'absorption tamponnée ne fait que l'appeler ;
+l'initialisation et la finalisation sont O(1) ; le corps de
+loupe-05 et les shims ne vivent qu'aux fenêtres). LE HOT
+PATH EST CONFIRMÉ PAR MESURE : toute optimisation du
+hachage vise LA COMPRESSION D'UN BLOC DE 64 OCTETS — le
+contrat de tls13-02, ni un autre périmètre, ni un
+découpage partiel.
+
+PIÈCES : comptage_instructions.csv (sha256 eb3038c04972ece7f31c1e3c1158d66cf257b4e99055402bad5d0ad9c18fb2af)
+La mesure consignée AVANT l'écriture du premier octet de la
+variante SHA-NI (l'ordre de R11 : mesurer, consigner,
+PUIS optimiser — le refus si la mesure manque).
