@@ -1,0 +1,4 @@
+============================================================================
+ LE KIT 2 DUDECT TEMPS REEL - correctif n.o 2 - paquet CORRECTIF2-kit-dudect
+ Les quatre familles crypto de la piece scellee (tls13-02, tls13-13,
+La syntaxe de la commande n'est pas correcte.

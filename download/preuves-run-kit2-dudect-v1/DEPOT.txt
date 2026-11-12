@@ -1,0 +1,34 @@
+LE DEPOT DES PREUVES - TRIADE kit-2 dudect, l'exe en 1 clic v1
+Run : 20261112T221502Z (UTC)   code de sortie du lanceur du kit : 255
+
+OU DEPOSER : le dossier Drive "Triade" -> sous-dossier "test"
+(l'exe a ouvert ce dossier dans votre navigateur - deposez preuves-kit2-dudect.zip).
+
+CE QUE CONTIENT CE ZIP :
+  run-console-<horodatage>.txt   la console ENTIERE du lanceur du kit, telle quelle
+  journal-dudect-*.csv           le journal de mesure du run (la piece du kit)
+  sortie-run.txt                 la sortie du mesureur (la piece du kit)
+  sortie-appel.txt               l'epreuve d'appel FIPS abc (la piece du kit)
+  temoin-dudect-BROUILLON.txt    le brouillon de temoin auto (le kit l'ecrit)
+  DEPOT.txt                      le present fichier
+
+LE GESTE QUI RESTE A VOTRE MAIN (le LISEZMOI du kit) : completez le temoin
+(l'etat EFFECTIF du turbo, vos observations memes defavorables - D189),
+datez et signez de votre main, puis renvoyez - le labo recoupe et consigne :
+JAMAIS avant le run, jamais sans pieces.
+
+LE KIT EMBARQUE (octet pour octet le paquet CORRECTIF2 du coffre, 10 pieces) :
+  LANCER-KIT-2-DUDECT.bat : e5c3dee06a1d50b6e9bb2e549a5dcbe27adfa33e2669f6509e76fc2a546a67a0
+  LISEZMOI-dudect.txt : a6269ebe310f741bdfa2ccb6cc9c2dcf898eb1fc3679c0e76f40c3ac62feb470
+  dudect_v150.c : 8c90ef8232e478a41d38a9edbba21f14f037939d7e8900d643063f5df53f06f3
+  dudect_v150.exe : 1f1d8c966478ac41f0e95797ad177285218b3c3d470d23dd4daf5ec5e96223f0
+  extraire_cibles_v150.py : 6b07216e7838586529ee6b5a7e081a750ad71e9a738033804f625fcbc820843c
+  test_appel.c : 56a35ec0f085ceb855800b438ef8de8ca6a1ae681bdc8f9bb91fdf240dfc6174
+  test_appel.exe : 42903257aa9e3028df44ef77339ffa0f732116bae4806beb51b602c41e9e1e70
+  cibles/manifeste-c.txt : 7293cd86359cebba81d590173a49c462f876cf5ce8b639d5c26c2577713ea5d8
+  cibles/manifeste.json : 93d5a13fcc4d1cb2598b471e291266654d8fec18a9dd3800dba297fbc649db52
+  cibles/proxy-image.bin : 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+
+Aucun jeton n'est embarque dans cet exe : le depot au coffre passe par
+VOTRE geste Drive, jamais par un secret dans le binaire (la frontiere
+du GUI v1 et de l'APK kit android).

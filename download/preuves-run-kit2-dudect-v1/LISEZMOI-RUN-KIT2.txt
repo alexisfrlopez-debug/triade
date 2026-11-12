@@ -1,0 +1,81 @@
+LISEZMOI-RUN-KIT2 — LE RUN N'A PAS VÉCU : LA CAUSE EST NOMMÉE, C'EST LA
+LIGNE 55 DU LANCEUR (13/11/2026)
+==================================================================================
+
+VOTRE GESTE A VÉCU ET IL EST CONSIGNÉ. Vous avez double-cliqué l'exe en
+1 clic ; quatre minutes plus tard le zip des preuves était au coffre
+(né à 22:15:02 UTC, déposé à 22:15:03 — la chaîne 1-clic entière vécut
+de bout en bout : extraction vérifiée, archives du run précédent, le
+VRAI lanceur du kit via cmd /c, la console capturée, le zip construit,
+l'explorateur et le coffre ouverts). La frontière tenue : l'exe n'a
+emporté AUCUN jeton — le dépôt fut VOTRE geste.
+
+MAIS LA MESURE, ELLE, N'A PAS VÉCU. Le zip que vous avez déposé ne porte
+que DEUX pièces (la console du lanceur + DEPOT.txt) : le journal csv,
+sortie-run.txt, sortie-appel.txt et le témoin NE SONT PAS NÉS — le
+lanceur est mort avant de les écrire. L'exe ne vous a pas menti : il a
+mis dans le zip ce qui existait, rien d'autre (il n'a rien fabriqué).
+
+LA CAUSE, LUE SUR VOTRE PIÈCE (D189 : rien ci-dessous n'est deviné) —
+
+  Votre console capturée fait 273 octets. Elle montre TROIS lignes du
+  bandeau, puis cette ligne de cmd.exe :
+
+      La syntaxe de la commande n'est pas correcte.
+
+  et le lanceur rend le code 255 (cité tel quel dans votre DEPOT.txt).
+  La cause vit dans LA LIGNE 55 du LANCER-KIT-2-DUDECT.bat :
+
+      echo  tls13-16, tls13-17), RDTSC/QPC, affinite coeur 0, t de Welch, |t| > 5.
+
+  LE « | » ET LE « > » SONT NUS. Pour cmd.exe, un « | » n'est jamais du
+  texte : c'est un TUYAU entre deux commandes. La ligne se lit donc
+  « echo … t de Welch, » | t | > 5. — un tuyau vers une commande « t »,
+  puis une REDIRECTION « > 5. » sans commande autour : la syntaxe est
+  incorrecte, cmd.exe abandonne le script ENTIER sur place. La ligne 55
+  ne s'affichera donc JAMAIS (l'erreur survient au déchiffrage, avant
+  l'exécution) — voilà pourquoi votre console s'arrête pile après
+  « (tls13-02, tls13-13, » : la dernière ligne qui ait vécu est la 54.
+
+  Elle était là DEPUIS LE DÉBUT : la ligne fut écrite à la naissance du
+  kit (édition v0.15.0, où elle porte le numéro 34), elle a traversé
+  TOUTES les éditions (MISE-A-JOUR n° 43, CORRECTIF2 n° 55) sans que
+  rien ne l'exécute jamais — parce que LA MESURE N'AVAIT JAMAIS ÉTÉ
+  COURUE. Votre double-clic du 12/11 (la « fenêtre morte » du verdict
+  précédent) et votre exe en 1 clic d'aujourd'hui sont le MÊME mort :
+  le candidat « cadre de sécurité » et le candidat « double-clic direct »
+  du LISEZMOI-VERDICT sont donc REMPLACÉS par la cause certaine — le
+  lanceur avait bien DÉMARRÉ (trois lignes vécues en moins d'une seconde)
+  et mourut à la quatrième, trop vite pour laisser une trace ; l'exe en
+  1 clic l'a rattrapée : votre console capturée EST la trace.
+
+CE QU'IL FAUT RETENIR DE L'HONNÊTETÉ DE VOTRE EXE (à garder pour la
+suite) : il a capturé la console ENTIÈRE (l'erreur de cmd.exe vit sur le
+flux d'erreur : elle est DANS la pièce — la capture embrasse les deux
+flux) ; il a rapporté le code 255 TEL QUEL ; il n'a pas maquillé le zip.
+C'est exactement la frontière promise : l'exe ne mesure rien, il porte.
+
+LA CONDUITE À TENIR (le plus court chemin) :
+
+  1. NE RE-COUREZ PAS l'exe en 1 clic en l'état : le lanceur mourra à la
+     MÊME ligne 55, à chaque fois, pour toujours. Ce n'est pas votre
+     machine, ce n'est pas l'antivirus, ce n'est pas le cadre de
+     sécurité : c'est la ligne du .bat, elle est la même chez vous et
+     au labo (trois fois octet pour octet : le coffre, votre extraction
+     du 12/11, l'exe embarqué).
+
+  2. DITES LE MOT au labo (un simple « oui » ou « fais la correction ») :
+     l'édition corrective naît — la ligne 55 ET sa sœur de fin de lanceur
+     (la « lecture honnête », mêmes tuyaux nus) échappées proprement, et
+     dans le même geste les deux écarts de source déjà promis au verdict
+     précédent (le retour du VirtualProtect vérifié ; l'étiquette
+     « anifeste] »). Le paquet re-livré, l'exe en 1 clic re-généré.
+
+  3. PUIS RE-COUREZ : le geste restera le plus court de la campagne —
+     double-clic, le zip naît sur le Bureau, déposez-le, complétez et
+     signez le témoin. LA MESURE, elle, restera la même : dudect_v150
+     cibles 200, le t de Welch, la lecture honnête |t| > 5 / |t| <= 5.
+
+La mesure reste JAMAIS ENCORE COURUE — mais pour la première fois, la
+chaîne qui la porte a vécu jusqu'au bout ET sa mort est une pièce.
+==================================================================================

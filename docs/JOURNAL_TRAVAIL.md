@@ -10346,3 +10346,115 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   déposer preuves-kit2-dudect-<ts>.zip au coffre /test (l'explorateur et
   le coffre s'ouvrent seuls), compléter et signer le témoin. Le labo
   relèvera, recoupera et lira LE RUN — la mesure jamais encore courue.
+
+## Entrée 259 — LE RELEVÉ DU RUN KIT-2 : LE RUN N'A PAS VÉCU, LA LIGNE 55 DU LANCEUR NOMMÉE SUR PIÈCES (la commande du développeur du 13/11 : « preuves du kit-2 dans /test du drive ») — preuves-kit2-dudect-20261112T221502Z.zip (2 722 o, md5 9e697c37…) : la console ENTIÈRE du lanceur capturée POUR LA PREMIÈRE FOIS (273 o : trois lignes du bandeau puis « La syntaxe de la commande n'est pas correcte. »), le code 255 rapporté tel quel, AUCUNE mesure née — la mesure demeure JAMAIS ENCORE COURUE (13/11, la session du relevé kit-2)
+
+- LA COMMANDE : « preuves du kit-2 dans /test du drive » — la suite
+  promise à l'Entrée 258 : le développeur double-clique l'exe 1-clic,
+  dépose le zip des preuves au coffre ; le labo relève, recoupe et lit
+  LE RUN.
+
+- LE RELEVÉ (le coffre /test, déposé le 12/11 22:15:03Z — QUATRE MINUTES
+  ET QUINZE SECONDES après la livraison de l'exe 22:10:48Z) : le listing
+  complet du /test par le relais OAuth (scripts/relever_run_kit2.py —
+  chaque pièce classée LABO / RELEVE-257 / MIROIR / ANCIEN / NOUVEAU),
+  la pièce NOUVELLE unique : preuves-kit2-dudect-20261112T221502Z.zip
+  (2 722 octets, md5 9e697c37… recoupé EXACT), le zip né sur le Bureau
+  à 22:15:02Z, déposé UNE SECONDE plus tard — le geste du développeur.
+  Les pièces du labo et le dépôt du run Android (Entrée 257) INTACTES.
+  Le zip MISE-A-JOUR refusé AU TÉLÉCHARGEMENT par Drive (HTTP 403
+  « malware or spam » — un fait du COFFRE comme le 12/11, nommé) : la
+  généalogie fut lue sur les éditions du DÉPÔT, toutes locales.
+
+- LA CHAÎNE 1-CLIC VÉCUE DE BOUT EN BOUT (la coquille Win32 de l'Entrée
+  258, son PREMIER run) : extraction re-recoupée sha256 pièce par pièce
+  (fail-closed), D99 (les restes archivés), LE VRAI lanceur vécu via
+  cmd /c, la console ENTIÈRE capturée, le zip construit sur le Bureau,
+  l'explorateur et le coffre ouverts, le dépôt PAR LE GESTE du
+  développeur (AUCUN jeton — la frontière tenue). Le DEPOT.txt cite les
+  DIX pièces embarquées (le .bat e5c3dee0… == le .bat du coffre, de
+  l'extraction du 12/11 et de l'exe, TROIS FOIS octet-exact ; l'image
+  scellée 0782d7e2… ; LE CORRIGÉ test_appel.exe 42903257…). LE ZIP DES
+  PREUVES NE PORTE QUE DEUX PIÈCES (run-console + DEPOT.txt) : les
+  pièces de mesure (journal csv, sortie-run, sortie-appel, témoin) ne
+  sont PAS NÉES — l'exe n'a RIEN fabriqué, l'écart est VISIBLE dans le
+  zip, nommé par les pièces elles-mêmes.
+
+- LA LECTURE (D189 : rien n'est deviné, tout est lu) : LE RUN N'A PAS
+  VÉCU. La console capturée fait 273 octets, CRLF, elle montre TROIS
+  lignes du bandeau (les lignes 52-54 du .bat), puis le message de
+  cmd.exe en locale française « La syntaxe de la commande n'est pas
+  correcte. » et l'abandon du batch — le code de sortie 255, rapporté
+  TEL QUEL au DEPOT.txt. LA CAUSE NOMMÉE : LA LIGNE 55 du
+  LANCER-KIT-2-DUDECT.bat — « echo  tls13-16, tls13-17), RDTSC/QPC,
+  affinite coeur 0, t de Welch, |t| > 5. » — LE PIPE ET LE CHEVRON NUS
+  dans un echo : cmd.exe lit le « | » comme un TUYAU entre commandes, la
+  redirection « > 5. » arrive sans commande autour : erreur de syntaxe
+  au DÉCHIFFRAGE (avant l'exécution — la ligne 55 ne s'affichera donc
+  JAMAIS), abandon du script entier. La console s'arrête pile après
+  « (tls13-02, tls13-13, » : la dernière ligne vécue est la 54.
+
+- L'ARBITRAGE AVEC L'ENTRÉE 253 : les candidats (A) Mark-of-the-Web et
+  (B) double-clic direct sont REMPLACÉS par la cause certaine : (C) LA
+  LIGNE 55. Le lanceur avait BIEN DÉMARRÉ (contrairement à la
+  formulation de l'Entrée 253 : trois echo vécus en moins d'une
+  seconde) et mourut à la quatrième ligne du bandeau ; la fenêtre se
+  referma sans pause (l'erreur de parsing ne pause pas — les pauses ne
+  vivent que sur les refus nommés) : c'est exactement la « fenêtre
+  morte » que le candidat (B) décrivait, au mécanisme près. L'ÉCART DE
+  MÉTHODE nommé : la relecture de l'Entrée 253 vérifia CRLF 257/257,
+  ASCII pur, BOM, étiquettes goto, 5 pauses — mais PAS les
+  MÉTACARACTÈRES nus dans les echo : la ligne fatale était sous les
+  yeux du labo depuis la naissance du kit.
+
+- LA GÉNÉALOGIE (la ligne relue dans TOUTES les éditions, octet par
+  octet) : l'édition ORIGINALE v0.15.0 (scripts/kits_mesure_v150/
+  kit_dudect, 28cd74dd…, ligne 34) la porte DÈS LA NAISSANCE ;
+  l'édition MISE-A-JOUR (edition_mise_a_jour/sources, 2b5b78ba…,
+  ligne 43) l'hérita ; le CORRECTIF2 (e5c3dee0…, ligne 55 — le .bat
+  vivant) l'hérita encore — elle ne fut JAMAIS exécutée sur Windows
+  parce que LA MESURE N'AVAIT JAMAIS ÉTÉ COURUE : le double-clic du
+  12/11 (Entrée 253) et l'exe 1-clic d'aujourd'hui sont LE MÊME MORT,
+  le second l'a rattrapé : la console capturée EST la trace. LA SECONDE
+  MINE : la « lecture honnête » de fin de lanceur (l.163 de
+  l'originale, l.218 du CORRECTIF2 : « |t| ^> 5 ») porte les MÊMES
+  TUYAUX NUS avec les chevrons échappés — jamais atteinte (la 55 tue
+  avant), à réparer dans le MÊME geste.
+
+- LA REPRODUCTION : le labo n'a NI Windows NI wine (nommé, jamais
+  maquillé) — la pièce console EST le témoignage du comportement de
+  cmd.exe sur la machine du développeur (l'expérience fut faite PAR LE
+  TERRAIN) ; la sémantique du tuyau et de la redirection sans commande
+  est la documentation publique de cmd.exe ; la ligne fut relue octet
+  par octet dans les trois références. La chaîne est complète sans
+  Windows au labo.
+
+- LA FRONTIÈRE : l'exe 1-clic NE MESURE RIEN et n'a rien maquillé — la
+  capture embrasse stdout ET stderr (l'erreur de parsing, émise sur le
+  flux d'erreur, est DANS la pièce : la « console ENTIÈRE » prouvée) ;
+  le code 255 rapporté tel quel ; le zip honnête (deux pièces, rien de
+  fabriqué) ; le dépôt par le geste du développeur (aucun jeton) ; D99
+  tenue. LA CONSÉQUENCE : la mesure demeure JAMAIS ENCORE COURUE
+  (CE-QUI-RESTE-A-FAIRE.txt inchangé sur ce point) ; le kit-2 est
+  INUTILISABLE EN L'ÉTAT par le .bat (toute nouvelle tentative —
+  double-clic, exe 1-clic, GUI — mourra à la ligne 55) ; AUCUNE donnée
+  de mesure n'existe : rien à lire, rien à consigner au témoin, la
+  signature du développeur n'a rien à couvrir.
+
+- LA PIÈCE LIVRÉE : LISEZMOI-RUN-KIT2.txt (4 686 octets, UTF-8, sha256
+  9d2a6349…) — la lecture en mots simples (ce qui a vécu, ce qui n'a
+  pas vécu, pourquoi, la conduite : NE PAS re-courir en l'état, DIRE LE
+  MOT pour l'édition corrective) ; les preuves au dépôt
+  (download/preuves-run-kit2-dudect-v1/ : le zip TEL QUEL + les deux
+  pièces aplaties + le LISEZMOI).
+
+- SUITE : au développeur — l'édition corrective est prête à naître sur
+  son mot (D189 : la cause est nommée, le correctif n'est plus
+  aveugle) : la ligne 55 ET la ligne 218 échappées (^|t^|), les deux
+  écarts de source déjà promis à l'Entrée 253 (334 : le retour du
+  VirtualProtect vérifié ; 307 : l'étiquette « anifeste] »), le paquet
+  re-livré, l'exe 1-clic re-généré — PUIS re-courir : le geste restera
+  le plus court de la campagne (double-clic, dépôt, témoin signé). En
+  suite de chaîne : les preuves-constat-arm pour clore le téléphone,
+  puis les gestes ouverts (le geste B SHA-NI réel, la campagne D204, la
+  cérémonie d'ère, le séquestre D183, la réplication).
