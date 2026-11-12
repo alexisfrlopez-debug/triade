@@ -1,0 +1,26 @@
+RECOUPEMENT DU GESTE A — le run terrain du correctif n° 2 du kit-shani (12/11 11:26 heure locale du développeur)
+l'annonce : « kit shani avec preuves déposé dans /test du drive »
+
+[VERT] A1 — le premier niveau du /test ne porte AUCUN dossier créé après la livraison du n° 2 (outre CORRECTIF2) — 29 entrées de premier niveau, aucune tardive
+[VERT] A2 — les pièces du geste A (VERDICT 588 o, journal 325 o) déposées APRÈS la livraison du n° 2 — verdict créé 2026-11-12T10:28:10.063Z · journal créé 2026-11-12T10:28:10.227Z
+[VERT] A3 — le scénario et le moteur du kit au /test datent de la livraison (non re-téléversés par le geste) — scénario créé 2026-11-12T10:16:08.365Z · moteur créé 2026-11-12T10:16:12.630Z
+[VERT] A4 — le recompte récursif du /test : 496 entrées (478 + l'arbre n° 2 [16] + le geste A [2]) — compté 496
+[VERT] B1 — le scénario du kit n° 2 au /test EST l'octet-pour-octet le scénario livré (d9def0b4…, 33 925 o)
+[VERT] B2 — moteur-shani.bin IDENTIQUE au n° 1, au kit du dépôt et à l'original du laboratoire (761ab194…, l'empreinte du témoin)
+[VERT] B3 — moteur-shani.s IDENTIQUE au n° 1 et au kit du dépôt
+[VERT] B4 — cibles/manifeste.json IDENTIQUE au n° 1 et au kit du dépôt
+[VERT] B5 — proxy-image.bin IDENTIQUE au n° 1 et à l'empreinte du manifeste (0782d7e2…)
+[VERT] B6 — la plage scellée tls13-02 recoupée au manifeste (RVA 0xC080, 448 o, 2ce2517a…)
+[VERT] B7 — moteur-shani-execute.bin (autotest v2) == moteur-shani.bin livré — la pièce relue intacte
+[VERT] B8 — le LISEZMOI-shani.txt du kit n° 2 == celui du dépôt
+[VERT] C1 — le journal porte QUATRE lignes : la machine (ALEKPC · AMD64 · Windows · Python 3.14.3 — LE RUN TERRAIN) puis T0, T1, le constat
+[VERT] C2 — le constat CPUID (famille 6 · modèle 142 · pas 12 · SHA-NI ABSENT) IDENTIQUE au journal et au verdict
+[VERT] C3 — le verdict porte l'ÉCHEC NOMMÉ T0.silicium avec le CONSTAT complet et la règle « renvoyer TEL QUEL »
+[VERT] C4 — la mutation de format : le journal du geste A porte la ligne machine (format n° 2), le journal du 10:02 (n° 1) n'en portait PAS — le scénario exécuté fut le n° 2
+[VERT] D — VERDICT-run-shani.txt du /test == la copie du laboratoire
+[VERT] D — scenario-shani-journal.log du /test == la copie du laboratoire
+[VERT] D — temoin-shani.txt du /test == la copie du laboratoire
+[VERT] D — moteur-shani-execute.bin du /test == la copie du laboratoire
+[VERT] D — le témoin cohérent (machine c-6af57fe2…, modèle 173, 819.8 → 128.6 = 6,37×, les empreintes du moteur et de l'image)
+
+BILAN : 21/21 VERT

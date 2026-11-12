@@ -8742,3 +8742,37 @@ Work Log:
   obligatoire), les trois autres kits EN ATTENTE, la campagne de
   comparaison D204, la cérémonie d'ère, le séquestre D183, la
   réplication.
+
+
+Task ID: 152
+Agent: Z.ai (agent principal)
+Task: LA RÉCEPTION DU GESTE A (l'annonce du développeur « kit shani avec
+preuves déposé dans /test du drive ») — le rapatriement des preuves du
+correctif n° 2, le recoupement 21/21 VERT (la chaîne de garde close, la
+chronologie datée aux métadonnées Drive), la consignation de l'Entrée 245 :
+le refus auto-portant du terrain — la règle D206 confirmée au terrain,
+D205 demeurant consacrée au laboratoire, jamais scellée.
+
+Work Log:
+- LE RAPATRIEMENT : le /test re-listé (496 entrées = 478 + l'arbre n° 2
+  [16] + le geste A [2], aucun autre dépôt — le premier niveau sans
+  entrée tardive), les 25 fichiers shani rapatriés dont les DEUX pièces
+  du geste A (le VERDICT 588 o, le journal 325 o).
+- LE RECOUPEMENT (scripts/recouper_geste_a_shani.py, rapport à
+  preuves-run-shani/recoupement-geste-a.txt, sha256 32072b83…) : 21/21
+  VERT — LA CHAÎNE (le scénario exécuté == le n° 2 livré d9def0b4… ; le
+  moteur, la source, les cibles et le LISEZMOI identiques au n° 1 et au
+  dépôt ; la plage scellée tls13-02 recoupée au manifeste ; le moteur
+  exécuté == le moteur livré), LA CHRONOLOGIE (le kit livré 10:16 UTC,
+  le run 10:26:54 UTC — 11:26:54 heure locale, le dépôt 10:28:10 UTC,
+  76 s après le run), LE RUN AUTO-PORTANT (la machine ALEKPC journalisée
+  à l'ouverture, le constat CPUID « GenuineIntel » · famille 6 · modèle
+  142 · pas 12 · SHA-NI ABSENT au journal ET au verdict, la mutation de
+  format prouvant le scénario n° 2), L'AUTOTEST v2 == les copies du
+  laboratoire (le témoin 6,37×).
+- LA CONSIGNATION : l'Entrée 245 au journal de travail, la présente
+  tâche au worklog, le commit, le push GitHub, le miroir Drive et le kit
+  Cérémonie tenus par le hook post-commit.
+- SUITE : au développeur — le geste B (aucun obligatoire), les trois
+  autres kits EN ATTENTE, la campagne de comparaison D204, la cérémonie
+  d'ère, le séquestre D183, la réplication.
