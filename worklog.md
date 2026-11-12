@@ -9021,3 +9021,46 @@ Work Log:
   choisir la machine du geste B, le constat-arm au téléphone, la voie 2
   QEMU, le témoin vitrine, la campagne D204, la cérémonie d'ère, le
   séquestre D183, la réplication.
+
+
+Task ID: 158
+Agent: Z.ai (agent principal, session auxiliaire — restauration par bundle,
+lien public du coffre, aucun jeton)
+Task: LA RÉCEPTION DU CRASH KIT-2 ET DU TRANSCRIPT TÉLÉPHONE (l'annonce du
+développeur du 12/11 : « le kit-2 crash au lancement. tu as un fichier
+"terminal transcript" dans /test qui est le journal du run sur téléphone »)
+— le transcript rapatrié et lu, LE CONSTAT-ARM VÉCU VERT (le troisième
+silicium constaté), le crash du kit-2 nommé par l'audit statique (le backend
+_WIN32 de test_appel.c passait l'image en PAGE_EXECUTE_READ puis l'épreuve
+écrit dans la table K — 0xC0000005, l'écriture fautive « mov [rbp+0x2f00],al
+» visible au désassemblage ; le labo ne pouvait pas le voir, le POSIX mappe
+RWX), dudect_v150.exe audité INTACT, LE CORRECTIF N° 2 LIVRÉ (la source RWX
++ la coquille du printf, l'exe du labo PATCHÉ D'UN OCTET 0x20→0x40, le
+paquet 46 pièces sha256 0e930b80…, l'épreuve 45/45 VERT, l'anti-test
+DIVERGENTE, le re-jeu déterministe).
+
+Work Log:
+- LA RESTAURATION : triade-history.bundle (43 874 542 octets) → clone à
+  l'Entrée 250 (7d1cb6b) ; le zip MISE-A-JOUR recoupé sha256 4e7270d7… ==
+  l'Entrée 249, l'arbre extrait, le manifeste lu.
+- LE SONDAGE DU /TEST (par lien public, navigateur sans authentification) :
+  « Terminal transcript » (14:04, 10 099 octets) — le seul dépôt neuf ; les
+  dossiers MISE-A-JOUR/MISE-A-JOUR2 déjà traités à l'Entrée 250.
+- LE TRANSCRIPT (constat-arm sur téléphone) : voir l'Entrée 251 — VERT
+  code 0, le troisième silicium constaté.
+- L'AUTOPSIE DU KIT-2 : le lanceur .bat audité d'abord (ASCII, CRLF, tout
+  refus porte un pause — impossible de mourir en silence) ; les exe
+  désassemblés (objdump) ; l'hypothèse rand_s REFUTÉE (shim mingw, GetProcAddress
+  à l'exécution) ; LA CAUSE TROUVÉE : PAGE_EXECUTE_READ + écriture de
+  mutation = 0xC0000005 ; les quatre occurrences de l'immédiat 0x20
+  discriminées (une VirtualProtect, trois memcmp 32).
+- LE CORRECTIF N° 2 : la source (PAGE_EXECUTE_READWRITE + printf réparé),
+  l'exe PATCHÉ D'UN OCTET (0x777e), le paquet assemblé (46 pièces,
+  déterministe), l'épreuve 45/45 VERT, l'anti-test DIVERGENTE, le
+  désassemblage du patché vérifié, le re-jeu identique.
+- LA CONSIGNATION : Entrée 251 + la présente Task 158 — le commit/push/
+  miroir/dépôt au coffre RESTENT À L'INFRA (aucun jeton dans cette session).
+- SUITE : au développeur — le re-run du kit-2 depuis le paquet corrigé
+  (dossier NEUF, D99), le renvoi du dossier ENTIER + du dossier du run
+  crashé TEL QUEL, les preuves-constat-arm/ formelles, puis les gestes
+  ouverts (geste B, D204, cérémonie d'ère, séquestre D183, réplication).

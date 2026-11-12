@@ -9765,3 +9765,101 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 **La consignation.** L'Entrée 250 au journal, la Task 157 au worklog, le commit, le push GitHub, le miroir Drive et le kit Cérémonie tenus par le hook post-commit ; les SIX preuves rapatriées au dépôt git (preuves-depots-maj-2machines/ — les .log bruts demeurent au coffre /test, leurs contenus cités mot pour mot au présent) ; le manifeste du sondage (sondage_depots_2machines.json, 49 + 49 pièces) et les trois scripts (sonder, rapatrier, recouper) au dépôt.
 
 **Frontières.** Aucune pièce scellée touchée ; les dépôts du développeur JAMAIS modifiés (lecture et rapatriement seuls, jamais d'écriture au /test) ; les consignations antérieures non réécrites (append-only) ; aucun chiffre fabriqué — tout nombre est LU d'une pièce, d'un témoin ou d'une métadonnée Drive ; la main demeure au développeur : LE KIT-2 DUDECT à courir (le grand manquant — un double-clic, aucun Python ni compilateur requis, puis l'état EFFECTIF du turbo au BIOS et la signature), le DIAGNOSTIC-MACHINE pour choisir la machine du geste B SHA-NI réel, le constat-arm au téléphone, la voie 2 QEMU, le témoin vitrine, la campagne de comparaison D204, la cérémonie d'ère, le séquestre D183, la réplication.
+
+## Entrée 251 — LE CONSTAT-ARM VÉCU AU TÉLÉPHONE ET LE KIT-2 CRASHÉ — LA CAUSE NOMMÉE, LE CORRECTIF N° 2 LIVRÉ (l'annonce du développeur du 12/11 au soir : « le kit-2 crash au lancement. tu as un fichier "terminal transcript" dans /test qui est le journal du run sur téléphone ») — TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect.zip (3 522 204 o, sha256 0e930b80…) : 46 pièces, l'exe PATCHÉ D'UN OCTET 0x20→0x40 (nouveau sha256 42903257aa9e…), l'épreuve 45/45 VERT, le re-jeu déterministe (12/11 au soir, la session auxiliaire — consignée par l'infra le 13/11)
+
+- LE TRANSCRIPT RAPATRIÉ : « Terminal transcript » (10 099 octets, sha256
+  1e678f62a603579a63a968e6656a7533659bee7e1f247f1bb74fb29e4b2d5c42) lu au
+  coffre /test, mot pour mot. LE RUN CONSTAT-ARM VERT CODE 0 — le journal
+  ENTIER du run y vit : la machine nommée à l'ouverture (Blackview XPLORE 1 ·
+  getprop ro.soc.model MT8791V/HZA · ro.board.platform mt6877 · Android 15 ·
+  Termux constaté par le PREFIX du PATH · Python 3.13.13 INSTALLÉ AUTOMATIQUEMENT
+  par pkg à l'ouverture, clang 21.1.8 venu avec · aarch64, 8 cœurs, noyau
+  6.6.66-android15) ; le silicium lu par ses propres canaux (T1.cpuinfo :
+  ARM Cortex-A55 + ARM Cortex-A78 ; T1.crypto : aes, pmull, sha1, sha2,
+  crc32, atomics) ; T2.refus des pièces x86-64 NOMMÉ avec empreintes
+  (loupe.exe 0.1.1 c1115105…, proxy-image.bin 0782d7e2…, moteur-shani.bin
+  761ab194… — « CE silicium ARM64 n'exécute pas l'ISA x86-64 : ni les PE
+  Windows 64 bits, ni la convention Windows x64, ni sha256rnds2 — la mesure
+  avant/après SHA-NI n'existe pas ici, les kits x86-64 sont REFUSÉS PAR
+  NATURE ») ; T2.sha256-arm : FEAT_SHA256 (SHA256H/SHA256H2) PRÉSENTE — une
+  AUTRE famille d'instructions que la SHA-NI x86, les deux mondes se
+  constatent, aucun ne se déguise ; T3.lecteur FIPS 180-4 « abc » EXACT
+  (sha256 ba7816bf…, sha512 ddaf35a1…) — un lecteur, jamais une mesure de
+  temps ; verdict VERT, code 0, « LE RUN EST TERMINÉ ». LE TROISIÈME
+  SILICIUM DE LA CAMPAGNE EST CONSTATÉ — le constat-arm est VÉCU (D206
+  tenue : la machine journalisée, le silicium lu par ses canaux, le refus
+  nommé, le verdict auto-portant). Les pièces formelles preuves-constat-arm/
+  (constat-arm-journal.log + constat-arm-verdict.txt) restent à renvoyer
+  pour clore la chaîne de pièces ; le transcript EST déjà le journal du run.
+
+- LE KIT-2 CRASHÉ AU LANCEMENT — LA CAUSE NOMMÉE PAR L'AUDIT STATIQUE : le
+  backend _WIN32 de test_appel.c (AJOUTÉ au correctif n° 1 pour la
+  compilation Windows) passait l'image en PAGE_EXECUTE_READ (0x20 — lecture
+  seule exécutable) à l'issue du chargement, PUIS l'épreuve de l'adversaire
+  ÉCRIT dans la table K (k[0] ^= 0x01, à image+0x2F00) : sur Windows, la
+  mutation reçoit une VIOLATION D'ACCÈS (0xC0000005) et l'exe meurt. LES
+  PREUVES AU DÉSASSEMBLAGE (test_appel.exe du kit, gcc 14-win32 mingw-w64) :
+  l'écriture fautive est « mov BYTE PTR [rbp+0x2f00],al » (0x140008229) ;
+  l'instruction fautive est « mov r8d,0x20 » (0x14000817c) qui alimente
+  __imp_VirtualProtect ; les TROIS autres occurrences de l'immédiat 0x20
+  sont des tailles de memcmp(…, 32) aux mêmes adresses 0x1400081eb/0x237/
+  0x27a — INTACTES. LE LABO NE POUVAIT PAS LE VOIR : le backend POSIX mappe
+  l'image RWX (mmap), la mutation s'y écrit toujours — l'autotest POSIX est
+  resté VERT (re-exécuté ce jour depuis la source inchangée : FIPS abc
+  EXACT, mutation DIVERGE, restauration EXACT, code 0) — la divergence des
+  deux backends est née du correctif n° 1 LUI-MÊME (le défaut écrit avec sa
+  réparation). Les exe précompilés n'avaient JAMAIS été exécutés (aucun
+  Windows au labo, wine refusé — l'étiquette honnête de l'Entrée 246) : le
+  premier run réel a nommé le défaut, exactement le scénario prévu.
+  dudect_v150.exe AUDITÉ INTACT : il n'écrit JAMAIS dans l'image après
+  protection (les secrets vivent en tampons locaux), l'immédiat RX de son
+  VirtualProtect est CORRECT pour son usage, et le shim mingw de rand_s
+  résout RtlGenRandom par GetProcAddress à l'exécution (aucune entrée
+  statique manquante — l'hypothèse du refus au chargement REFUTÉE) — le
+  mesureur ne porte PAS le défaut.
+
+- LE CORRECTIF N° 2 DU KIT-DUDECT LIVRÉ : TRIADE_kits_terrain_v0150_
+  CORRECTIF2-kit-dudect.zip (3 522 204 octets, sha256 0e930b803fb7e26a
+  4c1714c7e991fcd77a56fd9e08205f1ecb045e47d532f18c, 46 pièces, re-jeu
+  déterministe à l'horodatage fixe 2026-11-12 22:00:00 — le re-jeu rend le
+  MÊME sha256, prouvé) : (a) la SOURCE test_appel.c passe la page en
+  PAGE_EXECUTE_READWRITE (0x40) — les DEUX backends portent désormais la
+  MÊME sémantique RWX, celle que l'autotest POSIX a toujours validée — et la
+  coquille du printf (« utation K] ») y est corrigée (« [mutation K] ») ;
+  (b) l'exe précompilé livré est l'exe du labo PATCHÉ D'UN OCTET
+  (0x777e : 0x20→0x40 — l'immédiat de « mov r8d » qui alimente
+  VirtualProtect ; ancien sha256 f8b8e06e… == la pièce de l'Entrée 249,
+  nouveau 42903257aa9e3028df44ef77339ffa0f732116bae4806beb51b602c41e9e1e70),
+  le diff est EXACTEMENT un octet, le désassemblage du patché porte
+  « mov r8d,0x40 » à 0x14000817c — la tradition du correctif chirurgical
+  (terrain.3/D50) ; (c) dudect_v150.exe INTACT (1f1d8c96…, la pièce du labo
+  octet pour octet) ; (d) le lanceur bannière « correctif n.o 2 » (la
+  logique inchangée), LISEZMOI-dudect.txt et CE-QUI-RESTE-A-FAIRE.txt par
+  INSERTION (l'histoire jamais réécrite), EMPREINTES-PAQUET.txt régénérée
+  (44 pièces) et le manifeste du vérificateur recalé (6 entrées) ; (e)
+  L'ÉPREUVE SUR ARBRE VIERGE : VERIFIER-PAQUET 45/45 VERT code 0 ;
+  L'ANTI-TEST : l'octet 0x40 retropédalé en 0x20 sur une copie — l'écart
+  NOMMÉ DIVERGENTE, code 1, le vérificateur attrape ce qu'il prétend
+  attraper ; l'autotest POSIX re-exécuté depuis l'arbre corrigé : VERT
+  code 0, la ligne « [mutation K] condense DIVERGE » y est vérifiée.
+  Écart nommé résiduel : le binaire patché imprime toujours « utation K] »
+  (la coquille du printf, corrigée dans la source seule — aucun effet
+  sémantique, consigné au LISEZMOI du kit).
+
+- LA CONSIGNATION : la présente Entrée 251 au journal, la Task 158 au
+  worklog. RESTE À FAIRE DEPUIS L'INFRA : le commit, le push GitHub, le
+  miroir Drive, le dépôt du zip au coffre /test et au bac download/ du
+  dépôt (la session auxiliaire n'a pas les jetons — elle travaille par le
+  lien public, jamais par .gdrive/Tokens).
+
+- SUITE : au développeur — re-extrayez le zip corrigé dans un dossier NEUF
+  (D99) et double-cliquez pc-windows\kit-2-dudect\LANCER-KIT-2-DUDECT.bat :
+  l'épreuve d'appel doit vivre enfin (FIPS abc EXACT, [mutation K] DIVERGE,
+  restauration EXACT) puis LE RUN (N=200 par défaut, minimum 60) ; renvoyez
+  le dossier ENTIER (journal csv + sortie-run.txt + temoin signé de votre
+  main) ET le dossier du run CRASHÉ tel quel (D189 — le crash est un
+  résultat) ; les pièces formelles preuves-constat-arm/ si vous voulez clore
+  la chaîne du téléphone ; puis les gestes ouverts : le geste B SHA-NI réel
+  (le DIAGNOSTIC dit quelle machine), la campagne D204, la cérémonie d'ère,
+  le séquestre D183, la réplication.
