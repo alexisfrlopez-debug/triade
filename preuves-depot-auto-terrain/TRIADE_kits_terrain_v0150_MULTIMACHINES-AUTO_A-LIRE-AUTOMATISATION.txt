@@ -1,0 +1,90 @@
+A-LIRE-AUTOMATISATION.txt — L'ÉDITION AUTOMATISÉE DU PAQUET MULTIMACHINES
+==========================================================================
+(12/11/2026, le deuxième geste de la journée — la commande du développeur :
+« je vois qu'il y a dans le kit des choses à compiler. je veux que
+l'utilisation soit la plus simple possible, en automatisant au maximum »)
+
+LA RÉPONSE EN UNE LIGNE : UN SEUL GESTE PAR KIT — DOUBLE-CLIQUEZ SON
+LANCER. Le premier paquet (livré ce matin, sha256 efff812b…) vous demandait
+d'ouvrir une invite de commandes, de taper les compilations à la main (cl
+/O2, gcc -O2 -lm), d'orchestrer les étapes : cette édition fait TOUS ces
+gestes pour vous. Les kits, les pièces scellées, les scénarios et les
+LISEZMOI sont LES MÊMES, octet pour octet — SEULE la façon de les vivre
+change : les lanceurs.
+
+LA PORTE D'ENTRÉE (PC Windows) :
+  COMMENCER-ICI.bat    le menu : chaque kit par son lanceur, y compris les
+                       deux voies QEMU (elles partent toutes seules si WSL2
+                       vit sur la machine — le lanceur de chaque voie dit
+                       la commande exacte sinon).
+
+UN LANCEUR PAR KIT (le double-clic suffit) :
+  pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat
+      trouve Python (py/python/python3), lance le scénario T0-T5. RIEN À
+      COMPILER : le moteur-shani.bin est livré et son sha256 est asserté
+      par le scénario lui-même.
+  pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat
+      LE KIT QUI VOULAIT UNE COMPILATION — voici ce que le lanceur en fait :
+      il cherche un compilateur (cl / gcc / clang) ; S'IL EN TROUVE UN, il
+      RECOMPILE le mesureur et l'épreuve d'appel depuis LA SOURCE (la
+      source est la vérité) et exécute VOTRE binaire ; SINON les exe
+      PRÉCOMPILÉS livrés courent (cross-compilés au labo depuis CETTE
+      même source, jamais exécutés au labo — votre run en est le premier
+      témoin). Puis il vit l'épreuve d'appel (FIPS « abc » attendu
+      EXACT), LE RUN (dudect_v150 cibles 200 — passez votre N en argument
+      si vous voulez : LANCER-KIT-2-DUDECT.bat 400, minimum 60), et il
+      écrit temoin-dudect-BROUILLON.txt : machine, CPU, binaire exécuté,
+      empreintes, code de sortie — tout ce qu'une machine peut lire
+      d'elle-même. AUCUN PYTHON REQUIS pour ce kit.
+  pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat
+      recoupe le sha256 de loupe.exe contre le scellé AVANT TOUT
+      lancement (c1115105… — la pièce ne bouge JAMAIS d'un octet),
+      vérifie que Python est 64 BITS (exigé par le kit), lance le
+      scénario INTEGRAL T0-T7 + S0.
+  telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh
+      sur le téléphone (Termux) :  bash lancer-kit-constat-arm.sh
+      — s'il manque, le lanceur INSTALLE PYTHON TOUT SEUL (pkg) : c'était
+      l'unique étape manuelle du protocole.
+  qemu-wsl2/lancer-voie1-m7d.sh   la voie 1 (kit M7D rejoué) : le
+      qemu-riscv64 STATIQUE est embarqué, le lanceur ne demande RIEN —
+      juste python3 (qu'il tente même d'installer si sudo vit sans mot
+      de passe).
+  qemu-wsl2/lancer-voie2-shani.sh la voie 2 (kit shani sous émulation) :
+      le lanceur trouve qemu-x86_64, l'installe s'il peut, ou vous donne
+      LA commande exacte sinon (sudo apt install qemu-user).
+
+CE QUI RESTE À VOTRE MAIN — ET POURQUOI (rien de ce qui suit ne PEUT être
+automatisé sans mentir) :
+  — DATER ET SIGNER les témoins de votre main : c'est VOTRE geste, le
+    laboratoire ne peut pas le consigner à votre place (la règle des
+    douze runs loupe et du geste A shani : Entrée 245).
+  — L'ÉTAT EFFECTIF DU TURBO (BIOS) au kit-2 : le mesureur ne peut pas le
+    commander — le brouillon de témoin vous laisse la ligne à remplir.
+  — LE TÉMOIN VITRINE du kit-3 (facultatif : temoin-vitrine.bat) : il
+    ouvre de VRAIES fenêtres que VOUS fermez par Alt+F4 — un témoin de
+    vitrine automatisé ne témoignerait de rien.
+  — LE RENVOI des dossiers de preuves ENTIERS au coffre /test (dossier
+    Drive « Triade » → « test ») : le labo recoupe sur pièces, JAMAIS
+    avant le run, jamais sans pièces.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) — un refus auto-portant se renvoie TEL QUEL ;
+  — aucun chiffre fabriqué : tout nombre est lu d'une pièce, d'un témoin
+    ou d'une épreuve vécue ;
+  — les empreintes scellées ne bougent jamais (voyez LISEZMOI-
+    MULTIMACHINES.txt, la liste est là) ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'HONNÊTETÉ DE CETTE ÉDITION : les lanceurs .bat et .sh furent écrits au
+laboratoire et éprouvés SUR EXTRACTION VIERGE pour tout ce que le labo
+peut éprouver (les voies QEMU vécues en entier, le constat-arm, la
+recompilation gcc du kit-2) — mais le labo n'a AUCUN Windows : les
+lanceurs .bat y sont éprouvés par leurs commandes (certutil, where,
+powershell — toutes standard de Windows 10/11) et par la relecture, PAS
+par l'exécution. Le premier double-clic se vit chez vous, exactement
+comme les exe précompilés du kit-2 : si un écran nomme un défaut,
+renvoyez-le TEL QUEL (règle D122 : glissez le .txt dans la conversation)
+— le labo recoupe et corrige.

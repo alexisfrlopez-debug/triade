@@ -8866,3 +8866,53 @@ Work Log:
   aucun geste obligatoire ; si un écran nomme un défaut, le .txt renvoyé
   tel quel D122), le geste B SHA-NI réel, la campagne de comparaison D204,
   la cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 155
+Agent: Z.ai (agent principal)
+Task: LA RÉCEPTION DU DÉPÔT KIT TERRAIN (l'annonce du développeur du
+12/11/2026 : « dossier kit terrain avec preuves déposé dans /test du
+drive ») — le rapatriement des preuves du paquet AUTO, le recoupement
+26/26 VERT (la chaîne close, la chronologie datée aux métadonnées Drive,
+les deux runs auto-portants), la consignation de l'Entrée 248.
+
+Work Log:
+- LE SONDAGE : le /test re-listé (579 entrées = 496 [geste A] + 8
+  [MULTIMACHINES] + 75 [AUTO], aucune entrée créée après 12:38:20Z) ; le
+  dépôt = LA VAGUE 2 dans le dossier AUTO livré : l'arbre machine (55
+  entrées aux mtimes PRÉSERVÉS — l'extraction 13:35:21-22 locale) + LES
+  TROIS preuves de run (le livreur du labo ne pose JAMAIS modifiedTime —
+  le code lu ; l'outil du développeur nommé par la métadonnée même).
+- LE RAPATRIEMENT : 21 pièces au md5 VERT (scripts/
+  rapatrier_depot_kit_terrain.py, preuves-depot-auto-terrain/) ;
+  test_appel.exe REFUSÉ par l'antivirus Drive (HTTP 403) — l'empreinte
+  des MÉTADONNÉES recoupée à la place (== la copie du zip), l'étiquette
+  honnête.
+- LE KIT-1 SHANI (ALEKPC, 13:36:01 locale) : l'heure au journal == le
+  mtime Drive (deux voix) ; le même refus T0.silicium (SHA-NI ABSENT,
+  CPUID feuille 7 EBX bit 29 = 0) ; le VERDICT == celui du geste A
+  OCTET POUR OCTET, le journal ne diffère QUE par l'heure ; D206 tenue
+  une deuxième fois (QUI, QUOI).
+- LE KIT-3 LOUPE (Windows 11, 13:36:32 locale, 31 s après le kit-1) : LE
+  SCELLÉ c1115105… asserté au T0 ; T0→T7+S0 TOUT VERT (l'arène, la
+  session, la double lecture, LE PANNEAU == hashlib, les lignes, la
+  recherche, l'édition à l'octet 0x00 → 0x4D, les rejets nommés, la
+  pièce relue INCHANGÉE) ; LA SONDE 205 (P1/P4 refusés par le VRAI
+  chargeur : GetLastError 193, NTSTATUS 0xc000007b — l'axe nommé) ; le
+  treizième run terrain, le témoin == celui du 12e aux adresses ASLR
+  près ; « VERT SUR PIÈCES — l'application née de TRIADE a vécu chez
+  son utilisateur ».
+- LE RECOUPEMENT (scripts/recouper_depot_kit_terrain.py, rapport 26/26
+  VERT sha256 7168ca81…) : LA CHAÎNE (40/40 pièces du zip == l'arbre du
+  /test, les CINQ scellés exacts), LA CHRONOLOGIE (livraison 12:32:32Z →
+  extraction → runs → dépôt, aucune inversion), LES FRONTIÈRES (kit-2
+  non couru, la vitrine à la main, le refus n'écrit que ses deux pièces,
+  rien maquillé).
+- LA CONSIGNATION : l'Entrée 248 au journal, la présente tâche au
+  worklog, le commit, le push GitHub, le miroir Drive et le kit
+  Cérémonie tenus par le hook post-commit.
+- SUITE : au développeur — les kits restants du paquet AUTO à courir ou
+  non (kit-2 sur les siliciums Windows, le constat au téléphone, les
+  voies QEMU sous WSL2 — aucun geste obligatoire), le geste B SHA-NI
+  réel, la campagne de comparaison D204, la cérémonie d'ère, le
+  séquestre D183, la réplication.

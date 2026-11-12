@@ -1,0 +1,37 @@
+RECOUPEMENT DU DÉPÔT KIT TERRAIN — les runs du paquet AUTO (12/11/2026, 13:36 heure locale du développeur)
+l'annonce : « dossier kit terrain avec preuves déposé dans /test du drive »
+les pièces : preuves-depot-auto-terrain/ (rapatriées au md5 VERT contre les métadonnées Drive)
+
+A. LE DÉPÔT (l'annonce : « dossier kit terrain avec preuves déposé dans /test du drive »)
+[VERT] A1 — le recompte récursif du /test : 579 entrées (496 [geste A] + 8 [MULTIMACHINES, E246] + 75 [AUTO, E247]) — aucune entrée créée après 12:38:20Z, aucun autre dépôt
+[VERT] A2 — la vague 2 dans le dossier AUTO livré : 55 entrées (l'arbre machine extrait du zip + les trois preuves) créées 12:37:44-12:38:20Z aux mtimes PRÉSERVÉS (l'arbre extrait 13:35:21-22 locale) — le livreur du labo ne pose JAMAIS modifiedTime (le code lu : upload_create/upload_update), cette vague est L'OUTIL DU DÉVELOPPEUR ; les TROIS preuves de run parmi elles : 3
+[VERT] A3 — le ZIP livré (40 pièces) ne porte NI preuves-shani/ NI preuves-loupe/ — les trois pièces de preuves sont NÉES AU TERRAIN, pas livrées
+[VERT] A4 — la chronologie datée aux métadonnées Drive : le zip livré 12:32:32Z → l'extraction 12:35:21-22Z (les mtimes de l'arbre) → LE RUN KIT-1 12:36:01Z (= 13:36:01 au journal, heure locale) → LE RUN KIT-3 12:36:32Z → LE DÉPÔT 12:37:44-12:38:20Z — aucune inversion
+B. LA CHAÎNE (le kit exécuté == le kit livré)
+[VERT] B1 — les 40 pièces du zip == l'arbre déposé au /test, OCTET POUR OCTET (40/40 md5 VERT)
+[VERT] B2 — le zip du /test == le zip du bac download/ (md5 051fd9adfbb0…)
+[VERT] B3 — scenario-shani.py du kit-1 == le correctif n° 2 livré (sha256 d9def0b4d714…, 33925 o) — le kit-1 de l'AUTO EST le kit D206
+[VERT] B4 — moteur-shani.bin == l'empreinte du témoin (sha256 761ab194d88d…) · cibles/proxy-image.bin == LE SCELLÉ (sha256 0782d7e20d0b…) — les pièces exactes
+[VERT] B5 — loupe.exe == LE SCELLÉ (sha256 c111510535767a40…, md5 5fc07b786150…) · scenario-loupe.py == la vague 0.1.1-dev.1 (md5 77872b71cf52…) — les pièces du 12e run, exactes
+[VERT] B6 — test_appel.exe : le téléchargement REFUSÉ par l'antivirus Drive (HTTP 403 « malware or spam » — un faux positif connu des exe de mesure) ; l'empreinte des MÉTADONNÉES (md5 64e7f8e762a8…) == la copie du zip — la pièce au /test demeure l'octet pour octet la livrée, l'étiquette honnête
+C. LE RUN KIT-1 SHANI (ALEKPC, le troisième run terrain du kit, le deuxième du correctif n° 2)
+[VERT] C1 — le journal porte QUATRE lignes : la machine (ALEKPC · AMD64 · Windows · Python 3.14.3 — LE RUN TERRAIN) puis T0, T1, le constat — LE FORMAT n° 2 (D206) encore
+[VERT] C2 — le constat CPUID IDENTIQUE au journal et au verdict (CPUID feuille 7, EBX bit 29 = 0) — LE MÊME SILICIUM que le run de 10:02 et le geste A : CE silicium n'exécute pas sha256rnds2
+[VERT] C3 — le VERDICT == le verdict du geste A OCTET POUR OCTET (le même ÉCHEC NOMMÉ T0.silicium, la règle « se renvoie TEL QUEL ») ; le journal ne diffère du geste A QUE par l'heure (11:26:54 → 13:36:01) — UN RUN NEUF, le même refus
+[VERT] C4 — D206 tenue une DEUXIÈME fois au terrain : QUI a exécuté (ALEKPC nommée à l'ouverture), QUOI a refusé (T0.silicium — le constat CPUID au journal ET au verdict) — le kit ne peut pas inventer le silicium, il a refusé de mesurer EXACTEMENT comme conçu
+[VERT] C5 — l'heure du journal (13:36:01 locale) == le mtime Drive (12:36:01Z = 13:36:01 heure locale du développeur) — la pièce datée par DEUX voix indépendantes (le contenu et la métadonnée)
+D. LE RUN KIT-3 LOUPE (Windows 11, le treizième run terrain, le premier du paquet AUTO)
+[VERT] D1 — l'environnement : Windows 11 · Python 64 bits · AMD64 — le même que les runs 11 et 12
+[VERT] D2 — LE SCELLÉ ASSERTÉ au T0 : loupe.exe 127488 o, sha256 c111510535767a40… == LA PIÈCE LIVRÉE (l'empreinte prouve CES octets — la carte, génération 16)
+[VERT] D3 — T0→T7 TOUT VERT : l'arène (l'ombre byte-à-byte, l'IAT résolue : 37 feuilles), la session (poignée 0x2d4, le VRAI CreateFileW), la double lecture (les 384 octets IDENTIQUES), LE PANNEAU (md5 5fc07b786150… · sha256 == hashlib — la pièce de l'ère jugée par sa propre application), les lignes, la recherche (577 == bytes.find), L'ÉDITION à l'octet (0x00 → 0x4D SEUL, taille CONSTANTE), LES REJETS nommés, la pièce relue INCHANGÉE
+[VERT] D4 — LA SONDE DE L'ENTRÉE 205 vécue : P0 VERTE · P1 LE TROU REFUSÉ par le VRAI chargeur (GetLastError 193, NTSTATUS 0xc000007b) · P2 LE BSS VERTE · P3 LE CUI VERTE · P4 LA GÉOMÉTRIE ENTIÈRE REFUSÉE — L'AXE EST NOMMÉ, les copies %TEMP% mortes, loupe.exe INTACT ; sonde-214 : la liaison nommée au témoin
+[VERT] D5 — le témoin == celui du 12e run (les MÊMES pièces, Entrée 222) ne différant QUE par les adresses ASLR et la poignée de session (5 lignes divergentes, toutes d'exécution) — le gabarit intangible, UN RUN NEUF
+[VERT] D6 — le verdict du témoin : « LE RUN DE LOUPE : VERT SUR PIÈCES — l'application née de TRIADE a vécu chez son utilisateur : la session, le panneau, les lignes, la recherche, l'édition à l'octet, les rejets nommés »
+[VERT] D7 — le témoin écrit à 12:36:32Z (13:36:32 locale), 31 s après le kit-1 — les DEUX runs séquentiels, une minute à eux deux : le kit-1 refusa en une seconde, le kit-3 vécut T0→T7+S0 en une trentaine
+E. LES FRONTIÈRES (rien n'est maquillé)
+[VERT] E1 — kit-2-dudect NON couru (aucune preuve dudect au dépôt — ni témoin, ni csv) ; le téléphone-arm et les voies QEMU non courus — aucun geste obligatoire (la main demeure au développeur)
+[VERT] E2 — LA VITRINE demeure à la main du développeur (le [suite] du témoin le dit) : temoin-vitrine.bat à double-cliquer, les fenêtres à fermer SOI-MÊME — un témoin automatisé ne témoignerait de rien
+[VERT] E3 — le dossier preuves-shani/ du kit-1 porte EXACTEMENT les DEUX pièces du refus (VERDICT + journal) — le témoin complet et le moteur-exécuté naissent après le franchissement du silicium (le LISEZMOI le dit, les pièces le confirment) : la ligne « signature du geste » n'existe pas pour un refus, rien à signer, rien maquillé
+[VERT] E4 — D205 demeure consacrée au laboratoire, jamais scellée ; les journaux bruts (*.log) demeurent au coffre /test, leurs contenus cités mot pour mot ; les preuves recoupées sur pièces, le paquet déposé demeurant le paquet prouvé (D153)
+
+BILAN : 26/26 VERT
