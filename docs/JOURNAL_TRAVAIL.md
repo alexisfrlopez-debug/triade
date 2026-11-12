@@ -9863,3 +9863,107 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   la chaîne du téléphone ; puis les gestes ouverts : le geste B SHA-NI réel
   (le DIAGNOSTIC dit quelle machine), la campagne D204, la cérémonie d'ère,
   le séquestre D183, la réplication.
+
+## Entrée 252 — LE KIT-2 CRASHÉ ENCORE AU LANCEMENT — AUCUNE CAUSE CONNUE NE L'EXPLIQUE, LE COLLECTEUR DE PREUVES LIVRÉ (l'annonce du développeur du 13/11 : « dossier TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect dans /test du drive. kit-2 crash encore au lancement ») — TRIADE_kit2_preuves_crash.zip (5 235 o, sha256 ea24dcdf…) : RENVOYER-LE-CRASH.bat + LISEZMOI-CRASH.txt, l'écart nommé neuf dudect_v150.c:334, AUCUN correctif n° 3 aveugle (D189) (13/11, la session auxiliaire — consignée par l'infra le 13/11)
+
+- LE DÉPÔT RAPATRIÉ : le dossier TRIADE_kits_terrain_v0150_CORRECTIF2-
+  kit-dudect au coffre /test (l'upload du développeur, 16:47–16:50 UTC) —
+  le zip de coffre 3 437 133 octets téléchargé par le lien public et
+  recoupé : L'ARBRE EST LE PAQUET LIVRÉ octet pour octet (le diff contre
+  le montage du correctif n° 2 : RIEN ne diverge) À DEUX ÉCARTS PRÈS,
+  tous deux nommés : (a) test_appel.exe est ABSENT du coffre — le refus
+  403 « malware or spam » de Drive sur CETTE pièce vécu le 12/11
+  s'est reproduit à l'upload du développeur (l'étiquette honnête
+  d'E248 : l'empreinte des MÉTADONNÉES recoupe la pièce du zip livré,
+  l'absence est le fait du coffre, PAS du terrain) ; (b) DEUX PIÈCES
+  NEUVES du terrain : diagnostic-machine.txt (16:48) et
+  verification-paquet.txt (16:48).
+
+- LES DEUX PREUVES DU TERRAIN LUES MOT POUR MOT : (a) LE VÉRIFICATEUR
+  45/45 VERT — l'extraction du développeur EST le paquet du laboratoire,
+  ET test_appel.exe y est LA PIÈCE PATCHÉE (42903257aa9e…) : le kit
+  vérifié est le kit corrigé, l'écart « mauvais zip » est REFUTÉ côté
+  vérification ; (b) LE DIAGNOSTIC — ALEKPC nommé (Windows 11 · Intel64
+  famille 6 modèle 142 pas 12 · SHA-NI ABSENT · Python 3.14.3 64 bits ·
+  AUCUN compilateur : les exe précompilés courent · WSL2 vu), le verdict
+  « kit-2 dudect : VIVABLE — LA MESURE JAMAIS ENCORE COURUE ». Écart
+  cosmétique nommé : les CINQ étiquettes « [machine] » du témoin
+  naissent TRONQUÉES (« achine] », diagnostic_machine.py lignes
+  165-176) — le défaut vit dans la SOURCE de l'édition MISE À JOUR
+  (E249), aucune information perdue, à réparer à la prochaine édition.
+
+- LE CRASH « ENCORE AU LANCEMENT » — L'AUDIT INTÉGRAL RE-JOUÉ, AUCUNE
+  CAUSE CONNUE NE SURVIT : (a) le LANCEUR — ASCII pur, CRLF intégral,
+  chaque refus porte un pause : la fenêtre ne peut pas mourir en
+  silence (re-vérifié octet par octet) ; (b) le PATCH du correctif n° 2
+  — « mov r8d,0x40 » bien à 0x14000817c, les trois memcmp 32 INTACTS,
+  le flux VirtualAlloc→fread→VirtualProtect(RWX)→condense_abc→mutation
+  →restauration correct au désassemblage ; (c) l'IMAGE — les QUATRE
+  cibles sont PORTABLES (aucun sha256rnds2/msg1/msg2, aucun VEX dans
+  les plages) : le silicium SANS SHA-NI d'ALEKPC n'est PAS en cause ;
+  (d) les IMPORTS des DEUX exe — KERNEL32+msvcrt, rien qui puisse
+  manquer au chargement ; (e) le runtime mingw — standard, liste de
+  pseudo-relocations vide. CONCLUSION CONSIGNÉE : la cause du crash
+  n'est PAS dans ce que le laboratoire peut voir sans pièces — le
+  correctif n° 2 reste correct, mais il n'a pas (seul) nommé la cause
+  vécue. AUCUN CORRECTIF N° 3 AVEUGLE (D189 : jamais sans pièces).
+
+- L'ÉCART NOMMÉ NEUF TROUVÉ À L'AUDIT (à réparer à la prochaine édition
+  du laboratoire, pas par patch binaire sans pièces) :
+  dudect_v150.c LIGNE 334 ne vérifie PAS le retour de VirtualProtect —
+  si l'appel échoue jamais sur le terrain, le mesureur APPELLE l'image
+  non exécutable et meurt de 0xC0000005 GARANTI (l'appel fauteur :
+  appeler() → fn = image + rva) ; le backend POSIX (mmap RWX toujours
+  gagnant au labo) ne pouvait pas le voir. Ce défaut CONVERTIT un
+  refus propre en crash — il est candidat pour le crash vécu SI le
+  VirtualProtect est bloqué sur la machine (voir les hypothèses).
+
+- LES HYPOTHÈSES CLASSÉES (toutes discriminées par le collecteur, aucune
+  fermée sans pièces) : (1) L'ANTIVIRUS — les exe de mesure de timing
+  sont un faux positif classique ; le coffre Drive LUI-MÊME a refusé
+  test_appel.exe (403 « malware or spam ») DEUX FOIS : le suspect n° 1
+  est le bloqueur/killeur au lancement ; (2) LE VIRTUALPROTECT BLOQUÉ
+  (politique de sécurité locale) → test_appel refuserait proprement
+  (code 2 nommé) mais dudect plannerait au premier appel (l'écart
+  ligne 334) ; (3) LE MAUVAIS DOSSIER — le run aurait vécu dans une
+  VIEILLE extraction du 12/11 (le f8b8e06e… non patché) : le sha256 du
+  collecteur le dira ; (4) un reste inconnu — le code NTSTATUS + le
+  module fautif + le décalage (événements Windows 1000/1001) nommeront.
+
+- LE COLLECTEUR DE PREUVES LIVRÉ : TRIADE_kit2_preuves_crash.zip
+  (5 235 octets, sha256
+  ea24dcdf25e0bf686e2dbd84bcec7b03f937ce4b2ef3e2a077f83410f5b5a674 —
+  à recouper après livraison, 2 pièces) :
+  RENVOYER-LE-CRASH.bat (ASCII pur, CRLF intégral, AUCUN Python — la
+  forme du paquet E249) à poser DANS pc-windows\kit-2-dudect\ et
+  double-cliquer : il capture l'état du dossier et les sha256 (QUEL exe
+  a couru), les artefacts du run (sortie-appel.txt, sortie-run.txt,
+  témoin, journal csv), la machine (OS, CPU, Defender temps réel et
+  exclusions), L'ÉPREUVE DE LANCEMENT VIVE (test_appel.exe relancé sous
+  le collecteur, WER neutralisé par __COMPAT_LAYER : le code NTSTATUS
+  immédiat) et les ÉVÉNEMENTS Windows (Application Error 1000/1001 —
+  module fautif, code d'exception, décalage ; Defender 1116/1117/5007 —
+  détections et blocages) — le tout au réceptacle preuves-crash-kit2\
+  à renvoyer ENTIER au coffre /test ; et LISEZMOI-CRASH.txt (l'état de
+  l'audit, le geste, LE TEST PARALLÈLE de l'exclusion Defender — les
+  pièces étant recoupées 45/45, l'exclusion ne désarme rien que le
+  terrain ne puisse vérifier — et l'écart nommé ligne 334).
+
+- LA FRONTIÈRE HONNÊTE : le transcript téléphone du 13/11 (14:04 UTC)
+  re-recoupé — c'est LE MÊME journal constat-arm déjà consigné à
+  l'Entrée 251 (sha256 identique, 10 099 octets) : le TROISIÈME
+  SILICIUM reste VÉCU VERT, les pièces formelles preuves-constat-arm/
+  demeurent attendues ; AUCUN artefact du run kit-2 crashé n'a encore
+  été déposé au coffre (ils vivent sur la machine du développeur :
+  sortie-appel.txt naîtrait dès que le lanceur atteint l'épreuve
+  d'appel — le collecteur les rapatriera).
+
+- SUITE : au développeur — poser RENVOYER-LE-CRASH.bat dans
+  pc-windows\kit-2-dudect\ de l'extraction vérifiée, double-cliquer,
+  renvoyer preuves-crash-kit2\ ENTIER au coffre /test (le test
+  parallèle de l'exclusion Defender est optionnel et nommé au LISEZMOI)
+  ; le laboratoire nommera la cause SUR PIÈCES, puis le correctif n° 3
+  (l'écart ligne 334 réparé à la source, recompilé au labo principal)
+  vivra son édition. Les preuves-constat-arm/ pour clore la chaîne du
+  téléphone ; puis les gestes ouverts : le geste B SHA-NI réel, la
+  campagne D204, la cérémonie d'ère, le séquestre D183, la réplication.

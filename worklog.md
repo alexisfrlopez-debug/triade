@@ -9064,3 +9064,59 @@ Work Log:
   (dossier NEUF, D99), le renvoi du dossier ENTIER + du dossier du run
   crashé TEL QUEL, les preuves-constat-arm/ formelles, puis les gestes
   ouverts (geste B, D204, cérémonie d'ère, séquestre D183, réplication).
+
+
+Task ID: 159
+Agent: Z.ai (agent principal, session auxiliaire — restauration par
+bundle, lien public du coffre, aucun jeton)
+Task: LA RÉCEPTION DU SECOND CRASH KIT-2 (l'annonce du développeur du
+13/11 : « dossier TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect dans
+/test du drive. kit-2 crash encore au lancement ») — le dépôt du
+développeur rapatrié et recoupé (l'arbre == le paquet livré, test_appel.exe
+ABSENT du coffre : le 403 de Drive vécu une deuxième fois ; les preuves
+diagnostic-machine.txt + verification-paquet.txt lues : ALEKPC nommé,
+l'extraction 45/45 VERT portant LE EXE PATCHÉ), l'audit intégral re-joué
+SANS AUCUNE CAUSE CONNUE QUI SURVIT (lanceur, patch, image portable,
+imports, runtime mingw — tous vérifiés propres), l'écart nommé neuf trouvé
+(dudect_v150.c ligne 334 : le retour du VirtualProtect non vérifié — un
+refus converti en crash garanti si l'appel échoue), les QUATRE hypothèses
+classées (l'antivirus suspect n° 1 — le 403 de Drive sur la même pièce
+deux fois ; le VirtualProtect bloqué ; le mauvais dossier ; l'inconnu),
+LE COLLECTEUR DE PREUVES LIVRÉ (TRIADE_kit2_preuves_crash.zip, 2 pièces,
+sha256 ea24dcdf… — RENVOYER-LE-CRASH.bat sans Python + LISEZMOI-CRASH.txt
+avec le test d'exclusion Defender), AUCUN correctif n° 3 aveugle (D189 :
+jamais sans pièces), le transcript téléphone re-recoupé == l'Entrée 251
+(le troisième silicium VERT demeure).
+
+Work Log:
+- LE RAPATRIEMENT : le zip du coffre /test téléchargé par le lien public
+  (scripts/construire_collecteur_crash.py consigne le geste) ; le diff
+  contre le montage du correctif n° 2 : IDENTIQUE sauf test_appel.exe
+  absent (le 403, deux voix) et les deux preuves du terrain.
+- LES PREUVES : verification-paquet.txt 45/45 VERT (le kit vérifié EST le
+  corrigé) ; diagnostic-machine.txt (ALEKPC · SHA-NI ABSENT · aucun
+  compilateur · kit-2 VIVABLE) — l'écart cosmétique « achine] » nommé
+  (cinq étiquettes, né à la source dans l'édition E249).
+- L'AUDIT RE-JOUÉ : le désassemblage du patché (« mov r8d,0x40 » à
+  0x14000817c, les trois memcmp 32 intacts), l'image (aucun SHA-NI/AVX
+  dans les quatre plages — le silicium d'ALEKPC n'est pas en cause), les
+  imports (KERNEL32+msvcrt), le lanceur (ASCII/CRLF/pause), le runtime
+  (pseudo-relocations vides) — RIEN n'explique le crash : la cause vit
+  dans ce que seules les pièces du terrain peuvent nommer.
+- L'ÉCART NEUF : dudect_v150.c:334 — VirtualProtect non vérifié ;
+  si l'appel échoue, appeler() exécute une page non exécutable :
+  0xC0000005 garanti. Consigné, candidat si l'hypothèse (2) vit.
+  Pas de patch binaire sans pièces (la tradition D50 exige la cause
+  nommée d'abord).
+- LE COLLECTEUR : construit, éprouvé à la forme (ASCII pur vérifié octet
+  par octet, CRLF intégral, 2 pause, labels audités), le zip sha256
+  ea24dcdf… au bac download/ — le geste du développeur : UN DOUBLE-CLIC.
+- LA CONSIGNATION : la présente Entrée 252 + Task 159 — le commit/push/
+  miroir/dépôt au coffre RESTENT À L'INFRA (aucun jeton dans cette
+  session).
+- SUITE : au développeur — le collecteur double-cliqué, preuves-crash-kit2\
+  renvoyé ENTIER au coffre /test, le test d'exclusion Defender optionnel ;
+  puis le labo nomme la cause sur pièces et le correctif n° 3 vit son
+  édition (l'écart 334 réparé à la source). Les preuves-constat-arm/,
+  puis les gestes ouverts (geste B, D204, cérémonie d'ère, séquestre
+  D183, réplication).
