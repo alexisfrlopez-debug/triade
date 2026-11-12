@@ -1,0 +1,79 @@
+CORRECTIF N° 2 — LE KIT D205 (kit-shani) : VOTRE VERDICT REÇU, LU ET COMPRIS
+============================================================================
+(12/11 au soir — la réponse à votre dépôt « preuves shani dans /test »)
+
+CE QUE VOTRE RUN A DIT (recoupé sur les pièces du /test)
+  Votre run du 12/11 10:02 a fait EXACTEMENT ce que le correctif n° 1
+  devait faire — et puis le silicium a parlé :
+  1. PLUS AUCUN CRASH : l'arène fut allouée (plus d'access violation —
+     la faute d'extension de signe est morte), les pièces posées, les
+     empreintes recoupées (journal : T0 puis T1).
+  2. PUIS L'ÉCHEC NOMMÉ : « T0.silicium : les extensions SHA sont
+     présentes » — le geste a ÉCHOUÉ parce que votre silicium n'A PAS
+     SHA-NI (CPUID feuille 7, EBX bit 29 = 0). Le kit a refusé de
+     mesurer : sur un CPU qui n'exécute pas sha256rnds2, la mesure
+     avant/après SHA-NI N'EXISTE PAS. Ce n'est pas un défaut du kit,
+     c'est un FAIT DE SILICIUM — le kit ne peut pas inventer le
+     silicium.
+  Votre verdict a été renvoyé TEL QUEL (comme le kit l'exige) : il est
+  consigné au journal du laboratoire tel quel. Rien à refaire de ce
+  côté : le crash est guéri, le refus est légitime.
+
+CE QUI MANQUAIT À VOTRE VERDICT (et que ce correctif n° 2 répare)
+  Le verdict du correctif n° 1 était MUET sur l'identité du silicium :
+  le constat CPUID (fabricant, famille, modèle) n'était imprimé que
+  sur la console — ni au journal, ni au verdict — et la machine
+  n'était nulle part dans les preuves. Une preuve d'échec doit être
+  AUTO-PORTANTE : celui qui lit le verdict doit savoir QUI a exécuté
+  et QUOI a refusé, sans capture d'écran ni dires.
+  LE CORRECTIF N° 2 (seul scenario-shani.py change — le blob moteur,
+  sa source et les cibles sont IDENTIQUES au vôtre, octet pour octet) :
+  — la machine est JOURNALISÉE à l'ouverture du run ;
+  — le constat CPUID est JOURNALISÉ (fabricant, famille, modèle, pas,
+    bit 29) ;
+  — le verdict d'échec T0.silicium PORTE le constat complet : « … —
+    CONSTAT : « GenuineIntel » · famille 6 · modèle 173 · pas 1 ·
+    SHA-NI ABSENT — CPUID feuille 7, EBX bit 29 = 0 : CE silicium
+    n'exécute pas sha256rnds2… » (l'exemple ci-dessus est celui de
+    l'épreuve de laboratoire ; le vôtre dira les nommer votre CPU).
+
+CE QUE VOUS POUVEZ EN FAIRE (deux gestes, à vous de voir)
+  GESTE A — LE REFUS AUTO-PORTANT (une minute, votre machine) :
+    remplacez scenario-shani.py par celui-ci, re-exécutez, renvoyez
+    preuves-shani/ au /test : le dossier du laboratoire aura la pièce
+    définitive — VOTRE silicium nommé par son CPUID, pas seulement
+    « le geste a échoué ».
+  GESTE B — LA MESURE COMPLÈTE (si vous avez un silicium SHA-NI sous
+    la main — un autre poste, un CPU Intel récent [Ice Lake et
+    après] ou AMD Ryzen) : le même kit y rend le témoin complet
+    (avant/après, le rapport, les trois lecteurs). Le laboratoire a
+    mesuré 6,37× sur son propre silicium — ce chiffre est un STATUT
+    LABORATOIRE, pas un statut terrain ; le vôtre dira le sien.
+  Aucun des deux gestes n'est obligatoire pour la suite du projet :
+  le fait de silicium est déjà consigné.
+
+L'ÉPREUVE AU LABORATOIRE (avant de vous être livré)
+  Le kit n° 2 fut éprouvé par les DEUX chemins (preuves jointes dans
+  preuves-run-shani-autotest-labo-v2/) :
+  — LE CHEMIN VERT : run complet de bout en bout sur le silicium
+    SHA-NI du laboratoire — pièces scellées recoupées, FIPS « abc »
+    exact par les TROIS lecteurs (la pièce scellée tls13-02, le blob
+    SHA-NI, le miroir python), l'adversaire K tranché, la mesure
+    ~820 → ~128,6 cycles/compression (6,37×), les pièces relues
+    intactes ;
+  — LE CHEMIN NOMMÉ : une copie d'atelier au silicium masqué — le
+    verdict porte machine ET constat CPUID dès le premier coup (le
+    chemin exact de votre run du 10:02, désormais auto-portant).
+
+COMMENT APPLIQUER LE CORRECTIF N° 2
+  1. Dans votre dossier kit-shani, REMPLACEZ le fichier
+     scenario-shani.py par celui de ce paquet (rien d'autre ne change
+     — moteur-shani.bin, moteur-shani.s et cibles/ sont identiques ;
+     le LISEZMOI-shani.txt est joints à jour pour la lecture) ;
+  2. Exécutez comme avant :  scenario-shani.py
+  3. Renvoyez preuves-shani/ ENTIERS au coffre /test si vous faites
+     le geste A ou B.
+
+LES AUTRES KITS
+  kit-dudect, kit-fencei, kit-terrain-tiers : inchangés, EN ATTENTE
+  de vos runs — les trois LISEZMOI font foi.

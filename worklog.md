@@ -8635,3 +8635,110 @@ Work Log:
   D183, réplication).
 - Frontières : aucun scellé touché, aucune pièce consignée modifiée,
   append-only, aucun chiffre fabriqué.
+
+
+Task ID: 149
+Agent: Z.ai (agent principal)
+Task: LE KIT-SHANI TERRAIN DE LA LIVRAISON AU CORRECTIF N° 2 (le bloc vécu
+sur le bac resté à 24a04d6, consigné à la reprise par l'Entrée 242) :
+l'archive des quatre kits livrée, le crash d'ALEKPC signifié, le
+correctif n° 1 épreuvé (VERT 6,38×) et livré, le run terrain du 12/11
+10:02 (l'ÉCHEC NOMMÉ T0.silicium — SHA-NI absent sur le silicium du
+développeur), le rapatriement des preuves du /test, le correctif n° 2
+(le verdict auto-portant, D206) et son autotest deux chemins.
+
+Work Log:
+- LA LIVRAISON : TRIADE_kits_terrain_v0150 (les trois kits de mesure
+  v0.15.0 + le kit-shani D205 — tls13-02 scellée contre le blob
+  moteur-shani.bin, les trois lecteurs FIPS, l'adversaire K).
+- LE CRASH : access violation writing 0xFFFFFFFFD4991000 — l'extension
+  de signe du pointeur VirtualAlloc tronqué (restype par défaut) ; le
+  défaut DU KIT.
+- LE CORRECTIF N° 1 : les trois garde-fous (restype c_void_p, adresses
+  non signées 64 bits, écritures bornées) ; l'épreuve labo VERT
+  (6,38×, machine c-6af53c37…) ; le zip 39 271 o livré 12/11 05:23 UTC.
+- LE RUN TERRAIN : 12/11 09:02:06 UTC (10:02:06 locale) — PLUS AUCUN
+  crash, T0/T1 au journal, l'ÉCHEC NOMMÉ T0.silicium (CPUID 7/EBX
+  bit 29 = 0) ; le dépôt au /test à 09:03 UTC ; le rapatriement
+  09:06-09:07 (12 fichiers shani, md5 contrôlés).
+- LE CORRECTIF N° 2 : la machine au journal à l'ouverture, le constat
+  CPUID au journal ET au verdict (D206) ; l'autotest deux chemins
+  (vert 6,37× / nommé auto-portant code 3) — LES DEUX CHEMINS TENUS.
+- LA PERTE : la session perdit son contexte avant la consignation — la
+  présente Task et l'Entrée 242 reconstituent aux pièces.
+
+
+Task ID: 150
+Agent: Z.ai (agent principal)
+Task: LA SESSION DE REPRISE DU 12/11 (le « continue » du développeur
+après « preuves shani dans /test du drive ») — le fetch révélant la
+vague 3 déjà poussée (origin 737ceda), le commit local erroné démoli et
+refait sur la vraie numérotation, la re-certification du kit n° 2, la
+livraison n° 2 au bac, l'état des miroirs nommé (le commit interrompu
+par la fin de session — tenu par la Task 151).
+
+Work Log:
+- LE FETCH : le bac local encore à 24a04d6 ; origin/main à 737ceda
+  (la vague 3 entière : Entrées 234-241, D200-D205, Tasks 141-148) —
+  LE FETCH AVANT TOUT GESTE devient la règle d'ouverture.
+- LA RÉPARATION : le commit local 7f9323e (numérotation en collision,
+  jamais poussé) DÉMOLI ; les fichiers réels restaurés ; les Entrées
+  242-243 + D206 consignées sur la vraie numérotation ;
+  core.fileMode=false.
+- LA RE-CERTIFICATION : autotest deux chemins re-joué sur les octets
+  exacts du kit livrable (33 925 o) — VERT 6,37× (témoin frais
+  09:37, machine c-6af57fe2…) et NOMMÉ auto-portant.
+- LA LIVRAISON N° 2 : TRIADE_kits_terrain_v0150_CORRECTIF2-kit-shani.zip
+  (40 666 o, sha256 34a656f04502fbd5…) — recoup moteur/cibles, zip
+  vérifié octet pour octet, la lettre A-LIRE n° 2, D197 au bac.
+- LES MIROIRS : la session s'acheva AVANT le commit (origin/main
+  demeuré à 737ceda — la consignation mise en scène, tenue par la
+  Task 151) ; le Drive : le jeton OAuth du relais MORT (invalid_grant,
+  le /Tokens sans jeton neuf), le compte de service lit le /test (478
+  entrées, aucun dépôt nouveau) mais l'écriture du miroir et du kit
+  Cérémonie lui est refusée (403) — le miroir Drive resté à l'état
+  d'avant la vague 3, les DEUX remèdes nommés au développeur (la
+  ré-autorisation OAuth interactive, ou le partage Éditeur au compte
+  de service).
+- SUITE : au développeur — les gestes du correctif n° 2 (aucun
+  obligatoire), les trois autres kits EN ATTENTE, la campagne de
+  comparaison D204, la cérémonie d'ère, le séquestre D183, la
+  réplication.
+
+
+Task ID: 151
+Agent: Z.ai (agent principal)
+Task: LA SESSION DES MIROIRS TENUS (le « continue » du développeur avec
+la demande du lien d'authentification pour le refresh token) — la
+ré-autorisation OAuth interactive du relais Drive, le rapatriement
+idempotent des preuves shani et le recoup de chaîne (le kit exécuté ==
+le kit livré), le dépôt du correctif n° 2 au coffre /test, la
+consignation tenue (Entrées 242-244 + D206 commises et poussées, le
+miroir Drive et le kit Cérémonie synchronisés).
+
+Work Log:
+- LE LIEN D'AUTORISATION : l'URL de consentement servie (scripts/
+  renouveler_refresh_token.py — scope drive, offline, consent) ; le
+  développeur au geste ; le code échangé (refresh_token 103 car.),
+  l'ancien jeton sauvegardé horodaté (bak-20261112-100122), les caches
+  rafraîchis, la vérification bout-en-bout (listing racine : 20
+  entrées) — le relais vit de nouveau.
+- LE RAPATRIEMENT : le /test re-listé (478 entrées, aucun dépôt
+  nouveau), les 12 fichiers shani re-téléchargés octets identiques ;
+  LE RECOUP DE CHAÎNE : le scénario du dossier du développeur
+  (37ef3c18…) == le zip n° 1 livré — le kit exécuté fut le kit livré.
+- LE DÉPÔT N° 2 AU /test : dossier TRIADE_kits_terrain_v0150_
+  CORRECTIF2-kit-shani/ créé (la lettre A-LIRE, le kit n° 2 complet,
+  les preuves des deux chemins v2) — 11/11 pièces, md5 MATCH au
+  re-listing intégral.
+- LA CONSIGNATION TENUE : l'Entrée 243 ajustée avant son premier
+  commit (texte jamais publié — les affirmations prématurées « GitHub
+  POUSSÉ » réduites à l'état factuel de la session interrompue),
+  l'Entrée 244 consignée, le commit des Entrées 242-244 + D206, le
+  push GitHub (origin/main = la pointe), le miroir Drive TRIADE-
+  sauvegarde-git/ synchronisé (la vague 3 au miroir : 24a04d6 → la
+  pointe), le kit Cérémonie déployé.
+- SUITE : au développeur — les deux gestes du correctif n° 2 (aucun
+  obligatoire), les trois autres kits EN ATTENTE, la campagne de
+  comparaison D204, la cérémonie d'ère, le séquestre D183, la
+  réplication.

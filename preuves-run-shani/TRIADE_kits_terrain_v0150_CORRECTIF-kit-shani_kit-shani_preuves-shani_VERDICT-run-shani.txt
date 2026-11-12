@@ -1,0 +1,4 @@
+VERDICT : ÉCHEC NOMMÉ — LA MESURE AVANT/APRÈS SHA-NI : les pièces scellées recoupées, les trois lecteurs exacts, l'adversaire K tranché, la mesure consignée, la pièce relue intacte
+les gestes en échec :
+  — T0.silicium : les extensions SHA sont présentes
+un verdict d'échec se renvoie TEL QUEL : la ligne nomme le défaut

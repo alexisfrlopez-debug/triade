@@ -1,0 +1,73 @@
+CORRECTIF — LE KIT D205 (kit-shani) REMPLACÉ, LES AUTRES KITS SANS OBJET
+=========================================================================
+(12/11 — la réponse au plantage « access violation writing
+0xFFFFFFFFD4991000 » reçu sur ALEKPC)
+
+LE DIAGNOSTIC (l'adresse fautive parle d'elle-même)
+  0xFFFFFFFFD4991000 est l'EXTENSION DE SIGNE d'un pointeur 64 bits
+  tronqué en 32 bits signés : la moitié basse 0xD4991000 est celle
+  d'une adresse réellement allouée du genre 0x000002xxD4991000. Le
+  script de la première livraison laissait le type de retour d'un
+  appel système rendant un pointeur (VirtualAlloc) à sa VALEUR PAR
+  DÉFAUT de ctypes — un entier 32 bits SIGNÉ. Le pointeur revenait
+  donc tronqué et négatif ; le memmove l'étendait en adresse
+  0xFFFFFFFF… et le premier geste d'écriture violait la mémoire.
+  C'est la faute de classe la plus classique de ctypes sous Windows
+  64 bits : TOUT appel rendant un pointeur doit porter
+  restype = ctypes.c_void_p EXPLICITE.
+
+LE CORRECTIF (trois garde-fous, pas un)
+  1. restype = c_void_p EXPLICITE sur VirtualAlloc, GetCurrentThread,
+     mmap — sur TOUTE API rendant un pointeur ;
+  2. les adresses vivent en entiers NON SIGNÉS 64 bits (masque à
+     0xFFFFFFFFFFFFFFFF à chaque frontière) ;
+  3. CHAQUE écriture dans l'arène est BORNÉE fin incluse : toute
+     écriture qui déborde est un REFUS NOMMÉ avant le premier octet —
+     la classe entière de la faute est désormais impossible, pas
+     seulement l'instance.
+
+CE QUE LE KIT CORRIGÉ CONTIENT EN PLUS
+  — Le blob moteur (moteur-shani.bin, 1 360 o, sha256 scellé dans le
+    scénario) : la compression SHA-256 par EXTENSIONS SHA — les
+    instructions sha256rnds2/msg1/msg2 du silicium — plus les deux
+    moteurs de chronométrage RDTSC et la lecture CPUID, assemblés en
+    code machine position-indépendant (RIP-relatif, aucune entrée IAT,
+    aucun registre non volatil détruit) ;
+  — La source moteur-shani.s : la révision vit aux sources ;
+  — Le miroir python pur de la compression : le TROISIÈME lecteur —
+    le condensé FIPS « abc » est exigé IDENTIQUE de la pièce scellée
+    tls13-02, du blob SHA-NI et du miroir avant toute mesure ;
+  — L'adversaire : un octet de la table K muté doit faire diverger la
+    pièce — la preuve que l'image exécutée est bien celle recoupée.
+
+L'ÉPREUVE AU LABORATOIRE (avant de vous être livré)
+  Le kit corrigé fut exécuté de bout en bout sur le silicium SHA-NI du
+  laboratoire (VERDICT VERT, pièces jointes dans
+  preuves-run-shani-autotest-labo/) :
+    — les trois lecteurs rendent ba7816bf…8f01cfea… EXACT (FIPS 180-4) ;
+    — l'adversaire K tranché (diverge, restaure, exact) ;
+    — la mesure du laboratoire : tls13-02 à ~820 cycles/compression,
+      SHA-NI à ~128,6 — rapport 6,38× SUR CE silicium-là (le vôtre
+      dira le sien) ;
+    — les pièces relues intactes après le run.
+  Ces chiffres de laboratoire ne sont PAS un statut terrain : le run
+  qui compte est le vôtre.
+
+COMMENT APPLIQUER LE CORRECTIF
+  1. Dans votre dossier TRIADE_kits_terrain_v0150, SUPPRIMEZ le
+     dossier kit-shani existant (la version fautive) ;
+  2. Dézippez ce paquet : le dossier kit-shani corrigé prend sa place
+     (il est AUTONOME : rien d'autre du paquet n'est requis) ;
+  3. Exécutez comme avant : ouvrez l'invite dans kit-shani et tapez
+        scenario-shani.py
+  4. À la fin : datez et signez le témoin, renvoyez le dossier
+     preuves-shani/ ENTIERS au coffre /test.
+
+LES AUTRES KITS DU PAQUET
+  — kit-dudect : le mesureur est un programme C (aucun ctypes pointeur
+    — le défaut ne peut pas s'y produire) ; si SA compilation pose
+    problème, renvoyez le message d'erreur ;
+  — les autres dossiers : si un script y plante avec la MÊME signature
+    (access violation sur une adresse en 0xFFFFFFFF……), renvoyez la
+    trace ENTIÈRE — la faute est de la même classe et le correctif
+    sera le même.

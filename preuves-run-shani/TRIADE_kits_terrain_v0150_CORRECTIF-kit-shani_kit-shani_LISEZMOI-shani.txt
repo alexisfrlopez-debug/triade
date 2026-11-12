@@ -1,0 +1,86 @@
+LISEZMOI — LE KIT D205 : LA MESURE AVANT/APRÈS SHA-NI (corrigée, 12/11)
+=======================================================================
+
+POURQUOI CE KIT REMPLACE CELUI QUE VOUS AVEZ
+  La première livraison plantait au premier geste :
+      OSError: exception: access violation writing 0xFFFFFFFFD4991000
+  L'adresse fautive est l'extension de signe d'un POINTEUR 64 BITS
+  TRONQUÉ en 32 bits signés (0xD4991000 = la moitié basse d'une adresse
+  allouée du genre 0x000002xxD4991000). La cause : un appel système qui
+  rend un pointeur (VirtualAlloc) gardait son type de retour PAR DÉFAUT
+  — ctypes tronque alors en entier 32 bits SIGNÉ, et le memmove
+  l'étendait en adresse négative. LE CORRECTIF : chaque API rendant un
+  pointeur porte restype = c_void_p EXPLICITE ; les adresses vivent en
+  entiers non signés 64 bits ; et CHAQUE écriture dans l'arène est
+  bornée fin incluse — un débordement est un refus nommé AVANT le
+  premier octet.
+  Le kit corrigé fut ÉPROUVÉ AU LABORATOIRE de bout en bout (silicium
+  Intel SHA-NI, VERDICT VERT joint dans preuves-run-shani-autotest-labo/)
+  : pièces scellées recoupées, vecteur FIPS exact par TROIS lecteurs,
+  adversaire tranché, mesure rendue, pièces relues intactes.
+
+CE QUE LE KIT MESURE
+  L'AVANT : tls13-02 — la compression SHA-256 de LA PIÈCE SCELLÉE
+      proxy.exe 1.0.0 (446279f3…), appelée à son adresse dans l'image
+      mémoire étendue posée dans l'arène (la découpe honnête : la table
+      K en .rdata est lue par RIP-relatif).
+  L'APRÈS : shani_compress — la MÊME compression écrite avec les
+      EXTENSIONS SHA du silicium (sha256rnds2 / sha256msg1 / sha256msg2),
+      assemblée dans le blob moteur-shani.bin (source moteur-shani.s ;
+      dérivée des pseudocodes officiels, éprouvée contre le vecteur FIPS
+      « abc » et un recoup hashlib de mille blocs AVANT tout usage).
+  La mesure : 101 échantillons × 256 compressions par camp, affinité
+  posée à un cœur, RDTSC sérialisé, horloge QPC en contrepoint — la
+  MÉDIANE cycles/compression de chaque camp et LE RAPPORT, sur TROIS
+  blocs (le vecteur abc, un aléa déterministe, des zéros).
+  Le gain mesuré APPARTIENT À VOTRE MACHINE : aucun chiffre n'est
+  généralisé, aucun statut n'est fabriqué.
+
+LE CONTENU
+  scenario-shani.py   le scénario T0→T5 (python SEUL, aucun paquet)
+  moteur-shani.bin    le blob moteur (sha256 scellé dans le scénario)
+  moteur-shani.s      la source du blob — la révision vit aux sources
+  cibles/
+    proxy-image.bin   l'image mémoire étendue de la pièce scellée
+    manifeste.json    le manifeste (empreintes, cibles — la source
+                      unique posée par l'extracteur du kit dudect)
+
+COMMENT L'EXÉCUTER (votre machine Windows)
+  1. Ouvrez une invite de commandes DANS ce dossier kit-shani.
+  2. Tapez :  scenario-shani.py        (ou : python scenario-shani.py)
+  3. Attendez environ une à deux minutes — chaque geste s'imprime et
+     se consigne au fur et à mesure.
+  4. Le verdict s'écrit à la fin : VERT (tout tint) ou ÉCHEC NOMMÉ
+     (la ligne nomme le défaut — un échec se renvoie TEL QUEL).
+
+CE QUI NAÎT : ./preuves-shani/
+  temoin-shani.txt            le témoin complet (machine, silicium,
+                              empreintes, protocole, mesures, rapport)
+  scenario-shani-journal.log  le journal horodaté du run
+  VERDICT-run-shani.txt       le verdict
+  moteur-shani-execute.bin    les octets EXACTS exécutés
+
+À FAIRE APRÈS LE RUN
+  — Dater et signer de votre main la ligne « signature du geste » du
+    témoin (c'est VOTRE geste — le laboratoire ne peut pas le
+    consigner à votre place).
+  — Renvoyer le dossier preuves-shani/ ENTIERS au coffre
+    /test (dossier Drive « Triade » → « test ») : le laboratoire
+    recoupe sur pièces et consigne l'entrée de journal.
+
+PRÉCISIONS HONNÊTES
+  — Le silicium est lu par CPUID : un CPU SANS extensions SHA rend un
+    ÉCHEC NOMMÉ (le kit ne peut pas inventer le silicium).
+  — L'état du turbo n'est pas sondable simplement : consignez-le à la
+    main dans le témoin si votre BIOS le permet.
+  — L'affinité cœur 0 : si le système la refuse, elle est consignée et
+    la mesure continue (le témoin le dit).
+  — Sous Linux, le même script tourne en AUTOTEST laboratoire (le
+    mécanisme seul, AUCUN statut terrain) — c'est ainsi qu'il fut
+    éprouvé avant de vous être livré.
+
+RÉFÉRENCES
+  D205 : la décision SHA-NI (le hot path 98,11 %, le gain 5,84× de
+  l'étude — JAMAIS scellé dans l'artefact, journal OPT-01).
+  Entrée 241 : le témoin SHA-NI (temoin-shani.txt) est l'un des gestes
+  en attente qui VOUS appartiennent.
