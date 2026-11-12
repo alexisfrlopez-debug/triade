@@ -9178,3 +9178,36 @@ Work Log:
   suivante porte les écarts de source 334 + 307 (le retour du
   VirtualProtect vérifié ; l'étiquette tronquée), recompilés au labo
   principal — jamais de patch binaire.
+
+
+Task ID: 161
+Agent: Z.ai (agent principal — la session du GUI)
+Task: LE GUI KIT-2 v1 LIVRÉ (la commande du développeur du 13/11 : « fais un
+GUI autonome qui log dès son lancement. dedans je veux un bouton pour lancer
+kit-2, et je veux un autre bouton pour qu'il t'envoie les logs directement
+dans un dossier du drive, après le run du kit-2, que tu relèveras ensuite »)
+— TRIADE_gui_kit2_v1/triade_gui.py (59 106 o, sha256 06112518…) : un fichier
+unique stdlib, journalisation dès le lancement (environnement + montage
+noexec + toolchain), bouton LANCER KIT-2 (détection + pré-diagnostic ELF/
+noexec/CRLF + sortie horodatée ligne à ligne + code retour), bouton ENVOYER
+LES LOGS AU DRIVE (rclone / compte de service / manuel assisté), aucun
+jeton embarqué.
+
+Work Log:
+- LA STRUCTURE : un seul fichier, aucune dépendance — serveur HTTP local
+  (ThreadingHTTPServer), page unique adaptée au téléphone, polling 1,2 s ;
+  le journal en append-only dans TRIADE_logs/ + queue mémoire pour la
+  console live.
+- LE PRÉ-DIAGNOSTIQUE : lecture d'en-tête ELF (class/machine) vs uname,
+  options de montage (noexec/ro), CRLF des .sh, shebangs, ls -la du kit —
+  les QUATRE causes plausibles d'un « crash au lancement » nommées AVANT
+  le run.
+- L'ÉPREUVE : kit factice CORRECTIF2 (exit 3 simulé) — capture complète,
+  CRLF et architecture NOMMÉS au journal, envoi manuel assisté (zip), auto-
+  envoi après run, rendu navigateur headless sans erreur JS ; déduplication
+  hiérarchique des kits corrigée sur test réel.
+- LA FRONTIÈRE : aucun secret dans le livrable ; la MESURE demeure au
+  développeur ; le GUI instrumente, il ne remplace pas le kit.
+- SUITE : le développeur pose le GUI à côté du kit, lance par le bouton,
+  envoie les logs au Drive — le labo les relèvera (Entrée 255 : la synchro
+  git ↔ Drive qui suit).

@@ -10069,3 +10069,58 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   portera les deux écarts de source (334 : le retour du VirtualProtect
   vérifié ; 307 : l'étiquette « [manifeste] ») — AUCUN correctif n° 3
   binaire : la cause vécue est nommée et elle n'est pas dans le code.
+
+## Entrée 254 — LE GUI KIT-2 v1 LIVRÉ — LA JOURNALISATION DÈS LE LANCEMENT, LE BOUTON LANCER, LE BOUTON ENVOYER AU DRIVE (la commande du développeur du 13/11 : « fais un GUI autonome qui log dès son lancement. dedans je veux un bouton pour lancer kit-2, et je veux un autre bouton pour qu'il t'envoie les logs directement dans un dossier du drive, après le run du kit-2, que tu relèveras ensuite ») — TRIADE_gui_kit2_v1/triade_gui.py (59 106 o, sha256 06112518…) : un fichier unique stdlib, trois stratégies d'envoi, aucun jeton embarqué (13/11, la session du GUI)
+
+- LA COMMANDE : « fais un GUI autonome qui log dès son lancement. dedans je
+  veux un bouton pour lancer kit-2, et je veux un autre bouton pour qu'il
+  t'envoie les logs directement dans un dossier du drive, après le run du
+  kit-2, que tu relèveras ensuite » — le GUI naît APRÈS le verdict de
+  l'Entrée 253 (le kit est saint, le « crash » était le cadre Mark-of-the-Web
+  ou le double-clic direct : le GUI est l'instrument qui JOURNALISE le run
+  pour que plus aucun « crash silencieux » ne soit possible).
+
+- LE LIVRABLE : TRIADE_gui_kit2_v1/triade_gui.py (59 106 octets, sha256
+  06112518…) — UN FICHIER UNIQUE, stdlib seule (Python ≥ 3.8 : Termux, Pydroid,
+  PC Linux), AUCUN secret embarqué (le jeton du relais ne vit qu'au labo dans
+  .gdrive/, jamais dans le GUI) ; la page est servie sur le réseau local
+  (http://IP:8420) — lisible depuis le navigateur du téléphone.
+
+- LA JOURNALISATION DÈS LE LANCEMENT : l'environnement entier nommé au
+  démarrage (arch, Android getprop, SELinux, PATH, toolchain, stockages) dans
+  TRIADE_logs/gui_<horodatage>.log — tout ce que le diagnostic du crash
+  réclamait et que le terrain ne donnait pas.
+
+- LE BOUTON « LANCER KIT-2 » : détection automatique des kits (déduplication
+  hiérarchique — le conteneur ne masque plus le kit réel) + suggestions de
+  commande classées ; PRÉ-DIAGNOSTIQUE avant l'exécution (architecture ELF
+  des binaires vs l'hôte, montage NOEXEC de la SDCard, fins de ligne CRLF,
+  shebangs, ls -la, toolchain) ; exécution cwd=kit avec fusion
+  stdout+stderr horodatée LIGNE À LIGNE, code retour, durée, timeout
+  configurable (SIGKILL au groupe) ; option copie vers $HOME quand le kit
+  vit sur stockage partagé noexec ; option auto-envoi des logs après le run.
+
+- LE BOUTON « ENVOYER LES LOGS AU DRIVE » : trois stratégies en cascade —
+  rclone (remote triade:), compte de service (drive_sa.json + folder_id, le
+  MÊME mécanisme JWT que le relais du labo), repli manuel assisté (paquet
+  .zip + lien de téléchargement + partage Android) ; le tout journalisé.
+
+- L'ÉPREUVE EN SANDBOX (bout en bout) : kit factice CORRECTIF2 (crash simulé
+  exit 3, ELF x86-64, script CRLF piégé) — le pré-diagnostic NOMME le CRLF et
+  l'architecture (« POINT CLE »), la sortie est capturée horodatée, l'envoi
+  manuel assisté produit le .zip, l'AUTO-ENVOI après run vécu, la page rendue
+  dans un navigateur headless SANS AUCUNE erreur JS ; les bannières de
+  verdict (réussite/échec/mode) affichées, la console live de 17 000
+  caractères tenue à 1,2 s.
+
+- LA FRONTIÈRE HONNÊTE : le GUI n'embarque AUCUN jeton (le dossier du Drive
+  visé est le coffre du projet ; l'envoi SA exige drive_sa.json posé à la
+  main) ; il ne remplace PAS le kit — il l'instrumente ; la MESURE (le run
+  dudect) reste au développeur, comme à l'Entrée 253.
+
+- SUITE : au développeur — le GUI posé à côté du kit sur la machine du run
+  (Termux : pkg install python ; python triade_gui.py), LANCER KIT-2 par le
+  bouton, la fenêtre ne peut plus mourir en silence ; ENVOYER LES LOGS AU
+  DRIVE par le bouton — le labo relèvera les logs au coffre et lira le run
+  entier ; puis les gestes ouverts (le geste B, D204, la cérémonie d'ère, le
+  séquestre D183, la réplication).
