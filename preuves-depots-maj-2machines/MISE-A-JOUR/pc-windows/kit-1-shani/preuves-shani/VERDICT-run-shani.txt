@@ -1,0 +1,4 @@
+VERDICT : ÉCHEC NOMMÉ — LA MESURE AVANT/APRÈS SHA-NI : les pièces scellées recoupées, les trois lecteurs exacts, l'adversaire K tranché, la mesure consignée, la pièce relue intacte
+les gestes en échec :
+  — T0.silicium : les extensions SHA sont présentes — CONSTAT : « GenuineIntel » · famille 6 · modèle 142 · pas 12 · SHA-NI ABSENT — CPUID feuille 7, EBX bit 29 = 0 : CE silicium n'exécute pas sha256rnds2, la mesure avant/après n'y existe pas ; le kit ne peut pas inventer le silicium
+un verdict d'échec se renvoie TEL QUEL : la ligne nomme le défaut

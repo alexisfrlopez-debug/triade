@@ -1,0 +1,702 @@
+{
+ "MISE-A-JOUR": {
+  "id_dossier": "1_w-LShQz74oyUQML8Us7DqoCQZ-ezqUp",
+  "nb_pieces": 49,
+  "octets": 16124409,
+  "pieces": [
+   {
+    "chemin": "MISE-A-JOUR/A-LIRE-AUTOMATISATION.txt",
+    "id": "1Kdm1yhjuqA1qk4fbG7tzxpiNvus05o_U",
+    "taille": 5445,
+    "md5": "9120c8d3bbb9877cf4d795f35f126758",
+    "mtime": "2026-11-12T13:26:57.614Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/CE-QUI-RESTE-A-FAIRE.txt",
+    "id": "1bjayxVCLuI1-r6vyzmRrLXssMxzbzRJL",
+    "taille": 8899,
+    "md5": "df94c17acec0509f2727588f45b71069",
+    "mtime": "2026-11-12T13:26:57.632Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/COMMENCER-ICI.bat",
+    "id": "1w5OP9z8RShRM9zl8HLuN-IAJLtrz-B-u",
+    "taille": 6438,
+    "md5": "1d67ffc5f6ce0eee21951f2cb4efe7bd",
+    "mtime": "2026-11-12T13:26:57.640Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/DIAGNOSTIC-MACHINE.bat",
+    "id": "1TKLhBjnVVgepeSYIn20kHDX5wMp0ULrY",
+    "taille": 3474,
+    "md5": "70948f8bda943d1780548df0c41fe7d2",
+    "mtime": "2026-11-12T13:26:57.648Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/EMPREINTES-PAQUET.txt",
+    "id": "1gRQ3KmFltXGGu1DHLFhqL0Qq5n_CGWOF",
+    "taille": 5987,
+    "md5": "02c348ddd99a347ff6290347bf95e3ac",
+    "mtime": "2026-11-12T13:26:57.662Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/LISEZMOI-MULTIMACHINES.txt",
+    "id": "1yhLIp2Gqk9BUIi_HWSn7LxiJr9L7XBHU",
+    "taille": 9218,
+    "md5": "8d0485b09abd9836163249cdc7e4c38c",
+    "mtime": "2026-11-12T13:26:57.676Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/VERIFIER-PAQUET.bat",
+    "id": "1rvveZo8ZDBD4eZQbjFLlNprudZCYqzrv",
+    "taille": 4679,
+    "md5": "38da9010103eddd74be8b7be9bc4baa8",
+    "mtime": "2026-11-12T13:26:57.684Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/diagnostic_machine.py",
+    "id": "1PsX7Z3a9CGC3_c9zL68URgePQ4LQXTYJ",
+    "taille": 13658,
+    "md5": "eb2b89c691b50701143fb13e5785c7f9",
+    "mtime": "2026-11-12T13:26:57.696Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat",
+    "id": "1xU3PN_XPBaRSzUrik8a_PVbnAEEOv8Z9",
+    "taille": 3697,
+    "md5": "b437ebb274461aed2ffe35d276f7322f",
+    "mtime": "2026-11-12T13:26:57.716Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/LISEZMOI-shani.txt",
+    "id": "13WdirRFqDAGBwOYcmQUkrKKd5S9CGu0n",
+    "taille": 6144,
+    "md5": "b8c8dafdcbb22ff8fec74795cc884381",
+    "mtime": "2026-11-12T13:26:57.725Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/cibles/manifeste.json",
+    "id": "1mudyTNBEw6tUBG3d31D179dzDu0wvVRN",
+    "taille": 1629,
+    "md5": "f61cd16db094845d4815ca96852dde00",
+    "mtime": "2026-11-12T13:26:57.765Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/cibles/proxy-image.bin",
+    "id": "1NRaLPEuDe484jcdCwe0hEFrF2M_KkatZ",
+    "taille": 69632,
+    "md5": "c874e006815939bd323e6386c00ecb71",
+    "mtime": "2026-11-12T13:26:57.772Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/moteur-shani.bin",
+    "id": "1fX36XhRQb6nWIAr1UrqJKsLNxTYhT0YV",
+    "taille": 1360,
+    "md5": "0ddcda882cc291e5df6f38abd3d77dc8",
+    "mtime": "2026-11-12T13:26:57.735Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/moteur-shani.s",
+    "id": "1jidePLzYSnBGBA65oxW0W0S37a1dxdMv",
+    "taille": 7724,
+    "md5": "42e5c08489f6ca030aa372b773cb766a",
+    "mtime": "2026-11-12T13:26:57.741Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/preuves-shani/VERDICT-run-shani.txt",
+    "id": "1htL6R5mmrGxlzg42PE2NQvxTP2lWqIcx",
+    "taille": 588,
+    "md5": "17fd82f7b2616df38579d563de31a67f",
+    "mtime": "2026-11-12T13:28:26.522Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/preuves-shani/scenario-shani-journal.log",
+    "id": "1K24SjxI4w6nkLHH2L6126163X1lPpTAT",
+    "taille": 325,
+    "md5": "900b3f910b6053811fbf58d38a6d3a61",
+    "mtime": "2026-11-12T13:28:26.522Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-1-shani/scenario-shani.py",
+    "id": "1TDfGZ0SFHw64R3KD-nwvG4DOtT6PAwG3",
+    "taille": 33925,
+    "md5": "b9b0fc0b25fe085bb0f05a927c662f9c",
+    "mtime": "2026-11-12T13:26:57.751Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat",
+    "id": "1sC_XZ87sdvkxcqvqyppuVGvJx7J-CblD",
+    "taille": 12989,
+    "md5": "9a3bdb6f81e8d2ec81d367442983f60b",
+    "mtime": "2026-11-12T13:26:57.786Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/LISEZMOI-dudect.txt",
+    "id": "1KxohfjvOhwzDLRV3R3YG-YeU-ohmQayG",
+    "taille": 6444,
+    "md5": "705d6c749b5eabc23de516ac8beb84bf",
+    "mtime": "2026-11-12T13:26:57.796Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/cibles/manifeste-c.txt",
+    "id": "16sWDPDY-77-_U9molqm4b_2cAIYOtO-R",
+    "taille": 445,
+    "md5": "936f526b570a3d4add8d47bf4dd88143",
+    "mtime": "2026-11-12T13:26:57.864Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/cibles/manifeste.json",
+    "id": "1OJgH_43aSZEbjx0j0CEEDldhSsS8Oz0r",
+    "taille": 1629,
+    "md5": "f61cd16db094845d4815ca96852dde00",
+    "mtime": "2026-11-12T13:26:57.870Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/cibles/proxy-image.bin",
+    "id": "1ge3Iu5ElqCWGZsJkJQENErhGP7qwQC3d",
+    "taille": 69632,
+    "md5": "c874e006815939bd323e6386c00ecb71",
+    "mtime": "2026-11-12T13:26:57.879Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/dudect_v150.c",
+    "id": "13yvtulVWJ6GIyYxCp4qVLuJ6KT-yj217",
+    "taille": 17777,
+    "md5": "b830b270bcfab4e0b5111ee6fb7f57fc",
+    "mtime": "2026-11-12T13:26:57.804Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/dudect_v150.exe",
+    "id": "1xjJejqsMAeTAYz8nQlrZJQzlXhHxzhXV",
+    "taille": 423551,
+    "md5": "115459d30f97af2dd626b5a8d141da45",
+    "mtime": "2026-11-12T13:26:57.818Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/extraire_cibles_v150.py",
+    "id": "1W2goWHlwfMbl-hVYtuiFlGuayuzFBuDx",
+    "taille": 6155,
+    "md5": "df7c93f5c1468ffb956a5fff9acbddd6",
+    "mtime": "2026-11-12T13:26:57.828Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/test_appel.c",
+    "id": "13-CFUrlY3N4bJECFG2sNWR67K0LseQSc",
+    "taille": 4313,
+    "md5": "75853badab56a806f49bd7659dc7c7d5",
+    "mtime": "2026-11-12T13:26:57.835Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-2-dudect/test_appel.exe",
+    "id": "1ygqO4ApRqVXrFoN_-MPHhXwZpYL6jl4a",
+    "taille": 247082,
+    "md5": "64e7f8e762a803a50c44199684c80783",
+    "mtime": "2026-11-12T13:26:57.846Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat",
+    "id": "1p1x3b97FIILKwr0YHFrdcw3eJNxAKTUV",
+    "taille": 4957,
+    "md5": "968bc5eaff9c800eeaa49b70a31ef876",
+    "mtime": "2026-11-12T13:26:57.891Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/LISEZMOI-terrain-tiers.txt",
+    "id": "1Fupltcs4-WJ9jDb3vczMg-5WselyG1tm",
+    "taille": 3345,
+    "md5": "a75c2b31f7cee7d5c235a938acde0a1a",
+    "mtime": "2026-11-12T13:26:57.901Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/LISEZMOI-KIT-LOUPE.md",
+    "id": "1ONgKcsXkMB-UQf5RmfDoad1l1RG-mRwp",
+    "taille": 20084,
+    "md5": "38b7c764ae5774131fd9f27ae57b370a",
+    "mtime": "2026-11-12T13:26:57.917Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/loupe.exe",
+    "id": "1wjIf0NYcWkLoj5P5fyJXz2UzT_9DxJzg",
+    "taille": 127488,
+    "md5": "5fc07b786150058d45ec9bbec9acc4ed",
+    "mtime": "2026-11-12T13:26:57.925Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/preuves-loupe/temoin-loupe.txt",
+    "id": "1p6dxsqClXkAN80xOpfhQFSAklr0SvQ7j",
+    "taille": 5578,
+    "md5": "3995620ea8d6b2b5040c1a2aa9a279c7",
+    "mtime": "2026-11-12T13:28:40.625Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/scenario-loupe.py",
+    "id": "1oXTpXECmm5NAtG3jF0ZNm30zQcRlRIH4",
+    "taille": 62047,
+    "md5": "77872b71cf5242ea063d3b7c599a2250",
+    "mtime": "2026-11-12T13:26:57.935Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/temoin-vitrine.bat",
+    "id": "1NSldc9EbsejcVgxAtEbh7lVVOL6BsohY",
+    "taille": 3415,
+    "md5": "40476a2f6f0944d8e0c859ff1133cc01",
+    "mtime": "2026-11-12T13:26:57.943Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/LISEZMOI-qemu.txt",
+    "id": "1DiJe3LYvS-f8iPSG4uTWEZCzPyzMrLNx",
+    "taille": 4547,
+    "md5": "9c5fd448a8c28741e563b9a39f8cbc78",
+    "mtime": "2026-11-12T13:26:57.959Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/kit-m7d/LISEZMOI-KIT-M7D.md",
+    "id": "17goDMQJH6LVRIEg9VE81pH_iUco2NkMx",
+    "taille": 9289,
+    "md5": "0837ffc8c91ae151c7db0e6e85125569",
+    "mtime": "2026-11-12T13:26:57.992Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/kit-m7d/corpus",
+    "id": "1jaaMzFQhYHomb82LVE3iDuRf8jYlFvzP",
+    "taille": 12288,
+    "md5": "a550fee39b76e653ca31c7dc936dc9ca",
+    "mtime": "2026-11-12T13:26:57.998Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/kit-m7d/demo",
+    "id": "1DtsDnWk_vVtDqTBuZA-L9uCYXhXmtQaY",
+    "taille": 12288,
+    "md5": "7f61af58749421c1bcced2da9a4e14f5",
+    "mtime": "2026-11-12T13:26:58.004Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/kit-m7d/qemu-riscv64",
+    "id": "16SAFqag1WiiYppCOdbKQHkCGh9Re19w_",
+    "taille": 14821328,
+    "md5": "bae5a36f0dd40e1286d342c9433c0dc5",
+    "mtime": "2026-11-12T13:26:58.133Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/kit-m7d/scenario-m7d.py",
+    "id": "13nMtBqNTmKa83bUXp1I_H73ta-GP7kGe",
+    "taille": 24305,
+    "md5": "1764fd7dab56c34f86d21f8b246c00b3",
+    "mtime": "2026-11-12T13:26:58.145Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/lancer-voie1-m7d.sh",
+    "id": "1qnYuiRu5_4GNhthSohv3OmOxKhjWbOH3",
+    "taille": 3021,
+    "md5": "23f11bb51c8812a09b0264e145c4a9fc",
+    "mtime": "2026-11-12T13:26:57.969Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/lancer-voie2-shani.sh",
+    "id": "1vKn_n43tsK7LhKvQnvigFgEZI219UVcL",
+    "taille": 3572,
+    "md5": "61229bef485fc88829d3a54a416c7bd4",
+    "mtime": "2026-11-12T13:26:57.980Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/preuves-shani-emulation-labo/VERDICT-run-shani.txt",
+    "id": "1p9Hu3Wa0NyjiW-sXWrqpmcfCmMSlvId9",
+    "taille": 278,
+    "md5": "90030d9fc166d21d72dedf2225448226",
+    "mtime": "2026-11-12T13:26:58.161Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/preuves-shani-emulation-labo/scenario-shani-journal.log",
+    "id": "10MAL2pY7ux4WBypRTb-1hqgjgoyHa9li",
+    "taille": 659,
+    "md5": "15975c722a6dfa2776073b1947d2916d",
+    "mtime": "2026-11-12T13:26:58.166Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/qemu-wsl2/preuves-shani-emulation-labo/temoin-shani.txt",
+    "id": "1kga_5cRtlN7akhdgkBQzMb2UjUz-1nSk",
+    "taille": 1970,
+    "md5": "417c098f35a97919850154e60e238dc2",
+    "mtime": "2026-11-12T13:26:58.177Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/telephone-arm/kit-constat-arm/LISEZMOI-constat-arm.txt",
+    "id": "1iubPT557nok1WoQK7uz1ljCQanit5COh",
+    "taille": 4482,
+    "md5": "4585a9e164d711fea2881faf6eb7b9e5",
+    "mtime": "2026-11-12T13:26:58.198Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/telephone-arm/kit-constat-arm/constat-arm.py",
+    "id": "1KNXn_KaXA9D_HbRzfOmWcWzQ7QJ1VxrD",
+    "taille": 14361,
+    "md5": "7dc856212f91f88b6bc2fd511fa14f7d",
+    "mtime": "2026-11-12T13:26:58.208Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh",
+    "id": "1Z2JU7w4mqF5PSPYlMeex11cAO93v4RIB",
+    "taille": 3202,
+    "md5": "35fb3367b34032dbbf23c61d8d85838e",
+    "mtime": "2026-11-12T13:26:58.218Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR/verifier_paquet.py",
+    "id": "1GkuyB69hudd8xCuSLH269csjSpKLRmU8",
+    "taille": 9066,
+    "md5": "2136627e7adf8673f568ed20066571fb",
+    "mtime": "2026-11-12T13:26:58.230Z"
+   }
+  ]
+ },
+ "MISE-A-JOUR2": {
+  "id_dossier": "1htXFaFA4lNcqwFd-QYDB3--EzCfNSSii",
+  "nb_pieces": 49,
+  "octets": 16126756,
+  "pieces": [
+   {
+    "chemin": "MISE-A-JOUR2/A-LIRE-AUTOMATISATION.txt",
+    "id": "1cUFRYJdNRtH52gKsznGIm4na6V6QKC8f",
+    "taille": 5445,
+    "md5": "9120c8d3bbb9877cf4d795f35f126758",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/CE-QUI-RESTE-A-FAIRE.txt",
+    "id": "1et5-GmbtUedbQ1UeoNCIvJoHOWj9XUgQ",
+    "taille": 8899,
+    "md5": "df94c17acec0509f2727588f45b71069",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/COMMENCER-ICI.bat",
+    "id": "1mteRuoN8VPtk0SAFRj7XZfslpCrrmGuT",
+    "taille": 6438,
+    "md5": "1d67ffc5f6ce0eee21951f2cb4efe7bd",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/DIAGNOSTIC-MACHINE.bat",
+    "id": "17HJvmHT7WirwduKcwxDVY7bdvd-ztmEQ",
+    "taille": 3474,
+    "md5": "70948f8bda943d1780548df0c41fe7d2",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/EMPREINTES-PAQUET.txt",
+    "id": "1wcgFxg6qpRunwfqffKqSIxE7jxR7QtX9",
+    "taille": 5987,
+    "md5": "02c348ddd99a347ff6290347bf95e3ac",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/LISEZMOI-MULTIMACHINES.txt",
+    "id": "1-mhlXPMb7R6jxRMsCS9Jm_ZXjsJHSp1z",
+    "taille": 9218,
+    "md5": "8d0485b09abd9836163249cdc7e4c38c",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/VERIFIER-PAQUET.bat",
+    "id": "1hmDhv8e2bT-AEdwqojy3qX85ubTA0-hn",
+    "taille": 4679,
+    "md5": "38da9010103eddd74be8b7be9bc4baa8",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/diagnostic_machine.py",
+    "id": "1M6gbN4YLMil9xLjddioYQ8HXpYS-w87A",
+    "taille": 13658,
+    "md5": "eb2b89c691b50701143fb13e5785c7f9",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat",
+    "id": "174xKCHw5h2CRA25PF9ih-6enTXbYlj9Q",
+    "taille": 3697,
+    "md5": "b437ebb274461aed2ffe35d276f7322f",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/LISEZMOI-shani.txt",
+    "id": "1s-6OOAga_Q1uCb6OatVPXF7L6a_KTtce",
+    "taille": 6144,
+    "md5": "b8c8dafdcbb22ff8fec74795cc884381",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/cibles/manifeste.json",
+    "id": "1bZnhX4Wc9HWGPLBTc1MXHBHtZ40Zfrfe",
+    "taille": 1629,
+    "md5": "f61cd16db094845d4815ca96852dde00",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/cibles/proxy-image.bin",
+    "id": "1-s2ytPN35ZeeO3r0I8vijS9_odd-i2Qq",
+    "taille": 69632,
+    "md5": "c874e006815939bd323e6386c00ecb71",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/moteur-shani.bin",
+    "id": "1Qv3-b6qzqWFZ4f1hxrnS00p6OQRjLopb",
+    "taille": 1360,
+    "md5": "0ddcda882cc291e5df6f38abd3d77dc8",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/moteur-shani.s",
+    "id": "1_RUQE9-t_9azJZYy7U4p87aEzSKZvcyk",
+    "taille": 7724,
+    "md5": "42e5c08489f6ca030aa372b773cb766a",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-1-shani/scenario-shani.py",
+    "id": "1N1ApOcAI6DJJD4XXx081sZxGoTKR3NXQ",
+    "taille": 33925,
+    "md5": "b9b0fc0b25fe085bb0f05a927c662f9c",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat",
+    "id": "1h6usy-_cUcB6nPTSGrjM7QWRPcPgA3Kj",
+    "taille": 12989,
+    "md5": "9a3bdb6f81e8d2ec81d367442983f60b",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/LISEZMOI-dudect.txt",
+    "id": "1lqy1IoIx3BL3FgvMWvQ6RIIdOebUJuS6",
+    "taille": 6444,
+    "md5": "705d6c749b5eabc23de516ac8beb84bf",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/cibles/manifeste-c.txt",
+    "id": "1KJgAeDFVZJRw8T-_rLyVhgMhy2ywATCP",
+    "taille": 445,
+    "md5": "936f526b570a3d4add8d47bf4dd88143",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/cibles/manifeste.json",
+    "id": "1BGPJWHz6fzRaxz-9pTgTdU3oSbwmJbht",
+    "taille": 1629,
+    "md5": "f61cd16db094845d4815ca96852dde00",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/cibles/proxy-image.bin",
+    "id": "18OcW3BvRc_spEIVjrMtlqU4NIrDPa9dn",
+    "taille": 69632,
+    "md5": "c874e006815939bd323e6386c00ecb71",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/dudect_v150.c",
+    "id": "1RlKHAuPqb2xtJGu6ydQTPXDXs3DfBst3",
+    "taille": 17777,
+    "md5": "b830b270bcfab4e0b5111ee6fb7f57fc",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/dudect_v150.exe",
+    "id": "1R-Tks6QCZ9nEsvD5UCrI4GUKegaUPBYx",
+    "taille": 423551,
+    "md5": "115459d30f97af2dd626b5a8d141da45",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/extraire_cibles_v150.py",
+    "id": "15yAzETaAasRhy8hijds_JKmtMIsLpEvP",
+    "taille": 6155,
+    "md5": "df7c93f5c1468ffb956a5fff9acbddd6",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/test_appel.c",
+    "id": "15mmrxih-cMQOjij3PJls4o8hBR_pWlAx",
+    "taille": 4313,
+    "md5": "75853badab56a806f49bd7659dc7c7d5",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-2-dudect/test_appel.exe",
+    "id": "1IVOq8uHtj24qUhaKExjFquGk0zYWvMV5",
+    "taille": 247082,
+    "md5": "64e7f8e762a803a50c44199684c80783",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat",
+    "id": "1o8ZNMBecmU2AwYohLsAk5ORa_-XuWxIo",
+    "taille": 4957,
+    "md5": "968bc5eaff9c800eeaa49b70a31ef876",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/LISEZMOI-terrain-tiers.txt",
+    "id": "1qaZ3fejryicwMllwqMIodsKDLn-aht3I",
+    "taille": 3345,
+    "md5": "a75c2b31f7cee7d5c235a938acde0a1a",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/LISEZMOI-KIT-LOUPE.md",
+    "id": "1dJxuqyZrUmpPrh5-qoAZ1xJwBZzpjg35",
+    "taille": 20084,
+    "md5": "38b7c764ae5774131fd9f27ae57b370a",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/loupe.exe",
+    "id": "1N4NeNwx_VrqajKzRoMIaa3M48uucTY7m",
+    "taille": 127488,
+    "md5": "5fc07b786150058d45ec9bbec9acc4ed",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/scenario-loupe.py",
+    "id": "1e-j574Zie3usvixOkl3QCVwmmxQt1D4L",
+    "taille": 62047,
+    "md5": "77872b71cf5242ea063d3b7c599a2250",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/temoin-vitrine.bat",
+    "id": "1En1ydoq7MG5EkcOsiEsjqLUvaxq1brjX",
+    "taille": 3415,
+    "md5": "40476a2f6f0944d8e0c859ff1133cc01",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/LISEZMOI-qemu.txt",
+    "id": "1mIRfW8GArKVyLvISwnG0ofssY0OjFxCe",
+    "taille": 4547,
+    "md5": "9c5fd448a8c28741e563b9a39f8cbc78",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/LISEZMOI-KIT-M7D.md",
+    "id": "16Y_NbOTORf8rTO5vXf6OhJfqSZkuy-JX",
+    "taille": 9289,
+    "md5": "0837ffc8c91ae151c7db0e6e85125569",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/corpus",
+    "id": "1AOBX0PFwMfIEvrxrKhuyWc-0Y91l7v40",
+    "taille": 12288,
+    "md5": "a550fee39b76e653ca31c7dc936dc9ca",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/demo",
+    "id": "1AWm9X2DFM-YTS_VpzUzQSkfIVN5iZmF3",
+    "taille": 12288,
+    "md5": "7f61af58749421c1bcced2da9a4e14f5",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/preuves-m7/VERDICT-run-m7d.txt",
+    "id": "1odN7_aF1sWeLiWlRnW3HHKCbzpR3TLeg",
+    "taille": 4182,
+    "md5": "edb12391a6847f80fc4dee4f6af3ea05",
+    "mtime": "2026-11-12T13:31:17.274Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/preuves-m7/scenario-m7d-journal.log",
+    "id": "17gmrG07ZC_af3FQ1tCewcr4fJ8FmsyJ7",
+    "taille": 3699,
+    "md5": "57bf632545b821e5b64cb687d367ae0e",
+    "mtime": "2026-11-12T13:31:17.264Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/preuves-m7/temoin-m7d.txt",
+    "id": "1H-YSd0utHlf1GT2JJwauNQ4pfthF-C3D",
+    "taille": 957,
+    "md5": "7990a4086937f1954f019f9424c988b0",
+    "mtime": "2026-11-12T13:31:15.841Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/qemu-riscv64",
+    "id": "18Ovge6P9vJF15RzQlXIpDbFjn4_BdGYZ",
+    "taille": 14821328,
+    "md5": "bae5a36f0dd40e1286d342c9433c0dc5",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/kit-m7d/scenario-m7d.py",
+    "id": "1fRziCcKwL16sSfLoHrC1VJ_M-i02HyZO",
+    "taille": 24305,
+    "md5": "1764fd7dab56c34f86d21f8b246c00b3",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/lancer-voie1-m7d.sh",
+    "id": "1DNUl3AzRiLYV2Wi0nU0VbCvoQrFaPoCX",
+    "taille": 3021,
+    "md5": "23f11bb51c8812a09b0264e145c4a9fc",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/lancer-voie2-shani.sh",
+    "id": "10KTxcCy7A6WQeI9En48PmSBa8T2CTRkn",
+    "taille": 3572,
+    "md5": "61229bef485fc88829d3a54a416c7bd4",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/preuves-shani-emulation-labo/VERDICT-run-shani.txt",
+    "id": "1o3mNKJNKfF91_e680bJNtLI9VUA69Ct6",
+    "taille": 278,
+    "md5": "90030d9fc166d21d72dedf2225448226",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/preuves-shani-emulation-labo/scenario-shani-journal.log",
+    "id": "1s2tv9T9v4gJXcfDKV3IHHtshwEREp_wP",
+    "taille": 659,
+    "md5": "15975c722a6dfa2776073b1947d2916d",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/qemu-wsl2/preuves-shani-emulation-labo/temoin-shani.txt",
+    "id": "1IFYSuI5iHZGDvwoUQQKosar-JcDP57lv",
+    "taille": 1970,
+    "md5": "417c098f35a97919850154e60e238dc2",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/telephone-arm/kit-constat-arm/LISEZMOI-constat-arm.txt",
+    "id": "1u5ypoEIyeAaoVNbrFBPDsgArJo8ke7v6",
+    "taille": 4482,
+    "md5": "4585a9e164d711fea2881faf6eb7b9e5",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/telephone-arm/kit-constat-arm/constat-arm.py",
+    "id": "1FHXoRQee_kWP5gRPOukBH-GTFEgXDIas",
+    "taille": 14361,
+    "md5": "7dc856212f91f88b6bc2fd511fa14f7d",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh",
+    "id": "1YLu7Fn2ki1-o5wj-JDCcnMxckjhn1RjC",
+    "taille": 3202,
+    "md5": "35fb3367b34032dbbf23c61d8d85838e",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   },
+   {
+    "chemin": "MISE-A-JOUR2/verifier_paquet.py",
+    "id": "13kMtLd05JquJyH9rq3uROm2Hu2Hdoc6r",
+    "taille": 9066,
+    "md5": "2136627e7adf8673f568ed20066571fb",
+    "mtime": "2026-11-12T13:00:00.000Z"
+   }
+  ]
+ }
+}

@@ -1,0 +1,10 @@
+TÉMOIN DU RUN TERRAIN M7-(d) — l'universalité rejouée sur la machine du développeur
+date              : 2026-11-12 14:31:15 +0100
+machine            : Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.43
+noyau              : 6.18.58.1-microsoft-standard-WSL2 (x86_64)
+python             : 3.14.4
+instrument         : qemu-riscv64 version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1) — le kit (binaire statique embarqué)
+md5 instrument     : bae5a36f0dd40e1286d342c9433c0dc5
+corpus (AVANT)     : sha256 ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799 — le scellé 0.8.0-rc.1 du jalon M7
+demo (AVANT)       : sha256 e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9 — le démonstrateur invité f72001
+                    (réserve instrumentale D149 : qemu-riscv64 exécute l'ISA par TCG, le noyau et les syscalls sont RÉELS de l'hôte — une émulation de processus, jamais déguisée en exécution native)

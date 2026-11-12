@@ -8967,3 +8967,57 @@ Work Log:
   compilateur requis), le constat-arm au téléphone, les voies QEMU, le
   DIAGNOSTIC pour choisir la machine du geste B, la campagne D204, la
   cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 157
+Agent: Z.ai (agent principal)
+Task: LE DÉPÔT « RUN AUTO SUR 2 ORDIS » REÇU ET RECOUPÉ (l'annonce du
+développeur du 12/11/2026 : « j'ai lancé le run auto sur 2 ords
+différents, j'ai tout mis dans /test du drive ») — le sondage des DEUX
+dépôts (MISE-A-JOUR et MISE-A-JOUR2, 49 pièces chacun), le rapatriement
+des SIX preuves de run (md5 vérifiés), le recoupement 35/35 VERT, la
+consignation.
+
+Work Log:
+- LE SONDAGE (scripts/sonder_depots_maj_2machines.py, manifeste
+  sondage_depots_2machines.json) : /test porte les DEUX dossiers —
+  MISE-A-JOUR (machine 1, l'upload 13:26:57Z) et MISE-A-JOUR2 (machine
+  2, les mtimes 13:00:00.000Z exactes = artefact de l'outil d'upload).
+- LE RAPATRIEMENT (scripts/rapatrier_depots_maj_2machines.py) : les SIX
+  preuves de run téléchargées, chaque md5 == la métadonnée Drive —
+  machine 1 : VERDICT + journal du kit-1 (13:28:26Z), témoin du kit-3
+  (13:28:40Z) ; machine 2 : VERDICT + journal + témoin de la voie 1 M7D
+  (13:31:15-17Z).
+- LE KIT-1 (machine 1 : ALEKPC · Windows 11 · Python 3.14.3) : REFUSÉ
+  UNE TROISIÈME FOIS — le même ÉCHEC NOMMÉ T0.silicium (« GenuineIntel »
+  · famille 6 · modèle 142 · pas 12 · SHA-NI ABSENT, CPUID feuille 7 EBX
+  bit 29 = 0) ; le VERDICT md5 17fd82f7… == geste A == dépôt AUTO, TROIS
+  refus au même byte ; le journal ne diffère QUE par l'heure (14:28:26
+  locale == le mtime Drive) ; D206 tenue une 3e fois.
+- LE KIT-3 (machine 1, 14 s après) : LE QUATORZIÈME RUN TERRAIN, VERT
+  SUR PIÈCES — le scellé c1115105… asserté, T0→T7+S0 tout vert, la
+  sonde 205 : P1 et P4 refusés par le VRAI chargeur (GetLastError 193,
+  NTSTATUS 0xc000007b) ; le témoin == celui du 13e run aux adresses
+  ASLR et à la poignée près (38/38 lignes du gabarit).
+- LA VOIE 1 M7D (machine 2 : WSL2 6.18.58.1 · glibc 2.43 · Python
+  3.14.4) : 16 PASS / 0 ÉCHEC VERT, LA PREMIÈRE FOIS HORS DU LABO —
+  l'instrument == le qemu-riscv64 EMBARQUÉ du kit (md5 bae5a36f…), les
+  16 lignes PASS == celles du run du labo OCTET POUR OCTET (l'universalité
+  rejouée), les deux scellés assertés, ZÉRO RÉGRESSION, la réserve D149
+  nommée au témoin.
+- LE RECOUPEMENT (scripts/recouper_depots_maj_2machines.py, rapport
+  sha256 586121136c3e…, 35/35 VERT) : LA CHAÎNE (les 46 pièces de chaque
+  dépôt == le paquet livré md5 par md5, les deux machines parties du
+  MÊME paquet), LA CHRONOLOGIE (livraison 13:25Z → kit-1 13:28:26Z →
+  kit-3 13:28:40Z → M7D 13:31:17Z, aucune inversion), LES FRONTIÈRES (le
+  kit-2 dudect TOUJOURS PAS COURU — la seule mesure jamais vécue ; le
+  diagnostic, le constat-arm, la voie 2, la vitrine : pas vécus).
+- LA CONSIGNATION : l'Entrée 250 au journal, la présente tâche au
+  worklog, le commit, le push GitHub, le miroir Drive et le kit
+  Cérémonie tenus par le hook post-commit ; les .log bruts demeurent au
+  coffre /test, leurs contenus cités mot pour mot.
+- SUITE : au développeur — LE KIT-2 DUDECT (le grand manquant : un
+  double-clic, aucun Python ni compilateur requis), le DIAGNOSTIC pour
+  choisir la machine du geste B, le constat-arm au téléphone, la voie 2
+  QEMU, le témoin vitrine, la campagne D204, la cérémonie d'ère, le
+  séquestre D183, la réplication.
