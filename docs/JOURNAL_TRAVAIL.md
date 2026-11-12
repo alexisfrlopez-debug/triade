@@ -10278,3 +10278,71 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 - SUITE : le kit-2 dudect reste LA MESURE JAMAIS ENCORE COURUE du paquet
   (CE-QUI-RESTE-A-FAIRE.txt) — l'Entrée 258 en fait le geste le plus
   court sur Windows.
+
+## Entrée 258 — LE KIT-2 DUDECT EN EXE 1-CLIC (la commande du développeur du 13/11 : « fais moi un run en 1 clic exactement pareil pour le kit-2 dudect c'est beaucoup plus simple » puis « je ne souhaite pas un apk en 1 clic mais un exe en 1 clic pour le kit-2 ») — TRIADE-kit2-dudect-1clic.exe (1 066 726 o, sha256 9d2ccc91…) : les 10 pièces du paquet CORRECTIF2 EMBARQUÉES octet pour octet, re-recoupées sha256 à chaque run (fail-closed), LE VRAI lanceur .bat vécu via cmd /c, le zip des preuves au Bureau, l'explorateur + le coffre /test ouverts au geste final — AUCUN jeton, AUCUN Python requis (13/11, la session de l'exe 1-clic)
+
+- LA COMMANDE : « fais moi un run en 1 clic exactement pareil pour le
+  kit-2 dudect c'est beaucoup plus simple » puis « je ne souhaite pas un
+  apk en 1 clic mais un exe en 1 clic pour le kit-2 » — le même geste
+  court que l'APK (vécu VERT au téléphone, Entrée 257), pour la partie
+  pc-windows du paquet CORRECTIF2. PAS d'APK : un EXE Windows.
+
+- LE LIVRABLE : TRIADE-kit2-dudect-1clic.exe (1 066 726 octets, sha256
+  9d2ccc91…) — PE32+ x86-64 console, lié STATIQUE (imports KERNEL32 +
+  msvcrt + SHELL32 seuls, présents sur tout Windows), AUCUN droit, AUCUN
+  réseau sortant, AUCUN jeton, AUCUN Python requis. Avec le paquet
+  TRIADE_kit2_exe_1clic_v1.zip (fb7a8389…, exe + LISEZMOI — le PORTEUR si
+  Drive refuse l'exe nu par son faux positif « malware », le cas vécu le
+  12/11 sur test_appel.exe) et les sources complètes (a34f116e…) — au bac,
+  au coffre /test et au miroir.
+
+- LA MÉCANIQUE : LE KIT SCELLÉ EMBARQUÉ octet pour octet — les 10 pièces
+  du paquet CORRECTIF2 du coffre (le lanceur .bat, le LISEZMOI, les
+  sources, dudect_v150.exe, test_appel.exe, l'extracteur, les cibles avec
+  l'image scellée 0782d7e2…), recoupées 10/10 DANS l'exe livré (chaque
+  pièce cherchée et trouvée octet pour octet) ; à CHAQUE run l'exe
+  re-extrait et re-recoupe CHAQUE sha256 (fail-closed : REFUS nommé si un
+  octet diverge — l'antivirus qui retirerait un exe de mesure est NOMMÉ,
+  jamais un silence) ; D99 TENUE (les restes du run précédent partent aux
+  archives horodatées) ; PUIS LE VRAI LANCEUR DU KIT VIT : cmd /c
+  LANCER-KIT-2-DUDECT.bat — le .bat scellé fait TOUT (recoup de l'image,
+  recompilation si un compilateur vit sinon les exe précompilés, l'épreuve
+  d'appel FIPS abc, LE RUN N=200, le brouillon de témoin), sa console
+  ENTIÈRE capturée dans run-console-<ts>.txt puis affichée telle quelle ;
+  le zip des preuves naît sur le BUREAU (console + journal csv + sorties +
+  témoin + DEPOT.txt) ; l'explorateur s'ouvre SUR LE ZIP et le coffre /test
+  dans le navigateur — le dépôt est le geste du développeur, AUCUN jeton
+  (la frontière du GUI v1 et de l'APK). L'argument N passe au lanceur du
+  kit (validé par lui : minimum 60).
+
+- LA CHAÎNE DE BUILD (le labo, rejouable — construire-et-verifier.txt) :
+  gcc 14.2.0 mingw-w64 réinstallé au bac SANS ROOT (apt-get download +
+  dpkg-deb -x — le bac recréé ne porte plus le mingw des builds
+  précédents), -O2 -static -lshell32 ; le payload généré par
+  generer_payload.py depuis le zip CORRECTIF2 du coffre.
+
+- L'ÉPREUVE AU LABO : le NOYAU (sha256, crc32, écriture zip store,
+  extraction + vérification) est PORTABLE et éprouvé à l'AUTOTEST POSIX —
+  sha256 contre les vecteurs FIPS 180-4 (« abc » EXACT, vide EXACT),
+  extraction 10/10 VERTS, l'ANTI-TEST (une pièce mutée d'un octet) NOMMÉ
+  par le vérificateur, le zip produit RELU ET RECOUPÉ OCTET-EXACT par
+  Python (zipfile, crc compris) ; l'EXE livré recoupé par objdump (PE32+
+  console, imports nus) et le blob EMBARQUÉ retrouvé 10/10 octet pour
+  octet DANS l'exe ; un écart de console NOMMÉ ET RÉPARÉ avant livraison
+  (les littéraux « … » UTF-8 auraient été du mojibake en CP850 — les
+  littéraux sont ASCII purs, comme le kit). Le labo n'a AUCUN Windows :
+  la coquille Win32 (CreateProcess, ShellExecute, SHGetFolderPath,
+  FindFirstFile) vit son premier run chez le développeur — nommé, jamais
+  maquillé, comme les exe précompilés du kit avant lui.
+
+- LA FRONTIÈRE : l'exe NE MESURE RIEN et ne modifie JAMAIS le kit — la
+  mesure vit dans dudect_v150, l'épreuve dans test_appel, le protocole
+  dans le .bat : les sorties et codes de sortie sont LES LEURS. SmartScreen
+  (« Windows a protégé votre ordinateur » — exe non signé par certificat
+  de code) et l'antivirus sont NOMMÉS au LISEZMOI avec la conduite à
+  tenir.
+
+- SUITE : au développeur — DOUBLE-CLIQUER l'exe (le test part seul), puis
+  déposer preuves-kit2-dudect-<ts>.zip au coffre /test (l'explorateur et
+  le coffre s'ouvrent seuls), compléter et signer le témoin. Le labo
+  relèvera, recoupera et lira LE RUN — la mesure jamais encore courue.

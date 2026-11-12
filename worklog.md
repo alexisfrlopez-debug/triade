@@ -9295,3 +9295,31 @@ Work Log:
   demeure attendue.
 - SUITE : les preuves au dépôt (download/preuves-run-kit-android-v1/),
   Entrée 257.
+
+
+Task ID: 165
+Agent: Z.ai (agent principal — la session de l'exe 1-clic)
+Task: LE KIT-2 DUDECT EN EXE 1-CLIC (la commande du développeur : « je ne
+souhaite pas un apk en 1 clic mais un exe en 1 clic pour le kit-2 ») —
+TRIADE-kit2-dudect-1clic.exe (1 066 726 o, sha256 9d2ccc91…) : PE32+ x86-64
+statique (KERNEL32+msvcrt+SHELL32 seuls), aucun droit, aucun jeton, aucun
+Python requis ; les 10 pièces du paquet CORRECTIF2 EMBARQUÉES octet pour
+octet (recoupées 10/10 dans l'exe), re-vérifiées sha256 à CHAQUE run
+(fail-closed), D99, LE VRAI LANCER-KIT-2-DUDECT.bat vécu via cmd /c avec
+console entière capturée, le zip des preuves au Bureau, l'explorateur +
+le coffre /test ouverts au geste final.
+
+Work Log:
+- LA CHAÎNE : mingw gcc 14.2.0 réinstallé SANS ROOT (apt-get download +
+  dpkg-deb -x), -O2 -static -lshell32 ; generer_payload.py (blob C 793 416
+  octets + manifeste sha256) depuis le zip CORRECTIF2 du coffre.
+- L'ÉPREUVE : autotest POSIX du NOYAU TOUT VERT (vecteurs FIPS, 10/10
+  VERTS, anti-test muté NOMMÉ, zip relu OCTET-EXACT par Python — un bug
+  d'ordre d'évaluation dans l'EOCD du zip fut vécu, nommé et réparé au
+  geste) ; blob recoupé 10/10 DANS l'exe ; littéraux console ASCII-fés
+  (CP850). Le labo n'a aucun Windows : la coquille vit son premier run
+  chez le développeur — nommé.
+- LA FRONTIÈRE : l'exe ne mesure rien, ne modifie jamais le kit, n'emporte
+  aucun jeton ; SmartScreen/antivirus nommés au LISEZMOI.
+- SUITE : le développeur double-clique, dépose le zip des preuves au
+  coffre /test, signe le témoin ; le labo relèvera et lira LE RUN.

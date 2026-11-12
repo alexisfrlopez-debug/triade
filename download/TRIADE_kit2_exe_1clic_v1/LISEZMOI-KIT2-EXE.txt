@@ -1,0 +1,92 @@
+TRIADE KIT-2 DUDECT — L'EXE EN 1 CLIC v1 — LISEZ-MOI
+======================================================
+
+LA COMMANDE (le développeur, 13/11/2026) : « fais moi un run en 1 clic
+exactement pareil pour le kit-2 dudect c'est beaucoup plus simple » puis
+« je ne souhaite pas un apk en 1 clic mais un exe en 1 clic pour le kit-2 »
+— le même geste court que l'APK kit android (vécu VERT au téléphone le
+12/11 au soir), pour la partie pc-windows du paquet CORRECTIF2.
+
+L'EXE : TRIADE-kit2-dudect-1clic.exe — 1 066 726 octets, sha256
+9d2ccc91ba570681861eabbb77bf8f967c634747e03dacbd4ccd65afd303153d.
+PE32+ x86-64 console (Windows 7+ 64 bits), lié STATIQUE (aucune DLL au-delà
+de KERNEL32 + msvcrt + SHELL32, présentes sur tout Windows), AUCUN droit,
+AUCUN réseau sortant (il ouvre l'explorateur et le navigateur sur le coffre
+— c'est tout), AUCUN jeton embarqué. Aucun Python requis, aucun paquet à
+extraire, aucune commande : DOUBLE-CLIQUEZ.
+
+CE QU'IL FAIT (le geste en 1 clic) :
+  1. Il porte LE KIT SCELLÉ EN LUI : les 10 pièces du paquet CORRECTIF2 du
+     coffre, octet pour octet (le lanceur .bat, le LISEZMOI, les sources,
+     dudect_v150.exe, test_appel.exe, l'extracteur, les cibles avec
+     l'image scellée 0782d7e2…) — recoupées 10/10 dans l'exe livré.
+  2. Il les écrit vers %LOCALAPPDATA%\TRIADE\kit-2-dudect en re-recoupant
+     CHAQUE sha256 à CHAQUE run (fail-closed : REFUS nommé si un seul octet
+     diverge — l'antivirus qui retirerait un exe de mesure est NOMMÉ,
+     jamais un silence ; le coffre Drive a vécu ce faux positif le 12/11).
+  3. Il archive les restes du run précédent vers archives\<horodatage>
+     (D99 : jamais de mélange de runs).
+  4. IL VIT LE VRAI LANCEUR DU KIT : cmd /c LANCER-KIT-2-DUDECT.bat — le
+     .bat scellé fait TOUT (recoup de l'image scellée par sha256,
+     recompilation depuis LA SOURCE si un compilateur vit, sinon les exe
+     précompilés livrés, l'épreuve d'appel FIPS « abc », LE RUN N = 200 par
+     défaut, le brouillon de témoin). Sa console ENTIÈRE est capturée dans
+     run-console-<horodatage>.txt puis affichée telle quelle. Vous pouvez
+     passer votre N : lancez l'exe avec l'argument (ex. « 400 », minimum 60
+     — validé par le lanceur du kit lui-même).
+  5. IL CONSTRUIT LES PREUVES : preuves-kit2-dudect-<horodatage>.zip sur le
+     BUREAU (console entière + journal-dudect-*.csv + sortie-run.txt +
+     sortie-appel.txt + témoin-dudect-BROUILLON.txt + DEPOT.txt).
+  6. IL OUVRE l'explorateur SUR LE ZIP et le coffre /test du Drive dans le
+     navigateur (dossier « Triade » → « test ») : DEPOSEZ le zip — VOTRE
+     geste, comme au GUI v1 et à l'APK. Puis, à votre main : complétez le
+     témoin (l'état EFFECTIF du turbo, vos observations mêmes défavorables
+     — D189), datez, signez.
+
+L'HONNÊTETÉ (les mêmes frontières que le GUI v1, l'APK et le kit) :
+  — l'exe NE MESURE RIEN et ne modifie JAMAIS le kit : la mesure vit dans
+    dudect_v150, l'épreuve dans test_appel, le protocole dans le .bat —
+    les sorties et codes de sortie sont LES LEURS ;
+  — AUCUN jeton n'est embarqué : l'envoi au coffre passe par votre geste
+    Drive, jamais par un secret dans le binaire ;
+  — D99 tenue : un run achevé part aux archives horodatées, le kit se
+    re-extrait et se re-recoupe à chaque lancement — chaque run part du
+    kit scellé, jamais de l'état résiduel ;
+  — l'exe n'est PAS signé par un certificat de code : Windows peut montrer
+    « Windows a protégé votre ordinateur » (SmartScreen) — Informations
+    complémentaires → Exécuter quand même ; si Defender retire un exe de
+    mesure à l'extraction, l'écart est NOMMÉ au geste [1] : autorisez le
+    dossier %LOCALAPPDATA%\TRIADE puis relancez.
+
+L'ÉPREUVE AU LABO (13/11) : le NOYAU (sha256, crc32, écriture zip, ex-
+traction + vérification fail-closed) est PORTABLE et fut éprouvé à
+l'AUTOTEST POSIX : sha256 contre les vecteurs FIPS 180-4 (« abc » EXACT,
+vide EXACT), extraction 10/10 VERTS, l'anti-test (une pièce mutée d'un
+octet) NOMMÉE, le zip produit RELU ET RECOUPÉ OCTET-EXACT par Python
+(zipfile, crc compris) ; l'EXE livré recoupé par objdump (PE32+, imports
+KERNEL32/msvcrt/SHELL32 seuls) et le BLOB EMBARQUÉ retrouvé 10/10 octet
+pour octet DANS l'exe (chaque pièce cherchée et trouvée, empreintes
+confondues). Le labo n'a AUCUN Windows : la coquille Win32 (CreateProcess,
+ShellExecute, SHGetFolderPath) vit son premier run chez vous — comme les
+exe précompilés du kit avant vous, nommé, jamais maquillé.
+
+LA CHAÎNE DE BUILD (le labo, pour rejouer) : gcc 14.2.0 mingw-w64
+(x86_64-w64-mingw32-gcc-14-win32 -O2 -static -lshell32) — le toolchain
+réinstallé au bac SANS ROOT (apt-get download + dpkg -x, le bac ayant été
+recréé) ; le payload généré par generer_payload.py depuis le zip CORRECTIF2
+du coffre ; le noyau éprouvé POSIX (gcc -O2) ; les littéraux console en
+ASCII pur (la console Windows vit en CP850 — les « … » UTF-8 y seraient du
+mojibake, l'écart nommé et réparé avant la livraison). Sources complètes :
+TRIADE_kit2_exe_1clic_v1_sources.zip (le keystore n'existe pas ici : rien
+à exclure, tout y est).
+
+OÙ TROUVER LES PIÈCES : le bac de la session
+(download/TRIADE_kit2_exe_1clic_v1/), le coffre Drive « Triade » → « test »
+(l'exe nu peut y être refusé par le faux positif « malware » — le paquet
+TRIADE_kit2_exe_1clic_v1.zip est le porteur), et le miroir git
+(TRIADE-sauvegarde-git/download/TRIADE_kit2_exe_1clic_v1/).
+
+LA LECTURE HONNÊTE (celle du kit, inchangée) : |t| > 5 = une dépendance
+temporelle AU SEUIL consignée telle quelle ; |t| <= 5 = aucune divergence
+au seuil sur CET échantillon, CETTE machine, CETTE session — jamais
+« temps constant prouvé ».
