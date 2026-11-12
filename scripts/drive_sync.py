@@ -36,6 +36,7 @@ import urllib.request
 REPO = pathlib.Path(__file__).resolve().parents[1]
 GDRIVE = REPO / ".gdrive"
 TOKEN_FILE = GDRIVE / "oauth_token_relais.json"
+SA_FILES = sorted(GDRIVE.glob("*sa*.json")) if GDRIVE.is_dir() else []   # D263 : repli compte de service quand le refresh_token meurt (invalid_grant)
 STATE_FILE = GDRIVE / "state.json"
 
 DRIVE_ROOT_ID = "105MmhMGsVEiDICOv8uM8CVjcBm6pcdYp"   # dossier Drive « Triade »
@@ -43,7 +44,8 @@ PROJECT_FOLDER = "TRIADE-sauvegarde-git"   # D122 : renommé pour que
                                           # le miroir ne se confonde
                                           # plus avec le kit de cérémonie
 BUNDLE_NAME = "triade-history.bundle"
-ROOT_PUSH = ["REPRISE_PROJET.md", "PROTOCOLE_TRIADE_AGENT.md"]
+ROOT_PUSH = ["REPRISE_PROJET.md", "PROTOCOLE_TRIADE_AGENT.md",
+              "OU-TROUVER-LES-LIVRABLES.md"]   # D264 : la carte des livrables à la racine du coffre
 FOLDER_MIME = "application/vnd.google-apps.folder"
 API = "https://www.googleapis.com/drive/v3"
 UPLOAD = "https://www.googleapis.com/upload/drive/v3"
@@ -64,8 +66,66 @@ def _http_raw(url, data=None, headers=None, method=None):
         return e.code, e.read(), dict(e.headers)
 
 
+def _sa_access_token():
+    """D263 — jeton par compte de service (JWT RS256 signé par openssl).
+    Utilisé quand le refresh_token OAuth est mort (invalid_grant)."""
+    import base64
+    import tempfile
+    if not SA_FILES:
+        return None
+    sa_path = SA_FILES[0]
+    try:
+        sa = json.loads(sa_path.read_text())
+    except Exception:
+        return None
+    if not sa.get("private_key") or not sa.get("client_email"):
+        return None
+
+    def b64u(b):
+        return base64.urlsafe_b64encode(b).rstrip(b"=").decode()
+
+    now = time.time()
+    header = {"alg": "RS256", "typ": "JWT", "kid": sa.get("private_key_id", "")}
+    claims = {"iss": sa["client_email"], "scope": "https://www.googleapis.com/auth/drive",
+              "aud": "https://oauth2.googleapis.com/token",
+              "iat": int(now), "exp": int(now) + 3500}
+    signing_input = (b64u(json.dumps(header, separators=(",", ":")).encode())
+                      + "." + b64u(json.dumps(claims, separators=(",", ":")).encode())).encode()
+    keytmp = None
+    try:
+        import subprocess as _sp
+        with tempfile.NamedTemporaryFile(suffix=".pem", delete=False) as kf:
+            kf.write(sa["private_key"].encode())
+            keytmp = kf.name
+        p = _sp.run(["openssl", "dgst", "-sha256", "-sign", keytmp],
+                    input=signing_input, stdout=_sp.PIPE, stderr=_sp.PIPE)
+        if p.returncode != 0:
+            return None
+        jwt = signing_input + b"." + b64u(p.stdout).encode()
+        data = urllib.parse.urlencode({
+            "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            "assertion": jwt.decode()}).encode()
+        req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data,
+                                     headers={"Content-Type": "application/x-www-form-urlencoded"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            obj = json.load(r)
+        return obj.get("access_token")
+    except Exception:
+        return None
+    finally:
+        if keytmp:
+            try:
+                import os as _os
+                _os.unlink(keytmp)
+            except Exception:
+                pass
+
+
 def get_access_token(force=False):
-    """Obtient un access_token (cache local dans .gdrive/state.json)."""
+    """Obtient un access_token (cache local dans .gdrive/state.json).
+    D263 : si le refresh_token OAuth est mort (invalid_grant), repli sur le
+    compte de service (.gdrive/*sa*.json) — jamais les deux secrets sur disque
+    ailleurs que .gdrive/ (ignoré par git, décision D12)."""
     now = time.time()
     if not force and STATE_FILE.exists():
         try:
@@ -75,7 +135,15 @@ def get_access_token(force=False):
         except Exception:
             pass
     if not TOKEN_FILE.exists():
-        raise SyncError(f"jeton OAuth absent : {TOKEN_FILE}")
+        tok = _sa_access_token()
+        if tok:
+            try:
+                STATE_FILE.write_text(json.dumps(
+                    {"access_token": tok, "via": "sa", "expires_at": now + 3500}))
+            except Exception:
+                pass
+            return tok
+        raise SyncError(f"jeton OAuth absent : {TOKEN_FILE} (et aucun compte de service)")
     tok = json.loads(TOKEN_FILE.read_text())
     data = urllib.parse.urlencode({
         "client_id": tok["client_id"],
@@ -86,6 +154,15 @@ def get_access_token(force=False):
     st, body, _ = _http_raw(tok["token_uri"], data=data, headers={
         "Content-Type": "application/x-www-form-urlencoded"})
     if st != 200:
+        # D263 : refresh_token mort (invalid_grant vécu le 13/11) → repli SA
+        sa_tok = _sa_access_token()
+        if sa_tok:
+            try:
+                STATE_FILE.write_text(json.dumps(
+                    {"access_token": sa_tok, "via": "sa", "expires_at": now + 3500}))
+            except Exception:
+                pass
+            return sa_tok
         raise SyncError(f"rafraîchissement OAuth échoué (HTTP {st}) : {body[:200]!r}")
     obj = json.loads(body)
     try:

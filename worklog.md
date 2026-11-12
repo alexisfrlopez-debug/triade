@@ -9211,3 +9211,37 @@ Work Log:
 - SUITE : le développeur pose le GUI à côté du kit, lance par le bouton,
   envoie les logs au Drive — le labo les relèvera (Entrée 255 : la synchro
   git ↔ Drive qui suit).
+
+
+Task ID: 162
+Agent: Z.ai (agent principal — la session de la synchro)
+Task: LA SYNCHRO GIT ↔ DRIVE (la commande du développeur du 13/11 : « fais
+une synchro git et drive parce que je ne trouve pas les livrables ») — le
+relais restauré par le compte de service (le refresh_token OAuth mort
+invalid_grant, repli SA D263 dans drive_sync.py), les QUATRE consignations
+en attente appliquées (Entrées 251-254, Tasks 158-161, les livrables au bac
+du dépôt), le push GitHub (github.com/alexisfrlopez-debug/triade.git,
+main — la cible authentique ; coffre-fort est le projet PÈRE, jamais poussé
+par TRIADE), le miroir Drive synchronisé, le bundle régénéré avec D141 tenue
+(l'ancien courant Entrée 250 archivé versionné, le vétéran 090-1162003
+rapatrié aux archives, aucune suppression), le zip CORRECTIF2 déposé au
+coffre /test, et OU-TROUVER-LES-LIVRABLES.md poussé à la racine du coffre.
+
+Work Log:
+- LE DIAGNOSTIC : miroir + bundle arrêtés à l'Entrée 250 (md5 recoupés des
+  deux côtés), le zip CORRECTIF2 absent du coffre, les livrables des
+  sessions auxiliaires vivant seulement au bac de la session.
+- LE RELAIS : refresh_token mort (invalid_grant vécu au geste, le cas prévu
+  par le _usage du jeton) ; le compte de service physichong éprouvé en
+  lecture ET écriture sur le coffre entier ; repli SA codé dans
+  drive_sync.py (D263), ROOT_PUSH augmenté de la carte (D264).
+- LA CHAÎNE : un commit par entrée (251, 252, 253, 254, 255) — append-only,
+  chaque livrable attaché à son entrée ; les 15 pièces du terrain recoupées
+  contre les consignations avant preuves-crash-kit2/.
+- LE COFFRE : /test augmenté du zip CORRECTIF2 (le dossier extrait du
+  développeur demeure TEL QUEL) ; la racine du coffre porte la carte ;
+  archives-bundles/ reçoit l'ancien courant versionné.
+- LA FRONTIÈRE : aucun secret committé (.gdrive/ vérifié par check-ignore),
+  aucune suppression Drive, aucun scellé touché ; le refresh_token OAuth
+  mort nommé — ré-autorisation interactive à prévoir le jour où le compte
+  de service devra être retiré.

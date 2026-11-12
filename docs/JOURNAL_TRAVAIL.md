@@ -10124,3 +10124,66 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   DRIVE par le bouton — le labo relèvera les logs au coffre et lira le run
   entier ; puis les gestes ouverts (le geste B, D204, la cérémonie d'ère, le
   séquestre D183, la réplication).
+
+## Entrée 255 — LA SYNCHRO GIT ↔ DRIVE — LE RELAIS RESTAURÉ, LES CONSIGNATIONS EN ATTENTE APPLIQUÉES, LE COFFRE COMPLÉTÉ, LA CARTE DES LIVRABLES (la commande du développeur du 13/11 : « fais une synchro git et drive parce que je ne trouve pas les livrables ») — les Entrées 251-254 consignées, le push GitHub, le miroir + bundle à la pointe, D141 tenue, le zip CORRECTIF2 au coffre /test, OU-TROUVER-LES-LIVRABLES.md à la racine du coffre (13/11, la session de la synchro)
+
+- LA COMMANDE : « fais une synchro git et drive parce que je ne trouve pas
+  les livrables » — le diagnostic : les QUATRE dernières sessions (251-254)
+  vivaient AUSSI au bac de la session, mais SEULES les Entrées ≤ 250 étaient
+  au dépôt ; le miroir Drive et le bundle s'arrêtaient à l'Entrée 250
+  (md5 recoupé : worklog 68d0087d65…, bundle d035895b3f…) ; le zip CORRECTIF2
+  n'était NULLE PART au coffre (seul le dossier extrait y vivait) ; les
+  livrables des sessions auxiliaires n'étaient nulle part — d'où « je ne
+  trouve pas les livrables ».
+
+- LE RELAIS RESTAURÉ PAR LE COMPTE DE SERVICE : le refresh_token OAuth du
+  relais (sauvé au coffre Tokens/ le 5/11) MORT AU GESTE — invalid_grant
+  (expiré/révoqué), exactement le cas prévu par son _usage ; le compte de
+  service physichong (clé au coffre Tokens/, JWT RS256 signé par openssl)
+  LIT ET ÉCRIT tout le coffre — le relais vit de nouveau par lui ;
+  drive_sync.py porte le repli SA (D263 : essai OAuth → repli compte de
+  service), les secrets demeurant dans .gdrive/ gitignoré (D12, vérifié).
+
+- LES CONSIGNATIONS EN ATTENTE APPLIQUÉES (la chaîne append-only tenue) :
+  Entrées 251-253 + Tasks 158-160 des sessions auxiliaires, puis
+  l'Entrée 254 + Task 161 (le GUI) — journal + worklog + les livrables au
+  bac download/ du dépôt : le zip CORRECTIF2 (0e930b80…), le collecteur
+  (ea24dcdf…), LISEZMOI-VERDICT.txt (3f4cdae0…) à la racine du dépôt, les
+  diagnostics docx/pdf, les 15 pièces du terrain à preuves-crash-kit2/
+  (8 preuves + kit/ 7 pièces d'état, recoupées contre les consignations),
+  le GUI (06112518…).
+
+- LE PUSH GITHUB au présent commit : github.com/alexisfrlopez-debug/
+  triade.git, branche main — la cible authentique du protocole (l'Entrée 133
+  et suivantes ; le jeton au coffre Tokens/, jamais affiché ni committé) ;
+  L'ÉCART NOMMÉ au geste : le repo coffre-fort est le projet PÈRE — jamais
+  poussé par TRIADE (le premier essai y fut REFUSÉ non-fast-forward, AUCUN
+  dommage : la cible corrigée sur pièces, le journal fait foi) ; LE MIROIR DRIVE synchronisé par scripts/drive_sync.py (miroir
+  idempotent md5 par md5, JAMAIS de suppression) ; LE BUNDLE --all
+  régénéré à la pointe du présent commit ; D141 TENUE : l'ancien courant
+  (l'Entrée 250, 7d1cb6b, md5 d035895b…) ARCHIVÉ VERSIONNÉ à
+  archives-bundles/triade-history-250-7d1cb6b.bundle, le vétéran
+  090-1162003 (resté à la racine du miroir depuis le 10/11) rapatrié aux
+  archives — la racine ne porte plus QUE le courant ; LE ZIP CORRECTIF2
+  DÉPOSÉ AU COFFRE /test (il n'y vivait pas : seul le dossier extrait du
+  développeur y était).
+
+- LA CARTE DES LIVRABLES : OU-TROUVER-LES-LIVRABLES.md — poussée à la
+  RACINE du coffre (ROOT_PUSH de drive_sync.py, D264), au miroir et au bac
+  de la session : la réponse directe au « je ne trouve pas les livrables » —
+  chaque livrable y est nommé avec ses TROIS emplacements (bac, /test,
+  miroir) et son empreinte.
+
+- LES FRONTIÈRES : aucun scellé touché ; aucun fichier supprimé nulle part
+  (D141 : la racine du miroir ne porte que le courant par DÉPLACEMENT aux
+  archives, jamais par suppression) ; le refresh_token OAuth mort NOMMÉ —
+  la ré-autorisation interactive (le geste du développeur à l'URL de
+  consentement) redeviendra nécessaire si le compte de service doit être
+  retiré ; les tokens (OAuth, SA, git) JAMAIS committés ni affichés —
+  .gdrive/ gitignoré vérifié par git check-ignore.
+
+- SUITE : au développeur — LA MESURE jamais courue (le GUI posé à côté du
+  kit, le bouton LANCER, les logs envoyés au Drive : le labo les relèvera
+  au coffre) ; les preuves-constat-arm/ formelles ; puis les gestes ouverts
+  (le geste B SHA-NI réel, D204, la cérémonie d'ère, le séquestre D183, la
+  réplication).
