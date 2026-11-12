@@ -17,6 +17,9 @@ LA VOIE 1 — LE KIT M7D REJOUÉ SOUS QEMU-RISCV64 (le dossier kit-m7d/)
   à l'extraction du paquet (octet pour octet contre les scellés).
   LE GESTE : extraire le dossier, puis sous WSL2 (Ubuntu par exemple) :
       cd kit-m7d && python3 scenario-m7d.py
+  L'ÉDITION AUTOMATISÉE : tapez « bash qemu-wsl2/lancer-voie1-m7d.sh »
+  — le lanceur trouve python3 (voire l'installe si sudo vit sans mot
+  de passe) et vit le run : le qemu-riscv64 embarqué ne demande RIEN.
   Le run dure environ une minute, écrit ./preuves-m7/ (témoin, journal,
   verdict) — à renvoyer ENTIÈRES au coffre /test.
   LA FRONTIÈRE NOMMÉE : c'est une REPRODUCTION de la preuve M7 vécue
@@ -48,6 +51,10 @@ LA VOIE 2 — LE KIT-SHANI SOUS QEMU-X86_64 (l'émulation SHA-NI)
       sudo apt install qemu-user          # ou qemu-user-static
       cd kit-1-shani                      # le kit du paquet multimachines
       qemu-x86_64 -cpu max $(which python3) scenario-shani.py
+  L'ÉDITION AUTOMATISÉE : tapez « bash qemu-wsl2/lancer-voie2-shani.sh »
+  — le lanceur trouve qemu-x86_64 (voire l'installe si sudo vit sans mot
+  de passe ; sinon il vous donne LA commande exacte), vérifie le kit-1-shani
+  voisin et vit le run sous émulation.
   LES TÉMOINS : ./preuves-shani/ naît tout seul (témoin, journal,
   verdict) — DATEZ ET SIGNEZ le témoin en écrivant SOUS VOTRE MAIN :
   « run sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » — le

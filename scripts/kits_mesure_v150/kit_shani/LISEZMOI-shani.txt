@@ -59,7 +59,12 @@ LE CONTENU
                       unique posée par l'extracteur du kit dudect)
 
 COMMENT L'EXÉCUTER (votre machine Windows)
-  1. Ouvrez une invite de commandes DANS ce dossier kit-shani.
+  L'ÉDITION AUTOMATISÉE : DOUBLE-CLIQUEZ LANCER-KIT-1-SHANI.bat —
+  il fait les gestes 1 et 2 pour vous (les pièces vérifiées, Python
+  trouvé, le scénario lancé) et vous dit où sont les preuves. Rien à
+  compiler : le moteur-shani.bin est livré et asserté. Les étapes
+  ci-dessous demeurent la référence manuelle.
+ de commandes DANS ce dossier kit-shani.
   2. Tapez :  scenario-shani.py        (ou : python scenario-shani.py)
   3. Attendez environ une à deux minutes — chaque geste s'imprime et
      se consigne au fur et à mesure.

@@ -19,7 +19,12 @@ LA PIÈCE EXISTANTE (le socle — le dépôt et le coffre /test) :
                    LISEZMOI-KIT-LOUPE.md, assembler_kit_loupe.py).
 
 LE PROTOCOLE (le run, sur la machine tierce) :
-  1. La machine : un poste Windows (ou VM) PROPRE — jamais une machine
+  L'ÉDITION AUTOMATISÉE : DOUBLE-CLIQUEZ LANCER-KIT-3-LOUPE.bat —
+  il recoupe le sha256 de loupe.exe contre le scellé AVANT tout
+  lancement (le geste 2 ci-dessous), vérifie que Python est 64 bits
+  et vit le scénario intégral T0→T7 + S0. Le témoin vitrine
+  (facultatif) demeure un double-clic à part : temoin-vitrine.bat.
+ un poste Windows (ou VM) PROPRE — jamais une machine
      du développement ; consignez : la version de Windows, les
      locales, le modèle CPU, l'absence/présence des outils de
      développement (un poste « nu » est le cas le plus probant).

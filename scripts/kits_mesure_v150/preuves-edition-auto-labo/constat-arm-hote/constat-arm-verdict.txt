@@ -1,0 +1,12 @@
+VERDICT CONSTAT-ARM (kit multimachines — le troisième silicium)
+========================================================================
+VERDICT : VERT — LE CONSTAT COMPLET VÉCU : la machine nommée à l'ouverture, le silicium lu par ses propres canaux, le refus des pièces x86-64 nommé avec ses empreintes, le lecteur Python exact
+
+LA PORTÉE : ce constat ne mesure RIEN (aucun protocole pré-enregistré n'existe pour ce silicium, aucun chiffre n'est fabriqué) ; il consigne CE que la machine a dit d'elle-même, CE jour, ces canaux.
+signature du geste : à dater et à signer de la main du développeur.
+machine : c-6af57fe2-140d72b5-48bd871231e3 · x86_64 · Python 3.12.16
+système : Linux c-6af57fe2-140d72b5-48bd871231e3 5.10.134-013.15.kangaroo.al8.x86_64 #1 SMP Thu Jul 30 12:54:59 UTC 2026 x86_64
+silicium : ? part ? · révision ?
+le refus : la machine hôte n'est pas ARM64 — le constat du kit s'éprouve ici sur un monde non-cible, sans rien maquiller
+lecteur sha256 « abc » : EXACT
+lecteur sha512 « abc » : EXACT

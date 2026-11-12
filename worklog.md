@@ -8823,3 +8823,46 @@ Work Log:
   téléphone, les voies QEMU sous WSL2 — aucun geste obligatoire), le
   geste B SHA-NI réel, la campagne de comparaison D204, la cérémonie
   d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 154
+Agent: Z.ai (agent principal)
+Task: L'ÉDITION AUTOMATISÉE DU PAQUET MULTIMACHINES (la commande du
+développeur du 12/11/2026 : « je vois qu'il y a dans le kit des choses à
+compiler. je veux que l'utilisation soit la plus simple possible, en
+automatisant au maximum ») — les HUIT lanceurs (menu + 3 .bat kits + 3
+.sh), la lettre A-LIRE-AUTOMATISATION.txt, les six retouches de LISEZMOI,
+l'assemblage aux CINQ scellés recoupés, l'épreuve sur extraction vierge,
+la consignation et la livraison.
+
+Work Log:
+- LES LANCEURS : COMMENCER-ICI.bat (le menu, voies QEMU par WSL2/détection
+  wsl.exe), LANCER-KIT-1-SHANI.bat (python trouvé, rien à compiler),
+  LANCER-KIT-2-DUDECT.bat (recoup de l'image scellée, compilation
+  AUTOMATIQUE cl/gcc/clang sinon les exe précompilés, FALLBACK précompilé
+  sur échec avec écart nommé, épreuve d'appel, LE RUN N=200 par défaut,
+  BROUILLON DE TÉMOIN auto : CPU/OS/binaire/sha256/csv), LANCER-KIT-3-
+  LOUPE.bat (recoup loupe.exe AVANT tout, python 64 bits vérifié),
+  lancer-kit-constat-arm.sh (python installé par pkg s'il manque),
+  lancer-voie1-m7d.sh et lancer-voie2-shani.sh (qemu trouvé/installé/la
+  commande exacte rendue).
+- L'ÉPREUVE SUR EXTRACTION VIERGE : voie 1 M7D 16 PASS/0 ÉCHEC VERT code 0
+  PAR LE LANCEUR ; voie 2 shani émulé VERT code 0, le rapport 0,19× RENDU
+  PAR LE RUN ; constat-arm VERT (le constat honnête « pas un téléphone
+  ARM ») ; kit-2 recompilé gcc VERT (FIPS exact, autotest code 0) ;
+  testzip/CRLF/ASCII/bits/scellés. La RELECTURE des .bat (aucun Windows
+  au labo) a guéri : les call relatifs du menu, le refus sur échec de
+  compilation (fallback) ; le diff éprouvé/livré : 38/40 identiques, les
+  deux .bat corrigés seuls divergent.
+- L'ASSEMBLAGE : 40 pièces, 5 scellés recoupés, les .bat en CRLF, les .sh
+  exécutables — TRIADE_kits_terrain_v0150_MULTIMACHINES-AUTO.zip
+  3 497 291 o sha256 814312a5… ; les preuves d'épreuve au dépôt
+  (scripts/kits_mesure_v150/preuves-edition-auto-labo/ + la note
+  d'épreuve).
+- LA CONSIGNATION : l'Entrée 247 au journal, la présente tâche au worklog,
+  le commit, le push GitHub, le miroir Drive et le kit Cérémonie tenus par
+  le hook post-commit ; la livraison au bac download/ et au coffre /test.
+- SUITE : au développeur — LE ZIP AUTO EST À LUI (un double-clic par kit,
+  aucun geste obligatoire ; si un écran nomme un défaut, le .txt renvoyé
+  tel quel D122), le geste B SHA-NI réel, la campagne de comparaison D204,
+  la cérémonie d'ère, le séquestre D183, la réplication.

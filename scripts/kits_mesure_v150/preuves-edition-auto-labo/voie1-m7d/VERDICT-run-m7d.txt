@@ -1,0 +1,27 @@
+VERDICT DU RUN TERRAIN M7-(d) — l'universalité rejouée (post-mortem, sur pièces)
+
+[m7d] PASS : le témoin consigné : les empreintes ASSERTÉES avant tout geste (corpus ec343b4e8bebf21c…, demo e57fc74be2ea67ab…), l'instrument identifié (qemu-riscv64 version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1), md5 bae5a36f…, le kit (binaire statique embarqué)) — (réserve instrumentale D149 : qemu-riscv64 exécute l'ISA par TCG, le noyau et les syscalls sont RÉELS de l'hôte — une émulation de processus, jamais déguisée en exécution native)
+[m7d] PASS : le rituel n°1 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : le rituel n°2 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : le rituel n°3 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : base forcée -R 1G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : base forcée -R 4G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : base forcée -B 0x100000000 -R 2G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : LA BASCULE PENDANT LE TRAFIC : 1 200 usages de l'entrée, l'apply entre 399/400, le retour entre 799/800 — la transcription OCTET POUR OCTET l'attendu (15425 o : 800 lignes v1, 400 v2 marquées « j2: », les refus 1-4 et l'effet au geste même INCLUS dans le flux — il n'y a aucun détournement de canal) (code=0, 15425 o rendus / 15425 attendus)
+[m7d] PASS : le journal est COHÉRENT : 1 200 lignes ENTIÈRES, indices 0..1199 chacun EXACTEMENT une fois, aucun mélange de formats dans une même ligne (400 lignes v2)
+[m7d] PASS : LE DEP FALSIFIÉ (0x7→0x3) : l'exécution FAUTE au retour du premier mprotect (page sans X — le fetch suivant) : SIGSEGV, 4290 o EXACTS (les 400 lignes v1, zéro silence) (code=-11, 4290 o == 4290 attendus)
+[m7d] PASS : la falsification du démonstrateur : un octet d'opcode corrompu fait dévier la transcription ou le code (zéro silence — non-vacuité) (rompu à 0x2000 (essai n°1))
+[m7d] PASS : base forcée -R 1G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : base forcée -R 4G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : base forcée -B 0x100000000 -R 2G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : ZÉRO RÉGRESSION : les DEUX fichiers relus — le corpus et le demo n'ont pas bougé d'un octet (le patch est un fait de la session INVITÉE, jamais du fichier) (corpus ec343b4e8bebf21c…, demo e57fc74be2ea67ab…)
+[m7d] PASS : le rituel du scellé REJOUÉ après la démonstration : exactement ses deux lignes au code 0 (code=0)
+
+constats : 16 PASS / 0 ÉCHEC (0 s)
+instrument : qemu-riscv64 version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1) (md5 bae5a36f0dd40e1286d342c9433c0dc5, le kit (binaire statique embarqué)) — réserve instrumentale D149 : qemu-riscv64 exécute l'ISA par TCG, le noyau et les syscalls sont RÉELS de l'hôte — une émulation de processus, jamais déguisée en exécution native
+frontières nommées : le code 5 (le service refuse) est STRUCTUREL sous qemu-user (l'hôte accorde RWX sur mapping privé — la branche fail-closed vit dans tcp-07) ; la concurrence réelle est HORS périmètre (le corpus M7 est mono-fil — la bascule se démontre EN SESSION, entre deux usages) ; le demo est l'INSTRUMENT du chantier, pas un artefact de la lignée (pas de carte) ; le corpus est LE scellé 0.8.0-rc.1 du jalon.
+
+VERDICT : VERT
+
+Si VERT : renvoyer preuves-m7/ ENTIER au coffre /test/preuves-m7/ — le laboratoire recoupe sur pièces (D138/D145/D148) et, si elles établissent le critère, --sceller-final pose la finale 0.8.0 (le jalon M7 franchi — l'universalité DÉMONTRÉE).
+Si ÉCHEC NOMMÉ : renvoyer TEL QUEL — la ligne nomme le défaut.

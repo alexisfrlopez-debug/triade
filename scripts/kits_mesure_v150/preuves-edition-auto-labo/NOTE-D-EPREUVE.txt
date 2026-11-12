@@ -1,0 +1,62 @@
+NOTE-D'EPREUVE — L'ÉDITION AUTOMATISÉE DU PAQUET MULTIMACHINES (le labo, 12/11/2026)
+==================================================================================
+
+LA COMMANDE : « je vois qu'il y a dans le kit des choses à compiler. je veux
+que l'utilisation soit la plus simple possible, en automatisant au
+maximum » — les compilations manuelles (cl /O2, gcc -O2 -lm) et
+l'orchestration des étapes du premier paquet (efff812b…, Entrée 246)
+deviennent des LANCEURS : un double-clic par kit.
+
+L'ÉPREUVE SUR EXTRACTION VIERGE (la règle D153 : le paquet déposé est le
+paquet prouvé) — vécue sur le PREMIER assemblage de l'édition
+(sha256 c73e0be493cfb35ccf21c0e039192b9fe58b29e14a39f4a8485a508e4e320ee2,
+40 pièces) :
+
+  VOIE 1 (lancer-voie1-m7d.sh) : LE RUN M7D COMPLET VÉCU — 16 PASS /
+    0 ÉCHEC, VERDICT VERT, code 0 (pièces : voie1-m7d/ ci-dessous) —
+    le lanceur a trouvé python3, exécuté le scénario, les preuves sont
+    nées seules dans preuves-m7/ : DE BOUT EN BOUT.
+  VOIE 2 (lancer-voie2-shani.sh) : LE KIT-SHANI SOUS qemu-x86_64 -cpu max
+    VÉCU — VERDICT VERT, code 0, le rapport 0,19× RENDU PAR LE RUN (le
+    même artefact TCG que l'épreuve du matin : avant ~2 136 cyc, après
+    ~11 000 cyc) — pièces : voie2-shani-emule/. Le lanceur a trouvé
+    qemu-x86_64 au PATH (l'instrument réinstallé au labo par SA
+    procédure riscv/outils/installer_qemu.sh, 10.0.13).
+  CONSTAT-ARM (lancer-kit-constat-arm.sh) : VÉCU sur l'hôte x86-64 du
+    labo — VERDICT VERT, code 0, le constat honnête « CECI N'EST PAS UN
+    TÉLÉPHONE ARM » : pièces : constat-arm-hote/.
+  KIT-2 RECOMPILÉ (le geste que LANCER-KIT-2-DUDECT.bat fera chez vous
+    si un compilateur vit) : gcc -O2 depuis LA SOURCE DE L'EXTRAIT —
+    test_appel : FIPS abc EXACT, mutation K DIVERGE, restauration EXACT,
+    code 0 ; dudect_v150 --autotest : les quatre cibles recoupées, le t
+    de Welch calculé, code 0 — le journal du mesureur : kit2-recompile/.
+  L'EXTRACTION : testzip INTÈGRE ; les .bat TOUS en CRLF intégral et
+    ASCII pur ; les .sh exécutables (0o755) ; les CINQ scellés recoupés
+    EXACTS (loupe.exe, proxy-image ×2, corpus, demo).
+
+LA RELECTURE DES .BAT (le labo n'a AUCUN Windows — les lanceurs .bat y
+sont éprouvés par leurs COMMANDES et la relecture, jamais par
+l'exécution, l'étiquette honnête de l'Entrée 246 demeure) a attrapé et
+guéri DEUX défauts :
+  1. le menu COMMENCER-ICI.bat appelait les lanceurs par des chemins
+     RELATIFS — le dossier courant change après chaque kit, les appels
+     suivants eussent FAUTÉ : chemins absolus (%~dp0) posés ;
+  2. LANCER-KIT-2-DUDECT.bat REFUSAIT tout run si la compilation locale
+     échouait — le contraire de la commande (la simplicité maximale) :
+     il BASCULE désormais sur les exe précompilés livrés avec l'écart
+     NOMÉ au témoin (D189) ; un garde contre un N aberrant (> 7 chiffres)
+     et l'écart « test_appel non recompilé » nommé de même.
+
+LE PAQUET LIVRÉ (sha256 814312a5546d1476213948757943d8d33f4f94fe274d
+464b2bf17d0592a5562e, 3 497 291 o) diffère de l'assemblage éprouvé par
+CES DEUX SEULS FICHIERS (le diff entrée par entrée : 38/40 pièces
+OCTET POUR OCTET identiques, les deux .bat corrigés ci-dessus — des
+fichiers que le labo ne peut PAS exécuter ; tout ce qui FUT éprouvé
+[scellés, scénarios, lanceurs .sh] est identique au livré).
+
+LA LIMITE NOMMÉE (elle demeure, consignée à A-LIRE-AUTOMATISATION.txt) :
+le premier double-clic des .bat se vit chez le développeur — si un écran
+nomme un défaut, renvoyer le .txt TEL QUEL (D122) : le labo recoupe et
+corrige. Rien de ce qui doit rester à la main n'est maquillé : la
+signature, l'état EFFECTIF du turbo, le témoin vitrine, le renvoi au
+coffre /test.

@@ -30,7 +30,11 @@ L'HONNÊTETÉ DU KIT (ce qu'il fait, ce qu'il refuse de faire) :
     aucun ne se déguise.
 
 LE PROTOCOLE (le run, sur le téléphone) :
-  1. Installez Termux (F-Droid ou le Play Store) puis Python :
+  L'ÉDITION AUTOMATISÉE : sur le téléphone, tapez
+  « bash lancer-kit-constat-arm.sh » — le lanceur INSTALLE PYTHON
+  TOUT SEUL s'il manque (pkg), puis vit le run et vous dit où sont
+  les preuves. Les étapes ci-dessous demeurent la référence.
+ (F-Droid ou le Play Store) puis Python :
        pkg update && pkg install python
      (Termux seul exécute ce kit : iOS ne porte pas de Python libre).
   2. Copiez le dossier kit-constat-arm/ sur le téléphone (le stockage

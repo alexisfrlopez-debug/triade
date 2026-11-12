@@ -1,6 +1,29 @@
 LISEZMOI — LE PAQUET MULTIMACHINES (v0.15.0, la commande du 12/11/2026)
 ========================================================================
 
+L'ÉDITION AUTOMATISÉE (le 12/11, deuxième geste — la commande : « je veux
+que l'utilisation soit la plus simple possible, en automatisant au
+maximum ») : UN SEUL GESTE PAR KIT — DOUBLE-CLIQUEZ SON LANCEUR. Tout ce
+que le premier paquet vous demandait à la main (l'invite de commandes,
+les compilations cl/gcc, l'orchestration des étapes) est fait pour vous.
+La lettre complète vit dans A-LIRE-AUTOMATISATION.txt ; les lanceurs :
+
+  COMMENCER-ICI.bat                        le menu (tout le paquet, y
+                                           compris les voies QEMU par
+                                           WSL2 s'il vit chez vous)
+  pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat
+  pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat
+  pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat
+  telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh
+  qemu-wsl2/lancer-voie1-m7d.sh + lancer-voie2-shani.sh
+
+Rien de ce qui doit rester à votre main n'est maquillé : la signature des
+témoins, l'état EFFECTIF du turbo (kit-2), le témoin vitrine (kit-3) et
+le renvoi au coffre /test demeurent VOS gestes — chaque lanceur vous le
+dit à l'écran. Les pièces, les scénarios et les scellés sont LES MÊMES
+que le premier paquet (seule exception : les LISEZMOI portent la mention
+du lanceur).
+
 LA COMMANDE (le développeur) : « faire un zip avec les kits terrain que
 je peux exécuter sur mes machines (téléphone ARM, PC Windows 10 et 11,
 QEMU ou autre si besoin sur Windows) ».

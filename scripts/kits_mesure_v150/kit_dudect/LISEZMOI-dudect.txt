@@ -58,7 +58,15 @@ loupe.exe appartient à une itération future du kit. Aucun chiffre
 n'existe pour lui.
 
 LE PROTOCOLE (le run, sur la machine Windows du développeur) :
-  1. Copiez le dossier kit_dudect/ (extraire_cibles_v150.py, les
+  L'ÉDITION AUTOMATISÉE : DOUBLE-CLIQUEZ LANCER-KIT-2-DUDECT.bat —
+  il fait TOUT : la compilation (SI un compilateur vit — cl, gcc,
+  clang — il recompile depuis LA SOURCE, la vérité ; SINON les exe
+  précompilés livrés courent), l'épreuve d'appel, LE RUN (N = 200 par
+  défaut ; passez votre N en argument, minimum 60) et il écrit
+  temoin-dudect-BROUILLON.txt (machine, CPU, binaire, empreintes —
+  l'état EFFECTIF du turbo et la signature restent à votre main).
+  Aucun Python requis. Le protocole ci-dessous demeure la référence.
+ (extraire_cibles_v150.py, les
      cibles/ déjà extraites, dudect_v150.c, ce LISEZMOI).
   2. Compilez le mesureur :   cl /O2 dudect_v150.c
      (ou gcc -O2 -o dudect_v150.exe dudect_v150.c -lm)

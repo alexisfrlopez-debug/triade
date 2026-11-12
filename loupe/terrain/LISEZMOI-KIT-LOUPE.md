@@ -197,6 +197,9 @@ loupe-kit-13/
    `loupe-kit-13b/` si besoin : l'artefact refusé ne se réutilise pas).
    Sur votre Windows 11 : `loupe-kit-13/`.
 2. **Lancer le scénario** : `python scenario-loupe.py` (ou
+   l'édition automatisée du paquet multimachines :
+   DOUBLE-CLIQUEZ `LANCER-KIT-3-LOUPE.bat` du dossier parent —
+   il recoupe le scellé, vérifie le Python 64 bits, lance) ; ou
    `py`/`python3` — **un Python 64 bits est requis**). Aucun paquet à
    installer, aucun droit particulier, aucun réseau. Le run dure
    quelques secondes et dit tout à l'écran ; chaque constat est tranché
