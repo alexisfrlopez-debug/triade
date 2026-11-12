@@ -1,0 +1,142 @@
+CE-QUI-RESTE-A-FAIRE.txt — LA FEUILLE DE ROUTE DU PAQUET MULTIMACHINES
+======================================================================
+(12/11/2026, le troisième geste de la journée — la commande du
+développeur : « fais un kit mis à jour avec ce qu'il reste à faire ou des
+corrections si nécessaires, ou éventuellement rajouter des tests si tu
+trouve ça pertinent »)
+
+Cette édition ne remplace RIEN : les kits, les pièces scellées et les
+scénarios du paquet AUTOMATISÉ du même jour demeurent, octet pour octet
+sauf quatre fichiers d'édition nommés ci-dessous. Elle AJOUTE la feuille
+de route, DEUX tests neufs (le diagnostic de la machine, le vérificateur
+du paquet) et les corrections de relecture. Rien d'obligatoire : chaque
+geste demeure au développeur, aucun n'est maquillé.
+
+LA CARTE DE CE QUI RESTE — AU 12/11 SOIR (tout daté, tout consigné)
+-------------------------------------------------------------------
+
+CE QUI EST DÉJÀ VÉCU (aucun rejeu requis — les preuves sont au coffre) :
+  — LE KIT-1 SHANI, DEUX FOIS REFUSÉ par le même silicium (Entrée 245 le
+    geste A, Entrée 248 le rejeu du paquet AUTO — ALEKPC · Windows 10 ·
+    « GenuineIntel » · famille 6 · modèle 142 · pas 12 · SHA-NI ABSENT,
+    CPUID feuille 7 EBX bit 29 = 0) : le kit ne peut pas inventer le
+    silicium, le refus EST le résultat. Le rejeu sur CETTE machine n'a
+    plus rien à dire ; sur une AUTRE machine, le diagnostic ci-dessous
+    lit le CPUID avant tout geste.
+  — LE KIT-3 LOUPE, VÉCU VERT SUR PIÈCES (Entrée 248 : Windows 11 ·
+    13e run terrain · T0→T7+S0 tout vert, le scellé c1115105… asserté,
+    la pièce relue inchangée). Reste à votre main, si vous le voulez :
+    LE TÉMOIN VITRINE (temoin-vitrine.bat — des fenêtres que VOUS fermez).
+
+CE QUI RESTE À VIVRE SUR VOS MACHINES (un double-clic par kit, aucun
+ordre imposé — le menu COMMENCER-ICI.bat ouvre tout) :
+  1. LE KIT-2 DUDECT — LE GRAND MANQUANT : LA mesure temps réel des
+     quatre familles crypto de la pièce scellée (tls13-02, tls13-13,
+     tls13-16, tls13-17 — RDTSC/QPC, affinité cœur 0, t de Welch). JAMAIS
+     ENCORE COURU au 12/11 soir : c'est la seule mesure du paquet qui
+     n'existe pas encore. Elle vit sur N'IMPORTE QUEL Windows x86-64 —
+     aucun Python, aucun compilateur requis (les exe précompilés livrés
+     courent ; le lanceur recompile lui-même si cl/gcc/clang vit chez
+     vous). Le geste : pc-windows\kit-2-dudect\LANCER-KIT-2-DUDECT.bat
+     (N = 200 par défaut, minimum 60). Puis : l'état EFFECTIF du turbo
+     (BIOS) et votre signature sur le brouillon de témoin.
+  2. LE KIT CONSTAT-ARM — le troisième silicium, le téléphone (Android +
+     Termux) : copiez telephone-arm\kit-constat-arm\ au téléphone, tapez
+     « bash lancer-kit-constat-arm.sh » (Python s'installe seul s'il
+     manque). Un constat, jamais une mesure.
+  3. LES DEUX VOIES QEMU — si WSL2 vit sur un de vos PC Windows : le
+     menu COMMENCER-ICI.bat les lance (voie 1 : le kit M7D rejoué sous le
+     qemu-riscv64 EMBARQUÉ — autonome ; voie 2 : le kit-shani sous
+     qemu-x86_64 -cpu max — l'artefact TCG consigné tel quel, jamais une
+     vérité de silicium).
+  4. (Facultatif) LE TÉMOIN VITRINE du kit-3 — voir ci-dessus.
+
+LES GESTES DU PROJET, AU-DELÀ DU PAQUET (chacun attend le développeur) :
+  5. LE GESTE B SHA-NI RÉEL — la mesure avant/après sur un silicium qui
+     A SHA-NI (références du labo : 5,84× mesuré, 6,37× au témoin —
+     jamais confondus avec l'artefact TCG 0,19× de l'émulation). Le
+     diagnostic ci-dessous vous dira si l'une de vos machines l'a ; un
+     silicium récent (AMD Zen3+, Intel Ice Lake et après) l'a souvent.
+  6. LA CAMPAGNE DE COMPARAISON D204 — le plan pré-enregistré vit au
+     dépôt (Entrée 240) : elle démarre à votre geste.
+  7. LA CÉRÉMONIE D'ÈRE (le kit Cérémonie est déployé au coffre).
+  8. LE SÉQUESTRE D183.
+  9. LA RÉPLICATION.
+
+CE QUI NE SERA JAMAIS AUTOMATISÉ (les règles ne changent pas) : dater et
+SIGNER les témoins de votre main ; l'état EFFECTIF du turbo (BIOS) au
+kit-2 ; le témoin vitrine ; le RENVOI des dossiers de preuves ENTIERS au
+coffre /test (dossier Drive « Triade » → « test »). Le labo recoupe sur
+pièces : jamais avant le run, jamais sans pièces ; chaque écart nommé est
+un RÉSULTAT, jamais un échec à maquiller (D189) — un refus se renvoie
+TEL QUEL.
+
+LES DEUX TESTS NEUFS DE CETTE ÉDITION (la commande : « rajouter des
+tests si tu trouve ça pertinent »)
+-------------------------------------------------------------------
+
+  DIAGNOSTIC-MACHINE.bat  (double-clic — le témoin naît dans
+                           diagnostic-machine.txt) : la machine nommée
+                           (l'OS, l'architecture, le processeur), le
+                           silicium lu par CPUID — la MÊME lecture que le
+                           kit-1 au geste A : fabricant, famille, modèle,
+                           pas, SHA-NI présent ou absent (feuille 7, EBX
+                           bit 29) —, ce qui vit (Python et ses 64 bits,
+                           compilateurs, WSL2), et LE VERDICT : quels kits
+                           de CE paquet sont vivables SUR CETTE MACHINE,
+                           ce qui y reste à faire. Il sert AUSSI à
+                           choisir la machine du geste B (SHA-NI réel).
+                           Il constate, il ne mesure rien.
+  VERIFIER-PAQUET.bat     (double-clic — le rapport naît dans
+                           verification-paquet.txt) : le recoup sha256 des
+                           45 pièces de l'extraction contre le manifeste
+                           gravé au laboratoire. Il attrape l'extraction
+                           incomplète ET l'antivirus : le 12/11 même, le
+                           coffre Drive a REFUSÉ test_appel.exe au
+                           téléchargement (HTTP 403 « malware or spam » —
+                           un faux positif des exe de mesure de timing,
+                           Entrée 248) ; votre antivirus local peut faire
+                           de même À L'EXTRACTION. Si le vérificateur
+                           nomme un exe absent : c'est l'antivirus, pas le
+                           paquet — chaque lanceur recoupe de toute façon
+                           SON scellé avant tout run, et le kit-2 nomme
+                           désormais l'écart à l'écran et au témoin.
+                           Sans Python : le vérificateur recoupe au moins
+                           les CINQ scellés par certutil et le dit
+                           honnêtement.
+
+LES CORRECTIONS DE CETTE ÉDITION (la relecture, la règle du labo)
+-------------------------------------------------------------------
+
+  1. LANCER-KIT-2-DUDECT.bat : (a) si l'épreuve d'appel (test_appel)
+     manque à l'extraction, l'écart est désormais NOMMÉ à l'écran et au
+     témoin — l'édition AUTO la sautait en silence ; (b) si le binaire de
+     mesure manque lui-même, REFUS NOMMÉ (plus de code 9009 nu) ;
+     (c) la validation de N est durcie : plus aucun texte saisi ne peut
+     être exécuté par la ligne de validation (l'ancienne passait par un
+     pipe — la nouvelle ne demande rien à l'interpréteur).
+  2. LISEZMOI-dudect.txt : la ligne « 1. » du protocole, amputée par
+     l'insertion de la mention AUTOMATISÉE, est RÉPARÉE (la relecture
+     sur pièces, encore).
+  3. COMMENCER-ICI.bat : le menu porte le diagnostic, le vérificateur et
+     la présente feuille de route.
+  4. LISEZMOI-MULTIMACHINES.txt : le bandeau de la présente édition
+     (l'histoire des éditions demeure, jamais réécrite).
+
+LES PIÈCES INTACTES : les 40 pièces du paquet AUTOMATISÉ (sha256
+814312a5… — l'Entrée 247) sont reprises OCTET POUR OCTET, sauf les
+QUATRE fichiers d'édition nommés ci-dessus. Les CINQ scellés ne bougent
+pas : loupe.exe c1115105…, proxy-image étendue 0782d7e2…, moteur-shani
+761ab194…, corpus M7D ec343b4e…, demo M7D e57fc74b… (la liste complète
+des empreintes vit dans EMPREINTES-PAQUET.txt ; le sha256 du zip ENTIER
+vit à l'Entrée 249 du journal de travail et au coffre /test).
+
+L'HONNÊTETÉ DE CETTE ÉDITION : les deux nouveaux outils furent écrits au
+laboratoire et éprouvés SUR EXTRACTION VIERGE pour tout ce que le labo
+peut éprouver (le vérificateur 45/45, le diagnostic sur l'hôte Linux
+x86-64 du labo, la voie 1 M7D revécue par son lanceur, le kit-2
+recompilé gcc — la note d'épreuve est jointe au dépôt). Le labo n'a
+AUCUN Windows : les .bat neufs y demeurent éprouvés par leurs commandes
+et par la relecture, JAMAIS par l'exécution — le premier double-clic se
+vit chez vous ; si un écran nomme un défaut, renvoyez le .txt TEL QUEL
+(D122), le labo recoupe et corrige.

@@ -69,3 +69,9 @@ riscv/export/
 scripts/tla_v150/outils/
 scripts/tla_v150/_apalache-out/
 scripts/tla_v150/pbt_zone/
+
+# Le montage de l'édition MISE À JOUR — régénérable À L'OCTET par
+# scripts/kits_mesure_v150/edition_mise_a_jour/monter_edition_mise_a_jour.py
+# (le rejeu rend le même sha256 4e7270d7… : la preuve au journal, Entrée 249 ;
+#  le zip livré et les sources SONT versionnés, le paquet/ décompressé non)
+scripts/kits_mesure_v150/edition_mise_a_jour/paquet/

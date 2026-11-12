@@ -1,0 +1,279 @@
+NOTE D'ÉPREUVE — L'ÉDITION MISE À JOUR DU PAQUET MULTIMACHINES
+(l'épreuve sur extraction vierge, D153 — 2026-11-12T13:19:42Z ; la commande : « fais
+un kit mis à jour avec ce qu'il reste à faire ou des corrections si
+nécessaires, ou éventuellement rajouter des tests si tu trouve ça
+pertinent »)
+
+Le zip éprouvé : TRIADE_kits_terrain_v0150_MULTIMACHINES-MISE-A-JOUR.zip
+(3519581 o, sha256 4e7270d774b731338da5f1c9e380071238bbb64596097f1afbcaa1c1e26f1dd3…) — EXTRACTION VIERGE dans /tmp/epreuve-maj avant
+toute épreuve ; la source de vérité : le paquet AUTO 814312a5… recoupé
+avant le montage ; les CINQ scellés recoupés INTACTS au montage.
+
+LES SIX ÉPREUVES :
+  (a) LE VÉRIFICATEUR 45/45 pièces VERTES, code 0 — le manifeste gravé
+      recoupe l'extraction entière (y compris EMPREINTES-PAQUET.txt et
+      les exe : l'attrapage antivirus est le dessein même du test) ;
+  (b) L'ANTI-TEST : sur une COPIE, test_appel.exe RETIRÉ et un
+      octet de moteur-shani.bin MUTÉ — le vérificateur rend les
+      DEUX écarts NOMMÉS (ABSENTE / DIVERGENTE), code 1 — le test
+      attrape bien ce qu'il prétend attraper ;
+  (c) LE DIAGNOSTIC vécu sur l'hôte Linux x86-64 du labo : la
+      machine nommée, le CPUID lu par le stub (fabricant, famille,
+      modèle, pas, SHA-NI) RECoupÉ à la seconde voix /proc/cpuinfo,
+      le verdict rendu (hôte non-Windows : l'honnêteté le dit) ;
+  (d) LA VOIE 1 M7D REVÉCUE par son lanceur sur l'extraction :
+      16 PASS / 0 ÉCHEC, VERT, code 0, les preuves nées seules ;
+  (e) LE KIT-2 RECOMPILÉ depuis la source de l'extrait (gcc -O2) :
+      l'épreuve d'appel FIPS « abc » EXACT, mutation K DIVERGE,
+      restauration EXACT ; dudect_v150 --autotest VERT code 0 ;
+  (f) LE DIFF éprouvé/livré : les 36 pièces du paquet AUTO restées
+      OCTET POUR OCTET identiques, les 4 fichiers d'édition seuls
+      divergents (COMMENCER-ICI.bat, LISEZMOI-MULTIMACHINES.txt,
+      le lanceur et le LISEZMOI du kit-2) — les .sh, les scénarios,
+      les scellés et les sources C : INTACTS.
+
+LA FORME (constatée au montage, avant l'assemblage) : 46 pièces au
+total, les .bat TOUS CRLF intégral et ASCII pur (assertion au
+montage), les .sh exécutables (mode 755 posé au zip), les CINQ
+scellés recoupés INTACTS.
+
+L'HONNÊTETÉ : le labo n'a AUCUN Windows — les .bat neufs et
+corrigés y sont éprouvés par leurs commandes (certutil, findstr,
+for /f, where, powershell — toutes standard de Windows 10/11) et
+par la relecture, JAMAIS par l'exécution ; le premier double-clic
+se vit chez le développeur (si un écran nomme un défaut, le .txt
+renvoyé tel quel, D122). Les épreuves (c)-(e) vécurent sur l'hôte
+Linux x86-64 du laboratoire — leurs sorties intégrales vivent
+ci-dessous.
+
+
+### LE VÉRIFICATEUR (python3 verifier_paquet.py) — code 0
+
+```
+==================================================================
+ LE VÉRIFICATEUR DU PAQUET — l'intégrité de VOTRE extraction
+ 45 pièces recoupées contre le manifeste du laboratoire.
+ Un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+==================================================================
+[VERT] A-LIRE-AUTOMATISATION.txt
+[VERT] CE-QUI-RESTE-A-FAIRE.txt
+[VERT] COMMENCER-ICI.bat
+[VERT] DIAGNOSTIC-MACHINE.bat
+[VERT] EMPREINTES-PAQUET.txt
+[VERT] LISEZMOI-MULTIMACHINES.txt
+[VERT] VERIFIER-PAQUET.bat
+[VERT] diagnostic_machine.py
+[VERT] pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat
+[VERT] pc-windows/kit-1-shani/LISEZMOI-shani.txt
+[VERT] pc-windows/kit-1-shani/cibles/manifeste.json
+[VERT] pc-windows/kit-1-shani/cibles/proxy-image.bin
+[VERT] pc-windows/kit-1-shani/moteur-shani.bin
+[VERT] pc-windows/kit-1-shani/moteur-shani.s
+[VERT] pc-windows/kit-1-shani/scenario-shani.py
+[VERT] pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat
+[VERT] pc-windows/kit-2-dudect/LISEZMOI-dudect.txt
+[VERT] pc-windows/kit-2-dudect/cibles/manifeste-c.txt
+[VERT] pc-windows/kit-2-dudect/cibles/manifeste.json
+[VERT] pc-windows/kit-2-dudect/cibles/proxy-image.bin
+[VERT] pc-windows/kit-2-dudect/dudect_v150.c
+[VERT] pc-windows/kit-2-dudect/dudect_v150.exe
+[VERT] pc-windows/kit-2-dudect/extraire_cibles_v150.py
+[VERT] pc-windows/kit-2-dudect/test_appel.c
+[VERT] pc-windows/kit-2-dudect/test_appel.exe
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/LISEZMOI-terrain-tiers.txt
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/LISEZMOI-KIT-LOUPE.md
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/loupe.exe
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/scenario-loupe.py
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/temoin-vitrine.bat
+[VERT] qemu-wsl2/LISEZMOI-qemu.txt
+[VERT] qemu-wsl2/kit-m7d/LISEZMOI-KIT-M7D.md
+[VERT] qemu-wsl2/kit-m7d/corpus
+[VERT] qemu-wsl2/kit-m7d/demo
+[VERT] qemu-wsl2/kit-m7d/qemu-riscv64
+[VERT] qemu-wsl2/kit-m7d/scenario-m7d.py
+[VERT] qemu-wsl2/lancer-voie1-m7d.sh
+[VERT] qemu-wsl2/lancer-voie2-shani.sh
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/VERDICT-run-shani.txt
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/scenario-shani-journal.log
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/temoin-shani.txt
+[VERT] telephone-arm/kit-constat-arm/LISEZMOI-constat-arm.txt
+[VERT] telephone-arm/kit-constat-arm/constat-arm.py
+[VERT] telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh
+
+==================================================================
+ LE BILAN : 45/45 pièces VERTES — l'extraction est la pièce
+ du laboratoire. Vivez les kits (COMMENCER-ICI.bat), la feuille de route est CE-QUI-RESTE-A-FAIRE.txt.
+==================================================================
+
+[rapport] écrit : verification-paquet.txt
+```
+
+### L'ANTI-TEST (test_appel.exe RETIRÉ + moteur-shani.bin MUTÉ sur une COPIE) — code 1
+
+```
+==================================================================
+ LE VÉRIFICATEUR DU PAQUET — l'intégrité de VOTRE extraction
+ 45 pièces recoupées contre le manifeste du laboratoire.
+ Un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+==================================================================
+[VERT] A-LIRE-AUTOMATISATION.txt
+[VERT] CE-QUI-RESTE-A-FAIRE.txt
+[VERT] COMMENCER-ICI.bat
+[VERT] DIAGNOSTIC-MACHINE.bat
+[VERT] EMPREINTES-PAQUET.txt
+[VERT] LISEZMOI-MULTIMACHINES.txt
+[VERT] VERIFIER-PAQUET.bat
+[VERT] diagnostic_machine.py
+[VERT] pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat
+[VERT] pc-windows/kit-1-shani/LISEZMOI-shani.txt
+[VERT] pc-windows/kit-1-shani/cibles/manifeste.json
+[VERT] pc-windows/kit-1-shani/cibles/proxy-image.bin
+[ÉCART : DIVERGENTE]   pc-windows/kit-1-shani/moteur-shani.bin
+    attendu : 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+    lu      : 939b688dfc7aaef605e80e042613b41d8dc063887107b554b686aa4c774b10a6
+[VERT] pc-windows/kit-1-shani/moteur-shani.s
+[VERT] pc-windows/kit-1-shani/scenario-shani.py
+[VERT] pc-windows/kit-2-dudect/LANCER-KIT-2-DUDECT.bat
+[VERT] pc-windows/kit-2-dudect/LISEZMOI-dudect.txt
+[VERT] pc-windows/kit-2-dudect/cibles/manifeste-c.txt
+[VERT] pc-windows/kit-2-dudect/cibles/manifeste.json
+[VERT] pc-windows/kit-2-dudect/cibles/proxy-image.bin
+[VERT] pc-windows/kit-2-dudect/dudect_v150.c
+[VERT] pc-windows/kit-2-dudect/dudect_v150.exe
+[VERT] pc-windows/kit-2-dudect/extraire_cibles_v150.py
+[VERT] pc-windows/kit-2-dudect/test_appel.c
+[ÉCART : ABSENTE]      pc-windows/kit-2-dudect/test_appel.exe  (extraction incomplète ? l'antivirus ?)
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/LANCER-KIT-3-LOUPE.bat
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/LISEZMOI-terrain-tiers.txt
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/LISEZMOI-KIT-LOUPE.md
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/loupe.exe
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/scenario-loupe.py
+[VERT] pc-windows/kit-3-terrain-tiers-loupe/loupe-kit-13/temoin-vitrine.bat
+[VERT] qemu-wsl2/LISEZMOI-qemu.txt
+[VERT] qemu-wsl2/kit-m7d/LISEZMOI-KIT-M7D.md
+[VERT] qemu-wsl2/kit-m7d/corpus
+[VERT] qemu-wsl2/kit-m7d/demo
+[VERT] qemu-wsl2/kit-m7d/qemu-riscv64
+[VERT] qemu-wsl2/kit-m7d/scenario-m7d.py
+[VERT] qemu-wsl2/lancer-voie1-m7d.sh
+[VERT] qemu-wsl2/lancer-voie2-shani.sh
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/VERDICT-run-shani.txt
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/scenario-shani-journal.log
+[VERT] qemu-wsl2/preuves-shani-emulation-labo/temoin-shani.txt
+[VERT] telephone-arm/kit-constat-arm/LISEZMOI-constat-arm.txt
+[VERT] telephone-arm/kit-constat-arm/constat-arm.py
+[VERT] telephone-arm/kit-constat-arm/lancer-kit-constat-arm.sh
+
+==================================================================
+ LE BILAN : 43/45 pièces vertes, 2 ÉCART(S) NOMMÉ(S) —
+ renvoyez verification-paquet.txt TEL QUEL (D122) : le labo
+ recoupe sur pièces. Si un EXE manque : c'est l'ANTIVIRUS (un faux positif des exe de mesure), pas le paquet —
+ voyez CE-QUI-RESTE-A-FAIRE.txt, section LES DEUX TESTS NEUFS.
+==================================================================
+
+[rapport] écrit : verification-paquet.txt
+```
+
+### LE DIAGNOSTIC (python3 diagnostic_machine.py, hôte labo) — code 0
+
+```
+===================================================================
+ LE DIAGNOSTIC DE LA MACHINE — le paquet multimachines MISE À JOUR
+ Il constate : la machine, le silicium, ce qui vit, quels kits y
+ sont vivables. Il ne mesure rien, ne fabrique aucun chiffre.
+===================================================================
+
+[machine] l'OS      : Linux-5.10.134-013.15.kangaroo.al8.x86_64-x86_64-with-glibc2.41
+[machine] l'arche   : x86_64  (Python 64 bits)
+[machine] le CPU   : Intel(R) Xeon(R) Processor (/proc/cpuinfo)
+[silicium] CPUID   : « GenuineIntel » · famille 6 · modèle 173 · pas 1
+[silicium] SHA-NI  : PRÉSENT  (CPUID feuille 7, EBX bit 29)
+[silicium] 2e voix : /proc/cpuinfo vendor_id « GenuineIntel »  == CPUID (recoupées)
+[outils]   Python   : 3.12.16, 64 bits  (64 bits : le kit-3 y vit)
+[outils]   compil.  : gcc
+
+===================================================================
+ LE VERDICT (les kits vivables SUR CETTE MACHINE — l'état complet
+ du projet vit dans CE-QUI-RESTE-A-FAIRE.txt)
+===================================================================
+ cette machine est LINUX : les kits Windows du paquet n'y vivent pas (les exe livrés sont PE32+ x86-64).
+ les voies QEMU y vivent en bash DIRECT (lanceur-voie1-m7d.sh : le qemu-riscv64 STATIQUE est embarqué dans le paquet).
+ le téléphone vit par SON kit : telephone-arm/kit-constat-arm/
+ (le présent diagnostic fut éprouvé au laboratoire sur un hôte Linux x86-64 — cette voix même.)
+
+ A VOTRE MAIN (inchangé) : la signature des témoins, l'état EFFECTIF du turbo (kit-2), le témoin vitrine (kit-3), le renvoi
+ des preuves au coffre /test (dossier Drive « Triade » → « test »).
+===================================================================
+
+[témoin] le diagnostic est écrit : diagnostic-machine.txt
+```
+
+### LA VOIE 1 M7D (bash lancer-voie1-m7d.sh, extraction vierge) — code 0
+
+```
+ qemu-riscv64 exécute l'ISA par TCG, le noyau et les syscalls sont RÉELS de l'hôte — une émulation de processus, jamais déguisée en exécution native)
+[m7d] PASS : le rituel n°1 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : le rituel n°2 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : le rituel n°3 : exactement les DEUX lignes au code 0 (LE MÊME verdict que les instances win/linux — la parité § 8.3) (code=0, 60 o)
+[m7d] PASS : base forcée -R 1G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : base forcée -R 4G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : base forcée -B 0x100000000 -R 2G : la sortie IDENTIQUE (l'indifférence à la base — jamais un ASLR émulé, D155) (code=0)
+[m7d] PASS : LA BASCULE PENDANT LE TRAFIC : 1 200 usages de l'entrée, l'apply entre 399/400, le retour entre 799/800 — la transcription OCTET POUR OCTET l'attendu (15425 o : 800 lignes v1, 400 v2 marquées « j2: », les refus 1-4 et l'effet au geste même INCLUS dans le flux — il n'y a aucun détournement de canal) (code=0, 15425 o rendus / 15425 attendus)
+[m7d] PASS : le journal est COHÉRENT : 1 200 lignes ENTIÈRES, indices 0..1199 chacun EXACTEMENT une fois, aucun mélange de formats dans une même ligne (400 lignes v2)
+[m7d] PASS : LE DEP FALSIFIÉ (0x7→0x3) : l'exécution FAUTE au retour du premier mprotect (page sans X — le fetch suivant) : SIGSEGV, 4290 o EXACTS (les 400 lignes v1, zéro silence) (code=-11, 4290 o == 4290 attendus)
+[m7d] PASS : la falsification du démonstrateur : un octet d'opcode corrompu fait dévier la transcription ou le code (zéro silence — non-vacuité) (rompu à 0x2000 (essai n°1))
+[m7d] PASS : base forcée -R 1G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : base forcée -R 4G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : base forcée -B 0x100000000 -R 2G (le demo) : la transcription identique — l'indifférence à la base (code=0)
+[m7d] PASS : ZÉRO RÉGRESSION : les DEUX fichiers relus — le corpus et le demo n'ont pas bougé d'un octet (le patch est un fait de la session INVITÉE, jamais du fichier) (corpus ec343b4e8bebf21c…, demo e57fc74be2ea67ab…)
+[m7d] PASS : le rituel du scellé REJOUÉ après la démonstration : exactement ses deux lignes au code 0 (code=0)
+
+constats : 16 PASS / 0 ÉCHEC (0 s)
+instrument : qemu-riscv64 version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1) (md5 bae5a36f0dd40e1286d342c9433c0dc5, le kit (binaire statique embarqué)) — réserve instrumentale D149 : qemu-riscv64 exécute l'ISA par TCG, le noyau et les syscalls sont RÉELS de l'hôte — une émulation de processus, jamais déguisée en exécution native
+frontières nommées : le code 5 (le service refuse) est STRUCTUREL sous qemu-user (l'hôte accorde RWX sur mapping privé — la branche fail-closed vit dans tcp-07) ; la concurrence réelle est HORS périmètre (le corpus M7 est mono-fil — la bascule se démontre EN SESSION, entre deux usages) ; le demo est l'INSTRUMENT du chantier, pas un artefact de la lignée (pas de carte) ; le corpus est LE scellé 0.8.0-rc.1 du jalon.
+
+VERDICT : VERT
+
+Si VERT : renvoyer preuves-m7/ ENTIER au coffre /test/preuves-m7/ — le laboratoire recoupe sur pièces (D138/D145/D148) et, si elles établissent le critère, --sceller-final pose la finale 0.8.0 (le jalon M7 franchi — l'universalité DÉMONTRÉE).
+Si ÉCHEC NOMMÉ : renvoyer TEL QUEL — la ligne nomme le défaut.
+===================================================================
+ LE RUN EST TERMINÉ (code 0). Les preuves vivent dans
+ preuves-m7/ (témoin, journal, verdict).
+ À VOTRE MAIN : datez et signez le témoin de votre main, puis renvoyez
+ le dossier ENTIER au coffre /test (dossier Drive « Triade »).
+===================================================================
+```
+
+### LE KIT-2 RECOMPILÉ (gcc -O2 : test_appel FIPS + dudect --autotest) — code 0
+
+```
+[image] cibles/proxy-image.bin : 69632 octets mappes a 0x7f782e063000
+[FIPS abc] ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad -> EXACT (la piece scellee est bien l'image executee)
+[mutation K] condense DIVERGE — la table est BIEN lue par la piece
+[restauration] EXACT
+
+=== dudect_v150 - le mesureur temps reel (kit 1, v0.15.0) ===
+[config] OS=POSIX (autotest laboratoire)  N=200/classe  seuil |t|>5
+[ETIQUETTE] AUTOTEST LABORATOIRE - le mecanisme seul : AUCUN statut terrain n'en decoule (le run materiel appartient au developpeur)
+[affinite] coeur 0 : posee
+[manifeste] image 69632 octets, 4 cible(s)
+[image] sha256 recoupe - la piece scellee
+[tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+  fixe      : moy 875.2 cyc, med 876
+  aleatoire : moy 876.9 cyc, med 878
+  t de Welch = -1.24 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+  fixe      : moy 402749.2 cyc, med 397244
+  aleatoire : moy 402720.6 cyc, med 397360
+  t de Welch = 0.02 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+  fixe      : moy 55.2 cyc, med 56
+  aleatoire : moy 55.8 cyc, med 56
+  t de Welch = -2.80 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+  fixe      : moy 843.9 cyc, med 846
+  aleatoire : moy 846.4 cyc, med 848
+  t de Welch = -1.67 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-1794489582.csv - joignez-le a temoin-dudect.txt avec la config CPU, l'etat EFFECTIF du turbo et l'OS
+```

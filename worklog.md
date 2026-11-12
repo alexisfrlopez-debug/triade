@@ -8916,3 +8916,54 @@ Work Log:
   voies QEMU sous WSL2 — aucun geste obligatoire), le geste B SHA-NI
   réel, la campagne de comparaison D204, la cérémonie d'ère, le
   séquestre D183, la réplication.
+
+
+Task ID: 156
+Agent: Z.ai (agent principal)
+Task: L'ÉDITION MISE À JOUR DU PAQUET MULTIMACHINES (la commande du
+développeur du 12/11/2026 : « fais un kit mis à jour avec ce qu'il reste à
+faire ou des corrections si nécessaires, ou éventuellement rajouter des
+tests si tu trouve ça pertinent ») — la feuille de route, deux tests neufs,
+les corrections de relecture, l'assemblage aux scellés recoupés, l'épreuve
+sur extraction vierge, la consignation et la livraison.
+
+Work Log:
+- LA FEUILLE DE ROUTE : CE-QUI-RESTE-A-FAIRE.txt — l'état daté au 12/11
+  soir (kit-1 vécu par deux refus identiques, kit-3 vécu VERT au 13e run,
+  LE KIT-2 JAMAIS COURU, le constat-arm, les voies QEMU, le geste B,
+  D204, la cérémonie d'ère, le séquestre D183, la réplication).
+- LES DEUX TESTS NEUFS : DIAGNOSTIC-MACHINE.bat + diagnostic_machine.py
+  (le CPUID feuille 7 EBX bit 29 == la lecture du kit-1 au geste A, la
+  double voix /proc/cpuinfo sous Linux, le verdict kits vivables, le
+  témoin diagnostic-machine.txt) ; VERIFIER-PAQUET.bat + verifier_paquet.py
+  (les 45 pièces contre le manifeste gravé — l'attrapage antivirus, motivé
+  par le refus Drive 403 de test_appel.exe du 12/11 ; sans Python : les 5
+  scellés par certutil) ; EMPREINTES-PAQUET.txt (les 44 empreintes
+  lisibles, l'honnêteté du cercle).
+- LES CORRECTIONS : le lanceur kit-2 (l'écart NOMMÉ si l'épreuve d'appel
+  manque — l'édition AUTO la sautait en silence ; le REFUS NOMMÉ si le
+  binaire manque ; la validation de N sans exécution), la ligne « 1. » du
+  LISEZMOI-dudect réparée, le menu enrichi (D/V/6/7 + l'état des kits),
+  le bandeau inséré à la carte maîtresse.
+- L'ÉPREUVE SUR EXTRACTION VIERGE : (a) le vérificateur 45/45 VERT code 0 ;
+  (b) l'ANTI-TEST — l'exe retiré + l'octet muté sur une COPIE : les DEUX
+  écarts NOMMÉS, code 1 ; (c) le diagnostic vécu sur l'hôte labo — le
+  CPUID GenuineIntel · famille 6 · modèle 173 · SHA-NI PRÉSENT == la
+  seconde voix /proc/cpuinfo (le PREMIER hôte du projet à afficher
+  SHA-NI) ; (d) la voie 1 M7D revécue 16 PASS/0 ÉCHEC VERT code 0 ; (e)
+  le kit-2 recompilé gcc : FIPS abc EXACT, autotest VERT ; (f) le diff
+  36/40 pièces AUTO octet pour octet identiques, les 4 fichiers
+  d'édition seuls divergents ; CRLF/ASCII/scellés/46 pièces.
+- L'ASSEMBLAGE : 46 pièces, les .bat en CRLF, les .sh exécutables —
+  TRIADE_kits_terrain_v0150_MULTIMACHINES-MISE-A-JOUR.zip 3 519 581 o
+  sha256 4e7270d7… ; les preuves d'épreuve au dépôt
+  (scripts/kits_mesure_v150/edition_mise_a_jour/preuves-edition-maj-labo/
+  + la note d'épreuve).
+- LA CONSIGNATION : l'Entrée 249 au journal, la présente tâche au worklog,
+  le commit, le push GitHub, le miroir Drive et le kit Cérémonie tenus par
+  le hook post-commit ; la livraison au bac download/ et au coffre /test.
+- SUITE : au développeur — LE KIT-2 DUDECT À COURIR (la seule mesure
+  jamais encore vécue du paquet : un double-clic, aucun Python ni
+  compilateur requis), le constat-arm au téléphone, les voies QEMU, le
+  DIAGNOSTIC pour choisir la machine du geste B, la campagne D204, la
+  cérémonie d'ère, le séquestre D183, la réplication.
