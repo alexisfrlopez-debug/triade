@@ -1,0 +1,118 @@
+TRIADE KIT-2 DUDECT — L'EXE EN 1 CLIC v2 — LISEZ-MOI
+======================================================
+
+LA COMMANDE (le développeur, 13/11/2026) : « fais la correction » — la
+parole attendue par le LISEZMOI-RUN-KIT2 après le run v1 (l'Entrée 259 :
+votre console capturée avait nommé la cause certaine, la ligne 55 du
+lanceur). LA V2 EST NÉE : elle porte L'ÉDITION CORRECTIF3 du kit.
+
+CE QUI A CHANGÉ (le paquet CORRECTIF3 embarqué, les 10 pièces) :
+  - LANCER-KIT-2-DUDECT.bat : la ligne 55 ET sa sœur de fin de lanceur
+    (l.218-219) portent désormais les CHAPEAUX (^|t^| ^> 5) — les tuyaux
+    et chevrons nus y tuaient le script entier au déchiffrage (« La
+    syntaxe de la commande n'est pas correcte. », code 255) DEPUIS LA
+    NAISSANCE du kit ; le lanceur .bat v2 : sha256 27b256874d545ab2… ;
+  - dudect_v150.c : le retour du VirtualProtect DÉSORMAIS VÉRIFIÉ (un
+    échec devient un REFUS nommé, fail-closed) — l'écart 334 promis au
+    verdict ; sha256 fc3b5ccece2e577b… ;
+  - L'AUTRE écart promis (l'étiquette « anifeste] », E249) est ARBITRÉ
+    SUR PIÈCES : il n'a JAMAIS vécu dans le fichier — la ligne 307 dit
+    déjà « [manifeste] » (dump hexadécimal 5b 6d de la pièce du coffre) ;
+    l'écart consigné aux Entrées 252-253-259 était un ARTEFACT DE
+    LECTURE du labo (l'affichage de ses sorties avale la séquence
+    « [m » + lettre) — la ligne 307 demeure octet pour octet IDENTIQUE ;
+  - dudect_v150.exe : RECOMPILÉ au labo depuis la source corrigée —
+    JAMAIS de patch binaire (gcc 14-win32 mingw-w64 -O2, déterministe) ;
+    sha256 98d9613600193d98… ;
+  - les cinq autres pièces INTACTES octet pour octet (le LISEZMOI du kit,
+    test_appel, l'extracteur, les cibles avec l'image scellée 0782d7e2…).
+
+L'EXE : TRIADE-kit2-dudect-1clic-v2.exe — 1,072,358 octets, sha256
+e6752c5826e3c4716403508e81a0f959506ad833fb268895a4b7f0c727a066b0.
+PE32+ x86-64 console (Windows 7+ 64 bits), lié STATIQUE (aucune DLL au-delà
+de KERNEL32 + msvcrt + SHELL32, présentes sur tout Windows), AUCUN droit,
+AUCUN réseau sortant (il ouvre l'explorateur et le navigateur sur le coffre
+— c'est tout), AUCUN jeton embarqué. Aucun Python requis, aucun paquet à
+extraire, aucune commande : DOUBLE-CLIQUEZ. (La v1 demeure au coffre et au
+miroir : elle est la pièce du premier run de la coquille Win32 — l'histoire
+n'est jamais réécrite.)
+
+CE QU'IL FAIT (le geste en 1 clic, inchangé — la coquille a vécu son
+premier run au terrain le 12/11, l'Entrée 259 le consigne) :
+  1. Il porte LE KIT SCELLÉ EN LUI : les 10 pièces du paquet CORRECTIF3,
+     octet pour octet — recoupées 10/10 dans l'exe livré.
+  2. Il les écrit vers %LOCALAPPDATA%\TRIADE\kit-2-dudect en re-recoupant
+     CHAQUE sha256 à CHAQUE run (fail-closed : REFUS nommé si un seul octet
+     diverge).
+  3. Il archive les restes du run précédent vers archives\<horodatage>
+     (D99 : jamais de mélange de runs).
+  4. IL VIT LE VRAI LANCEUR DU KIT : cmd /c LANCER-KIT-2-DUDECT.bat — le
+     .bat scellé fait TOUT (recoup de l'image scellée, recompilation depuis
+     LA SOURCE si un compilateur vit, sinon les exe précompilés livrés,
+     l'épreuve d'appel FIPS « abc », LE RUN N = 200 par défaut, le brouillon
+     de témoin). Sa console ENTIÈRE est capturée dans
+     run-console-<horodatage>.txt puis affichée telle quelle. Vous pouvez
+     passer votre N : lancez l'exe avec l'argument (ex. « 400 », minimum 60
+     — validé par le lanceur du kit lui-même).
+  5. IL CONSTRUIT LES PREUVES : preuves-kit2-dudect-<horodatage>.zip sur le
+     BUREAU (console entière + journal-dudect-*.csv + sortie-run.txt +
+     sortie-appel.txt + témoin-dudect-BROUILLON.txt + DEPOT.txt).
+  6. IL OUVRE l'explorateur SUR LE ZIP et le coffre /test du Drive dans le
+     navigateur (dossier « Triade » → « test ») : DEPOSEZ le zip — VOTRE
+     geste, comme au GUI v1, à l'APK et à l'exe v1. Puis, à votre main :
+     complétez le témoin (l'état EFFECTIF du turbo, vos observations mêmes
+     défavorables — D189), datez, signez.
+
+L'HONNÊTETÉ (les mêmes frontières que la v1) :
+  — l'exe NE MESURE RIEN et ne modifie JAMAIS le kit : la mesure vit dans
+    dudect_v150, l'épreuve dans test_appel, le protocole dans le .bat —
+    les sorties et codes de sortie sont LES LEURS ;
+  — AUCUN jeton n'est embarqué : l'envoi au coffre passe par votre geste
+    Drive, jamais par un secret dans le binaire ;
+  — D99 tenue : un run achevé part aux archives horodatées, le kit se
+    re-extrait et se re-recoupe à chaque lancement ;
+  — l'exe n'est PAS signé par un certificat de code : Windows peut montrer
+    « Windows a protégé votre ordinateur » (SmartScreen) — Informations
+    complémentaires → Exécuter quand même.
+
+L'ÉPREUVE AU LABO (13/11) : le NOYAU éprouvé à l'AUTOTEST POSIX — sha256
+contre les vecteurs FIPS 180-4 (« abc » EXACT, vide EXACT), extraction
+10/10 VERTS sur le paquet CORRECTIF3, le zip produit RELU ET RECOUPÉ
+OCTET-EXACT par Python (zipfile, crc compris) ; l'EXE livré recoupé par
+objdump (PE32+, imports KERNEL32/msvcrt/SHELL32 seuls) et le BLOB EMBARQUÉ
+retrouvé 10/10 octet pour octet DANS l'exe ; le re-jeu DÉTERMINISTE
+(SOURCE_DATE_EPOCH posé : rebuild = mêmes octets). Le lanceur du kit fut
+AUDITÉ MÉTACARACTÈRE PAR MÉTACARACTÈRE (les 9 .bat du paquet : aucun tuyau
+nu dans aucun echo — l'écart de méthode de l'Entrée 253 est fermé). Le
+mesureur RECOMPILÉ fut éprouvé : l'autotest POSIX VERT (l'étiquette
+« [manifeste] » présente — la ligne 307 n'a pas bougé d'un octet), et le
+désassemblage montre le retour du VirtualProtect TESTÉ (test eax + saut au
+chemin de refus). Le labo n'a AUCUN Windows : la coquille a vécu une fois
+(v1, Entrée 259) ; la v2 vit la même coquille, seule l'édition embarquée
+change.
+
+LA CHAÎNE DE BUILD (le labo, pour rejouer) : gcc 14.2.0 mingw-w64
+(x86_64-w64-mingw32-gcc-14-win32 -O2 -static -lshell32,
+SOURCE_DATE_EPOCH=1794528000 pour le déterminisme) ; le payload généré par
+generer_payload.py depuis le paquet CORRECTIF3 du coffre
+(TRIADE_kits_terrain_v0150_CORRECTIF3-kit-dudect.zip, sha256
+c18b11c6c8e931c24141a2bdc76060b871f8a5e9dd55137d50d1041b144e58db) ; le
+noyau éprouvé POSIX (gcc -O2) ; les littéraux console en ASCII pur.
+Sources complètes : TRIADE_kit2_exe_1clic_v2_sources.zip (tout y est).
+
+OÙ TROUVER LES PIÈCES : le bac de la session
+(download/TRIADE_kit2_exe_1clic_v2/), le coffre Drive « Triade » → « test »
+(l'exe nu peut y être refusé par le faux positif « malware » — le paquet
+TRIADE_kit2_exe_1clic_v2.zip est le porteur), et le miroir git
+(TRIADE-sauvegarde-git/download/TRIADE_kit2_exe_1clic_v2/).
+
+LE GESTE (le plus court de la campagne) : DOUBLE-CLIQUEZ l'exe v2 — le
+test part seul (l'épreuve d'appel FIPS abc, puis LE RUN N=200 : la mesure
+prend des minutes), le zip des preuves naît sur le Bureau, déposez-le,
+complétez et signez le témoin. LA MESURE RESTE LA MESURE : dudect_v150
+cibles 200, le t de Welch, la lecture honnête |t| > 5 / |t| <= 5.
+
+LA LECTURE HONNÊTE (celle du kit, inchangée) : |t| > 5 = une dépendance
+temporelle AU SEUIL consignée telle quelle ; |t| <= 5 = aucune divergence
+au seuil sur CET échantillon, CETTE machine, CETTE session — jamais
+« temps constant prouvé ».

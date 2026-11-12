@@ -9378,3 +9378,46 @@ Work Log:
   re-livré, l'exe re-généré — puis re-courir : le geste le plus court de
   la campagne. Les preuves au dépôt (download/preuves-run-kit2-dudect-v1/),
   LISEZMOI-RUN-KIT2.txt (4 686 o, sha256 9d2a6349…), Entrée 259.
+
+
+Task ID: 167
+Agent: Z.ai (agent principal — la session de la correction)
+Task: L'ÉDITION CORRECTIVE CORRECTIF3-kit-dudect + L'EXE 1-CLIC V2 (la
+commande du développeur : « fais la correction ») : la ligne 55 du
+lanceur ET sa sœur (l.218-219) aux chapeaux posés, l'écart 334 réparé à
+la source (le retour du VirtualProtect VÉRIFIÉ, REFUS nommé fail-closed),
+dudect_v150.exe RECOMPILÉ depuis la source corrigée (jamais de patch
+binaire — le désassemblage montre test eax + saut au refus), le paquet
+TRIADE_kits_terrain_v0150_CORRECTIF3-kit-dudect.zip (46 pièces, 39
+intactes vs CORRECTIF2, 45/45 VERT, anti-test, re-jeu déterministe) et
+l'exe TRIADE-kit2-dudect-1clic-v2.exe (payload CORRECTIF3, 10/10 dans
+l'exe, contre-preuve : aucune pièce CORRECTIF2, autotest POSIX TOUT
+VERT).
+
+Work Log:
+- LE GESTE : build_correctif3_kit_dudect.py (l'édition assemblée depuis
+  l'arbre CORRECTIF2 recoupé 46/46 contre le zip du coffre —
+  correction, autotest, recompilation, désassemblage, textes,
+  empreintes, vérificateur, anti-test, zip déterministe) ;
+  construire_v2.py (le payload depuis le paquet CORRECTIF3, l'autotest
+  POSIX du noyau, mingw -O2 -static -lshell32,
+  SOURCE_DATE_EPOCH=1794528000 : le re-jeu déterministe, les
+  recoupements, la contre-preuve, l'emballage).
+- L'ARBITRAGE E249 : l'étiquette « anifeste] » n'a JAMAIS vécu dans la
+  pièce — dump hexadécimal 5b 6d, appartenance Python, l'expérience
+  vive de l'artefact (la séquence « [m » + lettre avalée par
+  l'affichage des sorties du labo) ; la ligne 307 INTACTE ; l'erreur de
+  lecture des Entrées 252-253-259 consignée telle quelle.
+- LA PREUVE DE CHAÎNE : la recompilation de la source non modifiée
+  reproduit l'exe CORRECTIF2 à six octets de lien près
+  (TimeDateStamp + CheckSum) — le diff du recompilé ne peut venir que
+  de la correction.
+- L'AUDIT FERMÉ : 9 .bat, tout echo (même après redirection) sans
+  métacaractère nu, tout rem sans tuyau ni esperluette — l'écart de
+  méthode de l'Entrée 253 fermé, aucune autre mine dans le paquet.
+- LA CONSIGNATION : Entrée 260 + la présente ; le commit, le push
+  GitHub, le miroir Drive (D141 : le courant 259-1bdaa29 archivé
+  versionné), le dépôt au coffre /test (CORRECTIF3 + exe v2 + paquets,
+  recoups md5).
+- SUITE : LE RUN du développeur — la mesure enfin courue, le témoin
+  signé, les preuves au coffre.

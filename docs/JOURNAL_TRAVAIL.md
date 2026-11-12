@@ -10458,3 +10458,101 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   suite de chaîne : les preuves-constat-arm pour clore le téléphone,
   puis les gestes ouverts (le geste B SHA-NI réel, la campagne D204, la
   cérémonie d'ère, le séquestre D183, la réplication).
+
+## Entrée 260 — L'ÉDITION CORRECTIVE CORRECTIF3-kit-dudect + L'EXE 1-CLIC V2 (la commande du développeur du 13/11 : « fais la correction » — le mot attendu par le LISEZMOI-RUN-KIT2) — la ligne 55 du lanceur ET sa sœur aux chapeaux posés, l'écart 334 réparé à la source (le retour du VirtualProtect VÉRIFIÉ), dudect_v150.exe RECOMPILÉ jamais patché, L'ARBITRAGE E249 : l'étiquette « anifeste] » n'a JAMAIS vécu dans la pièce (l'artefact de lecture du labo nommé, la ligne 307 INTACTE), l'audit des métacaractères FERMÉ (9 .bat, aucune mine) (13/11, la session de la correction)
+
+- LA COMMANDE : « fais la correction » — le mot attendu par le
+  LISEZMOI-RUN-KIT2 (l'Entrée 259 : « dites le mot au labo (un simple
+  "oui" ou "fais la correction") : l'édition corrective naît »). Elle
+  naît : LE PAQUET CORRECTIF3-kit-dudect + L'EXE 1-CLIC V2.
+
+- LE PÉRIMÈTRE PROMIS, TENU : (a) LA LIGNE 55 du lanceur (« t de Welch,
+  |t| > 5. » — le TUYAU ET LE CHEVRON NUS) porte désormais les chapeaux
+  (« t de Welch, ^|t^| ^> 5. ») ; (b) SA SŒUR de fin de lanceur (l.218-219,
+  la lecture honnête : les chevrons y étaient déjà échappés, les TUYAUX
+  nus) — mêmes chapeaux ; (c) L'ÉCART DE SOURCE 334 promis aux verdicts
+  du crash : le retour du VirtualProtect DÉSORMAIS VÉRIFIÉ dans
+  dudect_v150.c (un échec devient un REFUS nommé — fail-closed ; le refus
+  terminal nomme désormais « mmap/VirtualAlloc/VirtualProtect ») ; (d)
+  JAMAIS de patch binaire : dudect_v150.exe RECOMPILÉ au labo depuis la
+  source corrigée (gcc 14-win32 mingw-w64, -O2, SOURCE_DATE_EPOCH posé).
+
+- L'ARBITRAGE E249 (LA DÉCOUVERTE DE L'ÉDITION) : l'AUTRE écart promis —
+  l'étiquette « anifeste] » (E249, consignée aux Entrées 252-253-259) —
+  n'a JAMAIS vécu dans le fichier : la ligne 307 dit déjà
+  « [manifeste] ». PREUVE SUR PIÈCES : le dump hexadécimal de la ligne
+  (5b 6d = « [m »), le test d'appartenance Python (« printf("anifeste] »
+  absent, « printf("[manifeste] » présent), et l'EXPÉRIENCE VIVE : un
+  print Python de « [manifeste] » s'affiche « anifeste] » — L'AFFICHAGE
+  DES SORTIES DU LABO AVALE LA SÉQUENCE « [m » SUIVIE D'UNE LETTRE
+  (« [machine] » s'y lit « achine] » — l'écart cosmétique de l'Entrée
+  252 ; « [manifeste] » s'y lit « anifeste] »). Les consignations
+  précédentes avaient lu L'ŒIL du labo, pas la pièce : l'arbitrage est
+  consigné ici (D189 : l'erreur du labo rapportée telle quelle,
+  l'histoire jamais réécrite). LA LIGNE 307 DEMEURE OCTET POUR OCTET
+  IDENTIQUE — une pièce saine ne se retouche pas.
+
+- LA PREUVE DE CHAÎNE (le geste qui valide le recompilé) : la
+  recompilation de la source NON modifiée reproduit l'exe CORRECTIF2
+  livré à SIX octets près — l'horodatage de lien COFF (0x6af59ea9 =
+  12/11 11:10:33Z) et la somme de contrôle qui en dépend : 423 545
+  octets de code identiques. La chaîne du labo est LA MÊME que celle qui
+  fit l'original — le diff du recompilé CORRECTIF3 ne peut venir que de
+  la source corrigée. LE DÉSASSEMBLAGE le prouve : l'original ignorait
+  le retour du VirtualProtect (call → mov rcx,rbx direct, 0x1400105f3),
+  le CORRECTIF3 le TESTE (test eax,eax + je vers le chemin de refus,
+  0x140010606) — l'écart 334 est réparé DANS le binaire, l'immédiat
+  PAGE_EXECUTE_READ (0x20) inchangé.
+
+- L'AUDIT FERMÉ (l'écart de méthode de l'Entrée 253, nommé à la 259) :
+  les NEUF .bat du paquet audités métacaractère par métacaractère —
+  TOUT echo (y compris les « >> fichier echo … » du témoin) : AUCUN
+  métacaractère nu après réparation ; TOUT rem : AUCUN tuyau ni
+  esperluette (le chevron dans un rem VÉCUT au terrain — l.30
+  « 0x20->0x40 » : la dernière ligne vécue fut la 54, cmd jette la ligne
+  rem entière, la preuve est la pièce console) ; les tuyaux des
+  commandes (dir | findstr) et les redirections de fin de ligne sont
+  LÉGITIMES et reconnus tels. AUCUNE AUTRE MINE dans le paquet entier.
+
+- LE PAQUET : TRIADE_kits_terrain_v0150_CORRECTIF3-kit-dudect.zip
+  (3 525 456 o, sha256 c18b11c6…) — 46 pièces, 39 INTACTES octet pour
+  octet vs CORRECTIF2, 7 changées (le lanceur, le LISEZMOI du kit,
+  dudect_v150.c, dudect_v150.exe recompilé, la feuille de route,
+  EMPREINTES-PAQUET.txt régénérée, verifier_paquet.py recalé) ;
+  VERIFIER-PAQUET 45/45 VERT sur l'arbre ; l'ANTI-TEST (un octet muté
+  du mesureur recompilé) NOMMÉ DIVERGENT ; l'AUTOTEST POSIX du mesureur
+  corrigé VERT code 0 (l'étiquette « [manifeste] » présente — la ligne
+  307 n'a pas bougé d'un octet — 4 plages recoupées, 4 t de Welch
+  rendus) ; le RE-JEU DÉTERMINISTE prouvé (deux assemblages complets =
+  même sha256).
+
+- L'EXE 1-CLIC V2 : TRIADE-kit2-dudect-1clic-v2.exe (1 072 358 o,
+  sha256 e6752c58…) — la MÊME coquille Win32 qui vécut son premier run
+  au terrain (l'Entrée 259), seule l'édition embarquée change : le
+  payload CORRECTIF3 (le blob 799 271 o, les 10 pièces recoupées 10/10
+  DANS l'exe, ET LA CONTRE-PREUVE : aucune pièce CORRECTIF2 ne vit dans
+  le binaire v2) ; l'AUTOTEST POSIX du noyau TOUT VERT (vecteurs FIPS,
+  extraction 10/10, anti-test, zip relu octet-exact par Python,
+  DEPOT.txt v2, horodatage) ; le RE-JEU déterministe (rebuild = sha256
+  identique). Le paquet PORTEUR TRIADE_kit2_exe_1clic_v2.zip (437 172 o,
+  c2887ebd…) et les sources complètes (18 171 o, c61f2250…). La v1
+  DEMEURE au coffre et au miroir — elle est la pièce du premier run de
+  la coquille.
+
+- LA GÉNÉALOGIE TENUE : le bandeau du lanceur porte « correctif n.o 3 -
+  paquet CORRECTIF3-kit-dudect » ; les rem blocks, l'en-tête du
+  mesureur, le LISEZMOI du kit et la feuille de route consignent
+  l'édition (la cause certaine, les chapeaux, l'arbitrage E249) —
+  l'histoire jamais réécrite, toujours écrite DESSUS.
+
+- LA MESURE : TOUJOURS JAMAIS ENCORE COURUE — le geste le plus court :
+  DOUBLE-CLIQUER l'exe v2 (le paquet CORRECTIF3 embarqué), le zip des
+  preuves naît sur le Bureau, le déposer au coffre /test, compléter et
+  signer le témoin (D189 : l'état EFFECTIF du turbo, les observations
+  mêmes défavorables).
+
+- SUITE : LE RUN du développeur (l'exe v2, ou le paquet CORRECTIF3
+  extrait au neuf puis LANCER-KIT-2-DUDECT.bat) ; puis le témoin signé ;
+  puis les gestes ouverts (les preuves-constat-arm, le geste B SHA-NI
+  réel, la campagne D204, la cérémonie d'ère, le séquestre D183, la
+  réplication).
