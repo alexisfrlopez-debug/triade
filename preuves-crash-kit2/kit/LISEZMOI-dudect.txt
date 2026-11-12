@@ -1,0 +1,132 @@
+LISEZMOI — LE KIT 1 DUDECT TEMPS RÉEL (v0.15.0, la commande ic09ydeli point 2)
+==============================================================================
+
+LE CORRECTIF n° 2 DU KIT (12/11/2026, le premier run terrain) :
+le kit-2 a CRASHÉ au lancement chez le développeur (« le kit-2 crash au
+lancement », 12/11) — la cause est nommée par l'audit : le backend _WIN32
+de test_appel.c (ajouté au correctif n° 1) passait l'image en
+PAGE_EXECUTE_READ (lecture seule exécutable) puis l'épreuve de
+l'adversaire ÉCRIT dans la table K (k[0] ^= 0x01) : sur Windows la
+mutation reçoit une violation d'accès (0xC0000005) et l'exe meurt —
+l'écriture fautive est l'instruction « mov [rbp+0x2f00],al » du binaire
+(0x140008229). Le laboratoire ne pouvait pas le voir : le backend POSIX
+mappe l'image RWX (mmap), la mutation s'y écrit toujours — la divergence
+des deux backends est née du correctif n° 1 lui-même. LA RÉPARATION :
+la source passe la page en PAGE_EXECUTE_READWRITE (0x40) — les DEUX
+backends portent désormais la MÊME sémantique RWX, celle que l'autotest
+POSIX du laboratoire a toujours validée ; l'exe précompilé livré est
+l'exe du labo PATCHÉ D'UN OCTET (0x20→0x40, l'immédiat de « mov r8d »
+qui alimente VirtualProtect — le diff chirurgical à la tradition
+terrain.3/D50), tout le reste octet pour octet identique. dudect_v150.exe
+ne peut pas faillir de la sorte (il n'écrit JAMAIS dans l'image après
+protection — ses écritures vivent en tampons locaux) et demeure INTACT.
+Écart nommé résiduel : le binaire patché imprime toujours « utation K] »
+(la coquille du printf, corrigée dans la source seule — aucun effet
+sémantique). L'épreuve d'appel doit désormais vivre son premier run
+réel : FIPS abc EXACT, mutation K DIVERGE, restauration EXACT.
+
+LE CORRECTIF n° 1 DU KIT (12/11/2026, la préparation multimachines) :
+dudect_v150.c n'exécutait rand_s que si _CRT_RAND_S était posé AVANT
+stdlib.h — ni MSVC ni mingw-w64 ne le déclarent par défaut — et
+test_appel.c n'avait QUE le backend mmap POSIX (il ne compilait
+AUCUNEMENT sous Windows). Deux défauts latents que l'autotest POSIX du
+laboratoire ne pouvait pas toucher, découverts à la cross-compilation
+Windows du kit. LE GESTE : _CRT_RAND_S posé à la source, le backend
+_WIN32 (VirtualAlloc/VirtualProtect) ajouté à test_appel.c ; le
+backend POSIX INCHANGÉ et re-éprouvé après le geste (gcc -O2 :
+test_appel VERT code 0 — FIPS abc EXACT, mutation K DIVERGE,
+restauration EXACT ; dudect_v150 --autotest VERT code 0 — les quatre
+cibles recoupées, le t de Welch calculé). LES EXE PRÉCOMPILÉS : le
+paquet multimachines porte dudect_v150.exe et test_appel.exe
+(cross-compilés au labo, gcc 14-win32 mingw-w64, PE32+ x86-64, imports
+KERNEL32+msvcrt uniquement) — éprouvés à la compilation et par le
+backend POSIX du même source, NON exécutés au labo (aucun Windows au
+laboratoire, wine refusé par le bac) : le premier run se vit chez
+vous ; si un compilateur vit sur votre machine, recompilez depuis la
+source et comparez — la source est la vérité.
+
+L'OBJET : mesurer le temps d'HORLOGE réel des familles crypto de la
+pièce scellée (le complément du t=0 STRUCTUREL de v0.11.0 — la limite
+nommée depuis deux éditions : le compte d'instructions émulé n'est pas
+le temps du silicium).
+
+L'ÉTAT : PRÉPARÉ ET ÉPROUVÉ AU LABORATOIRE, EN ATTENTE DU RUN TERRAIN
+(le développeur). Aucun résultat matériel n'existe — la commande est
+explicite : « marquer 'en attente' tant que non exécutés, ne jamais
+fabriquer de chiffre ».
+
+CE QUE LE LABO A ÉPROUVÉ (les pièces jointes du kit) :
+  1. extraire_cibles_v150.py : la pièce proxy.exe recoupée SCELLÉE
+     (sha256 446279f3…3b00d93d) puis L'IMAGE MÉMOIRE ÉTENDUE construite
+     (69 632 o, chaque section à son RVA — les blocs ne sont PAS
+     autonomes : tls13-02 lit sa table K en .rdata par RIP-relatif, la
+     leçon vécue du premier essai) ;
+  2. test_appel.c : le condensé FIPS 180-4 « abc » EXACT depuis la
+     pièce scellée mappée (ba7816bf…), la mutation de la table K fait
+     DIVERGER, la restauration rend l'exact — l'image exécutée EST la
+     pièce ;
+  3. dudect_v150.c : l'AUTOTEST laboratoire (backend POSIX, étiqueté
+     comme tel) : les QUATRE cibles exécutées nativement, les plages
+     re-recoupées par le mesureur lui-même, le t de Welch calculé —
+     le mécanisme seul, AUCUN statut terrain n'en découle.
+
+LES QUATRE CIBLES (la sélection — les blocs ISOLABLES, contrats de
+couche I sans contexte d'application) :
+  tls13-02  la compression SHA-256 (le cœur du t=0 structurel)
+  tls13-13  l'échelle X25519 (le secret est LE SCALAIRE)
+  tls13-16  le bloc AES-128 (le secret est LA CLÉ)
+  tls13-17  la multiplication GHASH (le secret est X)
+LA LIMITE CONSIGNÉE : loupe-06 (md5) vit SOUS SESSION (contrat P1) :
+NON isolable sans l'application entière — la mesure pipeline de
+loupe.exe appartient à une itération future du kit. Aucun chiffre
+n'existe pour lui.
+
+LE PROTOCOLE (le run, sur la machine Windows du développeur) :
+  L'ÉDITION AUTOMATISÉE : DOUBLE-CLIQUEZ LANCER-KIT-2-DUDECT.bat —
+  il fait TOUT : la compilation (SI un compilateur vit — cl, gcc,
+  clang — il recompile depuis LA SOURCE, la vérité ; SINON les exe
+  précompilés livrés courent), l'épreuve d'appel, LE RUN (N = 200 par
+  défaut ; passez votre N en argument, minimum 60) et il écrit
+  temoin-dudect-BROUILLON.txt (machine, CPU, binaire, empreintes —
+  l'état EFFECTIF du turbo et la signature restent à votre main).
+  Aucun Python requis. Le protocole ci-dessous demeure la référence.
+
+  L'ÉDITION MISE À JOUR (le 12/11, troisième geste) corrige le LANCEUR :
+  si l'épreuve d'appel (test_appel) manque à l'extraction — l'antivirus
+  peut retirer les exe de mesure, le coffre Drive l'a vécu le 12/11 même —
+  l'écart est désormais NOMMÉ à l'écran et au témoin (l'édition AUTOMATISÉE
+  la sautait en silence) ; si le binaire de mesure manque : REFUS NOMMÉ
+  (plus jamais un code 9009 nu) ; la validation de N ne peut plus exécuter
+  aucun texte saisi. Et la présente réparation : la ligne « 1. » du
+  protocole ci-dessous, amputée par l'insertion de la mention AUTOMATISÉE,
+  est remise (la relecture sur pièces, encore). VERIFIER-PAQUET.bat, à la
+  racine du paquet, recoupe les 45 pièces de votre extraction AVANT tout
+  geste ; DIAGNOSTIC-MACHINE.bat dit quels kits vivent sur votre machine.
+
+  1. Les pièces du kit : extraire_cibles_v150.py, les cibles/ déjà
+     extraites, dudect_v150.c, ce LISEZMOI.
+  2. Compilez le mesureur :   cl /O2 dudect_v150.c
+     (ou gcc -O2 -o dudect_v150.exe dudect_v150.c -lm)
+  3. (Optionnel, recommandé) re-exécutez l'extraction pour recouper
+     les pièces :  python extraire_cibles_v150.py
+     — attendu : « scellé INTACT 446279f3… », la même image.
+  4. (Optionnel) l'épreuve d'appel :  gcc -O2 -o test_appel
+     test_appel.c && ./test_appel  — attendu : FIPS abc EXACT,
+     mutation K DIVERGE, restauration EXACT.
+  5. LE RUN :  dudect_v150.exe cibles 200
+     — l'affinité est posée sur le cœur 0 par le mesureur ;
+     — le turbo : le mesureur ne peut PAS le commander : notez l'état
+       EFFECTIF (BIOS désactivé ou non) dans le témoin ;
+     — N = 200 par classe par défaut (la commande exige N ≥ 60).
+  6. LES TÉMOINS : journal-dudect-<horodatage>.csv + temoin-dudect.txt
+     (votre notes : modèle CPU, fréquence, turbo effectif, OS, la
+     sortie console du mesureur) — à déposer au coffre /test.
+     Le labo recoupe et consigne : JAMAIS avant le run, jamais sans
+     pièces.
+
+LA LECTURE HONNÊTE : |t| > 5 = une dépendance temporelle AU SEUIL
+consignée telle quelle (dudect est un OUTIL DE DÉTECTION, pas une
+preuve d'exploitabilité — la consigne v0.13.0 s'applique : rapporter
+les résultats tels quels, y compris défavorables) ; |t| ≤ 5 = aucune
+divergence au seuil sur CET échantillon, CET machine, CETTE session —
+jamais « temps constant prouvé » dans l'absolu.

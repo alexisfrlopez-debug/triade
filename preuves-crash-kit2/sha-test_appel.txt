@@ -1,0 +1,3 @@
+Hachage SHA256 de test_appel.exe :
+42903257aa9e3028df44ef77339ffa0f732116bae4806beb51b602c41e9e1e70
+CertUtil: -hashfile La commande s’est terminée correctement.

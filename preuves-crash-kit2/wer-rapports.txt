@@ -1,0 +1,10 @@
+winamp.exe.12436.dmp
+winamp.exe.4344.dmp
+loupe.exe.7456.dmp
+loupe.exe.8500.dmp
+loupe.exe.3340.dmp
+loupe.exe.11064.dmp
+loupe.exe.8268.dmp
+loupe.exe.7768.dmp
+loupe.exe.9284.dmp
+loupe.exe.8356.dmp

@@ -9967,3 +9967,105 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   vivra son édition. Les preuves-constat-arm/ pour clore la chaîne du
   téléphone ; puis les gestes ouverts : le geste B SHA-NI réel, la
   campagne D204, la cérémonie d'ère, le séquestre D183, la réplication.
+
+## Entrée 253 — LES PREUVES DU TERRAIN RENTRÉES ET LE VERDICT RENDU SUR PIÈCES : LE KIT EST SAINT, LE « CRASH » N'EN ÉTAIT PAS UN (l'annonce du développeur du 13/11 : « dossier kit-2 déposé dans /test du drive ») — LISEZMOI-VERDICT.txt (5 054 o, sha256 3f4cdae0…) : l'épreuve vive PASSE code 0, le lanceur n'a JAMAIS démarré, les candidats (A) Mark-of-the-Web et (B) double-clic direct sur l'exe (13/11, la session auxiliaire — consignée par l'infra le 13/11)
+
+- LE GESTE DU TERRAIN A VÉCU : le développeur a suivi le protocole de la
+  Task 159 — RENVOYER-LE-CRASH.bat posé dans pc-windows\kit-2-dudect\ de
+  l'extraction vérifiée (18:24 heure machine), double-cliqué (18:25),
+  preuves-crash-kit2\ renvoyé ENTIER au coffre /test, DANS le dossier
+  kit-2-dudect redéposé (9 pièces + cibles/ 3 pièces + preuves-crash-kit2/
+  8 pièces). Le collecteur A TOURNÉ — le geste d'un double-clic a vécu.
+
+- LE RAPATRIEMENT ET LES RECOUPEMENTS : 8/8 preuves + 7/7 pièces d'état
+  téléchargées par le lien public (scripts/rapatrier_preuves_crash.py
+  consigne le geste). LE COLLECTEUR REDÉPOSÉ == LE COLLECTEUR LIVRÉ octet
+  pour octet (8e9ca884…, aucune retouche du terrain) ; LES SIX PIÈCES DU
+  KIT == LE PAQUET CORRECTIF2 DU LABO octet pour octet (dudect_v150.c/exe,
+  extraire_cibles_v150.py, LANCER-KIT-2-DUDECT.bat, LISEZMOI-dudect.txt,
+  test_appel.c) ; test_appel.exe REFUSÉ PAR DRIVE UNE TROISIÈME FOIS
+  (absent du coffre, PRÉSENT sur la machine : le listing terrain le nomme,
+  247 082 octets, empreinte 42903257aa9e… == LE CORRIGÉ — le 403 « malware
+  or spam » est un fait du COFFRE, pas du terrain).
+
+- LES PREUVES LUES MOT POUR MOT : (a) RAPPORT-CRASH — le dossier du kit
+  EST l'extraction vérifiée ; « AUCUN artefact de run dans ce dossier
+  (sortie-appel.txt absent) : le lanceur n'a JAMAIS atteint l'épreuve
+  d'appel ICI » ; OS Windows 11 Professionel 10.0.26300, i7-8665U,
+  Defender temps réel ACTIF, exclusions illisibles (non-admin) ; (b)
+  sha-test_appel : LE CORRIGÉ ; (c) sha-dudect : le paquet labo
+  (1f1d8c96…) ; (d) SORTIE-APPEL-VIVE — L'ÉPREUVE VIVE PASSE : CODE 0,
+  image cibles/proxy-image.bin 69 632 octets mappée, condensé FIPS « abc »
+  EXACT, mutation K DIVERGE (la table est lue), restauration EXACT — la
+  sortie intégrale attendue, au mot près ; (e) evenements-defender : 25
+  événements 5007 (changements de configuration seuls), AUCUN 1116/1117 ;
+  (f) evenements-application : 30 événements — 16 BlueScreen P1=9F
+  (DRIVER_POWER_STATE_FAILURE, minidumps du 07/08 au 04/09) + 14
+  LiveKernelEvents watchdog (13 × 141 du 06/10 au 03/11, 1 × 1a8 du
+  14/08) — TOUS HISTORIQUES, AUCUN du 12/11, et AUCUN événement 1000 nommant une pièce
+  du kit ; (g) wer-rapports : aucun rapport WER pour test_appel/dudect —
+  seulement 8 dumps loupe.exe + 2 winamp.exe (contextuels, antérieurs).
+
+- LE VERDICT NOMMÉ SUR PIÈCES (D189) : LE KIT EST SAINT SUR CETTE MACHINE
+  (l'épreuve vive le prouve au mot près) ; le « crash encore au
+  lancement » n'a laissé AUCUNE trace dans AUCUN canal (application,
+  noyau, antivirus, WER, dossier) ; le lanceur n'a JAMAIS ATTEINT sa
+  première écriture (sortie-appel.txt, la ligne 142 du lanceur) — or tout
+  chemin d'échec antérieur est soit IMPOSSIBLE (pièces présentes ; lanceur
+  re-vérifié sur les octets redéposés : CRLF 257/257, ASCII pur, BOM
+  absent, étiquettes goto complètes, 5 pauses) soit un REFUS NOMMÉ AVEC
+  PAUSE (visible, non rapporté par le développeur) — CONCLUSION : le
+  lanceur n'a effectivement JAMAIS DÉMARRÉ. LES DEUX CANDIDATS NOMMÉS,
+  tous deux sans trace parce qu'aucun programme n'a planté : (A) LE CADRE
+  DE SÉCURITÉ MARK-OF-THE-WEB AU DOUBLE-CLIC — tout le kit porte la marque
+  (zip téléchargé de Drive, extraction Explorer) : le cadre bleu « Windows
+  a protégé votre PC » refermé ou « Ne pas exécuter » se lit exactement
+  comme « crash au lancement » ; (B) LE DOUBLE-CLIC DIRECT SUR
+  test_appel.exe — l'exe court quatre lignes puis SORT NORMALEMENT en
+  moins d'une seconde (la source le dit : test_appel.c, chemin par
+  défaut) : la fenêtre clignote et se ferme, ce n'est pas un crash, mais
+  ça se lit exactement pareil.
+
+- LES QUATRE HYPOTHÈSES DE L'ENTRÉE 252, TOUTES ARBITRÉES SUR PIÈCES :
+  (1) L'ANTIVIRUS — RÉFUTÉ (aucune détection, l'exe présent et VIVANT : le
+  suspect n° 1 est blanchi) ; (2) LE VIRTUALPROTECT BLOQUÉ (l'écart
+  ligne 334) — RÉFUTÉ POUR LE VÉCU (l'épreuve vive prouve que le
+  VirtualProtect DU TERRAIN fonctionne : le condensé FIPS EXACT exige
+  l'image exécutable ; l'écart 334 demeure un défaut réel, à réparer à la
+  prochaine édition — mais il n'a pas vécu) ; (3) LE MAUVAIS DOSSIER —
+  RÉFUTÉ (l'extraction EST la vérifiée corrigée) ; (4) L'INCONNU —
+  REMPLACÉ par les candidats (A)/(B), nommés ci-dessus.
+
+- LES ÉCARTS NOMMÉS : (a) LA MACHINE EST MALADE AU NIVEAU PILOTE — 16
+  écrans bleus DRIVER_POWER_STATE_FAILURE (07/08–04/09), 14 watchdog
+  noyau (14/08–03/11), 11 arrêts sales : RIEN le 12/11, ce n'est pas la cause du
+  vécu ; mais une mesure de TEMPS sur une machine instable au niveau
+  pilote se consigne au témoin (le labo en tiendra compte en lisant |t|) ;
+  (b) LA RAFALE WER DE 17:49:48 — 30 vieux rapports d'un coup :
+  entretien d'arrière-plan, sans rapport avec le kit ; (c) L'HORLOGE
+  MACHINE lit 12/11 18:25 locale pour le collecteur quand l'annonce vit le
+  13/11 — écart nommé, non arbitrable sur pièces (horloge machine
+  possiblement en retard) ; (d) LE DÉFAUT COSMÉTIQUE « anifeste] »
+  RE-CONFIRMÉ À LA SOURCE (dudect_v150.c ligne 307 — l'écart E249) : à
+  réparer à la prochaine édition AVEC l'écart 334 — JAMAIS de patch
+  binaire : la cause vécue est nommée et elle n'est pas dans le code.
+
+- LA PIÈCE LIVRÉE : LISEZMOI-VERDICT.txt (5 054 octets, UTF-8, sha256
+  3f4cdae0dd438a370419cf21c3adf37243bd5e210d943ecf6deb4850cbcd65ac) — le
+  verdict en mots simples, LE GESTE QUI DÉCIDE (étape 0 : débloquer le zip
+  → ré-extraire au neuf ; étape 1 : double-cliquer LE LANCEUR, pas les
+  exe ; le cadre bleu éventuel EST le crash nommé : « Informations » puis
+  « Exécuter quand même » ; étape 2 : la fenêtre ne peut pas mourir en
+  silence, la mesure prend des minutes ; étape 3 : témoin signé + dossier
+  ENTIER au coffre), et les deux notes honnêtes pour le témoin
+  (l'histoire pilote ; la rafale WER).
+
+- SUITE : au développeur — LE geste du LISEZMOI-VERDICT : LA MESURE JAMAIS
+  ENCORE COURUE (CE-QUI-RESTE-A-FAIRE.txt) vit enfin son run — témoin
+  daté et signé, dossier ENTIER au coffre /test ; puis les
+  preuves-constat-arm/ pour clore la chaîne du téléphone ; puis les gestes
+  ouverts : le geste B SHA-NI réel, la campagne D204, la cérémonie d'ère,
+  le séquestre D183, la réplication. L'édition suivante du laboratoire
+  portera les deux écarts de source (334 : le retour du VirtualProtect
+  vérifié ; 307 : l'étiquette « [manifeste] ») — AUCUN correctif n° 3
+  binaire : la cause vécue est nommée et elle n'est pas dans le code.

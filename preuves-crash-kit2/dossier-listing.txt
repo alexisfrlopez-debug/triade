@@ -1,0 +1,19 @@
+ Le volume dans le lecteur C n'a pas de nom.
+ Le num‚ro de s‚rie du volume est 24F2-43C2
+
+ R‚pertoire de C:\Users\Alek\Downloads\TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect\pc-windows\kit-2-dudect
+
+12/11/2026  18:25    <DIR>          .
+12/11/2026  17:47    <DIR>          ..
+12/11/2026  17:47    <DIR>          cibles
+12/11/2026  17:47            17ÿ777 dudect_v150.c
+12/11/2026  17:47           423ÿ551 dudect_v150.exe
+12/11/2026  17:47             6ÿ155 extraire_cibles_v150.py
+12/11/2026  17:47            13ÿ726 LANCER-KIT-2-DUDECT.bat
+12/11/2026  17:47             8ÿ097 LISEZMOI-dudect.txt
+12/11/2026  18:25    <DIR>          preuves-crash-kit2
+12/11/2026  18:24             8ÿ687 RENVOYER-LE-CRASH.bat
+12/11/2026  17:47             5ÿ322 test_appel.c
+12/11/2026  17:47           247ÿ082 test_appel.exe
+               8 fichier(s)          730ÿ397 octets
+               4 R‚p(s)  90ÿ502ÿ545ÿ408 octets libres

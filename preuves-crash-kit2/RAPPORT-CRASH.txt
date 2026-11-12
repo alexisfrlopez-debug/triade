@@ -1,0 +1,28 @@
+=== LE RAPPORT DU COLLECTEUR DE PREUVES (kit-2) ===
+Le dossier du kit : C:\Users\Alek\Downloads\TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect\pc-windows\kit-2-dudect\
+La date           : 12/11/2026 18:25:18,40 (heure locale)
+
+LA CLE DU sha256 de test_appel.exe :
+  42903257aa9e... = LE CORRIGE correctif n.o 2 (RWX)
+  f8b8e06e...     = LE VIEUX exe du 12/11 (le mauvais dossier a couru)
+  (l'empreinte complete vit dans sha-test_appel.txt)
+
+AUCUN artefact de run dans ce dossier (sortie-appel.txt absent) :
+  le lanceur n'a JAMAIS atteint l'epreuve d'appel ICI - soit le run
+  a vecu dans UN AUTRE dossier, soit la fenetre est morte avant (nomme).
+OS       : Microsoft Windows 11 Professionnel
+Version  : 10.0.26300
+CPU      : Intel(R) Core(TM) i7-8665U CPU @ 1.90GHz
+Defender : protection temps reel = True
+Exclusions Defender (chemins) : N/A: Must be an administrator to view exclusions
+
+LE CODE DE SORTIE DE test_appel.exe (epreuve vive) : 0
+  0            = PAS de crash ici (le crash venait d'un autre etat/dossier)
+  -1073741819  = 0xC0000005 violation d'acces
+  -1073741795  = 0xC000001D instruction illegale
+  -1073741515  = 0xC0000135 DLL introuvable
+  2            = [REFUS] nomme de l'exe (VirtualAlloc/VirtualProtect/fopen)
+(la sortie complete vit dans sortie-appel-VIVE.txt)
+
+=== LA FIN DU RAPPORT - renvoyez le dossier preuves-crash-kit2 ENTIER
+au coffre /test (dossier Drive "Triade" - "test") ===

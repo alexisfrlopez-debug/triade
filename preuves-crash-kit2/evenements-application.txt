@@ -1,0 +1,1025 @@
+
+
+TimeCreated : 12/11/2026 17:49:49
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261103-0301.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-26275984-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.0e5421bc-dd43-43f9-b811-94d6c4c9e991.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_86546eb3-3258-45b0-8496-3d777fd932e0
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 86546eb3-3258-45b0-8496-3d777fd932e0
+              Statut du rapportÿ: 2049
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:49
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261102-1857.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-8124109-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.36b7a1a4-5a9f-4de5-9313-db03f1e3a5fa.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_a18cdd56-e5a3-4d2d-8561-a4676ee4efd8
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: a18cdd56-e5a3-4d2d-8561-a4676ee4efd8
+              Statut du rapportÿ: 2049
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261030-0117.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-16805046-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.670b6bda-80d7-4115-ada7-c73bc261a8d0.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_ba30cd5d-9f44-4f4b-9d4e-90e39fb2fc54
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: ba30cd5d-9f44-4f4b-9d4e-90e39fb2fc54
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261029-0854.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-13185093-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.e55f5948-1c98-49c5-9170-f6da94bc083b.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_060a3a6d-2881-43e7-8bc9-6f8494feaa5f
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 060a3a6d-2881-43e7-8bc9-6f8494feaa5f
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261028-1330.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-24344562-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.3d4faf4c-a2ce-4016-8e50-2d35bd97d23b.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_49d63eb9-70a7-451d-9856-6c053c740641
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 49d63eb9-70a7-451d-9856-6c053c740641
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261026-2139.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-29094187-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.e8b779e0-8677-42b9-9e42-8125689c539d.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_41a65baf-ff4f-4555-8a72-ad3675f8fbbf
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 41a65baf-ff4f-4555-8a72-ad3675f8fbbf
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261026-0243.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-24186015-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.722fdf71-e725-4154-a48a-d10b63a7efed.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_6ff8dec4-e645-4a98-8b00-1021da408e58
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 6ff8dec4-e645-4a98-8b00-1021da408e58
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261024-1150.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-3031828-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.12787eaf-f32a-4336-adeb-12bb4c641433.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_bc9f6a51-0c63-4559-b1b8-7e6718c983a5
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: bc9f6a51-0c63-4559-b1b8-7e6718c983a5
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261023-0326.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-11070859-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.a53f6396-c89c-42be-bf73-b6feb5fbbce6.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_58d31edb-07d4-4b01-b537-885a742fd156
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 58d31edb-07d4-4b01-b537-885a742fd156
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261016-1705.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-1286515-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.0992d53a-79c6-4001-88d6-948d82922c14.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_d4456162-e297-4a0a-951d-0312ca214ebb
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: d4456162-e297-4a0a-951d-0312ca214ebb
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261016-0431.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-4527046-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.c5e746c7-4c0b-4298-84ad-687c46db297f.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_42aa4d74-bda6-4c25-92b3-288436fbcc49
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 42aa4d74-bda6-4c25-92b3-288436fbcc49
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261007-0049.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-142375078-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.c8b29334-7be9-4a46-a98a-abb09d1403bb.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_7b7ebf7a-7219-42b1-9174-5daae4267232
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 7b7ebf7a-7219-42b1-9174-5daae4267232
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 141
+              P2ÿ: aaaaaaaaaaaaaaaa
+              P3ÿ: aaaaaaaaaaaaaaaa
+              P4ÿ: aaaaaaaaaaaaaaaa
+              P5ÿ: aaaaaaaaaaaaaaaa
+              P6ÿ: 10_0_26300
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20261006-1419.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-104629484-0.sysdata.xml
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG-20261006-1419.dmp
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.94d1c274-94dc-486b-967c-66de17c70d42.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_141_d5a5bdff6a6e2cc24dc29aeb44b22d16dc7ab_000
+              00000_746003bb-bbde-4c76-85c9-1f4f10b786ec
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 746003bb-bbde-4c76-85c9-1f4f10b786ec
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffff8f07b05c1c10
+              P4ÿ: fffff8027559d590
+              P5ÿ: ffff8f07c1f68050
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\090426-18234-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-18234-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.daa76e46-bdc7-4cf1-9e9c-a5f314b7902a.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_7edcc28e98f5d5aae65b616fcb9b519989cf130_00
+              000000_b796c375-0a9a-46cb-b18e-20f6f0bb0437
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 428fbb69-7f51-4a8f-99b2-af895d34b05e
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffff908fa48eb4c0
+              P4ÿ: fffff8021fb0d590
+              P5ÿ: ffff908fb6a55de0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\090226-20109-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-20109-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.6de4374d-ce16-4e4f-8d32-607694600b0d.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_546ba0b321fbff9ebdb9654473e7f612507a5dda_0
+              0000000_794bd9fb-181f-4fb2-86fb-73963c247a28
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: cd6457ae-798f-4984-a681-3ceb1bf77d6b
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffb182077d98a0
+              P4ÿ: fffff80134eb5590
+              P5ÿ: ffffb1821590f5c0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\090226-9484-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-9500-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.d2259a32-bcaf-43be-b7af-4d3c1acde8fb.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_ac2e63a720f5bc65c3598624ed715cb39a1df5_000
+              00000_3a9fcb1f-4d71-4e93-9100-cb9ce587a390
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: b4a44c2e-d476-46fc-b662-1d5d4b6f76f6
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffe40c5680c070
+              P4ÿ: fffff8057db69590
+              P5ÿ: ffffe40c67d16010
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\083126-11484-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-11796-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.a5baf32b-a1f2-4c4a-8879-e81faa36b27a.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_236c44e596a34512d13cb2cf7b8296b8e34e4a9_00
+              000000_a51a595b-8f2a-4f35-a326-a6b4b923857e
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 41271583-f863-459b-9b8d-09d82e47d82e
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffca095d859670
+              P4ÿ: fffff80553ed8580
+              P5ÿ: ffffca097a250d00
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082626-16328-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-16453-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.e603469c-3262-40cf-984a-20aee74a8fb1.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_d0e061b161c63a612f40dd4c72ccffcb25a1b8_000
+              00000_a4f18f5d-5866-4952-855d-82dc189fd835
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 6837db4c-aac6-40d8-9dd7-37308a2bf178
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffe08a65b10a00
+              P4ÿ: fffff8070f268580
+              P5ÿ: ffffe08a7984cdc0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082426-18015-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-18375-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.c735a8ac-9b46-4181-af46-42c29d4c57a3.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_74ad9b42664264197163cd20d886bd915f61c287_0
+              0000000_f77a6b51-5ce8-43b1-a8f0-825895bb60a4
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: b9a7ff2d-b292-4d30-b12f-43b755b80198
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffbe8eff92a0a0
+              P4ÿ: fffff801173a8580
+              P5ÿ: ffffbe8f0f9f2de0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082226-12484-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-14343-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.3a3c2d45-f53f-46ca-9ad7-93c83ec90344.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_d77a45f7a15fcb20b485badf9d83b23c414a6280_0
+              0000000_34e78acd-94e7-46bc-b617-dc9b90cc6b10
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 7551090e-478f-44ad-8ab4-b6ca8ded40b9
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffbe05049c7a80
+              P4ÿ: fffff8043be28580
+              P5ÿ: ffffbe0512cc6630
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082126-16218-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-16375-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.549ea2eb-d7e0-4f36-98a1-c599ca611042.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_ee2fbf83324f56d8a547ebcdb764e169f704a58_00
+              000000_6b651018-b534-49e3-8e72-e8c52efb904e
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: d01c9a3a-9e15-4098-ac98-800aaa623801
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffe301269f82a0
+              P4ÿ: fffff80623b58580
+              P5ÿ: ffffe30148fd3de0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082126-14578-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-16437-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.01f57bfb-3238-41a9-954d-d8d5ebb56be2.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_51f95f9f51d82c5397ebda7918daaf79a089b83c_0
+              0000000_edd88207-69e4-47f8-8b6b-4dbc1461b158
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 1dd8f96c-bc03-4a16-9bd8-3bf33757fdd6
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffc10a6179d070
+              P4ÿ: fffff80386ed8580
+              P5ÿ: ffffc10a7b9985a0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\082026-11531-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-11890-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.de08ce5d-5395-478e-9abb-1b9d7afa80ff.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_f5d761783433d57f64703b9d213da7bc19927c49_0
+              0000000_b3f4648a-61d9-4c49-9420-b0d0c9eae09a
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 591ac905-b6b7-4748-87c4-230bf463be8e
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffe20f30adf060
+              P4ÿ: fffff8074c018580
+              P5ÿ: ffffe20f5f6f7010
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\081926-13312-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-13343-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.320b6c4f-b7c3-4e99-b0d8-a1f6428eeda4.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_a72bb0392f381456c8b638b263db7692ed815e9_00
+              000000_b8eec34b-6f51-40c2-b61b-e8bfa706035f
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: d50323cf-e4ff-4208-ac33-2bfc5171fbf6
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffff888b7e8e8060
+              P4ÿ: fffff80341498580
+              P5ÿ: ffff888b8f82a5f0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\081626-11812-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-13968-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.0c93b4bf-6276-45b9-8bf6-3aca15bfaff7.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_c2cbebd5af54e99eef1fb1d93d9ce480b3c66b_000
+              00000_2676f4a5-6a3e-44ba-87b5-7510223bfa51
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 51d3c09a-24bf-40c3-8da1-fd8584c9a32d
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffb388d8b48800
+              P4ÿ: fffff8051dd68580
+              P5ÿ: ffffb388ed236920
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\081426-12687-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-13406-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.38ab418b-ffd1-4ff2-9ac1-fb4f6c7258e7.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_68719c3eccf7bb9fb412ce549661dc1fe5614_0000
+              0000_7ca40502-aeb3-4a50-9f01-a94f97f074fd
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 36f0e2ec-53f3-44b6-9f91-67c07616c3fe
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: LiveKernelEvent
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 1a8
+              P2ÿ: a
+              P3ÿ: 0
+              P4ÿ: 0
+              P5ÿ: 0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\LiveKernelReports\WATCHDOG\WATCHDOG-20260814-1304.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-209015-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.f5c2fb25-bb72-4a18-8c31-7c97e841ad7d.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_1a8_9d28cacebfd2e58c9d4bbe18d96b857e6f8d615_0
+              0000000_a2111f18-34b2-4b3d-92ff-7546b04436a0
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: a2111f18-34b2-4b3d-92ff-7546b04436a0
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffff858342bde2a0
+              P4ÿ: fffff8075a9a8580
+              P5ÿ: ffff85835780dde0
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\081026-8718-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-8734-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.b9fe0d1a-0fae-4714-b899-7b277288b297.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_c38fcdb72584238e7275123da8a0218560e40_0000
+              0000_36365992-cfb4-47d1-95e1-a2d2538b5ed6
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 9c1f7b38-fe1f-46d8-bedb-173e628a8d21
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffff96078f9fc2a0
+              P4ÿ: fffff8065d1a8580
+              P5ÿ: ffff9607a5b2fb70
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\080826-9890-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-9906-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.f13a4813-ed8a-4a23-a786-4bb67ddd5594.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_a3abd0bd7b28fc4becd68ad244b069d5cc6cdf_000
+              00000_c7ad2f1d-9e27-43a0-832c-300adb43c708
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: 2b133e15-1a9d-4a05-ae4b-706bb4cb13e3
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+TimeCreated : 12/11/2026 17:49:48
+Message     : D‚tecteur d'erreurs , type 0
+              Nom d'‚v‚nementÿ: BlueScreen
+              R‚ponseÿ: Non disponible
+              ID de CABÿ: 0
+              
+              Signature du problŠmeÿ: 
+              P1ÿ: 9f
+              P2ÿ: 3
+              P3ÿ: ffffd90704b25bf0
+              P4ÿ: fffff800301e8580
+              P5ÿ: ffffd90718369010
+              P6ÿ: 10_0_26200
+              P7ÿ: 0_0
+              P8ÿ: 256_1
+              P9ÿ: 
+              P10ÿ: 
+              
+              Fichiers jointsÿ:
+              \\?\C:\WINDOWS\Minidump\080726-10125-01.dmp
+              \\?\C:\WINDOWS\SystemTemp\WER-10562-0.sysdata.xml
+              \\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.2fa0d3e2-9a82-4ab7-8a47-0f1556e341d4.tmp.xml
+              
+              Ces fichiers sont peut-ˆtre disponibles iciÿ:
+              \\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\Kernel_9f_22d8b0b12f5c378d7014bde93838bc384cde718a_0
+              0000000_57f16e70-860b-4d70-815a-327dc9d950ed
+              
+              Symbole d'analyseÿ: 
+              Nouvelle recherche de la solutionÿ: 0
+              ID de rapportÿ: cb9258a5-3a75-4464-9855-696da719468e
+              Statut du rapportÿ: 2051
+              R‚cipient avec hachageÿ: 
+              GUID CABÿ:0
+
+
+

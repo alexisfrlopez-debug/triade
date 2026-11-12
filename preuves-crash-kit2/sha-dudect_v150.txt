@@ -1,0 +1,3 @@
+Hachage SHA256 de dudect_v150.exe :
+1f1d8c966478ac41f0e95797ad177285218b3c3d470d23dd4daf5ec5e96223f0
+CertUtil: -hashfile La commande s’est terminée correctement.

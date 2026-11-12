@@ -1,0 +1,86 @@
+LISEZMOI-VERDICT — LE KIT-2 EST SAINT, LE « CRASH » N'EN ÉTAIT PAS UN (13/11/2026)
+==================================================================================
+
+VOS PREUVES SONT RENTRÉES ET ELLES SONT EXCELLENTES NOUVELLES. Le verdict,
+sur pièces (D189 : rien ci-dessous n'est deviné, tout est lu dans vos huit
+fichiers de preuves-crash-kit2) :
+
+  1. VOTRE EXE CORRIGÉ TOURNE SUR VOTRE MACHINE. L'épreuve vive du
+     collecteur a relancé test_appel.exe sous surveillance : CODE 0 —
+     image mappée (69 632 octets), condensé FIPS « abc » EXACT, mutation K
+     DIVERGE (la table est bien lue par la pièce), restauration EXACT.
+     C'est la sortie intégrale attendue, au mot près.
+  2. VOTRE DOSSIER EST LE BON. L'extraction porte le test_appel.exe
+     corrigé (empreinte 42903257aa9e…) et les six autres pièces du paquet
+     recoupées OCTET POUR OCTET contre le laboratoire. Le « mauvais
+     dossier » est réfuté.
+  3. L'ANTIVIRUS EST BLANCHI. Aucune détection, aucune mise en quarantaine
+     (zéro événement Defender 1116/1117), l'exe est présent et il court.
+     Votre Defender temps réel n'a rien touché.
+  4. AUCUN CRASH N'A EU LIEU, D'AUCUNE PIÈCE, D'AUCUNE SORTE. Zéro
+     événement d'erreur d'application, zéro écran bleu neuf (les vôtres
+     datent d'avant novembre), zéro dump de crash du kit, zéro artefact
+     de run dans le dossier. Le « crash encore au lancement » n'a laissé
+     AUCUNE TRACE dans AUCUN canal que Windows possède.
+
+CE QUE C'ÉTAIT DONC (les deux seuls candidats qui survivent aux pièces —
+tous deux laissent exactement « aucune trace », parce qu'aucun programme
+n'a jamais planté) :
+
+  (A) UN CADRE DE SÉCURITÉ AU DOUBLE-CLIC — le plus probable. Chaque
+      fichier du kit porte la « marque du web » (zip téléchargé depuis
+      Drive, extrait avec l'Explorateur : Windows marque tout). Double-
+      cliquer un fichier marqué peut lever le cadre bleu « Windows a
+      protégé votre PC » (ou un avertissement de sécurité). Si on le
+      referme ou qu'on clique « Ne pas exécuter » : RIEN ne se lance,
+      aucune trace nulle part — et ça se lit exactement comme « crash au
+      lancement ».
+  (B) UN DOUBLE-CLIC DIRECT SUR test_appel.exe — double-cliqué depuis
+      l'Explorateur, cet exe fait son travail (quatre lignes) puis se
+      termine NORMALEMENT en moins d'une seconde : la fenêtre noire
+      clignote et se ferme. Ce n'est pas un crash — c'est une sortie
+      normale — mais ça se lit exactement comme « crash au lancement ».
+
+LE GESTE QUI DÉCIDE — ET QUI LANCE LA MESURE (le but du kit, JAMAIS
+encore courue ; elle ne demande aucun Python, aucune commande) :
+
+  Étape 0 (trente secondes, elle neutralise le candidat A) : clic droit
+  sur LE ZIP TRIADE_kits_terrain_v0150_CORRECTIF2-kit-dudect.zip →
+  Propriétés : si une case « Débloquer » apparaît en bas, COCHEZ-LA →
+  OK. Puis ré-extraisez le zip COMPLET dans un dossier NEUF (D99). Si la
+  case n'apparaît pas, il n'y a rien à débloquer : ré-extraisez quand
+  même dans un dossier neuf.
+
+  Étape 1 : dans pc-windows\kit-2-dudect\ du dossier neuf, double-cliquez
+  LANCER-KIT-2-DUDECT.bat — LE FICHIER .BAT, PAS LES EXE. Si le cadre
+  bleu « Windows a protégé votre PC » apparaît : C'EST LUI, votre
+  « crash » — cliquez « Informations » puis « Exécuter quand même ».
+
+  Étape 2 : REGARDEZ LA FENÊTRE. Elle ne peut pas mourir en silence —
+  chaque refus du lanceur s'arrête et attend une touche. Le run normal :
+  vérifications (quelques secondes) → « AUCUN compilateur » (normal chez
+  vous, les exe précompilés courent) → épreuve d'appel (quatre lignes) →
+  LA MESURE (plusieurs minutes : la fenêtre reste ouverte, l'affichage
+  vient à la fin) → témoin-dudect-BROUILLON.txt écrit → pause finale.
+
+  Étape 3 : complétez et signez le témoin (état effectif du turbo, date,
+  signature), et renvoyez le dossier ENTIER (témoin + sortie-run.txt +
+  sortie-appel.txt + journal csv) au coffre /test.
+
+DEUX NOTES HONNÊTES À PORTER AU TÉMOIN (le labo en tiendra compte en
+lisant |t|) :
+
+  - votre machine porte une histoire pilote chronique : 16 écrans bleus
+    DRIVER_POWER_STATE_FAILURE (du 7/08 au 4/09), 14 événements watchdog
+    noyau (du 14/08 au 3/11), 11 arrêts sales. AUCUN n'est du 12/11 : ce n'est
+    pas la cause du vécu. Mais une machine instable au niveau pilote
+    pèse sur une MESURE DE TEMPS — consignez-le d'une ligne dans le
+    témoin.
+  - la rafale de 17:49:48 (30 vieux rapports d'erreurs traités d'un coup)
+    est un entretien d'arrière-plan de Windows, sans rapport avec le kit.
+
+SI MALGRÉ TOUT quelque chose meurt : reposez RENVOYER-LE-CRASH.bat dans
+le dossier du run et double-cliquez-le — mais sur les pièces, RIEN dans
+ce kit ne peut planter sur votre machine. La chaîne attend ensuite vos
+pièces du téléphone (preuves-constat-arm) — le troisième silicium VERT
+est déjà consigné, il ne manque que les pièces formelles.

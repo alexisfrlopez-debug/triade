@@ -9120,3 +9120,61 @@ Work Log:
   édition (l'écart 334 réparé à la source). Les preuves-constat-arm/,
   puis les gestes ouverts (geste B, D204, cérémonie d'ère, séquestre
   D183, réplication).
+
+
+Task ID: 160
+Agent: Z.ai (agent principal, session auxiliaire — restauration par
+bundle, lien public du coffre, aucun jeton)
+Task: LA RÉCEPTION DES PREUVES DU CRASH KIT-2 (l'annonce « dossier kit-2
+déposé dans /test du drive ») — le dépôt rapatrié et recoupé par le lien
+public (8 preuves + 7 pièces d'état + cibles/ ; le collecteur redéposé ==
+le livré ; les six pièces du kit == le paquet CORRECTIF2 du labo octet
+pour octet ; test_appel.exe refusé par Drive une TROISIÈME fois mais
+PRÉSENT et VIVANT sur la machine), les preuves lues mot pour mot (l'épreuve
+vive PASSE : code 0, image mappée, FIPS abc EXACT, mutation DIVERGE,
+restauration EXACT ; aucun artefact de run ; aucun événement 1000/1001
+neuf ; aucune détection Defender ; aucun dump neuf), LE VERDICT NOMMÉ SUR
+PIÈCES : le kit est SAINT, le « crash » n'a laissé aucune trace dans
+aucun canal — le lanceur n'a jamais atteint sa première écriture (ligne
+142) donc n'a jamais démarré ; deux candidats nommés : (A) le cadre de
+sécurité Mark-of-the-Web au double-clic, (B) le double-clic direct sur
+test_appel.exe (sortie normale en < 1 s lue comme crash) ; les quatre
+hypothèses de Task 159 toutes arbitrées (antivirus réfuté, VirtualProtect
+réfuté pour le vécu, mauvais dossier réfuté, l'inconnu remplacé) ;
+LISEZMOI-VERDICT.txt livré (sha256 3f4cdae0…) avec le geste qui décide et
+lance LA MESURE jamais courue.
+
+Work Log:
+- LE RAPATRIEMENT : le dossier kit-2-dudect du coffre /test — 8 preuves de
+  preuves-crash-kit2/ + 7 pièces d'état + cibles/ (3 pièces) — tout par le
+  lien public, aucun jeton (scripts/rapatrier_preuves_crash.py).
+- LES RECOUPEMENTS : six pièces == paquet labo ; le collecteur == le
+  livré (8e9ca884…) ; test_appel.exe de la machine == LE CORRIGÉ
+  (42903257aa9e…) ; le lanceur re-vérifié sur les octets redéposés (CRLF
+  257/257, zéro LF nu, ASCII pur, zéro BOM, étiquettes goto complètes,
+  5 pauses, tout refus terminal attend une touche).
+- LA LECTURE : les huit preuves mot pour mot — l'épreuve vive VERTE (code
+  0 + la sortie intégrale attendue), les zéros (artefacts, événements
+  applicatifs, détections, dumps), l'histoire pilote chronique de la
+  machine (16 × 0x9F, 14 watchdog, 11 arrêts sales) nommée sans être
+  sur-lue (rien le 12/11).
+- LA CARTE D'INFÉRENCE : sortie-appel.txt (ligne 142) est le PREMIER
+  fichier que le lanceur écrit — son absence, PLUS l'impossibilité de tout
+  échec pré-142 (pièces présentes ; refus tous nommés et visibles),
+  ÉGAL le lanceur n'a jamais démarré. Les candidats (A) Mark-of-the-Web et
+  (B) double-clic direct sur l'exe sont les seuls qui produisent
+  exactement les traces collectées : AUCUNE.
+- LA PIÈCE : LISEZMOI-VERDICT.txt — le verdict, les étapes 0-3 (débloquer
+  → dossier neuf → LE LANCEUR → témoin signé), le cadre bleu nommé comme
+  ÉTANT le « crash », les notes honnêtes (machine instable au niveau
+  pilote — une ligne au témoin ; rafale WER sans rapport).
+- LA CONSIGNATION : la présente Entrée 253 + Task 160 — le commit/push/
+  miroir/dépôt au coffre RESTENT À L'INFRA (aucun jeton dans cette
+  session).
+- SUITE : LE geste du développeur (la mesure vit son run — le témoin
+  signé et le dossier ENTIER au coffre /test) ; les preuves-constat-arm/
+  pour clore le téléphone ; les gestes ouverts (le geste B, D204, la
+  cérémonie d'ère, le séquestre D183, la réplication) ; l'édition
+  suivante porte les écarts de source 334 + 307 (le retour du
+  VirtualProtect vérifié ; l'étiquette tronquée), recompilés au labo
+  principal — jamais de patch binaire.

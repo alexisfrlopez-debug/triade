@@ -1,0 +1,174 @@
+
+
+TimeCreated : 12/11/2026 17:02:38
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+
+TimeCreated : 12/11/2026 15:41:54
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+
+TimeCreated : 12/11/2026 14:51:21
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+
+TimeCreated : 12/11/2026 11:51:32
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+
+TimeCreated : 12/11/2026 10:52:37
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+
+TimeCreated : 12/11/2026 10:18:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\CoreService\WdConfigHash = 0xB3EA1687
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\CoreService\WdConfigHash = 0xF7CA9BC9
+
+TimeCreated : 12/11/2026 09:59:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+
+TimeCreated : 12/11/2026 06:05:17
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\Diagnostics\RolledbackPlatformHealthData = 0
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\RolledbackPlatformHealthData = 
+              <OVERALL>:<BAD>,<AGE>:<14>,<DIRTY_SHUTDOWNS>:<11><DEADLOCKS_DETECTED>:<0>
+
+TimeCreated : 12/11/2026 06:05:17
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\Diagnostics\PlatformRollbackMethod = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\PlatformRollbackMethod = 0x3
+
+TimeCreated : 12/11/2026 05:47:31
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\ServiceStartStates = 0x1
+               	Nouvelle valeurÿ: Default\ServiceStartStates = 0x0
+
+TimeCreated : 12/11/2026 05:29:33
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x1
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\UX Configuration\ToastOrSsoTrigger = 0x0
+
+TimeCreated : 12/11/2026 05:15:33
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\CoreService\WdConfigHash = 0xF5CE2E5D
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\CoreService\WdConfigHash = 0xB3EA1687
+
+TimeCreated : 12/11/2026 05:05:17
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              LoadingEngine
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              ServiceStartedSuccessfully
+
+TimeCreated : 12/11/2026 05:05:17
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\ProductAppDataPath = C:\ProgramData\Microsoft\Windows Defender
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\ProductAppDataPath = 
+              C:\ProgramData\Microsoft\Windows Defender
+
+TimeCreated : 12/11/2026 05:05:08
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              RegistringUxToastLibrary
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              LoadingEngine
+
+TimeCreated : 12/11/2026 05:05:06
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitWcsLibrary
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              RegistringUxToastLibrary
+
+TimeCreated : 12/11/2026 05:04:59
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitializeMiscConfigLibrary
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitWcsLibrary
+
+TimeCreated : 12/11/2026 05:04:59
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\IsServiceRunning = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\IsServiceRunning = 0x1
+
+TimeCreated : 11/11/2026 23:59:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              LoadingEngine
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              ServiceStartedSuccessfully
+
+TimeCreated : 11/11/2026 23:59:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\ProductAppDataPath = C:\ProgramData\Microsoft\Windows Defender
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\ProductAppDataPath = 
+              C:\ProgramData\Microsoft\Windows Defender
+
+TimeCreated : 11/11/2026 23:58:58
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitWcsLibrary
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              LoadingEngine
+
+TimeCreated : 11/11/2026 23:58:54
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitializeMiscConfigLibrary
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              InitWcsLibrary
+
+TimeCreated : 11/11/2026 23:58:54
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\IsServiceRunning = 0x0
+               	Nouvelle valeurÿ: HKLM\SOFTWARE\Microsoft\Windows Defender\IsServiceRunning = 0x1
+
+TimeCreated : 11/11/2026 23:52:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              LoadingEngine
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\Diagnostics\InitializingComponentProgress = 
+              ServiceStartedSuccessfully
+
+TimeCreated : 11/11/2026 23:52:05
+Message     : La configuration Antivirus Microsoft Defender a chang‚. S'il s'agit d'un ‚v‚nement inattendu, vous devez 
+              revoir les paramŠtres car cela peut ˆtre le r‚sultat d'un programme malveillant.
+               	Ancienne valeurÿ: Default\ProductAppDataPath = C:\ProgramData\Microsoft\Windows Defender
+               	Nouvelle valeur: HKLM\SOFTWARE\Microsoft\Windows Defender\ProductAppDataPath = 
+              C:\ProgramData\Microsoft\Windows Defender
+
+
+
