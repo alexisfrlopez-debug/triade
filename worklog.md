@@ -8598,3 +8598,40 @@ Work Log:
   développeur : le témoin du kit SHA-NI, la cérémonie d'ère si la variante
   s'embarque, et la campagne de comparaison des workflows (le paquet 5,
   les bras T/C, le plan verrouillé D204).
+
+
+Task ID: 148
+Agent: Z.ai (agent principal)
+Task: LE POINT DE REPRISE APRÈS LA VAGUE 3 — le rapatriement du bac à
+sable local depuis le dépôt (source de vérité), les trois miroirs
+recoupés, la re-exécution du vérificateur TLA+ clone-frais 13/13 VERT,
+l'archivage des six instructions de la vague, la main rendue au
+développeur.
+
+Work Log:
+- LE CONSTAT : le bac à sable local était resté à 24a04d6 (Entrée 233) —
+  les six paquets de la vague 3 (Entrées 234-240, D200-D205) vécurent
+  dans d'autres instances ; le dépôt git fit foi (origin/main ac42880).
+- LE RAPATRIEMENT : fast-forward pulled, l'arbre PROPRE, le journal
+  local porte les 200 entrées ; core.fileMode=false (les changements de
+  mode étaient des artefacts du montage, zéro octet de contenu).
+- LES TROIS MIROIRS : HEAD == origin/main == ac42880 ; le bundle Drive
+  verify VALIDE, refs/heads/main == ac42880 (l'instrument D199 VERT) ;
+  le garde sceau-I 14/14 VERT (clé reelle).
+- LA RE-EXÉCUTION : verifier_clone_frais.py 13/13 VERT — les outils
+  reprovisionnés aux empreintes consignées (tla2tools e1f11b75…,
+  apalache.tgz a756e96a… EXACTS), la fidélité D187 154/1 152 REPRODUITE,
+  le déchargement Apalache + les contrôles négatifs, la PBT 200/200
+  IDENTIQUE ; la pièce consignée RESTAURÉE intacte (7bab89e4…) après le
+  geste (modèle D192) ; les QUATRE scellés recoupés INTACTS
+  (loupe.exe c1115105…, proxy.exe 446279f3…, demo.exe df8f2e50…,
+  selftest.exe 8038585b…).
+- L'ARCHIVAGE : les SIX instructions de la vague 3 déplacées
+  /instructions → /ARCHIVE, md5 recoupés avant/après, 6/6 OK —
+  /instructions VIDE (le geste manquant de la clôture, soldé).
+- L'ÉTAT : la vague 3 exécutée en ses six paquets ; au développeur —
+  le témoin du kit SHA-NI, la cérémonie d'ère si embarquement, la
+  campagne de comparaison (plan D204), et les suites nommées (séquestre
+  D183, réplication).
+- Frontières : aucun scellé touché, aucune pièce consignée modifiée,
+  append-only, aucun chiffre fabriqué.
