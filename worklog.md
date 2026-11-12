@@ -9245,3 +9245,31 @@ Work Log:
   aucune suppression Drive, aucun scellé touché ; le refresh_token OAuth
   mort nommé — ré-autorisation interactive à prévoir le jour où le compte
   de service devra être retiré.
+
+
+Task ID: 163
+Agent: Z.ai (agent principal — la session du kit android)
+Task: LE KIT ANDROID EN APK — LE TEST EN 1 CLIC (la commande du développeur
+du 13/11 : « pour le kit android, fais un apk autonome que je puisse faire
+le test en 1 clic ») — TRIADE-kit-android-v1.apk (15 035 830 o, sha256
+313b60aa…) : arm64-v8a, minSdk 24, INTERNET seule, signé ; CPython 3.8.18
+embarqué (Chaquopy 15.0.1), le kit scellé embarqué octet pour octet
+(empreintes du coffre, re-vérifiées au démarrage, fail-closed), le VRAI
+constat-arm.py exécuté en processus, preuves à preuves-constat-arm/, D99,
+la page lance le test à l'ouverture, ENVOYER LE ZIP → partage Android →
+Drive (aucun jeton).
+
+Work Log:
+- LA MÉCANIQUE : relais Python local 127.0.0.1:8420 (stdlib pure, la même
+  famille que le GUI v1), WebView verrouillée sur la boucle locale,
+  FileProvider pour le partage des preuves.
+- L'ÉPREUVE : headless TOUT VERT sur x86-64 (flux complet, honnêteté
+  « ceci n'est pas un téléphone ARM » vécue) ; apksigner + badging +
+  natives arm64 vérifiés ; deadlock Lock non réentrant nommé et corrigé.
+- LA CHAÎNE : Gradle 8.7 + AGP 8.5.2 + Chaquopy 15.0.1 (DSL « chaquopy {} »
+  réfuté-nommé par le schéma), Temurin 17 (jlink), miroir aliyun (Central
+  429), keystore au labo jamais livré.
+- LA FRONTIÈRE : le kit constate, ne mesure rien ; aucune pièce x86
+  embarquée ; aucun jeton ; le geste réel (le tap) reste au développeur.
+- SUITE : le développeur ouvre l'APK, le test part seul, ENVOYER LE ZIP →
+  Drive /test ; le labo relèvera et recoupera (Entrée 256).

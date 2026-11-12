@@ -1,0 +1,66 @@
+TRIADE KIT ANDROID v1 — LISEZ-MOI
+=====================================
+
+LA COMMANDE (le développeur, 13/11/2026) : « pour le kit android, fais un apk
+autonome que je puisse faire le test en 1 clic ».
+
+L'APK : TRIADE-kit-android-v1.apk — 15 035 830 octets,
+sha256 313b60aa53c814307d6f95c83cffcde05f7445933a469e7e201304dccd64e5db.
+arm64-v8a seul (le téléphone du développeur est aarch64), minSdk 24
+(Android 7.0+), targetSdk 34, permission INTERNET seule (le relais local
+127.0.0.1:8420), signé (CN=TRIADE Kit Android, OU=Laboratoire, O=TRIADE,
+C=FR — keystore au labo, jamais livré).
+
+CE QU'IL FAIT (le geste en 1 clic) :
+  1. INSTALLEZ-LE (Paramètres → autoriser « installer des apps inconnues »
+     pour votre navigateur ou votre explorateur de fichiers, puis ouvrez
+     l'APK). Aucun autre droit, aucun réseau sortant, aucun jeton.
+  2. OUVREZ-LE : l'application démarre le relais Python (CPython 3.8.18
+     embarqué, Chaquopy), revérifie les empreintes du kit scellé (fail-closed :
+     REFUS nommé si un seul octet diverge), puis LA PAGE LANCE LE TEST TOUTE
+     SEULE. Le kit embarqué est kit-constat-arm/, octet pour octet le paquet
+     CORRECTIF2 du coffre (constat-arm.py cfaf4473…, le lanceur 830793…,
+     le LISEZMOI 7509e5…) — JAMAIS modifié, exécuté EN PROCESSUS.
+  3. LES PREUVES naissent dans l'application (preuves-constat-arm/ :
+     journal + verdict auto-portant) comme au Termux ; le verdict s'affiche
+     dans la page (VERT = le constat complet vécu).
+  4. ENVOYER LE ZIP AU DRIVE : le bouton construit le zip des preuves
+     (journal + verdict + log du relais + DEPOT.txt) et ouvre le partage
+     Android — choisissez Drive, dossier « Triade » → « test », enregistrez.
+     Le labo relèvera les preuves au coffre et recoupera.
+  5. Datez et signez le verdict de votre main (le LISEZMOI du kit) — puis
+     REFAIRE LE TEST relance un run propre : l'ancien part aux archives
+     horodatées (D99 : jamais de mélange de runs).
+
+L'HONNÊTETÉ (les mêmes frontières que le GUI v1 et le kit) :
+  — le kit CONSTATE, il ne mesure rien : aucun protocole pré-enregistré
+    n'existe pour ce silicium, aucun chiffre n'est fabriqué (D206) ;
+  — AUCUNE pièce x86-64 n'est embarquée : le kit cite leurs empreintes,
+    exactement comme au Termux ;
+  — AUCUN jeton n'est embarqué : l'envoi au coffre passe par le partage
+    Android (votre geste Drive), jamais par un secret dans l'APK ;
+  — le test est le VRAI constat-arm.py, pas un portage : ses sorties et son
+    code de sortie (0 VERT / 3 ÉCHEC NOMMÉ) sont les siens.
+
+L'ÉPREUVE AU LABO (13/11/2026) : le flux complet vécu headless sur x86-64
+(démarrage, vérification d'empreintes, page, run en processus, verdict VERT,
+honnêteté « ceci n'est pas un téléphone ARM » constatée, D99, zip) ; le build
+vérifié par apksigner (certificat ci-dessus) et badging (label, permissions,
+natives arm64-v8a) ; les empreintes du kit embarqué recoupées octet pour
+octet contre le coffre. Le labo n'a NI Android NI émulateur (pas de KVM) :
+le geste réel sur le téléphone reste au développeur — nommé, jamais maquillé.
+
+LA CHAÎNE DE BUILD (le labo, pour rejouer) : Gradle 8.7 + AGP 8.5.2 +
+Chaquopy 15.0.1 (CPython 3.8.18), Temurin 17 (jlink/javac — le sandbox n'a
+qu'un JRE), build-tools 34 + platform-34, miroir aliyun en tête des dépôts
+(Central 429 vécu le 13/11), keystore RSA 2048 validité 10 000 jours.
+Le DSL 15.x : l'extension s'appelle « chaquopy { version = "3.8" } » — le
+« python {} » des vieux réflexes n'existe pas (réfuté par le schéma
+d'extensions). Sources complètes : TRIADE_kit_android_v1_sources.zip
+(keystore exclu).
+
+OÙ TROUVER LES PIÈCES : le bac de la session (download/TRIADE_kit_android_v1/),
+le coffre Drive « Triade » → « test », et le miroir git
+(TRIADE-sauvegarde-git/download/TRIADE_kit_android_v1/) — avec le paquet
+TRIADE_kit_android_v1.zip (APK + ce LISEZMOI) si votre navigateur de
+téléphone préfère un zip.

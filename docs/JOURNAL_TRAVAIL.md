@@ -10187,3 +10187,54 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   au coffre) ; les preuves-constat-arm/ formelles ; puis les gestes ouverts
   (le geste B SHA-NI réel, D204, la cérémonie d'ère, le séquestre D183, la
   réplication).
+
+## Entrée 256 — LE KIT ANDROID EN APK — LE TEST EN 1 CLIC (la commande du développeur du 13/11 : « pour le kit android, fais un apk autonome que je puisse faire le test en 1 clic ») — TRIADE-kit-android-v1.apk (15 035 830 o, sha256 313b60aa…) : CPython 3.8.18 embarqué (Chaquopy 15.0.1), le kit scellé embarqué octet pour octet (empreintes re-vérifiées au démarrage, fail-closed), le VRAI constat-arm.py en processus, la page lance le test à l'ouverture, ENVOYER LE ZIP → partage Android (aucun jeton) (13/11, la session du kit android)
+
+- LA COMMANDE : « pour le kit android, fais un apk autonome que je puisse
+  faire le test en 1 clic » — le kit android est la partie telephone-arm du
+  paquet CORRECTIF2 (kit-constat-arm) ; l'APK en fait le geste le plus court
+  de la campagne : pas de Termux, pas de pkg, pas de copie de fichiers.
+
+- LE LIVRABLE : TRIADE-kit-android-v1.apk (15 035 830 octets, sha256
+  313b60aa…) — arm64-v8a seul, minSdk 24 / targetSdk 34, permission INTERNET
+  seule (le relais local 127.0.0.1:8420), signé (CN=TRIADE Kit Android —
+  keystore au labo, JAMAIS livré) ; avec le paquet TRIADE_kit_android_v1.zip
+  (b45999a0…, APK + LISEZMOI — le porteur si Drive refuse l'APK nu) et les
+  sources (keystore exclu) — au bac, au coffre /test et au miroir.
+
+- LA MÉCANIQUE : CPython 3.8.18 EMBARQUÉ (Chaquopy 15.0.1) ; LE KIT SCELLÉ
+  EMBARQUÉ octet pour octet — les 3 fichiers du paquet CORRECTIF2 du coffre,
+  empreintes re-vérifiées à CHAQUE démarrage (fail-closed : REFUS nommé si un
+  octet diverge, jamais de run sur un kit divergent) et recoupées EXACTES 3/3
+  dans l'APK livré ; LE VRAI constat-arm.py EXÉCUTÉ EN PROCESSUS, jamais
+  modifié — ses preuves naissent dans preuves-constat-arm/ comme au Termux ;
+  D99 TENUE (un run achevé part aux archives horodatées avant le suivant) ;
+  la page lance le test À L'OUVERTURE (le 1 clic) ; ENVOYER LE ZIP ouvre le
+  partage Android vers l'app Drive (AUCUN jeton embarqué — la frontière du
+  GUI v1).
+
+- LA CHAÎNE DE BUILD (le labo, rejouable) : Gradle 8.7 + AGP 8.5.2 +
+  Chaquopy 15.0.1, Temurin 17 (le sandbox n'a qu'un JRE : jlink/javac
+  manquaient), build-tools 34 + platform-34, miroir aliyun en tête des dépôts
+  (Central 429 vécu le 13/11) ; le DSL 15.x est « chaquopy { version = "3.8" } »
+  — l'extension s'appelle chaquopy, le « python {} » des vieux réflexes fut
+  réfuté PAR LE SCHÉMA d'extensions (le piège nommé) ; un deadlock Lock non
+  réentrant dans le relais fut vécu, nommé et corrigé au headless.
+
+- L'ÉPREUVE AU LABO : headless TOUT VERT sur x86-64 (démarrage, empreintes,
+  page, run en processus, verdict VERT rc 0, l'honnêteté « CECI N'EST PAS UN
+  TÉLÉPHONE ARM » vécue, D99, zip des preuves) ; apksigner verify + badging
+  (label, permissions, natives arm64-v8a) + les 3 empreintes du kit embarqué
+  recoupées EXACTES ; le labo n'a NI Android NI émulateur (pas de KVM) — le
+  geste réel sur le téléphone reste au développeur, nommé, jamais maquillé.
+
+- LA FRONTIÈRE : le kit CONSTATE, il ne mesure rien (D206) ; AUCUNE pièce
+  x86-64 embarquée (les empreintes CITÉES, comme au kit) ; aucun jeton ;
+  aucune donnée ne quitte le téléphone sinon par le geste de partage du
+  développeur.
+
+- SUITE : au développeur — installer l'APK (sources inconnues), L'OUVRIR :
+  le test part tout seul ; ENVOYER LE ZIP → Drive (Triade → test) ; dater et
+  signer le verdict de sa main ; le labo relèvera les preuves au coffre et
+  recoupera. Puis les gestes ouverts (le geste B, D204, la cérémonie d'ère,
+  le séquestre D183, la réplication).
