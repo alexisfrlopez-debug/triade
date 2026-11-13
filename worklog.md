@@ -10008,3 +10008,15 @@ Work Log:
   ENTIER au coffre /test) ; puis la campagne D204 aux deux bras (le GUI
   v1.0.1), le geste B sur un silicium à SHA-NI, la cérémonie hors-ligne
   du séquestre, le κ aux deux jeux d'annotations.
+
+- L'ADDENDA (les miroirs vécus) : LE PUSH GITHUB REFUSÉ ENCORE (« Invalid
+  username or token » au ls-remote — le jeton fourni demeure expiré ou
+  révoqué : écart nommé, non bloquant, le rafraîchissement appartient au
+  développeur) ; LE MIROIR DRIVE SYNCHRONISÉ À 276 ET VÉRIFIÉ : le bac
+  download/temoin-shani-signe/ porté (11 pièces, chaque md5 recoupé à la
+  lecture — la pièce reçue 030fe204…, le LISEZMOI-ECART c8b237e2…, les
+  DEUX AUTO en regard, le témoin m7d, l'INDEX du /test), les TROIS
+  fichiers édités (la carte, le worklog, le journal) MATCH octet pour
+  octet, le courant triade-history.bundle rafraîchi (md5 3787782a…,
+  distinct de l'archive 275-3b75692 versionnée) — le miroir Drive
+  demeure LA sauvegarde de référence.
