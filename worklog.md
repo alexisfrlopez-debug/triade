@@ -9421,3 +9421,61 @@ Work Log:
   recoups md5).
 - SUITE : LE RUN du développeur — la mesure enfin courue, le témoin
   signé, les preuves au coffre.
+
+
+Task ID: 168
+Agent: Z.ai (agent principal — la session de la réception du run kit-2)
+Task: LA RÉCEPTION DU RUN KIT-2 v2 — LA MESURE A VÉCU (l'annonce du
+développeur du 13/11 : « les preuves du kit2 sont déposées dans /test du
+drive ») : preuves-kit2-dudect-20261113T081451Z.zip (69 956 o, md5
+3111842a10… déposé 13/11 08:15:42Z, cinquante et une secondes après la fin
+du run) rapatrié par le relais SA et recoupé de bout en bout — les DIX
+pièces embarquées == le paquet CORRECTIF3 du labo 10/10, le binaire exécuté
+== le recompilé (98d96136…, PREMIER TÉMOIN TERRAIN du mesureur du labo),
+les statistiques rapportées == le journal brut recalculé (4/4 t de Welch :
+12.39 / 5.19 / 0.94 / 3.11 ; 8/8 moyennes ; 8/8 médianes — la médiane du
+kit = les 64 premières itérations, x[32], la définition du code vérifiée),
+l'épreuve d'appel EXACTE (FIPS abc, mutation K, restauration, code 0) —
+LA MESURE « JAMAIS ENCORE COURUE » DEPUIS v0.15.0 EST COURUE : tls13-02
+|t|=12.39 > 5 et tls13-13 |t|=5.19 > 5 (dépendances AU SEUIL consignées
+telles quelles), tls13-16 |t|=0.94 et tls13-17 |t|=3.11 <= 5 (aucune
+divergence au seuil) ; le témoin BROUILLON reçu, la signature à la main
+DEMEURE.
+
+Work Log:
+- LE RATTRAPAGE : le dépôt local arrêté à l'Entrée 255 — les cinq commits
+  256-260 (les sessions recyclées : l'APK, le relevé Android, l'exe 1-clic
+  v1, le run v1/ligne 55, le CORRECTIF3 + v2) recouverts par le bundle du
+  MIROIR Drive (list-heads 78a67a5, fast-forward vérifié ancêtre par
+  ancêtre, core.filemode false pour le bruit de permissions du bac).
+- LE RELEVÉ : la pièce nouvelle unique au /test (le zip du run v2), le run
+  v1 intact, les sources v2 et le LISEZMOI-KIT2-EXE déjà connus ; les
+  horodatages Drive nommés (dépôt 08:15:42Z, zip né 08:14:51Z).
+- LE RECOUPEMENT : DEPOT.txt v2 (10 sha256 cités) == paquet CORRECTIF3 du
+  dépôt == LISEZMOI (c18b11c6…) ; le témoin cite le binaire couru
+  (CertUtil) == le recompilé du labo ; le journal csv (1 600 lignes)
+  recalculé par Python (moyennes, variances, t de Welch, médianes aux
+  deux définitions — l'écart initial des médianes AVEC la définition
+  statistique classique mena à la lecture du code : med(64 premiers,
+  x[32]) et l'EXACTITUDE 8/8) ; l'épreuve d'appel relue.
+- LA LECTURE : deux dépendances au seuil (SHA-256 fixe plus lent que
+  aléatoire ; X25519 de justesse à 5.19), deux non-divergences (AES-128,
+  GHASH à 3.11 non nul) — N=200, un seul run, cœur 0, machine à histoire
+  pilote chronique (rien le jour du run), turbo NON consigné (le
+  brouillon ne peut pas le lire) : les notes honnêtes portées au témoin.
+- L'ÉCART DE LA CARTE NOMMÉ : l'OU-TROUVER de l'Entrée 260 annonçait
+  CORRECTIF3 + exe v2 « déposés au /test » — ils n'y vivent PAS (seuls
+  les zips de sources y passèrent, refus « malware » vraisemblable) : la
+  carte corrigée, l'histoire jamais réécrite.
+- LA PIÈCE : LISEZMOI-MESURE-VECUE.txt (racine du dépôt, déposé au coffre
+  /test pour le terrain) — les recoupements en mots simples, la mesure
+  consignée telle quelle, les notes honnêtes, LE GESTE QUI RESTE (le
+  témoin signé : turbo, observations, date, signature).
+- LA CHAÎNE : preuves au bac du dépôt (download/preuves-run-kit2-dudect-v2/,
+  zip + cinq pièces), Entrée 261 + la présente, commit, push GitHub main,
+  miroir Drive (D141 : le courant 260-78a67a5 archivé versionné), bundle
+  à la pointe.
+- SUITE : le TÉMOIN SIGNÉ du développeur ferme la chaîne du kit-2 ; un
+  second run à N plus grand (optionnel) consoliderait tls13-13/tls13-17 ;
+  puis preuves-constat-arm, le geste B SHA-NI réel, la campagne D204, la
+  cérémonie d'ère, le séquestre D183, la réplication.

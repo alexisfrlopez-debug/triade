@@ -1,0 +1,22 @@
+=== dudect_v150 - le mesureur temps reel (kit 1, v0.15.0) ===
+[config] OS=Windows (le run terrain)  N=200/classe  seuil |t|>5
+[affinite] coeur 0 : posee
+[manifeste] image 69632 octets, 4 cible(s)
+[image] sha256 recoupe - la piece scellee
+[tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+  fixe      : moy 1288.2 cyc, med 1244
+  aleatoire : moy 904.1 cyc, med 840
+  t de Welch = 12.39 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+  fixe      : moy 385567.0 cyc, med 388538
+  aleatoire : moy 378046.3 cyc, med 375884
+  t de Welch = 5.19 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+  fixe      : moy 26.0 cyc, med 26
+  aleatoire : moy 25.5 cyc, med 26
+  t de Welch = 0.94 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+  fixe      : moy 579.0 cyc, med 580
+  aleatoire : moy 574.5 cyc, med 576
+  t de Welch = 3.11 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-1794557691.csv - joignez-le a temoin-dudect.txt avec la config CPU, l'etat EFFECTIF du turbo et l'OS

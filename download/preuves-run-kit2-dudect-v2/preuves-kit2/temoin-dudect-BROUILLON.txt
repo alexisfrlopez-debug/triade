@@ -1,0 +1,29 @@
+LE TEMOIN DUDECT - BROUILLON AUTO (edition MISE A JOUR du 12/11)
+============================================================
+Le run        : 13/11/2026  9:14:57,25 (heure locale de la machine)
+L'OS           :
+Le CPU         : Intel(R) Core(TM) i7-8665U CPU @ 1.90GHz
+Les coeurs     : 4    Frequence annoncee : 2112 MHz
+
+Microsoft Windows [version 10.0.26300.9974]
+Le binaire     : dudect_v150.exe
+L'origine      : PRECOMPILE LIVRE (gcc 14-win32 mingw-w64, cross-compile au labo)
+Le sha256 du binaire execute :
+Hachage SHA256 de dudect_v150.exe :
+98d9613600193d988fbba3109db4fb3e43a051972293160941df46d0a3371673
+CertUtil: -hashfile La commande s’est terminée correctement.
+Le protocole   : dudect_v150 cibles 200 (affinite coeur 0 par le mesureur)
+Code du run    : 0
+Code de l'epreuve d'appel : 0 (sortie-appel.txt)
+Le journal csv : journal-dudect-1794557691.csv
+La sortie console complete : sortie-run.txt (jointe a ce dossier)
+
+A COMPLETER DE VOTRE MAIN (le mesureur ne peut pas le lire a votre place) :
+  - l'etat EFFECTIF du turbo (BIOS desactive ou non) ;
+  - la frequence reelle pendant le run, si vous la connaissez ;
+  - vos observations, memes defavorables (D189 : rapporter tel quel).
+
+PUIS : datez et signez de votre main sous ces lignes, et renvoyez le
+dossier ENTIER (journal csv + sortie-run.txt + ce temoin) au coffre
+/test (dossier Drive 'Triade' - 'test'). Le labo recoupe sur pieces :
+jamais avant le run, jamais sans pieces.

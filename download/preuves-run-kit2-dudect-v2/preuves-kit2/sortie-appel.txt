@@ -1,0 +1,4 @@
+[image] cibles/proxy-image.bin : 69632 octets mappes a 000001e371820000
+[FIPS abc] ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad -> EXACT (la piece scellee est bien l'image executee)
+[mutation K] condense DIVERGE — la table est BIEN lue par la piece
+[restauration] EXACT

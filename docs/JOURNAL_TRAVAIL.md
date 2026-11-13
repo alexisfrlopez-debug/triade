@@ -10556,3 +10556,90 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   puis les gestes ouverts (les preuves-constat-arm, le geste B SHA-NI
   réel, la campagne D204, la cérémonie d'ère, le séquestre D183, la
   réplication).
+
+## Entrée 261 — LA RÉCEPTION DU RUN KIT-2 v2 : LA MESURE A VÉCU (l'annonce du développeur du 13/11 : « les preuves du kit2 sont déposées dans /test du drive ») — preuves-kit2-dudect-20261113T081451Z.zip (69 956 o, md5 3111842a10…) rapatrié et recoupé : les DIX pièces embarquées == le paquet CORRECTIF3 du labo octet pour octet, le binaire exécuté == le recompilé du labo (98d96136…, son premier témoin terrain), les statistiques == le journal brut recalculé (4/4 t de Welch, 8/8 moyennes, 8/8 médianes), l'épreuve d'appel EXACTE, code 0 — LA MESURE « JAMAIS ENCORE COURUE » DEPUIS v0.15.0 EST COURUE : tls13-02 |t|=12.39 > 5 et tls13-13 |t|=5.19 > 5 (dépendances au seuil consignées telles quelles), tls13-16 |t|=0.94 et tls13-17 |t|=3.11 <= 5 (aucune divergence au seuil) — le témoin BROUILLON reçu, la signature à la main DEMEURE (13/11, la session de la réception du run)
+
+- LA COMMANDE : « les preuves du kit2 sont déposées dans /test du drive » —
+  la suite promise à l'Entrée 260 (« LE RUN du développeur ; puis le témoin
+  signé ») : le développeur double-cliqua l'exe 1-clic v2, la mesure vécut,
+  le zip des preuves naquit sur le Bureau et fut déposé au coffre /test.
+
+- LE RELEVÉ : la pièce NOUVELLE unique au /test :
+  preuves-kit2-dudect-20261113T081451Z.zip (69 956 octets, md5 3111842a10…
+  recoupé EXACT au téléchargement), DÉPOSÉ le 13/11 à 08:15:42Z — cinquante
+  et une secondes après la fin du run (l'horodatage du zip : 08:14:51Z).
+  Le run v1 (20261112T221502Z, l'Entrée 259) demeure au coffre INTACT —
+  l'histoire jamais réécrite. Six pièces dans le zip : la console ENTIÈRE
+  du lanceur (3 746 o), le journal csv de 1 600 mesures (60 156 o),
+  sortie-run.txt, sortie-appel.txt, le témoin BROUILLON auto, le DEPOT.txt
+  (le code de sortie du lanceur : 0). Rapatriement par l'API relais
+  (compte de service D263, aucun jeton affiché).
+
+- LES RECOUPEMENTS (tout est authentique, sur pièces) : (a) LES DIX PIÈCES
+  EMBARQUÉES citées au DEPOT.txt == LE PAQUET CORRECTIF3 du dépôt octet
+  pour octet, 10/10 empreintes (le lanceur 27b25687…, dudect_v150.c
+  fc3b5cce…, dudect_v150.exe 98d96136…, extraire 6b07216e…, test_appel.c
+  56a35ec0…, test_appel.exe 42903257… LE CORRIGÉ, le LISEZMOI 09d6a250…,
+  manifeste-c 7293cd86…, manifeste.json 93d5a13f…, l'image scellée
+  0782d7e2…) ; le zip CORRECTIF3 du dépôt == le sha256 documenté au
+  LISEZMOI-KIT2-EXE (c18b11c6…) ; (b) LE BINAIRE EXÉCUTÉ : le témoin
+  cite le sha256 rendu par CertUtil SUR LA MACHINE — 98d96136… == le
+  recompilé CORRECTIF3 du labo : SON PREMIER TÉMOIN TERRAIN (le labo n'a
+  aucun Windows, l'exe n'avait jamais couru nulle part) ; (c) LE JOURNAL
+  BRUT RECALCULÉ ligne à ligne par le labo : 1 600 lignes, 4 cibles ×
+  2 classes × 200 — les t de Welch recalculés (12.39, 5.19, 0.94, 3.11 :
+  4/4 EXACTS), les moyennes (1 288.2/904.1, 385 567.0/378 046.3, 26.0/25.5,
+  579.0/574.5 : 8/8 EXACTES), les médianes (1 244/840, 388 538/375 884,
+  26/26, 580/576 : 8/8 EXACTES — la médiane du kit porte sur les 64
+  PREMIÈRES itérations et retourne x[32], la définition du code
+  dudect_v150.c lignes 256-261 + 397-406, vérifiée avant de conclure) ;
+  (d) L'ÉPREUVE D'APPEL avant la mesure : image scellée 69 632 octets
+  mappée, FIPS « abc » ba7816bf… EXACT, mutation K DIVERGE, restauration
+  EXACT, code 0 — la pièce scellée ÉTAIT la pièce exécutée.
+
+- LA MESURE (consignée telle quelle, D189 — la lecture honnête du kit :
+  |t| > 5 = une dépendance temporelle AU SEUIL ; |t| <= 5 = aucune
+  divergence au seuil sur CET échantillon, CETTE machine, CETTE session ;
+  jamais « temps constant prouvé ») : tls13-02 (SHA-256) |t| = 12.39 > 5 —
+  le secret fixe PLUS LENT (1 288 cyc contre 904 en moyenne) ;
+  tls13-13 (X25519) |t| = 5.19 > 5 — de justesse (385 567 contre
+  378 046 : ~7 521 cycles, ~2 pour cent) ; tls13-16 (AES-128) |t| = 0.94 ;
+  tls13-17 (GHASH) |t| = 3.11 — aucune divergence au seuil, t non nul
+  pourtant. N = 200 par classe, UN SEUL run, affinité cœur 0, i7-8665U,
+  Windows 11 Pro 10.0.26300.9974, fréquence annoncée 2 112 MHz.
+
+- LES NOTES HONNÊTES : (a) le témoin reçu est le BROUILLON AUTO — l'état
+  EFFECTIF du turbo, la date et la signature à la main DEMEURENT (le geste
+  qui ferme la chaîne, demandé au LISEZMOI-MESURE-VECUE) ; (b) la machine
+  porte l'histoire pilote chronique (16 × 0x9F, 14 watchdog — rien le
+  jour du run, l'Entrée 253) : une mesure de TEMPS s'y consigne, le labo
+  en tiendra compte en lisant |t| ; (c) tls13-13 à 5.19 et tls13-17 à
+  3.11 : la limite n'est pas loin — un second run (l'exe v2 accepte N en
+  argument) consoliderait, sans jamais effacer celui-ci ; (d) l'horloge
+  machine COHÉRENTE cette fois (le témoin lit 13/11 9:14:57 locale, le
+  coffre a reçu 08:15:42Z — Paris UTC+1 : l'écart nommé à l'Entrée 253
+  résorbé sur pièces) ; (e) L'ÉCART DE LA CARTE : l'OU-TROUVER-LES-LIVRABLES
+  de l'Entrée 260 disait le zip CORRECTIF3 et l'exe v2 « déposés au coffre
+  /test » — SUR PIÈCES ils n'y vivent PAS (seuls les zips de SOURCES y
+  passèrent : le refus « malware » de Drive sur les zips à exe,
+  vraisemblable, le fait du COFFRE pas du terrain) ; les pièces vivent au
+  bac du dépôt (download/) et au bundle — la carte est corrigée par la
+  présente, l'histoire jamais réécrite : l'écart est nommé.
+
+- LA CHAÎNE DE RÉCEPTION (le labo) : le dépôt local rattrapé à l'Entrée
+  260 par le bundle du miroir (fast-forward dbf46b6 → 78a67a5, les cinq
+  commits 256-260 recouverts par list-heads avant le geste), les preuves
+  copiées au bac du dépôt (download/preuves-run-kit2-dudect-v2/, le zip +
+  les cinq pièces extraites), le LISEZMOI-MESURE-VECUE.txt écrit (racine
+  du dépôt, déposé au coffre /test pour le terrain), la présente
+  consignation + la Task 168, le commit, le push GitHub (main), le miroir
+  Drive synchronisé (D141 : l'ancien courant 260-78a67a5 archivé versionné),
+  le bundle régénéré à la pointe.
+
+- SUITE : au développeur — LE TÉMOIN SIGNÉ (l'état EFFECTIF du turbo, les
+  observations mêmes défavorables, la date, la signature — déposé au
+  coffre /test) ferme la chaîne du kit-2 ; un second run à N plus grand
+  (optionnel) consoliderait tls13-13/tls13-17 ; puis les preuves formelles
+  preuves-constat-arm (le téléphone), puis les gestes ouverts (le geste B
+  SHA-NI réel, la campagne D204, la cérémonie d'ère, le séquestre D183,
+  la réplication).

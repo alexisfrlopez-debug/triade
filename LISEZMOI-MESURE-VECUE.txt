@@ -1,0 +1,86 @@
+LISEZMOI-MESURE-VECUE — LE RUN EST REÇU, LA MESURE A VÉCU (13/11/2026)
+=====================================================================
+
+VOTRE DÉPÔT EST REÇU ET IL EST COMPLET. preuves-kit2-dudect-20261113T081451Z.zip
+(69 956 octets, md5 3111842a10…), déposé au coffre /test le 13/11 à 08:15:42
+UTC — cinquante et une secondes après la fin du run (08:14:51Z) : les six
+pièces y sont (la console ENTIÈRE du lanceur, le journal csv de 1 600 mesures,
+sortie-run.txt, sortie-appel.txt, le témoin BROUILLON auto, le DEPOT.txt) et
+le code de sortie du lanceur fut 0. Le run v1 du 12/11 (la ligne 55, l'Entrée
+259) est RÉPARÉ et DÉPASSÉ : la v2 a vécu de bout en bout.
+
+TOUT EST AUTHENTIQUE — LES RECOUPEMENTS DU LABO (sur pièces, D189 : rien
+n'est deviné) :
+
+  1. LES DIX PIÈCES EMBARQUÉES DANS VOTRE EXE == LE PAQUET CORRECTIF3 DU
+     LABO, octet pour octet (10/10 empreintes recoupées : le lanceur
+     27b25687…, dudect_v150.c fc3b5cce…, dudect_v150.exe 98d96136…,
+     test_appel, l'extracteur, les cibles avec l'image scellée 0782d7e2…).
+     Vous avez couru LE paquet du labo — l'édition corrective née de la
+     ligne 55.
+  2. LE BINAIRE EXÉCUTÉ == LE RECOMPILÉ DU LABO. Votre témoin cite le
+     sha256 du dudect_v150.exe qui courut (CertUtil, la pièce) :
+     98d96136… == le mesureur recompilé au labo depuis la source corrigée
+     (jamais patché). Ce run est son PREMIER TÉMOIN terrain — le labo n'a
+     aucun Windows, l'exe précompilé n'avait jamais couru nulle part.
+  3. LES STATISTIQUES RAPPORTÉES == LE JOURNAL BRUT RECALCULÉ. Le labo a
+     relu les 1 600 lignes du journal csv et recalculé chaque t de Welch,
+     chaque moyenne, chaque médiane : 4/4 t exacts, 8/8 moyennes exactes,
+     8/8 médianes exactes (la médiane du kit porte sur les 64 premières
+     itérations — la définition du code, vérifiée). La console affichée
+     est la mesure qui vécut.
+  4. L'ÉPREUVE D'APPEL A PASSÉ AVANT LA MESURE : image scellée de 69 632
+     octets mappée, condensé FIPS « abc » EXACT, mutation K DIVERGE (la
+     table est bien lue par la pièce), restauration EXACT, code 0 — la
+     pièce scellée était bien la pièce exécutée.
+
+LA MESURE, EN MOTS SIMPLES (consignée telle quelle, la lecture honnête du
+kit — |t| > 5 = une dépendance temporelle AU SEUIL ; |t| <= 5 = aucune
+divergence au seuil sur CET échantillon, CETTE machine, CETTE session ;
+jamais « temps constant prouvé ») :
+
+  - tls13-02 (SHA-256)    : |t| = 12.39 > 5 → DÉPENDANCE AU SEUIL. Le
+    secret fixe est plus LENT que le secret aléatoire (1 288 cycles en
+    moyenne contre 904) : le temps de la compression dépend du bloc
+    secret, au seuil, sur cette machine.
+  - tls13-13 (X25519)     : |t| = 5.19 > 5 → DÉPENDANCE AU SEUIL, de
+    justesse (385 567 cycles contre 378 046 en moyenne : un écart de
+    7 521 cycles, ~2 pour cent).
+  - tls13-16 (AES-128)    : |t| = 0.94 <= 5 → aucune divergence au seuil.
+  - tls13-17 (GHASH)      : |t| = 3.11 <= 5 → aucune divergence au seuil
+    (non nul pourtant — voir les notes).
+
+LES NOTES HONNÊTES QUE LE LABO PORTE AU TÉMOIN :
+
+  - N = 200 par classe, UN SEUL run, affinité cœur 0 posée par le
+    mesureur : c'est un PREMIER TÉMOIN, pas une campagne. Un second run
+    (l'exe v2 accepte votre N en argument, ex. « 400 », minimum 60)
+    consoliderait tls13-13 (5.19, la limite n'est pas loin) et tls13-17
+    (3.11) — sans jamais effacer celui-ci (D99 : l'histoire jamais
+    réécrite, chaque run aux archives horodatées).
+  - L'ÉTAT EFFECTIF DU TURBO n'est pas dans le témoin — le brouillon auto
+    ne peut pas le lire à votre place. C'est le geste qui reste (ci-dessous).
+  - Votre machine porte l'histoire pilote chronique déjà nommée (16 écrans
+    bleus DRIVER_POWER_STATE_FAILURE, 14 watchdog noyau — rien le jour du
+    run) : une mesure de TEMPS sur une machine instable au niveau pilote
+    se consigne, le labo en tiendra compte en lisant |t|.
+  - L'horloge machine est COHÉRENTE cette fois : le témoin lit
+    13/11 9:14:57 locale, le coffre a reçu 08:15:42 UTC — Paris UTC+1,
+    l'écart d'horloge nommé à l'Entrée 253 est résorbé sur pièces.
+
+LE GESTE QUI RESTE — LE SEUL (il ferme la chaîne du kit-2) : complétez et
+signez le témoin. Ouvrez temoin-dudect-BROUILLON.txt, écrivez l'état
+EFFECTIF du turbo (BIOS désactivé ou non), vos observations mêmes
+défavorables (D189), la date et votre signature — puis déposez-le au
+coffre /test. Le run est reçu et consigné (Entrée 261) ; le témoin signé
+ferme la mesure. Si vous courrez un second run avec un autre N, son zip
+sera reçu de la même façon — chaque témoin compte.
+
+CE QUI CHANGE AU PROJET : LA MESURE « JAMAIS ENCORE COURUE » depuis la
+naissance du kit (v0.15.0) EST COURUE. Premier témoin terrain du mesureur
+recompilé, des quatre familles crypto de la pièce scellée, du t de Welch
+au seuil |t| > 5. Deux dépendances au seuil consignées (SHA-256, X25519),
+deux non-divergences au seuil (AES-128, GHASH). La suite demeure : les
+preuves formelles preuves-constat-arm (le téléphone), le geste B SHA-NI
+réel, la campagne D204, la cérémonie d'ère, le séquestre D183, la
+réplication.
