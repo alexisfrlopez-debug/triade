@@ -1,0 +1,117 @@
+LISEZMOI — LES NOUVEAUX RUNS 1 CLIC REÇUS, LE KIT DES RUNS RESTANTS (le 14/11/2026)
+======================================================================================
+(l'annonce du développeur : « dossier avec preuves des nouveaux runs 1
+clic dans /test du drive. fais un kit avec les runs restants a faire » —
+la seconde vague : NEUF dossiers de run nés le 13/11 18:08-18:11Z,
+rapatriés et recoupés — 92 pièces nouvelles, md5 92/92, les NEUF paquets
+internes == les empreintes gravées, les CINQ scellés + le qemu embarqué
+INTACTS, rien retouché)
+
+LE BILAN EN MOTS SIMPLES : la seconde vague a fait vivre ce que la
+première n'avait pu. LA VOIE 2 QEMU A VÉCU SON RUN COMPLET : le kit-shani
+sous qemu-x86_64 -cpu max dans le WSL2 de PORTABLE, le CPU virtuel
+présente SHA-NI au CPUID (l'écran du témoin : « AuthenticAMD » · famille
+6 · modèle 6 · pas 3 — le CPUID synthétique de qemu, le refus ne peut
+plus exister), la chaîne T0-T5 ENTIÈRE vécue, les preuves-shani NÉES du
+terrain : VERDICT + journal + témoin AUTO + moteur-shani-execute.bin ==
+le moteur officiel OCTET POUR OCTET. L'ARTEFACT TCG de CE run :
+1,44× / 1,45× / 1,44× (abc, aléa, zéros — le rapport du bloc aléa :
+1,45× ; le labo avait vécu 0,19× à sa propre épreuve — l'artefact appartient
+AU RUN, consigné TEL QUEL, la frontière demeure : ÉMULATION, jamais le
+silicium — la mesure avant/après n'a de sens que sur le VRAI silicium,
+le geste B demeure). LA VOIE 1 REJOUÉE : le même VERDICT 16 PASS
+(edb12391…) et le même journal (57bf6325…) que le run de 15:50 — la
+reproduction sur la même machine ; le témoin AUTO né au rejouage ne
+diffère de celui signé (l'Entrée 272) QUE par la ligne de date — la
+chaîne de la voie 1 DEMEURE FERMÉE par la première main (le rejouage ne
+re-scelle rien, D165 ; le nouveau témoin AUTO est une pièce qui compte,
+D99, sa signature facultative). LE TÉMOIN VITRINE : vécu propre encore
+(deux codes 0, aucun WER loupe). LE DIAGNOSTIC : PORTABLE nommé encore —
+Windows 10, Ivy Bridge famille 6 modèle 58, SHA-NI ABSENT, Python
+3.14.10, WSL2 vu.
+
+LES RÉSULTATS NOMMÉS (des résultats, jamais des pannes — D189) :
+  — LE GESTE B : refus T0.silicium ENCORE (« SHA-NI ABSENT » — CPUID
+    feuille 7, EBX bit 29 = 0) : LA MESURE AVANT/APRÈS DEMEURE OUVERTE —
+    elle exige un silicium qui A SHA-NI (Ice Lake et après chez Intel,
+    Ryzen chez AMD — le diagnostic lit le CPUID et vous le dit) ;
+  — LA CAMPAGNE D204 : le journal du dry-run EST NÉ (17:09:47Z, la
+    seconde tentative — la première n'avait pas fait naître le journal) ;
+    l'écart nommé PERSISTE : la calibration « sleep 2.0 » FAUTE sous
+    Windows (code 1, 0,028 s — cmd.exe n'a pas de commande sleep). LA
+    RÉPARATION promise à l'édition suivante VIT DANS CE KIT (plus bas) ;
+  — LE SÉQUESTRE D183 : l'instrument a vécu jusqu'à l'import (le cache
+    cpython-314 né encore) ; aucune pièce d'autotest n'est née au dossier
+    — la cérémonie elle-même DEMEURE : machine HORS-LIGNE, « pip install
+    pynacl cryptography » AVANT la mise hors-ligne, les cinq médias, la
+    preuve de reconstitution à froid ;
+  — LA RÉPLICATION : le kit est intact ; l'autotest du κ vit à la
+    console. Les DEUX jeux d'annotations demeurent les acteurs
+    manquants — le second annotateur à recruter, le second domaine en
+    attente d'une vraie commande : nommés, jamais maquillés.
+
+LE KIT — LES RUNS RESTANTS, CHACUN EN UN FICHIER AUTONOME :
+  1. TRIADE-1CLIC-CAMPAGNE-D204-v2.bat — LA CAMPAGNE, l'édition v2 :
+     LA RÉPARATION y vit. La pause « sleep 2.0 » (une commande EXTERNE
+     que cmd.exe refuse aux deux vagues) devient une pause PYTHON EN
+     PROCESSUS : time.sleep mesuré par time.monotonic, la MÊME horloge
+     monotone que les mesures M4 — le kit exige déjà Python 3, la pause
+     y vit partout pareil (Windows, WSL2, Linux). L'écart attendu :
+     ~0,001 s, loin sous la tolérance 0,05 s. SEULE la pièce
+     chronometre_verification.py a changé d'édition (son sha256 gravé
+     au fichier) ; le plan D204 VERROUILLÉ demeure INTACT (a78caf8c…,
+     recoupé par certutil à chaque geste) et les HUIT autres pièces
+     demeurent INTACTES (celles de l'Entrée 270). La campagne elle-même
+     demeure le travail de fond aux DEUX bras — le plan fait foi,
+     AUCUNE mesure n'existe (CA1).
+  2. TRIADE-1CLIC-GESTE-B-SHANI.bat — INTACT (l'empreinte de l'Entrée
+     270, octet pour octet) : le geste B sur un silicium qui A SHA-NI.
+     DIAGNOSTIC-MACHINE.bat d'abord (le diagnostic choisit la machine).
+  3. TRIADE-1CLIC-SEQUESTRE-D183.bat — INTACT : la cérémonie des cinq
+     parts à la machine HORS-LIGNE (jamais au bac à sable, jamais en
+     ligne), « pip install pynacl cryptography » AVANT la mise
+     hors-ligne.
+  4. TRIADE-1CLIC-REPLICATION.bat — INTACT : le κ le jour des DEUX jeux
+     d'annotations (le seuil pré-enregistré κ ≥ 0,61, D189).
+
+LE GESTE QUI RESTE À VOTRE MAIN (jamais automatisé) — DANS L'ORDRE :
+  1. DATER ET SIGNER le témoin de LA VOIE 2 —
+     TRIADE-1CLIC-voie2-qemu-run-20261113-181158\pc-windows\kit-1-shani\
+     preuves-shani\temoin-shani.txt est né AUTO (18:12:07) : datez-le,
+     signez-le de votre main et écrivez sous votre main « run sous
+     qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » (le lanceur
+     officiel le demande), puis renvoyez preuves-shani\ ENTIER au
+     coffre /test. C'est la pièce qui FERME la chaîne de la voie 2.
+  2. La campagne D204 aux deux bras (la v2 d'abord — la calibration y
+     vit enfin sous Windows).
+  3. Le geste B sur un silicium qui A SHA-NI (le diagnostic choisit).
+  4. La cérémonie du séquestre à la machine hors-ligne.
+  5. Le κ le jour des deux jeux d'annotations.
+  (facultatif, D99 : les témoins AUTO du rejouage voie 1 et du témoin
+   vitrine — chaque témoin compte ; la chaîne de la voie 1 est déjà
+   FERMÉE par la main de l'Entrée 272, le rejouage ne re-scelle rien.)
+
+L'HONNÊTÉ DE CETTE ÉDITION :
+  — la pièce changée : chronometre_verification.py SEULE (l'édition v2,
+    la pause portable) — la divergence du plan de l'Entrée 272 NOMMÉE :
+    la pause « python -c » EXTERNE prévue eût mesuré la mise en route de
+    l'interpréteur — l'épreuve du labo : 2,012 s (écart 0,012 s, sous la
+    tolérance sur CETTE machine, mais la marge appartient au démarrage
+    de l'interpréteur, qui varie d'une machine à l'autre — une preuve
+    d'horloge ne vit pas à la merci d'un démarrage) ; la pause EN
+    PROCESSUS rend l'écart ~0,001 s PARTOUT ; le v1 demeure à l'histoire
+    git du dépôt (D143 — jamais jeté) ;
+  — les HUIT autres pièces de la campagne + les TROIS autres fichiers
+    du kit : INTACTS, ceux de l'Entrée 270 (recoupés sha256 à la copie) ;
+  — le labo n'a AUCUN Windows : le .bat v2 est éprouvé par ses commandes
+    et par la relecture, l'épreuve de la calibration vécue au labo POSIX
+    (le premier double-clic se vit chez vous, D122) ; si un écran nomme
+    un défaut, renvoyez le .txt TEL QUEL, le labo recoupe et corrige ;
+  — CE QUI NE SERA JAMAIS AUTOMATISÉ : dater et SIGNER les témoins de
+    votre main ; le renvoi des dossiers de preuves ENTIERS au coffre
+    /test ; le recrutement du second annotateur ; la cérémonie
+    hors-ligne ; le retrait de la phrase en clair après le séquestre.
+
+LES EMPREINTES DU MOMENT : la seconde vague == votre dépôt (92 pièces
+md5 recoupées, le DEPOT-RECU.txt porte les id Drive qui font foi) ; la
+consignation vit au journal de travail (l'Entrée 273) et au miroir git.

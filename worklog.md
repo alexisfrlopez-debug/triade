@@ -9941,3 +9941,70 @@ Work Log:
   rafraîchi, l'archive 274-8644226 versionnée — et demeure LA
   sauvegarde de référence ; le jeton GitHub se rafraîchit au geste du
   développeur le jour voulu).
+
+
+Task ID: 183
+Agent: Z.ai (agent principal — la session de la réception du témoin shani signé)
+Task: LA RÉCEPTION DU TÉMOIN SHANI SIGNÉ — L'ÉCART NOMMÉ : LA MAIN A
+SIGNÉ LA PIÈCE DU LABORATOIRE, PAS CELLE DU RUN — LA CHAÎNE DE LA VOIE 2
+DEMEURE OUVERTE (l'annonce « voici les temoins signes » + UNE pièce
+jointe au chat : temoin-shani.txt, 2 002 o, md5 030fe204…) : le recoup
+d'octets établit que la base du signé est l'AUTO DE L'ÉPREUVE DU LABO
+(1 970 o, md5 417c098f…, octet pour octet — le témoin né au run du
+12/11 11:17:07, machine c-6af57fe2-140d72b5-48bd871231e3 LE CONTENEUR
+DU LABO, l'Entrée 246), le bloc de la main (32 o : « fait le
+13/11/2026 / Alexis Lopez ») est LA MÊME MAIN que les Entrées
+264/266/267/272 — mais le run consigné par la pièce N'A PAS ÉTÉ EXÉCUTÉ
+par le développeur (« le run appartient au développeur qui l'exécute »,
+le témoin même) : la pièce qui ferme la voie 2 demeure le témoin NÉ DU
+RUN DE SA MACHINE (13/11 18:12:07, PORTABLE, l'artefact TCG 1,44×/1,45×,
+1 945 o, md5 5cd615c9…) — re-téléchargé INTACT et NON SIGNÉ du /test.
+
+Work Log:
+- LA RÉCEPTION : l'annonce au PLURIEL, UNE pièce au chat (le canal
+  unique — le parcours ENTIER du /test (660 fichiers) et de la racine
+  du coffre ne trouve AUCUN dépôt neuf du développeur depuis la seconde
+  vague : les canaux croisés de l'Entrée 272 demeurent la règle, l'écart
+  de canal est NOMMÉ, jamais maquillé) ; les autres chaînes de témoins
+  (kit-2 N=200, kit-2 N=400, verdict Android, m7d) sont déjà fermées —
+  la seule chaîne ouverte était la voie 2.
+- LES RECOUPEMENTS : la base du signé == l'AUTO DE L'ÉPREUVE DU LABO
+  sur ses 1 970 octets ENTIERS (recoupé contre les TROIS copies locales
+  + la copie du /test, 4/4 octet pour octet) ; la main de 32 o — la
+  nuance d'octet nommée : LF FINAL ici (b'fait le 13/11/2026\nAlexis
+  Lopez\n') contre LF INITIAL au m7d (b'\nfait le 13/11/2026\nAlexis
+  Lopez') : la formule identique, l'ancre blanche seule diffère ; les
+  empreintes portées (proxy-image 0782d7e2…, moteur-shani 761ab194…,
+  tls13-02 plage scellée 2ce2517a…) == les CINQ scellés — la pièce est
+  INTÈGRE, aucun octet muté.
+- L'ÉCART NOMMÉ (D189) : LA MAIN A SIGNÉ LA PIÈCE DU LABORATOIRE — le
+  témoin embarqué dans les kits à qemu-wsl2\preuves-shani-emulation-
+  labo\ comme RÉFÉRENCE (le labo l'a vécue : 0,19×), PAS le témoin du
+  run ; DEUX ABSENCES nommées : la mention « run sous qemu-x86_64 -cpu
+  max, ÉMULATION, pas le silicium » (demandée au LISEZMOI-RUNS-RESTANTS,
+  l'Entrée 273) MANQUE, et preuves-shani\ ENTIER n'est pas renvoyé au
+  /test ; la cause probable, nommée avec prudence : DEUX temoin-shani.txt
+  vivaient dans l'extraction (le sien à pc-windows\kit-1-shani\
+  preuves-shani\, la référence du labo à qemu-wsl2\) — le fait demeure :
+  la pièce signée n'est pas celle du run.
+- LE COURRIER DU LABO : /test/temoin-shani-signe-ecart-20261114/ — la
+  pièce reçue TELLE QUELLE (temoin-shani-signe-recu-chat.txt) + le
+  LISEZMOI-ECART-TEMPOIN-SHANI.txt (c8b237e2…) qui porte LA REPRISE
+  (ouvrir LE témoin du run — machine PORTABLE, 18:12:07 —, dater,
+  signer, écrire la mention ÉMULATION sous la main, renvoyer
+  preuves-shani\ ENTIER au /test), 2/2 md5 MATCH par re-téléchargement ;
+  le bac download/temoin-shani-signe/ (la pièce reçue, l'AUTO du labo
+  en regard, l'AUTO du développeur re-téléchargé intact, le témoin m7d
+  de référence de la main, l'INDEX du /test, le DEPOT-RECU.txt aux id
+  Drive).
+- LA CONSIGNATION : la présente Entrée 276 + Task 183 ; la carte
+  OU-TROUVER portée à 276 ; D141 tenu avant le commit (le courant
+  275-3b75692 archivé versionné au miroir, md5 recoupé par
+  re-téléchargement) ; le commit ; le push GitHub (le jeton refusé la
+  veille — réessayé au geste, le résultat nommé) ; le miroir Drive
+  synchronisé.
+- SUITE : au développeur — LA REPRISE de la voie 2 (signer SON témoin
+  avec la mention ÉMULATION sous la main, renvoyer preuves-shani\
+  ENTIER au coffre /test) ; puis la campagne D204 aux deux bras (le GUI
+  v1.0.1), le geste B sur un silicium à SHA-NI, la cérémonie hors-ligne
+  du séquestre, le κ aux deux jeux d'annotations.

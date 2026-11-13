@@ -1,0 +1,99 @@
+LISEZMOI — CHAQUE TEST EN UN FICHIER AUTONOME (l'édition FICHIERS-1CLIC, 13/11/2026)
+=====================================================================================
+(la commande du développeur : « Fais en sorte que chaque test se fasse en
+lançant un fichier autonome en 1 clic : exe, apk, bat etc... »)
+
+LA RÈGLE DE CETTE ÉDITION : UN TEST = UN FICHIER = UN DOUBLE-CLIC. Chaque
+fichier .bat porte en lui, scellées par empreinte sha256, toutes les pièces
+du test : il fait naître un dossier de run NEUF et daté à côté de lui,
+recoupe CHAQUE empreinte (fail-closed : un octet divergent, rien ne court),
+puis lance le lanceur officiel du test — INTACT, octet pour octet. Aucune
+extraction préalable, aucun autre fichier à télécharger, aucune commande.
+
+L'ÉTAPE 0, SEULE FOIS NÉCESSAIRE : si le cadre bleu « Windows a protégé
+votre PC » apparaît au premier double-clic (la marque du web — tout fichier
+téléchargé de Drive la porte), clic droit sur le fichier → Propriétés →
+cochez « Débloquer » → OK → double-cliquez encore. C'est le candidat A du
+verdict du 13/11 : nommé, il ne surprend plus personne.
+
+LES HUIT FICHIERS (chacun se vit seul, aucun ordre imposé) :
+
+  TRIADE-1CLIC-DIAGNOSTIC.bat      la machine nommée, le silicium par CPUID,
+                                   SHA-NI présent ou absent, le verdict des
+                                   kits vivables — SERT À CHOISIR la machine
+                                   du geste B. Témoin : diagnostic-machine.txt.
+
+  TRIADE-1CLIC-GESTE-B-SHANI.bat   LA mesure avant/après SHA-NI (Python 3 +
+                                   un silicium qui A SHA-NI — le diagnostic
+                                   le dit avant). Preuves : preuves-shani\.
+
+  TRIADE-1CLIC-VOIE1-QEMU.bat      le kit M7D rejoué sous le qemu-riscv64
+                                   EMBARQUÉ (WSL2 + Python 3, rien d'autre).
+                                   Preuves : preuves-m7\.
+
+  TRIADE-1CLIC-VOIE2-QEMU.bat      le kit-shani sous qemu-x86_64 -cpu max —
+                                   l'ARTEFACT TCG consigné tel quel, jamais
+                                   une vérité de silicium (WSL2 + qemu-user
+                                   + Python 3). Preuves : preuves-shani\.
+
+  TRIADE-1CLIC-CAMPAGNE-D204.bat   la console de campagne : statut, verrou du
+                                   plan pré-enregistré (sha256 recoupé),
+                                   calibration, chronométrage, tokens
+                                   (Python 3). Journal : preuves_v150\.
+
+  TRIADE-1CLIC-SEQUESTRE-D183.bat  la répétition générale (autotest, VERT
+                                   exigé), le découpage, la preuve à froid
+                                   (Python 3 + pynacl + cryptography AVANT la
+                                   mise hors-ligne ; la cérémonie elle-même
+                                   à la machine HORS-LIGNE).
+
+  TRIADE-1CLIC-REPLICATION.bat     l'autotest du κ de Cohen + la grille T/X
+                                   (Python 3 ; le calcul vit le jour des deux
+                                   jeux d'annotations).
+
+  TRIADE-1CLIC-TEMOIN-VITRINE.bat  le témoin vitrine du kit loupe : deux
+                                   fenêtres que VOUS fermez (Alt+F4), les
+                                   codes consignés. AUCUNE exigence.
+
+LES TESTS DÉJÀ EN FICHIER UNIQUE (rien à refaire) :
+  — LE KIT-2 DUDECT : l'exe 1-clic v2 du coffre (TRIADE_kit2_exe_1clic_v2,
+    aux archives-livraisons/kits-terrain-v0150 du /test) — la mesure y est
+    DÉJÀ VÉCUE deux fois, N=200 et N=400, témoins signés : les quatre
+    familles sous le seuil au N=400, la lecture honnête demeurant celle du
+    kit (aucune divergence au seuil sur cet échantillon, cette machine) ;
+  — LE CONSTAT-ARM : l'APK TRIADE-kit-android-v1 du /test (le test part
+    seul, le bouton construit le zip des preuves) — la chaîne est FERMÉE
+    (constat VERT, témoin signé) ;
+  — LA CÉRÉMONIE D'ÈRE : ses lanceurs vivent au dossier « Cérémonie » du
+    coffre (un registre du projet, jamais un test).
+
+L'HONNÊTETÉ DE CETTE ÉDITION :
+  — les pièces embarquées sont celles du paquet TRIADE_kits_1clic_gestes_
+    ouverts_v1 (recoupées 41/41 à l'extraction) et du kit loupe-13 du
+    coffre — OCTET POUR OCTET, jamais retouchées ; l'unique écart nommé :
+    le temoin-vitrine.bat embarqué est la version CRLF du paquet
+    CORRECTIF2, le contenu IDENTIQUE au mot près à celle du coffre (fins
+    de ligne seules — la forme CRLF est la règle des .bat du projet) ;
+  — chaque fichier porte sa liste de pièces ET leurs sha256 gravées en
+    clair dans son en-tête : quiconque le désire peut décompresser le
+    paquet interne (un zip ordinaire, en base64 après le marqueur) et tout
+    comparer lui-même ;
+  — le labo n'a AUCUN Windows : ces .bat y sont éprouvés par leurs
+    commandes (powershell, Expand-Archive, certutil, findstr — standard de
+    Windows 10/11), par l'AUDIT de forme (ASCII pur, CRLF intégral, zéro
+    métacaractère nu, chaque goto à son étiquette) et par L'ÉPREUVE MIROIR
+    (chaque fichier relu, son paquet redécodé, chaque pièce comparée octet
+    pour octet à la source) — JAMAIS par l'exécution : le premier
+    double-clic se vit chez vous ; si un écran nomme un défaut, renvoyez
+    la console TELLE QUELLE (D122), le labo recoupe et corrige ;
+  — CE QUI NE SERA JAMAIS AUTOMATISÉ : dater et SIGNER les témoins de
+    votre main ; la cérémonie hors-ligne ; le retrait de la phrase en
+    clair après le séquestre ; le recrutement du second annotateur ; le
+    renvoi des dossiers de preuves ENTIERS au coffre /test (dossier Drive
+    « Triade » → « test »).
+
+LE REPLI SI UN TÉLÉCHARGEMENT DIRECT EST REFUSÉ : le zip
+TRIADE_fichiers_1clic_v1.zip porte les DIX fichiers de cette édition —
+si Drive refuse un .bat nu (un faux positif déjà vécu sur les exe), le
+zip passe : extrayez-le, le fichier y est identique (les empreintes font
+foi — EMPREINTES-FICHIERS-1CLIC.txt).

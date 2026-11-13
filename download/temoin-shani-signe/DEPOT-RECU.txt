@@ -1,0 +1,7 @@
+DEPOT-RECU.txt — le courrier de l'écart déposé au coffre /test
+dossier : temoin-shani-signe-ecart-20261114 (id Drive 1ylunrVFdekZrCLzNDip1yGLb1ppjJU8v)
+dépôt du 14/11/2026 (l'Entrée 276), chaque pièce md5 recoupée par
+re-téléchargement :
+
+  temoin-shani-signe-recu-chat.txt  md5 030fe2048dc3fa233395b74ad64b90d2  id Drive 1GfO-Dq5jzEXhV-GDAVNQ0Nf5snfKtKZ5
+  LISEZMOI-ECART-TEMPOIN-SHANI.txt  md5 c8b237e2f83bb57272fa9ab1353b106f  id Drive 1c2w4km7WNxAXGJ0X8mASYxbfkimaTmLf
