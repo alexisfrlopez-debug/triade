@@ -1,0 +1,144 @@
+LISEZMOI — LE GUI DE LA CAMPAGNE D204, PAS À PAS, TOUT AU CLIC (le 14/11/2026)
+==============================================================================
+(le kit TRIADE_gui_campagne_v1 — la commande du développeur : « fais un
+GUI pas a pas, tout au clic, pour la campagne aux 2 bras » ; la campagne
+de comparaison des workflows, le plan pré-enregistré D204 VERROUILLÉ —
+sha256 a78caf8c… consigné AVANT toute mesure)
+
+L'OBJET : conduire LA CAMPAGNE AUX DEUX BRAS au clic, geste après geste,
+sur votre machine Windows — le GUI v1.0.0 (un seul fichier Python,
+tkinter de la stdlib, RIEN à installer au-delà de Python 3 ; le même
+esprit que ceremonie_gui.py).
+
+LE GESTE : dézippez ce kit où vous voulez (Téléchargements, Bureau) —
+TRIADE_gui_campagne_v1/ — puis DOUBLE-CLIQUEZ
+LANCER-GUI-CAMPAGNE-D204.bat. La fenêtre s'ouvre sur l'étape 1.
+Si un cadre « Windows a protégé votre PC » apparaît : clic droit sur le
+.bat, Propriétés, cochez « Débloquer », OK — la marque du web, comme
+toute pièce téléchargée du coffre.
+
+LE KIT PORTE LES HUIT PIÈCES (campagne-d204/) — celles du kit 1-clic v2
+de l'Entrée 273, INTACTES octet pour octet (recoupées à la copie) : le
+plan VERROUILLÉ, le LISEZMOI, la console officielle, les deux
+instruments (chronomètre v2 — la pause portable en processus ;
+compteur de tokens), les trois gabarits. Le GUI les recoupe à CHAQUE
+session (étape 1) — une divergence, RIEN ne court (fail-closed).
+
+LES CINQ ÉTAPES DU GUI :
+  1. LE VERROU — les HUIT pièces recoupées sha256 par sha256 (le plan
+     a78caf8c… en tête, == l'empreinte consignée à D204) ; puis
+     L'ATELIER DE CAMPAGNE naît : les COPIES DATÉES des trois gabarits
+     (carnet, livraisons, défauts) — les ORIGINAUX scellés demeurent
+     INTACTS pour toujours (la console officielle dit : « travaillez
+     sur des COPIES datées » — le GUI le tient pour vous). L'atelier
+     naît UNE fois, puis il ACCOMPAGNE toute la campagne (le carnet
+     continue d'une session à l'autre).
+  2. LA CALIBRATION — la preuve d'horloge du chronomètre (pause de
+     2 s, l'édition v2 EN PROCESSUS) ; l'écart doit rester sous la
+     tolérance 0,05 s. UN DRY-RUN : jamais une mesure de campagne
+     (CA1 — le dossier des résultats ne naît que d'une mesure réelle).
+  3. LA CAMPAGNE — les QUATORZE unités en tableau : les six blocs
+     (loupe-01 ouvrir, loupe-02 lire, loupe-05 sha256, loupe-08 ligne,
+     loupe-13 recherche, loupe-16 saisie) aux DEUX bras (T la notation
+     scellée, C le flux standard), plus la partie réaliste (l'app) EN
+     ATTENTE tant qu'aucune commande réelle n'est arrivée. Chaque
+     unité s'ouvre en SEPT onglets, dans l'ordre du geste :
+       1· KIT        choisir le dossier du kit livré par le labo au
+                     coffre ; le GUI recoupe ses EMPREINTES gravées
+                     s'il en porte ;
+       2· RUN        LANCER le lanceur officiel du kit — il court
+                     dans SA PROPRE console, INTACT, le GUI ne
+                     l'intercepte jamais ; puis CHOISIR le dossier du
+                     run né (la pièce à renvoyer) ;
+       3· TÉMOIN     ouvrir le dossier du run, le témoin au
+                     bloc-notes, le coffre /test au navigateur —
+                     DATER et SIGNER de VOTRE MAIN, renvoyer le
+                     dossier ENTIER (jamais automatisé, D99) ;
+       4· CARNET     la ligne M3 AU GESTE : la date, le geste du bras
+                     (cristallisation, garde, cérémonie de scellement
+                     au bras T ; tag-backup, relecture au bras C ;
+                     revue et arbitrage aux deux), début, fin — les
+                     minutes se calculent seules, arrondies à la
+                     minute ; jamais reconstruite de mémoire ;
+       5· LIVRAISON  la ligne M1 (règle D202) : le GUI TIENT la cap
+                     pré-enregistrée — il REFUSE au-delà de TROIS
+                     livraisons par bloc (DOUZE pour l'application) et
+                     après le PREMIER VERT ; le refus est NOMMÉ, la
+                     censure (la cap sans vert) se lit au tableau ;
+       6· DÉFAUTS    un défaut se NOMME avant toute correction : la
+                     classe, le mécanisme, la pièce à l'appui (un
+                     bouton la choisit), le côté (piece/kit/exclu),
+                     l'exclusion nommée avec sa raison ;
+       7· CHRONO     le temps mural M4 d'une commande de vérification
+                     — les listes FIXES du plan (§ 4-M4) rappelées par
+                     bras ; la ligne naît au journal de l'atelier, à
+                     la première mesure seulement (CA1) ;
+  4. LE SUIVI — le tableau honnête : les livraisons, les défauts, le
+     carnet, la calibration, le récapitulatif des tokens (l'instrument
+     compter_tokens.py, lu du journal livré par le labo). Les COMPTES
+     SEULS — AUCUNE agrégation orientant la suite (CA7 : l'analyse aux
+     deux bras complets seulement) ;
+  5. LES PIÈCES — où vit quoi : le plan, le LISEZMOI, la CONSOLE
+     OFFICIELLE (le chemin console demeure ENTIER — les mêmes
+     instruments), l'atelier, le coffre /test, et les frontières que
+     ce GUI tient par construction.
+
+CE QUE CE GUI NE FERA JAMAIS (les frontières, tenues par
+construction) :
+  — dater ni SIGNER un témoin : votre main, toujours (D99) ;
+  — DÉPOSER au coffre : le renvoi du dossier de run ENTIER vous
+    appartient — le GUI ouvre le coffre au navigateur, il n'écrit
+    JAMAIS au Drive ;
+  — FABRIQUER un chiffre : aucun résultat n'existe avant sa mesure
+    (CA5/CA6) — le GUI consigne, il ne calcule pas d'analyse ;
+  — TOUCHER les originaux scellés : il ne vit que sur les copies
+    datées de l'atelier (la confrontation des empreintes, CA5) ;
+  — DÉPASSER la cap pré-enregistrée (§ 7) : TROIS par bloc, DOUZE par
+    application, l'arrêt au premier vert — le refus est nommé ;
+  — courir un kit à votre place : le lanceur officiel court dans sa
+    console, INTACT — le GUI prépare, recoupe et consigne (CA6).
+
+LA MÉMOIRE DU GUI : etat-campagne-d204.json (à côté du GUI) retient
+votre dossier de pièces, l'atelier, la calibration et les kits choisis
+— rouvrez le GUI, tout se retrouve. TRIADE_logs/ conserve le journal
+de chaque session (chaque geste y vit). AUCUN de ces fichiers n'est
+une pièce scellée ; l'atelier, lui, retourne au coffre avec les
+preuves à la clôture de la campagne.
+
+L'HONNÊTÉ DE CETTE ÉDITION (l'épreuve du labo, D122 — le labo n'a
+aucun Windows, la fenêtre fut éprouvée au labo POSIX sous serveur X
+virtuel, JAMAIS l'exécution Windows) :
+  — le selftest (python triade_campagne_gui.py --selftest) : 13 VERT,
+    0 ROUGE — le verrou, le fail-closed (une pièce divergente NOMMÉE),
+    l'atelier (né, stable, les originaux INTACTS), le carnet (les
+    minutes calculées, la fin avant le début refusée), la cap (le
+    refus au-delà de TROIS, l'arrêt au premier vert, la censure), les
+    défauts (l'exclusion sans raison refusée), les empreintes gravées
+    d'un kit d'unité ;
+  — l'épreuve fonctionnelle (la fenêtre vive, les gestes réels
+    enchaînés) : 8 VERT, 0 ROUGE — le verrou au départ, l'atelier né,
+    LA CALIBRATION RÉELLE courue par l'instrument (écart 0,000 s,
+    VERT), la ligne de carnet, la livraison, le suivi, les huit
+    pièces intactes après la séance ;
+  — l'épreuve visuelle : les cinq étapes et les sept onglets
+    capturés et inspectés — les accents français rendus, aucun texte
+    rogné, aucune colonne trop étroite (deux corrections vécues au
+    fil de l'épreuve : le retour à la ligne des encadrés, les
+    étiquettes des onglets) ;
+  — le fil des instruments passe par une file (tkinter n'est pas
+    thread-safe) — le défaut « main thread is not in main loop »,
+    vécu à la première épreuve, est réparé et éprouvé ;
+  — le premier double-clic se vit chez vous : si un écran nomme un
+    défaut, renvoyez le journal de session (TRIADE_logs/) TEL QUEL,
+    le labo recoupe et corrige (D122).
+
+LES EMPREINTES du kit vivent à EMPREINTES-GUI-CAMPAGNE.txt (le GUI,
+le lanceur, et les HUIT pièces recoupées à la copie) — la console
+« certutil -hashfile » les recoupe chez vous si vous le voulez.
+
+LA SUITE : la campagne elle-même est le travail de fond aux DEUX
+BRAS — le plan fait foi. Les kits des unités (loupe-01…loupe-16 × T/C)
+seront livrés par le labo au coffre /test au fil de la campagne ;
+chaque kit reçu se choisit à l'onglet 1 de son unité, se lance à
+l'onglet 2, et son run revient ENTIER au coffre, témoin daté signé.
+Le GUI vous attend à chaque session : le verrou d'abord, toujours.

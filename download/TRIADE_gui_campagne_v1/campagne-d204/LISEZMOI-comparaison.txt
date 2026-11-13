@@ -1,0 +1,68 @@
+LISEZMOI — LE KIT DE COMPARAISON DES WORKFLOWS (paquet 5 de la vague 3)
+========================================================================
+(l'instruction 54wni4hzh ; le plan pré-enregistré ci-joint, son empreinte
+consignée à D204 AVANT toute mesure)
+
+L'OBJET : mesurer, aux DEUX disciplines (TRIADE la notation scellée vs le
+flux standard C+gcc), sur les MÊMES tâches par le MÊME agent avec le MÊME
+mécanisme de kit terrain — les QUATRE métriques : défauts échappés par
+livraison (règle D202 par côté), tokens réels lus des logs d'usage API,
+temps humain de cérémonie/revue, temps de calcul de vérification.
+
+ÉTAT : PRÉPARÉ, VERROUILLÉ, EN ATTENTE DE LA CAMPAGNE. Aucune mesure
+n'existe, aucune n'est fabriquée ; les runs terrain appartiennent au
+développeur.
+
+LES PIÈCES (ce dossier, scripts/comparaison_v150/) :
+  PLAN_PREREGISTRE_COMPARAISON.md   LE PLAN — les deux bras, les quatre
+                                    métriques, les hypothèses H1-H5, les
+                                    critères CA1-CA7, la taille
+                                    d'échantillon, la règle d'arrêt ; son
+                                    empreinte sha256 est consignée à D204 ;
+  compter_tokens.py                 L'INSTRUMENT M2 — chaque appel au
+                                    modèle passe par lui ; il LIT le champ
+                                    usage de la réponse de l'API (le log)
+                                    et journalise une ligne JSON par appel
+                                    (bras, phase, tâche) ; l'estimation
+                                    ×1,08 est REFUSÉE tant qu'un log
+                                    existe ;
+  chronometre_verification.py       L'INSTRUMENT M4 — le temps mural des
+                                    commandes de vérification (les listes
+                                    fixées par le plan § 4-M4), la
+                                    calibration prouvée au dry-run ;
+  carnet_temps_humain.csv           LE GABARIT M3 — le carnet du
+                                    développeur, rempli AU GESTE (jamais
+                                    reconstruit), arrondi à la minute ;
+  livraisons.csv / defauts.csv      LES GABARITS M1 — une ligne par run
+                                    terrain / par défaut nommé, la règle
+                                    D202 au commentaire (pièce et
+                                    livraison, les exclusions nommées) ;
+  verifier_comparaison_v150.py      LE VÉRIFICATEUR — le verrou (empreinte
+                                    consignée avant tout fichier de
+                                    résultats), l'audit du plan (zéro
+                                    chiffre de résultat), la preuve du
+                                    dry-run (les compteurs à l'unité
+                                    près).
+
+LA CAMPAGNE (le jour venu — au développeur de l'ouvrir) :
+  1. la partie contrôlée : les six blocs (loupe-01/02/05/08/13/16) aux
+     DEUX bras depuis leurs contrats I ; chaque appel au modèle par
+     compter_tokens.py (bras T phases spec/notation/oracle/build/
+     correctif/ceremonie ; bras C phases spec/source-c/tests-c/build/
+     correctif) ; les kits terrain au même mécanisme (pièce + scénario +
+     témoins) ; les runs chez le développeur, les témoins au coffre, le
+     recoup au labo ; au plus TROIS livraisons par bloc, l'arrêt au
+     premier vert ;
+  2. la partie réaliste : une commande applicative réelle (jamais un
+     exercice), aux DEUX bras, au plus DOUZE livraisons ;
+  3. le carnet M3 rempli au geste à chaque cérémonie et chaque revue ;
+  4. les chronométrages M4 à chaque livraison (les listes du plan) ;
+  5. l'analyse AUX DEUX BRAS COMPLETS seulement (CA7 — jamais en cours de
+     route), rapportée telle quelle (CA5), avec la réserve de
+     non-indépendance.
+
+LES FRONTIÈRES : les pièces scellées du projet INTACTES (la campagne vit
+sur des artefacts dev de laboratoire ; le garde 14/14 AVANT chaque geste) ;
+aucun arbre signé touché sans cérémonie d'ère ; le dossier des résultats
+(preuves_v150/comparaison_resultats/) NAÎT de la première mesure — jamais
+avant ; aucun chiffre fabriqué.

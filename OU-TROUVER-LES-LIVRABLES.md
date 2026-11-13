@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-273 — la réception du run kit-2 v2 :
+*Mise à jour : 14/11/2026 (Entrée 274 — LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS LIVRÉ : le kit TRIADE_gui_campagne_v1 au /test, tout au clic, les frontières tenues par construction ; Entrées 261-273 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
@@ -32,6 +32,7 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **LES RUNS 1 CLIC REÇUS ET RECOUPÉS — les HUIT dossiers de run du développeur (Entrée 271 : 87 pièces md5 recoupées, les cinq scellés intacts ; LA VOIE 1 QEMU VERT 16 PASS, le témoin vitrine propre, le geste B refusé nommé, la calibration D204 fautive sous Windows nommée — renvoyée telle quelle)** | preuves-runs-1clic-terrain-v1/ | **oui (fichiers-1clic/TRIADE_fichiers_1clic_v1/ — le dépôt du développeur, 13/11 15:51Z + LISEZMOI-RUNS-1CLIC.txt)** | download/preuves-runs-1clic-terrain-v1/ |
 | **LE TÉMOIN M7D DATÉ SIGNÉ — LA CHAÎNE DE LA VOIE 1 FERMÉE (Entrée 272 : la pièce du chat == le dépôt du développeur (/test/fichiers-1clic/temoin-m7d.txt, 989 o, md5 264e9cbd…) octet pour octet ; la base == l'AUTO 957 o + la main « fait le 13/11/2026 / Alexis Lopez » 32 o ; les trois empreintes recoupées, la chronologie jamais avant le run ; preuves-m7/ ENTIÈRES assemblées au /test/preuves-m7d-voie1-20261113T155020Z/ — cinq pièces md5 recoupées par re-téléchargement ; la finale 0.8.0 demeure scellée au 05/11, le rejouage ne re-scelle rien)** | preuves-m7-temoin-signe/ | **oui (preuves-m7d-voie1-20261113T155020Z/ — le signé, l'AUTO en regard, le VERDICT, le journal, le LISEZMOI)** | download/preuves-m7-temoin-signe/ |
 | **LA SECONDE VAGUE DES RUNS 1 CLIC + LE KIT DES RUNS RESTANTS (Entrée 273 : les NEUF dossiers 18:08-18:11Z, 92 pièces md5 recoupées ; LA VOIE 2 VÉCUE sous qemu-x86_64 -cpu max — preuves-shani nées du terrain, témoin AUTO en attente de la main, l'artefact TCG 1,44×/1,45× consigné tel quel ; LA VOIE 1 rejouée aux mêmes empreintes ; la calibration D204 RÉPARÉE : la pause portable en processus, l'épreuve VERT à 0,000 s ; le kit : QUATRE fichiers autonomes — la campagne v2, le geste B, le séquestre, la réplication, zip ca004296…)** | preuves-runs-1clic-terrain-v2/ + TRIADE_kit_runs_restants_v1/ | **oui (le kit : le zip + LISEZMOI-RUNS-RESTANTS.txt, md5 recoupés par re-téléchargement)** | download/preuves-runs-1clic-terrain-v2/ + download/TRIADE_kit_runs_restants_v1/ |
+| **LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS — le kit TRIADE_gui_campagne_v1 (Entrée 274 : le GUI v1.0.0 en un fichier tkinter, cinq étapes tout au clic — le verrou fail-closed, l'atelier aux copies datées, la calibration, les quatorze unités en sept onglets, le suivi aux comptes seuls ; la cap TENUE par le GUI ; zip 2b4ce495…)** | TRIADE_gui_campagne_v1/ | **oui (le zip + la carte LISEZMOI-campagne-GUI.txt, sha256 recoupés par re-téléchargement)** | download/TRIADE_gui_campagne_v1/ + download/TRIADE_gui_campagne_v1.zip |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
@@ -66,7 +67,7 @@ signée du 13/11 11:14Z ne parut au listing de son dossier que
 CROISE les canaux (listing, recherche par nom, lecture directe de la
 pièce) AVANT de conclure à une absence.*
 
-## L'état (Entrée 273) — la voie 2 vécue au terrain, la calibration réparée, le kit des runs restants livré : la voie 2 attend sa signature, la campagne attend ses deux bras
+## L'état (Entrée 274) — le GUI de campagne livré : la campagne aux deux bras OUTILLÉE au clic ; la voie 2 attend toujours sa signature, la campagne attend ses deux bras
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -117,5 +118,14 @@ pièce) AVANT de conclure à une absence.*
    hors-ligne), la réplication (le second annotateur et le second
    domaine demeurent les acteurs manquants, nommés, jamais maquillés).
 
+5. **LA CAMPAGNE EST OUTILLÉE AU CLIC (Entrée 274)** : le kit
+   TRIADE_gui_campagne_v1 vit au /test — le GUI pas à pas (le verrou,
+   l'atelier, la calibration, les quatorze unités, le suivi) ; la cap
+   pré-enregistrée est TENUE par le GUI (le refus au-delà de TROIS par
+   bloc, l'arrêt au premier vert) ; les kits d'unités demeurent À LIVRER
+   par le labo au fil de la campagne — le GUI les attend à l'onglet 1
+   de chaque unité, la campagne reste le travail de fond aux DEUX BRAS
+   (le plan a78caf8c… fait foi, AUCUNE mesure n'existe — CA1).
+
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-273) et au worklog (`worklog.md`, Tasks 158-180).*
+Entrées 251-274) et au worklog (`worklog.md`, Tasks 158-181).*

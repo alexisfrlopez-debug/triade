@@ -9854,3 +9854,40 @@ Work Log:
 - SUITE : au développeur — la signature du témoin de la voie 2 D'ABORD,
   la campagne aux deux bras (la v2), le geste B sur silicium SHA-NI, la
   cérémonie hors-ligne, le κ aux deux jeux.
+Task ID: 181
+Agent: Z.ai (agent principal — la session du GUI de campagne)
+Task: LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS LIVRÉ (la commande
+« fais un GUI pas a pas, tout au clic, pour la campagne aux 2 bras ») :
+le kit TRIADE_gui_campagne_v1 — triade_campagne_gui.py (un fichier,
+tkinter, la stdlib seule) + le double-clic LANCER-GUI-CAMPAGNE-D204.bat
++ les HUIT pièces de l'Entrée 273 INTACTES ; LES CINQ ÉTAPES (le verrou
+fail-closed et l'atelier aux copies datées, la calibration dry-run, les
+quatorze unités en sept onglets — kit, run officiel, témoin à la main,
+carnet M3 au geste, livraison M1, défauts nommés, chrono M4 —, le
+suivi aux comptes seuls, les pièces) ; LA CAP TENUE PAR LE GUI (le
+refus au-delà de TROIS, l'arrêt au premier vert, la censure lisible) ;
+les frontières par construction (jamais signer, jamais déposer, jamais
+fabriquer, jamais toucher les originaux).
+
+Work Log:
+- LA CONCEPTION : le plan D204 relu entier (les deux bras, les quatre
+  métriques, les caps § 7, CA1-CA7) ; le GUI épouse les listes fixes
+  (gestes M3 par bras, commandes M4 par bras, les six blocs) ; la
+  logique séparée de la fenêtre (--selftest sans tkinter, 13 VERT).
+- LES ÉPREUVES : fonctionnel 8 VERT sous Xvfb (la calibration RÉELLE
+  courue, écart 0,000 s) ; l'épreuve visuelle par lecteur visionnaire
+  (cinq étapes + sept onglets, deux corrections : les retours à la
+  ligne, les étiquettes d'onglets) ; le défaut de fil « main thread
+  is not in main loop » nommé et réparé (tout par la file).
+- LE DÉPÔT : le zip + la carte au /test, sha256 recoupés par
+  re-téléchargement (2b4ce495… / 685ae642…) ; les EMPREINTES gravées
+  du montage même (11 lignes) ; le relais OAuth du coffre a porté le
+  dépôt (le compte de service lecteur seul, le 403 nommé).
+- LA CONSIGNATION : la présente Entrée 274 + Task 181 ; la carte
+  OU-TROUVER portée à 274 ; D141 tenu avant le commit (le courant
+  273-190c8a6 archivé versionné, md5 recoupé) ; le commit, le miroir
+  synchronisé.
+- SUITE : au développeur — dézipper le kit et double-cliquer le .bat ;
+  le verrou d'abord, l'atelier naît, la calibration, puis les unités
+  au fil des kits livrés ; la signature du témoin de la voie 2
+  demeure LA pièce qui ferme sa chaîne.

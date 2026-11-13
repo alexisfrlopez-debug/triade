@@ -1,0 +1,12 @@
+# LA MÉTRIQUE M3 DU PLAN (D204) — LE TEMPS HUMAIN DE CÉRÉMONIE/REVUE.
+# RÈGLE : la ligne se remplit AU GESTE (jamais reconstruite de mémoire) ;
+# arrondi à la minute ; toute interruption > 5 min ferme la ligne et en
+# ouvre une autre. Les gestes chronométrés, PAR BRAS :
+#   bras T : cristallisation (les 10 rebuilds), garde, cérémonie de
+#            scellement (le geste du développeur, s'il a lieu — sinon
+#            la ligne reste absente, l'écart est nommé au rapport) ;
+#   bras C : le tag/backup équivalent, la relecture de livraison ;
+#   les DEUX : la revue des livrables (lire la spec/le code livré,
+#            arbitrer un défaut nommé).
+# colonnes : date,bras,tache,geste,debut,fin,minutes,notes
+date,bras,tache,geste,debut,fin,minutes,notes
