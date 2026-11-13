@@ -1,13 +1,16 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-265 — la réception du run kit-2 v2 :
+*Mise à jour : 13/11/2026 (Entrées 261-266 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
-1 CLIC). Ce fichier vit à la racine du coffre Drive, au
-miroir `TRIADE-sauvegarde-git/` et au bac de la session — il est tenu par
-`scripts/drive_sync.py` (ROOT_PUSH).*
+1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
+fermée ; LES TESTS CLOS ARCHIVÉS (44 entrées, le /test rendu à la
+suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature). Ce fichier
+vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
+au bac de la session — il est tenu par `scripts/drive_sync.py`
+(ROOT_PUSH).*
 
-## La réponse courte — les livrables récents ( Entrées 251-265 )
+## La réponse courte — les livrables récents ( Entrées 251-266 )
 
 | Livrable | Bac de la session | Coffre /test | Miroir git |
 | --- | --- | --- | --- |
@@ -21,15 +24,19 @@ miroir `TRIADE-sauvegarde-git/` et au bac de la session — il est tenu par
 | Exe 1-clic kit-2 v2 (exe e6752c58…, paquet c2887ebd…) | oui | oui (dépôté le 12/11, md5 recoupé — Entrée 263) | download/TRIADE_kit2_exe_1clic_v2/ |
 | **LE RUN KIT-2 v2 — LA MESURE VÉCUE (zip 3111842a… + lecture, Entrée 261)** | preuves-run-kit2-dudect-v2/ | **oui (le dépôt du développeur + LISEZMOI-MESURE-VECUE.txt)** | download/preuves-run-kit2-dudect-v2/ |
 | **LE TÉMOIN DU KIT-2 DATÉ SIGNÉ — LA CHAÎNE FERMÉE (Entrée 264)** | preuves-kit2-temoin-signe/ | **oui (le dossier du développeur, 13/11 09:04Z)** | download/preuves-kit2-temoin-signe/ |
-| **LE SECOND RUN OUTILLÉ — N=400 EN 1 CLIC (Entrée 265)** | TRIADE_kit2_second_run_N400_v1/ | oui | download/TRIADE_kit2_second_run_N400_v1/ |
+| **LE SECOND RUN OUTILLÉ — N=400 EN 1 CLIC (Entrée 265)** | TRIADE_kit2_second_run_N400_v1/ | oui (archivé à kits-terrain-v0150/ — le run est couru) | download/TRIADE_kit2_second_run_N400_v1/ |
+| **LE SECOND TÉMOIN SIGNÉ — N=400, LA CHAÎNE DOUBLEMENT FERMÉE (Entrée 266)** | preuves-kit2-second-temoin-signe/ | **oui (le dossier du développeur, 13/11 10:38Z — les quatre \|t\| sous le seuil)** | download/preuves-kit2-second-temoin-signe/ |
+| **LE TÉMOIN DU VERDICT ANDROID — à récupérer pour signer (Entrée 266)** | — | **oui (temoin-verdict-android/, trois pièces)** | — |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
 - `TRIADE_complet_v0.15.0.zip`, `TRIADE_soumission_v0.15.0.zip`,
   `TRIADE_manuscrit_v0.15.0.pdf`, `empreintes_livrables_v0.15.0.txt`.
-- Les kits terrain v0150 vécus : dossiers `TRIADE_kits_terrain_v0150_*` du
-  /test (MISE-A-JOUR, MISE-A-JOUR2, AUTO, CORRECTIF2-kit-shani,
-  CORRECTIF2-kit-dudect, kit-2-dudect avec les preuves du crash).
+- Les kits terrain v0150 vécus : les itérations MULTIMACHINES →
+  CORRECTIF → CORRECTIF2 et le kit CORRECTIF3 final vivent désormais aux
+  archives du /test (`archives-livraisons/kits-terrain-v0150/`, Entrée
+  266 — la salle et son LISEZMOI) ; le kit loupe-13 (campagne D204)
+  demeure au /test.
 
 ## Le miroir git — `TRIADE-sauvegarde-git/`
 
@@ -45,28 +52,34 @@ compte de service — c'est pourquoi ils semblèrent absents à l'Entrée 261) :
 le relais OAuth du coffre `Tokens/` est la vue de référence du coffre ;
 JAMAIS conclure à une absence depuis le seul listing du compte de service.*
 
-## L'état (Entrée 265) — la chaîne du kit-2 FERMÉE, le second run outillé, ce qui reste au développeur
+## L'état (Entrée 266) — la chaîne du kit-2 DOUBLEMENT fermée, le /test rendu à la suite, le témoin android attend sa main
 
-1. **LE TÉMOIN DATÉ SIGNÉ du run kit-2 EST REÇU** (Entrée 264, le 13/11
-   09:04Z) : « fait le 13/11/2026 / Alexis Lopez » sous les lignes, les
-   cinq pièces de mesure jamais retouchées — LA CHAÎNE DU KIT-2 EST
-   FERMÉE. Les champs demeurés vides (l'OS, le turbo EFFECTIF au BIOS, la
-   fréquence réelle, les observations) sont consignés TELS QUELS — D189 :
-   ils restent à votre main si vous souhaitez les compléter un jour, le
-   témoin signé demeurant la pièce de référence.
-2. **LE SECOND RUN KIT-2 EST OUTILLÉ EN 1 CLIC (Entrée 265)** : téléchargez
-   `TRIADE_kit2_second-run_N400_v1.zip` au coffre /test, extrayez,
-   double-cliquez `LANCER-SECOND-RUN-N400.bat` — il trouve l'exe v2 seul
-   (Téléchargements ou Bureau s'il y vit), recoupe son sha256 (fail-closed,
-   la v1 refusée nommée — la ligne 55) et le lance à N=400. Puis : déposez
-   le zip des preuves au /test, datez et signez le témoin du second run.
-   Il consoliderait tls13-13 (5.19, la limite n'est pas loin) et tls13-17
-   (3.11) sans jamais effacer le premier témoin signé.
-3. La signature à la main du verdict Android (Entrée 257) — D189 :
-   rapporter tel quel.
-4. Les preuves formelles `preuves-constat-arm/` (le téléphone) et les
-   gestes ouverts : le geste B SHA-NI réel, la campagne D204, la
-   cérémonie d'ère, le séquestre D183, la réplication.
+1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
+   le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
+   (Entrée 266, le 13/11 10:38Z — « fait le 13/11/2026 / Alexis LOPEZ »,
+   85 s après le run). Au N=400 : tls13-02 |t|=0.84, tls13-13 |t|=1.55,
+   tls13-16 |t|=-0.30, tls13-17 |t|=2.02 — LES QUATRE sous le seuil, les
+   dépendances du premier run DISSIPÉES (la lecture honnête demeure :
+   aucune divergence au seuil sur cet échantillon, cette machine — jamais
+   « temps constant prouvé »). Les deux dossiers signés demeurent au /test
+   — D99, jamais effacés.
+2. **LES TESTS CLOS SONT ARCHIVÉS (Entrée 266)** : 44 entrées du /test
+   déplacées aux salles d'archives (jamais jetées — D143) — 17 preuves et
+   runs clos à `archives-preuves/`, 27 livraisons et outils à la salle
+   nouvelle `archives-livraisons/kits-terrain-v0150/`. Le /test porte
+   DÉSORMAIS 15 entrées vivantes : les deux témoins signés, la chaîne
+   Android, le kit loupe-13, les registres de cérémonie, les salles — et
+   le témoin du verdict android.
+3. **LE TÉMOIN DU VERDICT ANDROID VOUS ATTEND (le geste le plus court de
+   la suite)** : au coffre /test, dossier `temoin-verdict-android/` —
+   récupérez-le, ouvrez `TEMOIN-VERDICT-ANDROID.txt`, complétez vos
+   observations (D189), datez et signez de votre main sous les lignes
+   (comme au kit-2), renvoyez le dossier ENTIER au /test. Le VERDICT.txt
+   joint reste tel quel (l'ancre de recoup).
+4. Les preuves formelles `preuves-constat-arm/` (le téléphone — l'APK
+   demeure au /test) et les gestes ouverts : le geste B SHA-NI réel, la
+   campagne D204 (le kit loupe-13 demeure au /test), la cérémonie d'ère,
+   le séquestre D183, la réplication.
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-265) et au worklog (`worklog.md`, Tasks 158-172).*
+Entrées 251-266) et au worklog (`worklog.md`, Tasks 158-173).*

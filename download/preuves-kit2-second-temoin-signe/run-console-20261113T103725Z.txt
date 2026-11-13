@@ -1,0 +1,63 @@
+============================================================================
+ LE KIT 2 DUDECT TEMPS REEL - correctif n.o 3 - paquet CORRECTIF3-kit-dudect
+ Les quatre familles crypto de la piece scellee (tls13-02, tls13-13,
+ tls13-16, tls13-17), RDTSC/QPC, affinite coeur 0, t de Welch, |t| > 5.
+ C'est LA MESURE JAMAIS ENCORE COURUE du paquet (voyez
+ CE-QUI-RESTE-A-FAIRE.txt).
+============================================================================
+
+[protocole] N = 400 echantillons par classe.
+[pieces] dudect_v150.c + cibles\ : presents.
+[recoup] sha256 attendu de cibles\proxy-image.bin :
+         0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[recoup] image scellee INTACTE - la piece est la piece du labo.
+[compilateur] AUCUN (cl / gcc / clang introuvables) : les exe PRECOMPILES
+              livres courent - ils furent cross-compiles au labo depuis
+              CETTE meme source, jamais executes au labo (aucun Windows
+              au labo) : ce run en est le premier temoin.
+[attention]  si votre ANTIVIRUS retire les exe a l'extraction (un faux
+              positif des exe de mesure de timing - le coffre Drive l'a
+              vecu le 12/11), l'ecart sera NOMME plus bas : rien ne se
+              passe en silence. VERIFIER-PAQUET.bat le dit AVANT, si vous
+              voulez le savoir d'abord.
+[epreuve d'appel] test_appel.exe - attendu : FIPS abc EXACT, mutation K DIVERGE...
+[image] cibles/proxy-image.bin : 69632 octets mappes a 0000019c98fe0000
+[FIPS abc] ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad -> EXACT (la piece scellee est bien l'image executee)
+[mutation K] condense DIVERGE — la table est BIEN lue par la piece
+[restauration] EXACT
+[epreuve d'appel] code 0 - EXACT.
+
+[LE RUN] "dudect_v150.exe" cibles 400  -  l'affichage suit a la fin du run...
+=== dudect_v150 - le mesureur temps reel (kit 1, v0.15.0) ===
+[config] OS=Windows (le run terrain)  N=400/classe  seuil |t|>5
+[affinite] coeur 0 : posee
+[manifeste] image 69632 octets, 4 cible(s)
+[image] sha256 recoupe - la piece scellee
+[tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+  fixe      : moy 1502.7 cyc, med 1420
+  aleatoire : moy 1324.8 cyc, med 1134
+  t de Welch = 0.84 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+  fixe      : moy 443930.5 cyc, med 443790
+  aleatoire : moy 438450.9 cyc, med 428158
+  t de Welch = 1.55 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+  fixe      : moy 28.3 cyc, med 28
+  aleatoire : moy 28.5 cyc, med 28
+  t de Welch = -0.30 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+  fixe      : moy 636.1 cyc, med 634
+  aleatoire : moy 633.9 cyc, med 636
+  t de Welch = 2.02 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-1794566245.csv - joignez-le a temoin-dudect.txt avec la config CPU, l'etat EFFECTIF du turbo et l'OS
+[LE RUN] code de sortie : 0
+
+============================================================================
+ LE BROUILLON DU TEMOIN EST ECRIT : temoin-dudect-BROUILLON.txt
+ A VOTRE MAIN : l'etat EFFECTIF du turbo (BIOS), la date et la SIGNATURE.
+ Renvoyez le dossier ENTIER au coffre /test (dossier Drive 'Triade').
+ La lecture honnete : |t| > 5 = dependance AU SEUIL, consignee
+ telle quelle ; |t| <= 5 = aucune divergence au seuil sur CET
+ echantillon, CETTE machine - jamais 'temps constant prouve'.
+============================================================================
+Appuyez sur une touche pour continuer... 

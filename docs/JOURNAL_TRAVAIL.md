@@ -10878,3 +10878,97 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   (Entrée 257) — D189 : rapporter tel quel ; puis preuves-constat-arm (le
   téléphone), puis les gestes ouverts : le geste B SHA-NI réel, la campagne
   D204, la cérémonie d'ère, le séquestre D183, la réplication.
+
+## Entrée 266 — LE SECOND TÉMOIN SIGNÉ (N=400) REÇU ET RECOUPÉ, LES TESTS CLOS ARCHIVÉS (44 entrées du /test), LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ POUR SIGNATURE (la parole du développeur du 13/11 : « dossier kit-2 avec preuves signées déposé dans /test du drive — archive tous les tests qui ne sont plus utiles pour la suite et mets le témoin du verdict android dans /test que je puisse le récupérer pour le signer ») (13/11, la session de la réception, de l'archivage et du témoin android)
+
+- LE SECOND TÉMOIN SIGNÉ : le dossier preuves-kit2-dudect-20261113T103725Z/
+  (créé 13/11 10:38:50Z, 85 s après le run 10:37:25Z, 8 min après le dépôt
+  du paquet N400 de l'Entrée 265) — SIX pièces rapatriées 6/6 md5
+  listing↔local MATCH, le bac download/preuves-kit2-second-temoin-signe/ à
+  la structure EXACTE du dépôt (jamais renommée). Le dépôt du développeur
+  porte le dossier entier sans zip séparé — D189 : rapporté tel quel.
+
+- LE RECOUPEMENT (jamais avant le run, jamais sans pièces) : les DIX
+  pièces du kit embarqué == le paquet CORRECTIF3 du labo octet pour octet
+  (10/10 sha256 relus du DEPOT.txt et recalculés contre le paquet) ; le
+  diff des deux témoins signés ne porte QUE quatre lignes — le run
+  (11:37:31 locale, UTC+1), le N (400), le journal (1794566245) et la main
+  (« Alexis LOPEZ » en capitales — D189 : tel quel, jamais maquillé) ; le
+  journal porte 3 200 lignes de données (4 cibles × 2 classes × 400 —
+  recomptées) ; la chronologie : la date « fait le 13/11/2026 » le MÊME
+  jour que le run, JAMAIS avant le run.
+
+- LA MESURE N=400 (consignée telle quelle, avec son témoin désormais
+  signé) : tls13-02 (SHA-256) |t| = 0.84, tls13-13 (X25519) |t| = 1.55,
+  tls13-16 (AES-128) |t| = -0.30, tls13-17 (GHASH) |t| = 2.02 — LES
+  QUATRE sous le seuil : les dépendances au seuil du premier run
+  (tls13-02 12.39, tls13-13 5.19) sont DISSIPÉES au N=400 — la mesure a
+  décidé ce que le LISEZMOI-SECOND-RUN lui laissait décider (« un N plus
+  grand la consoliderait ou la dissiperait »). La lecture honnête demeure
+  celle du kit : « aucune divergence au seuil sur CET échantillon, CETTE
+  machine — jamais 'temps constant prouvé' ». Les champs demeurés vides
+  (l'OS, le turbo EFFECTIF, la fréquence réelle, les observations)
+  rapportés TELS QUELS — D189. Les DEUX témoins signés coexistent (D99) :
+  N=200 (Entrée 264) et N=400 (la présente) — la chaîne du kit-2
+  DOUBLEMENT fermée.
+
+- L'ARCHIVAGE (la commande du développeur : « archive tous les tests qui
+  ne sont plus utiles pour la suite ») : 44 entrées du /test DÉPLACÉES
+  vers les salles d'archives — JAMAIS jetées, JAMAIS corbeillées, md5 et
+  tailles INTACTS vérifiés par re-listing après chaque déplacement (D143 :
+  tout ce qui n'est plus utile vit aux archives, versionné, jamais jeté).
+  17 preuves et runs clos → archives-preuves/ (les jalons m5b→m9f, les
+  sondes sys05/sys06 — leurs recoups 17/17 y vivaient déjà, preuves-loupe,
+  les loupe-kit-7 à 12, le kit-2-dudect du crash-épisode CLOS par le
+  verdict « aucun crash », les preuves du run v1 du 12/11 22:15Z, le
+  Terminal transcript). 27 livraisons et outils → la SALLE NOUVELLE
+  archives-livraisons/kits-terrain-v0150/ (les scripts WSB de la première
+  heure, les kits sonde sys05/sys06, les itérations MULTIMACHINES →
+  CORRECTIF → CORRECTIF2 du paquet terrain, le kit CORRECTIF3 final —
+  celui des deux runs signés —, les exe 1-clic v1 et v2, le lanceur N400,
+  le LISEZMOI-MESURE-VECUE du geste vécu, l'empaquetage et les sources de
+  l'APK android). Les DEUX index LISEZMOI des salles mis à jour (sections
+  datées du 13/11 append, recoupées par re-téléchargement octet pour
+  octet), la salle nouvelle porte son PROPRE LISEZMOI (la ligne de chacune
+  des 27 pièces, la frontière de ce qui demeure).
+
+- LE /TEST APRÈS : 15 entrées vivantes — les DEUX dossiers signés du
+  kit-2 (+ le zip du premier run, l'ancre de recoup de l'Entrée 264), la
+  chaîne Android (l'APK 313b60aa… pour preuves-constat-arm, son
+  LISEZMOI, le VERDICT du 12/11 et le zip du run), le kit loupe-13 (la
+  campagne D204, geste ouvert), les registres de la cérémonie d'identité
+  (signatures-I, cle-publique-I — jamais des tests), les deux salles
+  d'archives — et le témoin du verdict android.
+
+- LE TÉMOIN DU VERDICT ANDROID (la commande du développeur : « mets le
+  témoin du verdict android dans /test que je puisse le récupérer pour le
+  signer ») : le dossier temoin-verdict-android/ au coffre /test, TROIS
+  pièces déposées et recoupées md5 par md5 — TEMOIN-VERDICT-ANDROID.txt
+  (le témoin À COMPLÉTER ET À SIGNER : les faits du constat sur pièces —
+  Blackview XPLORE 1, MT8791V/HZA, Android 15, Cortex-A55+A78,
+  FEAT_SHA256 lue à ses canaux, le refus x86-64 nommé avec les trois
+  empreintes, les lecteurs sha256/sha512 « abc » EXACTS, la portée D206 —
+  puis la zone À COMPLÉTER de la main et les lignes de la signature) ;
+  VERDICT.txt (la copie EXACTE de l'original du 12/11, md5 660d00cea7… —
+  l'ancre de recoup, JAMAIS retouchée) ; LISEZMOI-TEMOIN-ANDROID.txt (le
+  geste en cinq minutes, aucun outil, aucun compte). ASCII pur, CRLF — la
+  forme du témoin kit-2 vécue.
+
+- LA CHAÎNE DE RÉCEPTION (le labo) : le D141 tenu AVANT le commit — le
+  courant du miroir (pointe 28b99ce, Entrée 265) archivé VERSIONNÉ à
+  archives-bundles/triade-history-265-28b99ce.bundle (md5 recoupé par
+  re-téléchargement, la pointe vérifiée par git bundle list-heads) ; la
+  présente consignation + la Task 173 au worklog ; la carte
+  OU-TROUVER-LES-LIVRABLES portée à l'Entrée 266 (les lignes du second
+  témoin signé et du témoin android, l'état mis à jour) ; le commit, le
+  push GitHub (main), le miroir Drive synchronisé (le bundle régénéré à
+  la pointe 266).
+
+- SUITE : au développeur — LE GESTE LE PLUS COURT DE LA SUITE :
+  récupérez le dossier temoin-verdict-android/ au coffre /test, ouvrez
+  TEMOIN-VERDICT-ANDROID.txt, complétez vos observations (D189), datez et
+  signez de votre main sous les lignes — comme au kit-2 —, renvoyez le
+  dossier ENTIER au /test. Puis les preuves formelles preuves-constat-arm/
+  (le téléphone — l'APK demeure au /test) et les gestes ouverts : le geste
+  B SHA-NI réel, la campagne D204 (le kit loupe-13 demeure au /test), la
+  cérémonie d'ère, le séquestre D183, la réplication.
