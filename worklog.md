@@ -9933,3 +9933,11 @@ Work Log:
   existant, rouvrir le GUI (le verrou passe, la calibration se
   rejoue), puis la campagne aux deux bras ; la signature du témoin de
   la voie 2 demeure LA pièce qui ferme sa chaîne.
+- L'ADDENDA (le dépôt vécu) : le /test a reçu les TROIS pièces
+  (le zip correctif, la carte, le bat v3) — 3/3 md5 MATCH par
+  re-téléchargement ; LE PUSH GITHUB a été REFUSÉ (« Invalid username or
+  token » — le jeton fourni est expiré ou révoqué : écart nommé, non
+  bloquant ; le MIROIR DRIVE est synchronisé à l'état 275 — le courant
+  rafraîchi, l'archive 274-8644226 versionnée — et demeure LA
+  sauvegarde de référence ; le jeton GitHub se rafraîchit au geste du
+  développeur le jour voulu).
