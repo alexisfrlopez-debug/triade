@@ -9547,3 +9547,15 @@ Work Log:
   GitHub + re-synchro du miroir.
 - SUITE : le témoin signé (261), preuves-constat-arm, le geste B, D204,
   la cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 171
+Agent: Z.ai (agent principal — la session de la réception du témoin signé)
+Task: LA RÉCEPTION DU TÉMOIN DATÉ SIGNÉ DU RUN KIT-2 — LE GESTE QUI FERME LA CHAÎNE (l'annonce du développeur du 13/11 : « preuves avec témoin daté signé déposées dans /test du drive ») : le dossier preuves-kit2-dudect-20261113T081451Z/ créé au coffre /test le 13/11 09:04:20Z (49 min après le dépôt du zip du run, 56e entrée du /test par le relais OAuth) — le témoin porte désormais SOUS LES LIGNES le bloc de la main du développeur (« fait le 13/11/2026 » / « Alexis Lopez », md5 43283c2ae9… vs ad49d1c948… le brouillon auto — les 34 octets du geste) ; les CINQ pièces de mesure re-déposées OCTET POUR OCTET IDENTIQUES aux pièces du run de l'Entrée 261 (DEPOT d7de268b1f…, journal 0850e035bf…, sortie-appel 286a40ba08…, sortie-run c7c207fe45…, console fafaf4a311…) — JAMAIS retouchées après coup ; la date : le MÊME JOUR que le run, JAMAIS AVANT LE RUN ; la signature : Alexis Lopez (github.com/alexisfrlopez-debug) ; LA CHAÎNE DU KIT-2 FERMÉE ; les champs demeurés vides (L'OS, le turbo EFFECTIF au BIOS, la fréquence réelle, les observations même défavorables) rapportés TELS QUELS — D189, jamais remplis par le labo à la place du développeur.
+
+Work Log:
+- LE RAPATRIEMENT : listing OAuth du /test (la vue de référence — règle de l'Entrée 263), le nouveau dossier repéré par createdTime (09:04:20Z > 08:15:42Z), SIX pièces téléchargées md5 par md5 (listing↔local 6/6 MATCH), le bac download/preuves-kit2-temoin-signe/ à la structure EXACTE du dépôt.
+- LE RECOUPEMENT : diff pièce par pièce contre le bac du run v2 — les cinq pièces de mesure IDENTIQUES (aucune retouche), le témoin : le seul et unique ajout = le bloc daté signé sous les lignes, sans newline final, le fichier demeurant sous son nom déposé.
+- LA CONSIGNATION : l'Entrée 264 au journal, la présente tâche au worklog, la carte OU-TROUVER-LES-LIVRABLES portée à 264 (la ligne du témoin signé, l'état mis à jour — la chaîne fermée).
+- LE D141 TENU AVANT LE COMMIT : le courant du miroir (pointe fe45439, Entrée 263) archivé VERSIONNÉ à archives-bundles/triade-history-263-fe45439.bundle, md5 c72b205d0d… recoupé par re-téléchargement ; puis le commit, le push GitHub (main), le miroir Drive synchronisé (le bundle régénéré à la pointe 264).
+- SUITE : (optionnel) le second run kit-2 à N plus grand (l'exe v2 accepte N en argument, ex. « 400 », minimum 60) consoliderait tls13-13 (5.19) et tls13-17 (3.11) sans jamais effacer le premier témoin signé ; la signature à la main du verdict Android (Entrée 257) ; preuves-constat-arm (le téléphone) ; le geste B SHA-NI réel, la campagne D204, la cérémonie d'ère, le séquestre D183, la réplication.

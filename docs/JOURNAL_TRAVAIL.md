@@ -10746,3 +10746,70 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   les preuves formelles preuves-constat-arm ; les gestes ouverts (le
   geste B SHA-NI réel, la campagne D204, la cérémonie d'ère, le
   séquestre D183, la réplication).
+
+## Entrée 264 — LA RÉCEPTION DU TÉMOIN DATÉ SIGNÉ DU RUN KIT-2 : LE GESTE QUI FERME LA CHAÎNE (l'annonce du développeur du 13/11 : « preuves avec témoin daté signé déposées dans /test du drive ») — un NOUVEAU dossier au coffre /test, preuves-kit2-dudect-20261113T081451Z/ (créé 13/11 09:04:20Z, 49 min après le dépôt du zip du run) : le témoin complété de la main du développeur sous les lignes, les pièces de mesure JAMAIS retouchées, la chaîne du kit-2 FERMÉE (13/11, la session de la réception — le témoin signé)
+
+- LE DÉPÔT : la 56e entrée du /test par le relais OAuth (la vue de
+  référence — Entrée 263), le dossier preuves-kit2-dudect-20261113T081451Z/
+  (id 15a8WRFO…), créé le 13/11 09:04:20Z : SIX pièces re-déposées en
+  dossier par le geste Drive du développeur. Rapatriées par l'API relais
+  6/6 md5 listing↔local MATCH, le bac download/preuves-kit2-temoin-signe/
+  au dépôt git — la structure EXACTE du dépôt, jamais renommée.
+
+- LE RECOUPEMENT DES PIÈCES (jamais avant le run, jamais sans pièces) :
+  les CINQ pièces de mesure sont OCTET POUR OCTET IDENTIQUES à celles du
+  zip du run déposé 08:15:42Z (Entrée 261) — DEPOT.txt (d7de268b1f…,
+  2 191 o), journal-dudect-1794557691.csv (0850e035bf…, 60 156 o),
+  sortie-appel.txt (286a40ba08…, 296 o), sortie-run.txt (c7c207fe45…,
+  1 257 o), run-console-20261113T081451Z.txt (fafaf4a311…, 3 746 o) :
+  le geste du développeur n'a touché à AUCUNE pièce de mesure — jamais
+  de retouche après coup, le diff ne diffère que par le témoin.
+
+- LE TÉMOIN (la seule divergence) : temoin-dudect-BROUILLON.txt porte
+  désormais SOUS LES LIGNES le bloc de la main du développeur —
+  « fait le 13/11/2026 » puis « Alexis Lopez » (md5 43283c2ae9…, 1 508 o,
+  vs le brouillon auto ad49d1c948…, 1 474 o : les 34 octets du geste,
+  sans newline final — le fichier demeure SOUS SON NOM DÉPOSÉ, jamais
+  renommé par le labo). LA DATE : 13/11/2026, le MÊME JOUR que le run
+  (9:14:57 locale = 08:14:51Z), 49 min après le dépôt du zip — JAMAIS
+  AVANT LE RUN. LA SIGNATURE : Alexis Lopez — le nom du développeur
+  (github.com/alexisfrlopez-debug, Entrée 133). Le geste exigé par le
+  LISEZMOI-MESURE-VECUE (« PUIS : datez et signez de votre main sous ces
+  lignes, et renvoyez le dossier ENTIER ») est VÉCU : le dossier ENTIER
+  est renvoyé.
+
+- LES CHAMPS DEMEURÉS VIDES (D189 : rapportés tels quels, jamais
+  maquillés) : le champ « L'OS : » demeure vide (l'auto-détecteur du kit
+  écrivit la version sous la ligne CPU — Windows 10.0.26300.9974) ;
+  l'état EFFECTIF du turbo au BIOS n'est PAS porté ; la fréquence réelle
+  pendant le run n'est PAS portée ; aucune observation (même défavorable)
+  n'est ajoutée. Le témoin est DATÉ et SIGNÉ comme annoncé — les trois
+  champs manuels du LISEZMOI demeurent vides, CONSIGNÉS EN L'ÉTAT :
+  jamais remplis par le labo à la place du développeur.
+
+- LA CONSÉQUENCE : LA CHAÎNE DU KIT-2 EST FERMÉE — le run a vécu
+  (Entrée 261 : LA MESURE A VÉCU), les preuves sont déposées, le témoin
+  est daté signé. La mesure tls13-02 (SHA-256) |t| = 12.39 > 5 et
+  tls13-13 (X25519) |t| = 5.19 > 5 (dépendances AU SEUIL consignées
+  telles quelles), tls13-16 (AES-128) |t| = 0.94 et tls13-17 (GHASH)
+  |t| = 3.11 <= 5 (aucune divergence au seuil) — N = 200/classe, un seul
+  run, cœur 0 — demeure consignée à l'Entrée 261 TELLE QUELLE, avec son
+  témoin désormais signé.
+
+- LA CHAÎNE DE RÉCEPTION (le labo) : le D141 tenu AVANT le commit — le
+  courant du miroir (pointe fe45439, Entrée 263) archivé VERSIONNÉ à
+  archives-bundles/triade-history-263-fe45439.bundle (md5 c72b205d0d…
+  recoupé par re-téléchargement) ; la présente consignation + la Task
+  171 au worklog ; la carte OU-TROUVER-LES-LIVRABLES portée à l'Entrée
+  264 (la ligne du témoin signé, l'état mis à jour) ; le commit, le push
+  GitHub (main), le miroir Drive synchronisé (le bundle régénéré à la
+  pointe 264).
+
+- SUITE : au développeur — (optionnel) un second run kit-2 à N plus
+  grand : l'exe v2 accepte votre N en argument (ex. « 400 », minimum 60)
+  — il consoliderait tls13-13 (5.19) et tls13-17 (3.11), sans jamais
+  effacer le premier témoin signé ; la signature à la main du verdict
+  Android (Entrée 257) — D189 : rapporter tel quel ; puis les preuves
+  formelles preuves-constat-arm (le téléphone), puis les gestes ouverts
+  (le geste B SHA-NI réel, la campagne D204, la cérémonie d'ère, le
+  séquestre D183, la réplication).
