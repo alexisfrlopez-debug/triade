@@ -1,11 +1,11 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-272 — la réception du run kit-2 v2 :
+*Mise à jour : 13/11/2026 (Entrées 261-273 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
 fermée ; LES TESTS CLOS ARCHIVÉS (44 entrées, le /test rendu à la
-suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive ; LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — Entrée 269 : le paquet TRIADE_kits_1clic_gestes_ouverts_v1, chaque geste ouvert en un double-clic ; CHAQUE TEST EN UN FICHIER AUTONOME — Entrée 270 : les HUIT TRIADE-1CLIC-*.bat, un test = un fichier = un double-clic, aucune extraction préalable ; LES RUNS 1 CLIC REÇUS ET RECOUPÉS — Entrée 271 : les HUIT dossiers de run renvoyés par le développeur (15:51Z), LA VOIE 1 QEMU VERDICT VERT 16 PASS, le témoin vitrine vécu propre, le geste B refusé nommé (SHA-NI absent), la calibration D204 nommée fautive sous Windows — la signature du temoin-m7d attend la main ; LE TÉMOIN M7D SIGNÉ REÇU ET LA CHAÎNE DE LA VOIE 1 FERMÉE — Entrée 272 : les canaux croisés (chat == dépôt du développeur, octet pour octet), la base == l'AUTO + la main de 32 o, preuves-m7/ ENTIÈRES au coffre). Ce fichier
+suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive ; LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — Entrée 269 : le paquet TRIADE_kits_1clic_gestes_ouverts_v1, chaque geste ouvert en un double-clic ; CHAQUE TEST EN UN FICHIER AUTONOME — Entrée 270 : les HUIT TRIADE-1CLIC-*.bat, un test = un fichier = un double-clic, aucune extraction préalable ; LES RUNS 1 CLIC REÇUS ET RECOUPÉS — Entrée 271 : les HUIT dossiers de run renvoyés par le développeur (15:51Z), LA VOIE 1 QEMU VERDICT VERT 16 PASS, le témoin vitrine vécu propre, le geste B refusé nommé (SHA-NI absent), la calibration D204 nommée fautive sous Windows — la signature du temoin-m7d attend la main ; LE TÉMOIN M7D SIGNÉ REÇU ET LA CHAÎNE DE LA VOIE 1 FERMÉE — Entrée 272 : les canaux croisés (chat == dépôt du développeur, octet pour octet), la base == l'AUTO + la main de 32 o, preuves-m7/ ENTIÈRES au coffre) ; LA SECONDE VAGUE DES RUNS 1 CLIC REÇUE — Entrée 273 : LA VOIE 2 VÉCUE sous qemu (l'artefact TCG consigné tel quel, le témoin AUTO attend la main), LA VOIE 1 REJOUÉE (les mêmes empreintes), la calibration D204 RÉPARÉE (la pause portable en processus), LE KIT DES RUNS RESTANTS LIVRÉ. Ce fichier
 vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
@@ -31,6 +31,7 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **CHAQUE TEST EN UN FICHIER AUTONOME — LES HUIT TRIADE-1CLIC (Entrée 270 : diagnostic, geste B, voie 1, voie 2, campagne D204, séquestre D183, réplication, témoin vitrine — un test = un fichier = un double-clic ; zip de repli 73861c10…)** | TRIADE_fichiers_1clic_v1/ | **oui (fichiers-1clic/ — les huit + EMPREINTES + le zip, md5 recoupés)** | download/TRIADE_fichiers_1clic_v1/ |
 | **LES RUNS 1 CLIC REÇUS ET RECOUPÉS — les HUIT dossiers de run du développeur (Entrée 271 : 87 pièces md5 recoupées, les cinq scellés intacts ; LA VOIE 1 QEMU VERT 16 PASS, le témoin vitrine propre, le geste B refusé nommé, la calibration D204 fautive sous Windows nommée — renvoyée telle quelle)** | preuves-runs-1clic-terrain-v1/ | **oui (fichiers-1clic/TRIADE_fichiers_1clic_v1/ — le dépôt du développeur, 13/11 15:51Z + LISEZMOI-RUNS-1CLIC.txt)** | download/preuves-runs-1clic-terrain-v1/ |
 | **LE TÉMOIN M7D DATÉ SIGNÉ — LA CHAÎNE DE LA VOIE 1 FERMÉE (Entrée 272 : la pièce du chat == le dépôt du développeur (/test/fichiers-1clic/temoin-m7d.txt, 989 o, md5 264e9cbd…) octet pour octet ; la base == l'AUTO 957 o + la main « fait le 13/11/2026 / Alexis Lopez » 32 o ; les trois empreintes recoupées, la chronologie jamais avant le run ; preuves-m7/ ENTIÈRES assemblées au /test/preuves-m7d-voie1-20261113T155020Z/ — cinq pièces md5 recoupées par re-téléchargement ; la finale 0.8.0 demeure scellée au 05/11, le rejouage ne re-scelle rien)** | preuves-m7-temoin-signe/ | **oui (preuves-m7d-voie1-20261113T155020Z/ — le signé, l'AUTO en regard, le VERDICT, le journal, le LISEZMOI)** | download/preuves-m7-temoin-signe/ |
+| **LA SECONDE VAGUE DES RUNS 1 CLIC + LE KIT DES RUNS RESTANTS (Entrée 273 : les NEUF dossiers 18:08-18:11Z, 92 pièces md5 recoupées ; LA VOIE 2 VÉCUE sous qemu-x86_64 -cpu max — preuves-shani nées du terrain, témoin AUTO en attente de la main, l'artefact TCG 1,44×/1,45× consigné tel quel ; LA VOIE 1 rejouée aux mêmes empreintes ; la calibration D204 RÉPARÉE : la pause portable en processus, l'épreuve VERT à 0,000 s ; le kit : QUATRE fichiers autonomes — la campagne v2, le geste B, le séquestre, la réplication, zip ca004296…)** | preuves-runs-1clic-terrain-v2/ + TRIADE_kit_runs_restants_v1/ | **oui (le kit : le zip + LISEZMOI-RUNS-RESTANTS.txt, md5 recoupés par re-téléchargement)** | download/preuves-runs-1clic-terrain-v2/ + download/TRIADE_kit_runs_restants_v1/ |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
@@ -65,7 +66,7 @@ signée du 13/11 11:14Z ne parut au listing de son dossier que
 CROISE les canaux (listing, recherche par nom, lecture directe de la
 pièce) AVANT de conclure à une absence.*
 
-## L'état (Entrée 272) — le témoin M7d signé reçu, la voie 1 FERMÉE sur pièces : chaque test demeure en un fichier autonome, les chaînes kit-2, constat-arm et voie 1 fermées par la main
+## L'état (Entrée 273) — la voie 2 vécue au terrain, la calibration réparée, le kit des runs restants livré : la voie 2 attend sa signature, la campagne attend ses deux bras
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -95,20 +96,26 @@ pièce) AVANT de conclure à une absence.*
    min après le run), les canaux croisés (chat == coffre, octet pour
    octet), les preuves ENTIÈRES au /test/preuves-m7d-voie1-
    20261113T155020Z/ — la finale 0.8.0 demeure scellée au 05/11 (le
-   rejouage ne re-scelle rien). Puis chaque test encore ouvert vit en
-   un fichier autonome (Entrée 270) :
-   les HUIT TRIADE-1CLIC-*.bat au /test/fichiers-1clic/ — diagnostic,
-   geste B SHA-NI, voie 1 QEMU, voie 2 QEMU, campagne D204, séquestre
-   D183, réplication, témoin vitrine : un fichier, un double-clic, les
-   pièces embarquées scellées, le lanceur officiel lancé INTACT ; le
-   paquet menu+zip de l'Entrée 269 est supersédé (rapatrié aux
-   archives-livraisons, D143 jamais jeté). Les preuves formelles
-   `preuves-constat-arm/` (le téléphone — l'APK demeure au /test), le
-   geste B sur une machine à SHA-NI (le diagnostic fichier le dit
-   avant), la campagne D204 aux deux bras (le kit loupe-13 demeure au
-   /test), la cérémonie d'ère (dossier Cérémonie), le séquestre
-   hors-ligne, la réplication (le second annotateur et le second
+   rejouage ne re-scelle rien). LA SECONDE VAGUE (Entrée 273) a fait
+   vivre le reste : LA VOIE 2 VÉCUE sous qemu-x86_64 -cpu max (les
+   preuves-shani nées du terrain — VERDICT, journal, témoin AUTO
+   1945 o, l'artefact TCG consigné tel quel, la frontière ÉMULATION
+   nommée partout) — LE TÉMOIN AUTO ATTEND LA MAIN, la pièce qui
+   ferme sa chaîne ; LA VOIE 1 REJOUÉE aux mêmes empreintes (la
+   chaîne demeure fermée par la première main, D165) ; LE GESTE B
+   refusé encore (SHA-NI absent — la mesure attend un silicium qui
+   en a) ; LA CALIBRATION D204 RÉPARÉE (la pause portable en
+   processus, l'épreuve VERT à 0,000 s). LE KIT DES RUNS RESTANTS
+   vit au /test : QUATRE fichiers autonomes — la campagne v2 (la
+   réparation), le geste B, le séquestre, la réplication (les TROIS
+   INTACTS de l'Entrée 270). Restent à la main : la signature du
+   témoin de la voie 2 D'ABORD (avec la phrase « run sous
+   qemu-x86_64 -cpu max, ÉMULATION, pas le silicium »), la campagne
+   aux deux bras, le geste B sur une machine à SHA-NI (le diagnostic
+   le dit avant), la cérémonie d'ère (dossier Cérémonie), le séquestre
+   hors-ligne (« pip install pynacl cryptography » AVANT la mise
+   hors-ligne), la réplication (le second annotateur et le second
    domaine demeurent les acteurs manquants, nommés, jamais maquillés).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-272) et au worklog (`worklog.md`, Tasks 158-179).*
+Entrées 251-273) et au worklog (`worklog.md`, Tasks 158-180).*

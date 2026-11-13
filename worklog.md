@@ -9806,3 +9806,51 @@ Work Log:
   nommés) ; au labo — l'édition correctrice du chronomètre (la pause
   portable), les écarts 334 + 307 de dudect à la prochaine édition du
   kit-2.
+
+
+Task ID: 180
+Agent: Z.ai (agent principal — la session de la seconde vague des runs 1 clic)
+Task: LA SECONDE VAGUE DES RUNS 1 CLIC REÇUE ET RECOUPÉE, LE KIT DES RUNS
+RESTANTS LIVRÉ (l'annonce « dossier avec preuves des nouveaux runs 1 clic
+dans /test du drive. fais un kit avec les runs restants a faire ») : les
+NEUF dossiers 18:08-18:11Z rapatriés (92 pièces md5 92/92, les NEUF paquets
+internes == gravés, les CINQ scellés + qemu INTACTS) — LA VOIE 2 VÉCUE
+SOUS qemu-x86_64 -cpu max (CPUID synthétique AuthenticAMD f6 m6 s3 SHA-NI
+présent, chaîne T0-T5 entière, preuves-shani nées du terrain, témoin AUTO
+1945 o, l'ARTEFACT TCG 1,44×/1,45× consigné TEL QUEL — le labo : 0,19× ;
+frontière ÉMULATION, jamais le silicium) ; LA VOIE 1 REJOUÉE (VERDICT
+edb12391 et journal 57bf6325 LES MÊMES que 15:50, le témoin AUTO ne
+différant du signé que par la date) ; LE GESTE B refusé encore (SHA-NI
+absent) ; LA CALIBRATION D204 fautive encore (sleep 2.0 code 1, 0,028 s)
+— LA RÉPARATION LIVRÉE : la pause portable EN PROCESSUS (time.sleep par
+time.monotonic), l'épreuve VERT écart 0,000 s, la divergence du plan de
+l'Entrée 272 (python -c externe : 2,013 s, l'écart 0,013 s) NOMMÉE ; LE
+KIT TRIADE_kit_runs_restants_v1 (QUATRE fichiers : la campagne v2 —
+SEULE chronometre_verification.py changée 41f8c1b0…, plan VERROUILLÉ
+intact ; geste B, séquestre, réplication INTACTS) déposé au /test, md5
+recoupés par re-téléchargement.
+
+Work Log:
+- LE RAPATRIEMENT : le parcours profond de fichiers-1clic/ (le premier
+  listing ne descendait pas dans le dossier connu du miroir — le canal
+  nommé, la pièce fait foi), 92 pièces nouvelles md5 recoupées, le
+  DEPOT-RECU.txt aux id Drive, le bac
+  download/preuves-runs-1clic-terrain-v2/.
+- LE RECOUPEMENT : les NEUF paquets internes == les empreintes gravées
+  (Entrée 270), les CINQ scellés + qemu INTACTS, les preuves nées lues
+  une à une (VERDICTs, journaux, témoins AUTO, dry-run).
+- LA RÉPARATION : chronometre_verification.py v2 (41f8c1b0…) — la pause
+  en processus ; le paquet 0ad42ee2…, le .bat v2 a2c8b8af… (39 107 o) ;
+  l'épreuve du labo VERT 0,000 s ; l'instrument v2 au dépôt (l'ancien à
+  l'histoire git, D143).
+- LE KIT : les QUATRE .bat + la carte LISEZMOI-RUNS-RESTANTS.txt + les
+  EMPREINTES + le zip ca004296… ; l'épreuve miroir 9/9, l'audit de
+  forme (les parenthèses du bloc neuf nommées et corrigées au geste
+  même), le déterminisme deux builds.
+- LA CONSIGNATION : la présente Entrée 273 + Task 180 ; la carte
+  OU-TROUVER portée à 273 ; D141 tenu avant le commit (le courant
+  272-dd536ac archivé versionné, md5 recoupé) ; le commit, le push
+  GitHub, le miroir synchronisé ; le kit déposé au /test.
+- SUITE : au développeur — la signature du témoin de la voie 2 D'ABORD,
+  la campagne aux deux bras (la v2), le geste B sur silicium SHA-NI, la
+  cérémonie hors-ligne, le κ aux deux jeux.

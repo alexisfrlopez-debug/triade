@@ -11571,3 +11571,119 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   tolérance inchangée 0,05 s — l'écart de l'Entrée 271), les écarts
   334 + 307 de dudect_v150.c à la prochaine édition du kit-2
   (l'Entrée 253), JAMAIS de patch binaire.
+
+
+## Entrée 273 — LA SECONDE VAGUE DES RUNS 1 CLIC REÇUE ET RECOUPÉE, LE KIT DES RUNS RESTANTS LIVRÉ — LA RÉPARATION DE LA CALIBRATION VIT ENFIN (l'annonce du développeur : « dossier avec preuves des nouveaux runs 1 clic dans /test du drive. fais un kit avec les runs restants a faire ») : les NEUF dossiers de run nés le 13/11 18:08-18:11Z (DEUX campagne dont une au journal né, le diagnostic, le geste B, la réplication, le séquestre, le témoin vitrine, la voie 1 REJOUÉE et LA VOIE 2 VÉCUE) rapatriés — 92 pièces nouvelles, md5 92/92, les NEUF paquets internes == les empreintes gravées, les CINQ scellés + le qemu embarqué INTACTS ; LA VOIE 2 A VÉCU SON RUN COMPLET sous qemu-x86_64 -cpu max (le CPUID synthétique « AuthenticAMD » f6 m6 s3, SHA-NI présent, la chaîne T0-T5 entière, les preuves-shani NÉES du terrain : VERDICT + journal + témoin AUTO + moteur-shani-execute.bin == le moteur officiel octet pour octet) — l'ARTEFACT TCG consigné TEL QUEL (1,44× / 1,45× / 1,44×, le rapport du bloc aléa 1,45× ; le labo avait vécu 0,19× — l'artefact appartient au run, la frontière demeurant : ÉMULATION, jamais le silicium), LE TÉMOIN AUTO ATTEND LA MAIN — la pièce qui FERME la chaîne de la voie 2 ; LA VOIE 1 REJOUÉE : le VERDICT edb12391… et le journal 57bf6325… LES MÊMES que le run de 15:50 (la reproduction sur la même machine), le témoin AUTO né au rejouage ne différant du signé (Entrée 272) QUE par la ligne de date — la chaîne DEMEURE fermée par la première main (le rejouage ne re-scelle rien, D165 ; la signature du nouveau témoin facultative, D99) ; LE GESTE B refusé T0.silicium ENCORE (SHA-NI absent, CPUID feuille 7 EBX bit 29 = 0 — la mesure avant/après demeure ouverte, le kit ne peut pas inventer le silicium) ; LA CALIBRATION D204 : le journal du dry-run NÉ (17:09:47Z, code 1, 0,028 s — cmd.exe n'a pas de sleep, la faute des deux vagues persistante, renvoyée telle quelle D189) — LA RÉPARATION promise à l'édition suivante LIVRÉE : la pause portable EN PROCESSUS, l'épreuve du labo VERT à l'écart 0,000 s, la divergence du plan de l'Entrée 272 (la pause « python -c » externe) NOMMÉE — l'épreuve la mesure 2,013 s, écart 0,013 s sous la tolérance sur CETTE machine, mais la marge appartient au démarrage de l'interpréteur : une preuve d'horloge ne vit pas à la merci d'un démarrage ; LE KIT TRIADE_kit_runs_restants_v1 : QUATRE fichiers autonomes (la campagne v2 — SEULE la pièce chronometre_verification.py changée 41f8c1b0…, le plan VERROUILLÉ a78caf8c… INTACT, les HUIT autres pièces celles de l'Entrée 270 ; le geste B, le séquestre, la réplication — INTACTS octet pour octet) ; le dépôt au coffre /test (le zip + la carte, md5 recoupés par re-téléchargement) ; D141 tenu avant le commit (le courant 272-dd536ac archivé versionné, md5 recoupé) (14/11, la session de la seconde vague)
+
+- LE MOMENT ET LES CANAUX : l'annonce au chat « dossier avec preuves des
+  nouveaux runs 1 clic dans /test du drive » — le premier listing du /test
+  ne montrait RIEN de neuf (lister_test_maintenant.py ne descend pas dans
+  fichiers-1clic/, connu du miroir) : le PARCOURS PROFOND l'a nommé —
+  les NEUF dossiers 18* au sein de fichiers-1clic/
+  TRIADE_fichiers_1clic_v1/ (la leçon en miroir : le canal connu cache
+  ses propres nouveautés, le parcours profond les révèle — la pièce
+  fait foi, jamais le premier listing).
+
+- LA SECONDE VAGUE, PIÈCE PAR PIÈCE : (a) LA CAMPAGNE, DEUX fois —
+  180820 SANS journal né (la première tentative n'a pas fait naître le
+  dry-run), 180936 AU journal né : la ligne calibration-sleep « sleep
+  2.0 » code 1, 0,028 s — LA MÊME FAUTE qu'à la première vague (15:47:08Z,
+  code 1, 0,031 s) : renvoyée telle quelle, la réparation promise à
+  l'édition suivante ; le LISEZMOI-1CLIC c3963f19… == la première vague
+  (l'extraction déterministe) ; le plan a78caf8c… VERROUILLÉ intact ; (b)
+  LE DIAGNOSTIC 181016 : PORTABLE nommé encore — Windows 10 19045, Ivy
+  Bridge f6 m58 s9, SHA-NI ABSENT, Python 3.14.10, aucun compilateur,
+  WSL2 vu ; (c) LE GESTE B 181032 : le refus T0.silicium — « GenuineIntel
+  » f6 m58 s9, SHA-NI ABSENT, CPUID feuille 7 EBX bit 29 = 0 : « CE
+  silicium n'exécute pas sha256rnds2, la mesure avant/après n'y existe
+  pas ; le kit ne peut pas inventer le silicium » ; (d) LA RÉPLICATION
+  181044 : le kit intact, l'autotest du κ vit à la console, les DEUX jeux
+  d'annotations demeurent les acteurs manquants ; (e) LE SÉQUESTRE
+  181119 : l'instrument vécu jusqu'à l'import (le pyc cpython-314 né
+  encore), aucune pièce d'autotest née au dossier — la cérémonie
+  demeure ; (f) LE TÉMOIN VITRINE 181138 : deux codes 0, aucun WER
+  loupe, temoin-fichier.bin == loupe.exe octet pour octet (la vitrine a
+  pour fichier la pièce scellée même, md5 5fc07b78…) ; (g) LA VOIE 1
+  181148 REJOUÉE : VERDICT edb12391… et journal 57bf6325… LES MÊMES que
+  le run de 15:50 (les empreintes déterministes), le témoin AUTO 957 o
+  ne différant du corps du signé (Entrée 272) QUE par la ligne de date
+  (16:50:32 → 18:11:52 +0100) — la reproduction sur la même machine ; (h)
+  LA VOIE 2 181158 VÉCUE : le journal 18:12:04-07 « AUTOTEST
+  LABORATOIRE (POSIX), le mécanisme seul, AUCUN statut terrain » —
+  T0.silicium « AuthenticAMD » f6 m6 s3 SHA-NI PRÉSENT (le CPUID
+  synthétique de qemu -cpu max : le refus ne peut plus exister), T2 les
+  lecteurs, T3 LA MESURE (abc 3102,6 → 2160,4 ; aléa 3137,7 → 2162,5 ;
+  zéros 2924,1 → 2028,4 — cycles RDTSC sérialisés), T4 le témoin AUTO
+  1945 o (« silicium : AuthenticAMD · famille 6 · modèle 6 · pas 3 ·
+  SHA-NI présent », LA PORTÉE au témoin même), T5 la clôture — le
+  moteur-shani-execute.bin == moteur-shani.bin (0ddcda88…) : l'exécuté
+  == l'officiel, octet pour octet.
+
+- LA LECTURE HONNÊTE DE LA VOIE 2 (D149 en miroir) : le rapport 1,44× /
+  1,45× est l'ARTEFACT TCG DE CE RUN — le labo avait vécu 0,19× à sa
+  propre épreuve du 12/11 : l'artefact appartient AU RUN, consigné TEL
+  QUEL ; cette voie EXERCE la chaîne, elle NE MESURE PAS — la mesure
+  avant/après n'a de sens que sur le VRAI silicium (le geste B demeure).
+  La frontière est nommée au témoin même, au LISEZMOI de la carte et au
+  journal du kit : « ÉMULATION, jamais le silicium ».
+
+- LA RÉPARATION (l'édition v2) : la pièce chronometre_verification.py
+  SEULE changée (sha256 41f8c1b0…), le paquet interne 0ad42ee2…, le .bat
+  v2 a2c8b8af… (39 107 o) ; LA PAUSE : time.sleep EN PROCESSUS, mesuré
+  par time.monotonic — la MÊME horloge monotone que les mesures M4 ; le
+  label « calibration-sleep » DEMEURE (la clé du vérificateur, le champ
+  commande nomme la vérité : « time.sleep(2.0) en processus [pause
+  portable v2] », code_retour 0) ; l'épreuve du labo : VERT, écart
+  0,000 s ; la forme externe « python -c » prévue à l'Entrée 272 eût
+  mesuré la mise en route de l'interpréteur — l'épreuve la nomme :
+  2,013 s (écart 0,013 s, sous la tolérance sur CETTE machine rapide,
+  mais la marge appartient au démarrage de l'interpréteur) : la pause EN
+  PROCESSUS rend l'écart ~0,001 s PARTOUT — la divergence NOMMÉE, jamais
+  maquillée.
+
+- LE KIT (TRIADE_kit_runs_restants_v1, zip ca004296…) : QUATRE fichiers
+  autonomes — la campagne v2 (l'édition réparée), le geste B, le
+  séquestre, la réplication (les TROIS INTACTS : recoupés à la copie
+  contre les empreintes de l'Entrée 270, octet pour octet) ; la carte
+  LISEZMOI-RUNS-RESTANTS.txt (le geste qui reste à la main, DANS
+  L'ORDRE : LA SIGNATURE du témoin de la voie 2 D'ABORD — datez,
+  signez, écrivez sous votre main « run sous qemu-x86_64 -cpu max,
+  ÉMULATION, pas le silicium », renvoyez preuves-shani/ ENTIER ; puis
+  la campagne aux deux bras, le geste B sur silicium SHA-NI, la
+  cérémonie hors-ligne, le κ aux deux jeux) ; les EMPREINTES gravées du
+  montage même.
+
+- LES ÉPREUVES DU LABO (sur copie, jamais l'exécution Windows — D122) :
+  l'épreuve miroir 9/9 (le paquet décodé du .bat, chaque pièce == la
+  source octet pour octet), l'audit de forme VERT (l'Entrée 260
+  rejouée PAR LE GÉNÉRATEUR — le bloc neuf né avec des parenthèses, la
+  forme les a NOMMÉES et corrigées au geste même : des crochets,
+  jamais de parenthèses), le déterminisme (deux builds, les mêmes
+  empreintes), la calibration vécue au labo POSIX (VERT, 0,000 s), le
+  verrou du plan recoupé à la lecture du paquet v1 même (a78caf8c…).
+
+- FRONTIÈRES : le plan D204 VERROUILLÉ INTACT (a78caf8c… — aucune mesure
+  exécutée, CA1 tenu : le journal du dry-run demeure la seule pièce, le
+  dossier des résultats naîtra de la première mesure) ; la finale 0.8.0
+  DEMEURE scellée au 05/11 (le rejouage de la voie 1 ne re-scelle rien,
+  D165/R6) ; la réserve D149 à la voie 1, la frontière ÉMULATION à la
+  voie 2, nommées partout ; le séquestre PRÉPARÉ jamais appliqué ; les
+  pièces scellées INTACTES (les CINQ + qemu recoupés dans les dépôts
+  mêmes) ; aucun jeton affiché (D12).
+
+- LE BAC : download/preuves-runs-1clic-terrain-v2/ (les NEUF dossiers de
+  la seconde vague, le DEPOT-RECU.txt aux id Drive, le
+  RAPPORT-RECOUPEMENT-v2.txt, les pièces racine de fichiers-1clic/) ;
+  download/TRIADE_kit_runs_restants_v1/ (les QUATRE .bat, la carte, les
+  EMPREINTES, le zip de repli).
+
+- SUITE : au développeur — LA SIGNATURE du témoin de la voie 2 D'ABORD
+  (la pièce qui ferme sa chaîne), puis la campagne D204 aux deux bras
+  (la v2 d'abord — la calibration y vit enfin sous Windows), le geste B
+  sur un silicium qui A SHA-NI (le diagnostic choisit : Ice Lake et
+  après chez Intel, Ryzen chez AMD), la cérémonie du séquestre à la
+  machine HORS-LIGNE (« pip install pynacl cryptography » AVANT la mise
+  hors-ligne), le κ le jour des DEUX jeux d'annotations (le second
+  annotateur à recruter, le second domaine en attente d'une vraie
+  commande — nommés, jamais maquillés) ; facultatif (D99) : les témoins
+  AUTO du rejouage voie 1 et du témoin vitrine.

@@ -25,7 +25,11 @@ première mesure). TOUTE commande hors liste est un ÉCART NOMMÉ.
 
 LE DRY-RUN (la preuve de l'instrument, AVANT toute mesure) :
   --calibration   une pause de durée connue — l'écart mesuré/connu doit
-                  être sous la tolérance (l'horloge prouvée) ;
+                  être sous la tolérance (l'horloge prouvée) ; la pause vit
+                  EN PROCESSUS (time.sleep, l'édition v2 du 14/11/2026) :
+                  le « sleep » externe faute sous Windows (cmd.exe n'a pas
+                  de commande sleep — l'écart nommé des runs 1 clic du
+                  13/11 : code 1, 0,031 puis 0,028 s) ;
   --command ...   une commande réelle de vérification, chronométrée et
                   journalisée (avec --dryrun, au journal du dry-run).
 
@@ -102,12 +106,34 @@ def main() -> int:
     # elle ne peut JAMAIS écrire au journal de campagne — le dossier des
     # résultats ne naît que d'une mesure réelle (CA1)
     if args.calibration is not None:
-        ligne = mesurer(f"sleep {args.calibration}", "calibration-sleep",
-                        "X", "dryrun", journal, True)
-        ecart = abs(ligne["secondes"] - args.calibration)
+        # v2 (l'édition du 14/11/2026) — LA PAUSE PORTABLE : time.sleep EN
+        # PROCESSUS, mesuré par time.monotonic — la MÊME horloge monotone
+        # que les mesures M4. Le « sleep » externe faute sous Windows
+        # (cmd.exe n'a pas de commande sleep — l'écart nommé des runs
+        # 1 clic du 13/11 : code 1, 0,031 puis 0,028 s) ; le kit exige
+        # déjà Python 3, la pause y vit partout pareil. Le label
+        # « calibration-sleep » demeure (la clé du vérificateur) ; le
+        # champ commande nomme la vérité. Une pause interrompue LÈVE —
+        # rien n'est journalisé (fail-closed par l'exception même).
+        debut = time.monotonic()
+        time.sleep(args.calibration)
+        secondes = time.monotonic() - debut
+        ligne = {
+            "horodatage": horodatage(),
+            "dryrun": True,
+            "bras": "X", "tache": "dryrun",
+            "label": "calibration-sleep",
+            "commande": f"time.sleep({args.calibration}) en processus [pause portable v2]",
+            "code_retour": 0,
+            "secondes": round(secondes, 3),
+        }
+        journal.parent.mkdir(parents=True, exist_ok=True)
+        with open(journal, "a", encoding="utf-8") as f:
+            f.write(json.dumps(ligne, ensure_ascii=False) + "\n")
+        ecart = abs(secondes - args.calibration)
         ok = ecart <= TOLERANCE_CALIBRATION
         print(f"[calibration] pause demandée {args.calibration:.2f} s, "
-              f"mesurée {ligne['secondes']:.3f} s — écart "
+              f"mesurée {secondes:.3f} s — écart "
               f"{ecart:.3f} s {'≤' if ok else '>'} tolérance "
               f"{TOLERANCE_CALIBRATION:.2f} s -> "
               f"{'VERT' if ok else 'ROUGE'}")
