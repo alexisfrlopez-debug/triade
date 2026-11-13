@@ -1,0 +1,18 @@
+DEPOT-RECU.txt — la fermeture de la voie 2 déposée puis consignée au coffre /test
+dossier : temoin-shani-fermeture-20261114 (id Drive 1DlvcSEIHmE-aa6XYQKb5nl1p_JVug9UY)
+le dépôt du développeur : /test/temoin-shani.txt — 2 038 o, md5 03f2f32c6d71153f17bbf1b914329f74,
+créé au coffre le 13/11 22:08:22Z (l'horloge du fichier porte 21:20:06 — la signature
+AVANT le dépôt) ; le courrier du labo (l'Entrée 278) : chaque pièce md5 recoupée par
+re-téléchargement :
+
+  la pièce déposée au /test : 2 038 o, md5 03f2f32c6d71153f17bbf1b914329f74 (== la pièce du
+    chat, Entrée 277, octet pour octet — sha256 12e66cc4c300303dbcebe8a261c6573c0e50ce1422e13e9d00ac257b5ba01700)
+  l'AUTO du run en regard : 1 945 o, md5 5cd615c9ef1deea25b1fc716772e2e6e (== temoin-shani.txt
+    du dossier de run 181158 au coffre, INTACT ET NON SIGNÉ — les 1 945 premiers octets du
+    dépôt, octet pour octet)
+
+  temoin-shani-depot-test.txt  md5 03f2f32c6d71153f17bbf1b914329f74  id Drive 1MwDVw6ZNGlWXECjoupK0Tq5_R-lWxItl
+  LISEZMOI-FERMETURE-TEMPOIN-SHANI.txt  md5 a1c9bd5d  id Drive 1dbFw-F0PV2MgQdkT3jQLk2kwWbl7HRJI
+  temoin-shani-auto-run-181158.txt  md5 5cd615c9ef1deea25b1fc716772e2e6e  id Drive 1vpDmIYlHoxePZTKXTsdi2Ow8vdeVjHCf
+
+l'INDEX du /test au moment de la consignation : 888 fichiers (INDEX-test.txt).

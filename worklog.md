@@ -10106,3 +10106,115 @@ Work Log:
   4639dcec…), le courant triade-history.bundle rafraîchi (bd5e2f62…,
   distinct de l'archive 276) — le miroir Drive demeure LA sauvegarde de
   référence.
+
+
+Task ID: 185
+Agent: Z.ai (agent principal — la session de la fermeture de la voie 2 et du git sync)
+Task: LA FERMETURE DE LA CHAÎNE DE LA VOIE 2 — LE DÉPÔT REÇU (l'annonce du
+développeur : « temoin depose dans /test du drive » — LE GESTE UNIQUE qui
+ferme, demandé à l'Entrée 277) : le recoup frais, refait à l'instant de la
+consignation AVANT TOUT VERDICT, établit que LE COFFRE PORTE DÉSORMAIS LA
+PIÈCE SIGNÉE DU RUN VÉCU — la chaîne de la voie 2 est FERMÉE SUR PIÈCES.
+
+- LA PIÈCE DÉPOSÉE : /test/temoin-shani.txt — 2 038 o, md5 03f2f32c…,
+  sha256 12e66cc4c300303dbcebe8a261c6573c0e50ce1422e13e9d00ac257b5ba01700 ;
+  créée au coffre le 13/11 22:08:22Z — APRÈS la reprise (le courrier de
+  l'Entrée 277 déposé à 21:33:44Z) : la demande précède le dépôt, jamais
+  l'inverse ; l'horloge du fichier porte 21:20:06 (l'instant de la pièce
+  signée, ANTÉRIEUR au dépôt : la signature AVANT le dépôt — la chronologie
+  saine).
+
+- CHAT == COFFRE, OCTET POUR OCTET : la pièce du dépôt == la pièce reçue au
+  chat (l'Entrée 277), recoupée par téléchargement direct — les canaux
+  croisés de l'Entrée 272 SE FERMENT ; le canal unique nommé à l'Entrée 277
+  n'est plus seul : L'ÉCART QUI DEMEURAIT — LE SEUL — EST RÉPARÉ.
+
+- LA BASE DU SIGNÉ == LE TÉMOIN NÉ DU RUN : les 1 945 premiers octets du
+  dépôt (md5 5cd615c9…) == la pièce INTACTE ET NON SIGNÉE du dossier de
+  run au coffre — /test/fichiers-1clic/TRIADE_fichiers_1clic_v1/TRIADE-
+  1CLIC-voie2-qemu-run-20261113-181158/pc-windows/kit-1-shani/preuves-
+  shani/temoin-shani.txt — octet pour octet, re-téléchargée au moment du
+  recoup : la main a signé LA PIÈCE DU RUN VÉCU (le 13/11 18:12:07,
+  machine PORTABLE · WSL2 · Python 3.14.4, l'artefact TCG 1,44×/1,45×) ;
+  le bloc de la main (93 o) demeure celui de l'Entrée 277 : la mention
+  « un sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » (la nuance
+  d'octet déjà nommée, D189) + « fait le 13/11/2026 / Alexis Lopez » — la
+  MÊME MAIN que les Entrées 264/266/267/272/276/277.
+
+- LE PARCOURS DU COFFRE ENTIER (les canaux croisés, la règle de l'Entrée
+  267) : 520 dossiers, 3 656 fichiers — 32 pièces temoin-shani* dont TROIS
+  au md5 03f2f32c… (le dépôt /test, la copie de réception de la reprise,
+  le miroir git) TOUTES IDENTIQUES, TROIS au md5 5cd615c9… (l'AUTO du run
+  en ses bacs, la pièce du dossier de run INTACTE ET NON SIGNÉE à sa
+  place) : AUCUN octet muté nulle part — la pièce du dossier de run
+  demeure ce qu'elle était, l'histoire jamais réécrite (D143).
+
+- LE COURRIER DU LABO : le dossier /test/temoin-shani-fermeture-20261114/
+  — le LISEZMOI-FERMETURE-TEMPOIN-SHANI.txt (3 964 o, md5 a1c9bd5d…),
+  déposé à l'instant du geste (13/11 22:26:02Z, AVANT la présente
+  consignation git — nommé tel quel), md5 recoupé par re-téléchargement ;
+  le bac download/temoin-shani-fermeture/ porte la pièce déposée
+  (temoin-shani-depot-test.txt), l'AUTO du run re-téléchargé intact en
+  regard (temoin-shani-auto-run-181158.txt), l'INDEX complet du /test
+  (888 fichiers) et le DEPOT-RECU.txt aux id Drive.
+
+- LA CHAÎNE DE LA VOIE 2 EST FERMÉE SUR PIÈCES : la pièce signée du run
+  vécu du développeur vit au coffre, recoupée au chat et à la base du
+  run, la main et la mention portées ; l'écart de l'Entrée 276 fut nommé,
+  la reprise (277) le répara, le dépôt (ce jour) ferme les canaux croisés
+  — un écart nommé est un RÉSULTAT, jamais un échec.
+
+- LA CONSIGNATION : la présente Entrée 278 + Task 185 ; la carte
+  OU-TROUVER portée à 278 ; la consignation git suit au même geste (la
+  présente session vit aussi le git sync — l'Entrée 279). (14/11, la
+  session de la fermeture de la voie 2)
+
+
+Task ID: 186
+Agent: Z.ai (agent principal — la session de la fermeture de la voie 2 et du git sync)
+Task: LE GIT SYNC GITHUB RÉUSSI — LE JETON DU /tokens, LE PUSH DES ENTRÉES
+275-277 (l'annonce du développeur : « go pour sync git » — le second geste
+du message qui portait le dépôt du témoin : « verifie le dossier /tokens
+du drive pour le nouveau jeton git ») : l'écart nommé aux addenda des
+Entrées 275/276/277 (« push GitHub refusé — Invalid username or token »)
+est RÉPARÉ — le dépôt GitHub ET le miroir Drive vivent désormais au même
+état.
+
+- LE JETON (le /tokens du coffre) : token_git.txt — 40 caractères, PAT
+  classique, déposé le 9/11 15:39Z — VÉRIFIÉ VALIDE contre l'API GitHub :
+  le compte alexisfrlopez-debug, le dépôt privé « triade » aux
+  permissions admin/maintain/push/triage/pull ; l'ancien jeton local
+  (fine-grained, 93 caractères) REFUSÉ (401 Bad credentials) — REMPLACÉ ;
+  la règle demeure : le jeton n'est JAMAIS écrit en clair.
+
+- LE RELAIS OAUTH (le /tokens aussi) : oauth_token_relais.json du 12/11
+  20:04Z — VÉRIFIÉ FONCTIONNEL (le jeton d'accès obtenu à l'instant) ;
+  le relais local du 22/10 est mort (invalid_grant) : c'est le relais du
+  12/11 qui a servi aux dépôts du labo au coffre ce jour (l'Entrée 278).
+
+- LE MIROIR LU : triade-history.bundle téléchargé du miroir Drive
+  (76 469 713 o, md5 558b306b… recoupé par l'API), cloné, git fsck
+  PROPRE ; le bundle porte main @ 7cc99f14 (l'Entrée 277 + addenda) et
+  origin/main @ 8644226a (le dernier état poussé au GitHub).
+
+- LE PUSH : main 8644226..7cc99f1 — LES SEPT COMMITS des Entrées
+  275-277, fast-forward VÉRIFIÉ AVANT LE GESTE (l'ancestralité
+  8644226a ⊂ 7cc99f14 établie ; 67 objets, ~2 Mo) ; la branche distante
+  bundle051/v0.5.1-jalon-v7 (9888d066) demeure INTACTE au distant ; le
+  ls-remote APRÈS le geste rend main @ 7cc99f14 — LE DÉPÔT GITHUB EST
+  SYNCHRONISÉ AU MIROIR.
+
+- L'ÉCART RÉPARÉ, NOMMÉ : les addenda des Entrées 275/276/277 portaient
+  le refus du push (le jeton expiré, « le rafraîchissement appartient au
+  développeur », le miroir Drive LA sauvegarde de référence) : le jeton
+  du /tokens le répare — les DEUX sauvegardes vivent au même état ; la
+  leçon demeure consignée : un jeton refusé fut nommé TROIS fois avant
+  d'être réparé, jamais maquillé.
+
+- LA CONSIGNATION : la présente Entrée 279 + Task 186 ; la carte
+  OU-TROUVER portée à 279 ; D141 tenu avant le commit (le courant
+  277-7cc99f1 archivé versionné au miroir — copie serveur Drive, md5
+  558b306b… ; le courant triade-history.bundle rafraîchi au présent
+  commit) ; le commit ; le push GitHub au présent commit ; le miroir
+  synchronisé (la carte, le worklog, le journal, le bac, les bundles).
+  (14/11, la session du git sync)

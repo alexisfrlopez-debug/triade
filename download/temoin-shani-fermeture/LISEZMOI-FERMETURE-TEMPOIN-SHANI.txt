@@ -1,0 +1,60 @@
+LISEZMOI-FERMETURE-TEMPOIN-SHANI.txt — LA FERMETURE DE LA CHAÎNE DE LA VOIE 2, LE 14/11/2026
+(l'annonce du développeur : « temoin depose dans /test du drive » — LE GESTE UNIQUE
+qui ferme, demandé à l'Entrée 277 ; le même message porte le second geste :
+« verifie le dossier /tokens du drive pour le nouveau jeton git »)
+
+LE GESTE A EU LIEU — LE COFFRE PORTE LA PIÈCE SIGNÉE (le recoup sur pièces,
+avant tout verdict, refait à l'instant de la présente consignation) :
+  — LA PIÈCE DÉPOSÉE : /test/temoin-shani.txt — 2 038 o, md5 03f2f32c…,
+    sha256 12e66cc4c300303dbcebe8a261c6573c0e50ce1422e13e9d00ac257b5ba01700 ;
+    créée au coffre le 13/11 22:08:22Z — APRÈS la reprise (21:33:44Z) : la
+    demande précède le dépôt, jamais l'inverse ; l'horloge du fichier porte
+    21:20:06 (l'instant de la pièce signée, antérieur au dépôt : la signature
+    AVANT le dépôt, la chronologie saine) ;
+  — CHAT == COFFRE, OCTET POUR OCTET : la pièce du dépôt == la pièce reçue
+    au chat (l'Entrée 277) — les canaux croisés de l'Entrée 272 SE FERMENT ;
+    le canal unique nommé à l'Entrée 277 n'est plus seul : L'ÉCART QUI
+    DEMEURAIT — LE SEUL — EST RÉPARÉ ;
+  — LA BASE DU SIGNÉ == LE TÉMOIN NÉ DU RUN : les 1 945 premiers octets du
+    dépôt (md5 5cd615c9…) == la pièce INTACTE ET NON SIGNÉE du dossier de
+    run au coffre — test/fichiers-1clic/TRIADE_fichiers_1clic_v1/TRIADE-
+    1CLIC-voie2-qemu-run-20261113-181158/pc-windows/kit-1-shani/preuves-
+    shani/temoin-shani.txt — octet pour octet : la main a signé LA PIÈCE DU
+    RUN VÉCU (le 13/11 18:12:07, machine PORTABLE · WSL2 · Python 3.14.4,
+    l'artefact TCG 1,44×/1,45×) ;
+  — LE BLOC DE LA MAIN (93 octets) : la mention EST PORTÉE SOUS LA MAIN —
+    « un sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » (la nuance
+    d'octet déjà nommée à l'Entrée 277 : le « r » initial de « run » manque,
+    une espace finale s'ajoute — la substance INTÈGRE et sans ambiguïté) —
+    et « fait le 13/11/2026 / Alexis Lopez » : la MÊME main que les témoins
+    kit-2, le verdict Android, le témoin m7d, l'écart et la reprise
+    (Entrées 264/266/267/272/276/277) ;
+  — LES COPIES AU COFFRE : le parcours du coffre ENTIER (520 dossiers,
+    3 656 fichiers) liste 32 pièces temoin-shani* — 3 au md5
+    03f2f32c… (le dépôt /test, la copie de réception de la reprise, le
+    miroir git) : toutes identiques ; 3 au md5 5cd615c9…, dont la pièce
+    du dossier de run qui demeure NON SIGNÉE à sa place : AUCUN octet muté
+    nulle part.
+
+LA CHAÎNE DE LA VOIE 2 EST FERMÉE SUR PIÈCES — la pièce signée du run vécu
+du développeur vit au coffre, recoupée au chat et à la base du run, la main
+et la mention portées ; l'écart de l'Entrée 276 fut nommé, la reprise (277)
+le répara, le dépôt (ce jour) ferme les canaux croisés : un écart nommé est
+un RÉSULTAT, jamais un échec ; la pièce n'est jamais jetée, l'histoire
+jamais réécrite.
+
+LE SECOND GESTE — LE JETON GIT (/tokens) :
+  — le dossier /tokens du coffre porte le NOUVEAU jeton git (token_git.txt,
+    40 caractères, PAT classique, déposé le 9/11) : VÉRIFIÉ VALIDE contre
+    l'API GitHub — compte alexisfrlopez-debug, accès complet (admin, push)
+    au dépôt privé « triade » et au dépôt « zai-bureau » ;
+  — l'ancien jeton local (fine-grained, 93 caractères) est REFUSÉ
+    (401 Unauthorized) : il est REMPLACÉ par celui du /tokens ; le jeton
+    n'est JAMAIS écrit en clair — la règle demeure : les tokens ne sont
+    jamais écrits en clair ;
+  — le /tokens porte AUSSI le relais OAuth du 12/11 : VÉRIFIÉ FONCTIONNEL
+    (jeton d'accès obtenu à l'instant) — le relais local du 22/10 est mort
+    (invalid_grant) : c'est le relais du 12/11 qui a servi à la présente
+    consignation.
+
+fait au laboratoire le 14/11/2026 — l'Entrée 278 du journal de travail.
