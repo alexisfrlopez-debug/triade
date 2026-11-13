@@ -38,6 +38,19 @@ Usage :
       --journal preuves_v150/comparaison_dryrun/dryrun_verifications.jsonl
   python3 chronometre_verification.py --command "python3 v06/sceau_I.py \
 verifier" --label garde --bras T --tache six-blocs --dryrun
+
+L'ÉDITION v3 (le 14/11/2026 au soir) — LA SORTIE SANS FAUTE DE PAGE DE
+CODES : le premier run du GUI (Windows, Python 3.14) nomma l'écart —
+l'annonce de la calibration écrivait « ≤ » (U+2264), INENCODABLE en
+cp1252, la page de codes d'un stdout PIPÉ (le GUI capture la sortie) :
+UnicodeEncodeError APRÈS la mesure et le journal — la pause fut MESURÉE
+et JOURNALISÉE (l'écriture du journal précède l'annonce), puis l'annonce
+SEULE faillit (code 1, la « calibration ROUGE » sans qu'aucune horloge
+fût en cause). LA RÉPARATION, deux ceintures : les flux reconfigurés en
+UTF-8 errors="replace" (le préambule ci-dessous) ; l'annonce rendue
+cp1252-sûre (« <= » au lieu de « ≤ »). Le mécanisme de la pause et le
+format du journal DEMEURENT ceux de la v2 (le label
+« calibration-sleep », la clé du vérificateur).
 """
 from __future__ import annotations
 
@@ -48,6 +61,21 @@ import pathlib
 import subprocess
 import sys
 import time
+
+# v3 — LA PREMIÈRE CEINTURE : les flux de sortie reconfigurés en UTF-8
+# errors="replace". Un stdout PIPÉ ou REDIRIGÉ sous Windows vit en
+# cp1252 (la page de codes ANSI française) où « ≤ » est inencodable ; le
+# GUI du kit décode l'UTF-8 (encoding="utf-8", errors="replace"), une
+# console Windows vit déjà l'Unicode par WriteConsoleW, un fichier
+# redirigé s'ouvre en UTF-8. errors="replace" garantit qu'AUCUNE
+# annonce ne peut lever, quel que soit le flux.
+for _flux in (sys.stdout, sys.stderr):
+    try:
+        _flux.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        # un flux fermé ou étranger : la seconde ceinture (l'annonce
+        # cp1252-sûre ci-dessous) demeure
+        pass
 
 JOURNAL_DEFAUT = (pathlib.Path(__file__).resolve().parents[1]
                   / "preuves_v150" / "comparaison_resultats"
@@ -132,9 +160,12 @@ def main() -> int:
             f.write(json.dumps(ligne, ensure_ascii=False) + "\n")
         ecart = abs(secondes - args.calibration)
         ok = ecart <= TOLERANCE_CALIBRATION
+        # v3 — LA SECONDE CEINTURE : l'annonce n'écrit PLUS aucun
+        # caractère hors cp1252 (« <= » au lieu de « ≤ ») — elle ne
+        # peut plus faillir, quelle que soit la page de codes du flux
         print(f"[calibration] pause demandée {args.calibration:.2f} s, "
               f"mesurée {secondes:.3f} s — écart "
-              f"{ecart:.3f} s {'≤' if ok else '>'} tolérance "
+              f"{ecart:.3f} s {'<=' if ok else '>'} tolérance "
               f"{TOLERANCE_CALIBRATION:.2f} s -> "
               f"{'VERT' if ok else 'ROUGE'}")
         return 0 if ok else 1

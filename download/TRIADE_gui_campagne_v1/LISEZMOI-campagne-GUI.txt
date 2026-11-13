@@ -1,9 +1,28 @@
-LISEZMOI — LE GUI DE LA CAMPAGNE D204, PAS À PAS, TOUT AU CLIC (le 14/11/2026)
+LISEZMOI — LE GUI DE LA CAMPAGNE D204, PAS À PAS, TOUT AU CLIC
+(l'édition v1.0.1 du 14/11/2026 au soir — LE CORRECTIF ENCODAGE ; la
+première édition v1.0.0 vit au coffre, D143 : jamais jetée)
 ==============================================================================
 (le kit TRIADE_gui_campagne_v1 — la commande du développeur : « fais un
 GUI pas a pas, tout au clic, pour la campagne aux 2 bras » ; la campagne
 de comparaison des workflows, le plan pré-enregistré D204 VERROUILLÉ —
 sha256 a78caf8c… consigné AVANT toute mesure)
+
+LE CORRECTIF v1.0.1 (l'écart nommé du premier run, le 14/11 au soir) :
+sous Windows, la sortie d'un instrument PIPÉE par le GUI vit en cp1252
+(la page de codes ANSI française) — l'annonce de la calibration
+écrivait « ≤ » (U+2264), INENCODABLE là : UnicodeEncodeError APRÈS la
+mesure et le journal. La pause fut MESURÉE et JOURNALISÉE (la ligne
+« calibration-sleep » vit à preuves_v150\comparaison_dryrun\
+dryrun_verifications.jsonl, à côté de campagne-d204) — l'annonce SEULE
+faillit, code 1, « calibration ROUGE » sans qu'aucune horloge fût en
+cause. LA RÉPARATION : le chronomètre v3 et le compteur de tokens v2
+(les flux reconfigurés en UTF-8 errors="replace", les annonces rendues
+cp1252-sûres — « <= » au lieu de « ≤ ») ; le GUI v1.0.1 REGRAVE leurs
+empreintes ; le plan VERROUILLÉ et les SIX autres pièces demeurent
+INTACTS, octet pour octet. LA REPRISE : dézippez le correctif
+PAR-DESSUS le dossier du kit existant (l'état du GUI, TRIADE_logs\ et
+l'atelier survivent — ce ne sont pas des pièces du kit) ; rouvrez le
+GUI : le verrou passe aux HUIT pièces, la calibration se rejoue au clic.
 
 L'OBJET : conduire LA CAMPAGNE AUX DEUX BRAS au clic, geste après geste,
 sur votre machine Windows — le GUI v1.0.0 (un seul fichier Python,

@@ -29,6 +29,16 @@ Usage :
       [--journal preuves_v150/comparaison_resultats/journal_tokens.jsonl]
   python3 compter_tokens.py --total \
       --journal preuves_v150/comparaison_resultats/journal_tokens.jsonl
+
+L'ÉDITION v2 (le 14/11/2026 au soir) — LA SORTIE SANS FAUTE DE PAGE DE
+CODES, la même réparation que le chronomètre v3 (l'écart nommé du
+premier run du GUI : un stdout PIPÉ sous Windows vit en cp1252 où
+« ≠ » est inencodable — UnicodeEncodeError à l'annonce d'un écart) :
+les flux reconfigurés en UTF-8 errors="replace" (le préambule
+(ci-dessous) protège AUSSI l'impression de la réponse du modèle, qui
+peut porter n'importe quel Unicode) ; l'annonce de l'écart rendue
+cp1252-sûre (« != » au lieu de « ≠ »). Le format du journal demeure
+CELUI DE LA v1, octet pour octet.
 """
 from __future__ import annotations
 
@@ -40,6 +50,20 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+
+# v2 — LA SORTIE SANS FAUTE DE PAGE DE CODES (la réparation du
+# chronomètre v3, portée au compteur) : un stdout PIPÉ ou REDIRIGÉ sous
+# Windows vit en cp1252 — « ≠ » (U+2260) y est inencodable, et la
+# réponse du modèle peut porter n'importe quel Unicode. Les flux se
+# reconfigurent en UTF-8 errors="replace" : AUCUNE annonce ne peut
+# lever, quel que soit le flux.
+for _flux in (sys.stdout, sys.stderr):
+    try:
+        _flux.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        # un flux fermé ou étranger : l'annonce cp1252-sûre ci-dessous
+        # demeure
+        pass
 
 # le journal de campagne — créé PAR LA PREMIÈRE MESURE (CA1 : le dossier
 # des résultats naît du premier appel instrumenté, jamais avant le plan)
@@ -140,8 +164,9 @@ def total(journal: pathlib.Path) -> None:
     incoherences = [l for l in lignes if not l.get("somme_coherente")]
     print(f"  TOTAL : {tout} tokens")
     if incoherences:
+        # v2 — l'annonce cp1252-sûre : « != » au lieu de « ≠ »
         print(f"  [ÉCART NOMMÉ] {len(incoherences)} ligne(s) où "
-              f"prompt+completion ≠ total (l'API contredite, la ligne "
+              f"prompt+completion != total (l'API contredite, la ligne "
               f"porte l'écart)")
     hors_log = [l for l in lignes if l.get("source") != "log-api"]
     if hors_log:

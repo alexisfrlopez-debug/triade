@@ -1,19 +1,29 @@
-EMPREINTES-GUI-CAMPAGNE — le kit TRIADE_gui_campagne_v1 (le 14/11/2026)
-sha256 des pièces du kit (générées du montage même)
+EMPREINTES-GUI-CAMPAGNE — le kit TRIADE_gui_campagne_v1, l'édition v1.0.1
+(le correctif encodage du 14/11/2026 au soir — sha256 générées du montage même)
 ==============================================================================
-40a051a08d3783724f9faccc1d2a7f356123a4cb2001577aeed78fc361b55f0e  triade_campagne_gui.py  (le GUI v1.0.0 — 13 selftest VERT, 8 fonctionnel VERT)
-ef7dd9cdf97cd1f63f302da5ebcb57ad0fbc4362c96380954e38dc808b74da1d  LANCER-GUI-CAMPAGNE-D204.bat  (le double-clic d'ouverture)
-685ae642e7e6cfe304f629dfb687b6859d89488671d31e28c755dc1532de2354  LISEZMOI-campagne-GUI.txt  (la carte du kit)
+92aa4f67701846150aa78ea6108e17ebc18f4630cbfd381f5d93fdd1442d842c  triade_campagne_gui.py  (le GUI v1.0.1 — les empreintes des DEUX instruments REGRAVÉES ; 13 selftest VERT)
+ef7dd9cdf97cd1f63f302da5ebcb57ad0fbc4362c96380954e38dc808b74da1d  LANCER-GUI-CAMPAGNE-D204.bat  (le double-clic d'ouverture — INTACT)
+535539152b411ec4e7e484538690a313da2af560d792b2a61089d9aed1d16a4b  LISEZMOI-campagne-GUI.txt  (la carte du kit — l'édition du correctif)
 
-LES HUIT PIÈCES de campagne-d204/ — INTACTES, celles du kit 1-clic v2 de l'Entrée 273 :
-a78caf8c0cb9498446a91d18d0f8a02ee16b6893d4fe4ce49843397f30240255  campagne-d204/PLAN_PREREGISTRE_COMPARAISON.md  (le plan VERROUILLÉ — l'empreinte consignée à D204)
-609a0e81b99376e698ef0bd90e89a0537ba97caf88cb8d9ee67637227f282beb  campagne-d204/LISEZMOI-comparaison.txt
-5f1ffa9776d296b809ada54217e86f8e4789bc865a5d77e0402ea222e021d1a9  campagne-d204/LANCER-CAMPAGNE-D204.bat  (la console officielle — le chemin console demeure)
-41f8c1b098b2a978b53e54a660db6c1e2818da0192f53b48eb3ba346ea50b758  campagne-d204/chronometre_verification.py  (l'instrument M4 — la pause portable v2)
-f5f3af046ab73d9282206e01ed7127a33c9bdef15e0ff2e2a29da3a5e0e348b6  campagne-d204/compter_tokens.py  (l'instrument M2)
-ba736b1f1e153e18a8c9bf6e97d73c04e456dcf136ede93e278802eca98baf0e  campagne-d204/carnet_temps_humain.csv  (le gabarit M3 — scellé, jamais retouché)
-3d7d13f033b1176efba8d4096b4512655805897e89127461fa25fc56cc8e2d10  campagne-d204/livraisons.csv  (le gabarit M1 — scellé, jamais retouché)
-e2756e76a84ac9c5d552ca01da26dc228e8b23c50b05689cb1cf9cee11380497  campagne-d204/defauts.csv  (le gabarit M1 — scellé, jamais retouché)
+LES HUIT PIÈCES de campagne-d204/ — SIX INTACTES (celles du kit 1-clic v2 de l'Entrée 273), LES DEUX INSTRUMENTS DE L'ÉDITION SANS FAUTE DE PAGE DE CODES :
+a78caf8c0cb9498446a91d18d0f8a02ee16b6893d4fe4ce49843397f30240255  campagne-d204/PLAN_PREREGISTRE_COMPARAISON.md  (le plan VERROUILLÉ — l'empreinte consignée à D204, INTACT)
+609a0e81b99376e698ef0bd90e89a0537ba97caf88cb8d9ee67637227f282beb  campagne-d204/LISEZMOI-comparaison.txt  (INTACTE — l'Entrée 273)
+5f1ffa9776d296b809ada54217e86f8e4789bc865a5d77e0402ea222e021d1a9  campagne-d204/LANCER-CAMPAGNE-D204.bat  (la console officielle — INTACTE, le chemin console demeure)
+ff0c96522fa558ccc37af6f16b9d63cc91ced71ae81c699c2cd26c1a0853a58f  campagne-d204/chronometre_verification.py  (l'instrument M4 — LA V3 : l'annonce sans faute de page de codes)
+e2939ef9d3ef7f228c1881b55744e182238fbb489b58d30595882d926eea26e5  campagne-d204/compter_tokens.py  (l'instrument M2 — LA V2 : la même réparation, portée au compteur)
+ba736b1f1e153e18a8c9bf6e97d73c04e456dcf136ede93e278802eca98baf0e  campagne-d204/carnet_temps_humain.csv  (le gabarit M3 — scellé, INTACT)
+3d7d13f033b1176efba8d4096b4512655805897e89127461fa25fc56cc8e2d10  campagne-d204/livraisons.csv  (le gabarit M1 — scellé, INTACT)
+e2756e76a84ac9c5d552ca01da26dc228e8b23c50b05689cb1cf9cee11380497  campagne-d204/defauts.csv  (le gabarit M1 — scellé, INTACT)
 
 Le GUI recoupe ces empreintes à CHAQUE session (étape 1) — une divergence,
 RIEN ne court (fail-closed). La console : certutil -hashfile <fichier> SHA256
+
+LE CORRECTIF (l'écart nommé du premier run, le 14/11 au soir) : l'annonce de
+la calibration écrivait « ≤ » (U+2264), inencodable en cp1252 — la page de
+codes d'un stdout pipé sous Windows (le GUI capture la sortie des instruments).
+La pause fut MESURÉE et JOURNALISÉE avant la faute de l'annonce (code 1).
+LA RÉPARATION : flux reconfigurés en UTF-8 errors="replace" + annonces
+cp1252-sûres (« <= » au lieu de « ≤ », « != » au lieu de « ≠ ») ; le mécanisme
+de la pause et les formats de journal DEMEURENT (le label « calibration-sleep »,
+la clé du vérificateur). La reprise : dézipper PAR-DESSUS, le verrou passe, la
+calibration se rejoue.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-triade_campagne_gui.py — TRIADE : LA CAMPAGNE D204 PAS À PAS · GUI v1.0.0
+triade_campagne_gui.py — TRIADE : LA CAMPAGNE D204 PAS À PAS · GUI v1.0.1
 =========================================================================
 UN SEUL FICHIER PYTHON, ZÉRO LIGNE DE COMMANDE (si ce n'est le lancer) —
 le GUI qui conduit, geste après geste, LA CAMPAGNE DE COMPARAISON DES
@@ -26,13 +26,14 @@ n'est arrivée (un statut, jamais un résultat fabriqué).
 
 LES GESTES DU GUI (tout au clic, dans l'ordre) :
     ÉTAPE 1  LE VERROU — les HUIT pièces recoupées sha256 par sha256
-             (le plan VERROUILLÉ a78caf8c…, le chronomètre v2
-             41f8c1b0…, les instruments, les gabarits) — une
+             (le plan VERROUILLÉ a78caf8c…, le chronomètre v3
+             ff0c9652…, les instruments, les gabarits) — une
              divergence, RIEN ne court (fail-closed) ; l'ATELIER de
              campagne naît ici (les COPIES datées des trois gabarits —
              les originaux scellés demeurent INTACTS) ;
     ÉTAPE 2  LA CALIBRATION — la preuve d'horloge du chronomètre
-             (2 s, la pause portable v2) — un DRY-RUN, jamais une
+             (2 s, la pause portable v3, l'annonce sans faute de page
+             de codes) — un DRY-RUN, jamais une
              mesure de campagne (CA1) ;
     ÉTAPE 3  LA CAMPAGNE — les quatorze unités, chacune conduite pas
              à pas : LE KIT (choisir, recouper ses empreintes gravées),
@@ -64,6 +65,20 @@ construction) :
 Lancement :
     double-cliquez LANCER-GUI-CAMPAGNE-D204.bat  (le kit complet),
     ou :  python3 triade_campagne_gui.py [--kit DOSSIER] [--selftest]
+
+L'ÉDITION v1.0.1 (le 14/11/2026 au soir) — LE CORRECTIF ENCODAGE : le
+premier run du GUI sous Windows nomma l'écart — l'annonce de la
+calibration (chronomètre v2) écrivait « ≤ », INENCODABLE en cp1252, la
+page de codes d'un stdout pipé (le GUI capture la sortie des
+instruments) : UnicodeEncodeError APRÈS la mesure et le journal — la
+pause fut MESURÉE et JOURNALISÉE, l'annonce SEULE faillit (code 1,
+« calibration ROUGE » sans faute d'horloge). LA RÉPARATION : le
+chronomètre v3 et le compteur de tokens v2 (l'édition sans faute de
+page de codes — flux reconfigurés en UTF-8, annonces cp1252-sûres),
+leurs empreintes REGRAVÉES ci-dessous ; le plan VERROUILLÉ et les six
+autres pièces demeurent INTACTS. La reprise : ré-extraire le kit PAR-
+DESSUS l'existant (l'état du GUI et l'atelier survivent), le verrou
+passe, la calibration se rejoue.
 """
 
 from __future__ import annotations
@@ -85,8 +100,8 @@ import traceback
 # SECTION A — LES CONSTANTES DU KIT (les pièces, le plan, les listes fixes)
 # ===========================================================================
 
-VERSION = "1.0.0"
-EDITION = "l'édition du 14/11/2026"
+VERSION = "1.0.1"
+EDITION = "l'édition du 14/11/2026 (le correctif encodage au soir)"
 
 GUI_DIR = pathlib.Path(__file__).resolve().parent
 FICHIER_ETAT = GUI_DIR / "etat-campagne-d204.json"
@@ -96,8 +111,12 @@ DOSSIER_LOGS = GUI_DIR / "TRIADE_logs"
 COFFRE_TEST_URL = ("https://drive.google.com/drive/folders/"
                    "1KeJIMwpsT7GshcjIJy0Sf8KzsOBjimU0")
 
-# LES HUIT PIÈCES de campagne-d204 (celles du kit 1-clic v2, l'Entrée 273)
-# — sha256 gravées : la transparence, la confrontation à chaque geste (CA5)
+# LES HUIT PIÈCES de campagne-d204 — celles du kit 1-clic v2 de
+# l'Entrée 273 POUR SIX, les DEUX instruments de l'édition v1.0.1
+# (le chronomètre v3, le compteur v2 — le correctif encodage du
+# 14/11 au soir ; les empreintes REGRAVÉES, la pause et les formats
+# de journal DEMEURENT) — sha256 gravées : la transparence, la
+# confrontation à chaque geste (CA5)
 EMPREINTES_PIECES = {
     "LANCER-CAMPAGNE-D204.bat":
         "5f1ffa9776d296b809ada54217e86f8e4789bc865a5d77e0402ea222e021d1a9",
@@ -108,9 +127,9 @@ EMPREINTES_PIECES = {
     "carnet_temps_humain.csv":
         "ba736b1f1e153e18a8c9bf6e97d73c04e456dcf136ede93e278802eca98baf0e",
     "chronometre_verification.py":
-        "41f8c1b098b2a978b53e54a660db6c1e2818da0192f53b48eb3ba346ea50b758",
+        "ff0c96522fa558ccc37af6f16b9d63cc91ced71ae81c699c2cd26c1a0853a58f",
     "compter_tokens.py":
-        "f5f3af046ab73d9282206e01ed7127a33c9bdef15e0ff2e2a29da3a5e0e348b6",
+        "e2939ef9d3ef7f228c1881b55744e182238fbb489b58d30595882d926eea26e5",
     "defauts.csv":
         "e2756e76a84ac9c5d552ca01da26dc228e8b23c50b05689cb1cf9cee11380497",
     "livraisons.csv":
@@ -1109,8 +1128,12 @@ class Application:
             "ÉTAPE 2 — LA CALIBRATION DU CHRONOMÈTRE",
             "La preuve d'horloge de l'instrument M4 : une pause de durée "
             "connue (2 s), mesurée par time.monotonic — la pause portable "
-            "v2, EN PROCESSUS (l'édition qui répare la faute « sleep » de "
-            "cmd.exe). L'écart doit rester sous la tolérance 0,05 s. "
+            "EN PROCESSUS, l'édition v3 à l'annonce SANS FAUTE DE PAGE DE "
+            "CODES (l'édition v2 répara la faute « sleep » de "
+            "cmd.exe ; la v3 répare l'annonce « ≤ » inencodable en cp1252 "
+            "— l'écart nommé du premier run, le 14/11 au soir : la pause "
+            "était MESURÉE et JOURNALISÉE, l'annonce seule avait failli). "
+            "L'écart doit rester sous la tolérance 0,05 s. "
             "UN DRY-RUN, jamais une mesure de campagne (CA1).")
         cal = self.etat.get("calibration", {})
         if cal.get("statut") == "VERT":

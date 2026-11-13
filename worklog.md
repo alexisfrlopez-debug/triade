@@ -9891,3 +9891,45 @@ Work Log:
   le verrou d'abord, l'atelier naît, la calibration, puis les unités
   au fil des kits livrés ; la signature du témoin de la voie 2
   demeure LA pièce qui ferme sa chaîne.
+Task ID: 182
+Agent: Z.ai (agent principal — la session du correctif encodage)
+Task: LE CORRECTIF ENCODAGE DU KIT GUI DE CAMPAGNE LIVRÉ (l'écart nommé
+par le premier run du GUI sous Windows, le 14/11 au soir :
+UnicodeEncodeError '\u2264' à l'annonce de la calibration — le stdout
+pipé du GUI vit en cp1252 où « ≤ » est inencodable) : la pause fut
+MESURÉE et JOURNALISÉE avant la faute de l'annonce ; le chronomètre v3
+et le compteur v2 (flux reconfigurés en UTF-8 errors="replace",
+annonces cp1252-sûres), le GUI v1.0.1 aux empreintes regravées, le kit
+console 1-clic v3 aux mêmes instruments.
+
+Work Log:
+- L'ÉCART NOMMÉ SUR PIÈCES : le traceback du terrain lu ligne à ligne
+  (cp1252.py, la position 69) ; le mécanisme reconstitué : le journal
+  précède l'annonce — la ligne « calibration-sleep » ~2,0 s vit au kit
+  du développeur ; la nuance consignée (code_retour 0 à la ligne,
+  process mort 1 à l'annonce).
+- L'AUDIT DE CLASSE : ast sur les littéraux de CHAQUE source livrée —
+  la même faute latente au compteur (« ≠ », pas encore vécue), les
+  GUI tkinter épargnés (widgets Unicode, journaux UTF-8), le
+  cérémonie_gui hors de portée de ce geste (widgets seuls).
+- LES ÉPREUVES : E1 la faute REJOUÉE (PYTHONIOENCODING=cp1252, le
+  wrapper du pipe : code 1 '\u2264', journal né avant) ; E2-E5 la
+  réparation VERT (code 0, la regex DU GUI trouve l'écart, l'annonce
+  cp1252-sûre, le compteur) ; E6 la faute latente nommée ; E7 selftest
+  13 VERT ; miroir du kit 12/12 ; miroir du bat v3 : 9/9 pièces, 6/9
+  octet pour octet celles de la v2.
+- LE MONTAGE : EMPREINTES régénérées du montage même ; le zip
+  TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip (c2dede15…) ; le bat
+  TRIADE-1CLIC-CAMPAGNE-D204-v3.bat (4da213bc…, paquet interne
+  7b8aaacc…) — le recoup de la carte LISEZMOI AJOUTÉ (9/9, l'omission
+  de la v2 nommée au header).
+- LE DÉPÔT : le zip correctif + la carte LISEZMOI-CORRECTIF-ENCODAGE +
+  le bat v3 au coffre /test, md5 recoupés par re-téléchargement ; le
+  v1 et le v2 demeurent (D143).
+- LA CONSIGNATION : la présente Entrée 275 + Task 182 ; la carte
+  OU-TROUVER portée à 275 ; D141 tenu avant le commit (le courant
+  274-8644226 archivé versionné au miroir, md5 recoupé).
+- SUITE : au développeur — dézipper le correctif PAR-DESSUS le kit
+  existant, rouvrir le GUI (le verrou passe, la calibration se
+  rejoue), puis la campagne aux deux bras ; la signature du témoin de
+  la voie 2 demeure LA pièce qui ferme sa chaîne.
