@@ -10090,3 +10090,19 @@ Work Log:
   D204 aux deux bras (le GUI v1.0.1), le geste B sur un silicium à
   SHA-NI, la cérémonie hors-ligne du séquestre, le κ aux deux jeux
   d'annotations.
+
+- L'ADDENDA (les miroirs vécus) : LE PUSH GITHUB REFUSÉ ENCORE (« remote:
+  Invalid username or token. Password authentication is not supported
+  for Git operations. » au ls-remote sous credential helper store —
+  l'API /user rend 401 « Bad credentials » ; le jeton fourni demeure
+  expiré ou révoqué : écart nommé, non bloquant, le rafraîchissement
+  appartient au développeur) ; LE MIROIR DRIVE SYNCHRONISÉ À 277 ET
+  VÉRIFIÉ : le bac download/temoin-shani-reprise/ porté (5 pièces à la
+  racine md5 recoupées à la lecture — la pièce reçue 03f2f32c…, l'AUTO
+  du run en regard 5cd615c9…, le LISEZMOI-REPRISE debb61d2…, l'INDEX du
+  /test, le DEPOT-RECU — plus les 5 candidats du parcours), les TROIS
+  fichiers édités (la carte, le worklog, le journal) MATCH octet pour
+  octet, l'archive D141 triade-history-276-ba77e08.bundle en place (md5
+  4639dcec…), le courant triade-history.bundle rafraîchi (bd5e2f62…,
+  distinct de l'archive 276) — le miroir Drive demeure LA sauvegarde de
+  référence.
