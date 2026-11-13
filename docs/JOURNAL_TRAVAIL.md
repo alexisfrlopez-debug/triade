@@ -11334,3 +11334,136 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   nommés, jamais maquillés]. Le kit-2 [exe 1-clic v2, la chaîne
   DOUBLEMENT fermée] et le constat-arm [l'APK, la chaîne fermée]
   n'ont rien à refaire ; la cérémonie d'ère vit au dossier Cérémonie.
+
+
+## Entrée 271 — LES RUNS 1 CLIC REÇUS ET RECOUPÉS (l'annonce du développeur du 13/11 au soir : « dossier avec preuves des runs 1 clic dans /test du drive ») : les HUIT fichiers autonomes ont vécu leur double-clic — huit dossiers de run nés en cinq minutes (15:46-15:51Z) sur PORTABLE (Windows 10 19045, Ivy Bridge famille 6 modèle 58) et son WSL2 — LA VOIE 1 QEMU VERDICT VERT 16 PASS / 0 ÉCHEC (l'universalité M7 rejointe au terrain pour la première fois, les 16 lignes LES MÊMES que le run labo de l'Entrée 269, la frontière D149 nommée au témoin), LE TÉMOIN VITRINE loupe.exe VÉCU PROPRE (deux codes 0, aucun WER loupe), LE DIAGNOSTIC nommant le TROISIÈME silicium du parc — ET LES RÉSULTATS NOMMÉS : le geste B refusé T0.silicium (SHA-NI absent sur PORTABLE aussi — la mesure demeure ouverte), LA CALIBRATION D204 FAUT SOUS WINDOWS (« sleep 2.0 » : code 1, 0,031 s — cmd.exe n'a pas de sleep ; l'écart renvoyé tel quel, la pause portable à l'édition suivante), la voie 2 sans preuve née, le séquestre vécu jusqu'à l'import (pyc cpython-314), la réplication aux acteurs manquants (13/11 au soir, la session de la réception)
+
+- LE GESTE ET SON MOMENT : le dossier fichiers-1clic/TRIADE_fichiers_
+  1clic_v1/ du /test (créé 15:51:12Z, une minute après le dernier run) —
+  les HUIT dossiers TRIADE-1CLIC-*-run-20261113-16* : campagne-d204
+  (164646), diagnostic (164743), geste-b (164750), replication (164804),
+  sequestre-d183 (164924), temoin-vitrine (165005), voie1-qemu (165020),
+  voie2-qemu (165041). La chaîne du vécu : les .bat livrés à 15:31-15:32Z
+  (l'Entrée 270), téléchargés, double-cliqués quinze minutes plus tard,
+  les dossiers de run renvoyés ENTIERS. La forme AUTONOME a vécu sa
+  première campagne réelle.
+
+- LE RAPATRIEMENT ET LES RECOUPEMENTS (lecture seule, le lien public du
+  coffre) : 87 fichiers md5 recoupés 87/87 [scripts/rapatrier_preuves_
+  1clic.py] ; les HUIT paquet-interne.zip == les empreintes gravées aux
+  .bat (61a355e7…, c138754d…, 59e6bc5d…, dde3f903…, ef09c1e0…,
+  4318d865…, 053ea3a1…, 2c054169…) ; 28/28 pièces de kit recoupées aux
+  sha256 gravés des LISEZMOI-1CLIC (les lanceurs officiels INTACTS) ;
+  les CINQ scellés + le qemu embarqué INTACTS (loupe.exe c1115105…,
+  proxy-image 0782d7e2…, moteur-shani 761ab194…, corpus ec343b4e…,
+  demo e57fc74b…, qemu-riscv64 f2bb9b35…) ; les HUIT .bat du
+  /test/fichiers-1clic == EMPREINTES-FICHIERS-1CLIC (la livraison n'a
+  pas bougé). Les preuves au bac download/preuves-runs-1clic-terrain-v1/
+  (87 pièces + le présent LISEZMOI).
+
+- LA VOIE 1 QEMU — VERDICT VERT 16 PASS / 0 ÉCHEC (le dossier de run
+  165020) : l'universalité M7 REJOUÉE AU TERRAIN, la première
+  reproduction hors labo — les empreintes ASSERTÉES avant tout geste
+  (corpus ec343b4e…, demo e57fc74b…), l'instrument identifié (le
+  qemu-riscv64 STATIQUE EMBARQUÉ du kit, version 10.0.13, md5
+  bae5a36f…), les TROIS rituels au code 0, les TROIS bases forcées
+  identiques (D155), LA BASCULE PENDANT LE TRAFIC (1 200 usages,
+  l'apply entre 399/400, 15 425 o EXACTS), le journal COHÉRENT (1 200
+  lignes, chacun son indice), LE DEP FALSIFIÉ (SIGSEGV, 4 290 o
+  EXACTS), la falsification du démonstrateur (rompu à 0x2000), ZÉRO
+  RÉGRESSION (les DEUX scellés relus intacts), le rituel du scellé
+  rejoué. Les 16 lignes PASS == le run labo de l'Entrée 269 (le bloc
+  verdict identique au diff près de la bannière console). Le témoin
+  AUTO né [temoin-m7d.txt : machine WSL2 6.18.58.1-microsoft-standard,
+  Python 3.14.4, 2026-11-13 16:50:32 +0100] — la frontière D149 au
+  témoin même : une émulation de processus TCG, JAMAIS déguisée en
+  exécution native. LA SIGNATURE DEMEURE à la main du développeur.
+
+- LE TÉMOIN VITRINE — VÉCU PROPRE (le dossier 165005) : loupe.exe
+  0.1.1-dev.1 sur PORTABLE (Windows 10 19045 — une TROISIÈME machine :
+  après ALEKPC Windows 11 et le téléphone ARM) : la vitrine VIDE code
+  0, la vitrine AVEC FICHIER code 0 [temoin-fichier.bin == loupe.exe,
+  le calque du lanceur], les 5 derniers WER : AUCUN loupe [les seuls
+  1000/1001 nomment SpotLightUWP.exe, un crash UWP sans rapport,
+  08:40Z] — le témoin né [preuves-loupe/temoin-vitrine.txt], la
+  signature facultative demeure.
+
+- LE DIAGNOSTIC (le dossier 164743) : PORTABLE nommé — Windows 10,
+  AMD64, Ivy Bridge famille 6 modèle 58 pas 9, SHA-NI ABSENT (CPUID
+  feuille 7, EBX bit 29 = 0), Python 3.14.10 64 bits, AUCUN
+  compilateur, WSL2 VU. Le diagnostic-machine.txt né (80224342…) — le
+  parc est TROIS siliciums nommés, chacun par ses propres canaux.
+
+- LE GESTE B — ÉCHEC NOMMÉ T0.silicium (le dossier 164750) : le refus
+  EST le résultat (« CE silicium n'exécute pas sha256rnds2, la mesure
+  avant/après n'y existe pas ; le kit ne peut pas inventer le
+  silicium ») — SHA-NI absent sur PORTABLE aussi [après les refus
+  d'ALEKPC, l'Entrée 245]. VERDICT-run-shani.txt + journal nés, le
+  refus consigné TEL QUEL. LA MESURE DEMEURE OUVERTE : elle exige un
+  silicium Ice Lake et après chez Intel, Ryzen chez AMD — le
+  diagnostic lit le CPUID et le dit AVANT.
+
+- LA CAMPAGNE D204 — LA CONSOLE VÉCUE, L'ÉCART NOMMÉ (le dossier
+  164646) : le journal du dry-run NÉ [preuves_v150/comparaison_dryrun/
+  dryrun_verifications.jsonl, 15:47:08Z] — CA1 TENU : AUCUNE mesure
+  n'existe, le dossier des résultats n'est pas né. L'ÉCART : la
+  calibration « sleep 2.0 » FAUTE SOUS WINDOWS [code_retour 1, 0,031 s
+  — chronometre_verification.py lance la pause par subprocess shell :
+  cmd.exe n'a PAS de commande sleep] : la preuve d'horloge ne peut pas
+  vivre TELLE QUELLE sur Windows. Renvoyé TEL QUEL (D189). LA
+  RÉPARATION à l'édition suivante : une pause PORTABLE (python -c
+  "import time; time.sleep(2)" — le kit exige déjà Python 3), la
+  tolérance inchangée (0,05 s). La campagne elle-même demeure le
+  travail de fond aux DEUX bras (le kit loupe-13 au /test).
+
+- LES TROIS AUTRES — L'ÉTAT CONSTATÉ, PAS MAQUILLÉ : (a) LA VOIE 2
+  (165041) : le paquet né INTACT (14 pièces gravées), le lanceur
+  officiel lancer-voie2-shani.sh en place, les preuves d'émulation du
+  labo EMBARQUÉES (90030d9f…, l'Entrée 269) — mais AUCUNE preuve-shani
+  n'est née du terrain : la voie 2 n'a pas vécu son run (qemu-user
+  absent du WSL2 ? le lanceur officiel donne LA commande exacte) ;
+  (b) LE SÉQUESTRE D183 (164924) : l'instrument a VÉCU jusqu'à l'import
+  [le cache v06/__pycache__/coffre_cf2.cpython-314.pyc est né : Python
+  3.14 a chargé coffre_cf2.py — 93 416 o compilés], aucune pièce
+  d'autotest n'est née au dossier ; la cérémonie DEMEURE à la machine
+  hors-ligne (pip install pynacl cryptography AVANT, les cinq médias,
+  la preuve de reconstitution à froid — le coffre réel intact) ;
+  (c) LA RÉPLICATION (164804) : le kit extrait intact (le calculateur
+  κ, la grille T/X) ; l'autotest vit à la console (aucune pièce née) ;
+  les DEUX jeux d'annotations demeurent les acteurs manquants (le
+  second annotateur à recruter, le second domaine en attente).
+
+- LES DEUX PIÈCES RACINES DATÉES : kit-loupe.zip [38 585 o, md5
+  dadfb48c…] et LISEZMOI-loupe.txt [19 900 o, md5 70340163…] sont au
+  /test depuis le 10/11 19:27Z (datation Drive) — le kit loupe zippé
+  (loupe.exe c1115105… scellé, scenario 131d0135…, temoin-vitrine.bat
+  6745d46f… l'édition du coffre, LISEZMOI 6cad6bd3… identique octet
+  pour octet au renommé .txt). CONSTATÉES à ce recensement (jamais
+  rapatriées avant : les listes fixes des scripts antérieurs ne les
+  nommaient pas) — RIEN ne diverge, le scellé y vit.
+
+- LA PIÈCE LIVRÉE : LISEZMOI-RUNS-1CLIC.txt (au bac
+  download/preuves-runs-1clic-terrain-v1/ et à la racine du /test) —
+  le bilan en mots simples, ce qui est VERT (voie 1, témoin vitrine,
+  diagnostic), les résultats nommés (geste B, calibration D204, voie
+  2, séquestre, réplication), et LE GESTE QUI RESTE À LA MAIN : dater
+  et SIGNER temoin-m7d.txt (la pièce qui ferme la voie 1), le geste B
+  sur un silicium SHA-NI, la voie 2 sous qemu-user, la campagne aux
+  deux bras, la cérémonie hors-ligne, le κ aux deux jeux.
+
+- Frontières : AUCUNE pièce scellée touchée (les CINQ recoupés dans
+  les dossiers de run mêmes) ; AUCUNE mesure de campagne fabriquée
+  [CA1 tenu — le jsonl du dry-run est la preuve d'instrument, pas une
+  mesure] ; le coffre réel du développeur intact ; aucun chiffre
+  fabriqué (le 0,19× du labo demeure consigné à l'Entrée 269) ; le
+  dossier rapatrié par le lien public, lecture seule, md5 recoupés.
+
+- SUITE : au développeur — LA SIGNATURE DU TÉMOIN M7D (preuves-m7/
+  renvoyé signé au /test : la chaîne de la voie 1 se ferme), le geste
+  B sur une machine à SHA-NI (le diagnostic choisit), la voie 2 sous
+  qemu-user, la campagne D204 aux deux bras (la calibration portable
+  viendra à l'édition suivante), la cérémonie du séquestre hors-ligne,
+  le κ le jour des deux jeux d'annotations ; au labo — l'édition
+  correctrice de chronometre_verification.py (la pause portable), les
+  écarts 334 + 307 de dudect_v150.c toujours attendus à la prochaine
+  édition du kit-2 (l'Entrée 253), JAMAIS de patch binaire.

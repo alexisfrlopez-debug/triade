@@ -9700,3 +9700,60 @@ Work Log:
   témoin daté signé, le dossier de run ENTIER au coffre ; les acteurs
   manquants de la réplication [second annotateur, second domaine]
   demeurent nommés.
+
+
+Task ID: 178
+Agent: Z.ai (agent principal — la session de la réception des runs)
+Task: LA RÉCEPTION DES PREUVES DES RUNS 1 CLIC (l'annonce « dossier avec
+preuves des runs 1 clic dans /test du drive ») — les HUIT dossiers de run
+des fichiers autonomes TRIADE-1CLIC (15:46-15:51Z, PORTABLE Windows 10 +
+WSL2) rapatriés et recoupés (87 pièces md5 87/87, les huit paquets ==
+empreintes gravées, 28/28 pièces de kit, les CINQ scellés + qemu
+embarqué INTACTS), lus mot pour mot : LA VOIE 1 QEMU VERDICT VERT
+16 PASS / 0 ÉCHEC (l'universalité M7 rejointe au terrain — les 16 lignes
+LES MÊMES que le run labo, D149 nommée), LE TÉMOIN VITRINE VÉCU PROPRE
+(deux codes 0, aucun WER loupe, une TROISIÈME machine), LE DIAGNOSTIC
+(le TROISIÈME silicium nommé : Ivy Bridge, SHA-NI absent), ET LES
+RÉSULTATS NOMMÉS : geste B refusé T0.silicium (la mesure ouverte),
+CALIBRATION D204 FAUT SOUS WINDOWS (« sleep 2.0 » code 1, 0,031 s —
+renvoyé tel quel, la pause portable à l'édition suivante), voie 2 sans
+preuve née, séquestre vécu jusqu'à l'import (pyc cpython-314),
+réplication aux acteurs manquants ; les DEUX pièces racines datées
+(kit-loupe.zip + LISEZMOI-loupe.txt, 10/11 19:27Z, constatées — rien ne
+diverge) ; LISEZMOI-RUNS-1CLIC.txt livré (le geste qui reste à la main :
+la SIGNATURE du temoin-m7d d'abord).
+
+Work Log:
+- LE RAPATRIEMENT : fichiers-1clic/TRIADE_fichiers_1clic_v1/ — les huit
+  dossiers de run + les pièces livrées (scripts/rapatrier_preuves_
+  1clic.py, lecture seule, chaque md5 recoupé contre la métadonnée
+  Drive).
+- LES RECOUPEMENTS : les huit paquet-interne.zip == les sha gravés aux
+  .bat ; 28/28 pièces == les LISEZMOI-1CLIC gravés ; les CINQ scellés
+  + le qemu embarqué recoupés DANS les dossiers de run ; les huit .bat
+  du /test == EMPREINTES-FICHIERS-1CLIC (la livraison intacte).
+- LA LECTURE : les verdicts et témoins mot pour mot — le VERT de la
+  voie 1 (16 PASS, la bascule pendant le trafic, le DEP falsifié, zéro
+  régression), le témoin vitrine propre, le refus nommé du geste B,
+  le jsonl du dry-run D204 (la calibration fautive lue TELLE QUELLE,
+  la cause nommée : cmd.exe n'a pas de sleep), les traces vives du
+  séquestre (pyc), les absences constatées (voie 2, autotests à la
+  console).
+- LA DATATION : le dossier des runs créé 15:51:12Z (une minute après
+  le dernier run) ; kit-loupe.zip + LISEZMOI-loupe.txt datés du 10/11
+  19:27Z (des pièces anciennes constatées à ce recensement, jamais de
+  nouveaux dépôts).
+- LA PIÈCE : LISEZMOI-RUNS-1CLIC.txt — le bilan en mots simples, les
+  résultats nommés, LE GESTE QUI DÉCIDE (la signature du témoin m7d,
+  le geste B sur silicium SHA-NI, la voie 2, la campagne, la
+  cérémonie, le κ) ; les preuves au bac
+  download/preuves-runs-1clic-terrain-v1/ (87 + 1).
+- LA CONSIGNATION : la présente Entrée 271 + Task 178 ; la carte
+  OU-TROUVER-LES-LIVRABLES portée à 271 ; D141 tenu avant le commit
+  (le courant 270-acfc914 archivé versionné) ; le commit, le push
+  GitHub, le miroir synchronisé, le LISEZMOI déposé à la racine du
+  /test.
+- SUITE : la signature du temoin-m7d (la chaîne de la voie 1 se
+  ferme) ; au labo — l'édition correctrice du chronomètre (la pause
+  portable), les écarts 334 + 307 de dudect à la prochaine édition du
+  kit-2 ; les acteurs manquants de la réplication demeurent nommés.

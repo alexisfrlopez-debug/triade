@@ -1,0 +1,92 @@
+LISEZMOI — LES RUNS 1 CLIC REÇUS ET RECOUPÉS (le 13/11 au soir)
+======================================================================
+(l'annonce du développeur : « dossier avec preuves des runs 1 clic
+dans /test du drive » — le dossier fichiers-1clic/TRIADE_fichiers_
+1clic_v1/, reçu 15:51Z, renvoyé ENTIER)
+
+LE BILAN EN MOTS SIMPLES : les HUIT fichiers autonomes ont vécu leur
+double-clic — huit dossiers de run nés en cinq minutes (15:46-15:51Z),
+sur DEUX environnements de la même session (PORTABLE Windows 10 pour
+les gestes Windows, son WSL2 pour la voie QEMU). Le labo a tout
+rapatrié (87 pièces, chaque md5 recoupé), tout relu mot pour mot, tout
+recoupé : les HUIT paquets internes == les empreintes gravées dans les
+.bat ; les 28 pièces de kit == les lanceurs officiels INTACTS ; les
+CINQ scellés + le qemu embarqué INTACTS (loupe.exe c1115105…,
+proxy-image 0782d7e2…, moteur-shani 761ab194…, corpus ec343b4e…,
+demo e57fc74b…, qemu-riscv64 f2bb9b35…). Rien n'a été retouché.
+
+CE QUI EST VERT (sur pièces, jamais sur parole) :
+  — LA VOIE 1 QEMU : VERDICT VERT, 16 PASS / 0 ÉCHEC —
+    l'universalité M7 REJOUÉE AU TERRAIN pour la première fois : les
+    empreintes assertées avant tout geste, les trois rituels, les
+    bases forcées, LA BASCULE pendant le trafic (1 200 usages), le DEP
+    falsifié (SIGSEGV exact), zéro régression (les DEUX scellés relus
+    intacts), le rituel du scellé rejoué. Les 16 lignes PASS sont LES
+    MÊMES que le run du labo (l'Entrée 269) — la frontière D149
+    demeure, nommée au témoin : une reproduction sous émulation TCG,
+    JAMAIS le métal.
+  — LE TÉMOIN VITRINE : loupe.exe 0.1.1-dev.1 a vécu PROPRE sur
+    PORTABLE (Windows 10 19045 — une TROISIÈME machine) : vitrine
+    vide ET vitrine avec fichier, DEUX codes de sortie 0, AUCUN
+    rapport WER pour loupe (les seuls événements 1000/1001 nomment
+    SpotLightUWP.exe, un crash UWP sans rapport, 08:40Z).
+  — LE DIAGNOSTIC : PORTABLE nommé — Windows 10, Ivy Bridge famille 6
+    modèle 58 pas 9, SHA-NI ABSENT, Python 3.14.10 64 bits, aucun
+    compilateur, WSL2 VU. Le parc est désormais TROIS siliciums
+    nommés (ALEKPC i7-8665U, le téléphone ARM Cortex-A55+A78,
+    PORTABLE Ivy Bridge).
+
+LES RÉSULTATS NOMMÉS (des résultats, jamais des pannes — D189) :
+  — LE GESTE B : refus T0.silicium, ÉCHEC NOMMÉ — « SHA-NI ABSENT »
+    sur PORTABLE aussi (CPUID feuille 7, EBX bit 29 = 0). Le kit ne
+    peut pas inventer le silicium : LA MESURE AVANT/APRÈS DEMEURE
+    OUVERTE — elle exige une machine Ice Lake et après chez Intel,
+    Ryzen chez AMD (le TRIADE-1CLIC-DIAGNOSTIC.bat vous le dira).
+  — LA CAMPAGNE D204 : la console a vécu, le journal du dry-run EST
+    NÉ, AUCUNE mesure n'existe (CA1 tenu). L'ÉCART NOMMÉ : la
+    calibration « sleep 2.0 » FAUTE sous Windows (code 1, 0,031 s —
+    cmd.exe n'a pas de commande sleep) : la preuve d'horloge ne peut
+    pas vivre TELLE QUELLE sur votre machine Windows. Renvoyé tel
+    quel, comme demandé. LA RÉPARATION viendra à l'édition suivante
+    (une pause portable — le kit exige déjà Python 3). La campagne
+    elle-même demeure le travail de fond aux deux bras.
+  — LA VOIE 2 QEMU : le paquet est né INTACT, le lanceur officiel en
+    place — mais AUCUNE preuve-shani n'est née du terrain dans le
+    dossier : la voie 2 n'a pas vécu son run (qemu-user absent du
+    WSL2 ? le lanceur officiel donne LA commande exacte s'il manque).
+    L'état est constaté, pas maquillé.
+  — LE SÉQUESTRE D183 : l'instrument a VÉCU jusqu'à l'import (le
+    cache cpython-314 de coffre_cf2.py est né — Python l'a chargé) ;
+    aucune pièce d'autotest n'est née au dossier. La cérémonie
+    elle-même DEMEURE : machine HORS-LIGNE, « pip install pynacl
+    cryptography » AVANT la mise hors-ligne, les cinq médias, la
+    preuve de reconstitution à froid.
+  — LA RÉPLICATION : le kit est intact ; l'autotest du κ vit à la
+    console (aucune pièce n'est née au dossier). Les DEUX jeux
+    d'annotations demeurent les acteurs manquants — le second
+    annotateur à recruter, le second domaine en attente d'une vraie
+    commande : nommés, jamais maquillés.
+
+LES DEUX PIÈCES RACINES DATÉES : kit-loupe.zip et LISEZMOI-loupe.txt
+sont au /test depuis le 10/11 19:27Z (le kit loupe zippé + son
+LISEZMOI en .txt — le scellé loupe.exe c1115105… y vit, identique).
+Le labo les a constatées à ce recensement — RIEN ne diverge.
+
+LE GESTE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  1. DATER ET SIGNER le témoin de la voie 1 —
+     TRIADE-1CLIC-voie1-qemu-run-…/qemu-wsl2/kit-m7d/preuves-m7/
+     temoin-m7d.txt est né AUTO : datez-le et signez-le de votre main
+     (comme au kit-2), puis renvoyez preuves-m7/ ENTIER au coffre
+     /test. C'est la pièce qui FERME la chaîne de la voie 1.
+  2. Le geste B sur un silicium qui A SHA-NI (le diagnostic choisit).
+  3. La voie 2 sous qemu-user (WSL2 — le lanceur donne la commande).
+  4. La campagne D204 aux deux bras (le kit loupe-13 demeure au /test ;
+     la calibration portable viendra à l'édition suivante).
+  5. La cérémonie du séquestre à la machine hors-ligne.
+  6. Le κ le jour des deux jeux d'annotations.
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT, jamais un échec à maquiller.
+
+LES EMPREINTES DU MOMENT : le dossier des runs == votre dépôt (87
+pièces md5 recoupés) ; la consignation vit au journal de travail
+(Entrée 271) et au miroir git.

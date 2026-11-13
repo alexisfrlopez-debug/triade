@@ -1,0 +1,36 @@
+LISEZMOI-1CLIC — LE DIAGNOSTIC DE LA MACHINE
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-DIAGNOSTIC.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  DIAGNOSTIC-MACHINE.bat      sha256 5ea985738d891228…
+  diagnostic_machine.py       sha256 b20621579426448c…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  AUCUNE exigence : avec Python 3 le diagnostic vit COMPLET ; sans
+  Python il rend ce que cmd lit seul et le NOMME [le CPUID et le
+  verdict complet exigent Python - https://www.python.org].
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  aucune pour le diagnostic lui-meme - il CONSTATE [la machine nommee,
+  le silicium lu par CPUID, SHA-NI present ou absent, ce qui vit] ;
+  il sert aussi a CHOISIR la machine du geste B SHA-NI reel.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

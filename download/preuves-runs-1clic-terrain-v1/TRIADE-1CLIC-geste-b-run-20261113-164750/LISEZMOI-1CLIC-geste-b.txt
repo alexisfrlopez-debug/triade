@@ -1,0 +1,43 @@
+LISEZMOI-1CLIC — LE GESTE B SHA-NI REEL
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-GESTE-B-SHANI.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  pc-windows\kit-1-shani\LANCER-KIT-1-SHANI.bat sha256 4c5be578398eb95e…
+  pc-windows\kit-1-shani\LISEZMOI-shani.txt sha256 b78caab0792fcfe9…
+  pc-windows\kit-1-shani\cibles\manifeste.json sha256 93d5a13fcc4d1cb2…
+  pc-windows\kit-1-shani\cibles\proxy-image.bin sha256 0782d7e20d0bd4a2…
+  pc-windows\kit-1-shani\moteur-shani.bin sha256 761ab194d88d527c…
+  pc-windows\kit-1-shani\moteur-shani.s sha256 d930cac0c6b00db0…
+  pc-windows\kit-1-shani\scenario-shani.py sha256 d9def0b4d714392a…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  Exige Python 3 [le lanceur officiel refuse nomme sinon] et un
+  silicium qui A SHA-NI [Intel Ice Lake et apres, AMD Ryzen - le
+  fichier TRIADE-1CLIC-DIAGNOSTIC.bat vous le dit AVANT]. Sur une
+  machine sans SHA-NI, le refus nomme T0.silicium est un RESULTAT,
+  jamais une panne [vecu trois fois sur ALEKPC].
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  dater et signer la ligne signature du geste du temoin
+  preuves-shani\temoin-shani.txt de votre main, puis renvoyer le
+  dossier preuves-shani\ ENTIER au coffre /test.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

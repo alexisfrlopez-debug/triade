@@ -1,0 +1,46 @@
+LISEZMOI-1CLIC — LA CAMPAGNE DE COMPARAISON D204
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-CAMPAGNE-D204.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  campagne-d204\LANCER-CAMPAGNE-D204.bat sha256 5f1ffa9776d296b8…
+  campagne-d204\LISEZMOI-comparaison.txt sha256 609a0e81b99376e6…
+  campagne-d204\PLAN_PREREGISTRE_COMPARAISON.md sha256 a78caf8c0cb94984…
+  campagne-d204\carnet_temps_humain.csv sha256 ba736b1f1e153e18…
+  campagne-d204\chronometre_verification.py sha256 af73c83478b81d48…
+  campagne-d204\compter_tokens.py sha256 f5f3af046ab73d92…
+  campagne-d204\defauts.csv   sha256 e2756e76a84ac9c5…
+  campagne-d204\livraisons.csv sha256 3d7d13f033b1176e…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  Exige Python 3. La console vit le STATUT des pieces, la
+  CALIBRATION du chronometre [un dry-run, jamais une mesure],
+  le CHRONOMETRAGE d'une commande, les TOKENS du journal. Le
+  plan PRE-ENREGISTRE est VERROUILLE : son sha256 recoupe par
+  certutil a chaque geste - un plan retouche ne courra jamais.
+  AUCUNE mesure n'existe encore, aucune n'est fabriquee [CA1].
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  la campagne elle-meme : un travail de fond aux DEUX bras [T la
+  discipline TRIADE, C le flux standard C+gcc, les memes taches,
+  les quatre metriques] - le plan pre-enregistre fait foi. Le kit
+  loupe-13 vit deja au coffre /test pour le bras de verification.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

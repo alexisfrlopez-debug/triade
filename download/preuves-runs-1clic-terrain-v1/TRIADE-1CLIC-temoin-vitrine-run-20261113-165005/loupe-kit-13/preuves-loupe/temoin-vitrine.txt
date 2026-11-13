@@ -1,0 +1,123 @@
+=== LE TEMOIN VITRINE - loupe.exe 0.1.1-dev.1 (kit 0.1.1-dev.1, Entree 221) === 
+
+Microsoft Windows [version 10.0.19045.6466]
+ 
+[1/4] LA VITRINE VIDE - code de sortie ci-dessous 
+code de sortie = 0 
+ 
+[2/4] LA VITRINE AVEC FICHIER (loupe.exe temoin-fichier.bin) - code de sortie ci-dessous 
+code de sortie = 0 
+ 
+[3/4] LES RAPPORTS WER RECENTS (les 5 derniers) : 
+ 
+[4/4] LE JOURNAL D EVENEMENTS - Application Error 1000 : le module fautif et le decalage de l exception NOMMES ci-dessous : 
+Event[0]:
+  Log Name: Application
+  Source: Windows Error Reporting
+  Date: 2026-11-13T08:40:23.3710000Z
+  Event ID: 1001
+  Task: N/A
+  Level: Information
+  Opcode: Informations
+  Keyword: Classique
+  User: N/A
+  User Name: N/A
+  Computer: PORTABLE
+  Description: 
+Détecteur d'erreurs 1935900594150007472, type 5
+Nom d’événement : MoAppCrash
+Réponse : Non disponible
+ID de CAB : 0
+
+Signature du problème : 
+P1 : 4484Ram6ler.SpotlightWallpapers_1.5.1.0_x64__a1cxeyfetfvyt
+P2 : praid:App
+P3 : 1.0.0.0
+P4 : 5e16312a
+P5 : combase.dll
+P6 : 10.0.19041.6456
+P7 : 089be9fd
+P8 : 80131509
+P9 : 00000000000261d2
+P10 : 
+
+Fichiers joints :
+\\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER4868.tmp.WERInternalMetadata.xml
+
+Ces fichiers sont peut-être disponibles ici :
+\\?\C:\ProgramData\Microsoft\Windows\WER\ReportArchive\AppCrash_4484Ram6ler.Spot_26537ea53331509d0485a504a3f9a8cce94e58e_d2d48bdd_ba5cbc0d-f71a-4e14-bbd6-42ae37f2069d
+
+Symbole d’analyse : 
+Nouvelle recherche de la solution : 0
+ID de rapport : 0afd5bfd-f056-4a6f-b584-79fe7640c88b
+Statut du rapport : 268435456
+Récipient avec hachage : 6e499d2454cf964a3addb35562c762b0
+GUID CAB :0
+
+Event[1]:
+  Log Name: Application
+  Source: Windows Error Reporting
+  Date: 2026-11-13T08:40:22.5090000Z
+  Event ID: 1001
+  Task: N/A
+  Level: Information
+  Opcode: Informations
+  Keyword: Classique
+  User: N/A
+  User Name: N/A
+  Computer: PORTABLE
+  Description: 
+Détecteur d'erreurs , type 0
+Nom d’événement : MoAppCrash
+Réponse : Non disponible
+ID de CAB : 0
+
+Signature du problème : 
+P1 : 4484Ram6ler.SpotlightWallpapers_1.5.1.0_x64__a1cxeyfetfvyt
+P2 : praid:App
+P3 : 1.0.0.0
+P4 : 5e16312a
+P5 : combase.dll
+P6 : 10.0.19041.6456
+P7 : 089be9fd
+P8 : 80131509
+P9 : 00000000000261d2
+P10 : 
+
+Fichiers joints :
+
+Ces fichiers sont peut-être disponibles ici :
+\\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\AppCrash_4484Ram6ler.Spot_26537ea53331509d0485a504a3f9a8cce94e58e_d2d48bdd_ba5cbc0d-f71a-4e14-bbd6-42ae37f2069d
+
+Symbole d’analyse : 
+Nouvelle recherche de la solution : 0
+ID de rapport : 0afd5bfd-f056-4a6f-b584-79fe7640c88b
+Statut du rapport : 4
+Récipient avec hachage : 
+GUID CAB :0
+
+Event[2]:
+  Log Name: Application
+  Source: Application Error
+  Date: 2026-11-13T08:40:21.6440000Z
+  Event ID: 1000
+  Task: Événements d’arrêts inattendus d’applications
+  Level: Erreur
+  Opcode: Informations
+  Keyword: Classique
+  User: N/A
+  User Name: N/A
+  Computer: PORTABLE
+  Description: 
+Nom de l’application défaillante SpotLightUWP.exe, version : 1.0.0.0, horodatage : 0x5e16312a
+Nom du module défaillant : Windows.UI.Xaml.dll, version : 10.0.19041.6456, horodatage : 0xd78c65a7
+Code d’exception : 0xc000027b
+Décalage d’erreur : 0x0000000000723870
+ID du processus défaillant : 0x2b40
+Heure de début de l’application défaillante : 0x01dd733e0bbb87fd
+Chemin d’accès de l’application défaillante : C:\Program Files\WindowsApps\4484Ram6ler.SpotlightWallpapers_1.5.1.0_x64__a1cxeyfetfvyt\SpotLightUWP.exe
+Chemin d’accès du module défaillant: C:\Windows\System32\Windows.UI.Xaml.dll
+ID de rapport : 0afd5bfd-f056-4a6f-b584-79fe7640c88b
+Nom complet du package défaillant : 4484Ram6ler.SpotlightWallpapers_1.5.1.0_x64__a1cxeyfetfvyt
+ID de l’application relative au package défaillant : App
+

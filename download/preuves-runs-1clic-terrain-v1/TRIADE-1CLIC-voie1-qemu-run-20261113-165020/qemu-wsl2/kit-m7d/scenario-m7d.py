@@ -1,0 +1,464 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""scenario-m7d.py — LE TERRAIN M7-(d) : l'universalité REJOUÉE sur la machine
+du développeur (qemu-riscv64 — la réserve instrumentale D149 : TCG, noyau et
+syscalls RÉELS de l'hôte, jamais déguisés en exécution native).
+
+Le kit porte DEUX artefacts et UN instrument :
+  corpus   le SCELLÉ 0.8.0-rc.1 du jalon M7 — la troisième instanciation de
+           la couche I (riscv64-linux-elf64) : sha256 ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799 ;
+  demo     le DÉMONSTRATEUR INVITÉ (f72001, PAS un artefact de la lignée —
+           l'instrument du chantier M7-(c), l'image du corpus + le
+           démonstrateur) : sha256 e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9 ;
+  qemu-riscv64  l'INSTRUMENT embarqué (binaire STATIQUE, aucun paquet, aucun
+           droit root, aucun réseau) — sa version et son md5 consignés au
+           témoin ; l'environnement peut fournir le sien ($QEMU_RISCV64 ou
+           le PATH), il est alors consigné de la même façon.
+
+Les temps du run (chaque constat tranché binaire, le verdict POST-MORTEM) :
+  T0 LE TÉMOIN      les empreintes ASSERTÉES avant tout geste (un kit
+                    corrompu est un refus nommé, jamais un run muet) ;
+                    l'environnement consigné (uname, python, qemu, la
+                    réserve D149 NOMMÉE) ;
+  T1 LE RITUEL DE PARITÉ  le scellé exécuté TROIS FOIS — exactement les
+                    DEUX lignes au code 0 (LE MÊME verdict que les instances
+                    win/linux : la parité § 8.3) ; TROIS bases forcées du
+                    CHARGEUR (-R 1G / -R 4G / -B+-R 2G) : la sortie
+                    identique (l'indifférence à la base — D155) ;
+  T2 LE PATCH fence.i PENDANT LE TRAFIC  le démonstrateur : 1 200 usages,
+                    l'apply entre 399/400, le retour entre 799/800, la
+                    transcription OCTET POUR OCTET (15425 o,
+                    800 lignes v1 + 400 v2 marquées « j2: »), le DEP
+                    falsifié (SIGSEGV, 4290 o exacts), la
+                    falsification du démonstrateur (un octet corrompu par
+                    instruction, jusqu'à la déviation — zéro silence),
+                    les bases forcées (la transcription identique) ;
+  T3 ZÉRO RÉGRESSION  les DEUX fichiers relus (sha inchangés — le patch est
+                    un fait de session INVITÉE, jamais du fichier), le
+                    rituel REJOUÉ (les deux lignes, code 0).
+
+Les pièces naissent toutes seules dans ./preuves-m7/ :
+  temoin-m7d.txt, scenario-m7d-journal.log, VERDICT-run-m7d.txt
+— à renvoyer ENTIÈRES au coffre /test/preuves-m7/ (dossier Drive « Triade »
+→ « test »). Le laboratoire recoupe sur pièces (D138/D145/D148) et, si
+elles établissent le critère, --sceller-final pose la finale 0.8.0.
+
+Un verdict ÉCHEC NOMMÉ se renvoie TEL QUEL : la ligne nomme le défaut ;
+un échec honnête vaut plus qu'un vert muet.
+"""
+
+import hashlib
+import os
+import platform
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+
+ICI = os.path.dirname(os.path.abspath(__file__))
+PREUVES = os.path.join(ICI, "preuves-m7")
+TMP = os.path.join(PREUVES, ".tmp")
+
+SHA_CORPUS = "ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799"
+SHA_DEMO = "e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9"
+MD5_QEMU_KIT = "bae5a36f0dd40e1286d342c9433c0dc5"
+TAILLE_QEMU_KIT = 14821328
+
+N_TRAFIC, K_APPLY, M_ROLLBACK = 1200, 400, 800
+ATTENDU_TAILLE = 15425        # la transcription intégrale du demo
+DEP_TAILLE = 4290                # les 400 lignes v1 du mutant DEP
+DEP_OFF = 0x1ad4                      # le site « addi a0, zero, 7 » (l'APPLY)
+DEP_OCTETS = bytes.fromhex("13057000")   # les 4 octets attendus au site
+DEMO_ADDRS = [0x2000, 0x2004, 0x2008, 0x200c, 0x2010, 0x2014, 0x2018, 0x201c, 0x2020, 0x2024, 0x2028, 0x202c, 0x2030, 0x2034, 0x2038, 0x203c, 0x2040, 0x2044, 0x2048, 0x204c, 0x2050, 0x2054, 0x2058, 0x205c, 0x2060, 0x2064, 0x2068, 0x206c, 0x2070, 0x2074, 0x2078, 0x207c, 0x2080, 0x2084, 0x2088, 0x208c, 0x2090, 0x2094, 0x2098, 0x209c, 0x20a0, 0x20a4, 0x20a8, 0x20ac, 0x20b0, 0x20b4, 0x20b8, 0x20bc, 0x20c0, 0x20c4, 0x20c8, 0x20cc, 0x20d0, 0x20d4, 0x20d8, 0x20dc, 0x20e0, 0x20e4, 0x20e8, 0x20ec, 0x20f0, 0x20f4, 0x20f8, 0x20fc, 0x2100, 0x2104, 0x2108, 0x210c, 0x2110, 0x2114, 0x2118, 0x211c, 0x2120, 0x2124, 0x2128, 0x212c, 0x2130, 0x2134, 0x2138, 0x213c, 0x2140, 0x2144, 0x2148, 0x214c, 0x2150, 0x2154, 0x2158, 0x215c, 0x2160, 0x2164, 0x2168, 0x216c, 0x2170, 0x2174, 0x2178, 0x217c, 0x2180, 0x2184, 0x2188, 0x218c, 0x2190, 0x2194, 0x2198, 0x219c, 0x21a0, 0x21a4, 0x21a8, 0x21ac, 0x21b0, 0x21b4, 0x21b8, 0x21bc, 0x21c0, 0x21c4, 0x21c8, 0x21cc, 0x21d0, 0x21d4, 0x21d8, 0x21dc, 0x21e0, 0x21e4, 0x21e8, 0x21ec, 0x21f0, 0x21f4, 0x21f8, 0x21fc, 0x2200, 0x2204, 0x2208, 0x220c, 0x2210, 0x2214, 0x2218, 0x221c, 0x2220, 0x2224, 0x2228, 0x222c, 0x2230, 0x2234, 0x2238, 0x223c, 0x2240, 0x2244, 0x2248, 0x224c, 0x2250, 0x2254, 0x2258, 0x225c, 0x2260, 0x2264, 0x2268, 0x226c, 0x2270, 0x2274, 0x2278, 0x227c, 0x2280, 0x2284, 0x2288, 0x228c, 0x2290, 0x2294, 0x2298, 0x229c, 0x22a0, 0x22a4, 0x22a8, 0x22ac, 0x22b0, 0x22b4, 0x22b8, 0x22bc, 0x22c0, 0x22c4, 0x22c8, 0x22cc, 0x22d0, 0x22d4, 0x22d8, 0x22dc, 0x22e0, 0x22e4, 0x22e8, 0x22ec, 0x22f0, 0x22f4, 0x22f8]              # les instructions du démonstrateur
+
+RITUEL = b"TRIADE M1 : minilibc 21/21 OK\ncorpus : autotest 21 vecteurs\n"
+
+# Les chaînes de la transcription — FIGÉES au laboratoire depuis le plan (la
+# source unique du dépôt) ; la transcription attendue est DÉTERMINISTE.
+CH_APPLY = b"demo: PASS apply 0 (usages 399/400)\n"
+CH_TRAMP = b"demo: PASS trampoline (le mot a bascule)\n"
+CH_EFFET = b"demo: PASS effet j2: verdict (v2 effectif)\n"
+CH_ROLLB = b"demo: PASS rollback 0 (usages 799/800)\n"
+CH_V1 = b"demo: PASS v1-retour (verdict sans marque)\n"
+CH_PTRAFIC = b"demo: PASS trafic 1200 verdicts (800 v1 + 400 v2)\n"
+CH_REST = b"demo: PASS restauration (entree a l'octet)\n"
+CH_DORM = b"demo: PASS dormance (croissance habitee)\n"
+CH_VERROU = b"demo: PASS verrou (rendu un-pour-un)\n"
+CH_REFMODE = b"demo: PASS refus-mode 1\n"
+CH_REFETAT = b"demo: PASS refus-etat 4 (x2)\n"
+CH_REFABS = b"demo: PASS refus-absent 2\n"
+CH_REFSOM = b"demo: PASS refus-somme 3\n"
+CH_FIN = b"demo: VERDICT VERT (fence.i demontre)\n"
+
+BASES_FORCEES = [("-R 1G", ["-R", "1G"]),
+                 ("-R 4G", ["-R", "4G"]),
+                 ("-B 0x100000000 -R 2G", ["-B", "0x100000000", "-R", "2G"])]
+
+RESERVE = ("réserve instrumentale D149 : qemu-riscv64 exécute l'ISA par TCG, "
+           "le noyau et les syscalls sont RÉELS de l'hôte — une émulation de "
+           "processus, jamais déguisée en exécution native")
+
+_MOTIF_LIGNE = re.compile(rb"^(j2: )?trafic (\d+)$")
+
+
+class EchecScenario(RuntimeError):
+    """Tout refus nommé AVANT le run (fail-closed : jamais un faux vert)."""
+
+
+def sha256_fichier(chemin):
+    with open(chemin, "rb") as f:
+        return hashlib.sha256(f.read()).hexdigest()
+
+
+def md5_fichier(chemin):
+    with open(chemin, "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()
+
+
+# --- Le journal : chaque ligne du run part à l'écran ET à la pièce --------------
+
+_constats = []
+_journal = []
+
+
+def dire(ligne):
+    """Une ligne du run — à l'écran ET au journal (la pièce intégrale)."""
+    print(ligne)
+    _journal.append(ligne)
+
+
+def constat(message, ok, detail=""):
+    ligne = f"[m7d] {'PASS' if ok else 'ÉCHEC'} : {message}"
+    if detail:
+        ligne += f" ({detail})"
+    _constats.append((ok, ligne))
+    dire(ligne)
+    return ok
+
+
+def ecrire_journal(nom, contenu):
+    with open(os.path.join(PREUVES, nom), "w", encoding="utf-8") as f:
+        f.write(contenu)
+
+
+# --- L'instrument ----------------------------------------------------------------
+
+
+def trouver_qemu():
+    """L'instrument, par ordre de préférence : l'environnement, le kit, le PATH.
+    Le bit exécutable de l'instrument embarqué peut se perdre au transfert
+    (certaines extractions zip ne restaurent pas les permissions) — le
+    scénario le RÉTABLIT, le geste est nommé au journal."""
+    if os.environ.get("QEMU_RISCV64") and os.access(os.environ["QEMU_RISCV64"], os.X_OK):
+        return os.environ["QEMU_RISCV64"], "l'environnement ($QEMU_RISCV64)"
+    embarque = os.path.join(ICI, "qemu-riscv64")
+    if os.path.exists(embarque):
+        if not os.access(embarque, os.X_OK):
+            try:
+                os.chmod(embarque, 0o755)
+            except OSError as exc:
+                raise EchecScenario(
+                    "le qemu-riscv64 EMBARQUÉ n'est pas exécutable et son bit "
+                    f"n'a pu être rétabli ({exc}) — si le dossier du kit est "
+                    "monté noexec, exporter $QEMU_RISCV64 vers un binaire "
+                    "exécutable ; sans instrument, pas de run (jamais un "
+                    "faux vert d'environnement — D154)")
+            dire("[m7d] le bit exécutable de l'instrument embarqué rétabli "
+                "(perdu au transfert — le geste est nommé, les artefacts "
+                "ne sont jamais modifiés)")
+        if os.access(embarque, os.X_OK):
+            return embarque, "le kit (binaire statique embarqué)"
+    p = shutil.which("qemu-riscv64")
+    if p:
+        return p, "le PATH de la machine"
+    raise EchecScenario(
+        "qemu-riscv64 INTROUVABLE — l'instrument est dans le kit (qemu-riscv64) ; "
+        "s'il a été perdu au transfert, déposer le binaire à côté du scénario "
+        "ou exporter $QEMU_RISCV64 ; sans instrument, pas de run (jamais un "
+        "faux vert d'environnement — D154)")
+
+
+def lancer(qemu, chemin_img, extra=None, timeout=90):
+    cmd = [qemu] + list(extra or []) + [chemin_img]
+    try:
+        r = subprocess.run(cmd, capture_output=True, timeout=timeout)
+        return r.stdout, r.stderr, r.returncode
+    except subprocess.TimeoutExpired:
+        return b"", b"<timeout>", -99
+
+
+# --- La transcription attendue (le générateur déterministe du plan) --------------
+
+
+def transcription_attendue():
+    att = bytearray()
+    for i in range(N_TRAFIC):
+        if i == K_APPLY:
+            att += CH_APPLY + CH_TRAMP + b"j2: verdict\n" + CH_EFFET
+        if i == M_ROLLBACK:
+            att += CH_ROLLB + b"verdict\n" + CH_V1
+        ligne = b"trafic " + str(i).encode() + b"\n"
+        att += (b"j2: " + ligne) if K_APPLY <= i < M_ROLLBACK else ligne
+    att += (CH_PTRAFIC + CH_REST + CH_DORM + CH_VERROU
+            + CH_REFMODE + CH_REFETAT + CH_REFABS + CH_REFSOM + CH_FIN)
+    return bytes(att)
+
+
+# --- Le run -----------------------------------------------------------------------
+
+
+def main() -> int:
+    debut = time.time()
+    os.makedirs(PREUVES, exist_ok=True)
+    corpus = os.path.join(ICI, "corpus")
+    demo = os.path.join(ICI, "demo")
+
+    # T0 LE TÉMOIN — les empreintes ASSERTÉES avant tout geste -----------------
+    sha_corpus = sha256_fichier(corpus)
+    sha_demo = sha256_fichier(demo)
+    if sha_corpus != SHA_CORPUS:
+        raise EchecScenario(f"le corpus n'est pas le scellé 0.8.0-rc.1 "
+                            f"(sha256 {sha_corpus[:16]}… != {SHA_CORPUS[:16]}…) — "
+                            "un kit corrompu est un refus nommé, jamais un run muet")
+    if sha_demo != SHA_DEMO:
+        raise EchecScenario(f"le demo n'est pas le démonstrateur éprouvé "
+                            f"(sha256 {sha_demo[:16]}… != {SHA_DEMO[:16]}…)")
+    # le bit exécutable peut se perdre au transfert (certaines extractions
+    # zip ne restaurent pas les permissions) — qemu-user L'EXIGE sur l'image
+    # invitée (constaté au labo : « Exec format error » sans lui) : le
+    # scénario le RÉTABLIT, le geste est nommé ; le chmod ne touche PAS un
+    # octet de contenu — les empreintes de T3 re-prouvent les fichiers
+    bits_retablis = []
+    for chemin_artefact in (corpus, demo):
+        if not os.access(chemin_artefact, os.X_OK):
+            try:
+                os.chmod(chemin_artefact, 0o755)
+                bits_retablis.append(os.path.basename(chemin_artefact))
+            except OSError as exc:
+                raise EchecScenario(
+                    f"le bit exécutable de {os.path.basename(chemin_artefact)} "
+                    f"n'a pu être rétabli ({exc}) — qemu l'exige sur l'image "
+                    "invitée ; sans lui, pas de run (jamais un faux vert "
+                    "d'environnement — D154)")
+    if bits_retablis:
+        dire("[m7d] le bit exécutable rétabli pour : " + ", ".join(bits_retablis)
+            + " (perdus au transfert — le geste est nommé ; le chmod ne "
+              "touche aucun octet de contenu)")
+    qemu, provenance = trouver_qemu()
+    md5_qemu = md5_fichier(qemu)
+    try:
+        version_qemu = subprocess.run([qemu, "--version"], capture_output=True,
+                                      text=True).stdout.splitlines()[0]
+    except Exception:
+        version_qemu = "qemu-riscv64 (version illisible)"
+    if qemu == os.path.join(ICI, "qemu-riscv64") and md5_qemu != MD5_QEMU_KIT:
+        raise EchecScenario(f"le qemu-riscv64 EMBARQUÉ a été altéré "
+                            f"(md5 {md5_qemu[:8]}… != {MD5_QEMU_KIT[:8]}…) — "
+                            "l'instrument du kit ne se remplace pas en silence")
+    temoin = [
+        "TÉMOIN DU RUN TERRAIN M7-(d) — l'universalité rejouée sur la machine du développeur",
+        f"date              : {time.strftime('%Y-%m-%d %H:%M:%S %z')}",
+        f"machine            : {platform.platform()}",
+        f"noyau              : {platform.release()} ({platform.machine()})",
+        f"python             : {sys.version.split()[0]}",
+        f"instrument         : {version_qemu} — {provenance}",
+        f"md5 instrument     : {md5_qemu}",
+        f"corpus (AVANT)     : sha256 {sha_corpus} — le scellé 0.8.0-rc.1 du jalon M7",
+        f"demo (AVANT)       : sha256 {sha_demo} — le démonstrateur invité f72001",
+        f"                    ({RESERVE})",
+        "",
+    ]
+    ecrire_journal("temoin-m7d.txt", "\n".join(temoin))
+    constat("le témoin consigné : les empreintes ASSERTÉES avant tout geste "
+            f"(corpus {sha_corpus[:16]}…, demo {sha_demo[:16]}…), l'instrument "
+            f"identifié ({version_qemu}, md5 {md5_qemu[:8]}…, {provenance}) — "
+            f"({RESERVE})", True)
+
+    vert = True
+
+    # T1 LE RITUEL DE PARITÉ — le scellé aux DEUX lignes, code 0 ---------------
+    for essai in range(1, 4):
+        sortie, err, code = lancer(qemu, corpus)
+        vert &= constat(f"le rituel n°{essai} : exactement les DEUX lignes au "
+                        "code 0 (LE MÊME verdict que les instances win/linux — "
+                        "la parité § 8.3)",
+                        code == 0 and not err and sortie == RITUEL,
+                        f"code={code}, {len(sortie)} o")
+    for nom_cfg, extra in BASES_FORCEES:
+        sortie, err, code = lancer(qemu, corpus, extra=extra)
+        vert &= constat(f"base forcée {nom_cfg} : la sortie IDENTIQUE "
+                        "(l'indifférence à la base — jamais un ASLR émulé, D155)",
+                        code == 0 and not err and sortie == RITUEL,
+                        f"code={code}")
+
+    # T2 LE PATCH fence.i PENDANT LE TRAFIC — le démonstrateur ------------------
+    attendu = transcription_attendue()
+    if len(attendu) != ATTENDU_TAILLE:
+        raise EchecScenario(f"la transcription attendue fait {len(attendu)} o "
+                            f"≠ {ATTENDU_TAILLE} o figés au labo — le scénario "
+                            "ne correspond pas à l'artefact")
+    os.makedirs(TMP, exist_ok=True)
+    with open(demo, "rb") as f:
+        img_demo = f.read()
+
+    chemin_demo = os.path.join(TMP, "demo")
+    with open(chemin_demo, "wb") as f:
+        f.write(img_demo)
+    os.chmod(chemin_demo, 0o755)
+    sortie, err, code = lancer(qemu, chemin_demo)
+    vert &= constat("LA BASCULE PENDANT LE TRAFIC : 1 200 usages de l'entrée, "
+                    f"l'apply entre {K_APPLY - 1}/{K_APPLY}, le retour entre "
+                    f"{M_ROLLBACK - 1}/{M_ROLLBACK} — la transcription OCTET "
+                    f"POUR OCTET l'attendu ({len(attendu)} o : 800 lignes v1, "
+                    "400 v2 marquées « j2: », les refus 1-4 et l'effet au "
+                    "geste même INCLUS dans le flux — il n'y a aucun "
+                    "détournement de canal)",
+                    code == 0 and not err and sortie == attendu,
+                    f"code={code}, {len(sortie)} o rendus / {len(attendu)} attendus"
+                    + (f", err={err[:60]!r}" if err else ""))
+    vues, duplique, fragment, melange = {}, None, None, None
+    emissions = {b"j2: verdict", b"verdict"}
+    for l in sortie.split(b"\n")[:-1]:
+        m = _MOTIF_LIGNE.match(l)
+        if not m:
+            if l.startswith(b"demo: ") or l in emissions:
+                continue
+            fragment = fragment or l
+            continue
+        num = int(m.group(2))
+        if num in vues:
+            duplique = duplique or num
+        vues[num] = m.group(1) is not None
+    for i, est_v2 in vues.items():
+        if est_v2 != (K_APPLY <= i < M_ROLLBACK):
+            melange = melange or i
+    vert &= constat("le journal est COHÉRENT : 1 200 lignes ENTIÈRES, indices "
+                    "0..1199 chacun EXACTEMENT une fois, aucun mélange de "
+                    "formats dans une même ligne",
+                    set(vues) == set(range(N_TRAFIC)) and duplique is None
+                    and fragment is None and melange is None,
+                    f"fragment {fragment!r}" if fragment is not None
+                    else f"dupliqué {duplique}" if duplique is not None
+                    else f"mélange @{melange}" if melange is not None
+                    else f"{sum(1 for v in vues.values() if v)} lignes v2")
+
+    # LE DEP FALSIFIÉ : 0x7 → 0x3 (le bit exécution RETENU pendant l'écriture,
+    # la falsification le retire — le fetch suivant FAUTE : page sans X)
+    if img_demo[DEP_OFF:DEP_OFF + 4] != DEP_OCTETS:
+        raise EchecScenario(f"le site du DEP a bougé : {img_demo[DEP_OFF:DEP_OFF + 4].hex()} "
+                            f"≠ {DEP_OCTETS.hex()} — le scénario ne correspond pas à l'artefact")
+    mutant = bytearray(img_demo)
+    mutant[DEP_OFF + 2] = 0x30            # 0x7 → 0x3 (l'imm12 du prot)
+    chemin_dep = os.path.join(TMP, "demo-dep")
+    with open(chemin_dep, "wb") as f:
+        f.write(bytes(mutant))
+    os.chmod(chemin_dep, 0o755)
+    attendu_dep = b"".join(b"trafic " + str(i).encode() + b"\n"
+                           for i in range(K_APPLY))
+    if len(attendu_dep) != DEP_TAILLE:
+        raise EchecScenario("l'attendu du DEP diverge des octets figés au labo")
+    sortie_m, err_m, code_m = lancer(qemu, chemin_dep)
+    vert &= constat("LE DEP FALSIFIÉ (0x7→0x3) : l'exécution FAUTE au retour du "
+                    "premier mprotect (page sans X — le fetch suivant) : "
+                    f"SIGSEGV, {len(attendu_dep)} o EXACTS (les 400 lignes v1, "
+                    "zéro silence)",
+                    code_m == -11 and sortie_m == attendu_dep,
+                    f"code={code_m}, {len(sortie_m)} o == {len(attendu_dep)} attendus")
+
+    # LA FALSIFICATION DU DÉMONSTRATEUR : un octet corrompu par instruction,
+    # jusqu'à la déviation — l'oracle n'est pas VACUE (D154)
+    rompu, essais = None, 0
+    for addr in DEMO_ADDRS:
+        mutant_f = bytearray(img_demo)
+        mutant_f[addr] ^= 0xFF
+        chemin_f = os.path.join(TMP, "demo-f")
+        with open(chemin_f, "wb") as f:
+            f.write(bytes(mutant_f))
+        os.chmod(chemin_f, 0o755)
+        essais += 1
+        sortie_f, err_f, code_f = lancer(qemu, chemin_f, timeout=45)
+        if (code_f, sortie_f) != (0, attendu):
+            rompu = addr
+            break
+    vert &= constat("la falsification du démonstrateur : un octet d'opcode "
+                    "corrompu fait dévier la transcription ou le code "
+                    "(zéro silence — non-vacuité)",
+                    rompu is not None,
+                    f"rompu à {rompu:#x} (essai n°{essais})" if rompu is not None
+                    else f"{essais} mutations TOUTES silencieuses — VACUE")
+
+    # L'INDIFFÉRENCE À LA BASE — les bases forcées du CHARGEUR
+    for nom_cfg, extra in BASES_FORCEES:
+        sortie_b, err_b, code_b = lancer(qemu, chemin_demo, extra=extra)
+        vert &= constat(f"base forcée {nom_cfg} (le demo) : la transcription "
+                        "identique — l'indifférence à la base",
+                        code_b == 0 and not err_b and sortie_b == attendu,
+                        f"code={code_b}")
+
+    # T3 ZÉRO RÉGRESSION — les fichiers n'ont pas bougé d'un octet --------------
+    sha_corpus_apres = sha256_fichier(corpus)
+    sha_demo_apres = sha256_fichier(demo)
+    vert &= constat("ZÉRO RÉGRESSION : les DEUX fichiers relus — le corpus et "
+                    "le demo n'ont pas bougé d'un octet (le patch est un fait "
+                    "de la session INVITÉE, jamais du fichier)",
+                    sha_corpus_apres == SHA_CORPUS and sha_demo_apres == SHA_DEMO,
+                    f"corpus {sha_corpus_apres[:16]}…, demo {sha_demo_apres[:16]}…")
+    sortie_c, err_c, code_c = lancer(qemu, corpus)
+    vert &= constat("le rituel du scellé REJOUÉ après la démonstration : "
+                    "exactement ses deux lignes au code 0",
+                    code_c == 0 and not err_c and sortie_c == RITUEL,
+                    f"code={code_c}")
+
+    # Le journal — LA pièce intégrale du run, puis le verdict POST-MORTEM ----
+    shutil.rmtree(TMP, ignore_errors=True)
+    duree = int(time.time() - debut)
+    entete_journal = [
+        "JOURNAL DU RUN TERRAIN M7-(d) — l'universalité rejouée",
+        f"machine : {platform.platform()} — noyau {platform.release()}",
+        f"instrument : {version_qemu} (md5 {md5_qemu}, {provenance}) — {RESERVE}",
+        f"corpus : sha256 {sha_corpus} — le scellé 0.8.0-rc.1 du jalon M7",
+        f"demo : sha256 {sha_demo} — le démonstrateur invité f72001",
+        "",
+    ]
+    ecrire_journal("scenario-m7d-journal.log",
+                   "\n".join(entete_journal + _journal) + "\n")
+    verdict = [
+        "VERDICT DU RUN TERRAIN M7-(d) — l'universalité rejouée (post-mortem, sur pièces)",
+        "",
+        *[l for _, l in _constats],
+        "",
+        f"constats : {sum(1 for ok, _ in _constats if ok)} PASS / "
+        f"{sum(1 for ok, _ in _constats if not ok)} ÉCHEC ({duree} s)",
+        f"instrument : {version_qemu} (md5 {md5_qemu}, {provenance}) — {RESERVE}",
+        "frontières nommées : le code 5 (le service refuse) est STRUCTUREL "
+        "sous qemu-user (l'hôte accorde RWX sur mapping privé — la branche "
+        "fail-closed vit dans tcp-07) ; la concurrence réelle est HORS "
+        "périmètre (le corpus M7 est mono-fil — la bascule se démontre EN "
+        "SESSION, entre deux usages) ; le demo est l'INSTRUMENT du chantier, "
+        "pas un artefact de la lignée (pas de carte) ; le corpus est LE "
+        "scellé 0.8.0-rc.1 du jalon.",
+        "",
+        "VERDICT : " + ("VERT" if vert else "KO"),
+        "",
+        "Si VERT : renvoyer preuves-m7/ ENTIER au coffre /test/preuves-m7/ — "
+        "le laboratoire recoupe sur pièces (D138/D145/D148) et, si elles "
+        "établissent le critère, --sceller-final pose la finale 0.8.0 "
+        "(le jalon M7 franchi — l'universalité DÉMONTRÉE).",
+        "Si ÉCHEC NOMMÉ : renvoyer TEL QUEL — la ligne nomme le défaut.",
+    ]
+    ecrire_journal("VERDICT-run-m7d.txt", "\n".join(verdict) + "\n")
+    print()
+    print("\n".join(verdict[-8:]))
+    return 0 if vert else 1
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except EchecScenario as exc:
+        print(f"REFUS (fail-closed) : {exc}", file=sys.stderr)
+        print("Aucune pièce n'a été écrite — le refus précède le run "
+              "(un kit corrompu ne se joue pas, D154).", file=sys.stderr)
+        sys.exit(2)

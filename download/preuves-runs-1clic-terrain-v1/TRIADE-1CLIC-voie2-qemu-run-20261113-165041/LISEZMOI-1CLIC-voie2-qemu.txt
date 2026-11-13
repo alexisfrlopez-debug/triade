@@ -1,0 +1,50 @@
+LISEZMOI-1CLIC — LA VOIE 2 QEMU - LE KIT-SHANI SOUS EMULATION
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-VOIE2-QEMU.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  qemu-wsl2\LANCER-VOIE2-QEMU.bat sha256 2c73bb0d8f091609…
+  qemu-wsl2\lancer-voie2-shani.sh sha256 18043df2d68960f2…
+  qemu-wsl2\LISEZMOI-qemu.txt sha256 6eabfa0d88567bb4…
+  qemu-wsl2\preuves-shani-emulation-labo\VERDICT-run-shani.txt sha256 31d6f33a356e15ee…
+  qemu-wsl2\preuves-shani-emulation-labo\scenario-shani-journal.log sha256 6d6940b12e382d4b…
+  qemu-wsl2\preuves-shani-emulation-labo\temoin-shani.txt sha256 8f68f62af6a32c2a…
+  pc-windows\kit-1-shani\LANCER-KIT-1-SHANI.bat sha256 4c5be578398eb95e…
+  pc-windows\kit-1-shani\LISEZMOI-shani.txt sha256 b78caab0792fcfe9…
+  pc-windows\kit-1-shani\cibles\manifeste.json sha256 93d5a13fcc4d1cb2…
+  pc-windows\kit-1-shani\cibles\proxy-image.bin sha256 0782d7e20d0bd4a2…
+  pc-windows\kit-1-shani\moteur-shani.bin sha256 761ab194d88d527c…
+  pc-windows\kit-1-shani\moteur-shani.s sha256 d930cac0c6b00db0…
+  pc-windows\kit-1-shani\scenario-shani.py sha256 d9def0b4d714392a…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  Exige WSL2, qemu-user [le lanceur officiel donne LA commande
+  exacte s'il manque] et Python 3 dans WSL2. Cette voie EXERCE
+  la chaine - le refus ne peut plus exister, qemu presente
+  SHA-NI au CPUID - elle NE MESURE PAS : le rapport rendu est
+  l'ARTEFACT TCG, consigne TEL QUEL [0,19x vecu au labo -
+  jamais une verite de silicium].
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  ecrire sous votre main la mention "run sous qemu-x86_64 -cpu
+  max, EMULATION, pas le silicium", dater et signer le temoin,
+  puis renvoyer preuves-shani\ ENTIER au coffre /test.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

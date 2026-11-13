@@ -1,0 +1,41 @@
+LISEZMOI-1CLIC — LE TEMOIN VITRINE DU KIT LOUPE
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-TEMOIN-VITRINE.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  loupe-kit-13\loupe.exe      sha256 c111510535767a40…
+  loupe-kit-13\scenario-loupe.py sha256 131d013585023792…
+  loupe-kit-13\temoin-vitrine.bat sha256 33763be44bd9687f…
+  loupe-kit-13\LISEZMOI-KIT-LOUPE.md sha256 6cad6bd3cc8bcbe9…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  AUCUNE exigence. La PREMIERE fenetre s'ouvre VIDE [l'usage a la
+  barre d'etat] : fermez-la par Alt+F4. La SECONDE s'ouvre AVEC
+  le fichier temoin-fichier.bin [l'entete des colonnes, les
+  lignes hexa, le miroir ASCII, le panneau d'empreintes] :
+  fermez-la par Alt+F4. Les DEUX codes de sortie sont consignes
+  au temoin - c'est VOUS qui fermez, c'est cela qui est temoin.
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  fermer vous-meme les deux fenetres, puis renvoyer le dossier
+  preuves-loupe\ ENTIER au coffre /test, QUEL QUE SOIT le
+  verdict [il vit dans loupe-kit-13\preuves-loupe\].
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

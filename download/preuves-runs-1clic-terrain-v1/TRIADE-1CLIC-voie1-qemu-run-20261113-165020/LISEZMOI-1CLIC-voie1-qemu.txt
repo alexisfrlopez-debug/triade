@@ -1,0 +1,43 @@
+LISEZMOI-1CLIC — LA VOIE 1 QEMU - LE KIT M7D REJOUE
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-VOIE1-QEMU.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  qemu-wsl2\LANCER-VOIE1-QEMU.bat sha256 0787f33dc883a895…
+  qemu-wsl2\lancer-voie1-m7d.sh sha256 173ab0db8b3e29be…
+  qemu-wsl2\LISEZMOI-qemu.txt sha256 6eabfa0d88567bb4…
+  qemu-wsl2\kit-m7d\LISEZMOI-KIT-M7D.md sha256 fc3571dd73bdce7c…
+  qemu-wsl2\kit-m7d\corpus    sha256 ec343b4e8bebf21c…
+  qemu-wsl2\kit-m7d\demo      sha256 e57fc74be2ea67ab…
+  qemu-wsl2\kit-m7d\qemu-riscv64 sha256 f2bb9b35eb97fc6b…
+  qemu-wsl2\kit-m7d\scenario-m7d.py sha256 ed7fd23caef2911a…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  Exige WSL2 [le lanceur nomme la commande d'installation s'il
+  manque] et Python 3 dans WSL2. Le qemu-riscv64 STATIQUE est
+  EMBARQUE : aucun paquet a installer, aucun reseau, aucun root.
+  La frontiere D149 demeure : une REPRODUCTION sous emulation
+  TCG, jamais le metal.
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  dater et signer le temoin de preuves-m7\ de votre main, puis
+  renvoyer le dossier preuves-m7\ ENTIER au coffre /test.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.

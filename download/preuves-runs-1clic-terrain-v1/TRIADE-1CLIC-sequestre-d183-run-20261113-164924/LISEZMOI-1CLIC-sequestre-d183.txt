@@ -1,0 +1,45 @@
+LISEZMOI-1CLIC — LE SEQUESTRE D183 - LA CEREMONIE DES 5 PARTS
+==========================================================================
+
+Ce dossier est né du fichier autonome TRIADE-1CLIC-SEQUESTRE-D183.bat (édition FICHIERS-1CLIC,
+13/11/2026 — la commande du développeur : « Fais en sorte que chaque
+test se fasse en lançant un fichier autonome en 1 clic : exe, apk,
+bat etc... »). Le fichier a fait naître ce dossier de run NEUF, daté
+(D99 : ne mélangez jamais les runs), a recoupé CHAQUE pièce par son
+empreinte sha256, puis a lancé le lanceur officiel du test — INTACT,
+octet pour octet.
+
+LA CARTE DE CE DOSSIER :
+  paquet-interne.zip          le paquet scellé d'où tout est né (son
+                             sha256 vit gravé dans le fichier .bat)
+  sequestre-d183\LANCER-SEQUESTRE-D183.bat sha256 772f3a315ac19e53…
+  sequestre-d183\scripts\kit_ceremonie_d183\AUTOTEST.txt sha256 b2d193af954ba35e…
+  sequestre-d183\scripts\kit_ceremonie_d183\LISEZMOI-ceremonie-D183.txt sha256 3de0d44c56d713d7…
+  sequestre-d183\scripts\kit_ceremonie_d183\sequestre_d183.py sha256 2d950634a57d1afe…
+  sequestre-d183\v06\coffre_cf2.py sha256 603ab952b45243fa…
+  le présent LISEZMOI         la carte et le geste qui reste à votre main
+
+CE QUE LE TEST EXIGE :
+  Exige Python 3 ET les paquets pynacl et cryptography [le geste
+  pip install pynacl cryptography se vit AVANT la mise hors-ligne
+  - l'outil refuse de courir sans eux, fail-closed nomme]. LA
+  CEREMONIE se vit a VOTRE machine HORS-LIGNE - jamais au bac a
+  sable, jamais en ligne [D87, D183]. La phrase ne traverse
+  JAMAIS le lanceur : seul son CHEMIN passe. Le coffre reel du
+  developpeur demeure INTACT - ce kit prepare, il n'applique rien.
+
+CE QUI RESTE À VOTRE MAIN (jamais automatisé) :
+  la repetition generale d'abord [l'autotest, VERT exige], puis le
+  decoupage de la phrase, la repartition des cinq medias [au
+  moins DEUX hors nuage], la preuve de reconstitution a froid
+  AVANT tout retrait. Le retrait de la phrase en clair est un
+  geste humain, liste, jamais automatise.
+
+LE RENVOI : le dossier de run ENTIER (ce dossier, témoins et preuves
+compris) repart au coffre /test — dossier Drive « Triade » → « test ».
+Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces ;
+un écart nommé est un RÉSULTAT (D189), jamais un échec à maquiller.
+
+LA TRANSPARENCE : le paquet interne est un zip ordinaire — quiconque
+le désire peut l'ouvrir et tout comparer lui-même. Les empreintes
+complètes vivent dans le fichier .bat lui-même, gravées en clair.
