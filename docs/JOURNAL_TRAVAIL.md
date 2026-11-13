@@ -11467,3 +11467,107 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   correctrice de chronometre_verification.py (la pause portable), les
   écarts 334 + 307 de dudect_v150.c toujours attendus à la prochaine
   édition du kit-2 (l'Entrée 253), JAMAIS de patch binaire.
+
+
+## Entrée 272 — LE TÉMOIN DU RUN M7-(d) REJOUÉ DATÉ SIGNÉ — LA CHAÎNE DE LA VOIE 1 FERMÉE (l'annonce du développeur : « temoin signe date » + la pièce jointe au chat) : la voie 1 QEMU des suites proposées a vécu sa chaîne ENTIÈRE, du fichier autonome à la main — le témoin né AUTO au run du terrain (13/11 16:50:32 +0100, PORTABLE WSL2, l'Entrée 271) revient portant « fait le 13/11/2026 / Alexis Lopez » ; LES CANAUX CROISÉS AVANT TOUT VERDICT (la leçon de l'Entrée 267) : la pièce du chat == LE DÉPÔT DU DÉVELOPPEUR au /test/fichiers-1clic/temoin-m7d.txt (989 o, md5 264e9cbd…, déposé 13/11 16:19:48Z) OCTET POUR OCTET ; LA BASE RECOUPÉE : le signé == l'AUTO sur les 957 o ENTIERS, le diff ne portant QUE le bloc de la main (32 o : LF + « fait le 13/11/2026 » + LF + « Alexis Lopez », aucun retour final — la forme de l'éditeur du geste, D189 tel quel ; LA MÊME MAIN que les témoins kit-2 N=200/N=400 et le verdict Android, Entrées 264/266/267) ; LES TROIS EMPREINTES recoupées contre les pièces du kit mêmes (md5 instrument bae5a36f…, sha256 corpus ec343b4e… == le sha gravé au .bat, sha256 demo e57fc74b… == le sha gravé) ; LA CHRONOLOGIE Saine : le run né 15:50:32Z, la main posée 16:17:38Z (mtime de la pièce déposée), le dépôt 16:19:48Z — la date du témoignage JAMAIS avant le run ; LE VERDICT VERT 16 PASS / 0 ÉCHEC (l'Entrée 271) établit le critère sur pièces (D138/D145/D148) ; LE LABO COURRIER : preuves-m7/ ENTIER assemblé au /test/preuves-m7d-voie1-20261113T155020Z/ — CINQ pièces byte-identical aux dépôts du développeur mêmes (le signé, l'AUTO en regard, le VERDICT, le journal, le LISEZMOI), CHAQUE md5 recoupé par re-téléchargement ; le nom DISTINCT de preuves-m7 assumé (D99 : l'original du run du 05/11 vit aux archives-preuves/, jamais mélangé) ; la finale 0.8.0 DEMEURE scellée au 05/11 (Entrées 154/155) — le rejouage ne re-scelle RIEN (le scellage est un fait de carte, D165 ; anti-rollback R6), la réserve D149 demeure AU TÉMOIN MÊME (la session de la réception, 13/11 au soir)
+
+- LE GESTE ET SON MOMENT : l'annonce au chat « temoin signe date » + la
+  pièce jointe temoin-m7d.txt (989 o) — le geste que l'Entrée 271 nommait
+  « LA SIGNATURE DU TÉMOIN M7D D'ABORD » est VÉCU : 27 minutes après le
+  run (le témoin AUTO né 15:50:32Z, la main posée 16:17:38Z), le
+  développeur a daté et signé de sa main, déposé la pièce au coffre
+  (16:19:48Z) et annoncé au chat. La chaîne de la voie 1 vit son dernier
+  maillon.
+
+- LES CANAUX CROISÉS (Entrée 267 en miroir : un canal seul ne suffit
+  JAMAIS) : la pièce jointe au chat == le dépôt du développeur au
+  /test/fichiers-1clic/temoin-m7d.txt — md5 264e9cbd… l'un et l'autre,
+  OCTET POUR OCTET (989 o). Le dépôt vit au niveau fichiers-1clic/ (le
+  geste simple du développeur), l'annonce au chat le nomme — les deux
+  canaux d'accord, la pièce fait foi.
+
+- LA BASE DU TÉMOIN : le signé == l'AUTO (né au run, 957 o, md5
+  0559db2f…, recoupé dans le dépôt de run du développeur même) OCTET
+  POUR OCTET sur les 957 o ENTIERS — le diff porte UNIQUEMENT le bloc
+  de la main : LF + « fait le 13/11/2026 » + LF + « Alexis Lopez »
+  (32 o, aucun retour final — la forme de l'éditeur du geste, D189 tel
+  quel). La même main que les témoins kit-2 N=200 (Entrée 264), N=400
+  (Entrée 266) et le verdict Android (Entrée 267) — QUATRE pièces de
+  la même main, aucune divergence de forme.
+
+- LES EMPREINTES DU TÉMOIN RECOUPÉES contre les pièces du kit mêmes :
+  md5 instrument qemu-riscv64 bae5a36f… (le binaire statique embarqué,
+  14,8 Mo, la pièce recoupée localement à l'instant), sha256 corpus
+  ec343b4e… (le scellé 0.8.0-rc.1 du jalon M7 — == le sha gravé au
+  TRIADE-1CLIC-VOIE1-QEMU.bat et au LISEZMOI-1CLIC), sha256 demo
+  e57fc74b… (le démonstrateur invité f72001 — == le sha gravé). Les
+  mêmes que le VERDICT ASSERTÉES avant tout geste (le premier PASS).
+
+- LA CHRONOLOGIE : le run né 13/11 15:50:32Z (16:50:32 +0100, le
+  témoin l'écrit) → la main posée 16:17:38Z (la date de modification
+  de la pièce déposée, Drive la porte) → le dépôt au coffre 16:19:48Z
+  (createdTime Drive) → l'annonce au chat. La date du témoignage
+  (« fait le 13/11/2026 ») JAMAIS avant le run — le même jour, 27
+  minutes après.
+
+- LA CHAÎNE DE LA VOIE 1 — FERMÉE : le fichier autonome livré
+  (TRIADE-1CLIC-VOIE1-QEMU.bat, l'Entrée 270) → le double-clic vécu
+  au terrain (16:50, VERDICT VERT 16 PASS / 0 ÉCHEC — les 16 lignes
+  LES MÊMES que le run labo, l'Entrée 271) → le témoin daté signé de
+  la main (16:17Z) → les preuves ENTIÈRES au coffre. Du labo à la
+  main et retour, la voie 1 a vécu sa chaîne complète — la première
+  des suites proposées FERMÉE sur pièces.
+
+- LE LABO COURRIER, NOMMÉ TEL QUEL : le VERDICT du kit ordonnait «
+  renvoyer preuves-m7/ ENTIER au coffre /test/preuves-m7/ » ; le
+  développeur a déposé la pièce SIGNÉE (le geste qui ne s'automatise
+  jamais) au niveau fichiers-1clic/ — le labo a assemblé le dossier
+  ENTIER depuis les dépôts du développeur MÊMES (source de vérité) :
+  /test/preuves-m7d-voie1-20261113T155020Z/ — le témoin SIGNÉ
+  (264e9cbd…), l'AUTO en regard renommé TEMOIN-M7D.original-auto.txt
+  (0559db2f…, D99 : rien n'est effacé, le diff de la main se lit
+  seul), le VERDICT (edb12391…), le journal (57bf6325…), le
+  LISEZMOI-preuves-m7d-voie1.txt (la carte et les recoupements) —
+  CINQ pièces, CHAQUE md5 recoupé par re-téléchargement après dépôt.
+  Le nom DISTINCT de preuves-m7 est assumé et nommé : l'original du
+  run du 05/11 vit aux archives-preuves/ (D143) — D99 : jamais
+  mélanger les runs. Les id Drive de chaque pièce vivent au
+  DEPOT-RECU.txt du bac (ils font foi).
+
+- LES FRONTIÈRES (nommées, jamais maquillées) : (a) LA FINALE 0.8.0
+  DEMEURE SCELLÉE AU 05/11 (Entrées 154/155, le plan de jalons) — le
+  rejouage ne re-scelle RIEN : le scellage est un fait de carte
+  (D165), le corpus ne bouge pas (anti-rollback R6) — la ligne «
+  --sceller-final » du VERDICT est le langage du kit originel, le
+  jalon était déjà franchi, ce qui se ferme est LA CHAÎNE DU REJOUAGE
+  ; (b) LA RÉSERVE D149 demeure, écrite au témoin signé même : TCG,
+  le noyau et les syscalls RÉELS de l'hôte — une émulation de
+  processus, jamais déguisée en exécution native ; (c) LA LECTURE
+  HONNÊTE : le vert du rejouage établit la reproduction SUR CETTE
+  MACHINE (PORTABLE WSL2), sous émulation — jamais « l'universalité
+  prouvée » hors de ses frontières ; (d) AUCUNE pièce scellée touchée
+  (les cinq recoupées dans les dépôts mêmes), aucune signature
+  fabriquée (la main est REÇUE, jamais produite).
+
+- LE BAC : download/preuves-m7-temoin-signe/ — SIX pièces (le signé,
+  l'AUTO, le VERDICT, le journal, le LISEZMOI, le DEPOT-RECU.txt des
+  id Drive).
+
+- Frontières : lecture seule partout ailleurs ; le coffre du
+  développeur intact hors le dossier nouveau assemblé ; aucun jeton
+  affiché (D12) ; le présent dossier NE contient AUCUNE mesure de
+  campagne (CA1 tenu — la campagne D204 demeure aux deux bras).
+
+- SUITE : au développeur — les gestes encore ouverts, chacun en un
+  fichier autonome au /test/fichiers-1clic/ : le geste B sur un
+  silicium à SHA-NI (le diagnostic lit le CPUID et le dit avant), la
+  voie 2 sous qemu-user (le lanceur nomme la commande exacte), la
+  campagne D204 aux deux bras (le kit loupe-13 au /test), la
+  cérémonie du séquestre hors-ligne (les cinq médias), la
+  réplication aux deux jeux d'annotations (le second annotateur et
+  le second domaine demeurent les acteurs manquants, nommés) ; au
+  labo — l'édition correctrice de chronometre_verification.py (la
+  pause portable : python -c "import time; time.sleep(2)", la
+  tolérance inchangée 0,05 s — l'écart de l'Entrée 271), les écarts
+  334 + 307 de dudect_v150.c à la prochaine édition du kit-2
+  (l'Entrée 253), JAMAIS de patch binaire.

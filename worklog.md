@@ -9757,3 +9757,52 @@ Work Log:
   ferme) ; au labo — l'édition correctrice du chronomètre (la pause
   portable), les écarts 334 + 307 de dudect à la prochaine édition du
   kit-2 ; les acteurs manquants de la réplication demeurent nommés.
+
+
+Task ID: 179
+Agent: Z.ai (agent principal — la session de la réception du témoin m7d)
+Task: LA RÉCEPTION DU TÉMOIN DU RUN M7-(d) REJOUÉ DATÉ SIGNÉ — LA CHAÎNE
+DE LA VOIE 1 FERMÉE (l'annonce « temoin signe date » + la pièce jointe) :
+le témoin né AUTO au run du terrain (13/11 16:50:32 +0100, PORTABLE WSL2,
+Entrée 271) revient signé « fait le 13/11/2026 / Alexis Lopez » — les
+canaux CROISÉS (la pièce du chat == le dépôt du développeur au
+/test/fichiers-1clic/temoin-m7d.txt, 989 o, md5 264e9cbd…, octet pour
+octet, déposé 16:19:48Z), la base recoupée (le signé == l'AUTO sur les
+957 o entiers, le bloc de la main 32 o seul — la même main que les
+Entrées 264/266/267), les trois empreintes recoupées contre les pièces
+du kit (md5 qemu bae5a36f…, sha256 corpus ec343b4e…, demo e57fc74b… ==
+les sha gravés), la chronologie saine (run 15:50:32Z → main 16:17:38Z →
+dépôt 16:19:48Z, jamais avant), le VERDICT VERT 16 PASS établit le
+critère sur pièces ; le labo courrier : preuves-m7/ ENTIER assemblé au
+/test/preuves-m7d-voie1-20261113T155020Z/ (CINQ pièces byte-identical
+aux dépôts du développeur, chaque md5 recoupé par re-téléchargement, le
+nom distinct de preuves-m7 assumé — D99, l'original du 05/11 aux
+archives) ; la finale 0.8.0 demeure scellée au 05/11 (le rejouage ne
+re-scelle rien, D165/R6), la réserve D149 au témoin même.
+
+Work Log:
+- LA RÉCEPTION : la pièce jointe au chat lue et md5-recoupée contre le
+  dépôt du développeur au /test/fichiers-1clic/temoin-m7d.txt (canaux
+  croisés, octet pour octet — la leçon de l'Entrée 267).
+- LES RECOUPEMENTS : la base du signé == l'AUTO (957 o, md5 0559db2f…,
+  le dépôt de run du développeur) ; le bloc de la main (32 o, LF nus,
+  aucun retour final — D189 tel quel) ; les trois empreintes du témoin
+  recoupées localement (md5 instrument, sha256 corpus/demo == les sha
+  gravés au .bat) ; les métadonnées Drive datées (mtime 16:17:38Z,
+  createdTime 16:19:48Z) — la chronologie jamais avant le run.
+- L'ASSEMBLAGE : /test/preuves-m7d-voie1-20261113T155020Z/ créé — les
+  quatre pièces de run (le signé, l'AUTO renommé, le VERDICT
+  edb12391…, le journal 57bf6325…) + le LISEZMOI (0c2ef69e…), chaque
+  dépôt recoupé par re-téléchargement ; le bac
+  download/preuves-m7-temoin-signe/ (six pièces, le DEPOT-RECU.txt
+  porte les id Drive qui font foi).
+- LA CONSIGNATION : la présente Entrée 272 + Task 179 ; la carte
+  OU-TROUVER-LES-LIVRABLES portée à 272 ; D141 tenu avant le commit
+  (le courant 271-5c6c904 archivé versionné, md5 recoupé) ; le
+  commit, le push GitHub, le miroir synchronisé.
+- SUITE : au développeur — le geste B sur silicium SHA-NI, la voie 2
+  sous qemu-user, la campagne D204 aux deux bras, la cérémonie du
+  séquestre, le κ aux deux jeux (les acteurs manquants demeurent
+  nommés) ; au labo — l'édition correctrice du chronomètre (la pause
+  portable), les écarts 334 + 307 de dudect à la prochaine édition du
+  kit-2.
