@@ -9479,3 +9479,39 @@ Work Log:
   second run à N plus grand (optionnel) consoliderait tls13-13/tls13-17 ;
   puis preuves-constat-arm, le geste B SHA-NI réel, la campagne D204, la
   cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 169
+Agent: Z.ai (agent principal — la session de la réception du run kit-2)
+Task: LA SYNCHRO GIT ↔ DRIVE DE L'ENTRÉE 261 (la suite immédiate de la
+réception) : le dépôt local RATTRAPÉ à l'Entrée 260 par le bundle du miroir
+(fast-forward dbf46b6→78a67a5, les cinq commits des sessions recyclées
+recouverts par list-heads avant le geste), le commit 8d6ab1d (Entrée 261 +
+Task 168) POUSSÉ à GitHub (recoup VERT : main distante == main locale), LE
+RELAIS OAUTH REVIVIFIÉ (le coffre Tokens/oauth_token_relais.json mis à jour
+hier 20:04 par le développeur — la ré-autorisation prévue à l'Entrée 255 ;
+rapatrié dans .gdrive/ gitignoré, jamais affiché), LE COMPTE DE SERVICE
+DEVENU LECTURE SEULE (403 « Insufficient permissions » sur tout le coffre —
+le fait du partage, nommé ; la lecture demeure intégrale), L'ANOMALIE D141
+NOMMÉE ET RÉPARÉE (l'archive 259-1bdaa29 contient la pointe 260 : le vrai
+courant 259 n'y vivait pas — aucun perte d'histoire, les bundles sont
+cumulatifs ; le courant 260 archivé à SON NOM triade-history-260-78a67a5,
+l'archive mal nommée demeure telle quelle), le miroir + le bundle portés à
+la pointe, LISEZMOI-MESURE-VECUE.txt DÉPOSÉ au coffre /test (md5 recoupé),
+la carte poussée à la racine.
+
+Work Log:
+- LE RATTRAPAGE : bundle du miroir téléchargé, ancêtre vérifié, merge
+  --ff-only (core.filemode false pour les 1 144 faux « modifiés » du bac).
+- LE RELAIS : sonde d'écriture par dossier (SA refusé partout), lecture du
+  coffre Tokens/ (noms seuls), refresh_token du 12/11 20:04 VIVANT,
+  identité propriétaire, écriture éprouvée, sonde jetable à la corbeille.
+- LA SYNCHRO : drive_sync.py idempotent (md5 par md5, jamais de
+  suppression), bundle --all régénéré, ROOT_PUSH (la carte 261), D141
+  tenu (archivage versionné AVANT le remplacement du courant, md5 du
+  courant recoupé par re-téléchargement).
+- LES REFUS NOMMÉS : les fichiers à exe peuvent être refusés par le
+  scanner du coffre (faux positif « malware » vécu) — nommés par la
+  sortie, jamais contournés ; les pièces vivent au dépôt git.
+- SUITE : le témoin signé (Entrée 261), preuves-constat-arm, le geste B,
+  D204, la cérémonie d'ère, le séquestre D183, la réplication.

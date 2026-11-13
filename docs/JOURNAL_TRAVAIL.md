@@ -10643,3 +10643,64 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   preuves-constat-arm (le téléphone), puis les gestes ouverts (le geste B
   SHA-NI réel, la campagne D204, la cérémonie d'ère, le séquestre D183,
   la réplication).
+
+## Entrée 262 — LA SYNCHRO GIT ↔ DRIVE DE L'ENTRÉE 261 : LE RELAIS OAUTH REVIVIFIÉ PAR LE JETON DU COFFRE, LE COMPTE DE SERVICE DEVENU LECTURE SEULE, L'ANOMALIE D141 NOMMÉE ET RÉPARÉE (le dépôt local rattrapé à l'Entrée 260 par le bundle du miroir, le courant archivé à SON NOM, le miroir + le bundle portés à la pointe 261, LISEZMOI-MESURE-VECUE.txt déposé au coffre /test, la carte poussée à la racine) (13/11, la session de la réception — la synchro qui suivit)
+
+- LE RATTRAPAGE DU DÉPÔT : le dépôt local vivait à l'Entrée 255 (dbf46b6)
+  quand les cinq commits des sessions recyclées (256-260 : l'APK, le relevé
+  Android, l'exe 1-clic v1, le run v1/ligne 55, le CORRECTIF3 + v2) ne
+  vivaient qu'au miroir et à GitHub — le bundle du miroir rapatrié
+  (65 261 806 o, list-heads 78a67a5 vérifié), fast-forward pur
+  (dbf46b6 ancêtre de 78a67a5, recoupé avant le geste), core.filemode
+  false pour le bruit de permissions du bac : l'arbre propre, RIEN
+  réécrit.
+
+- LE COMPTE DE SERVICE DEVENU LECTURE SEULE (le fait du coffre, nommé) :
+  le repli SA D263 (z-ai-811@physichong…), qui écrivit au coffre hier,
+  reçoit désormais 403 « Insufficient permissions for the specified
+  parent » SUR TOUT dossier du coffre (sonde d'écriture : archives-bundles,
+  miroir, /test — tous refusés ; canAddChildren: false lu à l'API) : son
+  droit d'écrire fut retiré du partage. La lecture demeure INTÉGRALE.
+
+- LE RELAIS OAUTH REVIVIFIÉ : le coffre Tokens/oauth_token_relais.json
+  porte un refresh_token MIS À JOUR hier 20:04 UTC (après la mort de
+  l'ancien, invalid_grant vécu à l'Entrée 255) — le geste du développeur
+  (la ré-autorisation interactive prévue par l'Entrée 255). Rapatrié dans
+  .gdrive/ (gitignoré, D12 — jamais affiché, jamais committé), le
+  rafraîchissement VIT : l'identité du jeton est le compte propriétaire,
+  l'écriture au coffre éprouvée par sonde (puis la sonde jetable mise à
+  la corbeille — récupérable, aucune pièce du projet touchée).
+
+- L'ANOMALIE D141 NOMMÉE ET RÉPARÉE : l'archive
+  archives-bundles/triade-history-259-1bdaa29.bundle (md5 800b42f105…)
+  contient en RÉALITÉ la pointe 260 (78a67a5) — les octets du vrai
+  courant 259 n'y vivent pas (la synchre d'hier téléversa le NOUVEAU
+  bundle deux fois : une fois au nom de l'archive, une fois comme
+  courant). AUCUNE PERTE D'HISTOIRE : les bundles sont cumulatifs
+  (--all), le commit 1bdaa29 vit dans le courant comme dans l'archive
+  mal nommée. LA RÉPARATION : le courant 260 (78a67a5, md5 recoupé par
+  re-téléchargement 800b42f105…) archivé à SON NOM —
+  triade-history-260-78a67a5.bundle ; l'archive mal nommée DEMEURE TELLE
+  QUELLE (jamais de suppression, jamais de réécriture : l'écart est
+  consigné ici, l'histoire jamais maquillée).
+
+- LA SYNC : scripts/drive_sync.py à la pointe du présent commit — le
+  miroir idempotent md5 par md5 (jamais de suppression), le bundle
+  régénéré (--all, la pointe 261+262), ROOT_PUSH à la racine du coffre
+  (dont la carte OU-TROUVER-LES-LIVRABLES.md de l'Entrée 261). Les
+  fichiers à exe (l'exe v2 nu, les paquets porteurs, le zip CORRECTIF3)
+  peuvent être refusés par le scanner du coffre (le faux positif
+  « malware » vécu) : les refus sont NOMMÉS par la sortie, jamais
+  contournés — les pièces vivent au dépôt git (local + GitHub + bundle).
+
+- LES DÉPÔTS AU /TEST : LISEZMOI-MESURE-VECUE.txt (la lecture du run pour
+  le terrain, md5 recoupé par relecture) ; TENTATIVE du zip CORRECTIF3
+  (l'écart de la carte nommé à l'Entrée 261 — si le scanner le refuse,
+  le refus est un fait du coffre, nommé).
+
+- SUITE : le TÉMOIN SIGNÉ du développeur (l'Entrée 261) ; les preuves
+  formelles preuves-constat-arm ; les gestes ouverts (le geste B SHA-NI
+  réel, la campagne D204, la cérémonie d'ère, le séquestre D183, la
+  réplication). NOTE AU DÉVELOPPEUR : si le partage du compte de service
+  doit demeurer lecture seule, le relais OAuth du coffre Tokens/ suffit —
+  la ré-autorisation du 12/11 20:04 est honorée par la présente.
