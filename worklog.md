@@ -9635,3 +9635,18 @@ Work Log:
   (recoup), le miroir synchronisé.
 - SUITE : inchangée (E267) — preuves-constat-arm formelles, geste B SHA-NI,
   D204, cérémonie d'ère, séquestre D183, réplication.
+
+
+
+Task ID: 176
+Agent: Z.ai (agent principal — la session des gestes ouverts)
+Task: LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — LE PAQUET TRIADE_kits_1clic_gestes_ouverts_v1 (la parole du développeur du 13/11 : « Fais des kits 1-clic pour les tests restants à faire et continue sur les suites proposées ») : chaque geste encore ouvert vit désormais en un double-clic — LE MENU (COMMENCER-GESTES-OUVERTS.bat, la forme PROUVÉE du dispatch : set /p + if/goto, jamais choice ni esperluette en chaîne), LE GESTE B (kit-1-shani INTACT + DIAGNOSTIC-MACHINE pour choisir la machine à SHA-NI), LES DEUX VOIES QEMU (les lanceurs officiels .sh INTACTS ouverts par wsl.exe + wslpath en deux temps — jamais les guillemets imbriqués), LA CAMPAGNE D204 (la console : statut, verrou du plan par certutil, calibration, chronométrage, tokens — CA1 tenu), LE SÉQUESTRE D183 (les trois gestes au menu, la phrase ne traversant jamais le lanceur, la dépendance pynacl + cryptography NOMMÉE à l'écran et au LISEZMOI) ET LA RÉPLICATION (l'autotest du κ + la grille T/X).
+
+Work Log:
+- L'ASSEMBLAGE : 42 pièces — 35 INTACTES recoupées sha256 À LA COPIE (contre EMPREINTES-PAQUET.txt du CORRECTIF2 et les sha256 du dépôt ; le recoup fail-closed REFUSA une empreinte mal transcrite par le labo, l'erreur nommée et corrigée au geste même), les SIX neufs (CINQ .bat + le LISEZMOI), EMPREINTES-GESTES-OUVERTS.txt généré du montage même.
+- L'AUDIT (l'Entrée 260 rejouée) : 6/6 VERT — ASCII pur, CRLF intégral, zéro métacaractère nu dans echo/rem, chaque goto à son étiquette ; le dispatch à la forme du COMMENCER-ICI.bat vécu au terrain.
+- LES ÉPREUVES (sur copie, pièces recoupées intactes après chacune) : séquestre --autotest VERT (pynacl + cryptography réinstallés par la procédure D149), κ autotest VERT, calibration 2,002 s VERT, diagnostic labo VERT, LA VOIE 1 M7D REVÉCUE (code 0, VERDICT VERT) — les rapports au bac download/preuves-kits-1clic-labo-v1/ ; non vivables nommées : aucun Windows au labo (les .bat par leurs commandes et la relecture, D122), la voie 2 sans qemu-x86_64 au bac (l'épreuve du 12/11 embarquée au paquet).
+- LE ZIP : sha256 878889c9082be72d4896e0d87258b70dcf246cb4e078b1b71c9fd55ff351e33e, recoupé 3/3 par re-extraction.
+- LE DÉPÔT : le zip + le LISEZMOI au coffre /test (le relais OAuth, la vue de référence), md5 recoupés par re-téléchargement.
+- LA CHAÎNE : l'Entrée 269 au journal, la présente tâche, la carte OU-TROUVER portée à 269, D141 tenu (le courant 268-25bb48b archivé versionné, md5 recoupé par re-téléchargement, la pointe vérifiée par git bundle list-heads), le commit, le push GitHub (recoup), le miroir Drive synchronisé.
+- SUITE : les gestes ouverts OUTILLÉS au /test — extraire, double-cliquer (le geste B, les voies QEMU, la campagne D204, le séquestre hors-ligne, le κ) ; les gestes déjà 1-clic rappelés (l'APK au /test, le témoin vitrine, la cérémonie d'ère au /Cérémonie) ; le second annotateur et le second domaine demeurent les acteurs manquants de la réplication.

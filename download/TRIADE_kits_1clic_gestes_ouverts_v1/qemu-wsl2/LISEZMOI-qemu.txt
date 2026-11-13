@@ -1,0 +1,72 @@
+LISEZMOI — LES DEUX VOIES QEMU SUR WINDOWS (WSL2, la préparation multimachines)
+================================================================================
+
+LA COMMANDE (le développeur, 12/11/2026) : « QEMU ou autre si besoin
+sur Windows ». Deux voies vivent dans ce paquet — AUCUNE n'est du
+silicium, CHACUNE le dit dans ses témoins.
+
+LA VOIE 1 — LE KIT M7D REJOUÉ SOUS QEMU-RISCV64 (le dossier kit-m7d/)
+  L'OBJET : rejouer sur VOTRE machine le scénario M7 du jalon 0.8.0 —
+  la bascule de page exécutable par patch à chaud avec fence.i PENDANT
+  le trafic, sur l'ISA RISC-V, l'adversaire DEP, les refus nommés, la
+  falsification du démonstrateur (l'instrument soupçonnable, D154).
+  LE CONTENU : le kit-m7d est AUTONOME — le SCELLÉ corpus 0.8.0-rc.1
+  (sha256 ec343b4e…), le démonstrateur invité (e57fc74b…), le
+  qemu-riscv64 STATIQUE embarqué (aucun paquet à installer) et le
+  scénario scenario-m7d.py (python3 SEUL). Recoupés au labo le 12/11
+  à l'extraction du paquet (octet pour octet contre les scellés).
+  LE GESTE : extraire le dossier, puis sous WSL2 (Ubuntu par exemple) :
+      cd kit-m7d && python3 scenario-m7d.py
+  L'ÉDITION AUTOMATISÉE : tapez « bash qemu-wsl2/lancer-voie1-m7d.sh »
+  — le lanceur trouve python3 (voire l'installe si sudo vit sans mot
+  de passe) et vit le run : le qemu-riscv64 embarqué ne demande RIEN.
+  Le run dure environ une minute, écrit ./preuves-m7/ (témoin, journal,
+  verdict) — à renvoyer ENTIÈRES au coffre /test.
+  LA FRONTIÈRE NOMMÉE : c'est une REPRODUCTION de la preuve M7 vécue
+  (WSL2/qemu, l'Entrée 155) — la réserve instrumentale D149 DEMEURE :
+  le TCG n'a pas de cache d'instructions physique, la bascule y est
+  « gratuite ». LA QUESTION SILICIUM du kit 2 v0.15.0 (fence.i sur une
+  VRAIE carte RV64) RESTE OUVERTE : aucune carte ne vit chez vous, ce
+  run ne la remplace JAMAIS — il exerce la chaîne, il ne prouve pas le
+  métal.
+
+LA VOIE 2 — LE KIT-SHANI SOUS QEMU-X86_64 (l'émulation SHA-NI)
+  L'OBJET : pour les machines SANS SHA-NI (le terrain ALEKPC l'a prouvé
+  de lui-même : CPUID feuille 7, EBX bit 29 = 0 — geste A, Entrée 245),
+  la chaîne complète du kit-shani (correctif n° 2) peut se vivre SOUS
+  ÉMULATION : qemu-x86_64 -cpu max expose SHA-NI au CPUID et traduit
+  sha256rnds2 par TCG.
+  L'ÉPREUVE DU LABORATOIRE (12/11 11:17, la pièce jointe
+  preuves-shani-emulation-labo/) : le kit-shani exact (le n° 2 livré)
+  a vécu SOUS qemu-x86_64 10.0.13 -cpu max sur l'hôte Linux du labo —
+  VERDICT VERT, code 0 : le constat CPUID « AuthenticAMD » famille 6
+  modèle 6 (le CPU virtuel de qemu), les trois lecteurs EXACTS,
+  l'adversaire K tranché, la mesure consignée, la pièce relue intacte —
+  ET LE RAPPORT 0,19× (l'AVANT scalaire 2 136 cyc, l'APRÈS SHA-NI
+  émulé 11 014 cyc) : LE TCG TRADUIT CHAQUE sha256rnds2 EN DES DIZAINES
+  D'OPÉRATIONS HÔTES — le rapport émulé est un ARTEFACT DE TRADUCTION,
+  JAMAIS une vérité de silicium. Le témoin du labo le consigne TEL
+  QUEL (aucun chiffre maquillé, aucun statut fabriqué).
+  LE GESTE (sur votre machine, sous WSL2) :
+      sudo apt install qemu-user          # ou qemu-user-static
+      cd kit-1-shani                      # le kit du paquet multimachines
+      qemu-x86_64 -cpu max $(which python3) scenario-shani.py
+  L'ÉDITION AUTOMATISÉE : tapez « bash qemu-wsl2/lancer-voie2-shani.sh »
+  — le lanceur trouve qemu-x86_64 (voire l'installe si sudo vit sans mot
+  de passe ; sinon il vous donne LA commande exacte), vérifie le kit-1-shani
+  voisin et vit le run sous émulation.
+  LES TÉMOINS : ./preuves-shani/ naît tout seul (témoin, journal,
+  verdict) — DATEZ ET SIGNEZ le témoin en écrivant SOUS VOTRE MAIN :
+  « run sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » — le
+  rapport rendu (probablement < 1) est l'artefact TCG : consignez-le
+  tel quel. Renvoyez le dossier au coffre /test.
+  LA FRONTIÈRE NOMMÉE : cette voie exerce LA CHAÎNE (le refus ne peut
+  plus exister : qemu présente SHA-NI), elle ne MESURE pas — la mesure
+  avant/après du kit-shani n'a de sens que sur le VRAI silicium
+  (le geste B : une machine SHA-NI réelle, à 5,84× au labo modèle 173,
+  6,37× au témoin du 12/11).
+
+LA COMMANDE DES DEUX VOIES EST HONNÊTE : QEMU est « l'autre » que vous
+nommiez — il vit ici comme INSTRUMENT D'EXERCICE et de REPRODUCTION,
+jamais comme substitut du métal. Chaque témoin porte sa propre
+déclaration : le labo recoupe, consigne, et ne fabrique rien.

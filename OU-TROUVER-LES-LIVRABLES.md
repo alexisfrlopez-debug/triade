@@ -1,11 +1,11 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-268 — la réception du run kit-2 v2 :
+*Mise à jour : 13/11/2026 (Entrées 261-269 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
 fermée ; LES TESTS CLOS ARCHIVÉS (44 entrées, le /test rendu à la
-suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive). Ce fichier
+suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive ; LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — Entrée 269 : le paquet TRIADE_kits_1clic_gestes_ouverts_v1, chaque geste ouvert en un double-clic). Ce fichier
 vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
@@ -27,6 +27,7 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **LE SECOND RUN OUTILLÉ — N=400 EN 1 CLIC (Entrée 265)** | TRIADE_kit2_second_run_N400_v1/ | oui (archivé à kits-terrain-v0150/ — le run est couru) | download/TRIADE_kit2_second_run_N400_v1/ |
 | **LE SECOND TÉMOIN SIGNÉ — N=400, LA CHAÎNE DOUBLEMENT FERMÉE (Entrée 266)** | preuves-kit2-second-temoin-signe/ | **oui (le dossier du développeur, 13/11 10:38Z — les quatre \|t\| sous le seuil)** | download/preuves-kit2-second-temoin-signe/ |
 | **LE TÉMOIN DU VERDICT ANDROID SIGNÉ — LA CHAÎNE DU CONSTAT-ARM FERMÉE (Entrée 267)** | temoin-android-signe/ | **oui (temoin-verdict-android/, QUATRE pièces — le signé du développeur, 13/11 11:14Z)** | download/temoin-android-signe/ |
+| **LES GESTES OUVERTS EN 1 CLIC — le paquet des suites proposées (Entrée 269 : geste B, voies QEMU, campagne D204, séquestre D183, réplication — zip 878889c9…)** | TRIADE_kits_1clic_gestes_ouverts_v1/ | **oui (le zip + le LISEZMOI, md5 recoupés)** | download/TRIADE_kits_1clic_gestes_ouverts_v1/ |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 

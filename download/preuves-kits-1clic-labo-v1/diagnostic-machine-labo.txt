@@ -1,0 +1,33 @@
+ÉPREUVE diagnostic-machine-labo.txt — sur copie, le diagnostic_machine.py
+code de sortie : 0
+la pièce du paquet INTACTE après l'épreuve : OUI
+======================================================================
+===================================================================
+ LE DIAGNOSTIC DE LA MACHINE — le paquet multimachines MISE À JOUR
+ Il constate : la machine, le silicium, ce qui vit, quels kits y
+ sont vivables. Il ne mesure rien, ne fabrique aucun chiffre.
+===================================================================
+
+[machine] l'OS      : Linux-5.10.134-013.15.kangaroo.al8.x86_64-x86_64-with-glibc2.41
+[machine] l'arche   : x86_64  (Python 64 bits)
+[machine] le CPU   : Intel(R) Xeon(R) Processor (/proc/cpuinfo)
+[silicium] CPUID   : « GenuineIntel » · famille 6 · modèle 173 · pas 1
+[silicium] SHA-NI  : PRÉSENT  (CPUID feuille 7, EBX bit 29)
+[silicium] 2e voix : /proc/cpuinfo vendor_id « GenuineIntel »  == CPUID (recoupées)
+[outils]   Python   : 3.12.16, 64 bits  (64 bits : le kit-3 y vit)
+[outils]   compil.  : gcc
+
+===================================================================
+ LE VERDICT (les kits vivables SUR CETTE MACHINE — l'état complet
+ du projet vit dans CE-QUI-RESTE-A-FAIRE.txt)
+===================================================================
+ cette machine est LINUX : les kits Windows du paquet n'y vivent pas (les exe livrés sont PE32+ x86-64).
+ les voies QEMU y vivent en bash DIRECT (lanceur-voie1-m7d.sh : le qemu-riscv64 STATIQUE est embarqué dans le paquet).
+ le téléphone vit par SON kit : telephone-arm/kit-constat-arm/
+ (le présent diagnostic fut éprouvé au laboratoire sur un hôte Linux x86-64 — cette voix même.)
+
+ A VOTRE MAIN (inchangé) : la signature des témoins, l'état EFFECTIF du turbo (kit-2), le témoin vitrine (kit-3), le renvoi
+ des preuves au coffre /test (dossier Drive « Triade » → « test »).
+===================================================================
+
+[témoin] le diagnostic est écrit : diagnostic-machine.txt

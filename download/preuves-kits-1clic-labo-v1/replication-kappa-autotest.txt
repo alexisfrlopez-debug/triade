@@ -1,0 +1,9 @@
+ÉPREUVE replication-kappa-autotest.txt — sur copie, le replication/kohen_kappa_v150.py
+code de sortie : 0
+la pièce du paquet INTACTE après l'épreuve : OUI
+======================================================================
+=== L'AUTOTEST DU CALCULATEUR κ (annotations SYNTHÉTIQUES) ===
+  accord parfait      : k = +1.0000 (attendu 1.0) po=1.000 n=8 -> OK
+  desaccord total     : k = -1.0000 (attendu < 0) po=0.000 pe=0.500 n=10 -> OK
+  accord partiel      : k = +0.4000 (attendu +0,4000) po=0.700 pe=0.500 n=10 -> OK
+[autotest] VERT — le calculateur est PRET ; le seuil d'acceptation pre-enregistre demeure κ ≥ 0.61 (D189)

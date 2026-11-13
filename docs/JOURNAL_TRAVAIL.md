@@ -11123,3 +11123,91 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   gestes ouverts : le geste B SHA-NI réel, la campagne D204 (le kit
   loupe-13 au /test), la cérémonie d'ère, le séquestre D183, la réplication.
 
+
+
+## Entrée 269 — LES GESTES OUVERTS OUTILLÉS EN 1 CLIC : LE PAQUET TRIADE_kits_1clic_gestes_ouverts_v1 (la parole du développeur du 13/11 : « Fais des kits 1-clic pour les tests restants à faire et continue sur les suites proposées ») : chaque geste encore ouvert du projet vit désormais en UN DOUBLE-CLIC — le geste B SHA-NI réel, les DEUX voies QEMU, la campagne D204, le séquestre D183 et la réplication — le menu COMMENCER-GESTES-OUVERTS.bat ouvre tout, les gestes déjà 1-clic sont RAPPELÉS (l'APK du /test, le témoin vitrine, la cérémonie d'ère au /Cérémonie) (13/11, la session des gestes ouverts)
+
+- LA COMMANDE ET SON MOMENT : la suite nommée aux Entrées 267-268 (les
+  preuves formelles constat-arm, le geste B SHA-NI réel, la campagne D204,
+  la cérémonie d'ère, le séquestre D183, la réplication) — les chaînes
+  fermées (kit-2 DOUBLEMENT, kit-3, constat-arm) ne se rejouent plus, les
+  archives sont tenues (l'Entrée 266) : ce qui reste, c'est OUTILLER chaque
+  geste ouvert au même standard que le reste du projet (le GUI v1, l'APK,
+  l'exe 1-clic — chaque geste du projet vit en un double-clic).
+
+- LE PAQUET (42 pièces + le fichier d'empreintes) : les 35 pièces INTACTES
+  recoupées sha256 À LA COPIE — le kit-1-shani complet, le kit-m7d complet
+  avec son qemu-riscv64 EMBARQUÉ, les deux lanceurs officiels .sh, le
+  LISEZMOI-qemu et les preuves d'émulation du labo, le DIAGNOSTIC-MACHINE
+  (tout cela contre EMPREINTES-PAQUET.txt du CORRECTIF2, la liste
+  consignée) ; le kit D183 avec l'instrument D120 v06/coffre_cf2.py et la
+  pièce AUTOTEST.txt de D192, les instruments D204 avec le plan
+  PRÉ-ENREGISTRÉ VERROUILLÉ (a78caf8c… — l'empreinte consignée à D204
+  AVANT toute mesure), le kit de réplication (tout cela contre les sha256
+  du dépôt) — le recoup fail-closed REFUSA la première passe : une
+  empreinte mal transcrite par le labo (…a3af au lieu de …a3ef), l'erreur
+  NOMMÉE et corrigée au geste même — la preuve que le recoup vit ; les SIX
+  fichiers neufs : CINQ lanceurs .bat + le LISEZMOI-GESTES-OUVERTS.txt (la
+  carte datée des gestes ouverts, les chaînes fermées rappelées, les
+  frontières nommées).
+
+- LES LANCEURS (la forme canonique) : l'audit de l'Entrée 260 rejoué 6/6
+  VERT — ASCII pur, CRLF intégral, ZÉRO métacaractère nu dans les
+  echo/rem, chaque goto à son étiquette ; le dispatch à la forme PROUVÉE
+  du COMMENCER-ICI.bat vécu au terrain (set /p + if/goto — jamais
+  choice, jamais l'esperluette en chaîne : l'ambiguïté de cmd est un piège
+  nommé, la forme vécue est la règle) ; les DEUX voies QEMU ouvertes par
+  wsl.exe + wslpath en DEUX TEMPS (la traduction du chemin capturée par
+  for /f, puis le lanceur OFFICIEL .sh lancé tel quel — jamais les
+  guillemets imbriqués) ; les refus nommés partout (wsl absent, chemin
+  refusé, python absent, saisie vide, fichier absent, journal pas né —
+  CA1) ; le verrou D204 au lanceur campagne : l'empreinte du plan recoupée
+  par certutil à chaque geste, un plan retouché ne courra jamais.
+
+- LES ÉPREUVES DU LABORATOIRE (sur COPIE, jamais le paquet — les pièces
+  recoupées intactes après chaque épreuve) : l'AUTOTEST du séquestre D183
+  VERT (pynacl + cryptography réinstallés par la procédure D149 — et la
+  DÉPENDANCE NOMMÉE désormais au LISEZMOI et à l'écran du lanceur :
+  l'instrument CF2 l'exige, le geste pip install se vit AVANT la mise
+  hors-ligne de la machine de cérémonie) ; l'AUTOTEST du κ de Cohen VERT
+  (trois cas synthétiques exacts) ; la CALIBRATION du chronomètre D204
+  VERT (2,002 s mesurés contre 2,00 s demandés — écart 0,002 s sous la
+  tolérance 0,05 s, un dry-run JAMAIS une mesure) ; le diagnostic sur
+  l'hôte Linux du labo VERT ; LA VOIE 1 QEMU REVÉCUE par son lanceur
+  officiel — code 0, VERDICT VERT, le qemu-riscv64 embarqué court, les
+  preuves nées sur la copie — les rapports au bac
+  download/preuves-kits-1clic-labo-v1/ ; LES ÉPREUVES NON VIVABLES
+  NOMMÉES : aucun Windows au labo (les .bat éprouvés par leurs commandes
+  et par la relecture, le premier double-clic au développeur, D122) ; la
+  voie 2 sans qemu-x86_64 au bac à sable (l'épreuve du 12/11 demeure, ses
+  pièces EMBARQUÉES au paquet : preuves-shani-emulation-labo/).
+
+- LE ZIP : 3 193 001 octets, sha256 878889c9082be72d4896e0d87258b70dcf
+  246cb4e078b1b71c9fd55ff351e33e — relu et recoupé 3/3 par re-extraction
+  (42 pièces octet pour octet à chaque tour).
+
+- LE DÉPÔT AU COFFRE /test : le zip + le LISEZMOI-GESTES-OUVERTS.txt (la
+  carte lisible sans extraire), md5 recoupés par re-téléchargement.
+
+- Frontières : AUCUNE pièce scellée touchée (les CINQ scellés recoupés à
+  la copie : loupe.exe c1115105…, proxy-image 0782d7e2…, moteur-shani
+  761ab194…, corpus ec343b4e…, demo e57fc74b…) ; le plan D204 VERROUILLÉ
+  et AUCUNE mesure exécutée (CA1 tenu : le dossier des résultats naîtra
+  de la première mesure instrumentée) ; le séquestre PRÉPARÉ, JAMAIS
+  appliqué (le coffre réel intact, D81 demeure, D87/D192 intacts) ; aucun
+  chiffre fabriqué (les références 5,84×/6,37×/0,19× demeurent consignées
+  à leurs entrées d'origine, le LISEZMOI les cite) ; le kit D183 embarque
+  la pièce AUTOTEST.txt de D192 INTACTE ; la main demeure au développeur :
+  aucun geste obligatoire, chaque témoin à dater et signer de sa main,
+  chaque dossier de preuves à renvoyer ENTIER au coffre /test.
+
+- SUITE : les gestes ouverts sont OUTILLÉS au /test — extraire le zip,
+  double-cliquer : le geste B sur une machine à SHA-NI (le diagnostic
+  choisit), les voies QEMU sous WSL2, la campagne D204 aux deux bras (le
+  kit loupe-13 au /test), la cérémonie du séquestre à la machine
+  hors-ligne, le κ le jour des deux jeux d'annotations ; les gestes déjà
+  1-clic rappelés au LISEZMOI (l'APK constat-arm au /test, le témoin
+  vitrine, la cérémonie d'ère au /Cérémonie) ; le second annotateur (à
+  recruter) et le second domaine (en attente d'une vraie commande)
+  demeurent les acteurs manquants de la réplication — nommés, jamais
+  maquillés.

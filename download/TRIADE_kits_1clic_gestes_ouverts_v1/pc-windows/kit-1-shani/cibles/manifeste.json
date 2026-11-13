@@ -1,0 +1,44 @@
+{
+  "piece": {
+    "fichier": "proxy.exe",
+    "sha256": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "nom": "proxy.exe 1.0.0 (M3, la pièce scellée)"
+  },
+  "image": {
+    "fichier": "proxy-image.bin",
+    "taille": 69632,
+    "image_base": 5368709120,
+    "sha256": "0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff"
+  },
+  "cibles": [
+    {
+      "nom": "tls13-02",
+      "rva": 49280,
+      "taille_slot": 448,
+      "sha256_plage": "2ce2517a5eb32c0282b60b6dbac4e7545fc1bd16a7f9ea431bbbd4705d022b46",
+      "contrat": "compression SHA-256 : rcx=etat u32[8], rdx=bloc u8[64]"
+    },
+    {
+      "nom": "tls13-13",
+      "rva": 53504,
+      "taille_slot": 2944,
+      "sha256_plage": "1d02bb4801830f89e217639f5abc86ca2ed40dd42cfe507106ee3a0dd75d2943",
+      "contrat": "echelle X25519 : rcx=sortie u8[32], rdx=scalaire u8[32], r8=u u8[32]"
+    },
+    {
+      "nom": "tls13-16",
+      "rva": 57088,
+      "taille_slot": 192,
+      "sha256_plage": "9026d1de3a4736970bfbdd02a0dbf7018b248ef94022b8d2c6b094847f21e954",
+      "contrat": "bloc AES-128 : rcx=cles u8[176], rdx=entree u8[16], r8=sortie u8[16]"
+    },
+    {
+      "nom": "tls13-17",
+      "rva": 57280,
+      "taille_slot": 192,
+      "sha256_plage": "cdf13dc648a75880b292ef50583160880ca6dc72dbf7bafd568294d82897d395",
+      "contrat": "GHASH GF(2^128) : rcx=Z u8[16], rdx=X u8[16], r8=Y u8[16]"
+    }
+  ],
+  "limite_consignee": "loupe-06 (md5) vit sous session (contrat P1) : NON isolable sans l'application entière — la mesure pipeline de loupe.exe appartient à une itération future du kit ; AUCUN chiffre n'existe."
+}

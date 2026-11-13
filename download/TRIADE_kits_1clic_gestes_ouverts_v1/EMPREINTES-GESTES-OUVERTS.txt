@@ -1,0 +1,63 @@
+EMPREINTES-GESTES-OUVERTS.txt — LES 41 PIÈCES DU PAQUET DES GESTES OUVERTS EN 1 CLIC
+(13/11/2026 — la commande du développeur : « Fais des kits 1-clic
+pour les tests restants à faire et continue sur les suites
+proposées »)
+==============================================================================
+
+Généré depuis le montage même du paquet : chaque pièce telle
+qu'elle vit dans le zip livré (les .bat en CRLF, leur forme
+canonique). Les pièces INTACTES sont recoupées à l'assemblage
+contre EMPREINTES-PAQUET.txt du paquet multimachines CORRECTIF2
+et contre les sha256 des pièces du dépôt — les CINQ scellés y
+demeurent : loupe.exe c1115105…, proxy-image 0782d7e2…,
+moteur-shani 761ab194…, corpus M7D ec343b4e…, demo M7D e57fc74b…
+
+L'HONNÊTETÉ DU PRÉSENT FICHIER : il couvre les pièces — tout sauf
+lui-même : un fichier ne peut pas sceller sa propre empreinte
+sans cercle. L'empreinte du présent fichier est rendue par le
+sha256 du zip ENTIER, consigné au journal de travail et au
+coffre /test.
+
+sha256                                                            pièce
+------------------------------------------------------------------------------------
+b56306e1ab0db505ef45d9626114f310cb96a575c0bcbb5b165c80a1b98a4363  COMMENCER-GESTES-OUVERTS.bat
+5ea985738d8912280e08a809a780f7e3484853b7a1506f4651986c7022605493  DIAGNOSTIC-MACHINE.bat
+32a714c55b3db65638ff27cd637ec70674b0d9d4d842ab1d6ed284f6e9932bbb  LISEZMOI-GESTES-OUVERTS.txt
+5f1ffa9776d296b809ada54217e86f8e4789bc865a5d77e0402ea222e021d1a9  campagne-d204/LANCER-CAMPAGNE-D204.bat
+609a0e81b99376e698ef0bd90e89a0537ba97caf88cb8d9ee67637227f282beb  campagne-d204/LISEZMOI-comparaison.txt
+a78caf8c0cb9498446a91d18d0f8a02ee16b6893d4fe4ce49843397f30240255  campagne-d204/PLAN_PREREGISTRE_COMPARAISON.md
+ba736b1f1e153e18a8c9bf6e97d73c04e456dcf136ede93e278802eca98baf0e  campagne-d204/carnet_temps_humain.csv
+af73c83478b81d487c3b90ab6e3a6b9173282b72a52b18c347a709bcd93a4237  campagne-d204/chronometre_verification.py
+f5f3af046ab73d9282206e01ed7127a33c9bdef15e0ff2e2a29da3a5e0e348b6  campagne-d204/compter_tokens.py
+e2756e76a84ac9c5d552ca01da26dc228e8b23c50b05689cb1cf9cee11380497  campagne-d204/defauts.csv
+3d7d13f033b1176efba8d4096b4512655805897e89127461fa25fc56cc8e2d10  campagne-d204/livraisons.csv
+b20621579426448ca9467813d2b32d6da97615b20e9a3422299404a8a32194f3  diagnostic_machine.py
+4c5be578398eb95effabd743311dc010a3ddbba1395e2859835f776e02f5b741  pc-windows/kit-1-shani/LANCER-KIT-1-SHANI.bat
+b78caab0792fcfe93f9f12ad004abaec47e62a11630142989c640262c56b62bd  pc-windows/kit-1-shani/LISEZMOI-shani.txt
+93d5a13fcc4d1cb2598b471e291266654d8fec18a9dd3800dba297fbc649db52  pc-windows/kit-1-shani/cibles/manifeste.json
+0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff  pc-windows/kit-1-shani/cibles/proxy-image.bin
+761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec  pc-windows/kit-1-shani/moteur-shani.bin
+d930cac0c6b00db0ad31108286e76ced084e417369c81fe68151100709faa1ad  pc-windows/kit-1-shani/moteur-shani.s
+d9def0b4d714392afcbb8a496ab0dface1b97e4398acf56d68f98c63d79d230a  pc-windows/kit-1-shani/scenario-shani.py
+0787f33dc883a895ba65426a33028d51750ba0a615703c1e656316a491e7d987  qemu-wsl2/LANCER-VOIE1-QEMU.bat
+2c73bb0d8f0916091312e94ae45e0fc0d08710a18ad038c5093793e0ed4977fd  qemu-wsl2/LANCER-VOIE2-QEMU.bat
+6eabfa0d88567bb40b2a517683e6244b18530c0221148bf7cb7b66faefc98f08  qemu-wsl2/LISEZMOI-qemu.txt
+fc3571dd73bdce7cc59fbe27269f4920593443083c1fda86e3cf32ccc5168fc6  qemu-wsl2/kit-m7d/LISEZMOI-KIT-M7D.md
+ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799  qemu-wsl2/kit-m7d/corpus
+e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9  qemu-wsl2/kit-m7d/demo
+f2bb9b35eb97fc6b67c43a65d944ea9dcd7b1908df95faf28cea68511e762dc5  qemu-wsl2/kit-m7d/qemu-riscv64
+ed7fd23caef2911aefdcdc42b541079ecf06ab0b06797f5af6ee0e3c1dfe9a1c  qemu-wsl2/kit-m7d/scenario-m7d.py
+173ab0db8b3e29bea8577d73b78e3ae0f89828e887d7ecc8efb955f28aa73f86  qemu-wsl2/lancer-voie1-m7d.sh
+18043df2d68960f2b44288cb09f9ef2e319ba1c84b5e46e5c68bc585db363765  qemu-wsl2/lancer-voie2-shani.sh
+31d6f33a356e15ee128697fa0cb691655be34f6040564cde607e664dafcf0838  qemu-wsl2/preuves-shani-emulation-labo/VERDICT-run-shani.txt
+6d6940b12e382d4b9a6f7180a3f626fb7516eafa8b8c447c86e0fe06b6f59851  qemu-wsl2/preuves-shani-emulation-labo/scenario-shani-journal.log
+8f68f62af6a32c2a57d5463f30b2edead70e9c5df06447734bac06ae89316d51  qemu-wsl2/preuves-shani-emulation-labo/temoin-shani.txt
+1c54a78206591a4a7e96c47266257829d3e48035fe73a50756e77d0be925492f  replication/LANCER-REPLICATION.bat
+a0a6c5e343e68bd1f05c2afa7e303e621968fc4d7bbb14070a6d135bb66bf8c7  replication/LISEZMOI-replication.txt
+e94abb200ca1ff44854af4bcc6c0c6bf609683549315dacbbe35356a513b80c1  replication/grille_tx.csv
+89f4c5e0dd14660acaf7df201c1f77f883c6a99be10fee4ff7cd22184c118d84  replication/kohen_kappa_v150.py
+772f3a315ac19e531015634036d817873687a94f85ab8105f43067bf5f9d430b  sequestre-d183/LANCER-SEQUESTRE-D183.bat
+b2d193af954ba35ea0ab859073f4f811f624ba64abc35385fad97812ffd4d94b  sequestre-d183/scripts/kit_ceremonie_d183/AUTOTEST.txt
+3de0d44c56d713d742df501cf50f1777cbb247b88a3ef60ac08cedd48331f48c  sequestre-d183/scripts/kit_ceremonie_d183/LISEZMOI-ceremonie-D183.txt
+2d950634a57d1afe9834f882b157b42cc21081de9e1bfab99b2e028edd1a7908  sequestre-d183/scripts/kit_ceremonie_d183/sequestre_d183.py
+603ab952b45243fa1d82b1fd0b4321a7e9af8cf97feda685d429814e6043f12f  sequestre-d183/v06/coffre_cf2.py

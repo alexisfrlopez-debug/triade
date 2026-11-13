@@ -1,0 +1,5 @@
+# LA MÉTRIQUE M1 (suite) — LES DÉFAUTS NOMMÉS (une ligne par défaut,
+# la règle du protocole : classe + mécanisme + pièce à l'appui AVANT
+# toute correction). côté = piece|kit|exclu (la règle D202).
+# colonnes : livraison,bras,tache,classe,mecanisme,cote,piece_appui,exclusion,raison_exclusion
+livraison,bras,tache,classe,mecanisme,cote,piece_appui,exclusion,raison_exclusion

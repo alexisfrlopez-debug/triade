@@ -1,0 +1,160 @@
+LISEZMOI — LES GESTES OUVERTS EN 1 CLIC (l'édition du 13/11/2026)
+======================================================================
+(la commande du développeur : « Fais des kits 1-clic pour les tests
+restants à faire et continue sur les suites proposées »)
+
+LE GESTE : extrayez le zip COMPLET dans un dossier NEUF (D99 : ne
+mélangez jamais les runs), puis double-cliquez
+COMMENCER-GESTES-OUVERTS.bat — chaque geste ouvert du projet y vit en
+un choix. Aucun ordre imposé, aucun geste obligatoire : chaque geste
+demeure au développeur, aucun n'est maquillé.
+
+LA CARTE DE CE QUI RESTE — AU 13/11 (tout daté, tout consigné)
+------------------------------------------------------------------
+
+LES CHAÎNES FERMÉES (aucune ne se rejoue ici — elles vivent aux
+archives du coffre /test, les Entrées 264, 266 et 267) :
+  — LE KIT-2 DUDECT : DEUX runs vécus (N=200 puis N=400), les DEUX
+    témoins datés signés de la main — LA mesure temps réel des quatre
+    familles crypto de la pièce scellée EXISTE désormais (au N=400 :
+    tls13-02 |t|=0,84 ; tls13-13 |t|=1,55 ; tls13-16 |t|=-0,30 ;
+    tls13-17 |t|=2,02 — les quatre sous le seuil ; la lecture honnête
+    du kit demeure : aucune divergence au seuil sur CET échantillon,
+    CETTE machine — jamais « temps constant prouvé ») ;
+  — LE KIT-3 LOUPE : VERT sur pièces (le 13e run terrain, Windows 11,
+    l'Entrée 248) ;
+  — LE CONSTAT-ARM : VÉCU au téléphone (Termux puis l'APK), le témoin
+    du verdict daté signé le 13/11 — le troisième silicium constaté
+    (FEAT_SHA256 lue à ses propres canaux, le refus x86-64 nommé avec
+    ses empreintes — l'Entrée 267) ;
+  — LE KIT-1 SHANI : DEUX refus identiques T0.silicium sur ALEKPC
+    (SHA-NI absent, l'Entrée 245 — le refus EST le résultat : le kit
+    ne peut pas inventer le silicium).
+
+CE PAQUET — LES GESTES ENCORE OUVERTS, CHACUN EN UN DOUBLE-CLIC :
+
+  1. LE GESTE B SHA-NI RÉEL — LA mesure avant/après sur un silicium
+     qui A SHA-NI (Ice Lake et après chez Intel, Ryzen chez AMD — le
+     diagnostic lit le CPUID et vous le dit). Les pièces :
+     pc-windows\kit-1-shani\ — INTACTES, celles du paquet
+     multimachines. LE GESTE : DIAGNOSTIC-MACHINE.bat d'abord (choisir
+     la machine), puis pc-windows\kit-1-shani\LANCER-KIT-1-SHANI.bat
+     sur la machine élue. Les références du laboratoire : 5,84× au
+     protocole 8 Mio de l'instruction, 6,37× et 6,38× aux autotests du
+     kit — des statuts laboratoire, JAMAIS des promesses : le gain
+     mesuré appartient à VOTRE machine. Puis : dater et signer le
+     témoin de votre main (temoin-shani.txt naît dans preuves-shani\),
+     renvoyer le dossier ENTIER au coffre /test.
+
+  2. LA VOIE 1 QEMU — LE KIT M7D REJOUÉ sous le qemu-riscv64 EMBARQUÉ
+     (autonome : aucun paquet à installer, aucun réseau, aucun root).
+     LE GESTE : qemu-wsl2\LANCER-VOIE1-QEMU.bat (WSL2 requis — le
+     lanceur trouve wsl.exe, traduit le chemin par wslpath, puis lance
+     le lanceur OFFICIEL lancer-voie1-m7d.sh, INTACT). LA FRONTIÈRE
+     NOMMÉE (D149, elle demeure) : une REPRODUCTION de la preuve M7
+     sous émulation TCG, jamais le métal — la question silicium
+     (fence.i sur une VRAIE carte RV64) reste ouverte. Le run écrit
+     preuves-m7\ — à dater, signer, renvoyer ENTIÈRES au coffre /test.
+
+  3. LA VOIE 2 QEMU — LE KIT-SHANI sous qemu-x86_64 -cpu max : le
+     rapport rendu est l'ARTEFACT TCG, consigné TEL QUEL (le labo l'a
+     vécu : 0,19× — chaque sha256rnds2 traduit en dizaines d'opérations
+     hôtes ; la pièce de l'épreuve vit dans
+     qemu-wsl2\preuves-shani-emulation-labo\). LE GESTE :
+     qemu-wsl2\LANCER-VOIE2-QEMU.bat (WSL2 + qemu-user requis — le
+     lanceur officiel donne LA commande exacte s'il manque). Cette voie
+     EXERCE la chaîne (le refus ne peut plus exister — qemu présente
+     SHA-NI au CPUID), elle NE MESURE PAS : la mesure avant/après n'a
+     de sens que sur le VRAI silicium (le geste B demeure).
+
+  4. LA CAMPAGNE D204 — la comparaison des workflows PRÉ-ENREGISTRÉE
+     (bras T la discipline TRIADE contre bras C le flux standard
+     C+gcc, les mêmes tâches, les quatre métriques). LE GESTE :
+     campagne-d204\LANCER-CAMPAGNE-D204.bat — la console de campagne :
+     le statut des pièces, le verrou du plan (l'empreinte sha256
+     recoupée par certutil contre la valeur consignée à D204 AVANT
+     toute mesure), la calibration du chronomètre (la preuve
+     d'horloge — un dry-run, jamais une mesure), le chronométrage d'une
+     commande, le récapitulatif des tokens. La campagne elle-même est
+     un travail de fond aux DEUX bras — le plan pré-enregistré
+     (PLAN_PREREGISTRE_COMPARAISON.md) fait foi, AUCUNE mesure
+     n'existe encore. Le journal naît à preuves_v150\
+     comparaison_resultats\ de la racine du paquet, à la première
+     mesure instrumentée seulement (CA1). Le kit terrain loupe-13
+     demeure au coffre /test.
+     NOTE HONNÊTE : le VÉRIFICATEUR (verifier_comparaison_v150.py)
+     vérifie les pièces DU LABORATOIRE (le verrou D204, le dry-run,
+     l'audit du plan) — il vit au dépôt avec ses chemins du labo, il
+     n'est PAS embarqué ici : sa course VERT est consignée
+     (preuves_v150/comparaison_dryrun/rapport_verification_paquet5.txt,
+     l'Entrée 239).
+
+  5. LE SÉQUESTRE D183 — la cérémonie des 5 parts à seuil 3 (le
+     partage CF2 D120 TEL QUEL, GF(2^8)) : l'alternative chiffrée à la
+     garde durable D81 (le facteur d'environ 40 de l'analyse
+     consignée). LE GESTE : sequestre-d183\LANCER-SEQUESTRE-D183.bat —
+     la répétition générale (l'autotest, VERT exigé) d'abord, puis LA
+     cérémonie à VOTRE machine HORS-LIGNE (jamais au bac à sable,
+     jamais en ligne) : le découpage de la phrase, la répartition des
+     cinq médias (au moins DEUX hors nuage), la preuve de
+     reconstitution à froid AVANT tout retrait. Le LISEZMOI pas à pas :
+     sequestre-d183\scripts\kit_ceremonie_d183\
+     LISEZMOI-ceremonie-D183.txt. La phrase ne traverse JAMAIS le
+     lanceur : seul son chemin passe.
+     NOTE HONNÊTE (apprise à l'épreuve du laboratoire, le 13/11) :
+     l'instrument CF2 exige Python 3 ET les paquets pynacl et
+     cryptography — le geste « pip install pynacl cryptography » se vit
+     AVANT la mise hors-ligne de la machine de cérémonie : une machine
+     hors-ligne ne peut plus les télécharger, et l'outil refuse de
+     courir sans eux (fail-closed nommé à l'écran).
+
+  6. LA RÉPLICATION — le calculateur κ de Cohen AUTOTESTÉ + la grille
+     de codage T/X finalisée (les classes T1-T5 et X1-X3, chacune avec
+     sa définition opérationnelle). LE GESTE :
+     replication\LANCER-REPLICATION.bat (l'autotest — la preuve à
+     froid ; le κ le jour des DEUX jeux d'annotations — le seuil
+     pré-enregistré κ ≥ 0,61, D189). CE QUI MANQUE au geste complet —
+     consigné, jamais maquillé : le SECOND ANNOTATEUR (à recruter) et
+     le SECOND DOMAINE (en attente d'une vraie commande).
+
+AILLEURS AU COFFRE — DÉJÀ EN 1 CLIC, RIEN À EXTRAIRE ICI :
+  — LES PREUVES FORMELLES constat-arm : l'APK TRIADE-kit-android-v1
+    du /test — ouvrez-le, le test part seul, le bouton construit le
+    zip des preuves et ouvre le partage Drive (dossier « Triade » →
+    « test ») ;
+  — LE TÉMOIN VITRINE du kit-3 (facultatif) : temoin-vitrine.bat du
+    dossier loupe-kit-13 au /test ;
+  — LA CÉRÉMONIE D'ÈRE : le dossier « Cérémonie » du coffre Drive —
+    ses lanceurs (lancer_ceremonie.bat et les autres) y vivent ; le
+    geste hors-ligne Ed25519, la clé jamais traversée.
+
+L'HONNÊTETÉ DE CETTE ÉDITION :
+  — les pièces INTACTES sont celles du paquet multimachines CORRECTIF2
+    (recoupées sha256 à l'assemblage contre EMPREINTES-PAQUET.txt, la
+    liste consignée — les CINQ scellés y demeurent : loupe.exe
+    c1115105…, proxy-image 0782d7e2…, moteur-shani 761ab194…, corpus
+    M7D ec343b4e…, demo M7D e57fc74b…) et celles du dépôt (le kit
+    D183 avec l'instrument D120, les instruments D204, le kit de
+    réplication) — OCTET POUR OCTET, jamais retouchées ;
+  — les SIX fichiers neufs sont les CINQ lanceurs .bat et le présent
+    LISEZMOI — aucun d'eux ne porte de pièce de mesure, ne mesure
+    rien, ne signe rien : ils cherchent, ils recoupent, ils lancent ;
+  — le labo n'a AUCUN Windows : les .bat neufs y sont éprouvés par
+    leurs commandes (where, for /f, wslpath, choice, certutil,
+    findstr — standard de Windows 10/11) et par la relecture, JAMAIS
+    par l'exécution — le premier double-clic se vit chez vous ; si un
+    écran nomme un défaut, renvoyez le .txt TEL QUEL (D122), le labo
+    recoupe et corrige ;
+  — CE QUI NE SERA JAMAIS AUTOMATISÉ : dater et SIGNER les témoins de
+    votre main ; l'état EFFECTIF du turbo (BIOS) au kit-2 ; le renvoi
+    des dossiers de preuves ENTIERS au coffre /test (dossier Drive
+    « Triade » → « test ») ; le recrutement du second annotateur ; la
+    cérémonie hors-ligne ; le retrait de la phrase en clair après le
+    séquestre. Le labo recoupe sur pièces : jamais avant le run,
+    jamais sans pièces.
+
+LES PIÈCES DE CE PAQUET : la liste complète vit dans
+EMPREINTES-GESTES-OUVERTS.txt (générée depuis le montage même du
+paquet) ; l'empreinte du zip ENTIER est consignée au journal de
+travail et au coffre /test — elle scelle aussi les fichiers qui ne
+peuvent pas sceller leur propre empreinte.

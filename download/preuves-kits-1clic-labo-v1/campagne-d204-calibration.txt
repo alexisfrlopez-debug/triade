@@ -1,0 +1,5 @@
+ÉPREUVE campagne-d204-calibration.txt — sur copie, le campagne-d204/chronometre_verification.py
+code de sortie : 0
+la pièce du paquet INTACTE après l'épreuve : OUI
+======================================================================
+[calibration] pause demandée 2.00 s, mesurée 2.002 s — écart 0.002 s ≤ tolérance 0.05 s -> VERT

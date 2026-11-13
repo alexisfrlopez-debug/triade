@@ -1,0 +1,33 @@
+ÉPREUVE sequestre-d183-autotest.txt — sur copie, le sequestre-d183/scripts/kit_ceremonie_d183/sequestre_d183.py
+code de sortie : 0
+la pièce du paquet INTACTE après l'épreuve : OUI
+======================================================================
+AUTOTEST DE L'OUTIL DE SÉQUESTRE D183 — la preuve à froid du geste du laboratoire
+(phrase de test PUBLIQUE, 48 octets ; le partage CF2 D120 : 5 parts à seuil 3 ; v06/coffre_cf2.py tel quel)
+
+  parts (0, 1, 2) : EXACTE
+  parts (0, 1, 3) : EXACTE
+  parts (0, 1, 4) : EXACTE
+  parts (0, 2, 3) : EXACTE
+  parts (0, 2, 4) : EXACTE
+  parts (0, 3, 4) : EXACTE
+  parts (1, 2, 3) : EXACTE
+  parts (1, 2, 4) : EXACTE
+  parts (1, 3, 4) : EXACTE
+  parts (2, 3, 4) : EXACTE
+  paire (0, 1) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 2) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 2) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (2, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (2, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (3, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  part seule : par construction GF(2^8) d'un degré 2, aucune information (Shamir 1979) — la part 0 ci-dessous est publiable :
+    sha256(part-0) = ea988029eeaaa3a8e8e6815e129d0090f5e240384df030a8e866041e390f9f91 (une part sous le seuil ne révèle rien)
+
+VERDICT : VERT — l'outil est prouvé à froid
+Exécuté le 2026-11-13T12:40:53
+LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (aucune phrase réelle lue, aucun conteneur ouvert) — le kit attend le geste du développeur (D183 : la cérémonie exigée de bout en bout).
