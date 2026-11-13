@@ -1,0 +1,32 @@
+TÉMOIN SHA-NI (kit D205, la mesure avant/après) — 2026-11-13 18:12:07
+machine : PORTABLE · x86_64 · Linux · Python 3.14.4
+silicium : AuthenticAMD · famille 6 · modèle 6 · pas 3 · SHA-NI présent
+affinité : cœur 0 posé ; turbo : état non sondé (à consigner manuellement si le BIOS le permet)
+
+LES PIÈCES (recoupées AVANT et APRÈS le run) :
+  proxy-image.bin : sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff (l'image étendue de la pièce scellée proxy.exe 1.0.0, 446279f3…)
+  moteur-shani.bin : sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec (source moteur-shani.s ; la révision vit aux sources)
+  tls13-02 : RVA 0xc080, plage scellée 2ce2517a5eb32c02… — l'AVANT
+
+LE PROTOCOLE : 101 échantillons × 256 compressions, échauffement 64, médiane ; RDTSC sérialisé (lfence avant, rdtscp+lfence après) ; horloge CLOCK_MONOTONIC en contrepoint.
+
+L'EXACTITUDE AVANT LA MESURE (les trois lecteurs) :
+  FIPS 180-4 « abc » : tls13-02 (pièce scellée), shani_compress et le miroir python rendent TOUS
+  ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+  l'adversaire : un octet de la table K muté → la pièce diverge ; restauré → l'exact revient.
+
+LA MESURE (cycles RDTSC par compression, médiane) :
+  abc (le vecteur) : avant 3102.6 — après 2160.4 — rapport 1.44× (horloge : 1401.2 ns → 1000.0 ns)
+  aléa déterministe : avant 3137.7 — après 2162.5 — rapport 1.45× (horloge : 1422.3 ns → 1018.0 ns)
+  zéros : avant 2924.1 — après 2028.4 — rapport 1.44× (horloge : 1329.7 ns → 955.1 ns)
+
+LE RAPPORT DE CE SILICIUM (bloc aléa, cycles) : 1.45×
+
+LA PORTÉE : ce témoin consigne la mesure DE CETTE machine, CE jour, CE protocole — aucun chiffre n'est généralisé, aucun statut n'est fabriqué ; le run appartient au développeur qui l'exécute.
+
+signature du geste : à dater et à signer de la main du développeur.
+
+un sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium 
+
+fait le 13/11/2026
+Alexis Lopez

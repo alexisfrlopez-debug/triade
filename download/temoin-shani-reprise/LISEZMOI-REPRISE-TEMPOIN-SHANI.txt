@@ -1,0 +1,68 @@
+LISEZMOI-REPRISE-TEMPOIN-SHANI.txt — LA RÉCEPTION DE LA REPRISE, LE 14/11/2026
+(l'annonce du développeur : « c'est fait » — UNE pièce jointe au chat :
+temoin-shani.txt, 2 038 o, md5 03f2f32c… — la réponse au courrier de
+l'écart du /test/temoin-shani-signe-ecart-20261114/, l'Entrée 276)
+
+LES DEUX GESTES DE LA REPRISE SONT VÉCUS (le recoup sur pièces, avant
+tout verdict) :
+  — LA BONNE PIÈCE EST SIGNÉE : la base du signé == LE TÉMOIN NÉ DE
+    VOTRE RUN sur ses 1 945 octets ENTIERS (md5 5cd615c9…, octet pour
+    octet — le run du 13/11 18:12:07, machine PORTABLE · WSL2 ·
+    Python 3.14.4, l'artefact TCG 1,44×/1,45×, re-téléchargé INTACT du
+    coffre à l'instant de la réception) : l'écart de la première
+    réception (l'Entrée 276 : la pièce du LABORATOIRE signée) est
+    RÉPARÉ — la main a signé la pièce DU RUN VÉCU ;
+  — LA MENTION EST PORTÉE, SOUS LA MAIN : « un sous qemu-x86_64 -cpu
+    max, ÉMULATION, pas le silicium » ; une nuance d'octet nommée
+    (jamais maquillée, D189) : le « r » initial de « run » manque sous
+    la main, une espace finale s'ajoute — la substance est INTÈGRE et
+    sans ambiguïté : qemu-x86_64 -cpu max, ÉMULATION, jamais le
+    silicium ; la frontière demandée (le LISEZMOI-RUNS-RESTANTS de
+    l'Entrée 273, reprise au courrier de l'écart) est ÉCRITE sous la
+    main ;
+  — LA MAIN : « fait le 13/11/2026 / Alexis Lopez » — la MÊME main que
+    les témoins kit-2 (N=200 puis N=400), le verdict Android, le témoin
+    m7d et la première réception (Entrées 264/266/267/272/276) ; la
+    chronologie saine : la main datée du 13/11, JAMAIS avant le run
+    (né 18:12:07 +0100) ; la datation au jour du geste plausible et
+    nommée avec prudence : la mention ne fut demandée qu'au kit des
+    runs restants puis au courrier de l'écart (13/11 au soir) — la main
+    est donc postérieure à ces demandes, exacte si elle fut posée avant
+    minuit, datée au jour du run sinon : la nuance est consignée, la
+    chronologie interne demeure saine ;
+  — L'INTÉGRITÉ : les empreintes portées au témoin (proxy-image
+    0782d7e2…, moteur-shani 761ab194…, tls13-02 RVA 0xc080 plage
+    scellée 2ce2517a…) recoupées AUX PIÈCES DU KIT MÊMES — la pièce
+    reçue est INTÈGRE, aucun octet muté.
+
+L'ÉCART QUI DEMEURE — LE SEUL :
+  LE COFFRE NE PORTE PAS LA PIÈCE SIGNÉE. L'absence est établie par
+  les canaux croisés (la leçon de l'Entrée 267 : jamais conclure à une
+  absence sur un listing seul) : le parcours du /test à profondeur six
+  (895 fichiers), la recherche par nom sur le coffre ENTIER (25
+  temoin-shani, AUCUNE pièce au md5 03f2f32c…), la recherche par date
+  de création (13 pièces créées après le courrier de l'écart : TOUTES
+  les dépôts du labo même — le bundle 275-3b75692 archivé et le bac du
+  miroir, 13/11 20:35-20:38Z) ; le dossier de run au coffre porte
+  TOUJOURS la base INTACTE ET NON SIGNÉE (md5 5cd615c9…) : LE CHAT
+  DEMEURE LE CANAL UNIQUE — les canaux croisés de l'Entrée 272 (la
+  pièce du chat == le dépôt du développeur, octet pour octet) ne se
+  ferment pas sur un canal seul ; LA CHAÎNE DE LA VOIE 2 DEMEURE
+  OUVERTE SUR CE POINT SEUL.
+
+LE GESTE UNIQUE QUI FERME (un dépôt, rien d'autre) :
+  DÉPOSEZ la pièce signée au coffre /test (dossier Drive « Triade » →
+  « test ») — le temoin-shani.txt que vous venez de signer (2 038 o) ;
+  le dossier preuves-shani\ ENTIER de votre extraction peut
+  l'accompagner si vous le voulez (ses autres pièces vivent déjà
+  vérifiées au coffre, l'Entrée 273). Le labo recoupe alors les canaux
+  croisés (chat == coffre, octet pour octet) et FERME la chaîne de la
+  voie 2 sur pièces.
+
+LA PIÈCE REÇUE N'EST PAS JETÉE (D143) : elle vit consignée TELLE QUELLE
+à côté du présent LISEZMOI (temoin-shani-signe-recu-chat-v2.txt, octet
+pour octet la pièce du chat) ; la première réception (l'Entrée 276)
+demeure à son dossier, l'histoire jamais réécrite — un écart nommé est
+un RÉSULTAT, jamais un échec.
+
+fait au laboratoire le 14/11/2026 — l'Entrée 277 du journal de travail.

@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 14/11/2026 au soir (Entrée 276 — LA RÉCEPTION DU TÉMOIN SHANI SIGNÉ, L'ÉCART NOMMÉ : la main a signé LA PIÈCE DU LABORATOIRE — l'épreuve embarquée `qemu-wsl2\preuves-shani-emulation-labo\` (12/11 11:17:07, machine du labo, l'artefact TCG 0,19×) — PAS le témoin du run de la voie 2 (13/11 18:12:07, PORTABLE, 1,44×/1,45×, md5 5cd615c9…) : la chaîne de la voie 2 DEMEURE OUVERTE, la reprise vit au `/test/temoin-shani-signe-ecart-20261114/` — signer SON témoin avec la mention « run sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium », renvoyer `preuves-shani\` ENTIER ; Entrée 275 — LE CORRECTIF ENCODAGE DU KIT GUI DE CAMPAGNE LIVRÉ : l'écart nommé par le premier run du GUI sous Windows — l'annonce de la calibration écrivait « ≤ » (U+2264), inencodable en cp1252, la page de codes d'un stdout pipé : la pause fut MESURÉE et JOURNALISÉE avant la faute de l'annonce ; le chronomètre v3 et le compteur v2 (flux UTF-8, annonces cp1252-sûres), le GUI v1.0.1 aux empreintes regravées, le kit correctif TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip + le bat console TRIADE-1CLIC-CAMPAGNE-D204-v3 au /test) ; Entrée 274 — LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS LIVRÉ : le kit TRIADE_gui_campagne_v1 au /test, tout au clic, les frontières tenues par construction ; Entrées 261-273 — la réception du run kit-2 v2 :
+*Mise à jour : 14/11/2026 (Entrée 277 — LA RÉCEPTION DE LA REPRISE : la main a signé LE TÉMOIN DE SON RUN (la base 1 945 o md5 5cd615c9… octet pour octet — le run du 13/11 18:12:07, PORTABLE, l'artefact TCG 1,44×/1,45×) et la mention « un sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » est PORTÉE sous la main (le « r » de « run » manque : la nuance d'octet nommée, D189) — l'écart de l'Entrée 276 RÉPARÉ sur deux de ses trois gestes ; la chaîne de la voie 2 n'attend PLUS QUE LE DÉPÔT de la pièce signée au coffre /test (le chat demeure le canal unique — l'absence établie par les TROIS canaux croisés ; le courrier vit au `/test/temoin-shani-reprise-20261114/`) ; Entrée 276 — LA RÉCEPTION DU TÉMOIN SHANI SIGNÉ, L'ÉCART NOMMÉ : la main a signé LA PIÈCE DU LABORATOIRE — l'épreuve embarquée `qemu-wsl2\preuves-shani-emulation-labo\` (12/11 11:17:07, machine du labo, l'artefact TCG 0,19×) — PAS le témoin du run de la voie 2 (13/11 18:12:07, PORTABLE, 1,44×/1,45×, md5 5cd615c9…) : la chaîne de la voie 2 DEMEURE OUVERTE, la reprise vit au `/test/temoin-shani-signe-ecart-20261114/` — signer SON témoin avec la mention « run sous qemu-x86_64 -cpu max, ÉMULATION, pas le silicium », renvoyer `preuves-shani\` ENTIER ; Entrée 275 — LE CORRECTIF ENCODAGE DU KIT GUI DE CAMPAGNE LIVRÉ : l'écart nommé par le premier run du GUI sous Windows — l'annonce de la calibration écrivait « ≤ » (U+2264), inencodable en cp1252, la page de codes d'un stdout pipé : la pause fut MESURÉE et JOURNALISÉE avant la faute de l'annonce ; le chronomètre v3 et le compteur v2 (flux UTF-8, annonces cp1252-sûres), le GUI v1.0.1 aux empreintes regravées, le kit correctif TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip + le bat console TRIADE-1CLIC-CAMPAGNE-D204-v3 au /test) ; Entrée 274 — LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS LIVRÉ : le kit TRIADE_gui_campagne_v1 au /test, tout au clic, les frontières tenues par construction ; Entrées 261-273 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
@@ -10,7 +10,7 @@ vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
 
-## La réponse courte — les livrables récents ( Entrées 251-275 )
+## La réponse courte — les livrables récents ( Entrées 251-277 )
 
 | Livrable | Bac de la session | Coffre /test | Miroir git |
 | --- | --- | --- | --- |
@@ -35,6 +35,7 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **LE GUI PAS À PAS DE LA CAMPAGNE AUX DEUX BRAS — le kit TRIADE_gui_campagne_v1 (Entrée 274 : le GUI v1.0.0 en un fichier tkinter, cinq étapes tout au clic — le verrou fail-closed, l'atelier aux copies datées, la calibration, les quatorze unités en sept onglets, le suivi aux comptes seuls ; la cap TENUE par le GUI ; zip 2b4ce495…)** | TRIADE_gui_campagne_v1/ | **oui (le zip + la carte LISEZMOI-campagne-GUI.txt, sha256 recoupés par re-téléchargement)** | download/TRIADE_gui_campagne_v1/ + download/TRIADE_gui_campagne_v1.zip |
 | **LE CORRECTIF ENCODAGE DU KIT GUI + LE BAT CONSOLE V3 (Entrée 275 : l'écart nommé par le premier run du GUI sous Windows — « ≤ » U+2264 inencodable en cp1252 au stdout pipé, la pause MESURÉE et JOURNALISÉE avant la faute de l'annonce ; le chronomètre v3 ff0c9652…, le compteur v2 e2939ef9…, le GUI v1.0.1 aux empreintes regravées, le plan et les six pièces INTACTS ; le bat TRIADE-1CLIC-CAMPAGNE-D204-v3 4da213bc… aux mêmes instruments, le recoup de la carte ajouté 9/9 ; épreuves E1-E7 dont la faute REJOUÉE et le selftest 13 VERT)** | TRIADE_gui_campagne_v1/ (le kit v1.0.1) + TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip + triade_campagne/kit/TRIADE-1CLIC-CAMPAGNE-D204-v3.bat | **oui (le zip correctif c2dede15… + LISEZMOI-CORRECTIF-ENCODAGE.txt + le bat v3, md5 recoupés par re-téléchargement ; le v1 et le v2 demeurent, D143)** | download/TRIADE_gui_campagne_v1/ + download/TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip + download/TRIADE_fichiers_1clic_v1/TRIADE-1CLIC-CAMPAGNE-D204-v3.bat |
 | **LA RÉCEPTION DU TÉMOIN SHANI SIGNÉ — L'ÉCART NOMMÉ, LA CHAÎNE DE LA VOIE 2 DEMEURE OUVERTE (Entrée 276 : la pièce du chat 2 002 o md5 030fe204… — la base == l'AUTO DE L'ÉPREUVE DU LABO 417c098f… octet pour octet, la main de 32 o la même que les Entrées 264/266/267/272 — mais le run consigné est CELUI DU LABO (12/11 11:17:07, 0,19×), PAS celui du développeur ; le témoin du run 18:12:07 PORTABLE 1,44×/1,45× md5 5cd615c9… re-téléchargé INTACT NON SIGNÉ ; la mention ÉMULATION manque, preuves-shani\ non renvoyé)** | temoin-shani-signe/ | **oui (temoin-shani-signe-ecart-20261114/ — la pièce reçue TELLE QUELLE + LISEZMOI-ECART-TEMPOIN-SHANI.txt, md5 recoupés par re-téléchargement)** | download/temoin-shani-signe/ |
+| **LA REPRISE REÇUE — LA MAIN A SIGNÉ LE TÉMOIN DE SON RUN, LA MENTION ÉMULATION PORTÉE (Entrée 277 : la pièce du chat 2 038 o md5 03f2f32c… — la base == LE TÉMOIN DU RUN 5cd615c9… octet pour octet (18:12:07, PORTABLE, l'artefact TCG 1,44×/1,45×), la main de 93 o la même que les Entrées 264/266/267/272/276, la mention portée à une nuance d'octet près (« un » pour « run », nommée), les empreintes recoupées aux pièces du kit mêmes — MAIS la pièce signée vit au CHAT SEUL : aucun dépôt au coffre, établi par les TROIS canaux croisés (parcours, recherche par nom, recherche par date) ; le geste unique qui ferme : DÉPOSER la pièce signée au /test)** | temoin-shani-reprise/ | **oui (temoin-shani-reprise-20261114/ — la pièce reçue TELLE QUELLE + LISEZMOI-REPRISE-TEMPOIN-SHANI.txt, md5 recoupés par re-téléchargement)** | download/temoin-shani-reprise/ |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
@@ -69,7 +70,7 @@ signée du 13/11 11:14Z ne parut au listing de son dossier que
 CROISE les canaux (listing, recherche par nom, lecture directe de la
 pièce) AVANT de conclure à une absence.*
 
-## L'état (Entrée 276) — le témoin shani signé REÇU, l'écart NOMMÉ : la main a signé la pièce du labo, pas celle du run — la voie 2 attend TOUJOURS sa signature (la reprise au /test), la campagne attend ses deux bras
+## L'état (Entrée 277) — la reprise REÇUE : la main a signé LE TÉMOIN DE SON RUN, la mention ÉMULATION portée sous la main — la voie 2 n'attend plus que le DÉPÔT de la pièce signée au coffre, la campagne attend ses deux bras
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -141,7 +142,24 @@ pièce) AVANT de conclure à une absence.*
    `qemu-wsl2\`), dater, signer, écrire la mention sous la main,
    renvoyer `preuves-shani\` ENTIER au coffre.
 
-6. **LA CAMPAGNE EST OUTILLÉE AU CLIC (Entrées 274-275)** : le kit
+6. **LA REPRISE REÇUE — LA BONNE PIÈCE SIGNÉE, LA MENTION PORTÉE
+   (Entrée 277)** : l'annonce « c'est fait » — UNE pièce au chat
+   (2 038 o, md5 03f2f32c…) ; le recoup d'octets : la base du signé ==
+   LE TÉMOIN NÉ DU RUN (1 945 o, md5 5cd615c9…, octet pour octet —
+   18:12:07, PORTABLE, l'artefact TCG 1,44×/1,45×) : l'écart de
+   l'Entrée 276 RÉPARÉ sur ce point ; la main de 93 o (« un sous
+   qemu-x86_64 -cpu max, ÉMULATION, pas le silicium » + « fait le
+   13/11/2026 / Alexis Lopez ») == LA MÊME MAIN que les Entrées
+   264/266/267/272/276, la mention portée à une nuance d'octet près
+   (le « r » de « run » manque — nommée, D189), les empreintes
+   recoupées aux pièces du kit mêmes ; L'ÉCART RESTANT, LE SEUL : la
+   pièce signée vit au CHAT SEUL (aucun dépôt au coffre, établi par
+   les TROIS canaux croisés — parcours, recherche par nom, recherche
+   par date) : LE GESTE UNIQUE qui ferme la voie 2 — DÉPOSER la pièce
+   signée au coffre /test (le LISEZMOI-REPRISE vit au
+   `/test/temoin-shani-reprise-20261114/`).
+
+7. **LA CAMPAGNE EST OUTILLÉE AU CLIC (Entrées 274-275)** : le kit
    TRIADE_gui_campagne_v1 vit au /test — le GUI pas à pas (le verrou,
    l'atelier, la calibration, les quatorze unités, le suivi) ; la cap
    pré-enregistrée est TENUE par le GUI (le refus au-delà de TROIS par
@@ -156,4 +174,4 @@ pièce) AVANT de conclure à une absence.*
    (le plan a78caf8c… fait foi, AUCUNE mesure n'existe — CA1).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-276) et au worklog (`worklog.md`, Tasks 158-183).*
+Entrées 251-277) et au worklog (`worklog.md`, Tasks 158-184).*

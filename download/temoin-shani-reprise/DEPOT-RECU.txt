@@ -1,0 +1,11 @@
+DEPOT-RECU.txt — le courrier de la reprise déposé au coffre /test
+dossier : temoin-shani-reprise-20261114 (id Drive 17o2rtizLIzb2vAiCRlTTEwF-ShciFane)
+dépôt du 14/11/2026 (l'Entrée 277), chaque pièce md5 recoupée par
+re-téléchargement :
+
+  la pièce reçue au chat : 2 038 o, md5 03f2f32c6d71153f17bbf1b914329f74
+  l'AUTO du run en regard : 1 945 o, md5 5cd615c9ef1deea25b1fc716772e2e6e (== temoin-shani.txt
+    du dossier de run 181158 au coffre, INTACT ET NON SIGNÉ)
+
+  temoin-shani-signe-recu-chat-v2.txt  md5 03f2f32c6d71153f17bbf1b914329f74  id Drive 15ubVDYhb-ACzz8TZaarQ22CZkoWJxzOC
+  LISEZMOI-REPRISE-TEMPOIN-SHANI.txt  md5 debb61d24ce71241610ebb966b57a784  id Drive 1z52oS8lUKJSoCEhDcSoPC85JcxUqEsnH
