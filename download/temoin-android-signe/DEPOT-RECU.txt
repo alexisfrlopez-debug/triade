@@ -1,0 +1,31 @@
+LE DEPOT RECU - LE TEMOIN DU VERDICT ANDROID, SIGNE DE LA MAIN
+Le dossier Drive 'Triade' -> 'test' -> 'temoin-verdict-android',
+quatre pieces le 13/11/2026 (le labo recoupe sur pieces, jamais
+avant le run, jamais sans pieces) :
+
+  1. TEMOIN-VERDICT-ANDROID.txt  LE TEMOIN SIGNE (la main du developpeur,
+     depose 2026-11-13T11:14:01Z, 2856 o, md5 8332d8289dc781cd38f74985db6474e1,
+     id Drive 1pZC3Qp4pNYx5gcd4cbQc39cDO3lXozAb
+     == l'original du labo OCTET POUR OCTET sur le corps entier,
+     le diff ne portant QUE le bloc de la main sous les lignes :
+     'fait le 13/11/2026\nAlexis Lopez'
+
+  2. TEMOIN-VERDICT-ANDROID.original-labo.txt  l'original NON SIGNE
+     demeure au dossier (D99 : chaque temoin compte, jamais efface),
+     depose 2026-11-13T10:55:38Z, 2824 o, md5 bfcf7d3c6920ffd4dd5873514ae9353f,
+     id Drive 1YWoItAGormV0jRLpJPSkkkUnHskNrOrt
+
+  3. LISEZMOI-TEMOIN-ANDROID.txt  le geste en cinq minutes, INTACT
+     md5 63ddcfb989c0b8dce887c1e0188ff829
+
+  4. VERDICT.txt  la copie EXACTE de l'original du run 12/11,
+     md5 660d00cea7516e63434c54f1b0226faf - jamais retouchee, l'ancre de recoup
+
+Le run : 12/11/2026 21:45:07 UTC (le constat-arm vecu au telephone,
+Entree 257). Le temoin signe le 13/11/2026 - JAMAIS avant le run.
+
+L'ECART DU CANAL, nomme (D189) : le listing du dossier temoin-verdict-
+android a mis ~15 minutes a montrer la piece nouvelle (11:14Z le depot,
+visible au listing ~11:30Z) tandis que la recherche par nom la montrait
+des 11:19Z - la lecon de l'Entree 263 se repete en miroir : un canal
+retarde n'est pas une absence ; on croise les canaux AVANT de conclure.

@@ -1,0 +1,29 @@
+LISEZMOI-TEMOIN - LE GESTE QUI SIGNE LE VERDICT ANDROID (13/11/2026)
+=====================================================================
+
+CE DOSSIER est le temoin du verdict Android - le troisieme silicium (le
+constat-arm vecu au telephone le 12/11, Entree 257). TROIS pieces :
+
+  TEMOIN-VERDICT-ANDROID.txt   le temoin A COMPLETER ET A SIGNER (votre main)
+  VERDICT.txt                  le verdict ORIGINAL du run
+                               (md5 660d00cea7...), JAMAIS retouche -
+                               la piece de recoup
+  LISEZMOI-TEMOIN-ANDROID.txt  le present fichier
+
+LE GESTE (cinq minutes, aucun outil, aucun compte) :
+  1. Recuperez ce dossier depuis le coffre Drive (Triade - test -
+     temoin-verdict-android).
+  2. Ouvrez TEMOIN-VERDICT-ANDROID.txt dans n'importe quel editeur de
+     texte (le Bloc-notes de votre telephone ou de votre PC).
+  3. Completez la zone A COMPLETER DE VOTRE MAIN : vos observations du
+     geste, memes defavorables (D189 : rapporter tel quel).
+  4. Datez et signez de votre main sous les lignes : "fait le ..." puis
+     votre nom - comme au temoin du kit-2 (le 13/11 au matin).
+  5. Deposez le dossier ENTIER au coffre /test (Triade - test). Le
+     VERDICT.txt joint reste TEL QUEL : jamais retouche.
+
+LE LABO recoupera sur pieces : le VERDICT joint == l'original du 12/11
+octet pour octet ; votre bloc date + signature sous les lignes du
+temoin ; la date jamais avant le run. JAMAIS avant le run, jamais sans
+pieces (D189). Les temoins du kit-2 ne sont jamais effaces (D99) :
+chaque temoin compte.

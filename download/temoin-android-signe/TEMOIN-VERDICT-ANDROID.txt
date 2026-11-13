@@ -1,0 +1,50 @@
+LE TEMOIN DU VERDICT ANDROID - LE TROISIEME SILICIUM (LE CONSTAT-ARM)
+======================================================================
+Le run        : 12/11/2026 21:45:07 UTC (22:45:07, heure locale du telephone)
+Le telephone  : Blackview XPLORE 1 (MT8791V/HZA, plateforme mt6877)
+L'OS          : Android 15
+Le silicium   : 8 coeurs ARM Cortex-A55 + ARM Cortex-A78 (arm64-v8a)
+Le lecteur    : Python 3.8.18 embarque dans l'APK (Chaquopy)
+Le kit        : TRIADE-kit-android-v1.apk
+               sha256 313b60aa53c814307d6f95c83cffcde05f7445933a469e7e201304dccd64e5db
+               le kit constat-arm embarque OCTET POUR OCTET (recoup
+               fail-closed au demarrage) :
+               - LISEZMOI-constat-arm.txt  7509e593b1db352dee12be33e3420d4620809a2e57121c23f05e29d97b3f8817
+               - constat-arm.py            cfaf4473cd5c40d6ef6159dc85dc23ce92e48a5983baa0f3875bef1d8189fb6e
+               - lancer-kit-constat-arm.sh 830793014fa2b56eb02296a8672cfafe1ee46944042bbc51ba018f060aac1081
+
+LE VERDICT (VERDICT.txt, joint a ce dossier - la piece de recoup, JAMAIS
+retouchee) : VERT - LE CONSTAT COMPLET VECU.
+  - la machine nommee a l'ouverture (cpuinfo + getprop) ;
+  - le silicium porte FEAT_SHA256 (ARM : SHA256H/SHA256H2) - une AUTRE
+    famille d'instructions que la SHA-NI x86, aucun deguisement ;
+  - le refus des pieces x86-64 NOMME avec ses empreintes :
+    loupe.exe         c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+    proxy-image.bin   0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+    moteur-shani.bin  761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+    CE silicium ARM64 n'execute pas l'ISA x86-64 : les kits x86-64 sont
+    REFUSES PAR NATURE ;
+  - les lecteurs Python EXACTS : sha256 "abc" EXACT, sha512 "abc" EXACT.
+
+LA PORTEE (D206) : ce constat ne mesure RIEN - aucun protocole
+pre-enregistre n'existe pour ce silicium, aucun chiffre n'est fabrique ;
+il consigne CE que la machine a dit d'elle-meme, CE jour, ces canaux.
+
+LES DEPOTS DU RUN (le coffre /test, le 12/11 21:45-46 UTC) :
+  - VERDICT.txt (md5 660d00cea7516e63434c54f1b0226faf)
+  - TRIADE_kit_android_20261112T214507Z.zip (le dossier entier du run :
+    le journal ligne par ligne, le verdict, le journal du relais)
+
+A COMPLETER DE VOTRE MAIN (le labo ne peut pas le lire a votre place) :
+  - vos observations du geste, memes defavorables (D189 : rapporter tel
+    quel) : l'installation de l'APK, le test parti seul a l'ouverture,
+    l'envoi du zip par le partage Android.
+
+PUIS : datez et signez de votre main sous ces lignes, et renvoyez le
+dossier ENTIER (ce temoin + le VERDICT.txt joint) au coffre /test
+(dossier Drive 'Triade' - 'test'). Le labo recoupe sur pieces : jamais
+avant le run, jamais sans pieces.
+
+
+fait le 13/11/2026
+Alexis Lopez 

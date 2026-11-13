@@ -10972,3 +10972,70 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   (le téléphone — l'APK demeure au /test) et les gestes ouverts : le geste
   B SHA-NI réel, la campagne D204 (le kit loupe-13 demeure au /test), la
   cérémonie d'ère, le séquestre D183, la réplication.
+## Entrée 267 — LA RÉCEPTION DU TÉMOIN DU VERDICT ANDROID SIGNÉ : LA CHAÎNE DU CONSTAT-ARM FERMÉE (l'annonce du développeur du 13/11 : « Temoin du run Android signé et importé dans /test du drive ») : le troisième silicium (le constat-arm vécu au téléphone, Entrée 257) porte désormais SON témoin daté signé de la main — le geste complet de bout en bout, DU TÉLÉPHONE AU COFFRE (13/11, la session du témoin android)
+
+- LE DÉPÔT : le dossier `temoin-verdict-android/` du coffre /test porte
+  désormais QUATRE pièces — le témoin SIGNÉ, un NOUVEAU fichier au MÊME
+  nom (TEMOIN-VERDICT-ANDROID.txt, 2 856 o, md5 8332d8289d…, id 1pZC3Qp4…,
+  déposé 13/11 11:14:01Z par le geste du développeur) vivant À CÔTÉ de
+  l'original NON SIGNÉ du labo (2 824 o, md5 bfcf7d3c69…, créé 10:55:38Z,
+  D99 : les deux témoins coexistent, jamais effacé) ; le VERDICT.txt joint
+  (1 249 o) et le LISEZMOI-TEMOIN-ANDROID.txt (1 586 o) demeurant INTACTS.
+
+- L'ÉCART DU CANAL NOMMÉ (D189) : le listing du dossier (la requête
+  « in parents ») n'a montré la pièce nouvelle que ~15 MINUTES après son
+  dépôt (11:14Z le dépôt, visible au listing ~11:30Z), tandis que la
+  recherche par nom la montrait dès 11:19:45Z et la lecture directe de la
+  pièce (métadonnées par id) dès la première minute — la leçon de
+  l'Entrée 263 SE RÉPÈTE EN MIROIR : un canal retardé n'est pas une
+  absence ; les canaux (listing du dossier, recherche par nom, lecture
+  directe) sont CROISÉS avant de conclure, jamais un seul lu.
+
+- LE RAPATRIEMENT : 4/4 pièces téléchargées, 4/4 md5 listing↔local MATCH,
+  au bac `download/temoin-android-signe/` — l'original non signé y vit
+  sous `TEMOIN-VERDICT-ANDROID.original-labo.txt` (Drive porte les deux
+  témoins au MÊME nom, un système de fichiers ne peut pas : les id Drive
+  et les md5 des QUATRE pièces portés au `DEPOT-RECU.txt` du bac font
+  foi — 1 643 o, md5 f14f592cd3…).
+
+- LE RECOUPEMENT SUR PIÈCES : (a) le VERDICT.txt joint == l'original du
+  run du 12/11 (md5 660d00cea7516e63434c54f1b0226faf) OCTET POUR OCTET —
+  jamais retouché, l'ancre tient ; (b) le LISEZMOI == l'original du labo
+  (63ddcfb989…) — intact ; (c) l'original non signé demeuré au dossier ==
+  la référence du labo (bfcf7d3c69…) — D99 ; (d) LE SIGNÉ : le corps
+  ENTIER == l'original octet pour octet (le préfixe commun porte 2 818 o,
+  99 % ; l'original ne perd que 4 octets de blancs en fin de fichier), le
+  diff ne portant QUE LE BLOC DE LA MAIN : « fait le 13/11/2026 » +
+  « Alexis Lopez » (36 octets — trois LF nus et un espace final : la forme
+  de l'éditeur du geste, D189 rapportée telle quelle ; la main est celle
+  des Entrées 133/264 — « Alexis Lopez », le second témoin kit-2 portant
+  « Alexis LOPEZ » en capitales, l'Entrée 266) ; (e) LA DATE « fait le
+  13/11/2026 » : le lendemain du run (12/11 21:45:07 UTC) — JAMAIS avant
+  le run ; (f) LA ZONE À COMPLÉTER demeurée VIDE (aucune observation du
+  geste portée : ni l'installation de l'APK, ni le départ seul du test, ni
+  l'envoi du zip) — rapportée telle quelle, D189 : le labo ne remplit pas
+  à la place du développeur.
+
+- LA CONSÉQUENCE : LA CHAÎNE DU CONSTAT-ARM EST FERMÉE — le troisième
+  silicium (Blackview XPLORE 1, MT8791V/HZA, Android 15, Cortex-A55+A78,
+  FEAT_SHA256 lue à ses propres canaux, le refus x86-64 nommé avec ses
+  empreintes) a vécu son constat le 12/11 (VERT, l'Entrée 257), les
+  pièces sont déposées au coffre (le VERDICT + le zip du run), le témoin
+  est daté signé de la main le 13/11 — LE GESTE COMPLET de bout en bout.
+  La portée D206 DEMEURE : ce constat ne mesure RIEN — aucun protocole
+  pré-enregistré n'existe pour ce silicium, aucun chiffre n'est fabriqué ;
+  il consigne ce que la machine a dit d'elle-même, ce jour, ces canaux.
+
+- LE D141 TENU AVANT LE COMMIT : le courant du miroir (pointe dc6e469,
+  Entrée 266) archivé VERSIONNÉ à archives-bundles/triade-history-266-
+  dc6e469.bundle (md5 recoupé par re-téléchargement, la pointe vérifiée
+  par git bundle list-heads) ; la présente consignation + la Task 174 au
+  worklog ; la carte OU-TROUVER-LES-LIVRABLES portée à l'Entrée 267 (la
+  ligne du témoin android signé, la NOTE du canal retardé, l'état mis à
+  jour) ; le commit, le push GitHub (main), le miroir Drive synchronisé
+  (le bundle régénéré à la pointe 267).
+
+- SUITE : au développeur — les preuves formelles `preuves-constat-arm/`
+  (le téléphone — l'APK demeure au /test) ; puis les gestes ouverts : le
+  geste B SHA-NI réel, la campagne D204 (le kit loupe-13 demeure au
+  /test), la cérémonie d'ère, le séquestre D183, la réplication.

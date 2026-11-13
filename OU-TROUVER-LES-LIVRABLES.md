@@ -10,7 +10,7 @@ vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
 
-## La réponse courte — les livrables récents ( Entrées 251-266 )
+## La réponse courte — les livrables récents ( Entrées 251-267 )
 
 | Livrable | Bac de la session | Coffre /test | Miroir git |
 | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **LE TÉMOIN DU KIT-2 DATÉ SIGNÉ — LA CHAÎNE FERMÉE (Entrée 264)** | preuves-kit2-temoin-signe/ | **oui (le dossier du développeur, 13/11 09:04Z)** | download/preuves-kit2-temoin-signe/ |
 | **LE SECOND RUN OUTILLÉ — N=400 EN 1 CLIC (Entrée 265)** | TRIADE_kit2_second_run_N400_v1/ | oui (archivé à kits-terrain-v0150/ — le run est couru) | download/TRIADE_kit2_second_run_N400_v1/ |
 | **LE SECOND TÉMOIN SIGNÉ — N=400, LA CHAÎNE DOUBLEMENT FERMÉE (Entrée 266)** | preuves-kit2-second-temoin-signe/ | **oui (le dossier du développeur, 13/11 10:38Z — les quatre \|t\| sous le seuil)** | download/preuves-kit2-second-temoin-signe/ |
-| **LE TÉMOIN DU VERDICT ANDROID — à récupérer pour signer (Entrée 266)** | — | **oui (temoin-verdict-android/, trois pièces)** | — |
+| **LE TÉMOIN DU VERDICT ANDROID SIGNÉ — LA CHAÎNE DU CONSTAT-ARM FERMÉE (Entrée 267)** | temoin-android-signe/ | **oui (temoin-verdict-android/, QUATRE pièces — le signé du développeur, 13/11 11:14Z)** | download/temoin-android-signe/ |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
@@ -50,9 +50,16 @@ triade-history.bundle`) — synchronisé à chaque commit par
 non propriétaires (la quarantaine malware de Drive les retire du listing du
 compte de service — c'est pourquoi ils semblèrent absents à l'Entrée 261) :
 le relais OAuth du coffre `Tokens/` est la vue de référence du coffre ;
-JAMAIS conclure à une absence depuis le seul listing du compte de service.*
+JAMAIS conclure à une absence depuis le seul listing du compte de
+service.*
 
-## L'état (Entrée 266) — la chaîne du kit-2 DOUBLEMENT fermée, le /test rendu à la suite, le témoin android attend sa main
+*NOTE (Entrée 267) : un listing de dossier peut RETARDER — la pièce
+signée du 13/11 11:14Z ne parut au listing de son dossier que
+~15 min plus tard, visible par la recherche par nom dès 11:19Z : on
+CROISE les canaux (listing, recherche par nom, lecture directe de la
+pièce) AVANT de conclure à une absence.*
+
+## L'état (Entrée 267) — les chaînes kit-2 ET constat-arm fermées par la main, le /test rendu à la suite
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -70,16 +77,17 @@ JAMAIS conclure à une absence depuis le seul listing du compte de service.*
    DÉSORMAIS 15 entrées vivantes : les deux témoins signés, la chaîne
    Android, le kit loupe-13, les registres de cérémonie, les salles — et
    le témoin du verdict android.
-3. **LE TÉMOIN DU VERDICT ANDROID VOUS ATTEND (le geste le plus court de
-   la suite)** : au coffre /test, dossier `temoin-verdict-android/` —
-   récupérez-le, ouvrez `TEMOIN-VERDICT-ANDROID.txt`, complétez vos
-   observations (D189), datez et signez de votre main sous les lignes
-   (comme au kit-2), renvoyez le dossier ENTIER au /test. Le VERDICT.txt
-   joint reste tel quel (l'ancre de recoup).
+3. **LE TÉMOIN DU VERDICT ANDROID EST SIGNÉ ET RECOUPÉ (Entrée 267)** :
+   la main du 13/11 11:14Z (« fait le 13/11/2026 / Alexis Lopez » — la
+   même main que le premier témoin kit-2), le VERDICT joint ==
+   l'original du run 12/11 octet pour octet, la date JAMAIS avant le
+   run, la zone d'observations demeurée vide (D189 tel quel) — LA
+   CHAÎNE DU CONSTAT-ARM FERMÉE, du téléphone au coffre. La portée
+   D206 demeure : le constat ne mesure rien.
 4. Les preuves formelles `preuves-constat-arm/` (le téléphone — l'APK
    demeure au /test) et les gestes ouverts : le geste B SHA-NI réel, la
    campagne D204 (le kit loupe-13 demeure au /test), la cérémonie d'ère,
    le séquestre D183, la réplication.
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-266) et au worklog (`worklog.md`, Tasks 158-173).*
+Entrées 251-267) et au worklog (`worklog.md`, Tasks 158-174).*
