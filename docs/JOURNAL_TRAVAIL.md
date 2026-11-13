@@ -11039,3 +11039,87 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   (le téléphone — l'APK demeure au /test) ; puis les gestes ouverts : le
   geste B SHA-NI réel, la campagne D204 (le kit loupe-13 demeure au
   /test), la cérémonie d'ère, le séquestre D183, la réplication.
+
+## Entrée 268 — L'ARBITRAGE COMPLET DE LA FAMILLE DES ÉTIQUETTES « TRONQUÉES » : LE « utation K] » DE L'ENTRÉE 251 N'A JAMAIS VÉCU — la coquille du printf du correctif n° 2 et son « résiduel » du binaire patché étaient des ARTEFACTS DE LECTURE (la séquence 5b 6d « [m » suivie d'une lettre, avalée par l'œil du labo — la classe arbitrée à l'Entrée 260) : LA PREUVE PAR LES PIÈCES DES DEUX RUNS SIGNÉS (les sortie-appel.txt de N=200 et N=400 portent « [mutation K] » COMPLET au dump od), par les COMPTAGES AVEUGLES (le source E249, l'original f8b8e06e… et le patché 42903257… portent la séquence complète — la forme tronquée NULLE PART) et par LE DIFF (E249 → CORRECTIF2 ne touche que le commentaire et le VirtualProtect : le printf INTACT, la « correction de coquille » fut un NO-OP) — TROIS étiquettes, TROIS artefacts, AUCUNE pièce fautive ; et le dépôt local de la session RATTRAPÉ à la pointe 267 (le geste de l'Entrée 262 rejoué) (13/11, la session de la vérification)
+
+- LE « CONTINUE » DU DÉVELOPPEUR (après le témoin Android signé, l'Entrée
+  267) : la vérification de la chaîne sur pièces — les 19 pièces du /test
+  rapatriées md5 VERT (les deux dépôts kit-2 signés, le dossier
+  temoin-verdict-android avec le témoin SIGNÉ « fait le 13/11/2026 / Alexis
+  Lopez » importé 11:14:01Z, les LISEZMOI des salles d'archives) ; LES
+  ARCHIVES RELUES (44 entrées aux deux salles, le /test à 15 entrées
+  vivantes — l'Entrée 266 vécue) ; LE JOURNAL DU MIROIR portant les Entrées
+  256-267 : les sessions recyclées y consignèrent TOUT (l'APK, les exe
+  1-clic v1/v2, le CORRECTIF3 né de « fais la correction », les deux runs
+  signés, l'archivage, le témoin Android reçu et recoupé) — la chaîne du
+  kit-2 DOUBLEMENT fermée, celle du constat-arm fermée.
+
+- LE DÉPÔT LOCAL RATTRAPÉ (le geste de l'Entrée 262 rejoué) : le dépôt de la
+  session vivait à l'Entrée 255 (dbf46b6) — le bundle du miroir rapatrié
+  (65 357 635 o, md5 1d183824f0… == listing), list-heads lu (main = eed729f,
+  l'Entrée 267), dbf46b6 ANCÊTRE recoupé (un premier geste REFUSÉ par le
+  garde-fou du script : l'ancêtralité testée AVANT le fetch ne peut
+  qu'échouer — l'erreur du script nommée et corrigée, jamais contournée),
+  fast-forward PUR (core.filemode false pour le bruit de permissions du
+  bac — 1 144 « modifications » de mode réduites à zéro), le journal == le
+  miroir (md5 36a00b7e91…), le worklog == le miroir (c5dbf85706…), GitHub
+  ls-remote == eed729f — les TROIS voix concordent.
+
+- LA DÉCOUVERTE DE LA RELECTURE (l'arbitrage qui manquait) : le dump od de
+  l'épreuve d'appel des runs signés montra « [ m u t a t i o n   K ] »
+  COMPLET — là où l'Entrée 251 avait consigné la coquille « utation K] »
+  corrigée à la source et le RÉSIDUEL « le binaire patché imprimera
+  toujours utation K] ». L'ENQUÊTE AVEUGLE (l'affichage du labo avale la
+  séquence 5b 6d suivie d'une lettre — les textes eux-mêmes s'affichent
+  tronqués : aucune lecture d'écran ne suffit, la leçon des Entrées 260 et
+  263 rejouée) : (a) LES PIÈCES DU TERRAIN — sortie-appel.txt du N=200
+  (md5 286a40ba08…) et du N=400 (efb880154c…), ligne 3 au dump : « [mutation
+  K] condense DIVERGE » COMPLET, l'exe exécuté (test_appel.exe 42903257…,
+  cité au DEPOT.txt des deux runs, re-recoupé fail-closed par le lanceur)
+  imprime l'étiquette ENTIÈRE ; (b) LES SOURCES au comptage — le
+  test_appel.c de l'édition MISE-A-JOUR (E249, celui depuis qui l'original
+  fut bâti) porte le printf complet 1 fois, la forme tronquée 0 fois ; le
+  source CORRECTIF2/CORRECTIF3 (56a35ec0…) idem (la ligne 113 complète au
+  dump) ; (c) LES BINAIRES au comptage — l'original f8b8e06e… et le patché
+  42903257… portent « [mutation K] condense » 1 fois chacun, la tronquée
+  0 fois ; (d) LE DIFF E249 → CORRECTIF2 — DEUX changements seuls : le bloc
+  commentaire (l.27-41, qui CONTIENT l'affirmation fausse) et le
+  VirtualProtect PAGE_EXECUTE_READ → READWRITE (LA réparation vraie du
+  crash) ; le printf INTACT.
+
+- LA CONSÉQUENCE : la coquille « utation K] » N'A JAMAIS VÉCU — ni dans le
+  source (déjà correct à l'E246/E249), ni dans l'original, ni dans le
+  patché, ni dans les sorties du terrain ; la « correction » de l'Entrée 251
+  fut un NO-OP sur le printf, et son « résiduel » est RÉFUTÉ par les runs
+  eux-mêmes. LA FAMILLE EST FERMÉE : « achine] » (E252 —
+  diagnostic_machine.py porte « [machine] » complet 5 fois aux deux
+  éditions), « anifeste] » (E249/252/253/259 — arbitré à l'E260, les
+  sortie-run.txt des deux runs le portent complet au dump), « utation K] »
+  (E251 — le présent arbitrage) : TROIS artefacts du même affichage,
+  AUCUNE pièce fautive. LA RÈGLE consignée : une étiquette « tronquée » ne
+  se lit JAMAIS à l'œil — dump od ou comptage aveugle, toujours.
+
+- L'HONNÊTETÉ (D189 : l'erreur du labo rapportée telle quelle, l'histoire
+  jamais réécrite) : les LISEZMOI des kits CORRECTIF2/CORRECTIF3 et le
+  commentaire du source correctif-2 portent la note résiduelle fausse —
+  les pièces DÉPLOYÉES demeurent octet-identiques (une pièce saine ne se
+  retouche pas, la tradition de l'E260) ; une édition future pourra purger
+  les TEXTES, aucune urgence (cosmétique — le comportement des binaires
+  fut TOUJOURS correct, aucun effet sémantique n'a jamais vécu).
+
+- LA CHAÎNE DE RÉCEPTION : le D141 tenu AVANT le commit (le courant du
+  miroir, pointe eed729f de l'Entrée 267, archivé VERSIONNÉ à
+  archives-bundles/triade-history-267-eed729f.bundle, md5 recoupé par
+  re-téléchargement, la pointe vérifiée par git bundle list-heads) ; le
+  rapport ARBITRAGE-utation-K.txt au bac (download/preuves-run-kit2-dudect-
+  v2/ — les comptages et les dumps, la pièce lisible) ; la présente
+  consignation + la Task 175 au worklog ; la carte OU-TROUVER portée à
+  l'Entrée 268 (la règle du dump en NOTE) ; le commit, le push GitHub
+  (main, recoup), le miroir Drive synchronisé (le bundle régénéré à la
+  pointe).
+
+- SUITE : au développeur — INCHANGÉE (l'Entrée 267) : les preuves formelles
+  preuves-constat-arm/ (le téléphone — l'APK demeure au /test) ; puis les
+  gestes ouverts : le geste B SHA-NI réel, la campagne D204 (le kit
+  loupe-13 au /test), la cérémonie d'ère, le séquestre D183, la réplication.
+

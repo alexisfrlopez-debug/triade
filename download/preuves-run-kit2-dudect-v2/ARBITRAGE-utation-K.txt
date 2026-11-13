@@ -1,0 +1,69 @@
+ARBITRAGE-UTATION-K — LA PREUVE PAR LES OCTETS (13/11/2026, l'Entrée 268)
+==========================================================================
+
+L'AFFIRMATION ARBITRÉE (l'Entrée 251, le correctif n° 2) : « la coquille du
+printf ("utation K]") y est corrigée ("[mutation K]") » puis « Écart nommé
+résiduel : le binaire patché imprime toujours "utation K]" ». L'Entrée 260
+arbitra « anifeste] » (l'artefact de lecture) mais laissa « utation K] »
+hors de l'arbitrage. Le présent rapport le boucle : LA COQUILLE N'A JAMAIS
+VÉCU — ni dans le source, ni dans les binaires, ni dans les sorties.
+
+1. LES PIÈCES DU TERRAIN (les DEUX runs signés du kit-2)
+   sortie-appel.txt du N=200 (md5 286a40ba08…, l'Entrée 264) — ligne 3,
+   dump od -c :  [ m u t a t i o n   K ]   c o n d e n s e   D I V E R G E
+   sortie-appel.txt du N=400 (md5 efb880154c…, l'Entrée 266) — idem.
+   L'exe exécuté : test_appel.exe 42903257aa9e… (cité au DEPOT.txt des deux
+   runs, re-recoupé fail-closed par le lanceur à chaque run) — il imprime
+   « [mutation K] » COMPLET. Le « résiduel » de l'Entrée 251 est RÉFUTÉ par
+   les runs eux-mêmes.
+
+2. LES SOURCES — COMPTAGES AVEUGLES (data.count : l'affichage du labo avale
+   la séquence 5b 6d « [m » suivie d'une lettre, AUCUNE lecture d'écran ne
+   suffit — la leçon des Entrées 260 et 263)
+   test_appel.c de l'édition MISE-A-JOUR (E249, celui depuis qui l'original
+     f8b8e06e… fut bâti) :  printf("[mutation K] condense  → 1 fois ;
+     la forme tronquée (sans 5b 6d)                    → 0 fois.
+   test_appel.c CORRECTIF2/CORRECTIF3 (56a35ec0…) : idem 1/0 — la ligne 113
+     porte la séquence complète au dump od.
+
+3. LES BINAIRES — COMPTAGES AVEUGLES
+   test_appel.exe original (f8b8e06e…, E246/E249) : « [mutation K] condense »
+     1 fois ; la forme tronquée 0 fois.
+   test_appel.exe patché  (42903257…, CORRECTIF2) : idem 1/0.
+
+4. LE DIFF E249 → CORRECTIF2 (LES DEUX SEULS CHANGEMENTS)
+   + le bloc commentaire (l.27-41) — qui CONTIENT l'affirmation fausse
+     « la coquille du printf… est corrigée à la source » ;
+   ~ l.89 : PAGE_EXECUTE_READ → PAGE_EXECUTE_READWRITE (LA réparation vraie
+     du crash, la seule sémantique changée).
+   Le printf : INTACT — il était déjà correct avant le correctif n° 2.
+
+5. LA FAMILLE — TROIS ÉTIQUETTES, TROIS ARTEFACTS, ZÉRO PIÈCE FAUTIVE
+   « achine] »   (E252) : diagnostic_machine.py porte « [machine] » complet
+                        5 fois (les deux éditions, comptage aveugle) — nommé
+                        artefact à l'Entrée 260 ;
+   « anifeste] » (E249/252/253/259) : arbitré à l'Entrée 260 (dump 5b 6d) —
+                        les sortie-run.txt des deux runs signés le portent
+                        complet au dump od (vérifié encore à la présente) ;
+   « utation K] » (E251) : LE PRÉSENT ARBITRAGE.
+   LA CAUSE COMMUNE : l'affichage du labo avale la séquence 5b 6d (« [m »)
+   suivie d'une lettre — l'œil du labo, JAMAIS les pièces.
+
+6. LA RÈGLE (consignée, la suite la tient)
+   Une étiquette « tronquée » ne se lit JAMAIS à l'œil : dump od -c ou
+   comptage aveugle (data.count), TOUJOURS — la même discipline que les
+   canaux croisés de l'Entrée 267 et la vue de référence de l'Entrée 263.
+
+7. L'HONNÊTETÉ (D189 : l'erreur du labo rapportée telle quelle)
+   L'Entrée 251 affirma une coquille inexistante, la « corrigea » (un no-op)
+   et nomma un résiduel que les pièces réfutent. Les LISEZMOI des kits
+   CORRECTIF2/CORRECTIF3 et le commentaire du source correctif-2 portent la
+   note résiduelle fausse — les pièces DÉPLOYÉES demeurent octet-identiques
+   (une pièce saine ne se retouche pas, la tradition de l'E260) ; une édition
+   future pourra purger les TEXTES — aucune urgence : le comportement des
+   binaires fut TOUJOURS correct, aucun effet sémantique n'a jamais vécu.
+
+*Le détail vit au journal (docs/JOURNAL_TRAVAIL.md, Entrée 268) et au worklog
+(Task 175). Les pièces citées vivent au coffre /test (les deux dépôts signés)
+et au bac du dépôt (download/preuves-kit2-temoin-signe/,
+download/preuves-kit2-second-temoin-signe/).*

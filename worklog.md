@@ -9593,3 +9593,45 @@ Work Log:
 - LE RECOUPEMENT : le corps du signé == l'original octet pour octet (préfixe commun 2 818 o, 99 % — l'original ne perd que 4 o de blancs finals), le diff ne portant QUE LE BLOC DE LA MAIN : « fait le 13/11/2026 » + « Alexis Lopez » (36 o, trois LF nus et un espace final — la forme de l'éditeur, D189 tel quel ; la main des Entrées 133/264), LA DATE le lendemain du run (12/11 21:45:07 UTC) JAMAIS AVANT, LA ZONE À COMPLÉTER demeurée VIDE (D189 — le labo ne remplit pas à la place du développeur) — LA CHAÎNE DU CONSTAT-ARM FERMÉE (du téléphone au coffre), la portée D206 demeurant : le constat ne mesure rien.
 - LA CHAÎNE DE RÉCEPTION : le D141 tenu AVANT le commit (le courant du miroir, pointe dc6e469 de l'Entrée 266, archivé VERSIONNÉ à archives-bundles/triade-history-266-dc6e469.bundle, md5 recoupé par re-téléchargement, la pointe vérifiée par git bundle list-heads) ; l'Entrée 267 au journal, la présente tâche au worklog, la carte OU-TROUVER portée à 267 (la ligne du témoin signé, la NOTE du canal retardé) ; le commit, le push GitHub (main, recoup), le miroir Drive synchronisé (le bundle régénéré à la pointe 267).
 - SUITE : au développeur — les preuves formelles preuves-constat-arm/ (le téléphone — l'APK demeure au /test), puis les gestes ouverts : le geste B SHA-NI réel, la campagne D204 (le kit loupe-13 au /test), la cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 175
+Agent: Z.ai (agent principal — la session de la vérification)
+Task: LA VÉRIFICATION DE LA CHAÎNE ET L'ARBITRAGE COMPLET DE LA FAMILLE
+« [m » (le « continue » du développeur après le témoin Android signé,
+l'Entrée 267) — les 19 pièces du /test rapatriées md5 VERT (les deux runs
+kit-2 signés, le témoin Android signé « fait le 13/11/2026 / Alexis Lopez »,
+les archives relues : 44 entrées, le /test à 15 vivantes), le journal du
+miroir portant les Entrées 256-267 (les sessions recyclées avaient TOUT
+consigné : l'APK, les exe 1-clic, le CORRECTIF3, les deux runs, l'archivage,
+le témoin Android), le dépôt local de la session RATTRAPÉ à la pointe 267
+(le geste E262 rejoué : bundle md5 recoupé, list-heads eed729f, fast-forward
+pur, GitHub == miroir == dépôt), ET L'ARBITRAGE QUI MANQUAIT : le
+« utation K] » de l'Entrée 251 n'a JAMAIS vécu — les sortie-appel.txt des
+DEUX runs signés portent « [mutation K] » COMPLET au dump od, les comptages
+aveugles donnent le source E249, l'original f8b8e06e… et le patché
+42903257… TOUS complets (la tronquée NULLE PART), le diff E249→CORRECTIF2
+ne touche que le commentaire et le VirtualProtect — la « correction de
+coquille » fut un NO-OP, le « résiduel » réfuté par les runs eux-mêmes ;
+LA FAMILLE FERMÉE : « achine] », « anifeste] » (E260), « utation K] » —
+trois artefacts du même affichage, AUCUNE pièce fautive.
+
+Work Log:
+- LA VÉRIFICATION : 19 pièces md5 VERT ; les archives (E266) vécues ; le
+  témoin Android signé (E267) confirmé sur pièces ; GitHub == miroir ==
+  bundle == eed729f.
+- LE RATTRAPAGE : bundle du miroir rapatrié (65 357 635 o, md5 1d183824f0…),
+  list-heads (main = eed729f), dbf46b6 ancêtre recoupé APRÈS fetch (le
+  garde-fou avait refusé le test avant fetch — l'erreur du script nommée),
+  fast-forward pur, core.filemode false, journal/worklog == miroir md5.
+- L'ARBITRAGE : les dumps od (sortie-appel N=200/N=400 ligne 3 complète),
+  les comptages aveugles (sources 1/0, binaires 1/0), le diff (commentaire
+  + VirtualProtect seuls), la famille fermée, la règle du dump consignée —
+  le rapport ARBITRAGE-utation-K.txt au bac
+  (download/preuves-run-kit2-dudect-v2/).
+- LA CHAÎNE : D141 tenu (le courant 267 archivé versionné
+  triade-history-267-eed729f.bundle, md5 recoupé par re-téléchargement),
+  la carte portée à 268 (la NOTE du dump), le commit, le push GitHub
+  (recoup), le miroir synchronisé.
+- SUITE : inchangée (E267) — preuves-constat-arm formelles, geste B SHA-NI,
+  D204, cérémonie d'ère, séquestre D183, réplication.

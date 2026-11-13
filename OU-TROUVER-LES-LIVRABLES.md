@@ -1,11 +1,11 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-266 — la réception du run kit-2 v2 :
+*Mise à jour : 13/11/2026 (Entrées 261-268 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
 fermée ; LES TESTS CLOS ARCHIVÉS (44 entrées, le /test rendu à la
-suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature). Ce fichier
+suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive). Ce fichier
 vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
@@ -53,13 +53,15 @@ le relais OAuth du coffre `Tokens/` est la vue de référence du coffre ;
 JAMAIS conclure à une absence depuis le seul listing du compte de
 service.*
 
+*NOTE (Entrée 268) : une étiquette « tronquée » dans un texte ou une sortie ne se lit JAMAIS à l'œil — l'affichage du labo avale la séquence 5b 6d (« [m ») suivie d'une lettre (« achine] », « anifeste] », « utation K] » : trois artefacts, zéro pièce fautive, Entrées 260 et 268) : dump od ou comptage aveugle, toujours.
+
 *NOTE (Entrée 267) : un listing de dossier peut RETARDER — la pièce
 signée du 13/11 11:14Z ne parut au listing de son dossier que
 ~15 min plus tard, visible par la recherche par nom dès 11:19Z : on
 CROISE les canaux (listing, recherche par nom, lecture directe de la
 pièce) AVANT de conclure à une absence.*
 
-## L'état (Entrée 267) — les chaînes kit-2 ET constat-arm fermées par la main, le /test rendu à la suite
+## L'état (Entrée 268) — les chaînes kit-2 ET constat-arm fermées par la main, la famille des étiquettes arbitrée : AUCUNE pièce fautive
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -90,4 +92,4 @@ pièce) AVANT de conclure à une absence.*
    le séquestre D183, la réplication.
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-267) et au worklog (`worklog.md`, Tasks 158-174).*
+Entrées 251-268) et au worklog (`worklog.md`, Tasks 158-175).*
