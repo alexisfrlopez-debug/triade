@@ -1,0 +1,16 @@
+EMPREINTES-SECOND-RUN — les sha256 des pièces (13/11/2026)
+============================================================
+
+LANCER-SECOND-RUN-N400.bat (le lanceur 1-clic du second run à N=400) :
+
+  e5da8b7a60246520618fb27f04da69ed599e8df9087a7697be3b40efcfc57857  LANCER-SECOND-RUN-N400.bat
+  8b54e98deb16e3cd676c1b5a48a82ca5be59c88b2fb1a5dbaa4c9a6cdc458187  LISEZMOI-SECOND-RUN.txt
+
+L'exe v2 recherché par le lanceur (JAMAIS embarqué ici, JAMAIS modifié) :
+  e6752c5826e3c4716403508e81a0f959506ad833fb268895a4b7f0c727a066b0  TRIADE-kit2-dudect-1clic-v2.exe
+
+Refusé nommé par le lanceur (la ligne 55, l'Entrée 259) :
+  9d2ccc91ba570681861eabbb77bf8f967c634747e03dacbd4ccd65afd303153d  TRIADE-kit2-dudect-1clic.exe  [la v1]
+
+L'honnêteté du cercle : ce fichier ne scelle pas sa propre empreinte,
+le sha256 du zip les rend toutes.

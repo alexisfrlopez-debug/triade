@@ -10813,3 +10813,68 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   formelles preuves-constat-arm (le téléphone), puis les gestes ouverts
   (le geste B SHA-NI réel, la campagne D204, la cérémonie d'ère, le
   séquestre D183, la réplication).
+## Entrée 265 — LA SUITE APPROUVÉE OUTILLÉE : LE SECOND RUN KIT-2 À N=400 EN 1 CLIC (la parole du développeur du 13/11 : « ok pour la suite proposée » — l'approbation de la SUITE consignée à l'Entrée 264) : le premier geste de la suite (le second run optionnel à N plus grand) demeurait À LA CONSOLE — l'exe v2 n'accepte son N qu'en argument de ligne de commande, et chaque geste du projet vit en un double-clic (le GUI v1, l'APK, l'exe v1, l'exe v2) — LE VOICI OUTILLÉ (13/11, la session de la suite approuvée)
+
+- LE LANCEUR : LANCER-SECOND-RUN-N400.bat (5 580 o, ASCII pur, CRLF intégral,
+  AUCUN métacaractère nu dans les echo — l'audit de l'Entrée 260 rejoué au
+  geste même, 4 contrôles VERTS) : il CHERCHE l'exe 1-clic v2 là où il vit
+  (son propre dossier, Téléchargements, le Bureau, le Bureau OneDrive compris
+  — quatre recherches), RECOUPE son sha256 par certutil contre l'empreinte
+  consignée (e6752c5826e3c4716403508e81a0f959506ad833fb268895a4b7f0c727a066
+  b0, recoupée au geste contre la pièce du dépôt — le pattern du
+  VERIFIER-PAQUET : hash vers fichier temporaire + findstr, jamais de
+  parsing ni de tuyau nu), PUIS LE LANCE AVEC 400 — le minimum 60 demeurant
+  validé par le lanceur du kit lui-même.
+
+- LE FAIL-CLOSED (trois refus nommés, la conduite dite à chacun) : l'exe v2
+  ABSENT → REFUS nommé (le paquet porteur TRIADE_kit2_exe_1clic_v2.zip au
+  coffre /test, le lanceur replacé à côté de l'exe) ; l'exe trouvé
+  DIVERGENT → REFUS nommé, un octet changé, RIEN ne court ; L'EXE V1 trouvé
+  (9d2ccc91…, cherché par SON nom à elle) → REFUSÉ NOMMÉ — la ligne 55 du
+  lanceur y vit encore (l'Entrée 259), seul l'exe portant l'édition
+  CORRECTIF3 peut courir le second run. Après le run : le code de sortie
+  rapporté tel quel, le geste rappelé à l'écran (déposer le zip, dater et
+  signer le témoin du second run).
+
+- LES PIÈCES INTACTES : l'exe v2 JAMAIS retouché et JAMAIS embarqué dans le
+  paquet — le lanceur ne porte AUCUNE pièce, il cherche, il recoupe, il
+  lance ; le kit CORRECTIF3 INTACT ; le premier témoin signé (Entrée 264)
+  JAMAIS effacé — D99 : chaque run part aux archives horodatées, chaque
+  témoin compte.
+
+- LE PAQUET : TRIADE_kit2_second-run_N400_v1.zip (5 655 o, trois pièces : le
+  lanceur, le LISEZMOI-SECOND-RUN [la lettre : pourquoi N=400 — tls13-13
+  |t|=5.19, la limite n'est pas loin, un N plus grand la consoliderait ou la
+  dissiperait, la mesure décide ; tls13-17 |t|=3.11 non nul ; la lecture
+  honnête demeurant celle du kit], les EMPREINTES-SECOND-RUN [les sha256,
+  la voix lisible à la main]) — relu et recoupé octet pour octet par Python
+  après création (3/3 pièces). Au bac download/TRIADE_kit2_second_run_N400_v1/,
+  au coffre /test et au miroir.
+
+- LE COFFRE /TEST RELU AVANT LE GESTE (le relais OAuth, la vue de référence
+  — Entrée 263) : 56 entrées, RIEN de neuf depuis le dossier du témoin signé
+  (13/11 09:04:20Z) — le second run n'est PAS encore couru ; la présente
+  consigne l'OUTILLAGE, jamais la mesure. Le labo n'a AUCUN Windows : le
+  premier run du lanceur vivra chez le développeur, comme chaque .bat du
+  projet — si un écran nomme un défaut, la console renvoyée TELLE QUELLE
+  (D122).
+
+- LA CHAÎNE DE RÉCEPTION (le labo) : le D141 tenu AVANT le commit — le
+  courant du miroir (pointe 2f8565c, Entrée 264) archivé VERSIONNÉ à
+  archives-bundles/triade-history-264-2f8565c.bundle (md5 e0cdcf4a22…
+  recoupé par re-téléchargement, la pointe vérifiée par git bundle
+  list-heads — un premier parsing trompé par les refs de secours du bundle
+  NOMMÉ et corrigé au geste même, la pièce immuable) ; la présente
+  consignation + la Task 172 au worklog ; la carte OU-TROUVER-LES-LIVRABLES
+  portée à l'Entrée 265 (la ligne du second run outillé, l'état mis à jour) ;
+  le commit, le push GitHub (main), le miroir Drive synchronisé (le bundle
+  régénéré à la pointe 265), le paquet déposé au coffre /test.
+
+- SUITE : au développeur — LE SECOND RUN : téléchargez
+  TRIADE_kit2_second-run_N400_v1.zip au coffre /test, extrayez-le,
+  DOUBLE-CLIQUEZ LANCER-SECOND-RUN-N400.bat ; puis le geste de la chaîne
+  (déposez le zip des preuves au coffre /test, datez et signez de votre main
+  le témoin du second run) ; puis la signature à la main du verdict Android
+  (Entrée 257) — D189 : rapporter tel quel ; puis preuves-constat-arm (le
+  téléphone), puis les gestes ouverts : le geste B SHA-NI réel, la campagne
+  D204, la cérémonie d'ère, le séquestre D183, la réplication.

@@ -1,0 +1,83 @@
+LISEZMOI-SECOND-RUN — LE SECOND RUN DU KIT-2 À N=400 EN 1 CLIC (13/11/2026)
+=============================================================================
+
+LA PAROLE (le développeur, 13/11/2026) : « ok pour la suite proposée » —
+l'approbation de la SUITE consignée à l'Entrée 264. Son premier geste :
+LE SECOND RUN OPTIONNEL À N PLUS GRAND. Il demeurait à la console — l'exe
+v2 n'accepte son N qu'en argument de ligne de commande — alors que chaque
+geste du projet vit en un double-clic (le GUI v1, l'APK, l'exe v1, l'exe
+v2). Le voici outillé : LANCER-SECOND-RUN-N400.bat.
+
+POURQUOI N=400 (la mesure du premier run, Entrée 261, consignée telle
+quelle) :
+  - tls13-02 (SHA-256)  : |t| = 12.39 > 5  — dépendance au seuil, franche ;
+  - tls13-13 (X25519)   : |t| = 5.19 > 5   — dépendance au seuil, DE
+    JUSTESSE : la limite n'est pas loin, un N plus grand la consoliderait
+    (ou la dissiperait — la mesure décide, jamais le labo) ;
+  - tls13-16 (AES-128)  : |t| = 0.94 <= 5  — aucune divergence au seuil ;
+  - tls13-17 (GHASH)    : |t| = 3.11 <= 5  — aucune divergence au seuil,
+    non nul pourtant : un N plus grand resserrerait la lecture.
+Un second run à N=400 DOUBLERAIT l'échantillon de chaque classe (200 → 400,
+minimum accepté 60, validé par le lanceur du kit lui-même). Il ne décide
+rien à lui seul : la campagne D204 demeure la campagne, chaque témoin
+compte, D99 — l'histoire jamais réécrite, chaque run aux archives
+horodatées, le premier témoin signé (Entrée 264) JAMAIS effacé.
+
+CE QUE FAIT LE LANCEUR (et rien d'autre) :
+  1. IL CHERCHE l'exe 1-clic v2 là où il vit : le dossier du lanceur, vos
+     Téléchargements, votre Bureau (le Bureau OneDrive compris) ;
+  2. IL RECOUPE son sha256 par certutil contre l'empreinte consignée au
+     laboratoire : e6752c5826e3c4716403508e81a0f959506ad833fb268895a4b7f0c
+     727a066b0. Fail-closed : la v1 (9d2ccc91…) est REFUSÉE NOMMÉE — la
+     ligne 55 du lanceur y vit encore (l'Entrée 259), seul l'exe portant
+     l'édition CORRECTIF3 peut courir le second run ; tout octet divergent
+     = REFUS nommé, RIEN ne court ;
+  3. IL LANCE l'exe v2 avec 400. L'exe fait TOUT le reste, inchangé :
+     re-extraction du kit, re-recoup des 10 pièces sha256 (fail-closed),
+     l'épreuve d'appel FIPS « abc », LE RUN N=400, le zip des preuves au
+     Bureau, l'explorateur et le coffre /test ouverts ;
+  4. IL RAPPELLE le geste qui suit (le vôtre) : déposez le zip au coffre
+     /test, puis datez et signez de votre main le témoin du second run —
+     comme au premier (« fait le … » puis votre nom) — et déposez le
+     dossier entier.
+
+LE GESTE : téléchargez ce paquet au coffre Drive « Triade » → « test »
+(TRIADE_kit2_second-run_N400_v1.zip), extrayez-le, DOUBLE-CLIQUEZ
+LANCER-SECOND-RUN-N400.bat. Si l'exe v2 vit déjà chez vous (Téléchargements
+ou Bureau — il y est si vous y avez couru le premier run), le lanceur le
+trouve seul ; sinon il le NOMME et dit la conduite (téléchargez
+TRIADE_kit2_exe_1clic_v2.zip au coffre /test, extrayez, replacez le
+lanceur à côté de l'exe).
+
+L'HONNÊTETÉ (les frontières, comme toujours) :
+  - le lanceur ne porte AUCUNE pièce, ne mesure rien, ne modifie JAMAIS
+    l'exe : il cherche, il recoupe, il lance — la mesure vit dans
+    dudect_v150, l'épreuve dans test_appel, le protocole dans le .bat du
+    kit, la coquille dans l'exe v2, tous INTACTS octet pour octet ;
+  - l'exe v2 n'est PAS signé par un certificat de code : Windows peut
+    montrer « Windows a protégé votre ordinateur » (SmartScreen) —
+    Informations complémentaires → Exécuter quand même ;
+  - le labo n'a AUCUN Windows : le lanceur fut écrit dans la forme
+    canonique du projet (ASCII pur, CRLF, AUCUN métacaractère nu dans les
+    echo — l'audit de l'Entrée 260 rejoué pièce par pièce au geste même)
+    mais son PREMIER run vit chez vous, comme chaque .bat du projet — si
+    un écran nomme un défaut, renvoyez la console TELLE QUELLE (D122) ;
+  - un second run N'EST PAS une campagne : N = 400/classe, un seul run,
+    cœur 0 — la lecture demeure la lecture honnête du kit (|t| > 5 =
+    dépendance temporelle au seuil consignée telle quelle ; |t| <= 5 =
+    aucune divergence au seuil sur CET échantillon, CETTE machine, CETTE
+    session — jamais « temps constant prouvé »).
+
+LA SUITE APPROUVÉE, DANS L'ORDRE (l'Entrée 264) : ce second run (votre
+double-clic) ; puis la signature à la main du verdict Android (Entrée 257
+— D189 : rapporter tel quel) ; puis les preuves formelles
+preuves-constat-arm (le téléphone) ; puis les gestes ouverts : le geste B
+SHA-NI réel (une machine à SHA-NI — DIAGNOSTIC-MACHINE sert à la choisir),
+la campagne de comparaison D204 (le plan verrouillé, aucune mesure
+exécutée), la cérémonie d'ère, le séquestre D183, la réplication.
+
+OÙ TROUVER LES PIÈCES : le bac de la session
+(download/TRIADE_kit2_second_run_N400_v1/), le coffre Drive « Triade » →
+« test » et le miroir git (TRIADE-sauvegarde-git/). Les empreintes :
+EMPREINTES-SECOND-RUN.txt — l'honnêteté du cercle : ce fichier ne scelle
+pas sa propre empreinte, le sha256 du zip les rend toutes.
