@@ -11211,3 +11211,126 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   recruter) et le second domaine (en attente d'une vraie commande)
   demeurent les acteurs manquants de la réplication — nommés, jamais
   maquillés.
+
+
+## Entrée 270 — CHAQUE TEST EN UN FICHIER AUTONOME : LES HUIT TRIADE-1CLIC (la parole du développeur du 13/11 : « Fais en sorte que chaque test se fasse en lançant un fichier autonome en 1 clic : exe, apk, bat etc... ») : le diagnostic, le geste B SHA-NI, les deux voies QEMU, la campagne D204, le séquestre D183, la réplication et le témoin vitrine vivent désormais CHACUN en UN SEUL FICHIER .bat — un double-clic, AUCUNE extraction préalable, AUCUN autre fichier — les pièces officielles du paquet gestes-ouverts v1 EMBARQUÉES, scellées par empreinte, recoupées fail-closed à leur naissance, le lanceur officiel lancé INTACT ; le kit-2 (l'exe 1-clic v2) et le constat-arm (l'APK) déjà en fichier unique RAPPELÉS (13/11, la session des fichiers autonomes)
+
+- LE PRINCIPE : un test = un fichier = un double-clic. Chaque
+  TRIADE-1CLIC-*.bat porte en lui, gravées en clair dans son en-tête, les
+  pièces du test avec leurs sha256 : il fait naître un dossier de run NEUF
+  daté à côté de lui [D99], recoupe le paquet interne PUIS chaque pièce
+  [fail-closed : un octet divergent, RIEN ne court], puis lance LE lanceur
+  officiel du test — INTACT, octet pour octet, celui du paquet
+  TRIADE_kits_1clic_gestes_ouverts_v1 (l'Entrée 269, recoupé 41/41 à
+  l'extraction avant tout assemblage).
+
+- LES HUIT FICHIERS (aucun ordre imposé, aucun geste obligatoire) :
+  TRIADE-1CLIC-DIAGNOSTIC.bat (18 550 o, 3 pièces) ; GESTE-B-SHANI
+  (62 059 o, 8) ; VOIE1-QEMU (4 222 215 o, 9 — le qemu-riscv64 STATIQUE
+  embarqué tient en 4,2 Mo par deflate) ; VOIE2-QEMU (75 567 o, 14) ;
+  CAMPAGNE-D204 (37 341 o, 9 — le verrou du plan pré-enregistré recoupé
+  par certutil au lanceur officiel) ; SEQUESTRE-D183 (48 274 o, 6 — la
+  dépendance pynacl + cryptography NOMMÉE, la cérémonie hors-ligne) ;
+  REPLICATION (22 630 o, 5) ; TEMOIN-VITRINE (63 575 o, 5). Les
+  empreintes des huit vivent à EMPREINTES-FICHIERS-1CLIC.txt ; le zip de
+  repli TRIADE_fichiers_1clic_v1.zip (73861c10…, dix fichiers) couvre le
+  refus de téléchargement direct d'un .bat nu — le faux positif des
+  mesures déjà vécu sur les exe.
+
+- LE MÉCANISME NOMMÉ : le paquet interne est un zip DÉTERMINISTE (dates
+  fixes, ordre trié, deflate 9 — deux builds rendent les mêmes
+  empreintes) gravé en base64 après le marqueur <<<TRIADE-PAQUET-
+  INTERNE>>> en fin de fichier [cmd.exe ne lit jamais ces lignes : le
+  déroulé s'arrête à exit /b] ; l'extraction est UNE commande PowerShell
+  [ReadAllText → IndexOf du marqueur CONSTRUIT PAR CONCATÉNATION — le
+  marqueur littéral ne vit qu'à la ligne du paquet, jamais dans la
+  commande qui le cherche → FromBase64String après nettoyage regex →
+  WriteAllBytes], puis Expand-Archive ; le recoup est certutil +
+  findstr vers fichier temporaire, le pattern PROUVÉ des lanceurs vécus
+  [VERIFIER-PAQUET, LANCER-SECOND-RUN-N400] ; l'étape 0 du cadre bleu
+  [la marque du web] est écrite à l'écran ET dans l'en-tête — le
+  candidat A du verdict du 13/11, nommé pour ne plus surprendre.
+
+- LA CIRCULARITÉ NOMMÉE ET ÉLIMINÉE (le défaut que la double lecture a
+  attrapé AVANT livraison) : la première passe portait un LISEZMOI
+  embarqué qui citait le sha256 du zip qui l'embarquait — la boucle
+  sha → texte → zip → sha ne convergeait JAMAIS [trois tours de
+  génération, trois sha]. LE SECOND LECTEUR INDÉPENDANT
+  [scripts/verifier_fichiers_1clic.py, un programme SÉPARÉ du
+  générateur] l'a nommé à la première relecture : « sha gravé divergent
+  pour LISEZMOI-1CLIC-*.txt » — RÉPARÉ [le LISEZMOI embarqué ne cite
+  plus aucun sha de paquet : le sha du paquet vit gravé dans le .bat,
+  seul à le connaître], la passe unique est stable, le défaut n'a pas
+  quitté le laboratoire — la preuve que la double lecture vit.
+
+- LES ÉPREUVES DU LABORATOIRE (la note complète au bac
+  download/preuves-fichiers-1clic-labo/NOTE-EPREUVE.txt) : le recoup
+  fail-closed à la copie [41 empreintes v1 + 4 scellés loupe] ;
+  l'audit de forme 8/8 [l'Entrée 260 rejouée : ASCII pur, CRLF
+  intégral, zéro métacaractère nu dans echo/rem/title — des crochets,
+  jamais de parenthèses — chaque goto à son étiquette, le marqueur
+  vivant une seule fois] ; l'épreuve miroir 8/8 [chaque fichier relu,
+  son paquet redécodé, chaque pièce comparée octet pour octet à la
+  source] ; le second lecteur TOUT VERT [sha du paquet lu
+  indépendamment, pièces gravées recalculées, lanceur appelé présent et
+  identique, ANTI-TEST : un octet muté au milieu du paquet → le sha
+  diverge] ; le déterminisme [deux builds, mêmes empreintes]. JAMAIS
+  l'exécution : aucun Windows au labo [D122] — le premier double-clic
+  se vit chez le développeur, si un écran nomme un défaut la console
+  repart TELLE QUELLE.
+
+- L'ÉCART NOMMÉ DE L'ASSEMBLAGE : le temoin-vitrine.bat embarqué est la
+  version CRLF du paquet CORRECTIF2 [33763be4…] — le contenu IDENTIQUE
+  au mot près à celle du dossier loupe-kit-13 du coffre [6745d46f…,
+  fins de ligne seules : la forme CRLF est la règle des .bat du
+  projet] ; le LISEZMOI-KIT-LOUPE embarqué est CELUI du coffre
+  [6cad6bd3…, l'édition cohérente avec un kit sans lanceur parent].
+  loupe.exe [c1115105…] et scenario-loupe.py [131d0135…] scellés et
+  identiques aux deux sources.
+
+- LA LIVRAISON : le dossier fichiers-1clic/ du coffre /test porte les
+  HUIT fichiers + EMPREINTES + le zip de repli, md5 recoupés par
+  re-téléchargement ; LISEZMOI-FICHIERS-1CLIC.txt à la racine du /test
+  [la carte lisible sans entrer le dossier] ; LE PAQUET V1 RAPATRIÉ
+  aux archives-livraisons/kits-terrain-v0150/ [le zip
+  TRIADE_kits_1clic_gestes_ouverts_v1.zip 878889c9… et son
+  LISEZMOI-GESTES-OUVERTS.txt : la forme menu+zip est SUPERSEDÉE par
+  les fichiers autonomes — D143 : DÉPLACÉS, jamais jetés, md5 intacts
+  vérifiés par re-listing, la salle et son LISEZMOI tenus] ; le bac
+  download/TRIADE_fichiers_1clic_v1/ du dépôt et le miroir suivent.
+
+- LE D141 TENU AVANT LE COMMIT : le courant du miroir [pointe c8b5893,
+  Entrée 269] archivé VERSIONNÉ à archives-bundles/triade-history-269-
+  c8b5893.bundle [md5 6c758db9… recoupé par re-téléchargement, la
+  pointe vérifiée par git bundle list-heads] ; la présente consignation
+  + la Task 177 au worklog ; la carte OU-TROUVER-LES-LIVRABLES portée
+  à l'Entrée 270 ; le commit, le push GitHub [main, recoup], le miroir
+  Drive synchronisé [le bundle régénéré à la pointe].
+
+- LE RELAIS D'ÉCRITURE RESTAURÉ PAR L'OAUTH DU COFFRE (l'écart nommé au
+  geste même) : au premier dépôt du jour, le compte de service physichong
+  — le relais depuis la mort du refresh_token (l'Entrée 255) — a rendu
+  HTTP 403 « Insufficient permissions for the specified parent » SUR
+  TOUTE écriture (le /test sondé : création ET dépôt refusés) tandis qu'il
+  lisait tout — le droît d'écrire du compte de service fut RETIRÉ après
+  les synchros du matin. LE COFFRE Tokens/ LU : l'oauth_token_relais.json
+  du coffre — la RÉ-AUTORISATION INTERACTIVE du développeur du 12/11
+  20:04Z, déposée au coffre — rafraîchit en HTTP 200 : ADOPTÉ dans
+  .gdrive/ (l'ancien jeton mort gardé en .bak local, JAMAIS committé,
+  D12 ; le cache state.json purgé) — le relais d'écriture vit de nouveau
+  par le compte DU DÉVELOPPEUR, la vue de référence (l'Entrée 263) ; le
+  repli SA demeure codé (D263) pour le jour où l'OAuth mourra encore.
+
+- SUITE : au développeur — chaque test encore ouvert vit désormais en
+  UN fichier au coffre /test/fichiers-1clic/ : téléchargez LE fichier
+  du geste voulu, double-cliquez [l'étape 0 Débloquer si le cadre bleu
+  apparaît], vivez le geste, datez et signez le témoin, renvoyez le
+  dossier de run ENTIER au coffre /test. Le diagnostic choisit la
+  machine du geste B [SHA-NI] ; les voies QEMU exigent WSL2 ; la
+  campagne D204 vit aux deux bras [le kit loupe-13 demeure au /test] ;
+  le séquestre se vit hors-ligne [pip install pynacl cryptography
+  AVANT] ; le κ attend les deux jeux d'annotations [le second
+  annotateur et le second domaine demeurent les acteurs manquants,
+  nommés, jamais maquillés]. Le kit-2 [exe 1-clic v2, la chaîne
+  DOUBLEMENT fermée] et le constat-arm [l'APK, la chaîne fermée]
+  n'ont rien à refaire ; la cérémonie d'ère vit au dossier Cérémonie.

@@ -1,0 +1,11 @@
+EMPREINTES-FICHIERS-1CLIC — l'édition du 13/11/2026
+sha256 des HUIT fichiers autonomes + les deux cartes (générées du montage même)
+==============================================================================
+c0d6de86ed047f0ee4af7ddf24acc91c4cb9ec8bef366a4e0d2086e515659b2b  TRIADE-1CLIC-DIAGNOSTIC.bat  (18,550 o, 3 pièces embarquées, paquet interne c138754d8280f260…)
+e20582febde26c5dcd6870e5a31725c4d18117a51db5795260b3dbe99416095e  TRIADE-1CLIC-GESTE-B-SHANI.bat  (62,059 o, 8 pièces embarquées, paquet interne 59e6bc5dae796f83…)
+662fa0da547f90e376c3bec2fc3c694e3d50d9a85547f8db670002d4259fd7b3  TRIADE-1CLIC-VOIE1-QEMU.bat  (4,222,215 o, 9 pièces embarquées, paquet interne 053ea3a17e946cd2…)
+2e1bc7142992be61444cfab08d17109809d5e62ac0d5236e44013ddac6f7ea68  TRIADE-1CLIC-VOIE2-QEMU.bat  (75,567 o, 14 pièces embarquées, paquet interne 2c054169259c543c…)
+7569aef4fc316199e8548f97e735249b7f00b746fcaaf442392931338ccf7eb2  TRIADE-1CLIC-CAMPAGNE-D204.bat  (37,341 o, 9 pièces embarquées, paquet interne 61a355e713bf0d07…)
+51fe8f575412714c5c021627961817fb336c5844f7e303ca7bb08410020b9e5c  TRIADE-1CLIC-SEQUESTRE-D183.bat  (48,274 o, 6 pièces embarquées, paquet interne ef09c1e0e16ef61d…)
+850c9457a4e426d4b2bdd4152c841bc9147ece20e64c1a38044897ff4d4eb0a9  TRIADE-1CLIC-REPLICATION.bat  (22,630 o, 5 pièces embarquées, paquet interne dde3f90368f7ce5c…)
+80a617f6b53927dbfe0c5608fc84221f9668a28e76e0d75de3f538103a811f5d  TRIADE-1CLIC-TEMOIN-VITRINE.bat  (63,575 o, 5 pièces embarquées, paquet interne 4318d8659ea90c95…)

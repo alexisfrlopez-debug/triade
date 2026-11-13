@@ -1,0 +1,86 @@
+NOTE D'ÉPREUVE — L'ÉDITION FICHIERS-1CLIC (13/11/2026, le laboratoire)
+=================================================================
+
+La commande du développeur : « Fais en sorte que chaque test se fasse
+en lançant un fichier autonome en 1 clic : exe, apk, bat etc... ».
+
+LES ÉPREUVES VÉCUES AU LABORATOIRE (sur les HUIT fichiers autonomes,
+AVANT livraison — le labo n'a AUCUN Windows : rien n'y fut exécuté,
+D122 ; les .bat y sont éprouvés par leurs commandes, par l'audit de
+forme et par la relecture, le premier double-clic se vit au terrain) :
+
+1. LE RECOUP FAIL-CLOSED À LA COPIE : chaque pièce source vérifiée
+   contre EMPREINTES-GESTES-OUVERTS.txt (41 empreintes, le paquet v1
+   de l'Entrée 269) et les scellés loupe (4) AVANT assemblage —
+   aucune pièce divergente admise.
+
+2. L'AUDIT DE FORME (l'Entrée 260 rejouée par le générateur) : ASCII
+   pur, CRLF intégral, zéro LF nu, zéro métacaractère nu dans
+   echo/rem/title [des crochets, jamais de parenthèses], chaque goto
+   à son étiquette, le marqueur <<<TRIADE-PAQUET-INTERNE>>> vivant UNE
+   seule fois — 8/8 VERT.
+
+3. L'ÉPREUVE MIROIR (le générateur relit chaque fichier) : le paquet
+   interne redécodé du base64, son sha256 recoupé contre la valeur
+   gravée, chaque pièce extraite et comparée OCTET POUR OCTET à la
+   source — 8/8 VERT.
+
+4. LE SECOND LECTEUR INDÉPENDANT (scripts/verifier_fichiers_1clic.py,
+   un programme SÉPARÉ du générateur, la double lecture du labo) :
+   forme, sha du paquet lu indépendamment de l'en-tête, pièces gravées
+   recalculées, comparaison aux sources, le lanceur appelé présent et
+   identique, l'ANTI-TEST (un octet muté au milieu du paquet → le sha
+   DIVERGE : le recoup fail-closed attrape ce qu'il prétend attraper),
+   la carte EMPREINTES — TOUT VERT.
+
+5. LA CIRCULARITÉ NOMMÉE ET ÉLIMINÉE : la première passe portait un
+   défaut réel — le LISEZMOI embarqué dans le zip citait le sha256 DU
+   ZIP QUI L'EMBARQUAIT (la boucle sha → texte → zip → sha ne
+   convergeait jamais : trois tours de génération, trois sha). LE
+   SECOND LECTEUR L'A NOMMÉ AVANT LIVRAISON (« sha gravé divergent
+   pour LISEZMOI-1CLIC-*.txt ») — RÉPARÉ : le LISEZMOI embarqué ne
+   cite plus aucun sha de paquet (il vit gravé dans le fichier .bat,
+   seul à le connaître) ; la passe unique est stable. La preuve que
+   la double lecture vit : le défaut ne quitta pas le laboratoire.
+
+6. LE DÉTERMINISME : deux builds complets depuis les mêmes sources
+   rendent les MÊMES empreintes (zip à dates fixes, ordre trié,
+   deflate niveau 9) — le sha256 du paquet interne est REPRODUCTIBLE
+   par quiconque régénère depuis le dépôt.
+
+LES EMPREINTES DES HUIT FICHIERS : EMPREINTES-FICHIERS-1CLIC.txt (au
+bac, au coffre /test/fichiers-1clic/ et au miroir).
+
+LA SORTIE DU SECOND LECTEUR (telle quelle) :
+
+  [second lecteur] 8 fichiers autonomes relus
+
+    [vert] TRIADE-1CLIC-CAMPAGNE-D204.bat             37,341 o  9 pièces gravées  paquet 61a355e713bf…
+    [vert] TRIADE-1CLIC-DIAGNOSTIC.bat                18,550 o  3 pièces gravées  paquet c138754d8280…
+    [vert] TRIADE-1CLIC-GESTE-B-SHANI.bat             62,059 o  8 pièces gravées  paquet 59e6bc5dae79…
+    [vert] TRIADE-1CLIC-REPLICATION.bat               22,630 o  5 pièces gravées  paquet dde3f90368f7…
+    [vert] TRIADE-1CLIC-SEQUESTRE-D183.bat            48,274 o  6 pièces gravées  paquet ef09c1e0e16e…
+    [vert] TRIADE-1CLIC-TEMOIN-VITRINE.bat             63,575 o  5 pièces gravées  paquet 4318d8659ea9…
+    [vert] TRIADE-1CLIC-VOIE1-QEMU.bat              4,222,215 o  9 pièces gravées  paquet 053ea3a17e94…
+    [vert] TRIADE-1CLIC-VOIE2-QEMU.bat                 75,567 o  14 pièces gravées  paquet 2c054169259c…
+
+  [second lecteur] TOUT VERT — forme, paquets, pièces, sources, lanceurs,
+  anti-test, carte des empreintes
+
+L'ÉCART NOMMÉ DE L'ASSEMBLAGE : le temoin-vitrine.bat embarqué est la
+version CRLF du paquet CORRECTIF2 (sha256 33763be4…) — le contenu
+IDENTIQUE AU MOT PRÈS à celle du dossier loupe-kit-13 du coffre
+(6745d46f…, fins de ligne seules : la forme CRLF est la règle des .bat
+du projet, l'écart consigné, jamais maquillé) ; le LISEZMOI-KIT-LOUPE
+embarqué est CELUI du coffre (6cad6bd3…, l'édition sans référence au
+lanceur du dossier parent, cohérente avec un kit autonome).
+
+LE MÉCANISME, POUR LA RELECTURE DE QUICONQUE : le paquet interne est
+un zip ORDINAIRE gravé en base64 après le marqueur de fin de fichier —
+cmd.exe ne lit jamais ces lignes (le déroulé s'arrête à exit /b) ;
+l'extraction est UNE commande PowerShell (ReadAllText → IndexOf du
+marqueur — construit par concaténation de trois morceaux, si bien que
+le marqueur littéral ne vit qu'à la ligne du paquet → FromBase64String
+après nettoyage regex → WriteAllBytes), puis Expand-Archive ; le recoup
+est certutil -hashfile + findstr vers fichier temporaire (le pattern
+des lanceurs vécus — jamais de tuyau nu, jamais de parsing en ligne).

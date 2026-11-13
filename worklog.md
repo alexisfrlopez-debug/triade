@@ -9650,3 +9650,53 @@ Work Log:
 - LE DÉPÔT : le zip + le LISEZMOI au coffre /test (le relais OAuth, la vue de référence), md5 recoupés par re-téléchargement.
 - LA CHAÎNE : l'Entrée 269 au journal, la présente tâche, la carte OU-TROUVER portée à 269, D141 tenu (le courant 268-25bb48b archivé versionné, md5 recoupé par re-téléchargement, la pointe vérifiée par git bundle list-heads), le commit, le push GitHub (recoup), le miroir Drive synchronisé.
 - SUITE : les gestes ouverts OUTILLÉS au /test — extraire, double-cliquer (le geste B, les voies QEMU, la campagne D204, le séquestre hors-ligne, le κ) ; les gestes déjà 1-clic rappelés (l'APK au /test, le témoin vitrine, la cérémonie d'ère au /Cérémonie) ; le second annotateur et le second domaine demeurent les acteurs manquants de la réplication.
+
+
+Task ID: 177
+Agent: Z.ai (agent principal — la session des fichiers autonomes)
+Task: CHAQUE TEST EN UN FICHIER AUTONOME — LES HUIT TRIADE-1CLIC (la
+parole du développeur du 13/11 : « Fais en sorte que chaque test se
+fasse en lançant un fichier autonome en 1 clic : exe, apk, bat
+etc... ») : le diagnostic, le geste B SHA-NI, les deux voies QEMU, la
+campagne D204, le séquestre D183, la réplication et le témoin vitrine
+chacun en UN SEUL .bat — les pièces officielles du paquet gestes-ouverts
+v1 EMBARQUÉES scellées par empreinte, le lanceur officiel lancé INTACT ;
+le kit-2 [exe v2] et le constat-arm [APK] déjà en fichier unique
+rappelés ; le paquet v1 supersédé rapatrié aux archives.
+
+Work Log:
+- LE RATTRAPAGE : le dépôt local de la session vivait à l'Entrée 255 —
+  le bundle du miroir rapatrié [68 516 893 o, md5 6c758db9… == listing],
+  list-heads main = c8b5893 [l'Entrée 269], dbf46b6 ancêtre, fast-forward
+  pur, core.filemode false, l'arbre propre.
+- L'ASSEMBLAGE : scripts/construire_fichiers_1clic.py — huit fichiers,
+  le paquet interne zip DÉTERMINISTE [dates fixes, ordre trié, deflate 9]
+  gravé en base64 après le marqueur de fin, l'extraction en UNE commande
+  PowerShell [le marqueur construit par concaténation : le littéral ne
+  vit qu'à la ligne du paquet], le recoup certutil + findstr [le pattern
+  des lanceurs vécus], fail-closed à la pièce.
+- LA CIRCULARITÉ ATTRAPÉE PAR LE SECOND LECTEUR : le LISEZMOI embarqué
+  citait le sha du zip qui l'embarquait — boucle sans convergence,
+  NOMMÉE par scripts/verifier_fichiers_1clic.py [le second lecteur
+  indépendant] AVANT livraison, ÉLIMINÉE [le sha du paquet vit au .bat
+  seul] — le défaut n'a pas quitté le laboratoire.
+- LES ÉPREUVES : recoup fail-closed à la copie [41 + 4] ; audit de forme
+  8/8 [ASCII, CRLF, zéro métacaractère nu, goto] ; épreuve miroir 8/8
+  [pièces comparées octet pour octet] ; second lecteur TOUT VERT
+  [l'anti-test : un octet muté → le sha diverge] ; déterminisme [deux
+  builds, mêmes empreintes] ; JAMAIS l'exécution [aucun Windows au
+  labo, D122] — la note au bac
+  download/preuves-fichiers-1clic-labo/NOTE-EPREUVE.txt.
+- LA LIVRAISON : /test/fichiers-1clic/ [les huit + EMPREINTES + le zip
+  de repli 73861c10…, md5 recoupés], LISEZMOI-FICHIERS-1CLIC.txt à la
+  racine du /test, le paquet v1 [zip + LISEZMOI] DÉPLACÉ aux
+  archives-livraisons/kits-terrain-v0150/ [D143, jamais jeté], le bac
+  du dépôt + le miroir.
+- LA CHAÎNE : l'Entrée 270 au journal, la présente tâche, la carte
+  OU-TROUVER portée à 270, D141 tenu [le courant 269-c8b5893 archivé
+  versionné, md5 recoupé], le commit, le push GitHub [recoup], le
+  miroir synchronisé.
+- SUITE : chaque test ouvert en un fichier au /test — le geste, le
+  témoin daté signé, le dossier de run ENTIER au coffre ; les acteurs
+  manquants de la réplication [second annotateur, second domaine]
+  demeurent nommés.

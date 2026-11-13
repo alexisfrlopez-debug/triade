@@ -1,11 +1,11 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 13/11/2026 (Entrées 261-269 — la réception du run kit-2 v2 :
+*Mise à jour : 13/11/2026 (Entrées 261-270 — la réception du run kit-2 v2 :
 LA MESURE A VÉCU ; le TÉMOIN DATÉ SIGNÉ reçu et recoupé : LA CHAÎNE DU
 KIT-2 FERMÉE ; la suite approuvée OUTILLÉE : LE SECOND RUN À N=400 EN
 1 CLIC ; LE SECOND TÉMOIN SIGNÉ (N=400) REÇU — la chaîne DOUBLEMENT
 fermée ; LES TESTS CLOS ARCHIVÉS (44 entrées, le /test rendu à la
-suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive ; LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — Entrée 269 : le paquet TRIADE_kits_1clic_gestes_ouverts_v1, chaque geste ouvert en un double-clic). Ce fichier
+suite) ; LE TÉMOIN DU VERDICT ANDROID DÉPOSÉ pour signature ; le TÉMOIN ANDROID SIGNÉ REÇU — la chaîne constat-arm FERMÉE, Entrée 267 ; L'ARBITRAGE DE LA FAMILLE « [m » — Entrée 268 : les « étiquettes tronquées » étaient des artefacts de lecture, AUCUNE pièce fautive ; LES GESTES OUVERTS OUTILLÉS EN 1 CLIC — Entrée 269 : le paquet TRIADE_kits_1clic_gestes_ouverts_v1, chaque geste ouvert en un double-clic ; CHAQUE TEST EN UN FICHIER AUTONOME — Entrée 270 : les HUIT TRIADE-1CLIC-*.bat, un test = un fichier = un double-clic, aucune extraction préalable). Ce fichier
 vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
@@ -27,7 +27,8 @@ au bac de la session — il est tenu par `scripts/drive_sync.py`
 | **LE SECOND RUN OUTILLÉ — N=400 EN 1 CLIC (Entrée 265)** | TRIADE_kit2_second_run_N400_v1/ | oui (archivé à kits-terrain-v0150/ — le run est couru) | download/TRIADE_kit2_second_run_N400_v1/ |
 | **LE SECOND TÉMOIN SIGNÉ — N=400, LA CHAÎNE DOUBLEMENT FERMÉE (Entrée 266)** | preuves-kit2-second-temoin-signe/ | **oui (le dossier du développeur, 13/11 10:38Z — les quatre \|t\| sous le seuil)** | download/preuves-kit2-second-temoin-signe/ |
 | **LE TÉMOIN DU VERDICT ANDROID SIGNÉ — LA CHAÎNE DU CONSTAT-ARM FERMÉE (Entrée 267)** | temoin-android-signe/ | **oui (temoin-verdict-android/, QUATRE pièces — le signé du développeur, 13/11 11:14Z)** | download/temoin-android-signe/ |
-| **LES GESTES OUVERTS EN 1 CLIC — le paquet des suites proposées (Entrée 269 : geste B, voies QEMU, campagne D204, séquestre D183, réplication — zip 878889c9…)** | TRIADE_kits_1clic_gestes_ouverts_v1/ | **oui (le zip + le LISEZMOI, md5 recoupés)** | download/TRIADE_kits_1clic_gestes_ouverts_v1/ |
+| **LES GESTES OUVERTS EN 1 CLIC — le paquet des suites proposées (Entrée 269 : geste B, voies QEMU, campagne D204, séquestre D183, réplication — zip 878889c9…)** | TRIADE_kits_1clic_gestes_ouverts_v1/ | *(supersédé — rapatrié aux archives-livraisons/kits-terrain-v0150/, Entrée 270)* | download/TRIADE_kits_1clic_gestes_ouverts_v1/ |
+| **CHAQUE TEST EN UN FICHIER AUTONOME — LES HUIT TRIADE-1CLIC (Entrée 270 : diagnostic, geste B, voie 1, voie 2, campagne D204, séquestre D183, réplication, témoin vitrine — un test = un fichier = un double-clic ; zip de repli 73861c10…)** | TRIADE_fichiers_1clic_v1/ | **oui (fichiers-1clic/ — les huit + EMPREINTES + le zip, md5 recoupés)** | download/TRIADE_fichiers_1clic_v1/ |
 
 ## Les livrables v0.15.0 (à la racine du coffre)
 
@@ -62,7 +63,7 @@ signée du 13/11 11:14Z ne parut au listing de son dossier que
 CROISE les canaux (listing, recherche par nom, lecture directe de la
 pièce) AVANT de conclure à une absence.*
 
-## L'état (Entrée 268) — les chaînes kit-2 ET constat-arm fermées par la main, la famille des étiquettes arbitrée : AUCUNE pièce fautive
+## L'état (Entrée 270) — chaque test en un fichier autonome, les chaînes kit-2 et constat-arm fermées par la main
 
 1. **LES DEUX TÉMOINS SIGNÉS du kit-2 SONT REÇUS** : N=200 (Entrée 264,
    le 13/11 09:04Z — « fait le 13/11/2026 / Alexis Lopez ») et N=400
@@ -87,10 +88,19 @@ pièce) AVANT de conclure à une absence.*
    run, la zone d'observations demeurée vide (D189 tel quel) — LA
    CHAÎNE DU CONSTAT-ARM FERMÉE, du téléphone au coffre. La portée
    D206 demeure : le constat ne mesure rien.
-4. Les preuves formelles `preuves-constat-arm/` (le téléphone — l'APK
-   demeure au /test) et les gestes ouverts : le geste B SHA-NI réel, la
-   campagne D204 (le kit loupe-13 demeure au /test), la cérémonie d'ère,
-   le séquestre D183, la réplication.
+4. **CHAQUE TEST ENCORE OUVERT VIT EN UN FICHIER AUTONOME (Entrée 270)** :
+   les HUIT TRIADE-1CLIC-*.bat au /test/fichiers-1clic/ — diagnostic,
+   geste B SHA-NI, voie 1 QEMU, voie 2 QEMU, campagne D204, séquestre
+   D183, réplication, témoin vitrine : un fichier, un double-clic, les
+   pièces embarquées scellées, le lanceur officiel lancé INTACT ; le
+   paquet menu+zip de l'Entrée 269 est supersédé (rapatrié aux
+   archives-livraisons, D143 jamais jeté). Les preuves formelles
+   `preuves-constat-arm/` (le téléphone — l'APK demeure au /test), le
+   geste B sur une machine à SHA-NI (le diagnostic fichier le dit
+   avant), la campagne D204 aux deux bras (le kit loupe-13 demeure au
+   /test), la cérémonie d'ère (dossier Cérémonie), le séquestre
+   hors-ligne, la réplication (le second annotateur et le second
+   domaine demeurent les acteurs manquants, nommés, jamais maquillés).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-268) et au worklog (`worklog.md`, Tasks 158-175).*
+Entrées 251-270) et au worklog (`worklog.md`, Tasks 158-177).*
