@@ -9515,3 +9515,35 @@ Work Log:
   sortie, jamais contournés ; les pièces vivent au dépôt git.
 - SUITE : le témoin signé (Entrée 261), preuves-constat-arm, le geste B,
   D204, la cérémonie d'ère, le séquestre D183, la réplication.
+
+
+Task ID: 170
+Agent: Z.ai (agent principal — la session de la réception du run kit-2)
+Task: LA CORRECTION DE L'ÉCART NOMMÉ À L'ENTRÉE 261 (troisième geste de la
+session) : « l'écart de la carte » (CORRECTIF3 + exe v2 « absents du /test »)
+était UN ARTEFACT DE LECTURE — le listing du compte de service CACHE les
+fichiers à exe (la quarantaine malware de Drive les retire des listings des
+non-propriétaires) ; avec le relais OAuth (propriétaire, revivifié par le
+jeton du coffre mis à jour le 12/11 20:04), le /test porte 55 entrées dont
+le zip CORRECTIF3, l'exe v2, les paquets porteurs v1/v2 — tous déposés le
+12/11 par la session de la correction, 5/5 md5 recoupés EXACTS (df846cc2…,
+37f8aec7…, b238cc23…, e87253fd…, 967ee63c…), la carte de l'Entrée 260 était
+JUSTE, la mienne corrigée (les trois lignes retournées à « oui », la note
+de visibilité ajoutée), la règle consignée : JAMAIS conclure à une absence
+au coffre depuis le seul listing du compte de service — le relais OAuth est
+la vue de référence (la même classe d'erreur que l'arbitrage E249 : lire
+par un canal limité et conclure à l'absence).
+
+Work Log:
+- LA DÉCOUVERTE : l'étape [4] de la synchro 262 trouva le zip CORRECTIF3
+  « déjà présent (md5 MATCH) » au /test — l'absence consignée à 261 était
+  donc impossible ; le re-listing OAuth montra 55 entrées (vs 47 au
+  compte de service) : les fichiers à exe cachés au SA.
+- LE RECOUPEMENT : 5/5 md5 locaux == coffre (exe v1/v2, porteurs v1/v2,
+  zip CORRECTIF3) ; la synchro 262 confirma (2 318 inchangés, 0 erreurs,
+  dont les exe du miroir invisibles au SA).
+- LA RÉPARATION : OU-TROUVER-LES-LIVRABLES.md (trois lignes + note de
+  visibilité + état 263), l'Entrée 263 + la présente, le commit + push
+  GitHub + re-synchro du miroir.
+- SUITE : le témoin signé (261), preuves-constat-arm, le geste B, D204,
+  la cérémonie d'ère, le séquestre D183, la réplication.

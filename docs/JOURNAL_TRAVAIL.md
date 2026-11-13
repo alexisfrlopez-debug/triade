@@ -10704,3 +10704,45 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
   réplication). NOTE AU DÉVELOPPEUR : si le partage du compte de service
   doit demeurer lecture seule, le relais OAuth du coffre Tokens/ suffit —
   la ré-autorisation du 12/11 20:04 est honorée par la présente.
+
+## Entrée 263 — LA CORRECTION DE L'ENTRÉE 261 : « L'ÉCART DE LA CARTE » ÉTAIT UN ARTEFACT DE LECTURE — les fichiers à exe du coffre sont CACHÉS au compte de service (la quarantaine malware de Drive les retire du listing des non-propriétaires), le relais OAuth les voit : le zip CORRECTIF3, l'exe 1-clic v2 et les paquets porteurs ÉTAIENT au coffre /test dès le 12/11 — la carte de l'Entrée 260 était JUSTE, la mienne corrigée, 5/5 md5 recoupés (13/11, la session de la réception — troisième geste)
+
+- L'ARTEFACT (D189 : l'erreur du labo rapportée telle quelle, l'histoire
+  jamais réécrite) : l'Entrée 261 nomma « ÉCART DE LA CARTE » l'absence
+  du zip CORRECTIF3, de l'exe v2 et des paquets porteurs au coffre /test
+  — la lecture venait du listing du COMPTE DE SERVICE (le repli D263,
+  seul jeton vivant avant la revivification OAuth). LA VÉRITÉ : ces
+  fichiers à exe sont INVISIBLES au compte de service — la quarantaine
+  malware de Drive retire les fichiers signalés du listing des comptes
+  non propriétaires. Avec le relais OAuth (le compte propriétaire,
+  revivifié hier 20:04 par le développeur), le /test compte 55 entrées —
+  pas 47 : le zip CORRECTIF3 (créé 12/11 23:06:32Z), l'exe v2
+  (23:06:34Z), le paquet porteur v2 (23:06:36Z), l'exe v1 (22:10:48Z),
+  le paquet v1 (22:10:50Z) — TOUT y était.
+
+- LE RECOUPEMENT (5/5 md5 EXACTS, local ↔ coffre) : le zip CORRECTIF3
+  df846cc2fd03…, l'exe v2 37f8aec75dc4…, le porteur v2 b238cc2318bd…,
+  l'exe v1 e87253fda2e7…, le porteur v1 967ee63c1fc6… — la synchro de
+  l'Entrée 262 le confirma d'elle-même (le zip CORRECTIF3 « déjà présent,
+  md5 MATCH », et 2 318 fichiers inchangés au miroir dont les exe que le
+  compte de service ne voyait pas).
+
+- LA CLASSE D'ERREUR nommée : la même famille que l'arbitrage E249
+  (l'Entrée 260) — lire par un canal limité et conclure à l'absence dans
+  la pièce. Ici le canal était le listing du compte de service ; la
+  règle consignée : JAMAIS conclure à une absence au coffre depuis le
+  seul listing du compte de service — la vue de référence est le relais
+  OAuth du coffre Tokens/ (le compte propriétaire), la carte
+  OU-TROUVER-LES-LIVRABLES porte la note.
+
+- LA CARTE RÉPARÉE : les trois lignes (exe v1, CORRECTIF3, exe v2)
+  retournées à « oui » (dépôté le 12/11, md5 recoupé), la note de
+  visibilité ajoutée à la section du miroir, l'état porté à l'Entrée
+  263. L'Entrée 261 DEMEURE telle quelle (sa consignation de l'écart
+  reste lisible — l'histoire jamais réécrite : la présente la corrige
+  par-dessus).
+
+- SUITE : inchangée — le TÉMOIN SIGNÉ du développeur (l'Entrée 261) ;
+  les preuves formelles preuves-constat-arm ; les gestes ouverts (le
+  geste B SHA-NI réel, la campagne D204, la cérémonie d'ère, le
+  séquestre D183, la réplication).
