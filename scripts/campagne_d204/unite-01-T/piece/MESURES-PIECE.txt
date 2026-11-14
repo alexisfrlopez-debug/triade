@@ -1,0 +1,5 @@
+MESURES DE LA PIÈCE DE CAMPAGNE — l'unité 1 (loupe-01 × T)
+loupe-01 (notation de campagne) : 403 o de code, slot 0x1c0 (448 o), padding 45 o (NOP)
+les 17 scellées : == les mesures d'arrêt D161
+loupe.exe : 127488 o, sha256 4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5
+différentiel au scellé : 12 plages, 356 o, au slot loupe-01 et à la porte R10 seuls

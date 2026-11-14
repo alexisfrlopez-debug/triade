@@ -199,4 +199,20 @@ pièce) AVANT de conclure à une absence.*
    22/10 mort).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-281) et au worklog (`worklog.md`, Tasks 158-188).*
+Entrées 251-282) et au worklog (`worklog.md`, Tasks 158-189).*
+
+
+9. **LA CAMPAGNE D204 EST NÉE — LA PREMIÈRE UNITÉ LIVRÉE (Entrée 282)** :
+   le dossier des résultats (scripts/preuves_v150/comparaison_resultats/)
+   NAÎT de la première mesure (CA1 : la ligne de garde, 14/11 02:08:50Z) ;
+   l'unité 1 — loupe-01 OUVRIR × bras T — construite, vérifiée (l'oracle
+   du bloc 14 VERT, le round-trip R5, la cristallisation 10/10),
+   livrée au coffre /test/kit-unite-loupe-01-T-20261114/ (12/12 pièces
+   recoupées par re-téléchargement) : la pièce (le scellé ne diffère qu'au
+   slot loupe-01 et à la porte R10), la notation de campagne (7 éditions,
+   6 correctifs, 25 défauts nommés au labo AVANT tout run — exclusions,
+   jamais échappés), le scénario chargeur + les témoins + la gravure
+   EMPREINTES ; la mesure vit aux journaux (M2 : 53 158 tokens en 9
+   appels lus du log ; M4 : 20 lignes) ; LE RUN APPARTIENT AU
+   DÉVELOPPEUR (le GUI onglet 1·KIT → 2·RUN → 3·TÉMOIN daté signé, le
+   dossier ENTIER renvoyé au /test).

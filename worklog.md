@@ -10264,3 +10264,79 @@ Work Log:
 - LA SUITE NOMMÉE : la première unité loupe-01 × bras T est le prochain geste du labo — le garde d'abord, la spec comptée, la notation à la main comptée, le round-trip, l'oracle depuis I, la cristallisation, le kit aux EMPREINTES gravées au /test.
 - LE BAC RESYNCHRONISÉ : le checkout local demeuré à l'E276 (bac recyclé) avancé à 280 par FAST-FORWARD depuis GitHub (aucune divergence de contenu, les bits de mode D159 restaurés) ; GitHub vérifié main @ e2f7e5c84b ; le jeton du /tokens validé encore (l'exemplaire de l'upload — ancien fine-grained — refusé 401, nommé).
 - LE GIT : Entrée 281 au journal, Task 188 au worklog, la carte OU-TROUVER portée à 281 ; D141 tenu (le courant 280-e2f7e5c archivé versionné, le bundle rafraîchi) ; le commit ; le push GitHub ; le miroir Drive synchronisé (le journal, le worklog, la carte OU-TROUVER, la carte kits-unités).
+
+
+Task ID: 189
+Agent: Z.ai (agent principal — la session de la première unité de la campagne)
+Task: LA PREMIÈRE UNITÉ DE LA CAMPAGNE D204 CONSTRUITE, CRISTALLISÉE ET
+LIVRÉE — loupe-01 OUVRIR × bras T (la commande « go pour l'unité 1 ») : le
+workflow mesuré de bout en bout, les journaux M2/M4 NÉS DE LA PREMIÈRE
+MESURE (CA1), la pièce recomposée du plan où SEUL le slot loupe-01 porte
+la notation de campagne, le kit aux EMPREINTES gravées déposé au coffre
+/test en son dossier daté kit-unite-loupe-01-T-20261114/.
+
+Work Log:
+- LA PRÉPARATION (avant toute mesure, D122) : l'infrastructure de campagne
+  écrite et éprouvée AU LABO — le builder (scripts/campagne_d204/
+  unite-01-T/build_unite01.py : les 17 notations scellées LUES à leurs
+  arbres + la notation de campagne par la chaîne brouillon → auteur →
+  notation, l'oracle structurel et l'audit msx64 du plan, la recomposition
+  PE, le différentiel contre le scellé CONFINÉ au slot loupe-01 et à la
+  porte R10), le round-trip (R5), l'oracle du bloc (les vecteurs du
+  contrat, le juge = le modèle indépendant hashlib, le harnais du domaine
+  portant la pièce de campagne au slot). L'ÉPREUVE DE PLOBERIE : le
+  builder avec le BROUILLON SCELLÉ reproduit loupe.exe 0.1.1-dev.1 OCTET
+  POUR OCTET (sha256 c1115105…) — la mécanique est fidèle AVANT toute
+  mesure, puis l'épreuve RETIRÉE (le brouillon scellé ne demeure JAMAIS
+  au dossier de campagne : la notation mesurée naît de l'appel seul).
+- LE WORKFLOW MESURÉ (chaque appel au modèle par compter_tokens.py, chaque
+  commande par chronometre_verification.py — les journaux à preuves_v150/
+  comparaison_resultats/, NÉS de la première mesure : la ligne de garde
+  d'abord, 02:08:50Z) : le GARDE sceau-I 14 arbres VERT (0,070 s) ;
+  la PHASE SPEC (5 313 tokens — le contrat lu, les notes d'auteur) ; la
+  PHASE ORACLE (3 752 tokens — les attentes du juge dérivées du contrat
+  AVANT le code, écrit-avant-code) ; la PHASE NOTATION (11 480 tokens —
+  le brouillon écrit À LA MAIN, jamais la notation scellée au prompt) ;
+  SIX CORRECTIFS comptés (32 613 tokens) tenus par les DÉFAUTS NOMMÉS AU
+  LABO avant toute correction (D1-D25 : la syntaxe RIP+offset, CreateFileW
+  testé à zéro, les arguments 5-7 au home space, l'alignement, rcx écrasé
+  par loupe-04, l'ordre de la session, le verdict de l'appelé effacé par
+  loupe-03, la poignée pendante de GetFileSizeEx, le hTemplateFile écrit
+  sur 4 octets — le défaut que seul le VRAI Windows aurait vécu, la
+  borne par registre, la poignée jamais chargée pour GetFileSizeEx) ;
+  les builds (3 refus nommés ~0,22 s, puis VERT ~0,48 s), les round-trips
+  (0,223 / 0,212 s), l'oracle (le premier ROUGE : D25 nommé sur
+  l'émulation, 0,310 s ; le second VERT 10,202 s — le panneau du témoin
+  3f, deux passages d'empreintes sous émulation).
+- LA PIÈCE : loupe.exe de campagne 127 488 o, sha256 4d119b22…, la
+  notation 356 o de code au slot 0x4080 (448 o, padding 92) ; le
+  différentiel contre le scellé : 12 plages, 356 o, TOUTES au slot
+  loupe-01 et à la porte R10 — les arbres signés INTACTS, le garde
+  14/14 AVANT tout geste ; LA CRISTALLISATION R6 : DIX rebuilds
+  consécutifs identiques (10/10, sha constant).
+- LE KIT : kit-unite-loupe-01-T-20261114/ — la pièce + la notation livrée
+  + le brouillon + le scénario terrain (LE CHARGEUR : LoadLibraryEx
+  DONT_RESOLVE, les six feuilles du noyau résolues aux slots, loupe-01
+  appelé aux témoins, le juge hashlib, le témoin né du run) + le lanceur
+  officiel + les QUATRE témoins (la génération FIXE, graine 20261107) +
+  la gravure EMPREINTES (10 pièces sha256, le format du GUI) + le
+  LISEZMOI ; py_compile VERT, l'épreuve d'extraction vierge 11/11, le
+  zip 219 581 o (sha256 a1153d67…).
+- LE DÉPÔT au coffre /test : le dossier daté + le zip, 12/12 pièces
+  recoupées PAR RE-TÉLÉCHARGEMENT octet pour octet (id Drive du dossier
+  19ct_zU8LUs5zaluYyssg4EBH6EGYOUHJ) — le GUI attend le kit à l'onglet
+  1·KIT de l'unité loupe-01 × T.
+- LA MESURE (M2 : 9 appels, 53 158 tokens, 100 % lus du log d'usage,
+  zéro estimation — CA3 ; M4 : 20 lignes — la garde, les builds, les
+  round-trips, les oracles ; M1 : les 25 défauts nommés au labo AVANT
+  tout run = exclusions § 2.3, JAMAIS ÉCHAPPÉS — la première LIVRAISON
+  naîtra du run du développeur ; M3 : le carnet au geste du développeur).
+- LA FRONTIÈRE TENUE : le labo n'a couru AUCUN run terrain (CA6), n'a
+  daté ni signé AUCUN témoin (D99), les pièces scellées du projet
+  INTACTES (le différentiel le prouve octet pour octet), le plan
+  VERROUILLÉ a78caf8c… INTACT, AUCUN agrégat calculé en cours de route
+  (CA7 — les comptes seuls vivent au journal).
+- SUITE : au développeur — le GUI (onglet 1·KIT : choisir le dossier
+  kit-unite-loupe-01-T-20261114 du /test), le RUN (le lanceur officiel),
+  le TÉMOIN daté signé de la main, le dossier ENTIER renvoyé au /test ;
+  puis l'unité 2 (loupe-01 × bras C) quand le vert recoupé ferme l'unité 1.
