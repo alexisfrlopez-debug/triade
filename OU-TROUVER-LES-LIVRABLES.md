@@ -199,7 +199,7 @@ pièce) AVANT de conclure à une absence.*
    22/10 mort).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-282) et au worklog (`worklog.md`, Tasks 158-189).*
+Entrées 251-283) et au worklog (`worklog.md`, Tasks 158-190).*
 
 
 9. **LA CAMPAGNE D204 EST NÉE — LA PREMIÈRE UNITÉ LIVRÉE (Entrée 282)** :
@@ -216,3 +216,6 @@ Entrées 251-282) et au worklog (`worklog.md`, Tasks 158-189).*
    appels lus du log ; M4 : 20 lignes) ; LE RUN APPARTIENT AU
    DÉVELOPPEUR (le GUI onglet 1·KIT → 2·RUN → 3·TÉMOIN daté signé, le
    dossier ENTIER renvoyé au /test).
+
+
+10. **LE PREMIER RUN DE L'UNITÉ 1 REVENU REFUSÉ — LE KIT v2 LIVRÉ (Entrée 283)** : la console du run (run-console-unite01.txt, 622 o, UTF-16, déposée au /test le 14/11 07:56Z, recoupée octet pour octet) : la pièce VERT (loupe.exe 4d119b22… == la gravure), l'image cartographiée @ 0x7ff7920c0000, puis REFUS à T0 (« CreateFileW introuvable à kernel32 ») — AUCUN vecteur, AUCUN témoin : LA FAUTE AU LABO (GetModuleHandleW sans restype — l'HMODULE 64 bits tronqué en int 32 bits, GetProcAddress refusait la poignée mutilée ; la faute REJOUÉE au POSIX sous ctypes, 16 épreuves VERT 0 ROUGE) ; LE KIT v2 au /test/kit-unite-loupe-01-T-20261114-v2/ (12/12 pièces recoupées par re-téléchargement : la DÉCLARATION qui manquait au scénario 3e0d14ed…, la capture console en UTF-8 au lanceur 82e90adc…, le LISEZMOI de l'écart et de la reprise 37843aba…, la pièce et les témoins INTACTS octet pour octet) ; le kit v1 DEMEURE au /test (D143) ; LA REPRISE au GUI : onglet 1·KIT choisir le dossier v2 → onglet 2·RUN lancer → onglet 3·TÉMOIN dater, signer de la main, renvoyer preuves-unite01/ ENTIER au /test — la première mesure de la campagne naîtra du run revenu (CA1).

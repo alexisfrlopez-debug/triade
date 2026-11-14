@@ -10340,3 +10340,15 @@ Work Log:
   kit-unite-loupe-01-T-20261114 du /test), le RUN (le lanceur officiel),
   le TÉMOIN daté signé de la main, le dossier ENTIER renvoyé au /test ;
   puis l'unité 2 (loupe-01 × bras C) quand le vert recoupé ferme l'unité 1.
+
+
+Task ID: 190
+Agent: Z.ai (agent principal — la session du premier run de l'unité 1 : le REFUS à T0, l'écart nommé du labo, le kit v2)
+Task: LE PREMIER RUN DE L'UNITÉ 1 (loupe-01 × bras T, campagne D204) EST REVENU REFUSÉ À T0 — « CreateFileW introuvable à kernel32 » : la pièce était VERT (4d119b22… == la gravure), l'image cartographiée 0x7ff7920c0000, PUIS le scénario refusait la première feuille du noyau — aucun vecteur n'a couru, aucun témoin n'est né ; la faute est AU LABO : GetModuleHandleW sans restype, l'HMODULE 64 bits rendu en int 32 bits tronqué, GetProcAddress refusait la poignée mutilée.
+
+Work Log:
+- LA RÉCEPTION : la console déposée au /test (run-console-unite01.txt, 622 o, 14/11 07:56:17Z) == la pièce du chat OCTET POUR OCTET (sha256 f00d014e…) ; le décodage : UTF-16 LE au BOM, le texte mojibaké — la chaîne identifiée aux CINQ couples (É╔ ×Î —ù éÚ …à) == cp1252 du tuyau Python décodé cp850 par PowerShell (l'écart cosmétique, les verdicts ASCII intacts).
+- LE DIAGNOSTIC SUR PIÈCES : l'audit AST du scénario v1 — GetModuleHandleW le SEUL appel à pointeur sans restype (LoadLibraryExW/GetProcAddress/CreateFileW la portaient) ; la machine est 64 bits (la base 0x7ff7… imprimée par le run même) — la troncature inévitable ; l'épreuve POSIX : mmap à adresse fixe 0x7fdfec0fd000, la forme v1 rend 0xffffffffec0fd000 (la poignée mutilée), la forme v2 rend l'adresse intacte — 16 épreuves VERT 0 ROUGE.
+- LE KIT v2 MONTÉ ET LIVRÉ : kit-unite-loupe-01-T-20261114-v2/ au /test — la déclaration qui manquait (restype c_void_p), le lanceur à capture UTF-8, la gravure regravée du montage même, la pièce et les sept pièces intactes OCTET POUR OCTET celles de la v1 (4d119b22…) ; 12/12 recoupés au /test + 12/12 au bac du miroir (24/24 re-téléchargements VERT) ; le LISEZMOI v2 porte l'écart nommé ET la reprise.
+- LE GIT : le bac local rattrapé par fast-forward 276 → 282-1f57581 (core.filemode false — les bits de mode D159, aucune divergence de contenu), D141 le courant 282 archivé versionné, le commit de l'Entrée 283, le push GitHub au jeton ghp_ du /tokens.
+- SUITE : au développeur — LA REPRISE de l'unité 1 au GUI (onglet 1·KIT choisir le dossier v2, onglet 2·RUN lancer, onglet 3·TÉMOIN dater signer de la main, renvoyer preuves-unite01/ ENTIER au /test) ; puis le labo recoupe le run revenu et l'unité suivante commence (loupe-01 × bras C ou loupe-02 × T, l'ordre du plan).
