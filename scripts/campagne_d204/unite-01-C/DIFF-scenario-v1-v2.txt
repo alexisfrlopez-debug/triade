@@ -1,0 +1,41 @@
+--- scenario-unite01C.py (v1)
++++ scenario-unite01C.py (v2)
+@@ -207,11 +207,25 @@
+              f"@+{R_EMPREINTES:#x}")
+ 
+     # ---- LA RÉSOLUTION AUX SLOTS RÉELS de la table d'imports ---------------
++    # (v2 — LA RÉPARATION DU REFUS DU 14/11 : le terminateur se lit au CHAMP
++    #  Name (l'RVA NUL), JAMAIS à la chaîne — à l'RVA 0 vit l'en-tête DOS
++    #  « MZ », et la boucle v1 dérivait hors table jusqu'à l'access violation
++    #  0x7ffa23900094 du terrain ; gardes fail-closed : au plus 64
++    #  descripteurs, aucun Name hors image — REFUS nommé, jamais un plantage)
+     h_k32 = ctypes.c_void_p(k32.GetModuleHandleW("kernel32.dll"))
+     slots = {}                                    # nom → l'adresse du slot
++    taille_image = lire_u32(base, opt + 56)       # SizeOfImage (PE32+ : +56)
+     desc = rva_imports
+-    while True:
+-        nom_dll = lire_chaine(base, lire_u32(base, desc + 12))
++    for _garde in range(64):
++        nom_rva = lire_u32(base, desc + 12)
++        if not nom_rva:                           # LE TERMINATEUR : Name NUL
++            break
++        if nom_rva >= taille_image:               # la garde fail-closed
++            consigne(f"[T0] REFUS : un descripteur d'import pointe hors "
++                     f"image (@+{nom_rva:#x}) — la pièce a divergé, rien "
++                     f"ne court")
++            return 2
++        nom_dll = lire_chaine(base, nom_rva)
+         if not nom_dll:
+             break
+         if "kernel32" in nom_dll.lower():
+@@ -230,6 +244,10 @@
+                         slots[feuille] = base + iat + 8 * j
+                 j += 1
+         desc += 20
++    else:
++        consigne("[T0] REFUS : la table d'imports sans terminateur — la "
++                 "pièce a divergé, rien ne court")
++        return 2
+     manquantes = [f for f in FEUILLES_KIT if f not in slots]
+     if "SetFilePointerEx" in manquantes:
+         manquantes.remove("SetFilePointerEx")    # l'ÉCART NOMMÉ du bras C
