@@ -10752,5 +10752,12 @@ Work Log:
   ouverture ; les autres pièces intactes), le re-run C-loupe-05-it2 au
   terrain (la ligne au livre au geste) ; le kit T clos demeure (son
   scénario porte la même faute, nommée) ; ENSUITE loupe-08 ligne, aux
-  deux bras — le labo construit à la commande. (15/11, la session des
+  deux bras — le labo construit à la commande.
+- LE RECOUP FINAL (nommé) : le bac reconstitué d'un clone GitHub PEU
+  PROFOND (--depth 5) — le premier bundle téléversé TRONQUÉ à six commits
+  (70 962 652 o) ; réparé dans la session : l'UNSHALLOW (403 commits), le
+  bundle COMPLET re-téléversé (78 187 359 o — « a complete history »), la
+  restauration à l'identique recoupée depuis le bundle même (403 commits,
+  HEAD 53b5e99) ; le refs/stash du bac ancien vit aux bundles archivés
+  (D141), le nouveau mire GitHub seul. (15/11, la session des
   runs de l'unité 3 recoupés)

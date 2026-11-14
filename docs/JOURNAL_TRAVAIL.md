@@ -12349,4 +12349,16 @@ la reprise portée à 298.
   (la cap tient : it2/it3), la ligne au livre au geste ; le kit T clos
   demeure (son scénario porte la même faute, nommée ici — D143, jamais
   jeté) ; ENSUITE loupe-08 ligne, aux deux bras — le labo construit à
-  la commande. (15/11, la session des runs de l'unité 3 recoupés)
+  la commande. - LE RECOUP FINAL (le bac du labo, nommé — jamais maquillé) : le bac de la
+  session fut reconstitué d'un CLONE GITHUB PEU PROFOND (--depth 5 — le bac
+  des sessions précédentes portait le dépôt entier) : LE PREMIER BUNDLE
+  téléversé au miroir fut TRONQUÉ à SIX commits (70 962 652 o — « complete »
+  de son propre avis, l'historique absent) ; L'ÉCART NOMMÉ ET RÉPARÉ dans
+  la session même : L'UNSHALLOW (le dépôt entier rapatrié : 403 commits),
+  LE BUNDLE COMPLET re-téléversé (78 187 359 o — main + origin/main + HEAD
+  @ 53b5e99, « a complete history »), LA RESTAURATION À L'IDENTIQUE
+  recoupée depuis le bundle même (git clone triade-history.bundle : 403
+  commits, HEAD 53b5e99) ; le bundle archivé du D141 (295-565706b) demeure
+  la mémoire de l'ère d'avant — le refs/stash du bac ancien vit aux bundles
+  archivés, le nouveau mire GitHub seul.
+(15/11, la session des runs de l'unité 3 recoupés)
