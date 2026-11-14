@@ -10627,3 +10627,77 @@ Work Log:
   construit à la commande ; le livre continue à la machine locale du
   développeur (le même dossier atelier-campagne-d204-20261114-013520 à
   « CHOISIR L'ATELIER EXISTANT… » — il porte les QUATRE lignes).
+
+
+Task ID: 204
+Agent: Z.ai (agent principal — la session de l'unité 3 : loupe-05 sha256 bâtie aux deux bras et livrée)
+Task: LA COMMANDE DU DÉVELOPPEUR (« go » — la suite prescrite par la 296) : L'UNITÉ 3 LOUPE-05 SHA256 CONSTRUITE AUX DEUX BRAS ET LIVRÉE AU COFFRE /test — la composition héritée tls13 PAR LA CARTE, les fenêtres glissantes 64 Kio, LE DÉFAUT LATENT T[31] de la table md5 des kits 01/02 nommé et réparé au bras C.
+
+Work Log:
+- LA VÉRIFICATION PRÉALABLE : le /test marché à neuf — l'unité 2 close au
+  livre (la 296 vécue : le livre 013520 à l'archive, la racine à SES 14
+  entrées, la carte à 296) ; le relais OAuth FONCTIONNEL.
+- LE BAC RECONSTITUÉ : le conteneur recyclé encore (la répétition
+  285/293/295/296) — keystone/capstone/pefile/unicorn/pynacl réinstallés,
+  le compilateur croisé re-extrait des .deb SANS ROOT (gcc-mingw-w64
+  14.2.0-19+27+b1 + binutils 2.47-6+13.3+b1 + mingw-w64 12.0.0-5, la
+  chaîne trixie) ; la vérification sur le source du kit 02 : 95 657 o à
+  la gravure près (95 413 — l'horodatage PE du lieur, NOMMÉ).
+- LE BRAS T : l'oracle écrit-avant-code (oracle-depuis-I.txt) ; LA
+  NOTATION À LA MAIN 279 o, 72 instructions (les choix : la sortie gardée
+  AVANT les bornes, LE LU RECOUPÉ AU DEMANDÉ plus strict que le scellé,
+  le contexte à [rsp+0x40] la leçon dev.5, la fenêtre min(64 Kio,
+  restant)) ; UNE FAUTE D'ORACLE nommée (le poison de la sortie nulle —
+  écrire à l'adresse 0, le harnais refuse JUSTEMENT) ; le build aux
+  verrous 121, le différentiel CONFINÉ au slot loupe-05 et à la porte
+  R10 ; LA CRISTALLISATION DIX rebuilds identiques (2f6df5a5…) ;
+  L'ORACLE 18 VERT 0 ROUGE (639 gammes + le proxy scellé +
+  L'INTÉGRATION loupe-07 scellé qui appelle la notation — le panneau ==
+  hashlib ; les FIPS au fichier ; les rejets au poison ; l'échec à la 2e
+  fenêtre, la session qui survit ; LA FALSIFICATION ENTRE LES FENÊTRES
+  attrapée — le condensé diverge, la même gamme verte au crochet retiré) ;
+  le générateur du scénario épuré par AST contre un contre-modèle — UNE
+  FAUTE ATTRAPÉE AVANT LE RUN (la plage vide des multi-fenêtres, corrigée
+  au fichier livré).
+- LE BRAS C : loupe_05_sha256 NEUVE (la famille sha256_* du bloc session
+  réutilisée, la fenêtre locale 64 Kio) + le bloc session du kit 02 ;
+  LE DÉFAUT LATENT NOMMÉ ET RÉPARÉ : T[31] de la table md5 — le panneau
+  md5 divergeait de RFC 1321 (le md5 de « abc » rendait b59ebe27… au
+  lieu de 90015098…) : le kit 01/02 portait 0x8d2a6c8a, la vérité sinus
+  est 0x8d2a4c8a, UN CHIFFRE — AUCUN juge des unités 1-2 ne lisait le
+  panneau ; l'isolement par le port Python (l'algorithme tenu, la TABLE
+  fautive), la correction au source livré, le panneau == hashlib ; gcc
+  -O2 croisée (96 171 o, b0d347ba…) ; LE CONTRAT REJOUÉ AU POSIX 65
+  VERT 0 ROUGE (le harnais à shims + LE TIROIR DE FALSIFICATION né : un
+  octet muté ENTRE les fenêtres) — DEUX FAUTES DU HARNAIS nommées en
+  route (la session de V3 jamais fermée → V4 refusée -5 session double,
+  le VÉRITABLE verdict du scellé ; les OUVRIR de V4/V5 non imprimés → le
+  juge au mauvais témoin — la pièce a toujours répondu juste) ; LES
+  CONTRÔLES BINAIRES 18 VERT 0 ROUGE (PE32+, les SIX exports, les SIX
+  feuilles kernel32, aucun appel CRT, les relocations) ; l'épreuve de la
+  découverte contre la pièce même + le générateur par AST (2 000 tailles
+  VERT).
+- LES KITS : les DEUX gravés (11 pièces chacun : les QUATRE témoins de la
+  génération FIXE == la gravure du kit 01 + temoin-abc.bin le fixture
+  FIPS du contrat, la nouveauté), l'extraction vierge 11/11 × 2.
+- LA LIVRAISON : les DEUX kits au /test, 24 pièces montées et recoupées
+  byte-byte (le double téléchargement), les gravures 11/11 × 2, LA CARTE
+  LISEZMOI-KITS PORTÉE À 297 (18 104 → 20 352 o), re-téléchargée
+  identique.
+- LES ÉCARTS NOMMÉS : M2 manquant (la répétition des 290/294) ; M4 non
+  instrumentée au labo (la répétition de la 294) ; le bac reconstitué
+  (le recyclage du conteneur, la chaîne mingw du jour) ; T[31] le défaut
+  latent des kits 01/02 (nommé, réparé au kit 05) ; le V4 terrain arme
+  un verrou de plage (NOMMÉ ABSENT si le système l'ignore) ; le V5 écrit
+  son fixture au réceptacle (falsifie-384.bin) ; l'écho « \t » du
+  lanceur cosmétique.
+- LA CONSIGNATION : la présente Task 204 + l'Entrée 297 ; la carte
+  OU-TROUVER portée à 297 (l'entrée 23, l'en-tête, les renvois Entrées
+  251-297 / Tasks 158-204) aux DEUX endroits (la racine du coffre + le
+  miroir git) ; le push GitHub (main) : JOURNAL_TRAVAIL.md + worklog.md
+  + OU-TROUVER, UN SEUL commit.
+- SUITE : au développeur — LE RUN DE L'UNITÉ 3 aux deux bras (1·KIT →
+  2·RUN → 3·TÉMOIN signé de la main → preuves-unite05[/ C]/ ENTIER au
+  /test ; onglets 4-7), puis les lignes au livre (T-loupe-05-it1,
+  C-loupe-05-it1 à l'onglet 5 de l'atelier 013520) ; ENSUITE loupe-08
+  ligne, aux deux bras. (15/11, la session de l'unité 3 bâtie)

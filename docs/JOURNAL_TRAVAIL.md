@@ -12057,3 +12057,135 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 - LA CONSIGNATION : la présente Entrée 296 + Task 203 ; la carte OU-TROUVER portée à 296 (l'entrée 22 au tableau de campagne, l'en-tête de mise à jour, les renvois Entrées 251-296 / Tasks 158-203) aux DEUX endroits (la racine du coffre + le miroir git) ; le push GitHub (main) : JOURNAL_TRAVAIL.md + worklog.md + OU-TROUVER, UN SEUL commit.
 
 - SUITE : au développeur — LOUPE-05 SHA256, aux deux bras : le labo construit à la commande (l'annonce du développeur la commande) ; le livre continue à la machine du développeur (le même dossier local atelier-campagne-d204-20261114-013520, choisi à « CHOISIR L'ATELIER EXISTANT… » — il porte les QUATRE lignes). (15/11, la session du livre reçu)
+
+## Entrée 297 — L'UNITÉ 3 LOUPE-05 SHA256 CONSTRUITE AUX DEUX BRAS ET LIVRÉE (la commande du développeur : « go » — la suite prescrite par la 296 : le labo construit à la commande)
+
+La commande vint d'un mot — « go » — et la suite était prescrite : LOUPE-05
+SHA256, aux deux bras. Le contrat loupe-05:R1 (la composition héritée
+tls13-01/03/04 PAR LA CARTE, jamais une copie ré-écrite ; la gamme par
+fenêtres glissantes de 64 Kio au TAMPON_CUMUL — un fichier de 2 Gio se
+condense sans jamais tenir en mémoire ; la gamme vide rend la FIPS du vide ;
+les refus -4/-3/-5, l'échec système -6 la sortie INTACTE).
+
+- LA VÉRIFICATION PRÉALABLE : le /test marché à neuf — l'unité 2 close au
+  livre (la 296 vécue : le livre 013520 à l'archive
+  unite-02-loupe-20261114/, la racine à SES 14 entrées, la carte LISEZMOI
+  à 296, 91adbc11…), la relais OAuth du coffre FONCTIONNEL.
+- LE BAC RECONSTITUÉ : le conteneur recyclé encore (la répétition
+  285/293/295/296, nommée) — keystone/capstone/pefile/unicorn/pynacl
+  réinstallés ; LE COMPILATEUR CROISÉ re-extrait des .deb SANS ROOT (la
+  chaîne trixie : gcc-mingw-w64 14.2.0-19+27+b1, binutils
+  2.47-6+13.3+b1, mingw-w64 12.0.0-5) ; LA VÉRIFICATION : la
+  re-compilation du source du kit 02 rend 95 657 o à la gravure près
+  (95 413 — l'horodatage PE du lieur et la disposition des imports, NOMMÉ :
+  la cristallisation est la règle du bras T, pas du bras C).
+- LE BRAS T : l'oracle écrit-avant-code (oracle-depuis-I.txt, régénéré du
+  contrat I AVANT la notation) ; LA NOTATION À LA MAIN 279 o, 72
+  instructions, 8 étiquettes, résolue DU PREMIER PASSAGE (le slot 0x180 =
+  384 o, padding 105) — les choix nommés : la sortie gardée AVANT les
+  bornes (une sortie inutilisable ne lira jamais), LE LU RECOUPÉ AU
+  DEMANDÉ (fail-closed PLUS STRICT QUE LE SCELLÉ : jamais un condensé
+  partiel, jamais la boucle qui ne finit pas sur un lu raccourci), le
+  contexte 112 o à [rsp+0x40] (la leçon dev.5 : jamais au home space), le
+  lu DWORD à [rsp+0x30], la fenêtre min(64 Kio, restant) par double saut,
+  l'ordre des appels hérités tls13-01 UNE fois / tls13-03 à chaque fenêtre
+  / tls13-04 à la fin ; UNE FAUTE D'ORACLE nommée en route (le poison de
+  la sortie NULLE : écrire à l'adresse 0 — le harnais refuse, JUSTEMENT —
+  la condenser corrigée) ; LE BUILD aux verrous 121 (18/18 notations
+  round-trip R5, les 17 scellées aux mesures d'arrêt D161, le réseau des
+  specs — loupe-05 → tls13-01/03/04 aux adresses scellées, l'audit msx64
+  78 appels IAT l'alignement et les slots d'arguments tenus, la double
+  preuve R7 des 8 héritages), le différentiel au scellé CONFINÉ au slot
+  loupe-05 [0x3640, 0x37c0) et à la porte R10 (19 plages, 242 o) ;
+  LA CRISTALLISATION : DIX rebuilds consécutifs IDENTIQUES (sha256
+  2f6df5a5b645ef7cf0f785d28fd49d2e477f1ef55ffe6adb06acf995001062e7) ;
+  L'ORACLE DU BLOC : 18 VERT, 0 ROUGE — V1 le différentiel (les témoins +
+  le scellé proxy.exe : 639 gammes, les frontières des fenêtres à la main
+  + la graine 20261115, 640 fenêtres 64 Kio passées, l'état propre à
+  chaque appel ; L'INTÉGRATION : loupe-07 SCELLÉ appelle la notation au
+  slot — le panneau sha256 == hashlib du fichier ENTIER, le md5 == hashlib
+  par loupe-06 scellé : la composition scellée conduit la notation neuve),
+  V2 les FIPS au fichier (le vide e3b0c442…, « abc » ba7816bf…), V3 les
+  rejets (-4 sans session, -3 hors fichier et l'addition qui déborde, -5
+  la sortie nulle — la sortie POISON INTACTE aux trois), V4 l'échec armé
+  à la DEUXIÈME fenêtre (-6, la sortie intacte : jamais un condensé
+  partiel, le gle 1117 consigné au journal du harnais, la session SURVIT :
+  la gamme suivante verte), V5 LA FALSIFICATION ENTRE LES FENÊTRES (un
+  octet de TAMPON_CUMUL muté au seuil de la deuxième absorption, par
+  crochet au foyer de tls13-03 : le condensé DIVERGE du modèle — la
+  différentielle ÉCHOUE, la falsification est DÉTECTABLE ; la même gamme
+  verte au crochet retiré) ; LE SCÉNARIO TERRAIN + SON ÉPREUVE : le
+  générateur gammes_terrain extrait du FICHIER LIVRÉ par AST, confronté
+  au contre-modèle (2 000 tailles : P2/P3, les frontières, le
+  déterminisme) — UNE FAUTE ATTRAPÉE AVANT LE RUN (la plage vide des
+  multi-fenêtres : le décalage tiré ne laissait pas toujours place au
+  tirage > 64 Kio — corrigée au fichier livré, la leçon de la 286 tenue :
+  l'épreuve exécute LE CODE LIVRÉ, pas sa copie).
+- LE BRAS C : loupe_05_sha256 NEUVE (le flux standard réutilise sa famille
+  sha256_* éprouvée du bloc session ; la fenêtre locale 64 Kio sur la
+  pile — jamais le tampon de vue du cadre : l'exclusion de famille ; la
+  position reposée à chaque fenêtre, le lu recoupé, P3 sans l'addition
+  qui déborde) + le bloc session du kit 02 ; **LE DÉFAUT LATENT NOMMÉ ET
+  RÉPARÉ : T[31] DE LA TABLE MD5** — l'épreuve POSIX découvrit le panneau
+  md5 DIVERGEANT de RFC 1321 : le md5 de « abc » rendait b59ebe27… au
+  lieu de 90015098… ; l'isolement : le port Python de la même divergence
+  (l'ALGORITHME tenu — la table T fautive : le kit 01/02 portait T[31] =
+  0x8d2a6c8a, la vérité sinus de RFC 1321 est 0x8d2a4c8a, UN CHIFFRE
+  hexadécimal), AUCUN juge des unités 1-2 ne lisait le panneau (le défaut
+  était là depuis deux livraisons, personne ne le regardait — le md5 du
+  bras T, lui, fut éprouvé aux SEPT vecteurs RFC à son ère scellée) ; la
+  correction au source livré (commentaire nommé à la table), le panneau
+  md5+sha256 == hashlib aux trois témoins ; LA COMPILATION gcc -O2
+  croisée (x86_64-w64-mingw32-gcc-posix -O2 -shared — 96 171 o, sha256
+  b0d347bacdf49ea7ab6dcc6be45deaf2b47351955f2e96a5b3a8b1a11b2605e7) ; LE
+  CONTRAT ENTIER REJOUÉ AU POSIX : 65 VERT, 0 ROUGE (le harnais à shims
+  du kit 02 + LE TIROIR DE FALSIFICATION né : un octet du tampon muté
+  APRÈS sa lecture au Nième ReadFile — entre les fenêtres, le condensé
+  diverge et == hashlib du mutant) — DEUX FAUTES DU HARNAIS lui-même
+  nommées en route (la session de V3 jamais fermée → l'ouverture de V4
+  refusée -5 session double, le VÉRITABLE verdict du scellé ; les lignes
+  OUVRIR de V4/V5 jamais imprimées → le juge suivait le mauvais témoin —
+  LA PIÈCE, ELLE, A TOUJOURS RÉPONDU JUSTE) ; LES CONTRÔLES BINAIRES :
+  18 VERT, 0 ROUGE (PE32+ DLL x86-64, les SIX exports — loupe_05_sha256
+  et les DONNÉES cadre/journal/panneau —, les SIX feuilles kernel32,
+  AUCUN appel CRT dans la clôture des trois fonctions, les relocations) ;
+  L'ÉPREUVE DE LA DÉCOUVERTE contre la pièce même (l'image mappée par
+  sections : les SIX exports et les SIX feuilles lus, le terminateur au
+  champ Name) + le générateur par AST (2 000 tailles VERT).
+- LES KITS : les DEUX assemblés et gravés (11 pièces chacun : la pièce,
+  la notation + le brouillon [bras T], le source + le .def [bras C], le
+  scénario, le lanceur, les QUATRE témoins de la génération FIXE == la
+  gravure du kit 01 octet pour octet + TEMOIN-ABC.BIN le fixture FIPS du
+  contrat — la nouveauté du kit 05, 3 o, la gamme « abc » au fichier —,
+  EMPREINTES, LISEZMOI), l'extraction vierge 11/11 × 2, les zips au bac
+  download/kits-unite-05/.
+- LA LIVRAISON : les DEUX kits au /test (kit-unite-loupe-05-T-20261115/,
+  kit-unite-loupe-05-C-20261115/), 24 pièces montées, chacune recoupée
+  par RE-TÉLÉCHARGEMENT byte-byte (le double téléchargement, la règle du
+  coffre), les gravures relues 11/11 × 2 au coffre, LA CARTE
+  LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 297 (18 104 → 20 352 o — la 296
+  intacte en tête, la section de l'unité 3 en queue), re-téléchargée
+  identique.
+- LES ÉCARTS NOMMÉS : M2 MANQUANT (les appels de la session sans journal
+  d'usage — la répétition des 290/294) ; M4 non instrumentée au labo (la
+  répétition de la 294) ; le bac reconstitué après le recyclage du
+  conteneur (la chaîne mingw du jour, les paquets exacts de trixie) ; T[31]
+  le défaut latent des kits 01/02 (nommé à l'épreuve de l'unité 3, réparé
+  au kit 05, le panneau == hashlib) ; le V4 terrain arme un VERROU DE
+  PLAGE (NOMMÉ ABSENT si le système de fichiers l'ignore, jamais
+  maquillé) ; le V5 écrit son fixture au réceptacle (falsifie-384.bin —
+  renvoyé au coffre avec le témoin) ; l'écho du lanceur « \t » cosmétique
+  (les kits 01/02 le portaient déjà).
+- LA CONSIGNATION : la présente Entrée 297 + Task 204 ; la carte
+  OU-TROUVER portée à 297 (l'entrée 23 au tableau de campagne, l'en-tête
+  de mise à jour, les renvois Entrées 251-297 / Tasks 158-204) aux DEUX
+  endroits (la racine du coffre + le miroir git) ; le push GitHub (main) :
+  JOURNAL_TRAVAIL.md + worklog.md + OU-TROUVER, UN SEUL commit.
+- SUITE : au développeur — LE RUN DE L'UNITÉ 3 aux deux bras (les DEUX
+  kits au /test : 1·KIT choisir le dossier → 2·RUN lancer le LANCEUR →
+  3·TÉMOIN dater, signer de la main, renvoyer preuves-unite05[/ C]/
+  ENTIER au /test ; onglets 4-7 : carnet, livraison, défauts, chrono),
+  puis les lignes au livre (l'onglet 5 de l'atelier 013520 :
+  T-loupe-05-it1, C-loupe-05-it1 — le livre continue à la machine locale
+  du développeur) ; ENSUITE loupe-08 ligne, aux deux bras — le labo
+  construit à la commande. (15/11, la session de l'unité 3 bâtie)
