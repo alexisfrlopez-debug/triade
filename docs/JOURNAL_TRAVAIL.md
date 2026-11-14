@@ -11959,3 +11959,16 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 - LES ONGLETS COMPAGNONS (attendus depuis la 287) : 4 · CARNET (le temps humain de la session C), 6 · DÉFAUTS (si un défaut se nomme), 7 · CHRONO (la mesure M4).
 
 - LES MIROIRS À L'OUVERTURE (la sonde 89, VERT partout) : GitHub main @ 60d285e4 == le local ; le bundle == l'état 290 ; D141 tenu (95 bundles aux archives) ; les trois textes identiques — la passation 290 est complète, aucune dette. (14/11, la session du guide)
+
+## Entrée 292 — LE REFUS DU VERROU LU ET NOMMÉ : l'atelier n'est pas la campagne (le retour du développeur : le REFUS « ne porte pas le plan pré-enregistré »)
+
+- CE QUI S'EST VÉCU : au picker de l'étape 2, l'atelier 013520 (D:\Downloads\Runs Triade\test\TRIADE_gui_tous_runs_v1\atelier-campagne-d204-20261114-013520) fut désigné au bouton « CHOISIR LE DOSSIER… » — le GUI REFUSA, fail-closed, nommé : « ne porte pas le plan pré-enregistré (choisissez le dossier campagne-d204 lui-même) ». LE REFUS EST JUSTE : l'atelier ne porte que les COPIES datées des trois gabarits (livraisons.csv, carnet, défauts) + journal-ouverture.txt — jamais le plan ; le verrou ne recoupe que les HUIT pièces de campagne-d204/.
+
+- LES DEUX BOUTONS DE L'ÉTAPE 2, DÉSEMBROUILLÉS : « CHOISIR LE DOSSIER… » (le premier, à côté du chemin) nourrit LE VERROU — il veut le dossier campagne-d204 LUI-MÊME (les HUIT pièces scellées, le plan a78caf8c… en tête ; sur la machine : D:\Downloads\Runs Triade\test\TRIADE_gui_tous_runs_v1\campagne-d204, à côté de LANCER-GUI-TOUS-RUNS.bat) ; « CHOISIR L'ATELIER EXISTANT… » (le troisième bouton) reprend L'ATELIER — le dossier daté qui porte livraisons.csv. Le guide de la 291 visait le TROISIÈME bouton ; le premier fut pris : le refus en naquit, rien ne cassa.
+
+- LE GESTE CORRIGÉ (le but demeure : la ligne C au livre 013520) : étape 2 → « CHOISIR L'ATELIER EXISTANT… » → désigner atelier-campagne-d204-20261114-013520 → le GUI annonce « L'ATELIER EXISTANT est repris — 1 livraison(s) y vivent, le carnet CONTINUE » (la marque du bon livre : UNE ligne, la T) ; puis étape 4 → C-loupe-01 → onglet 5 · LIVRAISON → CONSIGNER (la ligne C-loupe-01-it1 naîtra, l'unité close au premier vert, § 7, 1/3) ; puis l'atelier ENTIER au coffre /test.
+
+- SI LE VERROU DOIT TOUT DE MÊME VIVRE (le tableau des pièces vide, par exemple) : « CHOISIR LE DOSSIER… » → campagne-d204 (le dossier dont l'INTÉRIEUR montre le plan, les deux instruments, les trois gabarits, la console, le LISEZMOI) → « RECOUPER LES HUIT PIÈCES » → huit VERT → « OUVRIR L'ATELIER DE CAMPAGNE… » retrouve LUI-MÊME le 013520 (il cherche atelier-campagne-d204-* au parent du kit) — la campagne CONTINUE, jamais ne recommence. L'atelier n'est JAMAIS l'entrée du verrou ; la campagne n'est JAMAIS l'atelier.
+
+- LA CONSIGNATION : la présente Entrée 292 + Task 199 au worklog. (14/11, la session du refus lu — RÉÉCRITE VERBATIM à la 293 : le conteneur du labo fut recyclé entre les deux sessions, les consignations locales de la 292 furent perdues, AUCUN miroir ne les portait ; le texte est celui consigné au chat à l'époque)
+
