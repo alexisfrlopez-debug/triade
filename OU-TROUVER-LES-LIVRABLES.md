@@ -199,7 +199,7 @@ pièce) AVANT de conclure à une absence.*
    22/10 mort).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-284) et au worklog (`worklog.md`, Tasks 158-191).*
+Entrées 251-285) et au worklog (`worklog.md`, Tasks 158-192).*
 
 
 9. **LA CAMPAGNE D204 EST NÉE — LA PREMIÈRE UNITÉ LIVRÉE (Entrée 282)** :
@@ -222,3 +222,5 @@ Entrées 251-284) et au worklog (`worklog.md`, Tasks 158-191).*
 
 
 11. **LE RUN VERT DE L'UNITÉ 1 × BRAS T + LA DEUXIÈME UNITÉ LOUPE-01 × BRAS C LIVRÉE (Entrée 284)** : le run revenu du terrain (le dossier « Nouveau run » au /test) — 15 VERT 0 ROUGE, le témoin daté et signé de la main (Alexis Lopez, 14/11/2026), T0 recoupé (loupe.exe 4d119b22… == la gravure) ; LA PREMIÈRE MESURE EST NÉE (CA1 : l'atelier, la ligne livraisons.csv T-loupe-01-it1 VERT recoupée par le labo, le carnet cristallisation 85 min) ; l'unité T-loupe-01 CLOSE à it1 (§ 7 : l'arrêt au premier vert recoupé) ; LE KIT DU BRAS C au /test/kit-unite-loupe-01-C-20261114/ (12/12 recoupés + 12/12 au bac du miroir) : la pièce loupe-01-c.dll (gcc -O2 -shared, 93 625 o, 85b34ed4…), le source loupe-01-c.c, le scénario adapté au PE compilé, les MÊMES témoins ; la construction mesurée (11 appels, 67 475 tokens LUS DU LOG) et éprouvée au labo (MD5+SHA-256 32 VERT ; le contrat entier 17 VERT au POSIX D122 ; les contrôles binaires 16 VERT — aucun appel CRT) ; LA REPRISE au GUI : onglet 1·KIT de l'unité loupe-01 × C choisir le dossier → 2·RUN → 3·TÉMOIN signé de la main → preuves-unite01C/ ENTIER au /test.
+
+12. **LE BAC DU LABO RECONSTITUÉ — L'ÉTAT 284 RE-RECOUPÉ DU COFFRE (Entrée 285, addenda)** : le conteneur du labo recyclé entre deux sessions — le bac local revint vers 276, le coffre Drive, le miroir et GitHub demeurèrent LA vérité ; 139 pièces re-rapatriées, le kit C re-recoupé 10/10 à sa gravure, T0 re-recoupé (4d119b22… == le témoin), le plan VERROUILLÉ (a78caf8c…), GitHub vérifié à l'API (main @ 6a0d3de — le push de la 284 A VÉCU) ; L'ÉCART NOMMÉ : le récit du GUI collé au chat portait « 6 minutes » et « verdict ROUGE » — les pièces revenues disent 85 minutes et VERDICT VERT (le dossier ENTIER est la vérité, pas le récit) ; l'atelier 012347 (0 livraison) est la copie imbriquée VIDE — le livre qui compte est l'atelier 013520 rendu ENTIER au coffre ; LA SUITE au développeur : LE BRAS C au GUI (1·KIT choisir → 2·RUN lancer → 3·TÉMOIN signé de la main → preuves-unite01C/ ENTIER au /test).
