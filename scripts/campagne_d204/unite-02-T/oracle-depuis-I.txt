@@ -1,0 +1,74 @@
+L'ORACLE DEPUIS I — l'unité 2 (loupe-02 lire × bras T, la campagne D204)
+Écrit-avant-code : le présent document dérive du contrat loupe/I/loupe-02-lire.md
+(révision 1) AVANT la notation. Le juge est le MODÈLE INDÉPENDANT Python —
+jamais les octets du bloc.
+
+LE MODÈLE (la sémantique du contrat, une fonction) :
+
+  def modele_lire(fichier, decalage, journal):
+      # journal : la liste des entrées loupe-16 (décalage u64, octet u8)
+      taille = len(fichier)
+      if decalage % 16 != 0:  return (-5, None, None)   # E2 : la grille
+      if decalage >= taille:  return (-3, None, None)   # E3 : hors-bornes
+      remplissage = min(384, taille - decalage)         # Q1 : la double borne
+      tampon = bytearray(fichier[decalage:decalage + remplissage])
+      for dec, octet in journal:                        # Q2 : le recouvrement
+          if decalage <= dec < decalage + remplissage:
+              tampon[dec - decalage] = octet
+      return (0, bytes(tampon), remplissage)            # Q3 : rax = 0
+
+  ET LA SESSION D'ABORD (P1) : sans session ouverte, verdict -4, RIEN lu —
+  le modèle ne court même pas (E1 précède tout).
+
+LES ORDRES DU CONTRAT, dérivés mot à mot :
+  P1 → lire la poignée AU CADRE (+528) : INVALID_HANDLE_VALUE (-1) = refus -4.
+  P2 → le décalage (rcx) MULTIPLE DE 16 : les quatre bits bas nuls, sinon -5.
+  P3 → le décalage < la taille LUE AU CADRE (+520) — I1 : la borne jamais
+       passée par l'appelant — sinon -3.
+  Q1 → remplissage = min(384, taille − décalage) ; la position posée par
+       SetFilePointerEx (FILE_BEGIN) PUIS ReadFile du remplissage EXACT au
+       tampon (+568) ; la position reposée À CHAQUE lecture ; le champ
+       remplissage (+552) posé au cadre.
+  Q2 → APRÈS la lecture : chaque entrée du journal (la zone 4 112 o : u64
+       décalage · u8 octet · 7 réserve, le nombre u32 à +4096, 256 max)
+       dont le décalage ∈ [décalage, décalage + remplissage) REMPLACE
+       l'octet du tampon — l'édition survit au défilement.
+  Q3 → rax = 0 ; la vue (+536) et le curseur (+544) INTACTS — lire ne
+       déplace rien.
+  I2 → la lecture ne touche QUE le tampon du cadre : jamais TAMPON_CUMUL
+       (0x10000), jamais l'ECRAN (0xF500) — les zones annexes INTACTES.
+  I4 → l'IAT fermée du bloc : SetFilePointerEx, ReadFile, GetLastError —
+       AUCUNE autre feuille ; les non-volatils rendus ; NOP interdit.
+  E4 → SetFilePointerEx OU ReadFile en échec (ou lu != demandé — fail-closed,
+       le tampon ne montre JAMAIS un octet non lu) : GetLastError CONSIGNÉ
+       (l'appel, jamais le code brut exposé — la table traduit), remplissage
+       posé à 0, verdict -6.
+
+LES VECTEURS DU CONTRAT (le périmètre de l'oracle AU LABO) :
+  V1 différentiel   : les témoins du kit (1 o, 384 o, 3×64 Kio+1) + le
+      proxy.exe scellé — le tampon comparé à la découpe Python à 1 000
+      décalages aléatoires valides (couvre Q1, Q3 — la graine fixe, les
+      mêmes décalages aux deux juges).
+  V2 recouvrement   : les écritures aux BORDS de fenêtre (le premier octet,
+      le dernier, le hors-fenêtre avant et après) + une entrée multiple —
+      le tampon recouvert == le modèle (couvre Q2).
+  V3 rejets         : sans session (-4), décalage non aligné (-5), décalage
+      à la taille exacte (-3), décalage au-delà (-3) — RIEN lu, le cadre
+      INTACT (couvre E1, E2, E3 ; « rien lu » = remplissage et tampon
+      inchangés).
+  V4 échec système  : le shim ReadFile en échec (le harnais arme le Nième
+      appel) → -6, remplissage 0, le gle CONSIGNÉ au journal du harnais
+      (couvre E4, I4).
+  V5 falsification  : un octet du tampon muté APRÈS la lecture — l'état lu
+      DIVERGE du modèle : la falsification demandée, charte § 3 (le juge
+      lit l'état, jamais le modèle).
+
+LES INÉGRATIONS dérivées : loupe-01 scellé APPELLE loupe-02 à la naissance
+(la fenêtre à la vue 0, seulement si taille > 0) — la notation de campagne
+court À CHAQUE ouverture : le refus d'un appelé ferme la session, le
+verdict remonte (la spec loupe-01:R1, l'ordre du geste 5).
+
+LES TÉMOINS : la génération FIXE du labo (graine 20261107) — temoin-1.bin
+(1 o), temoin-384.bin (384 o), temoin-3f.bin (3 × 64 Kio + 1), vide.bin —
+les MÊMES octets aux deux bras, recoupés aux gravures des kits 01 avant
+toute copie.

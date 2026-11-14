@@ -1,0 +1,68 @@
+{
+ "kit": "D:\\Downloads\\Runs Triade\\test\\TRIADE_gui_tous_runs_v1\\campagne-d204",
+ "atelier": "D:\\Downloads\\Runs Triade\\TRIADE_gui_tous_runs_v1\\TRIADE_gui_tous_runs_v1\\atelier-campagne-d204-20261114-012347",
+ "runs_1clic": {
+  "voie1": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-VOIE1-QEMU.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-voie1-qemu-run-20261114-013639"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-voie1-qemu-run-20261114-013639"
+  },
+  "voie2": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-VOIE2-QEMU.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-voie2-qemu-run-20261114-013918"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-voie2-qemu-run-20261114-013918"
+  },
+  "diagnostic": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-DIAGNOSTIC.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-diagnostic-run-20261114-014022"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-diagnostic-run-20261114-014022"
+  },
+  "geste-b": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-GESTE-B-SHANI.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-geste-b-run-20261114-014116"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-geste-b-run-20261114-014116"
+  },
+  "vitrine": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-TEMOIN-VITRINE.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-temoin-vitrine-run-20261114-014159"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-temoin-vitrine-run-20261114-014159"
+  },
+  "sequestre": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-SEQUESTRE-D183.bat",
+   "historique": [
+    "D:\\Downloads\\test\\TRIADE-1CLIC-sequestre-d183-run-20261114-014315"
+   ],
+   "run": "D:\\Downloads\\test\\TRIADE-1CLIC-sequestre-d183-run-20261114-014315"
+  },
+  "replication": {
+   "bat": "D:/Downloads/test/TRIADE-1CLIC-REPLICATION.bat"
+  }
+ },
+ "calibration": {
+  "statut": "VERT",
+  "ecart": "0.000",
+  "quand": "2026-11-14 02:04:54"
+ },
+ "unites": {
+  "T-loupe-01": {
+   "kit": "D:/Downloads/Runs Triade/kit-unite-loupe-01-T-20261114-v2",
+   "lanceur": "D:/Downloads/Runs Triade/kit-unite-loupe-01-T-20261114-v2/kit-unite-loupe-01-T-20261114-v2/LANCEUR-UNITE-01-T.bat",
+   "dernier_run": "D:/Downloads/Runs Triade/kit-unite-loupe-01-T-20261114-v2/kit-unite-loupe-01-T-20261114-v2/preuves-unite01"
+  },
+  "C-loupe-01": {
+   "kit": "D:/Downloads/kit-unite-loupe-01-C-20261114-v2/kit-unite-loupe-01-C-20261114-v2",
+   "lanceur": "D:/Downloads/kit-unite-loupe-01-C-20261114-v2/kit-unite-loupe-01-C-20261114-v2/LANCEUR-UNITE-01-C.bat",
+   "dernier_run": "D:/Downloads/kit-unite-loupe-01-C-20261114-v2/kit-unite-loupe-01-C-20261114-v2/preuves-unite01C"
+  }
+ }
+}
