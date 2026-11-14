@@ -11946,3 +11946,16 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 - LA LIVRAISON : les DEUX kits au /test — 24 pièces recoupées par double téléchargement byte-byte, les gravures 10/10 relues du coffre, la carte LISEZMOI-KITS-UNITES-D204.txt portée à jour et re-téléchargée identique ; la racine porte 13 entrées. (14/11, la session de la construction — l'unité 2 attend son run)
 
 - SUITE : au développeur — LE RUN DE L'UNITÉ 2 aux deux bras (1·KIT → 2·RUN → 3·TÉMOIN signé de la main → preuves-unite02[/C]/ ENTIER au /test ; onglets 4-7) ; toujours attendue la ligne C de l'atelier (l'onglet 5) ; PUIS loupe-05 sha256.
+
+
+## Entrée 291 — LE GUIDE DE LA LIGNE C : où vit la ligne, comment elle naît (la question du développeur : « je ne sais pas où trouver la ligne C de l'atelier »)
+
+- LA RÉPONSE COURTE : la ligne C ne se TROUVE nulle part — elle S'ÉCRIT. C-loupe-01-it1 est la ligne de livraison du run vert du bras C (recoupé à l'Entrée 287 : 15 VERT 0 ROUGE, la pièce 85b34ed4… == la gravure) ; elle vit dans livraisons.csv de L'ATELIER, et l'atelier qui compte est atelier-campagne-d204-20261114-013520 — au coffre : /test/Nouveau run/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520/ (quatre pièces, UNE ligne : la T) ; elle naît de la MAIN du développeur à l'onglet 5 · LIVRAISON du GUI — le labo ne fabrique jamais une ligne de mesure.
+
+- LE PIÈGE NOMMÉ (pourquoi la ligne est introuvable) : l'état du GUI (etat-tous-runs.json) vise ENCORE l'atelier 012347 — la copie imbriquée VIDE (0 livraison, née 01:23:47) — et NON le livre 013520. La session ouverte sur le mauvais livre ne montre aucune ligne : à l'étape 2, « CHOISIR L'ATELIER EXISTANT… » désigne le 013520 (sur la machine : à côté du kit couru — D:\Downloads\Runs Triade\test\TRIADE_gui_tous_runs_v1\atelier-campagne-d204-20261114-013520). La marque du bon livre : sa livraisons.csv porte la ligne T-loupe-01-it1.
+
+- LE GESTE ENTIER (le GUI tous-runs) : étape 4 → la ligne C-loupe-01 → « OUVRIR L'UNITÉ CHOISIE → » → l'onglet « 5 · LIVRAISON » → LA DATE DU KIT 2026-11-14, LA DATE DU RUN 2026-11-14, LE VERDICT VERT, LE RECOUP « en attente » → « CONSIGNER LA LIVRAISON ». La ligne naîtra : C-loupe-01-it1,C,loupe-01,1,2026-11-14,2026-11-14,VERT,en attente — l'unité CLOSE au premier vert (§ 7). Puis l'atelier ENTIER renvoyé au coffre /test.
+
+- LES ONGLETS COMPAGNONS (attendus depuis la 287) : 4 · CARNET (le temps humain de la session C), 6 · DÉFAUTS (si un défaut se nomme), 7 · CHRONO (la mesure M4).
+
+- LES MIROIRS À L'OUVERTURE (la sonde 89, VERT partout) : GitHub main @ 60d285e4 == le local ; le bundle == l'état 290 ; D141 tenu (95 bundles aux archives) ; les trois textes identiques — la passation 290 est complète, aucune dette. (14/11, la session du guide)
