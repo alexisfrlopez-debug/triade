@@ -1,0 +1,159 @@
+LISEZMOI — LE GUI DE TOUS LES TESTS ET RUNS, PAS À PAS, TOUT AU CLIC
+(l'édition v1.0.0 du 14/11/2026 ; le GUI de campagne v1.0.1 demeure au
+coffre, INTACT — D143 : jamais jeté)
+==============================================================================
+(le kit TRIADE_gui_tous_runs_v1 — la commande du développeur : « fais un
+GUI pas a pas tout au clic pour la campagne d204. fais ca pour tous les
+tests et runs quand c'est possible » — TOUS les tests et runs qui se
+conduisent, et les chaînes fermées nommées telles, jamais maquillées)
+
+L'OBJET : conduire TOUT CE QUI SE VIT du projet au clic, geste après
+geste, sur votre machine Windows — un seul fichier Python, tkinter de la
+stdlib, RIEN à installer au-delà de Python 3 (le même esprit que
+ceremonie_gui.py et le GUI de campagne v1).
+
+LE GESTE : dézippez ce kit où vous voulez (Téléchargements, Bureau) —
+TRIADE_gui_tous_runs_v1/ — puis DOUBLE-CLIQUEZ
+LANCER-GUI-TOUS-RUNS.bat. La fenêtre s'ouvre sur le CATALOGUE (étape 1).
+Si un cadre « Windows a protégé votre PC » apparaît : clic droit sur le
+.bat, Propriétés, cochez « Débloquer », OK — la marque du web, comme
+toute pièce téléchargée du coffre.
+
+LA CONTINUITÉ (si le GUI campagne v1 a déjà vécu) : son état
+(etat-campagne-d204.json, à côté de l'ancien GUI ou dans le même dossier
+si vous dézippez PAR-DESSUS) est IMPORTÉ à l'ouverture — l'ATELIER, la
+CALIBRATION et les kits choisis SURVIVENT : la campagne CONTINUE, jamais
+ne recommence. Un atelier né ailleurs se reprend aussi au bouton
+« CHOISIR L'ATELIER EXISTANT… » de l'étape 2 (le dossier daté qui porte
+livraisons.csv).
+
+LES SEPT ÉTAPES DU GUI :
+  1. LE CATALOGUE — tous les tests et runs, leurs états NOMMÉS (OUVERT,
+     FACULTATIF, EN ATTENTE, FERMÉ), l'ordre des gestes restants ; le
+     bouton CONDUIRE ouvre la campagne à son verrou ou le run choisi à
+     sa conduite ; les chaînes fermées (kit-2 dudect, constat-ARM) se
+     lisent, ne se rejouent pas (D143) ;
+  2. LA CAMPAGNE · LE VERROU — les HUIT pièces de campagne-d204/
+     recoupées sha256 par sha256 (le plan a78caf8c… en tête, == D204) ;
+     l'ATELIER naît du verrou vert (les COPIES datées des trois
+     gabarits — les ORIGINAUX scellés INTACTS pour toujours) ;
+  3. LA CAMPAGNE · LA CALIBRATION — la preuve d'horloge du chronomètre
+     (2 s, la pause portable v3, l'édition sans faute de page de
+     codes) ; un DRY-RUN, jamais une mesure (CA1) ;
+  4. LA CAMPAGNE · LES QUATORZE UNITÉS — les six blocs aux deux bras +
+     la partie réaliste EN ATTENTE ; chaque unité en SEPT onglets :
+     KIT (choisir, recouper les empreintes gravées), RUN (la console
+     officielle, INTACTE), TÉMOIN (dater, signer DE VOTRE MAIN,
+     renvoyer le dossier ENTIER), CARNET M3 (la ligne au geste),
+     LIVRAISON M1 (la cap TROIS/bloc, DOUZE/app, TENUE par le GUI),
+     DÉFAUTS M1 (nommés avant toute correction), CHRONO M4 (les listes
+     fixes du plan) ;
+  5. LES AUTRES RUNS — les SEPT tests 1-clic, chacun en quatre temps :
+     1· LE FICHIER (le .bat choisi, RECOUPÉ contre son empreinte GRAVÉE
+        — un octet divergent, le run ne part pas : le GUI refuse de
+        LANCER un fichier divergent, fail-closed) ;
+     2· LE RUN (LANCER dans SA PROPRE console, INTACTE — le fichier
+        autonome fait naître son dossier de run daté ; puis CHOISIR le
+        dossier né) ;
+     3· LA PIÈCE (ouvrir le dossier, ouvrir LE témoin au bloc-notes,
+        ouvrir le coffre /test — dater, signer de votre main, renvoyer
+        le dossier ENTIER ; jamais automatisé, D99) ;
+     4· L'ÉTAT (ce que le run attend, NOMMÉ — jamais maquillé, D189) ;
+  6. LE SUIVI — les comptes SEULS de la campagne (livraisons, défauts,
+     carnet, tokens lus du journal — CA7 : aucune agrégation en cours
+     de route) et l'état consigné de chaque run 1-clic ;
+  7. LES PIÈCES — où vit quoi : le plan, la console officielle (le
+     chemin console demeure ENTIER), l'atelier, les empreintes des
+     SEPT fichiers 1-clic, le coffre /test, les frontières.
+
+LES SEPT RUNS 1-CLIC CONDUITS (étape 5 — chaque fichier se télécharge
+du coffre /test, l'édition FICHIERS-1CLIC du 13/11) :
+  TRIADE-1CLIC-DIAGNOSTIC.bat      la machine nommée — SERT À CHOISIR
+                                   la machine du geste B ;
+  TRIADE-1CLIC-GESTE-B-SHANI.bat   la mesure avant/après — exige un
+                                   silicium qui A SHA-NI ;
+  TRIADE-1CLIC-VOIE1-QEMU.bat      le rejeu M7D (FACULTATIF — la
+                                   chaîne est fermée, E272) ;
+  TRIADE-1CLIC-VOIE2-QEMU.bat      le rejeu kit-shani (FACULTATIF — la
+                                   chaîne est fermée, E278) ;
+  TRIADE-1CLIC-TEMOIN-VITRINE.bat  le témoin vitrine (FACULTATIF) ;
+  TRIADE-1CLIC-SEQUESTRE-D183.bat  la répétition générale — la
+                                   cérémonie à la machine HORS-LIGNE ;
+  TRIADE-1CLIC-REPLICATION.bat     l'autotest du κ (EN ATTENTE — les
+                                   deux jeux d'annotations).
+La console de campagne existe aussi en fichiers autonomes (v1, v2 du
+kit des runs restants, v3 du correctif encodage) : le GUI conduit la
+campagne nativement, la console demeure le chemin ENTIER (étape 7).
+
+CE QUE CE GUI NE FERA JAMAIS (les frontières, tenues par
+construction) :
+  — dater ni SIGNER un témoin : votre main, toujours (D99) ;
+  — DÉPOSER au coffre : le renvoi du dossier de run ENTIER vous
+    appartient — le GUI ouvre le coffre au navigateur, il n'écrit
+    JAMAIS au Drive ;
+  — FABRIQUER un chiffre : aucun résultat n'existe avant sa mesure
+    (CA5/CA6) — le GUI consigne, il ne calcule pas d'analyse ;
+  — TOUCHER les originaux scellés : il ne vit que sur les copies
+    datées de l'atelier (la confrontation des empreintes, CA5) ;
+  — DÉPASSER la cap pré-enregistrée (§ 7) : TROIS par bloc, DOUZE par
+    application, l'arrêt au premier vert — le refus est nommé ;
+  — LANCER un fichier 1-clic divergent : le recoup d'empreinte GRAVÉE
+    précède tout lancement (fail-closed) ;
+  — REJOUER une chaîne fermée : le kit-2 dudect, le constat-ARM —
+    l'histoire demeure (D143) ; les rejeux voie 1 / voie 2 sont
+    FACULTATIFS et nommés tels (D165 : le rejeu ne re-scelle rien).
+
+LA MÉMOIRE DU GUI : etat-tous-runs.json (à côté du GUI) retient votre
+dossier de pièces, l'atelier, la calibration, les kits et fichiers
+choisis, les runs consignés — rouvrez le GUI, tout se retrouve.
+TRIADE_logs/ conserve le journal de chaque session (chaque geste y
+vit). AUCUN de ces fichiers n'est une pièce scellée ; l'atelier, lui,
+retourne au coffre avec les preuves à la clôture de la campagne.
+
+L'HONNÊTÉ DE CETTE ÉDITION (l'épreuve du labo, D122 — le labo n'a
+aucun Windows, la fenêtre fut éprouvée au labo POSIX sous serveur X
+virtuel, JAMAIS l'exécution Windows) :
+  — le selftest (python triade_tous_runs_gui.py --selftest) : 31 VERT,
+    0 ROUGE — le verrou, le fail-closed, l'atelier (né, stable, les
+    originaux INTACTS, la reprise d'un atelier existant), le carnet,
+    la cap, les défauts, la table des SEPT fichiers 1-clic gravée, le
+    recoup d'un fichier (intact, divergent, absent), la découverte des
+    témoins aux dispositions VÉCUES des deux vagues (geste B, voie 1,
+    voie 2 aux DEUX dispositions, vitrine, diagnostic, séquestre,
+    réplication), la consignation des runs (dédoublonnée), l'héritage
+    du GUI campagne v1 ;
+  — l'épreuve fonctionnelle (la fenêtre vive, les gestes réels
+    enchaînés) : 17 VERT, 0 ROUGE — le catalogue, CONDUIRE la
+    campagne, l'atelier né, LA CALIBRATION RÉELLE courue par
+    l'instrument (écart 0,000 s, VERT), le carnet, la livraison, les
+    SEPT onglets, LE VRAI TRIADE-1CLIC-GESTE-B-SHANI.bat RECOUPÉ
+    INTACT (empreinte e20582fe…), le fichier divergent LANCEMENT
+    REFUSÉ, le run consigné et ses témoins trouvés, CONDUIRE un run
+    depuis le catalogue, la chaîne fermée REFUSÉE, le suivi, les
+    pièces, les huit pièces intactes après la séance — PLUS l'épreuve
+    de l'héritage : 3 VERT (l'atelier du GUI v1 retrouvé, la
+    calibration survit, le verrou vert) ;
+  — l'épreuve visuelle : les sept étapes, un panneau d'unité et un
+    onglet de run capturés et INSPECTÉS — cinq corrections vécues au
+    fil de l'épreuve (les largeurs du catalogue, les libellés d'onglet
+    trop longs, les encadrés des demi-colonnes, le bandeau supérieur,
+    la hauteur de la page des pièces) ; les accents français rendus,
+    le journal entier au bas de chaque écran ;
+  — le fil des instruments passe par une file (tkinter n'est pas
+    thread-safe) — les affichages des fils ouvriers y passent aussi
+    (JAMAIS un appel tkinter hors du fil principal) ;
+  — le premier double-clic se vit chez vous : si un écran nomme un
+    défaut, renvoyez le journal de session (TRIADE_logs/) TEL QUEL,
+    le labo recoupe et corrige (D122).
+
+LES EMPREINTES du kit vivent à EMPREINTES-GUI-TOUS-RUNS.txt (le GUI,
+le lanceur, la carte, et les HUIT pièces recoupées à la copie) — la
+console « certutil -hashfile » les recoupe chez vous si vous le
+voulez.
+
+LA SUITE : l'ordre des gestes restants est rappelé au catalogue — la
+campagne aux deux bras d'abord (le plan fait foi), le geste B sur un
+silicium qui A SHA-NI (le diagnostic choisit), la cérémonie du
+séquestre à la machine hors-ligne, le κ le jour des deux jeux
+d'annotations. Le GUI vous attend à chaque session : le catalogue
+d'abord, toujours.

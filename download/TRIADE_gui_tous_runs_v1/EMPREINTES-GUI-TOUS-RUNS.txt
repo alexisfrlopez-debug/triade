@@ -1,0 +1,33 @@
+EMPREINTES-GUI-TOUS-RUNS — le kit TRIADE_gui_tous_runs_v1, l'édition v1.0.0
+(la première édition du GUI de tous les runs, le 14/11/2026 — sha256 générées du montage même)
+==============================================================================
+255052c7e19835200d5e11f1d2b0b964cc81dab6c0060dfd4f2d0c474bb83b86  triade_tous_runs_gui.py  (le GUI v1.0.0 — la campagne portée du v1.0.1 + les sept runs 1-clic ; 31 selftest VERT)
+07633d9ccf478722b12d7d30f71b7d25adc9acdd1f458689e82fa64f28b3a2c6  LANCER-GUI-TOUS-RUNS.bat  (le double-clic d'ouverture)
+1a2306857a92db6f156868bbb38c087e728a91937fc821efefbe8c013a7c7881  LISEZMOI-GUI-TOUS-RUNS.txt  (la carte du kit)
+
+LES HUIT PIÈCES de campagne-d204/ — OCTET POUR OCTET celles du GUI campagne v1.0.1
+(le chronomètre v3 ff0c9652…, le compteur v2 e2939ef9… — l'édition sans faute de page de codes ;
+les SIX autres celles du kit 1-clic v2 de l'Entrée 273) :
+5f1ffa9776d296b809ada54217e86f8e4789bc865a5d77e0402ea222e021d1a9  campagne-d204/LANCER-CAMPAGNE-D204.bat
+609a0e81b99376e698ef0bd90e89a0537ba97caf88cb8d9ee67637227f282beb  campagne-d204/LISEZMOI-comparaison.txt
+a78caf8c0cb9498446a91d18d0f8a02ee16b6893d4fe4ce49843397f30240255  campagne-d204/PLAN_PREREGISTRE_COMPARAISON.md
+ba736b1f1e153e18a8c9bf6e97d73c04e456dcf136ede93e278802eca98baf0e  campagne-d204/carnet_temps_humain.csv
+ff0c96522fa558ccc37af6f16b9d63cc91ced71ae81c699c2cd26c1a0853a58f  campagne-d204/chronometre_verification.py
+e2939ef9d3ef7f228c1881b55744e182238fbb489b58d30595882d926eea26e5  campagne-d204/compter_tokens.py
+e2756e76a84ac9c5d552ca01da26dc228e8b23c50b05689cb1cf9cee11380497  campagne-d204/defauts.csv
+3d7d13f033b1176efba8d4096b4512655805897e89127461fa25fc56cc8e2d10  campagne-d204/livraisons.csv
+
+LES SEPT FICHIERS 1-CLIC attendus par l'étape 5 (téléchargés du coffre /test —
+l'édition FICHIERS-1CLIC du 13/11, l'Entrée 270 ; le GUI recoupe CHAQUE fichier
+choisi contre son empreinte GRAVÉE avant tout lancement) :
+c0d6de86ed047f0ee4af7ddf24acc91c4cb9ec8bef366a4e0d2086e515659b2b  TRIADE-1CLIC-DIAGNOSTIC.bat  (attendu — pas embarqué au kit)
+e20582febde26c5dcd6870e5a31725c4d18117a51db5795260b3dbe99416095e  TRIADE-1CLIC-GESTE-B-SHANI.bat  (attendu — pas embarqué au kit)
+662fa0da547f90e376c3bec2fc3c694e3d50d9a85547f8db670002d4259fd7b3  TRIADE-1CLIC-VOIE1-QEMU.bat  (attendu — pas embarqué au kit)
+2e1bc7142992be61444cfab08d17109809d5e62ac0d5236e44013ddac6f7ea68  TRIADE-1CLIC-VOIE2-QEMU.bat  (attendu — pas embarqué au kit)
+80a617f6b53927dbfe0c5608fc84221f9668a28e76e0d75de3f538103a811f5d  TRIADE-1CLIC-TEMOIN-VITRINE.bat  (attendu — pas embarqué au kit)
+51fe8f575412714c5c021627961817fb336c5844f7e303ca7bb08410020b9e5c  TRIADE-1CLIC-SEQUESTRE-D183.bat  (attendu — pas embarqué au kit)
+850c9457a4e426d4b2bdd4152c841bc9147ece20e64c1a38044897ff4d4eb0a9  TRIADE-1CLIC-REPLICATION.bat  (attendu — pas embarqué au kit)
+
+Le GUI recoupe les HUIT pièces à CHAQUE session (étape 2) et chaque fichier 1-clic au
+choix (étape 5) — une divergence, RIEN ne court (fail-closed). La console :
+certutil -hashfile <fichier> SHA256

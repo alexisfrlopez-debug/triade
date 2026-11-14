@@ -10218,3 +10218,39 @@ est RÉPARÉ — le dépôt GitHub ET le miroir Drive vivent désormais au même
   commit) ; le commit ; le push GitHub au présent commit ; le miroir
   synchronisé (la carte, le worklog, le journal, le bac, les bundles).
   (14/11, la session du git sync)
+
+
+## Task 187 — LE GUI DE TOUS LES TESTS ET RUNS (Entrée 280)
+
+- LA COMMANDE : « fais un GUI pas a pas tout au clic pour la campagne
+  d204. fais ca pour tous les tests et runs quand c'est possible » —
+  le kit TRIADE_gui_tous_runs_v1 livré au /test (zip 50f7bc86… +
+  LISEZMOI 1a230685…, sha256 recoupés par re-téléchargement) et au
+  miroir git (download/).
+
+- LE GUI (triade_tous_runs_gui.py, 255052c7…, 3 127 lignes, tkinter
+  stdlib seule) : SEPT étapes — le catalogue (les états nommés, les
+  chaînes fermées lues jamais rejouées), la campagne D204 portée du
+  GUI v1.0.1 OCTET POUR OCTET (verrou, atelier, calibration, les
+  quatorze unités en sept onglets, suivi), LES SEPT RUNS 1-CLIC en
+  quatre temps (le fichier recoupé contre son empreinte GRAVÉE —
+  fail-closed au lancement aussi, le run dans sa console officielle,
+  la pièce à la main, l'état nommé), le suivi, les pièces.
+
+- LA CONTINUITÉ : l'état du GUI campagne v1 importé à l'ouverture
+  (l'atelier, la calibration, les kits survivent — la campagne
+  continue) ; le bouton « CHOISIR L'ATELIER EXISTANT » pour un
+  atelier né ailleurs.
+
+- LES ÉPREUVES (D122, au POSIX sous Xvfb — jamais l'exécution
+  Windows) : selftest 31 VERT 0 ROUGE ; fonctionnel 17 VERT 0 ROUGE
+  dont le VRAI geste-b bat recoupé INTACT et le divergent LANCEMENT
+  REFUSÉ ; l'héritage 3 VERT ; l'épreuve visuelle par lecteur
+  visionnaire — cinq corrections vécues et nommées (largeurs,
+  onglets, encadrés, bandeau, hauteur des pièces).
+
+- LE GIT : Entrée 280 au journal, Task 187 au worklog, la carte
+  OU-TROUVER portée à 280 ; D141 tenu (le courant 279-3f62bdd
+  archivé versionné, le bundle rafraîchi) ; le commit ; le push
+  GitHub ; le miroir Drive synchronisé (les trois fichiers + le kit
+  au download/ du miroir).
