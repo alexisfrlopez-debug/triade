@@ -1,0 +1,13 @@
+EMPREINTES — LE KIT DE L'UNITÉ 1 × BRAS C (loupe-01, la campagne D204)
+(chaque pièce sha256, générée du montage même — le GUI recoupe à l'onglet 1·KIT ; une divergence, rien ne court)
+
+85b34ed4c243e9774d661a0b1964f80ba49333f4be1f6eef4658556eecb5ef3f  loupe-01-c.dll
+860ff1cfcf78d5fc4f72b8691921957f0834d34ce88858188c876fd097ad6ab1  loupe-01-c.c
+c0c9b9f40f4fe5e769f7196206a6fee3e050858ee729b17a1a302683f4b0084d  loupe-01-c.def
+a21c5e19636b5489b076c941f840da34a5c4fe4b2a4af64ab36cf14e73326f40  scenario-unite01C.py
+29bdae2ff65a6326db4f9fb6cc2a4ce2739019efa6ae685850c27d5ebf5edc66  LANCEUR-UNITE-01-C.bat
+df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c  temoin-1.bin
+3396717b98b4859b20ec0d673dcf168314834fc170fbc6b877f4eb32461d68c6  temoin-384.bin
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  vide.bin
+b06f859bbc71587dae9150a525e0d1398f01ea03a44f8dc18cbdd003ce374e03  LISEZMOI-KIT-UNITE-01-C.txt

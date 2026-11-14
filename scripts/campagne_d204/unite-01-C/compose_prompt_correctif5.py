@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""compose_prompt_correctif5.py — le correctif-5 de la phase source-c
+(bras C) : l'audit nomme TROIS défauts — dont UN PORTE PAR LE LABO
+lui-même (la prescription S[i % 16] du correctif-4 cassait l'index sur
+la table de 64 entrées — S[i] direct était le juste du correctif-3 ;
+la faute nommée au labo, jamais maquillée) — le compteur de tampon qui
+lit le champ REMPL du cadre sans l'initialiser entre les vecteurs, et
+le NUL du chemin écrit à l'indice 259 au lieu de la fin réelle."""
+import pathlib
+
+UNITE = pathlib.Path(__file__).resolve().parent
+
+entete = """Tu es le même auteur du domaine Loupe au laboratoire TRIADE — le bras C de
+la campagne D204. L'état : ton édition est COMPLÈTE et compile (gcc -O2,
+la DLL naît) ; SHA-256 est PROUVÉ VERT (66 tailles éprouvées au labo :
+« abc », 0, 1, 55, 56, 57, 63, 64, 65… 196 609 — toutes les frontières
+du rembourrage, l'absorption en un morceau comme irrégulière) ; le MD5
+est FAUX À TOUTES LES TAILLES. L'audit nomme TROIS défauts — dont un
+PORTE PAR LE LABO LUI-MÊME (nommé tel quel, jamais maquillé).
+
+================================================================================
+L'AUDIT — LES TROIS DÉFAUTS NOMMÉS
+================================================================================
+D25 (LA FAUTE AU LABO, nommée) : la prescription D22 du correctif-4 du
+    labo imposa « S[i % 16] » — or TA table S porte 64 entrées (les
+    quatre rangées complètes : 7,12,17,22 ×4 ; 5,9,14,20 ×4 ; 4,11,16,23
+    ×4 ; 6,10,15,21 ×4) : l'index juste est S[i] DIRECT (ton
+    correctif-3 l'avait juste !) — S[i % 16] relit la rotation 7 de la
+    première ronde à toute ronde ≥ 2. LE LABO SE CORRIGE : S[i].
+    (Preuve au labo : le modèle Python de TON transform avec S[i] rend
+    md5(\"abc\") = 900150983cd24fb0d6963f7d28e17f72 — le juste.)
+D26 (le compteur de tampon) : dans la boucle de lecture, « uint32_t pris
+    = *(uint32_t*)(cadre + REMPL_OFFSET); » — le champ REMPL du cadre
+    N'EST PAS initialisé avant la boucle : au DEUXIÈME vecteur du run
+    (le juge enchaîne quatre témoins SANS remettre le cadre à zéro), il
+    vaut le remplissage du fichier PRÉCÉDENT — le tampon serait décalé.
+    Un compteur LOCAL, déclaré avant la boucle, remis à 0 à chaque
+    appel (l'ouverture est une fonction : ses locales renaissent).
+D27 (le NUL du chemin) : après la boucle de copie, « ((uint16_t*)(cadre
+    + 0))[259] = 0; » écrit le NUL à la CAPACITÉ (259), pas à la FIN
+    RÉELLE de la chaîne copiée — le juge décode le chemin jusqu'au
+    premier NUL : au troisième témoin, les restes du chemin précédent
+    (plus long) colleraient leur queue au nom décodé (« temoin-3f.bin »
+    + la queue d'un « n » orphelin). Le NUL se pose À L'INDICE DE FIN :
+    la boucle laisse i == la longueur ; écris ((uint16_t*)(cadre +
+    0))[i] = 0;
+
+================================================================================
+TON TRAVAIL (le correctif-5) — LE FORMAT PATCH (les remplacements exacts)
+================================================================================
+Réponds UNIQUEMENT par les remplacements, au format EXACT, un par ligne :
+
+###REMPLACEMENTS
+AVANT=<la ligne fautive, copiée au caractère près>
+APRÈS=<la ligne corrigée>
+###FIN REMPLACEMENTS
+
+Les remplacements attendus (quatre, dans l'ordre du fichier) :
+1. la rotation du MD5 (D25) : la ligne « b = b + ROTL32(a + f + T[i] +
+   w[g], S[i % 16]); » → la même avec S[i] ;
+2. le compteur (D26, la déclaration) : la ligne « uint8_t morceau[4096]; »
+   → la même ligne, suivie d'une nouvelle ligne déclarant « uint32_t
+   pris_tampon = 0; » (le compteur local du tampon) ;
+3. le compteur (D26, la lecture) : la ligne « uint32_t pris =
+   *(uint32_t*)(cadre + REMPL_OFFSET); » → « uint32_t pris =
+   pris_tampon; » ;
+4. le compteur (D26, l'écriture) : la ligne « *(uint32_t*)(cadre +
+   REMPL_OFFSET) = pris + a_copier; » → « pris_tampon = pris +
+   a_copier; » ;
+5. le NUL du chemin (D27) : la ligne « ((uint16_t*)(cadre + 0))[259] =
+   0; » → « ((uint16_t*)(cadre + 0))[i] = 0; ».
+
+Aucun texte avant ###REMPLACEMENTS, aucun texte après ###FIN
+REMPLACEMENTS.
+"""
+
+(UNITE / "prompts" / "correctif-5.txt").write_text(entete, encoding="utf-8")
+print(f"[composé] prompts/correctif-5.txt : {len(entete.encode())} o")

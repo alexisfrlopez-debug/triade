@@ -1,0 +1,119 @@
+### Notes d'auteur — loupe-01 · ouvrir
+
+#### 1. L'INTENTION
+Ouvrir le fichier spécifié par le chemin en argument, initialiser le cadre de session avec sa poignée et sa taille, puis calculer les empreintes du fichier entier pour le panneau, le tout en s'assurant que la session reste unique et que les erreurs sont proprement signalées.
+
+#### 2. LES OBLIGATIONS
+
+*   **Préconditions (pre) :**
+    *   P1 : `rcx` contient un pointeur vers une chaîne de caractères UTF-16 NUL-terminée, d'une longueur inférieure ou égale à 259 octets (la capacité `MAX_PATH`).
+    *   P2 : La session n'est pas déjà ouverte. La poignée du cadre (`cadre + 528`) doit valoir `INVALID_HANDLE_VALUE`.
+    *   P3 : La table d'adresses d'imports (IAT) pour `kernel32` est résolue et accessible.
+    *   P4 : La pile est alignée sur une frontière de 16 octets.
+
+*   **Postconditions (post) :**
+    *   Q1 : En cas de succès, `CreateFileW` retourne un handle valide. Ce handle est stocké au cadre à l'offset `+528` et la taille du fichier, obtenue par `GetFileSizeEx`, est stockée à l'offset `+520`.
+    *   Q2 : Si la taille du fichier dépasse la `BORNE_TAILLE` (2 Gio), le verdict est `-3`, le handle est fermé avant le retour, et la barre affiche le message d'erreur correspondant.
+    *   Q3 : Le chemin d'accès est copié dans le cadre à l'offset `+0`. La vue (`cadre + 536`) et le curseur (`cadre + 544`) sont mis à zéro.
+    *   Q4 : La session est née entière :
+        *   Si la taille du fichier est supérieure à 0, la première fenêtre (`loupe-02`) est initialisée avec la vue 0.
+        *   Le panneau d'empreintes (`loupe-07`) est calculé pour le fichier entier, y compris pour un fichier de taille 0.
+    *   Q5 : En cas de succès, la fonction retourne `0` (code de succès de la table des verdicts).
+
+*   **Invariants (inv) :**
+    *   I1 : L'ouverture du fichier est exclusive. `CreateFileW` est appelé avec `dwShareMode = 0`.
+    *   I2 : Le fichier est ouvert en lecture seule. Aucune opération d'écriture n'est effectuée à l'ouverture.
+    *   I3 : Le coût du calcul du panneau d'empreintes (Q4) est accepté, même pour un fichier de 2 Gio.
+    *   I4 : Tout échec de l'API système est traduit en un verdict de la table des verdicts et consigné dans le journal.
+    *   I5 : La liste des fonctions kernel32 utilisées est limitée à `CreateFileW`, `GetFileSizeEx`, `CloseHandle`, et `GetLastError`. Aucun registre non-volatil n'est modifié. Les instructions `NOP` (0x90) sont interdites.
+
+#### 3. LA TABLE DES VERDICTS
+
+| Valeur de retour (rax) | Cause | Code `GetLastError` correspondant | Message à la barre |
+| :--- | :--- | :--- | :--- |
+| `0` | Succès | - | - |
+| `-2` | Fichier absent | `ERROR_FILE_NOT_FOUND` ou `ERROR_PATH_NOT_FOUND` | `absent` |
+| `-3` | Hors périmètre | - | `hors périmètre 0.1.0 : 2 Gio` |
+| `-5` | Session déjà ouverte | - | `un fichier à la fois, le nommé` |
+| `-6` | Erreur système | (Toute autre erreur, ex: `ERROR_ACCESS_DENIED`) | `système : [code]` |
+| `-7` | Fichier verrouillé | `ERROR_SHARING_VIOLATION` | `verrouillé` |
+
+#### 4. L'ORDRE DU GESTE
+
+1.  **Vérification de la précondition P2 :** Lire la poignée du cadre à l'offset `+528`. Si elle n'est pas `INVALID_HANDLE_VALUE`, retourner immédiatement le verdict `-5`.
+2.  **Appel à `CreateFileW` :**
+    *   Arguments : `rcx` (chemin), `GENERIC_READ \| GENERIC_WRITE`, `0` (partage exclusif), `NULL`, `OPEN_EXISTING`, `FILE_ATTRIBUTE_NORMAL`, `NULL`.
+    *   Stocker le handle retourné dans un registre temporaire.
+3.  **Traitement de l'ouverture :**
+    *   Si le handle retourné est `INVALID_HANDLE_VALUE` :
+        *   Appeler `GetLastError` pour obtenir le code d'erreur.
+        *   Brancher sur le traitement des erreurs (E1, E2, E3) pour retourner le verdict correspondant (`-2`, `-7`, ou `-6`).
+    *   Si l'ouverture est un succès :
+4.  **Vérification de la borne Q2 :**
+    *   Appeler `GetFileSizeEx` avec le handle pour obtenir la taille du fichier.
+    *   Si la taille est supérieure à `BORNE_TAILLE` (2 Gio) :
+        *   Appeler `CloseHandle` sur le handle.
+        *   Retourner le verdict `-3`.
+5.  **Initialisation du cadre (Q1, Q3) :**
+    *   Écrire le handle dans le cadre à l'offset `+528`.
+    *   Écrire la taille du fichier dans le cadre à l'offset `+520`.
+    *   Copier le chemin depuis `rcx` dans le cadre à l'offset `+0`.
+    *   Mettre à zéro la vue (`cadre + 536`) et le curseur (`cadre + 544`).
+6.  **Naissance de la session (Q4) :**
+    *   Si la taille du fichier est supérieure à 0, initialiser la première fenêtre (`loupe-02`) à la vue 0.
+    *   Calculer les empreintes de l'ensemble du fichier et les stocker dans le panneau (`loupe-07`).
+7.  **Retour de succès (Q5) :**
+    *   Retourner `0`.
+
+*(Note : Le mécanisme de kit terrain interdit tout appel au CRT. Les initialisations de structures devront donc être manuelles, octet par octet, et non via `memset` ou `memcpy` générés par le compilateur).*
+
+#### 5. LES VECTEURS DE TEST
+
+*   **V1 (Scénario nominal) :**
+    *   **Témoins :** Fichier de 1 octet, fichier de 384 octets, fichier de 3 x 64 Kio + 1 octet.
+    *   **Procédure :** Ouvrir chaque fichier via le scénario.
+    *   **Résultat attendu :** Le cadre est correctement rempli (chemin, taille, handle). La fenêtre et le panneau sont initialisés. L'écran reflète le contenu du fichier. Le verdict est `0`.
+
+*   **V2 (Scénario de rejet) :**
+    *   **Témoins :** Un chemin inexistant, un fichier ouvert et verrouillé par un autre processus, un fichier de 2 Gio + 1 octet.
+    *   **Procédure :** Tenter d'ouvrir chaque fichier.
+    *   **Résultat attendu :**
+        *   Chemin inexistant : Verdict `-2`, message `absent` à la barre.
+        *   Fichier verrouillé : Verdict `-7`, message `verrouillé` à la barre, et le handle est fermé.
+        *   Fichier hors périmètre : Verdict `-3`, message `hors périmètre 0.1.0 : 2 Gio` à la barre, et le handle est fermé.
+
+*   **V3 (Scénario de session déjà ouverte) :**
+    *   **Témoins :** Un fichier valide.
+    *   **Procédure :** Ouvrir le fichier, puis tenter de l'ouvrir à nouveau.
+    *   **Résultat attendu :** Le second appel retourne immédiatement le verdict `-5` avec le message `un fichier à la fois, le nommé`. Le cadre et le fichier du premier appel restent intacts.
+
+*   **V4 (Falsification) :**
+    *   **Témoins :** Un fichier valide.
+    *   **Procédure :** Après l'ouverture, le scénario modifie la taille stockée dans le cadre (à l'offset `+520`) d'un octet.
+    *   **Résultat attendu :** L'écran affiché par la suite (fenêtre, empreintes) est incorrect, car il se base sur la taille falsifiée. L'oracle de test doit détecter cette divergence.
+
+#### 6. LES PIÈGES
+
+*   **Appels CRT interdits :** Sous `gcc -O2`, des appels implicites à `memset` ou `memcpy` peuvent être générés pour initialiser des structures ou des copies de tableaux. Ces appels sont mortels car le CRT n'est pas initialisé. Il faut les éliminer manuellement.
+    *   **Contre-mesure :** Initialiser les structures (cadre, panneau) par des boucles manuelles ou des instructions `mov` directes, et interdire tout recours à des fonctions de bibliothèque standard.
+
+*   **Rembourrage de structure (padding) :** Le compilateur peut ajouter des octets de remplissage (padding) entre les champs d'une structure C pour respecter l'alignement. Le contrat spécifie des offsets précis.
+    *   **Contre-mesure :** Déclarer le cadre et le panneau avec des attributs de compilation pour forcer un empaquetage (packing) de 1 byte (ex: `#pragma pack(push, 1)` en C) ou, plus sûrement, accéder aux champs via des calculs d'offset sur un tableau d'octets plutôt qu'à travers une structure C.
+
+*   **Largeur des entiers :** La taille du fichier est un entier 64 bits (`LARGE_INTEGER`). La `BORNE_TAILLE` est de 2 Gio (2^31 octets). Une comparaison incorrecte (ex: `taille > 2147483648`) peut causer un débordement ou une comparaison erronée si la taille est interprétée comme un entier 32 bits signé.
+    *   **Contre-mesure :** Utiliser des registres 64 bits pour manipuler la taille et comparer directement avec la constante `BORNE_TAILLE` (définie comme `uint64_t`).
+
+*   **Mesure du chemin :** La précondition P1 impose une limite de 259 octets. Le code doit s'assurer que le chemin fourni respecte cette contrainte avant de l'utiliser.
+    *   **Contre-mesure :** Vérifier la longueur de la chaîne UTF-16 avant l'appel à `CreateFileW`. Si la longueur (sans le NUL final) est supérieure à 259, traiter cela comme une erreur système (`ERROR_INVALID_PARAMETER` -> verdict `-6`).
+
+*   **Poignée pendante :** Le contrat exige que, en cas de refus (surtout Q2 et les erreurs E1/E2/E3), le handle, s'il a été ouvert, doit être fermé par un appel à `CloseHandle` avant le retour.
+    *   **Contre-mesure :** Structurer le code avec des `goto` vers un label de nettoyage commun en fin de fonction pour garantir que `CloseHandle` est toujours appelé en cas d'erreur après l'ouverture.
+
+*   **Session double (P2) :** La vérification de la précondition P2 doit être la toute première action de la fonction, avant toute autre interaction avec le système de fichiers.
+    *   **Contre-mesure :** Placer la lecture de la poignée du cadre en tout début de fonction.
+
+*   **Gestion du vide (taille 0) :** La révision 3 clarifie que le vide (taille 0) est un cas valide. Il n'y a pas de fenêtre, mais le panneau d'empreintes DOIT être calculé.
+    *   **Contre-mesure :** Implémenter une logique conditionnelle après `GetFileSizeEx` : si `taille == 0`, ne pas initialiser la fenêtre, mais bien initialiser le panneau avec les empreintes d'un tableau vide.
+
+*   **Accès refusé non armé :** Un appel à `CreateFileW` peut échouer avec `ERROR_ACCESS_DENIED` pour des raisons complexes (permissions, lecteur non prêt, etc.). Ce cas doit être correctement traduit en verdict `-6` avec le code d'erreur consigné.
+    *   **Contre-mesure :** Attraper tous les codes d'erreur de `CreateFileW` qui ne sont pas `ERROR_FILE_NOT_FOUND` ou `ERROR_SHARING_VIOLATION` et les mapper systématiquement au verdict `-6`.

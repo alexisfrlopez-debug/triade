@@ -199,7 +199,7 @@ pièce) AVANT de conclure à une absence.*
    22/10 mort).
 
 *Le détail complet vit au journal de travail (`docs/JOURNAL_TRAVAIL.md`,
-Entrées 251-283) et au worklog (`worklog.md`, Tasks 158-190).*
+Entrées 251-284) et au worklog (`worklog.md`, Tasks 158-191).*
 
 
 9. **LA CAMPAGNE D204 EST NÉE — LA PREMIÈRE UNITÉ LIVRÉE (Entrée 282)** :
@@ -219,3 +219,6 @@ Entrées 251-283) et au worklog (`worklog.md`, Tasks 158-190).*
 
 
 10. **LE PREMIER RUN DE L'UNITÉ 1 REVENU REFUSÉ — LE KIT v2 LIVRÉ (Entrée 283)** : la console du run (run-console-unite01.txt, 622 o, UTF-16, déposée au /test le 14/11 07:56Z, recoupée octet pour octet) : la pièce VERT (loupe.exe 4d119b22… == la gravure), l'image cartographiée @ 0x7ff7920c0000, puis REFUS à T0 (« CreateFileW introuvable à kernel32 ») — AUCUN vecteur, AUCUN témoin : LA FAUTE AU LABO (GetModuleHandleW sans restype — l'HMODULE 64 bits tronqué en int 32 bits, GetProcAddress refusait la poignée mutilée ; la faute REJOUÉE au POSIX sous ctypes, 16 épreuves VERT 0 ROUGE) ; LE KIT v2 au /test/kit-unite-loupe-01-T-20261114-v2/ (12/12 pièces recoupées par re-téléchargement : la DÉCLARATION qui manquait au scénario 3e0d14ed…, la capture console en UTF-8 au lanceur 82e90adc…, le LISEZMOI de l'écart et de la reprise 37843aba…, la pièce et les témoins INTACTS octet pour octet) ; le kit v1 DEMEURE au /test (D143) ; LA REPRISE au GUI : onglet 1·KIT choisir le dossier v2 → onglet 2·RUN lancer → onglet 3·TÉMOIN dater, signer de la main, renvoyer preuves-unite01/ ENTIER au /test — la première mesure de la campagne naîtra du run revenu (CA1).
+
+
+11. **LE RUN VERT DE L'UNITÉ 1 × BRAS T + LA DEUXIÈME UNITÉ LOUPE-01 × BRAS C LIVRÉE (Entrée 284)** : le run revenu du terrain (le dossier « Nouveau run » au /test) — 15 VERT 0 ROUGE, le témoin daté et signé de la main (Alexis Lopez, 14/11/2026), T0 recoupé (loupe.exe 4d119b22… == la gravure) ; LA PREMIÈRE MESURE EST NÉE (CA1 : l'atelier, la ligne livraisons.csv T-loupe-01-it1 VERT recoupée par le labo, le carnet cristallisation 85 min) ; l'unité T-loupe-01 CLOSE à it1 (§ 7 : l'arrêt au premier vert recoupé) ; LE KIT DU BRAS C au /test/kit-unite-loupe-01-C-20261114/ (12/12 recoupés + 12/12 au bac du miroir) : la pièce loupe-01-c.dll (gcc -O2 -shared, 93 625 o, 85b34ed4…), le source loupe-01-c.c, le scénario adapté au PE compilé, les MÊMES témoins ; la construction mesurée (11 appels, 67 475 tokens LUS DU LOG) et éprouvée au labo (MD5+SHA-256 32 VERT ; le contrat entier 17 VERT au POSIX D122 ; les contrôles binaires 16 VERT — aucun appel CRT) ; LA REPRISE au GUI : onglet 1·KIT de l'unité loupe-01 × C choisir le dossier → 2·RUN → 3·TÉMOIN signé de la main → preuves-unite01C/ ENTIER au /test.

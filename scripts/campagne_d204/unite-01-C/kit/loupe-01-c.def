@@ -1,0 +1,6 @@
+LIBRARY loupe-01-c
+EXPORTS
+    loupe_01_ouvrir
+    loupe_03_fermer
+    cadre DATA
+    panneau DATA

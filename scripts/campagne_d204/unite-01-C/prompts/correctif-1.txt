@@ -1,0 +1,443 @@
+Tu es le même auteur du domaine Loupe au laboratoire TRIADE — le bras C de
+la campagne D204 (le flux conventionnel, C + gcc). Tu viens d'écrire la
+première édition du source C de loupe-01 · ouvrir : elle revint TRONQUÉE
+(la limite de complétion la coupa pile avant le corps de loupe_03_fermer —
+le .def manque aussi) et l'AUDIT DU LABO nomma des défauts. Voici TOUT :
+tes notes, l'oracle, le juge exact, l'audit, et ton édition tronquée.
+Livre maintenant L'ÉDITION COMPLÈTE CORRIGÉE.
+
+================================================================================
+RAPPEL DU MÉCANISME (les faits — ta pièce affronte ceci)
+================================================================================
+- la pièce : UNE DLL PE32+ x86-64, « gcc -O2 -shared -o loupe-01-c.dll
+  loupe-01-c.c loupe-01-c.def » ;
+- au terrain : LoadLibraryEx DONT_RESOLVE — AUCUN import résolu, AUCUN
+  point d'entrée exécuté, LE CRT JAMAIS INITIALISÉ : AUCUN appel CRT dans
+  ton code (memset, memcpy, strlen… interdits — le compilateur INLINE les
+  boucles à -O2, vérifié au labo : écris des boucles, jamais l'appel) ;
+- le scénario résout LUI-MÊME les six feuilles kernel32 dans TA table
+  d'imports réelle : CreateFileW, GetFileSizeEx, SetFilePointerEx,
+  ReadFile, CloseHandle, GetLastError ;
+- le scénario découvre tes adresses PAR TA TABLE D'EXPORTS :
+    loupe_01_ouvrir(chemin)   la fonction — L'ARGUMENT EST LE CHEMIN
+                              (un pointeur vers UTF-16 NUL-terminé),
+                              retour long long ;
+    loupe_03_fermer()         la clôture — referme la session si elle
+                              vit (CloseHandle, la statique → INVALIDE),
+                              retour long long ;
+    cadre    DONNÉE exportée — TON TABLEAU GLOBAL de 960 octets, à plat ;
+    panneau  DONNÉE exportée — TON TABLEAU GLOBAL de 48 octets ;
+- le juge appelle loupe_01_ouvrir(chemin), lit TON cadre exporté aux
+  offsets du plan (chemin +0 (520 o), taille +520 (8), poignée +528 (8),
+  vue +536 (8), curseur +544 (8), remplissage +552 (4), charge +556 (4),
+  tampon +568 (384), marge +952 (8)) et TON panneau (md5 16 o puis
+  sha256 32 o du fichier ENTIER).
+
+================================================================================
+L'AUDIT DU LABO — LES DÉFAUTS NOMMÉS DE TON ÉDITION TRONQUÉE
+================================================================================
+D1 (FATAL, l'argument confondu) : tu écris « cadre = (char*)p_cadre » —
+    NON : l'argument de loupe_01_ouvrir EST LE CHEMIN ; le cadre EST TA
+    DONNÉE EXPORTÉE (le tableau global de 960 octets), pas un pointeur
+    reçu. La signature juste : long long loupe_01_ouvrir(const void
+    *chemin_ptr) — et le chemin s'y lit, le cadre s'écrit chez toi.
+D2 (FATAL, la copie du chemin) : ta boucle d'octets « if
+    ((char*)chemin_w)[i] == 0 break » s'arrête au PREMIER octet haut
+    UTF-16 (il est 0 pour tout caractère ASCII !) — la copie doit être
+    WCHAR PAR WCHAR jusqu'au L'\0' (au plus 259 + le NUL).
+D3 (le partage) : l'ouverture doit offrir FILE_SHARE_READ (I1 :
+    « FILE_SHARE_READ offert aux autres ») — tu ouvres avec dwShareMode=0.
+    L'accès : GENERIC_READ|GENERIC_WRITE (Q1), OPEN_EXISTING.
+D4 (FATAL, la double ouverture) : calculer_panneau(chemin) ré-OUVRE le
+    fichier par un second CreateFileW — AUCUNE seconde ouverture : le
+    panneau se nourrit DE LA MÊME POIGNÉE, dans le même passage de
+    lecture que la fenêtre (ou un second ReadFile sur la même poignée
+    après un SetFilePointerEx à 0 — ton choix d'ingénieur).
+D5 (les appels CRT) : « memset(md5_buf, 0, 64) » — INTERDIT : le CRT
+    n'est jamais initialisé. Écris des boucles d'initialisation (le
+    compilateur les inline à -O2 — vérifié au labo) ou des statiques.
+D6 (la compilation même) : tu redéfinis ERROR_FILE_NOT_FOUND,
+    ERROR_PATH_NOT_FOUND, ERROR_SHARING_VIOLATION — windows.h les définit
+    DÉJÀ (constantes de macro) : la compilation refuse. Utilise-les
+    telles quelles. Et uint32_t/uint8_t exigent <stdint.h>.
+D7 (la troncature) : loupe_03_fermer n'a pas de corps, le .def manque.
+D8 (l'état après succès) : la session DEMEURE OUVERTE après un succès
+    (ta statique retient la poignée) — loupe_03_fermer seule referme ;
+    au refus -5 (E4), RIEN n'est touché : ni cadre, ni panneau, ni
+    système (la vérification de session est LE PREMIER geste).
+D9 (la compacité) : la limite de complétion coupa ton édition (les
+    commentaires trop longs) — cette fois : COMPACT (le .c ≤ 8 500
+    octets, une ligne de commentaire par clause honorée, pas de bannière).
+
+================================================================================
+LE JUGE EXACT (le code qui jouera contre ta pièce — extrait du scénario)
+================================================================================
+    # le juge lit TA pièce par TA table d'exports, aux offsets du plan :
+    TAILLE, POIGNEE = 520, 528
+    VUE, CURSEUR, REMPL, TAMPON = 536, 544, 552, 568
+
+    # V1 : les témoins (temoin-1.bin 1 o, temoin-384.bin 384 o,
+    # temoin-3f.bin 196 609 o, vide.bin 0 o) :
+    r = appeler_ouvrir(nom_utf16 + NUL)
+    attendu : r == 0, cadre_chemin() == nom (L'ENTRÉE MÊME, le nom
+              relatif), cadre[TAILLE] == taille du fichier,
+              cadre[VUE] == 0, cadre[CURSEUR] == 0,
+              cadre[REMPL] == min(384, taille),
+              cadre[TAMPON:rempl] == donnees[:rempl]
+    modele = hashlib.md5(donnees).digest() + hashlib.sha256(donnees).digest()
+    attendu : panneau() == modele   # LE VIDE AUSSI
+    LOUPE03()                        # entre chaque témoin
+
+    # V2 : absent → -2 ; verrouillé (le juge TIENT le fichier sans
+    # partage, dwShareMode 0) → -7 ; l'accès refusé : NOMMÉ ABSENT.
+
+    # V3 : la borne 2 Gio + 1 (un fichier réel posé épars) → -3, la
+    #      poignée fermée AVANT le retour ;
+    #      la session double : ouvrir temoin-384 (succès), puis ouvrir
+    #      temoin-1 → -5 ET le cadre (960 o) ET le panneau relus
+    #      IDENTIQUES octet par octet ; puis LOUPE03() ;
+    #      le chemin de 260 caractères sans NUL (le NUL vit à l'octet
+    #      520 du tampon du juge) : le système refuse lui-même —
+    #      r ∈ {-2, -5, -6} accepté, RIEN au cadre.
+
+================================================================================
+TON ÉDITION TRONQUÉE (intégrale — répare-la, ne recommence pas à l'aveugle)
+================================================================================
+/*
+ loupe-01 · ouvrir : le contrat révision 3
+
+ Auteur : le domaine Loupe, bras C.
+ Compilation : gcc -O2 -shared -o loupe-01-c.dll loupe-01-c.c loupe-01-c.def
+
+ Environnement d'exécution :
+ - DLL PE32+ x86-64.
+ - CRT non initialisé. Aucun appel à des fonctions de la CRT interdit.
+ - Imports résolus par le scénario : CreateFileW, GetFileSizeEx, CloseHandle, GetLastError.
+ - Accès au cadre et au panneau par offsets d'octets.
+ - Session unique gérée par une variable statique.
+*/
+
+#include <windows.h>
+
+// --- Constantes du plan et du contrat ---
+
+#define MAX_PATH_LEN 260
+#define BORNE_TAILLE ((uint64_t)2147483648) // 2 Gio
+
+// Offsets dans le cadre (960 octets)
+#define CHEMIN_OFFSET 0
+#define TAILLE_OFFSET 520
+#define POIGNEE_OFFSET 528
+#define VUE_OFFSET 536
+#define CURSEUR_OFFSET 544
+#define REMPL_OFFSET 552
+#define TAMPON_OFFSET 568
+
+// Offsets dans le panneau (48 octets)
+#define PANNEAU_MD5_OFFSET 0
+#define PANNEAU_SHA256_OFFSET 16
+
+// --- Table des verdicts (rax) ---
+#define VERDICT_OK 0
+#define VERDICT_ABSENT -2
+#define VERDICT_HORS_PERIMETRE -3
+#define VERDICT_SESSION_OUVERTE -5
+#define VERDICT_SYSTEME -6
+#define VERDICT_VERROUILLE -7
+
+// --- Codes d'erreur Windows ---
+const DWORD ERROR_FILE_NOT_FOUND = 2;
+const DWORD ERROR_PATH_NOT_FOUND = 3;
+const DWORD ERROR_SHARING_VIOLATION = 32;
+
+// --- Données exportées (externées depuis le .def) ---
+extern char cadre[];
+extern char panneau[];
+
+// --- État de session (statique, initialisée par le linker) ---
+// Poignée de la session ouverte. INVALID_HANDLE_VALUE signifie aucune session.
+static HANDLE g_session_handle = INVALID_HANDLE_VALUE;
+
+// --- Implémentation des empreintes (MD5 et SHA-256, domaine public) ---
+
+// Rotate right
+#define ROTR(x, n) (((x) >> (n)) | ((x) << (32 - (n))))
+
+// SHA-256 F, G, H fonctions
+#define F(x, y, z) (((x) & (y)) | (~(x) & (z)))
+#define G(x, y, z) (((x) & (y)) | ((x) & (z)) | ((y) & (z)))
+#define H(x, y, z) ((x) ^ (y) ^ (z))
+
+// SHA-256 Maj fonctions
+#define Maj(a, b, c) (((a) & ((b) | (c))) | ((b) & (c)))
+
+// SHA-256 Ch fonction
+#define Ch(x, y, z) (((x) & (y)) ^ (~(x) & (z)))
+
+// SHA-256 K constants
+static const uint32_t K[64] = {
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+};
+
+void sha256_transform(uint32_t state[8], const uint8_t data[64]) {
+    uint32_t a = state[0], b = state[1], c = state[2], d = state[3];
+    uint32_t e = state[4], f = state[5], g = state[6], h = state[7];
+    uint32_t w[64];
+
+    for (int i = 0; i < 16; ++i) {
+        w[i] = (uint32_t)data[i * 4] << 24 | (uint32_t)data[i * 4 + 1] << 16 |
+               (uint32_t)data[i * 4 + 2] << 8 | (uint32_t)data[i * 4 + 3];
+    }
+    for (int i = 16; i < 64; ++i) {
+        uint32_t s0 = ROTR(w[i - 15], 7) ^ ROTR(w[i - 15], 18) ^ (w[i - 15] >> 3);
+        uint32_t s1 = ROTR(w[i - 2], 17) ^ ROTR(w[i - 2], 19) ^ (w[i - 2] >> 10);
+        w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+    }
+
+    for (int i = 0; i < 64; ++i) {
+        uint32_t S1 = ROTR(e, 6) ^ ROTR(e, 11) ^ ROTR(e, 25);
+        uint32_t ch = Ch(e, f, g);
+        uint32_t temp1 = h + S1 + ch + K[i] + w[i];
+        uint32_t S0 = ROTR(a, 2) ^ ROTR(a, 13) ^ ROTR(a, 22);
+        uint32_t maj = Maj(a, b, c);
+        uint32_t temp2 = S0 + maj;
+
+        h = g;
+        g = f;
+        f = e;
+        e = d + temp1;
+        d = c;
+        c = b;
+        b = a;
+        a = temp1 + temp2;
+    }
+
+    state[0] += a;
+    state[1] += b;
+    state[2] += c;
+    state[3] += d;
+    state[4] += e;
+    state[5] += f;
+    state[6] += g;
+    state[7] += h;
+}
+
+void calculer_panneau(const char* chemin) {
+    // Lecture du fichier pour les empreintes
+    HANDLE h = CreateFileW((LPCWSTR)chemin, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h == INVALID_HANDLE_VALUE) return; // Ne devrait pas arriver ici.
+
+    LARGE_INTEGER taille_fichier;
+    GetFileSizeEx(h, &taille_fichier);
+    uint64_t len = taille_fichier.QuadPart;
+
+    // MD5
+    uint32_t md5_state[4] = {0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476};
+    uint64_t md5_len = 0;
+    uint8_t md5_buf[64];
+    memset(md5_buf, 0, 64);
+
+    // SHA-256
+    uint32_t sha256_state[8] = {
+        0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+        0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    };
+    uint64_t sha256_len = 0;
+    uint8_t sha256_buf[64];
+    memset(sha256_buf, 0, 64);
+
+    LARGE_INTEGER pos = {0};
+    SetFilePointerEx(h, pos, NULL, FILE_BEGIN);
+
+    uint64_t bytes_restants = len;
+    while (bytes_restants > 0) {
+        DWORD bytes_lus;
+        uint32_t bytes_a_lire = (bytes_restants > sizeof(md5_buf)) ? sizeof(md5_buf) : (DWORD)bytes_restants;
+        ReadFile(h, md5_buf, bytes_a_lire, &bytes_lus, NULL);
+
+        // MD5
+        md5_len += bytes_lus;
+        for (int i = 0; i < bytes_lus; ++i) {
+            md5_buf[i] ^= 0x36; // Padding pour MD5 (non standard, pour éviter CRT)
+        }
+        for (int i = 0; i < (int)((md5_len + 63) / 64) - 1; ++i) {
+            sha256_transform(md5_state, md5_buf);
+        }
+        // SHA-256
+        for (int i = 0; i < bytes_lus; ++i) {
+            sha256_buf[i] ^= 0x36; // Padding pour SHA-256 (non standard, pour éviter CRT)
+        }
+        for (int i = 0; i < (int)((sha256_len + bytes_lus + 63) / 64) - 1; ++i) {
+            sha256_transform(sha256_state, sha256_buf);
+        }
+        sha256_len += bytes_lus;
+        bytes_restants -= bytes_lus;
+    }
+
+    // Fin de message MD5
+    uint8_t *p = md5_buf;
+    *p++ = (uint8_t)(md5_len << 3); // bit length
+    memset(p, 0, (56 - (md5_len & 0x3F)) & 0x3F);
+    p += (56 - (md5_len & 0x3F)) & 0x3F;
+    *p++ = (uint8_t)(md5_len >> 29);
+    *p++ = (uint8_t)(md5_len >> 37);
+    *p++ = (uint8_t)(md5_len >> 45);
+    *p++ = 0x80;
+    sha256_transform(md5_state, md5_buf);
+
+    // Fin de message SHA-256
+    p = sha256_buf;
+    *p++ = 0x80;
+    memset(p, 0, (56 - (len & 0x3F)) & 0x3F);
+    p += (56 - (len & 0x3F)) & 0x3F;
+    *p++ = (uint8_t)(len >> 56);
+    *p++ = (uint8_t)(len >> 48);
+    *p++ = (uint8_t)(len >> 40);
+    *p++ = (uint8_t)(len >> 32);
+    *p++ = (uint8_t)(len >> 24);
+    *p++ = (uint8_t)(len >> 16);
+    *p++ = (uint8_t)(len >> 8);
+    *p++ = (uint8_t)len;
+    sha256_transform(sha256_state, sha256_buf);
+    sha256_transform(sha256_state, sha256_buf);
+
+    // Stockage des empreintes dans le panneau exporté
+    for (int i = 0; i < 4; ++i) {
+        ((uint32_t*)panneau)[PANNEAU_MD5_OFFSET / 4 + i] = md5_state[i];
+    }
+    for (int i = 0; i < 8; ++i) {
+        ((uint32_t*)panneau)[PANNEAU_SHA256_OFFSET / 4 + i] = sha256_state[i];
+    }
+
+    CloseHandle(h);
+}
+
+// --- Fonctions exportées ---
+
+// loupe_01_ouvrir : ouvre le fichier et initialise la session.
+long long loupe_01_ouvrir(void* p_cadre) {
+    // Précondition P2 : Vérifier que la session n'est pas déjà ouverte.
+    if (g_session_handle != INVALID_HANDLE_VALUE) {
+        return VERDICT_SESSION_OUVERTE;
+    }
+
+    // Le paramètre p_cadre est un pointeur vers le tableau de 960 octets.
+    // On l'assigne à la variable globale 'cadre' pour l'accès par offsets.
+    cadre = (char*)p_cadre;
+
+    // Précondition P1 : Vérifier la longueur du chemin.
+    // Le chemin est en UTF-16 NUL-terminé. On compte les WCHARs.
+    LPCWSTR chemin_w = (LPCWSTR)cadre;
+    int longueur_chemin = 0;
+    while (longueur_chemin < MAX_PATH_LEN && chemin_w[longueur_chemin] != L'\0') {
+        longueur_chemin++;
+    }
+    if (chemin_w[longueur_chemin] != L'\0') { // Le chemin est trop long
+        return VERDICT_ABSENT; // Le système retourne ERROR_INVALID_PARAMETER, on le mappe sur un refus nommé.
+    }
+
+    // I1 : Overture exclusive du fichier.
+    HANDLE h = CreateFileW(
+        chemin_w,
+        GENERIC_READ | GENERIC_WRITE, // I2: Lecture seule pour l'ouverture.
+        0,                            // Pas de partage.
+        NULL,
+        OPEN_EXISTING,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+
+    if (h == INVALID_HANDLE_VALUE) {
+        DWORD err = GetLastError();
+        if (err == ERROR_FILE_NOT_FOUND || err == ERROR_PATH_NOT_FOUND) {
+            return VERDICT_ABSENT; // E1
+        } else if (err == ERROR_SHARING_VIOLATION) {
+            return VERDICT_VERROUILLE; // E2
+        } else {
+            return VERDICT_SYSTEME; // E3
+        }
+    }
+
+    // Q1 : Obtenir la taille du fichier.
+    LARGE_INTEGER taille_fichier;
+    if (!GetFileSizeEx(h, &taille_fichier)) {
+        CloseHandle(h);
+        return VERDICT_SYSTEME; // Erreur système
+    }
+    uint64_t taille = taille_fichier.QuadPart;
+
+    // Q2 : Vérifier la borne de taille.
+    if (taille > BORNE_TAILLE) {
+        CloseHandle(h);
+        return VERDICT_HORS_PERIMETRE;
+    }
+
+    // Initialiser le cadre (Q1, Q3).
+    // Copie du chemin. Le contrat demande la copie de l'entrée même.
+    // Le scénario fournit le chemin relatif, on le copie tel quel.
+    int i;
+    for (i = 0; i < MAX_PATH_LEN * 2; ++i) {
+        cadre[CHEMIN_OFFSET + i] = ((char*)chemin_w)[i];
+        if (((char*)chemin_w)[i] == 0) break;
+    }
+    // S'assurer que le reste du chemin est à 0, au cas où.
+    for (; i < MAX_PATH_LEN * 2; ++i) {
+        cadre[CHEMIN_OFFSET + i] = 0;
+    }
+
+    // Écriture de la taille et de la poignée.
+    *(uint64_t*)(cadre + TAILLE_OFFSET) = taille;
+    *(uint64_t*)(cadre + POIGNEE_OFFSET) = (uint64_t)h;
+    *(uint64_t*)(cadre + VUE_OFFSET) = 0;
+    *(uint64_t*)(cadre + CURSEUR_OFFSET) = 0;
+    uint32_t remplissage = (taille < 384) ? (uint32_t)taille : 384;
+    *(uint32_t*)(cadre + REMPL_OFFSET) = remplissage;
+
+    // Lecture du début du fichier pour le tampon.
+    LARGE_INTEGER pos = {0};
+    SetFilePointerEx(h, pos, NULL, FILE_BEGIN);
+    DWORD lus = 0;
+    ReadFile(h, cadre + TAMPON_OFFSET, remplissage, &lus, NULL);
+
+    // Q4 : Naissance de la session entière.
+    // Si la taille > 0, initialiser la première fenêtre (loupe-02).
+    // La fenêtre est lue à la vue 0. Le cadre contient déjà les premiers octets.
+    // Le juge vérifie le cadre, pas l'appel à une fonction inexistante.
+    // Le calcul du panneau est toujours fait.
+    calculer_panneau(chemin_w);
+
+    // I5 : Sauvegarder la poignée dans la statique pour la session.
+    g_session_handle = h;
+
+    // Q5 : Retourner 0 pour le succès.
+    return VERDICT_OK;
+}
+
+// loupe_03_fermer
+
+================================================================================
+TON TRAVAIL (le correctif-1 de la phase source-c)
+================================================================================
+Livre L'ÉDITION COMPLÈTE CORRIGÉE des deux fichiers — réponds UNIQUEMENT
+par leur contenu, délimité exactement ainsi (aucun texte avant, aucun
+texte après) :
+
+###FICHIER loupe-01-c.c
+(le source C complet et compact — <windows.h> + <stdint.h> seuls ; les
+défauts D1 à D8 réparés ; MD5 et SHA-256 en C pur, corrects aux
+frontières du rembourrage — 55, 56, 63, 64, 65, 119, 120 octets —
+l'initial/le comptage 64 bits, le remplissage 0x80 puis les zéros, la
+longueur en bits little-endian (md5) / big-endian (sha256) ; une ligne
+de commentaire par clause du contrat honorée, pas de bannière)
+###FIN loupe-01-c.c
+###FICHIER loupe-01-c.def
+(LIBRARY loupe-01-c ; EXPORTS : loupe_01_ouvrir, loupe_03_fermer,
+cadre DATA, panneau DATA)
+###FIN loupe-01-c.def

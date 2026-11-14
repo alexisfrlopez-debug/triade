@@ -1,0 +1,98 @@
+Tu es le même auteur du domaine Loupe au laboratoire TRIADE — le bras C de
+la campagne D204. Ton source de loupe-01 · ouvrir est PRÉSENT ET PROUVÉ :
+la couche MD5+SHA-256 rend 32/32 VERT au labo (toutes les frontières du
+rembourrage, l'absorption irrégulière), la pièce compile en DLL PE32+
+(gcc -O2 -shared). Écris maintenant TON HARNAIS DE TESTS — la phase
+tests-c du workflow : l'épreuve du contrat ENTIER, jouée au laboratoire
+POSIX (le labo n'a AUCUN Windows — D122 : le run terrain appartient au
+développeur, l'épreuve du labo rejoue la LOGIQUE au POSIX).
+
+================================================================================
+L'ÉPREUVE (ce que le harnais fait)
+================================================================================
+Le harnais est UN fichier C (epreuve_posix.c) qui :
+  1. fournit un « windows.h » de shim (dans SON dossier, passé par -I au
+     compilateur) : les types (HANDLE, DWORD, LPCWSTR, LARGE_INTEGER,
+     INVALID_HANDLE_VALUE, GENERIC_READ/WRITE, FILE_SHARE_READ,
+     OPEN_EXISTING, FILE_BEGIN, les ERROR_*) et les DÉCLARATIONS des six
+     feuilles kernel32 ;
+  2. IMPLÉMENTE les six en shims POSIX :
+       CreateFileW     open(O_RDWR) ; puis flock(LOCK_EX|LOCK_NB) sur le
+                       fd : s'il échoue (EWOULDBLOCK — un autre
+                       détenteur tient le fichier), close + last_error =
+                       32 (SHARING_VIOLATION) + INVALID_HANDLE_VALUE ;
+                       open échoué : ENOENT → erreur 2 (FILE_NOT_FOUND),
+                       ENAMETOOLONG → erreur 3 (PATH_NOT_FOUND), EACCES →
+                       erreur 5, sinon erreur 5 ;
+       GetFileSizeEx   fstat → st_size ;
+       SetFilePointerEx lseek(fd, offset, SEEK_SET/CUR) ;
+       ReadFile        read() (boucle si partiel) ;
+       CloseHandle     close() (relâche le flock) ;
+       GetLastError    une variable thread-simple du shim ;
+     les chemins UTF-16 sont décodés en char[] par le shim (wcstombs
+     manuel : copie des octets bas, arrêt au NUL) ;
+  3. INCLUT LA PIÈCE TELLE QUELLE : #include "loupe-01-c.c" (compilé
+     avec -I. où vit le windows.h de shim) — la pièce n'est JAMAIS
+     modifiée ;
+  4. joue LES QUINZE VECTEURS DU JUGE, dans l'ordre du terrain :
+       V1  temoin-1.bin, temoin-384.bin, temoin-3f.bin, vide.bin —
+           l'ouverture, puis LOUPE03_fermer entre chacun ;
+       V2  « absent-du-terrain.bin » (attendu -2) ; « temoin-1.bin »
+           TENU sans partage par le harnais (le shim tient : open +
+           flock LOCK_EX|LOCK_NB, la poignée gardée pendant l'appel —
+           attendu -7, puis relâche) ;
+       V3  « geant-plus.bin » : un fichier RÉEL posé épars à
+           0x80000001 octets (open + ftruncate, fermer — attendu -3) ;
+           la session double : ouvrir temoin-384.bin (succès), PUIS
+           ouvrir temoin-1.bin (attendu -5, le cadre et le panneau
+           relus IDENTIQUES), puis loupe_03_fermer ;
+           le chemin de 260 caractères sans NUL : 260 L'A' en UTF-16
+           (520 octets) + le NUL — un refus nommé attendu (le système
+           refuse : -2, -5 ou -6) ;
+  5. pour CHAQUE vecteur, imprime UNE LIGNE au format EXACT :
+       VECTEUR <nom> rax=<n> chemin=<520 octets du cadre+0 en hex> taille=<u64> poignee=<u64> vue=<u64> curseur=<u64> rempl=<u32> tampon=<384 octets en hex> panneau=<48 octets en hex>
+     (les appels loupe_01_ouvrir recoivent le chemin en UTF-16 + NUL,
+     exactement comme le juge du terrain : un tampon de 520 octets + 8
+     octets de marge nulle) ;
+  6. AVANT la session double, imprime AUSSI l'état du cadre (960 octets
+     en hex) et du panneau après le premier succès — la ligne :
+       ETAT cadre=<960 octets hex> panneau=<48 octets hex>
+     … pour que le comparateur constate l'ancien cadre INTACT.
+
+Les témoins : temoin-1.bin (1 o), temoin-384.bin (384 o), temoin-3f.bin
+(196 609 o), vide.bin (0 o) — DÉJÀ PRÉSENTS dans le dossier du harnais
+(le labo les pose : les MÊMES octets que le kit du terrain).
+
+================================================================================
+TON TRAVAIL (la phase tests-c)
+================================================================================
+Réponds UNIQUEMENT par le contenu des DEUX fichiers, délimités ainsi
+(le windows.h de shim doit exister À LA COMPILATION — la pièce
+l'inclut ; le harnais compile : gcc -O2 -o epreuve_posix
+epreuve_posix.c -I.) :
+
+###FICHIER windows.h
+(LE SHIM : les types — HANDLE = void*, DWORD, WORD, LPCWSTR, LPDWORD,
+LARGE_INTEGER, INVALID_HANDLE_VALUE = (HANDLE)-1, GENERIC_READ 0x80000000,
+GENERIC_WRITE 0x40000000, FILE_SHARE_READ 1, OPEN_EXISTING 3,
+FILE_BEGIN 0, FILE_ATTRIBUTE_NORMAL 0, ERROR_FILE_NOT_FOUND 2,
+ERROR_PATH_NOT_FOUND 3, ERROR_ACCESS_DENIED 5, ERROR_SHARING_VIOLATION
+32, MAX_PATH 260 — et les DÉCLARATIONS des six feuilles : CreateFileW,
+GetFileSizeEx, SetFilePointerEx, ReadFile, CloseHandle, GetLastError ;
+les déclarations portent des noms C nets, les types minimaux)
+###FIN windows.h
+###FICHIER epreuve_posix.c
+(le harnais : #include <stdio.h> <stdint.h> <string.h> <fcntl.h>
+<unistd.h> <sys/stat.h> <sys/file.h> <errno.h>, PUIS #include
+<windows.h> (le shim du dossier) ET #include "loupe-01-c.c" (la pièce,
+incluse telle quelle) ; PUIS les implémentations des six shims POSIX
+(conformément à la spécification ci-dessus — CreateFileW : open(O_RDWR)
+puis flock(LOCK_EX|LOCK_NB), l'échec de flock → close + erreur 32 +
+INVALID_HANDLE_VALUE ; les erreurs d'open : ENOENT → 2, ENAMETOOLONG →
+3, EACCES → 5, sinon 5 ; GetLastError : la variable du shim) ; PUIS le
+main qui joue les QUINZE vecteurs dans l'ordre du terrain et imprime
+les lignes VECTEUR/ETAT au format exact ; COMPACT : ≤ 7 000 octets)
+###FIN epreuve_posix.c
+
+Aucun texte avant le premier ###FICHIER, aucun texte après le dernier
+###FIN.

@@ -1,0 +1,399 @@
+Tu es le même auteur du domaine Loupe au laboratoire TRIADE — le bras C de
+la campagne D204. L'audit du labo sur ton correctif-2 : la STRUCTURE est
+bonne (les données définies, l'ouverture contractuelle, la session, la
+borne), tes TABLES sont justes (T[64] complet, S par index modulo,
+sha256_transform conforme FIPS 180-4, la finalisation MD5 à deux blocs),
+MAIS la couche de hachage reste CASSÉE et l'édition est TRONQUÉE encore
+(la limite de complétion coupa dans loupe_01_ouvrir). Ce correctif
+PRESCRIT l'architecture exacte — suis-la à la lettre.
+
+================================================================================
+L'AUDIT — LES DÉFAUTS NOMMÉS DU CORRECTIF-2
+================================================================================
+D15 (les rondes MD5 2 et 4 sont FAUSSES) : ta ronde 2 appelle G(c,d,b)
+    = la MAJORITÉ — la vraie ronde 2 du MD5 est f = (d & b) | (~d & c) ;
+    ta ronde 4 appelle Ch(b,c,d) = (b&c)^(~b&d) — la vraie ronde 4 est
+    f = c ^ (b | ~d). Les QUATRE rondes exactes (w = le bloc en 16 mots
+    LITTLE-ENDIAN, g l'index du mot) :
+      i < 16 : f = (b & c) | (~b & d)  ; g = i
+      i < 32 : f = (d & b) | (~d & c)  ; g = (5*i + 1) % 16
+      i < 48 : f = b ^ c ^ d           ; g = (3*i + 5) % 16
+      i < 64 : f = c ^ (b | ~d)        ; g = (7*i) % 16
+    puis la ronde : temp = d ; d = c ; c = b ;
+    b = b + ROTL32(a + f + T[i] + w[g], S[i % 16]) ; a = temp ;
+    et à la fin état[0..3] += a,b,c,d. Ajoute la macro manquante :
+    #define ROTL32(x, n) (((x) << (n)) | ((x) >> (32 - (n))))
+D16 (l'absorption est incohérente) : tes compteurs « (md5_len + 63)/64
+    - 1 » transforment le MAUVAIS tampon le MAUVAIS nombre de fois, et
+    sha256_buf n'est JAMAIS rempli (la lecture va dans md5_buf seul) —
+    sans compter la coquille « sha5_buf ». Remplace TOUTE la couche par
+    L'ARCHITECTURE INCRÉMENTALE PRESCRITE ci-dessous.
+D17 (la finalisation SHA-256 à deux blocs est fausse) : ton « if
+    (sha256_part_len >= 56) transform; transform; » transforme le même
+    bloc deux fois — suis la finalisation prescrite.
+D18 (la troncature) : la fin de loupe_01_ouvrir (la copie du chemin au
+    CADRE +0 — jamais sur l'entrée même —, la pose du cadre, la lecture
+    du tampon, la naissance du panneau, la session), loupe_03_fermer
+    entier, et le .def manquent. Le .def retenu (celui de ton
+    correctif-1, juste) :
+        LIBRARY loupe-01-c
+        EXPORTS
+            loupe_01_ouvrir
+            loupe_03_fermer
+            cadre DATA
+            panneau DATA
+D19 (la copie du chemin) : elle va de l'ENTRÉE vers TON cadre à
+    l'offset 0, WCHAR par WCHAR, jusqu'au L'\0' inclus (au plus 259
+    caractères + le NUL) — l'entrée n'est JAMAIS modifiée :
+        for (i = 0; i < 259 && chemin_w[i] != 0; ++i)
+            ((uint16_t*)(cadre + 0))[i] = (uint16_t)chemin_w[i];
+        ((uint16_t*)(cadre + 0))[i] = 0;
+
+================================================================================
+L'ARCHITECTURE INCRÉMENTALE PRESCRITE (les deux empreintes, exactement)
+================================================================================
+    /* UN contexte PAR empreinte — l'absorption et la finalisation */
+    typedef struct { uint32_t etat[4]; uint8_t tampon[64];
+                     uint32_t rempli; uint64_t total; } ctx_md5;
+    typedef struct { uint32_t etat[8]; uint8_t tampon[64];
+                     uint32_t rempli; uint64_t total; } ctx_sha256;
+
+    md5_absorbe(ctx_md5 *c, const uint8_t *d, uint32_t n) :
+        pour chaque octet : c->tampon[c->rempli++] = d[k] ; c->total++ ;
+        si c->rempli == 64 : md5_transform(c->etat, c->tampon) ;
+        c->rempli = 0 ;
+    sha256_absorbe : la même chose avec sha256_transform.
+
+    md5_final(ctx_md5 *c, uint8_t sortie[16]) :
+        uint64_t bits = c->total * 8 ;
+        c->tampon[c->rempli++] = 0x80 ;
+        si c->rempli > 56 : { zéros de rempli à 64 ; md5_transform ;
+                             rempli = 0 ; }
+        zéros de rempli à 56 ;
+        la longueur bits sur 8 octets LITTLE-ENDIAN à tampon[56..63] ;
+        md5_transform ;
+        sortie : etat[0..3], chacun en LITTLE-ENDIAN → 16 octets.
+    sha256_final(ctx_sha256 *c, uint8_t sortie[32]) :
+        uint64_t bits = c->total * 8 ;
+        c->tampon[c->rempli++] = 0x80 ;
+        si c->rempli > 56 : { zéros de rempli à 64 ; sha256_transform ;
+                             rempli = 0 ; }
+        zéros de rempli à 56 ;
+        la longueur bits sur 8 octets BIG-ENDIAN à tampon[56..63] ;
+        sha256_transform ;
+        sortie : etat[0..7], chacun en BIG-ENDIAN → 32 octets.
+
+    /* la lecture : UN SEUL passage nourrit les DEUX empreintes */
+    uint8_t morceau[4096] ;  /* sur la pile */
+    while (reste > 0) {
+        uint32_t a_lire = (reste > 4096) ? 4096 : reste ;
+        DWORD lus = 0 ;
+        if (!ReadFile(h, morceau, a_lire, &lus, NULL) || lus == 0) break ;
+        md5_absorbe(&m5, morceau, lus) ;
+        sha256_absorbe(&s2, morceau, lus) ;
+        reste -= lus ;
+    }
+    md5_final(&m5, panneau) ;            /* les 16 premiers octets */
+    sha256_final(&s2, panneau + 16) ;    /* les 32 suivants */
+
+================================================================================
+TON ÉDITION CORRIGÉE (le correctif-2 — structure conservée, couches
+cassées à remplacer ; le début jusqu'à md5_transform est à reprendre,
+l'absorption et la finalisation à réécrire selon la prescription)
+================================================================================
+#include <windows.h>
+#include <stdint.h>
+
+#define MAX_PATH_LEN 260
+#define BORNE_TAILLE ((uint64_t)2147483648)
+#define TAILLE_OFFSET 520
+#define POIGNEE_OFFSET 528
+#define VUE_OFFSET 536
+#define CURSEUR_OFFSET 544
+#define REMPL_OFFSET 552
+#define TAMPON_OFFSET 568
+#define PANNEAU_MD5_OFFSET 0
+#define PANNEAU_SHA256_OFFSET 16
+#define VERDICT_OK 0
+#define VERDICT_ABSENT -2
+#define VERDICT_HORS_PERIMETRE -3
+#define VERDICT_SESSION_OUVERTE -5
+#define VERDICT_SYSTEME -6
+#define VERDICT_VERROUILLE -7
+
+char cadre[960];
+char panneau[48];
+
+static HANDLE g_session_handle = INVALID_HANDLE_VALUE;
+
+#define ROTR(x, n) (((x) >> (n)) | ((x) << (32 - (n))))
+#define F(x, y, z) (((x) & (y)) | (~(x) & (z)))
+#define G(x, y, z) (((x) & (y)) | ((x) & (z)) | ((y) & (z)))
+#define H(x, y, z) ((x) ^ (y) ^ (z))
+#define Maj(a, b, c) (((a) & ((b) | (c))) | ((b) & (c)))
+#define Ch(x, y, z) (((x) & (y)) ^ (~(x) & (z)))
+
+static const uint32_t K[64] = {
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+};
+
+static const uint32_t T[64] = {
+    0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
+    0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
+    0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
+    0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
+    0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
+    0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
+    0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+    0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
+};
+
+static const uint32_t S[64] = {
+    7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21
+};
+
+void sha256_transform(uint32_t state[8], const uint8_t data[64]) {
+    uint32_t a = state[0], b = state[1], c = state[2], d = state[3];
+    uint32_t e = state[4], f = state[5], g = state[6], h = state[7];
+    uint32_t w[64];
+
+    for (int i = 0; i < 16; ++i) {
+        w[i] = (uint32_t)data[i * 4] << 24 | (uint32_t)data[i * 4 + 1] << 16 |
+               (uint32_t)data[i * 4 + 2] << 8 | (uint32_t)data[i * 4 + 3];
+    }
+    for (int i = 16; i < 64; ++i) {
+        uint32_t s0 = ROTR(w[i - 15], 7) ^ ROTR(w[i - 15], 18) ^ (w[i - 15] >> 3);
+        uint32_t s1 = ROTR(w[i - 2], 17) ^ ROTR(w[i - 2], 19) ^ (w[i - 2] >> 10);
+        w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+    }
+
+    for (int i = 0; i < 64; ++i) {
+        uint32_t S1 = ROTR(e, 6) ^ ROTR(e, 11) ^ ROTR(e, 25);
+        uint32_t ch = Ch(e, f, g);
+        uint32_t temp1 = h + S1 + ch + K[i] + w[i];
+        uint32_t S0 = ROTR(a, 2) ^ ROTR(a, 13) ^ ROTR(a, 22);
+        uint32_t maj = Maj(a, b, c);
+        uint32_t temp2 = S0 + maj;
+
+        h = g;
+        g = f;
+        f = e;
+        e = d + temp1;
+        d = c;
+        c = b;
+        b = a;
+        a = temp1 + temp2;
+    }
+
+    state[0] += a;
+    state[1] += b;
+    state[2] += c;
+    state[3] += d;
+    state[4] += e;
+    state[5] += f;
+    state[6] += g;
+    state[7] += h;
+}
+
+void md5_transform(uint32_t state[4], const uint8_t data[64]) {
+    uint32_t a = state[0], b = state[1], c = state[2], d = state[3];
+    uint32_t w[16];
+
+    for (int i = 0; i < 16; ++i) {
+        w[i] = (uint32_t)data[i * 4] | (uint32_t)data[i * 4 + 1] << 8 |
+               (uint32_t)data[i * 4 + 2] << 16 | (uint32_t)data[i * 4 + 3] << 24;
+    }
+
+    for (int i = 0; i < 64; ++i) {
+        uint32_t f, g, x;
+        if (i < 16) {
+            f = F(b, c, d);
+            g = i;
+        } else if (i < 32) {
+            f = G(c, d, b);
+            g = (5 * i + 1) % 16;
+        } else if (i < 48) {
+            f = H(b, c, d);
+            g = (3 * i + 5) % 16;
+        } else {
+            f = Ch(b, c, d);
+            g = (7 * i) % 16;
+        }
+
+        uint32_t temp = d;
+        d = c;
+        c = b;
+        b = b + ROTL(a + f + T[i] + w[g], S[i % 16]);
+        a = temp;
+    }
+
+    state[0] += a;
+    state[1] += b;
+    state[2] += c;
+    state[3] += d;
+}
+
+void calculer_panneau(LPCWSTR chemin_w, HANDLE h) {
+    LARGE_INTEGER taille_fichier;
+    GetFileSizeEx(h, &taille_fichier);
+    uint64_t len = taille_fichier.QuadPart;
+
+    uint32_t md5_state[4] = {0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476};
+    uint64_t md5_len = 0;
+    uint8_t md5_buf[64];
+
+    uint32_t sha256_state[8] = {
+        0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+        0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    };
+    uint64_t sha256_len = 0;
+    uint8_t sha256_buf[64];
+
+    LARGE_INTEGER pos = {0};
+    SetFilePointerEx(h, pos, NULL, FILE_BEGIN);
+
+    uint64_t bytes_restants = len;
+    while (bytes_restants > 0) {
+        DWORD bytes_lus;
+        uint32_t bytes_a_lire = (bytes_restants > sizeof(md5_buf)) ? sizeof(md5_buf) : (DWORD)bytes_restants;
+        ReadFile(h, md5_buf, bytes_a_lire, &bytes_lus, NULL);
+
+        md5_len += bytes_lus;
+        for (int i = 0; i < (int)((md5_len + 63) / 64) - 1; ++i) {
+            md5_transform(md5_state, md5_buf);
+        }
+
+        sha256_len += bytes_lus;
+        for (int i = 0; i < (int)((sha256_len + 63) / 64) - 1; ++i) {
+            sha256_transform(sha256_state, sha5_buf);
+        }
+
+        bytes_restants -= bytes_lus;
+    }
+
+    uint8_t *p;
+    uint64_t bit_len = md5_len * 8;
+
+    p = md5_buf;
+    int md5_part_len = md5_len % 64;
+    p[md5_part_len] = 0x80;
+    if (md5_part_len < 56) {
+        for (int i = md5_part_len + 1; i < 56; ++i) p[i] = 0;
+    } else {
+        for (int i = md5_part_len + 1; i < 64; ++i) p[i] = 0;
+        md5_transform(md5_state, md5_buf);
+        for (int i = 0; i < 56; ++i) p[i] = 0;
+    }
+    p[56] = (uint8_t)(bit_len);
+    p[57] = (uint8_t)(bit_len >> 8);
+    p[58] = (uint8_t)(bit_len >> 16);
+    p[59] = (uint8_t)(bit_len >> 24);
+    p[60] = (uint8_t)(bit_len >> 32);
+    p[61] = (uint8_t)(bit_len >> 40);
+    p[62] = (uint8_t)(bit_len >> 48);
+    p[63] = (uint8_t)(bit_len >> 56);
+    md5_transform(md5_state, md5_buf);
+
+    p = sha256_buf;
+    int sha256_part_len = sha256_len % 64;
+    p[sha256_part_len] = 0x80;
+    if (sha256_part_len < 56) {
+        for (int i = sha256_part_len + 1; i < 56; ++i) p[i] = 0;
+    } else {
+        for (int i = sha256_part_len + 1; i < 64; ++i) p[i] = 0;
+        sha256_transform(sha256_state, sha256_buf);
+        for (int i = 0; i < 56; ++i) p[i] = 0;
+    }
+    p[56] = (uint8_t)(bit_len >> 56);
+    p[57] = (uint8_t)(bit_len >> 48);
+    p[58] = (uint8_t)(bit_len >> 40);
+    p[59] = (uint8_t)(bit_len >> 32);
+    p[60] = (uint8_t)(bit_len >> 24);
+    p[61] = (uint8_t)(bit_len >> 16);
+    p[62] = (uint8_t)(bit_len >> 8);
+    p[63] = (uint8_t)(bit_len);
+    sha256_transform(sha256_state, sha256_buf);
+    if (sha256_part_len >= 56) {
+        sha256_transform(sha256_state, sha256_buf);
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        ((uint32_t*)panneau)[PANNEAU_MD5_OFFSET / 4 + i] = md5_state[i];
+    }
+    for (int i = 0; i < 8; ++i) {
+        ((uint32_t*)panneau)[PANNEAU_SHA256_OFFSET / 4 + i] = sha256_state[i];
+    }
+}
+
+long long loupe_01_ouvrir(const void* chemin_ptr) {
+    if (g_session_handle != INVALID_HANDLE_VALUE) {
+        return VERDICT_SESSION_OUVERTE;
+    }
+
+    LPCWSTR chemin_w = (LPCWSTR)chemin_ptr;
+    int longueur_chemin = 0;
+    while (longueur_chemin < MAX_PATH_LEN && chemin_w[longueur_chemin] != L'\0') {
+        longueur_chemin++;
+    }
+    if (chemin_w[longueur_chemin] != L'\0') {
+        return VERDICT_ABSENT;
+    }
+
+    HANDLE h = CreateFileW(
+        chemin_w,
+        GENERIC_READ | GENERIC_WRITE,
+        FILE_SHARE_READ,
+        NULL,
+        OPEN_EXISTING,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+
+    if (h == INVALID_HANDLE_VALUE) {
+        DWORD err = GetLastError();
+        if (err == ERROR_FILE_NOT_FOUND || err == ERROR_PATH_NOT_FOUND) {
+            return VERDICT_ABSENT;
+        } else if (err == ERROR_SHARING_VIOLATION) {
+            return VERDICT_VERROUILLE;
+        } else {
+            return VERDICT_SYSTEME;
+        }
+    }
+
+    LARGE_INTEGER taille_fichier;
+    if (!GetFileSizeEx(h, &taille_fichier)) {
+        CloseHandle(h);
+        return VERDICT_SYSTEME;
+    }
+    uint64_t taille = taille_fichier.QuadPart;
+
+    if (taille > BORNE_TAILLE) {
+        CloseHandle(h);
+        return VERDICT_HORS_PERIMETRE;
+    }
+
+    char* chemin_a = (char*)chemin_ptr;
+    for (int i = 0; i < longueur_chemin; ++i) {
+
+================================================================================
+TON TRAVAIL (le correctif-3)
+================================================================================
+Livre LE FICHIER loupe-01-c.c SEUL, COMPLET, corrigé selon la
+prescription — réponds UNIQUEMENT par son contenu, délimité exactement
+ainsi (aucun texte avant, aucun texte après ; le .def est déjà retenu,
+ne le réécris pas) :
+
+###FICHIER loupe-01-c.c
+(le source C complet : <windows.h> + <stdint.h> seuls ; les rondes MD5
+exactes (D15), l'architecture incrémentale prescrite (D16/D17), la fin
+de loupe_01_ouvrir et loupe_03_fermer (D18), la copie du chemin au
+cadre (D19) ; COMPACT : ≤ 8 500 octets, commentaires d'une ligne,
+aucune bannière)
+###FIN loupe-01-c.c

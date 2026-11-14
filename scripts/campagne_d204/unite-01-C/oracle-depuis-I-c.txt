@@ -1,0 +1,135 @@
+**ORACLE POUR LOUPE-01 · OUVRIR (Révision 3)**
+
+**Vecteur V1-a : temoin-1.bin**
+*   **Entrée :** `chemin` = "temoin-1.bin", session initialement fermée.
+*   **Attendu :**
+    *   `rax` = 0 (succès).
+    *   **Cadre (offsets) :**
+        *   `+0` (chemin copié) = "temoin-1.bin" (terminé par NUL).
+        *   `+520` (taille) = 1.
+        *   `+528` (poignée) = handle de fichier valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 1) = 1.
+        *   `+568` (tampon) = contenu du fichier `temoin-1.bin` (1 octet).
+    *   **Panneau :**
+        *   `md5` = `hashlib.md5(b'x').digest()` = `098f6bcd...` (16 octets).
+        *   `sha256` = `hashlib.sha256(b'x').digest()` = `55ac4da6...` (32 octets).
+    *   **CloseHandle :** 1 appel, après la lecture du panneau.
+*   **Règle du modèle :** `CreateFileW` réussit. `GetFileSizeEx` donne 1. Le remplissage est 1. Le tampon du cadre est la tranche `[0:1]` du fichier. Le panneau contient les empreintes du contenu entier du fichier (1 octet).
+
+**Vecteur V1-b : temoin-384.bin**
+*   **Entrée :** `chemin` = "temoin-384.bin", session initialement fermée.
+*   **Attendu :**
+    *   `rax` = 0 (succès).
+    *   **Cadre (offsets) :**
+        *   `+0` (chemin copié) = "temoin-384.bin" (terminé par NUL).
+        *   `+520` (taille) = 384.
+        *   `+528` (poignée) = handle de fichier valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 384) = 384.
+        *   `+568` (tampon) = contenu du fichier `temoin-384.bin` (384 octets).
+    *   **Panneau :**
+        *   `md5` = `hashlib.md5(contenu_temoin_384).digest()` (16 octets).
+        *   `sha256` = `hashlib.sha256(contenu_temoin_384).digest()` (32 octets).
+    *   **CloseHandle :** 1 appel, après la lecture du panneau.
+*   **Règle du modèle :** `CreateFileW` réussit. `GetFileSizeEx` donne 384. Le remplissage est 384. Le tampon du cadre est la tranche `[0:384]` du fichier. Le panneau contient les empreintes du contenu entier du fichier (384 octets).
+
+**Vecteur V1-c : temoin-3f.bin**
+*   **Entrée :** `chemin` = "temoin-3f.bin", session initialement fermée.
+*   **Attendu :**
+    *   `rax` = 0 (succès).
+    *   **Cadre (offsets) :**
+        *   `+0` (chemin copié) = "temoin-3f.bin" (terminé par NUL).
+        *   `+520` (taille) = 196609.
+        *   `+528` (poignée) = handle de fichier valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 196609) = 384.
+        *   `+568` (tampon) = contenu du fichier `temoin-3f.bin` (premiers 384 octets).
+    *   **Panneau :**
+        *   `md5` = `hashlib.md5(contenu_temoin_3f).digest()` (16 octets).
+        *   `sha256` = `hashlib.sha256(contenu_temoin_3f).digest()` (32 octets).
+    *   **CloseHandle :** 1 appel, après la lecture du panneau.
+*   **Règle du modèle :** `CreateFileW` réussit. `GetFileSizeEx` donne 196609. Le remplissage est 384. Le tampon du cadre est la tranche `[0:384]` du fichier. Le panneau contient les empreintes du contenu entier du fichier (196609 octets).
+
+**Vecteur V1-d : vide.bin**
+*   **Entrée :** `chemin` = "vide.bin", session initialement fermée.
+*   **Attendu :**
+    *   `rax` = 0 (succès).
+    *   **Cadre (offsets) :**
+        *   `+0` (chemin copié) = "vide.bin" (terminé par NUL).
+        *   `+520` (taille) = 0.
+        *   `+528` (poignée) = handle de fichier valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 0) = 0.
+        *   `+568` (tampon) = une zone de 384 octets remplis de 0.
+    *   **Panneau :**
+        *   `md5` = `hashlib.md5(b'').digest()` = `d41d8cd9...` (16 octets).
+        *   `sha256` = `hashlib.sha256(b'').digest()` = `e3b0c442...` (32 octets).
+    *   **CloseHandle :** 1 appel, après la lecture du panneau.
+*   **Règle du modèle :** `CreateFileW` réussit. `GetFileSizeEx` donne 0. Le remplissage est 0. Le tampon du cadre est la tranche `[0:0]` (vide), donc 384 octets à 0. Le panneau contient les empreintes du contenu entier du fichier (le vide).
+
+**Vecteur V2-a : absent**
+*   **Entrée :** `chemin` = "un_fichier_qui_n_existe_pas.bin", session initialement fermée.
+*   **Attendu :**
+    *   `rax` = -2.
+    *   **Cadre :** Non modifié (état initial, tel que lu par le kit).
+    *   **Panneau :** Non modifié (état initial, tel que lu par le kit).
+    *   **CloseHandle :** 0 appel.
+*   **Règle du modèle :** `CreateFileW` échoue. `GetLastError` retourne `ERROR_FILE_NOT_FOUND` (2) ou `ERROR_PATH_NOT_FOUND` (3). Le verdict est -2. Aucune écriture dans le cadre ou le panneau.
+
+**Vecteur V2-b : verrouillé**
+*   **Entrée :** `chemin` vers un fichier existant verrouillé en écriture par un autre processus, session initialement fermée.
+*   **Attendu :**
+    *   `rax` = -7.
+    *   **Cadre :** Non modifié (état initial, tel que lu par le kit).
+    *   **Panneau :** Non modifié (état initial, tel que lu par le kit).
+    *   **CloseHandle :** 0 appel.
+*   **Règle du modèle :** `CreateFileW` échoue. `GetLastError` retourne `ERROR_SHARING_VIOLATION` (32). Le verdict est -7. Aucune écriture dans le cadre ou le panneau.
+
+**Vecteur V2-c : accès refusé**
+*   **Entrée :** `chemin` vers un fichier existant mais inaccessible (refus d'ACL), session initialement fermée.
+*   **Attendu :**
+    *   `rax` = -6.
+    *   **Cadre :** Non modifié (état initial, tel que lu par le kit).
+    *   **Panneau :** Non modifié (état initial, tel que lu par le kit).
+    *   **CloseHandle :** 0 appel.
+*   **Règle du modèle :** `CreateFileW` échoue. `GetLastError` retourne une valeur autre que celles listées dans E1, E2, E4 (ex: `ERROR_ACCESS_DENIED` (5)). Le verdict est -6. Le code d'erreur est consigné dans le journal du harnais. Aucune écriture dans le cadre ou le panneau.
+
+**Vecteur V3-a : 2 Gio + 1**
+*   **Entrée :** `chemin` vers un fichier de taille 2147483649 octets (2 Gio + 1), session initialement fermée.
+*   **Attendu :**
+    *   `rax` = -3.
+    *   **Cadre :** Non modifié (état initial, tel que lu par le kit).
+    *   **Panneau :** Non modifié (état initial, tel que lu par le kit).
+    *   **CloseHandle :** 1 appel, la poignée est fermée AVANT le retour de `loupe_01_ouvrir`.
+*   **Règle du modèle :** `CreateFileW` réussit. `GetFileSizeEx` donne une taille > 2147483648 (2 Gio). Le verdict est -3. La poignée est fermée avant le retour. Aucune écriture dans le cadre ou le panneau.
+
+**Vecteur V3-b : session double**
+*   **Entrée :** `chemin` vers un fichier existant, session initialement ouverte (poignée dans le cadre non nulle).
+*   **Attendu :**
+    *   `rax` = -5.
+    *   **Cadre :** Non modifié (octet par octet identique à l'état initial lu par le kit).
+    *   **Panneau :** Non modifié (octet par octet identique à l'état initial lu par le kit).
+    *   **CloseHandle :** 0 appel.
+*   **Règle du modèle :** La session est déjà ouverte (`poignée du cadre ≠ INVALIDE`). Le verdict est -5. Aucune action n'est entreprise, le cadre et le panneau restent intacts.
+
+**Vecteur V3-c : chemin 260 sans NUL**
+*   **Entrée :** `chemin` une chaîne de 260 caractères (sans le NUL final), session initialement fermée.
+*   **Attendu :**
+    *   `rax` = -2, -5 ou -6 (le verdict exact retourné par le système d'exploitation).
+    *   **Cadre :** Non modifié (état initial, tel que lu par le kit).
+    *   **Panneau :** Non modifié (état initial, tel que lu par le kit).
+    *   **CloseHandle :** 0 appel.
+*   **Règle du modèle :** Le système d'exploitation refuse le chemin trop long. Le verdict est celui retourné par le système (traduit par le kit en -2, -5 ou -6). Aucune écriture dans le cadre ou le panneau.
+
+**Vecteur V4 : la falsification**
+*   **Entrée :** `chemin` vers un fichier existant. Après un appel réussi à `loupe_01_ouvrir`, le kit modifie un octet de la taille (+520) dans le cadre.
+*   **Attendu :**
+    *   L'oracle échoue.
+*   **Règle du modèle :** Après l'appel, l'état observé du cadre (la taille mutée) diverge de l'état attendu (la taille lue par `GetFileSizeEx`). L'oracle, composé du modèle seul, détecte cette divergence et signale un échec. C'est la falsification demandée.
+
+**Indépendance de l'oracle :** L'oracle ne regarde JAMAIS les octets du source C de la DLL loupe-01. Il compose l'attendu exclusivement à partir des clauses du contrat et des entrées des vecteurs, et le confronte à l'état observé (le cadre et le panneau).

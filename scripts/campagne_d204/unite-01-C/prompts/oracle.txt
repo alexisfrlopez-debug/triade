@@ -1,0 +1,75 @@
+Tu es le même auteur du domaine Loupe au laboratoire TRIADE — le bras C de
+la campagne D204 (le flux conventionnel, C + gcc). Le bloc loupe-01 ·
+ouvrir sera écrit en C bientôt ; AVANT l'écriture (écrit-avant-code, la
+charte), tu dérives DU CONTRAT L'ORACLE — les attentes du juge, vecteur par
+vecteur. Le juge est un modèle indépendant Python (hashlib, les découpes) :
+il ne lira JAMAIS les octets de ton source — il compose l'attendu depuis le
+contrat seul et le confronte à l'état observé (le cadre et le panneau de la
+pièce, aux offsets du plan).
+
+LE CONTRAT (loupe/I/loupe-01-ouvrir.md, révision 3) — les clauses qui font
+l'oracle :
+- Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+  OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la taille par
+  GetFileSizeEx au cadre (+520) ;
+- Q2 la BORNE NOMMÉE : taille > 2 Gio → verdict -3, la poignée FERMÉE
+  AVANT le retour ;
+- Q3 le chemin COPIÉ au cadre (+0), la vue = 0 (+536), le curseur = 0
+  (+544) — le remplissage = min(384, taille) (+552), le tampon du cadre
+  (+568, 384 o) == la découpe du fichier [0, remplissage) ;
+- Q4 la session NÉE ENTIÈRE : la fenêtre à la vue 0 SEULEMENT SI
+  taille > 0 ; puis le panneau — les empreintes du fichier ENTIER
+  (48 o : md5 (16) puis sha256 (32), hashlib du contenu entier), LE VIDE
+  AUSSI (d41d8cd9… + e3b0c442…) ;
+- Q5 rax = 0 ;
+- E1 ERROR_FILE_NOT_FOUND (2) ou ERROR_PATH_NOT_FOUND (3) → -2 ;
+- E2 ERROR_SHARING_VIOLATION (32) → -7 ;
+- E3 tout autre refus → -6 (gle consigné au journal du harnais) ;
+- E4 session déjà ouverte (la poignée du cadre ≠ INVALIDE) → -5, RIEN
+  TOUCHÉ (le cadre ET le panneau de l'ancienne session relus identiques,
+  octet par octet) ;
+- P1 le chemin plus long que la capacité du cadre (le kit appelle un
+  chemin de 260 caractères, session fermée) : le système refuse
+  lui-même le chemin trop long — le verdict exact est consigné TEL QUEL
+  parmi -2, -5 ou -6 (le kit accepte les trois, la traduction de la
+  table fait foi), RIEN au cadre (jamais un débordement) ;
+- V4 la falsification : la taille mutée d'un octet au cadre après
+  l'ouverture → l'écran attendu (composé du modèle) diverge de l'état lu,
+  l'oracle échoue — LA FALSIFICATION DEMANDÉE.
+
+LA DISCIPLINE DU BRAS C (le kit terrain, le même aux deux bras) : ta
+pièce sera une DLL PE32+ chargée DONT_RESOLVE — le scénario résout
+LUI-MÊME les six feuilles kernel32 (CreateFileW, GetFileSizeEx,
+SetFilePointerEx, ReadFile, CloseHandle, GetLastError) dans TA table
+d'imports réelle, découvre tes fonctions loupe_01_ouvrir et
+loupe_03_fermer et tes données cadre (960 o) et panneau (48 o) PAR TA
+TABLE D'EXPORTS, appelle loupe_01_ouvrir(chemin) (l'ABI est la tienne —
+le C), lit le cadre et le panneau aux offsets du plan. loupe_03_fermer
+clôt la session (la poignée refermée, la session rouverte pour l'appel
+suivant) — le juge l'appelle entre les vecteurs.
+
+LES TÉMOINS DU KIT (les trois formes du remplissage, générés une fois
+pour toutes, graine fixe) : temoin-1.bin (1 octet), temoin-384.bin
+(384 octets exacts), temoin-3f.bin (3 × 64 Kio + 1 = 196 609 octets),
+et vide.bin (0 octet — le vide de la révision 3).
+
+TON TRAVAIL : écris L'ORACLE — la table des vecteurs avec, pour CHACUN,
+l'attendu EXACT et observable (le verdict rax, les champs du cadre avec
+leurs offsets, le contenu du panneau, les appels CloseHandle attendus
+quand il y en a) :
+1. V1-a temoin-1.bin   2. V1-b temoin-384.bin   3. V1-c temoin-3f.bin
+4. V1-d vide.bin       5. V2-a absent           6. V2-b verrouillé
+7. V2-c accès refusé (NOMMÉ ABSENT du run terrain — le refus d'ACL ne
+   s'arme pas proprement : le juge ne l'éprouve pas, l'absence est un
+   état nommé, jamais maquillé)
+8. V3-a 2 Gio + 1 (un fichier réel posé épars à cette taille)
+9. V3-b session double   10. V3-c chemin 260 sans NUL
+11. V4 la falsification.
+Pour chaque vecteur : l'entrée (le chemin appelé, l'état initial), 
+l'attendu (rax, chaque champ du cadre lu avec son offset, le panneau,
+les CloseHandle comptés), et LA RÈGLE DU MODÈLE qui le calcule
+(min(384, taille), hashlib.md5+sha256 du contenu entier, la découpe
+[0:remplissage), la traduction de la table des verdicts…). Termine par
+la phrase d'indépendance : ce que l'oracle ne regarde jamais.
+
+Réponds par le document seul, en français, sans préambule.
