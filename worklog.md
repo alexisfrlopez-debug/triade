@@ -10254,3 +10254,13 @@ est RÉPARÉ — le dépôt GitHub ET le miroir Drive vivent désormais au même
   archivé versionné, le bundle rafraîchi) ; le commit ; le push
   GitHub ; le miroir Drive synchronisé (les trois fichiers + le kit
   au download/ du miroir).
+Task ID: 188
+Agent: Z.ai (agent principal — la session de la question des kits d'unités)
+Task: LA RÉPONSE À « OÙ SONT LES KITS DES 14 UNITÉS » LIVRÉE EN CARTE AU /TEST (la question du développeur du 14/11 : « je ne sais pas où trouver les kits des 14 unités pour la campagne ») : AUCUN kit d'unité n'existe, aucun n'a jamais existé, et c'est PRÉVU AINSI — chaque kit est le PRODUIT du workflow mesuré, livré AU FIL par le labo, une unité à la fois.
+
+Work Log:
+- LA VÉRIFICATION SUR PIÈCES : le parcours du /test (aucun dossier kit-unite-, les kits présents sont les pièces-cadres : les DEUX GUI, les .bat 1-clic, le kit des runs restants, le kit loupe) ; CA1 vérifié frais — comparaison_resultats/ PAS NÉ (aucune mesure n'a jamais eu lieu, le dry-run seul vit) ; la carte du projet le disait déjà à l'E280.
+- LA CARTE LISEZMOI-KITS-UNITES-D204.txt (7 527 o, sha256 fd3d05dd…) livrée au /test via le relais OAuth, recoupée PAR RE-TÉLÉCHARGEMENT : les quatorze unités nommées, pourquoi aucun kit ne peut précéder la campagne (le kit est le produit du workflow mesuré — M1/M2/M4 vivent dans la construction), l'ordre de jeu d'une unité (labo construit et livre → onglet 1 KIT → onglet 2 RUN → onglet 3 TÉMOIN signé, le dossier ENTIER revient → recoup → unité suivante), la cap § 7 (TROIS/bloc, DOUZE/app, arrêt au premier vert), ce qui vit déjà au GUI (verrou, atelier, calibration, les SEPT runs 1-clic aux attentes nommées).
+- LA SUITE NOMMÉE : la première unité loupe-01 × bras T est le prochain geste du labo — le garde d'abord, la spec comptée, la notation à la main comptée, le round-trip, l'oracle depuis I, la cristallisation, le kit aux EMPREINTES gravées au /test.
+- LE BAC RESYNCHRONISÉ : le checkout local demeuré à l'E276 (bac recyclé) avancé à 280 par FAST-FORWARD depuis GitHub (aucune divergence de contenu, les bits de mode D159 restaurés) ; GitHub vérifié main @ e2f7e5c84b ; le jeton du /tokens validé encore (l'exemplaire de l'upload — ancien fine-grained — refusé 401, nommé).
+- LE GIT : Entrée 281 au journal, Task 188 au worklog, la carte OU-TROUVER portée à 281 ; D141 tenu (le courant 280-e2f7e5c archivé versionné, le bundle rafraîchi) ; le commit ; le push GitHub ; le miroir Drive synchronisé (le journal, le worklog, la carte OU-TROUVER, la carte kits-unités).
