@@ -1,0 +1,62 @@
+[VERT] console-racine : 5,040 o, sha256 81011506fc797331…, md5 54c6fd5539a0… — deux téléchargements IDENTIQUES
+[VERT] console-racine : versé au bac /home/z/my-project/download/preuves-refus-C-v1/run-console-unite01C-depot-test.txt
+[VERT] console-kit-v2 : 5,040 o, sha256 81011506fc797331…, md5 54c6fd5539a0… — deux téléchargements IDENTIQUES
+[VERT] console-kit-v2 : versé au bac /home/z/my-project/download/kit_unite_loupe_01_C_v2/kit-unite-loupe-01-C-20261114-v2/run-console-unite01C.txt
+[VERT] temoin-kit-v2 : 1,334 o, sha256 4cc0ee2be1252247…, md5 2e14e1ec3ca8… — deux téléchargements IDENTIQUES
+[VERT] temoin-kit-v2 : versé au bac /home/z/my-project/download/kit_unite_loupe_01_C_v2/kit-unite-loupe-01-C-20261114-v2/preuves-unite01C/temoin-unite01C.txt
+[VERT] temoin-coffre : 1,334 o, sha256 4cc0ee2be1252247…, md5 2e14e1ec3ca8… — deux téléchargements IDENTIQUES
+[VERT] le témoin au kit v2 == le témoin du coffre /preuves-unite01C/ (sha256 4cc0ee2be1252247…)
+[INFO] la console racine == la console au kit v2 (octet pour octet)
+[ÉCART] la console racine != la pièce du chat consignée au bac (2,693 o)
+
+----- console-racine : décodée « utf-16 (BOM) », 22 lignes vives -----
+  | === LE RUN DE L'UNITÉ 1 × BRAS C (loupe-01, gcc -O2) — la campagne D204, le terrain du développeur ===
+  | [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe-01-c.dll sha256 85b34ed4c243e977… == la gravure du kit
+  | [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff9bc640000
+  | [T0] les QUATRE exports découverts : loupe_01_ouvrir @+0x1e60, loupe_03_fermer @+0x2360, cadre (DONNÉE, 960 o) @+0x8060, panneau (DONNÉE, 48 o) @+0x8020
+  | [T0] SetFilePointerEx absente des imports de la pièce — L'ÉCART NOMMÉ (la lecture est séquentielle depuis l'ouverture ; le bras T la résolvait, la pièce C ne l'appelle pas)
+  | [T0] les 5 feuilles kernel32 de la pièce résolues aux slots réels de SA table d'imports (CloseHandle, CreateFileW, GetFileSizeEx, GetLastError, ReadFile)
+  | [VERT] V1:temoin-1.bin-la-session-nee-entiere — rax=0, chemin='temoin-1.bin', taille=1, remplissage=1
+  | [VERT] V1:temoin-1.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:temoin-384.bin-la-session-nee-entiere — rax=0, chemin='temoin-384.bin', taille=384, remplissage=384
+  | [VERT] V1:temoin-384.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:temoin-3f.bin-la-session-nee-entiere — rax=0, chemin='temoin-3f.bin', taille=196609, remplissage=384
+  | [VERT] V1:temoin-3f.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:vide.bin-la-session-nee-entiere — rax=0, chemin='vide.bin', taille=0, remplissage=0
+  | [VERT] V1:vide.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V2:E1-absent — rax=-2 (attendu -2 ABSENT)
+  | [VERT] V2:E2-verrouille — rax=-7 (attendu -7 VERROUILLÉ, le fichier tenu sans partage)
+  | [VERT] V2:E3-acces-refuse-NOMMÉ-ABSENT — l'accès refusé ne s'arme pas proprement au terrain — NOMMÉ, jamais maquillé (le refus d'ACL dépend du compte)
+  | [VERT] V3:Q2-la-borne-2-Gio — rax=-3 (attendu -3, la taille 2 Gio + 1 réelle posée au disque, épars)
+  | [VERT] V3:E4-la-session-double — rax=-5 (attendu -5), le cadre ET le panneau relus identiques
+  | [VERT] V3:P1-le-chemin-trop-long — rax=-6 — un REFUS NOMMÉ (le système refuse le chemin trop long avant la mesure du bloc ; le verdict consigné tel quel), RIEN au cadre : True
+  | [témoin] D:\Downloads\kit-unite-loupe-01-C-20261114-v2\kit-unite-loupe-01-C-20261114-v2\preuves-unite01C\temoin-unite01C.txt — 15 VERT, 0 ROUGE
+  | === LE RUN DE L'UNITÉ 1 × BRAS C FINI : dater et signer le témoin de votre main, renvoyer preuves-unite01C/ ENTIER au coffre /test ===
+
+----- console-kit-v2 : décodée « utf-16 (BOM) », 22 lignes vives -----
+  | === LE RUN DE L'UNITÉ 1 × BRAS C (loupe-01, gcc -O2) — la campagne D204, le terrain du développeur ===
+  | [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe-01-c.dll sha256 85b34ed4c243e977… == la gravure du kit
+  | [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff9bc640000
+  | [T0] les QUATRE exports découverts : loupe_01_ouvrir @+0x1e60, loupe_03_fermer @+0x2360, cadre (DONNÉE, 960 o) @+0x8060, panneau (DONNÉE, 48 o) @+0x8020
+  | [T0] SetFilePointerEx absente des imports de la pièce — L'ÉCART NOMMÉ (la lecture est séquentielle depuis l'ouverture ; le bras T la résolvait, la pièce C ne l'appelle pas)
+  | [T0] les 5 feuilles kernel32 de la pièce résolues aux slots réels de SA table d'imports (CloseHandle, CreateFileW, GetFileSizeEx, GetLastError, ReadFile)
+  | [VERT] V1:temoin-1.bin-la-session-nee-entiere — rax=0, chemin='temoin-1.bin', taille=1, remplissage=1
+  | [VERT] V1:temoin-1.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:temoin-384.bin-la-session-nee-entiere — rax=0, chemin='temoin-384.bin', taille=384, remplissage=384
+  | [VERT] V1:temoin-384.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:temoin-3f.bin-la-session-nee-entiere — rax=0, chemin='temoin-3f.bin', taille=196609, remplissage=384
+  | [VERT] V1:temoin-3f.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V1:vide.bin-la-session-nee-entiere — rax=0, chemin='vide.bin', taille=0, remplissage=0
+  | [VERT] V1:vide.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER
+  | [VERT] V2:E1-absent — rax=-2 (attendu -2 ABSENT)
+  | [VERT] V2:E2-verrouille — rax=-7 (attendu -7 VERROUILLÉ, le fichier tenu sans partage)
+  | [VERT] V2:E3-acces-refuse-NOMMÉ-ABSENT — l'accès refusé ne s'arme pas proprement au terrain — NOMMÉ, jamais maquillé (le refus d'ACL dépend du compte)
+  | [VERT] V3:Q2-la-borne-2-Gio — rax=-3 (attendu -3, la taille 2 Gio + 1 réelle posée au disque, épars)
+  | [VERT] V3:E4-la-session-double — rax=-5 (attendu -5), le cadre ET le panneau relus identiques
+  | [VERT] V3:P1-le-chemin-trop-long — rax=-6 — un REFUS NOMMÉ (le système refuse le chemin trop long avant la mesure du bloc ; le verdict consigné tel quel), RIEN au cadre : True
+  | [témoin] D:\Downloads\kit-unite-loupe-01-C-20261114-v2\kit-unite-loupe-01-C-20261114-v2\preuves-unite01C\temoin-unite01C.txt — 15 VERT, 0 ROUGE
+  | === LE RUN DE L'UNITÉ 1 × BRAS C FINI : dater et signer le témoin de votre main, renvoyer preuves-unite01C/ ENTIER au coffre /test ===
+
+[marqueurs] console-racine : access-violation=non, code-1=non, 15-vert=OUI, vert-total=OUI, temoin-ne=OUI, adresse-exacte=non, base-0x7ff9b74d0000=non
+
+[marqueurs] console-kit-v2 : access-violation=non, code-1=non, 15-vert=OUI, vert-total=OUI, temoin-ne=OUI, adresse-exacte=non, base-0x7ff9b74d0000=non

@@ -1,0 +1,36 @@
+LISEZMOI-NETTOYAGE-TEST — le 14/11/2026 (l'Entrée 288, la campagne D204)
+« nettoie /test en archivant tout ce qui n'est pas nécessaire pour la suite » — la commande du développeur.
+
+L'unité loupe-01 est CLOSE aux deux bras (T : Entrée 284 ; C : Entrée 287) ; l'ère pré-campagne (10-13/11) est consignée. Le /test est la zone de travail de la campagne : ce qui est clos descend à l'archive. RIEN N'EST JETÉ — « les fragments ne sont jamais jetés » : chaque pièce est DÉPLACÉE (mêmes identifiants, mêmes octets), jamais supprimée.
+
+== ARCHIVÉ à /archives-livraisons/unite-01-loupe-20261114/ (l'unité close) ==
+- kit-unite-loupe-01-T-20261114/       le kit T v1 (le refus T0 « CreateFileW » — Entrée 283)
+- kit-unite-loupe-01-T-20261114-v2/    le kit T v2 (le run VERT 15/0 — Entrée 284)
+- kit-unite-loupe-01-C-20261114/       le kit C v1 (le refus du scénario — Entrée 286 ; D143 : il demeure au coffre, l'archive est au coffre)
+- kit-unite-loupe-01-C-20261114-v2/    le kit C v2 (le run VERT 15/0 — Entrée 287 ; avec la console du run et le témoin né au kit, déposés le 14/11 13:31)
+- preuves-unite01C/                    le témoin C signé (recoupé 19 VERT — Entrée 287)
+- run-console-unite01.txt              la console du refus T v1 (Entrée 283)
+- console-run-v2-recue-1330/run-console-unite01C.txt   la console VERTE du run C v2, déposée à la racine le 14/11 13:30 (15 VERT 0 ROUGE — sha256 81011506fc797331…)
+
+== ARCHIVÉ à /archives-livraisons/terrain-pre-campagne-20261110-13/ (l'ère consignée avant la campagne) ==
+- la vitrine loupe (kit-loupe.zip, loupe-kit-13/, LISEZMOI-loupe.txt — 10/11)
+- le kit android (TRIADE-kit-android-v1.apk, TRIADE_kit_android_20261112T214507Z.zip, temoin-verdict-android/, VERDICT.txt, LISEZMOI-KIT-ANDROID.txt — 12/11)
+- les preuves kit2-dudect (2 dossiers + le zip — 13/11) et m7d-voie1 (13/11)
+- les témoins shani (3 dossiers + temoin-shani.txt — 13/11)
+- la distribution « runs restants » (TRIADE_kit_runs_restants_v1.zip, fichiers-1clic/, les trois LISEZMOI-RUNS/FICHIERS — 13/11)
+- les clés du sceau-I (cle-publique-I.txt, signatures-I.txt)
+- TRIADE_gui_campagne_v1.zip (le GUI v1 non corrigé — remplacé par la version CORRECTIF-encodage)
+
+== DEMEURE au /test (la suite de la campagne) ==
+- Nouveau run/   l'atelier 013520, le livre de la campagne (la ligne T ; la ligne C attend son retour)
+- TRIADE-1CLIC-CAMPAGNE-D204-v3.bat + TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip + LISEZMOI-campagne-GUI.txt + LISEZMOI-CORRECTIF-ENCODAGE.txt   le GUI de campagne, l'outil de chaque unité
+- TRIADE_gui_tous_runs_v1.zip + LISEZMOI-GUI-TOUS-RUNS.txt   le GUI tous-runs (la réplication attend ses deux jeux d'annotations)
+- LISEZMOI-KITS-UNITES-D204.txt   la carte des kits d'unités (portée à jour)
+- archives-livraisons/, archives-preuves/
+
+== ENCORE ATTENDUS (nommés à l'Entrée 287 — le dépôt du 14/11 13:30-13:31 a apporté la console VERTE du run v2 et le témoin du kit, pas les deux pièces ci-dessous) ==
+1. run-console-unite01C.txt DU KIT C v1 — LA CONSOLE DU REFUS : le fichier né du Tee du lanceur, dans le dossier kit-unite-loupe-01-C-20261114\ de votre machine (celui qui porte « access violation … 0x7FFA23900094 » et « code 1 »). Le dépôt reçu le 13:30 est la console du run v2 (VERTE) — une bonne pièce, consignée — mais ce n'est pas celle du refus. La pièce d'un refus n'est jamais jetée.
+2. L'ATELIER DE L'UNITÉ C (onglets 4-7 du GUI : le carnet M3, la ligne livraisons.csv, les défauts, le chrono M4) — l'atelier du coffre ne porte encore que la ligne T.
+Non bloquant : les deux jeux d'annotations pour la réplication ; la commande réelle des unités 13-14.
+
+LA SUITE : LOUPE-02 LIRE, aux deux bras (la troisième unité du plan a78caf8c…).
