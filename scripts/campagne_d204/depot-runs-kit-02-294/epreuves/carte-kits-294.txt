@@ -1,0 +1,143 @@
+﻿LISEZMOI-KITS-UNITES-D204 — OÙ SONT LES KITS DES QUATORZE UNITÉS
+(l'édition du 14/11/2026 ; la réponse à la question du développeur :
+« je ne sais pas où trouver les kits des 14 unités pour la campagne »)
+==============================================================================
+
+LA RÉPONSE COURT — IL N'Y EN A ENCORE AUCUN, ET C'EST PRÉVU AINSI
+------------------------------------------------------------------------------
+Aucun kit d'unité n'existe au coffre /test : AUCUN n'a jamais existé, et
+AUCUN n'a été perdu. Vous n'avez rien manqué. La carte du projet le
+consignait déjà mot pour mot à l'Entrée 280 : « les kits d'unités
+demeurent À LIVRER par le labo au fil de la campagne — le GUI les attend
+à l'onglet 1 de chaque unité, la campagne reste le travail de fond aux
+DEUX BRAS (le plan a78caf8c… fait foi, AUCUNE mesure n'existe — CA1) ».
+
+La preuve sur pièces, vérifiée au labo ce jour : le dossier des
+résultats (comparaison_resultats/) N'EST PAS NÉ — il naîtra de la
+PREMIÈRE MESURE de la campagne (CA1 : jamais avant). Ce qui existe déjà,
+comparaison_dryrun/, est la preuve d'INSTRUMENTATION (les compteurs à
+l'unité près, les 130 tokens du dry-run) — PAS une mesure.
+
+POURQUOI AUCUN KIT NE PEUT EXISTER AVANT LA CAMPAGNE
+------------------------------------------------------------------------------
+Parce que chaque kit d'unité est le PRODUIT du workflow que la campagne
+mesure. Le plan D204 (verrouillé, sha256 a78caf8c… consigné AVANT toute
+mesure) ne compare pas deux logiciels : il compare DEUX FAÇONS DE
+TRAVAILLER, et le kit est ce que chacune livre :
+
+  — LE BRAS T (la notation scellée) : le labo LIT le contrat de couche I
+    du bloc, ÉCRIT la notation À LA MAIN (chaque appel au modèle compté
+    par compter_tokens.py, phase par phase), la construit, la
+    round-trippe (R5), régénère l'oracle DEPUIS I, CRISTALLISE (dix
+    rebuilds consécutifs identiques, R6) — le garde des arbres signés
+    AVANT tout geste. Le kit naît de CE travail : la pièce dev + le
+    scénario + les témoins.
+
+  — LE BRAS C (le flux standard) : le MÊME agent écrit le source C du
+    MÊME contrat, le compile gcc -O2, écrit ses tests comme le flux le
+    pratique. Le kit : le binaire compilé + le même scénario adapté +
+    les mêmes témoins.
+
+Livrer les quatorze kits d'avance serait mesurer le vide : les tokens,
+les temps de vérification, les défauts échappés — tout ce que la campagne
+compte (M1, M2, M4) VIT dans la construction elle-même. Les kits ne se
+prêtent pas : ils se construisent AU FIL, une unité à la fois.
+
+LES QUATORZE UNITÉS (le tableau que le GUI porte à son étape 4)
+------------------------------------------------------------------------------
+La partie contrôlée — SIX blocs × DEUX bras, appariés par contrat :
+  loupe-01 OUVRIR      × T (notation)   × C (gcc -O2)
+  loupe-02 LIRE        × T              × C
+  loupe-05 SHA256      × T              × C
+  loupe-08 LIGNE       × T              × C
+  loupe-13 RECHERCHE   × T              × C
+  loupe-16 SAISIE      × T              × C
+La partie réaliste — UNE application complète de type Loupe × DEUX bras
+(les unités 13 et 14) : EN ATTENTE tant qu'aucune COMMANDE RÉELLE du
+développeur n'est arrivée (le précédent R2/D189 : jamais un exercice
+démonstratif). Le jour d'une vraie commande, elles vivent.
+
+LA CAP pré-enregistrée (§ 7 du plan) : au plus TROIS livraisons par
+bloc, DOUZE par application, L'ARRÊT AU PREMIER VERT recoupé — une unité
+à la cap sans vert est CENSURÉE, rapportée telle quelle. La campagne est
+SÉQUENTIELLE : un seul binôme développeur–agent, une unité à la fois.
+
+L'ORDRE DE JEU D'UNE UNITÉ (qui fait quoi, dans l'ordre)
+------------------------------------------------------------------------------
+  1. LE LABO construit l'unité (le workflow complet, instrumenté,
+     consigné) et LIVRE son kit au coffre /test — un dossier daté
+     kit-unite-… portant ses EMPREINTES gravées ;
+  2. VOUS, au GUI, onglet 1·KIT : CHOISIR le dossier du kit livré — le
+     GUI recoupe ses empreintes gravées (une divergence, rien ne court) ;
+  3. onglet 2·RUN : LANCER le lanceur officiel du kit — il court dans sa
+     propre console, INTACT ; le dossier du run naît sur votre machine ;
+     PUIS choisir ce dossier né (la pièce à renvoyer) ;
+  4. onglet 3·TÉMOIN : ouvrir le témoin au bloc-notes, le DATER, le
+     SIGNER DE VOTRE MAIN, renvoyer le dossier ENTIER au coffre /test —
+     jamais automatisé (D99), le GUI n'écrit jamais au Drive ;
+  5. aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1, la cap tenue par le GUI), les défauts nommés avant correction,
+     le chrono des commandes de vérification (M4) ;
+  6. LE LABO recoupe le run revenu (le vert, ou l'écart nommé) — PUIS
+     l'unité suivante commence.
+
+CE QUE VOUS POUVEZ FAIRE EN ATTENTE DES KITS (aujourd'hui, au GUI)
+------------------------------------------------------------------------------
+Rien n'attend les kits pour vivre :
+  — l'étape 2, LE VERROU : les HUIT pièces de campagne-d204/ recoupées
+    sha256 par sha256 (elles sont DANS le kit du GUI — le plan, les deux
+    instruments, les trois gabarits, la console, les LISEZMOI) ; l'atelier
+    de campagne y naît (les copies datées — les originaux demeurent
+    intacts pour toujours) ;
+  — l'étape 3, LA CALIBRATION : la preuve d'horloge du chronomètre v3
+    (un dry-run, jamais une mesure — CA1) ;
+  — l'étape 5, LES SEPT RUNS 1-CLIC : le GESTE B sur un silicium qui A
+    SHA-NI (le diagnostic choisit la machine — Ice Lake et après chez
+    Intel, Ryzen chez AMD), la CÉRÉMONIE DU SÉQUESTRE à la machine
+    HORS-LIGNE (« pip install pynacl cryptography » AVANT la mise hors
+    ligne), la RÉPLICATION (en attente des DEUX jeux d'annotations), le
+    DIAGNOSTIC, et les rejeus voie 1 / voie 2 / témoin vitrine
+    (facultatifs — les chaînes sont fermées, le rejeu ne re-scelle
+    rien, D165) ;
+  — l'étape 4 demeure consultable : le tableau des quatorze unités, leur
+    état honnête (aucune mesure n'existe — l'onglet KIT de chaque
+    unité attend son dossier, c'est SON état, jamais une faute).
+
+LA SUITE, CÔTÉ LABO
+------------------------------------------------------------------------------
+La PREMIÈRE unité — loupe-01 OUVRIR × bras T — est le prochain geste du
+labo : le garde d'abord (les arbres signés, avant tout geste), la
+lecture du contrat (phase spec, comptée), la notation à la main (phase
+notation, comptée), le round-trip, l'oracle régénéré depuis I, la
+cristallisation, le kit assemblé aux empreintes gravées, déposé au /test
+— chaque appel au modèle et chaque commande de vérification vivant au
+journal (compter_tokens.py, chronometre_verification.py) : le COÛT du
+workflow est la MESURE. Le kit naîtra au /test en son dossier daté, et
+le GUI l'attendra à l'onglet 1 de l'unité loupe-01 × T.
+
+Les frontières demeurent, tenues par construction : le labo ne courra
+JAMAIS le run terrain (il appartient au développeur, CA6), ne datera ni
+ne signera JAMAIS un témoin (votre main, D99), ne déposera JAMAIS à
+votre place, et ne fabriquera JAMAIS un chiffre (CA5/CA6).
+
+*La consignation vit au journal de travail (l'Entrée 281) ; le détail du
+plan à PLAN_PREREGISTRE_COMPARAISON.md (a78caf8c…, VERROUILLÉ) ; l'état
+des livrables à OU-TROUVER-LES-LIVRABLES.md (portée à 281).*
+
+
+=== LE NETTOYAGE DU /test — le 14/11/2026 (l'Entrée 288) ===
+L'unité loupe-01 est CLOSE aux deux bras (T : Entrée 284 ; C : Entrée 287). Ses QUATRE kits (T v1/v2, C v1/v2), preuves-unite01C/ et la console du refus T vivent désormais à /archives-livraisons/unite-01-loupe-20261114/ (DÉPLACÉS, jamais jetés — mêmes identifiants, mêmes octets ; D143 tenu : le kit C v1 demeure au coffre, l'archive est au coffre). La console VERTE du run C v2 (déposée le 14/11 13:30) : /archives-livraisons/unite-01-loupe-20261114/console-run-v2-recue-1330/. L'ère pré-campagne (10-13/11) : /archives-livraisons/terrain-pre-campagne-20261110-13/. Le détail : LISEZMOI-NETTOYAGE-TEST-20261114.txt à la racine du /test. LA CAMPAGNE CONTINUE : LOUPE-02 LIRE, aux deux bras.
+
+
+=== L'UNITÉ 2 LIVRÉE — LOUPE-02 LIRE, AUX DEUX BRAS — le 14/11/2026 (l'Entrée 290) ===
+La DEUXIÈME tâche contrôlée du plan a78caf8c… (loupe-02 LIRE : la fenêtre d'octets au tampon de session, bornée par la taille réelle — la double borne — puis LE RECOUVREMENT du journal d'édition : l'écrit survit au défilement).
+LE BRAS T : kit-unite-loupe-02-T-20261114/ — la pièce loupe.exe (127 488 o, 98354ff6…) : le build du plan où le slot loupe-02 (RVA 0x4240) porte LA NOTATION DE CAMPAGNE (292 o, 79 instructions, écrite à la main — trois fautes nommées en route : l'adressage à deux bases, le débordement du slot 325 > 320, la chute de boucle) ; les DIX-SEPT autres blocs scellés — loupe-01 scellé APPELLE la notation à chaque naissance de session ; la cristallisation DIX rebuilds identiques ; l'oracle du bloc 22 VERT 0 ROUGE (2 032 décalages, le scellé proxy.exe compris).
+LE BRAS C : kit-unite-loupe-02-C-20261114/ — la pièce loupe-02-c.dll (95 413 o, 925cd019…) : le source écrit par l'agent (loupe_02_lire neuve + le bloc session repris TEL QUEL du kit 01 — l'écart nommé : sa première fenêtre est lue INLINE), compilée gcc -O2 croisée (la commande consignée) ; le contrat entier rejoué au POSIX 20 VERT 0 ROUGE ; les contrôles binaires 18 VERT 0 ROUGE (SetFilePointerEx PRÉSENTE aux imports : l'écart nommé du kit 01 n'existe plus).
+LE GESTE (l'ordre de jeu inchangé) : 1·KIT choisir le dossier → 2·RUN lancer le LANCEUR → 3·TÉMOIN dater, signer de la main, renvoyer preuves-unite02[/ C]/ ENTIER au /test → onglets 4-7 (carnet, livraison, défauts, chrono). LA SUITE : loupe-05 sha256, aux deux bras.
+
+=== LES RUNS DE L'UNITÉ 2 REVENUS, LE JUGE v2 LIVRÉ — le 15/11/2026 (l'Entrée 294) ===
+L'annonce « kit 02 C et T dans /test du drive » : les DEUX kits courus au terrain le 14/11 (16:46:34Z et 16:48:50Z, la machine PORTABLE · Windows 10 · Python 3.14.10 — la même que l'unité 1, CA2). Les dépôts : une copie datée au sein de chaque kit — la console du run, le témoin DATÉ et SIGNÉ de la main (Alexis Lopez, 14/11/2026 — D99), et les pièces du kit recoupées TROIS FOIS (la copie == le kit parent au coffre == le bac du labo : 22/22 VERT). RANGÉS à /archives-livraisons/unite-02-loupe-20261114/ (les noms conservés, md5 par md5 — D143 : déplacés, jamais jetés).
+LE BRAS C : 20 VERT, 0 ROUGE — loupe-02-c.dll 925cd019… == la gravure ; SetFilePointerEx PRÉSENTE ; la première fenêtre lue INLINE au bloc session (l'écart nommé du bras C) ; LA PREMIÈRE LIVRAISON VERTE DE L'UNITÉ 2 — la ligne C-loupe-02-it1 attend sa consignation au livre (onglet 5 · LIVRAISON de l'atelier 013520 — il vit à /archives-livraisons/unite-01-loupe-20261114/atelier-campagne-d204-20261114-013520/, le choisir à « CHOISIR L'ATELIER EXISTANT… », étape 2).
+LE BRAS T : 18 VERT, 2 ROUGE — L'ÉCART ÉTAIT AU JUGE, PAS À LA PIÈCE : le scénario v1 posait le journal d'édition à R_JOURNAL = 0xE4E0, 64 octets au-dessus de la vérité du layout (loupe/layout.py : 0xE4A0 — l'adresse même que le lea de la pièce vise, lue à l'octet près) ; la pièce lisait son compte à la BONNE adresse et tombait sur la zone zéroée du juge → compte 0 → AUCUN recouvrement → les DEUX vecteurs V2 ROUGE (les-bords-de-fenetre, cinq-entrees-dont-une-non-alignee) — rejoués octet par octet au labo ; l'AUDIT DES CONSTANTES (le scénario livré contre le layout — l'épreuve qui manquait) est désormais tenu au bac. Le témoin est signé ; le run NE CONSOMME PAS d'itération (le précédent 283/284 : la faute au labo ne consomme jamais).
+LE KIT v2 : kit-unite-loupe-02-T-20261114-v2/ — LE SEUL CHANGEMENT : la constante du scénario remise à la vérité du layout (0xE4A0) ; loupe.exe 98354ff6… et les HUIT autres pièces INTACTES octet pour octet (comparez les EMPREINTES : une seule ligne bouge — scenario-unite02.py) ; le kit v1 demeure (D143). LA REPRISE : 1·KIT choisir le dossier v2 → 2·RUN lancer le LANCEUR → 3·TÉMOIN dater, signer de la main → preuves-unite02/ ENTIER au /test.
+LE LIVRE : livraisons.csv porte encore les DEUX seules lignes de loupe-01 — l'unité 2 attend le geste de l'onglet 5 (C-loupe-02-it1 maintenant, T-loupe-02-it1 au retour du run v2). LA SUITE : loupe-05 sha256, aux deux bras.

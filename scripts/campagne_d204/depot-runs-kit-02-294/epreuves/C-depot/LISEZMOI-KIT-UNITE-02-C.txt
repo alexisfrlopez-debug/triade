@@ -1,0 +1,100 @@
+﻿﻿LISEZMOI — LE KIT DE L'UNITÉ 2 : LOUPE-02 LIRE × BRAS C
+(la campagne de comparaison des workflows D204 ; le kit livré par le labo
+au coffre /test en son dossier daté — le GUI vous attend à l'onglet 1·KIT
+de l'unité loupe-02 × C)
+========================================================================
+
+L'OBJET : LA MÊME deuxième unité du bras C (le flux standard, C + gcc),
+le même contrat de couche I que le bras T (loupe-02 LIRE, révision 1) :
+la fenêtre d'octets au tampon de session, BORNÉE par la taille réelle,
+PUIS le recouvrement du journal d'édition. LA PIÈCE NEUVE :
+loupe_02_lire (le source écrit par l'agent) ; le bloc session
+(loupe_01_ouvrir, loupe_03_fermer) repris TEL QUEL du kit 01 (le flux
+standard réutilise son code éprouvé — l'écart nommé du bras C : sa
+première fenêtre est lue INLINE à l'ouverture, là où le loupe-01 du plan
+APPELLE loupe-02).
+
+LA COMPILATION (M4, la commande consignée) : x86_64-w64-mingw32-gcc-posix
+-O2 -shared -o loupe-02-c.dll loupe-02-c.c loupe-02-c.def — le
+compilateur croisé gcc-mingw-w64 14.2 extrait des paquets Debian SANS
+ROOT au bac du labo (l'outillage au travail/mingw-debs ; la reconstruction
+du bac après la remise à zéro du conteneur : les paquets 14.2.0-19+27+b1
+du jour — l'horodatage PE du lieur fait que deux builds ne sont jamais
+identiques : NOMMÉ, la cristallisation est la règle du bras T, pas du
+bras C ; la gravure fixe LA pièce).
+
+LES ÉPREUVES DU LABO (D122 — la logique rejouée au POSIX) :
+  — LE CONTRAT ENTIER REJOUÉ : 20 VERT 0 ROUGE (le harnais à shims du
+    kit 01, SetFilePointerEx déclarée À LA VALEUR — le vrai prototype,
+    l'écart nommé du kit 01 : la pièce 01 ne l'appelait pas, la
+    déclaration n'y fut jamais éprouvée ; le tiroir d'échec de ReadFile
+    pour E4) : les quatre témoins, les frontières, le recouvrement aux
+    bords et non aligné, le journal INTACT, les rejets au poison, la
+    session qui SURVIT à l'échec, la falsification détectable ;
+  — LES CONTRÔLES BINAIRES : 18 VERT 0 ROUGE (PE32+ DLL x86-64, les SIX
+    exports — loupe_02_lire et journal DONNÉE compris —, les SIX feuilles
+    kernel32 : SetFilePointerEx PRÉSENTE cette fois, l'écart nommé du
+    kit 01 n'existe plus ; AUCUN appel CRT dans la clôture des trois
+    fonctions ; les relocations) ;
+  — L'ÉPREUVE DU SCÉNARIO LIVRÉ : son juge extrait par AST, confronté à
+    un contre-modèle indépendant : 2 000 cas VERT ; la découverte et la
+    traversée d'imports du scénario exécutées CONTRE la pièce elle-même
+    (l'image mappée par sections) : les SIX exports et les SIX feuilles
+    lus.
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité — INCHANGÉ) :
+  1. AU GUI (TRIADE_gui_tous_runs_v1), onglet 1·KIT de l'unité
+     loupe-02 × C : CHOISIR CE DOSSIER (kit-unite-loupe-02-C-20261114) —
+     le GUI recoupe les EMPREINTES gravées (une divergence, rien ne
+     court) ;
+  2. onglet 2·RUN : LANCER LANCEUR-UNITE-02-C.bat (le lanceur officiel —
+     il court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (LoadLibraryEx DONT_RESOLVE),
+     découvre les adresses PAR LA TABLE D'EXPORTS, résout les feuilles
+     kernel32 AUX SLOTS RÉELS de la table d'imports (l'édition v2 du kit
+     01 : le terminateur au CHAMP Name, les gardes fail-closed), ouvre
+     la session par la pièce, appelle loupe_02_lire aux décalages du
+     kit, juge par le modèle indépendant, et écrit le témoin ; le
+     dossier preuves-unite02C/ naît ;
+  3. onglet 3·TÉMOIN : ouvrir preuves-unite02C\temoin-unite02C.txt au
+     bloc-notes, le DATER, le SIGNER DE VOTRE MAIN — jamais automatisé
+     (D99) — puis renvoyer le dossier ENTIER au coffre /test ;
+  4. aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1 — au plus TROIS par bloc, l'arrêt au premier vert), les défauts
+     nommés s'il y en a, le chrono (M4) ;
+  5. le labo recoupe le run revenu — PUIS l'unité suivante commence.
+
+LES PIÈCES DU KIT :
+  loupe-02-c.dll        la pièce (95 413 o, sha256 925cd019…) ;
+  loupe-02-c.c/.def     le source et la définition des exports (la
+                        livraison du bras C : le binaire ET le source) ;
+  scenario-unite02C.py  le scénario (la découverte, la résolution, le
+                        juge) ;
+  LANCEUR-UNITE-02-C.bat le lanceur officiel (la capture console en
+                        UTF-8 des deux côtés du tuyau) ;
+  temoin-1.bin, temoin-384.bin, temoin-3f.bin, vide.bin
+                        les témoins du kit (les MÊMES octets que le kit
+                        T — la génération fixe du labo) ;
+  EMPREINTES-KIT-UNITE-02-C.txt la gravure (chaque pièce, sha256) ;
+  le présent LISEZMOI.
+
+LES ÉCARTS NOMMÉS (consignés, jamais maquillés) :
+  — la première fenêtre lue INLINE au bloc session (le loupe-01 du plan
+    APPELLE loupe-02 : l'écart structurel du bras C, nommé) ;
+  — le vecteur V4 arme un VERROU DE PLAGE (LockFile d'un second
+    détenteur) : si le système de fichiers l'ignore au terrain, NOMMÉ
+    ABSENT ;
+  — les imports du CRT de lancement mingw (InitializeCriticalSection…)
+    vivent à la table sans jamais être appelées : sous DONT_RESOLVE
+    aucun point d'entrée ne court — l'audit de la clôture le prouve ;
+  — l'écho du lanceur rend « preuves-unite02C\temoin… » : le « \t » du
+    chemin rendu TAB par la console — COSMÉTIQUE, nommé (le kit 01 le
+    portait déjà).
+
+LA FRONTIÈRE : le run est À VOUS (CA6 — le labo ne court JAMAIS le
+terrain) ; le témoin se signe de VOTRE MAIN (D99) ; le renvoi du dossier
+ENTIER vous appartient ; la pièce ne bouge pas (l'empreinte gravée — une
+divergence, rien ne court).
+
+*La consignation vit au journal de travail (l'Entrée 290) ; le détail du
+plan à PLAN_PREREGISTRE_COMPARAISON.md (a78caf8c…, VERROUILLÉ).*

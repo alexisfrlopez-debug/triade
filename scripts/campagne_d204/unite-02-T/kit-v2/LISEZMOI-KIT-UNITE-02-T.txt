@@ -1,0 +1,106 @@
+﻿﻿﻿﻿LISEZMOI — LE KIT DE L'UNITÉ 2 : LOUPE-02 LIRE × BRAS T — RÉVISION v2
+(le juge corrigé, la pièce INTACTE ; la v1 courue au terrain le 14/11
+16:46:34Z revint 18 VERT 2 ROUGE — les DEUX ROUGE étaient la faute du
+JUGE, nommée ci-dessous)
+(la campagne de comparaison des workflows D204 ; le kit livré par le labo
+au coffre /test en son dossier daté — le GUI vous attend à l'onglet 1·KIT
+de l'unité loupe-02 × T)
+========================================================================
+
+L'OBJET : la DEUXIÈME unité de la partie contrôlée — le bloc loupe-02
+LIRE au BRAS T (la notation scellée). La pièce de ce kit est le build du
+plan où le slot loupe-02 (RVA 0x4240, 320 o) porte LA NOTATION DE
+CAMPAGNE : écrite à la main par l'agent depuis le contrat loupe-02:R1 (la
+fenêtre d'octets au tampon de session, BORNÉE par la taille réelle — la
+double borne — puis LE RECOUVREMENT du journal d'édition : ce que
+l'utilisateur a écrit survit au défilement). LES DIX-SEPT autres blocs
+demeurent les SCELLÉS du projet — dont loupe-01, qui APPELLE la notation
+de campagne à CHAQUE naissance de session (la fenêtre à la vue 0) : la
+première fenêtre de chaque fichier ouvert naît de la pièce mesurée.
+
+LA CONSTRUCTION (consignée, les défauts nommés AVANT toute livraison) :
+l'oracle écrit-avant-code (le modèle Python du contrat, avant la
+notation) ; la notation à la main — TROIS fautes nommées en route :
+l'adressage à deux bases (keystone refuse [r14 + rcx*16] — le pointeur
+qui marche), le débordement du slot (325 o > 320 : la notation compactée
+à 292 o — le lu pré-contré, le min par cmov, la poignée tenue en
+registre), la chute de boucle (le recouvrement tombait dans l'échec
+système — le saut du succès rendu explicite) ; la cristallisation : DIX
+rebuilds consécutifs IDENTIQUES (sha256 98354ff6…) ; l'oracle du bloc au
+labo : 22 VERT, 0 ROUGE (le différentiel à 2 032 décalages sur les
+témoins + le scellé proxy.exe, le recouvrement aux bords et non aligné,
+les rejets au tampon empoisonné, l'échec ReadFile armé, la falsification
+détectable) ; l'épreuve du scénario livré (son juge extrait par AST,
+confronté à un contre-modèle : 2 000 cas VERT — une frontière dupliquée
+y fut prise, nommée, corrigée AVANT le run).
+
+LA RÉVISION v2 (l'Entrée 294 — l'écart du juge nommé, la pièce
+reconnue DROITE) : le scénario v1 posait le journal d'édition à
+R_JOURNAL = 0xE4E0 — soixante-quatre octets au-dessus de la vérité du
+layout (loupe/layout.py : 0xE4A0, l'adresse que le lea de la pièce
+vise). La pièce lisait son compte à la bonne adresse et tombait sur la
+zone zéroée : compte 0, AUCUN recouvrement — les DEUX vecteurs V2
+(les-bords-de-fenetre, cinq-entrees-dont-une-non-alignee) revinrent
+ROUGE alors que la pièce était DROITE (le bras C, le même contrat juge
+par les exports de la dll, revint 20 VERT 0 ROUGE). LE SEUL CHANGEMENT :
+la constante du scénario remise à la vérité ; loupe.exe et les HUIT
+autres pièces INTACTES octet pour octet (comparez les EMPREINTES : une
+seule ligne bouge — scenario-unite02.py).
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité) :
+  1. AU GUI (TRIADE_gui_campagne_v1 ou TRIADE_gui_tous_runs_v1), onglet
+     1·KIT de l'unité loupe-02 × T : CHOISIR CE DOSSIER
+     (kit-unite-loupe-02-T-20261114-v2) — le GUI recoupe les EMPREINTES
+     gravées (une divergence, rien ne court) ;
+  2. onglet 2·RUN : LANCER LANCEUR-UNITE-02-T.bat (le lanceur officiel —
+     il court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (LoadLibraryEx DONT_RESOLVE),
+     résout lui-même les six feuilles kernel32 du noyau, ouvre la
+     session PAR LOUPE-01 SCELLÉ (la fenêtre née de la notation de
+     campagne), appelle loupe-02 aux décalages du kit, juge par le
+     modèle indépendant (les découpes hashlib), et écrit le témoin ; le
+     dossier preuves-unite02/ naît sur votre machine ;
+  3. onglet 3·TÉMOIN : ouvrir preuves-unite02\temoin-unite02.txt au
+     bloc-notes, le DATER, le SIGNER DE VOTRE MAIN — jamais automatisé
+     (D99) — puis renvoyer le dossier ENTIER au coffre /test ;
+  4. aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1 — la cap tenue par le GUI : au plus TROIS par bloc, l'arrêt au
+     premier vert), les défauts nommés s'il y en a, le chrono (M4) ;
+  5. le labo recoupe le run revenu — PUIS l'unité suivante commence.
+
+LES PIÈCES DU KIT :
+  loupe.exe                     la pièce (127 488 o, sha256 98354ff6…) —
+                                le build du plan, le slot loupe-02 portant
+                                la notation de campagne (292 o de code,
+                                28 de padding NOP) ;
+  notation-loupe-02-lire.asm    la notation LIVRÉE (l'explicite, résolue
+                                par l'auteur d'arithmétique d'adresses) ;
+  brouillon-loupe-02-lire.asm   le brouillon de la main (les choix, les
+                                fautes nommées en commentaires) ;
+  scenario-unite02.py           le scénario (le chargeur + le juge) —
+                                v2 : LA CONSTANTE DU JOURNAL remise à
+                                la vérité du layout (0xE4A0) ; le reste
+                                du texte INTACT ;
+  LANCEUR-UNITE-02-T.bat        le lanceur officiel (la capture console
+                                en UTF-8 des deux côtés du tuyau) ;
+  temoin-1.bin, temoin-384.bin, temoin-3f.bin, vide.bin
+                                les témoins du kit (la génération FIXE du
+                                labo, graine 20261107 — les MÊMES octets
+                                que le kit 01) ;
+  EMPREINTES-KIT-UNITE-02-T.txt la gravure (chaque pièce, sha256) ;
+  le présent LISEZMOI.
+
+LES ÉCARTS NOMMÉS DU RUN TERRAIN (consignés, jamais maquillés) :
+  — le vecteur V4 (l'échec système) arme un VERROU DE PLAGE (LockFile
+    d'un second détenteur sur [0, 384)) : si le système de fichiers
+    l'ignore au terrain, le vecteur est NOMMÉ ABSENT — jamais maquillé ;
+  — l'accès refusé ne s'arme pas proprement au terrain (le refus d'ACL
+    dépend du compte) : hors du contrat de loupe-02, rien à armer.
+
+LA FRONTIÈRE : le run est À VOUS (CA6 — le labo ne court JAMAIS le
+terrain) ; le témoin se signe de VOTRE MAIN (D99) ; le renvoi du dossier
+ENTIER vous appartient ; la pièce ne bouge pas (l'empreinte gravée — une
+divergence, rien ne court).
+
+*La consignation vit au journal de travail (les Entrées 290 et 294) ; le détail du
+plan à PLAN_PREREGISTRE_COMPARAISON.md (a78caf8c…, VERROUILLÉ).*
