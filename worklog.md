@@ -10561,3 +10561,69 @@ Work Log:
   T-loupe-02-it1, l'onglet 5 de l'atelier 013520), puis l'atelier ENTIER
   au coffre /test ; ENSUITE loupe-05 sha256, aux deux bras — le labo
   construit à la commande.
+
+
+Task ID: 203
+Agent: Z.ai (agent principal — la session du dépôt Runs Triade : le livre reçu, l'unité 2 close au livre)
+Task: L'ANNONCE DU DÉVELOPPEUR (« j'ai depose dans /test le dossier entier des runs, tu devrais tout avoir ») : LE DOSSIER ENTIER DES RUNS REÇU — LE LIVRE 013520 AVEC LES DEUX LIGNES DE LOUPE-02, RECOUPÉ BYTE-BYTE — L'UNITÉ 2 CLOSE AU LIVRE AUX DEUX BRAS ; le refus nommé du GUI (« je n'arrive pas a consigner loupe 02xC ») lu et nommé : la ligne était DÉJÀ consignée, il ne manquait que le dépôt.
+
+Work Log:
+- LA RESTAURATION DU BAC : le conteneur recyclé encore (la répétition des
+  285/293/295, nommée) — la vérité re-rapatriée du coffre Drive (le /test
+  marché à neuf, les miroirs re-hachés) ; le jeton git du relais /Tokens
+  VALIDE (la copie du bac périmée 401) ; le relais OAuth du 12/11
+  FONCTIONNEL — l'écriture au coffre par lui (le compte de service seul
+  SANS EFFET à l'écriture : 200 rendu, parents inchangés — la 294
+  répétée, nommée).
+- LA RÉPONSE AU REFUS NOMMÉ (la veille ~20:41Z) : le GUI refusa la seconde
+  consigne de C-loupe-02 (« l'unité est CLOSE — l'arrêt au PREMIER
+  VERT, § 7 ») — la lecture du code (un VERT au livre ferme la paire
+  bras × tâche) et du journal vert (« 4 livraison(s) y vivent, le carnet
+  CONTINUE ») : la ligne était DÉJÀ consignée, il ne manquait que le
+  dépôt — LE DÉPÔT VINT (Runs Triade/ né au /test 20:52:50Z le 14/11).
+- LE DÉPÔT : le dossier ENTIER des runs de la machine (7 dossiers,
+  8 fichiers — les runs 1-clic pré-campagne 13-14/11, les DEUX kits GUI
+  + zips, les kits loupe-01-T locaux v1/v2, l'installateur
+  python-3.14.10 33,5 Mo, une photo locale, PHRASE-CONTROLE en copie,
+  le miroir local test/) ET l'atelier 013520 à
+  test/TRIADE_gui_tous_runs_v1/.
+- LE RECOUP DU LIVRE (byte-byte contre le miroir de la 293) :
+  livraisons.csv 1 051 o == 919 (f0afea11…) + L'AJOUT EXACT de 132 o —
+  T-loupe-02-it1 puis C-loupe-02-it1 (kit 2026-11-14, run 2026-11-14,
+  VERT, « en attente » ; md5 be02d58c…), les lignes loupe-01 intactes ;
+  le carnet 1 087 o == 880 + QUATRE lignes M3 (T cristallisation 2 min,
+  C tag-backup 2 min, T cristallisation 1 min, T cristallisation 0 min) ;
+  defauts.csv + journal-ouverture.txt INTACTS — M1 : QUATRE livraisons,
+  ZÉRO défaut ; M3 : loupe-01 86 min, loupe-02 5 min.
+- LES ÉCARTS NOMMÉS : ① la ligne T VERT consignée vers 16:49-16:50Z
+  (elle précède la ligne C, la dernière écriture 16:50:03Z), AVANT le
+  run v2 (19:53:02Z) qui la rend vraie — au geste le seul run vécu : le
+  v1 18-2 (la faute au juge, la 294) ; le verdict = le prescrit de la
+  295, recoupé par le v2 20-0 (la sonde 104). ② la ligne M3
+  « cristallisation 20:54, 20:54, 0 min » — fin == début, demeurée
+  (jamais reconstruite de mémoire). ③ le refus nommé de la seconde
+  tentative C (~20:41Z) — le garde du GUI tint, rien ne courut.
+- LES DEUX AUTRES ATELIERS (nommés, jamais comptés) : le 012347 (la
+  copie imbriquée, la 285/291) SIX lignes d'essai (loupe-01 it1/it2
+  ROUGE it3 VERT aux deux bras, 14:07:31Z→15:13:41Z — la cap EXERCÉE au
+  GUI, AUCUN run ne correspond : jamais comptées) ; le 202807 (GUI
+  campagne, 13/11) VIERGE — le livre qui compte demeure le 013520.
+- LE RANGEMENT (D143, par le relais OAuth) : le livre 013520 DÉPLACÉ à
+  /test/archives-livraisons/unite-02-loupe-20261114/
+  atelier-campagne-d204-20261114-013520/ (le nom conservé, md5
+  be02d58c… AVANT == APRÈS ; la copie 919 o de la 293 demeure à
+  unite-01/) ; le reste du dépôt DÉPLACÉ-RENOMMÉ à
+  runs-triade-depot-20261114/ (le contenu intact) ; la racine revenue à
+  SES 14 entrées.
+- LA CARTE DU /test : LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 296
+  (15 448 -> 18104 o, sha256 91adbc11… — la 295 intacte en
+  tête, la section du livre reçu en queue).
+- LA CONSIGNATION : la présente Task 203 + l'Entrée 296 ; la carte
+  OU-TROUVER portée à 296 (l'entrée 22, l'en-tête, les renvois Entrées
+  251-296 / Tasks 158-203) aux DEUX endroits (la racine du coffre + le
+  miroir git) ; le push GitHub (main) : JOURNAL_TRAVAIL.md + worklog.md
+  + OU-TROUVER, UN SEUL commit.
+- SUITE : au développeur — LOUPE-05 SHA256, aux deux bras : le labo
+  construit à la commande ; le livre continue à la machine locale du
+  développeur (le même dossier atelier-campagne-d204-20261114-013520 à
+  « CHOISIR L'ATELIER EXISTANT… » — il porte les QUATRE lignes).
