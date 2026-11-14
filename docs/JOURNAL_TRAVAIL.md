@@ -12189,3 +12189,164 @@ les refus -4/-3/-5, l'échec système -6 la sortie INTACTE).
   T-loupe-05-it1, C-loupe-05-it1 — le livre continue à la machine locale
   du développeur) ; ENSUITE loupe-08 ligne, aux deux bras — le labo
   construit à la commande. (15/11, la session de l'unité 3 bâtie)
+
+## Entrée 298 — LES RUNS DE L'UNITÉ 3 REÇUS ET RECOUPÉS : LE BRAS T 17 VERT 1 ROUGE SIGNÉ, LE BRAS C 16 VERT 1 ROUGE SIGNÉ — LE SEUL ROUGE, LE MÊME AUX DEUX BRAS, EST LA FAUTE DU JUGE (la session de V3 jamais fermée — l'écart que le POSIX de la 297 avait nommé à son propre harnais), LES PIÈCES DROITES ; LE LIVRE PORTE LES DEUX LIGNES (T VERT — l'unité close au premier vert ; C ROUGE — le mot du terrain), LES DÉPÔTS RANGÉS, LE MIROIR DRIVE RESYNCHRONISÉ (l'écart de la 297 réparé) (l'annonce du développeur : « les resultats et preuves des runs loupe 05 C et T sont dans le dossier /test du drive » — la commande : « verifie que les fichiers de reprise rapide du projet sont a jour »)
+
+La reprise vint de trois lignes — les résultats au /test, les jetons au
+relais, la commande de vérifier les fichiers de reprise. Les fichiers
+étaient à jour à la 297 : la carte portait l'unité 3 bâtie et livrée, la
+suite prescrivait le run aux deux bras puis les lignes au livre. Les runs
+avaient vécu au terrain dans l'heure qui suivit la livraison — voici le
+recoup, la faute du juge nommée sur ses trois sources, les dépôts rangés,
+la reprise portée à 298.
+
+- LA VÉRIFICATION PRÉALABLE : le conteneur du labo recyclé encore (la
+  répétition 285/293/295/296/297, nommée) — le bac périmé, la vérité
+  re-rapatriée du coffre : le relais OAuth du coffre FONCTIONNEL (le jeton
+  du /Tokens, jamais imprimé), le dépôt GitHub vivant (main @ c8a83cc — le
+  push de la 297 a vécu), la racine du coffre lue (OU-TROUVER 54 576 o à
+  297, REPRISE_PROJET du 31/10, PROTOCOLE du 26/10), le /test marché à
+  neuf (les DEUX dépôts nés ~22:16Z le 14/11, le dossier GUI du terrain
+  22:15:54Z, la carte LISEZMOI-KITS à 297, 20 352 o) — RIEN ne manquait au
+  dossier.
+- LES DÉPÔTS (le « dossier ENTIER » de la frontière, tenu) :
+  kit-unite-loupe-05-T-20261115-20261114T220855Z-1-001/ (le kit tel que
+  téléchargé du coffre à 22:08:55Z — l'heure du terrain porte le nom du
+  dossier — avec run-console-unite05.txt 7 212 o UTF-16 et
+  preuves-unite05/ : temoin-unite05.txt 1 467 o + falsifie-384.bin 384 o)
+  et kit-unite-loupe-05-C-20261115-20261114T220851Z-1-001/ (pareil,
+  22:08:51Z — run-console-unite05C.txt 7 798 o, preuves-unite05C/ :
+  temoin-unite05C.txt 1 452 o + falsifie-384.bin) ; ET le dossier GUI du
+  terrain TRIADE_gui_tous_runs_v1/ à la racine du /test (22:15:54Z —
+  l'atelier 013520 au livre des SIX lignes, l'etat-tous-runs.json des SIX
+  unités, preuves_v150/, TRIADE_logs/).
+- LE RECOUP (byte-byte, la règle du coffre) : les pièces == les gravures —
+  loupe.exe 127 488 o sha256 2f6df5a5… == la gravure du kit T,
+  loupe-05-c.dll 96 171 o sha256 b0d347ba… == la gravure du kit C, les
+  DEUX scénarios == les gravures (245ba29f… / 6110cf67…), les témoins de
+  la génération fixe intacts ; LES TÉMOINS DATÉS le 14/11/2026 ET SIGNÉS
+  Alexis Lopez (D99 — la même main que toute la campagne) ; la machine
+  PORTABLE · Windows 10 · AMD64 · Python 3.14.10 (CA2 — la même que les
+  SIX runs) ; LA CHRONOLOGIE tenue : les kits téléchargés 22:08:51Z /
+  22:08:55Z → le run T 22:11:57Z → le run C 22:14:01Z → l'état du GUI
+  22:14:09Z → le carnet 22:14:54Z → le livre 22:14:58Z → le dossier GUI
+  déposé 22:15:54Z → les kits déposés 22:16:05Z / 22:16:20Z — jamais une
+  date avant le run.
+- LES VERDICTS DES RUNS : LE BRAS T 17 VERT 1 ROUGE ; LE BRAS C 16 VERT
+  1 ROUGE — LE ROUGE LE MÊME AUX DEUX BRAS : « V4:la-session-survit ».
+  Tout le reste vert : T0 les pièces recoupées aux gravures ; V1 les
+  sessions nées entières + les gammes aux frontières des fenêtres (4 /
+  203 / 234 cas, la graine 20261115, les fenêtres 64 Kio au
+  TAMPON_CUMUL) ; L'INTÉGRATION au bras T (loupe-07 SCELLÉ appelle la
+  notation au slot : le panneau sha256 == hashlib du fichier ENTIER — la
+  composition scellée conduit la notation neuve) ; LE PANNEAU au bras C
+  (md5+sha256 == hashlib aux TROIS témoins — T[31] LA VÉRITÉ RFC 1321
+  VÉCUE AU TERRAIN : le défaut latent des kits 01/02, nommé et réparé à
+  la 297, tenu à la première fenêtre) ; V2 les FIPS au fichier (le vide
+  e3b0c442…, « abc » ba7816bf…) ; V3 les cinq rejets (-4 sans session,
+  -3 hors fichier / à la taille / immense, -5 la sortie nulle — la sortie
+  POISON INTACTE aux cinq) ; V5 la falsification attrapée AUX DEUX BRAS
+  (falsifie-384.bin au réceptacle, l'octet 3 muté 0x90 → 0x6f, le
+  condensé divergé 3a15c637… ≠ 3396717b… ET == hashlib du mutant — la
+  pièce a lu SES octets, la différentielle attrape le faux).
+- LE ROUGE EST LA FAUTE DU JUGE, PAS DES PIÈCES (la 294 répétée) : le
+  scénario ne ferme JAMAIS la session de V3 — loupe_01_ouvrir ouvre
+  temoin-384 aux E2a-E2c, E3 court sur elle, et l'ouverture de V4
+  (temoin-3f.bin) est REFUSÉE : le modèle de session (le scellé au bras
+  T, le bloc session au bras C) refuse la double session (-5
+  SESSION_OUVERTE) — LE RETOUR DE L'OUVERTURE JETÉ PAR LE SCÉNARIO, la
+  ligne jamais vérifiée ; le condensé de V4 (0, 131 072) court donc
+  HORS-BORNES sur la session restée à 384 o → -3 : RIEN N'EST LU, la
+  plage verrouillée [64 Kio, 128 Kio) n'est JAMAIS touchée, le verrou
+  (posé, l'arme tenue) ne peut ni passer ni échouer ; la branche du
+  scénario (r ≠ -6) écrit « NOMMÉ ABSENT — le système de fichiers
+  l'ignore » : LE MESSAGE STATIQUE EST UNE MISLECTURE — le cas pré-nommé
+  au LISEZMOI ne s'applique PAS, rien ne fut jamais lu ; le rejeu (après
+  UnlockFile/CloseHandle) rend -3 encore → le vecteur la-session-survit
+  (il attend r=0 et le condensé) ROUGE. LA PREUVE AUX TROIS SOURCES : le
+  source C livré (loupe_01_ouvrir refuse la double session, VERDICT_SESSION_OUVERTE ;
+  la borne P3 rend -3), les DEUX scénarios lus (aucun loupe_03_fermer
+  entre E3 et l'ouverture de V4, le retour de l'ouverture jeté), les
+  consoles (rax=-3 DEUX fois aux DEUX bras — ni -6 ni 0, la signature
+  même de la session restée). L'ÉCART QUE LA 297 AVAIT NOMMÉ À SON
+  PROPRE HARNAIS : « la session de V3 jamais fermée → l'ouverture de V4
+  refusée -5 session double, le VÉRITABLE verdict du scellé ; les lignes
+  OUVRIR de V4/V5 jamais imprimées → le juge suivait le mauvais témoin —
+  LA PIÈCE, ELLE, A TOUJOURS RÉPONDU JUSTE » — le harnais POSIX fut
+  corrigé au labo, mais l'épreuve du scénario LIVRÉ n'en tint que le
+  GÉNÉRATEUR (l'AST contre le contre-modèle) : la faute voyagea jusqu'au
+  terrain. LES PIÈCES DROITES : la voie -6 (la plage verrouillée →
+  ReadFile refuse → -6, la sortie INTACTE, la session SURVIT à la gamme
+  suivante) est éprouvée au labo (le bras T : l'oracle du bloc 18-0,
+  « l'échec armé à la DEUXIÈME fenêtre » ; le bras C : le POSIX 65-0 au
+  tiroir d'échec de ReadFile) — les vecteurs V4 du terrain sont VOIDS
+  aux deux bras, le ROUGE ne mesure RIEN des pièces.
+- LE LIVRE (recoupé byte-byte contre l'archivé de la 296) :
+  livraisons.csv 1 184 o == 1 051 o (md5 be02d58c…) + L'AJOUT EXACT de
+  133 o — T-loupe-05-it1 (kit 2026-11-14, run 2026-11-14, VERT, « en
+  attente ») puis C-loupe-05-it1 (kit 2026-11-14, run 2026-11-14,
+  ROUGE, « en attente »), les QUATRE lignes loupe-01/02 intactes
+  au-dessus ; le carnet_temps_humain.csv 1 188 o == 1 087 + DEUX lignes
+  M3 (T loupe-05 cristallisation 23:11 → 23:13, 2 min ; C loupe-05
+  tag-backup 23:13 → 23:14, 1 min — heures locales cohérentes aux runs
+  22:11-22:14Z) ; defauts.csv (389 o) et journal-ouverture.txt (648 o)
+  INTACTS — AUCUN défaut nommé au terrain.
+- LES VERDICTS AU LIVRE (le livre est au terrain, jamais réécrit par le
+  labo) : T-loupe-05-it1 VERT consigné — L'UNITÉ 3 × T CLOSE À IT1 (§ 7 :
+  l'arrêt au premier vert) ; le ROUGE du run T étant le vecteur VOID (la
+  faute au juge — le précédent 283/284/294 : la faute au labo ne
+  consomme jamais), le VERT tient recoupé. C-loupe-05-it1 ROUGE
+  consigné — LE MOT DU TERRAIN ; l'arbitrage du labo : le ROUGE repose
+  sur le vecteur VOID (le terrain ne pouvait pas le savoir — le message
+  statique du scénario l'induisait en erreur), et les lectures restent
+  nommées, jamais tranchées à la place du terrain : ① le ROUGE compte
+  le vecteur void du juge (le prescrit de la réparation : le scénario
+  v2, le re-run it2) ; ② le ROUGE compte l'échappée T[31] (la métrique
+  M1 : le défaut latent du flux C avait échappé aux livraisons des
+  unités 1-2, nommé à la 297 — la livraison qui le nomme et le répare
+  serait comptée) — dans cette lecture une ligne de defauts.csv
+  manquerait au livre des défauts (l'écart nommé : la ligne est au
+  terrain). L'unité 3 × C demeure OUVERTE (it2/it3 à la cap de trois).
+- LE RANGEMENT (D143 : déplacés, jamais jetés, par le relais OAuth) :
+  les DEUX dépôts de kits DÉPLACÉS à
+  /test/archives-livraisons/unite-05-loupe-20261115/ (les noms
+  conservés) ; le dossier GUI du terrain (le livre aux SIX lignes,
+  l'état des runs, les logs) DÉPLACÉ au même dossier — la copie du
+  livre par unité attend la clôture du bras C (le précédent de la 296) ;
+  la racine revenue à SES 16 entrées (les 14 de la 296 + les DEUX kits
+  loupe-05 : le kit C attend son v2, le kit T clos demeure — le
+  précédent loupe-02).
+- L'ÉCART DE LA 297 NOMMÉ ET RÉPARÉ : le miroir Drive n'avait pas suivi
+  la 297 — journal/worklog/OU-TROUVER du miroir restés à la 296 (le push
+  GitHub, lui, a vécu : main @ c8a83cc, la racine du coffre à jour), le
+  bundle resté à 295-565706b (les sessions 296/297 ne tinrent pas
+  D141) ; la présente resynchronise le miroir au 298, archive le bundle
+  courant versionné (triade-history-295-565706b.bundle) et porte le
+  bundle au 298.
+- LES ÉCARTS NOMMÉS : M2 MANQUANT (les appels de la session sans journal
+  d'usage — la répétition des 290/294/297) ; M4 non instrumentée au
+  labo (la répétition) ; le bac reconstitué après le recyclage du
+  conteneur (la répétition) ; l'écart 297 du miroir Drive (ci-dessus,
+  réparé) ; le ROUGE void du juge aux deux bras (l'analyse ci-dessus) ;
+  la lecture ② du ROUGE C porterait une ligne manquante à defauts.csv
+  (nommée, jamais écrite par le labo — le livre des défauts est au
+  terrain).
+- LA CONSIGNATION : la présente Entrée 298 + Task 205 ; la carte
+  OU-TROUVER portée à 298 (l'entrée 24 au tableau de campagne, l'en-tête
+  de mise à jour, les renvois Entrées 251-298 / Tasks 158-205) aux DEUX
+  endroits (la racine du coffre + le miroir git) ; la carte
+  LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 298 au /test (20 352 → [taille]
+  o — la 297 intacte en tête, la section des runs reçus apposée en
+  queue), re-téléchargée identique ; le push GitHub (main) :
+  JOURNAL_TRAVAIL.md + worklog.md + OU-TROUVER, UN SEUL commit ; le
+  miroir Drive resynchronisé (l'écart de la 297 réparé), D141 tenu.
+- SUITE : au développeur — LE KIT C v2 (le scénario réparé : fermer la
+  session de V3 AVANT l'ouverture de V4, VÉRIFIER LE RETOUR de chaque
+  ouverture — fail-closed ; l'épreuve qui manquait : le FLUX DES
+  SESSIONS du fichier livré tenu contre la faute nommée, pas le seul
+  générateur ; les DIX autres pièces intactes octet pour octet, la
+  gravure regravée d'une ligne), le re-run C-loupe-05-it2 au terrain
+  (la cap tient : it2/it3), la ligne au livre au geste ; le kit T clos
+  demeure (son scénario porte la même faute, nommée ici — D143, jamais
+  jeté) ; ENSUITE loupe-08 ligne, aux deux bras — le labo construit à
+  la commande. (15/11, la session des runs de l'unité 3 recoupés)

@@ -10701,3 +10701,56 @@ Work Log:
   /test ; onglets 4-7), puis les lignes au livre (T-loupe-05-it1,
   C-loupe-05-it1 à l'onglet 5 de l'atelier 013520) ; ENSUITE loupe-08
   ligne, aux deux bras. (15/11, la session de l'unité 3 bâtie)
+
+## Task 205 — Entrée 298 : les runs de l'unité 3 recoupés, la faute du juge nommée, les dépôts rangés, la reprise portée à 298
+
+- LA COMMANDE : « verifie que les fichiers de reprise rapide du projet
+  sont a jour » — les résultats au /test, les jetons au relais /Tokens
+  (jamais imprimés), le conteneur recyclé encore (la répétition, nommée).
+- LES DÉPÔTS : les DEUX kits téléchargés du coffre (22:08:51Z/55Z) avec
+  les consoles des runs (T 22:11:57Z, C 22:14:01Z — la machine PORTABLE,
+  CA2) et preuves-unite05[/C]/ ENTIER (les témoins datés 14/11/2026
+  signés Alexis Lopez [D99] + falsifie-384.bin) ; le dossier GUI du
+  terrain (le livre aux SIX lignes, l'état des SIX unités, 22:15:54Z).
+- LE RECOUP : les pièces == les gravures (loupe.exe 2f6df5a5… /
+  loupe-05-c.dll b0d347ba…, les scénarios 245ba29f… / 6110cf67…), la
+  chronologie tenue (run T → run C → livre 22:14:58Z → dépôts 22:16Z).
+- LES VERDICTS : T 17 VERT 1 ROUGE, C 16 VERT 1 ROUGE — le ROUGE LE
+  MÊME (« V4:la-session-survit ») : LA FAUTE AU JUGE, PAS AUX PIÈCES —
+  le scénario ne ferme jamais la session de V3 (temoin-384), l'ouverture
+  de V4 est refusée -5 (retour jeté), le condensé (0, 131 072) court
+  hors-bornes sur la session de 384 o → -3 : RIEN lu, la plage
+  verrouillée jamais touchée, le message statique « le système de
+  fichiers l'ignore — NOMMÉ ABSENT » une MISLECTURE, le rejeu -3 encore
+  → ROUGE ; l'écart que la 297 avait nommé à son harnais POSIX (« la
+  session de V3 jamais fermée → l'ouverture de V4 refusée -5 session
+  double… LA PIÈCE, ELLE, A TOUJOURS RÉPONDU JUSTE ») — l'épreuve du
+  scénario livré n'en tint que le générateur, la faute voyagea au
+  terrain ; les pièces droites (la voie -6 éprouvée au labo : l'oracle
+  T 18-0, le POSIX C 65-0 ; T[31] la réparation vécue au terrain : le
+  panneau == hashlib).
+- LE LIVRE : 1 184 o == 1 051 + l'ajout exact de 133 o — T-loupe-05-it1
+  VERT (l'unité 3 × T CLOSE à it1, § 7) puis C-loupe-05-it1 ROUGE (le
+  mot du terrain ; le ROUGE repose sur le vecteur void — l'unité 3 × C
+  ouverte, it2/it3 à la cap) ; le carnet + DEUX lignes M3 (T
+  cristallisation 2 min, C tag-backup 1 min) ; defauts.csv intact.
+- LE RANGEMENT (D143) : les DEUX dépôts + le dossier GUI à
+  /test/archives-livraisons/unite-05-loupe-20261115/ (la copie du livre
+  par unité attend la clôture du bras C), la racine à SES 16 entrées.
+- L'ÉCART DE LA 297 RÉPARÉ : le miroir Drive resté à la 296
+  (journal/worklog/OU-TROUVER), le bundle à 295-565706b (D141 non tenu
+  aux 296/297) — le miroir resynchronisé au 298, le courant 295-565706b
+  archivé versionné, le bundle porté au 298.
+- LA CONSIGNATION : la présente Task 205 + l'Entrée 298 ; la carte
+  OU-TROUVER portée à 298 (l'entrée 24, l'en-tête, les renvois Entrées
+  251-298 / Tasks 158-205) aux DEUX endroits ; la carte LISEZMOI-KITS
+  portée à 298 au /test ; le push GitHub (main) : JOURNAL_TRAVAIL.md +
+  worklog.md + OU-TROUVER, UN SEUL commit ; le miroir Drive
+  resynchronisé, D141 tenu.
+- SUITE : au développeur — LE KIT C v2 (le scénario réparé : fermer la
+  session de V3 avant l'ouverture de V4, vérifier le retour de chaque
+  ouverture ; les autres pièces intactes), le re-run C-loupe-05-it2 au
+  terrain (la ligne au livre au geste) ; le kit T clos demeure (son
+  scénario porte la même faute, nommée) ; ENSUITE loupe-08 ligne, aux
+  deux bras — le labo construit à la commande. (15/11, la session des
+  runs de l'unité 3 recoupés)
