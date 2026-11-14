@@ -1,0 +1,35 @@
+TÉMOIN DU RUN DE L'UNITÉ 2 — loupe-02 lire × bras T (la campagne D204, la comparaison des workflows)
+==============================================================================
+le run      : 2026-11-14T16:46:34Z (UTC) — la machine du développeur
+la machine  : PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+la pièce    : loupe.exe 127488 o, sha256 98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e
+le verdict  : 18 VERT, 2 ROUGE — ÉCART NOMMÉ
+
+LES VECTEURS :
+  VERT T0:la-piece-recoupee-a-l-empreinte-gravee
+  VERT V1:temoin-1.bin-la-fenetre-nee-a-l-ouverture
+  VERT V1:temoin-1.bin-la-fenetre-bornee-a-1-decalages
+  VERT V1:temoin-384.bin-la-fenetre-nee-a-l-ouverture
+  VERT V1:temoin-384.bin-la-fenetre-bornee-a-24-decalages
+  VERT V1:temoin-3f.bin-la-fenetre-nee-a-l-ouverture
+  VERT V1:temoin-3f.bin-la-fenetre-bornee-a-103-decalages
+  VERT V1:vide.bin-l-ouverture-sans-fenetre
+  VERT V1:vide.bin-aucune-fenetre-valide
+  VERT V1:la-vue-et-le-curseur-intacts
+  VERT V2:le-journal-intact
+  VERT V3:E1-sans-session
+  VERT V3:E2-le-decalage-non-aligne
+  VERT V3:E3a-le-decalage-a-la-taille
+  VERT V3:E3b-le-decalage-immense
+  VERT V4:la-plage-verrouillee
+  VERT V4:la-session-survit
+  VERT V5:l-octet-mute-l-etat-lu-diverge
+  ROUGE V2:les-bords-de-fenetre
+  ROUGE V2:cinq-entrees-dont-une-non-alignee
+
+LE GESTE QUI RESTE À LA MAIN (jamais automatisé, D99) :
+  DATER ce témoin (la date de votre main), le SIGNER,
+  renvoyer le dossier preuves-unite02/ ENTIER au coffre /test.
+
+Daté le : __14/11/2026__________________
+Signé    : ___Alexis Lopez_________________

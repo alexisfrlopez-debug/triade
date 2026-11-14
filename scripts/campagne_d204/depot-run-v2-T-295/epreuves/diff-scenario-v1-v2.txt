@@ -1,0 +1,34 @@
+--- kit-T-v1/scenario-unite02.py	2026-11-14 20:18:19.344935210 +0000
++++ kit-T-v2/scenario-unite02.py	2026-11-14 20:16:02.707007804 +0000
+@@ -3,6 +3,20 @@
+ r"""scenario-unite02.py — LE TERRAIN DE L'UNITÉ 2 (loupe-02 lire × bras T, la
+ campagne de comparaison des workflows D204).
+ 
++RÉVISION v2 (14/11/2026, l'Entrée 294 — L'ÉCART DU JUGE NOMMÉ) : le run
++terrain de la v1 (16:46:34Z, 18 VERT 2 ROUGE) révéla que le présent
++scénario posait le journal à R_JOURNAL = 0xE4E0 — SOIXANTE-QUATRE octets
++au-dessus de la vérité du layout (loupe/layout.py : R_JOURNAL = 0xE4A0,
++l'adresse même que le lea de la pièce vise, lue à l'octet près au
++scripts/campagne_d204/depot-runs-kit-02-294/99_preuve_lea_exe.py). LA
++PIÈCE ÉTAIT DROITE : le compte qu'elle lisait tombait à l'entrée #156 de
++la zone zéroée du juge → compte 0 → AUCUN recouvrement → les DEUX
++vecteurs V2 ROUGE (les-bords-de-fenetre, cinq-entrees-dont-une-non-
++alignee) — rejoués octet par octet au labo (100_epreuves_juge.py). LE
++SEUL CHANGEMENT de la v2 : la constante remise à la vérité du layout
++(0xE4A0) ; la pièce et les HUIT autres pièces du kit demeurent INTACTES
++octet pour octet celles de la v1 (D143 : le kit v1 demeure au coffre).
++
+ Le kit porte UNE pièce et UN scénario :
+   loupe.exe          la pièce de campagne — le build du plan où le slot
+                      loupe-02 (RVA 0x4240) porte LA NOTATION DE CAMPAGNE
+@@ -74,7 +88,9 @@
+ R_LOUPE02 = 0x4240
+ R_LOUPE03 = 0x4380
+ R_CADRE = 0xE000
+-R_JOURNAL = 0xE4E0
++R_JOURNAL = 0xE4A0            # loupe-16 : la vérité du layout (D161) ; la v1
++                               # portait 0xE4E0 (+0x40) — l'écart du juge,
++                               # nommé à l'Entrée 294
+ IAT_SLOTS = {"CreateFileW": 0x3118, "GetFileSizeEx": 0x3120,
+              "SetFilePointerEx": 0x3128, "ReadFile": 0x3130,
+              "CloseHandle": 0x3140, "GetLastError": 0x3148}

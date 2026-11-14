@@ -10505,3 +10505,59 @@ Work Log:
 - LES ÉCARTS NOMMÉS : M2 manquant (les appels sans journal d'usage), M4 non instrumentée, l'écriture par le relais OAuth (le compte de service refusé 403 — nommé), les consoles UTF-16 LE (le Tee-Object, écart cosmétique).
 - LA CONSIGNATION : Entrée 294 + la présente Task 201 ; la carte OU-TROUVER portée à 294 (l'entrée 20, l'en-tête, les renvois 251-294 / 158-201) ; le bac depot-runs-kit-02-294/ (97-103 + epreuves/).
 - SUITE : au développeur — ① la ligne C-loupe-02-it1 au livre (onglet 5, l'atelier choisi à « CHOISIR L'ATELIER EXISTANT… ») ; ② le run v2 du bras T (1·KIT choisir le dossier v2 → 2·RUN → 3·TÉMOIN signer de la main → preuves-unite02/ ENTIER au /test), puis la ligne T-loupe-02-it1 ; ENSUITE loupe-05 sha256, aux deux bras — le labo construit à la commande.
+
+
+Task ID: 202
+Agent: Z.ai (agent principal — la session du run v2 du bras T revenu vert signé)
+Task: L'ANNONCE DU DÉVELOPPEUR (« preuves unite 02 dans /test du drive » + la question « je n'ai pas compris ce qu'il faut faire que je n'ai pas deja fait pour c loupe 02 ») : LE RUN v2 DU BRAS T REÇU ET RECOUPÉ — 20 VERT, 0 ROUGE, le témoin daté 14/11/2026 signé Alexis Lopez (D99) — L'UNITÉ 2 VERTE AUX DEUX BRAS ; le geste qui reste est LE MÊME aux deux bras et il n'était pas vécu au « C loupe 02 » non plus : LES DEUX LIGNES AU LIVRE.
+
+Work Log:
+- LA RESTAURATION DU BAC : le conteneur recyclé encore (la répétition des
+  Entrées 285/293, nommée) — le bac local retombé à l'état 276 (les sessions
+  277-294 vécurent en d'autres bacs, leurs consignations AU MIROIR) ; LA
+  VÉRITÉ re-rapatriée du miroir Drive : le bundle courant 77 533 582 o
+  (md5 1b39fb56…) == la pointe be7f948 (l'état 294 final), le dépôt local
+  RESTAURÉ (fetch + reset --hard), l'Entrée 294 la dernière au journal —
+  la chaîne sans trou.
+- LE DÉPÔT (la sonde 104-S1) : preuves-unite02/ à la racine du /test (né au
+  coffre 20:00:17Z le 14/11) — UNE pièce, temoin-unite02.txt 1 589 o
+  (md5 02a5d7fc…, sha256 de170c5b…), re-téléchargée DEUX FOIS byte-byte
+  IDENTIQUE ; LE DOSSIER ENTIER EST LÀ : le réceptacle ne porte QUE le
+  témoin (le scénario n'écrit que lui — la ligne 454 ; la console vit au
+  dossier du kit par le Tee-Object du LANCEUR).
+- LE RECOUP (la sonde 104, 7/7 VERT) : loupe.exe 127 488 o sha256
+  98354ff6… == la gravure du kit v2 == la pièce re-téléchargée re-hachée ==
+  l'empreinte que porte le témoin (D143 : la pièce n'a jamais bougé) ; LES
+  VINGT VECTEURS du v2 == LES VINGT du v1 (le témoin v1 aux archives en
+  regard) — le diff v1→v2 recoupé au labo : la note de révision et la
+  constante R_JOURNAL 0xE4E0→0xE4A0, RIEN d'autre ; les DEUX ROUGE du juge
+  fautif v1 (V2:les-bords-de-fenetre, V2:cinq-entrees-dont-une-non-
+  alignee) RETOURNÉS VERT au terrain — LA RÉPARATION VÉCUE ; la machine
+  PORTABLE · Windows 10 · AMD64 · Python 3.14.10 (CA2 — la même que les
+  SIX runs de la campagne) ; la chronologie tenue : run 19:53:02Z → la
+  main 19:53:45Z → le coffre 20:00:17Z, jamais une date avant le run ;
+  les DIX pièces du kit v2 au /test re-hachées 10/10 == la gravure.
+- LA RÉPONSE À LA QUESTION : RIEN du run, RIEN du témoin ne manque — tout
+  est vécu aux DEUX bras ; le geste qui manque est LA LIGNE AU LIVRE
+  (l'onglet 5 · LIVRAISON de l'atelier 013520, choisi au TROISIÈME bouton
+  « CHOISIR L'ATELIER EXISTANT… ») : livraisons.csv ne porte ENCORE que
+  les DEUX lignes de loupe-01 (f0afea11…, inchangé depuis la 293) —
+  C-loupe-02-it1 puis T-loupe-02-it1, la réponse portée à la carte du
+  /test (la section 295).
+- LE RANGEMENT (105) : preuves-unite02/ DÉPLACÉ — jamais jeté, D143 — à
+  /test/archives-livraisons/unite-02-loupe-20261114/preuves-unite02/ (le
+  nom conservé, md5 02a5d7fc… recoupé AVANT et APRÈS le geste, la racine
+  du /test revenue à ses 14 entrées de la 294).
+- LA CARTE DU /test (106) : LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 295
+  (12 646 → 15 448 o, sha256 c6f22126…) — la 294 INTACTE en tête, la
+  section du run v2 revenu APPOSÉE en queue, re-téléchargée byte-byte
+  identique.
+- LA CONSIGNATION : la présente Task 202 + l'Entrée 295 ; la carte
+  OU-TROUVER portée à 295 (l'entrée 21, l'en-tête de mise à jour, les
+  renvois Entrées 251-295 / Tasks 158-202) ; le bac scripts/campagne_d204/
+  depot-run-v2-T-295/ (les sondes, les epreuves/ : le témoin v2, le témoin
+  v1 en regard, les scénarios v1/v2, le diff, la gravure, le RECOUP-104).
+- SUITE : au développeur — LES DEUX LIGNES AU LIVRE (C-loupe-02-it1 et
+  T-loupe-02-it1, l'onglet 5 de l'atelier 013520), puis l'atelier ENTIER
+  au coffre /test ; ENSUITE loupe-05 sha256, aux deux bras — le labo
+  construit à la commande.
