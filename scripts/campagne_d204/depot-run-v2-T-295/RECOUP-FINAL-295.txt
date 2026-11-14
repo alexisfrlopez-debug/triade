@@ -1,0 +1,14 @@
+LE RECOUP FINAL 295 — 11/11 VERT
+============================================================
+
+VERT 1: preuves-unite02/ rangé à l'archive (temoin-unite02.txt md5 02a5d7fc… == 02a5d7fc…, la racine du /test sans le dépôt) — D143 tenu
+VERT 2: la carte LISEZMOI-KITS au /test : 15448 o, sha256 c6f22126… — la 294 en tête, la section 295 en queue
+VERT 3: kit-unite-loupe-02-T-20261114-v2/ au /test, loupe.exe re-haché 98354ff6… == la gravure (le kit demeure, D143)
+VERT 4: le livre (atelier 013520) : 2 lignes de livraison (loupe-01 T et C seules) — C-loupe-02-it1 et T-loupe-02-it1 attendent le geste de l'onglet 5
+VERT 5: le miroir : le courant bundle à la pointe 444876b == le local 444876b (l'état 295)
+VERT 6: le miroir : OU-TROUVER-LES-LIVRABLES.md == le local (47300 o MATCH byte-byte)
+VERT 6: le miroir : worklog.md == le local (770178 o MATCH byte-byte)
+VERT 6: le miroir : JOURNAL_TRAVAIL.md == le local (1817332 o MATCH byte-byte)
+VERT 7: le bac depot-run-v2-T-295/ au miroir : 7 entrées (les outils + les epreuves/)
+VERT 8: D141 : triade-history-294-be7f948.bundle aux archives (md5 1b39fb56…, 99 bundles)
+VERT 9: GitHub : main @ 444876b39c5d… == le local (le push de la session, recoupé au ls-remote)
