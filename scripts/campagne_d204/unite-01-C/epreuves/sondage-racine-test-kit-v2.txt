@@ -1,0 +1,70 @@
+===== RACINE /test =====
+[DIR ] archives-livraisons  (né 2026-11-03T04:52:04)  [id=1meUs8boUlod9cYYA6wlGn3NUEu8QiE76]
+[DIR ] archives-preuves  (né 2026-11-03T04:21:12)  [id=1TRZtOdvqfovvZt0jdFdpMysrpHNKOzFk]
+[FILE] cle-publique-I.txt  (65 o, né 2026-11-05T14:18:07)  [id=10ByNZZYSQAUEaRZKNGdDYZbHLXTZ1lTQ]
+[DIR ] fichiers-1clic  (né 2026-11-13T15:27:54)  [id=13QLRAn03mMxcfIKcpjwMfORplmYgahmL]
+[FILE] kit-loupe.zip  (38585 o, né 2026-11-10T19:27:01)  [id=1wHyW-GvMRYYlf4YSLTgxU6dE6BI8g3ms]
+[DIR ] kit-unite-loupe-01-C-20261114  (né 2026-11-14T10:13:45)  [id=1fboGAjFFf5ZRIcnPUuNotH5Kg110UpD5]
+[DIR ] kit-unite-loupe-01-C-20261114-v2  (né 2026-11-14T12:43:48)  [id=1bjqb3S5i66408Bontalj9kZ7vZkJAPqX]
+[DIR ] kit-unite-loupe-01-T-20261114  (né 2026-11-14T02:29:22)  [id=19ct_zU8LUs5zaluYyssg4EBH6EGYOUHJ]
+[DIR ] kit-unite-loupe-01-T-20261114-v2  (né 2026-11-14T08:19:21)  [id=1XwlEuD0fiRNJieNThwQ-gEUcSPWbzafi]
+[FILE] LISEZMOI-campagne-GUI.txt  (8811 o, né 2026-11-13T19:08:26)  [id=1l1k-nZ8RAUyovzECw6W2HrAlo8m9G-Ua]
+[FILE] LISEZMOI-CORRECTIF-ENCODAGE.txt  (4709 o, né 2026-11-13T19:58:51)  [id=1hropTb1M8UAWDY2wO781Cuph4UPT0rDj]
+[FILE] LISEZMOI-FICHIERS-1CLIC.txt  (6120 o, né 2026-11-13T15:32:05)  [id=1Lb0j1Q9emGgMTfJWQPninlCdgjJINkJX]
+[FILE] LISEZMOI-GUI-TOUS-RUNS.txt  (9639 o, né 2026-11-14T00:15:16)  [id=1iIQhfmPbD-6fCaJsGKTPtGTkVMWzGHL8]
+[FILE] LISEZMOI-KIT-ANDROID.txt  (4023 o, né 2026-11-12T21:38:35)  [id=1vVUpSd8mbDx2fafBnNjbZpcM4WIu_2cF]
+[FILE] LISEZMOI-KITS-UNITES-D204.txt  (7527 o, né 2026-11-14T01:20:42)  [id=1ioXYPnnVy19M6ufAERx8zYgZAloKuxHy]
+[FILE] LISEZMOI-loupe.txt  (19900 o, né 2026-11-10T19:27:04)  [id=13Hia37_rtX0Dewiv7cpexR8XQO-HCtl-]
+[FILE] LISEZMOI-RUNS-1CLIC.txt  (5595 o, né 2026-11-13T16:14:03)  [id=146cCvy2Mk97D1LvjiK9SgwsaXUtJsBGx]
+[FILE] LISEZMOI-RUNS-RESTANTS.txt  (7674 o, né 2026-11-13T17:39:52)  [id=1F3E4A_sDCTeEFcl2hWpUTxu34HgKsB_Y]
+[DIR ] loupe-kit-13  (né 2026-11-10T19:27:05)  [id=1v7lrH1KeL7Q03swLWX1xZyfae1F0Htac]
+[DIR ] Nouveau run  (né 2026-11-14T08:58:52)  [id=10gEa_uykB_v9m46hJJvxjweME5jPA7Jl]
+[DIR ] preuves-kit2-dudect-20261113T081451Z  (né 2026-11-13T09:04:20)  [id=15a8WRFOZdgupVwRO2DppID4WODrwlfZx]
+[FILE] preuves-kit2-dudect-20261113T081451Z.zip  (69956 o, né 2026-11-13T08:15:42)  [id=1eAKhr2fQNn3Ityh36ZeZBG9tWFdHxHNc]
+[DIR ] preuves-kit2-dudect-20261113T103725Z  (né 2026-11-13T10:38:50)  [id=1orh5JKWCqH9kmzYyH7Z8uUj4-5bamyX_]
+[DIR ] preuves-m7d-voie1-20261113T155020Z  (né 2026-11-13T16:28:39)  [id=1Zl-Y5rJde4C5RtxM9UoKbMhchydlYM9h]
+[DIR ] preuves-unite01C  (né 2026-11-14T12:57:07)  [id=1Vnusi6ixTrJiytv-aMTUScgeM5mCUAlK]
+[FILE] run-console-unite01.txt  (622 o, né 2026-11-14T07:56:17)  [id=16o9uNwQ0kOoaFkistyCnvOMqsdYNZFQ0]
+[FILE] signatures-I.txt  (1991 o, né 2026-11-05T09:00:34)  [id=19pcuormUBBDp_4blI1rhRWydUYxK_ENy]
+[DIR ] temoin-shani-fermeture-20261114  (né 2026-11-13T22:26:00)  [id=1DlvcSEIHmE-aa6XYQKb5nl1p_JVug9UY]
+[DIR ] temoin-shani-reprise-20261114  (né 2026-11-13T21:33:39)  [id=17o2rtizLIzb2vAiCRlTTEwF-ShciFane]
+[DIR ] temoin-shani-signe-ecart-20261114  (né 2026-11-13T20:31:49)  [id=1ylunrVFdekZrCLzNDip1yGLb1ppjJU8v]
+[FILE] temoin-shani.txt  (2038 o, né 2026-11-13T22:08:22)  [id=1MwDVw6ZNGlWXECjoupK0Tq5_R-lWxItl]
+[DIR ] temoin-verdict-android  (né 2026-11-13T10:55:36)  [id=1lS79IWEgih1bRo1CW2ktrtxysBvNKGQI]
+[FILE] TRIADE-1CLIC-CAMPAGNE-D204-v3.bat  (41925 o, né 2026-11-13T19:58:53)  [id=1BlQqLYFxvm4sXhuhNsqBunWmmJ5pfd1C]
+[FILE] TRIADE-kit-android-v1.apk  (15035830 o, né 2026-11-12T21:38:31)  [id=1qlq1ieaLsmmDqDDS3c9eG0tDrlo3WZ3C]
+[FILE] TRIADE_gui_campagne_v1.zip  (52987 o, né 2026-11-13T19:08:23)  [id=14WKeKfQ2exuyosFBCxbhDmVlOyPluRYM]
+[FILE] TRIADE_gui_campagne_v1_CORRECTIF-encodage.zip  (55357 o, né 2026-11-13T19:58:49)  [id=1KLvfKSAUIrpTaD81GBcss0af4zS1Rjwh]
+[FILE] TRIADE_gui_tous_runs_v1.zip  (67514 o, né 2026-11-14T00:15:13)  [id=13MQpikk0Kzka_0BUgtO_VSJqJoJ8MicD]
+[FILE] TRIADE_kit_android_20261112T214507Z.zip  (4692 o, né 2026-11-12T21:45:46)  [id=18rs4I0Dw54l58jIJimaH3-0Koi4nM0ZE]
+[FILE] TRIADE_kit_runs_restants_v1.zip  (241226 o, né 2026-11-13T17:39:48)  [id=1mJBLl2hlw2Pns5HRzpj0Ekb714WnnNEe]
+[FILE] VERDICT.txt  (1249 o, né 2026-11-12T21:45:52)  [id=1R0LI6IWgRUHOTl4IxFwocwXkO3ZD9VgU]
+
+===== KIT v2 (arborescence) =====
+[FILE] EMPREINTES-KIT-UNITE-01-C.txt  (1065 o, né 2026-11-14T12:44:08)  md5 705beb9bb007e86be75f9666557d2eb6
+[FILE] kit-unite-loupe-01-C-20261114-v2.zip  (248341 o, né 2026-11-14T12:44:38)  md5 ef1260ed50bbcfce321ceae5bd76a976
+[FILE] LANCEUR-UNITE-01-C.bat  (1074 o, né 2026-11-14T12:44:10)  md5 41f0ed4f912e412287ad60d1d16afc33
+[FILE] LISEZMOI-KIT-UNITE-01-C.txt  (6798 o, né 2026-11-14T12:44:13)  md5 5c06aca851bdbeb23b17d1e353105bf0
+[FILE] loupe-01-c.c  (10182 o, né 2026-11-14T12:44:41)  md5 507d3765a63ecd2e326be44b5fd9c481
+[FILE] loupe-01-c.def  (99 o, né 2026-11-14T12:44:43)  md5 333e9cdebb1cf68752f0433d6ba6a5b4
+[FILE] loupe-01-c.dll  (93625 o, né 2026-11-14T12:44:45)  md5 bf0cbe517cdec83e7bd7e774421b09c9
+[FILE] scenario-unite01C.py  (20327 o, né 2026-11-14T12:44:47)  md5 b0865e3110892dbf32b09a01c1c62288
+[FILE] temoin-1.bin  (1 o, né 2026-11-14T12:44:50)  md5 9d5ed678fe57bcca610140957afab571
+[FILE] temoin-384.bin  (384 o, né 2026-11-14T12:44:52)  md5 6316df41e88a934bbbe55495bed77750
+[FILE] temoin-3f.bin  (196609 o, né 2026-11-14T12:44:54)  md5 2f4b7bb7f90ccfa1b4735aaa648295c7
+[FILE] vide.bin  (0 o, né 2026-11-14T12:44:56)  md5 d41d8cd98f00b204e9800998ecf8427e
+
+===== EMPREINTES du kit v2 (EMPREINTES-KIT-UNITE-01-C.txt, 1065 o) =====
+EMPREINTES — LE KIT DE L'UNITÉ 1 × BRAS C, v2 (loupe-01, la campagne D204 — LA RÉPARATION DU REFUS DU 14/11)
+(chaque pièce sha256, générée du montage même — le GUI recoupe à l'onglet 1·KIT ; une divergence, rien ne court)
+
+85b34ed4c243e9774d661a0b1964f80ba49333f4be1f6eef4658556eecb5ef3f  loupe-01-c.dll
+860ff1cfcf78d5fc4f72b8691921957f0834d34ce88858188c876fd097ad6ab1  loupe-01-c.c
+c0c9b9f40f4fe5e769f7196206a6fee3e050858ee729b17a1a302683f4b0084d  loupe-01-c.def
+6340cd3c6308c3ae7ed11dad54c10ced75c19a86dbe54516cdd224e3bcc8ba77  scenario-unite01C.py
+29bdae2ff65a6326db4f9fb6cc2a4ce2739019efa6ae685850c27d5ebf5edc66  LANCEUR-UNITE-01-C.bat
+df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c  temoin-1.bin
+3396717b98b4859b20ec0d673dcf168314834fc170fbc6b877f4eb32461d68c6  temoin-384.bin
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  vide.bin
+1ce0cf387c3cbe5b21965e0e6159be72ae54581f5db6fdbe995f355392a67c4d  LISEZMOI-KIT-UNITE-01-C.txt

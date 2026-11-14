@@ -1,0 +1,23 @@
+[PIÈCE] preuves-unite01C/ au coffre (né 2026-11-14T12:57:09) : temoin-unite01C.txt
+[VERT] le-receptacle:le-temoin-present-seul — le scénario n'écrit QUE le témoin (vérifié au source v1 == v2 hors la traverse)
+[PIÈCE] run-console-unite01C.txt au /test (la console du refus v1, demandée à l'Entrée 286) : TOUJOURS ABSENTE — l'écart demeure nommé (le contenu vit déjà au bac download/preuves-refus-C-v1/)
+[VERT] le-temoin:rapatrie-puis-re-telecharge-identique — 1334 o, sha256 4cc0ee2be1252247…, md5 2e14e1ec3ca8c289… == le champ du coffre : 2e14e1ec3ca8c289…
+[VERT] le-temoin:la-taille-annoncee
+[VERT] le-temoin:le-run-date — le run      : 2026-11-14T12:55:25Z (UTC) — la machine du développeur
+[VERT] le-temoin:la-machine — LA MÊME LIGNE EXACTE que le témoin du bras T (la constante du terrain, CA2)
+[VERT] le-temoin:la-piece-93-625-o — la pièce    : loupe-01-c.dll 93625 o, sha256 85b34ed4c243e9774d661a0b1964f80ba49333f4be1f6eef4658556eecb5ef3f
+[VERT] le-temoin:le-verdict-15-vert-0-rouge — le verdict  : 15 VERT, 0 ROUGE — VERT
+[VERT] le-temoin:la-clef-du-contrat-1+8+3+3 — T0, V1×8 (les quatre témoins × session+panneau), V2×3, V3×3
+[VERT] le-temoin:D99-date-de-la-main — Daté le : _______14/11/2026_____________
+[VERT] le-temoin:D99-signe — Signé    : __Alexis Lopez__________________
+[VERT] la-gravure:la-dll-du-kit-v2-==-l-empreinte-du-temoin — sha256 85b34ed4c243e977… (la gravure v2 == la gravure v1 == le témoin — la pièce n'a jamais bougé)
+[VERT] la-gravure:le-scenario-repare-du-kit-v2 — sha256 6340cd3c6308c3ae… == la ligne de la gravure
+[VERT] la-gravure:la-gravure-elle-meme — sha256 250d6534b2cac9ad…, la ligne DLL == l'empreinte du témoin
+[VERT] la-gravure:le-bac-du-miroir-==-le-coffre
+[VERT] le-contrat:les-quinze-noms-==-ceux-du-temoin-T — octet pour octet — le même contrat de couche I aux deux bras (CA2)
+[VERT] le-contrat:les-quinze-noms-==-les-appels-du-scenario-v2 — la liste attendue dérivée du source du kit v2 livré
+[VERT] l-impossibilite-v1:la-chaine-du-terminateur-nest-jamais-vide — les quatre premiers octets de la pièce : « 4d 5a 90 00 » — lire_chaine(base, 0) rend TROIS caractères (« MZ\x90 », le 0x90 en replacement) avant le premier NUL : JAMAIS vide, la boucle v1 ne s'arrête JAMAIS au terminateur (l'autopsie 286 : 25 itérations de dérive, l'access violation 0x7ffa23900094 reproduite au labo OCTET PAR OCTET) — le v1 NE PEUT PAS écrire un témoin
+[VERT] l-arret-v2:le-champ-avant-la-chaine — le terminateur lu au CHAMP Name (l'RVA NUL), les gardes fail-closed — la réparation de l'Entrée 286, dans le fichier livré au coffre
+[VERT] la-chronologie:kit-v2-avant-run-avant-depot — le kit v2 né 2026-11-14T12:44:08 → le run 2026-11-14T12:55:25Z → le témoin touché 2026-11-14T12:56:09 (la main qui date et signe) → déposé 2026-11-14T12:57:09 — DOUZE minutes du kit au run, aucun trou
+
+LE RECOUP DE L'ENTRÉE 287 : 19 VERT, 0 ROUGE — LE TÉMOIN DU BRAS C EST RECOUPÉ VERT
