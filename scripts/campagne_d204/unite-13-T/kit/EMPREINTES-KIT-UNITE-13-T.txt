@@ -1,0 +1,11 @@
+﻿EMPREINTES — LE KIT DE L'UNITÉ 5 (loupe-13 RECHERCHE × bras T, la campagne D204)
+(chaque pièce sha256 — le GUI recoupe à l'onglet 1·KIT ; une divergence, rien ne court)
+
+690f6ed665f002a53c2a4223c0cdba375a8d00d7dae7016b5df623616d3c1dd4  LANCEUR-UNITE-13-T.bat
+ddd524ecaaeb6a492458eaa5d1c20e34b1d5b749738929464c4eb758d0f3e12f  LISEZMOI-KIT-UNITE-13-T.txt
+85cd66c5694770c3f313728ccd63a5457466eb02e07b99bcfb2f164592248c79  brouillon-loupe-13-recherche.asm
+78f5d5cddf90320a657ba04b8de635194e67f796d43980c7c6cef8b02f45a020  loupe.exe
+cd689a7d45ef1daa01dc844f98328084f39c146a55fbef8ab628d3669e22dc3c  notation-loupe-13-recherche.asm
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe
+e45ae5e14baff87c05ec63da3d884a449dfa01e04507f6b08ac67691ab220cb0  scenario-unite13.py
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin

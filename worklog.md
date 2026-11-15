@@ -11010,3 +11010,131 @@ Work Log:
   12:51:58Z puis à la corbeille par la main ; l'atelier jamais
   re-déposé — le livre au terrain : SIX lignes attendues, le recoup
   au prochain dépôt.
+
+## Task 210 — Entrée 303 : les runs v2 de l'unité 4 reçus VERTS aux DEUX bras (10 VERT 0 ROUGE × 2 — les témoins datés 15/11/2026 signés Alexis Lopez [D99], les kits qui ont couru == les livraisons v2 du coffre 9/9 byte-byte, la machine CA2, la chronologie tenue 13:37→13:45, les fixtures falsifie-16.bin IDENTIQUES entre les bras), l'unité 4 CLOSE au premier vert de ses kits v2, le livre au mot VERT de la 301 (les SIX d'origine intactes, it2 VERT le geste vécu, it3 parti — l'unité 3 × C close), LES DEUX ÉCARTS NOMMÉS (le run v1 du T — 12:52Z code 1, la pièce à l'appui au terrain — ABSENT du livre : la chirurgie prescrite, it1 ROUGE + it2 VERT ; defauts.csv intact — les DEUX défauts du kit 08 à consigner à l'onglet 6), le rangement (les DEUX dépôts aux archives unite-08 renommés, le stray « Nouveau run » du 14/11 échappé du nettoyage nommé et rangé, la racine revenue à SES 19), LE GO VÉCU — LOUPE-13 RECHERCHE CONSTRUITE, ÉPROUVÉE, LIVRÉE aux DEUX BRAS (la notation à la main 116 o 46 instructions 5 étiquettes — les cinq choix de la main ; l'oracle 10-0 [l'école + les marques du scellé MZ @0, PE @+0x40, les absentes → LA FIN NOMMÉE ; le différentiel 10 000 à la graine 20261115 ; les trois rejets -5 ; la falsification : le mutant re-résolu par l'auteur, 44/44 attrapés] ; la cristallisation DIX rebuilds identiques loupe.exe 78f5d5cd… ; le bras C : la dll gcc -O2 08610a18… à l'export unique, LE POSIX 11-0 [le trampoline SysV→msx64 À CINQ ARGUMENTS, le départ au slot [rsp+0x28] ; LE SHIM MEMCMP — RDI/RSI non-volatils msx64 sauvés et rendus, la leçon de convention ; la falsification double : la fenêtre mutée + le pas de la pièce muté 100/100] ; LES ÉPREUVES : le juge par AST == le contre-modèle, les constantes au plan, le générateur déterministe, L'ÉPREUVE DU KIT PLOMBERIE COMPRISE [les blocs V1/V3/V4 livrés exécutés VERBATIM contre la pièce réelle, le bloc découverte == le juge indépendant — la brèche de la 302 tenue] ; les DEUX kits au /test, 18 pièces recoupées par re-téléchargement byte-byte)
+
+- LA COMMANDE : « run depose dans /test du drive. verifie puis go pour
+  la suite » — les DEUX dépôts de run de l'unité 4 (les kits v2
+  téléchargés 13:37:17Z/20Z, les consoles, les preuves ENTIÈRES), la
+  réponse du labo : tout VERT, l'unité close, les écarts du livre
+  nommés, l'unité 5 construite et livrée.
+- LE RECOUPEMENT (verif_runs_unite08_v2_20261115.py, la console
+  intégrale) : les kits courus == les livraisons v2 (9/9 byte-byte à
+  chaque bras, EMPREINTES vérifiées : loupe.exe eec890a4… /
+  loupe-08-c.dll 9a51be68…, les scénarios == les gravures 44384f5d… /
+  e8041034…), les témoins datés et signés [D99], CA2, la chronologie
+  tenue (téléchargements 13:37:17Z/20Z → run T 13:39:16Z → témoin T
+  13:39:59Z → run C 13:41:11Z → témoin C 13:42:11Z → carnet
+  13:42:41Z → livre 13:44:11Z → dépôts 13:45:00Z-13Z), les fixtures
+  falsifie-16.bin 16 o IDENTIQUES entre les bras (l'octet 3 :
+  4d5a006f… — le même mutant).
+- LES VERDICTS : 10 VERT 0 ROUGE × 2 — les défauts v1 MORTS : la boucle
+  V3 passée (cast() a vécu), la découverte passée (les arités
+  unifiées ont vécu, l'export @+0x1380 découvert). L'UNITÉ 4 CLOSE.
+- LE LIVRE : les SIX d'origine intactes byte-byte ; it2 le mot VERT
+  (LE GESTE DE LA 301 VÉCU au livre — la ligne VRAIE : le run a couru,
+  les dates exactes, le mot == la console et le témoin signé ;
+  L'ARBITRATION DE LA 302 SANS OBJET : jamais on n'efface un geste
+  vécu [CA5/CA6], l'unité 3 × C close à it2 [2/3, le premier vert]) ;
+  it3 parti ; les DEUX lignes loupe-08 VERT consignées ; le carnet +
+  les DEUX lignes M3 ; defauts.csv + journal INTACTS.
+- LES ÉCARTS : ① le run v1 du T absent du livre — la 302 prescrivait
+  it1 ROUGE puis it2 VERT ; le terrain consigna it1 VERT seul — la
+  livraison fautive échappe à M1 (D202 : un défaut par LIVRAISON, le
+  run a couru) ; LA CHIRURGIE : it1 ROUGE + it2 VERT. ② les DEUX
+  défauts du kit 08 non consignés à l'onglet 6 (le T :
+  plantage-harnais-v3, exclusion NON, la pièce run-console-unite08.txt
+  au terrain ; le C SANS livraison : plantage-harnais-decouverte,
+  exclusion OUI — RET-NU, la pièce epreuve-kits08-v2-console.txt aux
+  archives).
+- LE RANGEMENT (D143) : les DEUX dépôts → unite-08-loupe-20261115/
+  renommés « …-RUN-V2-VERT-20261115 » × 2 ; le stray « Nouveau run »
+  (14/11 09:03, l'instantané test/ + preuves-unite01/ — ÉCHAPPÉ du
+  nettoyage, NOMMÉ) → les archives-livraisons, renommé
+  « Nouveau-run-20261114-echappe-du-nettoyage » ; la racine revenue à
+  SES 19 entrées.
+- LOUPE-13 LE BRAS T (build_unite13.py — le même mécanisme que les
+  unités 1-4) : la notation à la main 116 o, 46 instructions, 5
+  étiquettes (mes choix : le départ lu au-devant + les bornes avant le
+  cadre [deux sorties, la droite et la refusée] ; LA BORNE EN ADRESSE
+  [pointeur à pointeur, l'arithmétique jamais revécue] ; LE CURSEUR
+  EST LE POINTEUR [inc, la position par une soustraction] ; le cadre
+  honnête [cinq pushes + l'ombre 0x20, l'alignement 8−40−32 ≡ 0
+  mod 16] ; les moins vrais par la pile [push −1/pop rax —
+  l'imm8 dépassé du signe, jamais mov eax]) ; le build aux verrous
+  121 (l'audit msx64 : chaque argument 5+ à son slot — la classe de
+  la 207 gardée), le différentiel au scellé CONFINÉ au slot loupe-13
+  [0x4940, 0x4a00) + la porte R10 (5 plages, 125 o) ; la
+  cristallisation DIX rebuilds identiques (loupe.exe 127 488 o,
+  78f5d5cddf90320a657ba04b8de635194e67f796d43980c7c6cef8b02f45a020) ;
+  l'oracle 10-0 (oracle_unite13.py : l'appelant factice ÉTENDU au 5e
+  argument à la pile — la pile_args de la 207 ; LIBC-02 POSÉ @0x1180
+  par le geste du chantier (c) [le harnais noyau ne porte que
+  libc-01/07 — nommé] + LA DOUBLE PREUVE étendue : le scellé posé ==
+  le slot de LA PIÈCE ; l'école 10/10 ; les marques du scellé [MZ
+  @0, PE @+0x40, « This program » et « PEMax » les ABSENTES → -1 LA
+  FIN NOMMÉE — les en-têtes écrits à la main] ; le différentiel
+  10 000/10 000 [alphabets plein ET pauvre, 1 584 occurrences
+  VRAIES], la fenêtre et le motif LUS SEULS [I3], l'état propre
+  [I4] ; les TROIS rejets -5 ; LA FALSIFICATION : le brouillon muté
+  puis RE-RÉSOLU PAR L'AUTEUR — le mutant une VRAIE notation [la
+  première passe sur la notation résolue PLANTA aux sauts périmés :
+  l'imm +1 décale tout, les cibles absolues mentent — NOMMÉ EN
+  ROUTE, la re-résolution est la voie] : 44/44 cas à occurrence
+  divergents, la notation juste rejouée verte).
+- LOUPE-13 LE BRAS C : le source loupe-13-c.c (les bornes d'abord, le
+  constat trivial avant la boucle, la dernière candidate posée une
+  fois, chaque candidat au memcmp de la bibliothèque [I2, la liste
+  d'appels FERMÉE]) ; gcc -O2 -shared : loupe-13-c.dll 87 542 o,
+  08610a18b36753fa69b724810a359e6ad1ad647c46a896ee03e6ba8eec6b3404 —
+  l'export UNIQUE loupe_13_recherche @+0x1380, le seul appel de sa
+  clôture : le thunk memcmp ; LE POSIX 11-0 (epreuveposix_unite13C.py
+  : la dll mappée par sections, les EN-TÊTES MAPPEÉS comme le vrai
+  chargeur [nommé : le bloc découverte livré lit la table dans
+  l'image mappée même] ; LE TRAMPOLINE SysV→msx64 À CINQ ARGUMENTS —
+  les quatre registres réarrangés + le départ AU SLOT [rsp+0x28], 42
+  o, l'alignement compté ; LE SHIM MEMCMP : le slot IAT repointé au
+  memcmp de la libc du labo — LA LEÇON DE CONVENTION : RDI ET RSI
+  SONT NON-VOLATILS EN msx64 [gcc garde ses invariants à travers
+  l'appel : le shim naïf qui les empruntait PLANTAIT au second
+  candidat — nommé sur pièces, le shim les SAUVE ET LES REND,
+  l'alignement du call SysV compté : deux pushes + 8] ; l'école
+  10/10 + les marques ; le différentiel 10 000/10 000 aux MÊMES
+  tirages que le juge T [l'appariement du plan] ; les TROIS rejets ;
+  LA FALSIFICATION DOUBLE : la fenêtre mutée [l'original rend 2, le
+  mutant rend 6 : la pièce a lu SES octets] ET LE PAS DE LA PIÈCE
+  MUTÉ [add rbx, 1 → 2, l'octet @+0x13c3 : les 100 cas de l'école
+  impairs TOUS divergents, le pas restauré rend le vert] ; les
+  contrôles binaires : PE32+ DLL x86-64, l'export unique, la liste
+  d'appels fermée).
+- LES ÉPREUVES : le juge du scénario livré PAR AST == le contre-modèle
+  (2 000 cas + les frontières) ; les constantes au plan (R_LOUPE13 ==
+  LOUPE13_VA == 0x5740, le slot 0xC0, la graine, FENETRE_PROXY 8 192 ;
+  le C : AUCUNE RVA codée — la découverte par la table) ; le
+  générateur déterministe (deux passages identiques) ; L'ÉPREUVE DU
+  KIT PLOMBERIE COMPRISE (epreuve_kits13_20261115.py, la console 3 250
+  o, b461d474…) : les blocs V1/V3/V4 du scénario T LIVRÉ extraits
+  VERBATIM et EXÉCUTÉS contre la pièce réelle (les buffers + chercher
+  livrés — le 5e argument au slot msx64 ; l'école, les marques, les
+  rejets, la falsification et le fixture AU RÉCEPTACLE DU LABO) ; le
+  bloc DÉCOUVERTE du C LIVRÉ exécuté VERBATIM contre la dll réelle ==
+  LE JUGE INDÉPENDANT (@+0x1380 lu du fichier brut) ; les épreuves
+  286/294 repassées sur les DEUX sources — TOUT VERT.
+- LES KITS : assemble_kits_unite13.py — les DEUX kits 9 pièces (la
+  pièce, la notation + le brouillon [T] / le source + le .def [C], le
+  scénario, le lanceur [la signature commune : le double BOM vérifié
+  en tête], le scellé proxy.exe LE DORÉ, temoin-3f.bin LA GÉNÉRATION
+  FIXE == la gravure des kits 01/02/05/08 [c5fc1f28… recoupée], les
+  EMPREINTES [BOM + CRLF, le format du kit 08], les LISEZMOI [les
+  textes de l'unité 5 : l'objet, la construction consignée, le geste,
+  les vecteurs, le lanceur nommé]), py_compile OK, les zips à
+  l'extraction vierge recoupée ; LA LIVRAISON (drive_ops304.py) :
+  les 18 pièces au /test, chaque pièce RECROUPÉE PAR RE-TÉLÉCHARGEMENT
+  byte-byte (la règle du coffre), la racine à SES 21 entrées (19 +
+  les DEUX kits 13).
+- LA SUITE : au terrain — ① la chirurgie au livre (T-loupe-08-it1 →
+  it1 ROUGE + it2 VERT, au bloc-notes) ; ② les DEUX défauts à
+  l'onglet 6 ; ③ l'atelier ENTIER au coffre ; ④ le run de l'unité 5
+  aux deux bras (1·KIT → 2·RUN → 3·TÉMOIN dater et signer →
+  preuves-unite13[/C]/ ENTIER au coffre) ; ENSUITE loupe-16 saisie —
+  le labo construit à la commande.

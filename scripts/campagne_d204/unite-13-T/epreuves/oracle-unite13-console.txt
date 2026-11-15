@@ -1,0 +1,22 @@
+=== L'ORACLE DU BLOC — l'unité 5 (loupe-13 × bras T) : les vecteurs du contrat, le juge = le modèle indépendant ===
+[R7] libc-02 posé @0x1180 : 128 o du scellé M1, == la pièce — la double preuve
+
+-- V1 : le doré (l'école, les marques de la pièce de l'ère) --
+[VERT] V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — la PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide → -1, la plage vide → -1, le motif trop long → -1 IMMÉDIAT)
+[VERT] V1:les-marques-de-proxy — MZ @0, PE @+64, « This program » @+-1 — chaque position == bytes.find sur la première fenêtre du scellé ; « This program » et « PEMax » les marques ABSENTES du scellé (les en-têtes écrits à la main) → -1 LA FIN NOMMÉE, l'absence constatée
+
+-- V2 : le différentiel (10 000 cas, la graine fixe) --
+[VERT] V2:le-differentiel-10-000-cas — 10000/10 000 == le modèle (y compris les -1 — Q1-Q4 ; 1584 occurrences VRAIES), alphabets plein ET pauvre, la graine 20261115
+[VERT] V2:la-fenetre-et-le-motif-lus-seuls — les octets de la fenêtre et du motif INTACTS aux 10 000 gestes (I3 — la pureté)
+[VERT] V2:l-etat-propre — les non-volatils rendus, la pile équilibrée, les canaris intacts aux 10 000 gestes (I4)
+
+-- V3 : les rejets (E1/E2/E3) --
+[VERT] V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+
+-- V4 : la falsification (la position avancée d'un) --
+[VERT] V4:la-position-avancee-d-un-attrapee — les 44/44 cas à occurrence DIVERGENT du modèle — le mutant rend le second match au lieu du premier, la différentielle ATTRAPE LE FAUX (la falsification DEMANDÉE par le contrat)
+[VERT] V4:la-notation-juste-rejouee — la pièce de campagne redevenue la même — le vert rendu au retrait de la mutation (MZ @0, la première occurrence)
+
+=== L'ORACLE 10 VERT, 0 ROUGE ===

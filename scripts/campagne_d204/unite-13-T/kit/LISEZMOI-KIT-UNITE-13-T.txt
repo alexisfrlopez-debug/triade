@@ -1,0 +1,115 @@
+LISEZMOI — LE KIT DE L'UNITÉ 5 : LOUPE-13 RECHERCHE × BRAS T
+(la campagne de comparaison des workflows D204 ; le kit livré par le labo
+au coffre /test en son dossier daté — le GUI vous attend à l'onglet 1·KIT
+de l'unité loupe-13 × T)
+========================================================================
+
+L'OBJET : la CINQUIÈME unité de la partie contrôlée — le bloc loupe-13
+RECHERCHE au BRAS T (la notation scellée). La pièce de ce kit est le
+build du plan où le slot loupe-13 (RVA 0x5740, 192 o) porte LA NOTATION
+DE CAMPAGNE : écrite à la main par l'agent depuis le contrat loupe-13:R1
+(la première occurrence d'un motif de 1 à 32 o dans une fenêtre, à
+partir d'un départ donné — la position ABSOLUE de la PREMIÈRE, jamais la
+seconde ; l'absence → -1 LA FIN NOMMÉE de la table ; le motif plus long
+que la plage restante → -1 IMMÉDIAT, le constat trivial, jamais une
+boucle ; le départ = la taille [la plage vide] → -1, le miroir ; les
+trois refus → -5 ENTRÉE : le motif vide [chercher rien n'est pas
+chercher], le motif > 32 [la borne du quotidien MOTIF_MAX], le départ
+au-delà de la fenêtre [le départ est une position, pas un vœu] ; LA
+COMPARAISON PAR LA CARTE : chaque candidat testé par libc-02 memcmp LE
+BLOC SCELLÉ M1 à 0x1180, jamais une boucle réécrite — la liste
+d'appels FERMÉE ; la fenêtre et le motif LUS SEULS ; AUCUNE entrée IAT —
+la feuille pure). LES DIX-SEPT autres blocs demeurent les SCELLÉS du
+projet.
+
+LA CONSTRUCTION (consignée, les défauts nommés AVANT toute livraison) :
+l'oracle écrit-avant-code (le modèle indépendant AVANT les octets ; le
+juge ne relit jamais l'accusé) ; la notation à la main 116 o, 46
+instructions, 5 étiquettes (mes choix : LE DÉPART LU AU-DEVANT, LES
+BORNES AVANT LE CADRE — P5 lu à [rsp+0x28] avant tout push, les trois
+refus SANS AUCUN GESTE, deux sorties, la droite et la refusée ; LA
+BORNE EN ADRESSE — le dernier candidat posé une fois en adresse
+[fenêtre + taille − motif], la boucle compare POINTEUR À POINTEUR,
+l'arithmétique ne revit jamais à l'intérieur ; LE CURSEUR EST LE
+POINTEUR — le candidat avance par inc, la position rendue par une seule
+soustraction à la sortie ; LE CADRE HONNÊTE — cinq pushes + l'ombre
+0x20, le scellé a droit à son ombre d'appel, l'alignement tenu ; LES
+MOINS VRAIS PAR LA PILE — push −1/pop rax, l'imm8 dépassé du signe à 64
+bits, « mov eax, −1 » mentirait le haut) ; le build aux verrous 121
+(round-trip R5, les mesures D161 des dix-sept scellées, le réseau des
+specs, l'audit msx64 — chaque argument 5+ écrit à son slot), le
+différentiel au scellé CONFINÉ au slot loupe-13 et à la porte R10 (5
+plages, 125 o) ; la cristallisation : DIX rebuilds consécutifs
+IDENTIQUES (loupe.exe 127 488 o, sha256 78f5d5cddf90320a…) ; l'oracle
+du bloc : 10 VERT, 0 ROUGE (le doré : LE CORPUS DE L'ÉCOLE — le motif
+au premier octet, au dernier, à cheval sur le départ, l'occurrence
+DOUBLE LA PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le
+départ au milieu, la fenêtre vide, la plage vide, le motif trop long —
++ LES MARQUES DE PROXY.EXE SCELLÉ : MZ @0, PE @+0x40, « This program »
+et « PEMax » les marques ABSENTES [les en-têtes écrits à la main] →
+-1 LA FIN NOMMÉE ; le différentiel 10 000 cas == le modèle [alphabets
+plein ET pauvre, 1 584 occurrences VRAIES], la fenêtre et le motif LUS
+SEULS, l'état propre aux 10 000 gestes ; les TROIS rejets -5 ; LA
+FALSIFICATION DEMANDÉE : la position avancée d'un [lea rax, rbx+1
+contre mov rax, rbx — le mutant re-résolu par l'auteur, une vraie
+notation, jamais un texte balafré] — les 44 cas à occurrence TOUS
+divergents, la notation juste rejouée verte au retrait de la mutation)
+; l'épreuve du scénario livré : son modèle extrait par AST, confronté
+au contre-modèle (2 000 cas + les frontières), LES CONSTANTES AUDITÉES
+(R_LOUPE13 == LOUPE13_VA du plan, le slot i110013 0xC0), le
+générateur déterministe (deux passages identiques, les MÊMES tirages au
+labo et au terrain) ; L'ÉPREUVE DU KIT, PLOMBERIE COMPRISE (la leçon de
+la 302) : les blocs V1/V3/V4 du scénario livré extraits VERBATIM et
+exécutés au labo contre la pièce réelle du bras C — l'école, les
+marques, les rejets, la falsification et le fixture AU RÉCEPTACLE ;
+le bloc découverte du C exécuté contre la dll réelle == le juge
+indépendant.
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité) :
+  1. AU GUI (TRIADE_gui_tous_runs_v1 ou TRIADE_gui_campagne_v1), onglet
+     1·KIT de l'unité loupe-13 × T : CHOISIR CE DOSSIER
+     (kit-unite-loupe-13-T-20261115) — le GUI recoupe les EMPREINTES
+     gravées (une divergence, rien ne court) ;
+  2. onglet 2·RUN : LANCER LANCEUR-UNITE-13-T.bat (le lanceur officiel —
+     il court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (LoadLibraryEx DONT_RESOLVE —
+     LA FEUILLE PURE N'APPELLE PERSONNE : aucune feuille kernel32 à
+     résoudre), appelle loupe-13 à son adresse au plan (le 5e argument
+     posé par ctypes AU SLOT msx64 [rsp+0x28]), juge par le modèle
+     indépendant (bytes.find de Python), et écrit le témoin ; le
+     dossier preuves-unite13/ naît sur votre machine ;
+  3. onglet 3·TÉMOIN : ouvrir preuves-unite13\temoin-unite13.txt au
+     bloc-notes, le DATER, le SIGNER DE VOTRE MAIN — jamais automatisé
+     (D99) ;
+  4. renvoyer preuves-unite13/ ENTIER (le témoin signé +
+     falsifie-16.bin le fixture de la falsification) AU COFFRE /test ;
+  5. les onglets compagnons aux gestes vécus : 4·CARNET M3, 5·LIVRAISON
+     (la ligne T-loupe-13-it1 : kit 2026-11-15, run 2026-11-15, le
+     verdict de la console), 6·DÉFAUTS s'il y en a, 7·CHRONO M4.
+
+LES VECTEURS DU RUN (le contrat loupe-13 révision 1) :
+  V1 le doré : LE CORPUS DE L'ÉCOLE + LES MARQUES DE PROXY.EXE SCELLÉ
+     sur sa première fenêtre de 8 192 o (MZ @0, PE @+0x40, « This
+     program » et « PEMax » les marques ABSENTES → -1 LA FIN NOMMÉE) ;
+  V2 le différentiel : 10 000 cas aléatoires (fenêtres 0..4 096 o,
+     motifs 1..32, départs aléatoires, alphabet plein ET pauvre — la
+     graine fixe 20261115, les mêmes tirages au labo) : rax ==
+     bytes.find À L'IDENTIQUE, y compris les -1 (Q1-Q4) ; la fenêtre
+     et le motif LUS SEULS (I3) ;
+  V3 les rejets : le motif vide, le motif de 33 o, le départ au-delà
+     → les TROIS verdicts -5 (E1/E2/E3) ;
+  V4 la falsification demandée : LE DORÉ COPIÉ AU RÉCEPTACLE avec
+     l'octet 1 muté (0x5A → 0x6F — le « MZ » détruit) : la même gamme
+     rend -1 LA FIN NOMMÉE QUI DIVERGE du modèle de l'original (0) ET
+     == le modèle du mutant : la pièce a lu SES octets, la
+     différentielle attrape le faux (le fixture falsifie-16.bin vit
+     au réceptacle preuves-unite13/, renvoyé ENTIER avec le témoin).
+
+LE LANCEUR NOMMÉ : le double BOM (ef bb bf ×2) en tête — LA SIGNATURE
+COMMUNE de tous les lanceurs de la campagne (01 v2, 02, 05, 08 T/C,
+13 T/C) : la première ligne erre, l'echo demeure allumé, MAIS le run,
+la capture Tee et l'encodage du tuyau sont INTACTS (nommé à la 302,
+aucun fix mi-campagne).
+
+AUCUN SECRET ICI : le kit ne porte que des preuves publiques — la
+pièce, le scellé, les empreintes, les textes. (verrouillé à D204)

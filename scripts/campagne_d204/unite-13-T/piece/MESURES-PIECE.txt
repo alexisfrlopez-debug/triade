@@ -1,0 +1,5 @@
+MESURES DE LA PIÈCE DE CAMPAGNE — l'unité 5 (loupe-13 × T)
+loupe-13 (notation de campagne) : 116 o de code, slot 0xc0 (192 o), padding 76 o (NOP)
+les 17 scellées : == les mesures d'arrêt D161
+loupe.exe : 127488 o, sha256 78f5d5cddf90320a657ba04b8de635194e67f796d43980c7c6cef8b02f45a020
+différentiel au scellé : 5 plages, 125 o, au slot loupe-13 et à la porte R10 seuls

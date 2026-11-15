@@ -1,0 +1,22 @@
+[VERT] py_compile des DEUX scénarios 13 livrés
+[mappage] loupe-13-c.dll : 19 sections, l'image 0x1f000 o @ 0x1d0e50000 (la base préférée — le geste de LoadLibraryEx rejoué)
+[shim] memcmp servi @ 0x3aa1010 — le slot IAT @+0x91a0 repointé (la feuille unique)
+[trampoline] SysV→msx64 à cinq arguments @ 0x3aa2020 (42 o) — la pièce appelée au CPU réel
+[juge indépendant] l'export unique loupe_13_recherche @+0x1380 (lu du fichier brut)
+[VERT] T:la-plomberie-livree-execute — les buffers + chercher LIVRÉS exécutés au labo — le 5e argument posé au slot msx64 par ctypes, la pièce réelle répond 0 (MZ de l'école)
+[VERT] V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — LA PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide → -1, la plage vide → -1, le motif trop long → -1 IMMÉDIAT)
+[VERT] V1:les-marques-de-proxy — MZ @0, PE @+0x40, « This program » et « PEMax » les marques ABSENTES du scellé (les en-têtes écrits à la main) → -1 LA FIN NOMMÉE, l'absence constatée
+[VERT] T:le-bloc-v1-livre-execute — l'école 10/10 + les marques du scellé (MZ @0, PE @+0x40, les absentes → LA FIN NOMMÉE) — le texte LIVRÉ exécuté, VERBATIM
+[VERT] V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] T:le-bloc-v3-livre-execute — les TROIS rejets -5 (le motif vide, le motif de 33, le départ au-delà) — le texte LIVRÉ exécuté, VERBATIM
+[VERT] V4:l-octet-du-mz-mute-la-fin-nommee — l'octet 1 muté (0x5A → 0x6F) : le « MZ » détruit, la réponse -1 LA FIN NOMMÉE DIVERGE du modèle de l'original (0) ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)
+[VERT] T:le-bloc-v4-livre-execute — la falsification LIVRÉE exécutée — le fixture falsifie-16.bin écrit au réceptacle du labo (16 o), l'octet du « MZ » détruit : la réponse -1 LA FIN NOMMÉE == le modèle du mutant
+[T0] l'export UNIQUE découvert : loupe_13_recherche @+0x1380 — la feuille pure, le seul appel de sa clôture : le memcmp de la bibliothèque
+[T0] la feuille pure : AUCUNE feuille kernel32 à résoudre — le scénario ne touche pas à la table d'imports, la pièce n'appelle personne d'autre
+[VERT] C:le-bloc-decouverte-livre-execute — l'export unique loupe_13_recherche découvert @+0x1380 == le juge indépendant (la convention (base, rva) unifiée — la leçon de la 302 tenue) — le texte LIVRÉ exécuté, VERBATIM
+[VERT] 286-294:epreuve_scenario_unite13.py — === L'ÉPREUVE DU SCÉNARIO 13 T : TOUT VERT ===
+[VERT] 286-294:epreuve_scenario_unite13C.py — === L'ÉPREUVE DU SCÉNARIO 13 C : TOUT VERT ===
+
+=== L'ÉPREUVE DES KITS 13 : 3 VERT, 0 ROUGE ===

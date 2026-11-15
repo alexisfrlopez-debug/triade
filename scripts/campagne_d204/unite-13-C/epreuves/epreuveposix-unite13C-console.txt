@@ -1,0 +1,18 @@
+=== LE CONTRAT REJOUÉ AU POSIX — l'unité 5 (loupe-13 × bras C) : la dll mappée, l'export appelé NATURELLEMENT ===
+[carte] loupe-13-c.dll : l'export UNIQUE loupe_13_recherche @+0x1380, l'image 0x1f000 o à la base 0x1d0e50000
+[mappage] l'image @ 0x1d0e50000 (la base préférée — AUCUN relocation), les 19 sections posées
+[shim] memcmp servi @ 0x3eb92c0 (34 o, msx64→SysV → la libc du labo), le slot IAT @+0x91a0 repointé — la feuille unique de la liste fermée
+[adaptateur] le trampoline SysV→msx64 à cinq arguments posé @ 0x3eba2d0 (42 o) — la pièce appelée au CPU réel, le départ au slot [rsp+0x28]
+[VERT] V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — LA PREMIÈRE, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide, la plage vide, le motif trop long)
+[VERT] V1:les-marques-de-proxy — MZ @0, PE @+64, « This program » et « PEMax » les marques ABSENTES du scellé → -1 LA FIN NOMMÉE
+[VERT] V2:le-differentiel-10-000-cas — 10000/10 000 == le modèle (la graine 20261115, les MÊMES tirages que le juge T, y compris les -1)
+[VERT] V2:la-fenetre-et-le-motif-lus-seuls — les octets de la fenêtre et du motif INTACTS (I3 — la pureté)
+[VERT] V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V4:la-fenetre-mutee-attrapee — l'original rend 2 (la première), le mutant rend 6 (la seconde — la première détruite d'un octet) : la pièce a lu SES octets, la différentielle attrape le faux
+[VERT] V4:le-pas-de-la-piece-mute — les 100/100 cas de l'école impairs DIVERGENT (le motif au candidat impair, le pas de 2 ne le visite jamais) — le juge attrape la pièce fausse ; le pas restauré rend le vert (xAB → 1)
+[VERT] B:la-liste-d-appels-fermee — 1 appel dans la clôture : le thunk memcmp de la bibliothèque (I2 — jamais une boucle de comparaison réécrite), les imports KERNEL32/msvcrt servent le démarreur CRT du lieur seul
+[VERT] B:pe32plus-dll-x86-64 — PE32+ DLL x86-64, l'export UNIQUE loupe_13_recherche
+
+=== LE POSIX 11 VERT, 0 ROUGE ===

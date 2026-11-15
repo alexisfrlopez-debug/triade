@@ -12985,3 +12985,183 @@ nommés — la reprise portée à 302.
   presse ; ENSUITE loupe-13 recherche, aux deux bras — le labo
   construit à la commande. (15/11, la session du run tombé, du
   défaut nommé au kit et des DEUX kits v2 livrés)
+
+## Entrée 303 — LES RUNS DE L'UNITÉ 4 REÇUS VERTS AUX DEUX BRAS, L'UNITÉ 4 CLOSE (loupe-08 v2 : 10 VERT 0 ROUGE × 2, les témoins datés et signés, les kits recoupés byte-byte == les livraisons v2), LE LIVRE AU MOT VERT DE LA 301 (it2 VERT, it3 parti — les SIX d'origine intactes, les DEUX lignes loupe-08 consignées), LES ÉCARTS NOMMÉS (le run v1 du bras T — 12:52Z, code 1, la pièce à l'appui au terrain — ABSENT du livre : la 302 prescrivait it1 ROUGE puis it2 VERT, le terrain consigna it1 VERT seul, la livraison fautive du T échappe à M1 ; defauts.csv INTACT — les DEUX défauts du kit 08 prescrits à l'onglet 6 non consignés), LE RANGEMENT (les DEUX dépôts de run aux archives unite-08 renommés au récit, LE STRAY « Nouveau run » du 14/11 échappé du nettoyage nommé et rangé, la racine revenue à SES 19 entrées), LE GO VÉCU — LOUPE-13 RECHERCHE CONSTRUITE AUX DEUX BRAS ET LIVRÉE (la notation à la main 116 o, 46 instructions, 5 étiquettes — mes choix : le départ lu au-devant, les bornes avant le cadre ; LA BORNE EN ADRESSE ; LE CURSEUR EST LE POINTEUR ; le cadre honnête ; les moins vrais par la pile ; l'oracle 10-0 [l'école, les marques du scellé MZ/PE, les absentes → LA FIN NOMMÉE, le différentiel 10 000, les trois rejets, LA FALSIFICATION la position avancée d'un — le mutant re-résolu par l'auteur], la cristallisation DIX rebuilds identiques 78f5d5cd… ; le bras C : le source gcc -O2 croisé, la dll 08610a18… à l'export unique, LE POSIX 11-0 [LE TRAMPOLINE SysV→msx64 À CINQ ARGUMENTS, LE SHIM MEMCMP — RDI ET RSI NON-VOLATILS EN msx64, la leçon de la convention tenue], la falsification double [la fenêtre mutée + LE PAS DE LA PIÈCE MUTÉ 100/100]), LES ÉPREUVES (le juge par AST == le contre-modèle, les constantes au plan, le générateur déterministe ; L'ÉPREUVE DU KIT, PLOMBERIE COMPRISE — les blocs V1/V3/V4 du scénario livré exécutés VERBATIM contre la pièce réelle, le bloc découverte == le juge indépendant — la brèche de la 302 tenue pour toujours), LES DEUX KITS AU /test (9 pièces chacun, chaque pièce recoupée par re-téléchargement byte-byte)
+
+La reprise vint de l'annonce « run depose dans /test du drive. verifie
+puis go pour la suite ». Les DEUX runs de l'unité 4 aux kits v2 — dix
+vérts à chaque bras, les témoins datés du 15/11 et signés Alexis Lopez
+[D99] — et le go donné pour la suite : voici le recoupement intégral,
+les écarts du livre nommés, le rangement, et l'unité 5 loupe-13
+recherche construite, épreuvée et livrée aux deux bras — la reprise
+portée à 303.
+
+- LES DEUX DÉPÔTS au /test (nés 13:45:00Z-13:45:13Z le 15/11 :
+  kit-unite-loupe-08-T-20261115-v2-20261115T133720Z-1-001/ et
+  kit-unite-loupe-08-C-20261115-v2-20261115T133717Z-1-001/ — le kit tel
+  que téléchargé du coffre 13:37:20Z/17Z + la console du run + les
+  preuves ENTIERES : le témoin daté 15/11/2026 signé Alexis Lopez [D99]
+  + falsifie-16.bin le fixture de V4).
+- LE RECOUP byte-byte : les kits qui ont couru == les livraisons v2 du
+  coffre (9/9 pièces à chaque bras, byte-byte, le scénario == la gravure
+  44384f5d… / e8041034…, loupe.exe eec890a4… / loupe-08-c.dll
+  9a51be68…), la machine PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+  (CA2 — la même que les ONZE runs), la chronologie tenue (téléchargés
+  13:37:17Z/20Z → run T 13:39:16Z → témoin T 13:39:59Z → run C
+  13:41:11Z → témoin C 13:42:11Z → carnet 13:42:41Z → livre
+  13:44:11Z → dépôts 13:45:00Z-13Z — jamais une date avant le geste).
+- LES VERDICTS : LE BRAS T 10 VERT, 0 ROUGE ; LE BRAS C 10 VERT,
+  0 ROUGE — les DEUX défauts v1 MORTS au terrain : la boucle V3 PASSÉE
+  (les QUATRE rejets -5, la sortie POISON INTACTE — cast() a vécu, le
+  « cannot be converted to pointer » ne revit pas) ; LA DÉCOUVERTE
+  PASSÉE (l'export unique loupe_08_ligne @+0x1380 découvert par la
+  table — les arités unifiées ont vécu, le « takes 2 positional
+  arguments » ne revit pas) ; le doré, la ligne finale incomplète, le
+  différentiel 10 000/10 000, les 77 o exacts, l'octet muté attrapé
+  aux DEUX bras (falsifie-16.bin IDENTIQUE entre les bras — le même
+  mutant, l'octet 3 : 4d5a006f…). L'UNITÉ 4 LOUPE-08 LIGNE EST CLOSE
+  aux DEUX bras au premier vert de ses kits v2 (§ 7).
+- LE LIVRE (livraisons.csv 1 383 o == 1 317 o [l'archivé de la 301] +
+  la chirurgie vécue : les SIX lignes d'origine INTACTES byte-byte, la
+  ligne C-loupe-05-it2 porte le mot VERT — LE GESTE DE LA 301 VÉCU au
+  livre même, la ligne it3 PARTIE — l'unité 3 × C CLOSE à it2 [2/3,
+  le premier vert, § 7], la ligne est VRAIE : le run a couru 10:36Z,
+  la console et le témoin signé aux archives portent VERT, les dates
+  exactes — LA LIGNE DEMEURE, l'arbitration de la 302 (une
+  re-consignation propre attendue) est SANS OBJET : jamais on n'efface
+  un geste vécu [CA5/CA6]) + LES DEUX lignes loupe-08 consignées :
+  T-loupe-08-it1 VERT, C-loupe-08-it1 VERT (kit 2026-11-15, run
+  2026-11-15, « en attente ») — le carnet + les DEUX lignes M3 (T
+  loupe-08 cristallisation 14:38→14:40, 2 min ; C loupe-08 tag-backup
+  14:40→14:42, 2 min — heures locales) ; defauts.csv +
+  journal-ouverture.txt INTACTS byte-byte.
+- LES ÉCARTS NOMMÉS : ① LE RUN v1 DU BRAS T N'EST PAS AU LIVRE — le kit
+  v1 T a couru au terrain (téléchargé 12:52:41Z, le run fini code 1,
+  run-console-unite08.txt porte le traceback — la pièce à l'appui, le
+  dossier du run demeure au terrain) : la 302 prescrivait la
+  consignation it1 ROUGE (« le livre ne ment jamais : le run a couru »)
+  puis le re-run à it2 ; le terrain consigna le run v2 comme it1 VERT
+  seul — la livraison fautive du kit T échappe à M1 (D202 : un défaut
+  est compté par LIVRAISON — le run a couru, le livre doit le porter) ;
+  LA CHIRURGIE PRESCRITE : la ligne T-loupe-08-it1 devient DEUX lignes —
+  T-loupe-08-it1 ROUGE (le kit v1, run 2026-11-15) et T-loupe-08-it2
+  VERT (le kit v2, run 2026-11-15), l'unité close à it2 (2/3, le
+  premier vert) ; ② defauts.csv INTACT — les DEUX défauts du kit 08
+  prescrits à l'onglet 6·DÉFAUTS par la 302 ① (le bras T : la classe
+  « plantage-harnais-v3 », le mécanisme « le constructeur c_void_p
+  refuse le tampon — cast() requis (ligne 232) », le côté « kit », la
+  pièce à l'appui « run-console-unite08.txt », l'exclusion « non » ; le
+  bras C, SANS livraison : la classe « plantage-harnais-decouverte »,
+  le mécanisme « les arités de la découverte — définies (adresse),
+  appelées (base, rva), unifiées », la pièce à l'appui
+  « epreuve-kits08-v2-console.txt (aux archives unite-08) », l'exclusion
+  « OUI — nommé au labo avant tout run terrain »).
+- LE RANGEMENT (D143 : déplacés, jamais jetés) : les DEUX dépôts de run
+  DÉPLACÉS à /test/archives-livraisons/unite-08-loupe-20261115/
+  renommés « kit-unite-loupe-08-T-20261115-v2-RUN-V2-VERT-20261115 » /
+  « …-C-20261115-v2-RUN-V2-VERT-20261115 » ; LE STRAY « Nouveau run »
+  (le dossier du 14/11 09:03 — l'instantané test/ des lanceurs 1-CLIC
+  + preuves-unite01/ — ÉCHAPPÉ du nettoyage du 14/11 13:47, nommé)
+  DÉPLACÉ à la racine des archives-livraisons renommé
+  « Nouveau-run-20261114-echappe-du-nettoyage » ; la racine revenue à
+  SES 19 entrées.
+- LE GO VÉCU — LOUPE-13 RECHERCHE AUX DEUX BRAS (la commande « go pour
+  la suite », l'ordre de la 302) : LE CONTRAT loupe-13:R1 (la première
+  occurrence d'un motif de 1 à 32 o dans une fenêtre, à partir d'un
+  départ donné — la position ABSOLUE de la PREMIÈRE, jamais la seconde ;
+  l'absence → -1 LA FIN NOMMÉE ; le motif plus long que la plage
+  restante → -1 IMMÉDIAT, le constat trivial, jamais une boucle ; les
+  trois refus → -5 ; la comparaison PAR LA CARTE : chaque candidat au
+  libc-02 memcmp SCELLÉ à 0x1180, la liste d'appels FERMÉE ; la feuille
+  pure). LE BRAS T : la notation À LA MAIN 116 o, 46 instructions,
+  5 étiquettes (mes choix : LE DÉPART LU AU-DEVANT, LES BORNES AVANT LE
+  CADRE — P5 lu à [rsp+0x28] avant tout push, les trois refus SANS
+  AUCUN GESTE, deux sorties ; LA BORNE EN ADRESSE — le dernier
+  candidat posé une fois [fenêtre + taille − motif], la boucle compare
+  POINTEUR À POINTEUR ; LE CURSEUR EST LE POINTEUR — le candidat avance
+  par inc, la position rendue par une soustraction ; LE CADRE HONNÊTE —
+  cinq pushes + l'ombre 0x20, l'alignement compté ; LES MOINS VRAIS
+  PAR LA PILE — push −1/pop rax, l'imm8 dépassé du signe, jamais mov
+  eax qui mentirait le haut) ; le build aux verrous 121, le
+  différentiel au scellé CONFINÉ au slot loupe-13 [0x4940, 0x4a00) et
+  à la porte R10 (5 plages, 125 o) ; LA CRISTALLISATION DIX rebuilds
+  identiques (loupe.exe 127 488 o, sha256 78f5d5cddf90320a…) ;
+  L'ORACLE DU BLOC 10 VERT 0 ROUGE (le doré : LE CORPUS DE L'ÉCOLE —
+  le motif au premier octet, au dernier, à cheval sur le départ,
+  l'occurrence DOUBLE LA PREMIÈRE exigée, AAAA dans AAAAB, le
+  presque-frère, le départ au milieu, la fenêtre vide, la plage vide,
+  le motif trop long — + LES MARQUES DE PROXY.EXE SCELLÉ : MZ @0, PE
+  @+0x40, « This program » et « PEMax » les marques ABSENTES [les
+  en-têtes écrits à la main] → -1 LA FIN NOMMÉE, l'absence constatée ;
+  le différentiel 10 000 cas == le modèle [alphabets plein ET pauvre,
+  1 584 occurrences VRAIES, la graine 20261115], la fenêtre et le motif
+  LUS SEULS [I3], l'état propre aux 10 000 gestes [I4] ; les TROIS
+  rejets -5 ; LA FALSIFICATION DEMANDÉE : la position avancée d'un —
+  le brouillon muté [mov rax, rbx → lea rax, rbx+1] PUIS RE-RÉSOLU PAR
+  L'AUTEUR (le mutant est une VRAIE notation aux étiquettes
+  re-résolues, jamais un texte balafré aux sauts périmés) : les 44/44
+  cas à occurrence DIVERGENT, la notation juste rejouée verte) ; la
+  console de l'oracle (2 342 o, c4e86cd3…) aux épreuves du dossier de
+  campagne. LE BRAS C : le source loupe-13-c.c (les bornes d'abord, le
+  constat trivial avant la boucle, chaque candidat au memcmp de la
+  bibliothèque — I2), la chaîne croisée TRIXIE (gcc-mingw-w64
+  14.2.0-19+27+b1 — le bac conservé), gcc -O2 -shared :
+  loupe-13-c.dll 87 542 o, sha256 08610a18b36753fa… — L'EXPORT UNIQUE
+  loupe_13_recherche @+0x1380, LE SEUL APPEL de sa clôture : le thunk
+  memcmp de la bibliothèque ; LE CONTRAT REJOUÉ AU POSIX contre la
+  pièce même 11 VERT 0 ROUGE (la dll mappée par sections à la base
+  préférée, les EN-TÊTES MAPPEÉS comme le vrai chargeur ; LE
+  TRAMPOLINE SysV→msx64 À CINQ ARGUMENTS — les quatre registres
+  réarrangés + le départ posé AU SLOT [rsp+0x28], 42 o ; LE SHIM
+  MEMCMP — la feuille unique de la liste fermée : le slot IAT repointé
+  au memcmp de la libc du labo, RDI ET RSI NON-VOLATILS EN msx64 [le
+  gcc garde ses invariants à travers l'appel — le shim les SAUVE ET
+  LES REND, l'alignement du call SysV compté] ; l'école 10/10 + les
+  marques ; le différentiel 10 000/10 000 aux MÊMES tirages que le
+  juge T ; les TROIS rejets ; LA FALSIFICATION DOUBLE : la fenêtre
+  mutée [la première occurrence détruite d'un octet → la seconde : la
+  pièce a lu SES octets] ET LE PAS DE LA PIÈCE MUTÉ [add rbx, 1 → 2,
+  l'octet @+0x13c3 : les 100 cas de l'école impairs TOUS divergents —
+  le juge attrape la pièce fausse, le pas restauré rend le vert] ; les
+  contrôles binaires : PE32+ DLL x86-64, l'export unique, la liste
+  d'appels fermée) ; la console du POSIX (2 505 o, 225ea68f…) aux
+  épreuves du dossier de campagne.
+- LES ÉPREUVES : le juge du scénario livré extrait PAR AST == le
+  contre-modèle (2 000 cas + les frontières : la fenêtre vide, la
+  plage vide, le motif de 32 exactement, 33 refusé, le départ == la
+  taille, le départ au-delà) ; LES CONSTANTES AUDITÉES au plan
+  (R_LOUPE13 == LOUPE13_VA == 0x5740, le slot i110013 0xC0, la graine
+  20261115, FENETRE_PROXY 8 192 ; le scénario C porte AUCUNE RVA codée
+  — la découverte par la table, la convention (base, rva) unifiée de
+  la 302) ; le générateur du différentiel DÉTERMINISTE (deux passages
+  identiques, les MÊMES tirages au labo et au terrain) ; L'ÉPREUVE DU
+  KIT, PLOMBERIE COMPRISE (la brèche de la 302 refermée, tenue pour
+  toujours) : les blocs V1/V3/V4 du scénario T livré extraits VERBATIM
+  et EXÉCUTÉS au labo contre LA PIÈCE RÉELLE du bras C (les buffers +
+  chercher livrés, le 5e argument au slot msx64, l'école 10/10, les
+  marques, les TROIS rejets -5, la falsification et le fixture
+  falsifie-16.bin ÉCRIT au réceptacle du labo) ; le bloc DÉCOUVERTE
+  du scénario C livré exécuté VERBATIM contre la dll réelle mappée ==
+  LE JUGE INDÉPENDANT (l'export unique @+0x1380 lu du fichier brut) ;
+  la console de l'épreuve (3 250 o, b461d474…) — TOUT VERT.
+- LES DEUX KITS AU /test (kit-unite-loupe-13-T-20261115/ et
+  kit-unite-loupe-13-C-20261115/, 9 pièces chacun : la pièce, la
+  notation + le brouillon [T] ou le source + le .def [C], le
+  scénario, le lanceur, le scellé proxy.exe LE DORÉ, temoin-3f.bin LA
+  GÉNÉRATION FIXE == la gravure des kits 01/02/05/08, EMPREINTES,
+  LISEZMOI) — py_compile des DEUX scénarios livrés OK, chaque pièce
+  RECROUPÉE PAR RE-TÉLÉCHARGEMENT byte-byte (la règle du coffre),
+  l'extraction vierge des zips recoupée, la racine portée à SES 21
+  entrées (les 19 + les DEUX kits 13).
+- LA SUITE : au développeur — ① LA CHIRURGIE AU LIVRE (le bloc-notes,
+  jamais Excel : la ligne T-loupe-08-it1 DEVIENT DEUX lignes —
+  T-loupe-08-it1 ROUGE [le kit v1, le run tombé code 1] +
+  T-loupe-08-it2 VERT [le kit v2, le run revenu] ; RIEN d'autre
+  touché) ; ② LES DEUX DÉFAUTS À L'ONGLET 6·DÉFAUTS (le T :
+  plantage-harnais-v3, exclusion NON ; le C SANS livraison :
+  plantage-harnais-decouverte, exclusion OUI — RET-NU, nommé au labo
+  avant tout run) ; ③ l'atelier ENTIER re-déposé au coffre ; ④ LE RUN
+  DE L'UNITÉ 5 aux deux bras (1·KIT choisir kit-unite-loupe-13-T/C-
+  20261115 → 2·RUN lancer LANCEUR-UNITE-13-T/C.bat → 3·TÉMOIN dater,
+  signer de la main → preuves-unite13[/C]/ ENTIER au coffre) ; ENSUITE
+  loupe-16 saisie, aux deux bras — le labo construit à la commande.
