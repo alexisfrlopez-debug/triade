@@ -1,0 +1,153 @@
+=== L'ÉPREUVE DU KIT 13 C v2 — la feuille memcmp liée (la faute nommée à la 304) ===
+le 15/11/2026, le labo. Le run de l'unité 5 × bras C tomba au kit v1 au
+premier candidat de l'école (« OSError: exception: access violation
+writing 0x00000000000092DA », le run fini code 1 — la console du terrain,
+run-console-unite13C.txt, la pièce à l'appui). Le bras T, lui, revint
+VERT (9 VERT 0 ROUGE, le témoin daté 15/11/2026 signé Alexis Lopez).
+
+=== 1. L'AUTOPSIE DE LA PIÈCE (loupe-13-c.dll, sha256 08610a18b36753fa…) ===
+
+machine 0x8664 (8664 = AMD64), 19 sections, caractéristiques 0x2026 (2022 = DLL)
+magie optionnelle 0x20b (20b = PE32+)
+base préférée 0x1d0e50000
+  section .text    rva 0x00001000 taille 0x1420 -> fichier 0x600
+  section .data    rva 0x00003000 taille 0x70 -> fichier 0x1c00
+  section .rdata   rva 0x00004000 taille 0x5a0 -> fichier 0x1e00
+  section .pdata   rva 0x00005000 taille 0x1c8 -> fichier 0x2400
+  section .xdata   rva 0x00006000 taille 0x13c -> fichier 0x2600
+  section .bss     rva 0x00007000 taille 0x110 -> fichier 0x0
+  section .edata   rva 0x00008000 taille 0x54 -> fichier 0x2800
+  section .idata   rva 0x00009000 taille 0x388 -> fichier 0x2a00
+  section .tls     rva 0x0000a000 taille 0x10 -> fichier 0x2e00
+  section .reloc   rva 0x0000b000 taille 0x4c -> fichier 0x3000
+  section /4       rva 0x0000c000 taille 0x2b0 -> fichier 0x3200
+  section /19      rva 0x0000d000 taille 0x7441 -> fichier 0x3600
+  section /31      rva 0x00015000 taille 0x1604 -> fichier 0xac00
+  section /45      rva 0x00017000 taille 0x17a7 -> fichier 0xc400
+  section /57      rva 0x00019000 taille 0x6f0 -> fichier 0xdc00
+  section /70      rva 0x0001a000 taille 0xf5 -> fichier 0xe400
+  section /81      rva 0x0001b000 taille 0x9f0 -> fichier 0xe600
+  section /97      rva 0x0001c000 taille 0x1195 -> fichier 0xf000
+  section /113     rva 0x0001e000 taille 0x18b -> fichier 0x10200
+
+le répertoire d'exports @ rva 0x8000
+  EXPORT loupe_13_recherche @ rva 0x1380
+
+le répertoire d'imports @ rva 0x9000
+le répertoire IAT     @ rva 0x0
+
+  IMPORTS de KERNEL32.dll : INT 0x9040, IAT 0x9108
+    slot IAT 0x9108 : sur disque 0x91d0 <- DeleteCriticalSection (hint 292, hint/nom @ rva 0x91d0)
+    slot IAT 0x9110 : sur disque 0x91e8 <- EnterCriticalSection (hint 330, hint/nom @ rva 0x91e8)
+    slot IAT 0x9118 : sur disque 0x9200 <- GetLastError (hint 643, hint/nom @ rva 0x9200)
+    slot IAT 0x9120 : sur disque 0x9210 <- InitializeCriticalSection (hint 913, hint/nom @ rva 0x9210)
+    slot IAT 0x9128 : sur disque 0x922c <- LeaveCriticalSection (hint 1007, hint/nom @ rva 0x922c)
+    slot IAT 0x9130 : sur disque 0x9244 <- Sleep (hint 1443, hint/nom @ rva 0x9244)
+    slot IAT 0x9138 : sur disque 0x924c <- TlsGetValue (hint 1479, hint/nom @ rva 0x924c)
+    slot IAT 0x9140 : sur disque 0x925a <- VirtualProtect (hint 1526, hint/nom @ rva 0x925a)
+    slot IAT 0x9148 : sur disque 0x926c <- VirtualQuery (hint 1528, hint/nom @ rva 0x926c)
+
+  IMPORTS de msvcrt.dll : INT 0x9090, IAT 0x9158
+    slot IAT 0x9158 : sur disque 0x927c <- __iob_func (hint 148, hint/nom @ rva 0x927c)
+    slot IAT 0x9160 : sur disque 0x928a <- _amsg_exit (hint 192, hint/nom @ rva 0x928a)
+    slot IAT 0x9168 : sur disque 0x9298 <- _initterm (hint 380, hint/nom @ rva 0x9298)
+    slot IAT 0x9170 : sur disque 0x92a4 <- _lock (hint 483, hint/nom @ rva 0x92a4)
+    slot IAT 0x9178 : sur disque 0x92ac <- _unlock (hint 943, hint/nom @ rva 0x92ac)
+    slot IAT 0x9180 : sur disque 0x92b6 <- abort (hint 1041, hint/nom @ rva 0x92b6)
+    slot IAT 0x9188 : sur disque 0x92be <- calloc (hint 1057, hint/nom @ rva 0x92be)
+    slot IAT 0x9190 : sur disque 0x92c8 <- free (hint 1093, hint/nom @ rva 0x92c8)
+    slot IAT 0x9198 : sur disque 0x92d0 <- fwrite (hint 1101, hint/nom @ rva 0x92d0)
+    slot IAT 0x91a0 : sur disque 0x92da <- memcmp (hint 1151, hint/nom @ rva 0x92da)
+    slot IAT 0x91a8 : sur disque 0x92e4 <- realloc (hint 1170, hint/nom @ rva 0x92e4)
+    slot IAT 0x91b0 : sur disque 0x92ee <- strlen (hint 1197, hint/nom @ rva 0x92ee)
+    slot IAT 0x91b8 : sur disque 0x92f8 <- strncmp (hint 1199, hint/nom @ rva 0x92f8)
+    slot IAT 0x91c0 : sur disque 0x9302 <- vfprintf (hint 1233, hint/nom @ rva 0x9302)
+
+=== OÙ VIT 0x92da DANS L'IMAGE ===
+  0x92da tombe dans la section .idata (rva 0x9000..0x9388), fichier @0x2cda
+  les 32 octets là : 7f 04 6d 65 6d 63 6d 70 00 00 92 04 72 65 61 6c 6c 6f 63 00 ad 04 73 74 72 6c 65 6e 00 00 af 04
+  en ASCII         : ..memcmp....realloc...strlen....
+
+=== 2. LE RECOUP DU BRAS T (preuves-unite13, le dépôt du terrain 16:07Z) ===
+
+loupe.exe 127488 o ? True
+loupe.exe sha256 78f5d5cddf90320a657ba04b8de635194e67f796d43980c7c6cef8b02f45a020
+  == la gravure du kit T : True
+  == le témoin du terrain : True
+
+scenario-unite13-livré.py (labo) == scenario-unite13.py (coffre) : True
+  sha256 du scénario T au coffre : e45ae5e14baff87c05ec63da3d884a449dfa01e04507f6b08ac67691ab220cb0
+  == la gravure : True
+
+le mutant attendu : 4d 6f 00 00 00 00 00 00… (l'octet 1 : 0x5a → 0x6f)
+falsifie-16.bin reçu : 4d 6f 00 00 00 00 00 00… (16 o)
+  == le mutant attendu : True
+
+LE KIT C AU COFFRE (les pièces pour le v2) :
+  OK LANCEUR-UNITE-13-C.bat           28f81c8b1b86f0d3… == gravure
+  OK LISEZMOI-KIT-UNITE-13-C.txt      b6dcc07d8dce3194… == gravure
+  OK loupe-13-c.c                     c7d7ee406708a27d… == gravure
+  OK loupe-13-c.def                   e8ee14fd7390002e… == gravure
+  OK loupe-13-c.dll                   08610a18b36753fa… == gravure
+  OK proxy.exe                        446279f3ab356900… == gravure
+  OK scenario-unite13C.py             432d3c0150503994… == gravure
+  OK temoin-3f.bin                    c5fc1f28e471059d… == gravure
+
+=== 3. L'ÉPREUVE DE LA FEUILLE MEMCMP (la loi née à la 304, la règle de
+la 294 : l'épreuve contre le FICHIER LIVRÉ, pas le harnais du labo) ===
+--- contre le scénario v1 LIVRÉ (kit-unite-loupe-13-C-20261115) ---
+
+=== L'ÉPREUVE DE LA FEUILLE MEMCMP — scenario-unite13C.py ===
+  L1 ROUGE : le répertoire 1 (opt + 120) JAMAIS LU — la table d'imports que la pièce porte n'est même pas ouverte
+  L1 ROUGE : les noms jamais cherchés (msvcrt.dll : rien ; memcmp : rien) — la feuille n'est pas découverte, elle est tenue pour absente
+  L1 ROUGE : LA FAUTE NOMMÉE du v1 — le scénario tenait la feuille pour absente (« le scénario ne touche pas à la table d'imports ») tandis que la clôture de la pièce appelle le thunk memcmp (le seul appel de sa clôture)
+  L2 ROUGE : AUCUNE liaison au flux de main() — la pièce construite à l'énoncé 33, le premier appel peut suivre, RIEN n'est lié : le thunk sauterait à la valeur SUR DISQUE du slot IAT (0x92da, l'entrée hint/nom de memcmp — une RVA nue, hors de toute page) : L'ADRESSE EXACTE du crash terrain (« access violation writing 0x92da », le run tombé code 1 au premier candidat de l'école)
+  L3 ROUGE : AUCUNE relecture du slot après l'écriture — la liaison n'est jamais recoupée (l'écrit sans relecture n'est pas une preuve)
+=== L'ÉPREUVE FINIE : ROUGE — L1 ROUGE, L2 ROUGE, L3 ROUGE ===
+
+--- contre le scénario v2 (le kit v2, la candidate) ---
+
+=== L'ÉPREUVE DE LA FEUILLE MEMCMP — scenario-unite13C.py ===
+  L1 VERT : la feuille découverte par la table — le répertoire 1 lu (lignes [244]), les noms cherchés (msvcrt.dll ligne 277, memcmp ligne 265), AUCUNE RVA codée en dur (la convention (base, rva) de la 302)
+  L2 VERT : la liaison (énoncé 33) précède la construction de la pièce (énoncé 38) et sa retombée est gardée (énoncé 35) — jamais un appel sur une feuille morte
+  L3 VERT : les 5 gestes de liaison au guichet — ['GetProcAddress', 'LoadLibraryExW', 'LoadLibraryW', 'VirtualProtect'] — chaque retour lu, l'écart nommé, le flux stoppé ; la relecture recoupe l'écrit (lignes [274, 308])
+=== L'ÉPREUVE FINIE : VERT — L1 VERT, L2 VERT, L3 VERT ===
+
+=== 4. L'ÉPREUVE DU KIT 13 C v2 — LE TEXTE LIVRÉ, PLOMBERIE COMPRISE,
+LA FEUILLE EN PLUS (les blocs du v2 extraits VERBATIM et exécutés au
+labo contre la pièce réelle ; la liaison Windows ne court pas au labo —
+le harnas sert la feuille par son shim, l'équivalent labo du guichet
+livré ; les blocs découverte + imports exécutés contre l'image VIERGE
+avant le repeint) ===
+
+[VERT] py_compile du scénario 13 C v2 livré
+[mappage] loupe-13-c.dll : 19 sections, l'image 0x1f000 o @ 0x1d0e50000 (la base préférée — le geste de LoadLibraryEx rejoué)
+[juge indépendant] l'export unique loupe_13_recherche @+0x1380 ; le slot memcmp @+0x91a0, sa valeur sur disque 0x92da (l'entrée hint/nom — l'ADRESSE NUE du crash v1)
+[VERT] la-feuille:le-v1-ROUGE-nomme — les trois lois ROUGES contre le v1 — la faute nommée : le saut à l'adresse nue 0x92da, L'ADRESSE EXACTE du crash terrain — L'ÉPREUVE QUI AURAIT ARRÊTÉ LA FAUTE AVANT LE TERRAIN
+[VERT] la-feuille:le-v2-VERT — les trois lois VERTES contre le v2 livré (la découverte par la table, la liaison avant l'appel, le guichet fail-closed)
+[T0] l'export UNIQUE découvert : loupe_13_recherche @+0x1380 — la feuille pure, le seul appel de sa clôture : le memcmp de la bibliothèque
+[T0] la clôture de la pièce appelle UNE feuille : le memcmp de msvcrt.dll par son thunk IAT (I2 — la liste d'appels FERMÉE) ; les autres imports servent le démarreur CRT du lieur, qui ne court jamais sous DONT_RESOLVE
+[VERT] v2:le-bloc-decouverte-livre-execute — l'export unique loupe_13_recherche découvert @+0x1380 == le juge indépendant — le texte LIVRÉ exécuté, VERBATIM
+[VERT] v2:le-bloc-imports-du-guichet-execute — le slot memcmp découvert @+0x91a0 == le juge indépendant @+0x91a0, sa valeur sur disque 0x92da == 0x92da — le guichet lit la MÊME table, le texte LIVRÉ exécuté, VERBATIM (l'indentation de la fonction ôtée d'un étage, JAMAIS le code touché)
+[shim] memcmp servi @ 0x2d14dc0 — le slot IAT @+0x91a0 repointé (l'équivalent labo du guichet livré ; sa valeur sur disque lue au juge indépendant ci-dessous)
+[trampoline] SysV→msx64 à cinq arguments @ 0x2ccb500 (42 o) — la pièce appelée au CPU réel
+[VERT] v2:la-plomberie-livree-execute — les buffers + chercher LIVRÉS exécutés au labo (la feuille servie par le shim du harnas) — la pièce réelle répond 0
+[VERT] V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — LA PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide → -1, la plage vide → -1, le motif trop long → -1 IMMÉDIAT)
+[VERT] V1:les-marques-de-proxy — MZ @0, PE @+0x40, « This program » et « PEMax » les marques ABSENTES du scellé (les en-têtes écrits à la main) → -1 LA FIN NOMMÉE, l'absence constatée
+[VERT] v2:le-bloc-v1-livre-execute — l'école 10/10 + les marques du scellé — le texte LIVRÉ du v2 exécuté, VERBATIM
+[VERT] V2:le-differentiel-10-000-cas — 10000/10 000 == le modèle (la graine 20261115, les mêmes tirages au labo, y compris les -1 — Q1-Q4)
+[VERT] V2:la-fenetre-et-le-motif-lus-seuls — les octets de la fenêtre et du motif INTACTS aux 10 000 gestes (I3 — la pureté)
+[VERT] v2:le-bloc-v2-livre-execute — le différentiel 10 000/10 000 + la fenêtre et le motif lus seuls — le texte LIVRÉ du v2 exécuté, VERBATIM (la graine 20261115, les MÊMES tirages)
+[VERT] V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+[VERT] v2:le-bloc-v3-livre-execute — les TROIS rejets -5 — le texte LIVRÉ du v2 exécuté, VERBATIM
+[VERT] V4:l-octet-du-mz-mute-la-fin-nommee — l'octet 1 muté (0x5A → 0x6F) : le « MZ » détruit, la réponse -1 LA FIN NOMMÉE DIVERGE du modèle de l'original (0) ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)
+[VERT] v2:le-bloc-v4-livre-execute — la falsification LIVRÉE exécutée — le fixture écrit au réceptacle du labo (16 o)
+[VERT] la-piece-intacte — la dll du kit v2 == la gravure v1 (08610a18b36753fa…) — la faute était au kit, jamais à la pièce
+
+=== L'ÉPREUVE DU KIT 13 C v2 : 18 VERT, 0 ROUGE ===
+
+=== LA FIN : l'épreuve du kit 13 C v2 : 18 VERT, 0 ROUGE — la feuille
+liée au guichet fail-closed, les vecteurs intacts, la pièce inchangée
+(la faute était au kit, jamais à la pièce). ===

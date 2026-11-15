@@ -13165,3 +13165,201 @@ portée à 303.
   20261115 → 2·RUN lancer LANCEUR-UNITE-13-T/C.bat → 3·TÉMOIN dater,
   signer de la main → preuves-unite13[/C]/ ENTIER au coffre) ; ENSUITE
   loupe-16 saisie, aux deux bras — le labo construit à la commande.
+
+## Entrée 304 — LE BRAS T DE L'UNITÉ 5 VERT RECOUPÉ ET CLOS, LE BRAS C TOMBÉ AU KIT : LA FEUILLE MEMCMP JAMAIS LIÉE SOUS DONT_RESOLVE, LE SAUT À L'ADRESSE NUE 0x92DA (L'ENTRÉE HINT/NOM DE LA TABLE D'IMPORTS) — LA FAUTE NOMMÉE SUR PIÈCES, LE KIT C v2 LIVRÉ (LA FEUILLE LIÉE AU GUICHET FAIL-CLOSED, LES SEPT PIÈCES INTACTES, LA GRAVURE D'UNE LIGNE), L'ÉPREUVE DE LA FEUILLE NÉE (ROUGE CONTRE LE v1 : L'ÉPREUVE QUI AURAIT ARRÊTÉ LA FAUTE AVANT LE TERRAIN), LE RECOUP DE L'ATELIER (LA LIGNE T VERT VRAIE ; LA LIGNE DÉFAUT DU KIT 08 MAL POSÉE loupe-13 POUR loupe-08, NOMMÉE ; LE RUN C TOMBÉ NON CONSIGNÉ — LA CHIRURGIE PRESCRITE), LA 303 RETROUVÉE AU BUNDLE (LE PUSH PERDU AU RECYCLAGE DU CONTENEUR, RAPATRIÉE ET POUSSÉE AVEC LA 304) (l'annonce du développeur : la console du run C tombé — « OSError: exception: access violation writing 0x00000000000092DA » ; le mot : « atelier et preuves 13T dans /test du drive »)
+
+La reprise vint de la console collée au chat — le run de l'unité 5 × bras C
+tombé au premier candidat de l'école — et du mot qui suivit : l'atelier et
+les preuves 13-T déposés au /test. Voici le recoup du bras T, l'autopsie du
+bras C, la faute nommée sur pièces, le kit C v2 bâti et éprouvé, l'épreuve
+qui manquait née, la 303 retrouvée au bundle — la reprise portée à 304.
+
+- LE RUN DU BRAS T REÇU ET RECOUPÉ (preuves-unite13/ au /test, né
+  16:11:52Z : temoin-unite13.txt + falsifie-16.bin) : LE TÉMOIN 9 VERT
+  0 ROUGE — le run 2026-11-15T16:07:15Z, la machine PORTABLE · Windows 10
+  · AMD64 · Python 3.14.10 (CA2 — la même que les DOUZE runs), la pièce
+  loupe.exe 127 488 o sha256 78f5d5cd… == la gravure du kit T == le
+  témoin même, LE TÉMOIN DATÉ 15/11/2026 SIGNÉ Alexis Lopez (D99 — la
+  même main), le fixture falsifie-16.bin 16 o == LE MUTANT ATTENDU
+  (l'octet 1 : 0x5A → 0x6F — le « Z » du « MZ » détruit, « 4D 6F 00 00
+  … »), le scénario T au coffre == la copie du labo == la gravure (la
+  livraison de la 303 intacte). LE BRAS T DE L'UNITÉ 5 EST CLOS À IT1
+  au premier vert (§ 7).
+- LE LIVRE (livraisons.csv 1 516 o == 1 383 o + L'AJOUT EXACT de
+  133 o) : UNE ligne neuve T-loupe-13-it1 VERT (kit 2026-11-15, run
+  2026-11-15) — LA LIGNE VRAIE (le run a couru 16:07:15Z, le témoin
+  signé porte VERT, les dates exactes) ; une ligne VIDE avant elle
+  (cosmétique, nommée — elle part au geste avec la consignation du C) ;
+  le carnet + UNE ligne M3 (T-loupe-13 cristallisation 17:06→17:07,
+  1 min — heures locales cohérentes au run 16:07:15Z, CA2 à UTC+1) ;
+  journal-ouverture.txt intact.
+- LE RUN DU BRAS C TOMBÉ AU KIT (la console collée au chat, la pièce à
+  l'appui run-console-unite13C.txt au terrain) : le kit téléchargé
+  16:06:09Z, le lanceur officiel couru — le T0 VERT (la pièce recoupée
+  à la gravure : loupe-13-c.dll sha256 08610a18… == la gravure du kit),
+  l'image cartographiée DONT_RESOLVE @ 0x7ff9ae020000, l'export unique
+  loupe_13_recherche @+0x1380 découvert par la table — puis LA CHUTE au
+  premier cas de l'école : « OSError: exception: access violation
+  writing 0x00000000000092DA », la traceback aux lignes 238/218 du
+  scénario livré BYTE POUR BYTE (le terrain a couru LE fichier du
+  coffre), le run fini CODE 1, AUCUN témoin né (le bloc témoin vit
+  après V4), preuves-unite13C/ jamais né au coffre.
+- L'AUTOPSIE SUR PIÈCES (objdump + la table d'imports) : LA CHAÎNE
+  COMPLÈTE — loupe_13_recherche @+0x1380, l'appel au thunk à +0x13d4
+  (call +0x2398), le thunk « jmp QWORD PTR [rip+0x6e02] » lit LE SLOT
+  IAT de memcmp @+0x91a0 — et le slot, NON LIÉ (DONT_RESOLVE ne lie
+  RIEN), garde SA VALEUR SUR DISQUE : 0x92da, L'ADRESSE DE LA FAUTE
+  EXACTE — l'entrée hint/nom « memcmp » (hint 1151) de la section
+  .idata, une RVA NUE, hors de toute page ; le RIP y saute, la faute.
+  LE MESSAGE « writing » ÉLUCIDÉ : le filtre de ctypes (SetException)
+  ne connaît que « reading » (ExceptionInformation[0] == 0) et
+  « writing » (TOUT le reste) — la faute d'exécution au saut vers
+  l'adresse nue est rapportée « writing » par le tuyau, l'adresse
+  demeure LA PREUVE. LE TÉMOIN DU LABO CONTRE LE TÉMOIN DU TERRAIN :
+  le LISEZMOI livré disait la vérité en creux (« le seul appel de sa
+  clôture : le thunk memcmp de la bibliothèque » ; « LE SHIM MEMCMP :
+  le slot IAT repointé au memcmp de la libc du labo ») — le labo liait
+  la feuille dans SON harnais, jamais au scénario du terrain.
+- LA FAUTE NOMMÉE : la classe « plantage-harnais-feuille-memcmp », le
+  mécanisme — DONT_RESOLVE ne lie RIEN : le slot IAT de memcmp garde sa
+  valeur sur disque (l'entrée hint/nom, une RVA nue) ; le scénario ne
+  liait pas la feuille que la clôture de la pièce appelle (le seul
+  appel de sa liste fermée) — le premier appel sautait à l'adresse nue
+  0x92da. Le côté « kit », la pièce à l'appui run-console-unite13C.txt
+  (au terrain), l'exclusion NON — la faute au labo VOYAGEA jusqu'au
+  terrain cette fois (le patron [RET-NU] de la 302 ne s'applique pas :
+  le run fut consommé, la livraison C-loupe-13-it1 est ROUGE, D202).
+  LA BRÈCHE : l'épreuve du kit de la 303 exécutait les blocs V LIVRÉS
+  au harnais du labo QUI SHIMMAIT memcmp — le shim ne voyagea jamais
+  au scénario terrain, la plomberie de la LIAISON n'existait pas au
+  livré : la brèche de la 302 rouverte par la feuille.
+- LE SECOND DÉFAUT, COSMÉTIQUE, NOMMÉ AU LABO AVANT TOUT RE-RUN : le
+  texte du témoin (ligne 350) et la note V4 de la docstring (ligne 47)
+  du scénario v1 nommaient preuves-unite13/ — le réceptacle du bras T,
+  le gabarit d'où le scénario C fut dérivé — au lieu de
+  preuves-unite13C/ : le nom a glissé deux fois. Nommé, réparé au v2
+  (le run tombé n'a jamais atteint le témoin : aucun écart au terrain).
+- LE KIT C v2 LIVRÉ (kit-unite-loupe-13-C-20261115-v2/ aux 9 pièces au
+  /test) — LE SEUL CHANGEMENT le scénario (17 640 → 24 708 o, sha256
+  432d3c01… → a8aed114…) : ① LA FEUILLE MEMCMP LIÉE — le guichet
+  lier_feuille_memcmp() découvre le slot PAR LA TABLE D'IMPORTS (le
+  répertoire 1 lu à opt+120, les descripteurs au terminateur lu, le
+  nom msvcrt.dll, le nom memcmp — la convention (base, rva) unifiée de
+  la 302, AUCUNE RVA codée), lie le slot au memcmp de la machine
+  (LoadLibraryW msvcrt.dll + GetProcAddress « memcmp », VirtualProtect
+  l'instant de l'écriture + LA RE-PROTECTION, LA RELECTURE RECOUPÉE),
+  LE GUICHET FAIL-CLOSED : chaque geste vérifié, l'écart nommé, le
+  flux stoppé (return 2 — RIEN ne court, jamais un appel sur une
+  feuille morte) ; ② LE RÉCEPTACLE NOMMÉ JUSTE (preuves-unite13C/).
+  LES VECTEURS INTACTS au byte près (V1-V4 == le v1, le juge
+  modele_recherche inchangé, les gardes inchangées), LES SEPT autres
+  pièces INTACTES octet pour octet (recoupées à la gravure v1 AVANT la
+  copie : 7/7), la gravure regravée d'UNE SEULE LIGNE (le scénario),
+  le LISEZMOI v1 INTACT (la note de révision vit à la docstring — le
+  précédent du kit 05 C v2), le kit v1 DEMEURE au coffre (D143).
+- L'ÉPREUVE QUI MANQUAIT — LA FEUILLE LIÉE DU FICHIER LIVRÉ
+  (epreuve_feuille_memcmp.py, tenue au bac contre CHAQUE scénario C
+  livré — la règle née à la 294 étendue à la 304 : la PLOMBERIE de la
+  liaison voyage au terrain, l'épreuve la tient au fichier livré, pas
+  au harnais du labo) : TROIS LOIS — L1 LA FEUILLE DÉCOUVERTE PAR LA
+  TABLE D'IMPORTS (le répertoire 1 lu, les noms msvcrt.dll/memcmp
+  cherchés, AUCUNE RVA codée), L2 LA LIAISON AVANT L'APPEL (la liaison
+  précède la construction de la pièce au flux de main(), sa retombée
+  gardée), L3 LE GUICHET FAIL-CLOSED (chaque geste au retour lu,
+  l'écart nommé, la relecture recoupe l'écrit). CONTRE LE v1 : ROUGE
+  aux trois lois, LA FAUTE NOMMÉE LIGNE À LIGNE — L1 : le répertoire 1
+  jamais lu, les noms jamais cherchés, la feuille tenue pour absente ;
+  L2 : AUCUNE liaison, la pièce construite, le premier appel suit — le
+  thunk sauterait à la valeur sur disque 0x92da, L'ADRESSE EXACTE du
+  crash terrain ; L3 : AUCUN geste de liaison, ni LoadLibrary, ni
+  GetProcAddress, ni VirtualProtect. CONTRE LE v2 : VERT aux trois
+  lois. L'ÉPREUVE QUI AURAIT ARRÊTÉ LA FAUTE AVANT LE TERRAIN.
+- LES ÉPREUVES REPASSÉES CONTRE LE v2 LIVRÉ : l'épreuve du modèle de
+  la 303 (le juge extrait par AST == le contre-modèle indépendant,
+  2 000 cas + les frontières ; les constantes au plan ; le générateur
+  déterministe) : TOUT VERT. L'ÉPREUVE DU KIT 13 C v2
+  (epreuve_kits13C_v2_20261115.py) : 18 VERT 0 ROUGE — py_compile ; LE
+  JUGE INDÉPENDANT étendu (l'export unique @+0x1380 ET le slot memcmp
+  @+0x91a0 ET sa valeur sur disque 0x92da, lus du FICHIER BRUT par la
+  table d'imports du juge) ; la feuille contre le v1 (ROUGE nommé) et
+  le v2 (VERT) ; LE BLOC DÉCOUVERTE + LE BLOC IMPORTS DU GUICHET
+  exécutés VERBATIM contre la dll réelle mappée par sections à la base
+  préférée, SUR L'IMAGE VIERGE avant le repeint du shim (le slot
+  découvert @+0x91a0 == le juge, la valeur sur disque 0x92da == le
+  juge — l'indentation de la fonction ôtée d'un étage, JAMAIS le code
+  touché) ; LES BLOCS V1/V2/V3/V4 exécutés VERBATIM contre la pièce
+  réelle au trampoline SysV→msx64 à cinq arguments (le harnas sert la
+  feuille par son shim — L'ÉQUIVALENT LABO DU GUICHET LIVRÉ : la
+  liaison Windows ne court pas au labo, les vecteurs si ; les tampons
+  de la plomberie livrée câblés au bloc V2 — I3 lu aux tampons que
+  chercher LIVRÉ écrit, nommé en route : la 303 ne courait pas V2 à
+  son épreuve de kit, l'artefact des tampons du harnais ne s'était
+  jamais montré) ; LA PIÈCE INTACTE (la dll du kit v2 == la gravure v1
+  08610a18… — la faute était au kit, jamais à la pièce). La console de
+  l'épreuve (12 788 o) déposée au miroir git et aux archives unite-13
+  du coffre — la pièce à l'appui.
+- LE RECOUP DE L'ATELIER (le dépôt 16:12:26Z, 4 pièces) : le livre et
+  le carnet ci-dessus ; defauts.csv 905 o — LA LIGNE T-loupe-08 de la
+  302 consignée (plantage-harnais-v3, exclusion non) MAIS LA LIGNE C
+  SANS livraison PORTE TACHE « loupe-13 » AU LIEU DE « loupe-08 » —
+  LA LIGNE DE LA 302 MAL POSÉE au geste (la pièce à l'appui
+  epreuve-kits08-v2-console.txt parle du kit 08 d'elle-même, le
+  mécanisme cité mot pour mot) : NOMMÉE, la correction prescrite au
+  geste (tache loupe-13 → loupe-08). LES MANQUES NOMMÉS : ① LE RUN C
+  TOMBÉ NON CONSIGNÉ au livre — le livre ne ment jamais, le run a
+  couru : la ligne C-loupe-13-it1 ROUGE attendue au geste (le précédent
+  de la 302/303 : T-loupe-08-it1 ROUGE consignée) ; ② le LOG DE
+  SESSION du GUI absent du dépôt (la chronologie tenue par les heures
+  des pièces, le témoin signé et la console collée) — nommé, non
+  bloquant ; ③ AUCUNE ligne M3 pour le run C tombé (le précédent du
+  bras T 08 v1 : la ligne cristallisation viendra avec le re-run v2).
+- LA 303 RETROUVÉE AU BUNDLE — LE PUSH PERDU AU RECYCLAGE : le miroir
+  git local découvrit le dépôt à la 299 (f8b699f, propre) tandis
+  qu'origin/main vivait à la 302 (d9d5e52) — le conteneur du labo
+  recyclé après la session 303, le push perdu en route ; le bundle du
+  coffre (né 15:26:05Z, 78 566 571 o) portait refs/heads/main à
+  9314409 — LA 303 MÊME (Entrée 303 + Task 210, 45 fichiers : les
+  kits 13 bâtis, les épreuves, le journal et le worklog portés à 303
+  dans le commit) : RAPATRIÉE du bundle même (git fetch bundle →
+  reset --hard 9314409 — le précédent de la 293 : la vérité
+  re-rapatriée du miroir), vérifiée au journal (les Entrées 300-303
+  présentes byte pour byte). LE PUSH de la 304 emporte LES DEUX
+  COMMITS (la 303 revenue + la 304 neuve), la carte OU-TROUVER du
+  coffre était déjà à 303 (15:22Z — la session 303 l'avait portée).
+- LE RANGEMENT (D143 : déplacés, jamais jetés, par le relais OAuth) :
+  preuves-unite13/ (le dépôt du run T recoupé ci-dessus) DÉPLACÉ à
+  /test/archives-livraisons/unite-13-loupe-20261115/ renommé
+  « preuves-unite13-RUN-T-VERT-20261115 » + la console d'épreuve
+  epreuve-kits13C-v2-console.txt déposée là ; l'atelier-campagne
+  DEMEURE à la racine (le dossier vivant du terrain, l'attente du
+  re-dépôt après la consignation) ; la racine à SES 21 entrées + le
+  kit C v2 (22).
+- LA CONSIGNATION : la présente Entrée 304 + Task 211 ; la carte
+  LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 304 au /test (66 940 o + la
+  section de la 304), re-téléchargée identique ; la carte OU-TROUVER
+  portée à 304 (l'item 30, l'en-tête de mise à jour, les renvois
+  Entrées 251-304 / Tasks 158-211) aux DEUX endroits (la racine du
+  coffre + le miroir git) ; le push GitHub (main) : LES DEUX COMMITS
+  (la 303 revenue du bundle + la 304) ; le miroir Drive resynchronisé
+  au crochet post-commit ; le bundle D141 archivé versionné
+  (triade-history-303-9314409) avant le commit neuf.
+- SUITE : au développeur — ① LA CONSIGNATION AU GUI (le livre ne ment
+  jamais : le run a couru) : la ligne C-loupe-13-it1 (le kit
+  2026-11-15, le run 2026-11-15, le verdict ROUGE — le kit v1, le run
+  tombé code 1) + la ligne vide partie au geste + LE DÉFAUT à l'onglet
+  6·DÉFAUTS (bras C, loupe-13, la livraison C-loupe-13-it1 : la classe
+  « plantage-harnais-feuille-memcmp », le mécanisme « DONT_RESOLVE ne
+  lie rien — le slot IAT de memcmp garde sa valeur sur disque
+  (l'entrée hint/nom, une RVA nue 0x92da) ; le scénario ne liait pas
+  la feuille que la clôture de la pièce appelle — le premier appel
+  sautait à l'adresse nue », le côté « kit », la pièce à l'appui
+  « run-console-unite13C.txt », l'exclusion « non ») ET la ligne
+  défaut du kit 08 CORRIGÉE au geste (tache loupe-13 → loupe-08) ;
+  ② LE RE-RUN DU BRAS C : kit-unite-loupe-13-C-20261115-v2 du coffre
+  (une extraction FRAÎCHE, jamais le wrapper v1 réutilisé), 1·KIT (la
+  nouvelle gravure : scenario-unite13C.py a8aed114…) → 2·RUN lancer
+  LANCEUR-UNITE-13-C.bat → 3·TÉMOIN dater, signer de la main →
+  preuves-unite13C/ ENTIER + l'atelier ENTIER (avec le log de session)
+  au coffre — la ligne C-loupe-13-it2 VERT attendue ; ③ le kit T clos
+  demeure (D143) ; ENSUITE loupe-16 saisie, aux deux bras — le labo
+  construit à la commande. (15/11, la session de la feuille liée)
