@@ -12362,3 +12362,151 @@ la reprise portée à 298.
   la mémoire de l'ère d'avant — le refs/stash du bac ancien vit aux bundles
   archivés, le nouveau mire GitHub seul.
 (15/11, la session des runs de l'unité 3 recoupés)
+
+## Entrée 299 — LE RENVOI DU MATIN REÇU ET RECOUPÉ : LE NOUVEAU RUN C 16 VERT 1 ROUGE SUR LE KIT v1 (le même ROUGE du juge — la séquence inversée, le v2 prescrit par la 298 pas encore livré), LE RENVOI T DOUBLON BYTE-IDENTIQUE, LE LIVRE AUX HUIT LIGNES — LA LIGNE it3 VERT SANS RUN NOMMÉE ERREUR PAR LE TERRAIN (« it3 est une erreur »), L'ARBITRAGE : LES DEUX LIGNES RETIRÉES AU GESTE (la faute au labo ne consomme jamais), LE KIT C v2 LIVRÉ (la session de V3 fermée avant l'ouverture de V4, le guichet fail-closed, les DIX pièces intactes, la gravure d'une ligne) ET L'ÉPREUVE DU FLUX DES SESSIONS NÉE (ROUGE contre le v1 — la faute nommée ligne à ligne ; VERTE contre le v2 livré), LES RENVOIS RANGÉS (l'annonce du développeur : « nouveaux uploads dans /test du drive, dis moi ce qu'il te manque » ; l'aveu : « it3 est une erreur »)
+
+La reprise vint de l'annonce des nouveaux dépôts et de la question
+« ce qu'il te manque » — la réponse du labo tenait en une pièce : la
+preuve du it3 VERT que le livre portait sans run. L'aveu vint le
+quarteron d'heure suivant : « it3 est une erreur ». Voici le recoup du
+renvoi du matin, l'arbitrage de la cap, le kit C v2 bâti et livré,
+l'épreuve qui manquait née au bac, les renvois rangés — la reprise
+portée à 299.
+
+- LA VÉRIFICATION PRÉALABLE : le conteneur du labo recyclé encore (la
+  répétition 285/293/295/296/297/298, nommée) — les jetons du relais
+  vivants (le /Tokens, jamais imprimé), le dépôt GitHub vivant (main @
+  7384423, le recoup final de la 298), le /test marché à neuf : les
+  TROIS renvois nés 07:25:39Z-07:26:12Z le 15/11 (le dossier GUI, le
+  renvoi T, le renvoi C), la carte LISEZMOI-KITS à 298, les archives à
+  leur place — RIEN ne manquait au dossier, TOUT fut reçu.
+- LES RENVOIS : TRIADE_gui_tous_runs_v1/ (le dossier GUI du terrain —
+  le livre 013520, l'etat-tous-runs.json d'hier, le log du matin
+  tous_runs_gui_20261115-082204.log) ; kit-unite-loupe-05-T-…-1-001/
+  (le dépôt d'hiver re-déposé tel quel) ; kit-unite-loupe-05-C-…-1-001/
+  (portant UN NOUVEAU RUN : run-console-unite05C.txt 07:23:33Z,
+  preuves-unite05C/ : temoin-unite05C.txt 07:24:07Z + falsifie-384.bin).
+- LE RECOUP byte-byte : le scénario == la gravure du kit v1 (6110cf67…
+  — le kit v2 N'EXISTAIT PAS : la 298 le prescrivait, le labo ne
+  l'avait pas encore livré), la dll == la gravure (b0d347ba…), la
+  console IDENTIQUE à celle d'hier À L'ADRESSE ASLR PRÈS
+  (0x7ff9ae400000 → 0x7ff9aea00000) — LA FAUTE DÉTERMINISTE DU JUGE
+  rejouée : le run a couru AVANT le v2 (l'inversion de séquence est au
+  labo, jamais au terrain) ; le renvoi T DOUBLON BYTE-IDENTIQUE du
+  dépôt d'hier (console e2515e50… == e2515e50…, rien de nouveau,
+  nommé) ; la machine PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+  (CA2 — la même que les SEPT runs) ; la chronologie tenue au log du
+  GUI : le GUI ouvert 08:22:04 locales, le kit lancé par SA console
+  officielle (UN SEUL lancement), run 07:23:33Z → témoin 07:24:07Z →
+  carnet 07:24:23Z → livre 07:24:33Z → dépôts 07:25:39Z-07:26:12Z —
+  jamais une date avant le geste.
+- LE VERDICT DU RUN DU MATIN : 16 VERT, 1 ROUGE — le MÊME ROUGE
+  « V4:la-session-survit », la faute au juge v1 (la session de V3
+  jamais fermée, l'ouverture refusée -5 au retour jeté, le condensé
+  (0, 131 072) hors-bornes -3 sur la session de 384 o, RIEN lu), le
+  témoin daté 15/11/2026 signé Alexis Lopez (D99 — la même main), le
+  vecteur VOID encore — le ROUGE ne mesure RIEN des pièces ; la pièce,
+  elle, a toujours répondu juste (la 298 tient).
+- LE LIVRE AUX HUIT LIGNES (recoupé byte-byte contre l'archivé de la
+  298) : livraisons.csv 1 317 o == 1 184 o + L'AJOUT EXACT de 133 o —
+  C-loupe-05-it2 ROUGE (kit 2026-11-15, run 2026-11-15) puis
+  C-loupe-05-it3 VERT (kit 2026-11-15, run 2026-11-15) ; le carnet
+  1 235 o == 1 188 + UNE ligne M3 (C loupe-05 tag-backup 08:23→08:24,
+  1 min — heures locales cohérentes au run 07:23:33Z) ; defauts.csv et
+  journal-ouverture.txt INTACTS — aucun défaut nommé au terrain.
+- L'ANOMALIE NOMMÉE — LA LIGNE it3 VERT N'A AUCUN RUN : le log du GUI
+  ne montre qu'UN SEUL lancement du kit (08:22:04 locales) ; AUCUN
+  dépôt it3 n'existe au coffre (ni console, ni témoin daté/signé, ni
+  ligne M3) ; et un VERT était IMPOSSIBLE avec le kit v1 — le ROUGE
+  est déterministe, le run du matin vient de le rejouer à l'octet près.
+  L'AVEU DU TERRAIN à la question du labo (« le it3 a-t-il couru ? ») :
+  « it3 est une erreur » — LA LIGNE N'EXISTE PAS (CA5/CA6 : jamais un
+  chiffre non vécu ; le GUI consigne la main, il ne fabrique rien).
+- L'ARBITRAGE DE LA CAP : le it2 NON PLUS ne consomme pas — le
+  précédent 283/284/294 : LA FAUTE AU LABO NE CONSOMME JAMAIS ; le run
+  du matin a couru sur le kit v1 fautif (le v2 prescrit non livré,
+  l'inversion au labo), le ROUGE repose encore sur le vecteur void du
+  juge, RIEN des pièces n'y est mesuré. LE LIVRE DOIT REVENIR À SES
+  SIX LIGNES : RETIRER it2 ET it3 AU GESTE au GUI (l'écart nommé ici,
+  jamais réécrit par le labo — le livre est au terrain), l'atelier
+  ENTIER re-déposé au coffre ; la ligne M3 du 15/11 DEMEURE (une ligne
+  au geste, jamais reconstruite de mémoire — le précédent de la 296) ;
+  le date_kit « 2026-11-15 » des deux lignes retirées était de plus
+  inexact (le kit courant : le v1 du 14/11) — nommé, les lignes
+  partent.
+- LE KIT C v2 LIVRÉ (le geste prescrit par la 298, vécu ce jour) :
+  kit-unite-loupe-05-C-20261115-v2/ aux 12 pièces au /test — LE SEUL
+  CHANGEMENT le scénario (25 075 → 27 930 o, sha256 6110cf67… →
+  36c6fbff…) : ① la session de V3 FERMÉE (loupe_03_fermer) AVANT
+  l'ouverture de V4 — jamais la seconde ouverture sur une session
+  vivante ; ② LE RETOUR DE CHAQUE OUVERTURE VÉRIFIÉ — le guichet
+  ouvrir_session() fail-closed : le retour lu, un retour non nul
+  NOMME l'écart et STOPPE le flux, la garde (try/except
+  OuvertureRefusee) rattrape, le témoin porte les vecteurs vécus —
+  jamais un vecteur sur une session non née ou étrangère ; la note de
+  révision à la docstring, RIEN d'autre. LES DIX AUTRES PIÈCES
+  INTACTES octet pour octet (téléchargées du coffre et recoupées
+  contre la gravure v1 avant l'assemblage : 11/11 == gravure), la
+  gravure regravée d'UNE SEULE LIGNE (le scénario), le v1 demeure au
+  coffre (D143 — le précédent loupe-02). LA LIVRAISON RECOUPÉE par
+  re-téléchargement : le scénario livré == 36c6fbff…, la dll ==
+  b0d347ba…, la gravure livrée == 64123b7e…, py_compile du livré OK,
+  l'épreuve repassée CONTRE LE FICHIER LIVRÉ même : VERT aux trois
+  lois.
+- L'ÉPREUVE QUI MANQUAIT — LE FLUX DES SESSIONS DU FICHIER LIVRÉ
+  (epreuve_flux_sessions.py, tenue au bac contre CHAQUE scénario livré
+  — la règle née à la 294 pour l'audit des constantes : l'épreuve
+  s'applique au fichier livré, pas au seul générateur) : TROIS LOIS —
+  L1 LE GUICHET FAIL-CLOSED (le retour de chaque ouverture lu, aucun
+  appel nu au retour jeté), L2 LA DOUBLE SESSION INTERDITE (une
+  fermeture sépare chaque paire d'ouvertures — la faute nommée du
+  v1), L3 LE TÉMOIN SOUS L'ÉCHEC (la garde rattrape l'ouverture
+  refusée, l'écriture du témoin demeure atteignable après elle).
+  CONTRE LE v1 : ROUGE, LA FAUTE NOMMÉE LIGNE À LIGNE — L2 : l'ouverture
+  de V4 ligne 421 sur la session vivante née ligne 402, AUCUNE
+  fermeture entre les deux ; L1 : SEPT ouvertures nues aux retours
+  jetés (lignes 349, 378, 387, 402, 421, 464, 467) ; L3 : aucune
+  garde — L'ÉPREUVE QUI AURAIT ARRÊTÉ LA FAUTE AVANT LE TERRAIN (la
+  298 : l'épreuve du scénario livré n'en tint que le générateur, la
+  faute voyagea). CONTRE LE v2 : VERT aux trois lois (SEPT ouvertures,
+  SEPT fermetures, AUCUNE double session, le guichet tenu, la garde
+  posée).
+- LE RANGEMENT (D143 : déplacés, jamais jetés, par le relais OAuth) :
+  les TROIS renvois DÉPLACÉS à /test/archives-livraisons/
+  unite-05-loupe-20261115/ renommés au rangement — le T
+  « kit-…-T-…-1-001-RENVOI-20261115 » (le doublon byte-identique,
+  nommé), le C « kit-…-C-…-1-001-RUN-IT2-20261115 » (le run du matin
+  revenu, son témoin signé dedans), le GUI
+  « TRIADE_gui_tous_runs_v1-RENVOI-20261115 » (le livre aux HUIT
+  lignes — l'erreur it3 dedans, nommée, jamais maquillée) ; la racine
+  revenue à SES 17 entrées (les 16 de la 298 + le kit C v2).
+- LES ÉCARTS NOMMÉS : M2 MANQUANT (les appels de la session sans
+  journal d'usage — la répétition des 290/294/297/298) ; M4 non
+  instrumentée au labo (la répétition) ; le bac reconstitué après le
+  recyclage du conteneur (la répétition) ; L'INVERSION DE SÉQUENCE du
+  matin (le run avant le v2 prescrit — au labo, jamais au terrain :
+  le kit C v2 aurait dû précéder tout re-run) ; la ligne it3 erronée
+  (l'aveu du terrain, la correction au geste attendue) ; le date_kit
+  inexact des deux lignes retirées (nommé, les lignes partent) ; la
+  ligne M3 du matin demeure (une ligne au geste — le précédent 296).
+- LA CONSIGNATION : la présente Entrée 299 + Task 206 ; la carte
+  OU-TROUVER portée à 299 (l'entrée 25 au tableau de campagne,
+  l'en-tête de mise à jour, les renvois Entrées 251-299 / Tasks
+  158-206) aux DEUX endroits (la racine du coffre + le miroir git) ;
+  la carte LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 299 au /test (la
+  298 intacte en tête, la section du renvoi apposée en queue),
+  re-téléchargée identique ; le push GitHub (main) :
+  JOURNAL_TRAVAIL.md + worklog.md + OU-TROUVER, UN SEUL commit ; le
+  miroir Drive resynchronisé, D141 tenu (le courant 298-7384423
+  archivé versionné, le bundle porté à la 299).
+- SUITE : au développeur — ① CORRIGER LE LIVRE au geste au GUI
+  (retirer les lignes C-loupe-05-it2 et C-loupe-05-it3 — it3 n'a
+  jamais couru, it2 ne consomme pas ; re-déposer l'atelier ENTIER au
+  coffre) ; ② LE RE-RUN SUR LE KIT v2 : onglet 1·KIT choisir
+  kit-unite-loupe-05-C-20261115-v2 → onglet 2·RUN lancer
+  LANCEUR-UNITE-05-C.bat → onglet 3·TÉMOIN dater et signer de la main
+  → preuves-unite05C/ ENTIER + l'atelier au coffre — LE VRAI it2 (la
+  cap tient : it2/it3 disponibles) ; le kit T clos demeure (D143) ;
+  ENSUITE loupe-08 ligne, aux deux bras — le labo construit à la
+  commande. (15/11, la session du renvoi du matin, de l'erreur nommée
+  et du kit C v2)

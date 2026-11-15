@@ -10761,3 +10761,61 @@ Work Log:
   HEAD 53b5e99) ; le refs/stash du bac ancien vit aux bundles archivés
   (D141), le nouveau mire GitHub seul. (15/11, la session des
   runs de l'unité 3 recoupés)
+
+## Task 206 — Entrée 299 : le renvoi du matin recoupé, l'erreur it3 nommée par le terrain, la cap arbitréée, le kit C v2 bâti et livré, l'épreuve du flux des sessions née
+
+- LA COMMANDE : « nouveaux uploads dans /test du drive, dis moi ce
+  qu'il te manque » — la réponse du labo : la preuve du it3 VERT que
+  le livre portait sans run ; l'aveu : « it3 est une erreur ».
+- LES RENVOIS : le dossier GUI du terrain (le livre aux HUIT lignes,
+  le log du matin), le renvoi T (DOUBLON BYTE-IDENTIQUE d'hier —
+  console e2515e50… == e2515e50…), le renvoi C (UN NOUVEAU RUN
+  07:23:33Z : 16 VERT 1 ROUGE — le MÊME ROUGE du juge v1, la console
+  identique à hier à l'ADRESSE ASLR près ; le témoin daté 15/11/2026
+  signé Alexis Lopez [D99] + falsifie-384.bin).
+- LE RECOUP : le scénario == la gravure v1 (6110cf67… — le v2
+  n'existait pas : l'inversion de séquence est au labo), la dll ==
+  b0d347ba…, la machine PORTABLE (CA2), la chronologie tenue au log du
+  GUI (UN SEUL lancement du kit 08:22:04 locales, run 07:23:33Z →
+  témoin → carnet → livre 07:24:33Z → dépôts 07:25:39Z-07:26:12Z).
+- LE LIVRE : 1 317 o == 1 184 + l'ajout exact de 133 o — C-loupe-05-
+  it2 ROUGE puis C-loupe-05-it3 VERT ; le carnet + UNE ligne M3
+  (tag-backup 08:23→08:24, 1 min). L'ANOMALIE : it3 SANS RUN (un seul
+  lancement au log, aucun dépôt, un VERT impossible avec le v1) —
+  l'aveu du terrain : la ligne n'existe pas (CA5/CA6).
+- L'ARBITRAGE : it2 non plus ne consomme pas (la faute au labo ne
+  consomme jamais — 283/284/294) — LE LIVRE DOIT REVENIR À SES SIX
+  LIGNES : retirer it2 et it3 au geste, re-déposer l'atelier ; la
+  ligne M3 demeure (au geste, jamais reconstruite).
+- LE KIT C v2 : kit-unite-loupe-05-C-20261115-v2/ aux 12 pièces au
+  /test — le SEUL changement le scénario (36c6fbff…) : la session de
+  V3 FERMÉE avant l'ouverture de V4 ; LE RETOUR DE CHAQUE OUVERTURE
+  VÉRIFIÉ (le guichet ouvrir_session() fail-closed, la garde
+  rattrape, le témoin porte les vecteurs vécus) ; les DIX autres
+  pièces INTACTES (recoupées contre la gravure v1 : 11/11), la gravure
+  d'UNE SEULE LIGNE ; la livraison recoupée par re-téléchargement
+  (scénario == 36c6fbff…, dll == b0d347ba…, gravure == 64123b7e…,
+  py_compile OK).
+- L'ÉPREUVE QUI MANQUAIT : epreuve_flux_sessions.py au bac (la règle
+  294 — contre le fichier livré, pas le seul générateur) : TROIS LOIS
+  (L1 le guichet fail-closed, L2 la double session interdite, L3 le
+  témoin sous l'échec) — CONTRE LE v1 : ROUGE, la faute nommée ligne à
+  ligne (V4 ouverte ligne 421 sur la session vivante née ligne 402 ;
+  SEPT ouvertures nues aux retours jetés ; aucune garde) ; CONTRE LE
+  v2 LIVRÉ : VERT aux trois lois.
+- LE RANGEMENT (D143) : les TROIS renvois à /test/archives-livraisons/
+  unite-05-loupe-20261115/ renommés (le T RENVOI doublon nommé, le C
+  RUN-IT2, le GUI RENVOI au livre aux huit lignes), la racine à SES
+  17 entrées (les 16 + le kit C v2).
+- LA CONSIGNATION : la présente Task 206 + l'Entrée 299 ; la carte
+  OU-TROUVER portée à 299 (l'entrée 25, l'en-tête, les renvois
+  Entrées 251-299 / Tasks 158-206) aux deux endroits ; la carte
+  LISEZMOI-KITS portée à 299 au /test ; le push GitHub (main), UN
+  SEUL commit ; le miroir Drive resynchronisé, D141 tenu.
+- SUITE : au développeur — corriger le livre au geste (retirer it2 et
+  it3, re-déposer l'atelier ENTIER), PUIS le re-run sur le kit v2
+  (1·KIT choisir kit-unite-loupe-05-C-20261115-v2 → 2·RUN → 3·TÉMOIN
+  dater, signer → preuves-unite05C/ ENTIER + l'atelier au coffre) —
+  LE VRAI it2, la cap tient ; ENSUITE loupe-08 ligne, aux deux bras —
+  le labo construit à la commande. (15/11, la session du renvoi du
+  matin, de l'erreur nommée et du kit C v2)
