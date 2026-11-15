@@ -151,21 +151,21 @@ def main() -> int:
 
     # ---- LA DÉCOUVERTE PAR LA TABLE D'EXPORTS (l'édition v2 : les
     # gardes fail-closed, le terminateur lu au champ) -------------------------
-    def lire_octets(adresse: int, n: int) -> bytes:
+    def lire_octets(base: int, rva: int, n: int) -> bytes:
         brut = (ctypes.c_ubyte * n)()
-        ctypes.memmove(brut, adresse, n)
+        ctypes.memmove(brut, base + rva, n)
         return bytes(brut)
 
-    def lire_u32(adresse: int) -> int:
-        return struct.unpack("<I", lire_octets(adresse, 4))[0]
+    def lire_u32(base: int, rva: int) -> int:
+        return struct.unpack("<I", lire_octets(base, rva, 4))[0]
 
-    def lire_u16(adresse: int) -> int:
-        return struct.unpack("<H", lire_octets(adresse, 2))[0]
+    def lire_u16(base: int, rva: int) -> int:
+        return struct.unpack("<H", lire_octets(base, rva, 2))[0]
 
-    def lire_chaine(adresse: int) -> str:
+    def lire_chaine(base: int, rva: int) -> str:
         sortie = []
         for i in range(256):
-            c = lire_octets(adresse + i, 1)[0]
+            c = lire_octets(base, rva + i, 1)[0]
             if c == 0:
                 return "".join(sortie)
             sortie.append(chr(c))
@@ -184,10 +184,10 @@ def main() -> int:
     tab_ordinaux = lire_u32(base, rva_exports + 36)
     rva_par_nom = {}
     for i in range(nb_noms):
-        nom = lire_chaine(base + lire_u32(base + tab_noms + 4 * i))
-        ordinal = lire_u16(base + tab_ordinaux + 2 * i)
+        nom = lire_chaine(base, lire_u32(base, tab_noms + 4 * i))
+        ordinal = lire_u16(base, tab_ordinaux + 2 * i)
         if nom:
-            rva_par_nom[nom] = lire_u32(base + tab_fonctions + 4 * ordinal)
+            rva_par_nom[nom] = lire_u32(base, tab_fonctions + 4 * ordinal)
     if set(rva_par_nom) != {"loupe_08_ligne"}:
         consigne(f"[T0] REFUS : les exports découverts {sorted(rva_par_nom)} "
                  f"!= l'export unique loupe_08_ligne — la pièce a divergé")

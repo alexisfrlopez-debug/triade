@@ -10974,3 +10974,39 @@ Work Log:
   signer → preuves-unite08[/C]/ ENTIER + l'atelier au coffre) ;
   ENSUITE loupe-13 recherche. (15/11, la session du rejouage nommé et
   de l'unité 4 livrée)
+
+## Task 209 — Entrée 302 : le run de l'unité 4 bras T reçu tombé — LE DÉFAUT EST AU KIT (la boucle V3 : c_void_p au constructeur au lieu de cast, ligne 232, « cannot be converted to pointer » ; loupe.exe innocente : 5 VERT, 10 004 comparaisons exactes avant la chute, aucun témoin né), le second défaut trouvé au labo avant tout run (le kit C : les arités de la découverte), la brèche de l'épreuve nommée (la 286 exécutait la fonction PURE — la plomberie Windows jamais), les DEUX kits v2 épreuvés et livrés (les blocs livrés exécutés VERBATIM : la V3 contre une pièce gcc, la découverte contre la dll réelle mappée par sections — loupe_08_ligne @+0x1380 == le juge), le lanceur nommé (le double BOM : la signature de tous les lanceurs), le stray nommé (livraisons.csv aux SEPT lignes tombé à la racine puis à la corbeille)
+
+- LA COMMANDE : la console du run tombé de l'unité 4 bras T (le kit
+  téléchargé 12:52:41Z, le run fini code 1) — la réponse du labo : le
+  défaut est AU KIT, jamais à la pièce ; le second trouvé au labo
+  avant tout terrain ; les DEUX kits v2 livrés au coffre.
+- LE DÉFAUT (côté kit, bras T) : la boucle V3 ligne 232 —
+  « ctypes.c_void_p(tampon) » refuse un tableau ctypes ; cast() était
+  le geste (le composer du même scénario + TOUT le kit C l'avaient).
+  Reproduit au labo VERBATIM avec le message exact du terrain.
+- LE SECOND (côté kit, bras C, trouvé avant tout run) : la découverte
+  par la table d'exports — les arités (définies « (adresse…) »,
+  appelées « (base, rva…) », la ligne 187 mêlait les deux) ;
+  reproduit : « takes 2 positional arguments but 3 were given ».
+- L'ÉPREUVE v2 (la brèche refermée) : les blocs livrés extraits
+  VERBATIM et exécutés — la V3 contre une pièce du labo gcc (les
+  QUATRE rejets -5, le poison intact), la découverte contre la dll
+  RÉELLE mappée par sections (loupe_08_ligne @+0x1380 == le juge
+  indépendant), les épreuves 286/294 repassées — TOUT VERT (la
+  console 1 983 o, 6d26fbd0…, déposée aux archives unite-08).
+- LES KITS v2 : les SEPT pièces stables byte-byte (recoupées à la
+  gravure v1), le scénario seul bougé (T : a3d49fc4… → 44384f5d…,
+  C : 84240bf7… → e8041034…), l'EMPREINTES régénérée ; livrés au
+  /test, chaque pièce recoupée par re-téléchargement byte-byte ; les
+  kits v1 archivés (D143) à unite-08-loupe-20261115/ renommés au
+  défaut nommé ; la racine revenue à SES 19 entrées.
+- LE LANCEUR : le double BOM (ef bb bf ×2) vérifié en tête de TOUS
+  les lanceurs de la campagne (01 v2, 02, 05, 08 T, 08 C) — la
+  première ligne erre, l'echo demeure, le run et la capture Tee
+  intacts — LA SIGNATURE COMMUNE, aucun fix mi-campagne.
+- LE STRAY : livraisons.csv 1 250 o (SEPT lignes — le geste de la
+  301 vécu : it2 VERT, it3 parti) tombé à la racine du /test
+  12:51:58Z puis à la corbeille par la main ; l'atelier jamais
+  re-déposé — le livre au terrain : SIX lignes attendues, le recoup
+  au prochain dépôt.

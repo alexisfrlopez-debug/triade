@@ -12831,3 +12831,157 @@ livrée, les dépôts rangés — la reprise portée à 301.
   ENSUITE loupe-13 recherche, aux deux bras — le labo construit à
   la commande. (15/11, la session du rejouage nommé, des deux gestes
   demandés et de l'unité 4 livrée)
+
+## Entrée 302 — LE RUN DE L'UNITÉ 4 bras T REÇU TOMBÉ : LE DÉFAUT EST AU KIT, JAMAIS À LA PIÈCE (la console : 5 VERT — T0 la gravure, V1 ×2 le doré + la ligne finale, V2 ×2 le différentiel 10 000/10 000 + les 77 o exacts — puis le plantage ligne 232 : « TypeError: cannot be converted to pointer », la boucle V3 passait le tampon AU CONSTRUCTEUR c_void_p au lieu de cast() ; loupe.exe INNOCENTE : 10 004 comparaisons exactes avant la chute ; AUCUN témoin né, preuves-unite08/ jamais né, run-console-unite08.txt porte le traceback — LA PIÈCE À L'APPUI), LE SECOND DÉFAUT TROUVÉ AU LABO AVANT TOUT RUN TERRAIN (le kit C : LES ARITÉS DE LA DÉCOUVERTE — lire_octets/lire_u32/lire_u16 définies (adresse…), appelées (base, rva…), la ligne 187 mêlait les deux conventions — le bras C n'a JAMAIS couru, aucune livraison consommée), LA BRÈCHE DE L'ÉPREUVE NOMMÉE (les épreuves de la 286/294 exécutent la fonction PURE du scénario livré — le juge, par AST — LA PLOMBERIE Windows n'a jamais couru au labo dans AUCUN fichier livré), LES DEUX KITS v2 CONSTRUITS, ÉPROUVÉS, LIVRÉS (les blocs livrés extraits VERBATIM et EXÉCUTÉS au labo : la boucle V3 contre UNE PIÈCE DU LABO gcc — les QUATRE rejets -5, le poison intact ; la découverte contre LA DLL RÉELLE mappée par sections — loupe_08_ligne @+0x1380 == le juge indépendant ; les DEUX textes v1 REPRODUITS mot pour mot ; les épreuves 286/294 repassées vertes), LE LANCEUR NOMMÉ (le double BOM ef bb bf ×2 : LA SIGNATURE DE TOUS les lanceurs de la campagne — 01 v2, 02, 05, 08 T, 08 C, vérifiés byte-byte — la première ligne erre, le run et la capture Tee intacts, aucun fix mi-campagne), LE STRAY NOMMÉ (livraisons.csv 1 250 o aux SEPT lignes — le geste de la 301 vécu : it2 VERT, it3 parti — tombé à la RACINE du /test 12:51:58Z puis à la corbeille par la main ; le livre au terrain : SIX lignes attendues, le recoup au prochain dépôt de l'atelier)
+
+La reprise vint du run tombé de l'unité 4. La pièce avait tout donné —
+la gravure, le doré, la ligne finale incomplète, les dix mille lignes,
+les soixante-dix-sept octets exacts — puis le harnais du kit lui-même
+s'est effondré à la première épreuve des rejets. Voici le défaut nommé
+sur pièces, le second trouvé au labo avant tout terrain, la brèche de
+l'épreuve refermée, les deux kits v2 livrés, le lanceur et le stray
+nommés — la reprise portée à 302.
+
+- LE RUN REÇU (la console du terrain, le kit téléchargé du coffre
+  12:52:41Z, la machine du développeur) : « === LE RUN DE L'UNITÉ 4
+  (loupe-08 ligne × bras T) === » puis [VERT] T0:la-piece-recoupee —
+  loupe.exe sha256 eec890a4… == la gravure du kit ; [T0] l'image
+  cartographiée DONT_RESOLVE @ 0x7ff72d910000 ; [T0] la feuille pure
+  (aucune feuille kernel32, la pièce n'appelle personne) ; [VERT]
+  V1:le-dore-proxy-premiere-ligne (les 77 o == le modèle, « 4D 5A 00
+  00… ») ; [VERT] V1:le-temoin-3f-ligne-finale-incomplete (UN octet
+  valide, quinze groupes d'espaces — Q3) ; [VERT]
+  V2:le-differentiel-10-000-lignes (10 000/10 000, la graine 20261115)
+  ; [VERT] V2:exactement-77-o (le poison au-delà de 77 demeure — I2) ;
+  PUIS la chute : « File scenario-unite08.py, line 232, in main …
+  TypeError: cannot be converted to pointer », « === LE RUN A FINI
+  (code 1) === ». LES NUMÉROS DE LIGNES RECROUPÉS au fichier livré
+  (232 en main / 300 sys.exit — le scénario == la gravure v1
+  a3d49fc4…) : le run a couru le kit v1 TEL QUEL. AUCUN témoin n'est
+  né (le bloc témoin vit APRÈS V4, jamais atteint), preuves-unite08/
+  n'existe pas, RIEN à dater ni signer (D99 préservé) ;
+  run-console-unite08.txt (le Tee du lanceur) porte le traceback
+  ENTIER — c'est LA PIÈCE À L'APPUI du défaut, le dossier du run
+  demeure TEL QUEL au terrain.
+- LE DÉFAUT NOMMÉ — LA BOUCLE V3 (côté KIT, jamais la pièce) : la
+  ligne 232 construisait le pointeur par LE CONSTRUCTEUR —
+  « ctypes.c_void_p(src) » — mais src est UN TAMPON (create_string_buffer,
+  un tableau ctypes) : le constructeur c_void_p refuse un tableau
+  (« cannot be converted to pointer », l'erreur exacte du terrain) ;
+  LE GESTE JUSTE existait DEUX FOIS dans le même kit : le composer
+  (lignes 173-174) et TOUT le kit C (lignes 274-279) passent par
+  « ctypes.cast(tampon, c_void_p) » — la correction est le geste du
+  kit C recopié au kit T, RIEN d'autre.
+- LE SECOND DÉFAUT — TROUVÉ AU LABO AVANT TOUT RUN (le kit C, la
+  découverte par la table d'exports) : les fonctions définies à UNE
+  convention (lire_octets(adresse, n), lire_u32(adresse),
+  lire_u16(adresse), lire_chaine(adresse)) APPELÉES à l'autre
+  (lire_octets(base, 0x3C, 4) à la ligne 174 — TROIS arguments à
+  DEUX ; lire_u32(base, opt + 112) — DEUX à UN, lignes 176/181-184 ;
+  lire_u16(base, tab_ordinaux + 2*i) — lignes 188/190) et la ligne
+  187 MÊLAIT les deux (« lire_chaine(base + lire_u32(base +
+  tab_noms + 4*i)) » — l'adresse absolue et le décalage confondus).
+  Le plantage reproduit au labo : « lire_octets() takes 2 positional
+  arguments but 3 were given ». LE BRAS C N'A JAMAIS COURU : aucune
+  livraison consommée, le défaut est nommé au labo AVANT le terrain
+  (le patron [RET-NU] : l'exclusion nommée avec sa raison).
+- LA BRÈCHE DE L'ÉPREUVE NOMMÉE : les épreuves de la 286 (« l'épreuve
+  exécute LE CODE LIVRÉ, pas sa copie ») extrayaient la fonction PURE
+  du scénario livré — le juge modele_ligne, par AST — et la 294 les
+  constantes ; LA PLOMBERIE Windows (la boucle V3, la découverte par
+  la table d'exports) n'a JAMAIS couru au labo dans un fichier livré :
+  les oracles appelaient la pièce par LEURS propres mains, jamais par
+  le texte du kit. Les DEUX défauts vivaient exactement là.
+- LE CORRECTIF (la gravure stable, le scénario seul bouge) : le kit T
+  v2 — la boucle V3 passe les tampons par cast() (la forme exacte du
+  kit C, lignes 232-237) ; le kit C v2 — la découverte unifiée à
+  (base, rva) : les quatre fonctions définies (base, rva[, n]), la
+  ligne 187 rejointe (« lire_chaine(base, lire_u32(base, tab_noms +
+  4*i)) »). LES SEPT autres pièces de chaque kit INTACTES
+  byte-byte (recoupées à la gravure v1 AVANT la copie : la pièce, la
+  notation + le brouillon [T] ou le source + le .def [C], le
+  lanceur, le LISEZMOI, le scellé proxy.exe, temoin-3f.bin) ; le
+  scénario seul a bougé — T : a3d49fc4… → 44384f5d…, C : 84240bf7… →
+  e8041034… ; l'EMPREINTES régénérée couvre les NEUF pièces (8 lignes
+  de gravure, le format v1 : BOM + CRLF).
+- L'ÉPREUVE v2 — LE TEXTE LIVRÉ, PLOMBERIE COMPRISE : les blocs
+  extraits VERBATIM des scénarios v2 (l'épreuve ne réécrit RIEN) et
+  EXÉCUTÉS au labo — ① la boucle V3 du T contre UNE PIÈCE DU LABO
+  (gcc -O2 -shared, le contrat des rejets : -5, RIEN écrit) : les
+  QUATRE rejets -5, la sortie POISON INTACTE, [VERT] ×4 ; ② la
+  découverte du C contre LA PIÈCE RÉELLE loupe-08-c.dll MAPPÉE PAR
+  SECTIONS à une base factice (19 sections, l'image 0x1f000 o — le
+  geste de LoadLibraryEx rejoué) : l'export unique loupe_08_ligne
+  découvert @+0x1380 == LE JUGE INDÉPENDANT (la table d'exports lue
+  du fichier brut par la table de sections du juge, une autre
+  plomberie) ; ③ les DEUX textes v1 REPRODUITS au labo avec les
+  messages EXACTS du terrain (« cannot be converted to pointer » /
+  « takes 2 positional arguments but 3 were given ») ; ④ les épreuves
+  de la 286/294 REPASSÉES contre les sources v2 (le juge par AST ==
+  le contre-modèle 2 000 cas, les constantes au plan, le générateur
+  déterministe) — TOUT VERT. La console de l'épreuve (1 983 o,
+  6d26fbd0…) est LA PIÈCE À L'APPUI du défaut du kit C, déposée aux
+  archives unite-08.
+- LA LIVRAISON AU COFFRE : kit-unite-loupe-08-T-20261115-v2/ et
+  kit-unite-loupe-08-C-20261115-v2/ au /test (9 pièces chacun),
+  chaque pièce RECROUPÉE PAR RE-TÉLÉCHARGEMENT byte-byte (la règle du
+  coffre), l'extraction vierge des zips recoupée. LE RANGEMENT (D143
+  : déplacés, jamais jetés) : les DEUX kits v1 DÉPLACÉS à
+  /test/archives-livraisons/unite-08-loupe-20261115/ renommés «
+  kit-unite-loupe-08-T-20261115-V1-DEFAUT-SCENARIO-V3-20261115 » et «
+  kit-unite-loupe-08-C-20261115-V1-DEFAUT-DECOUVERTE-20261115 » (le
+  défaut nommé au nom même du dossier), la console de l'épreuve v2 à
+  leurs côtés ; la racine revenue à SES 19 entrées — les DEUX kits v2
+  aux places des v1.
+- LE LANCEUR NOMMÉ — LE DOUBLE BOM : « ´╗┐´╗┐@echo off » en tête de
+  la console du terrain, la question venue avec le run. LA VÉRITÉ AU
+  LABO : le double BOM (ef bb bf ×2) vit en tête de TOUS les
+  lanceurs de la campagne — le kit 01 v2, le kit 02, le kit 05, les
+  DEUX kits 08 — vérifié byte-byte ; la première ligne du .bat
+  échoue (« '´╗┐´╗┐@echo' n'est pas reconnu »), l'echo DEMEURE
+  allumé (d'où les commandes affichées), MAIS le run, la capture Tee
+  et l'encodage du tuyau (l'édition v2 du kit 01) sont INTACTS — le
+  BOM vit EN AMONT du tuyau, la capture ne l'a jamais vu. C'EST LA
+  SIGNATURE COMMUNE des lanceurs de la campagne, PAS un défaut du
+  kit 08 : aucun correctif mi-campagne, les lanceurs demeurent
+  byte-stables (la comparaison T/C intacts — la pièce seule compte,
+  D202).
+- LE STRAY NOMMÉ : livraisons.csv (1 250 o, SEPT lignes de données —
+  les SIX d'origine + C-loupe-05-it2 VERT, le geste de la 301 VÉCU :
+  le mot corrigé, la ligne it3 partie) tombé à la RACINE du /test le
+  12:51:58Z puis MIS À LA CORBEILLE par la main — le témoin du geste
+  intermédiaire, laissé à la corbeille (D143 : rien n'est jeté, la
+  corbeille du coffre garde). L'ATELIER n'a JAMAIS été re-déposé
+  (l'annonce « j'ai tout mis dans le drive /test » : SEUL le stray
+  est arrivé) — le livre au terrain aujourd'hui : SIX lignes
+  attendues (l'arbitration du dernier échange — la ligne it2, née du
+  mot faux du pré-remplissage, partie au geste elle aussi, le VRAI
+  it2 attendu d'une consignation propre au kit v2) ; le recoup
+  byte-byte attendu au PROCHAIN dépôt de l'atelier ENTIER.
+- LA SUITE : au développeur — ① LA CONSIGNATION AU GUI (le livre ne
+  ment jamais : le run a couru) : la livraison T-loupe-08-it1 (le kit
+  2026-11-15, le run 2026-11-15, le verdict ROUGE) puis le défaut
+  nommé à l'onglet 6·DÉFAUTS (bras T, loupe-08, la livraison
+  T-loupe-08-it1) : LA CLASSE « plantage-harnais-v3 », LE MÉCANISME
+  « le constructeur ctypes.c_void_p refuse le tampon — cast()
+  requis (ligne 232, le bras C l'avait) », LE CÔTÉ « kit », LA PIÈCE
+  À L'APPUI « run-console-unite08.txt », L'EXCLUSION « non » ; ET le
+  défaut du kit C nommé au labo (bras C, loupe-08, SANS livraison) :
+  la classe « plantage-harnais-decouverte », le mécanisme « les
+  arités de la découverte — définies (adresse), appelées (base, rva)
+  — unifiées (base, rva), la ligne 187 rejointe », le côté « kit »,
+  la pièce à l'appui « epreuve-kits08-v2-console.txt (aux archives
+  unite-08 du coffre) », l'exclusion « OUI — nommé au labo avant
+  tout run terrain, aucune livraison touchée (le patron [RET-NU]) » ;
+  ② LE RE-RUN DU BRAS T : kit-unite-loupe-08-T-20261115-v2 du coffre
+  (une extraction FRAÎCHE, jamais réutiliser le wrapper v1), 1·KIT
+  (la nouvelle gravure : scenario-unite08.py 44384f5d…) → 2·RUN →
+  3·TÉMOIN (dater, signer de la main) → preuves-unite08/ ENTIER +
+  l'atelier ENTIER au coffre (le dépôt attendu depuis la 301 — le
+  recoup du livre aux SIX lignes en profitera) ; ③ LE BRAS C :
+  kit-unite-loupe-08-C-20261115-v2 (le v1 n'a jamais couru — le
+  défaut y était trouvé avant tout run) ; ④ LE VRAI it2 de C-loupe-05
+  (le kit v2 du coffre, 1/3 consommé) — toujours en attente, rien ne
+  presse ; ENSUITE loupe-13 recherche, aux deux bras — le labo
+  construit à la commande. (15/11, la session du run tombé, du
+  défaut nommé au kit et des DEUX kits v2 livrés)

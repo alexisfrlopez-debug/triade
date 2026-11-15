@@ -229,9 +229,11 @@ def main() -> int:
             ("E3:la-source-nulle", None, 5, sortie_buf),
             ("E3:la-sortie-nulle", source_buf, 5, None)):
         ctypes.memmove(sortie_buf, POISON * 96, 96)
-        r = verdict(LOUPE08(ctypes.c_void_p(src) if src is not None else None,
+        r = verdict(LOUPE08(ctypes.cast(src, ctypes.c_void_p)
+                            if src is not None else None,
                             lon,
-                            ctypes.c_void_p(srt) if srt is not None else None,
+                            ctypes.cast(srt, ctypes.c_void_p)
+                            if srt is not None else None,
                             0))
         brut = (ctypes.c_ubyte * 96)()
         ctypes.memmove(brut, sortie_buf, 96)
