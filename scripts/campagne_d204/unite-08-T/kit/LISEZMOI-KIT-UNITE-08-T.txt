@@ -1,0 +1,116 @@
+LISEZMOI — LE KIT DE L'UNITÉ 4 : LOUPE-08 LIGNE × BRAS T
+(la campagne de comparaison des workflows D204 ; le kit livré par le labo
+au coffre /test en son dossier daté — le GUI vous attend à l'onglet 1·KIT
+de l'unité loupe-08 × T)
+========================================================================
+
+L'OBJET : la QUATRIÈME unité de la partie contrôlée — le bloc loupe-08
+LIGNE au BRAS T (la notation scellée). La pièce de ce kit est le build du
+plan où le slot loupe-08 (RVA 0x49C0, 320 o) porte LA NOTATION DE
+CAMPAGNE : écrite à la main par l'agent depuis le contrat loupe-08:R1
+(composer UNE ligne hexadécimale de 77 o au tampon fixe — les 8 chiffres
+MAJUSCULES du décalage, 2 espaces, les seize groupes « HH » séparés d'un
+espace [l'espace médian DOUBLÉ après le huitième], 2 espaces, le miroir
+ASCII de 16 [le point hors 0x20..0x7E], le NUL — EXACTEMENT 77 o écrits,
+jamais un de plus ; la ligne incomplète garde ses colonnes ; AUCUN
+débordement par construction, AUCUNE entrée IAT — la feuille pure, le
+tampon de 77 o EST la borne). LES DIX-SEPT autres blocs demeurent les
+SCELLÉS du projet.
+
+LA CONSTRUCTION (consignée, les défauts nommés AVANT toute livraison) :
+l'oracle écrit-avant-code (régénéré du contrat I : oracle-depuis-I.txt) ;
+la notation à la main 296 o, 85 instructions, 11 étiquettes (mes choix :
+la feuille SANS CADRE — trois pushes, la pile ne se touche jamais ; les
+bornes AVANT LES PUSHES MÊMES — le refus ne pousse même pas un registre,
+deux sorties, la droite et la refusée ; le décalage en VOLATIL SÛR — r9
+demeure, aucun appel ne le détruit ; les huit chiffres PAR ROTATION —
+rol 36 puis rol 4, le décalage descend nibble à nibble, jamais le
+compteur de décalage du scellé ; le squelette EN MOTS — la boucle des
+huit qwords d'espaces + le dword + le NUL, jamais la boucle d'octets ;
+les groupes en DEUX BOUCLES À PAS FIXE — la basse à 10 + 3·i, la haute
+à 35 + 3·(i-8), jamais le saut conditionnel de position ; le miroir PAR
+LA SOUSTRACTION SUR LA COPIE — (c - 0x20) ≤ 0x5E, une seule comparaison)
+; DEUX FAUTES NOMMÉES EN ROUTE, toutes deux attrapées à l'oracle avant
+tout terrain : ① le premier passage du miroir posait LA JAUGE (c - 0x20)
+au lieu de l'octet même — l'octet mesuré n'est jamais l'octet posé,
+corrigé sur la copie edx, l'octet demeurant dans al ; ② LE DÉSERT DE LA
+TABLE — le harnais noyau ne posait pas la table R_HEX du plan (le
+harnais_rendu la pose, le noyau non : nommé) : la PIÈCE, elle, la porte
+à SON .rdata 0x2050 — recoupée au FICHIER même avant la pose au harnais
+; le build aux verrous 121 (round-trip R5, les mesures D161 des
+dix-sept scellées, le réseau des specs, l'audit msx64, la double preuve
+R7 des huit héritages), le différentiel au scellé CONFINÉ au slot
+loupe-08 [0x3bc0, 0x3d00) et à la porte R10 (9 plages, 295 o) ; la
+cristallisation : DIX rebuilds consécutifs IDENTIQUES (sha256
+eec890a4…) ; l'oracle du bloc : 12 VERT, 0 ROUGE (le doré : la première
+ligne de proxy.exe scellé + la ligne finale incomplète du témoin 3 ×
+64 Kio + 1 ; le différentiel 10 000 lignes == le modèle, la source lue
+seule, EXACTEMENT 77 o, l'état propre aux canaris près ; les QUATRE
+rejets -5 au poison intact ; LA FALSIFICATION DEMANDÉE : une colonne
+décalée d'un espace dans la notation — les 200 lignes du mutant
+DIVERGENT, la notation juste rejouée verte au retrait de la mutation) ;
+l'épreuve du scénario livré : son modèle extrait par AST, confronté au
+contre-modèle (2 000 cas + les frontières), LES CONSTANTES AUDITÉES
+(R_LOUPE08 == LOUPE08_VA du plan, LIGNE == LIGNE_TAILLE), le
+générateur déterministe (10 000 tirages, deux passages identiques).
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité) :
+  1. AU GUI (TRIADE_gui_tous_runs_v1 ou TRIADE_gui_campagne_v1), onglet
+     1·KIT de l'unité loupe-08 × T : CHOISIR CE DOSSIER
+     (kit-unite-loupe-08-T-20261115) — le GUI recoupe les EMPREINTES
+     gravées (une divergence, rien ne court) ;
+  2. onglet 2·RUN : LANCER LANCEUR-UNITE-08-T.bat (le lanceur officiel —
+     il court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (LoadLibraryEx DONT_RESOLVE —
+     LA FEUILLE PURE N'APPELLE PERSONNE : aucune feuille kernel32 à
+     résoudre), appelle loupe-08 aux gammes du kit, juge par le modèle
+     indépendant (la composition Python du format), et écrit le témoin ;
+     le dossier preuves-unite08/ naît sur votre machine ;
+  3. onglet 3·TÉMOIN : ouvrir preuves-unite08\temoin-unite08.txt au
+     bloc-notes, le DATER, le SIGNER DE VOTRE MAIN — jamais automatisé
+     (D99) — puis renvoyer le dossier ENTIER au coffre /test ;
+  4. aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1 — la cap tenue par le GUI : au plus TROIS par bloc, l'arrêt au
+     premier vert), les défauts nommés s'il y en a, le chrono (M4) ;
+  5. le labo recoupe le run revenu — PUIS l'unité suivante commence.
+
+LES PIÈCES DU KIT :
+  loupe.exe                     la pièce (127 488 o, sha256 eec890a4…) —
+                                le build du plan, le slot loupe-08 portant
+                                la notation de campagne (296 o de code,
+                                24 de padding NOP) ;
+  notation-loupe-08-ligne.asm   la notation LIVRÉE (l'explicite, résolue
+                                par l'auteur d'arithmétique d'adresses) ;
+  brouillon-loupe-08-ligne.asm  le brouillon de la main (les choix et les
+                                deux fautes nommées en commentaires) ;
+  scenario-unite08.py           le scénario (le chargeur + le juge) ;
+  LANCEUR-UNITE-08-T.bat        le lanceur officiel (la capture console
+                                en UTF-8 des deux côtés du tuyau) ;
+  proxy.exe                     le scellé de l'ère 1.0.0 (65 024 o — sa
+                                première ligne EST le doré du contrat :
+                                « 4D 5A 00 00… », le projet écrit ses
+                                en-têtes à la main) ;
+  temoin-3f.bin                 le témoin de 3 × 64 Kio + 1 (la
+                                génération FIXE du labo, graine
+                                20261107 — les MÊMES octets que les
+                                kits 01/02/05 : sa ligne finale
+                                incomplète est le second doré) ;
+  EMPREINTES-KIT-UNITE-08-T.txt la gravure (chaque pièce, sha256) ;
+  le présent LISEZMOI.
+
+LES ÉCARTS NOMMÉS DU RUN TERRAIN (consignés, jamais maquillés) :
+  — le vecteur V4 écrit son fixture au réceptacle (falsifie-16.bin, le
+    doré copié avec un octet muté) : il vit à preuves-unite08/ et repart
+    avec le témoin — nommé ;
+  — la citation du contrat (« MZ\x90\x00\x03… ») est l'illustration
+    canonique du PE : le doré est LA PREMIÈRE LIGNE DU SCELLÉ RÉEL (« 4D
+    5A 00 00… ») — le modèle juge les octets réels, jamais la citation
+    (nommé).
+
+LA FRONTIÈRE : le run est À VOUS (CA6 — le labo ne court JAMAIS le
+terrain) ; le témoin se signe de VOTRE MAIN (D99) ; le renvoi du dossier
+ENTIER vous appartient ; la pièce ne bouge pas (l'empreinte gravée — une
+divergence, rien ne court).
+
+*La consignation vit au journal de travail (l'Entrée 301) ; le détail du
+plan à PLAN_PREREGISTRE_COMPARAISON.md (verrouillé à D204).*

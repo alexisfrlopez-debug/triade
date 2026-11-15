@@ -1,0 +1,11 @@
+﻿EMPREINTES — LE KIT DE L'UNITÉ 4 (loupe-08 LIGNE × bras C, la campagne D204)
+(chaque pièce sha256 — le GUI recoupe à l'onglet 1·KIT ; une divergence, rien ne court)
+
+c4e3285dabb95bbd1fae0daf62c124cbb8df845d077d73590b2ed08102c93605  LANCEUR-UNITE-08-C.bat
+8d9b0fe2bcc87d98a9068b40e03634f4603e15567cf49383961c1d1d2d43c723  LISEZMOI-KIT-UNITE-08-C.txt
+97aeec28cbca0d45e9570b552444e6555908de911bedf6468ba2fea328ac6af3  loupe-08-c.c
+ba4127ea34bd0d2df5b2b32985123c9157291414668c45bbf8c2c66e23439631  loupe-08-c.def
+9a51be684e2dec304d3324eaa5c3a069e7f2676166c789f3b2d2763f13312a73  loupe-08-c.dll
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe
+84240bf7b96169536742ffc7227b1611fef04cd5d3c7b4c540f6b8f6df035aa9  scenario-unite08C.py
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin

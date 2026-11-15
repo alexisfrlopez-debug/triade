@@ -1,0 +1,96 @@
+L'ORACLE DEPUIS I — l'unité 4 (loupe-08 ligne × bras T, la campagne D204)
+Écrit-avant-code : le présent document dérive du contrat loupe/I/loupe-08-ligne.md
+(révision 1) AVANT la notation. Le juge est le MODÈLE INDÉPENDANT Python —
+jamais les octets du bloc.
+
+LE MODÈLE (la sémantique du contrat, une fonction) :
+
+  def modele_ligne(decalage, octets):
+      # la longueur valide 1..16, le décalage multiple de 16 ≤ 0x7FFFFFFF
+      # (P4 : BORNE_TAILLE le garantit — le modèle ne vérifie pas ce que
+      # le plan garantit) ;
+      # Q1 : « SSSSSSSS·HH HH HH HH HH HH HH HH··HH HH HH HH HH HH HH HH··
+      #        MMMMMMMMMMMMMMMMM » + NUL — 8 chiffres hex MAJUSCULES du
+      # décalage (grand-boutiste), 2 espaces, 16 groupes « HH » séparés
+      # d'un espace (le médian DOUBLÉ après le huitième), 2 espaces, le
+      # miroir ASCII de 16, le NUL — EXACTEMENT 77 o, jamais un de plus ;
+      s = f"{decalage:08X}  "
+      g = [f"{b:02X}" if i < len(octets) else "  "
+           for i, b in enumerate(octets + b"\x00" * (16 - len(octets)))]
+      s += " ".join(g[:8]) + "  " + " ".join(g[8:]) + "  "
+      # Q2 : le miroir — 0x20..0x7E le caractère, tout autre le point
+      miroir = "".join(chr(b) if 0x20 <= b <= 0x7E else "."
+                       for b in octets[:16])
+      s += miroir + " " * (16 - len(miroir))
+      # Q3 : la ligne incomplète — les groupes au-delà de la longueur
+      # demeurent deux espaces, le miroir au-delà un espace : la colonne
+      # ASCII ne bouge JAMAIS (l'alignement est un invariant)
+      return s.encode("latin-1") + b"\x00"          # 77 o exacts
+
+  LES POSITIONS dérivées du format (la colonne ASCII est un invariant) :
+    [0..7]    les huit chiffres du décalage (bits 31..0, nibble à nibble)
+    [8..9]    deux espaces
+    [10..32]  les groupes 0..7 : « HH » à 10 + 3·i, l'espace entre eux
+    [33..34]  l'espace médian DOUBLÉ (entre les groupes 7 et 8)
+    [35..57]  les groupes 8..15 : « HH » à 35 + 3·(i − 8)
+    [58..59]  deux espaces
+    [60..75]  le miroir ASCII : 60 + i
+    [76]      le NUL final
+
+  LE VERDICT (Q4) : rax = 0 ; les rejets (E1/E2/E3) : rax = −5, RIEN
+  écrit — la sortie empoisonnée demeure INTACTE (I2 : les bornes P2
+  vérifiées AVANT la première écriture).
+
+LES ORDRES DU CONTRAT, dérivés mot à mot :
+  P1 → rcx = la source : au moins rdx octets lisibles (le modèle découpe
+       len(octets) ≤ 16 octets — jamais au-delà).
+  P2 → rdx = la longueur valide 1..16 : 0 ou 17+ → −5 AVANT toute
+       écriture (E1/E2).
+  P3 → r8 = la sortie : 77 o accessibles en écriture ; nulle → −5 (E3).
+  P4 → r9 = le décalage, multiple de 16, ≤ 0x7FFFFFFF — BORNE_TAILLE le
+       garantit : le modèle ne le vérifie pas (le plan répond d'elle).
+  Q1 → EXACTEMENT 77 o écrits : les positions ci-dessus, jamais une de
+       plus — le tampon de 77 o est la borne même.
+  Q2 → le miroir : 0x20..0x7E le caractère, tout autre le point « . » —
+       les octets non imprimables ne cassent jamais l'alignement.
+  Q3 → la ligne finale incomplète : les groupes absents = deux espaces,
+       le miroir absent = un espace — la colonne ASCII ne bouge pas.
+  Q4 → rax = 0.
+  I1 → AUCUNE entrée IAT, AUCUN site syscall, AUCUN état détenu — les
+       arguments seuls (le miroir exact des feuilles pures tls13).
+  I2 → AUCUN débordement : les bornes de P2 vérifiées AVANT la première
+       écriture ; le refus n'écrit RIEN.
+  I3 → la source LUE SEULE : ni le tampon de vue ni la sortie ne se
+       rétro-écrivent.
+  I4 → la table « 0123456789ABCDEF » du plan (MAJUSCULES — la convention
+       du journal des builds), lue par déplacement RIP ; aucun registre
+       non volatil détruit ; NOP, 0x90.
+
+LES VECTEURS DU CONTRAT (le périmètre de l'oracle AU LABO) :
+  V1 doré        : LA PREMIÈRE LIGNE DE PROXY.EXE SCELLÉ (« MZ\x90\x00
+      \x03\x00… » — la pièce de l'ère rendue à l'œil) : la ligne exacte,
+      les 77 o comparés au modèle ; LA LIGNE FINALE INCOMPLÈTE du témoin
+      de 3 × 64 Kio + 1 (UN octet valide : quinze groupes d'espaces, la
+      colonne droite) (couvre Q1, Q2, Q3, Q4).
+  V2 différentiel : 10 000 lignes aléatoires (décalages multiples de 16
+      ≤ 0x7FFFFFFF, longueurs 1..16, octets 0x00..0xFF — la graine fixe
+      de la campagne, les mêmes tirages aux deux juges) : la sortie ==
+      la composition Python du même format, l'égalité OCTET PAR OCTET
+      (couvre Q1, Q2, Q3).
+  V3 rejet       : longueur 0, longueur 17, source nulle, sortie nulle —
+      les QUATRE verdicts −5, RIEN écrit : la sortie demeurant POISON
+      (couvre E1, E2, E3, I2).
+  V4 falsification : une colonne décalée d'un espace dans la notation —
+      l'écran attendu diverge, l'oracle à scénarios échoue — LA
+      FALSIFICATION DEMANDÉE (le juge lit le format, jamais la pièce).
+
+LES INTÉGRATIONS dérivées : AUCUNE — la feuille pure n'est appelée par
+aucun scellé du noyau (loupe-10 le peintre l'appelle, lui, au rendu :
+hors du périmètre livré de l'unité 4 — l'intégration du peintre vit au
+chantier du domaine, pas au kit de campagne).
+
+LES TÉMOINS : le doré PROXY.EXE SCELLÉ (tls13/proxy.exe — la pièce de
+l'ère 1.0.0, 65 024 o, sa première ligne) + le témoin de 3 × 64 Kio + 1
+(la génération FIXE du labo, graine 20261107 — 196 609 o, sa ligne
+finale) — les MÊMES octets aux deux bras, recoupés aux gravures avant
+toute copie.

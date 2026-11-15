@@ -1,0 +1,3 @@
+LIBRARY loupe-08-c
+EXPORTS
+    loupe_08_ligne
