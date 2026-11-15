@@ -10819,3 +10819,60 @@ Work Log:
   LE VRAI it2, la cap tient ; ENSUITE loupe-08 ligne, aux deux bras —
   le labo construit à la commande. (15/11, la session du renvoi du
   matin, de l'erreur nommée et du kit C v2)
+
+## Task 207 — Entrée 300 : le vrai it2 recoupé (17 VERT 0 ROUGE, la faute du juge réparée), le livre corrigé au geste, le mot du verdict faux nommé (le formulaire pré-remplit ROUGE), loupe-08 ordonnée
+
+- LA COMMANDE : « j'ai tout mis dans le drive /test / verifie puis si
+  tout est ok go pour la suite » — la réponse du labo : neuf recoups
+  VERT et UN mot faux au livre.
+- LES DÉPÔTS : le dossier GUI re-déposé (l'atelier au livre corrigé,
+  le log de la session 11:33:17, l'état au kit v2) ; le kit C v2
+  portant les pièces du run (le téléversement FUSIONNÉ au dossier du
+  labo — même nom au Drive : les 12 pièces re-téléversées +
+  preuves-unite05C/ + la console).
+- LE RECOUP byte-byte : le kit 12/12 IDENTIQUE à la gravure livrée
+  (scénario 36c6fbff…, dll b0d347ba…, gravure 64123b7e…) ; le livre
+  1 251 o == 1 184 + l'ajout exact de 67 o — les DIX-SEPT premières
+  lignes byte-identiques (le gabarit + l'en-tête + les SIX lignes
+  d'origine), it2/it3 du matin PARTIS au geste, UNE ligne neuve : le
+  VRAI C-loupe-05-it2 ; le carnet + UNE ligne M3 (tag-backup 11:35→
+  11:37, 2 min), la ligne du matin demeure ; defauts.csv +
+  journal-ouverture INTACTS.
+- LE RUN : 10:36:29Z, la machine PORTABLE (CA2), **17 VERT, 0 ROUGE**
+  — LA FAUTE DU JUGE v1 RÉPARÉE : V4 la-plage-verrouillée ET
+  V4 la-session-survit TOUTES DEUX VERTES (la session de V3 fermée
+  avant l'ouverture de V4, le guichet fail-closed) ; la falsification
+  V5 recoupée au bac (l'octet 3 muté 0x90→0x6f, 3a15c63713c11688… ≠
+  3396717b98b4859b…) ; le témoin daté 15/11/2026 signé Alexis Lopez
+  [D99] ; la chronologie tenue au log du GUI (un seul lancement,
+  jamais une date avant le geste).
+- LA FAUTE NOMMÉE — LE MOT DU LIVRE : la ligne it2 porte « ROUGE »,
+  la console et le témoin signé portent « VERT » — LA CAUSE : le
+  formulaire du GUI pré-remplit le verdict à « ROUGE » (la ligne 2364,
+  la liste verrouillée VERT/ROUGE) ; la main n'a pas changé le mot.
+  La ligne est vraie par ailleurs (le run a couru, les dates
+  exactes) — SEUL LE MOT EST FAUX. La conséquence : le livre lit
+  « EN COURS (2/3) » et autoriserait un it3 faux — la vérité du run
+  FERME l'unité (§ 7, l'arrêt au premier vert).
+- LE GESTE DEMANDÉ : UN MOT au livraisons.csv (ROUGE → VERT à la
+  ligne it2, au bloc-notes, rien d'autre), l'atelier re-déposé — le
+  livre est au terrain, jamais réécrit par le labo.
+- LE GO : LOUPE-08 LIGNE AUX DEUX BRAS (la commande reçue) — la
+  notation neuve du contrat loupe-08:R1 (la ligne de 77 o, le tampon
+  fixe, aucun débordement, les rejets -5), le C gcc -O2 croisé (la
+  chaîne mingw à re-extraire — le bac recyclé l'a emportée), les deux
+  juges, la cristallisation, les épreuves, les kits au coffre.
+- LE RANGEMENT (D143) : le dépôt GUI renommé « TRIADE_gui_tous_runs_v1-
+  VRAI-IT2-20261115 » aux archives ; les pièces du run au sous-dossier
+  « kit-unite-loupe-05-C-20261115-v2-RUN-VRAI-IT2-20261115 » ; le kit
+  v2 revenu à ses 12 pièces, la racine à SES 17 entrées.
+- LA CONSIGNATION : la présente Task 207 + l'Entrée 300 ; la carte
+  OU-TROUVER portée à 300 (l'entrée 26, l'en-tête, les renvois Entrées
+  251-300 / Tasks 158-207) aux deux endroits ; la carte LISEZMOI-KITS
+  portée à 300 au /test, recoupée par re-téléchargement ; le push
+  GitHub (main), UN SEUL commit ; le miroir Drive resynchronisé, D141
+  tenu (le courant 299-f8b699f archivé versionné).
+- SUITE : au développeur — le mot au livre puis le re-dépôt de
+  l'atelier ENTIER ; au labo — la construction loupe-08 aux deux bras
+  (la session prochaine). (15/11, la session du vrai it2, du mot à
+  corriger et du go)

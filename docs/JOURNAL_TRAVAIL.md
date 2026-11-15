@@ -12510,3 +12510,143 @@ portée à 299.
   ENSUITE loupe-08 ligne, aux deux bras — le labo construit à la
   commande. (15/11, la session du renvoi du matin, de l'erreur nommée
   et du kit C v2)
+
+## Entrée 300 — LE RE-RUN DU VRAI it2 REÇU ET RECOUPÉ : LE LIVRE CORRIGÉ AU GESTE (les six lignes revenues, les it2/it3 du matin partis au geste), LE RUN 17 VERT 0 ROUGE SUR LE KIT v2 — LA FAUTE DU JUGE RÉPARÉE (la session survit, la plage verrouillée), LE TÉMOIN DATÉ SIGNÉ, MAIS LE MOT DU LIVRE FAUX : it2 consigné ROUGE, la console et le témoin signé disent VERT (le formulaire du GUI pré-remplit ROUGE — nommé) — LE MOT AU LIVRE DEMANDÉ AU GESTE, LOUPE-08 LIGNE ORDONNÉE AUX DEUX BRAS (l'annonce du développeur : « j'ai tout mis dans le drive /test » ; la commande : « verifie puis si tout est ok go pour la suite »)
+
+La reprise vint de l'annonce du tout déposé et de la commande du go
+conditionnel. Le recoup tint neuf points verts et UN mot faux — le mot
+du recoup au livre, contredit par la console et par le témoin signé de
+la même main. Voici le recoup du vrai it2, la faute nommée, le geste
+demandé, les dépôts rangés, le go donné — la reprise portée à 300.
+
+- LA VÉRIFICATION PRÉALABLE : le conteneur du labo recyclé encore (la
+  répétition 285/293/295/296/297/298/299, nommée) — les jetons du relais
+  vivants (le /Tokens, jamais imprimé), le dépôt GitHub vivant (main @
+  f8b699f, l'Entrée 299), le /test marché à neuf : le dossier GUI
+  re-déposé (modifié 10:38:22Z le 15/11), le kit C v2 portant les
+  pièces du run (10:38:07Z-10:38:08Z — le téléversement du terrain
+  FUSIONNÉ au dossier du labo, même nom), la carte LISEZMOI-KITS à 299,
+  les archives à leur place — RIEN ne manquait au dossier, TOUT fut
+  reçu.
+- LE LIVRE CORRIGÉ AU GESTE (recoupé byte-byte contre l'archivé de la
+  298) : livraisons.csv 1 251 o == 1 184 o + L'AJOUT EXACT de 67 o —
+  les DIX-SEPT premières lignes (le gabarit « # », l'en-tête, les SIX
+  lignes d'origine) BYTE-IDENTIQUES à l'archivé, les lignes it2/it3 du
+  matin PARTIES (la chirurgie prescrite par la 299, vécue au terrain —
+  rien d'autre touché), UNE ligne neuve : C-loupe-05-it2 (kit
+  2026-11-15, run 2026-11-15) — LE VRAI it2, le run existe ; le carnet
+  1 283 o == 1 235 + UNE ligne M3 (C loupe-05 tag-backup 11:35→11:37,
+  2 min — heures locales cohérentes au run 10:36:29Z), la ligne M3 du
+  matin DEMEURE (au geste, jamais reconstruite) ; defauts.csv 389 o et
+  journal-ouverture.txt 648 o INTACTS byte-byte.
+- LE RUN (bras C, le kit v2, la machine PORTABLE · Windows 10 · AMD64 ·
+  Python 3.14.10 [CA2 — la même que les HUIT runs]) : le kit téléchargé
+  du coffre 10:32:47Z (l'horodatage au nom du dossier), le GUI ouvert
+  11:33:17 locales, UN SEUL lancement du kit au log (tous_runs_gui_
+  20261115-113317.log), le run 10:36:29Z — **17 VERT, 0 ROUGE** : T0 la
+  pièce recoupée à la gravure (loupe-05-c.dll 96 171 o, sha256
+  b0d347ba…), V1 ×6 (les trois témoins — les gammes 4/203/234 cas, la
+  graine 20261115, T[31] la vérité RFC 1321 tenue), V2 ×2 (le vide + le
+  abc FIPS au fichier), V3 ×5 (E1/E2a/E2b/E2c/E3 — les rejets au
+  poison, rien publié), **V4 ×2 (la plage verrouillée + LA SESSION
+  SURVIT — LA FAUTE DU JUGE v1 RÉPARÉE : la session de V3 fermée avant
+  l'ouverture de V4, le guichet fail-closed tenu, la même gamme rejouée
+  verte)**, V5 (l'octet mute — falsifie-384.bin : l'octet 3 muté
+  0x90→0x6f, le condensé diverge 3a15c63713c11688… ≠ 3396717b98b4859b…
+  ET == hashlib du mutant — recoupé au bac octet par octet) ; le témoin
+  daté 15/11/2026 signé Alexis Lopez (D99 — la même main), « le
+  verdict : 17 VERT, 0 ROUGE — VERT ».
+- LE KIT v2 AU COFFRE (le téléversement du terrain fusionné au dossier
+  du labo) : les DOUZE pièces recoupées byte-byte contre la gravure
+  livrée par la 299 — 12/12 IDENTIQUES (le scénario == 36c6fbff…, la
+  dll == b0d347ba…, la gravure == 64123b7e…) ; les pièces du run nées
+  dedans (preuves-unite05C/ : le témoin 10:37:12Z + falsifie-384.bin ;
+  run-console-unite05C.txt 7 782 o, 10:36:30Z — la capture UTF-16LE du
+  lanceur, lue et recoupée).
+- LA CHRONOLOGIE (tenue au log du GUI + les horodatages Drive) : kit
+  téléchargé 10:32:47Z → GUI ouvert 11:33:17 locales → le kit lancé par
+  SA console officielle (UN SEUL lancement) → run 10:36:29Z → console
+  10:36:30Z → témoin daté signé 10:37:12Z → carnet 10:37:24Z → livre
+  10:37:28Z → dépôts 10:38Z — jamais une date avant le geste.
+- LA FAUTE NOMMÉE — LE MOT DU LIVRE : la ligne C-loupe-05-it2 porte
+  verdict « ROUGE » ; la console (17 VERT, 0 ROUGE) ET le témoin signé
+  (« 17 VERT, 0 ROUGE — VERT ») portent VERT. LA CAUSE : le formulaire
+  de livraison du GUI PRÉ-REMPLIT le verdict à « ROUGE » (un défaut
+  prudent — la liste déroulante verrouillée VERT/ROUGE, la ligne 2364
+  du GUI : vars_l["verdict"] = tk.StringVar(value="ROUGE")) ; la main
+  n'a pas changé le mot, le GUI a consigné fidèlement le mot donné
+  (« la livraison C-loupe-05-it2 est consignée (2/3, verdict ROUGE) »
+  au log — le GUI ne fabrique rien, CA5/CA6). La ligne est VRAIE par
+  ailleurs (le run a couru, les dates exactes, le numéro juste) — SEUL
+  LE MOT DU VERDICT EST FAUX. LA CONSÉQUENCE : le livre lit l'unité
+  « EN COURS (2/3) » — la vérité du run la FERME (§ 7 : l'arrêt au
+  premier vert) ; le livre tel quel autoriserait un it3 FAUX (le GUI
+  ne verrait aucun vert à C-loupe-05 et ouvrirait la cap à it3).
+- LE GESTE DEMANDÉ (au terrain — le livre est à lui, jamais réécrit par
+  le labo) : UN MOT au livraisons.csv de l'atelier — la ligne
+  C-loupe-05-it2 : « ROUGE » → « VERT » (le mot du recoup — la console
+  et le témoin signé le portent), RIEN d'autre touché (le gabarit, les
+  sept lignes, le carnet, les défaults demeurent), l'atelier ENTIER
+  re-déposé au coffre. Le précédent : la 299 retira des lignes entières
+  au geste ; ici le mot seul — la ligne demeure vraie, le mot faux
+  part. (Le GUI n'offre aucun retrait ni correction — append-only par
+  design ; le geste se vit au fichier, au bloc-notes, jamais Excel.)
+- L'ARBITRAGE : l'unité C-loupe-05 est VERT À LA VÉRITÉ DU RUN — 17
+  VERT 0 ROUGE au kit v2, le témoin daté signé, la pièce recoupée à la
+  gravure ; la cap : it1 ROUGE (le juge v1 fautif — la faute au labo ne
+  consomme jamais, la ligne DEMEURE : le run a couru, le mot était
+  juste), it2 VERT (le juge v2 réparé) — 2/3 consommées, CLOSE au
+  premier vert (§ 7). La partie contrôlée de la campagne : loupe-01 ×
+  T+C VERT (closes), loupe-02 × T+C VERT (closes), loupe-05 × T VERT à
+  it1 (close) × C VERT à it2 (close à la vérité du run — le mot au
+  livre attendu au geste).
+- LE GO DONNÉ (la commande « go pour la suite ») : LOUPE-08 LIGNE, aux
+  DEUX bras — le labo construit à la commande (le précédent de la 297 :
+  l'unité 3 bâtie des deux bras en une session). Le contrat loupe-08:R1
+  est au dossier (I/loupe-08-ligne.md) : composer UNE ligne
+  hexadécimale de 77 o au tampon fixe — les 8 chiffres du décalage, les
+  seize groupes « HH » à l'espace médian doublé, le miroir ASCII au
+  point de remplacement, le NUL final ; AUCUN débordement par
+  construction, les longueurs SONT les bornes, les rejets -5 au poison
+  (longueur 0, longueur 17, pointeurs nuls) ; les vecteurs V1-V4 du
+  contrat (le doré proxy.exe scellé, le différentiel aux 10 000
+  lignes, le rejet, la falsification DEMANDÉE — une colonne décalée
+  d'un espace doit ÉCHOUER). La construction : la notation neuve à la
+  main au bras T (le build du plan au slot loupe-08, la cristallisation
+  dix rebuilds), le source C gcc -O2 croisé au bras C (la chaîne mingw
+  à re-extraire des paquets Debian — le bac recyclé l'a emportée,
+  nommé d'avance), les DEUX juges, les épreuves au bac, les kits au
+  coffre.
+- LE RANGEMENT (D143 : déplacés, jamais jetés, par le relais OAuth) :
+  le dépôt GUI du jour DÉPLACÉ à /test/archives-livraisons/
+  unite-05-loupe-20261115/ renommé « TRIADE_gui_tous_runs_v1-
+  VRAI-IT2-20261115 » (le témoin du run ET du mot faux — jamais
+  maquillé) ; les pièces du run DÉPLACÉES du kit v2 au sous-dossier
+  « kit-unite-loupe-05-C-20261115-v2-RUN-VRAI-IT2-20261115 »
+  (preuves-unite05C/ + run-console-unite05C.txt) ; le kit v2 REVENU à
+  ses DOUZE pièces pures (la gravure intacte), la racine revenue à SES
+  17 entrées.
+- LES ÉCARTS NOMMÉS : M2 MANQUANT (les appels de la session sans
+  journal d'usage — la répétition des 290/294/297/298/299) ; M4 non
+  instrumentée au labo (la répétition) ; le bac recyclé encore (la
+  répétition — la chaîne mingw à re-extraire pour loupe-08 C) ; LE MOT
+  FAUX AU LIVRE (nommé ci-dessus, le geste demandé) ; le re-téléversé
+  du terrain fusionné au dossier du labo (le même nom au Drive —
+  nommé, le recoup 12/12 tenu, le rangement sépare les pièces du run).
+- LA CONSIGNATION : la présente Entrée 300 + Task 207 ; la carte
+  OU-TROUVER portée à 300 (l'entrée 26 au tableau de campagne,
+  l'en-tête de mise à jour, les renvois Entrées 251-300 / Tasks
+  158-207) aux DEUX endroits (la racine du coffre + le miroir git) ;
+  la carte LISEZMOI-KITS-UNITES-D204.txt PORTÉE À 300 au /test (la
+  299 intacte en tête, la section du vrai it2 apposée en queue), la
+  livraison recoupée par re-téléchargement ; le push GitHub (main) :
+  JOURNAL_TRAVAIL.md + worklog.md + OU-TROUVER, UN SEUL commit ; le
+  miroir Drive resynchronisé, D141 tenu (le courant 299-f8b699f
+  archivé versionné, le bundle porté à la 300).
+- SUITE : au développeur — ① LE MOT AU LIVRE (ROUGE → VERT à la ligne
+  C-loupe-05-it2, au bloc-notes, RIEN d'autre) puis re-déposer
+  l'atelier ENTIER au coffre — l'unité 3 × C close à la vérité du run,
+  le livre la dira ; ② au labo — LOUPE-08 LIGNE AUX DEUX BRAS (la
+  commande reçue ce jour) : la notation neuve du contrat, le C croisé,
+  les juges, la cristallisation, les épreuves, les kits au coffre.
+  (15/11, la session du vrai it2, du mot à corriger et du go)
