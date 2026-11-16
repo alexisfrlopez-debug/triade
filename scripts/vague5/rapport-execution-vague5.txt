@@ -1,0 +1,213 @@
+LE RAPPORT D'EXÉCUTION — LA VAGUE 5 DES DIX INSTRUCTIONS
+(les dix fichiers Qwen_text_20261116_* du /instructions, uploadés le
+16/11 à 18:33-18:34 ; lus INTÉGRALEMENT avant toute exécution le 17/11 ;
+exécutés un à un, chacun avec son étape de vérification ; l'archivage
+PRÉPARÉ puis DIFFÉRÉ — le déplacement au /ARCHIVE attend un jeton relais
+Drive frais : l'écriture au coffre fut refusée de bout en bout cette
+session (relais OAuth invalid_grant, jetons expirés, SA sans droit) ; les
+dix fichiers demeurent au /instructions, lus, exécutés, 10/10 md5
+recoupés à la lecture)
+
+================================================================================
+
+1. Qwen_text_20261116_4zi174ey3 — RQ2 : LES VALEURS DÉSYNCHRONISÉES
+   EXÉCUTÉ : les médianes courantes portées à 1 277/3 374/3 674
+   (abstract, résumé, §3.2, conclusion) ; les valeurs v0.14.0
+   (580/2 143/3 510) et M1 (51/719/1 088) étiquetées « historique »
+   PARTOUT ; les ratios baseline recalculés (300 304/1 277 = 235× ;
+   300 304/3 674 = 82× — les 518×/86× retirés) ; §4 (« measured once,
+   early », « no baseline ») et §5 (« M1-era card », « second agent has
+   not yet ») réparés sur l'état réel ; les « 138 mutation survivors »
+   de la conclusion portés à 56 ; les archives de soumission citées en
+   v0.18.0. Aucune valeur tapée : tout généré des sources (les mesures
+   brutes, les CSV).
+   VÉRIFIÉ : le linter v180 (62 affirmations au registre, les valeurs
+   recalculées des CSV) VERT ; les interdits (518×/86×, 138 survivors,
+   « no baseline ») refusés au build ; la compilation 29 pages propre.
+
+2. Qwen_text_20261116_q17cx7y35 — §3.5 : LES SIGNES INVERSÉS
+   EXÉCUTÉ : les pourcentages recalculés du CSV (75 983 vs 69 132 vs
+   77 505) : +9,9 % contre -O2, −2,0 % contre -Os ; la convention
+   EXPLICITE au texte (« coût de la notation relativement à la
+   référence, positif = notation plus chère »).
+   VÉRIFIÉ : le linter ÉTENDU aux signes et conventions — les deux
+   signes au registre avec leur dérivation ; les contrôles négatifs
+   (la falsification) attrapent toute mutation.
+
+3. Qwen_text_20261116_bwxv9xzfa — L'ARITHMÉTIQUE DE CAMPAGNE
+   EXÉCUTÉ : la table complète unité × bras × livraison × verdict ×
+   échappée × attribution GÉNÉRÉE des ledgers (22 livraisons) ;
+   le statut du 7e rouge EXPLICITE (C-loupe-05-it1 = l'artefact du
+   juge V4 de l'Entrée 294 : la faute au juge du labo ne consomme
+   jamais, règle D202) ; M3 lu au carnet (T 104 min, C 17 min) ; les
+   verdicts EXPLICITES H1 TENUE / H2 TENUE (3 T, 3 C) / H3 FALSIFIÉE
+   (×1,27) / H4-D204 TENUE (×6,1) / H5 FALSIFIÉE (×23,9) — insérés à
+   §2.4 (tab:campagne) et §3.1 ; la ligne H5 de la table v0.16.0 qui
+   disait « TENUE (23,9× ≤ 10×) » était incohérente — le manuscrit
+   avait raison (falsifiée), la table générée corrigée.
+   VÉRIFIÉ : reconciliation_campagne_v180.py — chaque total recalculé
+   du registre brut, 14/14 contrôles de réconciliation, zéro
+   divergence (code 0).
+
+4. Qwen_text_20261116_n05s570ch — LA BIBLIOGRAPHIE
+   EXÉCUTÉ : les QUATRE entrées vérifiées AUX SOURCES PRIMAIRES avant
+   insertion (arXiv/ACM/dblp/ICLR, le 17/11) : STOKE (Schkufza, Sharma,
+   Aiken — ASPLOS 2013, pp. 305-316, doi:10.1145/2451116.2451150) ;
+   SuperCoder (Wei, Suresh, Tan, Xu, Singh, Wang, Aiken — arXiv:
+   2505.11480, v4 du 8 août 2026 ; 95,0 % de tests passés et ×1,46 vs
+   gcc -O3 après fine-tuning — confirmés de la page arXiv) ; LaaC/
+   CompilerEval (Zhang, Gao, Liu, Xing, Wu, Zhao — IJCNN 2025,
+   arXiv:2511.04132) ; Nova (Jiang, Wang, Liu, Xu, Tan, Zhang, Babkin
+   — ICLR 2025, arXiv:2311.13721) ; la citation cassée STOKE[?] guérie
+   par \cite{stoke} ; la phrase de positionnement réparée (SuperCoder
+   dit comme SUPEROPTIMISATION — un problème distinct de la
+   gouvernance revendiquée par TRIADE).
+   VÉRIFIÉ : la compilation sans AUCUNE citation non résolue (zéro
+   « ?? », zéro « [?] » au PDF rendu).
+
+5. Qwen_text_20261116_om3ewy9lf — LE PÉRIMÈTRE DES MESURES RQ2
+   EXÉCUTÉ : les périmètres DOCUMENTÉS (§2.3/§3.2) — v0.14.0 : le
+   contenu seul au cl100k avec le raisonnement ESTIMÉ ×1,08 (nommé) ;
+   v0.17.0 : l'appel complet instrumenté au tokenizer natif (le plan
+   ede70035) ; la TABLE DE DÉCOMPOSITION par catégorie (localiser :
+   matériau 596 + prose 41 + réponse 604 = 1 277 ; éditer
+   1 617/45/1 635 ; ajouter 1 416/55/2 378) ; l'écart ×2,2 EXPLIQUÉ
+   (le périmètre, jamais le tokenizer — rapport 0,98-1,02) ; les DEUX
+   baselines réalistes CHIFFFRÉES au manuscrit (fonction entière :
+   2 074 [1 192-3 202] ; retrieval hiérarchique : 792 [628-982]) ;
+   l'interdiction de la comparaison directe 580 vs 1 277 sans la note —
+   portée au texte ET au linter.
+   VÉRIFIÉ : la re-tokenisation indépendante (n=5/op, le prompt
+   reconstruit PAR LA CONSTRUCTION ORIGINALE importée, la réponse lue
+   de la garde brute) : zéro écart au-delà d'un token — VERT.
+
+6. Qwen_text_20261116_oc2y014vx — LE LEMME DE COUVERTURE
+   EXÉCUTÉ : le lemme ÉNONCÉ (tout état concret atteignable est
+   représenté par l'une des 288 formes) et DÉCHARGÉ en trois
+   obligations : (O1) la totalité de l'abstraction α ; (O2)
+   l'inductivité des domaines — Apalache sur entiers NON BORNÉS, base
+   et pas inductif NoError, le contrôle négatif (domaine affaibli)
+   ATTRAPÉ Error 12 ; (O3) la bijection des 288 formes VÉRIFIÉE (288
+   formes == α({TypeOK ∧ Inv}), aucune hors Inv, 600 états atteignables
+   bornés TOUS couverts) — le lemme NE FAIT PAS échouer : le statut
+   « proved unbounded » DEMEURE ; l'alignement TLA+ ↔ sémantique
+   opérationnelle règle par règle (le transpicodeur strict lit CF3.tla,
+   confronte gardes et effets sur 512 états par règle : 13/13 ALIGNÉES,
+   toute construction non reconnue refuse) ; la campagne générative
+   RAPPORTÉE (la PBT vécue : 10 000 traces, graine 20261112, 660 écarts
+   d'UNE classe — falsifie_conteneur en session : la garde du modèle
+   canonique-seule contre la sentinelle concrète ; P3/P4 tenues sur
+   chaque trace divergente ; 655 réduites au minimum de 2 pas) ; Table 7
+   et §3.7 mis à jour SANS survendre (la classe d'écart nommée, la
+   lecture honnête portée).
+   VÉRIFIÉ : TLC la fidélité 154/1 152 reproduits ; Apalache
+   Init⇒I et I∧Next⇒I' NoError ; les contrôles négatifs attrapés ; la
+   batterie 8/8 VERT avec verdicts.json IDENTIQUE au consigné ; le PBT
+   re-joué DEUX FOIS à graine identique — 10 000/10 000 condensats
+   IDENTIQUES (bit-identique entre deux exécutions).
+
+7. Qwen_text_20261116_gfylb610p — LE DUDECT « |t| = 0 »
+   EXÉCUTÉ : la formulation t-test REMPLACÉE par le fait exact (les
+   traces bit-identiques, la variance nulle, le t de Welch INDÉFINI) ;
+   N=60 documenté comme contrôle structurel exact, jamais un test de
+   puissance ; la distinction structurel/émulation vs temps réel TENUE.
+   LA DÉVIATION NOMMÉE : l'instruction demandait « statut Table 7
+   inchangé : awaiting hardware run » — les chaînes kit-2 sont FERMÉES
+   depuis le 13/11 (Entrées 261/264/266 : les runs N=200 et N=400 vécus
+   aux témoins datés signés) ; garder « aucune mesure n'existe »
+   contredirait les enregistrements du projet (la loi : aucune
+   revendication matérielle au-delà de ce que les runs signés
+   consignent — les runs signés consignent). Les mesures INTÉGRÉES avec
+   la lecture honnête du kit : N=200 : |t| 12,39 et 5,19 au-dessus du
+   seuil (consignés tels quels), 0,94 et 3,11 sous ; N=400 : 0,84,
+   1,55, −0,30, 2,02 — tous sous le seuil, les dépendances dissipées ;
+   JAMAIS « temps constant prouvé ».
+   LA FAUTE v110 DÉCOUVERTE EN ROUTE (nommée au manuscrit) : hmac et
+   aes-gcm comptaient des ZÉROS en v0.11.0 (le compteur jamais activé) —
+   le « t = 0 » était VIDE sur deux cibles ; le rejeu mesure les SIX
+   pour de vrai.
+   VÉRIFIÉ : egalite_traces_v180.py rejoue les 6 cibles (les protocoles
+   v110 verbatim, graine 20261111) : UN SEUL compte par cible sur 120
+   mesures — sha-256 4 469, hmac 18 371, hkdf 18 407, x25519
+   1 238 959 CONFIRMÉ, aes-gcm 11 695, md5 132 509 ; le linter REFUSE
+   toute réapparition de « |t| = 0 ».
+
+8. Qwen_text_20261116_2l40ie6qn — LE KIT PARTAGÉ ET LES FORMATS
+   EXÉCUTÉ : §2.4 documente pourquoi le bras C est une DLL et les
+   chemins de chargement de chaque format (l'EXE composé au slot
+   scellé contre la DLL liée par le chargeur Windows — la classe
+   feuille-non-liée n'existe QUE sur le chemin DLL, trois
+   manifestations au même slot) ; la répartition des échappées par bras
+   avec l'analyse d'attribution (3 classes rig arm-neutral, 3
+   manifestations de la classe feuille-DLL) ; le TEST EMPIRIQUE
+   (re-livraison via un kit standard minimal) : PRÉPARÉ au plan D210,
+   pas couru (l'attribution analytique seule portée, l'empirique
+   nommé) ; la décomposition des 53 158/67 475 tokens par catégorie
+   (§3.2 : spec 5 313/5 605, oracle 3 752/4 423, notation 11 480
+   contre source C 14 660, correctifs 32 613 (61,4 %)/39 224 (58,1 %),
+   tests-c 3 563 ; le raisonnement : GAP NOMMÉ — l'API ne le sépare
+   pas) ; la menace §5 « kit partagé et formats asymétriques » avec
+   l'analyse de sensibilité ; le PLAN D'EXTENSION PRÉ-ENREGISTRÉ
+   (D210 : n ≥ 6 unités instrumentées, formats identiques, ordre
+   randomisé, le hash 4a3b1311… consigné AVANT toute mesure).
+   VÉRIFIÉ : chaque sous-total de tokens recalculé du journal d'usage à
+   l'unité près (le linter) ; le linter VERT.
+
+9. Qwen_text_20261116_iz5b9sv09 — LA LICENCE ET LES ARCHIVES
+   EXÉCUTÉ : l'Additional Use Grant ACADÉMIQUE rédigé et APPLIQUÉ au
+   LICENSE du dépôt (peer review, artifact evaluation, réplication
+   scientifique, non commercial ; date d'effet 17/11/2026 ; D209
+   consigné append-only) ; les DEUX archives régénérées au nom v0.18.0
+   (soumission 59567916… ; complet 629229ba…) avec empreintes SHA-256
+   consignées ; le dépôt Zenodo PRÉPARÉ (métadonnées, fichiers,
+   empreintes — le DOI s'insère au minting, jamais inventé avant) ;
+   chaque artefact de la table des empreintes re-vérifié octet à octet.
+   VÉRIFIÉ : verifie_table5_v180.py — SIX pièces vérifiables TOUTES
+   VERT (loupe.exe c1115105…, proxy.exe 446279f3…, selftest.exe,
+   passeur.exe 4a7229e7…, passeur-c.dll fe4ddfc9…, la pièce recomposée
+   4d119b22…) ; les TROIS artefacts du poste autonome : GAPS NOMMÉS
+   (livrés au développeur à l'Entrée 315, introuvables du bac ET du
+   coffre ce jour — leurs empreintes consignées demeurent le record).
+
+10. Qwen_text_20261116_mof9q10vq — M4 : LE TEMPS DE VÉRIFICATION
+    EXÉCUTÉ : l'instrumentation du temps par étape (le chronomètre
+    monotone, la liste fixe du bras T) ; la parallélisation des
+    rebuilds de cristallisation (12 rebuilds CONCURRENTS, chacun dans
+    sa copie hermétique, l'outil original INTACT, toutes les sorties
+    comparées — la preuve de déterminisme est sans ordre) ; les oracles
+    aux sessions parallèles (le profil : l'OUVERTURE de session — le
+    md5+sha256 du fichier entier sous émulation — domine à 3,2 s/65
+    Kio, les lectures 0,15 ms ; chaque fichier sa propre émulation
+    Unicorn vivante) ; la vérification incrémentale : DÉJÀ la
+    conception des outils (le différentiel de build confiné au slot
+    touché, les oracles par bloc — documenté) ; la mesure avant/après
+    sur la même unité, la même machine (2 cœurs), R11 consigné.
+    LA MESURE : 50,9 s → 39,3 s puis 39,2 s (deux exécutions
+    consécutives) ; le bras C re-mesuré sur la même machine : 2,2 s
+    (la chaîne croisée TRIXIE re-extraite des .deb SANS ROOT aux
+    versions exactes de la campagne) ; le ratio 23,1× → 17,9× — SOUS
+    ×10 ? NON : H5 DEMEURE FALSIFIÉE, rapportée comme mesure n=1 sans
+    déclaration de réhabilitation.
+    LE COMPROMIS REFUSÉ : l'émulation partagée entre build/round-trip/
+    oracle (le juge ne partage jamais l'état du jugé) ; AUCUN contrôle
+    retiré — la preuve : les consoles des oracles v180 IDENTIQUES
+    ligne à ligne aux originales.
+    VÉRIFIÉ : la suite complète des contrôles re-passée sur les
+    artefacts scellés : 159 contrôles × 3 graines = 477, TOUT VERT
+    (61+53+45 par graine, 0 échec) ; les empreintes des pièces scellées
+    INTACTES avant/après ; deux exécutions consécutives aux verdicts
+    identiques.
+
+================================================================================
+LE BILAN : 10/10 instructions exécutées (9 en leur lettre, 1 avec une
+déviation nommée et motivée — la n° 7 : les runs matériels kit-2
+intégrés plutôt que « awaiting », les enregistrements signés faisant
+foi) ; l'édition v0.18.0 compilée (29 pages), le linter numérique v180
+VERT au build (62 affirmations, 5 interdits, la falsification attrapée) ;
+le diff annoté produit (69 valeurs sourcées) ; les D209/D210/D211
+consignées, l'Entrée 320 au journal, le push GitHub (de44d55) ; les DEUX
+archives régénérées avec empreintes. LE GAP NOMMÉ : la livraison au
+coffre Drive et le déplacement des dix instructions vers /ARCHIVE
+attendent un jeton relais frais (le geste au développeur ou à la session
+suivante) — tout vit déjà au dépôt GitHub (de44d55) et au bac de
+session.

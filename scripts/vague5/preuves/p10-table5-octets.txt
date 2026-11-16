@@ -13,15 +13,13 @@ LA TABLE DES EMPREINTES — CHAQUE ARTEFACT VÉRIFIÉ OCTET À OCTET
      le record — la re-vérification attend son re-dépôt
 [pilot source v2] GAP NOMMÉ — idem (40d23f03fdaaf116…, 216 080 o)
 [pilot post (les deux)] GAP NOMMÉ — idem (50f7bc86… / c2dede15…)
-[TRIADE_soumission_v0.18.0.zip] 59567916a6470597f62012e3918dbbab2bf2e74cb1fc333451e0a67167fe0064 (228308 o)
-[TRIADE_complet_v0.18.0.zip] 629229ba123ea451867a13692ebcd5940c3f9e75af3085c9b8283166b383a3e9 (370874 o)
+[TRIADE_soumission_v0.18.0.zip] 990d7cb6e40e2513d5eabcfe1f64f078a0dcfc1d3c55bb9765176fad10973519 (228299 o)
+[TRIADE_complet_v0.18.0.zip] cab4d68809cfbfd6ccc28aef561cdc5253b5f5a20b0be6fd57de6a6cf529206b (376593 o)
 ========================================================================
-LES TROIS GAP NOMMÉS : les artefacts du poste autonome (l'installateur,
-le source v2, les journaux post) furent LIVRÉS au développeur (l'Entrée
-315) et ne vivent ni au bac ni au coffre — leurs empreintes consignées
-aux éditions précédentes demeurent le record ; la re-vérification octet
-à octet attend leur re-dépôt. Les SIX pièces vérifiables ce jour : TOUTES
-VERT, zéro divergence. Les DEUX archives régénérées : empreintes ci-dessus.
+LES TROIS GAP NOMMÉS : les artefacts du poste autonome furent LIVRÉS au
+développeur (l'Entrée 315) et ne vivent ni au bac ni au coffre — leurs
+empreintes consignées demeurent le record. Les SIX pièces vérifiables :
+TOUTES VERT, zéro divergence.
 
 LE VERDICT : VERT sur les pièces vérifiables — six sur six, zéro
 divergence ; trois gaps nommés, jamais comblés par estimation

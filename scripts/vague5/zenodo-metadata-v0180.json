@@ -1,0 +1,16 @@
+{
+  "titre": "TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.18.0) — manuscript, data tables, complete sources and verification evidence",
+  "auteurs": [{"nom": "Lopez", "prénom": "Alexis",
+               "affiliation": "Independent researcher"}],
+  "description": "The academic edition v0.18.0 of the TRIADE single-case study: a development protocol under which an LLM agent writes native x86-64, RISC-V and TLS 1.3 code directly as assembly notation, governed by signed layer-I specifications. This deposit contains the manuscript (29 pages), the consolidated data tables (the RQ2 instrumented round-trip measurements, the D204 campaign ledgers, the exact-trace constant-time replays, the M4 optimization measurements), the complete edition sources, the TLA+ models with the coverage lemma, the generative conformance campaign evidence, and the twelve-point verification report. License: Business Source License 1.1 with an academic Additional Use Grant (peer review, artifact evaluation, scientific replication, non-commercial research; effective 2026-11-17, decision D209; Change Date 2030-10-28 converting to GPLv3+).",
+  "licence": "BSL-1.1 with Academic Additional Use Grant (D209)",
+  "type": "publication-article",
+  "fichiers": [
+    {"nom": "TRIADE_soumission_v0.18.0.zip",
+     "sha256": "990d7cb6e40e2513d5eabcfe1f64f078a0dcfc1d3c55bb9765176fad10973519"},
+    {"nom": "TRIADE_complet_v0.18.0.zip",
+     "sha256": "cab4d68809cfbfd6ccc28aef561cdc5253b5f5a20b0be6fd57de6a6cf529206b"}
+  ],
+  "doi": "À INSÉRER AU MINTING — jamais inventé avant (la règle du projet)",
+  "note_depot": "Métadonnées PRÉPARÉES à la session du 17/11/2026 (la vague 5, l'instruction iz5b9sv09) ; le dépôt lui-même appartient au développeur (le geste de soumission)."
+}
