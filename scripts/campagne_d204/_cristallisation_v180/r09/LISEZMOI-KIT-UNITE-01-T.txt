@@ -1,0 +1,73 @@
+LISEZMOI — LE KIT DE L'UNITÉ 1 : LOUPE-01 OUVRIR × BRAS T
+(la campagne de comparaison des workflows D204 ; le kit livré par le labo
+au coffre /test en son dossier daté — le GUI vous attend à l'onglet 1·KIT
+de l'unité loupe-01 × T)
+========================================================================
+
+L'OBJET : la PREMIÈRE unité de la partie contrôlée — le bloc loupe-01
+OUVRIR au BRAS T (la notation scellée). La pièce de ce kit est le build du
+plan où le slot loupe-01 (RVA 0x4080) porte LA NOTATION DE CAMPAGNE :
+écrite À LA MAIN par l'agent au fil de SEPT éditions — la phase spec (le
+contrat lu, 5 313 tokens), la phase oracle (les attentes du juge dérivées
+du contrat AVANT le code, 3 752 tokens), la phase notation (11 480
+tokens), SIX correctifs comptés (32 613 tokens) tenus par les défauts
+nommés au labo AVANT toute livraison — les dix-sept autres blocs et les
+huit héritages demeurent les SCELLÉS du projet (la session née ENTIÈRE
+exige ses appelés ; les arbres signés INTACTS, le garde 14/14 VERT avant
+tout geste). La cristallisation : DIX rebuilds consécutifs identiques
+(sha256 4d119b22…). L'oracle du bloc au labo : 14 VERT, 0 ROUGE (les
+vecteurs du contrat, le juge = le modèle indépendant Python).
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité) :
+  1. AU GUI (TRIADE_gui_campagne_v1 ou TRIADE_gui_tous_runs_v1), onglet
+     1·KIT de l'unité loupe-01 × T : CHOISIR CE DOSSIER — le GUI recoupe
+     les EMPREINTES gravées (une divergence, rien ne court) ;
+  2. onglet 2·RUN : LANCER LANCEUR-UNITE-01-T.bat (le lanceur officiel —
+     il court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (LoadLibraryEx DONT_RESOLVE),
+     résout lui-même les six feuilles kernel32 du noyau, appelle loupe-01
+     aux témoins du kit, juge par le modèle indépendant (hashlib), et
+     écrit le témoin ; le dossier preuves-unite01/ naît sur votre
+     machine ;
+  3. onglet 3·TÉMOIN : ouvrir preuves-unite01\temoin-unite01.txt au
+     bloc-notes, le DATER, le SIGNER DE VOTRE MAIN — jamais automatisé
+     (D99) — puis renvoyer le dossier ENTIER au coffre /test ;
+  4. aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1 — la cap tenue par le GUI : au plus TROIS par bloc, l'arrêt au
+     premier vert), les défauts nommés s'il y en a, le chrono (M4) ;
+  5. le labo recoupe le run revenu — PUIS l'unité suivante commence.
+
+LES PIÈCES DU KIT :
+  loupe.exe                     la pièce (127 488 o, sha256 4d119b22…) ;
+  notation-loupe-01-ouvrir.asm  la notation LIVRÉE (l'explicite résolue
+                                par l'outil auteur — la source de la
+                                pièce, le round-trip R5 au labo) ;
+  brouillon-loupe-01-ouvrir.asm le brouillon de la main (l'étiquettes
+                                symboliques, la septième édition) ;
+  scenario-unite01.py           le scénario (le chargeur + les vecteurs
+                                + le modèle indépendant + le témoin) ;
+  LANCEUR-UNITE-01-T.bat        le lanceur officiel (le double-clic) ;
+  temoin-1.bin, temoin-384.bin, temoin-3f.bin, vide.bin
+                                les témoins du kit (les trois formes du
+                                remplissage + le vide, la génération
+                                FIXE du labo — graine 20261107) ;
+  EMPREINTES-KIT-UNITE-01-T.txt la gravure (chaque pièce, sha256) ;
+  le présent LISEZMOI.
+
+LES ÉCARTS NOMMÉS DU RUN TERRAIN (consignés, jamais maquillés) :
+  — l'accès refusé (E3) ne s'arme pas proprement au terrain (le refus
+    d'ACL dépend du compte) : NOMMÉ ABSENT, le vecteur ne compte pas ;
+  — le chemin de 260 caractères sans NUL : au terrain, le SYSTÈME refuse
+    lui-même le chemin trop long (le fichier ne peut exister) — le
+    verdict exact (-2/-5/-6) est CONSIGNÉ TEL QUEL au témoin ; la mesure
+    du bloc vit derrière le système (le labo l'éprouve à l'oracle).
+
+LA FRONTIÈRE : le run est À VOUS (CA6 — le labo ne court JAMAIS le
+terrain) ; le témoin se signe de VOTRE MAIN (D99) ; le renvoi du dossier
+ENTIER vous appartient ; la pièce ne bouge pas (l'empreinte gravée —
+une divergence, rien ne court).
+
+*La consignation vit au journal de travail (l'Entrée 282) ; les journaux
+de la campagne vivent à scripts/preuves_v150/comparaison_resultats/ (les
+tokens M2, les temps M4 — nés de la première mesure, CA1) ; le détail du
+plan à PLAN_PREREGISTRE_COMPARAISON.md (a78caf8c…, VERROUILLÉ).*

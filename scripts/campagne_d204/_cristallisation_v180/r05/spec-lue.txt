@@ -1,0 +1,102 @@
+1. L'INTENTION en une phrase (tes mots).
+Ouvrir un fichier donné, initialiser sa session avec ses métadonnées, et faire naître ses composants visuels et de calcul, ou retourner un verdict clair en cas d'échec.
+
+2. LES OBLIGATIONS : chaque précondition, postcondition et invariant du contrat, reformulé précisément (avec les offsets du cadre cités).
+**Préconditions :**
+*   **P1** : L'argument `rcx` doit contenir un pointeur vers une chaîne de caractères UTF-16, terminée par un NUL, d'une longueur inférieure ou égale à 259 octets (MAX_PATH).
+*   **P2** : La session ne doit pas être déjà ouverte. Le champ `cadre + 528` (la poignée du fichier) doit avoir la valeur `INVALID_HANDLE_VALUE`.
+*   **P3** : La Table des Adresses d'Import (IAT) pour `kernel32.dll` doit être résolue et accessible, contenant les adresses de `CreateFileW`, `GetFileSizeEx`, `CloseHandle` et `GetLastError`.
+*   **P4** : Le pointeur de pile (`rsp`) doit être aligné sur une frontière de 16 octets au moment de l'appel à ce bloc.
+
+**Postconditions :**
+*   **Q1** : En cas de succès, l'appel `CreateFileW` a été effectué avec les droits `GENERIC_READ | GENERIC_WRITE` et le mode `OPEN_EXISTING`. La valeur de retour (la poignée) a été stockée à l'offset `+528` du cadre, et la taille du fichier, obtenue par `GetFileSizeEx`, a été stockée à l'offset `+520`.
+*   **Q2** : Si la taille du fichier dépasse la `BORNE_TAILLE` (2 Gio), le verdict `-3` est retourné, la poignée du fichier est fermée via `CloseHandle` avant le retour, et le message d'erreur « hors périmètre 0.1.0 : 2 Gio » est affiché.
+*   **Q3** : La chaîne de caractères du chemin d'accès a été copiée dans le cadre à l'offset `+0`. Le champ `vue` est à `0` et le champ `curseur` est à `0`.
+*   **Q4** : La session est née dans son intégralité :
+    *   Le bloc `loupe-02` est appelé pour créer la première fenêtre, SEULEMENT SI la taille du fichier est supérieure à `0`.
+    *   Le bloc `loupe-07` est appelé pour calculer et afficher le panneau d'empreintes, TOUJOURS (même pour un fichier vide).
+    *   La vitrine est ouverte dans un état cohérent, montrant à la fois le contenu et ses empreintes.
+*   **Q5** : La valeur de retour dans `rax` est `0` en cas de succès.
+
+**Invariants :**
+*   **I1** : L'ouverture du fichier est exclusive. L'indicateur `FILE_SHARE_READ` est positionné pour autoriser la lecture par d'autres, mais `FILE_SHARE_WRITE` ne l'est pas, garantissant que Loupe est le seul à pouvoir écrire.
+*   **I2** : Aucune opération d'écriture n'est effectuée sur le fichier lors de cette phase d'ouverture.
+*   **I3** Le coût du calcul des empreintes (`loupe-07`) est assumé : il est proportionnel à la taille du fichier et peut prendre du temps pour les fichiers volumineux (ex: 2 Gio).
+*   **I4** : Tout code d'erreur retourné par l'API Windows est traduit dans la table des verdicts. Aucun code brut de `GetLastError` ne doit être exposé à l'utilisateur.
+*   **I5** : Seules les fonctions listées dans l'IAT (`CreateFileW`, `GetFileSizeEx`, `CloseHandle`, `GetLastError`) sont appelées. Aucun registre non-volatile (`rbx`, `rbp`, `r12`, `r13`, `r14`, `r15`) n'est modifié. Les instructions `NOP` (0x90) sont interdites.
+
+3. LA TABLE DES VERDICTS : chaque valeur de retour possible et sa cause exacte (les codes GetLastError correspondants).
+*   **`rax = 0`** : Succès. Le fichier a été ouvert, la session est initialisée et née.
+*   **`rax = -2`** : Verdict `ABSENT`. Le fichier ou le chemin n'existe pas. Codes `GetLastError` : `ERROR_FILE_NOT_FOUND` (2) ou `ERROR_PATH_NOT_FOUND` (3).
+*   **`rax = -5`** : Verdict `UN FICHIER À LA FOIS`. La session est déjà ouverte. Aucun appel système n'est effectué.
+*   **`rax = -6`** : Verdict `SYSTÈME`. Erreur d'OS non spécifiée. Code `GetLastError` : tout code sauf ceux des verdicts -2, -7.
+*   **`rax = -7`** : Verdict `VERROUILLÉ`. Le fichier est utilisé par un autre processus. Code `GetLastError` : `ERROR_SHARING_VIOLATION` (32).
+*   **`rax = -3`** : Verdict `HORS PÉRIMÈTRE`. La taille du fichier dépasse 2 Gio. La poignée est fermée avant le retour.
+
+4. L'ORDRE DU GESTE : la séquence d'appels que le bloc devra faire (la session née entière — dans l'ordre, avec les conditions), y compris le traitement des refus des appelés (que faire si loupe-02 ou loupe-07 refuse : la session se clôt par loupe-03, le verdict remonte tel quel — jamais une poignée pendante).
+1.  **Vérification préliminaire** :
+    *   Lire `cadre + 528`. Si ce n'est pas `INVALID_HANDLE_VALUE`, retourner `-5` et quitter.
+2.  **Ouverture du fichier** :
+    *   Appeler `CreateFileW(rcx, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)`.
+    *   Si `rax` est `INVALID_HANDLE_VALUE` :
+        *   Appeler `GetLastError()`.
+        *   Si le code est `ERROR_FILE_NOT_FOUND` ou `ERROR_PATH_NOT_FOUND`, retourner `-2`.
+        *   Si le code est `ERROR_SHARING_VIOLATION`, retourner `-7`.
+        *   Sinon, retourner `-6`.
+3.  **Validation de la taille** :
+    *   Stocker la poignée (`rax`) dans `cadre + 528`.
+    *   Appeler `GetFileSizeEx(rax, &cadre + 520)` pour obtenir la taille.
+    *   Si la taille (à `cadre + 520`) est supérieure à `BORNE_TAILLE` (2 Gio) :
+        *   Appeler `CloseHandle(cadre + 528)`.
+        *   Afficher le message « hors périmètre 0.1.0 : 2 Gio ».
+        *   Retourner `-3`.
+4.  **Initialisation du cadre** :
+    *   Copier la chaîne `rcx` dans `cadre + 0`.
+    *   Écrire `0` dans `cadre + 512` (vue) et `cadre + 516` (curseur).
+5.  **Naissance de la session** :
+    *   **Appeler `loupe-07` (empreintes)** :
+        *   Toujours appeler `loupe-07` avec la poignée et la taille du cadre.
+        *   Si `loupe-07` retourne une erreur non nulle :
+            *   Appeler `loupe-03` pour fermer la session (qui refermera la poignée).
+            *   Retourner le verdict de `loupe-07` (sans modification).
+    *   **Appeler `loupe-02` (fenêtre)** :
+        *   Si la taille du fichier (à `cadre + 520`) est supérieure à `0` :
+            *   Appeler `loupe-02`.
+            *   Si `loupe-02` retourne une erreur non nulle :
+                *   Appeler `loupe-03` pour fermer la session.
+                *   Retourner le verdict de `loupe-02`.
+6.  **Retour final** :
+    *   Si toutes les étapes précédentes ont réussi, retourner `0`.
+
+5. LES VECTEURS DE TEST que tu prévois de tenir (les témoins, les rejets, la falsification) avec le résultat attendu de chacun.
+*   **V1 : Scénario nominal (fichier de 384 octets)** :
+    *   **Action** : Ouvrir un fichier existant de 384 octets.
+    *   **Résultat attendu** : Le cadre est correctement rempli (`chemin`, `taille=384`, `vue=0`, `curseur=0`). `loupe-02` est appelé et crée une fenêtre. `loupe-07` est appelé et calcule les empreintes. `rax = 0`.
+*   **V2 : Scénario nominal (fichier vide)** :
+    *   **Action** : Ouvrir un fichier existant de 0 octet.
+    *   **Résultat attendu** : Le cadre est correctement rempli (`taille=0`). `loupe-02` n'est PAS appelé. `loupe-07` est appelé et son panneau correspond au vide. `rax = 0`.
+*   **V3 : Rejet - Fichier absent** :
+    *   **Action** : Tenter d'ouvrir un chemin inexistant.
+    *   **Résultat attendu** : Message « absent » à la barre. `cadre` reste inchangé. `rax = -2`.
+*   **V4 : Rejet - Fichier verrouillé** :
+    *   **Action** : Tenter d'ouvrir un fichier tenu par un autre processus (ex: `proxy.exe`).
+    *   **Résultat attendu** : Message « verrouillé » à la barre. La poignée est fermée. `cadre` reste inchangé. `rax = -7`.
+*   **V5 : Rejet - Fichier hors périmètre** :
+    *   **Action** : Tenter d'ouvrir un fichier de 2 Gio + 1 octet.
+    *   **Résultat attendu** : Message « hors périmètre 0.1.0 : 2 Gio » à la barre. La poignée est fermée. `cadre` reste inchangé. `rax = -3`.
+*   **V6 : Rejet - Session déjà ouverte** :
+    *   **Action** : Tenter d'ouvrir un fichier alors qu'une session est déjà active.
+    *   **Résultat attendu** : Message « un fichier à la fois » à la barre. L'ancien fichier et son cadre restent intacts. `rax = -5`.
+*   **V7 : Falsification - Taille mutée** :
+    *   **Action** : Après l'appel réussi à `GetFileSizeEx`, modifier manuellement la valeur à l'offset `+520` du cadre pour qu'elle soit incorrecte.
+    *   **Résultat attendu** : Le comportement de `loupe-02` et `loupe-07` devient incohérent (ex: `loupe-02` se base sur la fausse taille, `loupe-07` sur la vraie). L'oracle de test détecte cette divergence et le test est marqué comme échoué (la falsification est le but du test).
+
+6. LES PIÈGES que tu vois venir (les classes de défauts de la lignée : arguments 5+ de l'ABI msx64 au home space, poignée pendante, cadre non remis vierge sur refus, chemin non mesuré avant copie…).
+*   **Piège 1 : Fuite de ressources (Handle pendante)**. En cas d'échec après l'appel à `CreateFileW` (ex: taille > 2 Gio), il est crucial d'appeler `CloseHandle` avant de retourner. Sinon, la poignée reste ouverte jusqu'à la fin du processus.
+*   **Piège 2 : Échec de la naissance de la session**. Si `loupe-02` ou `loupe-07` échoue, il ne faut pas retourner directement leur verdict. Il faut impérativement appeler `loupe-03` pour nettoyer la session (notamment fermer la poignée du fichier) avant de remonter l'erreur.
+*   **Piège 3 : Précondition P2 non vérifiée**. Oublier de vérifier si une session est déjà ouverte (`cadre + 528`) avant de tenter d'en ouvrir une nouvelle, ce qui violerait le « un fichier à la fois ».
+*   **Piège 4 : Copie non sécurisée du chemin**. Effectuer une copie octet par octet de la chaîne `rcx` sans vérifier sa longueur (limitée à 259) pourrait entraîner un dépassement de tampon (buffer overflow) dans le cadre.
+*   **Piège 5 : Alignement de la pile**. L'appel à `CreateFileW` via l'IAT doit respecter l'ABI msx64, qui impose un alignement de la pile sur 16 octets. Oublier de pousser/réajuster `rsp` avant l'appel causerait un décalage dans les arguments.
+*   **Piège 6 : Gestion des erreurs de l'API**. Ne pas traduire correctement les codes d'erreur de `GetLastError` dans la table des verdicts, ou retourner un code brut à la place d'un verdict nommé (ex: retourner `32` au lieu de `-7`).
+*   **Piège 7 : État du cadre sur refus**. En cas de rejet (ex: `-5`, `-2`), s'assurer que le cadre n'a pas été partiellement modifié (ex: le chemin a été copié avant la vérification de la session ouverte). Le cadre doit rester vierge sur ces erreurs.
+*   **Piège 8 : Condition sur la taille pour `loupe-02`**. Oublier la condition « `loupe-02` SEULEMENT SI la taille > 0 » et l'appeler systématiquement, ce qui causerait un comportement indéfini ou un crash avec un fichier vide.

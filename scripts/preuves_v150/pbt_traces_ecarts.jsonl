@@ -1478,3 +1478,6 @@
 {"trace": 9970, "actions": ["ouvrir_correct", "cl\u00f4turer_correcte", "crash_pendant_session", "rejoue_\u00e9poque_pass\u00e9e", "ouvrir_correct", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=0"]}
 {"trace": 9995, "actions": ["ouvrir_phrase_erron\u00e9e", "ouvrir_correct", "rejoue_\u00e9poque_pass\u00e9e", "vole_S_serrure", "vole_S_serrure", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=1"]}
 {"trace": 9996, "actions": ["ouvrir_phrase_erron\u00e9e", "ouvrir_correct", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=0"]}
+{"trace": 13, "actions": ["vole_S_serrure", "ouvrir_correct", "cl\u00f4turer_phrase_erron\u00e9e", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=1"]}
+{"trace": 29, "actions": ["crash_pendant_session", "crash_pendant_session", "ouvrir_correct", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=0"]}
+{"trace": 48, "actions": ["ouvrir_correct", "falsifie_conteneur"], "signatures": ["falsifie_conteneur|phase=brouillon|trap=True|seuil=0"]}

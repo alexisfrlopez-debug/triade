@@ -1,0 +1,486 @@
+Tu es l'auteur du domaine Loupe au laboratoire TRIADE : tu écris des blocs en
+notation d'assembleur x86-64 À LA MAIN (jamais un compilateur), chaque bloc
+contre son contrat de couche I. Tu as déjà lu le contrat (tes notes de
+lecture et l'oracle du juge suivent). Écris maintenant LE BROUILLON du bloc
+loupe-01 · ouvrir : la notation à étiquettes symboliques que l'outil auteur
+résoudra (l'arithmétique d'adresses est à l'outil, la LOGIQUE est à toi).
+
+================================================================================
+LE CONTRAT (loupe/I/loupe-01-ouvrir.md, révision 3 — VERROUILLÉ)
+================================================================================
+
+loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+fixtures — la taille de la pièce ; r3 : LE VIDE — le fichier de taille zéro
+est un fichier réel du quotidien que l'éditeur DOIT ouvrir : la fenêtre
+n'existe pas pour lui [loupe-02 P3 : tout décalage ≥ taille 0], le
+remplissage demeure 0 et LE PANNEAU DU VIDE EXISTE — d41d8cd9… +
+e3b0c442…, la session née entière sans la fenêtre ; la découverte du
+geste (b), la couche I n'avait pas vu le vide)
+Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
+de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
+faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
+fenêtre lue (loupe-02), le panneau d'empreintes calculé (loupe-07). Les
+refus sont NOMMÉS (absent, verrouillé, hors périmètre) — la barre les
+porte, jamais un silence. Loupe vit de ses pièces : tout fichier du projet
+s'ouvre à l'œil.
+Contrat :
+  pre  : P1 rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+             la capacité du cadre, MAX_PATH) ; P2 la session n'est pas
+             déjà ouverte (la poignée du cadre = INVALIDE — sinon le
+             refus -5 : un fichier à la fois, le périmètre 0.1.0) ;
+         P3 l'IAT kernel32 résolue (D7/D35) ; P4 la pile alignée 16.
+  post : Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+             OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la
+             taille par GetFileSizeEx au cadre (+520) ;
+         Q2 la BORNE NOMMÉE : taille > BORNE_TAILLE (2 Gio) → verdict -3,
+             la poignée FERMÉE AVANT le retour (jamais une poignée
+             pendante), la barre porte « hors périmètre 0.1.0 : 2 Gio » ;
+         Q3 le chemin COPIÉ au cadre (+0, libc-01 hérité PAR LA CARTE —
+             jamais octet par octet réécrit), la vue = 0, le curseur = 0
+             (loupe-04 a posé le vierge) ;
+         Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
+             SEULEMENT SI la taille > 0 — le vide n'a PAS de fenêtre
+             (révision 3 : le remplissage 0 posé, la grille vide est un
+             état légitime) — puis loupe-07 (les empreintes du fichier
+             entier au panneau, LE VIDE AUSSI : son panneau est défini) ;
+             la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+         Q5 rax = 0 (la table des verdicts, charte § 9).
+  inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
+             aux autres, jamais reçu : Loupe est seul maître des octets
+             qu'il montrera modifiables) ;
+         I2 AUCUNE écriture au fichier à l'ouverture (lecture seule —
+             l'écriture vivra à loupe-17) ;
+         I3 le coût de Q4 est NOMMÉ : le panneau d'un fichier de 2 Gio
+             prend le temps de ses empreintes (deux passages) — la
+             vitrine née vraie, jamais un panneau mensonger ;
+         I4 tout refus d'OS est TRADUIT par la table (gle consigné au
+             journal du labo par le harnais) : jamais un code brut à
+             la barre ;
+         I5 l'IAT déclarée au plan (D161) : CreateFileW, GetFileSizeEx,
+             CloseHandle, GetLastError — la liste est fermée pour ce
+             bloc ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : ERROR_FILE_NOT_FOUND ou ERROR_PATH_NOT_FOUND → verdict -2 ABSENT
+       (le chemin ne désigne rien) — la barre le nomme, rax = -2.
+  E2 : ERROR_SHARING_VIOLATION → verdict -7 VERROUILLÉ (le partage
+       refuse : un autre détenteur tient le fichier) — la barre le
+       nomme, rax = -7.
+  E3 : tout autre refus d'OS (accès refusé, lecteur absent…) → verdict
+       -6 SYSTÈME, le code GetLastError consigné — rax = -6.
+  E4 : la session déjà ouverte (P2) → verdict -5, RIEN TOUCHÉ (le
+       fichier courant demeure) — un fichier à la fois, le nommé.
+Vecteurs :
+  V1 : scénario — le témoin du kit ouvert : le cadre lu champ à champ
+       (chemin, taille, vue 0, curseur 0, remplissage = min(384,
+       taille)), l'écran attendu composé octet par octet (couvre Q1,
+       Q3, Q4, Q5).
+  V2 : rejet — un chemin absent, un fichier tenu par un autre
+       détenteur, un fichier de 2 Gio + 1 : les TROIS verdicts nommés
+       à la barre, la poignée refermée dans le second cas (couvre Q2,
+       E1, E2, E3).
+  V3 : rejet — l'ouverture sur session ouverte : verdict -5, l'ancien
+       fichier INTACT (le tampon inchangé, l'oracle différentiel le
+       constate octet par octet) (couvre E4).
+  V4 : falsification — la taille mutée d'un octet au cadre après
+       l'ouverture : l'écran attendu diverge, l'oracle à scénarios
+       échoue (la falsification DEMANDÉE, charte § 3).
+Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
+              384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
+              formes du remplissage) + proxy.exe scellé (sha256
+              446279f3…, 65 024 o — la pièce de l'ère [erratum r2 :
+              la taille fautive 44 544 o était celle du scellé 0.9.0],
+              ouverte par l'application qui la juge).
+Provenance  : écrite-avant-code.
+Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
+              notation), D7/D35 (l'IAT), D137 (la lignée de balises —
+              un projet de développement).
+
+
+================================================================================
+TES NOTES DE LECTURE (la phase spec — tes propres notes d'auteur)
+================================================================================
+
+1. L'INTENTION en une phrase (tes mots).
+Ouvrir un fichier donné, initialiser sa session avec ses métadonnées, et faire naître ses composants visuels et de calcul, ou retourner un verdict clair en cas d'échec.
+
+2. LES OBLIGATIONS : chaque précondition, postcondition et invariant du contrat, reformulé précisément (avec les offsets du cadre cités).
+**Préconditions :**
+*   **P1** : L'argument `rcx` doit contenir un pointeur vers une chaîne de caractères UTF-16, terminée par un NUL, d'une longueur inférieure ou égale à 259 octets (MAX_PATH).
+*   **P2** : La session ne doit pas être déjà ouverte. Le champ `cadre + 528` (la poignée du fichier) doit avoir la valeur `INVALID_HANDLE_VALUE`.
+*   **P3** : La Table des Adresses d'Import (IAT) pour `kernel32.dll` doit être résolue et accessible, contenant les adresses de `CreateFileW`, `GetFileSizeEx`, `CloseHandle` et `GetLastError`.
+*   **P4** : Le pointeur de pile (`rsp`) doit être aligné sur une frontière de 16 octets au moment de l'appel à ce bloc.
+
+**Postconditions :**
+*   **Q1** : En cas de succès, l'appel `CreateFileW` a été effectué avec les droits `GENERIC_READ | GENERIC_WRITE` et le mode `OPEN_EXISTING`. La valeur de retour (la poignée) a été stockée à l'offset `+528` du cadre, et la taille du fichier, obtenue par `GetFileSizeEx`, a été stockée à l'offset `+520`.
+*   **Q2** : Si la taille du fichier dépasse la `BORNE_TAILLE` (2 Gio), le verdict `-3` est retourné, la poignée du fichier est fermée via `CloseHandle` avant le retour, et le message d'erreur « hors périmètre 0.1.0 : 2 Gio » est affiché.
+*   **Q3** : La chaîne de caractères du chemin d'accès a été copiée dans le cadre à l'offset `+0`. Le champ `vue` est à `0` et le champ `curseur` est à `0`.
+*   **Q4** : La session est née dans son intégralité :
+    *   Le bloc `loupe-02` est appelé pour créer la première fenêtre, SEULEMENT SI la taille du fichier est supérieure à `0`.
+    *   Le bloc `loupe-07` est appelé pour calculer et afficher le panneau d'empreintes, TOUJOURS (même pour un fichier vide).
+    *   La vitrine est ouverte dans un état cohérent, montrant à la fois le contenu et ses empreintes.
+*   **Q5** : La valeur de retour dans `rax` est `0` en cas de succès.
+
+**Invariants :**
+*   **I1** : L'ouverture du fichier est exclusive. L'indicateur `FILE_SHARE_READ` est positionné pour autoriser la lecture par d'autres, mais `FILE_SHARE_WRITE` ne l'est pas, garantissant que Loupe est le seul à pouvoir écrire.
+*   **I2** : Aucune opération d'écriture n'est effectuée sur le fichier lors de cette phase d'ouverture.
+*   **I3** Le coût du calcul des empreintes (`loupe-07`) est assumé : il est proportionnel à la taille du fichier et peut prendre du temps pour les fichiers volumineux (ex: 2 Gio).
+*   **I4** : Tout code d'erreur retourné par l'API Windows est traduit dans la table des verdicts. Aucun code brut de `GetLastError` ne doit être exposé à l'utilisateur.
+*   **I5** : Seules les fonctions listées dans l'IAT (`CreateFileW`, `GetFileSizeEx`, `CloseHandle`, `GetLastError`) sont appelées. Aucun registre non-volatile (`rbx`, `rbp`, `r12`, `r13`, `r14`, `r15`) n'est modifié. Les instructions `NOP` (0x90) sont interdites.
+
+3. LA TABLE DES VERDICTS : chaque valeur de retour possible et sa cause exacte (les codes GetLastError correspondants).
+*   **`rax = 0`** : Succès. Le fichier a été ouvert, la session est initialisée et née.
+*   **`rax = -2`** : Verdict `ABSENT`. Le fichier ou le chemin n'existe pas. Codes `GetLastError` : `ERROR_FILE_NOT_FOUND` (2) ou `ERROR_PATH_NOT_FOUND` (3).
+*   **`rax = -5`** : Verdict `UN FICHIER À LA FOIS`. La session est déjà ouverte. Aucun appel système n'est effectué.
+*   **`rax = -6`** : Verdict `SYSTÈME`. Erreur d'OS non spécifiée. Code `GetLastError` : tout code sauf ceux des verdicts -2, -7.
+*   **`rax = -7`** : Verdict `VERROUILLÉ`. Le fichier est utilisé par un autre processus. Code `GetLastError` : `ERROR_SHARING_VIOLATION` (32).
+*   **`rax = -3`** : Verdict `HORS PÉRIMÈTRE`. La taille du fichier dépasse 2 Gio. La poignée est fermée avant le retour.
+
+4. L'ORDRE DU GESTE : la séquence d'appels que le bloc devra faire (la session née entière — dans l'ordre, avec les conditions), y compris le traitement des refus des appelés (que faire si loupe-02 ou loupe-07 refuse : la session se clôt par loupe-03, le verdict remonte tel quel — jamais une poignée pendante).
+1.  **Vérification préliminaire** :
+    *   Lire `cadre + 528`. Si ce n'est pas `INVALID_HANDLE_VALUE`, retourner `-5` et quitter.
+2.  **Ouverture du fichier** :
+    *   Appeler `CreateFileW(rcx, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)`.
+    *   Si `rax` est `INVALID_HANDLE_VALUE` :
+        *   Appeler `GetLastError()`.
+        *   Si le code est `ERROR_FILE_NOT_FOUND` ou `ERROR_PATH_NOT_FOUND`, retourner `-2`.
+        *   Si le code est `ERROR_SHARING_VIOLATION`, retourner `-7`.
+        *   Sinon, retourner `-6`.
+3.  **Validation de la taille** :
+    *   Stocker la poignée (`rax`) dans `cadre + 528`.
+    *   Appeler `GetFileSizeEx(rax, &cadre + 520)` pour obtenir la taille.
+    *   Si la taille (à `cadre + 520`) est supérieure à `BORNE_TAILLE` (2 Gio) :
+        *   Appeler `CloseHandle(cadre + 528)`.
+        *   Afficher le message « hors périmètre 0.1.0 : 2 Gio ».
+        *   Retourner `-3`.
+4.  **Initialisation du cadre** :
+    *   Copier la chaîne `rcx` dans `cadre + 0`.
+    *   Écrire `0` dans `cadre + 512` (vue) et `cadre + 516` (curseur).
+5.  **Naissance de la session** :
+    *   **Appeler `loupe-07` (empreintes)** :
+        *   Toujours appeler `loupe-07` avec la poignée et la taille du cadre.
+        *   Si `loupe-07` retourne une erreur non nulle :
+            *   Appeler `loupe-03` pour fermer la session (qui refermera la poignée).
+            *   Retourner le verdict de `loupe-07` (sans modification).
+    *   **Appeler `loupe-02` (fenêtre)** :
+        *   Si la taille du fichier (à `cadre + 520`) est supérieure à `0` :
+            *   Appeler `loupe-02`.
+            *   Si `loupe-02` retourne une erreur non nulle :
+                *   Appeler `loupe-03` pour fermer la session.
+                *   Retourner le verdict de `loupe-02`.
+6.  **Retour final** :
+    *   Si toutes les étapes précédentes ont réussi, retourner `0`.
+
+5. LES VECTEURS DE TEST que tu prévois de tenir (les témoins, les rejets, la falsification) avec le résultat attendu de chacun.
+*   **V1 : Scénario nominal (fichier de 384 octets)** :
+    *   **Action** : Ouvrir un fichier existant de 384 octets.
+    *   **Résultat attendu** : Le cadre est correctement rempli (`chemin`, `taille=384`, `vue=0`, `curseur=0`). `loupe-02` est appelé et crée une fenêtre. `loupe-07` est appelé et calcule les empreintes. `rax = 0`.
+*   **V2 : Scénario nominal (fichier vide)** :
+    *   **Action** : Ouvrir un fichier existant de 0 octet.
+    *   **Résultat attendu** : Le cadre est correctement rempli (`taille=0`). `loupe-02` n'est PAS appelé. `loupe-07` est appelé et son panneau correspond au vide. `rax = 0`.
+*   **V3 : Rejet - Fichier absent** :
+    *   **Action** : Tenter d'ouvrir un chemin inexistant.
+    *   **Résultat attendu** : Message « absent » à la barre. `cadre` reste inchangé. `rax = -2`.
+*   **V4 : Rejet - Fichier verrouillé** :
+    *   **Action** : Tenter d'ouvrir un fichier tenu par un autre processus (ex: `proxy.exe`).
+    *   **Résultat attendu** : Message « verrouillé » à la barre. La poignée est fermée. `cadre` reste inchangé. `rax = -7`.
+*   **V5 : Rejet - Fichier hors périmètre** :
+    *   **Action** : Tenter d'ouvrir un fichier de 2 Gio + 1 octet.
+    *   **Résultat attendu** : Message « hors périmètre 0.1.0 : 2 Gio » à la barre. La poignée est fermée. `cadre` reste inchangé. `rax = -3`.
+*   **V6 : Rejet - Session déjà ouverte** :
+    *   **Action** : Tenter d'ouvrir un fichier alors qu'une session est déjà active.
+    *   **Résultat attendu** : Message « un fichier à la fois » à la barre. L'ancien fichier et son cadre restent intacts. `rax = -5`.
+*   **V7 : Falsification - Taille mutée** :
+    *   **Action** : Après l'appel réussi à `GetFileSizeEx`, modifier manuellement la valeur à l'offset `+520` du cadre pour qu'elle soit incorrecte.
+    *   **Résultat attendu** : Le comportement de `loupe-02` et `loupe-07` devient incohérent (ex: `loupe-02` se base sur la fausse taille, `loupe-07` sur la vraie). L'oracle de test détecte cette divergence et le test est marqué comme échoué (la falsification est le but du test).
+
+6. LES PIÈGES que tu vois venir (les classes de défauts de la lignée : arguments 5+ de l'ABI msx64 au home space, poignée pendante, cadre non remis vierge sur refus, chemin non mesuré avant copie…).
+*   **Piège 1 : Fuite de ressources (Handle pendante)**. En cas d'échec après l'appel à `CreateFileW` (ex: taille > 2 Gio), il est crucial d'appeler `CloseHandle` avant de retourner. Sinon, la poignée reste ouverte jusqu'à la fin du processus.
+*   **Piège 2 : Échec de la naissance de la session**. Si `loupe-02` ou `loupe-07` échoue, il ne faut pas retourner directement leur verdict. Il faut impérativement appeler `loupe-03` pour nettoyer la session (notamment fermer la poignée du fichier) avant de remonter l'erreur.
+*   **Piège 3 : Précondition P2 non vérifiée**. Oublier de vérifier si une session est déjà ouverte (`cadre + 528`) avant de tenter d'en ouvrir une nouvelle, ce qui violerait le « un fichier à la fois ».
+*   **Piège 4 : Copie non sécurisée du chemin**. Effectuer une copie octet par octet de la chaîne `rcx` sans vérifier sa longueur (limitée à 259) pourrait entraîner un dépassement de tampon (buffer overflow) dans le cadre.
+*   **Piège 5 : Alignement de la pile**. L'appel à `CreateFileW` via l'IAT doit respecter l'ABI msx64, qui impose un alignement de la pile sur 16 octets. Oublier de pousser/réajuster `rsp` avant l'appel causerait un décalage dans les arguments.
+*   **Piège 6 : Gestion des erreurs de l'API**. Ne pas traduire correctement les codes d'erreur de `GetLastError` dans la table des verdicts, ou retourner un code brut à la place d'un verdict nommé (ex: retourner `32` au lieu de `-7`).
+*   **Piège 7 : État du cadre sur refus**. En cas de rejet (ex: `-5`, `-2`), s'assurer que le cadre n'a pas été partiellement modifié (ex: le chemin a été copié avant la vérification de la session ouverte). Le cadre doit rester vierge sur ces erreurs.
+*   **Piège 8 : Condition sur la taille pour `loupe-02`**. Oublier la condition « `loupe-02` SEULEMENT SI la taille > 0 » et l'appeler systématiquement, ce qui causerait un comportement indéfini ou un crash avec un fichier vide.
+
+
+================================================================================
+L'ORACLE DU JUGE (la phase oracle — écrit-avant-code ; ta
+notation devra tenir CES attentes exactes)
+================================================================================
+
+**ORACLE DU DOMAINE LOUPE-01 · OUVRIR**
+
+---
+
+### **Vecteur 1-a : temoin-1.bin**
+*   **Entrée** : Chemin = `temoin-1.bin`, État initial = session fermée, fichier existant (1 octet).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` (chemin copié) = `temoin-1.bin` (chaîne C, terminée par NUL).
+        *   `+520` (taille) = 1.
+        *   `+528` (poignée) = handle valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 1) = 1.
+        *   `+568` (tampon) = contenu du fichier : `0xXX` (l'unique octet du témoin).
+    *   **Panneau** : `48 octets` = empreintes du contenu entier :
+        *   MD5 = `d41d8cd98f00b204e9800998ecf8427e` (incorrect, l'oracle doit utiliser le contenu réel, ici le MD5 de '0xXX').
+        *   SHA256 = `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` (incorrect, l'oracle doit utiliser le contenu réel, ici le SHA256 de '0xXX').
+    *   **CloseHandle** : 1 appel (fermeture de la poignée).
+*   **Règle du modèle** : Q1 (succès, poignée et taille lues), Q3 (vue, curseur, remplissage=1, tampon=contenu), Q4 (empreintes du contenu de 1 octet), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-b : temoin-384.bin**
+*   **Entrée** : Chemin = `temoin-384.bin`, État initial = session fermée, fichier existant (384 octets).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `temoin-384.bin`.
+        *   `+520` (taille) = 384.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 384) = 384.
+        *   `+568` (tampon) = contenu du fichier : `384 octets` du témoin.
+    *   **Panneau** : `48 octets` = empreintes du contenu entier (MD5 et SHA256 des 384 octets du témoin).
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès), Q3 (remplissage=384, tampon=contenu), Q4 (empreintes du contenu de 384 octets), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-c : temoin-3f.bin**
+*   **Entrée** : Chemin = `temoin-3f.bin`, État initial = session fermée, fichier existant (196609 octets).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `temoin-3f.bin`.
+        *   `+520` (taille) = 196609.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 196609) = 384.
+        *   `+568` (tampon) = contenu du fichier : `384 premiers octets` du témoin.
+    *   **Panneau** : `48 octets` = empreintes du contenu entier (MD5 et SHA256 des 196609 octets du témoin).
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès), Q3 (remplissage=384, tampon=découpe[0:384]), Q4 (empreintes du contenu entier), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-d : vide.bin**
+*   **Entrée** : Chemin = `vide.bin`, État initial = session fermée, fichier existant (0 octet).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `vide.bin`.
+        *   `+520` (taille) = 0.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 0) = 0.
+        *   `+568` (tampon) = `384 octets nuls`.
+    *   **Panneau** : `48 octets` = empreintes du contenu vide :
+        *   MD5 = `d41d8cd98f00b204e9800998ecf8427e`.
+        *   SHA256 = `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès, taille=0), Q3 (remplissage=0, tampon=nul), Q4 (empreintes du vide), Q5 (rax=0).
+
+---
+
+### **Vecteur 2-a : absent**
+*   **Entrée** : Chemin = `fichier_inexistant.bin`, État initial = session fermée.
+*   **Attendu** :
+    *   `rax` = -2 (ERROR_FILE_NOT_FOUND).
+    *   **Cadre (lu)** : Non modifié (état initial de la session).
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E1 (erreur 2 → -2), rien touché.
+
+---
+
+### **Vecteur 2-b : verrouillé**
+*   **Entrée** : Chemin = `fichier_verrouille.bin`, État initial = session fermée, fichier ouvert/verrouillé par un autre processus.
+*   **Attendu** :
+    *   `rax` = -7 (ERROR_SHARING_VIOLATION).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E2 (erreur 32 → -7), rien touché.
+
+---
+
+### **Vecteur 2-c : accès refusé**
+*   **Entrée** : Chemin = `fichier_acces_refuse.bin`, État initial = session fermée, fichier existant mais droits d'insuffisants.
+*   **Attendu** :
+    *   `rax` = -6 (refus générique).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E3 (autre erreur → -6, GLE consigné), rien touché.
+
+---
+
+### **Vecteur 3-a : 2 Gio + 1**
+*   **Entrée** : Chemin = `fichier_2gio+1.bin`, État initial = session fermée, fichier existant (taille > 2 Gio).
+*   **Attendu** :
+    *   `rax` = -3 (dépassement de la borne nommée).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 1 appel (la poignée est fermée avant le retour).
+*   **Règle du modèle** : Q2 (taille > 2 Gio → -3, poignée fermée), rien touché.
+
+---
+
+### **Vecteur 3-b : session double**
+*   **Entrée** : Chemin = `temoin-1.bin`, État initial = session déjà ouverte (poignée du cadre ≠ INVALIDE).
+*   **Attendu** :
+    *   `rax` = -5 (session déjà ouverte).
+    *   **Cadre (lu)** : Relu identiquement à la session précédente (non modifié par cet appel).
+    *   **Panneau** : Relu identiquement à la session précédente (non modifié).
+    *   **CloseHandle** : 0 appel (aucune nouvelle poignée n'a été ouverte).
+*   **Règle du modèle** : E4 (poignée ≠ INVALIDE → -5), rien touché.
+
+---
+
+### **Vecteur 3-c : chemin 260 sans NUL**
+*   **Entrée** : Chemin = chaîne de 260 caractères (sans NUL final).
+*   **Attendu** :
+    *   `rax` = -5 (chemin invalide).
+    *   **Cadre (lu)** : Non modifié (jamais de débordement, donc le champ `+0` reste intact).
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : P1 (chemin > 260 caractères → -5), rien touché.
+
+---
+
+### **Vecteur 4 : la falsification**
+*   **Entrée** : Chemin = `temoin-384.bin`, État initial = session fermée. Après l'ouverture réussie (Q1), le contenu du fichier est modifié par un tiers, altérant la taille lue (+520).
+*   **Attendu** :
+    *   L'oracle échoue.
+*   **Règle du modèle** : L'oracle compose l'écran attendu à partir du contrat. Il calcule la taille attendue (384), le remplissage attendu (384) et les empreintes attendues (MD5/SHA256 du *contenu original* du témoin). Lorsqu'il confronte cet écran attendu à l'état observé (où la taille a muté), il détecte une divergence. L'échec de l'oracle est la falsification demandée.
+
+---
+
+### **Indépendance de l'Oracle**
+L'oracle est un modèle indépendant. Il ne regarde JAMAIS les octets du bloc `loupe-01 · ouvrir`. Il ne lit pas le code, ne l'exécute pas, et n'observe pas les effets de bord directs. Il compose l'état attendu exclusivement à partir des clauses du contrat et des entrées fournies, puis le compare à l'état observé lu par le harnais.
+
+
+================================================================================
+LES FAITS DU PLAN (loupe/layout.py — la source unique ; l'auteur les connaît
+AVANT d'écrire ; les symboles s'utilisent PAR NOM, l'outil auteur résout)
+================================================================================
+
+LE SLOT : le bloc loupe-01 vit au slot RVA 0x4080, TAILLE 448 octets — ton
+code doit faire AU PLUS 432 octets (le slot se remplit de NOP 0x90, padding
+d'au moins 16 octets — multiple de 64).
+
+LE PROFIL : x86-64-win11-pe · ABI msx64.
+
+LES SYMBOLES DU PLAN (par nom, dans le brouillon) :
+  CADRE       le cadre de session (.data) — les champs, PAR OFFSET :
+              chemin    @+0    (520 o, UTF-16 NUL-terminé)
+              taille    @+520  (qword)
+              poignée   @+528  (qword ; INVALIDE = -1 = 0xFFFF...FF)
+              vue       @+536  (qword)
+              curseur   @+544  (qword)
+              remplissage @+552 (dword)
+              tampon    @+568  (384 o)
+  EMPREINTES  le panneau d'empreintes (48 o, .data) — l'argument de loupe-07
+  LOUPE02     le bloc fenêtre (l'appel direct : call LOUPE02 ; argument :
+              la vue en ecx)
+  LOUPE03     le bloc fermeture (la clôture de session, sans argument)
+  LOUPE04     le bloc cadre (pose le cadre VIERGE : zéros partout, poignée
+              INVALIDE ; sans argument ; rend 0)
+  LOUPE07     le bloc panneau (calcule md5+sha256 du fichier ENTIER au
+              panneau ; argument : le pointeur du panneau en rcx ; LE VIDE
+              AUSSI : son panneau est défini)
+  LIBC01      le memcpy hérité (rcx = destination, rdx = source,
+              r8d = nombre d'octets)
+  IAT_CREATEFILEW, IAT_GETFILESIZEEX, IAT_CLOSEHANDLE, IAT_GETLASTERROR
+              les QUATRE feuilles IAT du bloc — l'appel s'écrit :
+              call qword ptr [rip + IAT_CREATEFILEW]
+
+L'ABI msx64 (le profil ; l'audit statique du build la vérifie) :
+  - les arguments 1 à 4 : rcx, rdx, r8, r9 ;
+  - les arguments 5 ET PLUS vivent à [rsp+0x20], [rsp+0x28], [rsp+0x30]…
+    JAMAIS au home space [rsp..0x18] ; chaque slot d'argument 5+ doit être
+    ÉCRIT dans la branche qui appelle (le défaut de la lignée : trois slots
+    au home space, un pointeur fantôme) ;
+  - rsp ≡ 0 (mod 16) à CHAQUE appel (compte tes push/pop/sub/add) ;
+  - les registres non volatils (rbx, rbp, rdi, rsi, r12 à r15) rendus
+    INTACTS (sauve-les si tu les utilises) ;
+  - le verdict : rax signé 32 bits (la table des verdicts).
+
+LES FEUILLES (la sémantique des quatre) :
+  CreateFileW(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes,
+              dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile)
+    7 arguments : rcx = le chemin UTF-16 ; rdx = 0xC0000000
+    (GENERIC_READ|GENERIC_WRITE) ; r8 = 1 (FILE_SHARE_READ, offert jamais
+    reçu) ; r9 = 0 ; [rsp+0x20] = 3 (OPEN_EXISTING) ; [rsp+0x28] = 0 ;
+    [rsp+0x30] = 0. Rend la poignée, ou -1 (INVALID_HANDLE_VALUE) au refus
+    (alors GetLastError parle).
+  GetFileSizeEx(hFile, lpFileSize) : rcx = la poignée, rdx = le pointeur
+    de sortie (qword) ; rend non-zéro au succès.
+  CloseHandle(hObject) : rcx = la poignée ; rend non-zéro au succès.
+  GetLastError() : aucun argument ; rend le code (2 = FILE_NOT_FOUND,
+    3 = PATH_NOT_FOUND, 32 = SHARING_VIOLATION, 5 = ACCESS_DENIED).
+
+LE RÉSEAU DES SPECS (la liste FERMÉE des appels directs attendus — le
+build REFUSE tout appel hors réseau, et REFUSE un appelé manquant) :
+  LOUPE04, LOUPE02, LOUPE07, LOUPE03, LIBC01 — pas un de plus, pas un de
+  moins. Les quatre feuilles IAT ci-dessus — pas une de plus.
+
+L'ORDRE DU GESTE (le contrat le dit, le réseau l'exige) :
+  1. E4 D'ABORD : la poignée du cadre (@+528) lue — si ≠ -1, la session
+     est déjà ouverte : rax = -5, RIEN TOUCHÉ (l'ancien cadre demeure
+     INTACT — le test précède TOUT geste, même loupe-04) ;
+  2. LOUPE04 : le cadre vierge posé (les zéros, la poignée INVALIDE) ;
+  3. CreateFileW : au refus (-1), GetLastError → la table (2 ou 3 → -2 ;
+     32 → -7 ; le reste → -6), la barre le nomme, RETOUR ;
+  4. la poignée au cadre (+528), GetFileSizeEx → la taille au cadre (+520) ;
+  5. Q2 LA BORNE : taille > 0x80000000 (comparaison NON signée, la taille
+     est un qword) → CloseHandle (la poignée JAMAIS pendante), LOUPE04
+     (le cadre re-vierge : la session échouée ne laisse RIEN), rax = -3 ;
+  6. LA MESURE DU CHEMIN : les caractères UTF-16 comptés jusqu'au NUL ;
+     si 260 caractères SANS NUL → CloseHandle, LOUPE04, rax = -5 (jamais
+     un débordement) ;
+  7. LA COPIE : le chemin copié au cadre (+0) PAR LIBC01 (jamais octet
+     par octet réécrit) — n = (longueur + 1) × 2 octets, le NUL compris ;
+     la vue = 0, le curseur = 0 (loupe-04 les a posés) ;
+  8. Q4 LA SESSION NÉE ENTIÈRE : si taille > 0, LOUPE02 (la fenêtre à la
+     vue 0 — argument ecx = 0) ; puis LOUPE07 (le panneau — rcx = le
+     pointeur EMPREINTES, posé par lea rcx, [rip + EMPREINTES]) ; le vide
+     SAUTE la fenêtre mais PAS le panneau ;
+  9. LE REFUS D'UN APPELÉ (loupe-02 ou loupe-07 rend un eax négatif) :
+     LOUPE03 (la session se clôt — la poignée rendue, le cadre re-vierge),
+     le verdict de l'appelé remonte TEL QUEL dans rax ;
+  10. le succès : rax = 0.
+
+================================================================================
+LE FORMAT DU BROUILLON (ce que l'outil auteur accepte — rien d'autre)
+================================================================================
+
+  - les commentaires : une ligne qui commence par « ; »
+  - les étiquettes locales : « .nom: » SEULE sur sa ligne
+  - les sauts : « jmp .nom », « je .nom », « jne .nom », « jbe .nom »…
+  - les appels directs : « call LOUPE04 » (le NOM du symbole)
+  - les appels IAT : « call qword ptr [rip + IAT_CREATEFILEW] »
+  - les données : « lea rbx, [rip + CADRE] » — toute instruction peut
+    porter « [rip + SYMBOLE] » (jamais « [rip - SYMBOLE] »)
+  - une instruction par ligne, syntaxe Intel (mov, movzx, movsxd, lea,
+    cmp, test, jcc, call, push, pop, sub, add, xor, shl, inc, nop, ret…)
+  - les valeurs négatives immédiates : « push -3 » puis « pop rax » est la
+    manière de la lignée pour poser un verdict négatif dans rax (mov
+    eax, -3 convient aussi)
+
+================================================================================
+TON TRAVAIL : écris LE BROUILLON — les lignes « ; » d'en-tête (la spec, tes
+choix, l'ordre du geste — tes mots d'auteur), puis les instructions, une par
+ligne. Le code doit faire AU PLUS 432 octets (une centaine d'instructions
+suffisent largement — sois économe : pas de sous-routine, le bloc est droit).
+
+Réponds par le BROUILLON SEUL : aucun texte avant, aucun texte après,
+AUCUN bloc de code markdown (des lignes « ; » puis des instructions, rien
+d'autre).

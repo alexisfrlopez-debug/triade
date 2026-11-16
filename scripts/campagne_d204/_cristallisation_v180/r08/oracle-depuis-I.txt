@@ -1,0 +1,156 @@
+**ORACLE DU DOMAINE LOUPE-01 · OUVRIR**
+
+---
+
+### **Vecteur 1-a : temoin-1.bin**
+*   **Entrée** : Chemin = `temoin-1.bin`, État initial = session fermée, fichier existant (1 octet).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` (chemin copié) = `temoin-1.bin` (chaîne C, terminée par NUL).
+        *   `+520` (taille) = 1.
+        *   `+528` (poignée) = handle valide (non nul).
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 1) = 1.
+        *   `+568` (tampon) = contenu du fichier : `0xXX` (l'unique octet du témoin).
+    *   **Panneau** : `48 octets` = empreintes du contenu entier :
+        *   MD5 = `d41d8cd98f00b204e9800998ecf8427e` (incorrect, l'oracle doit utiliser le contenu réel, ici le MD5 de '0xXX').
+        *   SHA256 = `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` (incorrect, l'oracle doit utiliser le contenu réel, ici le SHA256 de '0xXX').
+    *   **CloseHandle** : 1 appel (fermeture de la poignée).
+*   **Règle du modèle** : Q1 (succès, poignée et taille lues), Q3 (vue, curseur, remplissage=1, tampon=contenu), Q4 (empreintes du contenu de 1 octet), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-b : temoin-384.bin**
+*   **Entrée** : Chemin = `temoin-384.bin`, État initial = session fermée, fichier existant (384 octets).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `temoin-384.bin`.
+        *   `+520` (taille) = 384.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 384) = 384.
+        *   `+568` (tampon) = contenu du fichier : `384 octets` du témoin.
+    *   **Panneau** : `48 octets` = empreintes du contenu entier (MD5 et SHA256 des 384 octets du témoin).
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès), Q3 (remplissage=384, tampon=contenu), Q4 (empreintes du contenu de 384 octets), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-c : temoin-3f.bin**
+*   **Entrée** : Chemin = `temoin-3f.bin`, État initial = session fermée, fichier existant (196609 octets).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `temoin-3f.bin`.
+        *   `+520` (taille) = 196609.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 196609) = 384.
+        *   `+568` (tampon) = contenu du fichier : `384 premiers octets` du témoin.
+    *   **Panneau** : `48 octets` = empreintes du contenu entier (MD5 et SHA256 des 196609 octets du témoin).
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès), Q3 (remplissage=384, tampon=découpe[0:384]), Q4 (empreintes du contenu entier), Q5 (rax=0).
+
+---
+
+### **Vecteur 1-d : vide.bin**
+*   **Entrée** : Chemin = `vide.bin`, État initial = session fermée, fichier existant (0 octet).
+*   **Attendu** :
+    *   `rax` = 0 (succès).
+    *   **Cadre (lu)** :
+        *   `+0` = `vide.bin`.
+        *   `+520` (taille) = 0.
+        *   `+528` (poignée) = handle valide.
+        *   `+536` (vue) = 0.
+        *   `+544` (curseur) = 0.
+        *   `+552` (remplissage) = min(384, 0) = 0.
+        *   `+568` (tampon) = `384 octets nuls`.
+    *   **Panneau** : `48 octets` = empreintes du contenu vide :
+        *   MD5 = `d41d8cd98f00b204e9800998ecf8427e`.
+        *   SHA256 = `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+    *   **CloseHandle** : 1 appel.
+*   **Règle du modèle** : Q1 (succès, taille=0), Q3 (remplissage=0, tampon=nul), Q4 (empreintes du vide), Q5 (rax=0).
+
+---
+
+### **Vecteur 2-a : absent**
+*   **Entrée** : Chemin = `fichier_inexistant.bin`, État initial = session fermée.
+*   **Attendu** :
+    *   `rax` = -2 (ERROR_FILE_NOT_FOUND).
+    *   **Cadre (lu)** : Non modifié (état initial de la session).
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E1 (erreur 2 → -2), rien touché.
+
+---
+
+### **Vecteur 2-b : verrouillé**
+*   **Entrée** : Chemin = `fichier_verrouille.bin`, État initial = session fermée, fichier ouvert/verrouillé par un autre processus.
+*   **Attendu** :
+    *   `rax` = -7 (ERROR_SHARING_VIOLATION).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E2 (erreur 32 → -7), rien touché.
+
+---
+
+### **Vecteur 2-c : accès refusé**
+*   **Entrée** : Chemin = `fichier_acces_refuse.bin`, État initial = session fermée, fichier existant mais droits d'insuffisants.
+*   **Attendu** :
+    *   `rax` = -6 (refus générique).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : E3 (autre erreur → -6, GLE consigné), rien touché.
+
+---
+
+### **Vecteur 3-a : 2 Gio + 1**
+*   **Entrée** : Chemin = `fichier_2gio+1.bin`, État initial = session fermée, fichier existant (taille > 2 Gio).
+*   **Attendu** :
+    *   `rax` = -3 (dépassement de la borne nommée).
+    *   **Cadre (lu)** : Non modifié.
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 1 appel (la poignée est fermée avant le retour).
+*   **Règle du modèle** : Q2 (taille > 2 Gio → -3, poignée fermée), rien touché.
+
+---
+
+### **Vecteur 3-b : session double**
+*   **Entrée** : Chemin = `temoin-1.bin`, État initial = session déjà ouverte (poignée du cadre ≠ INVALIDE).
+*   **Attendu** :
+    *   `rax` = -5 (session déjà ouverte).
+    *   **Cadre (lu)** : Relu identiquement à la session précédente (non modifié par cet appel).
+    *   **Panneau** : Relu identiquement à la session précédente (non modifié).
+    *   **CloseHandle** : 0 appel (aucune nouvelle poignée n'a été ouverte).
+*   **Règle du modèle** : E4 (poignée ≠ INVALIDE → -5), rien touché.
+
+---
+
+### **Vecteur 3-c : chemin 260 sans NUL**
+*   **Entrée** : Chemin = chaîne de 260 caractères (sans NUL final).
+*   **Attendu** :
+    *   `rax` = -5 (chemin invalide).
+    *   **Cadre (lu)** : Non modifié (jamais de débordement, donc le champ `+0` reste intact).
+    *   **Panneau** : Non modifié.
+    *   **CloseHandle** : 0 appel.
+*   **Règle du modèle** : P1 (chemin > 260 caractères → -5), rien touché.
+
+---
+
+### **Vecteur 4 : la falsification**
+*   **Entrée** : Chemin = `temoin-384.bin`, État initial = session fermée. Après l'ouverture réussie (Q1), le contenu du fichier est modifié par un tiers, altérant la taille lue (+520).
+*   **Attendu** :
+    *   L'oracle échoue.
+*   **Règle du modèle** : L'oracle compose l'écran attendu à partir du contrat. Il calcule la taille attendue (384), le remplissage attendu (384) et les empreintes attendues (MD5/SHA256 du *contenu original* du témoin). Lorsqu'il confronte cet écran attendu à l'état observé (où la taille a muté), il détecte une divergence. L'échec de l'oracle est la falsification demandée.
+
+---
+
+### **Indépendance de l'Oracle**
+L'oracle est un modèle indépendant. Il ne regarde JAMAIS les octets du bloc `loupe-01 · ouvrir`. Il ne lit pas le code, ne l'exécute pas, et n'observe pas les effets de bord directs. Il compose l'état attendu exclusivement à partir des clauses du contrat et des entrées fournies, puis le compare à l'état observé lu par le harnais.

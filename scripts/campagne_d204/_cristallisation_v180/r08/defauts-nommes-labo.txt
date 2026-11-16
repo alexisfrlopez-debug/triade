@@ -1,0 +1,45 @@
+LES DÉFAUTS NOMMÉS AU LABO — l'unité 1 (loupe-01 × bras T), la notation
+première (phase notation, 11 480 tokens) contre le build et l'audit du plan.
+Nommer AVANT correction (la règle D202) ; ces défauts sont nommés AU LABO
+avant tout run — JAMAIS ÉCHAPPÉS (exclusions, consignées avec leur raison).
+
+D1 — RÉSOLUTION-AUTEUR : la forme [rip + CADRE + 528] (offset après le
+     symbole) n'existe pas dans l'outil : quatre occurrences (lecture
+     poignée, écriture poignée, lea/lecture taille). La forme : lea reg,
+     [rip + CADRE] puis [reg + offset].
+D2 — CreateFileW testé à ZÉO (test rax, rax / jz) : la poignée INVALIDE est
+     -1, pas 0 — cmp rax, -1 / je le refus.
+D3 — LES ARGUMENTS PILE 5-7 DE CreateFileW JAMAIS ÉCRITS : [rsp+0x20] = 3
+     (OPEN_EXISTING), [rsp+0x28] = 0, [rsp+0x30] = 0 — l'audit msx64 refuse
+     un appel dont un slot 5+ n'est pas écrit dans la branche qui appelle.
+D4 — AUCUN CADRE DE PILE : rbx utilisé sans être sauvé (non volatil
+     détruit — I5), aucun sub rsp : l'alignement rsp ≡ 0 (mod 16) aux
+     appels IAT est faux (l'entrée ≡ 8 ; cinq push + sub rsp, 0x40 le
+     rétablissent — la forme de la lignée).
+D5 — rcx (le chemin) NON PRÉSERVÉ à travers call LOUPE04 : rcx est
+     volatile, l'appelé n'a aucune obligation de le rendre — le sauver
+     (r12) AVANT le premier appel.
+D6 — cmp r8d, 260*2 : keystone n'évalue pas les expressions — 520 littéral.
+D7 — movzx eax, word [rcx + r8] : la syntaxe exige word ptr.
+D8 — L'ORDRE DE LA SESSION INVERSÉ : le brouillon appelle LOUPE07 puis
+     LOUPE02 ; le contrat Q4 : loupe-02 D'ABORD (seulement si taille > 0)
+     PUIS loupe-07 (toujours, le vide aussi).
+D9 — LE VERDICT DE L'APPELÉ EFFACÉ : .appel_echoue appelle LOUPE03 puis
+     ret — loupe-03 rend 0, le verdict négatif de loupe-02/07 est PERDU ;
+     le sauver avant l'appel, le remettre après (movsxd vers r13 puis
+     retour — la lignée).
+D10 — GetFileSizeEx EN ÉCHEC → POIGNÉE PENDANTE : le chemin .erreur_os
+     partagé ne ferme pas la poignée (le refus de CreateFileW n'en a pas,
+     celui de GetFileSizeEx en a une ouverte) — deux chemins distincts ;
+     le refus de GetFileSizeEx : CloseHandle, LOUPE04, -6.
+D11 — .hors_perimetre : push rax avant CloseHandle DÉSALIGNE rsp de 8 à
+     l'appel ; le pop rax qui suit est mort (mov eax, -3 l'écrase) —
+     retirer le push/pop.
+D12 — LA MESURE DU CHEMIN OFF-BY-ONE : à la sortie de boucle r8 = 2 ×
+     longueur SANS le NUL ; la copie exige (longueur + 1) × 2 = r8 + 2.
+D13 — LA SOURCE DE LA COPIE JAMAIS CHARGÉE : à .copie_chemin, le commentaire
+     « rdx = source (déjà en rcx) » — rcx vient d'être écrasé par la
+     destination ; la source est le chemin sauvé (r12), rdx = r12.
+
+Consigné au journal de campagne ; la correction vit à la phase correctif
+(compter le coût — le workflow mesuré, M2).

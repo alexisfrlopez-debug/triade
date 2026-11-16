@@ -1,0 +1,188 @@
+Tu es l'auteur du domaine Loupe au laboratoire TRIADE. Ton cinquième
+brouillon du bloc loupe-01 · ouvrir (ci-dessous) ne porte PLUS QU'UN écart,
+de syntaxe cette fois — la ligne suivante est INASSEMBLABLE (keystone la
+refuse, vérifié au labo) :
+
+D24 — « cmp rax, 0x80000000 » : l'immédiat 0x80000000 dépasse le champ
+     signé d'un opérande immédiat 32 bits — keystone refuse. LA FORME DE
+     LA LIGNÉE (la borne par registre) :
+
+         mov r13, qword ptr [rbx + 520]
+         mov eax, 0x80000000
+         cmp r13, rax
+         ja .hors_perimetre
+
+     (la taille chargée en r13 ; la borne posée dans eax — 32 bits
+     suffisent, 0x80000000 y vit ; la comparaison NON signée
+     registre-à-registre ; le saut au-delà de la borne). Remplace les
+     lignes « mov rax, [rbx + 520] ; cmp rax, 0x80000000 ; ja
+     .hors_perimetre » par ces QUATRE lignes. Ne change RIEN d'autre
+     (r13 est sauvé par le prologue).
+
+================================================================================
+TON CINQUIÈME BROUILLON (un seul écart : D24)
+================================================================================
+
+; loupe-01 · ouvrir : brouillon auteur CORRIGÉ (D14-D17, D18-D22, D23)
+; spec : ouvrir fichier, initialiser session, naître composants (loupe-02/07) ou verdict.
+; choix : vérifier E4 (session ouverte) d'abord. Loupe04 pour cadre vierge. Mesure chemin.
+; appelés : LOUPE04, LOUPE02, LOUPE07, LOUPE03, LIBC01. IAT : CreateFileW, GetFileSizeEx, CloseHandle, GetLastError.
+; ordre : E4 -> LOUPE04 -> CreateFileW (gestion erreurs) -> stocker poignée/taille -> vérifier borne -> mesurer chemin -> copier chemin -> naissance session (LOUPE02 si taille>0 PUIS LOUPE07 TOUjours) -> gestion erreur appelés -> retour.
+; ABI : msx64. Registres non-volatils sauvegardés si utilisés. rsp aligné 16.
+; CORRECTIONS : D14 (lea rbx, [rip + CADRE] une fois, [rbx + offset] ensuite), D15 (cinq push, sub rsp, 0x40), D16 (r13 sauvegardé par r13), D17 (dword ptr), D18 (ptr qword), D19 (saut vers verdict_deja_ouvert), D20 (ordre des appels à la session), D21 (sauvegarde rcx avant LOUPE04), D22 (qword ptr pour hTemplateFile), D23 (ordre sauvegarde rcx, appel LOUPE04, restauration rcx).
+
+; --- Prologue ---
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x40
+lea rbx, [rip + CADRE] ; rbx = base du cadre
+
+; --- Vérification E4 (session déjà ouverte) ---
+cmp qword ptr [rbx + 528], -1
+jne .verdict_deja_ouvert
+
+; --- Préparation de l'appel CreateFileW ---
+mov r12, rcx ; sauver rcx (chemin)
+call LOUPE04 ; rax = 0, cadre zéro, poignée = -1
+mov rcx, r12 ; restaurer rcx (chemin) pour CreateFileW
+
+; --- Appel CreateFileW ---
+mov r9, 0
+mov r8, 1 ; FILE_SHARE_READ
+mov edx, 0xC0000000 ; GENERIC_READ | GENERIC_WRITE
+mov dword ptr [rsp + 0x20], 3 ; OPEN_EXISTING
+mov dword ptr [rsp + 0x28], 0
+mov qword ptr [rsp + 0x30], 0
+call qword ptr [rip + IAT_CREATEFILEW]
+cmp rax, -1
+je .erreur_os_create ; rax = -1 (erreur) ou handle
+
+; --- Succès CreateFileW : stocker la poignée ---
+mov [rbx + 528], rax
+
+; --- Appel GetFileSizeEx pour obtenir la taille ---
+lea rdx, [rbx + 520] ; rdx = &cadre.taille
+call qword ptr [rip + IAT_GETFILESIZEEX]
+test rax, rax
+jz .erreur_os_size ; rax = 0 (erreur)
+
+; --- Vérifier la taille (Q2 : BORNE_TAILLE) ---
+mov rax, [rbx + 520]
+cmp rax, 0x80000000 ; 2 Gio
+ja .hors_perimetre
+
+; --- Mesurer la longueur du chemin (UTF-16, NUL-terminé) ---
+xor r8, r8 ; r8d = nombre d'octets à copier (compteur)
+.loop_mesure:
+movzx eax, word ptr [r12 + r8] ; lire 1 caractère UTF-16 (2 octets)
+test eax, eax ; est-ce le NUL ?
+jz .copie_chemin
+add r8, 2 ; pas de NUL, on continue
+cmp r8d, 520 ; 260 caractères max * 2
+jb .loop_mesure
+
+; --- Chemin trop long (260+ sans NUL) ---
+mov rcx, [rbx + 528] ; rcx = poignée
+call qword ptr [rip + IAT_CLOSEHANDLE]
+call LOUPE04 ; remettre le cadre vierge
+mov eax, -5
+jmp .sortie
+
+.copie_chemin:
+; --- Copier le chemin dans le cadre (LIBC01) ---
+lea rcx, [rbx] ; destination = cadre.chemin
+mov rdx, r12 ; source = chemin sauvé (r12)
+lea r8, [r8 + 2] ; r8d = nombre d'octets (longueur + NUL)
+call LIBC01
+
+; --- Initialiser vue et curseur (déjà fait par LOUPE04) ---
+; [rbx+536] = 0, [rbx+544] = 0
+
+; --- Naissance de la session : LOUPE02 (fenêtre SI taille > 0) ---
+mov rax, [rbx + 520] ; rax = taille
+test rax, rax
+jz .naissance_panneau ; taille = 0, pas de fenêtre
+
+mov ecx, 0 ; argument ecx = 0 (vue 0)
+call LOUPE02
+test eax, eax
+jne .appel_echoue ; LOUPE02 a rendu une erreur, on propage
+
+; --- Naissance de la session : LOUPE07 (empreintes, TOUJOURS) ---
+.naissance_panneau:
+lea rcx, [rip + EMPREINTES] ; rcx = pointeur vers le panneau
+call LOUPE07
+test eax, eax
+jne .appel_echoue ; LOUPE07 a rendu une erreur, on propage
+
+; --- Succès final ---
+xor rax, rax
+jmp .sortie
+
+; --- Gestion des erreurs OS après CreateFileW ---
+.erreur_os_create:
+call qword ptr [rip + IAT_GETLASTERROR]
+cmp eax, 2 ; ERROR_FILE_NOT_FOUND
+je .verdict_absent
+cmp eax, 3 ; ERROR_PATH_NOT_FOUND
+je .verdict_absent
+cmp eax, 32 ; ERROR_SHARING_VIOLATION
+je .verdict_verrouille
+; Autre erreur
+mov eax, -6
+jmp .sortie
+
+.verdict_absent:
+mov eax, -2
+jmp .sortie
+
+.verdict_verrouille:
+mov eax, -7
+jmp .sortie
+
+; --- Gestion de la hors-périmètre ---
+.hors_perimetre:
+mov rcx, [rbx + 528] ; rcx = poignée
+call qword ptr [rip + IAT_CLOSEHANDLE]
+call LOUPE04 ; remettre le cadre vierge
+mov eax, -3
+jmp .sortie
+
+; --- Gestion d'un appelé (loupe-02 ou loupe-07) en échec ---
+.appel_echoue:
+movsxd r13, eax ; sauver le verdict de l'appelé
+call LOUPE03 ; fermer la session (poignée, cadre)
+mov eax, r13d ; restaurer le verdict
+jmp .sortie
+
+; --- Verdict E4 : session déjà ouverte ---
+.verdict_deja_ouvert:
+mov eax, -5
+jmp .sortie
+
+; --- Gestion des erreurs OS après GetFileSizeEx ---
+.erreur_os_size:
+mov rcx, [rbx + 528] ; rcx = poignée
+call qword ptr [rip + IAT_CLOSEHANDLE]
+call LOUPE04 ; remettre le cadre vierge
+mov eax, -6
+jmp .sortie
+
+; --- Épilogue unique ---
+.sortie:
+add rsp, 0x40
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+================================================================================
+LA CONSIGNE : le brouillon complet, sixième édition, D24 corrigé, TOUT LE
+RESTE DEMEURE À L'IDENTIQUE. Réponds par le BROUILLON SEUL. AUCUN texte
+avant ou après, AUCUN bloc markdown.
