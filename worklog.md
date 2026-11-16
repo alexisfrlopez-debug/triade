@@ -11218,3 +11218,630 @@ Work Log:
   → preuves-unite13C/ ENTIER + l'atelier ENTIER avec le log au coffre)
   ; ③ ENSUITE loupe-16 saisie, aux deux bras — le labo construit à la
   commande. (15/11, la session de la feuille liée)
+
+- LA SESSION DU RELAIS RÉTABLI (l'Entrée 305 close au coffre) : les jetons
+  à jour reçus du coffre /Tokens (la commande du développeur — RÈGLE
+  PERMANENTE : en cas de problème d'accès au coffre, VÉRIFIER /Tokens
+  d'abord ; scripts/gdrive_tokens.py le rapatrie, REGLES-PERMANENTES.md au
+  projet la porte) ; LE RELAIS OAUTH RÉTABLI — la livraison déposée au
+  /test PAR LE LABO : les kits kit-unite-loupe-16-T/C-20261116 (8 pièces
+  chacun, les gravures recoupées 7/7 + 7/7 byte-byte APRÈS dépôt —
+  re-téléchargées et re-hachées, les pièces PE32+ AMD64, py_compile VERT
+  des deux scénarios), l'épreuve console (14 VERT 0 ROUGE) déposée à
+  /test/archives-livraisons/unite-16-loupe-20261116/, le LISEZMOI-KITS
+  REMPLACÉ à la racine du /test (82 069 o — l'Entrée 305 y vit), et le
+  GUIDE-CORRECTIONS-LIVRE-305-20261116.txt déposé à la racine — LE GUIDE
+  DÉTAILLÉ DES CORRECTIONS DU LIVRE À FAIRE À LA MAIN : les TROIS gestes
+  de la 305 (la ligne défaut 304 AJOUTÉE — 905 -> 1 240 o ; la ligne kit
+  08 corrigée, tache loupe-13 -> loupe-08 ; la ligne vide RETIRÉE —
+  1 649 -> 1 648 o), les tailles et condensés sha256 attendus communiqués
+  au terrain (certutil), le guide LUI-MÊME recoupé byte-byte contre la
+  référence du labo (lab16/livraison/reference-apres-geste/) ; le run 13C
+  v2 demeure VERT recoupé (9 VERT 0 ROUGE, le témoin daté signé de la
+  main, la feuille memcmp liée au guichet — le slot @+0x91a0, la valeur
+  sur disque 0x92da repointée et relue) — l'unité 5 CLOSE à it2 ; la
+  vérification des kits AVANT dépôt : TOUT VERT (empreintes, PE, compile,
+  copies, épreuve) ; AUCUN rangement prescrit par la 305 (le wrapper
+  174404Z du terrain demeure à la racine du /test — D143, rien ne se
+  jette, le geste attendra son Entrée).
+- SUITE : au développeur — ① LE GESTE DU LIVRE au guide (au bloc-notes,
+  jamais Excel ; puis l'atelier ENTIER re-déposé au coffre) ; ② LES DEUX
+  RUNS de l'unité 6 (loupe-16 saisie, le bras T puis le bras C — le
+  témoin attendu 7 VERT 0 ROUGE PAR BRAS) ; ③ la commande réelle du
+  développeur pour la suite (la partie réaliste attend LA COMMANDE
+  RÉELLE, le précédent R2/D189).
+  (16/11, la session du relais rétabli)
+
+## Task 212 — Entrée 306 : les runs de l'unité 6 × les deux bras recoupés
+VERTS et signés — la partie contrôlée de la campagne D204 CLOSE (les six
+blocs au premier vert), le geste du livre de la 305 recoupé (un octet
+cosmétique nommé), le coffre rangé (D143 : treize kits + trois wrappers
+déplacés aux archives), la reprise rapide portée à jour, les synchros git
+et drive vérifiées puis poussées, le PDF final consigné comme attendu à la
+fermeture des sessions de runs
+
+- LA COMMANDE : « atelier et runs 16 C et T dans /test du drive. Verifie et
+  go pour la suite si tout est ok. Nettoie le drive en archivant ce qui
+  n'est pas necessaire pour la suite, et verifie si les instructions de
+  reprise rapide du projet sont a jour. verifie les synchro git et drive.
+  il faudra penser a produire la derniere version du pdf du projet quand
+  les sessions runs seront terminees ».
+- LE REÇU : les DEUX wrappers kit-unite-loupe-16-{T,C}-20261116-
+  20261115T1907{54,57}Z-1-001/ (les copies du terrain : les kits + preuves-
+  unite16[/C]/ + run-console-unite16[/C].txt) et L'ATELIER ENTIER
+  (19:12:43Z) — l'atelier-campagne-d204-20261114-013520 avec le geste du
+  livre de la 305 vécu.
+- LES RUNS RECOUPÉS (lab16/runs-recus/, tout téléchargé et re-haché) :
+  les kits qui ont couru == les livraisons du labo 8/8 + 8/8 byte-byte ;
+  LE T (run 19:09:45Z) : T0 la gravure (loupe.exe 1893833047…), V1
+  15/15, V2 10 000/10 000 (65 683 gestes, graine 20261116), V3 E1/E2/E3,
+  V4 l'entrée mutée — LE TÉMOIN 7 VERT 0 ROUGE daté 15/11/2026 SIGNÉ
+  ALEXIS LOPEZ [D99] ; LE C (run 19:11:15Z, la même machine PORTABLE ·
+  Windows 10 · AMD64 · Python 3.14.10 [CA2]) : les mêmes verdicts — LE
+  TÉMOIN 7 VERT 0 ROUGE daté signé ; l'ordre de jeu tenu (T puis C), la
+  chronologie entière tenue ; falsifie-16.bin IDENTIQUE entre les bras
+  (16 o, la clé du journal mutée 22 35 … 33) — L'UNITÉ 6 CLOSE À it1
+  AUX DEUX BRAS (§ 7).
+- LE LIVRE recoupé contre la référence-apres-geste du labo :
+  livraisons.csv 1 780 o == la référence 1 648 o (80ac3802…, geste ③
+  vécu) + les DEUX lignes 16 exactes aux dates VRAIES ; defauts.csv :
+  la ligne 304 byte-exacte + la tache kit 08 corrigée (gestes ① ②) —
+  UN SEUL ÉCART nommé : le LF FINAL manque (1 239 o attendus 1 240 —
+  cosmétique, aucune donnée touchée) ; le carnet + les DEUX lignes M3
+  de l'unité 6 ; journal-ouverture INTACT ; la colonne recoup « en
+  attente » demeure (le livre est au terrain, le recoup vit aux
+  Entrées).
+- LA PARTIE CONTRÔLÉE CLOSE : les SIX blocs au premier vert — loupe-01
+  (T1/C1), loupe-02 (T1/C1), loupe-05 (T1/C2), loupe-08 (T2/C1),
+  loupe-13 (T1/C2), loupe-16 (T1/C1) — QUINZE livraisons consommées
+  (12 VERT, 3 ROUGE : les kits v1 fautifs re-livrés en v2) ; la partie
+  réaliste (unités 13-14 du plan) attend LA COMMANDE RÉELLE (R2/D189).
+- LE RANGEMENT vécu (D143 : déplacés, jamais jetés) : les TREIZE kits
+  des unités closes {02×3, 05×3, 08×2, 13×3, 16×2} descendus aux
+  archives-livraisons/unite-XX-loupe-*/ (les TROIS kits 02 suffixés
+  « -LIVRAISON-LABO » : l'archive unite-02 tenait déjà les dépôts de
+  run de l'ère 02 aux noms nus) ; les TROIS wrappers de run renommés
+  « …-RUN-V2-VERT-20261115 » (13-C v2, aux archives unite-13) et
+  « …-RUN-VERT-20261115 » (16-T/16-C, aux archives unite-16) ; la
+  racine du /test revenue à SES 13 entrées ; le LISEZMOI-NETTOYAGE-
+  TEST-20261116.txt déposé à la racine porte la liste exacte.
+- LA REPRISE PORTÉE À JOUR : REPRISE_PROJET.md (racine du coffre +
+  TRIADE-sauvegarde-git) — le bloc DERNIÈRES ÉVOLUTIONS du 16/11 (le
+  bloc du 31/10 relabellisé historique dessous) : l'état de la
+  campagne, la règle /Tokens, le push, le PDF attendu ; la carte
+  OU-TROUVER portée à 306 (en-tête + items 31/32 + renvois Entrées
+  251-306 / Tasks 158-212) aux deux endroits + le miroir local
+  gdrive/projet/.
+- LES SYNCHROS : AVANT geste le miroir == le coffre (bundle
+  157 219 830 o du 15/11 18:49Z ; worklog 819 681 o identique ;
+  LISEZMOI 82 069 o identique) ; APRÈS geste LE PUSH de la 306 (commit
+  de session, bundle --all + worklog remplacés au TRIADE-sauvegarde-
+  git, envoi résumable, recoup par re-téléchargement).
+- LE PDF FINAL consigné (la consigne du développeur) : la dernière
+  version du PDF du projet à produire QUAND LES SESSIONS DE RUNS
+  SERONT TERMINÉES (le manuscrit courant TRIADE_manuscrit_v0.15.0.pdf
+  à la racine, 181 335 o — l'édition finale emportera la campagne).
+- SUITE : ① la commande réelle pour la partie réaliste (unités 13-14,
+  l'application Loupe aux deux bras) ; ② le PDF final à la fermeture
+  des sessions de runs ; ③ le LF final de defauts.csv — cosmétique,
+  au prochain geste du livre s'il advient.
+  (16/11, la session des six blocs clos)
+
+
+## Task 213 — Entrée 308 : le run v0.1 du kit 13 TOMBÉ AU LANCEUR (la
+fenêtre fermée d'elle-même, aucun témoin — la faute nommée sur pièces :
+la prose non-remmée, la signature de campagne violée), la commande
+d'évolution v0.2 reçue (« ouvre la v0.2 avec interception TLS »), la
+partie réaliste v0.2 CONSTRUITE aux deux bras (les onze contrats, le
+tunnel CONNECT, la poignée TLS disséquée, l'échange intérieur au fil
+clair), les défauts latents v0.1 attrapés à l'épreuve (le recomptage
+Content-Length à croissance de chiffres : l'asm et le modèle fautifs, le
+bras C juste), les kits v0.2 livrés et recoupés, LA NOUVELLE ÉPREUVE DU
+LANCEUR née de la faute
+
+- LA COMMANDE : « quand je lance le kit 13, la fenetre cmd se referme de
+  suite et je n'ai pas de temoin. ouvre la v0.2 avec interception TLS »
+  — le rapport du terrain + la commande d'évolution.
+- L'AUTOPSIE (le lanceur livré sha256 0406bcc6… recoupé byte-byte au
+  local) : LES SIX LIGNES DE PROSE SANS rem NI @echo off — la ligne 2
+  « (l'application reelle PASSEUR x bras T, la campagne D204). Le run »
+  est UNE ERREUR DE SYNTAXE CMD FATALE : le batch ENTIER abandonné, la
+  fenêtre morte avant le powershell, avant le pause, avant le témoin ;
+  le kit 16 compare (la signature tenue : @echo off + rem ×6 + double
+  BOM) ; le kit 14 porte LE MÊME défaut (jamais run — exclusion oui au
+  livre) ; la cause : le gabarit LANC_T de genere_kits.py avait perdu la
+  signature ; l'épreuve v0.1 (32 VERT) n'éprouvait PAS le lanceur — LA
+  BRÈCHE NOMMÉE, LA LOI NÉE ; le réceptacle preuves-unite13/ non livré
+  par le dépôt : l'autopsie a montré que le scénario LE CRÉE lui-même
+  (os.makedirs) — JAMAIS un bloqueur, nommé, aucune ligne de défaut.
+- LA COUCHE I v0.2 (écrite-avant-code, la v0.1 gravée 8a2147f2… fait
+  foi) : les ONZE contrats — 01 R2 (tunnels/saluts nés zéro), 02 R2 (la
+  requête CONNECT licite sans Host — l'autorité à l'URI), 05 R2 (les
+  lignes TUN « TUN autorité » et SNI « SNI hôte »), 08 R2 (le rapport
+  compte tunnels et saluts), 10 tunneler R1 (la méthode CONNECT lue
+  sinon -3 (10) fail-closed ; l'autorité « hote[:port] » aux bornes
+  URI, le port 443 par défaut ; la cible autoportée ; les règles champ
+  uri/hote sur l'autorité ; la première bloquante : la 403 posée + le
+  motif + rax=1 ; sinon la 200 « Tunnel ouvert » (42 o) + tunnels++),
+  11 saluer R1 (l'enregistrement 0x16 version ≥3 longueur cohérente, le
+  ClientHello 0x01, le corps marché, l'extension SNI : la première
+  entrée hostname donne LES BORNES + sni_valide=1 — L'ABSENCE DE SNI UN
+  ÉTAT LICITE ; les règles champ sni (2) ; la première bloquante :
+  L'ALERTE TLS (7 o, fatale échec-de-poignée) + rax=1 ; sinon saluts++ ;
+  TOUT DÉBORDEMENT → -3 (12) fail-closed) ; les zones : etat +0x40
+  tunnels +0x44 saluts, analyse +0x68/+0x70/+0x78, tls_hello (0xE400,
+  0x1000), .data VS 0xB000.
+- LE BRAS T : les brouillons 10-tunneler (1 201 o — D161 : le slot
+  0x400 s'incline à 0x500) et 11-saluer (1 029 o) à la main, les
+  révisions 01/02/05/08, la cristallisation (passeur.exe 61 952 o, sha
+  4a7229e7…, 3 rebuilds identiques), R5 le round-trip à chaque build,
+  les feuilles pures, le plan étendu (les NEUF slots INTACTS, les deux
+  nouveaux à la suite — R7).
+- LE BRAS C : le source étendu (les ONZE fonctions + tls_hello
+  exportée), gcc -O2 (l'horodatage PE du jour NOMMÉ — jamais
+  byte-identique entre passes, la gravure suit le build vécu).
+- L'HÔTE v0.2 (l'infrastructure commune CA2 — identique aux deux bras) :
+  le verbe CONNECT au TRANSPORT (jamais la décision), le ClientHello
+  PRÉ-LU brut AVANT toute poignée (saluer décide avant que
+  l'infrastructure ne chiffre), la poignée serveur par MemoryBIO (la
+  feuille du kit servie — la frappe à la volée HORS v0.2.0 NOMMÉE),
+  l'amont TLS non vérifié (le SNI nommé), l'échange INTÉRIEUR au MÊME
+  moteur (les octets comptés au flux clair, l'enrobage jamais) ; LES
+  PIÈCES TLS (openssl au labo, la CA + la feuille SAN
+  localhost/cible.example/127.0.0.1, vérifiée, IDENTIQUES aux deux bras
+  : ab7ee3a6… / 91a0b201… / 7a27d2f5…).
+- LES DÉFAUTS ATTRAPÉS À L'ÉPREUVE AVANT TOUTE LIVRAISON (chacun
+  corrigé et re-éprouvé VERT) : ① LE DÉFAUT LATENT v0.1 du recomptage
+  Content-Length quand le compte de chiffres CROÎT — l'asm 07 lisait
+  en dl en ÉCRASANT sa propre base rdx (des écritures sauvages : la
+  cascade « HTTP/1.1 20\n \r\r\rS »), le modèle Python copiait en
+  avant au lieu d'en arrière (la cascade « 122\r\r\r »), le bras C
+  était JUSTE (decale directionnelle) — le tour 583 de la v0.2 tira le
+  cas que 600 tours v0.1 n'avaient jamais tiré — les deux fautifs
+  corrigés (rsi pour la base asm ; la copie directionnelle au modèle) ;
+  ② le compte de tours (la sonde d'attente consomme un accept : --tours
+  7 pour six clients) ; ③ la clé de bloc 10/11 au chargeur (le format
+  « 010 » corrigé en 10) ; ④ le champ sni du parseur de règles de
+  l'épreuve ; ⑤ les lignes TUN/SNI des demandes BLOQUÉES (le précédent
+  v0.1 : la demande PUIS le refus — 15 lignes au journal).
+- L'ÉPREUVE : LES DEUX BRAS 47 VERT 0 ROUGE (T0, V1 l'école des onze
+  blocs, V2 600/600 la graine 20261116, V3 E1-E13, V4 DOUBLE (l'état
+  muté + l'octet du SNI muté — SNI localhost contre SNI mocalhost),
+  V-LIVE : les trois du TCP clair (v0.1 INTACT) + LES TROIS DU TUNNEL
+  TLS — L'ÉCHANGE DÉCHIFFRÉ RÉÉCRIT (la poignée vérifiée contre la CA
+  locale, Server: Original + REMPLACE DANS le flux déchiffré :
+  L'INTERCEPTION TLS PROUVÉE), le blocage CONNECT sans amont, le
+  blocage SNI par l'alerte sans amont, le journal 15 lignes, le rapport
+  tunnels 2 saluts 2) ; L'ÉPREUVE DES KITS 28 VERT 0 ROUGE — Y COMPRIS
+  LA LOI 308 : L'ÉPREUVE DU LANCEUR (le double BOM, la première ligne
+  @echo off, la prose remmée, le titre, la capture Tee, le pause final,
+  les CRLF — 14 contrôles par kit : la faute 307 ne passe plus).
+- LA LIVRAISON (le relais OAuth rafraîchi — le SA n'écrit pas, la
+  règle /Tokens a servi) : les kits v0.1 DESCENDUS aux
+  archives-livraisons (D143 : renommés « -LIVRAISON-V1-LANCEUR-
+  DEFAUTANT », jamais jetés), les kits v0.2 déposés (13 pièces
+  chacun, PLATS), le LISEZMOI-KITS REMPLACÉ (l'Entrée 308 y vit), le
+  GUIDE-CORRECTIONS-LIVRE-308 à la racine (T-app-it1 ROUGE + les deux
+  défauts nommés + les runs v0.2), les consoles d'épreuve aux
+  archives-preuves/unite-v02-epreuve/ — TOUT RECROUPÉ byte-byte par
+  re-téléchargement (les 26 pièces + le LISEZMOI + le GUIDE).
+- SUITE : au développeur — ① LE GESTE DU LIVRE au guide (au
+  bloc-notes, l'atelier ENTIER re-déposé) ; ② LES DEUX RUNS v0.2
+  (extraction fraîche : 1·KIT → 2·RUN LANCEUR-UNITE-13-T.bat puis
+  LANCEUR-UNITE-14-C.bat → 3·TÉMOIN dater signer [D99] →
+  preuves-unite13[/14]/ ENTIERS + l'atelier au coffre ; le témoin
+  attendu 47 VERT 0 ROUGE PAR BRAS ; les onglets 4-7 : T-app-it2 puis
+  C-app-it1 — le kit v0.1 C ne courut jamais : le v0.2 est sa première
+  livraison) ; ③ la commande suivante (la frappe de certificats à la
+  volée HORS périmètre v0.2.0 NOMMÉE — une commande peut l'ouvrir en
+  v0.3 ; le PDF final attendu à la fermeture des sessions de runs).
+  (16/11, la session du lanceur réparé et du tunnel TLS)
+
+## Task 214 — Entrée 311 : le run T v0.3.1 vécu à l'écart nommé (52 VERT
+1 ROUGE — la console de l'hôte décodée au codec LOCALE), le run C v0.3.1
+mort au premier geste qui appelle sa feuille (access violation 0x152da —
+la RVA nue de l'entrée hint/nom de memcpy au slot IAT non lié), les deux
+fautes diagnostiquées sur pièces, LA LOI v0.3.2 (la feuille liée au
+guichet + la console liée à l'UTF-8), les kits v5 construits, éprouvés
+45 VERT au labo et livrés recroupés, le guide du livre 311 déposé, le
+relais OAuth rafraîchi par /Tokens (la règle permanente a servi)
+
+- LA COMMANDE : la console du run 14 C (l'unité 14, le kit v4 : T0 VERT
+  la gravure, l'image cartographiée en mode exports — puis « OSError:
+  exception: access violation writing 0x00000000000152DA » au geste
+  V1-03, code 1, aucun témoin) + « run 13 avec preuves et atelier dans
+  le drive /test ».
+- LE REÇU : le wrapper kit-unite-13-app-T-20261116-v4-20261116T062244Z-
+  1-001 (dépôt 06:29:11Z — le kit + preuves-unite13/ + run-console-
+  unite13.txt) + l'atelier ENTIER re-déposé (06:29:50Z).
+- LE RECOUPE DU RUN 13 : le kit qui a couru == la livraison du labo
+  15/15 pièces byte-byte ; passeur.exe 4a7229e7418e8276… == la gravure
+  v0.2 (LA PIÈCE DEMEURE tenue depuis la 309) ; LE TÉMOIN 52 VERT
+  1 ROUGE daté 16/11/2026 SIGNÉ ALEXIS LOPEZ [D99 — la discipline tient
+  : un écart se signe aussi, nommé] ; la chronologie tenue (T vécu à
+  06:24:56Z puis C) ; L'ÉCART NOMMÉ : « V-LIVE:les-frappes-comptees-au-
+  fil-de-la-console — 0 frappées + 0 resservie + 1 muette au fil de
+  l'hôte » contre 2+1+1 attendues.
+- LE DIAGNOSTIC T (sur pièces) : le Popen du V-LIVE portait text=True
+  SANS encoding — le fil de l'hôte (UTF-8, posé par le lanceur des deux
+  côtés du tuyau) décodé au codec LOCALE du Python parent (cp1252 au
+  terrain Windows fr, UTF-8 au labo Linux) : les clés accentuées « la
+  feuille frappée » / « la MÊME pièce resservie » ne matchaient JAMAIS,
+  la clé ASCII « (muette) » passait seule — LA PIÈCE ET L'HÔTE INTACTS
+  (l'hôte avait tout imprimé, tout le reste du run VERT ; le même
+  Popen au scénario C : l'écart y était latent aussi).
+- LE DIAGNOSTIC C (sur pièces) : DONT_RESOLVE ne lie RIEN — le slot IAT
+  de memcpy (@+0x151a0) garde sa valeur SUR DISQUE, l'entrée hint/nom
+  (une RVA NUE 0x152da) ; l'autopsie binaire du DLL : les DIX appels
+  memcpy aux quatre blocs router/capturer/reecrire/tunneler (les autres
+  importations ne vivent qu'au démarrage CRT jamais appelé par la
+  pièce) — passeur_03_router appelle sa feuille au geste V1-03 : le
+  thunk jmp [rip+__imp_memcpy] sautait à l'adresse nue (LE MÊME SIGNE
+  que la faute 304 du kit loupe-13-C : le memcmp non lié, 0x92da,
+  « access violation writing » pareil) ; le kit n'avait JAMAIS couru au
+  bras C (v0.1→v0.3.1) : le chargeur POSIX du labo liait ses shims
+  (53 VERT au labo), le chemin Windows n'avait PAS de lieur — la classe
+  entière déjà consignée à la 304.
+- LA LOI v0.3.2 : LA FEUILLE LIÉE AU GUICHET (le lieur du chemin Windows
+  découvre le slot PAR LA TABLE D'IMPORTS — la convention (base, rva)
+  unifiée, AUCUNE RVA codée — repointe la feuille au memcpy de
+  msvcrt.dll de la machine par LoadLibrary + GetProcAddress,
+  VirtualProtect l'instant de l'écriture, la relecture recoupée, AU
+  GUICHET FAIL-CLOSED avant tout appel : jamais un appel sur une
+  feuille morte) ET LA CONSOLE LIÉE À L'UTF-8 (l'encoding explicite au
+  Popen aux DEUX bras — le fil de l'hôte décodé au codec DU TUYAU).
+- LES KITS v5 : LA PIÈCE DEMEURE (passeur.exe 4a7229e7418e8276… /
+  passeur-c.dll fe4ddfc9842fb29b… : les gravures v0.2 ne bougent pas),
+  L'HÔTE DEMEURE (CA2, les octets v0.3.1 — la loi vit au scénario), les
+  scénarios regravés (le guichet au T0 du bras C : une ligne de plus,
+  le témoin attendu 54 VERT au bras C / 53 au bras T), les lanceurs
+  nomment la v0.3.2, le double BOM DEMEURE.
+- L'ÉPREUVE DES KITS v5 : 45 VERT 0 ROUGE (L1 le lanceur la loi 308 +
+  la version v0.3.2 ; L2 les gravures recoupées 14 pièces aux deux
+  bras ; L3 LA PIÈCE DEMEURE v0.2→v0.3.2 + la cristallisation 3
+  rebuilds + la recompilation aux exports ; L4 py_compile ; L5 les
+  QUATRE pièces TLS identiques + la muette -x509_strict + la CA porte
+  keyUsage critique ; L6 la structure plate + la notation T et le
+  source C inchangés + l'hôte v0.3.1 inchangé ; L7 la loi v0.3.1 tenue ;
+  L8 LA LOI v0.3.2 — le guichet présent + couru avant tout appel + LA
+  DÉCOUVERTE RECOUPÉE : la marche du guichet sur le DLL du kit trouve
+  le slot de memcpy PAR LE NOM @+0x151a0, sa valeur SUR DISQUE
+  0x152da == L'ADRESSE NUE du crash terrain + la console liée à
+  l'UTF-8 aux deux bras).
+- LES RUNS DU LABO : LE T 53 VERT 0 ROUGE ET LE C 54 VERT 0 ROUGE,
+  CHACUN AU DOUBLE PYTHON (3.12.16 et 3.14.10) — la ligne T0 du guichet
+  vécue (le slot @+0x151a0, la valeur sur disque 0x152da, repointée à
+  l'adresse liée, la relecture recoupée).
+- LA LIVRAISON (le relais OAuth rafraîchi — la copie locale du relais
+  morte, la copie /Tokens du coffre vivante : LA RÈGLE PERMANENTE A
+  SERVI) : les kits v5 déposés au /test (15 pièces chacun, PLATS), les
+  consoles aux archives-preuves (unite-v05-epreuve : l'épreuve + les
+  QUATRE runs ; unite-13-run-v04-ecart : la console du T vécue convertie
+  + le témoin reçu ; unite-14-run-v04-crassee : la console du terrain
+  transcrite), le LISEZMOI-KITS REMPLACÉ (l'Entrée 311 y vit, 120 490
+  o), le GUIDE-CORRECTIONS-LIVRE-311 à la racine — TOUT RECROUPÉ
+  byte-byte par re-téléchargement (les 30 pièces + le LISEZMOI).
+- LE GUIDE 311 (les gestes du livre au bloc-notes) : la ligne T-app-it1
+  MABOUILLÉE réparée (le retour-chariot manquant avait collé T-app-it2
+  sur elle — le doublon retiré), le verdict T-app-it2 corrigé
+  VERT→ROUGE (l'écart nommé au témoin), la ligne C-app-it1 AJOUTÉE, les
+  DEUX lignes défaut (ecart-harnais-console-locale côté kit, pièce à
+  l'appui run-console-unite13.txt ; plantage-harnais-feuille-memcpy
+  côté kit, pièce à l'appui run-console-unite14C.txt) ; les tailles et
+  condensés attendus : livraisons.csv 1 951 o 9b127799f3d80463…,
+  defauts.csv 3 096 o 681362f31afcd312… (la référence-apres-geste du
+  labo en face).
+- SUITE : au développeur — ① LE GESTE DU LIVRE au guide (puis l'atelier
+  ENTIER re-déposé) ; ② LES DEUX RUNS v0.3.2 (extraction fraîche —
+  1·KIT la gravure → 2·RUN LANCEUR-UNITE-13-T.bat puis
+  LANCEUR-UNITE-14-C.bat → 3·TÉMOIN dater signer [D99] →
+  preuves-unite13/ et preuves-unite14C/ ENTIERS au coffre ; le témoin
+  attendu : 53 VERT 0 ROUGE au bras T, 54 VERT 0 ROUGE au bras C ; les
+  onglets 4-7 : la ligne T-app-it3 puis C-app-it2) ; ③ la commande
+  suivante (le développeur décide — le PDF final attendu à la
+  fermeture des sessions de runs).
+  (16/11, la session du guichet et du fil lié)
+
+- LE PUSH DE LA 311 (le geste de session) : le COMMIT de session, le
+  BUNDLE triade-history-311.bundle (157 960 587 o — le nom versionné, le
+  précédent du 308) déposé au TRIADE-sauvegarde-git, le worklog
+  REMPLACÉ (838 982 o, recoupé par re-téléchargement), LA REPRISE
+  PORTÉE À 311 (le bloc DERNIÈRES ÉVOLUTIONS remplacé, le bloc 306
+  relabellisé historique) REMPLACÉE au TRIADE-sauvegarde-git (123 767 o,
+  recoupée IDENTIQUE) — ET UN ÉCART NOMMÉ : la REPRISE de la RACINE du
+  coffre (11OrJS9X…) se liste des DEUX comptes (le SA ET le relais) mais
+  rend 404 à TOUT get/update (un FANTÔME Drive — même l'alt=media du
+  SA l'ignore) : INTOUCHABLE, elle demeure à sa version 306 (D143 :
+  jamais jetée, jamais écrasée) ; la REPRISE FAISANT FOI vit au
+  TRIADE-sauvegarde-git (portée à 311, recoupée) et au miroir local
+  (drive_work/REPRISE_PROJET.md) ; le nommage ici fait foi — le
+  prochain push tentera la racine de nouveau.
+  (16/11, la session du guichet et du fil lié — appendé au push)
+
+## Task 215 — Entrée 312 : le run T v0.3.2 vécu VERT à la loi vécue (53
+VERT 0 ROUGE, la console comptée 2+1+1 — l'écart du guide 311 guéri), le
+run C v0.3.2 mort EN V-LIVE au premier amont attendu (la loi v0.3.2 ne
+vivait qu'au scénario — l'hôte chargeait la pièce au chemin Windows par
+DONT_RESOLVE SANS lieur : passeur_03_router sautait à l'adresse nue
+0x152da DANS LE PROCESSUS HÔTE), la faute nommée sur pièces, LA LOI
+v0.3.3 (LA FEUILLE LIÉE AU GUICHET À L'HÔTE), les kits v6 construits,
+éprouvés 50 VERT au labo et livrés recroupés, le guide du livre 312
+déposé, le relais OAuth rafraîchi par /Tokens (la règle permanente a
+servi de nouveau)
+
+- LA COMMANDE : la console du run C v5 (l'unité 14, le kit v5 : T0 VERT
+  la gravure + LA FEUILLE LIÉE AU GUICHET VÉCUE — le slot @+0x151a0
+  repointé — V1-V4 TOUT VERT, le différentiel 600/600, les rejets, les
+  falsifications — puis « TimeoutError: timed out » au
+  amont.accept() (scenario-unite14C.py:2554), code 1, aucun témoin) +
+  « run 13 avec preuves et atelier dans le drive /test ».
+- LE REÇU (le /test rapatrié par le SA) : le kit T v5 re-déposé avec
+  preuves-unite13/ (run-console 07:16:17Z, temoin 2732 o daté signé
+  ALEXIS LOPEZ [D99], journal + rapport vlive) + l'atelier ENTIER
+  re-déposé (07:19:5x — livraisons.csv 2 006 o, defauts.csv 3 095 o,
+  carnet, journal-ouverture).
+- LE RECOUPE DU RUN T v5 : le témoin 53 VERT 0 ROUGE (la machine
+  PORTABLE Windows 10 AMD64 Python 3.14.10), la ligne
+  V-LIVE:les-frappes-comptees « 2 frappées + 1 resservie + 1 muette » ==
+  les attendues — LA LOI v0.3.2 VÉCUE au terrain ; le livre lu : les
+  gestes 311 tenus (T-app-it1/it2/C-app-it1 posés, les deux défauts
+  consignés), UN NOUVEAU MABOUILLAGE nommé : la ligne T-app-it3 COLLÉE
+  sur la ligne C-app-it1 (le retour-chariot manquant, LE MÊME SIGNE que
+  la faute nommée au guide 311) — la chirurgie prescrite au guide 312.
+- LE DIAGNOSTIC C (sur pièces, au labo) : l'autopsie des DEUX moteurs —
+  passeur.exe porte AUCUNE table d'imports (le bras T vivait sous l'hôte
+  sans lieur), passeur-c.dll importe memcpy (le slot IAT @+0x151a0, la valeur sur disque 0x152da == L'ADRESSE du crash v0.3.1) ; LE MÉCANISME
+  (lu au source de l'hôte) : Moteur.__init__ au chemin Windows —
+  LoadLibraryExW DONT_RESOLVE + la table d'exports SEULE, AUCUN lieur
+  (la classe 304/311 encore) ; au premier client du V-LIVE,
+  servir_client -> poser requete (memmove python) -> appeler 02 accepter
+  OK -> servir_echange -> appeler 03 router : le thunk jmp
+  [rip+__imp_memcpy] saute à la RVA nue DANS LE PROCESSUS HÔTE —
+  l'OSError attrapé au [ecart nomme] par client (le fil de l'hôte jamais
+  lu : le scénario ne lit la console de l'hôte qu'à la fin du vecteur,
+  le finally terminate sans lecture), l'amont JAMAIS contactée, le
+  scénario attend amont.accept() 3 s puis TimeoutError — code 1, AUCUN
+  TÉMOIN. LA LOI v0.3.2 n'était posée qu'au scénario (Chargeur.lier_
+  feuille au T0) — l'hôte (CA2, les octets v0.3.1 : « la loi vit au
+  scénario » dit la 311) chargeait la pièce au V-LIVE sans lieur : LE
+  MÊME SIGNE que la faute 311, l'hôte oublié.
+- LA LOI v0.3.3 : LA FEUILLE LIÉE AU GUICHET À L'HÔTE — le même guichet
+  fail-closed que la loi v0.3.2, posé DANS passeur_host.py (Moteur.lier_
+  feuille, appelé dans __init__ au chemin Windows AVANT tout appel de
+  bloc) : les slots découverts PAR LA TABLE D'IMPORTS (aucune RVA codée),
+  repointés au memcpy/memset/memmove de msvcrt.dll de la machine,
+  VirtualProtect l'instant de l'écriture, la relecture recoupée, les
+  refus nommés (RuntimeError : RIEN ne court) ; la pièce SANS table
+  d'imports (passeur.exe : « aucune feuille à lier (ras) », la marche saine) ; l'hôte v0.3.3 IDENTIQUE AUX DEUX BRAS (CA2 : la loi vit désormais à
+  l'hôte), la bannière v0.3.3, la ligne [guichet] au fil de l'hôte.
+- LES KITS v6 (kit-unite-13-app-T-20261116-v6 + kit-unite-14-app-C-
+  20261116-v6, 15 pièces chacun, PLATS) : LA PIÈCE DEMEURE (passeur.exe
+  4a7229e7418e8276… / passeur-c.dll fe4ddfc9842fb29b… : les gravures
+  v0.2 ne bougent pas), LES SCÉNARIOS DEMEURENT (les octets v0.3.2 — le
+  témoin attendu demeure 53/54), l'hôte v0.3.3 aux DEUX bras
+  (b5368612d9370b69… contre 4b84e54350bdb9ed… à la v5), les lanceurs
+  nomment la v0.3.3, le double BOM DEMEURE (la signature commune, la
+  faute 302, AUCUN fix mi-campagne), les LISEZMOI portés à l'Entrée 312,
+  les EMPREINTES regravées.
+- L'ÉPREUVE DES KITS v6 : 50 VERT 0 ROUGE (L1 le lanceur la loi 308 +
+  la version v0.3.3 ; L2 les gravures recoupées ; L3 LA PIÈCE DEMEURE
+  v0.2→v0.3.3 + la cristallisation 3 rebuilds identiques + la
+  recompilation aux exports ; L4 py_compile scénarios + hôte ; L5 les
+  QUATRE pièces TLS identiques aux deux bras + strictes ; L6 la
+  structure plate + la notation T et le source C inchangés + L'HÔTE
+  v0.3.3 identique aux deux bras ET changé depuis v5 ; L7 la loi v0.3.1
+  tenue ; L8 la loi v0.3.2 tenue ; L9 LA LOI v0.3.3 — le guichet présent
+  à l'hôte + couru avant tout appel de bloc + LA PIÈCE T SANS TABLE
+  D'IMPORTS (la marche saine) + LA DÉCOUVERTE RECOUPÉE : le slot memcpy
+  @+0x151a0, la valeur sur disque 0x152da == l'adresse nue des crashes
+  v0.3.1 (scénario) et v0.3.2 (hôte) + la bannière v0.3.3).
+- LES RUNS DU LABO : LE T 53 VERT 0 ROUGE ET LE C 54 VERT 0 ROUGE,
+  CHACUN AU DOUBLE PYTHON (3.12.16 et 3.14.10 — le venv .venv314 monté
+  pour l'occasion), les preuves nées aux kits archivées (unite-v06-
+  epreuve : l'épreuve + les QUATRE runs + leurs preuves).
+- LA LIVRAISON (le relais OAuth rafraîchi par /Tokens — la copie
+  locale du relais morte à nouveau, la copie /Tokens vivante : LA RÈGLE
+  PERMANENTE A SERVI ENCORE) : les kits v6 déposés au /test (15 pièces
+  chacun, PLATS, le dépôt idempotent : les pièces identiques sautées,
+  les absentes posées, une divergence = REFUS), les consoles aux
+  archives-preuves (unite-v06-epreuve ; unite-13-run-v05-vert : la
+  console du T vécue convertie UTF-16→UTF-8 + le témoin reçu + le
+  journal + le rapport ; unite-14-run-v05-crassee : la console du
+  terrain transcrite), le LISEZMOI-KITS REMPLACÉ (l'Entrée 312 y vit,
+  125 963 o), LE GUIDE-CORRECTIONS-LIVRE-312 à la racine — TOUT
+  RECROUPÉ byte-byte par re-téléchargement (les 30 pièces + le
+  LISEZMOI).
+- LE GUIDE 312 (les gestes du livre au bloc-notes) : la ligne T-app-it3
+  COLLÉE séparée (le même mabouillage que la faute du guide 311), la
+  ligne C-app-it2 AJOUTÉE (ROUGE — le run v0.3.2 du bras C consommé et
+  mort, aucun témoin), la ligne défaut plantage-hote-feuille-memcpy (la
+  pièce à l'appui run-console-unite14C.txt) ; les tailles et condensés
+  attendus : livraisons.csv 2 064 o sha256 e9df106ac3bdf3ec…,
+  defauts.csv 3 870 o sha256 1bed8908ea9e187d… (la référence-apres-
+  geste du labo en face).
+- SUITE : au développeur — ① LE GESTE DU LIVRE au guide (puis
+  l'atelier ENTIER re-déposé) ; ② LES DEUX RUNS v0.3.3 (extraction
+  fraîche — 1·KIT la gravure → 2·RUN LANCEUR-UNITE-13-T.bat puis
+  LANCEUR-UNITE-14-C.bat → 3·TÉMOIN dater signer [D99] → preuves-unite13/
+  et preuves-unite14C/ ENTIERS + l'atelier ENTIER au coffre /test ; le
+  témoin attendu : 53 VERT 0 ROUGE au bras T, 54 VERT 0 ROUGE au bras C ;
+  les onglets 4-7 : la ligne T-app-it4 puis C-app-it3) ; ③ la commande
+  suivante (le développeur décide — le PDF final attendu à la fermeture
+  des sessions de runs).
+  (16/11, la session du guichet à l'hôte)
+
+## Task 216 — Entrée 315 : le POSTE AUTONOME INSTALLABLE (l'EXE du GUI
+passeur — la commande du développeur « peux tu faire un exe autonome
+installable pour le GUI passeur ? atelier depose dans /test du drive »),
+livré, éprouvé au labo depuis le PAQUET EMPAQUETÉ (50 VERT 0 ROUGE),
+déposé au /test
+
+- LA COMMANDE reçue (l'atelier v1 du GUI au /test fait foi, l'Entrée
+  314 ; le livre au /test recoupé à l'instant : la version post-geste
+  313 — livraisons.csv 2 176 o sha256 3678e37f… == la référence en
+  face, le geste du livre VÉCU au terrain).
+- L'OBJET : TRIADE-GUI-PASSEUR-Setup-1.0.0.exe (99 285 377 o, sha256
+  34b97641…b0ee383d) — l'installateur Windows ×64 PAR UTILISATEUR
+  (aucun droit administrateur) : il porte la coquille Électron 35.7.5
+  (la fenêtre du poste, l'instance unique), le serveur autonome Next.js
+  16 du GUI (porté par l'exécutable Électron en mode NŒUD — AUCUN
+  Node/bun/npm à installer sur la machine) ET l'atelier instantané du
+  labo en LECTURE SEULE (les kits v6 des deux bras, les preuves reçues
+  du terrain, les consoles au double Python, l'épreuve consignée, le
+  livre corrigé, les docs). Le port 3140 (l'Entrée 314) ; si disputé,
+  le poste monte au suivant.
+- LES LOIS TENUES : lecture seule (aucune écriture, D143) ; AUCUN JETON
+  (l'atelier empaqueté SCANNÉ avant construction — aucune valeur
+  d'identifiant ; seules les pièces TLS du kit, la matière de la
+  campagne, comme au coffre) ; AUCUNE SIGNATURE (D99) ; l'épreuve
+  relançable — au terrain sans l'environnement du labo l'écart est
+  nommé, rien ne court ; la racine NOMMABLE (racine.json voisin du
+  serveur : le poste suit l'atelier, jamais l'inverse) ; la
+  désinstallation ne touche ni coffre ni Drive ni donnée.
+- LA PREUVE VÉCUE au labo avant le dépôt : l'épreuve relancée DEPUIS LE
+  SERVEUR EMPAQUETÉ : 50 VERT 0 ROUGE ; le livre : T-app-it4 présentée,
+  livraisons 2 176 o == référence, defauts 3 870 o == référence, le LF
+  tenu ; le journal : huit Entrées jusqu'à la 314 ; la fenêtre
+  capturée : le poste rendu entier (1·KIT, 14/14 recoupées aux deux
+  bras, l'hôte CA2 identique, les badges des lois) ; le serveur : ZÉRO
+  binaire natif (sharp exclu, images non optimisées — portable
+  Windows à l'octet).
+- LE CONTOUR : electron-builder --win nsis --x64 SOUS LINUX SANS WINE —
+  le script NSIS MAISON (uninstallateur écrit À L'INSTALLATION, la
+  voie NSIS classique ; le paquet applicatif pré-compressé app-64.7z
+  extrait par Nsis7z ; toutes les langues chargées — aucune alerte) ;
+  asar désactivé (le serveur enfant lit l'atelier aux vrais chemins) ;
+  la martingale : resources/poste/serveur — le node_modules du serveur
+  imbriqué un niveau plus bas (le filtre d'electron-builder exclut le
+  node_modules racinal, l'imbriquement le contourne — l'écart nommé
+  sur pièces, la cause racine lue dans le filtre d'electron-builder).
+- LE DÉPÔT au /test : le Setup EXE + TRIADE_gui_app_passeur_v2.zip
+  (216 080 o, sha256 40d23f03…bc32ba7 — le source entier : le v1 + la
+  couche racine portable [racine.ts : TRIADE_RACINE / racine.json /
+  le labo par défaut] + la coquille Électron + l'installateur NSIS
+  maison) + LISEZMOI-GUI-EXE-PASSEUR.txt (les gestes, les lois, les
+  empreintes) — TOUT RECROUPÉ par re-téléchargement.
+- SUITE : au développeur — ① LE PDF FINAL DU PROTOCOLE (« si tout ok,
+  redige la nouvelle version du pdf du protocole Triade » : tout est
+  ok, le v0.16.0 suit) ; ② LE CHANTIER DE L'OPTIMISATION (le coût en
+  tokens — la commande inscrite).
+  (16/11, la session de l'exe autonome)
+
+## Task 217 — Entrée 316 : LE PDF FINAL LIVRÉ (la nouvelle version du
+protocole — l'édition académique v0.16.0, l'édition de la CAMPAGNE D204
+close aux deux parties), compilée propre, vérifiée en huit points,
+déposée au coffre avec son archive de soumission
+
+- LA COMMANDE du développeur : « si tout ok, redige la nouvelle version du
+  pdf du protocole Triade » — tout était ok (l'EXE de l'Entrée 315 livré
+  et recoupé).
+- L'OBJET : TRIADE_manuscrit_v0.16.0.pdf (202 431 o, 25 pages, sha256
+  d28bc2bb…) + TRIADE_soumission_v0.16.0.zip (212 660 o, sha256
+  40988847… — README, le PDF, les tableaux, les empreintes, le rapport
+  de vérification) à la RACINE du coffre, aux côtés de la v0.15.0.
+- LE CONTENU NOUVEAU : le sous-titre porte la campagne (« eleven
+  milestones, a fourteen-unit two-arm field campaign, and two sealed
+  applications ») ; l'abstract et le résumé français portent la clôture
+  (22 livraisons témoignées, ZÉRO échappé pièce, la mesure M2
+  53 158/67 475 ×1,27 la direction opposée à H3, la récidive IAT
+  0x152da, les quatre remédiations à zéro octet scellé déplacé, les
+  instruments livrés dont l'EXE) ; la MÉTHODE porte la sous-section
+  « The D204 two-arm field campaign » (le plan a78caf8c…, les quatre
+  métriques M1-M4, les hypothèses H1-H5, les règles d'arrêt, le livre
+  du terrain recoupé, la discipline D99) ; les RÉSULTATS portent la
+  campagne par question (RQ1 : zéro échappé pièce, 6 côté kit + 2
+  exclus + l'artefact du juge ; RQ2 : la paire mesurée lue des logs,
+  les M2 manquants NOMMÉS jamais reconstruits ; RQ3 : la classe de la
+  feuille jamais liée récidivée DEUX FOIS au même slot, la leçon « le
+  garde vit là où le chargement vit », le codec de console, la prose
+  du lanceur, la poignée amont paresseuse ; RQ4 : LA PIÈCE DEMEURE —
+  quatre remédiations, zéro octet des gravures v0.2 déplacé) ; la
+  discussion porte « What the campaign adds » ; les menaces portent le
+  n=1 de la paire instrumentée ; la conclusion et les déclarations
+  portées à la v0.16.0 (les archives citées : TRIADE_soumission_v0.16.0.zip
+  et TRIADE_complet_v0.16.0.zip).
+- LES DONNÉES : GÉNÉRÉES, jamais tapées à la main — extraire_donnees_v160.py
+  (les journaux append-only, le livre du terrain post-geste 313, les
+  journaux M2/M4 lus des logs d'usage) produit macros_v160.tex et
+  tables_generees_v160.tex (le registre 22/15/7 ; la table des tokens
+  9/53 158 contre 11/67 475) ; l'historique v0.15.0 INTACT
+  (tables_generees.tex inchangé).
+- LA COMPILATION : Tectonic (XeTeX) — 25 pages, zéro hbox débordante
+  (les débordements hérités guéris par \emergencystretch, la phrase de
+  disponibilité des données remaniée en liste).
+- LA VÉRIFICATION (huit points, rapport_verification_v0.16.0.txt) : la
+  compilation VERT ; les macros régénérées VERT (13 366 / 11 729 /
+  4 659 lignes, D1–D206) ; les tableaux recoupés VERT (les totaux
+  imprimés == les valeurs générées, relus à la page des tables) ; le
+  livre recoupé au coffre VERT (2 176 o / 3 870 o, les empreintes
+  exactes) ; l'épreuve re-relancée depuis le poste EMPAQUETÉ VERT (50
+  VERT 0 ROUGE) ; l'EXE scanné VERT (aucun jeton, zéro binaire natif
+  au serveur) ; le manuscrit relu VERT (zéro « ?? », zéro parasite,
+  les comptes de l'abstract == les macros) ; les pièces scellées VERT
+  (les gravures demeurées).
+- LE DÉPÔT recoupé PAR RE-TÉLÉCHARGEMENT byte-byte (les deux pièces,
+  les sha exacts).
+- SUITE : au développeur — ① LE CHANTIER SUIVANT inscrit : l'optimisation
+  du protocole et le coût en tokens (la commande « ensuite prochain
+  chantier : optimiser le protocole et trouver des solutions pour le
+  cout en token ») ; ② la lecture de l'édition (le LISEZMOI de
+  soumission porte la lecture honnête : la paire instrumentée n=1, les
+  M2 manquants nommés, le binôme unique).
+  (16/11, la session du PDF final)
+
+## Task 218 — Entrée 317 : LE CHANTIER DE L'OPTIMISATION OUVERT (la
+commande « ensuite prochain chantier : optimiser le protocole et trouver
+des solutions pour le cout en token ») — le plan v1 livré au coffre
+(CHANTIER-OPTIMISATION-TOKENS-v1.md à la racine, 12 082 o ; le PDF de
+lecture au /test, 170 840 o), la mesure d'abord, sept leviers, le plan
+pré-enregistré D207, la règle d'arrêt armée
+
+- LA MESURE AVANT TOUT (R11) : l'anatomie du coût lue des journaux
+  d'usage seuls — l'unique unité entièrement instrumentée (loupe-01) :
+  bras T 53 158 tokens (spec 5 313 / oracle 3 752 / notation 11 480 /
+  CORRECTIFS 32 613 = 61,4 %), bras C 67 475 (correctifs 39 224 =
+  58,1 %) — LE HOT PATH EST LA SPIRALE CORRECTIVE ; l'ère de la carte
+  rappelée (580 / 2 143 / 3 510, baseline 300 304) — le portage visé,
+  jamais la rigueur.
+- LA LOI DU CHANTIER : la hiérarchie D19 réaffirmée (Sécurité >
+  Performance > Optimisation > Coût en tokens — invariant de révision) ;
+  CA3 tenu (tout appel reste instrumenté) ; R2/R5 intacts (le portage
+  réduit, jamais l'obligation) ; la règle des manquants nommés ; M3/M4
+  suivis (un trade de temps humain contre des tokens est un mauvais
+  trade).
+- LES SEPT LEVIERS rangés par économie attendue : L1 le contexte de
+  correctif minimal (le bundle-défaut : défaut + fragment + vecteur —
+  le format PATCH généralisé ; −20 à −30 % du total attendus) ; L2
+  l'oracle par fragment (frag-oracle scellé avec la couche I) ; L3 le
+  digest de contrat (le cache de l'arbre signé, vérifié par empreinte) ;
+  L4 les gabarits de notation du domaine (le squelette versionné —
+  R2 intact, l'audit msx64 à chaque assemblage ; le risque nommé :
+  l'espace d'ombre masqué) ; L5 l'index d'instructions dans la carte
+  (l'édition au voisinage) ; L6 LA RIG RÉPARÉE (compter_tokens.py câblé
+  dans chaque outil auteur — les M2 manquants guéris à la source, le
+  n=1 devient n+) ; L7 les suites du bras C réutilisées.
+- L'ARITHMÉTIQUE HONNÊTE (n=1, à mesurer) : le potentiel cumulé naïf
+  −30 à −45 % au bras T, −25 à −35 % au bras C — JAMAIS une promesse :
+  les leviers interagissent, le plan de mesure seul rendra les chiffres.
+- LE PLAN PRÉ-ENREGISTRÉ : la proposition D207 (un levier par unité
+  mesurée, jamais deux — l'attribution exige l'isolement ; la baseline
+  = la prochaine unité entièrement instrumentée, L6 d'abord ; LA RÈGLE
+  D'ARRÊT : un levier qui dégrade M1 ou M3 est REJETÉ et consigné) ;
+  la séquence L6 → baseline → L1 → L3 → L2 → L4 → L5/L7 ; les OPT-NN
+  au journal d'optimisation (le format D205).
+- LA FRONTIÈRE : ni R2/R5 touchés, ni cache non signé, ni oracle
+  contourné, ni optimisation non mesurée, ni trade d'échappés contre
+  des tokens.
+- SUITE : au développeur — ① LE GESTE L6 (la rig, une demi-session —
+  la mesure est la condition de tout le reste) ; ② la décision D207 à
+  sceller AVANT la première mesure de gain ; ③ la lecture du plan (le
+  PDF au /test).
+  (16/11, la session du chantier d'optimisation)
+
+## Task 219 — Entrée 319 : LE TÉMOIN L6 REÇU SIGNÉ ET LA VAGUE 4 DES
+HUIT INSTRUCTIONS EXÉCUTÉE (l'Entrée 319 au LISEZMOI du /test porte le
+détail intégral ; D207/D208 au journal de décisions ; l'édition
+v0.17.0 compilée et vérifiée — le linter numérique VERT au build ; les
+huit instructions archivées /instructions → /ARCHIVE, 8/8 md5 recoupés)
+
+  (16/11, la session de la vague 4)
