@@ -11854,3 +11854,39 @@ Work Log:
 - L'ÉDITION v0.18.0 : le manuscrit unifié sous périmètres documentés, la table de campagne insérée, le statut des preuves porté (couverture, conformité générative, dudect mesuré), la licence ouverte (D209), le plan D210 pré-enregistré, M4 optimisé consigné R11 — le linter numérique ÉTENDU (valeurs, signes, conventions, le refus de « |t| = 0 ») VERT au build.
 - L'ARCHIVAGE : DIFFÉRÉ, LE GAP NOMMÉ — l'écriture Drive refusée (relais OAuth invalid_grant, jetons expirés, SA sans droit d'écriture) ; les DIX instructions demeurent au /instructions (lues, exécutées, 10/10 md5 recoupés à la lecture) ; le push GitHub vécu (de44d55) porte TOUT le reste.
 (17/11, la session de la vague 5)
+
+## Task 221 — Entrée 321 : LA VAGUE 5 LIVRÉE AU COFFRE ET LES DIX
+INSTRUCTIONS ARCHIVÉES (le jeton relais frais du /Tokens — la règle
+permanente a servi ; le gap nommé de l'Entrée 320 FERMÉ)
+
+Work Log:
+- LE JETON RELAIS RAPATRIÉ du /Tokens du coffre (gdrive_tokens.py, la
+  règle permanente du 16/11 : LA première vérification en cas de problème
+  d'accès) : les QUATRE fichiers posés dans tokens/, AUCUNE valeur
+  affichée, JAMAIS committés (.gitignore) ; la sonde OAuth VERTE — le
+  /test répond (23 entrées), la voie d'écriture revenue.
+- LA LIVRAISON À LA RACINE DU COFFRE (livraison_vague5_relais.py, la voie
+  d'écriture OAuth, fail-closed à chaque geste : recoup AVANT, écriture,
+  relecture recoupée) : le manuscrit TRIADE_manuscrit_v0.18.0.pdf
+  (224 774 o), l'archive soumission (228 299 o), l'archive complète
+  (376 593 o), le rapport d'exécution (13 571 o), le rapport de
+  vérification v0.18.0 (3 449 o), les empreintes v0.18.0 (644 o) — CHAQUE
+  pièce RECROUPÉE md5 par re-téléchargement après dépôt ; D143 : l'empreinte
+  v0.17.0 de la racine RENOMMÉE empreintes_livrables_v0.17.0.txt avant de
+  poser la v0.18.0 au nom générique (md5 recoupé au renommage).
+- L'ARCHIVAGE DES DIX INSTRUCTIONS : /instructions → /ARCHIVE/
+  instructions_20261116/ — 10/10 md5 recoupés AVANT le déplacement (les
+  copies d'instructions-recu/), re-téléchargées et recoupées APRÈS ; le
+  rapport d'exécution déposé à leurs côtés ; LE /INSTRUCTIONS VIDE
+  (0 restant), l'archive à SES 19 entrées (le lot de huit + les dix + le
+  rapport).
+- LE PUSH MIROIR COMPLÉTÉ (les DEUX à chaque push — la règle) : le dépôt
+  GitHub retrouvé (la pointe a5be18a — les archives finales v0.18.0 ;
+  de44d55/af230c7 : l'Entrée 320 et son correctif honnête), le clone
+  miroir reconstruit DEPUIS GITHUB SEUL (le bac recyclé avait perdu
+  l'historique local — un commit initial seul : le bundle N'A JAMAIS été
+  régénéré depuis le bac, l'ancien de 319 Mo remplacé sur un état COMPLET
+  à jour), cette entrée consignée, le bundle --all remplacé au
+  TRIADE-sauvegarde-git + le nom versionné triade-history-321.bundle, le
+  worklog REMPLACÉ — recoupés par re-téléchargement.
+(17/11, la session de la livraison au coffre)
