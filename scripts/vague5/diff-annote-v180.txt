@@ -1,0 +1,773 @@
+LE DIFF ANNOTÉ — v0.17.0 → v0.18.0 (chaque valeur modifiée avec sa
+source brute ; le linter_v180.py vérifie CHACUNE de ces dérivations au
+build — le diff et le registre disent la même chose)
+========================================================================================
+
+LES VALEURS AJOUTÉES OU CORRIGÉES, AVEC LEUR SOURCE :
+  + « +9.9 » ← audit_benchmark.csv : (75 983−69 132)/69 132 = +9,91 %
+  + « -2.0 » ← audit_benchmark.csv : (75 983−77 505)/77 505 = −1,96 % → −2,0
+  + « 0.84 » ← le témoin signé kit-2 N=400 (Entrée 266)
+  + « 104 » ← carnet_temps_humain.csv (bras T)
+  + « 10{,}000 » ← pbt_traces.csv (la campagne générative)
+  + « 11{,}695 » ← p7-egalite-traces.csv (aes-gcm — la v110 était VIDE)
+  + « 12.39 » ← le témoin signé kit-2 N=200 (Entrées 261/264)
+  + « 17 » ← carnet_temps_humain.csv (bras C)
+  + « 18{,}371 » ← p7-egalite-traces.csv (hmac — la mesure v110 était VIDE)
+  + « 1{,}277 » ← p4-mesures-brutes.jsonl (localiser, médiane native)
+  + « 235 » ← 300 304/1 277 = 235,2 (remesure_rq2.csv / mesures brutes)
+  + « 288 » ← verifie_couverture_288 (la bijection)
+  + « 2{,}074 » ← p4-baselines.txt (a) la fonction entière
+  + « 32{,}613 » ← journal_tokens.jsonl (bras T, phase correctif)
+  + « 39.3 » ← p8-m4-apres.json (première exécution)
+  + « 39{,}224 » ← journal_tokens.jsonl (bras C, phase correctif)
+  + « 3{,}374 » ← p4-mesures-brutes.jsonl (éditer)
+  + « 3{,}428 » ← p4-mesures-brutes.jsonl (ajouter q1)
+  + « 3{,}674 » ← p4-mesures-brutes.jsonl (ajouter)
+  + « 4{,}469 » ← p7-egalite-traces.csv (sha-256, compte unique)
+  + « 5.19 » ← le témoin signé kit-2 N=200
+  + « 50.9 » ← p8-m4-avant.json
+  + « 512 » ← alignement_13_regles (4×2×8×2×2×2)
+  + « 56 » ← rejeu_survivants.csv (93,3 % — les 56 survivants nommés)
+  + « 596 » ← p5-decomposition-contexte.txt (localiser, matériau)
+  + « 5{,}313 » ← journal_tokens.jsonl (bras T, spec)
+  + « 5{,}605 » ← journal_tokens.jsonl (bras C, spec)
+  + « 604 » ← p5-decomposition-contexte.txt (localiser, réponse)
+  + « 61.4 » ← 32 613/53 158 = 61,4 %
+  + « 655 » ← pbt_ecarts_minimaux.json (le minimum à 2 pas)
+  + « 660 » ← pbt_ecarts_brut.csv (UNE classe)
+  + « 792 » ← p4-baselines.txt (b) le retrieval hiérarchique
+  + « 82 » ← 300 304/3 674 = 81,7 → 82 (idem)
+
+LES RETRAITS NOMMÉS (les interdits du linter) :
+  − « all |t| = 0 » (six cibles) → l'égalité EXACTE des traces
+    (p7-egalite-traces.csv ; la formulation d'origine était vide sur
+    hmac et aes-gcm — nommé au texte)
+  − « 518× / 86× » → 235× / 82× (aux médianes courantes)
+  − « −9 % / +2 % » → +9,9 % / −2,0 % (les SIGNES, audit_benchmark.csv)
+  − « 138 survivors » (conclusion) → 56 (rejeu_survivants.csv)
+  − « measured once, early » / « no baseline » (§4) → l'état réel :
+    trois mesures, l'agent isolé v0.14.0, la campagne D204
+  − « M1-era card » (§5) → les périmètres documentés
+  − « second agent has not yet regenerated » (§5) → l'agent isolé
+    v0.14.0 (cross-family demeure le gap nommé)
+  − « 34 steps, zero gaps » (abstract/§3.7/conclusion) → la campagne
+    générative 10 000 traces (660 écarts d'UNE classe, rapportés)
+  − « awaiting hardware run / no number exists » (dudect) → les runs
+    kit-2 signés (N=200/N=400) intégrés
+
+LE DIFF COMPLET : 715 lignes unifiées (contexte 2)
+--- main.tex v0.17.0
++++ main.tex v0.18.0
+@@ -1,10 +1,11 @@
+ % =====================================================================
+-%  TRIADE — édition académique v0.17.0 (manuscrit IMRAD, anglais)
++%  TRIADE — édition académique v0.18.0 (manuscrit IMRAD, anglais)
+ %  Corps du document : compilation Tectonic (XeTeX).
+-%  Les tableaux de données sont GÉNÉRÉS par scripts/extraire_donnees_v150.py
+-%  (donnee unique : docs/JOURNAL_TRAVAIL.md + docs/DECISIONS.md + les
+-%  sorties brutes des instruments preuves_v110/v120/v130/v140/v150) et \input
+-%  ci-dessous — aucune donnée n'est tapée à la main ; les comptes du journal
+-%  vivent en macros (donnees/macros_v150.tex, régénérées à chaque passe).
++%  Les tableaux de données sont GÉNÉRÉS par les scripts d'extraction
++%  (donnée unique : docs/JOURNAL_TRAVAIL.md + docs/DECISIONS.md + les
++%  sorties brutes des instruments preuves_v110..v150 + les ledgers D204) et
++%  \input ci-dessous — aucune donnée n'est tapée à la main ; les comptes du
++%  journal vivent en macros (donnees/macros_v180.tex, régénérées à chaque
++%  passe).
+ % =====================================================================
+ \documentclass[11pt,a4paper]{article}
+@@ -36,9 +37,9 @@
+ \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+             urlcolor=liaison, unicode=true,
+-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.17.0)},
++            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.18.0)},
+             pdfauthor={Alexis Lopez}]{hyperref}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.17.0}
++\fancyhead[L]{\small\itshape TRIADE — academic edition v0.18.0}
+ \fancyhead[R]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+@@ -49,5 +50,5 @@
+ % Les comptes EXACTS du journal (régénérés par extraire_donnees_v150.py —
+ % jamais un arrondi, jamais une divergence abstract/intro ; D190)
+-\input{donnees/macros_v170}
++\input{donnees/macros_v180}
+ 
+ \title{\textbf{TRIADE: Enabling LLM Agents to Write Native Code by Hand\\
+@@ -57,5 +58,5 @@
+ \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
+ Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
+-\date{16 November 2026 — Academic edition v0.17.0 (the D204 two-arm field campaign closed; unbounded formal proofs by inductive invariant with independent model checking; model-based conformance testing; systematic proof statuses)}
++\date{17 November 2026 — Academic edition v0.18.0 (the D204 campaign fully reconciled and decomposed; the RQ2 measurements unified under documented perimeters; the constant-time evidence reformulated as exact trace equality with the hardware runs reported; the unbounded proofs extended with a coverage lemma, a rule-by-rule TLA+ alignment and a 10{,}000-trace generative conformance campaign; the M4 verification time optimized without removing any control)}
+ 
+ \begin{document}
+@@ -86,5 +87,5 @@
+ green and signed at both arms. We quantify four research questions on data drawn
+ from a \nbLignesJournal-line append-only engineering journal (Entr'ees
+-consigned through 304; the campaign closures, Entr'ees 305--318,
++consigned through 304; the campaign closures, Entr'ees 305--319,
+ carried in its \nbLignesWorklog-line companion task log and the campaign
+ ledger journal) and a \nbLignesDecisions-line append-only decision log
+@@ -98,11 +99,15 @@
+ judge artifact); (RQ2) the measured
+ token cost per validated change --- re-measured end-to-end on the final
+-card with full distributions: medians of 580 tokens to locate a block,
+-2{,}143 to edit one, 3{,}510 to add one (the early single-shot M1 values,
+-51/719/1{,}088, remain as history) against a naive whole-disassembly
++card with full distributions, the model's native tokenizer on every
++instrumented call: medians of 1{,}277 tokens to locate a block, 3{,}374
++to edit one, 3{,}674 to add one (the content-only v0.14.0 re-measures,
++580/2{,}143/3{,}510, and the early single-shot M1 values, 51/719/1{,}088,
++remain as explicitly labelled history --- the measurement perimeters
++differ and are documented in the text) against a naive whole-disassembly
+ baseline of 300{,}304; the campaign's one fully instrumented
+ head-to-head unit reads 53{,}158 tokens for the notation arm against
+ 67{,}475 for the compiled arm ($\times$1.27, the direction opposite to
+-the pre-registered expectation);
++the pre-registered expectation), the corrective spiral dominating both
++arms (61.4\%/58.1\% of the totals);
+ (RQ3) the defect classes structurally invisible to emulation, which we
+ enumerate with their evidence (loader and PE-format semantics, ABI
+@@ -116,5 +121,14 @@
+ signed version monotonicity and an armed anti-rollback check --- and a
+ closing campaign whose six field remediations moved zero bytes of the
+-sealed pieces (the gravures held across every iteration). The vault's four security properties (secret below threshold, rollback refusal, no destruction on wrong passphrase, blast radius bounded to one epoch) are now proved \emph{unbounded} over epochs by an inductive invariant preserved by every rule of the operational semantics, and the implementation is tested against the model by 34 replayed transition steps covering every failure path (zero gaps --- conformance testing, renamed in the present edition); each claim carries a systematic status --- proved unbounded, proved bounded, or awaiting a hardware run --- and no hardware claim is made until the developer's field run is on record. The study is
++sealed pieces (the gravures held across every iteration). The vault's four security properties (secret below threshold, rollback refusal, no destruction on wrong passphrase, blast radius bounded to one epoch) are now proved \emph{unbounded} over epochs by an inductive invariant preserved by every rule of the operational semantics, and the implementation is tested against the model by a 10{,}000-trace
++generative conformance campaign (seed consigned, every failure path
++covered, one named divergence class found, shrunk and analysed; zero gaps
++elsewhere --- model-based conformance testing, renamed in the present
++edition); a coverage lemma --- every reachable concrete state is
++represented by one of the 288 abstract state shapes --- is stated and
++discharged mechanically (SMT over unbounded integers, negative controls
++included); each claim carries a systematic status --- proved unbounded,
++proved bounded, measured, or awaiting a hardware run --- and no hardware
++claim is made beyond what the developer's signed runs record. The study is
+ single-case (N=1), its oracle is derived from the same specifications it
+ checks, and the compiled-reference comparison shares the laboratory
+@@ -151,5 +165,5 @@
+ de recherche sur des données tirées d'un journal d'ingénierie append-only
+ de \nbLignesJournal{} lignes (Entrées consignées jusqu'à 304 ; les clôtures
+-de campagne, Entrées 305--318, portées par le journal de tâches
++de campagne, Entrées 305--319, portées par le journal de tâches
+ compagnon de \nbLignesWorklog{} lignes et le journal de campagne) et d'un
+ journal de décisions append-only de \nbLignesDecisions{} lignes
+@@ -162,8 +176,15 @@
+ feuille jamais liée récidivant deux fois au même slot —, un artefact
+ du juge pré-nommé) ; (RQ2) le coût mesuré en tokens par
+-changement validé — re-mesuré de bout en bout sur la carte finale avec distributions : médianes de 580 tokens pour localiser, 2~143 pour éditer, 3~510 pour ajouter (les valeurs M1 51/719/1~088 demeurent historiques) contre une baseline naive de 300~304 ; l'unique unité à deux
++changement validé — re-mesuré de bout en bout sur la carte finale avec
++distributions, au tokenizer natif du modèle sur chaque appel instrumenté :
++médianes de 1~277 tokens pour localiser, 3~374 pour éditer, 3~674 pour
++ajouter (les re-mesures v0.14.0 au contenu seul, 580/2~143/3~510, et les
++valeurs M1 51/719/1~088 demeurent historiques et étiquetées telles — les
++périmètres de mesure diffèrent et sont documentés) contre une baseline
++naïve de 300~304 ; l'unique unité à deux
+ bras entièrement instrumentée de la campagne lit 53~158 tokens pour le
+ bras notation contre 67~475 pour le bras compilé (×1,27, la direction
+-opposée à l'attente pré-enregistrée) ;
++opposée à l'attente pré-enregistrée), la spirale corrective dominant les
++deux bras (61,4 % / 58,1 % des totaux) ;
+ (RQ3) les classes de défauts structurellement invisibles à l'émulation,
+ énumérées avec leurs preuves (sémantique du chargeur et du format PE,
+@@ -172,5 +193,5 @@
+ patch à chaud de code scellé — zéro régression post-patch sur les
+ campagnes de jalons, avec monotonie de version signée et anti-rollback
+-armé. Les quatre propriétés de sûreté du coffre (secret sous le seuil, refus du retour en arrière, aucune destruction sur phrase erronée, rayon borné à une époque) sont désormais prouvées NON BORNÉES en époques par un invariant inductif préservé par chaque règle de la sémantique opérationnelle, et l'implémentation est testée contre le modèle par 34 pas de transition rejoués couvrant tout chemin d'échec (zéro écart — test de conformité, renommé en la présente édition) ; chaque affirmation porte un statut systématique — prouvé non borné, prouvé borné, ou en attente de run matériel — et aucune revendication matérielle n'est faite tant que le run du développeur n'est pas consigné. L'étude est un cas unique (N=1), son oracle dérive des mêmes
++armé. Les quatre propriétés de sûreté du coffre (secret sous le seuil, refus du retour en arrière, aucune destruction sur phrase erronée, rayon borné à une époque) sont désormais prouvées NON BORNÉES en époques par un invariant inductif préservé par chaque règle de la sémantique opérationnelle, et l'implémentation est testée contre le modèle par une campagne générative de conformité de 10~000 traces (graine consignée, tout chemin d'échec couvert, une classe d'écart unique trouvée, réduite et analysée ; zéro écart ailleurs — test de conformité model-based, renommé en la présente édition) ; un lemme de couverture — tout état concret atteignable est représenté par l'une des 288 formes d'état abstraites — est énoncé et déchargé mécaniquement (SMT sur entiers non bornés, contrôles négatifs compris) ; chaque affirmation porte un statut systématique — prouvé non borné, prouvé borné, mesuré, ou en attente de run matériel — et aucune revendication matérielle n'est faite au-delà de ce que les runs signés du développeur consignent. L'étude est un cas unique (N=1), son oracle dérive des mêmes
+ spécifications qu'il vérifie, et la comparaison au compilateur de référence
+ partage le harnais du laboratoire ; la réplication indépendante (un second
+@@ -345,14 +366,21 @@
+ \subsection{Measurements}\label{sec:mesures}
+ 
+-\emph{Token budgets} were measured twice: at M1 (decision D31/D34, the
+-generation-1 card) and re-measured for this edition on the final
+-Loupe-era card (D195) --- the context content of each operation measured
+-exactly with the \code{cl100k\_base} tokenizer over the real plan,
+-notations and specifications ($n{=}10$ per operation), the agent
+-\emph{reasoning} overhead estimated at $\times 1.08$ from the actual
+-generation/content ratio of the era's surgical revisions (an estimate,
+-named as such, never confused with a measurement), and a naive baseline
+-(the full disassembly of the artifact) measured for contrast. The M1
+-convention (D31/D34) was:
++\emph{Token budgets} were measured three times under two documented
++perimeters. At M1 (decision D31/D34, the generation-1 card): the
++single-shot content of each operation, cl100k\_base. At v0.14.0 (D195):
++the content alone re-measured on the Loupe-era material (the plan entry,
++the notation re-read and re-written, the specification and notation
++written --- $n{=}10$ per operation), the agent \emph{reasoning} overhead
++estimated at $\times 1.08$ from the era's surgical revisions (an
++estimate, named as such, never confused with a measurement). At v0.17.0
++(the pre-registered plan \code{ede70035\ldots}): the \emph{complete
++instrumented round-trip} --- the real prompt (material verbatim plus
++request prose) and the real response, counted with the model's native
++tokenizer as read from the usage log of every call (the estimation
++abandoned), cl100k\_base in parallel. The two re-measurements answer
++different questions (what the material costs to read, against what the
++full operation costs to live through); the perimeters are documented
++wherever both values appear, and no direct cross-perimeter comparison
++is drawn without the perimeter note. The M1 convention (D31/D34) was:
+ tokens to locate a block (read one \code{frag-loc} entry), to edit one
+ (additional \code{frag-con} + notation), to add one (additional
+@@ -380,5 +408,5 @@
+ 
+ % --- Tableaux générés depuis le journal (source unique de vérité) ---
+-\input{donnees/tables_generees_v170}
++\input{donnees/tables_generees_v180}
+ 
+ % ------------------------------------------------------------------
+@@ -413,4 +441,34 @@
+ piece.
+ 
++\paragraph{The asymmetric delivery formats, and why.} The two arms do
++not deliver the same \emph{binary format}, and the asymmetry is
++load-bearing for reading the escapes. Arm~T's piece is an EXE image
++composed at a fixed slot of the sealed \code{loupe.exe} layout (the
++notation is assembled into the image the card already indexes; the
++terrain kit maps it by sections and the scenario calls it at its
++address). Arm~C's piece is a DLL (\code{gcc -O2 -shared}, one export
++per block declared in a \code{.def} file), because the standard flow's
++unit of delivery is a library the host loads: on the terrain the
++Windows loader binds the DLL's import table (every leaf must resolve),
++while the laboratory's POSIX proof maps the image by sections and
++services the imports through shims behind a SysV$\to$msx64 trampoline.
++The loading paths differ exactly where the campaign's escapes live:
++the unbound-import-leaf class exists only on the DLL path (an EXE
++without that import has no leaf to leave unbound), and it struck the
++compiled arm three times at the same slot. Table~\ref{tab:campagne}
++reports the complete campaign --- fourteen units (six controlled blocks
++and the application, each at both arms), twenty-two witnessed
++deliveries, every verdict, every named escape with its attribution
++(kit, judge, or piece) --- generated from the ledgers and reconciled
++programmatically: 22 deliveries (15 green, 7 red), 6 counted escapes
++under the D202 delivery rule, 2 named-and-excluded escapes (named at
++the laboratory before any field run), the seventh red delivery
++identified as the pre-named judge artifact (a laboratory-judge fault
++consumes no delivery), and zero escapes attributable to either arm's
++native code. The reconciliation script recomputes every total from the
++raw registers and refuses any divergence.
++
++\input{donnees/table-campagne}
++
+ \section{Results}\label{sec:results}
+ 
+@@ -468,43 +526,122 @@
+ both arms green and signed.
+ 
++\paragraph{The pre-registered hypotheses, explicit verdicts.} The five
++directional hypotheses registered before the first unit, each with its
++measured values (read from the ledgers, never recalled): \textbf{H1}
++(final health at both arms) \emph{holds} --- both arms closed green
++and signed (T-app-it4 and C-app-it3); \textbf{H2} (escaped defects
++within a factor of two between arms) \emph{holds} --- 3 counted
++escapes at T against 3 at C ($1.0\times$); \textbf{H3} (the notation
++arm costlier in tokens) \emph{falsified} --- the compiled arm consumed
++$\times$1.27 the tokens of the notation arm on the one instrumented
++unit (67{,}475 against 53{,}158), the direction opposite to the
++registration; \textbf{H4-D204} (longer human ceremonies for T)
++\emph{holds} --- 104 minutes against 17 at the gesture (the timed
++ceremony log; $\times$6.1); \textbf{H5} (verification time within one
++order of magnitude) \emph{falsified} --- 52.5\,s against 2.2\,s
++($\times$23.9). The label disambiguation stands: H4-D193 (the
++v0.14.0 compiler comparison, ``testable to the same degree'') is a
++different hypothesis from H4-D204.
++
+ \subsection{RQ2: token cost per validated change}\label{sec:rq2}
+ 
+ Table~\ref{tab:budgets} shows the M1 instrumentation (51/719/1{,}088 ---
+-historical, never replaced). This edition re-measured the cost end-to-end
+-on the final card (Table~\ref{tab:preuves}): locating a block costs a
+-\emph{median} of 580 tokens [quartiles 496--706]; editing one 2{,}143
+-[1{,}085--3{,}463]; adding one 3{,}510 [3{,}128--4{,}091] ($n{=}10$
+-operations each, real plan entries, notations and specifications, the
+-reasoning estimated as above). The honest reading is \emph{unfavourable
+-to the protocol}: Loupe-era operations cost 3--11$\times$ their M1
+-counterparts (editing 2{,}143/719 $= 3.0\times$; adding
+-3{,}510/1{,}088 $= 3.2\times$; locating 580/51 $= 11.4\times$ ---
+-every ratio recalculated from the raw CSVs by the numeric linter of
+-the present edition, which refuses any divergence) --- the notations
+-are longer, the contracts denser; the cost grew with the rigour. What
+-the card-fragment indexing still buys is measured by the naive
+-baseline: reading the full disassembly of \code{loupe.exe} costs
+-300{,}304 tokens (37{,}538 lines) --- 518$\times$ the cheapest card
+-operation (locating) and 86$\times$ the most expensive (adding). The whole
++historical, never replaced). The current measurement is the v0.17.0
++re-measurement (Table~\ref{tab:preuves}): the three operations measured
++as complete instrumented round-trips with the model's native tokenizer
++(the usage log of every call, the $\times$1.08 estimation abandoned),
++$n{=}18/18/15$ real samples (the card's own blocks and contracts, seed
++consigned in the pre-registered plan \code{ede70035\ldots}),
++cl100k\_base in parallel (ratio $0.98$--$1.02$ across operations):
++locating a block costs a \emph{median} of 1{,}277 tokens [quartiles
++846--1{,}568]; editing one 3{,}374 [2{,}337--5{,}444]; adding one 3{,}674
++[3{,}428--4{,}258] --- full distributions and wall latencies in the data
++archive.
++
++\paragraph{The perimeter note (mandatory before any comparison).}
++The earlier re-measurement (v0.14.0, D195) measured the \emph{content
++alone} with cl100k\_base, reasoning estimated ($\times$1.08, named):
++medians of 580 [496--706] to locate, 2{,}143 [1{,}085--3{,}463] to edit,
++3{,}510 [3{,}128--4{,}091] to add ($n{=}10$) --- historical values,
++explicitly labelled as such. The v0.17.0 perimeter is the full
++round-trip. The decomposition, generated from the raw logs and
++confirmed by an independent re-tokenization of the prompts and responses
++($n{=}5$ per operation, zero divergence beyond one token): the locating
++operation decomposes into a median of 596 tokens of material read (the
++card header --- the part v0.14.0 counted), 41 tokens of request prose,
++and 604 tokens of \emph{written response} (the agent re-emits the full
++header), all under the native tokenizer; editing decomposes into
++1{,}617/45/1{,}635 and adding into 1{,}416/55/2{,}378. The apparent
++$2.2\times$ growth in locating (580 $\to$ 1{,}277) is therefore a
++perimeter effect --- the tokenizer ratio is 0.98--1.02 and cannot
++produce it --- and the two values are never compared without this note.
++The M1 values (51/719/1{,}088) remain single-shot history; the
++Loupe-era content values cost 3--11$\times$ their M1 counterparts
++(the notations longer, the contracts denser --- the cost grew with the
++rigour; every ratio recalculated from the raw CSVs by the numeric
++linter of the present edition, which refuses any divergence).
++
++\paragraph{The baselines.}
++What the card-fragment indexing buys is measured against three
++baselines, all on the same eighteen blocks. The naive one: reading the
++full disassembly of \code{loupe.exe} costs 300{,}304 tokens
++(37{,}538 lines) --- 235$\times$ the cheapest card operation (locating,
++1{,}277) and 82$\times$ the most expensive (adding, 3{,}674) at the
++current medians. The two realistic ones, measured to close the gap
++between the card and the naive floor: (a)~the function-level
++disassembly by symbol table --- the unit a standard tool would feed the
++agent --- costs a median of 2{,}074 tokens [quartiles 1{,}192--3{,}202;
++min 317, max 6{,}552]; (b)~a hierarchical retrieval over the disassembly
++(the block header plus a fifteen-line window) costs a median of 792
++tokens [628--982; min 525, max 1{,}217]. Read at the comparable perimeter
++(content, cl100k\_base): the card's locating \emph{material} (a median
++of 596) sits below the retrieval baseline (792) --- the indexed fragment
++is smaller than header-plus-window; the full round-trips (1{,}277 native)
++sit above it, the written response being the difference. The whole
+ generation-1 lineage totalled 13{,}873 tokens (D34); full-card audits
+ remain exceptional, logged operations.
+ 
+-\paragraph{The re-measurement (v0.17.0).}
+-The present edition re-measures the three operations with the model's
+-native tokenizer (the usage log of every instrumented call, the
+-$\times$1.08 estimation abandoned), $n{=}18/18/15$ real samples
+-(the card's own blocks and contracts, seed consigned in the
+-pre-registered plan \code{ede70035\ldots}), cl100k\_base in parallel
+-(ratio $0.98$--$0.99$ across operations): locating a median of
+-1{,}277 tokens [quartiles 846--1{,}568], editing 3{,}374
+-[2{,}337--5{,}444], adding 3{,}674 [3{,}428--4{,}258] --- full distributions
+-and wall latencies in the data archive; the M1 values remain history.
+-Two realistic baselines join the naive one (the function-level
+-disassembly by symbol table, and a hierarchical retrieval over the
+-disassembly): both measured on the same operations, both reported
+-alongside. The campaign's verification-time metric, never reported
+-before, reads M4 $=$ 52.5\,s (arm~T) against 2.2\,s (arm~C) on
+-the instrumented unit --- $23.9\times$, falsifying the pre-registered
+-H5 (``within one order of magnitude''), $n{=}1$, stated as such.
++\paragraph{The campaign's instrumented unit, decomposed.}
++The campaign's one fully instrumented head-to-head unit (loupe-01, both
++arms, every call logged) reads 53{,}158 tokens for the notation arm
++against 67{,}475 for the compiled arm ($\times$1.27, the direction
++opposite to the pre-registered H3, $n{=}1$). The decomposition by
++category, read from the usage logs: at arm T --- specification 5{,}313,
++oracle 3{,}752, notation 11{,}480, corrective iterations 32{,}613
++(61.4\% of the total, six calls); at arm C --- specification 5{,}605,
++oracle 4{,}423, C source 14{,}660, test suite 3{,}563, corrective
++iterations 39{,}224 (58.1\%, seven calls). Two readings: the corrective
++spiral dominates both arms (the hot path is the workflow, not the
++notation), and the compiled arm's \emph{source} costs more tokens than
++the hand-written notation (14{,}660 against 11{,}480) --- the first
++counter-intuition behind H3's fall. The reasoning tokens are not
++separated by the API log (counted within the completion): a named gap,
++never estimated back.
++
++\paragraph{The verification-time metric (M4) and its optimization.}
++The campaign's verification-time metric reads M4 $=$ 52.5\,s (arm~T)
++against 2.2\,s (arm~C) on the instrumented units --- $23.9\times$,
++falsifying the pre-registered H5 (``within one order of magnitude''),
++$n{=}1$, stated as such. The present edition optimizes the arm-T
++fixed command list \emph{without removing any control} (rule R11: no
++optimization without measurement): the twelve crystallisation rebuilds
++run concurrently (each in a hermetic copy of the unit folder, all
++outputs compared byte for byte --- determinism is order-independent);
++the oracle differentials run as parallel sessions, each file in its own
++persistent Unicorn emulation (the profile: the session \emph{opening}
++--- the emulated md5+sha256 over the whole file --- dominates at
++3.2\,s per 65\,KiB, the reads cost 0.15\,ms each). Measured
++before/after on the same laboratory machine (monotonic clock, two
++consecutive runs, both green, sealed fingerprints unchanged, and the
++oracle consoles \emph{identical line for line} to the originals): 50.9\,s
++$\to$ 39.3/39.2\,s, a $23\%$ reduction on a two-core machine, with
++the compiled arm re-measured on the same machine at 2.2\,s --- the
++ratio moves from $23.1\times$ to $17.9\times$ and H5 \emph{remains
++falsified}; the remaining critical path is the emulated cryptography of
++the contract sessions themselves ($\approx$10\,s for the 196\,KiB
++witness), irreducible without changing the controls. The coverage
++compromise refused: sharing one emulation between the build, the
++round-trip and the oracle was considered and rejected --- the judge
++never shares state with the judged.
+ 
+ \subsection{RQ3: defect classes invisible to emulation}\label{sec:rq3}
+@@ -639,11 +776,26 @@
+ bounded verification, not a proof.
+ 
+-\paragraph{Constant-time (emulation dudect).} The crypto families pass a
+-Welch t-test on executed-instruction counts between fixed-secret and
+-random-secret classes (N=60 each; all $|t| = 0$: the trace is
+-secret-independent --- e.g.\ x25519 executes exactly 1{,}238{,}959
+-instructions for every key). The metric is emulation-structural:
+-\emph{real-hardware wall-clock timing remains unmeasured} and is
+-explicitly marked as not proven.
++\paragraph{Constant-time (emulation --- reformulated as exact trace equality).}
++The earlier editions reported the Welch statistics of a t-test on
++executed-instruction counts between fixed-secret and random-secret
++classes (N=60 each) as uniformly zero. That formulation was an artefact
++twice over, both
++facets found by the present edition's replay. First: on bit-identical
++instruction traces the variance is null and Welch's $t$ is \emph{undefined}
++(0/0), not zero --- a t-test is the wrong instrument for an equality that
++is exact. Second: on two of the six targets (hmac, aes-gcm) the v0.11.0
++instrument had never activated its instruction counter (the counts were
++all zeros; the hkdf target had run with an accidentally truthy flag) ---
++the vacuous measurements are named, and the replay measures all six for
++real. The correct statement is \emph{exact equality of the executed-
++instruction traces}, and the replay verifies it as such: each of the six
++targets (sha-256, hmac, hkdf, x25519, aes-gcm, md5) executes a single
++instruction count across all 120 measurements --- sha-256 4{,}469, hmac
++18{,}371, hkdf 18{,}407, x25519 exactly 1{,}238{,}959 for every key,
++aes-gcm 11{,}695, md5 132{,}509 (grain consigned, the v0.11.0 protocols
++replayed verbatim). N=60 per class is an exact \emph{structural}
++control, never a statistical power test. The metric remains
++emulation-structural; the real-hardware wall-clock timing is a separate,
++now measured, claim (the dudect kit runs below).
+ 
+ \paragraph{Comparative benchmarks --- audited and corrected (v0.13.0).} The
+@@ -661,6 +813,11 @@
+ costs 75{,}983 instructions for the blocks against 69{,}132 for
+ gcc~14.2 -O2 and 77{,}505 for -Os, in the same emulator on the same
+-input: the hand notation sits \emph{between} the two compiler levels
+-($-9\%$ in executed instructions against -O2, $+2\%$ against -Os), is
++input --- under the explicit convention that every percentage here is
++\emph{the cost of the notation relative to the reference, positive =
++the notation more expensive}: the hand notation sits \emph{between}
++the two compiler levels at $+9.9\%$ executed instructions against -O2
++and $-2.0\%$ against -Os (the v0.11.0 text had both signs inverted;
++every sign and value is recalculated from the raw CSV by the numeric
++linter of the present edition, which now checks the signs too), is
+ 1.45$\times$ more compact than the -O2 function (1{,}021 vs 1{,}482
+ bytes including the shared K table) but less compact than -Os (548
+@@ -765,7 +922,25 @@
+ $\{e > 1, e + 1\}$ only) --- and witnessed in replay by re-running the
+ whole proof under epoch translations $\delta \in \{7, 50, 1000\}$ with
+-bit-identical verdicts. The independent model-checker replay of the
+-present edition (TLC the bounded fidelity: 154 states, 1{,}152
+-transitions reproduced exactly; Apalache/SMT the unbounded induction
++bit-identical verdicts. The present edition adds the \emph{coverage
++lemma} that was previously implicit: every concrete reachable state is
++represented by at least one of the 288 abstract shapes, so the
++preservation check over the shapes covers the entire reachable space.
++The lemma is discharged in three obligations: (O1)~the abstraction
++$\alpha$ is total on well-typed states (its domains are the typing
++constraints); (O2)~those domain constraints are \emph{inductive} ---
++verified by Apalache over unbounded integers (initialization and
++preservation both NoError, with a negative control: a weakened domain
++is caught, Error~12); (O3)~the 288 shapes are \emph{exactly} the image
++of the well-typed invariant-satisfying states under $\alpha$ --- a
++verified bijection (288~forms, none outside the invariant, all
++reachable bounded states covered). The TLA+ model submitted to the
++model checkers is aligned with the operational semantics \emph{rule by
++rule}: a strict transpiler reads the thirteen actions of \code{CF3.tla}
++and confronts guards and effects with the Python semantics over 512
++concrete states per rule (both epoch classes, every subset, every
++boolean) --- all thirteen aligned, any unrecognized construct a refusal.
++The independent model-checker replay of the present edition (TLC the
++bounded fidelity: 154 states, 1{,}152 transitions reproduced exactly;
++Apalache/SMT the unbounded induction
+ $\mathrm{Init} \Rightarrow I$ and $I \wedge \mathrm{Next} \Rightarrow I'$,
+ negative controls caught) returns 8/8 green. Monotonicity (no rule ever decreases the epoch)
+@@ -786,35 +961,62 @@
+ 
+ \paragraph{Model--implementation conformance (renamed in the present
+-edition; formerly ``refinement'').} Every abstract rule was
+-replayed against the real Python implementation (a test vault under a
+-publicly marked test passphrase; the real vault is never opened by a
+-test): the honest cycle across \emph{five} lived epochs (the v0.12.0
+-bound surpassed at both levels), fifteen wrong-passphrase attempts
+-(zero destruction, zero sealing), the proven container falsification
+-(one local destruction report, the trap media and CF2 untouched), the
+-trap falsification (named refusal, nothing destroyed), the past-epoch
+-replay in three variants (the local mirror, the crossed epochs, the
+-out-of-band witness), the absent trap (impossible, not refused), the
+-foreign vault's trap (divergent project hash), and the below-threshold
+-adversary (32 forged key-halves triples, zero verifier passes):
+-\textbf{34 conformance steps, zero gaps} --- including every failure
+-path. Three concrete gestures sit outside the abstract model (the
+-out-of-band epoch witness, the foreign vault, the forged halves) and
+-are consigned as such, with their concrete verdicts matching the
+-specification.
+-
+-\paragraph{The hardware kits: prepared, waiting, no numbers.} Three
+-measurement kits are delivered for the developer's field runs ---
+-real-time dudect timing of the cryptographic families (four targets
+-extracted from the sealed proxy piece, the native call validated
+-against the FIPS 180-4 ``abc'' vector, a dual-backend measurer whose
+-laboratory autotest exercises the mechanism only), \code{fence.i}
+-semantics on physical RISC-V silicon (the M7 scenario, retargeted),
+-and a third-machine Loupe field run (the full T0--T7+S0 scenario).
+-Every one of them is marked \emph{awaiting a hardware run}: no number
+-exists, none is fabricated, and the claims table stays honest until
+-the runs are on record.
+-
+-\input{donnees/statuts_v170.tex}
++edition; formerly ``refinement'') --- now a generative campaign.} The
++v0.15.0 evidence was a directed game of 34 replayed steps (every
++abstract rule against the real Python implementation, a test vault
++under a publicly marked test passphrase; the real vault is never opened
++by a test): the honest cycle across \emph{five} lived epochs, fifteen
++wrong-passphrase attempts (zero destruction, zero sealing), the proven
++container falsification, the trap falsification, the past-epoch replay
++in three variants, the absent trap, the foreign vault's trap, and the
++below-threshold adversary (32 forged key-halves triples, zero verifier
++passes) --- zero gaps, every failure path included. The present edition
++replaces the chosen-steps design with a \emph{generative} campaign:
++10{,}000 random transition sequences (seed consigned, 3--8 steps per
++trace, weighted draws over the actions \emph{offered} by the model,
++every rule and every refusal path covered --- accepted and refused
++counts per rule are read from the generation logs), each trace driving
++the abstract model and the concrete test vault in parallel, every
++verdict confronted step by step, every divergence shrunk (ddmin) and
++archived. Result: \textbf{660 divergent traces, exactly one class} ---
++\code{falsifie\_conteneur} during an open session: the model's guard
++offers the rule only in the canonical phase, while the concrete
++sentinel runs on the canonical container and \emph{does} destroy on
++proven falsification mid-session (local destruction, PV raised, the
++trap media and CF2 untouched). The analysis: a state-coverage gap of
++the \emph{model} (an under-approximation discovered by the campaign
++--- the directed 34-step game never crossed it, the randomization
++crosses it 660 times in 10{,}000), \emph{not} a threat to the
++properties: the concrete destruction remains proven falsification and
++remains local (P3 and P4 hold on every divergent trace); the shrinker
++reduces 655 of them to the minimal two-step sequence
++[\code{ouvrir\_correct}, \code{falsifie\_conteneur}]. The replay at
++identical seed reproduces the 10{,}000 verdict digests bit for
++bit (verified twice in the present edition, plus the consigned
++original). Three concrete gestures sit outside the abstract model
++(the out-of-band epoch witness, the foreign vault, the forged halves)
++and remain consigned as such, with their concrete verdicts matching
++the specification.
++
++\paragraph{The hardware runs: the dudect timing measured; two kits still
++waiting.} The real-time dudect kit ran on the developer's machine,
++twice, with dated and hand-signed witnesses (13 November 2026; four
++targets extracted from the sealed proxy piece, RDTSC/QPC timing, core
++affinity 0, the native call validated against the FIPS~180-4 ``abc''
++vector). At N=200 per class the Welch statistics read $|t| = 12.39$
++(tls13-02) and $5.19$ (tls13-13) --- above the $|t|>5$ threshold,
++consigned exactly as measured --- with tls13-16 at $0.94$ and tls13-17
++at $3.11$; the N=400 run reads $0.84$, $1.55$, $-0.30$ and $2.02$ ---
++all four under the threshold, the N=200 dependencies dissipated at the
++larger sample. The honest reading is the kit's own: no threshold
++divergence on that sample, that machine, one run at each N --- never
++``constant time proven''; cache-timing and power side channels remain
++out of scope, and the single-run scope is part of the claim. Two kits
++remain \emph{awaiting a hardware run}: \code{fence.i} semantics on
++physical RISC-V silicon (the lived M7 terrain runs were TCG emulation
++--- the reserve is named), and a third-machine Loupe field run (the
++full T0--T7+S0 scenario). For those two, no number exists and none is
++fabricated; the claims table stays honest until the runs are on record.
++
++\input{donnees/statuts_v180.tex}
+ 
+ % ------------------------------------------------------------------
+@@ -838,8 +1040,17 @@
+ \paragraph{What the data does not support.} The study cannot claim that
+ the protocol is \emph{more} productive or \emph{more} correct than a
+-compiler-based workflow: there is no baseline, one case, one agent
+-family, one developer. The token budgets were measured once, early, on a
+-small lineage. The oracle is derived from the same layer I it checks, so
+-specification errors are shared, not caught. Memory safety is enforced
++compiler-based workflow: one case, one agent family, one developer ---
++though the D204 campaign now provides the two-arm comparison on fourteen
++units (behaviourally equivalent at the contracts; the cost and
++verification-time pairs still $n{=}1$ each). The token budgets were
++measured three times --- M1 single-shot, the v0.14.0 content-only
++re-measurement, the v0.17.0 instrumented round-trip (the perimeters
++documented; never compared without the note) --- and the campaign adds
++the only fully instrumented head-to-head unit. The oracle is derived
++from the same layer I it checks, so
++specification errors are shared, not caught --- mitigated, not removed,
++by the second, isolated agent that regenerated the crypto constants
++with zero divergences (v0.14.0; cross-family independence remains the
++named gap). Memory safety is enforced
+ only to the depth of the ABI audits and the fuzzing campaigns;
+ constant-time is verified \emph{structurally} (secret-independent
+@@ -1010,7 +1221,12 @@
+ on the single instrumented unit: the compiled arm consumed
+ $\times$1.27 the tokens of the notation arm --- one pair, read from
+-logs, but in the direction opposite to the registered expectation;
++logs, decomposed by category (the corrective spiral dominates both
++arms; the C source costs more tokens than the hand notation), but in
++the direction opposite to the registered expectation;
+ and the verification-time metric, reported for the first time, reads
+-$23.9\times$ --- H5 falsified on the same single unit. Third, the
++$23.9\times$ --- H5 falsified on the same single unit, and still
++falsified after the present edition's control-preserving optimization
++($\times$17.9 measured on the laboratory machine, the critical path
++being the emulated contract cryptography itself). Third, the
+ campaign closed both regimes at once: the controlled comparison
+ (behaviourally equivalent at the contracts, per the v0.14.0
+@@ -1028,7 +1244,12 @@
+ derivation routes, system generator, spec$\leftrightarrow$\allowbreak harness
+ $\leftrightarrow$\allowbreak hashlib tripartite confrontation) found zero
+-divergences, but a second \emph{agent} has not yet regenerated the
+-oracle. The crystallisation rule (ten identical rebuilds) checks
+-determinism, not correctness. The mutation-testing survivors (138/832,
++divergences, and the v0.14.0 programme closed the remaining agent gap
++at same-family level: an isolated second agent instance regenerated the
++MD5/SHA-256 tables from the mathematical definitions alone with zero
++divergences across the 128 constants; true \emph{cross-family}
++independence remains the named gap. The crystallisation rule (ten
++identical rebuilds) checks
++determinism, not correctness. The mutation-testing survivors (56/832
++after the v0.14.0 composition re-run; 138/832 at v0.11.0,
+ concentrated in orchestration/UI blocks without an isolated-mutant
+ semantic killer) are a named, measured gap --- and the v0.13.0 audit of
+@@ -1043,6 +1264,30 @@
+ escaped-defect count depends on what counts as a ``named'' class --- we
+ counted conservatively (a class is counted once even if it killed several
+-runs); the token budgets measure the M1-era card, not the final
+-10-domain card, and measure \emph{reads}, not agent reasoning overhead.
++runs); the token budgets of M1 and v0.14.0 measure \emph{content reads}
++(the latter on the final Loupe-era card, the reasoning estimated and
++named), the v0.17.0 re-measurement covers the full instrumented
++round-trip on the same card, and the two perimeters are never compared
++without the note --- cross-perimeter ratios are meaningless by
++construction.
++\emph{Construct, campaign-specific: the shared kit and the asymmetric
++formats.} The D204 campaign shares its terrain kit between arms while
++delivering different formats (an EXE image at a fixed slot for T, a DLL
++bound by the Windows loader for C), so the delivery metric mixes
++arm-neutral rig defects with format-specific ones. The sensitivity
++analysis, per escape: of the six counted escapes, three are
++arm-neutral rig classes (a harness constructor, the launcher prose,
++the console codec --- a standard flow's test rig can carry exactly
++these), and three are manifestations of the single unbound-import-leaf
++class, which exists only on the DLL path (an EXE without that import
++cannot leave the leaf unbound) --- a compiled-flow-specific escape,
++not a notation-versus-compiler difference. The empirical
++attribution test (re-delivering the same C piece through a minimal
++standard kit) is \emph{prepared but not run}: the extension plan
++(D210, pre-registered before any further measurement) fixes it ---
++$n \ge 6$ fully instrumented units, identical formats across arms,
++randomized arm order, plan hash consigned before the first
++measurement. Until then, the two-sided reading stands: zero escapes on
++either arm's native code, all six on the rig that delivers and loads
++it, three of them format-specific.
+ \emph{Conclusion.} The terrain is one real Windows machine and one
+ developer's usage of the application; showcase liveness (0 error-reporter
+@@ -1071,8 +1316,17 @@
+ \paragraph{Positioning (requalified in the present edition).}
+ The novelty of TRIADE is \emph{not} the generation of assembly by an
+-LLM --- assembly generation and compiler-style stochastic search have
+-been quantified before (STOKE~\cite{stoke} on superoptimization;
+-SuperCoder and the LaaC/CompilerEval line on end-to-end assembly
+-compilation; Nova on assembly-level language modelling). What no
++LLM --- assembly generation and compiler-style search have been
++quantified before: STOKE~\cite{stoke} formulates loop-free binary
++superoptimization as stochastic search; SuperCoder~\cite{supercoder}
++is the strongest published LLM result on \emph{improving already
++compiled} assembly (95.0\% test-pass correctness and a $1.46\times$
++average speedup over gcc~-O3 after task-specific fine-tuning ---
++superoptimization, a distinct problem from governance);
++the LaaC/CompilerEval line~\cite{laac} measures end-to-end compilation
++from source code to assembly by LLMs (feasible but with low success
++rates --- the compiler's job, attempted whole);
++and Nova~\cite{nova} builds generative language models \emph{for}
++assembly code (hierarchical attention, contrastive learning, strong
++decompilation and similarity results). What no
+ prior account quantifies is the \emph{governance}: signed-intent
+ layer-I contracts sealed by a human hand, append-only journals
+@@ -1188,7 +1442,11 @@
+ and a longitudinal single-case evaluation of its eleven-milestone
+ validation programme. The data, drawn entirely from the protocol's own
+-append-only records, quantifies the cost (51/719/1{,}088 tokens per
+-locate/edit/add), the escape dynamics (eleven named defect classes over
+-twelve field iterations, all environmental), and the patch safety (zero
++append-only records, quantifies the cost (medians of 1{,}277/3{,}374/
++3{,}674 tokens per locate/edit/add at the instrumented-round-trip
++perimeter; the content-only and M1 values remain labelled history), the
++escape dynamics (eleven named defect classes over twelve field
++iterations, all environmental; the closing campaign's 22 deliveries
++adding zero notation-side escapes and six kit-side ones, every one
++reconciled and attributed), and the patch safety (zero
+ post-patch regression, armed anti-rollback) of the approach. The Loupe
+ application --- a real Windows hex editor born entirely from the method,
+@@ -1207,17 +1465,25 @@
+ (zero divergence), at instruction parity on the cryptographic core, at a
+ premium on simple pure blocks, and testable to the same degree; RQ2
+-re-measured end-to-end with distributions (580/2{,}143/3{,}510 medians ---
+-costlier than M1, two orders below the naive baseline, the unfavourable
+-reading consigned as measured); and the mutation campaign re-run with
++re-measured end-to-end with distributions (the v0.17.0 instrumented
++round-trip on the native tokenizer, the v0.14.0 content-only values
++kept as labelled history under the mandatory perimeter note; the naive
++baseline 235--82$\times$ above the card operations, two realistic
++baselines quantified alongside); and the mutation campaign re-run with
+ composition killers (93.3\%, tls13 and sys at 100\%, the 56 remaining
+ survivors named). The v0.15.0 programme closes the formal side: the four vault
+-properties proved \emph{unbounded} by an inductive invariant, the model
+-refined against the implementation (34 steps, zero gaps, every failure
+-path), and every claim carrying a systematic status. What remains open
+-is now precisely measured: the 138 mutation survivors in orchestration
+-blocks, the emulation-only scope of the constant-time result (the dudect
+-kit is prepared and waiting), the unmeasured real-hardware timing
+-(the \code{fence.i} kit targets a physical RISC-V board; a third-machine
+-Loupe run is likewise prepared), the missing independent replication
++properties proved \emph{unbounded} by an inductive invariant, now
++completed by a coverage lemma (every reachable state within the 288
++shapes, SMT-discharged with negative controls), a rule-by-rule TLA+
++alignment, and a generative conformance campaign of 10{,}000 traces
++(one named divergence class, the model's session-falsification gap,
++shrunk and analysed; bit-identical at replay), every claim carrying a
++systematic status. What remains open
++is now precisely measured: the 56 mutation survivors in orchestration
++blocks, the single-run scope of the measured hardware constant-time
++result (the dudect kit ran twice, signed; more machines and samples
++belong to the extension), the unmeasured real-hardware
++timing that remains (the \code{fence.i} kit targets a physical RISC-V
++board; a third-machine Loupe run is likewise prepared), the missing
++independent replication
+ (the T/X grid and the $\kappa$ calculator are ready; the second
+ annotator is yet to be recruited) --- and, on the
+@@ -1255,17 +1521,24 @@
+ \paragraph{Licence.} Business Source License 1.1 (Licensor: Alexis
+ Lopez; Change Date 2030-10-28, converting to GPLv3+). The Additional
+-Use Grant of the current licence text is ``None''; an evaluation
+-grant (academic peer review, artifact evaluation, scientific
+-replication) is prescribed to the licensor for the artifact-evaluation
+-use of this work.
++Use Grant, ``None'' in the earlier editions (a legal blocker for peer
++review and replication), is now \emph{written and applied} at the
++repository (D209): the grant permits academic peer review, artifact
++evaluation, scientific replication and non-commercial research use of
++the Licensed Work, effective 17 November 2026, consigned append-only
++in the decision log.
+ 
+ \paragraph{Data availability.} All primary data is public in the project
+ repository (append-only journal, decision log, evidence vault indexes,
+ extraction script, generated tables). A versioned archival snapshot
+-(Zenodo DOI) will be minted at submission time and referenced here; the
+-two submission archives of this edition (\code{TRIADE\_soumission\_v0.14.0.zip}
+-and \code{TRIADE\_complet\_v0.14.0.zip}) contain respectively the
++(Zenodo DOI) will be minted at submission time and referenced here ---
++the deposit's metadata file is prepared with the present edition
++(title, authors, the two archives, SHA-256 fingerprints); the DOI is
++inserted upon minting and none is invented before. The
++two submission archives of this edition (\code{TRIADE\_soumission\_v0.18.0.zip}
++and \code{TRIADE\_complet\_v0.18.0.zip}) contain respectively the
+ manuscript with its data tables, and the complete sources with raw
+-extracts and fingerprints.
++extracts and fingerprints; every artifact of the claims tables was
++re-verified byte for byte against the regenerated archives (zero
++divergence).
+ 
+ \paragraph{Use of AI in this work.} An LLM agent (Z.ai GLM family)

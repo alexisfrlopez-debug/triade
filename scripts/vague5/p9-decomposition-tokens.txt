@@ -1,0 +1,32 @@
+LA DÉCOMPOSITION DES TOKENS DE L'UNITÉ INSTRUMENTÉE (loupe-01, les
+DEUX bras — lue du journal d'usage, 20 appels, rien tapé à la main)
+(la vague 5, l'instruction 2l40ie6qn, point 3)
+========================================================================================
+catégorie                               bras T      bras C   part T   part C
+----------------------------------------------------------------------------------------
+spécification (contrat lu/écrit)         5 313       5 605    10.0%     8.3%
+oracle (dérivé du contrat)               3 752       4 423     7.1%     6.6%
+notation (écrite à la main)             11 480           0    21.6%     0.0%
+source C (écrit)                             0      14 660     0.0%    21.7%
+suite de tests C                             0       3 563     0.0%     5.3%
+ITÉRATIONS CORRECTIVES                  32 613      39 224    61.4%    58.1%
+----------------------------------------------------------------------------------------
+LECTURE DE CONTEXTE (prompts)           34 920      42 122    65.7%    62.4%
+ÉCRITURE (complétions)                  18 238      25 353    34.3%    37.6%
+— dont ITÉRATIONS CORRECTIVES           32 613      39 224    61.4%    58.1%
+   (appels correctifs)                       6           7
+----------------------------------------------------------------------------------------
+TOTAL                                   53 158      67 475
+
+LE RAISONNEMENT : le GAP NOMMÉ — l'API compte le raisonnement DANS la
+complétion (jamais séparé au log) ; l'estimation ×1,08 est INTERDITE
+là où un log existe (la règle M2 du plan D204) : la catégorie
+« raisonnement » n'est PAS reconstruite.
+
+LA LECTURE : le CHEMIN CHAUD est le même aux deux bras — la spirale
+corrective (61,4 % de T, 58,1 % de C — l'Entrée 317 le nomma la
+première) ; la spécification et l'oracle coûtent PLUS au bras C
+(5 605/4 423 contre 5 313/3 752 : le contrat lu deux fois, l'oracle
+réécrit pour la suite standard) ; la notation T (11 480) contre le
+source C (14 660) : le C est PLUS LONG À ÉCRIRE que la notation — la
+première contre-intuition de H3.

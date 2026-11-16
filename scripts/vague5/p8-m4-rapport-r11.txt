@@ -1,0 +1,67 @@
+LE RAPPORT R11 — L'OPTIMISATION DU TEMPS DE VÉRIFICATION (M4, BRAS T)
+(l'instruction mof9q10vq, la vague 5 — la même unité, la même machine,
+ le chronomètre monotone, AUCUN contrôle retiré)
+============================================================================================
+
+LA MACHINE : ce bac du laboratoire — 2 cœurs CPU (le parallélisme y est
+borné à ~2× ; les leviers sont mesurés tels quels, n=1).
+
+LA MESURE AVANT (la liste fixe originale, les outils de campagne) :
+  TOTAL 50.9 s — garde-sceau-I 0.072s ; round-trip-notation-1 0.226s ; round-trip-notation-2 0.224s ; oracle-bloc-loupe-01 10.289s ; build-recomposition-loupe-02 0.475s ; oracle-du-bloc-loupe-02 33.197s ; epreuve-scenario-posix 0.302s ; assemblage-kits 0.256s
+  (les 12 rebuilds de cristallisation : 5.8 s)
+
+LA MESURE APRÈS (la liste optimisée, les MÊMES contrôles) :
+  TOTAL 39.3 s (première exécution) puis 39.2 s (seconde) —
+  deux exécutions CONSÉCUTIVES, verdicts identiques (tout VERT), les
+  empreintes des pièces scellées INTACTES avant/après.
+  garde-sceau-I 0.073s ; cristallisation-12-concourants 4.27s ; round-trip-notation-1 0.244s ; round-trip-notation-2 0.237s ; oracle-bloc-loupe-01 (parallèle) 10.428s ; build-recomposition-loupe-02 0.471s ; oracle-du-bloc-loupe-02 (parallèle) 22.912s ; epreuve-scenario-posix 0.305s ; assemblage-kits 0.265s
+
+LES LEVIERS IMPLÉMENTÉS :
+  1. LA CRISTALLISATION CONCURRENTE — les 12 rebuilds courent en
+     parallèle, chacun dans SA COPIE hermétique du dossier d'unité
+     (l'outil original INTACT, une substitution mécanique du SEUL
+     chemin d'unité) ; toutes les sorties comparées octet à octet
+     (l'identité de TOUTES implique chaque paire consécutive — la
+     preuve de déterminisme est sans ordre) : 6.0 s → 4.2 s.
+  2. LES ORACLES AUX SESSIONS PARALLÈLES — le profil est sans appel :
+     l'OUVERTURE de session (le md5+sha256 du fichier ENTIER sous
+     émulation : 3.2 s pour 65 Kio, ~10 s pour 196 Kio) domine, les
+     lectures sont quasi gratuites (0,15 ms). Chaque fichier de V1
+     (puis la vue pré-posée et V2) vit dans SA PROPRE émulation
+     Unicorn persistante — un pool de travailleurs : l'oracle loupe-02
+     33.2 s → 23.2 s ; loupe-01 sans gain (le témoin 196 Kio EST le
+     chemin critique, 10.3 s).
+  3. LA VÉRIFICATION INCRÉMENTALE GUIDÉE PAR LA CARTE — DÉJÀ LA
+     CONCEPTION des outils de campagne : le différentiel du build est
+     confiné au slot touché (loupe-01 : [0x3280, 0x3440) + la porte
+     R10), les oracles sont par bloc ; la re-vérification complète
+     périodique demeure la porte de scellement (la suite M10 complète
+     159×3 graines — inchangée, hors de cette liste).
+
+LA PREUVE QU'AUCUN CONTRÔLE NE FUT RETIRÉ : les consoles des oracles
+v180 sont IDENTIQUES aux originales, ligne à ligne (diff vide) — les
+mêmes vecteurs, les mêmes graines (20261114), le même juge, le même
+ordre d'impression ; seuls changent l'ORDONNANCEMENT des exécutions.
+
+LE RATIO (les DEUX bras sur CETTE machine) :
+  C = 2.2 s (la liste fixe du bras C, la chaîne croisée
+      TRIXIE re-extraite des .deb SANS ROOT — les versions EXACTES de
+      la campagne : gcc-mingw-w64 14.2.0-19+27+b1, binutils
+      2.44-3+12+b1, mingw-w64 12.0.0-5).
+  AVANT : 50.9 / 2.2 = 23.1×  (le recoup : la campagne avait mesuré 23.9×
+  APRÈS : 39.2 / 2.2 = 17.8×
+
+LA LECTURE HONNÊTE : le gain est de 23 % sur cette machine à 2 cœurs ; le
+ratio demeure AU-DESSUS de ×10 — H5 DEMEURE FALSIFIÉE (la mesure est
+n=1, la machine fait partie du record) ; le chemin critique restant
+est l'émulation cryptographique des sessions de contrat (le md5+sha256
+du témoin 196 Kio, ~10 s — irréductible sans changer les contrôles),
+et les leviers parallèles monteront avec les cœurs (la machine du
+développeur en a davantage).
+
+LES COMPROMIS DE COUVERTURE REFUSÉS : AUCUN — aucune graine supprimée,
+aucun vecteur réduit, aucune vérification retirée (la preuve : les
+consoles identiques) ; le levier « pool persistant inter-outils » (une
+seule émulation partagée entre le build, le round-trip et l'oracle)
+fut CONSIDÉRÉ ET REFUSÉ : il couplerait des outils que le protocole
+exige indépendants (le juge ne partage pas l'état du jugé).

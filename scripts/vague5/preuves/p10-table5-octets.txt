@@ -1,0 +1,27 @@
+LA TABLE DES EMPREINTES — CHAQUE ARTEFACT VÉRIFIÉ OCTET À OCTET
+(la vague 5, iz5b9sv09 — l'octet est la vérité, la table confrontée)
+========================================================================
+[loupe.exe 0.1.1] VERT — c111510535767a40… (attendu c111510535767a40…) 127488 o
+[proxy.exe 1.0.0] VERT — 446279f3ab356900… (attendu 446279f3ab356900…) 65024 o
+[selftest.exe (M1)] VERT — 8038585b7af83c9f… (attendu 8038585b…) 9216 o
+[passeur.exe v0.2 (T)] VERT — 4a7229e7418e8276… (attendu 4a7229e7418e8276…) 61952 o
+[passeur-c.dll v0.2 (C)] VERT — fe4ddfc9842fb29b… (attendu fe4ddfc9842fb29b…) 102390 o
+[loupe.exe (campagne, pièce recomposée)] VERT — 4d119b22273c8fe1… (attendu 4d119b22…) 127488 o
+[pilot EXE (installer)] GAP NOMMÉ — livré au développeur (l'Entrée 315),
+     introuvable du bac ET du coffre ce jour ; l'empreinte consignée aux
+     éditions v0.16.0/v0.17.0 (34b9764131e3b3a5…, 99 285 377 o) demeure
+     le record — la re-vérification attend son re-dépôt
+[pilot source v2] GAP NOMMÉ — idem (40d23f03fdaaf116…, 216 080 o)
+[pilot post (les deux)] GAP NOMMÉ — idem (50f7bc86… / c2dede15…)
+[TRIADE_soumission_v0.18.0.zip] 59567916a6470597f62012e3918dbbab2bf2e74cb1fc333451e0a67167fe0064 (228308 o)
+[TRIADE_complet_v0.18.0.zip] 629229ba123ea451867a13692ebcd5940c3f9e75af3085c9b8283166b383a3e9 (370874 o)
+========================================================================
+LES TROIS GAP NOMMÉS : les artefacts du poste autonome (l'installateur,
+le source v2, les journaux post) furent LIVRÉS au développeur (l'Entrée
+315) et ne vivent ni au bac ni au coffre — leurs empreintes consignées
+aux éditions précédentes demeurent le record ; la re-vérification octet
+à octet attend leur re-dépôt. Les SIX pièces vérifiables ce jour : TOUTES
+VERT, zéro divergence. Les DEUX archives régénérées : empreintes ci-dessus.
+
+LE VERDICT : VERT sur les pièces vérifiables — six sur six, zéro
+divergence ; trois gaps nommés, jamais comblés par estimation

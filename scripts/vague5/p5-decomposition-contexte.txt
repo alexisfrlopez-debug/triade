@@ -1,0 +1,30 @@
+LE PÉRIMÈTRE DE CHAQUE MESURE RQ2 — LA DÉCOMPOSITION DU CONTEXTE ET LA RE-TOKENISATION INDÉPENDANTE
+(la vague 5, l'instruction om3ewy9lf — l'écart ×2,2 en localisation EXPLIQUÉ par périmètre, jamais par tokenizer)
+================================================================================================
+
+LES DEUX PÉRIMÈTRES :
+  v0.14.0 (D195)      : le CONTENU SEUL, cl100k_base, le vrai matériau ;
+                        le raisonnement ESTIMÉ ×1,08 (éditer/ajouter) — l'estimation nommée ;
+                        ni requête, ni réponse, ni aller-retour.
+  v0.17.0 (ede70035)  : L'APPEL COMPLET INSTRUMENTÉ — prompt réel (matériau + prose)
+                        + réponse réelle, au TOKENIZER NATIF lu du log (le ×1,08 abandonné),
+                        cl100k en parallèle (rapport 0,98–1,02 selon l'opération).
+
+LA TABLE DE DÉCOMPOSITION (médianes, tokens) — LE MÊME MATÉRIAU, LES DEUX PÉRIMÈTRES :
+opération     matériau lu prose req.  réponse écrite  TOTAL v2 (natif)  v0.14.0 contenu
+------------------------------------------------------------------------------------------------
+localiser             596         41             604              1277              580
+éditer               1617         45            1635              3374             2143
+ajouter              1416         55            2378              3674             3510
+------------------------------------------------------------------------------------------------
+
+LA LECTURE : l'écart 580 → 1 277 (localisation) se décompose en matériau (l'entête, déjà compté à v0.14.0),
++ la prose de requête + LA RÉPONSE ÉCRITE (l'agent rend l'entête complet — le coût de l'aller-retour réel),
+le tout au tokenizer natif : le rapport cl100k/natif 0,98–1,02 NE PEUT PAS produire ×2,2 — le périmètre oui.
+Toute comparaison directe 580 vs 1 277 sans cette note est INTERDITE (la contrainte de l'instruction, portée au linter).
+
+LES DEUX BASELINES RÉALISTES (les mêmes 18 blocs, cl100k) :
+  (a) désassemblage de la fonction entière : médiane 2 074 tokens [q1 1 192 .. q3 3 202] (min 317, max 6 552)
+  (b) retrieval hiérarchique (entête + fenêtre 15) : médiane 792 tokens [q1 628 .. q3 982] (min 525, max 1 217)
+
+LA RE-TOKENISATION INDÉPENDANTE (n=5 par opération, prompt reconstruit + réponse lue, ±1 token) : VERT — 15 échantillons, zéro écart > 1 token

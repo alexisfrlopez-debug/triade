@@ -1,0 +1,52 @@
+LA TABLE COMPLÈTE DE LA CAMPAGNE D204 — GÉNÉRÉE DES LEDGERS, RÉCONCILIÉE (la vague 5, l'instruction bwxv9xzfa)
+====================================================================================================
+
+LA TABLE (22 livraisons) :
+livraison       bras unité             it verdict échappée nommée                           attribution
+----------------------------------------------------------------------------------------------------
+T-loupe-01-it1  T    loupe-01          1  VERT    —                                         —
+C-loupe-01-it1  C    loupe-01          1  VERT    —                                         —
+T-loupe-02-it1  T    loupe-02          1  VERT    —                                         —
+C-loupe-02-it1  C    loupe-02          1  VERT    —                                         —
+T-loupe-05-it1  T    loupe-05          1  VERT    —                                         —
+C-loupe-05-it1  C    loupe-05          1  ROUGE   — (artefact du juge, classe V4 pré-nommée juge (labo)
+C-loupe-05-it2  C    loupe-05          2  VERT    —                                         —
+T-loupe-08-it1  T    loupe-08          1  ROUGE   plantage-harnais-v3                       kit
+T-loupe-08-it2  T    loupe-08          2  VERT    —                                         —
+C-loupe-08-it1  C    loupe-08          1  VERT    —                                         —
+T-loupe-13-it1  T    loupe-13          1  VERT    —                                         —
+C-loupe-13-it1  C    loupe-13          1  ROUGE   plantage-harnais-feuille-memcmp           kit
+C-loupe-13-it2  C    loupe-13          2  VERT    —                                         —
+T-loupe-16-it1  T    loupe-16          1  VERT    —                                         —
+C-loupe-16-it1  C    loupe-16          1  VERT    —                                         —
+T-app-it1       T    app (Passeur)     1  ROUGE   plantage-lanceur-prose-non-remmee         kit
+T-app-it2       T    app (Passeur)     2  ROUGE   ecart-harnais-console-locale              kit
+C-app-it1       C    app (Passeur)     1  ROUGE   plantage-harnais-feuille-memcpy           kit
+T-app-it3       T    app (Passeur)     3  VERT    —                                         —
+C-app-it2       C    app (Passeur)     2  ROUGE   plantage-hote-feuille-memcpy              kit
+T-app-it4       T    app (Passeur)     4  VERT    —                                         —
+C-app-it3       C    app (Passeur)     3  VERT    —                                         —
+----------------------------------------------------------------------------------------------------
+
+LE DÉCOMPTE EXACT :
+  unités                    : 14 (6 blocs contrôlés × 2 bras + l'application × 2 bras)
+  livraisons                : 22 (15 VERT, 7 ROUGE)
+  livraisons contrôlées     : 15 (3 unités ont exigé une 2e itération : loupe-05 C, loupe-08 T, loupe-13 C)
+  livraisons applicatives   : 7 (T: 4, C: 3)
+  échappées comptées (D202) : 6 — T 3, C 3, pièce 0, kit 6
+  exclusions nommées        : 2 (nommées au labo avant tout run terrain — la règle RET-NU)
+  le 7e rouge               : C-loupe-05-it1 — l'ARTEFACT DU JUGE V4 (la classe de session pré-nommée à l'Entrée 294, répétée à la 298) : le vecteur était VIDE, RIEN mesuré des pièces — la faute au juge du labo NE CONSOMME JAMAIS (règle D202 : le défaut compté par livraison exige un défaut nommé du kit+pièce LIVRÉ)
+
+LES MÉTRIQUES PAR BRAS (lues des journaux, jamais de mémoire) :
+  M3 temps humain   : T 104 min, C 17 min (×6.1) — carnet_temps_humain.csv, 22 lignes
+  M2 tokens réels   : T 53 158 (9 appels)  C 67 475 (11 appels) — ×1.27
+  M4 vérification   : T 52.5 s, C 2.2 s (×23.9)
+
+LES VERDICTS EXPLICITES :
+  H1 (santé finale aux deux bras)               TENUE      les deux bras verts et signés : T-app-it4 VERT, C-app-it3 VERT
+  H2 (échappés ≤ facteur 2 entre bras)          TENUE      3 T contre 3 C (1.00×)
+  H3 (le bras T plus coûteux en tokens)         FALSIFIÉE  C = 67 475 contre T = 53 158 (×1.27  la direction opposée — n=1)
+  H4-D204 (cérémonies T plus longues)           TENUE      104 min T contre 17 min C (×6.1)
+  H5 (temps de vérification même ordre de grandre)FALSIFIÉE  52.5 s T contre 2.2 s C (×23.9 > 10)
+
+LA RÉCONCILIATION (chaque total recalculé du registre brut) : VERT — zéro divergence

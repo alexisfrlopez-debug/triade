@@ -1,0 +1,7 @@
+cible,n_fixe,n_alea,comptes_distincts,compte_unique,min,max,egalite_exacte,x25519_confirme
+tls13-01..04 (sha-256),60,60,1,4469,4469,4469,True,
+"tls13-05 (hmac-sha256, la clé)",60,60,1,18371,18371,18371,True,
+"tls13-06 (hkdf-extract, l'IKM)",60,60,1,18407,18407,18407,True,
+"tls13-13/14 (x25519, la clé privée)",60,60,1,1238959,1238959,1238959,True,True
+"tls13-15..19 (aes-gcm, la clé)",60,60,1,11695,11695,11695,True,
+"loupe-06 (md5, le contenu)",60,60,1,132509,132509,132509,True,

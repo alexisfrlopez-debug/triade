@@ -1,0 +1,22 @@
+L'ALIGNEMENT RÈGLE PAR RÈGLE — CF3.tla (l'artefact TLC/Apalache) CONTRE modele_invariant_v150.py
+(la sémantique opérationnelle du rapport) — transpilation STRICTE du TLA+, confrontation état par état
+sur l'espace concret borné (e ∈ 1..4, 8 sous-ensembles sait, trap_ok, cf2_ok, secret ; les quatre drapeaux jamais lus par une
+garde tiennent leur valeur initiale — un fait mécanique : aucune garde ne les référence)
+====================================================================================================
+règle (Python ↔ TLA+)                                      états  activés   images   verdict
+----------------------------------------------------------------------------------------------------
+vole_K_user ↔ VoleKUser                          512      512      512   ALIGNÉE
+vole_S_serrure ↔ VoleSSerrure                       512      512      512   ALIGNÉE
+vole_S_piège ↔ VoleSPiege                         512      512      512   ALIGNÉE
+falsifie_conteneur ↔ FalsifieConteneur                  512      128      128   ALIGNÉE
+falsifie_piège ↔ FalsifiePiege                      512      256      256   ALIGNÉE
+rejoue_époque_passée ↔ RejoueEpoquePassee                 512      384      384   ALIGNÉE
+ouvrir_correct ↔ OuvrirCorrect                      512       80       80   ALIGNÉE
+ouvrir_phrase_erronée ↔ OuvrirPhraseErronee                512      256      256   ALIGNÉE
+ouvrir_ancien_couple ↔ OuvrirAncienCouple                 512      192      192   ALIGNÉE
+verifier ↔ Verifier                           512      256      256   ALIGNÉE
+crash_pendant_session ↔ CrashPendantSession                512      512      512   ALIGNÉE
+clôturer_correcte ↔ CloturerCorrecte                   512      128      128   ALIGNÉE
+clôturer_phrase_erronée ↔ CloturerPhraseErronee              512      256      256   ALIGNÉE
+----------------------------------------------------------------------------------------------------
+LE VERDICT : LES 13 RÈGLES ALIGNÉES — gardes et effets identiques sur tout l'espace

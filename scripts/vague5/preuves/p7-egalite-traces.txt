@@ -1,0 +1,19 @@
+L'ÉGALITÉ EXACTE DES TRACES D'INSTRUCTIONS — LA VÉRIFICATION DE LA VAGUE 5 (l'instruction gfylb610p)
+  (les 6 cibles de temps_constant_v110.py rejouées : N=60 par classe, graine 20261111, les MÊMES protocoles)
+
+tls13-01..04 (sha-256)                 comptes distincts 1   [min 4469 .. max 4469] → ÉGALITÉ EXACTE
+tls13-05 (hmac-sha256, la clé)         comptes distincts 1   [min 18371 .. max 18371] → ÉGALITÉ EXACTE
+tls13-06 (hkdf-extract, l'IKM)         comptes distincts 1   [min 18407 .. max 18407] → ÉGALITÉ EXACTE
+tls13-13/14 (x25519, la clé privée)    comptes distincts 1   [min 1238959 .. max 1238959] → ÉGALITÉ EXACTE — le compte unique 1 238 959 == 1 238 959 attendu
+tls13-15..19 (aes-gcm, la clé)         comptes distincts 1   [min 11695 .. max 11695] → ÉGALITÉ EXACTE
+loupe-06 (md5, le contenu)             comptes distincts 1   [min 132509 .. max 132509] → ÉGALITÉ EXACTE
+
+LA FORMULATION CORRECTE (qui remplace « all |t| = 0 ») : sur des
+traces d'instructions bit-identiques entre classes secret-fixe et
+secret-aléatoire, la variance est NULLE et le t de Welch est
+INDÉFINI (0/0), pas zéro : l'égalité est EXACTE, vérifiée comme
+telle — jamais un test statistique de puissance. N=60 est un
+contrôle structurel exact ; le temps réel matériel est l'affaire
+du kit dudect (mesuré à part).
+
+VERDICT : VERT — égalité exacte sur les 6 cibles, le compte x25519 confirmé
