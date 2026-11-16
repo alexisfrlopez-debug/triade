@@ -11883,10 +11883,21 @@ Work Log:
 - LE PUSH MIROIR COMPLÉTÉ (les DEUX à chaque push — la règle) : le dépôt
   GitHub retrouvé (la pointe a5be18a — les archives finales v0.18.0 ;
   de44d55/af230c7 : l'Entrée 320 et son correctif honnête), le clone
-  miroir reconstruit DEPUIS GITHUB SEUL (le bac recyclé avait perdu
-  l'historique local — un commit initial seul : le bundle N'A JAMAIS été
-  régénéré depuis le bac, l'ancien de 319 Mo remplacé sur un état COMPLET
-  à jour), cette entrée consignée, le bundle --all remplacé au
-  TRIADE-sauvegarde-git + le nom versionné triade-history-321.bundle, le
-  worklog REMPLACÉ — recoupés par re-téléchargement.
+  miroir reconstruit DEPUIS GITHUB SEUL — L'HISTOIRE CANONIQUE (415
+  commits, de 86d1bcf à la pointe de session). LA DÉCOUVERTE NOMMÉE (le
+  correctif honnête, le précédent af230c7) : l'ancien triade-history.bundle
+  du coffre (319 Mo, 16/11 18:15) n'est PAS un ancêtre de l'histoire
+  canonique — UNE LIGNÉE ORPHELINE de 20 commits (la récupération des bacs
+  recyclés du 16/11 : « la lignée du matin restaurée », des instantanés
+  d'arbres entiers d'où les 319 Mo ; pointe 3d94489 « la vague 4 exécutée »,
+  refuges refs/bundles/b312 et h306), AUCUN ancêtre commun avec main — le
+  remplacer à même les octets eût détruit la seule copie coffre de cette
+  lignée ; D143 : les octets anciens PRÉSERVÉS, copiés aux archives-bundles/
+  renommés triade-history-319-3d94489.bundle (md5 recoupé au téléchargement
+  préalable), le slot générique (l'id de la règle permanente) porte
+  désormais l'histoire canonique complète + cette entrée, le nom versionné
+  triade-history-321-ee65b6a.bundle posé à côté (le précédent 308/311/312) ;
+  le worklog du coffre REMPLACÉ — l'ancien RECROUPÉ byte-identique à
+  l'état pré-320 de GitHub (dc51bb7), RIEN perdu, la continuité tenue ;
+  le tout recoupé aux md5 du coffre.
 (17/11, la session de la livraison au coffre)
