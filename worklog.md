@@ -11901,3 +11901,61 @@ Work Log:
   l'état pré-320 de GitHub (dc51bb7), RIEN perdu, la continuité tenue ;
   le tout recoupé aux md5 du coffre.
 (17/11, la session de la livraison au coffre)
+
+## Task 222 — Entrée 322 : LA VAGUE 5 RECROUPÉE ET CLOSE (les deux failles
+de l'état livré fermées), LA VAGUE 6 REÇUE ET LUE INTÉGRALEMENT — six
+instructions en attente, le plan déclaré
+
+Work Log:
+- LA REPRISE : la session précédente s'était close au push 7146490 (les
+  scripts du geste miroir) ; le résumé de reprise héritait d'un état EN
+  RETARD sur le coffre (il croyait la livraison en attente) — LE COFFRE
+  RACONTAIT AUTRE CHOSE. LE RECOUP BYTE-BYTE DE TOUTE LA VAGUE 5
+  (rapatrie_instructions_v6.py, lecture seule SA) : le manuscrit v0.18.0
+  (224 774 o), l'archive soumission (228 299 o), l'archive complète
+  (376 593 o), le rapport d'exécution, le rapport de vérification, les
+  empreintes — CHACUNE re-téléchargée, sha256 IDENTIQUE au local ; les DIX
+  instructions archivées 10/10 md5 recoupées (les copies
+  d'instructions-recu/), le rapport d'exécution aux côtés — TOUT VERT : la
+  321 avait bien livré (le relais OAuth du /Tokens du 12/11 vivait encore
+  le 17/11 — la sonde OAuth VERTE, scripts/sonde_relais_ecriture.py).
+- LA PREMIÈRE FAILLE, FERMÉE : le rapport d'exécution livré citait les
+  empreintes d'une GÉNÉRATION INTERMÉDIAIRE des archives (59567916…/
+  629229ba… — le rapport rédigé 20:21:39, les zips rescellés 20:22:16, la
+  preuve p10 finale 20:22:40 ; le commit a5be18a portait déjà les vraies) :
+  la ligne CORRIGÉE vers les empreintes du scellage final (990d7cb6…/
+  cab4d688…), le rapport REMPLACÉ à la racine ET aux côtés des instructions
+  archivées (13 673 o), chacun RECROUPÉ byte-byte au re-téléchargement
+  (scripts/cloture_vague5.py — les remplacements créent des révisions
+  Drive, D143 tenu).
+- LA SECONDE FAILLE, FERMÉE : RIEN au coffre ne consignait les empreintes
+  réelles des deux zips livrés (l'empreinte racine couvre le manuscrit et
+  les pièces, pas les zips) : la preuve p10 FINALE (le scellage des deux
+  archives, les six pièces VERT, les trois gaps nommés du poste autonome,
+  1 858 o) et les métadonnées Zenodo v0180 (1 835 o — le DOI s'insère au
+  minting, jamais inventé) DÉPOSÉES à la racine, recoupées byte-byte.
+- LA VAGUE 6 REÇUE : SIX nouvelles instructions au /instructions
+  (Qwen__20261116_*, déposées 22:02:59-22:03:21 — DIX MINUTES après
+  l'archivage des dix précédentes, pendant le push miroir de la 321) :
+  rapatriées (6/6 md5 recoupés, instructions-recu/) et LUES INTÉGRALEMENT
+  avant toute exécution — (1) 5gfx6pwkj le mode de réponse minimale de
+  localiser (plan pré-enregistré hash-consigné, n>=15/mode, aucun contrôle
+  retiré) ; (2) 89488hblm le renforcement CF3 (équivalence SMT non bornée
+  garde-à-garde pour les 13 règles, le lemme O3 déchargé, la translation
+  d'époque forall-delta) ; (3) bqh4qlrqj l'audit du manuscrit v0.18.0 (DIX
+  incohérences nommées, le linter étendu au narratif) ; (4) fkkqc7v8t le
+  temps constant structurel (analyse de flux d'information au build, la
+  cause racine du renversement dudect N=200/400) ; (5) p39uklsca le plan
+  d'extension D210 (n>=6 unités instrumentées, ordre randomisé, le test
+  d'attribution empirique) ; (6) vljfs6pcj l'optimisation M4 (invalidation
+  incrémentaire par empreinte, mémoïsation scellée, pré-filtre différentiel,
+  n>=5). AUCUNE exécutée cette session — chacune est une session de mesure
+  ou de preuve à elle seule ; l'exécution viendra UNE À UNE avec son étape
+  de vérification (la discipline).
+- LE PLAN DÉCLARÉ : bqh4qlrqj D'ABORD (l'audit borné aux données locales,
+  la voie de la v0.19.0) ; puis les vagues de mesure (5gfx6pwkj, vljfs6pcj,
+  fkkqc7v8t) et la vague de preuve (89488hblm) ; p39uklsca DEMANDE LE
+  TERRAIN — n>=6 unités livrées de la main du développeur, le labo
+  prescrira le plan et préparera les kits, les témoins restent à la main
+  (D99), le livre au terrain.
+(17/11, la session de la clôture et de la réception)
