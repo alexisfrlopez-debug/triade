@@ -1,0 +1,20 @@
+$ python3 jouer_tous_les_runs.py
+
+--- stdout ---
+{
+ "tlc_fidelite_etats": 154,
+ "tlc_fidelite_d187": true,
+ "tlc_plafond_etats": 216,
+ "tlc_plafond_inv": true,
+ "tlc_bornes_etats": 360,
+ "tlc_bornes_inv": true,
+ "apalache_base": true,
+ "apalache_inductif": true,
+ "apalache_inductif_init_inv": true,
+ "apalache_controle_c1_attrape": true,
+ "apalache_controle_c2_attrape": true
+}
+
+[verdict global] 8/8 VERT
+
+--- stderr ---

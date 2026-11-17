@@ -1,0 +1,78 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCEg_CloturerCorrecte.cfg --length=0 CF3Equiv.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3Equiv.tla/2026-11-17T09-40-09_11124429621593783112
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@09:40:09.245
+  > MCEg_CloturerCorrecte.cfg: Loading TLC configuration          I@09:40:09.249
+  > Using init predicate(s) InitCopies from the TLC config        I@09:40:09.310
+  > Using next predicate(s) RecopieTout from the TLC config       I@09:40:09.310
+  > Using inv predicate(s) OblGarde_CloturerCorrecte from the TLC config I@09:40:09.310
+Tuning:                                                           I@09:40:09.312
+PASS #0: SanyParser                                               I@09:40:09.530
+PASS #1: TypeCheckerSnowcat                                       I@09:40:10.722
+ > Running Snowcat .::.                                           I@09:40:10.745
+ > Your types are purrfect!                                       I@09:40:11.605
+ > All expressions are typed                                      I@09:40:11.605
+PASS #2: ConfigurationPass                                        I@09:40:11.606
+  > MCEg_CloturerCorrecte.cfg: found INVARIANTS: OblGarde_CloturerCorrecte I@09:40:11.796
+  > Set the initialization predicate to InitCopies                I@09:40:11.799
+  > Set the transition predicate to RecopieTout                   I@09:40:11.800
+  > Set the constant initialization predicate to CInit            I@09:40:11.800
+  > Set an invariant to OblGarde_CloturerCorrecte                 I@09:40:11.800
+PASS #3: DesugarerPass                                            I@09:40:11.810
+  > Desugaring...                                                 I@09:40:11.810
+PASS #4: InlinePass                                               I@09:40:11.858
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblGarde_CloturerCorrecte, RecopieTout I@09:40:11.859
+PASS #5: TemporalPass                                             I@09:40:12.070
+  > Rewriting temporal operators...                               I@09:40:12.070
+  > No temporal property specified, nothing to encode             I@09:40:12.071
+PASS #6: InlinePass                                               I@09:40:12.071
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblGarde_CloturerCorrecte, RecopieTout I@09:40:12.071
+PASS #7: PrimingPass                                              I@09:40:12.076
+  > Introducing CInitPrimed for CInit'                            I@09:40:12.079
+  > Introducing InitCopiesPrimed for InitCopies'                  I@09:40:12.080
+PASS #8: VCGen                                                    I@09:40:12.081
+  > Producing verification conditions from the invariant OblGarde_CloturerCorrecte I@09:40:12.082
+  > VCGen produced 1 verification condition(s)                    I@09:40:12.088
+PASS #9: PreprocessingPass                                        I@09:40:12.091
+  > Before preprocessing: unique renaming                         I@09:40:12.091
+ > Applying standard transformations:                             I@09:40:12.097
+  > PrimePropagation                                              I@09:40:12.097
+  > Desugarer                                                     I@09:40:12.101
+  > UniqueRenamer                                                 I@09:40:12.104
+  > Normalizer                                                    I@09:40:12.106
+  > SetMembershipSimplifier                                       I@09:40:12.108
+  > Keramelizer                                                   I@09:40:12.117
+  > After preprocessing: UniqueRenamer                            I@09:40:12.149
+PASS #10: TransitionFinderPass                                    I@09:40:12.157
+  > Found 1 initializing transitions                              I@09:40:12.212
+  > Found 1 transitions                                           I@09:40:12.214
+  > Found constant initializer CInit                              I@09:40:12.214
+  > Applying unique renaming                                      I@09:40:12.216
+PASS #11: OptimizationPass                                        I@09:40:12.219
+ > Applying optimizations:                                        I@09:40:12.247
+  > ConstSimplifier                                               I@09:40:12.248
+  > ExprOptimizer                                                 I@09:40:12.251
+  > SetMembershipSimplifier                                       I@09:40:12.252
+  > ConstSimplifier                                               I@09:40:12.252
+PASS #12: AnalysisPass                                            I@09:40:12.254
+ > Marking skolemizable existentials and sets to be expanded...   I@09:40:12.256
+  > Skolemization                                                 I@09:40:12.256
+  > Expansion                                                     I@09:40:12.257
+  > Remove unused let-in defs                                     I@09:40:12.258
+ > Running analyzers...                                           I@09:40:12.260
+  > Introduced expression grades                                  I@09:40:12.262
+PASS #13: BoundedChecker                                          I@09:40:12.262
+State 0: Checking 1 state invariants                              I@09:40:12.769
+State 0: state invariant 0 holds.                                 I@09:40:12.773
+Step 0: picking a transition out of 1 transition(s)               I@09:40:12.776
+The outcome is: NoError                                           I@09:40:12.779
+Checker reports no error up to computation length 0               I@09:40:12.779
+It took me 0 days  0 hours  0 min  3 sec                          I@09:40:12.780
+Total time: 3.532 sec                                             I@09:40:12.780
+EXITCODE: OK
+
+--- stderr ---

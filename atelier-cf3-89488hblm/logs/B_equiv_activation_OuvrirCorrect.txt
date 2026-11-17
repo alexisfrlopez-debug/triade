@@ -1,0 +1,83 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCEa_OuvrirCorrect.cfg --length=1 --no-deadlock CF3Equiv.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3Equiv.tla/2026-11-17T09-55-52_13873120596210615419
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@09:55:52.078
+  > MCEa_OuvrirCorrect.cfg: Loading TLC configuration             I@09:55:52.082
+  > Using init predicate(s) InitCopies from the TLC config        I@09:55:52.160
+  > Using next predicate(s) NextAct_OuvrirCorrect from the TLC config I@09:55:52.160
+  > Using inv predicate(s) InvAct_OuvrirCorrect from the TLC config I@09:55:52.160
+Tuning:                                                           I@09:55:52.163
+PASS #0: SanyParser                                               I@09:55:52.375
+PASS #1: TypeCheckerSnowcat                                       I@09:55:53.371
+ > Running Snowcat .::.                                           I@09:55:53.372
+ > Your types are purrfect!                                       I@09:55:54.263
+ > All expressions are typed                                      I@09:55:54.263
+PASS #2: ConfigurationPass                                        I@09:55:54.270
+  > MCEa_OuvrirCorrect.cfg: found INVARIANTS: InvAct_OuvrirCorrect I@09:55:54.456
+  > Set the initialization predicate to InitCopies                I@09:55:54.460
+  > Set the transition predicate to NextAct_OuvrirCorrect         I@09:55:54.460
+  > Set the constant initialization predicate to CInit            I@09:55:54.461
+  > Set an invariant to InvAct_OuvrirCorrect                      I@09:55:54.461
+PASS #3: DesugarerPass                                            I@09:55:54.471
+  > Desugaring...                                                 I@09:55:54.471
+PASS #4: InlinePass                                               I@09:55:54.504
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvAct_OuvrirCorrect, NextAct_OuvrirCorrect I@09:55:54.505
+PASS #5: TemporalPass                                             I@09:55:54.770
+  > Rewriting temporal operators...                               I@09:55:54.771
+  > No temporal property specified, nothing to encode             I@09:55:54.771
+PASS #6: InlinePass                                               I@09:55:54.772
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvAct_OuvrirCorrect, NextAct_OuvrirCorrect I@09:55:54.772
+PASS #7: PrimingPass                                              I@09:55:54.776
+  > Introducing CInitPrimed for CInit'                            I@09:55:54.779
+  > Introducing InitCopiesPrimed for InitCopies'                  I@09:55:54.780
+PASS #8: VCGen                                                    I@09:55:54.782
+  > Producing verification conditions from the invariant InvAct_OuvrirCorrect I@09:55:54.783
+  > VCGen produced 1 verification condition(s)                    I@09:55:54.789
+PASS #9: PreprocessingPass                                        I@09:55:54.792
+  > Before preprocessing: unique renaming                         I@09:55:54.792
+ > Applying standard transformations:                             I@09:55:54.798
+  > PrimePropagation                                              I@09:55:54.799
+  > Desugarer                                                     I@09:55:54.805
+  > UniqueRenamer                                                 I@09:55:54.810
+  > Normalizer                                                    I@09:55:54.813
+  > SetMembershipSimplifier                                       I@09:55:54.846
+  > Keramelizer                                                   I@09:55:54.855
+  > After preprocessing: UniqueRenamer                            I@09:55:54.860
+PASS #10: TransitionFinderPass                                    I@09:55:54.878
+  > Found 1 initializing transitions                              I@09:55:54.962
+  > Found 2 transitions                                           I@09:55:54.971
+  > Found constant initializer CInit                              I@09:55:54.971
+  > Applying unique renaming                                      I@09:55:54.973
+PASS #11: OptimizationPass                                        I@09:55:54.976
+ > Applying optimizations:                                        I@09:55:54.980
+  > ConstSimplifier                                               I@09:55:54.980
+  > ExprOptimizer                                                 I@09:55:54.984
+  > SetMembershipSimplifier                                       I@09:55:54.985
+  > ConstSimplifier                                               I@09:55:54.986
+PASS #12: AnalysisPass                                            I@09:55:54.989
+ > Marking skolemizable existentials and sets to be expanded...   I@09:55:54.990
+  > Skolemization                                                 I@09:55:54.991
+  > Expansion                                                     I@09:55:54.991
+  > Remove unused let-in defs                                     I@09:55:54.993
+ > Running analyzers...                                           I@09:55:54.994
+  > Introduced expression grades                                  I@09:55:54.997
+PASS #13: BoundedChecker                                          I@09:55:54.997
+State 0: Checking 1 state invariants                              I@09:55:55.491
+State 0: state invariant 0 holds.                                 I@09:55:55.563
+Step 0: picking a transition out of 1 transition(s)               I@09:55:55.566
+State 1: Checking 1 state invariants                              I@09:55:55.587
+State 1: state invariant 0 holds.                                 I@09:55:55.596
+State 1: Checking 1 state invariants                              I@09:55:55.652
+State 1: state invariant 0 holds.                                 I@09:55:55.659
+Step 1: picking a transition out of 2 transition(s)               I@09:55:55.660
+The outcome is: NoError                                           I@09:55:55.666
+Checker reports no error up to computation length 1               I@09:55:55.666
+It took me 0 days  0 hours  0 min  3 sec                          I@09:55:55.666
+Total time: 3.586 sec                                             I@09:55:55.666
+EXITCODE: OK
+
+--- stderr ---

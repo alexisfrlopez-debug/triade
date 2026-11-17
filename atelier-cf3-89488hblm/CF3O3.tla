@@ -47,31 +47,31 @@ EXTENDS CF3
 (* la classe d'époque : 1, ≥2 — ou 0 (hors domaine, e < 1) *)
 Classe == IF e = 1 THEN 1 ELSE IF e >= 2 THEN 2 ELSE 0
 
-(* la forme d'un état : la classe AU LIEU de l'époque, le reste tel quel *)
-FormeOf == <<Classe, phase, sait, trap_ok, cf2_ok, secret, accepte,
-             detruit, destr_injuste, media_corrompu>>
+(* le domaine des formes — DIX paramètres scalaires (l'inférence de type
+ * d'Apalache ne suit pas les tuples non annotés — le correctif 3) :
+ * c = la classe, ph = la phase, sa = le savoir, tr = le piège,
+ * cf = CF2, se = le secret, ac = l'acceptation, de = la destruction,
+ * dj = l'injustice, me = le média *)
+FormDomain(c, ph, sa, tr, cf, se, ac, de, dj, me) ==
+  /\ c \in {1, 2}
+  /\ ph \in {"canonique", "brouillon"}
+  /\ sa \in SUBSET Elements
+  /\ tr \in BOOLEAN
+  /\ cf \in BOOLEAN
+  /\ se \in BOOLEAN
+  /\ ac \in BOOLEAN
+  /\ de \in BOOLEAN
+  /\ dj \in BOOLEAN
+  /\ me \in BOOLEAN
+  /\ (se = FALSE \/ Cardinality(sa) = 3)   \* I1 : secret ⟹ seuil 3
+  /\ dj = FALSE                             \* I2 : pas d'injustice
+  /\ cf /\ me = FALSE                       \* I3 : CF2 et média intacts
 
-(* le domaine des formes — les indices : 1=classe, 2=phase, 3=sait,
- * 4=trap_ok, 5=cf2_ok, 6=secret, 7=accepte, 8=detruit,
- * 9=destr_injuste, 10=media_corrompu *)
-FormDomain(f) ==
-  /\ f[1] \in {1, 2}
-  /\ f[2] \in {"canonique", "brouillon"}
-  /\ f[3] \in SUBSET Elements
-  /\ f[4] \in BOOLEAN
-  /\ f[5] \in BOOLEAN
-  /\ f[6] \in BOOLEAN
-  /\ f[7] \in BOOLEAN
-  /\ f[8] \in BOOLEAN
-  /\ f[9] \in BOOLEAN
-  /\ f[10] \in BOOLEAN
-  /\ (f[6] = FALSE \/ Cardinality(f[3]) = 3)   \* I1 : secret ⟹ seuil 3
-  /\ f[9] = FALSE                              \* I2 : pas d'injustice
-  /\ f[5] /\ f[10] = FALSE                     \* I3 : CF2 et média intacts
-
-(* OB1 — LA COUVERTURE : tout état bien typé ∧ Inv a sa forme AU DOMAINE.
- * Vérifié : Init = TypeOK /\ Inv, Inv = OblOB1, longueur 0. *)
-OblOB1 == FormDomain(FormeOf)
+(* OB1 — LA COUVERTURE : tout état bien typé ∧ Inv a sa forme AU DOMAINE
+ * (la forme : la classe AU LIEU de l'époque, le reste tel quel).
+ * Vérifié : Init = Inv (TypeOK ∧ I1-I4), Inv = OblOB1, longueur 0. *)
+OblOB1 == FormDomain(Classe, phase, sait, trap_ok, cf2_ok, secret,
+                     accepte, detruit, destr_injuste, media_corrompu)
 
 (* le domaine des formes VU COMME UN ÉTAT : la classe instantiée en
  * époque (le témoin ι de chaque forme — 1 → e = 1, 2 → e = 2) *)

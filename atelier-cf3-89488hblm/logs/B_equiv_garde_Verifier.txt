@@ -1,0 +1,78 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCEg_Verifier.cfg --length=0 CF3Equiv.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3Equiv.tla/2026-11-17T09-40-01_8269818367125639383
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@09:40:01.268
+  > MCEg_Verifier.cfg: Loading TLC configuration                  I@09:40:01.274
+  > Using init predicate(s) InitCopies from the TLC config        I@09:40:01.359
+  > Using next predicate(s) RecopieTout from the TLC config       I@09:40:01.359
+  > Using inv predicate(s) OblGarde_Verifier from the TLC config  I@09:40:01.359
+Tuning:                                                           I@09:40:01.362
+PASS #0: SanyParser                                               I@09:40:01.580
+PASS #1: TypeCheckerSnowcat                                       I@09:40:02.521
+ > Running Snowcat .::.                                           I@09:40:02.522
+ > Your types are purrfect!                                       I@09:40:03.484
+ > All expressions are typed                                      I@09:40:03.484
+PASS #2: ConfigurationPass                                        I@09:40:03.485
+  > MCEg_Verifier.cfg: found INVARIANTS: OblGarde_Verifier        I@09:40:03.728
+  > Set the initialization predicate to InitCopies                I@09:40:03.731
+  > Set the transition predicate to RecopieTout                   I@09:40:03.732
+  > Set the constant initialization predicate to CInit            I@09:40:03.733
+  > Set an invariant to OblGarde_Verifier                         I@09:40:03.733
+PASS #3: DesugarerPass                                            I@09:40:03.748
+  > Desugaring...                                                 I@09:40:03.748
+PASS #4: InlinePass                                               I@09:40:03.806
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblGarde_Verifier, RecopieTout I@09:40:03.806
+PASS #5: TemporalPass                                             I@09:40:04.047
+  > Rewriting temporal operators...                               I@09:40:04.048
+  > No temporal property specified, nothing to encode             I@09:40:04.048
+PASS #6: InlinePass                                               I@09:40:04.048
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblGarde_Verifier, RecopieTout I@09:40:04.048
+PASS #7: PrimingPass                                              I@09:40:04.052
+  > Introducing CInitPrimed for CInit'                            I@09:40:04.054
+  > Introducing InitCopiesPrimed for InitCopies'                  I@09:40:04.055
+PASS #8: VCGen                                                    I@09:40:04.057
+  > Producing verification conditions from the invariant OblGarde_Verifier I@09:40:04.057
+  > VCGen produced 1 verification condition(s)                    I@09:40:04.061
+PASS #9: PreprocessingPass                                        I@09:40:04.064
+  > Before preprocessing: unique renaming                         I@09:40:04.064
+ > Applying standard transformations:                             I@09:40:04.070
+  > PrimePropagation                                              I@09:40:04.070
+  > Desugarer                                                     I@09:40:04.074
+  > UniqueRenamer                                                 I@09:40:04.077
+  > Normalizer                                                    I@09:40:04.085
+  > SetMembershipSimplifier                                       I@09:40:04.087
+  > Keramelizer                                                   I@09:40:04.089
+  > After preprocessing: UniqueRenamer                            I@09:40:04.103
+PASS #10: TransitionFinderPass                                    I@09:40:04.111
+  > Found 1 initializing transitions                              I@09:40:04.178
+  > Found 1 transitions                                           I@09:40:04.180
+  > Found constant initializer CInit                              I@09:40:04.181
+  > Applying unique renaming                                      I@09:40:04.183
+PASS #11: OptimizationPass                                        I@09:40:04.193
+ > Applying optimizations:                                        I@09:40:04.197
+  > ConstSimplifier                                               I@09:40:04.197
+  > ExprOptimizer                                                 I@09:40:04.201
+  > SetMembershipSimplifier                                       I@09:40:04.206
+  > ConstSimplifier                                               I@09:40:04.207
+PASS #12: AnalysisPass                                            I@09:40:04.213
+ > Marking skolemizable existentials and sets to be expanded...   I@09:40:04.215
+  > Skolemization                                                 I@09:40:04.216
+  > Expansion                                                     I@09:40:04.216
+  > Remove unused let-in defs                                     I@09:40:04.252
+ > Running analyzers...                                           I@09:40:04.253
+  > Introduced expression grades                                  I@09:40:04.262
+PASS #13: BoundedChecker                                          I@09:40:04.262
+State 0: Checking 1 state invariants                              I@09:40:04.760
+State 0: state invariant 0 holds.                                 I@09:40:04.763
+Step 0: picking a transition out of 1 transition(s)               I@09:40:04.766
+The outcome is: NoError                                           I@09:40:04.769
+Checker reports no error up to computation length 0               I@09:40:04.769
+It took me 0 days  0 hours  0 min  3 sec                          I@09:40:04.770
+Total time: 3.497 sec                                             I@09:40:04.770
+EXITCODE: OK
+
+--- stderr ---

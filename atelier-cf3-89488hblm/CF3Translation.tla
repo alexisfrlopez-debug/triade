@@ -93,6 +93,7 @@ CFPyT == INSTANCE CF3Python WITH
 InitLT ==
   /\ TypeOK
   /\ e >= 2
+  /\ delta \in Int
   /\ delta >= 0
   /\ te = e + delta
   /\ tphase = phase
@@ -161,6 +162,7 @@ NextLTScelle == NextLT /\ UNCHANGED <<delta>>
 InitLTfaible ==
   /\ TypeOK
   /\ e >= 1
+  /\ delta \in Int
   /\ delta >= 0
   /\ te = e + delta
   /\ tphase = phase
