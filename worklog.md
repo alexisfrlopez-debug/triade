@@ -12673,3 +12673,77 @@ Work Log:
   GESTE DU DÉVELOPPEUR : re-double-clic, témoin signé, zip au coffre.
   (17/11 au soir, la session du flux)
 
+
+## Task 233 — Entrée 333 : LE RUN TERRAIN v160 REÇU, RECROUPI, LA FORENSIE
+PASSÉE — LES DIVERGENCES NOMMÉES TELLES QUELLES, LA CLASSE D'ARTEFACT
+CONFIRMÉE SUR LES DEUX RIVES (le dossier run-v160-20261117-144521 déposé
+au /test par le développeur au soir du 17/11 ; le GUI v1.0.1 a tenu SA
+CHAÎNE ENTIÈRE — compilation, les TROIS runs prescrits, la collecte née,
+le KeyError du terrain FERMÉ)
+
+[Restaurée VERBATIM au worklog le 17/11 au soir après la perte du bac —
+le texte est celui consigné au geste même ; seul l'en-tête de
+restauration s'ajoute.]
+
+Work Log:
+- LE DÉPÔT DU DÉVELOPPEUR : run-v160-20261117-144521 au /test, 11
+  fichiers (DEPOT, console-compilation, les TROIS consoles des runs —
+  contrôlé N=200, contrôlé N=400, témoin v150 —, l'exe, l'état machine,
+  les TROIS journaux csv bruts, le témoin). Re-téléchargé au bac ; les
+  NEUF pièces scellées du DEPOT recoupées sha256 : TOUT VERT, octet
+  pour octet. La chaîne : la gcc EMBARQUÉE 16.2.0 (mingw-w64 MSYS2),
+  -O2, l'exe dcc370d95cae… (135 753 o) ; la machine : Windows-10-
+  10.0.19045, Ivy Bridge (Family 6 Model 58), « Performances
+  élevées », le BIOS Turbo « je ne sais pas » (le pré-vol honnête).
+- LA FORENSIE (le pipeline unique de l'atelier fkkqc7v8t, réentendu aux
+  TROIS journaux — scripts/forensie_terrain_v160.py, la sortie à
+  FORENSIE-RUN-V160-TERRAIN-20261117.txt, 370 lignes) : les 60 verdicts
+  consignés aux consoles RECALCULÉS des journaux bruts — 60/60
+  RECROUPÉS, AUCUN ÉCART ; par mesure : le t de Welch, Yuen, Mann-
+  Whitney, KS, trim/winsor, l'IC bootstrap des médianes, les Spearman
+  de dérive, l'ANCOVA cycles ~ classe + rang.
+- LE VERDICT TERRAIN TEL QUEL (le seuil prescrit |t|>5) : le bras
+  CONTRÔLÉ N=200 : 6/20 (pire |t| 14,79, tls13-02) ; N=400 : 8/20
+  (pire 16,58, tls13-02) ; le TÉMOIN v150 : 6/20 (pire 10,72). PAR
+  CIBLE aux 40 mesures du contrôlé : tls13-02 6/40, tls13-17 7/40,
+  tls13-16 1/40 (UNE excursion isolée, N400 run 1), tls13-13 0/40 —
+  PROPRE, pire |t| 1,73 — la grande cible ne franchit JAMAIS le seuil,
+  aucune rive, aucun bras. LE LABO, lui, avait 0/20 au contrôlé
+  (pire 1,82, l'Entrée 330).
+- LA LECTURE HONNÊTE : UN EFFET CONSTANT EST ARITHMÉTIQUEMENT EXCLU —
+  tls13-02 à N=400, même binaire, même machine, cinq graines : +0,16 ·
+  −0,79 · −6,12 · −9,87 · −16,58 ; l'INSTABILITÉ du t (0 → 17) est la
+  signature d'un ARTEFACT DE MESURE, jamais d'un effet de classe (|t|
+  ∝ √n et STABLE serait l'effet réel). LES NOMMÉS : le chrono Windows
+  __rdtsc() SANS lfence (l'écart nommé du DEPOT, le #ifdef du source
+  fait foi — le labo mesurait sérialisé), l'Ivy Bridge au BIOS Turbo
+  inconnu ; l'ANCOVA recoupe : plusieurs runs divergents TOMBENT sous
+  le seuil une fois le rang contrôlé (tls13-17 run 5 : −8,05 → +0,97)
+  — l'ordre et la dérive portent une part nommée. LA CAUSE RACINE
+  CONFIRMÉE SUR LES DEUX RIVES (le guide § 9) : le bras TÉMOIN v150 a
+  reproduit l'excursion tls13-02 (3/5) — la classe d'artefact du
+  renversement vit dans l'ordre bloqué, l'échauffe asymétrique, le
+  chrono nu ; la machine du terrain la porte AUSSI au bras contrôlé,
+  ce que le chrono sérialisé du labo isolait. LA FORMULATION : les
+  divergences sont NOMMÉES, jamais « constant time proven » — et
+  JAMAIS son contraire : ces chiffres ne prouvent AUCUN défaut du
+  code ; ils nomment une classe d'artefact de mesure.
+- LE TÉMOIN REÇU (temoin-dudect-v160-A-COMPLETER.txt, 5a29eefe…) : la
+  ligne date+signature PORTE « le 17/11/2026 — signé Alexis Lopez » ;
+  TROIS champs À VOTRE MAIN demeurent VIDES (le modèle de machine,
+  l'état Turbo du BIOS, les observations D189) et le nom A-COMPLETER
+  demeure — L'ÉCART NOMMÉ au rapport § 4, pas fatal (l'état machine
+  est scellé par le relevé GUI) ; la voie pour le fermer : trois
+  lignes, un renommage temoin-dudect-v160.txt, un re-dépôt.
+- LA LIVRAISON AU COFFRE /test (recoup sha256, échec fermé) :
+  RAPPORT-RECEPTION-RUN-V160-TERRAIN-20261117.txt (3132dfaa…, le
+  verdict, la lecture, la suite) ; FORENSIE-RUN-V160-TERRAIN-
+  20261117.txt (c90efecd…, les 60 mesures avec robustes, dérives,
+  ANCOVA). Les livrables à download/ ; les journaux bruts JAMAIS
+  retouchés, à work/run-v160-terrain/ (le MANIFESTE-RECEPTION.txt).
+- LA CONSIGNATION : la présente Entrée 333 ; le geste v160 DE LA
+  CHECKLIST § 13 est clos côté labo (le run reçu, la forensie passée,
+  le verdict consigné) ; l'option du témoin complété demeure ; LES
+  COMMANDES QUI ATTENDENT : le push GitHub (le bundle 19d8524 au
+  coffre), l'OUVERTURE du chantier 5 — la campagne D210 (p39uklsca).
+  (17/11 au soir, la session du flux)
