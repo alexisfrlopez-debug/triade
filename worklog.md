@@ -12747,3 +12747,39 @@ Work Log:
   COMMANDES QUI ATTENDENT : le push GitHub (le bundle 19d8524 au
   coffre), l'OUVERTURE du chantier 5 — la campagne D210 (p39uklsca).
   (17/11 au soir, la session du flux)
+
+## Task 234 — Entrée 334 : LA PERTE DU BAC NOMMÉE, LE WORKLOG RESTAURÉ DU
+COFFRE, LES ENTRÉES 331-333 RE-CONSIGNÉES, LE PUSH GITHUB COMMANDÉ ET VÉCU
+(la commande du développeur : « push git puis chantier 5 » ; D143 tenu —
+rien n'est jamais détruit, tout vit au coffre)
+
+Work Log:
+- LA PERTE NOMMÉE : au recyclage du bac survenu après le run terrain, le
+  dépôt git local a RECULÉ — HEAD à l'ère de l'Entrée 329, le commit de
+  l'Entrée 333 et les textes des Entrées 331-333 perdus du worklog
+  local ; les livrables (download/, scripts/, work/) ont SURVÉCU, le
+  coffre /test a tout (le kit, les correctifs, le rapport, la
+  forensie). Rien d'unique n'était perdu : le coffre demeure la
+  référence.
+- LA RESTAURATION : le worklog du coffre TRIADE-sauvegarde-git
+  (l'édition 11:55, 903 935 o) téléchargé et recoupé — IDENTIQUE octet
+  pour octet au worklog du commit 19d8524 (l'Entrée 330 complète) ; le
+  dépôt fast-forwardé à 19d8524 depuis le bundle triade-history.bundle
+  du coffre (verify OK, les 5 refs). PUIS les trois entrées ré-appendées
+  en TROIS commits canoniques : la 331 RE-CONSIGNÉE des livrables
+  survivants (le LISEZMOI du kit, les DEUX correctifs du coffre, les
+  empreintes — la re-consignation NOMMÉE en tête d'entrée), la 332 et
+  la 333 restaurées VERBATIM (la 332 lue intégralement au fil avant la
+  perte, la 333 le texte consigné au geste même).
+- LE PUSH GITHUB (la commande du développeur, le jeton du /Tokens —
+  jamais affiché ni commité) : git push origin main au dépôt
+  alexisfrlopez-debug/triade — le résultat consigné ci-dessous au geste
+  même ; le bundle --all posé au coffre (le slot générique REMPLACÉ, la
+  version 334 DÉPOSÉE aux archives-bundles, D143), le worklog remplacé,
+  le journal tokens racine remplacé, TOUT re-téléchargé et recoupé
+  byte-byte (échec fermé).
+- LA CONSIGNATION : la présente Entrée 334 ; la commande suivante DU
+  DÉVELOPPEUR : LE CHANTIER 5 — LA CAMPAGNE D210 (l'instruction
+  p39uklsca, la dernière de la séquence prescrite ; l'ouverture suit,
+  la première unité se construit).
+  (17/11 au soir, la session du flux)
