@@ -1,0 +1,43 @@
+{
+ "vert": false,
+ "defauts": [
+  {
+   "classe": "NOP-I5",
+   "mecanisme": "la pièce ne s'achève pas sur le 0x90 (l'I5 du contrat : NOP, 0x90)",
+   "ligne": "(fin de pièce)",
+   "no": 0
+  },
+  {
+   "classe": "TAMPON-NON-ALLIE",
+   "mecanisme": "« TAMPON_CUMUL equ rsp » — un registre n'est pas une adresse de tampon : TAMPON_CUMUL est une zone de 64 Kio à ALLOUER (le contrat I3)",
+   "ligne": "TAMPON_CUMUL equ rsp",
+   "no": 29
+  },
+  {
+   "classe": "IAT-D161",
+   "mecanisme": "l'appel DIRECT à l'extern SetFilePointerEx — l'I5 du contrat exige l'appel INDIRECT par l'IAT déclarée (call qword ptr [rip+dép])",
+   "ligne": "call SetFilePointerEx",
+   "no": 90
+  },
+  {
+   "classe": "IAT-D161",
+   "mecanisme": "l'appel DIRECT à l'extern ReadFile — l'I5 du contrat exige l'appel INDIRECT par l'IAT déclarée (call qword ptr [rip+dép])",
+   "ligne": "call ReadFile",
+   "no": 99
+  },
+  {
+   "classe": "SYNTAXE",
+   "mecanisme": "keystone refuse « mov rdx, TAMPON_CUMUL » : Cannot find a symbol (KS_ERR_ASM_SYMBOL_MISSING)",
+   "ligne": "mov rdx, TAMPON_CUMUL",
+   "no": 105
+  },
+  {
+   "classe": "IAT-D161",
+   "mecanisme": "l'appel DIRECT à l'extern GetLastError — l'I5 du contrat exige l'appel INDIRECT par l'IAT déclarée (call qword ptr [rip+dép])",
+   "ligne": "call GetLastError",
+   "no": 142
+  }
+ ],
+ "octets": "",
+ "nb_octets": 271
+}

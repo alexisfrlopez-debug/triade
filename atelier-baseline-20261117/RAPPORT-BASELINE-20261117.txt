@@ -1,0 +1,163 @@
+LE RAPPORT DE LA BASELINE DOUBLE-BRAS — LA PREMIÈRE UNITÉ ENTIÈREMENT
+INSTRUMENTÉE PAR LA RIG (le chantier d'optimisation, l'unité n=2)
+(session du 17/11/2026 — la construction loupe-05 AUX DEUX BRAS PAR LA
+RIG, la commande du développeur : « fais un listing des chantiers puis
+lance le premier »)
+================================================================================
+
+LE GESTE : la séquence prescrite vécue en sa lettre — D207 (scellée le
+16/11) commande LA BASELINE avant tout levier ; la rig L6 (fermée en
+boucle au terrain le 16/11, le témoin signé) est LE chemin instrumenté.
+La construction véritable lut LA PIÈCE ENTIÈRE (le guide L6 : « la
+construction véritable lira la pièce entière ») : le contrat
+loupe-05-sha256.md (lab16/loupe/I/, l'Entrée 297) RECOURUPE au
+mini-contrat de la rig (les 27 premières lignes octet pour octet — le
+diff nommé : la note d'accompagnement du mini-contrat seule).
+
+L'ATELIER : rig-l6-20261116 rapportée du coffre /test, les CINQ pièces
+scellées aux empreintes RECOURPÉES (e2939ef9… compter_tokens, e5aa404a…
+rig_auteur, c57bf5bd… builder, 9d754c3e… correctif, a6887b94… tests —
+échec fermé : 5/5 VERT) ; le câblage prouvé par l'épreuve même de la
+rig (l'inspection AST + les trois outils à --cablage, l'appel moqué,
+aucun réseau). LE MODÈLE : glm-4-plus — l'identifiant LU du champ model
+de CHAQUE réponse (le modèle consigné depuis D204, le checkpoint exact
+demeure MISSING-NAMED : la politique de l'API). UN APPEL DE FUMÉE au
+CLI z-ai fut vécu AVANT la construction (16+2=18 tokens, HORS journal :
+la vérification de la chaîne, pas un geste de construction — l'appel
+est NOMMÉ ici, jamais compté).
+
+LA CONSTRUCTION — LE BRAS T (la notation à la main, 15 appels,
+36 089 tokens) :
+  spec        2 043  (les notes d'auteur du contrat entier)
+  oracle      3 884  (la dérivée écrite-avant-code : vecteurs V1-V5,
+                      les verdicts, la falsification demandée)
+  notation    4 031  (le brouillon x86-64 ABI msx64)
+  correctifs 17 749  (DIX tours — la spirale vécue : ①TAMPON 2 780 ;
+                      ②IAT TRONQUÉ-REJETÉ 748 ; ②bis IAT 1 733 ;
+                      ③DÉCLARATIONS 755 ; ⑤ÉTAT-ZONE 1 275 ; ⑥CADRE
+                      3 188 ; ⑦TAMPON-STATIQUE 773 ; ⑧FENÊTRE-MIN 694 ;
+                      ⑨HÉRITAGE TRONQUÉ-REJETÉ 2 497 ; ⑨bis HÉRITAGE
+                      3 306)
+  revue       8 382  (deux passages : l'ÉCART P3 nommé puis le
+                      CONFORME final)
+  LA PIÈCE : loupe-05-it8.asm — 376 octets cristallisés, keystone ==
+  capstone au round-trip (R5), l'IAT indirecte RIP-relative aux
+  déplacements déclarés (D161), la zone d'état (session +528, taille
+  +520, lea rbx [rip+0x9ba9]), le cadre msx64 (sub rsp, 0xc0 AVANT les
+  préconditions, l'ombre 32 o, le contexte à +0x40), TAMPON_CUMUL la
+  zone statique 64 Kio au plan (lea rdx, [rip+0xbb06]), la fenêtre au
+  MIN (cmovb), l'héritage AUX ADRESSES DU PLAN (call 0xc000 / 0xc240 /
+  0xc300 — jamais les étiquettes vides récursives), la pièce au ret (le
+  padding 0x90 du slot appartient au build — la convention de la
+  famille scellée).
+
+LA CONSTRUCTION — LE BRAS C (le flux standard gcc -O2, 8 appels,
+31 213 tokens) :
+  spec        2 090
+  oracle      3 426
+  source-c    6 146  (TRONQUÉE en sortie — 5 019 octets, EOF au milieu
+                      du tableau tls13_01 : la classe de troncature qui
+                      fit naître le format PATCH à l'unité 1)
+  correctifs 12 508  (TROIS tours : ①la complétion minimale 4 822 —
+                      l'auteur ferma l'accolade seul ; ②LA RÉDACTION
+                      COMPLÈTE 7 350 — les tableaux tombèrent, la
+                      famille sha256_* en fonctions C se leva ; ③
+                      l'include string.h 336)
+  tests-c     2 930
+  revue       4 113  (le verdict ÉCART I1/I2 — voir L'ARBITRAGE)
+  LA PIÈCE : loupe-05-it3.c — 160 lignes, gcc -O2 -std=c11 -Wall
+  -Wextra PROPRE contre le shim windows.h du labo (la tradition des
+  shims de la campagne — V4 « le shim ReadFile » ; la liste fermée
+  D161 : SetFilePointerEx, ReadFile, GetLastError, RIEN d'autre), la
+  famille sha256_* (transform/absorbe/final), les H0 FIPS, les QUATRE
+  verdicts nommés, les bornes SANS déborder (longueur > taille ||
+  décalage > taille - longueur), le lu RECOUPÉ au demandé (fail-closed,
+  jamais un condensé partiel), la fenêtre locale 64 Kio.
+
+LE JOURNAL NÉ (preuves-baseline/journal_tokens.jsonl — sha256
+7bd1530f…) : 23 appels instrumentés, 100 % log-api (zéro estimation,
+CA3 tenu), TOUTES les sommes cohérentes, le modèle glm-4-plus partout ;
+le garde-brut (6320b790…) conserve CHAQUE réponse brute de l'API — la
+ligne == le log, à l'unité près (la preuve du dry-run, étendue à la
+session entière).
+
+L'ARBITRAGE NOMMÉ (le bras C, la revue ÉCART sur I1/I2) : la revue lut
+le contrat À LA LETTRE — « l'héritage PAR LA CARTE » et « aucune
+constante SHA re-déclarée » — et nomma l'écart : le source C
+ré-implémente SHA-256. LA PIÈCE SCELLÉE DE LA FAMILLE (loupe-05-c.c,
+l'unité 3, vérifiée au terrain, close VERT) fait EXACTEMENT cela : la
+famille sha256_* en C, les H0 déclarés, les tableaux K — les invariants
+I1/I2 LIENT LE DOMÈNE DE LA NOTATION (la carte, R7 : « les octets AU
+BUILD », l'oracle d'octets du build T), jamais le bras C (gcc compile
+du C, aucune carte n'y vit). L'écart est CONSIGNÉ en sa lettre, l'arbitrage
+par précédent DOCUMENTÉ ici — la question interprétative est NOMMÉE au
+développeur (sa main tranche si la lettre du contrat doit être
+explicite pour le bras C).
+
+LES ÉCARTS NOMMÉS DE LA SESSION (jamais reconstruits) :
+  1. L'EXÉCUTION DIFFÉRENTIELLE (V1-V5) N'EST PAS REJOINTE : les cinq
+     vecteurs du contrat (le différentiel 1 000 gammes, le doré FIPS,
+     les rejets, le shim en échec, la falsification) exigent le harnais
+     d'émulation Win32 de l'atelier — les correctifs de la présente
+     naquirent des ORACLES MÉCANIQUES ATTEIGNABLES (keystone, capstone,
+     gcc, la confrontation à la pièce scellée) et des revues ; les
+     défauts que seule l'exécution prend (un encodage faux qui
+     s'assemble, une constante K erronée) demeurent LA PRISE DU TERRAIN
+     ou du harnais — la pièce T (376 o) et la pièce C (160 lignes) sont
+     LIVRÉES À L'ÉPREUVE, pas encore éprouvées.
+  2. DEUX TRONCATURES REJETÉES (T tour ②, T tour ⑨) + UNE à la
+     rédaction C : le phénomène de l'unité 1 vécu encore — la réponse
+     du tour ② perdit le site ReadFile (fragment en deux parties), le
+     tour ⑨ perdit la fin du corps ; les REJOUAGES en fragment CONTIGU
+     (le précédent PATCH) guérirent. La tour ⑨bis omettait la dernière
+     ligne inchangée (le ret) : la SUITE rattachée par le labo (le
+     format PATCH : les remplacements exacts + la suite).
+  3. LE SPLICE DU TOUR ⑥ PERDIT L'ÉTIQUETTE loupe_05: (et laissa une
+     clôture markdown) — la faute du LABO (le splice trop confiant),
+     RÉPARÉE mécaniquement (l'étiquette remise, la clôture ôtée), le
+     geste nommé ici ; les contrôles restaient verts car l'assemblage
+     n'exige pas l'étiquette — la leçon : le splice doit vérifier la
+     structure (à armer au prochain kit).
+  4. LA CORRECTION DE L'ORACLE T (le contrôle du labo) : la règle
+     « finir par 0x90 » était TROP STRICTE — la pièce scellée documente
+     le padding au slot (« Code : 313 o · padding : 71 o (NOP, 0x90) »)
+     et la notation s'achève au ret ; l'oracle corrigé CONTRE LA PIÈCE
+     SCELLÉE (la règle FIN-RET), le geste nommé.
+  5. LA QUESTION DU n : la baseline est n=2 (loupe-01 demeure n=1) —
+     les DEUX unités diffèrent (le contrat loupe-01 ouvrir vs loupe-05
+     sha256, les auteurs, les troncatures vécues) : les deltas ne sont
+     PAS attribuables à un levier seul — L1 (le bundle-défaut, le
+     format des correctifs de la rig) est DÉJÀ EN ŒUVRE dans la
+     baseline (le coût moyen par tour : ~1 775 tokens contre ~5 435 à
+     loupe-01) ; l'OPT-01 naîtra du LEVIER APPLIQUÉ à la PROCHAINE
+     unité contre CETTE baseline (un levier par unité mesurée, D207).
+
+LA MESURE (le journal, les deux bras) :
+  | phase        |  bras T  | loupe-01 T |  bras C  | loupe-01 C |
+  |--------------|----------|------------|----------|------------|
+  | spec         |    2 043 |      5 313 |    2 090 |      5 605 |
+  | oracle       |    3 884 |      3 752 |    3 426 |      4 423 |
+  | rédaction    |    4 031 |     11 480 |    6 146 |     14 660 |
+  | correctifs   |   17 749 |     32 613 |   12 508 |     39 224 |
+  | tests-c      |        — |          — |    2 930 |      3 563 |
+  | revue        |    8 382 |          — |    4 113 |          — |
+  | TOTAL (M2)   |   36 089 |     53 158 |   31 213 |     67 475 |
+  | appels       |       15 |          9 |        8 |         11 |
+  LA LECTURE HONNÊTE : le rapport C/T s'EST RENVERSÉ (loupe-01 :
+  C = 1,27 × T ; la baseline : C = 0,86 × T) — le bras T porta DIX
+  tours de correctif (les troncatures rejouées comprises) là où le C
+  en porta trois ; la phase corrective reste LE HOT PATH aux deux bras
+  (49 % du T, 40 % du C) ; la hiérarchie D19 est tenue (aucun contrôle
+  retiré : le round-trip, la garde de carte et la vérification
+  d'adresse vécues à CHAQUE tour par les contrôles du labo).
+
+LA CLÔTURE DE SESSION : la pièce T CONFORME à la revue finale (le
+verdict en sa lettre), la pièce C à l'arbitrage nommé ; les empreintes
+gravées (EMPREINTES-BASELINE.txt) ; le journal et le garde-brut les
+pièces maîtresses. CE QUI APPARTIENT AU DÉVELOPPEUR : l'épreuve
+d'exécution (le harnais ou le terrain — les vecteurs V1-V5), la
+consignation au journal canonique (l'Entrée qui accueille la présente
+session), le push GitHub (ses identifiants, sa machine), et LA
+DÉCISION sur la suite du chantier (le levier L1 appliqué à la prochaine
+unité — l'OPT-01 — dans l'ordre prescrit : L1 → L3 → L2 → L4 → L5/L7,
+un levier par unité mesurée, la règle d'arrêt armée).

@@ -1,0 +1,13 @@
+{
+ "vert": false,
+ "defauts": [
+  {
+   "classe": "FIN-RET",
+   "mecanisme": "la pièce ne s'achève pas sur le ret (la convention de la famille : le dernier octet du code est 0xc3, le padding NOP 0x90 du slot appartient au build)",
+   "ligne": "(fin de pièce)",
+   "no": 0
+  }
+ ],
+ "octets": "",
+ "nb_octets": 298
+}

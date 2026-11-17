@@ -1,0 +1,13 @@
+{
+ "vert": false,
+ "defauts": [
+  {
+   "classe": "NOP-I5",
+   "mecanisme": "la pièce ne s'achève pas sur le 0x90 (l'I5 du contrat : NOP, 0x90)",
+   "ligne": "(fin de pièce)",
+   "no": 0
+  }
+ ],
+ "octets": "",
+ "nb_octets": 298
+}

@@ -12014,3 +12014,41 @@ Work Log:
   d'écriture (JAMAIS affiché, JAMAIS commité au miroir).
 (17/11, la session de la vague 6 consignée et poussée)
 
+
+## Task 224 — Entrée 324 : LA BASELINE DOUBLE-BRAS CONSTRUITE (l'unité n=2
+entièrement instrumentée par la rig aux deux bras), LA SYNCHRO GIT/DRIVE ET
+LE PUSH VÉCUS AU COMMANDEMENT DU DÉVELOPPEUR
+
+Work Log:
+- LE LISTING ET LE LANCEMENT (la commande « fais un listing des chantiers en
+  cours, avec un ordre de priorité, puis lance le premier ») : CINQ
+  chantiers ordonnés selon le séquencement prescrit (D207 scellée, le guide
+  L6, le rapport vague 6) — la baseline double-bras lancée en première
+  (LISTING-CHANTIERS-20261117.md à l'atelier).
+- LA CONSTRUCTION : loupe-05 SHA-256 rebâtie AUX DEUX BRAS PAR LA RIG — le
+  contrat recoupé au mini-contrat (27 lignes octet pour octet), l'atelier
+  rig-l6 rapporté du /test (5/5 empreintes VERT), le modèle glm-4-plus lu
+  du champ model de chaque réponse. BRAS T : 15 appels, 36 089 tokens, dix
+  tours, loupe-05-it8.asm 376 octets cristallisés, revue CONFORME. BRAS C :
+  8 appels, 31 213 tokens, trois tours, loupe-05-it3.c gcc -O2 PROPRE au
+  shim, revue ÉCART I1/I2 ARBITRÉE PAR PRÉCÉDENT (la question NOMMÉE au
+  développeur).
+- LE JOURNAL NÉ : 23 appels, 100 % log-api, 67 302 tokens, sommes
+  cohérentes, le garde-brut chaque réponse brute ; les empreintes gravées.
+  LA MESURE : C/T renversé (0,86 × contre 1,27 × à loupe-01), les
+  correctifs LE hot path (49 % T / 40 % C), D19 tenue, la question du n
+  nommée (l'OPT-01 au levier explicite CONTRE CETTE baseline).
+- LES ÉCARTS NOMMÉS : V1-V5 non rejointe (les pièces LIVRÉES À L'ÉPREUVE —
+  le harnais ou le terrain), les troncatures rejetées/rejouées, la faute de
+  splice du tour ⑥, l'oracle T corrigé contre la pièce scellée (l'Entrée
+  324 au journal porte le détail intégral).
+- LA SYNCHRO ET LE PUSH (le commandement « d'abord la synchro git/drive —
+  vérifie /tokens du drive pour les acces ») : jetons /Tokens recensés (le
+  relais OAuth RAFRAÎCHI opérationnel — la voie d'écriture testée puis
+  nettoyée ; le jeton git vérifié permission push ; le SA la lecture), kit
+  recoupé byte-byte au zip (68 fichiers identiques), l'atelier au dépôt,
+  l'Entrée 324 au canon, le bundle 324 + le worklog remplacés au
+  TRIADE-sauvegarde-git (le 323 préservé, D143), le journal tokens remplacé
+  à la racine du coffre, le push GitHub vécu — jamais un jeton affiché,
+  jamais commité.
+(17/11, la session de la baseline consignée et synchronisée)

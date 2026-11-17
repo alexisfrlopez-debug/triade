@@ -13438,3 +13438,74 @@ COMMANDEMENT DU DÉVELOPPEUR
   (JAMAIS affiché, JAMAIS commité au miroir).
 (17/11, la session de la vague 6 consignée et poussée)
 
+
+## Entrée 324 — LA BASELINE DOUBLE-BRAS CONSTRUITE ET CONSIGNÉE (la première
+unité n=2 entièrement instrumentée par la rig), LA SYNCHRO GIT/DRIVE ET LE
+PUSH VÉCUS AU COMMANDEMENT DU DÉVELOPPEUR (« tokens a jour », le lien
+/Tokens du coffre)
+
+- LA COMMANDE ET LE LISTING : « fais moi un listing des chantiers en cours,
+  avec un ordre de priorité, puis lance le premier » — le
+  LISTING-CHANTIERS-20261117.md (à l'atelier) suit le SÉQUENCEMENT PRESCRIT
+  par le projet lui-même (D207 scellée, la checklist vague 6, le guide L6) :
+  ① la baseline double-bras, ② les leviers L1→L3→L2→L4→L5/L7 (5gfx6pwkj et
+  vljfs6pcj), ③ la preuve CF3 (89488hblm — l'outillage à re-provisionner),
+  ④ le temps constant structurel (fkkqc7v8t), ⑤ la campagne D210
+  (p39uklsca) — la baseline LANCÉE en première.
+- LA CONSTRUCTION (l'atelier rig-l6-20261116 rapporté du /test, les CINQ
+  pièces scellées recoupées 5/5 VERT aux empreintes ; le contrat
+  loupe-05-sha256.md RECOURPÉ au mini-contrat — les 27 premières lignes
+  octet pour octet ; le modèle glm-4-plus LU du champ model de CHAQUE
+  réponse ; un appel de fumée du CLI nommé, hors journal, jamais compté) :
+  LE BRAS T (15 appels, 36 089 tokens) — la notation à la main, DIX tours
+  de correctifs (les troncatures ② et ⑨ rejetées et rejouées en fragment
+  contigu), la pièce loupe-05-it8.asm 376 octets cristallisés (keystone ==
+  capstone au round-trip, l'IAT indirecte RIP-relative D161, la zone
+  d'état, le cadre msx64 0xc0 avec l'ombre 32 o, TAMPON_CUMUL statique au
+  plan, la fenêtre au min cmovb, l'héritage aux adresses du plan
+  0xc000/0xc240/0xc300), la revue finale CONFORME ; LE BRAS C (8 appels,
+  31 213 tokens) — le flux standard gcc -O2, TROIS tours, la pièce
+  loupe-05-it3.c 160 lignes PROPRE contre le shim windows.h (la liste
+  fermée D161 : SetFilePointerEx, ReadFile, GetLastError), la famille
+  sha256_*, les QUATRE verdicts, fail-closed (le lu recoupé au demandé,
+  jamais un condensé partiel), la revue finale ÉCART I1/I2 ARBITRÉ PAR
+  PRÉCÉDENT (la pièce scellée loupe-05-c.c de l'unité 3 ré-implémente
+  exactement ainsi — les invariants lient LE DOMAINE DE LA NOTATION, jamais
+  le bras C ; la question interprétative NOMMÉE au développeur).
+- LE JOURNAL NÉ (preuves-baseline/) : 23 appels instrumentés, 100 % log-api
+  (zéro estimation, CA3 tenu), 67 302 tokens TOUTES sommes cohérentes,
+  glm-4-plus partout ; le garde-brut conserve CHAQUE réponse brute — la
+  ligne == le log, à l'unité près ; les empreintes gravées
+  (EMPREINTES-BASELINE.txt).
+- LA MESURE : le rapport C/T RENVERSÉ (loupe-01 : C = 1,27 × T ; la
+  baseline : C = 0,86 × T — le bras T porta dix tours là où le C en porta
+  trois) ; la phase corrective demeure LE HOT PATH aux deux bras (49 % T,
+  40 % C) ; la hiérarchie D19 tenue (aucun contrôle retiré : round-trip,
+  garde de carte, vérification d'adresse à chaque tour) ; LA QUESTION DU n
+  — loupe-01 n=1 ≠ loupe-05 (contrats, auteurs, troncatures vécues) : les
+  deltas ne sont PAS attribuables à un levier seul, L1 déjà en œuvre dans
+  la baseline (~1 775 tokens/tour contre ~5 435) — l'OPT-01 naîtra du levier
+  EXPLICITE à la prochaine unité CONTRE CETTE baseline.
+- LES ÉCARTS NOMMÉS (jamais reconstruits) : l'exécution différentielle
+  V1-V5 NON REJOINTE (les cinq vecteurs du contrat — le différentiel 1 000
+  gammes, le doré FIPS, les rejets, le shim en échec, la falsification —
+  exigent le harnais d'émulation ou le terrain : les pièces T et C sont
+  LIVRÉES À L'ÉPREUVE, pas encore éprouvées) ; la faute de splice du tour ⑥
+  NOMMÉE (l'étiquette loupe_05: perdue, réparée mécaniquement — le splice
+  vérifiera la structure au prochain kit) ; la correction de l'oracle T
+  CONTRE LA PIÈCE SCELLÉE (la règle du 0x90 final trop stricte — la
+  convention : la notation s'achève au ret, le padding au slot appartient
+  au build).
+- LA SYNCHRO ET LE PUSH (le commandement du 17/11 : « d'abord la synchro
+  git/drive — vérifie /tokens du drive pour les acces ») : les jetons du
+  /Tokens RECENSÉS — le relais OAuth RAFRAÎCHI et OPÉRATIONNEL (la voie
+  d'écriture servie, testée puis nettoyée), le jeton git VÉRIFIÉ à l'API
+  (permission push au dépôt privé), le SA la lecture ; le kit recoupé
+  byte-byte au zip (68 fichiers IDENTIQUES) ; l'atelier-baseline-20261117/
+  AU DÉPÔT (les deux bras, le labo, les preuves, le rapport, le listing, le
+  journal), la présente Entrée 324 au canon, le worklog Task 224, le bundle
+  324 + le worklog REMPLACÉS au TRIADE-sauvegarde-git (le 323 versionné
+  préservé, D143), le JOURNAL-OPTIMISATION-TOKENS.txt REMPLACÉ à la racine
+  du coffre (la clôture baseline + le wording D207 scellée), le push GitHub
+  vécu — jamais un jeton affiché, jamais un jeton commité.
+(17/11, la session de la baseline consignée et synchronisée)

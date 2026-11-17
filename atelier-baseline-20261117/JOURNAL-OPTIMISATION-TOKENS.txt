@@ -1,0 +1,120 @@
+JOURNAL D'OPTIMISATION DU COÛT EN TOKENS — le chantier
+(CHANTIER-OPTIMISATION-TOKENS-v1.md à la racine du coffre, l'Entrée 317 ;
+la commande du développeur : « ensuite prochain chantier : optimiser le
+protocole et trouver des solutions pour le cout en token »)
+================================================================================
+Le format D205 (le précédent OPT-01, la variante SHA-NI, l'Entrée 240) :
+chaque OPT-NN porte LA MESURE AVANT (le hot path identifié par mesure),
+LE GAIN MESURÉ (avant/après, les mêmes logs), LE VÉRIFICATEUR (la preuve
+rejouable). La règle d'arrêt du plan D207 : un levier qui dégrade M1
+(un échappé imputable) ou M3 (le temps humain) est REJETÉ et consigné.
+La hiérarchie D19 demeure l'invariant : Sécurité > Performance >
+Optimisation > Coût en tokens.
+
+--------------------------------------------------------------------------------
+L6 — LA RIG RÉPARÉE (le 16/11/2026, l'Entrée 318 ; la commande du
+développeur : « Prepare le test L6 avec un guide »)
+--------------------------------------------------------------------------------
+LE GESTE : compter_tokens.py CÂBLÉ dans CHAQUE outil auteur du labo —
+LE JOURNAL NAÎT DES OUTILS, JAMAIS DE LA MÉMOIRE (l'écart nommé des
+Entrées 289/290 guéri à la source : les unités 2+ de la campagne avaient
+vu leurs appels de construction passer hors journal — sans M2 complet,
+aucun gain ne peut être consigné).
+
+LE KIT : rig-l6-20261116/ au coffre /test — rig_auteur.py le câblage
+(l'unique chemin des outils vers le modèle), outil_builder.py /
+outil_correctif.py / outil_tests.py les trois outils, epreuve_l6.py
+l'épreuve, verifier_l6.py le rejeu sans réseau, le guide
+(GUIDE-L6-RIG-20261116.txt + PDF), la gravure 18 pièces.
+
+L'ÉPREUVE VÉCUE : 25 VERT 0 ROUGE — le câblage vécu (l'inspection AST +
+les trois outils à --cablage), le dry-run réel TROIS appels par les
+TROIS outils (bras T spec 1624 + correctif 1680, bras C tests-c 2060 —
+TOTAL 5364 tokens, 100 % lus du log d'usage), le journal == le log à
+l'unité près, le récapitulatif doublement lu (le vérificateur ET
+l'instrument s'accordent), les CINQ falsifications attrapées (dont
+l'estimation ×1,08 refusée — CA3).
+
+L'ÉCONOMIE : NULLE — c'est la mesure (le chantier l'écrit : « le n=1
+devient n+ »). AUCUN OPT-NN à la présente : le premier OPT mesuré
+naîtra du levier L1 appliqué à une unité de campagne.
+
+LA SUITE : ① la décision D207 à sceller AVANT la première mesure de
+gain (un levier par unité mesurée, jamais deux ; la règle d'arrêt) ;
+② LA BASELINE — la prochaine unité entièrement instrumentée aux DEUX
+BRAS PAR LA RIG (le n=1 devient n=2 : chaque phase comptée par les
+outils, le journal né, plus aucun manquant) ; ③ les leviers dans
+l'ordre prescrit : L1 (le bundle-défaut — son format vit déjà à
+l'outil de correctif de la rig), L3, L2, L4, L5/L7 — chaque OPT-NN à
+la présente section.
+
+LA CLÔTURE L6 (le 16/11/2026, l'Entrée 319) — LE TÉMOIN DU TERRAIN REÇU
+SIGNÉ (Alexis Lopez [D99], « LA RIG L6 - LE REJEU DES PREUVES AU
+TERRAIN », 16/11/2026) : le rejeu recoupé au labo 18/18 pièces
+INTACTES, le journal == le log, les mutations re-attrapées — LA RIG EST
+VÉCUE AU TERRAIN ; LA DÉCISION D207 SCELLÉE (le chantier débouclé) ;
+LA BASELINE PEUT COURIR (l'unité n=2 entièrement instrumentée aux
+deux bras par la rig) ; AUCUN OPT-NN ENCORE — l'économie demeure
+nulle, la mesure demeure la reine.
+
+--------------------------------------------------------------------------------
+LA BASELINE DOUBLE-BRAS — LE n=2 NÉ (le 17/11/2026, la session de
+reprise ; la commande du développeur : « fais un listing des chantiers
+en cours, avec un ordre de priorité, puis lance le premier » — le
+premier chantier de la liste EST la baseline prescrite)
+--------------------------------------------------------------------------------
+LE GESTE : la construction entière de loupe-05 PAR LA RIG aux DEUX
+BRAS — le contrat intégral lu (loupe-05-sha256.md, l'Entrée 297,
+recoupé au mini-contrat octet pour octet), chaque phase comptée par les
+outils (outil_builder → rig_auteur → compter_tokens → le journal), le
+modèle glm-4-plus (LU du champ model de chaque réponse, le même que la
+campagne D204).
+
+LA MESURE (le journal né : 23 appels, 100 % log-api, zéro estimation) :
+  | phase        |  bras T  | loupe-01 T |  bras C  | loupe-01 C |
+  |--------------|----------|------------|----------|------------|
+  | spec         |    2 043 |      5 313 |    2 090 |      5 605 |
+  | oracle       |    3 884 |      3 752 |    3 426 |      4 423 |
+  | rédaction    |    4 031 |     11 480 |    6 146 |     14 660 |
+  | correctifs   |   17 749 |     32 613 |   12 508 |     39 224 |
+  | tests-c      |        — |          — |    2 930 |      3 563 |
+  | revue        |    8 382 |          — |    4 113 |          — |
+  | TOTAL (M2)   |   36 089 |     53 158 |   31 213 |     67 475 |
+  | appels       |       15 |          9 |        8 |         11 |
+
+LA LECTURE : le rapport C/T RENVERSÉ (1,27× à loupe-01 ; 0,86× à la
+baseline — le bras T porta dix tours de correctif dont DEUX troncatures
+rejouées, le bras C trois dont la rédaction tronquée) ; la phase
+corrective demeure LE HOT PATH (49 % T / 40 % C) ; le coût moyen par
+tour de correctif au format bundle-défaut de la rig : ~1 775 tokens
+(T) contre ~5 435 le tour plein-contexte de loupe-01 — L1 EST DÉJÀ EN
+ŒUVRE dans le chemin (l'outil de correctif de la rig) : l'OPT-01
+naîtra de la PROCHAINE unité au levier explicite contre CETTE baseline
+(un levier par unité mesurée, D207 — jamais deux).
+
+LES PIÈCES : bras T loupe-05-it8.asm (376 octets, keystone ==
+capstone au round-trip, l'IAT indirecte déclarée, l'état-zone, le cadre
+msx64 0xc0, TAMPON_CUMUL statique, la fenêtre au min, l'héritage aux
+adresses du plan 0xc000/0xc240/0xc300, la revue CONFORME) ; bras C
+loupe-05-it3.c (gcc -O2 -Wall -Wextra PROPRE au shim, la famille
+sha256_*, les quatre verdicts, fail-closed, la revue ÉCART I1/I2
+ARBITRÉE par le précédent de la pièce C scellée de l'unité 3 — la
+question interprétative NOMMÉE au développeur).
+
+LES ÉCARTS NOMMÉS : l'exécution différentielle V1-V5 NON REJOINTE (le
+harnais d'émulation — les pièces sont LIVRÉES À L'ÉPREUVE, les défauts
+d'exécution demeurent la prise du terrain) ; deux troncatures T + une
+rédaction C rejetées et rejouées (le précédent PATCH : le fragment
+contigu, la suite rattachée) ; la faute de splice du tour ⑥ (l'étiquette
+perdue, réparée, NOMMÉE — la leçon : le splice vérifiera la structure) ;
+la correction de l'oracle T contre la pièce scellée (la règle du 0x90
+final était trop stricte — la convention : la notation finit au ret, le
+padding au slot appartient au build) ; l'appel de fumée du CLI (18
+tokens, HORS journal, nommé).
+
+LA SUITE : au développeur — ① l'épreuve d'exécution (le harnais ou le
+terrain) pour les deux pièces ; ② la consignation au journal canonique
+et le push GitHub (sa main, ses identifiants) ; ③ LA DÉCISION DU LEVIER
+SUIVANT : L1 explicite à la prochaine unité (l'OPT-01), puis L3 → L2 →
+L4 → L5/L7 — un levier par unité mesurée, la règle d'arrêt armée (un
+levier qui dégrade M1 ou M3 est REJETÉ et consigné).

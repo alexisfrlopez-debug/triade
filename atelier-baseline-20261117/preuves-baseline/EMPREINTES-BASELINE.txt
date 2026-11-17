@@ -1,0 +1,19 @@
+EMPREINTES-BASELINE — la session du 17/11/2026 (la construction loupe-05 AUX DEUX BRAS PAR LA RIG)
+(sha256 de chaque pièce née — la gravure fait foi)
+==============================================================================
+7bd1530fc5d0a2db36fdf6c44529aa652eb1f338e1e17e9afe587d97ceb97ce7  preuves-baseline/journal_tokens.jsonl
+6320b790db676d71a6f8e0f2535429fd4a7e1be891f18b6d427434d3ef8f62f7  preuves-baseline/garde-brut.jsonl
+a2d98cb3432766d8b8f095ebaa4e1067aa2a723ed2e38161e7508d96ccd762b2  bras-T/loupe-05-it8.asm
+bb6fe5ca66a75bff1481fff33a6b05d19c951c6fb9413a220998a42a1115425d  bras-T/oracle.md
+5c595089a568d46023166aa49f68a43482214964630a665f74fe77779fabe55c  bras-T/notes-spec.md
+2b0418ef90f2d91102669ab5de259126c9b68d4841c28e2c5fa6848c7f7e4b74  bras-T/revue-finale.md
+603734f5f4daccb3c5402d5e536a49cde96b13030b955a237973f04df928d13a  bras-C/loupe-05-it3.c
+5eba4a94daadaf1340f8918729e82d607f3e279dd3a885ba9c773e772d7075e0  bras-C/oracle.md
+21c47d0976cc742a786716660e54d0ef5acdb4d41d194b29f237f3377d1651d8  bras-C/notes-spec.md
+ed1c607eb45a7166d91cb7728dfe1bd5a47722b9b185eae7ccd6ca4214b7488b  bras-C/tests-c.md
+148f722c070ecb4f3949f070cea5344817204b8957174e03967a8a45d6a7c7f2  bras-C/revue-finale.md
+a97af16f89a0420c586710d0db821cbfa28bc0c2eb851c451d0db589c8237753  lab/cristalliser.py
+82c0e85b90a7d374e27b9505809ef9d544c3837151fe1a13796bbfff2f422a0f  lab/controle_c.py
+b8a3a00a9ed4803ff8331f8082d7de9ea72b4d27da446ab5cf95eb2a815734ec  lab/splice_tour.py
+277504b90de2075f4d9ae4cb35b89c822a962168f12ecfb5ebb623707d79574c  lab/shim/windows.h
+1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe  loupe-05-sha256.md
