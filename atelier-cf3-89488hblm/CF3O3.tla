@@ -112,8 +112,12 @@ FormDomainFaible ==
   /\ destr_injuste = FALSE
   /\ cf2_ok /\ media_corrompu = FALSE
 
-(* l'énumération TLC du compte : Next == FALSE (aucun pas), l'invariant
- * vide tautologique — TLC compte les états de FormeDomaineEtat : 288 *)
-SuivantNul == FALSE
+(* l'énumération TLC du compte : le self-bouclage (TLC refuse une action
+ * suivante constante — l'amendement nommé du 17/11 : SuivantNul était
+ * FALSE, l'énumération des états de FormeDomaineEtat est INCHANGÉE) ;
+ * l'invariant vide tautologique — TLC compte : 288 attendus *)
+SuivantNul ==
+  UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte,
+              detruit, destr_injuste, media_corrompu>>
 Tautologie == TRUE
 =============================================================================
