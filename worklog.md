@@ -12600,3 +12600,76 @@ Work Log:
   (17/11 au soir, la session du flux — re-consigné après la perte du
   bac, les pièces font foi)
 
+
+## Task 232 — Entrée 332 : LE CORRECTIF COLLECTE v1.0.1 — LE KEYERROR
+gcc_version DU PREMIER RUN TERRAIN NOMMÉ, AUDITÉ ET FERMÉ EN QUATRE
+COUCHES (l'écran du développeur recopié TEL QUEL ; D143 tenu — v1.0.0
+aux archives)
+
+[Restaurée VERBATIM au worklog le 17/11 au soir après la perte du bac —
+le texte fut lu intégralement au fil avant la perte ; seul l'en-tête de
+restauration s'ajoute.]
+
+Work Log:
+- LE DÉFAUT VÉCU AU TERRAIN : au premier geste complet, le GUI v1.0.0
+  s'est fermé sur « KeyError : 'gcc_version' » (collecter l.492, via
+  _geste_collecte l.1281, travail l.1359, fil l.808) — le relevé gcc
+  --version vivait au dictionnaire DE LA COMPILATION, la collecte le
+  lisait au SOMMET du contexte : une clé que la chaîne réelle ne
+  posait JAMAIS. La chute arrive À LA COLLECTE — compilation et runs
+  sont nés, les consoles et les csv vivent au dossier du run ; c'est
+  le DEPOT et le gabarit qui tombent.
+- L'AUDIT (avant de toucher au code) a nommé DEUX DÉFAUTS LATENTS de
+  plus, fermés par la même édition : (A) json.dumps ne portait pas les
+  pathlib.Path de l'état — la sauvegarde de fin de chaîne aurait levé
+  TypeError ; (B) le contexte n'était sauvé qu'à la FIN de la chaîne —
+  le plantage l'a laissé VIDE, et la reprise du run tombé aurait chu à
+  la clé suivante (machine) au même endroit.
+- POURQUOI LE LABO NE L'AVAIT PAS VU : le selftest T6 comme l'épreuve
+  fonctionnelle CONSTRUISAIENT À LA MAIN le contexte, avec la clé au
+  sommet — la forme exacte que la chaîne réelle ne produit pas. LEÇON
+  CONSIGNÉE : l'épreuve doit rejouer L'ÉTAT LAISSÉ PAR UN PLANTAGE,
+  pas la forme idéale.
+- LA CORRECTION EN QUATRE COUCHES (v1.0.1, triade_run_v160_gui.py
+  85 998 o, sha256 4d6b5cb916e82187ec3a2a667938d2d6d03478bf92e9b6be3d
+  780436c6193ce0) : (1) le relevé posé AUSSI au sommet au geste § 4 ;
+  (2) LA RECONSTITUTION — à la collecte, tout relevé manquant est
+  RECONSTITUÉ des PIÈCES SCELLÉES du dossier (gcc --version et la
+  commande de console-compilation.txt, l'argv et les verdicts des
+  consoles des runs, l'OS/powercfg du plus récent etat-machine-*.txt),
+  RECOPIÉS jamais réinventés, CHAQUE RECONSTITUTION PORTE SA SOURCE au
+  DEPOT et au témoin ; (3) JAMAIS UN CRASH — un relevé absent est NOMMÉ
+  [ÉCART NOMMÉ], pas muet ; (4) LA MÉMOIRE TENUE — le contexte sauvé à
+  CHAQUE geste, les chemins traversent json (default=str) puis
+  reprennent leur type au chargement (norme_contexte).
+- LES PREUVES : le selftest étendu 16 VERT, 0 ROUGE (dont T12 : la
+  reconstitution d'un état VIDE — l'état exact du terrain — et la
+  collecte sans aucun relevé NOMMÉ, jamais crashée ; T13 : le
+  va-et-vient json des Path) ; L'ÉPREUVE FONCTIONNELLE étendue 13
+  VERT, 0 ROUGE — la chaîne réelle au bac (gcc 14.2, les deux bras
+  N=60 R=1) PUIS LE SCÉNARIO EXACT DU TERRAIN rejoué : contexte vide →
+  reconstitution → collecte sans crash, la source nommée au témoin
+  (« le gcc de la console : /usr/bin/gcc (reconstitué — correctif
+  v1.0.1) »).
+- CE QUI NE CHANGE PAS : les QUATRE pièces scellées INTACTES octet pour
+  octet (bcfad643…, 7293cd86…, 93d5a13f…, 0782d7e2…), la chaîne
+  embarquée mingw-w64 16.2.0 (manifeste 69dac340…), le lanceur .bat
+  (a7267a78…), le protocole v160 et D99 ENTIER. Les formats DEPOT et
+  gabarit demeurent — seules s'ajoutent les lignes « la source : ».
+- LA LIVRAISON AU COFFRE /test (remplacement EN PLACE, recoup sha256,
+  échec fermé) : kit-gui-1clic-v160-20261117.zip REMPLACÉ (40,6 Mo,
+  GUI v1.0.1 + LISEZMOI v1.0.1 + EMPREINTES régénérée ; le .bat et
+  les pièces scellées INTACTS dans le zip) ;
+  CORRECTIF-V160-GUI-COLLECTE-20261117.txt DÉPOSÉ (le défaut, les
+  deux latents, les quatre couches, les preuves, la voie du run tombé).
+- LA VOIE DU RUN TOMBÉ (consignée au LISEZMOI et au CORRECTIF) :
+  re-télécharger le kit remplacé, dézipper SUR l'ancien dossier,
+  re-double-cliquer le .bat — le GUI REPREND le dossier existant,
+  saute les étapes déjà vertes, RECONSTITUE, la collecte naît ; le témoin
+  demeure à VOTRE MAIN (D99). « Repartir à zéro » demeure (D143).
+- LA CONSIGNATION : la présente Entrée 332 ; les livrables à
+  download/ (le kit remplacé, le correctif) ; l'instruction p39uklsca
+  DEMEURE (le chantier 5, la campagne D210) ; le run v160 attend le
+  GESTE DU DÉVELOPPEUR : re-double-clic, témoin signé, zip au coffre.
+  (17/11 au soir, la session du flux)
+
