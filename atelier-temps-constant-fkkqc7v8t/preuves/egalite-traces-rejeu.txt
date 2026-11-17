@@ -1,0 +1,9 @@
+=== L'ÉGALITÉ EXACTE DES TRACES — les 6 cibles du dudect d'émulation (N=60/classe, graine 20261111) ===
+tls13-01..04 (sha-256)                 comptes distincts 1   [min 4469 .. max 4469] → ÉGALITÉ EXACTE
+tls13-05 (hmac-sha256, la clé)         comptes distincts 1   [min 18371 .. max 18371] → ÉGALITÉ EXACTE
+tls13-06 (hkdf-extract, l'IKM)         comptes distincts 1   [min 18407 .. max 18407] → ÉGALITÉ EXACTE
+tls13-13/14 (x25519, la clé privée)    comptes distincts 1   [min 1238959 .. max 1238959] → ÉGALITÉ EXACTE — le compte unique 1 238 959 == 1 238 959 attendu
+tls13-15..19 (aes-gcm, la clé)         comptes distincts 1   [min 11695 .. max 11695] → ÉGALITÉ EXACTE
+loupe-06 (md5, le contenu)             comptes distincts 1   [min 132509 .. max 132509] → ÉGALITÉ EXACTE
+
+VERDICT : VERT — égalité exacte sur les 6 cibles, le compte x25519 confirmé

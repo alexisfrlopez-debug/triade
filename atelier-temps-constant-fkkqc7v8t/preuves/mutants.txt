@@ -1,0 +1,14 @@
+=== LES CONTRÔLES NÉGATIFS — les mutants volontairement dépendants du secret doivent être ATTRAPÉS ===
+  VERT M1-echappee-precoce : BRANCHE @0xc101 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s3=0x0000000000000000 ; s4=0x0000000000000000]
+  VERT M1-echappee-precoce : BRANCHE @0xc101 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s3=0x0000000000000000 ; s4=0x0000000000000000]
+  VERT M2-table-indexee : ADRESSE @0xc166 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s0=? ; s1=0xffffffffffffffff]
+  VERT M2-table-indexee : ADRESSE @0xc166 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s0=? ; s1=0xffffffffffffffff]
+  VERT M3-cswap-branche : BRANCHE @0xd3b8 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s4=0x0000000000000000 ; s5=0x0000000000000000]
+  VERT M4-ghash-repli-jc : BRANCHE @0xe00c — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s2=0x8000000000000000 ; s3=?]
+  VERT M4-ghash-repli-jc : BRANCHE @0xe88f — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s2=0x0000000000000000]
+  VERT M4-ghash-repli-jc : BRANCHE @0xe00c — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s2=0x8000000000000000 ; s3=?]
+  VERT M5-md5-table-octet : ADRESSE @0x48b0 — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s0=? ; s1=0xffffffffffffffff]
+  VERT M6-hmac-cle-branchee : BRANCHE @0xc3eb — VIOLATION [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s0=0x0000000000000000]
+  VERT M7-decharge-and-zero : BRANCHE @0xc106 — DÉCHARGÉE [Z3 : UNSAT — l'expression est invariante ∀ 1 symbole(s) du secret (la dépendance syntaxique était sémantiquement nulle)]
+  VERT M7-decharge-and-zero : BRANCHE @0xc106 — DÉCHARGÉE [Z3 : UNSAT — l'expression est invariante ∀ 1 symbole(s) du secret (la dépendance syntaxique était sémantiquement nulle)]
+=== 7/7 mutants tranchés comme attendu ===

@@ -12360,3 +12360,138 @@ commandement du développeur ; les livrables à download/ ; l'instruction
 89488hblm EXÉCUTÉE — les instructions fkkqc7v8t/p39uklsca demeurent (les
 chantiers 4-5 du listing).
 (17/11, la session des trois obligations)
+
+## Task 230 — Entrée 330 : LE TEMPS CONSTANT STRUCTUREL PASSÉ À LA
+VÉRIFICATION STATIQUE NON BORNÉE, LA CAUSE RACINE DU RENVERSEMENT DUDECT
+NOMMÉE ET FERMÉE PAR LE PROTOCOLE (fkkqc7v8t, le chantier 4 du listing,
+D216)
+
+Work Log:
+- LA SESSION : la clôture de la synchro 329 d'abord (le push GitHub des 7
+  commits au fae926c — 0/0 recoupé ; le bundle du Drive RAFRAÎCHI au
+  fae926c et recoupé md5 — la session précédente l'avait laissé au
+  1eaf6d9, le commit fae926c (10:08:26) ayant suivi le rituel de 10:07 ;
+  le RAPPORT-89488hblm recoupé drive == local e5f84bc4… — TOUT VERT),
+  puis le chantier 4 ouvert à la commande du développeur (« go » — le
+  listing prescrit : les chantiers 1-3 clos, le 4 suivant ; l'instruction
+  fkkqc7v8t rapatriée du /instructions, md5 recoupé).
+- LE PLAN PRÉ-ENREGISTRÉ GELÉ AVANT TOUTE MESURE (sha256 58edd2c1…, le
+  commit fd8cb1a précède la première exécution — la règle D204/D211
+  reconduite) : les obligations O1-O6 aux protocoles MESURÉS fidèles, les
+  DEUX classes de violation (BRANCHE/ADRESSE), la décharge SMT non bornée
+  avec témoin, les 7 mutants dont M7 le contrôle POSITIF de décharge, la
+  forensie des deux journaux (les QUATRE hypothèses), le rejeu contrôlé
+  v160 (warm-up des deux classes, ordre randomisé à graine, R=5, lfence),
+  l'étape de vérification prescrite (mutants, égalité des traces sur clone
+  frais, scelles, builds).
+- LE MOTEUR (audit_temps_constant.py, ~2 300 lignes à la racine) : le
+  taaint flux-sensible sur les notations au round-trip R5, l'interprocédural
+  mémoïsé par signature (les feuilles f25519, le .comprimer de loupe-06,
+  libc-01/07 de m1), LES MODÈLES IAT NOMMÉS (ReadFile LA SOURCE du
+  secret — le protocole fixe.bin/alea.bin), la mémoire à racines par
+  octet (SP PAR FONCTION — le bug des cadres partagés fermé au vécu, les
+  identités de pointeur à travers les sauvegardes pile, le déplacement
+  PORTÉ dans les offsets — le second bug central, le cadre dynamique de
+  hkdf-expand à la voie symbolique du seau, la fenêtre rep 64 o vérifiée
+  aux notations). DEUX bugs centraux vécus et fermés au développement (le
+  rsp dont la racine mourait au premier sub — le modèle de pile INERT,
+  le [rbx+0x60] lisant les cellules 0..3 — le déplacement écrasé) : les
+  faux VERTS initiaux ÉTAIENT des vides — la leçon consignée, les
+  obligations reprises après chaque correctif, les verdicts JAMAIS
+  pliés au prédit.
+- LA MESURE : ONZE protocoles VERTS — ∀ valeurs du secret (∀ chemins du
+  code noté), AUCUN branchement, AUCUNE adresse ne dépend du secret :
+  sha-256 (01-04, dont 02 sous deux protocoles), hmac (05, la clé),
+  hkdf (06 l'IKM, la famille COMPLÉTÉE 07/08 sous PRK), x25519
+  (14→13→09-12, le cswap masqué et le masque sbb RECONNUS constants),
+  gcm-sceller (18→15/16/17), md5 (loupe-06 + libc + .comprimer, le
+  secret ENTRANT par ReadFile). DEUX ÉCARTS NOMMÉS : O4 — LA DÉCOUVERTE
+  DU CHANTIER (le plan prédisait VERT) : la branche défensive d'emprunt
+  de tls13-10 (jb .emprunt @0xcab6) — la retenue de la chaîne sub/sbb
+  PEUT dépendre des données (Z3, membres libres : SAT) ; sous
+  L'INVARIANT NOMMÉ (a, b < p — la forme réduite que la discipline
+  propager-geler de tls13-12 entretient), LA PREUVE DÉDIÉE 320 bits aux
+  constantes 2p exactes de la notation : UNSAT — la retenue TOUJOURS
+  nulle, la branche JAMAIS prise ; l'invariant N'EST PAS PROUVÉ par
+  l'audit — la constante-temporalité de x25519 est CONDITIONNELLE,
+  l'écart demeure NOMMÉ (l'égalité des traces le corrobore empiriquement
+  : 1 238 959 instructions toujours). O5b — le verdict d'étiquette de
+  tls13-19 (jnz après le OU des 16 XOR) : le bit public PAR CONTRAT
+  d'API (rax = −4 ou la restitution) — l'écart ATTENDU au plan, la
+  famille étendue à OUVRIR que la mesure ne couvrait pas.
+- LA DÉCHARGE SMT par tranchage arrière, vécue sur les mutants : les
+  symboles différés LIFO (l'auto-résolution S:=S fermée — la fuite qui
+  déchargeait à tort), les feuilles frontière au TAINT constaté (jamais
+  publiques par commodité), cmp/test à la sémantique exacte ((a&b)==0 —
+  le test mal codé déchargeait M1/M3 à tort), le CF des décalages au bit
+  sorti (le jc de M4 sur le CF du shld secret). LES 7/7 MUTANTS :
+  M1-M6 ATTRAPÉS aux témoins, M7 DÉCHARGÉ (and eax,0 : UNSAT — la voie
+  de décharge REFUSE de sur-signaler). La machine à muter : les régions
+  remplacées en COPIES (les scellées intactes), les cibles de saut
+  REMAPPÉES, les déplacements RIP recalculés à la cible fixe.
+- L'INTÉGRATION AU BUILD (à côté de l'audit ABI msx64) : les QUATRE
+  portes (construire + verifier de m9 après l'oracle structurel, de
+  loupe immédiatement après audit_msx64) — VÉCUE : les deux builds
+  courent l'audit ([audit temps constant] au tableau, les écarts nommés
+  RAPPORTÉS, tout écart NOUVEAU REFUSE le build), poursuivent jusqu'à la
+  CÉRÉMONIE DE CARTE (les secrets au coffre, D144 — le labo ne scelle
+  pas, par design) ; proxy.exe recomposé OCTET-IDENTIQUE au scellé
+  446279f3… (R7 tenu — l'audit est une LECTURE).
+- LA FORENSIE du renversement N=200→N=400 (les DEUX journaux bruts sur
+  pièces, l'ordre d'exécution conservé — 8 blocs BLOQUÉS) : le recoup
+  EXACT des t consignés (12,39/5,19/0,94/3,11 et 0,84/1,55/−0,30/2,02) ;
+  l'arithmétique du pouvoir — |t| ∝ √n rend le renversement
+  INCOMPATIBLE avec un effet constant ; TLS13-13 L'ARTEFACT PUR (l'ANCOVA
+  cycles ~ classe + rang : +5,19 → −1,29 n.s., la pente −55,8 cyc/mesure
+  — la machine hors régime, la dérive COLLÉE à l'ordre bloqué) ; TLS13-02
+  LE MIXTE (les dérivées intra-bloc Spearman +0,49/−0,33, la frontière
+  fixe→aléatoire −728 cyc, l'ANCOVA +12,39→+8,48, l'asymétrie d'état —
+  rand_s UN SYSTÈME par itération aléatoire contre rien pour la fixe, le
+  __rdtsc non sérialisé) ; à N=400 la dérive inversée (le bloc fixe part
+  à 3 109 cyc et descend — les deux runs ne mesuraient pas la même
+  machine) ; les robustes consignés (Mann-Whitney, KS, Yuen, les médianes
+  bootstrap BCa 10 000).
+- LE REJEU CONTRÔLÉ (dudect_v160, les deux backends du v150 — POSIX au
+  labo, Windows au terrain) : warm-up W=200 des DEUX classes, l'ordre
+  RANDOMISÉ par PRNG à graine consignée, lfence-rdtsc-lfence, R=5 runs
+  par N, l'affinité cœur 0 posée, les gouverneurs lus (/sys NON EXPOSÉ
+  par le bac — GAP NOMMÉ, le contrôle effectif au terrain). LA
+  DÉMONSTRATION : le bras CONTRÔLÉ 0/20 franchissements (pire |t|=1,82) ;
+  le bras TÉMOIN (le v150 tel quel) 2/20 — |t|=7,77 et 5,20 sur TLS13-02,
+  LA MÊME CIBLE que l'excursion du terrain, les SIGNES RENVERSÉS entre
+  runs — LA CLASSE D'ARTEFACT REPRODUITE AU LABORATOIRE. Le renversement
+  était l'œuvre du PROTOCOLE sur machine hors régime, PAS un canal du
+  code. LA FORMULATION HONNÊTE (l'instruction l'exige) : JAMAIS constant
+  time proven au-delà des runs signés — le prouvé est STRUCTUREL (∀
+  secrets, deux écarts nommés à conditions écrites) ; le N=200 et le
+  N=400 restent TOUS DEUX des faits consignés, réconciliés (le premier
+  mesurait le protocole, le second la pièce).
+- L'ÉTAPE DE VÉRIFICATION VÉCUE INTÉGRALE : les mutants 7/7 ; l'égalité
+  des traces REJOUÉE sur clone frais du commit du chantier (graine
+  20261111, N=60/classe : les SIX cibles à UN SEUL compte distinct sur
+  120 mesures, x25519 = 1 238 959 CONFIRMÉ) ; les SCELLES INTACTS après
+  le build (m8/proxy.exe 1492b0bc… l'ancre R7, tls13/proxy.exe
+  446279f3…, loupe/loupe.exe c1115105…, m1/selftest.exe 8038585b…) ;
+  les builds verts à la frontière de la cérémonie.
+- LES GAPS NOMMÉS : le verdict d'étiquette GCM (par contrat d'API) ;
+  l'invariant f25519 (a, b < p) non prouvé par le présent audit — la
+  branche d'emprunt conditionnelle ; la chaîne mingw absente du bac —
+  l'exécutable TERRAIN du v160 se compile chez le développeur (gcc -O2,
+  le kit source à l'atelier) ; /sys cpufreq non exposé (powercfg au
+  terrain, l'état effectif au témoin) ; les bornes du modèle (fenêtre
+  rep 64 o — le compte de tous les rep des blocs vérifié ; la
+  sur-approximation des seaux : des VALEURS taaintes, jamais des
+  obligations que le code ne porte pas ; le tranchage borné au bloc de
+  base — les frontières inter-blocs en feuilles au taaint du site,
+  fail-closed).
+- LA CONSIGNATION : D216 au journal des décisions, la présente Entrée
+  330, l'atelier entier au dépôt (le plan gelé, le moteur, le v160, le
+  pipeline de forensie, les journaux des deux bras, les preuves —
+  forensie, mutants, audit-tout, l'égalité rejouée, les builds —, le
+  rapport), le verdict des pièces INTACT (R7 : proxy.exe recomposé
+  octet-identique) ; le push GitHub au commandement du développeur ; les
+  livrables à download/ ; l'instruction fkkqc7v8t EXÉCUTÉE —
+  l'instruction p39uklsca demeure (le chantier 5, le plan d'extension
+  D210 — les gestes du terrain) ; le v160 terrain attend le geste du
+  développeur (compiler, courir, signer — le témoin au coffre).
+  (17/11, la session du flux)

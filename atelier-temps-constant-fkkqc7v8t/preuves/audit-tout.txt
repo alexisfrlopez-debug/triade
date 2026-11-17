@@ -1,0 +1,15 @@
+=== L'AUDIT DE TEMPS CONSTANT — tout ===
+  VERT   O1a-sha256-init (aucun secret)                   — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O1b-sha256-comprimer (le bloc 64 o)              — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O1c-sha256-comprimer (bloc + état)               — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O1d-sha256-absorber (le tampon)                  — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O1e-sha256-finaliser (l'état+tampon)             — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O2-hmac (la clé 32 o)                            — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O3a-hkdf-extract (l'IKM 22 o)                    — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O3b-hkdf-expand (le PRK)                         — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  VERT   O3c-hkdf-expand-label (le PRK)                   — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  ÉCART  O4-x25519 (la clé privée)                        — BRANCHE @0xcab6 : jb 0xcaf0 — les drapeaux cf testés sont taaints (dérivés du secret) [Z3 SANS borne (le modèle dédié, membres libres) : SAT — la retenue PEUT dépendre des données. LA PREUVE DÉDIÉE (le modèle 320 bits exact de la chaîne, les constantes 2p de la notation) : UNSAT — sous l'INVARIANT NOMMÉ (a, b < p, la forme réduite du domaine que propager-geler entretient), la retenue sortante est TOUJOURS NULLE : la branche jc .emprunt n'est JAMAIS prise ; l'invariant N'EST PAS PROUVÉ par le présent audit — l'écart demeure NOMMÉ]
+  VERT   O5a-aesgcm-sceller (la clé 16 o)                 — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+  ÉCART  O5b-aesgcm-ouvrir (la clé 16 o)                  — BRANCHE @0xe88f : jne 0xe95e — les drapeaux zf testés sont taaints (dérivés du secret) [Z3 : SAT — le CONTRE-EXEMPLE TÉMOIN : s2=0x0000000000000000]
+  VERT   O6-md5 (le contenu du fichier)                   — aucune branche, aucune adresse ne dépend du secret (0 obligation)
+=== 11 protocole(s) VERT(S) ; 2 écart(s) nommé(s) ===

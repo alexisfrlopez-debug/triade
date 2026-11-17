@@ -1,0 +1,23 @@
+=== M10 : re-vérification de loupe.exe + cristallisation R6 (R5/R7/R8) ===
+[sceau-I] garde : 14 arbres d'intention conformes à leurs signatures (le garde VERT 14/14 AVANT construire() — l'ère du TGN ouverte au build) ; clé déposée : reelle (ceremonie hors-ligne, D87)
+[scellés] les TROIS ancres R7 relues : selftest.exe (M1) · demo.exe 0.3.0 (la boucle) · proxy.exe 1.0.0 (M9) — INTACTES
+[couche-I] les 18 spécifications relues (gabarit § 2.2, révisions concordantes — R2 : la cérémonie a précédé, chaque bloc porté par sa spécification AVANT le premier octet)
+[assemblage] 18/18 notations : round-trip R5 vert, les longueurs == les mesures de l'arrêt (47/296/122/389/313/871/102 + 271/1622/568/796/126/983/1135 + 391/660/521/163 o — D161 tenu, l'Entrée 207 : 1622 pour le peintre)
+[oracle] structurel : 43 verrous PASS (le réseau des specs, les feuilles IAT par bloc, les déplacements RIP aux symboles du plan, AUCUN syscall, LES SLOTS DISJOINTS — les 26 posés)
+[audit msx64] 78 appels IAT AUDITÉS — l'alignement 16 VERT partout, chaque argument 5+ ÉCRIT À SON SLOT [rsp+0x20+] (la convention, jamais la pièce — la classe de l'Entrée 207 gardée pour toujours)
+[audit temps constant] 1 protocole(s) loupe : verts, 0 obligation(s) levée(s) et tranchée(s) (SMT non borné), les écarts nommés au plan : 2 (le verdict d'étiquette GCM — public par contrat d'API)
+[R7] LA DOUBLE PREUVE des 8 héritages : libc-01/02/07 (M1) + win-03 (démo) + tls13-01..04 (M9) + la table K — les extraits des SCELLÉS == les notations d'origine ré-assemblées == les octets qui seront posés AUX MÊMES adresses
+[PE] loupe.exe : 127 488 o  QUATRE sections (.text la minilibc + la boucle scellées · .rdata les pièces + l'IAT + la machinerie + la porte R10 + K[64] · .text2 les 18 blocs + la famille sha scellée · .data LE CADRE né MIROIR DU CADRE_VIERGE [zéros + la poignée INVALIDE @+528 — l'Entrée 206])  entrée 0x5c00 (WinMain)  WINDOWS_GUI  LA COMPOSITION INTÉGRALE comptée (chaque octet : bloc  pièce  int3 ou marge zéro)
+Traceback (most recent call last):
+  File "/home/z/my-project/triade/loupe/build_loupe.py", line 1927, in <module>
+    sys.exit(verifier() if args.verifier else construire())
+             ^^^^^^^^^^
+  File "/home/z/my-project/triade/loupe/build_loupe.py", line 1850, in verifier
+    nb, manifeste = verrou_croise(exe)
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/z/my-project/triade/loupe/build_loupe.py", line 1297, in verrou_croise
+    phrase, _ = cm10.charger_secrets(interactif=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/z/my-project/triade/loupe/carte_m10.py", line 116, in charger_secrets
+    raise ErreurCarte(
+carte_m10.ErreurCarte: cérémonie requise (D144) : secrets de carte absents du laboratoire (passphrase.txt, ed25519.seed) — relève au coffre : phrase = entrée lignee-D80, graine = entrée graine-ed25519-cartes (obtenir --vers-fichier .keys/ed25519.seed, octets bruts 32 o, jamais d'hex, jamais de fin de ligne)

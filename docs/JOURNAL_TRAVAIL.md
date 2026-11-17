@@ -13610,3 +13610,39 @@ PASSE B1 FALSIFIÉE CONSIGNÉE (le 17/11/2026, l'instruction 5gfx6pwkj)
   porte que du littéral, l'arithmétique appartient au vérificateur ;
   l'adoption ajournée au terrain ; 54 appels, 79 039 tokens, 100 % log.
 (17/11, consigné à la suite de la boucle corrective — le chantier 2 ouvert)
+
+## Entrée 330 — LE TEMPS CONSTANT STRUCTUREL NON BORNÉ, LA CAUSE RACINE
+DUDECT FERMÉE PAR LE PROTOCOLE (fkkqc7v8t exécutée, D216)
+- La clôture de la synchro 329 (push GitHub 0/0 au fae926c, le bundle
+  Drive rafraîchi au fae926c recoupé md5, le rapport CF3 recoupé), puis
+  le chantier 4 : le plan GELÉ (sha256 58edd2c1…, commit fd8cb1a) ;
+- L'AUDIT (audit_temps_constant.py) : le taaint flux-sensible
+  interprocédural sur les notations, les modèles IAT nommés (ReadFile la
+  source), la mémoire à racines par frame, la décharge SMT par tranchage
+  arrière non bornée ; ONZE protocoles VERTS (∀ secrets : aucun
+  branchement, aucune adresse), DEUX écarts nommés — la branche
+  d'emprunt de tls13-10 (LA DÉCOUVERTE : conditionnelle à l'invariant
+  a,b<p non prouvé ici — la preuve dédiée 320 bits : UNSAT sous
+  invariant, jamais prise) et le verdict d'étiquette de tls13-19 (public
+  par contrat d'API) ; 7/7 mutants (M7 DÉCHARGÉ — le contrôle positif) ;
+- L'INTÉGRATION aux builds m9 et loupe à côté de audit_msx64 — vécue
+  verte jusqu'à la cérémonie de carte, proxy.exe recomposé
+  octet-identique (R7) ;
+- LA FORENSIE (les deux journaux bruts) : le recoup exact des t ;
+  tls13-13 l'artefact PUR (l'ANCOVA +5,19 → −1,29 n.s. : la dérive
+  collée à l'ordre bloqué) ; tls13-02 le mixte (dérivées ±0,67, la
+  frontière −728 cyc, l'asymétrie rand_s, le rdtsc non sérialisé) ; le
+  rejeu v160 : le bras contrôlé 0/20 (pire |t|=1,82), le bras témoin
+  2/20 (|t|=7,77 et 5,20 sur tls13-02 — la même cible, les signes
+  renversés) — LA CLASSE D'ARTEFACT REPRODUITE AU LABO : le
+  renversement était le protocole, pas le code ;
+- L'ÉTAPE DE VÉRIFICATION intégrale : les mutants 7/7, l'égalité des
+  traces rejouée sur clone frais (x25519 1 238 959 confirmé), les
+  scelles intacts, les builds verts ; les gaps nommés (l'invariant
+  f25519, mingw absent, /sys cpufreq, les bornes du modèle).
+- LA LEÇON (D216) : LES FAUX VERTS DU DÉVELOPPEMENT ÉTAIENT DES VIDES —
+  chaque correctif du moteur a fait reprendre les obligations, les
+  verdicts jamais pliés au prédit ; la découverte du chantier (la branche
+  conditionnelle de tls13-10) EST le fruit de la discipline : le plan
+  prédisait VERT, l'exécution a nommé l'écart.
+(17/11, la session du flux — consigné à la suite du programme CF3)

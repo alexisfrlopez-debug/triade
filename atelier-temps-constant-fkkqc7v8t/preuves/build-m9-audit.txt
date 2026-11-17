@@ -1,0 +1,265 @@
+=== M9 : chaîne artefact TRIADE (profil x86-64-win11-pe, 1.0.0-dev.1) ===
+[sceau-I] garde : 13 arbres d'intention conformes à leurs signatures (le garde VERT 13/13 AVANT construire()) ; clé déposée : reelle (ceremonie hors-ligne, D87)
+[R5] b20007 (libc-07:R1) : 21 o, round-trip 11/11 = 100 %
+[R5] g70001 (tls-01:R1) : 89 o, round-trip 27/27 = 100 %
+[R5] g70002 (tls-02:R1) : 156 o, round-trip 45/45 = 100 %
+[R5] g70003 (tls-03:R1) : 284 o, round-trip 60/60 = 100 %
+[R5] g70004 (tls-04:R1) : 544 o, round-trip 115/115 = 100 %
+[R5] g70005 (tls-05:R2) : 325 o, round-trip 67/67 = 100 %
+[R5] g70006 (tls-06:R1) : 491 o, round-trip 105/105 = 100 %
+[R5] g70007 (tls-07:R2) : 527 o, round-trip 116/116 = 100 %
+[R5] g70008 (tls-08:R1) : 740 o, round-trip 157/157 = 100 %
+[R5] g70009 (http-08:R2) : 326 o, round-trip 95/95 = 100 %
+[R5] g70010 (http-10:R2) : 2125 o, round-trip 430/430 = 100 %
+[R5] g70011 (http-12:R2) : 458 o, round-trip 99/99 = 100 %
+[oracle] structurel M4 : 492 verrous PASS (contrats I verifies par bloc)
+[R5] a10002 (hello-02:R1) : 27 o, round-trip 6/6 = 100 %
+[R5] a10003 (hello-03:R1) : 12 o, round-trip 3/3 = 100 %
+[R5] b20001 (libc-01:R1) : 19 o, round-trip 10/10 = 100 %
+[R5] b20002 (libc-02:R1) : 57 o, round-trip 23/23 = 100 %
+[R5] b20003 (libc-03:R1) : 14 o, round-trip 6/6 = 100 %
+[R5] b20004 (libc-04:R1) : 61 o, round-trip 23/23 = 100 %
+[R5] c30001 (tcp-01:R1) : 173 o, round-trip 45/45 = 100 %
+[R5] c30002 (tcp-02:R1) : 20 o, round-trip 6/6 = 100 %
+[R5] c30003 (tcp-03:R1) : 18 o, round-trip 5/5 = 100 %
+[R5] c30004 (tcp-04:R1) : 18 o, round-trip 5/5 = 100 %
+[R5] c30005 (tcp-05:R1) : 15 o, round-trip 4/4 = 100 %
+[R5] c30006 (tcp-06:R1) : 43 o, round-trip 10/10 = 100 %
+[R5] c30011 (tcp-11:R1) : 191 o, round-trip 51/51 = 100 %
+[R5] e50001 (http-01:R1) : 58 o, round-trip 20/20 = 100 %
+[R5] e50002 (http-02:R1) : 457 o, round-trip 127/127 = 100 %
+[R5] e50003 (http-03:R1) : 159 o, round-trip 54/54 = 100 %
+[R5] e50004 (http-04:R1) : 252 o, round-trip 75/75 = 100 %
+[R5] e50005 (http-05:R1) : 113 o, round-trip 37/37 = 100 %
+[R5] e50006 (http-06:R2) : 122 o, round-trip 39/39 = 100 %
+[R5] e50007 (http-07:R1) : 307 o, round-trip 94/94 = 100 %
+[R5] e50008 (http-08:R1) : 241 o, round-trip 72/72 = 100 %
+[R5] e50009 (http-09:R1) : 128 o, round-trip 46/46 = 100 %
+[R5] e50010 (http-10:R2) : 1847 o, round-trip 385/385 = 100 %
+[R5] e50011 (http-11:R1) : 224 o, round-trip 48/48 = 100 %
+[R5] e50012 (http-12:R1) : 438 o, round-trip 96/96 = 100 %
+[R5] e50013 (tcp-13:R1) : 402 o, round-trip 82/82 = 100 %
+[oracle] structurel : 524 verrous PASS (contrats I verifies par bloc)
+[héritage] M3 : 524 verrous ; M4 : 492 verrous
+[R5] g80001 (http-08:R3) : 377 o, round-trip 103/103 = 100 %
+[R5] g80002 (http-10:R3) : 2719 o, round-trip 541/541 = 100 %
+[R5] g80003 (http-12:R3) : 779 o, round-trip 168/168 = 100 %
+[oracle] structurel M5 : 312 verrous PASS (contrats I vérifiés par bloc)
+[R7] l'image M5 composée == le scellé 0.6.0 OCTET PAR OCTET (sha c1e46fb0b857b6f3…) — la carte génération 7 scellée prouve CES octets (version=0.6.0, le fait de carte D104)
+[R5] g90001 (sys-01:R1) : 6 o, round-trip 3/3 = 100 %
+[R5] g90002 (sys-02:R1) : 293 o, round-trip 73/73 = 100 %
+[R5] g90003 (sys-03:R1) : 164 o, round-trip 44/44 = 100 %
+[oracle] structurel M8 : 54 verrous PASS (LA RÈGLE AUCUN IAT PAR BLOC sys constatée — charte § 3)
+[R7] l'image 0.9.0 recomposée == le scellé 0.9.0 OCTET PAR OCTET (sha 1492b0bc0792e1ab…) — le corps 0.9.0 INTACT, l'ancre de l'ère M9 ; la carte génération 8 scellée prouve CES octets (version=0.9.0, le fait de carte D104)
+[R5] g90004 (sys-04:R1) : 676 o, round-trip 122/122 = 100 %
+[R5] g90005 (sys-05:R2) : 289 o, round-trip 71/71 = 100 %
+[R5] g90006 (sys-06:R3) : 287 o, round-trip 71/71 = 100 %
+[oracle] structurel socle : 71 verrous PASS (la séquence create→bind→connect, les fixtures .text6 cités, la convention M8 multiple-de-64 tenue)
+[R5] h100001 (tls13-01:R1) : 74 o, round-trip 12/12 = 100 %
+[R5] h100002 (tls13-02:R1) : 387 o, round-trip 122/122 = 100 %
+[R5] h100003 (tls13-03:R1) : 139 o, round-trip 49/49 = 100 %
+[R5] h100004 (tls13-04:R1) : 165 o, round-trip 53/53 = 100 %
+[R5] h100005 (tls13-05:R1) : 435 o, round-trip 102/102 = 100 %
+[R5] h100006 (tls13-06:R1) : 151 o, round-trip 41/41 = 100 %
+[R5] h100007 (tls13-07:R1) : 347 o, round-trip 105/105 = 100 %
+[R5] h100008 (tls13-08:R1) : 310 o, round-trip 82/82 = 100 %
+[R5] h100009 (tls13-09:R1) : 54 o, round-trip 15/15 = 100 %
+[R5] h100010 (tls13-10:R1) : 252 o, round-trip 54/54 = 100 %
+[R5] h100011 (tls13-11:R1) : 1078 o, round-trip 230/230 = 100 %
+[R5] h100012 (tls13-12:R1) : 281 o, round-trip 80/80 = 100 %
+[R5] h100013 (tls13-13:R1) : 2887 o, round-trip 459/459 = 100 %
+[R5] h100014 (tls13-14:R1) : 23 o, round-trip 6/6 = 100 %
+[R5] h100015 (tls13-15:R1) : 520 o, round-trip 114/114 = 100 %
+[R5] h100016 (tls13-16:R1) : 129 o, round-trip 26/26 = 100 %
+[R5] h100017 (tls13-17:R1) : 162 o, round-trip 40/40 = 100 %
+[R5] h100018 (tls13-18:R1) : 1076 o, round-trip 189/189 = 100 %
+[R5] h100019 (tls13-19:R1) : 1163 o, round-trip 204/204 = 100 %
+[R5] h100020 (tls13-20:R1) : 349 o, round-trip 76/76 = 100 %
+[R5] h100021 (tls13-21:R1) : 403 o, round-trip 86/86 = 100 %
+[R5] h100022 (tls13-22:R1) : 241 o, round-trip 47/47 = 100 %
+[R5] h100023 (tls13-23:R1) : 532 o, round-trip 129/129 = 100 %
+[R5] h100024 (tls13-24:R1) : 2130 o, round-trip 336/336 = 100 %
+[R5] h100025 (tls13-25:R1) : 239 o, round-trip 62/62 = 100 %
+[R5] h100026 (tls13-26:R1) : 285 o, round-trip 58/58 = 100 %
+[R5] h100027 (tls13-27:R1) : 2975 o, round-trip 586/586 = 100 %
+[R5] h100028 (tls13-28:R1) : 144 o, round-trip 48/48 = 100 %
+[oracle] structurel tls13 : 594 verrous PASS (LA RÈGLE AUCUN IAT PAR BLOC tls13 + LES SLOTS DISJOINTS — l'erratum n° 4 : le contrôle qui nomme)
+[audit temps constant] ÉCART NOMMÉ (consigné au rapport, jamais masqué) — O4-x25519 (la clé privée) : BRANCHE @0xcab6 jb 0xcaf0
+[audit temps constant] ÉCART NOMMÉ (consigné au rapport, jamais masqué) — O5b-aesgcm-ouvrir (la clé 16 o) : BRANCHE @0xe88f jne 0xe95e
+[audit temps constant] 12 protocole(s) tls13 : verts, 2 obligation(s) levée(s) et tranchée(s) (SMT non borné), les écarts nommés au plan : 2 (le verdict d'étiquette GCM — public par contrat d'API)
+[PE] proxy.exe : 65024 octets, 8 sections (.text5 0xA000 — le domaine sys : les SIX blocs + la réserve int3 ; .text6 0xC000 NOUVELLE — le domaine tls13 : les 28 blocs + les fixtures), AUCUN import nouveau, entrée 0x8c80 inchangée (R7)
+[R7] réutilisation : 44 blocs octet-identiques au scellé 0.9.0, deltas .rdata/.text5/.text6/PE documentés (version 0x01000002 : geste de BUILD, jamais scellage)
+[oracle] différentiel M4 (héritage) : 560 cas verts
+[oracle] différentiel M5 (héritage) : 365 cas verts
+=== harnais_sys.py — le domaine sys noté-mesuré-prouvé (M8, blobs du build) ===
+graine 20261106 · volume complet
+
+--- V1 — round-trip de notation + concordance au plan (source unique) ---
+  [ok] V1.g90001:round-trip-100 — 6 o == 6 o déclarés, 3/3 instructions
+  [ok] V1.g90002:round-trip-100 — 293 o == 293 o déclarés, 73/73 instructions
+  [ok] V1.g90003:round-trip-100 — 164 o == 164 o déclarés, 44/44 instructions
+  [ok] V1.g90004:round-trip-100 — 676 o == 676 o déclarés, 122/122 instructions
+  [ok] V1.g90005:round-trip-100 — 289 o == 289 o déclarés, 71/71 instructions
+  [ok] V1.g90006:round-trip-100 — 287 o == 287 o déclarés, 71/71 instructions
+  [ok] V1.sys-01:six-octets-trombone — mov r10, rcx ; syscall ; ret — rien d'autre
+  [ok] V1.sys-02:concordance-plan — 12/12 immédiats
+  [ok] V1.sys-03:concordance-plan — 4/4 immédiats
+  [ok] V1.sys-03:citations-fixtures — les DEUX seuls [rip] du bloc résolvent à ['0x2ec0', '0x2ed0'] — le nom et la ligne CITÉS
+  [ok] V1.sys-03:ordre-resoudre-puis-emettre — l'appel sys-02 précède l'appel sys-01 dans les octets (I3)
+  [ok] V1.sys-04:concordance-plan — 14/14 immédiats — create/bind/connect au plan, jamais un littéral hors plan (T5)
+  [ok] V1.sys-04:les-trois-resolutions-au-geste-meme — l'alternance résoudre-émettre × 3 dans les octets (Q3/I6 : create PUIS bind PUIS connect, chaque geste résout)
+  [ok] V1.sys-04:citations-fixtures — les SIX seuls [rip] résolvent à ['0x10c20', '0x10c50', '0x10c90', '0x10cb0', '0x10cc0', '0x10cc0'] — le device, le EA, le bind WILDCARD et les noms CITÉS (T5/I3)
+  [ok] V1.sys-05:concordance-plan — 8/8 immédiats
+  [ok] V1.sys-05:citation-fixture — l'unique [rip] résout à 0x10cc0 — le nom CITÉ, jamais reconstruit (T5)
+  [ok] V1.sys-06:concordance-plan — 7/7 immédiats — l'erratum n° 10 tenu : RIEN en AfdFlags, 0x20 en TdiFlags
+  [ok] V1.sys-06:citation-fixture — l'unique [rip] résout à 0x10cc0 (T5)
+
+--- V2a — sys-01 : le trombone ABI au noyau simulé ---
+  [ok] V2a.sys-01:remappage-rcx-r10 — le noyau lit r10 = 0xabcd == rcx passé
+  [ok] V2a.sys-01:ssn-transmis-tel-quel — rax n'est jamais écrit avant le site (I2)
+  [ok] V2a.sys-01:pile-lue-a-rsp28 — les cinq arguments de pile lus à [rsp+0x28]+ AU site (I3)
+  [ok] V2a.sys-01:site-unique — exactement un syscall, le NTSTATUS 0 traverse (Q1/Q2)
+  [ok] V2a.sys-01:rcx-r11-detruits — rcx = l'adresse de retour, r11 = les drapeaux (Q3)
+  [ok] V2a.sys-01:non-volatils-et-pile — huit non-volatils sentinelles, la pile rendue (pop du ret), l'appelant ET la zone morte intacts (I4/Q4/I5 : le trombone n'écrit RIEN nulle part)
+  [ok] V2a.sys-01:status-echec-traverse — SSN inconnu → 0xc000001c rendu tel quel
+
+--- V2b — sys-02 : le résolveur sur fixtures ntdll synthétiques ---
+  [ok] V2b.sys-02:resolu-au-milieu — rax = LE SSN 0x31a (jamais 0 — Q1), rdx = le stub 0x150000610 (Q2)
+  [ok] V2b.sys-02:module-intact-I8 — 0 écriture(s) dans le module lu
+  [ok] V2b.sys-02:non-volatils-I7
+  [ok] V2b.sys-02:aucun-syscall-I4 — le bloc qui LIT n'ÉMET pas — la séparation est la garde
+  [ok] V2b.sys-02:borne-lue-une-fois-I1 — NumberOfNames lu 1 fois (la fenêtre)
+  [ok] V2b.sys-02:resolu-en-derniere — le dernier nom
+  [ok] V2b.sys-02:nom-absent-moins-1 — marche COMPLÈTE des noms, aucun accès au-delà (I1)
+  [ok] V2b.sys-02:EAT-vide-moins-1 — NumberOfNames = 0 : la marche vide est une réponse
+  [ok] V2b.sys-02:elfanew-trop-petit-moins-2 — e_lfanew 0x3F < fenêtre [0x40, 0x400]
+  [ok] V2b.sys-02:elfanew-fou-moins-2 — e_lfanew 0x401 > fenêtre
+  [ok] V2b.sys-02:pas-de-signature-moins-2 — le motif « PE\0\0 » absent à e_lfanew
+  [ok] V2b.sys-02:export-absent-moins-3 — RVA nul : le module n'exporte rien
+  [ok] V2b.sys-02:stub-crochete-moins-4 — le motif diverge (hook) : le numéro N'EST PAS extrait (charte § 2)
+  [ok] V2b.sys-02:span-invalide-moins-5 — pointeur nul / longueur nulle (P1/P2)
+  [ok] V2b.sys-02:ssn-bit31-positif-quand-meme — l'imm32 zéro-étendu reste POSITIF en 64 bits — la séparation verdicts(négatifs signés)/SSN(zéro-étendus) est structurelle
+
+--- V2c — sys-03 : LA TWIN AU DIFFÉRENTIEL (la MÊME ligne, deux chemins) ---
+  [ok] V2c.chemin-A:hello-02-par-IAT — WriteFile(handle, fixture-ligne, 33) — le scellé M0 émule vert
+  [ok] V2c.chemin-B:la-meme-ligne-octet-pour-octet — la ligne émise par NtWriteFile == celle de WriteFile == le fixture M0 (Q1 — la preuve d'observable)
+  [ok] V2c.chemin-B:les-neuf-arguments — handle, Event/Apc/Context NULL, tampon le fixture, 33, ByteOffset NULL, Key 0 (Q3)
+  [ok] V2c.chemin-B:iosb-sur-la-pile-du-bloc — l'IO_STATUS_BLOCK @ 0x7f007ee0 vit dans le cadre (I2 — zone morte au retour)
+  [ok] V2c.chemin-B:non-volatils-intacts — rbx/rbp sauvés et rendus (I6)
+  [ok] V2c.chemin-B:pile-de-l-appelant-intacte — la pile rendue (pop du ret), l'appelant intact — l'ABI traversante ne coûte RIEN au cadre
+  [ok] V2c.au-geste-meme:deux-ssn-distincts-suite — chaque appel résoud SA fixture — jamais un numéro en cache (Q2)
+  [ok] V2c.echec-resolution:moins-1-aucun-syscall — rax = -1 (le verdict de sys-03), rdx consigne LA CAUSE (le -1 du résolveur), le compteur syscall demeure à ZÉRO (I5 — la garde la plus importante)
+  [ok] V2c.status-non-nul:moins-6-consigne — rax = -6, rdx = 0xC0000022 (STATUS_ACCESS_DENIED) — nommé
+  [ok] V2c.divergence-iosb:moins-6 — rax = 0 mais iosb = 0xC0000094 : un désaccord est une anomalie
+  [ok] V2c.module-intact
+
+--- V3 — fuzzing à propriétés (300 modules en graine) ---
+  [ok] V3.fuzz:modele-contre-emulation — 300 cas, 0 écart
+  [ok] V3.fuzz:integrite-et-gardes — aucune écriture module, aucun syscall émis, NumberOfNames lu une fois par appel
+
+--- V4 — falsification : un point muté, le différentiel attrape ---
+  [ok] V4.sys-01:r10-recoit-rdx (le mauvais registre) — la twin mutée trahit le différentiel
+  [ok] V4.sys-01:r10-recoit-r8 (le troisieme) — la twin mutée trahit le différentiel
+  [ok] V4.sys-01:syscall-nop-nop (aucune emission) — la twin mutée trahit le différentiel
+  [ok] V4.sys-01:ret-int3 (le retour rompu) — la twin mutée trahit le différentiel
+  [ok] V4.sys-01:temoin-intact-vert
+  [ok] V4.sys-02:motif+1 (un hook serait accepté) — trahie sur 1/4 cas
+  [ok] V4.sys-02:off-ssn-8 (le mauvais imm32) — trahie sur 1/4 cas
+  [ok] V4.sys-02:fenetre-0x401 (la borne relâchée) — trahie sur 1/4 cas
+  [ok] V4.sys-02:verdict-mensonger (-1 rendu comme -3) — trahie sur 1/4 cas
+  [ok] V4.sys-02:marche-non-bornee (jae->jb) — trahie sur 2/4 cas
+  [ok] V4.sys-02:motif-ignorer (jne->je) — trahie sur 2/4 cas
+  [ok] V4.sys-02:temoin-intact-vert — les quatre cas de la batterie au témoin
+  [ok] V4.sys-03:longueur-32 (la ligne tronquée) — la twin mutée trahit le différentiel
+  [ok] V4.sys-03:handle-depuis-rbp (la base prise pour le handle) — la twin mutée trahit le différentiel
+  [ok] V4.sys-03:span-nom-10 (le préfixe piège) — la twin mutée trahit le différentiel
+  [ok] V4.sys-03:divergence-iosb-ignorée (jne->je) — la twin mutée trahit le différentiel
+  [ok] V4.sys-03:ordre-inverse (émettre avant résoudre) — la twin mutée trahit le différentiel
+  [ok] V4.sys-03:temoin-intact-vert
+
+--- V2d — sys-04 : le transport établi au noyau AFD simulé ---
+  [ok] V2d.sys-04:etabli-rax-0-handle-pose — rax = 0, [P3] = 0xbeef (posé au succès seulement — Q1), la poignée TCP EST ÉTABLIE (le connect synchrone a tenu)
+  [ok] V2d.sys-04:la-marche-create-bind-connect — TROIS syscalls : create PUIS BIND PUIS CONNECT — la séquence MESURÉE mswsock, jamais connect sans bind (I6)
+  [ok] V2d.sys-04:aucun-ecart-noyau-strict — le noyau strict n'a RIEN à nommer
+  [ok] V2d.sys-04:phandle-en-locale-jamais-p3 — PHANDLE 0x7f007e30 DANS le cadre (I2), la cellule du kit INTACTE jusqu'à la copie finale — aucune possession partielle
+  [ok] V2d.sys-04:iosb-sur-la-pile-du-bloc — les TROIS IOSB vivent dans le cadre — zones mortes au retour (I2)
+  [ok] V2d.sys-04:le-sockaddr-lu-copie-sans-interpretation — les 16 o du kit copiés à +24 du AFD_CONNECT, family LE et port RÉSEAU INTACTS (charte § 9 — le domaine ne convertit JAMAIS)
+  [ok] V2d.sys-04:le-kit-et-la-pile-intacts — rbx/rbp/rdi sauvés et rendus (I7), la pile rendue, AUCUNE écriture sous le cadre hors les pushes des six call et les trames des blocs PRUVÉS — la cellule AVoisinante canariée intacte : le bloc n'écrit QUE les 8 o de [P3]
+  [ok] V2d.sys-04:module-intact — l'EAT lue trois fois, JAMAIS écrite (I8 de sys-02 au passage)
+  [ok] V2d.sys-04:au-geste-meme-les-trois-ssn-suivent — « NtDeviceIoControlFile » résolu DEUX FOIS par appel — jamais un numéro en cache (Q3, charte § 6)
+  [ok] V2d.sys-04:resolution-1-echouee-moins-1 — « NtCreateFile » absent : rax = -1, rdx = LA CAUSE, le compteur syscall À ZÉRO (I5), la cellule canariée INTACTE
+  [ok] V2d.sys-04:resolution-2-echouee-la-marche-s-arrete — « NtDeviceIoControlFile » absent : le create parti, le bind JAMAIS (I5/I6), le handle JAMAIS posé (Q4)
+  [ok] V2d.sys-04:resolution-3-echouee-le-module-change — le stub corrompu PAR LE NOYAU au bind : la 3e résolution rend -4 (create et bind partis — 2 syscalls), rax = -1 LA CAUSE, la cellule INTACTE (Q4), le bloc n'a RIEN écrit dans le module
+  [ok] V2d.sys-04:status-create-moins-6-consigne — -6 au create : rdx = 0xc0000034 le BRUT consigné, le handle n'est PAS posé (aucune possession partielle — Q4)
+  [ok] V2d.sys-04:status-bind-moins-6-consigne — -6 au bind : rdx = 0xc0000094 le BRUT consigné, le handle n'est PAS posé (aucune possession partielle — Q4)
+  [ok] V2d.sys-04:status-connect-moins-6-consigne — -6 au connect : rdx = 0xc0000236 le BRUT consigné, le handle n'est PAS posé (aucune possession partielle — Q4)
+  [ok] V2d.sys-04:divergence-iosb-create — rax = 0 mais l'IOSB rend 0xC0000094 : un désaccord est une anomalie — le BRUT de l'IOSB consigné en rdx
+
+--- V2e — sys-05 : l'émission au noyau AFD simulé ---
+  [ok] V2e.sys-05:totale-emise-rax-0 — le noyau a lu 16406 o == la demande : 16406 [5 + 2^14 + 17] — la borne du jalon tient d'un geste
+  [ok] V2e.sys-05:aucune-copie-le-wsabuf-pointe-le-kit — le WSABUF pointe LA CHARGE du kit (P3 traverse — I2), les canaris autour INTACTS : le bloc n'y a JAMAIS touché
+  [ok] V2e.sys-05:les-dix-arguments-nt — handle, Event/Apc/Context NULL, l'IOCTL du plan, 24, NULL, 0 (Q4)
+  [ok] V2e.sys-05:non-volatils-pile-module — rbx/rbp/rdi/rsi rendus (I6), AUCUNE écriture sous le cadre hors les pushes des DEUX call et les trames des blocs PRUVÉS, l'EAT intacte
+  [ok] V2e.sys-05:partielle-refusee-moins-7 — le noyau a pris 16403 sur 16406 : -7, rdx = LE COMPTE — jamais une boucle silencieuse (le kit tranche de la suite)
+  [ok] V2e.sys-05:rien-parti-moins-7-compte-nul — zéro octet parti : le refus -7 aussi — rdx = 0 consigné
+  [ok] V2e.sys-05:status-moins-6-consigne — rdx = 0xc0000022 le BRUT — nommé, jamais muet
+  [ok] V2e.sys-05:divergence-iosb-moins-6 — le noyau ne parle pas deux fois
+  [ok] V2e.sys-05:resolution-echouee-moins-1 — la cause consignée, 0 syscall (I5)
+  [ok] V2e.sys-05:span-invalide-pointeur-nul-moins-5 — la garde AVANT tout : AUCUN syscall émis (charte § 5)
+  [ok] V2e.sys-05:span-invalide-longueur-nulle-moins-5 — la garde AVANT tout : AUCUN syscall émis (charte § 5)
+
+--- V2f — sys-06 : la réception au noyau AFD simulé ---
+  [ok] V2f.sys-06:n-octets-rendus — rax = 100 = le compte du IOSB (n ≥ 1 — Q1), UN syscall
+  [ok] V2f.sys-06:le-noyau-ecrit-chez-le-kit-recu-integre — les 100 o du noyau INTACTS chez le kit (I8), le RESTE du tampon canarié INTACT (I7 : rien de caché — le noyau n'a pas livré plus)
+  [ok] V2f.sys-06:les-dix-arguments-nt — l'IOCTL du plan, la taille 24, le noyau strict VERT
+  [ok] V2f.sys-06:non-volatils-pile-module — rbx/rbp/rdi/rsi rendus (I6), AUCUNE écriture sous le cadre hors les pushes des DEUX call et les trames des blocs PRUVÉS, l'EAT intacte
+  [ok] V2f.sys-06:demi-fin-moins-7 — le pair a fermé : -7 NOMMÉ, rdx = 0 le compte consigné — jamais un succès silencieux (le kit tranche)
+  [ok] V2f.sys-06:connexion-reset-moins-6-consigne — rdx = 0xc000013c (STATUS_CONNECTION_RESET) — l'exemple NOMMÉ de la spec, jamais muet
+  [ok] V2f.sys-06:divergence-iosb-moins-6 — le noyau ne parle pas deux fois
+  [ok] V2f.sys-06:resolution-echouee-moins-1 — la cause consignée, 0 syscall (I5)
+  [ok] V2f.sys-06:span-invalide-pointeur-nul-moins-5 — la garde AVANT tout : AUCUN syscall émis
+  [ok] V2f.sys-06:span-invalide-capacite-nulle-moins-5 — la garde AVANT tout : AUCUN syscall émis
+
+--- V3b — fuzzing transport à propriétés (360 cas en graine) ---
+  [ok] V3b.fuzz-transport:modele-contre-emulation — 360 cas, 0 écart — chaque verdict (-1/-4/-5/-6/-7, n, 0) prédit par le modèle de la couche I, consigné en rdx quand il est négatif, le noyau strict SANS AUCUN écart
+
+--- V4b — falsification du socle : chaque mutante trahit la batterie ---
+  [ok] V4b.sys-04:desired-access-+1 (le noyau strict refuse) — trahie sur 4/5 (succès, bind-status, sans-ioctl, connect-status)
+  [ok] V4b.sys-04:ioctl-bind-inconnu (0x12003→0x12004) — trahie sur 3/5 (succès, bind-status, connect-status)
+  [ok] V4b.sys-04:ioctl-connect-confondu-bind (0x12007→0x12003) — trahie sur 2/5 (succès, connect-status)
+  [ok] V4b.sys-04:ea-length-53 (le EA tronqué) — trahie sur 4/5 (succès, bind-status, sans-ioctl, connect-status)
+  [ok] V4b.sys-04:device-maxlength-44 (l'erratum d'instrument rejoué) — trahie sur 4/5 (succès, bind-status, sans-ioctl, connect-status)
+  [ok] V4b.sys-04:sockaddr-decale (+8→+16 : la copie au-delà du kit) — trahie sur 2/5 (succès, connect-status)
+  [ok] V4b.sys-04:handle-fausse-source ([rsp+0x58]→[rsp+0x50]) — trahie sur 1/5 (succès)
+  [ok] V4b.sys-04:create-iosb-aveugle (0x60→0x70 : le mauvais IOSB relu) — trahie sur 4/5 (succès, bind-status, sans-ioctl, connect-status)
+  [ok] V4b.sys-04:resolution2-sautee (js→jns : la marche sans garde) — trahie sur 4/5 (succès, bind-status, sans-ioctl, connect-status)
+  [ok] V4b.sys-04:temoin-intact-vert — les cinq cas de la batterie au témoin
+  [ok] V4b.sys-05:ioctl-send-confondu-recv (0x1201F→0x12017) — trahie sur 3/5 (succès, partiel, status)
+  [ok] V4b.sys-05:wsabuf-len-pour-ptr (esi→edi : la longueur faussée) — trahie sur 3/5 (succès, partiel, status)
+  [ok] V4b.sys-05:compteur-compare-a-rax (rsi→rax : le partiel passe) — trahie sur 1/5 (succès)
+  [ok] V4b.sys-05:afdflags-0x20-au-send (le drapeau du recv, pas du send) — trahie sur 3/5 (succès, partiel, status)
+  [ok] V4b.sys-05:span-garde-inversee (je→jne : le refus des sains) — trahie sur 5/5 (succès, partiel, status, sans-nom, span)
+  [ok] V4b.sys-05:temoin-intact-vert — les cinq cas de la batterie au témoin
+  [ok] V4b.sys-06:LE-TERRAIN-falsifie (AfdFlags 0→0x20 : la mesure WinDbg rétablie — REFUSÉE par le VRAI noyau, Entrée 191) — trahie sur 3/5 (succès, demi-fin, cnx-reset)
+  [ok] V4b.sys-06:LE-TERRAIN-VIDÉ (TdiFlags 0x20→0 : le placement perdu) — trahie sur 3/5 (succès, demi-fin, cnx-reset)
+  [ok] V4b.sys-06:demi-fin-masquee (jz→jnz : le zéro déguisé en succès) — trahie sur 2/5 (succès, demi-fin)
+  [ok] V4b.sys-06:ioctl-recv-confondu-send (0x12017→0x1201F) — trahie sur 3/5 (succès, demi-fin, cnx-reset)
+  [ok] V4b.sys-06:wsabuf-buf-pour-capacite (rdi→rsi : le tampon perdu) — trahie sur 3/5 (succès, demi-fin, cnx-reset)
+  [ok] V4b.sys-06:temoin-intact-vert — les cinq cas de la batterie au témoin
+[harnais] 131 contrôles VERTS · empreinte b837375782ca78d9 · graine 20261106
+[oracle] harnais sys (le domaine + le socle socket) : 131 cas verts
+Traceback (most recent call last):
+  File "/home/z/my-project/triade/tls13/build_m9.py", line 1550, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/z/my-project/triade/tls13/build_m9.py", line 1546, in main
+    return construire(volume, graine)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/z/my-project/triade/tls13/build_m9.py", line 1260, in construire
+    construire_carte_m9(exe, h["verrous_m3"], h["verrous_m4"], h["verrous_m5"],
+  File "/home/z/my-project/triade/tls13/build_m9.py", line 1026, in construire_carte_m9
+    phrase, _ = cm9.charger_secrets(interactif=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/z/my-project/triade/tls13/carte_m9.py", line 100, in charger_secrets
+    raise ErreurCarte(
+carte_m9.ErreurCarte: cérémonie requise (D144) : secrets de carte absents du laboratoire (passphrase.txt, ed25519.seed) — relève au coffre : phrase = entrée lignee-D80, graine = entrée graine-ed25519-cartes (obtenir --vers-fichier .keys/ed25519.seed, octets bruts 32 o, jamais d'hex, jamais de fin de ligne)
