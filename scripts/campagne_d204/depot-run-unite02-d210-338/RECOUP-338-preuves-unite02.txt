@@ -1,0 +1,32 @@
+RECOUP-338 — LE RUN TERRAIN DE L'UNITÉ 02 D210 AU KIT GUI 1-CLIC REÇU
+(le dépôt preuves-unite02/ du coffre /test ; l'annonce du développeur : « preuves deposees dans le drive /test »)
+==============================================================================
+[VERT] R1: les TROIS pièces du bac (3 au dépôt Drive) : md5 re-calculés == les métadonnées Drive (DEPOT-d210-unite02.txt, run-console-unite02-d210-20261117-200136.txt, temoin-unite02.txt)
+[VERT] R2: LE JUGE LIVRÉ : le scénario du kit b3e896f7… == le juge v1 de D204 b3e896f7… OCTET POUR OCTET (le juge FAUTIF des 283/284) ; le v2 réparé (302fa3a1…) AUX ARCHIVES, non livré ; R_JOURNAL : livré 0xE4E0 vs la vérité du layout 0xE4A0 (le v2 porte 0xE4A0) — SOIXANTE-QUATRE octets d'écart
+[VERT] R3: LA PREUVE T0 : la console porte « loupe.exe sha256 cf251c12d580b729… == la gravure du kit » ; la pièce du kit recoupée AU LABO : loupe.exe 127488 o, sha256 cf251c12d580b729… == la gravure du kit GUI livré à la 337
+[VERT] R4: LE VERDICT : 18 VERT, 2 ROUGE (code retour 1) — les DEUX ROUGE : V2:cinq-entrees-dont-une-non-alignee, V2:les-bords-de-fenetre == LA MÊME PAIRE que le juge v1 fautif fit rouge à D204 (le témoin v1 aux archives en regard) — la signature du JUGE, pas de la pièce
+
+LE REJEU FORENSIQUE — l'oracle du bloc couru DEUX FOIS (tel quel / greffé de la constante du scénario livré) :
+[VERT] R5: L'ORACLE TEL QUEL : 22 VERT, 0 ROUGE (la pièce CORRECTE, le RAPPORT-UNITE-D210-01 re-vécu) ; L'ORACLE GREFFÉ (R_JOURNAL = 0xE4E0, la constante du scénario livré, la section V2 seule) : 20 VERT, 2 ROUGE — les DEUX MÊMES vecteurs (V2:cinq-entrees-dont-une-non-alignee, V2:les-bords-de-fenetre) ROUGE, tout le demeurant VERT — LE VERDICT DU TERRAIN REPRODUIT AU LABO PAR LA CONSTANTE SEULE : la cause est le JUGE livré, JAMAIS la pièce (les consoles aux rejeu-338-oracle-*.txt du bac)
+[VERT] R6: LA MAIN (D99) : le témoin déposé 1600 o == le témoin avant-main gravé au DEPOT (1578 o, sha256 0c1ce902… MATCH byte-byte) + la main posée (+22 o) : daté le 17/11/2026, signé Alexis Lopez — la même main que les témoins de la campagne (264/266/267/272/276/284/287/294/295)
+[VERT] R7: LA MACHINE : PORTABLE · Windows 10 · AMD64 · Python 3.14.10 (CA2 — la même que les runs de la campagne D204) ; l'argv de la console (…Python314\python.exe) cohérent
+[VERT] R8: LA CHRONOLOGIE : le kit livré au /test 2026-11-17T17:15:38.226Z → le run 2026-11-17T19:01:36Z (le témoin, UTC ; le nom de la console « 17/11/2026 20:01:36 » == la ligne 1 == le chrono du DEPOT, l'heure locale du terrain, l'heure d'hiver UTC+1) → la console couchée 2026-11-17T19:01:37.241Z (le chrono M4 0,5 s) → LA MAIN 2026-11-17T19:02:41.390Z (le mtime du témoin) → le coffre 2026-11-17T19:03:26.306Z (la naissance du dossier) — jamais une date avant le run
+[VERT] R9: LE DEPOT : la console gravée (3970 o, 7434ccd5…) == la pièce déposée byte-byte ; les SEPT pièces du kit gravées (loupe.exe, les trois témoins, vide.bin, le scénario, EMPREINTES-PIECES-RUN) recoupées sha256 par sha256 == le kit GUI livré à la 337 — la chaîne de garde par le contenu (D143)
+[VERT] R10: LA CAP M1 : 0 zip au /test, le DEPOT porte « le GUI compte 0 assemblage(s) vécu(s) » — la PREMIÈRE livraison du bloc (TROIS par bloc, § 7 du plan D204) ; le dépôt est le RÉCEPTACLE ENTIER (témoin signé + DEPOT + console) SANS le zip assemblé du GUI — l'observation NOMMÉE : le terrain déposa le dossier preuves-unite02/ lui-même, jamais le zip ; le contenu est complet, l'exigence D99 tenue par le témoin daté-signé, l'emballage diffère — jamais maquillé
+
+LE BILAN DU RECOUP : 10 VERT / 0 ROUGE
+LA CAUSE DES DEUX ROUGE DU TERRAIN — nommée avant toute correction (D202) :
+  le kit GUI livré à la 337 embarque le juge v1 de D204 (octet pour octet,
+  b3e896f7…) — le juge FAUTIF de l'histoire D204 (R_JOURNAL = 0xE4E0,
+  soixante-quatre octets au-dessus de la vérité du layout 0xE4A0) ; la
+  pièce D210 est CORRECTE (l'oracle au harnais : 22 VERT, 0 ROUGE ; le
+  rejeu R5 : la seule constante fautive reproduit le verdict terrain).
+  Le run terrain NE CONSOMME PAS d'itération (le précédent 295 : la faute
+  au juge, jamais à la pièce) — T-loupe-02-d210-it1 attend le re-run au
+  juge réparé.
+LA CORRECTION (au commandement) : la re-livraison du kit avec le juge v2
+  (302fa3a1…, R_JOURNAL = 0xE4A0 — la vérité du layout) aux archives du
+  bac 295, puis le re-run terrain au geste du développeur.
+LA SUITE : ① la correction commandée ; ② loupe-08 le bras T d'abord (la
+  séquence tirée, jamais re-tirée) ; la re-livraison d'attribution empirique
+  au commandement.
