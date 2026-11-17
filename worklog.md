@@ -12495,3 +12495,108 @@ Work Log:
   D210 — les gestes du terrain) ; le v160 terrain attend le geste du
   développeur (compiler, courir, signer — le témoin au coffre).
   (17/11, la session du flux)
+
+## Task 231 — Entrée 331 : LE GUI 1-CLIC DU RUN v160 LIVRÉ AVEC LA CHAÎNE
+EMBARQUÉE — LE GAP MINGW DU BAC FERMÉ, LE DÉFAUT WINFIX NOMMÉ AU PREMIER
+GESTE (la commande du développeur : « fais un GUI 1 clic pour le run v160
+avec tous les outils nécessaires déjà inclus »)
+
+[RE-CONSIGNÉE le 17/11 au soir : le texte original de cette Entrée a vécu
+au worklog local du bac, PERDU au recyclage du bac survenu après le run
+terrain (le dépôt a reculé à l'ère 329/330) ; les FAITS sont re-consignés
+des LIVRABLES SURVIVANTS — le LISEZMOI-RUN-V160-1CLIC.txt du kit, les
+DEUX correctifs du coffre /test, EMPREINTES-GUI-V160-1CLIC.txt, les
+scripts du bac (monter_outils.py, msys2_closure.py,
+deposer_kit_gui_v160.py). L'histoire n'est pas réécrite : elle est
+RE-DITE de ses pièces, la perte NOMMÉE (D143/D189 tenus).]
+
+Work Log:
+- LE GAP MINGW FERMÉ D'ABORD : la commande du développeur exigeait la
+  chaîne INCLUSE ; le bac n'en avait AUCUNE (le GAP NOMMÉ de l'Entrée
+  330). Le cross-compileur gcc-mingw-w64 14.2 (Debian) fut extrait au
+  bac sans droits d'administrateur — et AU PREMIER GESTE de compilation
+  Windows, LE DÉFAUT EST APPARU : le source ORIGINAL du kit terrain
+  (sha256 7dc2beb5…) NE COMPILE PAS SOUS MINGW — la ligne 377 écrit
+  graine_prng, une variable qui ne vit qu'au backend POSIX (#else du
+  #ifdef _WIN32) : « 'graine_prng' undeclared », l'exécutable ne naît
+  jamais. Le geste § 4 du guide aurait échoué chez le développeur au
+  premier essai. Le labo ne l'avait jamais vu : SA chaîne mingw était
+  absente (D122) — la branche _WIN32 du v160 n'avait JAMAIS été compilée
+  nulle part.
+- LA CORRECTION MINIMALE (l'édition winfix, sha256 bcfad643efe2f716
+  fa54c72fe39fb0402b8cb45654dd959760f3185334442744) : la garde
+  #ifndef _WIN32 autour de la seule ligne fautive, et RIEN d'autre.
+  Sous Windows alea() demeure rand_s (le système), l'ordre des classes
+  demeure semé (prng_ordre vit aux DEUX backends) — le comportement
+  Windows est EXACTEMENT celui conçu au v160. LES TROIS PREUVES :
+  (A) le défaut — l'original au cross-compile mingw : l'erreur NOMMÉE ;
+  (B) la correction — le winfix au cross-compile : compilation ET liaison
+  VERTES, PE32+ console x86-64, sha256 1fb85ce92001d9bd35220816d0b08d
+  39208119c925bc2c024479a50eb46471ff (la référence du bac, compilation
+  seulement : le run demeure au terrain) ; (C) LE RECOUP POSIX INTACT —
+  les objets compilés au bac (gcc -O2 -c), original et winfix, sont
+  IDENTIQUES octet pour octet (sha256 cc5513b3… l'un comme l'autre) :
+  le texte préprocessé POSIX est le MÊME qu'avant, le rejeu contrôlé du
+  labo (0/20 contrôlé, 2/20 témoin, l'Entrée 330) demeure recoupable.
+  LES TROIS AUTRES PIÈCES INTACTES : manifeste-c.txt 7293cd86…, le
+  manifeste.json 93d5a13f…, l'image scellée proxy-image.bin 0782d7e2… —
+  les QUATRE cibles demeurent celles du run kit-2 du 13/11 (tls13-02
+  SHA-256, tls13-13 X25519, tls13-16 AES-128, tls13-17 GHASH), la
+  comparabilité par construction INCHANGÉE. Consigné au
+  CORRECTIF-V160-WINFIX-20261117.txt du /test ; l'original vit aux
+  archives (D143).
+- LE KIT GUI LIVRÉ (kit-gui-1clic-v160-20261117.zip, 40,6 Mo, au /test) :
+  le GUI est UN SEUL FICHIER PYTHON (tkinter de la stdlib — RIEN à
+  installer au-delà de Python 3) qui conduit LE GESTE TERRAIN COMPLET :
+  LE VERROU d'abord (les QUATRE pièces recoupées sha256 par sha256, la
+  chaîne embarquée recoupée FICHIER PAR FICHIER — une divergence : le
+  bouton reste gris, RIEN ne court, fail-closed) ; LE PRÉ-VOL (les trois
+  cases, le BIOS « je ne sais pas » admis, l'état EFFECTIF relevé
+  powercfg /getactivescheme + PERFBOOSTMODE) ; LE BOUTON VERT « TOUT
+  LANCER » : la compilation (gcc -O2 … -lm, la ligne exacte au témoin),
+  LE RUN PRINCIPAL contrôlé N=200 R=5, LE RUN DE RÉCONCILIATION contrôlé
+  N=400 R=5, LE BRAS TÉMOIN v150 N=200 R=5, LA COLLECTE (DEPOT.txt +
+  le gabarit de témoin pré-rempli) ; chaque console écrite AU FIL DE
+  L'EAU, les csv INTACTS (le mesureur les écrit, le GUI ne les touche
+  jamais), les verdicts RECOPIÉS jamais recalculés ; l'assemblage du zip
+  EXIGE le témoin signé (D99 tenu par construction) ; le coffre /test
+  s'ouvre au navigateur — le GUI n'écrit JAMAIS au Drive ; les gestes
+  seuls demeurent (reprendre, rejouer, le run libre à N/R choisis) ;
+  l'état sauvé (etat-run-v160.json), le journal de session
+  (TRIADE_logs\). LES FRONTIÈRES PAR CONSTRUCTION : jamais dater ni
+  signer, jamais déposer, jamais fabriquer un chiffre, jamais toucher
+  les pièces scellées, jamais renommer les csv — et JAMAIS « constant
+  time proven » au-delà des runs signés.
+- LA CHAÎNE EMBARQUÉE : outils\mingw64\ — mingw-w64 gcc 16.2.0 du
+  dépôt public MSYS2, élaguée au C seul (gcc.exe, cc1, as, ld, les crt,
+  les en-têtes : 2 177 fichiers). CHAQUE paquet recoupé sha256 contre
+  la base du dépôt (mingw64.db — la chaîne de provenance), CHAQUE
+  fichier gravé à outils\EMPREINTES-OUTILS.txt, le GUI RECOUPE L'ARBRE
+  ENTIER à chaque lancement. C'EST ELLE qui compile chez le développeur
+  — la ligne gcc --version exacte va au témoin.
+- L'ÉPREUVE AU BAC (D122 — le labo n'a aucun Windows ; la FENÊTRE
+  éprouvée au serveur X virtuel, l'exécution Windows au terrain) : le
+  selftest 16 VERT, 0 ROUGE (le verrou, le fail-closed NOMMÉ, la branche
+  winfix, le parseur des verdicts, le gabarit, le zip sans témoin
+  refusé, la chaîne recoupée 2 177/2 177, les trois runs prescrits) ;
+  L'ÉPREUVE FONCTIONNELLE 13 VERT, 0 ROUGE — la chaîne réelle au bac
+  POSIX (gcc 14.2 du bac, les DEUX bras courus N=60 R=1, les csv nés,
+  le DEPOT, le gabarit, le zip) ; l'épreuve visuelle sous X virtuel
+  (les cadres, les accents, aucun texte rogné) ; la compilation Windows
+  du source corrigé VERTE au cross-compile (la preuve B).
+- LA LIVRAISON AU COFFRE /test (recoup sha256, échec fermé) : le kit
+  kit-gui-1clic-v160-20261117.zip (le GUI + le LISEZMOI + EMPREINTES +
+  le lanceur LANCER-RUN-V160-1CLIC.bat + les QUATRE pièces scellées +
+  la chaîne) ; le CORRECTIF-V160-WINFIX-20261117.txt ; le kit terrain
+  kit-terrain-v160-fkkqc7v8t.zip REMPLACÉ en place (le source winfix +
+  le correctif au dossier + le guide corrigé — l'empreinte § 2 du guide
+  corrigée bcfad643…) ; le GUIDE-GESTE-TERRAIN-ET-SUITE-20261117.txt
+  remplacé (l'addendum en tête). Le premier double-clic se vit chez le
+  développeur : un écran nommant un défaut, le journal de session
+  renvoyé TEL QUEL, le labo recoupe et corrige.
+- LA CONSIGNATION : la présente Entrée 331 (re-consignée — voir la note
+  en tête) ; les livrables à download/ ; la suite au guide § 9 : le
+  dépôt du développeur attendu au /test, puis la forensie du labo.
+  (17/11 au soir, la session du flux — re-consigné après la perte du
+  bac, les pièces font foi)
+
