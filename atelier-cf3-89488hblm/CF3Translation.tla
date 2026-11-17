@@ -178,29 +178,21 @@ InitLTfaible ==
 (* CC2 — la clôture REPLACÉE PAR LE PLAFOND v120 (e ← min(e + 1, 3))
  * des DEUX côtés : le v120 transporté — la commutation DOIT ROMPRE à
  * la frontière du plafond (e = 3, δ = 1 : les deux saturent à 3, le
- * couplage exige 3 + δ) *)
-CloturerPlafond ==
+ * couplage exige 3 + δ). Une SEULE conjonction (le correctif 3 : les
+ * UNCHANGED imbriqués des deux règles collisionnent — « tsait is
+ * already assigned ») : les gardes des deux côtés, les effets des
+ * deux côtés, UN UNCHANGED *)
+NextLTplafond ==
   /\ phase = "brouillon"
   /\ trap_ok
-  /\ e' = IF e + 1 <= 3 THEN e + 1 ELSE 3
-  /\ phase' = "canonique"
-  /\ UNCHANGED <<sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-TCloturerPlafond ==
   /\ tphase = "brouillon"
   /\ ttrap_ok
+  /\ e' = IF e + 1 <= 3 THEN e + 1 ELSE 3
+  /\ phase' = "canonique"
   /\ te' = IF te + 1 <= 3 THEN te + 1 ELSE 3
   /\ tphase' = "canonique"
-  /\ UNCHANGED <<tsait, ttrap_ok, tcf2_ok, tsecret, taccepte, tdetruit,
-                 tdestr_injuste, tmedia_corrompu>>
-
-NextLTplafond ==
-  /\ CloturerPlafond /\ UNCHANGED <<te, tphase, tsait, ttrap_ok, tcf2_ok,
-                                   tsecret, taccepte, tdetruit,
-                                   tdestr_injuste, tmedia_corrompu>>
-  /\ TCloturerPlafond /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok,
-                                    secret, accepte, detruit,
-                                    destr_injuste, media_corrompu>>
-  /\ UNCHANGED <<delta>>
+  /\ UNCHANGED <<sait, trap_ok, cf2_ok, secret, accepte, detruit,
+                 destr_injuste, media_corrompu, tsait, ttrap_ok, tcf2_ok,
+                 tsecret, taccepte, tdetruit, tdestr_injuste,
+                 tmedia_corrompu, delta>>
 =============================================================================

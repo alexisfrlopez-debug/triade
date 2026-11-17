@@ -12247,3 +12247,116 @@ Work Log:
   instructions 89488hblm/fkkqc7v8t/p39uklsca demeurent (les chantiers
   3-5), l'OPT-01 réservé au levier L1 de la prochaine unité (D207).
   (17/11, la session du mémo scellé)
+
+## Task 229 — Entrée 329 : LE PROGRAMME DE PREUVE CF3 RENFORCÉ — L'ÉQUIVALENCE
+DES DEUX SÉMANTIQUES PROUVÉE PAR SMT NON BORNÉ, LA BIJECTION DES 288 FORMES,
+LE LEMME DE TRANSLATION ∀δ (89488hblm, le chantier 3 du listing, D215)
+
+LA SESSION : la synchro git/drive d'abord (l'Entrée 328 recoupée INTÈGRE au
+Drive — 8/8 gestes VERTS : le journal OPT-03, le worklog, le bundle 328, le
+rapport M4, l'archivage des DEUX instructions exécutées au /ARCHIVE, le
+ARCHIVAGE-RECOUP-V7 — GitHub 0/0 au 3009d18), puis le chantier 3 ouvert à la
+commande du développeur (« go pour la suite » — le listing prescrit : les
+chantiers 1-2 clos, le 3 suivant).
+
+LE PRÉALABLE — L'OUTILLAGE RE-PROVISIONNÉ avec L'ÉCART NOMMÉ : Apalache 0.63.0
+sha256 a756e96a… EXACT (le consigné) ; tla2tools.jar — l'octet-à-octet consigné
+(e1f11b75…) IRRÉCUPÉRABLE à l'amont ce jour (la release v1.8.0 est un dépôt
+roulant, l'asset actuel digest 7e53aa63… attesté PAR GITHUB depuis sa création
+2026-11-15T00:27:39Z est le build 2026.11.15.002146 rev bc1b506 — LA VERSION ET
+RÉVISION EXACTES des journaux consignés) ; le recoup FONCTIONNEL a tranché : la
+batterie originale rejointe depuis un clone frais reproduit le verdicts.json
+BIT-À-BIT (154/216/360 EXACTS, 8/8 VERT).
+
+LE PLAN PRÉ-ENREGISTRÉ GELÉ AVANT TOUTE MESURE (sha256 5d1421be…, le fichier
+atelier-cf3-89488hblm/PLAN-89488hblm.md, le commit dcb2d56 précède la première
+exécution — la règle D204/D211 reconduite) : les trois familles d'obligations
+de l'instruction telles quelles — (a) l'équivalence TLA+↔Python des 13 règles
+par SMT sur entiers non bornés, garde-à-garde et effet-à-effet, tout état bien
+typé (LA FIN de la confrontation échantillonnée 512 états/règle de la vague
+5) ; (b) le lemme O3 (la bijection 288 formes ↔ image de {TypeOK ∧ Inv} par α)
+par SMT non borné, LE PROUVÉ DISTINGUÉ DE L'ÉNUMÉRÉ BORNÉ ; (c) le lemme de
+translation ∀δ déchargé mécaniquement (LA FIN du trio audit syntaxique +
+témoins {7, 50, 1000} comme preuve) ; UN CONTRÔLE NÉGATIF PAR NOUVELLE
+OBLIGATION (l'affaiblissement volontaire attrapé) ; l'étape de vérification
+intégrale (le rejeu de la batterie, le verdicts.json bit-identique plus les
+nouvelles obligations, la campagne 10 000 traces à graine identique, la
+reproduction bit-à-bit des 10 000 digests).
+
+LA VOIE VÉCUE — TROIS AMENDEMENTS D'ENCODAGE, AUCUNE OBLIGATION TOUCHÉE :
+le XOR relationnel REFUSÉ par la discipline d'affectation d'Apalache («
+Illegal assignment inside an assignment-free expression » — la négation d'un
+système d'affectations n'existe pas) et le deadlock NON rapporté en
+vérification bornée (la sonde) — l'amendement 2 introduit LES COPIES MIROIR
+(la règle RÉELLE INSTANCEe sur la copie R, la relation Python sur la copie P)
+et L'ÉPINGLAGE TLC (le sens manquant par le deadlock TLC — rapporté par état
+— sur les 4 096 représentants e ∈ {1, 2}, la réduction JUSTIFIÉE par LT1
+(SMT) et l'audit mécanique consigné) ; les correctifs : l'énumérabilité TLC
+de l'Init des représentants, la précédence des configs sur le drapeau CLI
+--init (73 configs par-run générés), les tuples non annotés (FormDomain en
+dix paramètres scalaires) et l'affectation d'Init de delta — chaque écart
+committé AVANT les runs concernés.
+
+LA MESURE (tout verdict LU des journaux d'outils, jamais gravé) : LES 42
+OBLIGATIONS PROUVÉES NoError — 13 ÉQUIV_GARDE (GP ⟺ GT, tout état bien
+typé, e ∈ Int non borné ; le seuil Python LITTÉRAL Cardinality(sait ∩
+Elements) — son égalité avec Cardinality(sait) sous TypeOK est CONTENU DE LA
+PREUVE), 13 ÉQUIV_IMAGE (les images de la règle réelle et de la relation
+Python COÏNCIDENT), 13 ÉQUIV_ACTIVATION (le tir réel ⟹ la garde Python
+tenait), OB1 LA COUVERTURE (∀ état bien typé ∧ Inv, la classe au domaine —
+L'ARGUMENT DE COMPLÉTUDE : I4 force l'époque quelconque dans {1, 2}), OB2 LA
+NON-VACUITÉ (α∘ι = id — toute forme a son témoin), LT1 LES GARDES (∀δ ≥ 0,
+∀e ≥ 2 : les 13 gardes invariantes par translation), LT2 LA COMMUTATION
+(σ_δ ∘ FT = FT ∘ σ_δ, les règles réelles des deux côtés) ; LES 30 CONTRÔLES
+ATTRAPÉS Error 12 — les 26 fautes de transcription plausibles du point (a)
+(la phase canonique OUBLIÉE — l'écart de couverture que la PBT croisa —,
+LE ROLL-BACK e′ = e − 1, le secret TOUJOURS appris, la vérification qui
+ACCEPTE, la clôture qui n'AVANCE PAS, la destruction qui DÉBORDE sur le
+média…), CB1 (I4 PORTANTE : l'état e = 0 hors domaine), CB2 (I1 PORTANTE :
+la forme secret sans seuil sans témoin), CC1 (LA FRONTIÈRE DE CLASSE {1}/{≥2}
+PORTANTE : à e = 1, δ ≥ 1, la garde de rejeu diverge), CC2 (LE PLAFOND v120
+NON TRANSLATION-UNIFORME : à e = 3, δ = 1, les deux saturent à 3, le couplage
+exige 3 + δ — la raison historique de son retrait) ; L'ÉPINGLAGE TLC 13 ×
+les DEUX sens (aucun deadlock, aucune violation — 4 096 représentants,
+l'exploration bornée par le témoin : 8 192 états) et son contrôle (le
+deadlock ATTRAPÉ) ; LE COMPTE 288 ÉNUMÉRÉ par DEUX OUTILS (TLC 288 états
+distincts ; le verifie_couverture_288.py du clone : la bijection VERT).
+
+L'ÉTAPE DE VÉRIFICATION VÉCUE INTÉGRALE : le clone frais rejoue les 7 runs
+originaux — verdicts.json BIT-IDENTIQUE au consigné (11/11 clefs, le texte
+identique, 8/8 VERT) ; LA CAMPAGNE 10 000 TRACES REJOUÉE à graine identique
+(20261112, --replay, en tranches au premier plan — le bac fauche les
+processus) : 10 000 stables, 0 divergentes, les 10 000 digests BIT-À-BIT
+IDENTIQUES au CSV consigné, LE CONDENSÉ GLOBAL 333996d4f8ce281f… REPRODUIT ;
+le verdicts.json étendu : LES 11 CLEFS CONSIGNÉES INCHANGÉES + LES 91
+NOUVELLES (102 clefs, 96 booléens true, le compte 288, 10 000 stables).
+
+LA LEÇON : L'ÉQUIVALENCE N'EST PLUS UN TÉMOIGNAGE — l'échantillonnage 512
+états/règle disparaît au profit du ∀ sur tout état bien typé, l'époque non
+bornée ; la bijection des formes est PROUVÉE en ses deux obligations et son
+compte ÉNUMÉRÉ par deux outils (le prouvé et l'énuméré borné DISTINGUÉS —
+jamais l'un déguisé en l'autre) ; l'uniformité en époque est un LEMME ∀δ
+mécanique — un contre-exemple à grande époque aurait, par translation
+inverse, un contre-exemple à petite époque ; et la discipline d'outils
+découpe les preuves : la négation d'affectations n'existe pas chez Apalache,
+le deadlock n'y est pas observable — mais le TLC le rapporte : chaque
+obligation trouve SON moteur, l'épinglage TCL contre l'artefact réel, le SMT
+contre le non borné.
+
+LES ÉCARTS NOMMÉS : l'octet-à-octet du jar TLC irrécupérable (borné par le
+recoup fonctionnel — la batterie reproduite bit-à-bit), les trois
+amendements/correctifs d'encodage (chacun documenté et committé avant ses
+runs, aucune obligation ni mutation touchée), le chemin de sortie codé en
+dur du verifie_couverture_288.py (le répertoire recréé, le script consigné
+jamais modifié), le rejeu PBT en tranches (le bac fauche — 24 minutes
+d'horloge, quatre appels).
+
+LA CONSIGNATION : D215 au journal des décisions, la présente Entrée 329,
+l'atelier entier au dépôt (le plan, l'amendement, les six modules TLA+, les
+88 configs, le runner dispatchable, l'assembleur, les 91 journaux d'outils,
+les preuves PBT, le verdict étendu, le rapport), le verdicts.json canonique
+étendu (les 11 clefs consignées d'abord, bit-identiques) ; le push GitHub au
+commandement du développeur ; les livrables à download/ ; l'instruction
+89488hblm EXÉCUTÉE — les instructions fkkqc7v8t/p39uklsca demeurent (les
+chantiers 4-5 du listing).
+(17/11, la session des trois obligations)

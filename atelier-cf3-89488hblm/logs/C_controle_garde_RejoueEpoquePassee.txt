@@ -1,0 +1,79 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCCg_RejoueEpoquePassee.cfg --length=0 CF3EquivControles.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-00-42_761785925181605645
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@10:00:42.455
+  > MCCg_RejoueEpoquePassee.cfg: Loading TLC configuration        I@10:00:42.459
+  > Using init predicate(s) InitCopies from the TLC config        I@10:00:42.522
+  > Using next predicate(s) RecopieTout from the TLC config       I@10:00:42.522
+  > Using inv predicate(s) OblFaibleGarde_RejoueEpoquePassee from the TLC config I@10:00:42.522
+Tuning:                                                           I@10:00:42.552
+PASS #0: SanyParser                                               I@10:00:42.763
+PASS #1: TypeCheckerSnowcat                                       I@10:00:44.152
+ > Running Snowcat .::.                                           I@10:00:44.152
+ > Your types are purrfect!                                       I@10:00:45.181
+ > All expressions are typed                                      I@10:00:45.182
+PASS #2: ConfigurationPass                                        I@10:00:45.189
+  > MCCg_RejoueEpoquePassee.cfg: found INVARIANTS: OblFaibleGarde_RejoueEpoquePassee I@10:00:45.376
+  > Set the initialization predicate to InitCopies                I@10:00:45.379
+  > Set the transition predicate to RecopieTout                   I@10:00:45.380
+  > Set the constant initialization predicate to CInit            I@10:00:45.380
+  > Set an invariant to OblFaibleGarde_RejoueEpoquePassee         I@10:00:45.380
+PASS #3: DesugarerPass                                            I@10:00:45.392
+  > Desugaring...                                                 I@10:00:45.392
+PASS #4: InlinePass                                               I@10:00:45.469
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblFaibleGarde_RejoueEpoquePassee, RecopieTout I@10:00:45.469
+PASS #5: TemporalPass                                             I@10:00:45.702
+  > Rewriting temporal operators...                               I@10:00:45.702
+  > No temporal property specified, nothing to encode             I@10:00:45.702
+PASS #6: InlinePass                                               I@10:00:45.703
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblFaibleGarde_RejoueEpoquePassee, RecopieTout I@10:00:45.703
+PASS #7: PrimingPass                                              I@10:00:45.710
+  > Introducing CInitPrimed for CInit'                            I@10:00:45.713
+  > Introducing InitCopiesPrimed for InitCopies'                  I@10:00:45.714
+PASS #8: VCGen                                                    I@10:00:45.716
+  > Producing verification conditions from the invariant OblFaibleGarde_RejoueEpoquePassee I@10:00:45.717
+  > VCGen produced 1 verification condition(s)                    I@10:00:45.738
+PASS #9: PreprocessingPass                                        I@10:00:45.746
+  > Before preprocessing: unique renaming                         I@10:00:45.746
+ > Applying standard transformations:                             I@10:00:45.752
+  > PrimePropagation                                              I@10:00:45.753
+  > Desugarer                                                     I@10:00:45.758
+  > UniqueRenamer                                                 I@10:00:45.759
+  > Normalizer                                                    I@10:00:45.761
+  > SetMembershipSimplifier                                       I@10:00:45.773
+  > Keramelizer                                                   I@10:00:45.775
+  > After preprocessing: UniqueRenamer                            I@10:00:45.780
+PASS #10: TransitionFinderPass                                    I@10:00:45.798
+  > Found 1 initializing transitions                              I@10:00:45.899
+  > Found 1 transitions                                           I@10:00:45.900
+  > Found constant initializer CInit                              I@10:00:45.900
+  > Applying unique renaming                                      I@10:00:45.902
+PASS #11: OptimizationPass                                        I@10:00:45.904
+ > Applying optimizations:                                        I@10:00:45.908
+  > ConstSimplifier                                               I@10:00:45.909
+  > ExprOptimizer                                                 I@10:00:45.911
+  > SetMembershipSimplifier                                       I@10:00:45.912
+  > ConstSimplifier                                               I@10:00:45.913
+PASS #12: AnalysisPass                                            I@10:00:45.914
+ > Marking skolemizable existentials and sets to be expanded...   I@10:00:45.916
+  > Skolemization                                                 I@10:00:45.917
+  > Expansion                                                     I@10:00:45.917
+  > Remove unused let-in defs                                     I@10:00:45.918
+ > Running analyzers...                                           I@10:00:45.946
+  > Introduced expression grades                                  I@10:00:45.948
+PASS #13: BoundedChecker                                          I@10:00:45.948
+State 0: Checking 1 state invariants                              I@10:00:46.370
+Check the trace in: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-00-42_761785925181605645/violation1.tla, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-00-42_761785925181605645/MCviolation1.out, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-00-42_761785925181605645/violation1.json, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-00-42_761785925181605645/violation1.itf.json I@10:00:46.601
+State 0: state invariant 0 violated.                              I@10:00:46.603
+Found 1 error(s)                                                  I@10:00:46.606
+The outcome is: Error                                             I@10:00:46.614
+Checker has found an error                                        I@10:00:46.658
+It took me 0 days  0 hours  0 min  4 sec                          I@10:00:46.658
+Total time: 4.200 sec                                             I@10:00:46.658
+EXITCODE: ERROR (12)
+
+--- stderr ---

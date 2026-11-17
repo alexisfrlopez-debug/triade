@@ -1,0 +1,17 @@
+$ python3 verifie_couverture_288.py
+
+--- stdout ---
+LE LEMME DE COUVERTURE — L'OBLIGATION (O3) : LA BIJECTION DES 288 FORMES (la vague 5, oc2y014vx)
+========================================================================================
+  les formes de la preuve (forme_domaines, classes d'époque {1}∪{≥2}) : 288
+  α({TypeOK ∧ Inv}) sur les époques représentatives (1, 2, 3, 7, 50, 1000) : 288
+  LA BIJECTION : VERT — les deux ensembles sont ÉGAUX
+  les formes hors Inv : 0
+  la couverture des états atteignables (e≤5 d≤8 ; e≤7 d≤12) : 600 états {(5, 8): 228, (7, 12): 372}, TOUS couverts par les 288 formes
+
+LE LEMME, AVEC (O1)/(O2) DÉCHARGÉES PAR APALACHE (CF3Couverture.tla — base et pas inductif NoError,
+le contrôle négatif attrapé) : tout état concret atteignable est représenté par au moins une
+des 288 formes — la preuve de préservation sur les formes couvre donc TOUT l'espace atteignable.
+LE VERDICT : VERT
+
+--- stderr ---

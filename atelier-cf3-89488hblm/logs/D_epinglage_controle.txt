@@ -1,0 +1,90 @@
+$ java -jar /home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar -nowarning -config MTLP_ctl.cfg CF3EquivControles.tla
+
+--- stdout ---
+TLC2 Version 2026.11.15.002146 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 117 and seed 1177646416413237043 with 1 worker on 2 cores with 1012MB heap and 64MB offheap memory [pid: 12919] (Linux 5.10.134-013.15.kangaroo.al8.x86_64 amd64, Debian 21.0.13 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/z/my-project/triade/atelier-cf3-89488hblm/CF3EquivControles.tla
+Parsing file /home/z/my-project/triade/atelier-cf3-89488hblm/CF3Equiv.tla
+Parsing file /home/z/my-project/triade/atelier-cf3-89488hblm/CF3PythonControles.tla
+Parsing file /tmp/tlc-12654662542129951442/_TLCTrace.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/_TLCTrace.tla)
+Parsing file /home/z/my-project/triade/atelier-cf3-89488hblm/CF3.tla
+Parsing file /home/z/my-project/triade/atelier-cf3-89488hblm/CF3Python.tla
+Parsing file /tmp/tlc-12654662542129951442/Integers.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /tmp/tlc-12654662542129951442/FiniteSets.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/FiniteSets.tla)
+Parsing file /tmp/tlc-12654662542129951442/Naturals.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Parsing file /tmp/tlc-12654662542129951442/Sequences.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/Sequences.tla)
+Parsing file /tmp/tlc-12654662542129951442/TLC.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/TLC.tla)
+Parsing file /tmp/tlc-12654662542129951442/TLCExt.tla (jar:file:/home/z/my-project/triade/scripts/tla_v150/outils/tla2tools.jar!/tla2sany/StandardModules/TLCExt.tla)
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module CF3
+Semantic processing of module CF3Python
+Semantic processing of module CF3Equiv
+Semantic processing of module CF3PythonControles
+Semantic processing of module TLC
+Semantic processing of module TLCExt
+Semantic processing of module _TLCTrace
+Semantic processing of module CF3EquivControles
+Linting of module CF3
+Linting of module CF3Python
+Linting of module CF3Equiv
+Linting of module CF3PythonControles
+Linting of module TLCExt
+Linting of module _TLCTrace
+Linting of module CF3EquivControles
+Starting... (2026-11-17 10:04:06)
+Computing initial states...
+Computed 2 initial states...
+Computed 4 initial states...
+Computed 8 initial states...
+Computed 16 initial states...
+Computed 32 initial states...
+Computed 64 initial states...
+Computed 128 initial states...
+Computed 256 initial states...
+Computed 512 initial states...
+Computed 1024 initial states...
+Computed 2048 initial states...
+Finished computing initial states: 4096 distinct states generated at 2026-11-17 10:04:06.
+Error: Deadlock reached.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ trapP = TRUE
+/\ trapR = TRUE
+/\ e = 1
+/\ accepte = FALSE
+/\ eP = 1
+/\ eR = 1
+/\ media_corrompu = FALSE
+/\ cf2P = FALSE
+/\ cf2R = FALSE
+/\ marque = FALSE
+/\ accepteP = FALSE
+/\ accepteR = FALSE
+/\ destr_injuste = FALSE
+/\ injusteP = FALSE
+/\ injusteR = FALSE
+/\ phase = "brouillon"
+/\ phaseP = "brouillon"
+/\ phaseR = "brouillon"
+/\ secret = FALSE
+/\ secretP = FALSE
+/\ secretR = FALSE
+/\ saitP = {}
+/\ saitR = {}
+/\ trap_ok = TRUE
+/\ mediaP = FALSE
+/\ mediaR = FALSE
+/\ detruit = FALSE
+/\ detruitP = FALSE
+/\ detruitR = FALSE
+/\ sait = {}
+/\ cf2_ok = FALSE
+
+5184 states generated, 4608 distinct states found, 3519 states left on queue.
+The depth of the complete state graph search is 2.
+Finished in 01s at (2026-11-17 10:04:06)
+
+--- stderr ---

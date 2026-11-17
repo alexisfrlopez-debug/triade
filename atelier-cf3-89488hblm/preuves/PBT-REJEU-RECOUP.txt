@@ -1,0 +1,6 @@
+LE REJEU 10 000 TRACES (graine 20261112, --replay) — le recoup
+======================================================================
+  les 10 000 digests REJOUÉS contre les 10 000 CONSIGNÉS : 10000/10000 IDENTIQUES, 0 divergence(s)
+  le condensé global sha256 (l'ordre des traces) : IDENTIQUE
+      rejoué   : 333996d4f8ce281f7aff24fcde54c30c72954d4ee6d1edf0c07e92b682a1c6a1
+      consigné : 333996d4f8ce281f7aff24fcde54c30c72954d4ee6d1edf0c07e92b682a1c6a1

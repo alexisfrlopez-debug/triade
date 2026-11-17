@@ -1,0 +1,79 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCO_cb1.cfg --length=0 CF3O3.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3O3.tla/2026-11-17T10-03-07_13447777527366483959
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@10:03:07.504
+  > MCO_cb1.cfg: Loading TLC configuration                        I@10:03:07.508
+  > Using init predicate(s) InvSansI4 from the TLC config         I@10:03:07.587
+  > Using next predicate(s) SuivantNul from the TLC config        I@10:03:07.587
+  > Using inv predicate(s) OblOB1 from the TLC config             I@10:03:07.588
+Tuning:                                                           I@10:03:07.591
+PASS #0: SanyParser                                               I@10:03:07.803
+PASS #1: TypeCheckerSnowcat                                       I@10:03:08.267
+ > Running Snowcat .::.                                           I@10:03:08.267
+ > Your types are purrfect!                                       I@10:03:08.806
+ > All expressions are typed                                      I@10:03:08.807
+PASS #2: ConfigurationPass                                        I@10:03:08.807
+  > MCO_cb1.cfg: found INVARIANTS: OblOB1                         I@10:03:09.058
+  > Set the initialization predicate to InvSansI4                 I@10:03:09.061
+  > Set the transition predicate to SuivantNul                    I@10:03:09.062
+  > Set the constant initialization predicate to CInit            I@10:03:09.062
+  > Set an invariant to OblOB1                                    I@10:03:09.062
+PASS #3: DesugarerPass                                            I@10:03:09.069
+  > Desugaring...                                                 I@10:03:09.069
+PASS #4: InlinePass                                               I@10:03:09.097
+Leaving only relevant operators: CInit, CInitPrimed, InvSansI4, InvSansI4Primed, OblOB1, SuivantNul I@10:03:09.098
+PASS #5: TemporalPass                                             I@10:03:09.215
+  > Rewriting temporal operators...                               I@10:03:09.221
+  > No temporal property specified, nothing to encode             I@10:03:09.222
+PASS #6: InlinePass                                               I@10:03:09.245
+Leaving only relevant operators: CInit, CInitPrimed, InvSansI4, InvSansI4Primed, OblOB1, SuivantNul I@10:03:09.245
+PASS #7: PrimingPass                                              I@10:03:09.247
+  > Introducing CInitPrimed for CInit'                            I@10:03:09.249
+  > Introducing InvSansI4Primed for InvSansI4'                    I@10:03:09.253
+PASS #8: VCGen                                                    I@10:03:09.254
+  > Producing verification conditions from the invariant OblOB1   I@10:03:09.254
+  > VCGen produced 14 verification condition(s)                   I@10:03:09.259
+PASS #9: PreprocessingPass                                        I@10:03:09.263
+  > Before preprocessing: unique renaming                         I@10:03:09.264
+ > Applying standard transformations:                             I@10:03:09.270
+  > PrimePropagation                                              I@10:03:09.272
+  > Desugarer                                                     I@10:03:09.276
+  > UniqueRenamer                                                 I@10:03:09.280
+  > Normalizer                                                    I@10:03:09.284
+  > SetMembershipSimplifier                                       I@10:03:09.293
+  > Keramelizer                                                   I@10:03:09.300
+  > After preprocessing: UniqueRenamer                            I@10:03:09.305
+PASS #10: TransitionFinderPass                                    I@10:03:09.312
+  > Found 1 initializing transitions                              I@10:03:09.368
+  > Found 1 transitions                                           I@10:03:09.370
+  > Found constant initializer CInit                              I@10:03:09.370
+  > Applying unique renaming                                      I@10:03:09.373
+PASS #11: OptimizationPass                                        I@10:03:09.380
+ > Applying optimizations:                                        I@10:03:09.384
+  > ConstSimplifier                                               I@10:03:09.385
+  > ExprOptimizer                                                 I@10:03:09.390
+  > SetMembershipSimplifier                                       I@10:03:09.393
+  > ConstSimplifier                                               I@10:03:09.395
+PASS #12: AnalysisPass                                            I@10:03:09.402
+ > Marking skolemizable existentials and sets to be expanded...   I@10:03:09.404
+  > Skolemization                                                 I@10:03:09.406
+  > Expansion                                                     I@10:03:09.406
+  > Remove unused let-in defs                                     I@10:03:09.411
+ > Running analyzers...                                           I@10:03:09.413
+  > Introduced expression grades                                  I@10:03:09.416
+PASS #13: BoundedChecker                                          I@10:03:09.417
+State 0: Checking 14 state invariants                             I@10:03:09.880
+Check the trace in: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3O3.tla/2026-11-17T10-03-07_13447777527366483959/violation1.tla, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3O3.tla/2026-11-17T10-03-07_13447777527366483959/MCviolation1.out, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3O3.tla/2026-11-17T10-03-07_13447777527366483959/violation1.json, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3O3.tla/2026-11-17T10-03-07_13447777527366483959/violation1.itf.json I@10:03:10.094
+State 0: state invariant 0 violated.                              I@10:03:10.097
+Found 1 error(s)                                                  I@10:03:10.104
+The outcome is: Error                                             I@10:03:10.107
+Checker has found an error                                        I@10:03:10.151
+It took me 0 days  0 hours  0 min  2 sec                          I@10:03:10.152
+Total time: 2.645 sec                                             I@10:03:10.152
+EXITCODE: ERROR (12)
+
+--- stderr ---

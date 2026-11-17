@@ -1,0 +1,91 @@
+$ /home/z/my-project/triade/scripts/tla_v150/outils/apalache-0.63.0/bin/apalache-mc check --config=MCCi_VoleSPiege.cfg --length=1 --no-deadlock CF3EquivControles.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-01-32_3318070507338542006
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@10:01:32.614
+  > MCCi_VoleSPiege.cfg: Loading TLC configuration                I@10:01:32.618
+  > Using init predicate(s) InitCopies from the TLC config        I@10:01:32.715
+  > Using next predicate(s) NextImageCtl_VoleSPiege from the TLC config I@10:01:32.715
+  > Using inv predicate(s) InvImage from the TLC config           I@10:01:32.715
+Tuning:                                                           I@10:01:32.717
+PASS #0: SanyParser                                               I@10:01:32.948
+PASS #1: TypeCheckerSnowcat                                       I@10:01:34.264
+ > Running Snowcat .::.                                           I@10:01:34.264
+ > Your types are purrfect!                                       I@10:01:35.270
+ > All expressions are typed                                      I@10:01:35.276
+PASS #2: ConfigurationPass                                        I@10:01:35.277
+  > MCCi_VoleSPiege.cfg: found INVARIANTS: InvImage               I@10:01:35.474
+  > Set the initialization predicate to InitCopies                I@10:01:35.477
+  > Set the transition predicate to NextImageCtl_VoleSPiege       I@10:01:35.478
+  > Set the constant initialization predicate to CInit            I@10:01:35.478
+  > Set an invariant to InvImage                                  I@10:01:35.478
+PASS #3: DesugarerPass                                            I@10:01:35.489
+  > Desugaring...                                                 I@10:01:35.489
+PASS #4: InlinePass                                               I@10:01:35.546
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvImage, NextImageCtl_VoleSPiege I@10:01:35.547
+PASS #5: TemporalPass                                             I@10:01:35.757
+  > Rewriting temporal operators...                               I@10:01:35.757
+  > No temporal property specified, nothing to encode             I@10:01:35.757
+PASS #6: InlinePass                                               I@10:01:35.757
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvImage, NextImageCtl_VoleSPiege I@10:01:35.757
+PASS #7: PrimingPass                                              I@10:01:35.761
+  > Introducing CInitPrimed for CInit'                            I@10:01:35.764
+  > Introducing InitCopiesPrimed for InitCopies'                  I@10:01:35.765
+PASS #8: VCGen                                                    I@10:01:35.767
+  > Producing verification conditions from the invariant InvImage I@10:01:35.767
+  > VCGen produced 10 verification condition(s)                   I@10:01:35.771
+PASS #9: PreprocessingPass                                        I@10:01:35.775
+  > Before preprocessing: unique renaming                         I@10:01:35.775
+ > Applying standard transformations:                             I@10:01:35.781
+  > PrimePropagation                                              I@10:01:35.781
+  > Desugarer                                                     I@10:01:35.785
+  > UniqueRenamer                                                 I@10:01:35.786
+  > Normalizer                                                    I@10:01:35.788
+  > SetMembershipSimplifier                                       I@10:01:35.790
+  > Keramelizer                                                   I@10:01:35.793
+  > After preprocessing: UniqueRenamer                            I@10:01:35.799
+PASS #10: TransitionFinderPass                                    I@10:01:35.815
+  > Found 1 initializing transitions                              I@10:01:35.971
+  > Found 1 transitions                                           I@10:01:35.972
+  > Found constant initializer CInit                              I@10:01:35.973
+  > Applying unique renaming                                      I@10:01:35.975
+PASS #11: OptimizationPass                                        I@10:01:35.977
+ > Applying optimizations:                                        I@10:01:35.981
+  > ConstSimplifier                                               I@10:01:35.982
+  > ExprOptimizer                                                 I@10:01:35.984
+  > SetMembershipSimplifier                                       I@10:01:35.985
+  > ConstSimplifier                                               I@10:01:35.986
+PASS #12: AnalysisPass                                            I@10:01:35.987
+ > Marking skolemizable existentials and sets to be expanded...   I@10:01:35.989
+  > Skolemization                                                 I@10:01:35.989
+  > Expansion                                                     I@10:01:35.990
+  > Remove unused let-in defs                                     I@10:01:35.991
+ > Running analyzers...                                           I@10:01:35.992
+  > Introduced expression grades                                  I@10:01:35.995
+PASS #13: BoundedChecker                                          I@10:01:35.995
+State 0: Checking 10 state invariants                             I@10:01:36.458
+State 0: state invariant 0 holds.                                 I@10:01:36.462
+State 0: state invariant 1 holds.                                 I@10:01:36.465
+State 0: state invariant 2 holds.                                 I@10:01:36.466
+State 0: state invariant 3 holds.                                 I@10:01:36.467
+State 0: state invariant 4 holds.                                 I@10:01:36.468
+State 0: state invariant 5 holds.                                 I@10:01:36.469
+State 0: state invariant 6 holds.                                 I@10:01:36.470
+State 0: state invariant 7 holds.                                 I@10:01:36.471
+State 0: state invariant 8 holds.                                 I@10:01:36.471
+State 0: state invariant 9 holds.                                 I@10:01:36.472
+Step 0: picking a transition out of 1 transition(s)               I@10:01:36.473
+State 1: Checking 1 state invariants                              I@10:01:36.485
+Check the trace in: /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-01-32_3318070507338542006/violation1.tla, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-01-32_3318070507338542006/MCviolation1.out, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-01-32_3318070507338542006/violation1.json, /home/z/my-project/triade/atelier-cf3-89488hblm/_apalache-out/CF3EquivControles.tla/2026-11-17T10-01-32_3318070507338542006/violation1.itf.json I@10:01:36.749
+State 1: state invariant 2 violated.                              I@10:01:36.749
+Found 1 error(s)                                                  I@10:01:36.750
+The outcome is: Error                                             I@10:01:36.755
+Checker has found an error                                        I@10:01:36.778
+It took me 0 days  0 hours  0 min  4 sec                          I@10:01:36.778
+Total time: 4.161 sec                                             I@10:01:36.779
+EXITCODE: ERROR (12)
+
+--- stderr ---

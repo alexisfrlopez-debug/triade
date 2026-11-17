@@ -1,4 +1,52 @@
-LA BATTERIE 89488hblm — phase B-rest [0:13] : 4/4 VERT
+LA BATTERIE 89488hblm — phase D-rest [0:13] : 3/3 VERT
+  VERT  D. le verifie_couverture_288.py du clone : BIJECTION VERT
+  VERT  D. le contrôle d'épinglage : le deadlock ATTRAPÉ
+  VERT  D. l'énumération TLC des formes : 288 — 288 états distincts
+  ROUGE  D. le verifie_couverture_288.py du clone : BIJECTION VERT
+  VERT  D. l'épinglage TLC OuvrirPhraseErronee : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC OuvrirAncienCouple : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC Verifier : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC CrashPendantSession : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC CloturerCorrecte : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC CloturerPhraseErronee : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC VoleKUser : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC VoleSSerrure : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC VoleSPiege : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC FalsifieConteneur : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC FalsifiePiege : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC RejoueEpoquePassee : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  D. l'épinglage TLC OuvrirCorrect : les DEUX sens (aucun deadlock, aucune violation)
+  VERT  C_controle_translation_effets
+  VERT  C_controle_o3_couverture
+  VERT  C_controle_o3_non_vacuite
+  VERT  C_controle_translation_gardes
+  ROUGE  C_controle_translation_effets
+  VERT  C_controle_effet_VoleKUser
+  VERT  C_controle_effet_VoleSSerrure
+  VERT  C_controle_effet_VoleSPiege
+  VERT  C_controle_effet_FalsifieConteneur
+  VERT  C_controle_effet_FalsifiePiege
+  VERT  C_controle_effet_RejoueEpoquePassee
+  VERT  C_controle_effet_OuvrirCorrect
+  VERT  C_controle_effet_OuvrirPhraseErronee
+  VERT  C_controle_effet_OuvrirAncienCouple
+  VERT  C_controle_effet_Verifier
+  VERT  C_controle_effet_CrashPendantSession
+  VERT  C_controle_effet_CloturerCorrecte
+  VERT  C_controle_effet_CloturerPhraseErronee
+  VERT  C_controle_garde_VoleKUser
+  VERT  C_controle_garde_VoleSSerrure
+  VERT  C_controle_garde_VoleSPiege
+  VERT  C_controle_garde_FalsifieConteneur
+  VERT  C_controle_garde_FalsifiePiege
+  VERT  C_controle_garde_RejoueEpoquePassee
+  VERT  C_controle_garde_OuvrirCorrect
+  VERT  C_controle_garde_OuvrirPhraseErronee
+  VERT  C_controle_garde_OuvrirAncienCouple
+  VERT  C_controle_garde_Verifier
+  VERT  C_controle_garde_CrashPendantSession
+  VERT  C_controle_garde_CloturerCorrecte
+  VERT  C_controle_garde_CloturerPhraseErronee
   VERT  B_o3_couverture
   VERT  B_o3_non_vacuite
   VERT  B_translation_gardes

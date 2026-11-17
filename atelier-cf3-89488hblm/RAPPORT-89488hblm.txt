@@ -1,0 +1,154 @@
+LE RENFORCEMENT DU PROGRAMME DE PREUVE CF3 — LE RAPPORT (89488hblm)
+================================================================================
+(l'instruction reçue au /instructions, exécutée le 17/11 ; le plan
+pré-enregistré PLAN-89488hblm.md gelé au dcb2d56 AVANT toute mesure —
+sha256 5d1421bedf5912fe60a0b70a8a78ad3880c28a02367bc50626c3d0926a203fb5 —,
+l'amendement 2 au 8c831b6, les correctifs aux 5247c35 et après ; la règle
+D204/D211 reconduite : le commit précède la première exécution)
+
+LE RÉSULTAT : 102 CLEFS AU VERDICT ÉTENDU — les 11 clefs consignées
+BIT-IDENTIQUES (le rejeu du clone frais : les 7 runs originaux, TLC
+154/216/360 EXACTS, Apalache base/inductif NoError, les contrôles C1/C2
+attrapés — 8/8 VERT), PLUS les 91 clefs nouvelles : 42 obligations
+PROUVÉES (SMT entiers non bornés, Apalache 0.63.0/z3), 30 contrôles
+négatifs ATTRAPÉS (Error 12), l'épinglage TLC 13 règles × les DEUX sens
++ son contrôle (le deadlock ATTRAPÉ), le compte 288 (TLC + Python), et
+la campagne 10 000 traces REJOUÉE à graine identique : 10 000/10 000
+digests BIT-À-BIT IDENTIQUES, le condensé global 333996d4f8ce281f… 
+REPRODUIT.
+
+(a) L'ÉQUIVALENCE TLA+ ↔ SÉMANTIQUE PYTHON, PAR RÈGLE, SMT NON BORNÉ
+    — LA FIN DE L'ÉCHANTILLONNAGE 512/règle (la vague 5) :
+  * 13 ÉQUIV_GARDE (longueur 0, tout état bien typé) : la garde Python
+    (GP, la transcription fidèle de modele_invariant_v150.py — l'offre ∧
+    appliquer ≠ None —, le seuil LITTÉRAL Cardinality(sait ∩ Elements) :
+    son égalité avec Cardinality(sait) sous TypeOK est CONTENU DE LA
+    PREUVE) ⟺ la garde TLA+ extraite (GT) — NoError × 13.
+  * 13 ÉQUIV_IMAGE (longueur 1, LES COPIES MIROIR — l'amendement 2 : le
+    XOR relationnel REFUSÉ par la discipline d'affectation d'Apalache) :
+    la règle RÉELLE de CF3.tla (INSTANCE, zéro retranscription) tire sur
+    la copie R, la relation Python sur la copie P — les images
+    COÏNCIDENT — NoError × 13.
+  * 13 ÉQUIV_ACTIVATION (longueur 1, le témoin marque) : quand la règle
+    réelle tire, la garde Python TENAIT — NoError × 13.
+  * L'ÉPINGLAGE TLC (13 runs, les 4 096 représentants e ∈ {1, 2}) : le
+    sens manquant « la garde Python prétend ∧ la règle réelle refuse »
+    par le DEADLOCK TLC (rapporté par état — invisible en SMT borné,
+    la sonde ProbeDl le constata) ; l'autre sens par l'invariant ; les
+    DEUX sens VERTS × 13 — la réduction des représentants JUSTIFIÉE :
+    l'uniformité de classe des gardes Python PROUVÉE par LT1 (le point
+    (c)), celle des gardes réelles par l'audit mécanique consigné
+    (audit_regles.py : {e > 1, e + 1} seulement).
+  * LES 26 CONTRÔLES (une faute de transcription plausible par
+    obligation, CHACUNE ATTRAPÉE — Error 12) : 13 gardes mutées (le
+    vol restreint à tort, la phase canonique OUBLIÉE — l'écart de
+    couverture v0.15.0 que la PBT croisa —, le e > 1 oublié, la branche
+    honnête amputée, le trap_ok oublié…) et 13 effets mutés (le
+    MAUVAIS élément volé, le vol sans effet, la destruction qui
+    DÉBORDE sur le média, LE ROLL-BACK e′ = e − 1, le secret TOUJOURS
+    appris, la phrase erronée qui OUVRE, la vérification qui ACCEPTE,
+    le crash qui AVALE une époque, la clôture qui n'AVANCE PAS, la
+    phrase erronée qui SCELLE…).
+
+(b) LE LEMME O3 PAR SMT NON BORNÉ — LA BIJECTION, PROUVÉ ET ÉNUMÉRÉ
+    DISTINGUÉS :
+  * OB1 LA COUVERTURE (NoError) : pour TOUT état bien typé ∧ Inv —
+    l'époque QUELLE QU'ELLE SOIT — la forme α(s) est AU DOMAINE (la
+    classe dans {1, 2} : I4 force — l'argument de COMPLÉTUDE de la
+    preuve par formes finies sur l'espace non borné des époques).
+  * OB2 LA NON-VACUITÉ PAR FORME (NoError) : toute forme du domaine a
+    son témoin ι (la classe instantiée en époque) bien typé, Inv, de
+    forme lui-même (α∘ι = id).
+  * OB1 ∧ OB2 : l'image de {TypeOK ∧ Inv} par α est EXACTEMENT
+    FormDomain — la bijection des formes.
+  * LE COMPTE |FormDomain| = 288 : ÉNUMÉRÉ BORNÉ, JAMAIS PRÉTENDU
+    PROUVÉ — deux énumérations indépendantes : TLC (288 états distincts)
+    et le verifie_couverture_288.py du clone (288, la bijection VERT) ;
+    les époques représentatives {1, 2, 3, 7, 50, 1000} DEMEURENT DES
+    TÉMOINS, plus jamais des preuves.
+  * CB1 (OB1 sans I4 : l'état e = 0, classe 0, HORS domaine — ATTRAPÉ :
+    I4 est PORTANTE) ; CB2 (OB2 sans I1 : la forme secret ∧ sait = {}
+    sans témoin Inv — ATTRAPÉ : I1 est PORTANTE).
+
+(c) LE LEMME DE TRANSLATION ∀δ DÉCHARGÉ MÉCANIQUEMENT — LA FIN DU
+    TRIO {7, 50, 1000} COMME PREUVE :
+  * LT1 LES GARDES (NoError) : pour TOUT δ ≥ 0 et TOUT e ≥ 2, les 13
+    gardes au décalé ⟺ à l'origine — e et δ NON BORNÉS.
+  * LT2 LES EFFETS (NoError) : la commutation σ_δ ∘ FT = FT ∘ σ_δ —
+    les règles RÉELLES instanciées des deux côtés, le couplage préservé
+    (la clôture commute : (e + 1) + δ = (e + δ) + 1).
+  * LT1 ∧ LT2 : un contre-exemple à grande époque aurait, par
+    translation inverse, un contre-exemple à petite époque — la preuve
+    par formes finies aux classes {1} ∪ {≥2} est COMPLÈTE, MÉCANIQUE.
+  * CC1 (LT1 avec e ≥ 1 : à e = 1, δ ≥ 1, la garde de rejeu diverge —
+    ATTRAPÉ : LA FRONTIÈRE DE CLASSE {1}/{≥2} EST PORTANTE) ; CC2 (LT2
+    avec la clôture REPLACÉE PAR LE PLAFOND v120 des deux côtés : à
+    e = 3, δ = 1, les deux saturent à 3, le couplage exige 3 + δ —
+    ATTRAPÉ : LE PLAFOND N'EST PAS TRANSLATION-UNIFORME, la raison
+    historique de son retrait v120 → v0.15.0).
+
+L'ÉTAPE DE VÉRIFICATION (l'instruction l'exigeait, vécue INTÉGRALE) :
+  * LE CLONE FRAIS : les 7 runs originaux rejoués — verdicts.json
+    BIT-IDENTIQUE au consigné (11/11 clefs, le TEXTE identique), la
+    fidélité D187 154/1 152 reproduite au nombre EXACT ;
+  * LA CAMPAGNE 10 000 TRACES (graine consignée 20261112, --replay,
+    depuis le clone) : 10 000 stables, 0 divergentes, les 10 000
+    digests BIT-À-BIT identiques au CSV consigné, le condensé global
+    REPRODUIT — la frontière de la trace demeure (660 écarts d'UNE
+    classe, l'écart de couverture consigné : le présent chantier ne
+    touche NI le modèle Python NI le coffre, il les REJOUE) ;
+  * chaque contrôle négatif ATTRAPÉ (30 Error 12 + le deadlock TLC).
+
+LES ÉCARTS NOMMÉS :
+  * L'OUTILLAGE (le § 0 du plan) : Apalache 0.63.0 sha256 a756e96a…
+    EXACT (le consigné) ; tla2tools.jar — L'OCTET-À-OCTET CONSIGNÉ
+    (e1f11b75…) IRRÉCUPÉRABLE à L'AMONT ce jour (la release v1.8.0 est
+    un dépôt roulant ; l'asset actuel — digest sha256 7e53aa63… attesté
+    PAR GITHUB, créé 2026-11-15T00:27:39Z jamais remplacé — est le
+    build 2026.11.15.002146 rev bc1b506, LA VERSION ET RÉVISION EXACTES
+    des journaux consignés) ; LE RECOUP FONCTIONNEL A TRANCHÉ : la
+    batterie originale reproduite BIT-À-BIT (154/216/360, 8/8) —
+    l'écart est borné par la preuve elle-même ;
+  * LES TROIS AMENDEMENTS/CORRECTIFS D'ENCODAGE (le XOR refusé par la
+    discipline d'affectation — l'amendement 2 ; l'énumérabilité TLC de
+    l'Init des représentants ; la précédence des configs sur le drapeau
+    CLI --init — TOUT paramètre de run vit dans un config par run, 73
+    configs ; les tuples non annotés et l'affectation d'Init de delta —
+    le correctif 3) : AUCUNE OBLIGATION, AUCUNE MUTATION, AUCUN
+    CONTRÔLE ne fut touché — chaque écart documenté dans l'atelier,
+    committé AVANT les runs concernés ;
+  * le chemin de sortie du verifie_couverture_288.py (codé en dur à
+    l'ancienne mise en page /home/z/my-project/livraison-vague5/ — le
+    répertoire recréé, le script consigné JAMAIS modifié).
+
+LA FRONTIÈRE (l'honnêteté du chantier) :
+  * PROUVÉ (SMT, entiers non bornés) : les 30 obligations du point (a)
+    × les aspects, OB1, OB2, LT1, LT2 — chaque pièce avec son contrôle
+    ATTRAPÉ ;
+  * ÉNUMÉRÉ BORNÉ (et le dit) : le compte 288 (deux outils), les 4 096
+    représentants de l'épinglage (la réduction justifiée par LT1 +
+    l'audit consigné), les époques représentatives et les translations
+    témoins {7, 50, 1000} (démues de rôle probatoire) ;
+  * INTACT : le modèle Python, le coffre, la spec CF3.tla (copie
+    recoupée md5 b762c2c8…), les pièces consignées des vagues 3/5
+    (rejouées, jamais modifiées) ; l'écart de couverture PBT (660
+    traces, la falsification en session) demeure L'ÉCART CONSIGNÉ —
+    un chantier futur au commandement du développeur.
+
+LES PIÈCES : PLAN-89488hblm.md, AMENDEMENT-2-89488hblm.md, CF3Python.tla,
+CF3Equiv.tla, CF3PythonControles.tla, CF3EquivControles.tla, CF3O3.tla,
+CF3Translation.tla, les 88 configs (73 par-run + 15 d'épinglage),
+jouer_batterie_89488hblm.py (dispatchable par phase — le bac fauche les
+processus : chaque phase tient en un appel), assembler_verdicts_89488hblm.py,
+logs/ (les 91 journaux d'outils), preuves/ (le rejeu PBT : les 10 000
+lignes, le recoup du condensé), verdicts-89488hblm.json (les 102 clefs),
+RAPPORT-BATTERIE-A-D.txt, le présent rapport.
+
+LE VERDICT : VERT — le programme de preuve CF3 est renforcé sur les trois
+points de l'instruction ; l'équivalence des deux sémantiques n'est plus
+TÉMOIGNÉE sur 512 échantillons par règle, elle est PROUVÉE sur tout état
+bien typé, époque non bornée ; la bijection des 288 formes est PROUVÉE
+(ses deux obligations) et son compte ÉNUMÉRÉ par deux outils ; l'uniformité
+en époque est un LEMME ∀δ déchargé, plus un audit syntaxique et trois
+témoins. Les instructions fkkqc7v8t/p39uklsca demeurent (les chantiers
+4-5 du listing).
