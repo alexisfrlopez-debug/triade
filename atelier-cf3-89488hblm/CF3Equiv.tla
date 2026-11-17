@@ -222,7 +222,21 @@ InvAct_CloturerPhraseErronee == marque = FALSE \/ GP_CloturerPhraseErronee
  * InvPin_r tombe. Init = InitPin, Next = NextPin_r.
  ***************************************************************************)
 
-TypeOKClasses == TypeOK /\ e \in {1, 2}
+(* les représentants : les contraintes EXPLICITES et ÉNUMÉRABLES (TLC ne
+ * sait pas énumérer e \in Int — le correctif de l'amendement 2 : la
+ * conjonction TypeOK ∧ e ∈ {1, 2} réécrite les domaines finis d'abord,
+ * l'époque directement dans {1, 2}) *)
+TypeOKClasses ==
+  /\ e \in {1, 2}
+  /\ phase \in {"canonique", "brouillon"}
+  /\ sait \in SUBSET Elements
+  /\ trap_ok \in BOOLEAN
+  /\ cf2_ok \in BOOLEAN
+  /\ secret \in BOOLEAN
+  /\ accepte \in BOOLEAN
+  /\ detruit \in BOOLEAN
+  /\ destr_injuste \in BOOLEAN
+  /\ media_corrompu \in BOOLEAN
 
 InitPin ==
   /\ TypeOKClasses

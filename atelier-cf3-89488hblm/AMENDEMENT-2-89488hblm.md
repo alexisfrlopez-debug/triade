@@ -103,3 +103,29 @@ amendés (la règle D204/D211 reconduite — le commit précède la donnée ;
 le seul run exécuté sous le plan initial, equiv_garde_VoleKUser, suit
 l'encodage INCHANGÉ du plan gelé : Init = TypeOK, Inv = OblGarde,
 longueur 0).
+
+---
+
+## LE CORRECTIF DE L'AMENDEMENT 2 (avant tout run amendé) — deux leçons d'outil
+
+1. **L'ÉNUMÉRABILITÉ TLC** : TypeOKClasses == TypeOK ∧ e ∈ {1, 2} n'est
+   pas énumérable par TLC (« the right side of \IN is not enumerable » —
+   le e ∈ Int de TypeOK) — réécrit en contraintes EXPLICITES finies
+   (l'époque directement dans {1, 2}, les domaines des neuf autres
+   composants) — la MÊME population : 4 096 représentants (vérifié au
+   premier run : « 4096 distinct states generated »).
+2. **LA PRÉCÉDENCE DES CONFIGS** : le drapeau CLI --init d'Apalache NE
+   SURCHARGE PAS la section INIT du fichier de config (constaté : le
+   même --init=TypeOK donne NoError sous MCE.cfg [INIT InitCopies] et
+   l'erreur d'affectation sous MCC.cfg [INIT TypeOK]) — TOUT paramètre
+   de run vit désormais DANS un config par run (73 configs générés :
+   MCEg/MCEi/MCEa pour les obligations, MCCg/MCCi pour les contrôles,
+   MCO_*, MCT_*) ; --length et --no-deadlock demeurent CLI (les précédents
+   consignés les y ont toujours portés). Les runs de longueur 0 portent
+   NEXT RecopieTout (non parcouru à profondeur 0 — le précédent C2 :
+   --length=0 sous config à NEXT Next).
+   L'INIT des obligations GARDE : InitCopies (TypeOK ∧ les copies
+   couplées ∧ marque = FALSE) — les copies NE RESTREIGNENT PAS la base
+   (elle parcourt TOUS les états bien typés) : l'obligation est la même
+   que sous Init = TypeOK, l'initialisation des variables d'encodage en
+   plus.
