@@ -180,6 +180,17 @@ def une_execution(mode: str, numero: int) -> int:
         gravure = U02 / "kit"
         for canon in gravure.glob("loupe*"):
             shutil.copy2(canon, U02 / "piece" / canon.name)
+        # la pièce C canonique aussi — la gravure du kit C la porte (le
+        # comportement vécu de la campagne : l'assemblage recoupe les
+        # pièces contre les compilations consignées, la gravure détient
+        # les canoniques ; l'Entrée 320 commita une recompilation au
+        # epreuves — la pièce canonique est restaurée pareil)
+        gravure_c = REPO / "scripts" / "campagne_d204" / "unite-02-C" / "kit"
+        canon_c = gravure_c / "loupe-02-c.dll"
+        if canon_c.exists():
+            shutil.copy2(canon_c,
+                         REPO / "scripts" / "campagne_d204" / "unite-02-C"
+                         / "epreuves" / "loupe-02-c.dll")
         c_asm = etape("assemblage-kits (reprise : la pièce canonique "
                       "restaurée de la gravure)",
                       ["python3", "scripts/campagne_d204/"
