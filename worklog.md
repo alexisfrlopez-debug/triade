@@ -12783,3 +12783,66 @@ Work Log:
   p39uklsca, la dernière de la séquence prescrite ; l'ouverture suit,
   la première unité se construit).
   (17/11 au soir, la session du flux)
+
+## Task 235 — Entrée 335 : LE CHANTIER 5 OUVERT — LA CAMPAGNE D210 VÉCUE
+DEPUIS SA GRAINE (l'instruction p39uklsca, la dernière de la séquence
+prescrite ; la commande du développeur : « push git puis chantier 5 » — le
+push vécu à l'Entrée 334, le chantier suit)
+
+Work Log:
+- L'OUVERTURE (le plan D210, hash 4a3b1311… consigné à D210 AVANT toute
+  mesure) : LA GRAINE 20261117 consignée AVANT LE PREMIER APPEL (D217 au
+  journal des décisions ; GRAINE-D210.txt à l'atelier — la date du
+  commandement, le générateur python3 random.Random consigné, la
+  séquence TIRÉE PUBLIQUEMENT : loupe-02 le bras T d'abord, loupe-08 le
+  bras T d'abord, loupe-13 le bras T d'abord, loupe-16 le bras T
+  d'abord — le tirage honnête, quatre fois le même bord arrive une fois
+  sur huit, consigné tel quel, JAMAIS re-tiré). L'atelier posé
+  (projet/atelier-d210-p39uklsca/) : la rig L6 INTACTE recoupée à la
+  gravure (compter_tokens.py e2939ef9…, rig_auteur.py e5aa404a…), le
+  contrat loupe-02-lire.md VERBATIM de la couche I, le lab (les contrôles
+  mécaniques de la baseline + le cristalliseur PATCHÉ pour NOMMER les
+  encodages vides de keystone au lieu de tomber — le geste nommé), la
+  chaîne mingw du bac recoupée présente (le WINFIX de la 331).
+- LA PREMIÈRE UNITÉ : LOUPE-02 LIRE × BRAS T (la première tâche
+  contrôlée non encore instrumentée, l'ordre du tableau du LISEZMOI ;
+  loupe-01 n=1 et loupe-05 n=2 demeurent les paires d'avant-plan).
+  LA CONSTRUCTION PAR LA RIG (7 appels, 23 220 tokens, 100 % log-api,
+  le journal né des outils) : spec 1 943 · notation 4 031 · correctif
+  1 480 (IAT-D161 : les TROIS appels directs → les appels indirects par
+  les equ du plan) · correctif 2 212 (SYNTAXE : les CINQ refus keystone
+  — le ptr, le cmov-immédiat, l'échelle *16 inexistante, la faute vécue
+  de la D204 aussi) · oracle 3 710 (le juge écrit-avant-code, dérivé du
+  contrat) · correctif 5 269 (le faisceau STRUCTUREL : le slot 331 >
+  320, le cadre [rbp+16] inventé contre le lea rip+0x9dac de la
+  famille, le décalage détruit avant SetFilePointerEx, le layout +552
+  le remplissage/+568 LE tampon unique, le recouvrement interrompu à la
+  première entrée, le lu non recoupé, l'ombre absente) · correctif 4 575
+  (l'equ tombé, le prologue tombé, la poignée lue comme journal).
+  L'IT1 EST NÉE : le contrôle du lab VERT en syntaxe (331 o — LE
+  DÉBORDEMENT DU SLOT nommé, la D204 compacta à 292) ; l'it3 (le
+  dernier tour) porte la structure de la famille — le cadre par le lea
+  du plan, le décalage sauvé en r12, le remplissage au +552, l'ombre
+  autour des appels, le journal par le lea 0xe4a0 — MAIS l'equ et le
+  prologue demeurent tombés (deux tours de suite — la troncature
+  récurrente nommée, la leçon de la baseline réentendue) et le compteur
+  ReadFile lit rax (le retour de SetFilePointerEx, pas le remplissage).
+- L'ÉTAT NOMMÉ (la suite de la construction, au commandement) : le lab
+  re-pose l'equ et le prologue (le geste mécanique, les constantes du
+  plan nommées aux bundles — comme le splice), les fautes restantes au
+  tour suivant (le compteur ReadFile, le r9/ombre à l'endroit juste,
+  la destination du recouvrement au +568 en place), la cristallisation
+  DIX rebuilds, l'oracle différentiel au harnais D204 (oracle_unite02
+  réutilisable — le même plan, le même slot), la revue de cérémonie ;
+  PUIS le bras C (spec → source-c → tests-c → correctifs → revue), les
+  FORMATS IDENTIQUES (la pièce aux DEUX formats — l'EXE au slot ET la
+  DLL liée par le chargeur, la classe feuille-non-liée re-testée sur
+  les deux chemins), le kit daté au /test, le geste du développeur au
+  GUI passeur. La campagne est SÉQUENTIELLE — un seul binôme, une unité
+  à la fois (le guide § 10).
+- LA CONSIGNATION : la présente Entrée 335 ; l'atelier à projet/
+  atelier-d210-p39uklsca/ (le journal journal-tokens-d210.jsonl et le
+  garde-brut les pièces maîtresses) ; D217 au journal des décisions ;
+  le push GitHub + le bundle 335 + les slots Drive remplacés vécus au
+  geste établi de la 334.
+  (17/11 au soir, la session du flux)
