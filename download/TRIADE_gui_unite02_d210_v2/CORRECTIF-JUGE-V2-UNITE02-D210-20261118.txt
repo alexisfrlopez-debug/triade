@@ -1,0 +1,63 @@
+CORRECTIF-JUGE-V2-UNITE02-D210 — LE DÉFAUT NOMMÉ DE LA 338, LE JUGE RÉPARÉ,
+ET SES PREUVES
+(le 18/11/2026 au soir au labo, la correction COMMANDÉE par le développeur
+après la réception recoupée du run terrain de la 337 ; la consignation va à
+l'Entrée 339 du worklog ; D143 : le kit v1 demeure au coffre, INTACT —
+jamais jeté, jamais réécrit)
+================================================================================
+
+LE DÉFAUT (nommé AVANT correction — D202 — au RECOUP-338, nommé tel quel) :
+le kit GUI 1-clic livré à la 337 embarquait le scénario
+scenario-unite02.py du juge v1 (sha256 b3e896f7…) — le juge FAUTIF de
+l'histoire D204, octet pour octet. LE JUGE posait son journal à
+R_JOURNAL = 0xE4E0, SOIXANTE-QUATRE octets au-dessus de la vérité du
+layout (0xE4A0 — l'adresse même que le lea de la pièce vise, D161) : le
+juge lisait son journal TROP HAUT, la pièce n'y écrivait JAMAIS, et les
+DEUX vecteurs V2 du recouvrement tombaient ROUGE au terrain :
+
+    [ROUGE] V2:les-bords-de-fenetre
+    [ROUGE] V2:cinq-entrees-dont-une-non-alignee
+
+Le run terrain du 17/11 (20:01:36) rendit 18 VERT, 2 ROUGE, code retour 1.
+
+LES PREUVES (au labo, l'Entrée 338 — le bac
+scripts/campagne_d204/depot-run-unite02-d210-338/, le RECOUP-338 livré au
+/test) :
+  · LA PIÈCE EST CORRECTE : l'oracle du bloc couru TEL QUEL — 22 VERT,
+    0 ROUGE (le RAPPORT-UNITE-D210-01 re-vécu) ;
+  · LE JUGE LIVRÉ EST LA CAUSE : le scénario du kit == le juge v1 de
+    D204 OCTET POUR OCTET (b3e896f7…) ; le juge v2 réparé (302fa3a1…)
+    demeurait AUX ARCHIVES du bac 295, non livré ;
+  · LE REJEU FORENSIQUE : l'oracle du bloc couru DEUX FOIS — TEL QUEL
+    (22 VERT, 0 ROUGE), puis GREFFÉ de la seule constante fautive
+    (R_JOURNAL = 0xE4E0, la valeur du scénario livré) — 20 VERT, 2
+    ROUGE, LES DEUX MÊMES VECTEURS : LE VERDICT DU TERRAIN REPRODUIT AU
+    LABO PAR LA CONSTANTE SEULE. La cause est le juge livré, JAMAIS la
+    pièce (le précédent 295 : la faute au juge, jamais à la pièce).
+
+LA CORRECTION — LE JUGE v2 RÉPARÉ (ce kit porte) : le scénario
+scenario-unite02.py de CE kit est le juge v2 (sha256 302fa3a1…,
+22 476 o), PRIS AUX ARCHIVES du bac 295 (l'Entrée 295 de D204 — la
+constante remise à la vérité du layout, R_JOURNAL = 0xE4A0, la valeur
+du lea de la notation D210) ; SON SEUL CHANGEMENT par rapport au v1
+est cette constante et l'en-tête de révision qui la nomme. LA PIÈCE
+loupe.exe (cf251c12…), les témoins, la notation, les sources — LES
+QUATORZE autres pièces du kit demeurent INCHANGÉES octet pour octet
+(D143 : le kit v1 demeure au coffre ; le run v1 NE CONSOMME PAS
+d'itération — T-loupe-02-d210-it1 attend le re-run à ce juge réparé).
+
+L'ATTENDU DU RE-RUN : les DEUX vecteurs V2 ci-dessus passent VERT — le
+verdict attendu 20 VERT, 0 ROUGE, code retour 0 (l'oracle au juge sain
+conduit 22 VERT ; la console du scénario terrain compte 20 lignes de
+verdict — les DEUX ROUGE du 17/11 sont précisément celles que la
+constante fautive faisait tomber).
+
+LA LEÇON (consignée) : une re-livraison de kit se recoupe CONTRE LE JUGE
+qu'elle embarque — l'archive d'un juge réparé n'est pas une livraison ;
+le labo qui corrige un juge doit VÉRIFIER QUE LE KIT VIVANT PORTE LA
+RÉPARATION. (La même classe que l'Entrée 294 : le juge v2 y fut réparé
+aux archives, puis la campagne D210 bâtit son kit sur la v1 scellée —
+l'écart ne se vit qu'au terrain. La chaîne de garde par le contenu,
+D143, le nomma en une ligne.)
+
+(18/11/2026 au soir, la session de la correction — l'Entrée 339)

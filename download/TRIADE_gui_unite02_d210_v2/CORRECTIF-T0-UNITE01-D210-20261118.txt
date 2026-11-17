@@ -1,0 +1,65 @@
+CORRECTIF-T0-UNITE01-D210 — LE DÉFAUT NOMMÉ DU KIT DU 17/11, LA GRAVURE
+ADDITIONNELLE, ET SES PREUVES
+(le 18/11/2026 au labo, AVANT tout run terrain — découvert en construisant
+le GUI 1-clic de l'unité ; la consignation va à l'Entrée 336 du worklog ;
+D143 : le kit du 17/11 demeure au bac, rien n'est jamais détruit)
+================================================================================
+
+LE DÉFAUT. Le kit kit-unite-01-d210-20261117 tel que livré au bac portait
+EMPREINTES-KIT-UNITE-01-D210.txt au format « nom  taille o  sha256 »
+(lisible à l'œil — le format humain de la campagne D210). Or LE SCÉNARIO
+SCELLÉ (scenario-unite02.py, sha256 b3e896f7… — la pièce D204 INCHANGÉE,
+la même que le kit de l'unité 2 de la campagne) lit les gravures au format
+« sha256  nom » :
+
+    def lire_empreintes():
+        for fich in sorted(os.listdir(ICI)):
+            if fich.startswith("EMPREINTES") and fich.endswith(".txt"):
+                for ligne in open(...).read().splitlines():
+                    parts = ligne.strip().split(None, 2)
+                    if len(parts) >= 2 and len(parts[0]) == 64:
+                        empreintes[parts[1]] = parts[0].lower()
+
+Sur le kit du 17/11, AUCUNE ligne ne commence par un sha64 : la fonction
+rendait UN DICTIONNAIRE VIDE — et main() refusait AVANT toute mesure :
+
+    [T0] REFUS : aucune EMPREINTES*.txt au kit — rien ne court
+
+LE RUN TERRAIN SERAIT TOMBÉ AU PREMIER GESTE — sans aucune lecture, sans
+aucun témoin. Le défaut est de LIVRAISON (la gravure), jamais du scénario
+(la pièce scellée demeure INCHANGÉE, octet pour octet).
+
+LES PREUVES (au labo, l'extraction AST de lire_empreintes DU FICHIER
+LIVRÉ, exécutée — la leçon de l'Entrée 286 : l'épreuve exécute LE CODE
+LIVRÉ, pas sa copie) :
+  · sur le kit du 17/11 TEL QUE LIVRÉ : 0 pièce vue ;
+  · sur le kit précédent de la campagne (unite-02-T/kit, la gravure
+    « sha256  nom » d'origine) : 10 pièces vues — le parseur attendu,
+    confirmé sur pièce ;
+  · sur le kit GUI 1-clic (ce kit, la gravure additionnelle) : 15 pièces
+    vues, loupe.exe recoupé cf251c12… — T0 passera.
+
+LA CORRECTION — LA GRAVURE ADDITIONNELLE (le kit GUI 1-clic porte) :
+  EMPREINTES-PIECES-RUN.txt — LES QUINZE pièces du kit au format
+  « sha256  nom » QUE LE SCÉNARIO SCELLÉ PARSE (la même gravure que le
+  kit de l'unité 2 de la campagne, à l'identique des pièces) ; le
+  scénario fusionne TOUTES les EMPREINTES*.txt du dossier — les DEUX
+  gravures cohabitent, chacune à son usage (l'humaine et la machine).
+  L'EMPREINTES-KIT d'origine demeure INTACT à ses côtés, octet pour
+  octet (ca4177a7…) : D143 tenu — rien n'est modifié, rien n'est jeté.
+
+LA PREUVE T0 AU GUI (tenue à CHAQUE lancement, fail-closed) : le GUI
+extrait lire_empreintes DU SCÉNARIO LIVRÉ par AST, l'exécute sur le
+dossier du kit, et n'ACTIVE LE BOUTON VERT que si le scénario voit les
+pièces (« le scénario scellé voit 15 pièces (loupe.exe recoupé
+cf251c12…) — T0 passera » s'affiche en vert à l'onglet 1·VERROU) — le
+refus d'un run T0 devient IMPOSSIBLE AU TERRAIN : le défaut de gravure
+se nomme AVANT tout clic.
+
+LA LEÇON (consignée) : une gravure se recoupe CONTRE SON LECTEUR RÉEL —
+le format humain ne suffit jamais ; la preuve vit à l'extraction du code
+livré, pas à la lecture du fichier. (La même classe que le WINFIX de
+l'Entrée 331 : la branche _WIN32 du v160 n'avait jamais été compilée —
+ici, la gravure D210 n'avait jamais été PARSÉE par son scénario.)
+
+(18/11/2026, la session de la livraison du GUI 1-clic — l'Entrée 336)

@@ -13097,3 +13097,70 @@ Work Log:
   re-livraison d'attribution empirique au commandement.
   (18/11/2026, la session de la réception — le flux du coffre et du git
   aux jetons du /Tokens, l'annonce du développeur)
+
+
+Task ID: 206
+Agent: Z.ai (agent principal — la session de la correction commandée : le kit v2 au juge réparé livré)
+Task: LA CORRECTION COMMANDÉE (le « go » du développeur — la suite ① du RECOUP-338 : « la re-livraison du kit avec le juge v2 … puis le re-run terrain au geste du développeur ») : LE KIT GUI 1-CLIC v2 AU JUGE RÉPARÉ LIVRÉ au /test — le juge v2 (302fa3a1…, R_JOURNAL = 0xE4A0, la vérité du layout D161) PRIS AUX ARCHIVES DU BAC 295, la cause des deux rouge du terrain nommée à la 338 (D202 : la faute au juge, JAMAIS à la pièce), la pièce loupe.exe et les QUATORZE autres pièces INCHANGÉES octet pour octet (D143 : le kit v1 demeure au coffre, INTACT).
+
+Work Log:
+- LE JUGE v2 PRIS AUX ARCHIVES : le scenario-unite02.py du kit v2 ==
+  le scenario-unite02-v2.py du bac depot-run-v2-T-295/epreuves/ OCTET
+  POUR OCTET (sha256 302fa3a1…, 22 476 o ; R_JOURNAL = 0xE4A0 lu à la
+  ligne — soixante-quatre octets RÉTABLIS vers la vérité du layout) ;
+  la seule différence au v1 : la constante et l'en-tête de révision
+  qui la nomme (l'Entrée 294 de D204).
+- LA GRAVURE RÉGÉNÉRÉE (gravure_juge_v2_339.py) :
+  EMPREINTES-PIECES-RUN.txt v2 [1 975 o, sha256 cb2a8b0f…] — la ligne
+  du scénario porte le juge v2, les QUATORZE autres lignes INCHANGÉES
+  (recoupées sha256 par sha256 contre la gravure v1 AVANT le geste) ;
+  le BOM UTF-8 et les LF conservés à l'octet près ; LA PREUVE
+  IMMÉDIATE : lire_empreintes DU SCÉNARIO v2 LIVRÉ, extraite par AST
+  et exécutée sur le kit v2 : 15 pièces vues, loupe.exe recoupé
+  cf251c12… — T0 VERT.
+- LE GUI v2.0.0 (23 pièces au kit — les 22 du v1 + le
+  CORRECTIF-JUGE) : le verrou porte le juge v2 à la place du v1
+  (l'entrée de carte recoupe 302fa3a1…, la description nomme la
+  cause : « la faute au juge JAMAIS à la pièce ») + la gravure v2
+  (cb2a8b0f…) ; l'en-tête du source porte la correction nommée, le
+  LISEZMOI v2 réécrit [9 204 o], le lanceur .bat à l'en-tête v2 (les
+  CRLF conservés), le CORRECTIF-JUGE-V2-UNITE02-D210-20261118.txt
+  [3 613 o — le défaut nommé, la réparation livrée, l'attendu du
+  re-run : les DEUX vecteurs V2 passent VERT — 20 VERT, 0 ROUGE,
+  code 0], l'EMPREINTES-GUI v2 [4 372 o — tout recalculé des octets
+  finaux].
+- LES ÉPREUVES AU LABO (l'édition v2, l'honnêteté D122) : le selftest
+  15 VERT 0 ROUGE [le verrou 17/17 dont le juge v2] ; l'épreuve
+  fonctionnelle 9 VERT 0 ROUGE [la chaîne réelle du bouton vert au
+  bac POSIX, le scénario substitué étiqueté LABO — les fonctions
+  pures DU SCÉNARIO LIVRÉ extraites par AST] ; la fumée Xvfb 7 VERT
+  0 ROUGE [la fenêtre née, les cinq onglets, les 17 pièces rendues, le
+  verrou vert à l'écran] ; L'ÉPREUVE DU ZIP
+  (assembler_zip_juge_v2_339.py) : 23 entrées dézippées au bac, LE
+  JUGE DU ZIP == LES ARCHIVES DU BAC 295 byte-byte, le GUI DÉZIPPÉ
+  conduit son propre selftest : 15 VERT 0 ROUGE.
+- LA LIVRAISON (livrer_juge_v2_339.py, le geste établi — QUATRE noms
+  NEUFS, le kit v1 et ses livres demeurent INTACTS au /test, D143) :
+  kit-gui-1clic-unite02-d210-juge-v2-20261118.zip [260 590 o, md5
+  cf6dfeb0…] + CORRECTIF-JUGE-V2-UNITE02-D210-20261118.txt [3 613 o]
+  + LISEZMOI-RUN-UNITE02-D210-1CLIC-V2-JUGE-REPARE.txt [9 204 o] +
+  EMPREINTES-GUI-UNITE02-D210-1CLIC-V2-JUGE-REPARE.txt [4 372 o] —
+  QUATRE md5 recoupés (la fiche relue == le md5 local, échec fermé) ;
+  le kit v1 recoupé PRÉSENT au /test [723f319a…] ; le re-run terrain
+  AU GESTE DU DÉVELOPPEUR (T-loupe-02-d210-it1 attend le juge
+  réparé — le run v1 NE CONSOMMA pas d'itération).
+- LA CONSIGNATION : la présente Task 206 + l'Entrée 339 ; la carte
+  OU-TROUVER portée à 339 (la chaîne 338 conservée) ; le kit v2 au
+  download/ du dépôt [TRIADE_gui_unite02_d210_v2/ + le zip] ; les
+  SEPT scripts du geste à scripts/ [gravure, bat, empreintes,
+  assembler zip, épreuve fonctionnelle, fumée Xvfb, livrer] ; le git
+  poussé + le miroir Drive rafraîchi (le bundle + le delta + la
+  racine).
+- SUITE : le RE-RUN TERRAIN au geste du développeur [le kit v2
+  dézippé, LANCER-RUN-UNITE02-D210-1CLIC.bat, TOUT LANCER — l'attendu
+  : les deux vecteurs V2 VERT, 20 VERT 0 ROUGE, code 0, le témoin
+  daté signé D99, preuves-unite02/ au /test] ; après le re-run
+  recoupé : ② loupe-08 le bras T d'abord (la séquence tirée, jamais
+  re-tirée) ; la re-livraison d'attribution empirique au commandement.
+  (18/11/2026 au soir, la session de la correction — le « go » du
+  développeur, la suite ① du RECOUP-338)

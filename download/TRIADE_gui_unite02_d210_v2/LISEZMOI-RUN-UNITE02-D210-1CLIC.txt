@@ -1,0 +1,147 @@
+LISEZMOI-RUN-UNITE02-D210-1CLIC — LE RUN DE L'UNITÉ 01 D210 EN UN CLIC
+(l'édition v2 du 18/11/2026 au soir — LE JUGE RÉPARÉ : la correction
+commandée après la réception recoupée du run v1 ; le kit v1 et son run
+demeurent au coffre, INTACTS — D143 : jamais jetés, jamais réécrits)
+================================================================================
+
+L'OBJET : conduire LE GESTE TERRAIN de la première unité de la campagne
+D210 (loupe-02 lire × bras T — le LISEZMOI-KIT-UNITE-01-D210 du kit fait
+foi : l'ordre de jeu 1·KIT → 2·RUN → 3·TÉMOIN) SANS AUCUN CHOIX DE
+DOSSIER : le kit VIT DANS CE DOSSIER (loupe.exe, le scénario, les
+témoins, les gravures), le GUI le recoupe LUI-MÊME à chaque lancement.
+
+LA CORRECTION QUE CE KIT PORTE (le 18/11 au soir, la 339 — la cause fut
+nommée AVANT correction, D202, au RECOUP-338 livré au /test) : le kit v1
+couru au terrain le 17/11 rendit 18 VERT, 2 ROUGE — LA PIÈCE ÉTAIT
+CORRECTE (l'oracle du bloc : 22 VERT, 0 ROUGE), LA FAUTE AU JUGE livré :
+le scénario v1 (b3e896f7…) posait R_JOURNAL = 0xE4E0, SOIXANTE-QUATRE
+octets au-dessus de la vérité du layout (0xE4A0) — le juge lisait son
+journal trop haut, les DEUX vecteurs V2 du recouvrement tombaient rouge ;
+le rejeu forensique au labo REPRODUISIT le verdict terrain par la seule
+constante greffée. CE kit porte LE JUGE v2 RÉPARÉ (302fa3a1…, R_JOURNAL =
+0xE4A0 — la vérité du layout, le même qu'aux archives du bac 295 depuis
+l'Entrée 295 de D204) ; loupe.exe et les QUATORZE autres pièces du kit
+INCHANGÉES octet pour octet. Le re-run NE CONSOMME PAS d'itération :
+T-loupe-02-d210-it1 attend CE juge réparé — L'ATTENDU : les deux vecteurs
+V2 passent VERT, le verdict 20 VERT, 0 ROUGE, code retour 0.
+
+LE GESTE : dézippez ce kit où vous voulez (Téléchargements, Bureau) —
+kit-gui-1clic-unite02-d210-juge-v2-20261118/ — puis DOUBLE-CLIQUEZ
+LANCER-RUN-UNITE02-D210-1CLIC.bat. La fenêtre s'ouvre sur LE VERROU
+(l'étape 1 se recoupe seule) ; si un cadre « Windows a protégé votre PC »
+apparaît : clic droit sur le .bat, Propriétés, cochez « Débloquer », OK —
+la marque du web, comme toute pièce téléchargée du coffre.
+
+LE CORRECTIF T0 QUE CE KIT PORTE AUSSI (le 18/11, nommé au GUI et prouvé
+à chaque lancement) : le kit kit-unite-01-d210-20261117 tel que livré
+portait EMPREINTES-KIT-UNITE-01-D210.txt au format « nom  taille o
+sha256 » — le scénario (ce kit : le juge v2 302fa3a1… réparé à la 339,
+le LECTEUR de D204 inchangé) lit les gravures « sha256  nom » : il y
+voyait ZÉRO pièce, T0 aurait REFUSÉ. CE kit porte la gravure
+EMPREINTES-PIECES-RUN.txt (les QUINZE pièces au format parsé, la ligne
+du juge v2) ; l'EMPREINTES-KIT d'origine demeure INTACT à ses côtés
+(D143). LA PREUVE T0 : le GUI extrait lire_empreintes DU FICHIER LIVRÉ
+par AST et l'exécute sur ce dossier AVANT tout lancement — « le scénario
+scellé voit 15 pièces (loupe.exe recoupé cf251c12…) » s'affiche en vert ;
+le moindre écart = le bouton reste gris, RIEN ne court.
+
+LA FENÊTRE — LES CINQ ONGLETS :
+  1·VERROU   — LES DIX-SEPT pièces recoupées sha256 par sha256 (les
+               QUINZE du kit + les DEUX gravures) + LA PREUVE T0 ;
+               une divergence, RIEN ne court (fail-closed) ;
+  2·RUN      — LE BOUTON VERT « TOUT LANCER » : le scénario v2 couru
+               (SA console, écrite AU FIL DE L'EAU — chaque ligne couchée
+               et flushée à mesure — un crash laisse la console VIVANTE),
+               UTF-8 des deux côtés du tuyau (PYTHONIOENCODING posé par
+               le GUI), la console sauvée à
+               run-console-unite02-d210-<horodatage>.txt ; les verdicts
+               RECOPIÉS des lignes [VERT]/[ROUGE] (jamais recalculés) ;
+               le chrono M4 (début/fin/durée mesurés) ; REJOUER conduit
+               le rejeu diagnostic (le rejouage d'une unité verte n'est
+               PAS une livraison, § 7) ;
+  3·TÉMOIN   — LE VERROU D99 : le GUI ne signe JAMAIS. Le témoin naît
+               DU SCÉNARIO (preuves-unite02/temoin-unite02.txt, aux
+               blancs « Daté le : » / « Signé    : ») ; ouvre-le au
+               bloc-notes, DATE et SIGNE de votre main, puis
+               ASSEMBLER LE ZIP : preuves-unite02-d210-<UTC>.zip (le
+               réceptacle ENTIER + le DEPOT + la console) — l'assemblage
+               EXIGE le témoin daté-signé (refus nommé sinon) et REFUSE
+               au-delà de la cap M1 (TROIS livraisons par bloc, la règle
+               § 7 du plan D204) ; renvoyez le zip au coffre /test (le
+               bouton OUVRIR LE COFFRE y mène au navigateur — le GUI
+               n'écrit JAMAIS au Drive) ;
+  4·LIVRE    — les lignes AU GESTE : la ligne de carnet M3
+               (T-loupe-02-d210-it1), la ligne de livraison M1
+               (livraisons.csv), LA RÈGLE D202 (les défauts nommés AVANT
+               correction, defauts.csv), le chrono M4 ; le livre se
+               remplit À LA MAIN au bloc-notes, jamais ici ;
+  5·JOURNAL  — le journal de la session (chaque geste y vit) ; si un
+               écran nomme un défaut, renvoyez TRIADE_logs/ TEL QUEL.
+
+UN RUN ROUGE (le scénario rend 1) : le run FINIT quand même — le témoin
+naît, le dossier de preuves se renvoie ENTIER (le dépôt d'un run rouge
+est AUSSI un témoin) et LES DÉFAUTS SE NOMMENT AVANT CORRECTION (D202).
+Un REFUS (le code 2 — une pièce divergente, une empreinte absente) : le
+GUI s'arrête et NOMME la cause — ARRÊTEZ, ne modifiez AUCUN fichier, la
+console vivante se renvoie TELLE QUELLE.
+
+CE QUE CE GUI NE FERA JAMAIS (les frontières, tenues par construction) :
+  — DATER ni SIGNER un témoin : votre main, toujours (D99) ;
+  — DÉPOSER au coffre : il OUVRIRA le /test au navigateur, il n'écrit
+    JAMAIS au Drive ;
+  — FABRIQUER un chiffre : les verdicts sont RECOPIÉS des lignes de
+    console ; le compte VERT/ROUGE est un recomptage des lignes
+    couchées, jamais une réévaluation ;
+  — TOUCHER les pièces scellées : le scénario, loupe.exe, les témoins
+    LUS (le scénario lui-même recoupe loupe.exe AVANT de courir — le
+    moindre écart = [T0] REFUS, RIEN ne court) ;
+  — RENOMMER ni ÉDITER les pièces du réceptacle (le témoin, les
+    consoles : COPIÉES, jamais retouchées) ;
+  — DÉPASSER la cap M1 : TROIS livraisons par bloc — le quatrième zip
+    refuse, le refus est NOMMÉ.
+
+LA MÉMOIRE DU GUI : etat-run-unite02-d210.json (à côté du GUI) retient
+les étapes vertes, le contexte du run (console, verdicts, chrono),
+les livraisons assemblées — rouvrez le GUI, tout se retrouve (et si
+l'état périt, il se RECOMPLÈTE des pièces nées : la console la plus
+récente, le témoin — RELUS, jamais réinventés, la source nommée).
+TRIADE_logs/ conserve le journal de chaque session.
+
+L'HONNÊTETÉ DE CETTE ÉDITION v2 (l'épreuve du labo, D122 — le labo n'a
+AUCUN Windows : la fenêtre éprouvée au labo POSIX sous serveur X
+virtuel, l'exécution Windows se vit AU TERRAIN) :
+  — LA PREUVE DU JUGE : le scenario-unite02.py de ce kit == le juge v2
+    des archives du bac 295 OCTET POUR OCTET (sha256 302fa3a1…,
+    R_JOURNAL = 0xE4A0 lu à la ligne — la vérité du layout D161) ; le
+    rejeu forensique de la 338 : l'oracle au juge sain conduit la pièce
+    22 VERT, 0 ROUGE, la constante fautive seule reproduisait les deux
+    rouge du terrain ;
+  — le selftest (python triade_run_unite02_d210_gui.py --selftest) :
+    15 VERT, 0 ROUGE — le verrou (17/17 dont le juge v2), le
+    fail-closed, LA PREUVE T0, les verdicts recopiés, la main détectée
+    (D99), la collecte, le zip, la cap M1, l'état, la reconstitution ;
+  — l'épreuve fonctionnelle : 9 VERT, 0 ROUGE — LA CHAÎNE RÉELLE du
+    bouton vert conduite au bac POSIX (verrou, preuve T0, run,
+    collecte, zip, cap) avec un scénario SUBSTITUÉ étiqueté LABO (le
+    bac n'a aucun Windows — le substitué exécute les fonctions pures DU
+    SCÉNARIO LIVRÉ extraites par AST et émet LA MÊME console, JAMAIS
+    maquillé en run terrain) ;
+  — l'épreuve visuelle sous serveur X virtuel : 7 VERT, 0 ROUGE — la
+    fenêtre née, les CINQ onglets, les 17 pièces rendues, le verrou
+    VERT à l'écran, les accents rendus, le livre, le zip inactif sans
+    run ;
+  — le premier double-clic se vit chez vous : si un écran nomme un
+    défaut, renvoyez le journal de session (TRIADE_logs/) TEL QUEL,
+    le labo recoupe et corrige (D122).
+
+LES EMPREINTES du kit vivent à EMPREINTES-GUI-UNITE02-D210-1CLIC.txt (le
+GUI, le lanceur, le livre, les DEUX correctifs + les DIX-SEPT pièces
+recoupées) — la console « certutil -hashfile <fichier> SHA256 » les
+recoupe chez vous si vous le voulez.
+
+LA SUITE : le re-run de l'unité À VOTRE GESTE (ce kit, le juge réparé —
+T-loupe-02-d210-it1 demeure LA ligne de carnet : le run v1 ne consomma
+pas d'itération) ; après le re-run revenu et recoupé, l'unité suivante
+selon la séquence tirée (loupe-08 le bras T d'abord — jamais re-tirée,
+la graine D217) ; la re-livraison d'attribution empirique se prépare
+au commandement.
