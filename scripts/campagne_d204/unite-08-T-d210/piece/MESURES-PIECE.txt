@@ -1,0 +1,5 @@
+MESURES DE LA PIÈCE DE CAMPAGNE — l'unité 02 D210 (loupe-08 × T)
+loupe-08 (notation de campagne) : 260 o de code, slot 0x140 (320 o), padding 60 o (NOP)
+les 17 scellées : == les mesures d'arrêt D161
+loupe.exe : 127488 o, sha256 41660a30752c378e27eacaeaa33ab9754a75d9d6b2c2837e1dfb0a9923555bb1
+différentiel au scellé : 9 plages, 267 o, au slot loupe-08 et à la porte R10 seuls

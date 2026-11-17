@@ -1,0 +1,64 @@
+J'ai analysé le CONTRAT. Je suis prêt. L'ORACLE est dérivé.
+
+---
+
+### === L'ORACLE (le jugement du bloc de code) ===
+
+#### Les Vecteurs d'Entrée (Les Cas Nominaux, les Bords, les Rejets)
+
+Les vecteurs sont les instances matérielles du CONTRAT. Chacun est une preuve concrète, une attente sémantique absolue. Le code machine sera jugé sur sa capacité à reproduire exactement ces résultats.
+
+**1. Vecteur Nominal 1 (V1) : La Doré**
+*   **Scénario** : La première ligne du fichier `proxy.exe` scellé, avec une longueur de 16 octets.
+*   **Attendu de Contrat (sémantique)** :
+    *   **Q1 (Format)** : La sortie de 77 octets doit être une ligne parfaitement formatée, commençant par les 8 caractères hexadécimaux du décalage (par exemple, `00000000` si c'est le début du fichier), suivi de `  `, puis de 8 groupes de `HH` (représentant les 8 premiers octets en hexa), un double espace `  `, 8 autres groupes de `HH` (les 8 octets suivants), `  `, et enfin le miroir ASCII de ces 16 octets. La ligne se termine par un octet NUL (`\x00`).
+    *   **Q2 (Miroir)** : Chaque octet de la source (entre `0x20` et `0x7E`) doit être traduit en son caractère ASCII imprimable. Tout autre octet doit devenir un point (`.`).
+    *   **Q3 (Ligne Incomplète)** : *Non applicable ici, car la longueur est 16.*
+    *   **Q4 (Retour)** : Le registre `rax` doit contenir la valeur `0` à la fin de l'exécution.
+*   **Preuve Attendue** : La sortie octet par octet doit correspondre exactement à la ligne générée par une fonction Python respectant scrupuleusement les règles du contrat. L'alignement des colonnes doit être parfait.
+
+**2. Vecteur Nominal 2 (V2) : Le Différentiel**
+*   **Scénario** : 10 000 exécutions avec des entrées aléatoires :
+    *   `rdx` (longueur) : un entier entre 1 et 16.
+    *   `r9` (décalage) : un multiple de 16 (ex: 0, 16, 32...).
+    *   `rcx` (source) : 16 octets aléatoires (de `0x00` à `0xFF`).
+*   **Attendu de Contrat (sémantique)** :
+    *   **Q1 (Format)** : Pour chaque exécution, la sortie de 77 octets doit respecter scrupuleusement le format `SSSSSSSS  HH...HH  HH...HH  MMMMMMMMMMMMMMMMM`.
+    *   **Q2 (Miroir)** : Le miroir ASCII (`MMMM...`) doit être généré pour les `rdx` premiers octets de la source, avec le reste de la colonne (au-delà de `rdx`) rempli d'espaces.
+    *   **Q3 (Ligne Incomplète)** : Si `rdx < 16` (par exemple, `rdx = 10`), les groupes hexadécimaux 11 à 16 doivent être des espaces doubles, et les caractères du miroir 11 à 16 doivent être des espaces simples. La ligne doit conserver sa structure de 77 octets.
+    *   **Q4 (Retour)** : `rax` doit toujours être `0` après chaque exécution.
+*   **Preuve Attendue** : La sortie de chaque exécution doit être identique, octet par octet, à la sortie d'une fonction de référence (en Python ou autre) implémentant les mêmes règles. C'est le test de robustesse et de conformité.
+
+**3. Vecteur de Rejet (V3) : Les Entrées Invalides**
+*   **Scénario** : Trois appels distincts avec des paramètres violant le contrat.
+    *   **E1** : `rdx = 0` (longueur nulle).
+    *   **E2** : `rdx = 17` (longueur trop grande).
+    *   **E3** : `rcx = 0` (source nulle) *ou* `r8 = 0` (sortie nulle).
+*   **Attendu de Contrat (sémantique)** :
+    *   **Verdict** : Dans les trois cas, le code doit s'arrêter immédiatement et retourner la valeur `-5` dans `rax`.
+    *   **Absolu de Contrat** : **Rien ne doit être écrit** dans la zone mémoire pointée par `r8` (la sortie). La mémoire doit rester dans son état initial avant l'appel. C'est une condition impérative.
+*   **Preuve Attendue** : L'oracle à scénarios (différentiel) doit confirmer que, après un appel rejeté, la sortie n'a pas été modifiée. Le verdict `-5` dans `rax` est la seule trace de l'exécution.
+
+**4. Vecteur de Falsification (V4) : Le Piège**
+*   **Scénario** : Une entrée valide (ex: `rdx=16`, `r9=0`, `rcx` pointant sur 16 octets connus) mais une sortie contenant une seule erreur, par exemple :
+    *   Un espace manquant entre deux groupes hexadécimaux : `XX XX XX XX XX XX XX XX XX XX...`
+    *   Un point de remplacement (`.`) utilisé à la place d'un espace dans la colonne ASCII.
+    *   Une majuscule en minuscule en hexadécimal (`a` au lieu de `A`).
+*   **Attendu de Contrat (sémantique)** :
+    *   **Échec** : Le verdict est un échec total. La moindre déviation par rapport au format contracté est une falsification.
+*   **Preuve Attendue** : L'oracle à scénarios (différentiel) détectera la divergence et rendra un verdict négatif. Ce vecteur n'est pas un test de passage, mais une validation que le rejet de toute non-conformité est correct.
+
+---
+
+#### Les Attendus Globaux (Les Invariants du Jugement)
+
+Le jugement ne se limitera pas aux vecteurs ci-dessus. Le bloc de code sera aussi jugé sur la conformité aux principes fondamentaux extraits du contrat.
+
+*   **Attendu I1 (Pureté)** : L'absence totale d'effets de bord. Le code ne doit **jamais** lire ou écrire ailleurs que dans les tampons fournis en arguments (`rcx` pour lecture, `r8` pour écriture). Aucun appel système, aucune lecture/écriture en dur d'adresses mémoire, aucune modification de registres non volatils (`rbp`, `rsp`, etc.) qui ne soit explicitement autorisée.
+*   **Attendu I2 (Sécurité)** : L'absence totale de débordement. Le code doit garantir, par sa logique interne, qu'il n'écrira jamais en dehors des 77 octets alloués pour la sortie, quelle que soit l'entrée (dans les limites du contrat, i.e., `rdx` ≤ 16). La vérification des préconditions (`rdx` entre 1 et 16, `P1`/`P3` non nuls) doit être la première action.
+*   **Attendu I3 (Immuabilité)** : La source (`rcx`) est une lecture seule. Le code ne doit jamais tenter d'écrire dans cette zone mémoire. La pureté de l'entrée est un invariant.
+*   **Attendu I4 (Convention)** : L'utilisation de la table de conversion hexadécimale `0123456789ABCDEF` (majuscules exclusivement) et la destruction des registres volatils (`rax`, `rcx`, `rdx`, `r8`, `r9`, `r10`, `r11`) est attendue. L'utilisation de `NOP` (0x90) est une marque de propreté du code.
+
+---
+
+Le jugement est prêt. Le bloc de code sera soumis à cette procure. Il est soit innocent, soit coupable. Il n'y a pas de milieu.
