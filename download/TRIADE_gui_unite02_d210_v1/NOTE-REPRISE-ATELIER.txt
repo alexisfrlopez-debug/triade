@@ -1,0 +1,35 @@
+LA NOTE DE REPRISE DE L'ATELIER D210 — LA PERTE DU BAC NOMMÉE (17/11 au soir)
+L'atelier d210-p39uklsca vécu à la session précédente vivait au bac
+(projet/atelier-d210-p39uklsca/) — le bac fut recyclé entre les sessions
+(le précédent de l'Entrée 334 : LA PERTE NOMMÉE, le coffre demeure la
+référence). CE QUI FUT PERDU : les pièces de travail de la première unité
+(journal-tokens-d210.jsonl des 7 appels, le garde-brut, la notation it1,
+la notation it3, les fragments des tours, les notes spec/oracle de la
+session). CE QUI DEMEURE : la consignation INTÉGRALE à l'Entrée 335 du
+worklog (les 7 appels : spec 1 943 · notation 4 031 · correctif 1 480 ·
+correctif 2 212 · oracle 3 710 · correctif 5 269 · correctif 4 575 =
+23 220 tokens, 100 % log-api — LE RECORD DÉMEOURE AU WORKLOG, jamais
+reconstruit) ; la rig L6 INTACTE au coffre /test (recoupée aux empreintes
+à la reprise : e2939ef9… compter_tokens, e5aa404a… rig_auteur) ; le plan
+D210 verrouillé (sha256 4a3b1311… recoupé EXACT au dépôt du bundle 335) ;
+le contrat loupe-02-lire.md VERBATIM (la couche I) ; la pièce scellée de
+famille loupe-02-lire.asm (296 o de code, D204, la référence de la
+confrontation) ; la graine D217 (jamais re-tirée, la présente recoPIE la
+consignation).
+LE GESTE DE REPRISE (prescrit par l'Entrée 335 elle-même : « le lab
+re-pose l'equ et le prologue — le geste mécanique ») : ÉTENDU par la
+perte — le lab re-pose LA NOTATION IT3 TELLE QUE CONSIGNÉE (la structure
+de famille : le cadre par le lea du plan, le décalage en r12, le
+remplissage au +552, l'ombre autour des appels, le journal par le lea
+0xe4a0 ; l'equ et le prologue RE-POSÉS ; les FAUTES NOMMÉES de l'it3
+consignées demeurent au re-posé : le compteur ReadFile lit rax, le
+r9/ombre à l'endroit fautif, la destination du recouvrement hors du
++568) — les fautes partent au tour suivant PAR LA RIG (le
+bundle-défaut), le lab ne corrige JAMAIS par lui-même les fautes de
+fond, seulement les gestes mécaniques (l'equ, le prologue, le splice).
+LA MESURE : le journal-tokens-d210.jsonl RE-NÉ de la présente reprise
+(les appels de la suite consignés DEPUIS CETTE ligne) ; les 23 220
+tokens perdus demeurent au worklog comme le record des 7 appels —
+AUCUN total de la présente reprise ne les confond jamais : deux
+journaux, deux records, la sommation interdite sauf à la consignation
+finale qui NOMME la couture.

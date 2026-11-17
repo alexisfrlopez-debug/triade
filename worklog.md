@@ -12908,3 +12908,109 @@ Work Log:
   loupe-08 le bras T d'abord (la séquence tirée, jamais re-tirée).
   (17/11 au soir, la session de reprise — consignée le 18/11 au geste
   du push commandé)
+
+## Task 237 — Entrée 337 : LE GUI 1-CLIC AUTONOME DE L'UNITÉ 01 D210
+LIVRÉ, LE DÉFAUT T0 DE LA GRAVURE NOMMÉ AVANT LE TERRAIN, LE COFFRE ET
+LE GIT MIS À JOUR AUX JETONS DU /Tokens (la commande du développeur :
+« fais un GUI 1 clic autonome pour ce test et mets a jour le drive et
+git (dossier /token du drive pour les acces) »)
+
+Work Log:
+- LES JETONS RAPATRIÉS DU COFFRE (la procédure Task 79 rejouée) : les
+  QUATRE jetons du dossier /Tokens du Drive (le relais OAuth, le
+  secret client, le compte de service, le jeton GitHub) téléchargés à
+  .gdrive/ (600, JAMAIS affichés — D12) ; check_auth.py : l'échange
+  refresh→access 200, le listing du coffre 200, l'API GitHub /user 200
+  (compte alexisfrlopez-debug). Le dossier public du Drive listé sans
+  authentification au premier regard (la page web du dossier porte les
+  IDs — la voie de rapatriement documentée).
+- LE DÉFAUT T0 NOMMÉ AVANT LE TERRAIN (découvert en construisant le
+  GUI, AVANT tout run) : le kit kit-unite-01-d210-20261117 tel que
+  livré portait EMPREINTES-KIT-UNITE-01-D210.txt au format « nom
+  taille o sha256 » — LE SCÉNARIO SCELLÉ (b3e896f7…, D204 INCHANGÉ)
+  parse « sha256 nom » : lire_empreintes() y voyait ZÉRO pièce, T0
+  aurait REFUSÉ (« aucune EMPREINTES*.txt au kit — rien ne court ») —
+  le run terrain serait tombé au premier geste, sans témoin. LA
+  PREUVE (l'extraction AST de lire_empreintes DU FICHIER LIVRÉ,
+  exécutée — la leçon de la 286) : sur le kit du 17/11 → 0 pièce ;
+  sur le kit de l'unité 2 de la campagne (la gravure « sha256 nom »
+  d'origine) → 10 pièces ; sur le kit GUI → 15 pièces, loupe.exe
+  cf251c12… recoupé. LA CORRECTION : LA GRAVURE ADDITIONNELLE
+  EMPREINTES-PIECES-RUN.txt (les QUINZE pièces au format parsé) — le
+  scénario fusionne TOUTES les EMPREINTES*.txt, les DEUX gravures
+  cohabitent ; l'originale DEMEURE INTACTE (ca4177a7…, D143). LA
+  LEÇON : une gravure se recoupe CONTRE SON LECTEUR RÉEL — le format
+  humain ne suffit jamais (la même classe que le WINFIX de la 331 :
+  la branche jamais compilée, la gravure jamais parsée). Consigné au
+  CORRECTIF-T0-UNITE01-D210-20261118.txt (au kit ET au coffre /test).
+- LE GUI (triade_run_unite02_d210_gui.py, 66 200 o, tkinter stdlib,
+  UN SEUL FICHIER — RIEN à installer au-delà de Python 3 : le
+  scenario est pur ctypes, le kit PORTE ses pièces, AUCUNE chaîne à
+  embarquer) : LES CINQ ONGLETS — 1·VERROU (les DIX-SEPT pièces
+  recoupées sha256 par sha256 + LA PREUVE T0 recoupée à CHAQUE
+  lancement : le GUI extrait lire_empreintes du scénario livré par
+  AST et n'active le bouton vert QUE si le scénario voit les pièces —
+  le refus T0 devient IMPOSSIBLE au terrain), 2·RUN (le bouton TOUT
+  LANCER conduit le scénario TEL QUEL — SA console écrite AU FIL DE
+  L'EAU, UTF-8 des deux côtés [PYTHONIOENCODING posé], les verdicts
+  RECOPIÉS des lignes [VERT]/[ROUGE], jamais recalculés ; le chrono
+  M4 mesuré ; REJOUER le rejeu diagnostic, le rejouage d'une unité
+  verte n'est PAS une livraison § 7), 3·TÉMOIN (LE VERROU D99 : le
+  témoin naît DU SCÉNARIO, le GUI le lit et le RECOPIE, jamais n'y
+  touche ; l'assemblage preuves-unite02-d210-<UTC>.zip EXIGE le témoin
+  daté-signé [refus nommé] et REFUSE au-delà de la cap M1 [TROIS par
+  bloc, le refus nommé] ; le coffre /test ouvert au navigateur — le
+  GUI n'écrit JAMAIS au Drive), 4·LIVRE (la ligne de carnet M3
+  T-loupe-02-d210-it1, la ligne de livraison M1, LA RÈGLE D202, le
+  chrono M4 — à la main, jamais automatisé), 5·JOURNAL (le journal de
+  session, renvoyé TEL QUEL si un écran nomme un défaut). Un run
+  ROUGE (code 1) : le témoin naît, le dossier se renvoie ENTIER (le
+  dépôt d'un run rouge est AUSSI un témoin) ; un REFUS (code 2) : le
+  GUI s'arrête et NOMME (la console vivante renvoyée TELLE QUELLE).
+  L'ÉTAT sauvé à CHAQUE geste (etat-run-unite02-d210.json, default=str
+  — les leçons du correctif collecte v1.0.1 du v160 portées dès la
+  naissance) ; la reconstitution d'un état perdu des pièces nées (la
+  console, le témoin — RELUS, la source nommée).
+- LES ÉPREUVES (D122 — le bac n'a aucun Windows) : le selftest 15
+  VERT 0 ROUGE (le verrou, le fail-closed divergent/absent, LA PREUVE
+  T0 ET le défaut d'origine nommé [0 pièce sans la gravure du
+  correctif], les verdicts recopiés, la main détectée D99, la
+  collecte, le zip [témoin blanc refusé, cap tenue], l'état
+  va-et-vient, la reconstitution, le refus de code) ;
+  L'ÉPREUVE FONCTIONNELLE 9 VERT 0 ROUGE — LA CHAÎNE RÉELLE du bouton
+  vert conduite au bac POSIX avec un scénario SUBSTITUÉ étiqueté LABO
+  (le substitué exécute les fonctions pures DU SCÉNARIO LIVRÉ
+  extraites par AST, émet LA MÊME console et LE MÊME témoin au format
+  exact — JAMAIS maquillé en run terrain) ; L'ÉPREUVE VISUELLE sous
+  serveur X virtuel 7 VERT 0 ROUGE (la fenêtre née, les CINQ onglets,
+  les 17 pièces rendues, le verrou VERT, les accents, le livre, le zip
+  inactif sans run) PLUS la capture au pixel et l'inspection visuelle
+  — LA FUMÉE NOMMA UN DÉFAUT au premier rendu : le titre long chassait
+  les TROIS boutons du bandeau hors cadre — corrigé (les boutons
+  packés à droite d'abord, le wraplength partout), la leçon
+  consignée (jamais un bouton invisible au premier regard).
+- LA LIVRAISON AU COFFRE /test (recoup md5, échec fermé) : le kit
+  kit-gui-1clic-unite02-d210-20261118.zip (256 059 o, 22 pièces :
+  le GUI + le lanceur .bat CRLF + le LISEZMOI + le CORRECTIF-T0 +
+  l'EMPREINTES-GUI + LES QUINZE pièces du kit + les DEUX gravures),
+  le LISEZMOI, les EMPREINTES-GUI, le CORRECTIF-T0 à la racine du
+  /test — QUATRE md5 MATCH. Le kit porte le correctif T0 : le kit du
+  17/11 demeure au bac (D143), le GUI kit le SUPERSEDE au coffre.
+- LA CONSIGNATION ET LE GIT (la commande du développeur : « mets a
+  jour le drive et git ») : l'Entrée 336 re-consignée depuis son
+  brouillon (la construction de l'unité — sa consignation canonique
+  commandée au présent geste) ; la présente Entrée 337 ; le kit à
+  download/TRIADE_gui_unite02_d210_v1/ + le zip, les QUATRE scripts
+  d'épreuve et de livraison à scripts/, l'atelier de l'unité
+  scripts/campagne_d204/unite-02-T-d210/ suivi ; LE PUSH GitHub aux
+  jetons du /Tokens (origin → github.com/alexisfrlopez-debug/triade.git,
+  git-credentials 600, JAMAIS committé — D12) ; le miroir Drive
+  rafraîchi par drive_sync.py (le bundle + TRIADE-sauvegarde-git),
+  chaque pièce recoupée md5.
+- LA SUITE : ① LE RUN TERRAIN de l'unité au kit GUI (le premier
+  double-clic se vit chez le développeur — TOUT LANCER, le témoin à
+  sa main D99, le zip au /test) ; ② le recoup du lab au retour ;
+  ③ loupe-08 le bras T d'abord (la séquence tirée, jamais re-tirée) ;
+  la re-livraison d'attribution empirique au commandement.
+  (18/11/2026, la session de la livraison — le flux du coffre et du
+  git aux jetons du /Tokens, la commande du développeur)

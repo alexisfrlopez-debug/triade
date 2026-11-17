@@ -1,0 +1,68 @@
+LISEZMOI-KIT-UNITE-01-D210 — LA PREMIÈRE UNITÉ DE LA CAMPAGNE D210
+(loupe-02 LIRE × les DEUX BRAS, construite PAR LA RIG — le plan D210
+verrouillé 4a3b1311…, la graine 20261117 consignée AVANT le premier appel,
+la séquence tirée publiquement : loupe-02 le bras T d'abord)
+================================================================================
+
+CE QUE CE KIT EST. La première unité entièrement instrumentée de la
+campagne d'extension D210 (l'instruction p39uklsca, la dernière de la
+séquence prescrite) : le bloc loupe-02 LIRE reconstruit AUX DEUX BRAS
+PAR LA RIG L6 (compter_tokens.py câblé à chaque appel — le journal né
+des outils, 100 % log-api, zéro estimation). La pièce de campagne :
+loupe.exe (127 488 o, sha256 cf251c12…) — le build du plan où le slot
+loupe-02 (RVA 0x4240, 320 o) porte LA NOTATION D210 (300 o de code
+cristallisés, sha256 du cristal c8ec754e…, la cristallisation 10/10
+rebuilds byte-identiques), les DIX-SEPT autres blocs demeurant les
+scellés (R7 — la lecture seule, le diff au scellé CONFINÉ au slot
+loupe-02 et à la porte R10, le build le nomme).
+
+L'ÉPREUVE VÉCUE AU LABO : l'oracle différentiel au harnais D204 (le
+même plan, le même slot — oracle_unite02 réutilisé) : V1 le
+différentiel aux témoins + le scellé (1 000+ décalages, la graine fixe
+20261114, la vue et le curseur intacts), V2 le recouvrement aux bords
+de fenêtre + cinq entrées dont une non alignée, V3 les QUATRE rejets
+nommés, V4 le shim ReadFile en échec (fail-closed, la session survit),
+V5 la falsification détectée — **22 VERT, 0 ROUGE**. La revue de
+cérémonie aux deux bras : **CONFORME** (clause par clause, les
+instructions à l'appui).
+
+LE BRAS C : le source C pur (source-loupe-02-C.c — loupe-02-it3.c),
+gcc -O2 -std=c11 -Wall -Wextra PROPRE contre le shim windows.h du labo
+(la liste fermée IAT D161), la suite tests-c (N1-N6, B1-B5, R1-R6, la
+falsification), la revue CONFORME. ÉCART NOMMÉ : la chaîne mingw est
+ABSENTE du présent bac (le précédent du chantier 4 — GAP NOMMÉ) : la
+DLL du bras C n'est pas compilée ICI ; le source compile PROPRE et se
+compile au terrain (gcc -O2 -shared, la commande au RAPPORT) OU à la
+prochaine session la chaîne re-provisionnée (le WINFIX de la 331 le
+permît) — la pièce C est LIVRÉE À L'ÉPREUVE.
+
+LA MESURE (le journal kit/journal-tokens-d210.jsonl, 100 % log-api) :
+la REPRISE de cette session : 9 appels, 19 390 tokens (T : correctif
+1 522 [tours 4-5] + revue 3 711 ; C : spec 2 060, source-c 3 236,
+correctif 3 769 [tours 1-2], tests-c 2 479, revue 2 613). LA COUTURE
+NOMMÉE : les 7 appels de la première construction (23 220 tokens :
+spec 1 943, notation 4 031, correctifs 1 480/2 212/5 269/4 575, oracle
+3 710) vécurent à la session précédente — leur journal PÉRIT au
+recyclage du bac (NOTE-REPRISE-ATELIER.txt) ; leur record DEMEURE à
+l'Entrée 335 du worklog, JAMAIS reconstruit ni sommé en silence.
+
+L'ORDRE DE JEU DU TERRAIN (le geste du développeur — jamais automatisé,
+D99) :
+  1·KIT : choisir le dossier du kit livré — le GUI recoupe les
+     empreintes gravées (EMPREINTES-KIT-UNITE-01-D210.txt — une
+     divergence, rien ne court) ;
+  2·RUN : lancer le LANCEUR (ou python3 scenario-unite02.py — la
+     même pièce au slot, les témoins, le scénario D204 inchangé) ;
+     le dossier du run naît sur votre machine ;
+  3·TÉMOIN : dater, signer DE VOTRE MAIN, renvoyer le dossier ENTIER
+     (preuves-unite02-d210/) au coffre /test ;
+  aux onglets 4-7 : la ligne de carnet AU GESTE (M3), la livraison
+     (M1), les défauts nommés avant correction, le chrono des
+     commandes de vérification (M4 — le labo mesura : build 0,5 s,
+     oracle V1-V5 33,6 s).
+
+LA SUITE : la campagne est SÉQUENTIELLE (un binôme, une unité à la
+fois) — après le run revenu et recoupé, l'unité suivante selon la
+séquence tirée : loupe-08 le bras T d'abord. La re-livraison
+d'attribution empirique (la pièce C via un kit standard minimal) se
+prépare au commandement.
