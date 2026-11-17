@@ -1,0 +1,137 @@
+LE RAPPORT DE LA DEUXIÈME UNITÉ D210 — LOUPE-08 LIGNE × LES DEUX BRAS
+(la session du 18/11 — la commande du développeur : « go », la suite ②
+annoncée à l'Entrée 340 : loupe-08 le bras T d'abord, la séquence tirée
+de la graine D217, jamais re-tirée)
+================================================================================
+
+LE GESTE. La campagne D210 (le plan verrouillé 4a3b1311… ; la graine
+20261117 consignée AVANT le premier appel, D217 ; la séquence tirée
+publiquement : loupe-02 le bras T d'abord — VÉCU ET CLOS au terrain
+[Entrées 335-340], loupe-08 le bras T d'abord — LA PRÉSENTE, loupe-13
+et loupe-16 suivent). L'ATELIER INTACT : la rig L6 recoupée aux
+empreintes (e2939ef9… compter_tokens, e5aa404a… rig_auteur), le contrat
+loupe-08-ligne.md VERBATIM de la couche I (sha256 92d3e02c…), la pièce
+scellée de famille loupe-08-ligne.asm (271 o, D204 — la référence de
+la confrontation). LA MESURE au journal de campagne (100 % log-api, le
+garde-brut conservé) : 18 appels, 52 729 tokens (bras T 37 456 + bras C
+15 273) — la spirale corrective 26 866 tokens (51 % — H8 tenue :
+la spirale demeure le chemin chaud des DEUX bras).
+
+LE BRAS T — LA CONSTRUCTION PAR LA RIG (la spirale, les fautes nommées
+par les contrôles, jamais le lab ne complétant le fond) :
+  ① SPEC (2 105) : les notes d'auteur du contrat (les exigences, les
+     pièges, les invariants).
+  ② NOTATION (3 786) : le brouillon it1 — l'oracle du labo NOMME onze
+     lignes SYNTAXE (la directive db à la table — I4 : la table vit au
+     plan R_HEX 0x2050 ; les accès au symbole inconnu de keystone ; les
+     cinq formes mémoire-immédiat MUETTES [keystone rend un encodage
+     VIDE sans lever — le patch consigné de la 335 re-posé au labo]) ;
+     le contrôle CRASHE au premier tour : LE PATCH re- posé (l'encodage
+     vide NOMMÉ, jamais le crash — le geste restauré, consigné).
+  ③ LE CORRECTIF 1 (4 116, SYNTAXE) : la table au plan par le lea RIP,
+     les formes ptr — it2 VERT, 308 o.
+  ④ L'ORACLE (3 321, écrit-avant-code) : dérivé du contrat SEUL
+     (oracle-depuis-I.txt) — le juge est le modèle indépendant, jamais
+     les octets du bloc.
+  ⑤ LES CORRECTIFS 2-4 (4 474 + 4 196 + 4 134, le faisceau
+     STRUCTUREL) : le plan VOLATIL (rbx/r12-r15 détruits sans sauvegarde
+     — I4 ; la borne D8 : 308 > 304 ; les QUATRE espaces de Q1 ; le lea
+     dans la boucle ; l'extraction incohérente ; Q4 rax non remis) —
+     les réponses PARTIELLES (la classe de troncature récurrente,
+     nommée deux fois — le vécu de la D204 réentendu).
+  ⑥ LE GESTE MÉCANIQUE DU LABO (nommé, bijectif) : la remappe de la
+     phase 1 vers le plan volatile (r12/r13/r14/r15 → r8/rdx/r9d/rax,
+     l'élimination des alias) ; la normalisation de largeur (cmp r9d,
+     rdx → edx — la classe registre 32/64, le nouveau refus keystone
+     nommé au contrôle).
+  ⑦ LES CORRECTIFS 5-6 (1 656 + 3 294, les transcriptions
+     chirurgicales) : les phases 1-2 (les huit chiffres par le shr
+     28/shl 4, le compteur en r9d) puis 3-4 (les groupes par les deux
+     nibbles, le médian DOUBLÉ, le miroir, Q4 rax remis) — it8 : la
+     syntaxe VERT, 260 o.
+  ⑧ LE CORRECTIF 7 (984, LA FAUTE NOMMÉE PAR L'ORACLE AU HARNAIS) : la
+     boucle du miroir ne finissait JAMAIS aux longueurs courtes (l'inc
+     r9d manquant au chemin absent — le crash UC_ERR_WRITE_UNMAPPED de
+     la ligne finale incomplète du témoin 3f, I2 violenté) — guérie.
+  ⑨ LA CRISTALLISATION : 10/10 rebuilds byte-identiques (260 o, sha256
+     4498b7fa… ; la notation 73 instructions, 13 étiquettes, padding
+     60 o au slot 320).
+  ⑩ LE BUILD : loupe.exe 127 488 o, sha256 41660a30… — les verrous 121
+     (le round-trip R5 18/18, les mesures D161 des dix-sept scellées,
+     le réseau des specs 43 PASS, l'audit msx64 78 appels, la double
+     preuve R7 des huit héritages), le différentiel au scellé CONFINÉ
+     au slot loupe-08 [0x3bc0, 0x3d00) et à la porte R10 (9 plages,
+     267 o) — la lea résolue par l'auteur : 0x49e9 + 0x7 - 0x29a0 =
+     0x2050 == R_HEX du plan.
+  ⑪ L'ORACLE AU HARNAIS : 12 VERT, 0 ROUGE (V1 le doré [la première
+     ligne de proxy.exe scellé + la ligne finale incomplète du témoin
+     3f], V2 le différentiel 10 000 lignes == le modèle Python + la
+     source lue seule + EXACTEMENT 77 o + l'état propre, V3 les quatre
+     rejets -5 au poison intact, V4 la falsification [la table décalée
+     d'un octet : les 200 lignes du mutant DIVERGENT — la première
+     mutation tentée, le médian décalé, était INVISIBLE aux colonnes :
+     la redistribution des séparateurs totalise le même compte
+     d'espaces, NOMMÉE puis remplacée]).
+  ⑫ LA REVUE DE CÉRÉMONIE (5 390) : clause par clause, l'instruction à
+     l'appui — VERDICT : CONFORME.
+
+LE BRAS C — LE FLUX STANDARD (gcc -O2 -std=c11 -Wall -Wextra) :
+  spec 2 170 ; source-c 2 497 — la pièce née derrière une clôture
+  markdown, la fonction « loupe_08 » (le .def de la famille exporte
+  loupe_08_ligne), le ternaire no-op « (i == 7) ? ' ' : ' ' » (le
+  médian DOUBLÉ jamais écrit — les colonnes décalées) : TROIS défauts
+  nommés au contrôle du labo ; le tour 1 (1 578 : la fonction renommée,
+  le squelette des séparateurs) ; le tour 2 (1 191 : le bloc if/else du
+  médian DOUBLÉ, la transcription exacte) ; le geste du labo : la
+  clôture retirée, la ligne « le geste » du fragment retirée
+  (mécanique, nommée) ; LE JUGE POSIX au labo (gcc -O2 -shared, l'objet
+  partagé chargé, l'export loupe_08_ligne appelé naturellement — la
+  même graine 20261115, les mêmes tirages que le terrain) : V1-V4 — le
+  tour 3 (1 243) nommé par le juge (le retour INT faussait le verdict :
+  -5 lu 4294967291 — le retour LONG LONG de la famille) ; après le
+  tour 3 : 10 VERT, 0 ROUGE ; tests-c 2 593 (N01-N06, les bords, les
+  rejets, la falsification) ; la revue de cérémonie 4 001 : quatorze
+  clauses CONFORME, L'ÉCART NOMMÉ au sous-I4 « NOP, 0x90 » —
+  L'ARBITRAGE DU PRÉCÉDENT BASELINE (le NOP est le padding du slot au
+  bras T, la convention du build de la notation — jamais une clause du
+  flux standard C).
+  ÉCART NOMMÉ : la DLL pas compilée au bac (mingw absent — le GAP
+  nommé du chantier 4 ; le source compile PROPRE, la DLL au terrain :
+  x86_64-w64-mingw32-gcc -O2 -shared -o loupe-08-d210-c.dll
+  source-loupe-08-C.c loupe-08-c.def — la commande consignée, la pièce
+  livrée à l'épreuve).
+
+LA MESURE (le journal né des outils, 100 % log-api, le garde-brut
+conservé) — LA DEUXIÈME UNITÉ, UNE SEULE SESSION, AUCUNE COUTURE :
+  | phase        |  bras T  |  bras C  |
+  |--------------|----------|----------|
+  | spec         |    2 105 |    2 170 |
+  | rédaction    |    3 786 |    2 497 |
+  | oracle       |    3 321 |        — |
+  | correctifs   |   26 866*|    4 012 |
+  | tests-c      |        — |    2 593 |
+  | revue        |    5 390 |    4 001 |
+  (*) les sept tours du bras T : 4 116 + 4 474 + 4 196 + 4 134 +
+      1 656 + 3 294 + 984 = 22 854 ; + les trois du bras C : 4 012 —
+      la spirale 26 866 / 52 729 = 51 % : H8 TENUE (la spirale
+      corrective demeure le chemin chaud des DEUX bras).
+M4 au labo : le build 0,5 s ; l'oracle V1-V4 4,0 s ; l'épreuve POSIX
+  1,4 s.
+
+LES LIVRABLES : kit-unite-02-d210-20261118/ (la pièce loupe.exe
+41660a30…, la notation D210 260 o, le brouillon it8, le scénario D204
+INCHANGÉ [44384f5d…, la version corrigée du kit-v2 de l'unité 4], le
+proxy.exe scellé, le témoin 3f, le source C + les tests, le journal +
+le garde-brut, la graine, la gravure EMPREINTES 13/13 recoupée, le
+LISEZMOI terrain, le lanceur [CRLF conservés]) ;
+scripts/campagne_d204/unite-08-T-d210/ (brouillons/, notation/,
+piece/, kit/, epreuves/, l'oracle, le build, l'épreuve POSIX,
+l'assemblage du kit) ; l'atelier suivi (les fragments des tours, les
+notes spec, les revues) ; le présent rapport.
+
+LA SUITE : ① le GUI 1-clic de l'unité au commandement (le précédent de
+la 337 — le kit passeur au /test) ; ② le run terrain au geste du
+développeur (T-loupe-08-d210-it1 attendu — le livre M3 +
+livraisons.csv M1 à l'onglet 4·LIVRE) ; ③ l'unité SUIVANTE selon la
+séquence tirée : loupe-13 le bras T d'abord ; la re-livraison
+d'attribution empirique au commandement.
