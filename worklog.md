@@ -12172,3 +12172,78 @@ Work Log:
   puis le push GitHub et le bundle 327 + le worklog + le journal racine
   au TRIADE-sauvegarde-git (le 326 préservé, D143).
 (17/11, la session de la campagne localiser — la suite du chantier 2)
+
+## Task 228 — Entrée 328 : L'OPTIMISATION M4 vécue AU-DELÀ DE 39,3 s — LE MÉMO
+SCELLÉ DES SESSIONS PURES (vljfs6pcj, OPT-03, D214) — LE RÉGIME 10,4 s (−74 %),
+LE RATIO 4,9× SOUS ×10 (H5 NON RÉHABILITÉE), AUCUN CONTRÔLE RETIRÉ
+
+Work Log:
+- LA SYNCHRO GIT/DRIVE D'ABORD (le commandement du développeur) : les
+  QUATRE fichiers du /Tokens recoupés byte-byte contre le bac (aucune
+  divergence — les locaux demeurent les frais) ; GitHub au 75aaebd
+  (0/0, le fetch vécu) ; le Drive recoupé : le journal racine ==
+  atelier-baseline == download (9b297d94…), le worklog identique
+  (f98fd06f…), le bundle triade-history.bundle identique (e0525745…,
+  HEAD 75aaebd vérifié au git bundle verify) — la session précédente
+  avait clos son rituel avant l'interruption, RIEN à rattraper.
+- LA DÉCOUVERTE DE L'ÉTAT : le listing des chantiers relu — le chantier 1
+  CLOS (l'Entrée 326), la campagne LOCALISER vécue (l'Entrée 327) — la
+  prochaine file : L'INSTRUCTION vljfs6pcj (le temps de vérification M4,
+  la seconde des deux dépendances du chantier 2), le plan D207
+  séquencé (l'OPT-01 réservé au levier L1 de la prochaine unité).
+- LE BAC RE-PROVISIONNÉ (recyclé par le conteneur) : le clone
+  /tmp/triade-gh (au 75aaebd) ; LA CHAÎNE CROISÉE TRIXIE extraite des
+  .deb SANS ROOT aux versions EXACTES (gcc-mingw-w64-x86-64-posix
+  14.2.0-19+27+b1, binutils-mingw-w64-x86-64 2.44-3+12+b1, mingw-w64
+  12.0.0-5 — le build testé vert sur le source du kit) ; la copie de
+  travail loupe-01-c.c restituée au epreuves (la ligne #include de
+  l'épreuve POSIX l'exigeait) ; la pièce C canonique restaurée de la
+  gravure (l'Entrée 320 commita une recompilation au epreuves —
+  l'assemblage la refusait, le geste documenté au runner).
+- LE PLAN PRÉ-ENREGISTRÉ GELÉ AVANT TOUTE MESURE (sha256 6602acde…, le
+  commit aa5850a précède toute donnée) : les leviers (a)(b)(c) de
+  l'instruction tels quels, le format du mémo (la clé, la chaîne, la
+  signature Ed25519 clé de test publique spec § 8), le périmètre (les
+  ouvertures pures ≥ 64 Kio — le chemin critique mesuré), le protocole
+  n=5 par configuration (avant / froid / chaud / bras C / pré-filtre),
+  l'étape de vérification intégrale, la frontière (M10 inchangé,
+  l'adoption à part, la clé réelle au développeur).
+- L'OUTILLAGE (l'atelier atelier-m4-vljfs6pcj) : memo_sessions.py (le
+  mémo scellé — la chaîne + Ed25519, fail-closed à chaque chargement),
+  les oracles v181 (loupe-01 : la session 196 Kio au relevé jugé, tout
+  le reste vivant ; loupe-02 : les QUATRE ouvertures coûteuses au mémo
+  avec RECONSTRUCTION de l'état né — le cadre, le panneau, LA POIGNÉE
+  rendue à l'OS virtuel — puis les ~1000 lectures du bloc sous test
+  VIVANTES à chaque décalage), le runner avant/froid/chaud, la mesure C,
+  le pré-filtre natif, le contrôle négatif, l'extraction fail-closed.
+- LA MESURE (la même liste fixe, la même machine à 2 cœurs, le
+  chronomètre monotone) : LE PRÉ-FILTRE NATIF D'ABORD — 0,367 ms médiane
+  n=5 contre ~10 s d'émulation (~4 ordres de grandeur) ; L'AVANT 39,5 s
+  [39,1–39,7] n=5 (recoup vague 5 : 39,3/39,2) ; LA SEMENCE 40,0 s n=1 ;
+  L'APRÈS-CHAUD 10,4 s [10,3–10,4] n=5 — LE RÉGIME −74 % (oracle-01
+  10,4 → 0,49 s, oracle-02 23,2 → 4,1 s) ; LE BRAS C 2,1 s n=5.
+- L'ÉTAPE DE VÉRIFICATION (l'instruction l'exigeait, vécue INTÉGRALE) :
+  les consoles des oracles v181 IDENTIQUES ligne à ligne aux originales
+  (les 5 AVANT mutuellement identiques, la SEMENCE et les 5 CHAUD contre
+  elles, diff vide) ; la cristallisation 12/12 byte-identique à chaque
+  exécution ; les scellés INTACTS avant/après chaque exécution ; le bras
+  C re-mesuré ; LE RATIO ET LE VERDICT H5 recalculés des logs bruts par
+  l'extraction (18,7× → 4,9× — SOUS ×10 : NOUVELLE MESURE n=5, H5 NON
+  DÉCLARÉE RÉHABILITÉE, la règle mof9q10vq reconduite) ; LE CONTRÔLE
+  NÉGATIF DU MÉMO : l'octet muté → CHAÎNE-ROMPUE, la racine mutée →
+  RACINE-DIVERGENTE, la signature mutée → SIGNATURE-INVALIDE, l'absent →
+  le repli vivant — TOUT VERT.
+- LES ÉCARTS NOMMÉS : proxy.exe demeure VIVANT (65 024 o = 63,5 Kio < la
+  règle ≥ 64 Kio gelée — la parenthèse du plan le citait à tort, la
+  RÈGLE gouverne) ; les coûts vivants au semis sous contention du pool
+  (~22,5 s contre ~10 s isolés, les deux consignés) ; le risque résiduel
+  du mémo (un bloc non déterministe gèlerait une sortie) NOMMÉ au plan,
+  borné par la cristallisation et la porte M10 inchangée.
+- LA CONSIGNATION : OPT-03 au journal d'optimisation (le format D205),
+  D214 au journal des décisions, la présente Entrée 328, l'atelier
+  entier au dépôt (le plan, l'outillage, le mémo scellé, les preuves
+  brutes, le rapport) ; le push GitHub au commandement du développeur ;
+  les livrables à download/ ; l'instruction vljfs6pcj EXÉCUTÉE — les
+  instructions 89488hblm/fkkqc7v8t/p39uklsca demeurent (les chantiers
+  3-5), l'OPT-01 réservé au levier L1 de la prochaine unité (D207).
+  (17/11, la session du mémo scellé)

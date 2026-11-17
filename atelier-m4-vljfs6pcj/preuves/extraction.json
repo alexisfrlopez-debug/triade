@@ -1,0 +1,262 @@
+{
+ "distributions": {
+  "avant": {
+   "garde-sceau-I": {
+    "n": 5,
+    "min": 0.064,
+    "max": 0.078,
+    "mediane": 0.069,
+    "q1": 0.066,
+    "q3": 0.074
+   },
+   "cristallisation-12-concourants": {
+    "n": 5,
+    "min": 4.159,
+    "max": 4.31,
+    "mediane": 4.198,
+    "q1": 4.171,
+    "q3": 4.258
+   },
+   "round-trip-notation-1": {
+    "n": 5,
+    "min": 0.216,
+    "max": 0.225,
+    "mediane": 0.222,
+    "q1": 0.217,
+    "q3": 0.225
+   },
+   "round-trip-notation-2": {
+    "n": 5,
+    "min": 0.211,
+    "max": 0.263,
+    "mediane": 0.215,
+    "q1": 0.212,
+    "q3": 0.241
+   },
+   "oracle-bloc-loupe-01 (parallèle)": {
+    "n": 5,
+    "min": 10.227,
+    "max": 10.525,
+    "mediane": 10.375,
+    "q1": 10.262,
+    "q3": 10.457
+   },
+   "build-recomposition-loupe-02": {
+    "n": 5,
+    "min": 0.455,
+    "max": 0.472,
+    "mediane": 0.463,
+    "q1": 0.459,
+    "q3": 0.471
+   },
+   "oracle-du-bloc-loupe-02 (parallèle)": {
+    "n": 5,
+    "min": 23.003,
+    "max": 23.611,
+    "mediane": 23.169,
+    "q1": 23.056,
+    "q3": 23.502
+   },
+   "epreuve-scenario-posix": {
+    "n": 5,
+    "min": 0.294,
+    "max": 0.314,
+    "mediane": 0.3,
+    "q1": 0.296,
+    "q3": 0.308
+   },
+   "assemblage-kits": {
+    "n": 5,
+    "min": 0.209,
+    "max": 0.251,
+    "mediane": 0.248,
+    "q1": 0.222,
+    "q3": 0.251
+   },
+   "assemblage-kits (reprise : la pièce canonique restaurée de la gravure)": {
+    "n": 1,
+    "min": 0.246,
+    "max": 0.246,
+    "mediane": 0.246
+   },
+   "TOTAL": {
+    "n": 5,
+    "min": 39.136,
+    "max": 39.732,
+    "mediane": 39.465,
+    "q1": 39.181,
+    "q3": 39.685
+   }
+  },
+  "chaud": {
+   "garde-sceau-I": {
+    "n": 5,
+    "min": 0.065,
+    "max": 0.07,
+    "mediane": 0.066,
+    "q1": 0.065,
+    "q3": 0.07
+   },
+   "cristallisation-12-concourants": {
+    "n": 5,
+    "min": 4.062,
+    "max": 4.19,
+    "mediane": 4.14,
+    "q1": 4.084,
+    "q3": 4.171
+   },
+   "round-trip-notation-1": {
+    "n": 5,
+    "min": 0.207,
+    "max": 0.232,
+    "mediane": 0.22,
+    "q1": 0.213,
+    "q3": 0.227
+   },
+   "round-trip-notation-2": {
+    "n": 5,
+    "min": 0.204,
+    "max": 0.219,
+    "mediane": 0.216,
+    "q1": 0.209,
+    "q3": 0.217
+   },
+   "oracle-bloc-loupe-01 (parallèle)": {
+    "n": 5,
+    "min": 0.473,
+    "max": 0.501,
+    "mediane": 0.488,
+    "q1": 0.479,
+    "q3": 0.495
+   },
+   "build-recomposition-loupe-02": {
+    "n": 5,
+    "min": 0.461,
+    "max": 0.481,
+    "mediane": 0.472,
+    "q1": 0.463,
+    "q3": 0.48
+   },
+   "oracle-du-bloc-loupe-02 (parallèle)": {
+    "n": 5,
+    "min": 4.036,
+    "max": 4.309,
+    "mediane": 4.134,
+    "q1": 4.062,
+    "q3": 4.291
+   },
+   "epreuve-scenario-posix": {
+    "n": 5,
+    "min": 0.295,
+    "max": 0.305,
+    "mediane": 0.299,
+    "q1": 0.297,
+    "q3": 0.303
+   },
+   "assemblage-kits": {
+    "n": 5,
+    "min": 0.241,
+    "max": 0.269,
+    "mediane": 0.252,
+    "q1": 0.242,
+    "q3": 0.263
+   },
+   "TOTAL": {
+    "n": 5,
+    "min": 10.272,
+    "max": 10.447,
+    "mediane": 10.374,
+    "q1": 10.288,
+    "q3": 10.44
+   }
+  },
+  "C": {
+   "build-gcc-O2-loupe-01": {
+    "n": 5,
+    "min": 0.637,
+    "max": 0.703,
+    "mediane": 0.686,
+    "q1": 0.66,
+    "q3": 0.696
+   },
+   "suite-tests-c-hash": {
+    "n": 5,
+    "min": 0.274,
+    "max": 0.279,
+    "mediane": 0.275,
+    "q1": 0.275,
+    "q3": 0.279
+   },
+   "suite-tests-c-contrat": {
+    "n": 5,
+    "min": 0.201,
+    "max": 0.209,
+    "mediane": 0.202,
+    "q1": 0.201,
+    "q3": 0.206
+   },
+   "controles-binaires-loupe-01": {
+    "n": 5,
+    "min": 0.038,
+    "max": 0.039,
+    "mediane": 0.039,
+    "q1": 0.038,
+    "q3": 0.039
+   },
+   "build-gcc-O2-loupe-02": {
+    "n": 5,
+    "min": 0.643,
+    "max": 0.65,
+    "mediane": 0.645,
+    "q1": 0.643,
+    "q3": 0.648
+   },
+   "epreuve-contrat-posix-loupe-02": {
+    "n": 5,
+    "min": 0.219,
+    "max": 0.225,
+    "mediane": 0.221,
+    "q1": 0.22,
+    "q3": 0.224
+   },
+   "controles-binaires-loupe-02": {
+    "n": 5,
+    "min": 0.038,
+    "max": 0.041,
+    "mediane": 0.039,
+    "q1": 0.038,
+    "q3": 0.04
+   },
+   "TOTAL": {
+    "n": 5,
+    "min": 2.057,
+    "max": 2.124,
+    "mediane": 2.111,
+    "q1": 2.08,
+    "q3": 2.124
+   }
+  },
+  "froid": {
+   "TOTAL": {
+    "n": 1,
+    "min": 40.032,
+    "max": 40.032,
+    "mediane": 40.032
+   }
+  }
+ },
+ "ratio_avant": 18.69,
+ "ratio_chaud": 4.91,
+ "h5_avant": "FALSIFIÉE",
+ "h5_chaud": "SOUS LE SEUIL",
+ "gain_pct": 73.7,
+ "identite_consoles": true,
+ "memo": {
+  "entrees": 2,
+  "couts_vivants_s": [
+   10.188,
+   22.545
+  ]
+ },
+ "prefiltre_natif_ms": 0.367
+}

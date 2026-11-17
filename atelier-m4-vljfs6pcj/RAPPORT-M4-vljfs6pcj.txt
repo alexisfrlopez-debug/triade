@@ -1,0 +1,46 @@
+LE RAPPORT M4 — L'OPTIMISATION AU-DELÀ DE 39,3 s (l'instruction vljfs6pcj, l'atelier du même nom)
+(la même unité, la même machine — 2 cœurs, le chronomètre monotone, n=5 par configuration, AUCUN contrôle retiré)
+========================================================================================
+
+LES CONFIGURATIONS (les listes fixes inchangées, l'extraction refuse tout écart) :
+  AVANT  (les outils v180, l'état du projet) : médiane 39.5 s [39.1–39.7], n=5
+  FROID  (le mémo semé : le premier passage) : 40.0 s, n=1 — le prix de la semence, jamais le régime
+  CHAUD  (le mémo vérifié, le régime) : médiane 10.4 s [10.3–10.4], n=5
+  BRAS C (la liste fixe du bras C, la chaîne TRIXIE re-provisionnée) : médiane 2.1 s, n=5
+
+LES ÉTAPES (les médianes ; l'émulation crypto s'effondre, tout le reste tient) :
+  garde-sceau-I                             0.069 →    0.066
+  cristallisation-12-concourants            4.198 →     4.14
+  round-trip-notation-1                     0.222 →     0.22
+  round-trip-notation-2                     0.215 →    0.216
+  oracle-bloc-loupe-01 (parallèle)         10.375 →    0.488
+  build-recomposition-loupe-02              0.463 →    0.472
+  oracle-du-bloc-loupe-02 (parallèle)      23.169 →    4.134
+  epreuve-scenario-posix                      0.3 →    0.299
+  assemblage-kits                           0.248 →    0.252
+  assemblage-kits (reprise : la pièce canonique restaurée de la gravure)    0.246 →        —
+  TOTAL                                    39.465 →   10.374
+
+LA PREUVE QU'AUCUN CONTRÔLE NE FUT RETIRÉ : les consoles
+des oracles v181 IDENTIQUES ligne à ligne aux originaux (diff vide) — les 5 AVANT mutuellement identiques, le FROID et les 5 CHAUD contre elles.
+La cristallisation : 12 rebuilds concourants TOUS byte-identiques à chaque exécution (le code 0 exigé, le déterminisme prouvé sans ordre) ; les empreintes scellées INTACTES avant/après chaque exécution.
+
+LES LEVIERS VÉCUS (le plan § 2) :
+  (a) L'INVALIDATION PAR EMPREINTE — la clé porte le bloc assemblé, l'entrée, le contrat, l'oracle : 2 relevés scellés, tout changement d'un terme = absence = rejeu vivant ;
+  (b) LA MÉMOÏSATION SCELLÉE — chaîne de hachage + signature Ed25519 (clé de test publique), les relevés couvrant 2 cadres de 960 o ; les coûts vivants relevés au semis : 10.188 s, 22.545 s ;
+  (c) LE PRÉ-FILTRE NATIF — l'attendu hashlib du témoin 196 609 o : 0.367 ms (n=5) contre ~10 s d'émulation — ~4 ordres de grandeur ; la confrontation au panneau relevé demeure INTÉGRALE à chaque contrôle.
+
+LE RATIO (les DEUX bras sur CETTE machine, les médianes des distributions) :
+  AVANT : 39.5 / 2.1 = 18.7×  (le recoup vague 5 : 17,8×) — H5 FALSIFIÉE
+  CHAUD : 10.4 / 2.1 = 4.9× — H5 SOUS LE SEUIL
+
+LA LECTURE HONNÊTE : le gain de régime est de 74 % sur cette machine à 2 cœurs ; le ratio repasse sous ×10 — RAPPORTÉ COMME NOUVELLE MESURE (n=5), H5 N'EST PAS DÉCLARÉE RÉHABILITÉE : la règle mof9q10vq reconduite — la réhabilitation d'une hypothèse falsifiée exige le terrain, pas un levier ; la machine fait partie du record ; le risque résiduel du mémo (un bloc non déterministe gèlerait une sortie) est NOMMÉ au plan § 2, borné par la cristallisation (12 sorties byte-identiques à chaque exécution) et la porte M10 périodique (hors de cette liste, inchangée).
+
+LE CONTRÔLE NÉGATIF DU MÉMO (le plan § 5.6) : le relevé au preuves/controle-negatif-memo.txt — un octet muté, la racine mutée, la signature mutée : TROIS REFUS nommés ; le mémo absent : le repli vivant.
+
+LES ÉCARTS NOMMÉS (l'honnêteté l'exige) :
+  1. PROXY.EXE DEMEURE VIVANT — la règle opérative du plan (les ouvertures pures ≥ 64 Kio) l'exclut : 65 024 o = 63,5 Kio ; la parenthèse du plan le citait à tort parmi les sessions du périmètre — la RÈGLE gouverne, la parenthèse fut une faute de rédaction, la session proxy.exe court vivante à chaque oracle-02 (~3,2 s, le coût dominant restant du bras) ;
+  2. LES COÛTS VIVANTS RELEVÉS AU SEMIS sont des horloges murales SOUS CONTENTION du pool (2 cœurs, quatre travailleurs) : l'ouverture 196 Kio isolée mesure ~10 s (la sonde, l'oracle-01 au semis), la même au pool du semis oracle-02 : ~22,5 s — les deux consignés, jamais confondus ;
+  3. LA CHAÎNE CROISÉE RE-PROVISIONNÉE (le bac recyclé) aux versions EXACTES de la campagne (gcc-mingw-w64 14.2.0-19+27+b1, binutils 2.44-3+12+b1, mingw-w64 12.0.0-5, extraite des .deb sans root) ; la pièce C canonique restaurée de la gravure (l'Entrée 320 commita une recompilation au epreuves — le geste de restauration documenté au runner).
+
+LES COMPROMIS DE COUVERTURE REFUSÉS : AUCUN — aucune graine supprimée, aucun vecteur réduit, aucune vérification retirée (la preuve : les consoles identiques) ; le refus de la vague 5 (le pool persistant inter-outils : le juge ne partage pas l'état du jugé) DEMEURE — le mémo est un relevé signé, jamais un état partagé.

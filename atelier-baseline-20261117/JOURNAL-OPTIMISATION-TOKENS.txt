@@ -235,3 +235,79 @@ format de l'opération localiser du protocole est une décision à part
 (une ligne à confronter contre ~15 à relire — la lecture favorable, à
 vivre au terrain) ; l'instruction vljfs6pcj (le temps de vérification M4)
 demeure EN ATTENTE.
+
+================================================================================
+OPT-03 — LE TEMPS DE VÉRIFICATION M4 : LE MÉMO SCELLÉ DES SESSIONS PURES (le
+17/11/2026, l'instruction vljfs6pcj — la seconde des deux à l'attente de la
+baseline ; le plan pré-enregistré D214, sha256 6602acde… consigné AVANT toute
+mesure, le commit du plan précédant la première donnée)
+--------------------------------------------------------------------------------
+LA MESURE AVANT (la liste fixe, l'état du projet, la même machine à 2 cœurs) :
+39,5 s MÉDIANE [39,1–39,7] n=5 (le recoup vague 5 : 39,3/39,2 n=2 — jamais
+moyennées) — le profil inchangé : l'OUVERTURE de session (le md5+sha256 du
+fichier ENTIER sous émulation) domine (oracle-01 10,4 s ; oracle-02 23,2 s),
+les lectures quasi gratuites (0,15 ms).
+
+LES LEVIERS VÉCUS (les (a)(b)(c) de l'instruction, gelés au plan) :
+  (a) LA CLÉ = sha256(empreinte du bloc assemblé ‖ empreinte de l'entrée ‖
+      empreinte du contrat ‖ oracle) — un octet changé d'un seul terme =
+      ABSENCE = la session vit (l'invalidation par construction) ;
+  (b) LE RELEVÉ SCELLÉ — l'état né (rax, l'état propre, le cadre 960 o, le
+      panneau 48 o) relevé d'une session vivante, CHAÎNÉ puis SIGNÉ Ed25519
+      (la clé de TEST publique du sceau-I spec § 8 — la clé réelle n'apparaît
+      jamais) ; le mémo n'est JAMAIS cru : chaîne ET signature recalculées à
+      chaque chargement, tout écart = REFUS nommé ;
+  (c) LE PRÉ-FILTRE NATIF — l'attendu hashlib du témoin 196 609 o : 0,367 ms
+      MÉDIANE n=5 CONTRE ~10 s d'émulation (~4 ordres de grandeur, mesuré
+      D'ABORD) ; la confrontation au panneau relevé demeure INTÉGRALE.
+
+LE GAIN MESURÉ (lu des logs bruts par extraire_m4_v181.py — jamais tapé à la
+main ; les distributions complètes au RAPPORT-M4-vljfs6pcj.txt) :
+
+  | la configuration            | n |  médiane  |    plage    |
+  |------------------------------|---|-----------|-------------|
+  | AVANT (l'état du projet)     | 5 |    39,5 s | 39,1–39,7 s |
+  | SEMENCE (le mémo né)         | 1 |    40,0 s | le 1er passage |
+  | APRÈS-CHAUD (le régime)      | 5 |    10,4 s | 10,3–10,4 s |
+
+LE RÉGIME −74 % (la même liste fixe, la même machine) ; l'oracle-01
+10,4 → 0,49 s ; l'oracle-02 23,2 → 4,1 s. LE RATIO (les deux bras, les
+médianes) : AVANT 18,7× (le recoup vague 5 : 17,8×) → APRÈS-CHAUD 4,9× —
+SOUS ×10 : RAPPORTÉ COMME NOUVELLE MESURE (n=5), H5 N'EST PAS DÉCLARÉE
+RÉHABILITÉE (la règle mof9q10vq reconduite — la réhabilitation d'une
+hypothèse falsifiée exige le terrain, pas un levier).
+
+LE VÉRIFICATEUR (aucun contrôle retiré) : les consoles des oracles v181
+IDENTIQUES ligne à ligne aux originales (les 5 AVANT mutuellement
+identiques, la SEMENCE et les 5 CHAUD contre elles — diff vide) ; la
+cristallisation 12/12 rebuilds byte-identiques à CHAQUE exécution ; les
+empreintes scellées INTACTES avant/après chaque exécution ; le bras C
+re-mesuré 2,1 s n=5 (la chaîne TRIXIE re-provisionnée aux versions EXACTES
+de la campagne) ; LE CONTRÔLE NÉGATIF vécu : un octet du relevé muté →
+CHAÎNE-ROMPUE, la racine mutée → RACINE-DIVERGENTE, la signature mutée →
+SIGNATURE-INVALIDE, le mémo absent → le repli vivant (l'émulation complète,
+jamais l'échec muet).
+
+LES ÉCARTS NOMMÉS : proxy.exe DEMEURE VIVANT (65 024 o = 63,5 Kio < la règle
+≥ 64 Kio — la parenthèse du plan le citait à tort, la RÈGLE opérative
+gouverne, ~3,2 s restent au chemin critique de l'oracle-02) ; les coûts
+vivants au semis sont des horloges SOUS CONTENTION du pool (~22,5 s contre
+~10 s isolés — les deux consignés, jamais confondus) ; la pièce C canonique
+restaurée de la gravure (l'Entrée 320 commita une recompilation au epreuves).
+
+LA LEÇON (le mécanisme nommé) : LE CHEMIN CRITIQUE ÉTAIT LA RÉ-EXÉCUTION,
+PAS LA VÉRIFICATION — le juge différentiel (hashlib, les découpes) coûte
+des millisecondes ; ce qui coûtait 10 s était de RE-JOUER une session pure,
+déterministe, déjà prouvée. Le relevé jugé vaut la ré-exécution — À TROIS
+CONDITIONS nommées : la clé couvre TOUT ce qui détermine le résultat (le
+bloc, l'entrée, le contrat), le relevé est SCELLÉ (jamais cru), et le
+différentiel demeure intégral (le relevé est JUGÉ, pas obéi).
+
+LA FRONTIÈRE : le mémo MESURÉ VERT au labo — l'ADOPTION comme outil du
+protocole est UNE DÉCISION À PART (D214 : le mémo vivra l'épreuve du
+terrain et des unités suivantes) ; la porte M10 périodique INCHANGÉE (la
+re-vérification complète demeure le scellement) ; la clé de test publique
+ne prétend à aucune sécurité (la cérémonie réelle du mémo appartient au
+développeur) ; le refus de la vague 5 DEMEURE (jamais un état partagé
+entre juge et jugé — le mémo est un relevé signé, pas une émulation
+partagée).

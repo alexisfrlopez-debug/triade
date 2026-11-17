@@ -216,6 +216,28 @@ def main() -> int:
                  "la racine mutée, la signature mutée : TROIS REFUS "
                  "nommés ; le mémo absent : le repli vivant.")
         L.append("")
+        L.append("LES ÉCARTS NOMMÉS (l'honnêteté l'exige) :")
+        L.append("  1. PROXY.EXE DEMEURE VIVANT — la règle opérative du "
+                 "plan (les ouvertures pures ≥ 64 Kio) l'exclut : "
+                 "65 024 o = 63,5 Kio ; la parenthèse du plan le citait "
+                 "à tort parmi les sessions du périmètre — la RÈGLE "
+                 "gouverne, la parenthèse fut une faute de rédaction, "
+                 "la session proxy.exe court vivante à chaque oracle-02 "
+                 "(~3,2 s, le coût dominant restant du bras) ;")
+        L.append("  2. LES COÛTS VIVANTS RELEVÉS AU SEMIS sont des "
+                 "horloges murales SOUS CONTENTION du pool (2 cœurs, "
+                 "quatre travailleurs) : l'ouverture 196 Kio isolée "
+                 "mesure ~10 s (la sonde, l'oracle-01 au semis), la même "
+                 "au pool du semis oracle-02 : ~22,5 s — les deux "
+                 "consignés, jamais confondus ;")
+        L.append("  3. LA CHAÎNE CROISÉE RE-PROVISIONNÉE (le bac recyclé) "
+                 "aux versions EXACTES de la campagne (gcc-mingw-w64 "
+                 "14.2.0-19+27+b1, binutils 2.44-3+12+b1, mingw-w64 "
+                 "12.0.0-5, extraite des .deb sans root) ; la pièce C "
+                 "canonique restaurée de la gravure (l'Entrée 320 commita "
+                 "une recompilation au epreuves — le geste de "
+                 "restauration documenté au runner).")
+        L.append("")
         L.append("LES COMPROMIS DE COUVERTURE REFUSÉS : AUCUN — aucune "
                  "graine supprimée, aucun vecteur réduit, aucune "
                  "vérification retirée (la preuve : les consoles "

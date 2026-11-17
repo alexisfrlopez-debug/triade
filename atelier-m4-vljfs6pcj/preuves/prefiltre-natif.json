@@ -1,0 +1,15 @@
+{
+ "mesure": "pré-filtre différentiel natif (md5+sha256 hashlib)",
+ "entree": "temoin-3f.bin",
+ "octets": 196609,
+ "secondes": [
+  0.000387,
+  0.000367,
+  0.00036,
+  0.000371,
+  0.00036
+ ],
+ "mediane_ms": 0.367,
+ "panneau_attendu_16": "2f4b7bb7f90ccfa1",
+ "n": 5
+}

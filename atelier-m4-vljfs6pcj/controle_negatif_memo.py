@@ -34,8 +34,8 @@ def tenter(chemin: pathlib.Path, attendu: str) -> tuple[bool, str]:
         MEMO.MemoSessions.charger(str(chemin))
         return False, "CHARGÉ (le refus ATTENDU n'est pas venu — ROUGE)"
     except MEMO.MemoRefus as e:
-        nom = str(e).split(":")[0].strip()
-        return nom == attendu, f"REFUS {e}"
+        nom = str(e).split(" : ")[0].split(" à l'entrée")[0].strip()
+        return nom.startswith(attendu), f"REFUS {e}"
 
 
 def main() -> int:
@@ -73,10 +73,7 @@ def main() -> int:
     # 3. la signature mutée (la chaîne demeure juste — la signature seule)
     m3 = json.loads(json.dumps(doc))
     sig = m3["signature"]
-    m3["signature"] = ("0" * 126 + ("1" if sig[-1] != "1" else "0")) \
-        if len(sig) % 2 == 0 else sig
-    # la racine est recalculée sur les entrées INTACTES : pour isoler la
-    # signature, on signe une signature fausse sur le même contenu
+    m3["signature"] = sig[:-1] + ("1" if sig[-1] != "1" else "0")
     p3 = ATELIER / "memo-mute-signature.json"
     p3.write_text(json.dumps(m3, ensure_ascii=False), encoding="utf-8")
     ok, msg = tenter(p3, "SIGNATURE-INVALIDE")

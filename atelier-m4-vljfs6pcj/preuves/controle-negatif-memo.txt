@@ -1,0 +1,11 @@
+LE CONTRÔLE NÉGATIF DU MÉMO SCELLÉ (le plan § 5.6)
+========================================================================
+
+1. UN OCTET DU RELEVÉ MUTÉ : VERT — REFUS CHAÎNE-ROMPUE à l'entrée 2cd15fd409aa9731… : h attendu 42dcc9932218ba03…, lu c8792b9cf59e6976…
+2. LA RACINE MUTÉE : VERT — REFUS RACINE-DIVERGENTE : la chaîne ne ferme pas sur la racine déclarée
+3. LA SIGNATURE MUTÉE : VERT — REFUS SIGNATURE-INVALIDE : le mémo n'est pas scellé par la clé de test du format
+4. LE MÉMO ABSENT : VERT — REFUS MÉMO-ABSENT : /tmp/triade-gh/atelier-m4-vljfs6pcj/memo-absent.json — le repli : la session vivante court (vécu à la semence APRÈS-FROID)
+
+LA LECTURE HONNÊTE : le mémo n'est JAMAIS cru — chaque écart nommé est un REFUS,
+le repli est l'émulation complète (jamais l'échec muet).
+VERDICT : TOUT VERT
