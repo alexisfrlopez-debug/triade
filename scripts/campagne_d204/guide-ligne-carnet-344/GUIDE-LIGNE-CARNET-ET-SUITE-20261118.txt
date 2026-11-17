@@ -28,7 +28,7 @@ L'ÉTAT DU LIVRE, SONDÉ AU COFFRE À L'INSTANT : l'atelier
     attente » ;
   — carnet_temps_humain.csv  1 869 o  (sha256 ef988fd5…) : la dernière
     ligne « 2026-11-16,C,app,tag-backup,11:03,11:04,1, » ;
-  — defauts.csv  3 870 o  (sha256 1bed8908…) : les NEUF lignes D204, le
+  — defauts.csv  3 870 o  (sha256 1bed8908…) : les HUIT lignes D204, le
     LF final posé (le geste ② du guide-313) ;
   — journal-ouverture.txt  648 o : l'ouverture du 14/11, inchangée.
 AUCUNE ligne D210 ne vit au livre : les Entrées 340 et 343 le consignent
