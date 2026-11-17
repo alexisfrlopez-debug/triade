@@ -1,0 +1,303 @@
+GUIDE-LIGNE-CARNET-ET-SUITE-20261118 — LE GESTE DE LA LIGNE DE CARNET (les
+DEUX lignes D210 que le livre attend), PUIS LA SUITE DE LA CAMPAGNE
+================================================================================
+(le 18/11/2026, la session du guide — écrit à la commande « fais un guide
+pour la ligne de carnet puis la suite » ; le précédent des guides du livre
+305, 308, 311, 312 et 313, et du GUIDE-GESTE-TERRAIN-ET-SUITE ; les DEUX
+runs recoupés : l'Entrée 340 [T-loupe-02-d210-it1, le re-run au juge
+réparé] et l'Entrée 343 [T-loupe-08-d210-it1])
+================================================================================
+
+CE QUE CE GUIDE EST. Le mode d'emploi du geste qui vous attend — LA LIGNE
+DE CARNET : les DEUX lignes que le livre réclame des DEUX runs D210 déjà
+courus et recoupés (l'unité 01 loupe-02 le 17/11 au juge réparé, l'unité
+02 loupe-08 le 18/11 au passage de minuit), avec sa ligne de livraison M1
+compagnonne — puis la carte de ce qui vient après (l'unité suivante,
+l'attribution empirique, la fermeture). Tout ce qui est écrit ici est lu
+des consignations du projet : les Entrées 335-343 du worklog, les
+RECOUP-340 et RECOUP-343, le plan D210 pré-enregistré (sha256 4a3b1311…),
+et le LIVRE LUI-MÊME — sondé à l'instant au coffre (la sonde 344), chaque
+registre rapatrié byte-byte et recoupé md5. Rien n'est inventé ; les
+écarts sont nommés tels quels.
+
+L'ÉTAT DU LIVRE, SONDÉ AU COFFRE À L'INSTANT : l'atelier
+/test/atelier-campagne-d204-20261114-013520/ porte ses QUATRE registres aux
+états de la clôture D204 (le guide-313) —
+  — livraisons.csv  2 176 o  (sha256 3678e37f…) : 22 lignes de campagne,
+    la dernière « C-app-it3,C,app,3,2026-11-16,2026-11-16,VERT,en
+    attente » ;
+  — carnet_temps_humain.csv  1 869 o  (sha256 ef988fd5…) : la dernière
+    ligne « 2026-11-16,C,app,tag-backup,11:03,11:04,1, » ;
+  — defauts.csv  3 870 o  (sha256 1bed8908…) : les NEUF lignes D204, le
+    LF final posé (le geste ② du guide-313) ;
+  — journal-ouverture.txt  648 o : l'ouverture du 14/11, inchangée.
+AUCUNE ligne D210 ne vit au livre : les Entrées 340 et 343 le consignent
+l'une et l'autre — « la ligne de carnet AU GESTE DU DÉVELOPPEUR … le
+livre M3 + livraisons.csv M1 à l'onglet 4·LIVRE du GUI, à la main ». Le
+labo ne fabrique JAMAIS une ligne de mesure : la ligne est à votre main
+(la même frontière que le témoin D99 — jamais automatisé).
+
+
+════════════════════════════════════════════════════════════════════════
+PARTIE I — LE GESTE : LES LIGNES AU LIVRE (10 à 15 minutes, au bloc-notes)
+════════════════════════════════════════════════════════════════════════
+
+§ 1 · OÙ VIT LE LIVRE — L'ATELIER DU COFFRE
+--------------------------------------------------------------------------------
+Le livre est L'ATELIER : /test/atelier-campagne-d204-20261114-013520/ — le
+même dossier daté que toute la campagne D204 (l'atelier reçu à la 289, le
+guide-ligne-C de la 291, les gestes des guides 305 à 313). La campagne
+D210 est l'extension du plan D204 (le plan « D204+ » pré-enregistré,
+sha256 4a3b1311…) : les régimes M1, M3 et D202 demeurent, le livre
+demeure — les tâches nouvelles portent le nom « -d210 » (la pièce du kit
+le prescrit à son onglet 4·LIVRE : « loupe-02-d210 », « loupe-08-d210 »).
+
+Téléchargez l'atelier ENTIER du coffre (les QUATRE registres), ouvrez
+chaque registre AU BLOC-NOTES (jamais Excel — le précédent des guides 305
+à 313), portez les gestes ci-dessous, renvoyez l'atelier ENTIER (le § 6).
+Les lignes prescrites vivent AUSSI à l'onglet « 4·LIVRE — M1, M3, M4 au
+geste » du GUI de chaque unité (le kit GUI 1-clic dézippé chez vous :
+kit-gui-1clic-unite02-d210-juge-v2-20261118.zip pour l'unité 01,
+kit-gui-1clic-unite08-d210-20261118.zip pour l'unité 02) : le livre s'y
+LIT, il ne s'y remplît pas — « le livre se remplit À LA MAIN au
+bloc-notes, jamais ici » (le LISEZMOI-RUN de chaque kit le consigne).
+
+§ 2 · GESTE ① — LA LIGNE DE LIVRAISON M1 (livraisons.csv) : DEUX lignes
+--------------------------------------------------------------------------------
+À LA SUITE de la dernière ligne (C-app-it3), AJOUTEZ les DEUX lignes des
+DEUX livraisons D210 recoupées (l'état exact des QUATRE dernières lignes
+du livre après le geste) :
+
+T-app-it4,T,app,4,2026-11-16,2026-11-16,VERT,en attente
+C-app-it3,C,app,3,2026-11-16,2026-11-16,VERT,en attente
+T-loupe-02-d210-it1,T,loupe-02-d210,1,2026-11-17,2026-11-17,VERT,en attente
+T-loupe-08-d210-it1,T,loupe-08-d210,1,2026-11-18,2026-11-18,VERT,en attente
+
+Les valeurs, lues des pièces (jamais de mémoire — la règle du plan :
+« tokens et temps humain LUS des journaux et du carnet AU GESTE ») :
+  — LA PREMIÈRE (l'unité 01 D210, loupe-02 lire × bras T) : le re-run
+    VERT au juge réparé. Le kit v2 livré le 17/11 19:51Z, le run le
+    17/11 à 21:02:45 heure locale (le nom de la console == sa première
+    ligne), le verdict recopié de la console « 20 VERT, 0 ROUGE » (code
+    retour 0). La console vit aux archives :
+    /test/archives-livraisons/unite-02-d210-20261118/preuves-unite02-
+    RUN-V2-VERT-20261117/run-console-unite02-d210-20261117-210245.txt
+    (le témoin signé et le DEPOT vivent au même dossier).
+  — LA SECONDE (l'unité 02 D210, loupe-08 ligne × bras T) : le run du
+    18/11 à 00:09:11 heure locale — le passage de minuit conduit (le kit
+    livré le 17/11 23:42 heure locale courut le 18/11 à la première
+    minute), le verdict recopié « 10 VERT, 0 ROUGE » (code retour 0). La
+    console vit aux archives :
+    /test/archives-livraisons/unite-08-d210-20261118/kit-unite-02-d210-
+    20261118-RUN-V1-VERT-20261118/run-console-unite08-d210-20261118-
+    000911.txt
+  — LA COLONNE VERDICT porte « VERT » comme les 22 lignes précédentes du
+    livre (le verdict en toutes lettres vit aux consoles et aux
+    RAPPORT-RECEPTION de la racine du /test).
+  — LA COLONNE RECOUP porte « en attente » — la convention des lignes
+    précédentes (aucune ligne du livre ne fut jamais retouchée après
+    coup) ; le verdict du recoup vit au worklog (les Entrées 340 et 343,
+    10/10 VERT l'une et l'autre) et aux RAPPORT-RECEPTION-RUN-…-
+    20261118.txt de la racine du /test — le livre ne maquille rien, il
+    demeure la voix du terrain.
+  — LE RUN v1 DE L'UNITÉ 01 (le 17/11 20:01, celui du juge fautif) NE
+    PORTE AUCUNE LIGNE : le précédent 295 — la faute était au juge,
+    jamais à la pièce (nommée à la 338 AVANT correction [D202], corrigée
+    à la 339, le kit v2 livré APRÈS le run fautif) ; le run ne consomme
+    pas d'itération, il ne compte pas à M1. La ligne it1 est celle du
+    re-run au juge réparé.
+
+§ 3 · GESTE ② — LA LIGNE DE CARNET M3 (carnet_temps_humain.csv) : le
+temps humain des DEUX runs, à votre main
+--------------------------------------------------------------------------------
+À LA SUITE de la dernière ligne (2026-11-16,C,app,tag-backup,11:03,11:04,1,)
+AJOUTEZ les DEUX lignes du temps humain des runs. Le format du carnet
+(l'en-tête du registre le porte) : date,bras,tache,geste,debut,fin,minutes,
+notes — le geste D210 se nomme « run-terrain » (le GUI le prescrit à son
+onglet 4·LIVRE : « le run terrain de l'unité … ») :
+
+2026-11-17,T,loupe-02-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+2026-11-18,T,loupe-08-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+
+LA RÈGLE M3 (l'en-tête du carnet la porte, le GUI la répète) : la ligne
+se remplit AU GESTE, jamais reconstruite de mémoire ; arrondi à la
+minute ; toute interruption > 5 min ferme la ligne et en ouvre une
+autre. Les pièces ancrent les bornes — la chronologie recoupée des DEUX
+runs (R7 des RECOUP-340/343, les heures LOCALES du terrain, l'heure
+d'hiver UTC+1) :
+  — l'unité 01 (le re-run du 17/11) : la console couchée 21:02:45 → LA
+    MAIN au témoin 21:03:38 → le coffre né 21:04:11. Le geste entier
+    (le dézip du kit v2, le double-clic du lanceur, TOUT LANCER, le
+    témoin daté signé, le renvoi au coffre) vécut AU MOINS de la
+    première ligne de la console à la naissance du dossier — votre
+    début peut être plus tôt, votre renvoi plus tard : VOTRE minute
+    honnête prévaut (D189 : tout ce qui vivait se consigne, même
+    défavorable).
+  — l'unité 02 (le run du 18/11) : la console 00:09:11 → LA MAIN 00:09:51
+    → la fenêtre fermée 00:09:56 → le coffre 00:10:27 → preuves-unite08/
+    né 00:10:29. La même règle : vos bornes honnêtes, la minute près.
+  — LE TEMPS DU RUN v1 de l'unité 01 (le juge fautif, le 17/11
+    20:01→20:03) vécut aussi de votre main : si vous le consignez, il
+    porte SA ligne à lui (même date, geste run-terrain, la note le
+    nommant « run v1 au juge fautif — l'itération ne se consomme pas »)
+    — l'interruption d'une heure entre les DEUX runs (la correction du
+    labo) ferme les lignes entre elles. Aucune obligation : les DEUX
+    lignes prescrites sont celles des DEUX itérations comptées ; le
+    livre ne ment jamais, le run a couru.
+  — LA NOTE est à vous : ce que vous voulez nommer du geste (la machine
+    calme, une lenteur, une observation — D189). Elle peut demeurer vide
+    comme les lignes précédentes.
+  — LE CHRONO M4 ne s'écrit pas au carnet : il vit aux consoles des runs
+    (le GUI couche début/fin/durée — 0,4 s au re-run de l'unité 01, 0,6 s
+    au run de l'unité 02, recoupés aux Entrées 340/343) et au labo (le
+    RAPPORT de chaque unité : build 0,5 s ; l'oracle 33,6 s à l'unité 01,
+    4,0 s et l'épreuve POSIX 1,4 s à l'unité 02).
+
+AUCUN CONDENSÉ ATTENDU POUR LE CARNET : vos heures et vos minutes sont à
+votre main — le labo ne fabrique JAMAIS la ligne M3 (la même frontière
+que le témoin D99). La ligne juste : le format, les bornes des pièces, la
+règle de l'interruption.
+
+§ 4 · GESTE ③ — defauts.csv : RIEN À PORTER (le précédent 295)
+--------------------------------------------------------------------------------
+AUCUNE ligne de défaut : les DEUX runs D210 sont VERTS — rien ne se nomme
+au terrain. Le seul défaut nommé de la campagne D210 (le juge v1 fautif,
+R_JOURNAL 0xE4E0 — le kit de l'unité 01 l'embarqua, les DEUX vecteurs V2
+en ROUGE au run v1) fut nommé AU LABO à la réception (l'Entrée 338 —
+D202 : nommé AVANT correction) et corrigé par le labo (l'Entrée 339 — le
+CORRECTIF-JUGE-V2-UNITE02-D210-20261118.txt à la racine du /test) : la
+faute au juge ne vit JAMAIS au defauts.csv du terrain (le précédent 295
+— la ligne T-loupe-02-it1 de D204 n'en porte pas non plus ; le livre
+porte les défauts VUS aux runs qui comptent, et les DEUX qui comptent
+sont VERTS). Le défaut T0 de la gravure de l'unité 01 (le format de
+l'empreinte — CORRECTIF-T0-UNITE01-D210-20261118.txt à la racine) est du
+même bord : nommé au labo, guéri à la source (la gravure de l'unité 02
+NÉE PARSÉE — « nommé parce qu'il ne se reproduit pas », l'Entrée 342).
+VÉRIFIEZ SEULEMENT que le registre demeure INTACT (le condensé au § 5) —
+le LF final compris (le cosmétique du guide-313).
+
+§ 5 · LES VÉRIFICATIONS ATTENDUES APRÈS LES GESTES (certutil -hashfile …
+SHA256 au terrain — le précédent des guides 305 à 313 : recoupez au
+bloc-notes, le livre ne ment jamais)
+--------------------------------------------------------------------------------
+  livraisons.csv : 2 328 octets, sha256
+    8bae18e884808bdf0b8dec4c1a6ac516bf9b75fbd70b01e951079600ebfcdaf1
+    (la référence-après-geste du labo : le livre reçu 2 176 o + les DEUX
+    lignes du geste ① — les fins de ligne LF, aucune ligne vide, aucun
+    BOM, aucune autre retouche)
+  defauts.csv    : 3 870 octets, sha256
+    1bed8908ea9e187d8cf1e6d8e2c1c0b8c70c057e523ae048d64dd48943270ef6
+    (INCHANGÉ — le registre du geste ③ : rien à porter, le condensé du
+    livre reçu)
+  journal-ouverture.txt : 648 octets, INCHANGÉ (le registre d'ouverture
+    du 14/11, aucune retouche)
+  carnet_temps_humain.csv : AUCUN condensé attendu — vos heures et vos
+    minutes sont à votre main (le § 3) ; la ligne de plus vérifiée à
+    l'œil : le format, les bornes, la règle.
+
+§ 6 · ENSUITE — L'ATELIER ENTIER RE-DÉPOSÉ AU COFFRE
+--------------------------------------------------------------------------------
+Enregistrez, puis renvoyez l'ATELIER ENTIER au /test du coffre Drive
+(glisser-déposer le dossier atelier-campagne-d204-20261114-013520/ — les
+QUATRE registres à jour, l'état reçu plus les gestes portés) et annoncez
+comme à l'accoutumée : « les lignes du carnet dans le drive /test ». Le
+labo re-télécharge, recoupe les condensés, consigne l'Entrée qui reçoit
+les lignes du livre — et la campagne continue (la PARTIE II).
+
+
+════════════════════════════════════════════════════════════════════════
+PARTIE II — LA SUITE
+════════════════════════════════════════════════════════════════════════
+
+§ 7 · L'UNITÉ SUIVANTE : LOUPE-13, LE BRAS T D'ABORD (à votre commandement)
+--------------------------------------------------------------------------------
+La séquence tirée de la graine D217 (consignée AVANT le premier appel,
+l'Entrée 335 — JAMAIS re-tirée ; quatre fois le même bord arrive une
+fois sur huit, consigné tel quel) prescrit l'ordre des bras par unité :
+  loupe-02 le bras T d'abord — loupe-08 le bras T d'abord — loupe-13 le
+  bras T d'abord — loupe-16 le bras T d'abord.
+Les DEUX premières sont closes au terrain (les runs VERT recoupés des
+Entrées 340 et 343 — leurs lignes au livre au présent geste). LA TROISIÈME
+EST LOUPE-13 : au commandement (le mot d'ordre « go », comme à la 341),
+le labo construit l'unité aux deux bras par la rig (l'oracle
+écrit-avant-code, la notation au slot, la cristallisation DIX rebuilds,
+l'oracle au harnais, le source C à l'épreuve POSIX), livre le kit GUI
+1-clic daté au /test (le précédent des 337/339/342), et le geste du run
+vous revient : dézip → LANCER-RUN-…-1CLIC.bat → TOUT LANCER → le témoin
+daté signé de votre main [D99] → preuves-unite…/ au /test → l'annonce.
+PUIS la ligne au livre : le présent guide se reconduit — le geste de la
+ligne se vit À CHAQUE run désormais (l'onglet 4·LIVRE du kit le
+prescrit), pas en retard comme aux DEUX premières.
+
+§ 8 · LA RE-LIVRAISON D'ATTRIBUTION EMPIRIQUE (au commandement)
+--------------------------------------------------------------------------------
+Le plan D210 (son § 4) : « la pièce C re-livrée via un kit standard
+minimal — la question "le flux compilé pur l'aurait-il produite ?"
+tranchée sur pièces ». L'Entrée 343 la conserve à la suite : elle se
+prépare au commandement, après les unités de la séquence — l'attribution
+des échappées kit-side tranchée sur pièces. Rien ne se prépare sans
+commande.
+
+§ 9 · LA CADENCE — CE QUE LA CAMPAGNE DEMANDE (le plan D210,
+pré-enregistré AVANT toute mesure, sha256 4a3b1311…)
+--------------------------------------------------------------------------------
+  — n >= 6 unités ENTIÈREMENT INSTRUMENTÉES aux DEUX bras par la rig
+    (compter_tokens câblé à CHAQUE appel, le journal d'usage la donnée
+    unique, le ×1,08 interdit) ;
+  — FORMATS IDENTIQUES entre bras : chaque unité livrée aux DEUX
+    formats — l'EXE au slot scellé ET la DLL liée par le chargeur (le
+    source C et ses tests vivent au kit de chaque unité ; l'épreuve
+    POSIX la couvre au labo — le geste au terrain sera prescrit au
+    livre du kit le jour voulu) ;
+  — L'ORDRE DES BRAS RANDOMISÉ par unité (la séquence ci-dessus, la
+    graine consignée AVANT la première mesure) ;
+  — LA RÈGLE D202 : les défauts nommés AVANT correction (le geste ③ du
+    présent guide) ; LA RÈGLE D207 : un levier qui dégrade M1 (les
+    échappés) ou M3 (le temps humain) est REJETÉ ;
+  — LES HYPOTHÈSES H6-H8 aux fermetures (le taux d'échappées kit-side
+    entre bras ; l'ordre n'affecte aucune métrique au seuil de 5 % ; la
+    spirale corrective > 50 % des tokens de chaque unité — H8 TENUE à
+    la deuxième : 51 %, l'Entrée 341) ;
+  — la campagne est SÉQUENTIELLE : un seul binôme développeur-agent,
+    une unité à la fois, chaque unité un cycle labo → terrain → labo ;
+    la cap pré-enregistrée demeure (au plus trois livraisons par bloc,
+    l'arrêt au premier vert recoupé, la censure sans exclusion).
+
+§ 10 · LES GESTES DE FERMETURE (autour de la campagne — le
+GUIDE-GESTE-TERRAIN § 11 reconduit, à votre commandement)
+--------------------------------------------------------------------------------
+  — LE PDF FINAL : attendu à la fermeture des sessions de runs (le
+    v0.18.1 est l'édition courante ; la finale portera la clôture D210) ;
+  — LE DOI ZENODO ET LE GRANT D'ÉVALUATION à la licence : les gestes du
+    concédant (zenodo-metadata-v0180.json est déjà à la racine du
+    coffre) ;
+  — LE DÉPÔT GitHub et le miroir Drive vivent à chaque session aux
+    jetons du /Tokens (le geste du labo — rien à votre main) ;
+  — L'HORIZON NOMMÉ (consigné, pas promis) : la cérémonie d'ère (OPT-01
+    SHA-NI, le sceau-I, la clé hors-ligne), le séquestre D183, la
+    réplication (le GUI tous-runs attend ses deux jeux).
+
+§ 11 · LA CHECKLIST — L'ORDRE CONSEILLÉ
+--------------------------------------------------------------------------------
+  1. LE GESTE DU LIVRE (10 à 15 mn) : l'atelier téléchargé du /test →
+     les DEUX lignes livraisons.csv (geste ①) → les DEUX lignes du
+     carnet M3 (geste ②) → defauts.csv rien (geste ③) → les condensés
+     recoupés (§ 5) → l'atelier ENTIER re-déposé au /test + l'annonce ;
+  2. LE COMMANDEMENT DE LOUPE-13 (le mot d'ordre — le labo construit,
+     livre, et le run vous revient) ;
+  3. AU FIL DES UNITÉS : la ligne au livre À CHAQUE run (le présent
+     guide reconduit — jamais en retard) ;
+  4. À LA FERMETURE : l'attribution empirique au commandement, le PDF
+     final, le DOI Zenodo, le grant.
+
+Les lois qui gardent chaque geste : D99 (le témoin daté signé de votre
+main, jamais automatisé — la même frontière au carnet M3), D189 (les
+observations même défavorables consignées), D143 (rien n'est jamais
+détruit — la corbeille jamais), R7 (les pièces scellées intouchées),
+D202 (les défauts nommés AVANT correction), et la formulation honnête
+(jamais « constant time proven » au-delà des runs signés).
+
+(18/11/2026, la session du guide — le dépôt au /test recoupé md5 à la
+livraison ; la référence-après-geste du labo vit au bac
+scripts/campagne_d204/guide-ligne-carnet-344/reference-apres-geste/ ; les
+QUATRE registres reçus vivent au bac …/guide-ligne-carnet-344/epreuves/)

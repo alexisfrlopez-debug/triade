@@ -13330,3 +13330,67 @@ Work Log:
   d'attribution empirique au commandement.
   (18/11/2026, la session de la réception du run de la deuxième unité —
   l'annonce du développeur, l'attendu du livre tenu au geste du GUI 1-clic)
+
+
+Task ID: 211
+Agent: Z.ai (agent principal — la session du guide de la ligne de carnet)
+Task: LA COMMANDE DU DÉVELOPPEUR (« fais un guide pour la ligne de carnet puis la suite ») : LE GUIDE-LIGNE-CARNET-ET-SUITE-20261118.txt NÉ ET LIVRÉ à la racine du coffre /test (19 459 o, md5 324f1a77… recoupé byte-byte) — le mode d'emploi du geste des lignes que le livre attend des DEUX runs D210 recoupés (les Entrées 340 et 343), puis la carte de la suite de la campagne.
+
+Work Log:
+- LA SONDE DE L'ATELIER (sonde_atelier_344.py, TOUT VERT) : les QUATRE
+  registres de /test/atelier-campagne-d204-20261114-013520/ RAPATRIÉS au
+  bac guide-ligne-carnet-344/epreuves/ par DOUBLE téléchargement byte-byte
+  (md5 == la métadonnée Drive) : livraisons.csv 2 176 o [sha256 3678e37f…,
+  22 lignes de campagne, la dernière C-app-it3 du 16/11 — l'état du
+  guide-313 DEMEURE], carnet_temps_humain.csv 1 869 o [sha256 ef988fd5…,
+  la dernière ligne tag-backup du 16/11], defauts.csv 3 870 o [sha256
+  1bed8908…, le LF final posé], journal-ouverture.txt 648 o — LE CONSTAT :
+  AUCUNE ligne D210 ne vit au livre, les DEUX runs recoupés (les Entrées
+  340/343) attendent le geste du développeur (le labo ne fabrique JAMAIS
+  une ligne de mesure — la frontière D99).
+- LA RÉFÉRENCE-APRÈS-GESTE (le § 5 du guide, le précédent des guides
+  305-313) : livraisons.csv + les DEUX lignes prescrites = 2 328 o, sha256
+  8bae18e8… — les tailles et condensés attendus COMMUNIQUÉS au terrain
+  (certutil) ; LE CARNET : AUCUN condensé attendu — les heures et les
+  minutes appartiennent à la main du développeur (le labo ne fabrique
+  JAMAIS la ligne M3) ; defauts.csv INCHANGÉ (3 870 o, 1bed8908… — le
+  registre du geste ③ : rien à porter, le précédent 295).
+- LE GUIDE (19 459 o, la PARTIE I le geste : ① livraisons.csv les DEUX
+  lignes exactes [T-loupe-02-d210-it1 VERT 2026-11-17 ; T-loupe-08-d210-
+  it1 VERT 2026-11-18 — le verdict recopié des consoles 20 VERT 0 ROUGE
+  code 0 / 10 VERT 0 ROUGE code 0, citées à leurs chemins d'archives ;
+  la colonne recoup « en attente » la convention des 22 lignes, jamais
+  retouchée après coup ; le run v1 au juge fautif SANS ligne, le
+  précédent 295] ; ② le carnet M3 le geste « run-terrain », les bornes
+  ancrées aux chronologies recoupées [R7 des RECOUP-340/343, heures
+  locales : 21:02:45 → 21:03:38 → 21:04:11 au 17/11 ; 00:09:11 →
+  00:09:51 → 00:10:29 au 18/11], la règle de l'interruption > 5 min,
+  l'option honnête D189 pour le temps du run v1 (SA ligne à lui, si
+  consigné), le chrono M4 aux consoles [0,4 s / 0,6 s] jamais au carnet ;
+  ③ defauts.csv RIEN [la faute au juge nommée au LABO aux 338/339,
+  corrigée — les DEUX runs comptés VERTS] ; les vérifications certutil ;
+  l'atelier ENTIER re-déposé + l'annonce. La PARTIE II la suite : loupe-13
+  le bras T d'abord au commandement [la séquence D217, jamais re-tirée],
+  la ligne au livre À CHAQUE run désormais, l'attribution empirique au
+  commandement, la cadence du plan D210 [n >= 6, formats identiques,
+  D202/D207, H6-H8 — H8 tenue à la deuxième : 51 %], les gestes de
+  fermeture [PDF final, DOI Zenodo, grant]).
+- LA LIVRAISON (livrer_guide_344.py, TOUT VERT) : le guide TÉLÉVERSÉ à la
+  racine du /test (md5 324f1a77… MATCH byte-byte re-téléchargé), aux
+  côtés du GUIDE-GESTE-TERRAIN-ET-SUITE et des guides du livre (la racine
+  : 46 entrées) ; la copie de l'utilisateur à download/ (19 459 o).
+- LA CONSIGNATION : la présente Task 211 + l'Entrée 344 ; la carte
+  OU-TROUVER portée à 344 (la chaîne 343 conservée) ; le bac
+  scripts/campagne_d204/guide-ligne-carnet-344/ (le guide, les epreuves/,
+  la référence-apres-geste/) + les TROIS scripts du geste au bac et à
+  scripts/ ; le git poussé + le miroir Drive rafraîchi (aux jetons du
+  /Tokens).
+- SUITE : ① LE GESTE DU DÉVELOPPEUR AU GUIDE (l'atelier téléchargé du
+  /test, les DEUX lignes livraisons.csv, les DEUX lignes du carnet M3 à
+  sa main [le run-terrain, les bornes des pièces], l'atelier ENTIER
+  re-déposé au /test + l'annonce « les lignes du carnet dans le drive
+  /test ») ; ② loupe-13 le bras T d'abord au commandement (la séquence
+  tirée, jamais re-tirée — la graine D217) ; la re-livraison
+  d'attribution empirique au commandement.
+  (18/11/2026, la session du guide — la commande du développeur, les
+  lignes attendues prescrites sur pièces, jamais de mémoire)
