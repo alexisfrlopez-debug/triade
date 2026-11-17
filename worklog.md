@@ -12996,6 +12996,17 @@ Work Log:
   le LISEZMOI, les EMPREINTES-GUI, le CORRECTIF-T0 à la racine du
   /test — QUATRE md5 MATCH. Le kit porte le correctif T0 : le kit du
   17/11 demeure au bac (D143), le GUI kit le SUPERSEDE au coffre.
+- LE MIROIR (la mise à jour ciblée + L'ARRIÉRÉ NOMMÉ) : la POINTE
+  livrée par la mise à jour ciblée aux fonctions de drive_sync (LE
+  BUNDLE triade-history.bundle 79 644 743 o, md5 recoupé MATCH ; le
+  delta 46/46 fichiers de la session ; la racine REPRISE_PROJET.md et
+  OU-TROUVER mises à jour) ; L'ARRIÉRÉ DU MIROIR NOMMÉ : 602 fichiers
+  d'époques passées jamais téléversés (les ateliers cf3, les états,
+  les preuves — l'état laissé par les synchros interrompues d'avant la
+  présente session) — RÉSORBÉ au présent geste (621 téléversés, 0
+  erreur, la reprise-sur-état) ; LA PREUVE DE CONVERGENCE : la synchro
+  complète idempotente rend « 0 téléversés, 0 mis à jour, 3908
+  inchangés, 0 erreurs » — le miroir == le dépôt, octet pour octet.
 - LA CONSIGNATION ET LE GIT (la commande du développeur : « mets a
   jour le drive et git ») : l'Entrée 336 re-consignée depuis son
   brouillon (la construction de l'unité — sa consignation canonique
