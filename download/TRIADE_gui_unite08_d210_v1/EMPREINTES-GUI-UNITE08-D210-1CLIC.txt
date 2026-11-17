@@ -1,0 +1,40 @@
+EMPREINTES-GUI-UNITE08-D210-1CLIC — les pièces du kit GUI 1-clic
+(l'édition v1 du 18/11/2026 — LA DEUXIÈME UNITÉ D210 : loupe-08 ligne × bras T,
+la séquence tirée de la graine D217, jamais re-tirée ; le kit né au labo à l'Entrée 341 ;
+la console « certutil -hashfile <fichier> SHA256 » recoupe chaque ligne chez vous)
+==============================================================================
+
+LE GUI ET SES LIVRES :
+
+triade_run_unite08_d210_gui.py                   67000 o  sha256 2849133f35c3573b1c6c267ac09bee7fc2190687cf02384790858c30e1587c45
+                                               le GUI v1 (un seul fichier, tkinter stdlib — la logique du précédent 339 INCHANGÉE, la SECTION A de l'unité loupe-08)
+LANCER-RUN-UNITE08-D210-1CLIC.bat                 4016 o  sha256 379901f8a0067c1e9e7b59991d88d4a009947aee172f2f36c955d0805787bd34
+                                               le lanceur au double-clic (l'édition v1 nommée en tête, CRLF)
+LISEZMOI-RUN-UNITE08-D210-1CLIC.txt               9674 o  sha256 4722f936a1397c0cfa26eee1cc083538974ba91a374b0573bbb444fe44f40073
+                                               le livre du kit (l'édition v1 — la deuxième unité, l'attendu des DIX verdicts)
+
+LES PIÈCES DU KIT (le verrou du GUI les recoupe à CHAQUE lancement,
+fail-closed) — les QUATORZE du kit (les DOUZE pièces + la gravure +
+le livre) :
+
+GRAINE-D210.txt                                    791 o  sha256 c62a304f1df0d88882e03edecc8a9498e60bc6db293010775a9238eedcdc6673
+LANCEUR-UNITE-08-T.bat                            1109 o  sha256 acf950f0a155515cb6cbb4c24d37a47d908b8ab7819227981f9fa518620c957b
+LISEZMOI-KIT-UNITE-02-D210.txt                    5182 o  sha256 a4686b324882fd0a8604ab6d7a5148f8206e63b293e9c76f256641a14da5ff24
+brouillon-loupe-08-ligne.asm                      5492 o  sha256 663fd981192bf023c27ad68d92ef282711d4265b6ee3aac8effdda0b82a008c8
+journal-tokens-d210.jsonl                         9736 o  sha256 0b5ddb07694ecc0cfd09919a2cdc8d62bdb5b9a0ee81db573fb87d9676fb5658
+garde-brut-d210.jsonl                            89611 o  sha256 f8637fc4888137a025211f533db6ab599c9ad1bfa7343f564fba112e288295d1
+loupe.exe                                       127488 o  sha256 41660a30752c378e27eacaeaa33ab9754a75d9d6b2c2837e1dfb0a9923555bb1
+                                               LA PIÈCE de campagne (le slot loupe-08 RVA 0x49C0 porte la notation D210, 260 o cristallisés — 4498b7fa…)
+notation-loupe-08-ligne.asm                       2132 o  sha256 bb4d72fbbfabf01d323eeb1793389602e7816c7d9ac60cfeb2328adbd4ad3240
+proxy.exe                                        65024 o  sha256 446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+                                               le scellé de l'ère (la première ligne du doré V1)
+scenario-unite08.py                              13996 o  sha256 44384f5d4a5afbf5d17585ee73b0aeea56ba2fa76f1f4f82addf0903747a2d5a
+                                               LE JUGE D204 INCHANGÉ (44384f5d…, la version corrigée — le lecteur « sha256  nom », la feuille pure)
+source-loupe-08-C.c                               1166 o  sha256 f87bc5179bb8e9f8804d160b0bede8715f5224b5bf9c3003b188a1e790755a56
+temoin-3f.bin                                   196609 o  sha256 c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3
+tests-loupe-08-C.md                               2800 o  sha256 14ff38bd152cb7bcab3639a96bc7bbe3120dcdc6b952b3b3171f1ecd6820b297
+EMPREINTES-KIT-UNITE-02-D210.txt                  1383 o  sha256 3ce5b351fe5da70b2633bdd82df09b321df1e484b4bcd0f3f81e1b3cc4bf0de6
+                                               la gravure du kit (née parsée — le défaut T0 de l'unité 01 ne se reproduit pas)
+
+==============================================================================
+(18/11/2026, la session du GUI de l'unité 02 — l'Entrée 342 du worklog)

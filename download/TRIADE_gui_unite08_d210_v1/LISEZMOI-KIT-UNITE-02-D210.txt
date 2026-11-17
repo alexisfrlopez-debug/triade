@@ -1,0 +1,82 @@
+LISEZMOI — LE KIT DE L'UNITÉ 02 D210 : LOUPE-08 LIGNE × BRAS T
+(la campagne D210 — la deuxième unité, la séquence tirée de la graine
+D217 : loupe-08 le bras T d'abord ; le kit livré par le labo au coffre
+/test en son dossier daté — le GUI vous attend à l'onglet 1·KIT de
+l'unité loupe-08 × T)
+========================================================================
+
+L'OBJET : la DEUXIÈME unité de la campagne D210 (le plan
+pré-enregistré 4a3b1311…, la menace « kit partagé et formats
+asymétriques ») — le bloc loupe-08 LIGNE au BRAS T. La pièce de ce kit
+est le build du plan où le slot loupe-08 (RVA 0x49C0, 320 o) porte LA
+NOTATION DE CAMPAGNE : écrite À LA RIG (100 % log-api, le journal né
+des outils — la construction de la deuxième unité : 18 appels,
+52 729 tokens [bras T 37 456 + bras C 15 273], le journal et le
+garde-brut INCLUS au kit) depuis le contrat loupe-08:R1 (composer UNE
+ligne hexadécimale de 77 o au tampon fixe — les 8 chiffres MAJUSCULES
+du décalage, 2 espaces, les seize groupes « HH » séparés d'un espace
+[l'espace médian DOUBLÉ après le huitième], 2 espaces, le miroir ASCII
+de 16 [le point hors 0x20..0x7E], le NUL — EXACTEMENT 77 o écrits,
+jamais un de plus ; la ligne incomplète garde ses colonnes ; AUCUN
+débordement par construction, AUCUNE entrée IAT — la feuille pure, le
+tampon de 77 o EST la borne). LES DIX-SEPT autres blocs demeurent les
+SCELLÉS du projet.
+
+LA CONSTRUCTION (consignée, les défauts nommés AVANT toute livraison)
+: la rig L6 (compter_tokens e2939ef9…, rig_auteur e5aa404a…,
+recoupés INTACTS aux empreintes) ; l'oracle écrit-avant-code
+(oracle-depuis-I.txt, dérivé du contrat I seul) ; la spirale
+corrective : le correctif 1 (SYNTAXE — la table hexa au plan R_HEX
+0x2050 par le lea RIP, les formes ptr) ; les correctifs 2-4 (le
+faisceau STRUCTUREL : le plan VOLATIL — les sept registres rax, rcx,
+rdx, r8, r9, r10, r11, AUCUN push, la pile jamais touchée, la borne
+D8 tenue) ; les correctifs 5-6 (les transcriptions chirurgicales des
+phases : les huit chiffres par le shr 28/shl 4, les groupes par les
+deux nibbles, le miroir, Q4 rax remis) ; le correctif 7 (la boucle du
+miroir qui ne finissait jamais aux longueurs courtes — l'inc r9d au
+chemin absent, LA FAUTE NOMMÉE PAR L'ORACLE au harnais : le crash
+UC_ERR_WRITE_UNMAPPED de la ligne finale incomplète du témoin 3f).
+LES GESTES MÉCANIQUES DU LABO, nommés : la remappe bijective des
+registres de la phase 1 (r12/r13/r14/r15 → r8/rdx/r9d/rax) et la
+normalisation de largeur (cmp r9d, rdx → edx). LE BRAS C (le flux
+standard gcc -O2) : spec → source-c → les correctifs 1-3 (la fonction
+loupe_08_ligne du .def de la famille, le médian DOUBLÉ — le ternaire
+no-op nommé, le retour LONG LONG — le verdict -5 faussé en int,
+nommé par le juge POSIX) ; l'épreuve POSIX au labo (gcc -O2 -shared,
+l'export appelé naturellement, la même graine 20261115) : 10 VERT,
+0 ROUGE. L'ORACLE DU BLOC au harnais (V1 le doré [la première ligne
+de proxy.exe scellé + la ligne finale incomplète du témoin 3f], V2 le
+différentiel 10 000 lignes == le modèle + la source lue seule +
+EXACTEMENT 77 o + l'état propre, V3 les quatre rejets -5 au poison
+intact, V4 la falsification [la table décalée d'un octet — les 200
+lignes du mutant DIVERGENT]) : 12 VERT, 0 ROUGE. La cristallisation :
+DIX rebuilds consécutifs IDENTIQUES (260 o, sha256 4498b7fa…) ; le
+build aux verrous 121 (le round-trip R5, les mesures D161 des
+dix-sept scellées, le réseau des specs, l'audit msx64, la double
+preuve R7 des huit héritages), le différentiel au scellé CONFINÉ au
+slot loupe-08 [0x3bc0, 0x3d00) et à la porte R10 (9 plages, 267 o) ;
+la revue de cérémonie par la rig : VERDICT CONFORME (le bras T) ; la
+revue C : quatorze clauses CONFORME, l'écart nommé au sous-I4 « NOP,
+0x90 » — L'ARBITRAGE DU PRÉCÉDENT BASELINE (le NOP est le padding du
+slot au bras T, la convention du build de la notation — jamais une
+clause du flux standard C).
+
+LE GESTE (tout au clic, l'ordre de jeu d'une unité) :
+  1. AU GUI (TRIADE_gui_unite02… l'onglet 1·KIT de l'unité loupe-08 ×
+     T à venir) : CHOISIR CE DOSSIER (kit-unite-02-d210-20261118) — le
+     scénario recoupe les EMPREINTES gravées (une divergence, rien ne
+     court) ;
+  2. le run : LANCER LANCEUR-UNITE-08-T.bat (le lanceur officiel — il
+     court dans SA PROPRE console, INTACT) : le scénario recoupe la
+     pièce à la gravure, charge l'image (la feuille pure n'appelle
+     personne), appelle loupe-08 aux gammes du kit, juge par le modèle
+     indépendant (la composition Python du format), et écrit le
+     témoin ; le dossier preuves-unite08/ naît sur votre machine ;
+  3. le témoin : preuves-unite08\temoin-unite08.txt au bloc-notes, le
+     DATER, le SIGNER DE VOTRE MAIN — jamais automatisé (D99) ;
+  4. renvoyer le dossier ENTIER au coffre /test (le réceptacle : le
+     témoin signé + le DEPOT + la console du run — la cap M1 : le
+     réceptacle ENTIER, le zip assemblé du GUI est l'affaire du flux
+     GUI, jamais du terrain).
+
+LA MESURE au labo : le build 0,5 s ; l'oracle V1-V4 4,0 s.
