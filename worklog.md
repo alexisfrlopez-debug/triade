@@ -13164,3 +13164,61 @@ Work Log:
   re-tirée) ; la re-livraison d'attribution empirique au commandement.
   (18/11/2026 au soir, la session de la correction — le « go » du
   développeur, la suite ① du RECOUP-338)
+
+
+Task ID: 207
+Agent: Z.ai (agent principal — la session de la réception du re-run au juge réparé)
+Task: L'ANNONCE DU DÉVELOPPEUR (« preuves du run dans le drive /test ») : LE RE-RUN TERRAIN DE L'UNITÉ 02 D210 AU KIT GUI 1-CLIC v2 AU JUGE RÉPARÉ REÇU ET RECOUPÉ — 10/10 VERT, 20 VERT 0 ROUGE code retour 0, l'attendu du CORRECTIF-JUGE-V2 TENU, la même pièce aux deux runs (la cause était au juge, jamais à la pièce — D202 clos).
+
+Work Log:
+- LA RÉCEPTION (la sonde 340) : preuves-unite02/ NEUF à la racine du /test
+  (né au coffre le 17/11 20:04:11.728Z) — TROIS pièces (temoin-unite02.txt
+  1 589 o, DEPOT-d210-unite02.txt 2 065 o, run-console-unite02-d210-
+  20261117-210245.txt 3 976 o), chacune rapatriée au bac scripts/
+  campagne_d204/depot-run-unite02-d210-v2-340/epreuves/ par DOUBLE
+  téléchargement byte-byte, md5 == la métadonnée Drive — 3/3 VERT.
+- LE RECOUP (recoupe_run_v2_340.py, 10/10 VERT) : LE JUGE DU RUN — le
+  scénario gravé au DEPOT 302fa3a1… == le juge v2 RÉPARÉ == le kit v2 du
+  labo == les archives du bac 295 OCTET POUR OCTET (22 476 o, R_JOURNAL =
+  0xE4A0 == la vérité du layout D161), ≠ le v1 fautif (b3e896f7…,
+  0xE4E0) ; le chemin du kit à la console porte l'édition juge-v2 (la
+  correction de la 339 courue au terrain) ; LA PREUVE T0 (loupe.exe
+  cf251c12… == la gravure == la pièce du kit v2 recoupée au labo) ; LE
+  VERDICT : 20 VERT, 0 ROUGE, code retour 0 — les DEUX vecteurs V2
+  (V2:cinq-entrees-dont-une-non-alignee, V2:les-bords-de-fenetre — la
+  paire ROUGE du run v1) passés VERT, le diff des consoles v1/v2 ne porte
+  QUE ces deux vecteurs : la même pièce, le juge seul changea ; LA MAIN
+  (D99) : le témoin déposé 1 589 o == l'avant-main gravé au DEPOT
+  (1 567 o, sha256 9ac528cc…) + la main posée (+22 o) — daté le
+  17/11/2026, signé Alexis Lopez, la même main que la campagne ; LA
+  MACHINE : PORTABLE · Windows 10 · AMD64 · Python 3.14.10 (CA2) ; LA
+  CHRONOLOGIE tenue : le run v1 19:01:36Z → le kit v2 livré 19:51:35Z
+  (la correction APRÈS le run fautif) → le re-run 20:02:45Z → la console
+  20:02:45.582Z (chrono M4 0,4 s) → LA MAIN 20:03:38Z → le coffre
+  20:04:11Z ; LE DEPOT : la console gravée byte-byte, les SEPT pièces du
+  kit recoupées sha256 par sha256 == le kit v2 livré à la 339 (la chaîne
+  de garde par le contenu, D143) ; LA CAP M1 : la SECONDE livraison du
+  bloc (0 zip, 0 assemblage — le réceptacle ENTIER sans le zip du GUI,
+  l'observation nommée reconduite) ; LA MÊME PIÈCE : les CINQ pièces
+  matérielles (loupe.exe, les trois témoins, vide.bin) gravées au DEPOT
+  v2 == le DEPOT v1 == le kit v1 OCTET POUR OCTET — la correction ne
+  toucha QUE le juge (D202 clos).
+- LE RANGEMENT + LA LIVRAISON (ranger_livrer_340.py, TOUT VERT) : le dépôt
+  DÉPLACÉ-RENOMMÉ, jamais jeté (D143 — le nom « preuves-unite02 » PRIS à
+  l'archive par le run v1), à /test/archives-livraisons/unite-02-d210-
+  20261118/preuves-unite02-RUN-V2-VERT-20261117/ — chaque md5 recoupé
+  AVANT et APRÈS, INTACT ; le RAPPORT-RECEPTION-RUN-UNITE02-D210-TERRAIN-
+  V2-20261118.txt (== RECOUP-340-preuves-unite02-v2.txt, 5 113 o) livré à
+  la racine du /test, re-téléchargé et md5-recoupé byte-byte.
+- LA CONSIGNATION : la présente Task 207 + l'Entrée 340 ; la carte
+  OU-TROUVER portée à 340 (la chaîne 339 conservée) ; le bac
+  scripts/campagne_d204/depot-run-unite02-d210-v2-340/ (les epreuves/, le
+  RECOUP-340, les QUATRE scripts du geste) + les scripts à scripts/ ; le
+  git poussé + le miroir Drive rafraîchi (aux jetons du /Tokens).
+- SUITE : la ligne de carnet AU GESTE DU DÉVELOPPEUR (T-loupe-02-d210-it1
+  — le re-run VERT au juge réparé ; le livre M3 + livraisons.csv M1 à
+  l'onglet 4·LIVRE du GUI, le livre ne ment jamais : le run a couru) ;
+  ② loupe-08 le bras T d'abord (la séquence tirée, jamais re-tirée — la
+  graine D217) ; la re-livraison d'attribution empirique au commandement.
+  (18/11/2026, la session de la réception du re-run — l'annonce du
+  développeur, le juge réparé vérifié au terrain)
