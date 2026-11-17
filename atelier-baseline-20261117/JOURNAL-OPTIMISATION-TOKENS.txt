@@ -118,3 +118,59 @@ et le push GitHub (sa main, ses identifiants) ; ③ LA DÉCISION DU LEVIER
 SUIVANT : L1 explicite à la prochaine unité (l'OPT-01), puis L3 → L2 →
 L4 → L5/L7 — un levier par unité mesurée, la règle d'arrêt armée (un
 levier qui dégrade M1 ou M3 est REJETÉ et consigné).
+
+--------------------------------------------------------------------------------
+L'ÉPREUVE V1-V5 ET LA BOUCLE CORRECTIVE — LES DEUX BRAS VERTS (le
+17/11/2026, les Entrées 325-326 ; la suite prescrite « puis on continue
+chantier 1 », après la synchro git/drive au commandement du développeur)
+--------------------------------------------------------------------------------
+LE GESTE : l'épreuve d'exécution V1-V5 VÉCUE AU LABO PAR LE HARNAIS NÉ
+(Entrée 325 — bras T par émulation unicorn aux adresses du plan, bras C
+par gcc + LE JUGE EXTERNE hashlib, la graine 20261117) : LES DEUX BRAS
+REJETÉS — six classes de défauts NOMMÉES que la revue statique CONFORME
+de la construction n'avait pas vues (D-T1..D-T5 au bras T, D-C1 au bras
+C — la onzième classe de défaut invisible sans exécution de la
+collection du projet : le boutisme de la longueur, prouvé par
+SHA-256-LE(abc) == la sortie, octet pour octet).
+
+LA BOUCLE § 5 (le correctif appartient à la rig, chaque tour
+INSTRUMENTÉ) : le bras C guéri en UN tour (D-C1 : les huit affectations
+inversées, 855 tokens) ; le bras T en DEUX tours (la reprise de la
+notation aux cinq classes, 4 760 tokens — puis le résidu nommé par le
+rejeu en mécanique : le courrier rbp non posé, rip=0xc27a, 954 tokens).
+LE REJEU : LES DEUX BRAS CONFORMES — V1-V5 et I5 tous VERT (l'égalité
+octet par octet contre hashlib partout, le vide par la composition, les
+non-volatils tous rendus, la falsification détectée). Les revues
+reprises : CONFORMES aux deux bras (l'arbitrage I1/I2 du précédent
+respecté au C).
+
+LA MESURE (le journal porte désormais 28 appels, 100 % log-api) :
+  | la boucle § 5   |  bras T  |  bras C  |
+  |-----------------|----------|----------|
+  | correctif       |    5 714 |      855 |
+  | revue           |    3 428 |    3 665 |
+  | TOTAL           |    9 142 |    4 520 |
+  | appels          |        3 |        2 |
+  | M2 cumulé       |   45 231 |   35 733 |  (80 964 tokens au total)
+
+LA LECTURE : la guérison coûta 13 662 tokens aux deux bras (20 % de la
+construction) — le correctif multi-défaut (4 760) laissa un résidu que
+seul le REJEU nomma : le vecteur d'exécution (le crash observé,
+l'adresse, le registre) est le bundle-défaut le plus efficace du
+chantier (954 tokens le tour étroit) ; le correctif minimal d'une
+classe à huit lignes (855) guérit en un coup. LE FAIT SCIENTIFIQUE
+consigné : la revue statique CONFORME de la construction n'a pas vu la
+onzième classe — LE HARNAIS EST DÉSORMAIS LE JUGE (la rig construit,
+le harnais éprouve, la revue lit).
+
+LES PIÈCES FINALES : bras T loupe-05-it10.asm (394 o, cristal T-09,
+revue CONFORME) ; bras C loupe-05-it4.c (gcc PROPRE, revue CONFORME) ;
+les preuves vertes epreuve-v1v5-bras-{T,C}.json, le rejet PRÉSERVÉ
+(-REJET-325.json — la falsifiabilité : le rouge demeure à côté du
+vert) ; les empreintes gravées.
+
+LA SUITE : LE CHANTIER 1 EST CLOS (n=2 construit puis éprouvé vert aux
+deux bras) — les LEVIERS du chantier 2 DÉBLOQUÉS (L1 → L3 → L2 → L4 →
+L5/L7, un levier par unité mesurée, D207) : l'OPT-01 naîtra de la
+prochaine unité au levier explicite L1 contre CETTE baseline ; les
+instructions 5gfx6pwkj et vljfs6pcj attendent leurs unités.

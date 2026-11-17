@@ -12086,3 +12086,46 @@ Work Log:
   EPREUVE-V1V5.txt, le push GitHub, le bundle 325 + le worklog remplacés
   au TRIADE-sauvegarde-git (le 324 préservé).
 (17/11, la session de l'épreuve V1-V5 vécue et consignée)
+
+## Task 226 — Entrée 326 : LA BOUCLE CORRECTIVE § 5 VÉCUE — LES DEUX BRAS
+AU VERT, LE CHANTIER 1 CLOS
+
+Work Log:
+- LA SYNCHRO GIT/DRIVE d'abord (le commandement « d'abord la synchro
+  git/drive — vérifie /tokens du drive pour les acces » puis « go ») :
+  les QUATRE jetons du /Tokens recoupés BYTE-BYTE aux locaux (le relais
+  OAuth VIT — le refresh vécu, le scope drive ; le jeton git vérifié par
+  fetch), GitHub À JOUR (origin/main == HEAD == 59bc852, 0/0), le Drive
+  recoupé (le bundle 325 + le slot générique + le worklog + le journal
+  racine, empreintes identiques au re-téléchargement) ; l'écart de
+  permissions du bac à sable neutralisé (2 322 faux « changements » de
+  mode — core.fileMode false, le contenu identique).
+- LA BOUCLE § 5 ENSUITE (le commandement « puis on continue chantier 1 »)
+  : le bras C guéri en UN tour (D-C1 : les huit affectations inversées —
+  le grand-boutiste du FIPS, 855 tokens, la pièce loupe-05-it4.c, gcc
+  PROPRE) ; le bras T en DEUX tours (la REPRISE DE LA NOTATION aux cinq
+  classes D-T1..D-T5 — rdx au créneau, l'absorption au TAMPON_CUMUL par
+  le courrier rbp, le vide par la COMPOSITION init+final le littéral
+  supprimé, la copie depuis le créneau, le cadre 0xe0 et rdi/rsi sauvés
+  — 4 760 tokens, loupe-05-it9.asm 391 o ; puis le RÉSIDU nommé par le
+  rejeu en mécanique : « mov rbp, rdx » manquait après le lea du
+  ReadFile, rip=0xc27a — 954 tokens, loupe-05-it10.asm 394 o, cristal
+  T-09).
+- LE REJEU : LES DEUX BRAS CONFORMES — V1 (l'égalité octet par octet
+  partout contre hashlib), V2 (le vide ET « abc » exacts — le vide PAR
+  LA COMPOSITION au bras T), V3, V4, V5 et I5 tous VERT (les HUIT
+  non-volatils rendus au succès au bras T) ; les revues reprises
+  CONFORMES aux deux bras (l'arbitrage I1/I2 du précédent respecté au
+  C) ; les preuves vertes + le rejet PRÉSERVÉ (-REJET-325.json — le
+  rouge demeure à côté du vert).
+- LA MESURE : la boucle coûta 13 662 tokens (5 appels : C 855, T 4 760 +
+  954, les revues 3 428 + 3 665) — le journal porte 28 appels, 80 964
+  tokens au total (M2 cumulé : T 45 231, C 35 733). LE FAIT SCIENTIFIQUE
+  : la onzième classe (le boutisme) fut invisible à la revue statique —
+  LE HARNAIS EST DÉSORMAIS LE JUGE de chaque pièce à venir.
+- LA CONSIGNATION : le RAPPORT-BOUCLE-CORRECTIVE.txt, l'entrée au journal
+  canonique (les Entrées 325-326), les empreintes gravées (22 nouvelles),
+  le listing des chantiers ajusté (le chantier 1 CLOS), la présente Task
+  226 — puis le push GitHub et le bundle 326 + le worklog + le journal
+  racine au TRIADE-sauvegarde-git (le 325 préservé, D143).
+(17/11, la session de la boucle corrective vécue et le chantier 1 clos)

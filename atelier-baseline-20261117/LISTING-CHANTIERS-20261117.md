@@ -8,7 +8,13 @@
 
 ---
 
-## 1. LA BASELINE DOUBLE-BRAS — PRIORITÉ 1 ✅ LANCÉE (la présente session)
+## 1. LA BASELINE DOUBLE-BRAS — PRIORITÉ 1 ✅ CLOS (le 17/11 au soir, la
+session suivante — l'épreuve V1-V5 vécue par le harnais né, les deux bras
+rejetés, la boucle corrective § 5 vécue : le bras C un tour, le bras T
+deux, LE REJEU CONFORME V1-V5 et I5 aux deux bras — le détail aux
+Entrées 325-326, le RAPPORT-BOUCLE-CORRECTIVE.txt)
+
+~~PRIORITÉ 1 ✅ LANCÉE (la présente session)~~
 
 **Ce que c'est** : la prochaine unité entièrement instrumentée AUX DEUX
 BRAS PAR LA RIG (le n=1 devient n=2) — le geste-gate qui débloque les

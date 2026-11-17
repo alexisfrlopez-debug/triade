@@ -1,0 +1,108 @@
+LE RAPPORT DE LA BOUCLE CORRECTIVE § 5 — LA BASELINE DOUBLE-BRAS AU VERT
+(la suite prescrite du chantier ; la session du 17/11/2026, au
+commandement du développeur « puis on continue chantier 1 » — après la
+synchro git/drive vécue : les jetons du /Tokens recoupés byte-byte aux
+locaux, GitHub 0/0 au fetch, le bundle 325 + le worklog + le journal
+racine recoupés au re-téléchargement)
+================================================================================
+
+LE GESTE : l'échec à l'étape 5 avait envoyé les pièces au CORRECTIF (le
+protocole, la boucle § 5) — le geste appartient à la rig : chaque tour
+par outil_correctif (le bundle-défaut : le défaut nommé, le fragment,
+le vecteur qui a échoué), chaque appel INSTRUMENTÉ au journal (28
+appels au total, 100 % log-api, le modèle glm-4-plus LU du champ model).
+
+  - LE BRAS C (D-C1, le boutisme de la longueur) : UN tour — le
+    fragment des huit affectations (fragment-C4.c), le correctif rendu
+    (670+185 = 855 tokens), les huit affectations INVERSÉES (le poids
+    fort à [56], le poids faible à [63] — le grand-boutiste du FIPS
+    180-4, la convention de l'héritage scellé qui fait bswap avant
+    l'écriture). La pièce loupe-05-it4.c (gcc -O2 -std=c11 -Wall
+    -Wextra PROPRE au shim, aucun avertissement).
+  - LE BRAS T (D-T1..D-T5, la reprise de la notation) : DEUX tours —
+    le tour ⑩ LA REPRISE (3 230+1 530 = 4 760 tokens) : le corps entier
+    de la notation corrigé aux cinq classes (rdx posé au créneau avant
+    le call 0xc300 ; l'absorption au TAMPON_CUMUL par le courrier rbp ;
+    le vide par la COMPOSITION init+final — le littéral .data SUPPRIMÉ ;
+    la copie depuis le créneau ; le cadre 0xe0 et rdi/rsi sauvés) —
+    l'itération loupe-05-it9.asm, 391 octets cristallisés ; le rejeu
+    nomma LE RESIDU : 1 101/1 101 crashs à rip=0xc27a (le rep movsb de
+    tls13-03 lit [rdx]=rbp NON CARTÉ) et le vide VERT (la composition
+    porte déjà le vrai vecteur — D-T3 guérie au premier coup) ; le tour
+    ⑪ LE COURRIER (776+178 = 954 tokens) : « mov rbp, rdx » inséré
+    après le lea du ReadFile — l'itération loupe-05-it10.asm, 394
+    octets cristallisés (keystone == capstone au round-trip, la
+    convention fin-ret tenue).
+
+LE REJEU (le même harnais, la même graine 20261117, le juge externe
+hashlib — jamais les fonctions de la pièce) :
+
+  BRAS T — loupe-05-it10.asm (cristal T-09, 394 o) : CONFORME
+    V1 : VERT — l'égalité octet par octet partout (1 001 gammes proxy +
+    100 multi-fenêtres du bi-témoin).
+    V2 : VERT — le vide e3b0c442…7852b855 (LA COMPOSITION le produit) ;
+        « abc » ba7816bf…f20015ad.
+    V3 : VERT — E1 -4, E2 -3, E3 -5.
+    V4 : VERT — -6, la sortie intacte, 2 fenêtres, le code 5 consigné,
+        les non-volatils TOUS rendus AU CHEMIN D'ERREUR.
+    V5 : VERT — la mutation du tampon à la 2e fenêtre DÉTECTÉE
+        (dfc8cbb1… → 91a0dc3e…).
+    I5 : VERT — les HUIT non-volatils rendus au chemin de succès
+        (rbx, rbp, rdi, rsi, r12, r13, r14, r15 — le créneau rsp+0xB0
+        ne chevauche plus les sauvés : le cadre 0xe0).
+    Q2 : la composition observée SetFilePointerEx → ReadFile par
+        fenêtre, l'absorption au TAMPON_CUMUL, la finalisation au
+        créneau.
+
+  BRAS C — loupe-05-it4.c : CONFORME
+    V1 : VERT — l'égalité octet par octet partout (1 101 gammes, la
+        longueur désormais GRAND-boutiste).
+    V2 : VERT — le vide ET « abc » exacts.
+    V3 : VERT — E1 -4, E2 -3, E3 -5.
+    V4 : VERT — -6, la sortie intacte, 2 fenêtres, le code 5.
+    V5 : VERT — la falsification détectée (dfc8cbb1… → 91a0dc3e…).
+
+LES REVUES (la phase revue, instrumentée) : bras T CONFORME (toutes les
+clauses P/Q/I/E citées à l'instruction à l'appui, aucun écart — 2 476+
+952 = 3 428 tokens) ; bras C CONFORME (l'arbitrage I1/I2 du précédent
+respecté — 2 740+925 = 3 665 tokens). Les revues aux fichiers
+bras-{T,C}/revue-reprise.md.
+
+LA MESURE (la boucle corrective § 5, lue du journal) :
+  | bras | tour                 | appels |   tokens |
+  |------|----------------------|--------|----------|
+  | C    | correctif D-C1       |      1 |      855 |
+  | T    | correctif reprise    |      1 |    4 760 |
+  | T    | correctif courrier   |      1 |      954 |
+  | T    | revue                |      1 |    3 428 |
+  | C    | revue                |      1 |    3 665 |
+  | TOTAL| la boucle § 5        |      5 |   13 662 |
+
+LA LECTURE : le coût de la guérison (13 662 tokens aux deux bras) contre
+la construction (67 302) — le correctif multi-défaut du bras T (4 760)
+valut DEUX tours : la reprise portait cinq classes mais laissa le
+courrier rbp non posé (le rejeu le nomma en mécanique : rip=0xc27a) ;
+le correctif minimal du bras C (855 tokens, UNE classe, huit lignes)
+guérit en un tour — L'ÉCONOMIE DU BUNDLE-DÉFAUT ÉTENDU aux défauts
+d'exécution : le vecteur nommé (le crash observé, l'adresse, le registre)
+suffit au modèle pour circonscrire le geste. LE FAIT SCIENTIFIQUE : la
+onzième classe (le boutisme de la longueur) fut INVISIBLE à la revue
+statique CONFORME de la construction — seule l'exécution la prit ; les
+revues reprises demeurent statiques : LE HARNAIS EST DÉSORMAIS LE JUGE
+DE CHAQUE PIÈCE À VENIR (la rig construit, le harnais éprouve, la revue
+lit).
+
+LES PIÈCES FINALES : bras T loupe-05-it10.asm (394 o, cristal T-09,
+sha256 2daaacba…) ; bras C loupe-05-it4.c (sha256 a1789434…) ; les
+preuves vertes preuves-baseline/epreuve-v1v5-bras-{T,C}.json ; les
+preuves du rejet PRÉSERVÉES (-REJET-325.json — la falsifiabilité
+demeure : le rouge consigné n'est pas effacé par le vert) ; les cristaux
+intermédiaires T-08 (la reprise, 391 o — l'état rouge du résidu) et T-09
+(le vert) ; les fragments des tours ⑩ et ⑪ aux deux bras ; les empreintes
+gravées à EMPREINTES-BASELINE.txt.
+
+LA SUITE : la baseline EST (n=2 aux deux bras, CONSTRUITE puis ÉPROUVÉE
+VERTE) — le chantier 1 EST clos ; les LEVIERS d'optimisation (chantier 2,
+l'ordre L1 → L3 → L2 → L4 → L5/L7) sont DÉBLOQUÉS : l'OPT-01 naîtra de
+la prochaine unité au levier explicite L1 contre CETTE baseline (un
+levier par unité mesurée, D207 — la règle d'arrêt armée).

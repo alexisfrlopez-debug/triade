@@ -22,7 +22,10 @@
 #include <string.h>
 #include <windows.h> /* le shim du labo (-I lab/shim) */
 
-#include "../bras-C/loupe-05-it3.c"
+/* la pièce à l'épreuve : l'itération COURANTE de la boucle corrective § 5
+   (it3 au premier passage — le rejet consigné ; it4 après le correctif
+   D-C1 : le même harnais, la même graine, seule la pièce change) */
+#include "../bras-C/loupe-05-it4.c"
 
 /* --- le modèle de fichier du harnais --- */
 static uint8_t *fichier;

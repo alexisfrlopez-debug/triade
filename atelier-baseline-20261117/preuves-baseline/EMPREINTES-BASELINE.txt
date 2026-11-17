@@ -17,3 +17,30 @@ a97af16f89a0420c586710d0db821cbfa28bc0c2eb851c451d0db589c8237753  lab/cristallis
 b8a3a00a9ed4803ff8331f8082d7de9ea72b4d27da446ab5cf95eb2a815734ec  lab/splice_tour.py
 277504b90de2075f4d9ae4cb35b89c822a962168f12ecfb5ebb623707d79574c  lab/shim/windows.h
 1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe  loupe-05-sha256.md
+
+--------------------------------------------------------------------------------
+LA BOUCLE CORRECTIVE § 5 — le vert aux deux bras (le 17/11/2026, la suite
+de la session ; les preuves du rejet préservées : le rouge consigné
+demeure à côté du vert né)
+--------------------------------------------------------------------------------
+989dc8a1793f0b970b941a8fd3b9a614b0fdbd39d2c2f4638adc36423bf0bec4  preuves-baseline/journal_tokens.jsonl (28 appels)
+0ecfb3f5d469b64c51e15f510f77559e14c70081f54315ff268e6fb3d3c22832  preuves-baseline/garde-brut.jsonl (28 réponses)
+2daaacba25c40cf280991958c7ee0a901b8dadab9232d1e9fbee5b1921169bd9  bras-T/loupe-05-it10.asm (LA PIÈCE FINALE T, 394 o)
+a1789434aee218b9f5007b07a44078cbd95f00fbcaf39c7649a656e6efc21bb0  bras-C/loupe-05-it4.c (LA PIÈCE FINALE C)
+d1a9dba4c18012b38dae1d69d9e869e40739bd8f5a4a5d658b959d032229bbc6  bras-T/loupe-05-it9.asm (la reprise, l'état au résidu)
+72eeb6744d9824c1c635a6ba45b46254a9300d02079b601c299f7006fe0c0d35  bras-T/fragment-tour10.asm
+af983c49f7d1bea4249353ed2d86ec9a29515cda1d871e3de3aeb49c762e078d  bras-T/fragment-corrigee-tour10.md
+38175b5e79eebfa77a7e01b03264f5246ec24dc32419942b75735d66b6d17d5a  bras-T/fragment-tour11.asm
+e28fddc878846aa751b46a5f99edd58378cd2325946c0ec32f8274e1a208d42e  bras-T/fragment-corrigee-tour11.md
+9a3bb45fd7b687a1efc1e796c524c162616fa4bc9f35c52c2d3fcdfb44f7ecbc  bras-C/fragment-C4.c
+359a1e14e7250094872881ae6cef59ae188a5672b04f1fb2e403a5af66255126  bras-C/fragment-corrigee-C4.md
+f758dbf0799ef9872fb871e9ab48809fa6037be94bbd9d11acbb0b3501c0253a  bras-T/revue-reprise.md (CONFORME)
+9d1f0900387d23b11762a220b141274574617dfd46db82c89b58813e498f4472  bras-C/revue-reprise.md (CONFORME)
+8999d61dfa89f0cd218d2111cd222b3948e15baa6384464867a2f5964af443b8  preuves-baseline/cristal-T-08.json (la reprise, 391 o)
+3dc8822530f27372a7428700008fda1c87dce27b98c029c9795f38cc5b641a2a  preuves-baseline/cristal-T-09.json (LE VERT, 394 o)
+1e487a386cee5869d994f8f367829f9589f968c296a77406f9fcfd28519844f1  preuves-baseline/epreuve-v1v5-bras-T.json (CONFORME)
+5e333514bdd4f943811d03e1e70d52ca64cc23660bce63572588a82eef9b6607  preuves-baseline/epreuve-v1v5-bras-C.json (CONFORME)
+856d44b2a66e7bbb5dba3a7e46e25c148c32f82b2d37a3192254c3cc89134daa  preuves-baseline/epreuve-v1v5-bras-T-REJET-325.json (préservé)
+7cfa81a7bf095c769c44e1f7feeae485a00d670f439ae326bf520ee3536a23f6  preuves-baseline/epreuve-v1v5-bras-C-REJET-325.json (préservé)
+212851f672861c2515a8e724948de9c406c96ca59ee62f77745b1b1cc8d2f2d8  epreuve-v1v5/harnais_t.py (le cristal pointé T-09)
+3423a2f052e937a07ae5ec25f0cc9c0c55d7339e4e11e573e101cd7d7f819075  epreuve-v1v5/harnais_c.c (la pièce pointée it4)

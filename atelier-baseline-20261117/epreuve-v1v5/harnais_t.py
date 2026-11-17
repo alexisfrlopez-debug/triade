@@ -113,10 +113,12 @@ class HarnaisT:
     def __init__(self, fichier: bytes):
         self.fichier = fichier
         self.taille = len(fichier)
-        # la pièce cristallisée
+        # la pièce cristallisée (l'itération COURANTE de la boucle § 5 :
+        # T-07 le rejet consigné ; T-08 la reprise ; T-09 le courrier rbp
+        # — le même harnais, la même graine, seule la pièce change)
         cristal = json.load(open(os.path.join(
-            ATELIER, "preuves-baseline", "cristal-T-07.json"), encoding="utf-8"))
-        assert cristal["vert"] and cristal["nb_octets"] == 376
+            ATELIER, "preuves-baseline", "cristal-T-09.json"), encoding="utf-8"))
+        assert cristal["vert"] and cristal["nb_octets"] == 394
         self.piece = bytes.fromhex(cristal["octets"])
 
         # les cibles des déplacements RIP — calculées par désassemblage

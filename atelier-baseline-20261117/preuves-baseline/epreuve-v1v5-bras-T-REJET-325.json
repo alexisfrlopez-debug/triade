@@ -1,0 +1,158 @@
+{
+ "bras": "T",
+ "graine": 20261117,
+ "vecteurs": {
+  "V1": {
+   "n": 1101,
+   "crashs": 1094,
+   "divergents": 7,
+   "echantillon": [
+    {
+     "cas": 0,
+     "gamme": [
+      0,
+      65024
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 1733018129,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "446279f3ab356900…"
+    },
+    {
+     "cas": 1,
+     "gamme": [
+      56306,
+      2386
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 1094778450,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "9ce85dffb3b235af…"
+    },
+    {
+     "cas": 2,
+     "gamme": [
+      1599,
+      15353
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 900874103,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "c6b1c9a990e6f499…"
+    },
+    {
+     "cas": 3,
+     "gamme": [
+      13257,
+      14090
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 3752406898,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "ec9725e6964e6308…"
+    },
+    {
+     "cas": 4,
+     "gamme": [
+      22507,
+      19709
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 1359574973,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "db5d26606b650594…"
+    },
+    {
+     "cas": 5,
+     "gamme": [
+      14188,
+      22590
+     ],
+     "crash": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+     "rax": 2648705167,
+     "produit": "aaaaaaaaaaaaaaaa…",
+     "attendu": "ec14d8867dfb9d7f…"
+    }
+   ],
+   "verdict": "ROUGE",
+   "detail": "1094 crashs à l'exécution, 7 condensés divergents sur 1101 gammes"
+  },
+  "V2": {
+   "vide": {
+    "produit": "e3b0c44298fbfbd71e069c544f86dc10e96d6dce73ba434b8fb946d06089f0b8",
+    "attendu": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ok": false
+   },
+   "abc": {
+    "produit": "c8809e7041a28784dfe41e1e862af2b90cd292140c156547bd4a790c7c14f870",
+    "attendu": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "ok": false,
+    "crash": null
+   },
+   "verdict": "ROUGE"
+  },
+  "V3": {
+   "E1_session": {
+    "rax": -4,
+    "attendu": -4,
+    "ok": true
+   },
+   "E2_bornes": {
+    "rax": -3,
+    "attendu": -3,
+    "ok": true
+   },
+   "E3_entree": {
+    "rax": -5,
+    "attendu": -5,
+    "ok": true
+   },
+   "verdict": "VERT"
+  },
+  "V4": {
+   "rax": -6,
+   "attendu": -6,
+   "ok_verdict": true,
+   "sortie_intacte": true,
+   "ok_sortie": true,
+   "code_consigne": 5,
+   "fenetres": 2,
+   "crash": null,
+   "non_volatils": {
+    "rbx": true,
+    "rbp": true,
+    "rdi": true,
+    "rsi": true,
+    "r12": true,
+    "r13": true,
+    "r14": true,
+    "r15": true
+   },
+   "verdict": "VERT"
+  },
+  "V5": {
+   "verdict": "ROUGE",
+   "detail": "le condensé ne peut être observé — la pièce meurt à la finalisation (crash), la falsification est impossible à constater",
+   "crash_ref": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)",
+   "crash_mute": "Invalid memory write (UC_ERR_WRITE_UNMAPPED) (rip=0xc38c)"
+  }
+ },
+ "invariants": {
+  "I5_non_volatils_succes": {
+   "rbx": true,
+   "rbp": true,
+   "rdi": false,
+   "rsi": false,
+   "r12": true,
+   "r13": true,
+   "r14": false,
+   "r15": false
+  },
+  "I5_verdict": "ROUGE",
+  "Q2_appels_observes": [
+   "SetFilePointerEx",
+   "ReadFile"
+  ]
+ },
+ "VERDICT": "REJET"
+}

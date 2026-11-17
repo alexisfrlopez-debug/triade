@@ -13566,3 +13566,28 @@ L'EXÉCUTION PREND, NOMMÉES UNE À UNE — LE HARNAIS EST NÉ
   TAMPON_CUMUL, le vide par la composition, la copie depuis le créneau,
   rdi/rsi sauvés) — puis L'ÉPREUVE REJOUEE (la même graine) jusqu'au vert.
 (17/11, la session de l'épreuve V1-V5 vécue et consignée)
+
+## Entrée 326 : LA BOUCLE CORRECTIVE § 5 — LES DEUX BRAS AU VERT (le
+17/11/2026)
+
+- LA SYNCHRO GIT/DRIVE (le commandement du développeur) : les jetons du
+  /Tokens recoupés byte-byte (le relais OAuth VIT, le jeton git vérifié,
+  le SA la lecture), GitHub à jour (59bc852, 0/0), le Drive recoupé au
+  re-téléchargement (bundle 325, worklog, journal racine).
+- LA BOUCLE § 5 : bras C UN tour (D-C1 les huit affectations inversées,
+  855 tokens — loupe-05-it4.c) ; bras T DEUX tours (la reprise aux cinq
+  classes D-T1..D-T5, 4 760 tokens — loupe-05-it9.asm ; puis le courrier
+  rbp manquant nommé par le rejeu rip=0xc27a, 954 tokens —
+  loupe-05-it10.asm 394 o, cristal T-09).
+- LE REJEU (le même harnais, la graine 20261117, le juge hashlib) : LES
+  DEUX BRAS CONFORMES — V1-V5 et I5 tous VERT ; le vide PAR LA
+  COMPOSITION ; les HUIT non-volatils rendus ; la falsification
+  détectée. Les revues reprises CONFORMES. Le rejet PRÉSERVÉ à côté du
+  vert (la falsifiabilité).
+- LA MESURE : la boucle 13 662 tokens (C 4 520, T 9 142) — le journal 28
+  appels, 80 964 tokens (T 45 231, C 35 733). La onzième classe invisible
+  à la revue statique : LE HARNAIS EST DÉSORMAIS LE JUGE.
+- LE CHANTIER 1 EST CLOS (n=2 construit puis éprouvé vert aux deux bras)
+  — les leviers du chantier 2 DÉBLOQUÉS (L1 → L3 → L2 → L4 → L5/L7,
+  l'OPT-01 à la prochaine unité, D207).
+(17/11, consigné à la suite de l'épreuve V1-V5)
