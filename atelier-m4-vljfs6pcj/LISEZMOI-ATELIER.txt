@@ -1,0 +1,42 @@
+LISEZMOI — L'ATELIER M4 vljfs6pcj (le 17/11/2026)
+=================================================
+
+L'instruction : Qwen__20261116_vljfs6pcj — « Optimise le temps de
+vérification M4 du bras T au-delà des 39,3 s actuels, sans retirer
+aucun contrôle (R11) » — les leviers (a) invalidation incrémentale par
+empreinte de bloc, (b) mémoïsation scellée des sessions pures,
+(c) pré-filtre différentiel natif + émulation de confirmation.
+
+LE PLAN EST GELÉ AVANT TOUTE MESURE : PLAN-vljfs6pcj-M4.md (son sha256
+consigné à D214 et OPT-03 AVANT la première mesure ; le commit du plan
+précède toute donnée de mesure au dépôt).
+
+LA REPRODUCTION (le bac à 2 cœurs, la même machine fait partie du
+record — la chaîne croisée TRIXIE aux versions exactes doit vivre à
+/tmp/mingw-try, le clone à /tmp/triade-gh) :
+
+  python3 atelier-m4-vljfs6pcj/mesure_prefiltre_natif.py   # (c) d'abord
+  python3 atelier-m4-vljfs6pcj/outil_m4_v181.py --mode avant
+  python3 atelier-m4-vljfs6pcj/mesure_c_v181.py 5
+  python3 atelier-m4-vljfs6pcj/outil_m4_v181.py --mode froid
+  python3 atelier-m4-vljfs6pcj/outil_m4_v181.py --mode chaud
+  python3 atelier-m4-vljfs6pcj/controle_negatif_memo.py
+  python3 atelier-m4-vljfs6pcj/extraire_m4_v181.py
+
+LES FICHIERS :
+  PLAN-vljfs6pcj-M4.md        le plan pré-enregistré (gelé)
+  memo_sessions.py            le mémo scellé (chaîne + Ed25519 clé test)
+  oracle_unite01_v181.py      l'oracle loupe-01 au mémo
+  oracle_unite02_v181.py      l'oracle loupe-02 au mémo
+  outil_m4_v181.py            le runner (avant / froid / chaud)
+  mesure_c_v181.py            la liste fixe du bras C (n exécutions)
+  mesure_prefiltre_natif.py   le coût natif hashlib du témoin 196 Kio
+  controle_negatif_memo.py    la falsification du mémo (TROIS refus)
+  extraire_m4_v181.py         l'extraction + LE RAPPORT (fail-closed)
+  memo-sessions-v1.json       LE MÉMO (né de la semence, scellé)
+  preuves/                    les logs bruts (m4-*, c-*, extraction)
+  RAPPORT-M4-vljfs6pcj.txt    le rapport (né de l'extraction, jamais tapé)
+
+LA CONSOLE : les oracles v181 impriment LA CONSOLE ORIGINALE (stdout) —
+les statistiques du mémo vont à stderr. L'identité ligne à ligne est
+exigée par le plan § 5.1 et vérifiée par l'extraction.
