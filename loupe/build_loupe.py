@@ -1730,6 +1730,15 @@ def construire() -> int:
     code, insns_par_bloc = assembler_blocs(ks)
     verrous = oracle_structurel(code, insns_par_bloc)
     verrous += audit_msx64(insns_par_bloc)     # l'Entrée 207 : la classe
+    # L'AUDIT DE TEMPS CONSTANT STRUCTUREL NON BORNÉ (fkkqc7v8t) — à côté
+    # de l'audit ABI msx64 : l'obligation md5 (loupe-06 + libc + .comprimer)
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location(
+        "audit_temps_constant",
+        os.path.join(os.path.dirname(ICI), "audit_temps_constant.py"))
+    _ATC = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_ATC)
+    _ATC.auditer_loupe()
     extraits = heritage_scelle(m9, m1, demo, ks)
 
     sections = composer_image(code, extraits)
@@ -1810,6 +1819,15 @@ def verifier() -> int:
     code, insns_par_bloc = assembler_blocs(ks)
     verrous = oracle_structurel(code, insns_par_bloc)
     verrous += audit_msx64(insns_par_bloc)    # l'Entrée 207 : la classe
+    # L'AUDIT DE TEMPS CONSTANT STRUCTUREL NON BORNÉ (fkkqc7v8t) — à côté
+    # de l'audit ABI msx64 : l'obligation md5 (loupe-06 + libc + .comprimer)
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location(
+        "audit_temps_constant",
+        os.path.join(os.path.dirname(ICI), "audit_temps_constant.py"))
+    _ATC = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_ATC)
+    _ATC.auditer_loupe()
     extraits = heritage_scelle(m9, m1, demo, ks)
     sections = composer_image(code, extraits)
     exe = ecrire_pe32plus(*sections[:4])

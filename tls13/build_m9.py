@@ -1200,6 +1200,17 @@ def construire(volume: str, graine: int) -> int:
     print(f"[oracle] structurel tls13 : {len(verrous_tls13)} verrous PASS "
           f"(LA RÈGLE AUCUN IAT PAR BLOC tls13 + LES SLOTS DISJOINTS — "
           f"l'erratum n° 4 : le contrôle qui nomme)")
+    # L'AUDIT DE TEMPS CONSTANT STRUCTUREL NON BORNÉ (fkkqc7v8t, le
+    # chantier 4) — à côté de l'oracle structurel : le flux d'information
+    # sur les notations, les DEUX classes de violation (BRANCHE/ADRESSE),
+    # la décharge SMT ∀ secrets ; un refus nommé LÈVE l'échec du build
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location(
+        "audit_temps_constant",
+        os.path.join(TRIADE, "audit_temps_constant.py"))
+    _ATC = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_ATC)
+    _ATC.auditer_tls13()
 
     # 4. Composition de l'image M9 (deltas documentés + .text6)
     global CONTRATS_M9
@@ -1288,6 +1299,17 @@ def verifier(volume: str, graine: int) -> int:
     verrous_tls13 = oracle_structurel_m9(
         specs, code_tls13, BLOCS_TLS13, APPELS_FERMES_TLS13,
         DONNEES_RIP_TLS13, "tls13")
+    # L'AUDIT DE TEMPS CONSTANT STRUCTUREL NON BORNÉ (fkkqc7v8t, le
+    # chantier 4) — à côté de l'oracle structurel : le flux d'information
+    # sur les notations, les DEUX classes de violation (BRANCHE/ADRESSE),
+    # la décharge SMT ∀ secrets ; un refus nommé LÈVE l'échec du build
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location(
+        "audit_temps_constant",
+        os.path.join(TRIADE, "audit_temps_constant.py"))
+    _ATC = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_ATC)
+    _ATC.auditer_tls13()
     global CONTRATS_M9
     CONTRATS_M9 = contrats_m9(specs)
     with open(os.path.join(ICI, "proxy.exe"), "rb") as f:

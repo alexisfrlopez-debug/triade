@@ -1,0 +1,101 @@
+LA FORENSIE DU RENVERSEMENT DUDECT N=200 → N=400 — fkkqc7v8t B1
+  (les DEUX journaux bruts du terrain, sur pièces, jamais retouchés ;
+   l'ordre d'exécution conservé : 8 blocs BLOQUÉS — fixe PUIS
+   aléatoire par cible, itérations contiguës croissantes)
+
+═══════════════════════ N=200 (journal 1794557691) ═══════════════════════
+── tls13-02 (n=200/classe, cycles RDTSC)
+   le t de Welch recalculé :  +12.39  [RECROUPÉ]  → AU-SEUIL (|t|>5)
+   moyenne fixe    1288.2 cyc  | aléatoire     904.1 cyc  | Δ   +384.2
+   WARM-UP (le rang DANS le bloc) : Spearman fixe +0.494 / aléatoire -0.333 | les 50 premières fixe 1241.7 → les 50 dernières 1491.5 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.637 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : -728.0 cyc
+   OUTLIERS : p50 993 p90 1520 p99 1790 max 5174 | t à 5 % trim +28.76 | 10 % +31.47 | winsor 10 % +29.48
+   ROBUSTES : Mann-Whitney U=37686 z=+15.30 p=0.0000 | KS D=0.840 p=0.0000 | Yuen t=+35.37
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+423.0 .. +539.0] cyc (EXCLUT 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +12.39 → contrôlé du rang +8.48 (pente du rang +0.69 cyc/mesure)
+
+── tls13-13 (n=200/classe, cycles RDTSC)
+   le t de Welch recalculé :   +5.19  [RECROUPÉ]  → AU-SEUIL (|t|>5)
+   moyenne fixe  385567.0 cyc  | aléatoire  378046.3 cyc  | Δ  +7520.6
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.670 / aléatoire +0.061 | les 50 premières fixe 394307.1 → les 50 dernières 378826.7 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.539 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : -535.0 cyc
+   OUTLIERS : p50 376540 p90 393376 p99 448598 max 482688 | t à 5 % trim +10.43 | 10 % +12.47 | winsor 10 % +11.04
+   ROBUSTES : Mann-Whitney U=30846 z=+9.38 p=0.0000 | KS D=0.565 p=0.0000 | Yuen t=+13.87
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+2603.0 .. +12079.0] cyc (EXCLUT 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +5.19 → contrôlé du rang -1.29 (pente du rang -55.84 cyc/mesure)
+
+── tls13-16 (n=200/classe, cycles RDTSC)
+   le t de Welch recalculé :   +0.94  [RECROUPÉ]  → sous le seuil
+   moyenne fixe      26.0 cyc  | aléatoire      25.5 cyc  | Δ     +0.5
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.001 / aléatoire +0.023 | les 50 premières fixe 25.8 → les 50 dernières 25.6 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.118 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : +0.0 cyc
+   OUTLIERS : p50 26 p90 26 p99 32 max 112 | t à 5 % trim +3.73 | 10 % +3.94 | winsor 10 % +4.80
+   ROBUSTES : Mann-Whitney U=23268 z=+3.13 p=0.0018 | KS D=0.405 p=0.0000 | Yuen t=+4.38
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+0.0 .. +2.0] cyc (contient 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +0.94 → contrôlé du rang -0.57 (pente du rang -0.01 cyc/mesure)
+
+── tls13-17 (n=200/classe, cycles RDTSC)
+   le t de Welch recalculé :   +3.11  [RECROUPÉ]  → sous le seuil
+   moyenne fixe     579.0 cyc  | aléatoire     574.5 cyc  | Δ     +4.4
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.075 / aléatoire -0.072 | les 50 premières fixe 581.0 → les 50 dernières 580.0 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.200 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : -6.0 cyc
+   OUTLIERS : p50 576 p90 590 p99 638 max 688 | t à 5 % trim +4.73 | 10 % +5.34 | winsor 10 % +4.38
+   ROBUSTES : Mann-Whitney U=24368 z=+3.78 p=0.0002 | KS D=0.160 p=0.0104 | Yuen t=+6.34
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+0.0 .. +8.0] cyc (contient 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +3.11 → contrôlé du rang +0.20 (pente du rang -0.02 cyc/mesure)
+
+L'ARITHMÉTIQUE DU POUVOIR (√n) :
+  un effet de classe RÉEL et constant donne |t| ∝ √n :
+  12,39 → 0,84 quand n DOUBLE (200 → 400) est ARITHMÉTIQUEMENT
+  INCOMPATIBLE avec un effet constant — la forensie ci-dessus
+  nomme la classe d'artefact qui l'a produit (les chiffres par
+  cible : la dérive, les queues, l'ordre bloqué).
+
+═══════════════════════ N=400 (journal 1794566245) ═══════════════════════
+── tls13-02 (n=400/classe, cycles RDTSC)
+   le t de Welch recalculé :   +0.84  [RECROUPÉ]  → sous le seuil
+   moyenne fixe    1502.7 cyc  | aléatoire    1324.8 cyc  | Δ   +177.9
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.633 / aléatoire -0.251 | les 50 premières fixe 3109.4 → les 50 dernières 920.7 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.303 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : +46.0 cyc
+   OUTLIERS : p50 1189 p90 1716 p99 3203 max 85042 | t à 5 % trim +2.23 | 10 % +4.86 | winsor 10 % +1.67
+   ROBUSTES : Mann-Whitney U=84398 z=+1.35 p=0.1784 | KS D=0.310 p=0.0000 | Yuen t=+9.09
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+230.0 .. +320.0] cyc (EXCLUT 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +0.84 → contrôlé du rang -2.21 (pente du rang -2.77 cyc/mesure)
+
+── tls13-13 (n=400/classe, cycles RDTSC)
+   le t de Welch recalculé :   +1.55  [RECROUPÉ]  → sous le seuil
+   moyenne fixe  443930.5 cyc  | aléatoire  438450.9 cyc  | Δ  +5479.6
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.599 / aléatoire -0.233 | les 50 premières fixe 451905.3 → les 50 dernières 434040.4 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.527 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : -14581.0 cyc
+   OUTLIERS : p50 429809 p90 460070 p99 569918 max 1595486 | t à 5 % trim +8.31 | 10 % +14.88 | winsor 10 % +9.87
+   ROBUSTES : Mann-Whitney U=117784 z=+11.56 p=0.0000 | KS D=0.438 p=0.0000 | Yuen t=+20.83
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+8614.0 .. +14027.0] cyc (EXCLUT 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +1.55 → contrôlé du rang -1.81 (pente du rang -45.64 cyc/mesure)
+
+── tls13-16 (n=400/classe, cycles RDTSC)
+   le t de Welch recalculé :   -0.30  [RECROUPÉ]  → sous le seuil
+   moyenne fixe      28.3 cyc  | aléatoire      28.5 cyc  | Δ     -0.2
+   WARM-UP (le rang DANS le bloc) : Spearman fixe +0.027 / aléatoire +0.001 | les 50 premières fixe 29.3 → les 50 dernières 28.6 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.082 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : +0.0 cyc
+   OUTLIERS : p50 28 p90 30 p99 38 max 264 | t à 5 % trim +3.86 | 10 % +4.57 | winsor 10 % +3.41
+   ROBUSTES : Mann-Whitney U=89535 z=+3.21 p=0.0013 | KS D=0.460 p=0.0000 | Yuen t=+6.93
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+0.0 .. +0.0] cyc (contient 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul -0.30 → contrôlé du rang -1.77 (pente du rang -0.01 cyc/mesure)
+
+── tls13-17 (n=400/classe, cycles RDTSC)
+   le t de Welch recalculé :   +2.02  [RECROUPÉ]  → sous le seuil
+   moyenne fixe     636.1 cyc  | aléatoire     633.9 cyc  | Δ     +2.2
+   WARM-UP (le rang DANS le bloc) : Spearman fixe -0.015 / aléatoire -0.066 | les 50 premières fixe 636.6 → les 50 dernières 635.4 cyc
+   TURBO/ORDRE (la dérive) : Spearman global -0.129 | le palier de frontière (50 dernières fixe → 50 premières aléatoire) : -2.0 cyc
+   OUTLIERS : p50 634 p90 652 p99 674 max 770 | t à 5 % trim +4.71 | 10 % +5.23 | winsor 10 % +4.82
+   ROBUSTES : Mann-Whitney U=91508 z=+3.53 p=0.0004 | KS D=0.117 p=0.0072 | Yuen t=+5.98
+   le Δ de médianes (bootstrap 10 000, IC 95 %) : [+0.0 .. +4.0] cyc (contient 0)
+   ORDRE DES CLASSES (ANCOVA cycles ~ classe + rang) : t classe seul +2.02 → contrôlé du rang -0.94 (pente du rang -0.01 cyc/mesure)
+
+L'ARITHMÉTIQUE DU POUVOIR (√n) :
+  un effet de classe RÉEL et constant donne |t| ∝ √n :
+  12,39 → 0,84 quand n DOUBLE (200 → 400) est ARITHMÉTIQUEMENT
+  INCOMPATIBLE avec un effet constant — la forensie ci-dessus
+  nomme la classe d'artefact qui l'a produit (les chiffres par
+  cible : la dérive, les queues, l'ordre bloqué).
+
