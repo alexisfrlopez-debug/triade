@@ -1,0 +1,35 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode minimal — la réponse tient
+en une ligne, la carte confronte la réponse aux octets réels).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-01-ouvrir · bloc ouvrir : le fichier donné à la session (la session née entière) · spec loupe-01:R1 · bloc carte i110001
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x4080, taille 448 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : IAT kernel32 : CreateFileW, GetFileSizeEx, CloseHandle, GetLastError ; libc-01 (la copie du chemin PAR LA CARTE) ; loupe-04 (le cadre vierge en tête), loupe-02 (la fenêtre à la vue 0), loupe-03 (la clôture sur refus), loupe-07 (le panneau né) — la session née ENTIÈRE (Q4)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-01-ouvrir.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 389 o · padding : 59 o (NOP, 0x90)
+; Étiquettes résolues : .taille_ok=0x412c, .mesure=0x4136, .mesure_fin=0x4167, .panneau=0x418c, .propage=0x41a0, .refus_session=0x41ad, .refus_os=0x41b4, .absent=0x41d0, .verrouille=0x41d7, .refus_taille_os=0x41de, .sortie=0x41f7
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x408d + 0x7 + 0x9f6c = 0xe000
+;   0x40d4 + 0x6 - 0xfc2 = 0x3118
+;   0x40f3 + 0x6 - 0xfd9 = 0x3120
+;   0x4117 + 0x6 - 0xfdd = 0x3140
+;   0x4152 + 0x6 - 0x1018 = 0x3140
+;   0x418c + 0x7 + 0xa22d = 0xe3c0
+;   0x41b4 + 0x6 - 0x1072 = 0x3148
+;   0x41e5 + 0x6 - 0x10ab = 0x3140
+; Appels directs (l'adresse du plan — I1) : call 0x4040, call qword ptr [rip - 0xfc2], call qword ptr [rip - 0xfd9], call qword ptr [rip - 0xfdd], call 0x4040, call qword ptr [rip - 0x1018], call 0x4040, call 0x1100, call 0x4240, call 0x4940, call 0x4380, call qword ptr [rip - 0x1072], call qword ptr [rip - 0x10ab], call 0x4040
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et réponds AU FORMAT
+MINIMAL, une seule ligne exactement :
+IDENTIFIANT · NOM · SLOT · TAILLE
+— IDENTIFIANT : l'identifiant de bloc de la carte (la forme iNNNNNN de
+l'entête) ;
+— NOM : le nom du bloc (le premier champ de la première ligne de
+l'entête, la forme loupe-NN-mot) ;
+— SLOT : l'adresse RVA du slot, telle que la deuxième ligne de l'entête
+la porte (la forme 0x…) ;
+— TAILLE : la taille du slot en octets, le nombre tel que l'entête le
+porte.
+AUCUN CALCUL — recopie les quatre champs tels quels ; la carte fait le
+reste. Rien d'autre.

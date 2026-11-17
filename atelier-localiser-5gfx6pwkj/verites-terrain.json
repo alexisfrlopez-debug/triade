@@ -1,0 +1,187 @@
+{
+ "graine": 20261117,
+ "ordre": [
+  "i110007",
+  "i110011",
+  "i110002",
+  "i110012",
+  "i110003",
+  "i110010",
+  "i110009",
+  "i110017",
+  "i110016",
+  "i110013",
+  "i110014",
+  "i110018",
+  "i110006",
+  "i110015",
+  "i110004",
+  "i110008",
+  "i110001",
+  "i110005"
+ ],
+ "blocs": [
+  {
+   "nom": "loupe-01-ouvrir",
+   "id": "i110001",
+   "slot": 16512,
+   "taille": 448,
+   "fin": 16960,
+   "code": 389,
+   "notation_sha256": "a6ad8b47559b98ef493a27cf2bf2f6f1c03550d5c8b361fa5b5786119c900400"
+  },
+  {
+   "nom": "loupe-02-lire",
+   "id": "i110002",
+   "slot": 16960,
+   "taille": 320,
+   "fin": 17280,
+   "code": 296,
+   "notation_sha256": "372f89e5ff66cb0750985013cafaf29f262a9ceef2a0172c0af93e1c60cc3e85"
+  },
+  {
+   "nom": "loupe-03-fermer",
+   "id": "i110003",
+   "slot": 17280,
+   "taille": 192,
+   "fin": 17472,
+   "code": 122,
+   "notation_sha256": "d0ccc81ef425bbae28e654622801e28a5cb586d6e42f74e8bb12fe230a39312d"
+  },
+  {
+   "nom": "loupe-04-cadre",
+   "id": "i110004",
+   "slot": 16448,
+   "taille": 64,
+   "fin": 16512,
+   "code": 47,
+   "notation_sha256": "3a2d03d1cccb22d5f38d8e82006bb6de7eb17692c3518978315fa3e6cf06abbb"
+  },
+  {
+   "nom": "loupe-05-sha256",
+   "id": "i110005",
+   "slot": 17472,
+   "taille": 384,
+   "fin": 17856,
+   "code": 313,
+   "notation_sha256": "93977b05e5646e7fd583077b65b8eb2348b03b54e2fd09dd56567e5fe59fd2bb"
+  },
+  {
+   "nom": "loupe-06-md5",
+   "id": "i110006",
+   "slot": 17856,
+   "taille": 896,
+   "fin": 18752,
+   "code": 871,
+   "notation_sha256": "c8302dd79cdc6dea5712ef7034db46d2bd9dae73dae7609093f879f39459da2a"
+  },
+  {
+   "nom": "loupe-07-cumul",
+   "id": "i110007",
+   "slot": 18752,
+   "taille": 128,
+   "fin": 18880,
+   "code": 102,
+   "notation_sha256": "02173c3629d74fca0e3c7f1ebe11b1be9bc26f7f53cf7ee7fb79ff0cdc7c06eb"
+  },
+  {
+   "nom": "loupe-08-ligne",
+   "id": "i110008",
+   "slot": 18880,
+   "taille": 320,
+   "fin": 19200,
+   "code": 271,
+   "notation_sha256": "52a14615b0aef0b9d30622b425a886177b78a9b275ad5d7589d6bd2918ee6672"
+  },
+  {
+   "nom": "loupe-09-ecran",
+   "id": "i110009",
+   "slot": 23552,
+   "taille": 1152,
+   "fin": 24704,
+   "code": 1135,
+   "notation_sha256": "45b405e684b42aa8d94f631ad19e8b6d849bb2e94e410070d5c4f5a3f32d9325"
+  },
+  {
+   "nom": "loupe-10-peinture",
+   "id": "i110010",
+   "slot": 19200,
+   "taille": 1664,
+   "fin": 20864,
+   "code": 1622,
+   "notation_sha256": "fd0ad169b4d1bf15897cbb39bf191a724ce93af03434610417b60b65e89fcd73"
+  },
+  {
+   "nom": "loupe-11-defilement",
+   "id": "i110011",
+   "slot": 20864,
+   "taille": 640,
+   "fin": 21504,
+   "code": 568,
+   "notation_sha256": "7bd161003cd724e3381829737dc8b193c0231374afbb2f1ef8d7ed186383b708"
+  },
+  {
+   "nom": "loupe-12-aller",
+   "id": "i110012",
+   "slot": 21504,
+   "taille": 832,
+   "fin": 22336,
+   "code": 796,
+   "notation_sha256": "b1695a529f984a1fb408690ea1e7ab99031710658e82e62c94b93293eb8a8d64"
+  },
+  {
+   "nom": "loupe-13-recherche",
+   "id": "i110013",
+   "slot": 22336,
+   "taille": 192,
+   "fin": 22528,
+   "code": 126,
+   "notation_sha256": "f9c4afdce6c82ecf55c0dce1cb023259c561f01ebd433b5514e5482f04241576"
+  },
+  {
+   "nom": "loupe-14-suivant",
+   "id": "i110014",
+   "slot": 22528,
+   "taille": 1024,
+   "fin": 23552,
+   "code": 983,
+   "notation_sha256": "55bc6d03a4b1f65eafb6d97b89077550e139e8af810413f33fec86f9770abd68"
+  },
+  {
+   "nom": "loupe-15-curseur",
+   "id": "i110015",
+   "slot": 24704,
+   "taille": 448,
+   "fin": 25152,
+   "code": 391,
+   "notation_sha256": "b30ef03c0c4db353c2396d5099bef4961b15ff8572f685ed90891f66a43c3c23"
+  },
+  {
+   "nom": "loupe-16-saisie",
+   "id": "i110016",
+   "slot": 25152,
+   "taille": 704,
+   "fin": 25856,
+   "code": 660,
+   "notation_sha256": "7c710d412f3305f96e80208dbb8d66197c3e9e86adb3a7c66bd01ae08bc78c31"
+  },
+  {
+   "nom": "loupe-17-sauver",
+   "id": "i110017",
+   "slot": 25856,
+   "taille": 576,
+   "fin": 26432,
+   "code": 521,
+   "notation_sha256": "85a6b8c8c1415e03ede1357e4d5c3adc338d45e89e5c1e1272695b6398ea9271"
+  },
+  {
+   "nom": "loupe-18-quitter",
+   "id": "i110018",
+   "slot": 26432,
+   "taille": 192,
+   "fin": 26624,
+   "code": 163,
+   "notation_sha256": "c82237f1afaf770a972807692b08a0a6e6f1eb04c7854d27db41c33af80a0475"
+  }
+ ]
+}

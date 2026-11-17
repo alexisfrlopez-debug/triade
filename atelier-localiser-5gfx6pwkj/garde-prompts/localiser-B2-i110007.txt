@@ -1,0 +1,28 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode minimal — la réponse tient
+en une ligne, la carte confronte la réponse aux octets réels).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-07-cumul · bloc le cumul : les empreintes du fichier entier au panneau · spec loupe-07:R1 · bloc carte i110007
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x4940, taille 128 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : loupe-05 (le passage SHA-256) puis loupe-06 (le passage MD5) — LA COMPOSITION SEULE, DEUX passages l'un après l'autre (I2 : l'exclusion de famille) ; AUCUNE entrée IAT (le miroir des feuilles pures, charte § 9)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-07-cumul.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 102 o · padding : 26 o (NOP, 0x90)
+; Étiquettes résolues : .refus_session=0x4990, .refus_sortie=0x4997, .sortie=0x499e
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x4947 + 0x7 + 0x96b2 = 0xe000
+; Appels directs (l'adresse du plan — I1) : call 0x4440, call 0x45c0
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et réponds AU FORMAT
+MINIMAL, une seule ligne exactement :
+IDENTIFIANT · NOM · SLOT · TAILLE
+— IDENTIFIANT : l'identifiant de bloc de la carte (la forme iNNNNNN de
+l'entête) ;
+— NOM : le nom du bloc (le premier champ de la première ligne de
+l'entête, la forme loupe-NN-mot) ;
+— SLOT : l'adresse RVA du slot, telle que la deuxième ligne de l'entête
+la porte (la forme 0x…) ;
+— TAILLE : la taille du slot en octets, le nombre tel que l'entête le
+porte.
+AUCUN CALCUL — recopie les quatre champs tels quels ; la carte fait le
+reste. Rien d'autre.

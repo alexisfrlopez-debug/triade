@@ -13591,3 +13591,22 @@ L'EXÉCUTION PREND, NOMMÉES UNE À UNE — LE HARNAIS EST NÉ
   — les leviers du chantier 2 DÉBLOQUÉS (L1 → L3 → L2 → L4 → L5/L7,
   l'OPT-01 à la prochaine unité, D207).
 (17/11, consigné à la suite de l'épreuve V1-V5)
+
+## Entrée 327 : LA CAMPAGNE LOCALISER — LE MODE MINIMAL B2 MESURÉ VERT, LA
+PASSE B1 FALSIFIÉE CONSIGNÉE (le 17/11/2026, l'instruction 5gfx6pwkj)
+
+- LA CAMPAGNE PRÉ-ENREGISTRÉE (D211, hash a0ecaf41… avant toute mesure) :
+  les 18 blocs du domaine loupe, la graine 20261117, n=18 par mode,
+  l'instrument compter_tokens, cl100k en parallèle, aucun contrôle retiré.
+- LA PASSE 1 : A (l'entête complet) 18/18 sans divergence ; B1 (la plage
+  calculée par le modèle) FALSIFIÉE 18/18 (12 arithmétiques + 6 formes) —
+  le gain −41,0 % tenait mais la règle zéro-divergence rompue : un mode à
+  re-vérification systématique coûte plus qu'il n'économise.
+- LA PASSE 2 (D212, hash 0d98b0e1…) : B2 les quatre champs LITTÉRAUX, la
+  plage par la carte — LE TOTAL −37,3 % (1 712 → 1 072), LA RÉPONSE
+  −97,1 % (792 → 23), ZÉRO DIVERGENCE 18/18, les octets réels VERTS, la
+  garde avant/après identique, les empreintes inchangées.
+- LA LEÇON (D213) : LE CHAMP CALCULÉ EST LE CHAMP FAUSSÉ — la réponse ne
+  porte que du littéral, l'arithmétique appartient au vérificateur ;
+  l'adoption ajournée au terrain ; 54 appels, 79 039 tokens, 100 % log.
+(17/11, consigné à la suite de la boucle corrective — le chantier 2 ouvert)

@@ -1,0 +1,24 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le format en vigueur — la réponse
+rend l'entête complet du bloc localisé).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-06-md5 · bloc md5 d'une gamme : l'empreinte du quotidien, notée neuve (RFC 1321) · spec loupe-06:R1 · bloc carte i110006
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x45c0, taille 896 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : LA NOUVELLE NOTATION (aucun héritage : MD5 n'existe pas au projet) ; les tables MD5_S/MD5_T PUBLIQUES .rdata lues PAR DÉPLACEMENT RIP (I2 — la source unique vit au plan) ; libc-01 (le couplage du tampon PAR LA CARTE) et libc-07 (les zéros du bourre PAR LA CARTE) ; IAT kernel32 : SetFilePointerEx, ReadFile, GetLastError ; le cœur .comprimer : FEUILLE PURE en sous-routine locale, les QUATRE rounds nommés (RFC 1321 § 3.4)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-06-md5.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 871 o · padding : 25 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x4639, .fenetre_taille=0x4650, .absorbe=0x46b2, .k_ok=0x46e3, .fenetre_fin=0x4763, .bourre=0x476e, .zeros56=0x47b2, .comprimer=0x4810, .tour=0x4838, .r1=0x4867, .r2=0x487c, .r3=0x4897, .pas=0x48a9, .refus_session=0x48f4, .refus_bornes=0x48fb, .refus_sortie=0x4902, .refus_systeme=0x4909, .sortie=0x4916
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x45d0 + 0x7 + 0x9a29 = 0xe000
+;   0x4660 + 0x6 - 0x153e = 0x3128
+;   0x4686 + 0x7 + 0xb973 = 0x10000
+;   0x4690 + 0x6 - 0x1566 = 0x3130
+;   0x46fb + 0x7 + 0xb8fe = 0x10000
+;   0x482e + 0x7 - 0x2735 = 0x2100
+;   0x4909 + 0x6 - 0x17c7 = 0x3148
+; Appels directs (l'adresse du plan — I1) : call qword ptr [rip - 0x153e], call qword ptr [rip - 0x1566], call 0x1100, call 0x4810, call 0x13c0, call 0x4810, call 0x13c0, call 0x4810, call qword ptr [rip - 0x17c7]
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et rends SON ENTÊTE
+COMPLET (toutes les lignes de l'entête du bloc localisé, le format en
+vigueur de l'opération) — rien d'autre.

@@ -37,10 +37,11 @@ journal canonique, le push (la main du développeur).
 levier par unité mesurée, jamais deux (D207) ; la règle d'arrêt armée
 (un levier qui dégrade M1 ou M3 est REJETÉ). Deux instructions Qwen en
 attente en dépendent directement :
-- **5gfx6pwkj — le coût « localiser »** : le mode de réponse minimale
-  (identifiant de bloc + plage, vérifié par la carte) contre le header
-  complet (médiane 604/1 277 ≈ 47 %) — plan pré-enregistré hash-consigné,
-  n≥15 par mode, tokenizer natif + cl100k_base, aucun contrôle retiré ;
+- **5gfx6pwkj — le coût « localiser »** : ✅ EXÉCUTÉE (l'Entrée 327,
+  OPT-02 — la campagne pré-enregistrée D211/D212 : la passe B1 falsifiée
+  18/18, la passe B2 MESURÉE VERTE : le total −37,3 %, la réponse
+  −97,1 %, zéro divergence, la leçon D213 « le champ calculé est le
+  champ faussé », l'adoption ajournée au terrain) ;
 - **vljfs6pcj — le temps de vérification M4** : invalidation incrémentale
   par empreinte de bloc, mémoïsation scellée des sessions d'émulation,
   pré-filtre différentiel natif (le chemin critique crypto ~10 s/196 Kio),

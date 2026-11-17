@@ -12129,3 +12129,46 @@ Work Log:
   226 — puis le push GitHub et le bundle 326 + le worklog + le journal
   racine au TRIADE-sauvegarde-git (le 325 préservé, D143).
 (17/11, la session de la boucle corrective vécue et le chantier 1 clos)
+
+## Task 227 — Entrée 327 : LA CAMPAGNE LOCALISER (5gfx6pwkj) VÉCUE — LE MODE
+MINIMAL B2 MESURÉ VERT (−37,3 % LE TOTAL, −97,1 % LA RÉPONSE, ZÉRO
+DIVERGENCE), LA PASSE B1 FALSIFIÉE ET CONSIGNÉE
+
+Work Log:
+- LA CAMPAGNE (la première des deux instructions à l'attente de la
+  baseline, débloquée par les Entrées 324-326) : LE PLAN PRÉ-ENREGISTRÉ
+  D211 (sha256 a0ecaf41…) AVANT toute mesure — les 18 blocs du domaine
+  loupe, la graine 20261117, n=18 par mode, l'instrument compter_tokens
+  (le natif lu du champ usage), cl100k en parallèle, les distributions
+  complètes, aucun contrôle retiré (la vérification d'adresse, la
+  confrontation à la carte, la confrontation aux octets réels, la garde
+  de carte avant/après, les empreintes scellées).
+- LA PASSE 1 : le mode A (l'entête complet rendu — 18/18 sans divergence)
+  contre le mode B1 (la plage CALCULÉE par le modèle) — B1 FALSIFIÉE :
+  18/18 divergences (12 plages fausses : l'addition hexadécimale de tête ;
+  6 formes : la description recopiée au lieu du nom) ; le gain
+  directionnel tenait (−41,0 %) mais un mode qui exige une re-vérification
+  systématique coûte plus qu'il n'économise (la règle d'arrêt D207) ; LA
+  CLASSE DE FAUX POSITIF nommée au vérificateur (le 0xcc ENCODÉ dans une
+  instruction n'est pas un int3 — guérie par le désassemblage capstone) ;
+  un 429 de quota vécu à l'appel 31 (la reprise espacée, l'écart nommé au
+  rapport, 36/36 au final).
+- LA PASSE 2 (le plan B2 pré-enregistré D212, sha256 0d98b0e1… —
+  l'amendement né de la falsification) : la réponse porte QUATRE CHAMPS
+  LITTÉRAUX (IDENTIFIANT · NOM · SLOT · TAILLE), la plage calculée PAR LA
+  CARTE — LE GAIN MESURÉ : le total −37,3 % (1 712 → 1 072 natifs), la
+  réponse −97,1 % (792 → 23 tokens), ZÉRO DIVERGENCE 18/18, la
+  confrontation aux octets réels VERTE 18/18, la garde de carte
+  avant/après IDENTIQUE, les empreintes scellées inchangées 24/24.
+- LA LEÇON CONSACRÉE (D213) : LE CHAMP CALCULÉ EST LE CHAMP FAUSSÉ —
+  l'arithmétique demandée à la réponse est le point de défaillance du
+  mode minimal, pas le format une-ligne ; la carte existe pour vérifier —
+  qu'elle calcule aussi. L'ADOPTION du B2 comme format du protocole
+  AJOURNÉE au terrain et aux unités suivantes (jamais le protocole sur
+  une seule mesure).
+- LA CONSIGNATION : OPT-02 au journal canonique (le format D205), D211/
+  D212/D213 aux décisions, le rapport des deux passes à l'atelier, 54
+  appels 79 039 tokens 100 % log-api consignés, la présente Task 227 —
+  puis le push GitHub et le bundle 327 + le worklog + le journal racine
+  au TRIADE-sauvegarde-git (le 326 préservé, D143).
+(17/11, la session de la campagne localiser — la suite du chantier 2)

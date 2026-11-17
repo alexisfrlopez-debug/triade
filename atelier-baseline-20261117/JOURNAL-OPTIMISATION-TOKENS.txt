@@ -174,3 +174,64 @@ deux bras) — les LEVIERS du chantier 2 DÉBLOQUÉS (L1 → L3 → L2 → L4 �
 L5/L7, un levier par unité mesurée, D207) : l'OPT-01 naîtra de la
 prochaine unité au levier explicite L1 contre CETTE baseline ; les
 instructions 5gfx6pwkj et vljfs6pcj attendent leurs unités.
+
+--------------------------------------------------------------------------------
+OPT-02 — LE COÛT DE L'OPÉRATION LOCALISER : LE MODE MINIMAL B2 (le 17/11/2026,
+l'instruction 5gfx6pwkj — la première des deux à l'attente de la baseline ;
+les plans pré-enregistrés D211/D212, hash consignés AVANT toute mesure)
+--------------------------------------------------------------------------------
+LA MESURE AVANT (om3ewy9lf) : l'appel complet localiser = 1 277 natifs
+(matériau 596 + prose 41 + RÉPONSE 604 — la réponse ≈ 47 % du total :
+l'agent ré-émet l'entête complet du bloc).
+
+LA CAMPAGNE (les 18 blocs du domaine loupe, la graine 20261117, le même
+ordre aux deux passes, l'instrument compter_tokens — le natif lu du champ
+usage, 54 appels, 79 039 tokens, 100 % log-api) :
+
+  | le mode                    | n | total (médiane) | réponse (médiane) | divergence |
+  |----------------------------|---|-----------------|-------------------|------------|
+  | A l'actuel (l'entête)      | 18|         1 712   |             792   |   18/18    |
+  | B1 la plage CALCULÉE       | 18|         1 009   |              25   |    0/18 ✗  |
+  | B2 les champs LITTÉRAUX    | 18|         1 072   |              23   |   18/18 ✓  |
+
+LA FALSIFICATION CONSIGNÉE (la passe 1) : B1 exigeait la plage calculée
+[slot, slot+taille) — le modèle A CALCULÉ ET S'EST TROMPÉ : 12 plages
+fausses (l'addition hexadécimale de tête : 0x4440+0x180 rendu 0x45a0…)
+et 6 noms hors forme — 18/18 divergences, la règle zéro-divergence
+falsifiée ; le gain directionnel tenait (−41,0 %) MAIS un mode qui exige
+une re-vérification systématique coûte plus qu'il n'économise (la règle
+d'arrêt D207 armée dès la première passe).
+
+LE GAIN MESURÉ (B2, l'amendé — lu des logs bruts par extraire_gain.py) :
+LE TOTAL −37,3 % (1 712 → 1 072 natifs ; cl100k parallèle 1 679 → 1 050,
+le rapport cohérent) ; LA RÉPONSE −97,1 % (792 → 23 tokens [22-24]) —
+les quatre champs LITTÉRAUX (IDENTIFIANT · NOM · SLOT · TAILLE), la plage
+calculée PAR LA CARTE. ZÉRO DIVERGENCE 18/18.
+
+LE VÉRIFICATEUR (aucun contrôle retiré) : la vérification d'adresse (la
+plage confrontée à la vérité-terrain — chaque fin == slot+taille, la
+table vérifiée machine), la confrontation à la carte (l'identifiant et le
+nom du bloc soumis), LA CONFRONTATION AUX OCTETS RÉELS (loupe.exe lu au
+slot par pefile : le code réel, le padding NOP uniforme, AUCUN int3
+instruction — la classe de faux positif 0xcc-encodé nommée et guérie par
+le désassemblage capstone), LA GARDE DE CARTE vécue avant ET après (le
+garde sceau-I 14/14, l'assemblage 18/18 round-trip R5, l'oracle 43
+verrous, l'audit msx64 78 appels, la double preuve R7, la recomposition
+PE byte-identique — IDENTIQUE avant/après), LES EMPREINTES SCELLÉES
+inchangées (24/24 : loupe.exe c1115105…, carte.sig, les quatre frag-*.bin,
+les 18 notations — la campagne est lecture seule).
+
+LA LEÇON (le mécanisme nommé, la classe nouvelle de la collection) : LE
+CHAMP CALCULÉ EST LE CHAMP FAUSSÉ — l'arithmétique demandée à la réponse
+est le point de défaillance du mode minimal (12/18), pas le format
+une-ligne lui-même ; la carte existe pour vérifier — qu'elle calcule
+aussi. L'ÉCONOMIE STRUCTURELLE : la réponse de localiser ne doit porter
+QUE des champs littéralement présents au matériau (la réponse −97 %), le
+reste appartient au vérificateur.
+
+LA FRONTIÈRE : le mode B2 est MESURÉ VERT au labo — l'ADOPTION comme
+format de l'opération localiser du protocole est une décision à part
+(D213) ; le M3 (temps humain) nommé invérifiable au labo pour ce geste
+(une ligne à confronter contre ~15 à relire — la lecture favorable, à
+vivre au terrain) ; l'instruction vljfs6pcj (le temps de vérification M4)
+demeure EN ATTENTE.

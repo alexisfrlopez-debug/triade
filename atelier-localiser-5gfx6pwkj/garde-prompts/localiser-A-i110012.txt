@@ -1,0 +1,34 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le format en vigueur — la réponse
+rend l'entête complet du bloc localisé).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-12-aller · bloc l'aller : la barre-saisie hexa, le saut exact, le refus nommé · spec loupe-12:R1 · bloc carte i110012
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5400, taille 832 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : IAT user32 : InvalidateRect (le repaint demandé — le peintre est loupe-10) ; loupe-02 (la fenêtre relue au saut) ; loupe-14 (le commit CHERCHER délégué — le mode partagé, RENVOI) ; la zone SAISIE du plan (mode/actif/nibble/tampon) ; la règle de recadrage du plan (Q3 — recadre, la règle EXÉCUTABLE) ; le refus NOMMÉ monte à la barre (mode MESSAGE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-12-aller.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 796 o · padding : 36 o (NOP, 0x90)
+; Étiquettes résolues : .touche=0x5432, .caract=0x5441, .longueur=0x5487, .longueur_fin=0x5497, .chiffre_maj=0x54ad, .chiffre_hex=0x54cd, .borne_chercher=0x54e3, .borne_mode=0x54e9, .corrige=0x5501, .echappe=0x5515, .acquitter=0x5527, .ouvrir=0x5539, .ouvrir_session=0x5559, .commit=0x557d, .commit_scan=0x55a0, .commit_chiffre=0x55cc, .commit_accumule=0x55cf, .commit_scan_fin=0x55de, .commit_recadre=0x5618, .recadre_pos=0x5626, .recadre_vmax_zero=0x5643, .recadre_vmax_fin=0x5645, .recadre_fin=0x564d, .commit_visible=0x566c, .commit_mal=0x568e, .commit_hors=0x56a1, .commit_echec=0x56b4, .commit_chercher=0x56c9, .rien=0x56e1, .sortie=0x56e3, .message=0x56f3, .message_copie=0x56fe, .message_fin=0x570e
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x5412 + 0x7 + 0x8be7 = 0xe000
+;   0x544b + 0x7 + 0x8fae = 0xe400
+;   0x5479 + 0x7 + 0x8f80 = 0xe400
+;   0x54cd + 0x7 + 0x8f2c = 0xe400
+;   0x5515 + 0x7 + 0x8ee4 = 0xe400
+;   0x5527 + 0x7 + 0x8ed2 = 0xe400
+;   0x5543 + 0x7 - 0x31af = 0x239b
+;   0x5559 + 0x7 + 0x8ea0 = 0xe400
+;   0x557d + 0x7 + 0x8e7c = 0xe400
+;   0x558f + 0x7 + 0x8e6a = 0xe400
+;   0x566c + 0x7 + 0x8d8d = 0xe400
+;   0x5684 + 0x6 - 0x24ea = 0x31a0
+;   0x568e + 0x7 - 0x3318 = 0x237d
+;   0x56a1 + 0x7 - 0x3319 = 0x238f
+;   0x56b7 + 0x7 + 0x8d42 = 0xe400
+;   0x56f3 + 0x7 + 0x8d06 = 0xe400
+;   0x570e + 0x7 + 0x8ceb = 0xe400
+; Appels directs (l'adresse du plan — I1) : call 0x56f3, call 0x4240, call qword ptr [rip - 0x24ea], call 0x56f3, call 0x56f3, call 0x5800
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et rends SON ENTÊTE
+COMPLET (toutes les lignes de l'entête du bloc localisé, le format en
+vigueur de l'opération) — rien d'autre.

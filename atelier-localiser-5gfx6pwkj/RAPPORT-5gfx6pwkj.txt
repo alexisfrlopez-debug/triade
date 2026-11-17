@@ -1,0 +1,35 @@
+LE RAPPORT DE LA CAMPAGNE LOCALISER — 5gfx6pwkj / OPT-02
+(les plans pré-enregistrés : la passe 1 PLAN-5gfx6pwkj.md sha256 a0ecaf41… consigné D211 ; la passe 2 PLAN-5gfx6pwkj-B2.md sha256 0d98b0e1… consigné D212 — AVANT toute mesure ; le format D205 : la mesure avant, le gain mesuré, le vérificateur)
+============================================================================================
+
+LA MESURE AVANT (om3ewy9lf, v0.18.0 — l'appel complet instrumenté, natif) :
+  matériau 596 + prose 41 + RÉPONSE 604 = 1277 tokens (la réponse ≈ 47 % du total).
+
+LA CAMPAGNE (les MÊMES 18 blocs, la graine 20261117, l'instrument compter_tokens — le natif lu du champ usage) :
+  passe 1 : le mode A (l'actuel) contre le mode B (la plage CALCULÉE par le modèle) ;
+  passe 2 : le mode B2 (quatre champs LITTÉRAUX — la plage calculée PAR LA CARTE, le plan D212) ; le mode A non re-mesuré.
+                               n  médiane      q1      q3    min     max
+------------------------------------------------------------------------
+A l'actuel — total            18     1712    1150    2504    721    5204
+B1 minimal calculé — total    18     1009     722    1402    520    2751
+B2 minimal littéral — total   18     1072     790    1466    575    2817
+A — réponse seule             18      792     516    1194    301    2543
+B1 — réponse seule            18       25      23      26     20      59
+B2 — réponse seule            18       23      22      24     21      24
+A — cl100k (parallèle)        18     1679    1130    2452    718    5089
+B2 — cl100k (parallèle)       18     1050     776    1433    570    2757
+------------------------------------------------------------------------
+
+LE GAIN MESURÉ (lu des logs bruts, jamais tapé) :
+  B1 (falsifié) : total A 1712 → B 1009 = 41.0 % ; réponse 792 → 25 = 96.8 %
+  B2 (l'amendé) : total A 1712 → B2 1072 = 37.3 % ; réponse 792 → 23 = 97.1 %
+
+LE VÉRIFICATEUR :
+  la passe A : 18/18 sans divergence
+  la passe B1 : 0/18 — FALSIFIÉE (la plage calculée par le modèle : 12 arithmétiques + 6 formes)
+  la passe B2 : 18/18 — ZÉRO DIVERGENCE
+  la confrontation aux octets réels (loupe.exe lu au slot, le padding NOP, aucun int3 instruction) : VERT — 18/18
+  la source (CA3) : 0 appel(s) hors log-api
+  la somme (prompt+completion=total) : 0 écart(s)
+
+LE VERDICT : VERT — le mode minimal B2 (quatre champs littéraux, la carte fait l'arithmétique) réduit le coût SANS divergence, aucun contrôle retiré ; la passe B1 falsifiée demeure consignée (la leçon : jamais de champ calculé dans la réponse)

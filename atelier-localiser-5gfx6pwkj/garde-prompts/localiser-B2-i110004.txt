@@ -1,0 +1,27 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode minimal — la réponse tient
+en une ligne, la carte confronte la réponse aux octets réels).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-04-cadre · bloc le cadre de session posé vierge (la structure unique) · spec loupe-04:R1 · bloc carte i110004
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x4040, taille 64 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-07 (le memset hérité PAR LA CARTE — byte-identique au scellé M1, jamais une boucle réécrite) ; le cadre posé vierge, la poignée INVALIDE ; AUCUNE entrée IAT (le miroir des feuilles pures, charte § 9)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-04-cadre.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 47 o · padding : 17 o (NOP, 0x90)
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x4045 + 0x7 + 0x9fb4 = 0xe000
+; Appels directs (l'adresse du plan — I1) : call 0x13c0
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et réponds AU FORMAT
+MINIMAL, une seule ligne exactement :
+IDENTIFIANT · NOM · SLOT · TAILLE
+— IDENTIFIANT : l'identifiant de bloc de la carte (la forme iNNNNNN de
+l'entête) ;
+— NOM : le nom du bloc (le premier champ de la première ligne de
+l'entête, la forme loupe-NN-mot) ;
+— SLOT : l'adresse RVA du slot, telle que la deuxième ligne de l'entête
+la porte (la forme 0x…) ;
+— TAILLE : la taille du slot en octets, le nombre tel que l'entête le
+porte.
+AUCUN CALCUL — recopie les quatre champs tels quels ; la carte fait le
+reste. Rien d'autre.

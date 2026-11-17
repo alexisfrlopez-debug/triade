@@ -1,0 +1,65 @@
+LE RAPPORT DE LA CAMPAGNE LOCALISER — 5gfx6pwkj / OPT-02
+(le plan pré-enregistré PLAN-5gfx6pwkj.md, sha256 a0ecaf41…, consigné D211 AVANT toute mesure ; le format D205 : la mesure avant, le gain mesuré, le vérificateur)
+============================================================================================
+
+LA MESURE AVANT (om3ewy9lf, v0.18.0 — l'appel complet instrumenté, natif) :
+  matériau 596 + prose 41 + RÉPONSE 604 = 1277 tokens (la réponse ≈ 47 % du total).
+
+LA CAMPAGNE (les MÊMES 18 blocs, la graine 20261117, l'instrument compter_tokens — le natif lu du champ usage) :
+                   n  médiane      q1      q3    min     max
+------------------------------------------------------------
+A l'actuel — total        18     1712    1150    2504    721    5204
+B le minimal — total      18     1009     722    1402    520    2751
+A — réponse seule         18      792     516    1194    301    2543
+B — réponse seule         18       25      23      26     20      59
+A — cl100k (parallèle)    18     1679    1130    2452    718    5089
+B — cl100k (parallèle)    18      988     704    1366    510    2688
+------------------------------------------------------------
+
+LE GAIN MESURÉ (lu des logs bruts, jamais tapé) :
+  total    : médiane A 1712 → B 1009 = 41.0 % de réduction
+  réponse  : médiane A 792 → B 25 = 96.8 % de réduction
+
+LE VÉRIFICATEUR :
+  zéro divergence : ROUGE (18 écart(s) nommé(s) sur 36 réponses)
+  la confrontation aux octets réels (loupe.exe lu au slot, le padding NOP, le code sans INT3) : ROUGE
+  la source (CA3) : 0 appel(s) hors log-api
+  la somme (prompt+completion=total) : 0 écart(s)
+    - B/i110007 : hors format — « i110007 · bloc le cumul : les empreintes du fichier entier au panneau … »
+    - B/i110011 : localisation fausse — rendu i110011 · loupe-11-defilement · 0x5180–0x5380, attendu i110011 · loupe-11-defilement · 0x5180–0x5400
+    - B/i110002 : hors format — « i110002 · bloc lire · 0x4240–0x4360… »
+    - B/i110012 : localisation fausse — rendu i110012 · loupe-12-aller · 0x5400–0x5730, attendu i110012 · loupe-12-aller · 0x5400–0x5740
+    - B/i110003 : localisation fausse — rendu i110003 · fermer · 0x4380–0x4420, attendu i110003 · loupe-03-fermer · 0x4380–0x4440
+    - B/i110010 : hors format — « i110010 · bloc carte i110010 · 0x4b00–0x4f00… »
+    - B/i110009 : localisation fausse — rendu i110009 · loupe-09-ecran · 0x5c00–0x6600, attendu i110009 · loupe-09-ecran · 0x5c00–0x6080
+    - B/i110017 : localisation fausse — rendu i110017 · loupe-17-sauver · 0x6500–0x6680, attendu i110017 · loupe-17-sauver · 0x6500–0x6740
+    - B/i110016 : localisation fausse — rendu i110016 · loupe-16-saisie · 0x6240–0x6b00, attendu i110016 · loupe-16-saisie · 0x6240–0x6500
+    - B/i110013 : hors format — « i110013 · la recherche · 0x5740–0x5840… »
+    - B/i110014 : localisation fausse — rendu i110014 · loupe-14-suivant · 0x5800–0x6000, attendu i110014 · loupe-14-suivant · 0x5800–0x5c00
+    - B/i110018 : localisation fausse — rendu i110018 · loupe-18-quitter · 0x6740–0x6840, attendu i110018 · loupe-18-quitter · 0x6740–0x6800
+    - B/i110006 : hors format — « i110006 · bloc md5 d'une gamme : l'empreinte du quotidien, notée neuve… »
+    - B/i110015 : localisation fausse — rendu i110015 · loupe-15-curseur · 0x6080–0x61f9, attendu i110015 · loupe-15-curseur · 0x6080–0x6240
+    - B/i110004 : hors format — « i110004 · bloc le cadre de session posé vierge (la structure unique) ·… »
+    - B/i110008 : localisation fausse — rendu i110008 · loupe-08-ligne · 0x49c0–0x4a40, attendu i110008 · loupe-08-ligne · 0x49c0–0x4b00
+    - B/i110001 : localisation fausse — rendu i110001 · ouvrir · 0x4080–0x41f8, attendu i110001 · loupe-01-ouvrir · 0x4080–0x4240
+    - B/i110005 : localisation fausse — rendu i110005 · loupe-05-sha256 · 0x4440–0x45a0, attendu i110005 · loupe-05-sha256 · 0x4440–0x45c0
+    - i110001 : illisible à 0x4080 : 'bytes' object has no attribute 'get_data'
+    - i110002 : illisible à 0x4240 : 'bytes' object has no attribute 'get_data'
+    - i110003 : illisible à 0x4380 : 'bytes' object has no attribute 'get_data'
+    - i110004 : illisible à 0x4040 : 'bytes' object has no attribute 'get_data'
+    - i110005 : illisible à 0x4440 : 'bytes' object has no attribute 'get_data'
+    - i110006 : illisible à 0x45c0 : 'bytes' object has no attribute 'get_data'
+    - i110007 : illisible à 0x4940 : 'bytes' object has no attribute 'get_data'
+    - i110008 : illisible à 0x49c0 : 'bytes' object has no attribute 'get_data'
+    - i110009 : illisible à 0x5c00 : 'bytes' object has no attribute 'get_data'
+    - i110010 : illisible à 0x4b00 : 'bytes' object has no attribute 'get_data'
+    - i110011 : illisible à 0x5180 : 'bytes' object has no attribute 'get_data'
+    - i110012 : illisible à 0x5400 : 'bytes' object has no attribute 'get_data'
+    - i110013 : illisible à 0x5740 : 'bytes' object has no attribute 'get_data'
+    - i110014 : illisible à 0x5800 : 'bytes' object has no attribute 'get_data'
+    - i110015 : illisible à 0x6080 : 'bytes' object has no attribute 'get_data'
+    - i110016 : illisible à 0x6240 : 'bytes' object has no attribute 'get_data'
+    - i110017 : illisible à 0x6500 : 'bytes' object has no attribute 'get_data'
+    - i110018 : illisible à 0x6740 : 'bytes' object has no attribute 'get_data'
+
+LE VERDICT : ROUGE — les écarts ci-dessus font foi (consignés tels quels, l'instruction l'exige)
