@@ -7,48 +7,45 @@
  * sur entiers non bornés, garde-à-garde et effet-à-effet, pour chacune
  * des 13 règles et tout état bien typé »).
  *
- * LES DEUX SEMANTIQUES :
- *   — CÔTÉ TLA+ : les règles RÉELLES de CF3.tla (EXTENDS CF3 — le module
- *     est la pièce consignée, copie recoupée md5 b762c2c8… ; ZÉRO
- *     retranscription pour les relations : VoleKUser, …, CloturerPhraseErronee
- *     sont utilisées TELLES QUELLES). Seule la GARDE non-amorcée GT_r est
- *     transcrite (l'extraction non-amorcée de la règle) — et sa fidélité
- *     est ÉPINGLÉE par le couple de contrôles ci-dessous (garde + relation).
- *   — CÔTÉ PYTHON : la transcription FIDÈLE de modele_invariant_v150.py
- *     (actions_possibles = l'offre ; appliquer ≠ None = la garde EFFECTIVE ;
- *     l'effet = les affectations de appliquer). GP_r = la garde effective,
- *     FP_r = l'effet. Le seuil Python est LITTÉRAL :
- *     Cardinality(sait ∩ Elements) ≥ 3 (le code lit len(sait & ELEMENTS)) —
- *     l'égalité avec Cardinality(sait) sous TypeOK est CONTENU DE LA PREUVE.
+ * L'ENCODAGE (l'amendement 2 au plan — le XOR relationnel est REFUSÉ par
+ * la discipline d'affectation d'Apalache, « Illegal assignment inside an
+ * assignment-free expression » : la négation d'un système d'affectations
+ * n'existe pas ; l'absence de transition n'est pas observable en vérification
+ * bornée — le deadlock n'y est pas rapporté) : LES COPIES MIROIR.
+ *   — l'état de base (les 10 variables de CF3) demeure INVARIANT dans les
+ *     transitions de preuve ;
+ *   — la copie R (eR, phaseR, …) porte l'image par la règle RÉELLE : les
+ *     règles de CF3.tla instanciées par CF3R (zéro retranscription) ;
+ *   — la copie P (eP, phaseP, …) porte l'image par la relation PYTHON :
+ *     GP/FP instanciés par CFP (la transcription de CF3Python.tla) ;
+ *   — marque : le témoin du tir réel.
  *
- * LES OBLIGATIONS (par règle r, toute quantification sur les états BIEN
- * TYPÉS — e ∈ Int NON BORNÉ) :
- *   EQUIV_GARDE_r == GP_r <=> GT_r            (longueur 0 : Init = TypeOK)
- *   EQUIV_EFFET_r == CF3.r ≡ (GP_r ∧ FP_r)  (longueur 1 : Next = le XOR
- *     des deux relations, Inv = FALSE, --no-deadlock ; NoError ⟹ les
- *     relations sont ÉGALES — la garde ET l'effet, contre la règle RÉELLE)
- *   La décomposition : le XOR relationnel se scinde en différence de
- *   gardes et différence d'effets ; EQUIV_GARDE isole l'aspect garde,
- *   EQUIV_EFFET (la relation contre l'artefact réel) porte l'aspect effet
- *   et rescouvre la garde — ensemble elles SONT le « garde-à-garde et
- *   effet-à-effet » exigé. Les effets sont DÉTERMINISTES (13 règles,
- *   l'image est fonction de l'état) : l'égalité relationnelle entraîne
- *   l'égalité des gardes ET des fonctions d'effet.
- *
- * LA CORRESPONDANCE DES NOMS (Python → TLA+) : vole_K_user → VoleKUser,
- * vole_S_serrure → VoleSSerrure, vole_S_piège → VoleSPiege,
- * falsifie_conteneur → FalsifieConteneur, falsifie_piège → FalsifiePiege,
- * rejoue_époque_passée → RejoueEpoquePassee, ouvrir_correct → OuvrirCorrect,
- * ouvrir_phrase_erronée → OuvrirPhraseErronee, ouvrir_ancien_couple →
- * OuvrirAncienCouple, verifier → Verifier, crash_pendant_session →
- * CrashPendantSession, clôturer_correcte → CloturerCorrecte,
- * clôturer_phrase_erronée → CloturerPhraseErronee.
+ * LES TROIS OBLIGATIONS PAR RÈGLE (tout état bien typé, e ∈ Int NON
+ * BORNÉ) :
+ *   EQUIV_GARDE_r (longueur 0) : GP_r ⟺ GT_r — la garde Python contre
+ *     la garde TLA+ extraite (GT : l'extraction non-amorcée des règles
+ *     de CF3.tla, 13 lignes auditable) ;
+ *   EQUIV_IMAGE_r (longueur 1) : quand la règle RÉELLE tire (CF3R!r sur
+ *     la copie R) ET que la garde Python tient (CFP!GP_r), les images
+ *     COÏNCIDENT (l'invariant InvImage : copie R = copie P) ;
+ *   EQUIV_ACTIVATION_r (longueur 1) : quand la règle RÉELLE tire, la
+ *     garde Python TENAIT (l'invariant InvActivation : marque = FALSE ∨
+ *     GP_r — le tir réel pose marque, la garde Python se lit sur la
+ *     base inchangée).
+ *   ET L'ÉPINGLAGE TLC (tlp_garde_reel_r, la phase D du plan) : sur les
+ *     4 096 états représentants (e ∈ {1, 2} — la réduction justifiée :
+ *     l'uniformité de classe des gardes Python par LT1 (SMT, le point
+ *     (c)), celle des gardes réelles par l'audit mécanique consigné
+ *     audit_regles.py), TLC exige : GP_r ⟺ le tir réel est possible —
+ *     le sens MANQUANT (GP ∧ ¬tir réel : le TLC rapporte le deadlock ;
+ *     tir réel ∧ ¬GP : l'invariant tombe). Les DEUX sens, l'artefact
+ *     réel, l'énumération finie justifiée.
+ *   L'ENSEMBLE : les gardes équivalentes (SMT entre les sémantiques
+ *   écrites + TLC contre l'artefact réel), les images égales (SMT),
+ *   les activations d'accord (SMT + TLC) — l'équivalence complète.
  ***************************************************************************)
 
-EXTENDS CF3
-
-\* le seuil PYTHON, LITTÉRAL (len(sait & ELEMENTS) >= 3)
-SeuilPy == Cardinality(sait \intersect Elements) >= 3
+EXTENDS CF3, CF3Python
 
 (***************************************************************************
  * LES GARDES TLA+ — l'extraction non-amorcée des règles de CF3.tla.
@@ -72,120 +69,71 @@ GT_CloturerCorrecte == phase = "brouillon" /\ trap_ok
 GT_CloturerPhraseErronee == phase = "brouillon"
 
 (***************************************************************************
- * LA SÉMANTIQUE PYTHON — la transcription fidèle de
- * modele_invariant_v150.py (actions_possibles : l'OFFRE ; appliquer :
- * la garde effective — None = refus — et l'effet).
+ * LES COPIES MIROIR ET LES INSTANCES.
  ***************************************************************************)
 
-\* 1-3 : les vols — offerts TOUJOURS, jamais refusés
-GP_VoleKUser == TRUE
-FP_VoleKUser ==
-  /\ sait' = sait \union {KUser}
-  /\ UNCHANGED <<e, phase, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
+VARIABLES
+  \* @type: Int;
+  eR, \* @type: Str;
+  phaseR, \* @type: Set(Str);
+  saitR, \* @type: Bool;
+  trapR, \* @type: Bool;
+  cf2R, \* @type: Bool;
+  secretR, \* @type: Bool;
+  accepteR, \* @type: Bool;
+  detruitR, \* @type: Bool;
+  injusteR, \* @type: Bool;
+  mediaR,
+  \* @type: Int;
+  eP, \* @type: Str;
+  phaseP, \* @type: Set(Str);
+  saitP, \* @type: Bool;
+  trapP, \* @type: Bool;
+  cf2P, \* @type: Bool;
+  secretP, \* @type: Bool;
+  accepteP, \* @type: Bool;
+  detruitP, \* @type: Bool;
+  injusteP, \* @type: Bool;
+  mediaP,
+  \* @type: Bool;
+  marque
 
-GP_VoleSSerrure == TRUE
-FP_VoleSSerrure ==
-  /\ sait' = sait \union {SSerrure}
-  /\ UNCHANGED <<e, phase, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
+\* la règle RÉELLE sur la copie R (zéro retranscription)
+CF3R == INSTANCE CF3 WITH
+  e <- eR, phase <- phaseR, sait <- saitR, trap_ok <- trapR,
+  cf2_ok <- cf2R, secret <- secretR, accepte <- accepteR,
+  detruit <- detruitR, destr_injuste <- injusteR,
+  media_corrompu <- mediaR
 
-GP_VoleSPiege == TRUE
-FP_VoleSPiege ==
-  /\ sait' = sait \union {SPiege}
-  /\ UNCHANGED <<e, phase, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
+\* la relation PYTHON sur la copie P
+CFP == INSTANCE CF3Python WITH
+  e <- eP, phase <- phaseP, sait <- saitP, trap_ok <- trapP,
+  cf2_ok <- cf2P, secret <- secretP, accepte <- accepteP,
+  detruit <- detruitP, destr_injuste <- injusteP,
+  media_corrompu <- mediaP
 
-\* 4 : falsifie_conteneur — offert toujours ; EFFECTIF : piège intègre ET
-\*     canonique (appliquer : if trap_ok and phase == "canonique")
-GP_FalsifieConteneur == trap_ok /\ phase = "canonique"
-FP_FalsifieConteneur ==
-  /\ detruit' = TRUE
-  /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte,
-                 destr_injuste, media_corrompu>>
+\* l'état initial des preuves : la base bien typée, les copies COUPLÉES
+InitCopies ==
+  /\ TypeOK
+  /\ eR = e /\ phaseR = phase /\ saitR = sait /\ trapR = trap_ok
+  /\ cf2R = cf2_ok /\ secretR = secret /\ accepteR = accepte
+  /\ detruitR = detruit /\ injusteR = destr_injuste
+  /\ mediaR = media_corrompu
+  /\ eP = e /\ phaseP = phase /\ saitP = sait /\ trapP = trap_ok
+  /\ cf2P = cf2_ok /\ secretP = secret /\ accepteP = accepte
+  /\ detruitP = detruit /\ injusteP = destr_injuste
+  /\ mediaP = media_corrompu
+  /\ marque = FALSE
 
-\* 5 : falsifie_piège — offert toujours ; EFFECTIF : trap_ok
-GP_FalsifiePiege == trap_ok
-FP_FalsifiePiege ==
-  /\ trap_ok' = FALSE
-  /\ UNCHANGED <<e, phase, sait, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-\* 6 : rejoue_époque_passée — offert toujours ; EFFECTIF : e > 1 ;
-\*     l'état RETOURNÉ INCHANGÉ
-GP_RejoueEpoquePassee == e > 1
-FP_RejoueEpoquePassee == UNCHANGED vars
-
-\* 7 : ouvrir_correct — offert au canonique ; EFFECTIF : trap_ok et
-\*     (K_user ∉ sait — l'honnête — ou K_user ∈ sait ∧ seuil ≥ 3) ;
-\*     le secret appris à la branche seuil, conservé sinon
-GP_OuvrirCorrect ==
-  /\ phase = "canonique"
-  /\ trap_ok
-  /\ (KUser \notin sait \/ (KUser \in sait /\ SeuilPy))
-FP_OuvrirCorrect ==
-  /\ phase' = "brouillon"
-  /\ secret' = IF KUser \in sait THEN TRUE ELSE secret
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-\* 8 : ouvrir_phrase_erronée — offert au canonique ; JAMAIS refusé ;
-\*     l'état inchangé
-GP_OuvrirPhraseErronee == phase = "canonique"
-FP_OuvrirPhraseErronee == UNCHANGED vars
-
-\* 9 : ouvrir_ancien_couple — offert au canonique SI e > 1 ; jamais
-\*     refusé ensuite ; l'état inchangé (REFUS NOMMÉ)
-GP_OuvrirAncienCouple == phase = "canonique" /\ e > 1
-FP_OuvrirAncienCouple == UNCHANGED vars
-
-\* 10 : verifier — offert au canonique ; l'état inchangé
-GP_Verifier == phase = "canonique"
-FP_Verifier == UNCHANGED vars
-
-\* 11 : crash_pendant_session — offert aux DEUX phases ; l'état
-\*      revient au canonique, l'époque NE BOUGE PAS
-GP_CrashPendantSession == TRUE
-FP_CrashPendantSession ==
-  /\ phase' = "canonique"
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-\* 12 : clôturer_correcte — offerte au brouillon ; EFFECTIVE : trap_ok ;
-\*      e ← e+1 SANS PLAFOND, retour au canonique
-GP_CloturerCorrecte == phase = "brouillon" /\ trap_ok
-FP_CloturerCorrecte ==
-  /\ e' = e + 1
-  /\ phase' = "canonique"
-  /\ UNCHANGED <<sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-\* 13 : clôturer_phrase_erronée — offerte au brouillon ; l'état inchangé
-GP_CloturerPhraseErronee == phase = "brouillon"
-FP_CloturerPhraseErronee == UNCHANGED vars
+\* l'invariant d'image : les copies COÏNCIDENT
+InvImage ==
+  /\ eR = eP /\ phaseR = phaseP /\ saitR = saitP /\ trapR = trapP
+  /\ cf2R = cf2P /\ secretR = secretP /\ accepteR = accepteP
+  /\ detruitR = detruitP /\ injusteR = injusteP /\ mediaR = mediaP
 
 (***************************************************************************
- * LES RELATIONS PYTHON (garde effective ∧ effet) — contre les règles
- * RÉELLES de CF3.tla dans les XOR.
- ***************************************************************************)
-
-RPy_VoleKUser == GP_VoleKUser /\ FP_VoleKUser
-RPy_VoleSSerrure == GP_VoleSSerrure /\ FP_VoleSSerrure
-RPy_VoleSPiege == GP_VoleSPiege /\ FP_VoleSPiege
-RPy_FalsifieConteneur == GP_FalsifieConteneur /\ FP_FalsifieConteneur
-RPy_FalsifiePiege == GP_FalsifiePiege /\ FP_FalsifiePiege
-RPy_RejoueEpoquePassee == GP_RejoueEpoquePassee /\ FP_RejoueEpoquePassee
-RPy_OuvrirCorrect == GP_OuvrirCorrect /\ FP_OuvrirCorrect
-RPy_OuvrirPhraseErronee == GP_OuvrirPhraseErronee /\ FP_OuvrirPhraseErronee
-RPy_OuvrirAncienCouple == GP_OuvrirAncienCouple /\ FP_OuvrirAncienCouple
-RPy_Verifier == GP_Verifier /\ FP_Verifier
-RPy_CrashPendantSession == GP_CrashPendantSession /\ FP_CrashPendantSession
-RPy_CloturerCorrecte == GP_CloturerCorrecte /\ FP_CloturerCorrecte
-RPy_CloturerPhraseErronee == GP_CloturerPhraseErronee /\ FP_CloturerPhraseErronee
-
-(***************************************************************************
- * LES OBLIGATIONS GARDE-À-GARDE (longueur 0, Init = TypeOK) — la garde
- * Python (effective) contre la garde TLA+ (extraite).
+ * LES OBLIGATIONS GARDE (longueur 0, Init = TypeOK) : la garde Python
+ * contre la garde TLA+ extraite.
  ***************************************************************************)
 
 OblGarde_VoleKUser == GP_VoleKUser <=> GT_VoleKUser
@@ -203,26 +151,175 @@ OblGarde_CloturerCorrecte == GP_CloturerCorrecte <=> GT_CloturerCorrecte
 OblGarde_CloturerPhraseErronee == GP_CloturerPhraseErronee <=> GT_CloturerPhraseErronee
 
 (***************************************************************************
- * LES XOR RELATIONNELS (longueur 1, Inv = FALSE, --no-deadlock) — la
- * règle RÉELLE de CF3.tla contre la relation Python : NoError ⟹
- * ÉGALITÉ des relations (garde ET effet) sur tout état bien typé.
+ * LES OBLIGATIONS IMAGE (longueur 1) : la règle RÉELLE tire sur la
+ * copie R, la relation PYTHON tire sur la copie P — les images doivent
+ * coïncider (InvImage). Init = InitCopies, Inv = InvImage.
  ***************************************************************************)
 
-XOR_VoleKUser == (VoleKUser /\ ~ RPy_VoleKUser) \/ (~ VoleKUser /\ RPy_VoleKUser)
-XOR_VoleSSerrure == (VoleSSerrure /\ ~ RPy_VoleSSerrure) \/ (~ VoleSSerrure /\ RPy_VoleSSerrure)
-XOR_VoleSPiege == (VoleSPiege /\ ~ RPy_VoleSPiege) \/ (~ VoleSPiege /\ RPy_VoleSPiege)
-XOR_FalsifieConteneur == (FalsifieConteneur /\ ~ RPy_FalsifieConteneur) \/ (~ FalsifieConteneur /\ RPy_FalsifieConteneur)
-XOR_FalsifiePiege == (FalsifiePiege /\ ~ RPy_FalsifiePiege) \/ (~ FalsifiePiege /\ RPy_FalsifiePiege)
-XOR_RejoueEpoquePassee == (RejoueEpoquePassee /\ ~ RPy_RejoueEpoquePassee) \/ (~ RejoueEpoquePassee /\ RPy_RejoueEpoquePassee)
-XOR_OuvrirCorrect == (OuvrirCorrect /\ ~ RPy_OuvrirCorrect) \/ (~ OuvrirCorrect /\ RPy_OuvrirCorrect)
-XOR_OuvrirPhraseErronee == (OuvrirPhraseErronee /\ ~ RPy_OuvrirPhraseErronee) \/ (~ OuvrirPhraseErronee /\ RPy_OuvrirPhraseErronee)
-XOR_OuvrirAncienCouple == (OuvrirAncienCouple /\ ~ RPy_OuvrirAncienCouple) \/ (~ OuvrirAncienCouple /\ RPy_OuvrirAncienCouple)
-XOR_Verifier == (Verifier /\ ~ RPy_Verifier) \/ (~ Verifier /\ RPy_Verifier)
-XOR_CrashPendantSession == (CrashPendantSession /\ ~ RPy_CrashPendantSession) \/ (~ CrashPendantSession /\ RPy_CrashPendantSession)
-XOR_CloturerCorrecte == (CloturerCorrecte /\ ~ RPy_CloturerCorrecte) \/ (~ CloturerCorrecte /\ RPy_CloturerCorrecte)
-XOR_CloturerPhraseErronee == (CloturerPhraseErronee /\ ~ RPy_CloturerPhraseErronee) \/ (~ CloturerPhraseErronee /\ RPy_CloturerPhraseErronee)
+NextImage_VoleKUser == CF3R!VoleKUser /\ CFP!RPy_VoleKUser /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_VoleSSerrure == CF3R!VoleSSerrure /\ CFP!RPy_VoleSSerrure /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_VoleSPiege == CF3R!VoleSPiege /\ CFP!RPy_VoleSPiege /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_FalsifieConteneur == CF3R!FalsifieConteneur /\ CFP!RPy_FalsifieConteneur /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_FalsifiePiege == CF3R!FalsifiePiege /\ CFP!RPy_FalsifiePiege /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_RejoueEpoquePassee == CF3R!RejoueEpoquePassee /\ CFP!RPy_RejoueEpoquePassee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_OuvrirCorrect == CF3R!OuvrirCorrect /\ CFP!RPy_OuvrirCorrect /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_OuvrirPhraseErronee == CF3R!OuvrirPhraseErronee /\ CFP!RPy_OuvrirPhraseErronee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_OuvrirAncienCouple == CF3R!OuvrirAncienCouple /\ CFP!RPy_OuvrirAncienCouple /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_Verifier == CF3R!Verifier /\ CFP!RPy_Verifier /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_CrashPendantSession == CF3R!CrashPendantSession /\ CFP!RPy_CrashPendantSession /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_CloturerCorrecte == CF3R!CloturerCorrecte /\ CFP!RPy_CloturerCorrecte /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImage_CloturerPhraseErronee == CF3R!CloturerPhraseErronee /\ CFP!RPy_CloturerPhraseErronee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
 
-(* L'invariant bidon des contrôles relationnels : toute transition du XOR
- * est un contre-exemple. *)
-Faux == FALSE
+(***************************************************************************
+ * LES OBLIGATIONS ACTIVATION (longueur 1) : la règle RÉELLE tire sur la
+ * copie R et pose marque — la garde Python devait tenir sur la base
+ * (inchangée). Init = InitCopies, Inv = InvAct_r (par règle).
+ ***************************************************************************)
+
+NextAct_VoleKUser == CF3R!VoleKUser /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_VoleKUser == marque = FALSE \/ GP_VoleKUser
+
+NextAct_VoleSSerrure == CF3R!VoleSSerrure /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_VoleSSerrure == marque = FALSE \/ GP_VoleSSerrure
+
+NextAct_VoleSPiege == CF3R!VoleSPiege /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_VoleSPiege == marque = FALSE \/ GP_VoleSPiege
+
+NextAct_FalsifieConteneur == CF3R!FalsifieConteneur /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_FalsifieConteneur == marque = FALSE \/ GP_FalsifieConteneur
+
+NextAct_FalsifiePiege == CF3R!FalsifiePiege /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_FalsifiePiege == marque = FALSE \/ GP_FalsifiePiege
+
+NextAct_RejoueEpoquePassee == CF3R!RejoueEpoquePassee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_RejoueEpoquePassee == marque = FALSE \/ GP_RejoueEpoquePassee
+
+NextAct_OuvrirCorrect == CF3R!OuvrirCorrect /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_OuvrirCorrect == marque = FALSE \/ GP_OuvrirCorrect
+
+NextAct_OuvrirPhraseErronee == CF3R!OuvrirPhraseErronee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_OuvrirPhraseErronee == marque = FALSE \/ GP_OuvrirPhraseErronee
+
+NextAct_OuvrirAncienCouple == CF3R!OuvrirAncienCouple /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_OuvrirAncienCouple == marque = FALSE \/ GP_OuvrirAncienCouple
+
+NextAct_Verifier == CF3R!Verifier /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_Verifier == marque = FALSE \/ GP_Verifier
+
+NextAct_CrashPendantSession == CF3R!CrashPendantSession /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_CrashPendantSession == marque = FALSE \/ GP_CrashPendantSession
+
+NextAct_CloturerCorrecte == CF3R!CloturerCorrecte /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_CloturerCorrecte == marque = FALSE \/ GP_CloturerCorrecte
+
+NextAct_CloturerPhraseErronee == CF3R!CloturerPhraseErronee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>
+InvAct_CloturerPhraseErronee == marque = FALSE \/ GP_CloturerPhraseErronee
+
+(***************************************************************************
+ * L'ÉPINGLAGE TLC — les 4 096 représentants (e ∈ {1, 2}) : GP_r ⟺ le
+ * tir réel possible. Le sens GP ∧ ¬tir réel : TLC RAPPORTE le deadlock
+ * (ne pas passer -deadlock) ; le sens tir réel ∧ ¬GP : l'invariant
+ * InvPin_r tombe. Init = InitPin, Next = NextPin_r.
+ ***************************************************************************)
+
+TypeOKClasses == TypeOK /\ e \in {1, 2}
+
+InitPin ==
+  /\ TypeOKClasses
+  /\ eR = e /\ phaseR = phase /\ saitR = sait /\ trapR = trap_ok
+  /\ cf2R = cf2_ok /\ secretR = secret /\ accepteR = accepte
+  /\ detruitR = detruit /\ injusteR = destr_injuste
+  /\ mediaR = media_corrompu
+  /\ eP = e /\ phaseP = phase /\ saitP = sait /\ trapP = trap_ok
+  /\ cf2P = cf2_ok /\ secretP = secret /\ accepteP = accepte
+  /\ detruitP = detruit /\ injusteP = destr_injuste
+  /\ mediaP = media_corrompu
+  /\ marque = FALSE
+
+RecopieTout ==
+  UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit,
+              destr_injuste, media_corrompu, eR, phaseR, saitR, trapR,
+              cf2R, secretR, accepteR, detruitR, injusteR, mediaR,
+              eP, phaseP, saitP, trapP, cf2P, secretP, accepteP,
+              detruitP, injusteP, mediaP, marque>>
+
+NextPin_VoleKUser ==
+  \/ (marque = FALSE /\ CF3R!VoleKUser /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_VoleKUser /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_VoleKUser == marque = FALSE \/ GP_VoleKUser
+
+NextPin_VoleSSerrure ==
+  \/ (marque = FALSE /\ CF3R!VoleSSerrure /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_VoleSSerrure /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_VoleSSerrure == marque = FALSE \/ GP_VoleSSerrure
+
+NextPin_VoleSPiege ==
+  \/ (marque = FALSE /\ CF3R!VoleSPiege /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_VoleSPiege /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_VoleSPiege == marque = FALSE \/ GP_VoleSPiege
+
+NextPin_FalsifieConteneur ==
+  \/ (marque = FALSE /\ CF3R!FalsifieConteneur /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_FalsifieConteneur /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_FalsifieConteneur == marque = FALSE \/ GP_FalsifieConteneur
+
+NextPin_FalsifiePiege ==
+  \/ (marque = FALSE /\ CF3R!FalsifiePiege /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_FalsifiePiege /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_FalsifiePiege == marque = FALSE \/ GP_FalsifiePiege
+
+NextPin_RejoueEpoquePassee ==
+  \/ (marque = FALSE /\ CF3R!RejoueEpoquePassee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_RejoueEpoquePassee /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_RejoueEpoquePassee == marque = FALSE \/ GP_RejoueEpoquePassee
+
+NextPin_OuvrirCorrect ==
+  \/ (marque = FALSE /\ CF3R!OuvrirCorrect /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_OuvrirCorrect /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_OuvrirCorrect == marque = FALSE \/ GP_OuvrirCorrect
+
+NextPin_OuvrirPhraseErronee ==
+  \/ (marque = FALSE /\ CF3R!OuvrirPhraseErronee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_OuvrirPhraseErronee /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_OuvrirPhraseErronee == marque = FALSE \/ GP_OuvrirPhraseErronee
+
+NextPin_OuvrirAncienCouple ==
+  \/ (marque = FALSE /\ CF3R!OuvrirAncienCouple /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_OuvrirAncienCouple /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_OuvrirAncienCouple == marque = FALSE \/ GP_OuvrirAncienCouple
+
+NextPin_Verifier ==
+  \/ (marque = FALSE /\ CF3R!Verifier /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_Verifier /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_Verifier == marque = FALSE \/ GP_Verifier
+
+NextPin_CrashPendantSession ==
+  \/ (marque = FALSE /\ CF3R!CrashPendantSession /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_CrashPendantSession /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_CrashPendantSession == marque = FALSE \/ GP_CrashPendantSession
+
+NextPin_CloturerCorrecte ==
+  \/ (marque = FALSE /\ CF3R!CloturerCorrecte /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_CloturerCorrecte /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_CloturerCorrecte == marque = FALSE \/ GP_CloturerCorrecte
+
+NextPin_CloturerPhraseErronee ==
+  \/ (marque = FALSE /\ CF3R!CloturerPhraseErronee /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GP_CloturerPhraseErronee /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPin_CloturerPhraseErronee == marque = FALSE \/ GP_CloturerPhraseErronee
+
+Tautologie == TRUE
 =============================================================================

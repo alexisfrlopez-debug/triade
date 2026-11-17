@@ -1,65 +1,31 @@
 ------------------------ MODULE CF3EquivControles -----------------------
 (***************************************************************************
- * CF3EquivControles — LES 26 CONTRÔLES NÉGATIFS DU POINT (a) : UN PAR
- * OBLIGATION (l'instruction 89488hblm : « ajoute-en un par nouvelle
- * obligation (affaiblissement volontaire devant être attrapé) »).
+ * CF3EquivControles — LES 26 CONTRÔLES NÉGATIFS DU POINT (a), UN PAR
+ * OBLIGATION (l'instruction 89488hblm : « affaiblissement volontaire
+ * devant être attrapé ») — l'encodage des copies (l'amendement 2).
  *
- * CHAQUE contrôle est une FAUTE DE TRANSCRIPTION PLAUSIBLE du côté
- * PYTHON (le côté TLA+ est la règle réelle de CF3.tla — c'est la
- * transcription Python que les obligations gardent) : une garde
- * amputée ou chargée d'une condition étrangère, un effet qui vise le
- * mauvais composant. Chacune DOIT être attrapée (Error 12 attendu) —
- * la preuve que les obligations EQUIV_GARDE / EQUIV_EFFET mordent.
- *
- * Les 13 contrôles GARDE : Inv = (GPw_r ⟺ GT_r), Init = TypeOK,
- * longueur 0. Les 13 contrôles EFFET : Next = le XOR de la règle
- * RÉELLE contre la relation Python MUTÉE (garde intacte, effet muté :
- * RPyw_r == GP_r ∧ FPw_r), Inv = FALSE, longueur 1, --no-deadlock.
+ * Les 13 contrôles GARDE (longueur 0, Init = TypeOK) :
+ *   Inv = OblFaibleGarde_r : GPw_r ⟺ GT_r → Error 12 attendu.
+ * Les 13 contrôles IMAGE (longueur 1, Init = InitCopies) :
+ *   Next = la règle RÉELLE sur la copie R ∧ la relation PYTHON MUTÉE
+ *   (CFPw!RPyw_r — la garde intacte, l'effet dévié) sur la copie P ;
+ *   Inv = InvImage → Error 12 attendu (les images divergent).
+ * Le contrôle de l'épinglage TLC : la garde mutée de la falsification
+ * du conteneur (LA simplification fausse croisée par la campagne PBT)
+ * — le TLC DOIT tomber (le tir réel impossible où la garde mutée
+ * prétend : deadlock rapporté).
  ***************************************************************************)
 
-EXTENDS CF3Equiv
+EXTENDS CF3Equiv, CF3PythonControles
 
-(***************************************************************************
- * LES GARDES MUTÉES (GPw) — l'affaiblissement volontaire de chaque
- * obligation GARDE.
- ***************************************************************************)
+\* la relation Python MUTÉE sur la copie P
+CFPw == INSTANCE CF3PythonControles WITH
+  e <- eP, phase <- phaseP, sait <- saitP, trap_ok <- trapP,
+  cf2_ok <- cf2P, secret <- secretP, accepte <- accepteP,
+  detruit <- detruitP, destr_injuste <- injusteP,
+  media_corrompu <- mediaP
 
-\* 1 : le vol K_user restreint à tort au canonique (l'offre confondue)
-GPw_VoleKUser == phase = "canonique"
-\* 2 : le vol S_serrure conditionné au piège (une condition étrangère)
-GPw_VoleSSerrure == trap_ok
-\* 3 : le vol S_piège réservé à la classe ≥ 2 (l'époque lue à tort)
-GPw_VoleSPiege == e > 1
-\* 4 : la falsification du conteneur SANS l'exigence canonique — LA
-\*     simplification fausse que la campagne PBT a croisée (l'écart de
-\*     couverture v0.15.0 : la sentinelle court sur le canonique)
-GPw_FalsifieConteneur == trap_ok
-\* 5 : le piège falsifiable même indisponible (le tag jamais testé)
-GPw_FalsifiePiege == TRUE
-\* 6 : le rejeu accepté dès l'époque 1 (le e > 1 oublié)
-GPw_RejoueEpoquePassee == TRUE
-\* 7 : l'ouverture correcte SANS la branche honnête (K_user ∉ sait
-\*     amputé — l'honnête ne peut plus ouvrir son brouillon)
-GPw_OuvrirCorrect ==
-  /\ phase = "canonique"
-  /\ trap_ok
-  /\ KUser \in sait
-  /\ SeuilPy
-\* 8 : la phrase erronée offerte au brouillon aussi
-GPw_OuvrirPhraseErronee == TRUE
-\* 9 : l'ancien couple accepté dès l'époque 1 (le e > 1 oublié)
-GPw_OuvrirAncienCouple == phase = "canonique"
-\* 10 : la vérification offerte au brouillon aussi
-GPw_Verifier == TRUE
-\* 11 : le crash réservé au brouillon (le canonique ne peut plus crasher)
-GPw_CrashPendantSession == phase = "brouillon"
-\* 12 : la clôture au piège indisponible (le trap_ok oublié)
-GPw_CloturerCorrecte == phase = "brouillon"
-\* 13 : la clôture erronée offerte au canonique
-GPw_CloturerPhraseErronee == TRUE
-
-(* les obligations AFFAIBLIES — le vérificateur DOIT produire un
- * contre-exemple pour chacune *)
+\* ---- LES OBLIGATIONS AFFAIBLIES GARDE ----------------------------------
 OblFaibleGarde_VoleKUser == GPw_VoleKUser <=> GT_VoleKUser
 OblFaibleGarde_VoleSSerrure == GPw_VoleSSerrure <=> GT_VoleSSerrure
 OblFaibleGarde_VoleSPiege == GPw_VoleSPiege <=> GT_VoleSPiege
@@ -74,106 +40,29 @@ OblFaibleGarde_CrashPendantSession == GPw_CrashPendantSession <=> GT_CrashPendan
 OblFaibleGarde_CloturerCorrecte == GPw_CloturerCorrecte <=> GT_CloturerCorrecte
 OblFaibleGarde_CloturerPhraseErronee == GPw_CloturerPhraseErronee <=> GT_CloturerPhraseErronee
 
-(***************************************************************************
- * LES EFFETS MUTÉS (FPw) — la garde Python INTACTE, l'effet dévié.
- ***************************************************************************)
+\* ---- LES NEXT MUTÉS IMAGE (la règle réelle ∧ la relation mutée) --------
+NextImageCtl_VoleKUser == CF3R!VoleKUser /\ CFPw!RPyw_VoleKUser /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_VoleSSerrure == CF3R!VoleSSerrure /\ CFPw!RPyw_VoleSSerrure /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_VoleSPiege == CF3R!VoleSPiege /\ CFPw!RPyw_VoleSPiege /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_FalsifieConteneur == CF3R!FalsifieConteneur /\ CFPw!RPyw_FalsifieConteneur /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_FalsifiePiege == CF3R!FalsifiePiege /\ CFPw!RPyw_FalsifiePiege /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_RejoueEpoquePassee == CF3R!RejoueEpoquePassee /\ CFPw!RPyw_RejoueEpoquePassee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_OuvrirCorrect == CF3R!OuvrirCorrect /\ CFPw!RPyw_OuvrirCorrect /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_OuvrirPhraseErronee == CF3R!OuvrirPhraseErronee /\ CFPw!RPyw_OuvrirPhraseErronee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_OuvrirAncienCouple == CF3R!OuvrirAncienCouple /\ CFPw!RPyw_OuvrirAncienCouple /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_Verifier == CF3R!Verifier /\ CFPw!RPyw_Verifier /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_CrashPendantSession == CF3R!CrashPendantSession /\ CFPw!RPyw_CrashPendantSession /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_CloturerCorrecte == CF3R!CloturerCorrecte /\ CFPw!RPyw_CloturerCorrecte /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
+NextImageCtl_CloturerPhraseErronee == CF3R!CloturerPhraseErronee /\ CFPw!RPyw_CloturerPhraseErronee /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, marque>>
 
-\* 1 : le vol qui prend le MAUVAIS ÉLÉMENT (S_serrure au lieu de K_user)
-FPw_VoleKUser ==
-  /\ sait' = sait \union {SSerrure}
-  /\ UNCHANGED <<e, phase, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 2 : le vol SANS EFFET (le savoir jamais augmenté)
-FPw_VoleSSerrure == UNCHANGED vars
-\* 3 : le vol qui prend DEUX éléments d'un coup
-FPw_VoleSPiege ==
-  /\ sait' = sait \union {KUser, SPiege}
-  /\ UNCHANGED <<e, phase, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 4 : la destruction qui DÉBORDE sur le média (la confusion P3/P4)
-FPw_FalsifieConteneur ==
-  /\ detruit' = TRUE
-  /\ media_corrompu' = TRUE
-  /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte,
-                 destr_injuste>>
-\* 5 : le piège cassé qui DÉTRUIT (la falsification jamais anodine)
-FPw_FalsifiePiege ==
-  /\ trap_ok' = FALSE
-  /\ detruit' = TRUE
-  /\ UNCHANGED <<e, phase, sait, cf2_ok, secret, accepte,
-                 destr_injuste, media_corrompu>>
-\* 6 : LE ROLL-BACK — le rejeu qui DÉCRÔIT l'époque (la faute P2)
-FPw_RejoueEpoquePassee ==
-  /\ e' = e - 1
-  /\ UNCHANGED <<phase, sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 7 : le secret TOUJOURS appris — même la branche honnête (la faute P1)
-FPw_OuvrirCorrect ==
-  /\ phase' = "brouillon"
-  /\ secret' = TRUE
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 8 : la phrase erronée qui OUVRE une session
-FPw_OuvrirPhraseErronee ==
-  /\ phase' = "brouillon"
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 9 : l'ancien couple qui OUVRE une session (le rejeu accepté)
-FPw_OuvrirAncienCouple ==
-  /\ phase' = "brouillon"
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 10 : la vérification qui ACCEPTE (le rejeu entériné — la faute P2)
-FPw_Verifier ==
-  /\ accepte' = TRUE
-  /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, detruit,
-                 destr_injuste, media_corrompu>>
-\* 11 : le crash qui AVALE une époque
-FPw_CrashPendantSession ==
-  /\ phase' = "canonique"
-  /\ e' = e + 1
-  /\ UNCHANGED <<sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 12 : la clôture qui n'AVANCE PAS l'époque (la faute P2)
-FPw_CloturerCorrecte ==
-  /\ phase' = "canonique"
-  /\ UNCHANGED <<e, sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-\* 13 : la phrase erronée qui SCELLE (clôture effective)
-FPw_CloturerPhraseErronee ==
-  /\ phase' = "canonique"
-  /\ e' = e + 1
-  /\ UNCHANGED <<sait, trap_ok, cf2_ok, secret, accepte, detruit,
-                 destr_injuste, media_corrompu>>
-
-(* les relations Python mutées (garde intacte ∧ effet muté) *)
-RPyw_VoleKUser == GP_VoleKUser /\ FPw_VoleKUser
-RPyw_VoleSSerrure == GP_VoleSSerrure /\ FPw_VoleSSerrure
-RPyw_VoleSPiege == GP_VoleSPiege /\ FPw_VoleSPiege
-RPyw_FalsifieConteneur == GP_FalsifieConteneur /\ FPw_FalsifieConteneur
-RPyw_FalsifiePiege == GP_FalsifiePiege /\ FPw_FalsifiePiege
-RPyw_RejoueEpoquePassee == GP_RejoueEpoquePassee /\ FPw_RejoueEpoquePassee
-RPyw_OuvrirCorrect == GP_OuvrirCorrect /\ FPw_OuvrirCorrect
-RPyw_OuvrirPhraseErronee == GP_OuvrirPhraseErronee /\ FPw_OuvrirPhraseErronee
-RPyw_OuvrirAncienCouple == GP_OuvrirAncienCouple /\ FPw_OuvrirAncienCouple
-RPyw_Verifier == GP_Verifier /\ FPw_Verifier
-RPyw_CrashPendantSession == GP_CrashPendantSession /\ FPw_CrashPendantSession
-RPyw_CloturerCorrecte == GP_CloturerCorrecte /\ FPw_CloturerCorrecte
-RPyw_CloturerPhraseErronee == GP_CloturerPhraseErronee /\ FPw_CloturerPhraseErronee
-
-(* les XOR des contrôles effet : la règle RÉELLE contre la relation
- * mutée — chacun DOIT trouver un contre-exemple *)
-XORw_VoleKUser == (VoleKUser /\ ~ RPyw_VoleKUser) \/ (~ VoleKUser /\ RPyw_VoleKUser)
-XORw_VoleSSerrure == (VoleSSerrure /\ ~ RPyw_VoleSSerrure) \/ (~ VoleSSerrure /\ RPyw_VoleSSerrure)
-XORw_VoleSPiege == (VoleSPiege /\ ~ RPyw_VoleSPiege) \/ (~ VoleSPiege /\ RPyw_VoleSPiege)
-XORw_FalsifieConteneur == (FalsifieConteneur /\ ~ RPyw_FalsifieConteneur) \/ (~ FalsifieConteneur /\ RPyw_FalsifieConteneur)
-XORw_FalsifiePiege == (FalsifiePiege /\ ~ RPyw_FalsifiePiege) \/ (~ FalsifiePiege /\ RPyw_FalsifiePiege)
-XORw_RejoueEpoquePassee == (RejoueEpoquePassee /\ ~ RPyw_RejoueEpoquePassee) \/ (~ RejoueEpoquePassee /\ RPyw_RejoueEpoquePassee)
-XORw_OuvrirCorrect == (OuvrirCorrect /\ ~ RPyw_OuvrirCorrect) \/ (~ OuvrirCorrect /\ RPyw_OuvrirCorrect)
-XORw_OuvrirPhraseErronee == (OuvrirPhraseErronee /\ ~ RPyw_OuvrirPhraseErronee) \/ (~ OuvrirPhraseErronee /\ RPyw_OuvrirPhraseErronee)
-XORw_OuvrirAncienCouple == (OuvrirAncienCouple /\ ~ RPyw_OuvrirAncienCouple) \/ (~ OuvrirAncienCouple /\ RPyw_OuvrirAncienCouple)
-XORw_Verifier == (Verifier /\ ~ RPyw_Verifier) \/ (~ Verifier /\ RPyw_Verifier)
-XORw_CrashPendantSession == (CrashPendantSession /\ ~ RPyw_CrashPendantSession) \/ (~ CrashPendantSession /\ RPyw_CrashPendantSession)
-XORw_CloturerCorrecte == (CloturerCorrecte /\ ~ RPyw_CloturerCorrecte) \/ (~ CloturerCorrecte /\ RPyw_CloturerCorrecte)
-XORw_CloturerPhraseErronee == (CloturerPhraseErronee /\ ~ RPyw_CloturerPhraseErronee) \/ (~ CloturerPhraseErronee /\ RPyw_CloturerPhraseErronee)
+\* ---- LE CONTRÔLE DE L'ÉPINGLAGE TLC ------------------------------------
+\* la garde mutée de la falsification du conteneur (la phase canonique
+\* oubliée) : à phase = "brouillon" la garde mutée prétend que le tir
+\* est possible — la règle RÉELLE refuse — le deadlock DOIT être
+\* rapporté par TLC (le contrôle de l'épinglage)
+NextPinCtl_FalsifieConteneur ==
+  \/ (marque = FALSE /\ CF3R!FalsifieConteneur /\ marque' = TRUE /\ UNCHANGED <<e, phase, sait, trap_ok, cf2_ok, secret, accepte, detruit, destr_injuste, media_corrompu, eP, phaseP, saitP, trapP, cf2P, secretP, accepteP, detruitP, injusteP, mediaP>>)
+  \/ (marque = FALSE /\ ~ GPw_FalsifieConteneur /\ RecopieTout)
+  \/ (marque = TRUE /\ RecopieTout)
+InvPinCtl_FalsifieConteneur == marque = FALSE \/ GPw_FalsifieConteneur
 =============================================================================
