@@ -12846,3 +12846,65 @@ Work Log:
   le push GitHub + le bundle 335 + les slots Drive remplacés vécus au
   geste établi de la 334.
   (17/11 au soir, la session du flux)
+
+## Task 236 — Entrée 336 : LA PREMIÈRE UNITÉ D210 CONTINUÉE ET CLOSE À
+LA CONSTRUCTION — LOUPE-02 LIRE × LES DEUX BRAS (la commande du
+développeur : « continue le chantier en cours » ; l'ouverture vécue à
+l'Entrée 335, la présente en poursuit la lettre : « la suite au
+commandement » ; re-consignée depuis le BROUILLON-ENTREE-336.txt du bac
+au geste établi — la consignation canonique et le push commandés à la
+session suivante)
+
+Work Log:
+- L'ATELIER RE-POSÉ (la perte du bac nommée — le précédent de la 334 :
+  le coffre demeure la référence) : le journal-tokens-d210.jsonl des 7
+  appels (23 220 tokens) et les notations it1/it3 PÉRIRENT au
+  recyclage ; le record DEMEURE à l'Entrée 335 (jamais reconstruit) ;
+  la rig L6 recoupée INTACTE (e2939ef9… / e5aa404a…, le câblage prouvé
+  par l'épreuve même) ; le plan D210 verrouillé recoupé EXACT au
+  bundle 335 (sha256 4a3b1311…) ; la graine D217 recopiée de sa
+  consignation (JAMAIS re-tirée).
+- LE BRAS T : l'it3 RE-POSÉE (mécanique, la structure de famille
+  consignée + les trois fautes nommées portées — le re-posé 285 o, la
+  borne tenue) ; LE TOUR 4 par la rig (811 tokens — la réponse
+  PARTIELLE nommée : l'ombre à zéro et le fragment B manquants) ; LE
+  TOUR 5 (711 tokens — les deux ombres de la famille + la destination
+  au +568 rendue en ligne) ; L'ÉCART DE SPLICE DU LAB NOMMÉ : la ligne
+  B frappa la borne déplacée (le sub rdx, r12 écrasé — une écriture
+  hors du tampon, l'I2 violenté, le V2 rouge le prit) — réparé
+  mécaniquement, la leçon de la baseline (« le splice doit vérifier la
+  structure ») réentendue et ARQUÉE pour les tours suivants ; LA
+  CRISTALLISATION 10/10 (300 o, c8ec754e…) ; L'ORACLE au harnais D204
+  (le même plan, le même slot) : la pièce loupe.exe 127 488 o
+  (cf251c12…, le diff confiné au slot loupe-02 + la porte R10) —
+  22 VERT 0 ROUGE (V1-V5 entiers) ; LA REVUE DE CÉRÉMONIE : CONFORME.
+- LE BRAS C : spec 2 060 ; source-c 3 236 (né en asm inline MSVC — le
+  refus gcc nommé) ; les tours 1-2 par la rig (2 523 + 1 246) ; le geste
+  du lab (l'accolade du splice, les doublons — nommés) ; GCC -O2
+  -Wall -Wextra PROPRE contre le shim ; tests-c 2 479 ; LA REVUE :
+  CONFORME (l'arbitrage I1/I2 du précédent). ÉCART NOMMÉ : la DLL pas
+  compilée au bac (mingw absent, le GAP du chantier 4) — le source
+  compile PROPRE, la commande consignée au rapport, la pièce livrée à
+  l'épreuve.
+- LA MESURE : LA REPRISE 9 appels, 19 390 tokens, 100 % log-api (le
+  garde-brut conservé) — LA COUTURE nommée : les 7 appels de la première
+  construction (23 220) demeurent à l'Entrée 335, jamais sommés en
+  silence. M4 au labo : build 0,5 s ; oracle V1-V5 33,6 s.
+- LES ÉCARTS NOMMÉS (jamais reconstruits) : (1) la perte du bac (le
+  journal + les it1/it3 — le record au worklog) ; (2) la réponse
+  partielle du tour 4 (la classe de troncature) ; (3) l'écart de
+  splice du lab (bornes déplacées — la structure désormais vérifiée
+  après chaque splice) ; (4) mingw absent (la DLL au terrain ou à la
+  prochaine session — le WINFIX de la 331 le permit) ; (5) l'it3
+  re-posée est une RECONSTRUCTION de la consignation (la pièce
+  originale périt — sa fidélité est la consignation, jamais la
+  mémoire).
+- LA CONSIGNATION : la présente Entrée ; l'atelier au bac
+  (scripts/campagne_d204/unite-02-T-d210/ — le kit au bac
+  download/TRIADE_gui_unite02_d210_v1/ pour le dépôt au coffre /test)
+  ; le RAPPORT-UNITE-D210-01.txt et le LISEZMOI-KIT au kit. LA SUITE :
+  le run terrain de l'unité (le GUI passeur, le témoin daté signé
+  [D99], preuves-unite02-d210/ au /test, la ligne au livre) ; PUIS
+  loupe-08 le bras T d'abord (la séquence tirée, jamais re-tirée).
+  (17/11 au soir, la session de reprise — consignée le 18/11 au geste
+  du push commandé)

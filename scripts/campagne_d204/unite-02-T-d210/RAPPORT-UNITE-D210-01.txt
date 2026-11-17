@@ -1,0 +1,110 @@
+LE RAPPORT DE LA PREMIÈRE UNITÉ D210 — LOUPE-02 LIRE × LES DEUX BRAS
+(la session du 17/11 au soir — la commande du développeur : « continue
+le chantier en cours » ; l'ouverture vécue à l'Entrée 335, la présente
+poursuit la construction prescrite : « la suite au commandement »)
+================================================================================
+
+LE GESTE. La campagne D210 (le plan verrouillé, sha256 4a3b1311…
+recoupé EXACT au bundle 335 ; la graine 20261117 consignée AVANT le
+premier appel à D217, la séquence tirée publiquement : loupe-02 le
+bras T d'abord — quatre fois le même bord arrive une fois sur huit,
+consigné tel quel, jamais re-tiré). L'ATELIER RE-POSÉ : la perte du bac
+nommée (NOTE-REPRISE-ATELIER.txt) — le journal des 7 appels de la
+première construction périt au recyclage (23 220 tokens — le record
+demeure à l'Entrée 335, jamais reconstruit) ; la rig L6 INTACTE
+recoupée aux empreintes (e2939ef9… compter_tokens, e5aa404a…
+rig_auteur, le câblage prouvé par l'épreuve même — l'inspection AST +
+les trois outils, tout VERT) ; le contrat loupe-02-lire.md VERBATIM de
+la couche I ; la pièce scellée de famille loupe-02-lire.asm (la
+référence de la confrontation).
+
+LE BRAS T — LA CONSTRUCTION CONTINUÉE (prescrite par l'Entrée 335 :
+« le lab re-pose l'equ et le prologue — le geste mécanique ; les
+fautes restantes au tour suivant ») :
+  ① L'IT3 RE-POSÉE (le lab, mécanique — la perte l'étendit : la
+     notation reconstruite de la structure de famille consignée : le
+     cadre par le lea du plan, le décalage en r12, le remplissage au
+     +552, l'ombre autour des appels, le journal par le lea 0xe4a0 ;
+     l'equ et le prologue re-posés ; les TROIS fautes nommées portées :
+     le compteur ReadFile à rax, le r9/ombre hors de l'endroit juste,
+     la destination du recouvrement hors du +568). Le contrôle du lab :
+     syntaxe VERT, 285 o (la borne du slot tenue au re-posé — l'it1
+     perdue portait 331, son débordement demeure nommé).
+  ② LE TOUR 4 PAR LA RIG (le bundle-défaut : les trois fautes, le
+     fragment, le vecteur) : 811 tokens — le fragment rendu (r8←r13,
+     r9←[rsp+0x20]) PARTIEL : l'ombre à zéro et le fragment B manquants
+     (la classe de troncature récurrente, nommée — la réponse
+     partielle va au tour suivant, jamais le lab ne complète le fond).
+     Splice : it4, 283 o, VERT.
+  ③ LE TOUR 5 PAR LA RIG : 711 tokens — les deux ombres à zéro
+     ([rsp+0x20] et [rsp], la famille) + la destination du
+     recouvrement au +568 rendue en ligne unique (la suite rattachée —
+     le précédent PATCH). L'ÉCART DE SPLICE DU LAB NOMMÉ : la ligne B
+     frappa la mauvaise borne (les bornes déplacées par le splice
+     précédent — le sub rdx, r12 écrasé, le vieux +552 demeuré, une
+     écriture HORS du tampon : l'I2 violenté, le V2 rouge le prit) —
+     la LEÇON DE LA BASELINE RÉENTENDUE (« le splice doit vérifier la
+     structure ») ; la réparation MÉCANIQUE (le sub remis, la
+     destination unique au +568), l'écart consigné au présent.
+  ④ LA CRISTALLISATION : 10/10 rebuilds byte-identiques — le cristal
+     300 o, sha256 c8ec754e… (la borne du slot 320 tenue, 20 o de
+     marge).
+  ⑤ L'ORACLE DIFFÉRENTIEL au harnais D204 (le même plan, le même
+     slot) : la pièce de campagne bâtie par le build du plan (loupe.exe
+     127 488 o, sha256 cf251c12…, le diff au scellé CONFINÉ au slot
+     loupe-02 + la porte R10, les verrous 121, les 17 scellés aux
+     mesures d'arrêt, l'audit msx64, la double preuve R7) PUIS
+     l'oracle : V1-V5 = 22 VERT, 0 ROUGE (le différentiel 1 000+
+     décalages, le recouvrement aux bords + la non alignée, les quatre
+     rejets, le shim en échec fail-closed, la falsification).
+  ⑥ LA REVUE DE CÉRÉMONIE par la rig : 3 711 tokens — clause par
+     clause, l'instruction à l'appui — VERDICT : CONFORME.
+
+LE BRAS C — LE FLUX STANDARD (gcc -O2) :
+  spec 2 060 (les notes d'auteur) ; source-c 3 236 — NÉ EN ASM INLINE
+  MSVC derrière une clôture markdown (le premier refus gcc nommé — la
+  classe de clôture, vécue à la baseline) ; le tour 1 par la rig
+  2 523 (la traduction en C pur, les types du shim) ; le tour 2 par la
+  rig 1 246 (la redéfinition, la variable non lue) ; le geste du lab :
+  l'accolade fermante du splice + les doublons de déclaration (mécanique,
+  nommés) — GCC -O2 -std=c11 -Wall -Wextra PROPRE contre le shim
+  windows.h (la liste fermée IAT D161) ; tests-c 2 479 (N1-N6, B1-B5,
+  R1-R6, la falsification) ; la revue de cérémonie 2 613 — VERDICT :
+  CONFORME (l'arbitrage I1/I2 du précédent baseline : les invariants
+  lient le domaine de la notation, jamais le bras C).
+  ÉCART NOMMÉ : la DLL pas compilée au bac (mingw absent — le GAP
+  nommé du chantier 4 ; le source compile PROPRE, la DLL au terrain :
+  x86_64-w64-mingw32-gcc -O2 -shared -o loupe-02-d210-c.dll
+  source-loupe-02-C.c — la commande consignée, la pièce livrée à
+  l'épreuve).
+
+LA MESURE (le journal né des outils, 100 % log-api, le garde-brut
+conservé) : LA REPRISE — 9 appels, 19 390 tokens :
+  | phase        |  bras T  |  bras C  |
+  |--------------|----------|----------|
+  | spec         |    — *   |    2 060 |
+  | rédaction    |    — *   |    3 236 |
+  | correctifs   |    1 522 |    3 769 |
+  | tests-c      |        — |    2 479 |
+  | revue        |    3 711 |    2 613 |
+  (*) les phases spec/notation/oracle du bras T vécurent à la session
+  précédente (7 appels, 23 220 tokens — l'Entrée 335, le journal perdu
+  au bac, le record demeure au worklog : LA COUTURE nommée, jamais
+  sommée en silence).
+M4 au labo : le build 0,5 s ; l'oracle V1-V5 33,6 s.
+
+LES LIVRABLES : kit-unite-01-d210-20261117/ (la pièce loupe.exe, la
+notation D210, le brouillon it5, le scénario D204 inchangé, les quatre
+témoins, le source C + tests, le journal + garde-brut, la graine, la
+note de reprise, les EMPREINTES gravées, le LISEZMOI terrain) ; le
+présent rapport ; le brouillon d'Entrée 336 au worklog (la consignation
+canonique + le push appartiennent au développeur — sa main, ses
+identifiants).
+
+LA SUITE : ① LE RUN TERRAIN de l'unité (le GUI passeur : 1·KIT →
+2·RUN → 3·TÉMOIN → preuves-unite02-d210/ au /test) + la ligne au
+livre (atelier 013520, l'onglet 5 : T-loupe-02-d210-it1 puis
+C-loupe-02-d210-it1) ; ② le recoup du lab au retour ; ③ l'unité
+suivante selon la séquence tirée : loupe-08 le bras T d'abord ; la
+re-livraison d'attribution empirique (la pièce C via un kit standard
+minimal) au commandement.
