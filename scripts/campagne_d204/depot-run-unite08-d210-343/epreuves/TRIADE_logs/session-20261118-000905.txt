@@ -1,0 +1,42 @@
+00:09:06  [GUI] la fenêtre née — v1.0.0, l'édition v1 du 18/11/2026 — LA DEUXIÈME UNITÉ D210 (loupe-08 ligne × bras T, la séquence tirée de la graine D217 — jamais re-tirée ; le kit né au labo à l'Entrée 341, le juge scenario-unite08.py D204 INCHANGÉ 44384f5d… [la version corrigée], la gravure NÉE PARSÉE — le défaut T0 de l'unité 01 ne se reproduit pas)
+00:09:06  [GUI] le kit : D:\Downloads\kit-unite-02-d210-20261118
+00:09:06  [verrou:GRAINE-D210.txt] VERT — la graine D217 (consignée AVANT le premier appel, jamais re-tirée)
+00:09:06  [verrou:LANCEUR-UNITE-08-T.bat] VERT — la console officielle du kit (le run SA console, INTACT — CA6)
+00:09:06  [verrou:LISEZMOI-KIT-UNITE-02-D210.txt] VERT — le livre du kit (l'ordre de jeu du terrain — CHOISIR CE DOSSIER)
+00:09:06  [verrou:brouillon-loupe-08-ligne.asm] VERT — le brouillon it8 du bras T (la notation consignée)
+00:09:06  [verrou:journal-tokens-d210.jsonl] VERT — le journal des tokens (100 % log-api, la couture nommée)
+00:09:06  [verrou:garde-brut-d210.jsonl] VERT — le garde-brut de la rig (le journal brut de la construction)
+00:09:06  [verrou:loupe.exe] VERT — LA PIÈCE de campagne (le slot loupe-08 RVA 0x49C0 porte la notation D210, 260 o cristallisés — 4498b7fa…)
+00:09:06  [verrou:notation-loupe-08-ligne.asm] VERT — la notation D210 (le texte de la pièce au slot)
+00:09:06  [verrou:proxy.exe] VERT — le scellé de l'ère (la première ligne du doré V1)
+00:09:06  [verrou:scenario-unite08.py] VERT — LE JUGE D204 INCHANGÉ (44384f5d…, la version corrigée — le lecteur « sha256  nom », le chargeur DONT_RESOLVE, la feuille pure)
+00:09:06  [verrou:source-loupe-08-C.c] VERT — le source du bras C (gcc -O2 PROPRE, la pièce livrée à l'épreuve)
+00:09:06  [verrou:temoin-3f.bin] VERT — le témoin 3 × 64 Kio + 1 (V1 : la ligne finale incomplète)
+00:09:06  [verrou:tests-loupe-08-C.md] VERT — la suite de tests du bras C (N/B/R + la falsification)
+00:09:06  [verrou:EMPREINTES-KIT-UNITE-02-D210.txt] VERT — la gravure du kit (sha256 en tête — le format que le scénario scellé parse ; NÉE parsée : le défaut T0 de l'unité 01 ne se reproduit pas)
+00:09:06  [verrou] VERT — 14/14 pièces + la preuve T0 (13 pièces vues par le scénario scellé)
+00:09:06  [VERROU] VERT — le kit recoupé — TOUT LANCER attend votre clic
+00:09:11  [TOUT LANCER] parti — le verrou → le run → la collecte → le témoin
+00:09:11  === TOUT LANCER — 18/11/2026 00:09:11 : le verrou recoupé, le run part, la collecte suivra, le témoin est à VOTRE MAIN (D99) ===
+00:09:12  [run] === LE RUN DE L'UNITÉ 4 (loupe-08 ligne × bras T) — la campagne D204, le terrain du développeur ===
+00:09:12  [run] [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 41660a30752c378e… == la gravure du kit
+00:09:12  [run] [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6b5f90000
+00:09:12  [run] [T0] la feuille pure : AUCUNE feuille kernel32 à résoudre — le scénario ne touche pas à l'IAT, la pièce n'appelle personne
+00:09:12  [run] [VERT] V1:le-dore-proxy-premiere-ligne — les 77 o == le modèle (« 00000000  4D 5A 00 00 00 00 00 0… » — la pièce de l'ère rendue à l'œil)
+00:09:12  [run] [VERT] V1:le-temoin-3f-ligne-finale-incomplete — UN octet valide : quinze groupes d'espaces, la colonne ASCII droite — Q3
+00:09:12  [run] [VERT] V2:le-differentiel-10-000-lignes — 10000/10 000 == le modèle (la graine 20261115, les mêmes tirages au labo)
+00:09:12  [run] [VERT] V2:exactement-77-o — le poison au-delà de 77 demeure aux 10 000 gestes (I2 : jamais un de plus)
+00:09:12  [run] [VERT] V3:E1:la-longueur-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+00:09:12  [run] [VERT] V3:E2:la-longueur-dix-sept — verdict -5, la sortie POISON INTACTE — rien écrit
+00:09:12  [run] [VERT] V3:E3:la-source-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+00:09:12  [run] [VERT] V3:E3:la-sortie-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+00:09:12  [run] [VERT] V4:l-octet-mute-la-ligne-diverge — l'octet 3 muté : la ligne DIVERGE du modèle de l'original ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)
+00:09:12  [run] [témoin] D:\Downloads\kit-unite-02-d210-20261118\preuves-unite08\temoin-unite08.txt — 10 VERT, 0 ROUGE
+00:09:12  [run] === LE RUN DE L'UNITÉ 4 FINI : dater et signer le témoin de votre main, renvoyer preuves-unite08/ ENTIER au coffre /test ===
+00:09:12  [run] FINI — 10 VERT, 0 ROUGE recopiés (code 0)
+00:09:12  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-02-d210-20261118\preuves-unite08\temoin-unite08.txt
+00:09:12  [collecte] la console COPIÉE au réceptacle : run-console-unite08-d210-20261118-000911.txt
+00:09:12  [collecte] DEPOT-d210-unite08.txt né au réceptacle (3 pièces)
+00:09:12  [COLLECTE] née — DEPOT-d210-unite08.txt au réceptacle (3 pièces)
+00:09:12  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-02-d210-20261118\preuves-unite08\temoin-unite08.txt
+00:09:56  [GUI] la fenêtre fermée

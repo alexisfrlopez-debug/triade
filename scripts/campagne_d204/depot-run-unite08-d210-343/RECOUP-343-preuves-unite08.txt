@@ -1,0 +1,34 @@
+RECOUP-343 — LE RUN TERRAIN DE L'UNITÉ 02 D210 LOUPE-08 LIGNE × BRAS T
+REÇU ET RECOUPÉ (le dépôt kit-unite-02-d210-20261118/ du coffre /test ;
+l'annonce du développeur : « preuves dans le drive /test » — le run au
+kit GUI 1-clic livré à la 342, la suite ① honorée au geste du
+développeur)
+==============================================================================
+[VERT] R1: les SEPT pièces nées du run (22 entrées à la racine du dépôt, dont les sous-dossiers preuves-unite08, TRIADE_logs) : md5 re-calculés == les métadonnées Drive re-listées ; la console racine == la console du réceptacle OCTET POUR OCTET (la copie de la collecte byte-byte)
+[VERT] R2: LE JUGE DU RUN : le scénario gravé au DEPOT 44384f5d… == le juge D204 INCHANGÉ == le kit du labo livré à la 342 44384f5d… == la pièce au coffre (md5 5854253b…) — la faute au juge de la 338 ne se reproduit pas, NOMMÉE PARCE QU'ELLE NE SE REPRODUIT PAS (D202) ; le chemin du kit à la console porte le dossier daté : « D:\Downloads\kit-unite-02-d210-20261118\preuves-unite08 »
+[VERT] R3: LA PREUVE T0 : la console porte « loupe.exe sha256 41660a30752c378e… == la gravure du kit » ; la gravure EMPREINTES-KIT NÉE PARSÉE (le scénario scellé lut les empreintes — le défaut T0 de l'unité 01 ne se reproduit pas, NOMMÉ PARCE QU'IL NE SE REPRODUIT PAS) ; le journal de session porte le verrou « VERT — 14/14 pièces + la preuve T0 (13 pièces vues par le scénario scellé) » ; la pièce du kit recoupée AU LABO : loupe.exe 127488 o, sha256 41660a30752c378e… == la gravure du kit == la pièce au coffre
+[VERT] R4: LE VERDICT : 10 VERT, 0 ROUGE, code retour 0 — L'ATTENDU DU LIVRE TENU : les DIX verdicts (T0, V1 ×2, V2 ×2, V3 ×4, V4) ; les verdicts RECOPIÉS à l'identique console / état / témoin / journal de session (jamais recalculés) — la même forme que l'épreuve fonctionnelle du labo (10 VERT, 0 ROUGE, code 0) et que l'oracle du harnais (12 VERT, RAPPORT-UNITE-D210-02)
+[VERT] R5: LA MAIN (D99) : le témoin déposé 1114 o == le témoin avant-main gravé au DEPOT (1092 o, sha256 1b528b90… MATCH byte-byte, les blancs 20 soulignés) + la main posée (+22 o : « 18/11/2026 » + « Alexis Lopez ») — la même main que les témoins des runs 338/340 de la campagne ; le GUI ne signea jamais (la frontière tenue)
+[VERT] R6: LA MACHINE : PORTABLE · Windows 10 · AMD64 · Python 3.14.10 (CA2 — la même que les runs de la campagne D204/D210 et les re-runs 338/340) ; l'argv de la console (…Python314\python.exe) cohérent ; le DEPOT l'avoue honnête : « la machine : (non consignée) » — la machine vit au témoin (D99), la ligne du DEPOT ne maquille rien
+[VERT] R7: LA CHRONOLOGIE : le kit livré au /test 2026-11-17T22:42:58.602Z (la 342) → le faux né au run 2026-11-17T23:09:12.453Z (V4) → la console couchée 2026-11-17T23:09:12.550Z (le nom « 18/11/2026 00:09:11 » == la ligne 1 == le chrono du DEPOT == l'heure locale du terrain, UTC+1) → la console copiée 2026-11-17T23:09:12.622Z → le DEPOT gravé 2026-11-17T23:09:12.650Z → l'état 2026-11-17T23:09:12.651Z → LA MAIN 2026-11-17T23:09:51.694Z (le mtime du témoin, 39 s après la console) → le journal de session 2026-11-17T23:09:56.037Z (la fenêtre fermée) → le coffre né 2026-11-17T23:10:27.729Z → preuves-unite08/ né 2026-11-17T23:10:29.086Z — jamais une date avant le kit, jamais une date avant le run ; L'OBSERVATION NOMMÉE : les DIX-HUIT pièces du kit au coffre portent un mtime uniforme 2026-11-18T20:00:00.000Z (valeur ronde ~21 h après le run, POSTÉRIEURE à la naissance du dossier même) — le geste de dépôt ne conserva pas leurs mtimes, la chaîne de garde vit aux vraies voix (les mtimes des pièces nées du run, les createdTime, les md5 recoupés byte-byte) — JAMAIS maquillé
+[VERT] R8: LE DEPOT : la console gravée (2136 o, 631f64a2…) == la pièce déposée byte-byte ; le mutant falsifie-16.bin (16 o) == la pièce déposée == LA COMPOSITION DU LABO (l'octet 3 ^ 0x6F du doré de proxy.exe : la ligne du mutant DIVERGE du modèle de l'original ET == le modèle du mutant — le V4 recoupé au labo) ; les SIX pièces du kit gravées (loupe.exe, proxy.exe, temoin-3f.bin, le scénario D204, LISEZMOI-KIT, EMPREINTES-KIT) recoupées sha256 par sha256 == le kit livré à la 342 — la chaîne de garde par le contenu (D143)
+[VERT] R9: LA CAP M1 : 0 zip au /test, le DEPOT porte « le GUI compte 0 assemblage(s) vécu(s) », l'état du GUI « livraisons : 0 », les étapes « run + collecte » VERTES — LA PREMIÈRE livraison du bloc (TROIS par bloc, § 7 du plan D204 ; il en reste DEUX) ; le dépôt est le dossier kit-unite-02-d210-20261118/ ENTIER (le kit dézippé + les preuves nées du run), JAMAIS le zip assemblé — l'observation NOMMÉE reconduite (la 340 la nomma la première) : le contenu est complet, l'exigence D99 tenue par le témoin daté-signé, l'emballage diffère — jamais maquillé
+[VERT] R10: LA MÊME PIÈCE : les 18 pièces du kit au coffre (loupe.exe 41660a30…, proxy.exe 446279f3…, temoin-3f.bin c5fc1f28…, le juge 44384f5d…, les livres, les brouillons, la notation, le GUI) == le kit du labo livré à la 342 OCTET POUR OCTET (18/18 md5 MATCH) — le run ne toucha AUCUNE pièce scellée : le verrou les recoupa au lancement (14/14 VERT au journal), le scénario recoupa loupe.exe AVANT de courir (T0) — les pièces LUES, jamais retouchées
+
+LE BILAN DU RECOUP : 10 VERT / 0 ROUGE
+L'UNITÉ 02 D210 (LOUPE-08 LIGNE × BRAS T) CLOSE AU TERRAIN —
+  l'attendu du livre TENU : les DIX verdicts VERT, 0 ROUGE, code
+  retour 0, au geste du GUI 1-clic livré à la 342 (TOUT LANCER) ;
+  la main du développeur posée au témoin (D99 : daté 18/11/2026,
+  signé Alexis Lopez) ; le juge D204 INCHANGÉ couru au terrain —
+  les DEUX défauts de l'unité 01 (le T0 de la gravure, la faute au
+  juge de la 338) ne se reproduisirent pas, NOMMÉS PARCE QU'ILS
+  NE SE REPRODUisent pas (D202) ; la chaîne de garde close : kit
+  livré 22:42:58Z → run 23:09:12Z → main 23:09:51Z → coffre
+  23:10:27Z, les md5 recoupés byte-byte au rapatriement.
+LA LIGNE DE CARNET : T-loupe-08-d210-it1 VERT au geste du
+  développeur (la première itération consommée — le livre M3 +
+  livraisons.csv M1 à l'onglet 4·LIVRE du GUI, à la main).
+LA SUITE : ② l'unité suivante selon la séquence tirée (loupe-13 le
+  bras T d'abord — la graine D217, jamais re-tirée) ; la
+  re-livraison d'attribution empirique au commandement.

@@ -13253,3 +13253,80 @@ Work Log:
 - LA CONSIGNATION : la présente Task 209 + l'Entrée 342 ; la carte OU-TROUVER portée à 342 (la chaîne 341 conservée) ; le kit au download/ du dépôt [TRIADE_gui_unite08_d210_v1/ + le zip] ; les SIX scripts du geste à scripts/ ; le git poussé + le miroir Drive rafraîchi (aux jetons du /Tokens).
 - SUITE : ① le run terrain au geste du développeur [le kit dézippé, LANCER-RUN-UNITE08-D210-1CLIC.bat, TOUT LANCER — l'attendu : les DIX verdicts VERT, 10 VERT 0 ROUGE, code 0, le témoin daté signé D99, preuves-unite08/ au /test] ; ② l'unité suivante selon la séquence tirée : loupe-13 le bras T d'abord ; la re-livraison d'attribution empirique au commandement.
 (18/11/2026, la session du GUI de l'unité 02 — la suite ① honorée, le précédent 337 suivi)
+
+
+Task ID: 210
+Agent: Z.ai (agent principal — la session de la réception du run de la deuxième unité D210)
+Task: L'ANNONCE DU DÉVELOPPEUR (« preuves dans le drive /test ») : LE RUN TERRAIN DE L'UNITÉ 02 D210 LOUPE-08 LIGNE × BRAS T AU KIT GUI 1-CLIC LIVRÉ À LA 342 REÇU ET RECOUPÉ — 10/10 VERT, 10 VERT 0 ROUGE code retour 0 (l'attendu du livre TENU — la suite ① de la 342 honorée au geste du développeur : dézip, LANCER-RUN-UNITE08-D210-1CLIC.bat, TOUT LANCER, la main posée au témoin).
+
+Work Log:
+- LA RÉCEPTION (la sonde 343) : le dossier kit-unite-02-d210-20261118/ NEUF à
+  la racine du /test (né au coffre le 17/11 23:10:27.729Z — 27 min après la
+  livraison du kit 22:42:58.602Z) : le kit DÉZIPPÉ au terrain (les 18
+  pièces) + les preuves nées du run (la console racine 2 136 o, le
+  réceptacle preuves-unite08/ [falsifie-16.bin 16 o, la console COPIÉE, le
+  DEPOT-d210-unite08.txt 2 105 o, le témoin 1 114 o], l'état du GUI 2 089 o,
+  TRIADE_logs/ la session 5 277 o) — les SEPT pièces nées du run
+  rapatriées au bac scripts/campagne_d204/depot-run-unite08-d210-343/
+  epreuves/ par DOUBLE téléchargement byte-byte, md5 == la métadonnée
+  Drive — 7/7 VERT ; les DIX-HUIT pièces du kit au coffre recoupées par
+  md5 == le kit du labo livré à la 342 — 18/18 INTACT.
+- LE RECOUP (recoupe_run_unite08_343.py, 10/10 VERT) : LE JUGE DU RUN — le
+  scénario gravé au DEPOT 44384f5d… == le juge D204 INCHANGÉ == le kit du
+  labo de la 342 == la pièce au coffre (la faute au juge de la 338 ne se
+  reproduit pas, NOMMÉE PARCE QU'ELLE NE SE REPRODUIT PAS — D202) ; LA
+  PREUVE T0 : la console porte [VERT] T0 loupe.exe 41660a30… == la gravure
+  == la pièce recoupée au labo, la gravure NÉE PARSÉE (le défaut T0 de
+  l'unité 01 ne se reproduit pas non plus), le journal de session porte le
+  verrou « 14/14 pièces + la preuve T0 (13 pièces vues) » ; LE VERDICT :
+  10 VERT, 0 ROUGE, code retour 0 — les DIX verdicts (T0, V1 ×2, V2 ×2,
+  V3 ×4, V4) RECOPIÉS à l'identique console / état / témoin / journal —
+  l'attendu du LISEZMOI-RUN TENU ; LA MAIN (D99) : le témoin déposé
+  1 114 o == l'avant-main gravé au DEPOT (1 092 o, 1b528b90…) + la main
+  posée (+22 o : « 18/11/2026 » + « Alexis Lopez » — la même main que les
+  runs 338/340) ; LA MACHINE : PORTABLE · Windows 10 · AMD64 · Python
+  3.14.10 (CA2), le DEPOT l'avouant honnête « (non consignée) » — la
+  machine vit au témoin ; LA CHRONOLOGIE tenue : le kit livré 22:42:58Z →
+  le faux né 23:09:12.453Z (V4) → la console 23:09:12.550Z (chrono M4
+  0,6 s, le passage de minuit conduit : le nom de la console « 18/11/2026
+  00:09:11 » == la ligne 1 == le DEPOT == l'état, l'heure locale UTC+1) →
+  la collecte 23:09:12.622Z → le DEPOT .650Z → l'état .651Z → LA MAIN
+  23:09:51.694Z → la fenêtre fermée 23:09:56Z → le coffre né
+  23:10:27.729Z — jamais une date avant le kit, jamais avant le run ;
+  L'OBSERVATION NOMMÉE : les 18 pièces du kit au coffre portent un mtime
+  uniforme 2026-11-18T20:00:00.000Z (valeur ronde ~21 h après le run,
+  postérieure à la naissance du dossier même) — le geste de dépôt ne
+  conserva pas leurs mtimes, la chaîne de garde vit aux vraies voix
+  (mtimes des pièces nées du run, createdTime, md5 recoupés byte-byte) ;
+  LE DEPOT : la console gravée byte-byte, le mutant falsifie-16.bin == la
+  pièce déposée == la composition du labo (l'octet 3 ^ 0x6F du doré), les
+  SIX pièces du kit gravées recoupées sha256 == la 342 ; LA CAP M1 : LA
+  PREMIÈRE livraison du bloc (0 zip, 0 assemblage à l'état et au DEPOT —
+  le terrain déposa le dossier kit ENTIER, JAMAIS le zip assemblé :
+  l'observation de la 340 reconduite, le contenu complet, l'exigence D99
+  tenue par le témoin daté-signé, l'emballage diffère) ; LA MÊME PIÈCE :
+  les DIX-HUIT pièces du kit au coffre == le kit du labo de la 342 OCTET
+  POUR OCTET — le run ne toucha AUCUNE pièce scellée (le verrou 14/14 au
+  lancement, les pièces LUES, jamais retouchées).
+- LE RANGEMENT + LA LIVRAISON (ranger_livrer_343.py, TOUT VERT) : le dépôt
+  DÉPLACÉ-RENOMMÉ, jamais jeté (D143), à /test/archives-livraisons/
+  unite-08-d210-20261118/kit-unite-02-d210-20261118-RUN-V1-VERT-20261118/
+  (l'archive NEUVE au nom de l'unité loupe-08 — le précédent
+  unite-02-d210-20261118/ porte le run loupe-02 des 338/340) — chaque md5
+  recoupé AVANT et APRÈS, 25 fichiers INTACTS ; le RAPPORT-RECEPTION-RUN-
+  UNITE08-D210-TERRAIN-20261118.txt (== RECOUP-343-preuves-unite08.txt,
+  6 531 o) livré à la racine du /test, re-téléchargé et md5-recoupé
+  byte-byte.
+- LA CONSIGNATION : la présente Task 210 + l'Entrée 343 ; la carte
+  OU-TROUVER portée à 343 (la chaîne 342 conservée) ; le bac
+  scripts/campagne_d204/depot-run-unite08-d210-343/ (les epreuves/, le
+  RECOUP-343, les QUATRE scripts du geste) + les scripts à scripts/ ; le
+  git poussé + le miroir Drive rafraîchi (aux jetons du /Tokens).
+- SUITE : la ligne de carnet AU GESTE DU DÉVELOPPEUR (T-loupe-08-d210-it1
+  VERT — la première itération consommée ; le livre M3 + livraisons.csv M1
+  à l'onglet 4·LIVRE du GUI, à la main — le kit livré le 18/11 courut le
+  18/11) ; ② l'unité suivante selon la séquence tirée (loupe-13 le bras T
+  d'abord — la graine D217, jamais re-tirée) ; la re-livraison
+  d'attribution empirique au commandement.
+  (18/11/2026, la session de la réception du run de la deuxième unité —
+  l'annonce du développeur, l'attendu du livre tenu au geste du GUI 1-clic)

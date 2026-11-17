@@ -1,0 +1,21 @@
+LE RUN DE L'UNITÉ 02 D210 (LOUPE-08 LIGNE × BRAS T) — début le 18/11/2026 00:09:11
+l'argv exact : C:\Users\admin\AppData\Local\Programs\Python\Python314\python.exe scenario-unite08.py
+============================================================
+=== LE RUN DE L'UNITÉ 4 (loupe-08 ligne × bras T) — la campagne D204, le terrain du développeur ===
+[VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 41660a30752c378e… == la gravure du kit
+[T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6b5f90000
+[T0] la feuille pure : AUCUNE feuille kernel32 à résoudre — le scénario ne touche pas à l'IAT, la pièce n'appelle personne
+[VERT] V1:le-dore-proxy-premiere-ligne — les 77 o == le modèle (« 00000000  4D 5A 00 00 00 00 00 0… » — la pièce de l'ère rendue à l'œil)
+[VERT] V1:le-temoin-3f-ligne-finale-incomplete — UN octet valide : quinze groupes d'espaces, la colonne ASCII droite — Q3
+[VERT] V2:le-differentiel-10-000-lignes — 10000/10 000 == le modèle (la graine 20261115, les mêmes tirages au labo)
+[VERT] V2:exactement-77-o — le poison au-delà de 77 demeure aux 10 000 gestes (I2 : jamais un de plus)
+[VERT] V3:E1:la-longueur-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+[VERT] V3:E2:la-longueur-dix-sept — verdict -5, la sortie POISON INTACTE — rien écrit
+[VERT] V3:E3:la-source-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+[VERT] V3:E3:la-sortie-nulle — verdict -5, la sortie POISON INTACTE — rien écrit
+[VERT] V4:l-octet-mute-la-ligne-diverge — l'octet 3 muté : la ligne DIVERGE du modèle de l'original ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)
+[témoin] D:\Downloads\kit-unite-02-d210-20261118\preuves-unite08\temoin-unite08.txt — 10 VERT, 0 ROUGE
+=== LE RUN DE L'UNITÉ 4 FINI : dater et signer le témoin de votre main, renvoyer preuves-unite08/ ENTIER au coffre /test ===
+============================================================
+la durée : 0.6 s — fin le 18/11/2026 00:09:12
+le code retour : 0

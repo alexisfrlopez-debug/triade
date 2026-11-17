@@ -1,0 +1,25 @@
+DEPOT-d210-unite08.txt — le dépôt des preuves du run terrain
+assemblé par le GUI le 18/11/2026 00:09:12 (les relevés machine ; la signature est ailleurs — D99)
+============================================================
+le kit : D:\Downloads\kit-unite-02-d210-20261118
+la machine : (non consignée)
+le run : 10 VERT, 0 ROUGE (RECOPIÉS des lignes de console, jamais recalculés)
+le chrono M4 du run : début 18/11/2026 00:09:11 · fin 18/11/2026 00:09:12 · durée 0.6 s
+le labo mesura (18/11, RAPPORT-UNITE-D210-02) : build 0,5 s ; oracle V1-V4 4,0 s ; l'épreuve POSIX 1,4 s. Le chrono du terrain se mesure au geste présent (le GUI couche début/fin/durée à la console du run).
+
+LES PIÈCES DU RÉCEPTACLE preuves-unite08/ (nom, taille, sha256) :
+  falsifie-16.bin  16 o  f14fde0b343051defd5d0ff8d9c66bdfde9ab50351070982f01bf5a0d538d53d
+  run-console-unite08-d210-20261118-000911.txt  2136 o  631f64a27ad459e56800aaac698b59c67867b9a071b09899efc11074a5a5bd64
+  temoin-unite08.txt  1092 o  1b528b90dc219d58ed2aea47187f95c7e9789ae8794ec3b1faf3923495d4d8a7
+
+LES PIÈCES DU KIT AU RUN (recoupées au verrou, l'empreinte FAIT FOI) :
+  loupe.exe  127488 o  41660a30752c378e27eacaeaa33ab9754a75d9d6b2c2837e1dfb0a9923555bb1
+  proxy.exe  65024 o  446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+  temoin-3f.bin  196609 o  c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3
+  scenario-unite08.py  13996 o  44384f5d4a5afbf5d17585ee73b0aeea56ba2fa76f1f4f82addf0903747a2d5a
+  LISEZMOI-KIT-UNITE-02-D210.txt  5182 o  a4686b324882fd0a8604ab6d7a5148f8206e63b293e9c76f256641a14da5ff24
+  EMPREINTES-KIT-UNITE-02-D210.txt  1383 o  3ce5b351fe5da70b2633bdd82df09b321df1e484b4bcd0f3f81e1b3cc4bf0de6
+
+LA CAP M1 (le plan D204, § 7) : TROIS livraisons par bloc — le GUI compte 0 assemblage(s) vécu(s).
+
+LE GESTE QUI RESTE À LA MAIN (jamais automatisé, D99) : dater et SIGNER temoin-unite08.txt DE VOTRE MAIN, renvoyer le dossier preuves-unite08/ ENTIER au coffre /test (le GUI l'assemble en zip — l'exigence de la signature est tenue par construction).

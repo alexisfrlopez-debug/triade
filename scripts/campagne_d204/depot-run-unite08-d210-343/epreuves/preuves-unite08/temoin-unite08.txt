@@ -1,0 +1,25 @@
+TÉMOIN DU RUN DE L'UNITÉ 4 — loupe-08 ligne × bras T (la campagne D204, la comparaison des workflows)
+==============================================================================
+le run      : 2026-11-17T23:09:12Z (UTC) — la machine du développeur
+la machine  : PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+la pièce    : loupe.exe 127488 o, sha256 41660a30752c378e27eacaeaa33ab9754a75d9d6b2c2837e1dfb0a9923555bb1
+le verdict  : 10 VERT, 0 ROUGE — VERT
+
+LES VECTEURS :
+  VERT T0:la-piece-recoupee-a-l-empreinte-gravee
+  VERT V1:le-dore-proxy-premiere-ligne
+  VERT V1:le-temoin-3f-ligne-finale-incomplete
+  VERT V2:le-differentiel-10-000-lignes
+  VERT V2:exactement-77-o
+  VERT V3:E1:la-longueur-nulle
+  VERT V3:E2:la-longueur-dix-sept
+  VERT V3:E3:la-source-nulle
+  VERT V3:E3:la-sortie-nulle
+  VERT V4:l-octet-mute-la-ligne-diverge
+
+LE GESTE QUI RESTE À LA MAIN (jamais automatisé, D99) :
+  DATER ce témoin (la date de votre main), le SIGNER,
+  renvoyer le dossier preuves-unite08/ ENTIER au coffre /test.
+
+Daté le : ___18/11/2026_________________
+Signé    : __Alexis Lopez__________________
