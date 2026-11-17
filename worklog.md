@@ -12052,3 +12052,37 @@ Work Log:
   à la racine du coffre, le push GitHub vécu — jamais un jeton affiché,
   jamais commité.
 (17/11, la session de la baseline consignée et synchronisée)
+
+## Task 225 — Entrée 325 : L'ÉPREUVE D'EXÉCUTION V1-V5 VÉCUE AU LABO PAR LE
+HARNAIS — LES DEUX BRAS REJETÉS, SIX CLASSES DE DÉFAUTS NOMMÉES
+
+Work Log:
+- LA SYNCHRO GIT/DRIVE d'abord (le commandement « d'abord la synchro
+  git/drive — vérifie /tokens du drive pour les acces ») : les jetons du
+  /Tokens recensés (le relais OAuth RAFRAÎCHI opérationnel — la voie
+  d'écriture testée puis nettoyée ; le jeton git vérifié permission push ;
+  le SA la lecture), le kit recoupé byte-byte au zip (68 fichiers), le
+  bundle 323 restauré, l'Entrée 324 consignée (la baseline + le listing
+  des cinq chantiers), le push GitHub vécu (4e205eb → 1c7ea99), le bundle
+  324 + le worklog remplacés au TRIADE-sauvegarde-git (le 323 préservé,
+  D143), le journal tokens remplacé à la racine — TOUT recoupé byte-byte
+  au re-téléchargement (un faux négatif du listing Drive nommé : les
+  fichiers sains par accès direct, l'indexation en retard).
+- L'ÉPREUVE ENSUITE (le commandement « puis on continue chantier 1 ») : le
+  HARNAIS NÉ (bras T par émulation unicorn aux adresses du plan — les
+  QUATRE blocs tls13 scellés à leurs slots, la table K, les zones aux
+  cibles des lea, l'IAT D161 servie ; bras C par gcc contre le shim, LE
+  JUGE EXTERNE hashlib), la graine 20261117, proxy.exe scellé + le
+  bi-fenêtre + les FIPS.
+- LE VERDICT : LES DEUX BRAS REJETÉS — bras T : 1 094 crashs (rdx non posé
+  avant tls13-04 qui écrit à [rdx]) + l'absorption débranchée du tampon +
+  le littéral du vide erroné + la copie de l'état brut + quatre
+  non-volatils non rendus ; bras C : 1 101/1 101 condensés non vides faux
+  (la longueur en PETIT-boutiste au bloc final — preuve reconstituée
+  SHA-256-LE("abc") == la sortie, la onzième classe de la collection).
+  V3/V4 verts aux deux bras, V5 vert au C (la falsification détectée).
+- LA CONSIGNATION : l'Entrée 325 au canon, la présente Task 225, l'atelier
+  à jour au dépôt (epreuve-v1v5/ + les preuves JSON), le RAPPORT-
+  EPREUVE-V1V5.txt, le push GitHub, le bundle 325 + le worklog remplacés
+  au TRIADE-sauvegarde-git (le 324 préservé).
+(17/11, la session de l'épreuve V1-V5 vécue et consignée)

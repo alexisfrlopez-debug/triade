@@ -13509,3 +13509,60 @@ PUSH VÉCUS AU COMMANDEMENT DU DÉVELOPPEUR (« tokens a jour », le lien
   du coffre (la clôture baseline + le wording D207 scellée), le push GitHub
   vécu — jamais un jeton affiché, jamais un jeton commité.
 (17/11, la session de la baseline consignée et synchronisée)
+
+## Entrée 325 — L'ÉPREUVE D'EXÉCUTION V1-V5 VÉCUE AU LABO PAR LE HARNAIS :
+LES DEUX BRAS DE LA BASELINE REJETÉS, SIX CLASSES DE DÉFAUTS QUE SEULE
+L'EXÉCUTION PREND, NOMMÉES UNE À UNE — LE HARNAIS EST NÉ
+
+- LA COMMANDE : « puis on continue chantier 1 » — l'épreuve d'exécution
+  V1-V5 était LE reste nommé de la baseline (« le harnais ou le terrain »,
+  les pièces « LIVRÉES À L'ÉPREUVE, pas encore éprouvées »). LA VOIE VÉCUE :
+  LE HARNAIS DU LABO (la précédente Entrée 324 avait consigné la
+  construction et poussé la synchro git/drive au commandement « tokens a
+  jour » — le relais OAuth rafraîchi, le jeton git vérifié, le bundle 324
+  et le worklog remplacés au TRIADE-sauvegarde-git, le journal tokens à la
+  racine, le push GitHub vécu, tout recoupé byte-byte).
+- LE HARNAIS (epreuve-v1v5/, falsifiable, la graine 20261117 consignée) :
+  le bras T EXÉCUTÉ PAR ÉMULATION unicorn AUX ADRESSES DU PLAN — les
+  QUATRE blocs tls13 scellés assemblés à leurs slots (0xc000/0xc080/
+  0xc240/0xc300, R7), la table K à 0x2f00, la zone d'état et TAMPON_CUMUL
+  aux cibles des lea, l'IAT D161 servie par les shims ; le bras C compilé
+  gcc -O2 contre le shim du labo (PROPRE), LE JUGE EXTERNE (hashlib,
+  jamais les fonctions de la pièce). Les témoins : proxy.exe scellé
+  (446279f3… recoupé) + le bi-fenêtre (proxy.exe ×2 — le contrat exige «
+  la deuxième fenêtre ») + les fixtures FIPS.
+- LE VERDICT : LES DEUX BRAS REJETÉS. BRAS T — V1 ROUGE (1 094 CRASHS à
+  la finalisation + 7 condensés divergents sur 1 101), V2 ROUGE (le
+  littéral du vide erroné 98fbfbd7… ≠ FIPS 98fc1c14…), V3 VERT (-4/-3/-5
+  exacts), V4 VERT (-6, sortie intacte, non-volatils rendus), V5 ROUGE
+  (inobservable — la pièce meurt avant le condensé), I5 ROUGE. LES DÉFAUTS
+  NOMMÉS : D-T1 rdx NON POSÉ avant « call 0xc300 » — tls13-04 (le scellé)
+  écrit son condensé à [rdx], le déchet de compression tombe hors carte →
+  MORT pour toute gamme ≥ 64 o ; D-T2 l'absorption DÉBRANCHÉE du tampon
+  (tls13-03 reçoit rsp+0xB0, jamais TAMPON_CUMUL — I3 violé, les données
+  lues ne sont pas absorbées) ; D-T3 le vecteur vide CODÉ DUR ET ERRONÉ
+  (Q3 : « l'héritage le porte », pas un littéral) ; D-T4 la copie depuis
+  L'ÉTAT BRUT (rsp+0x40, les mots non permutés — le condensé bswappé
+  perdu) ; D-T5 QUATRE non-volatils non rendus au chemin de succès (rdi/
+  rsi par le rep movsb, r14/r15 par le créneau chevauchant les sauvegardes).
+  BRAS C — V1 ROUGE (1 101/1 101 condensés non vides FAUX, aucun crash,
+  rax=0 partout), V2 ROUGE (le vide EXACT — la composition produit le vrai
+  vecteur ; « abc » faux), V3 VERT, V4 VERT, V5 VERT (la mutation
+  détectée). LE DÉFAUT NOMMÉ : D-C1 LA LONGUEUR EN PETIT-BOUTISTE au bloc
+  final (total×8 écrit à l'envers, poids faible à [56] — le FIPS exige le
+  grand-boutiste) ; PREUVE reconstituée par le labo : SHA-256-LE("abc") ==
+  3859a4ec… == la sortie de la pièce byte pour byte ; la gamme vide
+  masquait le défaut (longueur nulle) — LA ONZIÈME CLASSE de défaut
+  invisible sans exécution de la collection du projet.
+- LA LECTURE HONNÊTE : les chemins de REJET sont sains aux deux bras
+  (V3/V4 exacts, fail-closed vécu), la falsification est DÉTECTÉE au bras
+  C ; les CHEMINS DE SUCCÈS portent les défauts. LE HARNAIS EST NÉ : il
+  vivra l'épreuve de chaque pièce à venir.
+- LA SUITE (la boucle § 5) : l'échec à l'étape 5 envoie les pièces au
+  CORRECTIF — le geste appartient à la rig (outil_correctif, le
+  bundle-défaut, chaque tour INSTRUMENTÉ) : le bras C par le correctif
+  minimal (les huit affectations inversées), le bras T par la reprise de
+  la notation (la signature de tls13-04 à [rdx], l'absorption au
+  TAMPON_CUMUL, le vide par la composition, la copie depuis le créneau,
+  rdi/rsi sauvés) — puis L'ÉPREUVE REJOUEE (la même graine) jusqu'au vert.
+(17/11, la session de l'épreuve V1-V5 vécue et consignée)
