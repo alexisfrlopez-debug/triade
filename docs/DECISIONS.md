@@ -4667,3 +4667,69 @@ reste sceau_I.py verifier.
 ## D210 — LE PLAN D'EXTENSION PRÉ-ENREGISTRÉ D204+ (la vague 5, l'instruction 2l40ie6qn point 5 : « préparer le plan pré-enregistré d'une extension n≥6 unités entièrement instrumentées, formats identiques, ordre des bras randomisé, hash consigné avant mesure ») : le plan vit au fichier scripts/campagne_d204/PLAN-EXTENSION-D210.md — n ≥ 6 unités entièrement instrumentées aux DEUX bras (la rig L6 généralisée : compter_tokens à chaque appel, les M2 manquants guéris à la source), FORMATS IDENTIQUES entre bras (le bras T livre au format du bras C et réciproquement — la menace « kit partagé et formats asymétriques » fermée par construction), ORDRE DES BRAS RANDOMISÉ par unité (la graine consignée AVANT la première mesure), le HASH du plan consigné au présent journal AVANT toute mesure (règle D204 reconduite — LE HASH : 4a3b131194e86039900500c11dcaf1735c2ccef95f4ce3fefbc36ee43807fd0c), l'attribution empirique des échappées kit-side au programme (la pièce C re-livrée via un kit standard minimal), la règle d'arrêt D207 reconduite (un levier qui dégrade M1 ou M3 est rejeté)
 
 ## D211 — LA VAGUE 5 DES DIX INSTRUCTIONS EXÉCUTÉE ET CONSACRÉE (les DIX fichiers du /instructions, 10/10 lus intégralement, exécutés en leur part labo — l'Entrée 320 porte le détail intégral) : (1) RQ2 UNIFIÉ SOUS PÉRIMÈTRES DOCUMENTÉS — les médianes courantes 1 277/3 374/3 674 (le round-trip instrumenté au tokenizer natif), les valeurs v0.14.0 580/2 143/3 510 et M1 51/719/1 088 étiquetées historiques, les ratios baseline recalculés (300 304/1 277 = 235× ; /3 674 = 82×), la décomposition par catégorie confirmée par re-tokenisation indépendante (n=5/op, zéro écart > 1 token), les DEUX baselines réalistes chiffrées au manuscrit (2 074 [1 192–3 202] ; 792 [628–982]) ; (2) LES SIGNES DE §3.5 CORRIGÉS (+9,9 % contre -O2, −2,0 % contre -Os, la convention explicite) et le linter numérique ÉTENDU AUX SIGNES (contrôles négatifs compris) ; (3) LA TABLE DE CAMPAGNE COMPLÈTE générée des ledgers (14 unités, 22 livraisons, 6 échappées comptées + 2 exclues, le 7e rouge = l'artefact du juge, M3 104/17 min, les verdicts explicites H1 TENUE / H2 TENUE / H3 FALSIFIÉE / H4-D204 TENUE / H5 FALSIFIÉE) avec le script de réconciliation qui refuse toute divergence ; (4) LES QUATRE RÉFÉRENCES VÉRIFIÉES AUX SOURCES (STOKE ASPLOS'13 doi:10.1145/2451116.2451150 ; SuperCoder arXiv:2505.11480 v4 2026 — 95,0 % et ×1,46 vs gcc -O3 ; LaaC IJCNN 2025 arXiv:2511.04132 ; Nova ICLR 2025 arXiv:2311.13721) et la phrase de positionnement réparée (la citation cassée STOKE[?] guérie) ; (5) LE LEMME DE COUVERTURE ÉNONCÉ ET DÉCHARGÉ (O1 totalité, O2 inductivité des domaines par Apalache sur entiers non bornés avec contrôle négatif attrapé, O3 la bijection des 288 formes vérifiée — tout état atteignable est couvert), L'ALIGNEMENT TLA+ RÈGLE PAR RÈGLE (13/13, transpilation stricte, 512 états par règle), la batterie TLC/Apalache re-jouée 8/8 VERT (verdicts.json identique au consigné) ; (6) LA CONFORMITÉ GÉNÉRATIVE RAPPORTÉE — la campagne PBT de 10 000 traces (graine 20261112) consignée au manuscrit : 660 écarts d'UNE classe (falsifie_conteneur en session : la garde du modèle canonique-seule, la sentinelle concrète détruit sur falsification PROUVÉE — P3/P4 tenues sur chaque trace), 655 réduites au minimum à 2 pas, le rejeu bit-identique vérifié DEUX FOIS ; (7) LE DUDECT REFORMULÉ EN ÉGALITÉ EXACTE — les 6 cibles rejouées (un SEUL compte par cible sur 120 mesures : sha-256 4 469, hmac 18 371, hkdf 18 407, x25519 1 238 959 confirmé, aes-gcm 11 695, md5 132 509), la faute v110 NOMMÉE (hmac/aes-gcm comptaient des zéros — le compteur jamais activé), les runs matériels kit-2 INTÉGRÉS (N=200 : 12,39/5,19/0,94/3,11 ; N=400 : 0,84/1,55/−0,30/2,02, témoins signés) ; (8) LA MENACE « KIT PARTAGÉ ET FORMATS ASYMÉTRIQUES » portée à §5 avec l'analyse de sensibilité (3 échappées arm-neutral, 3 manifestations de la classe feuille-non-liée spécifique au chemin DLL) et le plan D210 ; (9) LA LICENCE (D209 ci-dessus) ; (10) M4 OPTIMISÉ SANS AUCUN CONTRÔLE RETIRÉ — la cristallisation concurrente (12 rebuilds, copies hermétiques, l'outil original intact) et les oracles aux sessions parallèles (le profil : l'ouverture de session domine, 3,2 s/65 Kio ; les lectures 0,15 ms), les consoles IDENTIQUES ligne à ligne, avant/après 50,9 s → 39,3/39,2 s (deux exécutions, machine à 2 cœurs, C re-mesuré 2,2 s sur la même machine — le ratio 23,1× → 17,9×, H5 DEMEURE FALSIFIÉE, consigné R11) ; ET L'ÉDITION v0.18.0 COMPILÉE, le linter numérique étendu VERT au build, le diff annoté produit, LE PUSH GITHUB vécu (de44d55) ; L'ARCHIVAGE DES DIX INSTRUCTIONS PRÉPARÉ MAIS DIFFÉRÉ — LE GAP NOMMÉ : l'écriture au coffre Drive fut refusée de bout en bout (le relais OAuth rafraîchi : invalid_grant ; les jetons d'accès cachés expirés ; le compte de service SANS permission d'écriture sur le coffre) — les DIX fichiers demeurent au /instructions (LUS INTÉGRALEMENT et EXÉCUTÉS, 10/10 md5 recoupés à la lecture), leur déplacement /instructions → /ARCHIVE/instructions_20261116/ attend un jeton relais frais (le geste au développeur ou à la session suivante)
+## D212 — L'ÉDITION v0.18.1 : LES DIX INCOHÉRENCES DE L'AUDIT CORRIGÉES,
+LE LINTER ÉTENDU AU TEXTE NARRATIF (la vague 6, l'instruction
+bqh4qlrqj — la confirmation du développeur reçue le 17/11 : « il y a
+des instructions dans le drive /instructions, a executer puis archiver
+apres execution » ; l'ordre d'exécution celui prescrit par la
+checklist de reprise : le n° 3 d'abord, léger et indépendant) :
+(1) LA PLAGE DES FERMETURES harmonisée à 305–319 (le worklog-maj porte
+l'Entrée 319 — l'introduction disait 305–318, l'abstract avait raison ;
+la classe armée : « 305-318 » interdit au linter, trois occurrences de
+« 305-319 » exigées) ; (2) LES MANIFESTATIONS AU SLOT harmonisées —
+TROIS manifestations de la classe feuille-non-liée : DEUX au même slot
+memcpy @+0x151a0 (le scénario C-app-it1, l'hôte C-app-it2), UNE au
+memcmp (C-loupe-13-it1, @+0x91a0) — recompté de defauts.csv, le §2.4
+corrigé (« three times at the same slot » interdit) ; (3) LA RELATION
+HINT/RVA/CRASH énoncée — le slot IAT non lié à +0x151a0 retient sa RVA
+hint/nom sur disque (0x152da), le saut indirect atteint l'adresse nue :
+LE CRASH EST LA RVA HINT/NOM RETENUE (Entrées 304/311/312 ; le pendant
+memcmp 0x91a0/0x92da ; « equalling the crash address » interdit) ;
+(4) LA PLAGE EXACTE 2.98–11.37× (580/51 = 11.37, 2 143/719 = 2.98,
+3 510/1 088 = 3.23 — le « 3–11× » de D208 remplacé, interdit au
+linter) ; (5) LA NOTE DE NON-ADDITIVITÉ des médianes par composante
+(1 241/3 297/3 849 contre 1 277/3 374/3 674 — celle de l'ajout DÉPASSE
+sa médiane totale : la propriété des médianes indépendantes, jamais
+une omission ; les sommes recomptées de p5, exigées au linter) ;
+(6) LE DÉCOMPTE CRYPTO corrigé — QUATORZE blocs des familles (les
+treize tls13 crypto + loupe-06), 224 mutants, 0 survivant (mutation.csv
+recompté ; « nineteen pure-compute » interdit) ; (7) M4 RÉCONCILIÉ —
+l'avant-mesure 50,9 s à 3,0 % sous les 52,5 s consignés de la campagne
+((52.5-50.9)/52.5), deux mesures n=1 consignées telles quelles jamais
+moyennées, la série d'après n=2 (39,3/39,2 s) EXPLICITE — trois
+assertions nouvelles au registre (m4-avant, m4-apres-n2, m4-variance,
+dérivées de p8-m4-avant.json et du rapport R11) ; (8) LE RÉSIDU PBT
+NOMMÉ — 655/660 au minimum de 2 pas, les CINQ autres de la même classe
+unique à des minima plus longs (GAP NOMMÉ : le registre brut par trace
+— pbt_traces.csv / pbt_ecarts_minimaux.json — vit au dépôt, absent du
+bac de session ; les minima exacts des cinq ne sont pas re-dérivables
+ici et ne sont PAS inventés) ; (9) LA TABLE DE CHECKSUMS LOCALISÉE —
+elle vit DANS l'image de l'artifact (le répertoire R10 lu au
+chargement : dix-sept sommes par bloc + le qword de version), la 0.1.1
+née de la recomposition réécrit exactement ces dix-sept champs et le
+qword (0x00010008 → 0x00010101), ZÉRO octet ailleurs — D'OÙ les deux
+empreintes d'image distinctes (054de960…/c1115105…) à blocs de code
+octet-identiques (R7), la 0.1.0 scellée demeurant figée (D178/D179) ;
+(10) LA TABLE DES STATUTS RENDUE COMPLÈTE — la Table 8 de la v0.18.0
+était TRONQUÉE au PDF (flottant posé en dernière page : pdftotext
+s'arrête à « zero divergence, SHA-256 parity at », les lignes Campaign
+D204 et Independent replication perdues) — rendue en longtable
+(pages 19–20, la ligne finale rendue ; le linter exige longtable et
+les lignes finales au source).
+LA DISCIPLINE TENUE : AUCUNE valeur mesurée modifiée (les données
+générées byte-identiques à la v0.18.0) ; LE LINTER v181 : 64
+assertions (les 62 de la v180 inchangées + les trois M4), DIX
+interdits (les cinq de la v180 + les cinq classes narratives), les
+DIX classes de l'audit vérifiées au build contre les registres bruts
+(defauts.csv, mutation.csv, p5-decomposition, p8-m4, D178/D179) ; la
+falsification : toute mutation attrapée. LA VÉRIFICATION : V1–V10 TOUT
+VERT (rapport_verification_v0.18.1.txt), la réconciliation de campagne
+re-jouée zéro divergence, la compilation 29 pages zéro citation non
+résolue. LES LIMITES : la correction du registre PBT est bornée à ce
+que les comptes consignés établissent (gap nommé au point 8) ; la
+correction de la ligne prématurée de rapport_verification_v0.18.0.txt
+(« les dix instructions archivées après exécution ») appartient au
+journal, elle est rappelée au rapport v0.18.1 — l'archivage vague 5
+demeure le geste du développeur.
+L'ÉDITION : v0.18.1 (l'entête, le pied de page, les métadonnées PDF) ;
+la v0.18.0 scellée (archives, empreintes) demeure INTACTE et fait foi.

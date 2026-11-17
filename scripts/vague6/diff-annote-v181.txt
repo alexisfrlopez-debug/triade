@@ -1,0 +1,171 @@
+LE DIFF ANNOTÉ DE L'ÉDITION v0.18.1 — LES DIX CORRECTIONS DE L'AUDIT
+(la vague 6, l'instruction bqh4qlrqj — chaque correction SOURCÉE ; aucune
+valeur mesurée n'est modifiée ; le diff machine vit à côté,
+diff-main-v180-v181.patch + diff-statuts-v180-v181.patch)
+========================================================================
+
+(1) LA PLAGE DES ENTRÉES DE CLÔTURE — 305–318 → 305–319
+    L'ÉCART : l'abstract disait « Entrées 305--319 », l'introduction
+    « Entrées 305--318 » — une divergence interne.
+    LA SOURCE : le journal de tâches compagnon (worklog-maj, 11 856
+    lignes) porte les fermetures jusqu'à la Task 219 = ENTRÉE 319 (le
+    témoin L6 reçu signé et la vague 4 des huit instructions exécutée,
+    le 16/11) ; l'Entrée 320 est la session d'édition v0.18.0 elle-même.
+    LA CORRECTION : l'introduction porte désormais 305--319, comme
+    l'abstract anglais et l'abstract français (qui étaient justes).
+    LE LINTER : la classe est armée — « 305-318 » est un INTERDIT ;
+    trois occurrences de « 305-319 » exigées.
+
+(2) §2.4 « THREE TIMES AT THE SAME SLOT » → TROIS MANIFESTATIONS,
+    DEUX AU SLOT MEMCPY, UNE AU MEMCMP
+    L'ÉCART : le §2.4 disait « it struck the compiled arm three times
+    at the same slot », contredisant l'abstract (« recurring twice at
+    the same slot ») et le §3.1 (« two manifestations at the same
+    slot »).
+    LA SOURCE : defauts.csv (ledgers D204) recompte TROIS manifestations
+    de la classe feuille-non-liée — C-app-it1 (memcpy, le scénario),
+    C-app-it2 (memcpy, l'hôte) : DEUX fois le MÊME slot @+0x151a0 ;
+    C-loupe-13-it1 (memcmp @+0x91a0) : UNE fois un autre slot.
+    LA CORRECTION : le §2.4 dit désormais « three times --- twice at
+    the same slot (the memcpy leaf, IAT @+0x151a0: the scenario and
+    then the host) and once at the memcmp leaf (loupe-13, IAT
+    @+0x91a0) » — harmonisé avec l'abstract et le §3.1.
+    LE LINTER : « three times at the same slot » est un INTERDIT ; les
+    deux formulations requises (« twice at the same slot (the memcpy
+    leaf » / « once at the memcmp leaf ») sont exigées, recomptées de
+    defauts.csv.
+
+(3) LA RELATION HINT / RVA / ADRESSE DE CRASH — 0x152da ≠ 0x151a0
+    L'ÉCART : l'abstract disait « IAT memcpy @+0x151a0, the on-disk hint
+    value 0x152da equalling the crash address » — la juxtaposition
+    laissait croire que le slot (+0x151a0) « égale » l'adresse du crash.
+    LA SOURCE (preuve à l'artifact, Entrées 304/311/312 + defauts.csv) :
+    le slot IAT de memcpy vit à +0x151a0 dans l'image ; SUR DISQUE, ce
+    slot contient la RVA NUE de l'entrée hint/nom de la table
+    d'imports (0x152da) ; la feuille jamais liée, le premier appel
+    indirect SAUTE à cette RVA nue — « access violation writing
+    0x152da » : L'ADRESSE DU CRASH EST LA RVA HINT/NOM RETENUE, pas le
+    slot. Le mécanisme est le même que la faute 304 du kit loupe-13-C
+    (memcmp : slot @+0x91a0, valeur sur disque 0x92da).
+    LA CORRECTION : l'abstract et le §3.1 énoncent la chaîne complète
+    (slot +0x151a0 → contenu sur disque 0x152da → le saut atteint la
+    RVA nue → le crash EST la RVA hint/nom retenue), avec le pendant
+    memcmp @+0x91a0/0x92da.
+    LE LINTER : « equalling the crash address » est un INTERDIT ; les
+    quatre valeurs (0x151a0, 0x152da, 0x91a0, 0x92da) et la phrase
+    « the crash address is the retained hint/name RVA » sont exigées.
+
+(4) LA PLAGE DES RATIOS M1 — « 3–11× » → « 2.98–11.37× »
+    L'ÉCART : la plage arrondie de D208 (« 4–11× → 3–11× ») cachait les
+    ratios exacts.
+    LA SOURCE : remesure_rq2.csv contre budgets.csv — localiser
+    580/51 = 11.37, éditer 2 143/719 = 2.98, ajouter 3 510/1 088 =
+    3.23 ; la plage exacte est 2.98–11.37.
+    LA CORRECTION : « cost 2.98--11.37$\times$ their M1 counterparts ».
+    LE LINTER : l'assertion rq2-domaine du registre exige les quatre
+    chiffres capturés (2.98 / 11.37) recalculés des CSV ; « cost 3-11×
+    their M1 » est un INTERDIT.
+
+(5) LA NOTE DE NON-ADDITIVITÉ DES MÉDIANES PAR COMPOSANTE
+    L'ÉCART : les médianes par composante (596/41/604 ; 1 617/45/1 635 ;
+    1 416/55/2 378) ne s'additionnent PAS aux médianes du total
+    (1 277 ; 3 374 ; 3 674) — sans note, un lecteur additionne.
+    LA SOURCE : p5-decomposition-contexte.txt — les sommes valent
+    1 241, 3 297 et 3 849 (celle de l'ajout DÉPASSE même sa médiane
+    totale : 3 849 > 3 674 — la démonstration que l'écart n'est pas un
+    oubli mais une propriété des médianes indépendantes).
+    LA CORRECTION : la note méthodologique est insérée à la suite de la
+    décomposition (§3.2), sommes et totaux explicites, « medians are
+    not additive ».
+    LE LINTER : les trois sommes (1241/3297/3849) sont recomptées de p5
+    et exigées dans la prose, avec la phrase-clé.
+
+(6) LE DÉCOMPTE DES BLOCS CRYPTO — « NINETEEN » → QUATORZE
+    L'ÉCART : « the nineteen pure-compute crypto blocks and loupe-06 »
+    contredisait la table des preuves (224 mutants = 14 blocs × 16).
+    LA SOURCE : mutation.csv recompte — tls13-01..06, 13, 14, 15..19
+    (13 blocs tls13) + loupe-06 (md5) = 14 blocs, 224 mutants,
+    0 survivant.
+    LA CORRECTION : « the fourteen blocks of the cryptographic families
+    (the thirteen tls13 crypto blocks and loupe-06's md5; 224 mutants,
+    Table 6) ».
+    LE LINTER : « nineteen pure-compute crypto blocks » est un INTERDIT ;
+    le recompte (14/224/0) est refait de mutation.csv et les deux
+    formulations exigées.
+
+(7) M4 : L'ÉCART 52,5 s (CAMPAGNE) / 50,9 s (AVANT OPTIMISATION) —
+    ET LE n=2 DE L'OPTIMISATION CONSIGNÉ
+    L'ÉCART : le manuscrit juxtaposait « M4 = 52.5 s » (la campagne) et
+    « 50.9 s → 39.3/39.2 s » (l'optimisation) sans réconcilier les
+    1,6 s d'écart, et le « two consecutive runs » ne disait pas n=2.
+    LA SOURCE : journal_verifications.jsonl (la campagne : 52.505 s,
+    consignée 52.5) ; p8-m4-avant.json (l'avant-mesure : 50.865 s,
+    consignée 50.9) ; p8-m4-rapport-r11.txt (« AVANT : 50.9 / 2.2 =
+    23.1× (le recoup : la campagne avait mesuré 23.9×) »).
+    LA CORRECTION : la phrase réconcilie — l'avant-mesure lit 50.9 s,
+    3.0 % sous les 52.5 s consignés de la campagne ((52.5-50.9)/52.5),
+    l'écart de course de DEUX mesures n=1 consignées telles quelles,
+    jamais moyennées ; la série d'après est n=2 (39.3 s puis 39.2 s).
+    La table des statuts porte la même réconciliation.
+    LE LINTER : trois assertions nouvelles (m4-avant, m4-apres-n2,
+    m4-variance) dérivées du json et du rapport R11.
+
+(8) LE SORT DES 5 TRACES DIVERGENTES NON RÉDUITES À 2 PAS (655/660)
+    L'ÉCART : « the shrinker reduces 655 of them » taisait le sort des
+    5 autres (660 - 655).
+    LA SOURCE : pbt_ecarts_minimaux.json (le compte 655 au minimum de 2
+    pas, lu à la vague 5) ; le ddmin réduit CHAQUE trace divergente à
+    sa séquence minimale défaillante — les 5 restantes, de la MÊME
+    classe unique, s'arrêtent à des minima PLUS LONGS que 2 pas.
+    GAP NOMMÉ : le registre brut par trace (pbt_traces.csv /
+    pbt_ecarts_minimaux.json) vit au dépôt — absent du bac de session ;
+    les minima exacts des 5 traces ne sont pas re-dérivables ici et ne
+    sont PAS inventés : la correction s'en tient à ce que les comptes
+    consignés établissent (même classe, minima > 2 pas).
+    LA CORRECTION : le §3.7 énonce le résidu ; la table des statuts
+    porte « 655/660 shrunk to the 2-step minimum (the five others, of
+    the same class, to longer minima; the raw register consigned) ».
+    LE LINTER : l'assertion pbt-655 exige « 655 of the 660 » ; la
+    présence de « five remaining traces » est exigée, 660-655 recompté.
+
+(9) OÙ VIT LA TABLE DE CHECKSUMS RAFRAÎCHIE EN 0.1.1
+    L'ÉCART : « the 0.1.1 release refreshed a stale checksum table at
+    birth (17 sums, zero bytes of code moved, the 0.1.0 seal intact) »
+    ne disait pas OÙ vit la table — et la table des empreintes montre
+    deux SHA-256 différents pour loupe.exe 0.1.0/0.1.1 (054de960… /
+    c1115105…), apparemment en tension avec « artifact intact ».
+    LA SOURCE : D178 (« la table de la pièce porte 17 sommes de l'ère
+    dev.5 — les retouches des Entrées 210/214 changèrent les octets des
+    blocs SANS rafraîchir la table ») ; D179 (« la table des 17 sommes
+    rafraîchie… la pièce naît de la recomposition même… le qword
+    version porté 0x00010008 → 0x00010101 ; 0 OCTET AILLEURS »).
+    LA CORRECTION : la table vit DANS l'image de l'artifact (le
+    répertoire R10 lu au chargement : dix-sept sommes par bloc + le
+    qword de version) ; la 0.1.1 réécrit exactement ces dix-sept
+    champs et le qword, ZÉRO octet ailleurs — d'où deux empreintes
+    d'image distinctes alors que chaque bloc de code demeure
+    octet-identique (R7) et que la 0.1.0 scellée reste figée à sa
+    propre empreinte.
+    LE LINTER : « inside the artifact image », les deux qword
+    (0x00010008, 0x00010101) et « seventeen per-block sums » exigés.
+
+(10) LA TABLE 8 TRONQUÉE DANS LE PDF v0.18.0 — RENDUE COMPLÈTE
+    L'ÉCART (constaté sur le PDF rendu, pas seulement la source) : la
+    Table 8 (statuts systématiques) était un flottant `table` posé en
+    page 29 — la DERNIÈRE page ; pdftotext s'arrête en pleine ligne
+    (« zero divergence, SHA-256 parity at ») : les lignes « Campaign
+    D204 » et « Independent replication » étaient PERDUES du PDF.
+    LA CORRECTION : la table est désormais une `longtable` (le patron
+    de la table des preuves) — elle se scinde proprement : pages 19–20,
+    la ligne finale « Independent replication » rendue, la ligne
+    « Campaign D204 » rendue.
+    LE LINTER : le fichier source de la table doit être une longtable
+    et porter les lignes finales (« Campaign D204 », « Independent
+    replication », « 655/660 ») — la classe est armée au build.
+
+LA VERSION : l'édition corrigée est v0.18.1 (l'entête, le pied de
+page, les métadonnées PDF et la date le portent) — la v0.18.0 scellée
+(archives, empreintes) demeure INTACTE et fait foi pour ses
+livrables ; AUCUNE valeur mesurée n'a changé (le linter v181 re-vérifie
+les 64 affirmations du registre, dont les 62 de la v180 aux valeurs
+inchangées, plus les nouvelles classes).

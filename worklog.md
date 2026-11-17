@@ -11959,3 +11959,58 @@ Work Log:
   prescrira le plan et préparera les kits, les témoins restent à la main
   (D99), le livre au terrain.
 (17/11, la session de la clôture et de la réception)
+## Task 223 — Entrée 323 : LA VAGUE 6 OUVERTE — L'INSTRUCTION 3 EXÉCUTÉE,
+LE MANUSCRIT v0.18.1 NÉ DE L'AUDIT, L'ARCHIVAGE DE L'INSTRUCTION EXÉCUTÉE
+VÉCU, LA CONSIGNATION ET LE PUSH AU COMMANDEMENT DU DÉVELOPPEUR
+
+Work Log:
+- L'INSTRUCTION 3 DE LA VAGUE 6 (bqh4qlrqj, l'audit du manuscrit v0.18.0)
+  EXÉCUTÉE selon l'ordre prescrit par la checklist (le n° 3 d'abord, léger
+  et indépendant) : les DIX incohérences nommées corrigées aux sources —
+  la plage des fermetures 305–319, les TROIS manifestations de la classe
+  feuille-non-liée (deux au même slot memcpy @+0x151a0, une au memcmp
+  @+0x91a0), la relation hint/RVA/crash (0x152da la RVA hint/nom retenue —
+  le crash EST l'adresse nue du saut indirect), la plage exacte 2.98–11.37×
+  (580/51, 2 143/719, 3 510/1 088), la non-additivité des médianes par
+  composante (1 241/3 297/3 849 contre 1 277/3 374/3 674), les quatorze
+  blocs crypto des familles (224 mutants, 0 survivant), M4 réconcilié
+  (50,9 s à 3,0 % sous les 52,5 s consignés, deux mesures n=1 jamais
+  moyennées, la série d'après n=2 : 39,3/39,2 s), le résidu PBT nommé
+  (655/660 au minimum de 2 pas, les cinq autres de la même classe — gap
+  nommé : le registre brut vit au dépôt), la table de checksums localisée
+  DANS l'image (dix-sept sommes + le qword 0x00010008→0x00010101,
+  D178/D179), la Table 8 tronquée rendue complète en longtable — AUCUNE
+  valeur mesurée modifiée, la v0.18.0 scellée demeure et fait foi.
+- LE LINTER v181 ÉTENDU AU NARRATIF : 64 assertions (les 62 de la v180 +
+  les trois M4), DIX interdits (les cinq de la v180 + les cinq classes
+  narratives), les DIX classes de l'audit vérifiées au build contre les
+  registres bruts (defauts.csv, mutation.csv, p5, p8, D178/D179) ; LA
+  VÉRIFICATION V1–V10 TOUT VERT (scripts/vague6/rapport_verification_
+  v0.18.1.txt), la réconciliation de campagne re-jouée zéro divergence, la
+  falsification : toute mutation attrapée, la compilation 29 pages zéro
+  citation non résolue.
+- LES CINQ AUTRES INSTRUCTIONS SÉQUENCÉES, NON EXÉCUTÉES (la discipline
+  D207) : 5gfx6pwkj et vljfs6pcj après la baseline double-bras,
+  89488hblm attend l'outillage model-checker re-provisionné, fkkqc7v8t et
+  p39uklsca demandent des gestes du terrain — elles DEMEURENT au
+  /instructions (chacune est une session de mesure ou de preuve à elle
+  seule).
+- L'ARCHIVAGE EXÉCUTÉ (le même commandement, 17/11 — le lien /Tokens du
+  coffre donné « pour les acces et les synchros ») : bqh4qlrqj déplacée
+  /instructions → /ARCHIVE par le chemin B du kit vague 6 (les six md5
+  recoupés AVANT le geste, échec fermé — les cinq EN ATTENTE refusées ;
+  ARCHIVAGE-RECOUP-V6.txt le témoin, scripts/vague6/ ; le correctif du
+  script — deux coquilles ETATS[nom] → ETATS[n] au bloc du recoup —
+  porté avec lui).
+- LA CONSIGNATION ET LE PUSH vécus par la session au même commandement :
+  les brouillons D212 et Entrée 323 portés au canon (docs/DECISIONS.md,
+  docs/JOURNAL_TRAVAIL.md, worklog.md — les textes de la livraison
+  BROUILLONS-D212-ENTREE323.txt, la queue adaptée au vécu), l'édition
+  edition-v0181/ et les scripts de la vague 6 au dépôt, le bundle 323 +
+  le worklog REMPLACÉS au TRIADE-sauvegarde-git (les DEUX à chaque push,
+  D143 : le 322 versionné préservé), les livrables v0.18.1 (le PDF, les
+  deux rapports) déposés à la racine du coffre et recoupés byte-byte, le
+  push GitHub vécu — le relais OAuth du /Tokens du coffre a servi la voie
+  d'écriture (JAMAIS affiché, JAMAIS commité au miroir).
+(17/11, la session de la vague 6 consignée et poussée)
+

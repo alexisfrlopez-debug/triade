@@ -1,0 +1,192 @@
+--- livraison-vague5/edition-v180/main.tex	2026-11-16 20:06:06.333417722 +0000
++++ livraison-vague6/edition-v181/main.tex	2026-11-16 23:57:12.851357052 +0000
+@@ -1,5 +1,12 @@
+ % =====================================================================
+-%  TRIADE — édition académique v0.18.0 (manuscrit IMRAD, anglais)
++%  TRIADE — édition académique v0.18.1 (manuscrit IMRAD, anglais)
++%  L'édition v0.18.1 corrige les dix incohérences nommées par l'audit de
++%  la vague 6 (instruction bqh4qlrqj) : plage des Entrées de clôture,
++%  manifestations au slot, relation hint/RVA/adresse de crash, plage
++%  exacte des ratios M1, note de non-additivité des médianes, décompte
++%  des blocs crypto, réconciliation M4 (52.5/50.9, n=2), résidu PBT
++%  (655/660), localisation de la table de checksums 0.1.1, table des
++%  statuts complète (longtable). AUCUNE valeur mesurée n'est modifiée.
+ %  Corps du document : compilation Tectonic (XeTeX).
+ %  Les tableaux de données sont GÉNÉRÉS par les scripts d'extraction
+ %  (donnée unique : docs/JOURNAL_TRAVAIL.md + docs/DECISIONS.md + les
+@@ -36,11 +43,11 @@
+ \usepackage{fancyhdr}
+ \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+             urlcolor=liaison, unicode=true,
+-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.18.0)},
++            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.18.1)},
+             pdfauthor={Alexis Lopez}]{hyperref}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.18.0}
++\fancyhead[L]{\small\itshape TRIADE — academic edition v0.18.1}
+ \fancyhead[R]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ 
+@@ -57,7 +64,7 @@
+ fourteen-unit two-arm field campaign, and two sealed applications}}
+ \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
+ Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
+-\date{17 November 2026 — Academic edition v0.18.0 (the D204 campaign fully reconciled and decomposed; the RQ2 measurements unified under documented perimeters; the constant-time evidence reformulated as exact trace equality with the hardware runs reported; the unbounded proofs extended with a coverage lemma, a rule-by-rule TLA+ alignment and a 10{,}000-trace generative conformance campaign; the M4 verification time optimized without removing any control)}
++\date{17 November 2026 — Academic edition v0.18.1 (the D204 campaign fully reconciled and decomposed; the RQ2 measurements unified under documented perimeters; the constant-time evidence reformulated as exact trace equality with the hardware runs reported; the unbounded proofs extended with a coverage lemma, a rule-by-rule TLA+ alignment and a 10{,}000-trace generative conformance campaign; the M4 verification time optimized without removing any control; the ten named inconsistencies of the v0.18.0 audit corrected --- the journal-closure range, the slot manifestations, the hint/RVA/crash-address relation, the exact M1-era ratio range, the median non-additivity note, the crypto-block count, the M4 reconciliation with the optimization's n{=}2 consigned, the PBT shrink residue, the checksum-table location, and the statuses table rendered complete)}
+ 
+ \begin{document}
+ \maketitle
+@@ -114,8 +121,10 @@
+ shadow-space and SSE alignment, Windows error-code conventions,
+ harness-embedded assumptions) --- the campaign's recurrence being the
+ unbound import leaf that killed the compiled arm's field runs twice at
+-the same slot (IAT memcpy @+0x151a0, the on-disk hint value 0x152da
+-equalling the crash address), and the binding discipline that a
++the same slot (the unbound IAT slot for memcpy at +0x151a0, whose
++on-disk content --- the bare RVA of the hint/name-table entry, 0x152da
++--- is the address the indirect call jumped to: the crash address is
++the retained hint/name RVA itself), and the binding discipline that a
+ compiler normally provides silently; and (RQ4) the safety of hot-patching sealed
+ code --- zero post-patch regression across the milestone campaigns, with
+ signed version monotonicity and an armed anti-rollback check --- and a
+@@ -228,7 +237,7 @@
+ single human developer directing an LLM agent, over eleven milestones
+ between 26 October and 11 November 2026, and is documented in a
+ \nbLignesJournal-line append-only engineering journal (Entr\'ees
+-consigned through 304; the campaign closures, Entr\'ees 305--318,
++consigned through 304; the campaign closures, Entr\'ees 305--319,
+ carried in its \nbLignesWorklog-line companion task log and the campaign
+ ledger journal at the archive), a \nbLignesDecisions-line append-only
+ decision log (\plageDecisions), and sealed artifacts whose
+@@ -455,7 +464,9 @@
+ The loading paths differ exactly where the campaign's escapes live:
+ the unbound-import-leaf class exists only on the DLL path (an EXE
+ without that import has no leaf to leave unbound), and it struck the
+-compiled arm three times at the same slot. Table~\ref{tab:campagne}
++compiled arm three times --- twice at the same slot (the memcpy leaf,
++IAT @+0x151a0: the scenario and then the host) and once at the memcmp
++leaf (loupe-13, IAT @+0x91a0). Table~\ref{tab:campagne}
+ reports the complete campaign --- fourteen units (six controlled blocks
+ and the application, each at both arms), twenty-two witnessed
+ deliveries, every verdict, every named escape with its attribution
+@@ -518,8 +529,13 @@
+ code. The seventh red delivery traces to the pre-named judge artifact
+ of the V4 session class (Entry 294, disclosed at both arms); the
+ unbound-leaf class carries two manifestations at the same slot (the
+-scenario and then the host, IAT memcpy @+0x151a0, on-disk value
+-0x152da). Under the D202 delivery metric --- what the developer
++scenario and then the host) --- the mechanism, named on the artifact's
++bytes at Entr\'ees 304/311/312: the unbound IAT slot for memcpy at
++image offset +0x151a0 retains its on-disk content, the bare RVA of the
++hint/name-table entry (0x152da), and the indirect call through the
++slot jumps to that bare RVA --- the crash address is the retained
++hint/name RVA (the memcmp leaf of loupe-13 died the same death at
+++0x91a0/0x92da). Under the D202 delivery metric --- what the developer
+ actually received --- the campaign's rate is 6/22; under the piece
+ metric, zero. The controlled part closed every block at (or after) its
+ first green; the realistic part consumed seven deliveries to reach
+@@ -571,12 +587,21 @@
+ card header --- the part v0.14.0 counted), 41 tokens of request prose,
+ and 604 tokens of \emph{written response} (the agent re-emits the full
+ header), all under the native tokenizer; editing decomposes into
+-1{,}617/45/1{,}635 and adding into 1{,}416/55/2{,}378. The apparent
++1{,}617/45/1{,}635 and adding into 1{,}416/55/2{,}378. (A
++methodological note the present edition adds: the component medians are
++computed independently per component and do \emph{not} sum to the
++operation medians --- $596{+}41{+}604 = 1{,}241$ against 1{,}277 for
++locating, $1{,}617{+}45{+}1{,}635 = 3{,}297$ against 3{,}374 for
++editing, $1{,}416{+}55{+}2{,}378 = 3{,}849$ against 3{,}674 for adding;
++medians are not additive --- the components rank blocks differently ---
++and the add-operation's component sum even exceeds its total median.
++The totals are the measured round-trip medians, never sums of component
++medians.) The apparent
+ $2.2\times$ growth in locating (580 $\to$ 1{,}277) is therefore a
+ perimeter effect --- the tokenizer ratio is 0.98--1.02 and cannot
+ produce it --- and the two values are never compared without this note.
+ The M1 values (51/719/1{,}088) remain single-shot history; the
+-Loupe-era content values cost 3--11$\times$ their M1 counterparts
++Loupe-era content values cost 2.98--11.37$\times$ their M1 counterparts
+ (the notations longer, the contracts denser --- the cost grew with the
+ rigour; every ratio recalculated from the raw CSVs by the numeric
+ linter of the present edition, which refuses any divergence).
+@@ -631,10 +656,15 @@
+ persistent Unicorn emulation (the profile: the session \emph{opening}
+ --- the emulated md5+sha256 over the whole file --- dominates at
+ 3.2\,s per 65\,KiB, the reads cost 0.15\,ms each). Measured
+-before/after on the same laboratory machine (monotonic clock, two
+-consecutive runs, both green, sealed fingerprints unchanged, and the
+-oracle consoles \emph{identical line for line} to the originals): 50.9\,s
+-$\to$ 39.3/39.2\,s, a $23\%$ reduction on a two-core machine, with
++before/after on the same two-core laboratory machine (monotonic clock,
++the campaign's fixed command list): the before-measure reads 50.9\,s
++--- 3.0\% below the campaign's consigned 52.5\,s, the run-to-run
++spread of two single measurements ($n{=}1$ each, both consigned as
++measured, never averaged into an invented baseline) --- and the
++after-measure is two consecutive runs ($n{=}2$), 39.3\,s then
++39.2\,s, both green, sealed fingerprints unchanged, and the oracle
++consoles \emph{identical line for line} to the originals: a $23\%$
++reduction, with
+ the compiled arm re-measured on the same machine at 2.2\,s --- the
+ ratio moves from $23.1\times$ to $17.9\times$ and H5 \emph{remains
+ falsified}; the remaining critical path is the emulated cryptography of
+@@ -721,9 +751,17 @@
+ $(0,1,1,-1,1)$ opened the new epoch; a pre-release of the sealed 0.1.0
+ remains refused. Sealed artifacts never changed after their sealing run
+ (Table~\ref{tab:empreintes}); the 0.1.1 release refreshed a stale
+-checksum table \emph{at birth} (17 sums, zero bytes of code moved, the
+-0.1.0 seal intact) --- an explicit debt-repayment pattern the protocol
+-names and tracks.
++checksum table \emph{at birth} --- a debt named at the 0.1.0 sealing
++(D178): the table lives \emph{inside the artifact image} (the R10
++load-time directory, seventeen per-block sums plus the version qword),
++and the piece-side retouches consigned at Entr\'ees 210/214 had changed
++block bytes without refreshing the sums; the recomposed 0.1.1 image
++rewrites exactly those seventeen sum fields and the version qword
++($0x00010008 \to 0x00010101$), \emph{zero bytes elsewhere} --- which
++is why the 0.1.1 image hash differs from 0.1.0
++(Table~\ref{tab:empreintes}) while every code block stayed byte-identical
++(R7), the sealed 0.1.0 artifact remaining frozen at its own fingerprint
++--- an explicit debt-repayment pattern the protocol names and tracks.
+ 
+ % ------------------------------------------------------------------
+ \subsection{Strengthened evidence (the v0.11.0 programme)}\label{sec:renforce}
+@@ -746,9 +784,10 @@
+ neutral bytes). The original campaign: 832 single-byte mutants of the sealed blocks
+ (instructions, operands, offsets --- one byte mutated in a laboratory copy,
+ the sealed artifact untouched), killed by the existing instruments in
+-order of cost: the round-trip check, the structural oracle, and --- for
+-the nineteen pure-compute crypto blocks and loupe-06 --- the semantic
+-differential against official vectors. Result: 694/832 killed (83.4\%);
++order of cost: the round-trip check, the structural oracle, and --- for the fourteen
++blocks of the cryptographic families (the thirteen tls13 crypto blocks
++and loupe-06's md5; 224 mutants, Table~\ref{tab:preuves}) --- the
++semantic differential against official vectors. Result: 694/832 killed (83.4\%);
+ the cryptographic families reach 100\%. The 138 survivors concentrate in
+ the orchestration and UI blocks, where the semantic killer is not wired
+ at the isolated-mutant level (their semantics are verified by the full
+@@ -988,8 +1027,13 @@
+ crosses it 660 times in 10{,}000), \emph{not} a threat to the
+ properties: the concrete destruction remains proven falsification and
+ remains local (P3 and P4 hold on every divergent trace); the shrinker
+-reduces 655 of them to the minimal two-step sequence
+-[\code{ouvrir\_correct}, \code{falsifie\_conteneur}]. The replay at
++(ddmin) reduces every divergent trace to its minimal failing sequence:
++655 of the 660 reach the two-step minimum [\code{ouvrir\_correct},
++\code{falsifie\_conteneur}]; the five remaining traces --- of the same
++single class --- shrink to minimal sequences longer than two steps,
++their per-trace minima consigned in the campaign's raw register (the
++655/660 count is read from that register; the analysed object is the
++class, not the trace length). The replay at
+ identical seed reproduces the 10{,}000 verdict digests bit for
+ bit (verified twice in the present edition, plus the consigned
+ original). Three concrete gestures sit outside the abstract model
+@@ -1017,7 +1061,7 @@
+ full T0--T7+S0 scenario). For those two, no number exists and none is
+ fabricated; the claims table stays honest until the runs are on record.
+ 
+-\input{donnees/statuts_v180.tex}
++\input{donnees/statuts_v181.tex}
+ 
+ % ------------------------------------------------------------------
+ \section{Discussion}\label{sec:discussion}

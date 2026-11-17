@@ -1,0 +1,11 @@
+ARCHIVAGE-RECOUP-V6 — 2026-11-17 00:26:59Z
+Déplacées (instructions EXÉCUTÉES seules) :
+  - Qwen__20261116_bqh4qlrqj.txt  [rapport-execution-vague6.txt (v0.18.1, V1-V10 vert)]
+Restent au /instructions (EN ATTENTE d'exécution) :
+  - Qwen__20261116_5gfx6pwkj.txt  [après la baseline double-bras (D207)]
+  - Qwen__20261116_89488hblm.txt  [outillage model-checker à re-provisionner]
+  - Qwen__20261116_fkkqc7v8t.txt  [audit statique au labo, runs dudect au terrain]
+  - Qwen__20261116_p39uklsca.txt  [nouveaux cycles de campagne D210]
+  - Qwen__20261116_vljfs6pcj.txt  [après la baseline, un levier par unité (D207)]
+Après : /instructions = 5 fichier(s) ; /ARCHIVE = 42 fichier(s)
+md5 vérifiés AVANT déplacement (échec fermé) — voir MANIFESTE-6-INSTRUCTIONS.txt.

@@ -1,0 +1,190 @@
+% Fichier GÉNÉRÉ par extraire_donnees_v150.py — ne pas éditer à la main.
+% Les cinq tableaux historiques : extraits/validés par le module extraire_donnees_v100.py (ancres du journal, empreintes mesurées).
+% La table des preuves : PARSÉE depuis preuves_v110/v120/v130 — JAMAIS une troncature (la dette de la Table 6, soldée).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Milestones M0--M10 of the TRIADE validation programme (26 Oct -- 11 Nov 2026). Every milestone was closed on measured exit criteria; sources: work journal entries and decision log.}
+\label{tab:jalons}
+\begin{tabularx}{\textwidth}{@{}ll lX@{}}
+\toprule
+\textbf{Milestone} & \textbf{Sealed tag} & \textbf{Date} & \textbf{Lab evidence (exit criteria met)} \\
+\midrule
+\textbf{M0} & \code{0.1.0} & 10-26 & round-trip 100\\%; executable < 4 KiB \\
+\textbf{M1} & \code{0.2.0} & 10-26 & oracle 21/21; first crystallisation \\
+\textbf{M2} & \code{0.3.0} & 10-27 & conformity 68/68; 8 instrumented iterations \\
+\textbf{M3} & \code{0.4.0} & 10-28 & $10^6$ fuzzed cases $\times$2 seeds; 161 conformity controls \\
+\textbf{M4} & \code{0.5.0} & 10-29 & 560-case SSPI scenario oracle $\times$4 seeds; 12 mutations caught \\
+\textbf{M5} & \code{0.6.0} & 11-04 & per-build fingerprints active \\
+\textbf{M6} & \code{0.7.0} & 11-05 & 7/7 conformity suite; layer-I diff zero \\
+\textbf{M7} & \code{0.8.0} & 11-05 & round-trip 100 \% on new ISA; fence.i patch \\
+\textbf{M8} & \code{0.9.0} & 11-05 & 61 harness greens; 131 socket-socle controls \\
+\textbf{M9} & \code{1.0.0} & 11-07 & 28 blocks; 589 structural locks; handshake 54/54 $\times$3 seeds; cross-lock 86/86 \\
+\textbf{M10} & \code{loupe 0.1.0 / 0.1.1} & 11-11 & 18 blocks; 159 controls $\times$3 seeds; cross-lock 26/26; seal guard 14/14 \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Measured token budgets (M1 instrumentation, tokenizer cl100k\_base) against design targets, and generation-1 lineage volumes (D34). The lineage TOTAL counts specifications and delivered notations only --- drafts are excluded ($8{,}774 + 5{,}099 = 13{,}873$).}
+\label{tab:budgets}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+\textbf{Operation} & \textbf{Target} & \textbf{Measured} & \textbf{Source} \\
+\midrule
+Locate a block & 64 & 51 & D31/D34, M1 measurement (cl100k\_base) \\
+Edit a block & 3000 & 719 & D31/D34, M1 measurement \\
+Add a block & 6000 & 1,088 & D34, M1 (draft 1086, +2 drift re-measured) \\
+Whole lineage (specs) & --- & 8,774 & D34, generation-1 card \\
+Whole lineage (drafts) & --- & 3,973 & D34 \\
+Whole lineage (delivered notations) & --- & 5,099 & D34 \\
+Whole lineage (TOTAL) & --- & 13,873 & D34 \\
+\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Verification instruments and volumes per milestone. All numbers are drawn from the corresponding journal entries.}
+\label{tab:oracles}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Milestone} & \textbf{Instrument (measured volume)} \\
+\midrule
+\textbf{M1} & mini-libc oracle — 21/21 \emph{(D32; tag 0.2.0)} \\
+\textbf{M2} & echo conformity + differential — 68/68; 8 iterations, 8 defect classes \emph{(D43; tag 0.3.0)} \\
+\textbf{M3} & fuzz campaign + profile conformity suite — 1,000,000 cases $\times$2 seeds; 161 controls \emph{(D72/D73)} \\
+\textbf{M4} & SSPI scenario oracle + per-block differential — 560 cases $\times$4 seeds; 10,000 fuzzed cases $\times$2 seeds per block; 165k leaf differentials \emph{(D68-D93)} \\
+\textbf{M5} & build fingerprint registry + verifier — per-build sha256 registers \emph{(D134, D148)} \\
+\textbf{M6} & profile conformity suite (Linux) — 7/7; lab recoup 22/22 \emph{(D154)} \\
+\textbf{M7} & RISC-V round-trip + cross-profile lock — 100 \% round-trip; 29/29 recoup \emph{(D155)} \\
+\textbf{M8} & sys harness on synthetic ntdll fixtures — 61 greens; 131 socle controls; 30/30 recoup \emph{(D160-D165)} \\
+\textbf{M9} & tls13 structural oracle + handshake harness + cross-lock — 589 structural locks; handshake 54/54 $\times$3 seeds; cross-lock 86/86; 560+365+131 replayed \emph{(D166-D170)} \\
+\textbf{M10} & Loupe: 3 Unicorn harnesses + structural oracle + seal guard — 159 controls $\times$3 seeds (61+53+45); 121 structural locks; cross-lock 26/26; seal guard 14/14; crystallisation 26 x 10/10 \emph{(D172-D181)} \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\scriptsize
+\caption{The twelve terrain runs of the Loupe field test (M10). Every failure was \emph{named} (a class, a mechanism, an evidence piece) before being fixed; every fix was documented as a surgical revision. The sealed artifacts never changed after their sealing run. Sources: journal entries 204--222, decisions D178/D181.}
+\label{tab:runs}
+\begin{tabularx}{\textwidth}{@{}r l X X@{}}
+\toprule
+\textbf{\#} & \textbf{Kit} & \textbf{Outcome (named defect)} & \textbf{Documented fix} \\
+\midrule
+1 & \code{dev.1} & loader refusal 0xc000007b. Missing BASERELOC: ASLR image without relocation table (lab harness parses, never loads) & dev.2: minimal 12-byte BASERELOC, 7 bytes in 6 ranges \\
+2 & \code{dev.2} & same refusal 0xc000007b. Necessary-not-sufficient: page hole 0x3000-0x4000 + massive BSS outside the proven envelope of 8 prior artifacts & dev.3: image within envelope (VS==RS, no BSS) \\
+3 & \code{dev.3} & loader mapped the image (decisive step); T0 witness failed. [CADRE-NE]: .data initializer wrong (sentinel at +8 - a SIZE read as an offset instead of +528) & dev.4: initializer = exact mirror of harness CADRE\_VIERGE; guard healed (control derives from plan, never from the piece it guards) \\
+4 & \code{dev.4} & T0 all green; T1 named -6; showcase died instantly. Stack-argument class: msx64 args 5+ at home space instead of [rsp+0x20]+ (loupe-01/05/06) + SSE alignment (loupe-10/11) & dev.5: slots fixed; msx64 ABI audit born at build (static, catches SSE class); falsification control V7 added \\
+5 & \code{dev.5} & first run acquitting the piece; T1 named -7 VERROUILLE. [SESSION]: kit itself - scenario-as-loader holds loupe.exe as a live section, Windows refuses gle 32 to open it for write & dev.6 KIT-ONLY (artifact unchanged): byte-copy shadow temoin-session.bin \\
+6 & \code{dev.6} & two defects from one witness. False save error + missing showcase thread; [HINSTANCE-PEB]: hInstance read from PEB instead of GetModuleHandleW(NULL) & piece dev.6 (r12 = GetModuleHandleW(NULL)) + kit dev.7 \\
+7 & \code{dev.7} & T0-T5 all green (save proven on terrain); then two defects. [EAX-SANS-SIGNE] at kit (unsigned 32-bit reads of negative codes) + [D54-QUATRIEME] at piece (4 contiguous FirstThunk ranges without NULL separators) & piece dev.7 (IAT relocated 0x3100, 4 ranges separated by NULL, 63 call sites repointed) + kit dev.8 \\
+8 & \code{dev.8} & T0-T7 all green for the FIRST time (functional contract fully proven). Probe died on its own Python; showcase still mute (5th death) & kit dev.9 (probe made load-bearing) \\
+9 & \code{dev.9} & T0-T7 all green second time; 6th showcase death named by system then by lab. [OFT-QWORD]: 4 OFT tables at QWORD stride instead of DWORD - the loader walks 10.18.6.3 entries at DWORD stride; first cause of ALL deaths found on the piece bytes & piece dev.8 (89 bytes in 52 ranges, sealed 0.1.0 candidate) + kit dev.10 \\
+10 & \code{dev.11} & T0-T7 all green third time; SHOWCASE ALIVE FIRST TIME (0 and 0, no WER). [FREE-SANS-TYPE] at kit: FreeLibrary called without argtypes, 64-bit HMODULE truncated to C int - ArgumentError killed cascade 205 & kit dev.12 (argtypes=[c\_void\_p], except Exception widened, probe armored try/finally) \\
+11 & \code{dev.12} & T0-T7 all green 4th time; cascade 205 complete 1st time; showcase alive 2nd time; green holds entire. [SONDE-EXE] named by lab on pieces: structural false negative - library loader NEVER resolves an EXE's imports; liaison proven by the living showcase & seal loupe 0.1.0 on recouped run 39/39 (D178): notation debt paid (587$\rightarrow$0), crystallisation 26x10/10, anti-rollback armed \\
+12 & \code{dev.1} & T0-T7 all green 5th time; cascade 205 2nd time; showcase alive 3rd time (0 and 0, first of piece 0.1.1). [T0-PERIME] residual named (dev.12-era banner text - no gate touched) & seal loupe 0.1.1 (D181): [R10-PERIMEE] debt paid at birth (17 sums refreshed), card generation 17, artifact intact \\
+\bottomrule
+\end{tabularx}\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Sealed artifacts (SHA-256, verified byte for byte against the card and journal at edition time; the campaign pieces and instruments added at v0.17.0, each re-verified on the bytes at edition time).}
+\label{tab:empreintes}
+\begin{tabular}{@{}l r l@{}}
+\toprule
+\textbf{Artifact} & \textbf{Bytes} & \textbf{SHA-256 (first 16 hex)} \\
+\midrule
+\code{passeur.exe v0.2 (arm T)} & 57,856 & \code{4a7229e7418e8276\ldots} \\
+\code{passeur-c.dll v0.2 (arm C)} & 97,937 & \code{fe4ddfc9842fb29b\ldots} \\
+\code{pilot EXE (installer)} & 99,285,377 & \code{34b9764131e3b3a5\ldots} \\
+\code{pilot source v2} & 216,080 & \code{40d23f03fdaaf116\ldots} \\
+\code{pilot post (all runs)} & 67,514 & \code{50f7bc86dcca67cc\ldots} \\
+\code{pilot post (campaign)} & 55,357 & \code{c2dede15894f4eeb\ldots} \\
+\code{loupe.exe 0.1.1} & 127,488 & \code{c111510535767a40\ldots} \\
+\code{loupe.exe 0.1.0} & 127,488 & \code{054de960c31425d0\ldots} \\
+\code{proxy.exe 1.0.0} & 65,024 & \code{446279f3ab356900\ldots} \\
+\bottomrule
+\end{tabular}\end{table}
+
+\begingroup\scriptsize
+\begin{longtable}{@{}p{2.4cm} p{2.7cm} p{5.4cm} p{3.6cm}@{}}
+\caption{Strengthened evidence across editions, every row generated from the raw instrument outputs (no value typed by hand): the six v0.11.0 instruments (D185, consigned seeds), the v0.12.0 formal model and seal analysis (D187, D189), the v0.13.0 corrections (the audited benchmark, the corrected seal statistics), the v0.14.0 empirical programme, and the v0.15.0 unbounded proofs and refinement.}\label{tab:preuves}\\
+\toprule
+\textbf{Instrument} & \textbf{Target} & \textbf{Measured} & \textbf{Raw source} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Mutation testing (16 mutants/block, seed 20261111) & loupe domain (18 sealed blocks) & 230/288 killed (79.9\%); 58 survivors named & \code{preuves\_ \allowbreak{}v110/\allowbreak{}mutation.csv} \\
+\addlinespace[1.5pt]
+Mutation testing (16 mutants/block, seed 20261111) & tls13 domain (28 sealed blocks) & 397/448 killed (88.6\%); 51 survivors named & \code{preuves\_ \allowbreak{}v110/\allowbreak{}mutation.csv} \\
+\addlinespace[1.5pt]
+Mutation testing (16 mutants/block, seed 20261111) & sys domain (6 sealed blocks) & 67/96 killed (69.8\%); 29 survivors named & \code{preuves\_ \allowbreak{}v110/\allowbreak{}mutation.csv} \\
+\addlinespace[1.5pt]
+Mutation testing (same campaign) & cryptographic families (sha-256, hmac/hkdf, x25519, aes-gcm, md5) & 100\% killed (224/224 mutants, 0 survivors) & \code{preuves\_ \allowbreak{}v110/\allowbreak{}mutation.csv} \\
+\addlinespace[1.5pt]
+Coverage-guided fuzzing (seed 20261111) & loupe-01 (untrusted input path) & 72/119 instructions covered (60.5\%); 0 crashes; 0 canary violations; corpus 18 & \code{preuves\_ \allowbreak{}v110/\allowbreak{}fuzzage.json} \\
+\addlinespace[1.5pt]
+Coverage-guided fuzzing (seed 20261112) & http-10 (input parser, sealed 0.4.0) & 358 instructions covered; 0 crashes; 0 named faults; corpus 17 & \code{preuves\_ \allowbreak{}v110/\allowbreak{}fuzzage.json} \\
+\addlinespace[1.5pt]
+Bounded static memory safety (abstract interpretation) & 52 sealed blocks & 2\,098 accesses classified; 1\,181 stack accesses verified, 0 out-of-frame; 263 contract-mediated; 191 constant [rip]; 463 unresolved (named) & \code{preuves\_ \allowbreak{}v110/\allowbreak{}surete\_ \allowbreak{}memoire.csv} \\
+\addlinespace[1.5pt]
+Constant-time (emulation, exact trace equality; N=60/class, grain 20261111) & tls13-01..04 (sha-256), 05 (hmac), 06 (hkdf), 13/14 (x25519), 15..19 (aes-gcm), loupe-06 (md5) & ONE instruction count per target across all 120 measurements: sha-256 4\,469; hmac 18\,371; hkdf 18\,407; x25519 exactly 1\,238\,959 for every key; aes-gcm 11\,695; md5 132\,509 --- traces bit-identical, Welch $t$ undefined (the v0.11.0 ``$|t|{=}0$'' withdrawn; the hmac/aes-gcm counters had never run) & \code{preuves\_ \allowbreak{}v110/\allowbreak{}temps\_ \allowbreak{}constant.csv} + the v0.18.0 replay \\
+\addlinespace[1.5pt]
+Oracle independence (fresh seed 20261113) & MD5/SHA-256 tables re-derived (decimal arithmetic, cube roots); RFC 1321 gold vectors spec/harness/hashlib; 200-message os.urandom differentials & 0 divergences across 6 confrontations & \code{preuves\_ \allowbreak{}v110/\allowbreak{}independance.csv} \\
+\addlinespace[1.5pt]
+Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & tls13-01..04 blocks (hand notation, complete operation init+absorb+final) & 75\,983 instructions/op (69.84 instr/round); 765 B code + 256 B table; 27.6 ops/s (emulated) & \code{preuves\_ \allowbreak{}v130/\allowbreak{}audit\_ \allowbreak{}benchmark.csv} \\
+\addlinespace[1.5pt]
+Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -O2 reference (same emulator, same 1,024-byte input) & 69\,132 instructions/op (63.54 instr/round); 1\,226 B code + 256 B table; 30.3 ops/s (emulated) & \code{preuves\_ \allowbreak{}v130/\allowbreak{}audit\_ \allowbreak{}benchmark.csv} \\
+\addlinespace[1.5pt]
+Comparative benchmark sha256(1,024 B) — AUDITED v0.13.0 (D191) & gcc -Os reference (same emulator, same input) & 77\,505 instructions/op (71.24 instr/round); 292 B code + 256 B table; 26.4 ops/s (emulated) & \code{preuves\_ \allowbreak{}v130/\allowbreak{}audit\_ \allowbreak{}benchmark.csv} \\
+\addlinespace[1.5pt]
+Formal model of CF3 (v0.12.0, D187 — explicit-state exploration) & P1 secret under threshold; P2 roll-back refusal; P3 no destruction on wrong phrase; P4 bounded blast radius & all 4 properties PROVED IN THE MODEL (0 counterexamples); 154 states, 1\,152 transitions, depth 6; adversary at most 2 of 3 elements with epoch replay & \code{preuves\_ \allowbreak{}v120/\allowbreak{}modele\_ \allowbreak{}formel.csv} \\
+\addlinespace[1.5pt]
+Seal statistics — CORRECTED v0.13.0 (D190) & rule: seal iff $n$ consecutive identical rebuilds, per-rebuild divergence $q$ & P(seal$|q{=}50\%)$: 3.1\% ($n{=}5$), 0.098\% ($n{=}10$); P(seal$|q{=}1\%$): 95.1\%, 90.4\%; one-sided quantiles 1.86$\sigma$/3.10$\sigma$ & \code{preuves\_ \allowbreak{}v130/\allowbreak{}stats\_ \allowbreak{}v130.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-01 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 1025 vs 32 (notation vs compiled); code 448 B vs 494 B; mutation K3 5/16 vs 8/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-02 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 48 vs 47 (notation vs compiled); code 320 B vs 306 B; mutation K3 5/16 vs 9/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-05 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 9089 vs 9146 (notation vs compiled); code 384 B vs 1707 B; mutation K3 6/16 vs 14/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-08 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 641 vs 477 (notation vs compiled); code 320 B vs 351 B; mutation K3 13/16 vs 12/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-13 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 193 vs 69 (notation vs compiled); code 192 B vs 105 B; mutation K3 9/16 vs 13/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+Compiler-reference arm (v0.14.0, D193/D195) & loupe-16 — hand notation vs gcc -O2 C, same contracts, same shims, same vectors & instructions/op: 39 vs 16 (notation vs compiled); code 704 B vs 413 B; mutation K3 9/16 vs 14/16 — behavior: ZERO divergence on all vectors & \code{preuves\_ \allowbreak{}v140/\allowbreak{}bras\_ \allowbreak{}c.csv} \\
+\addlinespace[1.5pt]
+RQ2 re-measured (v0.14.0, the Loupe-era card) & localiser — end-to-end context tokens (cl100k\_base, n=10), reasoning estimated ($\times$1.08, named) & median 580 [q1 496 .. q3 706] — M1 historical: 51 & \code{preuves\_ \allowbreak{}v140/\allowbreak{}remesure\_ \allowbreak{}rq2.csv} \\
+\addlinespace[1.5pt]
+RQ2 re-measured (v0.14.0, the Loupe-era card) & éditer — end-to-end context tokens (cl100k\_base, n=10), reasoning estimated ($\times$1.08, named) & median 2,143 [q1 1,085 .. q3 3,463] — M1 historical: 719 & \code{preuves\_ \allowbreak{}v140/\allowbreak{}remesure\_ \allowbreak{}rq2.csv} \\
+\addlinespace[1.5pt]
+RQ2 re-measured (v0.14.0, the Loupe-era card) & ajouter — end-to-end context tokens (cl100k\_base, n=10), reasoning estimated ($\times$1.08, named) & median 3,510 [q1 3,128 .. q3 4,091] — M1 historical: 1\,088 & \code{preuves\_ \allowbreak{}v140/\allowbreak{}remesure\_ \allowbreak{}rq2.csv} \\
+\addlinespace[1.5pt]
+RQ2 naive baseline (v0.14.0) & full disassembly of loupe.exe (what the card spares) & 300\,304 tokens (37\,538 disassembly lines) — two orders of magnitude above any card operation & \code{preuves\_ \allowbreak{}v140/\allowbreak{}remesure\_ \allowbreak{}rq2.csv} \\
+\addlinespace[1.5pt]
+Oracle independence, second agent (v0.14.0) & MD5 T[64] + SHA-256 K[64] regenerated by an isolated agent instance from the mathematical definitions (same-family infrastructure — the gap named) & 0 divergences across 128 constants (agent == plan == definitions); integer-exact cube-root route confirms & \code{preuves\_ \allowbreak{}v140/\allowbreak{}independance\_ \allowbreak{}agent.csv} \\
+\addlinespace[1.5pt]
+Mutation survivors re-run, composition killers (v0.14.0) & loupe domain — the v0.11.0 mutants re-run with the composition harness (winmain scenario / handshake+record / autonomous sys harness) & 232/288 killed (80.6\%) — 56 survivors named (v0.11.0: 83.4\% overall; now 93.3\%) & \code{preuves\_ \allowbreak{}v140/\allowbreak{}rejeu\_ \allowbreak{}survivants.csv} \\
+\addlinespace[1.5pt]
+Mutation survivors re-run, composition killers (v0.14.0) & tls13 domain — the v0.11.0 mutants re-run with the composition harness (winmain scenario / handshake+record / autonomous sys harness) & 448/448 killed (100.0\%) — 0 survivors named (v0.11.0: 83.4\% overall; now 93.3\%) & \code{preuves\_ \allowbreak{}v140/\allowbreak{}rejeu\_ \allowbreak{}survivants.csv} \\
+\addlinespace[1.5pt]
+Mutation survivors re-run, composition killers (v0.14.0) & sys domain — the v0.11.0 mutants re-run with the composition harness (winmain scenario / handshake+record / autonomous sys harness) & 96/96 killed (100.0\%) — 0 survivors named (v0.11.0: 83.4\% overall; now 93.3\%) & \code{preuves\_ \allowbreak{}v140/\allowbreak{}rejeu\_ \allowbreak{}survivants.csv} \\
+\addlinespace[1.5pt]
+Formal model of CF3, P1 (v0.15.0) & secret below threshold (adversary with $\le 2$ of the three elements never learns the secret) & PROVED UNBOUNDED — the inductive invariant, preservation checked per rule over the finite state shapes; epoch-uniform by translation & \code{preuves\_ \allowbreak{}v150/\allowbreak{}modele\_ \allowbreak{}invariant.csv} \\
+\addlinespace[1.5pt]
+Formal model of CF3, P2 (v0.15.0) & rollback refusal (the epoch never decreases; replaying a past container-plus-trap pair is refused by name) & PROVED UNBOUNDED — the inductive invariant, preservation checked per rule over the finite state shapes; epoch-uniform by translation & \code{preuves\_ \allowbreak{}v150/\allowbreak{}modele\_ \allowbreak{}invariant.csv} \\
+\addlinespace[1.5pt]
+Formal model of CF3, P3 (v0.15.0) & no destruction on wrong passphrase (wrong phrases lead only to the benign retry branch) & PROVED UNBOUNDED — the inductive invariant, preservation checked per rule over the finite state shapes; epoch-uniform by translation & \code{preuves\_ \allowbreak{}v150/\allowbreak{}modele\_ \allowbreak{}invariant.csv} \\
+\addlinespace[1.5pt]
+Formal model of CF3, P4 (v0.15.0) & blast radius bounded to one epoch (the trap media and the CF2 fragments are never touched) & PROVED UNBOUNDED — the inductive invariant, preservation checked per rule over the finite state shapes; epoch-uniform by translation & \code{preuves\_ \allowbreak{}v150/\allowbreak{}modele\_ \allowbreak{}invariant.csv} \\
+\addlinespace[1.5pt]
+Model-implementation conformance (v0.15.0, directed) & every abstract rule replayed against the Python vault, all failure paths included & 34 steps, 0 gap(s) — five epochs lived at both levels & \code{preuves\_ \allowbreak{}v150/\allowbreak{}raffinement.csv} \\
+\addlinespace[1.5pt]
+Model-implementation conformance (v0.18.0, generative) & 10\,000 random transition sequences (seed 20261112, 3--8 steps, every rule and refusal path covered), model and concrete vault driven in parallel, ddmin shrinking & 660 divergent traces, ONE class (session falsification: the model's guard is canonical-only, the concrete sentinel destroys on proven falsification mid-session — P3/P4 hold on every divergent trace); 655 shrunk to the 2-step minimum; replay bit-identical (verified twice) & \code{preuves\_ \allowbreak{}v150/\allowbreak{}pbt\_ \allowbreak{}traces.csv} + the v0.18.0 replays \\
+\addlinespace[1.5pt]
+Coverage lemma + TLA+ alignment (v0.18.0) & the 288 shapes are exactly the abstraction of the well-typed invariant states (bijection verified); the domain constraints inductive (Apalache, unbounded integers, negative control caught); CF3.tla aligned rule by rule with the operational semantics (512 states per rule) & coverage VERIFIED; 13/13 rules aligned; the model-checker battery re-run 8/8 green, verdicts.json identical to the consigned & \code{tla\_ \allowbreak{}v150/} + the v0.18.0 checks \\
+\addlinespace[1.5pt]
+Wall-clock constant time (hardware dudect kit, 13 Nov 2026, signed witnesses) & four targets from the sealed proxy piece, RDTSC/QPC, core 0 & N=200/class: $|t|$ 12.39, 5.19, 0.94, 3.11 (two above the $>5$ threshold, consigned as measured); N=400/class: 0.84, 1.55, $-0.30$, 2.02 (all under; the dependencies dissipated) — no threshold divergence on that sample, that machine, one run each; never ``constant time proven'' & the signed kit-2 witnesses (Entries 261/264/266) \\
+\addlinespace[1.5pt]
+RQ2 re-measured (v0.17.0/v0.18.0, the instrumented round-trip) & localiser / éditer / ajouter — the native tokenizer on every logged call, the pre-registered plan ede70035, cl100k in parallel (0.98--1.02) & medians 1\,277 [846--1\,568] / 3\,374 [2\,337--5\,444] / 3\,674 [3\,428--4\,258], $n{=}18/18/15$; the perimeter decomposition confirmed by independent re-tokenization ($n{=}5$ per operation, zero divergence beyond one token) & \code{p4-mesures-brutes.jsonl} + the v0.18.0 decomposition \\
+\addlinespace[1.5pt]
+RQ1 exact interval (v0.13.0) & 11 of 12 terrain runs surfaced at least one escaped defect & Clopper-Pearson 95\% CI [0.615 — 0.998] (descriptive: sequential iterations of one developer-agent pair) & \code{preuves\_ \allowbreak{}v130/\allowbreak{}stats\_ \allowbreak{}v130.csv} \\
+\addlinespace[1.5pt]
+\bottomrule
+\end{longtable}\endgroup

@@ -13380,3 +13380,61 @@ qui manquait née, la 303 retrouvée au bundle — la reprise portée à 304.
 - LA VÉRIFICATION : le linter numérique ÉTENDU (les nouvelles valeurs, les signes, le refus de « |t| = 0 », les ratios périmètre) VERT au build avec contrôles négatifs ; la compilation Tectonic propre (29 pages, zéro citation non résolue) ; le diff annoté produit (69 valeurs sourcées) ; la suite M10 complète re-passée sur les scellés : 159 contrôles × 3 graines = 477, TOUT VERT.
 - L'ARCHIVAGE : PRÉPARÉ, DIFFÉRÉ — LE GAP NOMMÉ : l'écriture au coffre Drive refusée de bout en bout (le relais OAuth : invalid_grant au rafraîchissement ; les jetons d'accès cachés expirés ; le compte de service sans permission d'écriture) — les DIX instructions demeurent au /instructions (LUES et EXÉCUTÉES, 10/10 md5 recoupés à la lecture), le déplacement vers /ARCHIVE/instructions_20261116/ et le dépôt des livrables v0.18.0 à la racine attendent un jeton relais frais ; TOUT est par ailleurs VÉCU : le push GitHub (de44d55 — l'édition, les preuves, les scripts, les DEUX archives, les journaux, la licence, le plan D210), les livrables au bac de session.
 (17/11, la session de la vague 5)
+## Entrée 323 — LA VAGUE 6 OUVERTE : L'INSTRUCTION 3 EXÉCUTÉE, LE MANUSCRIT
+v0.18.1 NÉ DE L'AUDIT, L'ARCHIVAGE, LA CONSIGNATION ET LE PUSH VÉCUS AU
+COMMANDEMENT DU DÉVELOPPEUR
+
+- LA RÉCEPTION : les SIX fichiers du /instructions (Qwen__20261116_*, déposés
+  22:02:59–22:03:21 — dix minutes après l'archivage des dix précédentes)
+  rapatriés et lus INTÉGRALEMENT avant toute exécution (6/6 md5 recoupés) —
+  le plan déclaré : bqh4qlrqj d'abord (léger et indépendant), puis les vagues
+  de mesure et la vague de preuve.
+- L'INSTRUCTION 3 (bqh4qlrqj — l'audit du manuscrit v0.18.0) EXÉCUTÉE : les
+  DIX incohérences nommées corrigées aux sources — la plage des fermetures
+  305–319 ; les TROIS manifestations de la classe feuille-non-liée (deux au
+  même slot memcpy @+0x151a0 : le scénario puis l'hôte ; une au memcmp
+  loupe-13 @+0x91a0) ; la relation hint/RVA/crash énoncée (le slot IAT non
+  lié retient sa RVA hint/nom sur disque 0x152da, le saut indirect atteint
+  l'adresse nue : le crash EST la RVA retenue) ; la plage exacte
+  2.98–11.37× (580/51, 2 143/719, 3 510/1 088) ; la non-additivité des
+  médianes par composante (1 241/3 297/3 849 contre 1 277/3 374/3 674 —
+  celle de l'ajout DÉPASSE sa médiane totale) ; les QUATORZE blocs crypto
+  des familles (13 tls13 + loupe-06, 224 mutants, 0 survivant) ; M4
+  réconcilié (l'avant-mesure 50,9 s à 3,0 % sous les 52,5 s consignés, deux
+  mesures n=1 jamais moyennées, la série d'après n=2 : 39,3/39,2 s) ; le
+  résidu PBT nommé (655/660 au minimum de 2 pas, les cinq autres de la même
+  classe — gap nommé : le registre brut par trace vit au dépôt) ; la table
+  de checksums localisée DANS l'image (dix-sept sommes + le qword
+  0x00010008→0x00010101, zéro octet ailleurs — D178/D179, d'où les deux
+  empreintes d'image distinctes à blocs de code octet-identiques) ; la
+  Table 8 TRONQUÉE au PDF v0.18.0 rendue COMPLÈTE en longtable (pages
+  19–20) — AUCUNE valeur mesurée modifiée, la v0.18.0 scellée demeure.
+- LE LINTER v181 ÉTENDU AU TEXTE NARRATIF : 64 assertions (les 62 de la v180
+  + les trois M4), DIX interdits (les cinq de la v180 + les cinq classes
+  d'erreur narrative), les DIX classes de l'audit vérifiées au build contre
+  les registres bruts ; la falsification : toute mutation attrapée.
+- LA VÉRIFICATION : V1–V10 TOUT VERT (rapport_verification_v0.18.1.txt), la
+  réconciliation de campagne re-jouée zéro divergence, la compilation
+  29 pages zéro citation non résolue.
+- LES CINQ AUTRES SÉQUENCÉES (D207 scellé) : 5gfx6pwkj et vljfs6pcj après la
+  baseline double-bras (un levier par unité mesurée) ; 89488hblm attend
+  l'outillage model-checker re-provisionné (le clone de la séance précédente
+  recyclé avec le conteneur) ; fkkqc7v8t (l'audit statique au labo, les runs
+  dudect durcis au terrain) et p39uklsca (nouveaux cycles de campagne D210)
+  demandent des gestes du terrain — elles DEMEURENT au /instructions.
+- LE KIT D'ARCHIVAGE LIVRÉ puis L'ARCHIVAGE EXÉCUTÉ (le commandement du
+  développeur, 17/11 — le lien /Tokens du coffre « pour les acces et les
+  synchros ») : bqh4qlrqj déplacée /instructions → /ARCHIVE par le chemin B
+  (les six md5 recoupés AVANT le geste, échec fermé, les cinq EN ATTENTE
+  refusées ; ARCHIVAGE-RECOUP-V6.txt le témoin ; le geste suivit le kit à la
+  lettre — deux coquilles du bloc recoup corrigées avec lui).
+- LA CONSIGNATION ET LE PUSH vécus par la session au même commandement : les
+  brouillons D212 et Entrée 323 portés au canon, l'édition edition-v0181/
+  (main.tex, refs.bib, les données, le PDF) et les scripts de la vague 6 au
+  dépôt, le bundle 323 et le worklog REMPLACÉS au TRIADE-sauvegarde-git
+  (les DEUX à chaque push, D143 : le 322 versionné préservé), les
+  livrables v0.18.1 déposés à la racine du coffre et recoupés byte-byte, le
+  push GitHub vécu — le relais OAuth du /Tokens a servi la voie d'écriture
+  (JAMAIS affiché, JAMAIS commité au miroir).
+(17/11, la session de la vague 6 consignée et poussée)
+

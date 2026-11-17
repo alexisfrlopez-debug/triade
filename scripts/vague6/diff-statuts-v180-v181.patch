@@ -1,0 +1,44 @@
+--- livraison-vague5/edition-v180/donnees/statuts_v180.tex	2026-11-16 20:00:11.874037851 +0000
++++ livraison-vague6/edition-v181/donnees/statuts_v181.tex	2026-11-16 23:55:38.684447166 +0000
+@@ -1,26 +1,30 @@
+-\begin{table}[t]
+-\centering\small
+-\caption{Systematic proof statuses (the v0.15.0 requirement, carried and updated by every edition since): every claim carries its status and its evidence piece.}
+-\label{tab:statuts}
+-\begin{tabularx}{\textwidth}{lXX}
++% Table des statuts systématiques — v0.18.1 : rendue en longtable par
++% l'audit de la vague 6 (instruction bqh4qlrqj, point 10) : la table
++% flottante de la v0.18.0 était TRONQUÉE à la dernière page du PDF
++% (les lignes « Compiler-reference comparison » — partielle —,
++% « Campaign D204 » et « Independent replication » étaient perdues).
++\begingroup\scriptsize
++\begin{longtable}{@{}p{3.4cm} p{2.9cm} p{8.4cm}@{}}
++\caption{Systematic proof statuses (the v0.15.0 requirement, carried and updated by every edition since): every claim carries its status and its evidence piece.}\label{tab:statuts}\\
+ \toprule
+-Claim & Status & Evidence \\
++\textbf{Claim} & \textbf{Status} & \textbf{Evidence} \\
+ \midrule
++\endhead
++\bottomrule
++\endfoot
+ P1 secret below threshold & proved unbounded & inductive invariant $I_1$ (secret $\Rightarrow$ threshold 3); preservation by all 13 rules over 288 state shapes; epoch translation $\delta\in\{7,50,1000\}$ uniform \\
+ P2 rollback refusal & proved unbounded & unconditional epoch monotonicity (4{,}096 shapes, zero decrease); replay rules return the state unchanged \\
+ P3 no destruction on wrong phrase & proved unbounded & inductive invariant $I_2$: no rule ever writes unjust destruction \\
+ P4 blast radius one epoch & proved unbounded & inductive invariant $I_3$: no rule ever touches the trap media or the CF2 fragments \\
+ Coverage of the 288 shapes & proved (v0.18.0) & every reachable concrete state maps to one of the 288 forms: abstraction totality + domain inductivity (Apalache, unbounded integers, negative control caught) + verified bijection with the well-typed invariant states \\
+ TLA+ $\leftrightarrow$ operational semantics & verified (v0.18.0) & the 13 actions of CF3.tla transpiled strictly and confronted with the Python semantics over 512 states per rule --- all aligned; the model-checker battery re-run 8/8 green, verdicts identical to the consigned \\
+-Model $\leftrightarrow$ implementation & verified in the laboratory & directed: 34 conformance steps, 0 gaps; generative (v0.18.0): 10{,}000 traces, seed consigned, every rule and refusal path covered --- 660 divergences of ONE class (the model's session-falsification gap; P3/P4 hold on every one), shrunk to the 2-step minimum, replay bit-identical \\
++Model $\leftrightarrow$ implementation & verified in the laboratory & directed: 34 conformance steps, 0 gaps; generative (v0.18.0): 10{,}000 traces, seed consigned, every rule and refusal path covered --- 660 divergences of ONE class (the model's session-falsification gap; P3/P4 hold on every one), 655/660 shrunk to the 2-step minimum (the five others, of the same class, to longer minima; the raw register consigned), replay bit-identical \\
+ Bounded cross-checks & proved bounded & the v0.12.0 explorer reproduced exactly (154 states / 1{,}152 transitions); extended bounds 228/1{,}902 ($e\le5$, $d\le8$) and 372/3{,}342 ($e\le7$, $d\le12$), zero states outside $I$ \\
+ Structural constant time & proved bounded & exact equality of emulated instruction traces across secret classes (single count per target over 120 measurements; $t$ undefined, the ``$|t|{=}0$'' formulation withdrawn) \\
+ Wall-clock constant time & measured (2 runs, 1 machine) & the dudect kit on the developer's machine, signed witnesses: N=200 --- two targets above the threshold (12.39, 5.19, consigned as measured); N=400 --- all four under (0.84, 1.55, $-0.30$, 2.02); never ``constant time proven'' \\
+ \code{fence.i} on silicon & awaiting hardware run & the M7 scenario retargeted at a physical RV64 board; the lived M7 runs were TCG emulation, the reserve named --- instruction-cache semantics unproven \\
+ Third-machine field liveness & awaiting hardware run & the Loupe kit on a second Windows machine, full T0--T7+S0 scenario \\
+ Compiler-reference comparison & measured (v0.14.0) & zero divergence, SHA-256 parity at equal work; H4 holds \\
+-Campaign D204 & measured & 22 deliveries reconciled; H1/H2/H4-D204 hold, H3/H5 falsified ($n{=}1$ pairs, stated as such); the M4 optimization measured before/after with no control removed ($23.1\times \to 17.9\times$ on the lab machine, H5 still falsified) \\
++Campaign D204 & measured & 22 deliveries reconciled; H1/H2/H4-D204 hold, H3/H5 falsified ($n{=}1$ pairs, stated as such); the M4 optimization measured before/after with no control removed (52.5\,s consigned at the campaign, 50.9\,s the optimization's before-measure, $n{=}2$ after: 39.3/39.2\,s; $23.1\times \to 17.9\times$ on the lab machine, H5 still falsified) \\
+ Independent replication & awaiting (recruitment / real command) & the T/X grid finalised, the $\kappa$ calculator autotested (synthetic cases), criteria pre-registered unchanged; the extension plan D210 pre-registers $n\ge6$ instrumented units, identical formats, randomized arm order \\
+-\bottomrule
+-\end{tabularx}
+-\end{table}
++\end{longtable}\endgroup

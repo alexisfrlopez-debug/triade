@@ -1,0 +1,79 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.18.1
+(la vague 6, l'instruction bqh4qlrqj — chaque point VERT sur pièces)
+
+V1   la compilation du manuscrit : VERT — Tectonic (XeTeX), 29 pages,
+     zéro citation non résolue (aucun « ?? », aucun « [?] »), les
+     métadonnées PDF portent v0.18.1 ; le pied de page porte v0.18.1.
+V2   LE LINTER NUMÉRIQUE v181 : VERT — 64 affirmations chiffrées au
+     registre (les 62 de la v180 aux valeurs inchangées + les
+     nouvelles m4-avant / m4-apres-n2 / m4-variance ; l'assertion
+     rq2-domaine portée à la plage exacte 2.98-11.37), chacune dérivée
+     des sources brutes ; DIX interdits armés (les cinq de la v180 +
+     305-318, « three times at the same slot », « nineteen
+     pure-compute », « cost 3-11× », « equalling the crash address ») ;
+     zéro écart, zéro orphelin.
+V3   le linter étendu au TEXTE NARRATIF : VERT — les dix classes de
+     l'audit vérifiées au build : la plage 305-319 (3 occurrences
+     exigées, l'interdit 305-318), les manifestations au slot recomptées
+     de defauts.csv (2 memcpy + 1 memcmp), la relation hint/RVA/crash
+     (les quatre valeurs + la phrase mécanique), la non-additivité des
+     médianes (les sommes 1241/3297/3849 recomptées de p5 + la
+     phrase-clé), le décompte crypto recompté de mutation.csv
+     (14 blocs / 224 mutants / 0 survivant), le n=2 de l'optimisation,
+     le résidu PBT (660-655 = 5 nommé), la localisation de la table de
+     checksums (les deux qword + « inside the artifact image »), et
+     l'intégrité de la table des statuts (longtable + les lignes
+     finales au source).
+V4   les contrôles négatifs (la falsification) : VERT — chaque
+     mutation du registre est attrapée (la valeur mutée diverge
+     toujours de la valeur recalculée des sources) ; les interdits
+     refusent leur motif à la réapparition.
+V5   la réconciliation de campagne re-jouée : VERT — 14 unités,
+     22 livraisons (15/7), 6 comptées + 2 exclues, le 7e rouge
+     identifié (l'artefact du juge), M3 104/17, M2 53 158/67 475,
+     M4 52,5/2,2 — chaque total recalculé du registre brut,
+     zéro divergence (reconciliation_campagne_v180.py, inchangé).
+V6   les dix corrections au PDF rendu : VERT — pdftotext du
+     TRIADE_manuscrit_v0.18.1.pdf : les trois « 305–319 » présents,
+     aucun « 305–318 » ; « 2.98–11.37× » présent, aucun « 3–11× » ;
+     « fourteen blocks of the cryptographic families » et « 224
+     mutants » présents, aucun « nineteen » ; « twice at the same slot
+     (the memcpy leaf » / « once at the memcmp leaf » présents ; « the
+     crash address is the retained hint/name RVA » présent ;
+     1,241/3,297/3,849 et « medians are not additive » présents ;
+     « before-measure reads 50.9 s », « 3.0% below the campaign's
+     consigned 52.5 s », « (n=2) » présents ; « five remaining
+     traces » et « 655 of the 660 » présents ; « inside the artifact
+     image », « 0x00010101 », « seventeen per-block sums » présents.
+V7   la Table 8 complète : VERT — la table des statuts (longtable)
+     démarre page 19 et se termine page 20 avec la ligne finale
+     « Independent replication » rendue ; la ligne « Campaign D204 »
+     rendue ; la ligne « Compiler-reference comparison » entière (« …
+     SHA-256 parity at equal work; H4 holds ») — la troncature de la
+     v0.18.0 (qui perdait les trois dernières lignes en page 29) est
+     guérie.
+V8   les empreintes des pièces scellées : VERT — AUCUNE pièce scellée
+     touchée par l'édition (les corrections sont narratives, au
+     manuscrit seul) ; les données générées (tables_generees_v180,
+     table-campagne, macros_v180) sont les copies BYTE-IDENTIQUES de
+     l'édition v0.18.0 (md5 vérifiés à la copie) ; seule la table des
+     statuts change (longtable + la ligne PBT précisée), son diff
+     consigné (diff-statuts-v180-v181.patch).
+V9   le diff consigné : VERT — diff-main-v180-v181.patch (70 lignes
+     ajoutées, 26 retirées sur main.tex) + diff-statuts (44 lignes) +
+     le présent diff annoté (diff-annote-v181.txt, chaque correction
+     sourcée) — à consigner au journal des décisions en D212
+     (le brouillon livré).
+V10  la ligne prématurée de la v0.18.0, nommée au MANIFESTE : la
+     correction de la ligne finale de rapport_verification_v0.18.0.txt
+     (« les dix instructions archivées après exécution ») appartient
+     au journal/au rapport — le présent rapport ne la répète pas :
+     l'archivage vague 5 demeure LE geste en attente du développeur
+     (kit-archivage-vague5) ; la vague 6 n'archive QUE l'instruction
+     exécutée (bqh4qlrqj), le kit livré échec-fermé.
+
+LA SESSION : la vague 6, le 17/11/2026 — l'instruction 3 (bqh4qlrqj)
+exécutée en sa lettre ; les instructions 1, 2, 4, 5 et 6 demeurant à
+exécuter (voir rapport-execution-vague6.txt pour l'état et le
+séquençage). Les décisions D209/D210/D211 sont au dépôt ; le
+brouillon D212 + l'Entrée 323 accompagnent la présente livraison.

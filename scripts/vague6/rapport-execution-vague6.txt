@@ -1,0 +1,151 @@
+LE RAPPORT D'EXÉCUTION — LA VAGUE 6 DES SIX INSTRUCTIONS
+(les six fichiers Qwen__20261116_* du /instructions, uploadés le 16/11
+à 22:22 ; lus INTÉGRALEMENT le 17/11 avant toute exécution — la revue
+était déjà consignée « lus, non exécutés, en attente de confirmation »
+par la checklist du 17/11 ; la confirmation du développeur reçue ce
+jour (« a executer puis archiver apres execution ») ; l'ordre
+d'exécution suivi est celui prescrit par la checklist : le n° 3
+d'abord, léger et indépendant)
+================================================================================
+
+1. Qwen__20261116_bqh4qlrqj — L'AUDIT DU MANUSCRIT v0.18.0 : EXÉCUTÉE
+   (dix incohérences nommées, AUCUNE valeur mesurée modifiée)
+   EXÉCUTÉ : les dix points vérifiés AUX SOURCES puis corrigés —
+   (1) la plage des fermetures harmonisée à 305–319 (le worklog-maj
+   porte l'Entrée 319 ; l'introduction disait 305–318, l'abstract avait
+   raison) ; (2) le §2.4 harmonisé — TROIS manifestations de la classe
+   feuille-non-liée, DEUX au même slot memcpy (@+0x151a0 : le scénario
+   puis l'hôte), UNE au memcmp (loupe-13, @+0x91a0), recompté de
+   defauts.csv ; (3) la relation hint/RVA/adresse de crash énoncée — le
+   slot IAT non lié à +0x151a0 retient sa RVA hint/nom sur disque
+   (0x152da), le saut indirect atteint cette RVA nue : le crash EST la
+   RVA hint/nom retenue (Entrées 304/311/312, le pendant memcmp
+   0x91a0/0x92da) ; (4) la plage exacte 2.98–11.37× (580/51, 2 143/719,
+   3 510/1 088) ; (5) la note de non-additivité des médianes par
+   composante (1 241/3 297/3 849 contre 1 277/3 374/3 674 — celle de
+   l'ajout DÉPASSE sa médiane totale) ; (6) le décompte crypto corrigé
+   — QUATORZE blocs des familles (13 tls13 + loupe-06), 224 mutants,
+   0 survivant (mutation.csv) ; (7) M4 réconcilié — 50,9 s
+   l'avant-mesure, 3,0 % sous les 52,5 s consignés de la campagne,
+   deux mesures n=1 jamais moyennées, la série d'après n=2
+   (39,3/39,2 s) ; (8) le résidu PBT nommé — 655/660 au minimum de
+   2 pas, les CINQ autres de la même classe à des minima plus longs
+   (gap nommé : le registre brut par trace vit au dépôt, absent du
+   bac — les minima exacts des 5 ne sont pas inventés) ; (9) la table
+   de checksums localisée — elle vit DANS l'image (R10 : dix-sept
+   sommes + le qword 0x00010008→0x00010101, zéro octet ailleurs :
+   D178/D179) — d'où deux empreintes d'image distinctes à blocs de
+   code octet-identiques ; (10) la Table 8, TRONQUÉE au PDF v0.18.0
+   (les lignes Campaign D204 et Independent replication perdues en
+   page 29), rendue COMPLÈTE en longtable (pages 19–20).
+   L'ÉDITION : v0.18.1 — aucune valeur mesurée changée, les données
+   générées byte-identiques, la v0.18.0 scellée demeure.
+   LE LINTER ÉTENDU : linter_v181.py — 64 assertions (les 62 de la
+   v180 inchangées + les nouvelles M4), DIX interdits (les 5 de la
+   v180 + les 5 classes d'erreur narrative), et les DIX classes de
+   l'audit vérifiées au build contre les registres bruts
+   (defauts.csv, mutation.csv, p5, p8, D178/D179).
+   VÉRIFIÉ : rapport_verification_v0.18.1.txt — V1–V10 TOUT VERT ;
+   la réconciliation de campagne re-jouée : zéro divergence ; le
+   linter VERT ; la falsification : toute mutation attrapée.
+
+2. Qwen__20261116_5gfx6pwkj — LE COÛT « LOCALISER » : EN ATTENTE
+   (le levier d'optimisation, séquencé par D207)
+   L'ÉTAT : le prérequis D207 est SCELLÉ (le témoin L6 du terrain daté
+   signé, 16/11 — le chantier débloqué : UN levier par unité mesurée,
+   la BASELINE d'abord — la prochaine unité entièrement instrumentée
+   aux DEUX bras par la rig, n=1 devient n=2 — la règle d'arrêt armée :
+   un levier qui dégrade M1 ou M3 est REJETÉ ; la séquence L6 →
+   baseline → L1 (bundle-défaut) → L3 → L2 → L4 → L5/L7).
+   CE QUE DEMANDE L'INSTRUCTION : le mode de réponse minimale
+   (identifiant de bloc + plage, vérifié par la carte), le plan
+   pré-enregistré hash-consigné AVANT toute mesure, n≥15 par mode au
+   tokenizer natif sur chaque appel instrumenté, les contrôles
+   intacts (round-trip, garde de carte, vérification d'adresse).
+   L'EXÉCUTION : après la baseline double-bras — le geste de la
+   prochaine session de chantier (la rig L6 fermée en boucle le 16/11
+   : laboratoire 25 VERT, la recette terrain signée).
+
+3. Qwen__20261116_89488hblm — LE PROGRAMME DE PREUVE CF3 : EN ATTENTE
+   (le travail de preuve lourd, à préparer en parallèle)
+   CE QUE DEMANDE L'INSTRUCTION : l'équivalence TLA+↔sémantique
+   déchargée par SMT sur entiers non bornés (13 règles, garde à garde,
+   effet à effet), le lemme O3 par SMT non borné, le lemme de
+   translation ∀δ mécanisé, un contrôle négatif par nouvelle
+   obligation, la batterie re-jouée 8/8 avec verdicts.json
+   bit-identique, les 10 000 traces re-jouées bit à bit.
+   LE PRÉREQUIS NOMMÉ : l'outillage de model-checking n'est plus au
+   bac (le clone de la séance précédente — /tmp/triade-gh, Apalache
+   0.63.0 + tla2tools — fut recyclé avec le conteneur) : à
+   re-provisionner aux versions et empreintes consignées au dépôt
+   avant toute exécution ; les sources TLA+ (CF3.tla, CF3Couverture,
+   les MCA_*.cfg) demeurent aux archives complètes et à
+   /tmp/triade-work (partiel).
+   LA PART PRÉPARABLE ICI : la structure des obligations SMT par règle
+   et le plan des contrôles négatifs — le chantier s'ouvre à la
+   commande du développeur.
+
+4. Qwen__20261116_fkkqc7v8t — LE TEMPS CONSTANT STRUCTUREL : EN ATTENTE
+   (l'audit statique non borné + la cause racine du renversement dudect)
+   CE QUE DEMANDE L'INSTRUCTION : l'analyse de flux d'information
+   prouvant que branchements et adresses ne dépendent pas du secret
+   (système de types constant-time ou décharge SMT), intégrée au build
+   à côté de l'audit ABI msx64 ; l'investigation du renversement
+   N=200 (|t|=12,39/5,19) → N=400 (tous sous le seuil) : warm-up,
+   turbo/fréquence, outliers, ordre des classes — rejoué à warm-up
+   contrôlé, affinity et fréquence fixées, ordre randomisé, plusieurs
+   runs par N ; jamais « constant time proven » au-delà des runs
+   signés.
+   LA PARTIE LABO / LA PARTIE TERRAIN : l'audit statique est un
+   chantier d'outil au laboratoire (les six cibles scellées sont à
+   portée) ; les runs dudect durcis sont des GESTES DU TERRAIN — le
+   kit à warm-up/affinity/ordre randomisé se PRÉPARE au labo, la
+   course et la signature appartiennent au développeur (D99).
+   L'ÉTAT : aucun de ces deux chantiers ouvert cette session (la
+   priorité prescrite était le n° 3) — le séquençage demeure celui de
+   la checklist : préparation en parallèle, après la baseline.
+
+5. Qwen__20261116_p39uklsca — LE PLAN D'EXTENSION D210 : EN ATTENTE
+   (la campagne, la dernière de la séquence)
+   CE QUE DEMANDE L'INSTRUCTION : n≥6 unités entièrement instrumentées,
+   formats identiques aux deux bras (justifiés et consignés), ordre
+   randomisé (graine consignée), le test d'attribution empirique
+   (re-livraison de la pièce C par un kit standard minimal), la règle
+   D202 et ses exclusions, les tokens et le temps humain LUS des
+   journaux (jamais de mémoire), les distributions appariées avec
+   intervalles de confiance, les cinq hypothèses re-testées.
+   L'ÉTAT : le plan D210 est pré-enregistré (hash consigné avant toute
+   mesure) ; l'exécution exige de NOUVEAUX CYCLES DE CAMPAGNE avec
+   coordination terrain (les runs appartiennent au développeur) —
+   c'est la dernière de la séquence prescrite.
+
+6. Qwen__20261116_vljfs6pcj — LE TEMPS DE VÉRIFICATION M4 : EN ATTENTE
+   (l'optimisation au-delà de 39,3 s, séquencée par D207)
+   CE QUE DEMANDE L'INSTRUCTION : l'invalidation incrémentale des
+   oracles par empreinte de bloc via la carte ; la mémoïsation scellée
+   des sessions d'émulation pures (le cache un artifact vérifié et
+   signé — le compromis du partage d'émulation demeure refusé) ; le
+   pré-filtre différentiel natif suivi de l'émulation de confirmation
+   (l'effet mesuré d'abord sur le chemin critique crypto ~10 s/196
+   Kio) ; n≥5 par configuration, oracle sorties identiques ligne à
+   ligne, rebuilds byte-identiques 10/10, H5 recalculé des logs bruts
+   — consigné même s'il demeure falsifié.
+   L'ÉTAT : les leviers sont au labo (l'outillage m4 vit à
+   scripts_v180/m4/) ; la règle D207 commande la BASELINE d'abord, UN
+   levier par unité mesurée — l'exécution suit la baseline double-bras.
+
+================================================================================
+LE BILAN : 1/6 instructions exécutée (la n° 3, en sa lettre, dix points
+corrigés, dix classes armées au linter, V1–V10 tout vert, la v0.18.1
+compilée) ; 5/6 en attente — NON par blocage, par SÉQUENÇAGE : D207
+(scellé le 16/11) commande la baseline double-bras avant tout levier
+(instructions 1 et 6), la preuve CF3 (2) exige l'outillage
+model-checker re-provisionné, le temps constant (4) et la campagne
+(5) exigent des gestes du terrain. L'ARCHIVAGE : le kit vague 6
+livré ne déplace QUE l'instruction exécutée (bqh4qlrqj) — les cinq
+autres demeurent au /instructions jusqu'à leur exécution (échec
+fermé) ; l'archivage de la vague 5 (dix fichiers) demeure le geste en
+attente du développeur (kit-archivage-vague5). Les brouillons D212 et
+Entrée 323 accompagnent la livraison — la consignation au journal
+canonique et le push GitHub appartiennent au développeur, avec ses
+identifiants, sur sa machine (l'agent ne touche à aucun jeton).
