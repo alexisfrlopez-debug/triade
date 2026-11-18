@@ -1,0 +1,77 @@
+LISEZMOI-RUN-UNITE16-D210-1CLIC-V3 — LE RUN DE L'UNITÉ 04 D210,
+RÉVISION 3 (LOUPE-16 SAISIE × BRAS T) EN UN CLIC · L'ATELIER CHOISI PAR
+CONSTRUCTION · LE CORRECTIF DU CRASH NOMMÉ
+=========================================================================
+
+L'OBJET DE CETTE RÉVISION : le run v2 du 18/11 14:09 tomba à la liaison
+(code 1, 0,4 s — T0 VERT, la pièce INTACTE, le guichet découvert, puis) :
+« TypeError: this function takes at least 3 arguments (2 given) » à la
+ligne 269, LA LIAISON memmove. Le dépôt du crash reçu et reCOUPÉ au labo
+(la console, l'état, la session — le crash est AUSSI un témoin, TEL
+QUELLE) ; la faute nommée sur pièces : la liaison appelait memmove à
+DEUX arguments (dst, src) — le COMPTE manquait. Or CHAQUE autre appel
+du fichier (les DOUZE : les memmove des zones, les memset, les poses du
+cadre et du journal) porte SES TROIS arguments — la forme du correctif
+était déjà là, dans le fichier même ; la ligne fautive était née du
+correctif v2 (le bloc de liaison réécrit au guichet), et l'épreuve du
+guichet — née le même jour — n'éprouvait que la DÉCOUVERTE : la
+plomberie de la liaison n'avait jamais couru au labo. LE CORRECTIF,
+D'UN SEUL ARGUMENT : memmove(adresse, struct.pack("<Q", proc), 8) — le
+compte 8, l'arité de ses DOUZE frères. LES VECTEURS INTACTS au byte
+près (la parité AST : tout identique sauf CE seul appel) ; les DOUZE
+autres pièces INCHANGÉES octet pour octet ; la gravure regénérée d'UNE
+SEULE ligne (le scénario). L'ÉPREUVE QUI MANQUAIT NÉE :
+L'ÉPREUVE DE LA LIAISON — le bloc de liaison EXÉCUTÉ au labo contre
+le fichier livré (les gestes Windows neutralisés au contexte seul, le
+memmove et la relecture RÉELS) : CONTRE le v2 : ROUGE, le TypeError
+RECONSTITUÉ mot pour mot ; CONTRE le v3 : TOUT VERT (les QUATRE
+feuilles écrites, relues, l'égalité recoupée). Et l'AUDIT D'ARITÉ :
+chaque memmove/memset/string_at du scénario porte son compte.
+
+LE GESTE DU RE-RUN : DÉZIPPEZ CE KIT (kit-unite-04-d210-20261118-v3/,
+une extraction FRAÎCHE — jamais le dossier v2 réutilisé) puis
+DOUBLE-CLIQUEZ LANCER-RUN-UNITE16-D210-1CLIC.bat seul (SmartScreen peut
+demander « Plus d'informations → Exécuter quand même » — le .bat est
+signé de RIEN, c'est l'honnêteté). LE GUI exige Python 3 avec tkinter.
+
+À L'ONGLET 4·LIVRE : CHOISIR LE DOSSIER DE L'ATELIER (le dossier local
+des QUATRE registres du livre, reçu du coffre /test — L'ATELIER CHOISI
+PAR CONSTRUCTION : la ligne M1 au verdict RECOPIÉ et la ligne M3 aux
+bornes OBSERVÉES appendées DURANT le run ; defauts.csv et
+journal-ouverture.txt JAMAIS touchés ; l'atelier re-déposé au coffre
+demeure VOTRE geste), puis TOUT LANCER.
+
+L'ATTENDU DU RE-RUN : les NEUF verdicts VERT (9 VERT, 0 ROUGE, code 0) —
+T0 la pièce recoupée, [guichet] les QUATRE feuilles liées, V1 le
+différentiel 10 000 frappes, V2 le scénario « 4d5a » ET la vue qui suit,
+V3 les rejets, V4 le repli, V5 la falsification. Puis : le témoin daté
+signé de votre main [D99], preuves-unite16/ au coffre /test (le GUI
+assemble le zip — la signature exigée).
+
+AU LIVRE, AU BLOC-NOTS (la chirurgie prescrite — le livre ne ment
+jamais : le run v2 a couru) : ① la ligne T-loupe-16-d210-it2 ROUGE (le
+kit v2, le run 2026-11-18, le crash nommé, code 1) posée à la main à
+livraisons.csv ; ② le défaut à defauts.csv (l'onglet 6·DÉFAUTS : la
+classe « liaison-memmove-deux-arguments », le mécanisme « memmove
+appelé à DEUX arguments (dst, src) — le compte 8 manquant, contraire à
+l'arité des DOUZE autres appels du fichier ; la ligne née du correctif
+v2, l'épreuve du guichet n'éprouvait que la découverte », le côté
+« kit », la pièce à l'appui
+run-console-unite16-d210-20261118-140903.txt, l'exclusion « non — la
+faute au kit voyagée jusqu'au terrain, le run consommé, D202 ») ; ③
+l'atelier ENTIER re-déposé. Le re-run v3 couchera la ligne
+T-loupe-16-d210-it3 au livre DURANT le run.
+
+LA CAP M1 (le plan D204, § 7) : TROIS livraisons par bloc — le v3 EST
+la troisième de l'unité 04 (v1, v2, v3) : l'arrêt au premier vert
+recoupé, la censure sans exclusion.
+
+LES KITS v1 ET v2 DEMEURENT AU COFFRE (D143 : les dépôts des refus
+jamais recouverts — un refus est aussi un témoin).
+
+LES EMPREINTES : EMPREINTES-GUI-UNITE16-D210-1CLIC-V3.txt (le GUI et ses
+livres + les QUATORZE pièces du kit, chaque sha256 ; certutil -hashfile
+chez vous recoupe).
+
+(18/11/2026, la session du correctif v3 — le crash nommé, l'épreuve de
+la liaison née, la plomberie enfin éprouvée au labo)

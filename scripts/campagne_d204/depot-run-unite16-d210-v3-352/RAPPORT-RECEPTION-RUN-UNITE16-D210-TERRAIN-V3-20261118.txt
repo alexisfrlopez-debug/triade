@@ -1,0 +1,219 @@
+RAPPORT-RECEPTION-RUN-UNITE16-D210-TERRAIN-V3-20261118 — LE RUN
+REÇU TEL QUEL, RECOUPÉ, LE V1 ROUGE NOMMÉ SUR PIÈCES, L'ÉPREUVE DES
+MÉTRIQUES NÉE — ET LA CAP M1 TENUE : L'UNITÉ 04 CLOSE SUR SON ROUGE
+(l'annonce du développeur : « dernier run dans le dossier /test du drive » —
+le dépôt kit-unite-04-d210-20261118-v3/ au /test, le re-run au kit v3 livré
+à la 351, LA TROISIÈME livraison du bloc)
+================================================================================
+
+R1 — LA CONSOLE DU RUN (telle quelle, la pièce à l'appui
+run-console-unite16-d210-20261118-155959.txt, 3 113 o, md5 001ee638…) : le
+run parti 18/11 15:59:59, T0 VERT (loupe.exe sha256 b382e01b… == la gravure
+du kit — la pièce INTACTE), l'image cartographiée DONT_RESOLVE @
+0x7ff7b2080000, **LE GUICHET VERT** — « [guichet] les QUATRE feuilles liées
+par la table d'imports : user32 InvalidateRect (le repeint de loupe-16),
+kernel32 SetFilePointerEx + ReadFile (la relecture de loupe-02 le scellé) ET
+GetLastError (le chemin d'échec de la relecture — le -6 nommé) — chaque
+geste vérifié, la re-protection posée, la relecture recoupée » : LE CORRECTIF
+v3 PORTA — le TypeError memmove est PARTI, la liaison vécut ENTIÈRE au
+terrain ; puis TROIS lignes « [V1] le curseur ou la vue divergent » et LE
+VERDICT : [ROUGE] V1:le-differentiel-10000-frappes — le modèle Python
+diverge de la pièce AU CURSEUR OU À LA VUE ; V2 ×2, V3 ×3, V4, V5 TOUTS
+VERTS. Fin 16:00:08 (9,7 s), code retour 1. **8 VERT, 1 ROUGE** — le témoin
+lui-même le consigne : « ÉCART NOMMÉ ».
+
+R2 — LES PIÈCES DU DÉPÔT (26 entrées rapatriées au bac, DOUBLE
+téléchargement byte-byte, md5 == les métadonnées Drive, échec fermé) : les
+DIX-NEUF pièces du kit v3 recoupées au staging du labo — 19/19 INTACTES
+(loupe.exe b382e01b…, le scénario 71dca8b1… == le scellé livré à la 351 : le
+terrain a couru LE fichier du coffre, R7) ; les SEPT pièces nées du run :
+la console racine [3 113 o — == la console du réceptacle
+preuves-unite16/ OCTET POUR OCTET, md5 001ee638…], l'état
+[etat-run-unite16-d210.json, 3 622 o — les TROIS étapes vécues], la session
+[TRIADE_logs/session-20261118-155948.txt, 8 114 o], et le réceptacle
+preuves-unite16/ NÉ [DEPOT-d210-unite16.txt 2 110 o, falsifie-16.bin
+196 609 o sha256 17af4f18…, la console copiée, temoin-unite16.txt 1 077 o].
+LE TÉMOIN EST NÉ cette fois — daté et signé de la main (R3).
+
+R3 — LE TÉMOIN (la pièce datée-signée, D99) : le run 2026-11-18T15:00:08Z
+(UTC) == 16:00:08 locale, la machine « PORTABLE · Windows 10 · AMD64 ·
+Python 3.14.10 », loupe.exe 127 488 o sha256 b382e01b… == la gravure, le
+verdict « 8 VERT, 1 ROUGE — ÉCART NOMMÉ » RECOPIÉ (jamais recalculé), les
+NEUF vecteurs listés (V1 en ROUGE) ; LA MAIN : « Daté le : 18/11/2026 »,
+« Signé : Alexis Lopez » — LA DATE EST JUSTE cette fois (l'écart de la 348
+[17/11 contre le run du 18/11] NE SE REPRODUIT PAS) ; le témoin AVANT-MAIN
+1 055 o sha256 06bc8813… == la voix du DEPOT (le manifeste assemblé à
+16:00:08, AVANT la main) + 22 o DE LA MAIN posée après (le mtime 16:00:54
+locale — 45 s après la fin du run : la main vécut).
+
+R4 — L'ÉTAT DU GUI (etat-run-unite16-d210.json, 3 622 o) : les TROIS étapes
+vécues {run, collecte, livre} — LE GUI ALLA AU BOUT cette fois (le refus v1
+l'arrêta à {run}, le crash v2 à {run} aussi) ; le verdict recompté 8 VERT
+1 ROUGE, code 1, « rouge_ok : false » — LA LIGNE M1 AU VERDICT RECOPIÉ
+(ROUGE vécu → ROUGE couché, le précédent T-loupe-08-it1) et LA LIGNE M3
+aux bornes OBSERVÉES (15:59 → 16:00) couchées à l'atelier choisi ; les sha
+des QUATRE registres couchés par le GUI après SON geste (R10 les recoupe) ;
+l'atelier choisi « D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/
+atelier-campagne-d204-20261114-013520 ».
+
+R5 — LA SESSION (TRIADE_logs/session-20261118-155948.txt, 8 114 o) : la
+fenêtre née 15:59:49 (v2.0.2, L'ATELIER CHOISI PAR CONSTRUCTION) → le
+verrou 14/14 VERT 15:59:49 (les QUATORZE pièces, la preuve T0 « 13 pièces
+vues », le scénario CORRIGÉ et la gravure RÉVISION 3 nommés au verrou) →
+L'ATELIER CHOISI 15:59:57 (les QUATRE registres recoupés VERT — LUS jamais
+touchés) → TOUT LANCER 15:59:59 → le run 15:59:59-16:00:09 (le guichet
+VERT, les TROIS divergences V1 à 15:59:59, le verdict ROUGE à 16:00:08) →
+la collecte 16:00:09 (la console COPIÉE, le DEPOT né) → « [LIVRE] mis à
+jour durant le run » 16:00:09 → « le run ROUGE : la ligne defauts.csv se
+nomme À VOTRE MAIN (D202 — jamais automatisée) » → la fenêtre fermée
+16:01:29.
+
+R6 — LA CHRONOLOGIE (la chaîne de garde, aux heures des pièces) : le kit v3
+livré au coffre 14:47:29Z (15:47:29 locale, la 351) → la fenêtre née
+15:59:48 locale → le verrou VERT 15:59:49 → l'atelier choisi 15:59:57 →
+TOUT LANCER 15:59:59 → le run fini 16:00:08 (9,7 s) → le livre couché
+16:00:09 → LA MAIN au témoin 16:00:54 (le mtime, 45 s après la fin) → la
+fenêtre fermée 16:01:29 → le dépôt né au coffre 15:03:53Z (16:03:53
+locale) → l'atelier re-déposé 15:04:15Z (16:04:15 locale). Jamais une date
+avant le kit, jamais avant le run.
+
+R7 — LE JUGE DISCIPLINÉ : le scénario couru au terrain == le scellé livré à
+la 351 (scenario-unite16.py sha256 71dca8b1…, recoupé au dépôt) — et le
+correctif v3 PORTA SON GESTE : le guichet lia ses QUATRE feuilles, la
+re-protection vécut, la relecture recoupée (la console le consigne) ; la
+pièce loupe.exe INTACTE (b382e01b… == la gravure, R8 recoupé au dépôt ET au
+staging du labo 19/19). La faute v3 ne vit NI au parse (v1), NI à la
+liaison (v2) — elle vit à L'ÉCRAN QUE LE JUGE NE POSE PAS (R8).
+
+R8 — LE V1 ROUGE : LA FAUTE NOMMÉE SUR PIÈCES (l'autopsie au labo — la
+classe « les-metriques-ecran-jamais-posees-par-le-juge » ; le côté « kit »,
+l'exclusion « non » : la faute au juge VOYAGÉE jusqu'au terrain, le run fut
+consommé, D202) : ① LA PIÈCE LIT LES LIGNES VISIBLES à R_METRIQUES+8
+[0xFDF8] — la zone que le WM_SIZE de la vraie console remplit (layout.py :
+METRIQUES_LIGNES, « les lignes visibles ») ; la notation la clampe
+(lignes-3, la borne 24) et en tire LA VITRINE (vue + lignes×16) ; ② LE
+HARNAIS DU LABO LA POSE — harnais_edition.poser_metriques(emul, 27),
+appelée par l'oracle avant CHAQUE vecteur ; l'épreuve POSIX du bras C la
+PASSE en argument (27) ; LE SCÉNARIO-JUGE né à la 349 (le premier terrain
+à état) n'a AUCUN geste pour elle — poser_session écrit la session, le
+tampon, la saisie, le journal : JAMAIS la zone d'écran ; ③ LA ZONE VIT À
+SON ÉTAT STATIQUE — LES ZÉROS du .data livré (constaté octet par octet au
+labo : 0xFDF0..0xFE00 == 00, le dword à +8 == 0) ; la pièce calcule donc
+lignes_visibles = max(0, 0-3) = 0 → LA VITRINE = vue + 0×16 = LA VUE
+MÊME → chaque engagement au-delà du curseur 176 entre à .recadre : la vue
+RAMPE à aligne16_inf(curseur-176), la relecture et le repeint courent À
+CHAQUE frappe — pendant que le modèle du juge tient la vitrine à 27-3 =
+24 lignes = 384 : LA VUE DIVERGE dès le premier recadrage de la pièce,
+et l'écart se répète à presque chaque frappe (les curseurs, eux, RESTENT
+IDENTIQUES — le problème nommé « le curseur OU la vue » vit à la vue
+seule).
+
+R9 — LA PREUVE RECONSTITUÉE (la pièce à l'appui
+epreuve-metriques-unite16-console.txt au bac — l'épreuve des métriques
+NÉE, L5 : LE JUGE POSE L'ÉCRAN QU'IL ANNONCE) : le différentiel V1
+rejoué AU LABO CONTRE LA PIÈCE DE CAMPAGNE (le slot assemblé de la
+notation, la pièce livrée recoupée au dépôt — l'émulation du domaine, la
+même graine 20261115, le même tirage, le modèle du juge lignes=27
+VERBATIM) : ① LE TERRAIN RECONSTITUÉ — les métriques à leur état statique
+(les zéros) : le ROUGE reconstitué, le problème IDENTIQUE MOT POUR MOT
+(« le curseur ou la vue divergent » == la console du terrain), LA PREMIÈRE
+DIVERGENCE À LA FRAPPE 328 (la pièce pose vue=16, le modèle tient vue=0,
+le curseur 192 aux DEUX — l'engagement au curseur 191 : aligne16_inf(192-
+176) = 16 ≠ 0), les trois premières aux frappes 328-330 (== les TROIS
+lignes du terrain, toutes à 15:59:59 — 0,3 s de run), 9 673 divergences
+aux 10 000 frappes ; ② LE LABO RECONSTITUÉ — les métriques POSÉES (27, le
+geste du harnais) : 0 DIVERGENCE, le différentiel VERT — **LA PIÈCE N'EST
+PAS EN FAUTE** (l'état de l'oracle à la construction, reverifié) ; ③ LA LOI
+L5 STRUCTURELLE — le scénario livré ne porte AUCUNE écriture à 0xFDF0
+(constaté au fichier) : ROUGE nommé. Le déficit T0 (l'unité 01) avait
+engendré la gravure parsée ; le défaut memcmp (la 304) l'épreuve de la
+feuille ; le refus v1 (la 350) l'épreuve du guichet ; le crash v2 (la 351)
+l'épreuve de la liaison ; LE ROUGE V3 ENGENDRE L'ÉPREUVE DES MÉTRIQUES —
+la règle vit au bac, la cinquième loi : le juge qui modèle un écran le
+POSE.
+
+R10 — L'ATELIER RE-DÉPOSÉ RECOUPÉ (les QUATRE registres
+double-téléchargés, md5 == les métadonnées) : carnet_temps_humain.csv
+2 209 o sha256 9882c683… == LA VOIX DE L'ÉTAT DU GUI byte-byte (la ligne
+M3 « 2026-11-18,T,loupe-16-d210,run-terrain,15:59,16:00,1,… » est CELLE DU
+GUI, la main n'y toucha rien) ; defauts.csv 3 870 o sha256 1bed8908… ==
+INCHANGÉ depuis la 348 (D202 tenue : le GUI n'y écrit JAMAIS) ;
+journal-ouverture.txt 648 o sha256 4c036f08… == INCHANGÉ (l'ouverture du
+14/11 scellée) ; livraisons.csv 2 558 o sha256 204c1399… == LA VOIX DU GUI
+(f602f84b…, l'état après SON geste : les 36 lignes de la 348 + LA LIGNE
+M1) + UNE SEULE LIGNE DE LA MAIN isolée byte-byte (« T-loupe-16-d210-it2,
+T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente » — retirée, le
+sha restitue f602f84b… EXACTEMENT). LA LIGNE M1 DU GUI : « T-loupe-16-
+d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente » — le
+verdict RECOPIÉ honnête (ROUGE vécu → ROUGE couché) ; les TROIS lignes D210
+au livre (loupe-02 VERT, loupe-08 VERT, loupe-13 VERT) + les DEUX de
+l'unité 16 (ROUGE).
+
+R11 — LES ÉCARTS NOMMÉS (D189 — consignés JAMAIS corrigés, la main demeure
+la main) : ① LA LIGNE M1 DU RUN v3 PORTE « it1 » — la constante du kit
+(NOM_LIVRAISON_M1 « T-loupe-16-d210-it1 », NUMERO_M1 « 1 ») gravée à la
+construction de la 349 et JAMAIS PORTÉE par les correctifs chirurgicaux
+v2/v3 (qui ne touchèrent que les DEUX empreintes du verrou) — la
+prescription disait it3 ; le verdict (ROUGE) et les dates sont honnêtes,
+le NUMÉRO d'itération est celui du kit, pas celui du run ; ② LA LIGNE DE
+LA MAIN it2 porte la 4e colonne « 1 » (le numéro d'itération — it2
+attendait 2, la convention de l'ère app : T-app-it2→2, T-app-it4→4) — la
+copie de la ligne du GUI, le numéro pas porté ; ③ LE RUN v1 REFUS (12:12,
+la ligne it1 prescrite à la 350) DEMEURE SANS LIGNE PROPRE — le slot it1
+est occupé par la ligne du run v3 née du GUI ; ④ defauts.csv INCHANGÉ —
+les DEUX défauts prescrits (it1 « guichet-descripteur-quatre-champs » à la
+350, it2 « liaison-memmove-deux-arguments » à la 351) JAMAIS nommés, et le
+V1 ROUGE en est un TROISIÈME à nommer ; ⑤ la date du témoin JUSTE (18/11)
+— l'écart de la 348 ne se reproduit pas (nommé pour la mémoire).
+
+R12 — LA CAP M1 TENUE : L'UNITÉ 04 CLOSE SUR SON ROUGE (le plan D204 § 7 :
+au plus TROIS livraisons par bloc, l'arrêt au premier vert recoupé, la
+censure sans exclusion) : le v3 EST la TROISIÈME livraison du bloc de
+l'unité 04 (v1, v2, v3) — la cap est atteinte, et le re-run vint
+**8 VERT, 1 ROUGE** : PAS VERT. L'unité 04 D210 loupe-16 saisie × bras T
+se consigne CLOSE SUR SON ROUGE — le résultat demeure, rien ne se masque.
+L'OBSERVATION HONNÊTE qui accompagne la clôture : les TROIS fautes du
+bloc vécurent AU JUGE (le parse du guichet à la v1, l'arité memmove à la
+v2, l'écran jamais posé à la v3) — LA PIÈCE loupe.exe n'est JAMAIS
+fautive (intacte à CHAQUE run à la gravure, per-spec : elle lit l'écran
+que l'hôte doit poser — l'épreuve L5c le prouve, 0 divergence l'écran
+posé) ; le bloc se ferme sur le rouge de son juge, la notation et le
+bras C demeurant CONFORMES à la construction (les revues de la 349). La
+campagne D210 compte ses QUATRE unités closes : loupe-02 VERT, loupe-08
+VERT, loupe-13 VERT, loupe-16 ROUGE — la séquence tirée (la graine D217,
+jamais re-tirée) est ÉPUISÉE.
+
+LA CHIRURGIE PRESCRITE AU LIVRE (au bloc-notes, à votre main — le livre
+ne ment jamais : les TROIS runs ont couru ; le précédent 303/304) :
+① RENOMMER la ligne née du GUI « T-loupe-16-d210-it1 » en
+« T-loupe-16-d210-it3 » (la 4e colonne 1 → 3) — la ligne porte le run v3
+(le verdict ROUGE recopié, les dates justes) : le numéro d'itération
+rendu VRAI ; le renommement est SÛR parce que le bloc est CLOSE (aucun
+re-run ne viendra — l'idempotence du GUI ne reverra jamais it1) ;
+② POSER la ligne du run v1 REFUS : « T-loupe-16-d210-it1,T,loupe-16-d210,
+1,2026-11-18,2026-11-18,ROUGE,en attente » [le kit v1, le run 12:12, le
+REFUS RVA-HOURS-SECTIONS, code 2] — la ligne prescrite à la 350, le slot
+désormais libre ; ③ la ligne it2 déjà posée par votre main demeure (la 4e
+colonne « 1 » nommée en R11-②, jamais corrigée) ; ④ POSER LES TROIS
+DÉFAUTS à defauts.csv (l'onglet 6·DÉFAUTS) : it1 « guichet-descripteur-
+quatre-champs » (la 350), it2 « liaison-memmove-deux-arguments » (la
+351), it3 « les-metriques-ecran-jamais-posees-par-le-juge » [le
+mécanisme : « la pièce lit les lignes visibles à R_METRIQUES+8 [0xFDF8]
+(la zone WM_SIZE) ; le harnais du labo la pose (poser_metriques 27),
+l'épreuve POSIX la passe (27) — le scénario-juge n'a AUCUN geste pour
+elle : la zone vit aux zéros du .data, lignes=0, la vitrine dégénère à la
+vue même, la vue rampe à chaque engagement — le modèle tient 384 : la vue
+diverge dès la frappe 328 », le côté « kit », la pièce à l'appui
+run-console-unite16-d210-20261118-155959.txt, l'exclusion « non »] ;
+⑤ l'atelier ENTIER re-déposé au coffre + l'annonce.
+
+LA SUITE : la séquence tirée ÉPUISÉE et l'unité 04 close — la campagne
+regarde LES FERMETURES : l'attribution empirique au commandement (les
+QUATRE unités vécues, les livraisons comptées), les fermetures H6-H8, le
+PDF final de la campagne, le DOI Zenodo, le grant. Le labo tient désormais
+CINQ lois d'épreuve au bac (la gravure parsée, la feuille, le guichet, la
+liaison, l'écran) — chaque faute voyageuse engendra sa règle.
+
+(18/11/2026, la session de la réception du run v3 — reçu TEL QUEL, recoupé,
+le V1 rouge nommé sur pièces, l'épreuve des métriques née, la cap tenue :
+l'unité 04 close sur son rouge, la pièce jamais fautive)

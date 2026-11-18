@@ -1,0 +1,24 @@
+TÉMOIN DU RUN DE L'UNITÉ 04 D210 — loupe-16 saisie × bras T (la campagne D210, la comparaison des workflows)
+==============================================================================
+le run      : 2026-11-18T15:00:08Z (UTC) — la machine du développeur
+la machine  : PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+la pièce    : loupe.exe 127488 o, sha256 b382e01b76333a161e9731d72c290f769ad77b52bb7a3e8ffb3cd399b4ef5b20
+le verdict  : 8 VERT, 1 ROUGE — ÉCART NOMMÉ
+
+LES VECTEURS :
+  VERT T0:la-piece-recoupee-a-l-empreinte-gravee
+  VERT V2:le-scenario-4d5a
+  VERT V2:la-vue-qui-suit-le-recadrage
+  VERT V3:E1-sans-session
+  VERT V3:E2-la-cellule-fantome
+  VERT V3:E3-le-257e-distinct
+  VERT V4:le-repli-les-ignores
+  VERT V5:le-disque-falsifie-attrape
+  ROUGE V1:le-differentiel-10000-frappes
+
+LE GESTE QUI RESTE À LA MAIN (jamais automatisé, D99) :
+  DATER ce témoin (la date de votre main), le SIGNER,
+  renvoyer le dossier preuves-unite16/ ENTIER au coffre /test.
+
+Daté le : ___18/11/2026_________________
+Signé    : __Alexis Lopez__________________

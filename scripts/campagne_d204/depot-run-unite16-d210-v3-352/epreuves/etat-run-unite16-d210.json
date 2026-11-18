@@ -1,0 +1,73 @@
+{
+ "contexte": {
+  "console": "D:\\Downloads\\kit-unite-04-d210-20261118-v3\\run-console-unite16-d210-20261118-155959.txt",
+  "argv": [
+   "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+   "scenario-unite16.py"
+  ],
+  "debut": "18/11/2026 15:59:59",
+  "fin": "18/11/2026 16:00:08",
+  "duree_s": 9.7,
+  "code": 1,
+  "n_vert": 8,
+  "n_rouge": 1,
+  "verdicts": [
+   [
+    true,
+    "T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit"
+   ],
+   [
+    false,
+    "V1:le-differentiel-10000-frappes — le journal PAR DÉCALAGE (la réécriture REMPLACE, la borne 256 refusée), l'attente CONSOMMÉE par l'engagement, le tampon de vue (le recouvrement immédiat), la marque sale, LA GARDE RÉ-ARMÉE à chaque écriture, le pas clampé, LA VUE QUI SUIT (loupe-02 re-lit le DISQUE VIVANT) — tout == le modèle Python"
+   ],
+   [
+    true,
+    "V2:le-scenario-4d5a — « 4d5a » au curseur 0x22 : les DEUX octets au journal ET au tampon (visibles immédiatement), la marque sale, LA GARDE ré-armée, la cellule suivante active (curseur 0x24)"
+   ],
+   [
+    true,
+    "V2:la-vue-qui-suit-le-recadrage — le curseur au-delà de la vitrine → la nouvelle vue 0xd0 (aligne16_inf), LA RELECTURE par loupe-02 le scellé (le disque vivant, le recouvrement du journal au tampon) — la cellule suivante ATTEND à l'écran"
+   ],
+   [
+    true,
+    "V3:E1-sans-session — sans session ouverte → -4, la phrase nommée à la barre"
+   ],
+   [
+    true,
+    "V3:E2-la-cellule-fantome — le curseur forgé au-delà du remplissage → -3 « hors bornes », RIEN au journal (le refus PRÉCÈDE), l'attente CONSOMMÉE"
+   ],
+   [
+    true,
+    "V3:E3-le-257e-distinct — le 257e distinct → -3 « journal plein - Ctrl+S », les 256 premiers INTACTS (RIEN perdu)"
+   ],
+   [
+    true,
+    "V4:le-repli-les-ignores — « z », « ! », l'espace IGNORÉS proprement (rax = 0, rien bougé) ; « 4 » frappé puis VK_SUPPR : le nibble EFFACÉ (le premier chiffre repart) ; hors attente : ignoré"
+   ],
+   [
+    true,
+    "V5:le-disque-falsifie-attrape — le disque falsifié (l'octet 8 de la fenêtre re-lue muté) : le tampon après la relecture == le modèle du MUTANT (divergent de l'original) — la pièce a lu SON disque à elle par la poignée fausse, la différentielle ATTRAPE LE FAUX (le fixture falsifie-16.bin vit au réceptacle)"
+   ]
+  ],
+  "ligne_témoin": "[témoin] D:\\Downloads\\kit-unite-04-d210-20261118-v3\\preuves-unite16\\temoin-unite16.txt — 8 VERT, 1 ROUGE",
+  "rouge_ok": false
+ },
+ "etapes": {
+  "run": true,
+  "collecte": true,
+  "livre": true
+ },
+ "livraisons": 0,
+ "atelier": "D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520",
+ "livre": {
+  "atelier": "D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520",
+  "m1": "T-loupe-16-d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente",
+  "m3": "2026-11-18,T,loupe-16-d210,run-terrain,15:59,16:00,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3",
+  "shas": {
+   "livraisons.csv": "f602f84b8713e698ca6998580d9f63997ae1c22dce30fe22c66ab733a531339a",
+   "carnet_temps_humain.csv": "9882c68325b6eaf97ff3a966868282a5796ecfe2479a085cd2b7753d5f7bcfc2",
+   "defauts.csv": "1bed8908ea9e187d8cf1e6d8e2c1c0b8c70c057e523ae048d64dd48943270ef6",
+   "journal-ouverture.txt": "4c036f089e3fbb964525b4fa83ac870ed1f893ba2300e10b5521d797cf2f28bc"
+  }
+ }
+}

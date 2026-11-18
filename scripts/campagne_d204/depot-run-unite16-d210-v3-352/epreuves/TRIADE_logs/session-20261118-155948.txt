@@ -1,0 +1,54 @@
+15:59:49  [GUI] la fenêtre née — v2.0.2, L'ATELIER CHOISI PAR CONSTRUCTION — le commandement du développeur : « pour les GUI test, tu peux faire en sorte que je puisse choisir le dossier de l'atelier afin que le livre se mette a jour durant le run ? » — VÉCU au terrain à l'unité 04 (l'Entrée 348), PORTÉ PAR CONSTRUCTION à la présente : le GUI naît AVEC — la ligne M1 au verdict RECOPIÉ, la ligne M3 aux bornes OBSERVÉES (votre main demeure pour l'honnête borne ; D202 et D99 intacts)
+15:59:49  [GUI] le kit : D:\Downloads\kit-unite-04-d210-20261118-v3
+15:59:49  [verrou:GRAINE-D210.txt] VERT — la graine D217 (consignée AVANT le premier appel, jamais re-tirée)
+15:59:49  [verrou:LANCEUR-UNITE-16-T.bat] VERT — la console officielle du kit (le run SA console, INTACT — CA6)
+15:59:49  [verrou:LISEZMOI-KIT-UNITE-04-D210.txt] VERT — le livre du kit (l'ordre de jeu du terrain — CHOISIR CE DOSSIER)
+15:59:49  [verrou:brouillon-loupe-16-saisie.asm] VERT — le brouillon it3 du bras T (la composition des éléments convergés, la notation consignée)
+15:59:49  [verrou:journal-tokens-d210.jsonl] VERT — le journal des tokens (100 % log-api, la couture nommée)
+15:59:49  [verrou:garde-brut-d210.jsonl] VERT — le garde-brut de la rig (le journal brut de la construction)
+15:59:49  [verrou:loupe.exe] VERT — LA PIÈCE de campagne (le slot loupe-16 RVA 0x6240 porte la notation D210, 656 o cristallisés — 14e45f57…)
+15:59:49  [verrou:notation-loupe-16-saisie.asm] VERT — la notation D210 (le texte de la pièce au slot)
+15:59:49  [verrou:proxy.exe] VERT — le scellé de l'ère (la première fenêtre du doré V1)
+15:59:49  [verrou:scenario-unite16.py] VERT — LE JUGE CORRIGÉ (la liaison memmove au TROISIÈME argument — le compte 8, l'arité des DOUZE autres appels du fichier ; les vecteurs INTACTS, l'épreuve de la liaison née au labo : la plomberie exécutée contre le fichier livré, TOUT VERT)
+15:59:49  [verrou:source-loupe-16-C.c] VERT — le source du bras C (gcc -O2 PROPRE, la pièce livrée à l'épreuve)
+15:59:49  [verrou:temoin-3f.bin] VERT — le témoin 3 × 64 Kio + 1 (la fixture du kit)
+15:59:49  [verrou:tests-loupe-16-C.md] VERT — la suite de tests du bras C (N/B/R + la falsification)
+15:59:49  [verrou:EMPREINTES-KIT-UNITE-04-D210.txt] VERT — la gravure du kit RÉVISION 3 (regénérée d'UNE ligne — le scénario corrigé ; sha256 en tête — le format que le scénario scellé parse ; NÉE parsée : le défaut T0 de l'unité 01 ne se reproduit pas)
+15:59:49  [verrou] VERT — 14/14 pièces + la preuve T0 (13 pièces vues par le scénario scellé)
+15:59:49  [VERROU] VERT — le kit recoupé — TOUT LANCER attend votre clic
+15:59:57  [atelier] le dossier choisi : D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520
+15:59:57  [ATELIER] le choix parti — le verrou des QUATRE registres court
+15:59:57  [atelier] livraisons.csv : VERT — la métrique M1 — la ligne de livraison née du run (le verdict RECOPIÉ)
+15:59:57  [atelier] carnet_temps_humain.csv : VERT — la métrique M3 — la ligne du carnet née du geste observé (les bornes OBSERVÉES par le GUI)
+15:59:57  [atelier] defauts.csv : VERT — la règle D202 — JAMAIS touchée par le GUI (les défauts se nomment à votre main, l'analyse n'est jamais machine)
+15:59:57  [atelier] journal-ouverture.txt : VERT — le registre d'ouverture — JAMAIS touché (l'ouverture du 14/11 scellée)
+15:59:59  [TOUT LANCER] parti — le verrou → le run → la collecte → LE LIVRE (à l'atelier choisi) → le témoin
+15:59:59  === TOUT LANCER — 18/11/2026 15:59:59 : le verrou recoupé, le run part, la collecte suivra, le livre se met à jour à l'ATELIER CHOISI, le témoin est à VOTRE MAIN (D99) ===
+15:59:59  [run] === LE RUN DE L'UNITÉ 04 D210 (loupe-16 saisie × bras T) — la campagne D210, le terrain du développeur ===
+15:59:59  [run] [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit
+15:59:59  [run] [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff7b2080000
+15:59:59  [run] [guichet] les QUATRE feuilles liées par la table d'imports : user32 InvalidateRect (le repeint de loupe-16), kernel32 SetFilePointerEx + ReadFile (la relecture de loupe-02 le scellé) ET GetLastError (le chemin d'échec de la relecture — le -6 nommé) — chaque geste vérifié, la re-protection posée, la relecture recoupée
+15:59:59  [run]     [V1] le curseur ou la vue divergent
+15:59:59  [run]     [V1] le curseur ou la vue divergent
+15:59:59  [run]     [V1] le curseur ou la vue divergent
+16:00:08  [run] [ROUGE] V1:le-differentiel-10000-frappes — le journal PAR DÉCALAGE (la réécriture REMPLACE, la borne 256 refusée), l'attente CONSOMMÉE par l'engagement, le tampon de vue (le recouvrement immédiat), la marque sale, LA GARDE RÉ-ARMÉE à chaque écriture, le pas clampé, LA VUE QUI SUIT (loupe-02 re-lit le DISQUE VIVANT) — tout == le modèle Python
+16:00:08  [run] [VERT] V2:le-scenario-4d5a — « 4d5a » au curseur 0x22 : les DEUX octets au journal ET au tampon (visibles immédiatement), la marque sale, LA GARDE ré-armée, la cellule suivante active (curseur 0x24)
+16:00:08  [run] [VERT] V2:la-vue-qui-suit-le-recadrage — le curseur au-delà de la vitrine → la nouvelle vue 0xd0 (aligne16_inf), LA RELECTURE par loupe-02 le scellé (le disque vivant, le recouvrement du journal au tampon) — la cellule suivante ATTEND à l'écran
+16:00:08  [run] [VERT] V3:E1-sans-session — sans session ouverte → -4, la phrase nommée à la barre
+16:00:08  [run] [VERT] V3:E2-la-cellule-fantome — le curseur forgé au-delà du remplissage → -3 « hors bornes », RIEN au journal (le refus PRÉCÈDE), l'attente CONSOMMÉE
+16:00:08  [run] [VERT] V3:E3-le-257e-distinct — le 257e distinct → -3 « journal plein - Ctrl+S », les 256 premiers INTACTS (RIEN perdu)
+16:00:09  [run] [VERT] V4:le-repli-les-ignores — « z », « ! », l'espace IGNORÉS proprement (rax = 0, rien bougé) ; « 4 » frappé puis VK_SUPPR : le nibble EFFACÉ (le premier chiffre repart) ; hors attente : ignoré
+16:00:09  [run] [VERT] V5:le-disque-falsifie-attrape — le disque falsifié (l'octet 8 de la fenêtre re-lue muté) : le tampon après la relecture == le modèle du MUTANT (divergent de l'original) — la pièce a lu SON disque à elle par la poignée fausse, la différentielle ATTRAPE LE FAUX (le fixture falsifie-16.bin vit au réceptacle)
+16:00:09  [run] [témoin] D:\Downloads\kit-unite-04-d210-20261118-v3\preuves-unite16\temoin-unite16.txt — 8 VERT, 1 ROUGE
+16:00:09  [run] === LE RUN DE L'UNITÉ 04 D210 FINI : dater et signer le témoin de votre main, renvoyer preuves-unite16/ ENTIER au coffre /test ===
+16:00:09  [run] FINI — 8 VERT, 1 ROUGE recopiés (code 1)
+16:00:09  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-04-d210-20261118-v3\preuves-unite16\temoin-unite16.txt
+16:00:09  [collecte] la console COPIÉE au réceptacle : run-console-unite16-d210-20261118-155959.txt
+16:00:09  [collecte] DEPOT-d210-unite16.txt né au réceptacle (3 pièces)
+16:00:09  [COLLECTE] née — DEPOT-d210-unite16.txt au réceptacle (3 pièces)
+16:00:09  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-04-d210-20261118-v3\preuves-unite16\temoin-unite16.txt
+16:00:09  [LIVRE] mis à jour durant le run — les lignes M1/M3 couchées à l'atelier choisi (D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520)
+16:00:09  [livre] la ligne M1 couchée : T-loupe-16-d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+16:00:09  [livre] la ligne M3 couchée : 2026-11-18,T,loupe-16-d210,run-terrain,15:59,16:00,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3
+16:00:09  [livre] le run ROUGE : la ligne defauts.csv se nomme À VOTRE MAIN (D202 — jamais automatisée)
+16:01:29  [GUI] la fenêtre fermée

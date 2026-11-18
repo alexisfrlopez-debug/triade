@@ -1,0 +1,14 @@
+=== L'ÉPREUVE DES MÉTRIQUES (L5 — née du ROUGE V1 du terrain v3, l'Entrée 352) : LE JUGE POSE L'ÉCRAN QU'IL ANNONCE ===
+[ROUGE] L5a-le-scenario-pose-l-ecran — AUCUNE écriture à R_METRIQUES [0xFDF0] au scénario livré — la zone vit à son état statique (LES ZÉROS du .data), la pièce lit lignes=0, la vitrine dégénère à LA VUE MÊME
+[CONSTAT] le .data livré à R_METRIQUES+8 [0xFDF8] = 0 (l'état statique — personne ne le pose au terrain)
+
+-- L5b : LE TERRAIN RECONSTITUÉ (les métriques à leur état statique — les zéros ; le modèle du juge lignes=27) --
+    [V1] le curseur ou la vue divergent — frappe 328 : la pièce pose vue=16 curseur=192, le modèle tient vue=0 curseur=192
+    [V1] le curseur ou la vue divergent — frappe 329 : la pièce pose vue=16 curseur=192, le modèle tient vue=0 curseur=192
+    [V1] le curseur ou la vue divergent — frappe 330 : la pièce pose vue=16 curseur=193, le modèle tient vue=0 curseur=193
+[VERT] L5b-le-terrain-reconstitue — 9673 divergences aux 10 000 frappes — le problème « le curseur ou la vue divergent » == la console du terrain MOT POUR MOT ; la PREMIÈRE à la frappe 328 (la pièce pose vue=16, le modèle tient vue=0)
+
+-- L5c : LE LABO RECONSTITUÉ (les métriques POSÉES — 27, le geste du harnais ; le même modèle) --
+[VERT] L5c-le-labo-reconstitue — 0 divergence — la pièce N'EST PAS en faute : l'écran posé, le différentiel EST VERT (l'état de l'oracle à la construction)
+
+[BILAN] 2 VERT, 1 ROUGE — la faute nommée : la classe « les-metriques-ecran-jamais-posees-par-le-juge » (le côté KIT ; la pièce intacte b382e01b…, per-spec : elle lit l'écran que l'hôte doit poser)

@@ -1,0 +1,23 @@
+LE RUN DE L'UNITÉ 04 D210 (LOUPE-16 SAISIE × BRAS T) — début le 18/11/2026 15:59:59
+l'argv exact : C:\Users\admin\AppData\Local\Programs\Python\Python314\python.exe scenario-unite16.py
+============================================================
+=== LE RUN DE L'UNITÉ 04 D210 (loupe-16 saisie × bras T) — la campagne D210, le terrain du développeur ===
+[VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit
+[T0] l'image cartographiée DONT_RESOLVE @ 0x7ff7b2080000
+[guichet] les QUATRE feuilles liées par la table d'imports : user32 InvalidateRect (le repeint de loupe-16), kernel32 SetFilePointerEx + ReadFile (la relecture de loupe-02 le scellé) ET GetLastError (le chemin d'échec de la relecture — le -6 nommé) — chaque geste vérifié, la re-protection posée, la relecture recoupée
+    [V1] le curseur ou la vue divergent
+    [V1] le curseur ou la vue divergent
+    [V1] le curseur ou la vue divergent
+[ROUGE] V1:le-differentiel-10000-frappes — le journal PAR DÉCALAGE (la réécriture REMPLACE, la borne 256 refusée), l'attente CONSOMMÉE par l'engagement, le tampon de vue (le recouvrement immédiat), la marque sale, LA GARDE RÉ-ARMÉE à chaque écriture, le pas clampé, LA VUE QUI SUIT (loupe-02 re-lit le DISQUE VIVANT) — tout == le modèle Python
+[VERT] V2:le-scenario-4d5a — « 4d5a » au curseur 0x22 : les DEUX octets au journal ET au tampon (visibles immédiatement), la marque sale, LA GARDE ré-armée, la cellule suivante active (curseur 0x24)
+[VERT] V2:la-vue-qui-suit-le-recadrage — le curseur au-delà de la vitrine → la nouvelle vue 0xd0 (aligne16_inf), LA RELECTURE par loupe-02 le scellé (le disque vivant, le recouvrement du journal au tampon) — la cellule suivante ATTEND à l'écran
+[VERT] V3:E1-sans-session — sans session ouverte → -4, la phrase nommée à la barre
+[VERT] V3:E2-la-cellule-fantome — le curseur forgé au-delà du remplissage → -3 « hors bornes », RIEN au journal (le refus PRÉCÈDE), l'attente CONSOMMÉE
+[VERT] V3:E3-le-257e-distinct — le 257e distinct → -3 « journal plein - Ctrl+S », les 256 premiers INTACTS (RIEN perdu)
+[VERT] V4:le-repli-les-ignores — « z », « ! », l'espace IGNORÉS proprement (rax = 0, rien bougé) ; « 4 » frappé puis VK_SUPPR : le nibble EFFACÉ (le premier chiffre repart) ; hors attente : ignoré
+[VERT] V5:le-disque-falsifie-attrape — le disque falsifié (l'octet 8 de la fenêtre re-lue muté) : le tampon après la relecture == le modèle du MUTANT (divergent de l'original) — la pièce a lu SON disque à elle par la poignée fausse, la différentielle ATTRAPE LE FAUX (le fixture falsifie-16.bin vit au réceptacle)
+[témoin] D:\Downloads\kit-unite-04-d210-20261118-v3\preuves-unite16\temoin-unite16.txt — 8 VERT, 1 ROUGE
+=== LE RUN DE L'UNITÉ 04 D210 FINI : dater et signer le témoin de votre main, renvoyer preuves-unite16/ ENTIER au coffre /test ===
+============================================================
+la durée : 9.7 s — fin le 18/11/2026 16:00:08
+le code retour : 1
