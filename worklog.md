@@ -13567,3 +13567,113 @@ Work Log:
 - LA CONSIGNATION : la présente Task 219 + l'Entrée 352 ; la carte OU-TROUVER portée à 352 (la chaîne 351 conservée) ; le bac scripts/campagne_d204/depot-run-unite16-d210-v3-352/ [epreuves/ (26 pièces + atelier/) + l'épreuve-metriques-unite16-console.txt + le rapport] + les TROIS scripts du geste à scripts/campagne_d204/ [rapatrie_run_unite16_v3_352, epreuve_metriques_unite16, livrer_rapport_352] ; download/RECOUP-352-preuves-unite16-v3.txt [la copie locale] ; le push GitHub + le miroir Drive rafraîchi.
 - SUITE : au développeur — ① LA CHIRURGIE AU LIVRE (le bloc-notes) : renommer la ligne du GUI « T-loupe-16-d210-it1 » en « it3 » (la 4e colonne 1 → 3), poser la ligne du run v1 REFUS « T-loupe-16-d210-it1,…,ROUGE » [le kit v1, 12:12, code 2], poser les TROIS défauts à defauts.csv (it1 guichet-descripteur-quatre-champs, it2 liaison-memmove-deux-arguments, it3 les-metriques-ecran-jamais-posees-par-le-juge), l'atelier ENTIER re-déposé + l'annonce ; ② LES FERMETURES de la campagne (la séquence ÉPUISÉE, l'unité 04 close) : l'attribution empirique au commandement, les fermetures H6-H8, le PDF final, le DOI Zenodo, le grant.
   (18/11/2026, la session de la réception du run v3 — reçu TEL QUEL, recoupé, le V1 rouge nommé sur pièces, l'épreuve des métriques née, la cap tenue : l'unité 04 close sur son rouge, la pièce jamais fautive)
+
+
+Task ID: 220
+Agent: Z.ai (agent principal — la session de l'attribution empirique, la re-livraison au commandement)
+Task: LE KIT D'ATTRIBUTION EMPIRIQUE DE L'UNITÉ 04 D210 LOUPE-16 SAISIE × BRAS C CONSTRUIT ET LIVRÉ AU COMMANDEMENT (le « go » du développeur — les fermetures ouvertes : le plan D210 § 4, « la pièce C re-livrée via un kit standard minimal — la question "le flux compilé pur l'aurait-il produite ?" tranchée sur pièces ») : kit-unite-04-C-d210-attribution-20261118.zip [264 911 o, 9 entrées, md5 3905883c…] au coffre /test recoupé byte-byte.
+
+Work Log:
+- LE COMMANDEMENT ET L'ÉTAT : le « go » reçu à la suite de l'Entrée 352
+  (l'unité 04 close sur son rouge à la cap, la séquence épuisée) — la
+  première fermeture AU COMMANDEMENT : L'ATTRIBUTION EMPIRIQUE. L'état
+  vérifié AU COFFRE avant tout geste : l'atelier inchangé (15:04:13Z — la
+  chirurgie prescrite à la 352 DEMEURE à la main du développeur, nommée),
+  le worklog à l'Entrée 352, les kits et dépôts INTACTS (D143).
+- LA CHAÎNE : LE GAP MINGW CLOS — la commande prescrite au LISEZMOI du kit
+  T vécut AU BAC : la chaîne croisée Debian extraite (gcc-mingw-w64-x86-64
+  12.2.0, binutils-mingw 2.40, mingw-w64-dev 10.0 — les .deb dépaquetés au
+  bac, aucun root requis, la chaîne nommée) ; la commande EXACTE :
+  x86_64-w64-mingw32-gcc -O2 -std=c11 -Wall -Wextra -shared -o
+  loupe-16-d210-c.dll source-loupe-16-C.c loupe-16-c.def — la dll née
+  PROPRE (87 937 o, sha256 9a1945ff…), L'EXPORT UNIQUE loupe_16_saisie
+  @+0x1420. L'OBSERVATION D189 NOMMÉE : la construction n'est PAS
+  byte-reproductible au chemin près (les registres de débogage du lieur
+  portent le chemin de sortie — 2 octets au .text, le gros au DWARF) : LA
+  GRAVURE EST LA RÉFÉRENCE, la pièce livrée fixée à 9a1945ff… pour
+  toujours.
+- LA FERMETURE DE L'EXPORT (l'analyse pure-fichier, la traversée récursive
+  des appels) : 418 instructions appelantes depuis loupe_16_saisie — UN
+  SEUL appel sortant : LA FEUILLE STRLEN de msvcrt.dll par son thunk IAT
+  (le slot @+0x91a0, la valeur sur disque 0x92d4 = l'entrée hint/nom, une
+  RVA NUE — l'adresse où l'on sauterait sans la liaison) — LE PRÉCÉDENT
+  EXACT DE LA 304 (le memcmp de l'unité 5) : le kit standard C À FEUILLE,
+  la classe feuille-non-liée re-testée au second chemin de chargement (le
+  plan § 2 : « la classe feuille-non-liée re-testée sur les DEUX chemins »).
+- LE SCÉNARIO scenario-unite16C.py : le modèle de la campagne INCHANGÉ
+  depuis l'édition v2 du kit 01 — DONT_RESOLVE, la découverte PAR LA TABLE
+  D'EXPORTS (les arités unifiées — la leçon de la 302), LA FEUILLE STRLEN
+  LIÉE au guichet fail-closed AVANT le premier appel (LE DESCRIPTTEUR AUX
+  CINQ CHAMPS — la loi L2, la faute de la 350 fut le parse à QUATRE ; LA
+  MARCHE DES PLAGES FT jusqu'au NULL — la doctrine D54 ; AUCUNE RVA codée ;
+  VirtualProtect l'instant du geste + LE MEMMOVE À SON COMPTE de huit
+  octets — la loi L4, la faute de la 351 fut l'arité à DEUX ; LA
+  RE-PROTECTION et LA RELECTURE recoupées) ; L'ÉCRAN EN ARGUMENT (LIGNES =
+  27 à chaque appel — la loi L5 PAR CONSTRUCTION au bras C : la zone
+  WM_SIZE que le juge T doit POSER n'existe pas au miroir C, il la DEMANDE,
+  le juge la DONNE, le modèle la TIENT — le même 27 que le harnais et que
+  l'épreuve POSIX) ; LE JUGE = LE MODÈLE INDÉPENDANT — le miroir VERBATIM
+  de l'épreuve POSIX de la 349 (la même graine 20261115, les mêmes
+  tirages), les vecteurs en FONCTIONS PURES (v1..v5 sur (saisir, Session))
+  pour le rejeu véridique du labo.
+- LES ÉPREUVES AU LABO (D122 — le bac n'a aucun Windows ; la pièce RÉELLE
+  éprouvée AVANT livraison, la brèche de la 302 refermée pour toujours) :
+  ① LA PARITÉ POSIX — l'épreuve de la 349 reconduite INTÉGRALE contre le
+  source scellé recompilé au gcc du labo : 14 VERT, 0 ROUGE (1,6 s) ; ②
+  L'ÉPREUVE DE LA DLL MAPPÉE (la méthode D204 : la dll LIVRÉE mappée par
+  sections à la base préférée 0x25BFA0000, les en-têtes comme le vrai
+  chargeur ; LE SHIM STRLEN msx64→SysV — rcx→rdi, rdi/rsi SAUVÉS ET
+  RENDUS, la leçon de convention de la 304 ; LE TRAMPOLINE SysV→msx64 à
+  six arguments — les quatre registres réarrangés + LIGNES et le caractère
+  aux slots [rsp+0x20]/[rsp+0x28], l'ombre posée) : 8 STRUCTURELS (l'export
+  au fichier, la feuille au fichier — le descripteur aux cinq champs, le
+  mappage recoupé, le shim né, le bloc extrait PAR AST, LA LIAISON
+  VERBATIM au contexte neutre — le memmove à son compte et la relecture
+  RÉELS contre la pièce mappée, le trampoline né, le module chargé) + T0
+  (la gravure parsée au lecteur du scénario même — la loi L1) + LES TREIZE
+  VECTEURS du scénario LIVRÉ rejoués VERBATIM contre la pièce mappée —
+  TOUT VERT, 0 ROUGE (1,5 s) ; ③ L'ÉPREUVE DU ZIP : 4 VERT (les 9 entrées
+  == le staging byte-byte, le scénario dézippé compile, la gravure du zip
+  parse au lecteur du scénario même, 8 pièces T0 recoupé).
+- LA MESURE : la session vécu SANS la rig L6 au bac (aucun compter_tokens
+  câblé à cette session — le bac sandbox ne porte pas le harnais) : LA
+  MESURE M2 DE LA SESSION EST UN GAP NOMMÉ (D189 — jamais un nombre
+  reconstruit) ; M4 : le build mingw 0,08 s ; la parité POSIX 1,6 s ;
+  l'épreuve de la dll mappée 1,5 s.
+- LE KIT kit-unite-04-C-d210-attribution-20261118/ : LES NEUF PIÈCES (la
+  pièce loupe-16-d210-c.dll 9a1945ff…, le source SCELLÉ byte-identique
+  892ef03e… == le kit v3 de l'unité 04, le .def EXPORTS loupe_16_saisie,
+  le scénario 0e49ac1d…, le lanceur [double BOM + CRLF, la signature
+  commune] cda8112a…, le scellé proxy.exe 446279f3… == la campagne, le
+  témoin 3f c5fc1f28… == la campagne, la gravure EMPREINTES 8 pièces, le
+  LISEZMOI [le rôle, la question du plan, la lecture de la réponse, les
+  cinq lois tenues]).
+- LA LIVRAISON (par l'OAuth relais du 12/11 — VIVANT) :
+  kit-unite-04-C-d210-attribution-20261118.zip [264 911 o, md5 3905883c…]
+  au /test — MATCH par re-téléchargement byte-byte ; D143 : les kits v1/v2/
+  v3 de l'unité 04 et leurs dépôts, les kits des unités 01/02/03 — INTACTS,
+  jamais recouverts.
+- LA CONSIGNATION : la présente Task 220 + l'Entrée 353 ; la carte
+  OU-TROUVER portée à 353 (la chaîne 352 conservée) ; le bac
+  scripts/campagne_d204/attribution-unite16-C-353/ [le staging du kit + le
+  zip, epreuves/ (la console POSIX, la console de la dll mappée, le
+  falsifie du labo), asm/ (le trampoline, le shim, les sources), build/
+  (le pdb, le lib)] + les scripts du geste ; le push GitHub + le miroir
+  Drive.
+- SUITE : au développeur — ① LE RUN D'ATTRIBUTION au geste (dézip →
+  LANCEUR-UNITE-16-C-ATTRIBUTION.bat seul — l'attendu : LES QUATORZE
+  VERDICTS VERT (T0 + les treize vecteurs, 14 VERT 0 ROUGE, code 0) → le
+  témoin daté signé D99 → preuves-unite16C/ ENTIER au /test → l'annonce
+  « run d'attribution dans le drive /test ») ET la ligne au livre AU MÊME
+  GESTE (M1 « C-loupe-16-attr-it1,C,loupe-16-attr,1,2026-11-18,<la date>,<le
+  verdict recopié>,en attente » + M3 au carnet + l'atelier ENTIER
+  re-déposé) ; ② LA CHIRURGIE DE LA 352 demeure prescrite (le renommement
+  it1→it3 de la ligne du GUI, la ligne du run v1 REFUS, les TROIS défauts
+  à defauts.csv) ; ③ au retour : la réception recoupée, LA LECTURE DE
+  L'ATTRIBUTION tranchée sur pièces (VERT → les échappées de la campagne
+  PORTÉES À LA RIG — le format blanchi ; ROUGE → le défaut nommé D202 AVANT
+  tout correctif, l'attribution déplacée au format) — puis les fermetures
+  qui restent (H6-H8, le PDF final, le DOI Zenodo, le grant).
+  (18/11/2026, la session de l'attribution — la pièce C compilée re-livrée
+  au kit standard minimal, la question du plan prête à être tranchée sur
+  pièces, les cinq lois tenues au bac AVANT la livraison)

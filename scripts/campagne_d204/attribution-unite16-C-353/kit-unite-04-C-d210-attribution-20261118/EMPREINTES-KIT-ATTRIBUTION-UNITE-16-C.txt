@@ -1,0 +1,12 @@
+﻿EMPREINTES — LE KIT D'ATTRIBUTION DE L'UNITÉ 04 D210 (loupe-16 saisie ×
+bras C — la pièce C compilée re-livrée via le kit standard minimal, le plan D210 § 4)
+(chaque pièce sha256 — le scénario recoupe à T0 ; une divergence, rien ne court)
+
+cda8112a00f680b76e8e9305af43a85b86e2ccb89c989d6fbaa518aa629e0b05  LANCEUR-UNITE-16-C-ATTRIBUTION.bat
+0ed195dbd5eb60fcecdaafe4473eb2bbfd7a8b0c3008006c60cb202c6cd4eece  LISEZMOI-KIT-ATTRIBUTION-UNITE-16-C.txt
+407c223639b81f22f345ac1efbb1bebaf96b1e747a22cc9cbab216b84b5c699d  loupe-16-c.def
+9a1945ffefe6bbe853b7c36761a47d4be298b8a862f6207f8090330bc3b98d92  loupe-16-d210-c.dll
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe
+0e49ac1d63ee0d11dfb1105d4c9cf46016a88d14570f6519b88be19f911931cd  scenario-unite16C.py
+892ef03e7a960a73e75bf08cf11622a1cc14c20426ec5fb2208d59a8d8741da4  source-loupe-16-C.c
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin

@@ -1,0 +1,25 @@
+=== L'ÉPREUVE DE LA DLL MAPPÉE — la pièce C réelle contre le scénario livré, au labo (D122) ===
+[VERT] P1:l-export-unique-decouvert-au-fichier — loupe_16_saisie @+0x1420 — la découverte par la table, la leçon de la 302
+[VERT] P2:la-feuille-strlen-decouverte-au-fichier — le descripteur aux CINQ champs, la marche des plages FT jusqu'au NULL — le slot @+0x91a0, la valeur sur disque 0x92d4 (l'entrée hint/nom, l'adresse nue — la 304)
+[VERT] P3:le-mappage-recoupe — la base préférée 0x25bfa0000, les en-têtes et les 20 sections mappées — l'export relu AU MAPPAGE : ['loupe_16_saisie']
+[VERT] P4:le-shim-strlen-ne — msx64→SysV : rcx→rdi, rdi/rsi SAUVÉS ET RENDUS (la leçon de convention de la 304), l'alignement compté — la cible libc strlen 0x7f096f714840
+[VERT] P5:le-bloc-liaison-extrait-par-ast — lier_feuille_strlen extrait VERBATIM du scénario livré
+[VERT] P6:la-liaison-verbatim-vecue — le memmove à SON COMPTE (8) et la relecture RÉELS contre la pièce mappée : le slot @+0x91a0 repointé au shim 0x7f096f89c000, la valeur sur disque 0x92d4 lue avant le geste — le bloc du scénario LIVRÉ, au contexte neutre
+[VERT] P7:le-trampoline-ne — les quatre registres réarrangés + LIGNES et le caractère aux slots [rsp+0x20]/[rsp+0x28], l'ombre posée — la cible 0x25bfa1420
+[VERT] P8:le-module-charge — la graine 20261115, L'ÉCRAN EN ARGUMENT LIGNES=27 (la loi L5 : le même 27 que le harnais et l'épreuve POSIX — l'écran annoncé, l'écran posé)
+[VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe-16-d210-c.dll sha256 9a1945ffefe6bbe8… == la gravure du kit — le lecteur du scénario même, la loi L1
+[VERT] V1:le-differentiel-10000-frappes-temoin-3f — le journal PAR DÉCALAGE (la réécriture REMPLACE, la borne 256 refusée), l'attente CONSOMMÉE, le tampon (le recouvrement), la marque, la garde, le pas clampé, LA VUE QUI SUIT — tout == le modèle Python
+[VERT] V1:le-differentiel-10000-frappes-grand-8k — le journal PAR DÉCALAGE (la réécriture REMPLACE, la borne 256 refusée), l'attente CONSOMMÉE, le tampon (le recouvrement), la marque, la garde, le pas clampé, LA VUE QUI SUIT — tout == le modèle Python
+[VERT] V2:le-scenario-4d5a — « 4d5a » : les DEUX octets au journal ET au tampon, la marque, LA GARDE ré-armée, la cellule suivante active (curseur 0x24)
+[VERT] V2:la-vue-qui-suit-le-recadrage — le curseur au-delà de la vitrine → la nouvelle vue 208 (aligne16_inf), LA RELECTURE-MIROIR (le disque + le recouvrement du journal), remplissage 384 — la cellule suivante ATTEND à l'écran
+[VERT] V3:E1-sans-session — -4, la phrase nommée à la barre (le mode MESSAGE posé)
+[VERT] V3:E2-la-cellule-fantome — le curseur forgé au-delà du remplissage → -3, RIEN au journal (le refus PRÉCÈDE), l'attente CONSOMMÉE
+[VERT] V3:E2-la-fantome-marche-sale — la marque posée : la fantôme REFUSÉE QUAND MÊME — le remplissage lu u32 SEUL (jamais le qword)
+[VERT] V3:le-fichier-vide — taille zéro : aucune cellule n'existe → -3
+[VERT] V3:E3-le-257e-distinct — le 257e distinct → -3 nommé, les 256 INTACTS (RIEN perdu)
+[VERT] V4:le-non-hexa-ignore — « z », « ! », l'espace IGNORÉS proprement (rien bougé)
+[VERT] V4:vk-suppr-a-l-attente — « 4 » frappé, VK_SUPPR : le nibble EFFACÉ ; hors attente : ignoré
+[VERT] V5:la-garde-re-armee-a-l-ecriture — la pièce : l'écriture RÉ-ARME la garde (refus_quitter = 0) — Alt+F4 une seule fois après l'édition AVERTIRAIT (le scénario de loupe-18 tient au bras C)
+[VERT] V5:le-disque-falsifie-attrape — le disque falsifié (l'octet 8 de la fenêtre re-lue muté AU BUFFER VIVANT) : le tampon après la relecture == le modèle du MUTANT (divergent de l'original) — la pièce a lu SON disque à elle, la différentielle ATTRAPE LE FAUX (le fixture falsifie-16.bin vit au réceptacle)
+
+=== L'ÉPREUVE DE LA DLL MAPPÉE : 9 STRUCTURELS, 13 VECTEURS VERT, 0 ROUGE ===

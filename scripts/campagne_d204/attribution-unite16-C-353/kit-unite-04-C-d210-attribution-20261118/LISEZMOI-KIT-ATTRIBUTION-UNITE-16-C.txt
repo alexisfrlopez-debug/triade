@@ -1,0 +1,121 @@
+LISEZMOI — LE KIT D'ATTRIBUTION DE L'UNITÉ 04 D210 : LOUPE-16 SAISIE ×
+BRAS C, LA PIÈCE C COMPILÉE RE-LIVRÉE VIA LE KIT STANDARD MINIMAL
+(le plan D210 § 4 — pré-enregistré AVANT toute mesure, sha256 4a3b1311… :
+« L'ATTRIBUTION EMPIRIQUE des échappées kit-side — la pièce C re-livrée
+via un kit standard minimal (la question "le flux compilé pur l'aurait-il
+produite ?" tranchée sur pièces) » ; la séquence tirée ÉPUISÉE, l'unité 04
+close sur son rouge à la cap — la campagne regarde les fermetures)
+================================================================================
+
+L'OBJET DE CE KIT : le test d'ATTRIBUTION EMPIRIQUE prescrit au plan. La
+campagne D210 a vécu ses QUATRE unités (loupe-02 VERT, loupe-08 VERT,
+loupe-13 VERT, loupe-16 ROUGE à la cap) — et les échappées kit-side furent
+NOMMÉES sur pièces à chacune (le juge v1 fautif de l'unité 01, le format de
+gravure T0, puis les TROIS fautes du bloc de l'unité 04 : le parse du
+guichet à QUATRE champs, l'arité memmove à DEUX arguments, l'écran jamais
+posé par le juge). LA QUESTION QUI TRANCHE : ces échappées vivent-elles à
+LA RIG (la construction assistée du labo — l'oracle écrit-avant-code, la
+notation, le juge écrit du modèle) ou AU FORMAT (le kit livré au terrain —
+la découpe, la gravure, la plomberie du chargeur) ? LE TEST : la pièce C
+compilée — LE MÊME source scellé de l'unité 04 (source-loupe-16-C.c,
+sha256 892ef03e…, byte pour byte le fichier du kit v3) — re-livrée via le
+KIT STANDARD MINIMAL de la campagne (la forme des kits C de D204 : UNE
+pièce, UN scénario, le lanceur, la gravure, le livre — AUCUN artefact de
+rig, AUCUN GUI, AUCUNE notation). Si ce kit court VERT au terrain, le flux
+compilé pur N'AURAIT PAS PRODUIT les échappées : elles se consignent à la
+rig ; s'il échappe, le format est nommé SUR PIÈCES lui aussi. La réponse
+vient du terrain, jamais du labo.
+
+LA PIÈCE : loupe-16-d210-c.dll (87 937 o, sha256 9a1945ff…) — le source
+SCELLÉ compilé par LE FLUX STANDARD de la campagne : x86_64-w64-mingw32-gcc
+12.2.0 -O2 -std=c11 -Wall -Wextra -shared -o loupe-16-d210-c.dll
+source-loupe-16-C.c loupe-16-c.def (la commande prescrite au LISEZMOI du
+kit T ; le GAP mingw du labo — consigné à la 349 — est CLOS : la chaîne
+croisée Debian extraite au bac, gcc 12.2.0, la dll née PROPRE). L'EXPORT
+UNIQUE loupe_16_saisie @+0x1420 — la saisie au miroir C : les zones PAR
+POINTEURS (le cadre, la saisie, le journal), le disque PAR ARGUMENT, ET
+L'ÉCRAN EN ARGUMENT (lignes = 27 à chaque appel — la loi L5 PAR
+CONSTRUCTION au bras C : la zone WM_SIZE que le juge T doit POSER n'existe
+pas ici, le miroir C la DEMANDE, le juge la DONNE, le modèle la TIENT).
+
+LA CLÔTURE DE LA PIÈCE (constatée au labo, l'analyse pure-fichier) :
+418 instructions appelantes — UN SEUL appel sortant, LA FEUILLE STRLEN de
+msvcrt.dll par son thunk IAT (le slot @+0x91a0, la valeur sur disque
+0x92d4 = l'entrée hint/nom, une RVA NUE) — le précédent EXACT de la 304
+(le memcmp de l'unité 5) : le kit standard C À FEUILLE. Le reste des
+imports (KERNEL32, l'UCRT) sert le démarreur CRT du lieur, qui ne court
+JAMAIS sous DONT_RESOLVE.
+
+LE SCÉNARIO (scenario-unite16C.py) : le modèle de la campagne Loupe,
+INCHANGÉ depuis l'édition v2 du kit 01 — le scénario est LE CHARGEUR :
+LoadLibraryEx DONT_RESOLVE, la découverte PAR LA TABLE D'EXPORTS (les
+arités unifiées (base, rva) — la leçon de la 302), LA FEUILLE STRLEN LIÉE
+au guichet fail-closed AVANT le premier appel (le descripteur aux CINQ
+champs — la loi L2, la faute de la 350 fut le parse à QUATRE ; la marche
+des plages FT jusqu'au NULL — la doctrine D54 ; AUCUNE RVA codée ;
+VirtualProtect l'instant de l'écriture, la re-protection, la relecture
+recoupée ; le memmove à SON COMPTE de huit octets — la loi L4, la faute
+de la 351 fut l'arité à DEUX). LE JUGE EST LE MODÈLE INDÉPENDANT — le
+miroir VERBATIM de l'épreuve POSIX de la construction (la 349 : le même
+modèle qui y courut 14 VERT contre la pièce C même), la même graine
+20261115, les mêmes tirages.
+
+LES VECTEURS (le contrat loupe-16 révision 1 — le miroir du bras T) :
+T0 la pièce recoupée à la gravure ; V1 le différentiel 10 000 frappes
+AUX DEUX disques (le témoin 3f de 63 o et le grand 8k) ; V2 le scénario
+« 4d5a » ET la vue qui suit (le recadrage à 208, la relecture-miroir) ;
+V3 les rejets (E1 sans session, E2 la fantôme ET la fantôme marque sale,
+le vide, E3 le 257e distinct) ; V4 le repli (les ignorés, VK_SUPPR) ;
+V5 la falsification (LA GARDE RÉ-ARMÉE — le scénario de loupe-18 TIENT —
+ET le disque falsifié au buffer vivant, la différentielle attrape le
+faux). L'ATTENDU : LES QUATORZE VERDICTS VERT (14 VERT, 0 ROUGE, code 0).
+
+LES ÉPREUVES AU LABO (D122 — le bac n'a aucun Windows ; la pièce RÉELLE
+éprouvée AVANT livraison, la brèche de la 302 refermée pour toujours) :
+① LA PARITÉ POSIX — le source scellé recompilé au gcc du labo, l'épreuve
+de la 349 reconduite INTÉGRALE : 14 VERT, 0 ROUGE ; ② L'ÉPREUVE DE LA
+DLL MAPPÉE — la dll livrée MAPPÉE par sections à la base préférée, les
+en-têtes comme le vrai chargeur, LE SHIM STRLEN msx64→SysV (rdi/rsi
+SAUVÉS ET RENDUS — la leçon de convention de la 304) recevant la feuille,
+LE TRAMPOLINE SysV→msx64 à six arguments conduisant l'export, LA LIAISON
+VERBATIM (le bloc lier_feuille du scénario LIVRÉ, extrait PAR AST,
+exécuté au contexte neutre — le memmove à son compte et la relecture
+RÉELS) : 8 contrôles STRUCTURELS + LES TREIZE VECTEURS du scénario livré
+rejoués VERBATIM contre la pièce mappée — TOUT VERT, 0 ROUGE. La gravure
+elle-même passe le lecteur du scénario même (la loi L1).
+
+LE GESTE DU RUN : DÉZIPPEZ CE KIT (une extraction FRAÎCHE), puis
+DOUBLE-CLIQUEZ LANCEUR-UNITE-16-C-ATTRIBUTION.bat seul (SmartScreen peut
+demander « Plus d'informations → Exécuter quand même » — le .bat est
+signé de RIEN, c'est l'honnêteté). Le kit exige Python 3 au PATH.
+
+LE RÉCEPTACLE : preuves-unite16C/ naîtra DU RUN — le témoin
+temoin-unite16C.txt (D99 : DATER ET SIGNER DE VOTRE MAIN, jamais
+automatisé) et le fixture falsifie-16.bin. Renvoyez le dossier ENTIER au
+coffre /test.
+
+AU LIVRE (le bloc-notes — jamais Excel — le guide-344 § 7 reconduit : la
+ligne À CHAQUE run, jamais en retard) : ① la ligne M1 à livraisons.csv
+« C-loupe-16-attr-it1,C,loupe-16-attr,1,2026-11-18,<la date de votre
+run>,<le verdict RECOPIÉ de la console>,en attente » ; ② la ligne M3 au
+carnet « 2026-11-18,C,loupe-16-attr,run-terrain,<votre début>,<votre
+fin>,<vos minutes>,<votre note> » ; ③ RIEN à defauts.csv si le run est
+VERT — s'il est ROUGE, le défaut se nomme à l'onglet 6 (la pièce à
+l'appui run-console-unite16C.txt) ; ④ l'atelier ENTIER re-déposé au
+coffre + l'annonce (« run d'attribution dans le drive /test »).
+
+LA LECTURE DE LA RÉPONSE (ce que le verdict tranchera) : le run VERT —
+le flux compilé pur, livré au format standard minimal avec ses cinq lois,
+N'AURAIT PAS PRODUIT les échappées de la campagne : l'attribution les
+porte À LA RIG (le juge écrit du modèle aux terrains à état), et le
+format est blanchi SUR PIÈCES ; le run ROUGE — une échappée de plus,
+nommée sur pièces AVANT tout correctif (D202), et l'attribution se
+déplace AU FORMAT. Dans les DEUX cas le labo reçoit, recoupe byte-byte,
+et consigne — la réponse vit au terrain, jamais au labo.
+
+LES EMPREINTES : EMPREINTES-KIT-ATTRIBUTION-UNITE-16-C.txt (chaque pièce
+sha256 ; certutil -hashfile … SHA256 chez vous recoupe).
+
+(18/11/2026, la session de l'attribution — la pièce C compilée re-livrée
+au kit standard minimal, la question du plan prête à être tranchée sur
+pièces ; les cinq lois tenues au bac AVANT la livraison)
