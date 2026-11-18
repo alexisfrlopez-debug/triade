@@ -1,0 +1,337 @@
+GUIDE-CORRECTIONS-LIVRE-354-20261118 — LES CORRECTIONS DU LIVRE QUE LE
+DERNIER RUN RÉCLAME (le run d'attribution reçu — 14 VERT, 0 ROUGE — les
+SIX lignes prescrites, les TROIS défauts à nommer, puis la fermeture)
+================================================================================
+(le 18/11/2026, la session du guide — écrit à la commande « fais un guide
+détaillé s'il y a des corrections du livre à faire à la main » ; l'annonce du
+développeur : « dernier run dans le dossier /test du drive » ; le précédent
+des guides du livre 305, 308, 311, 312, 313 et 344 ; les réceptions recoupées
+qui portent les prescriptions : la 350 [le refus v1], la 351 [le crash v2],
+la 352 [le run v3 rouge à la cap], la 353 [le kit d'attribution livré] et LA
+PRÉSENTE [le run d'attribution reçu])
+
+CE QUE CE GUIDE EST. Le mode d'emploi des corrections que le livre attend —
+et OUI, il y en a : le dernier run (l'ATTRIBUTION EMPIRIQUE de l'unité 04,
+loupe-16 saisie × bras C, le 18/11 à 18:08) fut VERT, mais son kit est MINIMAL
+— AUCUN GUI, AUCUNE écriture machine : la ligne M1 et la ligne M3 de ce run
+sont À VOTRE MAIN, et la chirurgie de la 352 (prescrite à la réception du run
+v3) demeure entière, et les DEUX lignes de carnet du guide-344 attendent
+depuis la 345, et les TROIS défauts du bloc de l'unité 04 ne furent JAMAIS
+nommés à defauts.csv. Tout ce qui est écrit ici est lu des consignations du
+projet : les RAPPORT-RECEPTION-…-V2/V3-20261118.txt de la racine du /test, le
+GUIDE-LIGNE-CARNET-ET-SUITE-20261118.txt (le guide-344), le LISEZMOI du kit
+d'attribution, et LE LIVRE LUI-MÊME — sondé à l'instant au coffre (chaque
+registre rapatrié byte-byte, md5 == les métadonnées Drive, échec fermé).
+Rien n'est inventé ; les écarts sont nommés tels quels.
+
+LA RÉPONSE À VOTRE QUESTION, D'ABORD : les corrections à faire à la main sont
+SIX lignes et TROIS défauts —
+  — livraisons.csv : le bloc T-loupe-16 DEVIENT trois lignes (le renommement
+    de la ligne du GUI, la ligne du refus v1, la ligne it2 qui demeure) PLUS
+    la ligne d'attribution à la suite [geste ①] ;
+  — defauts.csv : les TROIS défauts du bloc de l'unité 04, jamais nommés
+    [geste ②] ;
+  — carnet_temps_humain.csv : les TROIS lignes à votre main — loupe-02-d210,
+    loupe-08-d210 (le guide-344 § 3, en attente depuis la 345) et
+    l'attribution [geste ③].
+Puis l'atelier ENTIER re-déposé au coffre + l'annonce. Trente à quarante
+minutes au bloc-notes.
+
+
+LE DERNIER RUN, REÇU ET RECOUPÉ (l'attribution — la pièce à l'appui de chaque
+ligne que ce guide prescrit) : le dépôt kit-unite-04-C-d210-attribution-
+20261118/ au /test (le kit dézippé + les pièces nées du run). LA CONSOLE
+(run-console-unite16C.txt, 6 250 o, UTF-16 LE — la forme des kits C) :
+T0 VERT — la pièce recoupée à la gravure (loupe-16-d210-c.dll 87 937 o,
+sha256 9a1945ff… == la gravure du kit), l'export unique découvert
+(loupe_16_saisie @+0x1420), LE GUICHET VERT (la feuille strlen de msvcrt.dll
+liée au slot IAT @+0x91a0 — la valeur sur disque 0x92d4, l'entrée hint/nom —
+l'écriture protégée l'instant du geste, la relecture recoupée), puis LES
+QUATORZE VERDICTS VERT : V1 ×2 (le différentiel 10 000 frappes aux DEUX
+disques), V2 ×2 (le scénario « 4d5a » ET la vue qui suit), V3 ×5 (les rejets),
+V4 ×2 (le repli), V5 ×2 (la garde ré-armée, le disque falsifié attrapé) —
+« 14 VERT, 0 ROUGE ». LE TÉMOIN (temoin-unite16C.txt, 1 319 o) : le run
+2026-11-18T17:08:00Z (UTC) == 18:08:00 locale, la machine « PORTABLE ·
+Windows 10 · AMD64 · Python 3.14.10 » (CA2, la même machine que toute la
+campagne), le verdict « 14 VERT, 0 ROUGE — VERT » RECOPIÉ (jamais
+recalculé), LES QUATORZE vecteurs listés — et LA MAIN POSÉE : « Daté le :
+18/11/2026 », « Signé : Alexis Lopez » (D99 — la date JUSTE, l'écart de la
+348 ne se reproduit pas). LE RÉCEPTACLE preuves-unite16C/ NÉ : falsifie-16.bin
+(8 192 o, né du V5) + le témoin. LES PIÈCES SCELLÉES recoupées au dépôt :
+3/3 VERT (la dll, le scénario, le source == la gravure de la 353 — le run ne
+toucha AUCUNE pièce scellée). LA CHRONOLOGIE : le kit livré 17:42:31 locale
+(la 353) → le run 18:08:00 → la main au témoin ~18:08:30 → le coffre né
+18:09:06. Jamais une date avant le kit, jamais avant le run.
+
+LA LECTURE DE L'ATTRIBUTION (ce que le verdict tranche — le LISEZMOI du kit
+la porte) : le run VERT — le flux compilé pur, livré au format standard
+minimal avec ses cinq lois, N'AURAIT PAS PRODUIT les échappées de la
+campagne : l'attribution les porte À LA RIG (le juge écrit du modèle aux
+terrains à état), et le format est blanchi SUR PIÈCES. La réponse vient du
+terrain, jamais du labo — elle est là, signée de votre main.
+
+
+L'ÉTAT DU LIVRE, SONDÉ AU COFFRE À L'INSTANT : l'atelier
+/test/atelier-campagne-d204-20261114-013520/ tel que re-déposé le 18/11 à
+16:04:15 locale (APRÈS le run v3, AVANT sa réception — les QUATRE registres
+rapatriés et recoupés md5) —
+  — livraisons.csv  2 558 o  (sha256 204c1399…) : 27 lignes de campagne —
+    les 22 de D204, les TROIS D210 vertes (loupe-02, loupe-08, loupe-13) ET
+    les DEUX de l'unité 16 : la ligne du GUI « T-loupe-16-d210-it1 » (le run
+    v3 — le numéro du kit, pas celui du run : l'écart nommé R11-① de la 352)
+    et la ligne de votre main « T-loupe-16-d210-it2 » (le crash v2, la 4e
+    colonne « 1 » : l'écart nommé R11-②, jamais corrigé) ;
+  — carnet_temps_humain.csv  2 209 o  (sha256 9882c683…) : la dernière ligne
+    est la M3 du run v3 (le GUI, 15:59 → 16:00) — les DEUX lignes prescrites
+    par le guide-344 (loupe-02-d210, loupe-08-d210) RESTENT ABSENTES ;
+  — defauts.csv  3 870 o  (sha256 1bed8908…) : les HUIT lignes D204 — les
+    TROIS défauts du bloc de l'unité 04 JAMAIS nommés (R11-④ de la 352) ;
+  — journal-ouverture.txt  648 o  (sha256 4c036f08…) : l'ouverture du 14/11,
+    inchangée.
+L'atelier re-déposé à 16:04 précède la réception v3 (16:27) et le run
+d'attribution (18:08) : le kit d'attribution n'a AUCUN GUI — RIEN ne s'écrit
+que votre main. Si votre atelier local porte déjà des gestes de la
+chirurgie 352, les lignes manquantes seules restent — l'état FINAL attendu
+(les blocs ci-dessous, byte-byte) est la référence ; le labo recoupe à la
+réception et nomme les écarts.
+
+
+════════════════════════════════════════════════════════════════════════
+PARTIE I — LES GESTES (30 à 40 minutes, au bloc-notes)
+════════════════════════════════════════════════════════════════════════
+
+§ 1 · OÙ VIT LE LIVRE — L'ATELIER DU COFFRE
+--------------------------------------------------------------------------------
+Le livre est L'ATELIER : /test/atelier-campagne-d204-20261114-013520/ — le
+même dossier daté que toute la campagne (les gestes des guides 305 à 313,
+344 et la présente). Téléchargez l'atelier ENTIER du coffre (les QUATRE
+registres), ouvrez chaque registre AU BLOC-NOTES (JAMAIS Excel — le
+précédent des guides), portez les gestes ci-dessous, renvoyez l'atelier
+ENTIER (le § 6). L'encodage demeure : UTF-8 SANS BOM, les fins de ligne LF —
+le bloc-notes Windows les conserve tels quels à l'enregistrement ; aucune
+ligne vide, aucun CR (le verrou du GUI les refuse, la convention du livre).
+
+§ 2 · GESTE ① — livraisons.csv : LE BLOC T-LOUPE-16 DEVIENT TROIS LIGNES,
+PUIS LA LIGNE D'ATTRIBUTION À LA SUITE
+--------------------------------------------------------------------------------
+QUATRE mouvements (le livre ne ment jamais : les TROIS runs de l'unité 04
+ont couru, l'attribution aussi) :
+
+  ①-a RENOMMEZ la ligne née du GUI — la PREMIÈRE des deux lignes
+      T-loupe-16-d210 (celle que le GUI coucha au run v3) :
+      « T-loupe-16-d210-it1 » DEVIENT « T-loupe-16-d210-it3 », et la 4e
+      colonne (numero_iteration) « 1 » DEVIENT « 3 » (la chirurgie ① de la
+      352 : le numéro d'itération rendu VRAI — la ligne porte le run v3, le
+      verdict ROUGE recopié, les dates justes). Le renommement est SÛR : le
+      bloc est CLOSE à la cap (le plan § 7 : trois livraisons, l'arrêt au
+      premier vert recoupé — v1, v2, v3 vécues) ; aucun re-run ne viendra,
+      l'idempotence du GUI ne reverra jamais it1 ;
+  ①-b POSEZ la ligne du run v1 REFUS à SA PLACE chronologique — AVANT la
+      ligne it2 (la chirurgie ② de la 352, la ligne prescrite à la 350 :
+      le kit v1, le run 12:12, le REFUS « RVA-HORS-SECTIONS », code 2) ;
+  ①-c la ligne it2 (posée de votre main à la 351) DEMEURE byte-byte — la 4e
+      colonne « 1 » est l'écart nommé R11-② de la 352 : JAMAIS corrigé, la
+      main demeure la main (D189) ;
+  ①-d POSEZ la ligne d'attribution À LA SUITE de la dernière ligne (le
+      LISEZMOI du kit la prescrit — le verdict RECOPIÉ du témoin).
+
+L'ÉTAT EXACT DU BLOC T-loupe-16 APRÈS LES GESTES ①-a/①-b/①-c (les DEUX
+lignes actuelles remplacées par les TROIS, l'ordre chronologique des runs :
+12:12, 14:09, 15:59) :
+
+T-loupe-16-d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+T-loupe-16-d210-it2,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+T-loupe-16-d210-it3,T,loupe-16-d210,3,2026-11-18,2026-11-18,ROUGE,en attente
+
+PUIS LA LIGNE D'ATTRIBUTION (le geste ①-d) — l'état exact des SEPT dernières
+lignes du livre après le geste entier :
+
+T-loupe-02-d210-it1,T,loupe-02-d210,1,2026-11-17,2026-11-17,VERT,en attente
+T-loupe-08-d210-it1,T,loupe-08-d210,1,2026-11-18,2026-11-18,VERT,en attente
+T-loupe-13-d210-it1,T,loupe-13-d210,1,2026-11-18,2026-11-18,VERT,en attente
+T-loupe-16-d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+T-loupe-16-d210-it2,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+T-loupe-16-d210-it3,T,loupe-16-d210,3,2026-11-18,2026-11-18,ROUGE,en attente
+C-loupe-16-attr-it1,C,loupe-16-attr,1,2026-11-18,2026-11-18,VERT,en attente
+
+Les valeurs, lues des pièces (jamais de mémoire — la règle du plan) :
+  — LA LIGNE it1 : le refus v1 du 18/11 12:12:19 (code 2, 0,2 s — la
+    console run-console-unite16-d210-20261118-121219.txt au dépôt
+    kit-unite-04-d210-20261118/) ;
+  — LA LIGNE it2 : la vôtre, demeurée (le crash v2 du 18/11 14:09:03,
+    code 1 — la console …-140903.txt au dépôt …-v2/) ;
+  — LA LIGNE it3 : le run v3 du 18/11 15:59:59 → 16:00:08 (8 VERT 1 ROUGE,
+    code 1 — la console …-155959.txt au dépôt …-v3/) ;
+  — LA LIGNE D'ATTRIBUTION : date_kit 2026-11-18 (le kit livré à la 353,
+    17:42:31 locale), date_run 2026-11-18 (18:08:00 locale), le verdict
+    « VERT » RECOPIÉ du témoin (« 14 VERT, 0 ROUGE — VERT » — le verdict en
+    toutes lettres vit au témoin et à la console, la colonne le porte comme
+    les 28 lignes précédentes) ;
+  — LA COLONNE RECOUP porte « en attente » — la convention de TOUTES les
+    lignes du livre (aucune ligne ne fut jamais retouchée après coup) ; le
+    verdict du recoup vit au worklog (les Entrées 350 à 354) et aux
+    RAPPORT-RECEPTION de la racine du /test.
+
+§ 3 · GESTE ② — defauts.csv : LES TROIS DÉFAUTS DU BLOC DE L'UNITÉ 04
+(onglet 6·DÉFAUTS — jamais nommés, D202 : un défaut se nomme AVANT toute
+correction ; les correctifs vécurent, les lignes manquent)
+--------------------------------------------------------------------------------
+À LA SUITE de la dernière ligne (C-app-it2, plantage-hote-feuille-memcpy),
+AJOUTEZ les TROIS lignes — le format du registre (les colonnes :
+livraison,bras,tache,classe,mecanisme,cote,piece_appui,exclusion,
+raison_exclusion ; le mécanisme ENTRE GUILLEMETS quand il porte une virgule
+— la convention des lignes existantes) :
+
+T-loupe-16-d210-it1,T,loupe-16-d210,guichet-descripteur-quatre-champs,le champ +8 ForwarderChain lu comme la RVA du nom (la RVA 0x0) ; la marche de l'OFT au lieu des plages FT (D54) ; la 4e feuille GetLastError non liée,kit,run-console-unite16-d210-20261118-121219.txt,non,
+T-loupe-16-d210-it2,T,loupe-16-d210,liaison-memmove-deux-arguments,"memmove appelé à DEUX arguments (dst, src) — le compte 8 manquant, contraire à l'arité des DOUZE autres appels du fichier ; la ligne née du correctif v2, l'épreuve du guichet n'éprouvait que la découverte",kit,run-console-unite16-d210-20261118-140903.txt,non,
+T-loupe-16-d210-it3,T,loupe-16-d210,les-metriques-ecran-jamais-posees-par-le-juge,"la pièce lit les lignes visibles à R_METRIQUES+8 [0xFDF8] (la zone WM_SIZE) ; le harnais du labo la pose (poser_metriques 27), l'épreuve POSIX la passe (27) — le scénario-juge n'a AUCUN geste pour elle : la zone vit aux zéros du .data, lignes=0, la vitrine dégénère à la vue même, la vue rampe à chaque engagement — le modèle tient 384 : la vue diverge dès la frappe 328",kit,run-console-unite16-d210-20261118-155959.txt,non,
+
+Les classes et les mécanismes, lus des réceptions (jamais de mémoire) :
+  — it1 (la 350, R11-②) : le descripteur d'imports dépaqueté à QUATRE champs
+    — le champ +8 (ForwarderChain, la valeur 0) lu comme la RVA du nom :
+    la recherche du nom à la RVA 0x0 → LE REFUS « RVA-HORS-SECTIONS » ;
+  — it2 (la 351, R11-②) : le liage mort au premier geste — memmove appelé à
+    DEUX arguments, le compte (8 octets) manquant → TypeError, code 1 ;
+  — it3 (la 352, R11-④) : le juge ne pose jamais la zone d'écran
+    R_METRIQUES+8 — la vitrine dégénère, la vue diverge dès la frappe 328
+    (le V1 ROUGE du run v3) ;
+  — LE CÔTÉ « kit » les trois fois (la faute au kit voyagée jusqu'au
+    terrain, le run consommé — D202), l'exclusion « non » (aucune des
+    règles d'exclusion ne s'applique : ni RET-NU — nommé après le run — ni
+    l'infrastructure du coffre).
+RIEN POUR L'ATTRIBUTION : le run est VERT (le LISEZMOI du kit ③ : « RIEN à
+defauts.csv si le run est VERT ») — la pièce C compilée au kit standard
+minimal n'échappa à rien : les cinq lois la couvrirent.
+
+§ 4 · GESTE ③ — carnet_temps_humain.csv : LES TROIS LIGNES À VOTRE MAIN
+(le temps humain des runs — la frontière M3 : le labo ne fabrique JAMAIS une
+ligne de mesure, la même frontière que le témoin D99)
+--------------------------------------------------------------------------------
+À LA SUITE de la dernière ligne (celle du GUI, loupe-16-d210 15:59 → 16:00),
+AJOUTEZ les TROIS lignes du temps humain. Le format du carnet (l'en-tête le
+porte) : date,bras,tache,geste,debut,fin,minutes,notes — le geste se nomme
+« run-terrain » :
+
+2026-11-17,T,loupe-02-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+2026-11-18,T,loupe-08-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+2026-11-18,C,loupe-16-attr,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+
+LA RÈGLE M3 (l'en-tête du carnet la porte) : la ligne se remplit AU GESTE,
+jamais reconstruite de mémoire ; arrondi à la minute ; toute interruption
+> 5 min ferme la ligne et en ouvre une autre. Les pièces ancrent les bornes
+— la chronologie recoupée (R7 des RECOUP-340/343 et la présente, les heures
+LOCALES du terrain, l'heure d'hiver UTC+1) :
+  — loupe-02-d210 (le re-run du 17/11 au juge réparé) : la console couchée
+    21:02:45 → LA MAIN au témoin 21:03:38 → le coffre né 21:04:11. Le geste
+    entier (le dézip du kit v2, le double-clic du lanceur, TOUT LANCER, le
+    témoin daté signé, le renvoi au coffre) vécut AU MOINS de la première
+    ligne de la console à la naissance du dossier — votre début peut être
+    plus tôt, votre renvoi plus tard : VOTRE minute honnête prévaut (D189) ;
+  — loupe-08-d210 (le run du 18/11 au passage de minuit) : la console
+    00:09:11 → LA MAIN 00:09:51 → la fenêtre fermée 00:09:56 → le coffre
+    00:10:27 → preuves-unite08/ né 00:10:29. La même règle : vos bornes
+    honnêtes, la minute près ;
+  — loupe-16-attr (le run d'attribution du 18/11) : le kit livré 17:42:31 →
+    le run 18:08:00 → LA MAIN au témoin ~18:08:30 → le coffre né 18:09:06.
+    Le geste entier vécut du dézip au renvoi — vos bornes honnêtes.
+LA NOTE est à vous : ce que vous voulez nommer du geste (la machine calme,
+une lenteur, une observation — D189). Elle peut demeurer vide comme les
+lignes de D204.
+LES LIGNES DÉJÀ COUCHÉES PAR LE GUI (loupe-13-d210 10:26 → 10:27,
+loupe-16-d210 15:59 → 16:00) : elles demeurent — votre main seul peut ajuster
+l'honnête borne (D189 : la ligne vit à votre atelier local, éditable au
+bloc-notes ; la note du GUI nomme l'ancre).
+LES LIGNES OPTIONNELLES (D189 — aucune obligation, le précédent du guide-344
+§ 3) : le temps des runs faillits vécut aussi de votre main — le run v1 au
+juge fautif de l'unité 01 (le 17/11 20:01 → 20:03), les DEUX refus de
+l'unité 04 (le 12:12, 0,2 s ; le 14:09, 0,4 s). Si vous les consignez, ils
+portent CHACUN sa ligne (même date, geste run-terrain, la note nommant le
+refus ou le juge fautif — « l'itération ne se consomme pas » au premier) ;
+le livre ne ment jamais, les runs ont couru.
+LE CHRONO M4 ne s'écrit pas au carnet : il vit aux consoles et aux états des
+runs (le kit d'attribution n'en porte pas — le minimal ; les autres : 0,4 s,
+0,6 s, 9,7 s) et au labo (les RAPPORT de chaque unité).
+
+§ 5 · LES VÉRIFICATIONS ATTENDUES APRÈS LES GESTES (certutil -hashfile …
+SHA256 au terrain — le précédent des guides 305 à 344 : recoupez au
+bloc-notes, le livre ne ment jamais)
+--------------------------------------------------------------------------------
+  livraisons.csv : 2 711 octets, sha256
+    c8307f642ee2984979ace0f267d6e0dfdd8f22f927b60dab6b720fcc259f7758
+    (la référence-après-geste du labo : le livre reçu 2 558 o + le bloc
+    T-loupe-16 à trois lignes + la ligne d'attribution — les fins de ligne
+    LF, aucune ligne vide, aucun BOM, aucune autre retouche)
+  defauts.csv    : 5 009 octets, sha256
+    8ed77d6cdc6f36b491a7cbaa8b3ac422bff8c892e2a4819a4f3cce9f83c7983c
+    (le registre reçu 3 870 o + les TROIS lignes du geste ② — le LF final
+    posé, les mécanismes entre guillemets là où la virgule vit)
+  journal-ouverture.txt : 648 octets, sha256
+    4c036f089e3fbb964525b4fa83ac870ed1f893ba2300e10b5521d797cf2f28bc
+    (INCHANGÉ — l'ouverture du 14/11 scellée, aucune retouche)
+  carnet_temps_humain.csv : AUCUN condensé attendu — vos heures et vos
+    minutes sont à votre main (le § 4) ; les lignes de plus vérifiées à
+    l'œil : le format, les bornes, la règle.
+
+§ 6 · ENSUITE — L'ATELIER ENTIER RE-DÉPOSÉ AU COFFRE
+--------------------------------------------------------------------------------
+Enregistrez, puis renvoyez l'ATELIER ENTIER au /test du coffre Drive
+(glisser-déposer le dossier atelier-campagne-d204-20261114-013520/ — les
+QUATRE registres à jour, l'état reçu plus les gestes portés) et annoncez
+comme à l'accoutumée : « les lignes du livre dans le drive /test ». Le labo
+re-télécharge, recoupe les condensés, consigne l'Entrée qui reçoit les
+lignes — et la campagne regarde ses fermetures (la PARTIE II).
+
+
+════════════════════════════════════════════════════════════════════════
+PARTIE II — LA SUITE (les fermetures de la campagne)
+════════════════════════════════════════════════════════════════════════
+
+§ 7 · LA CLÔTURE QUE LE LIVRE PORTE APRÈS LES GESTES
+--------------------------------------------------------------------------------
+La campagne D210 compte alors ses QUATRE unités closes (loupe-02 VERT,
+loupe-08 VERT, loupe-13 VERT, loupe-16 ROUGE à la cap — la séquence tirée
+de la graine D217, jamais re-tirée, ÉPUISÉE) ET l'attribution tranchée sur
+pièces (VERT : les échappées portées à la rig — le juge écrit du modèle aux
+terrains à état ; le format standard blanchi). Le livre la dira en 29 lignes
+de campagne et ONZE défauts nommés — chacun sur pièces, aucun masqué
+(la censure sans exclusion : le résultat demeure).
+
+§ 8 · LES FERMETURES QUI RESTENT (le guide-344 § 9-10 reconduit, à votre
+commandement)
+--------------------------------------------------------------------------------
+  — LES HYPOTHÈSES H6-H8 aux fermetures (le taux d'échappées kit-side entre
+    bras — l'attribution vient de le trancher ; l'ordre n'affecte aucune
+    métrique au seuil de 5 % ; la spirale corrective > 50 % des tokens de
+    chaque unité — H8 TENUE à la deuxième : 51 %, l'Entrée 341) ;
+  — LE PDF FINAL : attendu à la fermeture des sessions de runs (le v0.18.1
+    est l'édition courante ; la finale portera la clôture D210 et la lecture
+    de l'attribution) ;
+  — LE DOI ZENODO ET LE GRANT D'ÉVALUATION à la licence (les gestes du
+    concédant — zenodo-metadata-v0180.json est déjà à la racine du coffre) ;
+  — LE DÉPÔT GitHub et le miroir Drive vivent à chaque session aux jetons
+    du /Tokens (le geste du labo — rien à votre main).
+
+§ 9 · LA CHECKLIST — L'ORDRE CONSEILLÉ
+--------------------------------------------------------------------------------
+  1. LE GESTE DU LIVRE (30 à 40 mn) : l'atelier téléchargé du /test →
+     livraisons.csv [geste ① : le bloc à trois lignes + la ligne
+     d'attribution] → defauts.csv [geste ② : les trois défauts] → le carnet
+     [geste ③ : les trois lignes à votre main] → les condensés recoupés
+     (§ 5) → l'atelier ENTIER re-déposé au /test + l'annonce ;
+  2. LA FERMETURE au commandement : la lecture de l'attribution portée au
+     PDF final (H6-H8, le DOI, le grant).
+
+Les lois qui gardent chaque geste : D99 (le témoin daté signé de votre
+main, jamais automatisé — la même frontière au carnet M3), D189 (les
+observations même défavorables consignées — la 4e colonne de it2 demeure,
+la date de la main demeure), D143 (rien n'est jamais détruit — les dépôts
+de refus demeurent au coffre), R7 (les pièces scellées intouchées), D202
+(les défauts nommés AVANT correction — les trois lignes du geste ②), et la
+formulation honnête (jamais « constant time proven » au-delà des runs
+signés).
+
+(18/11/2026, la session du guide — le dépôt au /test recoupé md5 à la
+réception ; la référence-après-geste du labo vit au bac
+scripts/campagne_d204/guide-corrections-livre-354/reference-apres-geste/ ;
+les QUATRE registres reçus vivent au bac …/sonde-dernier-run/ ; la
+consignation à l'Entrée 354 du worklog)
