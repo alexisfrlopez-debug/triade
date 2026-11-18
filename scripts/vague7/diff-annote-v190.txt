@@ -1,0 +1,86 @@
+LE DIFF ANNOTÉ — v0.18.1 → v0.19.0
+(chaque changement sourcé ; la v0.18.1 scellée demeure et fait foi)
+
+EN-TÊTE ET TITRE
+  - v0.18.1 → v0.19.0 (pdftitle, fancyhead, le bloc de commentaires)
+    [la nouvelle édition, la convention de chaque passe]
+  - \date : 17 → 19 November 2026, la description portée à la
+    clôture D210 [l'Entrée 357 : le livre close ; les Entrées
+    335-356 : la campagne vécue]
+
+ABSTRACT (les quatre ajouts)
+  - « --- then extended by the D210 campaign (17--18 November 2026,
+    identical formats across arms, randomized arm order, the
+    empirical attribution test)… » [D217 : le plan pré-enregistré ;
+    les Entrées 335-353 : la campagne ; l'Entrée 354 : la lecture]
+  - « the extension adds seven deliveries at identical formats ---
+    three kit-side escapes in the shared judge, the piece never at
+    fault, the empirical attribution reading 14 VERT 0 ROUGE »
+    [le livre reçu 355/357 : livraisons.csv 29 lignes ; l'Entrée
+    354 : l'attribution tranchée VERT]
+  - la plage des Entrées 305--319 → 305--357 aux trois occurrences
+    (l'abstract, le résumé français, le texte) [le worklog : les
+    Entrées 319 → 357]
+
+MÉTHODES — la nouvelle sous-section sec:d210
+  [le plan D210 : scripts/campagne_d204/PLAN-EXTENSION-D210.md,
+  sha256 4a3b1311… recoupé EXACT au bundle ; D217 : la graine
+  20261117, le tirage public — le bras T d'abord aux quatre unités,
+  une chance sur huit, consigné tel quel, jamais re-tiré ; les
+  Entrées 335-353 : les quatre unités ; l'Entrée 353 : le kit
+  d'attribution, le juge = le modèle indépendant]
+
+RÉSULTATS — RQ1, après les verdicts H1-H5
+  - le paragraphe « The D210 extension: H6--H8, explicit verdicts »
+    [H6 : l'Entrée 354 — l'attribution tranchée sur pièces, les
+    échappées portées à la rig, le format blanchi ; H7 : le tirage
+    D217 sans contraste — l'observation consignée, l'hypothèse
+    reportée ; H8 : les Entrées 341 (51 %, tenue), 346 (39 %,
+    rompue — les gestes mécaniques du labo), 349 (9 % — la
+    composition au tour 3) ; la première unité : les Entrées 335/336
+    — les appels par tour 13 536/23 220 et 5 291/19 390, la couture
+    jamais sommée en silence, 44 % de 42 610]
+  - le paragraphe « The extension's metrics, as consigned »
+    [M2 : les Entrées 336/341/346/349 — 42 610 (couture nommée),
+    52 729, 40 749, 26 662 ; le gap de l'attribution : l'Entrée 353
+    — aucun compter_tokens au bac, D189 ; M3 : le carnet reçu 357 —
+    4 min T / 1 min C, l'écart des bornes nommé (les consoles
+    1,5/1,3/1,1 min — les RECOUP 340/343/354) ; M4 : les Entrées
+    336 (33,6 s), 341 (4,0 s / 1,4 s), 346 (146 s / 8,1 s), 349
+    (57 s / 1,6 s), 353 (0,08 s / 1,6 s / 1,5 s)]
+  - \input{donnees/table-campagne-d210} — la table NÉE, générée du
+    registre par reconciliation_campagne_d210.py (jamais tapée à la
+    main ; la colonne It. celle du registre TEL QUE DÉPOSÉ — it2
+    porte « 1 », l'écart R11-② de la 352 jamais corrigé, D189)
+
+DISCUSSION — « What the extension adds »
+  [la lecture de clôture : les trois fautes au juge partagé, la
+  pièce jamais fautive ; le déclin des tokens 52 729 → 40 749 →
+  26 662 (les templates mûrissent) ; le compte humain 4 min / 1 min ;
+  ce que l'extension ne ferma pas : le test d'ordre (H7 reportée) et
+  la seconde machine (la réplication en attente)]
+
+MENACES — le paragraphe « campaign-specific »
+  - « prepared but not run » → « was run at the extension's close »
+    [l'Entrée 354 : le run d'attribution 14 VERT 0 ROUGE, la question
+    du plan § 4 tranchée sur pièces] ; la lecture à deux voies
+    FERMÉE : zéro échappée au code natif des deux bras aux DEUX
+    campagnes (29 livraisons), toutes au rig — les six de D204 (trois
+    spécifiques au format aux formats asymétriques), les trois de
+    D210 (toutes au juge partagé aux formats identiques) ; le
+    confondant résiduel : l'ordre (le tirage sans contraste)
+
+LA TABLE DES STATUTS — statuts_v190.tex
+  [la ligne « Campaign D210 (extension) » née : measured — les
+  verdicts H6/H7/H8, les gaps M2/M3 nommés ; la ligne « Independent
+  replication » portée : le D210 exécuté, le contraste H7 à tirer,
+  la seconde machine en attente]
+
+LES MACROS — macros_v190.tex régénérée
+  [journal 13 648 / worklog 13 743 / décisions 4 748 / plage
+  D1--D217 — les comptes exacts des sources vivantes, régénérés à
+  chaque passe]
+
+AUCUNE valeur mesurée de la v0.18.1 n'est modifiée — l'ajout est
+purement narratif (la clôture D210, la lecture de l'attribution, les
+lignes M3). L'édition scellée v0.18.1 demeure et fait foi.

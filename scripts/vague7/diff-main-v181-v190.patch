@@ -1,0 +1,307 @@
+--- edition-v0181/main.tex	2026-11-18 22:31:45.576181856 +0000
++++ edition-v0190/main.tex	2026-11-18 22:47:03.365518502 +0000
+@@ -1,19 +1,34 @@
+ % =====================================================================
+-%  TRIADE — édition académique v0.18.1 (manuscrit IMRAD, anglais)
+-%  L'édition v0.18.1 corrige les dix incohérences nommées par l'audit de
+-%  la vague 6 (instruction bqh4qlrqj) : plage des Entrées de clôture,
+-%  manifestations au slot, relation hint/RVA/adresse de crash, plage
+-%  exacte des ratios M1, note de non-additivité des médianes, décompte
+-%  des blocs crypto, réconciliation M4 (52.5/50.9, n=2), résidu PBT
+-%  (655/660), localisation de la table de checksums 0.1.1, table des
+-%  statuts complète (longtable). AUCUNE valeur mesurée n'est modifiée.
++%  TRIADE — édition académique v0.19.0 (manuscrit IMRAD, anglais)
++%  L'édition v0.19.0 porte la clôture de la campagne d'extension D210
++%  (le plan pré-enregistré 4a3b1311…, la graine 20261117, le tirage
++%  public — le bras T d'abord aux quatre unités, une chance sur huit,
++%  consigné tel quel) : les QUATRE unités closes (loupe-02 VERT,
++%  loupe-08 VERT, loupe-13 VERT, loupe-16 ROUGE à la cap — trois
++%  échappées comptées, toutes côté kit dans le scénario/juge partagé,
++%  la pièce jamais fautive aux deux formats), l'attribution empirique
++%  tranchée sur pièces (VERT : la même pièce C re-livrée via un kit
++%  standard minimal — 14 VERT 0 ROUGE, le flux compilé pur ne l'aurait
++%  pas produite), les verdicts explicites H6--H8 (H6 tenue par
++%  l'attribution ; H7 non testée — le tirage ne donna aucun contraste,
++%  l'effet d'ordre inidentifiable, l'hypothèse reportée ; H8 réfutée —
++%  51 %/39 %/9 %, une unité sur quatre au-dessus du seuil inscrit, la
++%  première à 44 % la couture nommée), les métriques M2/M3/M4 telles
++%  que consignées (la couture 23 220+19 390 de la première unité ; le
++%  gap M2 de l'attribution — aucun compter_tokens au bac — jamais un
++%  nombre reconstruit ; l'écart M3 des bornes du carnet — les lignes
++%  reçues telles quelles, la frontière D99 ; les M4 du labo), et les
++%  lignes M3 du carnet (cinq lignes run-terrain : 4 min T / 1 min C).
++%  AUCUNE valeur mesurée de la v0.18.1 n'est modifiée — l'édition
++%  scellée v0.18.1 demeure et fait foi ; la présente AJOUTE la lecture
++%  de clôture D210.
+ %  Corps du document : compilation Tectonic (XeTeX).
+ %  Les tableaux de données sont GÉNÉRÉS par les scripts d'extraction
+ %  (donnée unique : docs/JOURNAL_TRAVAIL.md + docs/DECISIONS.md + les
+-%  sorties brutes des instruments preuves_v110..v150 + les ledgers D204) et
+-%  \input ci-dessous — aucune donnée n'est tapée à la main ; les comptes du
+-%  journal vivent en macros (donnees/macros_v180.tex, régénérées à chaque
+-%  passe).
++%  sorties brutes des instruments preuves_v110..v150 + les ledgers D204
++%  et D210) et \input ci-dessous — aucune donnée n'est tapée à la main ;
++%  les comptes du journal vivent en macros (donnees/macros_v190.tex,
++%  régénérées à chaque passe).
+ % =====================================================================
+ \documentclass[11pt,a4paper]{article}
+ 
+@@ -43,11 +58,11 @@
+ \usepackage{fancyhdr}
+ \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+             urlcolor=liaison, unicode=true,
+-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.18.1)},
++            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.19.0)},
+             pdfauthor={Alexis Lopez}]{hyperref}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.18.1}
++\fancyhead[L]{\small\itshape TRIADE — academic edition v0.19.0}
+ \fancyhead[R]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ 
+@@ -56,7 +71,7 @@
+ 
+ % Les comptes EXACTS du journal (régénérés par extraire_donnees_v150.py —
+ % jamais un arrondi, jamais une divergence abstract/intro ; D190)
+-\input{donnees/macros_v180}
++\input{donnees/macros_v190}
+ 
+ \title{\textbf{TRIADE: Enabling LLM Agents to Write Native Code by Hand\\
+ Under Signed-Intent Governance\\
+@@ -64,7 +79,7 @@
+ fourteen-unit two-arm field campaign, and two sealed applications}}
+ \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
+ Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
+-\date{17 November 2026 — Academic edition v0.18.1 (the D204 campaign fully reconciled and decomposed; the RQ2 measurements unified under documented perimeters; the constant-time evidence reformulated as exact trace equality with the hardware runs reported; the unbounded proofs extended with a coverage lemma, a rule-by-rule TLA+ alignment and a 10{,}000-trace generative conformance campaign; the M4 verification time optimized without removing any control; the ten named inconsistencies of the v0.18.0 audit corrected --- the journal-closure range, the slot manifestations, the hint/RVA/crash-address relation, the exact M1-era ratio range, the median non-additivity note, the crypto-block count, the M4 reconciliation with the optimization's n{=}2 consigned, the PBT shrink residue, the checksum-table location, and the statuses table rendered complete)}
++\date{19 November 2026 — Academic edition v0.19.0 (the D210 extension campaign closed and carried: four units at identical formats and randomized order, the fourth closed on its red at the delivery cap with three kit-side escapes in the shared judge, the piece never at fault; the empirical attribution tranchée on pieces --- the same C piece re-delivered through a minimal standard kit, 14 VERT 0 ROUGE; the H6--H8 verdicts explicit --- H6 holds by attribution, H7 untested on a draw that gave no contrast, H8 falsified as the corrective spiral declined; the M2/M3/M4 metrics consigned as filed, their gaps named; no measured value of the sealed v0.18.1 edition modified)}
+ 
+ \begin{document}
+ \maketitle
+@@ -91,9 +106,17 @@
+ as sealed hand notation (arm T) and once as compiled C (arm C) --- six
+ controlled blocks, then a second real application (``Passeur'', an
+ interception tool for the developer's authorized pentest) --- closed
+-green and signed at both arms. We quantify four research questions on data drawn
++green and signed at both arms --- then extended by the D210 campaign
++(17--18 November 2026, identical formats across arms, randomized arm
++order, the empirical attribution test): four further units, the fourth
++closed on its red at the delivery cap with three counted escapes all
++kit-side in the shared judge, and the attribution re-delivering the same
++compiled piece through a minimal standard kit to read 14 VERT, 0 ROUGE
++--- the compiled pure flow would not have produced them. We quantify
++four research questions on data drawn
+ from a \nbLignesJournal-line append-only engineering journal (Entr'ees
+-consigned through 304; the campaign closures, Entr'ees 305--319,
++consigned through 304; the campaign closures and the extension, Entr'ees
++305--357,
+ carried in its \nbLignesWorklog-line companion task log and the campaign
+ ledger journal) and a \nbLignesDecisions-line append-only decision log
+ (\plageDecisions): (RQ1) the
+@@ -103,7 +126,9 @@
+ campaign adds 22 witnessed deliveries in which zero escapes were
+ attributable to the sealed notation itself (six named kit-side escapes,
+ the unbound-leaf class recurring twice at the same slot, one pre-named
+-judge artifact); (RQ2) the measured
++judge artifact), and the extension adds seven deliveries at identical
++formats --- three kit-side escapes in the shared judge, the piece never
++at fault, the empirical attribution reading 14 VERT 0 ROUGE; (RQ2) the measured
+ token cost per validated change --- re-measured end-to-end on the final
+ card with full distributions, the model's native tokenizer on every
+ instrumented call: medians of 1{,}277 tokens to locate a block, 3{,}374
+@@ -173,7 +198,7 @@
+ autorisé du développeur), close verte et signée aux deux bras. Nous quantifions quatre questions
+ de recherche sur des données tirées d'un journal d'ingénierie append-only
+ de \nbLignesJournal{} lignes (Entrées consignées jusqu'à 304 ; les clôtures
+-de campagne, Entrées 305--319, portées par le journal de tâches
++de campagne et l'extension, Entrées 305--357, portées par le journal de tâches
+ compagnon de \nbLignesWorklog{} lignes et le journal de campagne) et d'un
+ journal de décisions append-only de \nbLignesDecisions{} lignes
+ (\plageDecisions) : (RQ1) le taux de défauts échappés des changements ayant
+@@ -237,7 +262,8 @@
+ single human developer directing an LLM agent, over eleven milestones
+ between 26 October and 11 November 2026, and is documented in a
+ \nbLignesJournal-line append-only engineering journal (Entr\'ees
+-consigned through 304; the campaign closures, Entr\'ees 305--319,
++consigned through 304; the campaign closures and the extension,
++Entr\'ees 305--357,
+ carried in its \nbLignesWorklog-line companion task log and the campaign
+ ledger journal at the archive), a \nbLignesDecisions-line append-only
+ decision log (\plageDecisions), and sealed artifacts whose
+@@ -481,6 +507,38 @@
+ 
+ \input{donnees/table-campagne}
+ 
++\subsection{The D210 extension campaign: identical formats, randomized
++order, empirical attribution}\label{sec:d210}
++
++The v0.18.0 limitations named the shared kit and the asymmetric formats
++as a construct threat; the extension plan (D210) was pre-registered to
++close it, its hash consigned before any measurement
++(\code{4a3b1311\ldots}): $n\ge6$ fully instrumented units (the four
++tasks not yet instrumented --- loupe-02 LIRE, loupe-08 LIGNE, loupe-13
++RECHERCHE, loupe-16 SAISIE --- joining the two earlier pairs at
++$n{=}1$ and $n{=}2$), identical formats across arms (every piece
++delivered at both the sealed EXE slot and the loader-bound DLL: the
++unbound-leaf class re-tested on both loading paths), the arm order
++randomized per unit (the seed 20261117 consigned before the first
++call; the public draw gave the T arm first in all four units --- a
++one-in-eight event, consigned as drawn, never re-drawn), the D207 stop
++rule reconducted, and the empirical attribution test: the fourth
++unit's C piece re-delivered through a minimal standard kit, the
++question ``would the pure compiled flow have produced the escapes?''
++tranch\'ee on pieces. Three directional hypotheses were registered
++with the plan: H6 (the kit-side escape rate within a factor of two
++between arms at identical formats --- the replication of H2), H7 (the
++randomized order affects no metric at the 5\% threshold --- the order
++test), H8 (the corrective spiral remains the hot path of both arms:
++above 50\% of each unit's tokens). The four metrics are the
++campaign's own (M1 under the D202 rule, M2 real tokens read from
++usage logs, M3 the developer's human time at the gesture, M4 the
++monotone verification chronometer); the attribution kit is deliberately
++minimal --- its judge is the model written for stateful terrains (the
++screen metrics posed by construction, the import guichet fail-closed
++through the import table, the leaf bound at its slot, the liaison
++verbatim at its arity).
++
+ \section{Results}\label{sec:results}
+ 
+ \subsection{RQ1: escaped-defect rate}\label{sec:rq1}
+@@ -559,6 +617,72 @@
+ v0.14.0 compiler comparison, ``testable to the same degree'') is a
+ different hypothesis from H4-D204.
+ 
++\paragraph{The D210 extension: H6--H8, explicit verdicts.} The
++extension's seven deliveries (Table~\ref{tab:campagne-d210}) read:
++the first three units closed green on their first delivery each; the
++fourth --- the first stateful terrain --- consumed its three
++deliveries at the pre-registered cap and is consigned closed on its
++red: a refused import-descriptor parse (the four-field descriptor
++read the ForwarderChain field as the name RVA), a two-argument
++\code{memmove} call (the arity contrary to the twelve other calls of
++the file), and a judge that never poses the screen metrics it
++announces. Three counted escapes, every one kit-side in the shared
++scenario/judge; the piece never at fault, at either format. The
++empirical attribution then re-delivered the same C piece through a
++minimal standard kit and read 14 VERT, 0 ROUGE: \emph{the compiled
++pure flow would not have produced the escapes --- they are the
++rig's}. \textbf{H6} (the kit-side escape rate within a factor of two
++between arms, at identical formats) \emph{holds, by attribution}:
++every counted escape is kit-side in the shared judge, zero on either
++arm's native code, and the attribution tranch\'ee on pieces that the
++compiled pure flow would not have produced them --- the
++delivery-metric asymmetry (three counted at the T deliveries of the
++fourth unit, none at the attribution's C delivery) measures where the
++shared faulty kit ran, not which arm's code failed: the piece was
++never at fault, and the minimal standard kit --- a different rig ---
++produced zero escapes on the same piece. \textbf{H7} (the randomized
++order affects no metric at the 5\% threshold) \emph{untested on this
++draw}: the public draw gave the T arm first in all four units --- no
++C-first unit, no contrast; the order effect is unidentifiable from
++this campaign, the observed arm asymmetries (the second-built arm
++consumed fewer tokens in every unit) confound arm with order, and no
++verdict at the threshold is permitted --- the hypothesis carries to
++the next campaign that draws the contrast. \textbf{H8} (the
++corrective spiral above 50\% of each unit's tokens) \emph{falsified}:
++the consigned per-unit figures read 51\% (the second unit, held),
++39\% (the third, broken --- the laboratory's mechanical re-poses
++replaced the spiral), 9\% (the fourth: the composition converged at
++the third tour); the first unit's figure is a named gap (its
++construction journal perished at a sandbox recycling; the per-call
++record consigned at the opening reads the corrective calls at
++13{,}536 of 23{,}220 tokens at the first construction and 5{,}291 of
++19{,}390 at the closure --- 44\% of the unit's 42{,}610, the couture
++named: the two sessions are never summed in silence). One unit of
++four above the registered threshold: the direction did not hold ---
++the spiral declined as the family templates matured; the protocol's
++corrective path is not intrinsically the hot one, it was the early
++one.
++
++\paragraph{The extension's metrics, as consigned.} M2 (real tokens,
++per unit, read from the usage logs): 42{,}610 for loupe-02 (the
++couture named above), 52{,}729 for loupe-08, 40{,}749 for loupe-13,
++26{,}662 for loupe-16; the attribution kit's session carries a named
++M2 gap (its sandbox had no token meter --- never a reconstructed
++number). M3 (the developer's human time, filled at the gesture): the
++carnet carries five run-terrain lines for the extension --- four at
++the T arm (four minutes) against one at the C arm (one minute); the
++reception named the honest gap: the filed bounds do not anchor to the
++runs' recouped chronologies (the runs' own consoles read 1.5, 1.3 and
++1.1 minutes; the filed minutes stand as the terrain's own --- the
++measurement frontier: the laboratory never retouches a line of
++measure). M4 (verification compute, the consigned laboratory figure
++per unit): the builds at 0.5\,s (mingw 0.08\,s at the attribution),
++the differential oracles at 33.6\,s / 4.0\,s / 146\,s / 57\,s
++across the four units, the POSIX parity at 1.4--8.1\,s, the
++mapped-DLL proof at 1.5\,s.
++
++\input{donnees/table-campagne-d210}
++
+ \subsection{RQ2: token cost per validated change}\label{sec:rq2}
+ 
+ Table~\ref{tab:budgets} shows the M1 instrumentation (51/719/1{,}088 ---
+@@ -1061,7 +1185,7 @@
+ full T0--T7+S0 scenario). For those two, no number exists and none is
+ fabricated; the claims table stays honest until the runs are on record.
+ 
+-\input{donnees/statuts_v181.tex}
++\input{donnees/statuts_v190.tex}
+ 
+ % ------------------------------------------------------------------
+ \section{Discussion}\label{sec:discussion}
+@@ -1280,6 +1404,25 @@
+ campaign is still one developer, one agent, one machine, and both
+ metric pairs are $n{=}1$.
+ 
++\paragraph{What the extension adds.} The D210 campaign closes the
++construct threat the v0.18.0 audit named: with identical formats
++across arms, the escapes did not move --- the fourth unit's three
++faults lived in the shared judge, the piece never at fault at either
++format, and the empirical attribution (the same C piece through a
++minimal standard kit, 14 VERT 0 ROUGE) tranch\'ee on pieces that the
++compiled pure flow would not have produced them: the escapes are the
++rig's, arm- and format-neutral. The token account gains three fully
++instrumented units (the second at 52{,}729, the third at 40{,}749,
++the fourth at 26{,}662 --- the decline across units is the templates
++maturing, not a discipline change); the human-time account reads
++four minutes against one at the gesture (the filed bounds stand as
++the terrain's own, the gap named at the reception); and the
++corrective-spiral hypothesis closes falsified --- the spiral was the
++early path, not the intrinsic one. What the extension could not
++close: the order test (the draw gave no contrast --- H7 carries to
++the next campaign) and the second machine (the replication remains
++awaiting).
++
+ \section{Threats to validity}\label{sec:threats}
+ 
+ \emph{Internal.} The oracle is circular with respect to layer I
+@@ -1325,14 +1468,20 @@
+ class, which exists only on the DLL path (an EXE without that import
+ cannot leave the leaf unbound) --- a compiled-flow-specific escape,
+ not a notation-versus-compiler difference. The empirical
+-attribution test (re-delivering the same C piece through a minimal
+-standard kit) is \emph{prepared but not run}: the extension plan
+-(D210, pre-registered before any further measurement) fixes it ---
+-$n \ge 6$ fully instrumented units, identical formats across arms,
+-randomized arm order, plan hash consigned before the first
+-measurement. Until then, the two-sided reading stands: zero escapes on
+-either arm's native code, all six on the rig that delivers and loads
+-it, three of them format-specific.
++attribution test was run at the extension's close (the D210 campaign,
++its plan pre-registered with its hash consigned before any further
++measurement): the same C piece re-delivered through a minimal
++standard kit read 14 VERT, 0 ROUGE --- the compiled pure flow would
++not have produced the escapes. The two-sided reading closes: across
++both campaigns (29 witnessed deliveries), zero escapes on either
++arm's native code; every counted escape on the rig that delivers and
++loads it --- the D204 six (three of them format-specific at the
++asymmetric formats), the D210 three (all in the shared scenario/judge
++at identical formats, the piece never at fault). The residual
++confound the extension could not close is the order test: the
++randomized draw gave the T arm first in all four units, so arm and
++order remain confounded (H7 carries to the next campaign that draws
++the contrast).
+ \emph{Conclusion.} The terrain is one real Windows machine and one
+ developer's usage of the application; showcase liveness (0 error-reporter
+ events) is a weak liveness signal, not a correctness proof. The RISC-V terrain

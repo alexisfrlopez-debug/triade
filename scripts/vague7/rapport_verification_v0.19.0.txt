@@ -1,0 +1,77 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.19.0
+(la clôture de la campagne D210 — chaque point VERT sur pièces)
+
+V1   la compilation du manuscrit : VERT — Tectonic (XeTeX), 30 pages
+     (la v0.18.1 en portait 29 — la clôture D210 ajoute la sienne),
+     zéro citation non résolue, les métadonnées PDF portent v0.19.0 ;
+     l'en-tête porte « TRIADE — academic edition v0.19.0 » ; la
+     convention de pied de page inchangée (== la v0.18.1 scellée).
+V2   LE LINTER NUMÉRIQUE v190 : VERT — 35 affirmations au registre
+     (les dix classes de la clôture D210 : le plan, les livraisons,
+     les échappées, l'attribution, M2, M3, M4, H6-H8, la plage des
+     Entrées, la table), chacune dérivée des sources brutes (les
+     registres reçus reception-357, le plan sha256 4a3b1311…, le
+     carnet) ; l'interdit « 305--319 » refusé (la plage portée
+     305--357 aux trois occurrences — l'abstract, le résumé, le
+     texte) ; zéro écart, zéro orphelin.
+V3   la réconciliation de campagne re-jouée : VERT — 29 livraisons
+     aux deux campagnes (22 D204 + 7 D210 : 4 VERT + 3 ROUGE), les
+     TROIS échappées comptées D210 toutes côté kit, l'attribution
+     C-loupe-16-attr-it1 VERT sans défaut, M3 D210 4 min T / 1 min C
+     (dérivé du carnet reçu), chaque total recalculé du registre
+     brut, zéro divergence (reconciliation_campagne_d210.py, code 0).
+V4   les contrôles négatifs (la falsification) : VERT — chaque
+     mutation du registre est attrapée : le hash du plan muté
+     (4a3b1312) ROUGE, l'attribution mutée (13 VERT) ROUGE, la
+     spirale mutée (50 %) ROUGE — trois mutations, trois refus, le
+     build REFUSÉ (code 2). Le linter est fail-closed, l'épreuve
+     vécue.
+V5   les contrôles géométriques (pymupdf) : VERT — 30 pages, AUCUN
+     débordement de marge, aucune page quasi vide, la table D210
+     porte ses SEPT lignes, les trois classes nommées rendues
+     (guichet, memmove, metriques), les folios == la convention de la
+     v0.18.1 scellée (contrôle_geometrique_v190.py).
+V6   le PDF rendu (pdftotext/fitz) : VERT — « v0.19.0 » à
+     l'en-tête et au titre ; « 19 November 2026 » à la date ; la
+     phrase d'attribution « the compiled pure flow would not have
+     produced the escapes » rendue ; « 14 VERT, 0 ROUGE » rendu ;
+     « holds, by attribution » / « untested on this draw » /
+     « falsified » rendus ; « 305--357 » aux trois occurrences,
+     aucun « 305--319 » ; les « undefined » restants sont le texte
+     légitime « t undefined » (la formulation Welch retirée, trois
+     occurrences) — aucun « ?? », aucun « [?] ».
+V7   la table des statuts : VERT — la ligne « Campaign D210
+     (extension) » née (measured — les verdicts H6/H7/H8, les gaps
+     nommés) ; la ligne « Independent replication » portée (le D210
+     exécuté, le contraste H7 à tirer, la seconde machine en attente)
+     ; la longtable complète, la troncature de la v0.18.0 ne se
+     reproduit pas (la leçon tenue).
+V8   les empreintes des pièces scellées : VERT — AUCUNE valeur
+     mesurée de la v0.18.1 modifiée (l'ajout est narratif : la
+     clôture D210, la lecture de l'attribution, les lignes M3) ; les
+     données générées portées : table-campagne-d210.tex NÉE (générée
+     du registre, jamais tapée à la main), macros_v190.tex
+     régénérée (journal 13 648 / worklog 13 743 / décisions 4 748 /
+     plage D1--D217), statuts_v190.tex née de la v181 (le diff
+     consigné) ; les tables de la v0.18.1 (tables_generees_v180,
+     table-campagne) inchangées byte-byte.
+V9   le diff consigné : VERT — diff-main-v181-v190.patch (307
+     lignes : 180 ajoutées, 31 retirées) + diff-statuts-v181-v190
+     (9 lignes) + le présent rapport — chaque changement sourcé à
+     son Entrée.
+V10  les écarts nommés (D189 — jamais masqués) : le gap M2 de
+     l'attribution (aucun compter_tokens au bac sandbox — jamais un
+     nombre reconstruit) PORTÉ au manuscrit ; l'écart M3 des bornes
+     du carnet (les lignes reçues telles quelles, la frontière D99,
+     les consoles 1,5/1,3/1,1 min) PORTÉ au manuscrit ; la figure
+     manquante de la première unité (le journal périt au recyclage —
+     les appels par tour consignés aux Entrées 335/336, la couture
+     23 220 + 19 390 jamais sommée en silence) PORTÉE au manuscrit ;
+     l'écart R11-② de la ligne it2 (la 4e colonne « 1 ») — la table
+     porte le registre TEL QUE DÉPOSÉ.
+
+LA SESSION : la clôture D210, le 19/11/2026 — le « go pour la suite »
+du développeur (« carnet M3 ok, go pour la suite si c'est bon pour
+toi ») : la réception du carnet (l'Entrée 357) puis la présente
+édition. La v0.18.1 scellée DEMEURE et fait foi ; la v0.19.0 devient
+L'ÉDITION COURANTE.
