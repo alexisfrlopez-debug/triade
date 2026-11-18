@@ -13394,3 +13394,71 @@ Work Log:
   d'attribution empirique au commandement.
   (18/11/2026, la session du guide — la commande du développeur, les
   lignes attendues prescrites sur pièces, jamais de mémoire)
+
+
+Task ID: 212
+Agent: Z.ai (agent principal — la session de la réception de l'atelier du livre et de la construction de la troisième unité D210)
+Task: L'ANNONCE DU DÉVELOPPEUR (« atelier dans le drive /test ») : LE GESTE DU GUIDE-344 REÇU AU TERRAIN — LE GESTE ① VÉCU BYTE-BYTE (livraisons.csv à 24 LIGNES DE CAMPAGNE, les DEUX lignes D210 exactes == la référence-après-geste du labo), LE GESTE ② DEMEURANT À LA MAIN (L'ÉCART NOMMÉ : AUCUNE ligne D210 au carnet M3 — le registre re-posé byte-identique à l'état de la sonde 344) ; PUIS LA COMMANDE « go pour la suite » : LA TROISIÈME UNITÉ D210 LOUPE-13 RECHERCHE × LES DEUX BRAS CONSTRUITE (la suite du guide-344 § 7 — la séquence D217 honorée).
+
+Work Log:
+- LA RÉCEPTION (reception_atelier_345.py, la sonde 344 reconduite) : le
+  MÊME dossier atelier-campagne-d204-20261114-013520/ (né au coffre le
+  15/11 13:44:48Z, mis à jour EN PLACE le 18/11 07:25:53-56Z — 08:25
+  heure locale d'hiver), les QUATRE registres rapatriés au bac
+  scripts/campagne_d204/reception-atelier-345/epreuves/ par DOUBLE
+  téléchargement byte-byte (md5 == la métadonnée Drive, échec fermé) :
+  livraisons.csv 2 328 o [sha256 8bae18e8… == la référence-après-geste
+  du guide-344 § 5, OCTET POUR OCTET — le geste ① VÉCU : les DEUX
+  lignes T-loupe-02-d210-it1 VERT 2026-11-17 et T-loupe-08-d210-it1
+  VERT 2026-11-18 EXACTES à la suite des 22 lignes, RIEN d'autre — les
+  fins de ligne LF, aucun BOM, aucune retouche] ; defauts.csv 3 870 o
+  [sha256 1bed8908… INCHANGÉ — le geste ③ correct : rien à porter, le
+  précédent 295] ; journal-ouverture.txt 648 o [INCHANGÉ] ;
+  carnet_temps_humain.csv 1 869 o [md5 6e327584… == l'état de la sonde
+  344 BYTE-BYTE].
+- L'ÉCART NOMMÉ (D189 — l'observation défavorable consignée telle
+  quelle) : LE GESTE ② (le carnet M3 du guide-344 § 3) N'A PAS VÉCU —
+  AUCUNE ligne D210 au carnet (la dernière ligne demeure la ligne
+  tag-backup du 16/11). Le temps humain des DEUX runs recoupés
+  (Entrées 340/343) RESTE À LA MAIN du développeur — le labo ne
+  fabrique JAMAIS une ligne M3 (la frontière D99). LA CHIRURGIE
+  PRESCRITE au rapport : le guide § 3 reconduit (les DEUX lignes
+  run-terrain, les bornes ancrées aux chronologies R7 [21:02:45 →
+  21:03:38 → 21:04:11 au 17/11 ; 00:09:11 → 00:09:51 → 00:10:29 au
+  18/11, heures locales], la règle de l'interruption > 5 min, l'option
+  D189 pour le temps du run v1), PUIS l'atelier ENTIER re-déposé +
+  l'annonce.
+- LA LIVRAISON (livrer_rapport_345.py, TOUT VERT) : le
+  RAPPORT-RECEPTION-ATELIER-LIVRE-D210-20261118.txt à la racine du
+  /test (md5 a70d1c3f… MATCH byte-byte re-téléchargé) — le livre à 24
+  lignes consigné, l'écart nommé, la chirurgie prescrite.
+- LA CONSIGNATION : la présente Task 212 + l'Entrée 345 ; la carte
+  OU-TROUVER portée à 345 (la chaîne 344 conservée) ; le bac
+  scripts/campagne_d204/reception-atelier-345/ (les epreuves/, le
+  rapport) + les DEUX scripts du geste à scripts/.
+- SUITE : LE COMMANDEMENT « go pour la suite » — la construction de la
+  troisième unité D210 loupe-13 recherche × les deux bras (la présente
+  session poursuit : l'oracle écrit-avant-code, la notation au slot, la
+  cristallisation, l'oracle au harnais, le source C à l'épreuve POSIX,
+  le kit GUI 1-clic livré au /test).
+  (18/11/2026, la session de la réception — le livre ne ment jamais :
+  les DEUX lignes M1 y vivent, les lignes M3 attendent la main)
+
+
+Task ID: 213
+Agent: Z.ai (agent principal — la session de la construction de la troisième unité D210)
+Task: LA TROISIÈME UNITÉ D210 LOUPE-13 RECHERCHE × LES DEUX BRAS CLOSE À LA CONSTRUCTION, LE GUI 1-CLIC LIVRÉ (la commande du développeur : « go pour la suite », la suite du guide-344 § 7 : loupe-13 le bras T d'abord — la séquence tirée de la graine D217, jamais re-tirée) : le kit-gui-1clic-unite13-d210-20261118.zip [295 500 o, 18 pièces, la racine kit-unite-03-d210-20261118/] au coffre /test avec ses DEUX livres, TROIS md5 recoupés byte-byte, les kits des unités 01/02 INTACTS (D143).
+
+Work Log:
+- L'ATELIER INTACT : la rig L6 recoupée aux empreintes (e2939ef9… compter_tokens, e5aa404a… rig_auteur), le contrat loupe-13-recherche.md VERBATIM de la couche I (01ee2ec4…), la pièce scellée de famille loupe-13-recherche.asm (D204, 126 o — la référence de confrontation).
+- LE BRAS T PAR LA RIG (100 % log-api) : spec 2 136 → notation 3 019 (le brouillon it1 NÉ EN PROSE : AUCUNE instruction, la ligne equ inassemblable — LA CLASSE « LA NOTATION EN PROSE » nommée au contrôle) → le correctif 1 (1 449, la réponse PARTIELLE : deux lignes seules — la classe de troncature récurrente) → le correctif 2 (2 181, LA NOTATION ENTIÈRE rendue) → le correctif 3 SYNTAXE (1 546 : l'equ supprimé, le cmp au littéral 0x20) → le correctif 4 (1 714 : le symbole LIBC02 — le refus de l'adresse nue « symbole de bloc inconnu » — le prologue de pile) → L'ORACLE écrit-avant-code (3 218, dérivé du contrat seul) → les correctifs 5-8 (2 019 + 2 128 + 2 002 : le faisceau STRUCTUREL — les arguments msx64, la borne absolue, l'épargne aux non-volatils poussés, la borne DANS la boucle, le départ lu — LES RÉPONSES PARTIELLES à chaque tour : le geste annoncé sans l'appliquer, les arguments régressant au SysV TROIS fois, l'épargne perdue, la ligne du départ disparaissant — L'OSCILLATION nommée) → LE GESTE MÉCANIQUE DU LABO (nommé, bijectif — le précédent 336/341) : la composition de l'it5 des éléments convergés (la remappe bijective des arguments rdi→rcx, rsi→rdx, rdx→r8 ET de la position r10→r15 l'épargnée, le re-pose de la ligne du départ AVANT toute poussée, la Q2 dans RAX — r12 demeure window_len pur —, le prologue UNE fois, le ret re-posé).
+- LA CRISTALLISATION 10/10 byte-identiques (122 o, sha256 8b7d8858…) ; LE BUILD loupe.exe 127 488 o (sha256 25066d8a…) : les verrous 121, le différentiel au scellé CONFINÉ au slot loupe-13 [0x4940, 0x4a00) + la porte R10 (8 plages, 33 o) ; L'ORACLE AU HARNAIS 10 VERT 0 ROUGE (V1 le corpus de l'école 10/10 + les marques du proxy.exe scellé [MZ @0, PE @+64, les absentes → -1], V2 le différentiel 10 000 cas == bytes.find + les tampons LUS SEULS + l'état propre, V3 les TROIS rejets -5, V4 la falsification [la position avancée d'un : les 44/44 cas à occurrence DIVERGENT]) ; LA REVUE DE CÉRÉMONIE (4 788) : VERDICT CONFORME.
+- LE BRAS C (gcc -O2 -std=c11 -Wall -Wextra) : spec 1 962 → source-c 2 111 (la pièce née QUATRE fois fautive : LA CLÔTURE MARKDOWN — gcc « stray ` », LA FONCTION hors famille recherche_octets_pure ≠ loupe_13_recherche du .def, LE RETOUR long 32 bits [la leçon D204 : -5 lu 4294967291], LES TYPES des tailles en long signé) → le tour 1 (1 155 : la fonction, le retour LONG LONG, les types unsigned long long, stdint.h — la clôture demeura) → LE GESTE MÉCANIQUE DU LABO (nommé — le précédent 341 : la clôture retirée, la ligne « le geste » retirée) + LA NORMALISATION du type (longueur_restante en unsigned long long — l'avertissement sign-compare) : gcc PROPRE ; LE JUGE POSIX 9 VERT 0 ROUGE (gcc -O2 -shared, l'export appelé naturellement, la graine 20261115 — V1-V4 le miroir du bras T, V4 la falsification : le retour avancé d'un attrapé 44/44) ; tests-c 3 477 ; LA REVUE C (3 793) : VERDICT CONFORME (l'arbitrage du précédent : I2 ARBITRÉ au bras C).
+- LA MESURE : 17 appels, 40 749 tokens (T 28 251 + C 12 498), la spirale corrective 16 245 (39 % — H8 ROMPUE à la troisième : l'observation défavorable consignée [D189], les gestes mécaniques du labo prirent le relais de la complétion ; H8 se mesurera aux fermetures, la campagne poursuit) ; M4 : le build 0,5 s ; l'oracle V1-V4 146 s (l'émulateur aux 10 000 cas) ; l'épreuve POSIX 8,1 s.
+- LE KIT-UNITE-03-D210-20261118 NÉ : QUATORZE pièces (la pièce loupe.exe 25066d8a…, la notation D210 122 o, le brouillon it5, le scénario D204 INCHANGÉ [e45ae5e1…, le juge du kit de l'unité 5 — celui qui recoupa son run VERT à la D204], le proxy.exe scellé, le témoin 3f, le source C + les tests, le journal + le garde-brut, la graine, la gravure EMPREINTES 13/13 recoupée, le LISEZMOI terrain, le lanceur [CRLF conservés]) ; le RAPPORT-UNITE-D210-03.txt à l'atelier.
+- LE GUI 1-CLIC (le précédent 342 — la chirurgie nommée) : le source v1 du GUI 08 (la logique B-E INCHANGÉE) porté à l'unité loupe-13 (l'en-tête + LA SECTION A remplacés, les références unitaires transposées unite08→unite13, l'audit final : AUCUNE référence 02/08 ne demeure, chaque référence 03 présente — compilé PROPRE 65 973 car.) ; le lanceur .bat (CRLF, la passe fine : le juge e45ae5e1, le kit 03, la Task 212) ; le LISEZMOI-RUN réécrit aux faits de l'unité 13 (le contrat, la mesure, les NEUF verdicts, H8 rompue nommée) ; l'EMPREINTES-GUI (17 pièces gravées).
+- LES ÉPREUVES AU LABO (l'honnêteté D122 — le bac n'a aucun Windows) : le selftest 15 VERT 0 ROUGE [le verrou 14/14, la fail-closed, LA PREUVE T0 13 pièces (loupe.exe recoupé 25066d8a…), T5b le refus sans gravure, les verdicts recopiés, la main D99, la collecte, le zip, la cap M1, l'état, la reconstitution] ; LA FUMÉE Xvfb 7 VERT 0 ROUGE [la fenêtre née — le titre l'unité 03 D210 (loupe-13 recherche × bras T), les CINQ onglets, les QUATORZE pièces rendues, le verrou VERT à l'écran — la preuve T0 « voit 13 pièces », les accents, le livre, le zip inactif sans run] ; L'ÉPREUVE DU ZIP [les 18 entrées dézippées au bac, la racine kit-unite-03-d210-20261118/, le juge == le kit du labo OCTET POUR OCTET — 5/5 recoupés (scenario, loupe.exe, la gravure, proxy, le témoin), le GUI DÉZIPPÉ conduit son PROPRE selftest : 15 VERT, 0 ROUGE].
+- LA LIVRAISON (livrer_gui_unite13_346.py, TOUT VERT) : kit-gui-1clic-unite13-d210-20261118.zip [295 500 o, md5 7b661951…] + LISEZMOI-RUN-UNITE13-D210-1CLIC.txt [9 774 o, e9cab607…] + EMPREINTES-GUI-UNITE13-D210-1CLIC.txt [3 444 o, 90e1c786…] — TROIS md5 MATCH par re-téléchargement byte-byte ; les kits des unités 01/02 recoupés PRÉSENTS au /test [le 02 v1 723f319a…, le juge-v2, le 08 — D143, jamais recouverts].
+- LA CONSIGNATION : la présente Task 213 + l'Entrée 346 ; la carte OU-TROUVER portée à 346 ; le bac scripts/campagne_d204/unite-13-T-d210/ (brouillons/, notation/, piece/, kit/, epreuves/, l'oracle, le build, l'épreuve POSIX, l'assemblage) + les SEPT scripts du geste à scripts/ ; le kit au download/ du dépôt [TRIADE_gui_unite13_d210_v1/ + le zip] ; le git poussé + le miroir Drive rafraîchi (aux jetons du /Tokens).
+- SUITE : ① le run terrain au geste du développeur [le kit dézippé, LANCER-RUN-UNITE13-D210-1CLIC.bat, TOUT LANCER — l'attendu : les NEUF verdicts VERT, 9 VERT 0 ROUGE, code 0, le témoin daté signé D99, preuves-unite13/ au /test] ET la ligne au livre AU MÊME GESTE (l'onglet 4·LIVRE : T-loupe-13-d210-it1 — le guide-344 § 7 : jamais en retard) ; ② l'unité suivante selon la séquence tirée : loupe-16 le bras T d'abord ; la re-livraison d'attribution empirique au commandement.
+  (18/11/2026, la session de la construction — la troisième unité, la séquence honorée, H8 rompue nommée)

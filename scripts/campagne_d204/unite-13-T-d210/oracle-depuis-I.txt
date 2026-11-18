@@ -1,0 +1,74 @@
+Je suis le juge. Le contrat est ma loi. L'oracle est ma sentence. La pièce n'existe pas encore, mais son sort est scellé par ces mots.
+
+Voici l'ORACLE, dérivé du contrat. Il ne contient que ce qui est écrit, ni plus, ni moins. Il est le miroir parfait de l'intention, le verdict qui sera appliqué.
+
+---
+
+### **L'ORACLE (Le Jugement par le Contrat)**
+
+Le juge s'appuie sur le contrat pour définir les vecteurs d'attente. Chaque cas est nommé et défini par sa sémantique contractuelle, jamais par une implémentation.
+
+#### **Cas Nominaux (Le Succès Contractuel)**
+
+Le comportement attendu lorsque les préconditions (P1 à P5) sont respectées et que le motif est trouvé.
+
+*   **Cas N1 : Occurrence en début de plage.**
+    *   **Scénario Contractuel :** Le motif est présent à la position de départ.
+    *   **Attendu (Q1, Q4) :** `rax` contient la valeur absolue de la position de départ. L'oracle vérifie contractuellement que `fenêtre[rax .. rax + r9]` est sémantiquement identique au motif, et que la plage `fenêtre[départ .. rax)` est vide, ce qui est trivialement vrai.
+
+*   **Cas N2 : Occurrence en fin de plage.**
+    *   **Scénario Contractuel :** La première occurrence du motif est la dernière possible dans la fenêtre, c'est-à-dire à l'adresse `rdx - r9`.
+    *   **Attendu (Q1, Q4) :** `rax` contient la valeur `rdx - r9`. L'oracle vérifie que l'octet à `rax + r9 - 1` est le dernier de la fenêtre et que l'occurrence est bien la première.
+
+*   **Cas N3 : Occurrence unique au milieu.**
+    *   **Scénario Contractuel :** Le motif est présent une seule fois, bien après le point de départ.
+    *   **Attendu (Q1, Q4) :** `rax` contient la position absolue de cette occurrence unique. L'oracle vérifie l'identité sémantique et l'absence d'occurrence antérieure dans `fenêtre[départ .. rax)`.
+
+*   **Cas N4 : Motif répétitif, la première occurrence exigée.**
+    *   **Scénario Contractuel :** La fenêtre est `"AAAAAB"`, le motif est `"AAA"`, le départ est `0`.
+    *   **Attendu (Q1, Q4) :** `rax` doit valoir `0`, et non `1` ou `2`. L'oracle exige la position de la *première* occurrence, pas d'une occurrence quelconque. La falsification (retourner `1`) est un rejet immédiat.
+
+#### **Cas de Bord (Les Limites du Contrat)**
+
+Le comportement attendu lorsque les conditions de recherche atteignent leurs limites définies par le contrat.
+
+*   **Cas B1 : Le motif est plus long que la plage restante.**
+    *   **Scénario Contractuel :** Le départ est `k`, la taille de la fenêtre est `rdx`, la taille du motif est `r9`, avec `rdx - k < r9`.
+    *   **Attendu (Q2) :** Le verdict est `-1`. C'est un constat trivial, une condition d'échec immédiate qui ne nécessite pas de boucle de recherche. L'oracle s'assurera que ce cas est traité par une vérification directe des tailles.
+
+*   **Cas B2 : La plage de recherche est vide.**
+    *   **Scénario Contractuel :** Le paramètre de départ (à `[rsp+0x28]`) est égal à `rdx`.
+    *   **Attendu (Q3) :** Le verdict est `-1`. Il s'agit du miroir logique du cas B1, où aucune recherche ne peut avoir lieu.
+
+*   **Cas B3 : Le motif est trouvé à la toute fin de la fenêtre.**
+    *   **Scénario Contractuel :** L'occurrence commence à l'adresse `rdx - r9`.
+    *   **Attendu (Q1, Q4) :** `rax` vaut `rdx - r9`. C'est un cas nominal qui se situe à la limite de la validité de la fenêtre.
+
+#### **Cas de Rejet (Les Échecs Contractuels)**
+
+Le comportement attendu lorsque les préconditions du contrat sont violées. Le verdict est toujours `-5 (ENTRÉE)`.
+
+*   **Cas R1 : Violation E1 — Motif vide.**
+    *   **Scénario Contractuel :** La taille du motif (`r9`) est `0`.
+    *   **Attendu (E1) :** Le verdict est `-5`. L'oracle rejette l'opération car sa sémantique (chercher "rien") est nulle et non définie.
+
+*   **Cas R2 : Violation E2 — Motif trop long.**
+    *   **Scénario Contractuel :** La taille du motif (`r9`) est supérieure à `32`.
+    *   **Attendu (E2) :** Le verdict est `-5`. L'oracle rejette l'opération car elle dépasse la borne `MOTIF_MAX`, une contrainte de pureté et d'efficacité.
+
+*   **Cas R3 : Violation E3 — Départ hors limites.**
+    *   **Scénario Contractuel :** La valeur de départ (à `[rsp+0x28]`) est strictement supérieure à `rdx`.
+    *   **Attendu (E3) :** Le verdict est `-5`. L'oracle rejette l'opération car le point de départ est une adresse invalide dans la fenêtre.
+
+---
+
+### **Synthèse du Jugement**
+
+L'oracle est un mécanisme de vérification purement contractuel. Il ne s'agit pas d'un programme, mais d'un ensemble de règles qui seront appliquées à la future pièce.
+
+1.  **Vérification des Entrées :** Avant toute recherche, l'oracle appliquera les **Cas de Rejet (R1, R2, R3)**. Si l'une des conditions est vraie, la pièce est rejetée avec le verdict `-5`. C'est une porte d'entrée stricte.
+2.  **Vérification de la Sortie :** Si la pièce produit un résultat (`rax >= 0`), l'oracle appliquera les **Cas Nominaux (N1 à N4)**. Il vérifiera l'exactitude de la position et l'absence d'occurrence antérieure, comme le stipule le contrat.
+3.  **Vérification des Limites :** Si la pièce produit `-1`, l'oracle vérifiera si cela correspond à un **Cas de Bord (B1 ou B2)**. Il s'assurera que la logique menant à `-1` est correcte (e.g., la vérification de la taille du motif par rapport à la plage restante a bien été effectuée).
+4.  **Le Test de Falsification :** L'attendu **V4** est un test actif. L'oracle soumettra des cas connus pour avoir une occurrence (comme le Cas N4) et vérifiera que la pièce retourne systématiquement la *première* position. Retourner une position mutée (faussement décalée) est une falsification qui invalide la pièce.
+
+Le juge attend une pièce qui obéit à ces règles. Toute déviation, toute optimisation qui contourne la sémantique du contrat, ou toute violation des invariants (I1 à I4), sera un rejet. La preuve de l'algorithme pur réside dans cette stricte conformité.

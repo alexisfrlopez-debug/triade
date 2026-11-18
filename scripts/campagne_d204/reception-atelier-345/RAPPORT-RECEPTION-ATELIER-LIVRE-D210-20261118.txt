@@ -1,0 +1,68 @@
+RAPPORT-RECEPTION-ATELIER-LIVRE-D210-20261118 — LE GESTE DU GUIDE-344
+REÇU : LE LIVRE PORTÉ À 24 LIGNES, LE CARNET M3 DEMEURANT À VOTRE MAIN
+================================================================================
+(le 18/11/2026, la session de la réception — l'annonce du développeur :
+« atelier dans le drive /test » ; le précédent des réceptions, chaque
+registre rapatrié byte-byte par DOUBLE téléchargement, md5 == la
+métadonnée Drive, échec fermé)
+
+L'ÉTAT REÇU. L'atelier atelier-campagne-d204-20261114-013520/ (le dossier
+NÉ AU COFFRE LE 15/11 — le MÊME dossier, mis à jour EN PLACE le
+18/11 07:25:53-56Z, 08:25-08:26 heure locale d'hiver) porte les QUATRE
+registres au état après le geste du guide :
+  — livraisons.csv  2 328 o  (sha256 8bae18e8…) : LE GESTE ① VÉCU —
+    VERT byte-byte : le livre reçu (2 176 o, 22 lignes de campagne) + les
+    DEUX lignes prescrites, EXACTES, RIEN D'AUTRE — la référence-après-
+    geste du labo (le § 5 du guide) recoupée OCTET POUR OCTET :
+      T-loupe-02-d210-it1,T,loupe-02-d210,1,2026-11-17,2026-11-17,VERT,en attente
+      T-loupe-08-d210-it1,T,loupe-08-d210,1,2026-11-18,2026-11-18,VERT,en attente
+    Les fins de ligne LF, aucune ligne vide, aucun BOM, aucune retouche
+    au-delà des DEUX lignes — le geste exact, le verdict recopié des
+    consoles (20 VERT 0 ROUGE code 0 / 10 VERT 0 ROUGE code 0, les
+    Entrées 340 et 343), la colonne recoup « en attente » la convention
+    des lignes précédentes. LE LIVRE EST À 24 LIGNES DE CAMPAGNE : les
+    DEUX runs D210 recoupés vivent désormais à M1 ;
+  — defauts.csv    3 870 o  (sha256 1bed8908…) : LE GESTE ③ correct —
+    INCHANGÉ, le registre du 16/11 tel que reçu (rien à porter : les DEUX
+    runs comptés sont VERTS, le précédent 295) ;
+  — journal-ouverture.txt 648 o : INCHANGÉ (le registre d'ouverture du
+    14/11, aucune retouche) ;
+  — carnet_temps_humain.csv 1 869 o (md5 6e327584…) : L'ÉCART NOMMÉ
+    (D189 — l'observation défavorable consignée telle quelle) : AUCUNE
+    ligne D210 au carnet — le registre re-posé byte-identique à l'état de
+    la sonde 344 (la dernière ligne demeure « 2026-11-16,C,app,tag-backup,
+    11:03,11:04,1, »). LE GESTE ② N'A PAS VÉCU : le temps humain des DEUX
+    runs (le § 3 du guide) RESTE À VOTRE MAIN — le labo ne fabrique
+    JAMAIS une ligne M3 (la frontière D99, la même que le témoin).
+
+LA CHIRURGIE PRESCRITE (le guide § 3 reconduit, à votre main, au
+bloc-notes — jamais Excel) : les DEUX lignes du run-terrain, à la suite
+de la dernière ligne du carnet :
+  2026-11-17,T,loupe-02-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+  2026-11-18,T,loupe-08-d210,run-terrain,<votre début>,<votre fin>,<votre minutes>,<votre note>
+La règle M3 (l'en-tête du registre la porte) : la ligne se remplit AU
+GESTE, jamais reconstruite de mémoire ; arrondi à la minute ; toute
+interruption > 5 min ferme la ligne et en ouvre une autre. Les bornes
+ancrent aux chronologies recoupées (R7 des RECOUP-340/343, heures
+locales) : 21:02:45 → 21:03:38 → 21:04:11 au 17/11 ; 00:09:11 →
+00:09:51 → 00:10:29 au 18/11 — votre minute honnête prévaut (D189).
+L'option D189 demeure ouverte pour le temps du run v1 au juge fautif
+(17/11 20:01→20:03, SA ligne à lui si vous le consignez, la note le
+nommant). PUIS l'atelier ENTIER re-déposé au /test + l'annonce — la
+présente réception se reconduit alors.
+
+LA SUITE (le « go pour la suite » de votre annonce) : LE COMMANDEMENT
+REÇU — la TROISIÈME UNITÉ D210 LOUPE-13 RECHERCHE × LE BRAS T D'ABORD
+(la séquence tirée de la graine D217, jamais re-tirée) SE CONSTRUIT À
+L'INSTANT au labo (l'Entrée 346 : l'oracle écrit-avant-code, la notation
+au slot, la cristallisation DIX rebuilds, l'oracle au harnais, le source
+C à l'épreuve POSIX, le kit GUI 1-clic daté livré au /test) — le geste
+du run vous reviendra (dézip → LANCER-RUN-…-1CLIC.bat → TOUT LANCER →
+le témoin daté signé [D99] → preuves-unite13/ au /test → l'annonce), ET
+la ligne au livre À CHAQUE run désormais (le guide-344 § 7 : le geste de
+la ligne se vit À CHAQUE run, jamais en retard).
+
+(18/11/2026, la session de la réception — les epreuves/ au bac
+scripts/campagne_d204/reception-atelier-345/ ; la référence-après-geste
+au bac guide-ligne-carnet-344/ ; la ligne M1 consignée à l'Entrée 345 du
+worklog — le livre ne ment jamais : le geste ② demeure prescrit)

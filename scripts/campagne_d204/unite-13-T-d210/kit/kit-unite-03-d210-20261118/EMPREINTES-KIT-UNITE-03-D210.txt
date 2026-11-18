@@ -1,0 +1,17 @@
+EMPREINTES — LE KIT DE L'UNITÉ 03 D210 (loupe-13 recherche × bras T
+— la campagne D210, la TROISIÈME unité, la séquence tirée de la graine D217)
+(chaque pièce sha256 — le scénario recoupe la pièce à la gravure ; une divergence, rien ne court)
+
+33b2ae9fab3c47aa825c7d46eef53c47bf181c276a4a1ceb989492d43bdcb88f  LANCEUR-UNITE-13-T.bat
+16af38b4e21bfaf78f38a09762a9f5881e59c1e5bc4ca9545edf0f8ebb360a5d  notation-loupe-13-recherche.asm
+c6426dd61910d1ba33fd5478e76a6e687a03412a6a8ee4ff289678145b7ca530  brouillon-loupe-13-recherche.asm
+25066d8a575df0153272987fd22a9f1cfd4fadfd99547cfaa439821eddf4fd45  loupe.exe
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe
+e45ae5e14baff87c05ec63da3d884a449dfa01e04507f6b08ac67691ab220cb0  scenario-unite13.py
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin
+bf78ebd37e25e77bf71cfc9aa10ccf5205a992c9d4606d292cebe76ac69c2027  source-loupe-13-C.c
+baf059a3524cfd2e6951123587b00c704bdac70213265450ab642ed032d3e611  tests-loupe-13-C.md
+8011775f5f54ebfd782c09154791b7edd127a9dd3047d2a4dc1954f32401ae2e  journal-tokens-d210.jsonl
+45331b0b081cec745f0ca1b3de294079b37eb6c7c877212f5241dccd0f99ae59  garde-brut-d210.jsonl
+c62a304f1df0d88882e03edecc8a9498e60bc6db293010775a9238eedcdc6673  GRAINE-D210.txt
+05d37a82ad74b86dd2692f65b8159e1c8b04be5e5532ea553c99b5a1a961084c  LISEZMOI-KIT-UNITE-03-D210.txt
