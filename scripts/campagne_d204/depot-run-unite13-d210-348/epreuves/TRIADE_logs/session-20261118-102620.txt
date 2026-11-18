@@ -1,0 +1,50 @@
+10:26:20  [GUI] la fenêtre née — v2.0.0, l'édition v2 du 18/11/2026 au soir — LE COMMANDEMENT DU DÉVELOPPEUR : « pour les GUI test, tu peux faire en sorte que je puisse choisir le dossier de l'atelier afin que le livre se mette a jour durant le run ? » — le kit v1 JAMAIS couru (aucune itération consommée, D143 : le kit v1 demeure au coffre INTACT), les QUATORZE pièces INCHANGÉES ; SEUL LE GUI monte : L'ATELIER CHOISI — le livre mis à jour durant le run : la ligne M1 au verdict RECOPIÉ, la ligne M3 aux bornes OBSERVÉES (M3 déplacé au commandement, NOMMÉ — votre main demeure pour l'honnête borne ; D202 et D99 intacts)
+10:26:20  [GUI] le kit : D:\Downloads\kit-unite-03-d210-20261118-v2
+10:26:21  [verrou:GRAINE-D210.txt] VERT — la graine D217 (consignée AVANT le premier appel, jamais re-tirée)
+10:26:21  [verrou:LANCEUR-UNITE-13-T.bat] VERT — la console officielle du kit (le run SA console, INTACT — CA6)
+10:26:21  [verrou:LISEZMOI-KIT-UNITE-03-D210.txt] VERT — le livre du kit (l'ordre de jeu du terrain — CHOISIR CE DOSSIER)
+10:26:21  [verrou:brouillon-loupe-13-recherche.asm] VERT — le brouillon it5 du bras T (la notation consignée)
+10:26:21  [verrou:journal-tokens-d210.jsonl] VERT — le journal des tokens (100 % log-api, la couture nommée)
+10:26:21  [verrou:garde-brut-d210.jsonl] VERT — le garde-brut de la rig (le journal brut de la construction)
+10:26:21  [verrou:loupe.exe] VERT — LA PIÈCE de campagne (le slot loupe-13 RVA 0x5740 porte la notation D210, 122 o cristallisés — 8b7d8858…)
+10:26:21  [verrou:notation-loupe-13-recherche.asm] VERT — la notation D210 (le texte de la pièce au slot)
+10:26:21  [verrou:proxy.exe] VERT — le scellé de l'ère (la première fenêtre du doré V1)
+10:26:21  [verrou:scenario-unite13.py] VERT — LE JUGE D204 INCHANGÉ (e45ae5e1…, le juge du kit de l'unité 5 — le lecteur « sha256  nom », le chargeur DONT_RESOLVE, la feuille pure)
+10:26:21  [verrou:source-loupe-13-C.c] VERT — le source du bras C (gcc -O2 PROPRE, la pièce livrée à l'épreuve)
+10:26:21  [verrou:temoin-3f.bin] VERT — le témoin 3 × 64 Kio + 1 (la fixture du kit)
+10:26:21  [verrou:tests-loupe-13-C.md] VERT — la suite de tests du bras C (N/B/R + la falsification)
+10:26:21  [verrou:EMPREINTES-KIT-UNITE-03-D210.txt] VERT — la gravure du kit (sha256 en tête — le format que le scénario scellé parse ; NÉE parsée : le défaut T0 de l'unité 01 ne se reproduit pas)
+10:26:21  [verrou] VERT — 14/14 pièces + la preuve T0 (13 pièces vues par le scénario scellé)
+10:26:21  [VERROU] VERT — le kit recoupé — TOUT LANCER attend votre clic
+10:26:43  [atelier] le dossier choisi : D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520
+10:26:43  [ATELIER] le choix parti — le verrou des QUATRE registres court
+10:26:43  [atelier] livraisons.csv : VERT — la métrique M1 — la ligne de livraison née du run (le verdict RECOPIÉ)
+10:26:43  [atelier] carnet_temps_humain.csv : VERT — la métrique M3 — la ligne du carnet née du geste observé (les bornes OBSERVÉES par le GUI)
+10:26:43  [atelier] defauts.csv : VERT — la règle D202 — JAMAIS touchée par le GUI (les défauts se nomment à votre main, l'analyse n'est jamais machine)
+10:26:43  [atelier] journal-ouverture.txt : VERT — le registre d'ouverture — JAMAIS touché (l'ouverture du 14/11 scellée)
+10:26:57  [TOUT LANCER] parti — le verrou → le run → la collecte → LE LIVRE (à l'atelier choisi) → le témoin
+10:26:57  === TOUT LANCER — 18/11/2026 10:26:57 : le verrou recoupé, le run part, la collecte suivra, le livre se met à jour à l'ATELIER CHOISI, le témoin est à VOTRE MAIN (D99) ===
+10:26:57  [run] === LE RUN DE L'UNITÉ 5 (loupe-13 recherche × bras T) — la campagne D204, le terrain du développeur ===
+10:26:57  [run] [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 25066d8a575df015… == la gravure du kit
+10:26:57  [run] [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff64cc00000
+10:26:57  [run] [T0] la feuille pure : AUCUNE feuille kernel32 à résoudre — le scénario ne touche pas à l'IAT, la pièce n'appelle que le scellé libc-02 du plan (base + 0x1180)
+10:26:57  [run] [VERT] V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — LA PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide → -1, la plage vide → -1, le motif trop long → -1 IMMÉDIAT)
+10:26:57  [run] [VERT] V1:les-marques-de-proxy — MZ @0, PE @+0x40, « This program » et « PEMax » les marques ABSENTES du scellé (les en-têtes écrits à la main) → -1 LA FIN NOMMÉE, l'absence constatée
+10:27:12  [run] [VERT] V2:le-differentiel-10-000-cas — 10000/10 000 == le modèle (la graine 20261115, les mêmes tirages au labo, y compris les -1 — Q1-Q4)
+10:27:12  [run] [VERT] V2:la-fenetre-et-le-motif-lus-seuls — les octets de la fenêtre et du motif INTACTS aux 10 000 gestes (I3 — la pureté)
+10:27:12  [run] [VERT] V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+10:27:12  [run] [VERT] V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+10:27:12  [run] [VERT] V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu
+10:27:12  [run] [VERT] V4:l-octet-du-mz-mute-la-fin-nommee — l'octet 1 muté (0x5A → 0x6F) : le « MZ » détruit, la réponse -1 LA FIN NOMMÉE DIVERGE du modèle de l'original (0) ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)
+10:27:12  [run] [témoin] D:\Downloads\kit-unite-03-d210-20261118-v2\preuves-unite13\temoin-unite13.txt — 9 VERT, 0 ROUGE
+10:27:12  [run] === LE RUN DE L'UNITÉ 5 FINI : dater et signer le témoin de votre main, renvoyer preuves-unite13/ ENTIER au coffre /test ===
+10:27:12  [run] FINI — 9 VERT, 0 ROUGE recopiés (code 0)
+10:27:12  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-03-d210-20261118-v2\preuves-unite13\temoin-unite13.txt
+10:27:12  [collecte] la console COPIÉE au réceptacle : run-console-unite13-d210-20261118-102657.txt
+10:27:12  [collecte] DEPOT-d210-unite13.txt né au réceptacle (3 pièces)
+10:27:12  [COLLECTE] née — DEPOT-d210-unite13.txt au réceptacle (3 pièces)
+10:27:12  [TÉMOIN] né — PAS ENCORE daté-signé (votre main, D99) — D:\Downloads\kit-unite-03-d210-20261118-v2\preuves-unite13\temoin-unite13.txt
+10:27:12  [LIVRE] mis à jour durant le run — les lignes M1/M3 couchées à l'atelier choisi (D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520)
+10:27:12  [livre] la ligne M1 couchée : T-loupe-13-d210-it1,T,loupe-13-d210,1,2026-11-18,2026-11-18,VERT,en attente
+10:27:12  [livre] la ligne M3 couchée : 2026-11-18,T,loupe-13-d210,run-terrain,10:26,10:27,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3
+10:28:16  [GUI] la fenêtre fermée

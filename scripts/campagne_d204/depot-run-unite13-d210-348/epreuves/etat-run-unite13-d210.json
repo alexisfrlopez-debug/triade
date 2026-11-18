@@ -1,0 +1,73 @@
+{
+ "contexte": {
+  "console": "D:\\Downloads\\kit-unite-03-d210-20261118-v2\\run-console-unite13-d210-20261118-102657.txt",
+  "argv": [
+   "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+   "scenario-unite13.py"
+  ],
+  "debut": "18/11/2026 10:26:57",
+  "fin": "18/11/2026 10:27:12",
+  "duree_s": 14.7,
+  "code": 0,
+  "n_vert": 9,
+  "n_rouge": 0,
+  "verdicts": [
+   [
+    true,
+    "T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 25066d8a575df015… == la gravure du kit"
+   ],
+   [
+    true,
+    "V1:le-corpus-de-l-ecole — 10/10 == le modèle (le premier octet, le dernier, à cheval sur le départ, l'occurrence DOUBLE — LA PREMIÈRE exigée, AAAA dans AAAAB, le presque-frère, le départ au milieu, la fenêtre vide → -1, la plage vide → -1, le motif trop long → -1 IMMÉDIAT)"
+   ],
+   [
+    true,
+    "V1:les-marques-de-proxy — MZ @0, PE @+0x40, « This program » et « PEMax » les marques ABSENTES du scellé (les en-têtes écrits à la main) → -1 LA FIN NOMMÉE, l'absence constatée"
+   ],
+   [
+    true,
+    "V2:le-differentiel-10-000-cas — 10000/10 000 == le modèle (la graine 20261115, les mêmes tirages au labo, y compris les -1 — Q1-Q4)"
+   ],
+   [
+    true,
+    "V2:la-fenetre-et-le-motif-lus-seuls — les octets de la fenêtre et du motif INTACTS aux 10 000 gestes (I3 — la pureté)"
+   ],
+   [
+    true,
+    "V3:E1:le-motif-vide — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu"
+   ],
+   [
+    true,
+    "V3:E2:le-motif-de-trente-trois — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu"
+   ],
+   [
+    true,
+    "V3:E3:le-depart-au-dela — verdict -5 — chercher rien n'est pas chercher ; la borne du quotidien MOTIF_MAX ; le départ est une position, pas un vœu"
+   ],
+   [
+    true,
+    "V4:l-octet-du-mz-mute-la-fin-nommee — l'octet 1 muté (0x5A → 0x6F) : le « MZ » détruit, la réponse -1 LA FIN NOMMÉE DIVERGE du modèle de l'original (0) ET == le modèle du mutant — la pièce a lu SES octets, la différentielle attrape le faux (le fixture falsifie-16.bin vit au réceptacle)"
+   ]
+  ],
+  "ligne_témoin": "[témoin] D:\\Downloads\\kit-unite-03-d210-20261118-v2\\preuves-unite13\\temoin-unite13.txt — 9 VERT, 0 ROUGE",
+  "rouge_ok": true
+ },
+ "etapes": {
+  "run": true,
+  "collecte": true,
+  "livre": true
+ },
+ "livraisons": 0,
+ "atelier": "D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520",
+ "livre": {
+  "atelier": "D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520",
+  "m1": "T-loupe-13-d210-it1,T,loupe-13-d210,1,2026-11-18,2026-11-18,VERT,en attente",
+  "m3": "2026-11-18,T,loupe-13-d210,run-terrain,10:26,10:27,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3",
+  "shas": {
+   "livraisons.csv": "d0b9a8c57515efae884411a6fec44e72378d707b1e329872adbc52c8476eb1d8",
+   "carnet_temps_humain.csv": "ee0d1f479e7d10780bf2ae60af9ff7b24aa7356b90fc62f142947052a9c70039",
+   "defauts.csv": "1bed8908ea9e187d8cf1e6d8e2c1c0b8c70c057e523ae048d64dd48943270ef6",
+   "journal-ouverture.txt": "4c036f089e3fbb964525b4fa83ac870ed1f893ba2300e10b5521d797cf2f28bc"
+  }
+ }
+}

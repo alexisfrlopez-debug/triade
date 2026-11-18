@@ -1,0 +1,24 @@
+TÉMOIN DU RUN DE L'UNITÉ 5 — loupe-13 recherche × bras T (la campagne D204, la comparaison des workflows)
+==============================================================================
+le run      : 2026-11-18T09:27:11Z (UTC) — la machine du développeur
+la machine  : PORTABLE · Windows 10 · AMD64 · Python 3.14.10
+la pièce    : loupe.exe 127488 o, sha256 25066d8a575df0153272987fd22a9f1cfd4fadfd99547cfaa439821eddf4fd45
+le verdict  : 9 VERT, 0 ROUGE — VERT
+
+LES VECTEURS :
+  VERT T0:la-piece-recoupee-a-l-empreinte-gravee
+  VERT V1:le-corpus-de-l-ecole
+  VERT V1:les-marques-de-proxy
+  VERT V2:le-differentiel-10-000-cas
+  VERT V2:la-fenetre-et-le-motif-lus-seuls
+  VERT V3:E1:le-motif-vide
+  VERT V3:E2:le-motif-de-trente-trois
+  VERT V3:E3:le-depart-au-dela
+  VERT V4:l-octet-du-mz-mute-la-fin-nommee
+
+LE GESTE QUI RESTE À LA MAIN (jamais automatisé, D99) :
+  DATER ce témoin (la date de votre main), le SIGNER,
+  renvoyer le dossier preuves-unite13/ ENTIER au coffre /test.
+
+Daté le : ___17/11/2026_________________
+Signé    : __Alexis Lopez__________________
