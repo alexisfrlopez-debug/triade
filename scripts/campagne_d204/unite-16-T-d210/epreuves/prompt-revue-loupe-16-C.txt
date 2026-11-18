@@ -1,0 +1,320 @@
+Tu es le RÉVISEUR d'une pièce C selon le protocole TRIADE (la cérémonie de
+revue : la pièce relue AU CONTRAT, clause par clause). La pièce : le MIROIR
+C de LOUPE-16 SAISIE (l'unité 04 D210 × bras C, le flux standard gcc -O2
+-std=c11 -Wall -Wextra PROPRE). Le récit : le source né de la rig (le tour
+d'auteur + la composition), L'ÉPREUVE POSIX : 14 VERT, 0 ROUGE (le
+différentiel 10 000 frappes aux deux disques, le scénario 4d5a, la vue qui
+suit et le recadrage au miroir (memcpy + le recouvrement), les rejets dont
+la fantôme MARCHE SALE, le repli, LA FALSIFICATION : le mutant garde
+attrapé).
+
+NOTE D'ARBITRAGE (I2/I3/I4) : le bras C est le flux standard compilé — la
+relecture au miroir est memcpy du disque passé par pointeur (l'échec de
+relecture vit au bras T seul, nommé au source) ; la feuille de repeint vit
+au bras T (le caller repeint au flux standard) — pas des écarts, des
+miroirs nommés.
+
+Revue la conformité AU CONTRAT, clause par clause (P1-P3, Q1-Q5, I1-I4,
+E1-E4) : cite la ligne à l'appui pour chaque clause, nomme les écarts
+éventuels, conclus par « Verdict : CONFORME » ou « Verdict : ÉCART ».
+Rien d'autre.
+
+=== LE CONTRAT (loupe-16-saisie.md, la couche I, verbatim) ===
+loupe-16 · saisie : l'octet écrit au journal, la marque sale posée · révision 1
+Intention : écrire un octet dans la cellule active — DEUX chiffres hexa
+successifs composent l'octet (le premier attend, le second engage),
+l'octet va AU JOURNAL DES ÉCRITURES (l'entrée par décalage, la
+réécriture du même octet REMPLACE) ET au tampon de vue (l'octet visible
+immédiatement), la marque SALE est posée — et LE DISQUE DEMEURE INTACT
+: tout est réversible avant la sauvegarde de loupe-17 (l'invariant du
+README). La garde de sortie est ré-armée à CHAQUE écriture (refus_
+quitter = 0 — la décision de loupe-18).
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_CHAR hors
+             mode saisie — les SEIZE chiffres hexa écoutent, tout
+             autre caractère est ignoré proprement ; P2 la session
+             est ouverte ; P3 la zone JOURNAL du plan (4 112 o : 256
+             entrées de 16 o — u64 décalage · u8 octet · 7 réserve —
+             et le nombre) + le nibble de la zone SAISIE.
+  post : Q1 LE PREMIER CHIFFRE : nibble actif, la valeur (0 à 15)
+             posée — la cellule attend (rien n'est écrit : un demi-
+             octet n'existe pas au disque ni au journal) ;
+         Q2 LE SECOND CHIFFRE : l'octet = (premier << 4) | second —
+             écrit AU JOURNAL : l'entrée du décalage du curseur
+             (l'entrée PAR DÉCALAGE : si le décalage est déjà au
+             journal, l'octet REMPLACÉ, le nombre n'augmente pas) ;
+             le journal PLEIN (256 distincts) → verdict -3 (la borne
+             nommée : « journal plein — Ctrl+S pour sauver ») ;
+         Q3 ET À LA VUE : si la cellule est dans la fenêtre (curseur
+             − vue < remplissage) : tampon[curseur − vue] = l'octet —
+             l'octet visible IMMÉDIATEMENT (jamais une édition
+             invisible) ;
+         Q4 LA MARQUE : cadre.sale = 1 ET refus_quitter = 0 (la garde
+             de loupe-18 ré-armée : après une NOUVELLE écriture, le
+             premier Alt+F4 re-vient avertir) ; le curseur AVANCE
+             (+1, clampé à taille − 1) — la cellule suivante attend ;
+         Q5 rax = 0 ; VK_SUPPR pendant l'attente (Q1) → le nibble
+             effacé (l'attente annulée proprement — le premier
+             chiffre repart).
+  inv  : I1 LE DISQUE INTACT : aucune écriture fichier ici (WriteFile
+             vit chez loupe-17 SEUL — la liste IAT du plan le
+             garantit : la contrebande d'écriture est un refus de
+             build) ;
+         I2 le journal est PAR DÉCALAGE (une entrée par octet — la
+             seconde écriture remplace : la sauvegarde écrit chaque
+             octet UNE fois, l'ordre interne du journal est celui de
+             la saisie) ;
+         I3 la cohérence de vue est tendue par loupe-02 Q2 (le
+             recouvrement : l'octet édité survit au défilement) —
+             ici la moitié locale : l'octet posé au tampon SI
+             visible ;
+         I4 le curseur reste BORNÉ [0, taille−1] (l'invariant du
+             cadre) ; AUCUNE entrée IAT propre (l'édition est pure
+             état : le journal, le tampon, la marque) ; NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P2) → verdict -4 SESSION, rax = -4.
+  E2 : la cellule hors fenêtre valide (curseur − vue ≥ remplissage :
+       la cellule n'existe pas à la vue) → verdict -3 HORS-BORNES —
+       l'écriture AU JOURNAL a quand même lieu ? NON : RIEN n'est
+       écrit (le refus précède le journal — la cellule fantôme
+       n'existe pas, l'oracle le constate).
+  E3 : le journal PLEIN (256 octets DISTINCTS en attente) → verdict
+       -3, la borne nommée à la barre (« journal plein — Ctrl+S »),
+       RIEN perdu (l'octet refusé n'entre pas, l'état demeure).
+  E4 : le caractère non hexa → IGNORÉ proprement (repli documenté :
+       rax = 0, rien — les seize chiffres seuls écoutent).
+Vecteurs :
+  V1 : différentiel — 10 000 saisies aléatoires (séquences de
+       chiffres, ré-écritures des mêmes décalés, la frontière du
+       journal) : le journal ET le tampon comparés au modèle Python
+       (l'entrée par décalage, le remplacement, le compte) (couvre
+       Q1, Q2, Q3, Q4, Q5).
+  V2 : scénario — « 4d5a » au curseur 0x22 : l'octet visible à la
+       vue, « MODIFIÉ » à la barre, l'astérisque au panneau, la
+       cellule suivante active — l'écran attendu (couvre Q3, Q4).
+  V3 : rejet — sans session : -4 ; la cellule au-delà du
+       remplissage : -3 RIEN au journal ; le 257e distinct : -3 nommé
+       (couvre E1, E2, E3).
+  V4 : scénario du repli — « z », « ! », l'espace : ignorés, rien
+       bougé (le différentiel constate l'inaction) ; VK_SUPPR à
+       l'attente : le premier chiffre repart (couvre E4, Q5).
+  V5 : falsification — la garde refus_quitter non ré-armée à
+       l'écriture : le scénario de loupe-18 (éditer PUIS Alt+F4
+       une seule fois doit avertir) échoue — la falsification
+       traverse les blocs, l'oracle à scénarios l'attrape.
+Fixtures    : le témoin du kit (les saisies aux bords de fenêtre) —
+              la cellule fantôme du E2 y vit.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (la zone JOURNAL déclarée), D7 (aucune IAT —
+              le disque demeure intact).
+
+=== LA PIÈCE C (source-loupe-16-C.c) ===
+/* loupe-16-saisie · le miroir C du bloc de campagne (l'unité 04 D210, bras C)
+ * La saisie : l'octet au journal, la marque sale, la garde ré-armée — le
+ * disque demeure intact (I1 : la sauvegarde vit chez loupe-17 seul).
+ *
+ * Le flux standard : gcc -O2 -std=c11 -Wall -Wextra PROPRE ; la DLL au
+ * terrain : x86_64-w64-mingw32-gcc -O2 -shared -o loupe-16-d210-c.dll
+ * source-loupe-16-C.c loupe-16-c.def (le .def : EXPORTS loupe_16_saisie).
+ *
+ * Les zones du MIROIR (les offsets du plan loupe, la source unique — les
+ * mêmes que le bras T lit par lea rip) : le cadre, la saisie, le journal ;
+ * le disque passe par pointeur : LA RELECTURE au miroir C est memcpy (le
+ * tampon re-né de disque[vue..] + le recouvrement du journal) — l'échec
+ * de relecture vit au bras T seul (le scellé loupe-02 le rend), nommé.
+ */
+#include <stdint.h>
+#include <string.h>
+
+/* LE CADRE (0xE000 au plan) : les offsets littéraux du plan */
+#define CADRE_TAILLE        520u   /* u64 */
+#define CADRE_POIGNEE       528u   /* u64 — INVALIDE (~0) hors session */
+#define CADRE_VUE           536u   /* u64 */
+#define CADRE_CURSEUR       544u   /* u64 */
+#define CADRE_REMPLISSAGE   552u   /* u32 — LUI SEUL, jamais le qword */
+#define CADRE_SALE          556u   /* u32 */
+#define CADRE_REFUS_QUITTER 560u   /* u32 — la garde de loupe-18 */
+#define CADRE_TAMPON        568u   /* 384 octets */
+
+/* LA SAISIE (0xE400) : le mode, l'attente, la barre */
+#define SAISIE_MODE         0u     /* u32 — 3 = MESSAGE */
+#define SAISIE_ACTIF        4u     /* u32 — l'attente du premier chiffre */
+#define SAISIE_NIBBLE       8u     /* u32 — sa valeur 0..15 */
+#define SAISIE_BARRE        12u    /* 80 octets */
+
+/* LE JOURNAL (0xE4A0) : 256 entrées de 16 o + le nombre */
+#define JOURNAL_NOMBRE      4096u  /* u32 */
+#define EDITS_MAX           256u
+#define TAMPON_SESSION      384u
+
+static uint64_t lire_u64(const unsigned char *zone, uint32_t off) {
+    uint64_t v = 0;
+    for (unsigned int i = 0; i < 8; ++i) {
+        v |= (uint64_t)zone[off + i] << (8u * i);
+    }
+    return v;
+}
+
+static uint32_t lire_u32(const unsigned char *zone, uint32_t off) {
+    uint32_t v = 0;
+    for (unsigned int i = 0; i < 4; ++i) {
+        v |= (uint32_t)zone[off + i] << (8u * i);
+    }
+    return v;
+}
+
+static void ecrire_u64(unsigned char *zone, uint32_t off, uint64_t v) {
+    for (unsigned int i = 0; i < 8; ++i) {
+        zone[off + i] = (unsigned char)(v >> (8u * i));
+    }
+}
+
+static void ecrire_u32(unsigned char *zone, uint32_t off, uint32_t v) {
+    for (unsigned int i = 0; i < 4; ++i) {
+        zone[off + i] = (unsigned char)(v >> (8u * i));
+    }
+}
+
+/* LE MESSAGE À LA BARRE : la phrase copiée (NUL final), le mode MESSAGE */
+static void poser_message(unsigned char *saisie, const char *phrase) {
+    size_t n = strlen(phrase);
+    if (n > 79) {
+        n = 79;
+    }
+    memcpy(saisie + SAISIE_BARRE, phrase, n);
+    saisie[SAISIE_BARRE + n] = '\0';
+    ecrire_u32(saisie, SAISIE_MODE, 3u);
+}
+
+/* LE RECOUVREMENT : le tampon re-né du disque + les octets du journal */
+static void relire_vue(unsigned char *cadre, unsigned char *journal,
+                       const unsigned char *disque, uint64_t nv) {
+    uint64_t taille = lire_u64(cadre, CADRE_TAILLE);
+    uint32_t nombre = lire_u32(journal, JOURNAL_NOMBRE);
+    uint32_t rempl = (taille - nv < TAMPON_SESSION)
+                     ? (uint32_t)(taille - nv) : TAMPON_SESSION;
+    memcpy(cadre + CADRE_TAMPON, disque + nv, rempl);
+    for (uint32_t i = 0; i < nombre; ++i) {
+        uint64_t dec = lire_u64(journal + 16u * i, 0u);
+        if (nv <= dec && dec - nv < (uint64_t)rempl) {
+            cadre[CADRE_TAMPON + (uint32_t)(dec - nv)] =
+                journal[16u * i + 8u];
+        }
+    }
+    ecrire_u64(cadre, CADRE_VUE, nv);
+    ecrire_u32(cadre, CADRE_REMPLISSAGE, rempl);
+}
+
+long long loupe_16_saisie(
+    unsigned char *cadre,
+    unsigned char *saisie,
+    unsigned char *journal,
+    const unsigned char *disque,
+    unsigned int lignes,
+    unsigned int caractere
+) {
+    /* E1 : sans session ouverte → -4, la phrase nommée à la barre */
+    if (lire_u64(cadre, CADRE_POIGNEE) == ~(uint64_t)0) {
+        poser_message(saisie, "aucun fichier ouvert");
+        return -4;
+    }
+
+    /* Q5 : VK_SUPPR pendant l'attente → le nibble effacé */
+    if (caractere == 0x08u) {
+        if (lire_u32(saisie, SAISIE_ACTIF) != 0u) {
+            ecrire_u32(saisie, SAISIE_ACTIF, 0u);
+            ecrire_u32(saisie, SAISIE_NIBBLE, 0u);
+        }
+        return 0;
+    }
+
+    /* E4 : la classe — les SEIZE chiffres hexa écoutent, le reste ignoré */
+    unsigned int c = caractere;
+    if (c >= 0x61u && c <= 0x66u) {
+        c -= 0x20u;                       /* les minuscules portées aux MAJUSCULES */
+    }
+    unsigned int valeur;
+    if (c >= 0x30u && c <= 0x39u) {
+        valeur = c - 0x30u;
+    } else if (c >= 0x41u && c <= 0x46u) {
+        valeur = c - 0x37u;
+    } else {
+        return 0;                          /* ignoré proprement (E4) */
+    }
+
+    /* Q1 : le premier chiffre → l'attente posée (rien n'est écrit) */
+    if (lire_u32(saisie, SAISIE_ACTIF) == 0u) {
+        ecrire_u32(saisie, SAISIE_ACTIF, 1u);
+        ecrire_u32(saisie, SAISIE_NIBBLE, valeur);
+        return 0;
+    }
+
+    /* Q2 : le second chiffre — l'attente CONSOMMÉE avant tout contrôle */
+    unsigned int premier = lire_u32(saisie, SAISIE_NIBBLE);
+    ecrire_u32(saisie, SAISIE_ACTIF, 0u);
+    ecrire_u32(saisie, SAISIE_NIBBLE, 0u);
+    unsigned int octet = (premier << 4) | valeur;
+
+    /* E2 : la cellule fantôme (le refus PRÉCÈDE le journal) */
+    uint64_t curseur = lire_u64(cadre, CADRE_CURSEUR);
+    uint64_t vue = lire_u64(cadre, CADRE_VUE);
+    uint32_t remplissage = lire_u32(cadre, CADRE_REMPLISSAGE);
+    if (curseur >= vue + (uint64_t)remplissage) {
+        poser_message(saisie, "hors bornes");
+        return -3;
+    }
+
+    /* Q2 : le journal PAR DÉCALAGE — présent REMPLACÉ, absent AJOUTÉ */
+    uint32_t nombre = lire_u32(journal, JOURNAL_NOMBRE);
+    uint32_t i = 0;
+    while (i < nombre) {
+        if (lire_u64(journal + 16u * i, 0u) == curseur) {
+            break;
+        }
+        ++i;
+    }
+    if (i < nombre) {
+        journal[16u * i + 8u] = (unsigned char)octet;   /* REMPLACÉ */
+    } else if (nombre < EDITS_MAX) {
+        ecrire_u64(journal + 16u * nombre, 0u, curseur);
+        journal[16u * nombre + 8u] = (unsigned char)octet;
+        ecrire_u32(journal, JOURNAL_NOMBRE, nombre + 1u);
+    } else {
+        poser_message(saisie, "journal plein - Ctrl+S");  /* E3, rien perdu */
+        return -3;
+    }
+
+    /* Q3 : l'octet visible immédiatement au tampon de vue */
+    cadre[CADRE_TAMPON + (uint32_t)(curseur - vue)] = (unsigned char)octet;
+
+    /* Q4 : la marque, LA GARDE RÉ-ARMÉE, le pas clampé */
+    uint64_t taille = lire_u64(cadre, CADRE_TAILLE);
+    ecrire_u32(cadre, CADRE_SALE, 1u);
+    ecrire_u32(cadre, CADRE_REFUS_QUITTER, 0u);
+    curseur = curseur + 1u;
+    if (curseur >= taille) {              /* clampé à taille − 1 ; le vide : 0 */
+        curseur = (taille > 0u) ? taille - 1u : 0u;
+    }
+    ecrire_u64(cadre, CADRE_CURSEUR, curseur);
+
+    /* LA VUE SUIT (le renvoi de loupe-15 Q3) : la vitrine [vue, vue+16·V) */
+    uint32_t v = (lignes > 3u) ? lignes - 3u : 0u;
+    if (v > 24u) {
+        v = 24u;
+    }
+    if (curseur < vue || curseur >= vue + (uint64_t)(16u * v)) {
+        uint64_t nv = (curseur > 176u) ? curseur - 176u : 0u;
+        nv &= ~(uint64_t)15u;                    /* aligne16_inf */
+        uint64_t vmax = 0u;
+        if (taille > TAMPON_SESSION) {
+            vmax = (taille - TAMPON_SESSION + 15u) & ~(uint64_t)15u;
+        }
+        if (nv > vmax) {
+            nv = vmax;
+        }
+        if (nv != vue) {
+            relire_vue(cadre, journal, disque, nv);  /* la relecture au miroir */
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,5 @@
+MESURES DE LA PIÈCE DE CAMPAGNE — l'unité 04 D210 (loupe-16 × T)
+loupe-16 (notation de campagne) : 656 o de code, slot 0x2c0 (704 o), padding 48 o (NOP)
+les 17 scellées : == les mesures d'arrêt D161
+loupe.exe : 127488 o, sha256 b382e01b76333a161e9731d72c290f769ad77b52bb7a3e8ffb3cd399b4ef5b20
+différentiel au scellé : 31 plages, 496 o, au slot loupe-16 et à la porte R10 seuls

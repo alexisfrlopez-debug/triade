@@ -1,0 +1,38 @@
+Tu es l'AUTEUR selon le protocole TRIADE (la campagne D210, l'unité 04
+D210 loupe-16 saisie × BRAS C : le flux standard gcc -O2 -std=c11
+-Wall -Wextra). Écris LE SOURCE C COMPLET du miroir de loupe-16 — la
+fonction exportée :
+
+long long loupe_16_saisie(unsigned char *cadre, unsigned char *saisie,
+unsigned char *journal, const unsigned char *disque,
+unsigned int lignes, unsigned int caractere)
+
+LES ZONES DU MIROIR (les offsets du plan, la source unique) : cadre —
+taille u64 @+520, poignée u64 @+528 (INVALIDE = ~0ULL hors session),
+vue u64 @+536, curseur u64 @+544, remplissage u32 @+552, sale u32
+@+556, refus_quitter u32 @+560, tampon 384 o @+568 ; saisie — actif u32
+@+4, nibble u32 @+8, barre 80 o @+12, mode u32 @+0 ; journal — 256
+entrées de 16 o (u64 décalage @+0, u8 octet @+8), le nombre u32 @+4096.
+Le disque : LA RELECTURE au miroir C (le tampon re-né de disque[vue..]
++ le recouvrement du journal — memcpy, la feuille standard ; l'échec de
+relecture vit au bras T seul, nommé en commentaire).
+
+LE CONTRAT : E1 poignée == ~0ULL → la phrase « aucun fichier ouvert » à
+la barre (saisie+12, NUL final), mode = 3, retour -4 ; Q5 VK_SUPPR
+(caractère 0x08) à l'attente → le nibble effacé, retour 0 ; E4 la classe
+— a-f porté à A-F, 0-9 et A-F écoutés, le reste IGNORÉ (retour 0) ; Q1
+le premier chiffre : actif = 1, nibble = valeur ; Q2 le second :
+l'attente CONSOMMÉE avant tout contrôle, l'octet = (premier << 4) |
+second ; E2 curseur ≥ vue + remplissage → « hors bornes » à la barre,
+-3, RIEN au journal ; le journal PAR DÉCALAGE (présent REMPLACÉ, absent
+AJOUTÉ si nombre < 256, sinon « journal plein - Ctrl+S », -3) ; Q3 le
+tampon[curseur − vue] = l'octet ; Q4 sale = 1, refus_quitter = 0,
+curseur +1 clampé à taille − 1 ; LA VUE SUIT : V = lignes − 3 clampé
+[0,24] ; curseur hors [vue, vue + 16·V) → nv = (curseur − 176) & ~15
+clampé ≥ 0 et ≤ (taille ≤ 384 ? 0 : (taille − 384 + 15) & ~15) ; si nv
+!= vue : le tampon re-né du disque + le recouvrement, remplissage =
+min(384, taille − nv), vue = nv ; retour 0. Les accès : des helpers
+inline u64/u32/u8 par offsetof — AUCUNE struct pattue, les offsets du
+plan littéraux. ISO C11 pur, PROPRE (aucun avertissement -Wall
+-Wextra), les fichiers d'en-tête utiles seuls. Réponds UNIQUEMENT le
+source C complet.

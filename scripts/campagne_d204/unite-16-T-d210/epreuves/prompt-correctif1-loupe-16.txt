@@ -1,0 +1,51 @@
+Tu es l'AUTEUR d'un bloc de code machine natif selon le protocole TRIADE
+(x86-64-win11-pe, ABI msx64 — la campagne D210, bras T). Ton brouillon
+it1 de LOUPE-16 SAISIE fut relu par les contrôles du labo : LES FAUTES
+NOMMÉES (D202 — avant toute correction) :
+
+  F1 (LA CLASSE DES OFFSETS) : la poignée lue à « [rbx + 0x328] » — le
+      plan porte CADRE.poignée à +528 (u64), JAMAIS 0x328 ; toutes les
+      adresses du cadre sont : taille +520, poignée +528, vue +536,
+      curseur +544, remplissage +552 (u32), sale +556, refus_quitter
+      +560, tampon +568 ; SAISIE actif +4, nibble +8, barre +12 ;
+      JOURNAL le nombre à +4096 ;
+  F2 (LA CLASSE DES NON-VOLATILS) : « lea rsi » et « mov dil » — RSI et
+      RDI SONT NON-VOLATILS en msx64 : jamais détruits sans être
+      poussés ; la convention interne du domaine : tes brouillons sont
+      les VOLATILS r10/r11 (le HWND à r12, le cadre à rbx, la saisie à
+      r13, le curseur à r14, l'octet à r15 — les cinq poussés) ;
+  F3 (LA CLASSE DES LIGNES ILLÉGALES) : une étiquette « IAT_INVALIDATERECT: »
+      posée DANS le brouillon — l'entrée IAT est une FEUILLE DU PLAN, pas
+      une étiquette locale : la feuille s'appelle par
+      « call qword ptr [rip + IAT_INVALIDATERECT] » (le symbole du plan),
+      JAMAIS définie par toi ;
+  F4 (LA CLASSE DES LEA MORTS) : des lea posés d'emblée (rdx JOURNAL,
+      rax METRIQUES, r10 L_SESSION) puis écrasés avant tout usage —
+      chaque lea vit à SON geste, jamais en réserve ;
+  F5 (LA CLASSE DU NOP) : le verdict du refus veut « push -4 / pop rax /
+      nop / nop » avant le saut (la convention EAX-sans-signe — le
+      round-trip des 4 octets du push+pop, jamais le mov eax, -4 nu).
+
+RENDS LE BROUILLON CORRIGÉ : la notation ENTIÈRE (une instruction par
+ligne, les étiquettes locales « .nom: » seules, les commentaires « ; »,
+« call LOUPE02 » pour la relecture, « call qword ptr [rip +
+IAT_INVALIDATERECT] » pour la feuille, AUCUN equ, AUCUNE macro) —
+l'ordre du contrat : E1 session (poignée == -1 → le message à la barre,
+rax = -4) ; Q5 VK_SUPPR (0x08) à l'attente ; E4 la classe des seize
+chiffres (a-f porté à A-F, 0-9 la valeur, le reste ignoré) ; Q1 le
+premier chiffre (l'attente posée) ; Q2 le second (r10d SAUVE le premier,
+l'attente CONSOMMÉE avant tout contrôle, l'octet = (premier << 4) |
+second) ; E2 la cellule fantôme (curseur ≥ vue + remplissage [le DWORD
+@+552 SEUL — jamais le qword : la marque vit à +556] → le message, rax
+= -3, RIEN au journal) ; le journal PAR DÉCALAGE (256 entrées de 16 o,
+u64 décalage @+0, u8 octet @+8, le nombre u32 @+4096 ; le décalage
+présent REMPLACÉ sinon AJOUTÉ ; 256 DISTINCTS → E3 : le message, rax =
+-3) ; Q3 tampon[curseur − vue] = l'octet ; Q4 sale = 1, refus_quitter =
+0, curseur +1 clampé à taille − 1 ; LA VUE SUIT (V = lignes@METRIQUES+8
+− 3 clampé [0, 24], la vitrine [vue, vue + 16·V) ; le curseur dehors →
+la nouvelle vue = aligne16_inf(curseur − 176) clampée à aligne16_sup
+(taille − 384) ; si elle diffère : r15 la SAUVE, « call LOUPE02 » avec
+rcx = la nouvelle vue, eax non-nul → la sortie SANS la poser, sinon la
+vue du cadre la reçoit) ; la feuille InvalidateRect (rcx = HWND, rdx =
+0, r8d = 1) ; rax = 0 ; l'épilogue rend tout non-volatil poussé.
+Réponds UNIQUEMENT le brouillon .asm complet.

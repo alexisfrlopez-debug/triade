@@ -1,0 +1,56 @@
+Tu es l'AUTEUR d'un bloc de code machine natif selon le protocole TRIADE (le
+profil x86-64-win11-pe, l'ABI msx64 — la campagne D210, le bras T : la
+notation écrite à la main). La tâche : LOUPE-16 SAISIE, l'unité 04 D210.
+
+Rédige LES NOTES D'AUTEUR (l'analyse préalable du contrat — tes exigences,
+tes pièges, tes invariants) en 25 lignes au plus, en français, sans code :
+ce que tu retiens des clauses, ce qui te paraît difficile, l'ordre où tu
+écrirais le bloc, les registres que tu comptes employer, les dangers que tu
+vois (l'état, le journal, la garde, la vue qui suit). Le contrat suit,
+verbatif ; lis-le et nomme ce que tu y retiens.
+
+=== LE CONTRAT (loupe-16-saisie.md, la couche I, verbatim) ===
+loupe-16 · saisie : l'octet écrit au journal, la marque sale posée · révision 1
+Intention : écrire un octet dans la cellule active — DEUX chiffres hexa
+successifs composent l'octet (le premier attend, le second engage),
+l'octet va AU JOURNAL DES ÉCRITURES (l'entrée par décalage, la réécriture
+du même octet REMPLACE) ET au tampon de vue (l'octet visible
+immédiatement), la marque SALE est posée — et LE DISQUE DEMEURE INTACT :
+tout est réversible avant la sauvegarde de loupe-17. La garde de sortie est
+ré-armée à CHAQUE écriture (refus_quitter = 0 — la décision de loupe-18).
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_CHAR hors mode
+             saisie — les SEIZE chiffres hexa écoutent, tout autre caractère
+             est ignoré proprement ; P2 la session est ouverte ; P3 la zone
+             JOURNAL du plan (4 112 o : 256 entrées de 16 o — u64 décalage ·
+             u8 octet · 7 réserve — et le nombre) + le nibble de la zone
+             SAISIE.
+  post : Q1 LE PREMIER CHIFFRE : nibble actif, la valeur (0 à 15) posée ;
+         Q2 LE SECOND CHIFFRE : l'octet = (premier << 4) | second — écrit
+             AU JOURNAL par décalage (le décalage déjà présent → REMPLACÉ,
+             le nombre n'augmente pas) ; journal PLEIN (256 distincts) → -3 ;
+         Q3 ET À LA VUE : tampon[curseur − vue] = l'octet si visible ;
+         Q4 LA MARQUE : cadre.sale = 1 ET refus_quitter = 0 ; le curseur
+             AVANCE (+1, clampé à taille − 1) — LA VUE SUIT l'avance ;
+         Q5 rax = 0 ; VK_SUPPR pendant l'attente → le nibble effacé.
+  inv  : I1 LE DISQUE INTACT (aucune écriture fichier ici) ; I2 le journal
+             PAR DÉCALAGE ; I3 l'octet posé au tampon SI visible ; I4 le
+             curseur BORNÉ [0, taille−1] ; NOP, 0x90.
+Échecs : E1 sans session → -4 ; E2 la cellule fantôme (curseur − vue ≥
+       remplissage) → -3, RIEN au journal (le refus précède) ; E3 journal
+       PLEIN → -3 ; E4 le non-hexa IGNORÉ (rax = 0).
+
+=== LES FAITS DU PLAN (layout.py — la source unique) ===
+CADRE @0xE000 : taille u64 @+520, poignée u64 @+528, vue u64 @+536,
+curseur u64 @+544, remplissage u32 @+552, sale u32 @+556, refus_quitter
+u32 @+560, tampon 384 o @+568 ; SAISIE @0xE400 : mode u32 @+0, actif u32
+@+4, nibble u32 @+8, barre 80 o @+12 ; JOURNAL @0xE4A0 : 256 entrées de
+16 o (u64 décalage @+0, u8 octet @+8), le nombre u32 @+4096 ; METRIQUES
+@0xFDF0 : lignes u32 @+8. L'appel : msx64 — rcx = HWND, rdx = 0x102
+(WM_CHAR), r8 = LE CARACTÈRE, r9 = 0. Le bloc appelle LOUPE02 (le scellé
+à 0x4240, la relecture) quand la vue doit suivre, et la feuille IAT
+InvalidateRect. La vue suit : V = min(24, lignes − 3) lignes visibles ;
+si le curseur sort de [vue, vue + 16·V) → recadre(curseur − 176) borné à
+vue_max = aligne16_sup(taille − 384), relecture LOUPE02 à la nouvelle vue.
+
+RÉPONDS UNIQUEMENT les notes d'auteur (25 lignes au plus, français).

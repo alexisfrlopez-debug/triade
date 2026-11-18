@@ -1,0 +1,11 @@
+Tu es l'AUTEUR selon le protocole TRIADE (la campagne D210, l'unité 04
+D210 loupe-16 saisie × bras T). Écris L'ORACLE DEPUIS I — le modèle
+indépendant dérivé du contrat SEUL (l'écrit-avant-code : jamais les
+octets du bloc). Réponds en 30 lignes au plus : la liste des fonctions
+du modèle Python (leurs noms, leurs arguments, leur sémantique en une
+phrase chacune) — le journal par décalage, la composition de l'octet, la
+consommation de l'attente, la cellule fantôme, la marque et la garde, le
+pas clampé, la vue qui suit (V = lignes − 3 capé 24, aligne16_inf(curseur
+− 176) borné à aligne16_sup(taille − 384)), le recouvrement du journal au
+tampon, les rejets E1/E2/E3/E4, VK_SUPPR — et RIEN d'autre (pas de code
+complet, les signatures et la sémantique suffisent).

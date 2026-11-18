@@ -1,0 +1,89 @@
+Tu es l'AUTEUR d'un bloc de code machine natif selon le protocole TRIADE
+(x86-64-win11-pe, ABI msx64 — la campagne D210, bras T : la notation de
+campagne écrite à la main). Rédige LE BROUILLON SYMBOLIQUE COMPLET du bloc
+LOUPE-16 SAISIE (l'unité 04 D210) — la notation ENTIERE, de la première à
+la dernière ligne, aucune omission.
+
+LE FORMAT DU BROUILLON (un fichier .asm — l'outil auteur le résoudra) :
+  — UNE instruction par ligne, les commentaires commencent par « ; » ;
+  — les étiquettes LOCALES seules sur leur ligne : « .nom: » ;
+  — les sauts : « jne .nom », « jb .nom »… ; les appels locaux :
+    « call .nom » ;
+  — l'appel au scellé : « call LOUPE02 » (le symbole du plan) ;
+  — la feuille IAT : « call qword ptr [rip + IAT_INVALIDATERECT] » ;
+  — les zones du plan par lea rip : « lea rbx, [rip + CADRE] »,
+    « lea r13, [rip + SAISIE] », « lea rdx, [rip + JOURNAL] »,
+    « lea rax, [rip + METRIQUES] », « lea r10, [rip + L_SESSION] »
+    (L_HORSBORNES, L_JOURNALPLEIN pareillement) ;
+  — AUCUN equ, aucune macro, rien d'autre.
+
+LA CONVENTION msx64 (le bloc) :
+  — prologue : pousse TOUT non-volatil utilisé (rbx, r12-r15 — rsi/rdi
+    interdits comme brouillon : tes registres de travail sont les
+    VOLATILS r10/r11), puis « sub rsp, 0x20 » (l'ombre de 32 o aux
+    appels) ;
+  — le verdict d'un refus : « push -4 », « pop rax », « nop », « nop »
+    puis saut à la sortie (la convention EAX-sans-signe du domaine) ;
+  — les appels (LOUPE02, la feuille IAT) se font RSP aligné 16 — ton
+    « sub rsp, 0x20 » le garantit après les pushes ;
+  — rax = 0 au succès.
+
+LES FAITS DU PLAN (la source unique — l'adresse zéro du bloc est posée
+par l'outil, JAMAIS en dur) :
+  — l'appelant : rcx = HWND, rdx = 0x102 (WM_CHAR), r8 = LE CARACTÈRE
+    (r8d), r9 = 0 ;
+  — CADRE : taille u64 @+520, poignée u64 @+528 (INVALIDE = -1 hors
+    session), vue u64 @+536, curseur u64 @+544, remplissage u32 @+552
+    (LIS LE DWORD SEUL — jamais le qword : la marque sale vit à +556),
+    sale u32 @+556, refus_quitter u32 @+560, tampon 384 o @+568 ;
+  — SAISIE : mode u32 @+0, actif u32 @+4 (l'attente), nibble u32 @+8,
+    barre 80 o @+12 ;
+  — JOURNAL : 256 entrées de 16 o (u64 décalage @+0, u8 octet @+8), le
+    nombre u32 @+4096 ;
+  — METRIQUES : lignes u32 @+8 ;
+  — la relecture : quand la vue doit suivre, l'appelant du plan est
+    « call LOUPE02 » avec rcx = LA NOUVELLE VUE ; eax non-nul = échec ;
+  — les messages à la barre : une sous-routine locale « .message » qui
+    copie l'étiquette pointée (octet par octet, NUL final) vers la
+    barre SAISIE+12 et pose mode = 3 : « aucun fichier ouvert » (E1),
+    « hors bornes » (E2), « journal plein - Ctrl+S » (E3).
+
+LE COMPORTEMENT EXIGÉ (le contrat, l'ordre) :
+  1. E1 : poignée == -1 → .message(L_SESSION), rax = -4, sortie ;
+  2. Q5 : r8d == 0x08 (VK_SUPPR) : si actif != 0 → actif = 0, nibble = 0 ;
+     sinon rien ; sortie rax = 0 ;
+  3. E4 : la CLASSE du caractère — les minuscules a-f portées aux
+     majuscules (−0x20), puis 0x30-0x39 → valeur = c − 0x30 ;
+     0x41-0x46 → valeur = c − 0x37 ; TOUT LE RESTE IGNORÉ (rax = 0,
+     rien) ;
+  4. Q1 : actif == 0 → actif = 1, nibble = la valeur ; sortie rax = 0 ;
+  5. Q2 (le second chiffre) : SAUVE le nibble en attente à r10d (VOLATIL
+     — aucun appel entre ici et la composition), CONSOMME l'attente
+     (actif = 0, nibble = 0) AVANT TOUT CONTRÔLE ; compose l'octet
+     = (premier << 4) | second ;
+  6. E2 : curseur ≥ vue + remplissage (le DWORD @+552) → .message
+     (L_HORSBORNES), rax = -3, RIEN au journal, sortie ;
+  7. le JOURNAL par décalage : parcours linéaire des « nombre » entrées
+     (pas 16) ; le décalage == curseur → l'octet REMPLACÉ (le compte
+     inchangé) ; absent et nombre < 256 → l'entrée AJOUTÉE à l'indice
+     « nombre », le compte + 1 ; absent et nombre == 256 → E3 :
+     .message(L_JOURNALPLEIN), rax = -3, sortie ;
+  8. Q3 : tampon[curseur − vue] = l'octet (la cellule est dans la
+     fenêtre par le refus E2 qui précède) ;
+  9. Q4 : sale = 1 ; refus_quitter = 0 ; curseur = curseur + 1 clampé à
+     taille − 1, écrit au cadre ;
+  10. LA VUE SUIT : V = lignes (METRIQUES @+8) − 3, clampé [0, 24] ;
+      V16 = V × 16 ; si curseur ∉ [vue, vue + V16) → la nouvelle vue =
+      aligne16_inf(curseur − 176) clampé à vue_max = aligne16_sup
+      (taille − 384) (clampé ≥ 0) ; si elle diffère de la vue → SAUVER
+      la nouvelle vue, « call LOUPE02 » (rcx = la nouvelle vue) ; eax
+      non-nul → la sortie SANS toucher la vue (l'écriture demeurée) ;
+      sinon la vue du cadre reçoit la nouvelle ;
+  11. la feuille : « call qword ptr [rip + IAT_INVALIDATERECT] » avec
+      rcx = le HWND (sauvé en début de bloc), rdx = 0, r8d = 1 ;
+      rax = 0 ; sortie ;
+  12. l'épilogue rend TOUT non-volatil poussé ; ret.
+
+Réponds UNIQUEMENT le brouillon .asm complet (les commentaires « ; »
+brieft chaque section — la ligne d'en-tête nomme le bloc). Aucune
+explication autour.

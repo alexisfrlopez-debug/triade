@@ -1,0 +1,12 @@
+Tu es l'AUTEUR selon le protocole TRIADE (la campagne D210, l'unité 04
+D210 loupe-16 saisie × bras C). Écris LES TESTS C (le document des cas
+nominaux, des bords, des rejets, de la falsification — le miroir des
+vecteurs du contrat) en 20 lignes au plus, en français : V1 le
+différentiel 10 000 saisies (séquences, ré-écritures des mêmes
+décalés, la frontière 256) ; V2 le scénario « 4d5a » (l'octet au
+journal ET au tampon, la marque, la garde, la cellule suivante) ; V3
+les rejets (-4 sans session, -3 la cellule fantôme même sale, -3 le
+257e distinct nommé, le vide) ; V4 le repli (le non-hexa ignoré,
+VK_SUPPR à l'attente) ; V5 la falsification (la garde non ré-armée :
+le scénario Alt+F4 échoue). Réponds UNIQUEMENT la liste des cas (le
+nom, le geste, l'attendu — une ligne chacun).

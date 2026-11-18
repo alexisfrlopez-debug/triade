@@ -1,0 +1,13 @@
+- `journal_decalage(journal, decalage)`: Décale le journal de `decalage` octets.  
+- `compo_octet(valeur, masque)`: Compose un octet à partir de `valeur` et `masque`.  
+- `consomme_attente(attente, quantite)`: Réduit l'attente de `quantite` unités.  
+- `cellule_fantome(index, curseur)`: Retourne la cellule fantôme à `index` depuis `curseur`.  
+- `marque_garde(seuil, valeur)`: Vérifie si `valeur` dépasse `seuil` (marque/garde).  
+- `pas_clampe(pas, min_val, max_val)`: Clamp `pas` entre `min_val` et `max_val`.  
+- `vue_suivante(lignes, curseur, taille)`: Calcule la vue `V` avec alignement et bornes.  
+- `recouvrement(journal, tampon, taille)`: Recouvre le journal sur le tampon sur `taille` octets.  
+- `rejet_E1(valeur, reference)`: Rejet E1 si `valeur` ≠ `reference`.  
+- `rejet_E2(attente, seuil)`: Rejet E2 si `attente` < `seuil`.  
+- `rejet_E3(curseur, limite)`: Rejet E3 si `curseur` ≥ `limite`.  
+- `rejet_E4(taille, min_taille)`: Rejet E4 si `taille` < `min_taille`.  
+- `VK_SUPPR(curseur, decalage)`: Gère la touche Suppr avec décalage.
