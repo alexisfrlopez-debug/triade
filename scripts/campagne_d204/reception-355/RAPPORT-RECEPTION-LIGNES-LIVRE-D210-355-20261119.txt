@@ -1,0 +1,108 @@
+RAPPORT-RECEPTION-LIGNES-LIVRE-D210-355-20261119 — LE GESTE DU GUIDE-354 REÇU :
+LES LIGNES DE LIVRAISONS ET LES DÉFAUTS BYTE-BYTE, LE LIVRE À 29 LIGNES ET
+ONZE DÉFAUTS — LE CARNET M3 DEMEURANT À VOTRE MAIN
+================================================================================
+(le 19/11/2026, la session de la réception — l'annonce du développeur :
+« les lignes du livre dans le drive /test » ; le précédent des réceptions,
+chaque registre rapatrié byte-byte par DOUBLE téléchargement, md5 == la
+métadonnée Drive, échec fermé)
+
+L'ÉTAT REÇU. L'atelier atelier-campagne-d204-20261114-013520/ (le MÊME
+dossier, les QUATRE registres re-posés la même seconde au coffre le
+18/11 à 19:20:52-53 heure locale d'hiver — le glisser-déposer du dossier
+entier, le geste du § 6 du guide) porte l'état après le geste du guide-354 :
+  — livraisons.csv  2 711 o  (sha256 c8307f64…, md5 49fcef8f…) : LE GESTE ①
+    VÉCU — VERT byte-byte : le livre reçu (2 558 o, 27 lignes) + le bloc
+    T-loupe-16 DEVENU TROIS lignes + la ligne d'attribution, EXACTS, RIEN
+    D'AUTRE — la référence-après-geste du labo (le § 5 du guide) recoupée
+    OCTET POUR OCTET :
+      T-loupe-16-d210-it1,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+      T-loupe-16-d210-it2,T,loupe-16-d210,1,2026-11-18,2026-11-18,ROUGE,en attente
+      T-loupe-16-d210-it3,T,loupe-16-d210,3,2026-11-18,2026-11-18,ROUGE,en attente
+      C-loupe-16-attr-it1,C,loupe-16-attr,1,2026-11-18,2026-11-18,VERT,en attente
+    La chirurgie ① de la 352 VÉCUE EN ENTIER : le renommement de la ligne du
+    GUI (it1 → it3, la 4e colonne 1 → 3), la ligne du refus v1 posée à SA
+    PLACE chronologique (12:12, le kit v1, ROUGE), la ligne it2 DEMEURÉE
+    byte-byte (la 4e colonne « 1 », l'écart R11-② jamais corrigé — la main
+    demeure la main, D189), PUIS la ligne d'attribution à la suite (le
+    verdict « VERT » RECOPIÉ du témoin « 14 VERT, 0 ROUGE — VERT », la
+    colonne recoup « en attente » la convention des 28 lignes précédentes).
+    Les fins de ligne LF, aucune ligne vide, aucun BOM. LE LIVRE EST À 29
+    LIGNES DE CAMPAGNE : les QUATRE unités D210 ET l'attribution vivent
+    désormais à M1, l'ordre chronologique des runs tenus (12:12, 14:09,
+    15:59, 18:08) ;
+  — defauts.csv    5 009 o  (sha256 8ed77d6c…, md5 b63e5c36…) : LE GESTE ②
+    VÉCU — VERT byte-byte : le registre reçu (3 870 o, les HUIT défauts
+    D204) + les TROIS défauts du bloc de l'unité 04 nommés, EXACTS, RIEN
+    D'AUTRE — la référence-après-geste recoupée OCTET POUR OCTET :
+      it1 « guichet-descripteur-quatre-champs » (la 350),
+      it2 « liaison-memmove-deux-arguments » (la 351),
+      it3 « les-metriques-ecran-jamais-posees-par-le-juge » (la 352) —
+    les mécanismes entre guillemets là où la virgule vit, la pièce à
+    l'appui CHACUNE (les consoles des dépôts v1/v2/v3), le côté « kit » les
+    trois fois, l'exclusion « non » ; RIEN pour l'attribution (VERT, le
+    LISEZMOI du kit ③ : « RIEN à defauts.csv si le run est VERT »). LE
+    REGISTRE EST À ONZE DÉFAUTS NOMMÉS — chacun sur pièces, aucun masqué ;
+  — journal-ouverture.txt 648 o  (sha256 4c036f08…, md5 e5be6bf8…) :
+    INCHANGÉ — l'ouverture du 14/11 scellée, le condensé reçu == le
+    condensé attendu du § 5 (aucune retouche, le registre lu jamais écrit) ;
+  — carnet_temps_humain.csv 2 209 o  (sha256 9882c683…, md5 6ab62f67…) :
+    L'ÉCART NOMMÉ (D189 — l'observation défavorable consignée telle
+    quelle) : AUCUNE ligne nouvelle — le registre re-posé
+    byte-identique à l'état de la sonde 354 (la dernière ligne demeure
+    celle du GUI, loupe-16-d210 15:59 → 16:00). LE GESTE ③ N'A PAS VÉCU :
+    les TROIS lignes du temps humain (loupe-02-d210 et loupe-08-d210 — le
+    guide-344 § 3, en attente depuis la 345 — et loupe-16-attr) RESTENT À
+    VOTRE MAIN — le labo ne fabrique JAMAIS une ligne M3 (la frontière
+    D99, la même que le témoin).
+
+LA CHIRURGIE PRESCRITE (le guide-354 § 4 reconduit, à votre main, au
+bloc-notes — jamais Excel) : les TROIS lignes du run-terrain, à la suite
+de la dernière ligne du carnet :
+  2026-11-17,T,loupe-02-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+  2026-11-18,T,loupe-08-d210,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+  2026-11-18,C,loupe-16-attr,run-terrain,<votre début>,<votre fin>,<vos minutes>,<votre note>
+La règle M3 (l'en-tête du registre la porte) : la ligne se remplit AU
+GESTE, jamais reconstruite de mémoire ; arrondi à la minute ; toute
+interruption > 5 min ferme la ligne et en ouvre une autre. Les bornes
+ancrent aux chronologies recoupées (R7, les heures LOCALES du terrain,
+l'heure d'hiver UTC+1) : loupe-02-d210 — la console 21:02:45 → la main
+21:03:38 → le coffre 21:04:11 au 17/11 ; loupe-08-d210 — la console
+00:09:11 → la main 00:09:51 → le coffre 00:10:27 au 18/11 ; loupe-16-attr
+— le kit livré 17:42:31 → le run 18:08:00 → la main ~18:08:30 → le coffre
+18:09:06 au 18/11. Votre minute honnête prévaut (D189) : le geste entier
+vécut du dézip au renvoi, votre début peut être plus tôt, votre renvoi
+plus tard. L'option D189 demeure ouverte pour le temps des runs faillits
+(le run v1 au juge fautif de l'unité 01, 17/11 20:01 → 20:03 ; les DEUX
+refus de l'unité 04, le 12:12 0,2 s et le 14:09 0,4 s — chacun SA ligne
+si vous les consignez, la note nommant le refus ou le juge fautif).
+PUIS l'atelier ENTIER re-déposé au /test + l'annonce — la présente
+réception se reconduit alors (le carnet seul : les TROIS autres registres
+sont reçus DÉFINITIFS, aucune retouche à venir).
+
+LA CLÔTURE QUE LE LIVRE PORTE DÉSORMAIS (le guide-354 § 7, réalisé aux
+lignes près) : la campagne D210 compte ses QUATRE unités closes (loupe-02
+VERT, loupe-08 VERT, loupe-13 VERT, loupe-16 ROUGE à la cap — la séquence
+tirée de la graine D217, jamais re-tirée, ÉPUISÉE) ET l'attribution
+tranchée sur pièces (VERT : les échappées portées à la rig — le juge
+écrit du modèle aux terrains à état ; le format standard minimal blanchi
+SUR PIÈCES). Le livre la dira en 29 LIGNES DE CAMPAGNE et ONZE DÉFAUTS
+NOMMÉS — la mesure M3 (les trois lignes du carnet) demeure LA SEULE
+OUVERTURE du livre.
+
+LA SUITE (le guide-354 § 8, au commandement) : les fermetures H6-H8 (le
+taux d'échappées kit-side entre bras — l'attribution vient de le trancher ;
+l'ordre n'affecte aucune métrique au seuil de 5 % ; la spirale corrective
+> 50 % des tokens de chaque unité — H8 TENUE à la deuxième : 51 %,
+l'Entrée 341), le PDF FINAL (le v0.18.1 est l'édition courante ; la
+finale portera la clôture D210 et la lecture de l'attribution), le DOI
+ZENODO ET LE GRANT (zenodo-metadata-v0180.json déjà à la racine du
+coffre). Le dépôt GitHub et le miroir Drive vivent à chaque session — le
+geste du labo, rien à votre main.
+
+(19/11/2026, la session de la réception — les registres reçus au bac
+scripts/campagne_d204/reception-355/registres-recus/ [la double passe à
+registres-recus-passe2/, md5 == les métadonnées, échec fermé] ; la
+référence-après-geste au bac guide-corrections-livre-354/reference-apres-geste/ ;
+la consignation à l'Entrée 355 du worklog — le livre ne ment jamais : le
+geste ③ demeure prescrit)

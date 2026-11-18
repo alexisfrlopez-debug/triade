@@ -1,0 +1,36 @@
+# LA MÉTRIQUE M3 DU PLAN (D204) — LE TEMPS HUMAIN DE CÉRÉMONIE/REVUE.
+# RÈGLE : la ligne se remplit AU GESTE (jamais reconstruite de mémoire) ;
+# arrondi à la minute ; toute interruption > 5 min ferme la ligne et en
+# ouvre une autre. Les gestes chronométrés, PAR BRAS :
+#   bras T : cristallisation (les 10 rebuilds), garde, cérémonie de
+#            scellement (le geste du développeur, s'il a lieu — sinon
+#            la ligne reste absente, l'écart est nommé au rapport) ;
+#   bras C : le tag/backup équivalent, la relecture de livraison ;
+#   les DEUX : la revue des livrables (lire la spec/le code livré,
+#            arbitrer un défaut nommé).
+# colonnes : date,bras,tache,geste,debut,fin,minutes,notes
+date,bras,tache,geste,debut,fin,minutes,notes
+2026-11-14,T,loupe-01,cristallisation,08:35,10:00,85,
+2026-11-14,C,loupe-01,tag-backup,16:51,16:52,1,
+2026-11-14,T,loupe-02,cristallisation,17:45,17:47,2,
+2026-11-14,C,loupe-02,tag-backup,17:47,17:49,2,
+2026-11-14,T,loupe-02,cristallisation,20:52,20:53,1,
+2026-11-14,T,loupe-02,cristallisation,20:54,20:54,0,
+2026-11-14,T,loupe-05,cristallisation,23:11,23:13,2,
+2026-11-14,C,loupe-05,tag-backup,23:13,23:14,1,
+2026-11-15,C,loupe-05,tag-backup,08:23,8:24,1,
+2026-11-15,C,loupe-05,tag-backup,11:35,11:37,2,
+2026-11-15,C,loupe-05,tag-backup,12:15,12:17,2,
+2026-11-15,T,loupe-08,cristallisation,14:38,14:40,2,
+2026-11-15,C,loupe-08,tag-backup,14:40,14:42,2,
+2026-11-15,T,loupe-13,cristallisation,17:06,17:07,1,
+2026-11-15,C,loupe-13,tag-backup,18:41,18:42,1,
+2026-11-15,C,loupe-13,tag-backup,18:43,18:46,3,
+2026-11-15,T,loupe-16,cristallisation,20:09,20:10,1,
+2026-11-15,C,loupe-16,tag-backup,20:10,20:11,1,
+2026-11-16,T,app,cristallisation,07:24,07:26,2,
+2026-11-16,T,app,cristallisation,08:15,08:17,2,
+2026-11-16,T,app,cristallisation,10:56,11:02,6,
+2026-11-16,C,app,tag-backup,11:03,11:04,1,
+2026-11-18,T,loupe-13-d210,run-terrain,10:26,10:27,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3
+2026-11-18,T,loupe-16-d210,run-terrain,15:59,16:00,1,bornes observées par le GUI (clic TOUT LANCER puis fin de collecte) — votre main demeure pour l'honnête borne M3

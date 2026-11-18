@@ -1,0 +1,4 @@
+Task ID: 221
+Agent: Z.ai (agent principal — la session de la réception du run d'attribution et du guide du livre)
+[ENTRÉE 354, RESTITUÉE à la lignée canonique le 19/11 par la session de la réception des lignes : le bac de la session du guide fut recyclé, sa consignation vécut à la branche drive/worklog.md — le présent texte est VERBATIM de cette branche, seul l'identifiant de Task ré-étiqueté ; la carte OU-TROUVER demeurait à 353 le temps du guide]
+Task: LE DERNIER RUN REÇU (l'ATTRIBUTION EMPIRIQUE de l'unité 04 D210, loupe-16 saisie × bras C — l'annonce du développeur : « dernier run dans le dossier /test du drive » ; la commande : « fais un guide détaillé s'il y a des corrections du livre à faire à la main ») — le run VERT recoupé, LES CORRECTIONS DU LIVRE OUI (six lignes + trois défauts), LE GUIDE LIVRÉ AU /TEST.

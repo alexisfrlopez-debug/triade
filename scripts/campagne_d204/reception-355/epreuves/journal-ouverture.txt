@@ -1,0 +1,14 @@
+OUVERTURE DE L'ATELIER — 2026-11-14 01:35:20
+le kit : D:\Downloads\test\TRIADE_gui_tous_runs_v1\campagne-d204
+le verrou tenait (les HUIT pièces recoupées sha256 par sha256, le plan a78caf8c… == D204) ;
+les COPIES datées des trois gabarits y vivent — les originaux scellés demeurent INTACTS ;
+le dossier des résultats naît de la première mesure instrumentée (CA1), jamais avant.
+
+  VERT  LANCER-CAMPAGNE-D204.bat
+  VERT  LISEZMOI-comparaison.txt
+  VERT  PLAN_PREREGISTRE_COMPARAISON.md
+  VERT  carnet_temps_humain.csv
+  VERT  chronometre_verification.py
+  VERT  compter_tokens.py
+  VERT  defauts.csv
+  VERT  livraisons.csv
