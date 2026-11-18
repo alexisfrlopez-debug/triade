@@ -1,0 +1,10 @@
+LE RUN DE L'UNITÉ 04 D210 (LOUPE-16 SAISIE × BRAS T) — début le 18/11/2026 12:12:19
+l'argv exact : C:\Users\admin\AppData\Local\Programs\Python\Python314\python.exe scenario-unite16.py
+============================================================
+=== LE RUN DE L'UNITÉ 04 D210 (loupe-16 saisie × bras T) — la campagne D210, le terrain du développeur ===
+[VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit
+[T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6bf150000
+[REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme
+============================================================
+la durée : 0.2 s — fin le 18/11/2026 12:12:20
+le code retour : 2

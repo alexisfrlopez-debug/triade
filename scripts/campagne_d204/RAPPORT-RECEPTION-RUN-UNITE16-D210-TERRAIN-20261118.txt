@@ -1,0 +1,118 @@
+RAPPORT-RECEPTION-RUN-UNITE16-D210-TERRAIN-20261118 — LE REFUS REÇU
+TEL QUELLE, RECOUPÉ, LA FAUTE NOMMÉE SUR PIÈCES, LE KIT v2 LIVRÉ
+(l'annonce du développeur : « run dans le drive /test » ; le dépôt :
+kit-unite-04-d210-20261118/ au /test — le REFUS du run v1 de l'unité 04
+D210, loupe-16 saisie × bras T)
+================================================================================
+
+R1 — LA CONSOLE DU REFUS (telle quelle, la pièce à l'appui
+run-console-unite16-d210-20261118-121219.txt, 764 o, md5 af3cbc5381…) :
+le run parti 18/11 12:12:19, T0 VERT (loupe.exe sha256 b382e01b… == la
+gravure du kit — la pièce INTACTE), l'image cartographiée DONT_RESOLVE
+@ 0x7ff6bf150000, puis [REFUS] RVA-HOURS-SECTIONS : la RVA 0x0 hors des
+sections — RIEN ne court, le guichet ferme ; fin 12:12:20 (0,2 s), code
+retour 2. AUCUN fichier modifié, AUCUNE action lancée — le fail-closed
+(R10) TENU : le guichet a refusé AVANT tout effet.
+
+R2 — LES PIÈCES DU DÉPÔT (23 entrées rapatriées au bac, DOUBLE
+téléchargement byte-byte, md5 == les métadonnées Drive, échec fermé) :
+les QUATORZE pièces du kit recoupées au staging du labo — 14/14
+INTACTES (loupe.exe b382e01b…, proxy.exe 446279f3…, le scénario
+739a3438… == le scellé livré : le terrain a couru LE fichier du coffre,
+R7) ; les QUATRE pièces nées du refus : la console, l'état, la session
+(TRIADE_logs/session-20261118-121155.txt, 4 949 o) et Capture.JPG
+(23 581 o — la fenêtre du refus, la même image que l'annonce du chat).
+
+R3 — LA FAUTE NOMMÉE SUR PIÈCES (l'autopsie au labo — la classe
+« guichet-descripteur-quatre-champs », le côté « kit », l'exclusion
+« non » : la faute au kit VOYAGÈE jusqu'au terrain, le run fut consommé,
+D202) : ① le descripteur d'imports dépaqueté à QUATRE champs
+("<IIII>") — le champ +8 (ForwarderChain, la valeur 0) lu comme la RVA
+du nom : la recherche du nom du premier descripteur à la RVA 0 →
+ra_of(sections, 0) → LE REFUS EXACT du terrain ; ② la découverte
+marchait l'OFT (le pas de dword de la retouche dev.8) au lieu des
+PLAGES FIRSTTHUNK — la doctrine du plan (D54, l'Entrée 210, build_loupe :
+« le chargeur MARCHE les plages FirstThunk jusqu'au NULL », chaque
+entrée sur disque == le RVA hint/nom de SA feuille) — les feuilles
+mortes (SetFilePointerEx 0x3128, ReadFile 0x3130, InvalidateRect 0x31a0 :
+LES SLOTS QUE LES NOTATIONS APPELLENT [rip]) invisibles à la mauvaise
+marche ; ③ la 4e feuille GetLastError 0x3148 (le chemin d'ÉCHEC de
+loupe-02 : les jz de la relecture atterrissent au -6 PAR GetLastError)
+non liée — la classe de la 304 si la relecture échouait.
+
+R4 — LA PREUVE RECONSTITUÉE (la pièce à l'appui
+epreuve-guichet-unite16-console.txt au bac) : la découverte du guichet
+du scénario LIVRÉ rejouée au labo par AST contre la pièce du kit — le
+refus reconstitué IDENTIQUE MOT POUR MOT (« [REFUS] RVA-HOURS-SECTIONS :
+la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme » ==
+la ligne de la console du terrain, byte pour byte).
+
+R5 — L'ÉTAT DU GUI (etat-run-unite16-d210.json, 233 o) : les étapes
+VIDES, livraisons 0 — le GUI s'est arrêté au refus, AVANT la collecte,
+AVANT le livre : AUCUNE ligne couchée (l'état honnête du refus) ; le
+verrou 14/14 VERT vécu AVANT (12:11:56), l'atelier choisi 12:12:15.
+
+R6 — LA CHRONOLOGIE (la session, R7 aux heures des pièces) : la fenêtre
+née 12:11:55 → le verrou VERT 12:11:56 → L'ATELIER CHOISI 12:12:15 (les
+QUATRE registres recoupés VERT — LUS, jamais touchés) → TOUT LANCER
+12:12:19 → T0 VERT puis LE REFUS 12:12:20 → « le GUI s'arrête » → la
+fenêtre fermée 12:13:36 ; le dépôt né au coffre après (le kit
+re-déposé avec les pièces du refus). Jamais une date avant le kit,
+jamais avant le run.
+
+R7 — L'ATELIER RE-DÉPOSÉ (les QUATRE registres double-téléchargés,
+md5 == les métadonnées) : livraisons.csv 2 404 o, carnet 2 039 o,
+defauts.csv 3 870 o, journal-ouverture.txt 648 o — les QUATRE
+IDENTIQUES BYTE-BYTE à l'état de la 348 (le diff nommé) : le GUI n'a RIEN
+écrit — le refus précède le livre, la ligne M1/M3 de l'unité 04 n'y vit
+pas (l'honnête absence). LE LIVRE NE MENT JAMAIS : le run v1 a couru —
+la chirurgie prescrite (R11).
+
+R8 — LE JUGE INCHANGÉ (R2) : le scénario couru au terrain == le scellé
+livré à la 349 — la faute est au KIT (le scénario livré lui-même), la
+pièce loupe.exe INTACTE (la gravure recoupée) : RIEN à retoucher à la
+pièce ni aux notations ; le correctif vise le scénario seul.
+
+R9 — LA BRÈCHE NOMMÉE (pour la campagne) : la 349 courut l'épreuve
+fonctionnelle au RUN SUBSTITUÉ (le modèle extrait par AST) — la
+PLOMBERIE du guichet, Windows-seule à lier_feuilles, n'avait JAMAIS
+couru au labo : la brèche de la 304 (la plomberie qui ne voyage pas)
+rouverte par le parse. L'ÉPREUVE DU GUICHET NÉE (la découverte rejouée
+contre le fichier livré — du pur fichier, aucun Windows requis) :
+CONTRE le v1 ROUGE (le refus reconstitué), CONTRE le v2 TOUT VERT —
+désormais tenue au bac AVANT chaque livraison à guichet.
+
+R10 — LE CORRECTIF LIVRÉ (kit-gui-1clic-unite16-d210-v2-20261118.zip,
+19 entrées, la racine kit-unite-04-d210-20261118-v2/) : le scénario
+CORRIGÉ (705951cc… — le parse aux CINQ champs, la marche des plages FT,
+la 4e feuille GetLastError ; LES VECTEURS INTACTS au byte près, la
+parité AST nommée), la gravure regénérée d'UNE ligne, LES DOUZE autres
+pièces inchangées octet pour octet, le GUI v2.0.1 (la chirurgie : les
+DEUX empreintes du verrou — selftest 27 VERT 0 ROUGE, le GUI dézippé du
+zip aussi), le lanceur à l'édition correctif, le LISEZMOI-RUN v2, la
+NOTE-ATELIER reconduite, l'EMPREINTES-GUI v2 ; le kit v1 DEMEURE au
+coffre (D143 — le dépôt du refus jamais recouvert). Le détail vit à
+CORRECTIF-UNITE16-D210-20261118.txt au /test.
+
+R11 — LA CHIRURGIE PRESCRITE AU LIVRE (au bloc-notes, à votre main — le
+livre ne ment jamais : le run v1 a couru ; le précédent 303/304) :
+① la ligne T-loupe-16-d210-it1 ROUGE posée à livraisons.csv (le kit v1,
+le run 2026-11-18 — REFUS nommé, code 2 : la ligne honnête) ;
+② le défaut à defauts.csv (l'onglet 6·DÉFAUTS : la classe
+« guichet-descripteur-quatre-champs », le mécanisme « le champ +8
+ForwarderChain lu comme la RVA du nom (la RVA 0x0) ; la marche de l'OFT
+au lieu des plages FT (D54) ; la 4e feuille GetLastError non liée », le
+côté « kit », la pièce à l'appui
+run-console-unite16-d210-20261118-121219.txt, l'exclusion « non ») ;
+③ l'atelier ENTIER re-déposé au coffre.
+
+R12 — LE RE-RUN (le geste prescrit, le kit v2) : une extraction FRAÎCHE
+(jamais le dossier v1 réutilisé), LANCER-RUN-UNITE16-D210-1CLIC.bat,
+CHOISIR LE DOSSIER DE L'ATELIER, TOUT LANCER — l'attendu : [guichet] les
+QUATRE feuilles liées, les NEUF verdicts VERT (9 VERT 0 ROUGE, code 0),
+le témoin daté signé [D99], preuves-unite16/ au coffre — la ligne
+T-loupe-16-d210-it2 au livre DURANT le run (la frontière de la 348 tenue
+par construction).
+
+(18/11/2026, la session de la réception du refus — reçu TEL QUELLE,
+reCOUPÉ, la faute nommée sur pièces, l'épreuve née, le kit v2 livré)

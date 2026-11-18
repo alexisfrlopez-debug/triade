@@ -1,0 +1,25 @@
+=== L'ÉPREUVE DU GUICHET — CONTRE LE v1 (kit-unite-04-d210-20261118) ===
+  [notation loupe-16] les appels IAT déclarés : ['0x31a0']
+  [notation loupe-02] les appels IAT déclarés : ['0x3128', '0x3130', '0x3148']
+[ROUGE] L1:la-decouverte-par-les-plages-ft — le refus RECONSTITUÉ au labo « RVA-HORS-SECTIONS : la RVA 0x0 hors des sections » — IDENTIQUE mot pour mot à la console du terrain
+    reconstitué : [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme
+    terrain     : [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme
+[VERT] L2:la-liaison-avant-tout-appel
+[VERT] L3:le-guichet-fail-closed — 6 refus nommés : L1-FEUILLE-INTROUVABLE, L3-GETPROCADDRESS, L3-RELECTURE, L3-REPROTECTION, L3-VIRTUALPROTECT, RVA-HORS-SECTIONS
+[VERDICT v1] 2 VERT, 1 ROUGE — LE REFUS RECONSTITUÉ, L'ÉPREUVE QUI MANQUAIT
+
+=== L'ÉPREUVE DU GUICHET — CONTRE LE v2 (kit-unite-04-d210-20261118-v2) ===
+  [notation loupe-16] les appels IAT déclarés : ['0x31a0']
+  [notation loupe-02] les appels IAT déclarés : ['0x3128', '0x3130', '0x3148']
+[VERT] L1:la-decouverte-par-les-plages-ft — la marche a joint les séparateurs NULL : 34 feuilles découvertes (les mortes comprises)
+[VERT] L1:les-appels-des-notations-couverts — chaque cible [rip] des notations EST un slot découvert
+[VERT] L1:la-voulue-couvre-la-liste-fermee — la voulue couvre TOUTE la liste fermée des notations — le guichet lie exactement les slots appelés
+    0x3128 → SetFilePointerEx@kernel32.dll (liée)
+    0x3130 → ReadFile@kernel32.dll (liée)
+    0x3148 → GetLastError@kernel32.dll (liée)
+    0x31a0 → InvalidateRect@user32.dll (liée)
+[VERT] L2:la-liaison-avant-tout-appel
+[VERT] L3:le-guichet-fail-closed — 6 refus nommés : L1-FEUILLE-INTROUVABLE, L3-GETPROCADDRESS, L3-RELECTURE, L3-REPROTECTION, L3-VIRTUALPROTECT, RVA-HORS-SECTIONS
+[VERDICT v2] 5 VERT, 0 ROUGE — TOUT VERT
+
+[BILAN] v1 : 2 VERT 1 ROUGE — l'épreuve qui aurait arrêté la faute AVANT le terrain ; v2 : 5 VERT 0 ROUGE

@@ -1,0 +1,34 @@
+12:11:55  [GUI] la fenêtre née — v2.0.0, L'ATELIER CHOISI PAR CONSTRUCTION — le commandement du développeur : « pour les GUI test, tu peux faire en sorte que je puisse choisir le dossier de l'atelier afin que le livre se mette a jour durant le run ? » — VÉCU au terrain à l'unité 04 (l'Entrée 348), PORTÉ PAR CONSTRUCTION à la présente : le GUI naît AVEC — la ligne M1 au verdict RECOPIÉ, la ligne M3 aux bornes OBSERVÉES (votre main demeure pour l'honnête borne ; D202 et D99 intacts)
+12:11:55  [GUI] le kit : D:\Downloads\kit-unite-04-d210-20261118
+12:11:56  [verrou:GRAINE-D210.txt] VERT — la graine D217 (consignée AVANT le premier appel, jamais re-tirée)
+12:11:56  [verrou:LANCEUR-UNITE-16-T.bat] VERT — la console officielle du kit (le run SA console, INTACT — CA6)
+12:11:56  [verrou:LISEZMOI-KIT-UNITE-04-D210.txt] VERT — le livre du kit (l'ordre de jeu du terrain — CHOISIR CE DOSSIER)
+12:11:56  [verrou:brouillon-loupe-16-saisie.asm] VERT — le brouillon it3 du bras T (la composition des éléments convergés, la notation consignée)
+12:11:56  [verrou:journal-tokens-d210.jsonl] VERT — le journal des tokens (100 % log-api, la couture nommée)
+12:11:56  [verrou:garde-brut-d210.jsonl] VERT — le garde-brut de la rig (le journal brut de la construction)
+12:11:56  [verrou:loupe.exe] VERT — LA PIÈCE de campagne (le slot loupe-16 RVA 0x6240 porte la notation D210, 656 o cristallisés — 14e45f57…)
+12:11:56  [verrou:notation-loupe-16-saisie.asm] VERT — la notation D210 (le texte de la pièce au slot)
+12:11:56  [verrou:proxy.exe] VERT — le scellé de l'ère (la première fenêtre du doré V1)
+12:11:56  [verrou:scenario-unite16.py] VERT — LE JUGE NOUVEAU NÉ À LA PRÉSENTE ÉDITION (le premier terrain À ÉTAT — le guichet aux TROIS feuilles par la table d'imports, le disque vivant par poignée réelle, le modèle recoupé par AST)
+12:11:56  [verrou:source-loupe-16-C.c] VERT — le source du bras C (gcc -O2 PROPRE, la pièce livrée à l'épreuve)
+12:11:56  [verrou:temoin-3f.bin] VERT — le témoin 3 × 64 Kio + 1 (la fixture du kit)
+12:11:56  [verrou:tests-loupe-16-C.md] VERT — la suite de tests du bras C (N/B/R + la falsification)
+12:11:56  [verrou:EMPREINTES-KIT-UNITE-04-D210.txt] VERT — la gravure du kit (sha256 en tête — le format que le scénario scellé parse ; NÉE parsée : le défaut T0 de l'unité 01 ne se reproduit pas)
+12:11:56  [verrou] VERT — 14/14 pièces + la preuve T0 (13 pièces vues par le scénario scellé)
+12:11:56  [VERROU] VERT — le kit recoupé — TOUT LANCER attend votre clic
+12:12:15  [atelier] le dossier choisi : D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520
+12:12:15  [ATELIER] le choix parti — le verrou des QUATRE registres court
+12:12:15  [atelier] livraisons.csv : VERT — la métrique M1 — la ligne de livraison née du run (le verdict RECOPIÉ)
+12:12:15  [atelier] carnet_temps_humain.csv : VERT — la métrique M3 — la ligne du carnet née du geste observé (les bornes OBSERVÉES par le GUI)
+12:12:15  [atelier] defauts.csv : VERT — la règle D202 — JAMAIS touchée par le GUI (les défauts se nomment à votre main, l'analyse n'est jamais machine)
+12:12:15  [atelier] journal-ouverture.txt : VERT — le registre d'ouverture — JAMAIS touché (l'ouverture du 14/11 scellée)
+12:12:19  [TOUT LANCER] parti — le verrou → le run → la collecte → LE LIVRE (à l'atelier choisi) → le témoin
+12:12:19  === TOUT LANCER — 18/11/2026 12:12:19 : le verrou recoupé, le run part, la collecte suivra, le livre se met à jour à l'ATELIER CHOISI, le témoin est à VOTRE MAIN (D99) ===
+12:12:20  [run] === LE RUN DE L'UNITÉ 04 D210 (loupe-16 saisie × bras T) — la campagne D210, le terrain du développeur ===
+12:12:20  [run] [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit
+12:12:20  [run] [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6bf150000
+12:12:20  [run] [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme
+12:12:20  [REFUS NOMMÉ] le GUI s'arrête
+12:12:20  [REFUS NOMMÉ] LE SCÉNARIO A REFUSÉ (fail-closed) : « [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme » — ARRÊTEZ, ne modifiez AUCUN fichier, ne relancez PAS : la console vit à run-console-unite16-d210-20261118-121219.txt — le dépôt d'un refus est aussi un témoin, renvoyez-la TELLE QUELLE.
+12:12:20  [REFUS NOMMÉ] LE SCÉNARIO A REFUSÉ (fail-closed) : « [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court, le guichet ferme » — ARRÊTEZ, ne modifiez AUCUN fichier, ne relancez PAS : la console vit à run-console-unite16-d210-20261118-121219.txt — le dépôt d'un refus est aussi un témoin, renvoyez-la TELLE QUELLE.
+12:13:36  [GUI] la fenêtre fermée

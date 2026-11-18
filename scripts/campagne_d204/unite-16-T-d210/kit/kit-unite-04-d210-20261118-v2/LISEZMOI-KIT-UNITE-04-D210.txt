@@ -1,0 +1,95 @@
+LISEZMOI — LE KIT DE L'UNITÉ 04 D210 : LOUPE-16 SAISIE × BRAS T
+(la campagne D210 — la QUATRIÈME unité, la séquence tirée de la graine
+D217 : loupe-16 le bras T d'abord ; le kit livré par le labo au coffre
+/test en son dossier daté — le GUI vous attend à l'onglet 1·KIT de
+l'unité loupe-16 × T)
+========================================================================
+
+L'OBJET : la QUATRIÈME unité de la campagne D210 (le plan
+pré-enregistré 4a3b1311…, la menace « kit partagé et formats
+asymétriques ») — le bloc loupe-16 SAISIE au BRAS T, LE PREMIER BLOC À
+ÉTAT de la campagne : DEUX chiffres hexa composent l'octet (le premier
+ATTEND, le second ENGAGE), l'octet va AU JOURNAL DES ÉCRITURES (l'entrée
+par décalage, la réécriture du même octet REMPLACE) ET au tampon de vue
+(visible immédiatement), la marque SALE est posée, LA GARDE de loupe-18
+RÉ-ARMÉE à chaque écriture, le curseur AVANCE clampé et LA VUE SUIT (le
+recadrage — loupe-02 le scellé RE-LIT, la feuille InvalidateRect repeint)
+— et LE DISQUE DEMEURE INTACT. La pièce de ce kit est le build du plan où
+le slot loupe-16 (RVA 0x6240, 704 o) porte LA NOTATION DE CAMPAGNE :
+écrite À LA RIG (100 % log-api — la construction de la quatrième unité :
+8 appels, 26662 tokens [bras T 16478 + bras C 10184], le journal et
+le garde-brut INCLUS au kit) depuis le contrat loupe-16:R1. LES
+DIX-SEPT autres blocs demeurent les SCELLÉS du projet.
+
+LA CONSTRUCTION (consignée, les défauts nommés AVANT toute livraison)
+: la rig L6 (compter_tokens e2939ef9…, rig_auteur e5aa404a…,
+recoupés INTACTS aux empreintes) ; l'oracle écrit-avant-code
+(oracle-depuis-I.txt, dérivé du contrat I seul) ; DEUX tours d'auteur
+(it1 nommé F1-F5 aux contrôles — la classe des OFFSETS [la poignée lue
+à +0x328 contre le plan +528], la classe des NON-VOLATILS [rsi/rdi
+détruits jamais poussés], la ligne ILLÉGALE [l'étiquette
+IAT_INVALIDATERECT posée au brouillon], la classe des LEA MORTS, le
+verdict nu) PUIS LA COMPOSITION DES ÉLÉMENTS CONVERGÉS (l'it3, le
+geste mécanique du labo NOMMÉ — le précédent des 336/341/346) ; la
+composition propre : les VOLATILS r10/r11 seuls au message à la barre
+(rsi/rdi JAMAIS touchés — l'état propre exigé aux 10 000 frappes), le
+remplissage lu u32 SEUL (+552, jamais le qword : la marque vit à
++556 — la cellule fantôme refusée MÊME sale, l'écart nommé à la
+confrontation du scellé) ; la CRISTALLISATION 10/10 rebuilds
+byte-identiques (656 o, le cristal 14e45f57…) ; le build loupe.exe
+127 488 o, sha256 b382e01b… (121 verrous : le round-trip R5, les
+mesures D161 des scellées, le réseau des specs, l'audit msx64, la
+double preuve R7 ; le différentiel au scellé CONFINÉ au slot loupe-16
+[0x5440, 0x5700) et à la porte R10 — 31 plages, 496 o).
+
+L'ORACLE AU HARNAIS (le juge = le modèle indépendant, la graine
+20261115) : 17 VERT, 0 ROUGE — V1 le différentiel 10 000 frappes aux
+DEUX disques (le témoin 3f ET le grand 8k : les ré-écritures, la
+frontière des 256 DISTINCTS, la vue qui suit, l'état propre) ; V2 le
+scénario « 4d5a » (l'écran attendu, loupe-10) ET LA VUE QUI SUIT (le
+recadrage à 208, la relecture LOUPE02 comptée, le recouvrement au
+tampon) ; V3 les rejets (E1 -4 nommé ; E2 la fantôme -3 RIEN au
+journal ET la fantôme MARCHE SALE ; le vide ; E3 le 257e distinct -3
+« journal plein », RIEN perdu) ; V4 le repli (le non-hexa ignoré,
+VK_SUPPR à l'attente) ; V5 LA FALSIFICATION DEMANDÉE : la garde non
+ré-armée (le mutant aux DEUX NOP) — le scénario de loupe-18 (éditer
+puis Alt+F4 UNE SEULE fois doit avertir) ÉCHOUE au mutant, la preuve
+TRAVERSE LES BLOCS ; la notation juste re-jouée VERTE.
+
+LE SCÉNARIO DE CE KIT EST NOUVEAU (le juge né à la présente édition —
+les juges des unités 1 à 3 venaient de D204, celui-ci n'existait pas)
+: LE PREMIER TERRAIN À ÉTAT — le scénario est LE CHARGEUR
+(LoadLibraryEx DONT_RESOLVE) PUIS LE GUICHET FAIL-CLOSED : les TROIS
+feuilles du chemin (user32 InvalidateRect, kernel32 SetFilePointerEx +
+ReadFile pour la relecture de loupe-02 le scellé) LIÉES PAR LA TABLE
+D'IMPORTS — chaque slot découvert PAR SES NOMS (jamais une RVA codée,
+la leçon des Entrées 302/304 reconduite), chaque geste vérifié
+(VirtualProtect, la re-protection, la relecture recoupée), tout écart
+= REFUS NOMMÉ, RIEN ne court. Le disque VIVANT par poignée réelle
+(CreateFileW du témoin : loupe-02 RE-LIT le disque pour de vrai). Le
+juge : le MODÈLE INDÉPENDANT extrait du scénario — recoupé AU LABO par
+AST contre le contre-modèle de l'oracle du bras T (20 000 sondes, 0
+écart).
+
+LE BRAS C : gcc -O2 -std=c11 -Wall -Wextra PROPRE (le juge POSIX 14
+VERT 0 ROUGE — V1-V5 le miroir du bras T, la même graine 20261115),
+la revue CONFORME.
+
+LE GESTE DU TERRAIN (le run de l'unité — le GUI 1-clic livré au
+commandement, L'ATELIER CHOISI PAR CONSTRUCTION) : LANCER-RUN-UNITE16-
+D210-1CLIC.bat → CHOISIR LE DOSSIER DE L'ATELIER à l'onglet 4·LIVRE →
+TOUT LANCER — l'attendu : les NEUF verdicts VERT (9 VERT, 0 ROUGE, code
+0), le témoin daté signé de votre main [D99], preuves-unite16/ au
+coffre /test. LA LIGNE AU LIVRE PENDANT LE RUN (l'onglet 4·LIVRE du
+GUI la couche LUI-MÊME à l'atelier choisi : T-loupe-16-d210-it1 — la
+frontière vécue de la 348 PORTÉE PAR CONSTRUCTION à la présente
+unité : le kit naît AVEC l'atelier choisi, jamais d'édition v2).
+
+LA COMMANDE DE LA DLL AU TERRAIN (le bras C, le GAP mingw consigné)
+: x86_64-w64-mingw32-gcc -O2 -shared -o loupe-16-d210-c.dll
+source-loupe-16-C.c loupe-16-c.def (le .def : EXPORTS
+loupe_16_saisie — la famille D204 ; le source compile PROPRE au flux
+standard).
+
+(18/11/2026, la session de la construction — la quatrième unité, la
+séquence honorée, l'atelier choisi PAR CONSTRUCTION)

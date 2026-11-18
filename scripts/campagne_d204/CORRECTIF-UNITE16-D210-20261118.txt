@@ -1,0 +1,114 @@
+CORRECTIF-UNITE16-D210-20261118 — LE CORRECTIF DU REFUS NOMMÉ
+(l'unité 04 D210, loupe-16 saisie × bras T — le kit v2 livré au /test :
+kit-gui-1clic-unite16-d210-v2-20261118.zip ; le kit v1 DEMEURE au coffre,
+D143 : le dépôt du refus est un témoin)
+================================================================================
+
+LE REFUS (telle quelle — la console du terrain, reçue au coffre
+kit-unite-04-d210-20261118/) :
+
+  [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff6bf150000
+  [REFUS] RVA-HORS-SECTIONS : la RVA 0x0 hors des sections — RIEN ne court,
+          le guichet ferme
+
+  le run : 18/11/2026 12:12:19 → 12:12:20 (0,2 s), code retour 2 —
+  AUCUN fichier modifié, aucune action lancée ; le témoin jamais né,
+  preuves-unite16/ jamais né ; la fenêtre du refus (Capture.JPG au dépôt)
+  et la consigne : ARRÊTEZ, ne modifiez RIEN, ne relancez PAS — le dépôt
+  d'un refus est aussi un témoin, renvoyé TEL QUELLE. C'EST FAIT.
+
+LA FAUTE NOMMÉE (sur pièces — l'autopsie au labo, la classe
+« guichet-descripteur-quatre-champs » ; le côté « kit », l'exclusion
+« non » : la faute au kit VOYAGÈE jusqu'au terrain, le run fut consommé,
+D202) :
+
+  ① LE DESCRIPTTEUR LU À QUATRE CHAMPS — lier_feuilles() dépaquait
+     "<IIII>" : le champ +8 (ForwarderChain — la valeur 0) était lu comme
+     la RVA du nom, la RVA du nom (+12) comme le FirstThunk, le champ
+     +16 (FirstThunk) JAMAIS lu. Le premier descripteur : la recherche du
+     nom à la RVA 0 → ra_of(sections, 0) → LE REFUS. La preuve
+     reconstituée au labo : la découverte du scénario livré rejouée par
+     AST contre loupe.exe b382e01b… (la même pièce == la gravure du kit,
+     recoupée 14/14 au dépôt) refuse EXACTEMENT — mot pour mot — la même
+     ligne que la console du terrain.
+
+  ② LA MARCHE — même corrigé du parse, la découverte marchait l'OFT
+     (OriginalFirstThunk) au pas de qword. Mais l'OFT de la famille vit
+     AU PAS DE DWORD (la retouche dev.8, consignée au build loupe) et la
+     doctrine du plan est explicite (D54, l'Entrée 210, build_loupe) :
+     « le chargeur MARCHE les plages FirstThunk jusqu'au NULL », chaque
+     entrée sur disque == le RVA hint/nom de SA feuille (le
+     préremplissage). La marche correcte : les PLAGES FT au pas de
+     qword jusqu'au séparateur NULL — les FEUILLES MORTES comprises
+     (jamais liées par un chargeur ordinaire : 0x3128 SetFilePointerEx,
+     0x3130 ReadFile, 0x31a0 InvalidateRect — les slots QUE les
+     notations appellent [rip]).
+
+  ③ LA 4e FEUILLE NON LIÉE — loupe-02 (le scellé de la relecture) porte
+     TROIS appels IAT : SetFilePointerEx, ReadFile ET GetLastError
+     (0x3148) — le chemin d'ÉCHEC de la relecture : les deux jz
+     atterrissent au -6 PAR GetLastError. La voulue du guichet v1 (et
+     du premier jet du correctif) ne liait que TROIS feuilles : si la
+     relecture échouait au terrain, la pièce sautait à la feuille morte
+     (la classe de la 304). Le correctif lie LES QUATRE.
+
+LE CORRECTIF (confiné au guichet — la parité AST nommée) :
+  scenario-unite16.py 739a3438… → 705951cc… — le parse aux CINQ champs
+  (le précédent de la 304 : l'OFT +0, l'horodatage +4, le renvoi +8, LE
+  NOM +12, LE FIRSTTHUNK +16), la marche des plages FT (la doctrine
+  D54), la 4e feuille GetLastError, la première occurrence gardée (la
+  double entrée GetMessageW de la plage démo ne gagne jamais). LES
+  VECTEURS INTACTS au byte près : la parité AST (m_journal_seconde,
+  m_vue_suit, fenetre_editee, Zones, main, ra_of, les constantes —
+  IDENTIQUES v1/v2, seul lier_feuilles change) ; le modèle recoupé de la
+  349 porte. LA GRAVURE regénérée d'UNE SEULE ligne (le scénario) ;
+  LES DOUZE AUTRES PIÈCES inchangées octet pour octet (recoupées à la
+  gravure v1 AVANT la copie : 12/12).
+  LE GUI v2.0.0 → v2.0.1 (la chirurgie nommée — le verrou du GUI grave
+  les sha256 en dur : les DEUX empreintes changées, le scénario et la
+  gravure ; LES DOUZE autres entrées du verrou inchangées) — le selftest
+  27 VERT 0 ROUGE, conduits AUSSI par le GUI dézippé du zip livré.
+
+L'ÉPREUVE QUI MANQUAIT — NÉE (epreuve_guichet_unite16.py, tenue au bac
+contre CHAQUE scénario livré à guichet — la règle de la 304 étendue au
+premier terrain à état) : la DÉCOUVERTE du guichet du scénario LIVRÉ
+rejouée au labo contre le fichier livré — le code VERBATIM extrait par
+AST, les gestes Windows neutralisés au contexte seul. LES TROIS LOIS :
+  L1 la découverte par les plages FT (D54) : la marche joint les
+     séparateurs NULL, ET la LISTE FERMÉE des notations (les appels IAT
+     déclarés aux en-têtes « Déplacements RIP » de loupe-16 et loupe-02)
+     TOUTE entière découverte, la voulue la COUVRANT par ses noms —
+     le guichet lie EXACTEMENT les slots que les notations appellent ;
+  L2 la liaison avant tout appel (lier_feuilles précède SAISIR à main) ;
+  L3 le guichet fail-closed (les SIX refus nommés présents).
+  CONTRE LE v1 : ROUGE — le refus RECONSTITUÉ au labo, IDENTIQUE mot pour
+  mot à la console du terrain. CONTRE LE v2 : TOUT VERT (les QUATRE
+  feuilles aux slots des notations : 0x3128, 0x3130, 0x3148, 0x31a0 —
+  chacun (liée)). L'ÉPREUVE QUI AURAIT ARRÊTÉ LA FAUTE AVANT LE TERRAIN :
+  la 349 courut le run substitué (le modèle par AST) — la plomberie du
+  guichet, Windows-seule, n'avait JAMAIS couru au labo : la brèche de la
+  304 rouverte par le parse. La console de l'épreuve vit au dépôt
+  (epreuve-guichet-unite16-console.txt).
+
+LA BRÈCHE NOMMÉE (pour la suite de la campagne) : chaque kit à guichet
+désormais passe L'ÉPREUVE DU GUICHET AVANT livraison (la découverte
+rejouée contre la pièce livrée — Windows n'est pas requis : le parse est
+du pur fichier). Le déficit T0 (l'unité 01) avait engendré la gravure
+parsée ; le défaut memcmp (la 304) avait engendré l'épreuve de la
+feuille ; le refus de l'unité 04 engendre L'ÉPREUVE DU GUICHET — la
+règle vit au bac.
+
+LE RE-RUN (le geste prescrit — le guide du kit v2,
+LISEZMOI-RUN-UNITE16-D210-1CLIC-V2.txt) : une extraction FRAÎCHE du zip
+v2, LANCER-RUN-UNITE16-D210-1CLIC.bat, CHOISIR LE DOSSIER DE L'ATELIER,
+TOUT LANCER — l'attendu : [guichet] les QUATRE feuilles liées, les NEUF
+verdicts VERT (9 VERT 0 ROUGE code 0), le témoin daté signé de votre
+main [D99], preuves-unite16/ au coffre — la ligne T-loupe-16-d210-it2 au
+livre DURANT le run. AU LIVRE AUSSI (le bloc-notes, la chirurgie
+prescrite — le livre ne ment jamais : le run v1 a couru) : la ligne
+T-loupe-16-d210-it1 ROUGE à livraisons.csv et le défaut à defauts.csv
+(nommé ci-dessus), l'atelier re-déposé.
+
+(18/11/2026, la session du correctif — le refus reçu TEL QUELLE, la
+faute nommée sur pièces, l'épreuve née, le guichet remis à la doctrine
+du plan)

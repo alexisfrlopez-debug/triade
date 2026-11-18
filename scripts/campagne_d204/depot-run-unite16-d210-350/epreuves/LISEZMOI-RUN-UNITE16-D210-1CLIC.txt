@@ -1,0 +1,96 @@
+LISEZMOI-RUN-UNITE16-D210-1CLIC — LE RUN DE L'UNITÉ 04 D210
+(LOUPE-16 SAISIE × BRAS T) EN UN CLIC · L'ATELIER CHOISI PAR CONSTRUCTION
+=========================================================================
+
+L'OBJET : la QUATRIÈME unité de la campagne D210 — le bloc loupe-16
+SAISIE, LE PREMIER À ÉTAT : DEUX chiffres hexa composent l'octet (le
+premier ATTEND, le second ENGAGE), l'octet va AU JOURNAL DES ÉCRITURES
+(l'entrée par décalage, la réécriture REMPLACE, la borne 256) ET au
+tampon de vue (visible immédiatement), la marque SALE est posée, LA
+GARDE de loupe-18 RÉ-ARMÉE à chaque écriture, le curseur AVANCE clampé
+et LA VUE SUIT — et LE DISQUE DEMEURE INTACT.
+
+LE GESTE NOUVEAU — L'ATELIER CHOISI PAR CONSTRUCTION : le commandement
+du développeur (verbatim : « pour les GUI test, tu peux faire en sorte
+que je puisse choisir le dossier de l'atelier afin que le livre se
+mette a jour durant le run ? ») VÉCU au terrain à l'unité 03 (l'Entrée
+348 : la ligne M1 couchée DURANT le run, la première fois de la
+campagne) — LA PRÉSENTE UNITÉ NAÎT AVEC : le GUI porte l'atelier choisi
+DÈS SA NAISSANCE, jamais d'édition v1 sans lui. À l'onglet 4·LIVRE :
+CHOISIR LE DOSSIER DE L'ATELIER (le dossier local des QUATRE registres
+du livre, reçu du coffre /test), le verrou le recoupe fail-closed, puis
+TOUT LANCER conduit : le verrou → le run → la collecte → LE LIVRE — la
+ligne M1 (le verdict RECOPIÉ des lignes de console) appendée à
+livraisons.csv, la ligne M3 (les bornes OBSERVÉES : le clic TOUT LANCER
+→ la fin de collecte) appendée au carnet, DURANT le run ; defauts.csv et
+journal-ouverture.txt JAMAIS touchés ; l'atelier re-déposé au coffre
+demeure VOTRE geste.
+
+LA PIÈCE DE CETTE UNITÉ : loupe.exe 127 488 o (sha256 b382e01b…), le
+build du plan où le slot loupe-16 (RVA 0x6240, 704 o) porte LA NOTATION
+DE CAMPAGNE écrite à la main (656 o cristallisés 10/10 — le cristal
+14e45f57… ; les 17 autres blocs demeurent les SCELLÉS ; le différentiel
+au scellé confiné au slot et à la porte R10).
+
+LE JUGE DE CE KIT EST NOUVEAU (scenario-unite16.py — né à la présente
+édition, les juges des unités 1 à 3 venaient de D204) : LE PREMIER
+TERRAIN À ÉTAT — le chargeur DONT_RESOLVE PUIS LE GUICHET FAIL-CLOSED
+aux TROIS feuilles (user32 InvalidateRect, kernel32 SetFilePointerEx +
+ReadFile : chaque slot découvert PAR LA TABLE D'IMPORTS, jamais une RVA
+codée — la leçon des Entrées 302/304 reconduite), le disque VIVANT par
+poignée réelle (loupe-02 le scellé RE-LIT le témoin pour de vrai), le
+juge = le MODÈLE INDÉPENDANT (recoupé au labo par AST contre le
+contre-modèle de l'oracle du bras T). La gravure NÉE PARSÉE (le défaut
+T0 de l'unité 01 ne se reproduit pas, NOMMÉ PARCE QU'IL NE SE
+REPRODUIT PAS).
+
+LE GESTE : DÉZIPPEZ le kit (kit-unite-04-d210-20261118/) puis
+DOUBLE-CLIQUEZ LANCER-RUN-UNITE16-D210-1CLIC.bat seul (le dossier
+racine du zip porte LE NOM DU KIT — le pas 1·KIT : CHOISIR CE DOSSIER ;
+SmartScreen peut demander « Plus d'informations → Exécuter quand même »
+— le .bat est signé de RIEN, c'est l'honnêteté). LE GUI exige Python 3
+avec tkinter.
+
+LA FENÊTRE — LES CINQ ONGLETS : 1·VERROU (les QUATORZE pièces recoupées
+sha256, LA PREUVE T0 : le scénario scellé voit 13 pièces), 2·RUN (la
+console au fil de l'eau), 3·TÉMOIN (D99 : dater, signer de votre main),
+4·LIVRE (L'ATELIER CHOISI : le dossier, les QUATRE registres, les lignes
+nées du run), 5·JOURNAL (la session).
+
+L'ATTENDU DU RUN : les NEUF verdicts VERT (9 VERT, 0 ROUGE, code 0) —
+T0 la pièce recoupée, V1 le différentiel 10 000 frappes, V2 le scénario
+« 4d5a » ET la vue qui suit (le recadrage, la relecture), V3 les rejets
+(E1 -4 nommé, E2 la cellule fantôme -3, E3 le journal plein -3), V4 le
+repli, V5 la falsification (le disque falsifié attrapé). Puis : le
+témoin daté signé de votre main [D99], preuves-unite16/ au coffre /test
+(le GUI assemble le zip — la signature exigée, la cap M1 tenue par
+construction). UN RUN ROUGE se consigne TEL QUEL (le livre ne maquille
+rien : la ligne M1 au verdict RECOPIÉ, le défaut à l'onglet 6·DÉFAUTS
+s'il fut kit-side) ; UN REFUS (pièce divergée, gravure absente) ne
+courra JAMAIS (fail-closed).
+
+CE QUE CE GUI NE FERA JAMAIS : toucher aux pièces scellées (R7),
+signer le témoin à votre place (D99), recalculer les verdicts (RECOPIÉS),
+écrire une ligne M3 « honnête » à votre place (D189), toucher defauts.csv
+ou journal-ouverture.txt (D202 + l'ouverture scellée), consommer une
+itération au rejeu diagnostique (le REJOUER ne couche JAMAIS la ligne).
+
+L'HONNÊTETÉ DE CETTE ÉDITION : le selftest 27 VERT 0 ROUGE ; l'épreuve
+fonctionnelle (le run substitué au labo — le modèle extrait du juge
+livré par AST, les lignes couchées byte-byte à l'atelier simulé aux
+registres réels du coffre) ; la fumée Xvfb (la fenêtre née, les CINQ
+onglets, le verrou VERT à l'écran) ; l'épreuve du zip (le GUI dézippé
+conduit son PROPRE selftest).
+
+LES EMPREINTES : EMPREINTES-GUI-UNITE16-D210-1CLIC.txt (le GUI et ses
+livres + les QUATORZE pièces du kit, chaque sha256 ; certutil -hashfile
+au terrain recoupe).
+
+LA SUITE : le run au geste du développeur (le kit dézippé, CHOISIR LE
+DOSSIER DE L'ATELIER, TOUT LANCER, le témoin, preuves-unite16/ au
+coffre) — la ligne au livre DURANT le run, la frontière vécue de la 348
+tenue par construction ; puis l'attribution empirique au commandement
+(le guide-344 § 8).
+
+(18/11/2026, la session de la construction — la quatrième unité, la
+séquence honorée, l'atelier choisi PAR CONSTRUCTION)
