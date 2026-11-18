@@ -1,0 +1,186 @@
+LE DIFF ANNOTÉ DE L'ÉDITION v0.19.1 — LES ONZE CORRECTIONS DE L'AUDIT INTER-PIÈCES
+(la vague 7, l'instruction 376f15f18 — chaque correction SOURCÉE ; aucune
+valeur mesurée n'est modifiée, sauf la réconciliation des tailles passeur,
+une mesure RE-FAITE sur les octets réels, sourcée aux archives ; le linter
+inter-pièces naît au build — diff machine : diff-main-v190-v191.patch +
+les diffs spec/livre)
+================================================================================
+
+(1) LA RÉFÉRENCE À LA SPÉCIFICATION COURANTE — v0.13.0 → v0.15.1 (manuscrit §2.1)
+    L'ÉCART : le manuscrit disait « described in the protocol specification
+    v0.13.0 » — la v0.15.0 est l'édition courante depuis le 16/11 (D198).
+    LA SOURCE : le journal des versions de la spec (la chaîne spec_v150,
+    l'Entrée 231) ; les mentions HISTORIQUES v0.13.0 (l'audit D190, les
+    corrections) demeurent légitimes — seule la référence COURANTE est visée.
+    LA CORRECTION : « the protocol specification v0.15.1 » (la présente
+    édition de cohérence porte la référence à la v0.15.1 née au même geste).
+    LE LINTER : la référence courante exigée à v0.15.1 ; « v0.13.0 » hors
+    contexte historique est un motif à nommer.
+
+(2) LES ÉNONCÉS DE TIMING MATÉRIEL — « unmeasured / waiting » → les runs
+    SIGNÉS du 13/11 (manuscrit §4 et §5)
+    L'ÉCART : deux passages disaient le timing matériel « real-hardware
+    timing remains unmeasured » et le kit dudect « waiting for the
+    developer's run » — CONTREDITS par §3.7 et les runs dudect SIGNÉS du
+    13/11 (le kit courut deux fois, témoin daté signé de la main).
+    LA SOURCE : les témoins signés du 13/11 (preuves-run-kit2-dudect-v1/v2,
+    l'Entrée 311) ; les Tables 6 et 8 du manuscrit portent les runs.
+    LA CORRECTION : « its real-hardware dudect timing is measured and
+    signed (the runs of 13 November 2026) » — cache-timing et canaux
+    auxiliaires demeurent NON MESURÉS et dits tels ; le kit fence.i
+    silicium et le run Loupe troisième machine demeurent EN ATTENTE,
+    jamais confondus.
+    LE LINTER : « real-hardware timing remains unmeasured » est un INTERDIT.
+
+(3) LES TAILLES PASSEUR.EXE / PASSEUR-C.DLL — 57 856 / 97 937 → 61 952 /
+    102 390 o (manuscrit, la table des artefacts scellés)
+    L'ÉCART : la table appariait les hash v2+ aux TAILLES DE LA LIVRAISON V1
+    (le lanceur défaillant, hash b155f707… / 97 937 o).
+    LA SOURCE : les artefacts réels RE-HACHÉS aux archives du coffre
+    (unite-13-app / unite-14-app, D204) — passeur.exe v0.2 (T) : 61 952 o,
+    sha256 4a7229e7418e8276… ; passeur-c.dll v0.2 (C) : 102 390 o, sha256
+    fe4ddfc9842fb29b… ; la pièce verbatim p10 (vague 5) disait juste.
+    LA CORRECTION : la table porte 61 952 / 102 390 — les octets réels,
+    la faute nommée (les tailles v1 appariées par erreur aux hash v2+).
+    LE LINTER : « 57,856 » et « 97,937 » sont des INTERDITS ; les tailles
+    exactes et les hash sont exigés, recalculés des archives.
+
+(4) L'ATTRIBUTION DE LA PLAGE RQ2 — 2,98–11,37× EST L'ÈRE LOUPE CONTRE M1,
+    PAS LES BRAS T/C (preuves §5 et présentation §3)
+    L'ÉCART : les preuves §5 disaient « l'écart mesuré entre les bras tient
+    à la plage exacte 2,98–11,37× » et la présentation §3 l'attribuait au
+    « bras T » contre le « bras C » — FAUX : la plage compare le CONTENU de
+    l'ère Loupe aux BASELINES M1 (le manuscrit §3.2 disait juste : « Loupe-era
+    content values cost 2.98–11.37× their M1 counterparts »).
+    LA SOURCE : remesure_rq2.csv contre budgets.csv — localiser 580/51 =
+    11,37 ; éditer 2 143/719 = 2,98 ; ajouter 3 510/1 088 = 3,23.
+    LA CORRECTION : « l'écart de l'ère Loupe contre la baseline M1 tient à
+    la plage exacte 2,98–11,37× (580/51, 2 143/719 et 3 510/1 088 selon
+    l'opération) » — aux preuves ET à la présentation.
+    LE LINTER : l'attribution bras-à-bras de la plage RQ2 est un INTERDIT ;
+    « Loupe-era » et « M1 » exigés ensemble.
+
+(5) LES DÉFINITIONS CF2 / CF3 ET LA DISTINCTION COFFRE / EXPORT
+    (présentation §2)
+    L'ÉCART : la présentation décrivait CF2 et CF3 en prose libre, sans les
+    définitions de la spec §12 (Table 11) ni du Livre ch. 3–4, et
+    confondait le coffre-fort (les phrases maîtresses) avec l'export de
+    continuité.
+    LA SOURCE : la spec §12 Table 11 (CF2 — la clé maîtresse répartie :
+    Shamir cinq gardes seuil 3, sentinelle à double seuil, PORTE D120 ;
+    CF3 — la serrure à triple scellement : la clé utilisateur invariable,
+    les moitiés serrure/piège fraîches à chaque époque, le piège sur média
+    séparé HORS machine, le cycle en deux actes) ; le Livre ch. 3–4.
+    LA CORRECTION : la présentation §2 décrit CF2 (Shamir 5/3 + sentinelle/
+    porte D120) et CF3 (serrure 3 éléments + piège hors-machine + époque)
+    conformément à la spec §12 ; le coffre-fort centralise les PHRASES
+    MAÎTRESSES (D75), l'état de développement (I,C,B) se transfère par
+    l'EXPORT DE CONTINUITÉ D16 — les deux désormais DISTINGUÉS.
+    LE LINTER : les marqueurs exigés (Shamir, seuil 3, D120, média séparé,
+    deux actes, D16) confrontés à la spec.
+
+(6) « SANS COMPILATEUR NI LANGAGE DE PROGRAMMATION » → LA FORMULATION
+    D182/D190 (présentation §1)
+    L'ÉCART : la formulation de la présentation §1 reconduisait la
+    promesse absolute requalifiée par l'édition académique.
+    LA SOURCE : D182 (la formulation corrigée) et D190 (les corrections de
+    l'édition v0.13.0) : « AUCUNE chaîne de traduction optimisante ni
+    opaque ; assemblage WYSIWYG vérifié par round-trip ».
+    LA CORRECTION : la présentation §1 porte la formulation D182/D190.
+    LE LINTER : « sans compilateur ni langage de programmation » est un
+    INTERDIT ; la formulation D182/D190 exigée.
+
+(7) LA BASE D'ARRONDI M4 — LE CANON 17,9× (39,3/2,2, LA PREMIÈRE EXÉCUTION)
+    L'ÉCART : la base d'arrondi du ratio M4 après optimisation flottait
+    entre 17,8× et 17,9× selon les pièces.
+    LA SOURCE : p8-m4-rapport-r11.txt (verbatim) : « TOTAL 39.3 s (première
+    exécution) puis 39.2 s (seconde) » ; C = 2.2 s — la première exécution
+    donne 39,3/2,2 = 17,9× (le canon consigné), la seconde 39,2/2,2 =
+    17,8× ; le manuscrit v0.19.0 portait déjà 17,9×.
+    LA CORRECTION : le canon est 17,9× (39,3/2,2, la première exécution de
+    la liste optimisée) ; la pièce R11 verbatim calcule 17,8× sur la
+    seconde (39,2/2,2) — L'ÉCART NOMMÉ À CÔTÉ, LA PIÈCE DEMEURANT VERBATIM.
+    LE LINTER : 17,9× exigé comme canon ; le couple 17,8/17,9 nommé avec
+    sa source aux preuves.
+
+(8) LA TABLE TOKENS RESTRUCTURÉE — LES ITÉRATIONS CORRECTIVES = PROMPTS +
+    COMPLÉTIONS (preuves §5)
+    L'ÉCART : la table posait « — dont ITÉRATIONS CORRECTIVES » SOUS la
+    ligne ÉCRITURE (complétions) — laissant croire que les 32 613 tokens
+    correctifs du bras T vivaient tous dans les 18 238 de l'écriture :
+    IMPOSSIBLE (32 613 > 18 238) ; l'itération corrective est un APPEL
+    ENTIER (prompt ET complétion).
+    LA SOURCE : p9-decomposition-tokens.txt (l'instruction 2l40ie6qn) —
+    les catégories de contenu (spécification, oracle, notation, source C,
+    tests C) somment avec les itérations au total ; la coupe
+    prompts/complétions (34 920/18 238 au bras T) est ORTHOGONALE.
+    LA CORRECTION : la table présente les itérations correctives comme
+    l'appel correctif ENTIER (prompts + complétions, 6 appels T / 7 appels
+    C), et la coupe prompts/complétions à part — le « dont » SOUS l'écriture
+    disparaît ; la pièce source demeure verbatim au dépôt, la
+    restructure est consignée à la présente.
+    LE LINTER : la ligne « dont ITÉRATIONS CORRECTIVES » sous l'écriture
+    est un INTERDIT de présentation ; l'appel entier exigé.
+
+(9) LA SPÉCIFICATION v0.15.1 — CINQ RÉCONCILIATIONS, AUCUNE RÈGLE MODIFIÉE
+    L'ÉCART : (a) §16 disait « le douzième run attendu scellera la balise » —
+    le run A VÉCU ET SCELLÉ (D181, l'Entrée 222 : vert recoupé 39/39) ;
+    (b) §1.1 qualifiait D19 d'« invariant de révision » — requalifiée
+    POLITIQUE DE PROJET EXPLICITE (D182) ; (c) §12.4 (Table 11) comptait
+    « treize arbres » — le garde est à QUATORZE (D177, l'arbre loupe entré) ;
+    (d) le titre de l'annexe B disait « D75–D184 » — la table va à D198 ;
+    (e) les budgets §4 se lisaient comme courants — HISTORIQUES (v0.3/D31)
+    contre les mesures v0.17–v0.18 (D195 : localiser 580, éditer 2 143,
+    ajouter 3 510).
+    LA SOURCE : D181 (le scellage), D182 (la requalification), D177 (les
+    quatorze arbres), le tableau décisionnel lui-même (D197/D198 en
+    dernières lignes), D195 (les mesures).
+    LA CORRECTION : les cinq passages corrigés aux sources ; la décision
+    append-only D218 consigne ; la spec régénérée en v0.15.1, ÉDITION DE
+    COHÉRENCE — AUCUNE règle modifiée, aucune couche ajoutée.
+    LE LINTER : « le douzième run attendu », « Treize arbres de couche I »
+    et « D75–D184 » sont des INTERDITS à la spec.
+
+(10) LE LIVRE DU COFFRE v1.2 — CINQ RÉCONCILIATIONS
+    L'ÉCART : (a) l'en-tête courant disait « (v1.0) » — la scorie de la
+    v1.1, nommée ; (b) le sommaire des décisions disait « D75 à D133 » —
+    la table porte la ligne D137 ; (c) le ch. 4 comptait « neuf arbres » —
+    l'état v0.6.x, le garde est à QUATORZE (D177) ; (d) la table
+    d'empreintes était à md5 (référence D133) — la gouvernance est à
+    sha-256 (D184) et les manifestes à sha-256 (D187), md5 demeurant
+    l'affichage Loupe et les preuves historiques gardant leurs md5 ; (e)
+    l'avant-propos référençait la spec v0.6.1 — l'édition courante est
+    la v0.15.1.
+    LA SOURCE : D177, D184, D187, l'annexe A de la spec (les sha-256
+    re-mesurées au dépôt), la ligne D137 de la table du Livre elle-même.
+    LA CORRECTION : les cinq passages corrigés ; la table portée aux
+    sha-256 de l'annexe A ; le Livre régénéré en v1.2 — AUCUN geste de
+    cérémonie changé.
+    LE LINTER : « (v1.0) » à l'en-tête, « D75 à D133 », « neuf arbres » et
+    « Empreintes md5 des modules » sont des INTERDITS au Livre.
+
+(11) LA PRÉSENTATION DU 20/11 — L'ÉTAT DES ÉDITIONS ET LA VISIBILITÉ DU DÉPÔT
+    L'ÉCART : la présentation ne portait ni la table de l'état des éditions
+    ni le statut de la visibilité du dépôt.
+    LA SOURCE : l'Entrée 358 (la v0.19.0 née, la clôture D210 portée) ; la
+    présente (la v0.19.1, édition de cohérence) ; D81 (la garde durable —
+    le dépôt GitHub PRIVÉ tant que D183 n'est pas appliqué et les
+    rotations vérifiées ; public + Zenodo seulement après).
+    LA CORRECTION : la présentation porte la table « état des éditions »
+    (le manuscrit v0.19.1 né de la v0.19.0/Entrée 358, la clôture D210 ;
+    la spec v0.15.1 ; le Livre v1.2 ; les preuves v0.19.1) et la ligne
+    « visibilité du dépôt : GitHub privé — À TRANCHER AVANT SOUMISSION
+    (D81) ».
+    LE LINTER : la table des éditions et la mention D81 exigées ; « GitHub
+    public » est un INTERDIT tant que D183 n'est pas appliqué.
+
+LA VERSION : l'édition corrigée est la famille v0.19.1/v0.15.1/v1.2 (les
+entêtes, les pieds de page, les métadonnées PDF et les dates les portent) —
+les éditions scellées v0.19.0/v0.15.0/v1.1 (archives, empreintes) demeurent
+INTACTES et font foi pour leurs livrables ; AUCUNE valeur mesurée n'a changé
+(l'unique changement chiffré est la réconciliation des tailles passeur, une
+mesure re-faite sur les octets réels des archives) ; les artefacts scellés
+et les arbres signés sont OCTET-IDENTIQUES avant/après (vérifié au geste) ;
+la décision D218 (append-only) consigne les corrections et leur sourcement.
+Source : la présente édition — chaque correction sourcée ci-dessus. Les
+pièces verbatim demeurent au dépôt (scripts/vague5/preuves/, scripts/vague6/).

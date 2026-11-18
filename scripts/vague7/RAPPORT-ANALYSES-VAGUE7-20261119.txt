@@ -1,0 +1,226 @@
+RAPPORT-ANALYSES-VAGUE7-20261119 — LES CINQ INSTRUCTIONS DU 18/11 REÇUES,
+TRIÉES ET SÉQUENCÉES ; LA PREMIÈRE EXÉCUTÉE À LA SESSION SUIVANTE (L'ENTRÉE 359)
+================================================================================
+(le 19/11/2026, la session de la réception — le développeur posa le lien du
+/instructions du coffre avec la règle : « ces instructions sont à archiver
+après exécution » ; les cinq pièces rapatriées en DOUBLE téléchargement
+byte-byte, md5 == la métadonnée Drive, échec fermé)
+
+L'ÉCART NOMMÉ (D189 — LA CORRECTION AU DOCUMENT, la vérité rétablie) : la
+présente session écrivit son analyse en réclamant l'exécution de
+l'instruction ① « à la présente session (l'Entrée 359) » — ELLE MOURUT
+AVANT LE PREMIER GESTE D'EXÉCUTION : aucun artefact né, aucune entrée
+consignée, aucun commit poussé, la racine du coffre intacte depuis 22:51
+UTC (l'Entrée 358, l'addendum). Les lignes de statut ci-dessous furent
+corrigées à la livraison : l'analyse et le séquençage DEMEURENT (ils font
+foi), l'exécution de la ① vécut à la SESSION SUIVANTE — l'Entrée 359 du
+worklog. Le livre ne ment jamais.
+
+L'ÉTAT REÇU. Le /instructions du coffre porte CINQ pièces nouvelles, déposées
+le 18/11 à 23:47:49-23:48:57 locale (le même geste, cinq fichiers) — la vague
+7 des instructions, après la vague 5 (les dix du 11/11, toutes exécutées et
+archivées) et la vague 6 (les six du 16/11, toutes exécutées et archivées) :
+  — Qwen__20261118_376f15f18.txt  3 310 o  md5 858269d4704a…
+  — Qwen__20261118_jx4l5vy5c.txt  2 119 o  md5 ff27036f521b…
+  — Qwen__20261118_5ey7gmjra.txt  2 253 o  md5 24197298fac2…
+  — Qwen__20261118_1c4sokpii.txt  2 146 o  md5 a8722e2e50e3…
+  — Qwen__20261118_cq01qv1za.txt  2 192 o  md5 5caef075340f…
+Leur dépôt (23:47 locale) est POSTÉRIEUR à la réception du carnet M3 (23:26,
+l'Entrée 357) et au rapport 357 (23:35) — la session de l'édition v0.19.0
+(Entrée 358) les précédait de peu : elles ne furent pas ouvertes ce jour-là.
+
+LA RÉCONCILIATION DE PRÉMISSE (nommée avant tout geste). La première
+instruction auditionne « les cinq pièces du pack (manuscrit v0.18.1,
+spécification v0.15.0, Livre du Coffre v1.1, preuves & calculs v0.18.1,
+présentation 19/11) ». L'édition v0.19.0 EST NÉE DEPUIS (l'Entrée 358 : le
+PDF final portant la clôture D210 — la v0.18.1 scellée demeure et fait foi,
+la v0.19.0 l'édition courante). L'audit s'applique donc aux éditions
+COURANTES : les corrections visées vivent à l'identique dans la v0.19.0
+(héritière byte-close de la v0.18.1 sur les passages visés — vérifié ligne à
+ligne avant chaque geste) ; le pack régénéré porte le manuscrit v0.19.1
+(édition de cohérence inter-pièces, aucune valeur mesurée modifiée), la
+spécification v0.15.1 (édition de cohérence, AUCUNE règle modifiée — le
+mandat le prescrit ainsi), le Livre du Coffre v1.2, les preuves & calculs
+v0.19.1 et la présentation du 20/11.
+
+═════════════════════════════════════════════════════════════════════════════
+INSTRUCTION ① — 376f15f18 : L'AUDIT INTER-PIÈCES DU PACK, ONZE CORRECTIONS,
+LE LINTER QUI REFUSE LE BUILD, LE PACK RÉGÉNÉRÉ
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT : un linter INTER-PIÈCES refusant le build sur toute divergence
+d'une valeur partagée (tailles d'artefacts, ratios, versions, nombre d'arbres
+signés, statut des outils formels, visibilité du dépôt) ; onze corrections
+numérotées aux sources ; les cinq PDF recompilés ; contrôles négatifs ; le
+diff annoté sourcé au journal append-only ; le pack zip régénéré, refusé si
+un seul contrôle est rouge.
+LA TRIAGE : ENTIÈREMENT AU LABORATOIRE — aucune mesure nouvelle, aucune clé,
+aucun run terrain ; les onze corrections sont des réconciliations sur pièces.
+LES FAITS QUI TRANCHENT DÉJÀ (constatés à l'analyse, chacun sera sourcé au
+diff annoté) :
+  (1) manuscrit §2.1 : la référence courante à la spec dit v0.13.0 (la
+      v0.15.0 est l'édition courante) — les mentions HISTORIQUES v0.13.0
+      (l'audit, les corrections) demeurent légitimes ;
+  (2) manuscrit §4/§5 : deux passages disent le timing matériel « unmeasured
+      » / le kit dudect « waiting » — CONTRÉS par §3.7 et les runs SIGNÉS du
+      13/11 (le kit courut deux fois, témoin daté signé) ; les deux autres
+      passages relevés sont déjà alignés (« now measured », « ran twice,
+      signed ») ;
+  (3) tailles passeur.exe/passeur-c.dll : LES ARTEFACTS RÉELS RE-HACHÉS aux
+      archives du coffre (unite-13-app / unite-14-app, D204) — passeur.exe
+      v0.2 (T) : 61 952 o, sha256 4a7229e7418e8276… ; passeur-c.dll v0.2
+      (C) : 102 390 o, sha256 fe4ddfc9842fb29b… — la table du manuscrit
+      portait 57 856 / 97 937 : les tailles de la LIVRAISON V1 (lanceur
+      défaillant, hash b155f707… / v1 97 937 o) appariées par erreur aux
+      hash v2+ ; la pièce verbatim p10 (vague 5) disait juste ; le manuscrit
+      est corrigé aux tailles réelles ;
+  (4) le ratio 2,98-11,37× est l'ère Loupe CONTRE M1 (580/51, 2 143/719,
+      3 510/1 088) — le manuscrit le dit juste ; les preuves §5 (« l'écart
+      mesuré entre les bras ») et la présentation §3 (« le bras T … le bras
+      C ») portent la fausse attribution — corrigées ;
+  (5) présentation §2 : CF2 = la clé répartie (Shamir cinq gardes seuil 3,
+      sentinelle à double seuil, PORTE D120 — spec §12 Table 11, Livre ch.3),
+      CF3 = la serrure piégée (la clé utilisateur invariable + les moitiés
+      serrure/piège fraîches à chaque époque, le piège sur média séparé
+      HORS machine, le cycle en deux actes) ; le coffre-fort centralise les
+      PHRASES MAÎTRESSES (D75), l'état de développement (I,C,B) se transfère
+      par l'EXPORT DE CONTINUITÉ D16 — les deux désormais distingués ;
+  (6) « sans compilateur ni langage de programmation » → la formulation
+      D182/D190 : aucune chaîne de traduction optimisante ni opaque ; le
+      round-trip rend la notation WYSIWYG ;
+  (7) la base d'arrondi M4 canonisée sur la valeur consignée : 23,1× → 17,9×
+      (39,3/2,2, la première exécution de la liste optimisée) ; la pièce
+      R11 verbatim calcule 17,8× sur la seconde (39,2/2,2) — l'écart nommé à
+      côté, la pièce demeurant verbatim ;
+  (8) la table tokens restructurée : les itérations correctives = prompts +
+      complétions (l'appel correctif entier), jamais un sous-ensemble de la
+      seule écriture ;
+  (9) spec : §16 le douzième run VÉCU ET SCELLÉ (D181, l'Entrée 222) ; §1.1
+      D19 = POLITIQUE DE PROJET (D182), pas un invariant intangible ; Table
+      11 §12.4 QUATORZE arbres signés (D177) ; titre annexe B D75-D198 ;
+      budgets §4 annotés HISTORIQUES vs les mesures v0.17-v0.18 (D195) ;
+      décision append-only + spec v0.15.1, aucune règle modifiée ;
+  (10) Livre v1.2 : en-tête courant (v1.0→v1.2 — la scorie nommée), sommaire
+      D75-D137 (la table porte déjà la ligne D137), QUATORZE arbres (ch.4
+      disait « neuf » — l'état v0.6.x), la table d'empreintes portée à
+      sha-256 (alignée D184/D187, les valeurs de l'annexe A de la spec
+      re-mesurées au dépôt), la référence à la spec courante (v0.15.1) ;
+  (11) présentation : la table « état des éditions » (portant l'état VRAI au
+      20/11 : manuscrit v0.19.1 né de la v0.19.0/Entrée 358, la clôture D210)
+      et la visibilité du dépôt « GitHub privé — À TRANCHER AVANT
+      SOUMISSION (D81) ».
+STATUT : EXÉCUTÉE À LA SESSION SUIVANTE (l'Entrée 359 — la présente session
+mourut avant le premier geste : l'écart nommé en tête du rapport) ;
+l'instruction archivée au /ARCHIVE/instructions_20261119/ après exécution.
+
+═════════════════════════════════════════════════════════════════════════════
+INSTRUCTION ② — jx4l5vy5c : LA BASCULE DE GARDE DURABLE D81 → SÉQUESTRE D183
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT : rafraîchir le kit de cérémonie D183 (l'outil au partage CF2
+D120, tel quel) — autotest sur phrase de test publique marquée (les 10
+combinaisons de 3 parts exactes reconstituent, les 10 paires sous seuil ne
+fuient rien), LISEZMOI pas à pas, manifeste sha256, listes de contrôle, le
+geste de retrait de la phrase en clair du dépôt ; la décision append-only de
+transition (l'analyse chiffrée perte/exposition, facteur ≈40) au statut
+« préparée, geste au développeur » ; la procédure de scan de secrets sur
+l'historique git complet (gitleaks/trufflehog, dry-run sur dépôt de test à
+secrets plantés) ; la checklist de rotation ; la matrice de décision
+visibilité dépôt (privé tant que D183 non appliqué et rotations non
+vérifiées ; public + Zenodo seulement après) ; l'extension documentée non
+appliquée (l'ancrage du témoin d'époque CF3 à un journal de transparence
+public — Rekor/Sigstore ou RFC 3161) ; la ligne D81 du modèle de menace
+(spec + manuscrit §4.1) au statut exact ; le runbook du Livre (section
+cérémonie D183).
+LA TRIAGE : AU LABORATOIRE, à une dépendance près — l'outillage de scan
+(gitleaks/trufflehog au bac ; à défaut l'équivalent Python nommé, jamais une
+simulation) ; AUCUNE clé, AUCUN conteneur réel touché (D105/D192 : le kit
+existe déjà, l'autotest est à la phrase de test publique).
+STATUT : SÉQUENCÉE — prochaine session dédiée ; la dépendance outillage
+constatée au premier geste.
+
+═════════════════════════════════════════════════════════════════════════════
+INSTRUCTION ③ — 5ey7gmjra : L'ÉCART CF3 MODÈLE↔IMPLÉMENTATION ET LE TEMPS
+CONSTANT DURCI
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT : étendre CF3.tla (falsifie_conteneur pendant une session ouverte,
+garde alignée sur la sentinelle concrète ; le résultat historique 660
+divergences consigné append-only) et re-jouer la campagne générative 10 000
+traces jusqu'à ZÉRO divergence (graine consignée + nouvelles graines, ddmin
+sur tout écart résiduel) ; décharger symboliquement l'uniformité d'époque
+(lemme de translation, Apalache, entiers non bornés, contrôle négatif) ;
+mettre à niveau l'instrument temps constant (hash des traces COMPLÈTES par
+run, égalité des hash sur les 6 cibles, N=60/classe) ; préparer le kit de
+mesure matérielle pré-enregistré EN ATTENTE (aucun chiffre matériel fabriqué).
+LA TRIAGE : AU LABORATOIRE, à une dépendance près — l'outillage TLA+
+(TLC/Apalache au bac : la chaîne v0.15.0 les employa ; à re-vérifier au
+premier geste, le re-provisionnement fut nommé à D207) ; le re-jeu 10 000
+traces et l'instrument traces-complètes sont calculatoires (heures de bac).
+STATUT : SÉQUENCÉE — session dédiée après ② ; le kit matériel demeure EN
+ATTENTE du geste développeur (jamais un chiffre fabriqué).
+
+═════════════════════════════════════════════════════════════════════════════
+INSTRUCTION ④ — cq01qv1za : L'OPTIMISATION DU COÛT DE LA BOUCLE SOUS R11
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT : le protocole de réponse « pointeur seul » pour localiser (ID +
+hash au lieu de l'en-tête complet ; expansion côté client ; avant/après sur
+n≥18 appels réels au tokenizer natif, re-tokenisation indépendante ±1) ; la
+mémoïsation déterministe des ouvertures de session émulées (clé sha256
+fichier+config+graine, ré-audit 1 run sur 10, preuve d'identité ligne à
+ligne) ; le double moteur d'émulation (QEMU-user pour le volume, Unicorn
+pour l'échantillon d'audit, divergence 0 exigée) ; la réconciliation du mémo
+D214 sur pièces (39,5 s vs 39,3/39,2 s) ; si le ratio après adoption passe
+sous ×10, énoncer que H5 devient tenue et mettre à jour la table des statuts.
+LA TRIAGE : AU LABORATOIRE — le harnais compter_tokens et l'émulateur vivent
+au bac de campagne ; les re-mesures sont des heures de bac ; AUCUN contrôle
+retiré (les consoles des oracles diff-identiques exigées) ; QEMU-user à
+provisionner si absent du bac.
+STATUT : SÉQUENCÉE — session dédiée après ③ (la baseline double-bras de la
+rig L6 précède tout levier, le séquençage D207 le maintient).
+
+═════════════════════════════════════════════════════════════════════════════
+INSTRUCTION ⑤ — 1c4sokpii : LE PLAN D210 À SON TERME, L'INDÉPENDANCE
+INTER-FAMILLES
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT : compléter à n≥6 unités entièrement instrumentées (si la séquence
+est épuisée à la cap, AMENDER le plan append-only avec justification AVANT
+tout nouveau tirage — jamais de re-tirage silencieux) ; chaque run terrain
+appartient au développeur (témoin daté/signé D99 — le labo prépare les kits
+et recoupe, ne fabrique jamais une ligne) ; l'indépendance inter-famille
+(constantes d'oracle MD5 T[64]/SHA-256 K[64] et source du bras C régénérés
+avec une seconde famille de modèle ; modèle local open-weights si l'API
+n'expose qu'une famille, SINON GAP NOMMÉ) ; trier les 56 survivants de
+mutation loupe (équivalents vs tuables), shims à injection de fautes,
+re-jeu aux mêmes tirages avec composition-killers ; le paquet d'évaluation
+d'artefacts (métadonnées Zenodo, scripts, graines, reproduction en une
+commande) et les matériaux de réplication (grille T/X, κ autotesté, second
+annotateur À RECRUTER — aucune annotation inventée).
+LA TRIAGE : LA PART LABO est préparatoire (l'amendement append-only du plan
+D210 AVANT tout nouveau tirage — la séquence QUATRE unités est ÉPUISÉE à la
+cap M1, la clôture est consignée à l'Entrée 358 : l'amendement devra le
+nommer et justifier les unités 5-6) ; LES RUNS TERRAIN demeurent au geste du
+développeur ; la seconde famille de modèle dépend de l'API disponible au
+bac (l'écart de famille fut nommé à D195) — GAP NOMMÉ si une seule famille.
+STATUT : SÉQUENCÉE — la DERNIÈRE de la vague (elle consomme les fermetures
+nées des quatre autres : la rig baseline de ④ pour les leviers, la
+réplication de ③ pour la grille) ; l'amendement du plan et les kits des
+unités 5-6 préparables au labo dès la commande.
+
+═════════════════════════════════════════════════════════════════════════════
+LE SÉQUENÇAGE PROPOSÉ (chacune clôt par son pack des cinq documents
+régénérés — l'ordre minimise les recompilations : ① porte les éditions de
+cohérence que les autres rééditeront)
+═════════════════════════════════════════════════════════════════════════════
+  ① 376f15f18 (la cohérence inter-pièces) — EXÉCUTÉE à la session suivante
+     (l'Entrée 359) ;
+  ② jx4l5vy5c (la garde durable D183) — la prochaine session ;
+  ③ 5ey7gmjra (l'écart CF3 et le temps constant) ;
+  ④ cq01qv1za (le coût de la boucle sous R11) ;
+  ⑤ 1c4sokpii (le plan au terme, l'indépendance inter-familles).
+L'ARCHIVAGE : chaque instruction descend au /ARCHIVE/instructions_20261119/
+APRÈS son exécution complète (la règle du développeur) — la ① y vit depuis
+l'Entrée 359 (la session suivante) ; les quatre autres demeurent au
+/instructions, leur analyse ci-dessus faisant foi.
+
+(19/11/2026, la session de la réception de la vague — cinq instructions
+lues entières, la prémissse réconciliée à l'état courant, la première
+EXÉCUTÉE À LA SESSION SUIVANTE (l'Entrée 359, l'écart nommé en tête) ;
+les quatre autres séquencées, aucune mesure fabriquée)

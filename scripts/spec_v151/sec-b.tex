@@ -1,0 +1,281 @@
+% =====================================================================
+%  CH 5-7 : Règles · Boucle de mise à jour · Vérification
+% =====================================================================
+\section{Les règles du protocole}\label{sec:regles}
+
+R1 à R7 proviennent de la v0.1 ; R8 à R10 de la v0.2 ; \textbf{R10 est renforcée et R11
+ajoutée par la v0.4.0}. Les règles sont peu nombreuses, vérifiables mécaniquement et
+sanctionnées par des effets concrets — refus de build, refus de commit ou blocage de
+session — plutôt que par des recommandations. Aucune règle existante n’est affaiblie : les
+énoncés de R1 à R9 sont repris à l’identique, celui de R10 est un sur-ensemble strict de
+la version v0.3.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les onze règles du protocole v0.4.0.}
+\label{tab:regles}
+\begin{tabularx}{\textwidth}{@{}l l Y l@{}}
+\toprule
+\textbf{\#} & \textbf{Règle} & \textbf{Énoncé} & \textbf{Sanction} \\
+\midrule
+R1 & Jamais de binaire nu & Tout artefact B est accompagné de I et C à jour & build refusé \\
+R2 & Intention d’abord & Toute modification commence par un diff sur I & édition rejetée \\
+R3 & Balisage obligatoire & Chaque bloc est décrit dans C & build refusé \\
+R4 & Patch à contrat stable & Le remplacement préserve signatures et contrats ; les
+appelants ne sont jamais invalidés & échec de vérification \\
+R5 & Vérifie-puis-écrit & Aucun commit sans oracle, vecteurs dorés et round-trip &
+commit impossible \\
+R6 & Cristallisation & Dix vérifications réussies rendent le bloc immuable ; le modifier
+exige la procédure lourde & nouvelle version du bloc \\
+R7 & Adresses stables & Les points d’entrée sont garantis par padding ; patcher ne
+déplace rien & re-liage forcé — interdit \\
+R8 & Verrou croisé & Empreintes des blocs et signature de la carte vérifiés avant chaque
+édition & session bloquée \\
+R9 & Carte signée obligatoire & L’agent refuse toute carte non signée & refus de
+démarrage \\
+\textbf{R10} & Échec contrôlé intégré \emph{(renforcée)} & Au lancement — avant toute
+entrée dans le chemin d’exécution — l’artefact vérifie (a) les checksums de ses blocs
+scellés, (b) la signature du manifeste de build couvrant code et données embarquées, (c)
+la monotonie de version (anti-rollback : tout état antérieur à la version minimale
+acceptée est refusé), (d) la conformité minimale de l’environnement au profil. Tout écart
+= arrêt propre immédiat ; aucun chemin d’exécution dégradé n’existe \emph{(fail-closed
+explicite)} & arrêt avant tout effet \\
+\textbf{R11} & Optimisation mesurée \emph{(nouvelle)} & Toute optimisation exige un hot
+path identifié par mesure, une mesure avant/après consignée au journal d’optimisation et
+un contrat stable (R4). L’optimisation prématurée — sans hot path identifié ni mesure —
+est interdite : la demande est refusée et consignée & refus de commit \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Quatre précisions. R4 : un bloc remplaçant honore les contrats publiés de son prédécesseur
+— mêmes signatures, mêmes pré et post-conditions, mêmes invariants visibles — condition de
+possibilité du patch à chaud. R7 s’entend \textbf{par profil} : les adresses sont stables
+au sein du binaire de chaque profil. R1, précisée par D16, interdit de livrer la carte
+avec l’artefact — pas de détenir et transférer son propre état : c’est l’objet de l’export
+de continuité. R10 renforcée (D20) étend le fail-closed en un contrôle intégré à quatre
+volets ; la vérification est strictement \textbf{locale} (aucune dépendance réseau au
+chargement) et la politique anti-rollback précise (registre des versions acceptées,
+stockage du plancher) appartient au profil de cible.
+
+\section{La boucle de mise à jour}\label{sec:boucle}
+
+La boucle est la seule voie par laquelle le logiciel évolue : sept étapes en deux phases —
+l’édition, puis la validation et le commit — séparées par un point de non-retour : rien
+n’est écrit dans le binaire avant que l’oracle n’ait rendu son verdict.
+
+\begin{table}[htbp]
+\centering\small
+\caption{La boucle de mise à jour en sept étapes.}
+\label{tab:boucle}
+\begin{tabularx}{\textwidth}{@{}l l Y l@{}}
+\toprule
+\textbf{N} & \textbf{Étape} & \textbf{Entrées $\to$ sorties} & \textbf{Règles} \\
+\midrule
+1 & Diff d’intention & requête de changement, couche I $\to$ diff minimal sur I & R2 \\
+2 & \textbf{Localisation par intention} & frag-loc, diff I $\to$ blocs impactés & R3 \\
+3 & Verrou croisé & frag-bld, binaire $\to$ verdict go / no-go & R8, R9 \\
+4 & Régénération ciblée & frag-con, notation $\to$ octets candidats & R4, R7, R11 \\
+5 & Vérification & candidats, oracle, vecteurs $\to$ verdict, journal & R5 \\
+6 & Commit atomique & verdict favorable $\to$ patch B, carte, scellage & R1 \\
+7 & Cristallisation & compteur de vérifications $\to$ bloc immuable & R6 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Localisation par intention (norme v0.4.0).} L’étape 2 porte désormais son nom
+entier : la localisation est \textbf{dérivée du diff d’intention} par l’index de la carte
+— jamais par balayage du binaire, jamais par recherche de motif dans les octets. Un diff
+qui ne localise aucun bloc est une erreur de spécification à corriger dans I, pas une
+licence de scan ; un balayage serait une violation du budget (§\ref{sec:carte}) et de R3.
+La précision de localisation — bon bloc identifié du premier coup — reste l’indicateur de
+santé mesuré dès M0 (cible 95 \%).
+
+\paragraph{Patch à chaud du profil primaire.} Le mécanisme exact est spécifié par chaque
+profil ; pour x86-64 : le nouveau bloc est d’abord écrit dans une zone de croissance
+libre, puis un trampoline de 12 à 16 octets est installé à l’ancien point d’entrée et
+bascule par une écriture alignée unique, atomique pour le processeur. L’ancien trampoline
+est conservé : le rollback copy-on-write consiste à rebasculer vers lui. Les adresses
+stables garantissent qu’aucun appelant ne référence l’intérieur d’un bloc : seuls les
+points d’entrée~— promis par R7~— sont trampolinés, et leur table est close et vérifiée
+par le verrou croisé. Le critère M2 : remplacer le bloc d’écho d’un serveur TCP pendant
+qu’il traite des connexions, sans interruption, avec rollback démontré~— \textbf{démontré
+sur machine réelle le 27 octobre 2026} (D43) : la boucle complète (bascule pendant le
+trafic, vérification memcmp, retour arrière, re-vérification) s’est terminée par le
+constat « DÉMO OK » du journal d’exécution, au terme de la campagne relatée en
+§\ref{sec:terrain}.
+
+\section{La stratégie de vérification}\label{sec:verification}
+
+Supprimer le compilateur, c’est perdre les filets de sécurité qu’il tendait gratuitement.
+La stratégie de vérification reconstruit une confiance équivalente sans réintroduire de
+couche de traduction dans l’artefact.
+
+\paragraph{L’oracle éphémère.} Implémentation de référence de chaque bloc — triviale,
+volontairement lente, dérivée de la couche I, générée au début de chaque session puis
+détruite. Le test est différentiel par propriétés : l’oracle et le bloc machine reçoivent
+des entrées aléatoires contraintes par les pré-conditions, leurs sorties sont comparées
+octet par octet ; volume de référence : douze mille cas par bloc critique — les campagnes
+effectives sont consignées au journal (76 010 cas en M1, 50 533 en M2, 86 pour la
+démonstration graphique). L’oracle dérive
+de I et non de B ; il est régénéré à chaque session ; sa régénération coûte moins que le
+diagnostic d’une corruption post-scellage. Dérivé de la couche I — indépendante de la
+cible — le \textbf{même} oracle valide les blocs de tous les profils : la portabilité ne
+divise pas le coût de vérification, elle le mutualise.
+
+\paragraph{Le round-trip de notation.} Chaque bloc assemblé est désassemblé et comparé à
+la notation d’origine ; tout désaccord — instruction, opérande, taille d’encodage — est un
+échec de build. La notation n’est pas un compilateur : aucune optimisation, aucune
+réécriture ne s’intercale entre l’écriture et les octets (principe WYSIWYG).
+
+\paragraph{La cristallisation.} Plus un bloc fait ses preuves, moins il coûte à vérifier.
+Chaîne de confiance du scellage : verdict de l’oracle $\to$ vecteurs dorés hachés dans
+frag-prf $\to$ empreinte du bloc dans frag-bld $\to$ signature de la carte entière $\to$
+immuabilité à dix vérifications.
+
+\subsection{Vecteurs de vérification}\label{sec:vecteurs}
+
+Trois espèces : \textbf{vecteurs dorés} (entrées/sorties de référence, conservés hachés) ;
+\textbf{propriétés différentielles} (invariants testés par l’oracle sur entrées
+contraintes) ; \textbf{tests de rejet} (chaque cas d’échec du contrat, matérialisé par un
+test qui exige la sanction nommée). Exigence de couverture : chaque exigence numérotée du
+contrat et chaque cas d’échec relie au moins un vecteur — la commande d’audit de
+traçabilité vérifie ce maillon.
+
+
+\subsection{La validation terrain — la boucle d'évidence}\label{sec:terrain}
+
+La v0.5.0 élève la validation terrain au rang de couche de vérification normée (D43). Le
+principe est né d'un constat structurel : l'oracle différentiel exécute le binaire contre un
+\textbf{modèle} de l'environnement — chargeur, ABI, sémantique des API, protections mémoire.
+Un binaire peut donc être exact au sens du round-trip, intègre au sens de la porte R10,
+conforme au sens de la suite du profil, vert au sens de l'oracle — et mourir au premier appel
+sur machine réelle, parce que le modèle était plus pauvre que la réalité. Les jalons M1 et
+M2 en ont fourni la preuve expérimentale : huit classes de défauts ainsi invisibles
+(§\ref{sec:taxonomieX}) n'ont été révélées que par l'exécution terrain.
+
+La boucle d'évidence comporte cinq éléments normés :
+
+\begin{enumerate}
+\item \textbf{Le journal d'exécution} — l'artefact livré écrit ses preuves au fil de l'eau
+(fichier à côté de l'exécutable, ligne par ligne). La règle d'honnêteté est absolue : une
+ligne n'est écrite qu'après la vérification de l'étape qu'elle atteste (memcmp exact) — une
+ligne présente vaut preuve ; la dernière ligne visible localise toute mortalité à
+l'intervalle près.
+\item \textbf{La lecture asymétrique} — le terrain retourne son verdict par un canal à
+faible bande passante : le journal (éventuellement complété d'une capture). L'atelier
+n'exige du terrain que ce document, jamais un diagnostic : la charge d'analyse reste à
+l'agent.
+\item \textbf{L'instrumentation contractualisée} — quand l'intervalle de mortalité reste
+aveugle, l'itération suivante embarque des sondes de trace aux frontières (D40) : elles
+journalisent des faits (positions d'exécution, retours vérifiés), jamais un succès non
+prouvé ; leur retrait après constat vert est promis dans la spécification (D43 a honoré la
+promesse) et vérifié par l'oracle — le journal nominal redevient exactement sa séquence de
+preuves, toute ligne parasite est un échec.
+\item \textbf{Le diff chirurgical} — chaque itération terrain ne modifie que les blocs
+révisés ; l'audit d'itération vérifie mécaniquement qu'aucun octet hors des zones
+autorisées (blocs révisés, chaînes, version, sommes) n'a bougé — l'héritage scellé reste
+octet-identique (R7).
+\item \textbf{L'archive brute} — chaque journal terrain est archivé tel quel (octets
+d'origine, encodage et fins de ligne compris) avec son empreinte : la preuve est le
+document, pas son résumé.
+\end{enumerate}
+
+Le protocole est ensuite économique : huit lectures de journal ont suffi à nommer huit
+classes de défauts en deux jours (demo.1 à demo.8), et le dernier diagnostic a été obtenu
+sans run supplémentaire — par lecture statique des octets appuyée sur les preuves
+accumulées (D42). La contrepartie est la garantie de progression : chaque défaut nommé
+devient un vecteur de falsification permanent de l'oracle — le modèle d'environnement
+s'enrichit de chaque lecture terrain et ne peut plus régresser en silence.
+
+\subsection{Taxonomie étendue — les défauts invisibles à l'émulation (X1--X8)}\label{sec:taxonomieX}
+
+Les classes T1--T6 (§\ref{sec:taxonomie}) classent les défauts de contrat non écrit :
+lisibles dans la spécification, corrigeables en écrivant le contrat. La campagne M2 a
+révélé une seconde famille, structurellement différente : des défauts dont ni la
+spécification, ni la notation, ni le round-trip, ni l'oracle ne parlent — parce que le
+modèle d'environnement de l'oracle était, sur un point précis, plus pauvre que le système
+réel. La v0.5.0 en fixe la taxonomie (D35--D43) :
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Taxonomie des défauts invisibles à l'émulation (classes X).}
+\label{tab:taxonomieX}
+\begin{tabularx}{\textwidth}{@{}l l Y Y Y@{}}
+\toprule
+\textbf{Classe} & \textbf{Déc.} & \textbf{Modèle défaillant} & \textbf{Défaut de
+référence} & \textbf{Garde permanente} \\
+\midrule
+X1 & D35 & sémantique du chargeur & \code{FirstThunk} $\neq$ slots appelés : le chargeur
+résout ailleurs que le code n'appelle & verrou « chargeur réel » : FT = slots appelés \\
+X2 & D36 & lecture de structure & \code{RECT.top} lu comme largeur : spec juste, octets
+faux — bloc jamais exécuté, shim muet & coquille exécutée + invariant géométrique \\
+X3 & D37 & canal de vérité & jumeau silencieux : le fichier vivait, l'écran restait vide —
+défaut dans la spécification & miroir universel, les deux canaux contrôlés \\
+X4 & D38 & ABI caller-saved & volatils relus après l'appel : un retour de syscall écrit
+RFLAGS dans r11 & clobber des volatiles à chaque retour simulé \\
+X5 & D39 & protections mémoire & phase de patch \code{PAGE\_READWRITE} sans execute : DEP
+permanent x64 & le shim applique les permissions réelles \\
+X6 & D40 & écart émulation/terrain & défaut latent qu'aucune exécution n'avait déclenché :
+audit exhaustif vert & sondes aux frontières, instrumentation contractualisée \\
+X7 & D41 & obligations ABI de l'appelant & zone d'accueil msx64 absente : l'appelé écrit
+sur l'adresse de retour & shim \code{/homeparams} + audit systémique des sites \\
+X8 & D42 & état hérité & section critique exigée par un bloc scellé, initialisée par un
+bloc orchestrateur retiré & shims à état + exécution réelle du consommateur \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Trois règles d'usage, miroir de celles de la taxonomie T. Premièrement, tout défaut terrain
+corrigé est classé T ou X au journal des décisions — la métrique « défauts ouverts par
+classe » du tableau de bord couvre désormais les deux familles. Deuxièmement, chaque classe
+X est gardée par une falsification : réintroduire le défaut doit faire échouer l'oracle —
+le modèle s'enrichit mais ne régresse jamais en silence. Troisièmement, la taxonomie est
+ouverte : une neuvième classe sera nommée X9 avec sa décision, jamais dissimulée dans un
+correctif muet.
+
+La lecture académique : un oracle différentiel valide la conformité d'un artefact à un
+modèle ; la validation terrain valide le modèle lui-même. Les deux couches sont
+complémentaires, non redondantes — l'oracle couvre l'espace des entrées à coût nul, le
+terrain couvre l'espace des environnements au coût d'un run. Le protocole exige les deux :
+R5 (vérifie-puis-écrit) pour la première, la boucle d'évidence pour la seconde.
+\subsection{Suite de conformité par profil}\label{sec:conformite}
+
+Chaque profil embarque une \textbf{suite de conformité} vérifiant ses sept éléments
+constitutifs (D22) :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Suite de conformité d’un profil : les sept contrôles.}
+\label{tab:suite}
+\begin{tabularx}{\textwidth}{@{}l l Y@{}}
+\toprule
+\textbf{\#} & \textbf{Élément du profil} & \textbf{Contrôle de la suite} \\
+\midrule
+1 & ISA et types & tailles, alignements, boutisme constatés = déclarés \\
+2 & ABI d’appel & appels et retours conformes ; volatilité ; shadow space ou zone rouge \\
+3 & Format d’exécutable & en-têtes valides ; protections constatées (DEP/NX, ASLR/PIE,
+CFI/CFG) \\
+4 & Interface système & résolution des imports ou syscalls ; contrat d’erreurs \\
+5 & Patch à chaud & bascule atomique et invalidation du cache d’instructions démontrées \\
+6 & Notation & round-trip 100 \% sur le corpus d’instructions du profil \\
+7 & Granularité et padding & adresses stables après patch (R7) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Un profil sans suite verte n’est pas déclarable supporté — un profil incomplet est refusé
+exactement comme un build sans carte (D14). La suite est un livrable obligatoire de
+l’instanciation, exécutée à chaque cristallisation de version rc et finale, et le critère
+d’acceptation des jalons M6 et M7.
+
+\subsection{Parité inter-profils à contrat constant}\label{sec:parite}
+
+Deux profils sont \textbf{paritaires} pour le contrat $\sigma$ si et seulement si :
+(1) $\sigma$ est instancié sur les deux depuis la même spécification I, à la
+paramétrisation près ; (2) l’oracle — dérivé de I, mutualisé — est vert sur les deux ;
+(3) les verdicts des vecteurs de $\sigma$ sont équivalents ; (4) les différences de profil
+sont documentées dans frag-con de chaque bloc. La parité se \textbf{vérifie par
+exécution}, jamais par déduction : c’est le critère de sortie de M6 (inter-OS) et M7
+(inter-ISA). Aucune couche d’abstraction n’est introduite pour l’obtenir — un bytecode
+portable trahirait la fonction objectif Performance (rejet consigné, §\ref{sec:rejets}).

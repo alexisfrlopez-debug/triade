@@ -1,0 +1,106 @@
+--- edition-v0190/main.tex	2026-11-18 22:47:03.365518502 +0000
++++ edition-v0191/main.tex	2026-11-18 23:16:52.696484966 +0000
+@@ -1,6 +1,12 @@
+ % =====================================================================
+-%  TRIADE — édition académique v0.19.0 (manuscrit IMRAD, anglais)
+-%  L'édition v0.19.0 porte la clôture de la campagne d'extension D210
++%  TRIADE — édition académique v0.19.1 (manuscrit IMRAD, anglais)
++%  L'édition v0.19.1 est une ÉDITION DE COHÉRENCE INTER-PIÈCES née de la
++%  v0.19.0 (la clôture D210 portée inchangée) : la référence à la
++%  spécification courante (v0.13.0 → v0.15.1), les tailles des artefacts
++%  scellés passeur re-hachées aux octets livrés (61 952 / 102 390 o — les
++%  tailles v1 défaillantes étaient appariées aux hash v2+), les énoncés de
++%  timing matériel alignés sur les runs dudect SIGNÉS du 13/11. AUCUNE
++%  valeur mesurée n'est modifiée.
+ %  (le plan pré-enregistré 4a3b1311…, la graine 20261117, le tirage
+ %  public — le bras T d'abord aux quatre unités, une chance sur huit,
+ %  consigné tel quel) : les QUATRE unités closes (loupe-02 VERT,
+@@ -58,11 +64,11 @@
+ \usepackage{fancyhdr}
+ \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+             urlcolor=liaison, unicode=true,
+-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.19.0)},
++            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.19.1)},
+             pdfauthor={Alexis Lopez}]{hyperref}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.19.0}
++\fancyhead[L]{\small\itshape TRIADE — academic edition v0.19.1}
+ \fancyhead[R]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ 
+@@ -79,7 +85,7 @@
+ fourteen-unit two-arm field campaign, and two sealed applications}}
+ \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
+ Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
+-\date{19 November 2026 — Academic edition v0.19.0 (the D210 extension campaign closed and carried: four units at identical formats and randomized order, the fourth closed on its red at the delivery cap with three kit-side escapes in the shared judge, the piece never at fault; the empirical attribution tranchée on pieces --- the same C piece re-delivered through a minimal standard kit, 14 VERT 0 ROUGE; the H6--H8 verdicts explicit --- H6 holds by attribution, H7 untested on a draw that gave no contrast, H8 falsified as the corrective spiral declined; the M2/M3/M4 metrics consigned as filed, their gaps named; no measured value of the sealed v0.18.1 edition modified)}
++\date{19 November 2026 — Academic edition v0.19.1 (the D210 extension campaign closed and carried from v0.19.0: four units at identical formats and randomized order, the fourth closed on its red at the delivery cap with three kit-side escapes in the shared judge, the piece never at fault; the empirical attribution tranchée on pieces --- the same C piece re-delivered through a minimal standard kit, 14 VERT 0 ROUGE; the H6--H8 verdicts explicit --- H6 holds by attribution, H7 untested on a draw that gave no contrast, H8 falsified as the corrective spiral declined; the M2/M3/M4 metrics consigned as filed, their gaps named; this v0.19.1 is a cross-piece coherence pass --- the current specification reference, the re-hashed sealed-artifact sizes, the hardware-timing statements aligned with the signed 13 November runs; no measured value of the sealed v0.18.1 edition modified)}
+ 
+ \begin{document}
+ \maketitle
+@@ -339,7 +345,7 @@
+ 
+ The development loop itself (update an intention, re-derive the oracle,
+ edit the notation, rebuild, verify, seal) and the seal ceremony model are
+-described in the protocol specification v0.13.0, which this edition
++described in the protocol specification v0.15.1, which this edition
+ accompanies; we summarise only what the evaluation needs.
+ 
+ \paragraph{Governance: signed intent and append-only records.}
+@@ -1222,8 +1228,11 @@
+ named gap). Memory safety is enforced
+ only to the depth of the ABI audits and the fuzzing campaigns;
+ constant-time is verified \emph{structurally} (secret-independent
+-instruction traces in emulation) --- real-hardware timing remains
+-unmeasured. These limits are stated, not smoothed over; the companion
++instruction traces in emulation) and its real-hardware dudect timing is
++measured and signed (the runs of 13 November 2026,
++Section~\ref{sec:v150}; Tables~\ref{tab:preuves} and~\ref{tab:statuts})
++--- cache-timing and power side channels remain unmeasured. These limits
++are stated, not smoothed over; the companion
+ programmes of the two subsequent editions addressed several of them
+ directly (mutation testing, bounded memory safety and structural
+ constant-time in v0.11.0; the formal model of the vault chain in
+@@ -1491,10 +1500,14 @@
+ is \emph{boundedly} verified (2{,}098 accesses classified, zero
+ stack-smash, 463 named unresolved --- linear analysis, no alias
+ analysis): a bounded result, not a proof. Constant-time is verified
+-\emph{structurally} (secret-independent instruction traces); real-hardware
+-wall-clock behaviour, cache-timing and power side channels remain
+-UNMEASURED and are marked as not proven --- the v0.15.0 dudect kit is prepared
+-and waiting for the developer's run, and its laboratory autotest
++\emph{structurally} (secret-independent instruction traces) and its
++real-hardware dudect timing is measured (the kit ran twice on the
++developer's machine with dated, hand-signed witnesses, 13 November 2026;
++Section~\ref{sec:v150}, Tables~\ref{tab:preuves} and~\ref{tab:statuts});
++cache-timing and power side channels remain
++UNMEASURED and are marked as not proven --- the \code{fence.i} silicon kit
++and the third-machine Loupe run remain prepared and waiting for the
++developer's gesture, and a laboratory autotest
+ proves the mechanism only, never the machine. The unbounded proof of
+ the vault properties rests on an inductive argument whose
+ epoch-uniformity is structural (the rules compare the epoch only to
+@@ -1674,8 +1687,8 @@
+ is now precisely measured: the 56 mutation survivors in orchestration
+ blocks, the single-run scope of the measured hardware constant-time
+ result (the dudect kit ran twice, signed; more machines and samples
+-belong to the extension), the unmeasured real-hardware
+-timing that remains (the \code{fence.i} kit targets a physical RISC-V
++belong to the extension), the real-hardware
++timing still unmeasured (the \code{fence.i} kit targets a physical RISC-V
+ board; a third-machine Loupe run is likewise prepared), the missing
+ independent replication
+ (the T/X grid and the $\kappa$ calculator are ready; the second
+--- edition-v0190/donnees/tables_generees_v180.tex	2026-11-18 22:42:22.790330585 +0000
++++ edition-v0191/donnees/tables_generees_v180.tex	2026-11-18 23:16:52.969485099 +0000
+@@ -89,8 +89,8 @@
+ \toprule
+ \textbf{Artifact} & \textbf{Bytes} & \textbf{SHA-256 (first 16 hex)} \\
+ \midrule
+-\code{passeur.exe v0.2 (arm T)} & 57,856 & \code{4a7229e7418e8276\ldots} \\
+-\code{passeur-c.dll v0.2 (arm C)} & 97,937 & \code{fe4ddfc9842fb29b\ldots} \\
++\code{passeur.exe v0.2 (arm T)} & 61,952 & \code{4a7229e7418e8276\ldots} \\
++\code{passeur-c.dll v0.2 (arm C)} & 102,390 & \code{fe4ddfc9842fb29b\ldots} \\
+ \code{pilot EXE (installer)} & 99,285,377 & \code{34b9764131e3b3a5\ldots} \\
+ \code{pilot source v2} & 216,080 & \code{40d23f03fdaaf116\ldots} \\
+ \code{pilot post (all runs)} & 67,514 & \code{50f7bc86dcca67cc\ldots} \\

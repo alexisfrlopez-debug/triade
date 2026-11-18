@@ -1,0 +1,217 @@
+--- scripts/spec_v150/sec-a.tex	2026-11-18 22:31:45.940181958 +0000
++++ scripts/spec_v151/sec-a.tex	2026-11-18 23:31:07.502657983 +0000
+@@ -48,9 +48,11 @@
+ \medskip
+ 
+ Arbitrage lexicographique : un objectif n’est jamais sacrifié au profit d’un objectif de
+-rang inférieur. La v0.4.0 consigne cette hiérarchie comme \textbf{invariant de révision}
+-(D19) : aucune révision future du protocole ne peut la modifier sans invalider
+-explicitement le protocole entier — pas l’ordre, pas les rangs, pas la non-compensation.
++rang inférieur. La v0.4.0 consigna cette hiérarchie comme \textbf{invariant de révision}
++(D19) ; l’édition académique la \textbf{requalifia POLITIQUE DE PROJET EXPLICITE}
++(D182) — non un invariant de révision : la hiérarchie demeure la règle du projet
++(l’ordre, les rangs, la non-compensation), et le document le dit dans les termes de
++l’ingénierie.
+ 
+ \begin{table}[htbp]
+ \centering\small
+@@ -706,6 +708,25 @@
+ archivées (racine $\to$ \code{/ARCHIVE}, déplacement vérifié — la
+ racine du coffre ne porte que les versions courantes).
+ 
++\subsection{Ce que change la v0.15.1}\label{sec:nouveautes151}
++
++UNE ÉDITION DE COHÉRENCE INTER-PIÈCES (D218, la première instruction
++de la vague du 18/11 — 376f15f18) : AUCUNE règle modifiée, aucune
++couche ajoutée, aucun artefact scellé touché. Cinq réconciliations sur
++pièces, chacune sourcée : (a) le §\ref{sec:jalons} porte le douzième
++run VÉCU ET SCELLÉ (D181, l'Entrée 222 — la balise \code{loupe 0.1.1}
++scellée sur le run vert recoupé 39/39, l'état attendu est clos) ;
++(b) le §\ref{sec:objectif} dit la requalification D19 (D182) :
++POLITIQUE DE PROJET EXPLICITE, non invariant de révision ; (c) le
++§\ref{sec:sceauI} compte les QUATORZE arbres signés (D177 — l'arbre
++\code{loupe} entré à la table canonique) ; (d) l'annexe décisionnelle
++porte son titre réel D75--D198 (la table allait déjà à D198) ; (e) les
++budgets du §\ref{sec:carte} sont annotés HISTORIQUES (ère de
++conception, v0.3/D31) contre les mesures d'édition v0.17--v0.18
++(D195). La décision D218 (append-only) consigne les corrections et
++leur sourcement ; le linter inter-pièces confronte les valeurs
++partagées aux cinq pièces du pack à chaque build (D218).
++
+ \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
+ 
+ La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —
+@@ -875,7 +896,7 @@
+ 
+ \begin{table}[htbp]
+ \centering\small
+-\caption{Budgets en tokens par opération (localiser amendé à 64 tokens par D31 après la mesure M1 — le gabarit canonique v0.4.0 mesurait 43 tokens en cl100k\_base ; autres budgets inchangés depuis la v0.3).}
++\caption{Budgets en tokens par opération — valeurs HISTORIQUES de l'ère de conception (localiser amendé à 64 tokens par D31 après la mesure M1 — le gabarit canonique v0.4.0 mesurait 43 tokens en cl100k\_base ; autres budgets inchangés depuis la v0.3) ; les MESURES d'édition v0.17--v0.18 (D195 : localiser 580, éditer 2~143, ajouter 3~510) font foi pour l'état courant.}
+ \label{tab:budgets}
+ \begin{tabularx}{\textwidth}{@{}Y Y l@{}}
+ \toprule
+--- scripts/spec_v150/sec-cf.tex	2026-11-18 22:31:45.940181958 +0000
++++ scripts/spec_v151/sec-cf.tex	2026-11-18 23:31:11.521659034 +0000
+@@ -291,10 +291,11 @@
+ 
+ \subsection{Le sceau de l'Intention (D87)}\label{sec:sceauI}
+ 
+-Treize arbres de couche I vivent sous le sceau — les lignées m0 à m8 (le domaine
++Quatorze arbres de couche I vivent sous le sceau — les lignées m0 à m8 (le domaine
+ \code{sys} depuis l'ère M8), l'arbre \code{tls13} (le domaine TLS 1.3 pur depuis
+-l'ère M9), \code{demo}, \code{terrain}, et l'arbre des axes lui-mêmes
+-(\code{v06/I}) : la spécification qui définit le sceau est la première couche I
++l'ère M9), \code{demo}, \code{terrain}, l'arbre \code{loupe} (le domaine M10, entré
++à la table canonique par la cérémonie d'ère du TGN, D171/D177) et l'arbre des axes
++eux-mêmes (\code{v06/I}) : la spécification qui définit le sceau est la première couche I
+ qu'il garde. Chaque ère qui ouvre un arbre nomme sa dette de cérémonie à la
+ naissance (D166, règle 8) : le registre figé étendu et l'arbre neuf exigent la clé
+ hors-ligne avant tout build — la charge se prépare au geste qui sert la main du
+--- scripts/spec_v150/sec-d.tex	2026-11-18 22:31:45.940181958 +0000
++++ scripts/spec_v151/sec-d.tex	2026-11-18 23:33:19.830693815 +0000
+@@ -236,9 +236,12 @@
+ dérive du plan, jamais de la pièce qu'il contrôle ; l'échec nommé vaut plus que
+ le vert muet ; la vitrine vivante prouve la liaison mieux que toute sonde) — et
+ la balise \code{loupe 0.1.0} scellée sur le onzième run recoupé 39/39 : LA
+-CRÉATION A VÉCU CHEZ SON UTILISATEUR. La version \code{0.1.1-dev.1} (D179)
+-poursuit : la dette [R10-PÉRIMÉE] soldée à la naissance, le douzième run attendu
+-scellera la balise \code{loupe 0.1.1} sur le vert recoupé.
++CRÉATION A VÉCU CHEZ SON UTILISATEUR. La version \code{0.1.1} (D179, D181)
++suit : la dette [R10-PÉRIMÉE] soldée à la naissance, LE DOUZIÈME RUN VÉCU ET
++SCELLÉ (l'Entrée 222) — la balise \code{loupe 0.1.1} scellée sur le vert
++recoupé 39/39 (T0$\to$T7 tout vert, la cascade 205, la vitrine vivante
++0 et 0), la version de maintenance à contrat stable, l'ère ouverte et
++refermée le même jour.
+ 
+ \paragraph{Le programme d'après M7 (D160).} La clôture v0.6.1 tenait les additions
+ mesurées « hors périmètre courant » ; la v0.7.0 lève la clause pour les deux
+@@ -975,9 +978,11 @@
+ AILLEURS — le code BYTE-IDENTIQUE au vécu des onze runs (R4/R7) ; la carte
+ GÉNÉRATION 17 ; le kit \code{0.1.1-dev.1} DÉPOSÉ au coffre \code{/test}
+ (loupe-kit-13, le réceptacle ARMÉ). \\
+-LE DOUZIÈME RUN ATTENDU & LE MÊME CRITÈRE que le onzième (le scénario ENTIER
+-T0 $\to$ S0 $\to$ LA LIAISON ET la vitrine vivante) — si le vert tient : LA
+-BALISE \code{loupe 0.1.1} SCELLÉE sur run terrain recoupé (le miroir D165/D170 :
++LE DOUZIÈME RUN VÉCU ET SCELLÉ (D181, l'Entrée 222) & LE MÊME CRITÈRE que le
++onzième (le scénario ENTIER
++T0 $\to$ S0 $\to$ LA LIAISON ET la vitrine vivante) — LE VERT TINT : LA
++BALISE \code{loupe 0.1.1} SCELLÉE sur le run terrain recoupé 39/39 (le miroir
++D165/D170 :
+ la porte est de processus, jamais de console). \\
+ \end{tabularx}
+ \end{table}
+@@ -1302,14 +1307,22 @@
+ D202 (le reclassement des défauts Loupe par côté), D203 (la révision
+ manuscrit+spécification : les pourcentages du benchmark reformulés sans
+ ambiguïté, les ratios RQ2 recalculés, le quantile unifié à 1,86σ, les
+-résidus d'édition purgés, la grille de réplication renommée F/L). La v0.9.0 avait
++résidus d'édition purgés, la grille de réplication renommée F/L). La
++v0.15.1 est L'ÉDITION DE COHÉRENCE INTER-PIÈCES (D218, la vague
++d'instructions du 18/11) : AUCUNE règle modifiée — le douzième run
++VÉCU ET SCELLÉ porté au §\ref{sec:jalons} (D181, l'Entrée 222), la
++requalification de D19 en politique de projet (D182), les QUATORZE
++arbres signés au §\ref{sec:sceauI} (D177), le titre réel de l'annexe
++décisionnelle (D75--D198), les budgets du §\ref{sec:carte} annotés
++HISTORIQUES contre les mesures v0.17--v0.18 (D195). La v0.9.0 avait
+ consolidé le programme d'après M10 : D177 (la cérémonie d'ère du TGN
+ armée — le quatorzième arbre), D178 (LE JALON M10 FRANCHI — la balise
+ \code{loupe 0.1.0} scellée par fait de carte sur le onzième run recoupé 39/39,
+ la dette de la carte soldée par la régénération des notations, la méthode TRIADE
+ entière prouvée par la CRÉATION), D179 (la version \code{0.1.1-dev.1} commandée
+-— la dette [R10-PÉRIMÉE] soldée à la naissance, le douzième run attendu) et
+-D180 (la présente consolidation). Sous elle, la série de terrain v0.8.1–v0.8.4
++— la dette [R10-PÉRIMÉE] soldée à la naissance), D180 (la présente
++consolidation) et D181 (LA BALISE \code{loupe 0.1.1} SCELLÉE SUR LE DOUZIÈME
++RUN VERT RECOUPÉ — la version de la dette soldée, l'Entrée 222). Sous elle, la série de terrain v0.8.1–v0.8.4
+ consigne les enseignements des runs un à un ; la v0.8.0 consolide le programme
+ d'après M9 : D170 (le jalon M9 franchi — la finale \code{1.0.0} scellée sur le
+ recoup exigé comme pièce, la session réelle la ligne applicative chiffrée),
+@@ -1506,7 +1519,7 @@
+ \end{tabularx}
+ \end{table}
+ 
+-\section{Tableau décisionnel du coffre-fort (D75--D184)}\label{sec:annexedecisions}
++\section{Tableau décisionnel du coffre-fort (D75--D198)}\label{sec:annexedecisions}
+ 
+ Le journal complet vit dans \code{docs/DECISIONS.md} ; les entrées ci-dessous sont
+ celles qui touchent le coffre, sa garde et ses cérémonies — une ligne chacune, la
+@@ -1650,13 +1663,15 @@
+ vérité des blocs, le qword porté, 0 octet de code changé (R4/R7) ; la carte
+ génération 17 ; l'anti-rollback ouvert à LA MONOTONIE R10 (la version
+ strictement supérieure ouvre l'ère, jamais elle ne referme l'ancienne) ; le kit
+-\code{0.1.1-dev.1} au coffre \code{/test} — LE DOUZIÈME RUN ATTENDU, la balise
+-\code{loupe 0.1.1} sur le vert recoupé. \\
++\code{0.1.1-dev.1} au coffre \code{/test} — LE DOUZIÈME RUN VÉCU ET SCELLÉ
++(D181, l'Entrée 222) : la balise \code{loupe 0.1.1} sur le vert recoupé
++39/39. \\
+ D180 & La consolidation v0.9.0 & le programme d'après M10 entre en
+ spécification : M10 franchi (la balise \code{loupe 0.1.0} scellée sur le
+ onzième run recoupé — la méthode TRIADE entière prouvée par la CRÉATION), la
+ version \code{0.1.1-dev.1} commandée (la dette [R10-PÉRIMÉE] soldée à la
+-naissance), le douzième run attendu ; le projet fils COFFRE-FORT demeure
++naissance), le douzième run vécu et scellé (D181, l'Entrée 222) ; le projet
++fils COFFRE-FORT demeure
+ dégelable au rythme du développeur. \\
+ D181 & La balise \code{loupe 0.1.1} scellée & LE DOUZIÈME RUN recoupé 39/39
+ (T0$\to$T7 tout vert la cinquième fois, la cascade 205 la deuxième, LA
+--- scripts/spec_v150/cover.html	2026-11-18 22:31:45.932181955 +0000
++++ scripts/spec_v151/cover.html	2026-11-18 23:34:27.043718613 +0000
+@@ -57,7 +57,7 @@
+   <div class="cover">
+     <div class="vline"></div>
+     <div class="content">
+-      <div class="label">Sp&eacute;cification technique &middot; Version 0.15.0</div>
++      <div class="label">Sp&eacute;cification technique &middot; Version 0.15.1</div>
+       <div class="title">Protocole TRIADE&nbsp;: gouvernance v&eacute;rifiable du d&eacute;veloppement logiciel assist&eacute; par IA</div>
+       <div class="subtitle">
+         Consolidation du programme d&rsquo;apr&egrave;s M10 (D178/D179)&nbsp;: LE JALON M10
+@@ -65,8 +65,9 @@
+         m&eacute;thode&nbsp;: onze runs terrain, onze d&eacute;fauts nomm&eacute;s, onze retouches
+         document&eacute;es, LA VITRINE VIVANTE chez son utilisateur — la balise
+         loupe&nbsp;0.1.0 scell&eacute;e sur le onzi&egrave;me run recoup&eacute; (fait de carte,
+-        l&rsquo;artefact intact). La version 0.1.1-dev.1 command&eacute;e&nbsp;: la dette
+-        [R10-P&Eacute;RIM&Eacute;E] sold&eacute;e &agrave; la naissance, le douzi&egrave;me run attendu.
++        l&rsquo;artefact intact). La version 0.1.1 (D179, D181)&nbsp;: la dette
++        [R10-P&Eacute;RIM&Eacute;E] sold&eacute;e &agrave; la naissance, LE DOUZI&Egrave;ME RUN V&Eacute;CU ET
++        SCELL&Eacute; (D181) — la balise loupe&nbsp;0.1.1 sur le vert recoup&eacute; 39/39.
+         M0&ndash;M10 franchis. Hi&eacute;rarchie inchang&eacute;e&nbsp;: S&eacute;curit&eacute; &gt;
+         Performance &gt; Optimisation &gt; Co&ucirc;t en tokens.
+       </div>
+@@ -74,8 +75,8 @@
+       <div class="institution">Projet TRIADE &mdash; d&eacute;veloppement agent-first<br>
+         Souverainet&eacute; cryptographique &middot; coffre-fort CF1&nbsp;&rarr;&nbsp;CF3 &middot; sceau de l&rsquo;Intention &middot; c&eacute;r&eacute;monies et kit du terrain&nbsp;: jalons M0&ndash;M10</div>
+       <div class="footer">
+-        <span>Document normatif &middot; s&eacute;rie TRIADE &middot; r&eacute;vision v0.15.0 (les corrections de l'&eacute;dition)</span>
+-        <span>11 novembre 2026</span>
++        <span>Document normatif &middot; s&eacute;rie TRIADE &middot; r&eacute;vision v0.15.1 (l'&eacute;dition de coh&eacute;rence inter-pi&egrave;ces)</span>
++        <span>19 novembre 2026</span>
+       </div>
+     </div>
+   </div>
+--- scripts/spec_v150/main.tex	2026-11-18 22:31:45.939181957 +0000
++++ scripts/spec_v151/main.tex	2026-11-18 23:31:58.677670483 +0000
+@@ -1,5 +1,5 @@
+ % =====================================================================
+-%  PROTOCOLE TRIADE v0.15.0 — Manuscrit de spécification
++%  PROTOCOLE TRIADE v0.15.1 — Manuscrit de spécification
+ %  Corps du document : Tectonic via pdf.py convert.latex.
+ %  Couverture générée séparément (cover.html, Template 03) et fusionnée
+ %  en amont — AUCUNE page de titre ici. Le sommaire est la première page
+@@ -100,7 +100,7 @@
+ \usepackage{fancyhdr}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape Protocole TRIADE — spécification v0.15.0}
++\fancyhead[L]{\small\itshape Protocole TRIADE — spécification v0.15.1}
+ \fancyfoot[C]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ 
+@@ -117,7 +117,7 @@
+             unicode=true]{hyperref}
+ 
+ \hypersetup{
+-  pdftitle={Protocole TRIADE v0.15.0 — spécification technique},
++  pdftitle={Protocole TRIADE v0.15.1 — spécification technique},
+   pdfauthor={Alexis FR-LOPEZ ; Agent Z.ai (GLM)},
+   pdfsubject={Gouvernance vérifiable du développement logiciel assisté par IA},
+   pdfkeywords={TRIADE, agent-first, contrat, vérification, gouvernance, profils, souveraineté cryptographique, coffre-fort}
