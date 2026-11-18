@@ -1,0 +1,69 @@
+LISEZMOI-RUN-UNITE16-D210-1CLIC-V2 — LE RUN DE L'UNITÉ 04 D210,
+RÉVISION 2 (LOUPE-16 SAISIE × BRAS T) EN UN CLIC · L'ATELIER CHOISI PAR
+CONSTRUCTION · LE CORRECTIF DU REFUS NOMMÉ
+=========================================================================
+
+L'OBJET DE CETTE RÉVISION : le run v1 du 18/11 12:12 REFUSA (fail-closed,
+code 2, 0,2 s — rien ne courut) : « [REFUS] RVA-HORS-SECTIONS : la RVA 0x0
+hors des sections — RIEN ne court, le guichet ferme ». Le dépôt du refus
+reçU et reCOUPÉ au labo (la console, l'état, la session, la capture — le
+refus est AUSSI un témoin, TEL QUELLE) ; la faute nommée sur pièces : le
+guichet du scénario lisait le descripteur d'imports à QUATRE champs (le
+champ +8 ForwarderChain — la valeur 0 — lu comme la RVA du nom : LA RVA
+0x0 DU REFUS) et marchait l'OFT (le pas de dword de la famille) au lieu
+des PLAGES FIRSTTHUNK (la doctrine D54 : le chargeur marche les plages
+jusqu'au NULL, chaque entrée sur disque == le RVA hint/nom de SA feuille).
+LE CORRECTIF, CONFINÉ AU GUICHET : le descripteur aux CINQ champs (le
+précédent de la 304), la marche des plages FT, ET la 4e feuille
+GetLastError (le chemin d'échec de loupe-02 : les jz de la relecture
+atterrissent au -6 PAR GetLastError — la feuille morte liée AVANT le
+premier échec réel). LES VECTEURS INTACTS au byte près (la parité AST :
+le modèle, les V1-V5, le témoin — IDENTIQUES) ; les DOUZE autres pièces
+INCHANGÉES octet pour octet ; la gravure regénérée d'UNE SEULE ligne (le
+scénario). L'ÉPREUVE QUI MANQUAIT NÉE : la découverte du guichet rejouée
+au labo contre le fichier livré — CONTRE le v1 : ROUGE, le refus
+RECONSTITUÉ mot pour mot ; CONTRE le v2 : TOUT VERT (les QUATRE feuilles
+aux slots QUE les notations appellent : SetFilePointerEx 0x3128, ReadFile
+0x3130, GetLastError 0x3148, InvalidateRect 0x31a0).
+
+LE GESTE DU RE-RUN : DÉZIPPEZ CE KIT (kit-unite-04-d210-20261118-v2/,
+une extraction FRAÎCHE — jamais le dossier v1 réutilisé) puis
+DOUBLE-CLIQUEZ LANCER-RUN-UNITE16-D210-1CLIC.bat seul (SmartScreen peut
+demander « Plus d'informations → Exécuter quand même » — le .bat est
+signé de RIEN, c'est l'honnêteté). LE GUI exige Python 3 avec tkinter.
+
+À L'ONGLET 4·LIVRE : CHOISIR LE DOSSIER DE L'ATELIER (le dossier local
+des QUATRE registres du livre, reçu du coffre /test — L'ATELIER CHOISI
+PAR CONSTRUCTION : la ligne M1 au verdict RECOPIÉ et la ligne M3 aux
+bornes OBSERVÉES appendées DURANT le run ; defauts.csv et
+journal-ouverture.txt JAMAIS touchés ; l'atelier re-déposé au coffre
+demeure VOTRE geste), puis TOUT LANCER.
+
+L'ATTENDU DU RE-RUN : les NEUF verdicts VERT (9 VERT, 0 ROUGE, code 0) —
+T0 la pièce recoupée, [guichet] les QUATRE feuilles liées, V1 le
+différentiel 10 000 frappes, V2 le scénario « 4d5a » ET la vue qui suit,
+V3 les rejets, V4 le repli, V5 la falsification. Puis : le témoin daté
+signé de votre main [D99], preuves-unite16/ au coffre /test (le GUI
+assemble le zip — la signature exigée).
+
+AU LIVRE, AU BLOC-NOTES (la chirurgie prescrite — le livre ne ment
+jamais : le run v1 a couru) : ① la ligne T-loupe-16-d210-it1 ROUGE (le
+kit v1, le run 2026-11-18 REFUS nommé) posée à la main à livraisons.csv ;
+② le défaut à defauts.csv (l'onglet 6·DÉFAUTS : la classe
+« guichet-descripteur-quatre-champs », le mécanisme « le champ +8 lu
+comme la RVA du nom — la RVA 0x0 ; la marche de l'OFT au lieu des plages
+FT (D54) ; la 4e feuille GetLastError non liée », le côté « kit », la
+pièce à l'appui run-console-unite16-d210-20261118-121219.txt, l'exclusion
+« non — la faute au kit voyagée jusqu'au terrain, le run consommé,
+D202 ») ; ③ l'atelier ENTIER re-déposé. Le re-run v2 couchera la ligne
+T-loupe-16-d210-it2 au livre DURANT le run.
+
+LE KIT v1 DEMEURE AU COFFRE (D143 : le dépôt du refus jamais recouvert —
+un refus est aussi un témoin).
+
+LES EMPREINTES : EMPREINTES-GUI-UNITE16-D210-1CLIC-V2.txt (le GUI et ses
+livres + les QUATORZE pièces du kit, chaque sha256 ; certutil -hashfile
+chez vous recoupe).
+
+(18/11/2026, la session du correctif — le refus nommé, l'épreuve née,
+le guichet remis à la doctrine du plan)

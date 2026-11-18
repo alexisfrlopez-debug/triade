@@ -1,0 +1,20 @@
+LE RUN DE L'UNITÉ 04 D210 (LOUPE-16 SAISIE × BRAS T) — début le 18/11/2026 14:09:03
+l'argv exact : C:\Users\admin\AppData\Local\Programs\Python\Python314\python.exe scenario-unite16.py
+============================================================
+=== LE RUN DE L'UNITÉ 04 D210 (loupe-16 saisie × bras T) — la campagne D210, le terrain du développeur ===
+[VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit
+[T0] l'image cartographiée DONT_RESOLVE @ 0x7ff734700000
+Traceback (most recent call last):
+  File "D:\Downloads\kit-unite-04-d210-20261118-v2\scenario-unite16.py", line 633, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "D:\Downloads\kit-unite-04-d210-20261118-v2\scenario-unite16.py", line 400, in main
+    lier_feuilles(base)
+    ~~~~~~~~~~~~~^^^^^^
+  File "D:\Downloads\kit-unite-04-d210-20261118-v2\scenario-unite16.py", line 269, in lier_feuilles
+    ctypes.memmove(adresse, struct.pack("<Q", proc))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: this function takes at least 3 arguments (2 given)
+============================================================
+la durée : 0.4 s — fin le 18/11/2026 14:09:03
+le code retour : 1

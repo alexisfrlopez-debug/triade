@@ -1,0 +1,13 @@
+=== L'ÉPREUVE DE LA LIAISON — CONTRE LE v2 (kit-unite-04-d210-20261118-v2) ===
+[ROUGE] L4:l-audit-d-arite — memmove à 2 arguments ligne 269 (memmove ×7, memset ×4, string_at ×9)
+[ROUGE] L4:la-liaison-eprouvee — le TypeError RECONSTITUÉ « this function takes at least 3 arguments (2 given) » — IDENTIQUE mot pour mot à la console du terrain
+    reconstitué : TypeError: this function takes at least 3 arguments (2 given)
+    terrain     : TypeError: this function takes at least 3 arguments (2 given)
+[VERDICT v2] 0 VERT, 2 ROUGE — LE CRASH RECONSTITUÉ, L'ÉPREUVE QUI MANQUAIT
+
+=== L'ÉPREUVE DE LA LIAISON — CONTRE LE v3 (kit-unite-04-d210-20261118-v3) ===
+[VERT] L4:l-audit-d-arite — chaque appel porte son compte (memmove ×7, memset ×4, string_at ×9)
+[VERT] L4:la-liaison-eprouvee — les 4 feuilles ÉCRITES par le memmove du fichier même, RELUES par son string_at, l'égalité recoupée — « [guichet] les QUATRE feuilles liées par la table d'imports :… »
+[VERDICT v3] 2 VERT, 0 ROUGE — TOUT VERT
+
+[BILAN] v2 : 0 VERT 2 ROUGE — l'épreuve qui aurait arrêté la faute AVANT le terrain ; v3 : 2 VERT 0 ROUGE

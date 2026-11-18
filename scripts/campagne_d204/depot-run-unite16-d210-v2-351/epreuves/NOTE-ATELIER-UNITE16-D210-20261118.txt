@@ -1,0 +1,52 @@
+NOTE-ATELIER — LE GUI DE L'UNITÉ 04 D210 NAÎT AVEC L'ATELIER CHOISI
+(la campagne D210 — la frontière PORTÉE PAR CONSTRUCTION, 20261118)
+=====================================================================
+
+LE COMMANDEMENT, verbatim : « pour les GUI test, tu peux faire en sorte
+que je puisse choisir le dossier de l'atelier afin que le livre se
+mette a jour durant le run ? ».
+
+CE QUE CE COMMANDEMENT DEMANDE : au GUI de campagne, le dossier local
+de l'atelier (les QUATRE registres du livre du terrain) CHOISI par le
+développeur à l'onglet 4·LIVRE — et LE LIVRE MIS À JOUR DURANT LE RUN :
+la ligne M1 (livraisons.csv, le verdict RECOPIÉ) et la ligne M3 (le
+carnet, les bornes OBSERVÉES) appendées par le GUI lui-même, à l'atelier
+choisi, pendant que le run vit — jamais en retard.
+
+L'ÉDITION QUI L'HONORE — ICI PAR CONSTRUCTION : le commandement fut
+honoré à l'unité 03 par l'édition v2 (l'Entrée 347 : le kit v1 JAMAIS
+couru, seul le GUI monta) PUIS VÉCU au terrain (l'Entrée 348 : la ligne
+M1 T-loupe-13-d210-it1 couchée DURANT le run, la première fois de la
+campagne). LA PRÉSENTE UNITÉ NAÎT AVEC : le GUI de l'unité 04 EST
+l'édition atelier dès sa naissance — AUCUNE édition v1 sans lui ne
+vivra jamais, la frontière est UN FAIT DE CONSTRUCTION (le kit
+kit-gui-1clic-unite16-d210-20261118.zip est LA première et seule
+édition).
+
+LA FRONTIÈRE M3, PORTÉE : le GUI couche les bornes OBSERVÉES (le clic
+TOUT LANCER → la fin de collecte, l'arrondi à la minute jamais sous 1,
+la date du début, la note NOMME l'ancre) — votre main demeure pour
+l'honnête borne (D189 : le temps humain à l'auteur du geste ; le labo
+ne fabrique JAMAIS une ligne de mesure).
+
+LES FRONTIÈRES QUI NE BOUGENT PAS : D99 (le témoin daté signé de votre
+main, jamais automatisé) ; D202 (les défauts nommés AVANT correction,
+defauts.csv au geste) ; journal-ouverture.txt (l'ouverture scellée du
+14/11, lu seulement) ; le coffre (l'atelier re-déposé = votre geste) ;
+le REJOUER diagnostique ne couche JAMAIS la ligne (l'itération ne se
+consomme qu'au run officiel).
+
+L'HONNÊTETÉ DES MESURES : le selftest 27 VERT (les contrôles T13-T18
+de l'atelier : le verrou des QUATRE registres, le BOM refusé, le CR au
+registre ÉCRIT refusé, les lignes M1/M3 nées du run, le doublon
+refusé, l'atelier divergent refusé) ; l'épreuve fonctionnelle au labo
+(le run substitué, les lignes couchées byte-byte à l'atelier simulé
+aux registres RÉELS du coffre — la sonde du jour) ; la fumée Xvfb (le
+bloc ATELIER à l'onglet 4·LIVRE) ; l'épreuve du zip dézippé.
+
+LA CONSIGNATION : la présente note vit au kit ; l'Entrée qui reçoit le
+run terrain la lira à la réception. La ligne attendue au livre après
+le run : T-loupe-16-d210-it1 (bras T, l'itération 1, le verdict RECOPIÉ
+de la console).
+
+(18/11/2026, la session de la construction)

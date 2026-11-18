@@ -1,0 +1,28 @@
+{
+ "contexte": {
+  "console": "D:\\Downloads\\kit-unite-04-d210-20261118-v2\\run-console-unite16-d210-20261118-140903.txt",
+  "argv": [
+   "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+   "scenario-unite16.py"
+  ],
+  "debut": "18/11/2026 14:09:03",
+  "fin": "18/11/2026 14:09:03",
+  "duree_s": 0.4,
+  "code": 1,
+  "n_vert": 1,
+  "n_rouge": 0,
+  "verdicts": [
+   [
+    true,
+    "T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256 b382e01b76333a16… == la gravure du kit"
+   ]
+  ],
+  "ligne_témoin": "",
+  "rouge_ok": false
+ },
+ "etapes": {
+  "run": true
+ },
+ "livraisons": 0,
+ "atelier": "D:/Downloads/Runs Triade/test/TRIADE_gui_tous_runs_v1/atelier-campagne-d204-20261114-013520"
+}

@@ -1,0 +1,12 @@
+GRAINE-D210 — la graine de la campagne D210 (consignée AVANT la première mesure, D217)
+CONTENU CONSIGNÉ (l'Entrée 335, le worklog — la pièce originale vive à
+l'atelier d'origine, PERDUE au recyclage du bac entre les sessions ; la
+graine ELLE-MÊME demeure SCELLÉE par sa consignation D217 au journal des
+décisions — JAMAIS re-tirée, la présente est la RECOPIE de la
+consignation, pas un nouveau tirage) :
+  - la date du commandement : 20261117
+  - le générateur : python3 random.Random (consigné)
+  - LA SÉQUENCE TIRÉE PUBLIQUEMENT : loupe-02 le bras T d'abord,
+    loupe-08 le bras T d'abord, loupe-13 le bras T d'abord, loupe-16 le
+    bras T d'abord — le tirage honnête, quatre fois le même bord arrive
+    une fois sur huit, consigné tel quel, JAMAIS re-tiré.

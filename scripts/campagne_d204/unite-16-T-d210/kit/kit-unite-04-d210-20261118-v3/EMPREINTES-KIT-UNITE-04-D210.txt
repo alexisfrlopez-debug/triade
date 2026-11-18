@@ -1,0 +1,20 @@
+EMPREINTES — LE KIT DE L'UNITÉ 04 D210, RÉVISION 3 (loupe-16 saisie × bras
+T — le correctif du crash nommé : la liaison memmove au TROISIÈME argument
+(le compte 8, l'arité des DOUZE autres appels du fichier) ; LES TREIZE
+AUTRES PIÈCES INTACTES octet pour octet — la gravure regénérée d'UNE SEULE
+ligne, le scénario)
+(chaque pièce sha256 — le scénario recoupe la pièce à la gravure ; une divergence, rien ne court)
+
+c62a304f1df0d88882e03edecc8a9498e60bc6db293010775a9238eedcdc6673  GRAINE-D210.txt
+f336c766685a803bda47e35c1790ea07b5c20bf9279777f3bfb5fac12a7706f9  LANCEUR-UNITE-16-T.bat
+9edc6d53f2ff95ac16ff09a57cfdf69d70dc5e9f97e4581d075685a0e10406e2  LISEZMOI-KIT-UNITE-04-D210.txt
+d452ae13c7a7a43b58becc9270582c59d3f9d100cb10696497882113844183e2  brouillon-loupe-16-saisie.asm
+bf9937b18fa6990c61989b22eb98d2975c703c58a508f3ea2700a23edf48f983  journal-tokens-d210.jsonl
+f221ccef487a5e2f9e5a22052b6b79756e9565dc15e31e3cbb82cc9cc2065de3  garde-brut-d210.jsonl
+b382e01b76333a161e9731d72c290f769ad77b52bb7a3e8ffb3cd399b4ef5b20  loupe.exe
+deee18fef56e6be1dce36a7697efc79e7e330e2b65ff3291849bbe88f2eeedf8  notation-loupe-16-saisie.asm
+446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d  proxy.exe
+71dca8b19ca94c043588c760d415df3031fcc5b6d5c27a8ec7d0c43405510176  scenario-unite16.py
+892ef03e7a960a73e75bf08cf11622a1cc14c20426ec5fb2208d59a8d8741da4  source-loupe-16-C.c
+c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3  temoin-3f.bin
+098b0879041b6e0f3e4f4b316585765a1bcec491f1668c0d7aa76a2181d9e8ec  tests-loupe-16-C.md

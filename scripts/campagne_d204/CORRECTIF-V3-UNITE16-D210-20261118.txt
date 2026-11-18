@@ -1,0 +1,117 @@
+CORRECTIF-V3-UNITE16-D210-20261118 — LE CORRECTIF DU CRASH NOMMÉ
+(l'unité 04 D210, loupe-16 saisie × bras T — le kit v3 livré au /test :
+kit-gui-1clic-unite16-d210-v3-20261118.zip ; les kits v1 et v2 DEMEURENT
+au coffre, D143 : les dépôts des refus sont des témoins)
+================================================================================
+
+LE CRASH (telle quelle — la console du terrain, reçue au coffre
+kit-unite-04-d210-20261118-v2/) :
+
+  [VERT] T0:la-piece-recoupee-a-l-empreinte-gravee — loupe.exe sha256
+  b382e01b76333a16… == la gravure du kit
+  [T0] l'image cartographiée DONT_RESOLVE @ 0x7ff734700000
+  Traceback (most recent call last):
+    File "…\scenario-unite16.py", line 269, in lier_feuilles
+      ctypes.memmove(adresse, struct.pack("<Q", proc))
+  TypeError: this function takes at least 3 arguments (2 given)
+
+  le run : 18/11/2026 14:09:03 → 14:09:03 (0,4 s), code retour 1 —
+  T0 VERT, la pièce INTACTE, le guichet DÉCOUVERT (le correctif v2
+  PORTA : le refus RVA-HOURS-SECTIONS est PARTI), puis la chute à la
+  LIAISON. AUCUN fichier modifié : l'écriture visait la mémoire de
+  l'image mappée — et le TypeError précéda TOUTE écriture (l'analyse de
+  l'appel échoue avant le geste, la PREMIÈRE feuille jamais touchée) ;
+  le témoin jamais né, preuves-unite16/ jamais né ; le GUI s'arrêta
+  NOMMÉ (« le réceptacle preuves-unite16/ est ABSENT — le scénario n'a
+  pas fini son geste »). Le dépôt reçu TEL QUELLE. C'EST FAIT.
+
+LA FAUTE NOMMÉE (sur pièces — l'autopsie au labo, la classe
+« liaison-memmove-deux-arguments » ; le côté « kit », l'exclusion
+« non » : la faute au kit VOYAGÈE jusqu'au terrain, le run fut
+consommé, D202) :
+
+  ① LA LIGNE 269 — memmove(adresse, struct.pack("<Q", proc)) : DEUX
+     arguments (dst, src), le COMPTE manquant. L'écriture d'un pointeur
+     de feuille IAT exige memmove(dst, src, 8) — huit octets, la
+     largeur du slot qword. L'appel à deux arguments lève TypeError
+     AVANT tout geste — la PREMIÈRE feuille jamais écrite, la page
+     laissée RW par le VirtualProtect de la même itération meurt avec
+     le processus (le crash ferme la session, rien ne survit).
+
+  ② L'ARITÉ CONTRAIRE DES DOUZE AUTRES APPELS DU FICHIER — l'audit
+     d'arité du scénario livré : memmove ×7, memset ×4, string_at ×9 ;
+     chaque appel porte son compte (les memmove des zones, les memset
+     de la saisie et du journal, les poses du cadre, les relectures)
+     SAUF la ligne 269. La forme correcte était DÉJÀ LÀ, dans le
+     fichier même : six frères memmove à trois arguments — la ligne
+     fautive est la seule de son espèce.
+
+  ③ LA LIGNE NÉE DU CORRECTIF v2 — le bloc de liaison fut réécrit à la
+     révision 2 (le guichet aux CINQ champs, la marche des plages FT) :
+     la ligne fautive naquit de CETTE réécriture. Et l'épreuve du
+     guichet — née le même jour à la 350 — n'éprouvait que la
+     DÉCOUVERTE : « la plomberie du guichet, Windows-seule à
+     lier_feuilles, n'avait JAMAIS couru au labo », nommait la 350 —
+     l'épreuve s'arrêta au parse ; la LIAISON (le memmove, la
+     re-protection, la relecture) demeura épargnée. La preuve
+     reconstituée au labo : le bloc de liaison du scénario livré
+     exécuté VERBATIM par AST au contexte neutre (un vrai tampon pour
+     les adresses, les gestes Windows neutralisés au contexte seul, le
+     memmove et la relecture string_at RÉELS) — le TypeError
+     RECONSTITUÉ IDENTIQUE MOT POUR MOT à la console du terrain.
+
+LE CORRECTIF (D'UN SEUL ARGUMENT — la parité AST nommée) :
+  scenario-unite16.py 705951cc… → 71dca8b1… — la ligne 269 porte
+  le compte : memmove(adresse, struct.pack("<Q", proc), 8) — huit
+  octets, l'arité de ses six frères. LES VECTEURS INTACTS au byte
+  près : la parité AST (les ONZE autres fonctions IDENTIQUES —
+  m_journal_seconde, m_vue_suit, fenetre_editee, Zones, main, ra_of,
+  les constantes ; dans lier_feuilles, UNE SEULE ligne changée sur
+  100 — la ligne de la liaison, nommée à l'épreuve). LA GRAVURE
+  regénérée (415f50ab… — l'en-tête de révision + la ligne du
+  scénario) ; LES TREIZE AUTRES PIÈCES inchangées octet pour octet
+  (recoupées au staging v2 AVANT la copie : 13/13, dont la
+  NOTE-ATELIER reconduite ; 12/12 == le v1 aussi).
+  LE GUI v2.0.1 → v2.0.2 (la chirurgie nommée — le verrou du GUI
+  grave les sha256 en dur : les DEUX empreintes changées, le scénario
+  et la gravure ; LES DOUZE autres entrées du verrou inchangées) — le
+  selftest 27 VERT 0 ROUGE, conduit AUSSI par le GUI dézippé du zip
+  livré, le verrou recoupé 14/14 contre le dossier extrait.
+
+L'ÉPREUVE QUI MANQUAIT — NÉE (epreuve_liaison_unite16.py, tenue au
+bac contre CHAQUE scénario livré à guichet, AVEC l'épreuve de la
+découverte) : LA QUATRIÈME LOI — L4 LA LIAISON ÉPOUVÉE : le bloc de
+liaison (du « for cle in voulues » au consigne final) EXÉCUTÉ
+VERBATIM au contexte neutre — chaque feuille ÉCRITE par le memmove du
+fichier même, RELUE par son string_at, l'égalité recoupée ; l'appel
+d'une mauvaise arité est un ROUGE NOMMÉ au premier geste. ET
+L'AUDIT D'ARITÉ : chaque memmove/memset/string_at du scénario porte
+son compte (memmove 3, memset 3, string_at 2).
+  CONTRE LE v2 : ROUGE ×2 — l'audit nomme la ligne 269 (memmove à 2
+  arguments), l'exécution RECONSTITUE le TypeError IDENTIQUE mot pour
+  mot (« this function takes at least 3 arguments (2 given) » == la
+  ligne de la console du terrain). CONTRE LE v3 : TOUT VERT — les
+  QUATRE feuilles écrites, relues, l'égalité recoupée, le consigne du
+  guichet rendu.
+
+LA CAP M1 (le plan D204, § 7 — nommée dès la livraison) : TROIS
+livraisons par bloc, l'arrêt au premier vert recoupé, la censure sans
+exclusion. Le v3 EST LA TROISIÈME livraison du bloc de l'unité 04
+(v1, v2, v3) : la cap est ATTEINTE — si le re-run v3 ne venait pas
+vert, l'unité 04 se consignerait CLOSE SUR SON ROUGE (la censure sans
+exclusion : le résultat demeure, rien ne se masque).
+
+LE RE-RUN (le geste prescrit — le guide du kit v3,
+LISEZMOI-RUN-UNITE16-D210-1CLIC-V3.txt) : une extraction FRAÎCHE du
+zip v3, LANCER-RUN-UNITE16-D210-1CLIC.bat, CHOISIR LE DOSSIER DE
+L'ATELIER, TOUT LANCER — l'attendu : [guichet] les QUATRE feuilles
+liées, les NEUF verdicts VERT (9 VERT 0 ROUGE code 0), le témoin daté
+signé de votre main [D99], preuves-unite16/ au coffre — la ligne
+T-loupe-16-d210-it3 au livre DURANT le run. AU LIVRE AUSSI (le
+bloc-notes, la chirurgie prescrite — le livre ne ment jamais : le run
+v2 a couru) : la ligne T-loupe-16-d210-it2 ROUGE à livraisons.csv et
+le défaut à defauts.csv (nommé ci-dessus), l'atelier re-déposé.
+
+(18/11/2026, la session du correctif v3 — le crash reçu TEL QUELLE, la
+faute nommée sur pièces, l'épreuve de la liaison née, la plomberie
+enfin éprouvée au labo)

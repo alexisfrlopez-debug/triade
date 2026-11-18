@@ -1,0 +1,35 @@
+EMPREINTES-GUI-UNITE16-D210-1CLIC-V2 — les pièces du kit GUI 1-clic CORRECTIF
+(l'unité 04 D210, la révision 2 — le refus nommé du run v1 recoupé, le guichet corrigé ;
+la console « certutil -hashfile <fichier> SHA256 » recoupe chaque ligne chez vous)
+==============================================================================
+
+LE GUI ET SES LIVRES :
+
+triade_run_unite16_d210_gui.py                      100236 o  sha256 7ce4d9c6996d3d118bd2280dd75ae5a2a293e3a48150fe4434a3e78b13d4802f
+le GUI v2.0.1 (LA CHIRURGIE du correctif : les DEUX empreintes du verrou — L'ATELIER CHOISI tenu ; le selftest 27 VERT)
+LANCER-RUN-UNITE16-D210-1CLIC.bat                     6016 o  sha256 b41d0b940f58c71f1d7f5f4fe78a82d0f28e7bc72aa73b2c1c7617dd41d1726c
+le lanceur au double-clic (l'édition CORRECTIF, CRLF+BOM)
+LISEZMOI-RUN-UNITE16-D210-1CLIC-V2.txt                4201 o  sha256 4249ebd6f0fa83b5f638ccb1f882a42fb163ca95fdb9edc4e7c03cdf3ee93fa2
+le livre du kit v2 (le correctif nommé, le geste du re-run)
+NOTE-ATELIER-UNITE16-D210-20261118.txt                2884 o  sha256 52d6e93df3432b15a18cb542d23db3c5f76917630d8868d99843ed7b595a58a2
+le commandement verbatim, la frontière M3 (INCHANGÉE — reconduite)
+
+LES PIÈCES DU KIT (le verrou du GUI les recoupe à CHAQUE lancement, fail-closed) :
+
+EMPREINTES-KIT-UNITE-04-D210.txt                      1599 o  sha256 957f745c54ac6d61adfeac233566a717b72aab480ce6976ba1bc262e16728515
+GRAINE-D210.txt                                        791 o  sha256 c62a304f1df0d88882e03edecc8a9498e60bc6db293010775a9238eedcdc6673
+LANCEUR-UNITE-16-T.bat                                1091 o  sha256 f336c766685a803bda47e35c1790ea07b5c20bf9279777f3bfb5fac12a7706f9
+LISEZMOI-KIT-UNITE-04-D210.txt                        5843 o  sha256 9edc6d53f2ff95ac16ff09a57cfdf69d70dc5e9f97e4581d075685a0e10406e2
+brouillon-loupe-16-saisie.asm                         5468 o  sha256 d452ae13c7a7a43b58becc9270582c59d3f9d100cb10696497882113844183e2
+garde-brut-d210.jsonl                               173510 o  sha256 f221ccef487a5e2f9e5a22052b6b79756e9565dc15e31e3cbb82cc9cc2065de3
+journal-tokens-d210.jsonl                            18743 o  sha256 bf9937b18fa6990c61989b22eb98d2975c703c58a508f3ea2700a23edf48f983
+loupe.exe                                           127488 o  sha256 b382e01b76333a161e9731d72c290f769ad77b52bb7a3e8ffb3cd399b4ef5b20
+notation-loupe-16-saisie.asm                          4706 o  sha256 deee18fef56e6be1dce36a7697efc79e7e330e2b65ff3291849bbe88f2eeedf8
+proxy.exe                                            65024 o  sha256 446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d
+scenario-unite16.py                                  29134 o  sha256 705951ccba0c25e895818392f21a629bd523d93b1f3709f36bc9b40258d73138
+                                               LE JUGE CORRIGÉ (le guichet aux CINQ champs, la marche des plages FT,
+                                               la 4e feuille GetLastError — les vecteurs INTACTS)
+source-loupe-16-C.c                                   7887 o  sha256 892ef03e7a960a73e75bf08cf11622a1cc14c20426ec5fb2208d59a8d8741da4
+temoin-3f.bin                                       196609 o  sha256 c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3
+tests-loupe-16-C.md                                   3765 o  sha256 098b0879041b6e0f3e4f4b316585765a1bcec491f1668c0d7aa76a2181d9e8ec
+

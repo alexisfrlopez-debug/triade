@@ -1,0 +1,148 @@
+RAPPORT-RECEPTION-RUN-UNITE16-D210-TERRAIN-V2-20261118 — LE CRASH REÇU
+TEL QUELLE, RECOUPÉ, LA FAUTE NOMMÉE SUR PIÈCES, LE KIT v3 LIVRÉ ET
+L'ÉPREUVE DE LA LIAISON NÉE
+(l'annonce du développeur : le dépôt kit-unite-04-d210-20261118-v2/ au
+/test — le CRASH du run v2 de l'unité 04 D210, loupe-16 saisie × bras
+T, le re-run prescrit par la 350)
+================================================================================
+
+R1 — LA CONSOLE DU CRASH (telle quelle, la pièce à l'appui
+run-console-unite16-d210-20261118-140903.txt, 1 259 o, md5 161f5217…) :
+le run parti 18/11 14:09:03, T0 VERT (loupe.exe sha256 b382e01b… == la
+gravure du kit — la pièce INTACTE), l'image cartographiée DONT_RESOLVE
+@ 0x7ff734700000, LE GUICHET DÉCOUVERT (le correctif v2 PORTA : les
+plages FT marchées, les QUATRE feuilles voulues trouvées, le refus
+RVA-HOURS-SECTIONS est PARTI), puis le Traceback : TypeError à la
+ligne 269 « ctypes.memmove(adresse, struct.pack("<Q", proc)) » —
+« this function takes at least 3 arguments (2 given) » ; fin 14:09:03
+(0,4 s), code retour 1. AUCUN fichier modifié : l'écriture visait la
+mémoire de l'image mappée, et le TypeError précéda TOUTE écriture (le
+contraire du refus v1 qui fermait AVANT tout geste : ici le guichet
+ouvrit, la PREMIÈRE feuille jamais touchée — l'analyse de l'appel
+échoue avant le geste).
+
+R2 — LES PIÈCES DU DÉPÔT (22 entrées rapatriées au bac, DOUBLE
+téléchargement byte-byte, md5 == les métadonnées Drive, échec fermé) :
+les DIX-NEUF pièces du kit v2 recoupées au staging du labo — 19/19
+INTACTES (loupe.exe b382e01b…, proxy.exe 446279f3…, le scénario
+705951cc… == le scellé livré à la 350 : le terrain a couru LE fichier
+du coffre, R7) ; les TROIS pièces nées du run : la console, l'état
+(etat-run-unite16-d210.json, 755 o), la session
+(TRIADE_logs/session-20261118-140850.txt, 5 456 o). Le témoin JAMAIS
+né, preuves-unite16/ JAMAIS né (le GUI le nomma lui-même), aucune
+capture cette fois — le dépôt est l'honnête état du kit couru.
+
+R3 — LA FAUTE NOMMÉE SUR PIÈCES (l'autopsie au labo — la classe
+« liaison-memmove-deux-arguments », le côté « kit », l'exclusion
+« non » : la faute au kit VOYAGÈE jusqu'au terrain, le run fut
+consommé, D202) : ① la ligne 269 — memmove(adresse, pack("<Q", proc))
+à DEUX arguments, le COMPTE manquant (l'écriture d'un pointeur de
+feuille IAT exige memmove(dst, src, 8) — huit octets, la largeur du
+slot qword) ; ② L'ARITÉ CONTRAIRE DES DOUZE AUTRES APPELS du fichier
+(l'audit d'arité : memmove ×7, memset ×4, string_at ×9 — chaque appel
+porte son compte SAUF la ligne 269 : la forme correcte était déjà là,
+six frères memmove à trois arguments) ; ③ la ligne NÉE DU CORRECTIF
+v2 (le bloc de liaison réécrit au guichet) — l'épreuve du guichet,
+née le même jour, n'éprouvait que la DÉCOUVERTE : la plomberie de la
+liaison n'avait jamais couru au labo (la brèche que la 350 avait
+NOMMÉE — « la plomberie du guichet, Windows-seule à lier_feuilles,
+n'avait JAMAIS couru au labo » — l'épreuve bâtie en réponse s'arrêta
+au parse).
+
+R4 — LA PREUVE RECONSTITUÉE (la pièce à l'appui
+epreuve-liaison-unite16-console.txt au bac) : le bloc de liaison du
+scénario LIVRÉ exécuté au labo par AST (le code VERBATIM, les gestes
+Windows neutralisés au contexte seul — un vrai tampon pour les
+adresses, le memmove et la relecture string_at RÉELS) — le TypeError
+RECONSTITUÉ IDENTIQUE MOT POUR MOT (« TypeError: this function takes
+at least 3 arguments (2 given) » == la ligne de la console du
+terrain, byte pour byte).
+
+R5 — L'ÉTAT DU GUI (etat-run-unite16-d210.json, 755 o) : les étapes
+{run} seules, livraisons 0, le verdict recompté 1 VERT (T0) 0 ROUGE —
+le GUI s'arrêta AU REFUS NOMMÉ (« [REFUS NOMMÉ] le GUI s'arrête », «
+le réceptacle preuves-unite16/ est ABSENT — le scénario n'a pas fini
+son geste (le témoin n'est pas né) ; la console vit au kit,
+renvoyez-la TELLE QUELLE »), AVANT la collecte, AVANT le livre :
+AUCUNE ligne couchée (l'état honnête du crash) ; le verrou 14/14 VERT
+vécu AVANT (14:08:51), l'atelier choisi 14:09:00.
+
+R6 — LA CHRONOLOGIE (la session, R7 aux heures des pièces) : la
+fenêtre née 14:08:50 (v2.0.1, L'ATELIER CHOISI PAR CONSTRUCTION) → le
+verrou VERT 14:08:51 (les QUATORZE pièces) → L'ATELIER CHOISI
+14:09:00 (les QUATRE registres recoupés VERT — LUS, jamais touchés) →
+TOUT LANCER 14:09:02 → T0 VERT puis LE CRASH 14:09:03 → « le GUI
+s'arrête » → la fenêtre fermée 14:09:31 ; le dépôt né au coffre après
+(le kit re-déposé avec les pièces du crash, 13:09Z == 14:09 heure
+locale d'hiver UTC+1). Jamais une date avant le kit, jamais avant le
+run.
+
+R7 — L'ATELIER DU COFFRE (les QUATRE registres double-téléchargés,
+md5 == les métadonnées) : livraisons.csv 2 404 o, carnet 2 039 o,
+defauts.csv 3 870 o, journal-ouverture.txt 648 o — les QUATRE
+IDENTIQUES BYTE-BYTE à l'état de la 348 : le GUI n'a RIEN écrit — le
+crash précède le livre, la ligne M1/M3 de l'unité 04 n'y vit pas
+(l'honnête absence). LE LIVRE NE MENT JAMAIS : le run v2 a couru — la
+chirurgie prescrite (R11).
+
+R8 — LE JUGE DISCIPLINÉ (R2) : le scénario couru au terrain == le
+scellé livré à la 350 (705951cc…) — la faute est au KIT (le scénario
+livré lui-même), la pièce loupe.exe INTACTE (b382e01b… == la gravure)
+; ET LE CORRECTIF v2 PORTA son geste : la découverte joignit ses
+feuilles (le refus v1 est PARTI, la marche des plages FT vécut au
+terrain) — la faute v2 vit à la LIAISON seule, un défaut NOUVEAU né
+du bloc réécrit. RIEN à retoucher à la pièce ni aux notations ; le
+correctif vise LA LIGNE seule.
+
+R9 — LA BRÈCHE NOMMÉE (pour la campagne) : la 350 avait nommé la
+brèche et bâti l'épreuve du guichet — mais l'épreuve s'arrêta à la
+DÉCOUVERTE. L'ÉPREUVE DE LA LIAISON NÉE (le bloc de liaison exécuté
+VERBATIM au contexte neutre — le memmove et la relecture RÉELS, les
+gestes Windows neutralisés) : CONTRE le v2 ROUGE (l'audit d'arité
+nomme la ligne 269 ; le TypeError reconstitué), CONTRE le v3 TOUT
+VERT — désormais tenue au bac AVANT chaque livraison à guichet, AVEC
+l'épreuve de la découverte. Le déficit T0 (l'unité 01) avait engendré
+la gravure parsée ; le défaut memcmp (la 304) l'épreuve de la
+feuille ; le refus v1 (la 350) l'épreuve du guichet ; le crash v2
+engendre L'ÉPREUVE DE LA LIAISON — la règle vit au bac.
+
+R10 — LE CORRECTIF LIVRÉ (kit-gui-1clic-unite16-d210-v3-20261118.zip,
+19 entrées, la racine kit-unite-04-d210-20261118-v3/) : le scénario
+CORRIGÉ D'UN SEUL ARGUMENT (705951cc… → 71dca8b1… —
+memmove(adresse, pack, 8) : le compte 8, l'arité de ses frères ; la
+parité AST : les ONZE autres fonctions IDENTIQUES, UNE seule ligne
+changée dans lier_feuilles), la gravure regénérée (415f50ab…), LE GUI
+v2.0.2 (la chirurgie : les DEUX empreintes du verrou — selftest 27
+VERT 0 ROUGE, le GUI dézippé du zip aussi, le verrou 14/14 contre le
+dossier extrait), le lanceur à l'édition correctif v3, le LISEZMOI-RUN
+v3, la NOTE-ATELIER reconduite, l'EMPREINTES-GUI v3 ; les kits v1 et
+v2 DEMEURENT au coffre (D143 — les dépôts des refus jamais
+recouverts). LA CAP M1 ATTEINTE : le v3 est la TROISIÈME livraison du
+bloc de l'unité 04 (v1, v2, v3 — le plan D204 § 7 : au plus trois par
+bloc, l'arrêt au premier vert recoupé, la censure sans exclusion). Le
+détail vit à CORRECTIF-V3-UNITE16-D210-20261118.txt au /test.
+
+R11 — LA CHIRURGIE PRESCRITE AU LIVRE (au bloc-notes, à votre main —
+le livre ne ment jamais : le run v2 a couru ; le précédent 303/304) :
+① la ligne T-loupe-16-d210-it2 ROUGE posée à livraisons.csv (le kit
+v2, le run 2026-11-18 — le crash nommé, code 1 : la ligne honnête) ;
+② le défaut à defauts.csv (l'onglet 6·DÉFAUTS : la classe
+« liaison-memmove-deux-arguments », le mécanisme « memmove appelé à
+DEUX arguments (dst, src) — le compte 8 manquant, contraire à
+l'arité des DOUZE autres appels du fichier ; la ligne née du
+correctif v2, l'épreuve du guichet n'éprouvait que la découverte »,
+le côté « kit », la pièce à l'appui
+run-console-unite16-d210-20261118-140903.txt, l'exclusion « non ») ;
+③ l'atelier ENTIER re-déposé au coffre.
+
+R12 — LE RE-RUN (le geste prescrit, le kit v3 — la DERNIÈRE livraison
+de la cap) : une extraction FRAÎCHE (jamais le dossier v2 réutilisé),
+LANCER-RUN-UNITE16-D210-1CLIC.bat, CHOISIR LE DOSSIER DE L'ATELIER,
+TOUT LANCER — l'attendu : [guichet] les QUATRE feuilles liées, les
+NEUF verdicts VERT (9 VERT 0 ROUGE, code 0), le témoin daté signé
+[D99], preuves-unite16/ au coffre — la ligne T-loupe-16-d210-it3 au
+livre DURANT le run (la frontière de la 348 tenue par construction).
+
+(18/11/2026, la session de la réception du crash — reçu TEL QUELLE,
+reCOUPÉ, la faute nommée sur pièces, l'épreuve de la liaison née, le
+kit v3 livré à la cap)
