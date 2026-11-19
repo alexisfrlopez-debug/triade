@@ -1,0 +1,20 @@
+================================================================================
+CONSOLE DU PASSAGE PUBLIC — LE GESTE VÉCU (le 19/11/2026)
+La décision EXPLICITE du maître (« on enchaine sur le passage public ») exécutée
+selon la règle 1 de MATRICE-VISIBILITE-DEPOT (AUCUN passage implicite) — l'ordre
+strict honoré : D183 vécu → rotation vérifiée → re-scan trié [Entrée 368] → PUBLIC
+================================================================================
+
+--- L'APPEL : PATCH /repos/alexisfrlopez-debug/triade ---
+corps : {"private": false, "visibility": "public"}
+jeton : lu au .gdrive/token_git.txt — jamais affiché (D12/D27)
+
+LE GESTE VÉCU À : 2026-11-19 14:05:30 +0000
+--- LA RÉPONSE DE L'API (les champs qui font foi) ---
+nom complet : alexisfrlopez-debug/triade
+privé       : False
+visibilité  : public
+html_url    : https://github.com/alexisfrlopez-debug/triade
+mise à jour : 2026-11-19T14:05:30Z
+clone_url   : https://github.com/alexisfrlopez-debug/triade.git
+ licence    : NOASSERTION

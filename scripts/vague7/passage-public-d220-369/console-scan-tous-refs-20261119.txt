@@ -1,0 +1,40 @@
+================================================================================
+CONSOLE DU SCAN TOUS-REFS — le re-jeu au moment du passage public (le 19/11/2026)
+L'outil de référence scan_secrets.py [sha256 ci-dessous] — TEL QUEL (D185), jamais
+une réécriture ; --all refs : main ET bundle051/v0.5.1-jalon-v7 (le commit orphelin
+9888d06 « --quiet » couvert — le passage public expose TOUS les refs, le scan les
+couvre TOUS)
+================================================================================
+
+--- l'outil employé (l'octet-identique du kit) ---
+f3728fbab39a6bd87acaee9757a9a762036003351ea3c64b7cf3a7d150c8f994  scripts/kit_ceremonie_d183/scan_secrets.py
+
+--- les refs scannés ---
+commits énumérés (tous refs) : 476
+
+--- LE SCAN ---
+LE SCAN DE SECRETS (D219) — l'historique git COMPLET de /home/z/my-project/depot
+  10 constat(s) — chaque blob de l'historique confronté aux règles nommées
+
+  [CLE-PRIVEE] m5/autorite/fixtures/racine-autorite.key
+      blob d3f34192be04edee…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-autonome.key
+      blob 4e4be3a02f533e0d…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-autre-hote.key
+      blob fb6a3bef1f6b44eb…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-expiree.key
+      blob 1cde3620cbbc79d5…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-valide.key
+      blob 53c0ebe90b7d74c0…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [PHRASE-CONTROLE] PHRASE-CONTROLE-COFFRE.txt
+      blob 943884735dcbd3b0…, 33 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob 620045df95adea0b…, 82274 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob c7b338d56457b1a1…, 70082 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob eba8a703af9ba549…, 77732 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob ef4d6945e22e6453…, 79266 o — apercu masque : ya29…89 (longueur 46)
+
+RAPPEL (D81/D219) : un secret commis en git y demeure à vie — le retrait du fichier ne retire pas l'historique ; le remède est la ROTATION (CHECKLIST-ROTATION.txt) et, pour la phrase de contrôle, la cérémonie D183 (le kit présent).

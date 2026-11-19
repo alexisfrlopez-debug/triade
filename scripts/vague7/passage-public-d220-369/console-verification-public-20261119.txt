@@ -1,0 +1,30 @@
+================================================================================
+CONSOLE DE LA VÉRIFICATION PUBLIQUE — les TROIS bords anonymes (le 19/11/2026)
+La preuve du « quiconque clone » : la page, l'API et le protocole git SANS jeton
+================================================================================
+
+--- [1] LA PAGE HTML ANONYME (https://github.com/alexisfrlopez-debug/triade) ---
+  code HTTP       : 200
+  octets lus      : 436922
+  page accessible : OUI — le dépôt est visible au visiteur sans compte
+  la page porte "alexisfrlopez-debug/triade" : OUI
+  la page porte "Public" : OUI
+
+--- [2] L'API ANONYME (api.github.com, sans jeton) ---
+  code HTTP : 403 - rate limit exceeded
+  (la limite de débit anonyme 60/h partagée — le bord git [ci-dessous] et le
+   bord HTML [ci-dessus] font foi du public ; l'API au jeton a dit private:False)
+
+--- [3] LE PROTOCOLE GIT ANONYME (git ls-remote, SANS jeton — quiconque clone) ---
+  f97e1f1330b916b4cb863d44b31248ea9753cbbc	HEAD
+  f97e1f1330b916b4cb863d44b31248ea9753cbbc	refs/heads/main
+  ^ la tête lue anonymement : f97e1f13… (l'Entrée 368) — le dépôt répond au clone nu
+
+--- [4] LE RECOMPTE ANONYME (les branches, sans jeton) ---
+  9888d066b018ad81ea67125a17ff30f6250f4928	refs/heads/bundle051/v0.5.1-jalon-v7
+  f97e1f1330b916b4cb863d44b31248ea9753cbbc	refs/heads/main
+
+VERDICT : PUBLIC AUX TROIS BORDS — la page (200), le protocole git (la tête et les
+branches lues sans jeton), l'API (private: False au jeton ; l'anonyme limité en
+débit par la partage 60/h, les deux autres bords faisant foi). LA MATRICE LIGNE 4
+EST HONORÉE : le dépôt public + le DOI Zenodo vivant (10.5281/zenodo.24367344).

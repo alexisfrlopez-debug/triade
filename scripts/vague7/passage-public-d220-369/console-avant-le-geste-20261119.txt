@@ -1,0 +1,38 @@
+================================================================================
+CONSOLE AVANT LE GESTE — l'état constaté avant le passage public (le 19/11/2026)
+La tête propre re-démontrée + le dépôt PRIVÉ constaté aux DEUX bords (jeton/anonyme)
+================================================================================
+
+--- [1] LA TÊTE LOCALE (le clone du labo, propre, synchronisé) ---
+tête      : f97e1f1330b916b4cb863d44b31248ea9753cbbc
+f97e1f1 Entrée 368 : le re-scan trié exécuté après la rotation vécue (CHECKLIST §7, matrice ligne 3) — l'annonce du maître « rotation faite, on peut 
+commits à la tête : 475
+écarts git status : 1 ligne(s) — le dossier de la présente session seul (non suivi) :
+?? scripts/vague7/passage-public-d220-369/
+
+--- [2] LA TÊTE PROPRE (ls-tree -r HEAD — le seul arbre de tête, jamais les
+    ancêtres ; les motifs EXACTS du scan_secrets.py de référence [Entrée 368]) ---
+fichiers PHRASE-CONTROLE-COFFRE* à la tête : 0
+  (le LISEZMOI-PHRASE-CONTROLE.txt seul y vit, légitime — le readme, jamais la phrase :
+    LISEZMOI-PHRASE-CONTROLE.txt
+fichiers-jetons par nom (token_git.txt, oauth_token*.json, *service_account*.json, client_secret*.json, .env, id_rsa*, *.keytab, *.p12) : 0
+  (le script scripts/relais_service_account.py est un OUTIL Python légitime — le
+   relais de livraison D111 — JAMAIS un fichier d'identifiants JSON ; le motif de
+   référence vise *service_account*.json, les identifiants seuls)
+
+--- [3] LE DÉPÔT DISTANT — LU AU JETON (l'état AVANT, l'API GitHub) ---
+nom complet : alexisfrlopez-debug/triade
+privé       : True
+visibilité  : private
+poussé le   : 2026-11-19T13:44:12Z
+branche     : main
+
+--- [4] L'ACCÈS ANONYME À LA PAGE (sans jeton — le bord HTML, hors limite de débit) ---
+code HTTP : 404 - Not Found
+page accessible anonymement : NON
+
+VERDICT DU PRÉ-VOL : les conditions de la ligne 4 réunies — la tête propre
+(re-scan Entrée 368 + le présent constat aux motifs exacts), la rotation vécue
+(D183, l'ancienne phrase INOPÉRANTE), la décision EXPLICITE du maître reçue
+(« on enchaine sur le passage public ») — l'ordre strict de la matrice honoré
+jusqu'à la dernière marche. LE GESTE PEUT ÊTRE VÉCU.
