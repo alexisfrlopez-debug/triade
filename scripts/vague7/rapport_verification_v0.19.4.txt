@@ -1,0 +1,115 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.19.4 (LE COÛT DE LA BOUCLE SOUS
+R11 : manuscrit v0.19.4 / spécification v0.15.4 [UNE RÈGLE ADDITIVE] / Livre
+du Coffre v1.3 inchangé / preuves v0.19.4 / présentation du 20/11 v0.19.4)
+(l'exécution de l'instruction cq01qv1za — la vague 7, la quatrième ; le plan
+PLAN-cq01qv1za-COUT.md sha256 cb5d1943… gelé AVANT toute mesure, le commit
+fed8c6d précédant la première donnée ; chaque point VERT sur pièces ; la
+vérification RE-JOUÉE à l'assemblage du présent dépôt — le linter, les
+empreintes, les tableaux)
+
+V1   LA PREMIÈRE EXIGENCE, TENUE AVANT TOUT : VERT — le coffre réel et les
+     phrases réelles JAMAIS approchés (D105 ; la cérémonie D183 VÉCUE le
+     19/11 11:17 locale, la phrase retirée du dépôt ET de la racine, les
+     parts réparties, la reconstitution prouvée à froid DEUX fois, la
+     rotation vécue — l'ancienne refusée) ; LE PLAN GELÉ recoupé à
+     l'assemblage : sha256 cb5d194340afdc3fcc118ff3b2a428a657fc81fc2069849
+     6cdb2627b76948b07 == le consigné, le commit fed8c6d AVANT la première
+     donnée ; LES SCELLÉS INTACTS à chaque run M4 (le champ scelles_intacts
+     des 17 preuves JSON : vrai à chaque exécution, recoupé à l'assemblage).
+V2   LE POINTEUR SEUL (OPT-04, l'axe 1) : VERT — la campagne 36 appels
+     réels à la rig (glm-4-plus, la graine 20261117, 100 % log-api, le
+     natif LU du champ usage) : le total A 1 714 → P 1 103 natifs (−35,7 %),
+     la réponse 770 → 52 (−93,3 %), zéro divergence 18/18 ; l'expansion
+     côté client à QUATRE refus nommés fail-closed (POINTEUR-INCONNU,
+     EMPREINTE-DIVERGENTE, EXPANSION-DIVERGENTE, HORS-FORMAT) 18/18
+     verte ; la re-tokenisation indépendante (encode_ordinary, un objet
+     neuf) à 0 écart — l'artefact +2 de la voie segmentée NOMMÉ, jamais
+     confondu ; la confrontation aux octets reprise TELLE QUELLE (loupe.exe
+     lu au slot, padding NOP : VERT 18/18). LES TABLEAUX du présent dépôt
+     GÉNÉRÉS du journal_tokens.jsonl et CONFRONTÉS aux consignés : les
+     médianes/quartiles/min/max EXACTS (A total 1 714 [1 150–2 474] min
+     721 max 5 204 ; P total 1 103 [821–1 498] min 610 max 2 840 ; A
+     réponse 770 ; P réponse 52) — un écart eût été un REFUS.
+V3   LE MÉMO V2 (l'axe 2) : VERT — la clé sur-ensemble sha256(bloc ‖ entrée
+     ‖ contrat ‖ config émulateur ‖ graine ‖ oracle) ; le format
+     TRIADE-MEMO-V2 au COMPTEUR DE RUNS CHAÎNÉ AU CŒUR SIGNÉ (le muter =
+     SIGNATURE-INVALIDE, vécu) ; L'AUDIT 1 RUN SUR 10 vécu DEUX FOIS — le
+     10ᵉ scellement d'oracle a déclenché l'audit TOUT SEUL pendant la
+     mesure (le CHAUD 4, 29,4 s — le prix de la preuve, nommé) : les
+     relevés vivants Unicorn confrontés aux relevés mémoisés CHAMP À
+     CHAMP : 0 écart (la preuve d'identité) ; l'audit dédié confirme (les
+     sessions ≥ 64 Kio re-exécutées vivantes, 0 écart).
+V4   LE DOUBLE MOTEUR (l'axe 3) : VERT — le lanceur C statique (gcc
+     -static lié haut, ms_abi, les SIX feuilles kernel32 aux sémantiques
+     du harnais, l'atterrissage naked au point exact du ret) exécutant
+     L'IMAGE BÂTIE PAR LE VRAI HARNAIS sous QEMU-user 10.0.13
+     (provisionné sans root, la version exacte du précédent) ; Unicorn la
+     référence à L'ÉCHANTILLON CONSIGNÉ (2 041 opérations, la graine
+     20261114) : DIVERGENCE=0 OCTET POUR OCTET ; le moteur à shim muté
+     ATTRAPÉ à la première ligne (MOTEUR-DIVERGENT) — la porte divise les
+     moteurs honnêtes des moteurs faux.
+V5   LA RÉCONCILIATION D214 ET LE RATIO H5 (l'axe 4) : VERT — la liste
+     fixe re-mesurée AVANT (39,7 s MÉDIANE [39,4–40,3] n=5, les v180 tels
+     quels) contre la pile adoptée (FROID 6,7 s ; CHAUD régime 6,8 s
+     [6,7–6,9] n=4 + l'audit automatique au CHAUD 4 : 29,4 s nommé ; AUDIT
+     dédié 39,1 s ; BRAS C 2,2 s [2,1–2,2]) ; LA CAUSE de l'écart
+     39,5/39,3/39,2 NOMMÉE sur pièces (des bacS différents de la même
+     classe 2 cœurs, les plages se chevauchent — la variance inter-bac,
+     chaque mesure vraie À SA MACHINE, le ratio aux DEUX bras de la même
+     machine fait foi) ; LE RATIO AVANT 39,7/2,2 = 17,9× → RÉGIME
+     6,8/2,2 = 3,0× — SOUS le seuil ×10 de D204 : H5 DEVIENT TENUE,
+     énoncé EXPLICITEMENT (l'instruction du maître, l'amendement de la
+     règle mof9q10vq ; la falsification D204 [×23,9] DEMEURE consignée
+     comme mesurée et datée). LES MESURES du présent dépôt GÉNÉRÉES des
+     preuves m4-*.json / c-run*.json et CONFRONTÉES : les médianes
+     EXACTES (39,7 / 6,8 / 39,1 / 2,2 ; le froid 6,7 ; l'audit du CHAUD 4
+     29,4) — un écart eût été un REFUS.
+V6   LES PREUVES QU'AUCUN CONTRÔLE NE FUT RETIRÉ : VERT — les 24 consoles
+     d'oracles capturées (5 AVANT re-mesurés + FROID + 5 CHAUD + AUDIT)
+     IDENTIQUES ligne à ligne aux originales consignées ; la
+     cristallisation 12 rebuilds concourants TOUS byte-identiques à chaque
+     exécution ; les empreintes scellées INTACTES avant/après CHAQUE
+     exécution (loupe.exe, proxy.exe, les pièces des deux unités) ; LES
+     CINQ CONTRÔLES NÉGATIFS 5/5 VERT (l'entrée de cache mutée →
+     CHAÎNE-ROMPUE ; le compteur muté → SIGNATURE-INVALIDE ; la racine
+     mutée → RACINE-DIVERGENTE ; la clé changée → l'absence, la session
+     vit ; le moteur divergent → ATTRAPÉ) — le rapport au complet du zip
+     (preuves_v194/controle-negatif-v2.txt).
+V7   LES SOURCES AU STATUT EXACT : VERT — le manuscrit v0.19.4 (H5 tenue —
+     l'amendement AJOUTÉ au verdict falsifié qui demeure ; le pointeur
+     seul au RQ2 ; le paragraphe de la pile), la spécification v0.15.4
+     (UNE RÈGLE ADDITIVE au localiser — aucune règle existante modifiée),
+     le Livre du Coffre v1.3 INCHANGÉ (le runbook scellé D180), les
+     preuves v0.19.4 (les pièces verbatim), la présentation du 20/11 au
+     statut exact (le dépôt PUBLIC D220, le DOI vivant) ; les éditions
+     scellées antérieures demeurent VRAIES À LEUR DATE.
+V8   LE LINTER INTER-PIÈCES v194 : VERT — 16/16 assertions (les canons M4
+     17,9× et OPT-04 3,0×/6,8 s, les chiffres du pointeur, les versions
+     croisées, la visibilité, la falsification D204 demeurant consignée,
+     les formulations D182/D190) — RE-ROUÉ à l'assemblage du présent
+     dépôt : 16 VERT, 0 ROUGE, le build admis.
+V9   LE PACK : VERT — TRIADE_presentation_v0.19.4_20261120.zip [2 161 824
+     o, sha256 7a333777db88b8bf…] assemblé, relu pièce à pièce, les
+     empreintes SHA-256 gravées (empreintes_livrables_v0.19.4.txt) ; LES
+     CINQ DOCUMENTS recoupés à l'assemblage du présent dépôt : manuscrit
+     v0.19.4 [6e3cf13d…] 251 802 o, spécification v0.15.4 [ec40d219…]
+     963 257 o, Livre du Coffre v1.3 [6dadf72d…] 930 968 o, preuves
+     v0.19.4 [f59ba532…] 91 179 o, présentation du 20/11 [221da9b7…]
+     68 967 o — 5/5 EXACTES ; LE PACK EST REFUSÉ SI UN SEUL CONTRÔLE EST
+     ROUGE : aucun ne l'est.
+V10  LE PRÉSENT DÉPÔT : VERT — la nouvelle version du record Zenodo
+     (concept DOI 10.5281/zenodo.24367343) portant l'édition v0.19.4 :
+     les TROIS fichiers gravés (TRIADE_soumission_v0.19.4.zip,
+     TRIADE_complet_v0.19.4.zip, TRIADE_presentation_v0.19.4_20261120.zip
+     — chaque sha256 au manifeste empreintes_complet_v0194.txt au bac du
+     dépôt) ; les tableaux GÉNÉRÉS des registres bruts et CONFRONTÉS aux
+     consignés (V2, V5) ; la réconciliation de campagne D210 re-roulée à
+     l'assemblage : VERT (aucun défaut pour l'attribution, le carnet 5
+     lignes run-terrain, chaque ROUGE porte son échappée nommée).
+
+LA SESSION : l'instruction cq01qv1za exécutée en sa lettre — la boucle
+mesurée AVANT (17,9×), la pile adoptée APRÈS (3,0×), les consoles
+identiques, AUCUN contrôle retiré ; H5 devient tenue par l'énoncé explicite
+du maître ; l'instruction archivée après exécution (la règle du
+développeur) ; l'instruction 1c4sokpii (la dernière de la vague 7) demeure
+séquencée.

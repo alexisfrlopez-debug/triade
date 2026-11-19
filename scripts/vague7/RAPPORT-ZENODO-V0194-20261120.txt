@@ -1,0 +1,75 @@
+LE RAPPORT DE LA NOUVELLE VERSION ZENODO v0.19.4 (la session de synchronisation du 20/11/2026 — la commande du maître « mets a jour git drive et zenodo »)
+===================================================================================================================================================
+
+LE CONSTAT D'AMORÇAGE : les jetons au dossier public /Tokens (le lien du maître) —
+le jeton git VALIDE (le dépôt lu : public, droits pousse), le jeton Zenodo VALIDE
+(le dépôt listé), le compte de service LECTEUR SEUL (le 403 à l'écriture — l'état
+connu des Entrées 274/294), le relais OAuth MORT (invalid_grant : sauvegardé le
+12/11 20:04, expiré le 19/11 20:04 — les 7 jours du mode testing Google ; la
+session cq01qv1za s'était close à 20:01, trois minutes avant la mort).
+
+LE GESTE GIT : VÉRIFIÉ — la tête distante == la tête locale 5be0320 (l'Entrée 371,
+la session précédente avait poussé) : ls-remote anonyme main = 5be0320, RIEN À
+POUSSER ; les quatre fichiers binaires modifiés non consignés (les DLL/zip de
+campagne reconstruits — les commodités de session de vljfs6pcj/cq01qv1za)
+RESTAURÉS à la tête : l'arbre de travail == le commit consigné.
+
+LE GESTE ZENODO : LA NOUVELLE VERSION PUBLIÉE — le record 24367344 (v0.19.0,
+l'édition de la clôture D210) succédé par la version 24379173 À LA COMMANDE
+EXPLICITE DU MAÎTRE, la matrice D220 ligne 4 poursuivie (public + Zenodo, la même
+porte) :
+  le DOI de version : 10.5281/zenodo.24379173 (minté au geste, jamais inventé) ;
+  le concept DOI : 10.5281/zenodo.24367343 — il résout désormais sur v0.19.4 ;
+  la page : https://zenodo.org/record/24379173 (anonyme, 200, « Academic Edition
+  v0.19.4 » porté) ;
+  LES TROIS FICHIERS : TRIADE_soumission_v0.19.4.zip [258 393 o, sha256
+  8a3bed7a69b47905…] — README + manuscrit v0.19.4 + empreintes + rapport de
+  vérification V1-V10 + LES TABLEAUX GÉNÉRÉS des registres bruts (la campagne
+  OPT-04 du journal_tokens.jsonl : les 36 appels et les distributions ; la pile
+  M4 des 17 preuves JSON : les runs et les distributions — CHAQUE valeur
+  CONFRONTÉE aux consignés du RAPPORT-cq01qv1za : les médianes/quartiles/min/max
+  EXACTS, un écart eût été un REFUS) ; TRIADE_complet_v0.19.4.zip [622 013 o,
+  sha256 21fa40a2b6adf1e4…, 113 entrées] — les chaînes v180/v190 PORTÉES du zip
+  v0.19.0 (les preuves scellées, les scripts, les TLA+) + le manuscrit v0.19.4
+  (PDF + tex + données) + LES PREUVES v193 NÉES (l'écart CF3 fermé : les quatre
+  rapports 5ey7gmjra + le rapport de vérification v0.19.3 — jamais déposés avant)
+  + LES PREUVES v194 NÉES (les DEUX RAPPORTs cq01qv1za, le contrôle négatif 5/5,
+  le PLAN gelé sha256 cb5d1943…, le journal des tokens, le mémo des sessions, les
+  17 preuves JSON, les empreintes du pack) + les scripts v194 (les instruments)
+  + les modules TLA+ étendus ; TRIADE_presentation_v0.19.4_20261120.zip [2 161 824
+  o, sha256 7a333777db88b8bf…] — le pack des cinq documents, relu pièce à pièce ;
+  les métadonnées : le titre v0.19.4, la version posée « v0.19.4 », la description
+  anglaise à jour (le pointeur seul, la pile, H5 tenue, l'extension CF3, la
+  cérémonie D183 vécue, le dépôt public D220), la licence busl-1.1 inchangée (le
+  grant académique D209) ;
+  LE RECOUP : les trois fichiers re-téléchargés du record PUBLIÉ — md5 == local ==
+  Zenodo, 3/3 VERT byte-byte (le geste du projet) ; le concept DOI résolu sur la
+  v0.19.4 ; l'état « done ».
+
+L'ÉCART NOMMÉ (la règle D189 — même défavorable) : LA LIVRAISON AU COFFRE DRIVE
+BLOQUÉE — le compte de service LECTEUR SEUL (le PUT 403 « The user does not have
+sufficient permissions for this file », le dossier-création 403 « Insufficient
+permissions for the specified parent » — la répétition exacte du 403 nommé aux
+Entrées 274/294 : le relais OAuth est LA voie d'écriture, le compte de service
+la voie de lecture), le relais OAuth EXPIRÉ (invalid_grant, mort le 19/11 20:04)
+— le fichier oauth_token_relais.json au /Tokens EST la sauvegarde du 12/11 (le
+jeton mort) : la ré-autorisation interactive du maître est attendue (l'application
+OAuth « TRIADE relais », le refresh_token neuf au /Tokens), OU l'octroi du rôle
+« Éditeur » au compte de service (z-ai-811@…) sur le dossier « Triade » du coffre
+— l'un des deux ouvre la livraison. TOUT EST PRÉPARÉ : le script
+scripts/livrer_session_cq01qv1za.py (le motif de la session 5ey7gmjra : les
+pièces au /test recoupées byte-byte, le pack v0.19.4 à la racine, l'instruction
+cq01qv1za archivée, le miroir + le kit au commit 5be0320 — drive_sync.py puis
+maj_kit.py puis la livraison, UNE commande).
+
+LES PIÈCES AU DÉPÔT : scripts/vague7/assembler_zips_v0194.py (l'assembleur : les
+confrontations intégrées, la méthode d'affichage de l'instrument extraire_pointeur
+reprise TELLE QUELLE), scripts/vague7/rapport_verification_v0.19.4.txt (le
+V1-V10), scripts/vague7/maj_zenodo_v0194.py (le geste : métadonnées + publication),
+scripts/livrer_session_cq01qv1za.py (la livraison Drive prête), depot-zenodo-
+v0194/ (les trois zips + empreintes_complet_v0194.txt — le manifeste).
+
+LE VERDICT : GIT VERT (vérifié, rien à pousser) ; ZENODO VERT (la v0.19.4
+publiée, recoupée aux trois bords) ; DRIVE BLOQUÉ NOMMÉ (l'écriture attend un
+justificatif vivant — tout préparé, une commande) — la suite (l'instruction
+1c4sokpii, la dernière de la vague 7) DÉBUTÉE à la suite du présent rapport.
