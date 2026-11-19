@@ -81,3 +81,9 @@ atelier-cout-boucle-cq01qv1za/bac-qemu-o2/
 atelier-cout-boucle-cq01qv1za/lanceur_qemu
 atelier-cout-boucle-cq01qv1za/lanceur_qemu_divergent
 scripts/vague7/pack-v194/
+
+# Les DEUX régénérés du rejeu D210 (Entrée 374) — instruments régénérables,
+# jamais des pièces : loupe-01-c.c recoupé == la source canonique, epreuve_posix
+# le compilé du epreuve_posix.c suivi
+scripts/campagne_d204/unite-01-C/epreuves/epreuve_posix
+scripts/campagne_d204/unite-01-C/epreuves/loupe-01-c.c

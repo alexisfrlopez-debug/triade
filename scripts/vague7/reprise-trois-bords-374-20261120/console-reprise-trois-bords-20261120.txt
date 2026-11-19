@@ -1,0 +1,38 @@
+
+============ [1] LES JETONS DU /tokens — recoup frais vs locaux (empreintes seules) ============
+  oauth_token_relais.json                    IDENTIQUE (frais 70af20070127 / local 70af20070127)
+  token_git.txt                              IDENTIQUE (frais f07255f7041b / local f07255f7041b)
+  zenodo.txt                                 IDENTIQUE (frais 31a923a8b008 / local 31a923a8b008)
+  client_secret.json                         IDENTIQUE (frais ad459ae7b276 / local ad459ae7b276)
+  service_account.json                       IDENTIQUE (frais 2d5fba791bec / local 2d5fba791bec)
+
+============ [2] GIT — le bord distant au jeton, la tête locale ============
+  dépôt : alexisfrlopez-debug/triade | privé : False | visibilité : public
+  tête distante main : 93051fe19eac
+  tête locale        : 93051fe19eac
+  VERT — le distant == la tête, rien à pousser
+  la tête vit à la branche distante : OUI (origin/HEAD -> origin/main)
+
+============ [3] ZENODO — le record v0.19.4 au bord public anonyme ============
+  DOI : 10.5281/zenodo.24379173 | concept : 10.5281/zenodo.24367343
+  état : done | version : v0.19.4 | publié le : 2026-11-20
+    - TRIADE_presentation_v0.19.4_20261120.zip (2161824 o)
+    - TRIADE_complet_v0.19.4.zip (622013 o)
+    - TRIADE_soumission_v0.19.4.zip (258393 o)
+  le concept DOI résout sur : v0.19.4 (record 24379173)
+
+============ [4] LE COFFRE DRIVE — /test, /instructions, l'archive, le miroir ============
+  /test RAPPORT-1C4SOKPII.txt                      VERT (md5 égal)
+  /test RAPPORT-INDEPENDANCE-FAMILLES.txt          VERT (md5 égal)
+  /test RAPPORT-REJEU-FAUTES-1C4SOKPII.txt         VERT (md5 égal)
+  /instructions : 0 entrée(s) — VIDE, aucune instruction en attente
+  /ARCHIVE/instructions_20261119 : 5 instructions :
+    - Qwen__20261118_1c4sokpii.txt
+    - Qwen__20261118_376f15f18.txt
+    - Qwen__20261118_5ey7gmjra.txt
+    - Qwen__20261118_cq01qv1za.txt
+    - Qwen__20261118_jx4l5vy5c.txt
+  miroir OU-TROUVER-LES-LIVRABLES.md        VERT (== dépôt)
+  miroir REPRISE_PROJET.md                  VERT (== dépôt)
+
+FIN DE LA VÉRIFICATION — les trois bords et le coffre.

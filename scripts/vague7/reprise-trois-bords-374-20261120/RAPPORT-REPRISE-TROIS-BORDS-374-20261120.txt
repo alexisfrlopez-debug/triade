@@ -1,0 +1,58 @@
+LE RAPPORT DE LA REPRISE — LES TROIS BORDS VÉRIFIÉS, LA QUEUE DE SESSION FERMÉE (Entrée 374)
+(la reprise à la suite de l'épuisement du contexte de la session précédente — la commande du
+maître « go pour la suite » ; ce dossier porte le rapport et la console ; AUCUNE mesure
+fabriquée, AUCUN jeton lu ni affiché — D12)
+================================================================================================
+
+(1) LES JETONS DU /tokens — RECOUPÉS IDENTIQUES
+    les CINQ fichiers du dossier Tokens du coffre (le relais OAuth, le jeton git, le jeton
+    zenodo, le client secret, le compte de service) téléchargés frais et recoupés aux copies
+    locales : IDENTIQUES tous les cinq (empreintes seules, jamais le contenu) — la rotation
+    ré-autorisée du maître le 19/11 à 20:26 était déjà en place, la session précédente
+    l'avait vécue et installée.
+
+(2) GIT — LE DISTANT == LA TÊTE, LE DÉPÔT PUBLIC
+    la tête distante main == 93051fe == la tête locale : le push du 19/11 22:11:45Z AVAIT
+    eu lieu ; l'affichage « ahead by 3 » de la référence de suivi locale n'était qu'une
+    référence OBSOLÈTE (restée à 5be0320) — rafraîchie par fetch anonyme (le dépôt est
+    public), le statut rend « up to date » ; le dépôt PUBLIC (D220 : privé False,
+    visibilité public) lu au jeton ; RIEN À POUSSER avant la présente consignation.
+
+(3) ZENODO — LE RECORD v0.19.4 VIVANT
+    lu au bord public anonyme : le DOI de version 10.5281/zenodo.24379173, le concept
+    10.5281/zenodo.24367343 résolvant sur v0.19.4, l'état « done », publié le 2026-11-20,
+    les TROIS fichiers (la soumission 258 393 o, le complet 622 013 o, la présentation
+    2 161 824 o) — la publication de l'Entrée 372 confirmée sur pièces fraîches.
+
+(4) LE COFFRE — LA LIVRAISON 1c4sokpii VÉCUE, LA VAGUE 7 CLOSE CONFIRMÉE
+    les TROIS rapports au /test (posés le 19/11 22:17Z, md5 recoupés égaux aux pièces de
+    l'atelier : RAPPORT-1C4SOKPII, RAPPORT-INDEPENDANCE-FAMILLES, RAPPORT-REJEU-FAUTES) ;
+    le /instructions VIDE (aucune instruction en attente) ; les CINQ instructions de la
+    vague 7 à /ARCHIVE/instructions_20261119/ (376f15f18, jx4l5vy5c, 5ey7gmjra, cq01qv1za,
+    1c4sokpii) ; le miroir TRIADE-sauvegarde-git == le dépôt (md5 égaux sur la carte
+    OU-TROUVER et REPRISE_PROJET) ; le kit de cérémonie 60/60 vérifiés aller-retour au
+    commit 93051fe (le maj_kit.log du 19/11 22:17 fait foi) ; aucune nouvelle instruction
+    du maître au /test depuis (la dernière pièce : les trois rapports à 22:17Z).
+
+(5) LA QUEUE DE SESSION FERMÉE — L'OUTIL CONSIGNÉ, L'ARBRE PROPRE
+    la session précédente s'éteignit par épuisement du contexte APRÈS ses gestes mais
+    AVANT sa toilette : l'outil livrer_1c4sokpii.py — la commande unique de la livraison
+    pourtant VÉCUE (les pièces sont au /test) — demeurait NON COMMITTÉ : la leçon D97
+    (« un correctif non-committé est un correctif qui n'existe pas ») TENUE, l'outil est
+    committé avec la présente ; les DEUX régénérés du rejeu sous
+    scripts/campagne_d204/unite-01-C/epreuves/ (le binaire epreuve_posix, la copie
+    loupe-01-c.c) portés au .gitignore — INSTRUMENTS RÉGÉNÉRABLES, JAMAIS DES PIÈCES :
+    loupe-01-c.c recoupé == la source canonique de source/ ET de kit/ OCTET POUR OCTET
+    (sha256 860ff1cf…), epreuve_posix est le compilé du epreuve_posix.c suivi ; l'arbre
+    PROPRE, la sauvegarde systématique D13 exécutée (commit + miroir + bundle + push).
+
+(6) CE QUE LE DÉPÔT ATTEND — LES GESTES DU MAÎTRE, NOMMÉS
+    la vague 7 est close (le verdict de l'instruction consigné : quatre points VERT ou gap
+    nommé, aucune mesure fabriquée) ; le paquet d'évaluation vit au dépôt, au /test et au
+    Zenodo ; les acteurs manquants demeurent NOMMÉS, jamais maquillés : le SECOND
+    ANNOTATEUR du protocole κ (PROTOCOLE-SECOND-ANNOTATEUR.txt, l'acceptation
+    pré-enregistrée κ ≥ 0,61 — aucune annotation inventée), les SIGNATURES-I de la
+    cérémonie d'ère du TGN (le jalon M10 : le dépôt de signatures-I.txt au /test débloque
+    le build de Loupe 0.1.0-dev.1), le SILICIUM à SHA-NI du geste B, le modèle 7B de
+    l'indépendance inter-familles (le gap de capacité du local nommé sur pièces) — la
+    prochaine instruction du maître ouvre la vague 8.
