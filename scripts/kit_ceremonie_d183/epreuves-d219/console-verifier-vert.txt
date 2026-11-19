@@ -1,0 +1,2 @@
+[D183] VERT — 3 parts, 51 octets : le sha256 du rendu == l'empreinte de contrôle du manifeste
+[D183] la phrase n'est pas affichée — la preuve est l'égalité des empreintes

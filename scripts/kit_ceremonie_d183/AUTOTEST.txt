@@ -22,8 +22,13 @@ AUTOTEST DE L'OUTIL DE SÉQUESTRE D183 — la preuve à froid du geste du labora
   paire (2, 4) (sous le seuil) : DÉCHET (rien ne fuite)
   paire (3, 4) (sous le seuil) : DÉCHET (rien ne fuite)
   part seule : par construction GF(2^8) d'un degré 2, aucune information (Shamir 1979) — la part 0 ci-dessous est publiable :
-    sha256(part-0) = 04ae87dbf53ed7da0c7076b2da2beab1a397e2b21312ff7cd26e31d8a65ce179 (une part sous le seuil ne révèle rien)
+    sha256(part-0) = 46f05e10530cd0fe5a63013e92a6881a5082ddcdad1c48fbc38f1503dbfe5f8b (une part sous le seuil ne révèle rien)
+
+  LA FALSIFICATION (D219) — la porte de l'empreinte de contrôle confronte chaque reconstitution :
+    parts (0, 1, 2) dont une FORGÉE (octet muté) : REFUSÉE — sha256 ≠ l’empreinte de contrôle
+    parts (2, 3, 4) dont une FORGÉE (octet muté) : REFUSÉE — sha256 ≠ l’empreinte de contrôle
+    parts (0, 1, 2) honnêtes : VERT — sha256 == l’empreinte de contrôle
 
 VERDICT : VERT — l'outil est prouvé à froid
-Exécuté le 2026-11-11T15:00:31
-LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (aucune phrase réelle lue, aucun conteneur ouvert) — le kit attend le geste du développeur (D183 : la cérémonie exigée de bout en bout).
+Exécuté le 2026-11-19T07:09:10
+LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (aucune phrase réelle lue, aucun conteneur ouvert) — le kit attend le geste du développeur (D183 : la cérémonie exigée de bout en bout ; D219 : la transition préparée, le geste au développeur).

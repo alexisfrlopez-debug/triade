@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 794px 1123px; margin: 0; }
+    :root {
+      /* Palette : famille bleu nuit (série TRIADE) — Template 03 */
+      --c-bg: #162032;
+      --c-accent: #4A90C4;
+      --c-text: #FFFFFF;
+      --c-muted: #90A8C0;
+      --c-footer: #607080;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      width: 794px; height: 1123px;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: 'Inter', 'Liberation Sans', sans-serif;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; min-height: 100vh; background: var(--c-bg); }
+      body { transform-origin: top center; scale: min(1, calc(100vw / 794), calc(100vh / 1123)); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.3); }
+    }
+    .cover { width: 794px; height: 1123px; position: relative; box-sizing: border-box; }
+    .vline { position: absolute; left: 57px; top: 76px; bottom: 76px; width: 2.5px; background: var(--c-accent); }
+    .content { position: absolute; left: 102px; right: 76px; top: 0; bottom: 0; }
+    .label {
+      position: absolute; top: 132px;
+      font-size: 9pt; color: var(--c-accent);
+      letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Inter', 'Liberation Sans', sans-serif;
+    }
+    .title {
+      position: absolute; top: 228px;
+      font-size: 32pt; font-weight: 700; line-height: 1.3;
+      font-family: 'Playfair Display', 'Liberation Serif', serif;
+      color: var(--c-text); max-width: 580px;
+    }
+    .subtitle {
+      position: absolute; top: 560px;
+      font-size: 12pt; line-height: 1.55;
+      color: var(--c-muted); max-width: 520px;
+    }
+    .authors { position: absolute; top: 800px; font-size: 12pt; color: var(--c-text); }
+    .institution { position: absolute; top: 848px; font-size: 10pt; color: var(--c-muted); line-height: 1.4; }
+    .footer {
+      position: absolute; bottom: 76px; left: 0; right: 0;
+      display: flex; justify-content: space-between;
+      font-size: 9pt; color: var(--c-footer);
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="vline"></div>
+    <div class="content">
+      <div class="label">Pack de pr&eacute;sentation &middot; pi&egrave;ce 4 — le dossier d&rsquo;&eacute;vidence</div>
+      <div class="title">Preuves &amp; calculs<br>du protocole TRIADE</div>
+      <div class="subtitle">
+        Le dossier d&rsquo;&eacute;vidence de l&rsquo;&eacute;dition v0.19.2 (la transition
+        D81 &rarr; D183 pr&eacute;par&eacute;e, D219)&nbsp;: la v&eacute;rification V1&ndash;V10 de
+        l&rsquo;ex&eacute;cution, le kit de s&eacute;questre et sa falsification prouv&eacute;e,
+        le scan de secrets au dry-run vert et son triage, la campagne D204 et la cl&ocirc;ture
+        D210, le mod&egrave;le formel du coffre, les mesures, la table des empreintes et le
+        diff annot&eacute; — chaque affirmation du manuscrit tra&ccedil;able jusqu&rsquo;&agrave;
+        ses pi&egrave;ces.
+      </div>
+      <div class="authors">Projet TRIADE — le laboratoire</div>
+      <div class="institution">Accompagne le manuscrit v0.19.2 (31 p.), la sp&eacute;cification v0.15.2 (66 p.) et le Livre<br>
+        du Coffre v1.3 (28 p.) — les pi&egrave;ces scell&eacute;es du pack.</div>
+      <div class="footer">
+        <span>TRIADE — le code machine natif &eacute;crit &agrave; la main</span>
+        <span>20 novembre 2026</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

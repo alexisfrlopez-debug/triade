@@ -1,0 +1,36 @@
+MANIFESTE DU SÉQUESTRE D183 — 5 parts à seuil 3 (CF2 D120)
+ceremonie : 2026-11-19T07:08:52
+taille de la phrase : 51 octets
+empreinte de contrôle de la phrase (sha256) : 997917aeb66f5b7382bf85c75348a940e8ad0f39268096ccb63aefd30d64906a
+   (cette empreinte PERMET la vérification à froid SANS la phrase : comparez le sha256 du rendu de reconstitution à celui-ci)
+
+LE PLAN DE RÉPARTITION DES MÉDIAS (D183 : au moins DEUX hors nuage) :
+  part 1 → USB n°1 (hors nuage, chez le développeur)
+  part 2 → USB n°2 (hors nuage, lieu distinct)
+  part 3 → papier (hors nuage, coffre physique)
+  part 4 → tiers de confiance (hors nuage si possible)
+  part 5 → coffre Drive (la part seule est inerte sous le seuil)
+
+LES EMPREINTES DES PARTS (sha256) :
+  part-1.txt : bc46cb8eef003d383b655d34a2ce98fe48b97d545682525a82598f4543761be7
+  part-2.txt : 36c8ab32e99e5c955f07bd19ba0980f193ddf07a9a7f883f7f1d2d3478c3313a
+  part-3.txt : e03cf3c8ec92d051554d427af50b36611608c20672c69376886ebd15c6c1583f
+  part-4.txt : 9fdf4833e586ffad5f4d78009fb7b84ff0b7f3df48493a63a845e7b8335fee49
+  part-5.txt : 74b0ccf5c5fd9bd3e54419978f0965fe5e25c849cdb16e7e9fa68deb036d7685
+
+LA PREUVE DE RECONSTITUTION À FROID — AVANT TOUT RETRAIT :
+  1. sur une machine propre, reconstituez avec TROIS parts (par ex. 1+2+3) :
+     python3 sequestre_d183.py --reconstituer part-1.txt part-2.txt part-3.txt
+  2. comparez le sha256 affiché à l'empreinte de contrôle ci-dessus : ÉGALITÉ EXIGÉE ;
+  3. répétez avec une AUTRE combinaison (par ex. 2+4+5) ;
+  4. SEULEMENT ALORS, le retrait de la phrase en clair (la liste de contrôle du LISEZMOI) ;
+
+LA LISTE DE CONTRÔLE DU RETRAIT (des gestes humains, jamais automatisés) :
+  [ ] la preuve de reconstitution passée DEUX fois ;
+  [ ] les 5 parts réellement réparties sur leurs médias (recoupées aux empreintes) ;
+  [ ] PHRASE-CONTROLE-COFFRE.txt retiré du dépôt git ;
+  [ ] PHRASE-CONTROLE-COFFRE.txt retiré de la racine du coffre Drive ;
+  [ ] l'entrée de journal consignée (append-only) : le séquestre vécu de bout en bout, D81 AMENDÉE ;
+  [ ] l'exercice de reconstitution périodique inscrit à l'agenda (les parts se dégradent : médias perdus, gardiens qui changent).
+
+L'OUTIL NE SUPPRIME RIEN : le retrait est un geste humain listé.

@@ -1,0 +1,23 @@
+EMPREINTES DES LIVRABLES — PACK DE PRÉSENTATION TRIADE v0.19.2
+(assemblé le 19/11/2026 ; chaque valeur recalculée au geste — échec fermé)
+
+1-manuscrit/TRIADE_manuscrit_v0.19.2.pdf
+    240705 octets  sha256 d375755fdc29611d773e1671725035e4319d036cdb0357178a9d7a1c3e919cb5  md5 64862be2b51f41382d0e5b6db15dae79
+2-specification/Protocole_TRIADE_v0.15.2_Specification.pdf
+    1143368 octets  sha256 adf61d9e59c95456ac63c708df78b96b532a414a654b42c80d6729dc19b0c25e  md5 8ce364c502d76a7e9b17f82c42c86160
+3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.3.pdf
+    930968 octets  sha256 6dadf72dd577cf00ce91aed25f6f1be16136f6ef454a99712840735750decdd5  md5 6f5606a74d5a06fed22edda62795fe70
+4-preuves-calculs/TRIADE_preuves_et_calculs_v0.19.2.pdf
+    294106 octets  sha256 a19a90cc3cd6568ff303cdde25c1b95802b0a9e88cc9b289acff8a14bc5a1de5  md5 e4e18426ed26362ba5fab6d1c9be3813
+5-presentation/TRIADE_presentation_20261120.pdf
+    237291 octets  sha256 d51354cf7266652cbb651f35fd368b99cc1a2451749eefecbe84fe7328552456  md5 238df18095959cc19e64359a266af699
+LICENSE
+    6321 octets  sha256 108ed17d232cca4703b4e3c338e33cebc014dc66c50795c4455a27afe141e273  md5 e7313375843e04947da32ac11543a545
+LISEZMOI.txt
+    8078 octets  sha256 a6f7ea0847084195306897d26cf88f16de3f02755b643f370a07d07517ae0cef  md5 c53fa199a05ffd556cfdb06d0d6d4384
+
+Le zip TRIADE_presentation_v0.19.2_20261120.zip ne peut pas porter son
+propre condensé — son sha256 est consigné à l'Entrée 360 du worklog
+et à la carte OU-TROUVER-LES-LIVRABLES du coffre.
+Le rapport de vérification (rapport_verification_v0.19.2.txt) est livré
+à la racine du coffre à côté du pack.

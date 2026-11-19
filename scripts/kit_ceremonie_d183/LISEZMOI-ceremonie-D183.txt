@@ -1,18 +1,23 @@
 LISEZMOI — LA CÉRÉMONIE DE SÉQUESTRE D183 (5 parts à seuil 3)
 ================================================================
 
-ÉTAT : KIT PRÉPARÉ AU LABORATOIRE, NON APPLIQUÉ. Le coffre réel n'a pas
+ÉTAT : KIT PRÉPARÉ AU LABORATOIRE, NON APPLIQUÉ — la transition D81 → D183
+PRÉPARÉE par la décision D219 (append-only) : le kit rafraîchi (l'autotest
+rejoué avec la falsification, la porte --verifier fail-closed née au geste),
+la procédure de scan de secrets avec dry-run, la checklist de rotation, la
+matrice de visibilité du dépôt et l'extension transparence publique livrées
+— LE GESTE DE LA CÉRÉMONIE DEMEURE AU DÉVELOPPEUR. Le coffre réel n'a pas
 été touché : PHRASE-CONTROLE-COFFRE.txt demeure en clair (D81, la décision
-active), aucun conteneur ouvert, aucune clé manipulée. La cérémonie
-appartient au développeur (D87 : jamais générée ni exécutée par le labo ;
-D183 : « le geste, s'il vient : une cérémonie documentée — jamais un
-hot-fix silencieux »).
+active jusqu'au geste vécu), aucun conteneur ouvert, aucune clé manipulée.
+La cérémonie appartient au développeur (D87 : jamais générée ni exécutée
+par le labo ; D183 : « le geste, s'il vient : une cérémonie documentée —
+jamais un hot-fix silencieux »).
 
-POURQUOI (l'analyse chiffrée de D183, consignée) : sous D81, l'espérance
-de perte annuelle ≈ 4,0 × 10⁻²·C_exposition (dominée par l'EXPOSITION :
-un seul des quatre emplacements compromise suffit, ≈ 3,9 %/an) contre
-≈ 1,0 × 10⁻³ sous le séquestre 5/3 — un facteur ≈ 40. La présente édition
-ajoute au modèle de menace la conséquence honnête : phrase au dépôt +
+POURQUOI (l'analyse chiffrée de D183, consignée et reprise à D219) : sous
+D81, l'espérance de perte annuelle ≈ 4,0 × 10⁻²·C_exposition (dominée par
+l'EXPOSITION : un seul des quatre emplacements compromise suffit, ≈ 3,9
+%/an) contre ≈ 1,0 × 10⁻³ sous le séquestre 5/3 — un facteur ≈ 40. Le
+modèle de menace porte la conséquence honnête : phrase au dépôt +
 S_serrure en en-tête clair = DEUX éléments trivialement disponibles ; la
 confidentialité effective repose sur le seul média piège (D190/D192).
 
@@ -21,7 +26,18 @@ L'OUTIL : sequestre_d183.py — le partage CF2 D120 TEL QUEL
 existant, jamais une réécriture (doctrine D185). L'AUTOTEST
 (AUTOTEST.txt) prouve l'outil à froid sur une PHRASE DE TEST PUBLIQUE :
 les 10 combinaisons de 3 parts reconstituent exactement, les 10 paires
-sous le seuil rendent un déchet, une part seule ne porte rien.
+sous le seuil rendent un déchet, une part seule ne porte rien — ET DEPUIS
+LE RAFRAÎCHISSEMENT D219 : une part FORGÉE (octet muté) est REFUSÉE par
+la porte de l'empreinte de contrôle, la même porte rendant VERT la
+combinaison honnête (la falsification prouvée, fail-closed).
+
+LE MODE --verifier (né au rafraîchissement D219) : la preuve de
+reconstitution FAIL-CLOSED — l'outil reconstitue la phrase des TROIS
+parts, calcule son sha256 et le CONFRONTE à l'empreinte de contrôle du
+manifeste : ÉGALITÉ exigée, tout écart un REFUS nommé (part fausse,
+forgée ou corrompue), code de sortie 1. La phrase n'est jamais affichée.
+La variante --reconstituer (affiche le sha256 sans confronter) demeure
+pour la vérification à la main.
 
 LA CÉRÉMONIE, PAS À PAS (le développeur, à sa machine hors-ligne) :
 
@@ -33,7 +49,9 @@ LA CÉRÉMONIE, PAS À PAS (le développeur, à sa machine hors-ligne) :
      EST le coffre »).
 
   2. LA RÉPÉTITION GÉNÉRALE. Rejouer l'autotest chez vous :
-     python3 sequestre_d183.py --autotest  → VERDICT : VERT exigé.
+     python3 sequestre_d183.py --autotest  → VERDICT : VERT exigé
+     (les 20 lignes de reconstitution, les 2 lignes de falsification
+     REFUSÉE, la ligne honnête VERT).
 
   3. LE DÉCOUPAGE.
      python3 sequestre_d183.py --ceremonie <fichier-phrase>
@@ -49,24 +67,59 @@ LA CÉRÉMONIE, PAS À PAS (le développeur, à sa machine hors-ligne) :
      raison 3 : « la proposition ne se substitue à la garde durable QUE si
      la cérémonie des parts est VÉCUE de bout en bout — sinon elle AJOUTE
      un risque de perte ») :
-     python3 sequestre_d183.py --reconstituer part-1.txt part-2.txt part-3.txt
-     → comparer le sha256 rendu à l'empreinte de contrôle du manifeste :
-     ÉGALITÉ EXIGÉE. Répéter avec une autre combinaison (ex. 2+4+5).
+     python3 sequestre_d183.py --verifier part-1.txt part-2.txt part-3.txt manifeste-sequestre.txt
+     → VERT exigé (l'outil confronte LUI-MÊME le sha256 du rendu à
+     l'empreinte de contrôle). Répéter avec une autre combinaison
+     (ex. 2+4+5) : VERT deux fois AVANT tout retrait.
 
   6. LE RETRAIT (uniquement si 5 est VERT deux fois) — des gestes humains,
      jamais automatisés, dans l'ordre de la liste de contrôle du
      manifeste : la phrase en clair retirée du dépôt git ET de la racine
      du coffre Drive ; l'entrée de journal consignée (append-only) ; D81
-     amendée par la décision de cérémonie.
+     amendée par la décision de cérémonie. AUSSI (la checklist de
+     rotation, CHECKLIST-ROTATION.txt) : toute phrase dont l'exposition a
+     pu se produire pendant l'ère du clair est TOURNÉE — la phrase commise
+     en git y demeure à vie, seule la rotation la rend inopérante.
 
   7. L'ENTRETIEN. Un exercice de reconstitution périodique (les parts se
      dégradent : médias perdus, gardiens qui changent) — la périodicité
      appartient au développeur ; l'agenda de l'exercice est nommé au
      manifeste.
 
+LES PIÈCES DU KIT RAFFRAÎCHI (D219) :
+  - sequestre_d183.py ............ l'outil (l'instrument CF2 D120 tel
+                                   quel ; l'autotest, la cérémonie, la
+                                   reconstitution, la preuve --verifier)
+  - AUTOTEST.txt ................. la preuve à froid du 19/11 : 10/10
+                                   EXACTES, 10/10 DÉCHETS, la
+                                   falsification REFUSÉE ×2, l'honnête
+                                   VERT — VERDICT : VERT
+  - scan_secrets.py .............. L'ÉQUIVALENT PYTHON NOMMÉ (gitleaks/
+                                   trufflehog absents du bac, l'écart
+                                   D207 nommé) : le scan de l'historique
+                                   git COMPLET — voir
+                                   PROCEDURE-SCAN-SECRETS.txt (le dry-run
+                                   sur dépôt de test à secrets plantés :
+                                   zéro faux négatif exigé)
+  - PROCEDURE-SCAN-SECRETS.txt ... la procédure pas à pas + le dry-run +
+                                   le scan du vrai dépôt (le rapport)
+  - CHECKLIST-ROTATION.txt ....... la rotation de toute phrase exposée
+  - MATRICE-VISIBILITE-DEPOT.txt . la matrice de décision : privé tant
+                                   que D183 n'est pas appliqué et les
+                                   rotations vérifiées ; public + Zenodo
+                                   seulement après
+  - EXTENSION-TRANSPARENCE-PUBLIQUE.txt ... l'extension DOCUMENTÉE NON
+                                   APPLIQUÉE : l'ancrage du témoin
+                                   d'époque CF3 dans un journal de
+                                   transparence public (Rekor/Sigstore
+                                   ou RFC 3161)
+  - epreuves-d219/ ............... les consoles et les pièces de test du
+                                   rafraîchissement (phrase de test
+                                   publique marquée, D105)
+
 LES FRONTIÈRES :
-  - le labo ne exécute JAMAIS --ceremonie (la phrase réelle ne traverse
-    pas le bac à sable, D87) ;
+  - le labo n'exécute JAMAIS --ceremonie sur la phrase réelle (elle ne
+    traverse pas le bac à sable, D87) ;
   - l'outil ne supprime JAMAIS rien (le retrait est humain, listé) ;
   - le coffre réel demeure INTACT tant que la cérémonie n'est pas vécue ;
   - D105/D81 pour le clone : les tests du laboratoire tournent sur des
@@ -74,7 +127,9 @@ LES FRONTIÈRES :
     conteneur réel n'est jamais ouvert par un test (la frontière consignée
     par la présente édition, D190/D192).
 
-Références : D81 (la garde durable, décision active), D120 (le partage
-CF2), D183 (la proposition et l'analyse chiffrée), D190/D192 (les
-corrections v0.13.0 : la conséquence D81 au modèle de menace, le kit
-préparé sans l'appliquer).
+Références : D81 (la garde durable, décision ACTIVE jusqu'au geste vécu),
+D120 (le partage CF2), D183 (la proposition et l'analyse chiffrée),
+D190/D192 (les corrections v0.13.0 : la conséquence D81 au modèle de
+menace, le kit préparé sans l'appliquer), D219 (la transition D81 → D183
+préparée : le kit rafraîchi, le scan, la rotation, la matrice de
+visibilité, l'extension transparence — le geste au développeur).

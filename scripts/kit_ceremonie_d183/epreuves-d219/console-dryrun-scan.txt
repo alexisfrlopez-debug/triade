@@ -1,0 +1,25 @@
+LE SCAN DE SECRETS (D219) — l'historique git COMPLET de /tmp/depot-test-secrets-d219
+  6 constat(s) — chaque blob de l'historique confronté aux règles nommées
+
+  [ASSIGNATION-SECREE] reglages.py
+      blob 1418697c06628b11…, 105 o — apercu masque : ZFpj…== (longueur 38)
+  [CLE-PRIVEE] notes/cle-serveur.txt
+      blob 5f4c4927031eded4…, 146 o — apercu masque : RS…
+  [FICHIER-JETON] .env
+      blob e529835d03c5c850…, 10 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [JETON-GITHUB] token_helper.py
+      blob d8daeaeb787929ba…, 121 o — apercu masque : gh…
+  [PHRASE-CONTROLE] PHRASE-CONTROLE-COFFRE.txt
+      blob 94d3c51d9e692b21…, 41 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [SECRET-OAUTH-GOOGLE] config.ini
+      blob 567e3c386abd6e51…, 97 o — apercu masque : GOCS…J8 (longueur 46)
+
+DRY-RUN VERT   SECRET-OAUTH-GOOGLE @ config.ini → ATTRAPÉ (blob 567e3c386abd…)
+DRY-RUN VERT   ASSIGNATION-SECREE @ reglages.py → ATTRAPÉ (blob 1418697c0662…)
+DRY-RUN VERT   JETON-GITHUB @ token_helper.py → ATTRAPÉ (blob d8daeaeb7879…)
+DRY-RUN VERT   CLE-PRIVEE @ cle-serveur.txt → ATTRAPÉ (blob 5f4c4927031e…)
+DRY-RUN VERT   PHRASE-CONTROLE @ PHRASE-CONTROLE-COFFRE.txt → ATTRAPÉ (blob 94d3c51d9e69…)
+DRY-RUN VERT   FICHIER-JETON @ .env → ATTRAPÉ (blob e529835d03c5…)
+DRY-RUN : 6/6 secrets plantés ATTRAPÉS, zéro faux négatif, zéro faux positif sur les fichiers propres
+
+RAPPEL (D81/D219) : un secret commis en git y demeure à vie — le retrait du fichier ne retire pas l'historique ; le remède est la ROTATION (CHECKLIST-ROTATION.txt) et, pour la phrase de contrôle, la cérémonie D183 (le kit présent).

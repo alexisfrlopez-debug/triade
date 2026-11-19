@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""linter_interpieces.py — LE LINTER INTER-PIÈCES (D218, l'instruction 376f15f18).
+"""linter_interpieces.py — LE LINTER INTER-PIÈCES (D218, l'instruction 376f15f18 ;
+ÉTENDU à D219, l'instruction jx4l5vy5c).
 
 Fail-closed : toute divergence d'une valeur partagée entre les CINQ pièces du
 pack REFUSE le build. Les valeurs partagées confrontées :
   — les tailles et empreintes des artefacts scellés (passeur.exe / passeur-c.dll) ;
   — les ratios (la plage RQ2 attribuée à l'ère Loupe contre M1 ; le canon M4 17,9×) ;
-  — les versions croisées (manuscrit v0.19.1 ↔ spécification v0.15.1 ↔ Livre v1.2) ;
+  — les versions croisées (manuscrit v0.19.2 ↔ spécification v0.15.2 ↔ Livre v1.3) ;
   — les QUATORZE arbres signés (D177) ;
   — le statut des outils formels (TLC / Apalache, 13 règles, 288 formes) ;
-  — la visibilité du dépôt (GitHub PRIVÉ, à trancher avant soumission — D81).
+  — la visibilité du dépôt (GitHub PRIVÉ, la matrice D219) ;
+  — LES STATUTS D81/D183 (l'extension D219) : la transition D81 → séquestre D183
+    PRÉPARÉE (D219) exigée aux pièces — la spécification (la ligne du modèle de
+    menace), le manuscrit (§4.1), le Livre (la cérémonie de séquestre § 7.5),
+    la présentation (l'état des éditions) — et la falsification du statut
+    (« préparée » mutée en « appliquée ») ATTRAPÉE.
 Les motifs interdits : « sans compilateur ni langage de programmation »,
 « 3–11× », l'attribution bras-à-bras de la plage RQ2, « 57,856 »/« 97,937 »,
-« real-hardware timing remains unmeasured », « 305–318 ».
+« real-hardware timing remains unmeasured », « 305–318 », la visibilité
+publique prématurée (avant la cérémonie vécue et la rotation vérifiée).
 
 Usage :
   python3 linter_interpieces.py                 # le contrôle, exit 1 si ROUGE
@@ -28,10 +35,10 @@ ICI = Path(__file__).resolve().parent
 REPO = ICI.parent.parent
 
 PIECES = {
-    "manuscrit": REPO / "edition-v0191" / "main.pdf",
-    "specification": REPO / "scripts" / "spec_v151" / "final.pdf",
-    "livre": REPO / "scripts" / "livre_v12" / "final.pdf",
-    "preuves": ICI / "TRIADE_preuves_et_calculs_v0.19.1.pdf",
+    "manuscrit": REPO / "edition-v0192" / "main.pdf",
+    "specification": REPO / "scripts" / "spec_v152" / "final.pdf",
+    "livre": REPO / "scripts" / "livre_v13" / "final.pdf",
+    "preuves": ICI / "TRIADE_preuves_et_calculs_v0.19.2.pdf",
     "presentation": ICI / "TRIADE_presentation_20261120.pdf",
 }
 
@@ -146,18 +153,18 @@ def controle(textes=None, verbeux=True):
     v.exige("manuscrit", ["23.1"], "la base avant 23,1× (manuscrit)")
 
     # ---- 3. les versions croisées ----
-    v.exige("manuscrit", ["v0.19.1"], "la version du manuscrit")
-    v.exige("manuscrit", ["v0.15.1"], "la référence à la spécification courante")
-    v.exige("specification", ["v0.15.1"], "la version de la spécification")
-    v.exige("specification", ["v0.19.1", "cohérence"], "l'édition de cohérence nommée à la spec", tous=False)
-    v.exige("livre", ["v1.2"], "la version du Livre")
-    v.exige("livre", ["v0.15.1"], "la référence à la spécification courante (Livre)")
-    v.exige("preuves", ["v0.19.1"], "la version des preuves")
-    v.exige("preuves", ["v0.15.1"], "la référence à la spec courante (preuves)")
-    v.exige("preuves", ["v1.2"], "la référence au Livre v1.2 (preuves)")
-    v.exige("presentation", ["v0.19.1"], "la version du manuscrit (présentation)")
-    v.exige("presentation", ["v0.15.1"], "la version de la spec (présentation)")
-    v.exige("presentation", ["v1.2"], "la version du Livre (présentation)")
+    v.exige("manuscrit", ["v0.19.2"], "la version du manuscrit")
+    v.exige("manuscrit", ["v0.15.2"], "la référence à la spécification courante")
+    v.exige("specification", ["v0.15.2"], "la version de la spécification")
+    v.exige("specification", ["D219", "cohérence"], "la transition D219 nommée à la spec (et la cohérence D218)", tous=False)
+    v.exige("livre", ["v1.3"], "la version du Livre")
+    v.exige("livre", ["v0.15.2"], "la référence à la spécification courante (Livre)")
+    v.exige("preuves", ["v0.19.2"], "la version des preuves")
+    v.exige("preuves", ["v0.15.2"], "la référence à la spec courante (preuves)")
+    v.exige("preuves", ["v1.3"], "la référence au Livre v1.3 (preuves)")
+    v.exige("presentation", ["v0.19.2"], "la version du manuscrit (présentation)")
+    v.exige("presentation", ["v0.15.2"], "la version de la spec (présentation)")
+    v.exige("presentation", ["v1.3"], "la version du Livre (présentation)")
 
     # ---- 4. les QUATORZE arbres signés ----
     v.exige("specification", ["Quatorze arbres de couche"], "les quatorze arbres (spec §12.4)")
@@ -178,10 +185,32 @@ def controle(textes=None, verbeux=True):
     v.exige("specification", ["Apalache"], "l'outil Apalache nommé (spec)")
     v.exige("specification", ["288 formes"], "la couverture 288 formes (spec)")
 
-    # ---- 6. la visibilité du dépôt ----
+    # ---- 6. la visibilité du dépôt (la matrice D219) ----
     v.exige("presentation", ["PRIVÉ"], "la visibilité du dépôt : GitHub PRIVÉ (présentation)")
     v.exige("presentation", ["D81"], "la décision D81 citée à la ligne de visibilité")
+    v.exige("presentation", ["D219"], "la décision D219 (la transition préparée) citée")
+    v.exige("presentation", ["la matrice de visibilité"], "la matrice de visibilité nommée (présentation)")
+    v.exige("presentation", ["seulement après la cérémonie VÉCUE et les rotations vérifiées"],
+           "la condition de la matrice : public seulement après la cérémonie vécue et les rotations vérifiées")
+    v.exige("specification", ["public + Zenodo seulement"], "la matrice : public + Zenodo seulement après (spec)")
     v.interdit("presentation", "GitHub public", "la visibilité publique avant D183")
+
+    # ---- 6 bis. LES STATUTS D81/D183 (l'extension D219) ----
+    v.exige("specification", ["la transition vers le séquestre D183 est PRÉPARÉE (D219"],
+           "la ligne D81 du modèle de menace au statut exact : la transition PRÉPARÉE (spec)")
+    v.exige("specification", ["geste au développeur"], "le statut « geste au développeur » (spec)")
+    v.exige("manuscrit", ["now prepared as decision D219"],
+           "la ligne D81 du §4.1 : now prepared as decision D219 (manuscrit)")
+    v.exige("manuscrit", ["completes the preparation as decision D219"],
+           "le paragraphe Two gestures au statut exact (manuscrit)")
+    v.exige("livre", ["cérémonie de séquestre D183"], "la section cérémonie D183 (Livre § 7.5)")
+    v.exige("livre", ["un facteur"], "l'analyse chiffrée au facteur ≈ 40 (Livre)")
+    v.exige("preuves", ["LA FALSIFICATION (D219)"], "la falsification de l'autotest (preuves)")
+    v.exige("preuves", ["REFUSÉE"], "la part forgée REFUSÉE (preuves)")
+    v.exige("preuves", ["6/6"], "le dry-run 6/6 (preuves)")
+    v.exige("presentation", ["PRÉPARÉE (D219)"], "la transition préparée D219 (présentation, la table)")
+    v.interdit("manuscrit", "the transition is complete", "la transition APPLIQUÉE avant le geste (manuscrit)")
+    v.interdit("specification", "la cérémonie D183 est vécue", "la cérémonie déclarée vécue avant le geste (spec)")
 
     # ---- 7. les motifs interdits généraux ----
     for piece in PIECES:
@@ -220,8 +249,8 @@ def autocontrole():
          "manuscrit", lambda t: t.replace("17.9", "17.8")),
         ("l'empreinte scellée mutée (toutes occurrences)",
          "preuves", lambda t: t.replace("4a7229e7418e8276", "4a7229e7418e8277")),
-        ("la version mutée (v0.15.1 → v0.13.0)",
-         "manuscrit", lambda t: t.replace("v0.15.1", "v0.13.0", 1)),
+        ("la version mutée (v0.15.2 → v0.13.0)",
+         "manuscrit", lambda t: t.replace("v0.15.2", "v0.13.0", 1)),
         ("les quatorze arbres mutés (→ treize)",
          "specification", lambda t: t.replace("Quatorze arbres de couche", "Treize arbres de couche", 1)),
         ("un motif interdit réintroduit (« sans compilateur ni langage de programmation »)",
@@ -232,6 +261,18 @@ def autocontrole():
          "presentation", lambda t: t.replace(
              "se tient dans la plage 2,98-11,37× la baseline M1",
              "se tient dans la plage 2,98-11,37× le bras C", 1)),
+        ("LE STATUT D183 MUTÉ (préparée → APPLIQUÉE — la falsification de l'extension D219)",
+         "specification", lambda t: t.replace(
+             "la transition vers le séquestre D183 est PRÉPARÉE (D219",
+             "la transition vers le séquestre D183 est APPLIQUÉE (D219", 1)),
+        ("la cérémonie déclarée vécue avant le geste (le manuscrit dévoyé)",
+         "manuscrit", lambda t: t.replace(
+             "now prepared as decision D219",
+             "now applied: the transition is complete", 1)),
+        ("la visibilité publique prématurée (la matrice cassée)",
+         "presentation", lambda t: t.replace(
+             "public + Zenodo seulement après la cérémonie VÉCUE et les rotations vérifiées",
+             "public + Zenodo dès aujourd'hui, la cérémonie peut attendre", 1)),
     ]
     verts = 0
     for nom, piece, mutation in cas:

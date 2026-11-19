@@ -1,0 +1,130 @@
+EXTENSION-TRANSPARENCE-PUBLIQUE — L'ANCRAGE DU TÉMOIN D'ÉPOQUE CF3 À UN
+JOURNAL DE TRANSPARENCE PUBLIC (Rekor/Sigstore ou RFC 3161)
+DOCUMENTÉE, NON APPLIQUÉE (D219)
+==============================================================================
+
+CE QUE CECI EST. L'extension prescrite par l'instruction jx4l5vy5c :
+« Propose, comme extension documentée non appliquée, l'ancrage du témoin
+d'époque CF3 dans un journal de transparence public (Rekor/Sigstore ou
+RFC 3161) : delta au modèle de menace, format du témoin, vérification
+machine, ce que cela retire à la dépendance "carte papier regardée" ». La
+présente DOCUMENTE ; elle ne TOUCHE à rien : aucun envoi à un service
+externe, aucune clé, aucune cérémonie vécue — le geste, s'il vient,
+appartient au développeur (D87).
+
+─ LE POINT DE DÉPART : CE QUE LA CARTE PAPIER PORTE AUJOURD'HUI ─────────────
+Le témoin d'époque actuel est LA CARTE DU SACHET (le Livre ch. « Les
+secrets et leurs gardes ») : une fiche papier ÉCRITE À LA MAIN, une ligne
+par clôture (date, époque, checksum). Sa fonction : L'ANTI-RETOUR-EN-
+ARRIÈRE — un attaquant admin peut effacer le journal local et resservir un
+conteneur ancien avec son piège ancien ; il ne peut pas IMITER VOTRE
+ÉCRITURE dans votre sachet. SA LIMITE, DITE AU LIVRE : « la carte ne
+protège que si elle est REGARDÉE » — le verdict à froid ré-exécuté par la
+machine froide est le filet, mais entre deux clôtures, un conteneur
+rejoué n'est démasqué que si quelqu'un lit la carte et compare. La
+dépendance est HUMAINE ET LOCALE : la preuve d'antériorité vit dans un
+sachet, pas dans un tiers vérifiable.
+
+─ L'EXTENSION : ANCRER LA LIGNE DE CLÔTURE À UN JOURNAL PUBLIC ──────────────
+LE PRINCIPE. À chaque clôture d'époque (le checksum que la carte porte),
+le maître SOUMET en outre une entrée à un journal de transparence public
+— un tiers append-only dont personne (pas même son opérateur) ne peut
+réécrire ou retirer une entrée sans que la falsification soit DÉTECTABLE
+par vérification croisée :
+
+  VARIANTE A — REKOR (SIGSTORE) : le journal public de Sigstore, un
+  méristérèse (transparency log) vérifiable par Merkle : chaque entrée
+  rend un UUID et une PROMESSE D'INCLUSION signée, l'inclusion prouvable
+  a posteriori (rekor-cli verify --uuid), le point de contrôle (signed
+  tree head) publiable et contraignant l'opérateur lui-même.
+
+  VARIANTE B — RFC 3161 (TSA) : une horodatage cryptographique d'un tiers
+  — la preuve que le checksum EXISTAIT à l'instant T, signée par
+  l'autorité, vérifiable hors ligne contre son certificat.
+
+LE FORMAT DU TÉMOIN (le même aux deux variantes — la charge utile est
+imprimable, jamais secrète) :
+
+  TRIADE-CF3-EPOQUE-N
+  date de clôture      : 2026-10-30 (l'heure locale du geste)
+  checksum du coffre   : 0cc89a96 (celui que verifier affiche et que la
+                          carte porte)
+  empreinte du piège   : sha256 des 32 premiers octets de S_piège(N) —
+                          prouve l'ÉPOQUE sans révéler le secret (le piège
+                          ne quitte jamais le média : l'empreinte suffit à
+                          l'ancrage)
+  conteneur            : sha256(coffre_cf3.bin) à la clôture
+  soumission           : sha256 du témoin ci-dessus (le point ancé à
+                          Rekor ou au TSA)
+
+La sortie vit au dépôt (temoins-epoque/), une ligne par clôture : la
+donnée soumise, l'UUID Rekor (ou le jeton RFC 3161), la promesse
+d'inclusion, le point de contrôle. RIEN DE SECRET ne quitte la machine :
+le témoin est fait d'empreintes publiques.
+
+LA VÉRIFICATION MACHINE (la commande qui remplace le regard) :
+  rekor-cli verify --uuid <uuid> --artifact <témoin reconstruit>
+  → l'inclusion PROUVÉE : le checksum d'époque N existait publiquement à
+  la date consignée ; un attaquant qui ressuscite l'époque N sur une
+  machine dont il a effacé les journaux est démasqué PAR LE JOURNAL
+  PUBLIC (l'entrée dit l'époque fermée ; l'état ressuscité prétend
+  l'époque ouverte). La vérification est SCRIPTABLE au verifier : «
+  époque N → témoin public N présent et inclus » devient un contrôle de
+  routine, plus jamais un geste d'œil.
+
+─ LE DELTA AU MODÈLE DE MENACE (l'analyse honnête, les deux bords) ──────────
+CE QUE L'EXTENSION AJOUTE :
+  + L'ANTI-RETOUR-EN-ARRIÈRE GAGNE UN TÉMOIN NON LOCAL : l'admin malveillant
+    qui efface journal et cartes affronte le journal PUBLIC — il ne peut
+    ni l'effacer ni le forger (la falsification du méristérèse est
+    détectable par les points de contrôle croisés) ;
+  + LA PREUVE D'ANTÉRIORITÉ devient TIERS-VÉRIFIABLE : un relecteur
+    externe (le DOI, le grant D209) peut vérifier l'âge des époques SANS
+    accéder au sachet ;
+  + LA DÉPENDANCE « carte regardée » S'AMENUISE : la relecture humaine
+    demeure recommandée mais n'est plus LE SEUL point de détection entre
+    deux vérifications à froid.
+
+CE QUE L'EXTENSION NE RETIRE PAS (les limites, dites telles quelles) :
+  − ELLE NE PROUVÉ PAS LA CLÔTURE, SEULEMENT L'EXISTENCE : le témoin
+    prouve que le checksum était connu à T, pas que l'époque fut
+    correctement fermée (un attaquant qui CONNAÎT le checksum d'une
+    époque close peut l'ancrer à son tour — l'entrée du MAÎTRE,
+    signée par SA clé hors-ligne, reste la marque de confiance ; l'ancrage
+    ne remplace pas la signature, il la DATE) ;
+  − ELLE AJOUTE UNE ÉMISSION RÉSEAU À LA CÉRÉMONIE : la clôture, jusqu'ici
+    locale, téléphone à un service externe (Rekor public ou TSA) — le
+    modèle de menace gagne un canal de fuite de MÉTADONNÉES (l'existence
+    et l'horaire des clôtures deviennent observables du tiers) ;
+  − LA DISPONIBILITÉ DU TIERS devient une dépendance de VÉRIFICATION (pas
+    de scellement : la vérification à froid reste locale, le témoin
+    ancré peut être re-vérifié hors ligne une fois le point de contrôle
+    copié) ;
+  − REKOR DEMEURE UN SERVICE OPÉRÉ (l'infrastructure Sigstore) : la
+    vérification exige la chaîne de confiance de son écosystème ; la
+    variante RFC 3161 exige un TSA de confiance — les deux sont des
+    ARBITRAGES DU DÉVELOPPEUR, la présente ne choisit pas à sa place.
+
+CE QUE CELA RETIRE À LA DÉPENDANCE « CARTE PAPIER REGARDÉE » : la carte
+demeure (elle est gratuite, hors-ligne, indestructible tant que le sachet
+vit) mais DÉMOTÉE du rôle d'unique témoin au rôle de témoin DE REPLI :
+la détection entre deux froids passe du « quelqu'un regarde » au « la
+machine vérifie l'inclusion », et la carte reprend son office quand le
+réseau ou le tiers manque. La question du Livre — « le jour où verifier
+affiche un checksum absent de votre carte, le mensonge est nommé » —
+gagne sa réponse machine : le checksum absent du témoin public EST le
+mensonge, nommé par un tiers que l'attaquant ne tient pas.
+
+─ POURQUOI ELLE N'EST PAS APPLIQUÉE ─────────────────────────────────────────
+(1) Le geste émet vers un service externe : l'arbitrage appartient au
+développeur, jamais au labo (D87 — la même frontière que la cérémonie
+D183 elle-même). (2) La cérémonie d'ère et le runbook du Livre sont
+SCELLÉS aux éditions courantes : y adjoindre un geste exige une édition
+documentée du Livre, pas un appendice silencieux (D180 : l'édition
+consigne, elle ne légifère pas). (3) Aucune urgence : la carte et le
+verdict à froid demeurent la garde en vigueur ; l'extension est un
+RENFORCEMENT futur, consigné pour ne pas être improvisé.
+
+(19/11/2026, la session D219 — l'extension écrite et non vécue : le
+témoin public décrit au format près, le delta aux deux bords, la frontière
+du geste au développeur)

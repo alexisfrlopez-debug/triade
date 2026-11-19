@@ -1,0 +1,73 @@
+--- spec_v151/sec-a.tex	2026-11-19 07:03:30.192574296 +0000
++++ spec_v152/sec-a.tex	2026-11-19 07:19:38.202466342 +0000
+@@ -727,6 +727,34 @@
+ leur sourcement ; le linter inter-pièces confronte les valeurs
+ partagées aux cinq pièces du pack à chaque build (D218).
+ 
++\subsection{Ce que change la v0.15.2}\label{sec:nouveautes152}
++
++L'ÉDITION DE LA TRANSITION PRÉPARÉE (D219, l'instruction jx4l5vy5c — la
++vague du 18/11, la deuxième) : AUCUNE règle modifiée, aucune couche
++ajoutée, aucun artefact scellé touché, le coffre réel et les phrases
++réelles JAMAIS approchés (D105 : passeur.exe/passeur-c.dll re-téléchargés
++intacts, le sceau 14 arbres verts). La ligne D81 du modèle de menace
++(§\ref{sec:menaces}) est portée à SON STATUT EXACT : la transition vers
++le séquestre chiffré D183 est \textbf{préparée, geste au développeur} —
++le kit de cérémonie rafraîchi (l'autotest rejoué : 10/10 combinaisons
++exactes, 10/10 paires sous le seuil inertes, la falsification PROUVÉE —
++une part forgée REFUSÉE par la porte de l'empreinte de contrôle ; le
++mode \code{--verifier} fail-closed né au geste), l'analyse chiffrée
++perte/exposition reprise (le facteur $\approx$ 40 en faveur du
++séquestre), le scan de secrets de l'historique git complet au dry-run
++vert (l'équivalent Python nommé, gitleaks/trufflehog absents — six
++secrets plantés sur six attrapés, zéro faux négatif ; le vrai dépôt
++trié : la phrase D81 connue, neuf fixtures de test nommées, aucune
++fuite réelle au-delà de l'arbitrage assumé), la checklist de rotation de
++toute phrase exposée, la matrice de décision de visibilité du dépôt
++(privé tant que la cérémonie n'est pas vécue et la rotation vérifiée ;
++public + Zenodo seulement après), et l'extension transparence publique
++DOCUMENTÉE NON APPLIQUÉE (l'ancrage du témoin d'époque à Rekor/Sigstore
++ou RFC 3161 : le format du témoin, la vérification machine, le delta au
++modèle de menace aux deux bords). D81 DEMEURE LA DÉCISION ACTIVE
++jusqu'à ce que la cérémonie soit vécue de bout en bout — le protocole
++prépare, le maître décide (D87).
++
+ \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
+ 
+ La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —
+--- spec_v151/sec-d.tex	2026-11-19 07:03:30.193574300 +0000
++++ spec_v152/sec-d.tex	2026-11-19 07:19:38.203466346 +0000
+@@ -128,9 +128,14 @@
+ la phrase \\
+ \textbf{Vol du coffre-fort des phrases} & chiffrement intégral (Argon2id, contexte
+ HKDF dédié, AEAD) ; écriture atomique ; depuis D81 la phrase de contrôle vit au coffre
+-Drive et au dépôt — mitigation première : restreindre le partage par lien & confidentialité
++Drive et au dépôt — mitigation première : restreindre le partage par lien ; la
++transition vers le séquestre D183 est PRÉPARÉE (D219 : le kit rafraîchi avec la
++falsification prouvée, le scan de secrets au dry-run vert, la checklist de rotation,
++la matrice de visibilité — le geste au développeur) & confidentialité
+ ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — la
+-rotation reste le remède (D75, étendu D81) \\
++rotation reste le remède (D75, étendu D81) ; le dépôt demeure PRIVÉ tant que la
++cérémonie D183 n'est pas vécue et la rotation vérifiée — public + Zenodo seulement
++après (D219) \\
+ \textbf{Expropriation (employeur, tiers)} & barrière juridique BSL 1.1 (D84) ;
+ barrière cryptographique : clé maîtresse jamais entière (Shamir, axe 2), intention
+ signée par la clé hors-ligne (sceau I, axe 3), serrure piégée à média séparé (axe 4) &
+@@ -1314,7 +1319,15 @@
+ requalification de D19 en politique de projet (D182), les QUATORZE
+ arbres signés au §\ref{sec:sceauI} (D177), le titre réel de l'annexe
+ décisionnelle (D75--D198), les budgets du §\ref{sec:carte} annotés
+-HISTORIQUES contre les mesures v0.17--v0.18 (D195). La v0.9.0 avait
++HISTORIQUES contre les mesures v0.17--v0.18 (D195). La v0.15.2 est
++L'ÉDITION DE LA TRANSITION PRÉPARÉE (D219, la même vague, la
++deuxième instruction) : AUCUNE règle modifiée — la ligne D81 du
++modèle de menace à son statut exact (le kit de séquestre D183
++rafraîchi avec la falsification prouvée, le scan de secrets de
++l'historique complet au dry-run vert, la checklist de rotation,
++la matrice de visibilité du dépôt, l'extension transparence
++publique documentée non appliquée — le statut « préparée, geste
++au développeur », la garde D81 active jusqu'au geste vécu). La v0.9.0 avait
+ consolidé le programme d'après M10 : D177 (la cérémonie d'ère du TGN
+ armée — le quatorzième arbre), D178 (LE JALON M10 FRANCHI — la balise
+ \code{loupe 0.1.0} scellée par fait de carte sur le onzième run recoupé 39/39,

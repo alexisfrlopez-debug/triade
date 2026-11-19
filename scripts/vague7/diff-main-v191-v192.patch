@@ -1,0 +1,99 @@
+--- ../edition-v0191/main.tex	2026-11-19 07:03:29.663572156 +0000
++++ ../edition-v0192/main.tex	2026-11-19 07:34:25.977063685 +0000
+@@ -1,8 +1,14 @@
+ % =====================================================================
+-%  TRIADE — édition académique v0.19.1 (manuscrit IMRAD, anglais)
+-%  L'édition v0.19.1 est une ÉDITION DE COHÉRENCE INTER-PIÈCES née de la
+-%  v0.19.0 (la clôture D210 portée inchangée) : la référence à la
+-%  spécification courante (v0.13.0 → v0.15.1), les tailles des artefacts
++%  TRIADE — édition académique v0.19.2 (manuscrit IMRAD, anglais)
++%  L'édition v0.19.2 est L'ÉDITION DE LA TRANSITION PRÉPARÉE (D219,
++%  l'instruction jx4l5vy5c — la vague du 18/11, la deuxième) née de la
++%  v0.19.1 (la clôture D210 et la cohérence inter-pièces portées
++%  inchangées) : la ligne D81 du modèle de menace (§4.1) au statut
++%  exact — le kit de séquestre D183 rafraîchi (la falsification prouvée),
++%  le scan de secrets au dry-run vert, la checklist de rotation, la
++%  matrice de visibilité du dépôt, l'extension transparence publique
++%  documentée non appliquée. AUCUNE valeur mesurée modifiée. Les tailles
++%  des artefacts
+ %  scellés passeur re-hachées aux octets livrés (61 952 / 102 390 o — les
+ %  tailles v1 défaillantes étaient appariées aux hash v2+), les énoncés de
+ %  timing matériel alignés sur les runs dudect SIGNÉS du 13/11. AUCUNE
+@@ -64,11 +70,11 @@
+ \usepackage{fancyhdr}
+ \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
+             urlcolor=liaison, unicode=true,
+-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.19.1)},
++            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.19.2)},
+             pdfauthor={Alexis Lopez}]{hyperref}
+ \pagestyle{fancy}
+ \fancyhf{}
+-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.19.1}
++\fancyhead[L]{\small\itshape TRIADE — academic edition v0.19.2}
+ \fancyhead[R]{\small\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ 
+@@ -85,7 +91,7 @@
+ fourteen-unit two-arm field campaign, and two sealed applications}}
+ \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
+ Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
+-\date{19 November 2026 — Academic edition v0.19.1 (the D210 extension campaign closed and carried from v0.19.0: four units at identical formats and randomized order, the fourth closed on its red at the delivery cap with three kit-side escapes in the shared judge, the piece never at fault; the empirical attribution tranchée on pieces --- the same C piece re-delivered through a minimal standard kit, 14 VERT 0 ROUGE; the H6--H8 verdicts explicit --- H6 holds by attribution, H7 untested on a draw that gave no contrast, H8 falsified as the corrective spiral declined; the M2/M3/M4 metrics consigned as filed, their gaps named; this v0.19.1 is a cross-piece coherence pass --- the current specification reference, the re-hashed sealed-artifact sizes, the hardware-timing statements aligned with the signed 13 November runs; no measured value of the sealed v0.18.1 edition modified)}
++\date{19 November 2026 — Academic edition v0.19.1 (the D210 extension campaign closed and carried from v0.19.0: four units at identical formats and randomized order, the fourth closed on its red at the delivery cap with three kit-side escapes in the shared judge, the piece never at fault; the empirical attribution tranchée on pieces --- the same C piece re-delivered through a minimal standard kit, 14 VERT 0 ROUGE; the H6--H8 verdicts explicit --- H6 holds by attribution, H7 untested on a draw that gave no contrast, H8 falsified as the corrective spiral declined; the M2/M3/M4 metrics consigned as filed, their gaps named; this v0.19.2 is the prepared-transition edition (D219) --- the D81 threat-model line carried to its exact status: the D183 escrow kit refreshed with proven falsification and a fail-closed verification gate, the full git-history secrets scan (dry-run green, the named Python equivalent), the rotation checklist and the repository visibility matrix (private until the ceremony is lived and the rotations verified; public with the Zenodo DOI only after); no measured value of the sealed v0.18.1 edition modified)}
+ 
+ \begin{document}
+ \maketitle
+@@ -345,7 +351,7 @@
+ 
+ The development loop itself (update an intention, re-derive the oracle,
+ edit the notation, rebuild, verify, seal) and the seal ceremony model are
+-described in the protocol specification v0.15.1, which this edition
++described in the protocol specification v0.15.2, which this edition
+ accompanies; we summarise only what the evaluation needs.
+ 
+ \paragraph{Governance: signed intent and append-only records.}
+@@ -1335,7 +1341,11 @@
+ $\approx 4.0 \times 10^{-2}\,C_{exposure}$ against
+ $\approx 1.0 \times 10^{-3}$ under the escrow --- a factor $\approx 40$
+ --- and D81 \emph{remains} the active decision (the ceremony belongs to
+-the developer).
++the developer) --- \emph{now prepared} as decision D219: the escrow kit
++refreshed (the autotest re-run with proven falsification), the
++full-history secrets scan dry-run green, the rotation checklist and the
++repository visibility matrix delivered, the transparency-log extension
++documented without applying it.
+ 
+ \paragraph{The D81 consequence, stated in the model (v0.13.0).} The
+ honest accounting of the current decision adds a row to the threat
+@@ -1348,14 +1358,24 @@
+ nothing, but the third --- the trapped medium --- is the only real
+ confidentiality barrier left, and the integrity guarantees (epoch
+ witnesses, destruction on proven falsification) carry the protective
+-load. Two gestures answer this row: the v0.13.0 edition \emph{prepares}
+-the D183 encrypted-escrow ceremony kit (Shamir 5-of-3 split,
+-cold-reconstitution proof, media-separation plan, withdrawal checklist)
+-at the laboratory, \emph{without applying it} --- closing the passphrase
+-exposure belongs to the developer; and the laboratory's own tests run on
+-temporary clones with test phrases only (the D105 visible-test boundary:
+-the real container is never opened by laboratory tests, and test states
+-are visibly marked as such).
++load. Two gestures answer this row: the v0.13.0 edition \emph{prepared}
++the D183 encrypted-escrow ceremony kit, and the v0.19.2 edition
++completes the preparation as decision D219 --- the kit refreshed (the
++autotest re-run: ten-of-ten threshold combinations exact, ten-of-ten
++sub-threshold pairs inert, a forged part \emph{refused} by the
++control-fingerprint gate; a fail-closed \code{--verifier} mode), the
++full git-history secrets scan (the named Python equivalent of gitleaks,
++its dry-run on a planted test repository green --- six of six caught,
++zero false negatives; the real repository triaged: the D81 passphrase
++known, nine test fixtures named, no real credential beyond the assumed
++arbitration), the rotation checklist for any exposed passphrase, the
++repository visibility matrix (private until the ceremony is lived and
++the rotations verified; public with the Zenodo DOI only after), and the
++transparency-log extension documented \emph{without applying it} ---
++closing the passphrase exposure belongs to the developer; and the
++laboratory's own tests run on temporary clones with test phrases only
++(the D105 visible-test boundary: the real container is never opened by
++laboratory tests, and test states are visibly marked as such).
+ 
+ \paragraph{Crystallisation: the statistical model --- corrected (v0.13.0).}
+ The rule (ten consecutive byte-identical rebuilds before sealing) seals

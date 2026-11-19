@@ -1,0 +1,34 @@
+AUTOTEST DE L'OUTIL DE SÉQUESTRE D183 — la preuve à froid du geste du laboratoire
+(phrase de test PUBLIQUE, 48 octets ; le partage CF2 D120 : 5 parts à seuil 3 ; v06/coffre_cf2.py tel quel)
+
+  parts (0, 1, 2) : EXACTE
+  parts (0, 1, 3) : EXACTE
+  parts (0, 1, 4) : EXACTE
+  parts (0, 2, 3) : EXACTE
+  parts (0, 2, 4) : EXACTE
+  parts (0, 3, 4) : EXACTE
+  parts (1, 2, 3) : EXACTE
+  parts (1, 2, 4) : EXACTE
+  parts (1, 3, 4) : EXACTE
+  parts (2, 3, 4) : EXACTE
+  paire (0, 1) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 2) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (0, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 2) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (1, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (2, 3) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (2, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  paire (3, 4) (sous le seuil) : DÉCHET (rien ne fuite)
+  part seule : par construction GF(2^8) d'un degré 2, aucune information (Shamir 1979) — la part 0 ci-dessous est publiable :
+    sha256(part-0) = 46f05e10530cd0fe5a63013e92a6881a5082ddcdad1c48fbc38f1503dbfe5f8b (une part sous le seuil ne révèle rien)
+
+  LA FALSIFICATION (D219) — la porte de l'empreinte de contrôle confronte chaque reconstitution :
+    parts (0, 1, 2) dont une FORGÉE (octet muté) : REFUSÉE — sha256 ≠ l’empreinte de contrôle
+    parts (2, 3, 4) dont une FORGÉE (octet muté) : REFUSÉE — sha256 ≠ l’empreinte de contrôle
+    parts (0, 1, 2) honnêtes : VERT — sha256 == l’empreinte de contrôle
+
+VERDICT : VERT — l'outil est prouvé à froid
+Exécuté le 2026-11-19T07:09:10
+LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (aucune phrase réelle lue, aucun conteneur ouvert) — le kit attend le geste du développeur (D183 : la cérémonie exigée de bout en bout ; D219 : la transition préparée, le geste au développeur).

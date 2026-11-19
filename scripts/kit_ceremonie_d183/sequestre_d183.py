@@ -17,7 +17,21 @@ DEUX RÉGIMES, SÉPARÉS PAR CONSTRUCTION :
                les C(5,3) = 10 combinaisons de 3 parts reconstituent
                EXACTEMENT la phrase ; les C(5,2) = 10 paires sous le seuil
                rendent un déchet ≠ phrase (l'information-théorique en
-               acte) ; le rapport AUTOTEST.txt est la pièce.
+               acte) ; LA FALSIFICATION (le rafraîchissement D219) : une
+               part forgée (un octet muté) est REFUSÉE par la
+               confrontation à l'empreinte de contrôle, le contrôle
+               négatif honnête rendu VERT par la même porte ; le rapport
+               AUTOTEST.txt est la pièce.
+
+  --verifier <p1> <p2> <p3> <manifeste>   LA PREUVE FAIL-CLOSED (le geste
+               du développeur, à SA machine hors-ligne) : reconstitue la
+               phrase des TROIS parts, calcule son sha256, le confronte à
+               l'empreinte de contrôle du manifeste — ÉGALITÉ exigée,
+               tout écart est un REFUS nommé (part fausse, forgée ou
+               corrompue), code de sortie 1. La phrase n'est jamais
+               affichée. (La variante --reconstituer demeure : elle
+               affiche le sha256 SANS confronter — la vérification à la
+               main reste possible.)
 
   --ceremonie <fichier-phrase>   LE GESTE DU DÉVELOPPEUR (à SA machine
                hors-ligne, JAMAIS au bac à sable) : lit SA phrase, la
@@ -94,6 +108,7 @@ def autotest() -> int:
         "",
     ]
     parts = decouper_phrase(PHRASE_TEST)
+    controle = sha256_hex(PHRASE_TEST)   # l'empreinte que le manifeste porte
     ok = True
     # (a) les C(5,3) = 10 combinaisons au seuil reconstituent EXACTEMENT
     combinaisons = list(itertools.combinations(range(N_PARTS), SEUIL))
@@ -115,12 +130,36 @@ def autotest() -> int:
                   "est publiable :")
     lignes.append(f"    sha256(part-0) = {sha256_hex(parts[0])} "
                   "(une part sous le seuil ne révèle rien)")
+    # (d) LA FALSIFICATION (le rafraîchissement D219) : une part forgée
+    #     (un octet du corps muté) est REFUSÉE par la porte du manifeste —
+    #     la même porte qui rend VERT le contrôle honnête. Le rejet est
+    #     NOMMÉ, fail-closed : aucun « à peu près » ne passe.
+    lignes += ["",
+               "  LA FALSIFICATION (D219) — la porte de l'empreinte de "
+               "contrôle confronte chaque reconstitution :"]
+    for combo in [(0, 1, 2), (2, 3, 4)]:
+        forge = bytearray(parts[combo[0]])
+        forge[3 + 5] ^= 0x01          # un octet du corps du premier bloc
+        rendu_f = reconstituer_phrase([bytes(forge)] + [parts[i] for i in combo[1:]])
+        refuse = sha256_hex(rendu_f) != controle
+        ok &= refuse
+        lignes.append(f"    parts {combo} dont une FORGÉE (octet muté) : "
+                      f"{'REFUSÉE — sha256 ≠ l’empreinte de contrôle' if refuse else 'ACCEPTÉE !'}")
+    # (e) LE CONTRÔLE NÉGATIF HONNÊTE : la même porte rend VERT la bonne
+    #     combinaison — la preuve que le REFUS vient de la falsification,
+    #     pas d'une porte qui refuse tout.
+    rendu_h = reconstituer_phrase([parts[0], parts[1], parts[2]])
+    honnete = sha256_hex(rendu_h) == controle
+    ok &= honnete
+    lignes.append(f"    parts (0, 1, 2) honnêtes : "
+                  f"{'VERT — sha256 == l’empreinte de contrôle' if honnete else 'ROUGE !'}")
     verdict = "VERT — l'outil est prouvé à froid" if ok else "ROUGE"
     lignes += ["", f"VERDICT : {verdict}",
                f"Exécuté le {datetime.datetime.now().isoformat(timespec='seconds')}",
                "LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (aucune phrase réelle lue, "
                "aucun conteneur ouvert) — le kit attend le geste du "
-               "développeur (D183 : la cérémonie exigée de bout en bout)."]
+               "développeur (D183 : la cérémonie exigée de bout en bout ; "
+               "D219 : la transition préparée, le geste au développeur)."]
     (ICI / "AUTOTEST.txt").write_text("\n".join(lignes) + "\n", encoding="utf-8")
     print("\n".join(lignes))
     return 0 if ok else 1
@@ -203,6 +242,37 @@ def reconstituer(fichiers: list[pathlib.Path]) -> int:
     return 0
 
 
+def verifier(fichiers: list[pathlib.Path], manifeste: pathlib.Path) -> int:
+    """LA PREUVE FAIL-CLOSED (le rafraîchissement D219) : la reconstitution
+    confrontée à l'empreinte de contrôle du manifeste — ÉGALITÉ exigée,
+    tout écart un REFUS nommé (part fausse, forgée ou corrompue)."""
+    import re as _re
+    texte = manifeste.read_text(encoding="utf-8")
+    m = _re.search(r"empreinte de contrôle de la phrase \(sha256\) : "
+                   r"([0-9a-f]{64})", texte)
+    if not m:
+        print("[D183] REFUS — l'empreinte de contrôle est introuvable au "
+              "manifeste (un manifeste qui ne dit pas quoi vérifier ne "
+              "vérifie rien)")
+        return 1
+    controle = m.group(1)
+    parts = [bytes.fromhex(f.read_text(encoding="utf-8").strip())
+             for f in fichiers]
+    rendu = reconstituer_phrase(parts)
+    sha = sha256_hex(rendu)
+    if sha == controle:
+        print(f"[D183] VERT — {len(parts)} parts, {len(rendu)} octets : le "
+              f"sha256 du rendu == l'empreinte de contrôle du manifeste")
+        print("[D183] la phrase n'est pas affichée — la preuve est "
+              "l'égalité des empreintes")
+        return 0
+    print("[D183] REFUS — le sha256 du rendu ≠ l'empreinte de contrôle : "
+          "une part est fausse, forgée ou corrompue (le rejet est nommé, "
+          "fail-closed ; essayez une autre combinaison de TROIS parts "
+          "recoupées au manifeste)")
+    return 1
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
@@ -212,4 +282,7 @@ if __name__ == "__main__":
         sys.exit(ceremonie(pathlib.Path(sys.argv[2])))
     if sys.argv[1] == "--reconstituer" and len(sys.argv) >= 4:
         sys.exit(reconstituer([pathlib.Path(a) for a in sys.argv[2:]]))
+    if sys.argv[1] == "--verifier" and len(sys.argv) == 6:
+        sys.exit(verifier([pathlib.Path(a) for a in sys.argv[2:5]],
+                          pathlib.Path(sys.argv[5])))
     raise SystemExit(__doc__)

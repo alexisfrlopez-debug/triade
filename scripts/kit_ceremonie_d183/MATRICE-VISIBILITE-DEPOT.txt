@@ -1,0 +1,74 @@
+MATRICE-VISIBILITE-DEPOT — LA DÉCISION DE VISIBILITÉ DU DÉPÔT (D219)
+======================================================================
+
+CE QUE CECI EST. La matrice prescrite par l'instruction jx4l5vy5c : « la
+matrice de décision visibilité dépôt (privé tant que D183 n'est pas
+appliqué et les rotations vérifiés ; public + Zenodo seulement après) ».
+L'état actuel : GitHub PRIVÉ (github.com/alexisfrlopez-debug/triade), la
+présentation porte « GitHub PRIVÉ — à trancher avant soumission (D81) ».
+
+LA MATRICE (chaque ligne est une CONDITION EXPRESSÉE, aucune implicite) :
+
+┌──────────────────────────────┬────────────────┬────────────────────────┐
+│ L'ÉTAT                        │ VISIBILITÉ     │ CE QUI MANQUE POUR     │
+│                              │ DU DÉPÔT       │ PASSER À LA LIGNE SUI- │
+│                              │                │ VANTE                  │
+├──────────────────────────────┼────────────────┼────────────────────────┤
+│ AUJOURD'HUI (D81 actif) :    │ PRIVÉ          │ — la cérémonie D183    │
+│ la phrase de contrôle en     │ (l'état courant│   vécue de bout en bout│
+│ clair au dépôt (le fichier   │ depuis la      │   (le kit D219 :       │
+│ est la remise) ; l'exposition│ première       │   répétition, découpa- │
+│ ≈ 3,9 %/an, l'arbitrage      │ sauvegarde)    │   ge, répartition,     │
+│ PERTE > EXPOSITION assumé    │                │   preuve à froid ×2,   │
+│                              │                │   retrait)             │
+├──────────────────────────────┼────────────────┼────────────────────────┤
+│ D183 APPLIQUÉ : la phrase    │ PRIVÉ          │ — la rotation de la    │
+│ retirée du dépôt ET de la    │ (inchangée)    │   phrase commise (elle │
+│ racine du coffre ; les parts │                │   demeure à l'historique│
+│ réparties ; la reconstitution│                │   git : seule la rota- │
+│ prouvée à froid DEUX fois    │                │   tion la rend inopé-  │
+│ (empreintes du manifeste)    │                │   rante) — CHECKLIST-  │
+│                              │                │   ROTATION.txt pas à   │
+│                              │                │   pas                  │
+├──────────────────────────────┼────────────────┼────────────────────────┤
+│ ROTATIONS VÉRIFIÉES : la     │ PRIVÉ, PRÊT    │ — le re-scan complet   │
+│ phrase tournée, l'ancienne   │ au passage     │   (scan_secrets.py)    │
+│ inopérante (le coffre la     │ public         │   re-trié : la tête    │
+│ refuse), les jetons (aucun   │                │   propre, le triage    │
+│ réel commis — le scan fait   │                │   des fixtures écrit ; │
+│ foi) ; les empreintes        │                │   la décision explicite│
+│ recoupées                    │                │   du développeur       │
+├──────────────────────────────┼────────────────┼────────────────────────┤
+│ PUBLIC + ZENODO : le dépôt   │ PUBLIC         │ RIEN — mais la fenêtre │
+│ public, le DOI déposé (le    │ (l'horizon     │ d'exposition redevient │
+│ paquet v0.19.0 au jeton, la  │ consigné,     │ un fait à traiter au   │
+│ licence BSL-1.1 au grant     │ JAMAIS         │ calendrier : le scan   │
+│ académique D209)             │ subi)          │ périodique entre au    │
+│                              │                │   runbook             │
+└──────────────────────────────┴────────────────┴────────────────────────┘
+
+LES RÈGLES DE LA MATRICE :
+  1. AUCUN PASSAGE implicite : chaque montée de ligne exige la décision
+     EXPLICITE du développeur, consignée (le journal des décisions,
+     append-only) — l'horizon « public + Zenodo » est CONSIGNÉ, pas promis.
+  2. L'ORDRE EST STRICT : D183 vécu → rotation vérifiée → re-scan trié →
+     public. Inverser deux lignes = exposer la phrase commise (l'historique
+     git la garde : rendre le dépôt public AVANT la rotation publie le
+     secret à vie — la ligne 2 ne protège QUE parce que le dépôt est
+     privé).
+  3. LE DOI ZENODO SUIT LA MÊME PORTE : le paquet de soumission
+     (TRIADE_soumission_v0.19.0.zip) ne porte PAS la phrase — mais le DOI
+     pointe le dépôt et la relecture externe y mène : la même matrice
+     gouverne (public + Zenodo, la même ligne).
+  4. LES FIXTURES du scan (m5/autorite/*.key, les ya29. de l'oracle
+     terrain) : le triage écrit (PROCEDURE-SCAN-SECRETS.txt) les accompagne
+     au public — un relecteur les verra, le triage répond AVANT la
+     question.
+  5. LE RETOUR EN ARRIÈRE existe : public → privé (un doute sur une fuite
+     future referme le dépôt et rouvre la rotation) — la matrice se
+     parcourt dans les deux sens, la ligne D183 → D81 ne se reparcourt
+     JAMAIS en silence (tout se consigne).
+
+(19/11/2026, la session D219 — la matrice posée AVANT le besoin : privé
+tant que la phrase vit au clair, public + Zenodo seulement après le
+retrait vécu et la rotation vérifiée)

@@ -1,0 +1,97 @@
+LE DIFF ANNOTÉ DE L'ÉDITION v0.19.2 — la transition D81 → D183 préparée
+(D219, l'instruction jx4l5vy5c, la vague 7, la deuxième) : chaque
+changement nommé, sourcé, AUCUNE valeur mesurée modifiée.
+================================================================================
+
+LE PÉRIMÈTRE : la ligne D81 du modèle de menace portée à SON STATUT EXACT
+aux trois pièces qui la portent (la spécification, le manuscrit §4.1, le
+runbook du Livre) ; les preuves et la présentation régénérées à l'état.
+Le coffre réel, les phrases réelles, les conteneurs : JAMAIS TOUCHÉS
+(D105). Les artefacts scellés et les arbres signés : OCTET-IDENTIQUES
+(vérifiés au geste — passeur.exe/passeur-c.dll re-téléchargés intacts,
+le sceau 14 arbres verts).
+
+── (1) LA SPÉCIFICATION v0.15.1 → v0.15.2 (diff-spec-v151-v152.patch,
+     73 lignes) ──
+L'ÉCART : la ligne D81 du modèle de menace (§15, la table tab:menaces)
+disait la garde durable sans dire son devenir ; le § 1.17 s'arrêtait à la
+v0.15.1 ; le journal des versions ignorait la v0.15.2.
+LA SOURCE : la décision D219 (append-only) — l'exécution de l'instruction
+jx4l5vy5c : le kit rafraîchi, le scan au dry-run vert, la checklist, la
+matrice, l'extension.
+LA CORRECTION : (a) la ligne D81 porte la transition — « la transition
+vers le séquestre D183 est PRÉPARÉE (D219 : le kit rafraîchi avec la
+falsification prouvée, le scan de secrets au dry-run vert, la checklist
+de rotation, la matrice de visibilité — le geste au développeur) » et le
+résiduel nomme la visibilité — « le dépôt demeure PRIVÉ tant que la
+cérémonie D183 n'est pas vécue et la rotation vérifiée — public + Zenodo
+seulement après (D219) » ; (b) le § 1.18 « Ce que change la v0.15.2 »
+naît (l'édition documentaire, AUCUNE règle modifiée, les frontières
+D105/D87, le résumé des cinq livrables du kit) ; (c) le journal des
+versions porte la phrase v0.15.2 (L'ÉDITION DE LA TRANSITION PRÉPARÉE).
+LE LINTER : l'assertion « la transition D183 préparée (D219) » exigée à
+la spec ; le motif interdit « le douzième run attendu » demeure absent.
+
+── (2) LE LIVRE DU COFFRE v1.2 → v1.3 (diff-livre-v12-v13.patch,
+     104 lignes) ──
+L'ÉCART : le runbook du maître (ch. 8, l'ordre des gestes) s'arrêtait à
+DÉTRUIRE CF2 ; le ch. 7 des cérémonies ne connaissait pas le séquestre ;
+la garde de la phrase (ch. 2) ne disait pas son devenir.
+LA SOURCE : le kit D183 rafraîchi (l'AUTOTEST.txt du 19/11, la
+falsification prouvée, le mode --verifier fail-closed) ; l'analyse
+chiffrée de D183 reprise à D219 (le facteur ≈ 40).
+LA CORRECTION : (a) le ch. 7 gagne la section 7.5 « La cérémonie de
+séquestre D183 — préparée, le geste au maître » : l'état (préparé, non
+appliqué), l'analyse (le facteur ≈ 40), la preuve à froid de l'outil
+(les dix combinaisons, les dix paires inertes, la part forgée REFUSÉE),
+le pas à pas en sept gestes (préparer cinq médias dont deux hors nuage —
+répétition — découpage — répartition — preuve à froide ×2 --verifier —
+retrait humain listé — entretien), les frontières (D87, l'outil ne
+supprime rien, le coffre intact, le dépôt PRIVÉ jusqu'au geste vécu) et
+l'encadré terrain « pourquoi le kit ne s'applique pas tout seul » (la
+raison 3 de D183 : une cérémonie non vécue AJOUTE un risque de perte) ;
+(b) l'ordre des gestes du runbook gagne le pointeur (le séquestre au
+commandement, la garde D81 et le dépôt PRIVÉ jusqu'au geste) ; (c) la
+garde de la phrase (ch. 2) porte le pointeur D183 (préparée D219, la
+cérémonie au maître, D81 active jusqu'au geste vécu). AUCUN geste de
+cérémonie changé.
+LE LINTER : l'assertion « la cérémonie de séquestre D183 » exigée au
+Livre ; le sommaire des décisions D75–D137 demeurant intact.
+
+── (3) LE MANUSCRIT v0.19.1 → v0.19.2 (diff-main-v191-v192.patch,
+     90 lignes) ──
+L'ÉCART : §4.1 disait D81 « remains the active decision (the ceremony
+belongs to the developer) » et le paragraphe « Two gestures » créditait
+la v0.13.0 de la préparation du kit — l'état avait AVANCÉ sans que le
+texte le dise.
+LA SOURCE : la décision D219 — le kit rafraîchi (l'autotest : 10/10
+combinations exact, 10/10 sub-threshold pairs inert, une part forgée
+REFUSÉE par la porte de l'empreinte de contrôle, le mode --verifier
+fail-closed), le scan de l'historique git complet (l'équivalent Python
+nommé de gitleaks, le dry-run 6/6 zéro faux négatif, le vrai dépôt trié
+— la phrase D81 connue, neuf fixtures nommées, AUCUN identifiant réel
+au-delà de l'arbitrage assumé), la checklist de rotation, la matrice de
+visibilité (privé jusqu'à la cérémonie vécue et la rotation vérifiée ;
+public + le DOI Zenodo seulement après), l'extension transparence
+publique documentée sans être appliquée.
+LA CORRECTION : (a) la première phrase D81 s'étend — « --- now prepared
+as decision D219: the escrow kit refreshed …, the full-history secrets
+scan dry-run green, the rotation checklist and the repository visibility
+matrix delivered, the transparency-log extension documented without
+applying it » ; (b) le paragraphe « Two gestures » porte le statut exact
+(la v0.13.0 préparée, la v0.19.2 complète la préparation — chaque
+livrable nommé, la frontière D105 reconduite) ; (c) la note d'édition
+(la \date) dit l'édition v0.19.2 (the prepared-transition edition) ; les
+en-têtes et métadonnées à v0.19.2. AUCUNE valeur mesurée modifiée, la
+clôture D210 et la cohérence inter-pièces portées inchangées.
+LE LINTER : les assertions « now prepared as decision D219 » et «
+completes the preparation as decision D219 » exigées au manuscrit ;
+l'interdit « real-hardware timing remains unmeasured » demeurant absent.
+
+── LA DISCIPLINE TENUE ──
+Chaque changement vit aux SOURCES (jamais au PDF rendu) ; les éditions
+scellées v0.19.0/v0.19.1, v0.15.0/v0.15.1 et v1.1/v1.2 DEMEURENT et font
+foi ; la décision D219 (append-only) consigne l'exécution entière ; les
+diffs machine accompagnent l'édition au dépôt (scripts/vague7/) ; le
+linter inter-pièces confronte les statuts D81/D183 aux cinq pièces à
+chaque build — fail-closed, le pack REFUSÉ si un seul contrôle est rouge.

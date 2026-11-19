@@ -1,0 +1,26 @@
+[
+ {
+  "regle": "SECRET-OAUTH-GOOGLE",
+  "fragment": "config.ini"
+ },
+ {
+  "regle": "ASSIGNATION-SECREE",
+  "fragment": "reglages.py"
+ },
+ {
+  "regle": "JETON-GITHUB",
+  "fragment": "token_helper.py"
+ },
+ {
+  "regle": "CLE-PRIVEE",
+  "fragment": "cle-serveur.txt"
+ },
+ {
+  "regle": "PHRASE-CONTROLE",
+  "fragment": "PHRASE-CONTROLE-COFFRE.txt"
+ },
+ {
+  "regle": "FICHIER-JETON",
+  "fragment": ".env"
+ }
+]

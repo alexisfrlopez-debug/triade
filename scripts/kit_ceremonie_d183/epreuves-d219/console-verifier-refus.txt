@@ -1,0 +1,1 @@
+[D183] REFUS — le sha256 du rendu ≠ l'empreinte de contrôle : une part est fausse, forgée ou corrompue (le rejet est nommé, fail-closed ; essayez une autre combinaison de TROIS parts recoupées au manifeste)

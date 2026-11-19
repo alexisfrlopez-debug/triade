@@ -1,0 +1,119 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.19.2 (LA TRANSITION D81 → D183
+PRÉPARÉE : manuscrit v0.19.2 / spécification v0.15.2 / Livre du Coffre
+v1.3 / preuves v0.19.2 / présentation du 20/11)
+(l'exécution de l'instruction jx4l5vy5c — la vague 7, la deuxième ; la
+décision D219 append-only ; chaque point VERT sur pièces ; AUCUNE valeur
+mesurée modifiée, AUCUNE règle de la spécification modifiée, AUCUN geste
+de cérémonie du Livre changé)
+
+V1   LA PREMIÈRE EXIGENCE, TENUE AVANT TOUT : VERT — SANS JAMAIS TOUCHER
+     au coffre réel ni aux phrases réelles (D105) : aucun conteneur
+     ouvert, aucune clé manipulée, la phrase réelle JAMAIS lue (le scan
+     ne lit jamais les fichiers-jetons : la présence EST le constat) ;
+     LA PREUVE AUX PIÈCES SCELLÉES : passeur.exe [61 952 o, sha256
+     4a7229e7418e8276…] et passeur-c.dll [102 390 o, fe4ddfc9842fb29b…]
+     re-téléchargés en DOUBLE passe byte-byte aux archives du coffre
+     (unite-14-app / unite-13-app, D204), INTACTS == les valeurs
+     consignées ; les scells locaux c1115105… (loupe.exe 0.1.1),
+     446279f3… (proxy.exe), 1492b0bc… (m8/proxy.exe) inchangés ; LE
+     SCEAU DE L'INTENTION couru au dépôt à l'ouverture ET à la clôture :
+     les QUATORZE arbres VERTS, cle deposee reelle (D87/D177).
+V2   LE KIT DE SÉQUESTRE D183 RAFRAÎCHI : VERT — l'outil sequestre_d183.py
+     ÉTENDU du mode --verifier (la preuve de reconstitution FAIL-CLOSED :
+     le sha256 du rendu CONFRONTÉ à l'empreinte de contrôle du manifeste,
+     ÉGALITÉ exigée, tout écart un REFUS nommé, code 1) ; le partage
+     CF2 D120 TEL QUEL (v06/coffre_cf2.py, jamais une réécriture — la
+     doctrine D185) ; l'AUTOTEST.txt rafraîchi du 19/11 : les 10/10
+     combinaisons de 3 parts EXACTES, les 10/10 paires sous le seuil
+     DÉCHET (rien ne fuite), la part seule publiable (Shamir 1979).
+V3   LA FALSIFICATION PROUVÉE (l'exigence de l'instruction : « part
+     forgée refusée, sous-seuil sans fuite, contrôle négatif attrapé ») :
+     VERT — une part FORGÉE (un octet du corps muté) REFUSÉE par la
+     porte de l'empreinte de contrôle aux DEUX combinaisons éprouvées
+     [(0,1,2) et (2,3,4)] ; la même porte rend VERT la combinaison
+     honnête (le contrôle négatif : le REFUS vient de la falsification,
+     pas d'une porte qui refuse tout) ; la preuve vécue de bout en bout
+     sur phrase de test PUBLIQUE marquée (51 o, D105) : --verifier VERT
+     à l'honnête [code 0], REFUS à la forgée [code 1] — les consoles et
+     les empreintes aux epreuves-d219/.
+V4   LE DRY-RUN DU SCAN DE SECRETS : VERT — gitleaks ET trufflehog
+     ABSENTS du bac (l'écart d'outillage nommé à D207) : L'ÉQUIVALENT
+     PYTHON NOMMÉ livré (scan_secrets.py — jamais une simulation : chaque
+     blob réellement lu, un seul flux git cat-file --batch, six règles
+     nommées, le contenu d'un secret JAMAIS affiché) ; le dépôt de test
+     à secrets plantés (planter_depot_test.py, déterministe : SIX secrets
+     factices dont DEUX SUPPRIMÉS de la tête, trois fichiers propres) :
+     6/6 ATTENDUS ATTRAPÉS (le manifeste d'attendus porte l'assertion —
+     un attendu introuvable est un FAUX NÉGATIF et l'outil est faux),
+     ZÉRO faux négatif, ZÉRO faux positif sur les fichiers propres
+     (l'entropie de Shannon ≥ 3,8 bits/caractère).
+V5   LE SCAN DU VRAI DÉPÔT ET SON TRIAGE : VERT — l'historique COMPLET
+     (472 commits, 5 847 blobs, 35 s) : DIX constats triés — 1× la
+     phrase de contrôle (LA SITUATION CONNUE D81, le sujet même de la
+     transition) ; 5× les clés de l'autorité de test locale M5
+     (m5/autorite/fixtures/*.key, D136 — NÉES FIXTURES, le constat
+     demeurant au rapport) ; 4× les jetons de fixture de l'oracle
+     terrain (ya29. factices 254 o de D70, l'ère D48-D70 — la TÊTE EST
+     PROPRE : la fixture courante est tronquée par concaténation,
+     l'arbre terrain SIGNÉ jamais touché, D143/R7) ; ET L'ABSENCE QUI
+     FAIT FOI : aucun jeton git, aucun fichier OAuth du relais, aucun
+     secret de client Google, aucune assignation secrète réelle dans
+     5 847 blobs — la discipline des jetons (D12/D27) a tenu sur toute
+     l'histoire.
+V6   LES LIVRABLES DOCUMENTAIRES DU KIT : VERT — la PROCEDURE-SCAN-SECRETS
+     (la méthode gitleaks, le dry-run, le rapport trié) ; la
+     CHECKLIST-ROTATION (le constat d'abord, la rotation AVANT le
+     retrait, le fichier-remise aussitôt, la preuve à froid, la
+     consignation, le re-scan) ; la MATRICE-VISIBILITE-DEPOT (QUATRE
+     états : privé l'état courant → privé après la cérémonie tant que
+     la rotation n'est pas vérifiée → privé prêt au public après le
+     re-scan trié → PUBLIC + ZENODO seulement après, l'ordre STRICT,
+     le retour en arrière prévu) ; l'EXTENSION-TRANSPARENCE-PUBLIQUE
+     DOCUMENTÉE NON APPLIQUÉE (Rekor/Sigstore ou RFC 3161 : le format
+     du témoin à l'empreinte près, la vérification machine, le delta au
+     modèle de menace AUX DEUX BORDS — l'anti-retour gagne un témoin
+     non local, MAIS l'ancrage ne prouve pas la clôture, ajoute une
+     émission de métadonnées et une dépendance de vérification ; la
+     carte papier DEMEURE, démotée d'unique témoin à témoin de repli).
+V7   LES SOURCES AU STATUT EXACT : VERT — la spécification v0.15.2
+     [66 pages Tectonic PROPRE, zéro citation non résolue : la ligne D81
+     du modèle de menace porte la transition PRÉPARÉE (D219) et le
+     résiduel nomme la visibilité (PRIVÉ jusqu'au geste vécu et la
+     rotation vérifiée), le § 1.18 né, le journal des versions porté ;
+     AUCUNE règle modifiée] ; le manuscrit v0.19.2 [31 pages, zéro
+     citation non résolue, le contrôle géométrique 0 débordement : la
+     première phrase D81 « now prepared as decision D219 », le
+     paragraphe « Two gestures » au statut exact, la note d'édition
+     v0.19.2 ; AUCUNE valeur mesurée modifiée] ; le Livre v1.3
+     [28 pages, zéro citation non résolue : la section 7.5 « La
+     cérémonie de séquestre D183 — préparée, le geste au maître » née
+     (l'analyse au facteur ≈ 40, la preuve à froid, les sept gestes, les
+     frontières, l'encadré « pourquoi le kit ne s'applique pas tout
+     seul »), le pointeur au runbook, le pointeur à la garde de la
+     phrase ; AUCUN geste de cérémonie changé].
+V8   LES DIFFS CONSIGNÉS : VERT — diff-spec-v151-v152.patch (73 lignes),
+     diff-livre-v12-v13.patch (104 lignes), diff-main-v191-v192.patch
+     (90 lignes) + LE DIFF ANNOTÉ diff-annote-v192.txt [chaque
+     changement nommé : l'écart, la source, la correction, le linter] +
+     la décision D219 (append-only, docs/DECISIONS.md) + la présente.
+V9   LE LINTER INTER-PIÈCES ÉTENDU AUX STATUTS D81/D183 : VERT — les
+     nouvelles assertions : la transition D183 préparée (D219) exigée à
+     la spec ET au manuscrit ET au Livre ET à la présentation ; la
+     visibilité PRIVÉ et la matrice nommée ; la cérémonie de séquestre
+     au Livre ; LA FALSIFICATION PROUVÉE (les nouveaux contrôles
+     négatifs : le statut muté « préparée » → « appliquée » ATTRAPÉ ;
+     la visibilité publique prématurée REFUSÉE ; la version non mutée
+     TOUTE VERTE).
+V10  LE PACK : VERT — TRIADE_presentation_v0.19.2_20261120.zip assemblé,
+     chaque pièce gravée (empreintes_livrables_v0.19.2.txt), le zip
+     testé (chaque pièce relue, les empreintes re-vérifiées) ; LE PACK
+     EST REFUSÉ SI UN SEUL CONTRÔLE EST ROUGE : aucun ne l'est.
+
+LA SESSION : l'instruction jx4l5vy5c exécutée en sa lettre — la bascule
+de garde durable D81 vers le séquestre chiffré D183 PRÉPARÉE, le statut
+« préparée, geste au développeur », la cérémonie au maître (D87), la
+garde D81 ACTIVE jusqu'au geste vécu de bout en bout ; les trois
+instructions restantes de la vague 7 (5ey7gmjra, cq01qv1za, 1c4sokpii)
+demeurent séquencées ; l'instruction jx4l5vy5c archivée après exécution
+à /ARCHIVE/instructions_20261119/ (la règle du développeur : « ces
+instructions sont à archiver après exécution »).

@@ -1,0 +1,358 @@
+% =====================================================================
+%  CH. 7 LES CÉRÉMONIES · CH. 8 LE RUNBOOK DU MAÎTRE
+% =====================================================================
+\section{Les cérémonies — le maître fait, l'outil relaie}\label{sec:ceremonies}
+
+\subsection{Le principe : personne ne touche vos secrets à votre place}
+
+Toutes les cérémonies du coffre obéissent à la même discipline (D105) : le bac à
+sable — l'agent, l'assistant, whatever — ne touchera \emph{jamais} le conteneur ni
+les phrases réels. Les cérémonies sont des actes du maître, guidés par un outillage
+qui \emph{relaie} sans réimplémenter : le GUI lance les vérités vivantes
+(\code{coffre\_cf2.py}, \code{coffre\_cf3.py}, \code{sceau\_I.py}) et leur sortie
+coule à l'écran. La phrase passe par STDIN — jamais en ligne de commande (invisible
+des journaux de processus), jamais affichée, jamais dans un rapport. Le verdict est
+\textbf{croisé} : code de sortie \emph{et} marque attendue dans le flux — un enfant
+menteux qui affiche VERT mais sort 1 est ROUGE ; un enfant muet est SANS VERDICT.
+
+Chaque module à tester porte le \textbf{trio D122} : une GUI, une boîte noire locale
+(journal horodaté, gitignoré, muet si le disque refuse — témoin, pas dépendance), un
+bouton « Envoyer le rapport ». Le rapport emporte l'écran et la boîte noire, aucune
+phrase, aucun chemin de coffre réel.
+
+\subsection{La cérémonie du sceau de l'Intention (quatre gestes)}\label{sec:cersceau}
+
+Le sceau signe la spécification elle-même — l'arbre \code{v06/I/} et les treize
+arbres de lignée : le garde est à QUATORZE arbres signés (D177 — l'arbre
+\code{loupe} entré à la table canonique par la cérémonie d'ère du TGN).
+Quatre gestes, depuis le clone :
+
+\begin{enumerate}
+\item \textbf{Préparer} (le dépôt) : \code{sceau\_I.py preparer} reconstruit le
+manifeste de chaque arbre, compare au manifeste signé, écrit \code{a-signer.txt} —
+une ligne par arbre : arbre, balise, empreinte.
+\item \textbf{Signer} (hors ligne, votre clé) : la cérémonie autoportée
+\code{ceremonie\_hors\_ligne.py signer} lit \code{a-signer.txt}, signe chaque
+empreinte avec la clé privée physique, \emph{vérifie chaque signature avant
+d'écrire} \code{signatures-I.txt}.
+\item \textbf{Déposer} (au dépôt) : \code{sceau\_I.py deposer} installe la remise —
+chaque signature est vérifiée contre l'arbre vivant et la clé publique AVANT toute
+écriture ; une remise invérifiable n'écrit RIEN.
+\item \textbf{Vérifier} : \code{sceau\_I.py verifier} — dix arbres VERTS, code 0.
+Puis commit + push (la preuve est publique).
+\end{enumerate}
+
+Le dépôt ne voit \emph{jamais} la graine : le flux est air-gap, la charge utile est
+imprimable (32 octets hex par arbre), la clé ne voyage pas. L'horodatage de première
+intention : la date du commit signé.
+
+\subsection{La cérémonie CF1 $\to$ CF2}\label{sec:cercf2}
+
+Depuis le GUI de cérémonie (\code{lancer\_ceremonie}), onglet « Coffre CF2 » — le
+coffre réel CF1 étant posé au bon endroit (le \code{.keys\textbackslash} du clone, ou
+le dossier de cérémonie) :
+
+\begin{enumerate}
+\item \textbf{La phrase d'abord.} Le fichier-remise D81 est à jour (si vous venez de
+changer la phrase : le fichier AVANT tout — un premier \code{migrer} refusé « phrase
+de contrôle divergente » est le fail-closed qui travaille, pas une panne).
+\item \textbf{Migrer.} Le CF1 est déverrouillé une dernière fois ; la base est
+re-scellée sous M + Shamir. Naissent \code{coffre\_cf2.bin} et les cinq gardes
+\code{g1} à \code{g5} (sous \code{gardes-cf2/}), tout dans \code{.keys}. Le CF1
+reste \textbf{intact}.
+\item \textbf{Trois copies hors-ligne.} Export de la feuille (fragments g3--g5, tags
+vérifiés avant impression) : papier au sachet, et/ou fichiers \code{.cf2f} copiés sur
+une USB hors-ligne. \emph{Trois}, pas deux : la relève exige le seuil.
+\item \textbf{Contrôle de relecture.} Relisez les copies (le GUI guide) — une copie
+illisible aujourd'hui est une résurrection impossible demain.
+\item \textbf{Liste blanche} (sentinelle CF2) puis \textbf{CF2 — verifier} : VERT.
+Sur Windows, la sentinelle refuse honnêtement de démarrer (moteur SACL/ETW restant) :
+la porte D120 avertit « SANS sentinelle » à chaque déverrouillage — borne dite,
+attente assumée.
+\end{enumerate}
+
+\begin{terrain}[— un refus nommé, ça ressemble à quoi]
+Le premier \code{migrer} CF2 du coffre réel (31/10) : « ÉCHEC — phrase de contrôle
+divergente ». La remise D81 n'était pas encore remplacée. Le refus est NOMMÉ, rien
+n'est écrit, le coffre est intact — la cérémonie se rejoue après le geste de
+discipline. C'est le fail-closed : \emph{mieux vaut un refus qu'un scellé sous une
+phrase qui n'est pas celle que vous pensiez taper}.
+\end{terrain}
+
+\subsection{La cérémonie CF2 $\to$ CF3 — MIGRER, VÉRIFIER, DÉTRUIRE}\label{sec:cercf3}
+
+Trois onglets, dans cet ordre, depuis \code{lancer\_migration\_cf3} (à la racine du
+clone ou du kit) :
+
+\begin{enumerate}
+\item \textbf{MIGRER (actes 1--3).} Champs : le conteneur CF2 (pré-rempli
+\code{.keys\textbackslash{} \allowbreak coffre\_cf2.bin}), la racine des gardes (vide = la
+config), la config explicite (vide = \code{.keys\textbackslash config\_cf2.json} si
+elle vit), le \textbf{média du piège — REQUIS} (branchez la clef USB du sachet et
+désignez-la : la machine ne le crée jamais, spec § 4), le conteneur CF3 \emph{qui
+naît} (dialogue d'enregistrement — c'est une sortie, pas une entrée), et la phrase
+\textbf{deux fois} (un scellé sous une phrase tapée ne s'ouvrirait plus sous la
+phrase pensée). La base re-scellée est de schéma identique — rien à traduire ; le
+piège est posé sur le média ; la re-lecture à froide du staging doit être VERTE ; le
+CF2 reste \textbf{intact}.
+\item \textbf{VÉRIFIER (verdict à froid).} Le conteneur CF3, le média, la phrase —
+une fois. Le verdict affiche époque, checksum, projet(s) : \textbf{notez le checksum
+sur la carte du sachet}. Recommandé (D127) : re-exécutez le lendemain, machine
+froide — un état qui ne se vérifie qu'à chaud n'est pas un état reposé.
+\item \textbf{DÉTRUIRE (acte 4, explicite).} Uniquement après recoupement : le
+conteneur CF2 à détruire, le conteneur CF3 \emph{survivant} (garde fail-closed : refus
+si le remplaçant est absent), la case « Je comprends ». Les fragments CF2 et leurs
+copies hors-ligne ne sont \emph{jamais} touchés — ils restent la relève historique.
+\end{enumerate}
+
+\begin{terrain}[— l'habit apprend du terrain : la grille D132]
+Le GUI de migration v1.0 packait les champs pleine largeur puis les boutons
+« Parcourir\ldots{} » à droite — la cavité les empilait en colonne, aucun sur la
+ligne de son champ. Le retour du terrain (31/10) a enfanté la v1.1 : chaque ligne
+de saisie en grille, le champ et son bouton sur la MÊME ligne, tout champ de chemin
+porte son bouton, la confirmation de phrase est étiquetée, les boutons d'acte sont
+pleine largeur. Vérifiable à l'ouverture : la fenêtre s'annonce
+« migration-CF3-GUI v1.1 (D132) » — barre de titre, bandeau, et première ligne de la
+boîte noire.
+\end{terrain}
+
+\subsection{La cérémonie de séquestre D183 — préparée, le geste au maître}\label{sec:cerd183}
+
+\textbf{L'ÉTAT} : le kit vit au dépôt (\code{scripts/kit\_ceremonie\_d183/}),
+\emph{préparé au laboratoire, NON appliqué} (D219) — le coffre réel n'a pas
+été touché, la phrase demeure au fichier-remise D81, aucune clé manipulée.
+\textbf{L'ANALYSE} qui la fonde : sous D81, l'espérance de perte annuelle
+$\approx 4{,}0 \times 10^{-2}\,C_{exposure}$ (l'exposition domine — un seul
+des quatre emplacements compromis suffit, $\approx 3{,}9~\%$/an) contre
+$\approx 1{,}0 \times 10^{-3}$ sous le séquestre 5/3 — \textbf{un facteur
+$\approx 40$}. Le partage est celui du coffre CF2 (D120, l'instrument
+\code{v06/coffre\_cf2.py} TEL QUEL) : cinq parts, seuil trois.
+
+\textbf{L'OUTIL EST PROUVÉ À FROID} : l'autotest du kit (19/11, D219) — les
+dix combinaisons de trois parts reconstituent EXACTEMENT, les dix paires
+sous le seuil rendent un déchet, \emph{une part forgée est REFUSÉE par la
+porte de l'empreinte de contrôle} (la falsification prouvée), la même porte
+rendant VERT la combinaison honnête. Le mode \code{--verifier} est
+fail-closed : il confronte LUI-MÊME le sha256 du rendu à l'empreinte de
+contrôle du manifeste — tout écart un refus nommé.
+
+\textbf{LA CÉRÉMONIE, PAS À PAS} (vous, machine propre hors-ligne —
+\code{python3 sequestre\_d183.py}) :
+
+\begin{enumerate}
+\item \textbf{Préparer} : python3, le dossier du kit, la phrase
+(\code{PHRASE-CONTROLE-COFFRE.txt}, à lire vous-même — jamais copée au bac
+à sable), et CINQ MÉDIAS : USB ×2, papier ×1, tiers de confiance ×1,
+coffre Drive ×1 — au moins DEUX hors nuage (toutes les parts au même
+nuage, et le nuage EST le coffre).
+\item \textbf{La répétition générale} : \code{--autotest} → VERDICT VERT
+exigé (les vingt lignes de reconstitution, la falsification refusée,
+l'honnête vert).
+\item \textbf{Le découpage} : \code{--ceremonie <fichier-phrase>} → les
+cinq parts (une par média, séparément) + le manifeste (empreintes sha256
+de chaque part, empreinte de contrôle de la phrase, plan de répartition,
+listes de contrôle). Le manifeste peut vivre au dépôt : il ne contient
+aucune part.
+\item \textbf{La répartition} : chaque part sur son média, les empreintes
+recoupées au manifeste.
+\item \textbf{La preuve de reconstitution à froid — AVANT TOUT RETRAIT} :
+\code{--verifier part-1 part-2 part-3 manifeste} → VERT exigé ; répétez
+avec une autre combinaison (ex. 2+4+5) : \textbf{VERT deux fois} ou rien.
+\item \textbf{Le retrait} (seulement alors — des gestes humains, jamais
+automatisés, la liste de contrôle du manifeste) : la phrase en clair
+retirée du dépôt git ET de la racine du coffre Drive ; l'entrée de journal
+consignée ; D81 amendée. \textbf{La rotation suit} (la checklist du kit) :
+la phrase commise vit à vie dans l'histoire git — seule la rotation la
+rend inopérante.
+\item \textbf{L'entretien} : un exercice de reconstitution périodique (les
+parts se dégradent : médias perdus, gardiens qui changent) — la périodicité
+est à vous, l'agenda nommé au manifeste.
+\end{enumerate}
+
+\textbf{LES FRONTIÈRES} : le laboratoire n'exécute \emph{jamais} la
+cérémonie sur la phrase réelle (D87) ; l'outil ne supprime \emph{jamais}
+rien (le retrait est humain, listé) ; le coffre réel demeure intact tant
+que la cérémonie n'est pas vécue — et \textbf{le dépôt demeure PRIVÉ}
+tant qu'elle ne l'est pas et que la rotation n'est pas vérifiée : public +
+Zenodo seulement après (la matrice de visibilité du kit, D219). Le kit
+porte aussi le scan de secrets de l'historique git complet (dry-run vert),
+la checklist de rotation, la matrice de visibilité et l'extension
+transparence publique (Rekor/RFC 3161) documentée sans être appliquée.
+
+\begin{terrain}[— pourquoi le kit ne s'applique pas tout seul]
+La raison est consignée à D183 : la proposition ne se substitue à la garde
+durable QUE si la cérémonie des parts est VÉCUE de bout en bout — parts
+réellement créées, réellement réparties, reconstitution PROUVÉE à froid
+deux fois. Sinon elle AJOUTE un risque de perte au lieu d'en retirer un :
+des parts qui n'existent pas protègent moins qu'un fichier qui existe.
+Le protocole prépare, le maître décide.
+\end{terrain}
+
+\subsection{La clôture, cérémonie du quotidien}\label{sec:cloture}
+
+L'usage courant d'un coffre CF3 : \code{ouvrir} (média branché, phrase), travailler,
+\code{fermer} (média rebranché, phrase retapée). Chaque clôture : une ligne sur la
+carte (checksum), un piège de plus au sachet, une époque de plus au compteur. Entre
+les deux, le brouillon vit sous K\_session — une panne le rend déchet, le canonique
+reste scellé. La règle d'hygiène : sessions courtes, re-verrouillage rapide, média
+débranché pendant le travail.
+
+\section{Le runbook du maître — Windows, pas à pas}\label{sec:runbook}
+
+\subsection{Trouver la maison}\label{sec:maison}
+
+Toute cérémonie vit dans une \textbf{maison} : le clone git du dépôt (celui qui
+contient \code{v06\textbackslash}) ou le kit de cérémonie du Drive. Le signe de la
+maison : les lanceurs \code{.bat} à la racine, et \code{v06\textbackslash} plein
+(42 fichiers, \code{I\textbackslash} et \code{sceau-I\textbackslash} compris). Le
+lanceur cherche \code{v06\textbackslash migration\_cf3\_gui.py} \emph{d'abord}, puis
+une copie plate à côté de lui — lancé depuis une maison, il prend la version vivante ;
+lancé depuis un dossier où le \code{.py} a été posé seul, il vivrait en repli.
+
+\begin{terrain}[— le GUI seul dans un dossier n'est pas une maison]
+Le rapport du 30/10 20:03 : « modules REQUIS absents : coffre\_cf3.py,
+coffre\_cf2.py », dossier v06 = \code{\ldots{}\textbackslash GitHub\textbackslash
+Cérémonie}. Le GUI v1.1 avait été copié seul dans un dossier : le relais ne trouvait
+pas ses vérités vivantes — refus nommé à chaque acte, par construction. Le remède :
+lancer depuis la maison (le clone \code{triade}, ou le kit), où
+\code{v06\textbackslash} est entier. Et l'autre doute du même soir — « le .bat
+n'appelle pas le .py mis à jour » — se lît dans le lanceur : il appelle
+\code{v06\textbackslash migration\_cf3\_gui.py} en premier ; le correctif v1.1 vivait
+dans ce fichier même. La preuve à l'exécution : la fenêtre s'annonce v1.1 (D132),
+trois fois.
+\end{terrain}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Deux maisons, deux postures — le clone git et le kit Drive.}
+\label{tab:maisons}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+ & \textbf{Le clone git} & \textbf{Le kit Drive} \\
+\midrule
+Qu'est-ce & le dépôt complet (\code{git clone}), \code{v06\textbackslash} entier à
+jour par \code{git pull} & le dossier \code{/Cérémonie} du Drive : lanceurs,
+LISEZMOI, \code{v06\textbackslash} identique au miroir PAR CONSTRUCTION (D130) \\
+Se met à jour par & \code{git pull} (réflexe avant toute cérémonie) & le hook
+post-commit du dépôt (miroir PUIS kit, même geste) — re-télécharger en cas de doute \\
+Sert à & les cérémonies ET les remises du sceau (commit, push) & les cérémonies
+seules — aucune écriture au dépôt \\
+Comment savoir qu'il est frais & \code{git log} ; la version que le GUI s'annonce &
+\code{MANIFESTE.txt} : commit de référence + empreintes — un kit périmé se LIT, ne
+se devine pas \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{L'ordre des gestes, du début à la fin}\label{sec:ordre}
+
+Pour un coffre qui démarre de zéro (la chaîne complète, telle que le terrain l'a
+parcourue) :
+
+\begin{enumerate}
+\item \textbf{Préparer la maison} : \code{git pull} dans le clone (ou re-télécharger
+le kit) ; vérifier le \code{MANIFESTE.txt} du kit (commit de référence, empreintes)
+si vous partez du Drive.
+\item \textbf{Poser le CF1} : \code{coffre\_fort.bin} (le conteneur réel, livré à la
+racine du coffre Drive) dans le \code{.keys\textbackslash} du clone. CF1 — statut
+VERT.
+\item \textbf{La phrase à vous} (optionnel, D110) : changer la phrase de contrôle
+pour la vôtre — alphanumérique, sans plafond. Le fichier-remise D81 suit
+\emph{immédiatement} : une ligne dans \code{PHRASE-CONTROLE-\allowbreak COFFRE.txt}, commit, push.
+\item \textbf{CF1 $\to$ CF2} : cérémonie § \ref{sec:cercf2} — migrer, trois copies
+hors-ligne, relecture, liste blanche, verifier VERT.
+\item \textbf{CF2 $\to$ CF3} : cérémonie § \ref{sec:cercf3} — MIGRER (média du piège
+requis, phrase deux fois), VÉRIFIER (checksum sur la carte), et le lendemain machine
+froide : re-VÉRIFIER, recouper œil contre carte.
+\item \textbf{DÉTRUIRE CF2} : après recoupement — la case explicite. Le rapport
+part par « Envoyer le rapport ».
+\item \textbf{Le séquestre de la phrase (D183, préparé D219)} : au
+commandement — la cérémonie § \ref{sec:cerd183} (le kit au dépôt) ; tant
+qu'elle n'est pas vécue, la garde D81 demeure et le dépôt demeure PRIVÉ.
+\end{enumerate}
+
+Pour un \textbf{coffre neuf} : le niveau est \textbf{votre arbitrage à la création}
+(D137, spécification § 12.5) — CF1 (\code{coffre\_fort.py init}, la relève simple),
+CF2 (\code{init} CF1 puis la cérémonie \code{coffre\_cf2.py migrer}, la garde
+répartie), CF3 (\code{coffre\_cf3.py init} : époque 1, média du piège, première
+ligne de la carte). La chaîne ci-dessus est l'histoire du coffre réel, pas un rite
+obligé — et elle reste disponible si les besoins grandissent.
+
+\subsection{La check-list pré-vol — avant toute cérémonie}\label{sec:preflight}
+
+Cinq vérifications, dans l'ordre, cinq minutes :
+
+\begin{enumerate}
+\item \textbf{La maison est à jour} : \code{git pull} rend « Already up to date »
+(le GUI s'annonce avec sa version — v2.2 pour la cérémonie, v1.1 pour la migration) ;
+le kit du Drive porte son \code{MANIFESTE.txt} au commit de référence.
+\item \textbf{Le fichier-remise D81 dit la vérité} : la ligne de
+\code{PHRASE-CONTROLE-COFFRE.txt} est la phrase que vous allez taper — sinon, posez-la
+d'abord, commit, push.
+\item \textbf{Le sachet est à portée de main} : média du piège à brancher au bon
+moment (et à débrancher après), carte pour noter le checksum, fragments hors-ligne si
+la cérémonie les touche.
+\item \textbf{La pile est verte} : le rapport d'environnement du GUI dit
+« pile COMPLÈTE » (argon2-cffi, PyNaCl, cryptography) — un module manquant est un
+refus nommé à l'acte, autant le savoir avant.
+\item \textbf{Vous avez le temps} : les cérémonies ne se pressent pas ; la phrase se
+tape deux fois précisément PARCE QUE le scellé sous une phrase mal tapée ne
+s'ouvrirait plus sous la phrase pensée.
+\end{enumerate}
+
+\subsection{Les statuts, et comment les lire}\label{sec:statuts}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les statuts que les outils rendent — et ce qu'ils veulent dire.}
+\label{tab:statuts}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Ce que vous voyez} & \textbf{Ce que ça veut dire} \\
+\midrule
+CF1 — statut VERT & le conteneur CF1 est trouvé, l'en-tête est conforme
+(TRIADE-CF1 v1, Argon2id) — l'étiquette seule, aucune clé dérivée \\
+CF1 — verifier INTÈGRE & la sentinelle a déverrouillé à froid : AEAD, empreinte,
+projets — le coffre est entier \\
+\code{[CF3] VERDICT : VERT — époque N, checksum a1b2c3d4, 3 projet(s)} & l'état
+exact de votre coffre CF3 : époque à suivre, checksum à recouper, compte de projets
+à connaître \\
+AVERTISSEMENT D120 : SANS sentinelle vivante & vous déverrouillez un CF2 sur une
+plateforme sans moteur : l'ère intermédiaire, honnête — close par CF3 \\
+modules REQUIS absents & vous n'êtes pas dans une maison : le relais ne trouve pas
+ses vérités vivantes — retournez au § \ref{sec:maison} \\
+ÉCHEC NOMMÉ — le média du piège est REQUIS & branchez la clef USB du sachet et
+désignez-la : la machine ne le crée jamais \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Les rapports}\label{sec:rapports}
+
+« Envoyer le rapport » écrit un \code{.txt} : l'écran (journal d'écran), la boîte
+noire horodatée, les empreintes md5 des modules (la génération de code qui a tourné se
+\emph{lit}), l'environnement (python, OS, pile). Aucun réseau, aucun secret, aucun
+chemin de coffre réel. Le rapport est la matière première du constat terrain (D122) :
+glissez-le dans la conversation, le laboratoire le consigne et pousse. L'export n'est
+pas un prérequis de la cérémonie — la chaîne vit même si le rapport meurt — mais il
+est la mémoire de votre geste.
+
+\subsection{L'autotest — prouver la serrure sans toucher au coffre}\label{sec:autotest}
+
+Le lanceur \code{lancer\_autotest\_cf3} (racine de la maison) exécute les
+autocontrôles de la serrure CF3 sur des répertoires \emph{temporaires} : aucun coffre
+réel ni phrase réelle n'est touché (discipline D105). C'est le geste de santé après
+une mise à jour des modules — un autotest vert sur une génération d'empreintes
+conforme, puis votre coffre vérifiable à froid par \code{verifier}. L'équivalent CLI
+de référence :
+
+\begin{lstlisting}
+py -3 v06\coffre_cf3.py autotest
+py -3 v06\coffre_cf3.py verifier --conteneur .keys\coffre_cf3.bin ^
+        --piege-dir <média du piège> --phrase-stdin
+py -3 v06\sceau_I.py verifier      (dix arbres VERTS, code 0)
+\end{lstlisting}
+
+Le GUI de migration et le GUI de cérémonie font exactement ces appels — la CLI est la
+référence, le GUI le relais. Sur Windows, \code{py -3} précède l'interpréteur ; la
+phrase arrive par STDIN (\code{--phrase-stdin}), jamais en argument.

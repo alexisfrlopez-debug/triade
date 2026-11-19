@@ -1,0 +1,69 @@
+CHECKLIST-ROTATION — LA ROTATION DE TOUTE PHRASE EXPOSÉE (D219, le kit D183)
+==============================================================================
+
+CE QUE CECI EST. La checklist prescrite par l'instruction jx4l5vy5c : « la
+checklist de rotation de toute phrase exposée ». La rotation est LE remède
+consigné (D75 étendu D81, le Livre ch. « La rotation ») : une phrase
+commise en git y demeure À VIE — on ne retire pas l'historique, on rend le
+secret INOPÉRANT. La règle de jugement du Livre : une exposition PROUVÉE
+exige la rotation dans la session qui suit ; une exposition POSSIBLE se
+traite au calendrier.
+
+LA CHECKLIST, PAS À PAS (le développeur, au moment du retrait D183 ou au
+moindre doute) :
+
+  [ ] 1. LE CONSTAT D'EXPOSITION écrit AVANT le geste (D189 : même
+         défavorable, tout se consigne) : quel secret, depuis quand, à
+         quels emplacements (le dépôt git, GitHub, le miroir Drive, la
+         racine du coffre Drive — les QUATRE de D81 pour la phrase de
+         contrôle), la fenêtre vécue (le précédent D76/D78 : ~64 minutes
+         d'exposition réelle consignée).
+
+  [ ] 2. LA NOUVELLE PHRASE choisie (alphanumérique, sans plafond — D110 :
+         la phrase est à VOUS) ; JAMAIS générée par le labo (D87).
+
+  [ ] 3. LA ROTATION VÉCUE AVANT TOUT RETRAIT — l'ordre est la survie :
+         a. [ ] changer-phrase (l'ancienne devient inopérante, les entrées
+              du coffre intactes) ;
+         b. [ ] le fichier-remise D183 mis à jour AUSSI TÔT avec la
+              NOUVELLE phrase (dépôt git + racine du coffre Drive) — un
+              coffre sous une phrase dont la remise est périmée est un
+              coffre déjà perdu (la discipline D81 entière) ;
+         c. [ ] le rejet de l'ANCIENNE phrase vérifié (le coffre refuse
+              l'ancienne : « phrase de contrôle divergente » — le
+              fail-closed qui travaille).
+
+  [ ] 4. LES AUTRES SECRETS DU SCAN, chacun tranché au rapport
+         (PROCEDURE-SCAN-SECRETS.txt) :
+         — les FIXTURES (m5/autorite/*.key, les ya29. de l'oracle terrain)
+           : NÉES FACTICES, aucune rotation requise — le triage écrit fait
+           foi ;
+         — TOUT jeton réel qu'un scan futur découvrirait (git, OAuth,
+           Zenodo) : RÉVOQUÉ à son fournisseur (GitHub: Settings →
+           Developer settings → Personal access tokens → Revoke ; Google:
+           la console Cloud → Identifiants), PUIS régénéré — la révocation
+           rend le jeton commis inopérant, c'est LA rotation d'un jeton.
+
+  [ ] 5. LA PREUVE DE RECONSTITUTION À FROUD de la NOUVELLE phrase sous
+         séquestre (si D183 est vécu) : --verifier VERT deux fois, aux
+         empreintes du NOUVEAU manifeste (l'ancien manifeste est périmé au
+         même titre que l'ancienne phrase).
+
+  [ ] 6. LA CONSIGNATION append-only : l'Entrée du worklog (la rotation,
+         la fenêtre, les empreintes des DEUX manifestes — l'ancien nommé
+         PÉRIMÉ, jamais détruit, D143), la décision au journal si elle
+         change un arbitrage.
+
+  [ ] 7. LE RE-SCAN de l'historique après le geste (scan_secrets.py) : le
+         rapport doit montrer l'ANCIENNE situation (l'historique la garde
+         — c'est attendu et dit tel quel) ET la tête propre ; le triage
+         mis à jour.
+
+LES LOIS QUI GARDENT LA CHECKLIST : D75 étendu D81 (la rotation, le
+remède), D80 (la rotation des lignées, le précédent vécu), D110 (la phrase
+est à vous), D87 (jamais générée par le labo), D189 (le constat même
+défavorable), D143 (rien n'est jamais détruit — l'ancien manifeste
+périmé demeure, nommé tel quel).
+
+(19/11/2026, la session D219 — la rotation écrite AVANT le besoin : la
+checklist vit au kit, le geste au développeur)
