@@ -1,0 +1,94 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.19.5 (LA CLÔTURE DE LA VAGUE 7 :
+manuscrit v0.19.5 / spécification v0.15.4 INCHANGÉE / Livre du Coffre v1.3
+INCHANGÉ / preuves v0.19.5 / présentation du 20/11 v0.19.5)
+(l'exécution de l'instruction 1c4sokpii portée aux documents — la vague 7,
+la cinquième et dernière ; chaque point VERT sur pièces ; la vérification
+RE-JOUÉE à l'assemblage du présent dépôt — le linter, les empreintes, la
+relecture du zip)
+
+V1   LA PREMIÈRE EXIGENCE, TENUE AVANT TOUT : VERT — le coffre réel et les
+     phrases réelles JAMIS approchés (D105) ; LES SCELLÉS INTACTS (la
+     batterie d'injection écrit aux ÉMULATIONS, les pièces loupe.exe /
+     proxy.exe jamais touchées — le rejeu charge les notations assemblées,
+     la frontière R4/D143 tenue) ; LE PLAN D210 PRÉ-ENREGISTRÉ sha256
+     4a4b1311… (l'Entrée 335) JAMAIS re-tiré — le triage et la batterie
+     rejouent les MÊMES 832 mutants (la graine 20261111 consignée avant
+     toute mesure).
+V2   LE CRITÈRE D'ÉCHANTILLON, CLOS SANS NOUVEAU TIRAGE : VERT — le
+     comptage LU DU REGISTRE (livraisons.csv, 29 lignes, jamais tapé) :
+     SEPT unités entièrement livrées aux deux bras (app, loupe-01/02/05/
+     08/13/16), N = 7 ≥ 6 TENU ; la séquence D210 épuisée à la cap M1
+     (la clôture consignée à l'Entrée 358), l'amendement conditionnel de
+     l'instruction JAMAIS DÉCLENCHÉ (il n'y a pas de tirage à précéder) ;
+     les runs terrain demeurent au geste du développeur.
+V3   LA BATTERIE D'INJECTION DE FAUTES : VERT — le rejeu reproduit la
+     console v0.14.0 À L'IDENTIQUE d'abord (776/832, la graine 20261111),
+     puis 811/832 TUÉS (97,5 %) : 35 tués PAR L'INJECTION (83,4 % →
+     93,3 % → 97,5 %) ; LE RESTE DE 21 NOMMÉ à treize familles de causes
+     (reste_nomme.csv : 6 l'état mourant, 3 le shim aveugle, 2 le suivi
+     de vue, et une chacun aux dix autres) ; AUCUN tueur affaibli
+     (K1/K2/K3 intacts — la console reproduite AVANT la batterie).
+V4   L'INDÉPENDANCE INTER-FAMILLES : LE GAP NOMMÉ, jamais simulé — la
+     confrontation préalable math↔plan TENUE (T[i] et K[i] égales aux
+     définitions RFC 1321 / FIPS 180-4, zéro divergence AVANT toute
+     génération) ; la récitation pure T 0/64, K 0/64 (le modèle répète
+     les ancres puis dérive) ; les rondes de correction 64/64 — LA COPIE,
+     jamais l'indépendance ; LE GAP : la capacité du modèle local
+     disponible (Qwen2.5-Coder-1.5B, 1,54 G paramètres ; 3 Go de RAM au
+     bac barrent le 7B) ; LE BRAS C : le contrat loupe-13 mot pour mot →
+     gcc -O2 → l'épreuve POSIX 1984/2011 VERT, 27 rouges nommés (la
+     plage restante trop courte rend -5 au lieu du -1 du contrat) — le
+     second gap nommé ; les pièces : RAPPORT-INDEPENDANCE-FAMILLES.txt,
+     bras_c_qwen_loupe13.c, independance_etat.json.
+V5   LE PAQUET D'ÉVALUATION : VERT — LA REPRODUCTION EN UNE COMMANDE
+     (atelier-plan-final-1c4sokpii/reproduire_1c4sokpii.sh : sept étapes
+     aux graines consignées — la réconciliation D210, le linter v194,
+     le triage 56, la batterie K4 811/832, le κ autotesté, l'épreuve
+     POSIX du bras C, les empreintes du pack — VERTE de bout en bout,
+     la console du 20/11 fait foi) ; LA GRILLE CODÉE (les 11 défauts du
+     registre en F1×1/F2×1/F3×3/F5×3/L3×3, codage_annotateur1.csv,
+     chaque classe justifiée du mécanisme consigné) ; LE SECOND
+     ANNOTATEUR À RECRUTER (PROTOCOLE-SECOND-ANNOTATEUR.txt, l'acceptation
+     pré-enregistrée κ ≥ 0,61 — AUCUNE annotation inventée) ; LE
+     CALCULATEUR κ AUTOTESTÉ 3/3 (+1, -1, +0,4 — calculables à la main).
+V6   LE CORRECTIF DE GOUVERNANCE (l'écart nommé sur pièces) : VERT — la
+     v0.19.4 publiée portait « the D183 escrow ceremony, prepared and
+     waiting for the developer's gesture » à sa conclusion et « D81
+     remains the active decision » à sa discussion : STALES AU SCELLAGE
+     MÊME (la cérémonie D183 vécut le 19/11 à 11:17 locale, l'Entrée 365 ;
+     l'édition v0.19.4 fut scellée à 19:56) ; la v0.19.5 porte les TROIS
+     lignes à L'ÉTAT VÉCU (la discussion, la conséquence D81 — la phrase
+     retirée du dépôt, le troisième geste vécu — et la conclusion) ; LE
+     LINTER v195 INTERDIT la ligne stale (« prepared and waiting » plus
+     jamais) et EXIGE « lived end-to-end » + D220 au manuscrit.
+V7   LE LINTER INTER-PIÈCES v195 : 29 VERT 0 ROUGE — les versions
+     croisées (manuscrit v0.19.5 ↔ spécification v0.15.4 ↔ Livre v1.3 ↔
+     preuves v0.19.5 ↔ présentation v0.19.5) ; les canons reconduits
+     (M4 17,9× ; OPT-04 : 3,0× / 6,8 s / H5 TENUE depuis v0.19.4 / le
+     pointeur −35,7 % et −93,3 % ; la falsification D204 DEMEURE
+     consignée) ; les assertions 1c4sokpii (811/832, 97,5 %, N = 7,
+     1984/2011, 0/64, le gap nommé, sans nouveau tirage) ; la
+     gouvernance vécue ; le dépôt PUBLIC (D220) et le DOI vivant
+     10.5281/zenodo.24367344 ; les motifs interdits D182/D190.
+V8   LE PACK, RELU PIÈCE À PIÈCE : VERT — TRIADE_presentation_v0.19.5_
+     20261120.zip [2 194 016 o, 12 fichiers] : les cinq documents
+     (manuscrit 259 909 o / spécification 963 257 o [le scellé v0.15.4
+     INCHANGÉ] / Livre 930 968 o [le scellé v1.3 INCHANGÉ] / preuves
+     107 425 o / présentation 80 377 o), les descriptions, le LISEZMOI,
+     les empreintes SHA-256 gravées — chaque pièce RE-LUE au dézippage,
+     les CINQ empreintes re-vérifiées : AUCUNE divergence.
+V9   LES PIÈCES VERBATIM : VERT — les preuves v0.19.5 portent les trois
+     rapports de l'atelier OCTET POUR OCTET (RAPPORT-1C4SOKPII.txt,
+     RAPPORT-INDEPENDANCE-FAMILLES.txt, rejeu_fautes_rapport.txt — lus,
+     jamais retapés) ; le corps de rendu du mono est DejaVu Sans Mono :
+     le ∛ (U+221B) et le ᵢ (U+1D62) du rapport d'indépendance sont
+     ABSENTS de Liberation Mono — le texte verbatim demeure
+     octet-identique, seul le corps de rendu change (l'écart nommé).
+V10  LE DIFF APPEND-ONLY ET LES TROIS BORDS : VERT — le worklog porté
+     (l'Entrée 375), le commit poussé au distant public, la livraison
+     Drive vécue (le pack à la racine, le présent rapport au /test, le
+     miroir rafraîchi) ; Zenodo : la v0.19.5 PRÉPARÉE, LA PUBLICATION AU
+     GESTE DU MAÎTRE — jamais un DOI minté sans commande explicite.
+
+LE VERDICT DE L'ÉTAPE DE VÉRIFICATION : VERT — les dix points tenus sur
+pièces, aucun contrôle retiré, aucune valeur mesurée modifiée.
