@@ -1,0 +1,79 @@
+$ /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/apalache-0.63.0/bin/apalache-mc check --config=MEEa_VoleKUser.cfg --length=1 --no-deadlock CF3EquivEtendu.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivEtendu.tla/2026-11-19T14-47-28_3600293207816199796
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@14:47:28.530
+  > MEEa_VoleKUser.cfg: Loading TLC configuration                 I@14:47:28.544
+  > Using init predicate(s) InitCopies from the TLC config        I@14:47:28.930
+  > Using next predicate(s) NextAct_VoleKUser from the TLC config I@14:47:28.930
+  > Using inv predicate(s) InvAct_VoleKUser from the TLC config   I@14:47:28.930
+Tuning:                                                           I@14:47:28.944
+PASS #0: SanyParser                                               I@14:47:29.717
+PASS #1: TypeCheckerSnowcat                                       I@14:47:32.246
+ > Running Snowcat .::.                                           I@14:47:32.247
+ > Your types are purrfect!                                       I@14:47:35.335
+ > All expressions are typed                                      I@14:47:35.339
+PASS #2: ConfigurationPass                                        I@14:47:35.344
+  > MEEa_VoleKUser.cfg: found INVARIANTS: InvAct_VoleKUser        I@14:47:36.267
+  > Set the initialization predicate to InitCopies                I@14:47:36.314
+  > Set the transition predicate to NextAct_VoleKUser             I@14:47:36.314
+  > Set the constant initialization predicate to CInit            I@14:47:36.315
+  > Set an invariant to InvAct_VoleKUser                          I@14:47:36.316
+PASS #3: DesugarerPass                                            I@14:47:36.408
+  > Desugaring...                                                 I@14:47:36.408
+PASS #4: InlinePass                                               I@14:47:36.575
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvAct_VoleKUser, NextAct_VoleKUser I@14:47:36.576
+PASS #5: TemporalPass                                             I@14:47:37.205
+  > Rewriting temporal operators...                               I@14:47:37.207
+  > No temporal property specified, nothing to encode             I@14:47:37.208
+PASS #6: InlinePass                                               I@14:47:37.209
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvAct_VoleKUser, NextAct_VoleKUser I@14:47:37.209
+PASS #7: PrimingPass                                              I@14:47:37.222
+  > Introducing CInitPrimed for CInit'                            I@14:47:37.226
+  > Introducing InitCopiesPrimed for InitCopies'                  I@14:47:37.234
+PASS #8: VCGen                                                    I@14:47:37.236
+  > Producing verification conditions from the invariant InvAct_VoleKUser I@14:47:37.237
+  > VCGen produced 1 verification condition(s)                    I@14:47:37.259
+PASS #9: PreprocessingPass                                        I@14:47:37.264
+  > Before preprocessing: unique renaming                         I@14:47:37.271
+ > Applying standard transformations:                             I@14:47:37.311
+  > PrimePropagation                                              I@14:47:37.315
+  > Desugarer                                                     I@14:47:37.320
+  > UniqueRenamer                                                 I@14:47:37.322
+  > Normalizer                                                    I@14:47:37.328
+  > SetMembershipSimplifier                                       I@14:47:37.338
+  > Keramelizer                                                   I@14:47:37.346
+  > After preprocessing: UniqueRenamer                            I@14:47:37.363
+PASS #10: TransitionFinderPass                                    I@14:47:37.410
+  > Found 1 initializing transitions                              I@14:47:37.564
+  > Found 1 transitions                                           I@14:47:37.571
+  > Found constant initializer CInit                              I@14:47:37.572
+  > Applying unique renaming                                      I@14:47:37.605
+PASS #11: OptimizationPass                                        I@14:47:37.607
+ > Applying optimizations:                                        I@14:47:37.619
+  > ConstSimplifier                                               I@14:47:37.636
+  > ExprOptimizer                                                 I@14:47:37.649
+  > SetMembershipSimplifier                                       I@14:47:37.657
+  > ConstSimplifier                                               I@14:47:37.669
+PASS #12: AnalysisPass                                            I@14:47:37.679
+ > Marking skolemizable existentials and sets to be expanded...   I@14:47:37.709
+  > Skolemization                                                 I@14:47:37.710
+  > Expansion                                                     I@14:47:37.711
+  > Remove unused let-in defs                                     I@14:47:37.717
+ > Running analyzers...                                           I@14:47:37.733
+  > Introduced expression grades                                  I@14:47:37.738
+PASS #13: BoundedChecker                                          I@14:47:37.738
+State 0: Checking 1 state invariants                              I@14:47:39.253
+State 0: state invariant 0 holds.                                 I@14:47:39.275
+Step 0: picking a transition out of 1 transition(s)               I@14:47:39.312
+Step 1: picking a transition out of 1 transition(s)               I@14:47:39.381
+The outcome is: NoError                                           I@14:47:39.425
+Checker reports no error up to computation length 1               I@14:47:39.429
+It took me 0 days  0 hours  0 min 10 sec                          I@14:47:39.433
+Total time: 10.896 sec                                            I@14:47:39.433
+EXITCODE: OK
+
+--- stderr ---

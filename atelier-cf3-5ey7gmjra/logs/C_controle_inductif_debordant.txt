@@ -1,0 +1,105 @@
+$ /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/apalache-0.63.0/bin/apalache-mc check --config=MEE_ctl.cfg --length=1 --no-deadlock CF3EtenduDebordant.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EtenduDebordant.tla/2026-11-19T14-52-30_11532356733918082862
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@14:52:30.363
+  > MEE_ctl.cfg: Loading TLC configuration                        I@14:52:30.374
+  > Using init predicate(s) Inv from the TLC config               I@14:52:30.738
+  > Using next predicate(s) NextDebordant from the TLC config     I@14:52:30.739
+  > Using inv predicate(s) Inv from the TLC config                I@14:52:30.739
+Tuning:                                                           I@14:52:30.746
+PASS #0: SanyParser                                               I@14:52:31.730
+PASS #1: TypeCheckerSnowcat                                       I@14:52:32.845
+ > Running Snowcat .::.                                           I@14:52:32.845
+ > Your types are purrfect!                                       I@14:52:34.079
+ > All expressions are typed                                      I@14:52:34.079
+PASS #2: ConfigurationPass                                        I@14:52:34.080
+  > MEE_ctl.cfg: found INVARIANTS: Inv                            I@14:52:34.871
+  > Set the initialization predicate to Inv                       I@14:52:34.908
+  > Set the transition predicate to NextDebordant                 I@14:52:34.909
+  > Set the constant initialization predicate to CInit            I@14:52:34.915
+  > Set an invariant to Inv                                       I@14:52:34.918
+PASS #3: DesugarerPass                                            I@14:52:34.930
+  > Desugaring...                                                 I@14:52:34.930
+PASS #4: InlinePass                                               I@14:52:35.033
+Leaving only relevant operators: CInit, CInitPrimed, Inv, InvPrimed, NextDebordant I@14:52:35.035
+PASS #5: TemporalPass                                             I@14:52:35.271
+  > Rewriting temporal operators...                               I@14:52:35.271
+  > No temporal property specified, nothing to encode             I@14:52:35.272
+PASS #6: InlinePass                                               I@14:52:35.272
+Leaving only relevant operators: CInit, CInitPrimed, Inv, InvPrimed, NextDebordant I@14:52:35.272
+PASS #7: PrimingPass                                              I@14:52:35.322
+  > Introducing CInitPrimed for CInit'                            I@14:52:35.327
+  > Introducing InvPrimed for Inv'                                I@14:52:35.328
+PASS #8: VCGen                                                    I@14:52:35.330
+  > Producing verification conditions from the invariant Inv      I@14:52:35.336
+  > VCGen produced 15 verification condition(s)                   I@14:52:35.346
+PASS #9: PreprocessingPass                                        I@14:52:35.358
+  > Before preprocessing: unique renaming                         I@14:52:35.361
+ > Applying standard transformations:                             I@14:52:35.427
+  > PrimePropagation                                              I@14:52:35.429
+  > Desugarer                                                     I@14:52:35.435
+  > UniqueRenamer                                                 I@14:52:35.444
+  > Normalizer                                                    I@14:52:35.463
+  > SetMembershipSimplifier                                       I@14:52:35.507
+  > Keramelizer                                                   I@14:52:35.518
+  > After preprocessing: UniqueRenamer                            I@14:52:35.557
+PASS #10: TransitionFinderPass                                    I@14:52:35.581
+  > Found 1 initializing transitions                              I@14:52:35.730
+  > Found 14 transitions                                          I@14:52:35.807
+  > Found constant initializer CInit                              I@14:52:35.812
+  > Applying unique renaming                                      I@14:52:35.819
+PASS #11: OptimizationPass                                        I@14:52:35.847
+ > Applying optimizations:                                        I@14:52:35.862
+  > ConstSimplifier                                               I@14:52:35.864
+  > ExprOptimizer                                                 I@14:52:35.923
+  > SetMembershipSimplifier                                       I@14:52:35.946
+  > ConstSimplifier                                               I@14:52:35.949
+PASS #12: AnalysisPass                                            I@14:52:35.971
+ > Marking skolemizable existentials and sets to be expanded...   I@14:52:35.973
+  > Skolemization                                                 I@14:52:36.006
+  > Expansion                                                     I@14:52:36.013
+  > Remove unused let-in defs                                     I@14:52:36.018
+ > Running analyzers...                                           I@14:52:36.032
+  > Introduced expression grades                                  I@14:52:36.048
+PASS #13: BoundedChecker                                          I@14:52:36.058
+State 0: Checking 15 state invariants                             I@14:52:38.018
+State 0: state invariant 0 holds.                                 I@14:52:38.035
+State 0: state invariant 1 holds.                                 I@14:52:38.050
+State 0: state invariant 2 holds.                                 I@14:52:38.075
+State 0: state invariant 3 holds.                                 I@14:52:38.077
+State 0: state invariant 4 holds.                                 I@14:52:38.109
+State 0: state invariant 5 holds.                                 I@14:52:38.122
+State 0: state invariant 6 holds.                                 I@14:52:38.124
+State 0: state invariant 7 holds.                                 I@14:52:38.162
+State 0: state invariant 8 holds.                                 I@14:52:38.164
+State 0: state invariant 9 holds.                                 I@14:52:38.169
+State 0: state invariant 10 holds.                                I@14:52:38.170
+State 0: state invariant 11 holds.                                I@14:52:38.175
+State 0: state invariant 12 holds.                                I@14:52:38.177
+State 0: state invariant 13 holds.                                I@14:52:38.204
+State 0: state invariant 14 holds.                                I@14:52:38.205
+Step 0: picking a transition out of 1 transition(s)               I@14:52:38.206
+State 1: Checking 2 state invariants                              I@14:52:38.353
+State 1: state invariant 2 holds.                                 I@14:52:38.373
+State 1: state invariant 7 holds.                                 I@14:52:38.406
+State 1: Checking 2 state invariants                              I@14:52:38.421
+State 1: state invariant 2 holds.                                 I@14:52:38.428
+State 1: state invariant 7 holds.                                 I@14:52:38.442
+State 1: Checking 2 state invariants                              I@14:52:38.444
+State 1: state invariant 2 holds.                                 I@14:52:38.452
+State 1: state invariant 7 holds.                                 I@14:52:38.468
+State 1: Checking 1 state invariants                              I@14:52:38.471
+Check the trace in: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EtenduDebordant.tla/2026-11-19T14-52-30_11532356733918082862/violation1.tla, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EtenduDebordant.tla/2026-11-19T14-52-30_11532356733918082862/MCviolation1.out, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EtenduDebordant.tla/2026-11-19T14-52-30_11532356733918082862/violation1.json, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EtenduDebordant.tla/2026-11-19T14-52-30_11532356733918082862/violation1.itf.json I@14:52:39.069
+State 1: state invariant 5 violated.                              I@14:52:39.070
+Found 1 error(s)                                                  I@14:52:39.105
+The outcome is: Error                                             I@14:52:39.113
+Checker has found an error                                        I@14:52:39.239
+It took me 0 days  0 hours  0 min  8 sec                          I@14:52:39.240
+Total time: 8.867 sec                                             I@14:52:39.240
+EXITCODE: ERROR (12)
+
+--- stderr ---

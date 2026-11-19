@@ -1,0 +1,54 @@
+$ java -jar /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar -nowarning -config MTLP_CrashPendantSession.cfg CF3EquivEtendu.tla
+
+--- stdout ---
+TLC2 Version 2026.11.15.002146 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 2 and seed 6767824892350475668 with 1 worker on 2 cores with 1024MB heap and 64MB offheap memory [pid: 8046] (Linux 5.10.134-013.15.kangaroo.al8.x86_64 amd64, Debian 21.0.13 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3EquivEtendu.tla
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3Etendu.tla
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3PythonEtendu.tla
+Parsing file /tmp/tlc-6842629030591498265/_TLCTrace.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/_TLCTrace.tla)
+Parsing file /tmp/tlc-6842629030591498265/Integers.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /tmp/tlc-6842629030591498265/FiniteSets.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/FiniteSets.tla)
+Parsing file /tmp/tlc-6842629030591498265/Naturals.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Parsing file /tmp/tlc-6842629030591498265/Sequences.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Sequences.tla)
+Parsing file /tmp/tlc-6842629030591498265/TLC.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/TLC.tla)
+Parsing file /tmp/tlc-6842629030591498265/TLCExt.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/TLCExt.tla)
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module CF3Etendu
+Semantic processing of module CF3PythonEtendu
+Semantic processing of module TLC
+Semantic processing of module TLCExt
+Semantic processing of module _TLCTrace
+Semantic processing of module CF3EquivEtendu
+Linting of module CF3Etendu
+Linting of module CF3PythonEtendu
+Linting of module TLCExt
+Linting of module _TLCTrace
+Linting of module CF3EquivEtendu
+Starting... (2026-11-19 14:53:11)
+Computing initial states...
+Computed 2 initial states...
+Computed 4 initial states...
+Computed 8 initial states...
+Computed 16 initial states...
+Computed 32 initial states...
+Computed 64 initial states...
+Computed 128 initial states...
+Computed 256 initial states...
+Computed 512 initial states...
+Computed 1024 initial states...
+Computed 2048 initial states...
+Finished computing initial states: 4096 distinct states generated at 2026-11-19 14:53:12.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 1.8E-12
+12288 states generated, 8192 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 2.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 1 and the 95th percentile is 1).
+Finished in 02s at (2026-11-19 14:53:12)
+
+--- stderr ---

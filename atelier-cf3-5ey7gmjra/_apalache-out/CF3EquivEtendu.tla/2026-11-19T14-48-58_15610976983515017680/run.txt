@@ -1,0 +1,1 @@
+ check --config=MEEa_OuvrirPhraseErronee.cfg --length=1 --no-deadlock CF3EquivEtendu.tla

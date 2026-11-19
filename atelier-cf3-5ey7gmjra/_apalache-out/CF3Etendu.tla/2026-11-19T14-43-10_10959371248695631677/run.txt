@@ -1,0 +1,1 @@
+ check --config=MEE_base.cfg --length=0 CF3Etendu.tla

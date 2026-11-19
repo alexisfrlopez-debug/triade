@@ -1,0 +1,1 @@
+ check --config=MEEi_CloturerPhraseErronee.cfg --length=1 --no-deadlock CF3EquivEtendu.tla

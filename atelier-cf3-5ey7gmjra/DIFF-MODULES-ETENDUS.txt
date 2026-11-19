@@ -1,0 +1,116 @@
+--- atelier-cf3-89488hblm/CF3Python.tla
++++ atelier-cf3-5ey7gmjra/CF3PythonEtendu.tla
+@@ -1,6 +1,8 @@
+---------------------------- MODULE CF3Python ---------------------------
++------------------------ MODULE CF3PythonEtendu ------------------------
+ (***************************************************************************
+- * CF3Python — LA SÉMANTIQUE PYTHON DE CF3 EN TLA+ : la transcription
+- * fidèle de modele_invariant_v150.py (l'instruction 89488hblm, point (a)).
++ * CF3PythonEtendu — LA SÉMANTIQUE PYTHON DE CF3 ÉTENDUE EN TLA+ : la
++ * transcription fidèle de modele_invariant_v153.py (l'instruction 5ey7gmjra
++ * — le pendant Python de CF3Etendu.tla : la règle 4 étendue, les douze
++ * autres la copie de la v0.15.0).
+  *
+  * LA SOURCE : actions_possibles (l'OFFRE — quelles actions sont proposées
+@@ -25,5 +27,5 @@
+  ***************************************************************************)
+ 
+-EXTENDS CF3
++EXTENDS CF3Etendu
+ 
+ \* le seuil PYTHON, LITTÉRAL (len(sait & ELEMENTS) >= 3)
+@@ -49,7 +51,8 @@
+                  destr_injuste, media_corrompu>>
+ 
+-\* 4 : falsifie_conteneur — offert toujours ; EFFECTIF : piège intègre ET
+-\*     canonique (appliquer : if trap_ok and phase == "canonique")
+-GP_FalsifieConteneur == trap_ok /\ phase = "canonique"
++\* 4 : falsifie_conteneur — L'EXTENSION 5ey7gmjra : offert toujours ;
++\*     EFFECTIF : piège intègre SEUL (appliquer : if trap_ok — les DEUX
++\*     phases, la session ouverte comprise : la sentinelle concrète)
++GP_FalsifieConteneur == trap_ok
+ FP_FalsifieConteneur ==
+   /\ detruit' = TRUE
+
+--- atelier-cf3-89488hblm/CF3Equiv.tla
++++ atelier-cf3-5ey7gmjra/CF3EquivEtendu.tla
+@@ -1,5 +1,8 @@
+---------------------------- MODULE CF3Equiv ---------------------------
+-(***************************************************************************
+- * CF3Equiv — L'ÉQUIVALENCE TLA+ ↔ SÉMANTIQUE PYTHON, RÈGLE PAR RÈGLE,
++------------------------ MODULE CF3EquivEtendu ------------------------
++(***************************************************************************
++ * CF3EquivEtendu — L'ÉQUIVALENCE TLA+ ÉTENDU ↔ SÉMANTIQUE PYTHON
++ * ÉTENDUE, RÈGLE PAR RÈGLE (l'instruction 5ey7gmjra : la batterie
++ * 89488hblm re-déchargée sur le modèle étendu — les 13 règles, la garde
++ * de la règle 4 portant l'extension),
+  * DÉCHARGÉE PAR SMT SUR ENTIERS NON BORNÉS (l'instruction 89488hblm,
+  * point (a) : « remplace la confrontation TLA+↔sémantique Python
+@@ -46,5 +49,5 @@
+  ***************************************************************************)
+ 
+-EXTENDS CF3, CF3Python
++EXTENDS CF3Etendu, CF3PythonEtendu
+ 
+ (***************************************************************************
+@@ -55,5 +58,6 @@
+ GT_VoleSSerrure == TRUE
+ GT_VoleSPiege == TRUE
+-GT_FalsifieConteneur == trap_ok /\ phase = "canonique"
++\* L'EXTENSION 5ey7gmjra : la garde TLA+ extraite de CF3Etendu.tla
++GT_FalsifieConteneur == trap_ok
+ GT_FalsifiePiege == trap_ok
+ GT_RejoueEpoquePassee == e > 1
+@@ -99,6 +103,6 @@
+   marque
+ 
+-\* la règle RÉELLE sur la copie R (zéro retranscription)
+-CF3R == INSTANCE CF3 WITH
++\* la règle RÉELLE sur la copie R (zéro retranscription — L'ÉTENDUE)
++CF3R == INSTANCE CF3Etendu WITH
+   e <- eR, phase <- phaseR, sait <- saitR, trap_ok <- trapR,
+   cf2_ok <- cf2R, secret <- secretR, accepte <- accepteR,
+@@ -106,6 +110,6 @@
+   media_corrompu <- mediaR
+ 
+-\* la relation PYTHON sur la copie P
+-CFP == INSTANCE CF3Python WITH
++\* la relation PYTHON sur la copie P (l'étendue)
++CFP == INSTANCE CF3PythonEtendu WITH
+   e <- eP, phase <- phaseP, sait <- saitP, trap_ok <- trapP,
+   cf2_ok <- cf2P, secret <- secretP, accepte <- accepteP,
+
+--- atelier-cf3-89488hblm/CF3Translation.tla
++++ atelier-cf3-5ey7gmjra/CF3TranslationEtendu.tla
+@@ -1,6 +1,7 @@
+------------------------- MODULE CF3Translation ------------------------
++--------------------- MODULE CF3TranslationEtendu ---------------------
+ (***************************************************************************
+- * CF3Translation — LE LEMME DE TRANSLATION ∀δ DÉCHARGÉ MÉCANIQUEMENT
+- * (l'instruction 89488hblm, point (c) : « formalise l'argument
++ * CF3TranslationEtendu — LE LEMME DE TRANSLATION ∀δ SUR LE MODÈLE
++ * ÉTENDU (l'instruction 5ey7gmjra, point 2 — le lemme 89488hblm re-déchargé
++ * sur la garde étendue de la règle 4 : « formalise l'argument
+  * d'uniformité en époque en un lemme de translation quantifié (∀δ)
+  * déchargé mécaniquement, au lieu du seul audit syntaxique +
+@@ -49,5 +50,5 @@
+  ***************************************************************************)
+ 
+-EXTENDS CF3, CF3Python
++EXTENDS CF3Etendu, CF3PythonEtendu
+ 
+ VARIABLES
+@@ -76,5 +77,5 @@
+ 
+ (* les règles TLA+ RÉELLES instanciées sur la copie décalée *)
+-CF3T == INSTANCE CF3 WITH
++CF3T == INSTANCE CF3Etendu WITH
+   e <- te, phase <- tphase, sait <- tsait, trap_ok <- ttrap_ok,
+   cf2_ok <- tcf2_ok, secret <- tsecret, accepte <- taccepte,
+@@ -83,5 +84,5 @@
+ 
+ (* les gardes PYTHON instanciées sur la copie décalée *)
+-CFPyT == INSTANCE CF3Python WITH
++CFPyT == INSTANCE CF3PythonEtendu WITH
+   e <- te, phase <- tphase, sait <- tsait, trap_ok <- ttrap_ok,
+   cf2_ok <- tcf2_ok, secret <- tsecret, accepte <- taccepte,

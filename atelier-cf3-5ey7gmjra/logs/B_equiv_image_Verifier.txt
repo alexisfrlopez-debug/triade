@@ -1,0 +1,88 @@
+$ /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/apalache-0.63.0/bin/apalache-mc check --config=MEEi_Verifier.cfg --length=1 --no-deadlock CF3EquivEtendu.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivEtendu.tla/2026-11-19T14-49-22_7943127536338167841
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@14:49:22.967
+  > MEEi_Verifier.cfg: Loading TLC configuration                  I@14:49:23.007
+  > Using init predicate(s) InitCopies from the TLC config        I@14:49:23.241
+  > Using next predicate(s) NextImage_Verifier from the TLC config I@14:49:23.242
+  > Using inv predicate(s) InvImage from the TLC config           I@14:49:23.244
+Tuning:                                                           I@14:49:23.247
+PASS #0: SanyParser                                               I@14:49:23.944
+PASS #1: TypeCheckerSnowcat                                       I@14:49:26.417
+ > Running Snowcat .::.                                           I@14:49:26.417
+ > Your types are purrfect!                                       I@14:49:29.407
+ > All expressions are typed                                      I@14:49:29.408
+PASS #2: ConfigurationPass                                        I@14:49:29.412
+  > MEEi_Verifier.cfg: found INVARIANTS: InvImage                 I@14:49:30.131
+  > Set the initialization predicate to InitCopies                I@14:49:30.145
+  > Set the transition predicate to NextImage_Verifier            I@14:49:30.146
+  > Set the constant initialization predicate to CInit            I@14:49:30.146
+  > Set an invariant to InvImage                                  I@14:49:30.147
+PASS #3: DesugarerPass                                            I@14:49:30.168
+  > Desugaring...                                                 I@14:49:30.168
+PASS #4: InlinePass                                               I@14:49:30.327
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvImage, NextImage_Verifier I@14:49:30.328
+PASS #5: TemporalPass                                             I@14:49:30.955
+  > Rewriting temporal operators...                               I@14:49:30.956
+  > No temporal property specified, nothing to encode             I@14:49:30.956
+PASS #6: InlinePass                                               I@14:49:30.956
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, InvImage, NextImage_Verifier I@14:49:30.956
+PASS #7: PrimingPass                                              I@14:49:30.958
+  > Introducing CInitPrimed for CInit'                            I@14:49:30.965
+  > Introducing InitCopiesPrimed for InitCopies'                  I@14:49:30.969
+PASS #8: VCGen                                                    I@14:49:30.970
+  > Producing verification conditions from the invariant InvImage I@14:49:30.970
+  > VCGen produced 10 verification condition(s)                   I@14:49:31.027
+PASS #9: PreprocessingPass                                        I@14:49:31.029
+  > Before preprocessing: unique renaming                         I@14:49:31.029
+ > Applying standard transformations:                             I@14:49:31.049
+  > PrimePropagation                                              I@14:49:31.049
+  > Desugarer                                                     I@14:49:31.050
+  > UniqueRenamer                                                 I@14:49:31.067
+  > Normalizer                                                    I@14:49:31.106
+  > SetMembershipSimplifier                                       I@14:49:31.111
+  > Keramelizer                                                   I@14:49:31.119
+  > After preprocessing: UniqueRenamer                            I@14:49:31.148
+PASS #10: TransitionFinderPass                                    I@14:49:31.175
+  > Found 1 initializing transitions                              I@14:49:31.424
+  > Found 1 transitions                                           I@14:49:31.434
+  > Found constant initializer CInit                              I@14:49:31.439
+  > Applying unique renaming                                      I@14:49:31.443
+PASS #11: OptimizationPass                                        I@14:49:31.460
+ > Applying optimizations:                                        I@14:49:31.474
+  > ConstSimplifier                                               I@14:49:31.477
+  > ExprOptimizer                                                 I@14:49:31.516
+  > SetMembershipSimplifier                                       I@14:49:31.532
+  > ConstSimplifier                                               I@14:49:31.533
+PASS #12: AnalysisPass                                            I@14:49:31.536
+ > Marking skolemizable existentials and sets to be expanded...   I@14:49:31.552
+  > Skolemization                                                 I@14:49:31.557
+  > Expansion                                                     I@14:49:31.558
+  > Remove unused let-in defs                                     I@14:49:31.559
+ > Running analyzers...                                           I@14:49:31.560
+  > Introduced expression grades                                  I@14:49:31.568
+PASS #13: BoundedChecker                                          I@14:49:31.576
+State 0: Checking 10 state invariants                             I@14:49:33.082
+State 0: state invariant 0 holds.                                 I@14:49:33.119
+State 0: state invariant 1 holds.                                 I@14:49:33.122
+State 0: state invariant 2 holds.                                 I@14:49:33.129
+State 0: state invariant 3 holds.                                 I@14:49:33.135
+State 0: state invariant 4 holds.                                 I@14:49:33.138
+State 0: state invariant 5 holds.                                 I@14:49:33.141
+State 0: state invariant 6 holds.                                 I@14:49:33.143
+State 0: state invariant 7 holds.                                 I@14:49:33.149
+State 0: state invariant 8 holds.                                 I@14:49:33.169
+State 0: state invariant 9 holds.                                 I@14:49:33.205
+Step 0: picking a transition out of 1 transition(s)               I@14:49:33.208
+Step 1: picking a transition out of 1 transition(s)               I@14:49:33.242
+The outcome is: NoError                                           I@14:49:33.255
+Checker reports no error up to computation length 1               I@14:49:33.260
+It took me 0 days  0 hours  0 min 10 sec                          I@14:49:33.264
+Total time: 10.294 sec                                            I@14:49:33.264
+EXITCODE: OK
+
+--- stderr ---

@@ -1,0 +1,1 @@
+ check --config=MCCg_VoleKUser.cfg --length=0 CF3EquivControlesEtendu.tla

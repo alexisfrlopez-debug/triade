@@ -1,0 +1,79 @@
+$ /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/apalache-0.63.0/bin/apalache-mc check --config=MCCg_OuvrirPhraseErronee.cfg --length=0 CF3EquivControlesEtendu.tla
+
+--- stdout ---
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivControlesEtendu.tla/2026-11-19T14-51-30_10210619741831320361
+# APALACHE version: 0.63.0 | build: 67b8ec6                       I@14:51:30.379
+  > MCCg_OuvrirPhraseErronee.cfg: Loading TLC configuration       I@14:51:30.422
+  > Using init predicate(s) InitCopies from the TLC config        I@14:51:30.776
+  > Using next predicate(s) RecopieTout from the TLC config       I@14:51:30.806
+  > Using inv predicate(s) OblFaibleGarde_OuvrirPhraseErronee from the TLC config I@14:51:30.807
+Tuning:                                                           I@14:51:30.822
+PASS #0: SanyParser                                               I@14:51:31.809
+PASS #1: TypeCheckerSnowcat                                       I@14:51:35.268
+ > Running Snowcat .::.                                           I@14:51:35.269
+ > Your types are purrfect!                                       I@14:51:38.510
+ > All expressions are typed                                      I@14:51:38.510
+PASS #2: ConfigurationPass                                        I@14:51:38.511
+  > MCCg_OuvrirPhraseErronee.cfg: found INVARIANTS: OblFaibleGarde_OuvrirPhraseErronee I@14:51:39.114
+  > Set the initialization predicate to InitCopies                I@14:51:39.128
+  > Set the transition predicate to RecopieTout                   I@14:51:39.129
+  > Set the constant initialization predicate to CInit            I@14:51:39.129
+  > Set an invariant to OblFaibleGarde_OuvrirPhraseErronee        I@14:51:39.129
+PASS #3: DesugarerPass                                            I@14:51:39.151
+  > Desugaring...                                                 I@14:51:39.151
+PASS #4: InlinePass                                               I@14:51:39.254
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblFaibleGarde_OuvrirPhraseErronee, RecopieTout I@14:51:39.255
+PASS #5: TemporalPass                                             I@14:51:40.041
+  > Rewriting temporal operators...                               I@14:51:40.041
+  > No temporal property specified, nothing to encode             I@14:51:40.041
+PASS #6: InlinePass                                               I@14:51:40.041
+Leaving only relevant operators: CInit, CInitPrimed, InitCopies, InitCopiesPrimed, OblFaibleGarde_OuvrirPhraseErronee, RecopieTout I@14:51:40.041
+PASS #7: PrimingPass                                              I@14:51:40.055
+  > Introducing CInitPrimed for CInit'                            I@14:51:40.060
+  > Introducing InitCopiesPrimed for InitCopies'                  I@14:51:40.062
+PASS #8: VCGen                                                    I@14:51:40.063
+  > Producing verification conditions from the invariant OblFaibleGarde_OuvrirPhraseErronee I@14:51:40.066
+  > VCGen produced 1 verification condition(s)                    I@14:51:40.070
+PASS #9: PreprocessingPass                                        I@14:51:40.110
+  > Before preprocessing: unique renaming                         I@14:51:40.110
+ > Applying standard transformations:                             I@14:51:40.127
+  > PrimePropagation                                              I@14:51:40.127
+  > Desugarer                                                     I@14:51:40.140
+  > UniqueRenamer                                                 I@14:51:40.142
+  > Normalizer                                                    I@14:51:40.145
+  > SetMembershipSimplifier                                       I@14:51:40.161
+  > Keramelizer                                                   I@14:51:40.163
+  > After preprocessing: UniqueRenamer                            I@14:51:40.176
+PASS #10: TransitionFinderPass                                    I@14:51:40.220
+  > Found 1 initializing transitions                              I@14:51:40.634
+  > Found 1 transitions                                           I@14:51:40.640
+  > Found constant initializer CInit                              I@14:51:40.644
+  > Applying unique renaming                                      I@14:51:40.651
+PASS #11: OptimizationPass                                        I@14:51:40.662
+ > Applying optimizations:                                        I@14:51:40.676
+  > ConstSimplifier                                               I@14:51:40.705
+  > ExprOptimizer                                                 I@14:51:40.714
+  > SetMembershipSimplifier                                       I@14:51:40.719
+  > ConstSimplifier                                               I@14:51:40.724
+PASS #12: AnalysisPass                                            I@14:51:40.741
+ > Marking skolemizable existentials and sets to be expanded...   I@14:51:40.743
+  > Skolemization                                                 I@14:51:40.754
+  > Expansion                                                     I@14:51:40.754
+  > Remove unused let-in defs                                     I@14:51:40.760
+ > Running analyzers...                                           I@14:51:40.771
+  > Introduced expression grades                                  I@14:51:40.773
+PASS #13: BoundedChecker                                          I@14:51:40.773
+State 0: Checking 1 state invariants                              I@14:51:42.147
+Check the trace in: /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivControlesEtendu.tla/2026-11-19T14-51-30_10210619741831320361/violation1.tla, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivControlesEtendu.tla/2026-11-19T14-51-30_10210619741831320361/MCviolation1.out, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivControlesEtendu.tla/2026-11-19T14-51-30_10210619741831320361/violation1.json, /home/z/my-project/depot/atelier-cf3-5ey7gmjra/_apalache-out/CF3EquivControlesEtendu.tla/2026-11-19T14-51-30_10210619741831320361/violation1.itf.json I@14:51:42.559
+State 0: state invariant 0 violated.                              I@14:51:42.564
+Found 1 error(s)                                                  I@14:51:42.577
+The outcome is: Error                                             I@14:51:42.612
+Checker has found an error                                        I@14:51:42.655
+It took me 0 days  0 hours  0 min 12 sec                          I@14:51:42.657
+Total time: 12.245 sec                                            I@14:51:42.657
+EXITCODE: ERROR (12)
+
+--- stderr ---

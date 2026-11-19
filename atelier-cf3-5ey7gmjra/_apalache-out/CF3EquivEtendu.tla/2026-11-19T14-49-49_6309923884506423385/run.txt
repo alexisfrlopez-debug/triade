@@ -1,0 +1,1 @@
+ check --config=MEEg_CloturerPhraseErronee.cfg --length=0 CF3EquivEtendu.tla

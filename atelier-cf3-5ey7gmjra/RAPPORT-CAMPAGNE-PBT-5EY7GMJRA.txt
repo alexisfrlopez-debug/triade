@@ -1,0 +1,75 @@
+LA CAMPAGNE PBT SUR LE MODÈLE ÉTENDU — L'INSTRUCTION 5ey7gmjra, POINT 1
+« re-joue la campagne générative 10 000 traces (graine consignée +
+nouvelles graines) jusqu'à ZÉRO divergence, chaque chemin d'échec
+couvert, ddmin sur tout écart résiduel »
+
+LE MODÈLE : modele_invariant_v153.py (l'étendu — la falsification
+offerte en session, la garde trap_ok seule) contre le coffre CONCRET
+v06/coffre_cf3.py (la phrase de TEST publique D192, jamais le coffre
+réel) ; le harnais pbt_raffinement_v153.py — le portage du v150, la
+branche d'écart fermée (le refus modèle hors piège indisponible est
+désormais IMPOSSIBLE : tout écart y est consigné ÉCART).
+
+LES TROIS CAMPAGNES (10 000 traces chacune, 3-8 pas, tirage pondéré) :
+  graine 20261112 (LA CONSIGNÉE) : 0 écart sur 10 000 traces — fins : 6732 par longueur, 3268 par destruction ;
+  graine 20261119 (NOUVELLE)     : 0 écart sur 10 000 traces — fins : 6725 par longueur, 3275 par destruction ;
+  graine 20261120 (NOUVELLE)     : 0 écart sur 10 000 traces — fins : 6771 par longueur, 3229 par destruction.
+
+LA STABILITÉ AU REJEU (la graine consignée) : DEUX rejeux intégraux —
+10 000/10 000 condensats BIT-IDENTIQUES à CHAQUE passe (le rejeu 1 :
+quatre tranches 2500 stables 0 divergentes ; le rejeu 2 : idem — le
+rejeu 2 == le rejeu 1 == la campagne, la triple égalité recoupée sur
+les 10 000 lignes des CSV).
+
+LE RECOUP À LA GÉNÉALOGIE (l'honnêteté du chantier) : contre le CSV
+consigné v0.15.0 (pbt_traces.csv, la campagne aux 660 écarts) —
+9 340 condensats IDENTIQUES, 660 DIVERGÉS : EXACTEMENT la classe des
+écarts consignés (l'égalité des ENSEMBLES vérifiée : les 660 traces
+divergées == les 660 traces à écarts du v150, AUUCUNE autre) ; les
+types de fin IDENTIQUES sur les 10 000 (les 660 demeurent des fins
+par destruction — la destruction est désormais celle que le modèle
+OFFRE, plus l'écart qu'il refusait). Le résultat historique (660
+divergences, une classe, réduit par ddmin à [ouvrir_correct,
+falsifie_conteneur]) DEMEURE CONSIGNÉ append-only : la découverte
+qui motiva l'extension.
+
+LES CONDENSÉS GLOBAUX (sha256, l'ordre des traces) :
+  20261112 : c0e32b82ae87a2b69420655dfdbc3e6526a5fdcf92788c23a061792106c649ee
+  20261119 : e7d12c42357c1c4a5046889c23e734c64d025d20b14e7b9d98d244c840ab809a
+  20261120 : 687aad6ab73256f5d18159b5cc7f97570ae7425f7e9a71f4cebe679c1854ed85
+
+LA COUVERTURE DES CHEMINS D'ÉCHEC (agrégée des journaux de tranches,
+les 13 règles, acceptées ET refusées) :
+  clôturer_correcte          tirés=  4711 acceptés=  3893 refusés=   818
+  clôturer_phrase_erronée    tirés=  2463 acceptés=  2463 refusés=     0
+  crash_pendant_session      tirés= 12335 acceptés= 12335 refusés=     0
+  falsifie_conteneur         tirés= 12460 acceptés=  9772 refusés=  2688
+  falsifie_piège             tirés= 12414 acceptés=  9769 refusés=  2645
+  ouvrir_ancien_couple       tirés=   585 acceptés=   585 refusés=     0
+  ouvrir_correct             tirés= 20072 acceptés= 12542 refusés=  7530
+  ouvrir_phrase_erronée      tirés= 10075 acceptés= 10075 refusés=     0
+  rejoue_époque_passée       tirés= 12413 acceptés=   645 refusés= 11768
+  verifier                   tirés= 10170 acceptés= 10170 refusés=     0
+  vole_K_user                tirés= 12579 acceptés= 12579 refusés=     0
+  vole_S_piège               tirés= 12564 acceptés= 12564 refusés=     0
+  vole_S_serrure             tirés= 12333 acceptés= 12333 refusés=     0
+
+  LES CHEMINS DE REFUS TOUS VÉCUS aux trois graines : la PORTE du
+  piège indisponible (ouvrir, clôturer, vérifier refusés), le SEUIL
+  (ouvrir refusé au KEK indérivable), le piège absent (falsifie
+  conteneur refusé — le bit altéré ne franchit jamais l'empreinte),
+  falsifie_piège refusé deux fois, le rejeu refusé à e=1 — chaque
+  chemin d'échec croisé par les 30 000 traces.
+
+LE DDMIN : AUCUN écart résiduel aux trois graines — le harnais porte
+la réduction (le drapeau --shrink, la même machine que v150), elle
+n'a RIEN à réduire : la machine prête, l'écart nul, dit tel quel.
+
+VERDICT : VERT — 30 000 traces aux trois graines, ZÉRO divergence :
+la frontière des 660 est FERMÉE, le modèle étendu et la sentinelle
+concrète s'accordent aux DEUX phases, chaque chemin d'échec couvert.
+
+LES PIÈCES : pbt_traces_5ey7gmjra.csv (10 000), pbt_traces_rejeu_
+5ey7gmjra.csv (le rejeu 1 — le rejeu 2 recoupé en place), pbt_traces_
+5ey7gmjra_g20261119.csv, pbt_traces_5ey7gmjra_g20261120.csv, les
+journaux de tranches (la couverture lue des journaux, jamais tapée).

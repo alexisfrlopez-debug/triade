@@ -1,0 +1,102 @@
+LE KIT DE MESURE MATÉRIELLE PRÉ-ENREGISTRÉ v0.19.0 — EN ATTENTE
+================================================================================
+(l'instruction 5ey7gmjra, point 4 : « Prépare le kit de mesure matérielle
+pré-enregistré (n≥10 runs par N, ≥2 machines, fréquence CPU fixée, affinité
+core, investigation des pics tls13-02/tls13-13 à N=200) EN ATTENTE du geste
+développeur : aucun chiffre matériel fabriqué. »)
+
+LE STATUT : EN ATTENTE DU GESTE DÉVELOPPEUR (D99 : chaque run terrain
+appartient au développeur — le témoin daté/signé ; le laboratoire prépare
+les kits et recoupe, il ne fabrique JAMAIS une ligne). AUCUN chiffre
+matériel ne vit dans le présent kit : tout ce qui suit est le PROTOCOLE,
+pré-enregistré AVANT toute donnée — la discipline du pré-enregistrement
+(la leçon D204/D210 : les critères AVANT les mesures, jamais après).
+
+LE MESUREUR : le dudect_v150.c SCELLÉ du kit terrain
+[sha256 8c90ef8232e478a41d38a9edbba21f14f037939d7e8900d643063f5df53f06f3,
+recoupé à la préparation] — le mesureur ÉPROUVÉ (le run signé du 13/11 :
+deux exécutions, témoin daté) : l'image mémoire étendue chargée, le sha256
+de l'image ET de chaque plage de cible recoupé au manifeste AVANT toute
+exécution, l'affinité posée sur UN cœur, l'échauffement de 100 appels,
+RDTSC (cycles) ET QPC (secondes), le t de Welch au seuil |t| > 5.
+LE PRÉSENT KIT N'AJOUTE AUCUN MESUREUR : il pré-enregistre le PROTOCOLE
+DE RÉPÉTITION et D'AGRÉGATION qui manquait (le run unique de la v0.15.0 :
+« measured (2 runs, 1 machine) » — la table des statuts le nommait tel
+quel ; la présente édition porte le protocole qui le dépasse).
+
+═════════════════════════════════════════════════════════════════════════════
+LE PROTOCOLE PRÉ-ENREGISTRÉ (chaque geste AVANT toute donnée)
+═════════════════════════════════════════════════════════════════════════════
+P1 LES RUNS : n ≥ 10 exécutions INDÉPENDANTES du mesureur par valeur de N
+   — chaque exécution un processus frais (l'affinité re-posée, l'échauffe-
+   ment re-vécu), la graine de chaque exécution CONSIGNÉE dans le témoin
+   (l'ordre des tirages reproductible) ; JAMAIS une exécution unique
+   habillée de dix mensonges.
+P2 LES VALEURS DE N : N = 60 (le contrôle structurel — le pendant des
+   60/classe de l'instrument d'émulation hash-vérifié) ET N = 200 (la
+   valeur du run signé du 13/11 — L'INVESTIGATION DES PICS porte ici) ;
+   N = 400 (la seconde valeur du run signé)demeure au protocole pour la
+   comparaison exacte au témoin existant.
+P3 LES MACHINES : ≥ 2 machines (la machine Windows du développeur — celle
+   du témoin signé du 13/11 — ET une seconde machine : l'autre Windows du
+   dépôt à deux machines, D204, ou la machine tiers du scénario Loupe) ;
+   chaque machine porte son EMPREINTE consignée : le modèle CPU, la
+   fréquence NOMINALE et l'état EFFECTIF du turbo/gouverneur, l'OS, la
+   charge au moment du run (le témoin l'exige — le run v0.15.0 le fit).
+P4 LA FRÉQUENCE CPU FIXÉE : le gouverneur à performance constante (ou le
+   turbo désactivé au BIOS) AVANT la série — l'état EFFECTIF consigné au
+   témoin (jamais « désactivé si possible » silencieux : l'état lu, nommé).
+P5 L'AFFINITÉ CORE : un cœur unique par exécution (le mesureur la pose :
+   SetThreadAffinityMask / sched_setaffinity — le mécanisme scellé) ; le
+   cœur CHOISI consigné (les pics d'un cœur partagé avec une interruption
+   sont une cause nommée, pas une découverte).
+P6 L'INVESTIGATION DES PICS tls13-02/tls13-13 À N=200 : le run signé du
+   13/11 porta DEUX cibles au-dessus du seuil à N=200 (12,39 et 5,19 —
+   les valeurs CONSIGNÉES AU TÉMOIN, jamais réinterprétées) ; la présente
+   pré-enregistre L'INVESTIGATION : à N=200, n≥10 exécutions par machine,
+   la DISTRIBUTION des t par exécution (pas seulement la moyenne : le
+   nombre d'exécutions au-dessus du seuil, l'étendue, la médiane) ; les
+   causes candidates NOMMÉES AVANT les données : (a) le bruit d'horloge
+   d'une exécution unique (le t de Welch au seuil 5 sur un échantillon
+   unique : la probabilité de faux positif non nulle — la répétition la
+   tranche) ; (b) l'interruption/la migration du cœur (l'affinité posée
+   mais le cœur partagé) ; (c) UN VRAI ÉCART de temps constant sur les
+   deux cibles (la conclusion que les données seules peuvent imposer —
+   si la répétition le tient, l'écart est NOMMÉ au manuscrit et la
+   mitigation au commandement du développeur) ; AUCUNE cause n'est
+   élue d'avance : les données tranchent, le protocole les attend.
+P7 LE JUGEMENT : une cible est dite À L'ÉCART si la MÉDIANE des t des
+   n≥10 exécutions dépasse le seuil 5 sur une machine (le critère
+   pré-enregistré) ; le rapport final porte PAR cible PAR machine PAR N :
+   la liste des t, la médiane, l'étendue, le verdict AU CRITÈRE — la
+   table des statuts du manuscrit porte le résultat AU STATUT EXACT
+   (« measured (n runs, m machines) » — jamais « constant time proven »,
+   la discipline du témoin v0.15.0 reconduite).
+P8 L'AGRÉGATION : agreger_mesures_v190.py (ci-présent) lit les journaux
+   CSV du mesureur scellé (journal-dudect-*.csv — le format inchangé),
+   calcule les médianes/étendues PAR cible/machine/N et tranche au
+   critère P7 — l'outil REFUSE tout fichier manquant ou toute ligne
+   imputable (échec fermé : aucune valeur fabriquée, aucune ligne
+   inventée, le moindre écart un REFUS nommé).
+
+═════════════════════════════════════════════════════════════════════════════
+LES PIÈCES DU KIT (chacune recoupée à la préparation)
+═════════════════════════════════════════════════════════════════════════════
+— LE PRESENT LISEZMOI (le protocole pré-enregistré P1-P8) ;
+— lancer_mesures_v190.sh / lancer_mesures_v190.bat : le pilote des n≥10
+  exécutions par N ∈ {60, 200, 400} (l'ordre des exécutions fixé, les
+  graines consignées au journal du pilote, l'empreinte machine gravée
+  AVANT la première exécution) — le pilote NE MESURE RIEN lui-même :
+  il appelle le mesureur scellé ;
+— agreger_mesures_v190.py : l'agrégation P8 (échec fermé) ;
+— LE RENVOI : les journaux CSV + le témoin daté/signé du développeur
+  (la règle systématique D122 : en cas de problème, le rapport .txt
+  glissé dans la conversation).
+
+LA FRONTIÈRE (dite telle quelle) : le présent kit ne fabrique AUCUN
+chiffre ; la ligne « Wall-clock constant time » de la table des statuts
+demeure « measured (2 runs, 1 machine) » jusqu'au geste du développeur —
+le kit prêt, l'attente nommée, la décision au maître.
+================================================================================
+Généré le 2026-11-19 à la préparation de l'instruction 5ey7gmjra — le
+mesureur scellé dudect_v150.c [8c90ef82…] INTACT, jamais recompilé ici.

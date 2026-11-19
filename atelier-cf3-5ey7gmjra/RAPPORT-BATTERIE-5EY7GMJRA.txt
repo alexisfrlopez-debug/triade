@@ -1,0 +1,99 @@
+LA BATTERIE 5ey7gmjra — lot D : 15/15 VERT
+  VERT  D. l'épinglage TLC VoleKUser : les DEUX sens
+  VERT  D. l'épinglage TLC VoleSSerrure : les DEUX sens
+  VERT  D. l'épinglage TLC VoleSPiege : les DEUX sens
+  VERT  D. l'épinglage TLC FalsifieConteneur : les DEUX sens
+  VERT  D. l'épinglage TLC FalsifiePiege : les DEUX sens
+  VERT  D. l'épinglage TLC RejoueEpoquePassee : les DEUX sens
+  VERT  D. l'épinglage TLC OuvrirCorrect : les DEUX sens
+  VERT  D. l'épinglage TLC OuvrirPhraseErronee : les DEUX sens
+  VERT  D. l'épinglage TLC OuvrirAncienCouple : les DEUX sens
+  VERT  D. l'épinglage TLC Verifier : les DEUX sens
+  VERT  D. l'épinglage TLC CrashPendantSession : les DEUX sens
+  VERT  D. l'épinglage TLC CloturerCorrecte : les DEUX sens
+  VERT  D. l'épinglage TLC CloturerPhraseErronee : les DEUX sens
+  VERT  D. le contrôle d'épinglage : l'INVARIANT du pin TOMBE (l'extension annulée ATTRAPÉE)
+  VERT  D. l'énumération TLC des formes : 288 (les formes INCHANGÉES) — 288 états distincts
+  VERT  C_controle_garde_VoleKUser
+  VERT  C_controle_effet_VoleKUser
+  VERT  C_controle_garde_VoleSSerrure
+  VERT  C_controle_effet_VoleSSerrure
+  VERT  C_controle_garde_VoleSPiege
+  VERT  C_controle_effet_VoleSPiege
+  VERT  C_controle_garde_FalsifieConteneur
+  VERT  C_controle_effet_FalsifieConteneur
+  VERT  C_controle_garde_FalsifiePiege
+  VERT  C_controle_effet_FalsifiePiege
+  VERT  C_controle_garde_RejoueEpoquePassee
+  VERT  C_controle_effet_RejoueEpoquePassee
+  VERT  C_controle_garde_OuvrirCorrect
+  VERT  C_controle_effet_OuvrirCorrect
+  VERT  C_controle_garde_OuvrirPhraseErronee
+  VERT  C_controle_effet_OuvrirPhraseErronee
+  VERT  C_controle_garde_OuvrirAncienCouple
+  VERT  C_controle_effet_OuvrirAncienCouple
+  VERT  C_controle_garde_Verifier
+  VERT  C_controle_effet_Verifier
+  VERT  C_controle_garde_CrashPendantSession
+  VERT  C_controle_effet_CrashPendantSession
+  VERT  C_controle_garde_CloturerCorrecte
+  VERT  C_controle_effet_CloturerCorrecte
+  VERT  C_controle_garde_CloturerPhraseErronee
+  VERT  C_controle_effet_CloturerPhraseErronee
+  VERT  C_controle_inductif_debordant
+  VERT  C_controle_translation_gardes
+  VERT  C_controle_translation_effets
+  VERT  C_controle_o3_couverture
+  VERT  C_controle_o3_non_vacuite
+  VERT  B_apalache_base_etendu
+  VERT  B_apalache_inductif_etendu
+  VERT  B_equiv_garde_VoleKUser
+  VERT  B_equiv_image_VoleKUser
+  VERT  B_equiv_activation_VoleKUser
+  VERT  B_equiv_garde_VoleSSerrure
+  VERT  B_equiv_image_VoleSSerrure
+  VERT  B_equiv_activation_VoleSSerrure
+  VERT  B_equiv_garde_VoleSPiege
+  VERT  B_equiv_image_VoleSPiege
+  VERT  B_equiv_activation_VoleSPiege
+  VERT  B_equiv_garde_FalsifieConteneur
+  VERT  B_equiv_image_FalsifieConteneur
+  VERT  B_equiv_activation_FalsifieConteneur
+  VERT  B_equiv_garde_FalsifiePiege
+  VERT  B_equiv_image_FalsifiePiege
+  VERT  B_equiv_activation_FalsifiePiege
+  VERT  B_equiv_garde_RejoueEpoquePassee
+  VERT  B_equiv_image_RejoueEpoquePassee
+  VERT  B_equiv_activation_RejoueEpoquePassee
+  VERT  B_equiv_garde_OuvrirCorrect
+  VERT  B_equiv_image_OuvrirCorrect
+  VERT  B_equiv_activation_OuvrirCorrect
+  VERT  B_equiv_garde_OuvrirPhraseErronee
+  VERT  B_equiv_image_OuvrirPhraseErronee
+  VERT  B_equiv_activation_OuvrirPhraseErronee
+  VERT  B_equiv_garde_OuvrirAncienCouple
+  VERT  B_equiv_image_OuvrirAncienCouple
+  VERT  B_equiv_activation_OuvrirAncienCouple
+  VERT  B_equiv_garde_Verifier
+  VERT  B_equiv_image_Verifier
+  VERT  B_equiv_activation_Verifier
+  VERT  B_equiv_garde_CrashPendantSession
+  VERT  B_equiv_image_CrashPendantSession
+  VERT  B_equiv_activation_CrashPendantSession
+  VERT  B_equiv_garde_CloturerCorrecte
+  VERT  B_equiv_image_CloturerCorrecte
+  VERT  B_equiv_activation_CloturerCorrecte
+  VERT  B_equiv_garde_CloturerPhraseErronee
+  VERT  B_equiv_image_CloturerPhraseErronee
+  VERT  B_equiv_activation_CloturerPhraseErronee
+  VERT  B_translation_gardes_etendu
+  VERT  B_translation_effets_etendu
+  VERT  B_o3_couverture
+  VERT  B_o3_non_vacuite
+  VERT  A. le journal TLC scellé : la profondeur 7, aucun état en file
+  VERT  A. le modèle Python SCELLÉ : 154/1152 D187 REPRODUIT
+  VERT  A. TLC la chaîne SCELLÉE : 154 états distincts — 896 générés / 154 distincts
+  ROUGE  A. le journal TLC scellé : la profondeur 7, aucun état en file
+  VERT  A. TLC la chaîne ÉTENDUE : l'espace atteignable INVARIANT (154 états distincts — l'extension n'ajoute AUCUN état) — 926 générés / 154 distincts (les transitions tirées croissent : la falsification offerte en session)
+  ROUGE  A. le modèle Python SCELLÉ : 154/1152 D187 REPRODUIT
+  VERT  A. le modèle Python ÉTENDU : la fidélité + les preuves + l'uniformité

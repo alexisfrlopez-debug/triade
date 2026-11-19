@@ -1,0 +1,1 @@
+ check --config=MEE_ind.cfg --length=1 --no-deadlock CF3Etendu.tla

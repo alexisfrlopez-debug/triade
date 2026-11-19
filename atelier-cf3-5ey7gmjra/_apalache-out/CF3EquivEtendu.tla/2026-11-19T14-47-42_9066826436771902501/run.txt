@@ -1,0 +1,1 @@
+ check --config=MEEg_VoleSPiege.cfg --length=0 CF3EquivEtendu.tla

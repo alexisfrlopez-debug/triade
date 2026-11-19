@@ -1,0 +1,1 @@
+ check --config=MCO_cb2.cfg --length=0 CF3O3.tla

@@ -1,0 +1,85 @@
+@!@!@STARTMSG 2262:0 @!@!@
+Created by Apalache on Thu Nov 19 14:52:27 UTC 2026
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ accepteP = FALSE
+/\ accepteR = FALSE
+/\ cf2P = FALSE
+/\ cf2R = FALSE
+/\ cf2_ok = FALSE
+/\ destr_injuste = FALSE
+/\ detruit = FALSE
+/\ detruitP = FALSE
+/\ detruitR = FALSE
+/\ e = -1
+/\ eP = -1
+/\ eR = -1
+/\ injusteP = FALSE
+/\ injusteR = FALSE
+/\ marque = FALSE
+/\ mediaP = FALSE
+/\ mediaR = FALSE
+/\ media_corrompu = FALSE
+/\ phase = "brouillon"
+/\ phaseP = "brouillon"
+/\ phaseR = "brouillon"
+/\ sait = {}
+/\ saitP = {}
+/\ saitR = {}
+/\ secret = FALSE
+/\ secretP = FALSE
+/\ secretR = FALSE
+/\ trapP = TRUE
+/\ trapR = TRUE
+/\ trap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <Next>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ accepteP = FALSE
+/\ accepteR = FALSE
+/\ cf2P = FALSE
+/\ cf2R = FALSE
+/\ cf2_ok = FALSE
+/\ destr_injuste = FALSE
+/\ detruit = FALSE
+/\ detruitP = FALSE
+/\ detruitR = FALSE
+/\ e = -1
+/\ eP = -1
+/\ eR = 0
+/\ injusteP = FALSE
+/\ injusteR = FALSE
+/\ marque = FALSE
+/\ mediaP = FALSE
+/\ mediaR = FALSE
+/\ media_corrompu = FALSE
+/\ phase = "brouillon"
+/\ phaseP = "canonique"
+/\ phaseR = "canonique"
+/\ sait = {}
+/\ saitP = {}
+/\ saitR = {}
+/\ secret = FALSE
+/\ secretP = FALSE
+/\ secretR = FALSE
+/\ trapP = TRUE
+/\ trapR = TRUE
+/\ trap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@

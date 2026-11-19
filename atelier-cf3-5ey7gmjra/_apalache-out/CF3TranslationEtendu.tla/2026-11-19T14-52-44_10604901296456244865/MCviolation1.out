@@ -1,0 +1,65 @@
+@!@!@STARTMSG 2262:0 @!@!@
+Created by Apalache on Thu Nov 19 14:52:53 UTC 2026
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ cf2_ok = FALSE
+/\ delta = 1
+/\ destr_injuste = FALSE
+/\ detruit = FALSE
+/\ e = 3
+/\ media_corrompu = FALSE
+/\ phase = "brouillon"
+/\ sait = {}
+/\ secret = FALSE
+/\ taccepte = FALSE
+/\ tcf2_ok = FALSE
+/\ tdestr_injuste = FALSE
+/\ tdetruit = FALSE
+/\ te = 4
+/\ tmedia_corrompu = FALSE
+/\ tphase = "brouillon"
+/\ trap_ok = TRUE
+/\ tsait = {}
+/\ tsecret = FALSE
+/\ ttrap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <Next>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ cf2_ok = FALSE
+/\ delta = 1
+/\ destr_injuste = FALSE
+/\ detruit = FALSE
+/\ e = 3
+/\ media_corrompu = FALSE
+/\ phase = "canonique"
+/\ sait = {}
+/\ secret = FALSE
+/\ taccepte = FALSE
+/\ tcf2_ok = FALSE
+/\ tdestr_injuste = FALSE
+/\ tdetruit = FALSE
+/\ te = 3
+/\ tmedia_corrompu = FALSE
+/\ tphase = "canonique"
+/\ trap_ok = TRUE
+/\ tsait = {}
+/\ tsecret = FALSE
+/\ ttrap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@

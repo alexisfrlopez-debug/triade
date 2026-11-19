@@ -1,0 +1,184 @@
+{
+  "#meta": {
+    "format": "ITF",
+    "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+    "description": "Created by Apalache on Thu Nov 19 14:50:57 UTC 2026",
+    "varTypes": {
+      "trapP": "Bool",
+      "trapR": "Bool",
+      "e": "Int",
+      "accepte": "Bool",
+      "eP": "Int",
+      "eR": "Int",
+      "media_corrompu": "Bool",
+      "cf2P": "Bool",
+      "cf2R": "Bool",
+      "marque": "Bool",
+      "accepteP": "Bool",
+      "accepteR": "Bool",
+      "destr_injuste": "Bool",
+      "injusteP": "Bool",
+      "injusteR": "Bool",
+      "phase": "Str",
+      "phaseP": "Str",
+      "phaseR": "Str",
+      "secret": "Bool",
+      "secretP": "Bool",
+      "secretR": "Bool",
+      "saitP": "Set(Str)",
+      "saitR": "Set(Str)",
+      "trap_ok": "Bool",
+      "mediaP": "Bool",
+      "mediaR": "Bool",
+      "detruit": "Bool",
+      "detruitP": "Bool",
+      "detruitR": "Bool",
+      "sait": "Set(Str)",
+      "cf2_ok": "Bool"
+    }
+  },
+  "params": [
+    "SPiege",
+    "SSerrure",
+    "KUser"
+  ],
+  "vars": [
+    "trapP",
+    "trapR",
+    "e",
+    "accepte",
+    "eP",
+    "eR",
+    "media_corrompu",
+    "cf2P",
+    "cf2R",
+    "marque",
+    "accepteP",
+    "accepteR",
+    "destr_injuste",
+    "injusteP",
+    "injusteR",
+    "phase",
+    "phaseP",
+    "phaseR",
+    "secret",
+    "secretP",
+    "secretR",
+    "saitP",
+    "saitR",
+    "trap_ok",
+    "mediaP",
+    "mediaR",
+    "detruit",
+    "detruitP",
+    "detruitR",
+    "sait",
+    "cf2_ok"
+  ],
+  "states": [
+    {
+      "#meta": {
+        "index": 0
+      },
+      "KUser": "K_user",
+      "SPiege": "S_piege",
+      "SSerrure": "S_serrure",
+      "accepte": false,
+      "accepteP": false,
+      "accepteR": false,
+      "cf2P": false,
+      "cf2R": false,
+      "cf2_ok": false,
+      "destr_injuste": false,
+      "detruit": false,
+      "detruitP": false,
+      "detruitR": false,
+      "e": {
+        "#bigint": "0"
+      },
+      "eP": {
+        "#bigint": "0"
+      },
+      "eR": {
+        "#bigint": "0"
+      },
+      "injusteP": false,
+      "injusteR": false,
+      "marque": false,
+      "mediaP": false,
+      "mediaR": false,
+      "media_corrompu": false,
+      "phase": "canonique",
+      "phaseP": "canonique",
+      "phaseR": "canonique",
+      "sait": {
+        "#set": []
+      },
+      "saitP": {
+        "#set": []
+      },
+      "saitR": {
+        "#set": []
+      },
+      "secret": false,
+      "secretP": false,
+      "secretR": false,
+      "trapP": false,
+      "trapR": false,
+      "trap_ok": false
+    },
+    {
+      "#meta": {
+        "index": 1
+      },
+      "KUser": "K_user",
+      "SPiege": "S_piege",
+      "SSerrure": "S_serrure",
+      "accepte": false,
+      "accepteP": false,
+      "accepteR": false,
+      "cf2P": false,
+      "cf2R": false,
+      "cf2_ok": false,
+      "destr_injuste": false,
+      "detruit": false,
+      "detruitP": false,
+      "detruitR": false,
+      "e": {
+        "#bigint": "0"
+      },
+      "eP": {
+        "#bigint": "0"
+      },
+      "eR": {
+        "#bigint": "0"
+      },
+      "injusteP": false,
+      "injusteR": false,
+      "marque": false,
+      "mediaP": false,
+      "mediaR": false,
+      "media_corrompu": false,
+      "phase": "canonique",
+      "phaseP": "canonique",
+      "phaseR": "canonique",
+      "sait": {
+        "#set": []
+      },
+      "saitP": {
+        "#set": []
+      },
+      "saitR": {
+        "#set": [
+          "S_serrure"
+        ]
+      },
+      "secret": false,
+      "secretP": false,
+      "secretR": false,
+      "trapP": false,
+      "trapR": false,
+      "trap_ok": false
+    }
+  ]
+}

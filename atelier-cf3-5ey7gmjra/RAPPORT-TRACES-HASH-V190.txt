@@ -1,0 +1,13 @@
+L'ÉGALITÉ DES TRACES COMPLÈTES PAR HASH — L'INSTRUMENT DURCI DE L'INSTRUCTION 5ey7gmjra (v0.19.0)
+  (les 6 cibles de l'instrument v180, N=60/classe, la graine consignée 20261119 ; le hash incrémental par run : chaque instruction (adresse, taille) + chaque accès de données (type, adresse, taille) — les VALEURS jamais hachées)
+
+  tls13-01..04 (sha-256, le message)       → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 5188-5188 événements, le compte == unique
+  tls13-05 (hmac-sha256, la clé)           → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 20868-20868 événements, le compte == unique
+  tls13-06 (hkdf-extract, l'IKM)           → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 20927-20927 événements, le compte == unique
+  tls13-13/14 (x25519, la clé privée)      → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 2159436-2159436 événements, le compte == unique  le compte 1 238 959 == 1 238 959
+  tls13-15..19 (aes-gcm, la clé)           → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 16608-16608 événements, le compte == unique
+  loupe-06 (md5, le contenu)               → ÉGALITÉ HASH-VÉRIFIÉE — 60+60 runs, 1 hash distinct, 155588-155588 événements, le compte == unique
+
+LA PROMOTION : le compte unique (v180) demeure CONTENU dans le hash — deux traces de longueurs différentes ont des hash différents ; l'égalité des 120 condensats par cible est la preuve d'égalité BIT-IDENTIQUE des traces complètes : le flot d'exécution ET le patron d'accès mémoire, indépendants du secret — PLUS une divulgation de type adresse-ou-contrôle.
+
+VERDICT : VERT — l'égalité hash-vérifiée sur les 6 cibles, le compte x25519 confirmé

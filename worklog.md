@@ -13837,3 +13837,18 @@ Work Log:
 - LA MATRICE : LA LIGNE 4 (PUBLIC + ZENODO) ATTEINTE — le dépôt PUBLIC (vérifié aux trois bords) et le DOI Zenodo VIVANT (10.5281/zenodo.24367344, l'Entrée 366) : les deux moitiés de la ligne en place, l'horizon consigné de la première sauvegarde désormais VÉCU — jamais subi, à la décision explicite du maître.
 - SUITE : les trois instructions restantes de la vague 7 demeurent séquencées (③ 5ey7gmjra l'écart CF3 et le temps constant, ④ cq01qv1za le coût de la boucle sous R11, ⑤ 1c4sokpii le plan au terme — le RAPPORT-ANALYSES-VAGUE7 fait foi) ; l'édition documentée des sources au statut public ET l'entrée du scan périodique au runbook attendent le commandement du maître.
   (19/11/2026, la session du passage public — la décision explicite du maître reçue et exécutée dans la lettre de la matrice : le pré-vol d'abord, le geste vécu à 14:05:30Z, les trois bords vérifiés, l'orphelin sondé par honnêteté, D220 consignée ; la ligne 4 honorée — le dépôt public, le DOI vivant, la matrice parcourue jusqu'au bout)
+
+---
+Task ID: 230
+Agent: Z.ai (agent principal — la session 5ey7gmjra : l'écart de session fermé, la vague 7 troisième instruction)
+Task: L'ÉCART MODÈLE↔IMPLÉMENTATION CF3 FERMÉ ET LA PREUVE TEMPS CONSTANT DURCIE (l'instruction 5ey7gmjra, à la suite de l'Entrée 369) : le modèle étendu (la falsification en session ouverte, la garde de la sentinelle), la campagne 30 000 traces à ZÉRO divergence, la batterie 96/96, l'instrument au hash des traces complètes 6/6, le kit matériel pré-enregistré EN ATTENTE, les éditions v0.15.3/v0.19.3, le pack relu.
+
+Work Log:
+- LE MODÈLE ÉTENDU : CF3Etendu.tla + modele_invariant_v153.py (la règle 4 aux DEUX phases, le diff exact gravé, les 660 historiques demeurant consignés) ; l'explorateur : 288 formes × 13 règles 0 violation, translation UNIFORME.
+- LA BATTERIE 96/96 : TLC scellé 154/896 reproduit (le journal aux lignes identiques) ; TLC étendu 154/926 (l'espace atteignable INVARIANT) ; Apalache Init⇒I, I∧Next⇒I′ NoError ; l'alignement 13/13 (garde/image/activation) ; LT1/LT2 re-prouvés ; 31 contrôles ATTRAPÉS (l'extension annulée, le débordement média) ; l'épinglage 13×2 sens + son contrôle.
+- LA CAMPAGNE : 10 000 traces graine 20261112 ZÉRO écart (l'écart des 660 FERMÉ) ; rejeu bit-identique DEUX fois ; graines 20261119/20261120 : ZÉRO écart ; le recoup : 9 340 identiques + 660 divergés == exactement la classe consignée ; chaque chemin d'échec couvert ; ddmin prêt, rien à réduire.
+- L'INSTRUMENT : le hash des traces complètes (instructions + adresses + accès mémoire, les valeurs jamais) — 6/6 cibles, une seule empreinte sur 120 mesures, x25519 1 238 959 subsumé, le clone PUBLIC anonyme.
+- LE KIT MATÉRIEL : le protocole P1-P8 pré-enregistré (n≥10/N, ≥2 machines, fréquence fixée, les pics tls13-02/13 à N=200 aux causes nommées d'avance), le mesureur scellé intact, l'agrégation fail-closed — EN ATTENTE, aucun chiffre.
+- LES ÉDITIONS : la spec v0.15.3 (aucune règle modifiée — le modèle porté à la lettre de la règle), le manuscrit v0.19.3 (la table des statuts aux quatre lignes), les preuves v0.19.3, la présentation du 20/11, le Livre v1.3 inchangé ; le linter v193 87/87 + 9/9 mutations attrapées ; le PACK v0.19.3 [sha256 0355c5af…] relu pièce à pièce.
+- SUITE : les instructions cq01qv1za et 1c4sokpii séquencées (le RAPPORT-ANALYSES-VAGUE7 fait foi) ; l'édition documentée des sources au statut public et l'entrée du scan périodique au runbook attendent le commandement du maître.
+  (19/11/2026, la session 5ey7gmjra — l'écart découvert par la campagne, fermé par l'extension : le modèle et la sentinelle concrète s'accordent enfin aux deux phases, sur pièces)

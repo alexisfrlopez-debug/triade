@@ -1,0 +1,5 @@
+propriété,énoncé,statut,preuve,hypothèses
+P1,secret sous seuil (≤ 2 éléments),PROUVÉE NON BORNÉE,"l'invariant I1 (secret ⟹ seuil = 3) : initialisé, préservé par les 13 règles sur les formes finies, uniforme par translation δ ∈ {7, 50, 1000} ; contre-vérification bornée époques ≤ 5 et ≤ 7","A1 symbolique, A2 seuil ≤ 2 (le vol des TROIS est hors modèle A5)"
+P2,refus du roll-back (l'époque ne décroît jamais ; le rejeu d'un couple passé est refusé nommé),PROUVÉE NON BORNÉE,"la monotonie inconditionnelle (4096 formes × 13 règles, 0 décroissance) + le rejeu-état-inchangé (0 divergence) — l'induction couvre TOUTE époque",A4 anciens couples (le rejeu complet est modélisé)
+P3,absence de destruction sur phrase erronée,PROUVÉE NON BORNÉE,l'invariant I2 : aucune règle n'écrit destruction_injuste — vérifié forme par forme,la phrase erronée mène à PhraseErronee (réessai) — spec § 5.4
+P4,rayon borné à une époque (le média et CF2 jamais touchés),PROUVÉE NON BORNÉE,l'invariant I3 : aucune règle n'écrit média_corrompu ni touche cf2_intact — vérifié forme par forme,"la destruction (falsification PROUVÉE, piège intègre) ne touche que l'état local — spec § 7"

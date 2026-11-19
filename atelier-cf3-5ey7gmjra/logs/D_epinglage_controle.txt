@@ -1,0 +1,124 @@
+$ java -jar /home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar -nowarning -config MTLP_ctl.cfg CF3EquivControlesEtendu.tla
+
+--- stdout ---
+TLC2 Version 2026.11.15.002146 (rev: bc1b506)
+Running breadth-first search Model-Checking with fp 4 and seed 8073156189685252802 with 1 worker on 2 cores with 1024MB heap and 64MB offheap memory [pid: 8131] (Linux 5.10.134-013.15.kangaroo.al8.x86_64 amd64, Debian 21.0.13 64bit, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3EquivControlesEtendu.tla
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3EquivEtendu.tla
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3PythonControlesEtendu.tla
+Parsing file /tmp/tlc-516036333419140779/_TLCTrace.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/_TLCTrace.tla)
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3Etendu.tla
+Parsing file /home/z/my-project/depot/atelier-cf3-5ey7gmjra/CF3PythonEtendu.tla
+Parsing file /tmp/tlc-516036333419140779/Integers.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Integers.tla)
+Parsing file /tmp/tlc-516036333419140779/FiniteSets.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/FiniteSets.tla)
+Parsing file /tmp/tlc-516036333419140779/Naturals.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Naturals.tla)
+Parsing file /tmp/tlc-516036333419140779/Sequences.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/Sequences.tla)
+Parsing file /tmp/tlc-516036333419140779/TLC.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/TLC.tla)
+Parsing file /tmp/tlc-516036333419140779/TLCExt.tla (jar:file:/home/z/my-project/depot/atelier-cf3-5ey7gmjra/outils/tla2tools.jar!/tla2sany/StandardModules/TLCExt.tla)
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module CF3Etendu
+Semantic processing of module CF3PythonEtendu
+Semantic processing of module CF3EquivEtendu
+Semantic processing of module CF3PythonControlesEtendu
+Semantic processing of module TLC
+Semantic processing of module TLCExt
+Semantic processing of module _TLCTrace
+Semantic processing of module CF3EquivControlesEtendu
+Linting of module CF3Etendu
+Linting of module CF3PythonEtendu
+Linting of module CF3EquivEtendu
+Linting of module CF3PythonControlesEtendu
+Linting of module TLCExt
+Linting of module _TLCTrace
+Linting of module CF3EquivControlesEtendu
+Starting... (2026-11-19 14:53:14)
+Computing initial states...
+Computed 2 initial states...
+Computed 4 initial states...
+Computed 8 initial states...
+Computed 16 initial states...
+Computed 32 initial states...
+Computed 64 initial states...
+Computed 128 initial states...
+Computed 256 initial states...
+Computed 512 initial states...
+Computed 1024 initial states...
+Computed 2048 initial states...
+Finished computing initial states: 4096 distinct states generated at 2026-11-19 14:53:15.
+Error: Invariant InvPinCtl_FalsifieConteneur is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ trapP = TRUE
+/\ trapR = TRUE
+/\ e = 1
+/\ accepte = FALSE
+/\ eP = 1
+/\ eR = 1
+/\ media_corrompu = FALSE
+/\ cf2P = FALSE
+/\ cf2R = FALSE
+/\ marque = FALSE
+/\ accepteP = FALSE
+/\ accepteR = FALSE
+/\ destr_injuste = FALSE
+/\ injusteP = FALSE
+/\ injusteR = FALSE
+/\ phase = "brouillon"
+/\ phaseP = "brouillon"
+/\ phaseR = "brouillon"
+/\ secret = FALSE
+/\ secretP = FALSE
+/\ secretR = FALSE
+/\ saitP = {}
+/\ saitR = {}
+/\ trap_ok = TRUE
+/\ mediaP = FALSE
+/\ mediaR = FALSE
+/\ detruit = FALSE
+/\ detruitP = FALSE
+/\ detruitR = FALSE
+/\ sait = {}
+/\ cf2_ok = FALSE
+
+State 2: <NextPinCtl_FalsifieConteneur line 68, col 7 to line 68, col 249 of module CF3EquivControlesEtendu>
+/\ trapP = TRUE
+/\ trapR = TRUE
+/\ e = 1
+/\ accepte = FALSE
+/\ eP = 1
+/\ eR = 1
+/\ media_corrompu = FALSE
+/\ cf2P = FALSE
+/\ cf2R = FALSE
+/\ marque = TRUE
+/\ accepteP = FALSE
+/\ accepteR = FALSE
+/\ destr_injuste = FALSE
+/\ injusteP = FALSE
+/\ injusteR = FALSE
+/\ phase = "brouillon"
+/\ phaseP = "brouillon"
+/\ phaseR = "brouillon"
+/\ secret = FALSE
+/\ secretP = FALSE
+/\ secretR = FALSE
+/\ saitP = {}
+/\ saitR = {}
+/\ trap_ok = TRUE
+/\ mediaP = FALSE
+/\ mediaR = FALSE
+/\ detruit = FALSE
+/\ detruitP = FALSE
+/\ detruitR = TRUE
+/\ sait = {}
+/\ cf2_ok = FALSE
+
+5185 states generated, 4609 distinct states found, 3519 states left on queue.
+The depth of the complete state graph search is 2.
+Finished in 01s at (2026-11-19 14:53:15)
+Trace exploration spec path: ./CF3EquivControlesEtendu_TTrace_1795099994.tla
+
+--- stderr ---

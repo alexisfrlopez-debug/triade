@@ -1,0 +1,18 @@
+$ python3 /home/z/my-project/depot/scripts/preuves_v150/modele_invariant_v150.py
+
+--- stdout ---
+=== LE MODÈLE FORMEL NON BORNÉ DE CF3 — l'invariant inductif ===
+[initialisation] I(s0) TIENT
+[préservation] 288 formes × 13 règles : 0 violation(s)
+[translation] UNIFORME — δ=7 : 288 formes, 0 violation(s), IDENTIQUE ; δ=50 : 288 formes, 0 violation(s), IDENTIQUE ; δ=1000 : 288 formes, 0 violation(s), IDENTIQUE
+[monotonie] 4096 formes (inconditionnel) : 0 décroissance(s)
+[rejeu-état-inchangé] 4096 formes : 0 divergence(s)
+[déduction] I ⊨ ¬P1 ∧ ¬P3 ∧ ¬P4 : TIENT
+[fidélité v120] époques ≤ 3, prof 6, plafond : 154 états / 1152 transitions — D187 REPRODUIT (154/1152)
+[bornes étendues] époques ≤ 5, prof 8, SANS plafond : 228 états / 1902 transitions, 0 état(s) hors I, contre-exemples {'P1': 0, 'P2': 0, 'P3': 0, 'P4': 0}
+[bornes étendues 2] époques ≤ 7, prof 12 : 372 états / 3342 transitions, hors I : 0, contre-exemples : {'P1': 0, 'P2': 0, 'P3': 0, 'P4': 0}
+
+[sortie] /home/z/my-project/depot/scripts/preuves_v150/modele_invariant.csv
+[verdicts] P1=PROUVÉE NON BORNÉE ; P2=PROUVÉE NON BORNÉE ; P3=PROUVÉE NON BORNÉE ; P4=PROUVÉE NON BORNÉE
+
+--- stderr ---

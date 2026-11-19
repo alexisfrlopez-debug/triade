@@ -1,0 +1,8 @@
+LES EMPREINTES SHA-256 DES LIVRABLES v0.19.3 (générées le 2026-11-19)
+================================================================
+
+b49bcfacf642fb000f1093426698172200b8380af55ff72bc9ad09300b21d167  TRIADE_manuscrit_v0.19.3.pdf  [245 367 octets]
+8e7d7ad3f106fe0e7e5c2e70bef0e5fd432ccc98e13873a1e05806899e011a25  Protocole_TRIADE_v0.15.3_Specification.pdf  [1 046 519 octets]
+6dadf72dd577cf00ce91aed25f6f1be16136f6ef454a99712840735750decdd5  Livre_du_Coffre_TRIADE_CF1-CF3_v1.3.pdf  [930 968 octets]
+04e604d5f98aacc8c70b4d2f1ace143b15c8564f0f5d820f7210dcc6cddadb8e  TRIADE_preuves_et_calculs_v0.19.3.pdf  [112 069 octets]
+93de8a0b6e11a12abdb581dc0f8bf30a125b75b7e616d3bd2a716b9e5f8265d6  TRIADE_presentation_20261120_v193.pdf  [83 666 octets]

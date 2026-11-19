@@ -1,0 +1,1 @@
+ check --config=MET_cc2.cfg --length=1 --no-deadlock CF3TranslationEtendu.tla

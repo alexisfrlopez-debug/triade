@@ -1,0 +1,43 @@
+@!@!@STARTMSG 2262:0 @!@!@
+Created by Apalache on Thu Nov 19 14:52:39 UTC 2026
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2110:1 @!@!@
+Invariant is violated.
+@!@!@ENDMSG 2110 @!@!@
+@!@!@STARTMSG 2121:1 @!@!@
+The behavior up to this point is:
+@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+1: <Initial predicate>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ cf2_ok = TRUE
+/\ destr_injuste = FALSE
+/\ detruit = FALSE
+/\ e = 2
+/\ media_corrompu = FALSE
+/\ phase = "brouillon"
+/\ sait = { "K_user", "S_piege", "S_serrure" }
+/\ secret = TRUE
+/\ trap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+2: <Next>
+/\ KUser = "K_user"
+/\ SPiege = "S_piege"
+/\ SSerrure = "S_serrure"
+/\ accepte = FALSE
+/\ cf2_ok = TRUE
+/\ destr_injuste = FALSE
+/\ detruit = TRUE
+/\ e = 2
+/\ media_corrompu = TRUE
+/\ phase = "brouillon"
+/\ sait = { "K_user", "S_piege", "S_serrure" }
+/\ secret = TRUE
+/\ trap_ok = TRUE
+
+@!@!@ENDMSG 2217 @!@!@

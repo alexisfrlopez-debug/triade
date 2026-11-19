@@ -1,0 +1,115 @@
+L'ÉTAPE DE VÉRIFICATION DE L'ÉDITION v0.19.3 (L'ÉCART DE SESSION FERMÉ :
+manuscrit v0.19.3 / spécification v0.15.3 / Livre du Coffre v1.3 inchangé /
+preuves v0.19.3 / présentation du 20/11 v0.19.3)
+(l'exécution de l'instruction 5ey7gmjra — la vague 7, la troisième ; chaque
+point VERT sur pièces ; AUCUNE valeur mesurée modifiée, AUCUNE règle de la
+spécification modifiée — la règle disait « seule la falsification PROUVÉE
+détruit », c'est le modèle qui sous-approximait)
+
+V1   LA PREMIÈRE EXIGENCE, TENUE AVANT TOUT : VERT — le coffre réel et les
+     phrases réelles JAMAIS approchés (D105) ; LES PIÈCES SCELLÉES
+     INTACTES : la spec CF3.tla v0.15.0 [md5 b762c2c8…] recoupée au geste,
+     le modèle Python v150 et le harnais PBT v150 intacts, le mesureur
+     dudect_v150.c [sha256 8c90ef82…] recoupé ; LE SCEAU DE L'INTENTION
+     couru au dépôt : les QUATORZE arbres VERTS, cle deposee reelle
+     (D87/D177) ; L'OUTILLAGE re-provisionné aux digests EXACTS (Apalache
+     0.63.0 a756e96a… == le consigné ; tla2tools.jar 7e53aa63… == l'asset
+     du 15/11 qui fit les journaux 89488hblm).
+V2   L'EXTENSION DU MODÈLE : VERT — CF3Etendu.tla né (la règle 4 : la
+     garde devient trap_ok SEUL, la falsification offerte aux DEUX phases,
+     l'effet inchangé — destruction LOCALE, PV, média/fragments INTACTS) ;
+     le pendant Python modele_invariant_v153.py (le diff EXACT gravé à
+     DIFF-MODULES-ETENDUS.txt — 80 lignes, chaque substitution nommée) ;
+     LE RÉSULTAT HISTORIQUE DES 660 DIVERGENCES DEMEURE CONSIGNÉ
+     append-only (la découverte qui motiva l'extension, jamais réécrite) ;
+     l'explorateur étendu : 288 formes × 13 règles 0 violation, la
+     translation UNIFORME (δ ∈ {7, 50, 1000}).
+V3   TLC LA FIDÉLITÉ BORNÉE : VERT — la chaîne SCELLÉE reproduite EXACTEMENT
+     (154 états distincts / 896 générés, profondeur 7, les lignes de fond
+     du journal identiques au consigné) ; la chaîne ÉTENDUE : l'espace
+     atteignable INVARIANT (154 états distincts — l'extension n'ajoute
+     AUCUN état ; les transitions tirées croissent 896 → 926 : la
+     falsification en session offerte) ; les DEUX modèles Python : le
+     scellé 154/1 152 (D187 REPRODUIT), l'étendu pareillement.
+V4   APALACHE SUR L'ÉTENDU : VERT — Init⇒I et I∧Next⇒I′ NoError (SMT,
+     entiers non bornés) ; L'ALIGNEMENT 13/13 règles (EQUIV_GARDE +
+     EQUIV_IMAGE + EQUIV_ACTIVATION, la garde étendue des deux côtés) ; LE
+     LEMME DE TRANSLATION re-prouvé (LT1 les gardes, LT2 les effets —
+     l'uniformité ∀δ sur le modèle étendu) ; OB1/OB2 + le compte 288
+     (TLC) ; LES 31 CONTRÔLES NÉGATIFS TOUS ATTRAPÉS (Error 12) — dont
+     L'EXTENSION ANNULÉE (la garde v0.15.0 restaurée comme mutation :
+     l'écart des 660 traces renaîtrait — ATTRAPÉ aux TROIS bords :
+     l'obligation GARDE, le contrôle d'épinglage TLC, l'obligation
+     d'image) et LE DÉBORDEMENT SUR LE MÉDIA (I3 violé — la preuve
+     d'inductivité MORD sur la règle étendue) ; l'épinglage TLC : 13
+     règles × les DEUX sens. LA BATTERIE : 96/96 VERT.
+V5   LA CAMPAGNE GÉNÉRATIVE : VERT — 10 000 traces à la GRAINE CONSIGNÉE
+     20261112 : ZÉRO écart (l'écart des 660 est FERMÉ) ; le REJEU
+     bit-identique DEUX FOIS (10 000/10 000 à chaque passe, la triple
+     égalité recoupée sur les CSV) ; LES NOUVELLES GRAINES 20261119 et
+     20261120 : 10 000 traces chacune, ZÉRO écart (30 000 au total) ; LE
+     RECOUP À LA GÉNÉALOGIE : 9 340 condensats IDENTIQUES au registre
+     v0.18.0, 660 DIVERGÉS — EXACTEMENT la classe des écarts consignés
+     (l'égalité des ENSEMBLES vérifiée), les types de fin identiques sur
+     les 10 000 ; chaque chemin d'échec couvert (la porte, le seuil, le
+     piège absent, falsifie_piège, le rejeu à e=1) ; LE DDMIN prêt, aucun
+     écart résiduel à réduire — dit tel quel.
+V6   L'INSTRUMENT TEMPS CONSTANT DURCI : VERT — le HASH des traces
+     COMPLÈTES (chaque instruction : adresse + taille ; chaque accès de
+     données : type + adresse + taille ; les VALEURS jamais hachées) ;
+     les 6 cibles (sha-256 5 188 événements, hmac 20 868, hkdf 20 927,
+     x25519 2 159 436, aes-gcm 16 608, md5-loupe 155 588), N=60/classe,
+     la graine consignée 20261119, le CLONE PUBLIC du dépôt (anonyme — la
+     preuve du « quiconque clone ») : UNE SEULE EMPREINTE par cible sur
+     les 120 mesures (l'égalité bit-identique des traces complètes) ; le
+     compte unique SUBSUMÉ (x25519 : 1 238 959 confirmé DEDANS).
+V7   LE KIT DE MESURE MATÉRIELLE PRÉ-ENREGISTRÉ : VERT — le protocole
+     P1-P8 gravé AVANT toute donnée (n≥10 exécutions par N ∈ {60, 200,
+     400}, ≥2 machines, la fréquence fixée + l'état EFFECTIF consigné,
+     l'affinité cœur, l'investigation des pics tls13-02/tls13-13 à N=200 :
+     les causes candidates NOMMÉES D'AVANCE — le bruit d'une exécution
+     unique, le cœur partagé, le vrai écart : les données tranchent,
+     aucune élue d'avance ; le critère au seuil MÉDIAN ; l'agrégation
+     fail-closed) ; le mesureur SCELLÉ porté INTACT ; EN ATTENTE du geste
+     développeur (D99) : AUCUN chiffre matériel fabriqué — la ligne
+     « wall-clock » demeure « measured (2 runs, 1 machine) ».
+V8   LES SOURCES AU STATUT EXACT : VERT — la spécification v0.15.3 [66
+     pages Tectonic PROPRE : L'ALIGNEMENT DU MODÈLE SUR LA RÈGLE — la
+     lettre de la sentinelle rendue explicite aux deux phases au § CF3,
+     la section « Ce que change la v0.15.3 », AUCUNE règle modifiée] ; le
+     manuscrit v0.19.3 [31 pages, zéro citation non résolue : l'écart
+     fermé au résultat de campagne, l'égalité hash-vérifiée, le kit
+     pré-enregistré, la table des statuts portée aux QUATRE lignes
+     commandées, la référence à la spec courante v0.15.3 ; AUCUNE valeur
+     mesurée modifiée] ; le Livre v1.3 INCHANGÉ (aucun geste de cérémonie
+     ne bouge — le runbook scellé D180 : l'entrée du scan périodique
+     attend l'édition documentée commandée) ; les preuves v0.19.3 [9
+     pages : les pièces de la session, les valeurs permanentes
+     reconduites] ; la présentation du 20/11 [7 pages : la lignée des
+     éditions — D183 préparée D219 puis VÉCUE, le dépôt PUBLIC D220, la
+     matrice honorée].
+V9   LE LINTER INTER-PIÈCES v193 : VERT — 87/87 assertions (les 71 de la
+     v192 portées + les NOUVELLES de l'instruction : l'écart fermé, la
+     campagne 30 000/zéro, la batterie 96/96, l'égalité hash-vérifiée, la
+     section v0.15.3, l'instruction nommée) ; L'EXCEPTION NOMMÉE : le
+     Livre v1.3 inchangé porte la référence v0.15.2 VRAIE À SA DATE (la
+     divergence jamais silencieuse) ; L'AUTOCONTRÔLE : les 9 mutations
+     TOUTES ATTRAPÉES (la valeur partagée, le canon M4, l'empreinte
+     scellée, la version, les quatorze arbres, le motif interdit
+     réintroduit, l'attribution RQ2 dévoyée, le statut D183 muté, la
+     visibilité publique prématurée).
+V10  LE PACK : VERT — TRIADE_presentation_v0.19.3_20261120.zip assemblé
+     [2 194 351 o, sha256 0355c5af65768d9c701ede2ae31dffaff220afab3b069b
+     3e6f21584ef572f1b6], chaque pièce gravée
+     (empreintes_livrables_v0.19.3.txt), le zip testé (chaque pièce
+     relue, les empreintes re-vérifiées) ; LE PACK EST REFUSÉ SI UN SEUL
+     CONTRÔLE EST ROUGE : aucun ne l'est.
+
+LA SESSION : l'instruction 5ey7gmjra exécutée en sa lettre — l'écart
+modèle↔implémentation du coffre CF3 FERMÉ (la falsification en session
+ouverte), la preuve temps constante durcie (le hash des traces
+complètes), l'uniformité d'époque re-déchargée sur l'étendu, le kit
+matériel pré-enregistré EN ATTENTE ; les instructions restantes de la
+vague 7 (cq01qv1za le coût de la boucle sous R11, 1c4sokpii le plan au
+terme) demeurent séquencées ; l'instruction 5ey7gmjra archivée après
+exécution à /ARCHIVE/instructions_20261119/ (la règle du développeur).

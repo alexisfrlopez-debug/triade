@@ -1,0 +1,1 @@
+ check --config=MCCi_CloturerPhraseErronee.cfg --length=1 --no-deadlock CF3EquivControlesEtendu.tla

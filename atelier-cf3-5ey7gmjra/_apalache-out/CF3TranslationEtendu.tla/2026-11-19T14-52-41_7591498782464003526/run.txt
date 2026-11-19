@@ -1,0 +1,1 @@
+ check --config=MET_cc1.cfg --length=0 CF3TranslationEtendu.tla

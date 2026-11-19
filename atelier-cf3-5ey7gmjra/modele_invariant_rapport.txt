@@ -1,0 +1,34 @@
+LE MODÈLE FORMEL NON BORNÉ DE CF3, ÉTENDU — v0.15.3
+L'EXTENSION 5ey7gmjra : falsifie_conteneur offerte en session ouverte (garde trap_ok seule, la sentinelle concrète) ; l'écart historique des 660 divergences demeure consigné — la découverte qui motiva l'extension ; les douze autres règles inchangées.
+
+LE PRINCIPE : le plafond d'époque de v120 est RETIRÉ (la clôture fait e ← e+1, comme l'implémentation coffre_cf3.py) ; la preuve passe par induction — I tient à l'initial, I est préservé par les 13 règles, I entraîne P1/P3/P4 ; la monotonie (par règle, inconditionnelle) et le rejeu-état-inchangé entraînent P2.
+
+L'INVARIANT I : I1 secret ⟹ seuil = 3 ; I2 ¬destruction_injuste ; I3 cf2_intact ∧ ¬média_corrompu ; I4 époque ≥ 1.
+
+1. INITIALISATION : I(s0) TIENT.
+2. PRÉSERVATION : 288 formes d'état (les valeurs I-variantes des 10 composants × les classes d'époque {1} ∪ {≥2}) × 13 règles = 3744 instances de préservation : 0 violation(s) — I est PRÉSERVÉ.
+   LE TEST DE TRANSLATION (l'uniformité de la classe e ≥ 2, témoignée mécaniquement) : δ=7 : 288 formes, 0 violation(s), IDENTIQUE ; δ=50 : 288 formes, 0 violation(s), IDENTIQUE ; δ=1000 : 288 formes, 0 violation(s), IDENTIQUE.
+3. MONOTONIE (porte P2) : 4096 formes TOUTES (I n'est pas exigé — la propriété est inconditionnelle) × 13 règles : 0 décroissance d'époque — l'époque ne décroît JAMAIS.
+   LE REJEU-ÉTAT-INCHANGÉ (second volet de P2) : les règles rejoue_époque_passée et ouvrir_ancien_couple retournent l'état INCHANGÉ sur les 4096 formes : 0 divergence(s).
+4. DÉDUCTION : sur toutes les formes satisfaisant I, AUCUNE violation P1/P3/P4 (P1 : I1 interdit secret ∧ seuil < 3 ; P3 : I2 interdit la destruction injuste ; P4 : I3 exige CF2 et le média intacts).
+5. CONTRE-VÉRIFICATION BORNÉE. (a) FIDÉLITÉ : l'explorateur porté, aux bornes et AU PLAFOND de v120, reproduit EXACTEMENT D187 — 154 états / 1152 transitions (154/1152, la preuve du portage fidèle).
+   (b) BORNES ÉTENDUES (époques ≤ 5, profondeur ≤ 8, SANS plafond) : 228 états / 1902 transitions — 0 état atteignable hors I, contre-exemples P1-P4 : {'P1': 0, 'P2': 0, 'P3': 0, 'P4': 0}.
+   (c) ROBUSTESSE (époques ≤ 7, profondeur ≤ 12 — la borne d'époque MORD : six cycles ouvrir+clôturer atteignables) : 372 états / 3342 transitions — hors I : 0, contre-exemples : {'P1': 0, 'P2': 0, 'P3': 0, 'P4': 0}.
+
+LES VERDICTS (les statuts systématiques) :
+  P1 PROUVÉE NON BORNÉE — secret sous seuil (≤ 2 éléments)
+     preuve : l'invariant I1 (secret ⟹ seuil = 3) : initialisé, préservé par les 13 règles sur les formes finies, uniforme par translation δ ∈ {7, 50, 1000} ; contre-vérification bornée époques ≤ 5 et ≤ 7
+     hypothèses : A1 symbolique, A2 seuil ≤ 2 (le vol des TROIS est hors modèle A5)
+  P2 PROUVÉE NON BORNÉE — refus du roll-back (l'époque ne décroît jamais ; le rejeu d'un couple passé est refusé nommé)
+     preuve : la monotonie inconditionnelle (4096 formes × 13 règles, 0 décroissance) + le rejeu-état-inchangé (0 divergence) — l'induction couvre TOUTE époque
+     hypothèses : A4 anciens couples (le rejeu complet est modélisé)
+  P3 PROUVÉE NON BORNÉE — absence de destruction sur phrase erronée
+     preuve : l'invariant I2 : aucune règle n'écrit destruction_injuste — vérifié forme par forme
+     hypothèses : la phrase erronée mène à PhraseErronee (réessai) — spec § 5.4
+  P4 PROUVÉE NON BORNÉE — rayon borné à une époque (le média et CF2 jamais touchés)
+     preuve : l'invariant I3 : aucune règle n'écrit média_corrompu ni touche cf2_intact — vérifié forme par forme
+     hypothèses : la destruction (falsification PROUVÉE, piège intègre) ne touche que l'état local — spec § 7
+
+LES STATUTS DISTINCTS (la commande, point 4) : P1-P4 PROUVÉES NON BORNÉES (par invariant inductif, TOUTE époque, TOUTE profondeur) ; la contre-vérification bornée (époques ≤ 5/≤ 7, prof 8) : PROUVÉE BORNÉE (l'évidence supplémentaire) ; les mesures matérielles (dudect temps réel, fence.i sur silicium, terrain tiers Loupe) : EN ATTENTE DE RUN MATÉRIEL (les kits sont prêts, aucun chiffre n'existe).
+
+LECTURE HONNÊTE : la preuve porte sur le MODÈLE (la sémantique abstraite, primitives symboliques A1) — le raffinement modèle↔implémentation est vérifié PAR AILLEURS (raffinement_v150.py) ; ce qui sort de A1-A4 (A5 : canaux auxiliaires, failles d'implémentation, le vol des TROIS, le quantique) demeure HORS MODÈLE et le dit. Le modèle, l'invariant et le vérificateur sont LE MÊME FICHIER : re-productibilité totale (python3 scripts/preuves_v150/modele_invariant_v150.py).

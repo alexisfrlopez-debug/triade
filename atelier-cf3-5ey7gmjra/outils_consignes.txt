@@ -1,0 +1,16 @@
+L'OUTILLAGE DE L'ATELIER 5ey7gmjRA — re-provisionné aux digests EXACTS
+(le bac recyclé entre les sessions effaça les outils ; la présente consigne
+les empreintes et la voie de re-provisionnement — jamais commis au dépôt)
+e1f11b75…  outils/tla2tools.jar  — le digest OCTET-À-OCTET consigné de
+             l'ère 89488hblm, IRRÉCUPÉRABLE à l'amont (la release v1.8.0
+             est un dépôt roulant) : l'asset du 15/11 (2026.11.15.002146
+             rev bc1b506) demeure, sha256
+             7e53aa636dac8a3cb0533f343115c0548e03fc0ce5edc7739becf58d3d0fb84f
+             — re-téléchargé et recoupé EXACT à la présente session
+a756e96af249bf33cd7629667a49472cb26ac8227c48583da139b414834d59df
+             outils/apalache-0.63.0.tgz — LE digest consigné (89488hblm),
+             re-téléchargé et recoupé EXACT (github apalache-mc/apalache
+             v0.63.0)
+La reproduction : les journaux d'outils (logs/) portent les versions et
+révisions EXACTES de chaque run — le recoup fonctionnel trança (la chaîne
+scellée reproduite bit-à-bit : TLC 154/896, le modèle Python 154/1 152).

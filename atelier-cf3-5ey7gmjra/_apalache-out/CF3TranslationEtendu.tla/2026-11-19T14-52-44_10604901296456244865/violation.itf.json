@@ -1,0 +1,138 @@
+{
+  "#meta": {
+    "format": "ITF",
+    "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+    "description": "Created by Apalache on Thu Nov 19 14:52:53 UTC 2026",
+    "varTypes": {
+      "tcf2_ok": "Bool",
+      "detruit": "Bool",
+      "e": "Int",
+      "tdestr_injuste": "Bool",
+      "secret": "Bool",
+      "media_corrompu": "Bool",
+      "tmedia_corrompu": "Bool",
+      "phase": "Str",
+      "cf2_ok": "Bool",
+      "taccepte": "Bool",
+      "ttrap_ok": "Bool",
+      "sait": "Set(Str)",
+      "tsait": "Set(Str)",
+      "tdetruit": "Bool",
+      "tphase": "Str",
+      "destr_injuste": "Bool",
+      "te": "Int",
+      "tsecret": "Bool",
+      "accepte": "Bool",
+      "trap_ok": "Bool",
+      "delta": "Int"
+    }
+  },
+  "params": [
+    "SPiege",
+    "SSerrure",
+    "KUser"
+  ],
+  "vars": [
+    "tcf2_ok",
+    "detruit",
+    "e",
+    "tdestr_injuste",
+    "secret",
+    "media_corrompu",
+    "tmedia_corrompu",
+    "phase",
+    "cf2_ok",
+    "taccepte",
+    "ttrap_ok",
+    "sait",
+    "tsait",
+    "tdetruit",
+    "tphase",
+    "destr_injuste",
+    "te",
+    "tsecret",
+    "accepte",
+    "trap_ok",
+    "delta"
+  ],
+  "states": [
+    {
+      "#meta": {
+        "index": 0
+      },
+      "KUser": "K_user",
+      "SPiege": "S_piege",
+      "SSerrure": "S_serrure",
+      "accepte": false,
+      "cf2_ok": false,
+      "delta": {
+        "#bigint": "1"
+      },
+      "destr_injuste": false,
+      "detruit": false,
+      "e": {
+        "#bigint": "3"
+      },
+      "media_corrompu": false,
+      "phase": "brouillon",
+      "sait": {
+        "#set": []
+      },
+      "secret": false,
+      "taccepte": false,
+      "tcf2_ok": false,
+      "tdestr_injuste": false,
+      "tdetruit": false,
+      "te": {
+        "#bigint": "4"
+      },
+      "tmedia_corrompu": false,
+      "tphase": "brouillon",
+      "trap_ok": true,
+      "tsait": {
+        "#set": []
+      },
+      "tsecret": false,
+      "ttrap_ok": true
+    },
+    {
+      "#meta": {
+        "index": 1
+      },
+      "KUser": "K_user",
+      "SPiege": "S_piege",
+      "SSerrure": "S_serrure",
+      "accepte": false,
+      "cf2_ok": false,
+      "delta": {
+        "#bigint": "1"
+      },
+      "destr_injuste": false,
+      "detruit": false,
+      "e": {
+        "#bigint": "3"
+      },
+      "media_corrompu": false,
+      "phase": "canonique",
+      "sait": {
+        "#set": []
+      },
+      "secret": false,
+      "taccepte": false,
+      "tcf2_ok": false,
+      "tdestr_injuste": false,
+      "tdetruit": false,
+      "te": {
+        "#bigint": "3"
+      },
+      "tmedia_corrompu": false,
+      "tphase": "canonique",
+      "trap_ok": true,
+      "tsait": {
+        "#set": []
+      },
+      "tsecret": false,
+      "ttrap_ok": true
+    }
+  ]
+}
