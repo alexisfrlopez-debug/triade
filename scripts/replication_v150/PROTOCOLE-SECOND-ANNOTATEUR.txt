@@ -1,0 +1,28 @@
+LE PROTOCOLE DU SECOND ANNOTATEUR — la réplication 1c4sokpii (partie 4)
+============================================================================
+LE BESOIN : le κ de Cohen exige DEUX jeux d'annotations indépendants. Le
+premier est le codage du labo (codage_annotateur1.csv — chaque défaut du
+registre de campagne codé à sa classe F/L lue de sa nature consignée) ; le
+second appartient À RECRUTER : un annotateur indépendant qui code LES MÊMES
+défauts SANS VOIR le codage du labo.
+
+LA GRILLE (D189, les étiquettes D203) : cinq classes terrain, trois classes
+laboratoire — les définitions opérationnelles et les exemples vécus vivent
+à grille_tx.csv ; les classes :
+  F1 chargeur/image · F2 ABI/matériel · F3 sémantique du chargeur ·
+  F4 conventions système · F5 environnement ·
+  L1 logique · L2 structure · L3 harnais.
+
+LE GESTE DE L'ANNOTATEUR : lire chaque défaut du registre (le id + le nom +
+la pièce citée au registre), choisir SA classe, UNE par défaut — le CSV de
+rendu : « id,classe » (une ligne par défaut, les id COMMUNS exigés).
+
+LE CALCUL : python3 kohen_kappa_v150.py codage_annotateur1.csv <le rendu>
+— le calculateur EST AUTOTESTÉ (trois cas synthétiques calculables à la
+main : l'accord parfait +1, le désaccord total -1, l'accord partiel +0,4 —
+la console du 20/11 fait foi) ; l'acceptation pré-enregistrée D189 :
+κ ≥ 0,61 (substantiel, Landis & Koch 1977).
+
+LA FRONTIÈRE : AUCUNE annotation n'est inventée ; le recrutement et le
+rendu appartiennent au maître ; le κ réel se calculera le jour où les deux
+jeux existeront (le statut consigné, jamais un chiffre fabriqué).

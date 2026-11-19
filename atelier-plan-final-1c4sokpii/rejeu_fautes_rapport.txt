@@ -1,0 +1,34 @@
+LE RE-JEU AUX SHIMS D'INJECTION DE FAUTES — 1c4sokpii partie 3
+(les MÊMES 832 mutants, la graine 20261111 ; K1/K2/K3 INTACTS ;
+ K4 la batterie d'injection : l'ouverture manquée, ALLER vide/hors
+  bornes/hexa, CHERCHER jusqu'à la FIN, le journal PLEIN + le
+  non-hexa, la ligne INCOMPLÈTE au fond, les touches aux BORNES,
+  les fautes PAR BLOC [sans session/hors fichier/sortie nulle/LE
+  SHIM ReadFile en échec])
+  TOTAL : 811/832 tués (97.5 %) — 21 vivants
+  dont 35 tués PAR LA BATTERIE D'INJECTION (les survivants de K3 confrontés aux branches d'erreur)
+
+LE RESTE NOMMÉ (chaque survivant, sa cause) :
+  vivant : loupe-01 0x143: 0x0c→0x17 — vivants (la batterie passée)
+  vivant : loupe-03 0x1b: 0x00→0xd0 — vivants (la batterie passée)
+  vivant : loupe-03 0x3b: 0x00→0xc4 — vivants (la batterie passée)
+  vivant : loupe-03 0x41: 0x00→0x42 — vivants (la batterie passée)
+  vivant : loupe-03 0x19: 0x10→0x2c — vivants (la batterie passée)
+  vivant : loupe-03 0x5a: 0x00→0xf1 — vivants (la batterie passée)
+  vivant : loupe-03 0x41: 0x00→0xff — vivants (la batterie passée)
+  vivant : loupe-04 0x28: 0xc0→0xcd — vivants (la batterie passée)
+  vivant : loupe-07 0x11: 0x10→0x25 — vivants (la batterie passée)
+  vivant : loupe-09 0x387: 0x01→0xd9 — vivants (la batterie passée)
+  vivant : loupe-11 0x137: 0x04→0xb7 — vivants (la batterie passée)
+  vivant : loupe-11 0x1d5: 0x00→0xc5 — vivants (la batterie passée)
+  vivant : loupe-11 0x1df: 0xf1→0xe3 — vivants (la batterie passée)
+  vivant : loupe-12 0x27b: 0xe1→0xc9 — vivants (la batterie passée)
+  vivant : loupe-14 0xdc: 0x00→0xde — vivants (la batterie passée)
+  vivant : loupe-14 0x21b: 0x01→0xed — vivants (la batterie passée)
+  vivant : loupe-15 0x1b: 0x02→0xe2 — vivants (la batterie passée)
+  vivant : loupe-15 0xfb: 0xd0→0xc1 — vivants (la batterie passée)
+  vivant : loupe-16 0x238: 0x00→0x4f — vivants (la batterie passée)
+  vivant : loupe-16 0x21e: 0x18→0xa2 — vivants (la batterie passée)
+  vivant : loupe-17 0x207: 0xe0→0xcc — vivants (la batterie passée)
+
+LA COMPARAISON : v0.11.0 694/832 (83,4 %) → v0.14.0 776/832 (93,3 %) → la batterie d'injection ci-dessus

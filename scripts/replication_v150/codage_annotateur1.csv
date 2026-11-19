@@ -1,0 +1,12 @@
+id,défaut,classe_annotateur_1,source
+T-loupe-08-it1,plantage-harnais-v3,L3,le constructeur ctypes du scénario — l'instrument
+C-loupe-08,plantage-harnais-decouverte,L3,les arités de la découverte — l'instrument
+C-loupe-13-it1,plantage-harnais-feuille-memcmp,F3,le slot IAT non lié que le VRAI chargeur eût lié — la sémantique du chargeur
+T-app-it1,plantage-lanceur-prose-non-remmee,F5,le lanceur du kit — l'environnement de livraison
+C-app,plantage-lanceur-prose-non-remmee,F5,le lanceur du kit — l'environnement de livraison
+T-app-it2,ecart-harnais-console-locale,F5,le codec LOCALE du parent — l'environnement
+C-app-it1,plantage-harnais-feuille-memcpy,F3,la feuille memcpy non liée au chemin Windows — la sémantique du chargeur
+C-app-it2,plantage-hote-feuille-memcpy,F3,la feuille memcpy non liée DANS le processus hôte — la sémantique du chargeur
+T-loupe-16-d210-it1,guichet-descripteur-quatre-champs,F1,"le champ +8 ForwarderChain lu comme la RVA du nom, la marche de l'OFT — la table des imports"
+T-loupe-16-d210-it2,liaison-memmove-deux-arguments,F2,"memmove à DEUX arguments, le compte 8 manquant — la convention d'appel"
+T-loupe-16-d210-it3,les-metriques-ecran-jamais-posees-par-le-juge,L3,le scénario-juge sans geste pour la zone — l'instrument

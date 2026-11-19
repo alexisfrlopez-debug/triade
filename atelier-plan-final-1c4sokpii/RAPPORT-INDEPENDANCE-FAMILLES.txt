@@ -1,0 +1,12 @@
+LE RAPPORT D'INDÉPENDANCE INTER-FAMILLES — 1c4sokpii partie 2
+(la seconde famille : Qwen2.5-Coder-1.5B-Instruct, open-weights, LOCAL, CPU, torch 2.15 — l'API du bac n'expose QU'UNE famille [GLM : le CLI z-ai n'a pas d'option modèle] ; la voie prescrite par l'instruction, JAMAIS SIMULÉ)
+
+LA CONFRONTATION PRÉALABLE (le juge) : les DÉFINITIONS MATHÉMATIQUES — T[i] = floor(2^32·|sin(i+1)|) (RFC 1321 § 3.4, la dérivation du harnais), K[i] = floor(frac(∛pᵢ)·2^32) (FIPS 180-4 § 4.2.2, la dérivée exacte aux décimales) — CONTRE LE PLAN (les tables du layout, la source unique du harnais) : ÉGALES, la confrontation spec↔harnais↔math TENUE avant toute génération.
+
+R1 LA RÉCITATION PURE (température 0, par morceaux de 16, les deux premières valeurs publiques seules au format) : T 0/64 justes (64 divergences), K 0/64 justes (64 divergences) — le modèle répète les ancres puis DÉRIVE (les sorties vides, les valeurs du vecteur d'initialisation, les chiffres voisins).
+LES RONDES DE CORRECTION (le protocole documenté : le modèle voit ses erreurs ET les valeurs justes) : à la ronde finale T 64/64, K 64/64 — LA COPIE AVEC LES VALEURS SOUS LES YEUX, JAMAIS L'INDÉPENDANCE (le verdict se juge à la récitation PURE).
+
+LE GAP NOMMÉ : la seconde famille À 1,54 G paramètres NE RÉCITE PAS les tables de façon indépendante — 64 + 64 valeurs fausses à la récitation pure ; le petit modèle local connaît la FORME (les premières constantes justes) mais pas les 128 valeurs — le GAP est la CAPACITÉ du modèle local disponible au bac (3 Go de RAM : le 7B n'y tient pas), jamais une simulation ; les tables de l'oracle demeurent celles de la confrontation math (le juge).
+
+LE BRAS C : le contrat loupe-13 (la couche I mot pour mot au prompt — jamais le source existant) → la génération → gcc -O2 → L'ÉPREUVE POSIX : l'école (10 cas), les TROIS rejets -5, la différentielle (2 000 cas, la graine 20261115, le juge bytes.find), les bornes : 1984/2011 VERT.
+LE GAP NOMMÉ DU BRAS C : 27 cas rouges (ROUGE differentiel : rendu -5 attendu -1; ROUGE differentiel : rendu -5 attendu -1; ROUGE differentiel : rendu -5 attendu -1; ROUGE differentiel : rendu -5 attendu -1; ROUGE differentiel : rendu -5 attendu -1) — la pièce générée ne tient pas le contrat au complet.

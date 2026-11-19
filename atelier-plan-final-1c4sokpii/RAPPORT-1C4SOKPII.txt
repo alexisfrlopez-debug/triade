@@ -1,0 +1,125 @@
+LE RAPPORT DE L'INSTRUCTION 1c4sokpii — LE PLAN D210 À SON TERME, L'INDÉPENDANCE INTER-FAMILLES (la vague 7, la CINQUIÈME et dernière)
+(l'exécution à la suite de la session de synchronisation des trois bords — la commande du maître « mets a jour git drive et zenodo puis go pour la suite » ; l'atelier atelier-plan-final-1c4sokpii/ porte les pièces ; AUCUNE mesure fabriquée)
+=====================================================================================================================================================================================================================================================
+
+(1) LE PLAN D210 À SON TERME — n≥6 TENU SANS NOUVEAU TIRAGE
+    le comptage LU DU REGISTRE (livraisons.csv, 29 lignes, jamais tapé) : SEPT unités
+    entièrement livrées AUX DEUX BRAS — app, loupe-01, loupe-02, loupe-05, loupe-08,
+    loupe-13, loupe-16 — N = 7 ≥ 6 : TENU. La séquence D210 (QUATRE unités) est ÉPUISÉE
+    à la cap M1, la clôture consignée à l'Entrée 358 (l'édition v0.19.0 la porte :
+    loupe-02 VERT, loupe-08 VERT, loupe-13 VERT, loupe-16 ROUGE à la cap — trois
+    échappées comptées toutes côté kit, l'attribution empirique 14 VERT 0 ROUGE, H6
+    tenue, H7 reportée, H8 réfutée) ; AUCUN nouveau tirage n'eut lieu — l'amendement
+    conditionnel de l'instruction (« si la séquence est épuisée à la cap, amende AVANT
+    tout nouveau tirage ») n'est JAMAIS DÉCLENCHE (il n'y a pas de tirage à précéder) ;
+    les runs terrain demeurent au geste du développeur (le livre fait foi, toutes les
+    lignes closes).
+
+(2) L'INDÉPENDANCE INTER-FAMILLES — LE GAP NOMMÉ, JAMAIS SIMULÉ
+    L'API du bac n'expose QU'UNE famille (GLM — le CLI z-ai n'a pas d'option modèle) :
+    LA VOIE PRESCRITE VÉCUE — un modèle LOCAL OPEN-WEIGHTS, Qwen2.5-Coder-1.5B-Instruct
+    (1,54 G paramètres, CPU, torch 2.15 — le plafond de RAM du bac : 3 Go, le 7B n'y
+    tient pas). LA CONFRONTATION PRÉALABLE : les définitions mathématiques (T[i] =
+    floor(2³²·|sin(i+1)|) RFC 1321, K[i] = floor(frac(∛pᵢ)·2³²) FIPS 180-4 — la dérivée
+    exacte aux décimales) CONTRE le plan (les tables du layout, la source unique) :
+    ÉGALES — la confrontation spec↔harnais↔math TENUE à zéro divergence AVANT toute
+    génération. R1 LA RÉCITATION PURE (température 0, morceaux de 16, les deux
+    premières valeurs publiques seules au format) : T 0/64, K 0/64 — le modèle répète
+    les ancres puis DÉRIVE (les sorties vides, les valeurs du vecteur
+    d'initialisation, les chiffres voisins). LES RONDES DE CORRECTION (le modèle voit
+    ses erreurs ET les valeurs justes) : 64/64 — LA COPIE, JAMAIS L'INDÉPENDANCE.
+    LE GAP NOMMÉ : la seconde famille à 1,54 G paramètres ne régénère PAS les 128
+    constantes de façon indépendante — le GAP est la CAPACITÉ du modèle local
+    disponible au bac ; les tables de l'oracle demeurent celles de la confrontation
+    mathématique (le juge). LE BRAS C : le contrat loupe-13 (la couche I mot pour mot
+    au prompt, jamais le source existant) → la génération → gcc -O2 → L'ÉPREUVE POSIX
+    (l'école, les TROIS rejets -5, la différentielle 2 000 cas à la graine 20261115,
+    le juge bytes.find) : 1984/2011 VERT — la ronde de correction ne ferma pas les
+    27 rouges (le bord Q2 : la plage restante trop courte rend -5 au lieu du -1 du
+    contrat) — LE SECOND GAP NOMMÉ, la pièce générée ne tient pas le contrat au
+    complet. Les pièces : RAPPORT-INDEPENDANCE-FAMILLES.txt, bras_c_qwen_loupe13.c,
+    independance_etat.json (les générations brutes).
+
+(3) LE TRI DES 56 SURVIVANTS, LES SHIMS D'INJECTION, LE NOUVEAU TAUX
+    LE TRIAGE : les MÊMES 832 mutants (la graine 20261111, la boucle répliquée) — le
+    rejeu reproduit la console v0.14.0 À L'IDENTIQUE (776/832, 93,3 %, les 56
+    capturés) ; chaque survivant noté AU NIVEAU INSTRUCTION (l'originale ET la mutante
+    décodées, le delta nommé) : 46 immédiats, 8 registres, 2 opérandes — le portrait :
+    les codes d'erreur (-6/-5/-3) jamais retournés au chemin heureux, les touches non
+    exercées ('a' '9' les hexa, ' ' '<' 'L' les colonnes), les branchements non pris,
+    les écritures de champs jamais relues. LES SHIMS D'INJECTION DE FAUTES (la
+    batterie K4, seize scénarios d'application + les fautes par bloc) : F1
+    l'ouverture manquée (le fichier absent, VERROUILLÉ, l'accès refusé) ; F2-F4 le
+    mode ALLER vécu (le commit vide -5, hors bornes -3, l'hexa 'a'/'9', SUPPR, ÉCHAP) ;
+    F5 CHERCHER jusqu'à la FIN (Ctrl+F, le motif, F3 au-delà de la dernière occurrence
+    — le -1 nommé, le compte d'occurrences LU DU FICHIER même) ; F6 le journal PLEIN
+    (les 256 octets DISTINCTS puis un de plus) + le caractère NON HEXA ; F7 la ligne
+    INCOMPLÈTE au fond (le fichier 2001 o, la dernière ligne partielle — Q3 de
+    loupe-08) ; F8 les touches aux BORNES ; F9 LES FAUTES PAR BLOC aux conventions des
+    épreuves (sans session -4, hors fichier -3, sortie nulle -5, LE SHIM ReadFile EN
+    ÉCHEC -6 — l'injection paramétrable du harnais ; la chaîne CHERCHER à la
+    convention poser_saisie ; L'ÉTAT PROPRE à chaque appel — les non-volatils
+    vérifiés ; les verdicts eax qui ne se lisent qu'au bloc, la barre affichant le nom
+    jamais le nombre). LE RE-JEU AUX MÊMES TIRAGES AVEC COMPOSITION-KILLERS :
+    811/832 TUÉS (97,5 %) — 35 tués PAR LA BATTERIE D'INJECTION (v0.11.0 : 83,4 % →
+    v0.14.0 : 93,3 % → 97,5 %). LE RESTE NOMMÉ : 21 survivants, CHACUN SA CAUSE
+    (reste_nomme.csv, treize familles) — 6 × L'ÉTAT MOURANT (les champs écrits à la
+    fermeture meurent avec la fenêtre, aucun observable ne les relit), 3 × LE SHIM
+    AVEUGLE (SetScrollInfo ne lit pas le drapeau ni le handle, InvalidateRect ne
+    distingue pas le hwnd), 2 × LE SUIVI DE VUE APRÈS SAISIE (le chemin rare du
+    cadre), et une chacun : LE CODE 3 JAMAIS SERVI (CreateFileW rend toujours 2 au
+    harnais — la voie du PATH_NOT_FOUND vit au vrai Windows), RBP VOLATIL (la
+    convention msx64 — l'appelant ne le relit jamais), LE SENTINEL ADJACENT (les
+    champs voisins portent le même -1 dans tout état servable), LE SITE DE TRANSFERT
+    HORS TABLE (le code mort d'une voie remplacée), LA POIGNÉE JAMAIS SERVIE (le shim
+    GetScrollInfo rend l'échec), LE CHAMP AU-DELÀ DU MOTIF (les octets jamais lus),
+    LA VOIE DE L'ÉCHEC JAMAIS SERVIE (le positionnement réussit toujours au harnais),
+    LA CONVERGENCE DES DEUX GARDES (le même refus -4 par les deux voies), LE CHEMIN
+    DU RECADRAGE (le contrôle manquant nommé), LA CIBLE DÉTOURNÉE RETOMBE (0x66d4
+    re-pose le même état). AUCUN tueur affaibli (K1/K2/K3 intacts — la console v0.14.0
+    reproduite d'abord).
+
+(4) LE PAQUET D'ÉVALUATION ET LES MATÉRIAUX DE RÉPLICATION
+    LES MÉTADONNÉES ZENODO : la v0.19.4 PUBLIÉE à la session de synchronisation (le
+    DOI 10.5281/zenodo.24379173, le concept DOI résolvant sur la v0.19.4 ; les trois
+    fichiers recoupés byte-byte — la Task 232 fait foi). LA REPRODUCTION EN UNE
+    COMMANDE : atelier-plan-final-1c4sokpii/reproduire_1c4sokpii.sh — sept étapes
+    rejouées aux graines consignées (la réconciliation D210, le linter v194, le triage
+    56, la batterie K4 811/832, le κ autotesté, l'épreuve POSIX du bras C 1984/2011,
+    les empreintes du pack 5/5) : VERT DE BOUT EN BOUT (la console du 20/11 fait foi).
+    LA GRILLE FINALISÉE : les 11 défauts du registre CODÉS F/L par l'annotateur 1 (le
+    labo, sur pièces — codage_annotateur1.csv : F1×1, F2×1, F3×3, F5×3, L3×3, chaque
+    classe justifiée du mécanisme consigné) ; la grille elle-même (grille_tx.csv, les
+    définitions opérationnelles D189/D203) ; LE SECOND ANNOTATEUR À RECRUTER — le
+    protocole écrit (PROTOCOLE-SECOND-ANNOTATEUR.txt : le geste, le format, le calcul,
+    l'acceptation pré-enregistrée κ ≥ 0,61) — AUCUNE annotation inventée. LE
+    CALCULATEUR κ AUTOTESTÉ : 3/3 (l'accord parfait +1, le désaccord total -1,
+    l'accord partiel +0,4 — calculables à la main).
+
+L'ÉTAPE DE VÉRIFICATION (la lettre de l'instruction, chaque point) :
+  la réconciliation re-jouée zéro divergence — VERT (les totaux recalculés du registre,
+    la table régénérée) ;
+  le linter numérique étendu — le v194 re-roulé 16/16 (les nouvelles assertions de la
+    campagne vivent au rapport et au triage ; le contrôle négatif VÉCU : la batterie
+    elle-même — un survivant tué par un scénario est la mutation attrapée, 35 fois) ;
+  le rejeu mutation aux mêmes graines — VERT (la graine 20261111, la console v0.14.0
+    reproduite 776/832 AVANT la batterie — jamais un tirage nouveau) ;
+  le κ autotesté sur cas synthétiques calculables à la main — VERT (3/3) ;
+  l'indépendance inter-famille zéro divergence OU GAP NOMMÉ — LE GAP NOMMÉ (les deux :
+    les tables 0/64 à la récitation pure, le bras C 1984/2011 — les pièces et le
+    protocole documentés, jamais simulé) ;
+  l'empreinte du plan verrouillée avant toute mesure — le plan D210 pré-enregistré
+    (sha256 4a4b1311…, l'Entrée 335) JAMAIS re-tiré ; le triage et la batterie rejouent
+    les MÊMES 832 mutants (la graine 20261111 consignée avant toute mesure) ;
+  les artefacts scellés intacts — la batterie écrit aux ÉMULATIONS (les images
+    mémoire), les pièces scellées loupe.exe/proxy.exe JAMAIS touchées (le rejeu
+    charge les notations assemblées, la frontière R4/D143 tenue) ;
+  le diff consigné append-only — le présent rapport, l'atelier, les CSV.
+
+LE VERDICT DE L'INSTRUCTION : (1) VERT — n≥6 tenu sans tirage, l'amendement jamais
+déclenché ; (2) LE GAP NOMMÉ (deux fois, sur pièces — la capacité du local disponible,
+le bord Q2 du bras C) ; (3) VERT — 97,5 % (811/832), les 35 tués par l'injection, le
+reste de 21 nommé à treize familles de causes ; (4) VERT — la reproduction en une
+commande, la grille codée, le protocole du second annotateur, κ autotesté, les
+métadonnées Zenodo v0.19.4 vivantes. La vague 7 est CLOSE (les cinq instructions
+exécutées : 376f15f18, jx4l5vy5c, 5ey7gmjra, cq01qv1za, 1c4sokpii).

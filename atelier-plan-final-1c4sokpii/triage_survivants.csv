@@ -1,0 +1,57 @@
+bid,offset,octet,instruction_origine,instruction_mutante,delta,classe
+loupe-01,0x143,0x0c→0x17,je 0x41d0,je 0x41db,immédiat : 0x41d0 → 0x41db,TUABLE
+loupe-01,0xca,0xeb→0xe6,jb 0x4136,jb 0x4131,immédiat : 0x4136 → 0x4131,TUABLE
+loupe-03,0x1b,0x00→0xd0,"mov rcx, qword ptr [rbx + 0x210]","mov rcx, qword ptr [rbx + 0xd00210]","immédiat : rcx, qword ptr [rbx + 0x210] → rcx, qword ptr [rbx + 0xd00210]",TUABLE
+loupe-03,0x3b,0x00→0xc4,"mov dword ptr [rax + 0x1000], 0","mov dword ptr [rax + 0x10c4], 0","immédiat : dword ptr [rax + 0x1000], 0 → dword ptr [rax + 0x10c4], 0",TUABLE
+loupe-03,0x41,0x00→0x42,"mov dword ptr [rax + 0x1000], 0","mov dword ptr [rax + 0x1000], 0x420000","immédiat : dword ptr [rax + 0x1000], 0 → dword ptr [rax + 0x1000], 0x420000",TUABLE
+loupe-03,0x19,0x10→0x2c,"mov rcx, qword ptr [rbx + 0x210]","mov rcx, qword ptr [rbx + 0x22c]","immédiat : rcx, qword ptr [rbx + 0x210] → rcx, qword ptr [rbx + 0x22c]",TUABLE
+loupe-03,0x5a,0x00→0xf1,"mov dword ptr [rax], 0","mov dword ptr [rax], 0xf1","immédiat : dword ptr [rax], 0 → dword ptr [rax], 0xf1",TUABLE
+loupe-03,0x41,0x00→0xff,"mov dword ptr [rax + 0x1000], 0","mov dword ptr [rax + 0x1000], 0xff0000","immédiat : dword ptr [rax + 0x1000], 0 → dword ptr [rax + 0x1000], 0xff0000",TUABLE
+loupe-04,0x28,0xc0→0xcd,"xor eax, eax","xor ebp, ecx","registre : eax, eax → ebp, ecx",TUABLE
+loupe-04,0xe,0xd9→0x39,"mov rcx, rbx","mov qword ptr [rcx], rdi","registre : rcx, rbx → qword ptr [rcx], rdi",TUABLE
+loupe-05,0xcb,0x40→0x76,"lea rcx, [rsp + 0x40]","lea rcx, [rsp + 0x76]","immédiat : rcx, [rsp + 0x40] → rcx, [rsp + 0x76]",TUABLE
+loupe-05,0x123,0xff→0x7f,"mov eax, 0xfffffffa","mov eax, 0xffff7ffa","immédiat : eax, 0xfffffffa → eax, 0xffff7ffa",TUABLE
+loupe-06,0xf1,0x00→0x34,"mov qword ptr [rsp + 0xa8], 0","mov qword ptr [rsp + 0xa8], 0x34000000","immédiat : qword ptr [rsp + 0xa8], 0 → qword ptr [rsp + 0xa8], 0x34000000",TUABLE
+loupe-06,0x78,0x00→0xcc,"mov qword ptr [rsp + 0x50], 0","mov qword ptr [rsp + 0x50], 0xffffffffcc000000","immédiat : qword ptr [rsp + 0x50], 0 → qword ptr [rsp + 0x50], 0xffffffffcc000000",TUABLE
+loupe-06,0x344,0xff→0x59,"mov eax, 0xfffffffb","mov eax, 0xffff59fb","immédiat : eax, 0xfffffffb → eax, 0xffff59fb",TUABLE
+loupe-06,0x108,0x00→0x90,"mov rdx, 0x40","mov rdx, 0x900040","immédiat : rdx, 0x40 → rdx, 0x900040",TUABLE
+loupe-06,0x2f3,0x00→0xbd,"mov edx, dword ptr [r14 + r12*4 + 0x100]","mov edx, dword ptr [r14 + r12*4 - 0x42ffff00]","immédiat : edx, dword ptr [r14 + r12*4 + 0x100] → edx, dword ptr [r14 + r12*4 - 0x42ffff00]",TUABLE
+loupe-07,0x17,0x38→0x31,je 0x4990,je 0x4989,immédiat : 0x4990 → 0x4989,TUABLE
+loupe-07,0x3e,0x00→0x93,"mov rdx, qword ptr [rbx + 0x208]","mov rdx, qword ptr [rbx + 0x930208]","immédiat : rdx, qword ptr [rbx + 0x208] → rdx, qword ptr [rbx + 0x930208]",TUABLE
+loupe-07,0x1a,0xc9→0xe4,"test rcx, rcx","test rsp, rsp","registre : rcx, rcx → rsp, rsp",TUABLE
+loupe-07,0x11,0x10→0x25,"cmp qword ptr [rbx + 0x210], -1","cmp qword ptr [rbx + 0x225], -1","immédiat : qword ptr [rbx + 0x210], -1 → qword ptr [rbx + 0x225], -1",TUABLE
+loupe-07,0x64,0x5b→0x5a,pop rbx,pop rdx,registre : rbx → rdx,TUABLE
+loupe-08,0xe4,0x20→0x0d,"cmp dl, 0x20","cmp dl, 0xd","immédiat : dl, 0x20 → dl, 0xd",TUABLE
+loupe-08,0x7c,0x3c→0x5d,"cmp eax, 0x3c","cmp eax, 0x5d","immédiat : eax, 0x3c → eax, 0x5d",TUABLE
+loupe-08,0x8e,0x4c→0x81,"cmp eax, 0x4c","cmp eax, -0x7f","immédiat : eax, 0x4c → eax, -0x7f",TUABLE
+loupe-08,0xd7,0xd2→0xc9,"xor r10d, r10d","xor r9d, r9d","opérande : r10d, r10d → r9d, r9d",TUABLE
+loupe-08,0x8e,0x4c→0x93,"cmp eax, 0x4c","cmp eax, -0x6d","immédiat : eax, 0x4c → eax, -0x6d",TUABLE
+loupe-09,0x387,0x01→0xd9,"mov edx, 0x102","mov edx, 0xd902","immédiat : edx, 0x102 → edx, 0xd902",TUABLE
+loupe-10,0x575,0x00→0x50,"mov r9d, 0x1c","mov r9d, 0x5000001c","immédiat : r9d, 0x1c → r9d, 0x5000001c",TUABLE
+loupe-11,0x137,0x04→0xb7,"shl eax, 4","shl eax, 0xb7","immédiat : eax, 4 → eax, 0xb7",TUABLE
+loupe-11,0x143,0x18→0x5b,"add r12, qword ptr [rbx + 0x218]","add r12, qword ptr [rbx + 0x25b]","immédiat : r12, qword ptr [rbx + 0x218] → r12, qword ptr [rbx + 0x25b]",TUABLE
+loupe-11,0x1d5,0x00→0xc5,"mov r9d, 1","mov r9d, 0xc50001","immédiat : r9d, 1 → r9d, 0xc50001",TUABLE
+loupe-11,0x1df,0xf1→0xe3,"mov rcx, r14","mov rbx, r12","registre : rcx, r14 → rbx, r12",TUABLE
+loupe-12,0xa2,0x61→0xd9,"cmp eax, 0x61","cmp eax, -0x27","immédiat : eax, 0x61 → eax, -0x27",TUABLE
+loupe-12,0x27b,0xe1→0xc9,"mov rcx, r12","mov rcx, r9","registre : rcx, r12 → rcx, r9",TUABLE
+loupe-12,0x2af,0xff→0x2d,"mov eax, 0xfffffffd","mov eax, 0xffff2dfd","immédiat : eax, 0xfffffffd → eax, 0xffff2dfd",TUABLE
+loupe-12,0x1b4,0x17→0xb8,jbe 0x55cc,jbe 0x556d,immédiat : 0x55cc → 0x556d,TUABLE
+loupe-12,0xfb,0x00→0x66,"mov byte ptr [r14 + r13 + 1], 0","mov byte ptr [r14 + r13 + 1], 0x66","immédiat : byte ptr [r14 + r13 + 1], 0 → byte ptr [r14 + r13 + 1], 0x66",TUABLE
+loupe-13,0x73,0x20→0x24,"add rsp, 0x20","add rsp, 0x24","immédiat : rsp, 0x20 → rsp, 0x24",TUABLE
+loupe-14,0x2f1,0x00→0xfe,"mov rax, qword ptr [rbx + 0x208]","mov rax, qword ptr [rbx + 0xfe0208]","immédiat : rax, qword ptr [rbx + 0x208] → rax, qword ptr [rbx + 0xfe0208]",TUABLE
+loupe-14,0xeb,0x00→0xad,"cmp qword ptr [rbx + 0x210], -1","cmp qword ptr [rbx + 0xad0210], -1","immédiat : qword ptr [rbx + 0x210], -1 → qword ptr [rbx + 0xad0210], -1",TUABLE
+loupe-14,0x3a5,0x39→0x33,"cmp al, 0x39","cmp al, 0x33","immédiat : al, 0x39 → al, 0x33",TUABLE
+loupe-14,0x0,0x53→0x52,push rbx,push rdx,registre : rbx → rdx,TUABLE
+loupe-14,0xdc,0x00→0xde,"mov dword ptr [rax + 8], 0","mov dword ptr [rax + 8], 0xde000000","immédiat : dword ptr [rax + 8], 0 → dword ptr [rax + 8], 0xde000000",TUABLE
+loupe-14,0x26b,0xf1→0xf6,"mov r9d, r14d","mov r14d, r14d","opérande : r9d, r14d → r14d, r14d",TUABLE
+loupe-14,0x21b,0x01→0xed,je 0x5b63,je 0x14763,immédiat : 0x5b63 → 0x14763,TUABLE
+loupe-15,0x1b,0x02→0xe2,"cmp qword ptr [rbx + 0x210], -1","cmp qword ptr [rbx + 0xe210], -1","immédiat : qword ptr [rbx + 0x210], -1 → qword ptr [rbx + 0xe210], -1",TUABLE
+loupe-15,0xfb,0xd0→0xc1,"add rax, rdx","add rcx, rax","registre : rax, rdx → rcx, rax",TUABLE
+loupe-15,0x1d,0x00→0xe1,"cmp qword ptr [rbx + 0x210], -1","cmp qword ptr [rbx - 0x1efffdf0], -1","immédiat : qword ptr [rbx + 0x210], -1 → qword ptr [rbx - 0x1efffdf0], -1",TUABLE
+loupe-16,0x1e5,0x54→0xea,jb 0x647a,jb 0x6410,immédiat : 0x647a → 0x6410,TUABLE
+loupe-16,0x142,0x16→0x4a,jb 0x6399,jb 0x63cd,immédiat : 0x6399 → 0x63cd,TUABLE
+loupe-16,0x238,0x00→0x4f,"mov qword ptr [rbx + 0x218], r15","mov qword ptr [rbx + 0x4f0218], r15","immédiat : qword ptr [rbx + 0x218], r15 → qword ptr [rbx + 0x4f0218], r15",TUABLE
+loupe-16,0x4a,0x20→0x77,jne 0x62ab,jne 0x6302,immédiat : 0x62ab → 0x6302,TUABLE
+loupe-16,0x21e,0x18→0xa2,"cmp rcx, qword ptr [rbx + 0x218]","cmp rcx, qword ptr [rbx + 0x2a2]","immédiat : rcx, qword ptr [rbx + 0x218] → rcx, qword ptr [rbx + 0x2a2]",TUABLE
+loupe-16,0x42,0x02→0xf4,"mov r14, qword ptr [rbx + 0x220]","mov r14, qword ptr [rbx + 0xf420]","immédiat : r14, qword ptr [rbx + 0x220] → r14, qword ptr [rbx + 0xf420]",TUABLE
+loupe-17,0x207,0xe0→0xcc,jge 0x66e8,jge 0x66d4,immédiat : 0x66e8 → 0x66d4,TUABLE
