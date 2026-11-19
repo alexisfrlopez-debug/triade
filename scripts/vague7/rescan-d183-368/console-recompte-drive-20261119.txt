@@ -1,0 +1,16 @@
+── (1) LA RACINE DU COFFRE ──
+   24 entrées vivantes (attendu : 24)
+   fichier-phrase vivant à la racine : AUCUN — VERT
+── (2) LE MIROIR TRIADE-sauvegarde-git ──
+   68 entrées vivantes au miroir
+   fichier-phrase vivant au miroir : AUCUN — VERT
+   (le LISEZMOI readme y demeure, légitime : ['LISEZMOI-PHRASE-CONTROLE.txt'])
+── (3) TOUT LE COFFRE, HORS CORBEILLE ──
+   recherche nommée 'PHRASE-CONTROLE-COFFRE.txt' (vivant) : 0 résultat(s) — attendu : 0
+── (4) LA CORBEILLE NOMMÉE (jamais la destruction, D143) ──
+   exemplaires corbeillés : 3 (attendu : 2 — le miroir 33 o et l'archive runs-triade 59 o, l'Entrée 365)
+   corbeillé : PHRASE-CONTROLE-COFFRE.txt (né 2026-11-14T20:52:52.636Z)
+   corbeillé : PHRASE-CONTROLE-COFFRE.txt (né 2026-10-28T13:48:04.277Z)
+   corbeillé : PHRASE-CONTROLE-COFFRE.txt (né 2026-10-28T13:47:21.725Z)
+
+VERDICT DU RECOMPTE : VERT — ZÉRO vivant au coffre

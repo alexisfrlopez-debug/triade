@@ -1,0 +1,167 @@
+RAPPORT-RESCAN-TRIE-D183-368-20261119 — LE RE-SCAN TRIÉ APRÈS LA CÉRÉMONIE
+VÉCUE : LA TÊTE PROPRE, L'HISTORIQUE ATTENDU, LA MATRICE À SA DERNIÈRE
+PORTE — LA DÉCISION EXPLICITE DU MAÎTRE
+================================================================================
+(le 19/11/2026, la session de reprise — l'annonce du maître : « rotation
+faite, on peut enchainer sur la suite » ; la prescription exécutée :
+CHECKLIST-ROTATION.txt § 7 [« LE RE-SCAN de l'historique après le geste
+(scan_secrets.py) : le rapport doit montrer l'ANCIENNE situation
+(l'historique la garde — c'est attendu et dit tel quel) ET la tête propre ;
+le triage mis à jour »] et MATRICE-VISIBILITE-DEPOT.txt ligne 3 [« le
+re-scan complet (scan_secrets.py) re-trié : la tête propre, le triage
+écrit des fixtures écrit ; la décision explicite du développeur »])
+
+═════════════════════════════════════════════════════════════════════════════
+L'ÉTAT REÇU — LA CÉRÉMONIE D183 VÉCUE DE BOUT EN BOUT (les pièces font foi)
+═════════════════════════════════════════════════════════════════════════════
+LA CÉRÉMONIE (BROUILLON-ENTREE-JOURNAL.txt au /test, sha256 86db6adb…,
+reçue et recoupée à l'Entrée 365) : vécue le 2026-11-19 à 11:17:10 locale
+— le séquestre précédent archivé (D143, jamais détruit : D:\Downloads\
+kit_ceremonie_d183_v0192\sequestres-precedents\20261119-111710), la phrase
+32 octets JAMAIS affichée, l'empreinte de contrôle ee098a917213… == l'UID
+du .ics de l'Entrée 364, les DEUX preuves à froid à combinaisons
+DISTINCTES (parts 1+2+3 puis 2+4+5, --verifier fail-closed code 0 aux
+deux, 11:19:13 et 11:19:18), le retrait aux cases de l'écran 6 (dépôt git
+ET racine Drive), D81 AMENDÉE — D183 la garde active (D183, D219). LA
+ROTATION vécue : changer-phrase §3a, la remise §3b, l'ancienne refusée
+§3c — l'outil piloté TEL QUEL (D185), la phrase générée à la machine du
+maître (D87 : le labo ne la voit jamais). Les DEUX derniers exemplaires
+vivants du fichier-phrase corbeillés au commandé (l'Entrée 365 : le
+miroir 33 o + l'archive runs-triade 59 o) — la corbeille n'est pas la
+destruction (D143), l'historique git garde la phrase À VIE attendue.
+
+LE DÉPÔT AU RELEVÉ : la tête lue à l'instant au miroir GitHub privé
+(github.com/alexisfrlopez-debug/triade) — 475 commits (472 au scan D219
++ les trois nés depuis : l'Entrée 360, son complément, et LE GESTE DU
+RETRAIT), la tête e433d3e « Delete PHRASE-CONTROLE-COFFRE.txt » — le
+commit du retrait vécu, poussé par le geste de la cérémonie.
+
+═════════════════════════════════════════════════════════════════════════════
+LE RE-SCAN EXÉCUTÉ — L'OUTIL RE-PROUVÉ, LA TÊTE PROPRE, LES CONSTATS TRIÉS
+═════════════════════════════════════════════════════════════════════════════
+L'OUTIL (scan_secrets.py du kit, sha256 f3728fba… — l'octet-identique du
+dépôt au /test, recoupé avant le geste) : LE DRY-RUN RE-JOUÉ D'ABORD
+(l'épreuve de l'outil, la prescription de la PROCEDURE) : le dépôt de
+test à secrets plantés re-né sous /tmp (planter_depot_test.py), les SIX
+secrets factices ATTRAPÉS 6/6, zéro faux négatif, zéro faux positif sur
+les fichiers propres — VERDICT VERT, l'outil est prouvé encore.
+
+LA TÊTE PROPRE (le retrait D183 démontré sur pièces) :
+  — L'ARBRE DU COMMIT DE TÊTE (ls-tree -r HEAD, le seul e433d3e — jamais
+    les arbres ancêtres) ne porte AUCUN PHRASE-CONTROLE-COFFRE*.txt ; le
+    LISEZMOI-PHRASE-CONTROLE.txt seul y vit, légitime (le readme, jamais
+    la phrase) ;
+  — les fichiers-jetons par nom (token_git.txt, oauth_token*.json,
+    client_secret*.json, *service_account*, .env, id_rsa*, *.keytab,
+    *.p12) : AUCUN à la tête ;
+  — l'index == la tête == l'arbre de travail : 0 écart (le clone frais).
+
+LE SCAN DE L'HISTORIQUE COMPLET (console-rescan-depot-reel-20261119.txt,
+sha256 2b27fb8e…, 5 427 o) : DIX constats — LA LISTE OCTET-IDENTIQUE au
+console-scan-depot-reel.txt de la session D219 (le diff des constats :
+VIDE — aucun secret né des trois commits nouveaux) :
+  1× PHRASE-CONTROLE — PHRASE-CONTROLE-COFFRE.txt, blob 943884735dcbd3b0…,
+     33 o : L'ANCIENNE SITUATION, DITE TELLE QUEL — l'historique la garde
+     (la vie du chemin : née à f652234 [D81, la remise], morte à e433d3e
+     [le retrait D183 vécu]). La tête ne la porte plus (ci-dessus) ; la
+     phrase demeurée à l'historique est INOPÉRANTE — la rotation vécue la
+     rend telle (le coffre refuse l'ancienne, la case §3c du maître).
+     TRIAGE : la situation connue et consignée, l'arbitrage D81 clos par
+     D183 — le constat demeure au rapport, l'honnêteté d'abord ;
+  5× CLE-PRIVEE — m5/autorite/fixtures/{racine-autorite, serv-autonome,
+     serv-autre-hote, serv-expiree, serv-valide}.key (1 704 o chacun) :
+     les fixtures de l'autorité de test locale M5 (D136), nées factices.
+     TRIAGE INCHANGÉ : fixture de test, aucune rotation requise — un
+     relecteur externe les verra, le triage est écrit ;
+  4× SECRET-OAUTH-GOOGLE — terrain/oracle_terrain.py, les quatre blobs
+     d'historique de l'ère D48-D70 : les ya29. FACTICES de l'oracle (D70),
+     la tête porte la fixture tronquée par concaténation. TRIAGE INCHANGÉ :
+     fixture de test, aucune rotation requise (la valeur n'a jamais été un
+     identifiant).
+
+CE QUE LE RE-SCAN NE TROUVE PAS (l'absence qui fait foi, la discipline
+tenue sur toute l'histoire) : AUCUN jeton GitHub (ghp_/gho_/ghu_/ghs_/
+ghr_/github_pat_), AUCUN GOCSPX-, AUCUNE assignation secrète à haute
+entropie dans les ~5 850 blobs, AUCUN fichier-jeton au-delà de la phrase
+retirée — la discipline des jetons (D12/D27, le .gitignore, le /Tokens)
+a tenu : les jetons réels (git, relais, Zenodo) ne quittent jamais le
+/Tokens du coffre.
+
+LE RECOMPTE DRIVE (console-recompte-drive-20261119.txt, sha256 ae76b501…,
+944 o — le volet coffre du re-scan trié, l'API au jeton du relais, la
+recherche nommée) :
+  — LA RACINE : 24 entrées vivantes, AUCUN fichier-phrase ;
+  — LE MIROIR TRIADE-sauvegarde-git/ : 68 entrées vivantes, AUCUN
+    fichier-phrase (le LISEZMOI readme y demeure, légitime) ;
+  — TOUT LE COFFRE, recherche nommée hors corbeille : ZÉRO résultat —
+    ZÉRO exemplaire vivant du fichier-phrase au coffre entier ;
+  — LA CORBEILLE NOMMÉE (D143 — jamais la destruction) : TROIS
+    exemplaires corbeillés — la copie racine (née le 28/10 13:48,
+    corbeillée au geste de la cérémonie), la copie miroir (née le 28/10
+    13:47, corbeillée au commandé de l'Entrée 365) et la copie archive
+    runs-triade-depot-20261114 (née le 14/11 20:52, corbeillée au même
+    commandé).
+VERDICT DU RECOMPTE : VERT.
+
+═════════════════════════════════════════════════════════════════════════════
+LA MATRICE — LA LIGNE 3 ATTEINTE SUR PIÈCES, LA DERNIÈRE PORTE AU MAÎTRE
+═════════════════════════════════════════════════════════════════════════════
+MATRICE-VISIBILITE-DEPOT.txt (D219), les lignes et leur état AUJOURD'HUI :
+  — ligne 1 (AUJOURD'HUI, D81 actif) : DÉPASSÉE — la cérémonie vécue ;
+  — ligne 2 (D183 APPLIQUÉ) : DÉPASSÉE — la phrase retirée du dépôt ET
+    de la racine, les parts réparties (au dire du maître, l'Entrée 365),
+    la reconstitution prouvée à froid DEUX fois (les empreintes du
+    manifeste) ;
+  — ligne 3 (ROTATIONS VÉRIFIÉES) : ATTEINTE ET VÉRIFIÉE SUR PIÈCES —
+    la phrase tournée, l'ancienne inopérante (§3c vécue), les jetons
+    aucun réel commis (le re-scan fait foi), les empreintes recoupées
+    (les deux preuves à froid VERT) ; LE RE-SCAN TRIÉ FAIT (le présent) :
+    la tête propre ✓, le triage écrit des fixtures ✓ — TOUTES les
+    conditions de la ligne sont réunies ;
+  — ligne 4 (PUBLIC + ZENODO) : LA DERNIÈRE PORTE — le DOI Zenodo VIT
+    DÉJÀ (l'Entrée 366 : 10.5281/zenodo.24367344, le record vérifié
+    public, les octets re-téléchargés == les scellés) ; LE PASSAGE PUBLIC
+    DU GITHUB DEMEURE AU GESTE DU MAÎTRE — la décision EXPLICITE consignée
+    que la matrice exige (règle 1 : « AUCUN passage implicite » ; règle 2 :
+    « l'ordre est strict » — il est à présent honoré jusqu'à la dernière
+    marche).
+
+L'ARBITRAGE QUI REVIENT AU MAÎTRE (dit tel quel, jamais conseillé en
+silence) : rendre le dépôt public publie AUSSI l'historique — la phrase
+D81 y demeure à vie (lisible par quiconque clone) ; elle est INOPÉRANTE
+(la rotation vécue), le contenu du coffre est indéchiffrable sans elle —
+l'exposition résiduelle est CELLE-LA, nommée à la matrice ligne 4 : « la
+fenêtre d'exposition redevient un fait à traiter au calendrier : le scan
+périodique entre au runbook ». Les neuf fixtures triées accompagneront
+le public (règle 4 : le triage écrit répond AVANT la question du
+relecteur). LE RETOUR EN ARRIÈRE existe (règle 5 : public → privé).
+
+═════════════════════════════════════════════════════════════════════════════
+LES PIÈCES DE LA SESSION (livrées au /test du coffre, chacune recoupée)
+═════════════════════════════════════════════════════════════════════════════
+  — le présent rapport [RAPPORT-RESCAN-TRIE-D183-368-20261119.txt] ;
+  — console-rescan-depot-reel-20261119.txt [5 427 o, sha256 2b27fb8e…] —
+    la console entière du re-scan : le dry-run re-joué, la tête propre,
+    le scan complet, l'historique attendu ;
+  — console-recompte-drive-20261119.txt [944 o, sha256 ae76b501…] — le
+    recomptage coffre : racine, miroir, la recherche nommée, la corbeille.
+
+L'ÉCART NOMMÉ (D189 — la vérité rétablie au document) : LA DÉRIVE DE
+DÉPÔT DE LA CARTE — l'OU-TROUVER-LES-LIVRABLES.md de la RACINE du coffre
+portait les Entrées 361-367 que le dépôt git ne connaissait pas (sa
+copie s'arrêtait à la 360 ; les sessions de livraison du kit vécurent au
+seul Drive, aucun commit) — la QUATRIÈME manifestation de la classe
+(D54, D68, D98, la présente). LA RÉCONCILIATION VÉCUE À LA PRÉSENTE : la
+copie de la racine (l'autorité — le journal fait foi) portée au dépôt
+avec l'Entrée 368, le tout committé et poussé — le dépôt, le miroir et
+la racine portent À PRÉSENT LA MÊME carte.
+
+LA SUITE : AU MAÎTRE — la décision EXPLICITE de la ligne 4 de la matrice
+(le passage public du GitHub) ; au geste suivant, les trois instructions
+restantes de la vague 7 demeurent séquencées (③ 5ey7gmjra, ④ cq01qv1za,
+⑤ 1c4sokpii — le RAPPORT-ANALYSES-VAGUE7 fait foi).
+
+(19/11/2026, la session de reprise — la rotation confirmée par le maître,
+le re-scan exécuté dans sa lettre : l'outil re-prouvé, la tête propre,
+l'ancienne situation dite telle quel, le coffre recompté ; la matrice à
+sa dernière porte, la décision au maître — jamais un passage implicite)

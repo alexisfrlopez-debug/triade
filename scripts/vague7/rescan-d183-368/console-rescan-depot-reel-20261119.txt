@@ -1,0 +1,79 @@
+═══════════════════════════════════════════════════════════════════
+LE RE-SCAN DE L'HISTORIQUE APRÈS LA CÉRÉMONIE D183 (CHECKLIST §7)
+(le 19/11/2026 à 13:39 UTC — la session de reprise)
+═══════════════════════════════════════════════════════════════════
+
+—— LE DÉPÔT : cloné du miroir GitHub (la tête lue à l'instant) ——
+commits : 475   tête : e433d3e — Delete PHRASE-CONTROLE-COFFRE.txt
+
+—— (1) LA PREUVE DE L'OUTIL : le dry-run re-joué ——
+DÉPÔT DE TEST planté : /tmp/depot-test-secrets-d219 (3 commits)
+  secrets plantés    : 6 (dont 2 SUPPRIMÉS de la tête)
+  fichiers propres   : propre/README.md, propre/outil.py, propre/suite.md
+  manifeste d'attendus : attendus-dryrun.json
+LE SCAN DE SECRETS (D219) — l'historique git COMPLET de /tmp/depot-test-secrets-d219
+  6 constat(s) — chaque blob de l'historique confronté aux règles nommées
+
+  [ASSIGNATION-SECREE] reglages.py
+      blob 1418697c06628b11…, 105 o — apercu masque : ZFpj…== (longueur 38)
+  [CLE-PRIVEE] notes/cle-serveur.txt
+      blob 5f4c4927031eded4…, 146 o — apercu masque : RS…
+  [FICHIER-JETON] .env
+      blob e529835d03c5c850…, 10 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [JETON-GITHUB] token_helper.py
+      blob d8daeaeb787929ba…, 121 o — apercu masque : gh…
+  [PHRASE-CONTROLE] PHRASE-CONTROLE-COFFRE.txt
+      blob 94d3c51d9e692b21…, 41 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [SECRET-OAUTH-GOOGLE] config.ini
+      blob 567e3c386abd6e51…, 97 o — apercu masque : GOCS…J8 (longueur 46)
+
+DRY-RUN VERT   SECRET-OAUTH-GOOGLE @ config.ini → ATTRAPÉ (blob 567e3c386abd…)
+DRY-RUN VERT   ASSIGNATION-SECREE @ reglages.py → ATTRAPÉ (blob 1418697c0662…)
+DRY-RUN VERT   JETON-GITHUB @ token_helper.py → ATTRAPÉ (blob d8daeaeb7879…)
+DRY-RUN VERT   CLE-PRIVEE @ cle-serveur.txt → ATTRAPÉ (blob 5f4c4927031e…)
+DRY-RUN VERT   PHRASE-CONTROLE @ PHRASE-CONTROLE-COFFRE.txt → ATTRAPÉ (blob 94d3c51d9e69…)
+DRY-RUN VERT   FICHIER-JETON @ .env → ATTRAPÉ (blob e529835d03c5…)
+DRY-RUN : 6/6 secrets plantés ATTRAPÉS, zéro faux négatif, zéro faux positif sur les fichiers propres
+
+RAPPEL (D81/D219) : un secret commis en git y demeure à vie — le retrait du fichier ne retire pas l'historique ; le remède est la ROTATION (CHECKLIST-ROTATION.txt) et, pour la phrase de contrôle, la cérémonie D183 (le kit présent).
+
+—— (2) LA TÊTE PROPRE (le retrait D183 vécu) ——
+l'ARBRE DU COMMIT DE TÊTE (ls-tree -r HEAD — le seul e433d3e, jamais les ancêtres) :
+  VERT — la tête ne porte AUCUN fichier-phrase (le LISEZMOI readme seul y vit, légitime)
+fichiers de tête au motif jeton  : 0 attendu : 0
+l'index == la tête == l'arbre de travail : 0 écart(s), attendu : 0
+
+—— (3) LE SCAN DE L'HISTORIQUE COMPLET (le vrai dépôt) ——
+LE SCAN DE SECRETS (D219) — l'historique git COMPLET de /home/z/my-project/depot
+  10 constat(s) — chaque blob de l'historique confronté aux règles nommées
+
+  [CLE-PRIVEE] m5/autorite/fixtures/racine-autorite.key
+      blob d3f34192be04edee…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-autonome.key
+      blob 4e4be3a02f533e0d…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-autre-hote.key
+      blob fb6a3bef1f6b44eb…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-expiree.key
+      blob 1cde3620cbbc79d5…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [CLE-PRIVEE] m5/autorite/fixtures/serv-valide.key
+      blob 53c0ebe90b7d74c0…, 1704 o — apercu masque : ----…-- (longueur 27)
+  [PHRASE-CONTROLE] PHRASE-CONTROLE-COFFRE.txt
+      blob 943884735dcbd3b0…, 33 o — apercu masque : (fichier-jeton — contenu jamais affiché)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob 620045df95adea0b…, 82274 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob c7b338d56457b1a1…, 70082 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob eba8a703af9ba549…, 77732 o — apercu masque : ya29…89 (longueur 46)
+  [SECRET-OAUTH-GOOGLE] terrain/oracle_terrain.py
+      blob ef4d6945e22e6453…, 79266 o — apercu masque : ya29…89 (longueur 46)
+
+RAPPEL (D81/D219) : un secret commis en git y demeure à vie — le retrait du fichier ne retire pas l'historique ; le remède est la ROTATION (CHECKLIST-ROTATION.txt) et, pour la phrase de contrôle, la cérémonie D183 (le kit présent).
+
+—— (4) L'ANCIENNE SITUATION : l'historique la garde (attendu, dit tel quel) ——
+la vie du chemin (git log --follow) : né à f652234 (D81, la remise), mort à e433d3e (le retrait D183 vécu)
+l'arbre de TOUT l'historique (rev-list --all) porte :
+943884735dcbd3b04d8f8ca464fbb6b503a84b62 PHRASE-CONTROLE-COFFRE.txt
+  ↑ le blob de la phrase commise D81 demeure à l'historique — la
+  ROTATION vécue la rend inopérante (le coffre la refuse),
+  l'historique fait foi (D81 : une phrase commise y demeure à vie)
