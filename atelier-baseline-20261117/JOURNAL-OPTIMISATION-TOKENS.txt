@@ -311,3 +311,94 @@ ne prétend à aucune sécurité (la cérémonie réelle du mémo appartient au
 développeur) ; le refus de la vague 5 DEMEURE (jamais un état partagé
 entre juge et jugé — le mémo est un relevé signé, pas une émulation
 partagée).
+
+
+================================================================================
+OPT-04 — LE COÛT DE LA BOUCLE SOUS R11 : LE POINTEUR SEUL, LE MÉMO V2, LE
+DOUBLE MOTEUR, H5 TENUE (le 19/11/2026, l'instruction cq01qv1za — la vague
+7, la quatrième ; le plan PLAN-cq01qv1za-COUT.md sha256 cb5d1943… gelé AVANT
+toute mesure, le commit fed8c6d précédant la première donnée)
+================================================================================
+LA MESURE AVANT (l'opération localiser, le format en vigueur) : le total
+1 714 natifs MÉDIANE [721–5 204], la réponse 770 [301–2 543] — 18 appels
+réels, la graine 20261117, le natif lu du champ usage (100 % log-api, le
+modèle glm-4-plus).
+
+LE GAIN MESURÉ (le mode P, le pointeur seul — ID + empreinte sha256, deux
+champs LITTÉRAUX, l'expansion côté client à QUATRE refus nommés) :
+  le TOTAL : 1 714 → 1 103 natifs = −35,7 % ;
+  la RÉPONSE : 770 → 52 = −93,3 % ;
+  zéro divergence 18/18, l'expansion client 18/18, la re-tokenisation
+  indépendante (encode_ordinary, un objet neuf) à 0 écart — la voie
+  segmentée portant un artefact SYSTÉMATIQUE +2 aux frontières de lignes,
+  NOMMÉ jamais confondu ; le cl100k parallèle cohérent.
+
+LE VÉRIFICATEUR : la confrontation aux octets reprise TELLE QUELLE de
+5gfx6pwkj (loupe.exe lu au slot, padding NOP, aucun int3 instruction —
+VERT 18/18) ; les falsifications du pointeur vécues (l'empreinte mutée →
+EMPREINTE-DIVERGENTE, l'identifiant inconnu → POINTEUR-INCONNU, la
+réponse hors format → HORS-FORMAT, le pointeur croisé →
+EXPANSION-DIVERGENTE — 5/5 VERT à expansion_pointeur.py).
+
+LA PILE M4 (le mémo v2 + le double moteur, la même liste fixe que la
+vague 5, n=5 par configuration, chronomètre monotone, CE bac 2 cœurs —
+il fait partie du record) :
+  AVANT (v180) : 39,7 s MÉDIANE [39,4–40,3] ; FROID (semis QEMU) : 6,7 s ;
+  CHAUD régime : 6,8 s [6,7–6,9] n=4 (+ l'AUDIT automatique au CHAUD 4 :
+  29,4 s — le prix de la preuve, nommé) ; AUDIT dédié : 39,1 s ;
+  BRAS C : 2,2 s [2,1–2,2].
+  LES ÉTAPES : l'oracle-01 10,340 → 0,453 s ; l'oracle-02 23,445 →
+  0,522 s (le loupe-01 sous QEMU : ~0,0 s contre ~10 s sous le harnais
+  instrumenté — le hook PAR INSTRUCTION était le coût, le TCG nu ne l'est
+  pas).
+
+LA RÉCONCILIATION DU MÉMO D214 SUR PIÈCES : la vague 5 39,3/39,2 s n=2 ;
+vljfs6pcj 39,5 [39,1–39,7] n=5 ; CE bac 39,7 [39,4–40,3] n=5 — des bacS
+DIFFÉRENTS de la même classe 2 cœurs, les plages se chevauchent, l'écart
+0,2–0,5 s (0,5–1,3 %) est la variance inter-bac NOMMÉE ; chaque mesure
+vraie À SA MACHINE, le ratio aux DEUX bras de la même machine fait foi.
+
+LE RATIO ET H5 (la règle de l'instruction, sa lettre) : AVANT 39,7/2,2 =
+17,9× ; RÉGIME 6,8/2,2 = 3,0× — SOUS ×10 : H5 DEVIENT TENUE, ÉNONCÉ
+EXPLICITEMENT ; la falsification D204 (×23,9) DEMEURE consignée comme
+mesurée et datée — la réhabilitation est l'AMENDEMENT DU MAÎTRE (la règle
+mof9q10vq « la réhabilitation exige le terrain » amendée par
+l'instruction ; le terrain à venir confirmera, la table porte le statut
+TEL QUE mesuré et sourcé).
+
+LE MÉMO V2 : la clé = sha256(bloc ‖ entrée ‖ contrat ‖ config émulateur ‖
+graine ‖ oracle) — le sur-ensemble de la v1 ; le COMPTEUR DE RUNS vit au
+CŒUR SIGNÉ (le muter = SIGNATURE-INVALIDE, vécu) ; L'AUDIT 1 RUN SUR 10 :
+le 10ᵉ scellement a déclenché l'audit TOUT SEUL pendant la mesure (le
+CHAUD 4) — les relevés vivants Unicorn confrontés aux relevés mémoisés
+CHAMP À CHAMP : 0 écart (la preuve d'identité).
+
+LE DOUBLE MOTEUR : le lanceur C statique (ms_abi, les SIX feuilles
+kernel32, l'image bâtie PAR LE VRAI HARNAIS — les octets identiques par
+construction) sous QEMU-user 10.0.13 au volume ; Unicorn la référence à
+L'ÉCHANTILLON CONSIGNÉ (2 041 opérations, la graine 20261114) :
+DIVERGENCE=0 OCTET POUR OCTET ; le moteur à shim muté ATTRAPÉ à la
+première ligne (MOTEUR-DIVERGENT) — la porte divise les moteurs honnêtes
+des moteurs faux.
+
+LES PREUVES QU'AUCUN CONTRÔLE NE FUT RETIRÉ : les 24 consoles d'oracles
+capturées (5 AVANT re-mesurés + FROID + 5 CHAUD + AUDIT) IDENTIQUES
+ligne à ligne aux originales consignées ; la cristallisation 12/12
+byte-identiques à chaque exécution ; les empreintes scellées INTACTES
+avant/après chaque exécution. LES CINQ CONTRÔLES NÉGATIFS : 5/5 VERT
+(l'entrée de cache mutée → CHAÎNE-ROMPUE ; le compteur muté →
+SIGNATURE-INVALIDE ; la racine mutée → RACINE-DIVERGENTE ; la clé
+changée → l'absence, la session vit ; le moteur divergent → ATTRAPÉ).
+
+LES PIÈCES : l'atelier atelier-cout-boucle-cq01qv1za/ au dépôt (D208) ;
+le pack TRIADE_presentation_v0.19.4_20261120.zip [2 161 824 o] relu
+pièce à pièce ; le linter v194 16/16 VERT ; les éditions v0.19.4 (le
+manuscrit, la spécification — une règle ADDITIVE, le Livre INCHANGÉ),
+les preuves v0.19.4, la présentation du 20/11 au statut exact (le dépôt
+PUBLIC D220, le DOI vivant).
+
+LA FRONTIÈRE : aucune graine supprimée, aucun vecteur réduit, aucune
+vérification retirée ; le pool partagé inter-outils REFUSÉ (le mémo est
+un relevé signé, jamais une émulation partagée ; le moteur n'est jamais
+le juge — hashlib demeure le modèle indépendant) ; le M10 périodique
+demeure la porte de scellement ; les artefacts scellés INTACTS (R4).

@@ -1,0 +1,44 @@
+LE RAPPORT DE LA CAMPAGNE POINTEUR — cq01qv1za / OPT-04 axe (1)
+(le plan PLAN-cq01qv1za-COUT.md sha256 cb5d1943… gelé AVANT toute
+mesure, le commit fed8c6d précédant la première donnée ; le format
+D205 : la mesure avant, le gain mesuré, le vérificateur)
+============================================================================================
+
+LA CAMPAGNE (les MÊMES 18 blocs, la graine 20261117, l'ordre même,
+la rig compter_tokens — le natif LU du champ usage, 100 % log-api,
+le cl100k parallèle, la re-tokenisation indépendante) :
+                                 n  médiane      q1      q3    min     max
+--------------------------------------------------------------------------
+A l'actuel — total              18     1714    1150    2474    721    5204
+P pointeur seul — total         18     1103     821    1498    610    2840
+A — réponse seule               18      770     505    1092    301    2543
+P — réponse seule               18       52      50      53     46      57
+A — cl100k (parallèle)          18     1679    1130    2431    718    5089
+P — cl100k (parallèle)          18     1067     795    1454    596    2771
+--------------------------------------------------------------------------
+
+LE GAIN MESURÉ (lu des logs bruts, jamais tapé) :
+  le total : A 1714 → P 1103 natifs = 35.7 %
+  la réponse : A 770 → P 52 = 93.3 %
+  le recoup OPT-02 (l'autre bac) : B2 total 1 072 / réponse 23 —
+  le pointeur P 1103 / 52 :
+  DEUX CHAMPS LITTÉRAUX (l'ID, l'empreinte) contre les quatre de B2
+  — le pointeur achète l'EXPANSION CÔTÉ CLIENT (l'entête ne revient
+  JAMAIS au contexte), B2 laissait quatre champs à recopier ; le
+  choix du format est un arbitrage DU MAÎTRE, les deux mesurés verts.
+
+LE VÉRIFICATEUR :
+  la passe A : 18/18 sans divergence
+  la passe P : 18/18 — ZÉRO DIVERGENCE
+  l'expansion client (les QUATRE portes, fail-closed) : 18/18 verte(s)
+  la re-tokenisation indépendante (±1 token, la voie ENTIÈRE : un
+  objet neuf par encode_ordinary) : 0 écart(s)
+  la voie segmentée (ligne à ligne, la mouture première du plan) :
+  36 prompt(s) à +2 EXACT — l'artefact SYSTÉMATIQUE de la fusion aux frontières de lignes, NOMMÉ (jamais une instabilité de l'instrument, jamais un refus)
+  la confrontation aux octets réels (loupe.exe au slot, padding
+  NOP, aucun int3 instruction) : VERT — 18/18
+  la source (CA3) : 0 appel(s) hors log-api
+  la somme (prompt+completion=total) : 0 écart(s)
+  le modèle (lu du champ model) : ['glm-4-plus']
+
+LE VERDICT : VERT — le pointeur seul (ID + empreinte, deux champs littéraux) réduit le coût SANS divergence, l'expansion client reconstruit l'entête octet pour octet, AUCUN contrôle retiré ; la re-tokenisation indépendante confirme l'instrument

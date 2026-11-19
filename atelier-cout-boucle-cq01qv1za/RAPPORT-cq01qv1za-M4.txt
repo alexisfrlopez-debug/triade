@@ -1,0 +1,68 @@
+LE RAPPORT M4/OPT-04 — LE COÛT DE LA BOUCLE SOUS R11, LA PILE ADOPTÉE (mémo v2 + double moteur)
+(le plan PLAN-cq01qv1za-COUT.md sha256 cb5d1943… gelé AVANT toute mesure ; la liste fixe de la vague 5, AUCUNE étape ajoutée ni retirée ; le chronomètre monotone ; cette machine 2 cœurs — elle fait partie du record)
+============================================================================================
+
+LES CONFIGURATIONS (les distributions complètes, jamais de moyenne sans distribution) :
+                        n  médiane      q1      q3     min     max
+------------------------------------------------------------------
+AVANT (v180)            5     39.7    39.4    39.8    39.4    40.3
+FROID (semis v182)      1      6.7     6.7     6.7     6.7     6.7
+CHAUD régime v182       4      6.8     6.8     6.8     6.7     6.9
+CHAUD dont audit        1     29.4    29.4    29.4    29.4    29.4
+AUDIT dédié v182        1     39.1    39.1    39.1    39.1    39.1
+BRAS C                  5      2.2     2.2     2.2     2.1     2.2
+------------------------------------------------------------------
+
+LES ÉTAPES (les médianes ; AVANT → CHAUD régime) :
+  garde-sceau-I                            0.069 → 0.067
+  cristallisation-12-concourants           4.227 → 4.222
+  round-trip-notation-1                    0.221 → 0.228
+  round-trip-notation-2                    0.219 → 0.217
+  oracle-bloc-loupe-01 (parallèle)        10.340 → 0.453
+  build-recomposition-loupe-02             0.475 → 0.464
+  oracle-du-bloc-loupe-02 (parallèle)     23.445 → 0.522
+  epreuve-scenario-posix                   0.300 → 0.302
+  assemblage-kits                          0.249 → 0.253
+
+LA RÉCONCILIATION DU MÉMO D214 SUR PIÈCES (39,5 vs 39,3/39,2) :
+  la vague 5 (mof9q10vq, le bac de la campagne) : 39,3 / 39,2 s n=2 — jamais moyennées ;
+  l'atelier vljfs6pcj (le bac du 17/11, re-provisionné) : médiane 39.5 s [39.1–39.7] n=5 ;
+  CE bac (re-provisionné encore, la même classe 2 cœurs) : médiane 39.7 s [39.4–40.3] n=5.
+  LA CAUSE NOMMÉE : des bacS DIFFÉRENTS de la même classe — les
+  horloges murales, la contention du pool et la disposition du
+  noyau varient au bac près ; les TROIS distributions se recouvrent
+  (les plages [39,1–39,7] et [39,4–40,3] se chevauchent, les 39,3/
+  39,2 de la vague 5 vivent aux deux) — l'écart de 0,2 à 0,5 s
+  (0,5 à 1,3 %) est la variance inter-bac, NOMMÉE sur pièces :
+  chaque mesure demeure vraie À SA MACHINE, le ratio l'est aux
+  DEUX bras de la même machine — c'est lui qui fait foi.
+
+LE RATIO ET LE VERDICT H5 (la règle de l'instruction cq01qv1za, sa lettre) :
+  AVANT : 39.7 / 2.2 = 17.9×
+  CHAUD (régime) : 6.8 / 2.2 = 3.0× — SOUS ×10
+
+  H5 DEVIENT TENUE — énoncé EXPLICITEMENT (l'instruction : « si le ratio après adoption passe sous ×10, énonce explicitement que H5 devient tenue et mets à jour la table des statuts ») : le ratio de régime 3.0× est sous le seuil ×10 de D204, la table des statuts du manuscrit PORTERA H5 TENUE (mesure n=5, cette machine, la source nommée) — la réhabilitation est PORTÉE PAR L'INSTRUCTION DU MAÎTRE (l'amendement explicite de la règle mof9q10vq : le terrain à venir confirmera, la table porte le statut TEL QUE mesuré)
+
+L'AUDIT 1 RUN SUR 10 — LES PREUVES D'IDENTITÉ :
+  le compteur chaîné du mémo v2 : le 10ᵉ scellement d'oracle a déclenché l'AUDIT TOUT SEUL au CHAUD 4 (l'oracle-02 re-exécuté vivant sous Unicorn, 29.4 s — le prix de la preuve, nommé) ;
+  l'audit dédié : 39,1 s, les sessions ≥ 64 Kio re-exécutées vivantes, les relevés confrontés AU MÉMO CHAMP À CHAMP :
+    [audit] le run 13 — la re-exécution vivante sous Unicorn, la preuve d'identité
+    [audit] temoin-3f.bin : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s) champ à champ
+    [audit] le run 14 — les tranches re-exécutées vivantes sous Unicorn, la preuve d'identité
+    [audit] temoin-3f.bin : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s) champ à champ
+    [audit] vue pré-posée : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)
+    [audit] V2 : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)
+    [audit] le run 10 — les tranches re-exécutées vivantes sous Unicorn, la preuve d'identité
+    [audit] vue pré-posée : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)
+
+LES PREUVES QU'AUCUN CONTRÔLE NE FUT RETIRÉ :
+  les consoles des oracles (24 consoles capturées : 5 AVANT re-mesurés + FROID + 5 CHAUD + AUDIT) IDENTIQUES ligne à ligne aux originales consignées (diff vide) ;
+  la cristallisation : 12 rebuilds concourants TOUS byte-identiques à chaque exécution, la pièce d'origine INTACTE ;
+  les empreintes scellées INTACTES avant/après CHAQUE exécution (loupe.exe, proxy.exe, selftest.exe, les pièces des deux unités).
+
+LES ÉCARTS NOMMÉS :
+  1. la chauffe du premier CHAUD (6,9 contre 6,7-6,8 aux suivants) : la première lecture du mémo au régime — nommée, jamais confondue ;
+  2. le CHAUD 4 porta L'AUDIT automatique (29,4 s) : son prix est le prix de la preuve — la distribution de régime l'exclut ET LE NOMME (n=4 régime + 1 audit) ;
+  3. le bras C exigea la chaîne TRIXIE au chemin du dépôt (/home/z/my-project/work/mingw-debs/root — un lien vers /tmp/mingw-try/root, l'extraction sans root reconduite) et la pièce source loupe-01-c.c copiée aux epreuves (l'inclusion de l'épreuve posix la veut là — la commodité de session de vljfs6pcj, reconduite) ; l'AVANT de CE bac (39,7) contre celui de vljfs6pcj (39,5) : la variance inter-bac nommée ci-dessus.
+
+LE VERDICT : VERT — la pile adoptée (mémo v2 + double moteur QEMU/Unicorn) tient le régime à 6.8 s (−83 % sur cette machine), le ratio 3.0× sous ×10 : H5 DEVIENT TENUE (l'énoncé explicite de l'instruction), les consoles identiques, aucun contrôle retiré

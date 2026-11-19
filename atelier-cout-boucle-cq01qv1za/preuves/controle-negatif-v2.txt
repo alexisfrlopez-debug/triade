@@ -1,0 +1,10 @@
+LES CONTRÔLES NÉGATIFS DE LA PILE cq01qv1za (le plan § 2.4/§ 3.3)
+========================================================================
+
+VERT l'entrée de cache mutée → CHAÎNE-ROMPUE au chargement (fail-closed, jamais cru)
+VERT le compteur d'audit muté → SIGNATURE-INVALIDE (le compteur vit dans le cœur signé — l'audit ne se réécrit pas en silence)
+VERT la racine mutée → RACINE-DIVERGENTE
+VERT la clé changée = l'absence : un terme de la clé v2 changé → RIEN au mémo → la re-exécution vivante (l'invalidation par construction)
+VERT le moteur divergent → ATTRAPÉ : le lanceur à shim muté diverge de la référence Unicorn à la ligne 0 de l'échantillon — le refus nommé MOTEUR-DIVERGENT, BLOQUANT (tout écart nominal)
+
+LE BILAN : 5/5 VERT — la porte divise les moteurs honnêtes des moteurs faux, le cache reste vérifié

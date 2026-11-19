@@ -76,3 +76,8 @@ scripts/tla_v150/pbt_zone/
 #  le zip livré et les sources SONT versionnés, le paquet/ décompressé non)
 scripts/kits_mesure_v150/edition_mise_a_jour/paquet/
 epreuve-v1v5/harnais_c
+atelier-cout-boucle-cq01qv1za/bac-qemu-o1/
+atelier-cout-boucle-cq01qv1za/bac-qemu-o2/
+atelier-cout-boucle-cq01qv1za/lanceur_qemu
+atelier-cout-boucle-cq01qv1za/lanceur_qemu_divergent
+scripts/vague7/pack-v194/
