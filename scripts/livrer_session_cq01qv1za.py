@@ -160,15 +160,22 @@ def main() -> int:
             assert st in (200, 201), (st, body[:200])
             dest = inventaire(archive_id)
         dest_id = dest["instructions_20261119"]["id"]
+        # le geste Drive natif : LA VOIE DOCUMENTÉE (PATCH ?addParents/
+        # removeParents) — le POST /files/{id}/parents de l'outil 5ey7gmjra
+        # répond désormais 404 (l'écart nommé à la livraison du 20/11 : le
+        # geste équivalent vécu, la corbeille JAMAIS — D143)
+        st, body, _ = api("PATCH",
+                          f"{API}/files/{fid}?addParents={dest_id}"
+                          f"&fields=parents", {})
+        assert st == 200, (st, body[:200])
         st, body, _ = api("GET", f"{API}/files/{fid}?fields=parents")
         parents = json.loads(body).get("parents", [])
-        st, body, _ = api("POST",
-                          f"{API}/files/{fid}/parents?addParent={dest_id}", None)
-        assert st in (200, 201), (st, body[:200])
         for p in parents:
-            st, body, _ = api("DELETE",
-                              f"{API}/files/{fid}/parents?removeParent={p}")
-            assert st in (200, 204), (st, body[:200])
+            if p != dest_id:
+                st, body, _ = api("PATCH",
+                                  f"{API}/files/{fid}?removeParents={p}"
+                                  f"&fields=parents", {})
+                assert st == 200, (st, body[:200])
         # la preuve du geste (la leçon de la Task 202 : le 200 muet du SA n'est
         # pas une preuve — le RE-LISTING aux DEUX bords fait foi)
         assert nom_arch not in inventaire(instructions_id), "encore au /instructions"
