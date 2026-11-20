@@ -1,0 +1,1 @@
+La présentation v220 — les neuf points de la vague 11 (la purge, les couloirs, la boucle porteuse, les gabarits, le coffre, le quatrième bras, les kits, le lifter, LES ERRATA + LE LINTER v220), la table des statuts, LES EMPREINTES SHA-256 DES QUATRE AUTRES PIÈCES GRAVÉES (la convention : aucun document ne porte son propre sha-256, le manifeste du pack porte les cinq).

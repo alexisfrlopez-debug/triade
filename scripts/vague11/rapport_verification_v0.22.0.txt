@@ -1,0 +1,157 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.22.0 (la vague 11)
+=========================================================
+(l'exécution des neuf instructions : zho5vilpy, ou6wn6wlv, fnvan0zes,
+ahult8jgd, o5apue194, vr9n3s3l7, 3lmyfb2xa, l4nnwqlld, hrbdfy6i4 ;
+les plans gelés AVANT toute mesure, le commit 3962b26 précédant la
+première donnée, les empreintes sha256 des neuf plans consignées à
+EMPREINTES-PLANS-VAGUE11.txt ; le linter v220 ÉTENDU À TOUT TOKEN
+NUMÉRIQUE de la prose, fail-closed au build)
+
+V1 — LE LINTER v220 ÉTENDU À TOUT TOKEN NUMÉRIQUE : 53 VERT, 0 ROUGE.
+     L'EXTRACTION INTÉGRALE : 5 026 tokens numériques extraits des cinq
+     pièces (manuscrit 1 686 · spécification 1 553 · Livre 557 · preuves
+     1 047 · présentation 183), CHACUN confronté aux QUATRE classes
+     nommées — (1) LES CANONS BRUTS (2 053 valeurs relues des CSV/JSONL/
+     registres/rapports des ateliers) ; (2) LES ARITHMÉTIQUES DÉRIVÉES
+     (177 valeurs recalculées par code : les sommes, les médianes par
+     poste, les ratios à une décimale, les pourcentages, LES COMPTES DES
+     JOURNAUX VIVANTS recalculés des fichiers mêmes) ; (3) LES
+     HISTORIQUES DATÉS (589 valeurs, chaque liste datée de son édition) ;
+     (4) LA CLASSE STRUCTURELLE (les identifiants D/OPT/RQ/H/CF, les
+     blocs, les dates, les versions, les graines, les normes, LES DOI
+     Zenodo). L'AMBIGUÏTÉ FR/EN TRANCHÉE PAR LA LANGUE DE LA PIÈCE : la
+     virgule est le séparateur de milliers au manuscrit ANGLAIS
+     (« 2,452 » → 2452), la DÉCIMALE aux pièces FRANÇAISES (« 4,533 s »
+     → 4,533) — chaque token UNE lecture, une valeur fausse n'y échappe
+     pas. LES VERSIONS CROISÉES (v0.22.0 ↔ spec v0.15.7 ↔ Livre v1.6),
+     les DOI, LES CORRECTIONS (a)-(f) de zho5vilpy aux marqueurs nommés,
+     LES CANONS DE LA VAGUE 11 (les couloirs, la boucle porteuse, les
+     quatre bras, le lifter, les gabarits, le coffre, les kits), LE
+     CONTRÔLE D81 (le motif aux contextes historiques admis à LA TABLE
+     NOMMÉE — le Livre et la spec à leur occurrence bornée), LES
+     EMPREINTES SHA-256 RECALCULÉES et confrontées (les quatre à la
+     présentation, les trois aux preuves, les cinq au manifeste).
+
+V2 — LE CONTRÔLE NÉGATIF du linter (l'instruction zho5vilpy) : LES DEUX
+     divergences volontaires injectées — la somme mémoire mutée
+     « 2,098 accesses » → « 2,198 » au MANUSCRIT ET le compte médiés muté
+     « MÉDIÉS 348 » → « MÉDIÉS 338 » aux PREUVES — REFUSÉES au premier
+     nom (l'extraction intégrale : 2198 et 338 hors les quatre classes ;
+     l'exige : « MÉDIÉS 348 » absent) ; après retrait, le build admis
+     (53 VERT 0 ROUGE) — la preuve que le contrôle vit aux deux lectures.
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (la garde du sceau
+     14/14 re-vérifiée avant et après le chantier — sceau_I.py verifier ;
+     les quatorze arbres signés, la clé déposée réelle, la cérémonie
+     hors-ligne D87 ; aucun artefact scellé touché).
+
+V4 — L'ERRATUM MÉMOIRE NOMMÉ (la correction (a)) : la ligne publiée à la
+     v0.21.0 « pile 1247 · médiés 0 · constants 191 · plan-fixe 189 ·
+     plan-garde 13 · contrat-boucle 18 · nommés 92 » SOMMAIT À 1750, PAS
+     2098 — la valeur « 0 » au compte médiés était UNE ERREUR (la
+     colonne medies_contrat du CSV brut porte 348) ; LE RECOMPTE PAR
+     CODE : pile 1247 · MÉDIÉS 348 · constants 191 · plan-fixe 189 ·
+     plan-garde 13 · contrat-boucle 18 · nommés 92 · hors-cadre 0 =
+     2098 EXACTEMENT (== acces_mem) ; la cohérence vague 10 reconduite
+     (2006 déchargés + 34 LEA + 58 gardes = 2098) ; le verbatim
+     historique DEMEURÉ octet pour octet (l'histoire n'est pas
+     réécrite), la correction vivant au texte des preuves v0.22.0 avec
+     l'erratum nommé ; LA CAUSE DU « couloir B : code 1 » consignée (la
+     correction (f)) : le sous-processus cpuid_hisse.py MORT À L'IMPORT
+     (pefile/nacl absents du bac de régénération v0.21.0), la mesure
+     re-exécutée et reproduite (v1 45 · v2 34,4 · scellé 26 · scellé en
+     flot 34,4), la ligne demeurée au verbatim.
+
+V5 — LES CORRECTIONS (b)-(f) PORTÉES : (b) LES RATIOS §7 RECALCULÉS à
+     une décimale par code (833/561 = 1,5× — le « 1.6× » périmé interdit
+     ; 16 040/833 = 19,3× — le « two orders below » périmé interdit) ;
+     (c) LE PLANCHER ÉDITER AU MÊME TOKENIZER : la paire de lignes du
+     diff réel re-tokenisée au champ usage du CLI z-ai (18 appels
+     journalisés, médiane 27,5 natif — le plancher cl100k 18 de la vague
+     9 reproduit à côté), le ratio natif/natif 674/27,5 = 24,5×, la
+     ligne cl100k historique (63,6×, la convention de périmètre v0.21.0)
+     DEMEURÉE DATÉE au bord ; (d) LES HEADERS ET VERSIONS (v0.22.0 au
+     running header et au pdftitle, la spec courante v0.15.7, le Livre
+     v1.6, l'état Data availability au DOI de version 24397623 et aux
+     archives v0.22.0, la plage de l'annexe B à D1-D243, quatorze arbres
+     partout où l'état courant, la section de la onzième vague à
+     l'historique d'édition) ; (e) LA CONCLUSION RQ2 ALIGNÉE sur les
+     formats adoptés (le pointeur seul D222 raffiné au localiser
+     hiérarchique, la fenêtre OPT-10 au gabarit versionné, le squelette
+     2 200, les périmètres antérieurs étiquetés histoire) ; (f) LES
+     VERBATIM INTÉGRAUX (la coupure à la ligne près — « N'ÉMET AUCUN »
+     entier, la balise meta charset posée à la couverture des preuves).
+
+V6 — LA DIVERGENCE DU PREMIER PASSAGE ATTRAPÉE PAR LE LINTER : la macro
+     \cgEffetNotationMs laissée par le premier passage portait 37 100 —
+     la valeur publiée v0.21.0 est 37 073 (39,236 − 2,163 = 37,073 s,
+     les médianes non arrondies des JSON bruts) ; LE LINTER ROUGE
+     (37 100 hors les quatre classes), LA PIÈCE CORRIGÉE (la macro
+     régénérée des JSON bruts, jamais le linter) — la preuve vécue que
+     le contrôle étendu attrape les fautes des instruments mêmes.
+
+V7 — LES RÉSULTATS DE LA VAGUE 11 AUX PIÈCES : LES COULOIRS SIMD
+     (l'hybride 704 cycles [IQR 52] à 25,9× sous le scellé GPR — dans la
+     classe des primitives SIMD libc ; le SHA-NI corps 128,5 c/bloc à
+     6,5× ; l'AVX2 dominé par le sondage au bac virtualisé, 2 660
+     cycles nommés ; la batterie 559 vecteurs zéro divergence) ; LA
+     BOUCLE PORTEUSE (la v4-inline 7,09 c/bloc [0,09] — la cible ≤12
+     ATTEINTE, 7,1× sur le v2 50,56 ; le cache de round-trip 680,6× ; la
+     cristallisation incrémentale −54 %) ; LE QUATRIÈME BRAS C+G+ (T
+     39,39 · C+G+ 18,68 · C+G 2,18 · C 1,97 — la notation propre
+     20,72 s = 55,7 % de T−C+G, le régime 16,50 s = 44,3 %, la
+     gouvernance 0,213 s, la somme exacte ; H-CGP2 confirmée, la
+     requalification rejetée) ; LE LIFTER AU DOMAINE (942 encodages zéro
+     divergence, 7 769 mutantes aux 155 divergences toutes
+     hors-vocabulaire — la garde fail-closed, 16 blocs aux sept
+     familles) ; LES GABARITS (1 106 → 674 natif −39,1 %, la prose
+     −57 % ; 1 053 → 627 −40,5 % ; 3 074 → 2 200 −28,5 %) ; LE COFFRE
+     DURCI (les sept gestes (a)-(g) sur copies labo, le modèle z3 aux
+     quatre invariants, le plancher 184 bits) ; LES KITS PRÉ-ENREGISTRÉS
+     (trente empreintes avant la remise, 57/57 autotests, aucun
+     résultat) ; LA PURGE D81 (le Livre v1.6 et la spec v0.15.7 aux
+     remplacements ancrés, le geste piège refusé, le scan des 513
+     commits zéro fuite).
+
+V8 — LE TRAVAIL PARTIEL COMPLÉTÉ (l'état constaté au premier passage,
+     nommé) : le patcher_main_v220.py MODIFIÉ APRÈS le main.tex du
+     premier passage (17 remplacements dont les paragraphes SIMD et
+     quatrième bras jamais bâtis) — le patcher re-roulé, les pièces
+     rebâties ; la PIÈCE PLANCHER NATIF absente des preuves — la pièce 9
+     posée (les deux rapports zho5vilpy verbatim) ; le linter à 8 ROUGE
+     (le manifeste absent, 44 tokens non couverts, trois exige) — les
+     QUATRE COMPLÉTIONS nommées : l'arrondi à une décimale du canon
+     SHA-NI (128,5 = 8 227/64 arrondi, la dérivation même du plan), les
+     comptes des journaux vivants recalculés des fichiers (la source
+     unique de vérité des macros), LES DOI à la classe structurelle
+     (identifiants de dépôt, jamais des mesures), l'énumération
+     « {60,200,400} » lue en entiers (jamais un nombre à virgules
+     multiples) ; chaque complétion RENFORCE le contrôle (aucune valeur
+     admise qui ne vive aux bruts, aux dérivées, aux historiques datés
+     ou à la structurelle).
+
+V9 — LE PACK TRIADE_presentation_v0.22.0.zip [2 216 992 octets, 12
+     fichiers] : exactement 5 documents PDF régénérés et cohérents
+     (manuscrit v0.22.0, spécification v0.15.7, Livre v1.6, preuves
+     v0.22.0, présentation v220), les descriptions, le LISEZMOI, LE
+     MANIFESTE DES EMPREINTES ; la convention nommée : aucun document
+     ne porte son propre sha-256, la présentation grave les quatre
+     autres, les preuves les trois de contenu, le manifeste les cinq ;
+     le zip relu pièce à pièce au dézippage (12/12 recoupées). LES DEUX
+     ARCHIVES DE DÉPÔT assemblées (la soumission 5 entrées, le complet
+     aux sources + les neuf ateliers + le pack).
+
+V10 — LES ÉDITIONS NÉES ET LES GAPS : le manuscrit v0.22.0 (17
+     remplacements ancrés : les corrections (a)-(f), les résultats de la
+     vague, les paragraphes nouveaux — les couloirs SIMD, la boucle
+     porteuse, le coffre durci, les kits, le quatrième bras), les preuves
+     v0.22.0 (les neuf pièces verbatim + l'erratum + la table des
+     empreintes), la présentation v220 ; D243 append-only au journal des
+     décisions ; l'Entrée 381 au worklog ; OU-TROUVER à l'Entrée 381 ;
+     les neuf instructions archivées (le dépôt et le coffre).
+
+AUCUNE valeur mesurée modifiée hors les corrections documentées ;
+AUCUN artefact scellé touché ; AUCUNE graine supprimée ; AUCUN contrôle
+retiré ; AUCUNE règle affaiblie ; LES GAPS NOMMÉS (l'ajouter-S à 3/18,
+la seconde machine, Tamarin, le FIDO2 physique, la TSA et l'ancrage
+réseau au geste, M3 le temps humain) JAMAIS simulés.

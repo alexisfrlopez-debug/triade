@@ -1,0 +1,12 @@
+LE PLANCHER ÉDITER AU NATIF (zho5vilpy, la correction (c))
+================================================================
+L'INSTRUMENT : le CLI z-ai, le champ usage LU (18 appels, le journal journal_plancher_natif.jsonl — le compte est le LOG)
+LE PLANCHER (la paire de lignes du diff réel, 18 mesures) :
+  cl100k : [20, 16, 18, 18, 22, 22, 17, 16, 18, 16, 16, 19, 16, 19, 22, 22, 18, 17]
+  natif  : [25, 25, 25, 25, 26, 27, 27, 27, 27, 28, 28, 28, 29, 29, 31, 31, 31, 31]
+  LES MÉDIANES : cl100k 18 (le plancher gelé de la vague 9 REPRODUIT) ; NATIF 27.5
+
+LE RATIO NATIF/NATIF : le numérateur 674 (le gabarit TPL-EDIT-v1, la médiane du champ prompt de la campagne gabarits, RECALCULÉE du JSONL brut) ÷ le plancher natif 27.5 = 24.5×
+LA LIGNE CL100K HISTORIQUE DEMEURE DATÉE : le ratio mixte 63,6× de la v0.21.0 (le total 1 146 natif ÷ le plancher 18 cl100k — la convention de périmètre de la vague 10, datée, jamais le courant)
+
+LA CLÉ DU JOURNAL : sha256 16f457cd44892045…

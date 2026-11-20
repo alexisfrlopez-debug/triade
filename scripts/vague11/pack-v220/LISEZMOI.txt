@@ -1,0 +1,10 @@
+LE PACK DE PRÉSENTATION TRIADE v0.22.0 — la vague 11
+====================================================
+
+LES CINQ DOCUMENTS : le manuscrit académique v0.22.0 (les errata nommés et corrigés, les résultats de la vague 11), la spécification v0.15.7 (la purge D81), le Livre du Coffre v1.6 (la purge D81), les preuves et calculs v0.22.0 (les neuf pièces verbatim intégrales + l'erratum de la décomposition mémoire + la table des empreintes), la présentation v220 (les neuf points, la table des statuts, les empreintes gravées).
+
+LA CONVENTION DES EMPREINTES : aucun document ne porte son propre sha-256 ; la présentation grave les quatre autres ; le document de preuves grave les trois pièces de contenu ; CE manifeste porte les cinq.
+
+LES NEUF INSTRUCTIONS DE LA VAGUE 11 exécutées aux plans gelés avant toute mesure (le commit 3962b26, EMPREINTES-PLANS-VAGUE11.txt) : zho5vilpy (le linter étendu à tout token numérique + les corrections sur pièces), ou6wn6wlv (la purge D81), fnvan0zes (les couloirs SIMD), ahult8jgd (la boucle porteuse AES-NI), o5apue194 (les gabarits versionnés), vr9n3s3l7 (le durcissement du coffre), 3lmyfb2xa (le quatrième bras C+G+), l4nnwqlld (les kits pré-enregistrés), hrbdfy6i4 (la soundness du lifter au domaine).
+
+LES GAPS NOMMÉS (jamais simulés) : l'ajouter-S à 3/18 (quinze refus honnêtes) ; la seconde machine ; Tamarin non installé au bac ; le FIDO2 physique au geste du maître ; la TSA et l'ancrage réseau au geste ; M3 le temps humain au terrain.

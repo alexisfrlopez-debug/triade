@@ -1,0 +1,92 @@
+[
+ {
+  "bloc": "loupe-07-cumul",
+  "cl100k": 17,
+  "plancher": "- jz 0x4997\n+ je 0x4997\n"
+ },
+ {
+  "bloc": "loupe-11-defilement",
+  "cl100k": 16,
+  "plancher": "- cmp r15, 5\n+ cmp r15, 4\n"
+ },
+ {
+  "bloc": "loupe-02-lire",
+  "cl100k": 16,
+  "plancher": "- cmp r13, 384\n+ cmp r13, 383\n"
+ },
+ {
+  "bloc": "loupe-12-aller",
+  "cl100k": 19,
+  "plancher": "- cmp rdx, 0x100\n+ cmp rdx, 0xff\n"
+ },
+ {
+  "bloc": "loupe-03-fermer",
+  "cl100k": 18,
+  "plancher": "- mov r8d, 48\n+ mov r8d, 47\n"
+ },
+ {
+  "bloc": "loupe-10-peinture",
+  "cl100k": 16,
+  "plancher": "- mov rcx, 13\n+ mov rcx, 12\n"
+ },
+ {
+  "bloc": "loupe-09-ecran",
+  "cl100k": 18,
+  "plancher": "- cmp eax, 0x22\n+ cmp eax, 0x21\n"
+ },
+ {
+  "bloc": "loupe-17-sauver",
+  "cl100k": 18,
+  "plancher": "- mov r8d, 1\n+ mov r8d, 0\n"
+ },
+ {
+  "bloc": "loupe-16-saisie",
+  "cl100k": 22,
+  "plancher": "- cmp r8d, 0x08\n+ cmp r8d, 0x7\n"
+ },
+ {
+  "bloc": "loupe-13-recherche",
+  "cl100k": 16,
+  "plancher": "- cmp r9, 32\n+ cmp r9, 31\n"
+ },
+ {
+  "bloc": "loupe-14-suivant",
+  "cl100k": 19,
+  "plancher": "- cmp rdx, 0x100\n+ cmp rdx, 0xff\n"
+ },
+ {
+  "bloc": "loupe-18-quitter",
+  "cl100k": 17,
+  "plancher": "- cmp edx, 0x10\n+ cmp edx, 0xf\n"
+ },
+ {
+  "bloc": "loupe-06-md5",
+  "cl100k": 22,
+  "plancher": "- mov r15d, 0x10000\n+ mov r15d, 0xffff\n"
+ },
+ {
+  "bloc": "loupe-15-curseur",
+  "cl100k": 22,
+  "plancher": "- cmp r8d, 0x24\n+ cmp r8d, 0x23\n"
+ },
+ {
+  "bloc": "loupe-04-cadre",
+  "cl100k": 18,
+  "plancher": "- mov r8d, 960\n+ mov r8d, 959\n"
+ },
+ {
+  "bloc": "loupe-08-ligne",
+  "cl100k": 16,
+  "plancher": "- cmp rdx, 1\n+ cmp rdx, 0\n"
+ },
+ {
+  "bloc": "loupe-01-ouvrir",
+  "cl100k": 20,
+  "plancher": "- mov edx, 0xc0000000\n+ mov edx, 0xbfffffff\n"
+ },
+ {
+  "bloc": "loupe-05-sha256",
+  "cl100k": 22,
+  "plancher": "- mov r15d, 0x10000\n+ mov r15d, 0xffff\n"
+ }
+]

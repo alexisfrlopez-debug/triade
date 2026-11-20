@@ -1,0 +1,9 @@
+LE COULOIR B — LE SONDAGE CPUID HISSÉ HORS DE LA BOUCLE PAR BLOC (8z4hj76w4)
+
+LA VARIANTE v2 : le chemin PUR 129 o au RVA 0xce00 (10 instructions AES-NI : neuf aesenc + aesenclast — le corps du bloc SANS sondage) ; LE FLUX 125 o au RVA 0xcf00 (le sondage CPUID UNE FOIS PAR FLOT, la boucle par bloc au chemin pur) ; les round-trips 100 %
+(a) LE FLUX v2 AU FIPS 197 (un bloc, le verdict NI) : la sortie == appendice B FIPS — VERT
+(b) LE REPLI v2 (le modèle par défaut sans AES-NI) : la sortie == FIPS via le SCELLE — VERT
+(c) L'ÉGALITÉ v2/v1/scellé : 64/64 — ZÉRO DIVERGENCE
+(d) LA MESURE (le même rig, 64 blocs, la graine 20261120) : LA V1 (le sondage PAR BLOC, la pièce vague 9) 45 instructions/bloc ; LA V2 (le sondage HISSÉ, la boucle pure) 34.4 instructions/bloc ; LE SCELLÉ GPR 26 instructions/bloc ; LE SCELLÉ EN FLOT (la même boucle porteur, le repli) 34.4 instructions/bloc
+    LE HISSAGE AMORTI : 11 instructions/bloc éliminées (le sondage payé UNE FOIS par flot, plus jamais par bloc) ; L'ÉCART v2/scellé-en-flot : +0.0 instructions/bloc À carriage égal (le corps NI pur 27 vs le corps GPR scellé 26 + le carriage 8 : LA PARITÉ EXACTE au compte d'instructions — le bénéfice NI vit aux CYCLES, mesuré au rig natif ; le scellé GPR clobber ses volatils : l'état du flot aux non-volatils, la leçon consignée à la notation)
+LA DETTE DE CÉRÉMONIE : les variantes vivent en COPIES DE LABORATOIRE aux marges 0xCE00/0xCE80/0xD000 — l'embarquement exigera la cérémonie d'ère (le modèle OPT-01)

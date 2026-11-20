@@ -1,0 +1,16 @@
+LE RECOMPTE DE LA DÉCOMPOSITION MÉMOIRE (zho5vilpy, la correction (a))
+========================================================================
+LA SOURCE : surete_memoire_v200.csv (52 lignes, acces_mem = 2098) — chaque catégorie sommée PAR CODE
+
+LA LIGNE PUBLIÉE À LA v0.21.0 (la pièce 4 des preuves, le verbatim de rapport-gardes.txt) :
+  pile 1247 · médiés 0 · constants 191 · plan-fixe 189 · plan-garde 13 · contrat-boucle 18 · nommés 92 · hors-cadre 0
+  LA SOMME PUBLIÉE : 1750 — PAS 2098 : LA FAUTE NOMMÉE (le compte « médiés 0 » : la colonne medies_contrat du CSV porte 348, la valeur « 0 » publiée à la v0.21.0 est UNE ERREUR — L'ERRATUM)
+
+LE RECOMPTE (chaque catégorie du CSV, sommée par code) :
+  pile 1247 · médiés 348 · constants 191 · plan-fixe 189 · plan-garde 13 · contrat-boucle 18 · nommés 92 · hors-cadre 0
+  LA SOMME : 2098 == acces_mem 2098 — EXACTEMENT
+
+LA COHÉRENCE RECONDUITE : 2006 déchargés + 34 LEA relationnels + 58 gardes = 2098 == 2098 (les 92 nommés = 34 LEA + 58 gardes — la vague 10 tenue)
+LES CATÉGORIES DÉCHARGÉES : pile 1247 + médiés 348 + constants 191 + plan-fixe 189 + plan-garde 13 + contrat-boucle 18 = 2006 déchargés (2006 attendus)
+
+LA CORRECTION PORTÉE AUX PIÈCES : les preuves v0.22.0 publient la décomposition corrigée AVEC L'ERRATUM NOMMÉ (la valeur « 0 » publiée à la v0.21.0, la somme 1750 fautive) ; le verbatim de rapport-gardes.txt demeure OCTET POUR OCTET à la pièce publiée v0.21.0 (l'histoire n'est pas réécrite) — la correction vit au texte DES PREUVES v0.22.0, la ligne fautive démarquée.
