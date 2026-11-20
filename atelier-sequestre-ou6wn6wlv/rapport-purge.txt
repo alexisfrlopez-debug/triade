@@ -1,0 +1,69 @@
+LE RAPPORT DE L'ATELIER ou6wn6wlv — LA PURGE DES INSTRUCTIONS DE REMISE D81 : LE SÉQUESTRE 5/3 EST LA GARDE ACTIVE
+(la vague 11 ; le plan gelé sha256 69e0d154a3e986df… AVANT toute modification)
+
+LE FONDEMENT : le séquestre D183 est VÉCU (D223 — la phrase retirée du dépôt ET de la racine, les cinq
+parts Shamir à seuil trois réparties, la reconstitution prouvée à froid deux fois, la rotation vécue et
+l'ancienne refusée) ; le dépôt est PUBLIC (D220). Les pièces opératoires (le Livre v1.5, la spec v0.15.6)
+portaient ENCORE des instructions de remise D81 (« commit, push » de PHRASE-CONTROLE-COFFRE.txt) — leur
+exécution aujourd'hui POUSSERAIT la phrase de contrôle au dépôt public : la purge est une correction de
+SÉCURITÉ au rang supérieur de l'ordre lexicographique.
+
+(1) LE LIVRE v1.5 -> v1.6 (patcher_livre_v16.py — 15 remplacements ANCRÉS, échec si une ancre manque) :
+    §1.4 règle 2 « La remise précède l'usage » -> « La phrase vit au séquestre, jamais au dépôt » (la
+    garde active 5/3, la reconstitution à froid, LE REFUS NOMMÉ de la réécriture, la garde D81 renvoyée
+    à son récit daté) ; §2 le récit D81 BORNÉ DANS LE TEMPS (« De D81 au 19 novembre 2026 : … la phrase
+    était écrite » — l'imparfait de l'histoire, le titre au passé « le fichier fut la remise ») ; §6 LES
+    TROIS TABLES (l'inventaire : la garde = le séquestre, sous trois parts la phrase est PERDUE — le
+    seuil est la survie ; la frontière : AUCUNE PHRASE au dépôt git public, la colonne « ce qu'il ne
+    porte JAMAIS » ; les rotations : le changement par la cérémonie sous séquestre, jamais le fichier) ;
+    §7 la cérémonie D183 Préparer (la phrase « lue de vos yeux depuis votre garde — jamais copée au bac
+    à sable, jamais commitée au dépôt ») ; §8.2 étape 3 « La phrase à vous » (la cérémonie de changement
+    sous séquestre : trois parts assemblées à froid, le plancher d'entropie, cinq parts neuves,
+    l'ancienne détruite avec PV, LE REFUS NOMMÉ) ; §8.3 item 2 la check-list pré-vol (« Le séquestre est
+    entier » : le manifeste des parts recoupé à la carte — jamais un fichier au dépôt) ; §9.2 le remède
+    « phrase de contrôle divergente » (la reconstitution à froid de TROIS parts du séquestre courant —
+    jamais la pose d'un fichier) ; §11 la décision D81 (l'annotation « amendée D223 » — l'histoire datée,
+    la garde active nommée).
+    LE LIVRE v1.6 CONSTRUIT (tectonic, la couverture fusionnée) : 29 pages, final.pdf 847 930 o.
+
+(2) LA SPEC v0.15.6 -> v0.15.7 (patcher_spec_v157.py — 11 remplacements ANCRÉS) : l'évolution de
+    discipline D81 (sec-a) AMENDÉE PAR D223 (la garde borne dans le temps, la garde active = les cinq
+    parts, la phrase en AUCUN dépôt, le refus avec son nom) ; LA TABLE DES GARDES tab:gardehi (la phrase
+    de lignée : en tête du développeur, séquestre D183/D223 — jamais le fichier-remise) ; LA TABLE DES
+    CÉRÉMONIES tab:ceremonies (CF1 -> CF2 : la phrase fournie par la reconstitution à froid — jamais un
+    fichier au dépôt) ; §14.3 LA CLAUSE (la phrase mise au séquestre AVANT TOUTE AUTRE ACTION — cinq
+    parts à seuil trois, la reconstitution à froid, le refus nommé) ET LA RESTAURATION POST-PANNE (la
+    reconstitution à froid de TROIS parts — plus jamais la relecture d'un fichier au racine) ; la table
+    d'évolutions v0.5.2 ET la décision D81 (les annotations « amendé D223 » — les mentions VERSIONNÉES
+    demeurent, l'histoire n'est pas réécrite) ; LA CORRESPONDANCE v0.15.7 au journal des versions (la
+    présente édition nommée : aucune règle du protocole modifiée, la seule purge).
+    LA SPEC v0.15.7 CONSTRUITE (tectonic) : main.pdf 967 540 o.
+
+(3) LE GREP EXHAUSTIF « PHRASE-CONTROLE » SUR LES DEUX PIÈCES RÉGÉNÉRÉES (la lettre de la vérification) :
+    LE LIVRE v1.6 : UNE occurrence — le récit D81 borné « De D81 au 19 novembre 2026 : … la phrase était
+    écrite dans PHRASE-CONTROLE-COFFRE.txt » (§2) : classée HISTORIQUE-DATÉE (l'append-only, l'histoire
+    n'est pas réécrite) ; ZÉRO occurrence prescriptive. LA SPEC v0.15.7 : UNE occurrence — la colonne
+    v0.5.2 de la table d'évolutions (ce que la v0.5.2 établit, annoté « amendé D223 ») : classée
+    HISTORIQUE-DATÉE (versionnée) ; ZÉRO occurrence prescriptive. Les hyphénations couvertes (le grep
+    sans espaces : PHRASE-CONTROLECOFFRE, PHRASECONTROLE — zéro).
+
+(4) LE RUNBOOK §8 DÉROULÉ EN SIMULATION (simuler_runbook.py — le clone de test, la phrase publique
+    marquée D105 « PHRASE-TEST-PUBLIQUE-D105-vague11-simulation », JAMAIS une phrase réelle) : les HUIT
+    étapes mécaniques exécutées (la maison à jour, le MANIFESTE lu, la cérémonie de changement sous
+    séquestre, CF1 -> CF2 au .keys/ gitignoré, CF2 -> CF3, la destruction CF2 avec PV) — CHAQUE étape
+    inspectée pour l'écriture de dépôt : ZÉRO chemin vert qui écrit ; LE GESTE PIÈGE (git add + commit
+    volontaire du fichier-phrase) REFUSÉ AU PREMIER NOM par la garde pre-commit D223 (« REFUS-NOMMÉ :
+    la phrase de contrôle ne se commite pas au dépôt (D223 — le séquestre 5/3 est la garde, le dépôt est
+    PUBLIC D220) ») ; LE SCAN INTÉGRAL des blobs de l'historique (513 commits, git rev-list --all |
+    cat-file --batch) : ZÉRO objet portant la phrase-marqueur. VERDICT : VERT — aucun chemin ne commit
+    de phrase.
+
+(5) LE LINTER DE STATUT D81/D183/D220 re-roulé : D183 ACTIF (la garde active — cinq parts, seuil trois),
+    D81 AMENDÉE (l'histoire datée), le dépôt PUBLIC (D220) — l'état porté aux deux pièces révisées et au
+    contrôle du linter v220 (le motif « le nom du fichier-remise à proximité d'un verbe d'écriture de
+    dépôt » INTERDIT au Livre et à la spec, les contextes historiques datés admis à la table nommée).
+
+(6) LA DÉCISION D'AMENDEMENT consignée append-only : D236 au journal des décisions.
+
+LES SCELLÉS : 14/14 arbres VERTS avant et après (v06/sceau_I.py verifier — aucune couche I touchée :
+la purge est éditoriale, les deux pièces sont des documents).

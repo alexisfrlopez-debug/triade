@@ -1,0 +1,153 @@
+% =====================================================================
+%  PROTOCOLE TRIADE v0.15.7 — Manuscrit de spécification
+%  L'édition v0.15.4 est LE POINTEUR SEUL (une règle ADDITIVE à
+%  l'opération localiser, l'instruction cq01qv1za — aucune règle
+%  existante modifiée). L'édition v0.15.3 est L'ALIGNEMENT DU MODÈLE SUR LA RÈGLE
+%  (l'instruction 5ey7gmjra, la vague du 18/11, la troisième) : le
+%  modèle formel CF3 étendu — la falsification du conteneur offerte
+%  pendant une session ouverte, la garde alignée sur la sentinelle
+%  concrète (destruction locale sur falsification prouvée, média et
+%  fragments intacts) ; les preuves non bornées re-déchargées sur le
+%  modèle étendu, la campagne générative re-jouée à ZÉRO divergence.
+%  AUCUNE règle modifiée : la règle disait « seule la falsification
+%  prouvée détruit » — le modèle v0.15.0 sous-approximait, la
+%  v0.15.3 le porte à la lettre.
+%  Corps du document : Tectonic via pdf.py convert.latex.
+%  Couverture générée séparément (cover.html, Template 03) et fusionnée
+%  en amont — AUCUNE page de titre ici. Le sommaire est la première page
+%  du corps.
+%  Chaîne née spec_v040 → spec_v050 (D25/D44) → spec_v051 (D75) →
+%  spec_v052 (D81) → spec_v060 (D133 — passation du programme de
+%  souveraineté cryptographique accompli : axes 2-3-4 livrés et prouvés
+%  terrain, axe 1 TEE consigné comme exigence) → spec_v061 (D137 — le
+%  niveau de naissance d'un coffre neuf devient l'arbitrage du
+%  développeur : CF1/CF2/CF3 à la création ; erratum typographique
+%  « tbp] » réparé au passage) → spec_v070 (D169 — la consolidation du
+%  programme d'après M7 : M8 le domaine `sys` franchi [finale 0.9.0],
+%  M9 le domaine `tls13` ouvert [couche I complète], le sceau à
+%  TREIZE arbres, les cérémonies d'ère au protocole) → spec_v080
+%  (D176 — la consolidation du programme d'après M9 : le domaine
+%  `tls13` FRANCHI [finale 1.0.0, la session réelle], le test
+%  grandeur nature ouvert [M10 « Loupe », la notation 18/18], la
+%  dette du quatorzième arbre nommée — la cérémonie d'ère du TGN
+%  précède tout build) → spec_v081
+%  (la révision de terrain du TGN : la cérémonie d'ère PASSÉE
+%  SUR PIÈCES [quatorze arbres, la dette soldée], le build
+%  loupe 0.1.0-dev.1 NÉ, le terrain a REFUSÉ dev.1 PUIS dev.2
+%  du même refus 0xc000007b [l'oubli du BASERELOC, puis la table
+%  nécessaire mais PAS suffisante], LA RETOUCHE dev.3 ramène
+%  l'image dans l'enveloppe prouvée de la lignée ET le kit porte
+%  SA CASCADE DIAGNOSTIQUE — le VRAI chargeur nommera l'axe) →
+%  spec_v082 (LA SECONDE RÉVISION DE TERRAIN : LE VRAI CHARGEUR A
+%  CARTOGRAPHIÉ dev.3 — la première fois au terrain, l'enveloppe
+%  PROUVÉE — puis LE TÉMOIN A NOMMÉ AU T0 [CADRE-NÉ] : l'initialiseur
+%  du build avait posé le sentinel à +8 [une TAILLE prise pour un
+%  offset] au lieu de +528 [la chaîne des tailles du plan] ; LA
+%  RETOUCHE dev.4 fait de l'initialiseur .data LE MIROIR EXACT du
+%  CADRE_VIERGE du harnais ET LE GARDE EST GUÉRI — le validateur
+%  relit LE MÊME miroir : le contrôle dérive du plan, jamais de la
+%  pièce qu'il contrôle — et le scénario relit LE .data ENTIER
+%  contre le miroir).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Polices ----------
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont{Liberation Mono}
+\usepackage[french]{babel}
+\addto\captionsfrench{\renewcommand{\tablename}{Tableau}}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,amsthm}
+
+% ---------- Mise en page ----------
+\usepackage{geometry}
+\geometry{a4paper, top=2.4cm, bottom=2.4cm, left=2.2cm, right=2.2cm, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{liaison}{HTML}{3681A6}
+\definecolor{grisdoux}{HTML}{555F66}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=2pt, leftmargin=1.4em}
+\usepackage{microtype}
+
+% ---------- Théorèmes ----------
+\theoremstyle{definition}
+\newtheorem{regle}{Règle}
+
+% ---------- Listings ----------
+\usepackage{listings}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{grisdoux},
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{black!25},
+  xleftmargin=4pt, xrightmargin=4pt,
+  aboveskip=6pt, belowskip=6pt,
+}
+
+% ---------- Titres ----------
+\usepackage{titlesec}
+\titleformat{\section}
+  {\Large\sffamily\bfseries\color{liaison}}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\large\sffamily\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{14pt plus 4pt minus 2pt}{7pt plus 2pt minus 2pt}
+
+% ---------- En-têtes / pieds ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Protocole TRIADE — spécification v0.15.7}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% ---------- Divers ----------
+\raggedbottom
+\emergencystretch=3em
+\widowpenalty=10000
+\clubpenalty=10000
+\setcounter{tocdepth}{2}
+
+% hyperref : TOUJOURS en dernier
+\usepackage[colorlinks=true, linkcolor=liaison, citecolor=grisdoux,
+            urlcolor=liaison, bookmarks=true, bookmarksnumbered=true,
+            unicode=true]{hyperref}
+
+\hypersetup{
+  pdftitle={Protocole TRIADE v0.15.7 — spécification technique},
+  pdfauthor={Alexis FR-LOPEZ ; Agent Z.ai (GLM)},
+  pdfsubject={Gouvernance vérifiable du développement logiciel assisté par IA},
+  pdfkeywords={TRIADE, agent-first, contrat, vérification, gouvernance, profils, souveraineté cryptographique, coffre-fort}
+}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+
+% Le sommaire est la première page du corps (la couverture est fusionnée
+% en amont). Conformité avec la règle « TOC = première page ».
+\tableofcontents
+\newpage
+
+\input{sec-a}   % 1 Vision · 2 Couche I + taxonomie · 3 Couches + traçabilité · 4 Carte
+\input{sec-b}   % 5 Règles · 6 Boucle · 7 Vérification
+\input{sec-c}   % 8 Pré-versions · 9 Reverse-specs · 10 Optimisation · 11 Profils
+\input{sec-cf}  % 12 Souveraineté cryptographique · 13 Cérémonies et kit du terrain
+\input{sec-d}   % 14 Gouvernance · 15 Menaces et limites · 16 Jalons · 17 Correspondance · 18 Décisions + annexe
+
+\end{document}
