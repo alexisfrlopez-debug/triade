@@ -1,0 +1,19 @@
+# Protocole Triade - hygiene de depot
+# Copier le contenu dans le .gitignore du projet (ou l'inclure).
+
+# Secrets et configuration locale
+.env
+config.json
+
+# Journal des ceremonies et resumes (prives par defaut ;
+# retirer cette ligne uniquement apres verification qu'aucune
+# donnee sensible ne s'y trouve, si le projet choisit de les publier)
+journal/
+
+# Fichiers d'identifiants et cles
+*.token
+*.key
+*.pem
+credentials/
+client_secret*.json
+oauth_token*.json
