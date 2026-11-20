@@ -1,0 +1,9 @@
+{"horodatage": "2026-11-20T11:47:49Z", "tache": "cg-gen-loupe-01", "modele": "glm-4-plus", "prompt_tokens": 2044, "completion_tokens": 520, "total_tokens": 2564, "source": "log-api"}
+{"horodatage": "2026-11-20T11:48:10Z", "tache": "cg-gen-loupe-02", "modele": "glm-4-plus", "prompt_tokens": 1542, "completion_tokens": 1589, "total_tokens": 3131, "source": "log-api"}
+{"horodatage": "2026-11-20T11:48:17Z", "tache": "cg-gen-loupe-05", "modele": "glm-4-plus", "prompt_tokens": 1750, "completion_tokens": 401, "total_tokens": 2151, "source": "log-api"}
+{"horodatage": "2026-11-20T11:48:42Z", "tache": "cg-gen-loupe-08", "modele": "glm-4-plus", "prompt_tokens": 1637, "completion_tokens": 1843, "total_tokens": 3480, "source": "log-api"}
+{"horodatage": "2026-11-20T11:48:50Z", "tache": "cg-gen-loupe-13", "modele": "glm-4-plus", "prompt_tokens": 1675, "completion_tokens": 466, "total_tokens": 2141, "source": "log-api"}
+{"horodatage": "2026-11-20T11:49:00Z", "tache": "cg-gen-loupe-16", "modele": "glm-4-plus", "prompt_tokens": 2006, "completion_tokens": 668, "total_tokens": 2674, "source": "log-api"}
+{"tache": "cg-corr-loupe-05-1", "total_tokens": 4953, "completion_tokens": 2940}
+{"tache": "cg-corr-loupe-05-2", "total_tokens": 2460, "completion_tokens": 455}
+{"tache": "cg-corr-loupe-05-3", "total_tokens": 5189, "completion_tokens": 4095}

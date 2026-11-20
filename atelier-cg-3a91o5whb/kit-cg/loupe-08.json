@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-08",
+ "famille": "composition",
+ "spec": "loupe/I/loupe-08-ligne.md",
+ "sha256_spec": "92d3e02ca41a5523db95e9f6b4c6c7d4ec62e3fded1cf6f5ecece9c47cf53174",
+ "signature_ed25519": "0fb0af0164cf0e9fa435cd565666b0fb3547a78561ef6b2160696adc02249dea5c85872a7f2bc88b5655e26f020415942f9c2c3cf44b3c632dc494a0b943b703"
+}

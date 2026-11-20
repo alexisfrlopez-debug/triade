@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-16",
+ "famille": "saisie",
+ "spec": "loupe/I/loupe-16-saisie.md",
+ "sha256_spec": "867907af24a0004632169e8b83cda9b8b73284fcf95c2dc88c308ce51c4725f3",
+ "signature_ed25519": "5fb58d27cefbea102832442e92d1a8f59a4ef573940def9bc2423951989be28e21a95ec9a2dbdfaca87d30f79d1ddf5d3ef13287cdfbb82fa74a0669d8d6ca01"
+}

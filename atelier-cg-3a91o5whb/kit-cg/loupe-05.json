@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-05",
+ "famille": "hachage",
+ "spec": "loupe/I/loupe-05-sha256.md",
+ "sha256_spec": "1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe",
+ "signature_ed25519": "7caba819c5d19147f857f68ffbac90fdf9919a0f386da628df8a7cfd9bc417e1f785c21307479feb1a0d03492ee29e8de785819a481d97580f5e051d3a62d80a"
+}

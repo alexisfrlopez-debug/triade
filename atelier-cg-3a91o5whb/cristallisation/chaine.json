@@ -1,0 +1,184 @@
+{
+ "chaine": [
+  {
+   "unite": "loupe-01",
+   "famille": "ouvrir",
+   "sha256_spec": "73eb2cba7e08be20fb1786c2fc1562b1ecb94560646ab009efd8be247f9cbf48",
+   "sha256_source": "860ff1cfcf78d5fc4f72b8691921957f0834d34ce88858188c876fd097ad6ab1",
+   "sha256_dll": "b1fe4c9ad729dd76dcb80a88685818fb1de18cbcff00d1b2e83caa98e00ca16d",
+   "graphe": {
+    "definies": [
+     "md5_absorbe",
+     "md5_final",
+     "md5_transform",
+     "sha256_absorbe",
+     "sha256_final",
+     "sha256_transform"
+    ],
+    "internes": [
+     "md5_absorbe",
+     "md5_final",
+     "md5_transform",
+     "sha256_absorbe",
+     "sha256_final",
+     "sha256_transform"
+    ],
+    "externes": [
+     "loupe_01_ouvrir",
+     "loupe_03_fermer"
+    ]
+   },
+   "precedente": "dabbe6c1327de554f2899e92a211edcaea679a1c24a06b539d383c0000e62544",
+   "empreinte_unite": "95e1d51826166503866489796f1a5b60bd5a89e46191dc794fe7ac3393d3c9ef"
+  },
+  {
+   "unite": "loupe-02",
+   "famille": "lire",
+   "sha256_spec": "898cd4bca4fe087ea7c415b7764734e3096d53088f8c1040cfbd7c3835b1961c",
+   "sha256_source": "2e12a6c26a43051b40fb56a68aec314b7066ad30e18fbe6d2b077386d9f2a9a6",
+   "sha256_dll": "cfab11a74aa54a400df658ad11753da13c5d156704450f50bcc20676d081bffc",
+   "graphe": {
+    "definies": [
+     "md5_absorbe",
+     "md5_final",
+     "md5_transform",
+     "sha256_absorbe",
+     "sha256_final",
+     "sha256_transform"
+    ],
+    "internes": [
+     "md5_absorbe",
+     "md5_final",
+     "md5_transform",
+     "sha256_absorbe",
+     "sha256_final",
+     "sha256_transform"
+    ],
+    "externes": [
+     "closed",
+     "lecture",
+     "loupe_01_ouvrir",
+     "loupe_02_lire",
+     "loupe_03_fermer",
+     "réelle"
+    ]
+   },
+   "precedente": "95e1d51826166503866489796f1a5b60bd5a89e46191dc794fe7ac3393d3c9ef",
+   "empreinte_unite": "c105066a3731ac402b7a68af64bfe9307d5ac71a2f65395745917caf8b7661e2"
+  },
+  {
+   "unite": "loupe-05",
+   "famille": "hachage",
+   "sha256_spec": "1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe",
+   "sha256_source": "02a33bca893db95bbcfb3b14f9348b5b652b136c688fe6e72224ca7c6a2053e7",
+   "sha256_dll": "ECHEC",
+   "graphe": {
+    "definies": [
+     "__declspec"
+    ],
+    "internes": [
+     "__declspec"
+    ],
+    "externes": [
+     "loupe_05"
+    ]
+   },
+   "precedente": "c105066a3731ac402b7a68af64bfe9307d5ac71a2f65395745917caf8b7661e2",
+   "empreinte_unite": "7657424262b58879991a21649edd25d6288d86111ad921c6674637fa20fa5776"
+  },
+  {
+   "unite": "loupe-08",
+   "famille": "composition",
+   "sha256_spec": "92d3e02ca41a5523db95e9f6b4c6c7d4ec62e3fded1cf6f5ecece9c47cf53174",
+   "sha256_source": "97aeec28cbca0d45e9570b552444e6555908de911bedf6468ba2fea328ac6af3",
+   "sha256_dll": "2d49bc7d6781787efa4ac85beabf66b020f6f16c3e1d60694330818c10b68200",
+   "graphe": {
+    "definies": [],
+    "internes": [],
+    "externes": [
+     "abord",
+     "absent",
+     "boutistes",
+     "colonnes",
+     "compilation",
+     "décalage",
+     "espace",
+     "loupe_08_ligne",
+     "plan"
+    ]
+   },
+   "precedente": "7657424262b58879991a21649edd25d6288d86111ad921c6674637fa20fa5776",
+   "empreinte_unite": "5bd52ac6503fd93e6c56bee3986539037706e80f5b0ef8df09f7f905446b51b8"
+  },
+  {
+   "unite": "loupe-13",
+   "famille": "recherche",
+   "sha256_spec": "01ee2ec41fdf1188758a2fa7f5e24bad302123fefc45a51bcb5868e60c31b101",
+   "sha256_source": "c7d7ee406708a27d66aa64159e3eab63950f7e27611a0e3b9c18b1ad691bed0f",
+   "sha256_dll": "aded5aaad8475ac537d544b592bd42cfd04873c47f57c815366af9c57ae65bc2",
+   "graphe": {
+    "definies": [],
+    "internes": [],
+    "externes": [
+     "abord",
+     "compilation",
+     "directe",
+     "fois",
+     "gagne",
+     "honnête",
+     "lecture",
+     "loupe_13_recherche",
+     "memcmp",
+     "motif",
+     "quotidien",
+     "taille",
+     "trivial"
+    ]
+   },
+   "precedente": "5bd52ac6503fd93e6c56bee3986539037706e80f5b0ef8df09f7f905446b51b8",
+   "empreinte_unite": "2c2e534d47ef35c31f5bc033c61c6efe774fca1db09f9b0961f70a6cfd1019b5"
+  },
+  {
+   "unite": "loupe-16",
+   "famille": "saisie",
+   "sha256_spec": "867907af24a0004632169e8b83cda9b8b73284fcf95c2dc88c308ce51c4725f3",
+   "sha256_source": "892ef03e7a960a73e75bf08cf11622a1cc14c20426ec5fb2208d59a8d8741da4",
+   "sha256_dll": "1c79612085003bf85fa7809d5b571d6dd88efbedcdc3b9258cf6cf6545bd7a2a",
+   "graphe": {
+    "definies": [
+     "ecrire_u32",
+     "ecrire_u64",
+     "lire_u32",
+     "lire_u64",
+     "poser_message",
+     "relire_vue"
+    ],
+    "internes": [
+     "ecrire_u32",
+     "ecrire_u64",
+     "lire_u32",
+     "lire_u64",
+     "poser_message",
+     "relire_vue"
+    ],
+    "externes": [
+     "campagne",
+     "copiée",
+     "def",
+     "fantôme",
+     "intact",
+     "loupe_16_saisie",
+     "memcpy",
+     "posée",
+     "proprement",
+     "seul",
+     "strlen"
+    ]
+   },
+   "precedente": "2c2e534d47ef35c31f5bc033c61c6efe774fca1db09f9b0961f70a6cfd1019b5",
+   "empreinte_unite": "9654447d6e758c232519946aefa83c034b8ea884be2bf69c3e266e5af4249805"
+  }
+ ],
+ "empreinte_finale": "9654447d6e758c232519946aefa83c034b8ea884be2bf69c3e266e5af4249805",
+ "signature_ed25519": "b18dc366ebe515f353d6840ab911c363e7a4037fde9f915ccee0c309aa1b69602e179635eff5e9b39e5007ba57762fff47f7487783cc7245f3e00cbe90df1103"
+}

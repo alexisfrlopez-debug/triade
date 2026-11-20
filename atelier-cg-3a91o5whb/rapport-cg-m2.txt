@@ -1,0 +1,11 @@
+LA MESURE M2 DU BRAS C+G (3a91o5whb) — les SIX appels de génération (le contrat I → le source C)
+
+  cg-gen-loupe-01: 2564 tokens (réponse 520)
+  cg-gen-loupe-02: 3131 tokens (réponse 1589)
+  cg-gen-loupe-05: 2151 tokens (réponse 401)
+  cg-gen-loupe-08: 3480 tokens (réponse 1843)
+  cg-gen-loupe-13: 2141 tokens (réponse 466)
+  cg-gen-loupe-16: 2674 tokens (réponse 668)
+  loupe-05 : la source générée (51 lignes, fonctions candidates [])
+
+LA MESURE (n=6) : TOTAL natif médiane 2674 [min 2141, max 3480] ; RÉPONSE médiane 668

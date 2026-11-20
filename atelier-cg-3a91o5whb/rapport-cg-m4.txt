@@ -1,0 +1,8 @@
+LA MESURE M4 — LES TROIS BRAS SUR LA MÊME MACHINE (n=5, l'horloge monotone, la liste fixe)
+
+  LE BRAS T : n=5 — médiane 39.24 s [min 39.05, max 39.28]
+  LE BRAS C : n=5 — médiane 1.95 s [min 1.95, max 2.01]
+  LE BRAS C+G : n=5 — médiane 2.16 s [min 2.16, max 2.20]
+
+LE RATIO DE GOUVERNANCE C+G/C : 1.11× (le coût des gestes de gouvernance ajoutés au bras C)
+LE RATIO DE RÉGIME T/C+G : 18.1× — L'EFFET NOTATION ISOLÉ : T−C+G = 37073 ms de vérification par session — le bras C+G porte LA MÊME GOUVERNANCE que T (les gestes g1-g4), l'écart restant est LA NOTATION manuscrite elle-même (les preuves qu'elle exige : la cristallisation des DOUZE rebuilds concurrents, les round-trips d'octets, la recomposition du plan — jamais demandés au bras compilé)

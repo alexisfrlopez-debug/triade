@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-01",
+ "famille": "ouvrir",
+ "spec": "loupe/I/loupe-01-ouvrir.md",
+ "sha256_spec": "73eb2cba7e08be20fb1786c2fc1562b1ecb94560646ab009efd8be247f9cbf48",
+ "signature_ed25519": "a730a4db02665868d27cca2404183787929ccb9cb96c38c06d79559b97669f102f3da47639b22d566266ff48aa260b3b9087eca905031fdee29b065ef5c5120c"
+}

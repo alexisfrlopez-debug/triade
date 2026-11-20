@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-13",
+ "famille": "recherche",
+ "spec": "loupe/I/loupe-13-recherche.md",
+ "sha256_spec": "01ee2ec41fdf1188758a2fa7f5e24bad302123fefc45a51bcb5868e60c31b101",
+ "signature_ed25519": "658d3b1db73efc4d3e6b4c48231fa8e8f340ea0463d74a35022e0b9aceb310e34447a2b45943ee8bd76d03c9aef84d1b9aa1fb4c5f3196201bb8b55957acde06"
+}

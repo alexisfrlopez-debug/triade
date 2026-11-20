@@ -1,0 +1,24 @@
+LA RÉCONCILIATION DU BRAS C+G (3a91o5whb) — le script qui RECALCULE CHAQUE TOTAL et REFUSE TOUT ÉCART
+
+VERT T : 5 exécutions — chaque total recalculé de ses étapes avec l'écart admis de la comptabilité des empreintes (~50 ms/ exécution, la garde du sceau hors liste, l'attribution consignée)
+VERT C : 5 exécutions — chaque total recalculé de ses étapes (ZÉRO écart, l'horloge)
+VERT CG : 5 exécutions — chaque total recalculé de ses étapes (ZÉRO écart, l'horloge)
+
+LE CONTRÔLE NÉGATIF : la faute de rig injectée (le total de l'étape 3 du run 1 altéré de +500 ms DANS UNE COPIE — les originaux jamais touchés) ATTRAPÉE et ATTRIBUÉE : CG-faute run 1 : la somme des étapes 2.696 != le total consigné 2.198 
+
+LA TABLE COMPARATIVE (M1-M4, LES INTERVALLES ET LE n EXPLICITES) :
+  M4 (le temps de vérification, cette machine, n=5 par bras, la médiane [min–max]) :
+     T   : 39.24 s [39.05–39.28]
+     C   : 1.95 s [1.95–2.01]
+     C+G : 2.16 s [2.16–2.20]
+
+  L'EFFET GOUVERNANCE (C+G − C) : 215 ms par session (1.11×) — le coût des gestes g1-g4 (la garde des intentions signées, la chaîne re-vérifiée, le kit) : SUB-LINEAIRE (les gestes constexpr ~0,21 s sur ~2 s)
+  L'EFFET NOTATION ISOLÉ (T − C+G) : 37.07 s par session (18.1×) — le bras C+G porte LA MÊME GOUVERNANCE (g1-g4) que T ; l'écart restant EST LA NOTATION : les preuves qu'elle exige (la cristallisation des DOUZE rebuilds CONCURRENTS de la pièce notée, les round-trips d'octets, la recomposition du plan, les oracles aux DEUX unités — jamais demandés au bras compilé)
+
+  M2 (les tokens du flux, l'appel de génération au gabarit contrat+mécanisme, n=6) : médiane 2619 [min 2141, max 3480] ; les correctifs de loupe-05 comptés à part (3 appels — l'échappée nommée) ; LES RECORDS T/C de la campagne (tête-à-tête loupe-01 : T 53 158, C 67 475 — les prompts de campagne portaient l'oracle et le juge : la différence de périmètre NOMMÉE, jamais fusionnés)
+
+  M1 (les échappées, en laboratoire) : LOUPE-05 — LA SIXIÈME UNITÉ CLOSE SUR SON ROUGE À LA CAP : trois échappées COMPTÉES et NOMMÉES (1) la COMPOSITION EXTERNE (v1 — le modèle a composé tls13_01/03/04 externes au lieu du source autonome), (2) LA TABLE K FAUTIVE (v2 — 80 entrées, les constantes SHA-512 64 bits mêlées aux SHA-256 — ATTRAPÉE par le juge hashlib : 0/3 FIPS), (3) LA RÉGRESSION (v3 — le modèle est REVENU à la composition externe) ; la dernière passe (v4) porte la table K correcte (64) mais la réponse TRONQUÉE à la limite de complétion — la pièce INCOMPLÈTE ; LES CINQ AUTRES UNITÉS : les épreuves de contrat vertes (loupe-02 l'oracle 20 VERT), les fautes de rig du bras C reconduites (la epreuve_posix loupe-01 et les contrôles binaires — l'état consigné de la campagne, jamais réparées en silence) ; LES ÉCHAPPÉES DE TERRAIN : attendent le geste du maître (le kit assemblé au gabarit)
+
+  M3 (le temps humain au geste) : NON MESURÉ EN LABO — le terrain est au geste du maître ; T et C portent leurs M3 DU REGISTRE D210 (datés) ; C+G M3 ATTEND le terrain — L'ÉCART NOMMÉ (jamais un chiffre inventé)
+
+LES LIMITES NOMMÉES : la clé de session du labo (le terrain signera au geste du maître — les intentions re-signées à la livraison) ; UNE SEULE MACHINE au bac (le ratio de régime mesuré sur elle, la variance inter-machine attend la seconde) ; LES TÉMOINS SIGNÉS : attendent le geste du maître (jamais simulés) ; les scellés INTACTS (14/14 avant et après, la garde du sceau)

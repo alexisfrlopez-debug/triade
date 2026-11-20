@@ -1,0 +1,50 @@
+{
+ "bras": "C",
+ "run": 3,
+ "total_s": 1.948,
+ "etapes": [
+  {
+   "etape": "build-gcc-O2-loupe-01",
+   "secondes": 0.689,
+   "code": 0,
+   "console": ""
+  },
+  {
+   "etape": "suite-tests-c-hash",
+   "secondes": 0.279,
+   "code": 0,
+   "console": "[VERT] le testeur compile (gcc -O2, le POSIX du labo)\n[\u00e9prouv\u00e9es] 32 VERT, 0 ROUGE (les fronti\u00e8res du rembourrage, l'incr\u00e9mentalit\u00e9 irr\u00e9guli\u00e8re)\n"
+  },
+  {
+   "etape": "suite-tests-c-contrat",
+   "secondes": 0.016,
+   "code": 1,
+   "console": "epreuve_posix.c:25:10: fatal error: loupe-01-c.c: No such file or directory\n   25 | #include \"loupe-01-c.c\"\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\n"
+  },
+  {
+   "etape": "controles-binaires-loupe-01",
+   "secondes": 0.012,
+   "code": 2,
+   "console": "python3: can't open file '/home/z/my-project/depot/scripts/campagne_d204/unite-01-C/controles_binaires.py': [Errno 2] No such file or directory\n"
+  },
+  {
+   "etape": "build-gcc-O2-loupe-02",
+   "secondes": 0.694,
+   "code": 0,
+   "console": ""
+  },
+  {
+   "etape": "epreuve-contrat-posix-loupe-02",
+   "secondes": 0.219,
+   "code": 0,
+   "console": "[VERT] V1:temoin-1.bin-l-ouverture \u2014 rax=0, remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-nee \u2014 la premi\u00e8re fen\u00eatre lue INLINE au bloC session (l'\u00e9cart nomm\u00e9 du bras C : le loupe-01 du plan APPELLE loupe-02, la pi\u00e8ce C l'incline dans son ouvrir) \u2014 le tampon == la d\u00e9coupe\n[VERT] V1:temoin-384.bin-l-ouverture \u2014 rax=0, remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-nee \u2014 la premi\u00e8re fen\u00eatre lue INLINE au bloC session (l'\u00e9cart nomm\u00e9 du bras C : le loupe-01 du plan APPELLE loupe-02, la pi\u00e8ce C l'incline dans son ouvrir) \u2014 le tampon == la d\u00e9coupe\n[VERT] V1:temoin-3f.bin-l-ouverture \u2014 rax=0, remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-nee \u2014 la premi\u00e8re fen\u00eatre lue INLINE au bloC session (l'\u00e9cart nomm\u00e9 du bras C : le loupe-01 du plan APPELLE loupe-02, la pi\u00e8ce C l'incline dans son ouvrir) \u2014 le tampon == la d\u00e9coupe\n[VERT] V1:les-frontieres \u2014 9 d\u00e9calages fronti\u00e8re (0, la derni\u00e8re valide, la derni\u00e8re pleine, les fen\u00eatres de la zone 65536) : le tampon == la d\u00e9coupe, remplissage == min(384, taille \u2212 d\u00e9calage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture \u2014 le vide s'ouvre, remplissage 0 (la fen\u00eatre n\u00e9e est vide)\n[VERT] V1:vide.bin-aucune-fenetre-valide \u2014 rax=-3 (d\u00e9calage 0 \u2265 taille 0 \u2192 -3 HORS-BORNES), rien lu\n[VERT] V2:les-bords-de-fenetre \u2014 le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant et l'apr\u00e8s IGNOR\u00c9S \u2014 l'\u00e9dition survit au d\u00e9filement\n[VERT] V2:le-journal-intact \u2014 loupe-02 n'\u00e9crit JAMAIS au journal (I2)\n[VERT] V2:cinq-entrees-dont-une-non-alignee \u2014 cinq entr\u00e9es dedans (fen+5 NON ALIGN\u00c9E comprise) \u2014 le tampon == le mod\u00e8le ind\u00e9pendant\n[VERT] V3:sans-session \u2014 rax=-4 (attendu -4 SESSION, rien lu)\n[VERT] V3:non-aligne \u2014 rax=-5 (attendu -5), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonn\u00e9 INTACT (rien lu)\n[VERT] V3:a-la-taille \u2014 rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonn\u00e9 INTACT (rien lu)\n[VERT] V3:au-dela \u2014 rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonn\u00e9 INTACT (rien lu)\n[VERT] V3:immense \u2014 rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonn\u00e9 INTACT (rien lu)\n[VERT] V4:l-echec-readfile \u2014 rax=-6 (le tiroir a refus\u00e9 \u2192 -6 SYST\u00c8ME), remplissage 0 == 0 (fail-closed), le tampon empoisonn\u00e9 INTACT \u2014 jamais un octet non lu\n[VERT] V4:la-session-survit \u2014 l'\u00e9chec ne cl\u00f4t PAS la session : la lecture suivante est verte, le tampon == le t\u00e9moin entier\n[VERT] V5:l-octet-mute-l-etat-lu-diverge \u2014 la lecture d'abord VERT (le tampon == le t\u00e9moin), l'octet 3 mut\u00e9 0x90 \u2192 0xff : l'\u00e9tat lu DIVERGE du mod\u00e8le \u2014 la falsification est D\u00c9TECTABLE\n\nLE JUGE : 20 VERT, 0 ROUGE \u2014 VERT\n"
+  },
+  {
+   "etape": "controles-binaires-loupe-02",
+   "secondes": 0.04,
+   "code": 0,
+   "console": "  VERT format:PE32+-DLL \u2014 PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\n  VERT exports:loupe_01_ouvrir \u2014 \u00e0 la table (6 exports)\n  VERT exports:loupe_02_lire \u2014 \u00e0 la table (6 exports)\n  VERT exports:loupe_03_fermer \u2014 \u00e0 la table (6 exports)\n  VERT exports:cadre \u2014 \u00e0 la table (6 exports)\n  VERT exports:journal \u2014 \u00e0 la table (6 exports)\n  VERT exports:panneau \u2014 \u00e0 la table (6 exports)\n  VERT exports:donnees-en-.data \u2014 cadre @0x9080, journal @0x8020, panneau @0x9040 \u2014 les DONN\u00c9ES en .data ; les TROIS fonctions en .text\n  VERT imports:CreateFileW \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:GetFileSizeEx \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:SetFilePointerEx \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:ReadFile \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:CloseHandle \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:GetLastError \u2014 r\u00e9solue par le sc\u00e9nario \u00e0 l'IAT r\u00e9elle\n  VERT imports:le-CRT-du-lanceur-nomme \u2014 les imports du CRT de lancement mingw (jamais appel\u00e9es sous DONT_RESOLVE : aucun point d'entr\u00e9e ne court) \u2014 nomm\u00e9\n  VERT audit:cloture-des-fonctions \u2014 8 fonctions dans la cl\u00f4ture de loupe_01_ouvrir/loupe_02_lire/loupe_03_fermer (les fonctions, leurs appel\u00e9s, les thunks)\n  VERT audit:aucun-appel-CRT \u2014 les __imp_ r\u00e9f\u00e9renc\u00e9s : ['__imp_CreateFileW', '__imp_GetFileSizeEx', '__imp_GetLastError', '__imp_ReadFile', '__imp_SetFilePointerEx'] ; les appels directs par l'IAT : 6, tous aux slots kernel32 \u2014 QUE les feuilles kernel32 de la pi\u00e8ce\n  VERT relocations:pr\u00e9sentes \u2014 l'image peut \u00eatre rebas\u00e9e par le chargeur\n\n=== CONTR\u00d4LES BINAIRES : 18 VERT, 0 ROUGE ===\n"
+  }
+ ],
+ "code": 3
+}

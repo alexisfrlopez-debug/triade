@@ -1,0 +1,7 @@
+{
+ "unite": "loupe-02",
+ "famille": "lire",
+ "spec": "loupe/I/loupe-02-lire.md",
+ "sha256_spec": "898cd4bca4fe087ea7c415b7764734e3096d53088f8c1040cfbd7c3835b1961c",
+ "signature_ed25519": "e25e202f3c8c65d0659ef6f65a1e1e33da1f9b1c4c471ef96bb687eafd60f368e188dcd1376148505c1968cbe6cefacf88f2f4f7725cab3391de93d8a459c107"
+}
