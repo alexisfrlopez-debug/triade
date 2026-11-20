@@ -1,0 +1,19 @@
+Construis le tableau de bord des quatre axes et mets le pack en cohérence, sans modifier aucune valeur mesurée, sans affaiblir aucune règle, sans toucher aux artefacts scellés.
+
+Modifications :
+1. Crée un tableau de bord généré depuis les pièces brutes, portant pour chaque axe : la valeur mesurée courante, le plancher irréductible et sa méthode de calcul, le ratio d'overhead, la cible, et le statut de chaque résidu nommé. Ordre lexicographique explicite : Sécurité, Performance, Optimisation, Coût en tokens ; aucune compensation entre rangs.
+2. Ajoute au manuscrit une section « distance au plancher » qui rapporte ces ratios et ce qui les compose, avec la convention de périmètre obligatoire avant toute comparaison.
+3. Unifie les étiquettes de version, dates, plages de décisions et comptes de lignes sur les cinq pièces par macros générées depuis les journaux ; réconcilie les DOI (concept vs version) ; aligne la Data Availability sur les archives courantes.
+4. Aligne la spécification et le Livre du Coffre sur l'état vécu de la gouvernance (séquestre vécu, dépôt public, rotation vérifiée) par décision append-only, sans affaiblir aucune règle ; corrige les comptes d'arbres, titres d'annexes et références de version périmés.
+5. Présente les verdicts pré-enregistrés en deux lignes distinctes quand une règle a été amendée après falsification ; réconcilie explicitement le critère d'échantillon (unités instrumentées vs livrées) ; affiche le verdict brut à côté du verdict par attribution ; corrige la probabilité du tirage d'ordre.
+6. Réécris l'abstract en un seul paragraphe cohérent à l'état courant, sans accumulation de couches d'édition.
+7. Étends le linter inter-pièces aux en-têtes, DOI, comptes, ratios et probabilités, avec contrôle négatif.
+
+Vérification après modifications :
+- Linter inter-pièces étendu : zéro divergence sur toutes les valeurs partagées ; un écart volontaire est refusé puis retiré.
+- Toutes les tables du manuscrit régénérées par le script d'extraction : aucun chiffre tapé à la main.
+- Garde du sceau 14/14, empreintes des artefacts scellés intactes, autotest du kit de séquestre vert.
+- Les verdicts pré-enregistrés originaux restent lisibles et datés dans le journal append-only.
+- Le tableau de bord recalcule chaque ratio depuis les CSV bruts et refuse toute divergence.
+
+Après vérification, produis TRIADE_presentation_v0.20.0.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

@@ -1,0 +1,19 @@
+Pré-enregistre un plan « sécurité au plancher » (hypothèses, critères d'acceptation, graines, empreinte sha256 verrouillée) AVANT toute mesure, puis exécute-le au laboratoire uniquement. Aucun artefact scellé, aucun arbre signé, aucun coffre réel touché.
+
+Modifications :
+1. Sûreté mémoire : étends l'analyse des 2 098 accès par inférence d'invariants de boucle, analyse d'intervalles et d'alias, puis décharge chaque accès non résolu par model checking borné sur la notation liftée. Produis un certificat par bloc. Objectif : 0 accès non résolu ; tout accès restant non déchargeable est nommé avec sa cause et son mécanisme.
+2. Mutation : classe les 21 survivants en équivalents prouvés (preuve mécanique : même observable sur tout état servable), tuables restants, limites du harnais. Tue les tuables par de nouveaux scénarios d'injection. Publie le score ajusté (équivalents exclus du dénominateur) à côté du 811/832 brut. Aucun tueur existant affaibli.
+3. Fuzzing : porte la couverture des blocs d'entrée non fiable à au moins 90 % par corpus saturant et guidage par branche, mémoire-ombre et canaris étendus, graines consignées. Zéro crash, zéro violation de canari exigé.
+4. Temps constant : ajoute une preuve statique de non-interférence sur la notation (aucune branche ni adresse mémoire dépendant du secret), en plus du hash de trace complète. Prépare l'exécution du protocole de répétition matérielle déjà pré-enregistré ; n'invente aucun chiffre matériel.
+5. Preuve CF3 : mécanise l'invariant inductif dans un assistant de preuve indépendant de l'explorateur maison, archive les certificats SMT, et porte le statut correspondant dans la table des preuves.
+6. Ancrage transparence : applique l'ancrage du témoin d'époque au journal de transparence documenté, avec vérification machine et delta au modèle de menace aux deux bords.
+7. Consigne une décision append-only par chantier, avec alternatives rejetées.
+
+Vérification après modifications :
+- Rejeu complet aux graines consignées : bit-identique ; la console v0.14.0 (776/832) reproduite AVANT toute nouvelle injection.
+- Chaque mutant déclaré équivalent porte une preuve mécanique ; un contrôle négatif volontairement faux est attrapé.
+- Round-trip 100 %, garde du sceau 14/14, empreintes des artefacts scellés intactes avant/après.
+- L'assistant de preuve indépendant rejoue l'invariant depuis un clone frais ; tout lemme non déchargé est nommé.
+- Aucun résultat matériel consigné sans témoin signé du développeur.
+
+Après vérification, produis TRIADE_presentation_v0.20.0.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

@@ -1,0 +1,18 @@
+Pré-enregistre un plan de performance à deux couloirs (critères, graines, empreinte verrouillée) AVANT toute mesure, conformément à R11 : hot path identifié par mesure, avant/après consigné, contrat stable R4, adresses scellées R7.
+
+Modifications :
+1. Couloir A — parité baseline : profile les six blocs contrôlés, identifie les boucles où la référence compilée emploie des mouvements SSE2 du baseline x86-64 que la notation GPR pure n'emploie pas. Écris les chemins SSE2 baseline en notation (recherche d'octet, composition de ligne, saisie). Mesure instructions/op, taille, et comportement aux mêmes vecteurs. Objectif : coût inférieur ou égal à gcc-O2 sur les six blocs à travail égal, sans aucune extension au-delà du baseline.
+2. Couloir B — hot paths de production : sur les hot paths mesurés (sha-256, aes-gcm, x25519, transformations de rendu), écris les chemins descendus à l'ISA (SHA-NI, AES-NI+PCLMUL, MULX/ADX, AVX2 selon pertinence), avec dispatch CPUID et repli baseline obligatoire. Chaque chemin est un nouveau bloc à adresse stable, contrat identique, round-trip exact.
+3. Nomme la dette de cérémonie à la naissance si une spécification de couche I est révisée ; aucun build avant la cérémonie.
+4. Reporte les deux couloirs séparément, avec la convention de parité préservée pour le couloir A et la mesure de production pour le couloir B. Aucun chiffre attendu n'est écrit avant mesure.
+5. Consigne chaque optimisation au journal OPT-NN avec sa mesure avant/après, et une décision append-only.
+
+Vérification après modifications :
+- Zéro divergence comportementale aux vecteurs dorés et aux oracles différentiels, sur les deux chemins (extension et repli).
+- Round-trip 100 % sur tous les nouveaux blocs ; cristallisation 10/10 ; empreintes des artefacts scellés antérieurs intactes.
+- Batterie de mutation rejouée sur les nouveaux blocs aux mêmes graines : aucun tueur affaibli, survivants nommés.
+- Temps constant re-vérifié sur chaque nouveau chemin (hash de trace complet, une empreinte par cible).
+- Le repli baseline est exercised sur une machine sans l'extension : verdict identique, refus nommé si l'environnement est non conforme.
+- Rapport de mesure avant/après avec conditions identiques, horloge monotone, n consigné.
+
+Après vérification, produis TRIADE_presentation_v0.20.0.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

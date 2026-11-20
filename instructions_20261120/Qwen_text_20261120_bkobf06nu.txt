@@ -1,0 +1,18 @@
+Pré-enregistre un plan d'optimisation de la boucle de vérification (hot paths profilés, critères, graines, empreinte verrouillée) AVANT toute mesure. Aucun contrôle retiré, aucune graine supprimée, aucun vecteur réduit, le juge ne partage jamais l'état du jugé.
+
+Modifications :
+1. Vérification incrémentale : construis le graphe de dépendances depuis la carte (I↔C↔B↔tests) et fais de la vérification une fonction du diff : un changement au bloc X ne revérifie que X et ses dépendants transitifs ; les blocs scellés inchangés portent leur certificat de cristallisation et ne sont pas rejoués. Le certificat est lié à l'empreinte du bloc, du contrat et de la configuration ; tout écart force le rejeu complet.
+2. Étends le double moteur au chemin chaud de l'ouverture de session (condensés émulés sur fichier entier) : volume sous QEMU-user avec compteur par bloc, échantillon d'audit sous Unicorn, clé de mémo étendue à tout ce qui détermine le résultat.
+3. Prépare un troisième régime de preuve nommé « oracle natif » : un exécuteur Windows automatisé (runner CI) qui exécute les octets scellés et les scénarios, produit des témoins hashés et signés, et les confronte aux attentes du laboratoire. Nomme explicitement ce qu'il attrape et ce qu'il n'attrape pas ; ne le confonds jamais avec le terrain du développeur. Consigne la décision et le delta au modèle de menace.
+4. Mesure M4 avant/après sur la liste de commandes fixe de la campagne, horloge monotone, n≥5 par configuration, et compare au bras C sur la même machine.
+5. Consigne chaque gain au journal OPT-NN et une décision append-only ; nomme tout écart défavorable.
+
+Vérification après modifications :
+- Les 24 consoles d'oracles capturées sont ligne-identiques aux originales.
+- Rejeu complet de la batterie de mutation aux mêmes graines : 811/832 intact, aucun tueur affaibli.
+- Un certificat incrémental volontairement falsifié (bloc, contrat ou configuration changé) force le rejeu complet et est refusé nommément.
+- Empreintes des artefacts scellés intactes avant/après chaque run ; expansion client verte ; zéro divergence.
+- Le régime natif est nommé partout où ses résultats apparaissent ; aucun résultat n'est présenté comme terrain du développeur.
+- Contrôle négatif : un shim de lanceur muté est attrapé à la première ligne.
+
+Après vérification, produis TRIADE_presentation_v0.20.0.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

@@ -1,0 +1,15 @@
+Aligne la spécification et le Livre du Coffre sur l'état vécu de la gouvernance (cérémonie D183 vécue le 19 novembre, phrase commise tournée, ancienne refusée, scan d'historique trié, dépôt public D220), sans affaiblir aucune règle, sans toucher au coffre réel ni aux artefacts scellés.
+
+Modifications :
+1. Consigne une nouvelle décision append-only (D223) actant l'état vécu : D183 active, D81 amendée, dépôt public, rotation vérifiée ; référence les pièces de la cérémonie.
+2. Spécification v0.15.5 : mets à jour la ligne D81 du tableau de menaces (§15) — la phrase de contrôle n'est plus au dépôt, le séquestre Shamir 5/3 est la garde active, le dépôt est public ; mets à jour §14.3 et §1.18 en conséquence ; aucune règle R1–R11 modifiée.
+3. Livre du Coffre v1.4 : porte §7.5 au statut VÉCU (les sept gestes accomplis, reconstitution à froid prouvée deux fois) ; mets à jour §8.2 étape 7, la matrice de visibilité (public + Zenodo), le glossaire et la table des décisions ; retire « le dépôt demeure PRIVÉ » et « D81 demeure ACTIVE ».
+4. Vérifie que le kit de séquestre et le scan de secrets restent cohérents avec l'état public (aucun jeton réel commis).
+
+Vérification après modifications :
+- Rejoue l'autotest du kit D183 : 10/10 combinaisons exactes, 10/10 paires sous seuil inertes, part forgée refusée, mode --verifier fail-closed vert.
+- Rejoue le scan de secrets de l'historique complet : zéro fuite réelle au-delà de l'arbitrage assumé.
+- Garde du sceau 14/14 vert ; empreintes des artefacts scellés intactes.
+- Linter inter-pièces : zéro divergence sur le statut D81/D183/D220 entre spec, Livre, manuscrit et présentation.
+
+Après vérification, produis TRIADE_presentation_v0.19.6.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification (v0.15.5), Livre du Coffre (v1.4), preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

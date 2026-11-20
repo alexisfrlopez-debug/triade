@@ -1,0 +1,146 @@
+[
+ {
+  "bloc": "loupe-07-cumul",
+  "type": "alias-revu",
+  "ligne_index": 17,
+  "ancienne": "jz 0x4997",
+  "nouvelle": "je 0x4997",
+  "consigne": "RÉVISION DE NOTATION (la classe « l'encodage équivalent ») : la ligne « jz 0x4997 » est révisée en « je 0x4997 » — l'alias de mnémonique, zéro octet changé. AUCUNE autre ligne ne change."
+ },
+ {
+  "bloc": "loupe-11-defilement",
+  "type": "constance-revue",
+  "ligne_index": 36,
+  "ancienne": "cmp r15, 5",
+  "nouvelle": "cmp r15, 4",
+  "consigne": "RÉVISION DE CONTRAT (loupe-11-defilement:R2, la classe « la constante revue ») : la ligne « cmp r15, 5 » est révisée en « cmp r15, 4 » — l'immédiat de travail passe de 5 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-02-lire",
+  "type": "constance-revue",
+  "ligne_index": 29,
+  "ancienne": "cmp r13, 384",
+  "nouvelle": "cmp r13, 383",
+  "consigne": "RÉVISION DE CONTRAT (loupe-02-lire:R2, la classe « la constante revue ») : la ligne « cmp r13, 384 » est révisée en « cmp r13, 383 » — l'immédiat de travail passe de 384 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-12-aller",
+  "type": "constance-revue",
+  "ligne_index": 36,
+  "ancienne": "cmp rdx, 0x100",
+  "nouvelle": "cmp rdx, 0xff",
+  "consigne": "RÉVISION DE CONTRAT (loupe-12-aller:R2, la classe « la constante revue ») : la ligne « cmp rdx, 0x100 » est révisée en « cmp rdx, 0xff » — l'immédiat de travail passe de 0x100 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-03-fermer",
+  "type": "constance-revue",
+  "ligne_index": 35,
+  "ancienne": "mov r8d, 48",
+  "nouvelle": "mov r8d, 47",
+  "consigne": "RÉVISION DE CONTRAT (loupe-03-fermer:R2, la classe « la constante revue ») : la ligne « mov r8d, 48 » est révisée en « mov r8d, 47 » — l'immédiat de travail passe de 48 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-10-peinture",
+  "type": "constance-revue",
+  "ligne_index": 78,
+  "ancienne": "mov rcx, 13",
+  "nouvelle": "mov rcx, 12",
+  "consigne": "RÉVISION DE CONTRAT (loupe-10-peinture:R2, la classe « la constante revue ») : la ligne « mov rcx, 13 » est révisée en « mov rcx, 12 » — l'immédiat de travail passe de 13 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-09-ecran",
+  "type": "constance-revue",
+  "ligne_index": 49,
+  "ancienne": "cmp eax, 0x22",
+  "nouvelle": "cmp eax, 0x21",
+  "consigne": "RÉVISION DE CONTRAT (loupe-09-ecran:R2, la classe « la constante revue ») : la ligne « cmp eax, 0x22 » est révisée en « cmp eax, 0x21 » — l'immédiat de travail passe de 0x22 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-17-sauver",
+  "type": "constance-revue",
+  "ligne_index": 62,
+  "ancienne": "mov r8d, 1",
+  "nouvelle": "mov r8d, 0",
+  "consigne": "RÉVISION DE CONTRAT (loupe-17-sauver:R2, la classe « la constante revue ») : la ligne « mov r8d, 1 » est révisée en « mov r8d, 0 » — l'immédiat de travail passe de 1 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-16-saisie",
+  "type": "constance-revue",
+  "ligne_index": 38,
+  "ancienne": "cmp r8d, 0x08",
+  "nouvelle": "cmp r8d, 0x7",
+  "consigne": "RÉVISION DE CONTRAT (loupe-16-saisie:R2, la classe « la constante revue ») : la ligne « cmp r8d, 0x08 » est révisée en « cmp r8d, 0x7 » — l'immédiat de travail passe de 0x08 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-13-recherche",
+  "type": "constance-revue",
+  "ligne_index": 17,
+  "ancienne": "cmp r9, 32",
+  "nouvelle": "cmp r9, 31",
+  "consigne": "RÉVISION DE CONTRAT (loupe-13-recherche:R2, la classe « la constante revue ») : la ligne « cmp r9, 32 » est révisée en « cmp r9, 31 » — l'immédiat de travail passe de 32 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-14-suivant",
+  "type": "constance-revue",
+  "ligne_index": 44,
+  "ancienne": "cmp rdx, 0x100",
+  "nouvelle": "cmp rdx, 0xff",
+  "consigne": "RÉVISION DE CONTRAT (loupe-14-suivant:R2, la classe « la constante revue ») : la ligne « cmp rdx, 0x100 » est révisée en « cmp rdx, 0xff » — l'immédiat de travail passe de 0x100 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-18-quitter",
+  "type": "constance-revue",
+  "ligne_index": 21,
+  "ancienne": "cmp edx, 0x10",
+  "nouvelle": "cmp edx, 0xf",
+  "consigne": "RÉVISION DE CONTRAT (loupe-18-quitter:R2, la classe « la constante revue ») : la ligne « cmp edx, 0x10 » est révisée en « cmp edx, 0xf » — l'immédiat de travail passe de 0x10 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-06-md5",
+  "type": "constance-revue",
+  "ligne_index": 42,
+  "ancienne": "mov r15d, 0x10000",
+  "nouvelle": "mov r15d, 0xffff",
+  "consigne": "RÉVISION DE CONTRAT (loupe-06-md5:R2, la classe « la constante revue ») : la ligne « mov r15d, 0x10000 » est révisée en « mov r15d, 0xffff » — l'immédiat de travail passe de 0x10000 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-15-curseur",
+  "type": "constance-revue",
+  "ligne_index": 26,
+  "ancienne": "cmp r8d, 0x24",
+  "nouvelle": "cmp r8d, 0x23",
+  "consigne": "RÉVISION DE CONTRAT (loupe-15-curseur:R2, la classe « la constante revue ») : la ligne « cmp r8d, 0x24 » est révisée en « cmp r8d, 0x23 » — l'immédiat de travail passe de 0x24 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-04-cadre",
+  "type": "constance-revue",
+  "ligne_index": 14,
+  "ancienne": "mov r8d, 960",
+  "nouvelle": "mov r8d, 959",
+  "consigne": "RÉVISION DE CONTRAT (loupe-04-cadre:R2, la classe « la constante revue ») : la ligne « mov r8d, 960 » est révisée en « mov r8d, 959 » — l'immédiat de travail passe de 960 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-08-ligne",
+  "type": "constance-revue",
+  "ligne_index": 18,
+  "ancienne": "cmp rdx, 1",
+  "nouvelle": "cmp rdx, 0",
+  "consigne": "RÉVISION DE CONTRAT (loupe-08-ligne:R2, la classe « la constante revue ») : la ligne « cmp rdx, 1 » est révisée en « cmp rdx, 0 » — l'immédiat de travail passe de 1 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-01-ouvrir",
+  "type": "constance-revue",
+  "ligne_index": 29,
+  "ancienne": "mov edx, 0xc0000000",
+  "nouvelle": "mov edx, 0xbfffffff",
+  "consigne": "RÉVISION DE CONTRAT (loupe-01-ouvrir:R2, la classe « la constante revue ») : la ligne « mov edx, 0xc0000000 » est révisée en « mov edx, 0xbfffffff » — l'immédiat de travail passe de 0xc0000000 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ },
+ {
+  "bloc": "loupe-05-sha256",
+  "type": "constance-revue",
+  "ligne_index": 38,
+  "ancienne": "mov r15d, 0x10000",
+  "nouvelle": "mov r15d, 0xffff",
+  "consigne": "RÉVISION DE CONTRAT (loupe-05-sha256:R2, la classe « la constante revue ») : la ligne « mov r15d, 0x10000 » est révisée en « mov r15d, 0xffff » — l'immédiat de travail passe de 0x10000 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision)."
+ }
+]

@@ -1,0 +1,18 @@
+Mets en cohérence les cinq documents du pack TRIADE (manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation) sans modifier aucune règle du protocole, aucun artefact scellé, aucun arbre signé, aucune valeur mesurée.
+
+Modifications :
+1. Manuscrit : unifie l'en-tête courant, la page de titre et le nom de fichier sur v0.19.5 ; cale la date sur la présentation (20 novembre 2026) ; remplace la référence « specification v0.15.3 » par v0.15.4 ; régénère la plage de décisions (D1–D222) et les comptes de lignes depuis les journaux par le script d'extraction ; réécris la Data Availability aux archives v0.19.5 et insère le DOI réel.
+2. Réconcilie les DOI : identifie lequel est le concept DOI et lequel est le DOI de version (présentation 10.5281/zenodo.24367344 vs preuves 10.5281/zenodo.24379173) ; consigne la distinction et utilise le concept DOI résolant sur la dernière version partout.
+3. Présentation : corrige « avant 39,7 s » en la valeur mesurée du manuscrit (39,3/39,2 s, n=2) ; recalcule le ratio depuis les CSV bruts.
+4. Manuscrit §2.5 : vérifie la probabilité du tirage T-premier sur quatre unités ; corrige « one-in-eight » en 1/16 si quatre tirages indépendants, ou nomme explicitement le nombre de tirages si différent.
+5. Spécification : porte le titre de l'annexe B à la plage réelle de la table ; réordonne §1.18/§1.19/§1.20 en ordre de version croissant ; corrige l'étiquette « mesures v0.17–v0.18 (D195) » en distinguant D195 (v0.14.0, contenu seul) des mesures instrumentées v0.17.
+6. Livre du Coffre : unifie couverture et pied de page sur la version courante ; aligne les références de spec sur v0.15.4 ; remplace « dix arbres VERTS » par quatorze partout (§7.2, §8.6, glossaire).
+7. Crée une source unique de vérité (macros) pour version, DOI, comptes d'arbres, plage de décisions, chiffres M4 ; étends le linter inter-pièces pour confronter ces valeurs aux cinq pièces à chaque build.
+
+Vérification après modifications :
+- Rejoue le linter inter-pièces étendu : zéro divergence sur les valeurs partagées.
+- Régénère toutes les tables du manuscrit par le script d'extraction : aucun chiffre tapé à la main.
+- Vérifie que les empreintes des artefacts scellés et le garde du sceau (14/14) sont intacts avant/après.
+- Contrôle négatif : introduis une divergence volontaire dans une valeur partagée, vérifie que le linter la refuse, puis retire-la.
+
+Après vérification, produis TRIADE_presentation_v0.19.6.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

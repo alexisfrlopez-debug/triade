@@ -1,0 +1,18 @@
+Renforce l'intégrité pré-enregistrée et la lisibilité du manuscrit sans modifier aucune valeur mesurée, sans retirer aucun contrôle, sans réécrire l'historique append-only.
+
+Modifications :
+1. H5 : présente deux verdicts distincts et datés — « H5-D204 : réfutée (×23,9, mesurée) » et « H5-amendée-OPT04 : tenue (×3,0, amendement explicite du maître) ». Ne fusionne pas les deux en un seul « tenue ».
+2. N=7 : ajoute un paragraphe de réconciliation explicite entre le critère pré-enregistré « n≥6 unités entièrement instrumentées » et la clôture « sept unités entièrement livrées aux deux bras » ; donne le compte exact des unités disposant de logs M2 (usage logs) et nomme toute relaxation comme telle, avec son amendement.
+3. H6 : affiche le verdict brut de la métrique de livraison (3 échappés côté T vs 0 côté C) à côté du verdict « tenue par attribution », avec le raisonnement d'attribution (kit partagé, pièce jamais fautive, 14 VERT 0 ROUGE).
+4. H7 : consigne que le tirage libre n'a pas produit de contraste ; pré-enregistre pour la prochaine campagne une randomisation stratifiée garantissant le contraste d'ordre.
+5. Abstract : réécris-le en un seul paragraphe cohérent à l'état v0.19.5 (clôture 30 000 traces zéro divergence en premier, gap 10 000 traces comme histoire datée) ; supprime l'accumulation des couches v0.19.1→v0.19.5.
+6. RQ2 : re-mesure la distribution de localiser après adoption du pointeur seul (même graine, tokenizer natif, n≥18) ; reporte les médianes pré-OPT-04 et post-OPT-04 avec note de périmètre ; mets à jour le headline et le résumé.
+7. §5 Threats : rafraîchis le paragraphe « house-built explorer / Tamarin-ProVerif absence » pour refléter l'usage TLC/Apalache (D200) tout en nommant la déviation restante.
+
+Vérification après modifications :
+- Re-extrais tous les chiffres depuis les registres bruts (livraisons.csv, defauts.csv, usage logs, remesure_rq2.csv) : zéro divergence, aucun chiffre tapé.
+- Rejoue la mesure RQ2 post-OPT-04 à la graine consignée : expansion client verte, zéro divergence, empreintes intactes.
+- Linter numérique étendu : signes, ratios, médianes, probabilités recalculés et confrontés.
+- Vérifie que les verdicts pré-enregistrés originaux (H3/H5/H8 réfutées) demeurent lisibles et datés dans le journal.
+
+Après vérification, produis TRIADE_presentation_v0.19.6.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

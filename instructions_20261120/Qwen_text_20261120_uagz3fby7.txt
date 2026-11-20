@@ -1,0 +1,19 @@
+Pré-enregistre un plan de réduction du coût en tokens (hypothèses, critères, graines, empreinte verrouillée) AVANT toute mesure. Aucun contrôle retiré, aucun round-trip supprimé, aucune vérification affaiblie.
+
+Modifications :
+1. OPT-05 — édition et ajout par hunks : définis un format de réponse où l'agent rend des hunks ciblés au lieu de réémettre la notation complète ; le client applique, reconstruit le bloc et confronte par round-trip exact. Quatre refus nommés fail-closed : HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT, HORS-FORMAT. Mesure avant/après à la même graine, tokenizer natif, n≥18, distributions complètes.
+2. Compilateur d'oracle déterministe : génère l'oracle de référence par script depuis le gabarit structuré de la couche I (pre/post/inv/échecs/vecteurs), sans tokens LLM. L'oracle reste dérivé de I, jamais de B, régénéré à chaque session, empreinte consignée. Mesure les tokens d'oracle supprimés par unité.
+3. Bibliothèque de gabarits porteurs de preuves : indexe les blocs scellés réutilisables et leurs contrats dans la carte ; une nouvelle unité se compose par héritage scellé (R7) plutôt que par réécriture. Mesure le coût unitaire avant/après sur une unité comparable, et la part de la spirale corrective.
+4. Carte compacte à la localisation : réduis le matériau lu au strict nécessaire (identifiant, plage, empreinte de contrat), expansion à la demande côté client, refus nommés. Mesure le total de localisation après adoption du pointeur seul.
+5. Reporte pour chaque axe le ratio au plancher : tokens mesurés divisés par la longueur tokenisée du diff réel (plancher de description minimale). Nomme le plancher et sa méthode de calcul.
+6. Consigne chaque optimisation au journal OPT-NN et une décision append-only.
+
+Vérification après modifications :
+- Round-trip 100 % sur tous les blocs ; les 24 consoles d'oracles ligne-identiques ; zéro divergence 18/18 sur l'expansion client.
+- Rejeu de la batterie de mutation aux mêmes graines : 811/832 intact, aucun tueur affaibli.
+- Un hunk volontairement faux, un contexte divergent et une empreinte divergente sont chacun refusés au premier refus nommé.
+- L'oracle généré par script est confronté à l'oracle précédent : zéro divergence aux vecteurs ; toute divergence est un refus nommé.
+- Empreintes des artefacts scellés intactes ; aucune graine supprimée ; re-tokenisation indépendante à ±1 token.
+- Les ratios au plancher sont recalculés depuis les CSV bruts par le linter numérique.
+
+Après vérification, produis TRIADE_presentation_v0.20.0.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

@@ -1,0 +1,15 @@
+Recadre le protocole d'indépendance inter-familles et affine l'analyse des survivants de mutation, au laboratoire uniquement, sans toucher aux artefacts scellés ni aux arbres signés, sans fabriquer aucun résultat.
+
+Modifications :
+1. Pré-enregistre un amendement au protocole d'indépendance AVANT tout run : remplace la récitation pure par une dérivation-outillée — le second modèle (famille distincte) dérive T[64] et K[64] depuis les définitions mathématiques (RFC 1321 / FIPS 180-4) avec exécution de code, sans voir les tables du plan ; le juge demeure la confrontation mathématique. La récitation pure reste reportée comme sonde de mémorisation, jamais comme test d'indépendance.
+2. Exécute la dérivation-outillée sur le modèle local disponible ; si la capacité est insuffisante, nomme le gap sur pièces (jamais simulé) ; si un 7B quantifié tient en RAM, tente-le et consigne la configuration.
+3. Étends le bras C généré à au moins trois contrats de couche I (dont loupe-13) ; reporte le profil de capacité par contrat (verts/rouges, classes de bord) ; nomme chaque gap.
+4. Classifie les 21 survivants de mutation en trois catégories : mutants équivalents prouvés (ex. RBP volatil jamais relu, sentinel adjacent, convergence des gardes, cible détournée retombant sur le même état), tuables restants, limites du harnais ; reporte le score ajusté (équivalents exclus du dénominateur) à côté du 811/832 brut.
+
+Vérification après modifications :
+- Confrontation math↔plan : zéro divergence AVANT toute génération.
+- Rejeu aux graines consignées : bit-identique ; la console v0.14.0 (776/832) reproduite d'abord, aucun tueur affaibli.
+- Pour chaque mutant déclaré équivalent : preuve mécanique (même observable sur tout état servable) ; contrôle négatif attrapé.
+- Empreintes des artefacts scellés intactes ; la batterie écrit aux émulations, jamais aux pièces.
+
+Après vérification, produis TRIADE_presentation_v0.19.6.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.

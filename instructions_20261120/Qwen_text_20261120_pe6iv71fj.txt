@@ -1,0 +1,16 @@
+Optimise le coût en tokens d'édition/ajout et le temps de vérification du chemin chaud, sans retirer aucun contrôle, sans affaiblir aucun tueur, sans modifier les artefacts scellés (R11 : aucune optimisation sans mesure).
+
+Modifications :
+1. Pré-enregistre le plan OPT-05 (hypothèses, critères, graines, empreinte verrouillée) AVANT toute mesure.
+2. Édition/ajout par hunks : définis un format de réponse où l'agent rend des hunks de notation (diff ciblé) au lieu de réémettre la notation complète ; le client applique les hunks, reconstruit le bloc, et confronte par round-trip exact ; quatre refus nommés fail-closed (HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT, HORS-FORMAT). Mesure avant/après à la même graine sur les opérations éditer et ajouter (tokenizer natif, n≥18, distributions complètes).
+3. Ouverture de session : étends le double moteur au chemin crypto émulé — volume sous QEMU-user (compteur plugin/bloc), échantillon d'audit sous Unicorn ; la clé de mémo v2 reste sha-256 de tout ce qui détermine le résultat ; le juge ne partage jamais l'état du jugé. Mesure M4 avant/après (horloge monotone, liste de commandes fixe, n≥5 par configuration).
+4. Reporte les gains et les ratios résiduels vs bras C ; nomme tout écart défavorable.
+
+Vérification après modifications :
+- Round-trip 100 % sur tous les blocs ; les 24 consoles d'oracles capturées identiques ligne à ligne aux originales.
+- Rejeu de la batterie de mutation aux mêmes graines : 811/832 intact, aucun tueur affaibli.
+- Empreintes des artefacts scellés intactes avant/après chaque run ; expansion client verte, zéro divergence.
+- Contrôle négatif : un hunk volontairement faux et un shim de lanceur muté sont attrapés au premier refus nommé.
+- Aucune graine supprimée, aucun vecteur réduit, aucune vérification retirée.
+
+Après vérification, produis TRIADE_presentation_v0.19.6.zip contenant exactement 5 documents PDF régénérés et cohérents : manuscrit, spécification, Livre du Coffre, preuves et calculs, présentation. Consigne les empreintes sha-256 des cinq pièces dans la présentation et le document de preuves.
