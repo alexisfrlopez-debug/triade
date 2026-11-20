@@ -1,0 +1,3 @@
+TRIADE_manuscrit_v0.19.6.pdf
+Le manuscrit académique v0.19.6 — la vague 8 portée : la cohérence (les macros, les DOI, 1/16), la gouvernance vécue, H5 en deux verdicts datés, N=7 réconcilié, RQ2 re-mesuré, l'abstract réécrit.
+sha256:3022d1c474abc2e9f6f47d836c8cc53edd40461234049773f740973d60b520ce

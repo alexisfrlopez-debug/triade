@@ -1,0 +1,109 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.19.6 (la vague 8)
+=========================================================
+(l'exécution des cinq instructions : gq117wphb, ansz8lvdf, nunsmzmrm,
+peap6ws09, pe6iv71fj ; les plans gelés AVANT toute mesure, le commit
+c36d93f précédant la première donnée ; le linter inter-pièces v196
+fail-closed au build)
+
+V1 — LE LINTER INTER-PIÈCES v196 : 39 VERT, 0 ROUGE.
+     Les versions croisées (v0.19.6 <-> v0.15.5 <-> v1.4), le concept
+     DOI 10.5281/zenodo.24367343 aux trois pièces porteuses, le DOI de
+     version courant nommé, le tirage à 1/16 (le 1/8 interdit), H5 en
+     deux verdicts distincts, les médianes M4 re-mesurées (39,1/6,6/1,9
+     ; le 39,7 s périmé interdit), la médiane localiser adoptée 1 103,
+     les gains OPT-05 (−34,3 %/−97,7 %), la dérivation-outillée (les
+     128 constantes), le bras C 1983/2011, le score ajusté 811/820 =
+     98,9 %, la gouvernance vécue (D223, « demeure PRIVÉ » interdit, la
+     ligne stale D183 interdite), l'annexe B à D75–D223, quatorze
+     arbres, la plage D1–D223, la batterie brute 811/832.
+
+V2 — LE CONTRÔLE NÉGATIF DU LINTER (l'instruction gq117wphb) : une
+     divergence volontaire (la médiane localiser mutée 1 103 -> 1 277
+     au manuscrit) est REFUSÉE par le linter au premier nom ; après
+     retrait, le build est admis (39 VERT 0 ROUGE) — la pièce du geste
+     au journal de session.
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES avant/après chaque
+     exécution de mesure (loupe.exe, proxy.exe, selftest.exe et les
+     pièces de campagne — vérifiées par le runner M4 à chacun des 11
+     runs : avant ×5, froid ×1, chaud ×5, scellés INTACTS partout).
+
+V4 — LA GARDE DU SCEAU : 14/14 VERT (l'étape garde-sceau-I du runner,
+     code 0 aux 11 exécutions).
+
+V5 — LA RE-MESURE RQ2 (le pointeur seul, la graine 20261117, n=18) :
+     18/18 CONFORMES (l'identifiant exact, l'empreinte recopiée telle
+     quelle — zéro divergence), la médiane 1 103 [q1 808, q3 1 502,
+     min 610, max 2 840], la réponse médiane 52 — REPRODUCTIBLE à
+     l'identique de la campagne OPT-04 (la même médiane, la même
+     réponse).
+
+V6 — LA CAMPAGNE OPT-05 (quatre cellules n=18, le tokenizer natif lu
+     du log d'usage, 100 appels journalisés) : éditer-A 17/18 verts
+     (médiane 3 732, réponse 1 726), éditer-H2 17/18 verts (médiane
+     2 452, réponse 40 — le gain total −34,3 %, réponse −97,7 %),
+     ajouter-A2 6/18 (médiane 5 079 — l'ajout complet demeure
+     l'opération difficile, les divergences nommées), ajouter-H2 0/18
+     (HORS-FORMAT : le modèle re-dumppe le contexte — l'écart nommé, le
+     format REFUSÉ en l'état pour l'ajout) ; les records v1 au journal
+     (editer-H 1/12, ajouter-A 0/10 — l'ambiguïté de la spécification,
+     l'amendement v2 consigné avant la re-mesure). LES QUATRE REFUS
+     NOMMÉS autotestés (HUNK-INCONNU, CONTEXTE-DIVERGENT,
+     HORS-FORMAT ×2, ROUND-TRIP-DIVERGENT — 2 VERT + 6 refus attrapés)
+     et le round-trip du client VERT 18/18 sur les notations réelles du
+     domaine.
+
+V7 — LA MESURE M4 (la liste fixe inchangée, chronomètre monotone, n=5
+     par configuration) : AVANT médiane 39,1 s [38,7–39,4] ; FROID 6,6
+     s ; CHAUD médiane 6,6 s — LE RUN 4 À 29,3 s EST L'AUDIT 1 RUN SUR
+     10 VÉCU (le compteur chaîné déclenchant la re-exécution vivante
+     tout seul) ; le bras C médiane 1,9 s (les trois étapes rouges de
+     la session précédente re-constatées, les écarts nommés) ; les
+     ratios : avant/C 20,4×, chaud/C 3,5× SOUS ×10. LE DOUBLE MOTEUR
+     AUDITÉ SOUS VRAI QEMU-USER : l'échantillon consigné de 2 041
+     opérations aux deux moteurs, DIVERGENCE = 0 octet pour octet (le
+     chemin crypto des ouvertures couvert ; le compteur par bloc et le
+     pilote crypto direct nommés à leur écart).
+
+V8 — L'INDÉPENDANCE PAR DÉRIVATION-OUTILLÉE : la confrontation
+     préalable math<->plan TENUE (T et K : les définitions aux décimales
+     == les tables du dépôt, 64/64 chacune, AVANT toute génération) ;
+     la seconde famille (Qwen2.5-Coder-1.5B, le snapshot 2e1fd397 de la
+     vague 7 re-téléchargé) DÉRIVE LES 128 CONSTANTES des définitions
+     mathématiques seules — CONFORMES aux définitions ET au plan, zéro
+     divergence (les deux sources générés conservés verbatim) ; la
+     récitation pure 2/64 + 2/64 (les ancreurs publics seuls — la sonde
+     de mémorisation, jamais un test d'indépendance).
+
+V9 — LE BRAS C AUX TROIS CONTRATS : loupe-13 1983/2011 VERT (les bords
+     Q2 et P4 nommés, la classe de la vague 7 reproduite) ; loupe-02 et
+     loupe-16 REFUSÉS À LA COMPILATION (l'ordre de déclaration de min ;
+     le void qui retourne — les classes nommées, les sources conservés
+     verbatim, la sémantique juste à la lecture pour loupe-02) ; la
+     première génération sans signature conservée au record (l'écart de
+     prompt nommé). LA CLASSIFICATION DES 21 SURVIVANTS : 12 équivalents
+     prouvés (la preuve mécanique par classe), 3 tuables restants, 6
+     limites du harnaïs — LE SCORE AJUSTÉ 811/820 = 98,9 % à côté du
+     brut 811/832 = 97,5 % (la formule gelée ÉTAIT ERRONÉE — elle
+     additionnait les équivalents au numérateur ; l'erreur NOMMÉE, la
+     formule corrigée : les équivalents exclus des deux termes).
+
+V10 — LE PACK TRIADE_presentation_v0.19.6_20261120.zip [2 178 850
+     octets, 12 fichiers] : exactement 5 documents PDF régénérés et
+     cohérents, les descriptions, le LISEZMOI, LES EMPREINTES SHA-256
+     des cinq pièces ; le zip RELU pièce à pièce (chaque empreinte
+     re-vérifiée au dézippage). Les deux archives de dépôt (soumission
+     et complet) assemblées en miroir de la structure v0.19.5 — la
+     publication Zenodo AU GESTE DU MAÎTRE (jamais un DOI minté sans
+     commande explicite).
+
+LES ÉDITIONS NÉES : le manuscrit v0.19.6 (15 remplacements ancrés +
+     le RQ2 français + la caption de table), la spécification v0.15.5
+     (8 remplacements ancrés — AUCUNE règle R1–R11 modifiée), le Livre
+     du Coffre v1.4 (10 remplacements ancrés + la couverture), les
+     preuves v0.19.6, la présentation du 20/11 v196 ; D223 append-only
+     au journal des décisions ; les macros v196 régénérées des journaux
+     vivants (D1–D223).
+
+AUCUNE valeur mesurée modifiée ; AUCUN artefact scellé touché ; AUCUNE
+graine supprimée ; AUCUN contrôle retiré.

@@ -1,0 +1,327 @@
+% =====================================================================
+%  CH. 9 MODE DÉGRADÉ · CH. 10 EMPREINTES · CH. 11 DÉCISIONS DU COFFRE
+% =====================================================================
+\section{Mode dégradé — quand ça refuse}\label{sec:degrade}
+
+\subsection{La première règle : un refus n'est pas une perte}
+
+Le coffre est fail-closed de bout en bout, ce qui a une conséquence pratique que le
+maître doit intérioriser : \textbf{presque tout ce qui « échoue » échoue sans rien
+écrire}. Une cérémonie refusée laisse le conteneur intact ; une clôture interrompue
+laisse le canonique intact et le brouillon rejouable ; une phrase erronée ne détruit
+rien. La seule famille d'événements qui \emph{détruit} est la falsification
+\emph{prouvée} (AEAD + étiquelle après quatre verts) — et même elle respecte la
+relève : le média et les fragments ne sont jamais touchés. Avant toute inquiétude,
+donc : relisez le refus — il \emph{nomme} son étape.
+
+\subsection{Le dictionnaire des refus nommés}\label{sec:dico}
+
+\begin{longtable}{@{}p{5.2cm} >{\raggedright\arraybackslash}p{4.2cm} >{\raggedright\arraybackslash}p{6.3cm}@{}}
+\toprule
+\textbf{Le refus} & \textbf{Ce qu'il veut dire} & \textbf{Le geste} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Le refus} & \textbf{Ce qu'il veut dire} & \textbf{Le geste} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+« phrase de contrôle divergente » (migrer) & la remise D81 n'est pas encore
+remplacée — le coffre vit sous une autre phrase que le fichier ne dit pas & posez la
+phrase courante dans \code{PHRASE-CONTROLE-COFFRE.txt}, commit, push, puis rejouez la
+cérémonie \\
+« phrase ERRONÉE » (CF3, verif) & la phrase tapée ne dérive pas le \code{verif} de
+l'en-tête & réessayez — le délai croît (1, 2, 4 s, plafond 8) ; vérifiez le
+fichier-remise ; jamais de destruction, jamais d'écriture \\
+« piège absent » & le média du piège n'est pas branché / désigné & branchez la clef
+USB du sachet, désignez-la — l'acte est \emph{impossible} sans elle, rien n'est lu \\
+« piège PÉRIMÉ » & l'époque du piège $\neq$ l'époque du conteneur — tentative de
+roll-back (ou mauvais média) & comparez l'époque du conteneur (\code{statut}) à la
+carte du sachet ; dites le verdict au laboratoire si la divergence n'est pas la
+vôtre \\
+tag du piège invalide & le média est corrompu — lecteur, secteur, copie coupée &
+\emph{pas} de destruction (le média est hors limite) : relisez-le, recopiez depuis
+les copies hors-ligne, rejouez \\
+« RETOUR EN ARRIÈRE » (journal local) & l'époque du conteneur est inférieure au miroir
+local & un canonique ancien a été resservi : recoupez la carte et le journal Git,
+dites le verdict — c'est précisément l'attaque que les témoins existent pour nommer \\
+« piège d'un AUTRE coffre » (H\_projet divergent) & le média mélange les sachets &
+un média du piège par coffre (borne) : remettez le bon sachet \\
+falsification PROUVÉE (AEAD/étiquette) & le conteneur a été altéré côté machine &
+destruction locale + PV (dans \code{.keys\textbackslash pv-cf3\textbackslash}) :
+lisez le PV, restaurez depuis le sachet (pièges + fragments CF2 pour la relève
+historique) \\
+clôture interrompue (panne) & l'écriture s'est arrêtée entre le piège et le
+remplacement atomique & \emph{rien n'est perdu} : le canonique est intact, le staging
+est détruit, la clôture est rejouable ; un piège orphelin ne protège rien et sera
+remplacé au rejeu \\
+« modules REQUIS absents » & le GUI tourne hors de sa maison & retour au §
+\ref{sec:maison} : lanceur à la racine d'un clone ou du kit, \code{v06\textbackslash}
+entier \\
+kit périmé (MANIFESTE divergent) & le kit du Drive a pris du retard sur le dépôt &
+depuis D130 le kit est déployé depuis \code{git ls-files v06/} à chaque commit :
+re-téléchargez, ou préférez le clone + \code{git pull} \\
+sentinelle morte (CF2, santé) & le heart-beat n'est plus frais & avertissement
+\emph{nominal}, pas un décès : la clé ne peut pas être lue par une sentinelle morte ;
+relancez-la, lisez le journal \\
+\end{longtable}
+
+\subsection{La relecture des copies, avant que le besoin n'arrive}
+
+La discipline la moins spectaculaire et la plus payante : \textbf{relisez vos copies
+hors-ligne quand vous n'en avez pas besoin}. La relecture des fragments CF2 (le GUI
+de cérémonie la guide) vérifie tag, sel, indice — une copie illisible aujourd'hui
+est une résurrection impossible le jour où les gardes machine brûlent. Même loi pour
+les pièges d'époque : le sachet se feuillette, la carte se recoupe. Le futur vous
+remerciera le présent vous.
+
+\subsection{La santé du coffre au quotidien}\label{sec:sante}
+
+Un calendrier honnête, calibré par les gestes du terrain :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Le calendrier de santé du coffre.}
+\label{tab:calendrier}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Quand} & \textbf{Le geste} \\
+\midrule
+À chaque clôture & une ligne sur la carte du sachet (checksum, époque) ; le média
+rangé au sachet ; \code{verifier} lu une fois à l'écran \\
+Après toute mise à jour des modules & \code{lancer\_autotest\_cf3} (temporaire, aucun
+coffre réel touché), empreintes recoupées au tableau \ref{tab:empreintslivre} \\
+Le lendemain d'une cérémonie & verdict à froid, machine redémarrée : checksum et
+époque identiques, carte recoupée œil contre papier \\
+Chaque mois, sans raison & relecture des copies hors-ligne (fragments, pièges du
+sachet) — une copie illisible aujourd'hui est une résurrection impossible demain ;
+\code{git pull} dans la maison ; MANIFESTE du kit recoupé \\
+Après tout imprévu & le rapport D122 part au laboratoire ; le journal local et le PV
+éventuel se lisent AVANT tout geste correctif \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{La machine froide}\label{sec:froide}
+
+Un verdict qui ne sort que sur la machine qui vient de sceller vaut moins qu'un
+verdict à froid : la mémoire chaude des clés, l'état des caches, l'habit du GUI —
+tout cela dort entre-temps. La recommandation de D127, devenue règle de maison :
+après toute cérémonie de migration, \textbf{re-exécutez le verdict à froid} — machine
+redémarrée, de préférence le lendemain, avant l'acte de destruction. Le checksum doit
+être identique, l'époque identique, et votre carte doit le dire.
+
+\begin{terrain}[— le rapport qu'on n'a pas exporté]
+31/10, cérémonie CF1 $\to$ CF2 : la fenêtre s'est fermée sans export du rapport —
+« ça a marché ». La chaîne était verte (statuts, verdicts, fragments posés), seule la
+\emph{mémoire} du geste manquait. Enseignement : l'export du rapport n'est pas un
+prérequis de la cérémonie — la vérité vit dans le conteneur, les gardes et le
+journal local — mais chaque geste n'existe historiquement qu'une fois : le bouton
+« Envoyer le rapport » est l'assurance que le \emph{prochain} imprévu aura son
+dossier complet.
+\end{terrain}
+
+\section{Empreintes et vérification}\label{sec:empreintslivre}
+
+\subsection{Pourquoi des empreintes}
+
+Chaque rapport de cérémonie porte les empreintes des modules qui ont tourné : la
+génération de code se \emph{lit}, ne se devine pas. Un verdict rendu par un module
+d'empreinte inconnue est un verdict à interroger : quelle génération ? quel correctif
+? La gouvernance des empreintes est à sha-256 depuis D184 (la migration de la
+v0.9.0 : la même méthode, l'empreinte longue) et les manifestes de kit à sha-256
+depuis D187 ; md5 demeure côté application une fonctionnalité d'affichage de
+Loupe (le panneau d'empreintes) et les preuves historiques gardent leurs md5 —
+les preuves ne se réécrivent jamais. Le tableau ci-dessous est la référence
+sha-256 des modules, alignée sur l'annexe A de la spécification v0.15.5
+(contenu canonique LF du dépôt).
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Empreintes sha-256 des modules v06 — référence D184/D187, alignée sur
+l'annexe A de la spécification v0.15.5 (contenu canonique LF du dépôt).}
+\label{tab:empreintslivre}
+\begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}p{5.6cm} Y@{}}
+\toprule
+\textbf{Module} & \textbf{sha-256} & \textbf{Rôle} \\
+\midrule
+\code{coffre\_fort.py} (racine) & \code{\allowbreak f5b2fb90cc020ba7\allowbreak fafc735ffa2b8adf\allowbreak e896f169f52409b7\allowbreak 5fe837808b706198} & CF1 \\
+
+\code{v06/coffre\_cf2.py} & \code{\allowbreak 603ab952b45243fa\allowbreak 1d82b1fd0b4321a7\allowbreak e9af8cf97feda685\allowbreak d429814e6043f12f} & CF2 — Shamir, sentinelle, porte D120 \\
+
+\code{v06/coffre\_cf3.py} & \code{\allowbreak ea871be616964a61\allowbreak 677be92ca671ac3d\allowbreak 12ce4cb96a105142\allowbreak a4d77a7694c24891} & CF3 — serrure piégée, migration, destruction \\
+
+\code{v06/sceau\_I.py} & \code{\allowbreak 89048e813043a3dd\allowbreak 73b805ac82f55f35\allowbreak 91694c5db37f3ec9\allowbreak 54ec2bafa8170810} & sceau I (le registre au 14\textsuperscript{e} arbre, D177) \\
+
+\code{v06/ceremonie\_hors\_ligne.py} & \code{\allowbreak b5a3fc7ac25c7ab4\allowbreak aab22530e1882c48\allowbreak a6bc43f0603fecbb\allowbreak eb7c54060d7bb7b7} & cérémonie air-gap \\
+
+\code{v06/ceremonie\_gui.py} & \code{\allowbreak 9df2583e6aa55d6a\allowbreak 8bfd780dc1cc309a\allowbreak d238c2bab30da3d3\allowbreak c2009e54420a28d5} & GUI cérémonie (v2.2) \\
+
+\code{v06/migration\_cf3\_gui.py} & \code{\allowbreak ba5c2a92141deee0\allowbreak 246e02015d718d8b\allowbreak a056412ff996b4b9\allowbreak a5e47403c5e86eda} & GUI migration (v1.1) \\
+
+\code{v06/autotest\_cf3\_gui.py} & \code{\allowbreak 557add0cf4f69346\allowbreak d5dbbda218923aa5\allowbreak dd1e90e6daf4fecd\allowbreak cdd5c89396d3c04b} & autotest CF3 \\
+
+\code{v06/sentinelle\_cf2.py} & \code{\allowbreak 9454e7563b403853\allowbreak 7d0189044fe69f81\allowbreak 2017ad9b7dd4b472\allowbreak 5549d6ce5708ead8} & sentinelle CF2 \\
+
+\code{v06/test\_cf2.py} & \code{\allowbreak 8445d97e94e5a812\allowbreak 94387c1dec120ce1\allowbreak 2e0bcc2cdd6cd191\allowbreak 8ea007a7709b17b5} & falsifiabilité CF2 \\
+
+\code{v06/test\_coffre\_cf3.py} & \code{\allowbreak 54066b1c5d7c7efe\allowbreak 855e9a1cbcb3547d\allowbreak bd02b0470a619398\allowbreak 0c1c60c463f21ce0} & falsifiabilité CF3 \\
+
+\code{v06/test\_sceau\_I.py} & \code{\allowbreak 6758133cf0f62dc1\allowbreak c192757d371df9a2\allowbreak 55c2f47e9adc1b23\allowbreak 8a97cf14e5685f0c} & falsifiabilité sceau \\
+
+\code{v06/test\_migration\_cf3.py} & \code{\allowbreak adcfe77ce6659510\allowbreak 745c83e802f54ce7\allowbreak 377c64e7124cdba2\allowbreak d3c6247684bdc04c} & falsifiabilité migration \\
+
+\code{v06/test\_migration\_cf3\_gui.py} & \code{\allowbreak 370364a2d68c9005\allowbreak dab89ed59840dc83\allowbreak d5ebd1cdf17beb52\allowbreak bf68110f1f618f12} & falsifiabilité GUI migration \\
+
+\code{v06/test\_ceremonie\_gui.py} & \code{\allowbreak fbfd15d9e8a49dc3\allowbreak f8ce4bc8273be63c\allowbreak ff26b869014f9885\allowbreak c2abd7cf6855a234} & falsifiabilité GUI cérémonie \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Une empreinte divergente au rapport désigne soit une fin de ligne différente
+(checkout Windows \code{autocrlf} : la commande git fait foi), soit une génération
+périmée — le \code{MANIFESTE.txt} du kit tranche (commit de référence + empreintes).
+
+\begin{terrain}[— une divergence réelle, consignée]
+Au rapport du 30/10 20:41, le \code{coffre\_fort.py} du clone terrain rendait
+\code{299fd124\ldots{}} (md5, la preuve historique telle que consignée) alors que
+le dépôt rendait \code{8c79263b\ldots{}} (md5) — ni l'un ni
+l'autre ne correspond à une version historique connue du fichier : à recouper au
+prochain \code{git pull} (\code{git status} dira si le fichier est modifié localement).
+Sans gravité connue : le module ne sert qu'à la migration CF1 $\to$ CF2, déjà
+accomplie. Mais la discipline est la discipline : \emph{une divergence d'empreinte se
+consigne, ne s'ignore pas}.
+\end{terrain}
+
+\subsection{Les verdicts de la chaîne réelle (30--31 octobre 2026)}
+
+La preuve terrain de la passation, telle qu'elle vivra au journal : CF1 statut VERT ;
+CF1 verifier INTÈGRE ; phrase changée (D110) ; CF2 migré (5 gardes, seuil 3, feuille
+g3--g5) ; CF3 MIGRER — époque 1, checksum \code{0cc89a96}, re-lecture à froide VERTE,
+CF2 laissé intact ; CF3 VÉRIFIER — VERT deux fois, checksum identique. La destruction
+du CF2 : acte explicite du maître, après recoupement machine froide. C'est l'état de
+référence auquel tout futur verdict se comparera.
+
+\subsection{La chronologie du terrain — 30 et 31 octobre 2026}\label{sec:chronoterrain}
+
+La migration réelle, heure par heure, telle que les rapports l'ont portée — le récit
+d'une chaîne qui vit :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Chronologie de la migration du coffre réel (rapports de boîte noire et
+constats de la conversation).}
+\label{tab:chronoterrain}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Quand} & \textbf{Ce qui s'est passé} \\
+\midrule
+30/10 soir & la cérémonie CF1 $\to$ CF2 : CF1 statut VERT, verifier INTÈGRE, phrase
+changée (D110), un premier \code{migrer} refusé (phrase divergente — remise D81 à
+faire), le second VERT ; CF2 né, cinq gardes, seuil 3 ; feuille g3--g5 exportée,
+tags vérifiés \\
+31/10 18:10 & attachement du dépôt au GUI de cérémonie — fait deux fois : le doublon
+de l'accueil est dénoncé (il deviendra D131) \\
+31/10 18:18 & le rapport le dit ; la question fragments suit (« un fichier
+fragment-cf2.txt, le système attend 3 \code{fragment-*.cf2} ») — réponse : les cinq
+originaux sous \code{gardes-cf2}, la feuille n'est que l'export papier \\
+31/10 soir & la fenêtre de migration CF2 $\to$ CF3 s'ouvre ; l'habit du GUI v1.0
+pêche (boutons empilés) — le constat devient la grille D132 \\
+30/10 20:03 & premier essai de migration depuis un dossier sans \code{v06/} :
+« modules REQUIS absents » — refus nommé, la maison n'était pas la bonne \\
+30/10 20:37 & relance depuis le clone \code{triade} : pile COMPLÈTE, empreintes
+conformes \\
+30/10 20:40 & MIGRER : CF2 déverrouillé une dernière fois (avertissement D120 — la
+vieille porte), base re-scellée, piège posé sur \code{D:/}, re-lecture à froide
+VERTE, époque 1, checksum \code{0cc89a96}, CF2 laissé intact \\
+30/10 20:41 & VÉRIFIER : VERT, même checksum — le recoupement machine est fait \\
+à suivre & la carte du sachet (la ligne est prête) ; le verdict machine froide ; la
+destruction CF2 — acte explicite, après recoupement ; le rapport D122 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Ce que cette chronologie enseigne : aucun imprévu n'a coûté un octet — chaque refus
+était nommé, chaque cérémonie rejouable, et l'unique dette restante est un geste
+\emph{volontaire} (la destruction), gardé pour après le recoupement. C'est la
+promesse du fail-closed, tenue sur un vrai coffre.
+
+\section{Les décisions du coffre — D75 à D137}\label{sec:decisionslivre}
+
+Le journal complet vit dans \code{docs/DECISIONS.md} du dépôt ; voici les entrées qui
+ont fait le coffre, dans l'ordre. Une décision ne se modifie jamais en silence : la
+révision invalide explicitement ce qu'elle remplace.
+
+\begin{longtable}{@{}p{1.5cm} p{4.6cm} >{\raggedright\arraybackslash}p{9.4cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Un titre} & \textbf{Ce qu'elle établit} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Un titre} & \textbf{Ce qu'elle établit} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+D75 & Le coffre-fort des phrases maîtresses & CF1 : phrases par projet, Argon2id +
+HKDF + AEAD, autotest de falsification, restauration post-réinitialisation. \\
+D76 & Nettoyage du coffre Drive & périmés archivés, miroir fidèle à git, incident du
+reliquat consigné. \\
+D80 & Rotation de lignée & la phrase exposée (D78) retirée, carte re-scellée à faits
+inchangés. \\
+D81 & La phrase sous garde durable & \code{PHRASE-CONTROLE-COFFRE.txt} au dépôt et
+au coffre Drive AVANT toute autre action — le fichier est la remise. \\
+D84 & Licence BSL 1.1 & la barrière juridique de l'expropriation. \\
+D85 & Attestation de non-exfiltration (axe 1) & quote TPM/SGX exigée — exigence
+consignée, infrastructure sans TEE. \\
+D86 & Interrupteur d'homme mort (axe 2) & Shamir jamais entier, sentinelle,
+destruction des fragments, T = 1 refusé. \\
+D87 & Filigrane de l'Intention (axe 3) & arbres de couche I signés par la clé Ed25519
+hors-ligne. \\
+D105 & Axe 3 livré (laboratoire) & spec écrite-avant-code, cérémonie autoportée, dix
+arbres, falsifiabilité 47/47. \\
+D106 & Axe 2 livré (laboratoire) & CF2 complet : Shamir, sentinelle double seuil,
+destruction + PV, migration CF1 $\to$ CF2. \\
+D107 & Maître de cérémonie graphique & un fichier, deux profils, zéro ligne de
+commande. \\
+D108 & Kit de cérémonie au Drive & \code{v06/} portable, MANIFESTE, aucun secret. \\
+D110 & La phrase est à VOUS & alphanumérique, sans plafond ; la discipline D81 ne
+bouge pas. \\
+D111--D118 & La série du GUI de cérémonie & attachement gardé (D111), trois chemins
+(D112), boîte noire (D113), verdict ancré (D114), manifeste canonique LF (D115), fil
+par preuves (D116), scénario avant tout (D117), page unique + lanceurs (D118). \\
+D119 & Dossier de cérémonie, fsync POSIX & le dossier naît avec la clé ; le terrain
+Windows fait loi. \\
+D120 & La sentinelle exigée au déverrouillage & la PORTE ferme le coffre quand le
+témoin meurt ; ère sans moteur : avertissement nommé. \\
+D121 & La serrure à triple scellement (axe 4) & CF3 : le démon remplacé par un piège
+hors machine, cycle en deux actes, erratum « 2 $\to$ TROIS ». \\
+D122 & Kit unique, trio systématique & une GUI, une boîte noire, un bouton « Envoyer
+le rapport ». \\
+D123 & PV distincts même-seconde & suffixe \code{-2} : deux destructions, deux
+fichiers — écrasement prouvé par le terrain. \\
+D124 & Leçons GUI dans le berceau & \code{python -u}, tampons neutralisés : les
+enfants ne mentent plus par buffer. \\
+D125 & Preuve terrain CF3 (labo) & la serrure prouvée avant tout outillage de
+migration. \\
+D126 & Re-cérémonie du sceau & accomplie par le maître : dix signatures vérifiées,
+commit poussé, la spec CF3 sous le sceau réel. \\
+D127 & Outillage de migration CF2 $\to$ CF3 & \code{migrer} / \code{detruire-cf2} +
+GUI + lanceurs ; re-lecture à froid ; destruction EXPLICITE après verdict humain. \\
+D129 & Le pilier droit & fil d'étapes et journal visibles quel que soit l'onglet. \\
+D130 & Le kit ne dérive plus & \code{v06/} du kit déployé depuis \code{git ls-files
+v06/}, hook miroir PUIS kit, MANIFESTE au commit de référence. \\
+D131 & Un bouton par page & doublon d'attachement supprimé ; la note fragments nomme
+les cinq originaux. \\
+D132 & La grille du GUI de migration & chaque bouton « Parcourir » sur la ligne de
+son champ ; confirmation étiquetée ; actes pleine largeur. \\
+D133 & Passation v0.6.0 & le programme accompli passe en spécification ; la sentinelle
+est \emph{par invocation} (la serrure) ; un coffre neuf naît CF3 ; M5 ouvert ; ce
+livre accompagne. \\
+D137 & Arbitrage du niveau de naissance (v0.6.1) & le niveau d'un coffre neuf —
+CF1/CF2/CF3 — est choisi par le développeur à la création ; la règle « naît CF3 » est
+explicitement invalidée ; la migration demeure disponible ; le coffre réel reste CF3 ;
+ce livre passe à v1.1. \\
+\end{longtable}

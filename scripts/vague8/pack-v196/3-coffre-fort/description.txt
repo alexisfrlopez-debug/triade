@@ -1,0 +1,3 @@
+Livre_du_Coffre_TRIADE_CF1-CF3_v1.4.pdf
+Le Livre du Coffre v1.4 — le runbook D183 au statut VÉCU (les sept gestes, la reconstitution à froid prouvée deux fois), quatorze arbres, la matrice public + Zenodo.
+sha256:eb74fee1a068091ab25cc03a02907ca8079c332aefd3999c936445892cd47469

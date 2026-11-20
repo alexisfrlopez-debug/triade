@@ -1,0 +1,3 @@
+TRIADE_preuves_et_calculs_v0.19.6.pdf
+Les preuves et calculs v0.19.6 — les pièces verbatim de la vague 8 : OPT-05, la dérivation-outillée, la classification des 21 survivants, l'amendement du format hunk.
+sha256:6ba23f29e6e771ca6c4703220e435d8af99d54888cb019911f3f3b4945c1424d

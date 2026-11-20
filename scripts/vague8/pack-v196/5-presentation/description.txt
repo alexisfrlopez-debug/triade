@@ -1,0 +1,3 @@
+TRIADE_presentation_20261120_v196.pdf
+La présentation du 20/11 à l'édition v0.19.6 — les cinq points de la vague, la table des statuts, l'état des éditions, la gouvernance vécue.
+sha256:736438c511c9351f92754d983a665aad5c928527e893a52e8b203f35a6d21e14

@@ -1,0 +1,3 @@
+Protocole_TRIADE_v0.15.5_Specification.pdf
+La spécification v0.15.5 — l'état vécu de la gouvernance (D223) : la ligne D81 du modèle de menace au séquestre actif, le dépôt public ; aucune règle R1-R11 modifiée.
+sha256:81c20717894394977c57e4643d8a4372a528024857b2c8674f7a4715330e1b0b

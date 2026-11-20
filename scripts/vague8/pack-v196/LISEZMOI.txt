@@ -1,0 +1,25 @@
+TRIADE — le pack de présentation v0.19.6 (la vague 8)
+======================================================
+
+Les CINQ documents régénérés et cohérents :
+  1-manuscrit       le manuscrit académique v0.19.6
+  2-specification   la spécification v0.15.5 (aucune règle modifiée)
+  3-coffre-fort     le Livre du Coffre v1.4 (le runbook D183 VÉCU)
+  4-preuves-calculs les preuves v0.19.6 (les pièces verbatim)
+  5-presentation    la présentation du 20/11 à l'état exact
+
+La vague 8 : la cohérence des cinq pièces (les macros des journaux
+vivants, les DOI réconciliés — le concept 10.5281/zenodo.24367343
+résolvant sur la courante —, le tirage à 1/16, les 39,3/39,2 s), la
+gouvernance à l'état vécu (D223 : le séquestre 5/3 la garde active,
+le dépôt public), l'intégrité pré-enregistrée (H5 en deux verdicts
+datés, N=7 réconcilié, H6 au brut, H7 stratifié, l'abstract réécrit,
+RQ2 re-mesuré 1 103/52, TLC/Apalache), l'indépendance par
+dérivation-outillée (les 128 constantes conformes — la seconde
+famille les DÉRIVE, la récitation demeure la sonde), les 21
+survivants classés (12 équivalents prouvés, 811/820 = 98,9 %),
+OPT-05 (l'édition par hunks -34,3 %/-97,7 %, l'ajout refusé en
+l'état, M4 39,1 -> 6,6 s, chaud/C 3,5x, l'audit 1/10 vécu).
+
+Le linter inter-pièces v196 : 39 VERT 0 ROUGE — le build admis.
+AUCUNE valeur mesurée modifiée, AUCUN artefact scellé touché.
