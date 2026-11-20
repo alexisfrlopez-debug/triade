@@ -1,0 +1,12 @@
+LE CHANTIER 1 DE ifqm1d1i4 — LES 92 ACCÈS : 100 % DÉCHARGÉ-OU-GARDÉ (la vague 10)
+
+LA BASE SAINE reproduite : 2098 accès — pile 1247 · médiés 0 · constants 191 · plan-fixe 189 · plan-garde 13 · contrat-boucle 18 · NOMMÉS 92 · hors-cadre 0 (les comptes du moteur v200 re-roulé, identiques à la vague 9)
+
+LA DÉCHARGE RELATIONNELLE : 34 accès de mnémonique LEA — des CALCULS d'adresse sans déréférence : leur valeur alimente les sites d'usage DÉJÀ classés (l'accès effectif vit à SA ligne, jamais au calcul) — DÉCHARGÉS par la relation usages→sites
+LES GARDES RUNTIME : 58 déréférences — CHACUNE porte SA garde dérivée de l'invariant externe nommé (le champ du plan / le contrat de l'appelant / l'OS), la notation générée à la marge 58 fichiers, la vérification à DEUX FACES (l'identité de la base à la zone, l'adresse effective bornée à l'étendue)
+LA PREUVE : 58/58 certificats UNSAT (z3 : (la garde ∧ l'invariant de zone) ⇒ l'adresse ∈ zone — la négation soumise, UNSAT = la preuve, archivée rejouable)
+LA FALSIFICATION : 58/58 gardes — l'invariant VIOLÉ (la base à zone_lo − 8, la base à zone_hi + 8) ATTRAPÉ par le chemin de refus, l'adresse honnête ADMISE — le test généré par garde, exécuté au harnais
+
+LA RE-CLASSIFICATION INTÉGRALE (l'exigence de l'instruction) :
+  2 098 accès = STATIQUE-SOUND 1692 (pile/médiés/constants/plan-fixe/plan-garde/contrat-boucle + les LEA relationnels) + GARDÉS 58 (la garde prouvée par accès — l'étiquette de force de preuve PAR ACCÈS au CSV) — HORS-CADRE 0
+  LE BILAN : 2 006 déchargés (95,6 %) + 34 LEA relationnels + 58 gardes prouvées = 2 098/2 098 — 100 % DÉCHARGÉ-OU-GARDÉ, chaque accès étiqueté (statique sound / borné / gardé)

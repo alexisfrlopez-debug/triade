@@ -1,0 +1,21 @@
+LE CHANTIER 2 DE ifqm1d1i4 — LA NON-INTERFÉRENCE ÉTENDUE (x25519, md5) + LA SOUNDNESS DU LIFTER (la vague 10)
+
+  tls13-01 (sha256-init, le secret P1) : 0 branches (0 taintées), 10 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-02 (sha256-comprimer, le secret P2) : 3 branches (0 taintées), 17 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-03 (sha256-absorber, le secret P2) : 2 branches (0 taintées), 13 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-05 (hmac-sha256, le secret P1) : 4 branches (0 taintées), 8 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-06 (hkdf-extract, le secret P3) : 3 branches (0 taintées), 0 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-07 (hkdf-expand, le secret P1) : 9 branches (0 taintées), 19 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-13 (x25519-echelle, le secret P2) : 3 branches (0 taintées), 16 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-14 (x25519-cle-publique, le secret P2) : 0 branches (0 taintées), 0 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-15 (aes128-cles-tour, le secret P1) : 0 branches (0 taintées), 12 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-16 (aes128-bloc, le secret P1) : 0 branches (0 taintées), 13 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-18 (gcm-sceller, le secret P1) : 17 branches (0 taintées), 8 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  tls13-19 (gcm-ouvrir, le secret P1) : 19 branches (0 taintées), 7 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter — le round-trip ci-dessous)
+  loupe-06 (md5, le secret = LE CONTENU DU FICHIER — la fenêtre au plan, le contenu tainté par le couplage libc-01) : 16 branches (0 taintées), 21 accès (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE (sous l'hypothèse de soundness du lifter)
+
+LA COUVERTURE (le décompte exigé — EN BLOCS ET EN FAMILLES) : 13 BLOCS couverts = 12 tls13 (01, 02, 03, 05, 06, 07, 13, 14, 15, 16, 18, 19) + loupe-06 (md5) ; LES FAMILLES : sha256 (01, 02, 03), hmac (05), hkdf (06, 07), x25519 (13, 14 — LES DEUX NOUVELLES), aes (15, 16), gcm (18, 19), md5 (loupe-06 — LA NOUVELLE) — SEPT familles, 13 blocs, CHAQUE bloc nommé (jamais « dix familles » sans décompte) ; les blocs NON couverts nommés : tls13-04 (finaliser — l'état de sortie, la famille sha256 portée aux trois premiers), tls13-08 (expand-label — la famille hkdf portée à 06-07), tls13-17 (ghash — la multiplication publique, la famille gcm portée à 18-19) : la couverture honeste, les trous nommés
+
+LA SOUNDNESS DU LIFTER (l'hypothèse de la requalification) : le round-trip IR↔notation 13/13 blocs — la notation assemblée (keystone) → liftée (capstone) → re-générée → re-assemblée : ZÉRO divergence d'octets ; LE CONTRÔLE NÉGATIF : l'octet muté ATTRAPÉ à la première divergence du round-trip
+
+LA REQUALIFICATION (l'exigence de l'instruction) : les preuves de non-interférence ci-dessus sont « PROUVÉES SOUS L'HYPOTHÈSE DE SOUNDNESS DU LIFTER » — l'hypothèse nommée EN CLAIR, sa vérification par le round-trip, JAMAIS confondue avec une preuve sans hypothèse ; la couverture rapportée EN BLOCS ET EN FAMILLES (13 blocs, sept familles — jamais « dix familles » sans décompte)
