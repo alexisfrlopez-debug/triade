@@ -57,6 +57,7 @@ terrain/livraison/
 # — Entrée 132 : la convention devient mécanique, git add -A ne peut plus
 # l'avaler)
 bundles-*/
+triade-history.bundle
 
 # Zone de travail locale du labo (miroirs de pièces, index de clôture) —
 # JAMAIS committée (modèle bundles-*/, Entrée 132 ; les pièces durables
