@@ -1,0 +1,69 @@
+=== LA RÉCONCILIATION — chaque total recalculé de ses étapes (les tolérances nommées) ===
+    T run 1 : total   39.310 s = Σétapes   39.279 s + comptabilité  +0.031 s [tolérance ±0.150] ok
+    T run 2 : total   39.441 s = Σétapes   39.380 s + comptabilité  +0.061 s [tolérance ±0.150] ok
+    T run 3 : total   39.393 s = Σétapes   39.360 s + comptabilité  +0.033 s [tolérance ±0.150] ok
+    T run 4 : total   39.372 s = Σétapes   39.327 s + comptabilité  +0.045 s [tolérance ±0.150] ok
+    T run 5 : total   39.478 s = Σétapes   39.446 s + comptabilité  +0.032 s [tolérance ±0.150] ok
+  CGP run 1 : total   19.080 s = Σétapes   19.063 s + comptabilité  +0.017 s [tolérance ±0.100] ok
+  CGP run 2 : total   18.678 s = Σétapes   18.661 s + comptabilité  +0.017 s [tolérance ±0.100] ok
+  CGP run 3 : total   18.881 s = Σétapes   18.865 s + comptabilité  +0.016 s [tolérance ±0.100] ok
+  CGP run 4 : total   18.597 s = Σétapes   18.581 s + comptabilité  +0.016 s [tolérance ±0.100] ok
+  CGP run 5 : total   18.410 s = Σétapes   18.395 s + comptabilité  +0.015 s [tolérance ±0.100] ok
+   CG run 1 : total    2.181 s = Σétapes    2.181 s + comptabilité  +0.000 s [tolérance ±0.050] ok
+   CG run 2 : total    2.239 s = Σétapes    2.238 s + comptabilité  +0.001 s [tolérance ±0.050] ok
+   CG run 3 : total    2.139 s = Σétapes    2.140 s + comptabilité  -0.001 s [tolérance ±0.050] ok
+   CG run 4 : total    2.204 s = Σétapes    2.203 s + comptabilité  +0.001 s [tolérance ±0.050] ok
+   CG run 5 : total    2.147 s = Σétapes    2.147 s + comptabilité  +0.000 s [tolérance ±0.050] ok
+    C run 1 : total    1.944 s = Σétapes    1.945 s + comptabilité  -0.001 s [tolérance ±0.050] ok
+    C run 2 : total    1.980 s = Σétapes    1.979 s + comptabilité  +0.001 s [tolérance ±0.050] ok
+    C run 3 : total    1.968 s = Σétapes    1.968 s + comptabilité  +0.000 s [tolérance ±0.050] ok
+    C run 4 : total    1.975 s = Σétapes    1.974 s + comptabilité  +0.001 s [tolérance ±0.050] ok
+    C run 5 : total    1.917 s = Σétapes    1.916 s + comptabilité  +0.001 s [tolérance ±0.050] ok
+  LES QUATRE BRAS RÉCONCILIÉS — la somme des étapes == le total mesuré, la comptabilité nommée et bornée
+
+=== LA MESURE M4 AUX QUATRE BRAS — les médianes (n=5, l'ordre alterné T, C+G+, C+G, C) ===
+  LE BRAS T  : médiane   39.39 s [min   39.31, max   39.48]
+  LE BRAS CGP: médiane   18.68 s [min   18.41, max   19.08]
+  LE BRAS CG : médiane    2.18 s [min    2.14, max    2.24]
+  LE BRAS C  : médiane    1.97 s [min    1.92, max    1.98]
+
+  T−C+G+ = 20.71 s (l'effet notation PROPRE, la question) ; T−C+G = 37.21 s (cette session ; la vague 10 publiait 37,07 s)
+  C+G+−C+G = 16.50 s (l'effet RÉGIME de vérification) ; C+G−C = 0.213 s (l'effet GOUVERNANCE, la vague 10 publiait 0,215 s)
+
+  LA RÈGLE DE DÉCISION (le plan § 4) : (T−C+G+) ≤ 30 % de (T−C+G) ?
+    (T−C+G+)/T−C+G = 20.71/37.21 = 55.7 % > 30 %
+    recoup cette session (appariée, la même machine) : 55.7 % — leffet notation propre CONFIRMÉ
+    recoup la référence vague 10 (37,07 s) : 55.9 % — leffet notation propre CONFIRMÉ
+  LE VERDICT : L'EFFET NOTATION PROPRE CONFIRMÉ — la ventilation trois-effets : notation propre 20.71 s / régime de vérification 16.50 s / gouvernance 0.213 s
+
+=== LA DÉCOMPOSITION PAR CONTRÔLE — LE BRAS C+G+ (les postes du régime en tête) ===
+  REBUILDS (le régime, l'équivalent compilé du round-trip)   médiane  15.865 s  ( 84.9 % du total) [min  15.640, max  16.270]
+  ORACLES (le régime, les volumes équivalents)               médiane   0.507 s  (  2.7 % du total) [min   0.498, max   0.515]
+  RECOMPOSITION (le régime, le graphe re-vérifié)            médiane   0.032 s  (  0.2 % du total) [min   0.030, max   0.033]
+  GARDES (le régime + g1)                                    médiane   0.153 s  (  0.8 % du total) [min   0.141, max   0.155]
+  GOUVERNANCE g2-g4 (g3 vit à la base C, nommé)              médiane   0.151 s  (  0.8 % du total) [min   0.144, max   0.163]
+  BASE C reconduite (la liste C, g3 compris)                 médiane   1.948 s  ( 10.4 % du total) [min   1.920, max   1.968]
+  COMPTABILITÉ (hors chronomètre d'étape)                    médiane   0.016 s  (  0.1 % du total) [min   0.015, max   0.017]
+  Σ DES POSTES (médiane)                                      18.678 s  == total médian 18.678 s (écart -0.000 s, la sommation des médianes vs la médiane des sommes — nommée)
+
+=== LA DÉCOMPOSITION PAR CONTRÔLE — LE BRAS T (la ventilation du régime) ===
+  GARDES (garde-sceau-I)                                     médiane   0.069 s  (  0.2 % du total) [min   0.066, max   0.070]
+  CRISTALLISATION ×12 (l'unité 01 seule)                     médiane   4.179 s  ( 10.6 % du total) [min   4.143, max   4.273]
+  ROUND-TRIPS de notation (×2, l'octet juge)                 médiane   0.426 s  (  1.1 % du total) [min   0.422, max   0.460]
+  ORACLES (bloc 01 + bloc 02)                                médiane  33.477 s  ( 85.0 % du total) [min  33.332, max  33.584]
+  BUILD-RECOMPOSITION (l'unité 02 recomposée)                médiane   0.478 s  (  1.2 % du total) [min   0.460, max   0.485]
+  ÉPREUVE scénario POSIX                                     médiane   0.298 s  (  0.8 % du total) [min   0.295, max   0.304]
+  KITS (assemblage + reprise)                                médiane   0.445 s  (  1.1 % du total) [min   0.273, max   0.450]
+  COMPTABILITÉ (hors chronomètre d'étape)                    médiane   0.033 s  (  0.1 % du total) [min   0.031, max   0.061]
+  Σ DES POSTES (médiane)                                      39.393 s  == total médian 39.393 s (écart +0.000 s, la sommation des médianes vs la médiane des sommes — nommée)
+
+=== LA DÉCOMPOSITION PAR CONTRÔLE — LE BRAS C+G (la gouvernance sur la base C) ===
+  GOUVERNANCE g1-g4 (les gestes)                             médiane   0.234 s  ( 10.7 % du total) [min   0.223, max   0.242]
+  BASE C (la liste C, g3 compris)                            médiane   1.943 s  ( 89.1 % du total) [min   1.917, max   1.996]
+  COMPTABILITÉ (hors chronomètre d'étape)                    médiane   0.000 s  (  0.0 % du total) [min  -0.001, max   0.001]
+  Σ DES POSTES (médiane)                                       2.181 s  == total médian 2.181 s (écart +0.000 s, la sommation des médianes vs la médiane des sommes — nommée)
+
+=== LA DÉCOMPOSITION PAR CONTRÔLE — LE BRAS C (le compilé nu) ===
+  BASE C (la liste C)                                        médiane   1.968 s  (100.0 % du total) [min   1.916, max   1.979]
+  COMPTABILITÉ (hors chronomètre d'étape)                    médiane   0.001 s  (  0.1 % du total) [min  -0.001, max   0.001]
+  Σ DES POSTES (médiane)                                       1.968 s  == total médian 1.968 s (écart +0.000 s, la sommation des médianes vs la médiane des sommes — nommée)

@@ -1,0 +1,134 @@
+{
+ "bras": "C+G+",
+ "run": 3,
+ "total_s": 18.881,
+ "etapes": [
+  {
+   "etape": "garde-sceau-I",
+   "secondes": 0.065,
+   "code": 0,
+   "console": "[sceau-I] m0: vert (667fb5ae36e4ab3c…)\n[sceau-I] m1: vert (e0e084402b497bde…)\n[sceau-I] m2: vert (752c58a8ce37ddc5…)\n[sceau-I] m3: vert (8ac66a299e46567c…)\n[sceau-I] m4: vert (7e5c61fbce15d3ec…)\n[sceau-I] m5: vert (1869422eca104a6a…)\n[sceau-I] m6: vert (88e8c5444fa7c89a…)\n[sceau-I] m7: vert (f35a0ae948351a6d…)\n[sceau-I] m8: vert (e36141f75ebd8e61…)\n[sceau-I] tls13: vert (4255986216f8b459…)\n[sceau-I] loupe: vert (59e4871ab5b47623…)\n[sceau-I] demo: vert (96e6fd4eaccd7c3f…)\n[sceau-I] terrain: vert (754cb03c967e51d3…)\n[sceau-I] v06: vert (a8166442abe2d98f…)\n[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)\n"
+  },
+  {
+   "etape": "garde-intentions-signees (g1)",
+   "secondes": 0.076,
+   "code": 0,
+   "console": "[garde] les intentions signées : 6 VERT, 0 refus\n"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-01 (×10 concourants)",
+   "secondes": 5.137,
+   "code": 0,
+   "console": "sha canonique par rebuild (les 3 champs d'horodatage du PE masqués) : r1=68353a261ffc, r2=68353a261ffc, r3=68353a261ffc, r4=68353a261ffc, r5=68353a261ffc, r6=68353a261ffc, r7=68353a261ffc, r8=68353a261ffc, r9=68353a261ffc, r10=68353a261ffc ; 10/10 identiques : True"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-02 (×10 concourants)",
+   "secondes": 5.158,
+   "code": 0,
+   "console": "sha canonique par rebuild (les 3 champs d'horodatage du PE masqués) : r1=9529f7e2be01, r2=9529f7e2be01, r3=9529f7e2be01, r4=9529f7e2be01, r5=9529f7e2be01, r6=9529f7e2be01, r7=9529f7e2be01, r8=9529f7e2be01, r9=9529f7e2be01, r10=9529f7e2be01 ; 10/10 identiques : True"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-05 (×10 concourants)",
+   "secondes": 4.734,
+   "code": 0,
+   "console": "le build mingw ECHEC aux 10 rebuilds : 1 échec(s) distinct(s), stderr IDENTIQUE — l'ECHEC cristallisé (l'état clos de la chaîne, sha256_dll = ECHEC) :  = ctx.etat[4] & 0xFF;\n      |                       ^\n/home/z/my-project/depot/atelier-cg-3a91o5whb/loupe-05-c.c:303:16: error: expected ‘]’ at end of input\n  303 |     p_sortie[20\n      |                ^\n      |                ]\n/home/z/my-project/depot/atelier-cg-3a91o5whb/loupe-05-c.c:303:5: error: expected declaration or statement at end of input\n  303 |     p_sortie[20\n      |     ^~~~~~~~\n"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-08 (×10 concourants)",
+   "secondes": 0.272,
+   "code": 0,
+   "console": "sha canonique par rebuild (les 3 champs d'horodatage du PE masqués) : r1=ecbc3c3f9515, r2=ecbc3c3f9515, r3=ecbc3c3f9515, r4=ecbc3c3f9515, r5=ecbc3c3f9515, r6=ecbc3c3f9515, r7=ecbc3c3f9515, r8=ecbc3c3f9515, r9=ecbc3c3f9515, r10=ecbc3c3f9515 ; 10/10 identiques : True"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-13 (×10 concourants)",
+   "secondes": 0.211,
+   "code": 0,
+   "console": "sha canonique par rebuild (les 3 champs d'horodatage du PE masqués) : r1=90bd36de93da, r2=90bd36de93da, r3=90bd36de93da, r4=90bd36de93da, r5=90bd36de93da, r6=90bd36de93da, r7=90bd36de93da, r8=90bd36de93da, r9=90bd36de93da, r10=90bd36de93da ; 10/10 identiques : True"
+  },
+  {
+   "etape": "rebuilds-cristallisation-loupe-16 (×10 concourants)",
+   "secondes": 0.588,
+   "code": 0,
+   "console": "sha canonique par rebuild (les 3 champs d'horodatage du PE masqués) : r1=6ed3adad0459, r2=6ed3adad0459, r3=6ed3adad0459, r4=6ed3adad0459, r5=6ed3adad0459, r6=6ed3adad0459, r7=6ed3adad0459, r8=6ed3adad0459, r9=6ed3adad0459, r10=6ed3adad0459 ; 10/10 identiques : True"
+  },
+  {
+   "etape": "build-gcc-O2-loupe-01",
+   "secondes": 0.706,
+   "code": 0,
+   "console": ""
+  },
+  {
+   "etape": "suite-tests-c-hash",
+   "secondes": 0.274,
+   "code": 0,
+   "console": "[VERT] le testeur compile (gcc -O2, le POSIX du labo)\n[éprouvées] 32 VERT, 0 ROUGE (les frontières du rembourrage, l'incrémentalité irrégulière)\n"
+  },
+  {
+   "etape": "suite-tests-c-contrat",
+   "secondes": 0.015,
+   "code": 1,
+   "console": "epreuve_posix.c:25:10: fatal error: loupe-01-c.c: No such file or directory\n   25 | #include \"loupe-01-c.c\"\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\n"
+  },
+  {
+   "etape": "controles-binaires-loupe-01",
+   "secondes": 0.012,
+   "code": 2,
+   "console": "python3: can't open file '/home/z/my-project/depot/scripts/campagne_d204/unite-01-C/controles_binaires.py': [Errno 2] No such file or directory\n"
+  },
+  {
+   "etape": "oracle-equivalent-loupe-01 (12 épreuves)",
+   "secondes": 0.206,
+   "code": 0,
+   "console": "=== L'ORACLE ÉQUIVALENT u01 (C+G+) — le juge = le modèle indépendant ===\n[VERT] V1:temoin-1.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-1.bin, taille 1, vue 0, curseur 0, remplissage 1, le tampon == la découpe du modèle\n[VERT] V1:temoin-1.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:temoin-384.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-384.bin, taille 384, vue 0, curseur 0, remplissage 384, le tampon == la découpe du modèle\n[VERT] V1:temoin-384.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:temoin-3f.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-3f.bin, taille 196609, vue 0, curseur 0, remplissage 384, le tampon == la découpe du modèle\n[VERT] V1:temoin-3f.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:vide.bin-le-fichier-vide — le vide s'ouvre : remplissage 0, le panneau du vide == (d41d8cd9…, e3b0c442…) — les empreintes du vide\n[VERT] V2:E1-absent — rax=-2 (attendu -2) — le chemin absent → -2 ABSENT\n[VERT] V2:E2-verrouille — rax=-7 (attendu -7) — le fichier tenu par un autre détenteur → -7 VERROUILLÉ\n[VERT] V2:E3-acces-refuse — rax=-6 (attendu -6) — l'accès refusé (chmod 000, ARMÉ — l'écart de campagne comblé) → -6 SYSTÈME\n[VERT] V3:Q2-la-borne-2-Gio — rax=-3 (attendu -3), la poignée REFERMÉE AVANT le retour (comptée : 4 → 5) — jamais une poignée pendante\n[VERT] V3:E4-la-session-double — rax=-5 (attendu -5), le cadre ET le panneau relus identiques — l'ancien fichier INTACT\n[VERT] V3:P1-le-chemin-trop-long — rax=-2 — 260 caractères sans NUL → -2 au POSIX (ENAMETOOLONG → ABSENT ; la pièce T répond -5 — L'ÉCART NOMMÉ), RIEN au cadre (les 8 premiers octets inchangés)\n[VERT] V4:la-taille-mutee-l-ecran-attendu-diverge — la réouverture rax=0, la taille mutée 384 → 385 au cadre : l'écran attendu (« taille=384 remplissage=384 ») DIVERGE de l'état lu (« taille=385 remplissage=384 ») — LA FALSIFICATION DEMANDÉE : le juge lit l'état, jamais le modèle\n\n=== L'ORACLE ÉQUIVALENT u01 : 14 VERT, 0 ROUGE — 12 épreuves, 14 contrôles — VERT ===\n"
+  },
+  {
+   "etape": "chaine-cristallisation (g2)",
+   "secondes": 0.076,
+   "code": 0,
+   "console": "[cristallisation] 6/6 empreintes recoupées ; la signature finale VÉRIFIÉE\n"
+  },
+  {
+   "etape": "build-gcc-O2-loupe-02",
+   "secondes": 0.687,
+   "code": 0,
+   "console": ""
+  },
+  {
+   "etape": "oracle-equivalent-loupe-02 (2032 décalages)",
+   "secondes": 0.292,
+   "code": 0,
+   "console": "[prepare] les décalages pré-générés (la graine 20261114, le même ordre que l'oracle T) : temoin-1.bin=2 ; temoin-384.bin=24 ; temoin-3f.bin=1003 ; proxy.exe=1003 — TOTAL 2032\n=== L'ORACLE ÉQUIVALENT u02 (C+G+) — le différentiel au volume du bras T, le juge = le modèle indépendant ===\n[VERT] V1:temoin-1.bin-la-fenetre-nee-a-l-ouverture\n[VERT] V1:temoin-384.bin-la-fenetre-nee-a-l-ouverture\n[VERT] V1:temoin-3f.bin-la-fenetre-nee-a-l-ouverture\n[VERT] V1:proxy.exe-la-fenetre-nee-a-l-ouverture\n\n=== L'ORACLE ÉQUIVALENT u02 : 2032 épreuves-décalages (4 intégrations), 0 ROUGE — VERT ===\n"
+  },
+  {
+   "etape": "epreuve-contrat-posix-loupe-02 (g3 l'oracle)",
+   "secondes": 0.215,
+   "code": 0,
+   "console": "[VERT] V1:temoin-1.bin-l-ouverture — rax=0, remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-384.bin-l-ouverture — rax=0, remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-3f.bin-l-ouverture — rax=0, remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:les-frontieres — 9 décalages frontière (0, la dernière valide, la dernière pleine, les fenêtres de la zone 65536) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture — le vide s'ouvre, remplissage 0 (la fenêtre née est vide)\n[VERT] V1:vide.bin-aucune-fenetre-valide — rax=-3 (décalage 0 ≥ taille 0 → -3 HORS-BORNES), rien lu\n[VERT] V2:les-bords-de-fenetre — le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant et l'après IGNORÉS — l'édition survit au défilement\n[VERT] V2:le-journal-intact — loupe-02 n'écrit JAMAIS au journal (I2)\n[VERT] V2:cinq-entrees-dont-une-non-alignee — cinq entrées dedans (fen+5 NON ALIGNÉE comprise) — le tampon == le modèle indépendant\n[VERT] V3:sans-session — rax=-4 (attendu -4 SESSION, rien lu)\n[VERT] V3:non-aligne — rax=-5 (attendu -5), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:a-la-taille — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:au-dela — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:immense — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V4:l-echec-readfile — rax=-6 (le tiroir a refusé → -6 SYSTÈME), remplissage 0 == 0 (fail-closed), le tampon empoisonné INTACT — jamais un octet non lu\n[VERT] V4:la-session-survit — l'échec ne clôt PAS la session : la lecture suivante est verte, le tampon == le témoin entier\n[VERT] V5:l-octet-mute-l-etat-lu-diverge — la lecture d'abord VERT (le tampon == le témoin), l'octet 3 muté 0x90 → 0xff : l'état lu DIVERGE du modèle — la falsification est DÉTECTABLE\n\nLE JUGE : 20 VERT, 0 ROUGE — VERT\n"
+  },
+  {
+   "etape": "controles-binaires-loupe-02",
+   "secondes": 0.039,
+   "code": 0,
+   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\n  VERT exports:loupe_01_ouvrir — à la table (6 exports)\n  VERT exports:loupe_02_lire — à la table (6 exports)\n  VERT exports:loupe_03_fermer — à la table (6 exports)\n  VERT exports:cadre — à la table (6 exports)\n  VERT exports:journal — à la table (6 exports)\n  VERT exports:panneau — à la table (6 exports)\n  VERT exports:donnees-en-.data — cadre @0x9080, journal @0x8020, panneau @0x9040 — les DONNÉES en .data ; les TROIS fonctions en .text\n  VERT imports:CreateFileW — résolue par le scénario à l'IAT réelle\n  VERT imports:GetFileSizeEx — résolue par le scénario à l'IAT réelle\n  VERT imports:SetFilePointerEx — résolue par le scénario à l'IAT réelle\n  VERT imports:ReadFile — résolue par le scénario à l'IAT réelle\n  VERT imports:CloseHandle — résolue par le scénario à l'IAT réelle\n  VERT imports:GetLastError — résolue par le scénario à l'IAT réelle\n  VERT imports:le-CRT-du-lanceur-nomme — les imports du CRT de lancement mingw (jamais appelées sous DONT_RESOLVE : aucun point d'entrée ne court) — nommé\n  VERT audit:cloture-des-fonctions — 8 fonctions dans la clôture de loupe_01_ouvrir/loupe_02_lire/loupe_03_fermer (les fonctions, leurs appelés, les thunks)\n  VERT audit:aucun-appel-CRT — les __imp_ référencés : ['__imp_CreateFileW', '__imp_GetFileSizeEx', '__imp_GetLastError', '__imp_ReadFile', '__imp_SetFilePointerEx'] ; les appels directs par l'IAT : 6, tous aux slots kernel32 — QUE les feuilles kernel32 de la pièce\n  VERT relocations:présentes — l'image peut être rebasée par le chargeur\n\n=== CONTRÔLES BINAIRES : 18 VERT, 0 ROUGE ===\n"
+  },
+  {
+   "etape": "recomposition-du-plan",
+   "secondes": 0.031,
+   "code": 0,
+   "console": "=== LA RECOMPOSITION DU PLAN (C+G+) — le graphe de dépendances re-vérifié à la livraison ===\n  VERT loupe-01 (ouvrir) : la source 860ff1cfcf78… recoupée ; 1/1 dépendances d'inclusion de dépôt recoupées ; 1 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 73eb2cba7e08… recoupée ; le DLL de la chaîne vague 10 : b1fe4c9ad729…\n  VERT loupe-02 (lire) : la source 2e12a6c26a43… recoupée ; 1/1 dépendances d'inclusion de dépôt recoupées ; 1 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 898cd4bca4fe… recoupée ; le DLL de la chaîne vague 10 : cfab11a74aa5…\n  VERT loupe-05 (hachage) : la source 02a33bca893d… recoupée ; 0/0 dépendances d'inclusion de dépôt recoupées ; 1 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 1c935b1d47d2… recoupée ; le DLL de la chaîne vague 10 : ECHEC (l'état clos de la chaîne)\n  VERT loupe-08 (composition) : la source 97aeec28cbca… recoupée ; 0/0 dépendances d'inclusion de dépôt recoupées ; 1 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 92d3e02ca41a… recoupée ; le DLL de la chaîne vague 10 : 2d49bc7d6781…\n  VERT loupe-13 (recherche) : la source c7d7ee406708… recoupée ; 0/0 dépendances d'inclusion de dépôt recoupées ; 2 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 01ee2ec41fdf… recoupée ; le DLL de la chaîne vague 10 : aded5aaad847…\n  VERT loupe-16 (saisie) : la source 892ef03e7a96… recoupée ; 0/0 dépendances d'inclusion de dépôt recoupées ; 2 inclusion(s) système (portées par la chaîne d'outil gelée) ; la spec signée 867907af24a0… recoupée ; le DLL de la chaîne vague 10 : 1c7961208500…\n  VERT les harnais d'épreuve : 17 fichiers recoupés à leurs empreintes gelées\n  VERT la chaîne de cristallisation vague 10 : 6/6 empreintes d'unité recoupées (la signature vit à g2)\n  VERT l'outil (la chaîne mingw gcc 14.2.0-19+27+b1, binutils 2.44-3+12+b1, mingw-w64 12.0.0-5 (TRIXIE, la chaîne gelée), le gcc natif) et le corpus (5 fichiers) recoupés\n=== LA RECOMPOSITION : 38 VERT, 0 REFUS — VERT ===\n"
+  },
+  {
+   "etape": "assemblage-kit (g4 le gabarit)",
+   "secondes": 0.071,
+   "code": 0,
+   "console": "[kit] 12 pièces au gabarit (le terrain au geste du maître)\n"
+  }
+ ],
+ "sceau_apres_ok": true,
+ "code": 3,
+ "code_regime": 0,
+ "fautes_consignees": [
+  "suite-tests-c-contrat",
+  "controles-binaires-loupe-01"
+ ]
+}

@@ -1,0 +1,29 @@
+=== LE CONTRÔLE NÉGATIF — la faute de rig +500 ms dans UNE COPIE du script de mesure (l'original JAMAIS touché) ===
+  l'original cgp_m4.py intact (sha256 a89362d8c3c9…) ; le site d'injection publié : « recomposition-du-plan » (+500 ms), DEUX variantes du rig
+
+  LA VARIANTE A (inter-étapes) — la copie cgp_m4_rig_A.py exécutée :
+ (2032 décalages) ]   0.302 s  code 0
+  [epreuve-contrat-posix-loupe-02 (g3 l'oracle)]   0.222 s  code 0
+  [controles-binaires-loupe-02                 ]   0.041 s  code 0
+  [recomposition-du-plan                       ]   0.035 s  code 0
+  [assemblage-kit (g4 le gabarit)              ]   0.076 s  code 0
+  === TOTAL C+G+ run 6 : 19.8 s ; code 3 (régime 0, les fautes consignées à part) ; sceau VERT
+    LA DÉTECTION PAR LA BORNE : comptabilité du run rig = total 19.808 − Σétapes 19.267 = +0.541 s [tolérance ±0.100] — HORS TOLÉRANCE : ATTRAPÉE
+    le scan d'étape (aveugle) : 0 étape(s) signalée(s) — la faute inter-étapes est INVISIBLE au scan (hors chronomètre d'étape), NOMMÉ : seule la borne l'attrape
+
+  LA VARIANTE B (in-étape) — la copie cgp_m4_rig_B.py exécutée :
+ (2032 décalages) ]   0.298 s  code 0
+  [epreuve-contrat-posix-loupe-02 (g3 l'oracle)]   0.215 s  code 0
+  [controles-binaires-loupe-02                 ]   0.038 s  code 0
+  [recomposition-du-plan                       ]   0.534 s  code 0
+  [assemblage-kit (g4 le gabarit)              ]   0.071 s  code 0
+  === TOTAL C+G+ run 6 : 19.2 s ; code 3 (régime 0, les fautes consignées à part) ; sceau VERT
+    LA DÉTECTION — l'étape qui dévie de sa propre médiane (dérive normalisée, seuil 0,30 s ET valeur > 2× médiane) :
+    SIGNALÉE : « recomposition-du-plan » = 0.534 s (sa médiane 0.032 s, déviation normalisée +0.501 s)
+    L'ATTRIBUTION AU PREMIER NOM : « recomposition-du-plan » (run rig 6)
+    le site vrai : « recomposition-du-plan » — VERT
+
+  LA SPÉCIFICITÉ — la même règle aux 5 runs honnêtes (médianes hors ce run) :
+    AUCUN faux positif — la règle est spécifique
+
+  LE VERDICT DU CONTRÔLE NÉGATIF : VERT — la faute +500 ms ATTRAPÉE aux DEUX fenêtres (la borne de comptabilité pour l'inter-étapes, le scan d'étape pour l'in-étape) et ATTRIBUÉE au premier nom « recomposition-du-plan »

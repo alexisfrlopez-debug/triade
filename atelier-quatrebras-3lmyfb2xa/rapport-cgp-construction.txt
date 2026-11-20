@@ -1,0 +1,27 @@
+LE BRAS C+G+ — LA CONSTRUCTION (3lmyfb2xa, la vague 11, le plan gelé PLAN-3LMYFB2XA.md)
+le C gcc-O2 des six unités D210 RECEVANT la gouvernance g1-g4 ET le régime de vérification complet du bras T adapté au compilé
+
+L'ENVIRONNEMENT : /tmp/triade-gh présent (le REPO gelé de l'outil vague 9 → le dépôt)
+LES SCELLÉS AVANT CONSTRUCTION : 14 arbres VERTS (sceau_I verifier)
+LE CORPUS : les QUATRE témoins copiés des épreuves de campagne (recoupés u01 == u02 octet à octet) + proxy.exe le SCELLÉ tls13 LU EN COPIE (l'original jamais touché — la lecture est le geste de l'oracle T même, quatrième fichier du différentiel)
+LES VOLUMES ORACLE DU BRAS T — SOURCÉS au registre vague 10 (m4-avant-run1.json) et RECOUPÉS à la recomputation (la graine 20261114, la même consommation du rng) :
+  u01 : 12 épreuves (4 V1 + 3 V2 + 4 V3 + 1 V4, la structure de l'oracle) / 14 contrôles (la console : 14 VERT)
+  u02 : 2032 décalages temoin-1.bin=2 ; temoin-384.bin=24 ; temoin-3f.bin=1003 ; proxy.exe=1003 / 22 contrôles (la console)
+  LA RECOMPUTATION : 2032 décalages temoin-1.bin=2 ; temoin-384.bin=24 ; temoin-3f.bin=1003 ; proxy.exe=1003 — ÉGAUX, le volume gelé
+LE PLAN GELÉ : cgp-plan.json — les SIX unités (la source, ses inclusions de dépôt recoupées à l'octet, les inclusions système portées par la chaîne d'outil gelée, la spec signée, le DLL attendu de la chaîne vague 10), les 17 harnais d'épreuve, les 3 artefacts de gouvernance vague 10 reçus, l'OUTIL (la chaîne mingw + le gcc natif + les en-têtes), le corpus
+LA VALIDATION DU HARNAIS u01 : VERT — === L'ORACLE ÉQUIVALENT u01 : 14 VERT, 0 ROUGE — 12 épreuves, 14 contrôles — VERT ===
+LA VALIDATION DU HARNAIS u02 : VERT — === L'ORACLE ÉQUIVALENT u02 : 2032 épreuves-décalages (4 intégrations), 0 ROUGE — VERT ===
+LA VALIDATION DE LA RECOMPOSITION : VERT
+LA FALSIFICATION (rebuilds) : le canonique honnête CONFRONTÉ VERT (True) ; l'OCTET MUTÉ (un octet de code hors champs d'horodatage) REFUSÉ (True) — la confrontation vit (les TROIS champs d'horodatage du PE seuls épargnés : l'en-tête TimeDateStamp, la somme de contrôle, le TimeDateStamp du répertoire d'exports — l'heure du lien PAR CONSTRUCTION du format, jamais une divergence de compilation)
+L'ÉCART NOMMÉ (le chemin du lien embarqué) : deux builds au MÊME -o RELATIF en répertoires hermétiques distincts divergent en 0 octet HORS horodatage — la confrontation hermétique est SÛRE (le -o relatif gelé neutralise l'embarquement) ; mais le build d'origine de la chaîne vague 10 (sha dll b1fe4c9ad729…) portait un -o ABSOLU à l'atelier cg : son sha n'est reproductible qu'à CE chemin — l'écrire exigerait de toucher l'atelier vague 10 (INTERDIT) : la confrontation est INTRA-LOT (les DIX rebuilds entre eux), la liaison à la chaîne portée par les SOURCES (la recomposition recoupe sha256_source == la chaîne signée)
+LA FALSIFICATION (recomposition) : le hash de la source muté dans la copie en mémoire REFUSÉ (exit 2 — le graphe vit)
+LA FALSIFICATION (les juges) : l'épreuve u01 mutée ROUGE (refus) ; le décalage u02 muté ROUGE (refus)
+
+LA TABLE DES VOLUMES PAR UNITÉ (le régime de vérification, compté par unité et par session — le plan § 2) :
+  loupe-01 : T = cristallisation 12 rebuilds CONCURRENTS + 2 round-trips R5 + oracle 12 épreuves / 14 contrôles || C+G+ = 10 rebuilds confrontés + oracle équivalent 12 épreuves / 14 contrôles + la base C (le build .def, la suite hash, le contrat 10 vecteurs, les contrôles binaires)
+  loupe-02 : T = build-recomposition + oracle 2032 décalages / 22 contrôles + épreuve scénario + kits || C+G+ = 10 rebuilds + oracle équivalent 2032 décalages (la même graine) + la base C + LA RECOMPOSITION DU PLAN (le graphe re-vérifié)
+  loupe-05 : T = rien par session (l'unité close sur son rouge à la cap, M1) || C+G+ = 10 rebuilds — l'ECHEC de build cristallisé (le sha256_dll de la chaîne EST « ECHEC », les 10 échecs confrontés à l'octet de stderr)
+  loupe-08 : T = rien par session || C+G+ = 10 rebuilds confrontés
+  loupe-13 : T = rien par session || C+G+ = 10 rebuilds confrontés
+  loupe-16 : T = rien par session || C+G+ = 10 rebuilds confrontés
+  LES ASYMÉTRIES NOMMÉES : le bras T cristallise 12 rebuilds de la SEULE unité 01 (+2 round-trips) ; le plan C+G+ gèle DIX rebuilds par unité aux SIX unités (60 compilations par session) — la table publie les comptes, jamais fusionnés

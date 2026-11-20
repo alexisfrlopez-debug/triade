@@ -1,0 +1,165 @@
+{
+ "genese": "cgp-3lmyfb2xa (vague 11) — le plan gelé AVANT toute mesure (PLAN-3LMYFB2XA.md)",
+ "unites": [
+  {
+   "unite": "loupe-01",
+   "famille": "ouvrir",
+   "source": "scripts/campagne_d204/unite-01-C/source/loupe-01-c.c",
+   "sha256_source": "860ff1cfcf78d5fc4f72b8691921957f0834d34ce88858188c876fd097ad6ab1",
+   "spec": "loupe/I/loupe-01-ouvrir.md",
+   "sha256_spec": "73eb2cba7e08be20fb1786c2fc1562b1ecb94560646ab009efd8be247f9cbf48",
+   "includes": [
+    "scripts/campagne_d204/unite-01-C/epreuves/windows.h"
+   ],
+   "systeme": [
+    "stdint.h"
+   ],
+   "chemins_recherche": [
+    "scripts/campagne_d204/unite-01-C/epreuves",
+    "scripts/campagne_d204/unite-01-C/source"
+   ],
+   "deps": {
+    "scripts/campagne_d204/unite-01-C/epreuves/windows.h": "8d929b6ddf481cabb8144bf0746978421173876a8f69f32d547ad4ffab5a0432"
+   },
+   "dll_chaine": "b1fe4c9ad729dd76dcb80a88685818fb1de18cbcff00d1b2e83caa98e00ca16d"
+  },
+  {
+   "unite": "loupe-02",
+   "famille": "lire",
+   "source": "scripts/campagne_d204/unite-02-C/source/loupe-02-c.c",
+   "sha256_source": "2e12a6c26a43051b40fb56a68aec314b7066ad30e18fbe6d2b077386d9f2a9a6",
+   "spec": "loupe/I/loupe-02-lire.md",
+   "sha256_spec": "898cd4bca4fe087ea7c415b7764734e3096d53088f8c1040cfbd7c3835b1961c",
+   "includes": [
+    "scripts/campagne_d204/unite-02-C/epreuves/windows.h"
+   ],
+   "systeme": [
+    "stdint.h"
+   ],
+   "chemins_recherche": [
+    "scripts/campagne_d204/unite-02-C/epreuves",
+    "scripts/campagne_d204/unite-02-C/source"
+   ],
+   "deps": {
+    "scripts/campagne_d204/unite-02-C/epreuves/windows.h": "e2f703ed9a2b532f894e72913c058ce68b2f7a29aae717e7bf8d37ea885bca06"
+   },
+   "dll_chaine": "cfab11a74aa54a400df658ad11753da13c5d156704450f50bcc20676d081bffc"
+  },
+  {
+   "unite": "loupe-05",
+   "famille": "hachage",
+   "source": "atelier-cg-3a91o5whb/loupe-05-c.c",
+   "sha256_source": "02a33bca893db95bbcfb3b14f9348b5b652b136c688fe6e72224ca7c6a2053e7",
+   "spec": "loupe/I/loupe-05-sha256.md",
+   "sha256_spec": "1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe",
+   "includes": [],
+   "systeme": [
+    "windows.h"
+   ],
+   "chemins_recherche": [],
+   "deps": {},
+   "dll_chaine": "ECHEC"
+  },
+  {
+   "unite": "loupe-08",
+   "famille": "composition",
+   "source": "scripts/campagne_d204/unite-08-C/source/loupe-08-c.c",
+   "sha256_source": "97aeec28cbca0d45e9570b552444e6555908de911bedf6468ba2fea328ac6af3",
+   "spec": "loupe/I/loupe-08-ligne.md",
+   "sha256_spec": "92d3e02ca41a5523db95e9f6b4c6c7d4ec62e3fded1cf6f5ecece9c47cf53174",
+   "includes": [],
+   "systeme": [
+    "stdint.h"
+   ],
+   "chemins_recherche": [],
+   "deps": {},
+   "dll_chaine": "2d49bc7d6781787efa4ac85beabf66b020f6f16c3e1d60694330818c10b68200"
+  },
+  {
+   "unite": "loupe-13",
+   "famille": "recherche",
+   "source": "scripts/campagne_d204/unite-13-C/source/loupe-13-c.c",
+   "sha256_source": "c7d7ee406708a27d66aa64159e3eab63950f7e27611a0e3b9c18b1ad691bed0f",
+   "spec": "loupe/I/loupe-13-recherche.md",
+   "sha256_spec": "01ee2ec41fdf1188758a2fa7f5e24bad302123fefc45a51bcb5868e60c31b101",
+   "includes": [],
+   "systeme": [
+    "stdint.h",
+    "string.h"
+   ],
+   "chemins_recherche": [],
+   "deps": {},
+   "dll_chaine": "aded5aaad8475ac537d544b592bd42cfd04873c47f57c815366af9c57ae65bc2"
+  },
+  {
+   "unite": "loupe-16",
+   "famille": "saisie",
+   "source": "scripts/campagne_d204/attribution-unite16-C-353/source-loupe-16-C.c",
+   "sha256_source": "892ef03e7a960a73e75bf08cf11622a1cc14c20426ec5fb2208d59a8d8741da4",
+   "spec": "loupe/I/loupe-16-saisie.md",
+   "sha256_spec": "867907af24a0004632169e8b83cda9b8b73284fcf95c2dc88c308ce51c4725f3",
+   "includes": [],
+   "systeme": [
+    "stdint.h",
+    "string.h"
+   ],
+   "chemins_recherche": [],
+   "deps": {},
+   "dll_chaine": "1c79612085003bf85fa7809d5b571d6dd88efbedcdc3b9258cf6cf6545bd7a2a"
+  }
+ ],
+ "harnais": {
+  "scripts/campagne_d204/unite-01-C/source/loupe-01-c.def": "c0c9b9f40f4fe5e769f7196206a6fee3e050858ee729b17a1a302683f4b0084d",
+  "scripts/campagne_d204/unite-01-C/epreuves/epreuve_posix.c": "033d964a21bab1e5de0f07abe416f9be98b4e2e9707591c44fe4ab417266aafc",
+  "scripts/campagne_d204/unite-01-C/epreuves/windows.h": "8d929b6ddf481cabb8144bf0746978421173876a8f69f32d547ad4ffab5a0432",
+  "scripts/campagne_d204/unite-01-C/epreuves/compare_epreuve.py": "873789f474eb93c277ddf92e8b991c7b037f8c796be7b825bbfde8b1187f2a42",
+  "scripts/campagne_d204/unite-01-C/epreuves/controles_binaires.py": "41c27c8fd0084c4de84175a20fb28b0a44b837edd40650053f7cd3367ba16a17",
+  "scripts/campagne_d204/unite-01-C/epreuve_hash_posix.py": "6f737105e8defbbfcdbfb4ccdced71594d548b626af68e250d3e0c114aa16b80",
+  "scripts/campagne_d204/unite-01-C/epreuves/testeur_hash.c": "1df8d3a2186d3af48f7ac0e85216b6b62e1b416f47a36569293ff7f55e58e244",
+  "scripts/campagne_d204/unite-02-C/source/loupe-02-c.def": "8ca2a65ab15de4cc60ecddff72ccb607b565a1461a72215b91a69f553b8c7754",
+  "scripts/campagne_d204/unite-02-C/epreuves/epreuve_posix.c": "5cbea86f0cb9905094b2de470e001542e08532260adc30124ae4dec941f5b35a",
+  "scripts/campagne_d204/unite-02-C/epreuves/windows.h": "e2f703ed9a2b532f894e72913c058ce68b2f7a29aae717e7bf8d37ea885bca06",
+  "scripts/campagne_d204/unite-02-C/epreuves/compare_epreuve.py": "4be278742ef5de269a15c0073ada5a9382a2e29963556b1f44b264ce737d4f28",
+  "scripts/campagne_d204/unite-02-C/epreuves/controles_binaires.py": "ae558ed3913d896aaf15ca2ec98c53c5bad170603832e8eba621fe116af615a0",
+  "atelier-quatrebras-3lmyfb2xa/cgp_oracle_u01.c": "4a9a0c43a2cfdead36e66ca58d794f40cc7cae6a2588b4045391227ebca98e37",
+  "atelier-quatrebras-3lmyfb2xa/cgp_juge_u01.py": "db610124b223198aa8d9b2b93190750f663410ed590bb5c12ef6410f3a5a4b72",
+  "atelier-quatrebras-3lmyfb2xa/cgp_oracle_u02.c": "6d0b603e4df4abc21f294db4af9b5f14f7e47e3c70c642dbb4552bdb9be330d2",
+  "atelier-quatrebras-3lmyfb2xa/cgp_juge_u02.py": "3e8bb945c7f5f662591e4862dff36fab7919a8a6ef34a6ec638e50d1fcd14d2e",
+  "atelier-quatrebras-3lmyfb2xa/cgp_recomposition.py": "10a962f2e2fadb56f7998f6d7e1c6e46086597325e9c432ea4a2bd311f723cef"
+ },
+ "gouvernance": {
+  "atelier-cg-3a91o5whb/cg_gouverne.py": "4f5bc5184324ce4cab55ad100718cc56467c78f4acbdf9a98223158228668f81",
+  "atelier-cg-3a91o5whb/cristallisation/chaine.json": "87c88e4303e1d99f9e5ee8a9fca52d79b969635a3ccc10ab679451abe40adf65",
+  "atelier-cg-3a91o5whb/cle_session_lab.pub": "2e286499480b70719b91cd70e0ccf1a08398c0387a9f410d3d29b3e094b8371a"
+ },
+ "outil": {
+  "/home/z/my-project/work/mingw-debs/root/usr/bin/x86_64-w64-mingw32-gcc-posix": "76446a0727ded3cc9ff237da04c7a03d6ff68722cf28c05b757ef35e34f24d6a",
+  "/usr/bin/gcc": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
+  "/home/z/my-project/work/mingw-debs/root/usr/x86_64-w64-mingw32/include/windows.h": "e931bc163a9980e71982a522879073f41f934c3d94b423d489ee9f387093899f",
+  "/home/z/my-project/work/mingw-debs/root/usr/x86_64-w64-mingw32/include/stdint.h": "d622b8a9acd4a6ff0d0ab33b4d77d83af31f46035660bdcb9c2aa6e56308b95d",
+  "/home/z/my-project/work/mingw-debs/root/usr/x86_64-w64-mingw32/include/string.h": "a0896b3b1cbb5b1754b3ccbe55fbfebb3f4618525fed21b9a3b0e783d94fc163",
+  "/usr/include/stdint.h": "38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a"
+ },
+ "outil_mingw_version": "gcc 14.2.0-19+27+b1, binutils 2.44-3+12+b1, mingw-w64 12.0.0-5 (TRIXIE, la chaîne gelée)",
+ "corpus": {
+  "cgp-corpus/temoin-1.bin": "df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c",
+  "cgp-corpus/temoin-384.bin": "3396717b98b4859b20ec0d673dcf168314834fc170fbc6b877f4eb32461d68c6",
+  "cgp-corpus/temoin-3f.bin": "c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3",
+  "cgp-corpus/vide.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cgp-corpus/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d"
+ },
+ "volumes": {
+  "u01_epreuves": 12,
+  "u01_controles": 14,
+  "u02_decalages": 2032,
+  "u02_par_fichier": {
+   "temoin-1.bin": 2,
+   "temoin-384.bin": 24,
+   "temoin-3f.bin": 1003,
+   "proxy.exe": 1003
+  },
+  "u02_integrations": 4,
+  "u02_controles_t": 22,
+  "rebuilds_par_unite": 10
+ }
+}

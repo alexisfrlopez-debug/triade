@@ -1,0 +1,289 @@
+LE QUATRIÈME BRAS C+G+ — LA MESURE M4 AUX QUATRE BRAS (3lmyfb2xa, la vague 11)
+le C gcc-O2 RECEVANT la gouvernance ET le régime de vérification complet du bras T — le plan gelé PLAN-3LMYFB2XA.md (sha256 c2a484e720ba44e8… consigné à EMPREINTES-PLANS-VAGUE11.txt AVANT toute mesure)
+
+===========================================================================
+1. LA QUESTION (le plan § 1, falsifiable, pré-enregistrée)
+===========================================================================
+La vague 10 mesura T (notation gouvernée) médiane 39,24 s · C (compilé nu)
+1,95 s · C+G (compilé gouverné) 2,16 s : l'effet notation isolé T−C+G =
+37,07 s (18,1×), l'effet gouvernance C+G−C = 215 ms. MAIS le bras C+G ne
+portait PAS le régime de VÉRIFICATION du bras T. LA QUESTION : l'écart
+T−C+G est-il L'EFFET NOTATION PROPRE ou L'EFFET DU RÉGIME DE VÉRIFICATION ?
+H-CGP1 (requalification si (T−C+G+) ≤ 30 % de (T−C+G)) ; H-CGP2 (effet
+notation propre CONFIRMÉ sinon, à la ventilation trois-effets publiée).
+AUCUN chiffre attendu écrit avant mesure : la mesure a tranché ci-dessous.
+
+===========================================================================
+2. LE BRAS CONSTRUIT (le plan § 2 — la construction consignée AVANT)
+===========================================================================
+La construction est consignée à rapport-cgp-construction.txt (la même
+session d'atelier, AVANT la mesure) : le corpus (les QUATRE témoins
+recoupés octet à octet + proxy.exe LU EN COPIE — l'original scellé jamais
+touché), le plan gelé cgp-plan.json (les SIX unités, 17 harnais, 3
+artefacts de gouvernance, l'outil, le corpus — 38 contrôles VERT à chaque
+livraison), les juges modèles indépendants (cgp_juge_u01.py,
+cgp_juge_u02.py, les harnais cgp_oracle_u01.c / cgp_oracle_u02.c), et LES
+FALSIFICATIONS passées avant la mesure : le rebuild muté REFUSÉ, le graphe
+muté REFUSÉ (exit 2), l'épreuve u01 mutée ROUGE, le décalage u02 muté
+ROUGE — le régime vit.
+
+LA TABLE DES VOLUMES ÉGAUX AU BRAS T (comptés par unité et par session —
+la table publiée du plan § 2, sourcée au registre vague 10 et recoupée à
+la recomputation, la graine 20261114) :
+  loupe-01 : T = cristallisation 12 rebuilds CONCURRENTS + 2 round-trips
+             R5 + oracle 12 épreuves (4 V1 + 3 V2 + 4 V3 + 1 V4) / 14
+             contrôles || C+G+ = 10 rebuilds confrontés + oracle
+             équivalent 12 épreuves / 14 contrôles + la base C (le build
+             .def, la suite hash, le contrat 10 vecteurs, les contrôles
+             binaires)
+  loupe-02 : T = build-recomposition + oracle 2032 décalages (temoin-1=2 ;
+             temoin-384=24 ; temoin-3f=1003 ; proxy.exe=1003) / 22
+             contrôles + épreuve scénario + kits || C+G+ = 10 rebuilds +
+             oracle équivalent 2032 décalages (la MÊME graine, la même
+             consommation du rng) + la base C + LA RECOMPOSITION DU PLAN
+  loupe-05 : T = rien (l'unité close sur son rouge, M1) || C+G+ = 10
+             rebuilds — l'ECHEC de build cristallisé (les 10 échecs
+             confrontés à l'octet de stderr)
+  loupe-08 / loupe-13 / loupe-16 : T = rien || C+G+ = 10 rebuilds
+             confrontés chacun
+  L'ASYMÉTRIE NOMMÉE : le bras T cristallise 12 rebuilds de la SEULE unité
+  01 ; le plan C+G+ gèle DIX rebuilds par unité aux SIX unités (60
+  compilations par session) — les comptes publiés, jamais fusionnés.
+LES REBUILDS = l'équivalent compilé du round-trip (la reproductibilité du
+build gcc -O2 aux sources et drapeaux gelés, les octets confrontés, les
+TROIS champs d'horodatage du PE seuls épargnés — l'heure du lien PAR
+CONSTRUCTION du format) : DOCUMENTÉ comme l'équivalent, JAMAIS confondu
+avec le round-trip de notation (l'octet juge keystone↔capstone du bras T).
+
+===========================================================================
+3. LA MESURE (le plan § 3 — le protocole exécuté)
+===========================================================================
+LA MÊME MACHINE (2 cœurs, la même pour les quatre bras), la liste fixe des
+six unités, n=5 par bras, l'horloge monotone, LES QUATRE BRAS EN ORDRE
+ALTERNÉ : pour chaque run i de 1 à 5, enchaîné T(i), C+G+(i), C+G(i),
+C(i) — la rotation contre la dérive thermique. LA SESSION : UNE SEULE
+invocation contiguë de cgp_m4.py (17:27-17:32), les 20 registres bruts à
+m4-{T,CGP,CG,C}-run{1..5}.json. Le bras T = l'outil vague 9 TEL QUEL
+(outil_m4_v182, la sortie REDIRIGÉE à cet atelier, les preuves vague 9
+jamais écrasées) ; les bras C et C+G = les étapes vague 10 reconduites à
+l'identique (les deux fautes de campagne consignées portées aux codes,
+jamais réparées en silence) ; le bras C+G+ = la liste C+G PLUS le régime.
+
+LES MÉDIANES (n=5, min/max nommés) :
+  LE BRAS T   (notation gouvernée)      : médiane 39,39 s [39,31 ; 39,48]
+  LE BRAS C+G+ (compilé, gouverné,      : médiane 18,68 s [18,41 ; 19,08]
+               AU RÉGIME COMPLET)
+  LE BRAS C+G (compilé gouverné)        : médiane  2,18 s [2,14 ; 2,24]
+  LE BRAS C   (compilé nu)              : médiane  1,97 s [1,92 ; 1,98]
+LES RECROUPEMENTS VAGUE 10 (la même machine, plus tôt ce jour, 14:15) : T
+39,24 → 39,39 s (+0,15 s, +0,4 %) ; C+G 2,163 → 2,181 s (+18 ms) ; C
+1,948 → 1,968 s (+20 ms) ; T−C+G 37,07 → 37,21 s ; C+G−C 215 → 213 ms —
+la session est CONSISTANTE avec la vague 10, aucune dérive de machine
+cette session (les extrêmes à +2,7 % des médianes au pire).
+
+LES ÉCARTS :
+  T−C+G+ = 20,72 s (LA QUESTION : l'effet notation PROPRE)
+  T−C+G  = 37,21 s (cette session, appariée ; la vague 10 : 37,07 s)
+  C+G+−C+G = 16,50 s (l'effet RÉGIME de vérification)
+  C+G−C  = 0,213 s (l'effet GOUVERNANCE ; la vague 10 : 0,215 s)
+  T/C+G+ = 2,11× ; T/C = 20,0× ; C+G+/C = 9,49× ; C+G/C = 1,108×
+
+===========================================================================
+4. LA DÉCOMPOSITION DU COÛT PAR CONTRÔLE (le plan § 3 — LA TABLE PUBLIÉE)
+===========================================================================
+LE BRAS C+G+ (les médianes sur 5 runs, chaque poste chronométré
+séparément — les étapes JSON le portent) :
+  REBUILDS (6 unités × 10 concourants confrontés)   15,865 s  (84,9 %)
+  ORACLES (12 épreuves/14 contrôles + 2032 décalages) 0,507 s  ( 2,7 %)
+  RECOMPOSITION DU PLAN (le graphe re-vérifié)        0,032 s  ( 0,2 %)
+  GARDES (garde-sceau-I 14 arbres + g1)               0,153 s  ( 0,8 %)
+  GOUVERNANCE g2-g4 (g3 vit à la base C, nommé)       0,151 s  ( 0,8 %)
+  BASE C reconduite (la liste C, g3 compris)          1,948 s  (10,4 %)
+  COMPTABILITÉ (hors chronomètre d'étape, cf. § 5)     0,016 s  ( 0,1 %)
+  Σ DES POSTES                                      18,678 s == total médian
+LE BRAS T (la ventilation du régime, les mêmes comptes) :
+  GARDES (garde-sceau-I)                               0,069 s  ( 0,2 %)
+  CRISTALLISATION ×12 (l'unité 01 seule)               4,179 s  (10,6 %)
+  ROUND-TRIPS de notation (×2, l'octet juge)           0,426 s  ( 1,1 %)
+  ORACLES (bloc 01 + bloc 02)                         33,477 s  (85,0 %)
+  BUILD-RECOMPOSITION (l'unité 02 recomposée)          0,478 s  ( 1,2 %)
+  ÉPREUVE scénario POSIX                               0,298 s  ( 0,8 %)
+  KITS (assemblage + reprise)                          0,445 s  ( 1,1 %)
+  COMPTABILITÉ (les copytrees + empreintes hors étape) 0,033 s  ( 0,1 %)
+  Σ DES POSTES                                       39,393 s == total médian
+LE BRAS C+G : GOUVERNANCE g1-g4 0,234 s (10,7 %) + BASE C 1,943 s (89,1 %)
++ comptabilité 0,000 s = 2,181 s. LE BRAS C : BASE C 1,968 s (100 %).
+LA LECTURE : à VOLUMES ÉGAUX d'épreuves, les oracles du bras T coûtent
+33,48 s contre 0,51 s au bras C+G+ (66×) — l'exécution de la pièce NOTÉE
+(émulation du bloc assemblé) contre la pièce COMPILÉE (gcc -O2) ; les
+rebuilds du régime coûtent inversement 15,87 s au C+G+ (60 compilations)
+contre 4,18 s à la cristallisation T (12 builds de notation) ; le net
+fait les 20,72 s de l'écart.
+
+===========================================================================
+5. LA RÉCONCILIATION (le plan § 3 et § 5 — chaque total recalculé)
+===========================================================================
+CHAQUE TOTAL RECALCULÉ DE SES ÉTAPES, les 20/20 runs DANS les tolérances
+publiées :
+  T   : 5/5 — comptabilité +0,031 à +0,061 s [tolérance 0,150] — les
+        copytrees de cristallisation, les sha256 des pièces et LES
+        EMPREINTES DES SCELLÉS hors chronomètre d'étape : l'écart ~50 ms
+        admis des vagues 9-10, attribué pareil ;
+  C+G+ : 5/5 — comptabilité +0,015 à +0,017 s [tolérance 0,100] — la
+        CONFRONTATION D'OCTETS (10 sha256 canoniques par unité) prise
+        APRÈS l'arrêt du chronomètre d'étape, le sceau APRÈS hors du
+        chronomètre total ;
+  C+G  : 5/5 — −0,001 à +0,001 s [tolérance 0,050] ;
+  C    : 5/5 — −0,001 à +0,001 s [tolérance 0,050].
+LA SOMME DES POSTES == LE TOTAL MESURÉ aux quatre bras (§ 4, les écarts
+de sommation nuls aux arrondis près). LA VENTILATION RECONCILIÉE :
+notation propre 20,715 + régime 16,497 + gouvernance 0,213 = 37,425 s ==
+T−C (39,393 − 1,968) — EXACTE.
+
+===========================================================================
+6. LE CONTRÔLE NÉGATIF (la faute de rig injectée dans UNE COPIE)
+===========================================================================
+L'ORIGINAL cgp_m4.py INTACT (sha256 a89362d8c3c9…). LA FAUTE : +500 ms à
+UNE étape — le site publié : « recomposition-du-plan », une PETITE étape
+du régime (une faute de 500 ms sur une étape de 5 s serait noyée dans la
+gigue des rebuilds concourants — le choix nommé). DEUX VARIANTES de la
+copie, DEUX fenêtres de détection :
+  LA VARIANTE A (inter-étapes — time.sleep AVANT l'appel d'étape) : la
+  faute vit hors tout chronomètre d'étape ; LA BORNE de réconciliation
+  l'ATTRAPE : comptabilité du run rig = 19,808 − 19,267 = +0,541 s contre
+  la tolérance ±0,100 — HORS TOLÉRANCE, REFUSÉE ; le scan d'étape (aveugle)
+  ne voit RIEN (0 signalée) — la limite NOMMÉE : une faute inter-étapes
+  n'est visible qu'à la borne.
+  LA VARIANTE B (in-étape — sleep DANS la commande de l'étape) : LA
+  DÉTECTION par l'étape qui dévie de SA PROPRE MÉDIANE (les 5 runs
+  honnêtes), NORMALISÉE par le facteur de dérive du run (la dérive machine
+  est multiplicative, la faute additive) : « recomposition-du-plan » =
+  0,534 s (sa médiane 0,032 s, déviation normalisée +0,501 s > 0,30 s ET
+  valeur 16,7× la médiane > 2×) — SIGNALÉE, ATTRIBUÉE AU PREMIER NOM,
+  confrontée au site vrai : VERT.
+  LA SPÉCIFICITÉ : la même règle appliquée aux 5 runs honnêtes (médianes
+  hors ce run) : AUCUN faux positif.
+LE VERDICT DU CONTRÔLE NÉGATIF : VERT — la faute +500 ms ATTRAPÉE aux
+DEUX fenêtres et ATTRIBUÉE au premier nom. Les artefacts : cgp_m4_rig_A.py,
+cgp_m4_rig_B.py (les copies), m4-CGP-rigA-run6.json, m4-CGP-rigB-run6.json
+(les registres rig, JAMAIS fusionnés aux registres bruts — runs 1 à 5
+seuls dans les tables).
+
+===========================================================================
+7. LE VERDICT DE LA RÈGLE DE DÉCISION (le plan § 4, gelé)
+===========================================================================
+(T−C+G+) ≤ 30 % de (T−C+G) ?
+  (T−C+G+)/(T−C+G) = 20,72/37,21 = 55,7 % > 30 % (la session appariée)
+  recoup à la référence vague 10 : 20,72/37,07 = 55,9 % > 30 %
+LE VERDICT : H-CGP2 — L'EFFET NOTATION PROPRE CONFIRMÉ. Le bras C+G+
+portant la gouvernance ET le régime de vérification complet du bras T
+(les rebuilds confrontés, les volumes oracle égaux, la recomposition à
+chaque livraison) DEMEURE à 18,68 s : l'essentiel de l'écart T−C+G+
+survit au régime — ce n'est PAS le régime qui portait le coût « notation
+isolée » de la vague 10. LA VENTILATION TROIS-EFFETS publiée (à porter
+aux pièces par le contrôleur, pas cet atelier) :
+  notation propre      T−C+G+  = 20,72 s (55,7 % de T−C+G)
+  régime de vérification C+G+−C+G = 16,50 s (44,3 %)
+  gouvernance          C+G−C   = 0,213 s (0,6 %)
+  somme 37,43 s == T−C — la ventilation fermée à l'octet près.
+La requalification H-CGP1 est REJETÉE aux deux fenêtres (session appariée
+et référence vague 10) ; les valeurs vague 10 demeurent aux historiques
+datés ; les cinq pièces restent à porter par le contrôleur central.
+
+===========================================================================
+8. LES SCELLÉS AVANT / APRÈS
+===========================================================================
+AVANT le travail (sceau_I verifier, 17:20, avant la première écriture de l'atelier) : 14 arbres VERTS — m0 à m8,
+tls13, loupe, demo, terrain, v06 (les empreintes consignées au registre
+d'exécution). APRÈS le travail (17:38, la toute dernière écriture de l'atelier) : 14 arbres VERTS, les MÊMES
+empreintes (m0 667fb5ae36e4ab3c… · v06 a8166442abe2d98f… · tls13
+4255986218f8b459…, etc.) — AUCUN artefact scellé touché (proxy.exe lu en
+copie seule, loupe.exe jamais écrit, le dépôt gelé /tmp/triade-gh de
+l'outil vague 9 utilisé par le bras T tel quel). Les 5 exécutions T
+consignent scelles_intacts=true ; les 5 exécutions C+G+ consignent le
+sceau APRÈS vert (hors chronomètre, la comptabilité nommée).
+
+===========================================================================
+9. LES GAPS NOMMÉS (jamais maquillés)
+===========================================================================
+1. LA SESSION INTERROMPUE : une première tentative de mesure (l'atelier
+   avant celui-ci) fut coupée par le bac d'exécution au run 3 du bras
+   C+G+ — la contiguïté de l'alternance ROMPUE au run 3, et l'état
+   machine changé entre les morceaux (cette tentative montrait une dérive
+   générale ×2 au run 2 : T 40→55 s, C 2,0→7,1 s ; la sonde après coup :
+   0,72 s le build gcc isolé, l'état run-1 retrouvé). LA MESURE FUT
+   ENTIÈREMENT REFAITE en une session contiguë ; les 9 registres de la
+   tentative sont archivés à session-interrompue-1/, JAMAIS fusionnés.
+2. LE PILOTE --depuis : l'option fut ajoutée à cgp_m4.py (les runs N..5)
+   contre la coupe du bac — elle ne servit PAS (la session tint en un
+   seul appel) ; documentée au code, neutre au protocole.
+3. LA CONSOLE RÉGÉNÉRÉE : la console vive de l'invocation fut consommée
+   par le filtre d'affichage de l'appel ; cgp-m4-console.log est
+   RÉGÉNÉRÉ depuis les registres bruts (nommé dans le fichier) — les
+   registres JSON font foi.
+4. LE BRAS T RUN 1 À 9 ÉTAPES : l'assemblage-kits réussit d'emblée au
+   run 1 (la pièce canonique laissée au dépôt gelé par la reprise de la
+   session précédente), les runs 2-5 échouent puis reprennent (10
+   étapes) — LE MÊME schéma que la vague 10 (son run 1 aussi à 9 étapes)
+   : le comportement adaptatif de l'outil vague 9 reconduit TEL QUEL, la
+   médiane porte sur les runs à reprise.
+5. LA CONFRONTATION INTRA-LOT : le sha du DLL de la chaîne vague 10
+   (b1fe4c9ad729…) n'est reproductible qu'à son -o ABSOLU à l'atelier cg
+   (interdit d'écriture) — la confrontation d'octets est INTRA-LOT (les
+   DIX rebuilds entre eux, le -o relatif hermétique) ; la liaison à la
+   chaîne portée par les SOURCES (la recomposition recoupe
+   sha256_source == la chaîne signée). L'ÉQUIVALENCE compilée du
+   round-trip est DOCUMENTÉE, jamais confondue avec lui.
+6. L'ÉCART P1 (u01) : la pièce C répond -2 (ENAMETOOLONG → ABSENT, la
+   sémantique du shim POSIX) là où la pièce T répond -5 — épinglé par le
+   juge, consigné à la construction.
+7. LOUPE-05 : le build mingw ÉCHOUE aux 10 rebuilds (l'unité close sur
+   son rouge, M1) — l'ÉCHEC cristallisé, les 10 stderr confrontés
+   identiques.
+8. LES FAUTES DE CAMPAGNE VAGUE 10 RECONDUITES : suite-tests-c-contrat
+   (code 1) et controles-binaires-loupe-01 (code 2) aux bras C, C+G et
+   C+G+ — l'état consigné D204, jamais réparées en silence ; le code
+   total 3 des trois bras compilés, le code_regime 0 du C+G+ (les étapes
+   du régime seules abortent).
+9. LA DÉRIVE MACHINE POTENTIELLE : la détection du contrôle négatif
+   normalise par le facteur de dérive du run (total/médiane des totaux)
+   — la règle publiée au script ; cette session n'a pas dérivé (maxima à
+   +1,6 %), la tentative interrompue montrait qu'elle peut (×2) —
+   l'alternance en est la parade, nommée au plan.
+10. L'ASYMÉTRIE DE VOLUME REBUILDS : T cristallise 12 rebuilds de la
+   seule unité 01 (+2 round-trips) ; C+G+ gèle 10 rebuilds × 6 unités —
+   la table du § 2 publie les comptes par unité, jamais fusionnés.
+
+===========================================================================
+10. LES FICHIERS DE CET ATELIER
+===========================================================================
+  cgp_construire.py            la construction du bras C+G+ (les rebuilds
+                               ×10 confrontés, les volumes oracle sourcés
+                               et recoupés, la recomposition, les
+                               falsifications) — exécutée AVANT la mesure
+  cgp_m4.py                    la mesure quatre bras alternée (le pilote
+                               --depuis documenté, inutilisé)
+  m4-{T,CGP,CG,C}-run{1..5}.json   LES 20 REGISTRES BRUTS
+  cgp_reconcilier.py           la réconciliation (totaux recalculés,
+                               tolérances nommées) + les décompositions
+                               par poste + LE CONTRÔLE NÉGATIF
+  rapport-cgp-m4.txt           LE PRÉSENT RAPPORT
+  cgp-plan.json                le plan gelé (38 contrôles par livraison)
+  cgp_recomposition.py         le graphe re-vérifié à chaque livraison
+  cgp_oracle_u01.c, cgp_juge_u01.py, cgp_oracle_u02.c,
+  cgp_juge_u02.py              les harnais et juges modèles indépendants
+  cgp-corpus/                  les témoins + les sorties d'oracle
+  rapport-cgp-construction.txt le compte-rendu de construction
+  cgp-m4-console.log           la console RÉGÉNÉRÉE des registres bruts
+  reconciliation-output.txt, controle-negatif-output.txt
+                               les sorties des scripts de réconciliation
+  cgp_m4_rig_A.py, cgp_m4_rig_B.py, m4-CGP-rig{A,B}-run6.json
+                               les copies rig et registres du contrôle
+                               négatif (jamais fusionnés)
+  session-interrompue-1/       l'archive de la première tentative coupée
+                               (9 registres + sa console, jamais fusionnés)
+
+LE VERDICT POUR LE CONTRÔLEUR : l'effet notation propre CONFIRMÉ à
+20,72 s (55,7 % de T−C+G) ; le régime de vérification isolé à 16,50 s
+(44,3 %) ; la gouvernance à 0,213 s — la ventilation trois-effets à
+porter aux pièces, la requalification rejetée.
