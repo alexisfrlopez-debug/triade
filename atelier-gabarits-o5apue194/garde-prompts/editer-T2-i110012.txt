@@ -1,0 +1,49 @@
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE — LE GABARIT VERSIONNÉ
+TPL-EDIT-v1 · sha256:797f2f6b0a36601abfe923413551bf36db422a9fb3d792aaaf7d56c0271a41a3
+(le corps du gabarte vit en session ; le client recoupe son
+empreinte AVANT l'application — GABARIT-DIVERGENT sinon.)
+
+LA FENÊTRE DE LA CIBLE (les lignes 25 à 49 du bloc — la
+ligne 37 est la ligne cible) :
+;   0x570e + 0x7 + 0x8ceb = 0xe400
+; Appels directs (l'adresse du plan — I1) : call 0x56f3, call 0x4240, call qword ptr [rip - 0x24ea], call 0x56f3, call 0x56f3, call 0x5800
+push rbx
+push rdi
+push rsi
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x30
+mov r12, rcx
+lea rbx, [rip + 0x8be7]
+cmp rdx, 0x100
+je 0x5432
+cmp rdx, 0x102
+je 0x5441
+xor eax, eax
+jmp 0x56e3
+cmp r8d, 0x74
+jne 0x56e1
+jmp 0x5539
+cmp r8d, 0x07
+je 0x5539
+lea rax, [rip + 0x8fae]
+mov eax, dword ptr [rax]
+
+LA GARDE (l'expansion fail-closed) : l'empreinte sha256 de la
+notation complète en cache : b1695a529f984a1fb408690ea1e7ab99031710658e82e62c94b93293eb8a8d64 — le client recoupe
+cette empreinte AVANT l'application des hunks (toute divergence
+de la base en cache : REFUS CONTEXTE-DIVERGENT).
+
+LES PARAMÈTRES LITTÉRAUX (l'opération — le diff) :
+bloc : loupe-12-aller
+ligne : 37
+ancienne : cmp rdx, 0x100
+nouvelle : cmp rdx, 0xff
+
+REQUÊTE : applique le gabarit aux paramètres — rends UNIQUEMENT
+les hunks : la PREMIÈRE ligne exactement « @@ hunk 1 », l'ancre
+« base: <la ligne exacte> », les retraits « - … », les
+insertions « + … », la DERNIÈRE ligne exactement « FIN-HUNKS »
+— aucune clôture de code (aucun ```), aucun autre texte.

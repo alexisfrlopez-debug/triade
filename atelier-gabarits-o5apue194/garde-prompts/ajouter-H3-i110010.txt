@@ -1,0 +1,210 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode HUNKS — l'unité se
+compose PAR HÉRITAGE du gabarit de famille : la réponse ne rend QUE
+les hunks, le client les applique au gabarit et confronte).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-10 · peinture : WM_PAINT, l'unique peintre · révision 1
+Intention : dessiner la fenêtre visible — composer l'écran (l'entête,
+les lignes par loupe-08, la barre d'état avec le PANNEAU
+D'EMPREINTES) puis le peindre (BeginPaint, la police à chasse fixe,
+TextOutW ligne à ligne, la cellule active en inverse, EndPaint). La
+mesure de la police a lieu UNE fois. L'expansion latin-1 octet→mot
+est exacte. L'oracle à scénarios compare l'écran attendu OCTET PAR
+OCTET — la peinture est la preuve visible du domaine.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_PAINT —
+             jamais ailleurs ; P2 la session peut être VIDE (la
+             vitrine sans fichier peint l'usage : P2 n'est PAS une
+             précondition d'état) ; P3 l'IAT gdi32/user32 du bloc
+             résolue.
+  post : Q1 LA COMPOSITION (l'ECRAIN, 2320 o) : l'entête posée (la
+             chaîne .rdata, 65 o utiles) ; la grille : pour chaque
+             ligne visible i de 0 à min(lignes_affichables − 1,
+             remplissage/16 arrondi) : loupe-08(tampon + 16·i, min(16,
+             remplissage − 16·i), grille + 80·i, vue + 16·i) — les
+             lignes au-delà de la fin restent VIERGES (jamais une
+             ligne fantôme) ; la barre ligne 1 : « Loupe 0.1.0-dev.1 —
+             <chemin> · <taille> o · curseur 0xNNNNNNNN · MODIFIÉ »
+             (ou l'usage si session vide) ; la barre ligne 2 (LE
+             PANNEAU) : « md5 <32 hex> · sha256 <64 hex> » (ou « — »)
+             — l'astérisque si la marque sale est posée (les
+             empreintes du DISQUE, la divergence nommée) ;
+         Q2 LA PEINTURE : BeginPaint (la PAINTSTRUCT sur la pile) ; la
+             police ANSI_FIXED_FONT sélectionnée (GetStockObject +
+             SelectObject), mesurée UNE fois (GetTextMetricsW →
+             METRIQUES : char_w, ligne_h, lignes_visibles — jamais
+             re-mesurée tant que la fenêtre vit) ; chaque ligne de
+             l'ECRAIN expansée latin-1 octet→mot (le tampon pile de
+             80 mots) puis TextOutW à (MARGE_X, MARGE_Y + ligne ·
+             ligne_h) ; EndPaint ;
+         Q3 LA CELLULE ACTIVE : la colonne du groupe hexa du curseur
+             repeinte en INVERSE (SetTextColor/SetBkColor échangés
+             autour de CE groupe seul, à l'abscisse exacte
+             MARGE_X + (10 + 3·colonne + (colonne ≥ 8 ? 1 : 0)) ·
+             char_w) — la surbrillance vit à la peinture, la position
+             au cadre (loupe-15 ne peint RIEN) ;
+         Q4 rax = 0.
+  inv  : I1 L'UNIQUE PEINTRE : aucune goutte hors WM_PAINT, aucun
+             autre bloc ne déclare TextOutW (la liste IAT fermée du
+             plan — la contrebande de peinture est un refus de build) ;
+         I2 le CLIPPING par lignes affichables : jamais un TextOutW
+             au-delà du client (GetClientRect lu à CHAQUE peinture —
+             la fenêtre peut rétrécir) ;
+         I3 la police À CHASSE FIXE est une EXIGENCE (ANSI_FIXED_FONT
+             — les colonnes hexa sinon se disloquent : le refus de la
+             police proportionnelle est un choix de domaine) ;
+         I4 l'expansion latin-1 EXACTE : chaque octet de l'ECRAIN →
+             le mot UTF-16 de même valeur (0x00–0xFF → U+0000–U+00FF,
+             la table est l'identité) — jamais un octet signé ;
+         I5 la composition ne MODIFIE RIEN : le cadre, le journal, les
+             empreintes LUS seuls (la peinture est pure lecture
+             d'état) ; registres non volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : BeginPaint rend un DC nul → verdict -6 SYSTÈME (le code
+       GetLastError consigné), RIEN peint, rax = -6 (jamais un
+       dessin sur un contexte mort).
+  E2 : GetStockObject ou GetTextMetricsW en échec (0 / le tm nul) →
+       verdict -6 SYSTÈME, la peinture AVORTÉE proprement (EndPaint
+       appelé quand même — le contexte se rend TOUJOURS).
+Vecteurs :
+  V1 : scénario — la vitrine sans session : l'ECRAIN composé (l'usage
+       à la barre 1, les « — » au panneau) puis peint : l'écran
+       attendu octet par octet (couvre Q1, Q2, Q4).
+  V2 : scénario — le témoin ouvert (vue 0, curseur 0x22) : les 24
+       lignes ou moins (le remplissage borne), la cellule active
+       inversée à la colonne exacte, le panneau aux empreintes du
+       disque — l'attendu intégral (couvre Q1, Q2, Q3).
+  V3 : scénario — la marque sale : l'astérisque au panneau, « MODIFIÉ
+       » à la barre 1 (la divergence nommée) (couvre Q1).
+  V4 : rejet — le shim BeginPaint à 0 : verdict -6, rien peint,
+       EndPaint déménagé jamais appelé sur DC nul — l'état demeure
+       propre (couvre E1) ; le shim GetTextMetricsW muet : la
+       peinture avortée proprement (couvre E2).
+  V5 : falsification — une ligne de la grille mutée d'un octet dans
+       l'ECRAIN : l'attendu diverge — l'oracle échoue (la
+       falsification DEMANDÉE, charte § 3).
+Fixtures    : les écrans attendus du kit (la vitrine vide, le témoin à
+              la vue 0, la ligne finale incomplète, la marque sale) —
+              les fixtures du dépôt, consignées au harnais.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), D134 (la balise peinte),
+              D137 (la lignée).
+
+
+LES CONVENTIONS DE NOTATION DU DOMAINE :
+- la feuille pure : arguments seuls, aucune entrée IAT, aucun état détenu ;
+- ABI msx64 : rcx, rdx, r8, r9 puis la pile ; les non-volatils (rbx, r12-r15)
+  sauvegardés par le bloc ; le cadre aligné à 16 ; l'appelant réserve le
+  shadow space de 32 octets ;
+- la notation x86-64 : une instruction par ligne, mnémonique puis opérandes ;
+  les sauts aux cibles absolues (0x…), les appels aux adresses du plan ;
+  les commentaires préfixés « ; » ; l'en-tête commenté du bloc porte son
+  identité (nom, spec, slot, taille, étiquettes résolues, appels directs).
+
+L'EXEMPLE DU FORMAT DE NOTATION (loupe-13, la notation RÉELLE du
+domaine — le format des lignes « + » de tes hunks) :
+; loupe-13-recherche · bloc la recherche : la première occurrence par memcmp hérité (pur) · spec loupe-13:R1 · bloc carte i110013
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5740, taille 192 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : chaque candidat testé par le scellé, JAMAIS une boucle réécrite) ; AUCUNE entrée IAT (la feuille pure, charte § 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA FIN NOMMÉE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-13-recherche.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 126 o · padding : 66 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x577c, .trouve=0x579f, .fin_nomme=0x57a4, .refus_entree=0x57ab, .sortie=0x57b0
+; Appels directs (l'adresse du plan — I1) : call 0x1180
+mov rax, qword ptr [rsp + 0x28]
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+test r9, r9
+jz 0x57ab
+cmp r9, 32
+ja 0x57ab
+cmp rax, rdx
+ja 0x57ab
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+mov r15, rax
+mov rax, r12
+sub rax, r15
+cmp r14, rax
+jg 0x57a4
+mov rax, r15
+add rax, r14
+cmp rax, r12
+ja 0x57a4
+lea rcx, [rbx + r15]
+mov rdx, r13
+mov r8, r14
+call 0x1180
+test eax, eax
+jz 0x579f
+inc r15
+jmp 0x577c
+mov rax, r15
+jmp 0x57b0
+push -1
+pop rax
+nop
+nop
+jmp 0x57b0
+push -5
+pop rax
+nop
+nop
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+UN EXEMPLE COMPLET DE RÉPONSE D'AJOUT (le bloc qui vérifie un tampon non vide et rend sa taille — la réponse ENTIÈRE, caractère pour caractère, telle que le client l'attend) :
+@@ hunk 1
+base: ; --- LE CORPS DU BLOC ICI ---
++ test rcx, rcx
++ jz 0x1234
++ mov rax, rdx
++ jmp 0x1250
++ mov eax, -5
++ jmp 0x1250
+@@ hunk 2
+base: add rsp, 0x20
++ nop
+FIN-HUNKS
+(REMARQUE : la réponse ci-dessus est TOUTE la réponse — elle commence à « @@ hunk 1 » et finit à « FIN-HUNKS », AUCUNE ligne de la notation du gabarit n'est re-dumpée, AUCUNE explication.)
+REQUÊTE : compose le bloc et rends UNIQUEMENT les hunks qui insèrent le corps dans le gabarit — la première ligne de ta réponse est EXACTEMENT « @@ hunk 1 », la dernière exactement « FIN-HUNKS ».

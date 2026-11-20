@@ -1,0 +1,199 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode HUNKS — l'unité se
+compose PAR HÉRITAGE du gabarit de famille : la réponse ne rend QUE
+les hunks, le client les applique au gabarit et confronte).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-12 · aller : la saisie hexadécimale à la barre, le refus nommé · révision 1
+Intention : aller à un décalage tapé en hexadécimal — LA BARRE-SAISIE :
+aucun contrôle enfant, la barre d'état DEVIENT le champ (l'écran
+appartient à Loupe). Le saut est EXACT (le curseur à la valeur) et
+ENCADRÉ : la saisie mal formée est refusée nommément, la valeur hors
+bornes est refusée nommément — JAMAIS un saut silencieux, jamais un
+recalage deviné. La règle de recadrage de la vue est déclarée ICI (les
+blocs 14 et 15 la citent — la source unique).
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) : WM_KEYDOWN F5 ou
+             Ctrl+G OUVERT le mode, puis les WM_CHAR du mode lui
+             reviennent ; P2 la zone SAISIE du plan (96 o : mode,
+             actif, nibble, tampon[80]).
+  post : Q1 L'OUVERTURE : mode = ALLER, le tampon vide, la barre
+             montre « ALLER (hexa) : » — la vitrine vit, la barre
+             écoute ;
+         Q2 LA FRAPPE : chiffre hexa (0-9A-Fa-f) → accumulé (au plus
+             8 chiffres — le 9e IGNORÉ proprement, la borne du
+             format 0x7FFFFFFF à 8 chiffres) ; VK_SUPPR → le dernier
+             chiffre retiré ; VK_ECHAP → mode = 0, la barre revient
+             (l'annulation PROPRE, rien arrivé) ;
+         Q3 LE COMMIT (VK_RETOUR) : le tampon VIDE ou non hexa →
+             verdict -5 (la barre nomme « saisie mal formée ») ; la
+             valeur ≥ taille → verdict -3 (la barre nomme « hors
+             bornes » — LE REFUS NOMMÉ du README) ; SINON : curseur =
+             la valeur, ET LA RÈGLE DE RECADRAGE : si le curseur
+             sort de la fenêtre visible, vue = min(recadre(curseur),
+             vue_max) — la ligne active posée à la 12e ligne quand la
+             place se trouve, le bord sinon (la règle EXÉCUTABLE du
+             plan d'adressage), loupe-02 (la fenêtre relue), mode =
+             0, InvalidateRect — LE SAUT EXACT ;
+         Q4 rax = 0 au saut ; les refus rendent leur verdict ET
+             SORTENT du mode (la barre porte le nom, l'oracle le
+             constate).
+  inv  : I1 la barre-saisie N'EST PAS un contrôle : aucun EDIT enfant,
+             aucun focus à rendre — les frappes reviennent par la
+             procédure, l'écran reste à Loupe ;
+         I2 la saisie ne touche NI le tampon de vue NI le journal NI
+             les empreintes (le saut est une navigation, pas une
+             édition) ;
+         I3 le curseur reste BORNÉ [0, taille−1] (l'invariant du
+             cadre — le saut y passe, jamais au travers) ;
+         I4 AUCUNE entrée IAT propre (le bloc est pur état + la
+             composition : loupe-02 et l'invalidation vivent chez
+             leurs propriétaires — la liste IAT du plan, la barre de
+             loupe-10 peint) ; NOP, 0x90.
+Échecs :
+  E1 : le commit d'une saisie vide ou non hexa → verdict -5 ENTRÉE,
+       mode = 0, la barre nomme « saisie mal formée ».
+  E2 : la valeur ≥ taille → verdict -3 HORS-BORNES, mode = 0, la
+       barre nomme « hors bornes » — JAMAIS un saut silencieux.
+  E3 : sans session ouverte → verdict -4 SESSION, mode = 0 (la barre
+       nomme « aucun fichier ouvert »).
+Vecteurs :
+  V1 : scénario — le saut au milieu (0x1000) : le curseur exact, la
+       vue recalée à la 12e ligne, l'écran attendu octet par octet ;
+       le saut à 0 et au dernier octet : la règle de recadrage au
+       bord (couvre Q1, Q3, Q4).
+  V2 : scénario — la frappe : 8 chiffres max (le 9e ignoré, le
+       tampon inchangé — le différentiel le constate), VK_SUPPR
+       retire, VK_ECHAP annule TOUT proprement (la barre revient,
+       rien bougé) (couvre Q2).
+  V3 : rejet — « », « 12Z4 », « 0x10 » (le x n'est pas hexa) :
+       verdict -5 nommé ; 0x7FFFFFFF sur un témoin de 100 o :
+       verdict -3 nommé ; sans session : -4 (couvre E1, E2, E3).
+  V4 : différentiel — la règle recadre(curseur) rejouée en Python
+       sur 10 000 curseurs aléatoires : l'égalité des vues (couvre
+       Q3).
+  V5 : falsification — le recadrage muté d'une ligne : l'écran
+       attendu du saut diverge — l'oracle échoue.
+Fixtures    : le témoin de 3 × 64 Kio + 1 (les sauts aux bords des
+              fenêtres de lecture).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (la zone SAISIE déclarée), D7 (aucune IAT
+              propre — la barre appartient à l'écran).
+
+
+LES CONVENTIONS DE NOTATION DU DOMAINE :
+- la feuille pure : arguments seuls, aucune entrée IAT, aucun état détenu ;
+- ABI msx64 : rcx, rdx, r8, r9 puis la pile ; les non-volatils (rbx, r12-r15)
+  sauvegardés par le bloc ; le cadre aligné à 16 ; l'appelant réserve le
+  shadow space de 32 octets ;
+- la notation x86-64 : une instruction par ligne, mnémonique puis opérandes ;
+  les sauts aux cibles absolues (0x…), les appels aux adresses du plan ;
+  les commentaires préfixés « ; » ; l'en-tête commenté du bloc porte son
+  identité (nom, spec, slot, taille, étiquettes résolues, appels directs).
+
+L'EXEMPLE DU FORMAT DE NOTATION (loupe-13, la notation RÉELLE du
+domaine — le format des lignes « + » de tes hunks) :
+; loupe-13-recherche · bloc la recherche : la première occurrence par memcmp hérité (pur) · spec loupe-13:R1 · bloc carte i110013
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5740, taille 192 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : chaque candidat testé par le scellé, JAMAIS une boucle réécrite) ; AUCUNE entrée IAT (la feuille pure, charte § 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA FIN NOMMÉE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-13-recherche.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 126 o · padding : 66 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x577c, .trouve=0x579f, .fin_nomme=0x57a4, .refus_entree=0x57ab, .sortie=0x57b0
+; Appels directs (l'adresse du plan — I1) : call 0x1180
+mov rax, qword ptr [rsp + 0x28]
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+test r9, r9
+jz 0x57ab
+cmp r9, 32
+ja 0x57ab
+cmp rax, rdx
+ja 0x57ab
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+mov r15, rax
+mov rax, r12
+sub rax, r15
+cmp r14, rax
+jg 0x57a4
+mov rax, r15
+add rax, r14
+cmp rax, r12
+ja 0x57a4
+lea rcx, [rbx + r15]
+mov rdx, r13
+mov r8, r14
+call 0x1180
+test eax, eax
+jz 0x579f
+inc r15
+jmp 0x577c
+mov rax, r15
+jmp 0x57b0
+push -1
+pop rax
+nop
+nop
+jmp 0x57b0
+push -5
+pop rax
+nop
+nop
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+UN EXEMPLE COMPLET DE RÉPONSE D'AJOUT (le bloc qui vérifie un tampon non vide et rend sa taille — la réponse ENTIÈRE, caractère pour caractère, telle que le client l'attend) :
+@@ hunk 1
+base: ; --- LE CORPS DU BLOC ICI ---
++ test rcx, rcx
++ jz 0x1234
++ mov rax, rdx
++ jmp 0x1250
++ mov eax, -5
++ jmp 0x1250
+@@ hunk 2
+base: add rsp, 0x20
++ nop
+FIN-HUNKS
+(REMARQUE : la réponse ci-dessus est TOUTE la réponse — elle commence à « @@ hunk 1 » et finit à « FIN-HUNKS », AUCUNE ligne de la notation du gabarit n'est re-dumpée, AUCUNE explication.)
+REQUÊTE : compose le bloc et rends UNIQUEMENT les hunks qui insèrent le corps dans le gabarit — la première ligne de ta réponse est EXACTEMENT « @@ hunk 1 », la dernière exactement « FIN-HUNKS ».

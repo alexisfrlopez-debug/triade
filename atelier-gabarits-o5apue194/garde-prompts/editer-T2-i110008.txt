@@ -1,0 +1,49 @@
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE — LE GABARIT VERSIONNÉ
+TPL-EDIT-v1 · sha256:797f2f6b0a36601abfe923413551bf36db422a9fb3d792aaaf7d56c0271a41a3
+(le corps du gabarte vit en session ; le client recoupe son
+empreinte AVANT l'application — GABARIT-DIVERGENT sinon.)
+
+LA FENÊTRE DE LA CIBLE (les lignes 7 à 31 du bloc — la
+ligne 19 est la ligne cible) :
+; Étiquettes résolues : .dec_boucle=0x4a0c, .rempli_haut=0x4a32, .rempli_miroir=0x4a44, .grp_boucle=0x4a59, .grp_pos=0x4a6b, .grp_suivant=0x4a8c, .miroir_boucle=0x4a98, .miroir_point=0x4aae, .miroir_poser=0x4ab0, .miroir_fin=0x4aba, .refus_entree=0x4abe, .sortie=0x4ac3
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x49fd + 0x7 - 0x29b4 = 0x2050
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+test rcx, rcx
+jz 0x4abe
+test r8, r8
+jz 0x4abe
+cmp rdx, 1
+jb 0x4abe
+cmp rdx, 16
+ja 0x4abe
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+lea r11, [rip - 0x29b4]
+mov edx, 28
+xor r10d, r10d
+mov rax, r14
+mov cl, dl
+
+LA GARDE (l'expansion fail-closed) : l'empreinte sha256 de la
+notation complète en cache : 52a14615b0aef0b9d30622b425a886177b78a9b275ad5d7589d6bd2918ee6672 — le client recoupe
+cette empreinte AVANT l'application des hunks (toute divergence
+de la base en cache : REFUS CONTEXTE-DIVERGENT).
+
+LES PARAMÈTRES LITTÉRAUX (l'opération — le diff) :
+bloc : loupe-08-ligne
+ligne : 19
+ancienne : cmp rdx, 1
+nouvelle : cmp rdx, 0
+
+REQUÊTE : applique le gabarit aux paramètres — rends UNIQUEMENT
+les hunks : la PREMIÈRE ligne exactement « @@ hunk 1 », l'ancre
+« base: <la ligne exacte> », les retraits « - … », les
+insertions « + … », la DERNIÈRE ligne exactement « FIN-HUNKS »
+— aucune clôture de code (aucun ```), aucun autre texte.

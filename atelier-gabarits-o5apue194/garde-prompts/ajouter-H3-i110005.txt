@@ -1,0 +1,197 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode HUNKS — l'unité se
+compose PAR HÉRITAGE du gabarit de famille : la réponse ne rend QUE
+les hunks, le client les applique au gabarit et confronte).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-05 · sha256 d'une gamme : l'héritage tls13 PAR LA CARTE · révision 1
+Intention : le condensé SHA-256 d'une gamme du fichier ouvert —
+l'héritage de la famille sha tls13 (M9, scellée 1.0.0) PAR LA CARTE :
+les QUATRE blocs tls13-01..04 embarqués au build BYTE-IDENTIQUES à leur
+scellé (R7), appelés par le plan d'adressage, JAMAIS une copie d'octets
+ré-écrite. La gamme passe par fenêtres glissantes de 64 Kio
+(TAMPON_CUMUL) : un fichier de 2 Gio se condense sans jamais tenir en
+mémoire.
+Contrat :
+  pre  : P1 la session est ouverte (la poignée ≠ INVALIDE) ;
+         P2 rcx = le décalage de gamme (≥ 0), rdx = la longueur (≥ 0) ;
+         P3 décalage + longueur ≤ taille du fichier ;
+         P4 r8 = la sortie, 32 o accessibles en écriture.
+  post : Q1 la sortie = SHA-256(F[décalage .. décalage + longueur))
+             — FIPS 180-4, la sémantique des blocs hérités (le contexte
+             112 o de tls13-01 P1, tenu SUR LA PILE — rien ne survit au
+             retour) ;
+         Q2 LA COMPOSITION HÉRITÉE : tls13-01 (l'initialisation, UNE
+             fois) puis, pour chaque fenêtre lue (SetFilePointerEx +
+             ReadFile dans TAMPON_CUMUL, au plus CUMUL_FENETRE octets),
+             tls13-03 (l'absorption), puis tls13-04 (la finalisation) —
+             LA LISTE EST FERMÉE (tls13-02 vit à l'intérieur de
+             tls13-03, l'héritage l'embarque avec) ;
+         Q3 la gamme VIDE (longueur 0) rend le condensé du vide FIPS
+             (e3b0c442…98ec4bf2) — le vecteur officiel, l'héritage le
+             porte ;
+         Q4 rax = 0.
+  inv  : I1 L'HÉRITAGE PAR LA CARTE (charte § 2, R7) : les octets de
+             tls13-01..04 au build == les octets du scellé 1.0.0 —
+             l'oracle du build le constatera octet par octet ; la
+             contrebande (une ré-écriture) est un refus de build ;
+         I2 AUCUNE constante SHA re-déclarée au domaine (H0, le bloc
+             64, la disposition du contexte vivent à tls13-01 — la
+             source unique, T5) ;
+         I3 la lecture passe par TAMPON_CUMUL — JAMAIS le tampon de
+             vue du cadre (la vue est intacte pendant le calcul :
+             l'invariant d'exclusion de famille) ;
+         I4 le pointeur fichier est repositionné à CHAQUE fenêtre
+             (SetFilePointerEx avant chaque ReadFile) — jamais une
+             position héritée d'un autre bloc ;
+         I5 l'IAT déclarée (D161) : SetFilePointerEx, ReadFile,
+             GetLastError — la liste fermée ; registres non volatils
+             rendus ; NOP, 0x90.
+Échecs :
+  E1 : sans session (P1) → verdict -4 SESSION, rax = -4.
+  E2 : la gamme hors fichier (P3) → verdict -3 HORS-BORNES, rax = -3.
+  E3 : la sortie inutilisable (P4 nulle) → verdict -5 ENTRÉE, rax = -5.
+  E4 : ReadFile ou SetFilePointerEx en échec → verdict -6 SYSTÈME, le
+       code GetLastError consigné, la sortie INTACTE (jamais un
+       condensé partiel : le calcul ne publie que le vrai).
+Vecteurs :
+  V1 : différentiel — les gammes des témoins du kit + proxy.exe scellé
+       (la gamme entière, 1 000 gammes aléatoires) comparées à
+       hashlib.sha256 : l'égalité octet par octet — la composition
+       héritée passée par ses fenêtres à chaque cas (couvre Q1, Q2,
+       Q4).
+  V2 : doré — la gamme vide (le vecteur FIPS e3b0c442…), la gamme
+       « abc » (ba7816bf…) : les vecteurs officiels rejoués au fichier
+       (couvre Q3).
+  V3 : rejet — sans session, gamme hors bornes, sortie nulle : les
+       TROIS verdicts nommés (couvre E1, E2, E3).
+  V4 : rejet — le shim ReadFile en échec à la deuxième fenêtre :
+       verdict -6, la sortie intacte (comparée à son état d'avant),
+       le code consigné (couvre E4).
+  V5 : falsification — un octet de TAMPON_CUMUL muté entre les
+       fenêtres : le condensé diverge du modèle — la différentielle
+       échoue (la falsification DEMANDÉE).
+Fixtures    : les vecteurs FIPS 180-4 (le vide, « abc ») + proxy.exe
+              scellé (la gamme entière recoupée : sha256 446279f3… —
+              l'application rend l'empreinte DE SA PROPRE PIÈCE).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), R7 (l'héritage PAR LA CARTE
+              — la charte § 2).
+
+
+LES CONVENTIONS DE NOTATION DU DOMAINE :
+- la feuille pure : arguments seuls, aucune entrée IAT, aucun état détenu ;
+- ABI msx64 : rcx, rdx, r8, r9 puis la pile ; les non-volatils (rbx, r12-r15)
+  sauvegardés par le bloc ; le cadre aligné à 16 ; l'appelant réserve le
+  shadow space de 32 octets ;
+- la notation x86-64 : une instruction par ligne, mnémonique puis opérandes ;
+  les sauts aux cibles absolues (0x…), les appels aux adresses du plan ;
+  les commentaires préfixés « ; » ; l'en-tête commenté du bloc porte son
+  identité (nom, spec, slot, taille, étiquettes résolues, appels directs).
+
+L'EXEMPLE DU FORMAT DE NOTATION (loupe-13, la notation RÉELLE du
+domaine — le format des lignes « + » de tes hunks) :
+; loupe-13-recherche · bloc la recherche : la première occurrence par memcmp hérité (pur) · spec loupe-13:R1 · bloc carte i110013
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5740, taille 192 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : chaque candidat testé par le scellé, JAMAIS une boucle réécrite) ; AUCUNE entrée IAT (la feuille pure, charte § 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA FIN NOMMÉE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-13-recherche.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 126 o · padding : 66 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x577c, .trouve=0x579f, .fin_nomme=0x57a4, .refus_entree=0x57ab, .sortie=0x57b0
+; Appels directs (l'adresse du plan — I1) : call 0x1180
+mov rax, qword ptr [rsp + 0x28]
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+test r9, r9
+jz 0x57ab
+cmp r9, 32
+ja 0x57ab
+cmp rax, rdx
+ja 0x57ab
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+mov r15, rax
+mov rax, r12
+sub rax, r15
+cmp r14, rax
+jg 0x57a4
+mov rax, r15
+add rax, r14
+cmp rax, r12
+ja 0x57a4
+lea rcx, [rbx + r15]
+mov rdx, r13
+mov r8, r14
+call 0x1180
+test eax, eax
+jz 0x579f
+inc r15
+jmp 0x577c
+mov rax, r15
+jmp 0x57b0
+push -1
+pop rax
+nop
+nop
+jmp 0x57b0
+push -5
+pop rax
+nop
+nop
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+UN EXEMPLE COMPLET DE RÉPONSE D'AJOUT (le bloc qui vérifie un tampon non vide et rend sa taille — la réponse ENTIÈRE, caractère pour caractère, telle que le client l'attend) :
+@@ hunk 1
+base: ; --- LE CORPS DU BLOC ICI ---
++ test rcx, rcx
++ jz 0x1234
++ mov rax, rdx
++ jmp 0x1250
++ mov eax, -5
++ jmp 0x1250
+@@ hunk 2
+base: add rsp, 0x20
++ nop
+FIN-HUNKS
+(REMARQUE : la réponse ci-dessus est TOUTE la réponse — elle commence à « @@ hunk 1 » et finit à « FIN-HUNKS », AUCUNE ligne de la notation du gabarit n'est re-dumpée, AUCUNE explication.)
+REQUÊTE : compose le bloc et rends UNIQUEMENT les hunks qui insèrent le corps dans le gabarit — la première ligne de ta réponse est EXACTEMENT « @@ hunk 1 », la dernière exactement « FIN-HUNKS ».

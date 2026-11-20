@@ -1,0 +1,53 @@
+LE RAPPORT DE L'ATELIER o5apue194 — LE GABARIT VERSIONNÉ, LE LOCALISER HIÉRARCHIQUE, L'AJOUT PAR SQUELETTE
+(la vague 11 ; le plan gelé sha256 ea388f511982a808… AVANT toute mesure ; la graine 20261117 reconduite,
+l'ordre jamais re-tiré ; le tokenizer natif lu du champ usage à chacun des 108 appels, cl100k parallèle)
+
+(1) LE GABARIT VERSIONNÉ (l'éditer-T2) : LA CONSIGNE EN LANGUE NATURELLE REMPLACÉE — le corps du gabarit
+    (la grammaire du format hunk, l'exemple, les règles d'ancre) vit UNE FOIS identifié TPL-EDIT-v1 + son
+    sha256 GRAVÉ AU PROMPT ; l'opération porte l'ID, l'empreinte, LES PARAMÈTRES LITTÉRAUX (le diff) ;
+    l'expansion côté client recoupe l'empreinte (fail-closed) ; LE REFUS HORS-FORMAT nommé. La fenêtre
+    ±12 lignes et l'empreinte sha256 de la notation DEMEURENT — aucun contrôle retiré.
+    LA MESURE (n=18) : AVANT éditer-F2 natif médiane 1 106 [cl100k 1 101] — LE RECORD v0.21.0 reproduit
+    (le matériau 239, la prose 866) ; APRÈS éditer-T2 natif médiane 674 [cl100k 651] — **−39,1 %** ;
+    LA DÉCOMPOSITION : la prose 866 → 372 (**−57 %** — le levier nommé de la vague 10 SAISI), le matériau
+    239 → 276 (le gabarit de l'ID + l'empreinte au bord). LES VERDICTS : 17/18 verts + UN REFUS
+    CONTEXTE-DIVERGENT (loupe-07-cumul — le modèle a varié, le client a refusé : fail-closed, jamais
+    re-tiré — le précédent OPT-10 reconduit, le MÊME bloc aux deux phases : la variation est au modèle,
+    pas au gabarit).
+
+(2) LE LOCALISER HIÉRARCHIQUE (le localiser-H) : L'INDEX GROSSIER (les IDs + les empreintes courtes
+    8 hex, l'empreinte sha256 en garde) PUIS L'ENTRÉE FINE (le pointeur seul après choix) ; l'expansion
+    côté client recoupée. LA MESURE (n=18) : AVANT localiser-P natif médiane 1 053 [cl100k 1 026] (le
+    matériau 826, la prose 199) — le record reproduit ; APRÈS localiser-H natif médiane 627 [cl100k
+    599] — **−40,5 %** (le matériau 826 → 335 : l'index grossier divise le pointé). 18/18 VERTS (le
+    pointeur exact à chaque entrée).
+
+(3) L'AJOUT PAR SQUELETTE (l'ajouter-S) : le squelette déterministe dérivé de la couche I (le cadre ABI
+    aux non-volatils sauvés, le shadow space, la signature) — L'AGENT NE REMPLIT QUE LA LOGIQUE ; le
+    client assemble, round-trip, juge le cadre. LA MESURE (n=18) : LE RECORD ajouter-H3 natif médiane
+    3 074 [cl100k 3 118] — 0/18 VERTS : TOUS REFUS HORS-FORMAT NOMMÉS (la dernière ligne pas
+    « FIN-HUNKS », les lignes hors formes admises) — L'ÉTAT DU RECORD TENU : l'ajout de notation
+    complète REFUSE le format au modèle actuel (le gap que la vague 9 avait nommé, jamais maquillé) ;
+    APRÈS ajouter-S natif médiane 2 200 [cl100k 2 233] — **−28,5 %** ; LES VERDICTS : 3/18 VERTS
+    (ASSEMBLE+ROUND-TRIP+CADRE — 46 et 19 instructions au round-trip exact) + 15 REFUS HORS-FORMAT
+    NOMMÉS (les lignes inassemblables, les étiquettes inconnues, les constantes du domaine hors
+    portée). **LA LECTURE HONNÊTE** : le squelette AMÉLIORE la faisabilité (0 → 3 verts) et le coût
+    (−28,5 %) SANS la garantir — la moitié du chemin ; le gap nommé : le modèle doit apprendre le
+    domaine d'étiquettes et de constantes (la voie : le gabarit du DOMAINE étendu au squelette — le
+    prochain levier).
+
+(4) LES CONTRÔLES : LA RE-TOKENISATION INDÉPENDANTE à écart max 0 aux 108 échanges (≤1 exigé — le
+    cl100k parallèle demeure un COMPTE distinct, jamais le juge) ; LE CLIENT GABARITS 16 VERT — les
+    refus nommés re-roulés : GABARIT-DIVERGENT, CONTEXTE-DIVERGENT, HORS-FORMAT (T2) ; POINTEUR-INCONNU,
+    HORS-FORMAT, EMPREINTE-DIVERGENTE, EXPANSION-DIVERGENTE, INDEX-DIVERGENT (H) ; HORS-FORMAT aux
+    quatre faces (S — l'étiquette inconnue, la logique vide, l'instruction impossible) ; la garde sha256
+    de la fenêtre conservée ; le round-trip 100 % aux applications honnêtes ; AUCUN contrôle retiré.
+
+(5) LES BUDGETS PUBLIÉS (n=18, la graine 20261117, l'ordre jamais re-tiré) : éditer 1 106 → 674 natif
+    (−39,1 %) ; localiser 1 053 → 627 (−40,5 %) ; ajouter 3 074 → 2 200 (−28,5 %, la faisabilité 0→3).
+
+LES SCELLÉS : 14/14 arbres VERTS avant et après (aucune couche I touchée — les gabarits vivent au
+client de campagne).
+LES GAPS NOMMÉS : l'ajouter demeure dominé par les refus honnêtes (15/18 — jamais re-tirés, jamais
+comptés verts) ; le refus CONTEXTE-DIVERGENT de loupe-07-cumul aux deux phases éditer (la variation du
+modèle, consignée) ; UNE SEULE MACHINE au bac.

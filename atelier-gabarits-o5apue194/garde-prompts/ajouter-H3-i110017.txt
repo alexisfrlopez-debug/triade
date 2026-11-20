@@ -1,0 +1,206 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode HUNKS — l'unité se
+compose PAR HÉRITAGE du gabarit de famille : la réponse ne rend QUE
+les hunks, le client les applique au gabarit et confronte).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-17 · sauver : les octets modifiés écrits à l'octet, le témoin rendu · révision 1
+Intention : enregistrer les octets modifiés — CHAQUE entrée du journal
+écrite À SON DÉCALAGE, UNE PAR UNE (SetFilePointerEx + WriteFile d'UN
+octet : l'écriture À L'OCTET, l'unité est l'octet, jamais une plage) —
+puis la marque levée, la garde de sortie levée, le panneau
+recalculé (loupe-07 : la vérité du disque re-naît — le coût du
+passage est nommé) ET LE TÉMOIN RENDU à la barre : combien d'octets,
+de la première à la dernière adresse — ce qui a bougé est dit, pas
+suggéré.
+Contrat :
+  pre  : P1 la session est ouverte ; P2 appelée par la procédure
+             (loupe-09 Q3) sur Ctrl+S (VK_KEYDOWN 'S' avec Ctrl) ;
+             P3 le journal peut être VIDE (le repli nommé).
+  post : Q1 le journal VIDE → rax = 0 SANS écriture, la barre nomme
+             « rien à sauver » (le repli documenté — pas un échec,
+             l'état nommé) ;
+         Q2 SINON : pour CHAQUE entrée du journal DANS SON ORDRE DE
+             SAISIE : SetFilePointerEx(décalage, DEBUT_FICHIER) puis
+             WriteFile(1 o) — l'octet à SON décalage, un par un ;
+             tout l'échec s'arrête LÀ (verdict -6, le code
+             GetLastError consigné — FAIL-CLOSED : le journal DEMEURE,
+             la marque demeure, les octets déjà écrits le restent —
+             l'échec ne perd RIEN, le geste peut se reprendre) ;
+         Q3 SUCCÈS COMPLET : journal.nombre = 0, cadre.sale = 0,
+             refus_quitter = 0 (la garde de loupe-18 levée — la
+             sortie ne ré-avertira plus : il n'y a plus rien à
+             perdre) ;
+         Q4 LE PANNEAU RE-NAÎT : loupe-07 rappelé (les empreintes du
+             DISQUE — la sauvegarde a changé le fichier, le panneau
+             suit : jamais un condensé d'avant) — le coût est NOMMÉ :
+             un passage de plus, le prix de la vérité ;
+         Q5 LE TÉMOIN à la barre : « N o écrits · 0xAABBCCDD..0xEEFF-
+             GGHH » (le compte exact, la première et la dernière
+             adresse écrites) — ce qui a bougé est DIT ;
+         Q6 la TAILLE DEMEURE (l'écriture à l'octet ne change JAMAIS
+             la taille du fichier — GetFileSizeEx après == avant,
+             l'oracle le constate) ; rax = 0.
+  inv  : I1 AUCUNE écriture hors des entrées du journal (le reste du
+             fichier est INTACT — la différentielle avant/après le
+             prouve : SEULEMENT les N octets du journal diffèrent,
+             jamais un de plus) ;
+         I2 l'ordre du journal est L'ORDRE DE SAISIE (loupe-16 I2) —
+             la sauvegarde le suit tel quel, le témoin rend les
+             adresses réelles ;
+         I3 WriteFile et SetFilePointerEx vivent ICI SEULS dans le
+             domaine (l'IAT fermée du plan — la contrebande
+             d'écriture est un refus de build : loupe-16 l'a juré,
+             le build le vérifie) ;
+         I4 jamais la taille (I6 le constate : l'écriture à l'octet
+             REMPLACE, elle n'étend pas — un hexadécimal éditeur ne
+             crée pas d'octets) ; registres non volatils rendus ;
+             NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P1) → verdict -4 SESSION, rax = -4.
+  E2 : SetFilePointerEx ou WriteFile en échec → verdict -6 SYSTÈME,
+       le code GetLastError consigné, FAIL-CLOSED : journal et marque
+       DEMEURENT (le geste se reprend — rien n'est perdu), le
+       témoin ne ment pas (il ne rend que le succès complet).
+Vecteurs :
+  V1 : différentiel — 1 000 scénarios d'édition/sauvegarde sur les
+       témoins : le fichier APRÈS == le modèle Python (les N octets
+       appliqués, le reste INTACT — la comparaison octet par octet
+       du fichier entier), la taille CONSTANTE (couvre Q2, Q6).
+  V2 : scénario — trois octets édités puis Ctrl+S : le témoin « 3 o
+       écrits · 0xA..0xC » à la barre, la marque levée, l'astérisque
+       parti, le panneau RE-NAÎT (les empreintes du fichier changé —
+       recoupées par hashlib) — l'écran attendu (couvre Q3, Q4, Q5).
+  V3 : rejet — sans session : -4 ; le shim WriteFile en échec à la
+       deuxième entrée : -6, la première écriture ACQUISE, le
+       journal DEMEURE (le second Ctrl+S reprend et FINIT — la
+       reprise est prouvée) (couvre E1, E2).
+  V4 : scénario du repli — Ctrl+S sans édition : « rien à sauver »,
+       AUCUN appel WriteFile (les appels comptés), rax = 0 (couvre
+       Q1).
+  V5 : falsification — un octet de trop écrit (la plage au lieu de
+       l'octet) : la différentielle V1 échoue — l'écriture à l'octet
+       est une exigence.
+Fixtures    : les témoins du kit (édités puis sauvés puis RE-OUVERTS :
+              la persistance constatée au second loupe-01 — la
+              boucle complète de l'éditeur).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT : WriteFile vit ici seul).
+
+
+LES CONVENTIONS DE NOTATION DU DOMAINE :
+- la feuille pure : arguments seuls, aucune entrée IAT, aucun état détenu ;
+- ABI msx64 : rcx, rdx, r8, r9 puis la pile ; les non-volatils (rbx, r12-r15)
+  sauvegardés par le bloc ; le cadre aligné à 16 ; l'appelant réserve le
+  shadow space de 32 octets ;
+- la notation x86-64 : une instruction par ligne, mnémonique puis opérandes ;
+  les sauts aux cibles absolues (0x…), les appels aux adresses du plan ;
+  les commentaires préfixés « ; » ; l'en-tête commenté du bloc porte son
+  identité (nom, spec, slot, taille, étiquettes résolues, appels directs).
+
+L'EXEMPLE DU FORMAT DE NOTATION (loupe-13, la notation RÉELLE du
+domaine — le format des lignes « + » de tes hunks) :
+; loupe-13-recherche · bloc la recherche : la première occurrence par memcmp hérité (pur) · spec loupe-13:R1 · bloc carte i110013
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5740, taille 192 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : chaque candidat testé par le scellé, JAMAIS une boucle réécrite) ; AUCUNE entrée IAT (la feuille pure, charte § 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA FIN NOMMÉE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-13-recherche.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 126 o · padding : 66 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x577c, .trouve=0x579f, .fin_nomme=0x57a4, .refus_entree=0x57ab, .sortie=0x57b0
+; Appels directs (l'adresse du plan — I1) : call 0x1180
+mov rax, qword ptr [rsp + 0x28]
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+test r9, r9
+jz 0x57ab
+cmp r9, 32
+ja 0x57ab
+cmp rax, rdx
+ja 0x57ab
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+mov r15, rax
+mov rax, r12
+sub rax, r15
+cmp r14, rax
+jg 0x57a4
+mov rax, r15
+add rax, r14
+cmp rax, r12
+ja 0x57a4
+lea rcx, [rbx + r15]
+mov rdx, r13
+mov r8, r14
+call 0x1180
+test eax, eax
+jz 0x579f
+inc r15
+jmp 0x577c
+mov rax, r15
+jmp 0x57b0
+push -1
+pop rax
+nop
+nop
+jmp 0x57b0
+push -5
+pop rax
+nop
+nop
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+UN EXEMPLE COMPLET DE RÉPONSE D'AJOUT (le bloc qui vérifie un tampon non vide et rend sa taille — la réponse ENTIÈRE, caractère pour caractère, telle que le client l'attend) :
+@@ hunk 1
+base: ; --- LE CORPS DU BLOC ICI ---
++ test rcx, rcx
++ jz 0x1234
++ mov rax, rdx
++ jmp 0x1250
++ mov eax, -5
++ jmp 0x1250
+@@ hunk 2
+base: add rsp, 0x20
++ nop
+FIN-HUNKS
+(REMARQUE : la réponse ci-dessus est TOUTE la réponse — elle commence à « @@ hunk 1 » et finit à « FIN-HUNKS », AUCUNE ligne de la notation du gabarit n'est re-dumpée, AUCUNE explication.)
+REQUÊTE : compose le bloc et rends UNIQUEMENT les hunks qui insèrent le corps dans le gabarit — la première ligne de ta réponse est EXACTEMENT « @@ hunk 1 », la dernière exactement « FIN-HUNKS ».

@@ -1,0 +1,30 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode pointeur seul — la
+réponse tient en une ligne, le client expande le pointeur auprès de la
+carte et confronte l'empreinte aux octets réels).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-05-sha256 · bloc sha256 d'une gamme : l'héritage tls13 PAR LA CARTE · spec loupe-05:R1 · bloc carte i110005
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x4440, taille 384 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : tls13-01 (l'init, UNE fois), tls13-03 (l'absorption à chaque fenêtre), tls13-04 (la finalisation) — LA FAMILLE SHA PAR LA CARTE (R7 : les octets du scellé 1.0.0, jamais une copie ré-écrite) ; IAT kernel32 : SetFilePointerEx, ReadFile, GetLastError ; le contexte 112 o SUR LA PILE
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-05-sha256.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 313 o · padding : 71 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x449a, .fenetre_taille=0x44b1, .finalise=0x4535, .refus_session=0x4546, .refus_bornes=0x454d, .refus_sortie=0x4554, .refus_systeme=0x455b, .sortie=0x4568
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x4450 + 0x7 + 0x9ba9 = 0xe000
+;   0x44c1 + 0x6 - 0x139f = 0x3128
+;   0x44f3 + 0x7 + 0xbb06 = 0x10000
+;   0x44fd + 0x6 - 0x13d3 = 0x3130
+;   0x450c + 0x7 + 0xbaed = 0x10000
+;   0x455b + 0x6 - 0x1419 = 0x3148
+; Appels directs (l'adresse du plan — I1) : call 0xc000, call qword ptr [rip - 0x139f], call qword ptr [rip - 0x13d3], call 0xc240, call 0xc300, call qword ptr [rip - 0x1419]
+Empreinte notation : sha256:93977b05e5646e7fd583077b65b8eb2348b03b54e2fd09dd56567e5fe59fd2bb
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et réponds AU FORMAT
+POINTEUR SEUL, une seule ligne exactement :
+IDENTIFIANT · sha256:<empreinte>
+— IDENTIFIANT : l'identifiant de bloc de la carte (la forme iNNNNNN de
+l'entête) ;
+— <empreinte> : l'empreinte sha256 recopiée TELLE QUELLE de la ligne
+« Empreinte notation » ci-dessus (64 hexadécimaux, aucun calcul).
+Rien d'autre.

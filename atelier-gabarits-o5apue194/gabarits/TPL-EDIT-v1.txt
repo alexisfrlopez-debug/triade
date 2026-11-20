@@ -1,0 +1,42 @@
+LE GABARIT D'ÉDITION TPL-EDIT-v1 — la carte TRIADE (le corps du gabarit
+versionné : la grammaire du format hunk, l'exemple complet, les règles
+d'ancre — il vit UNE FOIS par session ; le client recoupe l'empreinte du
+gabarit ET celle de la notation AVANT l'application, applique les hunks,
+reconstruit et confronte par round-trip exact — fail-closed, les refus
+nommés : HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT,
+ROUND-TRIP-DIVERGENT, GABARIT-DIVERGENT).
+
+LA GRAMMAIRE (obligatoire — toute réponse hors grammaire du gabarit =
+refus HORS-FORMAT au premier nom) :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+
+LES RÈGLES D'ANCRE : les ancres « base: » sont des lignes EXACTES du texte
+courant (octet pour octet) ; un hunk sans ligne « - » est une insertion
+PURE après l'ancre ; la première ligne « - » répète TOUJOURS l'ancre ; les
+hunks s'appliquent EN ORDRE, chacun dans le texte courant issu des hunks
+précédents.
+
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».

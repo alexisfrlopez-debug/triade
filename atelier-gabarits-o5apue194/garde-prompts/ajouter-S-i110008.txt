@@ -1,0 +1,116 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE — le
+cadre ABI, les types et la signature sont DÉRIVÉS de la couche I
+par le client : le squelette ci-dessous est DÉTERMINISTE ; tu ne
+remplis QUE LA LOGIQUE).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-08 · ligne : composer UNE ligne hexadécimale, tampon fixe · révision 1
+Intention : composer UNE ligne de la grille — le décalage en 8 chiffres
+hex, les seize octets en groupes, le miroir ASCII — dans un tampon fixe
+de 77 o : AUCUN débordement par construction (les longueurs SONT les
+bornes), AUCUN état (les arguments seuls), AUCUNE entrée IAT (le miroir
+exact des feuilles pures tls13). La ligne finale, incomplète, garde le
+FORMAT : les groupes absents sont des espaces — l'alignement des
+colonnes est un invariant, pas une chance.
+Contrat :
+  pre  : P1 rcx = la source, au moins rdx octets lisibles ; P2 rdx =
+             la longueur valide, 1 à 16 ; P3 r8 = la sortie, 77 o
+             (LIGNE_TAILLE) accessibles en écriture ; P4 r9 = le
+             décalage de la ligne (multiple de 16, ≤ 0x7FFFFFFF —
+             BORNE_TAILLE le garantit).
+  post : Q1 la sortie = « SSSSSSSS  HH HH HH HH HH HH HH HH  HH HH HH
+             HH HH HH HH HH  MMMMMMMMMMMMMMMMM » + NUL : 8 chiffres
+             hex du décalage (grand-boutiste, majuscules), 2 espaces,
+             16 groupes « HH » séparés par un espace (l'espace médian
+             DOUBLÉ après le huitième : 32 hex + 16 espaces), 2
+             espaces, le miroir ASCII de 16, le NUL final — EXACTEMENT
+             77 o écrits, jamais un de plus ;
+         Q2 le miroir : l'octet 0x20 à 0x7E → le caractère ; tout
+             autre → « . » (le point de remplacement — les octets non
+             imprimables ne cassent jamais l'alignement) ;
+         Q3 la ligne INCOMPLÈTE (rdx < 16) : les groupes au-delà de rdx
+             = deux espaces, le miroir au-delà = un espace — la ligne
+             finale demeure DROITE, la colonne ASCII ne bouge pas ;
+         Q4 rax = 0.
+  inv  : I1 AUCUNE entrée IAT, AUCUN site syscall, AUCUN état détenu
+             (les arguments seuls — charte § 9, le miroir tls13) ;
+         I2 AUCUN débordement : la composition écrit EXACTEMENT les 77
+             o de P3 — les bornes de P2/P4 sont vérifiées AVANT la
+             première écriture ;
+         I3 la source est LUE SEULE (jamais modifiée — la pureté
+             feather : ni le tampon de vue ni la sortie ne se
+             rétro-écrivent) ;
+         I4 les chiffres hexa : la table « 0123456789ABCDEF » du plan
+             (majuscules — la convention du journal des builds du
+             projet) ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : longueur 0 (P2) → verdict -5 ENTRÉE, rien écrit — une ligne
+       d'au moins un octet.
+  E2 : longueur > 16 (P2) → verdict -5 ENTRÉE, rien écrit — le format
+       est BORNÉ : seize octets, jamais dix-sept.
+  E3 : source ou sortie nulle (P1/P3) → verdict -5 ENTRÉE, rien écrit.
+Vecteurs :
+  V1 : doré — la première ligne de proxy.exe scellé (« MZ\x90\x00\x03
+       \x00… ») : la ligne exacte, les 77 o comparés au modèle ; la
+       ligne finale incomplète du témoin de 3 × 64 Kio + 1 (UN octet
+       valide : quinze groupes d'espaces, la colonne droite) (couvre
+       Q1, Q2, Q3, Q4).
+  V2 : différentiel — 10 000 lignes aléatoires (décalages, longueurs
+       1..16, octets 0x00..0xFF) : la sortie == la composition Python
+       du même format — l'égalité octet par octet (couvre Q1, Q2,
+       Q3).
+  V3 : rejet — longueur 0, longueur 17, pointeurs nuls : les TROIS
+       verdicts -5, rien écrit (la sortie demeure intacte — le
+       différentiel le constate) (couvre E1, E2, E3).
+  V4 : falsification — une colonne décalée d'un espace dans la
+       notation : l'écran attendu diverge, l'oracle à scénarios
+       échoue — la falsification DEMANDÉE.
+Fixtures    : proxy.exe scellé (sa première ligne — la pièce de l'ère
+              rendue à l'œil) + le témoin de 3 × 64 Kio + 1 (la ligne
+              finale).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (le format arrêté : 77 o), D7 (la pureté).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS, il est
+déjà là ; les règles de notation vivent en tête du squelette) :
+; loupe-08 · ligne : composer UNE ligne hexadécimale, tampon fixe · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = la source, au moins rdx octets lisibles · rdx = la longueur valide, 1 à 16 · r8 = la sortie, 77 o · r9 = le
+; verdicts nommés : -5 ENTRÉE
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises « ; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici) » et
+« ; <<< FIN-LOGIQUE » (les gardes des pré-conditions, la logique du
+post-condition, les étiquettes résolues aux cibles absolues).
+La PREMIÈRE ligne de ta réponse est la première instruction, la
+DERNIÈRE est la dernière — aucune balise, aucun squelette, aucun
+commentaire, aucune explication : la réponse n'est QUE les
+instructions de la logique.
