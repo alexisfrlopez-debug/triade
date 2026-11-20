@@ -1,0 +1,124 @@
+{
+ "cellules": {
+  "editer-A": {
+   "total": {
+    "n": 18,
+    "mediane": 3731.5,
+    "q1": 2509,
+    "q3": 5810,
+    "min": 1064,
+    "max": 10495
+   },
+   "reponse": {
+    "n": 18,
+    "mediane": 1725.5,
+    "q1": 1115,
+    "q3": 2760,
+    "min": 390,
+    "max": 4095
+   },
+   "verts": 17,
+   "n": 18
+  },
+  "editer-H2": {
+   "total": {
+    "n": 18,
+    "mediane": 2452.0,
+    "q1": 1832,
+    "q3": 3498,
+    "min": 1118,
+    "max": 6838
+   },
+   "reponse": {
+    "n": 18,
+    "mediane": 39.5,
+    "q1": 38,
+    "q3": 43,
+    "min": 36,
+    "max": 46
+   },
+   "verts": 17,
+   "n": 18
+  },
+  "ajouter-A2": {
+   "total": {
+    "n": 18,
+    "mediane": 5079.0,
+    "q1": 3593,
+    "q3": 6685,
+    "min": 2490,
+    "max": 9481
+   },
+   "reponse": {
+    "n": 18,
+    "mediane": 2772.5,
+    "q1": 1067,
+    "q3": 4095,
+    "min": 434,
+    "max": 4095
+   },
+   "verts": 6,
+   "n": 18
+  },
+  "ajouter-H2": {
+   "total": {
+    "n": 18,
+    "mediane": 4639.0,
+    "q1": 4050,
+    "q3": 6761,
+    "min": 3204,
+    "max": 7666
+   },
+   "reponse": {
+    "n": 18,
+    "mediane": 1632.0,
+    "q1": 891,
+    "q3": 2947,
+    "min": 554,
+    "max": 4095
+   },
+   "verts": 0,
+   "n": 18
+  }
+ },
+ "gains": {
+  "editer": {
+   "total": 0.3429,
+   "reponse": 0.9771,
+   "avant_mediane": 3731.5,
+   "hunk_mediane": 2452.0,
+   "avant_reponse": 1725.5,
+   "hunk_reponse": 39.5
+  },
+  "ajouter": {
+   "total": 0.0866,
+   "reponse": 0.4114,
+   "avant_mediane": 5079.0,
+   "hunk_mediane": 4639.0,
+   "avant_reponse": 2772.5,
+   "hunk_reponse": 1632.0
+  }
+ },
+ "rq2": {
+  "post_opt04": {
+   "n": 18,
+   "mediane": 1103.0,
+   "q1": 808,
+   "q3": 1502,
+   "min": 610,
+   "max": 2840
+  },
+  "conformes": 18,
+  "n": 18
+ },
+ "verdissement": {
+  "editer-H": {
+   "n": 12,
+   "verts": 1
+  },
+  "ajouter-A": {
+   "n": 10,
+   "verts": 0
+  }
+ }
+}
