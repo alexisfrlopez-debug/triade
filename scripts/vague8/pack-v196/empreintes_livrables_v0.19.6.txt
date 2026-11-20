@@ -3,7 +3,7 @@ LES EMPREINTES SHA-256 DES CINQ PIÈCES DU PACK v0.19.6
 inter-pièces v196 : 39 VERT 0 ROUGE au build)
 
 3022d1c474abc2e9f6f47d836c8cc53edd40461234049773f740973d60b520ce  1-manuscrit/TRIADE_manuscrit_v0.19.6.pdf
-81c20717894394977c57e4643d8a4372a528024857b2c8674f7a4715330e1b0b  2-specification/Protocole_TRIADE_v0.15.5_Specification.pdf
-eb74fee1a068091ab25cc03a02907ca8079c332aefd3999c936445892cd47469  3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.4.pdf
+ee3e852695087fad3166eacb496443cd8af1e70cc2f33a63f5d601746f0de885  2-specification/Protocole_TRIADE_v0.15.5_Specification.pdf
+bc1e93fee893d7fb1a6fc899f56000073ba2f987cd4ae94f790f9489443dc392  3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.4.pdf
 6ba23f29e6e771ca6c4703220e435d8af99d54888cb019911f3f3b4945c1424d  4-preuves-calculs/TRIADE_preuves_et_calculs_v0.19.6.pdf
 736438c511c9351f92754d983a665aad5c928527e893a52e8b203f35a6d21e14  5-presentation/TRIADE_presentation_20261120_v196.pdf

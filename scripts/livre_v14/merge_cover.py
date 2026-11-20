@@ -27,7 +27,7 @@ for page in PdfReader(BODY).pages:
     writer.add_page(page)
 
 writer.add_metadata({
-    "/Title": "Le Livre du Coffre — TRIADE CF1 → CF2 → CF3 (v1.3)",
+    "/Title": "Le Livre du Coffre — TRIADE CF1 → CF2 → CF3 (v1.4)",
     "/Author": "Alexis FR-LOPEZ ; Agent Z.ai (GLM)",
     "/Subject": "Le coffre-fort du protocole TRIADE : générations, cérémonies, runbook du maître",
     "/Creator": "TRIADE — chaîne LaTeX/Tectonic (D25/D81/D133)",
