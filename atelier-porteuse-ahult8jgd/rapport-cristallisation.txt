@@ -1,0 +1,25 @@
+LA CRISTALLISATION INCRÉMENTALE (ahult8jgd §3) — la fermeture transitive du diff seule re-vérifiée, l'audit 1/10 maintenu
+
+LE GRAPHE RÉEL : 28 blocs tls13, 42 arêtes déclarées (les « Dépendances : » des en-têtes du dépôt) ; la semence full-card : 28 blocs VERTS, le cristal posé (sha256 par notation + le graphe)
+LE ZÉRO-DIFF : fermeture ∅, complément 28 — l'audit tire ['tls13-15', 'tls13-17', 'tls13-19'] (graine 20261120), 3 blocs vérifiés, verdict VERT
+
+LE DIFF RÉEL (tls13-02, la compression SHA-256, un octet de commentaire ajouté — la notation reste VERT) :
+  la fermeture transitive : 11 blocs {02, 03, 04, 05, 06, 07, 08, 24, 25, 26, 27}
+  le complément épargné : 17 blocs (01/09/10/11/12/13/14/15/16/17/18/19/20/21/22/23/28)
+  l'audit 1/10 (graine 20261120) : 20, 22 — re-vérifiés intégralement
+  L'ÉCONOMIE : 13 blocs vérifiés contre 28 à la règle full-card (−54 %) ; le poste 142 ms
+  le verdict : VERT
+
+LE CONTRÔLE NÉGATIF (tls13-17 muté au compte d'en-tête — le R5 DOIT refuser — ET le cristal empoisonné : son sha mensonger fait croire au diff {02} seul, la fermeture ÉPARGNE le 17 muté) :
+  le tirage de l'audit (graine 20261120) : 20, 22
+  tls13-17 HORS le tirage — NON ATTRAPÉ : L'ÉCART NOMMÉ (l'audit est probabiliste, 1/10, JAMAIS une preuve — la faute demeure au cristal empoisonné : le prochain tirage ou la prochaine SEMENCE full-card la prendra)
+  LA CAPTURE DÉMONTRÉE (graine 4 CHERCHÉE et consignée) : le tirage prend tls13-17 — REFUS (['tls13-17']) : l'audit ATTRAPE la faute invisible au diff
+  le verdict du run à la graine par défaut : VERT  — VERT : le filet a laissé passer (l'écart nommé ci-dessus)
+
+LE BALAYAGE DES GRAINES (200 tirages de l'audit sur le complément de 17 blocs, k=2) : tls13-17 tiré 19/200 = 9.5 % (la probabilité du tirage uniforme : 11.8 %) — L'AUDIT EST UN FILET PROBABILISTE, PAS UNE PREUVE : la garantie reste la FERMETURE (le bloc muté EST dans le diff sha — la re-vérification full-card au prochain semis le prendra)
+
+LE POSTE DE VÉRIFICATION (n=10, la médiane, cette machine — le laboratoire au diff tls13-02 seul, R5 vert) :
+  la règle full-card : 279 ms [278–281]
+  l'incrément (fermeture + audit) : 139 ms [139–142] — −50 %
+
+LE VERDICT : VERT

@@ -1,0 +1,90 @@
+{
+ "moteur": "keystone=0.9.2;capstone=5.0.7(5.0.1280)",
+ "contrat": "r5-v1",
+ "echantillon": [
+  "/home/z/my-project/depot/tls13/notation/tls13-01-sha256-init.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-02-sha256-comprimer.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-03-sha256-absorber.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-04-sha256-finaliser.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-05-hmac-sha256.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-06-hkdf-extract.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-07-hkdf-expand.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-08-hkdf-expand-label.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-09-f25519-add.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-10-f25519-sub.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-11-f25519-mul.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-12-f25519-propager-geler.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-13-x25519-echelle.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-14-x25519-cle-publique.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-15-aes128-cles-tour.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-16-aes128-bloc.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-17-ghash-multiplication.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-18-gcm-sceller.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-19-gcm-ouvrir.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-20-enregistrement-proteger.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-21-enregistrement-deproteger.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-22-clienthello-composer.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-23-serverhello-traiter.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-24-calendrier-cles.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-25-finished-calculer-verifier.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-26-epinglage.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-27-principal-machine-etats.asm",
+  "/home/z/my-project/depot/tls13/notation/tls13-28-socle-appel.asm"
+ ],
+ "semis_s": 0.2876,
+ "avant_s": [
+  0.284,
+  0.2831,
+  0.2946,
+  0.3019,
+  0.2834,
+  0.2793,
+  0.2808,
+  0.279,
+  0.2952,
+  0.2865
+ ],
+ "apres_s": [
+  0.0006,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004,
+  0.0004
+ ],
+ "medianes": {
+  "avant_s": 0.2837,
+  "apres_s": 0.0004
+ },
+ "negatif": {
+  "cle-invalidee": {
+   "octets_mutes": 1,
+   "cle_intacte": "64005eb0da8c52cf",
+   "cle_mutee": "7ea5959ef5d0b1f6",
+   "cle_differente": true,
+   "hit_refuse": true,
+   "reverification_executee": true,
+   "verdict_reverifie": "VERT"
+  },
+  "compte-taille": {
+   "octets_mutes": 1,
+   "cle_intacte": "64005eb0da8c52cf",
+   "cle_mutee": "59cc094e37ff3c9c",
+   "cle_differente": true,
+   "hit_refuse": true,
+   "reverification_executee": true,
+   "verdict_reverifie": "REFUS"
+  }
+ },
+ "sensibilite": {
+  "moteur": true,
+  "rva": true,
+  "slot": true,
+  "contrat": true
+ },
+ "verdict": "VERT"
+}

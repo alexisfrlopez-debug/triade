@@ -1,0 +1,157 @@
+{
+ "runs": [
+  {
+   "run": 1,
+   "total_s": 82.176,
+   "somme_postes_s": 82.142,
+   "inter_poste_s": 0.034,
+   "scelles_intacts": true,
+   "empreintes": {
+    "loupe/loupe.exe": "c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1",
+    "tls13/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "m1/selftest.exe": "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0",
+    "scripts/campagne_d204/unite-01-T/piece/loupe.exe": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "scripts/campagne_d204/unite-02-T/piece/loupe.exe": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e"
+   },
+   "code": 2
+  },
+  {
+   "run": 2,
+   "total_s": 70.914,
+   "somme_postes_s": 70.857,
+   "inter_poste_s": 0.057,
+   "scelles_intacts": true,
+   "empreintes": {
+    "loupe/loupe.exe": "c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1",
+    "tls13/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "m1/selftest.exe": "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0",
+    "scripts/campagne_d204/unite-01-T/piece/loupe.exe": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "scripts/campagne_d204/unite-02-T/piece/loupe.exe": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e"
+   },
+   "code": 2
+  },
+  {
+   "run": 3,
+   "total_s": 43.724,
+   "somme_postes_s": 43.697,
+   "inter_poste_s": 0.027,
+   "scelles_intacts": true,
+   "empreintes": {
+    "loupe/loupe.exe": "c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1",
+    "tls13/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "m1/selftest.exe": "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0",
+    "scripts/campagne_d204/unite-01-T/piece/loupe.exe": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "scripts/campagne_d204/unite-02-T/piece/loupe.exe": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e"
+   },
+   "code": 2
+  },
+  {
+   "run": 4,
+   "total_s": 39.831,
+   "somme_postes_s": 39.797,
+   "inter_poste_s": 0.034,
+   "scelles_intacts": true,
+   "empreintes": {
+    "loupe/loupe.exe": "c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1",
+    "tls13/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "m1/selftest.exe": "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0",
+    "scripts/campagne_d204/unite-01-T/piece/loupe.exe": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "scripts/campagne_d204/unite-02-T/piece/loupe.exe": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e"
+   },
+   "code": 2
+  },
+  {
+   "run": 5,
+   "total_s": 39.731,
+   "somme_postes_s": 39.697,
+   "inter_poste_s": 0.034,
+   "scelles_intacts": true,
+   "empreintes": {
+    "loupe/loupe.exe": "c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1",
+    "tls13/proxy.exe": "446279f3ab356900870cc3b3e1700654a4216ec0b264172340e453db3b00d93d",
+    "m1/selftest.exe": "8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0",
+    "scripts/campagne_d204/unite-01-T/piece/loupe.exe": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "scripts/campagne_d204/unite-02-T/piece/loupe.exe": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e"
+   },
+   "code": 2
+  }
+ ],
+ "table": [
+  {
+   "poste": "garde-sceau-I",
+   "mediane_s": 0.092,
+   "min_s": 0.064,
+   "max_s": 0.103
+  },
+  {
+   "poste": "cristallisation-12-concourants",
+   "mediane_s": 4.533,
+   "min_s": 4.358,
+   "max_s": 4.767
+  },
+  {
+   "poste": "round-trip-notation-1",
+   "mediane_s": 0.303,
+   "min_s": 0.232,
+   "max_s": 1.259
+  },
+  {
+   "poste": "round-trip-notation-2",
+   "mediane_s": 0.333,
+   "min_s": 0.223,
+   "max_s": 1.983
+  },
+  {
+   "poste": "oracle-bloc-loupe-01 (parallèle)",
+   "mediane_s": 11.618,
+   "min_s": 10.367,
+   "max_s": 29.637
+  },
+  {
+   "poste": "build-recomposition-loupe-02",
+   "mediane_s": 0.49,
+   "min_s": 0.474,
+   "max_s": 1.36
+  },
+  {
+   "poste": "oracle-du-bloc-loupe-02 (parallèle)",
+   "mediane_s": 23.644,
+   "min_s": 23.154,
+   "max_s": 45.649
+  },
+  {
+   "poste": "epreuve-scenario-posix",
+   "mediane_s": 0.304,
+   "min_s": 0.294,
+   "max_s": 0.876
+  },
+  {
+   "poste": "assemblage-kits",
+   "mediane_s": 0.218,
+   "min_s": 0.204,
+   "max_s": 0.417
+  },
+  {
+   "poste": "assemblage-kits (reprise : la pièce canonique restaurée de la gravure)",
+   "mediane_s": 0.22,
+   "min_s": 0.202,
+   "max_s": 0.289
+  }
+ ],
+ "medianes": {
+  "total_s": 43.724,
+  "somme_postes_s": 43.697,
+  "inter_poste_s": 0.034
+ },
+ "identite_consoles_run_a_run": true,
+ "identite_consoles_originales": false,
+ "scelles_intacts": true,
+ "codes": [
+  2,
+  2,
+  2,
+  2,
+  2
+ ],
+ "verdict": "ROUGE"
+}

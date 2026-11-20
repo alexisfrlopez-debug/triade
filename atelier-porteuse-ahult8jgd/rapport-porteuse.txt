@@ -1,0 +1,64 @@
+LE RAPPORT DE L'ATELIER ahult8jgd — LA BOUCLE PORTEUSE AES-NI RESTRUCTURÉE, LE CACHE DE ROUND-TRIP, LA CRISTALLISATION INCRÉMENTALE, LA DÉCOMPOSITION DES 37 s
+(la vague 11 ; le plan gelé sha256 6d3e94b2692d79c7… AVANT toute mesure ; la machine : Xeon 3200 MHz,
+constant_tsc, aes — les drapeaux consignés au registre)
+
+(1) LA RESTRUCTURE DE LA BOUCLE PORTEUSE (les variantes à la marge VIERGE — 0xD200/0xD400/0xD800/0xDC00/
+    0xDE00, le scellé tls13-16 assemblé à son slot puis posé en copie de laboratoire 0xC400, la convention
+    du rig 8z4hj76w4 reprise : octets position-indépendants) :
+    LES V3 (la table d'adresses précalculée 230 o ; le déroulage k=4 341 o ; l'inline 674 o) : la table
+    53,11 c/bloc [IQR 0,59], le déroulé 53,17 [0,44], l'inline 48,41 [0,16] — LA CHAÎNE add→mov→call
+    n'est PAS le seul porteur : la table et le déroulage SEULS ne brisent pas la dépendance (l'écart
+    nommé — la leçon : le mode d'adressage indépendant PAR BLOC est le levier, pas la précalcule).
+    LES V4 (la restructure agressive : le mode d'adressage [base + index*8], le calendrier des clés
+    exposé aux adresses INDÉPENDANTES) : L'APPEL 7,81 c/bloc [0,19] — déjà SOUS la cible ; L'INLINE
+    (le corps aesenc posé dans la boucle, plus de call) 7,09 c/bloc [0,09] aux 64 blocs, 5,10 [0,03]
+    aux 256 — LA CIBLE ≤12 CYCLES/BLOC ENVELOPPE COMPRISE ATTEINTE (7,09 < 12 ; la référence v2
+    50,56 [0,16], le scellé appelé par le C 7,62 [0,19], le creux 3,83 [0,31], la calibration du stub
+    msx64 3,75 [0,16]) ; LE GAIN v2 -> v4-inline : 50,56 -> 7,09 = 7,1× — la boucle porteuse rejoint
+    LA CLASSE du scellé appelé par le compilateur (7,62) : la forme du porteur n'est plus la limite.
+    LA PARITÉ OBSERVABLE : le calendrier des clés par LE SCELLÉ tls13-15 confronté au juge FIPS 197
+    §5.2 VERT ; le vecteur FIPS C.1 VERT aux neuf variantes ; LA DIFFÉRENTIELLE 64/64 ET 256/256
+    OCTET POUR OCTET contre le scellé appelé par bloc (les neuf formes) ; LES REPLIS FORCÉS (le jz ->
+    jmp du laboratoire) exercés ; LE CONTRÔLE NÉGATIF (l'octet du déroulé muté 0x90 -> 0x91 à
+    l'offset 530) ATTRAPÉ — la divergence au premier vecteur ; LA BORNE N ≤ 256 fail-closed (rax = -2
+    refusé, rien chiffré hors borne) ; le round-trip 100 % aux dix notations.
+    LA MESURE DE L'ÉCONOMIE DU STUB : l'inline économise le call (7,81 -> 7,09 = 0,72 c/appel —
+    cohérent avec la calibration 3,75 du stub complet msx64, l'appel interne au rig étant plus léger).
+
+(2) LE CACHE DE ROUND-TRIP (rapport-roundtrip-cache.txt) : la clé = sha256(notation || version du
+    moteur [keystone=0.9.2;capstone=5.0.7] || configuration du profil [r5-v1]), le hit rend le verdict
+    SANS ré-exécution ; LA SEMENCE 0,288 s (28 notations tls13, tout vérifié) ; L'OUVERTURE n=10 :
+    AVANT 283,7 ms -> APRÈS 0,4 ms — LE GAIN 680,6× (−99,9 %) ; LE CONTRÔLE NÉGATIF double : la
+    mutation d'un octet du corps (clé différente, hit refusé, re-vérification exécutée) ET la mutation
+    du compte d'en-tête (clé différente, re-vérification COMPLÈTE qui ATTRAPE la faute — le verdict
+    REFUS, jamais un souvenir) ; LA SENSIBILITÉ aux trois constituants (moteur, rva/slot, contrat)
+    vérifiée ; TOUT écart de clé = re-vérification complète (fail-closed).
+
+(3) LA CRISTALLISATION INCRÉMENTALE (rapport-cristallisation.txt) : LE GRAPHE RÉEL des 28 blocs tls13
+    (42 arêtes déclarées aux « Dépendances : » des en-têtes du dépôt) ; LA FERMETURE TRANSITIVE du diff
+    SEULEMENT re-vérifiée — le diff réel tls13-02 : fermeture de 11 blocs, complément 17 épargné,
+    l'audit 1/10 (graine 20261120) tire 2 blocs — 13 vérifiés contre 28 (−54 %), le poste 142 ms ;
+    LE CONTRÔLE NÉGATIF : le cristal empoisonné (sha mensonger) épargne le bloc muté hors fermeture —
+    L'ÉCART NOMMÉ (l'audit 1/10 est un FILET PROBABILISTE, jamais une preuve : tls13-17 tiré 19/200 =
+    9,5 % au balayage) ; LA CAPTURE DÉMONTRÉE à la graine cherchée (le tirage prend le muté — REFUS) ;
+    la garantie demeure LA SEMENCE full-card (la faute prise au prochain semis).
+
+(4) LA DÉCOMPOSITION DES 37 s DU BRAS T (rapport-decomposition-37s.txt — la liste fixe de la vague 5,
+    le clone de laboratoire, l'horloge monotone, n=5) : LA TABLE PAR POSTE — garde-sceau-I 0,092 s ;
+    cristallisation-12-concourants 4,533 s ; round-trips 0,303+0,333 s ; L'ORACLE loupe-01 11,618 s ;
+    build-recomposition-loupe-02 0,490 s ; L'ORACLE loupe-02 23,644 s ; l'épreuve POSIX 0,304 s ;
+    l'assemblage des kits 0,218+0,220 s ; LA SOMME 43,697 s + l'inter-poste 0,034 s == LE TOTAL MESURÉ
+    43,724 s (l'écart 7 ms, l'inter-poste borné [0,027–0,057] — les empreintes, les lancements, le
+    registre) ; LA LECTURE : LES ORACLES PORTENT 81 % (35,3 s — les re-exécutions vivantes sous
+    Unicorn), la cristallisation 4,5 s, les round-trips 0,61 s, la recomposition 0,49 s — le coût du
+    régime de vérification du bras T est DOMINÉ par les volumes d'oracle (le recoupement avec le bras
+    C+G+ de la même vague : les oracles à volumes égaux y coûtent 0,51 s — l'écart 3lmyfb2xa tranche).
+    L'ÉCART NOMMÉ : les consoles de la décomposition ne sont pas LIGNE-IDENTIQUES aux originales (les
+    horodatages et durées intra-lignes diffèrent — la structure identique, le verbatim non) : la
+    re-exécution instrumentée n'est pas la console historique.
+
+LES SCELLÉS : INTACTS avant et après CHAQUE exécution (loupe/loupe.exe, tls13/proxy.exe, m1/selftest.exe,
+les pièces de campagne — la garde re-vérifiée au geste du pack).
+
+LA LIMITE NOMMÉE : UNE SEULE MACHINE au bac (la même que la vague 10 — les témoins signés attendent le
+geste du maître).

@@ -1,0 +1,234 @@
+{
+ "a107a6c30759df8635fffea28097763c3bd9d97d8108565c9ebb25ff5c01f713": {
+  "verdict": "VERT",
+  "bloc": "tls13-01-sha256-init",
+  "octets": 74,
+  "instructions": 12,
+  "sha256_octets": "fee7c1735dd8de361d7e252b327e5992bc851cf863131cda135f6b8f42d23e5e",
+  "verificateur": "r5-v1"
+ },
+ "de2f3e6a0f5b22c6aae8f0259098a10ddf870ab750da9abf33359ac894215ec6": {
+  "verdict": "VERT",
+  "bloc": "tls13-02-sha256-comprimer",
+  "octets": 387,
+  "instructions": 122,
+  "sha256_octets": "8b210bdaad8791dfbd9f0914e70866f7c6f175740911a7cde98bf7dc21e6cfd8",
+  "verificateur": "r5-v1"
+ },
+ "1428bc860484a957f1d5b8a1cd3d3cadd68671579804a8208eccd5ad024cbdc7": {
+  "verdict": "VERT",
+  "bloc": "tls13-03-sha256-absorber",
+  "octets": 139,
+  "instructions": 49,
+  "sha256_octets": "d4a00d449105de7980009f08397f44eb30627a8cfb55687bcc3a5ba77e89aebf",
+  "verificateur": "r5-v1"
+ },
+ "6cd16e2ad72557303ca183ed252f72a484040a9d910d5e1828cf7f9198964009": {
+  "verdict": "VERT",
+  "bloc": "tls13-04-sha256-finaliser",
+  "octets": 165,
+  "instructions": 53,
+  "sha256_octets": "63ac07d57953b5f5accdae64e7cb1b351ec7ff3fcfe381667f13351f76986a71",
+  "verificateur": "r5-v1"
+ },
+ "657e8dac0686d9138c1996c4e46cce446cb596a3f3ed60c0f81108686d887803": {
+  "verdict": "VERT",
+  "bloc": "tls13-05-hmac-sha256",
+  "octets": 435,
+  "instructions": 102,
+  "sha256_octets": "01177a62eab5adbca8fa46f3b6f1a7ea6a85e16b2406aaadd8ca6a6d713d1fec",
+  "verificateur": "r5-v1"
+ },
+ "488d75f9b0d3ac236d8049a7a8af8437d4e01db37612d09b23b55e80d24a73c7": {
+  "verdict": "VERT",
+  "bloc": "tls13-06-hkdf-extract",
+  "octets": 151,
+  "instructions": 41,
+  "sha256_octets": "a61f4b14766206e39c0d1905ec43b48a17d4ce8adf4d29980397e39dd59ee1e6",
+  "verificateur": "r5-v1"
+ },
+ "0d55b86de6920089b22f7d8daef4d428928e1c54783f6f484e69f1f9d8191393": {
+  "verdict": "VERT",
+  "bloc": "tls13-07-hkdf-expand",
+  "octets": 347,
+  "instructions": 105,
+  "sha256_octets": "12f89e6b460c89efb20c3115a174c08ff29b66c836144ec7acd805e067840965",
+  "verificateur": "r5-v1"
+ },
+ "55e2a5b61791e4116f065a30b286aab6c7b4142af4c12926d7ef7615bd26a30d": {
+  "verdict": "VERT",
+  "bloc": "tls13-08-hkdf-expand-label",
+  "octets": 310,
+  "instructions": 82,
+  "sha256_octets": "24293305584dadae03145fea73da2f3575c825d7c73d77dff5f5a82cac405ed4",
+  "verificateur": "r5-v1"
+ },
+ "16f98ec0d134bc3b37e68fb19b04d9f6cb673713508c6f2f59ae479faf91c19c": {
+  "verdict": "VERT",
+  "bloc": "tls13-09-f25519-add",
+  "octets": 54,
+  "instructions": 15,
+  "sha256_octets": "f9a8e16f2d5c49bdca3db5a54a2becc7c51c080cedc8deddcd884f80f66f7fea",
+  "verificateur": "r5-v1"
+ },
+ "b56c9f2ea940957cef34e16bbb38b516564ceb201025b5b7f65b4a248e07d93a": {
+  "verdict": "VERT",
+  "bloc": "tls13-10-f25519-sub",
+  "octets": 252,
+  "instructions": 54,
+  "sha256_octets": "aa94be2f3527ac50e8ab45b4d57aab9df2d1c5bb0951bff4fa760374b405ac5f",
+  "verificateur": "r5-v1"
+ },
+ "3ed5a953dc6cb5eebb3242cb43ccbaa4085e34c87b3c4ccc78e8bee29e8fa545": {
+  "verdict": "VERT",
+  "bloc": "tls13-11-f25519-mul",
+  "octets": 1078,
+  "instructions": 230,
+  "sha256_octets": "9ea3008f167792212b486b9f53e7ceb4ba4f6055d90960700f74f38fe3062f6c",
+  "verificateur": "r5-v1"
+ },
+ "042bf24aa11fd35079e72e7e202827a2d5534d3f15a26f52cd6e4d5163b45057": {
+  "verdict": "VERT",
+  "bloc": "tls13-12-f25519-propager-geler",
+  "octets": 281,
+  "instructions": 80,
+  "sha256_octets": "b0c1727ffc257c5ace86f93da5b206682fc03f5fbf9d8a47d0b8ac46b03189e2",
+  "verificateur": "r5-v1"
+ },
+ "247efb8c89eac5e51e8106e6723316ddcd96d55c41f1dfe223df00e8fbac4b5b": {
+  "verdict": "VERT",
+  "bloc": "tls13-13-x25519-echelle",
+  "octets": 2887,
+  "instructions": 459,
+  "sha256_octets": "8f11c5fa2edbfcf507a0e63ee15b2df0ad83ec54a45a0358a82307e40411afef",
+  "verificateur": "r5-v1"
+ },
+ "34adfb829e382571696db3adb63c2851361a63680c5ec37eb79e126f3577e428": {
+  "verdict": "VERT",
+  "bloc": "tls13-14-x25519-cle-publique",
+  "octets": 23,
+  "instructions": 6,
+  "sha256_octets": "861070b4a27c068c4557e2047d797d6215aeb41869fe2ad94763a5d76c4435f4",
+  "verificateur": "r5-v1"
+ },
+ "bd5a173d4e02b5569e6c90aec083c16d3ed4bf15014b4709f7003ea72d180f6e": {
+  "verdict": "VERT",
+  "bloc": "tls13-15-aes128-cles-tour",
+  "octets": 520,
+  "instructions": 114,
+  "sha256_octets": "4066b7ff7c052f1057e738781612b3c49eb5c2b29a6a7fc1f4226999a917ddf5",
+  "verificateur": "r5-v1"
+ },
+ "64005eb0da8c52cfc84e5f00956187b709ab91812385caf3cda34bc673933da9": {
+  "verdict": "VERT",
+  "bloc": "tls13-16-aes128-bloc",
+  "octets": 129,
+  "instructions": 26,
+  "sha256_octets": "cd760f141bf7d4b63f449ca68029034d274067ab2804741d0e6ac9d46b8e1309",
+  "verificateur": "r5-v1"
+ },
+ "9fbc6e2303ae2e6c098c17f8d39223d84da86fa4354105b5fa4f491505bfb25d": {
+  "verdict": "VERT",
+  "bloc": "tls13-17-ghash-multiplication",
+  "octets": 162,
+  "instructions": 40,
+  "sha256_octets": "b04526dde81c6cc719a7d421bb52fe85141dc354df1857072399d1a2dc3b305e",
+  "verificateur": "r5-v1"
+ },
+ "4efcbe99a87a40849cd1511df9dbb5dc99e2be5b1ad66fe26b4b978d32f59ab2": {
+  "verdict": "VERT",
+  "bloc": "tls13-18-gcm-sceller",
+  "octets": 1076,
+  "instructions": 189,
+  "sha256_octets": "a7b3c84c00a2ed122aa736a8754e14d078b676a0bb3976aa4737fb520f8eb85c",
+  "verificateur": "r5-v1"
+ },
+ "27d33dff7bcde2d467647ebff3dd19c177e83e1ddd5fc09b2d9b396fe6bc5b81": {
+  "verdict": "VERT",
+  "bloc": "tls13-19-gcm-ouvrir",
+  "octets": 1163,
+  "instructions": 204,
+  "sha256_octets": "bd17e6c931b67b0e65a3ef3454d5b1a52422173e47df753c8324bf03bcedab10",
+  "verificateur": "r5-v1"
+ },
+ "6f1b25ad0ba3f6e7776c71707d97644ff7f818ec5e2504115b8846d34f5c68e8": {
+  "verdict": "VERT",
+  "bloc": "tls13-20-enregistrement-proteger",
+  "octets": 349,
+  "instructions": 76,
+  "sha256_octets": "311c614d8bb3ce6034472cc3b801a304fc49a51e2852042923cea6ea183bf5f7",
+  "verificateur": "r5-v1"
+ },
+ "39a9a23ed71319e9b5cb302b81ec36ca206f99bd5e27569a8db6dce1b0fd6b71": {
+  "verdict": "VERT",
+  "bloc": "tls13-21-enregistrement-deproteger",
+  "octets": 403,
+  "instructions": 86,
+  "sha256_octets": "184ddba7f3315bb9b03784079d563f4bce3c55a60f85c00ddb228f4a57c4dd7c",
+  "verificateur": "r5-v1"
+ },
+ "a6a9937ea31fe081c2f352d1349c39cdb6e0de532eac5bad6ed8c1fbf03c0a3b": {
+  "verdict": "VERT",
+  "bloc": "tls13-22-clienthello-composer",
+  "octets": 241,
+  "instructions": 47,
+  "sha256_octets": "d8930fc7a2a1dc4434239055ed4b867e45e5d35f18bb79786a1ff8ae1c599f6f",
+  "verificateur": "r5-v1"
+ },
+ "718e6f6fde090c81b397967e80614fa39831e58f19f1bae784e2f0fb435e18cc": {
+  "verdict": "VERT",
+  "bloc": "tls13-23-serverhello-traiter",
+  "octets": 532,
+  "instructions": 129,
+  "sha256_octets": "7b03dd5b7ecde867ad87f6f805a9243bedf5625942209fae05ae9f0afcf0da40",
+  "verificateur": "r5-v1"
+ },
+ "017279c9ba6b1001c562f52469672e608483ab0399b57703ed416fc77b22f06d": {
+  "verdict": "VERT",
+  "bloc": "tls13-24-calendrier-cles",
+  "octets": 2130,
+  "instructions": 336,
+  "sha256_octets": "b9d61c20f0a1f206d1525b53d3fd143df6ec61c6e887a7bfed7afe116bc0c1a8",
+  "verificateur": "r5-v1"
+ },
+ "7db0bdd860304c7e5ad9aa1ce7eb8da3d0ddae7da0e2745fe1668772e1085df3": {
+  "verdict": "VERT",
+  "bloc": "tls13-25-finished-calculer-verifier",
+  "octets": 239,
+  "instructions": 62,
+  "sha256_octets": "b9254ee0bc531b59786f436f48463911072a297a2b49954b76dda473d9a2968c",
+  "verificateur": "r5-v1"
+ },
+ "a6ac6dfb4676084b2766b17e0b61f909f12455c348d538cca779ea20307a574e": {
+  "verdict": "VERT",
+  "bloc": "tls13-26-epinglage",
+  "octets": 285,
+  "instructions": 58,
+  "sha256_octets": "077a2455c885da4f07e145712ba47d7b1b432a5d9e18ccc11281f3e5c6f09024",
+  "verificateur": "r5-v1"
+ },
+ "a014a47a79337c331a68523e4d3f083680c3ab2e9c9fb88a75c895ee04e4a757": {
+  "verdict": "VERT",
+  "bloc": "tls13-27-principal-machine-etats",
+  "octets": 2975,
+  "instructions": 586,
+  "sha256_octets": "9318242a8ed13ff102d855e571458afd6433fc3c9dc08b40b3b669db969b0396",
+  "verificateur": "r5-v1"
+ },
+ "94e681ce2649573e06d9cb08b0e58fa1348d93869b1bbc5497865d1b593a264f": {
+  "verdict": "VERT",
+  "bloc": "tls13-28-socle-appel",
+  "octets": 144,
+  "instructions": 48,
+  "sha256_octets": "22362997a0d82e7fb11205584a754686749ffe3920fd75c9d59fa35304bcd2e9",
+  "verificateur": "r5-v1"
+ },
+ "7ea5959ef5d0b1f6a104e69848d9f2e6bc13d88bde8cb8bee8256d49ba9607a0": {
+  "verdict": "VERT",
+  "bloc": "tls13-16-aes128-bloc",
+  "octets": 129,
+  "instructions": 26,
+  "sha256_octets": "d48d0f96e0678fe29043a19c96c06adbf9dc44a26f978a775b2e35e97574c5d3",
+  "verificateur": "r5-v1"
+ }
+}

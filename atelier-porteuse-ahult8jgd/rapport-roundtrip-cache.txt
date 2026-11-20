@@ -1,0 +1,18 @@
+LE CACHE DE ROUND-TRIP (ahult8jgd §2) — la clé sha256(notation || moteur || profil), le hit sans ré-exécution, TOUT écart = re-vérification complète
+
+LA CLÉ DU JOUR : moteur « keystone=0.9.2;capstone=5.0.7(5.0.1280) », contrat « r5-v1 », l'échantillon tls13 : 28 notations (le dépôt, les slots de layout.py)
+
+LA SEMENCE : 0.288 s — 28 verdicts cachés (aucun hit, tout vérifié) ; sha256 du mémo 04b14a9052b3dca2…
+
+LE TEMPS D'OUVERTURE (n=10, la médiane [min–max], cette machine) :
+  AVANT (tout re-vérifié, le régime d'aujourd'hui) : 283.7 ms [279.0–301.9]
+  APRÈS (le mémo chaud, 28/28 hits) : 0.4 ms [0.4–0.6]
+  LE GAIN : 680.6× (−99.9 %) — le hit rend le verdict SANS ré-exécution (keystone/capstone jamais invoqués)
+
+LE CONTRÔLE NÉGATIF (tls13-16, la notation du dépôt COPIÉE au laboratoire — le scellé intact) :
+  (a) la mutation d'un octet du corps (le déplacement 0x10 → 0x11, 1 octet(s) du texte) : la clé 64005eb0da8c52cf… → 7ea5959ef5d0b1f6… — DIFFÉRENTE ; le hit REFUSÉ, la re-vérification EXÉCUTÉE — le verdict re-vérifié : VERT (l'instruction mutée reste ASSEMBLABLE : le round-trip la valide — c'est la CLÉ qui attrape, au premier nom)
+  (b) la mutation du compte d'en-tête (Code : 129 → 128 o, 1 octet(s)) : la clé DIFFÉRENTE, le hit REFUSÉ, la re-vérification COMPLETE ATTRAPE : verdict REFUS (la faute CONSTATÉE — jamais un souvenir)
+
+LA SENSIBILITÉ DE LA FORMULE (tout écart = re-vérification) : moteur OUI ; rva OUI ; slot OUI ; contrat OUI
+
+LE VERDICT : VERT — le gain 680.6× mesuré, le contrôle négatif attrapé au premier nom, la formule sensible à chacun de ses trois constituants
