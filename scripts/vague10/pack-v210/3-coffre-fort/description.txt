@@ -1,0 +1,1 @@
+Le Livre du Coffre v1.5 — INCHANGÉ à la vague 10 (la pièce opérationnelle française garde son style ; les références à la spec v0.15.6 et au dépôt public demeurent à l'état vécu).

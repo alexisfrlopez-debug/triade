@@ -1,0 +1,1 @@
+Les preuves et calculs v0.21.0 — les huit pièces verbatim de la vague 10 : la faute SSE2 et la re-mesure aux instructions, le temps réel sur matériel, la fenêtre de relecture, les gardes, la non-interférence étendue et le round-trip du lifter, le bras C+G (la construction, la mesure M4, la réconciliation avec le contrôle négatif) + LA TABLE DES EMPREINTES des pièces de contenu.

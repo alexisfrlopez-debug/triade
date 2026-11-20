@@ -1,0 +1,155 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.21.0 (la vague 10)
+=========================================================
+(l'exécution des six instructions : 1e2vq7rtw, 3a91o5whb, 8z4hj76w4,
+ifqm1d1i4, mqf258e4l, rgttyp8bj ; les plans gelés AVANT toute mesure,
+le commit 951e79b précédant la première donnée, les empreintes sha256
+des six plans consignées à EMPREINTES-PLANS-VAGUE10.txt ; le linter
+inter-pièces + LA COHÉRENCE INTERNE v210 fail-closed au build)
+
+V1 — LE LINTER INTER-PIÈCES + INTERNE v210 : 65 VERT, 0 ROUGE.
+     Les versions croisées (manuscrit v0.21.0 ↔ spec v0.15.6 ↔ Livre
+     v1.5 — les deux dernières INCHANGÉES : aucune règle ni cérémonie
+     touchée), les DOI, le 1/16, H5 en deux verdicts, LES MÉDIANES M4
+     RECALCULÉES des JSON bruts, LE RATIO M4 RECALCULÉ des médianes non
+     arrondies (6,912/2,056 = 3,362 → 3,4× — la cohérence INTERNE : les
+     valeurs historiques 3,5× datées D204 seulement), LES TROIS BRAS
+     (39,24/1,95/2,16, l'effet notation 18,1×, le contrôle négatif
+     attrapé), LES GARDES (100 % déchargé-ou-gardé, 58/58), LA MUTATION
+     (LA COHÉRENCE INTERNE : le score 811/817 AUX TROIS BORDS du
+     manuscrit, le 811/820 et le 98,9 % INTERDITS), LA NON-INTERFÉRENCE
+     (13 blocs, sept familles, l'hypothèse du lifter nommée, « dix
+     familles » interdit), CF3 14/14, LA SSE2 (la faute 406/564, le
+     temps réel 833/561/16 040, le ratio périmé 0,03× interdit au
+     manuscrit), LA FENÊTRE (1 146 recalculé du JSONL brut, n=18, 18/18
+     verts, la réponse 40, la référence H2 2 452), L'AXE AJOUTER AU COÛT
+     OPÉRATIONNEL (3 674 — le format refusé à sa ligne historique,
+     jamais la valeur courante), LES EMPREINTES SHA-256 RECALCULÉES et
+     confrontées (les quatre à la présentation, les trois aux preuves,
+     les cinq au manifeste).
+
+V2 — LE CONTRÔLE NÉGATIF du linter (l'instruction 1e2vq7rtw) : la
+     divergence volontaire injectée (le score ajusté muté 811/817 →
+     811/820 au manuscrit — UNE SEULE pièce) REFUSÉE au premier nom (la
+     cohérence INTERNE + l'interdit) ; après retrait, le build admis (65
+     VERT 0 ROUGE) — la preuve que le contrôle vit.
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (la garde du sceau
+     14/14 re-vérifiée avant et après chaque chantier ; les quatorze
+     arbres signés, la clé déposée réelle, la cérémonie hors-ligne D87).
+
+V4 — LA FAUTE SSE2 NOMMÉE ET CORRIGÉE (8z4hj76w4) : la variante vague 9
+     diffuser le motif de QUATRE octets au lieu du premier — 406/564
+     occurrences plantées MANQUÉES (la différentielle plantée
+     differenciel_plante.py, introduite par la présente : l'épreuve
+     antérieure n'exerçait AUCUNE occurrence, l'écart de l'épreuve
+     nommé) ; la correction v2 (208 o à la marge, round-trip 100 %, zéro
+     divergence aux 88 vecteurs — 24 convention + 64 plantées aux
+     alignements 0-63, le contrôle négatif du déplacement muté ATTRAPÉ) ;
+     le compilateur n'émAUCUN SIMD sur la source naturelle ; LE TEMPS
+     RÉEL sur matériel (RDTSCP, cœur 1 fixé, 3 200 MHz consignés,
+     constant_tsc, n=20) : 833 cycles/op [IQR 15] — DANS LA CLASSE des
+     primitives SIMD de la libc (l'idiome memchr 561, memmem 933,
+     gcc-O2 16 040, le scellé GPR 18 227) ; le récit 0,03× relativisé
+     NOMMÉ ; le CPUID HISSÉ (45 → 34,4 instr/bloc, la parité au scellé
+     en flot) ; LA LIMITE : UNE SEULE MACHINE au bac (jamais simulée).
+
+V5 — LA FENÊTRE DE RELECTURE (mqf258e4l — OPT-10) : n=18, la même
+     graine 20261117, le CLI z-ai au champ usage lu, 36 appels
+     journalisés ; l'AVANT éditer-H2 : médiane 2 452 == LE RECORD de la
+     vague 9 reproduit (17/18 verts + UN REFUS CONTEXTE-DIVERGENT nommé
+     — le modèle a varié, le client a refusé : fail-closed vécu, jamais
+     re-tirée) ; l'APRÈS éditer-F2 : 18/18 VERTS, médiane 1 146
+     [1 135-1 175], réponse 40 ; la décomposition cl100k : le matériau
+     1 684 → 239 (×7,0), la prose 866 DOMINE désormais (le prochain
+     levier nommé) ; la re-tokenisation indépendante : écart max 0
+     (±1 exigé) ; le ratio au plancher 136,2× → 63,6× natif ; les quatre
+     refus du pointeur re-roulés 5/5 VERT ; l'hypothèse H-F1
+     partiellement falsifiée (2,1× le total, pas 10× : la prose demeure).
+
+V6 — LES GARDES ET LA NON-INTERFÉRENCE (ifqm1d1i4) : la base v200
+     reproduite d'abord (2 098 accès, 2 006 déchargés, 92 nommés,
+     0 hors-cadre — identique) ; LA RE-CLASSIFICATION INTÉGRALE : 34 LEA
+     relationnels (les calculs d'adresse sans déréférence — la relation
+     usages→sites) + 58 gardes runtime (la vérification à deux faces,
+     l'invariant externe nommé par accès : le champ du plan, le contrat
+     de l'appelant, l'OS) = 100 % DÉCHARGÉ-OU-GARDÉ, chaque accès
+     étiqueté (statique sound / borné / gardé) au gardes_v210.csv ; LA
+     PREUVE : 58/58 certificats UNSAT (z3) ; LA FALSIFICATION : 58/58
+     gardes (l'invariant violé ATTRAPÉ aux deux bords + la face index,
+     l'adresse honnête admise) ; LA NON-INTERFÉRENCE ÉTENDUE à x25519
+     (tls13-13 le scalaire, tls13-14 la clé privée) et md5 (loupe-06 —
+     le secret = le contenu du fichier : la fenêtre au plan, le contenu
+     tainté par le couplage libc-01, les compteurs publics demeurés
+     publics) : 13 BLOCS PROUVÉS, SEPT familles nommées, les blocs non
+     couverts NOMMÉS (04, 08, 17) ; LA SOUNDNESS DU LIFTER : le
+     round-trip IR↔notation 13/13 zéro divergence, l'octet muté par
+     encodage alternatif (xor 31C0→33C0) ATTRAPÉ ; LA REQUALIFICATION :
+     « PROUVÉE SOUS L'HYPOTHÈSE DE SOUNDNESS DU LIFTER » partout ; LE
+     HASH DE TRACE TEMPS-CONSTANT RECONDUIT (l'audit non borné : 11
+     VERT, 2 écarts nommés — identique au record).
+
+V7 — LE TROISIÈME BRAS C+G (3a91o5whb, le plan gelé sha256 b94110c1…
+     AVANT toute mesure) : la gouvernance TRIADE complète reçue par le
+     C gcc-O2 — (g1) LES INTENTIONS SIGNÉES Ed25519 (la clé de session
+     du labo, les SIX signatures, le terrain signera au geste du maître
+     — l'écart nommé), (g2) LA CRISTALLISATION (le graphe LU des
+     sources, les empreintes chaînées depuis la genèse, SIGNÉES, la
+     re-vérification O(1) par unité), (g3) L'ORACLE DÉRIVÉ DE I (les
+     épreuves de contrat), (g4) LE KIT au gabarit (le geste du terrain
+     attend le maître) ; LA MESURE M4 AUX TROIS BRAS SUR LA MÊME MACHINE
+     (n=5 par bras, la liste fixe, l'horloge monotone) : T 39,24 s
+     [39,05-39,28] · C 1,95 s · C+G 2,16 s — L'EFFET GOUVERNANCE 215 ms
+     (1,11×) ; L'EFFET NOTATION ISOLÉ 37,07 s/session (18,1×) ; la
+     sixième unité loupe-05 CLOSE SUR SON ROUGE À LA CAP (trois
+     échappées nommées : la composition externe, la table K fautive
+     attrapée par le juge 0/3 FIPS, la réponse tronquée à la limite de
+     complétion) — le précédent de campagne reconduit ; LA MESURE M2
+     (l'appel de génération, n=6) : médiane 2 619 [2 141-3 480] natifs ;
+     LE SCRIPT DE RÉCONCILIATION : chaque total recalculé des JSON
+     bruts, ZÉRO écart (le bras T : l'écart admis ~50 ms de la
+     comptabilité des empreintes ATTRIBUÉ et consigné) ; LE CONTRÔLE
+     NÉGATIF : la faute de rig injectée (+500 ms DANS UNE COPIE)
+     ATTRAPÉE et attribuée au premier nom ; M3 NON MESURÉ en labo (le
+     terrain au geste du maître — jamais un chiffre inventé).
+
+V8 — LA RÉCONCILIATION ET LE REGISTRE (1e2vq7rtw + rgttyp8bj) :
+     l'abstract aligné au corps (811/817 = 99,3 %, les 15 équivalents,
+     les 6 survivants non équivalents — le brut 811/832 à côté, jamais
+     fusionnés) ; le ratio M4 recalculé des médianes non arrondies et
+     cité à une décimale PARTOUT où le courant (les historiques datés) ;
+     l'axe token ajouter au coût opérationnel (le canon D222 : 3 674) ;
+     LE LINTER ÉTENDU à la cohérence INTERNE (abstract ↔ corps ↔
+     tableaux — le contrôle négatif refusé au premier nom) ; LE REGISTRE
+     NEUTRE : le lexique ritualiste remplacé (le lot d'instructions pour
+     la vague, la décision explicite du développeur pour le geste, les
+     critères satisfaits pour TENU, le rapport de coûts pour la marge),
+     les majuscules d'emprise retirées de la prose, les pièces verbatim
+     demeurées octet pour octet, LA TRANSPARENCE INTACTE (les
+     falsifications, retraits, échecs et GAPS demeurés) ; le diff
+     numérique VÉRIFIÉ : les nombres disparus == l'ensemble documenté
+     de la réconciliation (820, 98,9, 0,03, 31,2, 136,2, 34,3, 97,7,
+     les compteurs de journaux portés) ; aucune revendication renforcée.
+
+V9 — LE PACK TRIADE_presentation_v0.21.0.zip [2 169 464 octets, 12
+     fichiers] : exactement 5 documents PDF régénérés et cohérents
+     (manuscrit v0.21.0, spécification v0.15.6 inchangée, Livre v1.5
+     inchangé, preuves v0.21.0, présentation v210), les descriptions,
+     le LISEZMOI, LE MANIFESTE DES EMPREINTES ; la convention nommée :
+     aucun document ne porte son propre sha-256, la présentation grave
+     les quatre autres, les preuves les trois de contenu, le manifeste
+     les cinq ; le zip relu pièce à pièce. Les deux archives de dépôt
+     assemblées (la soumission 5 entrées, le complet aux sources + les
+     ateliers + le pack).
+
+LES ÉDITIONS NÉES : le manuscrit v0.21.0 (26 remplacements ancrés :
+     la réconciliation, le registre neutre, les résultats de la vague,
+     les paragraphes nouveaux — l'effet notation isolé, la sûreté à
+     cent pour cent), les preuves v0.21.0 (les huit pièces verbatim +
+     la table des empreintes), la présentation v210 ; D229-D234
+     append-only au journal des décisions ; OPT-10 au journal
+     d'optimisation ; l'Entrée 379 au worklog.
+
+AUCUNE valeur mesurée modifiée hors la réconciliation documentée ;
+AUCUN artefact scellé touché ; AUCUNE graine supprimée ; AUCUN contrôle
+retiré ; AUCUNE règle affaiblie ; LES GAPS NOMMÉS (M3, la seconde
+machine, les témoins signés) JAMAIS simulés.

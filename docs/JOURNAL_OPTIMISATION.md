@@ -212,3 +212,15 @@ déchargés, 811/817 ajusté, CF3 mécanisé 14/14, la non-interférence aux dix
 familles, l'ancrage de transparence) SANS céder la performance (M4 3,5×
 tenu), l'optimisation (OPT-06/07/08 consacrés) ni les tokens (le pointeur
 seul reproduit 1 103/52) — le tableau de bord des quatre axes le porte.
+
+## OPT-10 — La fenêtre de relecture de l'édition (mqf258e4l, la vague 10 ; le plan gelé sha256 7e7e5571… AVANT toute mesure)
+
+**Le levier (le hot path mesuré)** : l'opération ÉDITER relit ~2 400 tokens de notation complète sur un total médian de 2 452 (le matériau domine, la réponse ne porte que 40 — le constat d'OPT-05).
+
+**Le geste** : ne relire que la FENÊTRE du hunk (±12 lignes autour de la cible, verbatim — les ancres demeurent des lignes exactes), la consigne, et L'EMPREINTE sha256 de la notation complète (la garde : le client recoupe l'empreinte du cache avant l'application — CONTEXTE-DIVERGENT sinon) ; le reste en cache de session.
+
+**La mesure (n=18, la graine 20261117, le tokenizer natif lu du champ usage, cl100k en parallèle, la re-tokenisation indépendante à ±1 — écart max 0)** : le total médian 2 452 → 1 146 (−53,3 %) ; le matériau relu 1 684 → 239 cl100k (×7,0) ; la réponse 40 inchangée ; le ratio au plancher (la paire de lignes du diff réel, 18 cl100k) : 136,2× → 63,6× natif ; la prose de prescription DOMINE désormais (866 > 239) : le prochain levier nommé — la grammaire du format, pas la notation.
+
+**Les contrôles** : 18/18 verts au round-trip exact (garde+application+confrontation) ; le REFUS CONTEXTE-DIVERGENT vécu à la cellule AVANT (le modèle a varié, le client a refusé : fail-closed, jamais re-tirée) ; les QUATRE refus du pointeur re-roulés 5/5 VERT ; AUCUN scellé touché.
+
+**Falsifiée** : H-F1 en son ordre de grandeur (le total ne descend pas d'un ordre de grandeur — la prose demeure) ; la mesure tranche, l'écart nommé.

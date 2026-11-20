@@ -1,0 +1,1 @@
+La présentation v210 — les cinq points de la vague 10 (la faute nommée et corrigée, la fenêtre, les gardes, l'effet notation isolé, la réconciliation et le registre neutre), la table des statuts avant/après, LES EMPREINTES SHA-256 DES QUATRE AUTRES PIÈCES GRAVÉES (la convention : aucun document ne porte son propre sha-256, le manifeste du pack porte les cinq).

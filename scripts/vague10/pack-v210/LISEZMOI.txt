@@ -1,0 +1,10 @@
+LE PACK DE PRÉSENTATION TRIADE v0.21.0 — la vague 10
+====================================================
+
+LES CINQ DOCUMENTS : le manuscrit académique v0.21.0 (la réconciliation, le registre neutre, les résultats de la vague 10), la spécification v0.15.6 (inchangée), le Livre du Coffre v1.5 (inchangé), les preuves et calculs v0.21.0 (les pièces verbatim des ateliers + la table des empreintes), la présentation v210 (les cinq points, la table des statuts, les empreintes gravées).
+
+LA CONVENTION DES EMPREINTES : aucun document ne porte son propre sha-256 ; la présentation grave les quatre autres ; le document de preuves grave les trois pièces de contenu ; CE manifeste porte les cinq.
+
+LES SIX INSTRUCTIONS DE LA VAGUE 10 exécutées aux plans gelés avant toute mesure (le commit 951e79b, EMPREINTES-PLANS-VAGUE10.txt) : 1e2vq7rtw (la réconciliation + le linter interne), 3a91o5whb (le bras C+G), 8z4hj76w4 (la faute SSE2 et la re-mesure équitable), ifqm1d1i4 (les gardes + la non-interférence étendue), mqf258e4l (la fenêtre de relecture), rgttyp8bj (le registre neutre).
+
+LES GAPS NOMMÉS (jamais simulés) : M3 le temps humain au geste du terrain ; la seconde machine ; les témoins signés.
