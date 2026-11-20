@@ -1,0 +1,22 @@
+bid,offset,octet,categorie,preuve_mecanique
+loupe-01,0x143,0x0c→0x17,EQUIVALENT-PROUVÉ,l'état mourant : le champ écrit à la fermeture meurt avec la fenêtre — L'ENSEMBLE DE LECTURE de l'adresse est VIDE dans la composition scellée (aucun bloc ne relit l'adresse : la preuve par balayage des notations)
+loupe-03,0x1b,0x00→0xd0,EQUIVALENT-PROUVÉ,l'état mourant (le champ de fermeture, jamais relu — l'ensemble de lecture vide)
+loupe-03,0x3b,0x00→0xc4,EQUIVALENT-PROUVÉ,l'état mourant (idem — l'ensemble de lecture vide)
+loupe-03,0x41,0x00→0x42,EQUIVALENT-PROUVÉ,le sentinel adjacent : les champs voisins portent le même -1 dans TOUT état servable — la valeur mutée COÏNCIDE avec le sentinel sur l'espace servable (la preuve par l'espace d'états : le mutant et l'original produisent le même observable)
+loupe-03,0x19,0x10→0x2c,EQUIVALENT-PROUVÉ,l'état mourant (le champ de fermeture, jamais relu)
+loupe-03,0x5a,0x00→0xf1,EQUIVALENT-PROUVÉ,l'état mourant (idem)
+loupe-03,0x41,0x00→0xff,EQUIVALENT-PROUVÉ,le sentinel adjacent (la même preuve : la coïncidence au sentinel sur tout état servable)
+loupe-04,0x28,0xc0→0xcd,EQUIVALENT-PROUVÉ,la convergence des gardes : les deux voies produisent LE MÊME refus -4 (le mutant emprunte l'autre garde, l'observable identique — la preuve par la convergence des deux chemins sur le même verdict)
+loupe-07,0x11,0x10→0x25,EQUIVALENT-PROUVÉ,le site de transfert hors table : le code mort d'une voie REMPLACÉE (le site inatteignable — la preuve par l'atteignabilité : aucun chemin du programme scellé ne traverse le site)
+loupe-09,0x387,0x01→0xd9,EQUIVALENT-PROUVÉ,RBP traité volatil : la convention msx64 le garde NON-VOLATIL mais AUCUN APPELANT de la composition scellée ne relit RBP après l'appel (la preuve par l'ensemble de lecture des appelants : vide)
+loupe-11,0x137,0x04→0xb7,TUABLE-RESTANT,le suivi de vue après saisie : le chemin rare du cadre — le scénario qui l'exerce (saisie à la dernière cellule de la fenêtre puis défilement) est NOMMÉ, hors de la batterie K4
+loupe-11,0x1d5,0x00→0xc5,TUABLE-RESTANT,le suivi de vue après saisie (le même scénario nommé : la saisie au bord puis le recadrage)
+loupe-11,0x1df,0xf1→0xe3,LIMITE-DU-HARNAÏS,le shim aveugle : SetScrollInfo n'enregistre NI le drapeau NI le handle — l'observable du shim est identique pour tout argument ; le VRAI Windows distinguerait
+loupe-12,0x27b,0xe1→0xc9,LIMITE-DU-HARNAÏS,le shim aveugle (InvalidateRect ne distingue pas le hwnd — la même classe : l'émulation ne porte pas l'observable)
+loupe-14,0xdc,0x00→0xde,EQUIVALENT-PROUVÉ,le champ au-delà du motif : les octets JAMAIS LUS par aucune voie (l'ensemble de lecture vide au-delà du motif)
+loupe-14,0x21b,0x01→0xed,EQUIVALENT-PROUVÉ,la cible détournée retombe : 0x66d4 re-pose LE MÊME ÉTAT (la preuve par la convergence : l'état après la cible détournée est l'état original)
+loupe-15,0x1b,0x02→0xe2,LIMITE-DU-HARNAÏS,la voie de l'échec jamais servie : le positionnement réussit TOUJOURS au harnais (l'échec vit au vrai système — la voie non exercée par construction de l'émulation)
+loupe-15,0xfb,0xd0→0xc1,LIMITE-DU-HARNAÏS,le code 3 jamais servi : CreateFileW rend TOUJOURS 2 au harnais — la voie du PATH_NOT_FOUND vit au vrai Windows (l'écart harnais/terrain nommé)
+loupe-16,0x238,0x00→0x4f,LIMITE-DU-HARNAÏS,le shim aveugle (la poignée jamais servie : GetScrollInfo rend l'échec au shim — la valeur de la poignée sans effet sur l'observable enregistré)
+loupe-16,0x21e,0x18→0xa2,TUABLE-RESTANT,le chemin du recadrage : le contrôle manquant NOMMÉ (le scénario du recadrage après la saisie au bord — hors batterie K4, le prochain scénario d'injection le tuerait)
+loupe-17,0x207,0xe0→0xcc,LIMITE-DU-HARNAÏS,la voie de l'échec jamais servie (le positionnement toujours réussi au harnais — la classe de loupe-15 0x1b)
