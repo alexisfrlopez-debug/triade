@@ -1,0 +1,9 @@
+EMPREINTES SHA-256 DES SIX PLANS DE LA VAGUE 10 — consignées AVANT toute mesure
+(le commit de ce fichier précède la première donnée de la vague)
+
+b94110c19f0da8bf878357115d3e352297418c5ac97ff25d4727ec101c72e546  atelier-cg-3a91o5whb/PLAN-3A91O5WHB.md  — 3a91o5whb (bras C+G)
+68d4880096c978f11a8e01333ef1d8f52e9b912b1668c332f0ed281d79e6493b  atelier-remesure-sse2-8z4hj76w4/PLAN-8Z4HJ76W4.md  — 8z4hj76w4 (SSE2 baselines équitables)
+658255cd2ce8e1038c537731877e0d868cdb1fca773aa2606450d6d1c0d79f44  atelier-gardes-ifqm1d1i4/PLAN-IFQM1D1I4.md  — ifqm1d1i4 (gardes + non-interférence)
+7e7e557139e447942d201f697ef74c74e03518678e810d3daf15b8efae9772df  atelier-fenetre-mqf258e4l/PLAN-MQF258E4L.md  — mqf258e4l (fenêtre de relecture)
+39b88813fb2fe0d4a659fa7a0fb96aa434e2cda321a03dd1401282ae72822386  atelier-reconciliation-1e2vq7rtw/PLAN-1E2VQ7RTW.md  — 1e2vq7rtw (réconciliation + linter interne)
+c6c5e76856340f39acf1d99138bbffeb48a21cd31085125632367536a5d28e57  atelier-registre-rgttyp8bj/PLAN-RGTTYP8BJ.md  — rgttyp8bj (registre neutre)
