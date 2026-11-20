@@ -1,0 +1,4 @@
+2026-11-20T20:46:23Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:46:23Z OUVERTURE : époque 1 — verdict VERT (les clés meurent à la sortie)
+2026-11-20T20:46:23Z CLOTURE : époque 1 -> 2 (p_idx 0 -> 0), checksum a50788b7 — re-lecture à froid VERTE
+2026-11-20T20:46:23Z PORTE : refus — piège PÉRIMÉ (époque 1 ≠ conteneur 2)

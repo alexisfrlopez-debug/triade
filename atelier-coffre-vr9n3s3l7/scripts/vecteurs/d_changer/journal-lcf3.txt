@@ -1,0 +1,4 @@
+2026-11-20T20:49:28Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:49:28Z INIT : époque 1, p_idx 0, entropie estimée 157.0 bits (plancher 60 vérifié)
+2026-11-20T20:49:29Z OUVERTURE : époque 1 — verdict VERT (les clés meurent à la sortie)
+2026-11-20T20:49:29Z PORTE : phrase ERRONÉE (verif divergent) — réessai, JAMAIS de destruction

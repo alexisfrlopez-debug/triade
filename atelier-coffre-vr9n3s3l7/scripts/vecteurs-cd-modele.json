@@ -1,0 +1,16 @@
+{
+ "c_migration": true,
+ "c_plancher": true,
+ "d_reconstitution_froide": true,
+ "d_deux_parts": true,
+ "d_migration": true,
+ "d_ancienne_refusee": true,
+ "d_cinq_parts_neuves": true,
+ "g_fido2": false,
+ "modele_i1": true,
+ "modele_i2": true,
+ "modele_i3": true,
+ "modele_i4": true,
+ "controle_negatif": true,
+ "verdict": "VERT"
+}

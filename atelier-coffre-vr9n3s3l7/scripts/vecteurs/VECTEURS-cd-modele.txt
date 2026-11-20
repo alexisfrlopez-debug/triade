@@ -1,0 +1,12 @@
+(c) LA CÉRÉMONIE DE RE-PARAMÉTRAGE ARGON2 (l'agilité) — copies de labo
+    la migration p_idx 0 -> 1 : VERT (l'ouverture verte sous les paramètres neufs, )
+    le plancher : les 3 phrases faibles REFUSÉES ; la forte ADMISE à 184 bits (≥ 60 la valeur gelée) : VERT
+(d) LA CÉRÉMONIE CHANGER-PHRASE CF3 SOUS SÉQUESTRE — copies de labo
+    la reconstitution à froid de TROIS parts : VERT ; DEUX parts IMPOSSIBLE : VERT ; la migration à la phrase neuve : VERT ; l'ancienne REFUSÉE : VERT ; la neuve re-découpée en cinq parts : VERT
+    les parts ANCIENNES détruites localement (la phrase neuve vit au séquestre neuf, jamais au dépôt — D223)
+(g) LE PROTOTYPE FIDO2 HMAC-SECRET (les vecteurs simulés, clés de TEST — le token physique AU GESTE DU MAÎTRE, le gap nommé)
+    (le module porte une API différente — vérifiée au rapport)
+LE MODÈLE FORMEL — la machine à états de la sentinelle en z3 (UNSAT aux négations)
+    I1 la corruption → REFUS SANS destruction : UNSAT — PROUVÉ ; I2 OUVERT exige les DEUX vérifications : UNSAT — PROUVÉ ; I3 le plancher refusant sous 60 bits : UNSAT — PROUVÉ ; I4 la falsification prouvée → DESTRUCTION_PV : UNSAT — PROUVÉ
+    LE CONTRÔLE NÉGATIF (l'ordre inversé — la corruption détruirait) : SAT — ATTRAPÉ
+LE BILAN (c)(d)(g)+modèle : 5 chantiers verts — VERT

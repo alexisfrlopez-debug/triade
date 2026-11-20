@@ -1,0 +1,16 @@
+VECTEURS (a) — L'EMPREINTE DU CHIFFRETEXTE AVANT L'AEAD (sentinelle LCF3, plan (a))
+phrase de test publique D105 : PHRASE-TEST-PUBLIQUE-D105-vague11-labo
+
+V1 honnête : ouverture VERTE — époque 1, empreinte liée (HMAC-SHA256, K_emp = HKDF(K_user ‖ S_piège)) CONFORME, AEAD VERT
+
+V2 CORRUPTION : VERT — verdict nommé « CORRUPTION — empreinte du chiffretexte divergente sans cohérence naïve : refus NOMMÉ SANS destruction (le chiffretexte est CONSERVÉ pour l'analyse ; la destruction attend la PREUVE de falsification — plan (a)) » ; le chiffretexte est CONSERVÉ (381 octets, inchangé depuis l'incident), AUCUN PV écrit (la destruction attend la preuve — jamais sur un incident), le média du piège INTACT
+
+V3 FALSIFICATION À EMPREINTE VALIDE : VERT — verdict nommé « FALSIFICATION À EMPREINTE VALIDE — la paire (chiffretexte, empreinte) est cohérente sous la lecture naïve (sha256 nu) mais PAS sous l'empreinte LIÉE À LA CLÉ : destruction LOCALE effectuée (PV écrit) ; le média du piège et les parts du séquestre sont INTACTS (plan (a)) » ; le conteneur DÉTRUIT (3 passes, PV écrit), le média du piège INTACT, la paire (ct, sha256(ct)) cohérente sous la lecture NAÏVE est réfutée par l'empreinte LIÉE À LA CLÉ (HMAC)
+   PV : /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/vecteurs/a_sentinelle/v3-falsification/pv-lcf3/pv-destruction-lcf3-20261120T204550Z.txt
+
+V4 falsification SANS la clé : VERT — verdict nommé (classe corruption) : refus fail-closed, rien ne s'ouuvre, aucune destruction (LA BORNE CONSIGNÉE : sans K_emp la falsification n'est pas PROUVABLE, elle est refusée — la destruction attend la preuve, la cohérence naïve)
+
+V5 AEAD après empreinte VERTE : VERT — l'empreinte liée du chiffretexte est CONFORME (ct intact), le nonce d'en-tête est altéré : le tag AEAD échoue — falsification PROUVÉE côté machine : DESTRUCTION LOCALE + PV (l'étage AEAD reste la preuve restante, l'ordre (a) est honoré : empreinte D'ABORD, AEAD ensuite)
+
+BILAN (a) : 5/5 vecteurs VERTS — VERT
+LE COFFRE RÉEL N'A PAS ÉTÉ TOUCHÉ (copies de laboratoire, phrase de test publique D105).

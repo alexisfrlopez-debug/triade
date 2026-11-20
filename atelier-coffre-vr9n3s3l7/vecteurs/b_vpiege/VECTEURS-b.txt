@@ -1,0 +1,14 @@
+VECTEURS (b) — V_piège DÉRIVÉE : HKDF(S_piège ; « piège » ‖ époque), l'anti-rollback (plan (b))
+
+V1 DÉRIVATION RE-PRODUCTIBLE : VERT — V_piège(7) = c38573464ce114ff85daa41ee64970d8 (16 o), recalcul IDENTIQUE ; l'ouverture honnête à l'époque courante est VERTE (la chaîne verif est calculée sur V_piège DÉRIVÉE) ; le fichier piège v2 ne PORTE PAS de V_piège (S_piège + tag seuls)
+
+V2 L'ÉPOQUE FAIT LA VALEUR : VERT — V_piège(1)=c8560efa271e2cb9… ≠ V_piège(2)=390efabf5dff19a1… ≠ V_piège(3)=814a0e374aa6be7c… (le sel « piège‖époque_le64 » lie la valeur à l'époque)
+
+V3 L'ÉPOQUE RETIRÉE REFUSÉE : VERT — (i) le couple ancien restauré : « RETOUR EN ARRIÈRE : époque du conteneur (1) < miroir local (2) — couple restauré REFUSÉ » ; (ii) le piège d'époque 1 au conteneur d'époque 2 : « piège PÉRIMÉ : époque du piège 1 ≠ époque du conteneur 2 — V_piège DÉRIVÉE à l'époque (b) : l'époque RETIRÉE est REFUSÉE (anti-rollback) » — l'anti-rollback au piège : V_piège est DÉRIVÉE à l'époque, l'époque retirée ne vérifie PLUS (aucune relecture possible, même piège intègre, même phrase honnête)
+
+V4 LE PIÈGE FORGÉ : VERT — S_piège réécrit, tag RECALCULÉ par l'attaquant qui tient le média : verif diverge (V_piège dérivée du faux S_piège) → PhraseErronee, BÉNIN : réessai, JAMAIS de destruction (la borne CF3 : un piège entièrement forgé se présente comme une phrase erronée)
+
+V5 LE PIÈGE D'UN AUTRE COFFRE : VERT — « H_projet du piège divergent — piège d'un AUTRE coffre » (H_projet divergent, refus nommé)
+
+BILAN (b) : 5/5 vecteurs VERTS — VERT
+AUCUN coffre réel, AUCUNE phrase réelle (D105).

@@ -1,0 +1,2 @@
+2026-11-20T20:45:49Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:45:49Z OUVERTURE : époque 1 — verdict VERT (les clés meurent à la sortie)

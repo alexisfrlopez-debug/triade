@@ -1,0 +1,2 @@
+2026-11-20T20:45:50Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:45:50Z PORTE : DESTRUCTION LOCALE — tag AEAD invalide après piège intègre, phrase vérifiée et empreinte liée conforme — falsification PROUVÉE côté machine (l'étage (a) est passé VERT : l'altération vit dans l'en-tête chiffrant) (PV /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/vecteurs/a_sentinelle/v5-aead/pv-lcf3/pv-destruction-lcf3-20261120T204550Z.txt)

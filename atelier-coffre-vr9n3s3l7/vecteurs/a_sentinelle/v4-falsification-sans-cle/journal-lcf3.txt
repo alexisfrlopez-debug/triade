@@ -1,0 +1,2 @@
+2026-11-20T20:45:50Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:45:50Z PORTE : REFUS NOMMÉ — CORRUPTION (empreinte liée divergente, naïve divergente) : AUCUNE destruction, le chiffretexte est CONSERVÉ pour l'analyse

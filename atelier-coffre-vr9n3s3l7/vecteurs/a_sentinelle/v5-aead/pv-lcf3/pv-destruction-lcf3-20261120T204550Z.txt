@@ -1,0 +1,10 @@
+PROCÈS-VERBAL DE DESTRUCTION LOCALE — TRIADE-LCF3 (labo vr9n3s3l7, plan (a))
+date : 2026-11-20T20:45:50Z
+raison : tag AEAD invalide après piège intègre, phrase vérifiée et empreinte liée conforme — falsification PROUVÉE côté machine (l'étage (a) est passé VERT : l'altération vit dans l'en-tête chiffrant)
+passes : aléatoire (CSPRNG) puis 0xFF puis 0x00, fsync par passe
+
+DETRUIT : /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/vecteurs/a_sentinelle/v5-aead/coffre.bin (3 passes, tronqué, renommé, unlink, fsync rép.)
+
+total : 1 artefact(s) machine détruit(s)
+le MÉDIA du piège est INTACT (externe — c'est la relève) ; les PARTS du séquestre sont INTACTES (le plan (d) : la reconstitution à froid demeure la relève)
+AUCUNE phrase écrite — le PV ne contient JAMAIS de secret (discipline RAM, miroir spec CF3 § 8)

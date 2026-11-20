@@ -1,0 +1,2 @@
+2026-11-20T20:45:50Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:45:50Z PORTE : DESTRUCTION LOCALE — FALSIFICATION À EMPREINTE VALIDE — l'attaquant a réécrit le chiffretexte ET son empreinte (cohérence NAÏVE sha256 seule) ; l'empreinte LIÉE À LA CLÉ (HMAC, plan (a)) réfute la paire : falsification PROUVÉE côté machine (phrase vérifiée, piège intègre) (PV /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/vecteurs/a_sentinelle/v3-falsification/pv-lcf3/pv-destruction-lcf3-20261120T204550Z.txt)

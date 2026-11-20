@@ -1,0 +1,71 @@
+LE RAPPORT DE L'ATELIER vr9n3s3l7 — LE DURCISSEMENT DU COFFRE SUR COPIES DE LABORATOIRE (a)-(g) + LE MODÈLE FORMEL
+(la vague 11 ; le plan gelé sha256 72f057f5f5108597… AVANT toute modification ; RÈGLE ABSOLUE tenue :
+aucun coffre réel, aucune phrase réelle — tout vit sur copies de laboratoire à la phrase publique D105)
+
+(a) L'EMPREINTE DU CHIFFRETEXTE AVANT L'AEAD (la sentinelle instantanée) — 5/5 VECTEURS VERTS : V1
+    l'honnête (l'empreinte LIÉE À LA CLÉ — HMAC sous K_emp — vérifiée AVANT l'AEAD, l'ouverture verte) ;
+    V2 LA CORRUPTION (l'octet du chiffretexte muté) = REFUS NOMMÉ SANS DESTRUCTION (le chiffretexte
+    conservé pour l'analyse — jamais la destruction sur un incident) ; V3 LA FALSIFICATION À EMPREINTE
+    VALIDE (l'attaquant réécrit le ct ET pose l'empreinte NAÏVE sha256 nue) = la paire cohérente sous la
+    lecture naïve est RÉFUTÉE par l'empreinte LIÉE À LA CLÉ — DESTRUCTION LOCALE + PV (le média du piège
+    et les parts INTACTS) ; V4 la falsification SANS la clé (la borne consignée : sans K_emp la
+    falsification n'est pas PROUVABLE, elle est refusée — la destruction attend la preuve) ; V5 le nonce
+    altéré après empreinte verte (l'étage AEAD la preuve restante — l'ORDRE (a) honoré : empreinte
+    D'ABORD, AEAD ensuite) : destruction + PV.
+
+(b) V_piège DÉRIVÉE (liée à S_piège et à l'époque) — 5/5 VECTEURS VERTS (la faute de setup nommée et
+    corrigée : le piège d'époque 1 omis à côté du conteneur restauré — le refus venait par « piège
+    ABSENT », un refus réel mais pas le NOM attendu) : la dérivation re-productible à l'époque courante ;
+    L'ÉPOQUE RETIRÉE REFUSÉE NOMMÉMENT (le couple ancien restauré : « RETOUR EN ARRIÈRE » ; le piège
+    d'époque 1 au conteneur d'époque 2 : « piège PÉRIMÉ — V_piège DÉRIVÉE à l'époque » — l'anti-rollback
+    au piège) ; le piège FORGÉ (S_piège réécrit, tag recalculé) se présente comme phrase erronée (BÉNIN,
+    jamais la destruction — la borne CF3) ; le piège d'un AUTRE coffre refusé au H_projet divergent.
+
+(c) LA CÉRÉMONIE DE RE-PARAMÉTRAGE ARGON2 (l'agilité) + LE PLANCHER — VERT : la migration p_idx 0 -> 1
+    (65536/3/1 -> 262144/4/1, les paramètres VERSIONNÉS AU CONTENEUR, la liste blanche) à la cérémonie
+    en cinq actes (l'ancien vérifié vert, le plancher re-vérifié, le p_idx neuf, le conteneur ré-écrit à
+    époque+1 avec K_user RECALCULÉ — l'agilité brise l'invariance de K_user, LA SEULE cérémonie qui le
+    fait, nommée —, la re-lecture à froid) ; LE PLANCHER D'ENTROPIE : les trois phrases faibles
+    REFUSÉES (« motdepasse », « azer1234 », « correcthorse »), la forte ADMISE à 184 bits (≥ 60 la
+    valeur gelée).
+
+(d) LA CÉRÉMONIE CHANGER-PHRASE CF3 SOUS SÉQUESTRE — VERT : la reconstitution À FROID de TROIS parts
+    (l'ancienne phrase rendue exacte) ; DEUX parts IMPOSSIBLES (le seuil) ; la phrase neuve VÉRIFIÉE AU
+    PLANCHER, le conteneur MIGRÉ (le coffre ré-écrit sous la phrase neuve) ; L'ANCIENNE REFUSÉE
+    (inopérante) ; la neuve RE-DÉCOUPÉE en CINQ parts (reconstituable à trois) ; les parts anciennes
+    DÉTRUITES localement ; LA PHRASE JAMAIS AU DÉPÔT (la garde D223 au séquestre de labo : l'écriture
+    sous garde exigée).
+
+(e) LE BLOC NATIF SCELLÉ « GARDE RAM » — LA SPEC I ÉCRITE (I-garde-ram.md : le gabarit du projet —
+    l'intention, le contrat pre/post, les invariants) ET LE DÉMONSTRATEUR DE LABORATOIRE VÉCU (ctypes) :
+    GESTE 1 la page verrouillée mlock(4096 o) VERT (madvise(MADV_DONTDUMP) refusé — best-effort nommé) ;
+    GESTE 2 la destruction explicit_bzero(3) — 4096 octets vérifiés NULS octet par octet ; GESTE 3
+    l'exclusion des dumps prctl(PR_SET_DUMPABLE, 0) — dumpable 1 -> 0 VERT ; munlock APRÈS la
+    destruction (l'ordre du contrat) ; LES MIROIRS WINDOWS SPÉCIFIÉS non exécutés au labo (VirtualLock,
+    SecureZeroMemory, WerAddExcludedApplication — le terrain au geste du maître, le gap nommé) ;
+    le refus nommé si l'OS refuse.
+
+(f) L'ANCRAGE REKOR/RFC 3161 DES TÉMOINS D'ÉPOQUE (extension D219) — le mécanisme SPÉCIFIÉ ET
+    IMPLÉMENTÉ AU LABO (ancrage_temoins.py) : la structure du témoin (époque, checksum, empreinte du
+    conteneur), la signature, LA VÉRIFICATION CRYPTOGRAPHIQUE LOCALE ; la requête réseau RÉELLE (TSA
+    nommée / l'entrée Rekor avec inclusion proof) AU GESTE DU MAÎTRE — jamais exécutée sans commande,
+    le gap nommé.
+
+(g) LE PROTOTYPE FIDO2 HMAC-SECRET — le modèle CTAP2 SIMULÉ au labo (fido2_hmac_secret.py : la graine
+    par preuve d'identité JAMAIS exportée, l'accord ECDH P-256, saltAuth HMAC-SHA256, la dérivation
+    output1 = HMAC(credSecret, salt1) — le modèle conforme) ; L'INTÉGRATION AU COFFRE SPÉCIFIÉE (le
+    média du piège FIDO2) ; LE TOKEN PHYSIQUE AU GESTE DU MAÎTRE (le gap nommé) ; NOTE HONNÊTE : les
+    vecteurs d'exécution du module attendent son API exacte — la spécification et le module livrés, les
+    vecteurs de bout en bout au geste suivant (l'écart nommé).
+
+LE MODÈLE FORMEL (z3) — LA MACHINE À ÉTATS DE LA SENTINELLE : les QUATRE invariants PROUVÉS (UNSAT aux
+négations) — I1 la corruption → REFUS SANS destruction ; I2 OUVERT exige les DEUX vérifications
+(l'empreinte ET l'AEAD) ; I3 le plancher refusant sous 60 bits ; I4 la falsification prouvée →
+DESTRUCTION_PV (le chemin en deux étapes : l'empreinte d'abord, l'AEAD la preuve restante) ; LE
+CONTRÔLE NÉGATIF : la machine NUE (sans les axiomes) permet la corruption destructrice — SAT — c'est la
+GARDE (les axiomes de l'ordre (a)) qui fait la preuve, le contrôle le nomme.
+
+LES SCELLÉS : 14/14 arbres VERTS avant et après (aucune couche I du dépôt touchée — les specs I neuves
+vivent à l'atelier).
+LES GAPS NOMMÉS : la requête TSA/Rekor réseau au geste du maître ; le token FIDO2 physique ; les
+miroirs Windows de la garde RAM au terrain ; les vecteurs d'exécution FIDO2 à l'API exacte.

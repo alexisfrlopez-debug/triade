@@ -1,0 +1,5 @@
+2026-11-20T20:49:26Z INIT : époque 1, p_idx 0, entropie estimée 82.6 bits (plancher 60 vérifié)
+2026-11-20T20:49:26Z OUVERTURE : époque 1 — verdict VERT (les clés meurent à la sortie)
+2026-11-20T20:49:28Z CLOTURE : époque 1 -> 2 (p_idx 0 -> 1), checksum a1742a3c — re-lecture à froid VERTE
+2026-11-20T20:49:28Z CÉRÉMONIE (c) re-paramétrage : p_idx 0 -> 1, PV /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/scripts/vecteurs/c_reparam/pv-lcf3/pv-reparametrage-2.txt
+2026-11-20T20:49:28Z OUVERTURE : époque 2 — verdict VERT (les clés meurent à la sortie)
