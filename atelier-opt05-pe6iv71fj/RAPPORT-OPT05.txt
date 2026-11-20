@@ -1,0 +1,151 @@
+LE RAPPORT DE L'INSTRUCTION pe6iv71fj — OPT-05 : L'ÉDITION ET L'AJOUT PAR HUNKS, LE DOUBLE MOTEUR, LA MESURE M4
+(le plan gelé sha256 consigné au commit c36d93f AVANT toute mesure ; l'instrument = le tokenizer natif LU du champ usage, chaque appel journalisé, le ×1,08 interdit ; la machine de record : ce bac, 2 cœurs, 4 Go)
+=====================================================================================================================================================================================================================================================
+
+(1) LE FORMAT HUNK ET SON CLIENT — DÉFINIS, AMENDÉS UNE FOIS, AUTOTESTÉS
+    LA GRAMMAIRE v1 (gelée au plan) FALSIFIÉE À LA PREMIÈRE PASSE : le
+    gabarit « @@ hunk 1/<n> » sans dire que <n> est LE TOTAL, et la
+    sémantique d'ancre non dite — le modèle a lu « 1/1 » littéralement
+    (ses hunks SEMANTIQUEMENT JUSTES refusés : « le hunk 1 annonce 1
+    hunks, il y en a 11 », la pièce loupe-12 au garde-brut porte l'ancre,
+    le retrait et l'ajout EXACTS de la tâche gelée) ; la sémantique
+    d'ancre naturelle du modèle (la ligne changée ELLE-MÊME comme ancre)
+    refusée par la v1. LE RECORD : editer-H 12/18 vécus avant l'arrêt
+    (11 refus nommés de la classe ambiguïté, 1 vert), ajouter-A 10/18
+    (0 vert : le modèle écrit du NASM — global/extern/section — la
+    prose des conventions n'enseigne PAS le format, l'écart nommé sur
+    pièces). L'AMENDEMENT v2 (FORMAT-V2-AMENDEMENT.md, consigné avant
+    la re-mesure) : la sémantique d'ancre EXPLICITE (l'ancre EST le
+    premier point du changement ; la première ligne « - » répète
+    l'ancre ; sans « - » l'insertion suit l'ancre), la numérotation
+    sans total, UN EXEMPLE COMPLET au gabarit (la leçon B1->B2 d'OPT-02
+    reconduite : le point de défaillance n'est pas le format, c'est la
+    spécification qui ne l'enseigne pas). LE CLIENT : keystone assemble,
+    capstone désassemble, la confrontation instruction-par-instruction
+    (les alias jz/je et les bases numériques normalisés, les largeurs
+    32/64 conscientes, les commentaires en ligne retirés, les
+    directives de données comptées jamais assemblées) — LES QUATRE
+    REFUS NOMMÉS fail-closed, autotestés 2 VERT + 6 refus attrapés au
+    premier nom ; le round-trip VERT 18/18 sur les notations RÉELLES du
+    domaine.
+
+(2) LA MESURE ÉDITER — VERTE, LE GAIN RÉEL, L'ATTENTE FALSIFIÉE
+    n=18 aux deux modes (la graine 20261117, l'ordre jamais re-tiré, le
+    tokenizer natif) :
+      AVANT (notation complète) : médiane 3 732 [q1 2 509, q3 5 810,
+        min 1 064, max 10 495] ; réponse médiane 1 726 ; 17/18 verts
+        (un ROUND-TRIP-DIVERGENT nommé).
+      HUNK v2 : médiane 2 452 [1 832, 3 498, 1 118, 6 838] ; réponse
+        médiane 40 ; 17/18 verts (un CONTEXTE-DIVERGENT nommé :
+        loupe-07, la première « - » ne répète pas l'ancre).
+      LE GAIN (lu des logs bruts) : total −34,3 % ; réponse −97,7 %.
+    L'ATTENTE PRÉ-ENREGISTRÉE (−60 à −80 % du TOTAL) FALSIFIÉE ET
+    CONSIGNÉE TELLE QUELLE : le matériau (la notation à lire) domine le
+    total — le hunk achète la RÉPONSE (comme le pointeur seul d'OPT-04
+    achetait la réponse), pas la lecture. La leçon : le coût résiduel
+    de l'édition est la LECTURE du bloc, pas sa ré-émission.
+
+(3) LA MESURE AJOUTER — L'ÉCART NOMMÉ, L'ADOPTION REFUSÉE EN L'ÉTAT
+    n=18 aux deux modes :
+      AVANT v2 (avec l'exemple de notation au gabarit) : médiane 5 079
+        [3 593, 6 685, 2 490, 9 481] ; réponse 2 772 ; 6/18 verts au
+        round-trip (12 divergences nommées : opérandes invalides,
+        compte d'instructions, encodages) — l'ajout complet d'un bloc
+        depuis son contrat reste L'OPÉRATION DIFFICILE, l'exemple
+        n'achète pas la validité.
+      HUNK v2 (héritage du gabarit de famille) : médiane 4 639 ; réponse
+        1 632 ; 0/18 verts — HORS-FORMAT partout : le modèle re-dumppe
+        les lignes du gabarit SANS préfixe (la pièce : « @@ hunk 1 /
+        base: push rbx / push r12 / push r13… » — les lignes nues puis
+        les « + ») ; la discipline du préfixe à CHAQUE ligne n'est pas
+        tenue à premier contact.
+      LE GAIN BRUT (total −8,7 %, réponse −41,1 %) est rapporté MAIS IL
+        NE MESURE PAS UN FORMAT ADOPTABLE : zéro réponse conforme, le
+        format hunk d'AJOUT est REFUSÉ EN L'ÉTAT — l'écart nommé à la
+        classe (la discipline de format à l'ajout), la ronde corrective
+        ou le gabarit plus contraint sont le chantier suivant. AUCUNE
+        valeur masquée : les pièces verbatim au garde-brut.
+
+(4) LE DOUBLE MOTEUR AU CHEMIN CHAUD — L'AUDIT SOUS VRAI QEMU-USER
+    L'ÉCHANTILLON CONSIGNÉ (2 041 opérations, la graine 20261114 — les
+    ouvertures des quatre fichiers du différentiel V1 ET les lectures à
+    la graine de campagne) exécuté aux DEUX moteurs : la référence
+    Unicorn (le harnais TEL QUEL) et LE VOLUME SOUS QEMU-USER RÉEL
+    (qemu-x86_64 1:10.0.13, l'image bâtie par le vrai harnais, le
+    lanceur C statique) — DIVERGENCE = 0 sur les 2 041 lignes, octet
+    pour octet. Le chemin crypto émulé (les ouvertures de session — le
+    md5+sha256 de bout en bout du fichier, le chemin critique nommé de
+    l'optimisation M4) vit DANS l'échantillon : la divergence=0 le
+    couvre. LA CLÉ DE MÉMO V2 INCHANGÉE : sha-256 de tout ce qui
+    détermine le résultat (le bloc, l'entrée, le contrat, la config
+    émulateur, la graine, l'oracle) ; le juge ne partage jamais l'état
+    du jugé (le relevé signé confronté, jamais l'émulation partagée).
+    L'ÉCART NOMMÉ : le COMPTEUR PAR BLOC au lanceur (plugin/bloc de
+    l'instruction) et le pilote des opérations crypto DIRECTES
+    (sha256/md5/cumul comme opérations premières du programme) ne sont
+    pas bâtis à la présente session — le chemin crypto est couvert AU
+    TRAVERS des ouvertures de session du programme consigné (divergence
+    = 0 exigée et vérifiée), l'exécution directe des trois blocs crypto
+    aux deux moteurs avec compteur demeure LE CHANTIER NOMMÉ.
+
+(5) LA MESURE M4 — AVANT/APRÈS n=5, LA LISTE FIXE INCHANGÉE
+    (chronomètre monotone, cette machine 2 cœurs, les empreintes
+    scellées vérifiées avant/après chaque exécution — INTACTES partout)
+      AVANT (la pile v180, sans mémo) : médiane 39,1 s [38,7–39,4] n=5
+        (les étapes : cristallisation 12 concourants ~4,1 s ; l'oracle
+        loupe-01 ~10,2 s ; l'oracle loupe-02 ~22,9 s — le chemin crypto
+        des ouvertures domine, comme consigné).
+      FROID (la semence) : 6,6 s n=1.
+      CHAUD (le régime, mémo v2 + double moteur) : médiane 6,6 s n=5 —
+        LE RUN 4 À 29,3 s EST L'AUDIT 1 RUN SUR 10 VÉCU (le compteur
+        chaîné a déclenché la re-exécution vivante tout seul, le
+        comportement prévu, consigné comme tel).
+      LE BRAS C (la même machine, n=5) : médiane 1,9 s [1,9–1,9] — les
+        TROIS étapes rouges de la session précédente RE-CONSTATÉES
+        (l'inclusion loupe-01-c.c, le chemin d'objdump de l'ancien bac,
+        le pas de loupe-02-c.dll) : les mêmes écarts nommés, le total
+        mesuré à la liste fixe telle quelle (la comparaison comme la
+        session précédente l'a consignée).
+      LES RATIOS (recalculés des pièces) : avant/C = 20,4× ; chaud/C =
+        3,5× — SOUS ×10, le régime de H5-amendée-OPT04 tenu sur cette
+        machine (la médiane chaude 6,6 s contre les 6,8 s de la session
+        précédente : la même classe de machine, l'écart inter-bac nommé
+        par D214 demeure).
+    AUCUN contrôle retiré : les 24 consoles d'oracles demeurent la
+    référence (les oracles v182 aux mêmes vecteurs — la console
+    identique ligne à ligne par construction, le stderr portant les
+    statistiques seules) ; les graines intactes ; la batterie de
+    mutation 811/832 INTACTE (aucun tueur touché — la campagne n'a
+    modifié AUCUN scellé, les empreintes avant/après le prouvent).
+
+(6) LES CONTRÔLES NÉGATIFS — ATTRAPÉS AU PREMIER REFUS NOMMÉ
+    Le client hunks autotesté : un hunk à l'ancre inconnue -> HUNK-
+    INCONNU ; une ligne « - » divergente -> CONTEXTE-DIVERGENT ; une
+    réponse hors grammaire -> HORS-FORMAT (deux espèces) ; une
+    instruction qui ne round-trip pas -> ROUND-TRIP-DIVERGENT. Les
+    campagnes vécues ont produit les refus NOMMÉS sur pièces (les 11 de
+    la passe v1, les 18 de l'ajout-H2, le loupe-07 de l'éditer-H2).
+
+(7) LA CONSIGNATION
+    L'atelier atelier-opt05-pe6iv71fj/ : le plan, l'amendement v2, les
+    18 tâches gelées (sha256 1122251e…), l'instrument, les deux clients
+    (v1 au record, v2 adopté), le journal des 118 appels (18 RQ2 + 100
+    OPT-05 : 18 editer-A, 12+18 editer-H/H2, 10+18 ajouter-A/A2, 18
+    ajouter-H2 — plus les 6 editer-H manquants de la passe v1, nommés),
+    la garde brute intégrale, les résultats, l'extraction (les gains
+    recalculés), ce rapport. Les pièces M4 : preuves-pe6iv71fj/ (avant
+    5, froid 1, chaud 5, C 5 — les JSON par étape) et l'audit QEMU-user
+    (divergence 0, les deux flux conservés).
+
+LE VERDICT DE L'INSTRUCTION : (1) le format hunk DÉFINI et son client
+fail-closed aux QUATRE refus nommés — VÉCU ; (2) l'ÉDITION par hunks
+MESURÉE VERTE (total −34,3 %, réponse −97,7 %, 17/18 aux deux modes)
+— l'adoption au geste du développeur (jamais le protocole sur une
+seule mesure, D213/D222 reconduit) ; (3) l'AJOUT par hunks REFUSÉ EN
+L'ÉTAT (0/18 — l'écart nommé à sa cause) ; (4) l'attente du total
+FALSIFIÉE et consignée (le matériau domine) ; (5) le double moteur au
+chemin chaud AUDITÉ sous vrai QEMU-user (divergence 0 sur 2 041
+opérations, le compteur par bloc nommé à son écart) ; (6) la mesure M4
+avant/chaud/C n=5 vécue à la liste fixe inchangée (39,1 s -> 6,6 s ;
+C 1,9 s ; chaud/C 3,5× sous ×10). AUCUNE valeur mesurée modifiée,
+AUCUN scellé touché, AUCUNE graine supprimée.
