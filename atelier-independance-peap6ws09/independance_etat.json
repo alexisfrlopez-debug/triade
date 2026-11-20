@@ -1,0 +1,72 @@
+{
+ "derivation_T": {
+  "nom": "T",
+  "code_verbatim": "import math\n\ndef table_T():\n    # Initialize an empty list to store the 64 MD5 constants\n    T = []\n    \n    # Loop through each index i from 0 to 63\n    for i in range(64):\n        # Calculate the sine of (i + 1) in radians\n        sin_value = math.sin(i + 1)\n        \n        # Compute the integer part of 4294967296 times the absolute value of sin_value\n        T.append(int(4294967296 * abs(sin_value)))\n    \n    # Return the list of 64 MD5 constants\n    return T\n",
+  "erreur": "",
+  "conforme_defs": true,
+  "conforme_plan": true,
+  "ecarts_defs": [],
+  "ecarts_plan": []
+ },
+ "derivation_K": {
+  "nom": "K",
+  "code_verbatim": "import math\n\ndef table_K():\n    # Generate the first 64 prime numbers\n    primes = [2]\n    num = 3\n    while len(primes) < 64:\n        if all(num % p != 0 for p in primes):\n            primes.append(num)\n        num += 2\n    \n    # Compute the cube roots of the primes and take the fractional parts\n    K = []\n    for p in primes:\n        cube_root = round(p ** (1/3), 32)\n        fractional_part = cube_root - int(cube_root)\n        K.append(int(fractional_part * (2**32)))\n    \n    return K\n\n# Example usage\nprint(table_K())\n",
+  "erreur": "",
+  "conforme_defs": true,
+  "conforme_plan": true,
+  "ecarts_defs": [],
+  "ecarts_plan": []
+ },
+ "recitation": {
+  "T": {
+   "0-15": 2,
+   "16-31": 0,
+   "32-47": 0,
+   "48-63": 0,
+   "verts": 2
+  },
+  "K": {
+   "0-15": 2,
+   "16-31": 0,
+   "32-47": 0,
+   "48-63": 0,
+   "verts": 2
+  }
+ },
+ "bras_c_loupe-13_v1_invite_sans_signature": {
+  "nom": "loupe-13",
+  "code_verbatim": "```c\n#include <stdio.h>\n#include <string.h>\n\ntypedef struct {\n    char *window;\n    size_t window_size;\n    char *pattern;\n    size_t pattern_length;\n    size_t start_position;\n} HexEditorState;\n\nint find_pattern(HexEditorState *state) {\n    // Check for empty pattern\n    if (state->pattern_length == 0) {\n        return -5; // E1: Empty pattern\n    }\n\n    // Check for pattern length exceeding maximum allowed\n    if (state->pattern_length > 32) {\n        return -5; // E2: Pattern length exceeds maximum allowed\n    }\n\n    // Check for invalid start position\n    if (state->start_position > state->window_size) {\n        return -5; // E3: Start position is out of bounds\n    }\n\n    // Perform binary search to find the pattern\n    for (size_t i = state->start_position; i <= state->window_size - state->pattern_length; ++i) {\n        if (memcmp(state->window + i, state->pattern, state->pattern_length) == 0) {\n            return i; // Found the pattern, return its starting index\n        }\n    }\n\n    return -1; // Pattern not found\n}\n```",
+  "fichier": "bras_c_qwen_loupe-13.c",
+  "epreuve": null
+ },
+ "bras_c_loupe-02_v1_invite_sans_signature": {
+  "nom": "loupe-02",
+  "code_verbatim": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#define INVALIDE -1\n\ntypedef struct {\n    int born;\n    int size;\n} Session;\n\ntypedef struct {\n    int offset;\n    char data[384];\n} Window;\n\nvoid read_window(Session *session, Window *window, int offset) {\n    if (offset % 16 != 0 || offset >= session->size) {\n        printf(\"E2\\n\");\n        return;\n    }\n\n    window->offset = offset;\n    window->data[0] = '\\0';\n\n    FILE *file = fopen(session->born, \"rb\");\n    if (!file) {\n        printf(\"E4\\n\");\n        return;\n    }\n\n    fseek(file, offset, SEEK_SET);\n    int bytesRead = fread(window->data, 1, sizeof(window->data), file);\n\n    fclose(file);\n\n    if (bytesRead != sizeof(window->data)) {\n        printf(\"E4\\n\");\n        return;\n    }\n\n    window->data[bytesRead] = '\\0';\n}\n\nint main() {\n    Session session = {0};\n    Window window = {0};\n\n    // Example usage\n    session.born = \"path/to/session.bin\";\n    session.size = 1024; // Example size\n    read_window(&session, &window, 100); // Example offset\n\n    // Print results\n    printf(\"Offset: %d\\n\", window.offset);\n    printf(\"Data: %s\\n\", window.data);\n\n    return 0;\n}\n```\n\nThis C program implements the `read_window` function according to the provided contract. It checks for various conditions such as invalid session, incorrect alignment, out-of-bounds access, and file reading errors. The function reads a specified number of bytes from a file into a window structure and prints the result.",
+  "fichier": "bras_c_qwen_loupe-02.c",
+  "epreuve": null
+ },
+ "bras_c_loupe-16_v1_invite_sans_signature": {
+  "nom": "loupe-16",
+  "code_verbatim": "```c\n#include <stdio.h>\n#include <stdlib.h>\n\n#define MAX_CELL_SIZE 256\n\ntypedef struct {\n    unsigned char data[MAX_CELL_SIZE];\n    int cursor;\n    int view;\n    int filled;\n    int refus_quit;\n} Cell;\n\nint loupe_16(Cell *cell, unsigned char byte) {\n    // Check if the session is open\n    if (!cell->session_open) {\n        return -4; // SESSION\n    }\n\n    // Check if the cell is within the window\n    if (cell->cursor - cell->view >= MAX_CELL_SIZE) {\n        return -3; // HORS-BORNES\n    }\n\n    // Check if the journal is full\n    if (cell->filled == MAX_CELL_SIZE) {\n        return -3; // JOURNAL PLAIN\n    }\n\n    // Write the byte to the cell\n    cell->data[cell->cursor] = byte;\n\n    // Update the cursor position\n    cell->cursor++;\n\n    // Mark the cell as visible\n    cell->visible = 1;\n\n    // Set the sale flag\n    cell->sale = 1;\n\n    // Clear the refuse quit flag\n    cell->refus_quit = 0;\n\n    // Return success\n    return 0;\n}\n```",
+  "fichier": "bras_c_qwen_loupe-16.c",
+  "epreuve": null
+ },
+ "bras_c_loupe-13": {
+  "nom": "loupe-13",
+  "code_verbatim": "#include <string.h>\n\nlong loupe_13_recherche(const unsigned char *fenetre, long taille, const unsigned char *motif, long taille_motif, long depart) {\n    if (taille_motif > 32 || taille < 0 || depart > taille) {\n        return -5;\n    }\n\n    for (long i = depart; i <= taille - taille_motif; ++i) {\n        if (memcmp(fenetre + i, motif, taille_motif) == 0) {\n            return i;\n        }\n    }\n\n    return -1;\n}",
+  "fichier": "bras_c_qwen_loupe-13.c",
+  "epreuve": null
+ },
+ "bras_c_loupe-02": {
+  "nom": "loupe-02",
+  "code_verbatim": "#include <stdio.h>\n#include <stdlib.h>\n\n#define INVALIDE 0xFFFFFFFF\n\nlong loupe_02_lire(const unsigned char *fichier, long taille, const long *journal_dec, const unsigned char *journal_oct, long journal_n, unsigned char *tampon, long *remplissage, long decalage) {\n    if (decalage % 16 != 0) {\n        return -5;\n    }\n    if (decalage >= taille) {\n        return -3;\n    }\n\n    *remplissage = min(384, taille - decalage);\n    for (long i = 0; i < *remplissage; ++i) {\n        tampon[i] = fichier[decalage + i];\n    }\n\n    for (long j = 0; j < journal_n; ++j) {\n        if (journal_dec[j] >= decalage && journal_dec[j] < decalage + *remplissage) {\n            tampon[journal_dec[j] - decalage] = journal_oct[j];\n        }\n    }\n\n    return 0;\n}\n\nlong min(long a, long b) {\n    return (a < b) ? a : b;\n}",
+  "fichier": "bras_c_qwen_loupe-02.c",
+  "epreuve": null
+ },
+ "bras_c_loupe-16": {
+  "nom": "loupe-16",
+  "code_verbatim": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct {\n    long decalage;\n    unsigned char octet;\n    long n;\n} JournalEntry;\n\n#define MAX_JOURNAL_SIZE 256\n\nJournalEntry journal[MAX_JOURNAL_SIZE];\nlong journal_index = 0;\n\nvoid loupe_16_saisie(long curseur, unsigned char octet, long *journal_dec, unsigned char *journal_oct, long *journal_n, unsigned char *tampon, long remplissage, long vue, long *sale) {\n    if (!*sale) {\n        fprintf(stderr, \"Session non ouverte\\n\");\n        return -4;\n    }\n\n    if (curseur - vue >= remplissage) {\n        fprintf(stderr, \"Cellule hors bornes\\n\");\n        return -3;\n    }\n\n    if (journal_index == MAX_JOURNAL_SIZE) {\n        fprintf(stderr, \"Journal plein\\n\");\n        return -3;\n    }\n\n    if (journal_index > 0 && journal[journal_index - 1].decalage == curseur) {\n        journal[journal_index - 1].octet = octet;\n    } else {\n        journal[journal_index].decalage = curseur;\n        journal[journal_index].octet = octet;\n        journal[journal_index].n = journal_index;\n        journal_index++;\n    }\n\n    tampon[curseur - vue] = octet;\n    *sale = 1;\n\n    if (curseur < remplissage) {\n        *sale = 0;\n    }\n}",
+  "fichier": "bras_c_qwen_loupe-16.c",
+  "epreuve": null
+ }
+}

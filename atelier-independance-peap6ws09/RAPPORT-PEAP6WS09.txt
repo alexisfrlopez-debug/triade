@@ -1,0 +1,105 @@
+LE RAPPORT DE L'INSTRUCTION peap6ws09 — LE PROTOCOLE D'INDÉPENDANCE RECADRÉ, LES SURVIVANTS AFFINÉS
+(l'amendement gelé AVANT tout run — la confrontation préalable math↔plan TENUE à zéro divergence AVANT toute génération : T[64] et K[64], les définitions aux décimales exactes == les tables du dépôt, 64/64 aux deux)
+=====================================================================================================================================================================================================================================================
+
+(1) LA DÉRIVATION OUTILLÉE — L'INDÉPENDANCE INTER-FAMILLES TENUE, LE
+    PROTOCOLE AMENDÉ VÉCU SUR PIÈCES
+    LE SECOND MODÈLE : Qwen2.5-Coder-1.5B-Instruct (la famille distincte
+    de l'agent de développement GLM), LOCAL open-weights, torch 2.15.0+cpu,
+    bfloat16, température 0 (l'unique passage), le snapshot 2e1fd397…
+    (le MÊME que la session 1c4sokpii — re-téléchargé à l'identique).
+    LA TÂCHE : le modèle ÉCRIT DU CODE qui dérive les tables des
+    DÉFINITIONS MATHÉMATIQUES SEULES — RFC 1321 § 3.4 pour T[64]
+    (floor(2³²·|sin(i+1)|), les radians), FIPS 180-4 § 4.2.2 pour K[64]
+    (les 32 premiers bits fractionnaires des racines cubiques des 64
+    premiers nombres premiers) — LE PLAN JAMAIS AU PROMPT. Le code généré
+    exécuté au sous-processus, la table lue de l'EXÉCUTION.
+    LE RÉSULTAT :
+      T (MD5) : LE CODE GÉNÉRÉ DÉRIVE LES 64 CONSTANTES — CONFORME AUX
+        DÉFINITIONS (64/64) ET AU PLAN (64/64), ZÉRO DIVERGENCE. La pièce :
+        derivation_table_T_qwen.py (verbatim — math.sin, la formule
+        exacte, AUCUNE valeur littérale).
+      K (SHA-256) : LE CODE GÉNÉRÉ DÉRIVE LES 64 CONSTANTES — CONFORME
+        AUX DÉFINITIONS (64/64) ET AU PLAN (64/64), ZÉRO DIVERGENCE. La
+        pièce : derivation_table_K_qwen.py (verbatim — les premiers
+        calculés, la racine cubique en flottant double `p ** (1/3)`
+        arrondie, la partie fractionnaire × 2³² : LA PRÉCISION DU DOUBLE
+        (53 bits de mantisse) SUFFIT aux 32 bits fractionnaires des
+        racines des petits premiers — la classe tient, l'écart de
+        précision ne mord pas).
+    LE VERDICT : L'INDÉPENDANCE INTER-FAMILLES EST TENUE PAR LA VOIE
+    OUTILLÉE — la seconde famille à 1,54 G paramètres DÉRIVE les 128
+    constantes de l'oracle depuis les définitions mathématiques, sans
+    jamais voir le plan. LE RECADRAGE JUSTIFIÉ SUR PIÈCES : là où la
+    récitation pure lisait 0/64 + 0/64 (la capacité de mémorisation), la
+    dérivation outillée lit 128/128 (la capacité d'IMPLÉMENTER les
+    définitions) — le test d'indépendance mesure la bonne chose : la
+    seconde famille peut RECONSTRUIRE l'oracle, pas le réciter.
+    LE GAP DE LA SESSION PRÉCÉDENTE FERMÉ : « la seconde famille ne
+    régénère PAS les constantes de façon indépendante » (1c4sokpii, la
+    récitation pure) est maintenant qualifié : elle ne les MÉMORISE pas
+    (la sonde le confirme) mais les DÉRIVE (la voie outillée le prouve).
+
+(2) LA RÉCITATION PURE — LA SONDE DE MÉMORISATION, JAMAIS UN TEST
+    D'INDÉPENDANCE (l'amendement appliqué)
+    Le protocole documenté de 1c4sokpii re-visitée (morceaux de 16, les
+    deux ancreurs publics au prompt, température 0) : T 2/64, K 2/64 —
+    le modèle ne récite QUE LES ANCREURS DONNÉS (T[0]/T[1],
+    K[0]/K[1]), tout le reste dérive. LA CONFIRMATION : aucune
+    mémorisation des tables — la sonde de mémorisation dit ce qu'elle
+    doit dire, elle n'est PLUS présentée comme un test d'indépendance
+    (le recadrage de l'instruction, porté au manuscrit v0.19.6).
+
+(3) LE BRAS C — LE PROFIL DE CAPACITÉ PAR CONTRAT, TROIS CONTRATS, LES
+    GAPS NOMMÉS SUR PIÈCES
+    LA PREMIÈRE GÉNÉRATION (l'écart de prompt NOMMÉ, conservé au record
+    independance_etat.json sous *_v1_invite_sans_signature) : l'invite
+    ne fixait pas la signature C — le modèle inventa ses propres API
+    (find_patern/read_window), la pièce conservée, la génération
+    reprise à la signature EXACTE (l'écart de la session, pas du
+    modèle).
+    LOUPE-13 (le reconduit) : gcc -O2, l'école + les rejets + la
+    différentielle 2 000 cas (la graine 20261115, le juge
+    bytes.find) — 1983/2011 VERT (98,7 %). LES ROUGES NOMMÉS : (a) le
+    rejet d'école « motif vide » — le code généré rend 0 au lieu de -5
+    (la garde P4 lue à l'envers : le modèle traite le motif vide comme
+    trouvé à la position 0) ; (b) LES 27 ROUGES DIFFÉRENTIELS de LA
+    MÊME CLASSE QUE LA SESSION PRÉCÉDENTE : « rendu -5 attendu -1 » —
+    le bord Q2 (la plage restante trop courte) : le modèle REFUSE
+    l'entrée (−5) là où le contrat rend LA FIN NOMMÉE (−1) — le bord
+    de la sémantique d'échec, la même lecture que 1c4sokpii (1984/2011
+    à l'époque, la classe reproduite à un rouge d'école près).
+    LOUPE-02 (LIRE) : LA COMPILATION REFUSÉE — gcc 14 : « implicit
+    declaration of function 'min' » (le modèle définit min APRÈS son
+    usage : l'ordre de déclaration C99, la classe nommée). LA PIÈCE
+    verbatim bras_c_qwen_loupe-02.c : la sémantique par ailleurs JUSTE
+    (les gardes -5/-3, le remplissage min(384, taille−décalage), le
+    recouvrement du journal à sa place) — à UNE déclaration près.
+    LOUPE-16 (SAISIE) : LA COMPILATION REFUSÉE — « 'return' with a
+    value, in function returning void » (le modèle déclara void puis
+    retourna les verdicts : la contradiction de type, la classe
+    nommée). LA PIÈCE verbatim bras_c_qwen_loupe-16.c.
+    LE PROFIL DE CAPACITÉ (les trois contrats, rapporté comme exigé) :
+      loupe-13 : 1983/2011 (98,7 %) — les bords Q2 et P4 nommés ;
+      loupe-02 : REFUS COMPILATION (l'ordre de déclaration) — la
+                 sémantique lue au source, juste, non prouvée à
+                 l'exécution ;
+      loupe-16 : REFUS COMPILATION (le type de retour) — non prouvé.
+    LA CAPACITÉ DE LA SECONDE FAMILLE au bras C : le contrat PUR
+    (recherche) tenu à 98,7 % ; les contrats À ÉTAT (la fenêtre, le
+    journal) ne passent pas la compilation à premier contact — le gap
+    nommé : la discipline de compilation C99 (les déclarations, les
+    types), pas la compréhension du contrat (les sources le montrent).
+
+(4) LA CONFRONTATION MATH↔PLAN (la préalable, re-tenue AVANT toute
+    génération)
+    T : les définitions aux décimales exactes (le harnais, Decimal
+    précision 60) == la table du plan (scripts/independance_v140.py) :
+    64/64. K : les définitions == la table du plan (tls13/layout.py) :
+    64/64. ZÉRO DIVERGENCE — la préalable qui fit foi à 1c4sokpii
+    re-vérifiée avant tout geste de la présente.
+
+LES PIÈCES : independance_etat.json (l'état reprise-safe), les deux
+codes de dérivation VERBATIM, les trois sources du bras C VERBATIM
+(+ les trois v1 au record), les pilotes et vecteurs de l'épreuve, la
+sonde de récitation au journal de l'état, ce rapport.
