@@ -1,0 +1,78 @@
+LE RAPPORT DE LA SESSION — LE KIT DE DÉVELOPPEMENT TRIADE v1.0.0 ASSEMBLÉ,
+LES TROIS MIROIRS MIS À JOUR, LE ZENODO v0.19.5 PUBLIÉ AU GESTE DU MAÎTRE
+(la commande « mets a jour les miroirs » à la suite du cadrage du kit :
+« un kit complet destiné à un développeur et son agent IA afin de pouvoir
+développer selon le protocole Triade » ; AUCUNE mesure fabriquée, AUCUN
+jeton lu ni affiché — D12)
+================================================================================================
+
+(1) LE KIT DE DÉVELOPPEMENT TRIADE v1.0.0 — LES QUATRE COMPOSANTS DU MAÎTRE
+    (1a) LES INSTRUCTIONS POUR L'AGENT — AGENTS.md [7 844 o] : le contrat
+    intégral de l'agent (la mission par ordre de priorité, les trois
+    vérités et la règle de placement, les HUIT règles d'or R1-R8, les
+    checklists obligatoires de début et de fin de session, le format du
+    résumé, la vue exécutive des six cérémonies, la gestion des jetons
+    sans jamais les voir, les interdits, la réponse à la fuite, la langue).
+    (1b) LE MANUEL DU DÉVELOPPEUR — docs/MANUEL_DEVELOPPEUR.pdf [292 810 o,
+    27 p.] (+ .docx [34 147 o]) : dix chapitres et annexes — principes,
+    architecture des trois vérités, installation, jetons et coffre,
+    collaboration développeur-agent, les cérémonies (§6.1 l'exécuteur,
+    §6.2 LE GUI 1-CLIC), versionnage et packs, passage public, incidents,
+    FAQ, structure du kit, glossaire — né du PIPELINE REPRODUCTIBLE en
+    sept étapes committé (scripts/kit_dev_v100/), postcheck 0 erreur.
+    (1c) LE NÉCESSAIRE POUR LES CÉRÉMONIES — ceremonies/GUIDE_CEREMONIES.md
+    [10 541 o] : les SIX déroulés complets C0-C5 ; l'exécuteur
+    scripts/triade_ceremonie.py [11 858 o] (mode agent --c/--oui, fiches
+    au journal/) ; ET LE GUI 1-CLIC TriadeKit sous ceremonies/gui/
+    [TriadeKit.py 95 231 o, stdlib seule ; les TROIS lanceurs
+    Windows/macOS/Linux ; LISEZMOI.md ; docs/EXTENSION.md] — l'auto-
+    diagnostic « TOUT EST OPERATIONNEL », le cycle complet démontré en
+    mode démo (2,7 s, aucun jeton requis) — le GUI v1.0 de l'Entrée 375,
+    demeuré NON COMMITTÉ (la leçon D97), PORTÉ AU DÉPÔT AU SEIN DU KIT,
+    utilisable aussi de façon autonome.
+    (1d) LE RESTE UTILE — SECURITE.md [5 031 o] ; les NEUF modèles de
+    templates/ ; le scanner scripts/triade_hygiene.py ; le README.md
+    d'entrée [5 032 o].
+    LA LIGNE ROUGE TENUE (« il ne faut surtout pas mes accès drive
+    dedans ») : le scan final — AUCUN jeton, AUCUN identifiant de dossier
+    Drive, AUCUN nom ; les configs livrées VIDES (seuls les marqueurs DÉMO
+    et les motifs de détection du code) ; le scanner DU kit passé sur le
+    kit : VERT, 22 fichiers texte, aucune alerte.
+    LE ZIP TRIADE_kit_developpement_v1.0.0.zip [229 801 o, 26 fichiers,
+    sha256 cbab654d7baf1b54…].
+
+(2) GIT — LE DÉPÔT PUBLIC PORTÉ À 1a9507d
+    l'Entrée 376 poussée (8fa61f1..1a9507d) : le kit complet, les
+    instruments de génération, le worklog — la tête distante main ==
+    1a9507d LUE ANONYMEMENT (ls-remote sans jeton, le dépôt public D220) ;
+    32 fichiers changés, 4 945 insertions.
+
+(3) LE COFFRE DRIVE — LE MIROIR, LE KIT D130, LE ZIP À LA RACINE
+    le miroir drive_sync : 31 téléversés + 2 mis à jour (le bundle, le
+    worklog) + 5 454 inchangés, 0 erreur au commit 1a9507d ; le kit D130
+    60/60 vérifiés aller-retour au commit 1a9507d (le MANIFESTE rafraîchi) ;
+    LE ZIP du kit de développement posé à la RACINE du coffre et recoupé
+    byte-byte (le motif des packs) ; le présent rapport au /test.
+
+(4) ZENODO — LA v0.19.5 PUBLIÉE AU GESTE DU MAÎTRE
+    la voie VÉRIFIÉE AVANT le geste : le brouillon 24382460 (état
+    unsubmitted, version v0.19.5), les TROIS fichiers recoupés md5
+    byte-byte aux pièces locales ; LE GESTE (la commande « mets a jour les
+    miroirs ») : la publication HTTP 202 — LE DOI DE VERSION
+    10.5281/zenodo.24382460 MINTÉ, le concept 10.5281/zenodo.24367343
+    résolvant désormais sur la v0.19.5 (la redirection du bord anonyme
+    fait foi), l'état « done », publié le 2026-11-20T00:34:17Z ; LES TROIS
+    FICHIERS au bord public anonyme recoupés égaux : la soumission
+    [266 704 o], le complet [1 050 978 o], le pack des cinq documents
+    [2 194 016 o].
+
+(5) LES TROIS MIROIRS VERTS — LA SUITE NOMMÉE
+    git (1a9507d vérifié anonymement), le coffre Drive (le miroir, le D130,
+    le zip, le rapport), Zenodo (la v0.19.5 vivante au DOI) — la vague 7
+    close et publiée ; le kit de développement public livré aux deux bords
+    git+drive (le bord Zenodo du KIT demeure à la décision du maître : une
+    version future du record le portera si le maître le commande) ; le
+    second annotateur du protocole κ, les signatures-I du jalon M10, le
+    silicium SHA-NI du geste B et le modèle 7B de l'indépendance
+    inter-familles demeurent NOMMÉS, jamais maquillés — la prochaine
+    instruction du maître ouvre la vague 8.
