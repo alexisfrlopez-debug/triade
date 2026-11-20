@@ -1,0 +1,76 @@
+GRILLE DE TÉMOIN — LE KIT fence.i AU SILICIUM (le format du fichier signé, l4nnwqlld)
+=======================================================================================
+LE PRINCIPE : le développeur exécute le run (LE GESTE), le scénario produit
+les pièces, le développeur SIGNE, le laboratoire recoupe. Aucune pièce sans
+signature ne ferme la ligne « awaiting ».
+
+1. LES PIÈCES QUE LE RUN PRODUIT (toutes dans preuves-fencei/, nées seules)
+--------------------------------------------------------------------------------
+  temoin-fencei.txt            l'environnement : la date, la machine, le
+                               noyau, LA CARTE (device-tree + cpuinfo « isa »
+                               + fréquence courante), le python, LA CHAÎNE
+                               d'assemblage et sa version, les empreintes
+                               AVANT (corpus ec343b4e…, demo e57fc74b…) ;
+  temoin-probe.bin             LE TÉMOIN BINAIRE de la sonde (48 o par
+                               enregistrement, u64 LE : l'en-tête puis les
+                               bras [run, bras, t1, mot relu, verdict,
+                               cycles]) — LA PIÈCE DU CRITÈRE ;
+  scenario-fencei-journal.log  le run entier, constat par constat ;
+  VERDICT-run-fencei.txt       le verdict post-mortem (chaque critère
+                               C1..C5, les frontières nommées).
+
+2. LA GRILLE DU FICHIER SIGNÉ (à remplir À LA MAIN par le développeur)
+--------------------------------------------------------------------------------
+Le développeur copie le bloc ci-dessous dans un fichier texte
+« SIGNATURE-RUN-FENCEI.txt » posé dans preuves-fencei/, puis le signe.
+Chaque champ « (attendu) » est recoupé par le laboratoire contre les
+pièces — tout écart nommé, jamais retouché.
+
+----- DÉBUT DU BLOC -----
+TÉMOIN SIGNÉ DU RUN fence.i AU SILICIUM — kit l4nnwqlld
+
+date et heure du run           : (la ligne « date » du temoin-fencei.txt)
+la carte                       : (modèle device-tree + la ligne « isa »
+                                 du cpuinfo — recopiées du témoin)
+la fréquence courante consignée: (la ligne « fréquence » du témoin)
+la chaîne d'assemblage         : (version du gcc/as, sa provenance —
+                                 cross de station ou natif de la carte)
+l'empreinte du binaire de sonde: (sha256 de fencei-probe, consigné au
+                                 journal au T1 — recopiée)
+le sha256 de temoin-probe.bin  : (calculé par le développeur :
+                                 sha256sum temoin-probe.bin)
+le sha256 du journal complet   : (sha256sum scenario-fencei-journal.log)
+le verdict rendu par le run    : (VERT / ÉCHEC NOMMÉ — la dernière ligne
+                                 du VERDICT-run-fencei.txt, recopiée)
+l'observation du bras B        : (x/5 verdicts périmés — la ligne
+                                 « OBSERVATION (le bras B…) » du journal ;
+                                 la lecture honnête : un verdict périmé
+                                 NOMME la nécessité de fence.i, un verdict
+                                 frais nomme l'échec de ligne ou le noyau —
+                                 aucune des deux n'est élue)
+les cycles consignés           : (les listes du journal, bras A puis bras B)
+
+Lu et approuvé — les pièces ci-dessus sont celles de MON run, à ma main :
+signature : ______________________   date : ______________
+----- FIN DU BLOC -----
+
+3. LA SIGNATURE (le tenseur d'authenticité — l'un des deux, nommé)
+--------------------------------------------------------------------------------
+  - GPG détaché (préféré si disponible sur la carte) :
+        gpg --detach-sign --armor preuves-fencei/SIGNATURE-RUN-FENCEI.txt
+    → SIGNATURE-RUN-FENCEI.txt.asc joint ; la clé publique déjà connue du
+    laboratoire (la chaîne de session du dépôt) ;
+  - OU la signature MANUSCRITE datée : le bloc imprimé ou recopié, signé à
+    la main, photographié/scanné (capture-signature.png joint au dossier).
+Une pièce sans l'une des deux signatures est retournée non recoupée.
+
+4. LE RETOUR
+--------------------------------------------------------------------------------
+Le dossier preuves-fencei/ ENTIER + la signature part au coffre
+/test/preuves-fencei/ (dossier Drive « Triade » → « test »). Le laboratoire
+recoupe : les empreintes AVANT/APRÈS, le MAGIC du témoin binaire, le décodage
+indépendant des enregistrements (le critère C2 recalculé depuis
+temoin-probe.bin SEUL), les sha256 de la grille contre les fichiers, la
+signature. Si les pièces établissent C1..C5 : la ligne « fence.i on
+silicon » se ferme SUR PIÈCES. Sinon : l'écart est nommé au registre, la
+ligne reste « awaiting », RIEN n'est fabriqué.

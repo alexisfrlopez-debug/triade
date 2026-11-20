@@ -1,0 +1,93 @@
+PROTOCOLE DE VÉRIFICATION — LE MODÈLE CF3 EN TAMARIN (l4nnwqlld, pièce 6)
+===========================================================================
+ÉTAT : LE MODÈLE EST LIVRÉ HASHÉ (EMPREINTES-KITS.txt), LA VÉRIFICATION
+APPARTIENT AU GESTE DU MAÎTRE AU POSTE RÉEL.
+
+LE GAP NOMMÉ (la pièce du constat, l'honnêteté d'abord) : tamarin-prover
+N'EST PAS INSTALLÉ au bac d'assemblage — constaté au geste même
+(« command not found » consigné au rapport de l'atelier). AUCUNE
+vérification n'a donc pu courir ici : le modèle est livré TEL QUEL, sa
+syntaxe et ses preuves attendent le poste réel. SI tamarin-prover vit un
+jour au bac, une vérification préliminaire sera la bienvenue — MAIS LE
+VERDICT OFFICIEL DEMEURE AU GESTE DU MAÎTRE (la règle de l'instruction :
+aucun résultat n'est produit sans le geste du développeur). Tout écart de
+syntaxe ou de preuve trouvé au poste réel se NOMME et s'amende PAR ÉCRIT
+(empreinte reconsignée) — jamais en silence.
+
+1. LA CHAÎNE À PROVISIONNER (le poste réel)
+--------------------------------------------------------------------------------
+  - tamarin-prover ≥ 1.9 (https://tamarin-prover.github.io — le manuel
+    d'installation ; une installation cabal/stack ou le binaire officiel) ;
+  - le présent dossier kit-tamarin-cf3/ (CF3.spthy + le présent protocole).
+
+2. LES COMMANDES (l'ordre des gestes)
+--------------------------------------------------------------------------------
+  G1. LE PARSE (la santé syntaxique — le premier geste) :
+        tamarin-prover CF3.spthy
+      → l'en-tête « Parsing theory CF3... » puis le résumé des lemmas ;
+      TOUTE erreur de syntaxe ici se NOMME et retourne au labo (l'amendement
+      écrit, l'empreinte reconsignée).
+  G2. L'ANALYSE AUTO-MATIQUE (les preuves) :
+        tamarin-prover CF3.spthy --prove
+      → chaque lemma passe à la preuve automatique (autoprove) ; les CINQ
+      lemmas attendus :
+        non_divulgation_de_la_phrase_sous_le_seuil   (LEMMA 1 — P1)
+        conservation_de_la_cle_utilisateur           (LEMMA 2)
+        absence_de_destruction_par_corruption        (LEMMA 3 — P3)
+        temoin_falsification_et_destruction          (la non-vacuité)
+        temoin_la_chaine_vivante                     (la chaîne habitée)
+  G3. SI L'AUTO ÉPUISÉE (les bornes, nommées) : un lemma non prouvé en
+      automatique passe à la preuve INTERACTIVE :
+        tamarin-prover interactive CF3.spthy
+      → le GUI (http://127.0.0.1:3001), le lemma choisi, la stratégie
+      par induction (right-click → induction) ; les heuristiques utiles :
+        smart, oracle, source-sink (tamarin-prover --heuristic=smart
+        --prove); en dernier recours, les bornes de traces :
+        --bound=10 (le compteur de pas) — UNE BORNE NOMMÉE n'est JAMAIS
+        une preuve sans borne : les lemmas 1-3 doivent se prouver SANS
+        borne (les lemmas témoins peuvent la tolérer).
+  G4. LA SORTIE (la pièce) : la console intégrale du run (copy-paste) +
+      le résumé des preuves (« lemmas proved/analysis complete ») partent
+      au coffre /test/preuves-cf3-tamarin/ avec la version exacte de
+      tamarin-prover (tamarin-prover --version) et l'empreinte du CF3.spthy
+      VÉRIFIÉ (recalculée au geste : sha256sum CF3.spthy — la confrontation
+      avec EMPREINTES-KITS.txt FAIT PARTIE de la pièce).
+
+3. CE QUE LES LEMMAS DISENT (et ce qu'ils ne disent pas)
+--------------------------------------------------------------------------------
+  - LEMMA 1 (non-divulgation de la phrase sous le seuil) : aucune phrase
+    ayant vécu n'est jamais connue de l'attaquant SOUS LA RESTRICTION —
+    la règle LAttaquantDolevYaoAuSeuilDesParts borne les traces à au plus
+    DEUX médias de parts compromis (la politique 5/3 de la cérémonie
+    D183, écrite au niveau du modèle). La restriction est PORTANTE : les
+    DIX règles de reconstitution illicite donneraient la phrase à trois
+    parts connues — le lemma tient PAR la restriction, jamais malgré elle ;
+  - LEMMA 2 (conservation de la clé utilisateur) : tout emploi de K_user
+    remonte à une phrase née avant — la clé d'une phrase est invariable à
+    travers les époques (les clôtures ne la retouchent jamais, spec § 2) ;
+  - LEMMA 3 (absence de destruction par corruption) : toute destruction
+    locale est précédée d'une falsification PROUVÉE — la phrase erronée et
+    la corruption seule ne détruisent JAMAIS (les modes de défaillance
+    séparés, spec § 5/§ 7 — la garantie P3 au niveau du modèle) ;
+  - LES LEMMAS TÉMOINS : la non-vacuité (la falsification et la
+    destruction EXISTENT dans le modèle — un modèle où rien ne peut
+    arriver ne prouve rien) et la chaîne habitée (création, migrations,
+    ouverture honnête coexistent dans une même trace).
+  - CE QU'ILS NE DISENT PAS (le niveau nommé) : Argon2id, HKDF et
+    XChaCha20-Poly1305 sont abstraits en h/senc (le niveau symbolique) ;
+    l'arithmétique de Shamir est abstraite (la reconstruction exige trois
+    parts distinctes, liées par les champs du fait !PartsDe) ; la
+    discipline RAM, la re-lecture à froid et le cycle en deux actes
+    appartiennent au CODE (v06/coffre_cf3.py, prouvé par
+    v06/test_coffre_cf3.py) — le modèle démontre les PROPRIÉTÉS de
+    sécurité au niveau symbolique, pas l'implémentation.
+
+4. LA CLÔTURE DE LA LIGNE (le statut, sur pièces)
+--------------------------------------------------------------------------------
+La ligne du modèle formel ne se ferme que sur les CINQ preuves (ou les
+quatre + les témoins) rendues au geste, la version consignée, l'empreinte
+confrontée. Une preuve échouée est une PIÈCE AUSSI PRÉCIEUSE qu'une preuve
+passée : l'échec se consigne AVEC le contre-exemple produit par Tamarin
+(la trace attaquante) — il nomme soit un défaut du modèle (amendement
+écrit), soit un défaut RÉEL du protocole (la découverte). Jamais un
+modèle muet, jamais un vert décrété.

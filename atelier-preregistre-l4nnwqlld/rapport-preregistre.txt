@@ -1,0 +1,275 @@
+RAPPORT DE L'ATELIER PRÉREGISTRE l4nnwqlld — LES KITS ET PLANS QUI FERMENT LES
+LIGNES « AWAITING », HASHÉS AVANT TOUTE MESURE (la vague 11, l'instruction V11-KIT)
+====================================================================================
+Écrit le 2026-11-20. LA RÈGLE DE L'INSTRUCTION — « aucun résultat n'est produit
+sans le geste du développeur » — a gouverné CHAQUE geste de l'atelier : ce qui
+est livré ci-dessous sont des KITS et des PLANS HASHÉS ; AUCUNE mesure n'a été
+prise, AUCUN run matériel n'a tourné, AUCUN chiffre n'a été fabriqué. Le plan
+gelé PLAN-L4NNWQLLD.md (l'empreinte consignée AVANT les kits à
+EMPREINTES-PLANS-VAGUE11.txt : bf7126ff9a986ba0…) a été suivi À LA LETTRE ;
+tout écart au plan est nommé ci-dessous (§ 6).
+
+1. LES SIX KITS LIVRÉS (empreintes complètes à EMPREINTES-KITS.txt — la table
+   sha256:93a46e939219cf41acb11aa2a40cb884930a7f5f0a9a16c3b06a742a1f4d7566,
+   VÉRIFIÉE par le constat A7 des autotests)
+--------------------------------------------------------------------------------
+K1. kit-fencei-rv64/ — LE KIT fence.i SUR CARTE RV64 PHYSIQUE (M7 au silicium).
+    Sept pièces : le scellé corpus (ec343b4e…, 0.8.0-rc.1 — copie INTACTE en
+    lecture seule), le démonstrateur demo (e57fc74b…, f72001), LA SONDE
+    sequence-fencei.S (65f6cb6b… : n ≥ 5 runs × deux bras — le bras A, la
+    séquence § 5 de la fiche profil INTÉGRALE avec fence.i : bascule du
+    scratch t1 consignée, mot aligné 4 o atomique, fence rw,rw, fence.i, saut
+    jalr ra, 0(t1) ; le bras B, SANS fence.i, la sonde de fetch périmé — une
+    OBSERVATION consignée, jamais une porte), LE SCÉNARIO RETARGETÉ
+    scenario-fencei-rv64.py (3e1d3975… : T0 témoin — empreintes ASSERTÉES,
+    la carte consignée : device-tree, cpuinfo « isa », fréquence, chaîne ;
+    T1 la sonde assemblée SUR LA CARTE (riscv64-linux-gnu-gcc ou le natif,
+    -march=rv64ima_zifencei_zicsr -mabi=lp64, la chaîne EXACTE documentée au
+    LISEZMOI § 2) ; T2 LE CRITÈRE : bras A = 100 % de verdicts du NOUVEAU
+    mot, t1 consigné, cycles consignés ; T3 le scellé AU SILICIUM : le corpus
+    ×3 au rituel, le demo 1 200 usages la bascule PENDANT le trafic 15 425 o
+    octet pour octet, le DEP falsifié SIGSEGV 4 290 o ; T4 zéro régression),
+    le PROTOCOLE-ACCEPTATION (e2c98d2d… : les critères C1-C5 MESURÉS, n ≥ 5,
+    gelés avant le run), la GRILLE-TEMOIN (13b33014… : le format du fichier
+    signé — empreintes, verdict, observation du bras B, signature GPG ou
+    manuscrite datée), le LISEZMOI (3adf8935… : la fiche de la carte visée —
+    RV64GC, la lettre G INCLUT Zifencei par construction ; le psABI autorise
+    le cœur RV64GC à exécuter le RV64IMA du scellé).
+K2. kit-loupe-3e-machine/ — LE KIT LOUPE TROISIÈME MACHINE (T0→T7+S0 intégral).
+    Cinq pièces : l'exécutable loupe.exe (c1115105…, 0.1.1-dev.1 — copie
+    INTACTE), le scénario INTÉGRAL scenario-loupe.py (131d0135…, copie octet
+    pour octet du scénario de la campagne D204 : T0 le contrôle D54 ÉTENDU,
+    T1→T7 le contrat, S0 la cascade 205, LA LIAISON aux 37 slots), le témoin
+    vitrine (6745d46f…, les quatre temps dont le [4/4] journal d'événements),
+    la GRILLE-TEMOIN (dc56d8bc… : le journal + les empreintes des sorties
+    signés, L'EMPREINTE CPU ET LA FRÉQUENCE consignées — les commandes
+    PowerShell de la consigne), la feuille de route pas à pas
+    LISEZMOI-KIT-LOUPE-3E (569ae3af…). Les données de test sont CRÉÉES AU RUN
+    (l'ombre, le fichier témoin) — la condition du recoup inter-machines.
+K3. kit-dudect/ — LE PROTOCOLE DUDECT RETARGETÉ (n ≥ 10 par N ∈ {60, 200, 400}
+    sur ≥ 2 machines). Huit pièces : le mesureur scellé dudect_v150.c
+    (8c90ef82…, porté INCHANGÉ — copie octet pour octet), les cibles
+    (proxy-image.bin 0782d7e2… + les manifestes : les QUATRE cibles
+    tls13-02/13/16/17, l'image mémoire étendue de la pièce scellée), le
+    LISEZMOI du protocole (b38fd25f…), L'INVESTIGATION DES PICS tls13-02/
+    tls13-13 À N=200 PRÉ-ENREGISTRÉE (8d7054ed… : TROIS causes testables
+    nommées AVANT les données avec leur test discriminant — C1 LA FAUSSE
+    CACHE DU COMPILATEUR (T1a -O0, T1b barrière volatile, T1c inspection
+    statique : le pic disparaît quand la barrière est posée) ; C2 L'ALIAS DE
+    LIGNE (T2a décalage contrôlé 4 Kio + 64 o, T2b contrôle positif à l'alias
+    maximal : le pic SUIT le décalage) ; C3 LE PARTAGE DE PORT (T3a l'aléa
+    prégénéré hors boucle, T3b comptage perf par port : le pic disparaît
+    quand l'aléa sort de la boucle) — plus les candidates v0.19.3 portées :
+    le faux positif d'horloge, l'interruption partagée, l'écart réel), LA
+    RÈGLE DE JUGEMENT GELÉE (c6f2120b… : le t DE WELCH sur les cycles des
+    journaux, le seuil |t| > 5, LA MÉDIANE par cellule machine×cible×N, la
+    DÉCISION PAR CIBLE, la phrase de frontière « jamais constant temps
+    prouvé »), et L'AGRÉGATEUR FAIL-CLOSED agregateur_dudect.py (86e60150… :
+    la complétude validée AVANT TOUT CALCUL — ≥ 2 machines avec témoin
+    portant empreinte CPU ET fréquence, 4 cibles, 3 N, n ≥ 10 runs, journaux
+    complets ; TOUT manque = REFUS exit 2 avec la liste, JAMAIS d'agrégat
+    partiel).
+K4. kit-h7-stratifiee/ — LA CAMPAGNE H7 (randomisation stratifiée garantissant
+    le contraste d'ordre). Deux pièces : le PLAN-H7 (96dc064d… : le plan de
+    puissance DOCUMENTÉ — δ̂ = |ln(67 475/53 158)| = 0,2385 l'asymétrie
+    confondue bras×ordre de la paire instrumentée D204, σ̂ = 0,2856 le SD des
+    log-M2 des quatre unités D210, α = 0,05 puissance 0,8 : normale 11,25 →
+    12, t de Student itérée → 14, DÉCISION FAIL-CLOSED 14 STRATES ; la
+    fixation des strates : les DOUZE familles loupe jamais livrées + les
+    DEUX relivraisons nommées (loupe-01 la paire instrumentée, loupe-16 la
+    famille à état du plafond D210) ; les critères d'arrêt — la règle D207
+    par unité reconduite, la campagne complète à 28 unités fermées,
+    l'amendement AVANT analyse si une strate devient indélivrable, H7 non
+    testée sous 10 strates complètes ; la règle de jugement — l'estimateur
+    β̂_s par strate LIBRE des effets de famille et de bras par construction,
+    le t apparié à t_{0,975;13} = 2,160, les QUATRE métriques nommées sans
+    correction de multiplicité) et LE GÉNÉRATEUR generateur_randomisation.py
+    (0ac3b0c6… : la graine 20261120 consignée AVANT le premier tirage réel,
+    le tirage DANS les strates — une pièce équilibrée par strate, LES DEUX
+    ORDRES PAR CONSTRUCTION, le « une-sur-seize » de D210 impossible par
+    design ; la table officielle n'existe qu'au geste --tirer, signée à
+    l'ouverture).
+K5. kit-annotateur-fl/ — LE RECRUTEMENT DU SECOND ANNOTATEUR (la grille F/L,
+    κ ≥ 0,61). Cinq pièces : la GRILLE F/L (e94abb20…, copie INTACTE de la
+    grille D189/D203 : F1-F5 terrain, L1-L3 laboratoire, définitions
+    opérationnelles et exemples vécus), LES CONSIGNES D'ANNOTATION (183444b5… :
+    le manuel, la loi du un, le pas-à-pas, LES HUIT EXEMPLES ÉTALONNÉS —
+    [OFT-QWORD]→F1, [RET-NU]→F3, [FREE-SANS-TYPE]→F4, [SESSION]→F2, la table
+    K→L1, la finalisation seule→L3, la winmain→L2, la vitrine morte→F5 — et
+    les pièges nommés), LE CALCULATEUR κ AUTOTESTÉ calculateur_kappa.py
+    (83e89fcc… : le κ de Cohen, la garde n ≥ 50, QUATRE fixtures à l'accord
+    attendu EXACT par construction), LA RÈGLE D'ACCEPTATION (24b35956… :
+    κ ≥ 0,61 Landis-Koch substantiel SUR n ≥ 50 items doubles, les DEUX
+    conditions conjointes ; LE PROTOCOLE D'ARBITRAGE : les désaccords nommés
+    item par item, la troisième lecture AU GESTE, l'arbitrage ne retouche
+    JAMAIS les deux CSV, l'amendement de grille PAR ÉCRIT), le LISEZMOI de
+    recrutement (ea6f6df1…).
+K6. kit-tamarin-cf3/ — LE MODÈLE CF3 EN TAMARIN. Deux pièces : CF3.spthy
+    (2622354a… : les actions du protocole — LA CRÉATION DU COFFRE (CF1), LA
+    MIGRATION CF1→CF2 (la cérémonie de séquestre : 5 parts à seuil 3), LA
+    MIGRATION CF2→CF3 (les trois éléments : K_user invariable, S_serrure
+    machine, S_piège média séparé), LE CHANGEMENT DE PHRASE SOUS SÉQUESTRE
+    (3 parts reconstituent, la phrase fraîche rescelle, les parts rafraîchies),
+    LA CLÔTURE D'ÉPOQUE (moitiés fraîches, K_user conservée), LA DESTRUCTION
+    LOCALE (jamais nue : la chaîne evil-maid → falsification prouvée →
+    destruction) ; LES LEMMAS DE SÉCURITÉ — la non-divulgation de la phrase
+    sous le seuil, la conservation de la clé utilisateur, l'absence de
+    destruction par corruption, plus les DEUX lemmas témoins de non-vacuité ;
+    LA RÈGLE DE RESTRICTION NOMMÉE LAttaquantDolevYaoAuSeuilDesParts — les
+    traces où l'attaquant accumule TROIS parts sont exclues, la politique 5/3
+    écrite au niveau du modèle, la restriction PORTANTE : les DIX règles de
+    reconstitution illicite donneraient la phrase sans elle) et le
+    PROTOCOLE-VERIFICATION (5bc75cce… : les commandes tamarin, les lemmas,
+    les bornes — la preuve automatique --prove, l'interactive à l'induction,
+    les bornes NOMMÉES jamais une preuve sans borne pour les lemmas 1-3).
+
+2. LES AUTOTESTS — TOUT VERT, 57/57 CONSTATS (autotests.py à la racine,
+   empreinte 13907399… ; exécuté le 2026-11-20, AUCUNE mesure — fixtures
+   synthétiques et pièces intactes seulement)
+--------------------------------------------------------------------------------
+  A1. LA SYNTAXE : les quatre pièces Python des kits compilent — VERT.
+  A2. L'AGRÉGATEUR FAIL-CLOSED (fixtures synthétiques) : l'arbre complet
+      s'agrège — les médianes CONSTRUITES (A/tls13-02/N60 +0,00 ; N200
+      +2668,0 le décalage +1000 construit ; B/tls13-13/N400 +0,00), la
+      décision par cible EXACTE (tls13-02 À DIVERGENCE, 13/16/17 SANS) ;
+      UN run manquant (machine-B/tls13-17/N400/run05) => REFUS NOMMÉ ;
+      l'agrégat partiel IMPOSSIBLE (RuntimeError) ; un témoin machine muet
+      (sans empreinte CPU ni fréquence) => REFUS — VERT, la règle de fer
+      éprouvée : la complétude AVANT tout calcul.
+  A3. LE CALCULATEUR κ (fixtures synthétiques) : l'accord parfait +1,0000 ;
+      le désaccord total −1,0000 ; l'accord partiel +0,4000 À LA MAIN
+      (po = 0,7, pe = 0,5) ; LE CAS n = 50 au κ EXACT +0,6400 PAR
+      CONSTRUCTION (po = 41/50 = 0,82, pe = 0,50, la matrice 23/7/2/18) ;
+      la garde de taille (κ = 0,9 à n = 10 : LA RÈGLE NE SE REND PAS) —
+      VERT.
+  A4. LE GÉNÉRATEUR DE RANDOMISATION (à la graine 20261120) : le plan de
+      puissance RE-DÉRIVÉ (δ = 0,2385, σ = 0,2856, normale 11,25 → 12,
+      t itérée → 14, décision = 14 = les strates fixées) ; le DÉTERMINISME
+      (la graine redonne LA MÊME table, sha256 2de7d488…) ; le CONTRASTE
+      GARANTI (les 14 strates portent chacune une unité T-première et une
+      C-première) ; la SENSIBILITÉ (une autre graine donne une autre table)
+      — VERT.
+  A5. LES ENCODAGES DE LA SONDE fence.i : les QUATRE littéraux .word et les
+      TROIS formes vives VÉRIFIÉS PAR L'ASSEMBLEUR MAISON DU DÉPÔT
+      (riscv/outils/as_rv64.py, le juge du jalon M7) : addi a0, zero, 11 →
+      1305b000 ; addi a0, zero, 22 → 13056001 ; jalr x0, ra, 0 → 67800000 ;
+      addi x0, x0, 0 → 13000000 ; fence rw, rw → 0f003003 ; fence.i →
+      0f100000 ; jalr ra, 0(t1) → e7000300 — VERT. (Le geste a RATTRAPÉ une
+      coquille : les premiers encodages manuscrits 0x00B50513/0x01650513
+      étaient FAUX — l'assembleur maison les a nommés, les pièces ont été
+      corrigées AVANT la consigne des empreintes : la preuve vivante que la
+      porte du dépôt attrape ce que l'auteur n'avait pas prévu.)
+  A6. L'INTÉGRITÉ DES COPIES : les DIX pièces copiées du dépôt sont OCTET
+      POUR OCTET les originales ; les empreintes ASSERTÉES par les scénarios
+      recoupées (corpus ec343b4e…, demo e57fc74b…, loupe.exe c1115105…) —
+      VERT.
+  A7. LA TABLE DES EMPREINTES : les 30 lignes d'EMPREINTES-KITS.txt
+      recoupées contre leurs fichiers — VERT (la table est vérifiée, pas
+      décrétée).
+
+3. LA TABLE DES STATUTS — INCHANGÉE (aucun résultat produit, la règle)
+--------------------------------------------------------------------------------
+Les SIX lignes « awaiting » de la table (edition-v0210/donnees/statuts_v190.tex)
+demeurent INCHANGÉES quant au statut — les kits les SERVENT, ils ne les ferment
+pas (la fermeture exigera les témoins signés recoupés) :
+  — « Wall-clock constant time … the pre-registered repetition protocol
+    delivered (v0.19.3) … awaiting the developer's run, no figure
+    fabricated » → K3 le sert (le protocole retargeté complet, l'agrégateur
+    fail-closed, l'investigation pré-enregistrée) ;
+  — « fence.i on silicon — awaiting hardware run … instruction-cache
+    semantics unproven » → K1 le sert (le scénario retargeté au silicium,
+    la sonde, le protocole d'acceptation, la grille) ;
+  — « Third-machine field liveness — awaiting hardware run … the Loupe kit
+    on a second Windows machine, full T0–T7+S0 scenario » → K2 le sert (le
+    paquet intégral, la feuille de route, la grille à l'empreinte CPU et à
+    la fréquence) ;
+  — « Independent replication — awaiting (recruitment / real command) …
+    the H7 order contrast still to be drawn by the next campaign; the
+    second machine remains awaiting » → K4 et K5 le servent (la
+    randomisation stratifiée garantissant le contraste, gelée avant le
+    premier tirage réel ; le kit de recrutement complet, la règle κ ≥ 0,61
+    sur n ≥ 50) ;
+  — le modèle CF3 en Tamarin (l'indépendance au niveau du modèle) → K6 le
+    sert (le modèle hashé, le protocole de vérification au geste).
+AUCUN fichier du dépôt hors de l'atelier n'a été modifié (git diff VIDE sur
+edition-v0210/, docs/, v06/, riscv/, loupe/, tls13/, scripts/) ; AUCUN commit
+(nu la règle) ; docs/DECISIONS.md, docs/JOURNAL_OPTIMISATION.md et worklog.md
+n'ont PAS été touchés.
+
+4. LES GAPS NOMMÉS (ce que le bac ne porte pas — l'honnêteté d'abord)
+--------------------------------------------------------------------------------
+  G1. LA CARTE RV64 PHYSIQUE : aucune fer RISC-V au bac — le kit fence.i
+      (chaîne riscv64-linux-gnu ABSENTE du bac également, constaté : gcc
+      14.2.0 hôte seul) attend la carte ET la station du développeur ;
+  G2. LA TROISIÈME MACHINE (et la seconde pour dudect) : aucune machine
+      Windows supplémentaire au bac — les kits loupe et dudect attendent
+      les machines réelles du développeur ;
+  G3. LE RECRUTEMENT : le second annotateur est À RECRUTER — aucune
+      annotation n'existe, aucune n'est fabriquée (le κ réel attendra les
+      deux jeux) ;
+  G4. TAMARIN AU POSTE RÉEL : tamarin-prover N'EST PAS INSTALLÉ au bac
+      (constaté au geste même : « command not found » consigné) — LE GAP
+      EST NOMMÉ au protocole de vérification du kit : le modèle CF3.spthy
+      est livré HASHÉ TEL QUEL, sa vérification appartient AU GESTE du
+      maître ; si un écart de syntaxe ou de preuve est trouvé au poste
+      réel, il se NOMME et s'amende PAR ÉCRIT (empreinte reconsignée),
+      jamais en silence ;
+  G5. LE PREMIER TIRAGE RÉEL H7 : la table de randomisation officielle
+      n'existera qu'au geste --tirer consigné-signé à l'ouverture de la
+      campagne (le générateur et la graine sont livrés, l'autotest a
+      vérifié les invariants SANS produire la pièce).
+
+5. LES SCELLAUX (le geste d'ouverture et de clôture)
+--------------------------------------------------------------------------------
+  AVANT : python3 v06/sceau_I.py verifier → « 14 arbres VERTS — cle deposee
+  reelle (ceremonie hors-ligne, D87) » (m0…m8, tls13, loupe, demo, terrain,
+  v06 — les empreintes consignées dans la sortie intégrale ci-dessus).
+  APRÈS : python3 v06/sceau_I.py verifier → « 14 arbres VERTS » — LES MÊMES
+  EMPREINTES (667fb5ae…, e0e08440…, 752c58a8…, 8ac66a29…, 7e5c61fb…,
+  1869422e…, 88e8c544…, f35a0ae9…, e36141f7…, 42559862…, 59e4871a…,
+  96e6fd4e…, 754cb03c…, a8166442…) : AUCUN artefact scellé touché, les
+  copies de l'atelier sont des copies (le constat A6 le re-prouve octet par
+  octet), les originaux demeurent INTACTS.
+
+6. LES ÉCARTS AU PLAN (nommés — la règle des vagues)
+--------------------------------------------------------------------------------
+  E1. Le plan demande « le scénario M7 retargeté (la fiche de la carte
+      visée — RV64GC, le profil riscv64-linux-elf64) » : livré AUSSI avec
+      la sonde dédiée (sequence-fencei.S) que le plan n'exigeait pas
+      explicitement mais que son protocole d'acceptation (« la bascule vue
+      par le cœur, l'invalidation du cache d'instructions prouvée au
+      témoin ») rend nécessaire — le demo scellé démontre la séquence
+      COMPLÈTE, la sonde ISOLE les critères mesurés bras par bras ;
+  E2. Les QUATRE encodages littéraux de la sonde ont été corrigés d'une
+      coquille manuscrite AVANT la consigne (nommé au § 2.A5) — l'empreinte
+      consignée est celle des pièces CORRIGÉES ;
+  E3. La table des empreintes ne contient ni son propre sceau (l'auto-
+      référence est impossible) ni l'empreinte du présent rapport (écrit
+      après elle) : le sceau de la table est sha256:93a46e93… consigné
+      CI-DESSUS, l'empreinte du rapport sera consignée à l'entrée suivante
+      du registre — jamais en silence.
+
+7. LES FICHIERS PRODUITS (l'atelier, 36 fichiers)
+--------------------------------------------------------------------------------
+  atelier-preregistre-l4nnwqlld/
+  ├── PLAN-L4NNWQLLD.md            le plan gelé (INTACT — non touché)
+  ├── kit-fencei-rv64/             7 pièces (corpus, demo, sonde .S, scénario,
+  │                                protocole, grille, LISEZMOI)
+  ├── kit-loupe-3e-machine/        5 pièces (loupe.exe, scénario, témoin
+  │                                vitrine, grille, LISEZMOI)
+  ├── kit-dudect/                  8 pièces (mesureur, cibles×3, LISEZMOI,
+  │                                investigation, règle, agrégateur)
+  ├── kit-h7-stratifiee/           2 pièces (PLAN-H7, générateur)
+  ├── kit-annotateur-fl/           5 pièces (grille, consignes, calculateur,
+  │                                règle, LISEZMOI)
+  ├── kit-tamarin-cf3/             2 pièces (CF3.spthy, protocole)
+  ├── autotests.py                 les autotests (57 constats VERTS)
+  ├── EMPREINTES-KITS.txt          la table sha256 (30 lignes, vérifiée)
+  └── rapport-preregistre.txt      le présent rapport
+
+LA DÉCISION CONSIGNÉE : l'atelier l4nnwqlld est LIVRÉ — six kits hashés, des
+plans gelés, des autotests verts, la table des statuts INCHANGÉE, les gaps
+nommés, les scellaux verts avant et après. La suite appartient aux gestes :
+la carte, les machines, le recrutement, Tamarin au poste réel, le premier
+tirage — chacun rendra son témoin signé, et la table des statuts ne bougera
+QUE SUR PIÈCES RECOUPÉES. Jamais un résultat sans le geste du développeur.

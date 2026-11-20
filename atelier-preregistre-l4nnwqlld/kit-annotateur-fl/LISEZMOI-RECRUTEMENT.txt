@@ -1,0 +1,75 @@
+LISEZMOI — LE KIT DE RECRUTEMENT DU SECOND ANNOTATEUR (la grille F/L, l4nnwqlld pièce 5)
+=======================================================================================
+PRÉ-ENREGISTRÉ — l'empreinte sha256 de chaque pièce consignée à
+EMPREINTES-KITS.txt AVANT la remise. LA RÈGLE : AUCUNE annotation n'est
+produite ici ; la ligne « Independent replication — awaiting (recruitment /
+real command) » demeure INCHANGÉE tant que le κ réel n'est pas calculé sur
+les DEUX jeux.
+
+1. L'OBJET
+--------------------------------------------------------------------------------
+Le κ de Cohen exige DEUX jeux d'annotations indépendants. Le premier est
+le codage du laboratoire (codage_annotateur1.csv de la réplication
+v0.15.0 — chaque défaut du registre codé à sa classe F/L lue de sa nature
+consignée). Le second APPARTIENT À RECRUTER : un annotateur indépendant
+qui code LES MÊMES défauts SANS VOIR le codage du labo. Le présent kit
+est TOUT ce qu'il faut pour le recruter, le briefer, calculer le κ et
+trancher : la grille, les consignes, le calculateur autotesté, la règle
+d'acceptation et l'arbitrage.
+
+2. LE CONTENU DU KIT
+--------------------------------------------------------------------------------
+kit-annotateur-fl/
+├── grille-fl.csv          LA GRILLE F/L (D189, les étiquettes D203) : les
+│                          HUIT classes (F1-F5 terrain, L1-L3 laboratoire),
+│                          les définitions opérationnelles, les exemples
+│                          vécus — copie INTACTE de la grille de la
+│                          réplication v0.15.0 (grille_tx.csv) ;
+├── consignes-annotation.txt  LES CONSIGNES (le manuel de l'annotateur) :
+│                          la loi du un, le pas-à-pas du geste, LES HUIT
+│                          EXEMPLES ÉTALONNÉS (défauts vécus, classes
+│                          consignées — l'étalonnage AVANT de coder), les
+│                          pièges nommés (détecté-par ≠ causé-par) ;
+├── calculateur_kappa.py   LE CALCULATEUR κ AUTOTESTÉ : le κ de Cohen, la
+│                          garde de taille (n ≥ 50), QUATRE fixtures
+│                          synthétiques à l'accord attendu EXACT par
+│                          construction (dont le cas n = 50 au κ exact
+│                          +0,64) ;
+├── REGLE-ACCEPTATION.txt  LA RÈGLE GELÉE : κ ≥ 0,61 (Landis-Koch
+│                          substantiel) SUR n ≥ 50 items doubles ; le
+│                          protocole d'arbitrage des désaccords ;
+└── LISEZMOI-RECRUTEMENT.txt  le présent document.
+
+3. LE RECRUTEMENT (ce que le kit demande au maître)
+--------------------------------------------------------------------------------
+- TROUVER l'annotateur : aucune compétence exigée au-delà de la lecture
+  attentive (la grille est opérationnelle) ; l'indépendance est la seule
+  condition NON NÉGOCIABLE : il/elle ne consulte NI le codage du labo, NI
+  les rapports d'édition, NI les classements publiés ;
+- LUI REMETTRE : le registre de campagne (la liste des défauts — le id, le
+  nom, la pièce citée), grille-fl.csv et consignes-annotation.txt —
+  RIEN D'AUTRE (le calculateur et la règle restent au labo : le verdict
+  ne se prépare pas chez l'annotateur) ;
+- LE TEMPS : consigné (la donnée de charge) ; le rendu attendu : UN CSV
+  « id,classe », UTF-8, les id communs sans retouche ;
+- LE NOMBRE : le registre porte aujourd'hui plus de cinquante défauts
+  nommés (les campagnes D204/D210 et les vagues d'instrumentation) —
+  TOUS se codent (n ≥ 50 est le minimum de la règle, pas le plafond).
+
+4. LE CALCUL (au labo, dès le rendu)
+--------------------------------------------------------------------------------
+  python3 calculateur_kappa.py codage_annotateur1.csv <le-rendu>.csv
+Le calculateur : le κ de Cohen sur les id communs, la garde de taille, la
+liste des litiges item par item, le verdict selon la règle gelée. Les
+QUATRE fixtures de l'autotest prouvent le mécanisme AVANT tout usage réel
+(rejouable à volonté : python3 calculateur_kappa.py).
+
+5. LA FRONTIÈRE
+--------------------------------------------------------------------------------
+Le recrutement et le rendu appartiennent au maître (D87 : jamais générés
+par le labo) ; le κ réel se calculera le jour où les deux jeux existeront
+(le statut consigné, jamais un chiffre fabriqué) ; l'arbitrage ne retouche
+JAMAIS les annotations (les deux CSV demeurent des pièces intactes) ; un
+κ sous le seuil n'est pas un échec du kit, c'est une MESURE — le désaccord
+se consigne, la grille s'amende PAR ÉCRIT si l'arbitrage le motive, le
+κ de première passe demeure dans l'histoire.

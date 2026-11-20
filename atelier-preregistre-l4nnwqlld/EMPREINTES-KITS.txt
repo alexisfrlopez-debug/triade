@@ -1,0 +1,60 @@
+EMPREINTES DES KITS — L'ATELIER PRÉREGISTRE l4nnwqlld (la vague 11, l'instruction V11-KIT)
+Gelées AVANT toute remise ; LA RÈGLE : « aucun résultat n'est produit sans le geste
+du développeur » — les kits sont livrés HASHÉS, AUCUNE mesure n'est prise.
+
+Le plan gelé : PLAN-L4NNWQLLD.md — sha256 consigné AVANT les kits à
+EMPREINTES-PLANS-VAGUE11.txt (bf7126ff9a986ba0…, la vague 11).
+
+
+--- kit-annotateur-fl ---
+kit-annotateur-fl/LISEZMOI-RECRUTEMENT.txt           sha256:ea6f6df1f9aa30248520622bf90e225164ee251d2e68b12fbaa8374a66d46069
+kit-annotateur-fl/REGLE-ACCEPTATION.txt              sha256:24b359560bc1da8024df9fba310f3ccaed2d8a72e55b084aecfacb3f2827274b
+kit-annotateur-fl/calculateur_kappa.py               sha256:83e89fcc9282eb1e9cf688843d42383e8e7a2240fb87a3a1b19f779a734db053
+kit-annotateur-fl/consignes-annotation.txt           sha256:183444b5a6e0569f421967ccb44763d0065d0d80fca37efc48a1eced1112d878
+kit-annotateur-fl/grille-fl.csv                      sha256:e94abb200ca1ff44854af4bcc6c0c6bf609683549315dacbbe35356a513b80c1
+
+--- kit-dudect ---
+kit-dudect/INVESTIGATION-PICS-N200.txt               sha256:8d7054edda4ce4c88e53b9cc5668cef6acdc009537b9cb4db97ddaad083f1799
+kit-dudect/LISEZMOI-KIT-DUDECT-V193.txt              sha256:b38fd25fba4ec07cbfd7ca157f515995fe5500133ed2c2fef2ed701e2a1fb54d
+kit-dudect/REGLE-JUGEMENT.txt                        sha256:c6f2120b0a7aac69c9e79f6d9017df4405041cfa6f599bce786b5a4f580161f2
+kit-dudect/agregateur_dudect.py                      sha256:86e6015064991ca39460878b4e54e7ed5155e5a319929ca67577989b3432be10
+kit-dudect/cibles/manifeste-c.txt                    sha256:7293cd86359cebba81d590173a49c462f876cf5ce8b639d5c26c2577713ea5d8
+kit-dudect/cibles/manifeste.json                     sha256:93d5a13fcc4d1cb2598b471e291266654d8fec18a9dd3800dba297fbc649db52
+kit-dudect/cibles/proxy-image.bin                    sha256:0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+kit-dudect/dudect_v150.c                             sha256:8c90ef8232e478a41d38a9edbba21f14f037939d7e8900d643063f5df53f06f3
+
+--- kit-fencei-rv64 ---
+kit-fencei-rv64/GRILLE-TEMOIN.txt                    sha256:13b3301451f2e3ed085032cd018661cc99f62239288ff377f02bdbddcdb225dc
+kit-fencei-rv64/LISEZMOI-KIT-FENCEI-RV64.txt         sha256:3adf893566112d58eb66ff95c34040ffcf8ba4b943fe79dbcf983e63a65a6d64
+kit-fencei-rv64/PROTOCOLE-ACCEPTATION.txt            sha256:e2c98d2d6947545b07d5fb4c21b6af1c4878d979dd32a403776de159e988eb28
+kit-fencei-rv64/corpus                               sha256:ec343b4e8bebf21c8b29a6da1a5eb022fb7b8e4b50ce95c5906734ef0b043799
+kit-fencei-rv64/demo                                 sha256:e57fc74be2ea67ab4c05351d0b5e0b93b6147ec34f2fb7aabbfd1ab7f141cde9
+kit-fencei-rv64/scenario-fencei-rv64.py              sha256:3e1d3975316b51d28c26294a85a51e5a71cda90cc11d9a7e3a8fac555e0e5efc
+kit-fencei-rv64/sequence-fencei.S                    sha256:65f6cb6b68771414fee9228c6551b536b9704fb5d7ba51d66e4d097da6d1228f
+
+--- kit-h7-stratifiee ---
+kit-h7-stratifiee/PLAN-H7.txt                        sha256:96dc064dd2d6ff8d8d22340042fa4f2338a873c274d216fdfe71e6e5caa79d4f
+kit-h7-stratifiee/generateur_randomisation.py        sha256:0ac3b0c6cb8e6329a2f95e70fc782e8727be93f34fdc8da5f1feb31d4f33d8c7
+
+--- kit-loupe-3e-machine ---
+kit-loupe-3e-machine/GRILLE-TEMOIN.txt               sha256:dc56d8bc3caa5b2d004cfc250ad5340fbce5936c265c319651feca5bd4d74853
+kit-loupe-3e-machine/LISEZMOI-KIT-LOUPE-3E.txt       sha256:569ae3af462aff4587db7d6d1d546510dd7de8f55180625d4f10156f1506b156
+kit-loupe-3e-machine/loupe.exe                       sha256:c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+kit-loupe-3e-machine/scenario-loupe.py               sha256:131d0135850237927ef59315a722bd0f206ed7741f1830b0aaf68e0a720a845a
+kit-loupe-3e-machine/temoin-vitrine.bat              sha256:6745d46fd71a515df5bc05e419a1518e79826a9b6ee03cfe2ceea81cd81b19b9
+
+--- kit-tamarin-cf3 ---
+kit-tamarin-cf3/CF3.spthy                            sha256:2622354afe23c75b646e9249070d0784e69a4f0ccab2b04d9ee5406b5dcaa4a4
+kit-tamarin-cf3/PROTOCOLE-VERIFICATION.txt           sha256:5bc75cce08f94fa2860f848b5443754d838523aa619bf7a575793ba2287d60bc
+
+--- la racine de l'atelier ---
+
+autotests.py                                     sha256:139073998a2dc2a30f21f6e2cc4345610c38f765955cc8f932612d42c2e594f5
+
+La table se VÉRIFIE à tout geste : python3 autotests.py (le constat A7
+recoupe CHAQUE ligne contre son fichier — la table est vérifiée, pas décrétée).
+Le présent fichier ne peut contenir son propre sceau ; l'empreinte du rapport
+(rapport-preregistre.txt, écrit après la table) est consignée AU rapport et à
+l'entrée suivante du registre — jamais ici, jamais en silence.
+
+Écrit le 2026-11-20 20:22:07 +0000 — l'atelier l4nnwqlld, AVANT la remise.

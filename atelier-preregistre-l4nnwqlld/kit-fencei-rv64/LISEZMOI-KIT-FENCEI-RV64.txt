@@ -1,0 +1,126 @@
+LISEZMOI — LE KIT fence.i SUR CARTE RV64 PHYSIQUE (M7 au silicium, l4nnwqlld pièce 1)
+=======================================================================================
+PRÉ-ENREGISTRÉ — l'empreinte sha256 de CHAQUE pièce de ce kit est consignée
+à EMPREINTES-KITS.txt À LA RACINE DE L'ATELIER, AVANT toute remise. LA RÈGLE
+DE L'INSTRUCTION : « aucun résultat n'est produit sans le geste du
+développeur » — ce kit LIVRE un scénario, un protocole et une grille ; AUCUNE
+mesure n'est prise ici. La ligne « fence.i on silicon — awaiting hardware
+run » de la table des statuts DEMEURE INCHANGÉE tant que le témoin signé
+n'est pas recoupé.
+
+POURQUOI CE KIT (la réserve D149, nommée depuis le jalon) : les runs M7
+vécus — laboratoire comme terrain WSL2 — exécutaient l'ISA par qemu-riscv64
+(TCG) : le noyau et les syscalls étaient réels de l'hôte, mais le CACHE
+D'INSTRUCTIONS était celui de l'hôte traduisant, jamais celui d'un cœur
+RISC-V. La sémantique de fence.i au silicium est donc NON CONSTATÉE : ce kit
+la demande à une fer réelle.
+
+1. LA CARTE VISÉE (la fiche — le kit n'exige AUCUNE marque)
+--------------------------------------------------------------------------------
+- UN cœur applicatif RV64GC 64 bits sous Linux (noyau ≥ 5.x, page 4 Kio) —
+  une carte de développement courante (VisionFive 2, BeagleV, Milk-V Mars,
+  Spin5, HiFive Unmatched…) ou un poste RISC-V : la fiche fait foi, pas la
+  marque ;
+- RV64GC INCLUT Zifencei PAR CONSTRUCTION : la lettre G désigne
+  IMAFD + Zicsr + Zifencei — fence.i y est NATIF. L'exécution même en fait
+  la preuve : une carte sans Zifenceur lèverait SIGILL (l'échec serait
+  nommé par le scénario, jamais contourné en silence) ;
+- le psABI AUTORISE un cœur RV64GC à exécuter du RV64IMA (sous-ensemble
+  strict — fiche de profil riscv64-linux-elf64 § 1) : les DEUX artefacts
+  scellés du kit courent Nativement, SANS AUCUNE recompilation ;
+- la fiche de référence du dépôt : docs/PROFIL_riscv64-linux-elf64.md
+  (RV64IMA + Zifencei, SANS C, 4 o par instruction, psABI LP64, syscalls
+  asm-generic, la séquence de patch § 5 : mprotect RW → écrire → fence
+  rw,rw → LA BASCULE UN MOT aligné → fence.i → RX → saut par le scratch t1).
+
+2. LA CHAÎNE EXACTE À PROVISIONNER (le script de préparation, documenté)
+--------------------------------------------------------------------------------
+Sur la station de travail (cross) OU sur la carte même (natif), le scénario
+cherche PAR ORDRE : riscv64-linux-gnu-gcc, puis cc, puis gcc. La chaîne :
+  - binutils ≥ 2.36 pour riscv (riscv64-linux-gnu-as) ;
+  - gcc ≥ 11 (riscv64-linux-gnu-gcc), paquet Debian/Ubuntu
+    « gcc-riscv64-linux-gnu » ;
+  - les DRAPEAUX (figés dans le scénario) :
+        -nostdlib -static -march=rv64ima_zifencei_zicsr -mabi=lp64
+    (Zifencei pour fence.i ; Zicsr pour rdcycle ; SANS C — la source porte
+    .option norvc, 4 o par instruction ; lp64 le soft-float du profil).
+  - la VERSION de la chaîne est CONSIGNÉE au témoin (T0), ainsi que
+    l'empreinte sha256 du binaire de sonde assemblé (T1) : la source est la
+    pièce, le binaire l'instant.
+AU LABORATOIRE (ce bac) : la chaîne riscv64-linux-gnu N'EST PAS INSTALLÉE —
+l'assemblage complet appartient au geste (LE GAP NOMMÉ). Ce que le labo a
+vérifié : les QUATRE encodages littéraux de la sonde par l'ASSEMBLEUR MAISON
+du dépôt (riscv/outils/as_rv64.py — addi a0, zero, 11 → 1305b000 ;
+addi a0, zero, 22 → 13056001 ; jalr x0, ra, 0 → 67800000 ; addi x0, x0, 0
+→ 13000000 ; fence rw, rw → 0f003003 ; fence.i → 0f100000 ; jalr ra, 0(t1)
+→ e7000300) — consigné au rapport de l'atelier.
+
+3. LE CONTENU DU KIT
+--------------------------------------------------------------------------------
+kit-fencei-rv64/
+├── corpus               LE SCELLÉ 0.8.0-rc.1 du jalon M7 — sha256
+│                        ec343b4e8bebf21c… (LECTURE SEULE pour le run ;
+│                        ET_DYN/PIE EM_RISCV, trois segments, exécution
+│                        native sur tout cœur RV64GC) ;
+├── demo                 LE DÉMONSTRATEUR INVITÉ f72001 — sha256
+│                        e57fc74be2ea67ab… (LECTURE SEULE ; l'image du
+│                        corpus + le démonstrateur patch à 0x2000 —
+│                        l'INSTRUMENT du chantier M7-(c), pas un artefact
+│                        de la lignée) ;
+├── sequence-fencei.S    LA SONDE (la source, 4 o/instruction, .option
+│                        norvc) : n ≥ 5 runs × DEUX bras — le bras A (la
+│                        séquence § 5 INTÉGRALE avec fence.i) et le bras B
+│                        (SANS fence.i — la sonde de fetch périmé, une
+│                        OBSERVATION consignée, jamais une porte) ; le
+│                        témoin binaire part sur stdout (48 o par
+│                        enregistrement, champs u64 LE : en-tête puis
+│                        [run, bras, t1, mot relu, verdict, cycles]) ;
+├── scenario-fencei-rv64.py  LE SCÉNARIO retargeté (python3 SEUL) :
+│                        T0 témoin (empreintes ASSERTÉES, la carte
+│                        consignée : cpuinfo/device-tree/fréquence/chaîne),
+│                        T1 la sonde assemblée SUR LA CARTE, T2 LE CRITÈRE
+│                        (bras A : 100 % de verdicts du NOUVEAU mot ; t1
+│                        consigné ; cycles consignés ; bras B : observation),
+│                        T3 le scellé AU SILICIUM (le corpus ×3 au rituel,
+│                        le demo : 1 200 usages, la bascule PENDANT le
+│                        trafic, 15 425 o octet pour octet ; le DEP
+│                        falsifié SIGSEGV 4 290 o), T4 zéro régression ;
+├── PROTOCOLE-ACCEPTATION.txt  LES CRITÈRES MESURÉS, gelés avant le run ;
+├── GRILLE-TEMOIN.txt    LE FORMAT du fichier signé que le développeur
+│                        retourne ;
+└── LISEZMOI-KIT-FENCEI-RV64.txt  le présent document.
+
+4. LE GESTE (quatre temps)
+--------------------------------------------------------------------------------
+1. TRANFÉRER le dossier kit-fencei-rv64/ ENTIER sur la carte (ou une
+   station qui la joint par ssh) — un NOUVEAU dossier, jamais mélangé à un
+   run ancien (D99). Les DEUX artefacts scellés ne sont jamais réécrits.
+2. LANCER : python3 scenario-fencei-rv64.py — depuis le dossier du kit.
+   Le scénario rétablit le bit exécutable des artefacts s'il s'est perdu au
+   transfert (le geste est nommé au journal ; le chmod ne touche aucun octet
+   de contenu). Aucun réseau, aucun droit root, aucune écriture hors de
+   ./preuves-fencei/. Durée : quelques secondes à quelques minutes selon la
+   carte (les 1 200 usages du demo y comptent).
+3. SIGNER le témoin selon GRILLE-TEMOIN.txt (l'empreinte des pièces, la
+   date, la main).
+4. RENVOYER preuves-fencei/ ENTIER + la signature au coffre
+   /test/preuves-fencei/ — le laboratoire recoupe sur pièces (D138/D145/
+   D148) et la ligne « awaiting » se ferme SUR PIÈCES, jamais avant.
+
+5. LES FRONTIÈRES NOMMÉES (l'honnêteté du terrain)
+--------------------------------------------------------------------------------
+- le BRAS B (sans fence.i) est une observation, jamais une porte : le
+  RISC-V n'EXIGE PAS la cohérence I/D (Unprivileged Spec) — un verdict
+  périmé au bras B NOMME la nécessité de fence.i sur ce cœur ; un verdict
+  frais nomme un échec de ligne du cache ou un noyau qui invalide au
+  mprotect (mode repli) — les DEUX lectures sont consignées, le bras A
+  SEUL tranche ;
+- la PORTÉE de fence.i est LE CŒUR COURANT (fiche § 5) : la sonde est
+  mono-fil ; la séquence multi-cœur (IPI + synchronisation) est hors
+  périmètre, nommée ici pour n'être jamais lue comme une généralité ;
+- le demo est l'INSTRUMENT du chantier M7-(c), pas un artefact de la
+  lignée (pas de carte) ; LE scellé du jalon est `corpus` ;
+- si le noyau de la carte REFUSE mmap RWX (politique execmem), la sonde
+  bascule ELLE-MÊME en mode repli mprotect sur SA page dédiée (le mode
+  est consigné à l'en-tête du témoin) — aucun des deux modes n'est un
+  faux vert : un refus de syscall est un ÉCHEC NOMMÉ (exit 2).

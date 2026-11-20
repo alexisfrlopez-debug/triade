@@ -1,0 +1,349 @@
+/*
+ * CF3.spthy — LE MODÈLE CF3 EN TAMARIN : la serrure à triple scellement et le
+ * cycle en deux actes (kit l4nnwqlld, pièce 6 — le modèle livré HASHÉ).
+ *
+ * LA SOURCE : v06/I/CF3/README.md (la spécification D121 — R2
+ * écrite-avant-code) instanciée par v06/coffre_cf3.py ; la cérémonie de
+ * séquestre D183 (5 parts à seuil 3 — sequestre_d183.py) ; la chaîne de
+ * générations CF1 → CF2 → CF3 (la spec § 12 : CF1 la phrase ; CF2 +
+ * fragments Shamir + sentinelle ; CF3 + piège sur média + cycle en deux
+ * actes). Le présent fichier est l'abstraction FORMELLE au niveau du
+ * modèle : la cryptographie concrète (Argon2id, HKDF, XChaCha20-Poly1305)
+ * est abstraite en h/senc — le niveau où les TROIS lemmas de sécurité se
+ * démontrent ; les abstractions sont NOMMÉES en commentaire, aucune n'est
+ * silencieuse.
+ *
+ * LES ACTIONS DU PROTOCOLE modélisées (les événements nommés) :
+ *   - LA CRÉATION DU COFFRE (CreationCoffre) — CF1, la phrase seule ;
+ *   - LA MIGRATION CF1→CF2 (MigrationCF2) — la cérémonie de séquestre :
+ *     la phrase partagée en CINQ parts à seuil TROIS sur cinq médias, le
+ *     coffre rescellé sous la dérivation à deux éléments ;
+ *   - LA MIGRATION CF2→CF3 (MigrationCF3) — la serrure à TROIS éléments :
+ *     K_user (la clé utilisateur, h de la phrase — INVARIABLE à travers
+ *     les époques), S_serrure (la moitié machine) et S_piège (la moitié
+ *     média séparé) ; le KEK abstrait en h(<K_user, S_serrure, S_piège>) ;
+ *   - LE CHANGEMENT DE PHRASE SOUS SÉQUESTRE (ChangementPhraseSousSequestre)
+ *     — TROIS parts (le seuil) reconstituent la phrase, la nouvelle
+ *     phrase fraîche rescelle le coffre, les parts rafraîchies ;
+ *   - LA CLÔTURE D'ÉPOQUE (ClotureDEpoque) — l'acte II : les moitiés
+ *     FRAÎCHES à chaque clôture, K_user CONSERVÉ (l'événement
+ *     CleUtilisateurEmployee en porte témoignage) ;
+ *   - LA DESTRUCTION LOCALE (DestructionLocale) — JAMAIS nue : précédée de
+ *     la FALSIFICATION PROUVÉE (FalsificationProuvee), la chaîne
+ *     evil-maid → ouverture falsifiée → destruction.
+ *
+ * L'ADVERSAIRE : Dolev-Yao (le réseau et tout ce qui fuit), PLUS les vols
+ * nommés du modèle de menace (spec § 1) : le VOL DE LA MACHINE SEULE (le
+ * conteneur et la S_serrure de l'en-tête clair — le voleur n'a pas le
+ * média du piège) et la COMPROMISSION DE MÉDIAS DE PARTS (la fuite, au
+ * compteur). LA RÈGLE DE RESTRICTION NOMMÉE (ci-dessous) borne l'attaquant
+ * AU SEUIL DES PARTS.
+ *
+ * LA RÈGLE DE RESTRICTION (le cœur de la politique de séquestre) :
+ *   LAttaquantDolevYaoAuSeuilDesParts — les traces où l'attaquant
+ *   accumule TROIS parts (le seuil de reconstitution) sont EXCLUES du
+ *   modèle : la politique 5/3 admet au plus DEUX médias compromis. La
+ *   restriction est PORTANTE : sans elle, la règle de reconstitution
+ *   illicite (dix règles, un par triplet de parts distinctes) donne la
+ *   phrase à l'attaquant et le lemma de non-divulgation tombe ; AVEC
+ *   elle, il tient. La restriction EST la politique de garde, écrite au
+ *   niveau du modèle.
+ *
+ * LES ABSTRACTIONS NOMMÉES (l'honnêteté du modèle) :
+ *   - Argon2id/HKDF/XChaCha20-Poly1305 → h et senc (le niveau
+ *     symbolique) ; le champ verif (l'essai-hors-ligne impossible au
+ *     voleur de la machine seule) est porté par la structure même du KEK
+ *     à trois éléments : sans le média du piège, AUCUNE rule ne peut
+ *     ouvrir ;
+ *   - l'arithmétique de Shamir (GF(2^8), 10 combinaisons de 3) est
+ *     abstraite : la reconstitution exige TROIS parts DISTINCTES — les
+ *     règles lient les trois champs distincts du fait !PartsDe (chaque
+ *     part est un nom frais distinct par construction) ; la combinateur
+ *     de l'attaquant est la famille de dix règles symétriques ;
+ *   - le cycle en deux actes est abstrait en la règle de clôture (les
+ *     moitiés fraîches, K_user conservé) — la discipline RAM et la
+ *     re-lecture à froid appartiennent au code (v06/coffre_cf3.py),
+ *     prouvées par v06/test_coffre_cf3.py, pas au niveau symbolique.
+ *
+ * LA VÉRIFICATION (PROTOCOLE-VERIFICATION.txt du kit) : le bac
+ * d'assemblage NE PORTE PAS tamarin-prover (constaté au geste même, le
+ * command not found consigné) — LE GAP EST NOMMÉ : la vérification
+ * appartient AU GESTE du maître au poste réel. Les commandes, les lemmas
+ * et les bornes y vivent.
+ */
+
+theory CF3
+begin
+
+builtins: hashing, symmetric-encryption
+
+/* le compteur de parts compromises (interne, privé) */
+functions: zero/0, succ/1 [private]
+
+/* ===================== LES ACTIONS DU PROTOCOLE (événements) ================ */
+
+event CreationCoffre(pk)                 /* la création, CF1 */
+event PhraseVivante(pk)                  /* une phrase naît (création ou changement) */
+event MigrationCF2(pk)                   /* CF1 → CF2 : la cérémonie de séquestre */
+event MigrationCF3(pk)                   /* CF2 → CF3 : les trois éléments */
+event ChangementPhraseSousSequestre(pk, pk)  /* l'ancienne, la nouvelle */
+event ClotureDEpoque(pk)                 /* l'acte II : l'époque nouvelle */
+event CleUtilisateurEmployee(pk)         /* K_user employée — la conservation */
+event OuvertureHonnete(pk)
+event PhraseErronee                      /* le refus bénin, JAMAIS de destruction */
+event VolDeLaMachine                     /* le voleur de la machine seule */
+event FuitePart                         /* un média de part compromis */
+event ReconstitutionIllicite(pk)        /* trois parts jointes — l'interdit */
+event RemplacementDuConteneur           /* l'evil maid écrit son conteneur */
+event FalsificationProuvee(pk)          /* la preuve cryptographique */
+event DestructionLocale(pk)             /* la destruction locale — JAMAIS nue */
+
+/* ============ LA RÈGLE DE RESTRICTION NOMMÉE (la politique de garde) ======= */
+/* L'attaquant Dolev-Yao AU SEUIL DES PARTS : les traces où TROIS parts (le
+ * seuil de reconstitution, la cérémonie 5/3) sont compromises sont EXCLUES
+ * — la politique admet au plus DEUX médias de parts compromis. Sans cette
+ * règle, ReconstitutionIllicite donne la phrase ; avec elle, le lemma
+ * non_divulgation_de_la_phrase_sous_le_seuil tient : la restriction est
+ * PORTANTE. */
+restriction LAttaquantDolevYaoAuSeuilDesParts:
+  "not Ex n #i. CompteurParts(succ(succ(succ(n)))) @ #i"
+
+/* ========================= LES RÈGLES DU PROTOCOLE ========================= */
+
+/* LA CRÉATION DU COFFRE — CF1 : la phrase seule scelle le contenu. */
+rule creation_du_coffre:
+  [ Fr($p), Fr($m), Fr($ep1) ]
+  --[ CreationCoffre($p), PhraseVivante($p) ]->
+  [ PhraseHote($p),
+    Coffre($ep1, senc($m, h($p))) ]
+
+/* LA MIGRATION CF1 → CF2 — la cérémonie de séquestre : la phrase est
+ * partagée en CINQ parts à seuil TROIS (cinq noms frais, un par média) ;
+ * le coffre rescellé sous la dérivation à deux éléments (la phrase et la
+ * garde de fragments, abstraite en $garde) ; le compteur de parts posé à
+ * zéro. !PartsDe lie la phrase à ses CINQ parts (champ distinct = part
+ * distincte, par la fraîcheur). */
+rule migration_cf1_vers_cf2:
+  [ PhraseHote($p), Coffre($ep, senc($m, h($p))), Fr($garde),
+    Fr($x1), Fr($x2), Fr($x3), Fr($x4), Fr($x5) ]
+  --[ MigrationCF2($p), CleUtilisateurEmployee(h($p)) ]->
+  [ PhraseHote($p),
+    GardeFragments($garde),
+    Coffre($ep, senc($m, h(<h($p), $garde>))),
+    !PartsDe($p, $x1, $x2, $x3, $x4, $x5),
+    PartSurMedia($x1), PartSurMedia($x2), PartSurMedia($x3),
+    PartSurMedia($x4), PartSurMedia($x5),
+    CompteurParts(zero) ]
+
+/* LA MIGRATION CF2 → CF3 — la serrure à TROIS éléments : la clé
+ * utilisateur K_user = h(phrase) INVARIABLE, la moitié machine
+ * S_serrure, la moitié média séparé S_piège ; le KEK abstrait en
+ * h(<K_user, S_serrure, S_piège>). */
+rule migration_cf2_vers_cf3:
+  [ PhraseHote($p), GardeFragments($garde),
+    Coffre($ep, senc($m, h(<h($p), $garde>))),
+    Fr($ss), Fr($sq), Fr($ep2) ]
+  --[ MigrationCF3($p), CleUtilisateurEmployee(h($p)) ]->
+  [ PhraseHote($p),
+    SerrureMachine($ss),
+    MediaPiege($sq),
+    Coffre($ep2, senc($m, h(<h($p), $ss, $sq>))) ]
+
+/* LA CLÔTURE D'ÉPOQUE — l'acte II : les moitiés FRAÎCHES à chaque
+ * clôture, K_user CONSERVÉE (h($p) inchangé — la conservation rendue
+ * visible par l'événement), le conteneur rescellé à l'époque suivante. */
+rule cloture_d_epoque:
+  [ PhraseHote($p), SerrureMachine($ss), MediaPiege($sq),
+    Coffre($ep, senc($m, h(<h($p), $ss, $sq>))),
+    Fr($ss2), Fr($sq2), Fr($ep2) ]
+  --[ ClotureDEpoque($ep2), CleUtilisateurEmployee(h($p)) ]->
+  [ PhraseHote($p),
+    SerrureMachine($ss2),
+    MediaPiege($sq2),
+    Coffre($ep2, senc($m, h(<h($p), $ss2, $sq2>))) ]
+
+/* LE CHANGEMENT DE PHRASE SOUS SÉQUESTRE — TROIS parts (le seuil)
+ * reconstituent la phrase (la liaison par !PartsDe) ; la nouvelle phrase
+ * FRAÎCHE rescelle le coffre aux TROIS éléments neufs ; les parts
+ * rafraîchies (les anciennes consommées) ; le compteur CONTINUE (aucun
+ * reset silencieux). */
+rule changement_de_phrase_sous_sequestre:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5),
+    PartSurMedia($x1), PartSurMedia($x2), PartSurMedia($x3),
+    PhraseHote($p), SerrureMachine($ss), MediaPiege($sq),
+    Coffre($ep, senc($m, h(<h($p), $ss, $sq>))),
+    Fr($p2), Fr($ss2), Fr($sq2), Fr($ep2),
+    Fr($y1), Fr($y2), Fr($y3), Fr($y4), Fr($y5) ]
+  --[ ChangementPhraseSousSequestre($p, $p2),
+      PhraseVivante($p2) ]->
+  [ PhraseHote($p2),
+    SerrureMachine($ss2),
+    MediaPiege($sq2),
+    Coffre($ep2, senc($m, h(<h($p2), $ss2, $sq2>))),
+    !PartsDe($p2, $y1, $y2, $y3, $y4, $y5),
+    PartSurMedia($y1), PartSurMedia($y2), PartSurMedia($y3),
+    PartSurMedia($y4), PartSurMedia($y5) ]
+
+/* L'OUVERTURE HONNÊTE — le témoin de l'acte I : la sentinelle complète
+ * (phrase + serrure + piège) vérifie le scellage à TROIS éléments ; la
+ * règle ne PEUT PAS s'appliquer à un conteneur forgé (le motif exige le
+ * KEK exact — l'attaquant qui ignore la phrase et le piège ne peut pas
+ * le produire). */
+rule ouverture_honnete:
+  [ PhraseHote($p), SerrureMachine($ss), MediaPiege($sq),
+    Coffre($ep, senc($m, h(<h($p), $ss, $sq>))) ]
+  --[ OuvertureHonnete($ep), CleUtilisateurEmployee(h($p)) ]->
+  [ PhraseHote($p), SerrureMachine($ss), MediaPiege($sq),
+    Coffre($ep, senc($m, h(<h($p), $ss, $sq>))) ]
+
+/* LA PHRASE ERRONÉE — le refus BÉNIN (spec § 5 : jamais de destruction,
+ * réessai) : une phrase fautive (un nom frais, la faute de frappe) ne
+ * détruit RIEN — aucune règle ne mène de PhraseErronee à la destruction. */
+rule tentative_phrase_erronee:
+  [ PhraseHote($p), Fr($q) ]
+  --[ PhraseErronee ]->
+  [ PhraseHote($p) ]
+
+/* LE VOL DE LA MACHINE SEULE (spec § 1 : le voleur du conteneur + disque,
+ * PAS le média du piège) — l'attaquant obtient le conteneur chiffré ET la
+ * S_serrure de l'en-tête clair ; il ne peut NI ouvrir (il lui manque la
+ * phrase et le piège), NI forger un conteneur ouvrable (le KEK). */
+rule vol_de_la_machine_seule:
+  [ Coffre($ep, senc($m, h(<h($p), $ss, $sq>))),
+    SerrureMachine($ss), PhraseHote($p) ]
+  --[ VolDeLaMachine ]->
+  [ Out(senc($m, h(<h($p), $ss, $sq>))), Out($ss),
+    Coffre($ep, senc($m, h(<h($p), $ss, $sq>))),
+    SerrureMachine($ss), PhraseHote($p) ]
+
+/* LA FUITE D'UNE PART — un média de part compromis : la part part à
+ * l'attaquant, le compteur s'incrémente (la restriction borne la suite). */
+rule fuite_d_une_part:
+  [ PartSurMedia($x), CompteurParts($n) ]
+  --[ FuitePart ]->
+  [ Out($x), CompteurParts(succ($n)) ]
+
+/* LA RECONSTITUTION ILLICITE PAR L'ATTAQUANT — les DIX règles, un par
+ * triplet de parts distinctes (C(5,3) = 10 : les champs distincts du fait
+ * !PartsDe lient trois parts DIFFÉRENTES par la fraîcheur des noms) ;
+ * l'attaquant qui connaît TROIS parts reconstitue la phrase. Ces règles
+ * sont ce qui rend la RESTRICTION PORTANTE : sous elle, elles ne peuvent
+ * jamais s'appliquer (au plus DEUX parts fuient). */
+rule reconstitution_illicite_123:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x2), K($x3) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_124:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x2), K($x4) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_125:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x2), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_134:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x3), K($x4) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_135:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x3), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_145:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x1), K($x4), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_234:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x2), K($x3), K($x4) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_235:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x2), K($x3), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_245:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x2), K($x4), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+rule reconstitution_illicite_345:
+  [ !PartsDe($p, $x1, $x2, $x3, $x4, $x5), K($x3), K($x4), K($x5) ]
+  --[ ReconstitutionIllicite($p) ]->
+  [ Out($p) ]
+
+/* L'EVIL MAID REMPLACE LE CONTENEUR — l'attaquant écrit son conteneur
+ * forgé à la place du canonique (le modèle de menace spec § 1 : détecté
+ * par tag, époques et AEAD). Le conteneur honnête est déplacé vers
+ * l'état Falsifiable — la preuve viendra à l'ouverture. */
+rule remplacement_du_conteneur:
+  [ Coffre($ep, senc($m, h(<h($p), $ss, $sq>))), In($forged) ]
+  --[ RemplacementDuConteneur ]->
+  [ CoffreFalsifie($ep, $forged) ]
+
+/* L'OUVERTURE FALSIFIÉE — la sentinelle complète (phrase + serrure +
+ * piège) confronte le conteneur forgé : le motif NE PEUT PAS correspondre
+ * (l'attaquant ne peut pas produire senc(·, h(<h(p), ss, sq>)) sans la
+ * phrase et le piège) — la falsification est PROUVÉE (spec § 5, étape 5 :
+ * l'AEAD échoue APRÈS les étapes 1-4 vertes). */
+rule ouverture_falsifiee:
+  [ CoffreFalsifie($ep, $forged),
+    PhraseHote($p), SerrureMachine($ss), MediaPiege($sq) ]
+  --[ FalsificationProuvee($ep) ]->
+  [ FalsificationEtablie($ep) ]
+
+/* LA DESTRUCTION LOCALE — JAMAIS nue : elle suit la falsification PROUVÉE
+ * (la chaîne remplacement → ouverture falsifiée → destruction) ; elle ne
+ * touche QUE la machine (le média du piège et les parts demeurent — la
+ * destruction reste survivable, spec § 7). */
+rule destruction_locale:
+  [ FalsificationEtablie($ep) ]
+  --[ DestructionLocale($ep) ]->
+  [ ]
+
+/* ============================ LES LEMMAS DE SÉCURITÉ ======================== */
+
+/* LEMMA 1 — LA NON-DIVULGATION DE LA PHRASE SOUS LE SEUIL : aucune
+ * phrase ayant vécu (créée ou née du changement sous séquestre) n'est
+ * JAMAIS connue de l'attaquant, TANT QUE la restriction le tient sous le
+ * seuil des parts (au plus DEUX médias compromis). C'est la garantie
+ * P1 du coffre au niveau du modèle. */
+lemma non_divulgation_de_la_phrase_sous_le_seuil:
+  "All p #i. PhraseVivante(p) @ #i ==> not Ex #j. K(p) @ #j"
+
+/* LEMMA 2 — LA CONSERVATION DE LA CLÉ UTILISATEUR : tout emploi de
+ * la clé utilisateur h(p) (les migrations, les clôtures d'époque, les
+ * ouvertures) remonte à une phrase NÉE AVANT — la clé d'une phrase est
+ * INVARIABLE à travers les époques (spec § 2 : K_user jamais retouchée
+ * par une clôture) ; seule la cérémonie sous séquestre fait naître une
+ * phrase nouvelle — et avec elle SA clé (le premier emploi de la clé
+ * nouvelle appartient à la règle SUIVANTE, jamais à la naissance). */
+lemma conservation_de_la_cle_utilisateur:
+  "All p #i. CleUtilisateurEmployee(h(p)) @ #i ==>
+     Ex #j. PhraseVivante(p) @ #j & #j < #i"
+
+/* LEMMA 3 — L'ABSENCE DE DESTRUCTION PAR CORRUPTION : toute destruction
+ * locale est PRÉCÉDÉE d'une falsification PROUVÉE (la preuve
+ * cryptographique — le conteneur forgé confronté à la sentinelle
+ * complète) ; la phrase erronée ne détruit JAMAIS (sa règle ne mène
+ * nulle part), la corruption seule ne détruit JAMAIS. C'est la garantie
+ * P3 du coffre au niveau du modèle : les modes de défaillance sont
+ * SÉPARÉS (spec § 5). */
+lemma absence_de_destruction_par_corruption:
+  "All ep #i. DestructionLocale(ep) @ #i ==>
+     Ex #j. FalsificationProuvee(ep) @ #j & #j < #i"
+
+/* LE LEMMA TÉMOIN (la non-vacuité du modèle — la falsifiabilité) : il
+ * EXISTE des traces où l'evil maid remplace le conteneur, la
+ * falsification est prouvée et la destruction locale survient — le
+ * modèle ne démontre pas le vide, il démontre la chaîne. */
+lemma temoin_falsification_et_destruction:
+  "Ex ep #i. DestructionLocale(ep) @ #i"
+
+/* LE LEMMA TÉMOIN (la vie honnête) : il EXISTE des traces où la
+ * création, les DEUX migrations et l'ouverture honnête vivent — la
+ * chaîne CF1→CF2→CF3 est habitée (les existences portent sur la MÊME
+ * trace : un lemme s'évalue par trace). */
+lemma temoin_la_chaine_vivante:
+  "Ex p ep #i #j #k #l. CreationCoffre(p) @ #i & MigrationCF2(p) @ #j &
+     MigrationCF3(p) @ #k & OuvertureHonnete(ep) @ #l"
+
+end

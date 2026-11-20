@@ -1,0 +1,142 @@
+PLAN DE LA CAMPAGNE H7 — LA RANDOMISATION STRATIFIÉE GARANTISSION LE CONTRASTE D'ORDRE
+(l4nnwqlld, pièce 4 — GELÉ AVANT LE PREMIER TIRAGE RÉEL)
+====================================================================================
+ÉTAT : PRÉ-ENREGISTRÉ, AUCUN TIRAGE RÉEL PRISE. Le générateur (generateur_
+randomisation.py) et la graine sont LIVRÉS ; le premier tirage réel est un
+GESTE consigné publiquement à l'ouverture de la campagne (le modèle D210 :
+la graine 20261117 consignée avant le premier appel). Rien ne sera tiré ici.
+
+1. L'HYPOTHÈSE ET LE CONSTAT QUI FONDE LE PLAN
+--------------------------------------------------------------------------------
+H7 (la lettre des campagnes) : « la randomisation d'ordre n'affecte aucune
+métrique au seuil de 5 % ». Le tirage libre de D210 (quatre tirages
+indépendants à une demi chacun) donna le bras T premier dans les QUATRE
+unités — un événement à une sur seize, consigné comme tiré, JAMAIS retiré :
+AUCUNE unité C-première, AUCUN contraste, l'effet d'ordre INIDENTIFIABLE,
+et les asymétries observées (le second bras bâti consommait MOINS de
+tokens dans CHAQUE unité) confondaient bras et ordre. L'édition a
+pré-enregistré la réponse : « une randomisation stratifiée est pré-enregistrée
+ici, garantissant le contraste d'ordre : les unités sont appariées par
+famille et l'ordre du bras est tiré dans chaque paire, de sorte que les
+deux ordres surviennent PAR CONSTRUCTION (le tirage libre qui n'a produit
+aucun contraste n'est jamais répété tel quel) ». Le présent plan EST cette
+randomisation, écrite avant le premier tirage réel.
+
+2. LE PLAN DE PUISSANCE (le calcul documenté — α = 0,05, puissance 0,8)
+--------------------------------------------------------------------------------
+L'EFFET ATTENDU, dérivé des campagnes D204/D210 (les seules données
+convenues, jamais recomptées ici) :
+  - δ̂ = |ln(67 475 / 53 158)| = 0,2385 — l'asymétrie CONFOUNDÉE
+    bras×ordre de la SEULE paire deux-bras instrumentée en M2 (D204,
+    loupe-01 : 53 158 tokens au bras notation, 67 475 au bras compilé,
+    ×1,27) : le PLUS GRAND effet d'ordre candidat dérivable du registre.
+    La campagne doit pouvoir DÉTECTER un effet de cette taille (ou le
+    rejeter) : c'est l'exigence minimale de la clôture honnête de H7 ;
+  - σ̂ = 0,2856 — l'écart-type des log-M2 des QUATRE unités de l'extension
+    D210 (ln 42 610 = 10,6598 ; ln 52 729 = 10,8729 ; ln 40 749 = 10,6152 ;
+    ln 26 662 = 10,1910 ; moyenne 10,5847, SD (n−1) 0,2856) — pris comme
+    borne CONSERVATRICE de la dispersion des différences intra-strate (la
+    variance ENTRE familles domine la variance intra-famille quand le
+    gabarit de famille est tenu : la borne est nommée, jamais sous-estimée).
+LE CALCUL (apparié, un t par strate) :
+  - approximation normale : n = ((z_{0,975} + z_{0,80}) · σ̂/δ̂)²
+    = ((1,95996 + 0,84162) × 1,19839)² = (3,35748)² = 11,25 → 12 strates ;
+  - correction petit échantillon (itérée, t de Student) : à n = 12 (ddl 11,
+    t_{0,975} = 2,201, t_{0,80} = 0,876) → 13,60 ; à n = 14 (ddl 13,
+    t_{0,975} = 2,160, t_{0,80} = 0,870) → 13,19 → CONVERGE À 14.
+LA DÉCISION FAIL-CLOSED : 14 STRATES (la borne la plus exigeante des deux
+calculs — jamais la plus basse). Le calcul est codé dans le générateur
+(puissance_h7()) et l'autotest le rejoue : le double calcul, les deux
+bornes, la convergence — les nombres ci-dessus ne sont pas une citation,
+ils se re-dérivent au geste.
+
+3. LA FIXATION DES STRATES (le plan de fixation, gelé)
+--------------------------------------------------------------------------------
+14 strates = 2 unités chacune = 28 unités (56 livraisons de bras). Les
+DOUZE premières : les DOUZE familles de blocs loupe JAMAIS ENCORE livrées
+à une campagne (le corpus en compte 18 ; six ont vécu D204/D210 : 01, 02,
+05, 08, 13, 16) — chaque strate porte DEUX constructions indépendantes de
+la MÊME famille (deux tours distincts, gabarit de famille tenu). Les
+DEUX dernières : des RELIVRAISONS des familles déjà livrées qui portent
+l'enjeu le plus lourd — loupe-01 (l'ouverture : la famille de la paire
+instrumentée qui fonde δ̂) et loupe-16 (la saisie : la famille à état qui
+consomma le plafond de livraisons à D210) — deux unités fraîches chacune,
+graines fraîches. La liste EXACTE vit dans le générateur (STRATES, gelée)
+et son autotest vérifie l'invariant : 14 strates, 28 unités, chaque
+famille distincte sauf les deux relivraisons nommées.
+
+4. LE TIRAGE DANS LES STRATES (la graine, le contraste garanti)
+--------------------------------------------------------------------------------
+LA GRAINE : 20261120 (consignée ICI, avant tout tirage réel — le modèle
+D210 : 20261117 pour sa campagne). Le générateur tire, DANS CHAQUE strate,
+UNE pièce équilibrée : si pile, la PREMIÈRE unité de la strate est
+T-première (le bras notation bâti en premier) et la seconde C-première ;
+si face, l'inverse. LES DEUX ORDRES SURVIENNENT PAR CONSTRUCTION dans
+CHAQUE strate — le contraste d'ordre est garanti structurellement : aucun
+tirage ne peut reproduire le « une-sur-seize » de D210, AUCUN re-tirage
+n'est jamais nécessaire (l'échec de contraste est impossible par design).
+Le tirage est DÉTERMINISTE à la graine : la table officielle (la sortie
+--tirer, avec le sha256 de la table canonique) sera consignée et signée à
+l'ouverture de la campagne — la re-exécution du générateur à la même
+graine DOIT redonner la même table (l'autotest le vérifie : c'est la
+preuve de non-rétropédalage).
+
+5. LES CRITÈRES D'ARRÊT (gelés avant le premier tirage réel)
+--------------------------------------------------------------------------------
+- LA RÈGLE D'ARRÊT PAR UNITÉ (la règle D207 reconduite de D204/D210) :
+  chaque unité vit AU PLUS TROIS livraisons ; l'unité se ferme sur son
+  VERT à la première livraison verte, sinon À SON PLAFOND sur son rouge
+  (consigné tel quel — les évasions nommées attribuées : pièce, kit ou
+  juge, la triade de D210) ;
+- LE CRITÈRE DE CAMPAGNE : la campagne est COMPLÈTE quand les 28 unités
+  sont fermées (vertes ou rouges-au-plafond — les deux comptent : l'estimation
+  de l'effet d'ordre vit sur les M2 des unités LIVRÉES, pas des unités
+  vertes seules, l'attribution des évasions est une pièce séparée) ;
+- SI UNE STRATE DEVIENT INDIVIVABLE (famille indisponible, juge en
+  défaut structurel nommé) : l'amendement se consigne AVANT TOUTE ANALYSE
+  (une relaxation NOMMÉE avec son effet sur la puissance — jamais en
+  silence ; le plan exige 14, il ne les décrète pas) ;
+- SI LES M2 MANQUENT À UNE UNITÉ (pas de journal d'usage) : l'écart est
+  NOMMÉ (le modèle D210 : les unités au plafond sans instrumentation
+  fraîche) — l'analyse de H7 se fait sur les strates COMPLÈTES en M2,
+  le compte des strates incomplètes consigné ; si < 10 strates complètes :
+  H7 reste NON TESTÉE (jamais de verdict sous-dimensionné, jamais de
+  chiffre fabriqué).
+
+6. LA RÈGLE DE JUGEMENT (gelée)
+--------------------------------------------------------------------------------
+LA MÉTRIQUE PRIMAIRE : M2 (les tokens réels par bras, lus des journaux
+d'usage — la métrique dont l'asymétrie a fondé δ̂). L'ESTIMATEUR PAR
+STRATE (l'effet d'ordre LIBRE des effets de famille ET de bras, par
+construction) :
+  β̂_s = ½ [ (ln M2(T,second) − ln M2(T,premier))          (unité T-première)
+            + (ln M2(C,second) − ln M2(C,premier)) ]       (unité C-première)
+— chaque différence est PISTE LE MÊME BRAS dans la MÊME strate : l'effet
+de bras s'y annule, l'effet de famille s'y annule ; β̂_s porte L'ORDRE
+SEUL (le gain d'être bâti en second).
+LE TEST (gelé) : t = moyenne(β̂_s) / (SD(β̂_s)/√14), bilatéral au seuil
+α = 0,05 (t_{0,975;13} = 2,160). H7 est REJETÉE (un effet d'ordre détecté
+au seuil) si |t| > 2,160 — l'effet est alors consigné AVEC sa taille
+(moyenne des β̂_s, en log, et son équivalent multiplicatif e^β̂). Sinon :
+« aucun effet d'ordre au seuil de 5 % sur ce plan » — JAMAIS « absence
+d'effet prouvée » (la symétrie honnête de « jamais constant temps prouvé »).
+LES MÉTRIQUES SECONDAIRES (M1 sous la règle D202, M3 le temps humain au
+geste, M4 le chronomètre monotone) : le MÊME estimateur β̂_s, le MÊME
+seuil, QUATRE tests nommés SANS correction de multiplicité (la convention
+des campagnes, gelée ici telle quelle — « aucune métrique au seuil de
+5 % » se lit métrique par métrique). H7 est falsifiée si UNE métrique
+rejette.
+LA FRONTIÈRE : l'estimation exige les DEUX bras de CHAQUE unité d'une
+strate (les paires appariées de la strate) — une strate n'entrant dans le
+test que COMPLÈTE ; le compte des strates testées est consigné au verdict
+(le plan de puissance exige 14 ; tout écart est un amendement nommé avant
+analyse, § 5).
+
+7. LES PIÈCES À LA CLÔTURE
+--------------------------------------------------------------------------------
+la table de tirage officielle (signée à l'ouverture) ; le registre des 28
+unités (livraisons, verdicts, attributions) ; les M2 par bras et unité
+(lus des journaux) ; la table des β̂_s et le t ; le verdict H7 signé ;
+le présent plan relu (tout écart au plan NOMMÉ au rapport — la règle des
+vagues : le plan gelé, l'empreinte consignée, le commit AVANT la première
+donnée).

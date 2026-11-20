@@ -1,0 +1,121 @@
+INVESTIGATION PRÉ-ENREGISTRÉE — LES PICS tls13-02/tls13-13 À N=200 (l4nnwqlld)
+===============================================================================
+ÉCRITE AVANT TOUTE DONNÉE NOUVELLE (la règle du pré-enregistrement : les
+causes sont nommées AVANT que la répétition ne parle ; AUCUNE n'est élue
+d'avance). Les DEUX constats vécus qui fondent l'investigation (13/11/2026,
+UN run, UNE machine, témoins signés — consignés tels quels, jamais
+recomptés ici) :
+  tls13-02 (la compression SHA-256) : |t| = 12.39 à N=200 ;
+  tls13-13 (l'échelle X25519)      : |t| =  5.19 à N=200 ;
+  les QUATRE cibles sous le seuil à N=400 (0.84, 1.55, −0.30, 2.02) et le
+  N=60 vécu sous le seuil.
+LA QUESTION PRÉ-ENREGISTRÉE : le pic de N=200 est-il UN ARTEFACT DU
+HARNAIS (la mesure), ou UN ÉCART RÉEL DU BLOC (la pièce) ? L'investigation
+discrimine par des TESTS NOMMÉS, exécutables au geste du développeur
+AVANT toute conclusion — chaque test porte SA signature discriminante.
+
+--- C1. LA FAUSSE CACHE DU COMPILATEUR (l'artefact d'optimisation du harnais) ---
+L'HYPOTHÈSE : le mesureur (dudect_v150.c compilé -O2) fait hoister la
+lecture du secret de la classe FIXE hors de la zone chronométrée, ou
+réutilise un résultat mis en cache par le compilateur entre les itérations
+de la classe fixe — la classe aléatoire, elle, relit ses données fraîches
+à chaque itération : la différence de temps mesurée serait alors celle du
+HARNAIS, pas du bloc scellé. La plausibilité : la boucle fixe appelle
+appeler(famille, fn, secret_fixe, …) avec secret_fixe CONSTANT — un
+compilateur AGRESSIF peut spider la charge.
+LE TEST DISCRIMINANT (la signature : le pic DISPARAÎT quand la barrière
+est posée) :
+  T1a — RECOMPILER SANS OPTIMISATION : gcc -O0 -o dudect_O0
+        dudect_v150.c -lm ; rejouer n ≥ 10 runs à N=200 sur tls13-02 et
+        tls13-13. Si le pic (le verdict par médiane de REGLE-JUGEMENT)
+        disparaît à -O0 alors qu'il tient à -O2 : C1 ÉTABLIE pour la
+        part -O0-disparaissante ;
+  T1b — LA BARRIÈRE EXPLICITE : recompiler -O2 avec un pointeur volatile
+        sur le secret et une barrière asm
+        (GCC : __asm__ volatile("" :: "r"(secret) : "memory");) devant
+        CHAQUE appel chronométré ; si le pic disparaît sous la barrière à
+        -O2 : C1 ÉTABLIE (la lecture était hoistée) ;
+  T1c — L'INSPECTION STATIQUE : objdump -d dudect_v150 | autour de la
+        boucle de mesure : chercher le chargement de secret_fixe HORS de
+        la boucle (une lect. avant l'étiquette, aucun ld dans le corps) —
+        la preuve lisible, consignée au témoin.
+LA CONTRE-SIGNATURE : si le pic TIENT à -O0 ET sous la barrière, C1 est
+REJETÉE pour ces cibles (l'écart n'est pas un artefact de hoisting).
+
+--- C2. L'ALIAS DE LIGNE (l'artefact d'agencement mémoire du harnais) -----------
+L'HYPOTHÈSE : les DEUX tampons de secret du mesureur (secret_fixe[256] et
+secret[256], adjacents sur la pile) tombent sur des lignes de cache qui
+S'ALIASENT entre les classes — la classe aléatoire RÉÉCRIT son tampon
+(alea(secret, …) à CHAQUE itération) et l'écriture salit/évince la ligne
+voisine lue par la classe fixe (ou réciproquement) : à N=200
+l'interleaving des écritures/lectures produit un biais systématique qui
+s'éteint à N=400 (l'échantillon absorbe la bascuelle). La plausibilité :
+les deux tampons sont à ~256 o d'écart — la même ligne 64 o peut servir
+les deux si l'alignement pile le veut.
+LE TEST DISCRIMINANT (la signature : le pic SUIT le décalage) :
+  T2a — LE DÉCALAGE CONTRÔLÉ : recompiler le mesureur avec les DEUX
+        tampons placés à un écart FIXE de 4 Kio + 64 o (les aligner
+        statiquement : __attribute__((aligned(4096))) et l'un à +64 o de
+        l'autre — deux pages/ensembles disjoints) ; rejouer n ≥ 10 runs à
+        N=200 : si le pic disparaît à l'écart contrôlé : C2 ÉTABLIE ;
+  T2b — LE CONTRÔLE POSITIF (l'amplification) : recompiler avec les DEUX
+        tampons FORCÉS à la MÊME ligne (écart 0 — un seul tampon relisant
+        le même alignement pour les deux classes, la classe aléatoire
+        réécrivant) : si le pic S'AMPLIFIE à l'alias maximal : C2
+        ÉTABLIE doublement (le tracking du décalage est la signature) ;
+  T2c — LA LECTURE DES ADRESSES : consigner au témoin les adresses
+        effectives des deux tampons (un printf %p au démarrage, un build
+        dédié) — l'alignement pile relatif, la preuve contextuelle.
+LA CONTRE-SIGNATURE : si le pic est INDIFFÉRENT au décalage (ni T2a ni
+T2b ne bougent le verdict), C2 est REJETÉE.
+
+--- C3. LE PARTAGE DE PORT (l'artefact de contention d'exécution) ----------------
+L'HYPOTHÈSE : le travail hors-cible de la classe aléatoire — l'appel
+alea() (rand_s sous Windows : un appel système, /dev/urandom sous POSIX :
+une lecture) placé DANS la boucle entre les régions chronométrées —
+laisse le cœur dans un état de ports d'exécution/d'écriture différent de
+la classe fixe (les uops de l'appel système, la ligne de pipeline, l'état
+de la fenêtre de réordonnancement) : la mesure de la classe qui SUIT un
+alea() hérite d'une contention résiduelle ; à N=200 l'effet n'a pas le
+volume de se lisser. La plausibilité : le RDTSC lui-même partage des
+ports avec le code aval ; l'entropie système est le seul asymétrie
+structurelle entre les DEUX classes du harnais.
+LE TEST DISCRIMINANT (la signature : le pic disparaît quand l'aléa SORT
+de la boucle) :
+  T3a — L'ALÉA PRÉGÉNÉRÉ : recompiler avec les N secrets aléatoires
+        PRÉGÉNÉRÉS en un tableau AVANT la boucle de mesure (aucun appel
+        système entre deux régions chronométrées) ; si le pic disparaît :
+        C3 ÉTABLIE ;
+  T3b — LE COMPTAGE DE PORTS (le témoin matériel) : sous Linux, rejouer
+        sous perf stat -e cycles,instructions,uops_dispatched_port.port_0,
+        uops_dispatched_port.port_5 (ou l'équivalent ltrace/ETW Windows) :
+        si la répartition par port DIFFÈRE entre les classes fixe/
+        aléatoire au-delà du bruit : la contention est NOMMÉE sur pièces.
+LA CONTRE-SIGNATURE : si le pic tient à l'aléa prégénéré, C3 est REJETÉE.
+
+--- LES CANDIDATES DE L'ÉDITION v0.19.3 (portées, nommées AVANT ces données) -----
+  C4 — LE FAUX POSITIF DE BRUIT D'HORLOGE : la médiane sur n ≥ 10 runs
+       décide (REGLE-JUGEMENT.txt) : un pic qui n'apparaît qu'à une
+       minorité de runs n'est PAS un verdict ;
+  C5 — L'INTERRUPTION PARTAGÉE DU CŒUR : l'affinité cœur 0 posée PAR LE
+       MESUREUR, la fréquence et l'état du turbo CONSIGNÉS par machine ;
+       une interruption qui frappe la classe aléatoire (la seconde
+       chronométrée) se voit au pic de la distribution des cycles du
+       journal CSV — l'agrégateur consigne les médianes par classe, le
+       journal porte le brut ;
+  C6 — L'ÉCART RÉEL DE TEMPS CONSTANT : l'hypothèse RÉSIDUELLE — si C1,
+       C2 et C3 sont rejetées par leurs contre-signatures et que la
+       médiane de n ≥ 10 runs tient au-dessus du seuil à N=200 sur ≥ 2
+       machines : l'écart est consigné COMME TEL (un écart au seuil sur
+       ces échantillons, ces machines — jamais « non-constant prouvé »,
+       la symétrie honnête de « jamais constant prouvé »).
+
+LA RÈGLE DU JEU (gelée) : AUCUNE cause élue d'avance ; chaque test
+discriminant est un geste du développeur CONSIGNÉ au témoin ; les
+éditions du mesureur pour T1/T2/T3 sont des BUILDS D'INVESTIGATION
+(copies nommées dudect_inv_*.c, empreintes consignées) — LE MESUREUR
+OFFICIEL demeure dudect_v150.c INCHANGÉ : l'investigation n'a pas le
+droit de muter l'instrument du verdict, seulement d'expliquer son
+lecture. Le rapport d'investigation (lequel test, quelle signature,
+quelle conclusion) se consigne à INVESTIGATION-RAPPORT.txt AU MOMENT DU
+GESTE — jamais avant.

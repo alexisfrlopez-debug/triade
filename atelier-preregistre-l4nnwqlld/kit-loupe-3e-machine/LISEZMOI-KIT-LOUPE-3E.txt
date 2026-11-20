@@ -1,0 +1,113 @@
+LISEZMOI — LE KIT LOUPE TROISIÈME MACHINE (T0→T7+S0 intégral, l4nnwqlld pièce 2)
+================================================================================
+PRÉ-ENREGISTRÉ — l'empreinte sha256 de CHAQUE pièce consignée à
+EMPREINTES-KITS.txt AVANT la remise. LA RÈGLE : AUCUNE mesure n'est prise
+ici ; la ligne « Third-machine field liveness — awaiting hardware run »
+demeure INCHANGÉE tant que le témoin signé n'est pas recoupé.
+
+1. L'OBJET (la ligne « awaiting », nommée depuis l'édition)
+--------------------------------------------------------------------------------
+La vitrine loupe.exe a VÉCU deux fois sur SA machine (les codes 0 et 0 aux
+dixième et onzième runs — la balise 0.1.0 scellée) ; l'automatisation
+multimachines de v0.15.0 a vécu sur UNE seconde machine Windows (l'édition
+mise à jour). La présente LIGNE exige la TROISIÈME : le scénario COMPLET
+T0→T7+S0 — le même que la campagne D204 (le protocole exact :
+scenario-loupe.py, LA MÊME pièce, le MÊME juge) — sur une machine Windows
+qui n'a JAMAIS vu l'application. La vivacité de la pièce hors de sa maison
+et de sa voisine : la preuve de terrain que le dépôt réclame.
+
+2. LE PAQUET (les pièces, copies INTACTES du dépôt — lecture seule)
+--------------------------------------------------------------------------------
+kit-loupe-3e-machine/
+├── loupe.exe          L'ARTEFACT 0.1.1-dev.1 — 127 488 o, sha256
+│                      c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef66
+│                      6fd76ceb93e61d1 (la version commandée D179 : la dette
+│                      R10-PÉRIMÉE soldée à la naissance, 0 octet de code
+│                      changé — byte-identique au vécu des ONZE RUNS) ;
+│                      le scénario ASSERTÉ son empreinte à T0 ;
+├── scenario-loupe.py  LE SCÉNARIO INTÉGRAL T0→T7+S0 (python 64 bits SEUL —
+│                      ctypes, hashlib, os, platform, struct, sys, tempfile ;
+│                      aucune écriture hors de ./preuves-loupe/ ; loupe.exe
+│                      N'EST JAMAIS écrit) — copie OCTET POUR OCTET de
+│                      loupe/terrain/scenario-loupe.py du dépôt ;
+├── temoin-vitrine.bat LE TÉMOIN VITRINE — les quatre temps : [1/4] la
+│                      vitrine vide, [2/4] la vitrine avec fichier,
+│                      [3/4] les rapports WER éventuels, [4/4] LE JOURNAL
+│                      D'ÉVÉNEMENTS (wevtutil : le module fautif et le
+│                      décalage de l'exception NOMMÉS PAR LE SYSTÈME si
+│                      une mort vient) ;
+├── GRILLE-TEMOIN.txt  le format du fichier signé à retourner (ci-dessous
+│                      le complément) ;
+└── LISEZMOI-KIT-LOUPE-3E.txt  le présent document.
+LES DONNÉES DE TEST : le scénario les CRÉE lui-même (L'OMBRE
+temoin-session.bin, née et morte AU RUN, jamais l'original ; le témoin
+vitrine crée temoin-fichier.bin) — le kit ne transporte AUCUNE donnée
+qui ne soit reproductible à l'identique : c'est la condition du recoup
+inter-machines (les empreintes des sorties DOIVENT être comparables).
+
+3. LA FEUILLE DE ROUTE PAS À PAS (le geste, quatre temps)
+--------------------------------------------------------------------------------
+TEMPS 1 — EXTRAIRE. Le dossier kit-loupe-3e-machine/ ENTIER sur la
+troisième machine (un Windows 10/11 64 bits, un Python 64 bits — py ou
+python). Un NOUVEAU dossier, jamais mélangé à un run ancien (D99). Si le
+bit exécutable de loupe.exe s'est perdu au transfert, le scénario le
+rétablit (geste nommé au journal, aucun octet de contenu touché).
+TEMPS 2 — LANCER LE SCÉNARIO. Depuis le dossier du kit :
+    python scenario-loupe.py
+Le run dure quelques secondes et dit tout à l'écran ; chaque constat est
+tranché binaire ; le verdict se rend POST-MORTEM. Les temps démontrés
+(LE MÊME contrat que la campagne D204, au détail près que la machine est
+NEUVE à l'application) :
+  T0 LE TÉMOIN : l'empreinte ASSERTÉE, l'image cartographiée DONT_RESOLVE,
+     LE CONTRÔLE D54 ÉTENDU (les QUATRE plages FirstThunk au compte exact,
+     ET LES QUATRE OFT marchés au pas DWORD du chargeur) ;
+  T1..T7 LE CONTRAT : la session sur L'OMBRE byte-à-byte, la double lecture,
+     LE PANNEAU (le sha256 de la pièce == hashlib), les lignes au format
+     composé, la recherche == bytes.find, LA BOUCLE D'ÉDITION, LES QUATRE
+     REJETS NOMMÉS (-2 ABSENT, -5 ENTRÉE, -3 HORS-BORNES, -1 FIN), la
+     clôture (l'artefact relu INCHANGÉ) ;
+  S0 LA CASCADE 205 : les axes reconstitués UN À UN sur des copies
+     temporaires nées et mortes dans %TEMP% — le VRAI chargeur Windows de
+     CETTE machine NOMME l'axe fautif ;
+  LA LIAISON : la copie chargée SANS DONT_RESOLVE, l'entrée neutralisée
+     (mov eax, 1 ; ret), LES 37 SLOTS RELUS — le VRAI chargeur doit y
+     avoir posé LES ADRESSES DES FONCTIONS.
+TEMPS 3 — VIVRE LA VITRINE (le cœur du grandeur nature). Double-cliquez
+temoin-vitrine.bat : LA PREMIÈRE fenêtre s'ouvre VIDE (fermez par Alt+F4),
+LA SECONDE avec temoin-fichier.bin (l'entête, les lignes hexa, le miroir
+ASCII, LE PANNEAU d'empreintes, la cellule active inversée — fermez par
+Alt+F4). Les DEUX codes de sortie sont capturés (preuves-loupe/
+temoin-vitrine.txt) — 0 et 0 attendus. Puis, si le cœur vous en dit,
+vivez la vitrine à la main (loupe.exe monfichier.bin : la molette, F5,
+F3, la saisie hexa, Ctrl+S, le double-geste Alt+F4) — une capture est la
+bienvenue (capture-*.png).
+TEMPS 4 — RENVOYER. preuves-loupe/ ENTIER + la signature (GRILLE-TEMOIN)
+au coffre /test/preuves-loupe-3e/.
+
+4. LES EMPREINTES CPU ET FRÉQUENCE (l'exigence du protocole)
+--------------------------------------------------------------------------------
+La troisième machine se CONSIGNE AU TÉMOIN AVANT le run (le champ de la
+grille, rempli par le développeur — PowerShell, depuis le dossier du kit) :
+    powershell -Command "Get-CimInstance Win32_Processor | \
+      Select-Object Name, MaxClockSpeed, CurrentClockSpeed | Format-List"
+    powershell -Command "(Get-CimInstance Win32_ComputerSystem).Model"
+    powershell -Command "[System.Environment]::OSVersion.VersionString"
+L'EMPREINTE CPU (le nom du modèle, l'architecture) ET LA FRÉQUENCE
+(MaxClockSpeed/CurrentClockSpeed, l'état EFFECTIF du turbo noté à la main
+si le BIOS le commande) sont consignées — la machine de record (celle des
+onze runs) et la seconde machine (celle de l'automatisation v0.15.0) ont
+les leurs au registre : la comparaison inter-machines exige la TIENNE.
+
+5. LES FRONTIÈRES NOMMÉES
+--------------------------------------------------------------------------------
+- le scénario NE LANCE PAS la vitrine (aucun point d'entrée exécuté) : les
+  blocs sont appelés à leurs adresses scellées — la vitrine se vit PAR SON
+  TÉMOIN puis à la main ;
+- loupe.exe n'est JAMAIS écrit (lecture seule, relu à la clôture) ; la
+  carte privée ne voyage JAMAIS avec l'artefact (R1) ;
+- la balise « loupe 0.1.1 » se scellera PAR FAIT DE CARTE sur le vert
+  recoupé DU DOUZIÈME RUN (sur la machine de record — le présent run de
+  TROISIÈME machine ferme la ligne « third-machine liveness », il ne
+  scelle PAS : les deux gestes sont distincts, les deux pièces aussi) ;
+- un dossier preuves-loupe/ existant d'un run ancien ne se MÉLANGE JAMAIS
+  (D99) : un dossier neuf par run.

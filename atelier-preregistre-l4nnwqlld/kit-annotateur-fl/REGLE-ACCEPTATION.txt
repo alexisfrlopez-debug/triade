@@ -1,0 +1,80 @@
+RÈGLE D'ACCEPTATION ET ARBITRAGE — LE SECOND ANNOTATEUR (l4nnwqlld, gelée)
+==========================================================================
+GELÉE AVANT LE RECRUTEMENT (le pré-enregistrement : la règle précède les
+annotations ; aucun seuil ne bougera après coup, quel que soit le κ).
+
+1. LA RÈGLE D'ACCEPTATION (D189, portée intégralement)
+--------------------------------------------------------------------------------
+  κ ≥ 0,61 (substantiel — Landis & Koch 1977, la borne « modérée » à 0,41
+  rejettée au pré-enregistrement D189 : la réplication exige l'accord
+  SUBSTANTIEL) SUR n ≥ 50 ITEMS DOUBLES — les DEUX conditions
+  CONJOINTESES :
+    - n < 50 : LA RÈGLE NE SE REND PAS (le κ est consigné, le verdict
+      attend la taille — le calculateur le refuse lui-même, codé) ;
+    - κ ≥ 0,61 à n ≥ 50 : L'ACCEPTATION REMPLIE — la grille F/L est
+      déclarée REPRODUCTIBLE entre annotateurs indépendants, la ligne
+      « Independent replication » se ferme sur pièces ;
+    - κ < 0,61 à n ≥ 50 : SOUS LE SEUIL — le désaccord se CONSIGNE, les
+      items en litige se NOMMENT, l'arbitrage court (§ 3) ; la grille est
+      RÉVISÉE par amendement NOMMÉ si l'arbitrage le motive (§ 4) — le κ
+      n'est JAMAIS recalculé sur des annotations retouchées.
+
+2. LE CALCUL (le calculateur du kit, autotesté)
+--------------------------------------------------------------------------------
+  python3 calculateur_kappa.py codage_annotateur1.csv <le rendu du second>
+Le κ de Cohen : κ = (po − pe)/(1 − pe), po l'accord observé, pe l'accord
+attendu sous indépendance (les marges), sur les id COMMUNS. Le calculateur
+est AUTOTESTÉ sur QUATRE fixtures synthétiques à l'accord attendu EXACT
+par construction (l'accord parfait +1 ; le désaccord total ; l'accord
+partiel +0,4 à la main ; le cas n = 50 au κ exact +0,64) — la preuve du
+mécanisme, JAMAIS des annotations. Le κ réel se calcule UNE fois, sur les
+DEUX jeux INTACTS.
+
+3. LE PROTOCOLE D'ARBITRAGE DES DÉACCORDS (gelé)
+--------------------------------------------------------------------------------
+  1. LA LISTE : tout item où les deux classes divergent est NOMMÉ (le
+     calculateur imprime les litiges item par item) — aucun désaccord
+     n'est fondu dans la moyenne ;
+  2. LA TROISIÈME LECTURE : pour chaque litige, une relecture AU GESTE de
+     l'énoncé consigné du défaut (le registre, la pièce citée) par le
+     laboratoire ET — si l'annotateur l'accepte — par l'annotateur
+     lui-même, CHACUN SANS modifier son codage : l'arbitrage produit une
+     TROISIÈME opinion consignée, il ne retouche JAMAIS les deux
+     premières (les deux CSV demeurent des pièces intactes) ;
+  3. LE CRITÈRE D'ARBITRAGE : la classe la plus proche de la CAUSE RACINE
+     (la loi du un, consignes § 1) ; l'arbitrage se CONSIGNE avec sa
+     motivation, une ligne par litige ;
+  4. LE RÉSULTAT D'ARBITRAGE est une PIÈCE SÉPARÉE : le κ officiel reste
+     celui des DEUX jeux INTACTS (l'arbitrage éclaire, il ne remplace
+     pas — sinon le κ mesurerait l'arbitre, pas l'accord) ;
+  5. SI L'ARBITRAGE MONTRE UN DÉFAUT DE GRILLE (une classe ambigüe
+     récurrente, deux classes confondues sur k items) : l'amendement
+     court (§ 4).
+
+4. L'AMENDEMENT DE GRILLE (nommé, jamais silencieux)
+--------------------------------------------------------------------------------
+Si κ < 0,61 ET l'arbitrage motive un défaut de la grille (et non des
+annotations) : la grille est révisée PAR ÉCRIT (la classe ambigüe
+redéfinie, un exemple étalonné ajouté), l'amendement consigné avec sa
+date et sa motivation, ET UN NOUVEL ÉCHANGE d'annotations COURT sur les
+mêmes items avec la grille améndée — le nouveau κ se calcule sur les
+NOUVELLES annotations (jamais un mélange ancien/amendé). Le κ de la
+première passe demeure consigné (l'histoire ne s'efface pas). AUCUN
+amendement ne peut être motivé par le seul désir d'un κ plus haut : la
+motivation se réfère à des ITEMS NOMMÉS dont l'arbitrage a montré
+l'ambiguïté.
+
+5. LA FRONTIÈRE (l'honnêteté du protocole)
+--------------------------------------------------------------------------------
+- le second annotateur est À RECRUTER : AUCUNE annotation n'existe, aucune
+  n'est fabriquée (la ligne « Independent replication — awaiting
+  (recruitment / real command) » demeure INCHANGÉE jusqu'au κ réel sur
+  pièces) ;
+- l'indépendance est la condition de validité : l'annotateur ne voit
+  JAMAIS le codage du labo (les items paradoxaux — un accord systématique
+  sur les items ambigus — alerteraient) ;
+- le κ mesure L'ACCORD, pas la VÉRITÉ : un κ élevé ne prouve pas que les
+  classes sont les bonnes, il prouve qu'elles sont LISIBLES de deux
+  côtés indépendants — c'est TOUT ce que la réplication demande ;
+- le temps de l'annotateur est consigné (la donnée de charge, jamais un
+  critère).

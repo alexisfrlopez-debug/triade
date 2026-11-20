@@ -1,0 +1,66 @@
+PROTOCOLE D'ACCEPTATION — LE KIT fence.i AU SILICIUM (gelé AVANT le run, l4nnwqlld)
+====================================================================================
+ÉTAT : PRÉ-ENREGISTRÉ, AUCUNE MESURE PRISE. La ligne « fence.i on silicon —
+awaiting hardware run » demeure INCHANGÉE jusqu'au témoin signé recoupé.
+Tout critère ci-dessous est MESURÉ au témoin binaire de la sonde et au
+journal du scénario — jamais décrété.
+
+LE PLAN DE MESURE (la sonde sequence-fencei.S, exécutée par LA CARTE) :
+  - n ≥ 5 RUNS (N_RUNS = 5 figé dans la source ; davantage exige N_RUNS
+    édité et RÉ-ASSEMBLÉ — le geste nommé, l'empreinte du binaire
+    reconsignée au témoin) ;
+  - chaque run porte DEUX bras :
+      BRAS A — la séquence § 5 de la fiche profil AVEC fence.i :
+        page accessible en écriture → LA BASCULE DU REGISTRE SCRATCH t1 ←
+        adresse du slot (jamais un registre d'argument) → écriture du mot
+        NOUVEAU (aligné 4 o, atomique sur RV64) → fence rw, rw → le mot
+        relu (la vue données, consignée) → fence.i → page RX → LE SAUT
+        jalr ra, 0(t1) PAR LE SCRATCH → le verdict (a0) ;
+      BRAS B — LA MÊME séquence SANS fence.i, TOUJOURS APRÈS le bras A de
+        son run (le slot est CHAUD au cache d'instructions — l'arm A vient
+        de l'exécuter) : la sonde du FETCH PÉRIMÉ.
+
+LES CRITÈRES D'ACCEPTATION (chacun tranché binaire au témoin) :
+  C1. LA BASCULE VUE PAR LE CŒUR — à CHAQUE bras de CHAQUE run : le champ
+      t1 du témoin == l'adresse du slot (l'en-tête), et le mot relu ∈
+      {0x00B00513 (v1), 0x01600513 (v2)} : le scratch a été chargé, le mot
+      a été lu — le transfert de contrôle jalr ra, 0(t1) PAR LE SCRATCH a
+      vécu. ÉCHEC si UN bras diverge.
+  C2. L'INVALIDATION DU CACHE D'INSTRUCTIONS PROUVÉE AU TÉMOIN — le bras A
+      rend le verdict du NOUVEAU mot (22) dans 100 % des n ≥ 5 runs : le
+      cœur a FETCHÉ l'instruction fraîche APRÈS fence.i. ÉCHEC si UN
+      SEUL bras A rend 11 (le verdict de l'ancien mot) ou tout autre
+      valeur : la ligne nomme le run fautif.
+  C3. LA COHÉRENCE DU PLAN — exactement 2 × n enregistrements de bras
+      (n bras A, n bras B), l'en-tête MAGIC 0x45434931, le mode de page
+      consigné (0 = RWX mmap, 1 = mprotect sur page dédiée). ÉCHEC si le
+      compte ou l'en-tête diverge (refus nommé AVANT tout jugement).
+  C4. LE SCELLÉ AU SILICIUM (le scénario T3) — le corpus exécuté NATIVEMENT
+      ×3 : exactement les DEUX lignes au code 0 (le rituel § 8.3) ; le
+      demo exécuté NATIVEMENT : 1 200 usages, la transcription OCTET POUR
+      OCTET les 15 425 o figés (800 lignes v1, 400 v2 marquées « j2: »,
+      les refus 1-4 inclus) ; le DEP falsifié (0x7→0x3) : SIGSEGV, 4 290 o
+      exacts. ÉCHEC sur tout écart nommé.
+  C5. ZÉRO RÉGRESSION (le scénario T4) — le corpus et le demo relus :
+      sha256 inchangés ; le rituel rejoué : les deux lignes au code 0.
+
+CE QUI N'EST PAS UNE PORTE (l'honnêteté du protocole) :
+  - le BRAS B (sans fence.i) : OBSERVATION consignée, jamais un critère —
+    un verdict périmé (22 alors que la mémoire dit v1) NOMME la nécessité
+    de fence.i sur CE cœur ; un verdict frais (11) nomme un échec de ligne
+    du cache d'instructions, ou un noyau qui invalide lui-même au mprotect
+    (mode repli) : les DEUX lectures sont consignées au témoin, aucune
+    n'est élue d'avance, aucune ne tranche ;
+  - les CYCLES (rdcycle autour du saut) : consignés à chaque bras — une
+    DONNÉE, jamais un critère (le coût de fence.i varie par microarchitecture,
+    le protocole ne le promet pas) ;
+  - la fréquence courante de la carte : CONSIGNÉE au témoin (T0), exigée
+    par la grille, jamais un critère.
+
+LA RÈGLE DE JUGEMENT (gelée) : le run est VERT ssi C1 ∧ C2 ∧ C3 ∧ C4 ∧ C5.
+Toute divergence = ÉCHEC NOMMÉ, renvoyé TEL QUEL (la ligne nomme le défaut ;
+un échec honnête vaut plus qu'un vert muet). Le verdict se rend POST-MORTEM
+par le scénario, le laboratoire recoupe sur pièces (D138/D145/D148) :
+témoin ↔ journal ↔ verdict recoupés ENTRE EUX, la signature vérifiée (la
+GRILLE-TEMOIN). La fermeture de la ligne « awaiting » se fait SUR PIÈCES
+recoupées — jamais sur la console seule.

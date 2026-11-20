@@ -1,0 +1,72 @@
+RÈGLE DE JUGEMENT GELÉE — LE KIT DUDECT RETARGETÉ (l4nnwqlld)
+==============================================================
+GELÉE AVANT TOUT RUN (le pré-enregistrement : la règle précède les
+données ; aucun paramètre ne bougera après coup, quel que soit le
+résultat). La règle se lit sur l'AGRÉGAT COMPLET validé par
+agregateur_dudect.py — jamais sur un run isolé, jamais sur une console.
+
+1. LA STATISTIQUE (par run)
+--------------------------------------------------------------------------------
+Pour CHAQUE run r, pour CHAQUE cible c : le t DE WELCH sur les CYCLES
+RDTSC entre les DEUX classes (secret-fixe, n = N itérations ; secret-
+aléatoire, n = N itérations) :
+    t = (m_fixe − m_alea) / sqrt(v_fixe/N + v_alea/N)
+où m et v sont la moyenne et la variance (dénominateur N−1) des cycles de
+la classe, LUES DU JOURNAL CSV (l'agrégateur RECALCULE depuis les cycles
+bruts — il ne fait confiance à AUCUNE valeur imprimée). LA CORRECTION DE
+WELCH : variances supposées INÉGALES, les DEUX effectifs égaux à N par
+construction — c'est la statistique du mesureur scellé, portée sans
+retouche. Bilatérale, sans test de préalable (le seuil consigné de la
+maison rend l'asymptotique honnête à N ≥ 60).
+
+2. LE SEUIL (gelé)
+--------------------------------------------------------------------------------
+|t| > 5 : une dépendance temporelle AU SEUIL, consignée TELLE QUELLE.
+|t| ≤ 5 : aucune divergence au seuil sur CET échantillon — JAMAIS « temps
+constant prouvé ». Le seuil 5 est celui du kit v0.15.0 et de l'édition
+structurelle v0.11.0 (la métrique change : le temps d'horloge réel).
+
+3. L'AGRÉGATION PAR CELLULE (machine × cible × N)
+--------------------------------------------------------------------------------
+Une CELLULE = (machine m, cible c, N ∈ {60, 200, 400}) portant n ≥ 10
+runs validés. Le statistique de cellule : LA MÉDIANE des t des n runs
+(le critère de la médiane, pré-enregistré à v0.19.3 : un pic minoritaire
+n'est pas un verdict ; la médiane résiste au run accidentellement
+interrompu). Verdict de cellule :
+    |médiane(t)| > 5  →  la cellule est À DIVERGENCE AU SEUIL ;
+    |médiane(t)| ≤ 5  →  la cellule est SANS divergence au seuil
+                         (sur ces échantillons, ces machines).
+
+4. LA DÉCISION PAR CIBLE (gelée — la ligne de la table des statuts)
+--------------------------------------------------------------------------------
+La CIBLE (tls13-02, tls13-13, tls13-16, tls13-17) est déclarée À
+DIVERGENCE AU SEUIL si AU MOINS UNE cellule (machine × N) est à
+divergence ; elle est déclarée SANS DIVERGENCE AU SEUIL si TOUTES les
+cellules (≥ 2 machines × 3 N × n ≥ 10 runs) sont sans divergence — et
+ALORS SEULEMENT la ligne « wall-clock constant time » peut être lue
+« n ≥ 10 runs par N ∈ {60, 200, 400}, ≥ 2 machines, aucune divergence au
+seuil, consignée comme telle » — JAMAIS « constant time proven ».
+Une divergence sur tls13-02 ou tls13-13 À N=200 déclenche LA LECTURE DE
+L'INVESTIGATION PRÉ-ENREGISTRÉE (INVESTIGATION-PICS-N200.txt) : les tests
+discriminants C1/C2/C3 appartiennent au geste suivant, CONSIGNÉS — la
+décision ci-dessus ne les attend pas, elle EST le constat.
+
+5. LE FAIL-CLOSED (la règle de fer)
+--------------------------------------------------------------------------------
+TOUT run manquant, tout journal incomplet, tout témoin machine muet (sans
+empreinte CPU ou sans fréquence) : le protocole est REFUSÉ — l'agrégateur
+rend exit 2 avec LA LISTE DES MANQUES, AUCUN agrégat partiel n'est calculé,
+AUCUNE médiane, AUCUN verdict. La complétude se valide AVANT TOUT CALCUL
+(c'est écrit dans le code de l'agrégateur, pas dans une intention). Les
+n ≥ 10 runs par cellule sont un MINIMUM : davantage de runs admis (la
+médiane en profite), JAMAIS moins.
+
+6. LES PIÈCES DU VERDICT
+--------------------------------------------------------------------------------
+L'agrégateur écrit verdit-dudect-<horodatage>.txt : par machine (l'empreinte
+CPU, la fréquence consignées), par cellule (n, la médiane, le verdict), la
+décision PAR CIBLE, et la phrase de frontière (« dudect est un outil de
+détection, pas une preuve d'exploitabilité — les canaux de cache et de
+puissance demeurent hors périmètre »). La signature du développeur (la
+grille du kit) et le recoup du laboratoire ferment la séquence — la ligne
+de la table des statuts ne bouge QUE SUR L'AGRÉGAT COMPLET SIGNÉ.

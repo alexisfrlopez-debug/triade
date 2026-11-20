@@ -1,0 +1,135 @@
+LISEZMOI — LE KIT DUDECT RETARGETÉ (le protocole de répétition v0.19.3, l4nnwqlld pièce 3)
+==========================================================================================
+PRÉ-ENREGISTRÉ — l'empreinte sha256 de CHAQUE pièce consignée à
+EMPREINTES-KITS.txt AVANT la remise. LA RÈGLE : AUCUNE mesure n'est prise
+ici ; la ligne « Wall-clock constant time — le run du développeur attendu »
+demeure « awaiting the developer's run » tant que l'agrégateur n'a pas tout
+validé sur pièces. AUCUN chiffre n'est fabriqué.
+
+1. L'OBJET (le protocole que l'édition v0.19.3 a pré-enregistré)
+--------------------------------------------------------------------------------
+Les DEUX runs vécus du dudect (13/11/2026, la machine du développeur, les
+témoins datés signés) ont lu à N=200 deux cibles AU-DESSUS du seuil :
+|t| = 12.39 (tls13-02) et 5.19 (tls13-13) — consignés TELS QUELS — tous
+quatre sous le seuil à N=400. La lecture honnête du kit demeure : AUCUNE
+divergence au seuil sur CET échantillon, CETTE machine, UN run par N —
+jamais « temps constant prouvé ». Le présent kit DELIVRE le protocole de
+répétition pré-enregistré : n ≥ 10 RUNS par N ∈ {60, 200, 400}, sur
+≥ 2 MACHINES, l'empreinte CPU et la fréquence consignées, l'affinité de
+cœur fixée, l'investigation des pics tls13-02/tls13-13 à N=200
+PRÉ-ENREGISTRÉE (INVESTIGATION-PICS-N200.txt — les causes écrites AVANT
+les données), LA RÈGLE DE JUGEMENT GELÉE (REGLE-JUGEMENT.txt), et
+L'AGRÉGATEUR FAIL-CLOSED (agregateur_dudect.py — tout run manquant = le
+protocole REFUSÉ, jamais d'agrégat partiel).
+
+2. LES QUATRE CIBLES (les blocs isolables — tls13-02/13 comprises)
+--------------------------------------------------------------------------------
+  tls13-02  la compression SHA-256 (le cœur du t=0 structurel — LE SECRET :
+            le bloc 64 o comprimé) ;
+  tls13-13  l'échelle X25519 (LE SECRET : LE SCALAIRE) ;
+  tls13-16  le bloc AES-128 (LE SECRET : LA CLÉ) ;
+  tls13-17  la multiplication GHASH (LE SECRET : X).
+La limite consignée demeure : loupe-06 (md5) vit SOUS SESSION (contrat P1),
+NON isolable sans l'application entière — la mesure pipeline de loupe.exe
+appartient à une itération future du kit ; AUCUN chiffre n'existe pour lui.
+Les cibles vivent dans cibles/ (l'IMAGE MÉMOIRE ÉTENDUE de la pièce scellée
+proxy.exe — 69 632 o, chaque section à son RVA : les blocs ne sont PAS
+autonomes, tls13-02 lit sa table K en .rdata par RIP-relatif — la leçon
+vécue) + le manifeste. Le mesureur RECOUPE lui-même le sha256 de l'image
+ET de chaque plage AVANT toute exécution.
+
+3. LE CONTENU DU KIT
+--------------------------------------------------------------------------------
+kit-dudect/
+├── dudect_v150.c        LE MESUREUR SCELLÉ, PORTÉ INCHANGÉ (copie octet
+│                        pour octet de scripts/kits_mesure_v150/kit_dudect/
+│                        dudect_v150.c) : les DEUX backends (_WIN32 :
+│                        QueryPerformanceCounter/SetThreadAffinityMask/
+│                        rand_s — LE RUN TERRAIN ; POSIX : CLOCK_MONOTONIC/
+│                        sched_setaffinity//dev/urandom — l'autotest
+│                        laboratoire), l'affinité posée sur le cœur 0 PAR
+│                        LE MESUREUR, l'échauffement 100 appels, N ≥ 60
+│                        itérations par classe (secret-fixe /
+│                        secret-aléatoire) en cycles RDTSC et secondes,
+│                        LE t DE WELCH calculé, le seuil |t| > 5 ;
+├── cibles/              proxy-image.bin + manifeste-c.txt + manifeste.json
+│                        (copies intactes) ;
+├── LISEZMOI-KIT-DUDECT-V193.txt  le présent document ;
+├── INVESTIGATION-PICS-N200.txt   L'INVESTIGATION PRÉ-ENREGISTRÉE (les
+│                        causes AVANT les données) ;
+├── REGLE-JUGEMENT.txt   LA RÈGLE DE JUGEMENT GELÉE (le seuil t, la
+│                        correction de Welch, la décision par cible) ;
+└── agregateur_dudect.py L'AGRÉGATEUR FAIL-CLOSED (valide la complétude
+                         AVANT TOUT calcul — tout run manquant : REFUS).
+
+4. LE PROTOCOLE DU RUN (la machine du développeur, DEUX machines distinctes)
+--------------------------------------------------------------------------------
+SUR CHAQUE MACHINE (≥ 2 : la machine de record + une seconde, nommées
+machines A et B au témoin), dans le dossier du kit :
+  1. CONSIGNER LA MACHINE au témoin AVANT le premier run (le champ exigé
+     par la grille) : le modèle CPU COMPLET (l'empreinte CPU), la
+     fréquence EFFECTIVE (base et turbo — l'état du turbo au BIOS noté à
+     la main : le mesureur NE PEUT PAS le commander), l'OS, la version du
+     compilateur ;
+  2. COMPILER le mesureur DEPUIS LA SOURCE (la vérité) :
+         cl /O2 dudect_v150.c
+       ou gcc -O2 -o dudect_v150.exe dudect_v150.c -lm
+     (le mesureur pose LUI-MÊME l'affinité sur le cœur 0) ;
+  3. (recommandé) l'épreuve d'appel : recompiler/exécuter test_appel.c du
+     kit v0.15.0 — FIPS « abc » EXACT attendu (la pièce mappée est la
+     pièce scellée) ;
+  4. LES RUNS — pour CHAQUE N ∈ {60, 200, 400}, DIX RUNS (n = 10, minimum
+     pré-enregistré ; davantage admis, JAMAIS moins) :
+         dudect_v150.exe cibles <N>
+     chaque run écrit journal-dudect-<horodatage>.csv (cible, classe,
+     iteration, cycles, secondes — LA PIÈCE) ; ranger chaque journal dans
+     runs/<machine>/<cible>/N<N>/run<k>/journal-dudect-<horodatage>.csv
+     (l'arborescence que l'agrégateur EXIGE — voir § 6) ;
+  5. LE TÉMOIN PAR MACHINE : temoin-machine-<A|B>.txt (le modèle CPU, la
+     fréquence effective, l'état du turbo, l'OS, le compilateur, le sha256
+     de dudect_v150.c AVANT compilation, le sha256 du binaire compilé, les
+     empreintes relues de cibles/) ;
+  6. L'AGRÉGATION (le geste final) : python3 agregateur_dudect.py runs/
+     — l'agrégateur VALIDE LA COMPLÉTUDE AVANT TOUT CALCUL : 2 machines ×
+     4 cibles × 3 N × 10 runs, chaque journal complet (2N lignes par
+     classe, les cycles présents), chaque témoin machine portant
+     l'empreinte CPU ET la fréquence — TOUT MANQUE = REFUS (exit 2, la
+     liste des manques) ; SEULEMENT ALORS il recalcule les t de Welch
+     DEPUIS LES CYCLES des journaux (il ne fait confiance à AUCUNE
+     console), agrège par la médiane et rend le verdict PAR CIBLE selon
+     REGLE-JUGEMENT.txt.
+
+5. L'INVESTIGATION DES PICS À N=200 (PRÉ-ENREGISTRÉE — la pièce dédiée)
+--------------------------------------------------------------------------------
+INVESTIGATION-PICS-N200.txt écrit AVANT toute donnée nouvelle : au moins
+TROIS causes testables nommées avec leur test discriminant (la fausse
+cache du compilateur, l'alias de ligne, le partage de port) + les
+candidates de l'édition v0.19.3 (le faux positif de bruit d'horloge,
+l'interruption partagée du cœur, l'écart réel de temps constant). AUCUNE
+cause n'est élue d'avance : la répétition et le critère de la médiane
+décident — l'investigation pré-enregistrée est la règle du jeu, pas son
+résultat.
+
+6. L'ARBORESCENCE EXIGÉE PAR L'AGRÉGATEUR (fail-closed sur la forme aussi)
+--------------------------------------------------------------------------------
+runs/
+├── temoin-machine-A.txt         (l'empreinte CPU + la fréquence + …)
+├── temoin-machine-B.txt
+├── machine-A/
+│   ├── tls13-02/N60/run01/journal-dudect-*.csv   … run10/
+│   ├── tls13-02/N200/…  tls13-02/N400/…
+│   ├── tls13-13/…  tls13-16/…  tls13-17/…
+└── machine-B/…                   (la même maille complète)
+TOUTE case vide, TOUT journal incomplet, TOUT témoin manquant ou muet
+(sans empreinte CPU ou sans fréquence) : REFUS NOMMÉ — jamais d'agrégat
+partiel, jamais de moyenne sur ce qui existe.
+
+7. LA FRONTIÈRE
+--------------------------------------------------------------------------------
+dudect est un OUTIL DE DÉTECTION, pas une preuve d'exploitabilité : |t| > 5
+se consigne TEL QUEL (la consigne v0.13.0 : rapporter les résultats tels
+quels, y compris défavorables) ; |t| ≤ 5 = aucune divergence au seuil sur
+CET échantillon — jamais « temps constant prouvé ». Les canaux cachés de
+cache et de puissance demeurent hors périmètre. La ligne de la table des
+statuts ne se ferme que sur l'agrégat COMPLET recoupé : n ≥ 10 × 3 N ×
+≥ 2 machines, sinon RIEN.

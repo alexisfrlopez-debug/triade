@@ -1,0 +1,114 @@
+CONSIGNES D'ANNOTATION — LE SECOND ANNOTATEUR, LA GRILLE F/L
+(l4nnwqlld, pièce 5 — le manuel et les exemples étalonnés)
+================================================================================
+À QUI : l'annotateur indépendant qui code LES MÊMES défauts que le
+laboratoire SANS JAMAIS VOIR son codage (la condition du κ de Cohen : deux
+jeux indépendants). Aucune compétence préalable en dehors de la lecture
+attentive : la grille est opérationnelle, chaque classe porte SA définition
+et SES exemples vécus.
+
+1. LA GRILLE (D189, les étiquettes D203 — grille-fl.csv du kit)
+--------------------------------------------------------------------------------
+CINQ classes TERRAIN (le défaut vit dans le monde où la pièce s'exécute) :
+  F1  chargeur/image        le format de l'image : en-tête PE, sections,
+                            table des imports/relocations, l'enveloppe de
+                            la lignée ;
+  F2  ABI/matériel          la convention d'appel et le matériel : registres,
+                            pile, ombre, alignement, codes de retour des
+                            registres ;
+  F3  sémantique du         ce que le VRAI chargeur fait que le scénario de
+      chargeur              laboratoire ne modélisait pas : l'entrée appelée
+                            en sémantique DllMain, le retour LU, la
+                            résolution des imports ;
+  F4  conventions système   les API du système : leurs codes d'erreur, leurs
+                            exigences de format, leurs comportements aux
+                            limites ;
+  F5  environnement         l'environnement d'exécution : la version de
+                            Windows, les locales, le poste, les outils
+                            présents.
+TROIS classes LABORATOIRE (le défaut vit dans la notation elle-même ou
+son instrumentation) :
+  L1  logique               une faute de la notation elle-même : la
+                            sémantique du bloc contredit son contrat de
+                            couche I ;
+  L2  structure             l'orchestration : l'agencement des blocs, l'ordre
+                            des écritures, les états partagés ;
+  L3  harnais               l'instrument de mesure, PAS la pièce :
+                            l'émulateur, l'oracle, le scénario de
+                            laboratoire.
+LA LOI DU UN : UN défaut, UNE classe — la PLUS PROCHE de la cause racine
+consignée ; si deux classes se disputent, choisir celle qui décrit CE QUI A
+FAILLI (pas ce qui l'a détecté) ; si aucune ne convient, écrire « ? » en
+classe et nommer l'hésitation en remarque (un « ? » honnête vaut mieux
+qu'un forcing — il sera compté comme désaccord, c'est sa fonction).
+
+2. LE GESTE DE L'ANNOTATEUR (pas à pas)
+--------------------------------------------------------------------------------
+  1. LIRE le registre de campagne fourni (la liste des défauts : le id, le
+     NOM du défaut, la PIÈCE citée — l'énoncé consigné au moment du fait,
+     jamais une reconstruction) ;
+  2. Pour CHAQUE défaut : lire son énoncé, demander « QUI a failli ? » —
+     le format de l'image (F1) ? la convention machine (F2) ? le vrai
+     chargeur au-delà du modèle (F3) ? l'API système (F4) ? le poste
+     (F5) ? la notation elle-même (L1) ? l'agencement (L2) ?
+     l'instrument de mesure (L3) ?
+  3. CHOISIR UNE classe, UNE par défaut ;
+  4. RENDRE le CSV : « id,classe » — une ligne par défaut, l'en-tête
+     exacte « id,classe », les id COMMUNS recopiés SANS RETOUCHE (le
+     calculateur exige les id communs) ; encodage UTF-8 ;
+  5. NE JAMAIS consulter le codage du laboratoire, les rapports d'édition
+     ou les classements publiés (l'indépendance est la condition du κ —
+     sa violation invaliderait la mesure, elle se voit aux items
+     paradoxaux) ;
+  6. CONSIGNER le temps passé et toute difficulté de la grille (elles
+     nourrissent l'amendement éventuel, jamais le codage lui-même).
+
+3. LES EXEMPLES ÉTALONNÉS (la calibration — huit défauts VÉCUS, leurs
+   classes consignées par le laboratoire ; l'annotateur s'y étalonne AVANT
+   de coder, ces huit items ne comptent pas dans le κ)
+--------------------------------------------------------------------------------
+  E1  [OFT-QWORD] — les quatre tableaux OriginalFirstThunk écrits à PAS DE
+      QWORD au lieu du pas DWORD du format PE : le VRAI chargeur lit
+      OFT[1] = 0, croit chaque liste terminée, résout UNE fonction par
+      DLL ; la sixième mort de la vitrine. → F1 (chargeur/image : le
+      FORMAT de la table d'imports).
+  E2  [RET-NU] — la sonde de liaison neutralisait l'entrée d'un seul octet
+      ret ; or le VRAI chargeur appelle l'entrée en sémantique DllMain ET
+      LIT SON RETOUR : un ret nu rend AL tel quel, le chargeur croit
+      l'initialisation échouée. → F3 (sémantique du chargeur : ce que le
+      VRAI chargeur fait que le scénario ne modélisait pas).
+  E3  [FREE-SANS-TYPE] — k32.FreeLibrary(base) appelé SANS argtypes avec le
+      HMODULE 64 bits du restype c_void_p : ctypes convertit l'argument
+      nu en int 32 bits, ArgumentError. → F4 (conventions système : l'API
+      et son typage).
+  E4  [SESSION] — l'erreur -6 : la classe des arguments PILE (les 5+
+      au home space au lieu de [rsp+0x20]+). → F2 (ABI/matériel : la
+      convention d'appel).
+  E5  la faute de TABLE K — une constante fausse dans la table K de
+      SHA-256, attrapée par le contrôle de couche I AVANT toute mesure. →
+      L1 (logique : la notation contredit son contrat).
+  E6  le compteur de la FINALISATION SEULE — l'artefact de périmètre D191 :
+      l'instrument de mesure comptait une phase de plus que la pièce. →
+      L3 (harnais : l'instrument, pas la pièce).
+  E7  la boucle winmain complète confrontée à la base saine — l'ordre des
+      écritures entre blocs, les états partagés mal orchestrés. → L2
+      (structure : l'agencement des blocs).
+  E8  la vitrine morte par le JOURNAL D'ÉVÉNEMENTS — BEX64, 0xC0000005 :
+      la mort nommée par le système sur CE poste, jamais reproduite
+      ailleurs. → F5 (environnement : le poste).
+LA LECTURE DES LIMITES (les pièges nommés) : un défaut DÉTECTÉ par le
+harnais mais causé par la pièce n'est PAS L3 (E5 : détecté au labo, causé
+par la notation) ; un défaut du VRAI chargeur qui n'EXISTAIT PAS dans le
+monde modélisé est F3, pas F1 (E2 contre E1 : le FORMAT est F1, le
+COMPORTEMENT au-delà du modèle est F3) ; un refus NOMMÉ de l'API (code
+d'erreur documenté) est F4 même s'il se voit au chargeur.
+
+4. CE QUI SE PASSE ENSUITE
+--------------------------------------------------------------------------------
+Le laboratoire confronte les DEUX jeux au calculateur (calculateur_kappa.py
+— autotesté sur fixtures synthétiques au κ exact par construction) ; la
+règle d'acceptation (REGLE-ACCEPTATION.txt) : κ ≥ 0,61 sur n ≥ 50 items
+doubles ; les désaccords sont NOMMÉS item par item et passent à
+l'arbitrage (le protocole y vit) ; votre CSV et votre temps passé sont
+consignés INTACTS — jamais retouchés, même en cas d'arbitrage divergent
+(les deux lectures demeurent des pièces).

@@ -1,0 +1,74 @@
+GRILLE DE TÉMOIN — LE KIT LOUPE TROISIÈME MACHINE (le journal + les empreintes
+des sorties, signés — l4nnwqlld)
+================================================================================
+LE PRINCIPE : le développeur vit le run (LE GESTE), le scénario produit le
+journal et les empreintes, le développeur SIGNE la grille, le laboratoire
+recoupe les pièces ENTRE ELLES. L'EMPREINTE CPU ET LA FRÉQUENCE de la
+troisième machine sont CONSIGNÉES AU TÉMOIN — l'exigence du protocole.
+
+1. LES PIÈCES QUE LE RUN PRODUIT (dans preuves-loupe/, nées seules)
+--------------------------------------------------------------------------------
+  temoin-loupe.txt        l'environnement de la machine (l'OS, le python,
+                          l'empreinte de loupe.exe relue AVANT le run) ;
+  temoin-loupe-journal.log  LE JOURNAL — le run entier, constat par
+                          constat (T0 → T7 → S0 → LA LIAISON) ;
+  temoin-vitrine.txt      LE TÉMOIN VITRINE avec son [4/4] (les quatre
+                          temps, les DEUX codes de sortie) — REQUIS ;
+  VERDICT-run-loupe.txt   le verdict post-mortem du scénario ;
+  capture-*.png           les captures éventuelles de la vitrine vécue à
+                          la main (facultatives, bienvenues).
+
+2. LA GRILLE DU FICHIER SIGNÉ (à remplir À LA MAIN, puis signer)
+--------------------------------------------------------------------------------
+Copier le bloc dans « SIGNATURE-RUN-LOUPE-3E.txt » posé dans preuves-loupe/.
+Les commandes PowerShell de la consigne (LISEZMOI § 4) servent les champs
+« empreinte CPU » et « fréquence ».
+
+----- DÉBUT DU BLOC -----
+TÉMOIN SIGNÉ DU RUN LOUPE TROISIÈME MACHINE — kit l4nnwqlld
+
+date et heure du run             : (la date du temoin-loupe.txt)
+la TROISIÈME machine (modèle)    : (Win32_ComputerSystem .Model)
+L'EMPREINTE CPU                  : (Win32_Processor .Name — le modèle
+                                   complet, l'architecture)
+LA FRÉQUENCE consignée           : (MaxClockSpeed / CurrentClockSpeed,
+                                   en MHz ; l'état EFFECTIF du turbo noté
+                                   à la main si le BIOS le commande)
+l'OS de la machine               : (OSVersion.VersionString + le build)
+le python du run                 : (la version 64 bits, du témoin)
+le sha256 de loupe.exe AVANT     : (c1115105… attendu — la ligne du T0)
+le sha256 de loupe.exe APRÈS     : (idem attendu — la clôture T7)
+le sha256 du journal complet     : (sha256sum/Get-FileHash de
+                                   temoin-loupe-journal.log)
+le sha256 du témoin vitrine      : (Get-FileHash de temoin-vitrine.txt)
+les DEUX codes de la vitrine     : (les codes capturés au [2/4] — 0 et 0
+                                   attendus)
+le verdict rendu par le run      : (VERT / ÉCHEC NOMMÉ — la dernière ligne
+                                   du VERDICT-run-loupe.txt)
+la vitrine vécue à la main ?     : (oui/non — si oui, les captures
+                                   jointes : capture-*.png)
+
+Lu et approuvé — les pièces ci-dessus sont celles de MON run, à ma main,
+sur une machine qui n'avait JAMAIS vu l'application :
+signature : ______________________   date : ______________
+----- FIN DU BLOC -----
+
+3. LA SIGNATURE (l'un des deux, nommé)
+--------------------------------------------------------------------------------
+  - GPG détaché (si disponible sur la machine) :
+        gpg --detach-sign --armor preuves-loupe/SIGNATURE-RUN-LOUPE-3E.txt
+  - OU la signature MANUSCRITE datée (le bloc signé à la main,
+    photographié/scanné : capture-signature.png).
+Une pièce sans signature est retournée non recoupée.
+
+4. LE RETOUR ET LE RECOUP
+--------------------------------------------------------------------------------
+Le dossier preuves-loupe/ ENTIER + la signature part au coffre
+/test/preuves-loupe-3e/. Le laboratoire recoupe : l'empreinte de la pièce
+AVANT/APRÈS (c1115105… INCHANGÉ — la pièce n'est jamais en faute avant
+preuve), le journal relu constat par constat contre le contrat D204, les
+sha256 de la grille contre les fichiers, le [4/4] du témoin vitrine, la
+signature. Si les pièces établissent le scénario INTÉGRAL (T0 → T7 → S0 →
+LA LIAISON) ET la vitrine vivante : la ligne « Third-machine field liveness
+» se ferme SUR PIÈCES. Sinon : l'écart nommé au registre, la ligne demeure
+« awaiting », RIEN n'est fabriqué.
