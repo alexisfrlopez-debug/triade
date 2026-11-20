@@ -1,0 +1,38 @@
+LE CHANTIER 1 DE hrbdfy6i4 — LA SOUNDNESS DU LIFTER CONFRONTÉE À L'OBSERVÉ UNICORN — LA VERSION CORRIGÉE (la méthode exacte)
+
+LE CONTRÔLE DES ARTÉFACTS (les faux positifs du premier passage, la correction à l'œuvre) :
+LES BLOCS : 16 (tls13-01, tls13-02, tls13-03, tls13-05, tls13-06, tls13-07, tls13-13, tls13-14, tls13-15, tls13-16, tls13-18, tls13-19, loupe-06, tls13-04, tls13-08, tls13-17) — 1818 instructions, 942 encodages distincts
+  inc r13d                         [41ffc5] — inc r13d : ÉCRIT rflags, ne LE LIT PAS ; divergences=[] ; surdécl=[]
+  ror edx, 0x11                    [c1ca11] — ror edx, 0x11 : ÉCRIT rflags, ne LE LIT PAS ; divergences=[] ; surdécl=[]
+  sub rax, rbx                     [4829d8] — sub rax, rbx : ÉCRIT rflags (multi-essais), ne LE LIT PAS ; divergences=[] ; surdécl=[]
+  mov al, byte ptr [r15 + rcx]     [418a040f] — mov al, [r15+rcx] : ÉCRIT rax, ne LE LIT PAS ; divergences=[] ; surdécl=[]
+  rep movsb byte ptr [rdi], byte ptr [rsi] [f3a4] — rep movsb : LIT rflags (DF) et rcx/rsi/rdi ; divergences=[] ; surdécl=[]
+  jne 0x400042                     [7540] — jne +0x40 : LIT rflags (le canal rip) ; divergences=[] ; surdécl=[]
+  adc rax, rbx                     [4811d8] — adc rax, rbx : LIT et ÉCRIT rflags ; divergences=[] ; surdécl=[]
+
+  tls13-01 : 12 instructions
+  tls13-02 : 122 instructions
+  tls13-03 : 49 instructions
+  tls13-05 : 102 instructions
+  tls13-06 : 41 instructions
+  tls13-07 : 105 instructions
+  tls13-13 : 459 instructions
+  tls13-14 : 6 instructions
+  tls13-15 : 114 instructions
+  tls13-16 : 26 instructions
+  tls13-18 : 189 instructions
+  tls13-19 : 204 instructions
+  loupe-06 : 214 instructions
+  tls13-04 : 53 instructions
+  tls13-08 : 82 instructions
+  tls13-17 : 40 instructions
+
+LE CORPUS (1) — LES BLOCS : 1818 instructions (942 encodages distincts — chaque encodage confronté une fois, l'oracle étant indépendant de l'adresse) : 0 DIVERGENCE(S) — ZÉRO — la soundness tenue ; 14 sur-déclarations bénignes (la direction conservatrice, comptée à part) ; 0 déclarations hors univers observable ; 0 encodages non observables
+
+LES FORMES : 99 classes (mnémonique × forme d'opérandes) — chaque classe mutée systématiquement : l'octet 0 ET l'octet 1 parcourus de 0x00 à 0xFF
+
+LE CORPUS (2) — LES MUTANTS : 49725 mutants essayés, 7839 VALIDES (capstone décode la longueur exacte ET keystone ré-assemble aux mêmes octets), 7769 confrontés (70 non exécutables sous unicorn — cmp:1;imul:2;int:18;int3:3;iretd:3;movabs:12;or:2;retf:27;ror:2) : 183 DIVERGENCE(S) — ROUGE ; 751 sur-déclarations bénignes ; 305 hors univers observable
+
+LE CONTRÔLE NÉGATIF (le lifter muté — le modèle d'ensemble altéré d'UNE instruction, tls13-04 mov rax, qword ptr [rbx + 0x68]) : le retrait de la ecriture déclarée ATTRAPÉ : écriture observée non déclarée : rax ; le retrait de la lecture déclarée ATTRAPÉ : lecture observée non déclarée : rbx
+
+LE BILAN : 1818 instructions de blocs (942 encodages distincts) + 7769 mutants confrontés ; 183 DIVERGENCES (ROUGE) ; 765 sur-déclarations bénignes (comptées à part — la direction conservatrice) ; 305 déclarations hors univers observable ; le contrôle négatif ATTRAPÉ ; 394.9 s

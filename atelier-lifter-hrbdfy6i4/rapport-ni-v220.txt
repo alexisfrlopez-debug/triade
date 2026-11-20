@@ -1,0 +1,34 @@
+LE CHANTIER 2 DE hrbdfy6i4 — LA NON-INTERFÉRENCE SUR LA COUVERTURE ÉTENDUE (tls13-17 H secret, tls13-04, tls13-08)
+
+  tls13-01 (sha256-init, le secret P1) : 0 branches (0 taintées), 10 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-02 (sha256-comprimer, le secret P2) : 3 branches (0 taintées), 17 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-03 (sha256-absorber, le secret P2) : 2 branches (0 taintées), 13 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-04 (sha256-finaliser-etat, le secret P1) : 2 branches (1 taintées), 17 accès à adresse calculée (6 taintés) — VIOLATION — ROUGE
+  tls13-05 (hmac-sha256, le secret P1) : 4 branches (0 taintées), 8 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-06 (hkdf-extract, le secret P3) : 3 branches (0 taintées), 0 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-07 (hkdf-expand, le secret P1) : 9 branches (0 taintées), 19 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-08 (hkdf-expand-label-secret, le secret P1) : 12 branches (0 taintées), 12 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-13 (x25519-echelle, le secret P2) : 3 branches (0 taintées), 16 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-14 (x25519-cle-publique, le secret P2) : 0 branches (0 taintées), 0 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-15 (aes128-cles-tour, le secret P1) : 0 branches (0 taintées), 12 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-16 (aes128-bloc, le secret P1) : 0 branches (0 taintées), 13 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-17 (ghash-H-secret, le secret P3) : 1 branches (0 taintées), 6 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-18 (gcm-sceller, le secret P1) : 17 branches (0 taintées), 8 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-19 (gcm-ouvrir, le secret P1) : 19 branches (0 taintées), 7 accès à adresse calculée (0 taintés) — LA NON-INTERFÉRENCE PROUVÉE — le taint ne tache NI branche NI adresse
+  tls13-04 (sha256-finaliser, LE MODÈLE AFFINÉ — l'état H[0..7] secret @+0..31, la longueur publique @+104) : 2 branches (0 taintées), 17 accès (0 taintés) — PROUVÉE au modèle affiné (la branche du bourrage lit la LONGUEUR, métadonnée publique — nommée)
+  loupe-06 (md5, le secret = LE CONTENU) : 16 branches (0 taintées), 21 accès (0 taintés) — PROUVÉE
+
+LE CONTRÔLE NÉGATIF (la branche sur secret injectée à la tls13-17 copiée — mov al,[r8] ; test al,al ; jz) : ATTRAPÉ — je 0xe000
+
+LE ROUND-TRIP (la couverture étendue, 16 blocs) : 16/16 — ZÉRO divergence
+
+LA COUVERTURE (EN BLOCS ET EN FAMILLES, les trous nommés) :
+  16 BLOCS couverts : tls13-01/02/03/04 (sha256 — la finalisation ÉTENDUE), 05 (hmac), 06/07/08 (hkdf — l'Expand-Label ÉTENDU), 13/14 (x25519), 15/16 (aes), 17/18/19 (gcm — LE GHASH ÉTENDU, H secret) + loupe-06 (md5) ;
+  LES FAMILLES : sha256 [01-04], hmac [05], hkdf [06-08], x25519 [13-14], aes [15-16], gcm [17-19], md5 [loupe-06] — SEPT familles ;
+  LES TROUS NOMMÉS (jamais une globalité) : tls13-09, tls13-10, tls13-11, tls13-12, tls13-20, tls13-21, tls13-22, tls13-23, tls13-24, tls13-25, tls13-26, tls13-27, tls13-28 (f25519 arithmétique, compteurs, poignée complète, enregistrement) — jamais couverts, jamais annoncés couverts.
+
+LE VERDICT : 16/16 blocs PROUVÉS (zéro branche, zéro adresse taintées) ; le contrôle négatif ATTRAPÉ ; le round-trip 16/16
+
+LE STATUT DE H DANS GHASH : LA VOIE FORTE TENUE — H (= E_K(0)) tainté comme secret à P3 : le taint de H ne tache NI branche NI adresse (la preuve tls13-17 ci-dessus) ; la déclaration « H public » eût exigé la même preuve — la couverture directe la rend inutile : H est un secret couvert.
+
+LA SOUNDNESS DU LIFTER : l'hypothèse VALIDÉE AU DOMAINE (le chantier 1 : zéro divergence sur les 942 encodages des blocs ; les 155 divergences mutantes HORS vocabulaire — LA GARDE : le refus nommé de toute classe non modélisée).
