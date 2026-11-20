@@ -1,0 +1,22 @@
+LA MÉCANISATION CF3 EN z3 — l'assistant de preuve INDÉPENDANT de l'explorateur maison
+
+LE MODÈLE : CF3.tla (13 règles, l'époque non bornée) — le portage RÈGLE À RÈGLE en SMT ; l'invARIANT I1–I4 + P2 ; LES OBLIGATIONS : la base + le pas par règle.
+
+  (0) LA BASE Init ⟹ I : VERT (UNSAT)
+  le pas VoleKUser : VERT (UNSAT — l'invariant préservé)
+  le pas VoleSSerrure : VERT (UNSAT — l'invariant préservé)
+  le pas VoleSPiege : VERT (UNSAT — l'invariant préservé)
+  le pas FalsifieConteneur : VERT (UNSAT — l'invariant préservé)
+  le pas FalsifiePiege : VERT (UNSAT — l'invariant préservé)
+  le pas RejoueEpoquePassee : VERT (UNSAT — l'invariant préservé)
+  le pas OuvrirCorrect : VERT (UNSAT — l'invariant préservé)
+  le pas OuvrirPhraseErronee : VERT (UNSAT — l'invariant préservé)
+  le pas OuvrirAncienCouple : VERT (UNSAT — l'invariant préservé)
+  le pas Verifier : VERT (UNSAT — l'invariant préservé)
+  le pas CrashPendantSession : VERT (UNSAT — l'invariant préservé)
+  le pas CloturerCorrecte : VERT (UNSAT — l'invariant préservé)
+  le pas CloturerPhraseErronee : VERT (UNSAT — l'invariant préservé)
+
+LE CONTRÔLE NÉGATIF : la règle 7 mutée (le seuil affaibli à 2) — ATTRAPÉ : z3 rend SAT, le contre-exemple au modèle (le secret appris avec 2 éléments — la preuve que la preuve voit)
+
+LE BILAN : 14/14 obligations VERTES (la base + les 13 règles) — les certificats SMT2 archivés rejouables (cf3_smt_certificats/), z3 l'assistant INDÉPENDANT de l'explorateur maison et d'Apalache (le second avis indépendant — le TLA+ d'origine déchargé par Apalache à v0.15.0, le présent par z3 : DEUX assistants distincts, la même vérité).

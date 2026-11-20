@@ -1,0 +1,11 @@
+bloc,famille,secret,branches,branches_taintees,acces_adresse,adresses_taintees,verdict
+tls13-01,sha256-init,P1,0,0,10,0,PROPRE
+tls13-02,sha256-comprimer,P2,3,0,17,0,PROPRE
+tls13-03,sha256-absorber,P2,2,0,13,0,PROPRE
+tls13-05,hmac-sha256,P1,4,0,8,0,PROPRE
+tls13-06,hkdf-extract,P3,3,0,0,0,PROPRE
+tls13-07,hkdf-expand,P1,9,0,19,0,PROPRE
+tls13-15,aes128-cles-tour,P1,0,0,12,0,PROPRE
+tls13-16,aes128-bloc,P1,0,0,13,0,PROPRE
+tls13-18,gcm-sceller,P1,17,0,8,0,PROPRE
+tls13-19,gcm-ouvrir,P1,19,0,7,0,PROPRE

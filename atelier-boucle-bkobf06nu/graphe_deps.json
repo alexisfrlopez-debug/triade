@@ -1,0 +1,94 @@
+{
+ "aretes": {
+  "loupe-01": [
+   "libc-01",
+   "loupe-02",
+   "loupe-03",
+   "loupe-04",
+   "loupe-07"
+  ],
+  "loupe-02": [],
+  "loupe-03": [
+   "libc-01",
+   "libc-02",
+   "libc-07",
+   "loupe-04"
+  ],
+  "loupe-04": [
+   "libc-01",
+   "libc-02",
+   "libc-07"
+  ],
+  "loupe-05": [
+   "tls13-01",
+   "tls13-02",
+   "tls13-03",
+   "tls13-04"
+  ],
+  "loupe-06": [
+   "libc-01",
+   "libc-02",
+   "libc-07"
+  ],
+  "loupe-07": [
+   "loupe-05",
+   "loupe-06"
+  ],
+  "loupe-08": [],
+  "loupe-09": [
+   "libc-01",
+   "libc-02",
+   "libc-07",
+   "loupe-01",
+   "loupe-10",
+   "loupe-11",
+   "loupe-12",
+   "loupe-14",
+   "loupe-15",
+   "loupe-16",
+   "loupe-17",
+   "loupe-18",
+   "win-03"
+  ],
+  "loupe-10": [
+   "loupe-08"
+  ],
+  "loupe-11": [
+   "loupe-02"
+  ],
+  "loupe-12": [
+   "loupe-02",
+   "loupe-14"
+  ],
+  "loupe-13": [
+   "libc-01",
+   "libc-02"
+  ],
+  "loupe-14": [
+   "loupe-02",
+   "loupe-13"
+  ],
+  "loupe-15": [
+   "loupe-02"
+  ],
+  "loupe-16": [
+   "loupe-02"
+  ],
+  "loupe-17": [
+   "loupe-07"
+  ],
+  "loupe-18": [
+   "loupe-03"
+  ]
+ },
+ "heritages": {
+  "libc-01": 4352,
+  "libc-02": 4480,
+  "libc-07": 5056,
+  "win-03": 5568,
+  "tls13-01": 49152,
+  "tls13-02": 49280,
+  "tls13-03": 49728,
+  "tls13-04": 49920
+ }
+}

@@ -1,0 +1,190 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-26",
+ "acces": [
+  {
+   "adresse": 64021,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb0], rcx",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 272"
+  },
+  {
+   "adresse": 64029,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb8], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 272"
+  },
+  {
+   "adresse": 64037,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xc0], r8",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 272"
+  },
+  {
+   "adresse": 64045,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 272"
+  },
+  {
+   "adresse": 64063,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 272"
+  },
+  {
+   "adresse": 64068,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 272"
+  },
+  {
+   "adresse": 64076,
+   "mnemonic": "mov",
+   "ligne": "mov r8, qword ptr [rsp + 0xb8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 272"
+  },
+  {
+   "adresse": 64093,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 272"
+  },
+  {
+   "adresse": 64098,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x90]",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 272"
+  },
+  {
+   "adresse": 64115,
+   "mnemonic": "mov",
+   "ligne": "mov r8, qword ptr [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 272"
+  },
+  {
+   "adresse": 64126,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8]",
+   "base": "r8",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 0 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 64129,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x90]",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 272"
+  },
+  {
+   "adresse": 64140,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 8]",
+   "base": "r8",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 8 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 64144,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 272"
+  },
+  {
+   "adresse": 64155,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 0x10]",
+   "base": "r8",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 16 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 64159,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 272"
+  },
+  {
+   "adresse": 64170,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 0x18]",
+   "base": "r8",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 24 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 64174,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0xa8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 272"
+  }
+ ]
+}

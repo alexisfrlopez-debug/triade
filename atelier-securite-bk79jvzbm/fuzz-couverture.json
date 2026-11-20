@@ -1,0 +1,22 @@
+{
+ "loupe-01": {
+  "instructions": 119,
+  "executees": 69,
+  "couverture": 58.0
+ },
+ "loupe-02": {
+  "instructions": 83,
+  "executees": 57,
+  "couverture": 68.7
+ },
+ "loupe-13": {
+  "instructions": 52,
+  "executees": 52,
+  "couverture": 100.0
+ },
+ "loupe-16": {
+  "instructions": 181,
+  "executees": 36,
+  "couverture": 19.9
+ }
+}

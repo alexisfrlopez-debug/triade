@@ -1,0 +1,3 @@
+TRIADE_manuscrit_v0.20.0.pdf
+Le manuscrit académique v0.20.0 — la vague 9 portée : le tableau de bord des quatre axes et la section « distance to the floor » (les ratios par axe, la convention de périmètre, la lecture lexicographique), la sûreté mémoire à 2,006/2,098 déchargés, les trois « tuables » re-classés équivalents-par-sweep (811/817 = 99.3), CF3 mécanisé 14/14, la non-interférence statique, les deux couloirs, le compilateur d'oracle, l'abstract réécrit.
+sha256:840180dae5b030b8dedeaac7e366742c0e172ac9b10b0412833a002102e28736

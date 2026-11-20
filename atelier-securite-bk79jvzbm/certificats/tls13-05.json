@@ -1,0 +1,335 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-05",
+ "acces": [
+  {
+   "adresse": 50130,
+   "mnemonic": "mov",
+   "ligne": "mov rbx, qword ptr [rsp + 0x200]",
+   "base": "rsp",
+   "index": null,
+   "disp": 512,
+   "classe": "pile",
+   "preuve": "[rsp+512] ≤ cadre 544"
+  },
+  {
+   "adresse": 50165,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50176,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50176,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rsi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 50178,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50196,
+   "mnemonic": "rep stosb",
+   "ligne": "rep stosb byte ptr [rdi], al",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50200,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50213,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50232,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50240,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50250,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50266,
+   "mnemonic": "rep stosb",
+   "ligne": "rep stosb byte ptr [rdi], al",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50268,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50291,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 544"
+  },
+  {
+   "adresse": 50296,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50306,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsi]",
+   "base": "rsi",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50312,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50327,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50335,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 544"
+  },
+  {
+   "adresse": 50351,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50370,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 544"
+  },
+  {
+   "adresse": 50378,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 544"
+  },
+  {
+   "adresse": 50391,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 544"
+  },
+  {
+   "adresse": 50414,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 544"
+  },
+  {
+   "adresse": 50419,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 544"
+  },
+  {
+   "adresse": 50429,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsi]",
+   "base": "rsi",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50435,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 544 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50450,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 544"
+  },
+  {
+   "adresse": 50458,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 544"
+  },
+  {
+   "adresse": 50474,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 544"
+  },
+  {
+   "adresse": 50482,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 544"
+  },
+  {
+   "adresse": 50501,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 544"
+  }
+ ]
+}

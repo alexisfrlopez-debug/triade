@@ -1,0 +1,34 @@
+LE COULOIR B — LA VARIANTE AES-NI DE TLS13-16 (le chemin descendu à l'ISA, le hot path crypto mesuré)
+
+LA VARIANTE : 223 o au RVA 0xce00 (la marge VIERGE — le scellé intact), 10 instructions AES-NI (neuf aesenc + aesenclast), LE ROUND-TRIP 100 %
+(a) LE MODÈLE PAR DÉFAUT (la sonde NATURELLE rend sans AES-NI) : LE REPLI VÉCU — le scellé exécuté, la sortie == le FIPS 197 — VERT (le repli est le scellé)
+(b) LE MODÈLE HASWELL : LE CHEMIN NI — la sortie 69c4e0d86a7b0430d8cdb78070b4c55a == LE FIPS 197 APPENDICE B — VERT (45 instructions/bloc)
+(c) L'ÉGALITÉ NI/SCELLÉ : 64/64 — ZÉRO DIVERGENCE (le NI rend le scellé octet pour octet)
+(d) LA MESURE (le même rig, 64 blocs, la graine 20261120) : NI 45 instructions/bloc contre le SCELLÉ GPR 26 — LE GAIN 0.6×
+
+LE TEMPS CONSTANT STRUCTUREL : le chemin NI ne porte AUCUN saut de données (les dix tours TOUJOURS exécutés — I1 par construction) ; le dispatch saute sur le VERDICT CPUID (public), jamais sur une donnée secrète.
+LA DETTE DE CÉRÉMONIE : la variante vit en COPIE DE LABORATOIRE à la marge 0xCE00 — l'embarquement exigera la cérémonie d'ère (le sceau-I, la clé hors-ligne — le modèle OPT-01 : JAMAIS scellé sans le geste du maître). Le GHASH PCLMULQDQ (l'autre moitié du chemin GCM) demeure LE CHEMIN SUIVANT — le plan le porte, la cérémonie le précède.
+
+
+LES CONSTATS DU COULOIR B (la lecture des specs I aux pièces) :
+  — AES (tls13-15/16) : LA DESCENTE À L'ISA EST DÉJÀ LE SCELLÉ — I3 de
+    tls13-15 : « AES-NI est exigé par le profil win de l'ère (Win10/11
+    x64) » — le scellé chiffre en 26 instructions/bloc (aesenc vécu,
+    AESKEYGENASSIST au déploiement, l'arrêt nommé I2) ; LA VARIANTE à
+    dispatch CPUID + repli est MESURÉE PLUS LENTE (45 contre 26 — le
+    prix du sondage par bloc) : LA LEÇON — le dispatch du modèle OPT-01
+    ne se justifie pas quand L'ÈRE L'EXIGE (le profil est le contrat,
+    la sonde est du théâtre) ; la variante demeure LA PIÈCE du chemin
+    (le FIPS 197 VERT au Haswell, l'égalité 64/64 au scellé) ;
+  — GHASH (tls13-17) : I5 LA FRONTIÈRE NOMMÉE — « PCLMULQDQ est un
+    CHANTIER FUTUR NOMMÉ d'optimisation — mesuré, pas supposé (le
+    miroir R11 de av-09) » — le chemin PCLMULQDQ demeure LE SUIVANT,
+    la dette de cérémonie nommée à sa naissance (aucun build avant la
+    cérémonie) ;
+  — SHA-256 : SHA-NI CONSACRÉ à OPT-01 (D205 : 5,84× mesuré, la
+    variante au plan, jamais scellée sans le geste du maître) ;
+  — X25519 (tls13-09..14) : la pertinence TRANCHÉE PAR LA MESURE — le
+    profil OPT-01 donna tls13-02 (le hachage) = 98,11 % des instructions
+    du chemin ; x25519 est O(1) PAR SESSION — l'ordre de grandeur nommé,
+    la descente MULX/ADX AU-DELÀ de la pertinence mesurée (le « selon
+    pertinence » de l'instruction, honoré par la pièce OPT-01).

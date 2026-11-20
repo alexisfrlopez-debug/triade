@@ -1,0 +1,149 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-16",
+ "acces": [
+  {
+   "adresse": 57088,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm0, xmmword ptr [rdx]",
+   "base": "rdx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 16 o"
+  },
+  {
+   "adresse": 57092,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx]",
+   "base": "rcx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57100,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x10]",
+   "base": "rcx",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57110,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x20]",
+   "base": "rcx",
+   "index": null,
+   "disp": 32,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57120,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x30]",
+   "base": "rcx",
+   "index": null,
+   "disp": 48,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 48 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57130,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x40]",
+   "base": "rcx",
+   "index": null,
+   "disp": 64,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 64 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57140,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x50]",
+   "base": "rcx",
+   "index": null,
+   "disp": 80,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 80 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57150,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x60]",
+   "base": "rcx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57160,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x70]",
+   "base": "rcx",
+   "index": null,
+   "disp": 112,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 112 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57170,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x80]",
+   "base": "rcx",
+   "index": null,
+   "disp": 128,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 128 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57183,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0x90]",
+   "base": "rcx",
+   "index": null,
+   "disp": 144,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 144 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57196,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmm1, xmmword ptr [rcx + 0xa0]",
+   "base": "rcx",
+   "index": null,
+   "disp": 160,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 160 (la structure du contrat I — les bornes au PRE), taille déclarée 176 o"
+  },
+  {
+   "adresse": 57209,
+   "mnemonic": "movdqu",
+   "ligne": "movdqu xmmword ptr [r8], xmm0",
+   "base": "r8",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 0 (la structure du contrat I — les bornes au PRE)"
+  }
+ ]
+}

@@ -1,0 +1,406 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-16",
+ "acces": [
+  {
+   "adresse": 25168,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x7da9]",
+   "base": "rip",
+   "index": null,
+   "disp": 32169,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25175,
+   "mnemonic": "lea",
+   "ligne": "lea r13, [rip + 0x81a2]",
+   "base": "rip",
+   "index": null,
+   "disp": 33186,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25182,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rbx + 0x210], -1",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25192,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rip - 0x3ed4]",
+   "base": "rip",
+   "index": null,
+   "disp": -16084,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25214,
+   "mnemonic": "mov",
+   "ligne": "mov r14, qword ptr [rbx + 0x220]",
+   "base": "rbx",
+   "index": null,
+   "disp": 544,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe220 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25227,
+   "mnemonic": "cmp",
+   "ligne": "cmp dword ptr [r13 + 4], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 4,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe404 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25238,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 4], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 4,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe404 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25246,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 8], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe408 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25323,
+   "mnemonic": "cmp",
+   "ligne": "cmp dword ptr [r13 + 4], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 4,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe404 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25330,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 4], 1",
+   "base": "r13",
+   "index": null,
+   "disp": 4,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe404 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25338,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 8], r15d",
+   "base": "r13",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe408 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25347,
+   "mnemonic": "mov",
+   "ligne": "mov r10d, dword ptr [r13 + 8]",
+   "base": "r13",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe408 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25351,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 4], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 4,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe404 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25359,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r13 + 8], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe408 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 25367,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rbx + 0x228]",
+   "base": "rbx",
+   "index": null,
+   "disp": 552,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe228 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25374,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rbx + 0x218]",
+   "base": "rbx",
+   "index": null,
+   "disp": 536,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe218 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25394,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rip - 0x3faa]",
+   "base": "rip",
+   "index": null,
+   "disp": -16298,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25429,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rip + 0x8144]",
+   "base": "rip",
+   "index": null,
+   "disp": 33092,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25436,
+   "mnemonic": "mov",
+   "ligne": "mov ecx, dword ptr [rdx + 0x1000]",
+   "base": "rdx",
+   "index": null,
+   "disp": 4096,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xf4a0 ∈ JOURNAL [0xe4a0, 0xf4b0)"
+  },
+  {
+   "adresse": 25453,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [r9], r14",
+   "base": "r9",
+   "index": null,
+   "disp": 0,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe4a0 ∈ JOURNAL [0xe4a0, 0xf4b0)"
+  },
+  {
+   "adresse": 25475,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rip - 0x3e6a]",
+   "base": "rip",
+   "index": null,
+   "disp": -15978,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25497,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [r9], r14",
+   "base": "r9",
+   "index": null,
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r9 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-16-6399-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 25500,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r9 + 8], r15b",
+   "base": "r9",
+   "index": null,
+   "disp": 8,
+   "classe": "nommé",
+   "cause": "la base r9 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-16-639c-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 25506,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rdx + 0x1000], ecx",
+   "base": "rdx",
+   "index": null,
+   "disp": 4096,
+   "classe": "nommé",
+   "cause": "la base rdx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-16-63a2-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 25514,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r9 + 8], r15b",
+   "base": "r9",
+   "index": null,
+   "disp": 8,
+   "classe": "nommé",
+   "cause": "la base r9 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-16-63aa-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 25521,
+   "mnemonic": "sub",
+   "ligne": "sub rax, qword ptr [rbx + 0x218]",
+   "base": "rbx",
+   "index": null,
+   "disp": 536,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe218 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25528,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rbx + 0x238]",
+   "base": "rbx",
+   "index": null,
+   "disp": 568,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe238 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25535,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [rdx + rax], r15b",
+   "base": "rdx",
+   "index": "rax",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base rdx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-16-63bf-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 25539,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x22c], 1",
+   "base": "rbx",
+   "index": null,
+   "disp": 556,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe22c ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25549,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x230], 0",
+   "base": "rbx",
+   "index": null,
+   "disp": 560,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe230 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25562,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25580,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rbx + 0x220], r14",
+   "base": "rbx",
+   "index": null,
+   "disp": 544,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe220 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25587,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [rip + 0x99f6]",
+   "base": "rip",
+   "index": null,
+   "disp": 39414,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 25594,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [rax + 8]",
+   "base": "rax",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xfdf8 ∈ METRIQUES [0xfdf0, 0xfe00)"
+  },
+  {
+   "adresse": 25618,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rbx + 0x218]",
+   "base": "rbx",
+   "index": null,
+   "disp": 536,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe218 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25656,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25691,
+   "mnemonic": "cmp",
+   "ligne": "cmp rcx, qword ptr [rbx + 0x218]",
+   "base": "rbx",
+   "index": null,
+   "disp": 536,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe218 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25715,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rbx + 0x218], r15",
+   "base": "rbx",
+   "index": null,
+   "disp": 536,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe218 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 25733,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x32eb]",
+   "base": "rip",
+   "index": null,
+   "disp": -13035,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  }
+ ]
+}

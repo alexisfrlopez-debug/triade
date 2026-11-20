@@ -1,0 +1,15 @@
+L'ANCRAGE DU TÉMOIN D'ÉPOQUE AU JOURNAL DE TRANSPARENCE
+======================================================
+
+LE JOURNAL DE TRANSPARENCE (la chaîne des époques du coffre) :
+  epoque-D75 (2026-10-28) : h = e9e0f13a215fe7f8c8e4e5bb… — la première lignée du coffre — la phrase de contrôle posée, …
+  epoque-D80 (2026-10-29) : h = 919f498745718f3e31d1e055… — LA ROTATION VÉCUE — la rotation de lignée, la nouvelle phras…
+  epoque-D183 (2026-11-19) : h = 81b1f70e8b59a5fa154ab64e… — LA CÉRÉMONIE VÉCUE DE BOUT EN BOUT — le découpage Shamir 5/3…
+
+LA VÉRIFICATION MACHINE : VERT — la chaîne recalculée de la genèse, chaque chaînon conforme (h_i = sha256(h_{{i-1}} ‖ époque ‖ témoin))
+L'ANCRAGE DU TÉMOIN COURANT : epoque-D183 à la hauteur 3 — la racine 81b1f70e8b59a5fa154ab64e… — la pièce ancrage-temoin-epoque.json
+LE CONTRÔLE NÉGATIF : VERT — une époque réécrite est REFUSÉE nommément : ANCRAGE-DIVERGENT : la chaîne rompue à epoque-D80 — attendu 143dc9f1214f0bdb… rendu 919f498745718f3e… (la réécriture ou l'omission NOMMÉES)
+
+LE DELTA AU MODÈLE DE MENACE (aux deux bords) :
+  — CE QUE L'ANCRAGE AJOUTE (le bord du coffre) : la détection de la RÉÉCRITURE d'époque (la falsification ROMPT la chaîne — le contrôle négatif VÉCU ci-dessus) et de L'OMISSION (la hauteur compte les époques : une époque sautée change la racine) ;
+  — CE QU'IL N'AJOUTE PAS : la preuve de PUBLICATION au monde — la chaîne locale ne prouve pas la diffusion (le dépôt public D220 la porte, l'ancrage l'ASSUME, jamais ne la prétend) ; la confiance dans le secret de cérémonie (le séquestre Shamir 5/3 demeure la garde active — D223).

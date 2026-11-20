@@ -1,0 +1,3 @@
+TRIADE_presentation_20261120_v200.pdf
+La présentation du 20/11 à l'édition v0.20.0 — les cinq points de la vague 9, la table des statuts (H5 en deux verdicts distincts, H4-composer falsifiée), l'état des éditions, la gouvernance vécue — avec les empreintes sha-256 des quatre autres pièces gravées.
+sha256:852da8ecb02570073720c9d5328185d79435755698befd89e7b05740354e0798

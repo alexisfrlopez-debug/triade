@@ -1,0 +1,3 @@
+Livre_du_Coffre_TRIADE_CF1-CF3_v1.5.pdf
+Le Livre du Coffre v1.5 — les références de version alignées (la spec v0.15.6 courante, le manuscrit v0.20.0), le compte d'arbres réel, le runbook D183 au statut vécu, la matrice public + Zenodo.
+sha256:d52dd7a589f891ae9e6029e9759eb03de519b3007e0adad96323b18d6ef17fd5

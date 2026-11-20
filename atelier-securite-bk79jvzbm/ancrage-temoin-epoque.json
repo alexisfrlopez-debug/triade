@@ -1,0 +1,33 @@
+{
+ "journal": [
+  {
+   "id": "epoque-D75",
+   "date": "2026-10-28",
+   "evenement": "la première lignée du coffre — la phrase de contrôle posée, la garde active D81",
+   "temoin": "d36bff0f963b7a5192d1969971b814810e44e871d75e72152beaca6051ed5b05 (le Livre v1.0 — la pièce de la cérémonie)",
+   "h": "e9e0f13a215fe7f8c8e4e5bb295ebc684d908c3b5c790f915839f5b5e2bb79a9"
+  },
+  {
+   "id": "epoque-D80",
+   "date": "2026-10-29",
+   "evenement": "LA ROTATION VÉCUE — la rotation de lignée, la nouvelle phrase, la reconstitution préparée",
+   "temoin": "25be93488d6d6f6273a6259e6e966a0b711cfb4c450d00f79e1d55a180a8baef (le Livre v1.1 — la pièce de la cérémonie D80)",
+   "h": "919f498745718f3e31d1e055045f12d5a94e7d36b9ff9469da2e8dd5041c7c28"
+  },
+  {
+   "id": "epoque-D183",
+   "date": "2026-11-19",
+   "evenement": "LA CÉRÉMONIE VÉCUE DE BOUT EN BOUT — le découpage Shamir 5/3, la répartition sur cinq médias, LA RECONSTITUTION À FROID PROUVÉE DEUX FOIS (D223 : l'état vécu acté)",
+   "temoin": "2b27fb8e2c7e936017f5b64e0f27ba1ad9b3ce823ea49b2d0d47c7e1818cf74 (la console-rescan — la pièce de l'Entrée 368)",
+   "h": "81b1f70e8b59a5fa154ab64e77555b0ab2d5a52cf32455d8bfbf94c29461e0c3"
+  }
+ ],
+ "ancrage": {
+  "regime": "TRIADE-TRANSPARENCE/1",
+  "epoque_courante": "epoque-D183",
+  "hauteur": 3,
+  "temoin": "2b27fb8e2c7e936017f5b64e0f27ba1ad9b3ce823ea49b2d0d47c7e1818cf74 (la console-rescan — la pièce de l'Entrée 368)",
+  "racine": "81b1f70e8b59a5fa154ab64e77555b0ab2d5a52cf32455d8bfbf94c29461e0c3",
+  "note": "le témoin d'époque ANCRÉ — la réécriture rompt la chaîne, l'omission aussi (la hauteur compte les époques)"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "compteurs": {
+  "i110001": 2,
+  "i110004": 4,
+  "i110002": 2,
+  "i110007": 2,
+  "i110005": 2,
+  "i110006": 2,
+  "i110003": 2
+ },
+ "ecart_qemu_plugin": "le qemu-user 1:10.0.13 de Debian est bâti SANS CONFIG_PLUGIN — le compteur plugin/bloc exigera le qemu à plugins du plan (l'écart nommé sur pièces)",
+ "temoins": {
+  "temoin-384.bin": 384,
+  "temoin-196609.bin": 196609
+ },
+ "note": "hook d'instruction Unicorn : CHAQUE entrée de bloc, la cascade interne comprise (loupe-05 : le fichier entier absorbé par blocs de 64 o)"
+}

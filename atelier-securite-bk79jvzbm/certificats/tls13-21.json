@@ -1,0 +1,395 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-21",
+ "acces": [
+  {
+   "adresse": 60258,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x40a0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 16544,
+   "classe": "pile",
+   "preuve": "[rsp+16544] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60285,
+   "mnemonic": "cmp",
+   "ligne": "cmp byte ptr [rdx], 0x17",
+   "base": "rdx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60294,
+   "mnemonic": "movzx",
+   "ligne": "movzx r10d, byte ptr [rdx + 3]",
+   "base": "rdx",
+   "index": null,
+   "disp": 3,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 3 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60303,
+   "mnemonic": "movzx",
+   "ligne": "movzx r11d, byte ptr [rdx + 4]",
+   "base": "rdx",
+   "index": null,
+   "disp": 4,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 4 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60311,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [r8 - 5]",
+   "base": "r8",
+   "index": null,
+   "disp": -5,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + -5 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 60347,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [rcx + 0xb0]",
+   "base": "rcx",
+   "index": null,
+   "disp": 176,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 176 (la structure du contrat I — les bornes au PRE), taille déclarée 216 o"
+  },
+  {
+   "adresse": 60354,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x40], r11",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60359,
+   "mnemonic": "mov",
+   "ligne": "mov r11d, dword ptr [rcx + 0xb8]",
+   "base": "rcx",
+   "index": null,
+   "disp": 184,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 184 (la structure du contrat I — les bornes au PRE), taille déclarée 216 o"
+  },
+  {
+   "adresse": 60366,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rsp + 0x48], r11d",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60371,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [rcx + 0xc0]",
+   "base": "rcx",
+   "index": null,
+   "disp": 192,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 192 (la structure du contrat I — les bornes au PRE), taille déclarée 216 o"
+  },
+  {
+   "adresse": 60381,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x44], r11",
+   "base": "rsp",
+   "index": null,
+   "disp": 68,
+   "classe": "pile",
+   "preuve": "[rsp+68] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60386,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x50], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60391,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x58], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60396,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x60], r9",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60401,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x68], rcx",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60406,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rdx + r8 - 0x10]",
+   "base": "rdx",
+   "index": "r8",
+   "disp": -16,
+   "classe": "nommé",
+   "cause": "la base rdx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-21-ebf6-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 60411,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x30], r10",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60416,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60421,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x38], r10",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60426,
+   "mnemonic": "lea",
+   "ligne": "lea r9, [r8 - 0x15]",
+   "base": "r8",
+   "index": null,
+   "disp": -21,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + -21 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 60430,
+   "mnemonic": "lea",
+   "ligne": "lea r8, [rdx + 5]",
+   "base": "rdx",
+   "index": null,
+   "disp": 5,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 5 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60434,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60439,
+   "mnemonic": "mov",
+   "ligne": "mov r10, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60444,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], r10",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60449,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x28], 5",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60467,
+   "mnemonic": "mov",
+   "ligne": "mov r10, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60472,
+   "mnemonic": "movzx",
+   "ligne": "movzx r11d, byte ptr [r10 + 3]",
+   "base": "r10",
+   "index": null,
+   "disp": 3,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 3 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60481,
+   "mnemonic": "movzx",
+   "ligne": "movzx eax, byte ptr [r10 + 4]",
+   "base": "r10",
+   "index": null,
+   "disp": 4,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 4 (la structure du contrat I — les bornes au PRE), taille déclarée 16640 o"
+  },
+  {
+   "adresse": 60500,
+   "mnemonic": "mov",
+   "ligne": "mov al, byte ptr [rsp + r10 + 0x70]",
+   "base": "rsp",
+   "index": "r10",
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60505,
+   "mnemonic": "mov",
+   "ligne": "mov r10, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60510,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r10], al",
+   "base": "r10",
+   "index": null,
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r10 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-21-ec5e-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 60513,
+   "mnemonic": "mov",
+   "ligne": "mov r10, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60518,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [r11 - 1]",
+   "base": "r11",
+   "index": null,
+   "disp": -1,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-21-ec66-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 60529,
+   "mnemonic": "movzx",
+   "ligne": "movzx edx, byte ptr [rsp + rax + 0x70]",
+   "base": "rsp",
+   "index": "rax",
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60534,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r10 + rax], dl",
+   "base": "r10",
+   "index": "rax",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P4 + index rax ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-21-ec76.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 60544,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 16576"
+  },
+  {
+   "adresse": 60549,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rcx + 0xc0], 1",
+   "base": "rcx",
+   "index": null,
+   "disp": 192,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 192 (la structure du contrat I — les bornes au PRE), taille déclarée 216 o"
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+LA CAMPAGNE VAGUE 9 — L'EXTRACTION (les distributions complètes, jamais tapées)
+
+  editer-H2: n=18, verts 18/18 — total médiane 2452 [q1 1740, q3 3527], réponse médiane 40
+  ajouter-H3: n=18, verts 0/18 — total médiane 6874 [q1 5716, q3 7202], réponse médiane 4095
+  composer-G: n=18, verts 3/18 — total médiane 4846 [q1 4392, q3 6649], réponse médiane 2246
+  localiser-P: n=18, verts 18/18 — total médiane 1103 [q1 804, q3 1530], réponse médiane 52
+
+LES RATIOS AU PLANCHER (le total mesuré ÷ le plancher
+de description minimale, la méthode cl100k_base — la convention de périmètre : le TOTAL (matériau + prose + réponse) rapporté, chaque champ consigné séparément) :
+  editer-H2: médiane 2452 ÷ plancher 18 = 136.22×
+  localiser-P: médiane 1103 ÷ plancher 29 = 38.03×
+  ajouter-H3: médiane 6874 ÷ plancher 1684 = 4.08×
+  composer-G: médiane 4846 ÷ plancher 1684 = 2.88×
+
+LA MÉTHODE DU PLANCHER (nommée) : éditer — la paire de lignes (retrait + pose) du diff réel, tokenisée ; localiser — le pointeur littéral (l'identifiant + l'empreinte) ; ajouter/composer — le corps du bloc (le matériau que TOUTE réponse doit porter : le plancher HAUT de l'unité entière) — la re-tokenisation indépendante à ±1 token (la règle OPT-02 reconduite).

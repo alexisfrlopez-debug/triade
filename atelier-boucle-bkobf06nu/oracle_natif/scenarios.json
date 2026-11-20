@@ -1,0 +1,20 @@
+{
+  "regime": "oracle-natif/1",
+  "graine": 20261120,
+  "scenarios": [
+    {"id": "T0-ouverture-384", "bloc": "loupe.exe", "argv": "loupe.exe temoin-384.bin",
+     "messages": ["WM_SIZE 440x640", "WM_PAINT", "WM_CLOSE", "WM_DESTROY"],
+     "attendu": "POSÉ PAR LE LABO (la base SANE de la campagne — le panneau hashlib du témoin 384 o)"},
+    {"id": "T1-ouverture-196609", "bloc": "loupe.exe", "argv": "loupe.exe temoin-196609.bin",
+     "messages": ["WM_SIZE 440x640", "WM_PAINT", "WM_VSCROLL 3", "WM_PAINT", "WM_CLOSE", "WM_DESTROY"],
+     "attendu": "POSÉ PAR LE LABO (le panneau hashlib du témoin 196 609 o — LE CONDENSÉ DU FICHIER ENTIER)"},
+    {"id": "T2-saisie-sauve", "bloc": "loupe.exe", "argv": "loupe.exe temoin-384.bin",
+     "messages": ["WM_SIZE", "WM_PAINT", "'4' 'd' (l'octet 0x4D au journal)", "Ctrl+S (le disque)",
+                  "WM_PAINT", "WM_CLOSE", "WM_DESTROY"],
+     "attendu": "POSÉ PAR LE LABO (le disque 0x4D écrit à l'offset 0x34)"},
+    {"id": "T3-vecteurs-loupe13", "bloc": "selftest.exe",
+     "argv": "selftest.exe --loupe-13 --graine 20261120",
+     "attendu": "POSÉ PAR LE LABO (les 64 vecteurs dorés de la recherche d'octet)"}
+  ],
+  "note": "les scénarios CONSIGNÉS — les mêmes que la campagne (la base SANE) ; les attendus POSÉS par le labo (les oracles hashlib), jamais par le runner ; le témoin SIGNÉ (Ed25519, la clé du CI)"
+}

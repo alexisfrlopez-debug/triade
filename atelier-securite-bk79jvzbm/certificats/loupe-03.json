@@ -1,0 +1,126 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-03",
+ "acces": [
+  {
+   "adresse": 17285,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x9c74]",
+   "base": "rip",
+   "index": null,
+   "disp": 40052,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17292,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rbx + 0x210], -1",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17302,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rbx + 0x210]",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17309,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x1263]",
+   "base": "rip",
+   "index": null,
+   "disp": -4707,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17319,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x1265]",
+   "base": "rip",
+   "index": null,
+   "disp": -4709,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17330,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [rip + 0xa0e7]",
+   "base": "rip",
+   "index": null,
+   "disp": 41191,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17337,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rax + 0x1000], 0",
+   "base": "rax",
+   "index": null,
+   "disp": 4096,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xf4a0 ∈ JOURNAL [0xe4a0, 0xf4b0)"
+  },
+  {
+   "adresse": 17347,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [rip + 0xa096]",
+   "base": "rip",
+   "index": null,
+   "disp": 41110,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17354,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rax + 0x20], 0",
+   "base": "rax",
+   "index": null,
+   "disp": 32,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe480 ∈ MOTIF [0xe460, 0xe490)"
+  },
+  {
+   "adresse": 17361,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [rip + 0xa028]",
+   "base": "rip",
+   "index": null,
+   "disp": 41000,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17368,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rax], 0",
+   "base": "rax",
+   "index": null,
+   "disp": 0,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe400 ∈ SAISIE [0xe400, 0xe460)"
+  },
+  {
+   "adresse": 17374,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rip + 0x9fdb]",
+   "base": "rip",
+   "index": null,
+   "disp": 40923,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  }
+ ]
+}

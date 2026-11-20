@@ -1,0 +1,157 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-08",
+ "acces": [
+  {
+   "adresse": 18941,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [rip - 0x29b4]",
+   "base": "rip",
+   "index": null,
+   "disp": -10676,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 18967,
+   "mnemonic": "movzx",
+   "ligne": "movzx eax, byte ptr [r11 + rax]",
+   "base": "r11",
+   "index": "rax",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-08-4a17-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 18972,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + r10], al",
+   "base": "r13",
+   "index": "r10",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index r10 ∈ [0, 8) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 18994,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + rax], 0x20",
+   "base": "r13",
+   "index": "rax",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index rax ∈ [0, 60) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 19012,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + rax], 0x20",
+   "base": "r13",
+   "index": "rax",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index rax ∈ [0, 76) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 19025,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + 0x4c], 0",
+   "base": "r13",
+   "index": null,
+   "disp": 76,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 76 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 19038,
+   "mnemonic": "lea",
+   "ligne": "lea eax, [r10 + r10*2 + 0xa]",
+   "base": "r10",
+   "index": "r10",
+   "disp": 10,
+   "classe": "nommé",
+   "cause": "la base r10 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-08-4a5e-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 19051,
+   "mnemonic": "movzx",
+   "ligne": "movzx edx, byte ptr [rbx + r10]",
+   "base": "rbx",
+   "index": "r10",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P1 + index r10 ∈ [0, 16) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 19064,
+   "mnemonic": "movzx",
+   "ligne": "movzx edx, byte ptr [r11 + rdx]",
+   "base": "r11",
+   "index": "rdx",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-08-4a78-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 19069,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + rax], dl",
+   "base": "r13",
+   "index": "rax",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index rax ∈ [11, 59) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 19074,
+   "mnemonic": "movzx",
+   "ligne": "movzx edx, byte ptr [r11 + rcx]",
+   "base": "r11",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-08-4a82-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 19079,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + rax + 1], dl",
+   "base": "r13",
+   "index": "rax",
+   "disp": 1,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index rax ∈ [11, 59) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 19101,
+   "mnemonic": "movzx",
+   "ligne": "movzx edx, byte ptr [rbx + r10]",
+   "base": "rbx",
+   "index": "r10",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P1 + index r10 ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/loupe-08-4a9d.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 19120,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r13 + r10 + 0x3c], dl",
+   "base": "r13",
+   "index": "r10",
+   "disp": 60,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P3 + index r10 ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/loupe-08-4ab0.smt2 (UNSAT)"
+  }
+ ]
+}

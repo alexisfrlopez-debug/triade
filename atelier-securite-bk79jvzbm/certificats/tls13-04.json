@@ -1,0 +1,202 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-04",
+ "acces": [
+  {
+   "adresse": 49934,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [rbx + 0x60]",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49937,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + rax + 0x20]",
+   "base": "rbx",
+   "index": "rax",
+   "disp": 32,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-04-c311-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49942,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [rdi], 0x80",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base rdi est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-04-c316-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49950,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + rax + 0x21]",
+   "base": "rbx",
+   "index": "rax",
+   "disp": 33,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-04-c31e-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49964,
+   "mnemonic": "rep stosb",
+   "ligne": "rep stosb byte ptr [rdi], al",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "nommé",
+   "cause": "la base rdi est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-04-c32c-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49968,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + rax + 0x21]",
+   "base": "rbx",
+   "index": "rax",
+   "disp": 33,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P1 + index rax ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-04-c330.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 49982,
+   "mnemonic": "rep stosb",
+   "ligne": "rep stosb byte ptr [rdi], al",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P1 + index rax ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-04-c33e.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 49984,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x60], 0x40",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49994,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rbx + 0x20]",
+   "base": "rbx",
+   "index": null,
+   "disp": 32,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50003,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + 0x20]",
+   "base": "rbx",
+   "index": null,
+   "disp": 32,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50014,
+   "mnemonic": "rep stosb",
+   "ligne": "rep stosb byte ptr [rdi], al",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50016,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rbx + 0x68]",
+   "base": "rbx",
+   "index": null,
+   "disp": 104,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 104 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50027,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rbx + 0x58], rax",
+   "base": "rbx",
+   "index": null,
+   "disp": 88,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 88 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50031,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x60], 0x40",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50041,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rbx + 0x20]",
+   "base": "rbx",
+   "index": null,
+   "disp": 32,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 50055,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [rbx + rcx]",
+   "base": "rbx",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P1 + index rcx ∈ [0, 32) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 50060,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rdi], eax",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  }
+ ]
+}

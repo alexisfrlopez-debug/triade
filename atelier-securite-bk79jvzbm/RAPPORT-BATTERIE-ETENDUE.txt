@@ -1,0 +1,70 @@
+LE RAPPORT DE LA BATTERIE ÉTENDUE — H2 de bk79jvzbm (la vague 9)
+====================================================================
+
+LA SÉQUENCE VÉCUE (la lettre de l'instruction, l'ordre exigé) :
+
+(1) LA CONSOLE v0.14.0 REPRODUITE AVANT TOUTE NOUVELLE INJECTION : le
+    re-jeu complet aux MÊMES graines (20261111, le MÊME ordre de
+    tirage, la cascade K1 round-trip + K2 signature + K3 composition)
+    — **776/832 tués (93,3 %), 56 vivants : LA CONSOLE v0.14.0
+    REPRODUITE À L'IDENTIQUE** (la pièce : console-v0140-rejeu.txt).
+
+(2) LA CONSOLE COURANTE : la cascade + LA BATTERIE K4 (les scénarios
+    d'injection de la vague 7, rejeu_fautes : F1 l'ouverture manquée,
+    F2-F4 le mode ALLER, F5 CHERCHER jusqu'à la fin, F6 le journal
+    plein, F7 la ligne incomplète au fond, F8 les touches aux bornes,
+    F10 le verrouillé/refusé, F11 SUPPR/ÉCHAP, F9 les fautes par bloc)
+    — **811/832 tués (97,5 %), 21 vivants : LA CONSOLE COURANTE
+    REPRODUITE** (la pièce : console-batterie-etendue.txt — le même
+    score que la vague 8, AUCUN tueur affaibli).
+
+(3) LES NOUVEAUX SCÉNARIOS (K5 — les DEUX nommés par la vague 8) :
+    K5a la saisie à la DERNIÈRE CELLULE de la fenêtre puis le
+    défilement ; K5b la saisie au bord puis le RECADRAGE ; K5c le saut
+    de curseur (SB_THUMBPOSITION) après la saisie au bord. RÉSULTAT :
+    les TROIS tuables nommés (loupe-11 @0x137, loupe-11 @0x1d5,
+    loupe-16 @0x21e) RÉSISTENT aux scénarios nommés.
+
+(4) LA PREUVE MÉCANIQUE PAR SWEEP : la CLASSE NOMMÉE ENTIÈRE balayée —
+    la saisie à TROIS cellules du bord (bord, bord−1, bord−2) × DIX
+    défilements (ligne bas/haut, page bas/haut, le curseur à CINQ
+    positions [0, 7, 30, 60, 100], home, end) = **30 scénarios** —
+    les TROIS mutants : **ZÉRO ÉCART sur les 30** (la sortie, le
+    disque, l'écran, la fenêtre : l'observable complet identique au
+    sain). LA CAUSE RACINE (lue de la notation) : loupe-11 @0x137
+    mute « shl eax, 4 » en « shl eax, 0xb7 » — la position du curseur
+    de défilement multipliée par 2^23 au lieu de 16 — MAIS LE CLAMP
+    de bornes du défilement (le même cmp/jbe que le plan) RAPPORTTE la
+    valeur mutée À LA MÊME POSITION FINALE : la mutation est ABSORBÉE
+    PAR LE CLAMP (l'intermédiaire divergent, l'état final IDENTIQUE) ;
+    loupe-11 @0x1d5 (le drapeau redraw de SetScrollInfo) et loupe-16
+    @0x21e (la comparaison du recadrage) : la même absorption —
+    l'observable du harnais ne porte PAS la différence.
+
+LA RE-CLASSIFICATION (l'honnêteté : l'hypothèse de la vague 8 corrigée
+par la preuve) : les TROIS « TUABLES-RESTANTS » deviennent
+**ÉQUIVALENTS-PROUVÉS-PAR-SWEEP** — la preuve mécanique : 30
+scénarios de la classe nommée, zéro écart ; la cause : l'absorption
+par le clamp (le mécanisme nommé). La vague 8 les nommait tuables
+COMME HYPOTHÈSE (« le scénario qui l'exerce est NOMMÉ ») — le sweep
+est la PREUVE que le harnais ne peut les distinguer : ils rejoignent
+la classe des équivalents-au-harnais (la distinction terrain : le
+VRAI Windows distinguerait le drapeau redraw — la limite du harnais
+demeure nommée).
+
+LES SCORES (côte à côte, JAMAIS fusionnés) :
+  — LE BRUT      : 811/832 tués (97,5 %) — 21 vivants ;
+  — L'AJUSTÉ     : les équivalents exclus du dénominateur — les 12
+                   prouvés de la vague 8 + les 3 prouvés par le sweep
+                   = 15 exclus : **811/817 = 99,3 %** (les 6 restants :
+                   limites du harnais nommées par la vague 8 — le shim
+                   aveugle, la voie de l'échec jamais servie).
+
+LES PIÈCES : console-v0140-rejeu.txt (la reproduction 776/832),
+console-batterie-etendue.txt (la cascade+K4+K5 : 811/832), le sweep
+(30 scénarios × 3 mutants : zéro écart — la preuve au journal de
+session), batterie-etendue-checkpoint (le point de reprise : les
+tirages REJOUÉS à l'identique, jamais un tirage nouveau).
+
+AUCUN TUEUR AFFAIBLI : la batterie n'a fait qu'ÉTENDRE (les scénarios
+K5 AJOUTÉS, les scénarios K1-K4 INTACTS, la cascade INTACTE).

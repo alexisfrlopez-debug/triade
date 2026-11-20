@@ -1,0 +1,200 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-25",
+ "acces": [
+  {
+   "adresse": 63753,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x28], rcx",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 176"
+  },
+  {
+   "adresse": 63758,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x30], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 176"
+  },
+  {
+   "adresse": 63763,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x38], r8",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 176"
+  },
+  {
+   "adresse": 63768,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x60], r9",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 176"
+  },
+  {
+   "adresse": 63779,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], r8",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 176"
+  },
+  {
+   "adresse": 63786,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 176"
+  },
+  {
+   "adresse": 63791,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], r10",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 176"
+  },
+  {
+   "adresse": 63796,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 176"
+  },
+  {
+   "adresse": 63806,
+   "mnemonic": "mov",
+   "ligne": "mov r8, qword ptr [rsp + 0x30]",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 176"
+  },
+  {
+   "adresse": 63826,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rsp + 0x60], 1",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 176"
+  },
+  {
+   "adresse": 63836,
+   "mnemonic": "mov",
+   "ligne": "mov r8, qword ptr [rsp + 0x38]",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 176"
+  },
+  {
+   "adresse": 63844,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8]",
+   "base": "r8",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 63847,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 176"
+  },
+  {
+   "adresse": 63855,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 8]",
+   "base": "r8",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 63859,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 176"
+  },
+  {
+   "adresse": 63867,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 0x10]",
+   "base": "r8",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 63871,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 176"
+  },
+  {
+   "adresse": 63879,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [r8 + 0x18]",
+   "base": "r8",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 63883,
+   "mnemonic": "xor",
+   "ligne": "xor r11, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 176"
+  }
+ ]
+}

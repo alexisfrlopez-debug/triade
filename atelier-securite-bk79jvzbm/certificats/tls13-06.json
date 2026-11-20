@@ -1,0 +1,76 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-06",
+ "acces": [
+  {
+   "adresse": 50637,
+   "mnemonic": "mov",
+   "ligne": "mov rbx, qword ptr [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 192"
+  },
+  {
+   "adresse": 50664,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x28], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 192"
+  },
+  {
+   "adresse": 50673,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x30], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 192"
+  },
+  {
+   "adresse": 50682,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x38], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 192"
+  },
+  {
+   "adresse": 50691,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x40], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 192"
+  },
+  {
+   "adresse": 50710,
+   "mnemonic": "lea",
+   "ligne": "lea r12, [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 192"
+  },
+  {
+   "adresse": 50721,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], rbx",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 192"
+  }
+ ]
+}

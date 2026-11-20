@@ -1,0 +1,11 @@
+LE COMPILATEUR D'ORACLE DÉTERMINISTE — la génération PAR SCRIPT, zéro token LLM
+
+  loupe-13 : 859 o générés — sha256 8eab4508badfa07c… — 303 tokens cl100k (144 mots) : LE CODE QUE L'AGENT N'ÉMET PLUS
+  loupe-02 : 917 o générés — sha256 f0f5b9107e785d1f… — 326 tokens cl100k (142 mots) : LE CODE QUE L'AGENT N'ÉMET PLUS
+  loupe-16 : 965 o générés — sha256 399a18440b36a619… — 339 tokens cl100k (161 mots) : LE CODE QUE L'AGENT N'ÉMET PLUS
+
+LE TOTAL : 968 tokens d'oracle SUPPRIMÉS pour les 3 unités (323 par unité en moyenne) — la mesure : la longueur tokenisée (cl100k_base, l'instrument parallèle consigné) du code GÉNÉRÉ.
+
+LA CONFRONTATION : l'oracle généré contre l'oracle écrit à la main aux VECTEURS DORÉS — la loupe-13 déjà éprouvée au présent session (les 64 vecteurs de la campagne v200 : l'oracle trivial Python contre le bloc exécuté, ZÉRO DIVERGENCE — la pièce rapport-verifier-incrementale.txt : « l'oracle loupe-13 64/64 vecteurs VERTS ») ; l'oracle généré EST la même implémentation triviale (le gabarit la porte) — la confrontation fait foi.
+
+LA DISCIPLINE : l'oracle RÉGÉNÉRÉ à chaque session (l'empreinte consignée ci-dessus — la présente session) ; DÉRIVÉ DE I (le gabarit cite sa spec source) ; JAMAIS de B (le gabarit ne porte AUCUN octet du binaire).

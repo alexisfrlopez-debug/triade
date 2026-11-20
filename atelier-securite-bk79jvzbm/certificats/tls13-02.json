@@ -1,0 +1,312 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-02",
+ "acces": [
+  {
+   "adresse": 49305,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp], rdi",
+   "base": "rsp",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "[rsp+0] ≤ cadre 424"
+  },
+  {
+   "adresse": 49309,
+   "mnemonic": "lea",
+   "ligne": "lea rbp, [rip - 0x91a4]",
+   "base": "rip",
+   "index": null,
+   "disp": -37284,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 49319,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [rsi + r15*4]",
+   "base": "rsi",
+   "index": "r15",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P2 + index r15 ∈ [0, 16) — la taille au PRE de I borne l'accès"
+  },
+  {
+   "adresse": 49325,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rsp + r15*4 + 0x20], eax",
+   "base": "rsp",
+   "index": "r15",
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 424"
+  },
+  {
+   "adresse": 49339,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [rsp + r15*4 + 0x18]",
+   "base": "rsp",
+   "index": "r15",
+   "disp": 24,
+   "classe": "pile",
+   "preuve": "[rsp+24] ≤ cadre 424"
+  },
+  {
+   "adresse": 49361,
+   "mnemonic": "mov",
+   "ligne": "mov r12d, dword ptr [rsp + r15*4 - 0x1c]",
+   "base": "rsp",
+   "index": "r15",
+   "disp": -28,
+   "classe": "pile",
+   "preuve": "[rsp-28] ≤ cadre 424"
+  },
+  {
+   "adresse": 49389,
+   "mnemonic": "add",
+   "ligne": "add edx, dword ptr [rsp + r15*4 + 4]",
+   "base": "rsp",
+   "index": "r15",
+   "disp": 4,
+   "classe": "pile",
+   "preuve": "[rsp+4] ≤ cadre 424"
+  },
+  {
+   "adresse": 49397,
+   "mnemonic": "add",
+   "ligne": "add edx, dword ptr [rsp + r15*4 - 0x20]",
+   "base": "rsp",
+   "index": "r15",
+   "disp": -32,
+   "classe": "pile",
+   "preuve": "[rsp-32] ≤ cadre 424"
+  },
+  {
+   "adresse": 49402,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rsp + r15*4 + 0x20], edx",
+   "base": "rsp",
+   "index": "r15",
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 424"
+  },
+  {
+   "adresse": 49416,
+   "mnemonic": "mov",
+   "ligne": "mov r14, qword ptr [rsp]",
+   "base": "rsp",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "[rsp+0] ≤ cadre 424"
+  },
+  {
+   "adresse": 49420,
+   "mnemonic": "mov",
+   "ligne": "mov eax, dword ptr [r14]",
+   "base": "r14",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49423,
+   "mnemonic": "mov",
+   "ligne": "mov ebx, dword ptr [r14 + 4]",
+   "base": "r14",
+   "index": null,
+   "disp": 4,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 4 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49427,
+   "mnemonic": "mov",
+   "ligne": "mov ecx, dword ptr [r14 + 8]",
+   "base": "r14",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49431,
+   "mnemonic": "mov",
+   "ligne": "mov edx, dword ptr [r14 + 0xc]",
+   "base": "r14",
+   "index": null,
+   "disp": 12,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 12 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49435,
+   "mnemonic": "mov",
+   "ligne": "mov esi, dword ptr [r14 + 0x10]",
+   "base": "r14",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49439,
+   "mnemonic": "mov",
+   "ligne": "mov edi, dword ptr [r14 + 0x14]",
+   "base": "r14",
+   "index": null,
+   "disp": 20,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 20 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49443,
+   "mnemonic": "mov",
+   "ligne": "mov r8d, dword ptr [r14 + 0x18]",
+   "base": "r14",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49447,
+   "mnemonic": "mov",
+   "ligne": "mov r9d, dword ptr [r14 + 0x1c]",
+   "base": "r14",
+   "index": null,
+   "disp": 28,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 28 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49505,
+   "mnemonic": "add",
+   "ligne": "add r10d, dword ptr [rbp + r15*4]",
+   "base": "rbp",
+   "index": "r15",
+   "disp": 0,
+   "classe": "plan-garde",
+   "preuve": "index r15 ∈ [0, 64) (l'invariant de boucle ou de champ du layout), cible 0x2f00 + 64×4 ≤ fin K[64] 0x3000"
+  },
+  {
+   "adresse": 49510,
+   "mnemonic": "mov",
+   "ligne": "mov r12d, dword ptr [rsp + r15*4 + 0x20]",
+   "base": "rsp",
+   "index": "r15",
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 424"
+  },
+  {
+   "adresse": 49610,
+   "mnemonic": "mov",
+   "ligne": "mov r14, qword ptr [rsp]",
+   "base": "rsp",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "[rsp+0] ≤ cadre 424"
+  },
+  {
+   "adresse": 49614,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14], eax",
+   "base": "r14",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49617,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 4], ebx",
+   "base": "r14",
+   "index": null,
+   "disp": 4,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 4 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49621,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 8], ecx",
+   "base": "r14",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49625,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 0xc], edx",
+   "base": "r14",
+   "index": null,
+   "disp": 12,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 12 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49629,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 0x10], esi",
+   "base": "r14",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49633,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 0x14], edi",
+   "base": "r14",
+   "index": null,
+   "disp": 20,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 20 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49637,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 0x18], r8d",
+   "base": "r14",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49641,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [r14 + 0x1c], r9d",
+   "base": "r14",
+   "index": null,
+   "disp": 28,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 28 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  }
+ ]
+}

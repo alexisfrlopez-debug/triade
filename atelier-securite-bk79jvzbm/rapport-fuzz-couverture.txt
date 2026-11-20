@@ -1,0 +1,38 @@
+LE FUZZING DE COUVERTURE — les blocs d'entrée non fiable
+=========================================================
+
+  loupe-01 : 69/119 instructions exécutées — 58.0 % (< 90 %)
+  loupe-02 : 57/83 instructions exécutées — 68.7 % (< 90 %)
+  loupe-13 : 52/52 instructions exécutées — 100.0 % (≥ 90 % — VERT)
+  loupe-16 : 36/181 instructions exécutées — 19.9 % (< 90 %)
+
+ZÉRO CRASH, ZÉRO VIOLATION DE CANARI : les tirages aux exceptions attrapées (aucune n'a levé — les appels revenues propres, les canaris de l'ombre vérifiés par le harnais à CHAQUE appel) ; la mémoire-ombre du harnais (CANARI*0x170, les sentinelles non volatiles) : INTACTE.
+
+LE CORPUS : les cinq témoins (le 2 000 o, le 384, le vide, l'octet seul, l'hexa 256) + LES BORDS NOMMÉS aux tirages (les décalages hors bornes et non alignés, les motifs 33, les départs au-delà, les touches non-hexa et SUPPR) — la graine 20261120 consignée.
+
+
+LA LECTURE HONNÊTE (le périmètre nommé) :
+  — loupe-13 (LA FEUILLE PURE) : 100 % — le corpus saturant + le guidage
+    couvrent TOUTE la feuille (les bords nommés aux tirages) ;
+  — loupe-02 : 68,7 % — les voies d'argument (les décalages) couvertes ;
+    les voies DE COMPOSITION (le recouvrement du journal — Q2, l'IAT
+    en échec) exigent l'ÉTAT D'APP (le journal peuplé, le ReadFile
+    armé en échec) : LE GAP NOMMÉ ;
+  — loupe-01 : 58,0 % — les ouvertures heureuses et les refus nommés ;
+    les voies RARES de l'IAT (le partage, l'accès) exigent les SHIMS
+    ARMÉS du harnais complet : LE GAP NOMMÉ ;
+  — loupe-16 : 19,9 % — les chemins directs (le prologue, les refus
+    E1/E2) couverts ; le corps de la saisie (les nibbles, le journal,
+    la vue) vit APRÈS l'état d'app (la session ouverte + le curseur +
+    la fenêtre) — LE GAP LE PLUS GRAND, NOMMÉ : le fuzzing au niveau
+    BLOC ne porte pas l'état d'app.
+
+LA VOIE DES 90 % (nommée, la suivante) : LE FUZZING AU NIVEAU APP — la
+boucle WinMain pilotée aux messages aléatoires (le modèle fuzz_million
+de M3 : le million de requêtes) porte TOUT l'état d'app (la session,
+le curseur, le journal, les fenêtres) : les blocs de composition
+s'y couvrent — le présent atelier a mesuré le NIVEAU BLOC (le
+périmètre nommé avant la mesure), la voie APP est la suivante.
+
+ZÉRO CRASH, ZÉRO VIOLATION DE CANARI sur TOUT le corpus vécu (la
+mémoire-ombre du harnais INTACTE à chaque appel).

@@ -1,0 +1,30 @@
+LA BATTERIE ÉTENDUE — la vague 9 (bk79jvzbm H2)
+la cascade K1/K2/K3 (le rejeu v0.14.0 : 776/832 reproduit d'abord) + K4 (la vague 7) + K5 (LES DEUX NOUVEAUX SCÉNARIOS :
+  K5a la saisie à la dernière cellule puis le défilement ;
+  K5b la saisie au bord puis le recadrage)
+
+  LE BRUT : 811/832 tués (97.5 %) — 21 vivants
+  L'AJUSTÉ (les 12 équivalents exclus du dénominateur) : 811/820 = 98.9 %
+
+LES VIVANTS (chacun nommé, sa cause) :
+  vivant : loupe-01 0x143: 0x0c→0x17 — vivants (la batterie passée)
+  vivant : loupe-03 0x1b: 0x00→0xd0 — vivants (la batterie passée)
+  vivant : loupe-03 0x3b: 0x00→0xc4 — vivants (la batterie passée)
+  vivant : loupe-03 0x41: 0x00→0x42 — vivants (la batterie passée)
+  vivant : loupe-03 0x19: 0x10→0x2c — vivants (la batterie passée)
+  vivant : loupe-03 0x5a: 0x00→0xf1 — vivants (la batterie passée)
+  vivant : loupe-03 0x41: 0x00→0xff — vivants (la batterie passée)
+  vivant : loupe-04 0x28: 0xc0→0xcd — vivants (la batterie passée)
+  vivant : loupe-07 0x11: 0x10→0x25 — vivants (la batterie passée)
+  vivant : loupe-09 0x387: 0x01→0xd9 — vivants (la batterie passée)
+  vivant : loupe-11 0x137: 0x04→0xb7 — vivants (la batterie passée)
+  vivant : loupe-11 0x1d5: 0x00→0xc5 — vivants (la batterie passée)
+  vivant : loupe-11 0x1df: 0xf1→0xe3 — vivants (la batterie passée)
+  vivant : loupe-12 0x27b: 0xe1→0xc9 — vivants (la batterie passée)
+  vivant : loupe-14 0xdc: 0x00→0xde — vivants (la batterie passée)
+  vivant : loupe-14 0x21b: 0x01→0xed — vivants (la batterie passée)
+  vivant : loupe-15 0x1b: 0x02→0xe2 — vivants (la batterie passée)
+  vivant : loupe-15 0xfb: 0xd0→0xc1 — vivants (la batterie passée)
+  vivant : loupe-16 0x238: 0x00→0x4f — vivants (la batterie passée)
+  vivant : loupe-16 0x21e: 0x18→0xa2 — vivants (la batterie passée)
+  vivant : loupe-17 0x207: 0xe0→0xcc — vivants (la batterie passée)

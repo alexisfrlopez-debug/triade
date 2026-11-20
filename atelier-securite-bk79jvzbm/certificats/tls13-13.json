@@ -1,0 +1,3328 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-13",
+ "acces": [
+  {
+   "adresse": 53517,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rdx]",
+   "base": "rdx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53533,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1b0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 432,
+   "classe": "pile",
+   "preuve": "[rsp+432] ≤ cadre 624"
+  },
+  {
+   "adresse": 53541,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rdx + 8]",
+   "base": "rdx",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53545,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1b8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 440,
+   "classe": "pile",
+   "preuve": "[rsp+440] ≤ cadre 624"
+  },
+  {
+   "adresse": 53553,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rdx + 0x10]",
+   "base": "rdx",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53557,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1c0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 448,
+   "classe": "pile",
+   "preuve": "[rsp+448] ≤ cadre 624"
+  },
+  {
+   "adresse": 53565,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rdx + 0x18]",
+   "base": "rdx",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53595,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1c8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 456,
+   "classe": "pile",
+   "preuve": "[rsp+456] ≤ cadre 624"
+  },
+  {
+   "adresse": 53603,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r8]",
+   "base": "r8",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53606,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1d0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 464,
+   "classe": "pile",
+   "preuve": "[rsp+464] ≤ cadre 624"
+  },
+  {
+   "adresse": 53614,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r8 + 8]",
+   "base": "r8",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53618,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1d8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 472,
+   "classe": "pile",
+   "preuve": "[rsp+472] ≤ cadre 624"
+  },
+  {
+   "adresse": 53626,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r8 + 0x10]",
+   "base": "r8",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53630,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1e0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 480,
+   "classe": "pile",
+   "preuve": "[rsp+480] ≤ cadre 624"
+  },
+  {
+   "adresse": 53638,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r8 + 0x18]",
+   "base": "r8",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 53655,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1e8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 488,
+   "classe": "pile",
+   "preuve": "[rsp+488] ≤ cadre 624"
+  },
+  {
+   "adresse": 53663,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [rip + 0x2d7a]",
+   "base": "rip",
+   "index": null,
+   "disp": 11642,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 53670,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11]",
+   "base": "r11",
+   "index": null,
+   "disp": 0,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xff20 ∈ .data session [0xf000, 0x11000)"
+  },
+  {
+   "adresse": 53673,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1f0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 496,
+   "classe": "pile",
+   "preuve": "[rsp+496] ≤ cadre 624"
+  },
+  {
+   "adresse": 53681,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 8]",
+   "base": "r11",
+   "index": null,
+   "disp": 8,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xff28 ∈ .data session [0xf000, 0x11000)"
+  },
+  {
+   "adresse": 53685,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1f8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 504,
+   "classe": "pile",
+   "preuve": "[rsp+504] ≤ cadre 624"
+  },
+  {
+   "adresse": 53693,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 0x10]",
+   "base": "r11",
+   "index": null,
+   "disp": 16,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xff30 ∈ .data session [0xf000, 0x11000)"
+  },
+  {
+   "adresse": 53697,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x200], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 512,
+   "classe": "pile",
+   "preuve": "[rsp+512] ≤ cadre 624"
+  },
+  {
+   "adresse": 53705,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 0x18]",
+   "base": "r11",
+   "index": null,
+   "disp": 24,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xff38 ∈ .data session [0xf000, 0x11000)"
+  },
+  {
+   "adresse": 53709,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x208], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 520,
+   "classe": "pile",
+   "preuve": "[rsp+520] ≤ cadre 624"
+  },
+  {
+   "adresse": 53727,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x1d0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 464,
+   "classe": "pile",
+   "preuve": "[rsp+464] ≤ cadre 624"
+  },
+  {
+   "adresse": 53738,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 624"
+  },
+  {
+   "adresse": 53743,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x1d0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 464,
+   "classe": "pile",
+   "preuve": "[rsp+464] ≤ cadre 624"
+  },
+  {
+   "adresse": 53755,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x1d8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 472,
+   "classe": "pile",
+   "preuve": "[rsp+472] ≤ cadre 624"
+  },
+  {
+   "adresse": 53773,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x28], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 624"
+  },
+  {
+   "adresse": 53778,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x1d8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 472,
+   "classe": "pile",
+   "preuve": "[rsp+472] ≤ cadre 624"
+  },
+  {
+   "adresse": 53790,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x1e0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 480,
+   "classe": "pile",
+   "preuve": "[rsp+480] ≤ cadre 624"
+  },
+  {
+   "adresse": 53808,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x30], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 624"
+  },
+  {
+   "adresse": 53813,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x1e0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 480,
+   "classe": "pile",
+   "preuve": "[rsp+480] ≤ cadre 624"
+  },
+  {
+   "adresse": 53825,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x1e8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 488,
+   "classe": "pile",
+   "preuve": "[rsp+488] ≤ cadre 624"
+  },
+  {
+   "adresse": 53843,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x38], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 624"
+  },
+  {
+   "adresse": 53848,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x1e8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 488,
+   "classe": "pile",
+   "preuve": "[rsp+488] ≤ cadre 624"
+  },
+  {
+   "adresse": 53863,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x40], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 624"
+  },
+  {
+   "adresse": 53868,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x48], 1",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 53877,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x50], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 53886,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x58], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 53895,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x60], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 53904,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x68], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 53913,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x70], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 53922,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x78], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 53931,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x80], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 53943,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x88], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 53955,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x90], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 53967,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xc0], 1",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 53979,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xc8], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 53991,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xd0], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 54003,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xd8], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 54015,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xe0], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 54027,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xe8], 0x1db41",
+   "base": "rsp",
+   "index": null,
+   "disp": 232,
+   "classe": "pile",
+   "preuve": "[rsp+232] ≤ cadre 624"
+  },
+  {
+   "adresse": 54039,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xf0], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 240,
+   "classe": "pile",
+   "preuve": "[rsp+240] ≤ cadre 624"
+  },
+  {
+   "adresse": 54051,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xf8], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 248,
+   "classe": "pile",
+   "preuve": "[rsp+248] ≤ cadre 624"
+  },
+  {
+   "adresse": 54063,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x100], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 256,
+   "classe": "pile",
+   "preuve": "[rsp+256] ≤ cadre 624"
+  },
+  {
+   "adresse": 54075,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x108], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 264,
+   "classe": "pile",
+   "preuve": "[rsp+264] ≤ cadre 624"
+  },
+  {
+   "adresse": 54087,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 624"
+  },
+  {
+   "adresse": 54092,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x98], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54100,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 624"
+  },
+  {
+   "adresse": 54105,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xa0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 54113,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x30]",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 624"
+  },
+  {
+   "adresse": 54118,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xa8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 54126,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x38]",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 624"
+  },
+  {
+   "adresse": 54131,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 54139,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 624"
+  },
+  {
+   "adresse": 54144,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 54168,
+   "mnemonic": "movzx",
+   "ligne": "movzx eax, byte ptr [rsp + rax + 0x1b0]",
+   "base": "rsp",
+   "index": "rax",
+   "disp": 432,
+   "classe": "pile",
+   "preuve": "[rsp+432] ≤ cadre 624"
+  },
+  {
+   "adresse": 54205,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54210,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54221,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x48], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54226,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x98], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54234,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 54239,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 54250,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x50], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 54255,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xa0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 54263,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 54268,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xa8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 54279,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x58], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 54284,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xa8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 54292,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 54297,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 54308,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x60], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 54313,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xb0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 54321,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 54326,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xb8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 54337,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x68], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 54342,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xb8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 54350,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 54355,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 54366,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x70], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 54371,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xc0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 54379,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x78]",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 54384,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xc8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 54395,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x78], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 54400,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xc8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 54408,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x80]",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 54416,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xd0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 54427,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x80], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 54435,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xd0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 54443,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x88]",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 54451,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xd8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 54462,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x88], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 54470,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xd8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 54478,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x90]",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 54486,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xe0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 54497,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x90], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 54505,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xe0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 54516,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54521,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x110], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54529,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 54534,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x118], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 280,
+   "classe": "pile",
+   "preuve": "[rsp+280] ≤ cadre 624"
+  },
+  {
+   "adresse": 54542,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 54547,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x120], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 288,
+   "classe": "pile",
+   "preuve": "[rsp+288] ≤ cadre 624"
+  },
+  {
+   "adresse": 54555,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 54560,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x128], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 296,
+   "classe": "pile",
+   "preuve": "[rsp+296] ≤ cadre 624"
+  },
+  {
+   "adresse": 54568,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 54573,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x130], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 304,
+   "classe": "pile",
+   "preuve": "[rsp+304] ≤ cadre 624"
+  },
+  {
+   "adresse": 54581,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54589,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 54599,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54604,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 54614,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54622,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x138], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 54630,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 54638,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x140], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 320,
+   "classe": "pile",
+   "preuve": "[rsp+320] ≤ cadre 624"
+  },
+  {
+   "adresse": 54646,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0xa8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 54654,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x148], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 328,
+   "classe": "pile",
+   "preuve": "[rsp+328] ≤ cadre 624"
+  },
+  {
+   "adresse": 54662,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 54670,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x150], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 336,
+   "classe": "pile",
+   "preuve": "[rsp+336] ≤ cadre 624"
+  },
+  {
+   "adresse": 54678,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0xb8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 54686,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x158], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 344,
+   "classe": "pile",
+   "preuve": "[rsp+344] ≤ cadre 624"
+  },
+  {
+   "adresse": 54694,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 54702,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 54715,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54723,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 54736,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 54744,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54754,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 54762,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54775,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54780,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x160], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 54788,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 54793,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x168], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 360,
+   "classe": "pile",
+   "preuve": "[rsp+360] ≤ cadre 624"
+  },
+  {
+   "adresse": 54801,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 54806,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x170], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 368,
+   "classe": "pile",
+   "preuve": "[rsp+368] ≤ cadre 624"
+  },
+  {
+   "adresse": 54814,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 54819,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x178], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 376,
+   "classe": "pile",
+   "preuve": "[rsp+376] ≤ cadre 624"
+  },
+  {
+   "adresse": 54827,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 54832,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x180], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 624"
+  },
+  {
+   "adresse": 54840,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 54848,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 54861,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54869,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54882,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 54890,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x48], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54895,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x168]",
+   "base": "rsp",
+   "index": null,
+   "disp": 360,
+   "classe": "pile",
+   "preuve": "[rsp+360] ≤ cadre 624"
+  },
+  {
+   "adresse": 54903,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x50], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 54908,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x170]",
+   "base": "rsp",
+   "index": null,
+   "disp": 368,
+   "classe": "pile",
+   "preuve": "[rsp+368] ≤ cadre 624"
+  },
+  {
+   "adresse": 54916,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x58], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 54921,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x178]",
+   "base": "rsp",
+   "index": null,
+   "disp": 376,
+   "classe": "pile",
+   "preuve": "[rsp+376] ≤ cadre 624"
+  },
+  {
+   "adresse": 54929,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x60], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 54934,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 624"
+  },
+  {
+   "adresse": 54942,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x68], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 54947,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 54952,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 54965,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 54973,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x188], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 392,
+   "classe": "pile",
+   "preuve": "[rsp+392] ≤ cadre 624"
+  },
+  {
+   "adresse": 54981,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x168]",
+   "base": "rsp",
+   "index": null,
+   "disp": 360,
+   "classe": "pile",
+   "preuve": "[rsp+360] ≤ cadre 624"
+  },
+  {
+   "adresse": 54989,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x190], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 400,
+   "classe": "pile",
+   "preuve": "[rsp+400] ≤ cadre 624"
+  },
+  {
+   "adresse": 54997,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x170]",
+   "base": "rsp",
+   "index": null,
+   "disp": 368,
+   "classe": "pile",
+   "preuve": "[rsp+368] ≤ cadre 624"
+  },
+  {
+   "adresse": 55005,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x198], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 408,
+   "classe": "pile",
+   "preuve": "[rsp+408] ≤ cadre 624"
+  },
+  {
+   "adresse": 55013,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x178]",
+   "base": "rsp",
+   "index": null,
+   "disp": 376,
+   "classe": "pile",
+   "preuve": "[rsp+376] ≤ cadre 624"
+  },
+  {
+   "adresse": 55021,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1a0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 416,
+   "classe": "pile",
+   "preuve": "[rsp+416] ≤ cadre 624"
+  },
+  {
+   "adresse": 55029,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 624"
+  },
+  {
+   "adresse": 55037,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x1a8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 424,
+   "classe": "pile",
+   "preuve": "[rsp+424] ≤ cadre 624"
+  },
+  {
+   "adresse": 55045,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 55053,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55066,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 55074,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x110], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55082,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x168]",
+   "base": "rsp",
+   "index": null,
+   "disp": 360,
+   "classe": "pile",
+   "preuve": "[rsp+360] ≤ cadre 624"
+  },
+  {
+   "adresse": 55090,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x118], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 280,
+   "classe": "pile",
+   "preuve": "[rsp+280] ≤ cadre 624"
+  },
+  {
+   "adresse": 55098,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x170]",
+   "base": "rsp",
+   "index": null,
+   "disp": 368,
+   "classe": "pile",
+   "preuve": "[rsp+368] ≤ cadre 624"
+  },
+  {
+   "adresse": 55106,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x120], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 288,
+   "classe": "pile",
+   "preuve": "[rsp+288] ≤ cadre 624"
+  },
+  {
+   "adresse": 55114,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x178]",
+   "base": "rsp",
+   "index": null,
+   "disp": 376,
+   "classe": "pile",
+   "preuve": "[rsp+376] ≤ cadre 624"
+  },
+  {
+   "adresse": 55122,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x128], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 296,
+   "classe": "pile",
+   "preuve": "[rsp+296] ≤ cadre 624"
+  },
+  {
+   "adresse": 55130,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 624"
+  },
+  {
+   "adresse": 55138,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x130], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 304,
+   "classe": "pile",
+   "preuve": "[rsp+304] ≤ cadre 624"
+  },
+  {
+   "adresse": 55146,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55154,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0xe8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 232,
+   "classe": "pile",
+   "preuve": "[rsp+232] ≤ cadre 624"
+  },
+  {
+   "adresse": 55167,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x188]",
+   "base": "rsp",
+   "index": null,
+   "disp": 392,
+   "classe": "pile",
+   "preuve": "[rsp+392] ≤ cadre 624"
+  },
+  {
+   "adresse": 55175,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55188,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x160]",
+   "base": "rsp",
+   "index": null,
+   "disp": 352,
+   "classe": "pile",
+   "preuve": "[rsp+352] ≤ cadre 624"
+  },
+  {
+   "adresse": 55196,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x70], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 55201,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x168]",
+   "base": "rsp",
+   "index": null,
+   "disp": 360,
+   "classe": "pile",
+   "preuve": "[rsp+360] ≤ cadre 624"
+  },
+  {
+   "adresse": 55209,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x78], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 55214,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x170]",
+   "base": "rsp",
+   "index": null,
+   "disp": 368,
+   "classe": "pile",
+   "preuve": "[rsp+368] ≤ cadre 624"
+  },
+  {
+   "adresse": 55222,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x80], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 55230,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x178]",
+   "base": "rsp",
+   "index": null,
+   "disp": 376,
+   "classe": "pile",
+   "preuve": "[rsp+376] ≤ cadre 624"
+  },
+  {
+   "adresse": 55238,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x88], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 55246,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x180]",
+   "base": "rsp",
+   "index": null,
+   "disp": 384,
+   "classe": "pile",
+   "preuve": "[rsp+384] ≤ cadre 624"
+  },
+  {
+   "adresse": 55254,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x90], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 55262,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 55267,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x188]",
+   "base": "rsp",
+   "index": null,
+   "disp": 392,
+   "classe": "pile",
+   "preuve": "[rsp+392] ≤ cadre 624"
+  },
+  {
+   "adresse": 55280,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 55288,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x110], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55296,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x140]",
+   "base": "rsp",
+   "index": null,
+   "disp": 320,
+   "classe": "pile",
+   "preuve": "[rsp+320] ≤ cadre 624"
+  },
+  {
+   "adresse": 55304,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x118], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 280,
+   "classe": "pile",
+   "preuve": "[rsp+280] ≤ cadre 624"
+  },
+  {
+   "adresse": 55312,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x148]",
+   "base": "rsp",
+   "index": null,
+   "disp": 328,
+   "classe": "pile",
+   "preuve": "[rsp+328] ≤ cadre 624"
+  },
+  {
+   "adresse": 55320,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x120], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 288,
+   "classe": "pile",
+   "preuve": "[rsp+288] ≤ cadre 624"
+  },
+  {
+   "adresse": 55328,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x150]",
+   "base": "rsp",
+   "index": null,
+   "disp": 336,
+   "classe": "pile",
+   "preuve": "[rsp+336] ≤ cadre 624"
+  },
+  {
+   "adresse": 55336,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x128], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 296,
+   "classe": "pile",
+   "preuve": "[rsp+296] ≤ cadre 624"
+  },
+  {
+   "adresse": 55344,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x158]",
+   "base": "rsp",
+   "index": null,
+   "disp": 344,
+   "classe": "pile",
+   "preuve": "[rsp+344] ≤ cadre 624"
+  },
+  {
+   "adresse": 55352,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x130], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 304,
+   "classe": "pile",
+   "preuve": "[rsp+304] ≤ cadre 624"
+  },
+  {
+   "adresse": 55360,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55368,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 55381,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55389,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55402,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 624"
+  },
+  {
+   "adresse": 55407,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xc0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 55415,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 624"
+  },
+  {
+   "adresse": 55420,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xc8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 55428,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x30]",
+   "base": "rsp",
+   "index": null,
+   "disp": 48,
+   "classe": "pile",
+   "preuve": "[rsp+48] ≤ cadre 624"
+  },
+  {
+   "adresse": 55433,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xd0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 55441,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x38]",
+   "base": "rsp",
+   "index": null,
+   "disp": 56,
+   "classe": "pile",
+   "preuve": "[rsp+56] ≤ cadre 624"
+  },
+  {
+   "adresse": 55446,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xd8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 55454,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 624"
+  },
+  {
+   "adresse": 55459,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xe0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 55467,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 55475,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55488,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 55496,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 55509,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 55517,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 55530,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 55538,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x98], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 55546,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x140]",
+   "base": "rsp",
+   "index": null,
+   "disp": 320,
+   "classe": "pile",
+   "preuve": "[rsp+320] ≤ cadre 624"
+  },
+  {
+   "adresse": 55554,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xa0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 55562,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x148]",
+   "base": "rsp",
+   "index": null,
+   "disp": 328,
+   "classe": "pile",
+   "preuve": "[rsp+328] ≤ cadre 624"
+  },
+  {
+   "adresse": 55570,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xa8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 55578,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x150]",
+   "base": "rsp",
+   "index": null,
+   "disp": 336,
+   "classe": "pile",
+   "preuve": "[rsp+336] ≤ cadre 624"
+  },
+  {
+   "adresse": 55586,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 55594,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x158]",
+   "base": "rsp",
+   "index": null,
+   "disp": 344,
+   "classe": "pile",
+   "preuve": "[rsp+344] ≤ cadre 624"
+  },
+  {
+   "adresse": 55602,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 55630,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 55635,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0x98]",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 55646,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x48], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 55651,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x98], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 152,
+   "classe": "pile",
+   "preuve": "[rsp+152] ≤ cadre 624"
+  },
+  {
+   "adresse": 55659,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 55664,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xa0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 55675,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x50], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 55680,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xa0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 160,
+   "classe": "pile",
+   "preuve": "[rsp+160] ≤ cadre 624"
+  },
+  {
+   "adresse": 55688,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 55693,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xa8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 55704,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x58], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 55709,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xa8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 168,
+   "classe": "pile",
+   "preuve": "[rsp+168] ≤ cadre 624"
+  },
+  {
+   "adresse": 55717,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 55722,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 55733,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x60], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 55738,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xb0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 624"
+  },
+  {
+   "adresse": 55746,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 55751,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xb8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 55762,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x68], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 55767,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xb8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 184,
+   "classe": "pile",
+   "preuve": "[rsp+184] ≤ cadre 624"
+  },
+  {
+   "adresse": 55775,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 55780,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xc0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 55791,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x70], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 55796,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xc0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 192,
+   "classe": "pile",
+   "preuve": "[rsp+192] ≤ cadre 624"
+  },
+  {
+   "adresse": 55804,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x78]",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 55809,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xc8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 55820,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x78], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 55825,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xc8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 200,
+   "classe": "pile",
+   "preuve": "[rsp+200] ≤ cadre 624"
+  },
+  {
+   "adresse": 55833,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x80]",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 55841,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xd0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 55852,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x80], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 55860,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xd0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 208,
+   "classe": "pile",
+   "preuve": "[rsp+208] ≤ cadre 624"
+  },
+  {
+   "adresse": 55868,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x88]",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 55876,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xd8]",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 55887,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x88], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 55895,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xd8], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 216,
+   "classe": "pile",
+   "preuve": "[rsp+216] ≤ cadre 624"
+  },
+  {
+   "adresse": 55903,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x90]",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 55911,
+   "mnemonic": "xor",
+   "ligne": "xor rax, qword ptr [rsp + 0xe0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 55922,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0x90], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 55930,
+   "mnemonic": "xor",
+   "ligne": "xor qword ptr [rsp + 0xe0], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 224,
+   "classe": "pile",
+   "preuve": "[rsp+224] ≤ cadre 624"
+  },
+  {
+   "adresse": 55938,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x70]",
+   "base": "rsp",
+   "index": null,
+   "disp": 112,
+   "classe": "pile",
+   "preuve": "[rsp+112] ≤ cadre 624"
+  },
+  {
+   "adresse": 55943,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x110], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 55951,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x78]",
+   "base": "rsp",
+   "index": null,
+   "disp": 120,
+   "classe": "pile",
+   "preuve": "[rsp+120] ≤ cadre 624"
+  },
+  {
+   "adresse": 55956,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x118], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 280,
+   "classe": "pile",
+   "preuve": "[rsp+280] ≤ cadre 624"
+  },
+  {
+   "adresse": 55964,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x80]",
+   "base": "rsp",
+   "index": null,
+   "disp": 128,
+   "classe": "pile",
+   "preuve": "[rsp+128] ≤ cadre 624"
+  },
+  {
+   "adresse": 55972,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x120], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 288,
+   "classe": "pile",
+   "preuve": "[rsp+288] ≤ cadre 624"
+  },
+  {
+   "adresse": 55980,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x88]",
+   "base": "rsp",
+   "index": null,
+   "disp": 136,
+   "classe": "pile",
+   "preuve": "[rsp+136] ≤ cadre 624"
+  },
+  {
+   "adresse": 55988,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x128], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 296,
+   "classe": "pile",
+   "preuve": "[rsp+296] ≤ cadre 624"
+  },
+  {
+   "adresse": 55996,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x90]",
+   "base": "rsp",
+   "index": null,
+   "disp": 144,
+   "classe": "pile",
+   "preuve": "[rsp+144] ≤ cadre 624"
+  },
+  {
+   "adresse": 56004,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x130], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 304,
+   "classe": "pile",
+   "preuve": "[rsp+304] ≤ cadre 624"
+  },
+  {
+   "adresse": 56012,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x138], 1",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 56024,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x140], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 320,
+   "classe": "pile",
+   "preuve": "[rsp+320] ≤ cadre 624"
+  },
+  {
+   "adresse": 56036,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x148], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 328,
+   "classe": "pile",
+   "preuve": "[rsp+328] ≤ cadre 624"
+  },
+  {
+   "adresse": 56048,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x150], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 336,
+   "classe": "pile",
+   "preuve": "[rsp+336] ≤ cadre 624"
+  },
+  {
+   "adresse": 56060,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x158], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 344,
+   "classe": "pile",
+   "preuve": "[rsp+344] ≤ cadre 624"
+  },
+  {
+   "adresse": 56079,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 56087,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 56107,
+   "mnemonic": "movzx",
+   "ligne": "movzx eax, byte ptr [rsp + rax + 0x1f0]",
+   "base": "rsp",
+   "index": "rax",
+   "disp": 496,
+   "classe": "pile",
+   "preuve": "[rsp+496] ≤ cadre 624"
+  },
+  {
+   "adresse": 56132,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 56140,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x110]",
+   "base": "rsp",
+   "index": null,
+   "disp": 272,
+   "classe": "pile",
+   "preuve": "[rsp+272] ≤ cadre 624"
+  },
+  {
+   "adresse": 56158,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 56163,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rsp + 0x138]",
+   "base": "rsp",
+   "index": null,
+   "disp": 312,
+   "classe": "pile",
+   "preuve": "[rsp+312] ≤ cadre 624"
+  },
+  {
+   "adresse": 56186,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 56201,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x48], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 56206,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rsp + 0x50], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 56211,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 56226,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x50], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 56231,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rsp + 0x58], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 56236,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 56251,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x58], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 56256,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rsp + 0x60], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 56261,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 56276,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x60], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 56281,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rsp + 0x68], rdx",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 56286,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 56295,
+   "mnemonic": "add",
+   "ligne": "add rax, qword ptr [rsp + 0x48]",
+   "base": "rsp",
+   "index": null,
+   "disp": 72,
+   "classe": "pile",
+   "preuve": "[rsp+72] ≤ cadre 624"
+  },
+  {
+   "adresse": 56300,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 56303,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x50]",
+   "base": "rsp",
+   "index": null,
+   "disp": 80,
+   "classe": "pile",
+   "preuve": "[rsp+80] ≤ cadre 624"
+  },
+  {
+   "adresse": 56312,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 56324,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi + 8], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 56328,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x58]",
+   "base": "rsp",
+   "index": null,
+   "disp": 88,
+   "classe": "pile",
+   "preuve": "[rsp+88] ≤ cadre 624"
+  },
+  {
+   "adresse": 56337,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 56349,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi + 0x10], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  },
+  {
+   "adresse": 56353,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 624"
+  },
+  {
+   "adresse": 56362,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rsp + 0x68]",
+   "base": "rsp",
+   "index": null,
+   "disp": 104,
+   "classe": "pile",
+   "preuve": "[rsp+104] ≤ cadre 624"
+  },
+  {
+   "adresse": 56374,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rdi + 0x18], rax",
+   "base": "rdi",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 32 o"
+  }
+ ]
+}

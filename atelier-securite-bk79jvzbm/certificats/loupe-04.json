@@ -1,0 +1,26 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-04",
+ "acces": [
+  {
+   "adresse": 16453,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x9fb4]",
+   "base": "rip",
+   "index": null,
+   "disp": 40884,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 16476,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rbx + 0x210], 0xffffffffffffffff",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  }
+ ]
+}

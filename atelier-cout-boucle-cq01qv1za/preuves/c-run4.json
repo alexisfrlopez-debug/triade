@@ -1,50 +1,50 @@
 {
  "bras": "C",
  "run": 4,
- "total_s": 2.239,
+ "total_s": 2.021,
  "etapes": [
   {
    "etape": "build-gcc-O2-loupe-01",
-   "secondes": 0.692,
+   "secondes": 0.718,
    "code": 0,
    "console": ""
   },
   {
    "etape": "suite-tests-c-hash",
-   "secondes": 0.278,
+   "secondes": 0.282,
    "code": 0,
    "console": "[VERT] le testeur compile (gcc -O2, le POSIX du labo)\n[éprouvées] 32 VERT, 0 ROUGE (les frontières du rembourrage, l'incrémentalité irrégulière)\n"
   },
   {
    "etape": "suite-tests-c-contrat",
-   "secondes": 0.215,
-   "code": 0,
-   "console": "=== L'ÉPREUVE DU CONTRAT ENTIER (le juge hashlib, D122) ===\n  VERT V1:temoin-1.bin:rax — rax=0 (attendu 0)\n  VERT V1:temoin-384.bin:rax — rax=0 (attendu 0)\n  VERT V1:temoin-3f.bin:rax — rax=0 (attendu 0)\n  VERT V1:vide.bin:rax — rax=0 (attendu 0)\n  VERT V2:E1-absent — rax=-2 (attendu -2)\n  VERT V2:E2-verrouille — rax=-7 (attendu -7, la tenue flock sans partage)\n  VERT V2:E3-acces-refuse-NOMMÉ-ABSENT — le refus d'ACL ne s'arme pas proprement — nommé, jamais maquillé\n  VERT V3:Q2-la-borne-2-Gio — rax=-3 (attendu -3, le géant épars 2 Gio + 1)\n  VERT V3:etat-chemin — l'ETAT porte le chemin du succès ('temoin-384.bin')\n  VERT V3:etat-taille-rempl\n  VERT V3:etat-panneau — l'ETAT porte le panneau (md5, sha256) de temoin-384\n  VERT V3:etat-tampon\n  VERT V3:E4-rax — rax=-5 (attendu -5)\n  VERT V3:E4-cadre-intact — le cadre relu identique octet par octet (chemin, taille, rempl, tampon)\n  VERT V3:E4-panneau-intact — le panneau relu identique\n  VERT V3:P1-le-chemin-trop-long — rax=-2 — un refus nommé (le système refuse le chemin trop long)\n  VERT V3:P1-rien-au-cadre — RIEN au cadre (les 8 premiers octets inchangés)\n\n=== BILAN : 17 VERT, 0 ROUGE ===\n"
+   "secondes": 0.016,
+   "code": 1,
+   "console": "epreuve_posix.c:25:10: fatal error: loupe-01-c.c: No such file or directory\n   25 | #include \"loupe-01-c.c\"\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\n"
   },
   {
    "etape": "controles-binaires-loupe-01",
-   "secondes": 0.042,
-   "code": 0,
-   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\n  VERT exports:loupe_01_ouvrir — à la table (4 exports)\n  VERT exports:loupe_03_fermer — à la table (4 exports)\n  VERT exports:cadre — à la table (4 exports)\n  VERT exports:panneau — à la table (4 exports)\n  VERT exports:donnees-en-.data — les RVA ['00008060', '00001e60', '00002360', '00008020'] — cadre et panneau pointent la zone .data (les DONNÉES exportées)\n  VERT imports:CreateFileW — résolue par le scénario à l'IAT réelle\n  VERT imports:GetFileSizeEx — résolue par le scénario à l'IAT réelle\n  VERT imports:ReadFile — résolue par le scénario à l'IAT réelle\n  VERT imports:CloseHandle — résolue par le scénario à l'IAT réelle\n  VERT imports:GetLastError — résolue par le scénario à l'IAT réelle\n  VERT imports:SetFilePointerEx-absente-nommée — la pièce ne s'en sert pas (lecture séquentielle depuis l'ouverture) — l'écart nommé, le scénario résout les six du kit\n  VERT imports:le-CRT-du-lanceur-nomme — les imports du CRT de lancement mingw (jamais appelées sous DONT_RESOLVE : aucun point d'entrée ne court) — nommé\n  VERT audit:cloture-des-fonctions — 7 fonctions dans la clôture de loupe_01_ouvrir/loupe_03_fermer (les fonctions, leurs appelés, les thunks)\n  VERT audit:aucun-appel-CRT — les __imp_ référencés : ['__imp_CreateFileW', '__imp_GetFileSizeEx', '__imp_GetLastError', '__imp_ReadFile'] ; les appels directs par l'IAT : 5, tous aux slots kernel32 — QUE les feuilles kernel32 de la pièce\n  VERT relocations:présentes — l'image peut être rebasée par le chargeur\n\n=== CONTRÔLES BINAIRES : 16 VERT, 0 ROUGE ===\n"
+   "secondes": 0.035,
+   "code": 1,
+   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\nTraceback (most recent call last):\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-01-C/epreuves/controles_binaires.py\", line 155, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-01-C/epreuves/controles_binaires.py\", line 57, in main\n    x = objdump(\"-x\")\n        ^^^^^^^^^^^^^\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-01-C/epreuves/controles_binaires.py\", line 43, in objdump\n    r = subprocess.run([OBJDUMP, *args, str(DLL)], capture_output=True,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '/home/z/my-project/work/mingw-debs/root/usr/bin/x86_64-w64-mingw32-objdump'\n"
   },
   {
    "etape": "build-gcc-O2-loupe-02",
-   "secondes": 0.715,
+   "secondes": 0.709,
    "code": 0,
    "console": ""
   },
   {
    "etape": "epreuve-contrat-posix-loupe-02",
-   "secondes": 0.243,
+   "secondes": 0.226,
    "code": 0,
    "console": "[VERT] V1:temoin-1.bin-l-ouverture — rax=0, remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-384.bin-l-ouverture — rax=0, remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-3f.bin-l-ouverture — rax=0, remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:les-frontieres — 9 décalages frontière (0, la dernière valide, la dernière pleine, les fenêtres de la zone 65536) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture — le vide s'ouvre, remplissage 0 (la fenêtre née est vide)\n[VERT] V1:vide.bin-aucune-fenetre-valide — rax=-3 (décalage 0 ≥ taille 0 → -3 HORS-BORNES), rien lu\n[VERT] V2:les-bords-de-fenetre — le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant et l'après IGNORÉS — l'édition survit au défilement\n[VERT] V2:le-journal-intact — loupe-02 n'écrit JAMAIS au journal (I2)\n[VERT] V2:cinq-entrees-dont-une-non-alignee — cinq entrées dedans (fen+5 NON ALIGNÉE comprise) — le tampon == le modèle indépendant\n[VERT] V3:sans-session — rax=-4 (attendu -4 SESSION, rien lu)\n[VERT] V3:non-aligne — rax=-5 (attendu -5), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:a-la-taille — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:au-dela — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:immense — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V4:l-echec-readfile — rax=-6 (le tiroir a refusé → -6 SYSTÈME), remplissage 0 == 0 (fail-closed), le tampon empoisonné INTACT — jamais un octet non lu\n[VERT] V4:la-session-survit — l'échec ne clôt PAS la session : la lecture suivante est verte, le tampon == le témoin entier\n[VERT] V5:l-octet-mute-l-etat-lu-diverge — la lecture d'abord VERT (le tampon == le témoin), l'octet 3 muté 0x90 → 0xff : l'état lu DIVERGE du modèle — la falsification est DÉTECTABLE\n\nLE JUGE : 20 VERT, 0 ROUGE — VERT\n"
   },
   {
    "etape": "controles-binaires-loupe-02",
-   "secondes": 0.054,
-   "code": 0,
-   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\n  VERT exports:loupe_01_ouvrir — à la table (6 exports)\n  VERT exports:loupe_02_lire — à la table (6 exports)\n  VERT exports:loupe_03_fermer — à la table (6 exports)\n  VERT exports:cadre — à la table (6 exports)\n  VERT exports:journal — à la table (6 exports)\n  VERT exports:panneau — à la table (6 exports)\n  VERT exports:donnees-en-.data — cadre @0x9080, journal @0x8020, panneau @0x9040 — les DONNÉES en .data ; les TROIS fonctions en .text\n  VERT imports:CreateFileW — résolue par le scénario à l'IAT réelle\n  VERT imports:GetFileSizeEx — résolue par le scénario à l'IAT réelle\n  VERT imports:SetFilePointerEx — résolue par le scénario à l'IAT réelle\n  VERT imports:ReadFile — résolue par le scénario à l'IAT réelle\n  VERT imports:CloseHandle — résolue par le scénario à l'IAT réelle\n  VERT imports:GetLastError — résolue par le scénario à l'IAT réelle\n  VERT imports:le-CRT-du-lanceur-nomme — les imports du CRT de lancement mingw (jamais appelées sous DONT_RESOLVE : aucun point d'entrée ne court) — nommé\n  VERT audit:cloture-des-fonctions — 8 fonctions dans la clôture de loupe_01_ouvrir/loupe_02_lire/loupe_03_fermer (les fonctions, leurs appelés, les thunks)\n  VERT audit:aucun-appel-CRT — les __imp_ référencés : ['__imp_CreateFileW', '__imp_GetFileSizeEx', '__imp_GetLastError', '__imp_ReadFile', '__imp_SetFilePointerEx'] ; les appels directs par l'IAT : 6, tous aux slots kernel32 — QUE les feuilles kernel32 de la pièce\n  VERT relocations:présentes — l'image peut être rebasée par le chargeur\n\n=== CONTRÔLES BINAIRES : 18 VERT, 0 ROUGE ===\n"
+   "secondes": 0.034,
+   "code": 1,
+   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\nTraceback (most recent call last):\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-02-C/epreuves/controles_binaires.py\", line 159, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-02-C/epreuves/controles_binaires.py\", line 59, in main\n    x = objdump(\"-x\")\n        ^^^^^^^^^^^^^\n  File \"/home/z/my-project/projet/triade/scripts/campagne_d204/unite-02-C/epreuves/controles_binaires.py\", line 45, in objdump\n    r = subprocess.run([OBJDUMP, *args, str(DLL)], capture_output=True,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/home/z/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '/home/z/my-project/work/mingw-debs/root/usr/bin/x86_64-w64-mingw32-objdump'\n"
   }
  ],
- "code": 0
+ "code": 1
 }

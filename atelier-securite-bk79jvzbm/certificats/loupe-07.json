@@ -1,0 +1,57 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-07",
+ "acces": [
+  {
+   "adresse": 18759,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x96b2]",
+   "base": "rip",
+   "index": null,
+   "disp": 38578,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 18766,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rbx + 0x210], -1",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 18786,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 18793,
+   "mnemonic": "lea",
+   "ligne": "lea r8, [r12 + 0x10]",
+   "base": "r12",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 18809,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  }
+ ]
+}

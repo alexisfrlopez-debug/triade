@@ -1,0 +1,195 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.20.0 (la vague 9)
+=========================================================
+(l'exécution des cinq instructions : bk79jvzbm, 0205wxg5q, bkobf06nu,
+uagz3fby7, h0mq0s2m6 ; les plans gelés AVANT toute mesure, le commit
+a4a41be précédant la première donnée, les empreintes sha256 des cinq
+plans consignées à EMPREINTES-PLANS-VAGUE9.txt ; le linter inter-pièces
+v200 fail-closed au build)
+
+V1 — LE LINTER INTER-PIÈCES v200 ÉTENDU : 74 VERT, 0 ROUGE.
+     Les EN-TÊTES (les versions croisées v0.20.0 <-> v0.15.6 <-> v1.5,
+     les preuves v0.20.0 nommées), les DOI (le concept
+     10.5281/zenodo.24367343 aux trois pièces porteuses, le DOI de
+     version courant nommé, le DOI v0.19.0 interdit à la présentation),
+     la probabilité du tirage (le 1/16, le 1/8 interdit), H5 en deux
+     verdicts distincts, LES MÉDIANES M4 RECALCULÉES des JSON bruts
+     (39,2/7,0/2,0, n=5, l'audit 1/10 au run chaud 29,6 s), la sûreté
+     mémoire (2 006/2 098, 95,6 %, 92 nommés), la preuve par sweep (30
+     scénarios, ÉQUIVALENTS-PAR-SWEEP), le score ajusté 811/817 = 99,3 %
+     À CÔTÉ du brut 811/832 (jamais fusionnés), la non-interférence
+     statique, CF3 mécanisé 14/14, les falsifications
+     CERTIFICAT-DIVERGENT, le double moteur DIVERGENCE=0, le couloir A
+     (3 928 contre 115 292, le ratio 0,03×, la marge 31,2×), les tokens
+     (2 452/40, 1 103/52, 968/323), LES QUATRE RATIOS AU PLANCHER
+     RECALCULÉS du JSONL brut (136,2×/38,0×/4,1×/2,9× = médiane ÷
+     plancher nommé), la section « Distance to the floor » du manuscrit,
+     la gouvernance vécue (D223, « demeure PRIVÉ » interdit), l'annexe B
+     à D75-D228, quatorze arbres, la plage D1-D228, LES EMPREINTES
+     SHA-256 des pièces gravées (les quatre autres à la présentation,
+     les trois de contenu aux preuves, les cinq au manifeste — chaque
+     empreinte RECALCULÉE et confrontée).
+
+V2 — LE CONTRÔLE NÉGATIF DU LINTER (l'instruction h0mq0s2m6) : une
+     divergence volontaire (la médiane localiser mutée 1 103 -> 1 277 à
+     la présentation) est REFUSÉE par le linter au premier nom ; après
+     retrait, le build est admis (74 VERT 0 ROUGE) — la pièce du geste
+     au journal de session.
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (le rapport
+     d'atelier du certificat incrémental : « LES SCELLÉS INTACTES :
+     True » aux rejeux ; les artefacts de campagne inchangés — la
+     vérification par le runner à chaque exécution de mesure).
+
+V4 — LA GARDE DU SCEAU : 14/14 VERT (python3 v06/sceau_I.py verifier —
+     les quatorze arbres signés, la clé déposée réelle, la cérémonie
+     hors-ligne D87 ; re-vérifiée à la présente session).
+
+V5 — LES RE-PRODUCTIONS À L'IDENTIQUE : la console v0.14.0 REPRODUITE
+     AVANT toute nouvelle injection (776/832, la graine 20261111, le
+     point de reprise à verdicts — les tirages REJOUÉS, jamais un
+     nouveau), la console courante 811/832 ensuite ; la re-mesure
+     localiser-P : 18/18 conformes, médiane 1 103, réponse 52 ; la
+     référence éditer-H2 : 18/18 verts, médiane 2 452 [q1 1 740, q3
+     3 527], réponse 40 — les QUATRE cellules de la campagne aux
+     médianes RECALCULÉES du JSONL brut par le linter (les doublons du
+     journal cassé : la première occurrence fait foi, la règle de
+     l'extraction consignée).
+
+V6 — LA SÛRETÉ MÉMOIRE AU PLANCHER (bk79jvzbm) : l'analyse v110
+     reproduite À L'IDENTIQUE d'abord (2 098 accès, 463 non-résolus),
+     puis l'extension par inférence d'invariants de boucle, analyse
+     d'intervalles, analyse d'alias et model checking borné z3 :
+     2 006/2 098 DÉCHARGÉS PAR PREUVE (95,6 %), 92 NOMMÉS avec cause,
+     mécanisme ET la preuve SAT qu'aucune borne statique n'existe sans
+     l'invariant externe ; HORS-CADRE 0 ; les certificats archivés
+     (certificats/, certificats_smt/).
+
+V7 — LA MUTATION, LE TEMPS CONSTANT, CF3, LA TRANSPARENCE, LE FUZZING
+     (bk79jvzbm) : les DEUX nouveaux scénarios K5 vécus ; LES TROIS
+     « TUABLES » RE-CLASSÉS ÉQUIVALENTS-PAR-SWEEP (la classe entière :
+     3 cellules du bord × 10 défilements = 30 scénarios, ZÉRO ÉCART —
+     l'hypothèse de la vague 8 corrigée par la preuve : le clamp de
+     bornes ABSORBE la mutation) ; le score ajusté 811/817 = 99,3 %
+     (les 15 équivalents exclus) à côté du brut 811/832 = 97,5 %,
+     AUCUN tueur affaibli ; la non-interférence statique aux DIX
+     familles crypto (0 branche taintée, 0 adresse taintée, le contrôle
+     négatif ATTRAPÉ) ; CF3 mécanisé en z3 — L'ASSISTANT INDÉPENDANT :
+     14/14 obligations VERTES, les certificats SMT2 archivés rejouables
+     (cf3_smt_certificats/), le contrôle négatif (le seuil affaibli à
+     2) ATTRAPÉ au contre-exemple ; l'ancrage de transparence (la
+     chaîne des 3 époques recalculée de la genèse, la réécriture
+     REFUSÉE nommément ANCRAGE-DIVERGENT, le delta au modèle de menace
+     aux deux bords) ; le fuzzing : loupe-13 (la feuille pure) 100 % de
+     couverture au corpus saturant, les blocs de composition mesurés au
+     niveau bloc (58,0/68,7/19,9 % — le gap NOMMÉ : l'état d'app),
+     ZÉRO crash, ZÉRO violation de canari.
+
+V8 — LA BOUCLE DE VÉRIFICATION (bkobf06nu) : le CERTIFICAT DE
+     CRISTALLISATION (le graphe de dépendances LU des notations
+     assemblées, jamais déclaré à la main ; le diff d'un bloc : 3
+     blocs re-vérifiés en 0,05 s contre 18 la complète en 0,31 s ; les
+     15 inchangés portent leur certificat chaîné depuis la genèse et
+     SIGNÉ Ed25519 ; LES TROIS FALSIFICATIONS — bloc, contrat,
+     configuration — chacune REFUSÉE nommément CERTIFICAT-DIVERGENT,
+     le rejeu complet forcé) ; le DOUBLE MOTEUR au chemin chaud de
+     l'ouverture (le volume sous le VRAI qemu-x86_64 : le témoin
+     196 609 o au fichier entier, 6 relevés en 0,03 s contre
+     l'échantillon Unicorn 20,0 s, DIVERGENCE=0 octet pour octet ; la
+     clé de mémo étendue à tout ce qui détermine le résultat ; l'écart
+     nommé : le qemu-user de Debian bâti sans CONFIG_PLUGIN) ; le
+     régime ORACLE NATIF préparé (le runner, les scénarios consignés,
+     la signature Ed25519 du témoin, CE QU'IL ATTRAPE et CE QU'IL
+     N'ATTRAPE PAS consignés — jamais confondu avec le terrain du
+     développeur, le contrôle négatif VÉCU : le shim muté REFUSÉ à la
+     première ligne) ; la MESURE M4 à la liste fixe (n=5, l'horloge
+     monotone) — L'INCIDENT NOMMÉ D'ABORD : les pièces brutes JSON de
+     la mesure de la session morte furent PERDUES au geste de
+     restauration des instruments régénérables à la reprise (la
+     présente session, l'erreur NOMMÉE — les valeurs consignées
+     D225/OPT-07 demeurent le record historique de la session morte),
+     LA MESURE RE-JOUÉE de bout en bout aux mêmes n (avant ×5, froid,
+     chaud ×5, C ×5 — la chaîne mingw re-provisionnée aux versions
+     exactes gcc 14.2.0-19+27+b1, binutils 2.44-3+12+b1, mingw-w64
+     12.0.0-5, extraits des .deb sans root) : AVANT médiane 39,3 s
+     [39,1–39,6] · FROID 6,8 s · CHAUD médiane 6,9 s (le run à 29,7 s
+     : l'AUDIT 1/10 VÉCU — le compteur chaîné) · le bras C 2,1 s — LE
+     RATIO DE RÉGIME 3,4× (le seuil ×10 tenu, l'écart à la mesure
+     perdue 3,5× nommé : la variance inter-exécution, la classe
+     D214) ; les scellés INTACTS à chacune des 16 exécutions.
+
+V9 — LES DEUX COULOIRS (0205wxg5q) : LE COULOIR A — le constat sur
+     pièces (le gcc -O2 des blocs contrôlés n'emploie PAS SSE2, le
+     décompte SIMD des .text : 0), la parité au GPR (loupe-13 le scellé
+     1,07× gcc-O2, la bibliothèque tenue ÉGALE : les deux bras au
+     memcmp scellé) ; LA VARIANTE SSE2 BASELINE (à la marge vierge
+     0xCC00, AUCUN octet du scellé touché : le scan 16 octets movdqu +
+     pcmpeqb + pmovmskb, le premier octet diffusé SANS pshufb — SSSE3
+     hors baseline, l'interdit, chaque candidat confirmé au memcmp
+     scellé) : round-trip 100 %, ZÉRO DIVERGENCE aux 24 vecteurs (les
+     15 de la mesure + les 9 bords nommés), 3 928 instructions/op
+     contre 115 292 gcc-O2 — LE RATIO 0,03× (l'objectif « coût
+     inférieur ou égal à gcc-O2 » TENU avec 31,2× de marge) ; LE
+     COULOIR B — AES-NI : LA DESCENTE EST DÉJÀ LE SCELLÉ (26
+     instructions/bloc, aesenc vécu), la variante à dispatch MESURÉE
+     PLUS LENTE (45 contre 26 : la leçon) ; GHASH PCLMULQDQ : la
+     frontière nommée I5 ; SHA-NI : OPT-01 5,84× consacré ; x25519 :
+     O(1)/session (la pertinence tranchée par la mesure) ; LA DETTE DE
+     CÉRÉMONIE nommée à la naissance (les copies de laboratoire,
+     l'embarquement exigera la cérémonie d'ère).
+
+V10 — LES TOKENS AU-DELÀ D'OPT-05 (uagz3fby7) : la campagne aux
+     QUATRE cellules (n=18, la graine 20261117, le tokenizer natif lu
+     du champ usage) — éditer-H2 REPRODUIT 18/18 (2 452/40) ; ajouter-H3
+     REFUSÉ POUR LA TROISIÈME FOIS (0/18 HORS-FORMAT — le format
+     REFUSÉ DÉFINITIVEMENT en l'état, la voie de l'ajout demeure la
+     notation complète) ; composer-G 3/18 (médiane 4 846 contre
+     ajouter-A2 5 079 — H4 FALSIFIÉE : l'héritage déclaré n'achète pas
+     la réponse) ; localiser-P REPRODUIT 18/18 (1 103/52) ; LE
+     COMPILATEUR D'ORACLE DÉTERMINISTE (le gabarit structuré des specs
+     I → le code généré PAR SCRIPT, zéro token LLM, dérivé de I jamais
+     de B : 968 tokens supprimés aux 3 unités, 323/unité) ; LES RATIOS
+     AU PLANCHER (la méthode nommée : éditer — la paire de lignes du
+     diff réel, localiser — le pointeur littéral, ajouter/composer —
+     le corps du bloc, le plancher HAUT honnête) : 136,2×/38,0×/4,1×/
+     2,9× — la convention de périmètre : les trois champs consignés
+     séparément, jamais fusionnés.
+
+V11 — LE TABLEAU DE BORD DES QUATRE AXES (h0mq0s2m6) : GÉNÉRÉ des
+     pièces brutes (chaque valeur SOURCÉE : les CSV des ateliers, les
+     journaux — jamais tapée à la main, chaque ratio RECALCULÉ, le
+     linter le re-vérifie au build en re-lisant les mêmes pièces) ;
+     l'ORDRE LEXICOGRAPHIQUE EXPLICITE (Sécurité > Performance >
+     Optimisation > Coût en tokens, AUCUNE compensation entre rangs) ;
+     pour chaque axe : la valeur mesurée courante, le PLANCHER
+     IRRÉDUCTIBLE et SA MÉTHODE, le ratio d'overhead, la cible et le
+     statut de chaque résidu nommé ; la section « Distance to the
+     floor » portée au manuscrit (la convention de périmètre
+     obligatoire avant toute comparaison, la lecture lexicographique).
+
+V12 — LE PACK TRIADE_presentation_v0.20.0.zip [2 193 000 octets, 12
+     fichiers] : exactement 5 documents PDF régénérés et cohérents
+     (manuscrit v0.20.0, spécification v0.15.6, Livre du Coffre v1.5,
+     preuves v0.20.0, présentation v200), les descriptions, le
+     LISEZMOI, LE MANIFESTE DES EMPREINTES ; LES EMPREINTES SHA-256
+     DES CINQ PIÈCES consignées DANS la présentation (les quatre
+     autres gravées) et le document de preuves (les trois pièces de
+     contenu) — LA CONVENTION nommée : aucun document ne porte son
+     propre sha-256, le manifeste porte les cinq, le linter re-vérifie
+     chaque empreinte au build ; le zip RELU pièce à pièce (chaque
+     empreinte re-vérifiée au dézippage). Les deux archives de dépôt
+     (soumission et complet) assemblées — la publication Zenodo AU
+     GESTE DU MAÎTRE (jamais un DOI minté sans commande explicite).
+
+LES ÉDITIONS NÉES : le manuscrit v0.20.0 (le tableau de bord et la
+     section distance-to-the-floor, l'abstract réécrit en un seul
+     paragraphe, les canons de la vague), la spécification v0.15.6 (la
+     table des preuves au CF3 mécanisé et à la non-interférence
+     statique, l'annexe B à D75-D228, la section nouveautés — AUCUNE
+     règle R1-R11 modifiée), le Livre du Coffre v1.5 (les références
+     de version alignées, le compte d'arbres réel), les preuves
+     v0.20.0 (les huit pièces verbatim + la table des empreintes), la
+     présentation v200 ; D224-D228 append-only au journal des
+     décisions ; OPT-07/OPT-08/OPT-09 au journal d'optimisation.
+
+AUCUNE valeur mesurée modifiée ; AUCUN artefact scellé touché ; AUCUNE
+graine supprimée ; AUCUN contrôle retiré ; AUCUNE règle affaiblie.

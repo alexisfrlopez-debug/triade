@@ -1,0 +1,43 @@
+LE TABLEAU DE BORD DES QUATRE AXES — TRIADE v0.20.0 (la vague 9)
+========================================================================
+L'ORDRE LEXICOGRAPHIQUE EXPLICITE : Sécurité > Performance > Optimisation > Coût en tokens — AUCUNE compensation entre les rangs (la fonction objectif du protocole § 8).
+
+AXE 1 — SÉCURITÉ (le rang supérieur : jamais sacrifié)
+------------------------------------------------------------
+  Sûreté mémoire : 2098 accès classés — 2006 DÉCHARGÉS par preuve (95.6 %), 92 NOMMÉS avec cause et certificat BMC (zéro non-résolu muet — chaque nommé porte la preuve SAT que sa borne est externe) ; HORS-CADRE : 0 (la classe du stack-smash DEMEURE VIDE).
+    — le plancher : 2 098 accès TOUS déchargés ou nommés — la méthode : l'analyse v200 (invariants de boucle, intervalles, alias, interprocédural) + BMC z3 ; le résidu : les 92 nommés (OS/appelant — la preuve au certificat).
+  Mutation : la batterie étendue — BRUT 811/832 (97,5 %) ; AJUSTÉ (15 équivalents exclus : les 12 de la vague 8 + LES 3 PROUVÉS PAR SWEEP de la vague 9) : 811/817 = 99,3 % — la reproduction : v0.14.0 776/832 À L'IDENTIQUE d'abord, la courante 811/832 ensuite, les DEUX nouveaux scénarios K5 vécus (les 3 « tuables » re-classés ÉQUIVALENTS-PAR-SWEEP : 30 scénarios, zéro écart — l'hypothèse de la vague 8 corrigée par la preuve).
+    — le plancher : 100 % des mutants non-équivalents tués ; le résidu : 6 limites du harnais (nommées — le shim aveugle, la voie jamais servie).
+  Fuzzing : loupe-13 (la feuille pure) 100 % de couverture au corpus saturant ; les blocs de composition (01/02/16) : la couverture au niveau BLOC mesurée (58,0/68,7/19,9 %), le gap NOMMÉ (l'état d'app — la voie APP le porte, la suivante) ; ZÉRO crash, ZÉRO violation de canari.
+  Temps constant : LA PREUVE STATIQUE DE NON-INTERFÉRENCE — les DIX familles crypto PROUVÉES (0 branche taintée, 0 adresse taintée — la taint du secret propagée, le contrôle négatif ATTRAPÉ) ; le hash de trace complète reconduit (D221).
+  CF3 : l'invariant inductif MÉCANISÉ en z3 (l'assistant INDÉPENDANT) — 14/14 obligations VERTES (la base + les 13 règles), les certificats SMT2 archivés rejouables, le contrôle négatif (le seuil affaibli) ATTRAPÉ.
+  Transparence : le témoin d'époque ANCRÉ au journal de transparence (la chaîne des 3 époques recalculée de la genèse, la réécriture REFUSÉE nommément — le contrôle négatif vécu).
+  Garde du sceau : 14/14 VERT (la vérification vécue à la reprise).
+
+AXE 2 — PERFORMANCE (le deuxième rang)
+------------------------------------------------------------
+  La session M4 (la liste fixe, n=5, l'horloge monotone, cette machine) : AVANT médiane 39.3 s · FROID 6.8 s · CHAUD médiane 6.9 s (le run à 29.7 s : L'AUDIT 1/10 VÉCU — le compteur chaîné déclenchant la re-exécution vivante) · le bras C 2.1 s (les contrôles binaires PE à la campagne exigent Windows — l'écart nommé, le timing la pièce).
+    — le plancher : le bras C à travail égal (la référence compilée) — LE RATIO DE RÉGIME : 3.4× (le seuil ×10 : TENU, la règle H5-amendée-OPT04 tenue par l'instruction D222).
+  Le couloir A (la parité baseline) : loupe-13 — le GPR scellé 1,07× gcc-O2 (la parité à prendre) ; LA VARIANTE SSE2 : 0,03× gcc-O2 (3 928 instructions/op contre 115 292) — L'OBJECTIF « coût inférieur ou égal à gcc-O2 » TENU avec 31,2× de marge ; le zéro divergence comportementale aux 24 vecteurs (les bords compris).
+  Le couloir B (les chemins chauds) : AES — LA DESCENTE EST DÉJÀ LE SCELLÉ (l'ère l'exige — I3 de tls13-15 : aesenc vécu, 26 instructions/bloc) ; GHASH PCLMULQDQ : le chantier suivant (la frontière nommée I5) ; SHA-NI : OPT-01 5,84× (consacré) ; x25519 : la pertinence tranchée par la mesure (O(1)/session).
+
+AXE 3 — OPTIMISATION (le troisième rang : fondée sur hot path mesuré, JAMAIS prématurée — R11)
+------------------------------------------------------------
+  OPT-01 SHA-NI : 5,84× (consacré D205, jamais scellé sans le geste du maître) ;
+  OPT-02 localiser B2 : −37,3 % total, −97,1 % réponse ;
+  OPT-03 le mémo M4 : −74 % (39,5 → 10,4 s) ;
+  OPT-04 le pointeur seul : −35,7 % total, −93,3 % réponse (adopté D222) ;
+  OPT-05 les hunks d'ÉDITION : −34,3 % total, −97,7 % réponse (17/18) ; l'ajout par hunks REFUSÉ trois fois (v1, v2, v3 à l'exemple complet — 0/18 : le format d'ajout demeure la notation complète) ;
+  OPT-06 (la vague 9) : le compilateur d'oracle — 968 tokens supprimés aux 3 unités (323/unité, zéro token LLM) ; le certificat incrémental — le diff d'un bloc : 3 blocs re-vérifiés contre 18 (0,05 s contre 0,31 s), les 3 falsifications REFUSÉES nommément ; le double moteur à l'ouverture : DIVERGENCE=0 (le volume QEMU 0,03 s contre l'échantillon Unicorn 20,0 s — le compteur par bloc au harnais, le qemu sans plugins NOMMÉ) ;
+    — le plancher : chaque levier fondé sur un hot path MESURÉ (le journal OPT-NN fait foi) ; le résidu : l'ajout par hunks (refusé — la voie demeurée : la notation complète).
+
+AXE 4 — COÛT EN TOKENS (le quatrième rang : à contrainte égale)
+------------------------------------------------------------
+  editer-H2 : n=18, verts 18/18 — total médiane 2452 [q1 1740, q3 3527], réponse 40 — LE RATIO AU PLANCHER : 136.2× (plancher 18 cl100k)
+  ajouter-H3 : n=18, verts 0/18 — total médiane 6874 [q1 5716, q3 7202], réponse 4095 — LE RATIO AU PLANCHER : 4.1× (plancher 1684 cl100k)
+  composer-G : n=18, verts 3/18 — total médiane 4846 [q1 4392, q3 6649], réponse 2246 — LE RATIO AU PLANCHER : 2.9× (plancher 1684 cl100k)
+  localiser-P : n=18, verts 18/18 — total médiane 1103 [q1 804, q3 1530], réponse 52 — LE RATIO AU PLANCHER : 38.0× (plancher 29 cl100k)
+    — LES PLANCHERS NOMMÉS (la méthode) : éditer — la paire de lignes du diff réel ; localiser — le pointeur littéral ; ajouter/composer — le corps du bloc (le plancher HAUT : toute réponse doit le porter).
+    — le plancher de l'OPÉRATION : la longueur tokenisée du diff réel (la description minimale) ; l'overhead : le matériau relu + la prose de prescription (la convention de périmètre : les trois champs consignés séparément, jamais fusionnés).
+
+LA LECTURE LEXICOGRAPHIQUE : la SÉCURITÉ a gagné (la sûreté mémoire 95,6 % déchargés + les preuves CF3/non-interférence/le sweep) SANS céder un point de performance (M4 tenu) ni une vérification (la batterie AUCUN tueur affaibli) — AUCUNE compensation entre les rangs : chaque axe rapporté pour lui-même.

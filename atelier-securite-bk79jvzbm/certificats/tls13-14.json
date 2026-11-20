@@ -1,0 +1,16 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-14",
+ "acces": [
+  {
+   "adresse": 56452,
+   "mnemonic": "lea",
+   "ligne": "lea r8, [rip + 0x2275]",
+   "base": "rip",
+   "index": null,
+   "disp": 8821,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  }
+ ]
+}

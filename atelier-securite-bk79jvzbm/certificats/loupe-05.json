@@ -1,0 +1,196 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-05",
+ "acces": [
+  {
+   "adresse": 17488,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x9ba9]",
+   "base": "rip",
+   "index": null,
+   "disp": 39849,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17495,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rbx + 0x210], -1",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17521,
+   "mnemonic": "cmp",
+   "ligne": "cmp rax, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17552,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 304"
+  },
+  {
+   "adresse": 17585,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rbx + 0x210]",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17601,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x139f]",
+   "base": "rip",
+   "index": null,
+   "disp": -5023,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17615,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0xb0], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 304"
+  },
+  {
+   "adresse": 17627,
+   "mnemonic": "lea",
+   "ligne": "lea r9, [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 304"
+  },
+  {
+   "adresse": 17635,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 304"
+  },
+  {
+   "adresse": 17644,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rbx + 0x210]",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17651,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rip + 0xbb06]",
+   "base": "rip",
+   "index": null,
+   "disp": 47878,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17661,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x13d3]",
+   "base": "rip",
+   "index": null,
+   "disp": -5075,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17671,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 304"
+  },
+  {
+   "adresse": 17676,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rip + 0xbaed]",
+   "base": "rip",
+   "index": null,
+   "disp": 47853,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17683,
+   "mnemonic": "mov",
+   "ligne": "mov r8, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 304"
+  },
+  {
+   "adresse": 17696,
+   "mnemonic": "add",
+   "ligne": "add r12, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 304"
+  },
+  {
+   "adresse": 17704,
+   "mnemonic": "sub",
+   "ligne": "sub r13, qword ptr [rsp + 0xb0]",
+   "base": "rsp",
+   "index": null,
+   "disp": 176,
+   "classe": "pile",
+   "preuve": "[rsp+176] ≤ cadre 304"
+  },
+  {
+   "adresse": 17717,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rsp + 0x40]",
+   "base": "rsp",
+   "index": null,
+   "disp": 64,
+   "classe": "pile",
+   "preuve": "[rsp+64] ≤ cadre 304"
+  },
+  {
+   "adresse": 17755,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x1419]",
+   "base": "rip",
+   "index": null,
+   "disp": -5145,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  }
+ ]
+}

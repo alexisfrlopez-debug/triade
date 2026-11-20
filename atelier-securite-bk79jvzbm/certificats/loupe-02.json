@@ -1,0 +1,208 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-02",
+ "acces": [
+  {
+   "adresse": 16971,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x9dae]",
+   "base": "rip",
+   "index": null,
+   "disp": 40366,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 16978,
+   "mnemonic": "cmp",
+   "ligne": "cmp qword ptr [rbx + 0x210], -1",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17008,
+   "mnemonic": "cmp",
+   "ligne": "cmp r12, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17021,
+   "mnemonic": "mov",
+   "ligne": "mov r13, qword ptr [rbx + 0x208]",
+   "base": "rbx",
+   "index": null,
+   "disp": 520,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe208 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17046,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x228], r13d",
+   "base": "rbx",
+   "index": null,
+   "disp": 552,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe228 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17053,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rbx + 0x210]",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17069,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x118b]",
+   "base": "rip",
+   "index": null,
+   "disp": -4491,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17083,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 176"
+  },
+  {
+   "adresse": 17092,
+   "mnemonic": "lea",
+   "ligne": "lea r9, [rsp + 0x20]",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 176"
+  },
+  {
+   "adresse": 17097,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp], 0",
+   "base": "rsp",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "[rsp+0] ≤ cadre 176"
+  },
+  {
+   "adresse": 17105,
+   "mnemonic": "mov",
+   "ligne": "mov rcx, qword ptr [rbx + 0x210]",
+   "base": "rbx",
+   "index": null,
+   "disp": 528,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe210 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17112,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rbx + 0x238]",
+   "base": "rbx",
+   "index": null,
+   "disp": 568,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe238 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 17122,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x11b8]",
+   "base": "rip",
+   "index": null,
+   "disp": -4536,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17132,
+   "mnemonic": "lea",
+   "ligne": "lea r14, [rip + 0xa1ad]",
+   "base": "rip",
+   "index": null,
+   "disp": 41389,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17141,
+   "mnemonic": "cmp",
+   "ligne": "cmp ecx, dword ptr [r14 + 0x1000]",
+   "base": "r14",
+   "index": null,
+   "disp": 4096,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xf4a0 ∈ JOURNAL [0xe4a0, 0xf4b0)"
+  },
+  {
+   "adresse": 17157,
+   "mnemonic": "mov",
+   "ligne": "mov rdx, qword ptr [r14 + rax]",
+   "base": "r14",
+   "index": "rax",
+   "disp": 0,
+   "classe": "plan-garde",
+   "preuve": "index rax ∈ [0, 0) (l'invariant de boucle), cible 0xe4a0 + 0×1 ≤ fin JOURNAL 0xf4b0"
+  },
+  {
+   "adresse": 17180,
+   "mnemonic": "mov",
+   "ligne": "mov al, byte ptr [r14 + rax + 8]",
+   "base": "r14",
+   "index": "rax",
+   "disp": 8,
+   "classe": "plan-garde",
+   "preuve": "index rax ∈ [0, 0) (l'invariant de boucle), cible 0xe4a8 + 0×1 ≤ fin JOURNAL 0xf4b0"
+  },
+  {
+   "adresse": 17185,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [rbx + rdx + 0x238], al",
+   "base": "rbx",
+   "index": "rdx",
+   "disp": 568,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-02-4321-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 17221,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x1203]",
+   "base": "rip",
+   "index": null,
+   "disp": -4611,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 17227,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x228], 0",
+   "base": "rbx",
+   "index": null,
+   "disp": 552,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe228 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  }
+ ]
+}

@@ -1,0 +1,181 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-08",
+ "acces": [
+  {
+   "adresse": 51218,
+   "mnemonic": "mov",
+   "ligne": "mov rbx, qword ptr [rsp + 0x310]",
+   "base": "rsp",
+   "index": null,
+   "disp": 784,
+   "classe": "pile",
+   "preuve": "[rsp+784] ≤ cadre 800"
+  },
+  {
+   "adresse": 51226,
+   "mnemonic": "mov",
+   "ligne": "mov rdi, qword ptr [rsp + 0x300]",
+   "base": "rsp",
+   "index": null,
+   "disp": 768,
+   "classe": "pile",
+   "preuve": "[rsp+768] ≤ cadre 800"
+  },
+  {
+   "adresse": 51234,
+   "mnemonic": "mov",
+   "ligne": "mov rsi, qword ptr [rsp + 0x308]",
+   "base": "rsp",
+   "index": null,
+   "disp": 776,
+   "classe": "pile",
+   "preuve": "[rsp+776] ≤ cadre 800"
+  },
+  {
+   "adresse": 51352,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 800"
+  },
+  {
+   "adresse": 51362,
+   "mnemonic": "mov",
+   "ligne": "mov word ptr [r10], ax",
+   "base": "r10",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51366,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [r14 + 6]",
+   "base": "r14",
+   "index": null,
+   "disp": 6,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 6 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 51370,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r10 + 2], r11b",
+   "base": "r10",
+   "index": null,
+   "disp": 2,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+2 = rsp+2 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51374,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [r10 + 3], 0x31736c74",
+   "base": "r10",
+   "index": null,
+   "disp": 3,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+3 = rsp+3 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51382,
+   "mnemonic": "mov",
+   "ligne": "mov word ptr [r10 + 7], 0x2033",
+   "base": "r10",
+   "index": null,
+   "disp": 7,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+7 = rsp+7 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51389,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [r10 + 9]",
+   "base": "r10",
+   "index": null,
+   "disp": 9,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+9 = rsp+9 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51400,
+   "mnemonic": "mov",
+   "ligne": "mov al, byte ptr [r13 + rcx]",
+   "base": "r13",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P2 + index rcx ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-08-c8c8.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 51405,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r11 + rcx], al",
+   "base": "r11",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+9]+0 = rsp+9 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51417,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r11], dil",
+   "base": "r11",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+9]+0 = rsp+9 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51430,
+   "mnemonic": "mov",
+   "ligne": "mov al, byte ptr [r15 + rcx]",
+   "base": "r15",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P4 + index rcx ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-08-c8e6.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 51434,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r11 + rcx], al",
+   "base": "r11",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+9]+0 = rsp+9 ≤ cadre 800 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51443,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [r14 + rdi]",
+   "base": "r14",
+   "index": "rdi",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r14 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-08-c8f3-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 51451,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], rbx",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 800"
+  }
+ ]
+}

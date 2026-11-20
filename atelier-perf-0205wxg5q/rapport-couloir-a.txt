@@ -1,0 +1,10 @@
+LE COULOIR A — LA PARITÉ BASELINE (la mesure avant, R11)
+
+LE CONSTAT SUR PIÈCES (l13.o, gcc -O2) : 0 instruction(s) SIMD — la référence n'emploie PAS SSE2 sur ces boucles (les boucles d'octets GPR du compilateur)
+
+loupe-13 (la recherche d'octet, fenêtre 4 096 o, motif 16 o) :
+  LE BRAS T (la notation GPR scellée + le memcmp scellé) : médiane 123460 instructions/op, IQR 2380 (n=15, la graine 20261120)
+  LE BRAS C (gcc -O2, 1 call memcmp repointé au SCELLÉ libc-02) : médiane 115292, IQR 2380
+  LE RATIO T/C : 1.07× — la parité À PRENDRE (le chemin SSE2 du point 1)
+
+LA CONVENTION DE PARITÉ : le même moteur (Unicorn, le compte par hook), la bibliothèque tenue ÉGALE (les DEUX bras au memcmp SCELLÉ libc-02 — le call du bras C repointé), les mêmes vecteurs (la graine 20261120), la confrontation comportementale aux vecteurs (zéro divergence — l'assertion au code).

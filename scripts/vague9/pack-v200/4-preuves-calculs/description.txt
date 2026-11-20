@@ -1,0 +1,3 @@
+TRIADE_preuves_et_calculs_v0.20.0.pdf
+Les preuves et calculs v0.20.0 — les huit pièces verbatim de la vague 9 : la sûreté mémoire au plancher (2,006/2,098 déchargés, 92 nommés), la batterie étendue (le sweep, 811/817), CF3 mécanisé + la non-interférence, le certificat de cristallisation + le double moteur, les deux couloirs, la campagne de tokens + le compilateur d'oracle, le tableau de bord des quatre axes, l'ancrage de transparence — avec la table des empreintes sha-256.
+sha256:efd85d579acb294950b09b79325d6394301d378364cf17db9855c2e353bc2aad

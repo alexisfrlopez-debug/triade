@@ -1,0 +1,116 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-01",
+ "acces": [
+  {
+   "adresse": 49152,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx], 0x6a09e667",
+   "base": "rcx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49158,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 4], 0xbb67ae85",
+   "base": "rcx",
+   "index": null,
+   "disp": 4,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 4 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49165,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 8], 0x3c6ef372",
+   "base": "rcx",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49172,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 0xc], 0xa54ff53a",
+   "base": "rcx",
+   "index": null,
+   "disp": 12,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 12 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49179,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 0x10], 0x510e527f",
+   "base": "rcx",
+   "index": null,
+   "disp": 16,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 16 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49186,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 0x14], 0x9b05688c",
+   "base": "rcx",
+   "index": null,
+   "disp": 20,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 20 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49193,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 0x18], 0x1f83d9ab",
+   "base": "rcx",
+   "index": null,
+   "disp": 24,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 24 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49200,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rcx + 0x1c], 0x5be0cd19",
+   "base": "rcx",
+   "index": null,
+   "disp": 28,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 28 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49207,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rcx + 0x60], 0",
+   "base": "rcx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49215,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rcx + 0x68], 0",
+   "base": "rcx",
+   "index": null,
+   "disp": 104,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 104 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+LA VARIANTE SSE2 : 200 o assemblés au RVA 0xcc00 (la marge VIERGE — le scellé intact), 6 instructions SSE2 baseline, LE ROUND-TRIP 100 % (capstone → keystone, byte-identique)
+  les étiquettes résolues : {'.balaye': '0xcc4b', '.avance16': '0xcc8f', '.queue': '0xcc95', '.trouve': '0xccad', '.absent': '0xccb2', '.refus_entree': '0xccb7', '.sortie': '0xccba'}
+
+LA CONFRONTATION : 24 vecteurs (les 15 de la mesure avant + LES 9 BORDS NOMMÉS : n ∈ {0,1,2,33,64,65,255,256,1000}, le motif ∈ {1,16,31,32}) — ZÉRO DIVERGENCE contre l'implémentation triviale (le juge Python, jamais le binaire)
+
+LA MESURE APRÈS (les mêmes vecteurs 4096/16, le même moteur) :
+  LA VARIANTE SSE2 : médiane 3928 instructions/op
+  LE SCELLÉ GPR   : médiane 122681 instructions/op
+  LE BRAS C gcc-O2 : médiane 115292 (la pièce d'avant)
+  LE RATIO SSE2/gcc-O2 : 0.03× — le coût INFÉRIEUR OU ÉGAL à gcc-O2 : L'OBJECTIF TENU
+  LE GAIN SSE2/GPR : 31.2×

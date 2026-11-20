@@ -1,0 +1,68 @@
+LA SÛRETÉ MÉMOIRE AU PLANCHER — v200 (la vague 9, l'instruction bk79jvzbm point 1)
+================================================================================
+
+LA BASE SAINE : la v110 REPRODUITE d'abord à l'identique — 52 blocs (loupe +
+tls13 + sys), 2 098 accès, les mêmes classes de départ ; la v200 n'a RETIRÉ
+aucune classification, elle a DÉCHARGÉ les 463 non-résolus de la v110 :
+
+  — PILE                : 1247 accès [rsp±k] et [rbp±k] (le repère rbp
+                           maison désormais suivi) vérifiés au cadre
+  — MÉDIÉS-CONTRAT      : 348 accès via pointeurs d'argument et
+                           chaînes arg+offset (les structures déclarées des
+                           specs I : tls13-27 P1 = 17 520 o, les contextes
+                           sha 112 o, md5 16 o…) — bornes au PRE
+  — CONSTANTS           : 191 accès [rip+disp] vers le plan
+  — PLAN-FIXE           : 189 accès aux adresses du plan (le CADRE,
+                           l'ÉCRAN, le JOURNAL, les tables .rdata, les
+                           fixtures) — la zone du layout les borne
+  — PLAN-GARDE          : 13 accès plan + index d'invariant de
+                           boucle (la garde cmp/jcc lue, l'intervalle
+                           dérivé, z3 au certificat)
+  — CONTRAT-BOUCLE      : 18 accès tampon-argument + index
+                           garde-borné par la taille du PRE (z3 : UNSAT de
+                           la négation, certificat archivé)
+  — NOMMÉS              : 92 accès à base RUNTIME — CHACUN porte sa
+                           cause, son mécanisme ET la BMC de démonstration
+                           (z3 : la négation de la sûreté est SAT sans
+                           l'invariant externe — le modèle au certificat :
+                           la borne n'est PAS statique, elle vit au champ
+                           du plan, au contrat de l'appelant ou à l'OS)
+
+LES MÉCANISMES DE LA V200 (l'extension demandée) :
+  (1) L'INFÉRENCE D'INVARIANTS DE BOUCLE — les boucles par sauts arrière,
+      DEUX familles (montantes init-0→inc→cmp-B→jb ; descendantes
+      mov-C→dec→jnz), l'intervalle du compteur au corps ;
+  (2) L'ANALYSE D'INTERVALLES — constantes, copies, inc/dec/add/sub, les
+      lea composés [x + x*s + k] (la transformée d'intervalle), les
+      masques and 2^n, les champs bornés du cadre (remplissage ≤ 384,
+      taille ≤ 2 Gio — les invariants du layout aux hypothèses) ;
+  (3) L'ANALYSE D'ALIAS — la provenance de chaque registre suivie aux
+      chaînes : le plan (lea/mov [rip]), les arguments (les structures
+      déclarées), la pile (rsp/rbp, les spills [rsp±K] suivis au dépôt et
+      au rechargement), les compteurs ;
+  (4) LE MODEL CHECKING BORNÉ — z3 sur la notation liftée : les
+      certificats UNSAT des intervalles (contrat-boucle), les certificats
+      SAT de démonstration des nommés (la preuve qu'aucune borne statique
+      n'existe sans l'invariant externe) ;
+  (5) L'INTERPROCÉDURAL AU DOMAINE SCELLÉ — les appels intra-domaine ne
+      détruisent que les volatils RÉELLEMENT écrits par le bloc visé (sa
+      notation analysée) — les chaînes survivent aux appels ;
+  (6) LES REP — l'étendue rep × N lue du mov rcx précédent, la zone la
+      borne.
+
+LE BILAN : 463 non-résolus (v110) → 92 nommés avec cause, mécanisme
+et certificat BMC ; 2006 accès DÉCHARGÉS par preuve (95.6 % des
+2 098). LES HORS-CADRE : 0 (la classe du stack-smash demeure vide).
+
+LES PIÈCES : surete_memoire_v200.csv (le tableau par bloc),
+certificats/{bloc}.json (chaque accès, sa classe, sa preuve, son
+certificat), certificats_smt/*.smt2 (les certificats z3 rejouables).
+
+L'HONNÊTETÉ : les 92 nommés ne sont PAS des échecs muets — chacun
+porte la preuve mécanique (SAT) que sa borne exige un invariant externe ;
+les causes dominantes : les pointeurs rendus par l'OS (les API Win32 —
+loupe-09), les plages gardées par des valeurs runtime (le journal de
+loupe-02 : rdx gardé par r12/r13, la borne au remplissage), les pointeurs
+de contexte chargés (le socle de tls13-27), les indices composés des
+tables de métriques (loupe-08/10). La preuve COMPLÈTE de ces accès exige
+le modèle de l'OS ou les invariants de terrain — NOMMÉS, jamais devinés.

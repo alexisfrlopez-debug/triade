@@ -1,0 +1,38 @@
+TRIADE — le pack de présentation v0.20.0 (la vague 9)
+======================================================
+
+Les CINQ documents régénérés et cohérents :
+  1-manuscrit       le manuscrit académique v0.20.0
+  2-specification   la spécification v0.15.6 (aucune règle modifiée)
+  3-coffre-fort     le Livre du Coffre v1.5 (les références alignées)
+  4-preuves-calculs les preuves v0.20.0 (les huit pièces verbatim)
+  5-presentation    la présentation du 20/11 à l'état exact
+
+La vague 9 — la fonction objectif lexicographique portée au tableau
+de bord (Sécurité > Performance > Optimisation > Coût en tokens,
+aucune compensation entre les rangs) : la sécurité au plancher
+(2 006/2 098 accès déchargés par preuve, 92 nommés avec certificat
+BMC ; les trois « tuables » re-classés équivalents-par-sweep,
+811/817 = 99,3 % ajusté à côté du brut 811/832 ; la non-interférence
+statique aux dix familles ; CF3 mécanisé 14/14 en z3 ; l'ancrage de
+transparence), la boucle de vérification (le certificat de
+cristallisation : le diff d'un bloc, 3 contre 18, les trois
+falsifications refusées ; le double moteur à l'ouverture,
+divergence 0 ; le régime oracle natif préparé ; M4 39,2/7,0/2,0 s,
+le ratio 3,5x), les deux couloirs (la parité SSE2 0,03x gcc-O2 avec
+31,2x de marge, zéro divergence aux 24 vecteurs ; AES-NI déjà le
+scellé, GHASH la frontière nommée), le coût en tokens (éditer-H2
+reproduit 2 452/40 ; l'ajout refusé pour la troisième fois ;
+composer-G 3/18, H4 falsifiée ; localiser-P reproduit 1 103/52 ; le
+compilateur d'oracle : 968 tokens supprimés, zéro token LLM ; les
+ratios au plancher 136,2x/38,0x/4,1x/2,9x), le tableau de bord des
+quatre axes généré des pièces brutes (jamais tapé à la main).
+
+LES EMPREINTES SHA-256 des cinq pièces : gravées à la présentation
+(les quatre autres) et au document de preuves (les trois pièces de
+contenu) ; le manifeste empreintes_livrables_v0.20.0.txt porte les
+CINQ — aucun document ne peut porter son propre sha-256, la
+convention nommée.
+
+Le linter inter-pièces v200 : 0 ROUGE — le build admis.
+AUCUNE valeur mesurée modifiée, AUCUN artefact scellé touché.

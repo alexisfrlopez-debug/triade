@@ -1,0 +1,86 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-18",
+ "acces": [
+  {
+   "adresse": 26442,
+   "mnemonic": "lea",
+   "ligne": "lea rbx, [rip + 0x78af]",
+   "base": "rip",
+   "index": null,
+   "disp": 30895,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 26463,
+   "mnemonic": "cmp",
+   "ligne": "cmp dword ptr [rbx + 0x22c], 0",
+   "base": "rbx",
+   "index": null,
+   "disp": 556,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe22c ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 26472,
+   "mnemonic": "cmp",
+   "ligne": "cmp dword ptr [rbx + 0x230], 0",
+   "base": "rbx",
+   "index": null,
+   "disp": 560,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe230 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 26481,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x230], 1",
+   "base": "rbx",
+   "index": null,
+   "disp": 560,
+   "classe": "plan-fixe",
+   "preuve": "plan 0xe230 ∈ CADRE 960 [0xe000, 0xe3c0)"
+  },
+  {
+   "adresse": 26491,
+   "mnemonic": "lea",
+   "ligne": "lea rsi, [rip - 0x4229]",
+   "base": "rip",
+   "index": null,
+   "disp": -16937,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 26505,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x35b7]",
+   "base": "rip",
+   "index": null,
+   "disp": -13751,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 26521,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x35df]",
+   "base": "rip",
+   "index": null,
+   "disp": -13791,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  },
+  {
+   "adresse": 26538,
+   "mnemonic": "call",
+   "ligne": "call qword ptr [rip - 0x35e8]",
+   "base": "rip",
+   "index": null,
+   "disp": -13800,
+   "classe": "constant",
+   "preuve": "rip+disp → le layout du plan"
+  }
+ ]
+}

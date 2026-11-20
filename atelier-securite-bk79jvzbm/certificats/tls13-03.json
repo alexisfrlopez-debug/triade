@@ -1,0 +1,161 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-03",
+ "acces": [
+  {
+   "adresse": 49757,
+   "mnemonic": "mov",
+   "ligne": "mov r14d, dword ptr [rbx + 0x60]",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49775,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + r14 + 0x20]",
+   "base": "rbx",
+   "index": "r14",
+   "disp": 32,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-03-c26f-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49786,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "nommé",
+   "cause": "la base rdi est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-03-c27a-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49786,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rsi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 49788,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [rbx + 0x60], r15d",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49792,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rbx + 0x68], r15",
+   "base": "rbx",
+   "index": null,
+   "disp": 104,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 104 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49805,
+   "mnemonic": "lea",
+   "ligne": "lea rdx, [rbx + 0x20]",
+   "base": "rbx",
+   "index": null,
+   "disp": 32,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 32 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49814,
+   "mnemonic": "mov",
+   "ligne": "mov dword ptr [rbx + 0x60], 0",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49823,
+   "mnemonic": "lea",
+   "ligne": "lea rdi, [rbx + r14 + 0x20]",
+   "base": "rbx",
+   "index": "r14",
+   "disp": 32,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-03-c29f-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49834,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rdi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "nommé",
+   "cause": "la base rdi est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-03-c2aa-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 49834,
+   "mnemonic": "rep movsb",
+   "ligne": "rep movsb byte ptr [rdi], byte ptr [rsi]",
+   "base": "rsi",
+   "index": null,
+   "disp": 0,
+   "_rep": null,
+   "_rep_taille": 1,
+   "classe": "médié-contrat",
+   "via": "arg:P2",
+   "preuve": "l'argument arg:P2 + 0 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 49836,
+   "mnemonic": "add",
+   "ligne": "add dword ptr [rbx + 0x60], r13d",
+   "base": "rbx",
+   "index": null,
+   "disp": 96,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 96 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  },
+  {
+   "adresse": 49840,
+   "mnemonic": "add",
+   "ligne": "add qword ptr [rbx + 0x68], r13",
+   "base": "rbx",
+   "index": null,
+   "disp": 104,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 104 (la structure du contrat I — les bornes au PRE), taille déclarée 112 o"
+  }
+ ]
+}

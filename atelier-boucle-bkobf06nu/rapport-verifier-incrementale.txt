@@ -1,0 +1,31 @@
+LE GRAPHE DE DÉPENDANCES (lu des notations assemblées)
+  loupe-01 → ['libc-01', 'loupe-02', 'loupe-03', 'loupe-04', 'loupe-07']
+  loupe-03 → ['libc-01', 'libc-02', 'libc-07', 'loupe-04']
+  loupe-04 → ['libc-01', 'libc-02', 'libc-07']
+  loupe-05 → ['tls13-01', 'tls13-02', 'tls13-03', 'tls13-04']
+  loupe-06 → ['libc-01', 'libc-02', 'libc-07']
+  loupe-07 → ['loupe-05', 'loupe-06']
+  loupe-09 → ['libc-01', 'libc-02', 'libc-07', 'loupe-01', 'loupe-10', 'loupe-11', 'loupe-12', 'loupe-14', 'loupe-15', 'loupe-16', 'loupe-17', 'loupe-18', 'win-03']
+  loupe-10 → ['loupe-08']
+  loupe-11 → ['loupe-02']
+  loupe-12 → ['loupe-02', 'loupe-14']
+  loupe-13 → ['libc-01', 'libc-02']
+  loupe-14 → ['loupe-02', 'loupe-13']
+  loupe-15 → ['loupe-02']
+  loupe-16 → ['loupe-02']
+  loupe-17 → ['loupe-07']
+  loupe-18 → ['loupe-03']
+
+LA SESSION COMPLÈTE : 18/18 round-trip VERT, l'oracle loupe-13 64/64 vecteurs VERTS — 0.31 s
+LES CERTIFICATS : 18 blocs certifiés, la racine signée Ed25519 (clé de test publique — le modèle D214/D222)
+LA CHAÎNE RECALCULÉE : VERT (chaque entrée chaînée, la signature vérifiée)
+
+LE DIFF AU BLOC loupe-08 : 3 blocs re-vérifiés (['loupe-08', 'loupe-09', 'loupe-10']) — les 15 INCHANGÉS portent leur certificat — 0.05 s contre 0.31 s la complète
+
+LES CONTRÔLES NÉGATIFS (le certificat falsifié)
+  VERT : le BLOC changé → REFUS NOMMÉ CERTIFICAT-DIVERGENT  — le rejeu complet forcé
+  VERT : le CONTRAT changé → REFUS NOMMÉ CERTIFICAT-DIVERGENT  — le rejeu complet forcé
+  VERT : la CONFIGURATION changée → REFUS NOMMÉ CERTIFICAT-DIVERGENT  — le rejeu complet forcé
+
+LES SCELLÉS INTACTES : True
+LE TEMPS TOTAL : 0.4 s

@@ -1,0 +1,285 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-07",
+ "acces": [
+  {
+   "adresse": 50827,
+   "mnemonic": "mov",
+   "ligne": "mov rbx, qword ptr [rsp + 0x60]",
+   "base": "rsp",
+   "index": null,
+   "disp": 96,
+   "classe": "pile",
+   "preuve": "[rsp+96] ≤ cadre 128"
+  },
+  {
+   "adresse": 50875,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [r14 + 0x21]",
+   "base": "r14",
+   "index": null,
+   "disp": 33,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 33 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 50907,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [r14 + 0x78]",
+   "base": "r14",
+   "index": null,
+   "disp": 120,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 120 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 50925,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [rbx + rsi]",
+   "base": "rbx",
+   "index": "rsi",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c6ed-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 50933,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 128"
+  },
+  {
+   "adresse": 50938,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11]",
+   "base": "r11",
+   "index": null,
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c6fa-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 50941,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [r10], rax",
+   "base": "r10",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50944,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 8]",
+   "base": "r11",
+   "index": null,
+   "disp": 8,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c700-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 50948,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [r10 + 8], rax",
+   "base": "r10",
+   "index": null,
+   "disp": 8,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+8 = rsp+8 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50952,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 0x10]",
+   "base": "r11",
+   "index": null,
+   "disp": 16,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c708-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 50956,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [r10 + 0x10], rax",
+   "base": "r10",
+   "index": null,
+   "disp": 16,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+16 = rsp+16 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50960,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [r11 + 0x18]",
+   "base": "r11",
+   "index": null,
+   "disp": 24,
+   "classe": "nommé",
+   "cause": "la base r11 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c710-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 50964,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [r10 + 0x18], rax",
+   "base": "r10",
+   "index": null,
+   "disp": 24,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+24 = rsp+24 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 50974,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 128"
+  },
+  {
+   "adresse": 50989,
+   "mnemonic": "mov",
+   "ligne": "mov al, byte ptr [r15 + rcx]",
+   "base": "r15",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "contrat-boucle",
+   "preuve": "l'argument arg:P2 + index rcx ∈ [0, 0) — la taille au PRE de I borne l'accès",
+   "certificat": "certificats_smt/tls13-07-c72d.smt2 (UNSAT)"
+  },
+  {
+   "adresse": 50993,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r11 + rcx], al",
+   "base": "r11",
+   "index": "rcx",
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51005,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r11], dil",
+   "base": "r11",
+   "index": null,
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51008,
+   "mnemonic": "lea",
+   "ligne": "lea rax, [rsp + 0x49]",
+   "base": "rsp",
+   "index": null,
+   "disp": 73,
+   "classe": "pile",
+   "preuve": "[rsp+73] ≤ cadre 128"
+  },
+  {
+   "adresse": 51016,
+   "mnemonic": "mov",
+   "ligne": "mov qword ptr [rsp + 0x20], rax",
+   "base": "rsp",
+   "index": null,
+   "disp": 32,
+   "classe": "pile",
+   "preuve": "[rsp+32] ≤ cadre 128"
+  },
+  {
+   "adresse": 51029,
+   "mnemonic": "lea",
+   "ligne": "lea r8, [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 128"
+  },
+  {
+   "adresse": 51034,
+   "mnemonic": "lea",
+   "ligne": "lea r9, [r14 + 1]",
+   "base": "r14",
+   "index": null,
+   "disp": 1,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 1 (la structure du contrat I — les bornes au PRE)"
+  },
+  {
+   "adresse": 51063,
+   "mnemonic": "lea",
+   "ligne": "lea r11, [rsp + 0x49]",
+   "base": "rsp",
+   "index": null,
+   "disp": 73,
+   "classe": "pile",
+   "preuve": "[rsp+73] ≤ cadre 128"
+  },
+  {
+   "adresse": 51071,
+   "mnemonic": "lea",
+   "ligne": "lea r10, [rbx + rsi]",
+   "base": "rbx",
+   "index": "rsi",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c77f-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 51082,
+   "mnemonic": "mov",
+   "ligne": "mov dl, byte ptr [r11 + rax]",
+   "base": "r11",
+   "index": "rax",
+   "disp": 0,
+   "classe": "pile",
+   "preuve": "le pointeur de PILE [rsp+0]+0 = rsp+0 ≤ cadre 128 (le tampon local du bloc)"
+  },
+  {
+   "adresse": 51086,
+   "mnemonic": "mov",
+   "ligne": "mov byte ptr [r10 + rax], dl",
+   "base": "r10",
+   "index": "rax",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base r10 est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/tls13-07-c78e-sat.smt2 (SAT — la borne externe)"
+  },
+  {
+   "adresse": 51113,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [r14 + 0x78]",
+   "base": "r14",
+   "index": null,
+   "disp": 120,
+   "classe": "médié-contrat",
+   "via": "arg:P3",
+   "preuve": "l'argument arg:P3 + 120 (la structure du contrat I — les bornes au PRE)"
+  }
+ ]
+}

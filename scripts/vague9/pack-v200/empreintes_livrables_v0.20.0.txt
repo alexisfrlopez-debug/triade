@@ -1,0 +1,12 @@
+LES EMPREINTES SHA-256 DES CINQ PIÈCES DU PACK v0.20.0
+(gravées à la présentation — les quatre autres — et au document de
+preuves — les trois pièces de contenu ; aucun document ne porte son
+propre sha-256, le présent manifeste porte les CINQ — la convention
+du pack ; le linter inter-pièces v200 re-vérifie chaque empreinte
+au build : 0 ROUGE exigé)
+
+840180dae5b030b8dedeaac7e366742c0e172ac9b10b0412833a002102e28736  1-manuscrit/TRIADE_manuscrit_v0.20.0.pdf
+395fc3bb49a06378894cc9998ca583be484677358a7fb7078fcd0d9b90c89f4b  2-specification/Protocole_TRIADE_v0.15.6_Specification.pdf
+d52dd7a589f891ae9e6029e9759eb03de519b3007e0adad96323b18d6ef17fd5  3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.5.pdf
+efd85d579acb294950b09b79325d6394301d378364cf17db9855c2e353bc2aad  4-preuves-calculs/TRIADE_preuves_et_calculs_v0.20.0.pdf
+852da8ecb02570073720c9d5328185d79435755698befd89e7b05740354e0798  5-presentation/TRIADE_presentation_20261120_v200.pdf

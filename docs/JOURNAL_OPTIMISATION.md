@@ -121,3 +121,94 @@ futur build loupe exigera la cérémonie d'ère du développeur (le sceau-I,
 la clé hors-ligne) et le témoin de SON run terrain (temoin-shani.txt).
 
 ---
+
+---
+
+## OPT-06 — LA VAGUE 9, LE BILAN DES TROIS LEVIERS DU CERTIFICAT, DU DOUBLE MOTEUR ET DE L'OUVERTURE (l'instruction bkobf06nu, D225 — 20/11/2026)
+
+**Le hot path, MESURÉ AVANT TOUT.** La session complète de vérification :
+18/18 round-trip + l'oracle loupe-13 64/64 vecteurs = 0,31 s (le harnais,
+cette machine) — le chemin chaud : LA RE-VÉRIFICATION des blocs INCHANGÉS
+à chaque geste (la cristallisation 12 rebuilds, les oracles re-joués).
+
+**Les leviers.** (a) LE CERTIFICAT DE CRISTALLISATION : le graphe de
+dépendances lu des notations (les arêtes d'appel — jamais déclaré à la
+main) ; le diff d'UN bloc (loupe-08) re-vérifie 3 blocs (lui + loupe-09/10
+ses dépendants transitifs) en 0,05 s contre 0,31 s la complète — les 15
+inchangés portent leur certificat chaîné-signé (Ed25519, clé de test
+publique — le modèle D214) ; les TROIS falsifications REFUSÉES nommément
+(CERTIFICAT-DIVERGENT — le rejeu complet forcé). (b) LE DOUBLE MOTEUR À
+L'OUVERTURE : le volume sous le vrai qemu-x86_64 (le témoin 196 609 o au
+fichier entier) — 0,03 s contre 20,0 s à l'échantillon Unicorn,
+DIVERGENCE=0 ; le compteur par bloc au hook du harnais (l'écart nommé :
+le qemu de Debian SANS CONFIG_PLUGIN). (c) LE RÉGIME ORACLE NATIF :
+PRÉPARÉ (le runner, les scénarios, la signature, la confrontation
+fail-closed) — son exécution au CI, jamais confondu avec le terrain.
+
+**La mesure M4 (la liste fixe, n=5, l'horloge monotone).** AVANT 39,2 s
+[39,2–39,7] · FROID 6,9 s · CHAUD 7,0 s (le run à 29,6 s : l'AUDIT 1/10
+VÉCU) · le bras C 2,0 s — LE RATIO DE RÉGIME 3,5× (le seuil ×10 tenu).
+
+**Le sort.** CONSACRÉ AU LABORATOIRE (le certificat et le double moteur) ;
+le natif au geste du maître (l'armement du runner CI).
+
+---
+
+## OPT-07 — LES DEUX COULOIRS DE PERFORMANCE : LA PARITÉ SSE2 ET LES CHEMINS ISA (l'instruction 0205wxg5q, D226 — 20/11/2026)
+
+**Le constat d'abord (R11).** Le gcc -O2 des blocs contrôlés n'emploie PAS
+SSE2 (le décompte SIMD des .text : 0) — la parité se joue au GPR : loupe-13
+le scellé 1,07× gcc-O2 (la bibliothèque tenue ÉGALE : les deux bras au
+memcmp SCELLÉ, le call du bras C repointé).
+
+**La variante SSE2 baseline (loupe-13-sse2 à la marge 0xCC00).** Le scan
+16 octets à la fois (movdqu + pcmpeqb + pmovmskb — le baseline du x86-64,
+AUCUNE extension au-delà, AUCUN dispatch : la garantie constructeur), le
+premier octet diffusé sans pshufb (SSSE3 hors baseline), chaque candidat
+confirmé au memcmp scellé : round-trip 100 %, zéro divergence aux 24
+vecteurs, **3 928 instructions/op contre 115 292 gcc-O2 — le ratio 0,03×,
+l'objectif « ≤ gcc-O2 » tenu avec 31,2× de marge**.
+
+**Le couloir B.** AES-NI : LA DESCENTE EST DÉJÀ LE SCELLÉ (l'ère l'exige,
+I3 de tls13-15 — 26 instructions/bloc) ; la variante à dispatch MESURÉE
+PLUS LENTE (45 contre 26 : le prix du sondage par bloc — la leçon) ;
+GHASH PCLMULQDQ : la frontière nommée I5, le chantier suivant ; x25519 :
+la pertinence tranchée par la mesure (O(1)/session).
+
+**Le sort.** La variante SSE2 CONSACRÉE AU LABORATOIRE (copie de
+laboratoire à la marge — l'embarquement exigera la cérémonie d'ère).
+
+---
+
+## OPT-08 — LE COÛT EN TOKENS AU-DELÀ D'OPT-05 : LE COMPILATEUR D'ORACLE, LA BIBLIOTHÈQUE, LES RATIOS AU PLANCHER (l'instruction uagz3fby7, D227 — 20/11/2026)
+
+**La campagne (quatre cellules n=18, la graine 20261117, le tokenizer
+natif lu du champ usage).** éditer-H2 REPRODUIT (18/18, 2 452/40) ;
+ajouter-H3 REFUSÉ POUR LA TROISIÈME FOIS (0/18 HORS-FORMAT — le format
+d'ajout demeure la notation complète) ; composer-G (la cellule nouvelle :
+l'index des scellés au prompt) : 3/18, 4 846 contre 5 079 — H4 FALSIFIÉE
+(l'héritage déclaré n'achète pas la réponse : le domaine composait déjà
+par appels) ; localiser-P REPRODUIT (18/18, 1 103/52 — le pointeur seul
+tenu).
+
+**Le compilateur d'oracle.** Le gabarit structuré des specs I → le code
+généré PAR SCRIPT, zéro token LLM : **968 tokens supprimés aux 3 unités
+(323/unité)** — la mesure : la longueur cl100k du code généré (ce que
+l'agent n'émet plus).
+
+**Les ratios au plancher (la méthode nommée).** éditer-H2 136,2× (le
+matériau relu domine) ; localiser-P 38,0× ; ajouter-H3 4,1× ; composer-G
+2,9× — la convention de périmètre : les trois champs consignés séparément.
+
+**Le sort.** Le compilateur CONSACRÉ ; l'ajout par hunks REFUSÉ
+DÉFINITIVEMENT en l'état (trois falsifications consignées).
+
+---
+
+## OPT-09 — LA VAGUE 9 EN UN LIGNE : LA SÉCURITÉ AU PLANCHER SANS CÉDER UN POINT (D224-D228 — 20/11/2026)
+
+La fonction objectif lexicographique tenue : la SÉCURITÉ gagnée (2 006/2 098
+déchargés, 811/817 ajusté, CF3 mécanisé 14/14, la non-interférence aux dix
+familles, l'ancrage de transparence) SANS céder la performance (M4 3,5×
+tenu), l'optimisation (OPT-06/07/08 consacrés) ni les tokens (le pointeur
+seul reproduit 1 103/52) — le tableau de bord des quatre axes le porte.

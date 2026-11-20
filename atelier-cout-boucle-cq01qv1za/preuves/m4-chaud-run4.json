@@ -1,7 +1,7 @@
 {
  "mode": "chaud",
  "run": 4,
- "total_s": 29.43,
+ "total_s": 29.708,
  "etapes": [
   {
    "etape": "garde-sceau-I",
@@ -12,21 +12,21 @@
   },
   {
    "etape": "cristallisation-12-concourants",
-   "secondes": 4.213,
+   "secondes": 4.347,
    "code": 0,
    "console": "sha par rebuild : r1=4d119b22273c, r2=4d119b22273c, r3=4d119b22273c, r4=4d119b22273c, r5=4d119b22273c, r6=4d119b22273c, r7=4d119b22273c, r8=4d119b22273c, r9=4d119b22273c, r10=4d119b22273c, r11=4d119b22273c, r12=4d119b22273c ; pièce d'origine intacte : True",
    "stderr": ""
   },
   {
    "etape": "round-trip-notation-1",
-   "secondes": 0.215,
+   "secondes": 0.214,
    "code": 0,
    "console": "=== LE ROUND-TRIP R5 — la notation de campagne livrée (loupe-01 × T) ===\n[R5] 403 o, 96 instructions — keystone == capstone == keystone, l'octet juge ; sha256 97543a56657d9bd14362303ef6ddfca2e64824b6e830e47eefad421d22ee08a3\n=== LE ROUND-TRIP R5 VERT ===\n",
    "stderr": ""
   },
   {
    "etape": "round-trip-notation-2",
-   "secondes": 0.214,
+   "secondes": 0.209,
    "code": 0,
    "console": "=== LE ROUND-TRIP R5 — la notation de campagne livrée (loupe-01 × T) ===\n[R5] 403 o, 96 instructions — keystone == capstone == keystone, l'octet juge ; sha256 97543a56657d9bd14362303ef6ddfca2e64824b6e830e47eefad421d22ee08a3\n=== LE ROUND-TRIP R5 VERT ===\n",
    "stderr": ""
@@ -36,32 +36,32 @@
    "secondes": 0.465,
    "code": 0,
    "console": "=== L'ORACLE DU BLOC — l'unité 1 (loupe-01 × bras T) : les vecteurs du contrat, le juge = le modèle indépendant ===\n\n-- V1 : le scénario (les trois formes + le vide) --\n[VERT] V1:temoin-1.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-1.bin, taille 1, vue 0, curseur 0, remplissage 1, le tampon == la découpe du modèle\n[VERT] V1:temoin-1.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:temoin-384.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-384.bin, taille 384, vue 0, curseur 0, remplissage 384, le tampon == la découpe du modèle\n[VERT] V1:temoin-384.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:temoin-3f.bin-la-session-nee-entiere — le cadre champ à champ : chemin temoin-3f.bin, taille 196609, vue 0, curseur 0, remplissage 384, le tampon == la découpe du modèle\n[VERT] V1:temoin-3f.bin-le-panneau-ne — le panneau 48 o == (md5, sha256) hashlib du fichier ENTIER\n[VERT] V1:vide.bin-le-fichier-vide — le vide s'ouvre : remplissage 0, le panneau du vide == (d41d8cd9…, e3b0c442…) — les empreintes du vide\n\n-- V2 : les rejets d'OS --\n[VERT] V2:E1-absent — le chemin absent → -2 ABSENT\n[VERT] V2:E2-verrouille — le fichier tenu par un autre détenteur → -7 VERROUILLÉ\n[VERT] V2:E3-acces-refuse — l'accès refusé → -6 SYSTÈME, gle 5 consigné au journal du harnais (I4)\n\n-- V3 : les bornes de l'argument --\n[VERT] V3:Q2-la-borne-2-Gio — la taille 2 Gio + 1 → -3, la poignée REFERMÉE AVANT le retour (comptée), le cadre re-vierge — jamais une poignée pendante\n[VERT] V3:E4-la-session-double — l'ouverture sur session ouverte → -5, le cadre ET le panneau relus identiques — l'ancien fichier INTACT\n[VERT] V3:P1-le-chemin-trop-long — 260 caractères sans NUL → -5 (l'argument invalide), RIEN au cadre — jamais un débordement\n\n-- V4 : la falsification demandée --\n[VERT] V4:la-taille-mutee-l-ecran-attendu-diverge — la taille mutée 384 → 385 au cadre : l'écran attendu (« taille=384 remplissage=384 ») DIVERGE de l'état lu (« taille=385 remplissage=384 ») — l'oracle à scénarios échoue, LA FALSIFICATION DEMANDÉE : le juge lit l'état, jamais le modèle\n\n=== L'ORACLE DU BLOC : 14 VERT, 0 ROUGE — VERT ===\n",
-   "stderr": "[memo] temoin-3f.bin : RELEVÉ jugé (le mémo vivant)\n[memo] scellé : 2 entrées, racine 3664e8f5da98e328…, compteur de runs 9, 1 relevé(s) jugé(s) sur 1 session ≥ 64 Kio\n"
+   "stderr": "[memo] temoin-3f.bin : RELEVÉ jugé (le mémo vivant)\n[memo] scellé : 2 entrées, racine af535a7c44f89370…, compteur de runs 9, 1 relevé(s) jugé(s) sur 1 session ≥ 64 Kio\n"
   },
   {
    "etape": "build-recomposition-loupe-02",
-   "secondes": 0.475,
+   "secondes": 0.48,
    "code": 0,
-   "console": "=== LE BUILD DE CAMPAGNE — l'unité 2 (loupe-02 × bras T, D204) : la recomposition de la pièce depuis le plan ===\n[auteur] loupe-02 de campagne résolu : 292 o, 79 instructions, 8 étiquettes, 28 o de padding (slot 0x140)\n[assemblage] 18/18 notations : round-trip R5 vert — 17 scellées aux mesures d'arrêt (D161 tenu) + loupe-02 de campagne 292 o (LA mesure de la pièce)\n[oracle] structurel : 43 verrous PASS (le réseau des specs, les feuilles IAT par bloc, les déplacements RIP aux symboles du plan, AUCUN syscall, LES SLOTS DISJOINTS — les 26 posés)\n[audit msx64] 78 appels IAT AUDITÉS — l'alignement 16 VERT partout, chaque argument 5+ ÉCRIT À SON SLOT [rsp+0x20+] (la convention, jamais la pièce — la classe de l'Entrée 207 gardée pour toujours)\n[scellés] les TROIS ancres R7 relues : selftest.exe (M1) · demo.exe 0.3.0 (la boucle) · proxy.exe 1.0.0 (M9) — INTACTES\n[R7] LA DOUBLE PREUVE des 8 héritages : libc-01/02/07 (M1) + win-03 (démo) + tls13-01..04 (M9) + la table K — les extraits des SCELLÉS == les notations d'origine ré-assemblées == les octets qui seront posés AUX MÊMES adresses\n[PE] loupe.exe : 127 488 o  QUATRE sections (.text la minilibc + la boucle scellées · .rdata les pièces + l'IAT + la machinerie + la porte R10 + K[64] · .text2 les 18 blocs + la famille sha scellée · .data LE CADRE né MIROIR DU CADRE_VIERGE [zéros + la poignée INVALIDE @+528 — l'Entrée 206])  entrée 0x5c00 (WinMain)  WINDOWS_GUI  LA COMPOSITION INTÉGRALE comptée (chaque octet : bloc  pièce  int3 ou marge zéro)\n[différentiel] 11 plage(s) modifiée(s) (284 o en tout), TOUTES au slot loupe-02 [0x3440, 0x3580) et à la porte R10 — l'écart CONFINÉ, nommé\n[pièce] /home/z/my-project/depot/scripts/campagne_d204/unite-02-T/piece/loupe.exe : 127488 o, sha256 98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e\n=== LE BUILD DE CAMPAGNE VERT : la pièce recomposée du plan — verrous 121, l'écart au scellé confiné au slot loupe-02 ===\n",
+   "console": "=== LE BUILD DE CAMPAGNE — l'unité 2 (loupe-02 × bras T, D204) : la recomposition de la pièce depuis le plan ===\n[auteur] loupe-02 de campagne résolu : 292 o, 79 instructions, 8 étiquettes, 28 o de padding (slot 0x140)\n[assemblage] 18/18 notations : round-trip R5 vert — 17 scellées aux mesures d'arrêt (D161 tenu) + loupe-02 de campagne 292 o (LA mesure de la pièce)\n[oracle] structurel : 43 verrous PASS (le réseau des specs, les feuilles IAT par bloc, les déplacements RIP aux symboles du plan, AUCUN syscall, LES SLOTS DISJOINTS — les 26 posés)\n[audit msx64] 78 appels IAT AUDITÉS — l'alignement 16 VERT partout, chaque argument 5+ ÉCRIT À SON SLOT [rsp+0x20+] (la convention, jamais la pièce — la classe de l'Entrée 207 gardée pour toujours)\n[scellés] les TROIS ancres R7 relues : selftest.exe (M1) · demo.exe 0.3.0 (la boucle) · proxy.exe 1.0.0 (M9) — INTACTES\n[R7] LA DOUBLE PREUVE des 8 héritages : libc-01/02/07 (M1) + win-03 (démo) + tls13-01..04 (M9) + la table K — les extraits des SCELLÉS == les notations d'origine ré-assemblées == les octets qui seront posés AUX MÊMES adresses\n[PE] loupe.exe : 127 488 o  QUATRE sections (.text la minilibc + la boucle scellées · .rdata les pièces + l'IAT + la machinerie + la porte R10 + K[64] · .text2 les 18 blocs + la famille sha scellée · .data LE CADRE né MIROIR DU CADRE_VIERGE [zéros + la poignée INVALIDE @+528 — l'Entrée 206])  entrée 0x5c00 (WinMain)  WINDOWS_GUI  LA COMPOSITION INTÉGRALE comptée (chaque octet : bloc  pièce  int3 ou marge zéro)\n[différentiel] 11 plage(s) modifiée(s) (284 o en tout), TOUTES au slot loupe-02 [0x3440, 0x3580) et à la porte R10 — l'écart CONFINÉ, nommé\n[pièce] /home/z/my-project/projet/triade/scripts/campagne_d204/unite-02-T/piece/loupe.exe : 127488 o, sha256 98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e\n=== LE BUILD DE CAMPAGNE VERT : la pièce recomposée du plan — verrous 121, l'écart au scellé confiné au slot loupe-02 ===\n",
    "stderr": ""
   },
   {
    "etape": "oracle-du-bloc-loupe-02 (parallèle)",
-   "secondes": 23.193,
+   "secondes": 23.286,
    "code": 0,
    "console": "=== L'ORACLE DU BLOC — l'unité 2 (loupe-02 × bras T) : les vecteurs du contrat, le juge = le modèle indépendant ===\n\n-- V1 : le différentiel (les témoins + le scellé) --\n[VERT] V1:temoin-1.bin-la-fenetre-nee-a-l-ouverture — loupe-01 scellé a appelé la notation de campagne : remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-bornee-a-2-decalages — 2 décalages valides (les frontières + la graine 20261114) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:temoin-384.bin-la-fenetre-nee-a-l-ouverture — loupe-01 scellé a appelé la notation de campagne : remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-bornee-a-24-decalages — 24 décalages valides (les frontières + la graine 20261114) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:temoin-3f.bin-la-fenetre-nee-a-l-ouverture — loupe-01 scellé a appelé la notation de campagne : remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-bornee-a-1003-decalages — 1003 décalages valides (les frontières + la graine 20261114) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:proxy.exe-la-fenetre-nee-a-l-ouverture — loupe-01 scellé a appelé la notation de campagne : remplissage 384 == min(384, 65024)\n[VERT] V1:proxy.exe-la-fenetre-bornee-a-1003-decalages — 1003 décalages valides (les frontières + la graine 20261114) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture-sans-fenetre — le vide s'ouvre sans fenêtre (loupe-01 saute l'appelé) — remplissage 0\n[VERT] V1:vide.bin-aucune-fenetre-valide — sur le vide, décalage 0 ≥ taille 0 → -3 HORS-BORNES\n[VERT] V1:la-vue-et-le-curseur-intacts — la lecture à 4096 ne déplace NI la vue (64) NI le curseur (65)\n\n-- V2 : le recouvrement du journal --\n[VERT] V2:les-bords-de-fenetre — le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant (fenêtre−16) et l'après (fenêtre+384) IGNORES — l'édition survit au défilement\n[VERT] V2:le-journal-intact — loupe-02 ne écrit JAMAIS au journal (I2 : la lecture ne touche que le tampon du cadre)\n[VERT] V2:cinq-entrees-dont-une-non-alignee — cinq entrées dedans (fen+5 NON ALIGNÉE comprise) — le tampon == le modèle\n\n-- V3 : les rejets --\n[VERT] V3:E1-sans-session — la session fermée → -4 SESSION, rien lu\n[VERT] V3:E2-le-decalage-non-aligne — 40 non multiple de 16 → -5 ENTRÉE, le tampon ET le remplissage INTACTS (rien lu)\n[VERT] V3:E3a-le-decalage-a-la-taille — 384 == la taille → -3 HORS-BORNES, rien lu\n[VERT] V3:E3b-le-decalage-au-dela — 400 > la taille → -3 HORS-BORNES, rien lu\n[VERT] V3:E3c-le-decalage-immense — 2^40 → -3 HORS-BORNES (u64, jamais signé), rien lu\n\n-- V4 : l'échec système --\n[VERT] V4:le-readfile-en-echec — rax=-6, remplissage 0 == 0 (fail-closed), le gle CONSIGNÉ au journal du harnais : [('GetLastError', 1117)]\n[VERT] V4:la-session-survit — l'échec ne clôt PAS la session : la lecture suivante est verte, le tampon == le témoin entier\n\n-- V5 : la falsification demandée --\n[VERT] V5:l-octet-mute-l-etat-lu-diverge — la lecture d'abord VERT (le tampon == le modèle), l'octet 3 muté 0x90 → ff : l'état lu DIVERGE du modèle — la falsification est DÉTECTABLE (le juge lit l'état)\n\n=== L'ORACLE DU BLOC : 22 VERT, 0 ROUGE — VERT ===\n",
-   "stderr": "[audit] le run 10 — les tranches re-exécutées vivantes sous Unicorn, la preuve d'identité\n[audit] vue pré-posée : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)\n[audit] V2 : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)\n[audit] temoin-3f.bin : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s) champ à champ\n[memo] V1 temoin-3f.bin : RELEVÉ jugé\n[memo] vue pré-posée : RELEVÉ jugé\n[memo] V2 : RELEVÉ jugé\n[memo] scellé : 2 entrées, racine 3664e8f5da98e328…, compteur de runs 10, 3 relevé(s) jugé(s) sur 3 sessions ≥ 64 Kio\n"
+   "stderr": "[audit] le run 10 — les tranches re-exécutées vivantes sous Unicorn, la preuve d'identité\n[audit] vue pré-posée : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)\n[audit] temoin-3f.bin : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s) champ à champ\n[audit] V2 : la re-exécution vivante (Unicorn) confrontée au mémo — 0 écart(s)\n[memo] V1 temoin-3f.bin : RELEVÉ jugé\n[memo] vue pré-posée : RELEVÉ jugé\n[memo] V2 : RELEVÉ jugé\n[memo] scellé : 2 entrées, racine af535a7c44f89370…, compteur de runs 10, 3 relevé(s) jugé(s) sur 3 sessions ≥ 64 Kio\n"
   },
   {
    "etape": "epreuve-scenario-posix",
-   "secondes": 0.302,
+   "secondes": 0.305,
    "code": 0,
    "console": "[extraction] les DEUX fonctions pures lues du scénario livré (scenario-unite02.py) par AST — exécutées VERBATIM\n[VERT] le modèle du juge == le contre-modèle : 2000 cas aléatoires (les tailles 1/16/384/385/196609/alea, les journaux 0-5 entrées)\n[VERT] les décalées du terrain : multiples de 16, < taille, UNIQUES, les frontières couvertes (0 et la dernière valide)\nL'ÉPREUVE POSIX DU SCÉNARIO EST VERTE — le juge livré dit la même chose que le contre-modèle indépendant\n",
    "stderr": ""
   },
   {
    "etape": "assemblage-kits",
-   "secondes": 0.25,
+   "secondes": 0.261,
    "code": 0,
    "console": "=== L'ASSEMBLAGE DES DEUX KITS DE L'UNITÉ 2 (loupe-02 LIRE) ===\n[témoins] la génération FIXE recoupée : les QUATRE == la gravure du kit 01 octet pour octet\n[py_compile] les DEUX scénarios compilent\n[kit T] 10 pièces gravées, l'extraction vierge 10/10 VERT — kit-unite-loupe-02-T-20261114.zip\n[kit C] 10 pièces gravées, l'extraction vierge 10/10 VERT — kit-unite-loupe-02-C-20261114.zip\n[bac] les DEUX kits versés à /home/z/my-project/download/kits-unite-02\n\nLES DEUX KITS DE L'UNITÉ 2 SONT ASSEMBLÉS, GRAVÉS ET ÉPROUVÉS — prêts pour la livraison au coffre /test\n",
    "stderr": ""

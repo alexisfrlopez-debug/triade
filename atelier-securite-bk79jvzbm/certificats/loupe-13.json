@@ -1,0 +1,28 @@
+{
+ "domaine": "loupe",
+ "bloc": "loupe-13",
+ "acces": [
+  {
+   "adresse": 22336,
+   "mnemonic": "mov",
+   "ligne": "mov rax, qword ptr [rsp + 0x28]",
+   "base": "rsp",
+   "index": null,
+   "disp": 40,
+   "classe": "pile",
+   "preuve": "[rsp+40] ≤ cadre 160"
+  },
+  {
+   "adresse": 22407,
+   "mnemonic": "lea",
+   "ligne": "lea rcx, [rbx + r15]",
+   "base": "rbx",
+   "index": "r15",
+   "disp": 0,
+   "classe": "nommé",
+   "cause": "la base rbx est une VALEUR RUNTIME (chargée ou recomputée) — la borne vit à l'INVARIANT EXTERNE (le champ du plan, le contrat de l'appelant, l'OS)",
+   "bmc": "SAT sans invariant externe — la preuve exige la cause nommée (sat)",
+   "certificat": "certificats_smt/loupe-13-5787-sat.smt2 (SAT — la borne externe)"
+  }
+ ]
+}

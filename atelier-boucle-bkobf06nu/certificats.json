@@ -1,0 +1,172 @@
+{
+ "entrees": [
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-01",
+   "empreinte_bloc": "70ee18cacc9371241076002b16d910d2dc37aec916889034645610646bfcfd9b",
+   "empreinte_contrat": "73eb2cba7e08be20fb1786c2fc1562b1ecb94560646ab009efd8be247f9cbf48",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-01",
+   "h": "aafb4cc3a03f5b5afdffdc1d314b354ca0ff7aca566cca82fc6116c1c12c9585"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-02",
+   "empreinte_bloc": "c0c15f70e3997035a84e0affb3bd1b742a4d2035a05661ef81bd7d27a2b0294e",
+   "empreinte_contrat": "898cd4bca4fe087ea7c415b7764734e3096d53088f8c1040cfbd7c3835b1961c",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-02",
+   "h": "8e0e33cdde9fade2045b8f24cbf87fa6f302d6922a96aef9fbeaa3d02b8b465f"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-03",
+   "empreinte_bloc": "9a6c666f1d009ee862ae7b9a0df38f9cc1a49bc5dca37db0b56b2b4964fb83d6",
+   "empreinte_contrat": "2b992a47b150c13a904659584f441fc54ed312941eb12350a543ddb6b493838f",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-03",
+   "h": "ea501b7ee390a180cbb1545342a4a348a5033cd8eb9a004ab512f2b17f616275"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-04",
+   "empreinte_bloc": "a38fa9c24f1a3226b6cf9aea6e32e31255054c7f67e9ba187e62bff1aac3a3c4",
+   "empreinte_contrat": "ae040cb8e92aeb0cbd8f5bc7cc2981c75348ddfe4f690abdb0b2c4cae2783f90",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-04",
+   "h": "8c18850bdf442e309f6e1b731a25d5217d1a170ec39b6c85d4b4aecb10c59dac"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-05",
+   "empreinte_bloc": "996fb003b75bde031b75be187ec538c32f099b37eeb895a72c9dde14dfc2f9e8",
+   "empreinte_contrat": "1c935b1d47d24da33b5ea0fe743dcb9651ebd1def5e10be6696ddfb4da9981fe",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-05",
+   "h": "2b357b23a1228f0731e7403f6370a97657912c1c2841418f6b036e784ba55648"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-06",
+   "empreinte_bloc": "f656a88ab2506861ba49451cd71afb60c7ec570f7c4c68f744c07775ecd62da7",
+   "empreinte_contrat": "b1f8b5d7219407f3cd569c1b411d1c1829ffdd47ba555f1a610bc5a0cf0f21d2",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-06",
+   "h": "30a00c86eb1e82129669514590cfc4645459f744012069bac86f9fad5ee6526d"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-07",
+   "empreinte_bloc": "29c099c8906a2b17ae04731e20cfc90ecfe79c6387550db21592df5ab7a74827",
+   "empreinte_contrat": "d8bb26f0d93fa62bc74b1463d1a698e7a782c9cb04e02305e6430b0d011c680f",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-07",
+   "h": "d0a930f1f18aa97d90883f58a5a09eb08fa1cbb6dfc0b4466612e4a3f69f4724"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-08",
+   "empreinte_bloc": "bb0e1cbc1cfd0c9b5a3f918a2430c16a3204ca38b0ab7560d809c98467d490b3",
+   "empreinte_contrat": "92d3e02ca41a5523db95e9f6b4c6c7d4ec62e3fded1cf6f5ecece9c47cf53174",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-08",
+   "h": "bdf1c1394692ed8e7ee75943f7827df200f3ba441d9fc81f360a60a084d7b93c"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-09",
+   "empreinte_bloc": "ecaa4e32bf2af35ff2bcf70b49277f236f348ad9baad5b15de3e4d309e79023c",
+   "empreinte_contrat": "2eb98dd0c004c81b788952fe6930a26686ea123498a5ee8e1d229e697797e3ee",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-09",
+   "h": "4cc8e1846ffeed5805d45f11917a7c1cab376526779f22e53dbafefc2dd7c645"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-10",
+   "empreinte_bloc": "84d7af6a4d44e54f81dd6f7e50a46556c7a245980742254befc48faebc95622a",
+   "empreinte_contrat": "690fefe9cab45ee7caee6c2dfebb52cc392852db9cfd233e0b39a682ad66d27a",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-10",
+   "h": "cd1817b7143117ec7c9c4b1240f46194378a2df88b828df1f0c7a85098a80c72"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-11",
+   "empreinte_bloc": "57f35d7b597df0739d741764a654191321417b73a47b35fad87036743998bc29",
+   "empreinte_contrat": "a0eae9c969146730256451d9decdafee735f3575a95e0d40cabc381a08215dcb",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-11",
+   "h": "0077b6b1b106fe02f8115c524948171cdb44e0d40fa0516e99813e0c6715e9d4"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-12",
+   "empreinte_bloc": "530e311e4acd4ac18124bbb6bf132dad7f345b19bc266e16b16aa51f00dad971",
+   "empreinte_contrat": "b49d636c381479b8ef3a84e856d381e2283a3d1bf1af2a26abe67d48e00b5320",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-12",
+   "h": "dc4b7da2086ec293a81a473c689f863d508395b50def9f974bdf4396d4363471"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-13",
+   "empreinte_bloc": "0a7b0bd1fd8979d0e8c9058646e0a2d82f9e2829d79dd53ef03f6c5b13b7c3bc",
+   "empreinte_contrat": "01ee2ec41fdf1188758a2fa7f5e24bad302123fefc45a51bcb5868e60c31b101",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "oracle-loupe13-python",
+   "h": "04bfb88ce274116a3e7274929516d1f9a0f07520733a1e22b2b65e388a7912c0"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-14",
+   "empreinte_bloc": "f8251d53e1c568f0e280a4fa373f4fb7edddc8ec0782b143842c098439c399c0",
+   "empreinte_contrat": "cd30b9241caf8abeecca8b8f2102829bc4f82e24ba360ce980c71b6a9482515f",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-14",
+   "h": "19af9f2269246196772dd509fdfa20fc8900f88fc1939aa00b35e7373268b573"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-15",
+   "empreinte_bloc": "fc9f8a8996f26248c34d631197d388b8b6a677fa9018a55f49132a46c930e8ce",
+   "empreinte_contrat": "7fb955fea6afc96b418cc92ff17dbf642ee280570354afd7bf1f20b8c58e43e2",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-15",
+   "h": "173a644e590d1f68970444196556b46ea3d3b977072d9df632b5127f65c672d5"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-16",
+   "empreinte_bloc": "ac635ae25733d1bd982b1dfa2d35cb0f751cc3531f21da399e342dee42c13302",
+   "empreinte_contrat": "867907af24a0004632169e8b83cda9b8b73284fcf95c2dc88c308ce51c4725f3",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-16",
+   "h": "499b3f504704bf9dc2bdb2dbc6028c2d2d0855b1f71fb0ddfd5adeda1419ca89"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-17",
+   "empreinte_bloc": "7d1cc7d324cd0a68cd373cd41b07cf5023a7b3db3d68da778035ea21a91de7d0",
+   "empreinte_contrat": "3f93c3e2fd83a3cdeb4a250ce1709a2cf30daa40d6d35529051b36bfc11cdbcf",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-17",
+   "h": "079d4b4851b5314fa5230273e28660785285c60bb42eab6dfc5bc0209964e5c3"
+  },
+  {
+   "format": "TRIADE-CERT-CRIST/1",
+   "bloc": "loupe-18",
+   "empreinte_bloc": "6c52e15156b124a2395aaf6e7d2c6afc9121d26d3e3a7333d21ee547538de7d9",
+   "empreinte_contrat": "06ce11a1976798d2739f04965541acc4ce4c710cc157974a7a5b630212698ffe",
+   "empreinte_config": "c5d82ba211bd29913e08c06aa7ccce96eb1d5aabbcfb123bcd3a49de8a4936a2",
+   "oracle": "roundtrip-loupe-18",
+   "h": "c8352aea69587b0addf8333b8f92231fb2c264e70e2ce53cf190b40d561dcf63"
+  }
+ ],
+ "racine": {
+  "format": "TRIADE-CERT-CRIST/1",
+  "n": 18,
+  "racine": "c8352aea69587b0addf8333b8f92231fb2c264e70e2ce53cf190b40d561dcf63",
+  "signature": "f28f92734e793d9f459a8969e2ac1b798b0483cba46aad835943bc565d1619b5bd0c12d93c239a8d799b46b869edebeb0887a6cf556d94eccea81a22c35e0d06"
+ }
+}

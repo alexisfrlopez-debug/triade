@@ -1,0 +1,28 @@
+{
+ "domaine": "tls13",
+ "bloc": "tls13-28",
+ "acces": [
+  {
+   "adresse": 68888,
+   "mnemonic": "mov",
+   "ligne": "mov r10, qword ptr [rcx]",
+   "base": "rcx",
+   "index": null,
+   "disp": 0,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 0 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  },
+  {
+   "adresse": 68896,
+   "mnemonic": "mov",
+   "ligne": "mov r11, qword ptr [rcx + 8]",
+   "base": "rcx",
+   "index": null,
+   "disp": 8,
+   "classe": "médié-contrat",
+   "via": "arg:P1",
+   "preuve": "l'argument arg:P1 + 8 (la structure du contrat I — les bornes au PRE), taille déclarée 64 o"
+  }
+ ]
+}

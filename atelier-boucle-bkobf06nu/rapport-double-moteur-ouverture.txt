@@ -1,0 +1,13 @@
+LE PROGRAMME : 6 opérations (2 témoins : le 384 o au bord bas, LE 196 609 o AU FICHIER ENTIER — le condensé du chemin chaud de l'ouverture)
+L'ÉCHANTILLON UNICORN : 6 relevés en 19.89 s — LES COMPTEURS PAR BLOC (le hook d'instruction, la cascade INTERNE comprise) :
+    i110001    :       2 entrées
+    i110002    :       2 entrées
+    i110003    :       2 entrées
+    i110004    :       4 entrées
+    i110005    :       2 entrées
+    i110006    :       2 entrées
+    i110007    :       2 entrées
+LE VOLUME QEMU (le vrai qemu-x86_64 1:10.0.13) : 6 relevés en 0.03 s
+L'AUDIT : DIVERGENCE=0 — les deux moteurs s'accordent octet pour octet
+LA CLÉ DE MÉMO ÉTENDUE (temoin-384.bin, 384 o) : sha256 = e94811097e9deebf01e5a3d4dc4f2878f5ea330c… — le bloc ‖ l'entrée ‖ LE CONDENSÉ DU FICHIER ENTIER ‖ la config ‖ la graine ‖ l'oracle (tout ce qui détermine le résultat)
+LA CLÉ DE MÉMO ÉTENDUE (temoin-196609.bin, 196609 o) : sha256 = 60056254b5230b5f92bace7eb67fb3624309eaf5… — le bloc ‖ l'entrée ‖ LE CONDENSÉ DU FICHIER ENTIER ‖ la config ‖ la graine ‖ l'oracle (tout ce qui détermine le résultat)

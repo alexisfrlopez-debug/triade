@@ -1,0 +1,3 @@
+(a) la pièce saine : VERT
+(b) le shim muté (un octet à 0x151a) : EMPREINTE-DIVERGENTE : attendu c111510535767a40… rendu e416495ee153f895…
+LE VERDICT : VERT — le lanceur muté REFUSÉ à la première ligne, AVANT toute exécution (fail-closed)

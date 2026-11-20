@@ -1,0 +1,3 @@
+Protocole_TRIADE_v0.15.6_Specification.pdf
+La spécification v0.15.6 — l'alignement à l'état vécu de la vague 9 : la table des preuves au CF3 mécanisé (z3, l'assistant indépendant) et à la non-interférence statique, l'annexe B à la plage réelle D75-D228, la section nouveautés aux gains de la vague — AUCUNE règle R1-R11 modifiée.
+sha256:395fc3bb49a06378894cc9998ca583be484677358a7fb7078fcd0d9b90c89f4b
