@@ -1,0 +1,9 @@
+LA DIFFÉRENTIELLE NATIVE : hybride 0/559 divergences ; AVX2 0/559 divergences
+LA DIFFÉRENTIELLE SHA-NI (contre LE SCELLÉ) : 0/256 divergences
+CYCLES hybride        médiane 704 IQR 52
+CYCLES avx2           médiane 5846 IQR 138
+CYCLES scelle13       médiane 18226 IQR 4
+CYCLES shani-64blocs  médiane 180507 IQR 2646
+CYCLES shani-corps    médiane 8227 IQR 6
+CYCLES shani-dispatch médiane 202 IQR 2
+CYCLES scelle02-64blocs médiane 53243 IQR 164

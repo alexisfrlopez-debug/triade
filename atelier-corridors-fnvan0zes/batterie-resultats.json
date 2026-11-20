@@ -1,0 +1,12 @@
+{
+ "batterie": 559,
+ "unicorn": {
+  "hybride": 0,
+  "avx2-repli": 0
+ },
+ "round_trip": {
+  "hybride": true,
+  "avx2": true,
+  "shani": true
+ }
+}

@@ -1,0 +1,4 @@
+LES TROIS COULOIRS : l'hybride 314 o au RVA 0xcd00 (round-trip 100 %) ; l'AVX2 494 o au RVA 0xd100 (round-trip 100 %) ; le SHA-NI 896 o au RVA 0xd300 (round-trip 100 %) — les SCELLÉS INTACTS (la marge)
+LA BATTERIE ÉLARGIE : 559 vecteurs (64 + 3 queue · 4 chevauchants · 13 longueurs · 3 pages · 8 multi · 512 property-based, la graine 20261120)
+LA DIFFÉRENTIELLE UNICORN (hybride) : 559 vecteurs — ZÉRO DIVERGENCE
+LA DIFFÉRENTIELLE UNICORN (avx2-repli) : 559 vecteurs — ZÉRO DIVERGENCE
