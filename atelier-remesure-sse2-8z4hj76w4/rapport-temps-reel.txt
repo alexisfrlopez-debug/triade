@@ -1,0 +1,20 @@
+LE TEMPS RÉEL SUR MATÉRIEL (8z4hj76w4) — le rig natif :
+
+LA MACHINE DE RECORD : Intel(R) Xeon(R) Processor — 3200.000 MHz consignés, constant_tsc, l'affinité au cœur 1 (sched_setaffinity), RDTSCP, n=20 répétitions par cellule (≥10 exigé), la médiane et l'IQR rapportées en CYCLES ; LA LIMITE NOMMÉE : UNE SEULE MACHINE au bac — la consigne « ≥2 machines, témoins signés » attend la seconde machine et le geste du maître : JAMAIS simulé
+
+LE CONTRÔLE NÉGATIF (la variante mutée à la première ligne, le déplacement 0x28→0x29) : ATTRAPÉ à la première divergence
+
+  v2-sse2-notation       — divergences 0/88 ; cellules (4096/16):      833 cyc [IQR     15] ; (1000/32):     288 cyc [IQR     7] ; (4096/1):     109 cyc [IQR    13]
+  scelle-gpr-notation    — divergences 0/88 ; cellules (4096/16):    18227 cyc [IQR      4] ; (1000/32):    4802 cyc [IQR     2] ; (4096/1):     128 cyc [IQR     1]
+  gcc-O2                 — divergences 0/88 ; cellules (4096/16):    16040 cyc [IQR    173] ; (1000/32):    3870 cyc [IQR     3] ; (4096/1):     122 cyc [IQR     2]
+  gcc-O3                 — divergences 0/88 ; cellules (4096/16):    16046 cyc [IQR     10] ; (1000/32):    3868 cyc [IQR     3] ; (4096/1):     122 cyc [IQR     2]
+  idiome-memchr-O2       — divergences 0/88 ; cellules (4096/16):      561 cyc [IQR      4] ; (1000/32):     270 cyc [IQR     1] ; (4096/1):     101 cyc [IQR     1]
+  idiome-memchr-O3       — divergences 0/88 ; cellules (4096/16):      561 cyc [IQR      5] ; (1000/32):     270 cyc [IQR     2] ; (4096/1):     101 cyc [IQR     1]
+  libc-memmem            — divergences 0/88 ; cellules (4096/16):      933 cyc [IQR      6] ; (1000/32):     485 cyc [IQR     4] ; (4096/1):      86 cyc [IQR     1]
+
+LE COULOIR B AU MATÉRIEL (AES-NI vécu au CPU du bac — NOTE : le SCELLÉ tls13-16 est DÉJÀ le chemin aesenc [I3, la descente vécue] — la comparaison natif porte les FORMES DU PORTEUR, pas NI contre GPR) : le flux v2 (sondage hissé, la boucle à registres porteurs) 54 cycles/bloc ; le scellé appelé par bloc depuis le C (la boucle du compilateur) 8 cycles/bloc ; LA CALIBRATION de l'enveloppe msx64 (le stub ret) 4.1 cycles/appel
+    LA LECTURE HONNÊTE : la boucle du flux porte une chaîne de dépendance PAR REGISTRES PORTÉS (r13/r14/r15 — add → mov → call sérialisés) quand la boucle du compilateur expose des adresses INDÉPENDANTES PAR BLOC au moteur hors-ordre : le recouvrement inter-blocs s'exprime côté C — L'ÉCART 46 cycles/bloc NOMMÉ (la forme du porteur, pas le chemin crypto) ; le corps NI (4 cycles/bloc nets de l'enveloppe) reste le chemin chaud mesuré
+L'ÉGALITÉ flux/scellé au matériel : ZÉRO DIVERGENCE octet pour octet (64 blocs)
+
+LA NOTE DE CELLULE : (4096/1) est le cas TROUVÉ-TÔT (l'octet unique d'un tir aléatoire apparaît dans les premiers ~32 octets — l'épreuve de l'absence est impossible à 1 octet : (255/256)^4096 ≈ 1e-7) ; (4096/16) et (1000/32) sont les cas ABSENTS (la convention de la mesure vague 9)
+la durée du rig : 0.0 s (l'horloge monotone)

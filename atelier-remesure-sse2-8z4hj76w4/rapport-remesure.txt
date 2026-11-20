@@ -1,0 +1,16 @@
+LA FAUTE NOMMÉE (v1, la vague 9) : la diffusion du motif de QUATRE OCTETS (movd + punpckldq + punpcklqdq) au lieu du PREMIER OCTET (la chaîne complète de QUATRE shuffles) — 406/564 occurrences plantées MANQUÉES (l'occurrence aux positions où m0 != m[p mod 4], la différentielle plantée differenciel_plante.py) ; la confrontation vague 9 (24 vecteurs aux motifs aléatoires ABSENTS des tampons) ne pouvait PAS la voir : l'épreuve n'exerçait AUCUNE occurrence — l'écart de l'épreuve nommé (les vecteurs à occurrence plantée introduits par la présente)
+LA VARIANTE CORRIGÉE v2 : 208 o au RVA 0xcc00 (la marge VIERGE — le scellé intact), 8 instructions SSE2 baseline (la diffusion du premier octet en QUATRE shuffles — movd + punpcklbw + punpcklwd + punpckldq + punpcklqdq), le round-trip 100 %
+LA CONFRONTATION v2 : 88 vecteurs (les 24 de la convention vague 9 + LES 64 OCCURRENCES PLANTÉES aux alignements systématiques 0-63) — ZÉRO DIVERGENCE contre l'implémentation triviale (le juge Python)
+LE CONTRÔLE NÉGATIF : la variante mutée à la première ligne (l'octet ModRM de « mov rax, [rsp+0x28] » muté) — ATTRAPÉE à la première divergence
+
+LA MESURE AUX INSTRUCTIONS (la même série 4096/16, la graine 20261120, n=15, la médiane, LA BIBLIOTHÈQUE TENUE ÉGALE — le memcmp scellé à 0x1180 pour la variante ET le scellé ; le call du bras C repointé au scellé) :
+  LA VARIANTE SSE2 CORRIGÉE v2 : médiane 4087 instructions/op
+  LE SCELLÉ GPR                : médiane 124772 instructions/op
+  LE BRAS C gcc-O2             : médiane 115422 instructions/op
+  LE BRAS C gcc-O3             : médiane 116551 instructions/op
+  LE BRAS C gcc-O3 -msse2      : médiane 116430 instructions/op
+LE RATIO v2/gcc-O2 : 0.04× — LE GAIN v2/scellé : 30.5×
+
+LE CONSTAT DU COMPILATEUR (sur pièces, objdump) : l13.c gcc-O2 : 0 instructions SIMD / 62 ; gcc-O3 : 0/62 ; gcc-O3 -msse2 : 0/62 — le compilateur N'ÉMET AUCUN SIMD sur la source naturelle (la boucle autour de l'appel memcmp opaque est invectorisable) : LA BASELINE VECTORISÉE ÉQUITABLE DU COMPILATEUR N'EXISTE PAS pour cette source — la voie SIMD du compilateur vit à LA BIBLIOTHÈQUE (memchr/memmem — mesurées au rig de temps réel natif ; l'absence de memchr scellé interdit la cellule sous Unicorn, la borne nommée)
+
+  !! couloir B : code 1

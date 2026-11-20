@@ -1,0 +1,5 @@
+loupe-13,recherche 4096/16,SSE2-v2-corrigée,4087
+loupe-13,recherche 4096/16,scellé-GPR,124772
+loupe-13,recherche 4096/16,C-gcc-O2,115422
+loupe-13,recherche 4096/16,C-gcc-O3,116551
+loupe-13,recherche 4096/16,C-gcc-O3-msse2,116430
