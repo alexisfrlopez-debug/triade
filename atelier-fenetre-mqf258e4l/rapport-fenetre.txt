@@ -1,0 +1,18 @@
+LA CAMPAGNE FENÊTRE (mqf258e4l) — la vague 10
+
+[editer-H2] n=18 — verts 17/18 ; TOTAL natif médiane 2452 [q1 1839, q3 3470] ; RÉPONSE médiane 40 ;
+    DÉCOMPOSITION cl100k : matériau 1684 · prose 691 · réponse 40 (les trois champs consignés séparément — la convention de périmètre) ;
+    LA RE-TOKENISATION INDÉPENDANTE : écart max 0 (±1 exigé) ; LE RATIO AU PLANCHER (la paire de lignes du diff réel, 18 cl100k) : 136.2× natif
+[editer-F2] n=18 — verts 18/18 ; TOTAL natif médiane 1146 [q1 1135, q3 1175] ; RÉPONSE médiane 40 ;
+    DÉCOMPOSITION cl100k : matériau 239 · prose 866 · réponse 40 (les trois champs consignés séparément — la convention de périmètre) ;
+    LA RE-TOKENISATION INDÉPENDANTE : écart max 0 (±1 exigé) ; LE RATIO AU PLANCHER (la paire de lignes du diff réel, 18 cl100k) : 63.6× natif
+
+LA RÉDUCTION : le total natif médiane 2452 → 1146 (53.3 % de réduction) ; le matériau relu 1684 → 239 cl100k — LA FENÊTRE DU HUNK porte le gain, le cache de session porte le reste
+
+LES QUATRE REFUS DU POINTEUR (l'exigence de l'instruction — l'expansion_pointuer re-roulée) :
+    VERT  l'identifiant inconnu → REFUS POINTEUR-INCONNU 
+    VERT  la réponse hors format → REFUS HORS-FORMAT 
+    VERT  les 18 expansions honnêtes — l'entête reconstruit == l'entête soumis, octet pour octet
+    VERT  le pointeur croisé (désigne un autre bloc) → REFUS EXPANSION-DIVERGENTE 
+    
+    L'EXPANSION CÔTÉ CLIENT : 5/5 VERT — QUATRE refus nommés, fail-closed, la table régénérée des fichiers mêmes

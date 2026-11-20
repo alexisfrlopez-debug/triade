@@ -1,0 +1,129 @@
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE (le mode HUNKS — la réponse ne
+rend QUE les hunks ciblés, le client applique et confronte).
+
+LA NOTATION COURANTE DU BLOC (la base, lue du fichier même) :
+; loupe-08-ligne · bloc la ligne : 77 o exacts — le décalage, les 16 groupes, le miroir · spec loupe-08:R1 · bloc carte i110008
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x49c0, taille 320 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : AUCUNE entrée IAT (la feuille pure — le miroir exact des feuilles tls13, charte § 9) ; la table hexa « 0123456789ABCDEF » du plan (I4 — R_HEX .rdata, lue par déplacement RIP) ; les bornes P2/P4 vérifiées AVANT la première écriture (I2 : exactement 77 o, jamais un de plus) ; la source LUE SEULE (I3)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-08-ligne.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 271 o · padding : 49 o (NOP, 0x90)
+; Étiquettes résolues : .dec_boucle=0x4a0c, .rempli_haut=0x4a32, .rempli_miroir=0x4a44, .grp_boucle=0x4a59, .grp_pos=0x4a6b, .grp_suivant=0x4a8c, .miroir_boucle=0x4a98, .miroir_point=0x4aae, .miroir_poser=0x4ab0, .miroir_fin=0x4aba, .refus_entree=0x4abe, .sortie=0x4ac3
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x49fd + 0x7 - 0x29b4 = 0x2050
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+test rcx, rcx
+jz 0x4abe
+test r8, r8
+jz 0x4abe
+cmp rdx, 1
+jb 0x4abe
+cmp rdx, 16
+ja 0x4abe
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+lea r11, [rip - 0x29b4]
+mov edx, 28
+xor r10d, r10d
+mov rax, r14
+mov cl, dl
+shr rax, cl
+and eax, 0xf
+movzx eax, byte ptr [r11 + rax]
+mov byte ptr [r13 + r10], al
+sub edx, 4
+inc r10d
+cmp r10d, 8
+jb 0x4a0c
+mov eax, 8
+mov byte ptr [r13 + rax], 0x20
+inc eax
+cmp eax, 60
+jb 0x4a32
+mov eax, 60
+mov byte ptr [r13 + rax], 0x20
+inc eax
+cmp eax, 76
+jb 0x4a44
+mov byte ptr [r13 + 76], 0
+xor r10d, r10d
+cmp r10d, r12d
+jae 0x4a8c
+lea eax, [r10 + r10*2 + 10]
+cmp r10d, 8
+jb 0x4a6b
+inc eax
+movzx edx, byte ptr [rbx + r10]
+mov ecx, edx
+shr edx, 4
+and ecx, 0xf
+movzx edx, byte ptr [r11 + rdx]
+mov byte ptr [r13 + rax], dl
+movzx edx, byte ptr [r11 + rcx]
+mov byte ptr [r13 + rax + 1], dl
+inc r10d
+cmp r10d, 16
+jb 0x4a59
+xor r10d, r10d
+cmp r10d, r12d
+jae 0x4aba
+movzx edx, byte ptr [rbx + r10]
+cmp dl, 0x20
+jb 0x4aae
+cmp dl, 0x7e
+ja 0x4aae
+jmp 0x4ab0
+mov dl, 0x2e
+mov byte ptr [r13 + r10 + 60], dl
+inc r10d
+jmp 0x4a98
+xor eax, eax
+jmp 0x4ac3
+mov eax, -5
+add rsp, 0x28
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LA RÉVISION (la spécification de couche I, la consigne) :
+RÉVISION DE CONTRAT (loupe-08-ligne:R2, la classe « la constante revue ») : la ligne « cmp rdx, 1 » est révisée en « cmp rdx, 0 » — l'immédiat de travail passe de 1 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision).
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+REQUÊTE : applique la révision et rends UNIQUEMENT les hunks au format
+ci-dessus — la dernière ligne exactement « FIN-HUNKS ».
