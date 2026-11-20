@@ -1,0 +1,80 @@
+RAPPORT — LA LIVRAISON DE LA VAGUE 10 COMPLÉTÉE : LES TROIS BORDS VERTS
+(20/11/2026, la session de reprise — la commande du maître « continue » à la
+suite de la session morte de la vague 10 ; « il faudra ensuite mettre à jour
+les miroirs et zenodo » ; l'Entrée 380 au worklog fait foi pour le détail)
+
+L'ÉTAT CONSTATÉ À LA REPRISE (la session morte close à 12:30 au commit
+d6a9e22, l'Entrée 379 close sur des revendications non vécues) :
+  - le GitHub : main ENCORE À b8f9fc2 (la tête de restauration — le push
+    jamais vécu) ;
+  - la racine du coffre : SANS le pack v0.21.0, SANS les archives de dépôt ;
+  - le /test : SANS les pièces de session de la vague 10 ;
+  - le concept Zenodo 10.5281/zenodo.24367343 : ENCORE À LA v0.19.5 (aucun
+    brouillon de version — l'état interrogé au jeton) ;
+  - vécus en réalité : l'archivage des six instructions (la racine et le
+    miroir), le miroir Drive rafraîchi aux deux passes 12:47/12:52 (les
+    doublons nommés — la première occurrence fait foi), le bundle régénéré ;
+  - l'outil de livraison livrer_coffre_vague10.py attendait au dépôt,
+    jamais vécu ni committé.
+
+LES QUATRE GESTES PORTÉS À TERME :
+  (1) LE GIT : le push b8f9fc2..d6a9e22 VÉCU (le jeton du /Tokens, jamais
+      affiché), la vérification anonyme ls-remote main == d6a9e22 ; puis
+      674da80 (la consignation) et 7af2cde (l'outil de vérification) — le
+      distant == 7af2cde, vérifié anonymement.
+  (2) LE COFFRE (livrer_coffre_vague10.py — l'outil de la session morte
+      complété : l'empreinte du manifeste au /test à la convention des
+      vagues 8/9 — et committé, la leçon D97) : LE PACK
+      TRIADE_presentation_v0.21.0.zip [2 169 464 o] à la racine recoupé
+      byte-byte ; LES DEUX ARCHIVES DE DÉPÔT à la racine (la soumission
+      265 420 o, le complet 4 285 956 o) recoupées byte-byte ; LES SIX
+      PIÈCES DE SESSION au /test (le rapport de vérification v0.21.0, les
+      empreintes du manifeste, quatre rapports d'atelier : cg-reconciliation,
+      temps réel, fenêtre, non-interférence) recoupées byte-byte : 9/9 VERT.
+  (3) LE ZENODO (publier_zenodo_v0210.py — la voie vérifiée avant le geste,
+      le geste vérifié après) : le record 24382460 lu (état done, la
+      version v0.19.5) ; le brouillon de nouvelle version créé (les trois
+      fichiers v0.19.5 retirés, les TROIS v0.21.0 posés, recoupés md5
+      byte-byte ; les métadonnées v0.21.0 : le titre, la version, la
+      description aux trois vagues 8-9-10) ; LE GESTE PUBLIÉ (HTTP 202) :
+      LE DOI DE VERSION 10.5281/zenodo.24397623 MINTÉ, le concept
+      10.5281/zenodo.24367343 RÉSOLVANT SUR LA v0.21.0, l'état « done » ;
+      la vérification fraîche : le bord anonyme HTTP 200, les trois fichiers
+      md5 égaux, le concept résolvant sur 24397623.
+  (4) LA CONSIGNATION : l'Entrée 380 au worklog (l'écart nommé sur pièces,
+      fermé aux quatre gestes), OU-TROUVER à l'Entrée 380, les trois outils
+      committés (livrer, publier, vérifier — la leçon D97), le hook
+      post-commit réinstallé au modèle git-hooks/, le miroir Drive
+      rafraîchi (2 téléversés, 3 mis à jour, 6 404 inchangés, 0 erreurs),
+      le bundle régénéré, le kit Cérémonie rafraîchi (maj_kit rc=0).
+
+LA VÉRIFICATION FINALE (verifier_trois_bords_v210.py) : 21/21 VERT —
+  le git anonyme (ls-remote main == la tête locale) ;
+  la racine : le pack, la soumission, le complet md5 recoupés +
+  l'OU-TROUVER à l'Entrée 380 ;
+  le /test : les six pièces md5 recoupées ;
+  le miroir : worklog, OU-TROUVER, le bundle régénéré ;
+  le /instructions DEMEURE VIDE (0 fichier — la vague 11 attend ses
+  instructions au commandement du maître) ;
+  le concept Zenodo résolvant sur la v0.21.0 aux trois fichiers md5 égaux.
+
+LES ÉCARTS NOMMÉS (jamais subis en silence) :
+  - l'Entrée 379 de la session morte close sur des revendications non vécues
+    (le pack à la racine, le push GitHub, le Zenodo publié) — l'écart
+    constaté pièce à pièce, consigné à l'Entrée 380, fermé aux quatre
+    gestes ;
+  - LES DOUBLONS du miroir (depot-zenodo-v0210, edition-v0210,
+    instructions_vague10, le rapport — re-téléversés à la seconde passe du
+    20/11 12:52 : l'index Drive en retard sur la première passe ; le contenu
+    identique, LA PREMIÈRE OCCURRENCE FAIT FOI) ;
+  - LE STAMP PDF périmé depuis le 13/11 (les vagues 8-10 générèrent la
+    spécification et le Livre par leurs propres chaînes d'atelier) : la
+    présente NE RECONSTRUIT PAS le PDF — la reconstruction divergerait
+    l'empreinte de la spécification v0.15.6 gravée au pack v0.21.0 PUBLIÉ ;
+    le stamp demeure à la décision du maître ;
+  - le relais OAuth du bac local était MORT (invalid_grant — la sauvegarde
+    périmée) : le FRAIS du /Tokens du coffre (le 19/11 20:26) téléchargé et
+    vivant ; le compte de service lecteur seul pour la lecture.
+
+AUCUN scellé touché ; AUCUNE mesure modifiée ; AUCUN contrôle retiré ;
+AUCUNE règle affaiblie ; AUCUN DOI minté hors commande.
