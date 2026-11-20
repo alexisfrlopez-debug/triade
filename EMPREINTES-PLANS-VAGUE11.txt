@@ -1,0 +1,15 @@
+EMPREINTES DES PLANS — LA VAGUE 11 (les neuf instructions)
+Gelées AVANT toute mesure ; le présent commit précède la première donnée.
+
+PLAN-ZHO5VILPY.md        sha256:3130c21f31a3fde5…  (zho5vilpy — le linter étendu à tout token numérique + les corrections sur pièces)
+PLAN-OU6WN6WLV.md        sha256:69e0d154a3e986df…  (ou6wn6wlv — la purge des instructions de remise D81, le séquestre 5/3 garde active)
+PLAN-FNVAN0ZES.md        sha256:ebbfce71865d2ae8…  (fnvan0zes — la différentielle durcie, l'hybride, les couloirs AVX2 et SHA-NI)
+PLAN-AHULT8JGD.md        sha256:6d3e94b2692d79c7…  (ahult8jgd — la boucle porteuse AES-NI restructurée, le cache, la cristallisation incrémentale, les 37 s)
+PLAN-O5APUE194.md        sha256:ea388f511982a808…  (o5apue194 — le gabarit versionné, le localiser hiérarchique, l'ajout par squelette)
+PLAN-VR9N3S3L7.md        sha256:72f057f5f5108597…  (vr9n3s3l7 — le durcissement du coffre sur copies de laboratoire (a)-(g) + le modèle formel)
+PLAN-3LMYFB2XA.md        sha256:c2a484e720ba44e8…  (3lmyfb2xa — le quatrième bras C+G+ au régime de vérification complet)
+PLAN-L4NNWQLLD.md        sha256:bf7126ff9a986ba0…  (l4nnwqlld — les kits et plans hashés des lignes awaiting)
+PLAN-HRBDFY6I4.md        sha256:70616ffff0d77513…  (hrbdfy6i4 — la soundness du lifter confrontée à l'observé, le statut de H, la couverture étendue)
+
+La règle reconduite des vagues 8-9-10 : le plan gelé, l'empreinte consignée,
+le commit AVANT la première donnée ; tout écart au plan nommé au rapport.
