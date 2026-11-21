@@ -1,0 +1,19 @@
+LE MANIFESTE DES EMPREINTES — LA RELEASE v0.22.1 (la vague 12, la corrective de l'édition v0.22.0)
+(chaque empreinte RECALCULÉE du fichier même — les cinq du pack DEMEURÉS, l'édition v0.22.0 immuable ; LES DEUX PIÈCES CORRIGÉES par la purge sémantique D81 reconstruites ; l'empreinte du complet v0.22.1 consignée au worklog Entrée 382 et au coffre — elle ne peut vivre dans l'archive même qui la porte)
+
+LES CINQ DU PACK (l'édition v0.22.0 — DEMEURÉS octet pour octet) :
+109af183591cc265910ad69f280521339932a8f9502230d7f5155380ff85322a  TRIADE_manuscrit_v0.22.0.pdf
+73c3664dfd29b17540db45e3d18db0902b1130479552770ea5e7ef32b9d92cc7  Protocole_TRIADE_v0.15.7_Specification.pdf
+0c621fbfd6f70b106f1faa55195b1af539af7da489d9b4cc3d5de79daec7520f  Livre_du_Coffre_TRIADE_CF1-CF3_v1.6.pdf
+1309d3f99c126cf7d55564b9b4b5e81d0df41bae02434b2421e05f87ea6b9406  TRIADE_preuves_et_calculs_v0.22.0.pdf
+36d9138606306703d4869ef7254312c81a3fbc4ed799d5637595ffe1d5368c86  TRIADE_presentation_20261121_v220.pdf
+
+LES DEUX PIÈCES CORRIGÉES (la purge sémantique D81 de 0uug27teo, la vague 12 — RECONSTRUITES, les empreintes NOUVELLES) :
+4bf227a8e6f5b447d9000fdce07647bea4802be95c3bfefd78677dcc8aa9af25  Livre_du_Coffre_TRIADE_CF1-CF3_v1.6_PURGE.pdf (scripts/livre_v16/final.pdf — 29 p., la version courante du Livre)
+3fd1aba1519e31cf6efd9ca68ea4bf93745376b936b64f894c6dea6a7630b115  Protocole_TRIADE_v0.15.7_Specification_PURGE.pdf (scripts/spec_v157/main.pdf — la version courante de la spec)
+
+LES DEUX FICHIERS ZENODO DEMEURÉS (la soumission et la présentation de l'édition, inchangés à la release) :
+TRIADE_soumission_v0.22.0.zip — md5 361913c84f36cecc89d134cce7b0a2c4 (275 388 o, recoupé au bord anonyme)
+TRIADE_presentation_v0.22.0.zip — md5 27e6cdd2304a9d43f6f2f64f97adf9e6 (2 216 992 o, recoupé au bord anonyme)
+
+LE COMPLET RÉGÉNÉRÉ : TRIADE_complet_v0.22.1.zip — l'empreinte sha256 consignée au worklog (Entrée 382) et recoupée au coffre ET au bord anonyme Zenodo après la pose (jamais dans l'archive même).

@@ -1,0 +1,125 @@
+RAPPORT DE VÉRIFICATION — LA RELEASE v0.22.1 (la vague 12, la corrective de l'édition v0.22.0)
+=====================================================================================
+(l'exécution des six instructions : 6kbfrpn7k, 0uug27teo, alhmpl35u, 14n3k8gd7,
+pgodgk35l, x705m50vl ; les plans gelés AVANT toute mesure, le commit 4f5d59f
+précédant la première donnée, les empreintes sha256 des six plans consignées à
+EMPREINTES-PLANS-VAGUE12.txt ; la vague RE-EXÉCUTÉE depuis la tête 5c90a05 —
+le travail de la session morte PERDU au recyclage du bac, nommé au commit
+d'ouverture ; les scellés 14/14 avant et après chaque atelier)
+
+V1 — LA SÉMANTIQUE DE LA RELEASE : v0.22.1 EST LA CORRECTIVE, L'ÉDITION
+     v0.22.0 DEMEURE. Le manuscrit, les preuves et la présentation v0.22.0
+     SONT INCHANGÉS (la balise immuable — les cinq empreintes du pack
+     recoupées à empreintes_livrables_v0.22.1.txt, octet pour octet celles
+     de la v0.22.0) ; les corrections de la vague 12 vivent AUX ATELIERS,
+     AUX CHAÎNES DE SOURCES RECONSTRUITES et aux errata consignés — la
+     génération v0.23.0 (le geste suivant) portera les corrections
+     recomposantes au manuscrit et aux preuves selon l'ordre nommé.
+
+V2 — LES SIX ATELIERS DE LA DOUZIÈME VAGUE (les rapports aux
+     atelier-*/rapport-*.txt) :
+     · 6kbfrpn7k LA RECOMPOSABILITÉ : les seize ratios publiés audités au
+       recalcul — TROIS ROUGES nommés (le cache ×709,25 vs ×680,6 — LA
+       RE-MESURE au protocole exact : le canon 285,725 → 0,418 ms, le gain
+       ×683,6 recomposé des canons imprimés ; l'ajouter −28,43 % vs −28,5 —
+       les médianes non arrondies 3 073,5 → 2 199,5, le ratio −28,4 %
+       recompose ; le régime 18,17 vs 18,1 — le canon C+G à trois décimales
+       2,163 s) ; LE CENSUS 559 sommé par code : 16+3+4+13+3+8+512 = 559
+       EXACT (l'erratum de la ligne « 64+… » qui sommait à 607) ; LE LINTER
+       v230 aux classes RATIOS et ÉTIQUETTES, les deux contrôles négatifs
+       plantés et REFUSÉS au premier nom ;
+     · 0uug27teo LA PURGE SÉMANTIQUE D81 : les SEPT résidus prescriptifs
+       du Livre v1.6 et de la spec v0.15.7 remplacés par la garde active
+       D223 aux 13 remplacements ancrés, les QUATRE annotations d'époque
+       aux contextes historiques datés ; LES CORRECTIONS AU PASSAGE (la
+       couverture « Version 1.3 » → v1.6, la phrase tronquée du §2.3
+       refermée, l'ordre chronologique du Tableau 13) ; LES DEUX PDF
+       RECONSTRUITS : Livre 4bf227a8… [29 p.] · spec 3fd1aba1… ; le grep
+       sémantique ZÉRO prescriptif, le runbook rejoué aux 8 étapes sans
+       écriture, 0 blob portant la marque sur 528 commits ;
+     · alhmpl35u LA MACHINERY GÉNÉRATIVE : 30 000 traces aux trois graines
+       (1 250 par règle par graine), ZÉRO DIVERGENCE aux huit chemins
+       d'échec, le replay bit-identique deux fois (le digest des verdicts
+       ET l'état du générateur) ; le modèle z3 ÉTENDU aux deux portes
+       neuves — LES SIX INVARIANTS PROUVÉS (I5, I6 neufs), le contrôle
+       négatif SAT ; LA GRILLE DE RÉCEPTION fail-closed aux quatre
+       autotests verts — AUCUN RÉSULTAT PRODUIT, la table des statuts
+       inchangée ;
+     · 14n3k8gd7 LE DOUBLE MOTEUR GÉNÉRALISÉ : l'échantillon aux 2 041
+       opérations, Unicorn 13,43 s · QEMU-user 1,10 s · natif 0,04 s — LA
+       DIVERGENCE ZÉRO aux deux confrontations, le shim muté ATTRAPÉ à la
+       première ligne, le gain 357× ; la cause de l'écart v0.22.0 NOMMÉE
+       (la clé littérale "etape" au lieu de m[etape] — le bug de
+       comparaison, corrigé par écrit) ; LE BUDGET DE RISQUE pondéré
+       P 11,8 % → 27,5 %, E 8,5 → 3,6 sessions, l'évasion de la vague 11
+       fermée à la même graine ; LA MENACE DU CACHE au magasin signé lié à
+       l'époque, les deux contrôles négatifs refusés au premier nom ;
+     · pgodgk35l TPL-ADD-v2 : LE DICTIONNAIRE DE DOMAINE VERSIONNÉ
+       (DICT-DOMAINE-v1, l'empreinte sha256 gravée au matériau et recoupée
+       au canonique), le client v2 aux QUATRE REFUS vécus (ID-INCONNU,
+       DICT-DIVERGENT, EXPANSION-DIVERGENTE, HORS-FORMAT) ; la campagne
+       aux 18 mêmes tâches : 5/18 VERTS (trois refus v1 convertis) — LA
+       CIBLE PRÉ-ENREGISTRÉE (≥ 15/18 ET ≤ 1 500) MANQUÉE aux deux faces,
+       LE GAP NOMMÉ PAR CLASSE (7 HORS-FORMAT · 3 ID-INCONNU · 3
+       EXPANSION-DIVERGENTE), JAMAIS re-tiré ;
+     · x705m50vl LES DEUX VARIANTES À LA MARGE VIERGE : LE V5-ENTRELACÉ
+       k ∈ {4, 8} aux calendriers INDÉPENDANTS (un registre de base par
+       flot) — LA CIBLE PRÉ-ENREGISTRÉE ≤ 3 c/bloc MANQUÉE (ent4@64 6,453
+       [0,125] · ent4@256 5,313 [0,070] · ent8@64 5,953 [0,125] · ent8@256
+       4,844 [0,039] c/bloc enveloppe comprise) ET LE GAP NOMMÉ PAR
+       MESURE : LA SONDE PLANCHER-AESENC rend 0,459 c/aesenc — l'unité
+       débite 2,18 aesenc/cycle, le plancher arithmétique 4,59 c/bloc
+       enveloppe libre, ent8@256 à 1,055× le plancher (l'unité saturée) ;
+       l'AVX2 APRÈS HISSAGE au verdict RÉSOLU AU CHARGEMENT SOUS R10 (le
+       sondage hissé UNE fois par session, la note de fnvan0zes TENUE) :
+       le couloir 470 c [26] contre 5 840 [148] au dispatch par appel — LE
+       GAIN 12,4× ; LA BATTERIE 559 re-roulée zéro divergence (le chemin
+       AVX2 réel et le repli au natif, le repli sous Unicorn) ; LA PARITÉ
+       TOUT VERT (le FIPS 197 §5.2 aux huit clés du banc, le vecteur C.1
+       aux quatre corps, la différentielle 64/64 et 256/256 octet pour
+       octet, LE MAPPAGE aux huit clés différentes, les queues, la borne
+       fail-closed, le mutant ATTRAPÉ au premier vecteur, le round-trip
+       100 % aux neuf corps) ; LA FAUTE DE LA PASSE MORTE NOMMÉE (le corps
+       ent8 chargeait toutes les clés de la seule base rbx — réécrit aux
+       HUIT bases, le mappage le juge).
+
+V3 — LES CHAÎNES CORRIGÉES ET L'ARCHIVE : le complet v0.22.1 porte LES
+     SOURCES de l'édition demeurées, LES CHAÎNES RECONSTRUITES (le Livre
+     v1.6 purgé et la spec v0.15.7 purgée, PDF compris), LES NEUF ateliers
+     de la vague 11, LES SIX de la vague 12, les scripts des deux vagues
+     (le linter v220 ET v230) et LE PACK des cinq documents inchangé —
+     l'inventaire relu pièce à pièce au dézippage, les empreintes du pack
+     recoupées ; les exclusions nommées (native/ — les rig régénérables
+     par les scripts committés ; states/ et logs/ — les états TLA+ et les
+     journaux volumineux, les rapports et registres demeurent).
+
+V4 — LES SCELLÉS : la garde du sceau-I 14/14 à CHAQUE atelier avant et
+     après (la vague entière re-vérifiée au geste de clôture) ; les
+     QUATRE pièces aux ancres R7 INTACTES (loupe.exe c1115105… ·
+     proxy.exe 446279f3… · selftest.exe 8038585b… · demo.exe df8f2e50…).
+
+V5 — LES TROIS BORDS : (1) le git — le push GitHub vérifié anonymement
+     (ls-remote main == la tête) ; (2) le coffre Drive — le complet
+     v0.22.1 et le présent rapport posés à la racine, les SIX rapports
+     d'atelier de la vague au /test, le worklog et l'OU-TROUVER à
+     l'Entrée 382 au miroir, le bundle régénéré, LE /instructions DEMEURÉ
+     VIDE (les six archivées au dépôt ET au coffre) ; (3) Zenodo — la
+     release v0.22.1 au concept 10.5281/zenodo.24367343, les trois
+     fichiers md5 recoupés byte-byte au bord anonyme (la soumission et la
+     présentation DEMEURÉES, le complet régénéré).
+
+V6 — LES GAPS NOMMÉS (jamais simulés, jamais re-tirés) : les DEUX CIBLES
+     PRÉ-ENREGISTRÉES manquées de la vague (l'ajouter-v2 5/18 ET la marge
+     vierge ≤ 3 c/bloc — les issues consignées telles quelles, les causes
+     mesurées et nommées) ; la seconde machine (une seule au bac) ; le
+     plancher 0,459 c/aesenc MESURÉ SUR LA MACHINE VIRTUALISÉE du bac (le
+     matériel nu au terrain) ; Unicorn sans AVX/SHA-NI (le chemin ymm au
+     natif seul) ; l'exécution du linter v230 sur les cinq pièces attend
+     la génération v0.23.0 (le geste suivant — les ancre exigées déjà
+     gravées au linter).
+
+V7 — LE VERDICT : VERT — les six instructions exécutées aux rapports
+     verts, les plans gelés avant toute donnée, les deux cibles
+     pré-enregistrées manquées HONNÊTEMENT consignées avec leurs causes
+     mesurées, les corrections portées aux chaînes et aux errata, les
+     trois bords recoupés, les scellés intacts.
