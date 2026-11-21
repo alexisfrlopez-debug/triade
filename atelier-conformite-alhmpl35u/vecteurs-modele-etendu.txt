@@ -1,0 +1,14 @@
+LE MODÈLE z3 ÉTENDU (alhmpl35u) — la sentinelle aux portes
+d'époque et de plancher, les SIX invariants re-déchargés
+(UNSAT aux négations), le contrôle négatif compris
+
+  I1_corruption_sans_destruction : UNSAT — PROUVÉ
+  I2_ouvert_exige_deux : UNSAT — PROUVÉ
+  I3_plancher_sous_60 : UNSAT — PROUVÉ
+  I4_falsification_pv : UNSAT — PROUVÉ
+  I5_epoque_refusee_avant_empreinte : UNSAT — PROUVÉ
+  I6_ordre_des_etages : UNSAT — PROUVÉ
+
+LE CONTRÔLE NÉGATIF (la machine NUE, aucun axiome) : la corruption peut détruire et l'époque périmée atteindre l'empreinte : SAT — ATTRAPÉ (la preuve vit aux AXIOMES — la garde)
+
+LE VERDICT : VERT

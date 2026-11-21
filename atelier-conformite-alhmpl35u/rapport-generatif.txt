@@ -1,0 +1,30 @@
+LA MACHINERY DE CONFORMITÉ GÉNÉRATIVE (alhmpl35u, la vague 12)
+la sentinelle durcie (a)-(g) de la vague 11 confrontée aux règles
+abstraites — 30 000 traces, trois graines, ddmin, replay ×2
+
+LA CONCEPTION : K_user dérivé UNE fois par la VRAIE Argon2id du
+ labo pour les deux phrases de test (32 o chacune)
+ — les traces excercent LA SENTINELLE (empreinte/AEAD/piège/
+époque/plancher), la dérivation n'y vit pas ; le caractère
+ aléatoire par trace aux s_serrure/s_piege/sel_hkdf/nonce frais
+ du constructeur INTACT ; les scénarios : honnete, corruption, falsification-naive, nonce-altere, piege-perime, retour-arriere, phrase-erronee, plancher-faible
+
+LA GRAINE 20261121a (seed 0x20261121) — 10 000 traces :
+  comptes par règle (acceptés conformes) : honnete=1250 · corruption=1250 · falsification-naive=1250 · nonce-altere=1250 · piege-perime=1250 · retour-arriere=1250 · phrase-erronee=1250 · plancher-faible=1250
+  divergences : 0 — AUCUNE (la réduction ddmin jamais requise)
+  LE REPLAY BIT-IDENTIQUE : digest dd3f106f65-4b84cbb58b == dd3f106f65-4b84cbb58b : IDENTIQUE
+  durée 4.0 s + replay 3.9 s — VERDICT VERT
+
+LA GRAINE 20261121b (seed 0x20262111) — 10 000 traces :
+  comptes par règle (acceptés conformes) : honnete=1250 · corruption=1250 · falsification-naive=1250 · nonce-altere=1250 · piege-perime=1250 · retour-arriere=1250 · phrase-erronee=1250 · plancher-faible=1250
+  divergences : 0 — AUCUNE (la réduction ddmin jamais requise)
+  LE REPLAY BIT-IDENTIQUE : digest dd3f106f65-dc9f2cba20 == dd3f106f65-dc9f2cba20 : IDENTIQUE
+  durée 3.9 s + replay 3.9 s — VERDICT VERT
+
+LA GRAINE 20261121c (seed 0x21112026) — 10 000 traces :
+  comptes par règle (acceptés conformes) : honnete=1250 · corruption=1250 · falsification-naive=1250 · nonce-altere=1250 · piege-perime=1250 · retour-arriere=1250 · phrase-erronee=1250 · plancher-faible=1250
+  divergences : 0 — AUCUNE (la réduction ddmin jamais requise)
+  LE REPLAY BIT-IDENTIQUE : digest dd3f106f65-2a13cd581d == dd3f106f65-2a13cd581d : IDENTIQUE
+  durée 3.9 s + replay 3.9 s — VERDICT VERT
+
+LE VERDICT : VERT — 30 000 traces aux trois graines, zéro divergence, le replay bit-identique deux fois, chaque chemin d'échec couvert (les comptes lus des journaux)

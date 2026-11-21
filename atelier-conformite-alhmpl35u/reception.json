@@ -1,0 +1,31 @@
+{
+ "grille": [
+  {
+   "id": "G1",
+   "ligne": "dudect n≥10 × N{60,200,400} × ≥2 machines, signé, CPU+fréquence"
+  },
+  {
+   "id": "G2",
+   "ligne": "fence.i RV64, la chaîne exacte consignée"
+  },
+  {
+   "id": "G3",
+   "ligne": "Loupe 3e machine T0→T7+S0, CPU+fréquence"
+  },
+  {
+   "id": "G4",
+   "ligne": "H7 stratifié, le tirage signé à l'ouverture"
+  },
+  {
+   "id": "G5",
+   "ligne": "double annotation κ≥0,61 n≥50 (grille F/L)"
+  },
+  {
+   "id": "G6",
+   "ligne": "Tamarin au poste réel, bornes nommées"
+  }
+ ],
+ "resultats_produits": 0,
+ "table_des_statuts": "INCHANGÉE (aucune pièce recoupée)",
+ "verdict": "VERT"
+}

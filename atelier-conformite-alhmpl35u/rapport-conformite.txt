@@ -1,0 +1,120 @@
+LE RAPPORT DE L'ATELIER alhmpl35u — LA MACHINERY DE CONFORMITÉ GÉNÉRATIVE
+BRANCHÉE SUR LA MACHINE z3 DE LA SENTINELLE DURCIE, ET LA GRILLE DE
+RÉCEPTION DES TÉMOINS SIGNÉS
+(21/11/2026, la vague 12 — le plan gelé sha256 7644a7874815f924… au
+commit d'ouverture, AVANT toute exécution ; RÈGLE ABSOLUE tenue : aucun
+coffre réel, aucune phrase réelle — tout vit aux phrases publiques D105
+de laboratoire)
+
+═════════════════════════════════════════════════════════════════════════════
+LE CHANTIER 1 — LA MACHINERY GÉNÉRATIVE (30 000 traces, trois graines)
+═════════════════════════════════════════════════════════════════════════════
+
+LA CONCEPTION (nommée) : chaque trace construit UN conteneur honnête par
+le CONSTRUCTEUR INTACT de la sentinelle durcie (coffre_labo.py de
+vr9n3s3l7 — JAMAIS modifié), lui applique LE SCÉNARIO (la mutation), puis
+exécute LA SENTINELLE INTACTE — le verdict observé classé aux noms du
+protocole, confronté à LA RÈGLE ABSTRAITE. K_user dérivé UNE fois par la
+VRAIE Argon2id du labo (p_idx 0) pour chacune des DEUX phrases de test
+(l'honnête et l'erronée) — LES TRACES EXERCENT LA SENTINELLE (les règles
+empreinte/AEAD/piège/époque/plancher), la dérivation n'y vit pas ; le
+caractère aléatoire par trace vit aux s_serrure/s_piege/sel_hkdf/nonce
+frais du constructeur ; la campagne AU TMPFS (le fsync de l'écriture
+atomique y est natif — le coût d'E/S ne mesure pas la sentinelle).
+
+LES HUIT SCÉNARIOS (les chemins d'échec exigés par l'instruction, tous
+couverts) : honnête (OUVERT) ; la corruption sans destruction (un octet
+du chiffretexte muté → REFUS NOMMÉ, le chiffretexte CONSERVÉ) ; la
+falsification à empreinte naïve valide (le ct muté ET l'empreinte
+réécrite au sha256 nu → DESTRUCTION LOCALE + PV, le média et les parts
+INTACTS) ; le nonce altéré après empreinte verte (l'empreinte couvre le
+seul chiffretexte — l'étage AEAD la preuve restante → DESTRUCTION + PV) ;
+le piège périmé d'époque (le couple ancien restauré : le piège d'époque 1
+au chemin de l'époque 2 → REFUS PÉRIMÉ, V_piège DÉRIVÉE à l'époque) ; le
+retour en arrière (le conteneur d'époque 1 sous le miroir local
+d'époque 2 → REFUS RETOUR EN ARRIÈRE) ; la phrase erronée (BÉNIN,
+JAMAIS de destruction) ; la phrase faible au plancher (les QUATRE phrases
+faibles validées à l'estimateur — « 123456789abc » ADMISE à 62 bits par
+l'estimateur HONNÊTE est exclue de la liste : le plancher qui admet une
+phrase de 62 bits n'est pas une divergence, il est le plancher).
+
+LE RÉSULTAT : 30 000 traces aux TROIS graines (20261121a/b/c, 10 000
+chacune) — ZÉRO DIVERGENCE (chaque règle abstraite confrontée à
+l'implémentation durcie, 1 250 traces par règle par graine, les comptes
+lus des journaux : honnete=1250 · corruption=1250 · falsification=1250 ·
+nonce=1250 · périmé=1250 · arrière=1250 · erronée=1250 · plancher=1250) ;
+LA RÉDUCTION ddmin JAMAIS REQUISE (aucune divergence à réduire — la
+procédure vit au code, nommée) ; LE REPLAY BIT-IDENTIQUE DEUX FOIS : le
+digest des verdicts ET l'état final du générateur (la suite ENTIÈRE des
+tirages) identiques par graine — dd3f106f65-4b84cbb58b (a) ·
+dd3f106f65-dc9f2cba20 (b) · dd3f106f65-2a13cd581d (c) ; la machine étant
+CLASSE-DÉTERMINISTE, les verdicts seuls eussent été égaux aux trois
+graines — l'état du générateur fait la preuve distincte des tirages.
+
+LE PREMIER PASSAGE ET SON ÉCART NOMMÉ (la transparence) : la première
+exécution porta 225-236 « divergences » par graine — toutes au
+SCÉNARIO plancher-faible, toutes de la DONNÉE DE TEST fautive : la phrase
+« 123456789abc » (12 caractères, 3 classes) est ADMISE à 62,0 bits par
+l'estimateur du dépôt — LE PLANCHIER HONNÊTE, pas une divergence de
+l'implémentation ; la donnée corrigée (la phrase exclue de la liste, la
+cause nommée ici), la campagne re-roulée intégralement : zéro divergence.
+LA PIÈCE CORRIGÉE (la donnée de test), JAMAIS L'IMPLÉMENTATION NI LE
+MODÈLE.
+
+═════════════════════════════════════════════════════════════════════════════
+LE MODÈLE z3 ÉTENDU — LES SIX INVARIANTS RE-DÉCHARGÉS
+═════════════════════════════════════════════════════════════════════════════
+
+LA MACHINE ÉTENDUE (modele_z3_etendu.py) : la machine à états de la
+sentinelle AUX DEUX PORTES NEUVES — PLANCHER (la cérémonie, l'axiome
+≥ 60 bits) → ÉPOQUE (le piège d'époque et le miroir, l'anti-rollback)
+→ EMPREINTE → AEAD → OUVERT / REFUS / DESTRUCTION_PV, LES ÉTATS
+TERMINAUX ABSORBANTS (un refus clôt l'acte, une destruction aussi —
+aucune transition n'en sort). LES SIX INVARIANTS PROUVÉS (UNSAT aux
+négations) : I1 la corruption → REFUS SANS destruction ; I2 OUVERT
+exige les DEUX vérifications (les gardes réelles aux deux étages) ; I3
+le plancher refusant sous 60 bits ; I4 la falsification prouvée →
+DESTRUCTION_PV (le chemin en deux étapes : l'empreinte d'abord, l'AEAD
+la preuve restante) ; I5 (ÉTENDU) l'époque périmée n'atteint JAMAIS
+l'empreinte — le refus AVANT tout ; I6 (ÉTENDU) l'ordre des étages : le
+chemin vers OUVERT passe les QUATRE portes dans l'ordre. LE CONTRÔLE
+NÉGATIF : la machine NUE (aucun axiome) — la corruption peut détruire et
+l'époque périmée atteindre l'empreinte : SAT — ATTRAPÉ (la preuve vit
+aux AXIOMES — la garde, le contrôle le nomme). L'ÉCART DU PREMIER
+PASSAGE nommé : les requêtes I1/I2 du premier jet interrogeaient la
+mauvaise profondeur de chemin (le modèle corrige PAR ÉCRIT, la cause au
+rapport : la transition à deux étages exige les gardes RÉELLES au
+second étage, pas des constantes).
+
+═════════════════════════════════════════════════════════════════════════════
+LE CHANTIER 2 — LA GRILLE DE RÉCEPTION DES TÉMOINS SIGNÉS
+═════════════════════════════════════════════════════════════════════════════
+
+LA GRILLE (grille_reception.py) : les SIX lignes exigeuses — G1 dudect
+n≥10 par N∈{60,200,400} × ≥2 machines (chaque run signé, l'empreinte CPU
+et la fréquence AU TÉMOIN) ; G2 fence.i RV64 (la chaîne exacte consignée) ;
+G3 la troisième machine Loupe T0→T7+S0 (CPU + fréquence) ; G4 le tirage
+H7 stratifié signé À L'OUVERTURE ; G5 la double annotation κ≥0,61 sur
+n≥50 (la grille F/L) ; G6 Tamarin au poste réel (les bornes nommées).
+L'AGRÉGATEUR FAIL-CLOSED : tout manque = exit 2, LA LISTE nommée —
+jamais d'agrégat partiel. LES QUATRE AUTOTESTS VERTS : (a) la soumission
+synthétique complète ADMISE (code 0) ; (b) l'incomplète REFUSÉE au
+premier nom (exit 2, les manques nommés : κ=0,54 < 0,61 ; G6 absent ;
+une seule machine) ; (c) la pièce NON SIGNÉE refusée ; (d) l'empreinte
+CPU absente refusée. AUCUN RÉSULTAT PRODUIT — la table des statuts
+INCHANGÉE (aucun témoignage recoupé : la règle de l'instruction tenue).
+
+═════════════════════════════════════════════════════════════════════════════
+LE VERDICT ET LES GAPS NOMMÉS
+═════════════════════════════════════════════════════════════════════════════
+
+VERT — 30 000 traces zéro divergence, le replay bit-identique deux fois,
+les six invariants prouvés au modèle étendu (le contrôle négatif SAT), la
+grille de réception 4/4 aux autotests, aucun résultat produit. LE SCEAU :
+14/14 arbres VERTS avant et après (aucune couche I touchée — le git diff
+VIDE hors atelier : aucune pièce du dépôt modifiée par la présente, les
+outils vivent à l'atelier). LES GAPS (leur geste attendu) : le token
+FIDO2 physique ; l'ancrage réseau TSA/Rekor ; TAMARIN au poste réel
+(non installé au bac — D240 reconduit) ; les miroirs Windows de la garde
+RAM ; la seconde machine au bac (une seule — le témoignage l'exige,
+jamais simulé).

@@ -1,0 +1,12 @@
+{
+ "invariants": {
+  "I1_corruption_sans_destruction": true,
+  "I2_ouvert_exige_deux": true,
+  "I3_plancher_sous_60": true,
+  "I4_falsification_pv": true,
+  "I5_epoque_refusee_avant_empreinte": true,
+  "I6_ordre_des_etages": true
+ },
+ "controle_negatif_nu": true,
+ "verdict": "VERT"
+}

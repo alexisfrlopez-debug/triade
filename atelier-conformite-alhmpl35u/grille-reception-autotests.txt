@@ -1,0 +1,14 @@
+LES AUTOTESTS DE LA GRILLE DE RÉCEPTION (alhmpl35u, le chantier 2 — AUCUN RÉSULTAT PRODUIT : la grille attend les témoins du geste du maître)
+
+  (a) la soumission complète admise : VERT — code 0
+  (b) l'incomplète refusée au premier nom : VERT — exit 2, 3 manques nommés
+        - G5 κ=0.54 < 0,61 : annotation-faible
+        - G6 AUCUNE pièce — Tamarin au poste réel, bornes nommées
+        - G1 1 machine(s) < 2 — le témoin de deux machines distinctes exigé
+  (c) la pièce non signée refusée : VERT — G2 PIÈCE NON SIGNÉE : fencei-rv64-temoin — fence.i RV64, la chaîne exacte consignée
+  (d) l'empreinte CPU absente refusée : VERT — G3 L'EMPREINTE CPU ABSENTE du témoin : loupe-sans-cpu
+
+LA TABLE DES STATUTS INCHANGÉE — aucun témoignage recoupé, aucun résultat produit (la règle de l'instruction tenue) ;
+LES GAPS NOMMÉS (leur geste attendu) : le token FIDO2 physique (au geste du maître) ; l'ancrage réseau TSA/Rekor (la requête au geste) ; TAMARIN AU POSTE RÉEL (non installé au bac — la vérification au geste, D240 le gap nommé reconduit) ; les miroirs Windows de la garde RAM (le terrain) ; la SECONDE MACHINE au bac (une seule — le témoignage l'exige, jamais simulé).
+
+LE VERDICT : 4/4 AUTOTESTS VERTS — VERT
