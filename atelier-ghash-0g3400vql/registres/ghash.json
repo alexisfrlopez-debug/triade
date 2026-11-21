@@ -1,0 +1,204 @@
+{
+  "duree_s": 0.5,
+  "octets": {
+    "karatsuba": 334,
+    "schoolbook": 326,
+    "sonde": 73
+  },
+  "rva": {
+    "sonde": 58880,
+    "karatsuba": 59392,
+    "schoolbook": 59904,
+    "v4i": 60416,
+    "shani": 61184
+  },
+  "round_trip": {
+    "karatsuba": true,
+    "schoolbook": true,
+    "sonde": true,
+    "v4i": true,
+    "shani": false,
+    "s02": true,
+    "s15": true,
+    "s16": true,
+    "s17": true,
+    "s18": true
+  },
+  "unicorn": {
+    "diff": {
+      "karatsuba": {
+        "vecteurs": 320,
+        "divergences": 0
+      },
+      "schoolbook": {
+        "vecteurs": 320,
+        "divergences": 0
+      }
+    },
+    "punition": {
+      "karatsuba": "7/7",
+      "schoolbook": "7/7"
+    },
+    "commut": 32,
+    "intact": 32,
+    "repli": "32/32",
+    "mutant": "ATTRAPÉ au premier vecteur",
+    "comptes": {
+      "karatsuba": 67,
+      "schoolbook": 65
+    },
+    "commut_sb": 32,
+    "intact_sb": 32
+  },
+  "temps_constant": {
+    "aleatoire": {
+      "empreintes": 1,
+      "n": 60
+    },
+    "structurée": {
+      "empreintes": 1,
+      "n": 60
+    },
+    "latence_variable": [],
+    "instructions": [
+      "add",
+      "je",
+      "jmp",
+      "mov",
+      "movabs",
+      "movdqa",
+      "movdqu",
+      "pand",
+      "pclmulqdq",
+      "pcmpgtd",
+      "por",
+      "pshufb",
+      "pshufd",
+      "pslldq",
+      "psllq",
+      "psrldq",
+      "psrlq",
+      "pxor",
+      "ret",
+      "sub",
+      "test",
+      "xor"
+    ]
+  },
+  "mesures": {
+    "stub": {
+      "mediane": 66,
+      "iqr": 0,
+      "par": 66.0,
+      "par_iqr": 0.0
+    },
+    "ghash-karatsuba": {
+      "mediane": 6404,
+      "iqr": 22,
+      "par": 64.04,
+      "par_iqr": 0.22
+    },
+    "ghash-schoolbook": {
+      "mediane": 6339,
+      "iqr": 30,
+      "par": 63.39,
+      "par_iqr": 0.3
+    },
+    "ghash-scelle": {
+      "mediane": 80635,
+      "iqr": 10398,
+      "par": 806.35,
+      "par_iqr": 103.98
+    },
+    "gcm-couloir@64": {
+      "mediane": 1246,
+      "iqr": 62,
+      "par": 19.4688,
+      "par_iqr": 0.9688
+    },
+    "gcm-scelle17@64": {
+      "mediane": 5425,
+      "iqr": 192,
+      "par": 84.7656,
+      "par_iqr": 3.0
+    },
+    "gcm-scelle18@64": {
+      "mediane": 5924,
+      "iqr": 128,
+      "par": 92.5625,
+      "par_iqr": 2.0
+    },
+    "gcm-evp128@64": {
+      "mediane": 1514,
+      "iqr": 40,
+      "par": 23.6562,
+      "par_iqr": 0.625
+    },
+    "gcm-evp256@64": {
+      "mediane": 1514,
+      "iqr": 18,
+      "par": 23.6562,
+      "par_iqr": 0.2812
+    },
+    "gcm-couloir@4096": {
+      "mediane": 30950,
+      "iqr": 202,
+      "par": 7.5562,
+      "par_iqr": 0.0493
+    },
+    "gcm-scelle17@4096": {
+      "mediane": 240865,
+      "iqr": 18714,
+      "par": 58.8049,
+      "par_iqr": 4.5688
+    },
+    "gcm-scelle18@4096": {
+      "mediane": 263552,
+      "iqr": 8604,
+      "par": 64.3438,
+      "par_iqr": 2.1006
+    },
+    "gcm-evp128@4096": {
+      "mediane": 2385,
+      "iqr": 74,
+      "par": 0.5823,
+      "par_iqr": 0.0181
+    },
+    "gcm-evp256@4096": {
+      "mediane": 2527,
+      "iqr": 68,
+      "par": 0.6169,
+      "par_iqr": 0.0166
+    },
+    "sha-shani@4096": {
+      "mediane": 184782,
+      "iqr": 240,
+      "par": 45.1128,
+      "par_iqr": 0.0586
+    },
+    "sha-scelle@4096": {
+      "mediane": 53662,
+      "iqr": 158,
+      "par": 13.1011,
+      "par_iqr": 0.0386
+    },
+    "sha-evp@4096": {
+      "mediane": 8340,
+      "iqr": 2,
+      "par": 2.0361,
+      "par_iqr": 0.0005
+    }
+  },
+  "parites": [
+    "PARITE couloir==scelle17 25/25 ; couloir==scelle18 25/25 ; couloir==EVP 25/25",
+    "PARITE shani==scelle02 1 ; shani==EVP 1"
+  ],
+  "machine": {
+    "machine": "Intel(R) Xeon(R) Processor",
+    "mhz": "3200.000",
+    "drapeaux": "aes avx2 avx512f constant_tsc pclmulqdq rdtscp sha_ni sse2"
+  },
+  "sonde": "SONDE verdict=15 pclmul=1 aes=1 sha=1",
+  "sceau_avant": true,
+  "sceau_apres": true
+}

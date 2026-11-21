@@ -9335,6 +9335,7 @@ LE RECOUP SUR PIÈCES (les SEPT pièces du dossier du run kit-loupe/ du /test ra
 - 2026-10-30T21:41:37Z · a52d54b · docs/Protocole_TRIADE_v0.2_Specification.pdf · sha256 d9946ea1b1239584b53a6d1019d0eb50764858efdfc2f94b697cd8f1688029e8 · md5 eb6a5316fc62e1b6414ee3dc39514724 · 560975 o · rattrapage M5-a (archive, version gelée)
 
 <!-- m5a:journal-des-builds v1 — consignation automatique des empreintes par build (D134). Les entrées numérotées du journal s'insèrent TOUJOURS AVANT la présente ligne ; les lignes de build s'ajoutent SOUS elle, la plus récente en tête. Ne pas édier à la main. -->
+- 2026-11-21T23:33:45Z · b2fbcf8 · docs/Protocole_TRIADE_v0.12.0_Specification.pdf · sha256 69f537ad42aed9189e6d13fc99bc260a9edf5ed2fb50b724f43a437758f5df42 · md5 f16a4355565136715ca7e633adca5765 · 1087383 o · build_pdf.sh (chaîne spec_v090)
 - 2026-11-21T07:13:04Z · 4f5d59f · docs/Protocole_TRIADE_v0.12.0_Specification.pdf · sha256 69f537ad42aed9189e6d13fc99bc260a9edf5ed2fb50b724f43a437758f5df42 · md5 f16a4355565136715ca7e633adca5765 · 1087383 o · build_pdf.sh (chaîne spec_v090)
 - 2026-11-13T19:53:20Z · f184db2 · docs/Protocole_TRIADE_v0.12.0_Specification.pdf · sha256 69f537ad42aed9189e6d13fc99bc260a9edf5ed2fb50b724f43a437758f5df42 · md5 f16a4355565136715ca7e633adca5765 · 1087383 o · build_pdf.sh (chaîne spec_v090)
 - 2026-11-12T00:18:09Z · a42b46c · docs/Protocole_TRIADE_v0.12.0_Specification.pdf · sha256 69f537ad42aed9189e6d13fc99bc260a9edf5ed2fb50b724f43a437758f5df42 · md5 f16a4355565136715ca7e633adca5765 · 1087383 o · build_pdf.sh (chaîne spec_v090)

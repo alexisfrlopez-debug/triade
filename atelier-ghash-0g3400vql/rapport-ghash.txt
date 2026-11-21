@@ -1,0 +1,70 @@
+LE COULOIR GHASH EN PCLMULQDQ (0g3400vql, la vague 13)
+Le plan gelé sha256:caab6f481ab3799f… AVANT toute mesure.
+
+LE ROUND-TRIP 9/9 (keystone == capstone == keystone) ; le corridor SHA-NI RECONDUIT TEL QUEL de fnvan0zes (son round-trip vit à son atelier — l'encodage SHA canonique, les octets explicites keystone ne les porte pas)
+LES MARGES SANS CHEVAUCHEMENT par code (les cinq pièces de corridor + les cinq scellés de la session, chacun à sa place — la convention du rig)
+LA DIFFÉRENTIELLE contre le scellé : karatsuba 0/320 divergences · schoolbook 0/320
+LES CAS PUNITIFS : {'karatsuba': '7/7', 'schoolbook': '7/7'}
+LA COMMUTATIVITÉ 32/32 : 32/32 · 32/32 ; X/Y INTACTS : 32/32 · 32/32
+LE REPLI (r10=0 → le scellé) : 32/32
+LE MUTANT : ATTRAPÉ au premier vecteur
+LES COMPTES Unicorn (enveloppe comprise) : karatsuba 67 · schoolbook 65 instructions
+LE TEMPS-CONSTANT STRUCTUREL : traces 1 empreinte(s)/60 (aléatoire) · 1 empreinte(s)/60 (structurée) ; latence variable : AUCUNE
+LA LECTURE (les ratios sur les médianes non arrondies) :
+- LE GHASH SEUL : le couloir karatsuba 64,04 c [22] · schoolbook 63,39 c [30] contre le scellé
+  GPR 806,35 c — LE GAIN 12,6× ; LA CIBLE PRÉ-ENREGISTRÉE ≤ 80 c ATTEINTE aux deux variantes ;
+  la mesure TRANCHE entre les deux : le schoolbook devant de 0,65 c (1,0 % — DANS l'IQR, l'écart
+  nommé non significatif à cette unité ; les DEUX notations livrées, le schoolbook adopté au
+  gabarit courant) ;
+- L'AES-GCM COMPLET @4096 : la composition couloir (la porteuse v4-inline + le GHASH pclmulqdq)
+  7,556 c/octet contre la composition scellée-17 58,80 (7,8×) et le scellé tls13-18 entier
+  64,34 (8,5×) ; face à OpenSSL EVP : aes-128-gcm 0,5823 c/octet et aes-256-gcm 0,6169 —
+  OpenSSL 13,0× devant NOTRE composition à 4096 (le GHASH AGRÉGÉ 4 blocs/appel + le CTR
+  entièrement pipeliné d'OpenSSL contre nos appels par bloc — l'écart NOMMÉ, la composition
+  de laboratoire jamais maquillée en production) ; @64 : la composition couloir 19,47 c/octet
+  CONTRE EVP 23,66 — NOTRE composition 1,2× DEVANT au petit message (le coût par appel d'EVP
+  payé, le nôtre amorti) ;
+- LE SHA-256 COMPLET : le corridor SHA-NI RECONDUIT de fnvan0zes 45,11 c/octet — DOMINÉ PAR LE
+  SONDAGE cpuid PAR APPEL (le design v11 : ~2 660 c × 64 blocs = 170 240 c = 92,1 % du total au
+  bac virtualisé ; le CORPS SHA-NI seul ≈ (184 782 − 170 240)/64 = 228 c/bloc = 3,56 c/octet —
+  le gain du corps sur le scellé GPR 13,10 c/octet = 3,7×) ; EVP_sha256 (SHA-NI activé par
+  OpenSSL) 2,036 c/octet — 1,75× devant le corps nu (l'agrégation et le scheduling d'OpenSSL,
+  nommés) ; LE HISSAGE exigé par l'instruction VIT dans la sonde de session pour les corridors
+  NEUFS (le GHASH dispatch sous r10, le sondage UNE fois, compté) — le corridor SHA-NI d'époque
+  RECONDUIT TEL QUEL, son coût de sondage MESURÉ et nommé (la leçon pour sa renotation) ;
+- LA PARITÉ TRIPLE : le rig-GCM (couloir) == le rig-GCM (scellé 17) == LE SCELLÉ tls13-18 ==
+  OpenSSL EVP 25/25 (ct ET étiquette, octet pour octet) ; SHA : couloir == scellé 02 == EVP ;
+- LE TEMPS-CONSTANT STRUCTUREL : UNE empreinte de trace par classe (60 mesures chacune, les
+  adresses et tailles hachées, les VALEURS JAMAIS) ; aucune instruction à latence variable sur
+  le chemin (div/idiv/cpuid/rdtsc ABSENTS du corridor — le sondage VIT à l'appelant, PUBLIC) ;
+  le SEUL jcc du corridor porte sur r10 PUBLIC (le dispatch), AUCUNE branche ni adresse sur les
+  secrets — le twist SANS BRANCHE (pcmpgtd/pand/pxor), la réduction PAR DÉCALAGES ;
+- LE REPLI au scellé 32/32 (jamais un chemin mort), LE MUTANT attrapé au premier vecteur, la
+  commutativité et X/Y intacts 32/32 (le contrat tls13-17:R1 TENU — R4).
+
+LES GAPS NOMMÉS (jamais simulés) : LE BAC VIRTUALISÉ — les cycles publiés sont LES CYCLES DE
+CETTE MACHINE (le cpuid y coûte ~2 660 c, le silicium nu au geste du développeur au terrain) ;
+UNE SEULE machine ; le corridor SHA-NI d'époque reconduit avec SON dispatch par appel (le coût
+mesuré ci-dessus, la renotation hissée nommée geste suivant) ; la composition de laboratoire
+par blocs contre l'AGRÉGATION d'OpenSSL (l'écart @4096 structurel, jamais maquillé).
+
+LE RIG NATIF (RDTSCP, cœur 1, n=20, médiane non arrondie + IQR, cycles bruts)
+  stub                           66 c [IQR    0] · 66.0000 c/unité
+  ghash-karatsuba              6404 c [IQR   22] · 64.0400 c/unité
+  ghash-schoolbook             6339 c [IQR   30] · 63.3900 c/unité
+  ghash-scelle                80635 c [IQR 10398] · 806.3500 c/unité
+  gcm-couloir@64               1246 c [IQR   62] · 19.4688 c/unité
+  gcm-scelle17@64              5425 c [IQR  192] · 84.7656 c/unité
+  gcm-scelle18@64              5924 c [IQR  128] · 92.5625 c/unité
+  gcm-evp128@64                1514 c [IQR   40] · 23.6562 c/unité
+  gcm-evp256@64                1514 c [IQR   18] · 23.6562 c/unité
+  gcm-couloir@4096            30950 c [IQR  202] · 7.5562 c/unité
+  gcm-scelle17@4096          240865 c [IQR 18714] · 58.8049 c/unité
+  gcm-scelle18@4096          263552 c [IQR 8604] · 64.3438 c/unité
+  gcm-evp128@4096              2385 c [IQR   74] · 0.5823 c/unité
+  gcm-evp256@4096              2527 c [IQR   68] · 0.6169 c/unité
+  sha-shani@4096             184782 c [IQR  240] · 45.1128 c/unité
+  sha-scelle@4096             53662 c [IQR  158] · 13.1011 c/unité
+  sha-evp@4096                 8340 c [IQR    2] · 2.0361 c/unité
+LA MACHINE : Intel(R) Xeon(R) Processor · 3200.000 MHz · drapeaux aes avx2 avx512f constant_tsc pclmulqdq rdtscp sha_ni sse2
+LA SONDE DE SESSION : SONDE verdict=15 pclmul=1 aes=1 sha=1 — le verdict UNE fois, les couloirs ne sondent plus
