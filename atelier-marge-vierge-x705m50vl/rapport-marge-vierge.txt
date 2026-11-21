@@ -1,0 +1,121 @@
+LE RAPPORT DE L'ATELIER x705m50vl — LES DEUX VARIANTES À LA MARGE VIERGE : LE V5-ENTRELACÉ k ∈ {4, 8} AUX CALENDRIERS INDÉPENDANTS, L'AVX2 APRÈS HISSAGE, LA CIBLE PRÉ-ENREGISTRÉE ≤ 3 c/bloc MANQUÉE ET LE GAP NOMMÉ PAR MESURE
+(la vague 12 ; le plan gelé sha256 c24a729de4305df6… AVANT toute mesure — le commit 4f5d59f précède la première donnée ; la machine : Xeon 3200 MHz, constant_tsc, aes avx2 avx512f — les drapeaux consignés au registre ; la convention du rig 8z4hj76w4 : octets position-indépendants, la bibliothèque tenue égale)
+
+(1) LES NOTATIONS À LA MARGE VIERGE : ENT4 804 o au RVA 0xE200 · HISSE 441 o à 0xE600 · ENT8
+    1 536 o à 0xE800 · LE MUTANT 804 o à 0xF000 (l'octet du disp32 de la lecture [rbx + 0x90]
+    du flot 0 : 0x90 → 0x91, le geste exact du mutant de la porteuse) · LE PLANCHER-AESENC 66 o
+    à 0xF400 (la sonde de débit pur : HUIT chaînes aesenc indépendantes sur registres SEULS)
+    · v4-inline 608 o la référence AVANT à 0xD400 · le couloir AVX2 à dispatch par appel
+    (fnvan0zes) 494 o la cellule de non-régression à 0xD100 · les HUIT calendriers aux adresses
+    INDÉPENDANTES 0xC800-0xCF00 (espacés 0x100, lignes distinctes) et le banc aux HUIT clés
+    DIFFÉRENTES à 0xD800 · les SCELLÉS assemblés à leurs slots par le lecteur canonique B4
+    (tls13-15 à 0xDCC0, tls13-16 à 0xDF00, loupe-13 à 0x5740), posés en copies de laboratoire à
+    0xC080/0xC400. LES DEUX ÉCARTS AU PLAN NOMMÉS : le plan gelé posait ent8 à 0xE400 — le
+    corps k=8 (1 536 o) NE TIENT PAS dans la fenêtre 0x200, ET ent4 lui-même (804 o) déborde
+    0xE400 — ent8 posé à 0xE800, la cause mesurée (le compte d'octets assemblés), le plan
+    demeuré gelé ; les marges vérifiées SANS chevauchement (la v4-inline déborde 0xD600 — le
+    banc aux clés déplacé à 0xD800, la même cause nommée). LE ROUND-TRIP 100 % aux NEUF corps
+    (ent4, ent8, hisse, plancher, v4i, avx2, tls15, tls16, scelle13).
+    LA FAUTE DE LA PASSE MORTE NOMMÉE : le corps ent8 déposé par la session morte chargeait
+    TOUTES les clés de tour de la SEULE base rbx (huit calendriers DÉCLARÉS aux adresses
+    indépendantes, UN vécu) — le vice relevé à la reprise pièce à pièce, le corps réécrit aux
+    HUIT bases (rbx · rdi · rsi · rbp · r12-r15), le mappage différentiel aux clés
+    différentes le juge.
+
+(2) LA PARITÉ EXIGÉE — TOUT VERT : LE CALENDRIER des clés par LE SCELLÉ tls13-15 confronté au
+    juge python FIPS 197 §5.2 VERT, ET LES HUIT clés du banc 8/8 (chaque calendrier dérivé par
+    le scellé == le juge, la LCG 20261120 consignée) ; LE VECTEUR FIPS 197 C.1 VERT aux quatre
+    corps (le scellé, v4-inline, ent4, ent8 — le même chiffre 3925841d…dc09fb) ; LA
+    DIFFÉRENTIELLE 64/64 ET 256/256 OCTET POUR OCTET contre le scellé appelé par bloc aux
+    calendriers égaux (v4i, ent4, ent8) ET LE VÉRITABLE MAPPAGE aux HUIT clés DIFFÉRENTES :
+    le bloc i au calendrier (i mod k) PROUVÉ 64/64 et 256/256 (le juge le scellé appelé à la
+    bonne clé par bloc — ent4 aux 4 clés, ent8 aux 8) ; LES QUEUES (N mod k) EXERCÉES aux huit
+    tailles 1 · 2 · 3 · 5 · 7 · 63 · 65 · 255 — restes 1-3 (ent4) et 1-7 (ent8) vécus, TOUT
+    n/n ; LE REPLI FORCÉ du couloir hissé (r10 = 1 → le chemin SSE2) aux 559 vecteurs, ET le
+    chemin AVX2 réel (r10 = 0, le CPU porte avx2) — ZÉRO DIVERGENCE aux deux (le lm = 33 au
+    REFUS DE CONTRAT -5 attendu, vécu) ; LA BATTERIE 559 SOUS UNICORN au repli forcé : 559
+    vecteurs, ZÉRO DIVERGENCE (LA BORNE NOMMÉE : Unicorn ne porte ni AVX ni SHA-NI — le chemin
+    ymm JAMAIS simulé sous émulation, le natif seul le vit) ; LA BORNE N ≤ 256 fail-closed :
+    N = 257 → rax = -2, RIEN chiffré (le 0xAA intact aux deux corps) ; LE CONTRÔLE NÉGATIF :
+    l'octet du corps entrelacé muté ATTRAPÉ AU PREMIER VECTEUR (le FIPS C.1 diverge — le
+    bloc 0 = le flot 0 = la base mutée) ; les SCELLÉS INTACTS avant et après CHAQUE partie
+    (la garde du sceau-I 14/14 à QUATRE reprises — avant, après la batterie, après les
+    comptes, après le rig natif ; les QUATRE pièces sha256 aux ancres R7 : loupe.exe
+    c1115105… · proxy.exe 446279f3… · selftest.exe 8038585b… · demo.exe df8f2e50…).
+
+(3) LE COMPTE D'INSTRUCTIONS UNICORN (l'enveloppe comprise — prologue/épilogue dans le
+    compte) : ent4@64 1 623 (25,36/bloc) · ent4@256 6 375 (24,90) · ent8@64 1 600 (25,00) ·
+    ent8@256 6 280 (24,53) — CONTRE v4i@64 1 081 (16,89) · v4i@256 4 249 (16,60) : LE COÛT
+    DU LEXIQUE DE L'ENTRELACEMENT +48 % d'instructions (les lectures rk PAR FLOT : 40 par
+    groupe de 4 contre 10 partagées à v4i) — le prix nommé de l'indépendance d'adressage.
+
+(4) LA MESURE (RDTSCP, le cœur 1 épinglé, n = 20 — ≥ 20 exigé —, la médiane NON ARRONDIE,
+    l'IQR, les cycles bruts publiés — la recomposabilité, la leçon 6kbfrpn7k ; le stub msx64
+    76 c [4] consigné) :
+    LE V5-ENTRELACÉ (c/bloc ENVELOPPE COMPRISE) : ent4@64 413 c = 6,453 [0,125] · ent4@256
+    1 360 c = 5,313 [0,070] · ent8@64 381 c = 5,953 [0,125] · ent8@256 1 240 c = 4,844
+    [0,039] — CONTRE v4-inline la référence AVANT AU RIG MÊME : v4i@64 366 c = 5,719 [0,031]
+    · v4i@256 1 219 c = 4,762 [0,008] (la valeur publiée v0.22.0 : 7,09 [0,09] aux 64 et
+    5,10 [0,03] aux 256 — DATÉE : la mesure d'un autre jour, l'état de la machine diffère ;
+    la comparaison honnête est AU RIG MÊME, la même session).
+    LA CIBLE PRÉ-ENREGISTRÉE ≤ 3 c/bloc MANQUÉE aux deux tailles (meilleure cellule ent8@256
+    = 4,844) — LE GAP NOMMÉ PAR MESURE, JAMAIS UN CHIFFRE AJUSTÉ : LE PLANCHER-AESENC (la
+    sonde de débit pur : 512 itérations × HUIT chaînes indépendantes sur registres, aucune
+    donnée) rend 1 880 c [2] aux 4 096 aesenc = 0,459 c/aesenc — L'UNITÉ AES DE CETTE MACHINE
+    DÉBITE 2,18 aesenc/cycle, LE PLANCHER ARITHMÉTIQUE D'UN BLOC AES-128 EST 10 × 0,459 =
+    4,59 c/bloc ENVELOPPE LIBRE : AUCUNE ORGANISATION DES LECTURES NE PEUT DESCENDRE SOUS LE
+    DÉBIT DE L'UNITÉ — la cible ≤ 3 exigeait ≥ 3,33 aesenc/cycle, l'unité en donne 2,18. La
+    cause est LE PORT, pas la latence : les k chaînes indépendantes MASQUENT la latence
+    (l'écart 64 → 256 blocs se referme : 6,45 → 5,31 à ent4, 5,95 → 4,84 à ent8 — le
+    lissage de l'enveloppe), mais le DÉBIT de l'unité borne les quatre cellules ; ent8@256
+    vit à 1,055× le plancher (4,844 / 4,59) — l'entrelacement k=8 SATURE l'unité, l'écart
+    résiduel 0,25 c/bloc = la pression des lectures (12 accès mémoire par bloc contre 6 à
+    v4i — le compte Unicorn nomme le +48 %). LA LECTURE HONNÊTE DU LEVIER : l'indépendance
+    d'adressage nommée par v4 N'EST PAS le goulot sur cette machine — v4i (les lectures rk
+    PARTAGÉES, 10 par groupe) demeure légèrement devant aux deux tailles (5,719/4,762
+    contre 6,453/5,313 à ent4) : les lectures L1 partiellement réordonnancées du renommage
+    de registres suffisent, et les 40 lectures par groupe de l'entrelacement AJOUTENT la
+    pression de port sans casser d'attente mesurée ; le levier v4 (l'adresse indépendante
+    PAR BLOC de la chaîne add→mov→call de v3) demeurait le bon — l'étendre AU CALENDRIER ne
+    paye pas : LE GAP A DÉPLACÉ de l'organisation des lectures au débit de l'unité de
+    silicium, le plancher mesuré le nomme.
+    L'AVX2 APRÈS HISSAGE (le couloir de recherche, 4 096 octets, le motif 16 ABSENT — la
+    convention fnvan0zes, re-mesurée n = 20) : LE COULOIR HISSÉ 470 c [26] CONTRE le couloir
+    à dispatch par appel 5 840 c [148] — LE GAIN DU HISSAGE 12,4× : le sondage cpuid (la
+    sortie d'hyperviseur du bac virtualisé, ≈ 5 370 c vécues) NE SE PAIE PLUS PAR APPEL, le
+    verdict RÉSOLU AU CHARGEMENT SOUS R10, la note de fnvan0zes (« l'embarquement exigera le
+    sondage hissé, le couloir porte la note ») TENUE ; LE REPLI SSE2 (r10 = 1, jamais un
+    chemin mort) 1 540 c [10] — 3,3× le chemin AVX2, 11,8× devant le scellé GPR : la
+    machine sans AVX2 vit un repli HONNÊTE, pas une punition. LES NON-RÉGRESSIONS : le
+    couloir à dispatch 5 840 [148] contre la publiée 5 846 [138] — l'écart 6 c dans l'IQR,
+    la classe tenue ; le scellé loupe-13 18 228 [18] contre la publiée 18 226 [4] — l'écart
+    2 c, la classe tenue.
+
+(5) LES FAUTES NOMMÉES ET CORRIGÉES (la transparence de la session, jamais maquillée) : (a)
+    LE CORPS ent8 DE LA PASSE MORTE — huit calendriers déclarés, les lectures TOUTES à la
+    seule base rbx : le corps réécrit aux HUIT bases, le mappage aux clés différentes le
+    juge (64/64 et 256/256) ; (b) LE PORTEUR r11 DE LA FENÊTRE — le premier passage du
+    couloir hissé plantait au vecteur 57 (n = 17 < 32 : le repli16 atteint DEPUIS la file
+    AVX2 où rcx est déjà consommé par le balayage — la leçon des registres porteurs
+    8z4hj76w4 tombée au changement de porteur : r10 PORTE LE VERDICT, le porteur de la
+    fenêtre déménagé à r11, rdx demeuré intact aux deux entrées — nommé) ; (c) le rig
+    natif : la page 0x1000 posée DEUX fois (le trampoline la pose déjà — l'EEXIST nommé au
+    premier run, la pose doublée retirée) ; les substitutions de gabarit à un % manquant —
+    les fautes de l'outil, nommées, jamais touchées aux notations.
+
+(6) LES LIMITES NOMMÉES : UNE SEULE MACHINE au bac (la même que les vagues 10-11 — les
+    témoins signés attendent le geste du maître, JAMAIS simulés) ; LE BAC VIRTUALISÉ — le
+    plancher 0,459 c/aesenc est le débit DE CETTE MACHINE virtualisée, le matériel nu peut
+    différer (la mesure au terrain, la leçon du cpuid mesurée par fnvan0zes : ≈ 2 660 c au
+    bac contre ≈ 100 au nu) ; Unicorn SANS AVX (le chemin ymm vécu au natif seul — la borne
+    reconduite) ; la cible ≤ 3 c/bloc PRÉ-ENREGISTRÉE MANQUÉE — l'issue consignée TELLE
+    QUELLE, jamais re-tirée (la règle des vagues 8-11) ; la comparaison v4i aux valeurs
+    publiées DATÉE (7,09/5,10 d'un autre jour — 5,719/4,762 au rig même, la même session :
+    les deux publiés, la lecture honnête nommée).
+
+LA CONSIGNATION : OPT-16 au journal d'optimisation (la mesure avant/après consignée AVANT
+le commit, R11) ; D249 append-only au journal des décisions ; les registres
+registres/marge-vierge.json (les cycles bruts, les IQR, les comptes, la machine, les
+drapeaux) ; le présent rapport ; l'atelier committé au dépôt (les notations, le rig C
+généré, le script, les registres, le rapport) — les SCELLÉS INTACTS, la marge vierge seule
+écrite.

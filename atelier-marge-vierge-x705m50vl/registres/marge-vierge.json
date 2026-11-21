@@ -1,0 +1,228 @@
+{
+ "duree_s": 2.1,
+ "octets": {
+  "ent4": 804,
+  "hisse": 441,
+  "ent8": 1536,
+  "mut": 804,
+  "plancher": 66,
+  "v4i": 608,
+  "avx2": 494,
+  "tls15": 520,
+  "tls16": 129,
+  "scelle13": 126
+ },
+ "rva": {
+  "tls15": "0xc080",
+  "tls16": "0xc400",
+  "avx2": "0xd100",
+  "v4i": "0xd400",
+  "ent4": "0xe200",
+  "hisse": "0xe600",
+  "ent8": "0xe800",
+  "mut": "0xf000",
+  "plancher": "0xf400",
+  "stub": "0xf800",
+  "scelle13": "0x5740",
+  "rk_meme": [
+   "0xc800",
+   "0xc900",
+   "0xca00",
+   "0xcb00",
+   "0xcc00",
+   "0xcd00",
+   "0xce00",
+   "0xcf00"
+  ],
+  "rk_diff": "0xd800"
+ },
+ "round_trip": {
+  "ent4": true,
+  "ent8": true,
+  "hisse": true,
+  "plancher": true,
+  "v4i": true,
+  "avx2": true,
+  "tls15": true,
+  "tls16": true,
+  "scelle13": true
+ },
+ "mutation": {
+  "offset": 736,
+  "avant": "0x90",
+  "apres": "0x91",
+  "cible": "movdqu xmm4, [rbx + 0x90] (flot 0)"
+ },
+ "comptes_unicorn": {
+  "ent4@64": {
+   "instructions": 1623,
+   "par_bloc": 25.359
+  },
+  "ent4@256": {
+   "instructions": 6375,
+   "par_bloc": 24.902
+  },
+  "ent8@64": {
+   "instructions": 1600,
+   "par_bloc": 25.0
+  },
+  "ent8@256": {
+   "instructions": 6280,
+   "par_bloc": 24.531
+  },
+  "v4i@64": {
+   "instructions": 1081,
+   "par_bloc": 16.891
+  },
+  "v4i@256": {
+   "instructions": 4249,
+   "par_bloc": 16.598
+  }
+ },
+ "batterie_unicorn": {
+  "vecteurs": 559,
+  "divergences": 0
+ },
+ "parite": {
+  "calendrier_fips": true,
+  "calendrier_huit_cles": "8/8",
+  "fips_c1": {
+   "scelle": true,
+   "v4i": true,
+   "ent4": true,
+   "ent8": true
+  },
+  "negatif": "ATTRAPE",
+  "diff": {
+   "v4i@0064": "64/64",
+   "ent4@0064": "64/64",
+   "ent8@0064": "64/64",
+   "v4i@0256": "256/256",
+   "ent4@0256": "256/256",
+   "ent8@0256": "256/256"
+  },
+  "diffcles64": {
+   "ent4@0064": "64/64",
+   "ent8@0064": "64/64"
+  },
+  "diffcles256": {
+   "ent4@0256": "256/256",
+   "ent8@0256": "256/256"
+  },
+  "queue": {
+   "v4i@0001": "1/1",
+   "ent4@0001": "1/1",
+   "ent8@0001": "1/1",
+   "v4i@0002": "2/2",
+   "ent4@0002": "2/2",
+   "ent8@0002": "2/2",
+   "v4i@0003": "3/3",
+   "ent4@0003": "3/3",
+   "ent8@0003": "3/3",
+   "v4i@0005": "5/5",
+   "ent4@0005": "5/5",
+   "ent8@0005": "5/5",
+   "v4i@0007": "7/7",
+   "ent4@0007": "7/7",
+   "ent8@0007": "7/7",
+   "v4i@0063": "63/63",
+   "ent4@0063": "63/63",
+   "ent8@0063": "63/63",
+   "v4i@0065": "65/65",
+   "ent4@0065": "65/65",
+   "ent8@0065": "65/65",
+   "v4i@0255": "255/255",
+   "ent4@0255": "255/255",
+   "ent8@0255": "255/255"
+  },
+  "borne": {
+   "ent4": {
+    "rax_m2": true,
+    "rien_chiffre": true
+   },
+   "ent8": {
+    "rax_m2": true,
+    "rien_chiffre": true
+   }
+  },
+  "batterie_native_avx2": "0",
+  "batterie_native_repli": "0"
+ },
+ "mesures": {
+  "stub": {
+   "cycles_mediane": 76,
+   "cycles_iqr": 4,
+   "par_op_mediane": 76.0,
+   "par_op_iqr": 4.0
+  },
+  "plancher": {
+   "cycles_mediane": 1880,
+   "cycles_iqr": 2,
+   "par_op_mediane": 0.458984,
+   "par_op_iqr": 0.000488
+  },
+  "v4i@64": {
+   "cycles_mediane": 366,
+   "cycles_iqr": 2,
+   "par_op_mediane": 5.71875,
+   "par_op_iqr": 0.03125
+  },
+  "v4i@256": {
+   "cycles_mediane": 1219,
+   "cycles_iqr": 2,
+   "par_op_mediane": 4.761719,
+   "par_op_iqr": 0.007812
+  },
+  "ent4@64": {
+   "cycles_mediane": 413,
+   "cycles_iqr": 8,
+   "par_op_mediane": 6.453125,
+   "par_op_iqr": 0.125
+  },
+  "ent4@256": {
+   "cycles_mediane": 1360,
+   "cycles_iqr": 18,
+   "par_op_mediane": 5.3125,
+   "par_op_iqr": 0.070312
+  },
+  "ent8@64": {
+   "cycles_mediane": 381,
+   "cycles_iqr": 8,
+   "par_op_mediane": 5.953125,
+   "par_op_iqr": 0.125
+  },
+  "ent8@256": {
+   "cycles_mediane": 1240,
+   "cycles_iqr": 10,
+   "par_op_mediane": 4.84375,
+   "par_op_iqr": 0.039062
+  },
+  "hisse-avx2@4096": {
+   "cycles_mediane": 470,
+   "cycles_iqr": 26,
+   "par_op_mediane": 470.0,
+   "par_op_iqr": 26.0
+  },
+  "hisse-repli@4096": {
+   "cycles_mediane": 1540,
+   "cycles_iqr": 10,
+   "par_op_mediane": 1540.0,
+   "par_op_iqr": 10.0
+  },
+  "avx2@4096": {
+   "cycles_mediane": 5840,
+   "cycles_iqr": 148,
+   "par_op_mediane": 5840.0,
+   "par_op_iqr": 148.0
+  },
+  "scelle13@4096": {
+   "cycles_mediane": 18228,
+   "cycles_iqr": 18,
+   "par_op_mediane": 18228.0,
+   "par_op_iqr": 18.0
+  }
+ },
+ "machine": "Intel(R) Xeon(R) Processor",
+ "mhz": "3200.000",
+ "drapeaux": "aes avx2 avx512f constant_tsc pclmulqdq rdtscp sse2"
+}
