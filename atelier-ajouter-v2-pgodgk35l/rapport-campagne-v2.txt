@@ -1,0 +1,18 @@
+LA CAMPAGNE TPL-ADD-v2 (pgodgk35l) — les 18 mêmes tâches, la graine
+20261117 reconduite, l'ordre JAMAIS re-tiré ; le CLI z-ai au champ
+usage LU ; les QUATRE contrôles négatifs REFUSÉS au premier nom
+avant la première tâche
+
+LES RÉSULTATS : 5/18 VERTS · la médiane native 3718 [cl100k 3702] · la re-tokenisation indépendante écart max 42
+LA CIBLE PRÉ-ENREGISTRÉE : ≥ 15/18 verts ET ≤ 1 500 natifs : MANQUÉE — le gap résiduel nommé
+LES 15 REFUS v1 : 3 CONVERTIS VERTS sur pièce (loupe-03-fermer, loupe-18-quitter, loupe-05-sha256…)
+  les refus v1 restant refus : 12 (loupe-07-cumul, loupe-11-defilement, loupe-12-aller, loupe-10-peinture, loupe-09-ecran, loupe-17-sauver…)
+LES 3 VERTS v1 re-roulés : 2/3 verts (round-trip exact, cadre ABI vérifié)
+LA DURÉE : 281 s · le journal journal_v2.jsonl · la garde brute au garde-brut-v2.jsonl
+
+LE GAP RÉSIDUEL NOMMÉ PAR CLASSE DE REFUS :
+  7 × HORS-FORMAT
+  3 × ID-INCONNU
+  3 × EXPANSION-DIVERGENTE
+
+LE VERDICT : LE GAP NOMMÉ

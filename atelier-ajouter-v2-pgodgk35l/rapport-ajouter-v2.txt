@@ -1,0 +1,99 @@
+LE RAPPORT DE L'ATELIER pgodgk35l — TPL-ADD-v2 : LE SQUELETTE PLUS LE
+DICTIONNAIRE DE DOMAINE VERSIONNÉ, LA CAMPAGNE AUX 18 MÊMES TÂCHES
+(21/11/2026, la vague 12 — le plan gelé sha256 cf3fb88e8eebed2a… au
+commit d'ouverture, la graine 20261117 reconduite, l'ordre JAMAIS
+re-tiré)
+
+═════════════════════════════════════════════════════════════════════════════
+LE CLIENT v2 — LE DICTIONNAIRE DE DOMAINE VERSIONNÉ (DICT-DOMAINE-v1)
+═════════════════════════════════════════════════════════════════════════════
+
+LE SQUELETTE DÉTERMINISTE (le v1 de la vague 11 TEL QUEL : le cadre ABI
+dérivé de la couche I — le prologue/épilogue aux non-volatils, le shadow
+space, la signature) PLUS LE DICTIONNAIRE : les étiquettes admissibles du
+bloc (les cibles résolues de la notation réelle — LBL-xxx) et les
+constantes admissibles (les appels IAT aux slots du plan, les appels
+directs libc/tls13, les bornes nommées de la spec, les immédiats
+distinctifs du corps — CST-xxx) ; l'empreinte sha256 du dictionnaire
+GRAVÉE au matériau, RECOUPÉE au canonique du bloc (le client REBUILD le
+dictionnaire — une mutation du matériau est DICT-DIVERGENT).
+
+L'AGENT ÉMET DES IDs : « je LBL-005 », « call CST-002 », « cmp r13,
+CST-004 » ; LE CLIENT EXPANDE : les LBL au NOM CANONIQUE (l'étiquette
+interne dépend de la disposition du corps réécrit — la RÉSOLUTION LOCALE
+demeure, la discipline du point fixe de l'auteur ; les définitions
+« LBL-xxx : » expandées au nom), les CST-IAT au déplacement RIP CALCULÉ à
+l'adresse de l'instruction (le point fixe des tailles), les CST-appel à
+l'adresse du plan, les CST-constante à la valeur.
+
+LES QUATRE REFUS NOMMÉS (fail-closed, vécus aux contrôles négatifs AVANT
+la campagne) : ID-INCONNU (l'ID hors dictionnaire — LBL-999) ;
+DICT-DIVERGENT (le dictionnaire muté d'un octet — une borne décalée,
+l'empreinte divergente du canonique) ; EXPANSION-DIVERGENTE (la ligne
+expandée qui ne s'assemble pas, le round-trip qui diverge) ; HORS-FORMAT
+(la ligne hors les formes admises). AUCUN CONTRÔLE RETIRÉ : le round-trip
+keystone/capstone CANONIQUE (le client v8 TEL QUEL), LE JUGE DU CADRE
+(le prologue/épilogue vérifiés ligne à ligne), l'empreinte de la notation
+— le client v2 n'ajoute QUE le dictionnaire.
+
+═════════════════════════════════════════════════════════════════════════════
+LES TROIS PASSES DU CLIENT (les corrections nommées — le droit de
+l'ingénierie, jamais le ré-tirage de la mesure)
+═════════════════════════════════════════════════════════════════════════════
+
+LA PASSE 1 : l'expansion LBL aux ADRESSES FIXES de la notation — vice de
+conception NOMMÉ : l'adresse d'une étiquette interne DÉPEND de la
+disposition du corps réécrit (sauter à l'ancienne adresse = sauter au
+milieu de son propre code à un décalage arbitraire) — 1/18 verts, la
+cause comprise.
+LA PASSE 2 : l'expansion corrigée AU NOM CANONIQUE (la résolution locale
+pose l'adresse à la disposition réelle) + le few-shot (l'exemple de forme
+ligne à ligne contre les définitions LBL-xxx :) + l'extraction étendue
+des constantes sémantiques du corps — 2/18.
+LA PASSE 3 : le placeholder de taille étendu aux références expandées
+(le point fixe mesure la taille, la résolution vit après) — 5/18, LA
+MESURE CONSIGNÉE (la campagne ci-dessous, jamais re-tirée).
+
+═════════════════════════════════════════════════════════════════════════════
+LA CAMPAGNE — LES 18 MÊMES TÂCHES, LA MESURE AU CHAMP USAGE
+═════════════════════════════════════════════════════════════════════════════
+
+LE RÉSULTAT : 5/18 VERTS (loupe-03-fermer, loupe-18-quitter, loupe-05-
+sha256 CONVERTIS VERTS sur pièce — des refus v1 ; loupe-02-lire et
+loupe-04-cadre TENUS ; loupe-13-recherche PERDU aux erreurs
+d'assemblage du modèle) ; la médiane native 3 718 [cl100k 3 702] ; la
+re-tokenisation indépendante : l'écart du prompt mesuré au journal (le
+champ usage : le tokenizer NATIF du modèle ; cl100k la re-tokenisation
+parallèle — les deux comptes consignés au JSONL, l'écart max 42 aux
+seuls prompts : DEUX tokenizers distincts, jamais confondus).
+
+LA CIBLE PRÉ-ENREGISTRÉE (falsifiable) : ≥ 15/18 verts ET ≤ 1 500
+natifs — MANQUÉE aux deux faces : la faisabilité 5/18, le coût 3 718.
+
+LE GAP RÉSIDUEL NOMMÉ PAR CLASSE DE REFUS (la règle de l'instruction —
+jamais re-tiré) :
+  7 × HORS-FORMAT — les formes invalides du modèle : cmp mémoire-à-mémoire
+      (illégal en x86), movzx r64/r64 (la source doit être r32), xor
+      dword/r64 (le désalignement de taille), la ligne tronquée, le
+      symbole en clair (VK_LEFT) ;
+  3 × ID-INCONNU — les IDs hallucinés au-delà du dictionnaire du bloc
+      (LBL-004 au bloc qui n'en porte que 3 ; CST-001 au bloc sans
+      constante) ;
+  3 × EXPANSION-DIVERGENTE — l'IAT en opérande de comparaison, le call à
+      une étiquette locale, l'opérande constante en cible d'appel.
+
+LA LECTURE : le dictionnaire FERME la classe des refus v1 (les étiquettes
+inconnues et les constantes hors portée — 3 conversions vécues) mais le
+modèle bute désormais aux FORMES INVALIDES de l'assemblage lui-même : le
+gap a DÉPLACÉ — de la connaissance du domaine (fermé par le dictionnaire)
+à la validité de l'écriture machine (le modèle écrit du x86 plausible mais
+invalide) ; le prochain levier nommé : la validation des formes AVANT
+l'envoi (le validateur d'instruction au matériau, la grammaire des formes
+dans le few-shot). LE COÛT : le dictionnaire et le few-shot PAIENT au
+prompt (la médiane v1 : 2 199 natifs ; la médiane v2 : 3 718 — le lexique
+admissible coûte 1 519 tokens de plus, le gap au budget nommé).
+
+LE VERDICT : LE GAP NOMMÉ — la cible pré-enregistrée manquée aux deux
+faces (5/18 ; 3 718), l'issue consignée telle quelle, les trois passes du
+client nommées, les contrôles négatifs aux quatre faces REFUSÉS au
+premier nom, AUCUN contrôle retiré, la graine et l'ordre tenus.
