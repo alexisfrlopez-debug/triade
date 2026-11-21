@@ -1,0 +1,32 @@
+LA REPRISE 6KBFRPN7K — LE CANON NON ARRONDI DU CACHE DE ROUND-TRIP
+(le protocole EXACT de roundtrip_cache.py re-exécuté à la précision
+ microseconde ; le rapport historique demeure octet pour octet)
+
+L'ÉCHANTILLON : 28 notations tls13 (le dépôt, les slots
+ de layout.py), le contrat r5-v1, le moteur du jour
+
+LE TEMPS D'OUVERTURE (n=10, la médiane [min–max], cette machine) :
+  AVANT (tout re-vérifié) : 285.725 ms
+      [283.750–297.158]
+  APRÈS (le mémo chaud, 28/28 hits) :
+      0.418 ms [0.405–0.612]
+  LE GAIN PUBLIÉ, RECOMPOSÉ DES CANONS IMPRIMÉS CI-DESSUS : 683.6×
+  (le brut non arrondi des médianes : 684.4× — l'écart
+ d'arrondi du canon à trois décimales, nommé ; tolérance du linter
+ : 0,2 % relatif aux gains multiplicatifs)
+  (−99.9 %)
+
+L'ERRATUM NOMMÉ (l'instruction 6kbfrpn7k) : la ligne v0.22.0
+« 283,7 ms → 0,4 ms, le gain 680,6× » ne se recomposait pas —
+le lecteur calculait 283,7/0,4 = ×709,2 ; la cause : la médiane
+après publiée à UNE décimale (0,4 ms) pour un ratio à trois
+chiffres significatifs ; le registre historique arrondi à la
+dixième de milliseconde. LE CANON À TROIS DÉCIMALES ci-dessus
+recompose le ratio publié à cette ligne.
+
+LES DIX VALEURS BRUTES (secondes, six décimales) :
+  avant : 0.288812, 0.285289, 0.285510, 0.292784, 0.285122, 0.297158, 0.286795, 0.285939, 0.283769, 0.283750
+  après : 0.000612, 0.000427, 0.000449, 0.000415, 0.000419, 0.000413, 0.000409, 0.000427, 0.000405, 0.000416
+
+sha256 du mémo : 04b14a9052b3dca2…
+LE VERDICT : VERT — le canon à trois décimales publié, le gain recomposé

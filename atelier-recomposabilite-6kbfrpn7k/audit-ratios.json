@@ -1,0 +1,182 @@
+{
+ "ratios": [
+  {
+   "ratio": "cache round-trip (ms)",
+   "imprimes": "283.7 -> 0.4",
+   "canon": "285.725 -> 0.418 (reprise µs)",
+   "recalc_imprimes": 709.25,
+   "recalc_canons": 683.55,
+   "publie": 680.6,
+   "ecart": 28.65,
+   "tolerance": 0.05,
+   "verdict": "ROUGE"
+  },
+  {
+   "ratio": "ajouter (tokens request)",
+   "imprimes": "3074 -> 2200",
+   "canon": "3073.5 -> 2199.5 (le JSONL brut)",
+   "recalc_imprimes": -28.43,
+   "recalc_canons": -28.44,
+   "publie": -28.5,
+   "ecart": 0.07,
+   "tolerance": 0.05,
+   "verdict": "ROUGE"
+  },
+  {
+   "ratio": "régime T/C+G (s)",
+   "imprimes": "39.24 / 2.16",
+   "canon": "39.244 / 2.163 (les m4-*.json bruts)",
+   "recalc_imprimes": 18.17,
+   "recalc_canons": 18.14,
+   "publie": 18.1,
+   "ecart": 0.07,
+   "tolerance": 0.05,
+   "verdict": "ROUGE"
+  },
+  {
+   "ratio": "éditer (tokens request)",
+   "imprimes": "1106 -> 674",
+   "canon": "1105.5 -> 673.5",
+   "recalc_imprimes": -39.06,
+   "recalc_canons": -39.08,
+   "publie": -39.1,
+   "ecart": 0.04,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "localiser (tokens request)",
+   "imprimes": "1053 -> 627",
+   "canon": "1053.0 -> 627.0",
+   "recalc_imprimes": -40.46,
+   "recalc_canons": -40.46,
+   "publie": -40.5,
+   "ecart": 0.04,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "hybride sous le scellé (cycles)",
+   "imprimes": "18226 / 704",
+   "canon": "18226 / 704",
+   "recalc_imprimes": 25.89,
+   "recalc_canons": 25.89,
+   "publie": 25.9,
+   "ecart": -0.01,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "porteuse v4-inline (c/bloc)",
+   "imprimes": "50.56 / 7.09",
+   "canon": "50.56 / 7.09",
+   "recalc_imprimes": 7.13,
+   "recalc_canons": 7.13,
+   "publie": 7.1,
+   "ecart": 0.03,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "plancher éditer natif",
+   "imprimes": "674 / 27.5",
+   "canon": "674 / 27.5",
+   "recalc_imprimes": 24.51,
+   "recalc_canons": 24.51,
+   "publie": 24.5,
+   "ecart": 0.01,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "part notation propre (%)",
+   "imprimes": "20.72 / 37.21",
+   "canon": "20.715 / 37.212",
+   "recalc_imprimes": 55.68,
+   "recalc_canons": 55.67,
+   "publie": 55.7,
+   "ecart": -0.02,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "part régime (%)",
+   "imprimes": "16.50 / 37.21",
+   "canon": "16.497 / 37.212",
+   "recalc_imprimes": 44.34,
+   "recalc_canons": 44.33,
+   "publie": 44.3,
+   "ecart": 0.04,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "fenêtre éditer (%)",
+   "imprimes": "2452 -> 1146",
+   "canon": "2452 -> 1146",
+   "recalc_imprimes": -53.26,
+   "recalc_canons": -53.26,
+   "publie": -53.3,
+   "ecart": 0.04,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "prose de prescription (%)",
+   "imprimes": "866 -> 372",
+   "canon": "866 -> 372",
+   "recalc_imprimes": -57.04,
+   "recalc_canons": -57.04,
+   "publie": -57.0,
+   "ecart": -0.04,
+   "tolerance": 0.5,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "sse2 sous gcc-O2 (temps réel)",
+   "imprimes": "16040 / 833",
+   "canon": "16040 / 833",
+   "recalc_imprimes": 19.26,
+   "recalc_canons": 19.26,
+   "publie": 19.3,
+   "ecart": -0.04,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "sse2 sur l'idiome memchr",
+   "imprimes": "833 / 561",
+   "canon": "833 / 561",
+   "recalc_imprimes": 1.48,
+   "recalc_canons": 1.48,
+   "publie": 1.5,
+   "ecart": -0.02,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "sha-ni sous le scellé (c/bloc)",
+   "imprimes": "832 / 128.5",
+   "canon": "53243/8227 = 6.472",
+   "recalc_imprimes": 6.47,
+   "recalc_canons": 6.47,
+   "publie": 6.5,
+   "ecart": -0.03,
+   "tolerance": 0.05,
+   "verdict": "VERT"
+  },
+  {
+   "ratio": "cristallisation incrémentale (%)",
+   "imprimes": "13 / 28 blocs",
+   "canon": "13 / 28",
+   "recalc_imprimes": 53.57,
+   "recalc_canons": 53.57,
+   "publie": 54.0,
+   "ecart": -0.43,
+   "tolerance": 0.5,
+   "verdict": "VERT"
+  }
+ ],
+ "rouges": 3,
+ "tolerance": 0.05
+}

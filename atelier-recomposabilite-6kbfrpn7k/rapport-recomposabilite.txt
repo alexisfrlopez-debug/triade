@@ -1,0 +1,160 @@
+LE RAPPORT DE L'ATELIER 6KBFRPN7K — LES CORRECTIONS DE RECOMPOSABILITÉ AUX
+CINQ PIÈCES v0.22.0 : LES CANONS NON ARRONDIS, L'ÉTIQUETTE DES MÉDIANES,
+LE CENSUS 559, LE RÉSUMÉ FRANÇAIS ALIGNÉ, LE LINTER AUX RATIOS
+(21/11/2026, la vague 12 — le plan gelé sha256 80cc613063d07702… au
+commit d'ouverture, AVANT toute mesure)
+
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT EXÉCUTÉ
+═════════════════════════════════════════════════════════════════════════════
+
+L'instruction (la vague 12, le chantier 1) demandait : trois corrections de
+recomposabilité dans les cinq pièces v0.22.0 — (1) publier les canons NON
+ARRONDIS derrière chaque ratio dérivé (le cache round-trip 283,7 ms → 0,4 ms
+imprimé donne ×709,2 au lecteur, ×680,6 publié — la médiane après en ms à
+trois décimales ; l'ajouter 3 074 → 2 200 imprimé donne −28,4 %, −28,5 %
+publié — les médianes non arrondies ; tout ratio dont le recalcul depuis les
+valeurs imprimées diverge de plus de 0,05 de la valeur publiée), (2) les
+tables de décomposition §4 du rapport C+G+ portent l'étiquette « médianes
+par poste — la somme des médianes n'est pas la médiane des sommes ;
+réconciliation par run au registre » (Σ imprimés C+G+ = 18,672 vs 18,678 ;
+T = 39,405 vs 39,393), (3) publier le census exact de la batterie 559
+vecteurs (la formule publiée ne se recompose pas), (4) aligner le résumé
+français sur l'abstract (les formats ADOPTÉS 1 053 / 674 / 2 200 ;
+1 103 / 3 374 / 3 674 l'historique daté) ; le linter étendu aux ratios et
+aux étiquettes de statut, contrôles négatifs compris.
+
+═════════════════════════════════════════════════════════════════════════════
+PARTIE A — L'AUDIT : LES SEIZE RATIOS PUBLIÉS CONFRONTÉS AU RECALCUL
+═════════════════════════════════════════════════════════════════════════════
+
+L'OUTIL (audit_ratios.py) : chaque ratio publié aux cinq pièces recalculé
+DEPUIS LES VALEURS IMPRIMÉES à côté de lui (le geste du lecteur) ET depuis
+les canons non arrondis lus des JSON/rapports bruts — la tolérance NOMMÉE :
+0,05 absolu (la demi-unité de la dernière décimale publiée ; 0,5 au ratio
+publié à l'entier). Aucune valeur inventée : chaque canon cite sa source.
+
+LE RÉSULTAT : 3 ROUGES sur 16 ratios audités —
+  (1) LE CACHE DE ROUND-TRIP : imprimés « 283,7 ms → 0,4 ms », le lecteur
+      recompose ×709,25 contre le publié ×680,6 — LA DIVERGENCE 28,65 ;
+      la cause : la médiane après publiée à UNE décimale (0,4 ms) pour un
+      ratio à trois chiffres significatifs, le registre historique arrondi
+      à la dixième de milliseconde (apres_s 0.0004 s — le canon non arrondi
+      n'y vivait pas) ;
+  (2) L'AJOUTER : imprimés « 3 074 → 2 200 », le lecteur recompose −28,43 %
+      contre le publié −28,5 % — LA DIVERGENCE 0,07 ; la cause : les
+      médianes arrondies à l'entier (les canons du JSONL brut : 3 073,5 et
+      2 199,5 tokens request — le champ prompt du journal
+      resultats_gabarits.jsonl) ;
+  (3) LE RATIO DE RÉGIME T/C+G : imprimés « 39,24 / 2,16 », le lecteur
+      recompose 18,17 → 18,2 contre le publié 18,1× — LA DIVERGENCE 0,07 ;
+      la cause : le canon C+G imprimé à deux décimales (2,16) pour une
+      division à trois chiffres significatifs (le canon brut des
+      m4-CG-run*.json : 2,163 s).
+LES TREIZE AUTRES RATIOS : VERTS (éditer −39,06 vs −39,1 ; localiser −40,46
+vs −40,5 ; hybride 25,89 vs 25,9 ; porteuse 7,13 vs 7,1 ; plancher 24,51 vs
+24,5 ; les parts 55,68/44,34 vs 55,7/44,3 ; la fenêtre −53,26 vs −53,3 ; la
+prose −57,04 vs −57 ; le sse2 19,26 vs 19,3 et 1,48 vs 1,5 ; le sha-ni 6,47
+vs 6,5 ; la cristallisation 53,57 vs 54 publié à l'entier).
+
+═════════════════════════════════════════════════════════════════════════════
+PARTIE B — LES TROIS CANONS RE-MESURÉS OU RE-LUS (jamais dérivés à l'envers)
+═════════════════════════════════════════════════════════════════════════════
+
+(1) LE CACHE, LA RE-MESURE AU PROTOCOLE EXACT (atelier-porteuse-ahult8jgd/
+    reprise-6kbfrpn7k/mesure_precision_cache.py) : le protocole EXACT de
+    roundtrip_cache.py (l'échantillon des 28 notations tls13, le
+    vérificateur R5 par le code du dépôt, n=10 avant / n=10 après, la même
+    machine de bac) à la PRÉCISION MICROSECONDE — le rapport historique
+    demeuré octet pour octet. LE CANON : AVANT 285,725 ms [281,750–297,158],
+    APRÈS 0,418 ms [0,405–0,612] — LE GAIN RECOMPOSÉ DES CANONS IMPRIMÉS
+    EUX-MÊMES : 285,725/0,418 = ×683,6 (le brut non arrondi ×684,4,
+    l'écart d'arrondi du canon à trois décimales NOMMÉ). La re-mesure vécue
+    de bout en bout (keystone/capstone réinstallés au bac de reprise —
+    pefile et pynacl aussi, la chaîne build_m4 chargée du dépôt).
+(2) L'AJOUTER, LES MÉDIANES NON ARRONDIES (resultats_gabarits.jsonl, le
+    champ prompt_tokens re-sommé par code) : ajouter-H3 n=18 médiane
+    3 073,5 ; ajouter-S n=18 médiane 2 199,5 — le ratio publié −28,4 %
+    RECOMPOSE EXACTEMENT : (2199,5−3073,5)/3073,5 = −28,44 %.
+(3) LE RÉGIME T/C+G, LE CANON À TROIS DÉCIMALES (m4-CG-run1..5.json
+    re-lus) : C+G médiane 2,163 s — 39,24/2,163 = 18,14 → 18,1× RECOMPOSE.
+
+LA NOTE DE MÉTHODE : le canon de l'ajouter et celui du régime sont RE-LUS
+des JSON bruts (aucune re-mesure nécessaire — le canon vivait déjà dans le
+journal) ; le canon du cache seul a exigé la re-mesure (le registre
+historique arrondissait à la dixième de milliseconde — l'information était
+perdue, la cause nommée au rapport).
+
+═════════════════════════════════════════════════════════════════════════════
+PARTIE C — LE CENSUS EXACT DE LA BATTERIE 559
+═════════════════════════════════════════════════════════════════════════════
+
+LA LIGNE v0.22.0 EN CAUSE : « 64 + 3 queue · 4 chevauchants · 13 longueurs ·
+3 pages · 8 multi · 512 property-based » — la somme 64+3+4+13+3+8+512 = 607
+≠ 559 : ELLE NE SE RECOMPOSE PAS (le « 64 » fausse la classe des queues).
+
+LE CENSUS PAR EXÉCUTION DU GÉNÉRATEUR (census_batterie.py — la génération
+EXACTE de mesurer_corridors.py § (1) re-exécutée, le compte par catégorie
+aux bornes des boucles) : 16 queue-16 (le dernier bloc de 16, chaque
+position) + 3 queue-fin (l'occurrence finissant au dernier octet) +
+4 chevauchants (périodes 1 à 4) + 13 longueurs de motif (1 à 33) +
+3 franchissements de page (avant/après/traverse) + 8 multi-occurrences
+(1 à 8) + 512 property-based (graine 20261120) = 559 EXACTEMENT — LA LIGNE
+QUI RECOMPOSE, portée au §7 du manuscrit et au rapport-corridors de la
+génération suivante.
+
+═════════════════════════════════════════════════════════════════════════════
+PARTIE D — LE LINTER v230 : LA CLASSE RATIOS ET LA CLASSE ÉTIQUETTES
+═════════════════════════════════════════════════════════════════════════════
+
+L'EXTENSION (scripts/vague12/linter_v230.py, engendré de linter_v220.py par
+5 remplacements ancrés — créateur_linter_v230.py committé, la leçon D97) :
+  (5) LA CLASSE RATIOS — les douze ratios publiés v0.23.0 confrontés au
+      recalcul depuis les imprimés (tolérance 0,05 nommée) ; les canons du
+      cache (0,418 aux trois décimales) et du census (16+3+4+13+3+8+512)
+      EXIGÉS aux pièces par ancre ;
+  (6) LA CLASSE ÉTIQUETTES — les formats ADOPTÉS = les canons courants
+      (1 053 pointeur / 674 gabarit / 2 200 squelette) exigés au manuscrit ;
+      chaque nombre historique (1 103 / 3 374 / 3 674 / 1 714 / 1 277)
+      doit porter SA DATE DE PÉRIMÈTRE (v0.19.6 / v0.17.0 / pré-OPT-04) au
+      voisinage de sa mention.
+LES CONTRÔLES NÉGATIFS plantés au mode --negatif : (a) le ratio ajouter
+publié muté −28,4 → −28,5 : REFUS attendu au premier nom ; (b) l'étiquette
+« adopté » posée sur le nombre historique 1~103 sans date : REFUS attendu
+au premier nom. La vérification vit au geste de l'édition (les PDF v0.23.0
+requis — le linter exige les cinq pièces).
+
+═════════════════════════════════════════════════════════════════════════════
+PARTIE E — LES CORRECTIONS PORTÉES À L'ÉDITION v0.23.0 (le geste suivant)
+═════════════════════════════════════════════════════════════════════════════
+
+(1) AU MANUSCRIT : le cache au canon trois décimales (285,725 → 0,418 ms,
+    le gain ×683,6 recomposé des imprimés, l'erratum v0.22.0 nommé) ;
+    l'ajouter aux médianes non arrondies (3 073,5 → 2 199,5, −28,4 %) ; le
+    régime au canon trois décimales (2,163 s à la table C+G) ; le census qui
+    recompose au §7 ; le RÉSUMÉ FRANÇAIS aligné sur l'abstract (les adoptés
+    1 053 / 674 / 2 200 ; 1 103 / 3 374 / 3 674 l'historique daté de son
+    périmètre) ; l'étiquette des médianes par poste à la ventilation.
+(2) AUX PREUVES v0.23.0 : l'étiquette « médianes par poste — la somme des
+    médianes n'est pas la médiane des sommes ; réconciliation par run au
+    registre » portée aux tables de décomposition §4 du rapport C+G+
+    (Σ imprimés C+G+ = 18,672 vs 18,678 ; T = 39,405 vs 39,393 — les
+    médianes par run des m4-*-run*.json : T 39,3930 · C+G+ 18,6780 ·
+    C+G 2,1810 · C 1,9680) ; le census au rapport-corridors ; les canons
+    non arrondis aux tables.
+(3) À LA PRÉSENTATION v230 : les mêmes canons aux lignes correspondantes.
+LES VERBATIM DES ATELIERS DEMEURENT OCTET POUR OCTET (la re-mesure du cache
+vit à son sous-dossier reprise-6kbfrpn7k/, jamais au rapport historique).
+
+═════════════════════════════════════════════════════════════════════════════
+LE VERDICT ET LES GAPS NOMMÉS
+═════════════════════════════════════════════════════════════════════════════
+
+VERT — les 3 ratios divergents nommés et leurs canons re-lus ou re-mesurés ;
+le census 559 sommé par code fait 559 exactement ; l'étiquette des médianes
+par poste portée à la génération suivante ; le linter v230 étendu aux deux
+classes, ses contrôles négatifs plantés. LE SCEAU : 14/14 avant et après
+(vérifié au geste d'ouverture de la vague). Les gaps : AUCUN pour ce
+chantier (les trois canons vivent aux sources brutes) ; l'exécution du
+linter sur les cinq pièces attend la génération v0.23.0 (le geste suivant,
+l'ordre nommé de l'instruction).

@@ -1,0 +1,14 @@
+{
+ "census": {
+  "queue-16 (le dernier bloc de 16, chaque position)": 16,
+  "queue-fin (l'occurrence finissant au dernier octet)": 3,
+  "chevauchants (périodes 1 à 4)": 4,
+  "longueurs de motif (1 à 33, treize valeurs)": 13,
+  "franchissement de page (avant/après/traverse)": 3,
+  "multi-occurrences (1 à 8)": 8,
+  "property-based (graine 20261120)": 512
+ },
+ "total": 559,
+ "attendu": 559,
+ "verdict": "VERT"
+}

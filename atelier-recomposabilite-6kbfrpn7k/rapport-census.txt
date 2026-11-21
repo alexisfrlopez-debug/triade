@@ -1,0 +1,27 @@
+LE CENSUS EXACT DE LA BATTERIE 559 (6kbfrpn7k, l'item 3)
+le générateur re-exécuté par code — le compte par catégorie sommé
+
+LA LIGNE v0.22.0 EN CAUSE : « 64 + 3 queue · 4 chevauchants ·
+13 longueurs · 3 pages · 8 multi · 512 property-based » — la somme
+64+3+4+13+3+8+512 = 607 ≠ 559 : ELLE NE SE RECOMPOSE PAS (le « 64 »
+faux pour les 16 queue-16, l'auteur comptant sans doute les 16
+alignements de queue comme 64).
+
+LE CENSUS EXACT (les bornes des boucles du générateur, la preuve par
+exécution) :
+    16  queue-16 (le dernier bloc de 16, chaque position)
+     3  queue-fin (l'occurrence finissant au dernier octet)
+     4  chevauchants (périodes 1 à 4)
+    13  longueurs de motif (1 à 33, treize valeurs)
+     3  franchissement de page (avant/après/traverse)
+     8  multi-occurrences (1 à 8)
+   512  property-based (graine 20261120)
+  ----
+   559  LE TOTAL — == 559 EXACTEMENT
+
+LA LIGNE DE PROSE QUI RECOMPOSE (portée au §7 du manuscrit et au
+rapport-corridors de la génération suivante) : « 16 queue-16 + 3
+queue-fin + 4 chevauchants + 13 longueurs + 3 pages + 8 multi +
+512 property-based = 559 ».
+
+LE VERDICT : VERT — le census sommé par code fait 559 exactement
