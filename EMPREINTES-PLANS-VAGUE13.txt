@@ -1,0 +1,12 @@
+EMPREINTES DES PLANS — LA VAGUE 13 (les six instructions du 21/11/2026)
+Gelées AVANT toute mesure ; le présent commit précède la première donnée.
+
+PLAN-0G3400VQL.md        sha256:caab6f481ab3799f…  (0g3400vql — le couloir GHASH PCLMULQDQ, l'AES-GCM complet face à OpenSSL EVP, le temps-constant structurel)
+PLAN-Q8KUGKPDU.md        sha256:b1b7e6751aa7e4e9…  (q8kugkpdu — le statut exact des 58 gardes, la méthode des 15 exclusions, le Tamarin v2 sans restriction)
+PLAN-5NWNWOCEO.md        sha256:ecc15c07bca48a49…  (5nwnwoceo — TPL-ADD-v3 la grammaire et la boucle de réparation, le coût par changement validé, l'extension à éditer)
+PLAN-AY6ZUZM8O.md        sha256:b15a74cb02f49aa1…  (ay6zuzm8o — H-CGP3 la ventilation quatre bras sur la pile optimisée, les volumes égalisés)
+PLAN-YLRZMLBN8.md        sha256:a21e29107bd40ffa…  (ylrzmlbn8 — la génération v0.23.0 : les écarts (a)-(f), les abstracts macros, le refactoring)
+PLAN-H66O54PJD.md        sha256:fad85402de72df9d…  (h66o54pjd — la purge sémantique v13, le Livre v1.7, la spec v0.15.8, la garde pre-commit/push)
+
+La règle reconduite des vagues 8-12 : le plan gelé, l'empreinte consignée,
+le commit AVANT la première donnée ; tout écart au plan nommé au rapport.
