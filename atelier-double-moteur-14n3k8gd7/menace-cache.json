@@ -1,0 +1,9 @@
+{
+ "entrees_signees": true,
+ "liaison_epoque": true,
+ "rejeu_inter_epoque_refuse": true,
+ "entree_forgee_refusee": true,
+ "invalidation_nommee": true,
+ "reverifications_executees": 2,
+ "verdict": "VERT"
+}

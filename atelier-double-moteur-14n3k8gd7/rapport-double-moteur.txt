@@ -1,0 +1,105 @@
+LE RAPPORT DE L'ATELIER 14n3k8gd7 — LE DOUBLE MOTEUR GÉNÉRALISÉ À TOUS LES
+POSTES ORACLE, LE BUDGET DE RISQUE DE LA CRISTALLISATION, LA MENACE DU
+CACHE ÉTENDUE
+(21/11/2026, la vague 12 — le plan gelé sha256 7dfcffe0628dc71a… au
+commit d'ouverture, AVANT toute mesure)
+
+═════════════════════════════════════════════════════════════════════════════
+LE CHANTIER 1 — LE DOUBLE MOTEUR GÉNÉRALISÉ (generalisateur.py)
+═════════════════════════════════════════════════════════════════════════════
+
+L'ÉCHANTILLON CONSIGNÉ : 2 041 opérations aux QUATRE fichiers témoins du
+différentiel V1 (la graine 20261114 de la campagne) — les TROIS POSTES
+ORACLE de la liste fixe couverts : loupe-01 OUVRIR (4), loupe-02 LIRE
+(2 032), loupe-03 FERMER (4), l'état (1).
+
+LES TROIS MOTEURS : le lanceur C compilé FRAIS (gcc -O2 -static, le
+binaire jamais cru sur parole — sha256 b05a35ce5c2bbbde…), l'image bâtie
+PAR LE VRAI HARNAIS Unicorn (byte-identique PAR CONSTRUCTION) :
+  — Unicorn (l'audit) : 2 041 lignes en 13,43 s
+  — QEMU-user 11.1.3 (le volume, l'extrait sans root de deb.debian.org) :
+    2 041 lignes en 1,10 s
+  — natif (l'ELF lanceur aux mêmes adresses) : 2 041 lignes en 0,04 s
+LA DIVERGENCE : Unicorn↔QEMU 0, Unicorn↔natif 0 — ZÉRO octet pour octet
+sur l'échantillon consigné. LE SHIM MUTÉ (la base des poignées du shim
+CreateFileW 0x1000 → 0x1008 — la sémantique du harnais ROMPUE) : ATTRAPÉ
+À LA PREMIÈRE LIGNE (le relevé « poignee » 4104 contre 4096 — la
+divergence vécue au premier relevé). LA MESURE avant/après (n=5, l'horloge
+monotone, la liste fixe) : AVANT l'oracle Unicorn médiane 13,61 s
+[13,52–13,82] ; APRÈS le lanceur natif médiane 0,0381 s [0,0380–0,0432] —
+LE GAIN 357× (le volume au natif ; l'AUDIT demeure Unicorn — le moteur
+n'est jamais le juge, hashlib le modèle indépendant côté oracle).
+
+LES CONSOLES (le critère de non-affaiblissement) : ligne-identiques run à
+run (natif ↔ Unicorn). LA CAUSE DE L'ÉCART v0.22.0 NOMMÉE SUR PIÈCES : la
+comparaison des consoles de la décomposition des 37 s (la vague 11)
+indexait consoles_origin["etape"] — LA CLÉ LITTÉRALE — au lieu de
+consoles_origin[m["etape"]] : la KeyError avalée à l'except rendait
+identite_originale=None, d'où le « NON — ÉCART NOMMÉ » de la vague 11 —
+l'écart TRACE AU BUG DE COMPARAISON, pas aux consoles ; la comparaison
+CORRIGÉE exécutée : 0 étape en écart aux originales consignées (les
+consoles communes aux cinq preuves m4-avant-run*.json).
+
+═════════════════════════════════════════════════════════════════════════════
+LE CHANTIER 2 — LE BUDGET DE RISQUE FORMALISÉ (budget_risque.py)
+═════════════════════════════════════════════════════════════════════════════
+
+LE SCÉNARIO CANONIQUE (ahult8jgd §3, le graphe réel des 28 blocs aux
+42 arêtes) : le diff tls13-02 → la fermeture de 11, le complément de 17,
+l'adversaire empoisonne tls13-17 HORS fermeture, l'audit tire k=2.
+
+LES TROIS QUANTITÉS PUBLIÉES : (1) P(détection par tirage) : UNIFORME
+1 − C(16,2)/C(17,2) = 11,8 % ; PONDÉRÉ w17/W × k = 27,5 % (le poids de
+tls13-17 : le fan-in 2 + le diff récent +2,2 + le porteur de garde +1,6) ;
+(2) LE TEMPS ESPÉRÉ DE DÉTECTION (l'adversaire reste, une session par
+audit) : UNIFORME 8,5 sessions, PONDÉRÉ 3,6 sessions ; (3) LA BORNE DE LA
+SEMENCE FULL-CARD : la faute est prise AU PLUS TARD à la prochaine semence
+(la re-vérification intégrale de 28 blocs au semis — la borne
+DÉTERMINISTE ; la fermeture au cristal mensonger ne couvre pas le bloc
+empoisonné, la semence le prend TOUJOURS).
+
+LE TIRAGE PONDÉRÉ À BUDGET ÉGAL (k=2, la dépense de vérification
+IDENTIQUE) : l'uniforme à la graine par défaut 20261120 tire [22, 20] —
+tls13-17 ÉVADÉ (l'écart nommé de la vague 11, REPRODUIT) ; LE PONDÉRÉ À
+LA MÊME GRAINE tire [17, 18] — tls13-17 CAPTURÉ : l'évasion FERMÉE au
+tirage pondéré, la capture démontrée à la même graine ; l'uniforme à la
+graine cherchée 4 (le canon vague 11) tire [15, 17] — PRIS, la capture de
+la vague 11 reproduite. LE BALAYAGE (200 graines) : l'uniforme 9,5 %
+(théorie 11,8 %), le pondéré 32,0 % (théorie 27,5 %). L'AUDIT DEMEURE UN
+FILET PROBABILISTE, PAS UNE PREUVE : la garantie reste la fermeture et la
+semence full-card.
+
+═════════════════════════════════════════════════════════════════════════════
+LE CHANTIER 3 — LA MENACE DU CACHE ÉTENDUE (menace_cache.py)
+═════════════════════════════════════════════════════════════════════════════
+
+LE MAGASIN SIGNÉ : chaque entrée porte LA SIGNATURE sous la clé de carte
+(HMAC-SHA256 au corps canonique — moteur ‖ contrat ‖ bloc ‖ verdict ‖
+empreinte — à l'époque du moteur ; la clé de TEST du labo, la vraie vit à
+la carte chiffrée du dépôt) et L'ÉPOQUE DU MOTEUR ; le hit validé exige
+l'égalité d'époque ET la signature vérifiée. LES DEUX CONTRÔLES NÉGATIFS
+DU MAGASIN : (a) LE REJEU INTER-ÉPOQUE — l'entrée valide de l'époque
+moteur 1 (re-signée : valide en elle-même) substituée au magasin de
+l'époque 2 → REFUS NOMMÉ « REJEU INTER-ÉPOQUE », la re-vérification
+complète EXÉCUTÉE (le compteur constaté) ; (b) L'ENTRÉE FORGÉE — la
+signature écrasée d'un faux (32 octets nuls) → REFUS NOMMÉ « ENTRÉE NON
+SIGNÉE / SIGNATURE DIVERGENTE ». L'INVALIDATION NOMMÉE : le moteur
+changeant d'époque (2 → 3), l'entrée d'hier au magasin d'aujourd'hui →
+REFUS NOMMÉ — le verdict d'une autre époque ne se souvient pas.
+
+═════════════════════════════════════════════════════════════════════════════
+LE VERDICT ET LES GAPS NOMMÉS
+═════════════════════════════════════════════════════════════════════════════
+
+VERT — les trois moteurs byte-identiques sur les 2 041 opérations
+consignées, le shim muté attrapé à la première ligne, la mesure n=5 au
+gain 357×, les consoles ligne-identiques (la comparaison corrigée, la
+cause de l'écart v0.22.0 nommée sur pièces) ; les trois quantités du
+budget publiées, la capture re-démontrée à la même graine au budget égal ;
+le magasin signé aux deux contrôles négatifs refusés au premier nom. LE
+SCEAU : 14/14 avant et après. LES GAPS : le qemu-user AU PLUGIN de comptage
+(1:11.1.3 bâti sans CONFIG_PLUGIN — le compteur par bloc demeure au
+harnais, D185 reconduit) ; l'époque du moteur de production (la version
+courante du moteur vit déjà à la clé du cache — l'ÉPOCHE signée
+démontre le mécanisme au labo, le portage à la carte réelle au geste du
+maître) ; aucune cellule existante régressée.

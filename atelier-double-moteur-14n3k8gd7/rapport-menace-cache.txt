@@ -1,0 +1,21 @@
+LE MODÈLE DE MENACE DU CACHE DE ROUND-TRIP ÉTENDU (14n3k8gd7)
+les entrées signées sous la clé de carte, liées à l'époque du
+moteur, l'invalidation nommée — les deux contrôles négatifs du
+MAGASIN
+
+LE MAGASIN HONNÊTE (l'époque moteur 2, deux entrées signées) :
+  le hit validé à l'époque courante : VERT — la signature vérifiée, l’époque égale
+
+LE CONTRÔLE NÉGATIF (a) — LE REJEU INTER-ÉPOQUE :
+  l'entrée valide de l'époque moteur 1 substituée au magasin de l'époque 2 :
+  REFUS NOMMÉ : REJEU INTER-ÉPOQUE au magasin (clé cle-tls13-15… : l'entrée de l'époque moteur 1 rejouée à l'époque …
+  la re-vérification complète exécutée : OUI (le compteur 1)
+
+LE CONTRÔLE NÉGATIF (b) — L'ENTRÉE FORGÉE :
+  la signature de l'entrée écrasée par un faux (32 octets nuls) :
+  REFUS NOMMÉ : ENTRÉE NON SIGNÉE / SIGNATURE DIVERGENTE au magasin (clé cle-tls13-16…) : REFUS — re-vérification co…
+
+L'INVALIDATION NOMMÉE (le moteur change d'époque 2 → 3) :
+  l'entrée d'hier au magasin d'aujourd'hui : REFUS NOMMÉ — le verdict d’une autre époque ne se souvient pas
+
+LE VERDICT : VERT — le magasin signé aux entrées liées à l'époque, les deux contrôles négatifs REFUSÉS au premier nom, la re-vérification complète exécutée au refus

@@ -1,0 +1,11 @@
+{
+ "operations": 2041,
+ "divergence_unicorn_qemu": 0,
+ "divergence_unicorn_natif": 0,
+ "shim_mute_attrape_premiere_ligne": true,
+ "consoles_identiques_run": true,
+ "avant_mediane_s": 13.605,
+ "apres_mediane_s": 0.0381,
+ "gain": 357.2,
+ "verdict": "VERT"
+}

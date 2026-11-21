@@ -1,0 +1,32 @@
+LE DOUBLE MOTEUR GÉNÉRALISÉ (14n3k8gd7) — TOUS les postes
+oracle de la liste fixe (loupe-01 OUVRIR · loupe-02 LIRE ·
+loupe-03 FERMER — l'échantillon consigné des QUATRE fichiers,
+les lectures à la graine de la campagne)
+
+LE LANCEUR compilé frais : gcc -O2 -static (sha256 b05a35ce5c2bbbde…)
+
+L'ÉCHANTILLON CONSIGNÉ : 2041 opérations — ouvrir (+2032 lire, 4 fermer, 4 ouvrir, 1 état) aux QUATRE fichiers témoins (graine 20261114)
+
+LES TROIS MOTEURS :
+  Unicorn (l'audit)   : 2041 lignes en 13.43 s
+  QEMU-user (le volume) : 2041 lignes en 1.10 s
+  natif (l'ELF lanceur) : 2041 lignes en 0.04 s
+  LA DIVERGENCE Unicorn↔QEMU : 0 — ZÉRO, byte-identique
+  LA DIVERGENCE Unicorn↔natif : 0 — ZÉRO, byte-identique
+
+LE SHIM MUTÉ (la base des poignées 0x1000 → 0x1008, la sémantique CreateFileW du harnais ROMPUE) :
+  la première ligne du flux muté : {"op":"ouvrir","detail":"temoin-1.bin","rax":0,"propre":1,"poignee":4104,"ta…
+  la première ligne du flux honnête : {"op":"ouvrir","detail":"temoin-1.bin","rax":0,"propre":1,"poignee":4096,"ta…
+  ATTRAPÉ À LA PREMIÈRE LIGNE : OUI — la divergence vécue au premier relevé
+
+LA MESURE avant/après (n=5, l'horloge monotone, la liste fixe) :
+  AVANT (l'oracle Unicorn, le régime d'aujourd'hui) : médiane 13.61 s [13.52–13.82]
+  APRÈS (le lanceur natif aux mêmes adresses) : médiane 0.0381 s [0.0380–0.0432]
+  LE GAIN : 357× (le volume au natif ; l'AUDIT demeure Unicorn — le moteur n'est jamais le juge)
+
+LES CONSOLES (le critère de non-affaiblissement) :
+  run à run (natif ↔ Unicorn) : LIGNE-IDENTIQUES
+  les originales consignées : 9 consoles de 45 étapes aux cinq preuves m4-avant-run*.json
+  contre les originales (la comparaison CORRIGÉE — la clé m["etape"], plus la clé littérale) : 0 étape(s) en écart — les étapes communes conformes
+
+LE VERDICT : VERT — les TROIS moteurs byte-identiques sur l'échantillon consigné, le shim muté attrapé à la première ligne, les consoles ligne-identiques run à run, la mesure n=5 consignée

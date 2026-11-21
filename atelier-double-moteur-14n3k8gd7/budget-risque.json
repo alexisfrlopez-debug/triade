@@ -1,0 +1,19 @@
+{
+ "p_uniforme": 0.1176,
+ "p_pondere": 0.275,
+ "e_sessions_uniforme": 8.5,
+ "e_sessions_pondere": 3.6,
+ "borne_full_card": "la prochaine semence (déterministe)",
+ "uniforme_graine_defaut": [
+  22,
+  20
+ ],
+ "capture_pondere_defaut": true,
+ "uniforme_graine_cherchee": [
+  15,
+  17
+ ],
+ "balayage_200_uniforme_pct": 9.5,
+ "balayage_200_pondere_pct": 32.0,
+ "verdict": "VERT"
+}

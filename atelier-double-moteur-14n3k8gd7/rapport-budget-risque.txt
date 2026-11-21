@@ -1,0 +1,30 @@
+LE BUDGET DE RISQUE DE LA CRISTALLISATION INCRÉMENTALE (14n3k8gd7)
+le scénario canon de la vague 11 : la fermeture de 11, le
+complément de 17, l'adversaire empoisonne tls13-17 HORS fermeture,
+l'audit tire k=2 du complément — le budget de vérification ÉGAL
+
+LES TROIS QUANTITÉS PUBLIÉES (les formules au texte) :
+  (1) P(détection par tirage) — UNIFORME : P = 1 - C(16,2)/C(17,2) = 0.1176 (11.8 %) ;
+      PONDÉRÉ : P ≈ w17/W × k = 0.2750 (27.5 %) — le
+      poids de tls13-17 : le fan-in 2, le diff récent (+2,2), le porteur de
+      garde (+1,6)
+  (2) LE TEMPS ESPÉRÉ DE DÉTECTION (une session par audit,
+      l'adversaire reste) : UNIFORME E[sessions] = 1/P = 8.5 sessions ; PONDÉRÉ E = 3.6 sessions
+  (3) LA BORNE DE LA SEMENCE FULL-CARD : la faute est prise AU
+      PLUS TARD à la prochaine semence (28 blocs, la re-vérification
+      INTÉGRALE au semis) — la borne DÉTERMINISTE : la fermeture du
+      diff au cristal mensonger NE couvre pas le bloc empoisonné,
+      la semence le prend TOUJOURS
+
+LE TIRAGE PONDÉRÉ À BUDGET ÉGAL — la capture re-démontrée :
+  l'uniforme à la graine par défaut 20261120 : [22, 20] — tls13-17 ÉVADÉ (l’écart nommé de la vague 11 — le filet probabiliste)
+  le PONDÉRÉ à la MÊME graine 20261120 (budget k=2 ÉGAL) : [17, 18] — tls13-17 CAPTURÉ — la capture démontrée au tirage pondéré
+  l'uniforme à la graine cherchée 4 (le canon vague 11) : [15, 17] — tls13-17 PRIS (la capture de la vague 11 REPRODUITE)
+
+LA DÉMONSTRATION PAR BALAYAGE (200 graines, le taux de capture) :
+  l'uniforme : 19/200 = 9.5 % (théorie 11.8 %)
+  le pondéré : 64/200 = 32.0 % (théorie 27.5 %)
+
+LA LECTURE : le pondéré À BUDGET ÉGAL double quasi la probabilité de capture d'un bloc à garde récemment touché ; l'évasion nommée de la vague 11 (le tirage qui ÉPARGNAIT tls13-17 à la graine par défaut) est FERMÉE au tirage pondéré — la capture à la MÊME graine. L'AUDIT DEMEURE UN FILET PROBABILISTE, PAS UNE PREUVE : la garantie reste la fermeture et la semence full-card.
+
+LE VERDICT : VERT — les trois quantités publiées, la capture re-démontrée à la graine par défaut au budget égal
