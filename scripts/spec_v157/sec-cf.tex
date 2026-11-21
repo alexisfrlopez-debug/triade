@@ -283,8 +283,9 @@ Anti-retour & — & monotonie du conteneur & trois témoins d'époque (journal l
 carte papier, journal Git) \\
 Falsification prouvée & refus (AEAD) & refus (AEAD + verif) & destruction locale + PV —
 jamais le média ni les fragments \\
-Relève si la machine brûle & la phrase (D81 : le fichier est la remise) & T copies
-hors-ligne des fragments & le sachet : pièges d'époque + carte papier \\
+Relève si la machine brûle & la phrase — la garde d'époque D81 amendée le
+19 novembre 2026 : le séquestre 5/3, la reconstitution à froid de TROIS parts
+(D223) & T copies hors-ligne des fragments & le sachet : pièges d'époque + carte papier \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -519,7 +520,7 @@ l'appui : CF1 \code{statut} VERT (conteneur trouvé, en-tête TRIADE-CF1 v1, Arg
 CF1 \code{verifier} INTÈGRE ; phrase de contrôle changée pour la sienne (D110 —
 re-chiffrement, nouveau sel, l'ancienne inopérante) ; un premier \code{migrer} CF2
 refusé nommément (« phrase de contrôle divergente » — la remise D81 n'était pas encore
-remplacée : le fail-closed a travaillé, la cérémonie a été rejouée) ; CF2 né — cinq
+remplacée, la garde d'époque amendée D223 : le fail-closed a travaillé, la cérémonie a été rejouée) ; CF2 né — cinq
 fragments sous \code{.keys/gardes-cf2} (seuil 3), CF1 intact, porte D120 posée en ère
 sans moteur ; export de la feuille (trois fragments, gardes g3--g5, tags vérifiés avant
 impression) ; puis la migration CF3 : \code{migrer} VERT (base re-scellée, schéma
@@ -589,8 +590,9 @@ porter, jamais plus.
 \textbf{Support} & \textbf{Ce qu'il porte} & \textbf{Ce qu'il ne porte JAMAIS} \\
 \midrule
 Dépôt git (poussé) & le code, la SPEC signée (\code{v06/I/}), les preuves publiques du
-sceau, le journal de travail — et la \emph{phrase de contrôle} (D81 : le fichier est la
-remise ; la rotation reste le remède d'une exposition) & aucun conteneur de coffre
+sceau, le journal de travail — la phrase de contrôle n'y vit plus (amendée D223 : le
+séquestre 5/3 la porte, la reconstitution à froid de TROIS parts ; l'historique
+D81 du passé git demeure à vie, inopérant par la rotation) & aucun conteneur de coffre
 (\code{/.keys/} gitignoré), aucun fragment, aucune graine \\
 \code{.keys/} du clone & conteneurs CF1/CF2/CF3, gardes CF2 (5 fragments), config,
 journaux et PV locaux, miroir d'époque & jamais dans git — le dossier entier est

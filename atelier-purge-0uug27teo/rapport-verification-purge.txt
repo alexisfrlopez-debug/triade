@@ -1,0 +1,26 @@
+LA VÉRIFICATION SÉMANTIQUE DE LA PURGE D81 (0uug27teo)
+le grep sémantique élargi sur les deux pièces régénérées —
+les motifs : fichier-remise · remise D81 · le fichier est la
+remise · le fichier AVANT tout · PHRASE-CONTROLE ; la proximité
+d'un verbe d'écriture de dépôt OU d'un impératif prescriptif
+
+LA TABLE NOMMÉE DES OCCURRENCES (le classement complet) :
+  [livre] HISTORIQUE-DATÉE : « fichier-remise … ais écrite au dépôt, l'usage transient détruit après le geste. Tout ge »
+  [livre] HISTORIQUE-DATÉE : « PHRASE-CONTROLE … perte (vécu, répété) dépasse le risque d'exposition (URL non devinable »
+  [livre] HISTORIQUE-DATÉE : « remise D81 … — borne dite, attente assumée. Retour du terrain — un refus nommé, ça  »
+  [livre] HISTORIQUE-DATÉE : « fichier-remise … e dépôt passé PUBLIC (D220). Le coffre réel n'a PAS été migré d'époque »
+  [livre] HISTORIQUE-DATÉE : « remise D81 … conversation). Quand Ce qui s'est passé 30/10 soir la cérémonie CF1 →  »
+  [livre] HISTORIQUE-DATÉE : « fichier-remise … chivés, miroir fidèle à git, incident du reliquat consigné. Rotation d »
+  [livre] HISTORIQUE-DATÉE : « remise D81 … du geste : le bouton existe pour que le prochain imprévu ait son dossi »
+  [specification] HISTORIQUE-DATÉE : « remise D81 … ase de contrôle changée pour la sienne (D110 — re-chiffrement, nouveau »
+  [specification] HISTORIQUE-DATÉE : « PHRASE-CONTROLE … rde de la phrase de contrôle détenuesauvegardée modifié (D81 ; amendé  »
+  [specification] HISTORIQUE-DATÉE : « fichier-remise … t ; incident du reliquat consigné. Rotation de lignée la phrase exposé »
+  [specification] HISTORIQUE-DATÉE : « le fichier est la remise … ucjation : mais PHRASE-CONTROLE-COFFRE.txt sto- au ckée, déaffi- pôt c »
+
+LE VERDICT DU GREP : 0 occurrence(s) PRESCRIPTIVE(S) — ZÉRO (la purge exacte au périmètre sémantique)
+
+LE CONTRÔLE NÉGATIF VÉCU : la phrase prescriptive synthétique réintroduite à la copie —
+  « fichier-remise » à proximité du verbe prescriptif : REFUSÉE AU PREMIER NOM (le motif vivant du linter)
+LE CONTRÔLE NÉGATIF : REFUSÉ au premier nom (1 occurrence(s) attrapée(s)) — VERT
+
+LE VERDICT FINAL : VERT

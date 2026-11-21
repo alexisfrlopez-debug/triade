@@ -1,0 +1,146 @@
+LE RAPPORT DE L'ATELIER 0UUG27TEO — LA PURGE DES RÉSIDUS PRESCRIPTIFS D81 AU
+PÉRIMÈTRE SÉMANTIQUE : LES SEPT RÉSIDUS NOMMÉS REMPLACÉS, LES CONTEXTES
+HISTORIQUES ANNOTÉS, LES DEUX PDF RECONSTRUITS, LE LINTER AU MOTIF DE
+L'INTENTION
+(21/11/2026, la vague 12 — le plan gelé sha256 38627e24a8e5adb9… au
+commit d'ouverture, AVANT toute modification)
+
+═════════════════════════════════════════════════════════════════════════════
+LE MANDAT EXÉCUTÉ
+═════════════════════════════════════════════════════════════════════════════
+
+L'instruction (la vague 12, le chantier 2) demandait : les pièces
+Livre_du_Coffre v1.6 et Protocole_TRIADE v0.15.7 contiennent des résidus
+prescriptifs de la garde D81 que le grep « PHRASE-CONTROLE » ne couvre pas —
+sept localisations exactes à remplacer par la garde active D223 (le séquestre
+5/3, la reconstitution à froid de TROIS parts, la phrase en AUCUN dépôt, le
+refus nommé de la réécriture), par remplacements ancrés échouant si une ancre
+manque ; les contextes historiques datés DEMEURENT annotés « amendé D223 » ;
+corriger au passage la couverture « VERSION 1.3 »→v1.6, l'avant-propos
+« v0.15.2 »→v0.15.7, la phrase tronquée du §2.3, l'ordre chronologique du
+Tableau 13 ; étendre le linter au motif sémantique, contrôle négatif planté ;
+consigner l'erratum en décision append-only ; reconstruire les deux PDF.
+
+═════════════════════════════════════════════════════════════════════════════
+L'ERRATUM NOMMÉ (la cause racine)
+═════════════════════════════════════════════════════════════════════════════
+
+La revendication « zéro prescriptive » de ou6wn6wlv (la vague 11) était
+EXACTE au périmètre du grep (le motif « PHRASE-CONTROLE », le nom de
+fichier), INEXACTE au périmètre sémantique : sept résidus prescriptifs
+vivaient sous les tournures « fichier-remise », « remise D81 », « le fichier
+est la remise ». LA CAUSE RACINE : le motif du linter dérivait du NOM DE
+FICHIER, pas de l'INTENTION de la garde (écrire la phrase au dépôt).
+
+═════════════════════════════════════════════════════════════════════════════
+LA PURGE — LES 13 REMPLACEMENTS ANCRÉS (purger_d81_semantique.py, REFUS si
+une ancre manque — vécus sans refus)
+═════════════════════════════════════════════════════════════════════════════
+
+AU LIVRE : (1) l'annexe C, dernière FAQ — « posez la phrase courante dans le
+fichier-remise, commit, push — puis rejouez » → la reconstitution à froid de
+TROIS parts, la phrase en AUCUN dépôt (D223) ; (2) §7.3 étape 1 — « le
+fichier-remise D81 est à jour … le fichier AVANT tout » → le séquestre 5/3
+à jour, la reconstitution AVANT tout ; (3) §9.2 « phrase ERRONÉE » —
+« vérifiez le fichier-remise » → vérifiez la phrase au séquestre (TROIS
+parts à froid, D223) ; (4) Tableau 1 colonne CF1 — « le fichier-remise D81 »
+→ « la phrase sous séquestre 5/3 (amendé D223) » ; (5) le glossaire
+« relève » — « et le fichier-remise D81 » → la reconstitution à froid de
+TROIS parts, jamais par un fichier de dépôt.
+
+À LA SPEC : (6) Tableau 13 (§12.3) « Relève si la machine brûle » colonne
+CF1 — « la phrase (D81 : le fichier est la remise) » → « la phrase — la
+garde d'époque D81 amendée le 19 novembre 2026 : le séquestre 5/3 » (l'ordre
+chronologique des époques rétabli) ; (7) §14.3 « Contrepartie consignée » —
+« la phrase vit sur le stockage du coffre Drive partagé par lien » → « la
+phrase ne vit en AUCUN dépôt — le séquestre 5/3 la porte » (le résidu
+historique nommé : l'historique git AVANT l'amende demeure à vie, inopérant
+par la rotation) ; (8) Tableau 16 (§13.6) « Dépôt git » — « et la phrase de
+contrôle (D81 : le fichier est la remise) » → « la phrase de contrôle n'y
+vit plus (amendée D223 … l'historique D81 du passé git demeure à vie,
+inopérant par la rotation) » ; (9) la table d'évolution v0.5.1/v0.5.2 (la
+ligne de menace) — l'annotation « amendé D223 » portée, le contexte daté
+DEMEURÉ.
+
+LES CORRECTIONS AU PASSAGE (nommées) : (10) la couverture « Version 1.3 » →
+v1.6 — ET TROIS TRACES PÉRIMÉES DE LA v1.4 jamais régénérée découvertes au
+passage : la spec courante « v0.15.5 » → v0.15.7, la révision « v1.4
+(D218) » → v1.6 (D236), le pied de couverture ; (11) l'avant-propos « v1.3 :
+l'édition courante est la v0.15.2 » → v1.6 / v0.15.7 ; (12) LA PHRASE
+TRONQUÉE du §2.3 — « (la phrase tournée, l'ancienne ACTIVE jusqu'au geste
+vécu. » — la parenthèse JAMAIS REFERMÉE — refermée : « l'ancienne demeurant
+ACTIVE jusqu'au geste vécu de sa destruction) » ; (13) le titre PDF du
+merge_cover.py v1.4 → v1.6.
+
+LES QUATRE ANNOTATIONS DES CONTEXTES HISTORIQUES (annoter_historiques.py —
+les récits DEMEURÉS INTACTS) : le récit de terrain du refus nommé (31/10) au
+Livre §7.4 ; la chronologie du terrain « 30/10 soir » au Livre §9.3 ; la FAQ
+explicative de l'annexe C ; le récit de terrain du coffre réel à la spec
+§12 — chacun porte désormais « la garde d'époque, amendée D223 ».
+
+═════════════════════════════════════════════════════════════════════════════
+LES DEUX PDF RECONSTRUITS — LES EMPREINTES CONSIGNÉES
+═════════════════════════════════════════════════════════════════════════════
+
+LE LIVRE : tectonic (main.tex → main.pdf) + la couverture RÉGÉNÉRÉE
+(weasyprint, cover.html → cover.pdf — la Version 1.6, les traces v1.4
+éteintes) + merge_cover.py → final.pdf [29 pages] —
+sha256 4bf227a8e6f5b447… (l'ancienne 3-coffre-fort du pack v0.22.0 :
+f2e412ebe88113de… — la divergence ENTIÈREMENT aux zones ancrées, le diff
+textuel constaté : la couverture, les sept résidus, les quatre annotations,
+la phrase refermée — AUCUNE autre zone).
+LA SPEC : tectonic (main.tex → main.pdf) —
+sha256 3fd1aba1519e31cf… (l'ancienne : 143f8f6cc01e5fe1… — les trois
+résidus, l'annotation, l'ordre chronologique seuls).
+
+═════════════════════════════════════════════════════════════════════════════
+LA VÉRIFICATION (verifier_purge.py — le procès-verbal au rapport-verification)
+═════════════════════════════════════════════════════════════════════════════
+
+(1) LE GREP SÉMANTIQUE ÉLARGI sur les deux pièces régénérées (pdftotext,
+les apostrophes typographiques normalisées) : les motifs fichier-remise ·
+remise D81 · le fichier AVANT tout · PHRASE-CONTROLE · le fichier est la
+remise (ce dernier au contexte PHRASE seul — la remise de la clé I,
+generer/signer D87, est une remise AUTRE, admissible au nom) — ZÉRO
+occurrence PRESCRIPTIVE ; LES 12 OCCURRENCES RESTANTES classées
+HISTORIQUE-DATÉE à la table nommée (la table complète au rapport-verification :
+les récits de terrain datés, la table d'évolution v0.5.1/v0.5.2, les
+annotations d'époque, l'histoire datée du §2.3, la chronologie).
+(2) LE CONTRÔLE NÉGATIF VÉCU : la phrase prescriptive synthétique « posez la
+phrase courante dans le fichier-remise, commit, push — puis rejouez »
+réintroduite dans une COPIE du texte du Livre — REFUSÉE AU PREMIER NOM (le
+motif vivant du linter, la whitelist aux marqueurs d'époque seuls).
+(3) LE RUNBOOK REJOUÉ (rejouer_runbook.py — le simulateur de la vague 11
+INTACT, le chemin du dépôt patché) : au clone à phrase publique D105
+(PHRASE-TEST-PUBLIQUE-D105-vague12-simulation) — LES HUIT ÉTAPES MÉCANIQUES
+sans écriture (git pull, le MANIFESTE lu, la cérémonie sous séquestre, CF1 →
+CF2 au .keys/, CF2 → CF3, la destruction CF2 au PV) ; LE GESTE PIÈGE (git
+add + commit du fichier-phrase) REFUSÉ AU PREMIER NOM par la garde pre-commit
+D223 ; le scan intégral des blobs : 0 objet git portant la phrase-marqueur
+sur 528 commits.
+(4) LE FICHIER-PHRASE AU DÉPÔT : PHRASE-CONTROLE-COFFRE.txt ABSENT de HEAD
+(supprimé à e433d3e — la rotation D223) ; l'ajout historique f652234 (D81,
+le 19 novembre 2026) demeure DATÉ au passé git, la phrase d'alors INOPÉRANTE
+par la rotation vécue — la transparence intacte, jamais l'effacement.
+(5) LE LINTER v230 ÉTENDU (le contrôle D81 au motif sémantique : le motif
+dérite désormais de l'INTENTION de la garde ; la whitelist aux marqueurs
+D'ÉPOQUE — le « D223 » nu du prose opérationnelle n'admet RIEN ; la fenêtre
+resserrée à la clause ±180) — son exécution intégrale attend les cinq pièces
+v0.23.0 (le geste de l'édition).
+
+═════════════════════════════════════════════════════════════════════════════
+LE VERDICT ET LES GAPS NOMMÉS
+═════════════════════════════════════════════════════════════════════════════
+
+VERT — les sept résidus purgés aux remplacements ancrés, les quatre
+annotations d'époque posées, les deux PDF reconstruits aux empreintes
+consignées, le grep sémantique à zéro prescriptif, le contrôle négatif refusé
+au premier nom, le runbook rejoué sans écriture, la garde piège vivante, le
+scan des blobs à zéro fuite neuve. D245 append-only (l'erratum de la vague 11
+consigné : exacte au grep, inexacte au sémantique — la cause nommée). LE
+SCEAU : 14/14 avant et après (le sceau I ne signe PAS le Livre ni la spec
+CF1-CF3 — ils ne sont pas des arbres I ; les quatorze arbres INTACTS, vérifié
+au geste d'ouverture). Les gaps : AUCUN pour ce chantier — la remise de la
+clé I (generer/signer, D87) demeure une remise LÉGITIME d'un objet AUTRE (la
+clé de signature du sceau, jamais la phrase du coffre), admissible au nom à
+la table du linter.

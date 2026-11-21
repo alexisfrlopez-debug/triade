@@ -97,11 +97,12 @@ au séquestre AVANT TOUTE AUTRE ACTION — cinq parts Shamir à seuil trois (D18
 la garde active D223), la reconstitution à froid quand la phrase sert, la phrase
 en AUCUN dépôt (public depuis D220) : tout geste qui tenterait de la réécrire
 (ou son fichier) au dépôt est refusé avec son nom — et la graine Ed25519 reste
-hors coffre (D30). Contrepartie consignée : la
-phrase vit sur le stockage du coffre Drive partagé par lien — la confidentialité au
-repos repose sur le contrôle d'accès au dossier (restreindre le partage par lien :
-mitigation première) ; une phrase entrée dans l'historique git y demeure à vie, la
-rotation reste le remède — format normatif : FORMAT\_CARTE § 11.
+hors coffre (D30). Contrepartie consignée (amendée D223) : la
+phrase ne vit en AUCUN dépôt — le séquestre 5/3 la porte (cinq parts Shamir à
+seuil trois, la reconstitution à froid quand la phrase sert) ; le résidu
+historique nommé : une phrase entrée dans l'historique git avant l'amende y
+demeure à vie, inopérante par la rotation (le refus nommé de la réécriture la
+garde) — format normatif : FORMAT\_CARTE § 11.
 
 \section{Menaces et limites}\label{sec:menaces}
 
@@ -444,7 +445,7 @@ coffre Drive, AVANT toute autre action ; le fichier est la remise & modifié
 Menace « vol du coffre-fort » & sans la phrase, indéchiffrable & la phrase vit sur le
 coffre Drive partagé par lien : confidentialité au repos ramenée au contrôle d'accès au
 dossier ; une phrase commise en git y demeure à vie, la rotation reste le remède &
-étendu (D81) \\
+étendu (D81 ; amendé D223 — le séquestre 5/3, la phrase hors dépôt) \\
 État des jalons & M0–M3 franchis, M4 à venir & M4 ouvert (D77 — couche I
 écrite-avant-code : huit spécifications tls, deux révisions http) ; M0–M3 inchangés &
 constaté (D77) \\

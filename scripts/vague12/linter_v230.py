@@ -97,6 +97,7 @@ def extraire(chemin) -> str:
                              "utf-8", "replace")
     return re.sub(r"\s+", " ",
                   txt.replace("\u2013", "-").replace("\u2014", "-")
+                     .replace("\u2019", "'").replace("\u2018", "'")
                      .replace("\u2009", " ").replace("\u202f", " ")
                      .replace("\u00a0", " ").replace("\u2212", "-"))
 
@@ -488,13 +489,21 @@ def controle_d81(textes: dict[str, str], v) -> int:
     opératoires » : le motif du nom de fichier de remise À PROXIMITÉ d'un
     verbe d'écriture de dépôt interdit au Livre/spec ; les contextes
     historiques admis à LA TABLE NOMMÉE."""
-    MOTIF = "PHRASE-CONTROLE"
+    # 0UUG27TEO — LE MOTIF SÉMANTIQUE ÉLARGI : le nom de fichier ET les
+    # tournures de la garde (le motif dérive désormais de l'INTENTION de la
+    # garde — écrire la phrase au dépôt — plus du seul nom de fichier)
+    MOTIF = re.compile(r"fichier-remise|remise D81|le fichier AVANT tout|"
+                       r"PHRASE-CONTROLE", re.I)
     VERBES = re.compile(r"committ|pouss|push|écri[s(t]|ecr[i (]|dépos|"
-                        r"depos|pos(?:e|ez|er)\b|sauvegard", re.I)
-    # LA TABLE NOMMÉE des contextes historiques admis :
+                        r"depos|pos(?:e|ez|er)\b|sauvegard|vit sur", re.I)
+    # LA TABLE NOMMÉE des contextes historiques datés admis (les marqueurs
+    # D'ÉPOQUE — le « D223 » nu du prose opérationnelle n'admet RIEN) :
     ADMIS = {
-        "livre": ["De D81 au 19 novembre 2026"],
-        "specification": ["En v0.5.2", "amendé D223", "D81 ;"],
+        "livre": ["De D81 au 19 novembre 2026", "le fichier fut la remise",
+                  "l'histoire datée", "d'époque", "amendée D223",
+                  "amendé D223", "AMENDÉE", "l'épisode fondateur"],
+        "specification": ["En v0.5.2", "En v0.5.1", "d'époque",
+                          "amendée D223", "amendé D223", "D81 ;"],
     }
     verts = 0
     for piece in ("livre", "specification"):
@@ -507,6 +516,7 @@ def controle_d81(textes: dict[str, str], v) -> int:
         ok = True
         for pos in occurrences:
             ctx = t[max(0, pos - 320):pos + 320]
+            ctx = t[max(0, pos - 180):pos + 180]
             marqueur = any(m in ctx for m in ADMIS[piece])
             if not marqueur:
                 ok = False
