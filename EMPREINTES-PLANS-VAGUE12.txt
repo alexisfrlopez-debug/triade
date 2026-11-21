@@ -1,0 +1,23 @@
+EMPREINTES DES PLANS — LA VAGUE 12 (les six instructions)
+Gelées AVANT toute mesure ; le présent commit précède la première donnée.
+
+PLAN-6KBFRPN7K.md        sha256:80cc613063d07702…  (6kbfrpn7k — les corrections de recomposabilité aux cinq pièces, le linter aux ratios)
+PLAN-0UUG27TEO.md        sha256:38627e24a8e5adb9…  (0uug27teo — la purge des résidus prescriptifs D81 au périmètre sémantique, les PDFs reconstruits)
+PLAN-ALHMPL35U.md        sha256:7644a7874815f924…  (alhmpl35u — la machinery générative sur la sentinelle z3, la grille de réception des témoins)
+PLAN-14N3K8GD7.md        sha256:7dfcffe0628dc71a…  (14n3k8gd7 — le double moteur généralisé, le budget de risque de la cristallisation)
+PLAN-PGODGK35L.md        sha256:cf3fb88e8eebed2a…  (pgodgk35l — TPL-ADD-v2 le dictionnaire de domaine, la campagne aux 18 tâches)
+PLAN-X705M50VL.md        sha256:c24a729de4305df6…  (x705m50vl — le v5-entrelacé k∈{4,8}, l'AVX2 après hissage)
+
+La règle reconduite des vagues 8-9-10-11 : le plan gelé, l'empreinte consignée,
+le commit AVANT la première donnée ; tout écart au plan nommé au rapport.
+
+NOTE DE SESSION (la reprise de la vague 12, 21/11/2026) : la session morte de la
+vague 12 (la nuit du 20 au 21) avait exécuté la vague aux six commits e53df1b →
+091a5d9 — le dépôt de bac supprimé au recyclage, AUCUN des six commis ni au
+GitHub (la tête demeure 5c90a05) ni au miroir Drive (le bundle 551a65d, la
+synchro morte au relais OAuth invalid_grant à chaque geste), ni aucune pièce au
+coffre (vérifié au compte de service : zéro fichier vague 12 au miroir) —
+l'intégralité de son travail PERDUE, nommée ici ; la présente RE-EXÉCUTE la
+vague depuis la tête 5c90a05 aux plans ci-dessus (les empreintes neuves, les
+plans réécrits — les originaux perdus avec le dépôt), le relais OAuth FRAIS du
+/Tokens du coffre (le 19/11 20:26) installé au .gdrive/ et vérifié vivant.
