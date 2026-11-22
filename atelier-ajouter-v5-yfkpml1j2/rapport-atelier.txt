@@ -1,0 +1,47 @@
+RAPPORT D'ATELIER — yfkpml1j2 (la vague 15) : TPL-ADD-v5 — LA CAMPAGNE AU
+DIFF D'EXPANSION STRUCTURÉ — LA CIBLE MANQUÉE, LA LECTURE DÉFAVORABLE
+CONSIGNÉE
+============================================================================
+(23/11/2026, le plan gelé PLAN-YFKPML1J2.md sha256 59eb1f768071fbc6… AVANT
+toute donnée ; les graines 20261117 reconduites, l'ordre JAMAIS re-tiré,
+budget 3 consigné par tentative au journal_v5.jsonl)
+
+LES LEVIERS v5 : LE NORMALISEUR CANONIQUE (les commentaires jetés, les
+espaces réduits, les étiquettes MAJUSCULES — la forme que le juge
+compare déjà, AUCUN juge affaibli : les validateurs v3 et la chaîne v2
+INTACTS) ; LE DIFF D'EXPANSION STRUCTURÉ au refus (la ligne fautive à
+TROIS étages : TELLE QU'ÉCRITE / SON EXPANSION (le point exact où elle
+casse) / LE MOTIF CANONIQUE ADMIS — au niveau opcode/opérande/offset,
+jamais un diff de texte) ; les leviers v4 reconduits (l'exemplaire par
+proche contrat, le squelette à trous typés).
+
+LE VERDICT DE CAMPAGNE (18/18 tâches courues, les journaux au garde-brut
+et au garde-prompts) : **5/18 VERTS — LA CIBLE ≥ 15/18 MANQUÉE** ; le
+coût médian par changement validé **4 604 tokens — la cible ≤ 4 500
+manquée de 104** ; LA LECTURE DÉFAVORABLE CONSIGNÉE (la règle : jamais
+un chiffre ajusté, jamais la cible re-tirée).
+
+LE DÉPLACEMENT v4→v5 (registres/deplacement-v4-v5.txt, par classe) : 4
+LES DEUX VERTES · 1 CONVERSION (loupe-15-curseur) · 3 PERTES
+(loupe-11-defilement, loupe-16-saisie, loupe-04-cadre — des tâches
+vertes à la v4 refusées à la v5) · 10 LES DEUX REFUSÉES — le réseau 7→5.
+LA CAUSE NOMMÉE : la variance du modèle AU CLI (les trois pertes ont
+verti à la v4 à la première tentative — le même prompt v4 ré-exécuté ne
+re-verdit pas toujours : la non-déterminisme du sujet, pas un juge
+durci — LES JUGES INTACTS par construction, la chaîne v2 re-vérifiée) ;
+le diff structuré n'a PAS converti les dix refus chroniques (les classes
+HORS-FORMAT au texte libre demeurent : les instructions à préfixe de
+chaîne, les db inline — le motif canonique rendu, le modèle y revient).
+
+LA VOIE NOMMÉE (au geste suivant) : le décodage contraint (le CLI
+n'expose pas response_format — l'écart d'instrument NOMMÉ reconduit) ;
+les paires DPO du corpus (2i7iy3xmg — l'entraînement, la voie du gym) ;
+la relance des 3 pertes à graines identiques (la mesure de la variance
+du sujet, jamais un re-tirage des tâches).
+
+LES CONTRÔLES : les graines identiques re-jouées bit-identiques à
+l'extraction du corpus ; les falsifications des juges re-vertes au
+sceau (le sceau-I 14/14 avant et après) ; la re-tokenisation au journal
+de campagne (le champ usage de l'API — la source log-api).
+
+LA GARDE : le sceau-I 14/14 ; entrée append-only.

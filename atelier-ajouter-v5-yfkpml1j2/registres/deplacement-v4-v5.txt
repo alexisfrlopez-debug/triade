@@ -1,0 +1,20 @@
+01 loupe-07-cumul         v4=R v5=R LES DEUX REFUSÉES
+02 loupe-11-defilement    v4=V v5=R PERTE
+03 loupe-02-lire          v4=R v5=R LES DEUX REFUSÉES
+04 loupe-12-aller         v4=R v5=R LES DEUX REFUSÉES
+05 loupe-03-fermer        v4=V v5=V LES DEUX VERTES
+06 loupe-10-peinture      v4=R v5=R LES DEUX REFUSÉES
+07 loupe-09-ecran         v4=R v5=R LES DEUX REFUSÉES
+08 loupe-17-sauver        v4=R v5=R LES DEUX REFUSÉES
+09 loupe-16-saisie        v4=V v5=R PERTE
+10 loupe-13-recherche     v4=V v5=V LES DEUX VERTES
+11 loupe-14-suivant       v4=R v5=R LES DEUX REFUSÉES
+12 loupe-18-quitter       v4=V v5=V LES DEUX VERTES
+13 loupe-06-md5           v4=R v5=R LES DEUX REFUSÉES
+14 loupe-15-curseur       v4=R v5=V CONVERSION
+15 loupe-04-cadre         v4=V v5=R PERTE
+16 loupe-08-ligne         v4=R v5=R LES DEUX REFUSÉES
+17 loupe-01-ouvrir        v4=R v5=R LES DEUX REFUSÉES
+18 loupe-05-sha256        v4=V v5=V LES DEUX VERTES
+
+conversions 1 · pertes 3 · verts v4 7 -> v5 5

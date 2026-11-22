@@ -1,0 +1,573 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : HORS-FORMAT: ligne inassemblable : 'mov r15d, dword ptr'
+LA CAUSE EXACTE : 
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-06 · md5 d'une gamme : l'empreinte du quotidien, notée neuve · révision 1
+Intention : le condensé MD5 d'une gamme du fichier ouvert — LA NOUVELLE
+NOTATION du domaine (aucun héritage : MD5 n'existe pas au projet, le
+quotidien le réclame — toutes les pièces vivent par leur md5 au journal
+des builds). Le cœur est pur (les tables publiques .rdata, dérivées par
+arithmétique), la lecture par fenêtres glissantes de 64 Kio le joint au
+fichier. MD5 N'EST PAS UNE PREUVE DE SÉCURITÉ — c'est l'empreinte de
+cohérence du quotidien, la spec le nomme et le domaine s'en tient là.
+Contrat :
+  pre  : P1 la session est ouverte ; P2 rcx = le décalage (≥ 0), rdx =
+             la longueur (≥ 0) ; P3 décalage + longueur ≤ taille ;
+         P4 r8 = la sortie, 16 o accessibles en écriture.
+  post : Q1 la sortie = MD5(F[décalage .. décalage + longueur)) —
+             RFC 1321 : le contexte 88 o (A,B,C,D u32 @ +0 · longueur
+             u64 @ +16 · tampon[64] @ +24) tenu SUR LA PILE ; le petit-
+             boutisme DE MD5 (le condensé sérialisé little-endian, RFC
+             1321 § 3.2 — le miroir exact du grand-boutisme SHA : les
+             deux empreintes du panneau, les deux boutismes) ;
+         Q2 LE CŒUR : l'initialisation aux QUATRE abscisses (0x67452301,
+             0xEFCDAB89, 0x98BADCFE, 0x10325476), les SOIXANTE-QUATRE
+             tours par blocs de 64 (les décalages MD5_S, les
+             constantes MD5_T — les tables PUBLIQUES du plan
+             d'adressage, DÉRIVÉES PAR ARITHMÉTIQUE au geste (a) : T[i]
+             = floor(2^32 · |sin(i+1)|), le vérificateur les
+             re-dérive), le bourrage 0x80 puis les zéros, la longueur
+             sur 64 bits, l'extraction des QUATRE mots ;
+         Q3 les fenêtres : SetFilePointerEx + ReadFile dans TAMPON_CUMUL
+             (au plus 64 Kio), le cœur nourri fenêtre à fenêtre — un
+             fichier de 2 Gio se condense, jamais tout en mémoire ;
+         Q4 la gamme vide rend d41d8cd98f00b204e9800998ecf8427e (le
+             vecteur RFC 1321) ; Q5 rax = 0.
+  inv  : I1 le cœur ne déclare AUCUNE entrée IAT (le calcul pur — la
+             lecture seule porte l'IAT : SetFilePointerEx, ReadFile,
+             GetLastError, la liste fermée du bloc) ;
+         I2 les tables MD5_S/MD5_T sont des DONNÉES PUBLIQUES en
+             lecture seule (.rdata) — la source unique vit au plan
+             d'adressage, jamais re-déclarée ;
+         I3 la lecture passe par TAMPON_CUMUL (l'exclusion de famille —
+             jamais deux flux), le tampon de vue INTACT ;
+         I4 le contexte ne survit pas au retour (la pile le rend) ;
+             registres non volatils rendus ; NOP, 0x90 ;
+         I5 MD5 N'EST PAS UNE PREUVE : aucune décision de sécurité du
+             projet ne repose sur ce bloc — l'empreinte de cohérence
+             du quotidien, RIEN DE PLUS.
+Échecs :
+  E1 : sans session (P1) → verdict -4 SESSION, rax = -4.
+  E2 : la gamme hors fichier (P3) → verdict -3 HORS-BORNES, rax = -3.
+  E3 : la sortie inutilisable (P4) → verdict -5 ENTRÉE, rax = -5.
+  E4 : ReadFile ou SetFilePointerEx en échec → verdict -6 SYSTÈME, le
+       code GetLastError consigné, la sortie INTACTE (jamais un
+       condensé partiel).
+Vecteurs :
+  V1 : doré — LES SEPT VECTEURS OFFICIELS RFC 1321 (le vide, « a »,
+       « abc », « message digest », l'alphabet minuscule, l'alphabet
+       mixte, « 1234567890 » ×8) : les condensés exacts, octet pour
+       octet, AU FICHIER (les gammes d'un témoin composé pour eux)
+       (couvre Q1, Q2, Q4, Q5).
+  V2 : différentiel — 1 000 gammes aléatoires des témoins + proxy.exe
+       scellé, comparées à hashlib.md5 : l'égalité exacte (couvre Q1,
+       Q3).
+  V3 : rejet — sans session, hors bornes, sortie nulle : les TROIS
+       verdicts nommés (couvre E1, E2, E3).
+  V4 : rejet — le shim ReadFile en échec : verdict -6, la sortie
+       intacte, le code consigné (couvre E4).
+  V5 : falsification — une constante MD5_T mutée d'un ulp à la table
+       .rdata : les sept vecteurs dorés échouent — la falsification
+       ATTRAPÉE PAR LES VECTEURS OFFICIELS.
+Fixtures    : les SEPT vecteurs RFC 1321 (le témoin du kit les porte) +
+              proxy.exe scellé (md5 recoupé par hashlib au labo —
+              l'empreinte que le projet consigne à chaque build).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (les tables dérivées avant la notation), D7/D35
+              (l'IAT), D134 (le journal des builds vit de ces
+              empreintes).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-06 · md5 d'une gamme : l'empreinte du quotidien, notée neuve · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le décalage (≥ 0), rdx = · r8 = la sortie, 16 o accessibles en écriture
+; verdicts nommés : -4 SESSION · -3 HORS-BORNES · -5 ENTRÉE · -6 SYSTÈME
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette boucle (cible de saut)
+  LBL-002 = l'étiquette fenetre_taille (cible de saut)
+  LBL-003 = l'étiquette absorbe (cible de saut)
+  LBL-004 = l'étiquette k_ok (cible de saut)
+  LBL-005 = l'étiquette fenetre_fin (cible de saut)
+  LBL-006 = l'étiquette bourre (cible de saut)
+  LBL-007 = l'étiquette zeros56 (cible de saut)
+  LBL-008 = l'étiquette comprimer (cible de saut)
+  LBL-009 = l'étiquette tour (cible de saut)
+  LBL-010 = l'étiquette r1 (cible de saut)
+  LBL-011 = l'étiquette r2 (cible de saut)
+  LBL-012 = l'étiquette r3 (cible de saut)
+  LBL-013 = l'étiquette pas (cible de saut)
+  LBL-014 = l'étiquette refus_session (cible de saut)
+  LBL-015 = l'étiquette refus_bornes (cible de saut)
+  LBL-016 = l'étiquette refus_sortie (cible de saut)
+  LBL-017 = l'étiquette refus_systeme (cible de saut)
+  LBL-018 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel direct libc-01 — memcpy (dst, src, n)
+  CST-005 = l'appel direct libc-07 — memset (dst, octet, n)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 14aeda6001d9d0ff… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-07-cumul, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+sub rsp, 0x28
+lea rbx, [rip + 0x96b2]
+cmp qword ptr [rbx + 528], -1
+je 0x4990
+test rcx, rcx
+jz 0x4997
+mov r12, rcx
+xor ecx, ecx
+mov rdx, qword ptr [rbx + 520]
+lea r8, [r12 + 16]
+call 0x4440
+test eax, eax
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp qword ptr [rbx + 528], -1
+je LBL-014
+test rcx, rcx
+jz LBL-014
+test rdx, rdx
+jz LBL-015
+mov r12, rcx
+mov r13, rdx
+mov r14, qword ptr [rbx + 520]
+add r14, r13
+cmp r12, r14
+jae LBL-015
+test r8, r8
+jz LBL-016
+mov r15, qword ptr [rbx + 536]
+cmp r8, r15
+jae LBL-016
+xor eax, eax
+mov dword ptr [r8], 0x67452301
+mov dword ptr [r8 + 4], 0xEFCDAB89
+mov dword ptr [r8 + 8], 0x98BADCFE
+mov dword ptr [r8 + 12], 0x10325476
+mov qword ptr [r8 + 16], 0
+mov qword ptr [r8 + 24], 0
+mov r14, r12
+xor r15, r15
+boucle:
+call CST-001
+mov qword ptr [rsp + 0x10], r14
+xor r15, r15
+fenetre_taille:
+cmp r15, 0x10000
+jae LBL-005
+mov rdi, rsp
+mov rsi, r12
+mov rdx, r15
+call CST-004
+test eax, eax
+jne LBL-017
+cmp r15, 0
+je LBL-003
+absorbe:
+mov rdi, r8
+mov rsi, rsp
+mov rdx, r15
+call CST-004
+k_ok:
+mov r14, r15
+add r12, r15
+cmp r12, qword ptr [rbx + 520]
+jbe LBL-005
+cmp r12, r12
+je LBL-003
+fenetre_fin:
+call CST-001
+mov qword ptr [rsp + 0x10], r12
+xor r15, r15
+cmp r12, qword ptr [rbx + 520]
+jbe fenetre_taille
+bourre:
+mov byte ptr [rsp], 0x80
+mov rdi, rsp
+mov rsi, rsp
+mov edx, 1
+call CST-005
+mov rdi, rsp
+mov rsi, rsp
+mov rdx, 0x3f0
+call CST-005
+zeros56:
+mov rdi, rsp
+add rdi, 8
+mov rsi, rsp
+mov rdx, 0x38
+call CST-005
+mov qword ptr [rsp + 8], r12
+comprimer:
+mov r14, 0
+tour:
+mov r15d, dword ptr [rsp + r14 * 4]
+rol r15d, 12
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x40 + r14 * 4]
+add r15d, dword ptr [rsp + 0x10 + r14 * 4]
+rol r15d, 7
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x80 + r14 * 4]
+add r15d, dword ptr [rsp + 0x20 + r14 * 4]
+rol r15d, 3
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xc0 + r14 * 4]
+rol r15d, 5
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x100 + r14 * 4]
+rol r15d, 4
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x140 + r14 * 4]
+rol r15d, 6
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x180 + r14 * 4]
+rol r15d, 2
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x1c0 + r14 * 4]
+rol r15d, 0xb
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x200 + r14 * 4]
+rol r15d, 0xc
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x240 + r14 * 4]
+rol r15d, 0xa
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x280 + r14 * 4]
+rol r15d, 0xe
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x2c0 + r14 * 4]
+rol r15d, 0xf
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x300 + r14 * 4]
+rol r15d, 5
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x340 + r14 * 4]
+rol r15d, 3
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x380 + r14 * 4]
+rol r15d, 10
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x3c0 + r14 * 4]
+rol r15d, 15
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x400 + r14 * 4]
+rol r15d, 8
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x440 + r14 * 4]
+rol r15d, 7
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x480 + r14 * 4]
+rol r15d, 9
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x4c0 + r14 * 4]
+rol r15d, 6
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x500 + r14 * 4]
+rol r15d, 0xa
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x540 + r14 * 4]
+rol r15d, 0xc
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x580 + r14 * 4]
+rol r15d, 2
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x5c0 + r14 * 4]
+rol r15d, 0xb
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x600 + r14 * 4]
+rol r15d, 0xe
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x640 + r14 * 4]
+rol r15d, 5
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x680 + r14 * 4]
+rol r15d, 0xf
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x6c0 + r14 * 4]
+rol r15d, 4
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x700 + r14 * 4]
+rol r15d, 0xa
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x740 + r14 * 4]
+rol r15d, 3
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x780 + r14 * 4]
+rol r15d, 9
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x7c0 + r14 * 4]
+rol r15d, 8
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x800 + r14 * 4]
+rol r15d, 7
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x840 + r14 * 4]
+rol r15d, 2
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x880 + r14 * 4]
+rol r15d, 0xc
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x8c0 + r14 * 4]
+rol r15d, 0xb
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x900 + r14 * 4]
+rol r15d, 0xe
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x940 + r14 * 4]
+rol r15d, 5
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x980 + r14 * 4]
+rol r15d, 0xf
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0x9c0 + r14 * 4]
+rol r15d, 4
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xa00 + r14 * 4]
+rol r15d, 0xa
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xa40 + r14 * 4]
+rol r15d, 3
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xa80 + r14 * 4]
+rol r15d, 9
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xac0 + r14 * 4]
+rol r15d, 8
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xb00 + r14 * 4]
+rol r15d, 7
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xb40 + r14 * 4]
+rol r15d, 2
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xb80 + r14 * 4]
+rol r15d, 0xc
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xbc0 + r14 * 4]
+rol r15d, 0xb
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xc00 + r14 * 4]
+rol r15d, 0xe
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xc40 + r14 * 4]
+rol r15d, 5
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xc80 + r14 * 4]
+rol r15d, 0xf
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xcc0 + r14 * 4]
+rol r15d, 4
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xd00 + r14 * 4]
+rol r15d, 0xa
+mov r15d, dword ptr [r8 + r15 * 4]
+mov r15d, dword ptr [rsp + r14 * 4]
+add r15d, dword ptr [r8 + 0xd40 + r14 * 4]
+rol r15d, 3
+mov r15d, dword ptr
+=== FIN (tentative de réparation 3 sur le budget 3) ===
+
+LE DIFF D'EXPANSION STRUCTURÉ (au niveau opcode/opérande/offset — TELLE QU'ÉCRITE / CE QUE L'EXPANDEUR EN FAIT / LE MOTIF ADMIS) :
+  ÉCRIT    : cmp qword ptr [rbx + 528], -1
+  EXPANSION: cmp qword ptr [rbx + 528], -1   [l'expandeur l'admet]
+  ÉCRIT    : je LBL-014
+  EXPANSION: je refus_session_   [l'expandeur l'admet]
+  ÉCRIT    : test rcx, rcx
+  EXPANSION: test rcx, rcx   [l'expandeur l'admet]
+  ÉCRIT    : jz LBL-014
+  EXPANSION: jz refus_session_   [l'expandeur l'admet]
+  ÉCRIT    : test rdx, rdx
+  EXPANSION: test rdx, rdx   [l'expandeur l'admet]
+  ÉCRIT    : jz LBL-015
+  EXPANSION: jz refus_bornes_   [l'expandeur l'admet]
+  ÉCRIT    : mov r12, rcx
+  EXPANSION: mov r12, rcx   [l'expandeur l'admet]
+  ÉCRIT    : mov r13, rdx
+  EXPANSION: mov r13, rdx   [l'expandeur l'admet]
+
+LE CONTRE-EXEMPLE (les motifs fautifs et leurs corrections canoniques) :
+  FAUTIF   : call CST-004            jamais : un IAT en opérande cmp
+  ADMIS    : call CST-004            (l'IAT s'appelle en call)
+  FAUTIF   : cmp qword ptr [rax], qword ptr [rbx]
+  ADMIS    : mov rax, qword ptr [rbx]  puis  cmp rax, CST-001
+  FAUTIF   : movzx rax, rcx
+  ADMIS    : movzx rax, ecx        (la source 32 bits ou moins)
+  FAUTIF   : cmp eax, WM_PAINT
+  ADMIS    : cmp eax, CST-002      (un ID du dictionnaire, jamais un symbole en clair)

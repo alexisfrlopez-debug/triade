@@ -1,0 +1,238 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-17 · sauver : les octets modifiés écrits à l'octet, le témoin rendu · révision 1
+Intention : enregistrer les octets modifiés — CHAQUE entrée du journal
+écrite À SON DÉCALAGE, UNE PAR UNE (SetFilePointerEx + WriteFile d'UN
+octet : l'écriture À L'OCTET, l'unité est l'octet, jamais une plage) —
+puis la marque levée, la garde de sortie levée, le panneau
+recalculé (loupe-07 : la vérité du disque re-naît — le coût du
+passage est nommé) ET LE TÉMOIN RENDU à la barre : combien d'octets,
+de la première à la dernière adresse — ce qui a bougé est dit, pas
+suggéré.
+Contrat :
+  pre  : P1 la session est ouverte ; P2 appelée par la procédure
+             (loupe-09 Q3) sur Ctrl+S (VK_KEYDOWN 'S' avec Ctrl) ;
+             P3 le journal peut être VIDE (le repli nommé).
+  post : Q1 le journal VIDE → rax = 0 SANS écriture, la barre nomme
+             « rien à sauver » (le repli documenté — pas un échec,
+             l'état nommé) ;
+         Q2 SINON : pour CHAQUE entrée du journal DANS SON ORDRE DE
+             SAISIE : SetFilePointerEx(décalage, DEBUT_FICHIER) puis
+             WriteFile(1 o) — l'octet à SON décalage, un par un ;
+             tout l'échec s'arrête LÀ (verdict -6, le code
+             GetLastError consigné — FAIL-CLOSED : le journal DEMEURE,
+             la marque demeure, les octets déjà écrits le restent —
+             l'échec ne perd RIEN, le geste peut se reprendre) ;
+         Q3 SUCCÈS COMPLET : journal.nombre = 0, cadre.sale = 0,
+             refus_quitter = 0 (la garde de loupe-18 levée — la
+             sortie ne ré-avertira plus : il n'y a plus rien à
+             perdre) ;
+         Q4 LE PANNEAU RE-NAÎT : loupe-07 rappelé (les empreintes du
+             DISQUE — la sauvegarde a changé le fichier, le panneau
+             suit : jamais un condensé d'avant) — le coût est NOMMÉ :
+             un passage de plus, le prix de la vérité ;
+         Q5 LE TÉMOIN à la barre : « N o écrits · 0xAABBCCDD..0xEEFF-
+             GGHH » (le compte exact, la première et la dernière
+             adresse écrites) — ce qui a bougé est DIT ;
+         Q6 la TAILLE DEMEURE (l'écriture à l'octet ne change JAMAIS
+             la taille du fichier — GetFileSizeEx après == avant,
+             l'oracle le constate) ; rax = 0.
+  inv  : I1 AUCUNE écriture hors des entrées du journal (le reste du
+             fichier est INTACT — la différentielle avant/après le
+             prouve : SEULEMENT les N octets du journal diffèrent,
+             jamais un de plus) ;
+         I2 l'ordre du journal est L'ORDRE DE SAISIE (loupe-16 I2) —
+             la sauvegarde le suit tel quel, le témoin rend les
+             adresses réelles ;
+         I3 WriteFile et SetFilePointerEx vivent ICI SEULS dans le
+             domaine (l'IAT fermée du plan — la contrebande
+             d'écriture est un refus de build : loupe-16 l'a juré,
+             le build le vérifie) ;
+         I4 jamais la taille (I6 le constate : l'écriture à l'octet
+             REMPLACE, elle n'étend pas — un hexadécimal éditeur ne
+             crée pas d'octets) ; registres non volatils rendus ;
+             NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P1) → verdict -4 SESSION, rax = -4.
+  E2 : SetFilePointerEx ou WriteFile en échec → verdict -6 SYSTÈME,
+       le code GetLastError consigné, FAIL-CLOSED : journal et marque
+       DEMEURENT (le geste se reprend — rien n'est perdu), le
+       témoin ne ment pas (il ne rend que le succès complet).
+Vecteurs :
+  V1 : différentiel — 1 000 scénarios d'édition/sauvegarde sur les
+       témoins : le fichier APRÈS == le modèle Python (les N octets
+       appliqués, le reste INTACT — la comparaison octet par octet
+       du fichier entier), la taille CONSTANTE (couvre Q2, Q6).
+  V2 : scénario — trois octets édités puis Ctrl+S : le témoin « 3 o
+       écrits · 0xA..0xC » à la barre, la marque levée, l'astérisque
+       parti, le panneau RE-NAÎT (les empreintes du fichier changé —
+       recoupées par hashlib) — l'écran attendu (couvre Q3, Q4, Q5).
+  V3 : rejet — sans session : -4 ; le shim WriteFile en échec à la
+       deuxième entrée : -6, la première écriture ACQUISE, le
+       journal DEMEURE (le second Ctrl+S reprend et FINIT — la
+       reprise est prouvée) (couvre E1, E2).
+  V4 : scénario du repli — Ctrl+S sans édition : « rien à sauver »,
+       AUCUN appel WriteFile (les appels comptés), rax = 0 (couvre
+       Q1).
+  V5 : falsification — un octet de trop écrit (la plage au lieu de
+       l'octet) : la différentielle V1 échoue — l'écriture à l'octet
+       est une exigence.
+Fixtures    : les témoins du kit (édités puis sauvés puis RE-OUVERTS :
+              la persistance constatée au second loupe-01 — la
+              boucle complète de l'éditeur).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT : WriteFile vit ici seul).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-17 · sauver : les octets modifiés écrits à l'octet, le témoin rendu · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; verdicts nommés : -4 SESSION · -6 SYSTÈME
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette session (cible de saut)
+  LBL-002 = l'étiquette sauver (cible de saut)
+  LBL-003 = l'étiquette boucle (cible de saut)
+  LBL-004 = l'étiquette refus_systeme (cible de saut)
+  LBL-005 = l'étiquette sortie_relaye (cible de saut)
+  LBL-006 = l'étiquette sortie (cible de saut)
+  LBL-007 = l'étiquette message (cible de saut)
+  LBL-008 = l'étiquette message_copie (cible de saut)
+  LBL-009 = l'étiquette message_fin (cible de saut)
+  LBL-010 = l'étiquette chaine (cible de saut)
+  LBL-011 = l'étiquette chaine_fin (cible de saut)
+  LBL-012 = l'étiquette dec (cible de saut)
+  LBL-013 = l'étiquette dec_boucle (cible de saut)
+  LBL-014 = l'étiquette dec_copie (cible de saut)
+  LBL-015 = l'étiquette hex8 (cible de saut)
+  LBL-016 = l'étiquette hex8_boucle (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 05f5c6d4bca3a84a… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-18-quitter, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+sub rsp, 0x28
+mov r12, rcx
+lea rbx, [rip + 0x78af]
+cmp edx, 0x10
+je 0x675f
+cmp edx, 2
+je 0x67a3
+xor eax, eax
+jmp 0x67b2
+cmp dword ptr [rbx + 556], 0
+je 0x6796
+cmp dword ptr [rbx + 560], 0
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret

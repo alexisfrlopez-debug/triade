@@ -1,0 +1,227 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-05 · sha256 d'une gamme : l'héritage tls13 PAR LA CARTE · révision 1
+Intention : le condensé SHA-256 d'une gamme du fichier ouvert —
+l'héritage de la famille sha tls13 (M9, scellée 1.0.0) PAR LA CARTE :
+les QUATRE blocs tls13-01..04 embarqués au build BYTE-IDENTIQUES à leur
+scellé (R7), appelés par le plan d'adressage, JAMAIS une copie d'octets
+ré-écrite. La gamme passe par fenêtres glissantes de 64 Kio
+(TAMPON_CUMUL) : un fichier de 2 Gio se condense sans jamais tenir en
+mémoire.
+Contrat :
+  pre  : P1 la session est ouverte (la poignée ≠ INVALIDE) ;
+         P2 rcx = le décalage de gamme (≥ 0), rdx = la longueur (≥ 0) ;
+         P3 décalage + longueur ≤ taille du fichier ;
+         P4 r8 = la sortie, 32 o accessibles en écriture.
+  post : Q1 la sortie = SHA-256(F[décalage .. décalage + longueur))
+             — FIPS 180-4, la sémantique des blocs hérités (le contexte
+             112 o de tls13-01 P1, tenu SUR LA PILE — rien ne survit au
+             retour) ;
+         Q2 LA COMPOSITION HÉRITÉE : tls13-01 (l'initialisation, UNE
+             fois) puis, pour chaque fenêtre lue (SetFilePointerEx +
+             ReadFile dans TAMPON_CUMUL, au plus CUMUL_FENETRE octets),
+             tls13-03 (l'absorption), puis tls13-04 (la finalisation) —
+             LA LISTE EST FERMÉE (tls13-02 vit à l'intérieur de
+             tls13-03, l'héritage l'embarque avec) ;
+         Q3 la gamme VIDE (longueur 0) rend le condensé du vide FIPS
+             (e3b0c442…98ec4bf2) — le vecteur officiel, l'héritage le
+             porte ;
+         Q4 rax = 0.
+  inv  : I1 L'HÉRITAGE PAR LA CARTE (charte § 2, R7) : les octets de
+             tls13-01..04 au build == les octets du scellé 1.0.0 —
+             l'oracle du build le constatera octet par octet ; la
+             contrebande (une ré-écriture) est un refus de build ;
+         I2 AUCUNE constante SHA re-déclarée au domaine (H0, le bloc
+             64, la disposition du contexte vivent à tls13-01 — la
+             source unique, T5) ;
+         I3 la lecture passe par TAMPON_CUMUL — JAMAIS le tampon de
+             vue du cadre (la vue est intacte pendant le calcul :
+             l'invariant d'exclusion de famille) ;
+         I4 le pointeur fichier est repositionné à CHAQUE fenêtre
+             (SetFilePointerEx avant chaque ReadFile) — jamais une
+             position héritée d'un autre bloc ;
+         I5 l'IAT déclarée (D161) : SetFilePointerEx, ReadFile,
+             GetLastError — la liste fermée ; registres non volatils
+             rendus ; NOP, 0x90.
+Échecs :
+  E1 : sans session (P1) → verdict -4 SESSION, rax = -4.
+  E2 : la gamme hors fichier (P3) → verdict -3 HORS-BORNES, rax = -3.
+  E3 : la sortie inutilisable (P4 nulle) → verdict -5 ENTRÉE, rax = -5.
+  E4 : ReadFile ou SetFilePointerEx en échec → verdict -6 SYSTÈME, le
+       code GetLastError consigné, la sortie INTACTE (jamais un
+       condensé partiel : le calcul ne publie que le vrai).
+Vecteurs :
+  V1 : différentiel — les gammes des témoins du kit + proxy.exe scellé
+       (la gamme entière, 1 000 gammes aléatoires) comparées à
+       hashlib.sha256 : l'égalité octet par octet — la composition
+       héritée passée par ses fenêtres à chaque cas (couvre Q1, Q2,
+       Q4).
+  V2 : doré — la gamme vide (le vecteur FIPS e3b0c442…), la gamme
+       « abc » (ba7816bf…) : les vecteurs officiels rejoués au fichier
+       (couvre Q3).
+  V3 : rejet — sans session, gamme hors bornes, sortie nulle : les
+       TROIS verdicts nommés (couvre E1, E2, E3).
+  V4 : rejet — le shim ReadFile en échec à la deuxième fenêtre :
+       verdict -6, la sortie intacte (comparée à son état d'avant),
+       le code consigné (couvre E4).
+  V5 : falsification — un octet de TAMPON_CUMUL muté entre les
+       fenêtres : le condensé diverge du modèle — la différentielle
+       échoue (la falsification DEMANDÉE).
+Fixtures    : les vecteurs FIPS 180-4 (le vide, « abc ») + proxy.exe
+              scellé (la gamme entière recoupée : sha256 446279f3… —
+              l'application rend l'empreinte DE SA PROPRE PIÈCE).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), R7 (l'héritage PAR LA CARTE
+              — la charte § 2).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-05 · sha256 d'une gamme : l'héritage tls13 PAR LA CARTE · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le décalage de gamme (≥ 0), rdx = la longueur (≥ 0) · r8 = la sortie, 32 o accessibles en écriture
+; verdicts nommés : -4 SESSION · -3 HORS-BORNES · -5 ENTRÉE · -6 SYSTÈME
+; les appelés directs (le plan — la liste fermée) :
+;   tls13-01 @ 0xc000 — sha256-init (ctx 112 o)
+;   tls13-02 @ 0xc080 — sha256-comprimer (ctx, bloc 64 o)
+;   tls13-03 @ 0xc400 — sha256-absorber (ctx, données, n)
+;   tls13-04 @ 0xc5c0 — sha256-finaliser (ctx, sortie 32 o)
+; IAT déclarée (la liste fermée) : SetFilePointerEx, ReadFile, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette boucle (cible de saut)
+  LBL-002 = l'étiquette fenetre_taille (cible de saut)
+  LBL-003 = l'étiquette finalise (cible de saut)
+  LBL-004 = l'étiquette refus_session (cible de saut)
+  LBL-005 = l'étiquette refus_bornes (cible de saut)
+  LBL-006 = l'étiquette refus_sortie (cible de saut)
+  LBL-007 = l'étiquette refus_systeme (cible de saut)
+  LBL-008 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel direct tls13-01 — sha256-init (ctx 112 o)
+  CST-005 = l'appel direct tls13-03 — sha256-absorber (ctx, données, n)
+  CST-006 = l'appel direct tls13-04 — sha256-finaliser (ctx, sortie 32 o)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 2015d0ae00d0d3c4… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-06-md5, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0xc0
+lea rbx, [rip + 0x9a29]
+cmp qword ptr [rbx + 528], -1
+je 0x48f4
+mov rax, rcx
+add rax, rdx
+jc 0x48fb
+cmp rax, qword ptr [rbx + 520]
+ja 0x48fb
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
