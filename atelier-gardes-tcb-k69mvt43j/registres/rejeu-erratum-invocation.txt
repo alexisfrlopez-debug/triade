@@ -1,0 +1,12 @@
+ERRATUM APPEND-ONLY — LE REJEU DES 116 CERTIFICATS v14 : LA PASSE CORRIGÉE
+============================================================================
+(23/11/2026, le geste de préparation de la release v0.23.3 — la commande du maître « ok pour la suite (release de la vague…) » ; le rapport atelier et le harnais-tcb.json DEMEURENT octet pour octet, la présente vit À CÔTÉ)
+
+LA CAUSE NOMMÉE : la passe consignée au rapport invoquait `z3 -in <fichier>` — l'option -in exige la formule à l'ENTRÉE STANDARD (l'argument fichier refusé : « Error: using standard input to read formula » émis à stderr, la sortie stdout VIDE) : les 116 verdicts consignés étaient vides — 0/58 décharges UNSAT, 0/58 mutations SAT, 116 écarts à verdict "" — la trace DEMEURE (un échec mesuré est une pièce aussi précieuse qu'un vert) ; le worklog de la session (Entrée 387) portait la lecture de la passe CORRECTE exécutée à part — la présente en consigne la trace exécutable.
+
+LA PASSE CORRIGÉE (`z3 <fichier>`, z3 5.4.1, le bac même) : les décharges UNSAT 58/58 ; les mutations SAT (le relâchement d'UNE UNITÉ) 58/58 ; les écarts : 0 ; la durée 0.7 s
+L'EMPREINTE DU CORPUS (les sha256 des 116 fichiers, chaînés par ordre lexicographique) : sha256 9aaa4bfa6589756adfd8794be4238c385cf037e44afc7c220cae446625f50a6d
+
+LA PREUVE RESTE PORTANTE : 58/58 relâchements d'une unité SAT — le certificat tombe dès que l'invariant cède d'un octet (le recoupement à la trace v14 : registre-z3-58.json, 58/58 UNSAT consigné à la vague 14).
+
+LA RÈGLE RECONDUITE : jamais le verbatim historique réécrit — l'erratum vit append-only à côté.

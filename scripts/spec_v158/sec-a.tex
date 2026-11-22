@@ -11,8 +11,8 @@ plutôt que de supprimer les langages (une impossibilité de principe, puisqu’
 langage manipule des symboles textuels et que tout format binaire rendu lisible par un
 agent constitue de facto un langage), TRIADE déplace le langage vers une fine couche de
 spécification maintenue par l’agent, tandis que l’artefact livré est du code machine natif
-pur. Le compilateur disparaît du pipeline de livraison : ce que l’agent écrit est ce qui
-s’exécute — et rien d’autre.
+pur. Le compilateur n’est jamais livré : la notation scellée, elle, l’est — ce que
+l’agent écrit est ce qui s’exécute, et rien d’autre.
 
 Le nom encode l’architecture : trois couches indissociables — Intention (I), Binaire (B),
 Carte (C) — unies par un verrou croisé cryptographique. La couche I contient le quoi et le
@@ -262,7 +262,8 @@ onzième runs : L'APPLICATION NÉE DE TRIADE A VÉCU CHEZ SON UTILISATEUR).
 
 LE ONZIÈME RUN recoupé 39/39 : \textbf{LA BALISE \code{loupe 0.1.0} SCELLÉE PAR
 FAIT DE CARTE} (D178 : la dette de la carte soldée par la RÉGÉNÉRATION DES
-NOTATIONS — 18/18 notations == la pièce OCTET POUR OCTET, l'écart de l'audit
+NOTATIONS (nov. 2026) — 18/18 notations == la pièce OCTET POUR
+OCTET, l'écart de l'audit
 $587 \to 0$ ; la cristallisation $26 \times 10/10$ ; la re-signature à la graine
 durable D144 — LE TÉMOIN NE BOUGE PAS ; l'anti-rollback ARMÉ ; \code{loupe.exe}
 INTACT \code{054de960…} — LE MÊME binaire que le run a couru) : \textbf{LA MÉTHODE
@@ -315,7 +316,8 @@ journal par \code{scripts/extraire\_donnees\_v100.py} — le manuscrit
 n'affirme rien qui ne soit extrait et vérifié.
 
 \textbf{LA FORMULATION CORRIGÉE} (le manuscrit et, par lui, le protocole) :
-« le compilateur disparaît » devient « AUCUNE chaîne de traduction
+l’ancienne formule sémantique (le compilateur réputé retranché du
+pipeline) devient « AUCUNE chaîne de traduction
 optimisante ni opaque ; assemblage WYSIWYG vérifié par round-trip » ;
 « code volé inexploitable » devient « l'évolution du code volé est
 bloquée, son exécution ne l'est pas » ; les majuscules emphatiques et le
@@ -1004,7 +1006,8 @@ EMPREINTE-DIVERGENTE, EXPANSION-DIVERGENTE, HORS-FORMAT). La mesure
 OPT-04 (la même graine que OPT-02, 18 appels réels au tokenizer natif,
 le cl100k parallèle, la re-tokenisation indépendante à ±1 token) : le
 total 1~714 → 1~103 natifs (−35,7~\%), la réponse 770 → 52
-(−93,3~\%), zéro divergence 18/18, l'expansion client verte 18/18. Le
+(−93,3~\%), (nov. 2026) zéro divergence 18/18, l'expansion client
+verte 18/18. Le
 budget D31 (64 tokens à la première ligne) demeure : le pointeur le
 tient avec marge. La décision D222 (append-only) consigne l'adoption.
 

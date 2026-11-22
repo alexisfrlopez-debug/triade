@@ -1,0 +1,8 @@
+LES EMPREINTES DES LIVRABLES — la vague 15, l'édition v0.23.3 (la release)
+(chaque pièce sha256 ; le manifeste fait loi)
+
+TRIADE_manuscrit_v0.23.3.pdf  sha256:0d337e604c44bcb5e52745dd51988c686c81d9fe970f634781cbbaa9700dee03
+Protocole_TRIADE_v0.15.8_Specification.pdf  sha256:06171f7ff2fb462abe8bffea9584cfe343d9631ef5d08c56b19b9f84be7b9c95
+Livre_du_Coffre_TRIADE_CF1-CF3_v1.7.pdf  sha256:5930539839b2e49469b5af7797e1cd2e1a7102c1622fbe4b7fdaac570afb1c82
+TRIADE_preuves_et_calculs_v0.23.3.pdf  sha256:06ec70e77801a1900ba8333bddcc945c6fe190963e03c0d3f6fa466734c02bb2
+TRIADE_presentation_v233.pdf  sha256:78f6a393b1b99d55d04a428cce3960e754eb5b95bf6b34ea5115dd6b1ed998d7
