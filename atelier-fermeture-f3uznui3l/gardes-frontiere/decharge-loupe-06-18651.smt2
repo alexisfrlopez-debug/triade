@@ -1,0 +1,23 @@
+; PREUVE DE DÉCHARGE DE FRONTIÈRE — loupe-06-18651 (f3uznui3l, vague 14)
+; la zone CADRE [0xe000, 0xe3c0) — le certificat ifqm1d1i4 composé
+; LA COMPOSITION : (la frontière A ADMIS) ∧ (la frontière PORTE l'invariant)
+;                 ∧ (la négation de la sûreté) → UNSAT exigé
+(set-info :status unknown)
+(declare-fun adresse () (_ BitVec 64))
+(declare-fun lo_f () (_ BitVec 64))
+(declare-fun hi_f () (_ BitVec 64))
+(declare-fun lo_z () (_ BitVec 64))
+(declare-fun hi_z () (_ BitVec 64))
+; (1) LA FRONTIÈRE A ADMIS l'adresse (le contrôle de frontière tenu)
+(assert (bvuge adresse (_ bv57344 64)))
+(assert (bvult adresse (_ bv58304 64)))
+; (2) LA FRONTIÈRE PORTE l'invariant : ses bornes SONT les bornes de la zone
+(assert (= lo_f (_ bv57344 64)))
+(assert (= hi_f (_ bv58304 64)))
+(assert (= lo_z (_ bv57344 64)))
+(assert (= hi_z (_ bv58304 64)))
+(assert (= lo_f lo_z))
+(assert (= hi_f hi_z))
+; (3) LA NÉGATION DE LA SÛRETÉ (l'adresse HORS zone)
+(assert (or (bvult adresse lo_z) (bvuge adresse hi_z)))
+(check-sat)

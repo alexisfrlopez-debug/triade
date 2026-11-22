@@ -1,0 +1,23 @@
+; PREUVE DE DÉCHARGE DE FRONTIÈRE — tls13-07-50952 (f3uznui3l, vague 14)
+; la zone CTX [0x500000, 0x501000) — le certificat ifqm1d1i4 composé
+; LA COMPOSITION : (la frontière A ADMIS) ∧ (la frontière PORTE l'invariant)
+;                 ∧ (la négation de la sûreté) → UNSAT exigé
+(set-info :status unknown)
+(declare-fun adresse () (_ BitVec 64))
+(declare-fun lo_f () (_ BitVec 64))
+(declare-fun hi_f () (_ BitVec 64))
+(declare-fun lo_z () (_ BitVec 64))
+(declare-fun hi_z () (_ BitVec 64))
+; (1) LA FRONTIÈRE A ADMIS l'adresse (le contrôle de frontière tenu)
+(assert (bvuge adresse (_ bv5242880 64)))
+(assert (bvult adresse (_ bv5246976 64)))
+; (2) LA FRONTIÈRE PORTE l'invariant : ses bornes SONT les bornes de la zone
+(assert (= lo_f (_ bv5242880 64)))
+(assert (= hi_f (_ bv5246976 64)))
+(assert (= lo_z (_ bv5242880 64)))
+(assert (= hi_z (_ bv5246976 64)))
+(assert (= lo_f lo_z))
+(assert (= hi_f hi_z))
+; (3) LA NÉGATION DE LA SÛRETÉ (l'adresse HORS zone)
+(assert (or (bvult adresse lo_z) (bvuge adresse hi_z)))
+(check-sat)

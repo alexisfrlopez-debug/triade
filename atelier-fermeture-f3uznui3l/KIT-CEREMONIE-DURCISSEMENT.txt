@@ -1,0 +1,53 @@
+# KIT DE CÉRÉMONIE — LE DURCISSEMENT DU COFFRE RÉEL (f3uznui3l, la vague 14)
+
+## CE QUE C'EST
+Le kit préparant la cérémonie qui déploie les SEPT GESTES (a)-(g) prouvés en copies
+de laboratoire (atelier-coffre-vr9n3s3l7, la vague 11) sur le coffre réel du
+développeur. **Le kit est prêt ; LE GESTE APPARTIENT AU DÉVELOPPEUR.** La règle
+absolue D105 demeure : le laboratoire ne touche JAMAIS le coffre réel ni les
+phrases réelles — les copies de laboratoire portent la phrase publique marquée
+`PHRASE-TEST-PUBLIQUE-D105-*`. L'autotest complet a tourné sur copie publique
+AVANT livraison.
+
+## LES SEPT GESTES (les preuves vivent à atelier-coffre-vr9n3s3l7/)
+| Geste | Contenu | La pièce de preuve (copie labo) | Le geste réel |
+|---|---|---|---|
+| (a) | L'empreinte du chiffré AVANT l'AEAD (sentinelle HMAC sous K_emp) | `vecteurs/a_sentinelle-v1..v5` — 5/5 VERTS | `coffre_fort.py` au geste du maître |
+| (b) | V_piège DÉRIVÉE (liée à S_piège ET à l'époque — anti-rollback au piège) | `vecteurs/b_vpiege-v1..v5` — 5/5 VERTS | idem |
+| (c) | Re-paramétrage Argon2 versionné + plancher d'entropie ≥ 60 bits | `vecteurs/c_reparam` (p_idx 0→1 vécu ; 3 phrases faibles REFUSÉES) | idem |
+| (d) | Changement de phrase CF3 sous séquestre 5/3 (phrase neuve au plancher, ancienne détruite, phrase JAMAIS au dépôt — D223) | `vecteurs/d_changer` — VERT au séquestre de labo | `scripts/kit_ceremonie_d183/sequestre_d183.py` |
+| (e) | Garde RAM mlock + zéroïsation (I-garde-ram.md, contrat P1-P4/Q1-Q4) | `labo/garde_ram_demo.py` — mlock/bzero/dumpable VERTS | les miroirs Windows au geste (gap nommé) |
+| (f) | Ancrage Rekor/RFC 3161 des témoins d'époque | `labo/ancrage_temoins.py` — vérification locale VERTe | la requête réseau au geste (gap nommé) |
+| (g) | Prototype FIDO2 HMAC-SECRET (le média du piège) | `labo/fido2_hmac_secret.py` — CTAP2 simulé VERT | le token physique au geste (gap nommé) |
+
+## LA CÉRÉMONIE (pas à pas, AU GESTE DU MAÎTRE)
+1. **Préparer** : un poste hors-ligne, la phrase de contrôle lue de
+   `PHRASE-CONTROLE-COFFRE.txt` (garde durable D81), le coffre copié localement.
+2. **Répéter sur copie publique** : lancer l'autotest complet (voir ci-dessous) —
+   TOUT VERT est la condition d'entrée.
+3. **(a)-(c) au coffre réel** : déployer la sentinelle, V_piège dérivée, le
+   re-paramétrage p_idx — chaque geste suivi de `coffre_fort.py verifier`.
+4. **(d) sous séquestre 5/3** : suivre `scripts/kit_ceremonie_d183/
+   LISEZMOI-ceremonie-D183.txt` (préparer → répétition générale → découpage →
+   répartition → preuve de reconstitution à froid ×2 → retrait → entretien).
+5. **(e)** : la garde RAM compilée pour la cible (mlock/VirtualLock,
+   SecureZeroMemory), le témoin d'époque ancré **(f)**, le média du piège posé
+   si FIDO2 disponible **(g)**.
+6. **Consigner** : chaque geste, son horodatage, son verdict — append-only.
+
+## L'AUTOTEST (la condition d'entrée, sur copie publique)
+```
+python3 coffre_fort.py autotest                        # CF1, phrases publiques
+python3 v06/test_coffre_cf3.py                         # T1-T13 falsifiabilité CF3
+python3 v06/autotest_cf3_gui.py                        # pupitre 28 contrôles embarqués
+python3 atelier-coffre-vr9n3s3l7/labo/coffre_labo.py   # (a)(b)(c) sur copie marquée
+```
+
+## LES GAPS NOMMÉS (jamais simulés)
+TSA/Rekor réseau (f) ; token FIDO2 physique (g) ; miroirs Windows de la garde
+RAM (e) ; le coffre réel ne bouge QUE au geste du maître.
+
+## LES EMPREINTES (les pièces de preuve de labo, intouchables)
+Empreintes complètes à `atelier-coffre-vr9n3s3l7/EMPREINTES-VR9N3S3L7.txt`
+et au rapport de l'atelier vr9n3s3l7 (la vague 11) ; les scellés du coffre
+demeurent sous le sceau-I 14/14 (v06).

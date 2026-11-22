@@ -1,0 +1,56 @@
+{
+ "date": "2026-11-22",
+ "garde_instr_emulees": 9,
+ "garde_natif_rdtscp": "garde n=200 mediane=56.0 iqr=2.0 (machine virtualisee, coeur epingle)",
+ "instrument": "Unicorn 2.1.4 (le même instrument des deux côtés ; IAT stubées xor eax,eax/ret — le coût d'appel système ABSENT, la cible ≤1 % s'évalue au terrain)",
+ "blocs": [
+  {
+   "bloc": "loupe-02-lire",
+   "gardees": 1,
+   "instr_bloc": 24,
+   "instr_garde": 9,
+   "ratio_pct": 37.5,
+   "cible_1pct": false
+  },
+  {
+   "bloc": "loupe-06-md5",
+   "gardees": 9,
+   "instr_bloc": 25,
+   "instr_garde": 9,
+   "ratio_pct": 36.0,
+   "cible_1pct": false
+  },
+  {
+   "bloc": "loupe-08-ligne",
+   "gardees": 3,
+   "instr_bloc": 14,
+   "instr_garde": 9,
+   "ratio_pct": 64.286,
+   "cible_1pct": false
+  },
+  {
+   "bloc": "loupe-09-ecran",
+   "gardees": 4,
+   "instr_bloc": 6,
+   "instr_garde": 9,
+   "ratio_pct": 150.0,
+   "cible_1pct": false
+  },
+  {
+   "bloc": "loupe-10-peinture",
+   "gardees": 2,
+   "instr_bloc": 16,
+   "instr_garde": 9,
+   "ratio_pct": 56.25,
+   "cible_1pct": false
+  },
+  {
+   "bloc": "loupe-16-saisie",
+   "gardees": 5,
+   "instr_bloc": 28,
+   "instr_garde": 9,
+   "ratio_pct": 32.143,
+   "cible_1pct": false
+  }
+ ]
+}

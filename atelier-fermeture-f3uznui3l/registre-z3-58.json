@@ -1,0 +1,8 @@
+{
+ "date": "2026-11-22",
+ "outil": "z3 5.4.1.0 (bac vague 14)",
+ "certificats": 58,
+ "unsat": 58,
+ "ecarts": [],
+ "duree_s": 0.4
+}

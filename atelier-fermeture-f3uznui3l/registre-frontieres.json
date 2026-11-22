@@ -1,0 +1,994 @@
+{
+ "date": "2026-11-22",
+ "gardes": 58,
+ "verts": 58,
+ "rouges": 0,
+ "detail": [
+  {
+   "garde": "loupe-02-17185",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18463",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18466",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18470",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18474",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18614",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18651",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18654",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18658",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-06-18662",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-08-18967",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-08-19064",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-08-19074",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-09-23583",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-09-23593",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-09-23611",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-09-23629",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-10-20375",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-10-20385",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-16-25497",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-16-25500",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-16-25506",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-16-25514",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "loupe-16-25535",
+   "zone": "CADRE",
+   "bornes": [
+    57344,
+    58304
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41073",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41086",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41130",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41138",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41149",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41203",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41216",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41226",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41239",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41247",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "sys-02-41255",
+   "zone": "OS",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-03-49786",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-03-49834",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-04-49942",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-04-49964",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-07-50938",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-07-50944",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-07-50952",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-07-50960",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-07-51086",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-18-57907",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-18-58057",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-18-58262",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-18-58501",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-18-58504",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-19-59018",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-19-59501",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-19-59707",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-20-60091",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-20-60098",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-20-60106",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-20-60114",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-20-60122",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  },
+  {
+   "garde": "tls13-21-60510",
+   "zone": "CTX",
+   "bornes": [
+    5242880,
+    5246976
+   ],
+   "decharge": "unsat",
+   "mutation_sat": "sat",
+   "harnais": {
+    "basse": 4294967291,
+    "haute": 4294967291,
+    "index": 4294967291,
+    "honnête": 0
+   },
+   "vert": true
+  }
+ ]
+}

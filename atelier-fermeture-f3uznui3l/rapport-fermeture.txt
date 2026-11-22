@@ -1,0 +1,130 @@
+RAPPORT DE L'ATELIER FERMETURE SÉCURITÉ f3uznui3l — LA VAGUE 14 (22/11/2026)
+=============================================================================
+
+Écrit à la session de la vague 14, au plan gelé PLAN-F3UZNUI3L.md (empreinte
+0d718aa3559d0a26… consignée AVANT toute mesure à EMPREINTES-PLANS-VAGUE14.txt,
+commit b2fbcf8-style de la vague). LA RÈGLE D105 TENUE : aucun coffre réel ni
+phrase réelle touchés — copies de laboratoire à phrase publique marquée seules.
+Le sceau-I : 14/14 arbres VERTS avant et après l'atelier (v06/sceau_I.py
+verifier rejoué deux fois).
+
+1. LES 58 CERTIFICATS RE-VÉRIFIÉS (la base composée)
+--------------------------------------------------------------------------------
+Les 58 certificats UNSAT de ifqm1d1i4 (la vague 10) re-roulés UN PAR UN au z3
+du bac (z3-solver 5.4.1.0, installé à la session — le bac neuf ne le portait
+pas) : 58/58 UNSAT, 0 SAT, 0 autre écart, 0,4 s au total
+(registre-z3-58.json). Le TCB re-dénombré par le CSV : 24 champ du plan +
+23 contrat de l'appelant + 11 OS = 58 EXACT.
+
+2. LA COMPOSITION DES GARDES DE FRONTIÈRE — LE CŒUR DE L'ATELIER
+--------------------------------------------------------------------------------
+LA THÉORIE (le plan § 3) : la garde de frontière établit l'invariant AVANT
+l'accès interne ; si ses bornes SONT les bornes de la zone (le binding), les
+58 obligations internes sont DÉCHARGÉES par la seule frontière.
+58 DÉCHARGES émises (gardes-frontiere/decharge-*.smt2) : (la frontière a
+admis) ∧ (la frontière PORTE l'invariant — le binding des bornes) ∧ (la
+négation de la sûreté) → **58/58 UNSAT** : la décharge tient pour CHAQUE
+obligation.
+LA FALSIFICATION PAR GARDE (la preuve est PORTANTE, jamais une tautologie) :
+58 mutations émises (gardes-frontiere/mutation-*.smt2 — les bornes
+relâchées d'UNE unité, hi_f := hi_z + 1) : **58/58 SAT** — la décharge
+ÉCHOUE nommément quand la frontière ne porte plus l'invariant exact : le
+binding fait la preuve.
+LE HARNAIS (Unicorn 2.1.4, la copie de labo à la marge 0x10000 — OPT-01) :
+pour CHAQUE garde, l'invariant violé REFUSÉ aux DEUX bornes ET à la face
+d'index (eax = −5 nommé), l'adresse honnête ADMISE (eax = 0) —
+**58/58 tenus** (registre-frontieres.json, chaque garde exécutée au harnais,
+les registres calés par la recette propre de la garde : mov ACC, BASE /
+add ACC, INDEX / add ACC, DISP).
+BILAN : **58/58 VERT** — la composition intégrale (composer_frontieres_
+f3uznui3l.py, l'outil committé).
+
+3. LE COÛT PAR BLOC (R11 — la cible pré-enregistrée ≤1 % sur les non crypto)
+--------------------------------------------------------------------------------
+L'INSTRUMENT : la garde et le bloc EXÉCUTÉS au MÊME harnais Unicorn (les
+blocs extraits du SCELLÉ loupe.exe à leurs slots canoniques — sha256
+c1115105… intact avant/après, IAT stubées xor eax,eax/ret) ; l'ancre réelle :
+la garde au rig natif RDTSCP (n=200, cœur épinglé CPU 1).
+LA GARDE : 9 instructions émulées ; **56,0 cycles natifs [IQR 2,0]** (la
+machine virtualisée nommée — Intel Xeon 3200 MHz, drapeaux aes/avx2/pclmulqdq
+/rdtscp ; le silicium nu au geste du développeur).
+LES BLOCS NON CRYPTO porteurs d'obligations (6) : loupe-02-lire 24 instr ·
+loupe-06-md5 25 · loupe-08-ligne 14 · loupe-09-ecran 6 · loupe-10-peinture
+16 · loupe-16-saisie 28 (les chemins pris à l'état CADRE vierge — un CHEMIN
+par bloc, l'instrument émulé nommé).
+LE VERDICT HONNÊTE : au code propre du bloc (IAT stubées), le ratio émulé
+garde/bloc porte 32 % à 150 % — **LA CIBLE ≤1 % N'EST PAS TRANCHÉE AU BAC** :
+chaque bloc loupe porte ≥ 1 appel IAT (CloseHandle/GetMessage/WriteFile)
+dont le coût réel au terrain dépasse de loin le code propre — la cible
+s'évalue au geste du développeur sur machine réelle, l'écart nommé (le gap
+était prévisible : l'instrument émulé ne porte pas le coût d'appel système).
+L'AUTOTEST DES GESTES DE LABO (le kit de cérémonie) : (a) sentinelle
+**5/5 VERTS** et (b) V_piège **5/5 VERTS** re-vécus à la présente session
+sur copies propres (la non-idempotence des PV de destruction NOMMÉE : les
+runs répétés accumulent les PV — le verdict re-pris à l'état propre) ;
+les vecteurs (c)(d)(e)(f)(g) demeurant ceux de la vague 11 (intacts, sceau).
+
+4. LE KIT DE CÉRÉMONIE DU DURCISSEMENT DU COFFRE RÉEL
+--------------------------------------------------------------------------------
+KIT-CEREMONIE-DURCISSEMENT.txt : les sept gestes (a)-(g) avec leurs pièces
+de preuve de labo, la cérémonie pas à pas (préparer → répéter sur copie
+publique → (a)-(c) → (d) sous séquestre 5/3 → (e)(f)(g) → consigner
+append-only), l'autotest d'entrée (coffre_fort.py autotest +
+v06/test_coffre_cf3.py + le pupitre 28 contrôles), les gaps nommés
+(TSA/Rekor réseau ; token FIDO2 physique ; miroirs Windows garde RAM), LE
+GESTE APPARTIENT AU DÉVELOPPEUR — le coffre réel DEMEURE intact.
+
+5. TAMARIN CF3 v2 — LE RUN VÉCU AU BAC (le prover INSTALLÉ, une première)
+--------------------------------------------------------------------------------
+tamarin-prover 1.12.0 INSTALLÉ au bac (le binaire officiel linux64-ubuntu,
+tar.gz sha256 201be06f469e47cf… consigné) avec Maude 3.4 + prelude.maude
+(sha256 3e7147ee4a6ff96e…) — le prover absent de trois vagues VIT MAINTENANT
+au bac. LA SYNTAXE AMENDÉE PAR ÉCRIT (la règle du plan : tout écart se nomme
+et s'amende, empreinte reconsignée) :
+  — v2.1 : `zero` est un nom RÉSERVÉ du builtin hashing en tamarin 1.12.0 —
+    renommé `nul` (2 occurrences actives) ;
+  — v2.2 : les déclarations `event ...` NE FONT PAS partie de la grammaire
+    spthy top-level (les faits y sont déclarés IMPLICITEMENT — manuel
+    « Facts ... need not be declared explicitly » — les 15 déclarations
+    retirées par écrit) ;
+  — v2.3 : les faits d'action sans arguments exigent les parenthèses
+    (`PhraseErronee` → `PhraseErronee()`).
+LE MODÈLE AMENDÉ : sha256 63347fda… RECONSIGNÉ (l'original f9a79efc… demeurant
+au registre, l'écart nommé ligne à ligne ci-dessus) ; le modèle PARSE et
+charge (Theory loaded/translated/closed, Derivation checks verts, Saturating
+Sources done). LA PREUVE --prove DES SIX LEMMAS lancée au long cours (le
+lemme d'implication « secret appris ⇒ ≥ 3 parts », les deux témoins, les
+trois conservations) : LE VERDICT attend la complétion — consigné au registre
+Tamarin dès rendu (aucun verdict fabriqué : un lemme non terminé à la clôture
+de session demeure « EN ATTENTE », la borne nommée).
+L'ÉCART DU PROTOCOLE v1 CORRIGÉ PAR ÉCRIT : le protocole disait « les CINQ
+lemmas » alors que le fichier et la liste en portent SIX — corrigé.
+
+6. DUDECT — LA PRÉPARATION RE-VÉRIFIÉE
+--------------------------------------------------------------------------------
+L'agrégateur fail-closed du kit (agregateur_dudect.py) re-autotesté (--selftest
+VERT), la complétude AVANT tout calcul confirmée, le refus nommé sur run
+manquant vécu à l'autotest ; le mesureur dudect_v150.c et les quatre cibles
+aux empreintes recoupées (le manifeste-c.txt inchangé) — les runs
+n≥10×{60,200,400}×≥2 machines appartiennent au développeur (les témoins
+signés attendus au /test du coffre).
+
+LES GAPS NOMMÉS (jamais simulés)
+--------------------------------------------------------------------------------
+— la cible ≤1 % du coût par bloc : NON TRANCHÉE au bac émulé (l'appel système
+  absent de l'instrument) — au terrain, au geste du maître ;
+— la preuve --prove : au long cours au bac, le verdict EN ATTENTE à la
+  clôture si inachevée (jamais un verdict fabriqué) ;
+— l'oracle natif OPT-07 : la session n'a pas livré le moteur natif des
+  oracles (la priorité portée à la composition z3 des frontières — l'écart
+  au plan NOMMÉ) ;
+— TSA/Rekor, FIDO2 physique, miroirs Windows garde RAM : au geste du maître.
+
+PIÈCES LIVRÉES (l'atelier)
+--------------------------------------------------------------------------------
+composer_frontieres_f3uznui3l.py · registre-z3-58.json · gardes-frontiere/
+(116 fichiers : 58 décharges + 58 mutations) · registre-frontieres.json ·
+mesurer_cout_gardes_f3uznui3l.py · rig_garde.c · cout-gardes.json ·
+KIT-CEREMONIE-DURCISSEMENT.txt · CF3-v2-amende.spthy (l'amendement écrit) ·
+rapport-fermeture.txt (le présent) · registre-tamarin-v14.txt (au rendu de la
+preuve).
