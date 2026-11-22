@@ -1,0 +1,6 @@
+{"tache": "ajouter-v4-i26111701", "bloc": "loupe-07-cumul", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 3346}, {"essai": 1, "total": 4009}, {"essai": 2, "total": 4011}, {"essai": 3, "total": 4011}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111702", "bloc": "loupe-11-defilement", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 4737}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111703", "bloc": "loupe-02-lire", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 4387}, {"essai": 1, "total": 5657}, {"essai": 2, "total": 5666}, {"essai": 3, "total": 5666}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111704", "bloc": "loupe-12-aller", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8324}, {"essai": 1, "total": 12958}, {"essai": 2, "total": 12958}, {"essai": 3, "total": 12958}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111705", "bloc": "loupe-03-fermer", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 3355}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111706", "bloc": "loupe-10-peinture", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8923}, {"essai": 1, "total": 13618}, {"essai": 2, "total": 13582}, {"essai": 3, "total": 13582}], "verdict": "REFUS Refus"}

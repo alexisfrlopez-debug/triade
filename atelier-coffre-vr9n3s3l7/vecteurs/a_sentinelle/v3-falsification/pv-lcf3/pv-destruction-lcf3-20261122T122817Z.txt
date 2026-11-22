@@ -1,0 +1,10 @@
+PROCÈS-VERBAL DE DESTRUCTION LOCALE — TRIADE-LCF3 (labo vr9n3s3l7, plan (a))
+date : 2026-11-22T12:28:17Z
+raison : FALSIFICATION À EMPREINTE VALIDE — l'attaquant a réécrit le chiffretexte ET son empreinte (cohérence NAÏVE sha256 seule) ; l'empreinte LIÉE À LA CLÉ (HMAC, plan (a)) réfute la paire : falsification PROUVÉE côté machine (phrase vérifiée, piège intègre)
+passes : aléatoire (CSPRNG) puis 0xFF puis 0x00, fsync par passe
+
+DETRUIT : /home/z/my-project/depot/atelier-coffre-vr9n3s3l7/vecteurs/a_sentinelle/v3-falsification/coffre.bin (3 passes, tronqué, renommé, unlink, fsync rép.)
+
+total : 1 artefact(s) machine détruit(s)
+le MÉDIA du piège est INTACT (externe — c'est la relève) ; les PARTS du séquestre sont INTACTES (le plan (d) : la reconstitution à froid demeure la relève)
+AUCUNE phrase écrite — le PV ne contient JAMAIS de secret (discipline RAM, miroir spec CF3 § 8)

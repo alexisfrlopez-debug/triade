@@ -425,7 +425,7 @@ optimization without measurement).
 
 The development loop itself (update an intention, re-derive the oracle,
 edit the notation, rebuild, verify, seal) and the seal ceremony model are
-described in the protocol specification v0.15.7 (the D81 purge edition: the five-thirds escrow is the active guard, the delivery instructions retired from the operational text), which this edition
+described in the protocol specification v0.15.8 (the D81 purge edition: the five-thirds escrow is the active guard, the delivery instructions retired from the operational text), which this edition
 accompanies; we summarise only what the evaluation needs.
 
 \paragraph{Governance: signed intent and append-only records.}
@@ -2049,7 +2049,7 @@ question the third arm left open. Measured on the same machine at
 $n{=}5$ per arm, order alternated against thermal drift: T
 \quatreBrasT{}\,s, C+G+ \quatreBrasCGP{}\,s, C+G \quatreBrasCG{}\,s, C
 \quatreBrasC{}\,s --- the notation effect \emph{proper} (T$-$C+G+) is
-\effetNotationPropre{}\,s (\partNotationPropre\,\% of T$-$C+G), the
+\effetNotationPropre{}\,s (\partNotationPropre\,\% of T$-$(C+G)), the
 verification regime (C+G+$-$C+G) \effetRegime{}\,s (\partRegime\,\%),
 the governance gestures \effetGouvernanceOnze{}\,s: the pre-registered
 H-CGP2 is confirmed --- the requalification rejected at both windows
@@ -2128,7 +2128,7 @@ command, the gaps named. A z3 state machine proves the four
 invariants of the sentinel (the control names the unguarded machine
 where corruption destroys). The D81 delivery instructions are
 purged from the operational documents (the Book of the Vault v1.6
-and the specification v0.15.7: the five-thirds escrow is the active
+and the specification v0.15.8: the five-thirds escrow is the active
 guard, the repository public --- the runbook simulation refused the
 trap gesture at the first named step, the \purgeCommitsScannes{}-commit
 history scan found zero leak).

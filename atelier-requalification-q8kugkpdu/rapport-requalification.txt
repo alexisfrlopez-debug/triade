@@ -106,3 +106,7 @@ LA VÉRIFICATION (verifier_q8kugkpdu.py) : 20/20 VERT — le TCB somme à
 grep par code, le lemme d'implication PRÉSENT, l'empreinte consignée,
 les CINQ requalifications présentes, le verbatim historique intact,
 le sceau 14/14 APRÈS l'atelier.
+
+
+--- ERRATUM v0.23.1 (io13olvxz, la vague 14 — append-only) ---
+La décomposition des 12 arguments sommait à 13 à l'énumération manuelle : l'état mourant ×6 EST ×5 au census CSV (classification-21-survivants.csv) ; la famille omise à l'abstract : « the field beyond the motif » (loupe-14@0xdc). La table recomposée PAR CODE depuis le CSV (12 = 5+2+1+1+1+1+1) ; le présent erratum vit à côté, le verbatim historique demeure octet pour octet.
