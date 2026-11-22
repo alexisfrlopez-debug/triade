@@ -1,0 +1,44 @@
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE — LE GABARIT VERSIONNÉ
+TPL-EDIT-v1 · sha256:797f2f6b0a36601abfe923413551bf36db422a9fb3d792aaaf7d56c0271a41a3
+(le corps du gabarte vit en session ; le client recoupe son
+empreinte AVANT l'application — GABARIT-DIVERGENT sinon.)
+
+LA FENÊTRE DE LA CIBLE (les lignes 3 à 22 du bloc — la
+ligne 15 est la ligne cible) :
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-07 (le memset hérité PAR LA CARTE — byte-identique au scellé M1, jamais une boucle réécrite) ; le cadre posé vierge, la poignée INVALIDE ; AUCUNE entrée IAT (le miroir des feuilles pures, charte § 9)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-04-cadre.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 47 o · padding : 17 o (NOP, 0x90)
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x4045 + 0x7 + 0x9fb4 = 0xe000
+; Appels directs (l'adresse du plan — I1) : call 0x13c0
+push rbx
+sub rsp, 0x20
+lea rbx, [rip + 0x9fb4]
+mov rcx, rbx
+xor edx, edx
+mov r8d, 960
+call 0x13c0
+mov qword ptr [rbx + 528], -1
+xor eax, eax
+add rsp, 0x20
+pop rbx
+ret
+
+
+LA GARDE (l'expansion fail-closed) : l'empreinte sha256 de la
+notation complète en cache : 3a2d03d1cccb22d5f38d8e82006bb6de7eb17692c3518978315fa3e6cf06abbb — le client recoupe
+cette empreinte AVANT l'application des hunks (toute divergence
+de la base en cache : REFUS CONTEXTE-DIVERGENT).
+
+LES PARAMÈTRES LITTÉRAUX (l'opération — le diff) :
+bloc : loupe-04-cadre
+ligne : 15
+ancienne : mov r8d, 960
+nouvelle : mov r8d, 959
+
+REQUÊTE : applique le gabarit aux paramètres — rends UNIQUEMENT
+les hunks : la PREMIÈRE ligne exactement « @@ hunk 1 », l'ancre
+« base: <la ligne exacte> », les retraits « - … », les
+insertions « + … », la DERNIÈRE ligne exactement « FIN-HUNKS »
+— aucune clôture de code (aucun ```), aucun autre texte.

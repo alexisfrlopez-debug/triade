@@ -1,0 +1,72 @@
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE (le mode FENÊTRE — la base
+n'est PAS relue : la fenêtre de la cible seule est au prompt, la
+notation complète est en cache côté client ; la réponse ne rend
+QUE les hunks ciblés).
+
+LA FENÊTRE DE LA CIBLE (les lignes 15 à 39 du bloc — la
+ligne 27 est la ligne cible) :
+push r13
+push r14
+push r15
+sub rsp, 0x20
+mov r12, rcx
+lea rbx, [rip + 0x7f69]
+cmp qword ptr [rbx + 528], -1
+je 0x61e7
+mov r13, qword ptr [rbx + 520]
+test r13, r13
+jz 0x61e7
+mov r14, qword ptr [rbx + 544]
+cmp r8d, 0x24
+je 0x60f1
+cmp r8d, 0x23
+je 0x60f7
+cmp r8d, 0x25
+je 0x6113
+cmp r8d, 0x27
+je 0x6118
+cmp r8d, 0x26
+je 0x611d
+cmp r8d, 0x28
+je 0x6123
+cmp r8d, 0x21
+
+LA RÉVISION (la spécification de couche I, la consigne) :
+RÉVISION DE CONTRAT (loupe-15-curseur:R2, la classe « la constante revue ») : la ligne « cmp r8d, 0x24 » est révisée en « cmp r8d, 0x23 » — l'immédiat de travail passe de 0x24 à sa valeur révisée. AUCUNE autre ligne de code ne change (les adresses, les étiquettes et les autres instructions demeurent OCTET POUR OCTET ; les lignes de commentaire d'en-tête peuvent être mises à jour pour porter la révision).
+
+LA GARDE (l'expansion fail-closed) : l'empreinte sha256 de la
+notation complète en cache : b30ef03c0c4db353c2396d5099bef4961b15ff8572f685ed90891f66a43c3c23 — le client recoupe
+cette empreinte AVANT l'application des hunks (toute divergence
+de la base en cache : REFUS CONTEXTE-DIVERGENT).
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+REQUÊTE : applique la révision et rends UNIQUEMENT les hunks au
+format ci-dessus — les ancres « base: » sont des lignes exactes
+de la fenêtre ci-dessus — la dernière ligne exactement
+« FIN-HUNKS ».

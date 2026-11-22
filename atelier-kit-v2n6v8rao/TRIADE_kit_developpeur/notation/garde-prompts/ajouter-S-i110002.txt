@@ -1,0 +1,116 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE — le
+cadre ABI, les types et la signature sont DÉRIVÉS de la couche I
+par le client : le squelette ci-dessous est DÉTERMINISTE ; tu ne
+remplis QUE LA LOGIQUE).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-02 · lire : la fenêtre d'octets au tampon de session · révision 1
+Intention : lire la fenêtre de TAMPON_SESSION octets (384) à un décalage
+donné — dans le tampon du cadre, BORNÉ par la taille réelle (jamais un
+octet de trop, jamais un octet au-delà de la fin), puis recouvrir les
+octets du journal d'édition : ce que l'utilisateur a écrit demeure
+visible après le défilement — la cohérence de vue est un invariant, pas
+une chance.
+Contrat :
+  pre  : P1 la session est ouverte (la poignée du cadre ≠ INVALIDE) ;
+         P2 rcx = le décalage de fenêtre, MULTIPLE DE 16 (l'alignement
+             de ligne — la grille reste droite) ;
+         P3 décalage < taille du fichier (la fenêtre touche au moins un
+             octet valide).
+  post : Q1 remplissage = min(384, taille − décalage) — posé au cadre
+             (+552) ; le tampon (+568) = les octets du fichier
+             [décalage, décalage + remplissage) lus par SetFilePointerEx
+             PUIS ReadFile (la position repositionnée à CHAQUE lecture —
+             jamais une position héritée) ;
+         Q2 LE RECOUVREMENT DU JOURNAL : pour chaque entrée du journal
+             (loupe-16) dont le décalage ∈ [décalage, décalage +
+             remplissage), l'octet du tampon REMPLACÉ par l'octet écrit
+             — l'édition survit au défilement ;
+         Q3 rax = 0 ; la vue et le curseur du cadre INTACTS (lire ne
+             déplace rien — le défilement est à loupe-11).
+  inv  : I1 la borne est LUE AU CADRE (la taille), jamais passée par
+             l'appelant — un décalage faux est un refus, pas une
+             confiance ;
+         I2 la lecture ne touche QUE le tampon du cadre — jamais
+             TAMPON_CUMUL (la fenêtre des empreintes et de la recherche,
+             l'exclusion de famille), jamais l'ECRAIN (la composition
+             est à loupe-10) ;
+         I3 JAMAIS un octet au-delà de la fin : remplissage ≤ 384 ET
+             décalage + remplissage ≤ taille — la double borne, la
+             lecture s'arrête à la taille réelle ;
+         I4 l'IAT déclarée (D161) : SetFilePointerEx, ReadFile,
+             GetLastError — la liste fermée du bloc ; registres non
+             volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P1) → verdict -4 SESSION, rien lu, rax =
+       -4.
+  E2 : décalage non multiple de 16 (P2) → verdict -5 ENTRÉE, rien lu —
+       la grille ne se penchera pas.
+  E3 : décalage ≥ taille (P3) → verdict -3 HORS-BORNES, rien lu — la
+       fenêtre au-delà de la fin n'existe pas.
+  E4 : ReadFile ou SetFilePointerEx en échec → verdict -6 SYSTÈME, le
+       code GetLastError consigné, remplissage = 0 (fail-closed : le
+       tampon ne montre JAMAIS un octet non lu).
+Vecteurs :
+  V1 : différentiel — les témoins du kit + proxy.exe scellé : le tampon
+       comparé octet par octet à la découpe Python à 1 000 décalages
+       aléatoires valides (couvre Q1, Q3).
+  V2 : différentiel du recouvrement — des écritures au journal aux
+       décalages des bords de fenêtre (le premier, le dernier, le
+       hors-fenêtre) : le tampon recouvert == le modèle Python (couvre
+       Q2).
+  V3 : rejet — sans session, décalage non aligné, décalage à la taille
+       exacte, décalage au-delà : les QUATRE verdicts nommés, rien lu
+       (couvre E1, E2, E3).
+  V4 : rejet — le shim ReadFile en échec : verdict -6, remplissage 0,
+       le code consigné par le harnais (couvre E4).
+  V5 : falsification — un octet du tampon muté après lecture : la
+       composition d'écran diverge de l'attendu, l'oracle échoue.
+Fixtures    : les témoins du kit (1 o, 384 o, 3 × 64 Kio + 1) + proxy.exe
+              scellé (446279f3…) — les découpes recoupées par hashlib.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS, il est
+déjà là ; les règles de notation vivent en tête du squelette) :
+; loupe-02 · lire : la fenêtre d'octets au tampon de session · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le décalage de fenêtre, MULTIPLE DE 16 (l'alignement
+; types : TAMPON_SESSION = 384
+; verdicts nommés : -4 SESSION · -5 ENTRÉE · -3 HORS-BORNES · -6 SYSTÈME
+; IAT déclarée (la liste fermée) : SetFilePointerEx, ReadFile, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises « ; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici) » et
+« ; <<< FIN-LOGIQUE » (les gardes des pré-conditions, la logique du
+post-condition, les étiquettes résolues aux cibles absolues).
+La PREMIÈRE ligne de ta réponse est la première instruction, la
+DERNIÈRE est la dernière — aucune balise, aucun squelette, aucun
+commentaire, aucune explication : la réponse n'est QUE les
+instructions de la logique.

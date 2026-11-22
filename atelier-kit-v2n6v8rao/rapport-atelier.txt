@@ -1,0 +1,26 @@
+RAPPORT D'ATELIER — v2n6v8rao (la vague 15) : TRIIADE_KIT_DEVELOPPEUR DEPUIS
+LE DÉPÔT PAR CONSTRUCTION
+============================================================================
+(23/11/2026, le plan gelé PLAN-V2N6V8RAO.md sha256 67475ee9042c0dee… AVANT
+toute donnée)
+LE GÉNÉRATEUR (generer_kit.py) : LA LISTE PAR CONSTRUCTION (le motif
+D130 — git ls-files, JAMAIS de maintenance manuelle) ; LES 156 PIÈCES
+assemblées : la notation+round-trip (la chaîne v2 + les validateurs v3),
+la carte+expandeur pointeur-seul, LE GÉNÉRATEUR d'oracle depuis I
+(JAMAIS d'oracle pré-dérivé expédié — la dette kit nommée à la
+naissance), les guides (le guide d'agent zd316de39), l'eval (la ladder
+vpcr7mh3t), le gym (3x9cf4e5d), le feedback (witgt6qta : l'outil + le
+schéma + DOC-FEEDBACK), le rapport (0i4pkzbyr), le triage (e1lr9i8ts).
+LE MANIFESTE : sha256 par fichier, le VECTEUR DE VERSIONS kit↔protocole
+↔carte↔profil (v1.0.0 ↔ v0.23.2), LA PLAGE DE COMPATIBILITÉ et la porte
+verifier-compatibilite fail-closed (tout triplet incompatible REFUSÉ),
+LES ANCRES EXPÉDIÉES : AUCUNE (ni cle-publique-I.txt, ni signatures de
+référence — la cérémonie de genèse AIR-GAP au kit, le sceau LOCAL),
+LA LICENCE BSL 1.1 + le grant D209, LA DETTE KIT nommée à la naissance.
+LA CRISTALLISATION : LES 10 REBUILDS BIT-IDENTIQUES (le générateur
+déterministe, les entrées triées, aucun timestamp flottant).
+LE DÉPÔT Zenodo DEMEURE LE GESTE DU DÉVELOPPEUR — jamais minté sans
+commande ; le check-update optionnel JAMAIS une dépendance réseau au
+build (offline par construction).
+LA GARDE : le sceau-I 14/14 ; le dépôt de travail n'a été que LU (les
+pièces copiées, jamais déplacées) ; entrée append-only.

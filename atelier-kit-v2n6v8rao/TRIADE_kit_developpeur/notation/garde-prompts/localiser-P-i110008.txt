@@ -1,0 +1,24 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode pointeur seul — la
+réponse tient en une ligne, le client expande le pointeur auprès de la
+carte et confronte l'empreinte aux octets réels).
+
+BLOC DE LA CARTE (entête lu du fichier même) :
+; loupe-08-ligne · bloc la ligne : 77 o exacts — le décalage, les 16 groupes, le miroir · spec loupe-08:R1 · bloc carte i110008
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x49c0, taille 320 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : AUCUNE entrée IAT (la feuille pure — le miroir exact des feuilles tls13, charte § 9) ; la table hexa « 0123456789ABCDEF » du plan (I4 — R_HEX .rdata, lue par déplacement RIP) ; les bornes P2/P4 vérifiées AVANT la première écriture (I2 : exactement 77 o, jamais un de plus) ; la source LUE SEULE (I3)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-08-ligne.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 271 o · padding : 49 o (NOP, 0x90)
+; Étiquettes résolues : .dec_boucle=0x4a0c, .rempli_haut=0x4a32, .rempli_miroir=0x4a44, .grp_boucle=0x4a59, .grp_pos=0x4a6b, .grp_suivant=0x4a8c, .miroir_boucle=0x4a98, .miroir_point=0x4aae, .miroir_poser=0x4ab0, .miroir_fin=0x4aba, .refus_entree=0x4abe, .sortie=0x4ac3
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x49fd + 0x7 - 0x29b4 = 0x2050
+Empreinte notation : sha256:52a14615b0aef0b9d30622b425a886177b78a9b275ad5d7589d6bd2918ee6672
+
+REQUÊTE : localise le bloc ci-dessus dans la carte et réponds AU FORMAT
+POINTEUR SEUL, une seule ligne exactement :
+IDENTIFIANT · sha256:<empreinte>
+— IDENTIFIANT : l'identifiant de bloc de la carte (la forme iNNNNNN de
+l'entête) ;
+— <empreinte> : l'empreinte sha256 recopiée TELLE QUELLE de la ligne
+« Empreinte notation » ci-dessus (64 hexadécimaux, aucun calcul).
+Rien d'autre.

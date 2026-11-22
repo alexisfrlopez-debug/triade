@@ -1,0 +1,133 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE — le
+cadre ABI, les types et la signature sont DÉRIVÉS de la couche I
+par le client : le squelette ci-dessous est DÉTERMINISTE ; tu ne
+remplis QUE LA LOGIQUE).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-18 · quitter : la sortie propre, aucun octet perdu, aucune fuite · révision 1
+Intention : la sortie propre — LE DOUBLE-GESTE GARANTIT : si la marque
+sale est posée, le PREMIER Alt+F4 est REFUSÉ NOMMÉMENT (la barre dit
+« MODIFIÉ — Alt+F4 encore pour quitter sans sauver, Ctrl+S pour
+sauver », le coup s'entend) et SEUL LE SECOND TRANSCHE (la volonté
+délibérée, deux fois nommée — jamais une perte d'un seul geste) ;
+sinon : DestroyWindow, WM_DESTROY → la session close (loupe-03 : la
+poignée rendue, les zones d'hygiène vidées), PostQuitMessage (la
+boucle héritée win-03 rend), WinMain retourne, ExitProcess(0) —
+AUCUNE poignée pendante, AUCUN contexte mort, AUCUNE fuite : la
+sortie est aussi propre que l'entrée était vraie.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_CLOSE
+             (Alt+F4 ou le menu système) ou, chez WM_DESTROY, par la
+             fin de fenêtre ; P2 l'état du cadre fait foi (sale,
+             refus_quitter — les DEUX champs de loupe-04 P1).
+  post : Q1 WM_CLOSE AVEC marque sale ET refus_quitter = 0 →
+             refus_quitter = 1, verdict -5 (L'ORDRE REFUSÉ EN
+             L'ÉTAT), la barre nomme « MODIFIÉ — Alt+F4 encore pour
+             quitter sans sauver, Ctrl+S pour sauver », MessageBeep
+             (le refus s'entend) — la fenêtre DEMEURE, rien n'est
+             perdu ;
+         Q2 WM_CLOSE AVEC marque sale ET refus_quitter = 1 (le second
+             geste) OU marque propre → DestroyWindow (la fin demandée
+             — l'utilisateur a tranché : sauver était à lui) ;
+         Q3 WM_DESTROY : loupe-03 (la session close PROPREMENT : la
+             poignée rendue, le cadre vierge, le journal ABANDONNÉ
+             DÉLIBÉRÉMENT — le double-geste l'a nommé, les octets
+             non sauvés sont une VOLONTÉ, pas une perte), puis
+             PostQuitMessage(0) — la boucle héritée win-03 rend,
+             WinMain retourne, ExitProcess(0) ;
+         Q4 rax = 0 aux deux chemins de passage ; le chemin refusé
+             rend -5 (le verdict nommé monte à la barre — l'écran
+             nomme ce qu'il refuse).
+  inv  : I1 LA GARDE EST INVARIANTE : la perte d'octets non sauvés
+             exige DEUX gestes (le premier REFUSÉ nommément — la
+             garde ré-armée par loupe-16 à CHAQUE écriture et levée
+             par loupe-17 à CHAQUE sauvegarde réussie : le réseau
+             des trois blocs la tient, l'oracle à scénarios le
+             prouve par tous les chemins) ;
+         I2 la sortie ne SAUVEGARDE JAMAIS elle-même (la sauvegarde
+             est un geste explicite de loupe-17 — quitter ne décide
+             JAMAIS à la place de l'utilisateur) ;
+         I3 AUCUNE fuite : la poignée close (loupe-03), le contexte
+             de peinture TOUJOURS rendu (EndPaint chez loupe-10, y
+             compris à l'avortement — E2 de loupe-10), la file
+             quittée (PostQuitMessage UNE fois), le code de sortie
+             0 (le succès : même l'abandon délibéré est une sortie
+             PROPRE) ;
+         I4 l'IAT fermée du bloc (DestroyWindow, PostQuitMessage,
+             MessageBeep) — la clôture de session vit chez loupe-03,
+             le processus meurt chez loupe-09 (ExitProcess) ;
+             registres non volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : WM_CLOSE sur marque sale non encore refusée → verdict -5 (LE
+       REFUS NOMMÉ — la barre porte la phrase, le coup s'entend) :
+       c'est L'ÉCHEC QUI GARDE, la sanction est la protection.
+Vecteurs :
+  V1 : scénario — Alt+F4 SANS marque sale : la sortie directe (la
+       session close, la file quittée, ExitProcess(0) — les appels
+       comptés un à un) (couvre Q2, Q3, Q4).
+  V2 : scénario — LE DOUBLE-GESTE : trois octets édités, Alt+F4 :
+       le refus -5, la fenêtre DEMEURE, la barre porte la phrase,
+       le beep sonne ; Alt+F4 encore : la sortie SANS sauvegarde
+       (le journal abandonné délibérément — le fichier au disque
+       INTACT : la différentielle le constate) (couvre Q1, Q2).
+  V3 : scénario — LE RÉSEAU DE LA GARDE : Alt+F4 refusé, Ctrl+S (la
+       sauvegarde lève refus_quitter), Alt+F4 : la sortie DIRECTE
+       (rien à perdre — Q3 de loupe-17) ; ET le chemin inverse :
+       Alt+F4 refusé, une NOUVELLE écriture (la garde ré-armée),
+       Alt+F4 : le refus REVIENT (couvre Q1 — la falsification V5
+       de loupe-16 est la preuve croisée).
+  V4 : rejet — le verdict -5 monte à la barre (l'écran attendu le
+       porte), rax = -5 au premier geste (couvre E1).
+  V5 : falsification — la garde mutée (refus_quitter jamais levé
+       par la sauvegarde) : le scénario V3 échoue — l'oracle à
+       scénarios attrape la fuite de logique.
+Fixtures    : les témoins du kit (le fichier INTACT après l'abandon
+              délibéré — la différentielle tranche).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), D36 (le modèle démo : la
+              vitrine s'explique jusqu'à sa mort).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS, il est
+déjà là ; les règles de notation vivent en tête du squelette) :
+; loupe-18 · quitter : la sortie propre, aucun octet perdu, aucune fuite · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; les appelés directs (le plan — la liste fermée) :
+;   win-03 (l'adresse au plan de la carte)
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises « ; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici) » et
+« ; <<< FIN-LOGIQUE » (les gardes des pré-conditions, la logique du
+post-condition, les étiquettes résolues aux cibles absolues).
+La PREMIÈRE ligne de ta réponse est la première instruction, la
+DERNIÈRE est la dernière — aucune balise, aucun squelette, aucun
+commentaire, aucune explication : la réponse n'est QUE les
+instructions de la logique.

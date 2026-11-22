@@ -1,0 +1,43 @@
+L'OPÉRATION LOCALISER DE LA CARTE TRIADE (le mode hiérarchique —
+le client expande le pointeur auprès de la carte et confronte
+l'empreinte aux octets réels).
+
+L'INDEX GROSSIER DE LA SESSION (les IDs des blocs et leurs
+empreintes COURTES, 8 hex) :
+L'INDEX GROSSIER DE LA CARTE LOUPE (M10) — les 18 blocs : l'ID · l'empreinte
+courte (les 8 premiers hex du sha256 de la notation du bloc)
+i110001 a6ad8b47
+i110002 372f89e5
+i110003 d0ccc81e
+i110004 3a2d03d1
+i110005 93977b05
+i110006 c8302dd7
+i110007 02173c36
+i110008 52a14615
+i110009 45b405e6
+i110010 fd0ad169
+i110011 7bd16100
+i110012 b1695a52
+i110013 f9c4afdc
+i110014 55bc6d03
+i110015 b30ef03c
+i110016 7c710d41
+i110017 85a6b8c8
+i110018 c82237f1
+— la garde : sha256:03268d65597eaba15a3ff8e2e861c90a59d7b13c89efc0101620ae64cd68172b (l'empreinte de l'index — le client
+la recoupe avant toute expansion, fail-closed)
+
+
+LE BLOC À LOCALISER (l'identité — l'empreinte sha256 COMPLÈTE de
+sa notation) :
+sha256:d0ccc81ef425bbae28e654622801e28a5cb586d6e42f74e8bb12fe230a39312d
+
+REQUÊTE : localise le bloc ci-dessus dans l'index (l'entrée dont
+l'empreinte courte est le PRÉFIXE de l'empreinte complète) et
+récupère l'entrée fine — réponds AU FORMAT POINTEUR SEUL, une
+seule ligne exactement :
+IDENTIFIANT · sha256:<empreinte>
+— IDENTIFIANT : l'iNNNNNN de l'entrée choisie de l'index ;
+— <empreinte> : l'empreinte sha256 complète recopiée TELLE QUELLE
+du bloc à localiser ci-dessus (64 hexadécimaux, aucun calcul).
+Rien d'autre.

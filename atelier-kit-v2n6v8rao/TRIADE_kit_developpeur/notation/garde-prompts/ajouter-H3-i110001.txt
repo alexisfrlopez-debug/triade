@@ -1,0 +1,209 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode HUNKS — l'unité se
+compose PAR HÉRITAGE du gabarit de famille : la réponse ne rend QUE
+les hunks, le client les applique au gabarit et confronte).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+fixtures — la taille de la pièce ; r3 : LE VIDE — le fichier de taille zéro
+est un fichier réel du quotidien que l'éditeur DOIT ouvrir : la fenêtre
+n'existe pas pour lui [loupe-02 P3 : tout décalage ≥ taille 0], le
+remplissage demeure 0 et LE PANNEAU DU VIDE EXISTE — d41d8cd9… +
+e3b0c442…, la session née entière sans la fenêtre ; la découverte du
+geste (b), la couche I n'avait pas vu le vide)
+Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
+de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
+faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
+fenêtre lue (loupe-02), le panneau d'empreintes calculé (loupe-07). Les
+refus sont NOMMÉS (absent, verrouillé, hors périmètre) — la barre les
+porte, jamais un silence. Loupe vit de ses pièces : tout fichier du projet
+s'ouvre à l'œil.
+Contrat :
+  pre  : P1 rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+             la capacité du cadre, MAX_PATH) ; P2 la session n'est pas
+             déjà ouverte (la poignée du cadre = INVALIDE — sinon le
+             refus -5 : un fichier à la fois, le périmètre 0.1.0) ;
+         P3 l'IAT kernel32 résolue (D7/D35) ; P4 la pile alignée 16.
+  post : Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+             OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la
+             taille par GetFileSizeEx au cadre (+520) ;
+         Q2 la BORNE NOMMÉE : taille > BORNE_TAILLE (2 Gio) → verdict -3,
+             la poignée FERMÉE AVANT le retour (jamais une poignée
+             pendante), la barre porte « hors périmètre 0.1.0 : 2 Gio » ;
+         Q3 le chemin COPIÉ au cadre (+0, libc-01 hérité PAR LA CARTE —
+             jamais octet par octet réécrit), la vue = 0, le curseur = 0
+             (loupe-04 a posé le vierge) ;
+         Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
+             SEULEMENT SI la taille > 0 — le vide n'a PAS de fenêtre
+             (révision 3 : le remplissage 0 posé, la grille vide est un
+             état légitime) — puis loupe-07 (les empreintes du fichier
+             entier au panneau, LE VIDE AUSSI : son panneau est défini) ;
+             la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+         Q5 rax = 0 (la table des verdicts, charte § 9).
+  inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
+             aux autres, jamais reçu : Loupe est seul maître des octets
+             qu'il montrera modifiables) ;
+         I2 AUCUNE écriture au fichier à l'ouverture (lecture seule —
+             l'écriture vivra à loupe-17) ;
+         I3 le coût de Q4 est NOMMÉ : le panneau d'un fichier de 2 Gio
+             prend le temps de ses empreintes (deux passages) — la
+             vitrine née vraie, jamais un panneau mensonger ;
+         I4 tout refus d'OS est TRADUIT par la table (gle consigné au
+             journal du labo par le harnais) : jamais un code brut à
+             la barre ;
+         I5 l'IAT déclarée au plan (D161) : CreateFileW, GetFileSizeEx,
+             CloseHandle, GetLastError — la liste est fermée pour ce
+             bloc ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : ERROR_FILE_NOT_FOUND ou ERROR_PATH_NOT_FOUND → verdict -2 ABSENT
+       (le chemin ne désigne rien) — la barre le nomme, rax = -2.
+  E2 : ERROR_SHARING_VIOLATION → verdict -7 VERROUILLÉ (le partage
+       refuse : un autre détenteur tient le fichier) — la barre le
+       nomme, rax = -7.
+  E3 : tout autre refus d'OS (accès refusé, lecteur absent…) → verdict
+       -6 SYSTÈME, le code GetLastError consigné — rax = -6.
+  E4 : la session déjà ouverte (P2) → verdict -5, RIEN TOUCHÉ (le
+       fichier courant demeure) — un fichier à la fois, le nommé.
+Vecteurs :
+  V1 : scénario — le témoin du kit ouvert : le cadre lu champ à champ
+       (chemin, taille, vue 0, curseur 0, remplissage = min(384,
+       taille)), l'écran attendu composé octet par octet (couvre Q1,
+       Q3, Q4, Q5).
+  V2 : rejet — un chemin absent, un fichier tenu par un autre
+       détenteur, un fichier de 2 Gio + 1 : les TROIS verdicts nommés
+       à la barre, la poignée refermée dans le second cas (couvre Q2,
+       E1, E2, E3).
+  V3 : rejet — l'ouverture sur session ouverte : verdict -5, l'ancien
+       fichier INTACT (le tampon inchangé, l'oracle différentiel le
+       constate octet par octet) (couvre E4).
+  V4 : falsification — la taille mutée d'un octet au cadre après
+       l'ouverture : l'écran attendu diverge, l'oracle à scénarios
+       échoue (la falsification DEMANDÉE, charte § 3).
+Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
+              384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
+              formes du remplissage) + proxy.exe scellé (sha256
+              446279f3…, 65 024 o — la pièce de l'ère [erratum r2 :
+              la taille fautive 44 544 o était celle du scellé 0.9.0],
+              ouverte par l'application qui la juge).
+Provenance  : écrite-avant-code.
+Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
+              notation), D7/D35 (l'IAT), D137 (la lignée de balises —
+              un projet de développement).
+
+
+LES CONVENTIONS DE NOTATION DU DOMAINE :
+- la feuille pure : arguments seuls, aucune entrée IAT, aucun état détenu ;
+- ABI msx64 : rcx, rdx, r8, r9 puis la pile ; les non-volatils (rbx, r12-r15)
+  sauvegardés par le bloc ; le cadre aligné à 16 ; l'appelant réserve le
+  shadow space de 32 octets ;
+- la notation x86-64 : une instruction par ligne, mnémonique puis opérandes ;
+  les sauts aux cibles absolues (0x…), les appels aux adresses du plan ;
+  les commentaires préfixés « ; » ; l'en-tête commenté du bloc porte son
+  identité (nom, spec, slot, taille, étiquettes résolues, appels directs).
+
+L'EXEMPLE DU FORMAT DE NOTATION (loupe-13, la notation RÉELLE du
+domaine — le format des lignes « + » de tes hunks) :
+; loupe-13-recherche · bloc la recherche : la première occurrence par memcmp hérité (pur) · spec loupe-13:R1 · bloc carte i110013
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5740, taille 192 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : libc-02 memcmp (LE BLOC SCELLÉ M1 PAR LA CARTE — I2 : chaque candidat testé par le scellé, JAMAIS une boucle réécrite) ; AUCUNE entrée IAT (la feuille pure, charte § 9) ; le départ à [rsp+0x28] (P5, le 5e argument msx64) ; la position ABSOLUE de la PREMIÈRE occurrence ou −1 (LA FIN NOMMÉE)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-13-recherche.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 126 o · padding : 66 o (NOP, 0x90)
+; Étiquettes résolues : .boucle=0x577c, .trouve=0x579f, .fin_nomme=0x57a4, .refus_entree=0x57ab, .sortie=0x57b0
+; Appels directs (l'adresse du plan — I1) : call 0x1180
+mov rax, qword ptr [rsp + 0x28]
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+test r9, r9
+jz 0x57ab
+cmp r9, 32
+ja 0x57ab
+cmp rax, rdx
+ja 0x57ab
+mov rbx, rcx
+mov r12, rdx
+mov r13, r8
+mov r14, r9
+mov r15, rax
+mov rax, r12
+sub rax, r15
+cmp r14, rax
+jg 0x57a4
+mov rax, r15
+add rax, r14
+cmp rax, r12
+ja 0x57a4
+lea rcx, [rbx + r15]
+mov rdx, r13
+mov r8, r14
+call 0x1180
+test eax, eax
+jz 0x579f
+inc r15
+jmp 0x577c
+mov rax, r15
+jmp 0x57b0
+push -1
+pop rax
+nop
+nop
+jmp 0x57b0
+push -5
+pop rax
+nop
+nop
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE FORMAT DE RÉPONSE HUNK (obligatoire, fail-closed — le client applique,
+reconstruit et confronte par round-trip exact ; quatre refus nommés :
+HORS-FORMAT, HUNK-INCONNU, CONTEXTE-DIVERGENT, ROUND-TRIP-DIVERGENT).
+LA GRAMMAIRE :
+@@ hunk <k>          (k = 1, 2, 3… le rang du hunk, en ordre)
+base: <UNE ligne exacte du texte courant — LE PREMIER POINT DU CHANGEMENT>
+- <une ligne retirée à partir de l'ancre>   [0 ou plus]
++ <une ligne insérée au même point>         [1 ou plus]
+… (les hunks suivent, chacun commence par « @@ hunk k »)
+FIN-HUNKS
+LA SÉMANTIQUE DE L'ANCRE : l'ancre est la ligne OÙ LE CHANGEMENT SE PRODUIT.
+Si le hunk retire des lignes, la PREMIÈRE ligne « - » EST L'ANCRE ELLE-MÊME
+(la ligne remplacée, répétée) et les retraits suivent dans l'ordre À PARTIR
+DE L'ANCRE — elles sont remplacées par les lignes « + ». Si le hunk ne
+retire RIEN, l'ancre est la ligne APRÈS laquelle l'insertion se fait.
+UN EXEMPLE COMPLET (remplacer « mov eax, 5 » par « mov eax, 6 » puis
+insérer « nop » après « pop rbx ») :
+@@ hunk 1
+base: mov eax, 5
+- mov eax, 5
++ mov eax, 6
+@@ hunk 2
+base: pop rbx
++ nop
+FIN-HUNKS
+RIEN d'autre dans la réponse — aucun texte hors hunks, aucune politesse,
+la dernière ligne est exactement « FIN-HUNKS ».
+
+UN EXEMPLE COMPLET DE RÉPONSE D'AJOUT (le bloc qui vérifie un tampon non vide et rend sa taille — la réponse ENTIÈRE, caractère pour caractère, telle que le client l'attend) :
+@@ hunk 1
+base: ; --- LE CORPS DU BLOC ICI ---
++ test rcx, rcx
++ jz 0x1234
++ mov rax, rdx
++ jmp 0x1250
++ mov eax, -5
++ jmp 0x1250
+@@ hunk 2
+base: add rsp, 0x20
++ nop
+FIN-HUNKS
+(REMARQUE : la réponse ci-dessus est TOUTE la réponse — elle commence à « @@ hunk 1 » et finit à « FIN-HUNKS », AUCUNE ligne de la notation du gabarit n'est re-dumpée, AUCUNE explication.)
+REQUÊTE : compose le bloc et rends UNIQUEMENT les hunks qui insèrent le corps dans le gabarit — la première ligne de ta réponse est EXACTEMENT « @@ hunk 1 », la dernière exactement « FIN-HUNKS ».

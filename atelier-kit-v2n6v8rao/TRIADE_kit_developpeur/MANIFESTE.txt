@@ -1,0 +1,643 @@
+{
+  "schema": "TRIADE-KIT-DEVELOPPEUR-v1",
+  "par_construction": "git ls-files (D130) — jamais de maintenance manuelle",
+  "pieces": {
+    "carte/client_v2.py": {
+      "source": "atelier-ajouter-v2-pgodgk35l/client_v2.py",
+      "sha256": "acf6e4575764fd75235a011604000d9f235e132bc44c65a9c90213ff3e70a9eb"
+    },
+    "eval/eval_ladder.py": {
+      "source": "atelier-eval-vpcr7mh3t/eval_ladder.py",
+      "sha256": "8145df63429ea110f5daaf70dd982b9dd1b84e22efb1dbb06ceebab2939339c8"
+    },
+    "feedback/DOC-FEEDBACK.md": {
+      "source": "atelier-feedback-witgt6qta/DOC-FEEDBACK.md",
+      "sha256": "e7a6b4b0c81579955e1210b65d4398178172a412a5899dd7d381c6c9796d3ec8"
+    },
+    "feedback/TRIADE-FEEDBACK-v1.schema.json": {
+      "source": "atelier-feedback-witgt6qta/TRIADE-FEEDBACK-v1.schema.json",
+      "sha256": "d7e53f66077812f911dee508dd62612098f24846f0162635a55769b838150cd7"
+    },
+    "feedback/triade_feedback.py": {
+      "source": "atelier-feedback-witgt6qta/triade_feedback.py",
+      "sha256": "d07c62d333e12ac6328dd5965c3efdb605e38438610fa455adf4ab9196364cce"
+    },
+    "guides/GUIDE-AGENT.md": {
+      "source": "atelier-guide-zd316de39/GUIDE-AGENT.md",
+      "sha256": "ce1d5a49f8f5345b70fb1c954ac6a1143f4f777615f9d12b8c52207744718d70"
+    },
+    "gym/triade_gym.py": {
+      "source": "atelier-gym-3x9cf4e5d/triade_gym.py",
+      "sha256": "8871070bfbec66e3049b658e4bed1857773fdfab530301939882d2bce14aca1c"
+    },
+    "juges/client_v3.py": {
+      "source": "atelier-ajouter-v3-5nwnwoceo/client_v3.py",
+      "sha256": "36c30b54b9e3edd1b8d6853fbe7a7b2114188fc0288282545d251a6d55469b6a"
+    },
+    "notation/PLAN-O5APUE194.md": {
+      "source": "atelier-gabarits-o5apue194/PLAN-O5APUE194.md",
+      "sha256": "ea388f511982a80858a2db6cd42ef38db6105ff192287a6328a53a569072e963"
+    },
+    "notation/campagne_gabarits.py": {
+      "source": "atelier-gabarits-o5apue194/campagne_gabarits.py",
+      "sha256": "cdb0ab1c23f7a4a12272a1d03f78b917ddf24475f1dbdc54cfa55a0510eaa4fe"
+    },
+    "notation/client_gabarits.py": {
+      "source": "atelier-gabarits-o5apue194/client_gabarits.py",
+      "sha256": "3f7bee7f4ecfac098c6be0c4fcb8c93b40ccd0d576fcf524edc707a7afff3757"
+    },
+    "notation/client_v2.py": {
+      "source": "atelier-ajouter-v2-pgodgk35l/client_v2.py",
+      "sha256": "acf6e4575764fd75235a011604000d9f235e132bc44c65a9c90213ff3e70a9eb"
+    },
+    "notation/client_v3.py": {
+      "source": "atelier-ajouter-v3-5nwnwoceo/client_v3.py",
+      "sha256": "36c30b54b9e3edd1b8d6853fbe7a7b2114188fc0288282545d251a6d55469b6a"
+    },
+    "notation/gabarits/TPL-EDIT-v1.txt": {
+      "source": "atelier-gabarits-o5apue194/gabarits/TPL-EDIT-v1.txt",
+      "sha256": "797f2f6b0a36601abfe923413551bf36db422a9fb3d792aaaf7d56c0271a41a3"
+    },
+    "notation/gabarits/index-grossier.txt": {
+      "source": "atelier-gabarits-o5apue194/gabarits/index-grossier.txt",
+      "sha256": "62c82470ec650e83ca70dffe6504482f912135aaa08e41ba19761c3f51491744"
+    },
+    "notation/gabarits/squelettes/loupe-01-ouvrir.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-01-ouvrir.asm",
+      "sha256": "8c589ab98320a231e515fa12c97e3e8bac74f938dc911305de984e37298b9383"
+    },
+    "notation/gabarits/squelettes/loupe-02-lire.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-02-lire.asm",
+      "sha256": "e9633ac15b877c4a3385b2ca8320d824fa85724d9ce8503d02cf2d9adfba2d35"
+    },
+    "notation/gabarits/squelettes/loupe-03-fermer.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-03-fermer.asm",
+      "sha256": "4176e528d075ee6d1aeac8b8be11dedc6abf670f6167327ff22f7f0cfb08882b"
+    },
+    "notation/gabarits/squelettes/loupe-04-cadre.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-04-cadre.asm",
+      "sha256": "5f172c6efc726ba1b4ec4441a88a30d1c93f314cf99e80b47bcea70519789201"
+    },
+    "notation/gabarits/squelettes/loupe-05-sha256.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-05-sha256.asm",
+      "sha256": "b76714fe493514b30546fbc0046033f595076d34bab8dabd42298e3f0366be43"
+    },
+    "notation/gabarits/squelettes/loupe-06-md5.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-06-md5.asm",
+      "sha256": "2fb0eaaa9afca08621ece91a295e44e12562c5a2a3e0fccdf267aa54dbfa19a0"
+    },
+    "notation/gabarits/squelettes/loupe-07-cumul.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-07-cumul.asm",
+      "sha256": "b81de1dacce573d3655055cd3f0b61685cb1c9cd437857893bab01eaf9bc7681"
+    },
+    "notation/gabarits/squelettes/loupe-08-ligne.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-08-ligne.asm",
+      "sha256": "d999e161f9083702b8b8a2a07e21b4fab7e1e566977f653df81d8d501f9dff8c"
+    },
+    "notation/gabarits/squelettes/loupe-09-ecran.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-09-ecran.asm",
+      "sha256": "c7fced7150d2bb7112f71bebb8c4b854580646e423f970cabb7b2a6f759dd03f"
+    },
+    "notation/gabarits/squelettes/loupe-10-peinture.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-10-peinture.asm",
+      "sha256": "271dd4e081096c7d828a0e4ca3113651a4fbecdb4260234915676bf743ef5edc"
+    },
+    "notation/gabarits/squelettes/loupe-11-defilement.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-11-defilement.asm",
+      "sha256": "02b4102722aa14f01f9afedd2c557dfb72698242d858e1e12283c05caee76b5f"
+    },
+    "notation/gabarits/squelettes/loupe-12-aller.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-12-aller.asm",
+      "sha256": "9559f95f127c1b91561ecebfeb987c9d582232947fb7094f0591b13285c465a2"
+    },
+    "notation/gabarits/squelettes/loupe-13-recherche.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-13-recherche.asm",
+      "sha256": "72bfce7fef04a4dbfa8eadbb7f83d24f6a638b51cd53cbfb7754931be77ea79e"
+    },
+    "notation/gabarits/squelettes/loupe-14-suivant.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-14-suivant.asm",
+      "sha256": "03106fdf7012dcdc4b7656489b25613b1dca5432c977ad4e66bab61d0851074a"
+    },
+    "notation/gabarits/squelettes/loupe-15-curseur.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-15-curseur.asm",
+      "sha256": "be772bb0c8c3d6ac03306cfa9c05e01fb0159472ce9f01f6bed85a1cae0134a8"
+    },
+    "notation/gabarits/squelettes/loupe-16-saisie.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-16-saisie.asm",
+      "sha256": "e8354891d942df5403c4fce8275bb2693be4b9ea6df46cbdafc976a0bc36701c"
+    },
+    "notation/gabarits/squelettes/loupe-17-sauver.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-17-sauver.asm",
+      "sha256": "9cd31f2c7681f9a491ee7b4a4ac38b686212d1a9cdf93bdd4e18e6201614efa2"
+    },
+    "notation/gabarits/squelettes/loupe-18-quitter.asm": {
+      "source": "atelier-gabarits-o5apue194/gabarits/squelettes/loupe-18-quitter.asm",
+      "sha256": "b6cd3e74b5432ceeec53a88d9e109c8816365530f156af2d4628267bfc7c9fbe"
+    },
+    "notation/garde-brut.jsonl": {
+      "source": "atelier-gabarits-o5apue194/garde-brut.jsonl",
+      "sha256": "610c5d2e9011b96a052f35b1f468cc9d6c46c94b66501224cdd0247e2cebd121"
+    },
+    "notation/garde-pilotes.jsonl": {
+      "source": "atelier-gabarits-o5apue194/garde-pilotes.jsonl",
+      "sha256": "ad8a13260298c908a181f1c4a635093ab32f32a174cd6ff5a3668b90957deae0"
+    },
+    "notation/garde-prompts/ajouter-H3-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110001.txt",
+      "sha256": "e359fb26fd80666d6592d79e7c45082a13cbc77f12c4bf500c86ebab5584f3b6"
+    },
+    "notation/garde-prompts/ajouter-H3-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110002.txt",
+      "sha256": "64bff3643f25d930593ec36cc2fd2f282f467e012cadbe805e036e2e502a3df1"
+    },
+    "notation/garde-prompts/ajouter-H3-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110003.txt",
+      "sha256": "c98c1fd2fc216ad9b39398ac66eeceab57667f85702512b1330ce6e472da8c60"
+    },
+    "notation/garde-prompts/ajouter-H3-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110004.txt",
+      "sha256": "cf7d7230006d0dca40b745ae2290c9a06b11451cf12f44affc6626a7ab998e9f"
+    },
+    "notation/garde-prompts/ajouter-H3-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110005.txt",
+      "sha256": "c958d72124ef8f5275df0746400442a701de461f18971b83d3b26f51048a1b04"
+    },
+    "notation/garde-prompts/ajouter-H3-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110006.txt",
+      "sha256": "79b8babd38783f79a5b66a1c2b32d2c897fd885c3bb8afd2718eb55c7fbeac79"
+    },
+    "notation/garde-prompts/ajouter-H3-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110007.txt",
+      "sha256": "621465c83c94456d4a957e46b31ed568e835fb22a299474fc000711d66cc07d0"
+    },
+    "notation/garde-prompts/ajouter-H3-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110008.txt",
+      "sha256": "9e0b13ee942c5409e250e04f077d5d964c32fba6e29d552aa85e8c1550499b74"
+    },
+    "notation/garde-prompts/ajouter-H3-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110009.txt",
+      "sha256": "c4321b3cd08ace45cb965d29fdd0a83e59adf917d81f5332cb152c1518b3f040"
+    },
+    "notation/garde-prompts/ajouter-H3-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110010.txt",
+      "sha256": "7bb966dd6ac459342389cdb8e23284f55ac55d0f19dd8e9d384bfeb836309fc0"
+    },
+    "notation/garde-prompts/ajouter-H3-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110011.txt",
+      "sha256": "b22a722b20ad7ac343f4acf0129b33e7fe7197d1e19229224b69d7212d1633ad"
+    },
+    "notation/garde-prompts/ajouter-H3-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110012.txt",
+      "sha256": "d40be0d70633983d7641d75e8ce0d724a10e719c2f3fd75c01fcea8220cc9c20"
+    },
+    "notation/garde-prompts/ajouter-H3-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110013.txt",
+      "sha256": "f8705a2165802ab432ebfec6b77f94f808afcc93d8475d907ac6622f55c7a1ae"
+    },
+    "notation/garde-prompts/ajouter-H3-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110014.txt",
+      "sha256": "bf3229439761d13e3f58bb9076ed569892f307a93dcfe2777c1a5e0b97f3bd4d"
+    },
+    "notation/garde-prompts/ajouter-H3-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110015.txt",
+      "sha256": "dee330a64e26586c0b6fa9fbb4bfc97b9d9aea6c9a5238127d008beecf1f9fa8"
+    },
+    "notation/garde-prompts/ajouter-H3-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110016.txt",
+      "sha256": "c69e4d71e43cda3f786fef90dbf2c20100da8e724992490bac3831b2495c8f96"
+    },
+    "notation/garde-prompts/ajouter-H3-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110017.txt",
+      "sha256": "4b8fd1d819e7ce82ec6cde4bde32d937dad5a85c047e055a2b84ba1768b42f3f"
+    },
+    "notation/garde-prompts/ajouter-H3-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-H3-i110018.txt",
+      "sha256": "cd4c5b647f21b2571d8fb62663c3eb9465474fcdc4430f84866afbd5167ef92b"
+    },
+    "notation/garde-prompts/ajouter-S-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110001.txt",
+      "sha256": "66f0353d048d72fc9a540ef3536960058e705f269dc9045706bdccc23594af65"
+    },
+    "notation/garde-prompts/ajouter-S-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110002.txt",
+      "sha256": "645bb88c9d36c62f1c255604c9500fed1b7558d83b90a979ecf98c2f1cabf850"
+    },
+    "notation/garde-prompts/ajouter-S-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110003.txt",
+      "sha256": "efa1f0a732228f1e567b4c257451933e9161027bc1061e01d50b1daad1d022fb"
+    },
+    "notation/garde-prompts/ajouter-S-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110004.txt",
+      "sha256": "f3723156267f4769a26da19072f26d5370c3f0b47fabbc81bbe1e5909c164d01"
+    },
+    "notation/garde-prompts/ajouter-S-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110005.txt",
+      "sha256": "28ce3a991ec4b1519f4c932f52c6a221f67845a20a863eb241aa425773b66ef4"
+    },
+    "notation/garde-prompts/ajouter-S-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110006.txt",
+      "sha256": "e51a17aaeaaa479dd591db219fc7b0685a4681c7f90a9e6da4362cc1d5ef3620"
+    },
+    "notation/garde-prompts/ajouter-S-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110007.txt",
+      "sha256": "127cf6ee401e480d6683d04347cd8ec2c8badc2a700e942472aecbd4373f95ea"
+    },
+    "notation/garde-prompts/ajouter-S-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110008.txt",
+      "sha256": "fce74f513cebb4c0178d85df92e43a2ffaa4fecba2ec90e0895c8e31151b878e"
+    },
+    "notation/garde-prompts/ajouter-S-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110009.txt",
+      "sha256": "5211386bab465b1c8c17d8635acc4c208b703904fe974492f3a9e43b6102052b"
+    },
+    "notation/garde-prompts/ajouter-S-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110010.txt",
+      "sha256": "8c7dbee9bae8ca6530ad7673bc3df75659fe012a2b9869e0f9d6965bed93085a"
+    },
+    "notation/garde-prompts/ajouter-S-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110011.txt",
+      "sha256": "8f709d9d509ffcd4e8b600e6b5a73cc2c82ea5a152ba7d17862b0c6fe226afae"
+    },
+    "notation/garde-prompts/ajouter-S-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110012.txt",
+      "sha256": "7b43ae251ea895fdf7a13bcf0d1e76231cd66384bea119cb16cce7ebfce0d70e"
+    },
+    "notation/garde-prompts/ajouter-S-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110013.txt",
+      "sha256": "bba11000e7dad5d1ac7ff613a4b6294bcc36e92f7719a83995c9427d81bab64e"
+    },
+    "notation/garde-prompts/ajouter-S-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110014.txt",
+      "sha256": "6becbf82b5dac30e8d8028ad8998672de4cbe9c1b7e7c09da292248ec1a909ed"
+    },
+    "notation/garde-prompts/ajouter-S-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110015.txt",
+      "sha256": "4daeecc2bdd6318c172695d8f26c17b5d2d9c3007de21ba0a324ecd7468bdc04"
+    },
+    "notation/garde-prompts/ajouter-S-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110016.txt",
+      "sha256": "d1c5dc45fe162857609a4007017eab602765e5fb19e2a688af6b6d4203ffbe2f"
+    },
+    "notation/garde-prompts/ajouter-S-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110017.txt",
+      "sha256": "7bc57f5b2edcf9c5687f3ecc5b7c2c2db4b76e1921e9ffee443b9b98d7a8b4f2"
+    },
+    "notation/garde-prompts/ajouter-S-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/ajouter-S-i110018.txt",
+      "sha256": "8b0bbbdadc7367e3749e487ed2fc7b6f170677d7386ab12b5edf5af04881adff"
+    },
+    "notation/garde-prompts/editer-F2-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110001.txt",
+      "sha256": "d3473425d1c1d88ab7bedaa7af38b4abe34e3da15b0b41655921ae6fd894c5d3"
+    },
+    "notation/garde-prompts/editer-F2-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110002.txt",
+      "sha256": "4003f14ad26117f4a155bda50b0064a8f5d4d9c4b4ef82f7006247315c23a75e"
+    },
+    "notation/garde-prompts/editer-F2-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110003.txt",
+      "sha256": "ec0983cc9d900a3a615115955b367b66194741bda3e2df77e256fcb8551b0f9d"
+    },
+    "notation/garde-prompts/editer-F2-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110004.txt",
+      "sha256": "5b515c19c8bbcc27cccfef133d9c09992067f1a93902ccb9abc46cf4a750661c"
+    },
+    "notation/garde-prompts/editer-F2-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110005.txt",
+      "sha256": "b84814e61bcb04fdb05b89cbaf8301a62e7393797073f9751a2467a97e222d42"
+    },
+    "notation/garde-prompts/editer-F2-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110006.txt",
+      "sha256": "69e40e6ce9711758b6c931042c6b578921e232c42f62d5a0d9edd1290ad0b389"
+    },
+    "notation/garde-prompts/editer-F2-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110007.txt",
+      "sha256": "b5fe1be385b7e7f0ca496e4f47859dfe1f4d50fa8c76505c0e6b18e9a3cf6dfd"
+    },
+    "notation/garde-prompts/editer-F2-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110008.txt",
+      "sha256": "cc12f43607efbd5e80bf9e13793a63494280709bee3209c58e9fdb65c16b4dae"
+    },
+    "notation/garde-prompts/editer-F2-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110009.txt",
+      "sha256": "f8405a149328a3a15d4b81f08517a85711caa587760c405dd3bbfc7b05569846"
+    },
+    "notation/garde-prompts/editer-F2-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110010.txt",
+      "sha256": "9816da5aa3f4675300a54ad62c9e716da17897ba4bcbdf0cb625a47dc7ef21aa"
+    },
+    "notation/garde-prompts/editer-F2-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110011.txt",
+      "sha256": "b9ec1717c23d7270df6986cd94f41740c5f05ddd3ccefd39e94a0a5035967dda"
+    },
+    "notation/garde-prompts/editer-F2-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110012.txt",
+      "sha256": "e0d5f81390ff47291a96263f46fb003d3e1a5c99802ea1422dd3c546133e99b7"
+    },
+    "notation/garde-prompts/editer-F2-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110013.txt",
+      "sha256": "4cdd9e2f341f6970de5b8eaafb4c22763a099465af599dd553b011faaae57a49"
+    },
+    "notation/garde-prompts/editer-F2-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110014.txt",
+      "sha256": "94654251861dfd5e2c4473bff7267101ffb643f41860177548a1d34ce17cd8b7"
+    },
+    "notation/garde-prompts/editer-F2-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110015.txt",
+      "sha256": "383dce4667fdce6ad85fd4f2a257c55d69996f0cd34e71395a466b8276cfbda1"
+    },
+    "notation/garde-prompts/editer-F2-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110016.txt",
+      "sha256": "0dad6b35718ed4841c4403072b9a3085fb3a68529d4b4d5fac09a7facef97500"
+    },
+    "notation/garde-prompts/editer-F2-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110017.txt",
+      "sha256": "af0489acc5638a197e731d08b85a37a79845b7e40c6aad41535be834d76a951b"
+    },
+    "notation/garde-prompts/editer-F2-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-F2-i110018.txt",
+      "sha256": "87d4504fb87ec04b992ef4aa318dcdc1e16e38efe6869fab779b95454cc0f7c5"
+    },
+    "notation/garde-prompts/editer-T2-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110001.txt",
+      "sha256": "95d135296cabadf8a1ef88bd85543ba2171b8454a4d6345e1be2092b92f74f8b"
+    },
+    "notation/garde-prompts/editer-T2-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110002.txt",
+      "sha256": "e68ded06fba7d63aacf6feed70ec38d3de25c3c0a4b79f3889cab3a9251b6478"
+    },
+    "notation/garde-prompts/editer-T2-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110003.txt",
+      "sha256": "244794642a27588940db3527a3f0d2f2bef7025043e67a13997bedca602e850d"
+    },
+    "notation/garde-prompts/editer-T2-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110004.txt",
+      "sha256": "72b8ad77b7e68a5ca22fe17c53a78194ff02dbc16541503b620aea5ac23f7a43"
+    },
+    "notation/garde-prompts/editer-T2-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110005.txt",
+      "sha256": "d6bedefdbf4b0f2c16f72c7d3d0bbcda98b9c100b1c649c095691436e6ec949e"
+    },
+    "notation/garde-prompts/editer-T2-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110006.txt",
+      "sha256": "41b45f5ad2121c43a7ca9461caf83543111a12dfff01f20bd5f291563bd43289"
+    },
+    "notation/garde-prompts/editer-T2-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110007.txt",
+      "sha256": "50111d5fdb6e6c4adbf1fde9c448fb147dfcb05934242bdef77dcd55d365190a"
+    },
+    "notation/garde-prompts/editer-T2-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110008.txt",
+      "sha256": "be793554f7377a8473c7b2445be90d5ba797196a2130e94d965b8d26ae007226"
+    },
+    "notation/garde-prompts/editer-T2-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110009.txt",
+      "sha256": "b3ebe14761fa37106bbf92efef33f3ae1cbcc08f2ee4f8df7f985ad6385c2bb4"
+    },
+    "notation/garde-prompts/editer-T2-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110010.txt",
+      "sha256": "2063ab8c8d8649b357ec8f54316f86d01f773e1b4c9d5d193229ad4620cda0fe"
+    },
+    "notation/garde-prompts/editer-T2-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110011.txt",
+      "sha256": "474adc6b83bd03e3aa5594f05dcf0dad0f19dbed7bc1660f9a1e5ffb4794be33"
+    },
+    "notation/garde-prompts/editer-T2-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110012.txt",
+      "sha256": "7143884e3ee24a7a463d7dbf16b56821ee28b971051affffcd329fc60462e0d4"
+    },
+    "notation/garde-prompts/editer-T2-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110013.txt",
+      "sha256": "2f29cc4eee7308ff4dfd9a5a9147d2e9a9e413f806f60c274391c509dc41d1d1"
+    },
+    "notation/garde-prompts/editer-T2-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110014.txt",
+      "sha256": "9e2c28bbf6d6dfacf7e976ac0297f9e04e49e0d060beeef5b583e8dd7a4b4063"
+    },
+    "notation/garde-prompts/editer-T2-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110015.txt",
+      "sha256": "f92a7b646469fe19c5c1b52274780e9069070264ac036e41fe95328e009f6820"
+    },
+    "notation/garde-prompts/editer-T2-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110016.txt",
+      "sha256": "9ad0cd0966d2d2003be21c19cc38e227d4ed6b445f2fa7a10ee70d08524b26ce"
+    },
+    "notation/garde-prompts/editer-T2-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110017.txt",
+      "sha256": "d0de62a79596ae00d236cf36b70daa0007bc92fbd4e105e477d391f748e077f3"
+    },
+    "notation/garde-prompts/editer-T2-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/editer-T2-i110018.txt",
+      "sha256": "af4aa68e4dd452e9a420fa2c5916679d6f6cdbdb83cf1171a166c5b496c787de"
+    },
+    "notation/garde-prompts/localiser-H-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110001.txt",
+      "sha256": "f2a15835655c996d743ea07bb199b9a2d1d0bc5b48c24f614508a5553aa92277"
+    },
+    "notation/garde-prompts/localiser-H-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110002.txt",
+      "sha256": "f93abb303cc0842f7a61efac0c1a7ed54f12e75e9a05c2abba4074e42ec3bfb2"
+    },
+    "notation/garde-prompts/localiser-H-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110003.txt",
+      "sha256": "8a97c2adab5bad329b8f9cbaed6f70c77fe5358c360b105a224c3e2c177b4ca6"
+    },
+    "notation/garde-prompts/localiser-H-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110004.txt",
+      "sha256": "2a85582c9b923bb3b23a0b2a1fa41d09ce5e5584bdfcf0771404ce76fe0b59d9"
+    },
+    "notation/garde-prompts/localiser-H-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110005.txt",
+      "sha256": "4e4075341e2a6322f1d59e77686c76a1a0be21fe84d084ff8c5b913c8a6f668c"
+    },
+    "notation/garde-prompts/localiser-H-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110006.txt",
+      "sha256": "dddf1576e7a8fa8bd2b2d0d675e1087109e239bebcbba6a36ce3c0155e3f7edd"
+    },
+    "notation/garde-prompts/localiser-H-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110007.txt",
+      "sha256": "1798a642dbe0be1999f04c79552fef2a99a4d641ccd8fd56eb414fb212522767"
+    },
+    "notation/garde-prompts/localiser-H-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110008.txt",
+      "sha256": "7101c97a584c2ee6a9077751ffc12fb3705db9978d151dfb10a3f50d5090d1de"
+    },
+    "notation/garde-prompts/localiser-H-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110009.txt",
+      "sha256": "4e68ad93a6d672bdf8b4485684be065ea685dc3c43705aca505e88a97dadc23e"
+    },
+    "notation/garde-prompts/localiser-H-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110010.txt",
+      "sha256": "9c2dd86f69d48fa7ef7ca889524cde8babab75ed49243d9b5748d83d96cff182"
+    },
+    "notation/garde-prompts/localiser-H-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110011.txt",
+      "sha256": "743965e7c8413f3c7a60633aef6172ce112f16b2258ec0fca4c35ad2e97b1195"
+    },
+    "notation/garde-prompts/localiser-H-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110012.txt",
+      "sha256": "810217706ac2503b0ee5d70c24525411142c9d77241f4e5eceafff68e27dfdef"
+    },
+    "notation/garde-prompts/localiser-H-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110013.txt",
+      "sha256": "e4e2cc9b3aa33ce837a00e1f56c066f3cf7e4b5621d3bf9c0ebf5627bf222632"
+    },
+    "notation/garde-prompts/localiser-H-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110014.txt",
+      "sha256": "cb54383790f65df2d6e671f36c2d6b8ee7a09fddab859f1b3e8389384b90b7a9"
+    },
+    "notation/garde-prompts/localiser-H-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110015.txt",
+      "sha256": "f76ff8e5b1bca69550937c862ad61f631ac472f909a25a7757c5b7e897b0b286"
+    },
+    "notation/garde-prompts/localiser-H-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110016.txt",
+      "sha256": "baedb4eef9e6652640375d3b45933b7ab10a9f5a6b8f114455a460ce49a5d483"
+    },
+    "notation/garde-prompts/localiser-H-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110017.txt",
+      "sha256": "576f51c089e4db704ede53fcad379d2b47f8204262ac800352247854a11b08bf"
+    },
+    "notation/garde-prompts/localiser-H-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-H-i110018.txt",
+      "sha256": "5fd55c7e0ff7ba2110c8ea025ca1ba80587fae83639c0ed27c0c02a269c3685b"
+    },
+    "notation/garde-prompts/localiser-P-i110001.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110001.txt",
+      "sha256": "88f4f41979e06a24c0f2b4477a0d8536717176c00c8667e65333afe499ca48f1"
+    },
+    "notation/garde-prompts/localiser-P-i110002.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110002.txt",
+      "sha256": "82b587262534889154703db421710a061491f7bab446210454817982e321ee93"
+    },
+    "notation/garde-prompts/localiser-P-i110003.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110003.txt",
+      "sha256": "79a432d5a7f8db0231212b17cb36195568a36b1b967fc5bf74fc7c38d639168c"
+    },
+    "notation/garde-prompts/localiser-P-i110004.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110004.txt",
+      "sha256": "a6314747518e6ade7d4c228effd31b65cbb63e597172ed019c5da04224d8d755"
+    },
+    "notation/garde-prompts/localiser-P-i110005.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110005.txt",
+      "sha256": "720b8bfb8c71a31ed75f10917db19b555989b377dbd38408bd40fc74e207250f"
+    },
+    "notation/garde-prompts/localiser-P-i110006.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110006.txt",
+      "sha256": "0b4d344c212c3fcc9e4c9c20b67f1f97874407e7997e5e3f045588887483bceb"
+    },
+    "notation/garde-prompts/localiser-P-i110007.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110007.txt",
+      "sha256": "29a32ca46fce3d727834901dd6184063cd5bf9557b47fe2a41534c8ce6b18d61"
+    },
+    "notation/garde-prompts/localiser-P-i110008.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110008.txt",
+      "sha256": "fe88df1e8375b153b759fac6a6f43619f21cfc69d4724991b408a71db4767fd3"
+    },
+    "notation/garde-prompts/localiser-P-i110009.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110009.txt",
+      "sha256": "eb6bf52e5e6d85e07d8e2f87254a37aed345ff5bc97e8f79b4cede634208ec03"
+    },
+    "notation/garde-prompts/localiser-P-i110010.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110010.txt",
+      "sha256": "322b5f917bbfa5b9fdad2ab19c3dae7089fe22545ca548a70068e35a61c0fe7c"
+    },
+    "notation/garde-prompts/localiser-P-i110011.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110011.txt",
+      "sha256": "75b26086283947770b92da93824739dd8d2d11332e5c210c1d0f1e9dbc123610"
+    },
+    "notation/garde-prompts/localiser-P-i110012.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110012.txt",
+      "sha256": "be405c3127b628d6383f7e783309f00e45b815dbac080af112c99c707fd2ca24"
+    },
+    "notation/garde-prompts/localiser-P-i110013.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110013.txt",
+      "sha256": "a1708ccb3794f2d6b3313ef34943e5f5fe9e57f3d7c5ea13a18028b8592ae370"
+    },
+    "notation/garde-prompts/localiser-P-i110014.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110014.txt",
+      "sha256": "5b36f486e200c12cd5c7dbb0d86cd9142259787ea70e37b067644c0016bababc"
+    },
+    "notation/garde-prompts/localiser-P-i110015.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110015.txt",
+      "sha256": "daacfabc57a3281f958f809f8f8d42e2ac5e49cd3e6da69c1a6c3f1529b2e7f2"
+    },
+    "notation/garde-prompts/localiser-P-i110016.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110016.txt",
+      "sha256": "01bab20bff38e9458a63e25e451353e69efceece4f52bc0e0a59589337af75d8"
+    },
+    "notation/garde-prompts/localiser-P-i110017.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110017.txt",
+      "sha256": "e238bb3dd622a98abac7bc8cb54cb030afdc191f510d4bd7501c432e213e7034"
+    },
+    "notation/garde-prompts/localiser-P-i110018.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/localiser-P-i110018.txt",
+      "sha256": "92ccb16bfa27445a3e7b0f0d5f7759ce4d4280e89b89933e696579584bee2d79"
+    },
+    "notation/garde-prompts/pilote-H.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-H.txt",
+      "sha256": "4e4075341e2a6322f1d59e77686c76a1a0be21fe84d084ff8c5b913c8a6f668c"
+    },
+    "notation/garde-prompts/pilote-S.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-S.txt",
+      "sha256": "178ca1b2cc99860a96cd6b27abae47dd98adf70d550e95eaebb781bf6443301f"
+    },
+    "notation/garde-prompts/pilote-S2.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-S2.txt",
+      "sha256": "d3d46d3d14054849f2a32d1bffb1c62bc8c4889c0b9304c6068daecdaa42faf1"
+    },
+    "notation/garde-prompts/pilote-S3.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-S3.txt",
+      "sha256": "bba11000e7dad5d1ac7ff613a4b6294bcc36e92f7719a83995c9427d81bab64e"
+    },
+    "notation/garde-prompts/pilote-T2-recap.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-T2-recap.txt",
+      "sha256": "fbf606e4dd6d0dbde456187bd85160673881e62bdb6e06eb83dbc0f0b4c4b3f8"
+    },
+    "notation/garde-prompts/pilote-T2-recap2.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-T2-recap2.txt",
+      "sha256": "b9b822918c95b537bc67d795897699bd2f97ce4e3bb6cae655aae8b9b2880b41"
+    },
+    "notation/garde-prompts/pilote-T2-strict.txt": {
+      "source": "atelier-gabarits-o5apue194/garde-prompts/pilote-T2-strict.txt",
+      "sha256": "ab22c1a02e95706b0ac6c2f4cb379a5fce5b2488cb20dde0f62277c241aa8270"
+    },
+    "notation/journal_gabarits.jsonl": {
+      "source": "atelier-gabarits-o5apue194/journal_gabarits.jsonl",
+      "sha256": "f4c01550d56e95f4d0febd01f3939e77c0fc86b0815124fed76e09ddcc5de73f"
+    },
+    "notation/journal_pilotes.jsonl": {
+      "source": "atelier-gabarits-o5apue194/journal_pilotes.jsonl",
+      "sha256": "6ab94f101d57a48a9653a9adf6cc5ae06b5d8a92e595e82f6c6d5e81fcfd0e33"
+    },
+    "notation/rapport-gabarits.txt": {
+      "source": "atelier-gabarits-o5apue194/rapport-gabarits.txt",
+      "sha256": "c633f110eb839f505ae19c991a24bbba2e22165d74d057a846e05148331eea7b"
+    },
+    "notation/resultats_gabarits.jsonl": {
+      "source": "atelier-gabarits-o5apue194/resultats_gabarits.jsonl",
+      "sha256": "f7f8728a89ef743f98c559e1ef1b8ddaafab1b7117259c2c707de57577d952e4"
+    },
+    "rapport/outil_rapport.py": {
+      "source": "atelier-dataset-0i4pkzbyr/outil_rapport.py",
+      "sha256": "1a6980708dda2a285147abcc43dab53240c921ab8b067099fdda33d43f94da8d"
+    },
+    "triage/triage_rapports.py": {
+      "source": "atelier-triage-e1lr9i8ts/triage_rapports.py",
+      "sha256": "18e1b78fbd64b44faca0976202b48375e2ec4e7051cca52d1ac2dc0c2067a83d"
+    }
+  },
+  "vecteur_de_versions": {
+    "kit": "v1.0.0",
+    "protocole": "v0.23.2",
+    "carte": "les notations scellées du dépôt",
+    "profil": "x86-64-win11-pe"
+  },
+  "plage_compatibilite": "le kit v1.x ↔ le protocole v0.23.x — la porte verifier-compatibilite fail-closed",
+  "ancres_expediaes": "AUCUNE (ni cle-publique-I.txt, ni signatures de référence — la cérémonie de genèse AIR-GAP au kit, le sceau LOCAL)",
+  "licence": "BSL 1.1 + le grant D209",
+  "dette_kit": [
+    "l'oracle pré-dérivé JAMAIS expédié (le générateur depuis I seul)",
+    "la genèse air-gap AU GESTE de l'adopteur"
+  ]
+}
