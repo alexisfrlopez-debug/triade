@@ -1,0 +1,3 @@
+TRIADE_complet_v0.23.1.zip  sha256:6b173d00a07777c0d6e4d24f6ff761e71783190f1896eed3b35b224d5cb6d1ee
+TRIADE_soumission_v0.23.0.zip  (demeurée byte-byte, la release corrective)
+TRIADE_presentation_v0.23.0.zip  (demeurée byte-byte)
