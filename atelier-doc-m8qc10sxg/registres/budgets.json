@@ -1,0 +1,12 @@
+{
+  "AGENT-CORE": {
+    "tokens": 216,
+    "cible": 1500,
+    "verdict": "VERT"
+  },
+  "QUICKSTART": {
+    "tokens": 167,
+    "cible": 800,
+    "verdict": "VERT"
+  }
+}

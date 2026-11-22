@@ -1,0 +1,28 @@
+RAPPORT D'ATELIER — m8qc10sxg (la vague 15) : LA DOCUMENTATION DU KIT EN
+ANGLAIS CANONIQUE — DEUX AUDIENCES, FRAGMENTÉE, LES BUDGETS MESURÉS
+============================================================================
+(23/11/2026, le plan gelé PLAN-M8QC10SXG.md sha256 8a1ac823e8760022… AVANT
+toute donnée)
+LES FRAGMENTS LIVRÉS (le noyau de la présente session — les tables
+numériques DEPUIS LES CANONS, jamais retapées : les budgets cités aux
+opérandes publiées du MANIFESTE) :
+— AGENT-CORE.md (l'audience AGENT, l'anglais compact) : LES ONZE RÈGLES
+  au canon — mesuré 216 tokens / cible ≤ 1500 : VERT (l'opérande non
+  arrondi publié à registres/budgets.json) ;
+— QUICKSTART.md (l'audience HUMAINE, une page) : mesuré 167 tokens /
+  cible ≤ 800 : VERT ;
+— LES IDENTIFICATEURS LITTÉRAUX demeurent (LBL-001, CST-004, les classes
+  de refus HORS-FORMAT/ID-INCONNU/EXPANSION-DIVERGENTE — les constantes
+  du protocole, JAMAIS traduites ; l'anglais explique) ;
+— LA DÉGRADATION GRÂCIEUSE nommée au QUICKSTART (sans response_format :
+  la grammaire au prompt + les validateurs, jamais un juge affaibli).
+LES ÉCARTS AU PLAN NOMMÉS : la présente session livre le NOYAU (deux
+fragments aux budgets verts) — les sept fragments restants
+(DEVELOPER_GUIDE, TROUBLESHOOTING, SECURITY, REFERENCE, les
+DOC-LOC/EDIT/ADD/REFUS/CEREMONY/FEEDBACK, CAPABILITY_PROBE) et le miroir
+FR au linter de parité DEMEURENT au geste suivant (la session a porté la
+priorité aux treize ateliers outillants) ; le contrôle négatif du
+linter doc (la valeur numérique divergente EN/FR plantée, l'identifiant
+traduit) vit AVEC le miroir FR — l'écart nommé, jamais maquillé.
+LA GARDE : le sceau-I 14/14 ; les tables numériques générées des canons
+(les budgets du MANIFESTE du kit) ; entrée append-only.
