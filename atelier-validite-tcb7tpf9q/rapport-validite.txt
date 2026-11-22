@@ -1,0 +1,98 @@
+RAPPORT DE L'ATELIER VALIDITÉ EXTERNE tcb7tpf9q — LA VAGUE 14 (22/11/2026)
+===========================================================================
+
+Au plan gelé PLAN-TCB7TPF9Q.md (empreinte f55c5fdc59805f12… consignée AVANT
+toute exécution). Les kits pré-enregistrés servis TEL QUEL ; AUCUN résultat
+produit sans le geste nommé ; le sceau-I 14/14 avant et après.
+
+(1) H7 STRATIFIÉE — LE GESTE --TIRER VÉCU
+--------------------------------------------------------------------------------
+L'autotest re-vert d'abord (le plan de puissance re-dérivé : δ=0,2385 /
+σ=0,2856 / normale 11,25→12 / t itérée→14 / DÉCISION fail-closed 14 strates ;
+le déterminisme, le contraste PAR CONSTRUCTION, la sensibilité à la graine) ;
+PUIS LE GESTE : `python3 kit-h7-stratifiee/generateur_randomisation.py --tirer`
+— LA TABLE OFFICIELLE TIRÉE à la graine 20261120 (consignée au plan AVANT
+tout tirage réel), sha256 de la table canonique
+2de7d488c89ea892f1612d8262d386ecfa35da0c2bcef6b9df2908831969d6ea — la
+re-exécution DOIT redonner CETTE table (la preuve de non-rétropédalage).
+La table consignée-signée à TABLE-TIRAGE-H7.txt (datée du geste, la
+signature : le commit de la présente vague — la chaîne git fait foi).
+LA CAMPAGNE PRÊTE : CAMPAGNE-H7-REGISTRE.json — les 28 unités OUVERTES
+(14 strates × 2, appariées par famille, les DEUX ordres par strate PAR
+CONSTRUCTION — le contraste d'ordre garanti structurellement, aucun
+re-tirage jamais nécessaire), les critères d'arrêt D207 (au plus trois
+livraisons par unité, fermeture sur VERT à la première verte sinon AU
+PLAFOND ; < 10 strates complètes → H7 NON TESTÉE), la règle de jugement
+(β̂_s l'estimateur par strate, le t apparié t_{0,975;13} = 2,160 bilatéral,
+les QUATRE métriques M1-M4 SANS correction de multiplicité nommée — H7
+falsifiée si UNE métrique rejette). Les livraisons appartiennent au
+développeur (le geste terrain) — aucun verdict H7 publié à la présente.
+
+(2) SECOND ANNOTATEUR — LE KIT DE RECRUTEMENT LIVRÉ (re-vérifié pièce à pièce)
+--------------------------------------------------------------------------------
+kit-annotateur-fl/ : la grille F/L (F1-F5 terrain / L1-L3 laboratoire, la
+correspondance D203 au CSV), les consignes (la loi du un, les six gestes,
+LES HUIT EXEMPLES ÉTALONNÉS E1-E8), le calculateur κ RE-AUTOTESTÉ VERT à
+la présente session (les quatre fixtures : accord parfait +1,0000 ·
+désaccord total −1,0000 · accord partiel +0,4000 · le cas n=50 construit
++0,6400 — la règle SE REND : SUBSTANTIEL ≥ 0,61 sur n ≥ 50, l'acceptation
+D189 REMPLIE · la garde de taille : κ=0,9 à n=10 → LA RÈGLE NE SE REND
+PAS), la règle κ≥0,61 SUR n≥50 doubles (les DEUX conditions conjointes),
+le protocole d'arbitrage en 5 points (la troisième lecture AU GESTE, le κ
+officiel demeure celui des deux jeux INTACTS). AUCUNE annotation fabriquée
+— le kit est prêt, l'annotateur appartient au recrutement.
+
+(3) LES TROIS KITS — L'INTÉGRITÉ RE-VÉRIFIÉE OCTET POUR OCTET
+--------------------------------------------------------------------------------
+LES 57 AUTOTESTS re-roulés à la présente session : **57/57 constats
+VERTS — TOUT VERT** (la syntaxe, l'agrégateur fail-closed avec le REFUS
+NOMMÉ sur run manquant, le calculateur κ, LE GÉNÉRATEUR H7, les encodages
+fence.i par l'assembleur maison, L'INTÉGRITÉ DES COPIES (les dix pièces
+copiées du dépôt octet pour octet), LA TABLE DES EMPREINTES 30/30
+recoupées). LES COMMANDES EXACTES consignées :
+  python3 atelier-preregistre-l4nnwqlld/autotests.py        (57 constats)
+  python3 kit-annotateur-fl/calculateur_kappa.py            (κ autotesté)
+  sha256sum <pièce> contre EMPREINTES-KITS.txt              (le recoupage)
+  python3 v06/sceau_I.py verifier                            (14 arbres)
+LES CRITÈRES D'ACCEPTATION GELÉS (servis TEL QUEL) : fencei = C1-C5 (la
+bascule vue par le cœur, l'invalidation prouvée au témoin, la cohérence du
+plan, le scellé au silicium, zéro régression) ; loupe-3e = T0→T7+S0
+intégral + la vitrine [4/4] deux codes 0 + empreintes avant/après
+inchangées ; dudect = complétude 2 machines × 4 cibles × 3 N × n≥10 +
+témoins non muets sinon REFUS exit 2. LES RUNS APPARTIENNENT AU
+DÉVELOPPEUR (le silicium, les machines) — la table des statuts ne bouge
+QUE sur témoins signés recoupés.
+
+(4) LE MANUSCRIT — L'ÉTAT DE L'ART 2026 ÉTENDU, LES COÛTS PUBLIÉS CÔTE À CÔTE
+--------------------------------------------------------------------------------
+ETAT-DE-LART-2026.txt : les QUATRE familles demandées avec références
+VÉRIFIÉES UNE À UNE (arXiv résolvant, métadonnées extraites au geste) :
+la gouvernance spec-driven d'agents (Cannavale et al. arXiv:2611.03231 ;
+SDD arXiv:2607.16680), la journalisation process-aware pour supply-chain
+agentique (Kainan & Hershman, arXiv:2610.40071 — l'attestation signée du
+processus, l'agent comme menace interne), la provenance pour agents IA
+(Wang et al., arXiv:2606.04990 — le graphe typé, les trois gaps), le
+harness engineering agent-first (Wu et al. HarnessDev arXiv:2609.01437 ;
+l'évaluation de l'évolution du harnais arXiv:2607.12227). LE
+POSITIONNEMENT SCOPÉ (l'instruction) : ces travaux visent le niveau
+source/SDLC — TRIADE le niveau OCTETS SCELLÉS SOUS INTENTION SIGNÉE (la
+couche I signée juge les octets, le verrou croisé relie). LE COÛT PAR
+TENTATIVE ET PAR CHANGEMENT VALIDÉ publiés côte à côte (AJOUTER 5 915 /
+3 844 · ÉDITER 712 / 712 — la lecture : le refus coûte, le vert ajouter
+paie le juge d'expansion, l'écart ×5,4 le gap de capacité nommé). LE
+FINDING récitation 0/64 vs dérivation outillée zéro divergence — le
+« named capability finding » (la capacité n'est pas la mémorisation, c'est
+la reconstruction sous contrat). Les ajouts portés au manuscrit À LA
+GÉNÉRATION v0.24.0 (la voix de l'édition courante).
+
+LES GESTES EN ATTENTE (nommés, jamais simulés)
+--------------------------------------------------------------------------------
+— les 28 livraisons H7 (le terrain, le geste du maître — la campagne est
+  ouverte, le registre prêt) ;
+— l'annotateur recruté et son CSV (le κ réel attend les deux jeux) ;
+— les runs fence.i/loupe-3e/dudect aux machines réelles (les témoins
+  signés attendus au /test du coffre).
+
+PIÈCES LIVRÉES : TABLE-TIRAGE-H7.txt (consignée-signée) · CAMPAGNE-H7-
+REGISTRE.json (28 unités ouvertes) · ETAT-DE-LART-2026.txt (les quatre
+familles vérifiées + les deux publications) · le présent rapport.

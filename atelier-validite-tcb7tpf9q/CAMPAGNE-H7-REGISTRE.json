@@ -1,0 +1,128 @@
+{
+ "date_ouverture": "2026-11-22",
+ "geste": "--tirer (consigné)",
+ "graine": 20261120,
+ "table_sha256": "2de7d488c89ea892f1612d8262d386ecfa35da0c2bcef6b9df2908831969d6ea",
+ "regle_jugement": "β̂_s = ½[(ln M2(T,second) − ln M2(T,premier)) + (ln M2(C,second) − ln M2(C,premier))] ; t = moyenne(β̂_s)/(SD/√14) ; t_{0,975;13} = 2,160 bilatéral",
+ "quatre_metriques": [
+  "M2 (primaire)",
+  "M1 (règle D202)",
+  "M3 (temps humain)",
+  "M4 (chronomètre monotone)"
+ ],
+ "critere_arret": "D207 — au plus TROIS livraisons par unité, fermeture sur VERT à la première verte sinon AU PLAFOND ; <10 strates complètes → H7 NON TESTÉE",
+ "unites": [
+  {
+   "strate": "S01",
+   "famille": "loupe-03-fermer",
+   "unite_t": "fermer-tour1",
+   "unite_c": "fermer-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S02",
+   "famille": "loupe-04-cadre",
+   "unite_t": "cadre-tour2",
+   "unite_c": "cadre-tour1",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S03",
+   "famille": "loupe-06-md5",
+   "unite_t": "md5-tour1",
+   "unite_c": "md5-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S04",
+   "famille": "loupe-07-cumul",
+   "unite_t": "cumul-tour1",
+   "unite_c": "cumul-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S05",
+   "famille": "loupe-09-ecran",
+   "unite_t": "ecran-tour1",
+   "unite_c": "ecran-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S06",
+   "famille": "loupe-10-peinture",
+   "unite_t": "peinture-tour1",
+   "unite_c": "peinture-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S07",
+   "famille": "loupe-11-defilement",
+   "unite_t": "defilement-tour2",
+   "unite_c": "defilement-tour1",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S08",
+   "famille": "loupe-12-aller",
+   "unite_t": "aller-tour1",
+   "unite_c": "aller-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S09",
+   "famille": "loupe-14-suivant",
+   "unite_t": "suivant-tour1",
+   "unite_c": "suivant-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S10",
+   "famille": "loupe-15-curseur",
+   "unite_t": "curseur-tour1",
+   "unite_c": "curseur-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S11",
+   "famille": "loupe-17-sauver",
+   "unite_t": "sauver-tour1",
+   "unite_c": "sauver-tour2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S12",
+   "famille": "loupe-18-quitter",
+   "unite_t": "quitter-tour2",
+   "unite_c": "quitter-tour1",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S13",
+   "famille": "loupe-01-relivree",
+   "unite_t": "ouverture-rel1",
+   "unite_c": "ouverture-rel2",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  },
+  {
+   "strate": "S14",
+   "famille": "loupe-16-relivree",
+   "unite_t": "saisie-rel2",
+   "unite_c": "saisie-rel1",
+   "ordre_t": "T-premiere",
+   "etat": "OUVERTE (attente de livraison)"
+  }
+ ]
+}

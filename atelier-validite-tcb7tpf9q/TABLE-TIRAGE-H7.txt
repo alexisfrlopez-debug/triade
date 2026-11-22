@@ -1,0 +1,34 @@
+# TABLE DE TIRAGE — campagne H7, randomisation stratifiée (kit l4nnwqlld)
+# graine : 20261120 (consignée au plan AVANT le premier tirage réel)
+# par strate : la pièce équilibrée décide quelle unité porte le bras T en premier ;
+# l'autre unité porte le bras C en premier — LES DEUX ORDRES PAR CONSTRUCTION.
+S01|loupe-03-fermer|fermer-tour1|T-premiere|fermer-tour2|C-premiere
+S02|loupe-04-cadre|cadre-tour2|T-premiere|cadre-tour1|C-premiere
+S03|loupe-06-md5|md5-tour1|T-premiere|md5-tour2|C-premiere
+S04|loupe-07-cumul|cumul-tour1|T-premiere|cumul-tour2|C-premiere
+S05|loupe-09-ecran|ecran-tour1|T-premiere|ecran-tour2|C-premiere
+S06|loupe-10-peinture|peinture-tour1|T-premiere|peinture-tour2|C-premiere
+S07|loupe-11-defilement|defilement-tour2|T-premiere|defilement-tour1|C-premiere
+S08|loupe-12-aller|aller-tour1|T-premiere|aller-tour2|C-premiere
+S09|loupe-14-suivant|suivant-tour1|T-premiere|suivant-tour2|C-premiere
+S10|loupe-15-curseur|curseur-tour1|T-premiere|curseur-tour2|C-premiere
+S11|loupe-17-sauver|sauver-tour1|T-premiere|sauver-tour2|C-premiere
+S12|loupe-18-quitter|quitter-tour2|T-premiere|quitter-tour1|C-premiere
+S13|loupe-01-relivree|ouverture-rel1|T-premiere|ouverture-rel2|C-premiere
+S14|loupe-16-relivree|saisie-rel2|T-premiere|saisie-rel1|C-premiere
+
+# sha256 de la table canonique : 2de7d488c89ea892f1612d8262d386ecfa35da0c2bcef6b9df2908831969d6ea
+# LE GESTE : consigner cette table datée-signée à l'ouverture de la campagne H7 ;
+#   la re-exécution à la graine 20261120 doit redonner CETTE table (sha compris).
+
+# === LA CONSIGNATION DU GESTE (le --tirer, exécuté le 22/11/2026 à la session
+# de la vague 14 — tcb7tpf9q) ===
+# Le geste : la table ci-dessus TIRÉE à la graine 20261120 (consignée au plan
+# AVANT tout tirage réel — kit l4nnwqlld), l'autotest VERT au geste (le plan
+# de puissance re-dérivé, le déterminisme, le contraste par construction, la
+# sensibilité à la graine), la re-exécution DOIT redonner CETTE table (sha
+# 2de7d488c89ea892f1612d8262d386ecfa35da0c2bcef6b9df2908831969d6ea compris).
+# La campagne H7 est OUVERTE aux 28 unités (14 strates × 2, les deux ordres par
+# strate PAR CONSTRUCTION — le contraste garanti, aucun re-tirage jamais).
+# La signature : le commit de la présente vague (la chaîne git fait foi).
+# SHA256 de la présente table consignée : a669c1b6ab6a622c4939fa4ff3a6ab36513d89d9ed58d1c3521528033b1a99a8

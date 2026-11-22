@@ -1,0 +1,87 @@
+AJOUTS À L'ÉTAT DE L'ART — LES TRAVAUX 2026 (tcb7tpf9q, la vague 14)
+====================================================================
+Quatre familles demandées, références VÉRIFIÉES une à une (arXiv résolvant,
+métadonnées extraites au geste — aucune référence inventée). Le
+positionnement scopé (l'instruction) : ces travaux visent le NIVEAU SOURCE /
+SDLC, TRIADE le NIVEAU OCTETS SCELLÉS SOUS INTENTION SIGNÉE.
+
+(1) GOUVERNANCE SPEC-DRIVEN D'AGENTS
+  [cannavale2026] Alfonso Cannavale, Alessandra Pariale, Valeria Pontillo,
+  Patrizio Pelliccione, Andrea De Lucia, Fabio Palomba. « Specification-
+  Driven Governance for Fairness-by-Design in Agentic Software Engineering:
+  How Far Can We Go? » arXiv:2611.03231 (2 nov. 2026). — Les développeurs
+  passent de l'implémentation à la GOUVERNANCE ; la spécification opérationalise
+  les intentions (97,22 % des exigences de fairness capturées quand elles sont
+  spécifiées). LE PONT avec TRIADE : la couche I signée — mais la gouvernance
+  de Cannavale vit au niveau des artefacts source, TRIADE au niveau des octets
+  exécutés (le verrou croisé relie les deux).
+  [sdd2026] « Specification-Driven Development as the Foundation of AI-Native
+  Software Engineering. » arXiv:2607.16680 (18 juil. 2026). — L'ingénierie
+  logicielle déplacée vers la spécification d'intention ; le code devient
+  dérivable. TRIADE : le code machine écrit à la main DEMEURE l'artefact
+  scellé, la spécification le JUGE (jamais l'inverse).
+
+(2) JOURNALISATION PROCESS-AWARE POUR SUPPLY-CHAIN AGENTIQUE
+  [kainan2026] Yuval Kainan, Carmit Hershman. « Agentic process evidence. »
+  arXiv:2610.40071 (29 oct. 2026). — APE : une ATTESTATION signée, foule-
+  preuve, machine-readable du processus agentique, liant les sessions à leur
+  résultat (process-aware logging) ; l'agent comme MENACE INTERNE (intent
+  mismatch, injection). LE PONT : l'attestation Kainan-Hershman vit au
+  niveau des événements du SDLC ; le sceau-I de TRIADE signe les ARBRES
+  D'INTENTION et la carte verrouille les octets — la même frontière (la
+  preuve du processus), deux étages.
+
+(3) PROVENANCE POUR AGENTS IA
+  [wang2026] Yiqi Wang, Jiaqi Zhang, Zhangkai Wu, Taotao Cai, Zirui Liu,
+  Zequn Sun, Mingkai Zheng, Manqing Dong, Yu-Xuan Qiu, Xuefei Yin, Yanming
+  Zhu. « From Agent Traces to Trust: A Survey of Evidence Tracing and
+  Execution Provenance in LLM Agents. » arXiv:2606.04990 (3 juin 2026,
+  v6 15 oct. 2026). — La provenance comme graphe typé complet de l'exécution
+  (evidence units, tool calls, memory lineage, cross-agent propagation) ;
+  les TROIS gaps nommés : la provenance inter-composants, l'annotation des
+  relations typées, l'évaluation orientée récupération. LE PONT : TRIADE
+  répond au gap d'annotation au niveau des octets — chaque bloc porte son
+  verrou croisé SHA-256 dans la carte signée (la relation typée CONSTRUCTION
+  → OCTETS), la re-cryptage et l'export de continuité portant la lignée.
+
+(4) HARNESS ENGINEERING AGENT-FIRST
+  [wu2026] Yuhao Wu, Jingyuan Zhang, Jiajun Shi, Xinping Lei, Qingshui Gu,
+  Yuxuan Zhang, Zexuan Wang, Chen He, Chen Huang, Maojia Song, Zhiyuan
+  Zeng, Shaowen Wang, Jinkai Liu, Yunfeng Shi, Jiaheng Liu, Shen Yan,
+  Wenhao Huang, Ge Zhang, Wenxuan Zhang. « HarnessDev: Can LLMs Create and
+  Evolve Their Own Agent Harness? » arXiv:2609.01437 (1ᵉʳ sept. 2026). —
+  L'évaluation des harnais auto-générés (capacité ET coût), les harnais
+  générés encore sous les références humaines au code. [li2026] « Rethinking
+  the Evaluation of Harness Evolution for Agents. » arXiv:2607.12227
+  (14 juil. 2026). LE PONT : le harnais TRIADE n'est pas auto-évolué — il
+  est CONSTRUIT PAR CONTRAT (chaîne notation → oracle → carte), les
+  instruments tiers (Unicorn, z3, tectonic) nommés et versionnés —
+  l'échec de HarnessDev (harnais sous la référence humaine) est la raison
+  pour laquelle TRIADE garde le harnais du côté du contrat.
+
+LES DEUX PUBLICATIONS DEMANDÉES (à porter au manuscrit à la génération)
+--------------------------------------------------------------------------
+LE COÛT PAR TENTATIVE ET PAR CHANGEMENT VALIDÉ, CÔTE À CÔTE (l'instruction,
+la campagne TPL-ADD-v3 mesurée) :
+  — AJOUTER : 5 915 natifs PAR TENTATIVE (médiane, 57 tentatives uniques
+    dédoublonnées première-consignation) · 3 844 natifs PAR CHANGEMENT VALIDÉ
+    (le canon v3, médiane des 6 verts, toutes passes comprises) ;
+  — ÉDITER : 712 PAR TENTATIVE · 712 PAR CHANGEMENT VALIDÉ (la première
+    passe domine, 17/18 verts d'emblée) ;
+  — la lecture : le refus coûte (la tentative rouge ~5 915) ; le vert
+    ajouter paie le juge d'expansion (3 844) ; l'écart ajouter/éditer
+    (×5,4) est LE gap de capacité nommé au manuscrit.
+LE FINDING RÉCITATION 0/64 vs DÉRIVATION OUTILLÉE ZÉRO DIVERGENCE (le
+résultat de capacité nommé — déjà mesuré aux vagues antérieures, à publier
+comme finding) : la récitation pure du bloc par le modèle SANS outil
+échoue (0/64) ; la DÉRIVATION OUTILLÉE inter-familles (128 constantes
+régénérées des définitions mathématiques seules) donne zéro divergence —
+la capacité n'est pas la mémorisation du bloc, c'est la reconstruction
+sous contrat. Publier comme « named capability finding » : le modèle ne
+récite pas les octets scellés, il les DÉRIVE — la frontière capacité/
+récitation tranchée par la dérivation outillée.
+
+VÉRIFICATION (le plan) : les références vérifiées une à une (arXiv
+résolvant, titres-auteurs-dates extraits au geste) ; la table des statuts
+ne bouge QUE sur pièces signées ; aucun verdict H7, aucune annotation —
+les gestes en attente nommés.
