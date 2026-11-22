@@ -1,0 +1,15 @@
+Contexte : AES-NI porteur 7,09 c/bloc (corps AES seul), SHA-NI 128,5 c/bloc, AVX2 dominé par CPUID (~2 660 cycles/appel au bac virtualisé). GHASH reste le hotspot GCM non descendu ; les comparaisons portent sur le scellé et libc, pas sur OpenSSL.
+
+Tâches :
+1. Couloir GHASH en PCLMULQDQ (réduction Karatsuba ou schoolbook selon mesure), dispatch CPUID hissé UNE fois par session pour tous les corridors (le hoisting est la condition nommée de l'AVX2) ; variantes à la marge vierge, scellés intacts.
+2. Mesurer AES-GCM COMPLET (porteur + GHASH + enveloppe) et SHA-256 complet face à OpenSSL EVP (AES-256-GCM, SHA-256 avec SHA-NI activé) sur la même machine, RDTSC cœur épinglé, n≥20, médianes+IQR, fréquence et empreinte CPU consignées ; publier aussi les comparaisons libc existantes.
+3. Vérifier la propriété temps-constant structurelle des nouveaux corridors : taint branche/adresse sur secrets (H inclus), hash de traces complètes à N=60/classe, instructions à latence variable sur données secrètes proscrites ; vecteurs NIST/FIPS et différentielle contre le scellé.
+4. Journal OPT (R11) : hot path identifié par mesure, avant/après, contrat stable ; consigner la décision d'adoption ou de refus motivé.
+
+Contraintes : aucun artefact scellé touché (copies labo seules) ; plan gelé hashé avant mesure ; toute mesure matérielle au geste du développeur si le bac est virtualisé — nommer la limite, ne jamais maquiller un cycle virtualisé en silicium.
+
+Vérification après modifications :
+- Différentielle 256/256 octet pour octet contre le scellé pour chaque variante ; vecteurs FIPS 197 / SP 800-38D verts ; contrôle négatif (octet muté) attrapé au premier vecteur ; borne fail-closed exercée.
+- Taint : zéro branche et zéro adresse taintées par le secret ; un hash de trace distinct par cible sur 120 mesures ; contrôle négatif (branche sur secret injectée) attrapé.
+- Ratios recalculés des médianes non arrondies par le linter ; dispatch vérifié hors boucle (comptage d'appels CPUID par session == 1).
+- Round-trip 100 % aux nouvelles notations ; sceau 14/14 avant/après ; journal OPT complété AVANT tout commit des blocs optimisés.

@@ -1,0 +1,15 @@
+Contexte : (a) « memory safety 100 % discharged-or-guarded » : 58 déréférences portent des « runtime guards » dérivées d'invariants externes — le texte ne dit pas si ces gardes sont ÉMISES dans le binaire ou sont des obligations de preuve conditionnelles ; (b) 15 mutants « mechanically proved equivalent » (811/817 ajusté) sans méthode ni bornes publiées ; (c) le modèle Tamarin CF3 porte la restriction LAttaquantDolevYaoAuSeuilDesParts qui exclut l'adversaire ≥3 parts (portante, nommée).
+
+Tâches :
+1. Trancher le statut des 58 gardes : si preuves conditionnelles, renommer « conditional (assumption-discharged) », publier la liste exhaustive des invariants externes comme TCB (contrat OS, structure appelant, champ de layout), et émettre si possible les vérifications runtime fail-closed correspondantes dans une variante de laboratoire avec falsification par garde ; si gardes runtime, publier leur code et leur preuve de refus aux deux bornes.
+2. Publier la méthode et les bornes des 15 preuves d'équivalence (bounded model checking ? profondeur ?) ; requalifier le score ajusté avec le statut exact (prouvé borné/non borné) ; les 6 survivants non équivalents restent nommés par famille de cause.
+3. Reformuler le modèle Tamarin : retirer la restriction adversaire et prouver le lemme implication « secret appris ⇒ l'adversaire a détenu ≥3 parts » + lemmes de non-vacuité (trace honnête atteignable) ; si tamarin-prover est absent du bac, livrer le modèle hashé et nommer le gap sans fabriquer de verdict.
+4. Mettre à jour la table des statuts de preuve et le manuscrit en conséquence (abstract inclus).
+
+Contraintes : aucun coffre réel ni phrase réelle ; copies de laboratoire à phrase publique marquée ; plan gelé hashé avant modification ; append-only.
+
+Vérification après modifications :
+- Chaque garde : certificat UNSAT deux côtés + falsification (invariant violé refusé aux deux bornes et sur la face d'index, adresse honnête admise) ; contrôle négatif global (machine nue → SAT) re-roulé.
+- Score de mutation recalculé du CSV brut par le linter, dénominateurs publiés côte à côte (811/832 et 811/817 avec statut des 15).
+- Tamarin : si exécuté, --prove vert avec bornes nommées et traces de non-vacuité archivées ; sinon gap nommé au protocole, empreinte du modèle consignée.
+- Table des statuts régénérée depuis les pièces ; sceau 14/14 avant/après ; linter inter-pièces vert.

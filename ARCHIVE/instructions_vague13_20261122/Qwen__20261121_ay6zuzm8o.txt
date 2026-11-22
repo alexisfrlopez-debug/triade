@@ -1,0 +1,15 @@
+Contexte : la ventilation vague 11 (notation propre 20,72 s / régime 16,50 s / gouvernance 0,213 s) est mesurée avec le bras T sur l'outil vague 9 NON optimisé (39,4 s) et une asymétrie de rebuilds 12 (T, unité 01 seule) vs 60 (C+G+, 6 unités). La pile adoptée (memo v2, double moteur QEMU-user/Unicorn, cache de round-trip, cristallisation incrémentale) mesure ~6,9 s ailleurs. Le confond « coût intrinsèque de la notation » vs « coût d'implémentation du harnais » reste ouvert.
+
+Tâches :
+1. Pré-enregistrer H-CGP3 avec plan hashé AVANT toute mesure : ventilation à quatre bras sur la pile optimisée, volumes de rebuilds ÉGALISÉS par unité (publier la table par unité), volumes d'oracle égaux, même machine, n≥5 par bras, ordre des bras randomisé dans chaque run (graine consignée avant le premier tirage), marges d'équivalence fixées à l'avance.
+2. Instrumenter la décomposition par poste des quatre bras ; distinguer explicitement dans la publication : effet notation intrinsèque (round-trips, recomposition), effet implémentation de vérification (émulation vs natif), effet régime (volumes), effet gouvernance.
+3. Rejouer les contrôles négatifs double fenêtre (inter-étapes et in-étape) avec normalisation de dérive ; archiver toute session interrompue sans fusion.
+4. Publier les deux ventilations côte à côte (vague 11 datée / pile optimisée courante), verdicts H-CGP2 et H-CGP3 distincts et datés, jamais fusionnés.
+
+Contraintes : R11 (mesure avant/après, journal OPT) ; aucun contrôle retiré ; aucun artefact scellé touché (copies seules) ; aucun chiffre fabriqué ; les gaps (une machine, n=5) nommés.
+
+Vérification après modifications :
+- Réconciliation de chaque total depuis ses étapes aux tolérances publiées (20/20 runs) ; somme de la ventilation == T−C à la milliseconde.
+- Consoles d'oracle ligne-identiques aux originales (hors horodatages nommés) ; empreintes des scellés intactes avant/après chaque run.
+- Contrôle négatif +500 ms attrapé aux DEUX fenêtres et attribué au premier nom, zéro faux positif sur les runs honnêtes.
+- Rejeu à graine identique bit-identique ; registres bruts archivés ; sceau 14/14 avant/après.

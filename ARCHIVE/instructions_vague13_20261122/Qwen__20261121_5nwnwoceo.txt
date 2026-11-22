@@ -1,0 +1,14 @@
+Contexte : ajouter-par-squelette = 2 200 tokens natifs mais 3/18 verts, 15 refus HORS-FORMAT nommés (étiquettes inconnues, constantes hors domaine, lignes inassemblables). RQ2 est défini comme coût par changement VALIDÉ : le coût publié est un coût par tentative.
+
+Tâches :
+1. Fermer le gap de format SANS retirer de contrôle : (a) grammaire EBNF/JSON-schema du squelette publiée au client, décodage contraint si l'infrastructure l'expose, sinon boucle client « assemble→refus nommé→réparation cibonnée » avec budget de reprises plafonné et consigné ; (b) gabarit du DOMAINE (étiquettes et constantes admissibles dérivées de la couche I et de la carte) fourni au modèle dans le squelette ; (c) l'agent n'émet que le delta non dérivable, le client dérive cadre ABI, shadow space, signature, ancres.
+2. Mesurer sur les 18 tâches à la graine consignée : faisabilité première passe, faisabilité après reprises (budget nommé), coût bout-en-bout PAR CHANGEMENT VALIDÉ (tentatives refusées incluses), au tokenizer natif lu du champ usage, cl100k en parallèle.
+3. Étendre le même protocole à éditer (le refus CONTEXTE-DIVERGENT de loupe-07-cumul) et publier la table canonique des budgets adoptés avec statuts.
+4. Consigner la décision d'adoption append-only ; les refus honnêtes demeurent au registre, jamais re-tirés en silence.
+
+Contraintes : round-trip 100 % sur toute application acceptée ; les quatre refus fail-closed du pointeur et les refus HORS-FORMAT demeurent ; aucun artefact scellé touché ; plan gelé hashé avant mesure.
+
+Vérification après modifications :
+- Rejeu complet aux mêmes graines : faisabilité ≥95 % première passe ou le gap résiduel nommé avec ses causes ; zéro vert obtenu par relaxation d'un contrôle (falsification demandée : un octet muté au cadre → refus nommé exigé).
+- Re-tokenisation indépendante (écart ≤1 token sur l'ensemble des échanges) ; coût par changement validé recalculé du JSONL brut par le linter.
+- Round-trip et garde de fenêtre sha256 re-vérifiés sur chaque bloc accepté ; sceau 14/14 avant/après ; autotests du client gabarits verts avec chaque refus re-roulé.

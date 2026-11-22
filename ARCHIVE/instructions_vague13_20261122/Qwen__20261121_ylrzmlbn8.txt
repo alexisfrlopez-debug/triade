@@ -1,0 +1,16 @@
+Contexte : pack v0.22.0. Écarts constatés : (a) la décomposition publiée de la batterie SIMD « 64+3 queue · 4 chevauchants · 13 longueurs · 3 pages · 8 multi · 512 property-based » somme à 607, pas 559 (avec 16+3 la somme fait 559 exactement) ; (b) le manuscrit dit « lengths 1–33 », les preuves « 13 longueurs » ; (c) −28,5 % publié pour l'ajout alors que 1−2200/3074 = 28,43 % sur opérandes affichés ; (d) abstract EN titre les formats vague 11, résumé FR titre les valeurs v0.17/v0.19.6 ; (e) « inter-family independence settled » dans l'abstract vs gap de capacité nommé en conclusion ; (f) dashboard spec (Table 19) encore aux budgets M1.
+
+Tâches :
+1. Recouper la batterie 559 au registre brut de l'atelier fnvan0zes : publier la partition EXACTE (étiquettes et comptes identiques dans les cinq pièces), corriger la coquille présumée 64←16 ou le compte publié, consigner l'erratum append-only sans réécrire le verbatim historique.
+2. Publier les opérandes non arrondis de chaque ratio de la vague 11 (dont ajouter −28,x %) ; le linter recalcule et refuse tout écart au-delà de l'arrondi publié.
+3. Générer abstracts EN et FR depuis les MÊMES macros de données : une seule table canonique « budgets adoptés » (localiser 627 hiérarchique / éditer 674 TPL-EDIT-v1 / ajouter 2 200 squelette AVEC faisabilité 3/18 au même rang), chaque valeur portant ID de décision, périmètre et statut (adopté/mesuré/historique). Aligner le dashboard de la spec sur cette table.
+4. Remplacer « settled » par la formulation scopée : dérivation outillée inter-familles à zéro divergence ; récitation pure hors capacité du modèle disponible (0/64), gap nommé.
+5. Refactorer le manuscrit : corps = état courant unique, voix « present edition » unique ; les onze vagues en changelog gelé ; chaque nombre via macro sourcée.
+
+Contraintes : aucun artefact scellé touché ; les verbatim historiques demeurent octet pour octet ; jamais un chiffre retapé à la main.
+
+Vérification après modifications :
+- Linter v220 sur tout token numérique des cinq pièces : zéro divergence ; contrôles négatifs (somme fausse injectée, ratio à opérandes faux, version périmée injectée → chacun refusé nommément).
+- La partition de la batterie somme exactement au total publié, aux mêmes étiquettes dans les cinq pièces.
+- Re-tokenisation indépendante des valeurs de budget citées (écart ≤1 token) ; abstracts EN/FR comparés champ à champ par script : zéro écart de valeur.
+- Sceau 14/14 avant/après, empreintes des pièces régénérées consignées et croisées entre présentation et table des preuves.

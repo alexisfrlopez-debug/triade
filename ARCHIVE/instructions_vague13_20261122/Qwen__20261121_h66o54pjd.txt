@@ -1,0 +1,17 @@
+Contexte : dépôt TRIADE public (D220), garde active = séquestre Shamir 5/3 (D183/D223). La purge ou6wn6wlv n'a greppé que le littéral PHRASE-CONTROLE ; des instructions D81 prescriptives subsistent.
+
+Tâches :
+1. Recenser dans Livre_du_Coffre v1.6 et Protocole_TRIADE v0.15.7 TOUT geste prescriptif de remise de phrase, quelle que soit sa formulation (« fichier-remise », « garde durable », « posez la phrase… commit, push », « vérifiez le fichier-remise », glossaire « relève », Table 16 git, §12.5 CF1 « garde durable », §14.3 « Contrepartie consignée » au présent). Corriger chacun vers la garde active (reconstitution à froid de trois parts, refus nommé D223) ou le borner en histoire datée explicitement étiquetée.
+2. Réparer les phrases cassées par le patcher ancré (§2.3 parenthèse non fermée, §7.5 splice « tant que… depuis que… », §8.2 « tant qu'elle est VÉCUE ») par réécriture complète des paragraphes, pas par remplacement de sous-chaînes.
+3. Aligner les métadonnées du Livre : couverture, avant-propos, §10.1, Table 12, sommaire des décisions → v1.7 / spec v0.15.8 / plage décisionnelle réelle incluant D183/D219/D220/D223/D236. Porter D236 à l'annexe B de la spec.
+4. Étendre le linter documentaire : règle « aucun verbe d'écriture de dépôt à proximité d'un référent de phrase, hors table historique datée » sur un vocabulaire ÉLARGI (fichier-remise, garde durable, phrase de contrôle, remise), plus lint des chaînes de version dans couvertures/avant-propos/tables.
+5. Étendre la garde pre-commit/pre-push : détection par empreintes des secrets connus + entropie, pas seulement le nom de fichier. Consigner la décision d'amendement append-only.
+
+Contraintes : aucun artefact scellé touché, aucun coffre réel ni phrase réelle (D105), plan gelé hashé avant modification, toute pièce historique datée demeure octet pour octet.
+
+Vérification après modifications :
+- Grep multi-motifs sur les PDF régénérés : zéro occurrence prescriptive, chaque occurrence restante classée HISTORIQUE-DATÉE avec sa date.
+- Relecture intégrale des paragraphes patchés (pas de grep seul) : zéro phrase tronquée, zéro splice ancien/nouveau.
+- Simulation du runbook sur clone à phrase publique marquée : les huit étapes sans écriture de dépôt ; le geste-piège refusé au premier nom pour CHAQUE variante de formulation ; scan complet de l'historique git : zéro fuite.
+- Contrôle négatif du linter : réinjecter une instruction D81 synthétique dans une copie → refus nommé exigé ; retirer la réinjection.
+- Sceau 14/14 arbres VERTS avant et après, empreintes identiques ; linter inter-pièces v220 re-roulé vert ; nouvelles empreintes des cinq pièces consignées.
