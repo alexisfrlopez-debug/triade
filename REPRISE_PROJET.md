@@ -15,7 +15,9 @@ B). Trois couches indissociables ; priorités lexicographiques
 **Sécurité > Performance > Optimisation > Coût en tokens**. Le dossier
 publie des ÉDITIONS académiques (manuscrit, spécification, Livre du
 Coffre, preuves, présentation) au DOI Zenodo
-**10.5281/zenodo.24367343** (concept ; v0.23.0 = record 24438614).
+**10.5281/zenodo.24367343** (concept ; v0.23.2 = record 24442951 —
+la version courante, les TROIS packs ; les records datés : 24420007 =
+v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1).
 
 ## 2. LE RYTHME : LES VAGUES D'INSTRUCTIONS (le cœur de la reprise)
 
@@ -41,11 +43,18 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : la vague 14 est CLOSE (Entrée 384, 22/11/2026) —
-six ateliers exécutés, instructions archivées, la release v0.23.1 au
-concept. **LA VAGUE 15 attend ses instructions au commandement du
-maître.** La dernière vague close entièrement : six ateliers + release ;
-détail au worklog (Entrée 383 = vague 13, 384 = vague 14).
+**L'ÉTAT PRÉSENT** : la vague 14 est CLOSE (Entrée 384) ET LA GÉNÉRATION
+CORRECTIVE **v0.23.2** CLOSE (Entrée 385, 22/11/2026) — la session
+promise à l'Entrée 384 soldée : les CINQ pièces régénérées aux sources
+corrigées (io13olvxz), LE LINTER v232 étendu aux quatre règles nouvelles
+(153 VERT 0 ROUGE), LES TROIS PACKS à la version courante (la soumission
+ET LA PRÉSENTATION portées — la commande du maître « je n'ai pas la
+version presentation et soumission du pack dans zenodo » honorée), la
+version v0.23.2 PUBLIÉE au concept (record 24442951), la livraison au
+coffre ET les miroirs tenus. **LA VAGUE 15 attend ses instructions au
+commandement du maître.** La dernière vague close entièrement : six
+ateliers + release ; détail au worklog (Entrée 383 = vague 13, 384 =
+vague 14, 385 = la génération v0.23.2).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
@@ -81,7 +90,7 @@ verifier` (14 arbres VERTS).
 | `/home/z/my-project/depot` | LA SOURCE DE VÉRITÉ : le dépôt git complet (l'historique par le bundle ; l'arborescence § 6) |
 | Coffre Drive (dossier racine « Triade ») | le `/instructions` (les vagues en attente), `ARCHIVE/` (les instructions exécutées, les packs supersédés), `/livrables` (les packs courants), `/test` (les constats du développeur), `TRIADE-sauvegarde-git/` (LE MIROIR du dépôt + triade-history.bundle + worklog + OU-TROUVER + les ateliers), `/Tokens`, `coffre_fort.bin` + `PHRASE-CONTROLE-COFFRE.txt` (garde durable D81), le conteneur de continuité |
 | GitHub `alexisfrlopez-debug/triade` | le miroir distant (push à chaque release, vérifié anonymement ls-remote) |
-| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, la v0.23.1 = la vague 14) |
+| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, **24442951 = v0.23.2 — la version courante, les trois packs**) |
 | `/home/z/my-project/download/` | les livrables du bac (miroir des pièces terrain) |
 
 **Les jetons NE SONT JAMAIS committés** (la garde pre-commit h66o54pjd :
@@ -92,15 +101,19 @@ empreintes + entropie ; § 8 de l'ancien fichier demeure).
 1. **L'édition** (quand la vague porte une génération) : edition-v0<N>M0/
    née de la précédente, macros régénérées des journaux vivants
    (`scripts/vague13/regenerer_macros_v230.py`), tectonic + weasyprint
-   pour les cinq pièces, LE LINTER `scripts/vague12/linter_v230.py`
-   (zéro rouge + contrôle négatif), les packs (soumission / présentation /
-   complet) assemblés aux empreintes consignées ;
-2. **LA PUBLICATION ZENODO** (patron `scripts/vague13/publier_zenodo_
-   v0230.py`) : la voie newversion → bucket → métadonnées → PUBLISH,
-   reprise idempotente aux 500, les md5 recoupés byte-byte au bord anonyme,
+   pour les cinq pièces, LE LINTER (`scripts/vague12/linter_v230.py`,
+   étendu à v232 : `scripts/vague14/linter_v232.py` — zéro rouge +
+   contrôle négatif), les packs (soumission / présentation / complet)
+   assemblés aux empreintes consignées (`scripts/vague14/
+   assemble_pack_v232.py`) ;
+2. **LA PUBLICATION ZENODO** (patrons v13/v14 : `scripts/vague13/
+   publier_zenodo_v0230.py`, `scripts/vague14/publier_zenodo_v0232.py`) :
+   la voie newversion → bucket → métadonnées → PUBLISH, reprise
+   idempotente aux 500, les md5 recoupés byte-byte au bord anonyme,
    le DOI de version minté ;
-3. **LA LIVRAISON AU COFFRE** (patron `scripts/vague13/livrer_coffre_
-   vague13.py`) : la racine, le /test, le /livrables, les supersédés au
+3. **LA LIVRAISON AU COFFRE** (patrons v13/v14 : `scripts/vague13/
+   livrer_coffre_vague13.py`, `scripts/vague14/livrer_coffre_v232.py`)
+   : la racine, le /test, le /livrables, les supersédés au
    lot ARCHIVE — chaque pièce recoupée par re-téléchargement (le 308
    « Resume Incomplete » est LA réponse intermédiaire normale) ;
 4. **LES MIROIRS** : `python3 scripts/drive_sync.py` (miroir + bundle),
@@ -123,9 +136,11 @@ depot/
 │                                   les archives PDF (v0.2 → v0.15.8), le Livre
 ├── scripts/                        sync_backup.sh, drive_sync.py, build_pdf.sh,
 │   ├── vague11/ vague12/ vague13/  les chaînes par vague (linter v230, patchers)
+│   │   vague14/                 LA CHAÎNE v232 (linter étendu, assemble,
+│   │                            publier, livrer — les patrons courants)
 │   ├── spec_v158/ livre_v17/       les sources spec + Livre (tectonic/cover)
-├── edition-v0230/                  L'ÉDITION courante (main.tex + donnees/)
-├── depot-zenodo-v0230/             les packs v0.23.0 (soumission + complet)
+├── edition-v0232/                  L'ÉDITION courante (les sources v0.23.2)
+├── depot-zenodo-v0232/             les packs v0.23.2 (soumission + présentation + complet)
 ├── atelier-*/                      LES ATELIERS par vague (un dossier par
 │                                   instruction : rapport + outils + registres)
 ├── ARCHIVE/                        les instructions exécutées par vague
@@ -148,12 +163,23 @@ depot/
 - la sauvegarde systématique (sync_backup.sh) après chaque modification ;
 - l'ordre des tâches JAMAIS re-tiré ; les graines consignées.
 
-## 8. Le protocole de cette session de reprise (vague 14, pour mémoire)
+## 8. Le protocole de cette session de reprise (la v0.23.2, pour mémoire)
 
-La restauration du bac + les six plans gelés + les six ateliers (frontières
-z3 58/58, Tamarin installé-amendé-falsifié-honnête, GHASH agrégé 41× le
-scellé, H-CGP4 −89,4 % du régime, TPL-ADD-v4 7/18 avec deux conversions,
-H7 tirée + état de l'art vérifié) + les corrections (a)-(i) aux sources +
-l'archivage + la release v0.23.1 + le présent fichier. Les GAPS nommés à
-l'Entrée 384 (la régénération des cinq pièces et le linter étendu PORTÉS À
-LA PROCHAINE SESSION DE GÉNÉRATION — la priorité de la vague 15).
+La session de génération promise à l'Entrée 384, suscitée par la
+commande du maître « je n'ai pas la version presentation et soumission
+du pack dans zenodo » : LES CINQ PIÈCES régénérées aux sources corrigées
+(io13olvxz soldé), LE LINTER v232 ÉTENDU aux quatre règles nouvelles
+(153 VERT 0 ROUGE + le contrôle négatif vécu), LES CORRECTIONS (a)-(j)
+portées, la vague 14 au corps, LE SCEAU-I 14/14 avant/après, LES TROIS
+PACKS assemblés (soumission / présentation / complet), LA PUBLICATION
+ZENODO v0.23.2 (record 24442951, les trois md5 recoupés byte-byte), LA
+LIVRAISON AU COFFRE (les trois packs au /livrables, le rapport et le
+manifeste à la racine, les supersédés aux lots ARCHIVE). La session MORT
+AU CONTEXT après la livraison — la présente reprise a achevé la chaîne :
+LE COMMIT de la consignation (l'Entrée 385 au worklog, l'OU-TROUVER, le
+script livrer_coffre_v232.py, le présent fichier), LE PUSH GitHub, LA
+SYNC DU MIROIR Drive (bundle régénéré, worklog, OU-TROUVER, REPRISE),
+LA VÉRIFICATION DES TROIS BORDS. Les GAPS nommés à l'Entrée 385 demeurent
+(la mesure d'entrelacement GHASH, le re-run Tamarin de l'amendement, les
+28 livraisons H7, l'annotateur, les machines du dudect — au geste du
+maître ; la seconde machine).
