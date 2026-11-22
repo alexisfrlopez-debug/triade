@@ -43,24 +43,36 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : la vague 15 est CLOSE (Entrée 387, 23/11/2026) — LES
-DIX-SEPT INSTRUCTIONS exécutées en deux sessions (les quatre de
-l'Entrée 386 + les treize de l'Entrée 387), les instructions ARCHIVÉES
-au coffre, le /instructions LAISSÉ VIDE. LES PIÈCES MAJEURES : LA MESURE
-DE COMPOSITION 0,7271 c/octet@4096 (la cible ≤2,0 TENUE au 36 %) ; le
-TCB réduit 58→34→11 (le corridor des onze gardes OS à 0xFC00) ; le
-moteur d'oracles natif au jumeau Unicorn (la mémo content-addressed,
-le gate, l'audit chaîné) ; LA CAMPAGNE v5 5/18 — LA CIBLE ≥15/18
-MANQUÉE, LA LECTURE DÉFAVORABLE CONSIGNÉE (la variance du sujet au CLI
-nommée, les juges INTACTS) ; le corpus aux 109 triples (les splits sans
-dorée, le canari unique, la cristallisation 10×) ; le kit développeur
-PAR CONSTRUCTION (156 pièces, AUCUNE ancre expédiée) ; le linter v2 aux
-cinq classes (5/5 négatif — prêt à juger la release). LES GESTES AU
-DÉVELOPPEUR : le poste réel (les six lemmas Tamarin + le run ProVerif),
-le métal nu (≥2 machines), les 28 livraisons H7, l'annotateur, la
-seconde famille, les dépôts Zenodo (kit + corpus). LA RELEASE de la
-vague (les cinq pièces régénérées au linter v2) À LA COMMANDE DU
-MAÎTRE. Détail au worklog (Entrées 385-387).
+**L'ÉTAT PRÉSENT** : LA RELEASE v0.23.3 PUBLIÉE (Entrée 388, 23/11/2026
+— la commande du maître « ok pour la suite (release de la vague etc…) »)
+: LES CINQ PIÈCES RÉGÉNÉRÉES sous le linter v2 de vxf37231r (LES CINQ
+CLASSES INTÉGRÉES à la chaîne `scripts/vague15/linter_v233.py` : 223
+VERT 0 ROUGE, le contrôle négatif aux onze refus — la phrase
+sémantique retirée de la spec §1 [le compilateur N'EST JAMAIS LIVRÉ, la
+notation scellée l'est], les faisabilités n/18 datées partout, la
+campagne v5 nommée à part à 5/18 LA CIBLE MANQUÉE, le claim de version
+à la v0.23.2 courante, les gallicismes guéris) ; LA VAGUE 15 AU CORPS
+(la composition 0,7271 c/octet@4096 — la cible ≤2,0 TENUE au 36 %,
+OpenSSL EVP à 1,26×, la chaîne scellée 68,7× derrière — ; le TCB
+58→34→11 et le corridor des onze ; le moteur d'oracles natif 5189× ;
+TPL-ADD-v5 à sa cible manquée consignée ; H7 servie ; CF3-v3 au verdict
+machine ; l'écosystème d'adoption : le corpus 109, le gym, la ladder,
+le guide, la doc EN, le kit 156) ; LES DEUX ERRATA DE PASSE nommés (le
+rejeu TCB à l'invocation corrigée — 58 UNSAT + 58 SAT, append-only —,
+les splits du corpus recomptés 28/4/4 · 77/16/16 = 109) ; LES TROIS
+PACKS assemblés au linter vert exigé ; LA PUBLICATION ZENODO au record
+24450872 (le concept 10.5281/zenodo.24367343 résout sur v0.23.3, les
+md5 recoupés byte-byte) ; LA LIVRAISON AU COFFRE (les trois packs au
+/livrables, le rapport et le manifeste à la racine et au /test, les
+v0.23.2 supersédés aux lots ARCHIVE, le /instructions vide) ; LES
+MIROIRS et la consignation (l'Entrée 388, l'OU-TROUVER, le présent
+fichier, la vérification des trois bords). LES GESTES AU DÉVELOPPEUR
+demeurent : le poste réel (les lemmas Tamarin + le run ProVerif), le
+métal nu (≥2 machines), les 28 livraisons H7, l'annotateur, la seconde
+famille, les dépôts Zenodo (kit + corpus) ; LA CAMPAGNE v6 à la
+commande (LA VOIE NOMMÉE : le décodage contraint, les paires DPO, la
+relance des trois pertes à graines identiques). Détail au worklog
+(Entrées 385-388).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
