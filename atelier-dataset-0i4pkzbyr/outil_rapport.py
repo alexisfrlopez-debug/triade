@@ -49,7 +49,8 @@ MOTIFS_SECRETS = [
         r"(?i)(api[_-]?key|secret[_-]?key|access[_-]?token)\s*[:=]\s*\S{16,}")),
     ("chemin_absolu", re.compile(r"(?<![\w])(/[A-Za-z0-9_.-]+){3,}")),
     ("username_systeme", re.compile(
-        r"(?i)/home/[A-Za-z0-9_.-]+|/Users/[A-Za-z0-9_.-]+")),
+        r"/home/[A-Za-z0-9_.-]+|/Users/[A-Za-z0-9_.-]+")),
+    # la casse EXACTE (le faux positif /Home/End nomme au corpus)
 ]
 MARQUEUR_PHRASE_TEST = "PHRASE-TEST-MARQUEE-D105"
 

@@ -1,0 +1,17 @@
+{
+  "nom": "TRIADE-CORPUS-v1",
+  "provenance": "les journaux append-only et les campagnes ajouter v2/v3/v4 (les décisions D1-D251 au fil)",
+  "licence": "BSL-1.1 (le dépôt) ; le sous-ensemble permissif CC-BY-4.0 séparé",
+  "splits": {
+    "TRAIN": 28,
+    "DEV": 4,
+    "TEST": 4
+  },
+  "canari": "la phrase unique au TRAIN (la sonde)",
+  "gaps_nommes": [
+    "le dépôt Zenodo/HF DEMEURE le geste du développeur",
+    "la sonde AU POSTE",
+    "le dual-use exclu par construction (aucun binaire intercepteur au corpus)"
+  ],
+  "dual_usage": "aucun : les tâches de notation d'un éditeur de texte natif — aucune cible d'interception"
+}

@@ -1,0 +1,11 @@
+{
+  "triples": 109,
+  "propres": 109,
+  "splits": {
+    "TRAIN": 28,
+    "DEV": 4,
+    "TEST": 4
+  },
+  "cristallisation_10x": true,
+  "graine": 20261126
+}

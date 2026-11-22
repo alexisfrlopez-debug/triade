@@ -1,0 +1,35 @@
+{
+  "commit": "la tête au moment du gel (la chaîne git fait foi)",
+  "schema": "TRIADE-CORPUS-v1",
+  "fichiers": {
+    "DATASET-CARD.json": "edfb582e548e084d0d4011698e477d849370b4832c1c792bcf9ed2d09f9861be",
+    "MANIFESTE.json": "391a5af9a25d5064c7a6785026df59365c96f821a170ada5c3ac66eb703ec6a8",
+    "dev.jsonl": "c4cb5253d015b0e0908e75552da991ac6170af7798007230d51c61056d6cd2b5",
+    "permissif-ccby.jsonl": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "sonde-contamination.json": "a483c08394a362944080aba8d44887c429cac6063008560a94c7aaa253b2d2c0",
+    "test.jsonl": "45ac62a70ebac2a7b9bd1eb0c4535c91179d76d0905b2a16b2a6beead7796cfc",
+    "train.jsonl": "39614077e5c6d9feb94eb528ae19d9f948d67c531a2ac26daa17229023bb3eb7"
+  },
+  "vecteur_de_versions": {
+    "protocole": "v0.23.2",
+    "campagnes": [
+      "v2",
+      "v3",
+      "v4"
+    ],
+    "graine": 20261126
+  },
+  "empreintes_des_juges": {
+    "assembler_v3": "la chaîne v2 INTACTE (aucun juge affaibli)",
+    "validateurs": "les quatre interdits v3"
+  },
+  "graines": {
+    "splits": 20261126
+  },
+  "canari": "ef0f417edf691dfbf6bff5acd29be50eec058a375c88c9e24419bd9a11d1ef9d",
+  "gaps_nommes": [
+    "le dépôt Zenodo/HF DEMEURE le geste du développeur",
+    "la sonde AU POSTE",
+    "le dual-use exclu par construction (aucun binaire intercepteur au corpus)"
+  ]
+}

@@ -45,7 +45,7 @@ MOTIFS_SECRETS = [
     ("chemin_absolu", re.compile(
         r"(?<![\w])(/[A-Za-z0-9_.-]+){3,}")),
     ("username_système", re.compile(
-        r"(?i)/home/[A-Za-z0-9_.-]+|/Users/[A-Za-z0-9_.-]+")),
+        r"/home/[A-Za-z0-9_.-]+|/Users/[A-Za-z0-9_.-]+")),  # la casse exacte (/Home/End n'est pas un chemin)
 ]
 # la phrase marquée : TOUTE ligne portant la balise de test est un secret
 # par construction (le contrôle négatif D105 : la phrase PUBBLIQUE MARQUÉE)

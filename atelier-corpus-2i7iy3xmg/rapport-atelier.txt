@@ -1,0 +1,50 @@
+RAPPORT D'ATELIER — 2i7iy3xmg (la vague 15) : LE CORPUS D'ENTRAÎNEMENT
+DEPUIS LES JOURNAUX APPEND-ONLY ET LES CAMPAGNES
+============================================================================
+(23/11/2026, la session de la vague 15 — le plan gelé PLAN-2I7IY3XMG.md,
+sha256 3dc1832f77c7cb09… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée ; SANS INVENTER UNE SEULE DONNÉE)
+
+L'EXTRACTION MÉCANIQUE : LES 109 TRIPLES (contrat, réponse, verdict,
+classe de refus, diff) des campagnes ajouter v3 (57) et v4 (52) — la
+correspondance PAR ID (l'id API du journal ↔ la pièce brute à la
+garde-brut, les DEUX formes ramenées : la v2 enveloppée {tache,
+reponse_api}, la v3/v4 brute ; la v2 sans garde-prompts née après coup —
+les 18 tentatives v2 vivent au journal, leurs contrats n'ont pas été
+archivés au geste : L'ÉCART NOMMÉ, le corpus v2 différé au prochain
+dépôt de prompts), JAMAIS retapé — les champs copiés mécaniquement.
+
+LA PORTE DE SCRUB fail-closed : LE CONTRÔLE NÉGATIF VÉCU (le jeton
+planté ATTRAPÉ — le triple refusé à la porte) ; les 109/109 admis (aucun
+secret au corpus réel) ; LE FAUX POSITIF NOMMÉ : le motif
+username_système attrapait « /Home/End » (LES TOUCHES DU CLAVIER au
+texte d'instruction — 13 triples refusés à la première passe) — LA CASSE
+EXACTE exigée (/home/ minuscule, /Users/ capitalisé), la correction
+portée aux QUATRE outils de la vague (le corpus, le feedback, le triage,
+le rapport), l'écart consigné.
+
+LES SPLITS ÉTANCHES (la graine 20261126 consignée) : TRAIN 25 tâches /
+69 lignes · DEV 3/12 · TEST 4/16 — LE TEST NE PORTE AUCUNE NOTATION
+DORÉE (la réponse, le verdict, la classe et le diff retirés — les
+validateurs seuls) ; LE CANARI UNIQUE embarqué dans TRAIN (la phrase
+anti-contamination — une seule occurrence au corpus entier, vérifiée).
+
+LA SONDE DE CONTAMINATION livrée (la dérivation des 128 constantes
+depuis les définitions seules + le canari + l'overlap n-gram) — AU
+POSTE, jamais au bac d'entraînement.
+
+LE SOUS-ENSEMBLE PERMISSIF séparé du BSL (le canari CC-BY-4.0 seul au
+corpus réel — le reste BSL-1.1, la licence du dépôt).
+
+LA CRISTALLISATION : LES 10 REBUILDS BIT-IDENTIQUES (la graine et
+l'extraction déterministes — l'extraction re-jouée, les empreintes des
+triples confrontées).
+
+LA DATASET CARD + LE MANIFESTE : sha256 par fichier, le vecteur de
+versions (protocole v0.23.2, campagnes v3/v4, graine 20261126), les
+empreintes des juges (la chaîne v2 INTACTE — aucun juge affaibli), le
+canari haché, les gaps nommés (le dépôt Zenodo/HF DEMEURE le geste du
+développeur ; la sonde au poste ; le dual-use exclu par construction).
+
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel ni phrase
+réelle touchés ; entrée append-only au journal.
