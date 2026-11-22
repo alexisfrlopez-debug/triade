@@ -1,0 +1,53 @@
+REGISTRE TAMARIN — LA VAGUE 14 (f3uznui3l, 22/11/2026)
+===========================================================
+
+L'OUTIL : tamarin-prover 1.12.0 (le binaire officiel linux64-ubuntu,
+tar.gz sha256 201be06f469e47cff554df6ca93db8366fc2c69d70c61fcbd1370a
+1074b469c6), Maude 3.4 + prelude.maude sha256 3e7147ee4a6ff96e… — LE PROVER
+VIT AU BAC : c'est la première session du projet où tamarin-prover exécute
+le modèle CF3 (trois vagues l'avaient nommé absent).
+
+LES AMENDEMENTS PAR ÉCRIT (la règle du plan — tout écart se nomme) :
+  v2.1 : `zero` est RÉSERVÉ au builtin hashing en tamarin 1.12.0 — renommé
+         `nul` (2 occurrences actives) ;
+  v2.2 : les 15 déclarations `event ...` retirées — les faits spthy se
+         déclarent IMPLICITEMENT (le manuel : « Facts ... need not be
+         declared explicitly » ; le mot-clé `event` n'existe qu'au calcul
+         de processus SAPIC) ;
+  v2.3 : les faits d'action sans arguments exigent les parenthèses
+         (`PhraseErronee` → `PhraseErronee()`).
+LE MODÈLE AMENDÉ : sha256 63347fdac2ce2ee9… (l'original f9a79efc… consigné,
+jamais réécrit). Le modèle PARSE, charge, traduit, les derivation checks
+et la saturation des sources passent.
+
+LE VERDICT DU PREMIER RUN EFFECTIF (aucun verdict fabriqué) :
+  — LEMME D'IMPLICATION (secret appris ⇒ ≥ 3 parts) : **FALSIFIÉ — trace
+    de 2 pas trouvée** (preuve-lemme1.txt, la trace JSON consignée à
+    trace-implication.json) : `Send → !KU( p )`.
+  — LA CAUSE NOMMÉE : les dix règles `reconstitution_illicite_*` portent
+    les parts en variables PUBLIQUES ($x1..$x5) — une variable publique est
+    CONNUE DE L'ADVERSAIRE PAR CONSTRUCTION, donc K($x1) est trivialement
+    satisfiable (l'attaquant instancie les parts à sa convenance) et la
+    reconstitution « réussit » sans aucune fuite réelle : le contre-exemple
+    est UN DÉFAUT DE MODÉLISATION, pas une attaque du protocole ;
+  — LES 36 AVERTISSEMENTS DE WELLFORMEDNESS nommés (« the analysis results
+    might be wrong ») : les dix règles portent K (nom réservé) en prémisse ;
+    `creation_du_coffre` porte Fr($p) — les faits Fr exigent des variables
+    FRAÎCHES ;
+  — LES CINQ AUTRES LEMMES : analysis incomplete au budget de session (le
+    run complet exige plus de 10 minutes de recherche arrière par lemme au
+    bac virtualisé).
+
+L'AMENDEMENT REQUIS (nommé, au prochain geste) : les parts en variables
+fraîches (liées par !PartsDe à la création), les relations d'attaquant
+hors du fait K réservé (un fait dédié par exemple AttackerPart), Fr des
+variables fraîches à la création — l'empreinte RECONSIGNÉE après
+amendement, la preuve re-roulée. UN ÉCHEC EST UNE PIÈCE AUSSI PRÉCIEUSE
+QU'UN VERT : la trace attaquante consignée (le registre ne maquille pas).
+
+L'ÉCART DU PROTOCOLE v1 CORRIGÉ PAR ÉCRIT : « les CINQ lemmas » corrigés
+en SIX (le fichier et la liste en portent six).
+
+PIÈCES : preuve-lemme1.txt (la console intégrale) · trace-implication.json
+(la trace falsifiante) · CF3-v2-amende.spthy (l'amendement écrit, sha256
+63347fda…).

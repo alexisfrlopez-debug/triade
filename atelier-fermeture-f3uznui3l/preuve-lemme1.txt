@@ -1,0 +1,562 @@
+maude tool: 'maude'
+ checking version: 3.4. OK.
+ checking installation: WARNING:
+
+Warning: unrecognized symbol hook name unificationPairSymbol.
+Warning: "prelude.maude", line 2039 (fmod META-LEVEL): failed to attach op-hook
+    unificationPairSymbol `{_`,_`} to metaReduce.
+Warning: "prelude.maude", line 2039 (fmod META-LEVEL): bad special for operator
+    metaReduce.
+Warning: "prelude.maude", line 2319 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaVariantUnify.
+Warning: "prelude.maude", line 2319 (fmod META-LEVEL): bad special for operator
+    metaVariantUnify.
+Warning: "prelude.maude", line 2324 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaVariantDisjointUnify.
+Warning: "prelude.maude", line 2324 (fmod META-LEVEL): bad special for operator
+    metaVariantDisjointUnify.
+Warning: "prelude.maude", line 2359 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaParse.
+Warning: "prelude.maude", line 2359 (fmod META-LEVEL): bad special for operator
+    metaParse.
+Warning: "prelude.maude", line 2364 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaPrettyPrint.
+Warning: "prelude.maude", line 2364 (fmod META-LEVEL): bad special for operator
+    metaPrettyPrint.
+Warning: "prelude.maude", line 1932 (fmod META-LEVEL): this module contains one
+    or more errors that could not be patched up and thus it cannot be used or
+    imported.
+Warning: "prelude.maude", line 2518: syntax error
+Warning: "prelude.maude", line 2518: skipped unexpected token: CONFIGURATION
+
+ Please install one of the following versions of Maude: 2.7.1, 3.0, 3.1, 3.2.1, 3.2.2, 3.3, 3.3.1, 3.4, 3.5, 3.5.1
+
+Detailed results from testing 'maude'
+ command: maude
+ stdin:   quit
+
+ stdout:  		     \||||||||||||||||||/
+		   --- Welcome to Maude ---
+		     /||||||||||||||||||\
+	     Maude 3.4
+	     Copyright 1997-2024 SRI International
+		   Sun Nov 22 12:34:36 2026
+Bye.
+
+ stderr:  Warning: unrecognized symbol hook name unificationPairSymbol.
+Warning: "prelude.maude", line 2039 (fmod META-LEVEL): failed to attach op-hook
+    unificationPairSymbol `{_`,_`} to metaReduce.
+Warning: "prelude.maude", line 2039 (fmod META-LEVEL): bad special for operator
+    metaReduce.
+Warning: "prelude.maude", line 2319 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaVariantUnify.
+Warning: "prelude.maude", line 2319 (fmod META-LEVEL): bad special for operator
+    metaVariantUnify.
+Warning: "prelude.maude", line 2324 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaVariantDisjointUnify.
+Warning: "prelude.maude", line 2324 (fmod META-LEVEL): bad special for operator
+    metaVariantDisjointUnify.
+Warning: "prelude.maude", line 2359 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaParse.
+Warning: "prelude.maude", line 2359 (fmod META-LEVEL): bad special for operator
+    metaParse.
+Warning: "prelude.maude", line 2364 (fmod META-LEVEL): failed to attach id-hook
+    MetaLevelOpSymbol to metaPrettyPrint.
+Warning: "prelude.maude", line 2364 (fmod META-LEVEL): bad special for operator
+    metaPrettyPrint.
+Warning: "prelude.maude", line 1932 (fmod META-LEVEL): this module contains one
+    or more errors that could not be patched up and thus it cannot be used or
+    imported.
+Warning: "prelude.maude", line 2518: syntax error
+Warning: "prelude.maude", line 2518: skipped unexpected token: CONFIGURATION
+
+[Theory CF3] Theory loaded
+[Theory CF3] Theory translated
+[Theory CF3] Derivation checks started
+[Theory CF3] Derivation checks ended
+[Theory CF3] Theory closed
+theory CF3
+
+begin
+
+// Function signature and definition of the equational theory E
+
+functions: fst/1, h/1, nul/0, pair/2, sdec/2, senc/2, snd/1,
+           succ/1[private,constructor]
+equations:
+    fst(<x.1, x.2>) = x.1,
+    sdec(senc(x.1, x.2), x.2) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+/*
+looping facts with injective instances:
+  Coffre/2, MediaPiege/1, PartSurMedia/1, PhraseHote/1, SerrureMachine/1
+*/
+
+rule (modulo E) creation_du_coffre:
+   [ Fr( $p ), Fr( $m ), Fr( $ep1 ) ]
+  --[ CreationCoffre( $p ), PhraseVivante( $p ) ]->
+   [ PhraseHote( $p ), Coffre( $ep1, senc($m, h($p)) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) migration_cf1_vers_cf2:
+   [
+   PhraseHote( $p ), Coffre( $ep, senc($m, h($p)) ), Fr( $garde ),
+   Fr( $x1 ), Fr( $x2 ), Fr( $x3 ), Fr( $x4 ), Fr( $x5 )
+   ]
+  --[ MigrationCF2( $p ), CleUtilisateurEmployee( h($p) ) ]->
+   [
+   PhraseHote( $p ), GardeFragments( $garde ),
+   Coffre( $ep, senc($m, h(<h($p), $garde>)) ),
+   !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), PartSurMedia( $x1 ),
+   PartSurMedia( $x2 ), PartSurMedia( $x3 ), PartSurMedia( $x4 ),
+   PartSurMedia( $x5 ), CompteurParts( nul )
+   ]
+
+  // loop breaker: [0]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) migration_cf2_vers_cf3:
+   [
+   PhraseHote( $p ), GardeFragments( $garde ),
+   Coffre( $ep, senc($m, h(<h($p), $garde>)) ), Fr( $ss ), Fr( $sq ),
+   Fr( $ep2 )
+   ]
+  --[ MigrationCF3( $p ), CleUtilisateurEmployee( h($p) ) ]->
+   [
+   PhraseHote( $p ), SerrureMachine( $ss ), MediaPiege( $sq ),
+   Coffre( $ep2, senc($m, h(<h($p), $ss, $sq>)) )
+   ]
+
+  // loop breaker: [0]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) cloture_d_epoque:
+   [
+   PhraseHote( $p ), SerrureMachine( $ss ), MediaPiege( $sq ),
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) ), Fr( $ss2 ), Fr( $sq2 ),
+   Fr( $ep2 )
+   ]
+  --[ ClotureDEpoque( $ep2 ), CleUtilisateurEmployee( h($p) ) ]->
+   [
+   PhraseHote( $p ), SerrureMachine( $ss2 ), MediaPiege( $sq2 ),
+   Coffre( $ep2, senc($m, h(<h($p), $ss2, $sq2>)) )
+   ]
+
+  // loop breakers: [0,1,2,3]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) changement_de_phrase_sous_sequestre:
+   [
+   !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), PartSurMedia( $x1 ),
+   PartSurMedia( $x2 ), PartSurMedia( $x3 ), PhraseHote( $p ),
+   SerrureMachine( $ss ), MediaPiege( $sq ),
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) ), Fr( $p2 ), Fr( $ss2 ),
+   Fr( $sq2 ), Fr( $ep2 ), Fr( $y1 ), Fr( $y2 ), Fr( $y3 ), Fr( $y4 ),
+   Fr( $y5 )
+   ]
+  --[ ChangementPhraseSousSequestre( $p, $p2 ), PhraseVivante( $p2 ) ]->
+   [
+   PhraseHote( $p2 ), SerrureMachine( $ss2 ), MediaPiege( $sq2 ),
+   Coffre( $ep2, senc($m, h(<h($p2), $ss2, $sq2>)) ),
+   !PartsDe( $p2, $y1, $y2, $y3, $y4, $y5 ), PartSurMedia( $y1 ),
+   PartSurMedia( $y2 ), PartSurMedia( $y3 ), PartSurMedia( $y4 ),
+   PartSurMedia( $y5 )
+   ]
+
+  // loop breakers: [4,0,1,2,3,5,6,7]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) ouverture_honnete:
+   [
+   PhraseHote( $p ), SerrureMachine( $ss ), MediaPiege( $sq ),
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) )
+   ]
+  --[ OuvertureHonnete( $ep ), CleUtilisateurEmployee( h($p) ) ]->
+   [
+   PhraseHote( $p ), SerrureMachine( $ss ), MediaPiege( $sq ),
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) )
+   ]
+
+  // loop breakers: [0,1,2,3]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) tentative_phrase_erronee:
+   [ PhraseHote( $p ), Fr( $q ) ]
+  --[ PhraseErronee( ) ]->
+   [ PhraseHote( $p ) ]
+
+  // loop breaker: [0]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) vol_de_la_machine_seule:
+   [
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) ), SerrureMachine( $ss ),
+   PhraseHote( $p )
+   ]
+  --[ VolDeLaMachine( ) ]->
+   [
+   Out( senc($m, h(<h($p), $ss, $sq>)) ), Out( $ss ),
+   Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) ), SerrureMachine( $ss ),
+   PhraseHote( $p )
+   ]
+
+  // loop breakers: [2,0,1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) fuite_d_une_part:
+   [ PartSurMedia( $x ), CompteurParts( $n ) ]
+  --[ FuitePart( ) ]->
+   [ Out( $x ), CompteurParts( succ($n) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_123:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x2 ), K( $x3 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_124:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x2 ), K( $x4 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_125:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x2 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_134:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x3 ), K( $x4 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_135:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x3 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_145:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x1 ), K( $x4 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_234:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x2 ), K( $x3 ), K( $x4 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_235:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x2 ), K( $x3 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_245:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x2 ), K( $x4 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_345:
+   [ !PartsDe( $p, $x1, $x2, $x3, $x4, $x5 ), K( $x3 ), K( $x4 ), K( $x5 ) ]
+  --[ ReconstitutionIllicite( $p ) ]->
+   [ Out( $p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) remplacement_du_conteneur:
+   [ Coffre( $ep, senc($m, h(<h($p), $ss, $sq>)) ), In( $forged ) ]
+  --[ RemplacementDuConteneur( ) ]->
+   [ CoffreFalsifie( $ep, $forged ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) ouverture_falsifiee:
+   [
+   CoffreFalsifie( $ep, $forged ), PhraseHote( $p ), SerrureMachine( $ss ),
+   MediaPiege( $sq )
+   ]
+  --[ FalsificationProuvee( $ep ) ]->
+   [ FalsificationEtablie( $ep ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) destruction_locale:
+   [ FalsificationEtablie( $ep ) ] --[ DestructionLocale( $ep ) ]-> [ ]
+
+  /* has exactly the trivial AC variant */
+
+lemma implication_secret_appris_reconstitution_illicite:
+  all-traces
+  "∀ p #i.
+    (K( p ) @ #i) ⇒ (∃ #j. (ReconstitutionIllicite( p ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i.
+  (K( p ) @ #i) ∧ ∀ #j. (ReconstitutionIllicite( p ) @ #j) ⇒ ¬(#j < #i)"
+*/
+simplify
+SOLVED // trace found
+
+lemma conservation_de_la_cle_utilisateur:
+  all-traces
+  "∀ p #i.
+    (CleUtilisateurEmployee( h(p) ) @ #i) ⇒
+    (∃ #j. (PhraseVivante( p ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i.
+  (CleUtilisateurEmployee( h(p) ) @ #i)
+ ∧
+  ∀ #j. (PhraseVivante( p ) @ #j) ⇒ ¬(#j < #i)"
+*/
+by sorry
+
+lemma absence_de_destruction_par_corruption:
+  all-traces
+  "∀ ep #i.
+    (DestructionLocale( ep ) @ #i) ⇒
+    (∃ #j. (FalsificationProuvee( ep ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ ep #i.
+  (DestructionLocale( ep ) @ #i)
+ ∧
+  ∀ #j. (FalsificationProuvee( ep ) @ #j) ⇒ ¬(#j < #i)"
+*/
+by sorry
+
+lemma temoin_falsification_et_destruction:
+  all-traces "∃ ep #i. DestructionLocale( ep ) @ #i"
+/*
+guarded formula characterizing all counter-examples:
+"∀ ep #i. (DestructionLocale( ep ) @ #i) ⇒ ⊥"
+*/
+by sorry
+
+lemma temoin_la_chaine_vivante:
+  all-traces
+  "∃ p ep #i #j #k #l.
+    (((CreationCoffre( p ) @ #i) ∧ (MigrationCF2( p ) @ #j)) ∧
+     (MigrationCF3( p ) @ #k)) ∧
+    (OuvertureHonnete( ep ) @ #l)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p ep #i #j #k #l.
+  (CreationCoffre( p ) @ #i) ∧
+  (MigrationCF2( p ) @ #j) ∧
+  (MigrationCF3( p ) @ #k) ∧
+  (OuvertureHonnete( ep ) @ #l)
+ ⇒
+  ⊥"
+*/
+by sorry
+
+lemma temoin_atteignabilite_du_seuil:
+  all-traces
+  "∃ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j) ⇒ ⊥"
+*/
+by sorry
+
+/*
+WARNING: the following wellformedness checks failed!
+
+Reserved names
+==============
+
+  Rule `reconstitution_illicite_123' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x2 ), K( $x3 )
+  
+  Rule `reconstitution_illicite_124' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x2 ), K( $x4 )
+  
+  Rule `reconstitution_illicite_125' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x2 ), K( $x5 )
+  
+  Rule `reconstitution_illicite_134' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x3 ), K( $x4 )
+  
+  Rule `reconstitution_illicite_135' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x3 ), K( $x5 )
+  
+  Rule `reconstitution_illicite_145' contains facts with reserved names on left-hand-side:
+    K( $x1 ), K( $x4 ), K( $x5 )
+  
+  Rule `reconstitution_illicite_234' contains facts with reserved names on left-hand-side:
+    K( $x2 ), K( $x3 ), K( $x4 )
+  
+  Rule `reconstitution_illicite_235' contains facts with reserved names on left-hand-side:
+    K( $x2 ), K( $x3 ), K( $x5 )
+  
+  Rule `reconstitution_illicite_245' contains facts with reserved names on left-hand-side:
+    K( $x2 ), K( $x4 ), K( $x5 )
+  
+  Rule `reconstitution_illicite_345' contains facts with reserved names on left-hand-side:
+    K( $x3 ), K( $x4 ), K( $x5 )
+
+Fr facts must only use a fresh- or a msg-variable
+=================================================
+
+  rule `creation_du_coffre' fact: Fr( $p )
+  
+  rule `creation_du_coffre' fact: Fr( $m )
+  
+  rule `creation_du_coffre' fact: Fr( $ep1 )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $garde )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $x1 )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $x2 )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $x3 )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $x4 )
+  
+  rule `migration_cf1_vers_cf2' fact: Fr( $x5 )
+  
+  rule `migration_cf2_vers_cf3' fact: Fr( $ss )
+  
+  rule `migration_cf2_vers_cf3' fact: Fr( $sq )
+  
+  rule `migration_cf2_vers_cf3' fact: Fr( $ep2 )
+  
+  rule `cloture_d_epoque' fact: Fr( $ss2 )
+  
+  rule `cloture_d_epoque' fact: Fr( $sq2 )
+  
+  rule `cloture_d_epoque' fact: Fr( $ep2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $p2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $ss2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $sq2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $ep2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $y1 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $y2 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $y3 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $y4 )
+  
+  rule `changement_de_phrase_sous_sequestre' fact: Fr( $y5 )
+  
+  rule `tentative_phrase_erronee' fact: Fr( $q )
+
+Facts occur in the left-hand-side but not in any right-hand-side 
+=================================================================
+
+   1. in rule "reconstitution_illicite_123":  factName `K' arity: 1 multiplicity: Linear
+  
+   2. in rule "reconstitution_illicite_123":  factName `K' arity: 1 multiplicity: Linear
+  
+   3. in rule "reconstitution_illicite_123":  factName `K' arity: 1 multiplicity: Linear
+  
+   4. in rule "reconstitution_illicite_124":  factName `K' arity: 1 multiplicity: Linear
+  
+   5. in rule "reconstitution_illicite_124":  factName `K' arity: 1 multiplicity: Linear
+  
+   6. in rule "reconstitution_illicite_124":  factName `K' arity: 1 multiplicity: Linear
+  
+   7. in rule "reconstitution_illicite_125":  factName `K' arity: 1 multiplicity: Linear
+  
+   8. in rule "reconstitution_illicite_125":  factName `K' arity: 1 multiplicity: Linear
+  
+   9. in rule "reconstitution_illicite_125":  factName `K' arity: 1 multiplicity: Linear
+  
+  10. in rule "reconstitution_illicite_134":  factName `K' arity: 1 multiplicity: Linear
+  
+  11. in rule "reconstitution_illicite_134":  factName `K' arity: 1 multiplicity: Linear
+  
+  12. in rule "reconstitution_illicite_134":  factName `K' arity: 1 multiplicity: Linear
+  
+  13. in rule "reconstitution_illicite_135":  factName `K' arity: 1 multiplicity: Linear
+  
+  14. in rule "reconstitution_illicite_135":  factName `K' arity: 1 multiplicity: Linear
+  
+  15. in rule "reconstitution_illicite_135":  factName `K' arity: 1 multiplicity: Linear
+  
+  16. in rule "reconstitution_illicite_145":  factName `K' arity: 1 multiplicity: Linear
+  
+  17. in rule "reconstitution_illicite_145":  factName `K' arity: 1 multiplicity: Linear
+  
+  18. in rule "reconstitution_illicite_145":  factName `K' arity: 1 multiplicity: Linear
+  
+  19. in rule "reconstitution_illicite_234":  factName `K' arity: 1 multiplicity: Linear
+  
+  20. in rule "reconstitution_illicite_234":  factName `K' arity: 1 multiplicity: Linear
+  
+  21. in rule "reconstitution_illicite_234":  factName `K' arity: 1 multiplicity: Linear
+  
+  22. in rule "reconstitution_illicite_235":  factName `K' arity: 1 multiplicity: Linear
+  
+  23. in rule "reconstitution_illicite_235":  factName `K' arity: 1 multiplicity: Linear
+  
+  24. in rule "reconstitution_illicite_235":  factName `K' arity: 1 multiplicity: Linear
+  
+  25. in rule "reconstitution_illicite_245":  factName `K' arity: 1 multiplicity: Linear
+  
+  26. in rule "reconstitution_illicite_245":  factName `K' arity: 1 multiplicity: Linear
+  
+  27. in rule "reconstitution_illicite_245":  factName `K' arity: 1 multiplicity: Linear
+  
+  28. in rule "reconstitution_illicite_345":  factName `K' arity: 1 multiplicity: Linear
+  
+  29. in rule "reconstitution_illicite_345":  factName `K' arity: 1 multiplicity: Linear
+  
+  30. in rule "reconstitution_illicite_345":  factName `K' arity: 1 multiplicity: Linear
+*/
+
+/*
+Generated from:
+Tamarin version 1.12.0
+Maude version 3.4 (unsupported)
+Git revision: 82780bbaf3328a45f624ddb41e51bf75425f851c (with uncommited changes), branch: master
+Compiled at: 2026-03-07 14:22:39.174278293 UTC
+*/
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: CF3-v2.spthy
+
+  processing time: 0.24s
+  
+  WARNING: 36 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  implication_secret_appris_reconstitution_illicite (all-traces): falsified - found trace (2 steps)
+  conservation_de_la_cle_utilisateur (all-traces): analysis incomplete (1 steps)
+  absence_de_destruction_par_corruption (all-traces): analysis incomplete (1 steps)
+  temoin_falsification_et_destruction (all-traces): analysis incomplete (1 steps)
+  temoin_la_chaine_vivante (all-traces): analysis incomplete (1 steps)
+  temoin_atteignabilite_du_seuil (all-traces): analysis incomplete (1 steps)
+
+==============================================================================

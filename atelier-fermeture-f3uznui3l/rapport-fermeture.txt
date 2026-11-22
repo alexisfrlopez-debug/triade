@@ -92,11 +92,17 @@ et s'amende, empreinte reconsignée) :
 LE MODÈLE AMENDÉ : sha256 63347fda… RECONSIGNÉ (l'original f9a79efc… demeurant
 au registre, l'écart nommé ligne à ligne ci-dessus) ; le modèle PARSE et
 charge (Theory loaded/translated/closed, Derivation checks verts, Saturating
-Sources done). LA PREUVE --prove DES SIX LEMMAS lancée au long cours (le
-lemme d'implication « secret appris ⇒ ≥ 3 parts », les deux témoins, les
-trois conservations) : LE VERDICT attend la complétion — consigné au registre
-Tamarin dès rendu (aucun verdict fabriqué : un lemme non terminé à la clôture
-de session demeure « EN ATTENTE », la borne nommée).
+Sources done). LA PREUVE --prove VÉCUE au premier run effectif de l'histoire
+du projet : LE LEMME D'IMPLICATION **FALSIFIÉ — TRACE DE 2 PAS** (Send →
+!KU(p) — la trace JSON consignée), la cause nommée au registre (les parts en
+variables PUBLIQUES rendent K trivialement satisfiable : un défaut de
+MODÉLISATION, pas une attaque du protocole) ; LES 36 AVERTISSEMENTS DE
+WELLFORMEDNESS nommés (K réservé en prémisse ×10, Fr($p) public à la
+création) ; les cinq autres lemmes INCOMPLETE au budget de session. L'AMENDEMENT
+REQUIS nommé (parts fraîches, relations d'attaquant hors K, Fr fraîches) —
+UN ÉCHEC EST UNE PIÈCE AUSSI PRÉCIEUSE QU'UN VERT : la trace consignée,
+AUCUN VERDICT FABRIQUÉ (registre-tamarin-v14.txt, preuve-lemme1.txt,
+trace-implication.json).
 L'ÉCART DU PROTOCOLE v1 CORRIGÉ PAR ÉCRIT : le protocole disait « les CINQ
 lemmas » alors que le fichier et la liste en portent SIX — corrigé.
 
