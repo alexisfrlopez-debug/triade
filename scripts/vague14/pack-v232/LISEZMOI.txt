@@ -1,0 +1,12 @@
+LE PACK DE PRÉSENTATION TRIADE v0.23.2 — la vague 14, la génération corrective
+===========================================================
+
+LES CINQ DOCUMENTS : le manuscrit académique v0.23.2 (les dix corrections sourcées portées, la vague 14 portée au corps), la spécification v0.15.8 (reconstruite — « quatorze arbres »), le Livre du Coffre v1.7 (le bandeau de couverture porté à 1.7), les preuves et calculs v0.23.2 (les cinq rapports d'atelier verbatim + la consignation des corrections + la table des empreintes), la présentation v232 (les points de la vague, l'état des éditions, les empreintes gravées).
+
+LA GÉNÉRATION CORRECTIVE : la v0.23.1 (la release de la vague 14) avait porté les sources corrigées au seul pack COMPLET — la soumission et la présentation demeurées byte-byte à leur état v0.23.0, l'écart nommé au worklog. La commande du maître (« je n'ai pas la version presentation et soumission du pack dans zenodo ») commande la présente : les cinq pièces régénérées, le linter étendu aux quatre règles nouvelles, les trois packs assemblés à la version courante, la version publiée au concept Zenodo avec la soumission et la présentation à la version courante.
+
+LA CONVENTION DES EMPREINTES : aucun document ne porte son propre sha-256 ; la présentation grave les quatre autres ; le document de preuves grave les trois pièces de contenu ; CE manifeste porte les cinq.
+
+LES SIX INSTRUCTIONS DE LA VAGUE 14 exécutées aux plans gelés avant toute mesure (EMPREINTES-PLANS-VAGUE14.txt) : f3uznui3l (la fermeture sécurité : les 58 certificats re-vérifiés, la composition des gardes de frontière, Tamarin installé et le premier run vécu — le lemme d'implication falsifié, un défaut de modélisation nommé), h1mz2sr8s (le GHASH agrégé quatre blocs à réduction différée : 19,66 c/mult, 41,0× sur le scellé), s2p9bm3zd (H-CGP4 la mémoïsation content-addressed : −89,4 % sans aucun contrôle retiré), 842vqyy1k (TPL-ADD-v4 les quatre leviers : 7/18, la première conversion d'un refus honnête), tcb7tpf9q (la validité externe : H7 tirée et signée, la campagne ouverte aux 28 unités), io13olvxz (les dix corrections sourcées — la présente génération).
+
+LES GAPS NOMMÉS (jamais simulés) : la cible TPL-ADD-v4 (≥ 15/18) manquée à 7/18 — le gap par classe de refus ; la cible ≤ 1 % du coût des gardes non tranchée au bac émulé ; la mesure d'entrelacement GHASH suivante ; le re-run Tamarin de l'amendement ; les 28 livraisons H7 au geste du maître ; la seconde machine (une seule au bac).

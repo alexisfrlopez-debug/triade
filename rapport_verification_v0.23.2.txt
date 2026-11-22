@@ -1,0 +1,192 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.23.2 (la vague 14, la génération
+corrective)
+=========================================================================
+(la session de génération promise à l'Entrée 384 — l'écart nommé à la
+release v0.23.1 : « la régénération des CINQ pièces et le linter étendu
+PORTÉS À LA PROCHAINE SESSION DE GÉNÉRATION » ; la commande du maître :
+« je n'ai pas la version presentation et soumission du pack dans zenodo »
+— la présente génère les cinq pièces aux sources corrigées, étend le
+linter, assemble les TROIS packs à la version courante et les publie au
+concept ; les plans gelés de la vague 14 demeurent, le sceau-I re-vérifié
+AVANT et APRÈS la génération)
+
+V1 — LE LINTER v232 (ÉTENDU) AUX CINQ PIÈCES : 153 VERT, 0 ROUGE.
+     L'EXTRACTION INTÉGRALE : 4 652 tokens numériques extraits des cinq
+     pièces (manuscrit 1 877 · spécification 1 645 · Livre 566 · preuves
+     406 · présentation 158), CHACUN confronté aux QUATRE classes
+     nommées — (1) LES CANONS BRUTS (2 895 valeurs relues des CSV/JSONL/
+     registres/rapports des ateliers, les vagues 9 à 14 — les six
+     ateliers de la vague 14 AJOUTÉS au manifeste des sources) ; (2) LES
+     ARITHMÉTIQUES DÉRIVÉES (269 valeurs recalculées par code : les
+     sommes, les médianes par poste, les ratios, LES COMPTES DES
+     JOURNAUX VIVANTS recalculés des fichiers mêmes) ; (3) LES
+     HISTORIQUES DATÉS (769 valeurs, chaque liste datée de son édition —
+     les pièces v0.23.0 AJOUTÉES à la table) ; (4) LA CLASSE STRUCTURELLE
+     (les identifiants, les dates, les versions, les graines, les normes,
+     les DOI Zenodo — le 24442241 au jour de la rédaction, les records
+     24420007/24438614 datés, les numéros d'Entrée, les ISBN).
+     L'AMBIGUÏTÉ FR/EN TRANCHÉE PAR LA LANGUE DE LA PIÈCE ; LE
+     PRÉ-TRAITEMENT DES ÉNUMÉRATIONS BRACÉES (« {60,200,400} » — la
+     grille de réception D246 — un IDENTIFIANT DE PROTOCOLE, jamais une
+     prose numérique : la virgule y aurait lu « 200,400 » comme le nombre
+     200,4) ; LES QUATRE RÈGLES NOUVELLES : (A) LES CHAÎNES DE VERSION
+     (les bandeaux, les couvertures, les dates, les plages
+     décisionnelles D1–D251 RECOMPTÉES du journal, la plage d'Entrées
+     305–385, le DOI de version courant 24442241, le changelog gelé aux
+     lignes v0.23.1/v0.23.2, le bandeau du Livre « Version 1.7 ») ; (B)
+     LES DÉCOMPOSITIONS RECOMPOSÉES PAR CODE depuis les CSV/JSONL (la
+     classification des 21 non-tués — l'état mourant ×5, JAMAIS ×6 ; les
+     SEPT familles d'arguments sémantiques à l'abstract EN — la famille
+     « the field beyond the pattern » portée, l'erratum (b) ; TPL-ADD-v4
+     7/18 et la médiane 3 990 RECOMPTÉS du resultats_v4.jsonl ; H-CGP4
+     24,163 → 2,555 = −89,4 % RECOMPTÉ du verdict JSON ; le TCB
+     24+23+11 = 58 recompté du registre z3) ; (C) LES OPÉRANDES NON
+     ARRONDIS (TOUT ratio publié porte ses opérandes — le deux étages
+     NOMMÉS : la PRÉSENCE par pièce, la PROXIMITÉ ±400 au manuscrit : le
+     cache 683,6 ← 285,725/0,418 ; l'agrégé 41,0 ← 19,66/806,35 ; le
+     corridor 12,7 ← 63,39/806,35 ; l'agrégé contre le corridor
+     3,23 ← 63,39/19,66 ; le plancher M4 3,4 ← 6,912/2,056 ; la mémo
+     −89,4 ← 24,163/2,555 ; la fermeture 37,425 ← 20,715+16,497+0,213) ;
+     (D) LA DÉTECTION T/X HORS MARQUEUR D'ÉPOQUE DATÉ (le motif de la
+     grille d'époque n'admis qu'à son marqueur — D203/D189, le renommage
+     nommé, « à l'époque », « l'ancienne » — toute occurrence hors
+     marqueur ROUGE, la règle INSENSIBLE à la casse). LE CONTRÔLE D81
+     (7 occurrences au Livre, 5 à la spec — toutes aux contextes
+     historiques admis à la table nommée) ; LES EMPREINTES SHA-256
+     RECALCULÉES et confrontées (les quatre à la présentation, les trois
+     aux preuves, les cinq au manifeste).
+
+V2 — LE CONTRÔLE NÉGATIF du linter : LES divergences volontaires
+     injectées — la somme mémoire mutée « 2,098 » → « 2,198 » au
+     MANUSCRIT, le compte médiés muté « MÉDIÉS 348 » → « MÉDIÉS 338 »
+     aux PREUVES, les opérandes du plancher M4 RETIRÉS (« 6.912/2.056 =
+     3.362 » → « 6.9/2.1 = 3.29 »), LA FERMETURE PRIVÉE DE SES
+     OPÉRANDES (« (20.715 + 16.497 + 0.213 = 37.425 » → « (37.425 »),
+     la grille T/X INJECTÉE sans marqueur d'époque (« an F/L coding
+     grid » → « a T/X coding grid ») ET le ratio ajouter muté
+     « −28.4 » → « −28.5 » — REFUSÉES au premier nom (7 ROUGE :
+     l'extraction intégrale refuse 2198 et 338 ; LA RÈGLE (C) REFUSE la
+     fermeture privée à SES DEUX ÉTAGES — la présence ET la proximité ;
+     l'exige des canons refuse les opérandes retirés et la grille
+     injectée ; le ratio refuse le publié muté) ; après retrait, le
+     build admis (153 VERT 0 ROUGE).
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (la garde du sceau
+     14/14 re-vérifiée avant la génération ET après les builds — les
+     quatorze arbres VERTS, les quatre pièces scellées aux ancres R7 :
+     loupe.exe 59e4871a… · demo.exe 96e6fd4e… · terrain 754cb03c… · v06
+     a8166442… — aucune pièce scellée touchée par la génération).
+
+V4 — LES DIX CORRECTIONS SOURCÉES (io13olvxz) PORTÉES AUX PIÈCES : (a)
+     le gain du cache 683,6× (le canon 285,725/0,418, D244) aux
+     générateurs v230 ET à la présente génération — la ligne « 680,6 »
+     N'EXISTE PLUS à aucune pièce ; (b) l'erratum append-only au rapport
+     de requalification (verbatim, la décomposition recomposée PAR CODE
+     : les 12 arguments sémantiques = 5+2+1+1+1+1+1 — l'état mourant ×5,
+     JAMAIS ×6) ET LA FAMILLE OMISE PORTÉE à l'abstract EN (« the field
+     beyond the pattern », loupe-14@0xdc — l'énumération aux SEPT
+     familles) ; (c) les opérandes non arrondis du plancher M4 publiés
+     au §7 (« $6.912/2.056 = 3.362$, cited at one decimal ») ; (d) le
+     bandeau du Livre « Version 1.6 » → v1.7 (INACHEVÉ à f9f4799 — le
+     PDF livré v1.7 portait le bandeau 1.6 — PORTÉ ici, la couverture
+     reconstruite) ; (e) la grille T/X → F/L (D203) au §4.1 du
+     manuscrit (« an F/L coding grid … renamed from the earlier T/X
+     labels by D203 ») ET à la table des statuts (« the F/L grid
+     finalised (renamed from T/X by D203 …) ») ; (f) la voix « présent
+     édition » unique (reconduite — les vagues antérieures datées) ;
+     (g) la spec « quatorze arbres VERTS » (Table 15, le PDF
+     reconstruit) ; (h) le dénominateur H-CGP2 nommé T−(C+G) ET LA
+     FERMETURE AUX OPÉRANDES NON ARRONDIS publiée (« 20.715 + 16.497 +
+     0.213 = 37.425 s = T−C ; the rounded macros leave a 13 ms
+     residual ») ; (i) la Table 8 D210 it2 = 2 avec l'erratum as-filed
+     nommé (portée à la vague 14, reconduite) ; (j) le canon GHASH
+     unique sur la variété ADOPTÉE (le schoolbook 63,39 c [IQR 30]
+     contre le scellé 806,35 : 12,7× ; le karatsuba 64,04 la variante
+     livrée non adoptée, l'écart 0,65 c DANS l'IQR nommé — la ligne
+     mixte « 63--64 cycles … 12.6× » n'existe plus).
+
+V5 — L'ÉTAT DE L'ÉDITION v0.23.2 : les en-têtes pdftitle/running-header
+     à v0.23.2, la bannière de date à la génération corrective (les dix
+     corrections, la vague 14 portée : le GHASH agrégé, H-CGP4,
+     TPL-ADD-v4, H7 tirée, le premier run Tamarin), les abstracts EN/FR
+     aux mêmes canons étendus à la quatorzième (la faisabilité 7/18, la
+     boucle de contre-exemple convertissant son premier refus honnête),
+     LE CHANGELOG GELÉ aux lignes v0.23.1 (la corrective : le complet
+     seul régénéré, la soumission et la présentation demeurées
+     byte-byte) et v0.23.2 (la présente : les cinq pièces, le linter
+     étendu, les trois packs), la disponibilité des données au DOI
+     24442241 (la v0.23.1 au jour de la rédaction — les dépôts datés
+     étendus aux records 24420007 et 24438614), les plages d'Entrées à
+     305–385, LES MACROS régénérées des journaux vivants (le worklog
+     14 047, la plage D1–D251, le DOI au jour de la rédaction), les
+     archives de dépôt aux noms v0.23.2.
+
+V6 — LES RÉSULTATS DE LA VAGUE 14 PORTÉS AUX PIÈCES : LE GHASH AGRÉGÉ
+     QUATRE BLOCS À RÉDUCTION DIFFÉRÉE (19,66 c/mult [IQR 19] — le gain
+     41,0× sur le scellé 806,35, 3,23× sur le corridor v13 [63,39/19,66
+     aux opérandes publiées]) ; H-CGP4 LA MÉMOÏSATION CONTENT-ADDRESSED
+     (−89,4 % à la part régime, les médianes 24,163 → 2,555 s publiées,
+     AUCUN contrôle retiré) ; TPL-ADD-v4 (7/18 — la première conversion
+     d'un refus honnête par la réparation par contre-exemple, le coût
+     médian 3 990 ≤ 4 500, la cible ≥ 15/18 manquée nommée par classe) ;
+     H7 TIRÉE ET SIGNÉE (la table officielle consignée, la campagne
+     ouverte aux 28 unités — le corps et la conclusion du manuscrit
+     portés à l'état exact, la table des statuts incluse) ; LE PREMIER
+     RUN TAMARIN EFFECTIF (le lemme d'implication FALSIFIÉ — un défaut
+     de modélisation nommé, JAMAIS une attaque : les parts en variables
+     publiques rendent K trivialement satisfiable ; l'amendement écrit
+     et re-haché, les cinq autres lemmata incomplets au budget, AUCUN
+     VERDICT FABRIQUÉ — le manuscrit porte l'état exact).
+
+V7 — LES CANONS RECOMPOSÉS PAR CODE (la règle (B) du linter, chaque
+     recomposition des CSV/JSONL bruts mêmes) : la classification des 21
+     non-tués (l'état mourant ×5, le sentinel ×2, le shim ×3, le suivi
+     ×2, l'échec ×2, et un-each ×7 — 12 familles, la somme 21) ; les 12
+     arguments sémantiques = 5+2+1+1+1+1+1 ; TPL-ADD-v4 7/18 verts et la
+     médiane 3 990 recomptés du resultats_v4.jsonl ; H-CGP4 24,163 →
+     2,555 = −89,4 % recompté du verdict-hcgp4.json ; le TCB
+     24+23+11 = 58 (le registre z3 : 58 certificats, 58 UNSAT).
+
+V8 — LES CINQ PIÈCES RÉGÉNÉRÉES : le manuscrit v0.23.2 (39 pages, les
+     sources corrigées, la bannière et les abstracts à l'état courant) ;
+     la spécification v0.15.8 (69 pages, reconstruite aux sources
+     corrigées — « quatorze arbres » porté) ; le Livre du Coffre v1.7
+     (29 pages, le bandeau « Version 1.7 » porté — la correction (d)
+     achevée) ; les preuves et calculs v0.23.2 (9 pages : les CINQ
+     rapports d'atelier de la vague 14 lus VERBATIM, la consignation des
+     dix corrections, l'héritage mesuré des vagues 11-13, la table des
+     empreintes) ; la présentation v232 (3 pages : les six points de la
+     vague 14, l'état des éditions, l'héritage, les gaps nommés, les
+     empreintes des quatre autres pièces GRAVÉES). LES EMPREINTES AU
+     MANIFESTE : 99cbe5a884fbc446… (manuscrit) · 0b21ab871f38f887…
+     (spec) · ac1336c86da4da72… (Livre) · bf4cd2e668afddf2… (preuves) ·
+     7f13174c54d9cbd4… (présentation) — la convention tenue : aucun
+     document ne porte son propre sha-256, le manifeste porte les cinq.
+
+V9 — LES TROIS PACKS ASSEMBLÉS À LA VERSION COURANTE : TRIADE_soumission_
+     v0.23.2.zip (cinq fichiers : le README, le manuscrit, le manifeste
+     des empreintes, le présent rapport, la note des tables) ;
+     TRIADE_presentation_v0.23.2.zip (12 fichiers : les cinq pièces
+     numérotées, les descriptions, le LISEZMOI, le manifeste) ;
+     TRIADE_complet_v0.23.2.zip (les sources des cinq pièces, les
+     ateliers des vagues 12-13-14, les chaînes de génération et LES
+     DEUX LINTERS v230/v232, le pack des cinq documents) — chaque pack
+     relu pièce à pièce au dézippage, chaque empreinte re-vérifiée ; la
+     commande du maître honorée : LA SOUMISSION ET LA PRÉSENTATION
+     portées à la version courante v0.23.2 et publiées au concept avec
+     le complet.
+
+V10 — L'ÉDITION CLOSE ET LES GAPS NOMMÉS : la génération corrective
+     v0.23.2 née (l'écart de l'Entrée 384 soldé : les cinq pièces
+     régénérées, le linter étendu aux quatre règles nouvelles, les
+     trois packs à la version courante). LES GAPS (jamais simulés,
+     jamais re-tirés) : la cible TPL-ADD-v4 (≥ 15/18) MANQUÉE à 7/18 —
+     le gap résiduel par classe de refus (expansion-divergente ×9 ·
+     hors-format ×2 · ID-inconnu ×1) ; la cible ≤ 1 % du coût des
+     gardes NON TRANCHÉE au bac émulé (l'appel système absent, le coût
+     56,0 c mesuré) ; la composition d'entrelacement GHASH (~1,6
+     c/octet@4096 projetée, la cible ≤ 2,0 probablement tenue — LA
+     MESURE SUIVANTE, jamais déclarée avant mesure) ; le re-run Tamarin
+     de l'amendement (le modèle re-haché, le geste du maître) ; les 28
+     livraisons H7, l'annotateur, les machines du dudect — au geste du
+     maître ; la seconde machine (une seule au bac).
