@@ -16,6 +16,7 @@ CONCEPT = 24367343
 VERSION_RECORD = 24450872
 
 sys.path.insert(0, "/home/z/my-project/scripts")
+sys.path.insert(0, "/home/z/my-project/depot/scripts")
 
 def md5_of(path):
     h = hashlib.md5()
