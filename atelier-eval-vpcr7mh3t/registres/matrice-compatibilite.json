@@ -1,0 +1,22 @@
+{
+  "regle": "TOUT triplet (checkpoint, kit, juges) INCOMPATIBLE est REFUSÉ fail-closed — la matrice confronte les VECTEURS DE VERSIONS (le manifeste du kit, la version des juges, la plage du checkpoint)",
+  "colonnes": [
+    "checkpoint",
+    "kit",
+    "juges"
+  ],
+  "exemples": [
+    {
+      "checkpoint": "v0.23.2",
+      "kit": "TRIADE-kit v1.x",
+      "juges": "la chaîne v2 + validateurs v3",
+      "verdict": "COMPATIBLE"
+    },
+    {
+      "checkpoint": "antérieur au kit",
+      "kit": "toute version",
+      "juges": "toute",
+      "verdict": "REFUS (le vecteur de versions incompatible — la porte ne se rend pas)"
+    }
+  ]
+}

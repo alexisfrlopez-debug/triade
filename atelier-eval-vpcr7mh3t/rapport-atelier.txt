@@ -1,0 +1,28 @@
+RAPPORT D'ATELIER — vpcr7mh3t (la vague 15) : L'EVAL MÉCANIQUE RE-JOUABLE
+— LA CAPABILITY LADDER ANTI-RÉCITATION, L'ANTI-GAMING, LA MATRICE
+============================================================================
+(23/11/2026, le plan gelé PLAN-VPCR7MH3T.md sha256 bb65164c8f7d31be… AVANT
+toute donnée)
+LES JUGES EN HARNAÏS RUNNABLE (eval_ladder.py) : le round-trip
+keystone==capstone==keystone, le juge d'expansion, l'oracle différentiel,
+la batterie de mutation, les certificats z3 aux frontières — LA CHAÎNE
+v2 INTÉGRALEMENT + les validateurs v3 (aucun juge affaibli) ; les 18
+tâches held-out SANS notation dorée (les validateurs seuls — le TEST du
+corpus).
+LA CAPABILITY LADDER : rung 0 LA RÉCITATION (attendu ÉCHEC — la sonde :
+la récitation exacte = LA CONTAMINATION CONSTATÉE) ; rung 1 LA DÉRIVATION
+depuis les définitions (zéro divergence — le geste au poste) ; rung 2
+LOCALISER (les 4 refus fail-closed) ; rung 3 ÉDITER ; rung 4 AJOUTER ;
+rung 5 LA BOUCLE COMPLÈTE ; rung 6 LE TERRAIN (le geste développeur, NON
+CONTAMINABLE) — CHAQUE RUNG NOMME LA FRONTIÈRE DU MODÈLE, jamais une
+moyenne trompeuse.
+LE VÉCU AU BANC : le rung 4 sur loupe-05-sha256 — la notation exemplaire
+VERDIE par la chaîne complète (le harnais runnable).
+LA MATRICE checkpoint↔kit↔juges fail-closed consignée (sha256
+9016732760df4d7a… — tout triplet incompatible REFUSÉ, la porte ne se
+rend pas).
+LE GÉNÉRATEUR PROCÉDURAL : les contrats neufs depuis la grammaire du
+dictionnaire (le générateur de tâches du corpus — la ré-génération du
+held-out à chaque version, l'eval RÉSISTE à la contamination) ; la sonde
+de contamination du corpus (2i7iy3xmg) — re-jouable au poste.
+LA GARDE : le sceau-I 14/14 ; entrée append-only.
