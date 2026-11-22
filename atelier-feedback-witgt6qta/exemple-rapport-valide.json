@@ -1,0 +1,40 @@
+{
+  "schema": "TRIADE-FEEDBACK-v1",
+  "kit": {
+    "contract": "CONTRAT-<version>",
+    "manifest": "MANIFESTE-<sha256>"
+  },
+  "agent": {
+    "family": "famille-non-nommee",
+    "identifier_as_exposed": "identifier_as_exposed",
+    "checkpoint": "not_exposed"
+  },
+  "env": {
+    "os": "non-nomme",
+    "cpu_class": "non-nommee"
+  },
+  "capability": {
+    "constantes_128": "non-mesure",
+    "smoke_notation": "non-mesure"
+  },
+  "measured": {
+    "operations": 3,
+    "refus_par_classe": {
+      "ptr_non_resolu": 1
+    },
+    "tokens_natifs": 2211,
+    "wall": 13.2,
+    "defauts_fl": [
+      {
+        "classe": "frontiere-motif",
+        "locus": "piece",
+        "evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  },
+  "commentary": "",
+  "consent": {
+    "public_digest": "c73940f006fd50d11fca31762a6fd55ac74bfbdfdc2bb23b75bd5f445ed622fb",
+    "licence": "CC-BY-4.0"
+  }
+}

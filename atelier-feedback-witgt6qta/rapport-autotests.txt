@@ -1,0 +1,7 @@
+(1) la phrase marquee plantee : ATTRAPÉE, le rapport REFUSÉ
+(2) le champ requis retire (consent) : REFUSÉ nommé
+(3) le secret reel plante (ghp_...) : ATTRAPÉ, le rapport REFUSÉ
+(4) le rapport d'exemple valide (l'extraction mecanique exacte + le gabarit) : VERT
+(5) le cout token marginal de la part measured : l'invocation seule ≈ 5 tokens (la part EXTRAITE du journal deja consigne, jamais retapee) — ≈ 0 VÉCU
+(6) l'anonymat du rapport (aucun chemin reel, aucune cle) : VERT
+(7) offline (aucun module reseau importe) : VERT

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TRIADE-FEEDBACK-v1",
+  "title": "TRIADE-FEEDBACK-v1 — le schéma du rapport adopteur (witgt6qta, la vague 15)",
+  "type": "object",
+  "required": ["schema", "kit", "agent", "env", "capability", "measured", "consent"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "TRIADE-FEEDBACK-v1"},
+    "kit": {
+      "type": "object", "required": ["contract", "manifest"],
+      "properties": {
+        "contract": {"type": "string"},
+        "manifest": {"type": "string"}
+      }
+    },
+    "agent": {
+      "type": "object", "required": ["family"],
+      "description": "identifier_as_exposed : l'identifiant TEL QU'EXPOSÉ (jamais un secret) ; checkpoint not_exposed si inconnu",
+      "properties": {
+        "family": {"type": "string"},
+        "identifier_as_exposed": {"type": "string"},
+        "checkpoint": {"type": "string", "description": "not_exposed si inconnu"}
+      }
+    },
+    "env": {
+      "type": "object", "required": ["os", "cpu_class"],
+      "properties": {
+        "os": {"type": "string"},
+        "cpu_class": {"type": "string"}
+      }
+    },
+    "capability": {
+      "type": "object", "required": ["constantes_128", "smoke_notation"],
+      "properties": {
+        "constantes_128": {"type": "string",
+          "description": "le verdict de la dérivation des 128 constantes (reussi/refusé + le compte)"},
+        "smoke_notation": {"type": "string"}
+      }
+    },
+    "measured": {
+      "type": "object",
+      "description": "EXTRAITE MÉCANIQUEMENT du journal de session (jamais retapée)",
+      "required": ["operations", "refus_par_classe", "tokens_natifs", "wall"],
+      "properties": {
+        "operations": {"type": "integer", "minimum": 0},
+        "refus_par_classe": {"type": "object"},
+        "tokens_natifs": {"type": "integer", "minimum": 0},
+        "wall": {"type": "number", "minimum": 0},
+        "defauts_fl": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["classe", "locus", "evidence_sha256"],
+            "properties": {
+              "classe": {"type": "string"},
+              "locus": {"enum": ["kit", "piece"]},
+              "evidence_sha256": {"type": "string"}
+            }
+          }
+        },
+        "regime": {"type": "object"},
+        "memo": {"type": "object"},
+        "audit": {"type": "object"}
+      }
+    },
+    "commentary": {
+      "type": "string", "maxLength": 5000,
+      "description": "optionnel ≤500 tokens, MARQUÉ NON VÉRIFIÉ — la seule part budgétée"
+    },
+    "consent": {
+      "type": "object", "required": ["public_digest", "licence"],
+      "properties": {
+        "public_digest": {"type": "string"},
+        "licence": {"const": "CC-BY-4.0"}
+      }
+    },
+    "signature_adopteur": {
+      "type": "string",
+      "description": "optionnelle — JAMAIS l'ancre du projet"
+    }
+  }
+}

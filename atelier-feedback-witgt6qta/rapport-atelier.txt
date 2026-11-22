@@ -1,0 +1,46 @@
+RAPPORT D'ATELIER — witgt6qta (la vague 15) : L'OUTIL `triade feedback` +
+LE SCHÉMA TRIADE-FEEDBACK-v1 GELÉ PAR EMPREINTE AVANT TOUT RAPPORT
+============================================================================
+(22/11/2026, la session de la vague 15 — le plan gelé PLAN-WITGT6QTA.md,
+sha256 07515122a9230bc3… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée)
+
+LE SCHÉMA PRÉ-ENREGISTRÉ : TRIADE-FEEDBACK-v1.schema.json — sha256
+d7e53f66077812f9… gelée par empreinte AVANT le premier rapport généré
+(l'ordre du plan tenu) ; les champs au plan : kit/contract/manifest,
+agent (family, identifier_as_exposed, checkpoint not_exposed si inconnu),
+env, capability (128 constantes + smoke), measured (opérations, refus par
+classe, tokens natifs, wall ; défauts F/L locus kit|piece +
+evidence_sha256 ; régime/mémo/audit), commentary optionnel ≤500 tokens
+MARQUÉ NON VÉRIFIÉ, consent (public_digest, CC-BY-4.0), signature adopteur
+optionnelle (JAMAIS l'ancre du projet).
+
+L'OUTIL (triade_feedback.py) :
+- LA PART MEASURED EXTRAITE MÉCANIQUEMENT du journal de session JSONL
+  (jamais retapée — le coût token marginal mesuré ≈ 0 : l'invocation
+  seule ≈ 5 tokens, les données DU JOURNAL déjà consigné) ;
+- LES PORTES fail-closed VÉCUES : la phrase de test marquée plantée dans
+  un faux journal ATTRAPÉE et le rapport REFUSÉ ; le champ requis retiré
+  (consent) REFUSÉ nommé ; le secret réel planté (ghp_…) ATTRAPÉ et le
+  rapport REFUSÉ ; l'anonymisation mécanique (chemins/usernames) à la
+  porte ; la re-vérification de schéma standalone (`verifier`) ;
+- LA SORTIE : report-<date>-<kitver>.json + le gabarit d'issue GitHub
+  PRÉ-REMPLI — JAMAIS d'envoi automatique (le geste humain D122), le
+  texte du gabarit porte la consigne de relecture ;
+- OFFLINE (R10) : AUCUN appel réseau à la génération — la vérification
+  structurelle vécue (aucun module réseau importé, test 7).
+
+L'ÉCART NOMMÉ (la règle retirée par le test vécu) : la règle hex-64 du
+premier passage de la porte de secrets ATTRAPAIT les evidence_sha256
+LÉGAUX (faux positif au test 4) — la règle RETIRÉE (un sha256 pur n'est
+pas un secret, gitleaks ne le drape pas), les sept autres classes de
+motifs demeurent, le contrôle négatif (1)(3) RE-PASSÉ VERT.
+
+LES LIVRABLES : TRIADE-FEEDBACK-v1.schema.json · triade_feedback.py ·
+tests_feedback.py (les 7 contrôles vécus, rapport-autotests.txt) ·
+exemple-rapport-valide.json · DOC-FEEDBACK.md (la consigne agent) ·
+le présent rapport.
+
+LA GARDE : le sceau-I 14/14 avant et après (l'atelier n'écrit QUE dans
+son dossier) ; aucun coffre réel ni phrase réelle touchés ; entrée
+append-only au journal (la présente consignée au worklog de la vague).
