@@ -1,0 +1,30 @@
+RAPPORT D'ATELIER — vxf37231r (la vague 15) : LES EXTENSIONS
+DOCUMENTÉES-NON-APPLIQUÉES ET LES RÉSIDUS DE COHÉRENCE — LE LINTER v2
+============================================================================
+(23/11/2026, le plan gelé PLAN-VXF37231R.md sha256 b76f9d2994e0e547… AVANT
+toute donnée)
+LE LINTER v2 (linter_v2.py) — LES CINQ CLASSES nommées à l'instruction :
+(A) LES PHRASES SÉMANTIQUES RETIRÉES (« le compilateur disparaît »
+encore en spec §1 vs D182 — la formulation exacte exigée : le
+compilateur N'EST JAMAIS LIVRÉ) ; (B) LES PLAGES DÉCISIONNELLES
+annoncées vs les entrées listées (D1–Dxxx contre la table à D137 — la
+plage qui s'étend au-delà du journal : ROUGE) ; (C) LES SÉQUENCES DE
+FAISABILITÉ (la Table 19 porte 7/18 à la vague 14 — TOUTE autre valeur
+sans marqueur d'époque daté : ROUGE ; la campagne courante v5 nommée à
+part) ; (D) LES CLAIMS DOI/VERSION POST-DÉPÔT (le manuscrit « v0.23.1
+at this writing » vs le dépôt v0.23.2 vérifié) ; (E) LES GALLICISMES EN
+(« tranchée », « five-thirds escrow »).
+LE CONTRÔLE NÉGATIF VÉCU : UNE VIOLATION PLANTÉE PAR CLASSE —
+**5/5 ATTRAPÉES, le linter est PORTANT** (exit 0).
+LES ÉCARTS AU PLAN NOMMÉS (la session a porté la priorité aux treize
+ateliers outillants) : l'ancrage Rekor/RFC3161 des témoins d'époque (le
+kit du format du témoin + la vérification machine offline fail-closed +
+le delta au modèle de menace aux deux bords) DEMEURE au geste suivant ;
+le moteur sentinelle Windows SACL/journal 4663/ETW + les miroirs
+Windows de la garde RAM DEMEURENT au geste suivant (l'outillage mingw
+est au bac) ; LES CINQ PIÈCES RÉGÉNÉRÉES au linter vert (la génération)
+appartiennent à LA COMMANDE DU MAÎTRE (la release de la vague) — le
+linter v2 est PRÊT à les juger ; les corrections vivent en décisions
+nouvelles, JAMAIS en réécriture des entrées historiques.
+LA GARDE : le sceau-I 14/14 ; aucun coffre réel touché ; entrée
+append-only.
