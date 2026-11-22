@@ -1,0 +1,43 @@
+RAPPORT DE L'ATELIER TPL-ADD-v4 842vqyy1k — LA VAGUE 14 (22/11/2026)
+====================================================================
+
+Au plan gelé PLAN-842VQYY1K.md (empreinte 4184dc00a9bdf58f… consignée AVANT
+toute mesure). Graines 20261117 reconduites, l'ordre JAMAIS re-tiré, le
+budget 3 consigné par tentative au JSONL (journal_v4.jsonl, la garde-brut
+archivée par appel).
+
+LES QUATRE LEVIERS :
+(1) LA GRAMMAIRE AU DÉCODAGE — le CLI z-ai n'expose PAS response_format
+    (le constat v3 RECONDUIT, l'écart d'instrument nommé : la grammaire
+    vit au prompt + aux validateurs, le masque de logits hors instrument) ;
+(2) LE SQUELETTE À TROUS TYPÉS — l'énoncé des trous typés au prompt
+    (registre, offset, cible) : des lignes courtes, une instruction par
+    ligne, jamais d'expansion multiple ;
+(3) LA RÉPARATION PAR CONTRE-EXEMPLE — le prompt de réparation porte LE
+    DIFF EXACT attendu/obtenu + les QUATRE motifs canoniques corrigés
+    (l'IAT en call, l'opérande mémoire unique, movzx 32 bits, l'ID jamais
+    le symbole en clair) ;
+(4) L'EXEMPLAIRE PAR PROCHE CONTRAT — la notation scellée voisine (14
+    lignes de code, la référence LITTÉRALE du dépôt) injectée au prompt.
+
+LA MESURE (les 18 mêmes tâches, l'ordre de la graine) : AJOUTER **7/18
+verts** (loupe-11-defilement CONVERTI — un refus EXPANSION-DIVERGENTE de
+v3, la boucle de réparation a vécu sa première conversion ajouter ;
+loupe-16-saisie CONVERTI ; loupe-15-curseur PERDU — un vert v3, la
+variance du modèle nommée ; les verts v3 reconduits : 02-non, 03, 13, 18,
+04, 05... les cinq verts v3 reconduits + loupe-05) ; LE COÛT MÉDIAN PAR
+CHANGEMENT VALIDÉ **3 990 natifs ≤ 4 500 TENU**.
+LA CIBLE PRÉ-ENREGISTRÉE ≥15/18 **MANQUÉE à 7/18** — le gap demeure,
+jamais masqué : les refus restent dominés par l'expansion-divergente (la
+stabilité de l'écriture machine face au juge d'expansion, le gap de
+capacité nommé depuis v3) ; le déplacement v3→v4 par classe consigné au
+registre (les conversions loupe-11/16 vs la perte loupe-15 — le gap s'est
+DÉPLACÉ, la boucle de contre-exemple CONVERTIT désormais des refus v3).
+
+AUCUN artefact scellé touché ; les refus honnêtes au registre append-only,
+jamais re-tirés ; aucun juge affaibli (les validateurs v3 intacts, la
+chaîne d'assemblage v2 intègre).
+
+PIÈCES : campagne_v4.py · journal_v4.jsonl (27 appels) · garde-brut-v4.jsonl ·
+garde-prompts/ (27 prompts archivés) · resultats_v4.jsonl (18 lignes
+canoniques) · le présent rapport.

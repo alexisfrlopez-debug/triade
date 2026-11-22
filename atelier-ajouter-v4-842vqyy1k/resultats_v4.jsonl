@@ -4,3 +4,15 @@
 {"tache": "ajouter-v4-i26111704", "bloc": "loupe-12-aller", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8324}, {"essai": 1, "total": 12958}, {"essai": 2, "total": 12958}, {"essai": 3, "total": 12958}], "verdict": "REFUS Refus"}
 {"tache": "ajouter-v4-i26111705", "bloc": "loupe-03-fermer", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 3355}], "verdict": "VERT"}
 {"tache": "ajouter-v4-i26111706", "bloc": "loupe-10-peinture", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8923}, {"essai": 1, "total": 13618}, {"essai": 2, "total": 13582}, {"essai": 3, "total": 13582}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111707", "bloc": "loupe-09-ecran", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8878}, {"essai": 1, "total": 13497}, {"essai": 2, "total": 13497}, {"essai": 3, "total": 13497}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111708", "bloc": "loupe-17-sauver", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8137}, {"essai": 1, "total": 12801}, {"essai": 2, "total": 12801}, {"essai": 3, "total": 12801}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111709", "bloc": "loupe-16-saisie", "vert": true, "essais": 2, "journaux": [{"essai": 0, "total": 5080}, {"essai": 1, "total": 6365}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111710", "bloc": "loupe-13-recherche", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 3841}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111711", "bloc": "loupe-14-suivant", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8681}, {"essai": 1, "total": 13334}, {"essai": 2, "total": 13334}, {"essai": 3, "total": 13334}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111712", "bloc": "loupe-18-quitter", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 3990}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111713", "bloc": "loupe-06-md5", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 6687}, {"essai": 1, "total": 9810}, {"essai": 2, "total": 9784}, {"essai": 3, "total": 9784}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111714", "bloc": "loupe-15-curseur", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 4546}, {"essai": 1, "total": 5754}, {"essai": 2, "total": 5754}, {"essai": 3, "total": 5754}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111715", "bloc": "loupe-04-cadre", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 3166}], "verdict": "VERT"}
+{"tache": "ajouter-v4-i26111716", "bloc": "loupe-08-ligne", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 7751}, {"essai": 1, "total": 12407}, {"essai": 2, "total": 8766}, {"essai": 3, "total": 5081}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111717", "bloc": "loupe-01-ouvrir", "vert": false, "essais": 4, "journaux": [{"essai": 0, "total": 8318}, {"essai": 1, "total": 9224}, {"essai": 2, "total": 5536}, {"essai": 3, "total": 5536}], "verdict": "REFUS Refus"}
+{"tache": "ajouter-v4-i26111718", "bloc": "loupe-05-sha256", "vert": true, "essais": 1, "journaux": [{"essai": 0, "total": 4398}], "verdict": "VERT"}
