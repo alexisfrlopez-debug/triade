@@ -1,0 +1,210 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.23.3 (la vague 15, la release)
+=========================================================================
+(la commande du maître « ok pour la suite (release de la vague etc…) » ;
+la vague 15 close à l'Entrée 387 — les dix-sept instructions exécutées
+en deux sessions, les instructions archivées au coffre, le /instructions
+laissé vide ; la release porte LES CINQ PIÈCES RÉGÉNÉRÉES au linter v2
+de vxf37231r, l'atelier qui livra les cinq classes au contrôle négatif
+5/5 ; les plans gelés de la vague 15 demeurent, le sceau-I re-vérifié
+AVANT et APRÈS la génération)
+
+V1 — LE LINTER v233 AUX CINQ PIÈCES : 223 VERT, 0 ROUGE.
+     L'EXTRACTION INTÉGRALE : les tokens numériques extraits des cinq
+     pièces (manuscrit ~1 989 · spécification ~1 645 · Livre 566 ·
+     preuves ~727 · présentation ~170), CHACUN confronté aux QUATRE
+     classes nommées — (1) LES CANONS BRUTS (les registres et rapports
+     des ateliers des vagues 9 à 15 — LES DIX-SEPT ATELIERS DE LA VAGUE
+     15 AJOUTÉS au manifeste des sources : les registres de la
+     composition, du TCB, du moteur d'oracles, du journal v5, du corpus,
+     du kit) ; (2) LES ARITHMÉTIQUES DÉRIVÉES (les valeurs recalculées
+     par code : la composition 2 978,2/4 096 = 0,7271, le rapport au
+     silicium 2 978,2/2 357,9 = 1,26×, la chaîne 204 544,5/2 978,2 =
+     68,7×, la cible au pourcentage 0,7271/2,0 = 36 %, le moteur
+     0,9599…/0,000185 = 5189×, la médiane v5 des sommes par tâche
+     verte = 4 604, les splits du corpus recomptés des fichiers livrés
+     28/4/4 tâches · 77/16/16 triples = 109, les 156 pièces du kit du
+     MANIFESTE, le harnais 36/36 et le corridor 424 o du registre, LES
+     COMPTES DES JOURNAUX VIVANTS recalculés des fichiers mêmes) ; (3)
+     LES HISTORIQUES DATÉS (chaque liste datée de son édition — les
+     pièces v0.23.2 de la vague 14 AJOUTÉES à la table) ; (4) LA CLASSE
+     STRUCTURELLE (les identifiants, les dates, les versions, les
+     graines, les normes, les DOI Zenodo — le 24442951 au jour de la
+     rédaction, les records 24420007/24438614/24442241 datés, les
+     numéros d'Entrée, les ISBN).
+     LES CINQ CLASSES v2 INTÉGRÉES (la clause verbatim : les zones
+     marquées « pièce verbatim » du document de preuves sont la trace
+     historique append-only — c'est le linter v2 lui-même qui cite les
+     phrases qu'il attrape — l'exemption est STRUCTURELLE, au marqueur,
+     comme la règle T/X du v232 admettait ses marqueurs d'époque datés) :
+     (A) la phrase sémantique « le compilateur disparaît » JAMAIS à la
+     voix (la formulation exacte D182 portée à la spec §1 : le
+     compilateur N'EST JAMAIS LIVRÉ, la notation scellée l'est — les
+     DEUX citations historiques reformulées sans la forme littérale) ;
+     (B) les plages décisionnellesannoncées contre le journal (D1–D251
+     recompté) ; (C) les faisabilités n/18 datées partout (TOUT n/18
+     hors le canon 7/18 de la Table 19 exige le marqueur 2026 dans les
+     soixante caractères qui précèdent ; la campagne courante v5 (nov.
+     2026) nommée à part à 5/18 — LA CIBLE MANQUÉE, la lecture
+     défavorable consignée) ; (D) le claim « at this writing » à la
+     version courante v0.23.2 ; (E) les gallicismes EN guéris («
+     settled on pieces », la formulation anglaise des cinq parts à
+     seuil trois). LES RÈGLES v232 RECONDUITES : les chaînes de version
+     (les bandeaux v0.23.3, la date du 23 novembre 2026, la plage
+     d'Entrées 305–387, le DOI courant 24442951, le changelog gelé aux
+     lignes v0.23.2/v0.23.3, le bandeau du Livre « Version 1.7 », la
+     date du Livre alignée), les décompositions recomposées par code
+     depuis les CSV/JSONL, TOUT ratio publié portant ses opérandes non
+     arrondis (la composition 0,7271 ← 2 978,2/4 096 ; le moteur 5189 ←
+     0,960/0,000185 ; le silicium 1,26 ← 2 978,2/2 357,9 ; la chaîne
+     68,7 ← 204 544,5/2 978,2 — les DEUX étages, la présence par pièce
+     et la proximité ±400 au manuscrit), la détection T/X hors marqueur
+     d'époque daté.
+
+V2 — LE CONTRÔLE NÉGATIF du linter : LES divergences volontaires
+     injectées REFUSÉES AUX ONZE NOMS — la somme mémoire mutée
+     2 098 → 2 198 (l'extraction intégrale refuse), les opérandes M4
+     retirés 6.912/2.056 → 6.9/2.1 (la règle des opérandes refuse aux
+     deux étages), la fermeture privée de ses opérandes (20.715 +
+     16.497 + 0.213 retirés — refusé), la grille T/X injectée sans
+     marqueur d'époque (refusée), l'opérande du moteur mutée 0,000185 →
+     0,000285 ms aux preuves (l'exigence du canon ET la règle des
+     opérandes refusent), la phrase sémantique plantée à la spec
+     (la classe (A) refuse), un 15/18 non daté planté au manuscrit
+     (la classe (C) refuse), le gallicisme « tranchée » planté au
+     manuscrit (la classe (E) refuse), le ratio ajouter muté −28,4 →
+     −28,5 (la classe RATIOS refuse), les canons v14 retirés par la
+     mutation (l'exigence refuse) — LE LINTER EST PORTANT.
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (la garde du sceau
+     I : QUATORZE arbres VERTS vérifiés AVANT et APRÈS la génération —
+     aucune pièce scellée touchée ; les scellés 0xDF00/0xDFC0, les
+     couloirs 0xE200-0xEA00/0xF300/0xF800, le corridor 0xFC00 de la
+     vague 15 lui-même : l'émission au bac de laboratoire, jamais dans
+     le binaire scellé).
+
+V4 — LES DEUX ERRATA DE PASSE NOMMÉS À LA PRÉPARATION (la recomposition
+     par code des fichiers mêmes, la doctrine append-only) : (1) LE
+     REJEU TCB — la passe consignée au rapport k69mvt43j invoquait z3
+     avec l'option d'entrée standard ET un argument fichier (la sortie
+     vide, les 116 verdicts consignés vides : 0/58, 0/58, 116 écarts —
+     LA TRACE DEMEURE, un échec mesuré est une pièce aussi précieuse
+     qu'un vert) ; LA PASSE CORRIGÉE (`z3 <fichier>`) : 58 décharges
+     UNSAT + 58 mutations SAT, ZÉRO écart — l'erratum vit APPEND-ONLY
+     au registre (registres/rejeu-erratum-invocation.txt), le rapport
+     et le harnais demeurés octet pour octet ; (2) LES SPLITS DU CORPUS
+     — le rapport 2i7iy3xmg porte les comptes de la première passe
+     (25 tâches / 69 lignes · 3/12 · 4/16 — la passe AVANT l'admission
+     des 13 triples du faux positif /Home/End : 97 ≠ 109, la coquille
+     interne nommée) ; la recomposition des fichiers livrés (le
+     manifeste au sha256) : 28/4/4 tâches · 77/16/16 triples = 109 —
+     les valeurs de la voix courante portées aux pièces, le rapport
+     demeuré verbatim.
+
+V5 — L'ÉTAT DE L'ÉDITION v0.23.3 : les en-têtes pdftitle/running-header
+     portés à v0.23.3, la bannière de date au 23 novembre 2026 (la
+     release de la vague 15 au résumé), les abstracts EN/FR (la
+     faisabilité datée 3/18 → 6/18 → 7/18 → la v5 (nov. 2026) à 5/18 la
+     cible manquée consignée), le changelog gelé aux lignes v0.23.1/
+     v0.23.2/v0.23.3, la disponibilité des données au DOI 24442951 (la
+     v0.23.2 au jour de la rédaction — les records 24420007/24438614/
+     24442241/24442951 datés), la plage d'Entrées 305–387, LES MACROS
+     régénérées (worklog 14 092, la plage D1–D251 inchangée — aucune
+     décision nouvelle : l'arbitrage des propositions du triage
+     appartient au développeur), la date de couverture du Livre
+     alignée (23 novembre 2026), le bandeau « Version 1.7 ».
+
+V6 — LES RÉSULTATS DE LA VAGUE 15 PORTÉS AUX PIÈCES : LA COMPOSITION
+     0,7271 c/octet@4096 (la médiane 2 978,2 c [IQR 5,6] par appel de
+     4 096 octets, n=20, le cœur épinglé, la machine virtualisée
+     nommée ; LA CIBLE PRÉ-ENREGISTRÉE ≤ 2,0 TENUE au 36 % ; OpenSSL
+     EVP 0,5757 — 2 357,9 c [IQR 19,3] — au même silicium : le couloir
+     à 1,26× de la bibliothèque réglée ; LE REPLI la chaîne scellée
+     49,9376 — 204 544,5 c [IQR 7 223,5] — : le couloir 68,7× DEVANT,
+     AUCUN contrôle retiré ; la parité au rig : les 4 112 octets
+     identiques, la garde verte avant la mesure ; la décomposition
+     11,63 c/bloc = CTR 4,76 + GHASH agrégé 4,92 + jointure 1,95 — la
+     projection v14 (~1,6) DÉPASSÉE par la mesure, jamais une
+     projection présentée comme mesure) ; LE TCB 58→34→11 (le registre
+     par étages : 24 CADRE par preuve de layout, 23 CTX à la
+     composition, LES 11 OS les assomptions nommées ; le corridor des
+     onze à 0xFC00 : 424 o, 116 instr, round-trip vert, R4/R7
+     préservés ; LE HARNAIS 36/36 — les onze admissions honnêtes, la
+     face basse et la face haute refusées, LA FACE D'INDEX refusée ;
+     le coût du dispatch nommé : la médiane 22 instr/appel contre
+     l'inline 7) ; LE MOTEUR D'ORACLES NATIF (le jumeau Unicorn
+     LIGNE-IDENTIQUE aux deux corps scellés — 128 vecteurs chacun ; la
+     mémo content-addressée, le gate au premier vecteur, l'audit
+     1-sur-10 chaîné zéro écart ; les médianes 0,960 ms → 0,000185 ms
+     au hit : LE GAIN 5189× aux opérandes non arrondies) ; TPL-ADD-v5
+     5/18 (LA CIBLE ≥ 15/18 MANQUÉE, le coût médian 4 604 — la cible
+     ≤ 4 500 manquée de 104 — LA LECTURE DÉFAVORABLE CONSIGNÉE : la
+     variance du sujet au CLI nommée, les trois pertes avaient verti à
+     la v4 aux mêmes prompts, LES JUGES INTACTS ; le déplacement v4→v5
+     par classe : 4 les deux vertes, 1 conversion, 3 pertes, 10 les
+     deux refusées) ; H7 SERVIE (le générateur re-exécuté
+     BIT-IDENTIQUE au sha canonique 2de7d488, l'agrégateur fail-closed
+     au plafond D207 vécu au refus, le second annotateur re-autotesté,
+     le confound 1,5B NOMMÉ 0/64) ; CF3-v3 AU VERDICT MACHINE (L3
+     VERIFIED 1 122 pas ; L1, L2 et les trois témoins INCOMPLETE au
+     mur de mémoire 4 Go — la cause nommée, l'évaluation partielle la
+     voie du poste réel ; le port ProVerif aux six requêtes actives,
+     les six écarts de sémantique nommés) ; L'ÉCOSYSTÈME D'ADOPTION
+     (le corpus aux 109 triples — les splits 28/4/4 · 77/16/16
+     recomptés des fichiers, le TEST sans dorée, le canari unique, les
+     10 rebuilds bit-identiques ; le gym à la récompense typée — LA
+     RÉCOMPENSE = LE VERDICT DU JUGE, jamais la similarité ; la ladder
+     aux rungs qui nomment la frontière ; le guide d'agent aux onze
+     règles, AUCUNE ancre expédiée ; la doc EN au noyau — 216/167
+     tokens aux cibles ≤ 1 500/≤ 800 ; le kit aux 156 pièces PAR
+     CONSTRUCTION, la porte de compatibilité fail-closed, AUCUNE ancre
+     ; les protocoles matériels pré-enregistrés, l'agrégateur au refus
+     vécu ; le linter v2 aux cinq classes).
+
+V7 — LES CANONS RECOMPOSÉS PAR CODE (la règle (B) du linter, chaque
+     valeur recalculée du fichier brut même) : TPL-ADD-v5 5/18 et la
+     médiane 4 604 recomptés du journal_v5.jsonl et du log de campagne
+     ; le TCB [58, 24, 23, 11] et tcb_final 11 du registre par étages
+     ; le harnais 36/36 et le corridor 424 o du harnais-tcb.json ;
+     l'erratum du rejeu relu (la passe corrigée 58 + 58) ; la
+     composition 0,7271 et la cible 2,0 du registre
+     mesure-entrelacement.json ; le corpus 109 recompté des fichiers
+     livrés ; le kit 156 du MANIFESTE.txt ; le moteur 128 vecteurs et
+     le gain 5189 du registre-oracles.json.
+
+V8 — LES CINQ PIÈCES RÉGÉNÉRÉES : le manuscrit v0.23.3 (40 pages, les
+     cinq classes portées, la vague 15 au corps), la spec v0.15.8
+     (69 pages, la phrase sémantique retirée, les faisabilités datées),
+     le Livre v1.7 (29 pages, la date alignée), les preuves v0.23.3
+     (15 pages : les DIX-SEPT rapports verbatim + la consignation + les
+     deux errata nommés + la table des empreintes), la présentation
+     v233 (3 pages : les sept points, l'état des éditions, les
+     empreintes gravées) — LES EMPREINTES SHA-256 DES CINQ au manifeste
+     empreintes_livrables_v0.23.3.txt, les empreintes croisées gravées
+     (la présentation porte les quatre autres, les preuves les trois
+     pièces de contenu, le manifeste les cinq).
+
+V9 — LES TROIS PACKS ASSEMBLÉS À LA VERSION COURANTE : TRIADE_soumission_
+     v0.23.3.zip, TRIADE_complet_v0.23.3.zip et TRIADE_presentation_
+     v0.23.3.zip — le linter v233 EXIGÉ vert avant l'assemblage (le
+     refus ferme), chaque archive testée au dézippage, le pack de
+     présentation relu pièce à pièce (chaque empreinte re-vérifiée).
+
+V10 — LA RELEASE ET LES GAPS NOMMÉS : la publication au concept
+     10.5281/zenodo.24367343 (la voie newversion → bucket →
+     métadonnées → PUBLISH, les md5 recoupés byte-byte au bord anonyme,
+     le DOI de version minté), la livraison au coffre (la racine, le
+     /test, le /livrables aux trois packs v0.23.3, les supersédés au
+     lot ARCHIVE, le /instructions DEMEURÉ VIDE vérifié), les miroirs
+     (le push GitHub vérifié anonymement, la sync du miroir Drive — le
+     bundle régénéré, le worklog, l'OU-TROUVER, REPRISE —, la
+     vérification des trois bords). LES GAPS NOMMÉS (jamais simulés) :
+     la cible TPL-ADD-v5 ≥ 15/18 manquée à 5/18 (la voie nommée : le
+     décodage contraint, les paires DPO, la relance à graines
+     identiques) ; les cinq lemmas au mur de mémoire du bac (les
+     modèles prêts, le poste réel RAM ≥ 16 Go au geste du maître) ; la
+     cible ≤ 1 % du coût des gardes au kit terrain (la machine nommée)
+     ; les 28 livraisons H7, l'annotateur, l'endpoint de la seconde
+     famille, les machines du dudect (≥ 2), la carte RV64 — au geste
+     du développeur ; les sept fragments EN restants et le miroir FR
+     de la doc ; les dépôts Zenodo du kit et du corpus — JAMAIS mintés
+     sans commande ; UNE SEULE MACHINE virtualisée.

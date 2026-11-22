@@ -20,6 +20,9 @@ DOI_COURANT = "10.5281/zenodo.24442951"  # la v0.23.2 au jour de la rédaction
 
 def remplace(t: str, ancien: str, nouveau: str, nom: str) -> str:
     if ancien not in t:
+        if nouveau in t:
+            print(f"  — {nom} (déjà porté)")
+            return t
         print(f"ANCRE MANQUANTE : {nom}")
         sys.exit(2)
     if t.count(ancien) != 1:
@@ -45,6 +48,13 @@ def main() -> int:
 
     t = OUT.read_text(encoding="utf-8")
 
+    t = remplace(
+        t,
+        "\\newcommand{\\nbLignesJournal}{13,650}",
+        f"\\newcommand{{\\nbLignesJournal}}{{{n_journal:,}}}",
+        f"nbLignesJournal 13,650 → {n_journal:,} (la consignation "
+        "automatique des builds D134 — la ligne du build_pdf.sh de la "
+        "sync, la génération postérieure à la ligne)")
     t = remplace(
         t,
         "\\newcommand{\\nbLignesWorklog}{14,047}",

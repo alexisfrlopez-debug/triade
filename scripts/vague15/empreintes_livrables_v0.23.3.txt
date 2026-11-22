@@ -1,8 +1,8 @@
-LES EMPREINTES DES LIVRABLES — la vague 15, l'édition v0.23.3 (la release)
-(chaque pièce sha256 ; le manifeste fait loi)
+LE MANIFESTE DES EMPREINTES — le pack TRIADE v0.23.3 (la vague 15, la release)
+(chaque empreinte RECALCULÉE du fichier même — le linter re-vérifie)
 
-TRIADE_manuscrit_v0.23.3.pdf  sha256:0d337e604c44bcb5e52745dd51988c686c81d9fe970f634781cbbaa9700dee03
-Protocole_TRIADE_v0.15.8_Specification.pdf  sha256:06171f7ff2fb462abe8bffea9584cfe343d9631ef5d08c56b19b9f84be7b9c95
-Livre_du_Coffre_TRIADE_CF1-CF3_v1.7.pdf  sha256:5930539839b2e49469b5af7797e1cd2e1a7102c1622fbe4b7fdaac570afb1c82
-TRIADE_preuves_et_calculs_v0.23.3.pdf  sha256:06ec70e77801a1900ba8333bddcc945c6fe190963e03c0d3f6fa466734c02bb2
-TRIADE_presentation_v233.pdf  sha256:78f6a393b1b99d55d04a428cce3960e754eb5b95bf6b34ea5115dd6b1ed998d7
+a2835461edb30f15a212dbe06eb2420c4452f6054110363c287af63c5a020c08  TRIADE_manuscrit_v0.23.3.pdf
+06171f7ff2fb462abe8bffea9584cfe343d9631ef5d08c56b19b9f84be7b9c95  Protocole_TRIADE_v0.15.8_Specification.pdf
+5930539839b2e49469b5af7797e1cd2e1a7102c1622fbe4b7fdaac570afb1c82  Livre_du_Coffre_TRIADE_CF1-CF3_v1.7.pdf
+69a0b4c30acdd579306ae38b82a634b2f55f172ebe72cf8f8f5af3ea83337bf0  TRIADE_preuves_et_calculs_v0.23.3.pdf
+0b5e843b94598dca0c79d5cb886ff090c58486eea4a3ef9c29103c947cccc674  TRIADE_presentation_v233.pdf

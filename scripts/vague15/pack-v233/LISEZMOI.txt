@@ -1,0 +1,10 @@
+LE PACK DE PRÉSENTATION TRIADE v0.23.3 — la vague 15, la release
+===========================================================
+
+LES CINQ DOCUMENTS : le manuscrit académique v0.23.3 (les cinq classes du linter v2 portées aux sources, la vague 15 au corps), la spécification v0.15.8 (la phrase sémantique retirée, les faisabilités datées), le Livre du Coffre v1.7 (la date alignée), les preuves et calculs v0.23.3 (les dix-sept rapports verbatim + les deux errata de passe nommés + la table des empreintes), la présentation v233 (les sept points, l'état des éditions, les empreintes gravées).
+
+LA RELEASE DE LA VAGUE 15 : la vague close à l'Entrée 387 (les dix-sept instructions exécutées en deux sessions, les instructions archivées au coffre, le /instructions laissé vide), la commande du maître (« ok pour la suite (release de la vague etc…) ») commande la présente : les CINQ PIÈCES RÉGÉNÉRÉES sous le linter v2 de vxf37231r (les cinq classes : les phrases sémantiques, les plages décisionnelles, les faisabilités datées, les claims de version post-dépôt, les gallicismes EN — le contrôle négatif 5/5 vécu à l'atelier, les onze refus vécus à la chaîne intégrée), les TROIS PACKS assemblés à la version courante, la version publiée au concept Zenodo.
+
+LA CONVENTION DES EMPREINTES : aucun document ne porte son propre sha-256 ; la présentation grave les quatre autres ; le document de preuves grave les trois pièces de contenu ; CE manifeste porte les cinq.
+
+LES GAPS NOMMÉS (jamais simulés) : la cible TPL-ADD-v5 (≥ 15/18) manquée à 5/18 (la variance du sujet au CLI nommée, les juges intacts) ; les cinq lemmas au mur de mémoire 4 Go du bac (L3 vérifié, la voie du poste réel nommée) ; la cible ≤ 1 % du coût des gardes au kit terrain ; les 28 livraisons H7, l'annotateur, l'endpoint de la seconde famille, les machines du dudect, la carte RV64 — au geste du maître ; les sept fragments EN restants et le miroir FR de la doc ; les dépôts Zenodo du kit et du corpus.
