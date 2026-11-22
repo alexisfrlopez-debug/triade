@@ -1,0 +1,304 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : EXPANSION-DIVERGENTE
+LA CAUSE EXACTE : la ligne expandée ne s'assemble pas : 'call LBL-002' -> 'call rempli_haut_'
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-08 · ligne : composer UNE ligne hexadécimale, tampon fixe · révision 1
+Intention : composer UNE ligne de la grille — le décalage en 8 chiffres
+hex, les seize octets en groupes, le miroir ASCII — dans un tampon fixe
+de 77 o : AUCUN débordement par construction (les longueurs SONT les
+bornes), AUCUN état (les arguments seuls), AUCUNE entrée IAT (le miroir
+exact des feuilles pures tls13). La ligne finale, incomplète, garde le
+FORMAT : les groupes absents sont des espaces — l'alignement des
+colonnes est un invariant, pas une chance.
+Contrat :
+  pre  : P1 rcx = la source, au moins rdx octets lisibles ; P2 rdx =
+             la longueur valide, 1 à 16 ; P3 r8 = la sortie, 77 o
+             (LIGNE_TAILLE) accessibles en écriture ; P4 r9 = le
+             décalage de la ligne (multiple de 16, ≤ 0x7FFFFFFF —
+             BORNE_TAILLE le garantit).
+  post : Q1 la sortie = « SSSSSSSS  HH HH HH HH HH HH HH HH  HH HH HH
+             HH HH HH HH HH  MMMMMMMMMMMMMMMMM » + NUL : 8 chiffres
+             hex du décalage (grand-boutiste, majuscules), 2 espaces,
+             16 groupes « HH » séparés par un espace (l'espace médian
+             DOUBLÉ après le huitième : 32 hex + 16 espaces), 2
+             espaces, le miroir ASCII de 16, le NUL final — EXACTEMENT
+             77 o écrits, jamais un de plus ;
+         Q2 le miroir : l'octet 0x20 à 0x7E → le caractère ; tout
+             autre → « . » (le point de remplacement — les octets non
+             imprimables ne cassent jamais l'alignement) ;
+         Q3 la ligne INCOMPLÈTE (rdx < 16) : les groupes au-delà de rdx
+             = deux espaces, le miroir au-delà = un espace — la ligne
+             finale demeure DROITE, la colonne ASCII ne bouge pas ;
+         Q4 rax = 0.
+  inv  : I1 AUCUNE entrée IAT, AUCUN site syscall, AUCUN état détenu
+             (les arguments seuls — charte § 9, le miroir tls13) ;
+         I2 AUCUN débordement : la composition écrit EXACTEMENT les 77
+             o de P3 — les bornes de P2/P4 sont vérifiées AVANT la
+             première écriture ;
+         I3 la source est LUE SEULE (jamais modifiée — la pureté
+             feather : ni le tampon de vue ni la sortie ne se
+             rétro-écrivent) ;
+         I4 les chiffres hexa : la table « 0123456789ABCDEF » du plan
+             (majuscules — la convention du journal des builds du
+             projet) ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : longueur 0 (P2) → verdict -5 ENTRÉE, rien écrit — une ligne
+       d'au moins un octet.
+  E2 : longueur > 16 (P2) → verdict -5 ENTRÉE, rien écrit — le format
+       est BORNÉ : seize octets, jamais dix-sept.
+  E3 : source ou sortie nulle (P1/P3) → verdict -5 ENTRÉE, rien écrit.
+Vecteurs :
+  V1 : doré — la première ligne de proxy.exe scellé (« MZ\x90\x00\x03
+       \x00… ») : la ligne exacte, les 77 o comparés au modèle ; la
+       ligne finale incomplète du témoin de 3 × 64 Kio + 1 (UN octet
+       valide : quinze groupes d'espaces, la colonne droite) (couvre
+       Q1, Q2, Q3, Q4).
+  V2 : différentiel — 10 000 lignes aléatoires (décalages, longueurs
+       1..16, octets 0x00..0xFF) : la sortie == la composition Python
+       du même format — l'égalité octet par octet (couvre Q1, Q2,
+       Q3).
+  V3 : rejet — longueur 0, longueur 17, pointeurs nuls : les TROIS
+       verdicts -5, rien écrit (la sortie demeure intacte — le
+       différentiel le constate) (couvre E1, E2, E3).
+  V4 : falsification — une colonne décalée d'un espace dans la
+       notation : l'écran attendu diverge, l'oracle à scénarios
+       échoue — la falsification DEMANDÉE.
+Fixtures    : proxy.exe scellé (sa première ligne — la pièce de l'ère
+              rendue à l'œil) + le témoin de 3 × 64 Kio + 1 (la ligne
+              finale).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (le format arrêté : 77 o), D7 (la pureté).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-08 · ligne : composer UNE ligne hexadécimale, tampon fixe · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = la source, au moins rdx octets lisibles · rdx = la longueur valide, 1 à 16 · r8 = la sortie, 77 o · r9 = le
+; verdicts nommés : -5 ENTRÉE
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette dec_boucle (cible de saut)
+  LBL-002 = l'étiquette rempli_haut (cible de saut)
+  LBL-003 = l'étiquette rempli_miroir (cible de saut)
+  LBL-004 = l'étiquette grp_boucle (cible de saut)
+  LBL-005 = l'étiquette grp_pos (cible de saut)
+  LBL-006 = l'étiquette grp_suivant (cible de saut)
+  LBL-007 = l'étiquette miroir_boucle (cible de saut)
+  LBL-008 = l'étiquette miroir_point (cible de saut)
+  LBL-009 = l'étiquette miroir_poser (cible de saut)
+  LBL-010 = l'étiquette miroir_fin (cible de saut)
+  LBL-011 = l'étiquette refus_entree (cible de saut)
+  LBL-012 = l'étiquette sortie (cible de saut)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire c76ead54a02b8c56… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp rdx, 1
+jl LBL-011
+cmp rdx, 16
+jg LBL-011
+test rcx, rcx
+jz LBL-011
+test r8, r8
+jz LBL-011
+mov r12, r9
+call LBL-002
+mov qword ptr [r8], r12
+mov r13, rcx
+mov r14, rdx
+mov r15, 0
+call LBL-004
+jmp LBL-003
+LBL-002:
+mov rax, r12
+shr rax, 4
+mov r12, rax
+and r12, 0xF
+mov rax, CST-001
+movzx rax, byte ptr [rax + r12]
+mov r12, rax
+ret
+LBL-004:
+cmp r15, 8
+jge LBL-006
+mov rax, r13
+add rax, r15
+movzx rax, byte ptr [rcx + rax]
+call LBL-005
+mov byte ptr [r8 + r15*2 + 10], al
+mov byte ptr [r8 + r15*2 + 11], ah
+inc r15
+jmp LBL-004
+LBL-006:
+cmp r15, 16
+jge LBL-008
+mov byte ptr [r8 + r15*2 + 10], 0x20
+mov byte ptr [r8 + r15*2 + 11], 0x20
+inc r15
+jmp LBL-004
+LBL-008:
+cmp r14, 16
+jge LBL-010
+mov rax, r14
+sub rax, r15
+cmp rax, 0
+jle LBL-010
+mov r12, rax
+shl r12, 1
+add r12, 42
+mov rax, 0x20
+rep stosb
+jmp LBL-010
+LBL-003:
+mov byte ptr [r8 + 8], 0x20
+mov byte ptr [r8 + 9], 0x20
+mov byte ptr [r8 + 26], 0x20
+mov byte ptr [r8 + 27], 0x20
+mov r12, r13
+mov r15, 0
+call LBL-007
+jmp LBL-010
+LBL-007:
+cmp r15, r14
+jge LBL-010
+mov rax, r13
+add rax, r15
+movzx rax, byte ptr [rcx + rax]
+cmp al, 0x20
+jl LBL-009
+cmp al, 0x7E
+jg LBL-009
+mov byte ptr [r8 + r15 + 42], al
+jmp LBL-010
+LBL-009:
+mov byte ptr [r8 + r15 + 42], CST-002
+LBL-010:
+mov byte ptr [r8 + 58], 0x20
+mov byte ptr [r8 + 59], 0x20
+mov r12, 16
+sub r12, r14
+shl r12, 1
+add r12, 42
+mov rax, 0x20
+rep stosb
+mov byte ptr [r8 + 76], 0x0
+xor rax, rax
+jmp LBL-012
+LBL-011:
+mov rax, -5
+jmp LBL-012
+LBL-012:
+=== FIN (tentative de réparation 2 sur le budget 3) ===

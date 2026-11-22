@@ -1,0 +1,297 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : EXPANSION-DIVERGENTE
+LA CAUSE EXACTE : l'ID CST-001 n'est pas une opérande expandable
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-02 · lire : la fenêtre d'octets au tampon de session · révision 1
+Intention : lire la fenêtre de TAMPON_SESSION octets (384) à un décalage
+donné — dans le tampon du cadre, BORNÉ par la taille réelle (jamais un
+octet de trop, jamais un octet au-delà de la fin), puis recouvrir les
+octets du journal d'édition : ce que l'utilisateur a écrit demeure
+visible après le défilement — la cohérence de vue est un invariant, pas
+une chance.
+Contrat :
+  pre  : P1 la session est ouverte (la poignée du cadre ≠ INVALIDE) ;
+         P2 rcx = le décalage de fenêtre, MULTIPLE DE 16 (l'alignement
+             de ligne — la grille reste droite) ;
+         P3 décalage < taille du fichier (la fenêtre touche au moins un
+             octet valide).
+  post : Q1 remplissage = min(384, taille − décalage) — posé au cadre
+             (+552) ; le tampon (+568) = les octets du fichier
+             [décalage, décalage + remplissage) lus par SetFilePointerEx
+             PUIS ReadFile (la position repositionnée à CHAQUE lecture —
+             jamais une position héritée) ;
+         Q2 LE RECOUVREMENT DU JOURNAL : pour chaque entrée du journal
+             (loupe-16) dont le décalage ∈ [décalage, décalage +
+             remplissage), l'octet du tampon REMPLACÉ par l'octet écrit
+             — l'édition survit au défilement ;
+         Q3 rax = 0 ; la vue et le curseur du cadre INTACTS (lire ne
+             déplace rien — le défilement est à loupe-11).
+  inv  : I1 la borne est LUE AU CADRE (la taille), jamais passée par
+             l'appelant — un décalage faux est un refus, pas une
+             confiance ;
+         I2 la lecture ne touche QUE le tampon du cadre — jamais
+             TAMPON_CUMUL (la fenêtre des empreintes et de la recherche,
+             l'exclusion de famille), jamais l'ECRAIN (la composition
+             est à loupe-10) ;
+         I3 JAMAIS un octet au-delà de la fin : remplissage ≤ 384 ET
+             décalage + remplissage ≤ taille — la double borne, la
+             lecture s'arrête à la taille réelle ;
+         I4 l'IAT déclarée (D161) : SetFilePointerEx, ReadFile,
+             GetLastError — la liste fermée du bloc ; registres non
+             volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : sans session ouverte (P1) → verdict -4 SESSION, rien lu, rax =
+       -4.
+  E2 : décalage non multiple de 16 (P2) → verdict -5 ENTRÉE, rien lu —
+       la grille ne se penchera pas.
+  E3 : décalage ≥ taille (P3) → verdict -3 HORS-BORNES, rien lu — la
+       fenêtre au-delà de la fin n'existe pas.
+  E4 : ReadFile ou SetFilePointerEx en échec → verdict -6 SYSTÈME, le
+       code GetLastError consigné, remplissage = 0 (fail-closed : le
+       tampon ne montre JAMAIS un octet non lu).
+Vecteurs :
+  V1 : différentiel — les témoins du kit + proxy.exe scellé : le tampon
+       comparé octet par octet à la découpe Python à 1 000 décalages
+       aléatoires valides (couvre Q1, Q3).
+  V2 : différentiel du recouvrement — des écritures au journal aux
+       décalages des bords de fenêtre (le premier, le dernier, le
+       hors-fenêtre) : le tampon recouvert == le modèle Python (couvre
+       Q2).
+  V3 : rejet — sans session, décalage non aligné, décalage à la taille
+       exacte, décalage au-delà : les QUATRE verdicts nommés, rien lu
+       (couvre E1, E2, E3).
+  V4 : rejet — le shim ReadFile en échec : verdict -6, remplissage 0,
+       le code consigné par le harnais (couvre E4).
+  V5 : falsification — un octet du tampon muté après lecture : la
+       composition d'écran diverge de l'attendu, l'oracle échoue.
+Fixtures    : les témoins du kit (1 o, 384 o, 3 × 64 Kio + 1) + proxy.exe
+              scellé (446279f3…) — les découpes recoupées par hashlib.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-02 · lire : la fenêtre d'octets au tampon de session · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le décalage de fenêtre, MULTIPLE DE 16 (l'alignement
+; types : TAMPON_SESSION = 384
+; verdicts nommés : -4 SESSION · -5 ENTRÉE · -3 HORS-BORNES · -6 SYSTÈME
+; IAT déclarée (la liste fermée) : SetFilePointerEx, ReadFile, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette rempli (cible de saut)
+  LBL-002 = l'étiquette recouvre (cible de saut)
+  LBL-003 = l'étiquette recouvre_suivant (cible de saut)
+  LBL-004 = l'étiquette recouvre_fin (cible de saut)
+  LBL-005 = l'étiquette refus_session (cible de saut)
+  LBL-006 = l'étiquette refus_entree (cible de saut)
+  LBL-007 = l'étiquette refus_bornes (cible de saut)
+  LBL-008 = l'étiquette refus_systeme (cible de saut)
+  LBL-009 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = la constante immédiat-0x180 (la borne nommée)
+  CST-005 = la constante TAMPON_SESSION (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 0a20f52d9ff1af37… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+mov r13, CST-001
+cmp r12, r13
+jbe LBL-007
+mov r13, qword ptr [rbx + 544]
+call CST-001
+cmp rax, 0
+jne LBL-008
+call CST-002
+mov r14, rax
+test r14, r14
+jz LBL-008
+mov r13, qword ptr [rbx + 560]
+mov rsi, rcx
+mov rdi, r13
+mov ecx, r14d
+rep movsb
+mov rsi, rcx
+mov rdi, r13
+call LBL-001
+mov r12, 0
+jmp LBL-009
+LBL-001:
+push rbp
+mov rbp, rsp
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x28
+mov r12, rcx
+mov r13, rdx
+mov r14, rsi
+mov r15, rdi
+cmp r12, 0
+je LBL-002
+cmp r12, r14
+jbe LBL-002
+mov r12, r14
+LBL-002:
+xor rax, rax
+cmp rax, r12
+jbe LBL-003
+mov rax, r12
+LBL-003:
+mov rcx, r15
+mov rdx, rax
+mov r8, r13
+call CST-003
+cmp rax, 0
+jne LBL-004
+mov eax, dword ptr [rbx + 548]
+call CST-003
+mov dword ptr [rbx + 548], eax
+LBL-004:
+mov rax, r12
+add rsp, 0x28
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbp
+ret
+LBL-005:
+mov eax, -4
+jmp LBL-009
+LBL-006:
+mov eax, -5
+jmp LBL-009
+LBL-007:
+mov eax, -3
+jmp LBL-009
+LBL-008:
+mov eax, -6
+LBL-009:
+mov qword ptr [rbx + 552], r12
+mov qword ptr [rbx + 568], r13
+mov eax, 0
+add rsp, 0x28
+ret
+=== FIN (tentative de réparation 1 sur le budget 3) ===

@@ -1,0 +1,325 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : EXPANSION-DIVERGENTE
+LA CAUSE EXACTE : l'ID CST-001 n'est pas une opérande expandable
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-11 · défilement : la molette et l'ascenseur, bornés à la fin réelle · révision 1
+Intention : faire glisser la fenêtre de vue — la molette (TROIS lignes
+par cran), l'ascenseur (la ligne, la page, la poignée glissée), le
+recalage au redimensionnement — TOUJOURS BORNÉ : jamais un décalage au-
+delà de la fin réelle du fichier, et la DERNIÈRE fenêtre VOIT le
+dernier octet (la borne supérieure est l'arrondi au-dessus, pas en
+dessous). L'alignement à 16 octets est inviolable : la grille reste
+droite, les lignes demeurent des lignes.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_SIZE,
+             WM_VSCROLL ou WM_MOUSEWHEEL ; P2 la session peut être
+             vide (le repli nommé, pas un échec).
+  post : Q1 LE PAS : SB_LIGNE_HAUT/BAS = ±16 o ; SB_PAGE_HAUT/BAS =
+             ±(GRILLE_LIGNES − 2) lignes = ±352 o ; SB_POIGNEE/
+             SB_POIGNEE_COURSE = la position demandée × 16 (GetScroll-
+             Info — l'ascenseur parle en LIGNES, le cadre en octets) ;
+             WM_MOUSEWHEEL = ±(delta / MOLETTE_CRAN) × 48 o (TROIS
+             lignes par cran, le signe du delta) ;
+         Q2 LA BORNE : vue' = clamp16(vue ± pas) dans [0, vue_max] —
+             vue_max = aligne16_sup(max(0, taille − 384)) : la
+             DERNIÈRE fenêtre montre le DERNIER octet (le
+             remplissage final peut être court — la fin n'est jamais
+             cachée) ; les fichiers ≤ 384 o ne défilent PAS (vue = 0,
+             le petit fichier tient entier) ;
+         Q3 le GESTE : si vue' ≠ vue : loupe-02 (la fenêtre relue —
+             le recouvrement du journal y vit), SetScrollInfo (min 0,
+             max vue_max/16, pos vue'/16, page = lignes visibles —
+             l'ascenseur TOUJOURS synchrone), InvalidateRect (le
+             repaint demandé) ; si vue' = vue : RIEN (le geste au
+             bout ne relit pas — l'OS au bout reste calme) ;
+         Q4 WM_SIZE : les lignes visibles recalculées (client_h /
+             ligne_h — les métriques de loupe-10), l'ascenseur remis,
+             l'écran invalidé — la fenêtre rétrécie ou grandie
+             n'affiche JAMAIS de lignes fantômes ;
+         Q5 rax = 0 ; sans session (P2) : rax = 0 SANS AUCUN effet
+             (l'écran vide ne défile pas — le repli documenté, le
+             message rendu à DefWindowProcW).
+  inv  : I1 TOUTE vue est multiple de 16 (l'alignement inviolable —
+             la composition de loupe-08 l'exige, la grille le
+             garde) ;
+         I2 le clamp PRÉCÈDE la lecture (jamais une lecture hors
+             fichier, jamais un remplissage négatif — la borne est un
+             repli NOMMÉ, pas un échec : le geste au-delà de la fin
+             S'ARRÊTE à la fin) ;
+         I3 l'ascenseur ne ment JAMAIS (SetScrollInfo après CHAQUE
+             mouvement réel — jamais une position affichée divergente
+             du cadre) ;
+         I4 le défilement ne touche NI le curseur (il suit sa vie à
+             loupe-15 — le curseur peut sortir de l'écran par le
+             défilement, jamais par lui-même) NI le journal NI les
+             empreintes ; l'IAT fermée (GetScrollInfo, SetScrollInfo,
+             InvalidateRect, GetClientRect, GetLastError) ; NOP, 0x90.
+Échecs :
+  E1 : GetScrollInfo en échec (la structure SCROLLINFO invalide) →
+       verdict -6 SYSTÈME, le code consigné, le geste de poignée
+       ABANDONNÉ proprement (vue inchangée, l'ascenseur non touché).
+Vecteurs :
+  V1 : différentiel — la règle vue_max rejouée en Python sur 10 000
+       tailles aléatoires (0, 1, 384, 385, 3 × 64 Kio + 1, 2 Gio) :
+       l'égalité des bornes et du clamp (couvre Q1, Q2).
+  V2 : scénario — la molette au bout : la dernière fenêtre VOIT le
+       dernier octet (le remplissage court), l'écran attendu au
+       dernier décalage (couvre Q2, Q3).
+  V3 : scénario — le petit fichier (≤ 384 o) : la molette et
+       l'ascenseur SANS effet (vue = 0), rien relu (les appels
+       comptés) (couvre Q2, Q5).
+  V4 : scénario — WM_SIZE (la fenêtre rétrécie de moitié) : les
+       lignes visibles recalculées, aucune ligne fantôme à la
+       première peinture suivante (couvre Q4).
+  V5 : rejet — le shim GetScrollInfo en échec : verdict -6, vue
+       intacte (couvre E1).
+Fixtures    : les témoins du kit (1 o, 384 o exactement, 3 × 64 Kio +
+              1 — les trois formes de la borne).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-11 · défilement : la molette et l'ascenseur, bornés à la fin réelle · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; verdicts nommés : -6 SYSTÈME
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette vmax_zero (cible de saut)
+  LBL-002 = l'étiquette vmax_fin (cible de saut)
+  LBL-003 = l'étiquette taille (cible de saut)
+  LBL-004 = l'étiquette taille_zero (cible de saut)
+  LBL-005 = l'étiquette taille_pose (cible de saut)
+  LBL-006 = l'étiquette vscroll (cible de saut)
+  LBL-007 = l'étiquette pas_ligne_haut (cible de saut)
+  LBL-008 = l'étiquette pas_ligne_bas (cible de saut)
+  LBL-009 = l'étiquette pas_page_haut (cible de saut)
+  LBL-010 = l'étiquette pas_page_bas (cible de saut)
+  LBL-011 = l'étiquette poignee (cible de saut)
+  LBL-012 = l'étiquette pas_applique (cible de saut)
+  LBL-013 = l'étiquette borne (cible de saut)
+  LBL-014 = l'étiquette borne_haut (cible de saut)
+  LBL-015 = l'étiquette borne_fin (cible de saut)
+  LBL-016 = l'étiquette ascenseur_remis (cible de saut)
+  LBL-017 = l'étiquette molette (cible de saut)
+  LBL-018 = l'étiquette rien (cible de saut)
+  LBL-019 = l'étiquette sans_session (cible de saut)
+  LBL-020 = l'étiquette refus_gsi (cible de saut)
+  LBL-021 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = la constante immédiat-0x115 (la borne nommée)
+  CST-006 = la constante immédiat-0x20a (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire c0bf4e1645260d4e… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp qword ptr [rbx + 528], 0
+je LBL-019
+mov r12, qword ptr [rbx + 528]
+mov r13, qword ptr [rbx + 536]
+cmp r13, 384
+jbe LBL-004
+mov r14, qword ptr [rbx + 512]
+sub r14, 384
+and r14, -16
+mov qword ptr [rbx + 544], r14
+jmp LBL-006
+LBL-004:
+mov qword ptr [rbx + 544], 0
+LBL-006:
+cmp qword ptr [rbx + 544], 0
+je LBL-018
+LBL-005:
+mov r14, qword ptr [rbx + 544]
+mov r15, qword ptr [rbx + 560]
+mov rax, qword ptr [rbx + 568]
+cmp rax, CST-001
+je LBL-007
+cmp rax, CST-002
+je LBL-008
+cmp rax, CST-003
+je LBL-009
+cmp rax, CST-004
+je LBL-010
+cmp rax, CST-005
+je LBL-017
+cmp rax, CST-006
+je LBL-017
+jmp LBL-021
+LBL-007:
+mov rax, -16
+jmp LBL-012
+LBL-008:
+mov rax, 16
+jmp LBL-012
+LBL-009:
+mov rax, -352
+jmp LBL-012
+LBL-010:
+mov rax, 352
+LBL-012:
+mov r15, qword ptr [rbx + 560]
+add r15, rax
+mov rax, qword ptr [rbx + 544]
+cmp r15, rax
+jae LBL-013
+mov r15, 0
+LBL-013:
+mov rax, qword ptr [rbx + 544]
+cmp r15, rax
+jbe LBL-014
+mov r15, rax
+LBL-014:
+mov rax, qword ptr [rbx + 560]
+cmp r15, rax
+je LBL-018
+mov qword ptr [rbx + 560], r15
+call CST-001
+cmp rax, 0
+jne LBL-020
+mov qword ptr [rbx + 576], r15
+shr r15, 4
+mov qword ptr [rbx + 584], r15
+call CST-002
+call CST-003
+jmp LBL-018
+LBL-017:
+mov rax, qword ptr [rbx + 576]
+shr rax, 4
+mov qword ptr [rbx + 584], rax
+call CST-002
+jmp LBL-018
+LBL-020:
+mov rax, -6
+jmp LBL-021
+LBL-019:
+mov rax, 0
+jmp LBL-021
+LBL-018:
+mov rax, 0
+LBL-021:
+add rsp, 0x20
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+=== FIN (tentative de réparation 3 sur le budget 3) ===

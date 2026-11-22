@@ -1,0 +1,70 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : CONTEXTE-DIVERGENT
+LA CAUSE EXACTE : la première ligne « - » du hunk 1 ne répète pas l'ancre « cmp eax, 0x20 »
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION ÉDITER DE LA CARTE TRIADE — LE GABARIT VERSIONNÉ
+TPL-EDIT-v1 · sha256:797f2f6b0a36601abfe923413551bf36db422a9fb3d792aaaf7d56c0271a41a3
+(le corps du gabarte vit en session ; le client recoupe son
+empreinte AVANT l'application — GABARIT-DIVERGENT sinon.)
+
+LA FENÊTRE DE LA CIBLE (les lignes 38 à 62 du bloc — la
+ligne 50 est la ligne cible) :
+sub rsp, 0xb0
+xor ecx, ecx
+call qword ptr [rip - 0x2b13]
+mov r12, rax
+call qword ptr [rip - 0x2b14]
+mov rdx, rax
+cmp word ptr [rdx], 0x22
+jne 0x5c3b
+add rdx, 2
+movzx eax, word ptr [rdx]
+test eax, eax
+jz 0x5c8a
+cmp eax, 0x22
+je 0x5c4d
+add rdx, 2
+jmp 0x5c29
+movzx eax, word ptr [rdx]
+test eax, eax
+jz 0x5c8a
+cmp eax, 0x20
+je 0x5c4d
+add rdx, 2
+jmp 0x5c3b
+movzx eax, word ptr [rdx]
+cmp eax, 0x20
+
+LA GARDE (l'expansion fail-closed) : l'empreinte sha256 de la
+notation complète en cache : 45b405e684b42aa8d94f631ad19e8b6d849bb2e94e410070d5c4f5a3f32d9325 — le client recoupe
+cette empreinte AVANT l'application des hunks (toute divergence
+de la base en cache : REFUS CONTEXTE-DIVERGENT).
+
+LES PARAMÈTRES LITTÉRAUX (l'opération — le diff) :
+bloc : loupe-09-ecran
+ligne : 50
+ancienne : cmp eax, 0x22
+nouvelle : cmp eax, 0x21
+
+REQUÊTE : applique le gabarit aux paramètres — rends UNIQUEMENT
+les hunks : la PREMIÈRE ligne exactement « @@ hunk 1 », l'ancre
+« base: <la ligne exacte> », les retraits « - … », les
+insertions « + … », la DERNIÈRE ligne exactement « FIN-HUNKS »
+— aucune clôture de code (aucun ```), aucun autre texte.
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+@@ hunk 1
+base: cmp eax, 0x20
+- cmp eax, 0x22
++ cmp eax, 0x21
+FIN-HUNKS
+=== FIN (tentative de réparation 1 sur le budget 3) ===

@@ -1,0 +1,1027 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : HORS-FORMAT
+LA CAUSE EXACTE : la ligne 792 n'est pas une forme admise : 'LBL'
+LA LIGNE FAUTIVE : « LBL »
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+fixtures — la taille de la pièce ; r3 : LE VIDE — le fichier de taille zéro
+est un fichier réel du quotidien que l'éditeur DOIT ouvrir : la fenêtre
+n'existe pas pour lui [loupe-02 P3 : tout décalage ≥ taille 0], le
+remplissage demeure 0 et LE PANNEAU DU VIDE EXISTE — d41d8cd9… +
+e3b0c442…, la session née entière sans la fenêtre ; la découverte du
+geste (b), la couche I n'avait pas vu le vide)
+Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
+de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
+faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
+fenêtre lue (loupe-02), le panneau d'empreintes calculé (loupe-07). Les
+refus sont NOMMÉS (absent, verrouillé, hors périmètre) — la barre les
+porte, jamais un silence. Loupe vit de ses pièces : tout fichier du projet
+s'ouvre à l'œil.
+Contrat :
+  pre  : P1 rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+             la capacité du cadre, MAX_PATH) ; P2 la session n'est pas
+             déjà ouverte (la poignée du cadre = INVALIDE — sinon le
+             refus -5 : un fichier à la fois, le périmètre 0.1.0) ;
+         P3 l'IAT kernel32 résolue (D7/D35) ; P4 la pile alignée 16.
+  post : Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+             OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la
+             taille par GetFileSizeEx au cadre (+520) ;
+         Q2 la BORNE NOMMÉE : taille > BORNE_TAILLE (2 Gio) → verdict -3,
+             la poignée FERMÉE AVANT le retour (jamais une poignée
+             pendante), la barre porte « hors périmètre 0.1.0 : 2 Gio » ;
+         Q3 le chemin COPIÉ au cadre (+0, libc-01 hérité PAR LA CARTE —
+             jamais octet par octet réécrit), la vue = 0, le curseur = 0
+             (loupe-04 a posé le vierge) ;
+         Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
+             SEULEMENT SI la taille > 0 — le vide n'a PAS de fenêtre
+             (révision 3 : le remplissage 0 posé, la grille vide est un
+             état légitime) — puis loupe-07 (les empreintes du fichier
+             entier au panneau, LE VIDE AUSSI : son panneau est défini) ;
+             la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+         Q5 rax = 0 (la table des verdicts, charte § 9).
+  inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
+             aux autres, jamais reçu : Loupe est seul maître des octets
+             qu'il montrera modifiables) ;
+         I2 AUCUNE écriture au fichier à l'ouverture (lecture seule —
+             l'écriture vivra à loupe-17) ;
+         I3 le coût de Q4 est NOMMÉ : le panneau d'un fichier de 2 Gio
+             prend le temps de ses empreintes (deux passages) — la
+             vitrine née vraie, jamais un panneau mensonger ;
+         I4 tout refus d'OS est TRADUIT par la table (gle consigné au
+             journal du labo par le harnais) : jamais un code brut à
+             la barre ;
+         I5 l'IAT déclarée au plan (D161) : CreateFileW, GetFileSizeEx,
+             CloseHandle, GetLastError — la liste est fermée pour ce
+             bloc ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : ERROR_FILE_NOT_FOUND ou ERROR_PATH_NOT_FOUND → verdict -2 ABSENT
+       (le chemin ne désigne rien) — la barre le nomme, rax = -2.
+  E2 : ERROR_SHARING_VIOLATION → verdict -7 VERROUILLÉ (le partage
+       refuse : un autre détenteur tient le fichier) — la barre le
+       nomme, rax = -7.
+  E3 : tout autre refus d'OS (accès refusé, lecteur absent…) → verdict
+       -6 SYSTÈME, le code GetLastError consigné — rax = -6.
+  E4 : la session déjà ouverte (P2) → verdict -5, RIEN TOUCHÉ (le
+       fichier courant demeure) — un fichier à la fois, le nommé.
+Vecteurs :
+  V1 : scénario — le témoin du kit ouvert : le cadre lu champ à champ
+       (chemin, taille, vue 0, curseur 0, remplissage = min(384,
+       taille)), l'écran attendu composé octet par octet (couvre Q1,
+       Q3, Q4, Q5).
+  V2 : rejet — un chemin absent, un fichier tenu par un autre
+       détenteur, un fichier de 2 Gio + 1 : les TROIS verdicts nommés
+       à la barre, la poignée refermée dans le second cas (couvre Q2,
+       E1, E2, E3).
+  V3 : rejet — l'ouverture sur session ouverte : verdict -5, l'ancien
+       fichier INTACT (le tampon inchangé, l'oracle différentiel le
+       constate octet par octet) (couvre E4).
+  V4 : falsification — la taille mutée d'un octet au cadre après
+       l'ouverture : l'écran attendu diverge, l'oracle à scénarios
+       échoue (la falsification DEMANDÉE, charte § 3).
+Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
+              384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
+              formes du remplissage) + proxy.exe scellé (sha256
+              446279f3…, 65 024 o — la pièce de l'ère [erratum r2 :
+              la taille fautive 44 544 o était celle du scellé 0.9.0],
+              ouverte par l'application qui la juge).
+Provenance  : écrite-avant-code.
+Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
+              notation), D7/D35 (l'IAT), D137 (la lignée de balises —
+              un projet de développement).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+; verdicts nommés : -2 ABSENT · -7 VERROUILLÉ · -6 SYSTÈME
+; les appelés directs (le plan — la liste fermée) :
+;   libc-01 @ 0x1100 — memcpy (dst, src, n)
+; IAT déclarée (la liste fermée) : CreateFileW, GetFileSizeEx, CloseHandle, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette taille_ok (cible de saut)
+  LBL-002 = l'étiquette mesure (cible de saut)
+  LBL-003 = l'étiquette mesure_fin (cible de saut)
+  LBL-004 = l'étiquette panneau (cible de saut)
+  LBL-005 = l'étiquette propage (cible de saut)
+  LBL-006 = l'étiquette refus_session (cible de saut)
+  LBL-007 = l'étiquette refus_os (cible de saut)
+  LBL-008 = l'étiquette absent (cible de saut)
+  LBL-009 = l'étiquette verrouille (cible de saut)
+  LBL-010 = l'étiquette refus_taille_os (cible de saut)
+  LBL-011 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = l'appel direct libc-01 — memcpy (dst, src, n)
+  CST-006 = la constante immédiat-0x104 (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 562e844b9003ad2f… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+mov r12, rcx
+mov r13, qword ptr [rbx]
+test r13, r13
+jne LBL-006
+mov r14, qword ptr [rbx + 528]
+cmp r14, -1
+je LBL-006
+call CST-001
+test rax, rax
+jz LBL-007
+mov qword ptr [rbx + 528], rax
+call CST-002
+mov qword ptr [rbx + 520], rax
+cmp rax, CST-006
+ja LBL-010
+mov rdi, rcx
+mov rsi, qword ptr [rbx]
+mov rdx, rsi
+call CST-005
+mov qword ptr [rbx + 0], rdi
+mov qword ptr [rbx + 8], 0
+mov qword ptr [rbx + 16], 0
+mov r13, rax
+cmp r13, 0
+je LBL-004
+jmp LBL-004
+LBL-006:
+mov eax, -5
+jmp LBL-011
+LBL-007:
+mov r14, rax
+call CST-004
+cmp r14, 2
+je LBL-008
+cmp r14, 32
+je LBL-009
+jmp LBL-007
+LBL-008:
+mov eax, -2
+jmp LBL-011
+LBL-009:
+mov eax, -7
+jmp LBL-011
+LBL-010:
+mov r14, rax
+call CST-004
+mov qword ptr [rbx + 528], -1
+mov eax, -3
+jmp LBL-011
+fin_os:
+mov eax, -6
+jmp LBL-011
+LBL-011:
+xor rax, rax
+ret
+LBL-004:
+call LBL-003
+jmp LBL-011
+mesure:
+cmp r13, 0
+je LBL-002
+call CST-005
+jmp LBL-002
+LBL-002:
+ret
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL-003:
+jmp mesure
+LBL-002:
+jmp LBL-002
+LBL-004:
+jmp LBL-004
+LBL
+=== FIN (tentative de réparation 2 sur le budget 3) ===

@@ -1,0 +1,35 @@
+LE RAPPORT TPL-ADD-v3 — LA GRAMMAIRE PUBLIÉE, LES VALIDATEURS DE FORMES, LA BOUCLE DE RÉPARATION (5nwnwoceo, la vague 13)
+==========================================================================
+Le plan gelé sha256:ecc15c07bca48a49… ; la graine 20261117 reconduite, l'ordre JAMAIS re-tiré ; le budget de reprises PLAFONNÉ À TROIS, consigné par tentative au JSONL ; le CLI z-ai au champ usage lu à chaque appel ; les réponses brutes archivées (garde-brut), les prompts archivés en texte (garde-prompts).
+
+LES TROIS LEVIERS v3 : (1) LA GRAMMAIRE TPL-ADD-GRAMMAIRE-v1 publiée au modèle DANS le prompt (l'EBNF du corps + les quatre interdits de forme, sha256 5808a6414b3a9da4…) ; (2) LES VALIDATEURS DE FORMES au client (les refus FORME-INVALIDE au nom de la cause, la ligne fautive rendue à la réparation — AVANT l'assemblage) ; (3) LA BOUCLE « assemble → refus nommé → réparation ciblée » (le refus nommé + la ligne fautive au prompt de réparation, le budget 3).
+
+LA CAMPAGNE AJOUTER (les 18 mêmes tâches, l'ordre de la graine) :
+  la faisabilité PREMIÈRE PASSE : 6/18 ;
+  la faisabilité APRÈS REPRISES : 6/18 ;
+  le coût médian PAR CHANGEMENT VALIDÉ (tentatives refusées incluses) : 3844 natifs [cl100k parallèle 4116] ;
+  LA CIBLE PRÉ-ENREGISTRÉE (≥ 17/18 ET ≤ 4 500 natifs) : MANQUÉE — la faisabilité 6/18 < 17/18 (le coût 3844 ≤ 4 500 tenu) ;
+  LE GAP RÉSIDUEL NOMMÉ PAR CLASSE (jamais re-tiré) : EXPANSION-DIVERGENTE × 9 · HORS-FORMAT × 2 · ID-INCONNU × 1 ; LA LECTURE : la boucle de réparation n'a CONVERTI AUCUN refus (les six verts sont TOUS de première passe) — les refus EXPANSION-DIVERGENTE (l'IAT en opérande, le call-à-étiquette, le round-trip divergent) RÉSISTENT à la réparation ciblée : le modèle réécrit la ligne fautive mais en produit une nouvelle — le gap a déplacé de la CONNAISSANCE du domaine à la STABILITÉ de l'écriture machine face au juge d'expansion ; les refus v1/v2 demeurent au registre, la comparaison 3 → 5 → 6 verts aux trois passes nommée.
+
+L'EXTENSION À ÉDITER (les 18 tâches d'édition, la même boucle) :
+  la faisabilité : 18/18 (la première passe 17/18, UNE tâche réparée à la deuxième passe — la boucle A FONCTIONNÉ à l'éditer) ;
+  le coût médian par changement validé : 712 natifs ;
+  le refus CONTEXTE-DIVERGENT de loupe-07-cumul (la vague 11) DEMEURE AU REGISTRE (la variation était au modèle) — à la présente passe la tâche a vécu VERTE de première passe (le modèle n'a pas varié cette fois : la variation est À LUI, jamais re-tirée en silence, les deux mesures datées au registre).
+
+LA TABLE CANONIQUE DES BUDGETS ADOPTÉS (chaque valeur : ID de décision, périmètre, statut) :
+  ┌──────────────┬──────────────────────────────┬─────────────────┬──────────────┐
+  │ Opération    │ Budget (natifs)              │ Périmètre       │ Statut       │
+  ├──────────────┼──────────────────────────────┼─────────────────┼──────────────┤
+  │ localiser    │ 1 053 → 627 (hiérarchique)   │ le pointeur seul │ adopté D222  │
+  │ éditer       │ 1 106 → 674 (TPL-EDIT-v1)    │ la fenêtre ±12    │ adopté OPT-14│
+  │ ajouter      │ 3 074 → 2 200 (squelette)    │ le squelette     │ mesuré (v11) │
+  │              │ 3 844 PAR CHANGEMENT VALIDÉ   │ la boucle v3     │ mesuré v13   │
+  │              │ faisabilité 3/18 → 5/18 → 6/18 (v1→v2→v3)     │ LE GAP NOMMÉ │
+  │ éditer (v13) │ 712 PAR CHANGEMENT VALIDÉ    │ la boucle v3     │ mesuré v13   │
+  │              │ faisabilité 18/18 (17 de première passe)       │ mesuré v13   │
+  └──────────────┴──────────────────────────────┴─────────────────┴──────────────┘
+  (le dashboard de la spec — Tableau 19 — ALIGNÉ sur cette table au geste de ylrzmlbn8 ; les budgets M1 51/719/1 088 deviennent HISTORIQUES datés)
+
+LES ÉCARTS D'INSTRUMENT NOMMÉS : la limite de débit de l'API (le 429 vécu) COUPA la campagne aux tâches 4-10 de la première passe — les résultats perdus au timeout du bac RE-EXÉCUTÉS (l'instrument, jamais le tirage : les tâches déjà consignées ne se re-tirent PAS, les reprises des pertes d'instrument nommées ici) ; le rythme de 20 s entre appels adopté après le 429.
+
+LES CONTRÔLES : la re-tokenisation indépendante (journal vs garde-brut) écart max 0 ; le round-trip re-vérifié sur CHAQUE bloc accepté (l'assemblage rejoué depuis les réponses archivées) ; les SEPT faces négatives re-roulées (les quatre refus v2 + les quatre validateurs — l'octet muté au cadre REFUSÉ au premier nom) ; les refus honnêtes AU REGISTRE, jamais re-tirés en silence.

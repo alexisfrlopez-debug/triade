@@ -1,0 +1,175 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-03 · fermer : la session close, jamais une poignée pendante · révision 1
+Intention : fermer proprement le fichier de session — quel que soit
+l'état (ouvert, déjà fermé, en erreur) : la poignée rendue à l'OS, le
+cadre re-posé vierge, les zones de session (journal, motif, empreintes,
+saisie) remises à zéro. Les zones de session ne fuient JAMAIS d'un
+fichier à l'autre — l'hygiène est un invariant. Idempotent par
+construction : fermer deux fois ne fait rien de plus, jamais de mal.
+Contrat :
+  pre  : P1 AUCUNE précondition — le geste est appelable dans TOUT état
+             (c'est sa raison d'être : la sortie propre de loupe-18
+             n'examinerait pas l'état, elle fermerait).
+  post : Q1 si la poignée du cadre est valide (≠ INVALIDE) :
+             CloseHandle UNE fois — le fichier rendu à l'OS ; si
+             CloseHandle échoue : le code GetLastError consigné, la
+             suite AURA LIEU QUAND MÊME (jamais une poignée pendante,
+             quel que soit l'état) ;
+         Q2 loupe-04 appelée : le cadre re-posé VIERGE (tout à zéro,
+             poignée = INVALIDE) ;
+         Q3 les zones de session remises à zéro : le nombre du journal
+             (loupe-16) = 0, la longueur du motif (loupe-13) = 0, les
+             empreintes (loupe-07) effacées, le mode de saisie
+             (loupe-12) = 0 — le prochain fichier naît dans un état
+             neuf ;
+         Q4 rax = 0 dans TOUS les cas de P1 (y compris session déjà
+             fermée : le geste est IDEMPOTENT — rien fait, rien de
+             plus).
+  inv  : I1 le DISQUE n'est PAS touché : fermer ne sauvegarde RIEN
+             (la sauvegarde est un geste délibéré à loupe-17 — fermer
+             abandonne les écritures non sauvées, la barre de loupe-18
+             les aura nommées avant) ;
+         I2 le journal est OUBLIÉ, pas appliqué (Q3) — la cohérence :
+             ce qui n'est pas sauvegardé n'existe pas au disque ;
+         I3 l'IAT déclarée (D161) : CloseHandle, GetLastError — la
+             liste fermée ; registres non volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : CloseHandle en échec (poignée valide) → le code GetLastError
+       consigné AU JOURNAL DU HARNAIS, la suite de Q2/Q3 A LIEU, rax =
+       0 QUAND MÊME (le verdict -6 serait un mensonge : la session est
+       close, l'état est propre — l'échec de l'OS est constaté, pas
+       propagé : « jamais une poignée pendante » prime).
+Vecteurs :
+  V1 : scénario — ouvrir puis fermer puis relire le cadre : tout est
+       vierge (les champs à zéro, la poignée INVALIDE), l'oracle
+       différentiel constate l'état neuf (couvre Q1, Q2, Q4).
+  V2 : scénario d'hygiène — ouvrir le témoin, éditer (journal posé),
+       saisir un motif, fermer, ouvrir le SECOND témoin : le journal
+       VIDE (les octets du premier fichier n'apparaissent JAMAIS dans
+       la vue du second) — l'écran attendu le prouve octet par octet
+       (couvre Q3).
+  V3 : idempotence — fermer sur session fermée : rax = 0, AUCUN appel
+       CloseHandle (le harnais compte les appels), rien bougé (couvre
+       Q4).
+  V4 : rejet de l'erreur — le shim CloseHandle en échec : la suite a
+       lieu, le cadre vierge, rax = 0, le code consigné (couvre E1).
+Fixtures    : les deux témoins du kit (l'hygiène inter-fichiers de V2).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-03 · fermer : la session close, jamais une poignée pendante · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; IAT déclarée (la liste fermée) : CloseHandle, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette propre (cible de saut)
+  LBL-002 = l'étiquette deja (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel direct libc-07 — memset (dst, octet, n)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 49e401fc4cbf7a65… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret

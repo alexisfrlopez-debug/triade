@@ -1,0 +1,651 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : HORS-FORMAT
+LA CAUSE EXACTE : la ligne 253 n'est pas une forme admise : 'sbb rax, 0'
+LA LIGNE FAUTIVE : « sbb rax, 0 »
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-10 · peinture : WM_PAINT, l'unique peintre · révision 1
+Intention : dessiner la fenêtre visible — composer l'écran (l'entête,
+les lignes par loupe-08, la barre d'état avec le PANNEAU
+D'EMPREINTES) puis le peindre (BeginPaint, la police à chasse fixe,
+TextOutW ligne à ligne, la cellule active en inverse, EndPaint). La
+mesure de la police a lieu UNE fois. L'expansion latin-1 octet→mot
+est exacte. L'oracle à scénarios compare l'écran attendu OCTET PAR
+OCTET — la peinture est la preuve visible du domaine.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_PAINT —
+             jamais ailleurs ; P2 la session peut être VIDE (la
+             vitrine sans fichier peint l'usage : P2 n'est PAS une
+             précondition d'état) ; P3 l'IAT gdi32/user32 du bloc
+             résolue.
+  post : Q1 LA COMPOSITION (l'ECRAIN, 2320 o) : l'entête posée (la
+             chaîne .rdata, 65 o utiles) ; la grille : pour chaque
+             ligne visible i de 0 à min(lignes_affichables − 1,
+             remplissage/16 arrondi) : loupe-08(tampon + 16·i, min(16,
+             remplissage − 16·i), grille + 80·i, vue + 16·i) — les
+             lignes au-delà de la fin restent VIERGES (jamais une
+             ligne fantôme) ; la barre ligne 1 : « Loupe 0.1.0-dev.1 —
+             <chemin> · <taille> o · curseur 0xNNNNNNNN · MODIFIÉ »
+             (ou l'usage si session vide) ; la barre ligne 2 (LE
+             PANNEAU) : « md5 <32 hex> · sha256 <64 hex> » (ou « — »)
+             — l'astérisque si la marque sale est posée (les
+             empreintes du DISQUE, la divergence nommée) ;
+         Q2 LA PEINTURE : BeginPaint (la PAINTSTRUCT sur la pile) ; la
+             police ANSI_FIXED_FONT sélectionnée (GetStockObject +
+             SelectObject), mesurée UNE fois (GetTextMetricsW →
+             METRIQUES : char_w, ligne_h, lignes_visibles — jamais
+             re-mesurée tant que la fenêtre vit) ; chaque ligne de
+             l'ECRAIN expansée latin-1 octet→mot (le tampon pile de
+             80 mots) puis TextOutW à (MARGE_X, MARGE_Y + ligne ·
+             ligne_h) ; EndPaint ;
+         Q3 LA CELLULE ACTIVE : la colonne du groupe hexa du curseur
+             repeinte en INVERSE (SetTextColor/SetBkColor échangés
+             autour de CE groupe seul, à l'abscisse exacte
+             MARGE_X + (10 + 3·colonne + (colonne ≥ 8 ? 1 : 0)) ·
+             char_w) — la surbrillance vit à la peinture, la position
+             au cadre (loupe-15 ne peint RIEN) ;
+         Q4 rax = 0.
+  inv  : I1 L'UNIQUE PEINTRE : aucune goutte hors WM_PAINT, aucun
+             autre bloc ne déclare TextOutW (la liste IAT fermée du
+             plan — la contrebande de peinture est un refus de build) ;
+         I2 le CLIPPING par lignes affichables : jamais un TextOutW
+             au-delà du client (GetClientRect lu à CHAQUE peinture —
+             la fenêtre peut rétrécir) ;
+         I3 la police À CHASSE FIXE est une EXIGENCE (ANSI_FIXED_FONT
+             — les colonnes hexa sinon se disloquent : le refus de la
+             police proportionnelle est un choix de domaine) ;
+         I4 l'expansion latin-1 EXACTE : chaque octet de l'ECRAIN →
+             le mot UTF-16 de même valeur (0x00–0xFF → U+0000–U+00FF,
+             la table est l'identité) — jamais un octet signé ;
+         I5 la composition ne MODIFIE RIEN : le cadre, le journal, les
+             empreintes LUS seuls (la peinture est pure lecture
+             d'état) ; registres non volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : BeginPaint rend un DC nul → verdict -6 SYSTÈME (le code
+       GetLastError consigné), RIEN peint, rax = -6 (jamais un
+       dessin sur un contexte mort).
+  E2 : GetStockObject ou GetTextMetricsW en échec (0 / le tm nul) →
+       verdict -6 SYSTÈME, la peinture AVORTÉE proprement (EndPaint
+       appelé quand même — le contexte se rend TOUJOURS).
+Vecteurs :
+  V1 : scénario — la vitrine sans session : l'ECRAIN composé (l'usage
+       à la barre 1, les « — » au panneau) puis peint : l'écran
+       attendu octet par octet (couvre Q1, Q2, Q4).
+  V2 : scénario — le témoin ouvert (vue 0, curseur 0x22) : les 24
+       lignes ou moins (le remplissage borne), la cellule active
+       inversée à la colonne exacte, le panneau aux empreintes du
+       disque — l'attendu intégral (couvre Q1, Q2, Q3).
+  V3 : scénario — la marque sale : l'astérisque au panneau, « MODIFIÉ
+       » à la barre 1 (la divergence nommée) (couvre Q1).
+  V4 : rejet — le shim BeginPaint à 0 : verdict -6, rien peint,
+       EndPaint déménagé jamais appelé sur DC nul — l'état demeure
+       propre (couvre E1) ; le shim GetTextMetricsW muet : la
+       peinture avortée proprement (couvre E2).
+  V5 : falsification — une ligne de la grille mutée d'un octet dans
+       l'ECRAIN : l'attendu diverge — l'oracle échoue (la
+       falsification DEMANDÉE, charte § 3).
+Fixtures    : les écrans attendus du kit (la vitrine vide, le témoin à
+              la vue 0, la ligne finale incomplète, la marque sale) —
+              les fixtures du dépôt, consignées au harnais.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), D134 (la balise peinte),
+              D137 (la lignée).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-10 · peinture : WM_PAINT, l'unique peintre · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; verdicts nommés : -6 SYSTÈME
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette police_la (cible de saut)
+  LBL-002 = l'étiquette client_zero (cible de saut)
+  LBL-003 = l'étiquette client_div (cible de saut)
+  LBL-004 = l'étiquette raz (cible de saut)
+  LBL-005 = l'étiquette entete_copie (cible de saut)
+  LBL-006 = l'étiquette grille_remplie (cible de saut)
+  LBL-007 = l'étiquette grille_zero (cible de saut)
+  LBL-008 = l'étiquette grille_G (cible de saut)
+  LBL-009 = l'étiquette grille_boucle (cible de saut)
+  LBL-010 = l'étiquette grille_len (cible de saut)
+  LBL-011 = l'étiquette grille_fin (cible de saut)
+  LBL-012 = l'étiquette barre_usage (cible de saut)
+  LBL-013 = l'étiquette barre_message (cible de saut)
+  LBL-014 = l'étiquette barre_aller (cible de saut)
+  LBL-015 = l'étiquette barre_chercher (cible de saut)
+  LBL-016 = l'étiquette barre1_fin (cible de saut)
+  LBL-017 = l'étiquette panneau_vide (cible de saut)
+  LBL-018 = l'étiquette panneau_fin (cible de saut)
+  LBL-019 = l'étiquette peint_grille (cible de saut)
+  LBL-020 = l'étiquette peint_grille_suivant (cible de saut)
+  LBL-021 = l'étiquette peint_grille_fin (cible de saut)
+  LBL-022 = l'étiquette barre_saute (cible de saut)
+  LBL-023 = l'étiquette cellule_col (cible de saut)
+  LBL-024 = l'étiquette cellule_pos (cible de saut)
+  LBL-025 = l'étiquette cellule_fin (cible de saut)
+  LBL-026 = l'étiquette refus_begin (cible de saut)
+  LBL-027 = l'étiquette avorte_police (cible de saut)
+  LBL-028 = l'étiquette sortie (cible de saut)
+  LBL-029 = l'étiquette chaine (cible de saut)
+  LBL-030 = l'étiquette chaine_fin (cible de saut)
+  LBL-031 = l'étiquette chemin16 (cible de saut)
+  LBL-032 = l'étiquette chemin16_point (cible de saut)
+  LBL-033 = l'étiquette chemin16_poser (cible de saut)
+  LBL-034 = l'étiquette chemin16_fin (cible de saut)
+  LBL-035 = l'étiquette hex8 (cible de saut)
+  LBL-036 = l'étiquette hex8_boucle (cible de saut)
+  LBL-037 = l'étiquette hex_octets (cible de saut)
+  LBL-038 = l'étiquette dec (cible de saut)
+  LBL-039 = l'étiquette dec_boucle (cible de saut)
+  LBL-040 = l'étiquette dec_copie (cible de saut)
+  LBL-041 = l'étiquette peindre (cible de saut)
+  LBL-042 = l'étiquette peindre_compte (cible de saut)
+  LBL-043 = l'étiquette peindre_expanse (cible de saut)
+  LBL-044 = l'étiquette peindre_goutte (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = l'appel IAT au slot du plan (« call CST-005 »)
+  CST-006 = l'appel IAT au slot du plan (« call CST-006 »)
+  CST-007 = la constante immédiat-0x910 (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire bc9d47f3e3fbd223… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+mov rax, qword ptr [rbx + 0x28]
+test rax, rax
+je LBL-002
+call CST-001
+test eax, eax
+jne LBL-026
+mov r12, qword ptr [rbx + 0x20]
+mov r13, qword ptr [rbx + 0x18]
+mov r14, qword ptr [rbx + 0x30]
+mov r15, qword ptr [rbx + 0x38]
+cmp r14, 0
+je LBL-007
+call CST-002
+mov eax, r12d
+mov edx, r13d
+call CST-003
+mov r8d, eax
+mov r9d, edx
+mov r10d, r8d
+shr r10d, 0x3
+cmp r10d, r9d
+cmovg r10d, r9d
+xor r11d, r11d
+cmp r11d, r10d
+jae LBL-011
+mov rdi, qword ptr [rbx + 0x40]
+lea rsi, [rbx + 0x410]
+lbl_grille_boucle:
+call LBL-008
+add rdi, 0x10
+add rsi, 0x50
+inc r11d
+cmp r11d, r10d
+jb lbl_grille_boucle
+lbl_grille_fin:
+mov rsi, qword ptr [rbx + 0x48]
+test rsi, rsi
+je LBL-012
+mov rdi, qword ptr [rbx + 0x410]
+call LBL-005
+lbl_barre_message:
+lea rsi, [rbx + 0x510]
+call LBL-013
+mov rdi, rsi
+call LBL-014
+cmp qword ptr [rbx + 0x58], 0
+je lbl_barre_chercher
+mov rsi, qword ptr [rbx + 0x58]
+call LBL-015
+lbl_barre_chercher:
+call LBL-016
+mov rdi, qword ptr [rbx + 0x48]
+test rdi, rdi
+je LBL-017
+mov rsi, qword ptr [rbx + 0x60]
+call LBL-018
+mov rdi, qword ptr [rbx + 0x68]
+test rdi, rdi
+je LBL-018
+mov rsi, qword ptr [rbx + 0x68]
+call LBL-018
+call LBL-019
+mov r14d, r8d
+mov r15d, r9d
+call CST-004
+test eax, eax
+jne LBL-027
+mov r12d, eax
+mov r13d, edx
+mov r8d, r12d
+shr r8d, 0x4
+cmp r8d, r15d
+cmovg r8d, r15d
+xor r9d, r9d
+lbl_peint_grille:
+lea r10, [rbx + 0x810]
+lea r11, [rbx + 0x410]
+mov rdi, r9
+shl rdi, 0x4
+add rdi, r11
+mov rsi, r9
+shl rsi, 0x5
+add rsi, r10
+call LBL-020
+add r9d, 1
+cmp r9d, r8d
+jb lbl_peint_grille
+lbl_peint_grille_fin:
+mov rdi, qword ptr [rbx + 0x48]
+test rdi, rdi
+je lbl_sortie
+mov r8, qword ptr [rbx + 0x20]
+mov r9, qword ptr [rbx + 0x18]
+mov r10, qword ptr [rbx + 0x30]
+cmp r8, 0
+jl lbl_cellule_fin
+cmp r8, r10
+jae lbl_cellule_fin
+mov r11d, r8d
+and r11d, 0xf
+mov r12d, r8d
+shr r12d, 0x4
+cmp r12d, r9d
+jge lbl_cellule_fin
+call LBL-023
+mov r13, rax
+call LBL-024
+mov rdi, r13
+mov rsi, r12
+call LBL-025
+lbl_cellule_fin:
+call CST-005
+mov r12, rax
+mov r13, rdx
+mov rdi, r12
+call CST-006
+test eax, eax
+je lbl_sortie
+mov rdi, r12
+call LBL-041
+xor eax, eax
+lbl_sortie:
+mov rsp, rbp
+pop rbp
+ret
+lbl_police_la:
+mov rax, qword ptr [rbx + 0x490]
+mov qword ptr [rbx + 0x488], rax
+ret
+lbl_client_zero:
+mov qword ptr [rbx + 0x410], 0
+mov qword ptr [rbx + 0x420], 0
+mov qword ptr [rbx + 0x430], 0
+mov qword ptr [rbx + 0x440], 0
+mov qword ptr [rbx + 0x450], 0
+mov qword ptr [rbx + 0x460], 0
+mov qword ptr [rbx + 0x470], 0
+mov qword ptr [rbx + 0x480], 0
+mov qword ptr [rbx + 0x490], 0
+mov qword ptr [rbx + 0x4A0], 0
+mov qword ptr [rbx + 0x4B0], 0
+mov qword ptr [rbx + 0x4C0], 0
+mov qword ptr [rbx + 0x4D0], 0
+mov qword ptr [rbx + 0x4E0], 0
+mov qword ptr [rbx + 0x4F0], 0
+mov qword ptr [rbx + 0x500], 0
+ret
+lbl_client_div:
+mov qword ptr [rbx + 0x530], 0
+ret
+lbl_raz:
+mov rdi, rsi
+xor al, al
+call LBL-030
+ret
+lbl_entete_copie:
+mov rdi, rsi
+mov rsi, qword ptr [rbx + 0x410]
+mov rcx, 0x41
+rep movsb
+ret
+lbl_grille_remplie:
+mov rdi, rsi
+mov rsi, rdi
+mov rcx, 0x10
+rep movsb
+ret
+lbl_grille_zero:
+mov rdi, rsi
+mov rcx, 0x10
+xor al, al
+rep stosb
+ret
+lbl_grille_G:
+mov rax, qword ptr [rbx + 0x410]
+mov qword ptr [rbx + 0x810], rax
+ret
+lbl_grille_len:
+mov rax, qword ptr [rbx + 0x30]
+mov rcx, rax
+and rcx, 0xf
+mov rdx, rax
+shr rdx, 0x4
+cmp rcx, 0
+je lbl_grille_len_fin
+cmp rcx, 0x10
+je lbl_grille_len_fin
+mov rax, rdx
+inc rax
+lbl_grille_len_fin:
+ret
+lbl_grille_fin:
+ret
+lbl_barre_usage:
+mov rax, qword ptr [rbx + 0x410]
+mov qword ptr [rbx + 0x510], rax
+ret
+lbl_barre_message:
+mov rdi, rsi
+mov rsi, qword ptr [rbx + 0x510]
+mov rcx, 0x80
+rep movsb
+ret
+lbl_barre_aller:
+mov rdi, rsi
+mov rsi, qword ptr [rbx + 0x510]
+mov rcx, 0x80
+rep movsb
+ret
+lbl_barre_chercher:
+mov rax, qword ptr [rbx + 0x510]
+mov qword ptr [rbx + 0x518], rax
+ret
+lbl_barre1_fin:
+ret
+lbl_panneau_vide:
+mov rax, qword ptr [rbx + 0x510]
+mov qword ptr [rbx + 0x528], rax
+mov qword ptr [rbx + 0x530], 0
+ret
+lbl_panneau_fin:
+ret
+lbl_peint_grille:
+mov rdi, rsi
+mov rsi, rdi
+mov rcx, 0x80
+call LBL-043
+mov rdi, rax
+mov rsi, rdx
+call LBL-044
+ret
+lbl_peint_grille_suivant:
+mov rdi, rsi
+mov rsi, rdi
+mov rcx, 0x80
+call LBL-043
+mov rdi, rax
+mov rsi, rdx
+call LBL-044
+ret
+lbl_peint_grille_fin:
+ret
+lbl_barre_saute:
+mov rdi, rsi
+mov rsi, qword ptr [rbx + 0x510]
+mov rcx, 0x80
+rep movsb
+ret
+lbl_cellule_col:
+mov rax, rdi
+and rax, 0xf
+cmp rax, 8
+sbb rax, 0
+add rax, 0xA
+shl rax, 0x1
+ret
+lbl_cellule_pos:
+mov rax, rdi
+shr rax, 0x4
+ret
+lbl_cellule_fin:
+ret
+lbl_refus_begin:
+mov rax, -6
+ret
+lbl_avorte_police:
+mov rax, -6
+ret
+lbl_sortie:
+ret
+lbl_chaine:
+mov r8, rsi
+mov r9, rdi
+xor r10, r10
+mov r11, rsi
+lbl_chaine_fin:
+cmp r10, r9
+je lbl_chaine_fin_ret
+mov al, byte ptr [r8 + r10]
+mov byte ptr [rdi + r10], al
+inc r10
+jmp lbl_chaine
+lbl_chaine_fin_ret:
+ret
+lbl_chemin16:
+mov r8, rsi
+mov r9, rdi
+xor r10, r10
+mov r11, rsi
+lbl_chemin16_point:
+cmp byte ptr [r8], 0
+je lbl_chemin16_fin
+mov al, byte ptr [r8]
+mov byte ptr [r9], al
+inc r8
+inc r9
+jmp lbl_chemin16_point
+lbl_chemin16_poser:
+mov byte ptr [r9], 0x2E
+inc r9
+jmp lbl_chemin16_point
+lbl_chemin16_fin:
+ret
+lbl_hex8:
+mov r8, rsi
+mov r9, rdi
+mov r10, rsi
+mov r11, 0x8
+lbl_hex8_boucle:
+cmp r11, 0
+je lbl_hex8_boucle_fin
+mov al, byte ptr [r8]
+call LBL-035
+mov byte ptr [r9], al
+inc r8
+inc r9
+dec r11
+jmp lbl_hex8_boucle
+lbl_hex8_boucle_fin:
+ret
+lbl_hex_octets:
+mov rax, rsi
+and rax, 0xFF
+mov r8, rax
+mov r9, rdi
+mov r10, 0x1
+lbl_dec_boucle:
+xor rdx, rdx
+mov rax, r8
+div r10
+mov byte ptr [r9 + rdx], 0x30
+add r9, 1
+mov r8, rax
+inc r10
+cmp r8, 0
+jne lbl_dec_boucle
+ret
+lbl_dec:
+mov r8, rsi
+mov r9, rdi
+mov r10, 0x1
+lbl_dec_boucle:
+xor rdx, rdx
+mov rax, r8
+div r10
+mov byte ptr [r9 + rdx], 0x30
+add r9, 1
+mov r8, rax
+inc r10
+cmp r8, 0
+jne lbl_dec_boucle
+ret
+lbl_dec_copie:
+mov rdi, rsi
+mov rsi, rdi
+mov rcx, rdx
+rep movsb
+ret
+lbl_peindre:
+mov rdi, rsi
+call LBL-042
+ret
+lbl_peindre_compte:
+mov rax, rdi
+shl rax, 0x1
+mov rdx, rsi
+add rax, rdx
+ret
+lbl_peindre_expanse:
+mov r8, rsi
+mov r9, rdi
+mov r10, 0
+lbl_peindre_goutte:
+cmp r10, r8
+je lbl_peindre_goutte_fin
+mov rax, qword ptr [rdi + r10]
+and rax, 0xFF
+mov qword ptr [rsi + r10], rax
+add r10, 0x1
+jmp lbl_peindre_goutte
+lbl_peindre_goutte_fin:
+ret
+=== FIN (tentative de réparation 3 sur le budget 3) ===

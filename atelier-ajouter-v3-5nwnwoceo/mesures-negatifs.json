@@ -1,0 +1,41 @@
+{
+ "horodatage": "2026-11-22T08:35:11",
+ "graine": 20261117,
+ "budget": 3,
+ "grammaire_sha256": "5808a6414b3a9da460ec70a4ef0b6e84dea6b425289ce19ff798bf7ed4d86634",
+ "controles_negatifs": {
+  "ID-INCONNU": true,
+  "DICT-DIVERGENT": true,
+  "EXPANSION-DIVERGENTE": true,
+  "HORS-FORMAT": true,
+  "FORME-cmp-mémoire": true,
+  "FORME-movzx-r64": true,
+  "FORME-taille": true,
+  "FORME-symbole-clair": true,
+  "CADRE-MUTÉ": true
+ },
+ "ajouter-v3": {
+  "mode": "ajouter-v3",
+  "n": 18,
+  "verts": 6,
+  "premiere_passe": 6,
+  "median_cout_par_change": 3844.0,
+  "median_cout_cl100k": 3844.0,
+  "refus_par_classe": {
+   "ID-INCONNU": 1,
+   "EXPANSION-DIVERGENTE": 9,
+   "HORS-FORMAT": 2
+  },
+  "cible": false
+ },
+ "editer-v3": {
+  "mode": "editer-v3",
+  "n": 18,
+  "verts": 18,
+  "premiere_passe": 17,
+  "median_cout_par_change": 712.5,
+  "median_cout_cl100k": 712.5,
+  "refus_par_classe": {},
+  "cible": null
+ }
+}

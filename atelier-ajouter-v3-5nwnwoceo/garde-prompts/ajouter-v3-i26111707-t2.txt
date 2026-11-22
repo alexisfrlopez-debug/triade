@@ -1,0 +1,796 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : HORS-FORMAT
+LA CAUSE EXACTE : ligne inassemblable : 'cmp edx,'
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-09 · écran : la vitrine entière et la disposition déclarée · révision 1
+Intention : POSER L'ÉCRAN DE LOUPE — la vitrine entière : le point
+d'entrée (WinMain : la ligne de commande lue à la main, le chemin cité
+ou non), la fenêtre (classe + création — l'héritage du MODÈLE win-02 de
+la démo, R3), LA PROCÉDURE qui route chaque message à son bloc, et les
+TROIS ZONES DÉCLARÉES avant la première goutte de peinture (l'ECRAIN :
+entête, grille, barre). La disposition est tenue DEUX FOIS : la
+disposition DES ZONES (la structure déclarée au plan) et la disposition
+DES MESSAGES (la table de routage fermée). TOUT refus nommé du domaine
+monte à la barre — l'écran NOMME ce qu'il refuse, la vitrine qui ne
+s'explique pas n'existe pas (D36/D37, le modèle démo).
+Contrat :
+  pre  : P1 l'IAT kernel32/user32/gdi32 résolue (D7/D35, les 34
+             feuilles du plan) ; P2 .data vierge côté vitrine (HWND,
+             ECRAIN, SAISIE) ; P3 la pile alignée 16 (WinMain).
+  post : Q1 WinMain : la ligne de commande lue PAR GetCommandLineW À LA
+             MAIN (le programme sauté, guillemets honorés — aucun
+             shell32, aucune dépendance) : chemin cité → loupe-01 (la
+             session naît, le refus nommé monte à la barre et la
+             vitrine s'ouvre VIDE VRAIE) ; chemin absent → la vitrine
+             s'ouvre avec l'usage à la barre (« loupe <fichier> ») —
+             l'état nommé, pas un échec ;
+         Q2 la CLASSE enregistrée (WNDCLASSEXW sur la pile — jamais en
+             .data ; lpfnWndProc = LA PROCÉDURE, la classe et le titre
+             UTF-16 de .rdata, le curseur flèche, l'icône ERREUR pour
+             l'explication fatale) puis CreateWindowExW (STYLE_FENETRE
+             — l'ascenseur vertical inclus, 640 × 480) puis ShowWindow
+             — tout échec : MessageBoxW(MB_ICONERROR) PUIS ExitProcess(1)
+             (la vitrine impossible s'explique PUIS meurt : D36) ;
+         Q3 LA PROCÉDURE (le callback msx64 : rcx = hwnd, rdx = msg,
+             r8 = wParam, r9 = lParam — D38 : les volatils sauvés avant
+             tout appel) : WM_PAINT → loupe-10 ; WM_SIZE, WM_VSCROLL,
+             WM_MOUSEWHEEL → loupe-11 ; WM_KEYDOWN → LA TABLE DE
+             COMMANDES (F5 ou Ctrl+G → loupe-12 ; F3 → loupe-14 ;
+             Ctrl+S → loupe-17 ; Alt+F4/WM_CLOSE → loupe-18 ; les
+             flèches/PgUp/PgDn/Home/End → loupe-15 ; toute autre
+             touche → DefWindowProcW) ; WM_CHAR → la saisie active ?
+             loupe-12/loupe-14 : loupe-16 — LA LISTE EST FERMÉE ;
+         Q4 la boucle HÉRITÉE win-03 (PAR LA CARTE — GetMessageW/
+             TranslateMessage/DispatchMessageW jusqu'à WM_QUIT) puis
+             ExitProcess(0) — le retour propre ;
+         Q5 rax = 0 au retour de WinMain (le code d'ExitProcess).
+  inv  : I1 L'ÉCRAN DÉCLARÉ AVANT LA PEINTURE : la zone ECRAIN du plan
+             (2320 o — l'entête 80 @ +0, la grille 24 × 80 @ +80, la
+             barre 2 × 160 @ +2000) est LA disposition : loupe-10 la
+             remplit, la structure ne bouge plus JAMAIS ;
+         I2 l'image PI (D33) : GetModuleHandleW(0), aucune adresse
+             absolue — le callback, la classe, les chaînes : tout
+             relatif ou résolu ;
+         I3 AUCUNE goutte de peinture hors WM_PAINT (loupe-10 est
+             L'UNIQUE peintre — la procédure ne peint jamais elle-
+             même) ; l'invalidation passe par InvalidateRect (le
+             repaint demandé, jamais volé) ;
+         I4 TOUT verdict négatif des blocs routés monte à la barre
+             (l'écran nomme le refus — la barre le porte au prochain
+             WM_PAINT) : jamais un refus muet, jamais un crash ;
+         I5 la balise à la barre (« Loupe 0.1.0-dev.1 — … » — charte
+             § 6, D137) ; l'IAT fermée du bloc (D161) ; NOP, 0x90.
+Échecs :
+  E1 : RegisterClassExW = 0 → MessageBoxW(MB_ICONERROR) PUIS
+       ExitProcess(1) — la classe impossible, expliquée puis morte
+       (D36 : jamais silencieux).
+  E2 : CreateWindowExW = 0 → idem E1 — la vitrine impossible.
+Vecteurs :
+  V1 : scénario — le témoin ouvert par la ligne de commande : la
+       vitrine créée (classe + fenêtre + boucle), l'écran attendu à
+       la première peinture, octet par octet (couvre Q1, Q2, Q5).
+  V2 : scénario — la commande SANS chemin : la vitrine ouverte avec
+       l'usage à la barre, AUCUNE session (le cadre vierge) (couvre
+       Q1).
+  V3 : émulation — les shims scriptent la file (WM_PAINT, WM_KEYDOWN
+       des commandes, WM_CHAR, WM_CLOSE) : CHAQUE routage constaté
+       chez son bloc (les appels comptés un à un), DefWindowProcW
+       pour le reste (couvre Q3, Q4).
+  V4 : rejet — le shim RegisterClassExW à 0 (puis CreateWindowExW à
+       0) : MessageBoxW appelée, ExitProcess(1) — l'explication puis
+       la mort, AUCUNE boucle lancée (couvre E1, E2).
+  V5 : falsification — un routage muté (WM_CHAR dérouté vers
+       loupe-16 hors mode saisie) : le scénario diverge — l'oracle à
+       scénarios échoue.
+Fixtures    : les chaînes UTF-16 .rdata (classe « LoupeHexa », titre
+              « Loupe — l'éditeur hexadécimal ») + les libellés de la
+              barre (l'usage, les refus, la balise).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), D33 (PI), D36/D37 (le modèle
+              démo : la vitrine s'explique), D38 (les volatils du
+              callback), D137 (la balise à la barre).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-09 · écran : la vitrine entière et la disposition déclarée · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; les appelés directs (le plan — la liste fermée) :
+;   win-02 (l'adresse au plan de la carte)
+;   win-03 (l'adresse au plan de la carte)
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette programme_cote (cible de saut)
+  LBL-002 = l'étiquette programme_nu (cible de saut)
+  LBL-003 = l'étiquette programme_apres (cible de saut)
+  LBL-004 = l'étiquette chemin_pre (cible de saut)
+  LBL-005 = l'étiquette refus_gen (cible de saut)
+  LBL-006 = l'étiquette sans_chemin (cible de saut)
+  LBL-007 = l'étiquette suite_vitrine (cible de saut)
+  LBL-008 = l'étiquette vitrine_impossible (cible de saut)
+  LBL-009 = l'étiquette procedure (cible de saut)
+  LBL-010 = l'étiquette r_peinture (cible de saut)
+  LBL-011 = l'étiquette r_defilement (cible de saut)
+  LBL-012 = l'étiquette r_commande (cible de saut)
+  LBL-013 = l'étiquette r_curseur (cible de saut)
+  LBL-014 = l'étiquette r_aller (cible de saut)
+  LBL-015 = l'étiquette r_suivant (cible de saut)
+  LBL-016 = l'étiquette r_caractere (cible de saut)
+  LBL-017 = l'étiquette r_caractere_libre (cible de saut)
+  LBL-018 = l'étiquette hex_maj (cible de saut)
+  LBL-019 = l'étiquette r_sauver (cible de saut)
+  LBL-020 = l'étiquette r_saisie (cible de saut)
+  LBL-021 = l'étiquette r_libre_suivant (cible de saut)
+  LBL-022 = l'étiquette r_libre_aller (cible de saut)
+  LBL-023 = l'étiquette r_fermeture (cible de saut)
+  LBL-024 = l'étiquette r_destruction (cible de saut)
+  LBL-025 = l'étiquette r_defaut (cible de saut)
+  LBL-026 = l'étiquette r_retour (cible de saut)
+  LBL-027 = l'étiquette monter (cible de saut)
+  LBL-028 = l'étiquette monter_fin (cible de saut)
+  LBL-029 = l'étiquette message (cible de saut)
+  LBL-030 = l'étiquette message_copie (cible de saut)
+  LBL-031 = l'étiquette message_fin (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = l'appel IAT au slot du plan (« call CST-005 »)
+  CST-006 = l'appel IAT au slot du plan (« call CST-006 »)
+  CST-007 = l'appel IAT au slot du plan (« call CST-007 »)
+  CST-008 = l'appel IAT au slot du plan (« call CST-008 »)
+  CST-009 = l'appel IAT au slot du plan (« call CST-009 »)
+  CST-010 = la constante immédiat-0x115 (la borne nommée)
+  CST-011 = la constante immédiat-0x20a (la borne nommée)
+  CST-012 = la constante immédiat-0x100 (la borne nommée)
+  CST-013 = la constante immédiat-0x102 (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire c4f3dc126c056f67… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+programme_cote:
+mov r12, qword ptr [rbx + 0x8]
+cmp r12, -1
+je LBL-005
+cmp r12, 0
+je LBL-006
+jmp LBL-007
+programme_nu:
+cmp r12, 0
+jne LBL-006
+jmp LBL-005
+programme_apres:
+chemin_pre:
+call CST-001
+mov r14, rax
+test r14, r14
+je LBL-005
+jmp LBL-007
+refus_gen:
+mov qword ptr [rbx + 0x8], -1
+jmp LBL-007
+sans_chemin:
+mov qword ptr [rbx + 0x8], -1
+mov rdx, qword ptr [rbx + 0x18]
+mov qword ptr [rbx + 0x10], rdx
+jmp LBL-007
+suite_vitrine:
+vitrine_impossible:
+call CST-002
+test eax, eax
+je LBL-008
+call CST-003
+test eax, eax
+je LBL-008
+call CST-004
+test eax, eax
+je LBL-008
+call CST-005
+test eax, eax
+je LBL-008
+call CST-006
+call CST-007
+call CST-008
+jmp LBL-009
+procedure:
+cmp edx, 0x1f
+je LBL-010
+cmp edx, 0x7b
+je LBL-011
+cmp edx, 0x100
+je LBL-012
+cmp edx, 0x102
+je LBL-012
+cmp edx, 0x115
+je LBL-012
+cmp edx, 0x11f
+je LBL-013
+cmp edx, 0x120
+je LBL-013
+cmp edx, 0x121
+je LBL-013
+cmp edx, 0x122
+je LBL-013
+cmp edx, 0x123
+je LBL-013
+cmp edx, 0x124
+je LBL-013
+cmp edx, 0x125
+je LBL-013
+cmp edx, 0x126
+je LBL-013
+cmp edx, 0x127
+je LBL-013
+cmp edx, 0x128
+je LBL-013
+cmp edx, 0x129
+je LBL-013
+cmp edx, 0x12a
+je LBL-013
+cmp edx, 0x12b
+je LBL-013
+cmp edx, 0x12c
+je LBL-013
+cmp edx, 0x12d
+je LBL-013
+cmp edx, 0x12e
+je LBL-013
+cmp edx, 0x12f
+je LBL-013
+cmp edx, 0x130
+je LBL-013
+cmp edx, 0x131
+je LBL-013
+cmp edx, 0x132
+je LBL-013
+cmp edx, 0x133
+je LBL-013
+cmp edx, 0x134
+je LBL-013
+cmp edx, 0x135
+je LBL-013
+cmp edx, 0x136
+je LBL-013
+cmp edx, 0x137
+je LBL-013
+cmp edx, 0x138
+je LBL-013
+cmp edx, 0x139
+je LBL-013
+cmp edx, 0x13a
+je LBL-013
+cmp edx, 0x13b
+je LBL-013
+cmp edx, 0x13c
+je LBL-013
+cmp edx, 0x13d
+je LBL-013
+cmp edx, 0x13e
+je LBL-013
+cmp edx, 0x13f
+je LBL-013
+cmp edx, 0x140
+je LBL-013
+cmp edx, 0x141
+je LBL-013
+cmp edx, 0x142
+je LBL-013
+cmp edx, 0x143
+je LBL-013
+cmp edx, 0x144
+je LBL-013
+cmp edx, 0x145
+je LBL-013
+cmp edx, 0x146
+je LBL-013
+cmp edx, 0x147
+je LBL-013
+cmp edx, 0x148
+je LBL-013
+cmp edx, 0x149
+je LBL-013
+cmp edx, 0x14a
+je LBL-013
+cmp edx, 0x14b
+je LBL-013
+cmp edx, 0x14c
+je LBL-013
+cmp edx, 0x14d
+je LBL-013
+cmp edx, 0x14e
+je LBL-013
+cmp edx, 0x14f
+je LBL-013
+cmp edx, 0x150
+je LBL-013
+cmp edx, 0x151
+je LBL-013
+cmp edx, 0x152
+je LBL-013
+cmp edx, 0x153
+je LBL-013
+cmp edx, 0x154
+je LBL-013
+cmp edx, 0x155
+je LBL-013
+cmp edx, 0x156
+je LBL-013
+cmp edx, 0x157
+je LBL-013
+cmp edx, 0x158
+je LBL-013
+cmp edx, 0x159
+je LBL-013
+cmp edx, 0x15a
+je LBL-013
+cmp edx, 0x15b
+je LBL-013
+cmp edx, 0x15c
+je LBL-013
+cmp edx, 0x15d
+je LBL-013
+cmp edx, 0x15e
+je LBL-013
+cmp edx, 0x15f
+je LBL-013
+cmp edx, 0x160
+je LBL-013
+cmp edx, 0x161
+je LBL-013
+cmp edx, 0x162
+je LBL-013
+cmp edx, 0x163
+je LBL-013
+cmp edx, 0x164
+je LBL-013
+cmp edx, 0x165
+je LBL-013
+cmp edx, 0x166
+je LBL-013
+cmp edx, 0x167
+je LBL-013
+cmp edx, 0x168
+je LBL-013
+cmp edx, 0x169
+je LBL-013
+cmp edx, 0x16a
+je LBL-013
+cmp edx, 0x16b
+je LBL-013
+cmp edx, 0x16c
+je LBL-013
+cmp edx, 0x16d
+je LBL-013
+cmp edx, 0x16e
+je LBL-013
+cmp edx, 0x16f
+je LBL-013
+cmp edx, 0x170
+je LBL-013
+cmp edx, 0x171
+je LBL-013
+cmp edx, 0x172
+je LBL-013
+cmp edx, 0x173
+je LBL-013
+cmp edx, 0x174
+je LBL-013
+cmp edx, 0x175
+je LBL-013
+cmp edx, 0x176
+je LBL-013
+cmp edx, 0x177
+je LBL-013
+cmp edx, 0x178
+je LBL-013
+cmp edx, 0x179
+je LBL-013
+cmp edx, 0x17a
+je LBL-013
+cmp edx, 0x17b
+je LBL-013
+cmp edx, 0x17c
+je LBL-013
+cmp edx, 0x17d
+je LBL-013
+cmp edx, 0x17e
+je LBL-013
+cmp edx, 0x17f
+je LBL-013
+cmp edx, 0x180
+je LBL-013
+cmp edx, 0x181
+je LBL-013
+cmp edx, 0x182
+je LBL-013
+cmp edx, 0x183
+je LBL-013
+cmp edx, 0x184
+je LBL-013
+cmp edx, 0x185
+je LBL-013
+cmp edx, 0x186
+je LBL-013
+cmp edx, 0x187
+je LBL-013
+cmp edx, 0x188
+je LBL-013
+cmp edx, 0x189
+je LBL-013
+cmp edx, 0x18a
+je LBL-013
+cmp edx, 0x18b
+je LBL-013
+cmp edx, 0x18c
+je LBL-013
+cmp edx, 0x18d
+je LBL-013
+cmp edx, 0x18e
+je LBL-013
+cmp edx, 0x18f
+je LBL-013
+cmp edx, 0x190
+je LBL-013
+cmp edx, 0x191
+je LBL-013
+cmp edx, 0x192
+je LBL-013
+cmp edx, 0x193
+je LBL-013
+cmp edx, 0x194
+je LBL-013
+cmp edx, 0x195
+je LBL-013
+cmp edx, 0x196
+je LBL-013
+cmp edx, 0x197
+je LBL-013
+cmp edx, 0x198
+je LBL-013
+cmp edx, 0x199
+je LBL-013
+cmp edx, 0x19a
+je LBL-013
+cmp edx, 0x19b
+je LBL-013
+cmp edx, 0x19c
+je LBL-013
+cmp edx, 0x19d
+je LBL-013
+cmp edx, 0x19e
+je LBL-013
+cmp edx, 0x19f
+je LBL-013
+cmp edx, 0x200
+je LBL-013
+cmp edx, 0x201
+je LBL-013
+cmp edx, 0x202
+je LBL-013
+cmp edx, 0x203
+je LBL-013
+cmp edx, 0x204
+je LBL-013
+cmp edx, 0x205
+je LBL-013
+cmp edx, 0x206
+je LBL-013
+cmp edx, 0x207
+je LBL-013
+cmp edx, 0x208
+je LBL-013
+cmp edx, 0x209
+je LBL-013
+cmp edx, 0x20a
+je LBL-011
+cmp edx, 0x20b
+je LBL-011
+cmp edx, 0x20c
+je LBL-011
+cmp edx, 0x20d
+je LBL-011
+cmp edx, 0x20e
+je LBL-011
+cmp edx, 0x20f
+je LBL-011
+cmp edx, 0x210
+je LBL-011
+cmp edx, 0x211
+je LBL-011
+cmp edx, 0x212
+je LBL-011
+cmp edx, 0x213
+je LBL-011
+cmp edx, 0x214
+je LBL-011
+cmp edx, 0x215
+je LBL-011
+cmp edx, 0x216
+je LBL-011
+cmp edx, 0x217
+je LBL-011
+cmp edx, 0x218
+je LBL-011
+cmp edx, 0x219
+je LBL-011
+cmp edx, 0x21a
+je LBL-011
+cmp edx, 0x21b
+je LBL-011
+cmp edx, 0x21c
+je LBL-011
+cmp edx, 0x21d
+je LBL-011
+cmp edx, 0x21e
+je LBL-011
+cmp edx, 0x21f
+je LBL-011
+cmp edx, 0x220
+je LBL-011
+cmp edx, 0x221
+je LBL-011
+cmp edx, 0x222
+je LBL-011
+cmp edx, 0x223
+je LBL-011
+cmp edx, 0x224
+je LBL-011
+cmp edx, 0x225
+je LBL-011
+cmp edx, 0x226
+je LBL-011
+cmp edx, 0x227
+je LBL-011
+cmp edx, 0x228
+je LBL-011
+cmp edx, 0x229
+je LBL-011
+cmp edx, 0x22a
+je LBL-011
+cmp edx, 0x22b
+je LBL-011
+cmp edx, 0x22c
+je LBL-011
+cmp edx, 0x22d
+je LBL-011
+cmp edx, 0x22e
+je LBL-011
+cmp edx, 0x22f
+je LBL-011
+cmp edx, 0x230
+je LBL-011
+cmp edx, 0x231
+je LBL-011
+cmp edx, 0x232
+je LBL-011
+cmp edx, 0x233
+je LBL-011
+cmp edx, 0x234
+je LBL-011
+cmp edx, 0x235
+je LBL-011
+cmp edx, 0x236
+je LBL-011
+cmp edx, 0x237
+je LBL-011
+cmp edx, 0x238
+je LBL-011
+cmp edx, 0x239
+je LBL-011
+cmp edx, 0x23a
+je LBL-011
+cmp edx, 0x23b
+je LBL-011
+cmp edx, 0x23c
+je LBL-011
+cmp edx, 0x23d
+je LBL-011
+cmp edx, 0x23e
+je LBL-011
+cmp edx, 0x23f
+je LBL-011
+cmp edx, 0x240
+je LBL-011
+cmp edx, 0x241
+je LBL-011
+cmp edx, 0x242
+je LBL-011
+cmp edx, 0x243
+je LBL-011
+cmp edx, 0x244
+je LBL-011
+cmp edx, 0x245
+je LBL-011
+cmp edx, 0x246
+je LBL-011
+cmp edx, 0x247
+je LBL-011
+cmp edx, 0x248
+je LBL-011
+cmp edx, 0x249
+je LBL-011
+cmp edx, 0x24a
+je LBL-011
+cmp edx, 0x24b
+je LBL-011
+cmp edx, 0x24c
+je LBL-011
+cmp edx, 0x24d
+je LBL-011
+cmp edx, 0x24e
+je LBL-011
+cmp edx, 0x24f
+je LBL-011
+cmp edx, 0x250
+je LBL-011
+cmp edx, 0x251
+je LBL-011
+cmp edx, 0x252
+je LBL-011
+cmp edx, 0x253
+je LBL-011
+cmp edx, 0x254
+je LBL-011
+cmp edx, 0x255
+je LBL-011
+cmp edx, 0x256
+je LBL-011
+cmp edx, 0x257
+je LBL-011
+cmp edx, 0x258
+je LBL-011
+cmp edx, 0x259
+je LBL-011
+cmp edx, 0x25a
+je LBL-011
+cmp edx, 0x25b
+je LBL-011
+cmp edx, 0x25c
+je LBL-011
+cmp edx, 0x25d
+je LBL-011
+cmp edx, 0x25e
+je LBL-011
+cmp edx, 0x25f
+je LBL-011
+cmp edx, 0x260
+je LBL-011
+cmp edx, 0x261
+je LBL-011
+cmp edx, 0x262
+je LBL-011
+cmp edx, 0x263
+je LBL-011
+cmp edx, 0x264
+je LBL-011
+cmp edx, 0x265
+je LBL-011
+cmp edx, 0x266
+je LBL-011
+cmp edx, 0x267
+je LBL-011
+cmp edx, 0x268
+je LBL-011
+cmp edx, 0x269
+je LBL-011
+cmp edx, 0x26a
+je LBL-011
+cmp edx, 0x26b
+je LBL-011
+cmp edx, 0x26c
+je LBL-011
+cmp edx, 
+=== FIN (tentative de réparation 2 sur le budget 3) ===

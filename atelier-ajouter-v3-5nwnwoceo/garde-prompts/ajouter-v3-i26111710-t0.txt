@@ -1,0 +1,196 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-13 · recherche : l'algorithme pur, la fenêtre et le motif · révision 1
+Intention : L'ALGORITHME PUR — la première occurrence d'une suite
+d'octets (le motif, 1 à 32 o) dans un tampon, à partir d'un départ
+donné — PROUVÉ AU LABO AVANT TOUT EMBARQUEMENT (la feuille pure du
+domaine : les arguments seuls, aucune IAT, aucun état). La comparaison
+par libc-02 (memcmp) HÉRITÉ PAR LA CARTE : chaque candidat testé par le
+bloc scellé M1, le premier match gagne. Loupe-14 l'appelle fenêtre par
+fenêtre sur le fichier — la pureté ici est la condition de la preuve
+là-bas.
+Contrat :
+  pre  : P1 rcx = la fenêtre, au moins rdx octets lisibles ; P2 rdx =
+             la taille de fenêtre (≥ 0) ; P3 r8 = le motif, au moins
+             r9 octets lisibles ; P4 r9 = la taille du motif, 1 à
+             32 (MOTIF_MAX) ; P5 le départ à l'adresse [rsp+0x28],
+             0 à rdx inclus.
+  post : Q1 rax = la position DE LA PREMIÈRE occurrence du motif dans
+             fenêtre[départ .. rdx) — position ABSOLUE dans la
+             fenêtre (départ compté), la première, jamais la
+             seconde ;
+         Q2 l'absence → rax = -1 : LA FIN NOMMÉE de la table (le
+             verdict -1 — la plage est épuisée) ; le motif plus
+             long que la plage restante → -1 IMMÉDIAT (le constat
+             trivial, jamais une boucle : la fenêtre ne peut pas le
+             contenir) ;
+         Q3 le départ = rdx (la plage vide) → -1 (le miroir de Q2) ;
+         Q4 rax ≥ 0 → fenêtre[rax .. rax + r9) == le motif octet par
+             octet (l'occurrence est VRAIE — memcmp l'a juré) et
+             AUCUNE occurrence n'existe dans fenêtre[départ .. rax)
+             (la première, la vraie première).
+  inv  : I1 AUCUNE entrée IAT, AUCUN site syscall, AUCUN état détenu
+             (les arguments seuls — le miroir exact des feuilles
+             pures tls13, charte § 9) ;
+         I2 LA COMPARAISON PAR LA CARTE : chaque candidat testé par
+             libc-02 (le bloc scellé M1, byte-identique) — JAMAIS
+             une boucle de comparaison réécrite (R7) ; la liste
+             d'appels est FERMÉE (libc-02 seul) ;
+         I3 la fenêtre et le motif LUS SEULS (jamais modifiés — la
+             pureté) ; la complexité est HONNÊTE (la recherche directe
+             O(n·m), m ≤ 32 : la borne du quotidien la rend tenable —
+             aucune table, aucune allocation, l'algorithme tient dans
+             la tête) ;
+         I4 aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : le motif vide (P4 = 0) → verdict -5 ENTRÉE — chercher rien
+       n'est pas chercher.
+  E2 : le motif > 32 (P4) → verdict -5 ENTRÉE — la borne du quotidien
+       (MOTIF_MAX), la barre la nomme chez loupe-14.
+  E3 : le départ hors fenêtre (P5 > rdx) → verdict -5 ENTRÉE — le
+       départ est une position, pas un vœu.
+Vecteurs :
+  V1 : différentiel — 10 000 cas aléatoires (fenêtres 0 à 4 096 o,
+       motifs 1 à 32, départs aléatoires, alphabet plein 0x00-0xFF
+       ET alphabet pauvre pour forcer les occurrences multiples) :
+       rax == bytes.find du modèle Python À L'IDENTIQUE, y compris
+       les -1 (couvre Q1, Q2, Q3, Q4).
+  V2 : doré — le motif au premier octet, au dernier, à cheval sur le
+       départ, l'occurrence double (la PREMIÈRE exigée), le motif
+       répétitif « AAAA » dans « AAAAB » (les cas de l'école, tenus
+       pour toujours) (couvre Q1, Q4).
+  V3 : rejet — motif vide, motif de 33 o, départ au-delà : les TROIS
+       verdicts -5 (couvre E1, E2, E3).
+  V4 : falsification — une position rendue mutée d'un (le second
+       match au lieu du premier) : la différentielle échoue — la
+       falsification DEMANDÉE (la pureté du bloc est la preuve du
+       fichier chez loupe-14).
+Fixtures    : les cas de l'école (le corpus V2, consigné au harnais)
+              + les fenêtres de proxy.exe scellé (les motifs « MZ »,
+              « PEMax », « This program » — les marques de la pièce
+              de l'ère).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7 (l'héritage libc-02 PAR LA CARTE).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-13 · recherche : l'algorithme pur, la fenêtre et le motif · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = la fenêtre, au moins rdx octets lisibles · rdx = la taille de fenêtre (≥ 0) · r8 = le motif, au moins · r9 = la taille du motif, 1 à
+; types : MOTIF_MAX = 32
+; verdicts nommés : -1 IMMÉDIAT · -5 ENTRÉE
+; les appelés directs (le plan — la liste fermée) :
+;   libc-02 @ 0x1180 — memcmp (a, b, n)
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette boucle (cible de saut)
+  LBL-002 = l'étiquette trouve (cible de saut)
+  LBL-003 = l'étiquette fin_nomme (cible de saut)
+  LBL-004 = l'étiquette refus_entree (cible de saut)
+  LBL-005 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel direct libc-02 — memcmp (a, b, n)
+  CST-002 = la constante MOTIF_MAX (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire f9f1c54176723422… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret

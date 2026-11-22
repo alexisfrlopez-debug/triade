@@ -1,0 +1,31 @@
+{
+ "horodatage": "2026-11-22T08:34:22",
+ "graine": 20261117,
+ "budget": 3,
+ "grammaire_sha256": "5808a6414b3a9da460ec70a4ef0b6e84dea6b425289ce19ff798bf7ed4d86634",
+ "controles_negatifs": {
+  "ID-INCONNU": true,
+  "DICT-DIVERGENT": true,
+  "EXPANSION-DIVERGENTE": true,
+  "HORS-FORMAT": true,
+  "FORME-cmp-mémoire": true,
+  "FORME-movzx-r64": true,
+  "FORME-taille": true,
+  "FORME-symbole-clair": true,
+  "CADRE-MUTÉ": true
+ },
+ "ajouter-v3": {
+  "mode": "ajouter-v3",
+  "n": 26,
+  "verts": 10,
+  "premiere_passe": 10,
+  "median_cout_par_change": 3969.0,
+  "median_cout_cl100k": 3969.0,
+  "refus_par_classe": {
+   "HORS-FORMAT": 3,
+   "EXPANSION-DIVERGENTE": 12,
+   "ID-INCONNU": 1
+  },
+  "cible": false
+ }
+}
