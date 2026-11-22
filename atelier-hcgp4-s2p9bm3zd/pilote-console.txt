@@ -1,0 +1,293 @@
+[hcgp4] la graine d'ordre 20261123 consignée AVANT le premier tirage ; les tirages :
+  run 1 : C → T → C+G → C+G+
+  run 2 : C → C+G+ → T → C+G
+  run 3 : T → C → C+G+ → C+G
+  run 4 : T → C+G → C → C+G+
+  run 5 : C+G → C+G+ → C → T
+
+===== LE RUN 1 — l'ordre ['C', 'T', 'C+G', 'C+G+'] =====
+  [build-gcc-O2-loupe-01                       ]   0.724 s  code 0
+  [suite-tests-c-hash                          ]   0.284 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.013 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.737 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.235 s  code 0
+  [controles-binaires-loupe-02                 ]   0.013 s  code 2
+  === TOTAL C run 1 : 2.0 s ; code 3
+=== T run 1 — la pile optimisée MÉMOISÉE, la liste amendée ===
+  [garde-sceau-I                               ]   0.075 s  code 0
+  [cristallisation-incrémentale                ]   0.438 s  code 0
+  [round-trip-notation-1                       ]   0.241 s  code 0
+  [round-trip-notation-2                       ]   0.227 s  code 0
+  [rebuilds-loupe-01 ×10 pièces                ]   1.031 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [rebuilds-loupe-02 ×10 pièces                ]   1.022 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [rebuilds-loupe-05 ×10 blocs                 ]   0.460 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [rebuilds-loupe-08 ×10 pièces                ]   0.977 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [rebuilds-loupe-13 ×10 pièces                ]   0.962 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [rebuilds-loupe-16 ×10 pièces                ]   0.997 s  code 0   [mémo : 1 miss · 8 hits · 1 audit]
+  [oracle-bloc-loupe-01 (parallèle)            ]   0.471 s  code 0
+  [recomposition-loupe-02                      ]   0.479 s  code 0
+  [oracle-du-bloc-loupe-02 (parallèle)         ]   0.533 s  code 0
+  [epreuve-scenario-posix                      ]   0.295 s  code 0
+  [assemblage-kits                             ]   0.205 s  code 2
+  [assemblage-kits (reprise : la pièce canonique restaurée)]   0.255 s  code 0
+  === TOTAL T run 1 : 8.7 s ; code 0 ; scellés INTACTS ; mémo rebuilds : compteur 60
+  [garde-intentions-signees (g1)               ]   0.083 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.717 s  code 0
+  [suite-tests-c-hash                          ]   0.282 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.013 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.725 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.238 s  code 0
+  [controles-binaires-loupe-02                 ]   0.014 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.086 s  code 0
+  [assemblage-kit (g4)                         ]   0.079 s  code 0
+  === TOTAL C+G run 1 : 2.3 s ; code 3
+  [garde-sceau-I                               ]   0.077 s  code 0
+  [garde-intentions-signees (g1)               ]   0.085 s  code 0
+  [rebuilds-loupe-01 ×10                       ]   5.139 s  code 0
+  [rebuilds-loupe-02 ×10                       ]   5.085 s  code 0
+  [rebuilds-loupe-05 ×10                       ]   4.523 s  code 0
+  [rebuilds-loupe-08 ×10                       ]   0.259 s  code 0
+  [rebuilds-loupe-13 ×10                       ]   0.205 s  code 0
+  [rebuilds-loupe-16 ×10                       ]   0.576 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.672 s  code 0
+  [suite-tests-c-hash                          ]   0.278 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.682 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.218 s  code 0
+  [controles-binaires-loupe-02                 ]   0.013 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.084 s  code 0
+  [assemblage-kit (g4)                         ]   0.079 s  code 0
+  === TOTAL C+G+ run 1 : 18.0 s ; code 3
+
+===== LE RUN 2 — l'ordre ['C', 'C+G+', 'T', 'C+G'] =====
+  [build-gcc-O2-loupe-01                       ]   0.731 s  code 0
+  [suite-tests-c-hash                          ]   0.284 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.013 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.688 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.231 s  code 0
+  [controles-binaires-loupe-02                 ]   0.013 s  code 2
+  === TOTAL C run 2 : 2.0 s ; code 3
+  [garde-sceau-I                               ]   0.076 s  code 0
+  [garde-intentions-signees (g1)               ]   0.087 s  code 0
+  [rebuilds-loupe-01 ×10                       ]   5.293 s  code 0
+  [rebuilds-loupe-02 ×10                       ]   5.322 s  code 0
+  [rebuilds-loupe-05 ×10                       ]   4.759 s  code 0
+  [rebuilds-loupe-08 ×10                       ]   0.263 s  code 0
+  [rebuilds-loupe-13 ×10                       ]   0.271 s  code 0
+  [rebuilds-loupe-16 ×10                       ]   0.663 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.680 s  code 0
+  [suite-tests-c-hash                          ]   0.281 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.691 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.225 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.087 s  code 0
+  [assemblage-kit (g4)                         ]   0.080 s  code 0
+  === TOTAL C+G+ run 2 : 18.8 s ; code 3
+=== T run 2 — la pile optimisée MÉMOISÉE, la liste amendée ===
+  [garde-sceau-I                               ]   0.071 s  code 0
+  [cristallisation-incrémentale                ]   0.033 s  code 0
+  [round-trip-notation-1                       ]   0.232 s  code 0
+  [round-trip-notation-2                       ]   0.230 s  code 0
+  [rebuilds-loupe-01 ×10 pièces                ]   0.504 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-02 ×10 pièces                ]   0.513 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-05 ×10 blocs                 ]   0.262 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-08 ×10 pièces                ]   0.683 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-13 ×10 pièces                ]   0.618 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-16 ×10 pièces                ]   0.509 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [oracle-bloc-loupe-01 (parallèle)            ]   0.477 s  code 0
+  [recomposition-loupe-02                      ]   0.465 s  code 0
+  [oracle-du-bloc-loupe-02 (parallèle)         ]  23.857 s  code 0
+  [epreuve-scenario-posix                      ]   0.301 s  code 0
+  [assemblage-kits                             ]   0.211 s  code 2
+  [assemblage-kits (reprise : la pièce canonique restaurée)]   0.249 s  code 0
+  === TOTAL T run 2 : 29.2 s ; code 0 ; scellés INTACTS ; mémo rebuilds : compteur 120
+  [garde-intentions-signees (g1)               ]   0.079 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.678 s  code 0
+  [suite-tests-c-hash                          ]   0.280 s  code 0
+  [suite-tests-c-contrat                       ]   0.017 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.690 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.226 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.092 s  code 0
+  [assemblage-kit (g4)                         ]   0.084 s  code 0
+  === TOTAL C+G run 2 : 2.2 s ; code 3
+
+===== LE RUN 3 — l'ordre ['T', 'C', 'C+G+', 'C+G'] =====
+=== T run 3 — la pile optimisée MÉMOISÉE, la liste amendée ===
+  [garde-sceau-I                               ]   0.072 s  code 0
+  [cristallisation-incrémentale                ]   0.032 s  code 0
+  [round-trip-notation-1                       ]   0.230 s  code 0
+  [round-trip-notation-2                       ]   0.213 s  code 0
+  [rebuilds-loupe-01 ×10 pièces                ]   0.482 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-02 ×10 pièces                ]   0.478 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-05 ×10 blocs                 ]   0.241 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-08 ×10 pièces                ]   0.502 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-13 ×10 pièces                ]   0.493 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-16 ×10 pièces                ]   0.514 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [oracle-bloc-loupe-01 (parallèle)            ]   0.479 s  code 0
+  [recomposition-loupe-02                      ]   0.464 s  code 0
+  [oracle-du-bloc-loupe-02 (parallèle)         ]   0.519 s  code 0
+  [epreuve-scenario-posix                      ]   0.297 s  code 0
+  [assemblage-kits                             ]   0.206 s  code 2
+  [assemblage-kits (reprise : la pièce canonique restaurée)]   0.241 s  code 0
+  === TOTAL T run 3 : 5.5 s ; code 0 ; scellés INTACTS ; mémo rebuilds : compteur 180
+  [build-gcc-O2-loupe-01                       ]   0.666 s  code 0
+  [suite-tests-c-hash                          ]   0.278 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.677 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.218 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  === TOTAL C run 3 : 1.9 s ; code 3
+  [garde-sceau-I                               ]   0.067 s  code 0
+  [garde-intentions-signees (g1)               ]   0.087 s  code 0
+  [rebuilds-loupe-01 ×10                       ]   5.161 s  code 0
+  [rebuilds-loupe-02 ×10                       ]   5.567 s  code 0
+  [rebuilds-loupe-05 ×10                       ]   4.613 s  code 0
+  [rebuilds-loupe-08 ×10                       ]   0.273 s  code 0
+  [rebuilds-loupe-13 ×10                       ]   0.220 s  code 0
+  [rebuilds-loupe-16 ×10                       ]   0.596 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.678 s  code 0
+  [suite-tests-c-hash                          ]   0.285 s  code 0
+  [suite-tests-c-contrat                       ]   0.019 s  code 1
+  [controles-binaires-loupe-01                 ]   0.013 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.733 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.245 s  code 0
+  [controles-binaires-loupe-02                 ]   0.013 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.085 s  code 0
+  [assemblage-kit (g4)                         ]   0.079 s  code 0
+  === TOTAL C+G+ run 3 : 18.7 s ; code 3
+  [garde-intentions-signees (g1)               ]   0.085 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.724 s  code 0
+  [suite-tests-c-hash                          ]   0.292 s  code 0
+  [suite-tests-c-contrat                       ]   0.018 s  code 1
+  [controles-binaires-loupe-01                 ]   0.017 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.714 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.222 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.078 s  code 0
+  [assemblage-kit (g4)                         ]   0.071 s  code 0
+  === TOTAL C+G run 3 : 2.2 s ; code 3
+
+===== LE RUN 4 — l'ordre ['T', 'C+G', 'C', 'C+G+'] =====
+=== T run 4 — la pile optimisée MÉMOISÉE, la liste amendée ===
+  [garde-sceau-I                               ]   0.065 s  code 0
+  [cristallisation-incrémentale                ]   0.032 s  code 0
+  [round-trip-notation-1                       ]   0.212 s  code 0
+  [round-trip-notation-2                       ]   0.214 s  code 0
+  [rebuilds-loupe-01 ×10 pièces                ]   0.489 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-02 ×10 pièces                ]   0.486 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-05 ×10 blocs                 ]   0.229 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-08 ×10 pièces                ]   0.482 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-13 ×10 pièces                ]   0.474 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-16 ×10 pièces                ]   0.496 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [oracle-bloc-loupe-01 (parallèle)            ]   0.462 s  code 0
+  [recomposition-loupe-02                      ]   0.467 s  code 0
+  [oracle-du-bloc-loupe-02 (parallèle)         ]   0.623 s  code 0
+  [epreuve-scenario-posix                      ]   0.331 s  code 0
+  [assemblage-kits                             ]   0.208 s  code 2
+  [assemblage-kits (reprise : la pièce canonique restaurée)]   0.243 s  code 0
+  === TOTAL T run 4 : 5.5 s ; code 0 ; scellés INTACTS ; mémo rebuilds : compteur 240
+  [garde-intentions-signees (g1)               ]   0.078 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.677 s  code 0
+  [suite-tests-c-hash                          ]   0.278 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.679 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.219 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.078 s  code 0
+  [assemblage-kit (g4)                         ]   0.073 s  code 0
+  === TOTAL C+G run 4 : 2.1 s ; code 3
+  [build-gcc-O2-loupe-01                       ]   0.668 s  code 0
+  [suite-tests-c-hash                          ]   0.276 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.677 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.219 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  === TOTAL C run 4 : 1.9 s ; code 3
+  [garde-sceau-I                               ]   0.067 s  code 0
+  [garde-intentions-signees (g1)               ]   0.078 s  code 0
+  [rebuilds-loupe-01 ×10                       ]   4.968 s  code 0
+  [rebuilds-loupe-02 ×10                       ]   5.007 s  code 0
+  [rebuilds-loupe-05 ×10                       ]   4.604 s  code 0
+  [rebuilds-loupe-08 ×10                       ]   0.268 s  code 0
+  [rebuilds-loupe-13 ×10                       ]   0.206 s  code 0
+  [rebuilds-loupe-16 ×10                       ]   0.582 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.665 s  code 0
+  [suite-tests-c-hash                          ]   0.281 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.910 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.297 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.104 s  code 0
+  [assemblage-kit (g4)                         ]   0.073 s  code 0
+  === TOTAL C+G+ run 4 : 18.2 s ; code 3
+
+===== LE RUN 5 — l'ordre ['C+G', 'C+G+', 'C', 'T'] =====
+  [garde-intentions-signees (g1)               ]   0.078 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.681 s  code 0
+  [suite-tests-c-hash                          ]   0.277 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.681 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.219 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.079 s  code 0
+  [assemblage-kit (g4)                         ]   0.072 s  code 0
+  === TOTAL C+G run 5 : 2.1 s ; code 3
+  [garde-sceau-I                               ]   0.067 s  code 0
+  [garde-intentions-signees (g1)               ]   0.077 s  code 0
+  [rebuilds-loupe-01 ×10                       ]   4.977 s  code 0
+  [rebuilds-loupe-02 ×10                       ]   4.975 s  code 0
+  [rebuilds-loupe-05 ×10                       ]   4.595 s  code 0
+  [rebuilds-loupe-08 ×10                       ]   0.250 s  code 0
+  [rebuilds-loupe-13 ×10                       ]   0.237 s  code 0
+  [rebuilds-loupe-16 ×10                       ]   0.590 s  code 0
+  [build-gcc-O2-loupe-01                       ]   0.663 s  code 0
+  [suite-tests-c-hash                          ]   0.283 s  code 0
+  [suite-tests-c-contrat                       ]   0.018 s  code 1
+  [controles-binaires-loupe-01                 ]   0.013 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.739 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.223 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  [chaine-cristallisation (g2)                 ]   0.079 s  code 0
+  [assemblage-kit (g4)                         ]   0.080 s  code 0
+  === TOTAL C+G+ run 5 : 17.9 s ; code 3
+  [build-gcc-O2-loupe-01                       ]   0.723 s  code 0
+  [suite-tests-c-hash                          ]   0.286 s  code 0
+  [suite-tests-c-contrat                       ]   0.016 s  code 1
+  [controles-binaires-loupe-01                 ]   0.012 s  code 2
+  [build-gcc-O2-loupe-02                       ]   0.677 s  code 0
+  [epreuve-contrat-posix-loupe-02              ]   0.220 s  code 0
+  [controles-binaires-loupe-02                 ]   0.012 s  code 2
+  === TOTAL C run 5 : 1.9 s ; code 3
+=== T run 5 — la pile optimisée MÉMOISÉE, la liste amendée ===
+  [garde-sceau-I                               ]   0.067 s  code 0
+  [cristallisation-incrémentale                ]   0.031 s  code 0
+  [round-trip-notation-1                       ]   0.215 s  code 0
+  [round-trip-notation-2                       ]   0.212 s  code 0
+  [rebuilds-loupe-01 ×10 pièces                ]   0.490 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-02 ×10 pièces                ]   0.478 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-05 ×10 blocs                 ]   0.232 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-08 ×10 pièces                ]   0.492 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-13 ×10 pièces                ]   0.472 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [rebuilds-loupe-16 ×10 pièces                ]   0.492 s  code 0   [mémo : 0 miss · 9 hits · 1 audit]
+  [oracle-bloc-loupe-01 (parallèle)            ]   0.466 s  code 0
+  [recomposition-loupe-02                      ]   0.468 s  code 0
+  [oracle-du-bloc-loupe-02 (parallèle)         ]   0.511 s  code 0
+  [epreuve-scenario-posix                      ]   0.299 s  code 0
+  [assemblage-kits                             ]   0.208 s  code 2
+  [assemblage-kits (reprise : la pièce canonique restaurée)]   0.250 s  code 0
+  === TOTAL T run 5 : 5.4 s ; code 0 ; scellés INTACTS ; mémo rebuilds : compteur 300
+
+[hcgp4] LES RUNS [1, 2, 3, 4, 5] clos — code global 3 ; le mémo des rebuilds : compteur 300, 6 entrée(s), 264 hits · 6 miss · 30 audits

@@ -1,0 +1,16 @@
+LE CONTRÔLE NÉGATIF DOUBLE FENÊTRE — S2P9BM3ZD (la vague 14, miroir v13)
+==========================================================================
+
+LE BRAS T — le run d'AUDIT oracle [2] NOMMÉ ET EXCLU (la re-exécution vivante au multiple de 10 du compteur du mémo v2 — le prix de la preuve)
+LE BRAS T — le run de SEMENCE [1] NOMMÉ ET EXCLU du scan de spécificité (le départ froid du mémo : la cristallisation full-card + les misses qui sèment — la médiane du régime le DEMEURE, seul le scan aux honnêtes chauds l'exclut, nommé)
+LE BRAS T — la médiane des runs honnêtes (le régime) 5.464 s
+  la spécificité : 0 faux positif(s) sur 3 runs honnêtes VERT
+  (a) l'inter-étapes (+500 ms factices à « recomposition-loupe-02 ») : ATTRAPÉ — la comptabilité déviée : total 5.464 vs somme 5.963 (écart -0.499 s > tolérance 0.15)
+  (b) l'in-étape (+500 ms à « recomposition-loupe-02 ») : ATTRAPÉ AU PREMIER NOM — l'étape « recomposition-loupe-02 » à 0.967 s (médiane 0.467, déviation normalisée +0.453 s, valeur 2.07× la médiane)
+
+LE BRAS C+G+ — la médiane des runs honnêtes (le régime) 18.165 s
+  la spécificité : 0 faux positif(s) sur 5 runs honnêtes VERT
+  (a) l'inter-étapes (+500 ms factices à « chaine-cristallisation (g2) ») : ATTRAPÉ — la comptabilité déviée : total 18.017 vs somme 18.504 (écart -0.487 s > tolérance 0.1)
+  (b) l'in-étape (+500 ms à « chaine-cristallisation (g2) ») : ATTRAPÉ AU PREMIER NOM — l'étape « chaine-cristallisation (g2) » à 0.587 s (médiane 0.085, déviation normalisée +0.497 s, valeur 6.91× la médiane)
+
+LE VERDICT : VERT — le +500 ms attrapé aux DEUX fenêtres et attribué au premier nom, zéro faux positif sur les honnêtes

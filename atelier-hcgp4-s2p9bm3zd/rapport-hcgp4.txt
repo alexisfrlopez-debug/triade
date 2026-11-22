@@ -1,0 +1,54 @@
+RAPPORT DE L'ATELIER H-CGP4 s2p9bm3zd — LA VAGUE 14 (22/11/2026)
+===============================================================
+
+Au plan gelé PLAN-S2P9BM3ZD.md (empreinte 7c0475aaf924cef1… consignée AVANT
+toute mesure). H-CGP4 : à volumes égalisés (10×6 = 60 rebuilds par bras T),
+réduire la part RÉGIME du T−C sans retirer AUCUN contrôle.
+
+LA MÉMOÏSATION CONTENT-ADDRESSED (le levier 1, livré) : la clé = sha256 de
+TOUT ce qui détermine le résultat — les sources de l'unité (notations, I,
+layout), le build script, la configuration du moteur (keystone/capstone,
+versions) — UN OCTET CHANGÉ = MISS, le rebuild court vivant (le contrôle
+négatif VÉCU : la source mutée d'un octet → la clé DIVERGE → MISS —
+ATTRAPÉ au premier nom).
+L'AUDIT 1-SUR-10 VIVANT CONSERVÉ ET CHAÎNÉ : le compteur (modulo 10)
+déclenche la re-exécution complète du rebuild (6 rebuilds vivants par
+run de 60) — le relevé CONFRONTÉ champ par champ (sha, taille) au produit
+caché — AUCUNE confiance silencieuse (un écart = RuntimeError nommé ;
+aucun écart vécu aux 5 runs).
+
+LA MESURE (n = 5 par mode, horloge monotone, la même machine virtualisée,
+la même liste de commandes) :
+— SANS mémo (la ligne de base re-roulée à froid, la mécanique v13) :
+  médiane **24,163 s** les 60 rebuilds ;
+— AVEC mémo (le mémo chaud, l'audit 1-sur-10 vivant) : médiane **2,555 s** ;
+— LA PART RÉGIME RÉDUITE : **−89,4 %** (24,163 → 2,555 s) — SANS qu'aucune
+  graine soit retirée, AUCUN vecteur réduit, AUCUN contrôle retiré (l'audit
+  déclenché et vert à chaque run ; les six chaînes de pièces + le niveau
+  bloc loupe-05 aux mêmes volumes) ;
+— CONTRE LA PART RÉGIME v13 (17,487 s, ay6zuzm8o — datée) : la
+  mémoïsation tranche le hot path mesuré R11 (88,4 % de la part T−C) ;
+  les bras C DEMEURENT inchangés (leurs chiffres v13 datés — le levier
+  vise le bras T seul, l'écart de périmètre NOMMÉ : la campagne quatre
+  bras complète re-roulera au prochain passage long, la mesure présente
+  isole le levier exact).
+
+LA SOMMATION NOMMÉE : la médiane des runs vs la somme des postes — la
+mesure porte l'étape rebuilds seule (le reste du bras T inchangé, ses
+postes v13 datés).
+
+H-CGP4 TENUE : la part régime du T−C réduite à 2,555 s sur 60 rebuilds —
+jamais fusionnée avec H-CGP2 (44,3 %) ni H-CGP3 (TENUE ≤30 % : la part
+notation intrinsèque 5,5 %) — les trois hypothèses datées, séparées.
+
+L'ORACLE NATIF (OPT-07 préparé, le levier 2) : LE GAP NOMMÉ — la session
+a porté la priorité à la composition z3 des frontières (f3uznui3l) et au
+couloir GHASH agrégé (h1mz2sr8s) ; le moteur natif d'exécution des
+oracles avec jumeau Unicorn demeure au plan suivant, l'écart au plan
+NOMMÉ. La cristallisation incrémentale (le levier 3, déjà −54 %) compose
+avec le mémo (les deux mécanismes orthogonaux — le mémo v13 du cache R5
+et le présent mémo de régime).
+
+PIÈCES : hcgp4_pilote.py · registre-sans.json · registre-avec.json ·
+memo-regime.json (le mémo, ÉPHÉMÈRE — jamais une pièce scellée) ·
+verdict-hcgp4.json · le présent rapport.

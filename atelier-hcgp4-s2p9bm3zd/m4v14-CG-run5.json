@@ -1,0 +1,92 @@
+{
+ "bras": "C+G",
+ "run": 5,
+ "total_s": 2.128,
+ "etapes": [
+  {
+   "etape": "garde-intentions-signees (g1)",
+   "secondes": 0.078,
+   "code": 0,
+   "console": "[garde] les intentions signées : 6 VERT, 0 refus\n",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "build-gcc-O2-loupe-01",
+   "secondes": 0.681,
+   "code": 0,
+   "console": "",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "suite-tests-c-hash",
+   "secondes": 0.277,
+   "code": 0,
+   "console": "[VERT] le testeur compile (gcc -O2, le POSIX du labo)\n[éprouvées] 32 VERT, 0 ROUGE (les frontières du rembourrage, l'incrémentalité irrégulière)\n",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "suite-tests-c-contrat",
+   "secondes": 0.016,
+   "code": 1,
+   "console": "",
+   "stderr": "epreuve_posix.c:25:10: fatal error: loupe-01-c.c: No such file or directory\n   25 | #include \"loupe-01-c.c\"\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\n",
+   "essais": null
+  },
+  {
+   "etape": "controles-binaires-loupe-01",
+   "secondes": 0.012,
+   "code": 2,
+   "console": "",
+   "stderr": "python3: can't open file '/home/z/my-project/depot/scripts/campagne_d204/unite-01-C/controles_binaires.py': [Errno 2] No such file or directory\n",
+   "essais": null
+  },
+  {
+   "etape": "build-gcc-O2-loupe-02",
+   "secondes": 0.681,
+   "code": 0,
+   "console": "",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "epreuve-contrat-posix-loupe-02",
+   "secondes": 0.219,
+   "code": 0,
+   "console": "[VERT] V1:temoin-1.bin-l-ouverture — rax=0, remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-384.bin-l-ouverture — rax=0, remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-3f.bin-l-ouverture — rax=0, remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:les-frontieres — 9 décalages frontière (0, la dernière valide, la dernière pleine, les fenêtres de la zone 65536) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture — le vide s'ouvre, remplissage 0 (la fenêtre née est vide)\n[VERT] V1:vide.bin-aucune-fenetre-valide — rax=-3 (décalage 0 ≥ taille 0 → -3 HORS-BORNES), rien lu\n[VERT] V2:les-bords-de-fenetre — le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant et l'après IGNORÉS — l'édition survit au défilement\n[VERT] V2:le-journal-intact — loupe-02 n'écrit JAMAIS au journal (I2)\n[VERT] V2:cinq-entrees-dont-une-non-alignee — cinq entrées dedans (fen+5 NON ALIGNÉE comprise) — le tampon == le modèle indépendant\n[VERT] V3:sans-session — rax=-4 (attendu -4 SESSION, rien lu)\n[VERT] V3:non-aligne — rax=-5 (attendu -5), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:a-la-taille — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:au-dela — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:immense — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V4:l-echec-readfile — rax=-6 (le tiroir a refusé → -6 SYSTÈME), remplissage 0 == 0 (fail-closed), le tampon empoisonné INTACT — jamais un octet non lu\n[VERT] V4:la-session-survit — l'échec ne clôt PAS la session : la lecture suivante est verte, le tampon == le témoin entier\n[VERT] V5:l-octet-mute-l-etat-lu-diverge — la lecture d'abord VERT (le tampon == le témoin), l'octet 3 muté 0x90 → 0xff : l'état lu DIVERGE du modèle — la falsification est DÉTECTABLE\n\nLE JUGE : 20 VERT, 0 ROUGE — VERT\n",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "controles-binaires-loupe-02",
+   "secondes": 0.012,
+   "code": 2,
+   "console": "",
+   "stderr": "python3: can't open file '/home/z/my-project/depot/scripts/campagne_d204/unite-02-C/epreuves/controles_binaries.py': [Errno 2] No such file or directory\n",
+   "essais": null
+  },
+  {
+   "etape": "chaine-cristallisation (g2)",
+   "secondes": 0.079,
+   "code": 0,
+   "console": "[cristallisation] 6/6 empreintes recoupées ; la signature finale VÉRIFIÉE\n",
+   "stderr": "",
+   "essais": null
+  },
+  {
+   "etape": "assemblage-kit (g4)",
+   "secondes": 0.072,
+   "code": 0,
+   "console": "[kit] 12 pièces au gabarit (le terrain au geste du maître)\n",
+   "stderr": "",
+   "essais": null
+  }
+ ],
+ "code": 3,
+ "fautes_consignees": [
+  "suite-tests-c-contrat",
+  "controles-binaires-loupe-01"
+ ]
+}

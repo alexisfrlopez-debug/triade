@@ -1,0 +1,288 @@
+{
+ "reconciliation": {
+  "T": {
+   "ecarts_max": 0.0030000000000001137,
+   "runs": [
+    {
+     "run": 1,
+     "total": 8.67,
+     "somme": 8.668
+    },
+    {
+     "run": 2,
+     "total": 29.217,
+     "somme": 29.215
+    },
+    {
+     "run": 3,
+     "total": 5.464,
+     "somme": 5.463
+    },
+    {
+     "run": 4,
+     "total": 5.515,
+     "somme": 5.513
+    },
+    {
+     "run": 5,
+     "total": 5.386,
+     "somme": 5.383
+    }
+   ]
+  },
+  "C+G+": {
+   "ecarts_max": 0.015000000000000568,
+   "runs": [
+    {
+     "run": 1,
+     "total": 18.017,
+     "somme": 18.004
+    },
+    {
+     "run": 2,
+     "total": 18.833,
+     "somme": 18.819
+    },
+    {
+     "run": 3,
+     "total": 18.747,
+     "somme": 18.734
+    },
+    {
+     "run": 4,
+     "total": 18.165,
+     "somme": 18.15
+    },
+    {
+     "run": 5,
+     "total": 17.891,
+     "somme": 17.878
+    }
+   ]
+  },
+  "C+G": {
+   "ecarts_max": 0.001000000000000334,
+   "runs": [
+    {
+     "run": 1,
+     "total": 2.254,
+     "somme": 2.254
+    },
+    {
+     "run": 2,
+     "total": 2.171,
+     "somme": 2.17
+    },
+    {
+     "run": 3,
+     "total": 2.232,
+     "somme": 2.233
+    },
+    {
+     "run": 4,
+     "total": 2.122,
+     "somme": 2.122
+    },
+    {
+     "run": 5,
+     "total": 2.128,
+     "somme": 2.127
+    }
+   ]
+  },
+  "C": {
+   "ecarts_max": 0.001000000000000112,
+   "runs": [
+    {
+     "run": 1,
+     "total": 2.023,
+     "somme": 2.023
+    },
+    {
+     "run": 2,
+     "total": 1.977,
+     "somme": 1.977
+    },
+    {
+     "run": 3,
+     "total": 1.88,
+     "somme": 1.879
+    },
+    {
+     "run": 4,
+     "total": 1.881,
+     "somme": 1.88
+    },
+    {
+     "run": 5,
+     "total": 1.946,
+     "somme": 1.946
+    }
+   ]
+  }
+ },
+ "medianes": {
+  "T": {
+   "medianne": 5.489,
+   "regime_n": 4,
+   "audit_runs": [
+    2
+   ],
+   "tous": [
+    5.386,
+    5.464,
+    5.515,
+    8.67,
+    29.217
+   ]
+  },
+  "C+G+": {
+   "medianne": 18.165,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    17.891,
+    18.017,
+    18.165,
+    18.747,
+    18.833
+   ]
+  },
+  "C+G": {
+   "medianne": 2.171,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    2.122,
+    2.128,
+    2.171,
+    2.232,
+    2.254
+   ]
+  },
+  "C": {
+   "medianne": 1.946,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    1.88,
+    1.881,
+    1.946,
+    1.977,
+    2.023
+   ]
+  }
+ },
+ "postes": {
+  "T": {
+   "gouvernance": 0.455,
+   "implémentation de vérification": 1.371,
+   "notation intrinsèque": 0.932,
+   "régime": 2.683
+  },
+  "C+G+": {
+   "gouvernance": 0.251,
+   "implémentation de vérification": 0.623,
+   "régime": 17.21
+  },
+  "C+G": {
+   "gouvernance": 0.234,
+   "implémentation de vérification": 0.547,
+   "régime": 1.368
+  },
+  "C": {
+   "implémentation de vérification": 0.546,
+   "régime": 1.4
+  }
+ },
+ "ventilation_T_C": {
+  "notation intrinsèque": 0.932,
+  "implémentation de vérification": 0.825,
+  "régime": 1.283,
+  "gouvernance": 0.455
+ },
+ "somme_ventilation": 3.495,
+ "T_minus_C_ventilation": 3.495,
+ "T_minus_C_medianes_totaux": 3.543,
+ "ecart_sommation_medianes": -0.048,
+ "part_regime_v14": 0.3671,
+ "vague13_publiee": {
+  "notation intrinsèque": 1.079,
+  "implémentation de vérification": 0.779,
+  "régime": 17.487,
+  "gouvernance": 0.442,
+  "T_minus_C": 19.787,
+  "part_régime_pct": 88.4,
+  "T": 21.633,
+  "C": 1.934
+ },
+ "verdict_hcgp4": "H-CGP4 TENUE — la part RÉGIME du T−C RÉDUITE : 17.487 s (88.4 %, la vague 13 datée 22/11/2026, publiée AVANT) → 1.283 s (36.7 %, la vague 14 mesurée, la mémoïsation content-addressée des 60 rebuilds) — la réduction +16.204 s ; les graines, vecteurs et contrôles CONSERVÉS (vérifiés par hcgp4_verifier.py : l'audit 1/10 vécu et vert, les consoles, les scellés)",
+ "table_rebuilds_par_unite": {
+  "loupe-01": 0.49,
+  "loupe-02": 0.486,
+  "loupe-05": 0.241,
+  "loupe-08": 0.502,
+  "loupe-13": 0.493,
+  "loupe-16": 0.509
+ },
+ "total_rebuilds_t": 2.721,
+ "memo_par_unite": {
+  "loupe-01": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  },
+  "loupe-02": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  },
+  "loupe-05": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  },
+  "loupe-08": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  },
+  "loupe-13": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  },
+  "loupe-16": {
+   "hit": 44,
+   "miss": 1,
+   "audit": 5,
+   "audits_verts": 5,
+   "ecarts": 0
+  }
+ },
+ "memo_global": {
+  "hits": 264,
+  "misses": 6,
+  "audits": 30,
+  "audits_verts": 30,
+  "ecarts": 0
+ },
+ "tolerances": {
+  "T": 0.15,
+  "C+G+": 0.1,
+  "C+G": 0.05,
+  "C": 0.05
+ },
+ "graine_ordre": 20261123,
+ "n": 5
+}

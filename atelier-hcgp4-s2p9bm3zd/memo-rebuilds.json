@@ -1,0 +1,93 @@
+{
+ "format": "TRIADE-MEMO-REBUILDS-V1",
+ "constante": "5452494144452d4d454d4f2d52454255494c44532d544553542d323032362d7631",
+ "publique": "be29f21bd0e93aeba30c42a022ac251a4559a69124473d8c96e201e513eff8af",
+ "horodatage": "2026-11-22T11:53:58",
+ "config_hash": "3c942468a48156787f68bee893c768a8d2bc74b89535049967638101f6b68468",
+ "graine": 20261123,
+ "compteur_rebuilds": 300,
+ "contrat": "hcgp4-r1",
+ "racine": "e73fa542bdc7ccbb3f168e957e304236059da76bf1aa9befc4e040b9d6c74c5e",
+ "signature": "0bcf12301cba7c7f44a2d5e4a90da6595191aa957bef6429626d720221f23495a66934537097d9806d023cee9ce51377fac41bc2a390172bf6598806c27c0d06",
+ "entrees": [
+  {
+   "cle": "e8db34c5894ac4c7c5e5020efeb20ce946be086ace224285bf773cf0e002457c",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "4d119b22273c8fe140a2b74d5f8fe3f8eef5457540cbc9e178529e13fee244a5",
+    "octets": 127488,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "pièce",
+    "unite": "loupe-01"
+   },
+   "h": "08cff0df58623a398b08fef37b21134d5d93f5ecf18706ac11510db7fdc3a0fe"
+  },
+  {
+   "cle": "85918e6994023eda83faae832335a2595011190e9f5e0259af6d83e068236b2a",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "98354ff6ac07cf291199e9b33acd032bf2285bcbc7490b8f174bc24f91770f6e",
+    "octets": 127488,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "pièce",
+    "unite": "loupe-02"
+   },
+   "h": "27b2cbd1d8ff283da44ceed02252a4c2aaba1f08f170251cd66eee01db6d9eb5"
+  },
+  {
+   "cle": "bf2893e8d7c6968cbc1abee844a0b4eac139af307b1434529a1bed1cb6eda846",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "996fb003b75bde031b75be187ec538c32f099b37eeb895a72c9dde14dfc2f9e8",
+    "octets": 313,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "bloc",
+    "instructions": 71,
+    "unite": "loupe-05"
+   },
+   "h": "35e5a845c24ff18a53f5918cfa532fb243fd134cd142852eccbab54a8527c510"
+  },
+  {
+   "cle": "08338e920a64c4767bebee8a188515a4785348cdd8dfb112a7a38e8148cbd88d",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "eec890a4cdc3f6a50c733157bad5a228292efb49b587f46043357e7542ca8b6e",
+    "octets": 127488,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "pièce",
+    "unite": "loupe-08"
+   },
+   "h": "34798bfd294e3b99158d654762110f29edcec13d4ab7282c19a9972437130c20"
+  },
+  {
+   "cle": "d8fad349486e8e7445194a69d876887b839b44c147b5b97208dba3f055bb35f7",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "78f5d5cddf90320a657ba04b8de635194e67f796d43980c7c6cef8b02f45a020",
+    "octets": 127488,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "pièce",
+    "unite": "loupe-13"
+   },
+   "h": "0fa42c09ee1edea726fe2df2605297d4d4ef89ab425cb5b0c0ed3b908d3eceb8"
+  },
+  {
+   "cle": "90c23fa826c1cf8bbf5dda03f3aae21b7a41f5bed3554153c383bef549b84ae2",
+   "valeur": {
+    "verdict": "VERT",
+    "sha256_produit": "b382e01b76333a161e9731d72c290f769ad77b52bb7a3e8ffb3cd399b4ef5b20",
+    "octets": 127488,
+    "code": 0,
+    "verificateur": "hcgp4-r1",
+    "niveau": "pièce",
+    "unite": "loupe-16"
+   },
+   "h": "e73fa542bdc7ccbb3f168e957e304236059da76bf1aa9befc4e040b9d6c74c5e"
+  }
+ ]
+}
