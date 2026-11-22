@@ -1,0 +1,301 @@
+[Theory CF3] Theory loaded
+theory CF3
+
+begin
+
+// Function signature and definition of the equational theory E
+
+functions: fst/1, h/1, nul/0, pair/2, sdec/2, senc/2, snd/1,
+           succ/1[private,constructor]
+equations:
+    fst(<x.1, x.2>) = x.1,
+    sdec(senc(x.1, x.2), x.2) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+builtin  hashing
+
+builtin  symmetric-encryption
+
+function: nul () : Any 
+
+function: succ (Any) : Any  [private]
+
+rule (modulo E) creation_du_coffre:
+   [ Fr( ~p ), Fr( ~m ), Fr( ~ep1 ) ]
+  --[ CreationCoffre( ~p ), PhraseVivante( ~p ) ]->
+   [ PhraseHote( ~p ), Coffre( ~ep1, senc(~m, h(~p)) ) ]
+
+rule (modulo E) migration_cf1_vers_cf2:
+   [
+   PhraseHote( p ), Coffre( ep, senc(m, h(p)) ), Fr( ~garde ), Fr( ~x1 ),
+   Fr( ~x2 ), Fr( ~x3 ), Fr( ~x4 ), Fr( ~x5 )
+   ]
+  --[ MigrationCF2( p ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), GardeFragments( ~garde ),
+   Coffre( ep, senc(m, h(<h(p), ~garde>)) ),
+   !PartsDe( p, ~x1, ~x2, ~x3, ~x4, ~x5 ), PartSurMedia( ~x1 ),
+   PartSurMedia( ~x2 ), PartSurMedia( ~x3 ), PartSurMedia( ~x4 ),
+   PartSurMedia( ~x5 ), CompteurParts( nul )
+   ]
+
+rule (modulo E) migration_cf2_vers_cf3:
+   [
+   PhraseHote( p ), GardeFragments( garde ),
+   Coffre( ep, senc(m, h(<h(p), garde>)) ), Fr( ~ss ), Fr( ~sq ), Fr( ~ep2 )
+   ]
+  --[ MigrationCF3( p ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ~ss ), MediaPiege( ~sq ),
+   Coffre( ~ep2, senc(m, h(<h(p), ~ss, ~sq>)) )
+   ]
+
+rule (modulo E) cloture_d_epoque:
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), Fr( ~ss2 ), Fr( ~sq2 ),
+   Fr( ~ep2 )
+   ]
+  --[ ClotureDEpoque( ~ep2 ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ~ss2 ), MediaPiege( ~sq2 ),
+   Coffre( ~ep2, senc(m, h(<h(p), ~ss2, ~sq2>)) )
+   ]
+
+rule (modulo E) changement_de_phrase_sous_sequestre:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), PartSurMedia( x1 ),
+   PartSurMedia( x2 ), PartSurMedia( x3 ), PhraseHote( p ),
+   SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), Fr( ~p2 ), Fr( ~ss2 ),
+   Fr( ~sq2 ), Fr( ~ep2 ), Fr( ~y1 ), Fr( ~y2 ), Fr( ~y3 ), Fr( ~y4 ),
+   Fr( ~y5 )
+   ]
+  --[ ChangementPhraseSousSequestre( p, ~p2 ), PhraseVivante( ~p2 ) ]->
+   [
+   PhraseHote( ~p2 ), SerrureMachine( ~ss2 ), MediaPiege( ~sq2 ),
+   Coffre( ~ep2, senc(m, h(<h(~p2), ~ss2, ~sq2>)) ),
+   !PartsDe( ~p2, ~y1, ~y2, ~y3, ~y4, ~y5 ), PartSurMedia( ~y1 ),
+   PartSurMedia( ~y2 ), PartSurMedia( ~y3 ), PartSurMedia( ~y4 ),
+   PartSurMedia( ~y5 )
+   ]
+
+rule (modulo E) ouverture_honnete:
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) )
+   ]
+  --[ OuvertureHonnete( ep ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) )
+   ]
+
+rule (modulo E) tentative_phrase_erronee:
+   [ PhraseHote( p ), Fr( ~q ) ]
+  --[ PhraseErronee( ) ]->
+   [ PhraseHote( p ) ]
+
+rule (modulo E) vol_de_la_machine_seule:
+   [
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), SerrureMachine( ss ),
+   PhraseHote( p )
+   ]
+  --[ VolDeLaMachine( ) ]->
+   [
+   Out( senc(m, h(<h(p), ss, sq>)) ), Out( ss ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), SerrureMachine( ss ),
+   PhraseHote( p )
+   ]
+
+rule (modulo E) fuite_d_une_part:
+   [ PartSurMedia( x ), CompteurParts( n ) ]
+  --[ FuitePart( ), PartTenue( x ) ]->
+   [ Out( x ), !PartAdverse( x ), CompteurParts( succ(n) ) ]
+
+rule (modulo E) reconstitution_illicite_123:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x3 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_124:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_125:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_134:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x3 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_135:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x3 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_145:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_234:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x3 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_235:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x3 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_245:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) reconstitution_illicite_345:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x3 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+rule (modulo E) remplacement_du_conteneur:
+   [ Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), In( forged ) ]
+  --[ RemplacementDuConteneur( ) ]->
+   [ CoffreFalsifie( ep, forged ) ]
+
+rule (modulo E) ouverture_falsifiee:
+   [
+   CoffreFalsifie( ep, forged ), PhraseHote( p ), SerrureMachine( ss ),
+   MediaPiege( sq )
+   ]
+  --[ FalsificationProuvee( ep ) ]->
+   [ FalsificationEtablie( ep ) ]
+
+rule (modulo E) destruction_locale:
+   [ FalsificationEtablie( ep ) ] --[ DestructionLocale( ep ) ]-> [ ]
+
+lemma implication_secret_appris_reconstitution_illicite:
+  all-traces
+  "∀ p #i #k.
+    ((PhraseVivante( p ) @ #k) ∧ (K( p ) @ #i)) ⇒
+    ((∃ #j. (ReconstitutionIllicite( p ) @ #j) ∧ (#j < #i)) ∧
+     (∃ x1 x2 x3 #j1 #j2 #j3.
+       (((((PartTenue( x1 ) @ #j1) ∧ (PartTenue( x2 ) @ #j2)) ∧
+          (PartTenue( x3 ) @ #j3)) ∧
+         (#j1 < #i)) ∧
+        (#j2 < #i)) ∧
+       (#j3 < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i #k.
+  (PhraseVivante( p ) @ #k) ∧ (K( p ) @ #i)
+ ∧
+  ((∀ #j. (ReconstitutionIllicite( p ) @ #j) ⇒ ¬(#j < #i)) ∨
+   (∀ x1 x2 x3 #j1 #j2 #j3.
+     (PartTenue( x1 ) @ #j1) ∧
+     (PartTenue( x2 ) @ #j2) ∧
+     (PartTenue( x3 ) @ #j3)
+    ⇒
+     ((¬(#j1 < #i)) ∨ (¬(#j2 < #i)) ∨ (¬(#j3 < #i)))))"
+*/
+by sorry
+
+lemma conservation_de_la_cle_utilisateur:
+  all-traces
+  "∀ p #i.
+    (CleUtilisateurEmployee( h(p) ) @ #i) ⇒
+    (∃ #j. (PhraseVivante( p ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i.
+  (CleUtilisateurEmployee( h(p) ) @ #i)
+ ∧
+  ∀ #j. (PhraseVivante( p ) @ #j) ⇒ ¬(#j < #i)"
+*/
+by sorry
+
+lemma absence_de_destruction_par_corruption:
+  all-traces
+  "∀ ep #i.
+    (DestructionLocale( ep ) @ #i) ⇒
+    (∃ #j. (FalsificationProuvee( ep ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ ep #i.
+  (DestructionLocale( ep ) @ #i)
+ ∧
+  ∀ #j. (FalsificationProuvee( ep ) @ #j) ⇒ ¬(#j < #i)"
+*/
+by sorry
+
+lemma temoin_falsification_et_destruction:
+  all-traces "∃ ep #i. DestructionLocale( ep ) @ #i"
+/*
+guarded formula characterizing all counter-examples:
+"∀ ep #i. (DestructionLocale( ep ) @ #i) ⇒ ⊥"
+*/
+by sorry
+
+lemma temoin_la_chaine_vivante:
+  all-traces
+  "∃ p ep #i #j #k #l.
+    (((CreationCoffre( p ) @ #i) ∧ (MigrationCF2( p ) @ #j)) ∧
+     (MigrationCF3( p ) @ #k)) ∧
+    (OuvertureHonnete( ep ) @ #l)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p ep #i #j #k #l.
+  (CreationCoffre( p ) @ #i) ∧
+  (MigrationCF2( p ) @ #j) ∧
+  (MigrationCF3( p ) @ #k) ∧
+  (OuvertureHonnete( ep ) @ #l)
+ ⇒
+  ⊥"
+*/
+by sorry
+
+lemma temoin_atteignabilite_du_seuil:
+  all-traces
+  "∃ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j) ⇒ ⊥"
+*/
+by sorry
+
+end

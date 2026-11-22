@@ -1,0 +1,21 @@
+TABLE DES STATUTS CF3 — LA VAGUE 15 (qa3k5putf, 22/11/2026)
+================================================================
+LA RÈGLE : jamais « prouvé » sans verdict machine ; un INCOMPLETE
+nommé avec son budget est une pièce aussi précieuse qu'un vert.
+
+| Pièce | Verdict machine | Budget/issue | Où |
+|---|---|---|---|
+| CF3-v3.spthy (parts fraîches, !PartAdverse, lemme reformulé) | PARSE+TRADUIT+derivation checks | les 36 v2 résolus (A×10 B×25 C×1) | registre-tamarin-v15.txt |
+| L3 absence_de_destruction_par_corruption | **VERIFIED** (1 122 pas, 29,4 s) | v3 ET v3b, verdict identique | preuve-L3-absence-destruction.txt |
+| L1 implication (reformulée, deux étages) | INCOMPLETE — le mur de mémoire | 300 s ×3 + 6 heuristiques + évaluation partielle 10 min (29 pas, mémoire bornée, convergence lente) | registre §lemma |
+| L2 conservation_de_la_cle_utilisateur | INCOMPLETE — OOM | 300 s | preuve-L2-conservation.txt |
+| T1 témoin falsification+destruction (négation v3.5) | INCOMPLETE — OOM | BFS/DFS/SEQDFS bornés et non | preuve-T1-temoin-falsification.txt |
+| T2 témoin la chaîne vivante (négation v3.5) | INCOMPLETE — OOM à profondeur 9 (le témoin y est) | BFS 400 s | registre §lemma |
+| T3 témoin atteignabilité du seuil (négation v3.5) | INCOMPLETE — OOM à profondeur 9 | BFS/DFS/SEQDFS/auto-sources | preuve-T3-temoin-seuil.txt |
+| LE NÉGATIF (part publique, mouture transposée) | INCOMPLETE — OOM (le run prêt au poste réel) | bound 8 : décomposition K(p) | preuve-NEGATIF-lemme1.txt |
+| LE PORT PROVERIF CF3-v3.pv | LIVRÉ, le run au poste réel (le bac ne télécharge pas proverif) | — | CF3-v3.pv + écarts |
+
+LA SUITE (au geste du maître, le poste réel) : les six lemmas avec
+--partial-evaluation et le temps (LA VOIE NOMMÉE — la mémoire y est
+bornée) ; le négatif à rouler le premier (la portance) ; le port
+ProVerif avec les six requêtes actives.

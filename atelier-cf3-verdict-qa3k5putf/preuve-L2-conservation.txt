@@ -1,0 +1,11 @@
+maude tool: 'maude'
+ checking version: 3.4. OK.
+ checking installation: OK.
+[Theory CF3] Theory loaded
+[Theory CF3] Theory translated
+[Theory CF3] Derivation checks started
+[Theory CF3] Derivation checks ended
+[Theory CF3] Theory closed
+[Saturating Sources] Step 1 (Max 5)
+[Saturating Sources] Done
+tamarin-prover: out of memory

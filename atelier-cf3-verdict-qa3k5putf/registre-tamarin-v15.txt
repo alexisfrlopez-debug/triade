@@ -1,0 +1,164 @@
+REGISTRE TAMARIN — LA VAGUE 15 (qa3k5putf, 22/11/2026)
+===========================================================
+L'OUTIL : tamarin-prover 1.12.0 (le binaire officiel du bac, installé
+vague 14) ; Maude 3.4 + prelude.maude — LES DEUX VIVANTS AU BAC, la
+vérification d'installation OK (SANS les avertissements META-LEVEL de la
+session v14 — la preuve v14 courait sur un Maude au meta-level cassé,
+le constat porté au registre présent : les décompositions de la v14
+étaient les siennes, pas celles d'un Maude entier).
+
+===========================================================
+LES 36 AVERTISSEMENTS DE WELLFORMEDNESS v2 — NOMMÉS ET RÉSOLUS UN PAR UN
+===========================================================
+La passe v2 (constatée au run présent, 0,24 s avant abandon — 36
+avertissements) se décompose en TROIS familles, chacune résolue À LA
+SOURCE au v3 :
+
+  FAMILLE A (10) — « K is a reserved fact, use In/Out or a dedicated
+    fact » : les dix règles reconstitution_illicite_* portaient K($x)
+    en prémisse. RÉSOLU v3.2 : le fait DÉDIÉ !PartAdverse(x) (persistant,
+    posé par la fuite) aux dix règles ; l'action PartTenue(x) (le
+    témoin daté pour le second étage du lemme 1).
+  FAMILLE B (25) — « Fr must be applied to a variable of fresh sort » :
+    les 25 occurrences Fr($x) à variables PUBLIQUES — création (3 :
+    $p, $m, $ep1), migration CF2 (6 : $garde, $x1..$x5), migration CF3
+    (3 : $ss, $sq, $ep2), clôture (3 : $ss2, $sq2, $ep2), changement
+    (9 : $p2, $ss2, $sq2, $ep2, $y1..$y5), phrase erronée (1 : $q).
+    RÉSOLU v3.1 : TOUS les noms secrets naissent Fr(~x) — le $-préfixe
+    portait les noms du côté PUBLIC de la syntaxe : UN NOM FRAIS PUBLIC
+    EST CONNU DE L'ADVERSAIRE PAR CONSTRUCTION (c'était le défaut v14).
+  FAMILLE C (1) — les variables m/sq non dérivables des prémisses aux
+    règles vol_de_la_machine_seule puis remplacement_du_conteneur (le
+    pattern niché sous constructeur réémis). RÉSOLU v3.4 : le conteneur
+    porté en la variable OPAQUE c aux deux règles (le terme
+    senc(m, h(<h(p), ss, sq>)) inchangé par unification, le coffre
+    passe tel quel).
+
+RÉSULTAT v3 : le modèle PARSE, se TRADUIT, les derivation checks
+S'ACHÈVENT (le sous-contrôle de dérivation expire au délai par défaut
+de 5 s — l'avertissement nommé « derivation checks timed out » ; le
+délai étendu (120 s) OOM au bac 4 Go — la cause : l'arbre KD de la
+théorie à destructeur, voir la cause nommée ci-dessous). Les lemmes
+COURENT malgré l'avertissement (le VERIFIED de L3 en fait foi).
+
+===========================================================
+LES AMENDEMENTS v3 (l'héritage v14 porté)
+===========================================================
+  v3.1 — les secrets à la sortie fraîche (~) : phrase, parts, moitiés,
+         garde, contenu, époques — les 25 Fr(~x) de la famille B ;
+  v3.2 — les relations d'attaquant hors du fait K réservé : la fuite
+         pose !PartAdverse(x) + l'action PartTenue(x) ; les dix
+         reconstitutions consomment le fait dédié aux trois positions ;
+  v3.3 — le lemme d'implication reformulé sur variables privées : la
+         quantification porte sur les phrases NÉES (l'action
+         PhraseVivante) — les termes construits (h(t), <t,t'>, senc…)
+         restent hors du périmètre du secret ; la conclusion porte les
+         DEUX étages : la reconstitution PRÉCÉDENTE ET les trois parts
+         tenues (la distinctivité des positions par la fraîcheur des
+         cinq champs de !PartsDe, l'argument à la règle) ;
+  v3.4 — le conteneur opaque aux deux règles porteuses (famille C) ;
+  v3.5 — l'IDIOME DU TÉMOIN : tamarin 1.12.0 n'offre PAS d'annotation
+         exists-trace au parseur (la liste fermée des attributs :
+         typing, sources, reuse, diff_reuse, use_induction, hide_lemma,
+         heuristic, output, left, right — constaté au geste) : les
+         trois témoins sont énoncés en NÉGATION sous all-traces, le
+         verdict FALSIFIED-AVEC-TRACE EST la preuve d'existence (la
+         trace archivée en JSON est le témoin) ;
+  v3.6 (v3b) — l'équation sdec(senc(x,y),y)=x ÉLIMINÉE, senc portée
+         en fonction libre — L'ARGUMENT DE LA MORTE : le KEK
+         h(<h(p),ss,sq>) n'est JAMAIS sorti ; le tenir exigerait la
+         phrase FRAÎCHE (reconstruction) ET la moitié sq QUI N'EST
+         JAMAIS sorti (MediaPiege ne sort nulle part) — l'équation ne
+         donnait AUCUNE capacité atteignable en plus ; ELLE NE
+         NOURRISSAIT QUE L'ARBRE KD (l'explosion de mémoire constatée).
+         ÉCART AU PLAN NOMMÉ : le plan disait « les relations
+         d'attaquant hors K » — l'équation morte emportée est un geste
+         de PLUS, justifié au présent registre ; le v3 (à l'équation)
+         DEMEURE livré et consigné, le v3b est la pièce courante des
+         preuves. Le VERIFIED de L3 est IDENTIQUE au v3 et au v3b
+         (1 122 pas, même verdict) — la co-divergence nulle constatée.
+
+LES EMPREINTES :
+  CF3-v2-amende.spthy (vague 14, VERBATIM) : 35a7c6a32c2f9239…
+  CF3-v3.spthy  (l'équation demeure)        : ab84960dde83083a…
+  CF3-v3b.spthy (l'équation éliminée)       : 1f4528658e976c1c…
+  CF3-v3-negatif.spthy (le contrôle, mouture adoptée) : 367e9d0936639e68…
+  CF3-v3.pv (le port ProVerif)              : 98d8e6d162b02cf6…
+  (chaque empreinte pleine longueur consignée à empreintes-atelier.txt)
+
+===========================================================
+LES SIX LEMMAS — LES VERDICTS MACHINE, LES BUDGETS CONSIGNÉS
+===========================================================
+(La machine : bac virtualisé 4 Go ; chaque run consigné avec son
+budget et son issue — AUCUN VERDICT FABRIQUÉ ; un INCOMPLETE nommé est
+une pièce aussi précieuse qu'un vert.)
+
+L1 implication_secret_appris_reconstitution_illicite (v3 et v3b) :
+    INCOMPLETE — le mur de mémoire du bac. Les configurations éprouvées
+    (toutes OOM avant le premier pas de preuve, l'explosion à la
+    décomposition du but K(p) — l'arbre de cas sur les termes
+    constructibles) : défaut (300 s) ; heuristiques S/I/i/c/C sur v3b
+    (150 s chacune) ; l'évaluation partielle (SUMMARY) : 29 pas de
+    précalcul en 10 min, SANS OOM (la mémoire bornée !) mais la
+    convergence lente au-delà du budget de session — LA VOIE NOMMÉE
+    pour le poste réel : --partial-evaluation + le temps.
+L2 conservation_de_la_cle_utilisateur : INCOMPLETE — OOM (budget 300 s,
+    défaut + v3b).
+L3 absence_de_destruction_par_corruption : **VERIFIED (1 122 pas,
+    29,4 s)** — AU v3 ET AU v3b, le verdict identique.
+T1 temoin_falsification_et_destruction (négation v3.5) : INCOMPLETE —
+    BFS : OOM à la frontière de profondeur ; DFS/SEQDFS bornés (10) et
+    non bornés : OOM au-delà du budget.
+T2 temoin_la_chaine_vivante (négation v3.5) : INCOMPLETE — BFS : OOM
+    (« searching for attacks at depth 9 » puis la mort) ; le témoin
+    EST à ~9 pas (création→migration→migration→ouverture + les KU) —
+    la frontière de l'entrelacement des instances explose avant de
+    l'atteindre.
+T3 temoin_atteignabilite_du_seuil (négation v3.5) : INCOMPLETE — BFS :
+    OOM à profondeur 9 (le témoin à ~9 pas : création→migration→3
+    fuites→reconstitution→KU) ; DFS borné 10 : OOM ; SEQDFS non borné :
+    400 s sans verdict ; auto-sources : OOM.
+
+LE CONTRÔLE NÉGATIF (la part publique réintroduite) — DEUX MOUTURES :
+  (1) le défaut v2 VERBATIM en syntaxe ($ partout + K en prémisse) :
+      OOM (l'arbre KD du K en prémisse) ; à bound=8 : analysis
+      incomplete SANS verdict — la mouture consignée, aucun verdict
+      fabriqué ;
+  (2) LA MOUTURE ADOPTÉE — la part publique TRANSPOSÉE au vocabulaire
+      v3 : la migration pose !PartAdverse(~x1..~x3) DÈS LA NAISSANCE
+      (l'adversaire tient trois parts par construction, AUCUNE fuite,
+      aucun PartTenue), les reconstitutions v3 intactes : la
+      falsification attendue sur le SECOND étage de L1 (le secret appris
+      sans trois parts FUITÉES) — le run OOM au bac (bound 8 : la
+      décomposition du but K(p) demeure le mur). LE NÉGATIF DEMEURE
+      PRÊT À ROULER au poste réel — la portance de la preuve sera
+      établie au geste.
+
+LA CAUSE NOMMÉE (le mur, l'analyse consignée) : la décomposition du but
+K(p) de L1 — Tamarin case-scinde p sur les termes constructibles de la
+clôture de l'adversaire AVANT que la contrainte PhraseVivante(p) ne
+ferme les branches ; l'arbre explose au-delà des 4 Go du bac. La v14
+l'avait dit autrement (« plus de 10 minutes par lemme au bac
+virtualisé ») : la présente session la caractérise — le mur est la
+DÉCOMPOSITION, pas la profondeur ; l'évaluation partielle le contourne
+(mémoire bornée) au prix du temps. LA CONSÉQUENCE PRATIQUE : le poste
+réel (RAM large, temps long) tient les six lemmas avec le présent
+modèle et le présent registre — les commandes consignées au rapport.
+
+LA CONFRONTATION AUX QUATRE P1–P4 (invariants inductifs, la vague 13) :
+les P1–P4 demeurent PROUVÉES par invariant inductif (les traces z3 de
+la vague 13 font foi) ; la présente session n'y contredit RIEN : L3
+(VERIFIED) est l'orthogonal destruction/falsification ; aucune
+contradiction silencieuse — la confrontation complète (les six lemmas
+au vert au poste réel) demeure le geste suivant.
+
+LE PORT PROVERIF : CF3-v3.pv livré (les six requêtes actives, les
+événements miroir, l'oracle du seuil) ; le bac NE TÉLÉCHARGE PAS
+proverif (les relais tentés au geste — nommés au rapport) : LE RUN
+APPARTIENT AU DÉVELOPPEUR ; les SIX écarts de sémantique nommés à
+ECARTS-SEMANTIQUES-TAMARIN-PROVERIF.txt.
+
+L'ÉCART DU PROTOCOLE CORRIGÉ PAR ÉCRIT : le plan disait « les SIX
+lemmas » — les SIX lemmas courus UN PAR UN (six preuves séparées, six
+budgets consignés ci-dessus) ; le lemme d'implication porte DEUX étages
+(la reformulation v3.3) — un seul lemme, une seule preuve.

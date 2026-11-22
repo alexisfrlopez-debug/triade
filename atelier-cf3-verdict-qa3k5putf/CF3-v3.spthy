@@ -1,0 +1,309 @@
+/*
+ * CF3-v3.spthy — LE MODÈLE CF3 V3 (qa3k5putf, la vague 15) : l'amendement
+ * exigé par le verdict du premier run vécu (vague 14, f3uznui3l) PORTÉ —
+ * les parts fraîches, les relations d'attaquant hors du fait K réservé,
+ * le lemme d'implication reformulé sur variables privées.
+ *
+ * L'HÉRITAGE NOMMÉ (le registre v14 fait foi) : le premier run effectif a
+ * FALSIFIÉ le lemme d'implication de la v2 — la cause nommée : les parts
+ * en variables PUBLIQUES ($x1..$x5) sont connues de l'adversaire PAR
+ * CONSTRUCTION, donc K($x1) trivialement satisfiable — la reconstitution
+ * « réussissait » sans aucune fuite réelle : UN DÉFAUT DE MODÉLISATION,
+ * jamais une attaque du protocole. La v2-amende (sha256 35a7c6a32c2f9239…)
+ * demeure VERBATIM au dossier de la vague 14 ; la présente v3 est la pièce
+ * courante.
+ *
+ * LES TROIS AMENDEMENTS v3 :
+ *   v3.1 — LES SECRETS À LA SORTIE FRAÎCHE (~) : phrase, parts, moitiés,
+ *          garde, contenu, époques — tout nom secret naît Fr(~x) ; les 25
+ *          avertissements « Fr($x) public » de la v2 disparaissent À LA
+ *          SOURCE (le $-préfixe portait les noms du côté PUBLIC de la
+ *          syntaxe : un nom frais PUBLIC est connu de l'adversaire par
+ *          construction — c'était le défaut).
+ *   v3.2 — LES RELATIONS D'ATTAQUANT HORS DU FAIT K RÉSERVÉ : la fuite
+ *          d'une part émet le fait DÉDIÉ !PartAdverse(x) (persistant :
+ *          l'adversaire ne désapprend pas) + l'ACTION PartTenue(x) (le
+ *          témoin daté pour les lemmes) ; les dix règles de reconstitution
+ *          consomment !PartAdverse aux TROIS positions — les 10
+ *          avertissements « K en prémisse » disparaissent.
+ *   v3.3 — LE LEMME D'IMPLICATION REFORMULÉ SUR VARIABLES PRIVÉES : la
+ *          quantification porte sur les phrases NÉES (l'action
+ *          PhraseVivante) — les termes construits (h(t), <t,t>, senc…)
+ *          que l'adversaire sait TOUJOURS bâtir de ses connaissances sont
+ *          HORS du périmètre du secret ; la conclusion porte les DEUX
+ *          étages : la reconstitution illicite PRÉCÉDENTE ET les trois
+ *          parts tenues (les positions distinctes garanties par la
+ *          fraîcheur des cinq champs de !PartsDe — l'argument est au
+ *          registre, la forme canonique garde les témoins).
+ *
+ * LES ABSTRACTIONS NOMMÉES (l'honnêteté du modèle, INCHANGÉES de la v2) :
+ * Argon2id/HKDF/XChaCha20-Poly1305 → h et senc (le niveau symbolique) ;
+ * l'arithmétique de Shamir abstraite (la reconstitution exige TROIS parts
+ * DISTINCTES, les champs du fait !PartsDe) ; le cycle en deux actes
+ * abstrait en la règle de clôture (les moitiés fraîches, K_user conservé).
+ */
+
+theory CF3
+begin
+
+builtins: hashing, symmetric-encryption
+
+/* le compteur de parts compromises (interne, privé) — OBSERVATIONNEL :
+ * il compte les fuites, il ne restreint RIEN (le retrait de la
+ * restriction v2 demeure TOTAL). */
+functions: nul/0, succ/1 [private]
+
+/* ===================== LES ACTIONS DU PROTOCOLE (événements) ================ */
+/* (les faits d'action se déclarent implicitement — l'amendement v2.2) */
+
+/* ================== LES RÈGLES DU PROTOCOLE (la v3 aux noms frais) ========= */
+
+/* LA CRÉATION DU COFFRE — CF1 : la phrase seule scelle le contenu.
+ * v3.1 : Fr(~p), Fr(~m), Fr(~ep1) — noms FRAIS de la sorte privée. */
+rule creation_du_coffre:
+  [ Fr(~p), Fr(~m), Fr(~ep1) ]
+  --[ CreationCoffre(~p), PhraseVivante(~p) ]->
+  [ PhraseHote(~p),
+    Coffre(~ep1, senc(~m, h(~p))) ]
+
+/* LA MIGRATION CF1 → CF2 — la cérémonie de séquestre : la phrase est
+ * partagée en CINQ parts à seuil TROIS (cinq noms frais, un par média ;
+ * champ distinct = part distincte, PAR LA FRAÎCHEUR) ; le coffre
+ * rescellé sous la dérivation à deux éléments ; le compteur posé à zéro. */
+rule migration_cf1_vers_cf2:
+  [ PhraseHote(p), Coffre(ep, senc(m, h(p))), Fr(~garde),
+    Fr(~x1), Fr(~x2), Fr(~x3), Fr(~x4), Fr(~x5) ]
+  --[ MigrationCF2(p), CleUtilisateurEmployee(h(p)) ]->
+  [ PhraseHote(p),
+    GardeFragments(~garde),
+    Coffre(ep, senc(m, h(<h(p), ~garde>))),
+    !PartsDe(p, ~x1, ~x2, ~x3, ~x4, ~x5),
+    PartSurMedia(~x1), PartSurMedia(~x2), PartSurMedia(~x3),
+    PartSurMedia(~x4), PartSurMedia(~x5),
+    CompteurParts(nul) ]
+
+/* LA MIGRATION CF2 → CF3 — la serrure à TROIS éléments : la clé
+ * utilisateur K_user = h(phrase) INVARIABLE, la moitié machine
+ * S_serrure, la moitié média séparé S_piège ; le KEK abstrait en
+ * h(<K_user, S_serrure, S_piège>). */
+rule migration_cf2_vers_cf3:
+  [ PhraseHote(p), GardeFragments(garde),
+    Coffre(ep, senc(m, h(<h(p), garde>))),
+    Fr(~ss), Fr(~sq), Fr(~ep2) ]
+  --[ MigrationCF3(p), CleUtilisateurEmployee(h(p)) ]->
+  [ PhraseHote(p),
+    SerrureMachine(~ss),
+    MediaPiege(~sq),
+    Coffre(~ep2, senc(m, h(<h(p), ~ss, ~sq>))) ]
+
+/* LA CLÔTURE D'ÉPOQUE — l'acte II : les moitiés FRAÎCHES à chaque
+ * clôture, K_user CONSERVÉE (h(p) inchangé), le conteneur rescellé. */
+rule cloture_d_epoque:
+  [ PhraseHote(p), SerrureMachine(ss), MediaPiege(sq),
+    Coffre(ep, senc(m, h(<h(p), ss, sq>))),
+    Fr(~ss2), Fr(~sq2), Fr(~ep2) ]
+  --[ ClotureDEpoque(~ep2), CleUtilisateurEmployee(h(p)) ]->
+  [ PhraseHote(p),
+    SerrureMachine(~ss2),
+    MediaPiege(~sq2),
+    Coffre(~ep2, senc(m, h(<h(p), ~ss2, ~sq2>))) ]
+
+/* LE CHANGEMENT DE PHRASE SOUS SÉQUESTRE — TROIS parts (le seuil)
+ * reconstituent la phrase ; la nouvelle phrase FRAÎCHE rescelle le
+ * coffre aux TROIS éléments neufs ; les parts rafraîchies ; le compteur
+ * CONTINUE (aucun reset silencieux). */
+rule changement_de_phrase_sous_sequestre:
+  [ !PartsDe(p, x1, x2, x3, x4, x5),
+    PartSurMedia(x1), PartSurMedia(x2), PartSurMedia(x3),
+    PhraseHote(p), SerrureMachine(ss), MediaPiege(sq),
+    Coffre(ep, senc(m, h(<h(p), ss, sq>))),
+    Fr(~p2), Fr(~ss2), Fr(~sq2), Fr(~ep2),
+    Fr(~y1), Fr(~y2), Fr(~y3), Fr(~y4), Fr(~y5) ]
+  --[ ChangementPhraseSousSequestre(p, ~p2),
+      PhraseVivante(~p2) ]->
+  [ PhraseHote(~p2),
+    SerrureMachine(~ss2),
+    MediaPiege(~sq2),
+    Coffre(~ep2, senc(m, h(<h(~p2), ~ss2, ~sq2>))),
+    !PartsDe(~p2, ~y1, ~y2, ~y3, ~y4, ~y5),
+    PartSurMedia(~y1), PartSurMedia(~y2), PartSurMedia(~y3),
+    PartSurMedia(~y4), PartSurMedia(~y5) ]
+
+/* L'OUVERTURE HONNÊTE — le témoin de l'acte I : la sentinelle complète
+ * (phrase + serrure + piège) vérifie le scellage à TROIS éléments. */
+rule ouverture_honnete:
+  [ PhraseHote(p), SerrureMachine(ss), MediaPiege(sq),
+    Coffre(ep, senc(m, h(<h(p), ss, sq>))) ]
+  --[ OuvertureHonnete(ep), CleUtilisateurEmployee(h(p)) ]->
+  [ PhraseHote(p), SerrureMachine(ss), MediaPiege(sq),
+    Coffre(ep, senc(m, h(<h(p), ss, sq>))) ]
+
+/* LA PHRASE ERRONÉE — le refus BÉNIN : une phrase fautive ne détruit
+ * RIEN — aucune règle ne mène de PhraseErronee à la destruction. */
+rule tentative_phrase_erronee:
+  [ PhraseHote(p), Fr(~q) ]
+  --[ PhraseErronee() ]->
+  [ PhraseHote(p) ]
+
+/* LE VOL DE LA MACHINE SEULE — l'attaquant obtient le conteneur chiffré
+ * ET la S_serrure de l'en-tête clair ; il ne peut NI ouvrir, NI forger
+ * un conteneur ouvrable (le KEK). v3.4 : le conteneur porté en la
+ * variable OPAQUE c (le terme senc(m, h(<h(p), ss, sq>)) inchangé par
+ * unification — la résolution du dernier avertissement de dérivation :
+ * les variables nichées m/sq ne sont plus réémises sous constructeur,
+ * le coffre passe tel quel). */
+rule vol_de_la_machine_seule:
+  [ Coffre(ep, c), SerrureMachine(ss), PhraseHote(p) ]
+  --[ VolDeLaMachine() ]->
+  [ Out(c), Out(ss),
+    Coffre(ep, c), SerrureMachine(ss), PhraseHote(p) ]
+
+/* LA FUITE D'UNE PART — un média de part compromis : la part part à
+ * l'attaquant (Out), le fait DÉDIÉ !PartAdverse(x) est posé (v3.2 : la
+ * relation d'attaquant HORS du fait K réservé — persistante : ce qui
+ * est su ne l'est plus jamais moins) et l'ACTION PartTenue(x) datée (le
+ * témoin pour le second étage du lemme d'implication) ; le compteur
+ * s'incrémente (l'instrument OBSERVATIONNEL). */
+rule fuite_d_une_part:
+  [ PartSurMedia(x), CompteurParts(n) ]
+  --[ FuitePart(), PartTenue(x) ]->
+  [ Out(x), !PartAdverse(x), CompteurParts(succ(n)) ]
+
+/* LA RECONSTITUTION ILLICITE PAR L'ATTAQUANT — les DIX règles, un par
+ * triplet de parts distinctes (C(5,3) = 10) ; l'attaquant qui TIENT
+ * TROIS parts (!PartAdverse aux trois positions liées par !PartsDe)
+ * reconstitue la phrase. v3.1/v3.2 : les variables des positions sont
+ * LIÉES aux champs frais de !PartsDe (plus AUCUNE instanciation publique
+ * libre) ; la connaissance exigée est le fait DÉDIÉ, plus le K réservé. */
+rule reconstitution_illicite_123:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x2), !PartAdverse(x3) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_124:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x2), !PartAdverse(x4) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_125:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x2), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_134:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x3), !PartAdverse(x4) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_135:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x3), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_145:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x1), !PartAdverse(x4), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_234:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x2), !PartAdverse(x3), !PartAdverse(x4) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_235:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x2), !PartAdverse(x3), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_245:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x2), !PartAdverse(x4), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+rule reconstitution_illicite_345:
+  [ !PartsDe(p, x1, x2, x3, x4, x5), !PartAdverse(x3), !PartAdverse(x4), !PartAdverse(x5) ]
+  --[ ReconstitutionIllicite(p) ]->
+  [ Out(p) ]
+
+/* L'EVIL MAID REMPLACE LE CONTENEUR — l'attaquant écrit son conteneur
+ * forgé à la place du canonique ; le conteneur honnête déplacé vers
+ * l'état Falsifiable — la preuve viendra à l'ouverture. v3.4 : le
+ * conteneur honnête consommé en la variable OPAQUE c (la résolution du
+ * dernier avertissement de dérivation, même geste que le vol). */
+rule remplacement_du_conteneur:
+  [ Coffre(ep, c), In(forged) ]
+  --[ RemplacementDuConteneur() ]->
+  [ CoffreFalsifie(ep, forged) ]
+
+/* L'OUVERTURE FALSIFIÉE — la sentinelle complète confronte le conteneur
+ * forgé : la falsification est PROUVÉE. */
+rule ouverture_falsifiee:
+  [ CoffreFalsifie(ep, forged),
+    PhraseHote(p), SerrureMachine(ss), MediaPiege(sq) ]
+  --[ FalsificationProuvee(ep) ]->
+  [ FalsificationEtablie(ep) ]
+
+/* LA DESTRUCTION LOCALE — JAMAIS nue : elle suit la falsification
+ * PROUVÉE ; elle ne touche QUE la machine (la destruction reste
+ * survivable). */
+rule destruction_locale:
+  [ FalsificationEtablie(ep) ]
+  --[ DestructionLocale(ep) ]->
+  [ ]
+
+/* ============================ LES LEMMAS (la v3) ============================ */
+
+/* LEMMA 1 (v3) — L'IMPLICATION REFORMULÉE SUR VARIABLES PRIVÉES : une
+ * phrase NÉE (l'action PhraseVivante — les noms frais du protocole) que
+ * l'adversaire apprend NE PEUT l'avoir été que par la reconstitution
+ * illicite PRÉCÉDENTE, ET l'adversaire TENAIT alors trois parts (les
+ * actions PartTenue antérieures — les positions distinctes garanties
+ * par la fraîcheur des cinq champs de !PartsDe, l'argument consigné au
+ * registre : la forme garde les témoins datés, la règle porte la
+ * distinctivité). Les termes CONSTRUITS (h(t), <t,t>, senc(t,t')…)
+ * restent hors du périmètre : l'adversaire les bâtit librement de ses
+ * connaissances — le secret du protocole est la PHRASE, pas la clôture
+ * de l'algèbre sous les fonctions publiques (la v2 quantifiait sur tout
+ * terme : c'était la seconde cause du falsifié, nommée au registre). */
+lemma implication_secret_appris_reconstitution_illicite:
+  "All p #i #k. PhraseVivante(p) @ #k & K(p) @ #i ==>
+     (Ex #j. ReconstitutionIllicite(p) @ #j & #j < #i) &
+     (Ex x1 x2 x3 #j1 #j2 #j3. PartTenue(x1) @ #j1 & PartTenue(x2) @ #j2 &
+        PartTenue(x3) @ #j3 & #j1 < #i & #j2 < #i & #j3 < #i)"
+
+/* LEMMA 2 — LA CONSERVATION DE LA CLÉ UTILISATEUR (maintenu) : tout
+ * emploi de la clé h(p) remonte à une phrase NÉE AVANT. */
+lemma conservation_de_la_cle_utilisateur:
+  "All p #i. CleUtilisateurEmployee(h(p)) @ #i ==>
+     Ex #j. PhraseVivante(p) @ #j & #j < #i"
+
+/* LEMMA 3 — L'ABSENCE DE DESTRUCTION PAR CORRUPTION (maintenu) : toute
+ * destruction locale est PRÉCÉDÉE d'une falsification PROUVÉE. */
+lemma absence_de_destruction_par_corruption:
+  "All ep #i. DestructionLocale(ep) @ #i ==>
+     Ex #j. FalsificationProuvee(ep) @ #j & #j < #i"
+
+/* LEMMA TÉMOIN 1 — la chaîne evil-maid habitée : il EXISTE des traces
+ * où la falsification est prouvée et la destruction survient — la
+ * non-vacuité du modèle. */
+/* L'IDIOME DU TÉMOIN (v3.5) : tamarin 1.12.0 n'offre pas d'annotation
+ * exists-trace au parseur (constaté au geste — la liste fermée des
+ * attributs : typing, sources, reuse, diff_reuse, use_induction,
+ * hide_lemma, heuristic, output, left, right) ; le témoin est donc
+ * énoncé en NÉGATION sous la sémantique all-traces : le verdict
+ * FALSIFIED AVEC TRACE est LA PREUVE D'EXISTENCE (la trace falsifiante
+ * EST le témoin, archivée en JSON) — jamais une moyenne, jamais du
+ * vide : un négatif VERIFIED dénoncerait la vacuité du modèle. */
+lemma temoin_falsification_et_destruction:
+  "All ep #i. DestructionLocale(ep) @ #i ==> F"
+
+/* LEMMA TÉMOIN 2 — la vie honnête : il EXISTE des traces où la
+ * création, les DEUX migrations et l'ouverture honnête vivent (sur la
+ * MÊME trace). */
+lemma temoin_la_chaine_vivante:
+  "All p ep #i #j #k #l. CreationCoffre(p) @ #i & MigrationCF2(p) @ #j &
+     MigrationCF3(p) @ #k & OuvertureHonnete(ep) @ #l ==> F"
+
+/* LEMMA TÉMOIN 3 — L'ATTEIGNABILITÉ DU SEUIL : il EXISTE une trace où
+ * trois médias de parts fuient ET l'adversaire apprend la phrase (la
+ * reconstitution illicite VÉCUE puis le secret connu) — le seuil de la
+ * politique 5/3 est MONTRÉ VIVANT dans le modèle : sans ce témoin,
+ * l'implication du LEMMA 1 serait vraie du vide ; avec lui, la
+ * conclusion « la seule voie est le seuil » porte sur un monde où le
+ * seuil est FRANCHISSABLE — et c'est PRÉCISÉMENT la politique : trois
+ * parts compromises perdent le coffre, deux ne suffisent jamais. */
+lemma temoin_atteignabilite_du_seuil:
+  "All p #i #j. ReconstitutionIllicite(p) @ #i & K(p) @ #j ==> F"
+
+end

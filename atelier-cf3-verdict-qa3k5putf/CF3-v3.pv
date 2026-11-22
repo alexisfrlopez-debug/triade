@@ -1,0 +1,178 @@
+(*============================================================================
+ * CF3-v3.pv — LE PORT PROVERIF DU MODÈLE CF3-v3 (qa3k5putf, la vague 15)
+ * La contre-vérification du verdict Tamarin ; TOUT ÉCART DE SÉMANTIQUE
+ * entre les deux outils est nommé à ECARTS-SEMANTIQUES-TAMARIN-PROVERIF.txt.
+ *
+ * L'ÉTAT DU PORTEUR : le bac NE PORTE PAS proverif (le téléchargement
+ * tenté au geste — bproverif.gforge.inria.fr et les relais GitHub —
+ * refusés au bac réseau) : le présent port est PRÊT À ROULER au poste
+ * réel, le run appartient au développeur, AUCUN VERDICT FABRIQUÉ.
+ *
+ * LA STRUCTURE (le miroir des 16 règles spthy) :
+ *   - la chaîne honnête : création CF1 → migration CF2 (les CINQ parts à
+ *     seuil TROIS, la table partsDe) → migration CF3 (la serrure à TROIS
+ *     éléments) → clôture d'époque (la récursion des moitiés fraîches) ;
+ *   - l'ouverture honnête (le témoin de l'acte I) ; la phrase erronée ;
+ *   - le vol de la machine (le conteneur + S_serrure sortis) ;
+ *   - les fuites de parts (les CINQ médias, l'oracle du seuil) ;
+ *   - LA RECONSTITUTION ILICITE : l'ORACLE 3-sur-5 — l'attaquant qui
+ *     présente TROIS parts DE LA MÊME PHRASE (la table) reçoit la phrase
+ *     (dans Tamarin c'est une règle de l'adversaire ; dans ProVerif
+ *     l'attaquant ne consulte pas les tables : un PROCESS ORACLE porte
+ *     le seuil — l'écart de sémantique n° 3) ;
+ *   - l'evil maid (le remplacement du conteneur par un terme forgé reçu
+ *     sur le canal public) → l'ouverture falsifiée → la destruction locale.
+ *   - le changement de phrase sous séquestre (le seuil vécu, les parts
+ *     rafraîchies, la nouvelle phrase née).
+ *============================================================================*)
+
+free c: channel [public].  (* le canal public : l'evil maid et l'oracle du seuil *)
+
+type phrase. type part. type moitie. type contenu. type conteneur.
+type epoch. type garde.
+
+(* les primitives : h et senc opaques (les fonctions publiques —
+ * l'attaquant les bâtit librement, AUCUNE inversion ; l'équation
+ * sdec éliminée au v3b, l'argument de la morte au registre Tamarin *)
+fun h(bitstring): bitstring.
+fun senc(contenu, bitstring): conteneur.
+
+(* le KEK abstrait : h(<h(p), ss, sq>) — la paire libre *)
+fun kek(phrase, moitie, moitie): bitstring.
+
+(* =========================== LES ÉVÉNEMENTS ============================== *)
+event CreationCoffre(phrase).
+event PhraseVivante(phrase).
+event MigrationCF2(phrase).
+event MigrationCF3(phrase).
+event ClotureDEpoque(epoch).
+event CleUtilisateurEmployee(bitstring).
+event ChangementPhraseSousSequestre(phrase, phrase).
+event OuvertureHonnete(epoch).
+event PhraseErronee().
+event VolDeLaMachine().
+event FuitePart(part).
+event PartTenue(part).
+event ReconstitutionIllicite(phrase).
+event RemplacementDuConteneur().
+event FalsificationProuvee(epoch).
+event DestructionLocale(epoch).
+
+(* la table des parts : la phrase liée à ses CINQ parts (le miroir du
+ * fait persistant !PartsDe — l'écart n° 2 : la table ProVerif n'exige
+ * pas la DISTINCTIVITÉ par fraîcheur, elle la reçoit du processus *)
+table partsDe(phrase, part, part, part, part, part).
+
+(* la table de l'état de la serrure (l'écart n° 4 : l'état courant des
+ * moitiés — Tamarin le porte aux faits linéaires consommés à chaque
+ * clôture ; ProVerif le porte à la récursion du processus, la table
+ * témoin pour l'ouverture *)
+table serrureCourante(phrase, moitie, moitie, conteneur, epoch).
+
+(* ================== L'ORACLE DU SEUIL (3-sur-5) ========================== *)
+(* le miroir des DIX règles reconstitution_illicite_* : l'attaquant
+ * présente trois terms sur c ; si la table des parts les tient tous
+ * trois de la MÊME phrase, la phrase sort — l'événement consigné *)
+let oracleSeuil(p: phrase, x1: part, x2: part, x3: part, x4: part, x5: part) =
+  (
+    in(c, (a: part, b: part, d: part));
+    get(partsDe, (=p, =a, =b, =d, w4: part, w5: part)) in
+    ( event ReconstitutionIllicite(p); out(c, p) )
+  ) else 0.
+
+(* ==================== LA CHAÎNE HONNÊTE CF1→CF2→CF3 ====================== *)
+let processusHote(p: phrase, m: contenu, ep1: epoch) =
+  event CreationCoffre(p); event PhraseVivante(p);
+  (* CF1 : la phrase seule scelle *)
+  new garde: garde;
+  new x1: part; new x2: part; new x3: part; new x4: part; new x5: part;
+  event MigrationCF2(p); event CleUtilisateurEmployee(h(p));
+  insert partsDe(p, x1, x2, x3, x4, x5);
+  (* les CINQ parts déposées aux médias (chaque média peut fuir — le
+ * parallélisme des fuites est le miroir du fait PartSurMedia *)
+  ( !( out(c, x1); event FuitePart(x1); event PartTenue(x1) )
+  | !( out(c, x2); event FuitePart(x2); event PartTenue(x2) )
+  | !( out(c, x3); event FuitePart(x3); event PartTenue(x3) )
+  | !( out(c, x4); event FuitePart(x4); event PartTenue(x4) )
+  | !( out(c, x5); event FuitePart(x5); event PartTenue(x5) ) );
+  (* CF3 : la serrure à TROIS éléments *)
+  new ss: moitie; new sq: moitie; new ep2: epoch;
+  event MigrationCF3(p); event CleUtilisateurEmployee(h(p));
+  let c3 = senc(m, kek(p, ss, sq)) in
+  insert serrureCourante(p, ss, sq, c3, ep2);
+  (* l'oracle du seuil VIT (le témoin d'atteignabilité) *)
+  !(oracleSeuil(p, x1, x2, x3, x4, x5))
+  |
+  (* la boucle des actes : l'ouverture honnête, la clôture d'époque,
+ * le changement de phrase sous séquestre, l'evil maid *)
+  !( get(serrureCourante(=p, sst: moitie, sqt: moitie, ct: conteneur, ept: epoch));
+     ( (* l'ouverture honnête *)
+       event OuvertureHonnete(ept); event CleUtilisateurEmployee(h(p));
+       insert serrureCourante(p, sst, sqt, ct, ept)
+     )
+     |
+     (* la clôture d'époque : les moitiés FRAÎCHES, K_user conservée *)
+     ( new ss2: moitie; new sq2: moitie; new ep2b: epoch;
+       event ClotureDEpoque(ep2b); event CleUtilisateurEmployee(h(p));
+       insert serrureCourante(p, ss2, sq2, ct, ep2b)
+     )
+     |
+     (* la phrase erronée : le refus bénin *)
+     ( new q: phrase; event PhraseErronee() )
+     |
+     (* LE VOL DE LA MACHINE SEULE : le conteneur ET S_serrure sortis *)
+     ( event VolDeLaMachine(); out(c, ct); out(c, sst) )
+     |
+     (* L'EVIL MAID : le conteneur forgé reçu, l'ouverture confronte *)
+     ( in(c, forged: conteneur);
+       event RemplacementDuConteneur();
+       event FalsificationProuvee(ept);
+       event DestructionLocale(ept)
+     ) )
+  |
+  (* LE CHANGEMENT DE PHRASE SOUS SÉQUESTRE : le seuil vécu — le
+ * processus reçoit trois parts (la reconstitution), la phrase NEUVE
+ * naît, les parts rafraîchies — le miroir de la règle spthy *)
+  !( in(c, (a: part, b: part, d: part));
+     get(partsDe(=p, =a, =b, =d, x4b: part, x5b: part)) in
+     ( event ReconstitutionIllicite(p);
+       new p2: phrase; event PhraseVivante(p2);
+       event ChangementPhraseSousSequestre(p, p2);
+       new y1: part; new y2: part; new y3: part; new y4: part; new y5: part;
+       insert partsDe(p2, y1, y2, y3, y4, y5);
+       ( !( out(c, y1); event FuitePart(y1); event PartTenue(y1) )
+       | !( out(c, y2); event FuitePart(y2); event PartTenue(y2) )
+       | !( out(c, y3); event FuitePart(y3); event PartTenue(y3) )
+       | !( out(c, y4); event FuitePart(y4); event PartTenue(y4) )
+       | !( out(c, y5); event FuitePart(y5); event PartTenue(y5) ) );
+       !(oracleSeuil(p2, y1, y2, y3, y4, y5))
+     ) else 0 ).
+
+(* ============================ LE PROCESSUS ================================ *)
+process
+  !( new p: phrase; new m: contenu; new ep1: epoch;
+     processusHote(p, m, ep1) )
+
+(* ============================ LES REQUÊTES ================================ *)
+query p: phrase; attacker(p) ==> event(ReconstitutionIllicite(p)).
+query p: phrase; event(CleUtilisateurEmployee(h(p))) ==> event(PhraseVivante(p)).
+query e: epoch; event(DestructionLocale(e)) ==> event(FalsificationProuvee(e)).
+
+(* Les écarts de sémantique Tamarin↔ProVerif — les SIX nommés à
+ * ECARTS-SEMANTIQUES-TAMARIN-PROVERIF.txt :
+ *  1. le TYPAGE phrase fait le scoping que la spthy confie à
+ *     PhraseVivante (les types ne sont pas des sorts) ;
+ *  2. !PartsDe → la TABLE (la distinctivité par fraîcheur n'est pas
+ *     structurelle, elle est héritée du processus) ;
+ *  3. la reconstitution illicite : règle de l'ADVERSAIRE en Tamarin,
+ *     PROCESS ORACLE en ProVerif (l'attaquant ne consulte pas les
+ *     tables) ;
+ *  4. l'état courant des moitiés : faits linéaires consommés en
+ *     Tamarin, récursion + table témoin en ProVerif (les moitiés
+ *     anciennes ne sont pas détruites au sens strict) ;
+ *  5. le second étage de L1 (les TROIS PartTenue antérieurs) :
+ *     inexprimable en correspondance ProVerif — l'étage demeure
+ *     Tamarin ;
+ *  6. les TÉMOINS d'existence de trace (T1/T2/T3) : pas des requêtes
+ *     ProVerif (la correspondance est sur toutes les traces) — les
+ *     témoins demeurent Tamarin. *)

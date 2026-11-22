@@ -1,0 +1,58 @@
+RAPPORT D'ATELIER — qa3k5putf (la vague 15) : CF3-v3 MENÉ VERS LE VERDICT
+============================================================================
+(22/11/2026, la session de la vague 15 — le plan gelé PLAN-QA3K5PUTF.md,
+sha256 consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT tout run)
+
+LE MANDAT EXÉCUTÉ : mener CF3-v2-amende.spthy à verdict complet sous
+Tamarin 1.12.0/Maude 3.4 — les 36 avertissements nommés et résolus un
+par un, les six lemmas exécutés un par un aux budgets consignés, le
+contrôle négatif, le port ProVerif, la confrontation aux P1–P4.
+
+CE QUI A VÉCU (les pièces) :
+1. CF3-v3.spthy — les TROIS amendements exigés par le registre v14 :
+   les parts fraîches (v3.1), les relations d'attaquant hors K via le
+   fait dédié !PartAdverse + l'action PartTenue (v3.2), le lemme
+   d'implication reformulé sur variables privées AUX DEUX ÉTAGES
+   (v3.3) ; le conteneur opaque aux deux règles porteuses (v3.4) ;
+   l'idiome du témoin en négation — tamarin 1.12.0 n'offre pas
+   d'annotation exists-trace (la liste fermée des attributs, le
+   constaté au geste) (v3.5) ; l'équation sdc éliminée avec
+   l'argument de la morte (v3.6, la pièce v3b — l'écart au plan NOMMÉ
+   au registre).
+2. LES 36 AVERTISSEMENTS — les trois familles A×10/B×25/C×1 nommées et
+   résolues À LA SOURCE (registre-tamarin-v15.txt, la décomposition
+   complète par règle et par occurrence).
+3. LES SIX LEMMAS AU VERDICT MACHINE : L3 VERIFIED (1 122 pas) ; L1,
+   L2, T1, T2, T3 INCOMPLETE au mur de mémoire du bac 4 Go — les
+   configurations éprouvées et la CAUSE NOMMÉE (la décomposition du
+   but K(p), pas la profondeur : l'évaluation partielle borne la
+   mémoire mais converge au-delà du budget de session — LA VOIE pour
+   le poste réel) ; LE NÉGATIF en deux moutures (le défaut v2 verbatim
+   — OOM, la mouture consignée ; la part publique transposée au
+   vocabulaire v3 — le run prêt au poste réel).
+4. LE PORT PROVERIF CF3-v3.pv — les six requêtes actives, les
+   événements miroir, l'oracle du seuil, les SIX écarts de sémantique
+   nommés (ECARTS-SEMANTIQUES ci-joint au port) ; le run au poste réel
+   (le bac ne télécharge pas proverif — les relais tentés : bproverif.
+   gforge.inria.fr, les trois URL GitHub — refusés).
+5. LA CONFRONTATION aux P1–P4 (invariants inductifs vague 13) : aucune
+   contradiction — L3 (le VERIFIED) orthogonal ; la confrontation
+   complète au geste suivant (les six au vert au poste réel).
+
+LES COMMANDES DU POSTE RÉEL (la reprise idempotente) :
+  tamarin-prover CF3-v3b.spthy --partial-evaluation=SUMMARY \
+    --prove=implication_secret_appris_reconstitution_illicite
+  (puis chaque lemma par son nom ; le négatif d'abord :
+   --prove=... --stop-on-trace=DFS --bound=8 sur CF3-v3-negatif.spthy)
+  proverif CF3-v3.pv   (les trois requêtes actives)
+
+LES GAPS NOMMÉS (au geste du maître) : le poste réel (RAM ≥ 16 Go, le
+temps long) tient les six lemmas — la présente session a borné le
+travail : les modèles SONT prêts, les empreintes consignées, la voie de
+preuve (l'évaluation partielle) nommée ; le run ProVerif au poste
+réel ; la table des statuts tenue à jour.
+
+LA GARDE : le sceau-I 14/14 AVANT et APRÈS l'atelier (aucune pièce
+scellée touchée — le présent atelier n'écrit QUE dans son dossier) ;
+le verbatim historique demeure (CF3-v2-amende.spthy inchangé, sha256
+35a7c6a32c2f9239… recoupé au dépôt).

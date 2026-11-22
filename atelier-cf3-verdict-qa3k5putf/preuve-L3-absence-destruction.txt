@@ -1,0 +1,3754 @@
+maude tool: 'maude'
+ checking version: 3.4. OK.
+ checking installation: OK.
+[Theory CF3] Theory loaded
+[Theory CF3] Theory translated
+[Theory CF3] Derivation checks started
+[Theory CF3] Derivation checks ended
+[Theory CF3] Theory closed
+[Saturating Sources] Step 1 (Max 5)
+[Saturating Sources] Done
+theory CF3
+
+begin
+
+// Function signature and definition of the equational theory E
+
+functions: fst/1, h/1, nul/0, pair/2, sdec/2, senc/2, snd/1,
+           succ/1[private,constructor]
+equations:
+    fst(<x.1, x.2>) = x.1,
+    sdec(senc(x.1, x.2), x.2) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+/*
+looping facts with injective instances:
+  Coffre/2, MediaPiege/1, PartSurMedia/1, PhraseHote/1, SerrureMachine/1
+*/
+
+rule (modulo E) creation_du_coffre:
+   [ Fr( ~p ), Fr( ~m ), Fr( ~ep1 ) ]
+  --[ CreationCoffre( ~p ), PhraseVivante( ~p ) ]->
+   [ PhraseHote( ~p ), Coffre( ~ep1, senc(~m, h(~p)) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) migration_cf1_vers_cf2:
+   [
+   PhraseHote( p ), Coffre( ep, senc(m, h(p)) ), Fr( ~garde ), Fr( ~x1 ),
+   Fr( ~x2 ), Fr( ~x3 ), Fr( ~x4 ), Fr( ~x5 )
+   ]
+  --[ MigrationCF2( p ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), GardeFragments( ~garde ),
+   Coffre( ep, senc(m, h(<h(p), ~garde>)) ),
+   !PartsDe( p, ~x1, ~x2, ~x3, ~x4, ~x5 ), PartSurMedia( ~x1 ),
+   PartSurMedia( ~x2 ), PartSurMedia( ~x3 ), PartSurMedia( ~x4 ),
+   PartSurMedia( ~x5 ), CompteurParts( nul )
+   ]
+
+  // loop breakers: [0,1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) migration_cf2_vers_cf3:
+   [
+   PhraseHote( p ), GardeFragments( garde ),
+   Coffre( ep, senc(m, h(<h(p), garde>)) ), Fr( ~ss ), Fr( ~sq ), Fr( ~ep2 )
+   ]
+  --[ MigrationCF3( p ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ~ss ), MediaPiege( ~sq ),
+   Coffre( ~ep2, senc(m, h(<h(p), ~ss, ~sq>)) )
+   ]
+
+  // loop breakers: [0,2]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) cloture_d_epoque:
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), Fr( ~ss2 ), Fr( ~sq2 ),
+   Fr( ~ep2 )
+   ]
+  --[ ClotureDEpoque( ~ep2 ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ~ss2 ), MediaPiege( ~sq2 ),
+   Coffre( ~ep2, senc(m, h(<h(p), ~ss2, ~sq2>)) )
+   ]
+
+  // loop breakers: [0,1,2,3]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) changement_de_phrase_sous_sequestre:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), PartSurMedia( x1 ),
+   PartSurMedia( x2 ), PartSurMedia( x3 ), PhraseHote( p ),
+   SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) ), Fr( ~p2 ), Fr( ~ss2 ),
+   Fr( ~sq2 ), Fr( ~ep2 ), Fr( ~y1 ), Fr( ~y2 ), Fr( ~y3 ), Fr( ~y4 ),
+   Fr( ~y5 )
+   ]
+  --[ ChangementPhraseSousSequestre( p, ~p2 ), PhraseVivante( ~p2 ) ]->
+   [
+   PhraseHote( ~p2 ), SerrureMachine( ~ss2 ), MediaPiege( ~sq2 ),
+   Coffre( ~ep2, senc(m, h(<h(~p2), ~ss2, ~sq2>)) ),
+   !PartsDe( ~p2, ~y1, ~y2, ~y3, ~y4, ~y5 ), PartSurMedia( ~y1 ),
+   PartSurMedia( ~y2 ), PartSurMedia( ~y3 ), PartSurMedia( ~y4 ),
+   PartSurMedia( ~y5 )
+   ]
+
+  // loop breakers: [4,0,1,2,3,5,6,7]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) ouverture_honnete:
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) )
+   ]
+  --[ OuvertureHonnete( ep ), CleUtilisateurEmployee( h(p) ) ]->
+   [
+   PhraseHote( p ), SerrureMachine( ss ), MediaPiege( sq ),
+   Coffre( ep, senc(m, h(<h(p), ss, sq>)) )
+   ]
+
+  // loop breakers: [0,1,2,3]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) tentative_phrase_erronee:
+   [ PhraseHote( p ), Fr( ~q ) ]
+  --[ PhraseErronee( ) ]->
+   [ PhraseHote( p ) ]
+
+  // loop breaker: [0]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) vol_de_la_machine_seule:
+   [ Coffre( ep, c ), SerrureMachine( ss ), PhraseHote( p ) ]
+  --[ VolDeLaMachine( ) ]->
+   [
+   Out( c ), Out( ss ), Coffre( ep, c ), SerrureMachine( ss ),
+   PhraseHote( p )
+   ]
+
+  // loop breakers: [0,2,1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) fuite_d_une_part:
+   [ PartSurMedia( x ), CompteurParts( n ) ]
+  --[ FuitePart( ), PartTenue( x ) ]->
+   [ Out( x ), !PartAdverse( x ), CompteurParts( succ(n) ) ]
+
+  // loop breaker: [1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_123:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x3 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_124:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_125:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x2 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_134:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x3 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_135:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x3 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_145:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x1 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_234:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x3 ), !PartAdverse( x4 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_235:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x3 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_245:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x2 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) reconstitution_illicite_345:
+   [
+   !PartsDe( p, x1, x2, x3, x4, x5 ), !PartAdverse( x3 ),
+   !PartAdverse( x4 ), !PartAdverse( x5 )
+   ]
+  --[ ReconstitutionIllicite( p ) ]->
+   [ Out( p ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) remplacement_du_conteneur:
+   [ Coffre( ep, c ), In( forged ) ]
+  --[ RemplacementDuConteneur( ) ]->
+   [ CoffreFalsifie( ep, forged ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) ouverture_falsifiee:
+   [
+   CoffreFalsifie( ep, forged ), PhraseHote( p ), SerrureMachine( ss ),
+   MediaPiege( sq )
+   ]
+  --[ FalsificationProuvee( ep ) ]->
+   [ FalsificationEtablie( ep ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) destruction_locale:
+   [ FalsificationEtablie( ep ) ] --[ DestructionLocale( ep ) ]-> [ ]
+
+  /* has exactly the trivial AC variant */
+
+lemma implication_secret_appris_reconstitution_illicite:
+  all-traces
+  "∀ p #i #k.
+    ((PhraseVivante( p ) @ #k) ∧ (K( p ) @ #i)) ⇒
+    ((∃ #j. (ReconstitutionIllicite( p ) @ #j) ∧ (#j < #i)) ∧
+     (∃ x1 x2 x3 #j1 #j2 #j3.
+       (((((PartTenue( x1 ) @ #j1) ∧ (PartTenue( x2 ) @ #j2)) ∧
+          (PartTenue( x3 ) @ #j3)) ∧
+         (#j1 < #i)) ∧
+        (#j2 < #i)) ∧
+       (#j3 < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i #k.
+  (PhraseVivante( p ) @ #k) ∧ (K( p ) @ #i)
+ ∧
+  ((∀ #j. (ReconstitutionIllicite( p ) @ #j) ⇒ ¬(#j < #i)) ∨
+   (∀ x1 x2 x3 #j1 #j2 #j3.
+     (PartTenue( x1 ) @ #j1) ∧
+     (PartTenue( x2 ) @ #j2) ∧
+     (PartTenue( x3 ) @ #j3)
+    ⇒
+     ((¬(#j1 < #i)) ∨ (¬(#j2 < #i)) ∨ (¬(#j3 < #i)))))"
+*/
+by sorry
+
+lemma conservation_de_la_cle_utilisateur:
+  all-traces
+  "∀ p #i.
+    (CleUtilisateurEmployee( h(p) ) @ #i) ⇒
+    (∃ #j. (PhraseVivante( p ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ p #i.
+  (CleUtilisateurEmployee( h(p) ) @ #i)
+ ∧
+  ∀ #j. (PhraseVivante( p ) @ #j) ⇒ ¬(#j < #i)"
+*/
+by sorry
+
+lemma absence_de_destruction_par_corruption:
+  all-traces
+  "∀ ep #i.
+    (DestructionLocale( ep ) @ #i) ⇒
+    (∃ #j. (FalsificationProuvee( ep ) @ #j) ∧ (#j < #i))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ ep #i.
+  (DestructionLocale( ep ) @ #i)
+ ∧
+  ∀ #j. (FalsificationProuvee( ep ) @ #j) ⇒ ¬(#j < #i)"
+*/
+simplify
+solve( FalsificationEtablie( ep ) ▶₀ #i )
+  case ouverture_falsifiee_case_0001
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0002
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0003
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0004
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0005
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0006
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0007
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0008
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0009
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0010
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0011
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0012
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0013
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0014
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0015
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0016
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0017
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0018
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0019
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0020
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0021
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0022
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0023
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0024
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0025
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0026
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0027
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0028
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0029
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0030
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0031
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0032
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0033
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0034
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0035
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0036
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0037
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0038
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0039
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0040
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0041
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0042
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0043
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0044
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0045
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0046
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0047
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0048
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0049
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0050
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0051
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0052
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0053
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0054
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0055
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0056
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0057
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0058
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0059
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0060
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0061
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0062
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0063
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0064
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0065
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0066
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0067
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0068
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0069
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0070
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0071
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0072
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0073
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0074
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0075
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0076
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0077
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0078
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0079
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0080
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0081
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0082
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0083
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0084
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0085
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0086
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0087
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0088
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0089
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0090
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0091
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0092
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0093
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0094
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0095
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0096
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0097
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0098
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0099
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0100
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0101
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0102
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0103
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0104
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0105
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0106
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0107
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0108
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0109
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0110
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0111
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0112
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0113
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0114
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0115
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0116
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0117
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0118
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0119
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0120
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0121
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0122
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0123
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0124
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0125
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0126
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0127
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0128
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0129
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0130
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0131
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0132
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0133
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0134
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0135
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0136
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0137
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0138
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0139
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0140
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0141
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0142
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0143
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0144
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0145
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0146
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0147
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0148
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0149
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0150
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0151
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0152
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0153
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0154
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0155
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0156
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0157
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0158
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0159
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0160
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0161
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0162
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0163
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0164
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0165
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0166
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0167
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0168
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0169
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0170
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0171
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0172
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0173
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0174
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0175
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0176
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0177
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0178
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0179
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0180
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0181
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0182
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0183
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0184
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0185
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0186
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0187
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0188
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0189
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0190
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0191
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0192
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0193
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0194
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0195
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0196
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0197
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0198
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0199
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0200
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0201
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0202
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0203
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0204
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0205
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0206
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0207
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0208
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0209
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0210
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0211
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0212
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0213
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0214
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0215
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0216
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0217
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0218
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0219
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0220
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0221
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0222
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0223
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0224
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0225
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0226
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0227
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0228
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0229
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0230
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0231
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0232
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0233
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0234
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0235
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0236
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0237
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0238
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0239
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0240
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0241
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0242
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0243
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0244
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0245
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0246
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0247
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0248
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0249
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0250
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0251
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0252
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0253
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0254
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0255
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0256
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0257
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0258
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0259
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0260
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0261
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0262
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0263
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0264
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0265
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0266
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0267
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0268
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0269
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0270
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0271
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0272
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0273
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0274
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0275
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0276
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0277
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0278
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0279
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0280
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0281
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0282
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0283
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0284
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0285
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0286
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0287
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0288
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0289
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0290
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0291
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0292
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0293
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0294
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0295
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0296
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0297
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0298
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0299
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0300
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0301
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0302
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0303
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0304
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0305
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0306
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0307
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0308
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0309
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0310
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0311
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0312
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0313
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0314
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0315
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0316
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0317
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0318
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0319
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0320
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0321
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0322
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0323
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0324
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0325
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0326
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0327
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0328
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0329
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0330
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0331
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0332
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0333
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0334
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0335
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0336
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0337
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0338
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0339
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0340
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0341
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0342
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0343
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0344
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0345
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0346
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0347
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0348
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0349
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0350
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0351
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0352
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0353
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0354
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0355
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0356
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0357
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0358
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0359
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0360
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0361
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0362
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0363
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0364
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0365
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0366
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0367
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0368
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0369
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0370
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0371
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0372
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0373
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0374
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0375
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0376
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0377
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0378
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0379
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0380
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0381
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0382
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0383
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0384
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0385
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0386
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0387
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0388
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0389
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0390
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0391
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0392
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0393
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0394
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0395
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0396
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0397
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0398
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0399
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0400
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0401
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0402
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0403
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0404
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0405
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0406
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0407
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0408
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0409
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0410
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0411
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0412
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0413
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0414
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0415
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0416
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0417
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0418
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0419
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0420
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0421
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0422
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0423
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0424
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0425
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0426
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0427
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0428
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0429
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0430
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0431
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0432
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0433
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0434
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0435
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0436
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0437
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0438
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0439
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0440
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0441
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0442
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0443
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0444
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0445
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0446
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0447
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0448
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0449
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0450
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0451
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0452
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0453
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0454
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0455
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0456
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0457
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0458
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0459
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0460
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0461
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0462
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0463
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0464
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0465
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0466
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0467
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0468
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0469
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0470
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0471
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0472
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0473
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0474
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0475
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0476
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0477
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0478
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0479
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0480
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0481
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0482
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0483
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0484
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0485
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0486
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0487
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0488
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0489
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0490
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0491
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0492
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0493
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0494
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0495
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0496
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0497
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0498
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0499
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0500
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0501
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0502
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0503
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0504
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0505
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0506
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0507
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0508
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0509
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0510
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0511
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0512
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0513
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0514
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0515
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0516
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0517
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0518
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0519
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0520
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0521
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0522
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0523
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0524
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0525
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0526
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0527
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0528
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0529
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0530
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0531
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0532
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0533
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0534
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0535
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0536
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0537
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0538
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0539
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0540
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0541
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0542
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0543
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0544
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0545
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0546
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0547
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0548
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0549
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0550
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0551
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0552
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0553
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0554
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0555
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0556
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0557
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0558
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0559
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0560
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0561
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0562
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0563
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0564
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0565
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0566
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0567
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0568
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0569
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0570
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0571
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0572
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0573
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0574
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0575
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0576
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0577
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0578
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0579
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0580
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0581
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0582
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0583
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0584
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0585
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0586
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0587
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0588
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0589
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0590
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0591
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0592
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0593
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0594
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0595
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0596
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0597
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0598
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0599
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0600
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0601
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0602
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0603
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0604
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0605
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0606
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0607
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0608
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0609
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0610
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0611
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0612
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0613
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0614
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0615
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0616
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0617
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0618
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0619
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0620
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0621
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0622
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0623
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0624
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0625
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0626
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0627
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0628
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0629
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0630
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0631
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0632
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0633
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0634
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0635
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0636
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0637
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0638
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0639
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0640
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0641
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0642
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0643
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0644
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0645
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0646
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0647
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0648
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0649
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0650
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0651
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0652
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0653
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0654
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0655
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0656
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0657
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0658
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0659
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0660
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0661
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0662
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0663
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0664
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0665
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0666
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0667
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0668
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0669
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0670
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0671
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0672
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0673
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0674
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0675
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0676
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0677
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0678
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0679
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0680
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0681
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0682
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0683
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0684
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0685
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0686
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0687
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0688
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0689
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0690
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0691
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0692
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0693
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0694
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0695
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0696
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0697
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0698
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0699
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0700
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0701
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0702
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0703
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0704
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0705
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0706
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0707
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0708
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0709
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0710
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0711
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0712
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0713
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0714
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0715
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0716
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0717
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0718
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0719
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0720
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0721
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0722
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0723
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0724
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0725
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0726
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0727
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0728
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0729
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0730
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0731
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0732
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0733
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0734
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0735
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0736
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0737
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0738
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0739
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0740
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0741
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0742
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0743
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0744
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0745
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0746
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0747
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0748
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0749
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0750
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0751
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0752
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0753
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0754
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0755
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0756
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0757
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0758
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0759
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0760
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0761
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0762
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0763
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0764
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0765
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0766
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0767
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0768
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0769
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0770
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0771
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0772
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0773
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0774
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0775
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0776
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0777
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0778
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0779
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0780
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0781
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0782
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0783
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0784
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0785
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0786
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0787
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0788
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0789
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0790
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0791
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0792
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0793
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0794
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0795
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0796
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0797
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0798
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0799
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0800
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0801
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0802
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0803
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0804
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0805
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0806
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0807
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0808
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0809
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0810
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0811
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0812
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0813
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0814
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0815
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0816
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0817
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0818
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0819
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0820
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0821
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0822
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0823
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0824
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0825
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0826
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0827
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0828
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0829
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0830
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0831
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0832
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0833
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0834
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0835
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0836
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0837
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0838
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0839
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0840
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0841
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0842
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0843
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0844
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0845
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0846
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0847
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0848
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0849
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0850
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0851
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0852
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0853
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0854
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0855
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0856
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0857
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0858
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0859
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0860
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0861
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0862
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0863
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0864
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0865
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0866
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0867
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0868
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0869
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0870
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0871
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0872
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0873
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0874
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0875
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0876
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0877
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0878
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0879
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0880
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0881
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0882
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0883
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0884
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0885
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0886
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0887
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0888
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0889
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0890
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0891
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0892
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0893
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0894
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0895
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0896
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0897
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0898
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0899
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0900
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0901
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0902
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0903
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0904
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0905
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0906
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0907
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0908
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0909
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0910
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0911
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0912
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0913
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0914
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0915
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0916
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0917
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0918
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0919
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0920
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0921
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0922
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0923
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0924
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0925
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0926
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0927
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0928
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0929
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0930
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0931
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0932
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0933
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0934
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0935
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0936
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0937
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0938
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0939
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0940
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0941
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0942
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0943
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0944
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0945
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0946
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0947
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0948
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0949
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0950
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0951
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0952
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0953
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0954
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0955
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0956
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0957
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0958
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0959
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0960
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0961
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0962
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0963
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0964
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0965
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0966
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0967
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0968
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0969
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0970
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0971
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0972
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0973
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0974
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0975
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0976
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0977
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0978
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0979
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0980
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0981
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0982
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0983
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0984
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0985
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0986
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0987
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0988
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0989
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0990
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0991
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0992
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0993
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0994
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0995
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0996
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0997
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0998
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_0999
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1000
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1001
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1002
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1003
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1004
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1005
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1006
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1007
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1008
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1009
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1010
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1011
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1012
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1013
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1014
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1015
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1016
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1017
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1018
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1019
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1020
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1021
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1022
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1023
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1024
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1025
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1026
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1027
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1028
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1029
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1030
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1031
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1032
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1033
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1034
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1035
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1036
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1037
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1038
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1039
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1040
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1041
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1042
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1043
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1044
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1045
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1046
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1047
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1048
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1049
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1050
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1051
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1052
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1053
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1054
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1055
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1056
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1057
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1058
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1059
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1060
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1061
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1062
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1063
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1064
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1065
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1066
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1067
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1068
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1069
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1070
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1071
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1072
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1073
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1074
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1075
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1076
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1077
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1078
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1079
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1080
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1081
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1082
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1083
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1084
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1085
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1086
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1087
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1088
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1089
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1090
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1091
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1092
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1093
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1094
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1095
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1096
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1097
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1098
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1099
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1100
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1101
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1102
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1103
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1104
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1105
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1106
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1107
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1108
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1109
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1110
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1111
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1112
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1113
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1114
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1115
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1116
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1117
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1118
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1119
+  by contradiction /* from formulas */
+next
+  case ouverture_falsifiee_case_1120
+  by contradiction /* from formulas */
+qed
+
+lemma temoin_falsification_et_destruction:
+  all-traces "∃ ep #i. DestructionLocale( ep ) @ #i"
+/*
+guarded formula characterizing all counter-examples:
+"∀ ep #i. (DestructionLocale( ep ) @ #i) ⇒ ⊥"
+*/
+by sorry
+
+lemma temoin_la_chaine_vivante:
+  all-traces
+  "∃ p ep #i #j #k #l.
+    (((CreationCoffre( p ) @ #i) ∧ (MigrationCF2( p ) @ #j)) ∧
+     (MigrationCF3( p ) @ #k)) ∧
+    (OuvertureHonnete( ep ) @ #l)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p ep #i #j #k #l.
+  (CreationCoffre( p ) @ #i) ∧
+  (MigrationCF2( p ) @ #j) ∧
+  (MigrationCF3( p ) @ #k) ∧
+  (OuvertureHonnete( ep ) @ #l)
+ ⇒
+  ⊥"
+*/
+by sorry
+
+lemma temoin_atteignabilite_du_seuil:
+  all-traces
+  "∃ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j)"
+/*
+guarded formula characterizing all counter-examples:
+"∀ p #i #j. (ReconstitutionIllicite( p ) @ #i) ∧ (K( p ) @ #j) ⇒ ⊥"
+*/
+by sorry
+
+/*
+WARNING: the following wellformedness checks failed!
+
+Derivation Checks
+=================
+
+  Derivation checks timed out.
+  Use --derivcheck-timeout=INT to configure timeout.
+  Set to 0 to deactivate for no timeout.
+*/
+
+/*
+Generated from:
+Tamarin version 1.12.0
+Maude version 3.4
+Git revision: 82780bbaf3328a45f624ddb41e51bf75425f851c (with uncommited changes), branch: master
+Compiled at: 2026-03-07 14:22:39.174278293 UTC
+*/
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: CF3-v3.spthy
+
+  processing time: 29.72s
+  
+  WARNING: 1 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  implication_secret_appris_reconstitution_illicite (all-traces): analysis incomplete (1 steps)
+  conservation_de_la_cle_utilisateur (all-traces): analysis incomplete (1 steps)
+  absence_de_destruction_par_corruption (all-traces): verified (1122 steps)
+  temoin_falsification_et_destruction (all-traces): analysis incomplete (1 steps)
+  temoin_la_chaine_vivante (all-traces): analysis incomplete (1 steps)
+  temoin_atteignabilite_du_seuil (all-traces): analysis incomplete (1 steps)
+
+==============================================================================

@@ -1,0 +1,20 @@
+maude tool: 'maude'
+ checking version: 3.4. OK.
+ checking installation: OK.
+[Theory CF3] Theory loaded
+[Theory CF3] Theory translated
+[Theory CF3] Derivation checks started
+[Theory CF3] Derivation checks ended
+[Theory CF3] Theory closed
+searching for attacks at depth: 1
+[Saturating Sources] Step 1 (Max 5)
+[Saturating Sources] Done
+searching for attacks at depth: 2
+searching for attacks at depth: 3
+searching for attacks at depth: 4
+searching for attacks at depth: 5
+searching for attacks at depth: 6
+searching for attacks at depth: 7
+searching for attacks at depth: 8
+searching for attacks at depth: 9
+tamarin-prover: out of memory
