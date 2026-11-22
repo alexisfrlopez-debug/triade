@@ -1,0 +1,22 @@
+RAPPORT D'ATELIER — zd316de39 (la vague 15) : LE GUIDE D'AGENT
+INDÉPENDANT DU MODÈLE + LA SONDE + LE BENCH
+============================================================================
+(23/11/2026, le plan gelé PLAN-ZD316DE39.md sha256 0686cebf35c0479e… AVANT
+toute donnée)
+LE GUIDE (GUIDE-AGENT.md) : LES 11 RÈGLES (le pointeur seul et SES 4
+refus, une instruction par ligne, les trous typés, la grammaire des
+refus nommés, l'IAT en call, la source étroite, les constantes au
+dictionnaire, l'étiquette MAJUSCULE à la ligne seule, LES BUDGETS
+ADOPTÉS aux opérandes non arrondis 627/674/2 200, LA BOUCLE EN 7
+ÉTAPES, JAMAIS JOUER LE JUGE — la notation mutée ATTRAPÉE) ; LA
+DÉGRADATION GRÂCIEUSE NOMMÉE (response_format absent → la grammaire au
+prompt + les validateurs, JAMAIS un juge affaibli — le constat
+TPL-ADD-v4 reconduit) ; LA SONDE DE CAPACITÉ AVANT INVESTISSEMENT (la
+dérivation des 128 + le smoke de notation + LA FRONTIÈRE NOMMÉE — le
+conseil fail-closed, pas le gatekeeping, le finding 0/64 du 1.5B fait
+foi) ; LE BENCH PRÉ-ENREGISTRÉ EMBARQUÉ (les 18 tâches, les graines
+20261117, les juges INTACTS, le schéma JSONL append-only, les budgets
+étiquetés, LE GEL AVANT toute mesure — la ladder vpcr7mh3t liée).
+AUCUNE ancre de confiance du projet expédiée (le guide porte les règles,
+jamais cle-publique-I ni les signatures de référence).
+LA GARDE : le sceau-I 14/14 ; entrée append-only.
