@@ -1,0 +1,26 @@
+{
+  "graine": 20261125,
+  "n_vecteurs": 128,
+  "memo_cles": [
+    "75d70fa3ba430c794ac5779192190419d0f9eeb5d35cb8266a6de45c24b7f06b",
+    "8c4c28007740573d33161f3242fc8ca37e4d39ebb5bff00d07fd6cf7f4b48eb6"
+  ],
+  "audits": [
+    {
+      "corps": "tls13-16 (AES)",
+      "champs_divergents": []
+    },
+    {
+      "corps": "tls13-17 (GHASH)",
+      "champs_divergents": []
+    }
+  ],
+  "mesure": {
+    "avant_mediane_s": 0.0009599309996701777,
+    "apres_mediane_s": 1.849984982982278e-07
+  },
+  "sha256_corps": {
+    "tls13-16": "cd760f141bf7d4b63f449ca68029034d274067ab2804741d0e6ac9d46b8e1309",
+    "tls13-17": "b04526dde81c6cc719a7d421bb52fe85141dc354df1857072399d1a2dc3b305e"
+  }
+}

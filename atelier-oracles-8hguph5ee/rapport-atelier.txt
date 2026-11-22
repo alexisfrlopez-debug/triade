@@ -1,0 +1,18 @@
+=== LE JUMEAU contre le natif : tls13-16 (AES) ===
+la confrontation native/jumeau sur 128 vecteurs : LIGNE-IDENTIQUE (rax + digeste)
+la clé du mémo : sha256 75d70fa3ba430c79… (le corps ‖ les vecteurs ‖ la config ‖ la graine)
+  le premier appel : MISS (l'exécution vivante, la console consignée au mémo)
+  l'octet du corps muté : la clé 77caad0696c4be34… MISS (une autre clé — le rebuild court VIVANT)
+LE GATE (le shim muté : le déplacement d'une lecture de calendrier) : ATTRAPÉ au premier vecteur — la console diverge à la première ligne
+L'AUDIT 1-SUR-10 (la re-exécution complète sous le jumeau, la confrontation champ par champ) : ZÉRO ÉCART
+=== LE JUMEAU contre le natif : tls13-17 (GHASH) ===
+la confrontation native/jumeau sur 128 vecteurs : LIGNE-IDENTIQUE (rax + digeste)
+la clé du mémo : sha256 8c4c28007740573d… (le corps ‖ les vecteurs ‖ la config ‖ la graine)
+  le premier appel : MISS (l'exécution vivante, la console consignée au mémo)
+  l'octet du corps muté : la clé 09a6a74b58569fde… MISS (une autre clé — le rebuild court VIVANT)
+LE GATE (le shim muté : le déplacement d'une lecture de calendrier) : ATTRAPÉ au premier vecteur — la console diverge à la première ligne
+L'AUDIT 1-SUR-10 (la re-exécution complète sous le jumeau, la confrontation champ par champ) : ZÉRO ÉCART
+=== LA MESURE avant/après n=5 (l'horloge monotone) ===
+SANS mémo (128 vecteurs natifs) : la médiane 1.0 ms
+AU mémo (le hit, la lecture) : la médiane 0.0002 ms
+LE RAPPORT : 5189× — la composition avec la mémo de régime v14 (−89,4 % H-CGP4) et la cristallisation incrémentale (−54 %) : les mécanismes ORTHOGONAUX (la clé hash TOUT ce qui détermine le résultat)
