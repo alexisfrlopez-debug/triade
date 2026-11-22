@@ -1,0 +1,46 @@
+RAPPORT D'ATELIER — 0i4pkzbyr (la vague 15) : LES RUNS ADOPTEURS LE
+DATASET DE RÉPLICATION — L'OUTIL RAPPORT DU TRIO D122, LE CODAGE F/L,
+L'OUTILLAGE H7 GÉNÉRALISÉ
+============================================================================
+(23/11/2026, la session de la vague 15 — le plan gelé PLAN-0I4PKZBYR.md,
+sha256 aaf84f1f52ec232f… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée ; aucun coffre réel touché — le laboratoire D105)
+
+LE TRIO D122 LIVRÉ (outil_rapport.py) :
+1. LE JOURNAL D'ÉCRAN : les événements structurés de la session de
+   l'adopteur — ZÉRO phrase libre, ZÉRO chemin réel, ZÉRO clé (la porte
+   à l'entrée, l'anonymisation au paquet) ;
+2. LA BOÎTE NOIRE HORODATÉE : chaque événement CHAÎNÉ (h_i =
+   sha256(h_{i-1} ‖ la charge ‖ l'horodatage), la genèse posée) — LA
+   CHAÎNE INTACTE vérifiée au vert, UNE MUTATION d'une entrée DÉTECTÉE
+   (« la chaîne ROMPUE à l'entrée 1 » — la boîte ne se réécrit pas) ;
+3. LE BOUTON ENVOYER : la soumission GÉNÉRÉE (le CSV anonymisé du codage
+   + la boîte + LE MANIFESTE sha256 par pièce) — JAMAIS d'envoi
+   automatique (le geste humain D122) ; LA PORTE DE SECRETS en entrée :
+   LA PHRASE DE TEST MARQUÉE plantée dans un faux journal REFUSÉE (la
+   boîte jamais écrite), un secret réel (ghp_ assemblé au runtime)
+   REFUSÉ.
+
+LE CODAGE F/L OBLIGATOIRE : la grille D203 (la correspondance
+un-pour-un T/X → F/L — les TROIS étiquettes du jeu d'essai converties au
+CSV de soumission, les résiduelles REFUSÉES) ; le CSV sans colonne f/l
+REFUSÉ nommé ; LE CALCULATEUR κ du kit annotateur (l4nnwqlld —
+re-autotesté VERT à ab2vh5c2m : les QUATRE fixtures, la règle κ ≥ 0,61
+SUR n ≥ 50 les deux conditions conjointes) ; LE PROTOCOLE D'ARBITRAGE
+EN CINQ POINTS (consigné au kit annotateur).
+
+L'OUTILLAGE H7 GÉNÉRALISÉ : le tirage stratifié par paires de familles
+(les DEUX ordres PAR CONSTRUCTION — le générateur l4nnwqlld reconduit,
+la table 2de7d488 re-exécutée bit-identique à ab2vh5c2m), LES RÈGLES
+D'ARRÊT D207 fail-closed (le refus vécu aux QUATRE livraisons — le
+plafond de TROIS), le t apparié t_{0,975;13} = 2,160, les QUATRE
+métriques sans correction de multiplicité nommée ; LES LIVRAISONS
+APPARTIENNENT À L'ADOPTEUR, AUCUN verdict fabriqué.
+
+LES SEPT CONTRÔLES VÉCUS (rapport-autotests.txt) — tous VERTS ; les
+écarts de passe nommés (la mutation du premier jet visait une entrée
+sans effet — la cible corrigée à l'entrée réelle, la chaîne ROMPUE
+constatée).
+
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel ni phrase
+réelle touchés ; entrée append-only au journal.

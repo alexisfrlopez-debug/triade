@@ -1,0 +1,7 @@
+(1) la phrase marquee plantee dans le faux journal : REFUSEE, la boite jamais ecrite
+(2) le secret reel plante (ghp_ assemble) : REFUSE
+(3) la boite noire : la chaine INTACTE au vert, UNE MUTATION d'entree DETECTEE (la chaine ROMPUE)
+(4) le codage F/L sans colonne f/l : REFUSE nomme
+(5) la grille D203 : les etiquettes T/X converties un-pour-un (3 conversions VERTES)
+(6) l'anonymat du paquet (aucun chemin reel, aucune cle, aucune etiquette T/X residuelle) : VERT
+(7) l'outillage H7 (ab2vh5c2m reconduit) : QUATRE livraisons a une unite REFUSEES (le plafond D207, exit 2)
