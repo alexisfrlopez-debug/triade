@@ -1,0 +1,7 @@
+(1) le rapport malformé : REFUSÉ
+(2) le rapport porteur d'un secret planté : REFUSÉ
+(3) le pooling inter-schéma : ATTRAPÉ — les versions SÉPARÉES au clustering (note de périmètre au rejeu)
+(4) le digest recomputable depuis les rapports bruts : VERT — zéro divergence
+(5) zéro secret au digest : VERT (les rapports refusés à la porte (2) n'y vivent pas)
+(6) les 2 décisions PROPOSÉES au format Dxxx, l'arbitrage AU DÉVELOPPEUR : VERT — jamais auto-appliquées
+(7) le triage clusterise SANS coder (le codage officiel double-annotation κ≥0,61 au kit annotateur 0i4pkzbyr) : VERT — la structure s'y prête

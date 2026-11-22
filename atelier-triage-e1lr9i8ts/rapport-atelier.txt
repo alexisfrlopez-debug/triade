@@ -1,0 +1,53 @@
+RAPPORT D'ATELIER — e1lr9i8ts (la vague 15) : LE PIPELINE DE TRIAGE DES
+RAPPORTS ADOPTEURS ET LE DIGEST PAR RELEASE
+============================================================================
+(22/11/2026, la session de la vague 15 — le plan gelé PLAN-E1LR9I8TS.md,
+sha256 e16d8517badafa68… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée)
+
+LES TROIS ÉTAGES LIVRÉS (triage_rapports.py) :
+1. LA VALIDATION À L'ENTRÉE fail-closed : le schéma PAR VERSION (les
+   rapports de versions différentes JAMAIS poolés sans note de périmètre
+   — le contrôle négatif (3) vécu : v1 et v2 SÉPARÉES au clustering), le
+   scan de secrets (les sept classes de motifs + la phrase marquée D105,
+   le miroir de triade_feedback), la signature SI PRÉSENTE vérifiée au
+   format (jamais exigée, jamais l'ancre) ;
+2. LE CLUSTERING MÉCANIQUE : les classes de refus, les défauts F/L
+   (classe@locus), la doc_confusion (les mots du commentary), la
+   frontière de capacité PAR FAMILLE (les 128 constantes + les tokens) —
+   les rapports malformés REFUSÉS au premier jet (le registre des refus
+   nommé au clustering) ;
+3. LE TRIAGE PROPOSE des décisions (le format D<prochain> : grammaire/
+   gabarit, nouvelle classe X + vecteur de falsification, révision doc,
+   raffinement budget/frontière) — L'ARBITRAGE APPARTIENT AU
+   DÉVELOPPEUR (la structure de sortie le porte à chaque proposition),
+   le journal est append-only, AUCUNE amendment automatique du
+   protocole ; le codage officiel des défauts RENVOYÉ au kit annotateur
+   (0i4pkzbyr, la double-annotation κ≥0,61 sur n≥50) — le triage
+   clusterise, il NE CODE PAS.
+
+LE DIGEST PAR RELEASE : généré mécaniquement (les comptes, les refus par
+famille, les distributions de tokens, la frontière de capacité, les
+contributeurs acknowledged OPT-IN au public_digest anonyme CC-BY-4.0) ;
+RECOMPUTABLE depuis les rapports bruts — LE REJEU ZÉRO DIVERGENCE vécu
+(4) ; ZÉRO secret (le scan au digest + les rapports porteurs REFUSÉS à
+la porte — le négatif (5) vécu) ; le dépôt Zenodo du digest DEMEURE le
+geste du développeur.
+
+LES SEPT CONTRÔLES VÉCUS (rapport-autotests.txt) :
+(1) le rapport malformé REFUSÉ ; (2) le secret planté REFUSÉ ; (3) LE
+POOLING INTER-SCHÉMA ATTRAPÉ (les versions séparées) ; (4) le digest
+recomputable ZÉRO DIVERGENCE ; (5) zéro secret au digest ; (6) les
+décisions PROPOSÉES jamais appliquées (Dxxx + AU DÉVELOPPEUR) ; (7) le
+triage clusterise sans coder.
+
+L'ÉCART NOMMÉ (la passe du rejeu) : le premier passage du rejeu
+recomputait le digest depuis le dossier QUI LE PORTE (le digest lu comme
+un rapport → l'entrée « inconnue » au clustering → la divergence) — la
+cause nommée, les fichiers digest IGNORÉS au scan (le nommage au code),
+le rejeu RE-PASSÉ VERT.
+
+LES LIVRABLES : triage_rapports.py · tests_triage.py (les 7 contrôles,
+rapport-autotests.txt) · le présent rapport.
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel ni phrase
+réelle touchés ; entrée append-only au journal.
