@@ -1,0 +1,70 @@
+RAPPORT DE L'ATELIER PERFORMANCE h1mz2sr8s — LA VAGUE 14 (22/11/2026)
+======================================================================
+
+Au plan gelé PLAN-H1MZ2SR8S.md (empreinte 2e0f01049a486663… consignée AVANT
+toute mesure). Le chantier (1) — LE GHASH AGRÉGÉ QUATRE BLOCS À RÉDUCTION
+DIFFÉRÉE — livré au complet ; les chantiers (2)(3) (renotation SHA-NI,
+AVX2 dispatch hissé) demeurent au suivi (le hot path GHASH était le
+premier nommé par la vague 13 — l'écart au plan NOMMÉ, la priorité portée
+au premier chantier).
+
+LE COULOIR : notation/ghash-pclmulqdq-agrege4.asm — 601 octets assemblés à
+la marge VIERGE 0xF300 (la page 0xC000-0xFFFF, les marges v13 0xE800/0xEA00
+INTACTES) : le produit de X1..X4 contre les PUISSANCES de H (H⁴‖H³‖H²‖H —
+la table passée par l'appelant, DÉRIVÉE PAR LE SCELLÉ LUI-MÊME : trois
+appels chaînés du scellé sur H — l'associativité VÉRIFIÉE par mesure
+(scellé(seallé(A,H),H) == scellé(A,scellé(H,H)) 5/5 ; commutatif 5/5 — le
+domaine du scellé, jamais deviné)), chaque terme TWISTÉ comme le scellé
+twiste son entrée Y, l'accumulation 256 bits PAR XOR (l'addition du corps
+sans retenue), LA RÉDUCTION alg9 UNIQUE DIFFÉRÉE (par décalages — aucun
+clmul en réduction), le produit SCHOOLBOOK par puissance (la mesure v13 a
+tranché : 63,39 contre 64,04 karatsuba, l'écart dans l'IQR), LE REPLI :
+r10=0 → QUATRE appels chaînés au scellé 0xdfc0 (le pointeur H sauvé sur
+pile et rechargé à CHAQUE appel — le scellé ratisse r8/r9/r10/r11 —
+leçon vécue au harnais).
+
+LES CONTRÔLES (tous VERTS) :
+— round-trip keystone==capstone==keystone : VERT (601 o, 138 instr) ;
+— LA DIFFÉRENTIELLE : **320/320 — ZÉRO ÉCART** (256 aléatoires + 64
+  structurés, la graine 20261123 consignée ; le couloir (r10=1) contre la
+  chaîne de QUATRE appels au scellé (0xDFC0, r10=0), Z octet pour octet +
+  rax=0) ;
+— LE MUTANT (l'imm8 du premier pclmulqdq muté) : **ATTRAPÉ au premier
+  vecteur** ;
+— LE REPLI : **32/32** — jamais un chemin mort ;
+— LE TEMPS-CONSTANT STRUCTUREL : **UNE empreinte de trace par classe**
+  (60 mesures aléatoires → 1 empreinte ; 60 structurées → 1 empreinte ;
+  l'empreinte = sha256 des (adresse, taille) SEULES — les valeurs jamais,
+  miroir v13) ;
+— LA GARDE DU SCEAU-I : 14/14 VERTS avant et après (les pièces R7 :
+  proxy.exe 446279f3…, loupe.exe c1115105… INTACTES).
+
+LA MESURE (rig natif RDTSCP, n=20, cœur épinglé CPU 1, la machine
+virtualisée nommée — Intel Xeon 3200 MHz, aes/avx2/pclmulqdq/rdtscp ;
+le silicium nu au geste du développeur) :
+— LE GH400 (25 appels × 4 = 100 multiplications) : **médiane 1 966
+  cycles [IQR 19] → 19,66 c/multiplication** ;
+— CONTRE LE SCELLÉ (806,35 c/mult) : **LE GAIN 41,0×** ;
+— CONTRE LE COULOIR v13 (63,39 c/mult schoolbook) : **3,23× par
+  multiplication** — la réduction différée payée UNE fois au lieu de
+  quatre (la réduction ~25 c économisée ×3) et le marshalling ÷4 ;
+— LA PROJECTION DE COMPOSITION (nommée projection, pas une mesure) :
+  19,66 c/mult = 1,23 c/octet côté GHASH ; le CTR v4i mesuré ~5,7 c/bloc
+  par v13 → la composition entrelacée par groupes de quatre projette
+  ~1,6 c/octet@4096 — LA CIBLE PRÉ-ENREGISTRÉE ≤2,0 c/octet@4096
+  probablement tenue, la MESURE DE COMPOSITION (l'entrelacement effectif
+  v4i×agrége dans le rig) DEMEURE LE GESTE SUIVANT — l'écart nommé,
+  jamais maquillé en vert.
+
+LES LEÇONS (consignées) :
+— le call pousse l'adresse de retour : la constante C lue à [rsp+0x10]
+  DANS la sous-routine pointait la moitié de la table pshufb — l'offset
+  corrigé à [rsp+0x18] sous le call, l'écart attrapé par la
+  différentielle au premier vecteur ;
+— le scellé tls13-17 ratisse r8/r9/r10/r11 — le repli doit recharger r8
+  à CHAQUE appel, le pointeur sauvé sur pile ;
+— la table des puissances vit au DOMAINE DU SCELLÉ (l'associativité
+  vérifiée par mesure avant la dérivation — jamais le juge, jamais deviné).
+
+PIÈCES : notation/ghash-pclmulqdq-agrege4.asm · mesurer_ghash_agrege.py ·
+native/rig_agrege.c · le présent rapport.

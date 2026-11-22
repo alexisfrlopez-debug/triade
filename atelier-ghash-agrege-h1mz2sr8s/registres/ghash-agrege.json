@@ -1,0 +1,180 @@
+{
+  "duree_s": 0.7,
+  "octets": {
+    "agrege": 906,
+    "sonde": 73,
+    "v4i": 608
+  },
+  "rva": {
+    "agrege": 62208,
+    "sonde": 58880,
+    "v4i": 60416
+  },
+  "round_trip": {
+    "agrege": true,
+    "sonde": true,
+    "v4i": true,
+    "s15": true,
+    "s16": true,
+    "s17": true,
+    "s18": true
+  },
+  "unicorn": {
+    "diff": {
+      "agrege": {
+        "vecteurs": 320,
+        "divergences": 0
+      }
+    },
+    "punition": {
+      "agrege": "8/8"
+    },
+    "intact": "32/32",
+    "table_intacte": "32/32",
+    "repli": "32/32",
+    "mutant": "ATTRAPÉ au premier vecteur",
+    "comptes": {
+      "agrege": 117
+    }
+  },
+  "temps_constant": {
+    "aleatoire": {
+      "empreintes": 1,
+      "n": 60
+    },
+    "structurée": {
+      "empreintes": 1,
+      "n": 60
+    },
+    "latence_variable": [],
+    "instructions": [
+      "add",
+      "call",
+      "je",
+      "lea",
+      "mov",
+      "movabs",
+      "movdqa",
+      "movdqu",
+      "pand",
+      "pclmulqdq",
+      "pcmpgtd",
+      "por",
+      "pshufb",
+      "pshufd",
+      "pslldq",
+      "psllq",
+      "psrldq",
+      "psrlq",
+      "pxor",
+      "ret",
+      "sub",
+      "test",
+      "xor"
+    ]
+  },
+  "mesures": {
+    "stub": {
+      "mediane": 66,
+      "iqr": 2,
+      "par": 66.0,
+      "par_iqr": 2.0
+    },
+    "ghash-agrege": {
+      "mediane": 1606,
+      "iqr": 18,
+      "par": 16.06,
+      "par_iqr": 0.18
+    },
+    "ghash-scelle": {
+      "mediane": 78888,
+      "iqr": 270,
+      "par": 788.88,
+      "par_iqr": 2.7
+    },
+    "gcm-agrege@64": {
+      "mediane": 1201,
+      "iqr": 16,
+      "par": 18.7656,
+      "par_iqr": 0.25
+    },
+    "gcm-agrege@4096": {
+      "mediane": 10430,
+      "iqr": 12,
+      "par": 2.5464,
+      "par_iqr": 0.0029
+    },
+    "gcm-perbloc17@4096": {
+      "mediane": 219749,
+      "iqr": 402,
+      "par": 53.6497,
+      "par_iqr": 0.0981
+    },
+    "gcm-scelle18@64": {
+      "mediane": 5372,
+      "iqr": 42,
+      "par": 83.9375,
+      "par_iqr": 0.6562
+    },
+    "gcm-scelle18@4096": {
+      "mediane": 270761,
+      "iqr": 12542,
+      "par": 66.1038,
+      "par_iqr": 3.062
+    },
+    "gcm-evp128@64": {
+      "mediane": 1513,
+      "iqr": 24,
+      "par": 23.6406,
+      "par_iqr": 0.375
+    },
+    "gcm-evp128@4096": {
+      "mediane": 2370,
+      "iqr": 34,
+      "par": 0.5786,
+      "par_iqr": 0.0083
+    },
+    "gcm-evp256@4096": {
+      "mediane": 2531,
+      "iqr": 86,
+      "par": 0.6179,
+      "par_iqr": 0.021
+    },
+    "ctr-v4i@4096": {
+      "mediane": 1218,
+      "iqr": 2,
+      "par": 0.2974,
+      "par_iqr": 0.0005
+    }
+  },
+  "parites": [
+    "PARITE agrege==scelle18 25/25 ; agrege==parbloc17 25/25 ; agrege==EVP 25/25"
+  ],
+  "machine": {
+    "machine": "Intel(R) Xeon(R) Processor",
+    "mhz": "3200.000",
+    "drapeaux": "aes avx2 avx512f constant_tsc pclmulqdq rdtscp sha_ni sse2"
+  },
+  "sonde": "SONDE verdict=15 pclmul=1 aes=1 sha=1",
+  "H_openssl": "d32e0cdc2141c79e7b0cc0cc25061cf5",
+  "H_rig": "d32e0cdc2141c79e7b0cc0cc25061cf5",
+  "table_tordue": "645c19b842838f3cf61981984a0c39eb037538e333c0f6728c53c869e6ee2c8e53df585a66e298f0d1e3dc1245b65f5ea7b9a8f5a390cf5c2cb613c3fa70c5ef",
+  "cible_2048": {
+    "cible_c_octet": 2.0,
+    "cible_cycles": 8192,
+    "mesure_cycles": 10430,
+    "verdict": "MANQUÉE"
+  },
+  "references_v13": {
+    "couloir_4096": 7.5562,
+    "scelle_mult": 806.35,
+    "couloir_mult": 63.39
+  },
+  "gains": {
+    "vs_couloir_v13_4096": 2.967,
+    "vs_scelle_publie_mult": 50.21,
+    "vs_couloir_v13_mult": 3.95
+  },
+  "sceau_avant": true,
+  "sceau_apres": true
+}
