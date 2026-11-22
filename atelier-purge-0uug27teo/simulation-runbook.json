@@ -1,47 +1,47 @@
 {
- "verdict": "VERT",
+ "verdict": "ROUGE",
  "phrase_test": "PHRASE-TEST-PUBLIQUE-D105-vague12-simulation",
  "etapes": [
   {
    "etape": "§8.1 git pull (la maison à jour)",
    "commande": "git pull -q",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": ""
   },
   {
    "etape": "§8.1 MANIFESTE lu (le kit)",
    "commande": "cat MANIFESTE.txt 2>/dev/null || cat LISEZMOI-ARCHIVE.txt >/dev/null",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": ""
   },
   {
    "etape": "§8.2-3 la cérémonie de changement sous séquestre (les parts hors-ligne assemblées — AUCUN fichier au dépôt)",
    "commande": "mkdir -p .keys && echo parts > .keys/sequestre-simulation.txt",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": ""
   },
   {
    "etape": "§8.2-4 CF1 -> CF2 (le conteneur au .keys/, gitignoré)",
    "commande": "echo conteneur > .keys/coffre_fort.bin",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": ""
   },
   {
    "etape": "§8.2-5 CF2 -> CF3 (l'époque au .keys/, le média hors dépôt)",
    "commande": "echo epoque > .keys/cf3-epoque.txt",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": ""
   },
   {
    "etape": "§8.2-6 détruire CF2 (le PV au .keys/)",
    "commande": "echo pv > .keys/pv-cf3/destruction.txt 2>/dev/null || mkdir -p .keys/pv-cf3 && echo pv > .keys/pv-cf3/destruction.txt",
    "code": 0,
-   "phrase_au_depot": false,
+   "phrase_au_depot": true,
    "sortie": "/bin/sh: 1: cannot create .keys/pv-cf3/destruction.txt: Directory nonexistent\n"
   },
   {
@@ -59,7 +59,7 @@
    "sortie": "REFUS-NOMMÉ : la phrase de contrôle ne se commite pas au dépôt (D223 — le séquestre 5/3 est la garde, le dépôt est PUBLIC D220)\n"
   }
  ],
- "chemins_rouges": 0,
- "fuites_blob": 0,
- "commits_scannes": 528
+ "chemins_rouges": 6,
+ "fuites_blob": 3,
+ "commits_scannes": 541
 }

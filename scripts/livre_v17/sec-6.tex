@@ -1,0 +1,208 @@
+% =====================================================================
+%  ANNEXES — A : formats complets · B : glossaire
+% =====================================================================
+\appendix
+\section{Les formats, octet par octet}\label{sec:formats}
+
+Ces listings sont la reprise \emph{exacte} des formats normatifs des specs scellées
+(\code{v06/I/CF2/README.md} § 3--4, \code{v06/I/CF3/README.md} § 3--4) — reproduits
+ici parce que le maître les recopie, les compare et les fait lire à un tiers. En cas
+de doute : l'arbre signé fait foi.
+
+\subsection{Conteneur TRIADE-CF1}
+
+\begin{lstlisting}
+magic "TRIADE-CF1" . version u16 . champs longueur-prefixee u16 :
+    hachage (sha256), kdf (argon2id + hkdf-sha256),
+    chiffrement (xchacha20poly1305), date ISO-8601 UTC .
+sel argon 16/32 o (pose a l'init) . params (t, m, p) .
+sel HKDF 32 o . nonce 24 o (frais a CHAQUE ecriture) .
+empreinte 32 o = sha256(chiffretexte) .
+chiffretexte = AEAD(clair, K, AAD = tout ce qui precede)
+    K = HKDF-SHA256(Argon2id(phrase, sel, 65536/3/1),
+                    sel_hkdf, info "coffre=v1")
+\end{lstlisting}
+
+\subsection{Conteneur TRIADE-CF2}
+
+\begin{lstlisting}
+magic "TRIADE-CF2" (10 o) . version u16 (1) .
+champs longueur-prefixee u16 : hachage (sha256), kdf (hkdf-sha256),
+                               chiffrement (xchacha20poly1305),
+                               date ISO-8601 UTC, shamir ("t=3/n=5") .
+sel HKDF 32 o (aleatoire a l'init) . nonce 24 o (frais a CHAQUE
+ecriture) . empreinte sha256 du chiffretexte 32 o .
+verif 16 o = sha256(HKDF(M, sel, info "cf2=verif")) tronque .
+chiffretexte : XChaCha20-Poly1305(JSON base, K, AAD = tout ce qui precede)
+   avec K = HKDF-SHA256(M, sel du conteneur, info "coffre=v2", L=32)
+\end{lstlisting}
+
+\subsection{Fragment TRIADE-CF2-FRAG (ASCII, transportable sur papier)}
+
+\begin{lstlisting}
+TRIADE-CF2-FRAG v1
+coffre: <sel HKDF du conteneur, 64 hex - l'identite STABLE du coffre>
+x: <indice, decimal>
+seuil: t=3/n=5
+fragment: <64 hex - 32 o>
+tag: <16 hex - sha256("TRIADE-CF2-frag" || x || fragment) tronque>
+\end{lstlisting}
+
+\subsection{Conteneur TRIADE-CF3 (petit-boutiste)}
+
+\begin{lstlisting}
+"TRIADE-CF3" 10 o | version u16 (=1) | epoque u64 | H_projet 32 o |
+sel_argon 16 o | params (t,m,p : u32x3) | sel_hkdf 32 o | S_serrure 32 o |
+nonce 24 o |                       <- fin de l'AAD (168 o)
+empreinte 32 o = sha256(chiffretexte) | verif 16 o |
+chiffretexte = AEAD(clair, aad, nonce, KEK)
+
+KEK   = HKDF-SHA256(ikm = K_user || S_serrure || S_piege ;
+                    salt = sel_hkdf ;
+                    info = "triade-CF3/v1|" || epoque(le64) || H_projet)
+verif = sha256(HKDF(ikm = K_user || V_piege ;
+                    info = "triade-CF3/verif/v1"))[:16]
+\end{lstlisting}
+
+\subsection{Piège TRIADE-CF3-PIEGE (ASCII, un fichier par époque)}
+
+\begin{lstlisting}
+TRIADE-CF3-PIEGE v1
+epoque: <u64 decimal>
+projet: <H_projet hex (64)>
+piege: <S_piege hex (64)>
+verif: <V_piege hex (32)>
+tag: <hex (16)>
+tag = sha256("TRIADE-CF3-piege" || epoque(le64) || H_projet ||
+             S_piege || V_piege)[:8]
+\end{lstlisting}
+
+\subsection{Manifeste du sceau de l'Intention (canonique)}
+
+\begin{lstlisting}
+TRIADE-SCEAU-I v1
+arbre: <nom>
+artefact: <artefact>
+balise: <balise>
+fichiers: <N>
+sha256:<64 hex minuscules>  <chemin relatif POSIX, tri lexicographique>
+...   (une ligne par fichier - contenu canonique LF)
+\end{lstlisting}
+
+L'empreinte d'arbre est le sha256 du manifeste \emph{entier} ; la signature Ed25519
+(RFC 8032) couvre l'empreinte — 32 octets, imprimables.
+
+\section{Glossaire du coffre}\label{sec:glossaire}
+
+\begin{description}[style=nextline, leftmargin=1.2em]
+\item[acte] Une opération qui déverrouille (ouvre, clôture, vérifie) — porte la
+sentinelle instantanée.
+\item[carte du sachet] Fiche papier du sachet où le maître consigne, \emph{à la main},
+le checksum de 8 hex de chaque clôture — deuxième témoin d'époque, indécevable par
+logiciel.
+\item[clé I] La graine Ed25519 hors-ligne qui signe l'intention (la spécification) ;
+le dépôt ne voit que sa clé publique.
+\item[époque] Compteur u64 du coffre CF3, posé à 1, incrémenté à chaque clôture —
+l'horloge de la métamorphose et le témoin anti-retour.
+\item[fail-closed] Tout refus est nommé et rien ne s'écrit : l'échec est sûr, jamais
+silencieux.
+\item[fragment] Un morceau ASCII du secret maître CF2 (32 octets utiles + identité) ;
+transportable sur papier.
+\item[garde] Répertoire distinct portant UN fragment CF2 (mode 0700) ; en production,
+ACL et supports séparés.
+\item[journal local] \code{.keys/journal-cf3.txt} — premier témoin d'époque, contrôle
+automatique, effaçable par un attaquant admin.
+\item[maison] Le clone git (avec \code{v06/} entier) ou le kit Drive — l'endroit d'où
+les cérémonies se lancent.
+\item[média du piège] Le support séparé (clef USB du sachet) qui porte S\_piège et
+V\_piège — jamais écrit sur la machine hors l'instant de l'acte.
+\item[piège] Le fichier \code{piege-CF3-epoque-N.txt} du média — sans lui,
+l'acte est impossible.
+\item[PV] Procès-verbal de destruction : date, déclencheur, artefacts détruits,
+raison nommée — deux destructions même seconde, deux fichiers (D123).
+\item[relève] Ce qui ressuscite le coffre si la machine meurt : le sachet (pièges,
+copies hors-ligne) — la phrase revient par la reconstitution à froid de TROIS
+parts du séquestre (amendé D223), jamais par un fichier de dépôt.
+\item[sachet] La pochette physique individuelle : pièges d'époque, copies hors-ligne
+des fragments, la carte.
+\item[sceau de l'Intention] La signature Ed25519 des arbres de couche I ; quatorze arbres,
+gardes de build et de patch.
+\item[sentinelle instantanée] Les cinq vérifications ordonnées qui courent à chaque
+acte CF3 — par invocation, jamais en démon.
+\item[seuil] Le T de Shamir : le nombre de fragments qui reconstituent M (et le nombre
+de copies hors-ligne qui arment la relève).
+\item[staging] Le conteneur en attente (\code{coffre\_cf3.bin.staging}) pendant la
+re-lecture à froid ; remplacé atomiquement ou détruit.
+\item[témoins d'époque] Les trois miroirs anti-retour : journal local, carte papier,
+journal Git.
+\item[trio D122] Une GUI, une boîte noire, un bouton « Envoyer le rapport » — pour
+chaque module à tester.
+\item[vérités vivantes] Les modules CLI que les GUI relaient sans réimplémenter
+(\code{coffre\_cf2.py}, \code{coffre\_cf3.py}, \code{sceau\_I.py}).
+\end{description}
+
+\section{Les questions du terrain — et leurs réponses}\label{sec:faq}
+
+Posées par le terrain réel entre le 30 et le 31 octobre 2026, répondues alors au fil
+de l'eau — écrites ici une fois pour toutes. Les mêmes questions reviendront ; les
+mêmes réponses tiennent.
+
+\begin{description}[style=nextline, leftmargin=1.2em]
+\item[« La cérémonie m'a produit un \code{fragments-cf2.txt} et le système attend
+3 \code{fragment-*.cf2} — où sont les fragments ? »] Les CINQ originaux vivent sous
+\code{.keys\textbackslash gardes-cf2\textbackslash g1...g5\textbackslash
+fragment-N.cf2f} — un fichier par garde, dossier caché. La feuille est l'export
+\emph{papier} des trois fragments g3--g5 ; les copies USB sont les fichiers
+\code{.cf2f} eux-mêmes. Trois objets, trois rôles (§ \ref{sec:cf2}).
+\item[« Sur la page de choix de scénario, il y a deux boutons d'attachement qui
+font doublon. »] Vu et corrigé : depuis D131, un bouton PAR page — l'accueil ne le
+porte que dans le panneau de scénario, la page de cérémonie que dans son bandeau.
+Le geste, lui, n'a pas changé.
+\item[« L'interface de migration n'est pas claire ; les boutons de recherche ne sont
+pas alignés aux champs. »] Défaut mécanique du v1.0 (champs pleine largeur, boutons
+rejetés en colonne à droite) — corrigé par la grille D132 : chaque bouton sur la
+ligne de son champ, confirmation de phrase étiquetée, actes pleine largeur. La
+fenêtre s'annonce v1.1.
+\item[« \code{lancer\_migration\_cf3.bat} n'est pas dans git. »] Il y est — à la
+\emph{racine} du dépôt, à côté de \code{v06\textbackslash}, pas DANS
+\code{v06\textbackslash} : convention D118. \code{git ls-files} le liste ;
+\code{git log} le suit depuis D127.
+\item[« La mise à jour est un \code{.py} que le \code{.bat} n'appelle pas. »] Le
+lanceur appelle \code{v06\textbackslash migration\_cf3\_gui.py} \emph{en premier}
+(ligne 12 du \code{.bat}) — et le correctif vivait précisément dans ce fichier.
+Vérifiable en trois endroits à l'exécution : titre, bandeau, première ligne de la
+boîte noire.
+\item[« Il demande un \code{coffre\_cf3.bin} que je n'ai pas. »] Ce champ est une
+\emph{sortie} : « le coffre qui naît », dialogue d'enregistrement, pré-rempli. Ce
+qui manquait vraiment dans ce rapport-là était \code{coffre\_cf3.py} — le module :
+le GUI tournait hors de sa maison (§ \ref{sec:maison}).
+\item[« Modules REQUIS absents : \code{coffre\_cf3.py}, \code{coffre\_cf2.py}. »]
+Le GUI est un relais : sans ses vérités vivantes à côté de lui, chaque acte est un
+refus nommé. Remède : lancer depuis la racine du clone (ou du kit), où
+\code{v06\textbackslash} est entier.
+\item[« Je dois pousser quelque chose sur git maintenant ? »] Non — par
+construction : tout ce que la migration écrit vit dans \code{.keys\textbackslash}
+(gitignoré) ou sur le média ; la boîte noire est un \code{*.log} (ignoré).
+\code{git status} rend « nothing to commit ». Les seuls push de votre chaîne sont
+les remises du sceau.
+\item[« C'est quoi, la carte du sachet ? »] Une fiche papier, dans le sachet, où
+vous consignez À LA MAIN le checksum de 8 hex de chaque clôture — le témoin
+qu'aucun logiciel ne peut truquer (§ \ref{sec:gards}).
+\item[« On n'avait pas décidé de supprimer la sentinelle en migrant en CF3 ? Si on
+impose CF3 dès la création, on n'a plus besoin de sentinelle, non ? »] Le
+\emph{démon} est mort en CF3 ; l'exigence D120 vit \emph{par invocation} : la
+sentinelle instantanée est la serrure — impossible à oublier de lancer. Et oui :
+à l'époque de cette question, un coffre neuf naissait CF3 par \code{init} direct ;
+depuis D137 (v0.6.1), le niveau de naissance — CF1, CF2 ou CF3 — est votre
+arbitrage à la création (spécification § 12.5).
+\item[« J'ai fermé sans exporter le rapport, mais ça a marché. »] Normal : l'export
+n'est pas un prérequis de la cérémonie — la vérité vit dans le conteneur, les
+gardes et le journal local. Le rapport est la \emph{mémoire} du geste : le bouton
+existe pour que le prochain imprévu ait son dossier complet.
+\item[« Un premier \code{migrer} a échoué : phrase de contrôle divergente. »] Le
+fail-closed qui travaille : la remise D81 d'époque n'était pas encore remplacée
+(amendée D223). Rien n'a été
+écrit ; reconstituez à froid TROIS parts du séquestre courant (l'époque au
+manifeste), puis rejouez — la phrase ne vit en AUCUN dépôt, le refus nommé
+de la réécriture (D223).
+\end{description}

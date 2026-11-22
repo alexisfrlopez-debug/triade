@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1150px; font-family: 'Liberation Sans', 'DejaVu Sans', sans-serif; background: #FFFFFF; padding: 18px 14px; }
+  .canvas { width: 1122px; position: relative; }
+
+  /* ---- rangée des trois générations ---- */
+  .row { display: flex; align-items: stretch; justify-content: space-between; }
+  .gen { width: 330px; border: 2.5px solid #3681A6; border-radius: 10px; background: #EFF6FF; padding: 14px 14px 12px; }
+  .gen .tag { font-size: 17px; letter-spacing: 2px; color: #3681A6; font-weight: 700; margin-bottom: 4px; }
+  .gen h3 { font-size: 28px; color: #16324A; margin-bottom: 8px; line-height: 1.15; }
+  .gen .fmt { font-family: 'Liberation Mono', 'DejaVu Sans Mono', monospace; font-size: 17px; color: #555F66; background: #FFFFFF; border: 1px solid #C9D8E4; border-radius: 5px; padding: 3px 8px; display: inline-block; margin-bottom: 9px; }
+  .gen .mec { font-size: 20px; color: #2A3B47; line-height: 1.38; margin-bottom: 10px; }
+  .garde { border: 2px solid #2F855A; background: #F0FDF4; border-radius: 8px; padding: 8px 10px; }
+  .garde .gt { font-size: 17px; font-weight: 700; color: #2F855A; letter-spacing: 1px; margin-bottom: 3px; }
+  .garde .gc { font-size: 20px; color: #1F4632; line-height: 1.32; }
+
+  /* ---- flèches de cérémonie ---- */
+  .cer { width: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+  .cer .fl { width: 0; height: 0; border-top: 11px solid transparent; border-bottom: 11px solid transparent; border-left: 17px solid #555F66; }
+  .cer .ln { height: 4px; width: 30px; background: #555F66; }
+  .cer .lbl { position: absolute; top: 100%; margin-top: 6px; width: 240px; text-align: center; font-size: 17px; color: #555F66; line-height: 1.3; }
+
+  /* ---- bandeau invariants ---- */
+  .invariant { margin-top: 104px; border: 2px solid #555F66; border-radius: 10px; background: #F6F8FA; padding: 10px 16px; }
+  .invariant .it { font-size: 17px; font-weight: 700; letter-spacing: 2px; color: #555F66; margin-bottom: 5px; }
+  .invariant .ic { display: flex; justify-content: space-between; font-size: 20px; color: #2A3B47; }
+  .invariant .ic span { width: 32%; line-height: 1.35; }
+
+  /* ---- témoins ---- */
+  .temoins { margin-top: 16px; }
+  .temoins .tt { font-size: 20px; font-weight: 700; color: #975A16; margin-bottom: 8px; }
+  .temoins .tt small { font-size: 17px; font-weight: 400; color: #B7791F; }
+  .trow { display: flex; justify-content: space-between; align-items: stretch; }
+  .tem { width: 356px; border: 2px solid #B7791F; border-radius: 10px; background: #FFFBEB; padding: 9px 12px; }
+  .tem .tn { font-size: 20px; font-weight: 700; color: #975A16; margin-bottom: 3px; }
+  .tem .td { font-size: 20px; color: #4A3B1E; line-height: 1.32; }
+
+  /* ---- note bas ---- */
+  .note { margin-top: 16px; border-left: 5px solid #3681A6; background: #EFF6FF; border-radius: 0 8px 8px 0; padding: 9px 14px; font-size: 20px; color: #16324A; line-height: 1.4; }
+  .note b { color: #3681A6; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="row">
+    <div class="gen">
+      <div class="tag">GÉNÉRATION 1 · D75</div>
+      <h3>CF1 — le coffre à phrase</h3>
+      <div class="fmt">TRIADE-CF1 v1</div>
+      <div class="mec">Une phrase de contrôle dérive la clé :
+        Argon2id → HKDF <i>coffre=v1</i> → XChaCha20-Poly1305.</div>
+      <div class="garde">
+        <div class="gt">GARDE · LA PHRASE</div>
+        <div class="gc">Phrase de contrôle (D81) — le fichier
+        PHRASE-CONTROLE-COFFRE.txt <i>est</i> la remise : commit + coffre
+        Drive AVANT toute autre action.</div>
+      </div>
+    </div>
+
+    <div class="cer"><div class="ln"></div><div class="fl"></div>
+      <div class="lbl">cérémonie de migration — déverrouillé une dernière fois, base re-scellée, CF1 laissé intact</div>
+    </div>
+
+    <div class="gen">
+      <div class="tag">GÉNÉRATION 2 · D86</div>
+      <h3>CF2 — la clé répartie</h3>
+      <div class="fmt">TRIADE-CF2 v1</div>
+      <div class="mec">Secret maître M <b>jamais stocké entier</b> :
+        Shamir sur GF(2<sup>8</sup>), 5 fragments, seuil 3 — sous le seuil,
+        mort informationnelle.</div>
+      <div class="garde">
+        <div class="gt">GARDE · LES FRAGMENTS</div>
+        <div class="gc">5 gardes g1–g5 (seuil 3) + T = 3 copies
+        hors-ligne (feuille papier g3–g5 ou USB) — la relève exige le
+        seuil entier.</div>
+      </div>
+    </div>
+
+    <div class="cer"><div class="ln"></div><div class="fl"></div>
+      <div class="lbl">cérémonie de migration — MIGRER → VÉRIFIER (checksum contre la carte) → DÉTRUIRE (explicite)</div>
+    </div>
+
+    <div class="gen">
+      <div class="tag">GÉNÉRATION 3 · D121</div>
+      <h3>CF3 — la serrure piégée</h3>
+      <div class="fmt">TRIADE-CF3 v1</div>
+      <div class="mec">K_user <b>invariable</b> + S_serrure + S_piège
+        frais à chaque époque ; cycle en deux actes ; sentinelle
+        instantanée à chaque acte.</div>
+      <div class="garde">
+        <div class="gt">GARDE · LE MÉDIA DU PIÈGE</div>
+        <div class="gc">Sans S_piège (sachet), le déverrouillage est
+        impossible — pas seulement refusé. La carte du sachet consigne
+        le checksum à la main.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="invariant">
+    <div class="it">CE QUI NE CHANGE JAMAIS D'UNE GÉNÉRATION À L'AUTRE</div>
+    <div class="ic">
+      <span>Le même JSON de base (<i>projets</i>) — la migration ne traduit <b>rien</b>.</span>
+      <span>Argon2id 65536 Kio · 3 it · p=1 (planchers FORMAT_CARTE § 3.1).</span>
+      <span>Fail-closed : tout refus est nommé, écriture atomique, discipline RAM.</span>
+    </div>
+  </div>
+
+  <div class="temoins">
+    <div class="tt">LES TROIS TÉMOINS D'ÉPOQUE <small>— CF3 § 9, anti-retour-en-arrière — du plus faible (1) au plus fort (3)</small></div>
+    <div class="trow">
+      <div class="tem">
+        <div class="tn">1 · Journal local</div>
+        <div class="td">.keys/journal-cf3.txt — contrôle automatique à
+        chaque acte ; borne : effaçable par un attaquant admin.</div>
+      </div>
+      <div class="tem">
+        <div class="tn">2 · Carte papier du sachet</div>
+        <div class="td">Checksum de 8 hex consigné à la main à chaque
+        clôture ; verifier l'affiche à froid — indécevable par logiciel.</div>
+      </div>
+      <div class="tem">
+        <div class="tn">3 · Journal Git</div>
+        <div class="td">Époque et checksum consignés à chaque cérémonie,
+        poussés — témoin archivé hors machine.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><b>Le niveau d'un coffre neuf est arbitré par le développeur</b> (D137) :
+  CF1, CF2 ou CF3 à la création — la chaîne CF1 → CF2 → CF3 est l'histoire du coffre
+  réel, pas un rite obligé, et demeure disponible à tout moment.</div>
+
+</div>
+</body>
+</html>

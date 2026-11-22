@@ -291,13 +291,15 @@ du vol du coffre-fort (§ 15.1). Aucune règle n'est modifiée ; aucune couche n
 ### 1.6 Ce que change la v0.5.2
 
 Une évolution de discipline, tracée dans la correspondance (§ 19.6) et le journal des
-versions (§ 21), rattachée à la décision D81 : la **phrase de contrôle du coffre-fort
-passe sous garde durable** — dès sa production (init, rotation, changement), elle est
-sauvegardée dans le dépôt git (commit dédié, push GitHub, miroir du coffre Drive par le
-hook) et au racine du coffre Drive AVANT toute autre action de la session ; le fichier
-`PHRASE-CONTROLE-COFFRE.txt` (phrase seule sur une ligne, lisible tel quel par
-`--phrase-fichier`) EST la remise — l'affichage unique de cérémonie (D27/D30) cesse
-d'être le canal de survie. Le constat fondateur : la rotation D80 avait produit une
+versions (§ 21), rattachée à la décision D81 puis AMENDÉE par D223 : **la phrase de
+contrôle vit sous séquestre à seuil depuis le 19 novembre 2026** — répartie en CINQ
+parts à seuil TROIS, AUCUNE phrase en clair au dépôt git ni au coffre Drive, la
+cérémonie de reconstitution à froid de trois parts l'unique voie de survie (le refus
+nommé D223 garde la ligne) ; l'affichage unique de cérémonie (D27/D30) n'est jamais
+le canal de survie. (L'histoire D81 — la phrase au fichier-remise
+`PHRASE-CONTROLE-COFFRE.txt` au dépôt et au coffre Drive, sauvegardée avant toute
+autre action — est DATÉE : du 4 au 19 novembre 2026, amendée par D223, jamais un
+geste courant.) Le constat fondateur : la rotation D80 avait produit une
 phrase neuve dont la remise prévue en fin de tour n'a jamais eu lieu — la session
 d'exécution est morte avant (pannes d'infrastructure récurrentes, quatre réinitialisations
 et une interruption de session déjà consignées) — et la phrase ne vivait plus que dans le
@@ -1242,7 +1244,7 @@ sceau de l'Intention — `v06/I/README.md` (axe 3), `v06/I/CF2/README.md` (axe 2
 
 | Garde | Menace couverte | Où elle vit |
 |---|---|---|
-| Phrase de lignée | chiffre les enveloppes de carte — vol du dépôt au repos | en tête du développeur, secours au coffre Drive (D81 : le fichier est la remise) |
+| Phrase de lignée | chiffre les enveloppes de carte — vol du dépôt au repos | en tête du développeur, secours au coffre Drive (D81, du 4 au 19 novembre 2026 : le fichier FUT la remise — amendé D223) |
 | Graine Ed25519 en ligne | signe les cartes — atteste les FAITS (les octets scellés) | dépôt du développeur (jamais confiée au bac à sable, D30) |
 | Clé I hors-ligne | signe l'intention — atteste la VOLONTÉ (le droit de faire évoluer) | support physique hors machine ; le dépôt ne voit que la clé publique |
 | Clave du coffre (CF2/CF3) | le secret maître — expropriation du poste vivant | CF2 : répartie par Shamir ; CF3 : moitié piège sur média séparé |
@@ -1352,7 +1354,7 @@ mérite, pas pour tout projet.
 
 | Niveau | Acte de création | Ce qui vient avec |
 |---|---|---|
-| CF1 | `coffre_fort.py init` | conteneur chiffré à phrase (D75) ; garde durable de la phrase (D81) ; relève simple |
+| CF1 | `coffre_fort.py init` | conteneur chiffré à phrase (D75) ; la garde de la phrase à l'arbitrage du développeur (D137 — la garde active D223 : le séquestre à reconstitution à froid, la phrase en AUCUN dépôt ; l'histoire D81 datée) ; relève simple |
 | CF2 | `coffre_fort.py init` puis cérémonie `coffre_cf2.py migrer` — l'`init` direct de CF2 demeure un outil de LABORATOIRE, la spécification scellée CF2 (§ 12 — phase laboratoire / cérémonie réelle) fait foi | clé maîtresse répartie Shamir (N gardes, seuil T), T copies hors-ligne, liste blanche, sentinelle/porte D120 |
 | CF3 | `coffre_cf3.py init` | époque 1, média du piège dès le premier jour, cycle en deux actes, sentinelle par invocation, sachet + carte papier (§ 13) |
 
@@ -1371,7 +1373,7 @@ La question du terrain — *puisqu'un coffre né CF3 porte sa sentinelle dès la
 création, celle-ci ne devient-elle pas inutile ?* — garde sa réponse normative au
 niveau CF3 : la sentinelle de CF3 n'est pas un composant qu'on peut oublier de
 lancer, c'est la serrure elle-même ; l'exigence D120 est réalisée *par construction*.
-Ce qui demeure obligatoire, niveau par niveau : CF1 — la garde durable de la phrase ;
+Ce qui demeure obligatoire, niveau par niveau : CF1 — la garde de la phrase à l'arbitrage du développeur (D137 ; la garde active D223 : la reconstitution à froid de trois parts, la phrase en AUCUN dépôt) ;
 CF2 — les T copies hors-ligne et la liste blanche ; CF3 — le média du piège (sans
 S_piège, le déverrouillage est *impossible*) et la discipline du sachet (§ 13).
 
@@ -1395,7 +1397,7 @@ guide sans les réimplémenter.
 | Cérémonie | Gestes | Preuve attendue |
 |---|---|---|
 | Sceau de l'Intention (D87/D126) | `preparer` ; cérémonie hors-ligne `signer` (clé physique) ; `deposer` (vérifié avant écriture) ; `verifier` | treize arbres VERTS, code 0 ; commit poussé |
-| CF1 → CF2 (D106) | phrase (remise D81 AVANT tout) ; `migrer` ; 5 gardes ; T = 3 copies hors-ligne (feuille g3–g5 ou USB) ; relecture ; liste blanche | CF2 `verifier` VERT ; CF1 laissé intact |
+| CF1 → CF2 (D106) | phrase (la garde en vigueur : D223 — la reconstitution à froid de trois parts du séquestre ; l'histoire D81 « remise AVANT tout » datée du 4 au 19 novembre 2026) ; `migrer` ; 5 gardes ; T = 3 copies hors-ligne (feuille g3–g5 ou USB) ; relecture ; liste blanche | CF2 `verifier` VERT ; CF1 laissé intact |
 | CF2 → CF3 (D121/D127) | MIGRER (conteneur CF2, gardes, *média du piège requis*, phrase deux fois) ; VÉRIFIER (checksum contre la carte) ; DÉTRUIRE (case explicite) | époque 1, checksum 8 hex noté ; verdict à froid VERT (machine froide recommandé) |
 | Clôture CF3 (usage courant) | acte I (média débranché) ; session sur le brouillon ; acte II (phrase retapée, époque N+1) | checksum affiché, ligne sur la carte ; journal Git consigné |
 | Destruction locale (`bruler`) | commande explicite `--oui-je-comprends` ; trois passes + PV | PV nommé ; fragments et médias jamais touchés |
@@ -1527,7 +1529,7 @@ sur le secret de la carte : elle survivrait à sa divulgation.
 | Corruption de carte (accidentelle) | Bit rot, panne de stockage | Fragments au repos | AEAD (intégrité par fragment) + signature + verrou croisé | Détecté au chargement — refus propre |
 | Fuite de la carte | Initié, poste compromis | Fragments au repos | Chiffrement (algo de l'en-tête) ; sharding ; escrow | Perte partielle limitée à un fragment |
 | Vol de l'export de continuité | Voleur, stockage cloud compromis | Conteneur exporté | Chiffrement intégral (phrase maîtresse + Argon2id) ; signature | Sans la phrase, indéchiffrable |
-| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) ; depuis D81 la phrase de contrôle elle-même vit au coffre Drive et dans le dépôt (arbitrage PERTE > EXPOSITION) | Chiffrement intégral (Argon2id, contexte HKDF dédié, AEAD) ; écriture atomique 0600 ; mitigation première : restreindre le partage par lien du dossier (§ 17.3) | Confidentialité ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — on ne compte plus sur sa confidentialité, la rotation reste le remède |
+| **Vol du coffre-fort des phrases** | Voleur, stockage cloud compromis | Conteneur du coffre-fort (D75) ; de D81 au 19 novembre 2026 la phrase de contrôle vivait au coffre Drive et dans le dépôt (l'arbitrage d'époque PERTE > EXPOSITION) ; depuis D223 la phrase vit sous séquestre à seuil, en AUCUN dépôt | Chiffrement intégral (Argon2id, contexte HKDF dédié, AEAD) ; écriture atomique 0600 ; mitigation première : restreindre le partage par lien du dossier (§ 17.3) | Confidentialité ramenée au contrôle d'accès du dossier ; une phrase commise en git y demeure à vie — on ne compte plus sur sa confidentialité, la rotation reste le remède |
 | **Expropriation (employeur, tiers)** | D84 | Barrière juridique BSL 1.1 ; barrière cryptographique : clé maîtresse jamais entière (Shamir, axe 2), intention signée par la clé hors-ligne (sceau I, axe 3), serrure piégée à média séparé (axe 4) | Le code volé est inexploitable et ne peut pas évoluer ; l'axe 1 (TEE) reste une exigence consignée |
 | **Evil maid sur le conteneur ou le média du piège** | D121 | Tag du piège, époques croisées conteneur/piège, AEAD + étiquette, champ `verif` indérivable | Détecté — refus nommé ; la falsification prouvée détruit côté machine, jamais le média |
 | **Roll-back du couple conteneur + piège** | D121 | Trois témoins d'époque : journal local, carte papier du sachet (à la main), journal Git poussé | Détecté — « RETOUR EN ARRIÈRE » nommé ; recoupement humain à froid |
@@ -1705,11 +1707,14 @@ phrase, indéchiffrable » (§ 15.1). Après une réinitialisation du poste, l'i
 conteneur puis `obtenir --vers-fichier` restaurent la phrase opérationnelle sans cérémonie
 de régénération. La règle de discipline évolue en D81 sur un point, l'arbitrage étant
 consigné : chaque cérémonie de clés (D27/D30) alimente le coffre-fort dans la même
-session, et **la phrase de contrôle est sauvegardée durablement AVANT TOUTE AUTRE
-ACTION** — `PHRASE-CONTROLE-COFFRE.txt` au racine du dépôt (phrase seule sur une ligne,
-lisible par `--phrase-fichier`), commit dédié, push GitHub, miroir du coffre Drive par
-le hook, copie au racine du coffre Drive — le fichier EST la remise (l'affichage unique
-de D27/D30 demeure possible mais n'est plus le canal de survie). À chaque rotation le
+session. **La garde de la phrase est le séquestre à seuil depuis le 19 novembre 2026
+(D223)** : la phrase répartie en CINQ parts à seuil TROIS, AUCUNE phrase en clair au
+dépôt ni au coffre Drive — la voie de survie est la cérémonie de reconstitution à
+froid de trois parts (§ 17.3bis), le refus nommé D223 garde la ligne ; l'affichage
+unique de cérémonie (D27/D30) demeure possible mais n'est jamais le canal de survie.
+(L'histoire D81 — la phrase au fichier-remise `PHRASE-CONTROLE-COFFRE.txt`, commit
+dédié, push GitHub, miroir et coffre Drive, AVANT toute autre action — est DATÉE :
+du 4 au 19 novembre 2026, amendée par D223, jamais un geste courant.) À chaque rotation le
 fichier est remplacé et git conserve les phrases retirées du service. La graine Ed25519
 reste hors coffre (D30) — la relève d'une lignée perdue resterait la cérémonie avec
 preuve byte-identique. Contrepartie consignée : la phrase vit désormais sur le stockage
@@ -1843,7 +1848,7 @@ exige les deux copies, le conteneur étant indéchiffrable sans la phrase).
 
 | # | Évolution | En v0.5.1 | En v0.5.2 | Statut |
 |---|---|---|---|---|
-| 1 | Garde de la phrase de contrôle | détenue par le seul développeur, jamais stockée, affichée une seule fois (D75) | sauvegardée durablement dès production : `PHRASE-CONTROLE-COFFRE.txt` au dépôt (git + GitHub + miroir Drive) et au racine du coffre Drive, AVANT toute autre action ; le fichier est la remise (§ 17.3, FORMAT_CARTE § 11) | modifié (D81) |
+| 1 | Garde de la phrase de contrôle | détenue par le seul développeur, jamais stockée, affichée une seule fois (D75) | sauvegardée durablement dès production : `PHRASE-CONTROLE-COFFRE.txt` au dépôt (git + GitHub + miroir Drive) et au racine du coffre Drive, AVANT toute autre action ; le fichier est la remise — HISTOIRE DATÉE du 4 au 19 novembre 2026 (§ 17.3, FORMAT_CARTE § 11) | modifié (D81, du 4 au 19 novembre 2026, amendé D223) |
 | 2 | Menace « vol du coffre-fort » | sans la phrase, indéchiffrable | la phrase vit sur le coffre Drive partagé par lien : confidentialité au repos ramenée au contrôle d'accès du dossier ; mitigation première = restreindre le partage ; une phrase commise en git y demeure à vie, la rotation reste le remède | étendu (D81) |
 | 3 | État des jalons | M0–M3 franchis, M4 à venir | M4 ouvert (D77 — couche I écrite-avant-code : huit spécifications tls + deux révisions http) ; M0–M3 inchangés | constaté (D77) |
 
@@ -2110,7 +2115,7 @@ rejeté (append-only : la correction vit dans l'Entrée 230 et D197).
 | Diff chirurgical | Itération terrain dont l'audit vérifie qu'aucun octet hors des zones autorisées n'a changé |
 | Fuzzing à propriétés | Génération d'entrées aléatoires contraintes, vérifiées par propriétés (jamais de crash, domaines de retour, bornes mémoire) — cœur du jalon M3 |
 | Coffre-fort des phrases maîtresses | Conteneur chiffré TRIADE-CF1 centralisant toutes les phrases maîtresses d'un projet (D75, § 17.3) — l'outil vit dans le dépôt, le conteneur jamais |
-| Phrase de contrôle | Secret ouvrant le coffre-fort — sous garde durable depuis D81 : `PHRASE-CONTROLE-COFFRE.txt` au dépôt et au racine du coffre Drive, sauvegardé AVANT toute autre action dès production (§ 17.3) |
+| Phrase de contrôle | Secret ouvrant le coffre-fort — sous séquestre à seuil depuis le 19 novembre 2026 (D223) : répartie en CINQ parts à seuil TROIS, AUCUNE phrase en clair au dépôt ni au coffre Drive, la reconstitution à froid de trois parts l'unique voie (§ 17.3) ; l'histoire D81 (le fichier-remise au dépôt) est datée du 4 au 19 novembre 2026 |
 
 - **Époque** — compteur u64 du coffre CF3, incrémenté à chaque clôture : l'horloge de la métamorphose et le témoin anti-retour.
 - **Piège** — la moitié S_piège de la clé CF3, vivant exclusivement sur le média séparé ; sans elle, le déverrouillage est impossible.

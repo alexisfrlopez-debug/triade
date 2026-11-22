@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# TRIADE — AVANT chaque push : LA GARDE DE SECRETS SUR LA PLAGE POUSSÉE
+# (h66o54pjd, la vague 13). Installé dans .git/hooks/pre-push ; le modèle
+# vit dans git-hooks/pre-push.
+#
+# LA PLAGE : tout fichier introduit ou modifié entre la tête locale et la
+# tête du distant (la plage du push) — LA MÊME GARDE que le pre-commit
+# (empreintes + entropie + motifs), le contenu examiné, PAS le nom seul :
+# un secret qui aurait échappé au commit est attrapé AVANT le départ.
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+cd "$ROOT" || exit 1
+REMOTE_REF="${2:-refs/heads/main}"
+
+# la plage poussée : les fichiers de la diff tête locale..distant
+TETE_DISTANTE=$(git ls-remote origin main 2>/dev/null | cut -f1)
+if [ -n "$TETE_DISTANTE" ]; then
+    FICHIERS=$(git diff --name-only --diff-filter=ACM \
+        "$TETE_DISTANTE"..HEAD 2>/dev/null | \
+        grep -E '\.(py|md|txt|json|tex|html|sh|yml|yaml|toml|cfg|ini|asm|js|ts|bat|c|h|cpp|d)$' || true)
+else
+    FICHIERS=$(git diff --name-only --diff-filter=ACM HEAD 2>/dev/null | \
+        grep -E '\.(py|md|txt|json|tex|html|sh|yml|yaml|toml|cfg|ini|asm|js|ts|bat|c|h|cpp|d)$' || true)
+fi
+[ -z "$FICHIERS" ] && exit 0
+
+python3 scan_secrets.py $FICHIERS
+RC=$?
+if [ $RC -ne 0 ]; then
+    echo ""
+    echo "[pre-push] REFUS : un secret connu ou une chaîne à haute entropie vit"
+    echo "à la plage poussée — le push REFUSÉ (la garde h66o54pjd). Le secret ne"
+    echo "quitte JAMAIS le dépôt local."
+    exit 1
+fi
+exit 0

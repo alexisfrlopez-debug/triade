@@ -1,0 +1,130 @@
+LE RAPPORT DE LA PURGE v13 — h66o54pjd (la vague 13)
+======================================================
+Le plan gelé sha256:fad85402de72df9d… AVANT toute modification ; les
+remplacements ancrés (REFUS si une ancre manque — zéro refus vécu) ; les
+pièces historiques datées demeurent ; AUCUN coffre réel, aucune phrase
+réelle (D105 — du texte seul).
+
+(1) LE RECENSEMENT EXHAUSTIF ET LES CORRECTIONS
+-------------------------------------------------
+LE RECENSEMENT par code (le référent de phrase à proximité d'un verbe
+d'écriture de dépôt, le vocabulaire ÉLARGI : fichier-remise · garde
+durable · phrase de contrôle · remise · PHRASE-CONTROLE) sur les sources
+du Livre v1.6, de la spec v0.15.7, du PROTOCOLE_TRIADE.md et du
+FORMAT_CARTE.md : CHAQUE occurrence classée PRESCRIPTIF (corrigée vers
+LA GARDE ACTIVE D223 — le séquestre 5/3, la reconstitution à froid de
+TROIS parts, la phrase en AUCUN dépôt, le refus nommé) ou HISTORIQUE-
+DATÉE (bornée, annotée).
+
+LES CIBLES NOMMÉES DU PLAN, TOUTES CORRIGÉES :
+  — spec sec-cf.tex Tableau 14 CF1 : « garde durable de la phrase
+    (D81) » → l'arbitrage du développeur (D137, la garde active D223) ;
+  — spec sec-cf.tex §12.5 : « CF1 — la garde durable de la phrase » →
+    la garde à l'arbitrage, la D223 la forme vécue ;
+  — spec sec-d.tex §14.3 : LE SPLICE réparé par RÉÉCRITURE COMPLÈTE (le
+    fragment « la phrase ne vit plus au … racine du coffre Drive, AVANT
+    toute autre action » — la coupure de la passe vague 12) ;
+  — spec sec-a.tex:328-340 : l'énoncé PÉRIMÉ « le coffre réel DEMEURE à
+    la garde D81 » porté à l'état courant (le séquestre vécu le
+    19 novembre, D220/D223) ;
+  — spec sec-a.tex:516 : le modèle de menace DATÉ (l'époque D81 : deux
+    éléments trivialement disponibles → depuis D223 : UN élément, la
+    confidentialité au seuil) ;
+  — PROTOCOLE l.1355/1374 (les tables CF1 et l'exigence §12.5),
+    l.1398 (la table des cérémonies — la remise D81 bornée datée),
+    l.1708-1712 (§17.3 — l'instruction prescriptive RÉÉCRITE vers la
+    garde D223, l'histoire D81 datée entre parenthèses), l.2113 (le
+    glossaire), l.294-299 (le bloc D81 du §3 — l'instruction manquante
+    du recensement, corrigée), l.1245/1532/1851/1967 (les rangées de
+    table portées à l'histoire datée) ;
+  — FORMAT_CARTE l.310-315 (la description de la garde) et l.355-360
+    (les instructions (4) et (5) — la production et la restauration à
+    la cérémonie de reconstitution, JAMAIS le dépôt).
+
+LES PHRASES CASSÉES RÉPARÉES PAR RÉÉCRITURE COMPLÈTE DES PARAGRAPHES :
+  — le Livre §7.5 (LES FRONTIÈRES) : le splice « tant que… depuis
+    que… » — le paragraphe portait DEUX fragments contradictoires cousus
+    (la passe vague 12) ; le paragraphe entier réécrit : la cérémonie A
+    ÉTÉ VÉCUE le 19 novembre 2026, les DEUX états datés, le présent
+    énonce le second ;
+  — le Livre §8.2 item 7 : « tant qu'elle est VÉCUE » — le membre
+    fautif (la cérémonie n'est plus AU COMMANDEMENT, elle est AU PASSÉ) ;
+    l'item entier réécrit ;
+  — le §2.3 vérifié refermé (D245 — la parenthèse fermée, la lecture
+    intégrale vécue).
+
+(2) LES MÉTADONNÉES v1.7 / v0.15.8
+------------------------------------
+LE LIVRE v1.7 : l'en-tête main.tex, le fancyhead, le pdftitle, la
+couverture (la révision v1.7, la série), l'avant-propos (v1.7 /
+l'édition courante v0.15.8), le titre du merge, le pied — LA PLAGE
+DÉCISIONNELLE réelle D75–D250.
+
+LA SPEC v0.15.8 : l'en-tête, le fancyhead, le pdftitle, la
+correspondance — D236 PORTÉE à l'annexe B (la plage étendue D75–D250,
+les VINGT-DEUX rangées D229–D250 consignées : les OPT-11 à OPT-15, les
+ateliers de la vague 12, la release v0.22.1).
+
+LES DEUX PDF RECONSTRUITS : le Livre final.pdf [29 p.] sha256
+0f34ef3809474c73… (weasyprint + tectonic + merge, le titre v1.7) · la
+spec main.pdf [69 p.] sha256 028b4f1914c13a4e… (tectonic).
+
+(3) LE LINTER DOCUMENTAIRE ÉTENDU
+-----------------------------------
+LA RÈGLE au vocabulaire ÉLARGI : « aucun verbe d'écriture de dépôt à
+l'UNITÉ (phrase ou ligne de table) d'un référent de phrase, hors
+marqueur d'époque daté » — la portée À L'UNITÉ (la fenêtre ±200 de la
+vague 12 traversait les phrases : l'unité est la portée, jamais le
+voisinage lointain) ; la « remise » NUE couverte seulement au contexte
+PHRASE (la remise du SCEAU — sceau_I.py, la graine Ed25519, les arbres
+signés — est UNE AUTRE remise, légitime au dépôt, jamais confondue).
+
+LE LINT DES CHAÎNES DE VERSION : les couvertures/avant-propos/tables
+portent la version courante (Livre == v1.7, spec == v0.15.8) ; les
+déclarations d'édition courante périmées REFUSÉES (les correspondances
+« vX → vY » demeurent datées par construction).
+
+LE CONTRÔLE NÉGATIF VÉCU : l'instruction D81 synthétique réinjectée à
+une COPIE → REFUS nommé au premier nom (le référent + le verbe, hors
+marqueur d'époque) ; la réinjection retirée.
+
+(4) LA GARDE PRE-COMMIT/PRE-PUSH ÉTENDUE
+------------------------------------------
+LA DÉTECTION PAR EMPREINTES ET ENTROPIE (l'amendement consigné) :
+scan_secrets.py porte LES DEUX faces — (1) LES EMPREINTES sha256 des
+secrets connus (la phrase-marqueur publique D105, les classes jeton
+GitHub ghp_/PAT, secret OAuth GOCSPX-, clé privée PEM, refresh 1//0,
+clé API sk-) ; (2) L'ENTROPIE Shannon (les assignations ≥ 28 car. aux
+clés de secret nommées, ≥ 3,8 bits/car — les chemins, les empreintes
+publiées et les base64 des pièces publiques exclus par motif).
+
+LES HOOKS committés et installés : git-hooks/pre-commit (la diff
+staged) et git-hooks/pre-push (LA PLAGE POUSSÉE tête locale..distant) —
+le secret ne quitte JAMAIS le dépôt local.
+
+LES CONTRÔLES VÉCUS : le secret synthétique réinjecté à une copie → le
+commit REFUSÉ au premier nom (la classe, le fichier, la ligne) ; la
+pièce saine committable ; LE FAUX POSITIF NUL sur l'état courant
+(5 196 pièces examinées, 0 détection).
+
+(5) LA SIMULATION DU RUNBOOK
+------------------------------
+LE RUNBOOK §8 DÉROULÉ sur clone à phrase publique marquée D105 : LES
+HUIT étapes mécaniques sans écriture de dépôt (le fichier-phrase jamais
+suivi, le marqueur jamais committé) ; LE GESTE PIÈGE (git add du
+fichier-phrase) REFUSÉ au premier nom (la garde installée au clone —
+l'installation fait partie du runbook réel) ; LA VARIANTE RENOMMÉE (le
+contenu sous un autre nom de fichier) REFUSÉE AUSSI — la garde est au
+CONTENU, pas au nom ; LE SCAN COMPLET de l'historique : le marqueur
+public vit aux SEULES pièces de consignation nommées (les ateliers des
+vagues 11-13 qui documentent le test — classées CONSIGNATION, jamais
+des fuites ; le clone d'exécution vague-12 retiré du plan de travail).
+
+LA VÉRIFICATION (verifier_h66o54pjd.py) : 16/16 VERT — le grep
+multi-motifs sur les DEUX PDF régénérés : ZÉRO occurrence prescriptive
+(les occurrences restantes toutes classées HISTORIQUE-DATÉE ou ÉNONCÉ
+DE LA GARDE : « est REFUSÉ », « JAMAIS écrite au dépôt ») ; la relecture
+intégrale des paragraphes réparés (zéro splice, zéro phrase tronquée) ;
+le runbook vert ; le linter vert ; les versions aux PDF exactes ;
+aucune édition courante périmée déclarée ; la garde à double face
+verte ; le sceau 14/14.

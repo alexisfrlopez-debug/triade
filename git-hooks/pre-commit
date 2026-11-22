@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# TRIADE — AVANT chaque commit : LA GARDE DE SECRETS (h66o54pjd, la vague 13).
+# Installé dans .git/hooks/pre-commit ; le modèle vit dans git-hooks/pre-commit.
+#
+# LA GARDE (l'amendement consigné append-only) : la détection par
+# EMPREINTES sha256 des secrets connus + ENTROPIE Shannon (les
+# assignations ≥ 28 car. à ≥ 3,8 bits/car) + les MOTIFS de classe
+# (ghp_…, GOCSPX-…, PEM, refresh 1//0…) — sur le CONTENU des fichiers
+# de la diff, PAS seulement leur nom. Un secret connu sous TOUT nom de
+# fichier est attrapé.
+#
+# LE REFUS NOMMÉ : la première détection refuse le commit au premier nom
+# (la classe, le fichier, la ligne) — jamais un avertissement silencieux.
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+cd "$ROOT" || exit 1
+
+# les fichiers texte de la diff (les binaires épargnés — les .exe scellés)
+FICHIERS=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null | \
+    grep -E '\.(py|md|txt|json|tex|html|sh|yml|yaml|toml|cfg|ini|asm|js|ts|bat|c|h|cpp|d)$' || true)
+[ -z "$FICHIERS" ] && exit 0
+
+python3 scan_secrets.py $FICHIERS
+RC=$?
+if [ $RC -ne 0 ]; then
+    echo ""
+    echo "[pre-commit] REFUS : un secret connu ou une chaîne à haute entropie vit"
+    echo "à la diff — le commit REFUSÉ (la garde h66o54pjd, la classe et la ligne"
+    echo "citée ci-dessus). Si la chaîne est légitime (une pièce publique nommée),"
+    echo "porte-la à PIECES_NOMMEES de scan_secrets.py avec sa raison — jamais en"
+    echo "silence."
+    exit 1
+fi
+exit 0
