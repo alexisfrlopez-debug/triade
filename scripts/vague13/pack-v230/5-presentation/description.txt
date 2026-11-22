@@ -1,0 +1,1 @@
+La présentation v230 — les points de la vague 13 (le couloir GHASH, la requalification, la ventilation, TPL-ADD-v3, la purge v13, la génération v0.23.0), la table des statuts, LES EMPREINTES SHA-256 DES QUATRE AUTRES PIÈCES GRAVÉES (la convention : aucun document ne porte son propre sha-256, le manifeste du pack porte les cinq).

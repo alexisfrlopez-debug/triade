@@ -55,7 +55,10 @@ Empreintes des données embarquées & conformes & hachage vs carte \\
 Défauts ouverts par classe T1–T6 & 0 & journal des décisions \\
 Optimisations sans mesure (R11) & 0 & journal d'optimisation \\
 Budgets tokens (localiser / éditer / ajouter) & $\leq$ 64 / 3 000 / 6 000 &
-instrumentation — mesurés M1 : 51 / 719 / 1 088 (D31) \\
+instrumentation — adoptés : 627 (hiérarchique, D222) / 674
+(TPL-EDIT-v1, OPT-14) / 2~200 (squelette, OPT-14), la faisabilité
+3/18 puis 5/18 puis 6/18 ; les M1 51 / 719 / 1 088 (D31) historiques
+datés \\
 Suite de conformité par profil actif & verte & suite du profil \\
 Changements hors journal des décisions & 0 & diff vs journal \\
 Pré-versions correctement balisées (dev / rc / final) & 100 \% & registre des balises \\
@@ -83,8 +86,8 @@ phrase de contrôle sous séquestre à seuil (D183/D223, la garde VÉCUE
 depuis le 19 novembre 2026 : la phrase répartie en CINQ parts à seuil
 TROIS, AUCUNE phrase en clair au dépôt ni au coffre Drive — la
 cérémonie de reconstitution à froid de trois parts est l'unique voie,
-le refus nommé D223 garde la ligne ; l'histoire D81 — la phrase au
-fichier-remise — est datée du 4 au 19 novembre 2026), Argon2id aux
+le refus nommé D223 garde la ligne ; l'histoire D81 DATÉE du 4 au 19 novembre 2026 — la phrase au
+fichier-remise d'alors —, Argon2id aux
 planchers de la carte au repos puis HKDF à contexte dédié, XChaCha20-Poly1305 avec
 l'en-tête clair pour AAD, écriture atomique 0600, autotest de falsification exigé à
 chaque installation. Le conteneur chiffré s'exporte tel quel vers le coffre Drive du
@@ -1553,7 +1556,7 @@ menace porte l'état vécu ; le runbook § 7.5 du Livre au statut VÉCU \\
 \end{tabularx}
 \end{table}
 
-\section{Tableau décisionnel du coffre-fort (D75--D250)}\label{sec:annexedecisions}
+\section{Tableau décisionnel du coffre-fort (D75--D251)}\label{sec:annexedecisions}
 
 Le journal complet vit dans \code{docs/DECISIONS.md} ; les entrées ci-dessous sont
 celles qui touchent le coffre, sa garde et ses cérémonies — une ligne chacune, la
@@ -1785,26 +1788,27 @@ D225 & 20 nov. 2026 & Le certificat de cristallisation, le double moteur à l'ou
 D226 & 20 nov. 2026 & Les deux couloirs de performance : la parité SSE2 baseline (0,03$\times$ gcc-O2) et les chemins ISA (OPT-08) \\
 D227 & 20 nov. 2026 & Le coût en tokens au-delà d'OPT-05 : le compilateur d'oracle, la bibliothèque de gabarits, les ratios au plancher (OPT-09) \\
 D228 & 20 nov. 2026 & Le tableau de bord des quatre axes et la cohérence du pack v0.20.0 \\
-D229 & 20 nov. 2026 & La vague 9 en une ligne : la sécurité au plancher sans céder un point (OPT-09) \\
-D230 & 20 nov. 2026 & La fenêtre de relecture de l'édition (OPT-10) \\
-D231 & 20 nov. 2026 & La vague 10 exécutée : l'édition v0.21.0 née, la réhabilitation H5 portée \\
-D232 & 21 nov. 2026 & Les couloirs SIMD mesurés sur matériel (OPT-11) \\
-D233 & 21 nov. 2026 & La boucle porteuse AES-NI à la cible, le cache de round-trip, la cristallisation incrémentale (OPT-12) \\
-D234 & 21 nov. 2026 & Le quatrième bras C+G+ : H-CGP2 confirmée, la ventilation trois-effets (OPT-13) \\
-D235 & 21 nov. 2026 & Le gabarit versionné, le localiser hiérarchique, l'ajout par squelette (OPT-14) \\
-D236 & 21 nov. 2026 & La purge des instructions de remise D81 : le séquestre 5/3 est la garde active, le dépôt public \\
+D229 & 20 nov. 2026 & La vague 10 exécutée : les six instructions à leurs pièces, l'édition v0.21.0 née \\
+D230 & 20 nov. 2026 & La faute SSE2 nommée et la re-mesure aux baselines équitables \\
+D231 & 20 nov. 2026 & Le troisième bras C+G : l'effet notation isolé de la gouvernance seule \\
+D232 & 20 nov. 2026 & Les 92 accès à 100\,\% déchargé-ou-gardé, la non-interférence étendue, la soundness du lifter \\
+D233 & 20 nov. 2026 & La fenêtre de relecture de l'opération éditer (OPT-10) \\
+D234 & 20 nov. 2026 & La réconciliation du score, du ratio et de l'axe, le registre neutre : l'édition v0.21.0 close \\
+D235 & 20 nov. 2026 & Les couloirs SIMD à la marge : l'hybride memchr+memcmp, l'AVX2 à dispatch et repli, le SHA-NI au corps \\
+D236 & 21 nov. 2026 & La purge des instructions de remise D81 (l'histoire datée du 4 au 19 novembre 2026) : le séquestre 5/3 est la garde active, le dépôt public \\
 D237 & 21 nov. 2026 & La boucle porteuse AES-NI à 7,09 cycles/bloc, le cache de round-trip 680$\times$, la cristallisation incrémentale au graphe réel (OPT-12 consigné) \\
-D238 & 21 nov. 2026 & Les six kits pré-enregistrés sans résultat (la règle des kits) \\
+D238 & 21 nov. 2026 & Le quatrième bras C+G+ : l'effet notation propre confirmé, la ventilation trois-effets (OPT-13) \\
 D239 & 21 nov. 2026 & Le lifter au domaine validé : 942 encodages zéro divergence \\
-D240 & 21 nov. 2026 & Les errata et le linter : le plancher natif 27,5, le ratio 24,5$\times$ \\
-D241 & 21 nov. 2026 & La clôture de la vague 11 : l'édition v0.22.0 née aux cinq documents \\
-D242 & 21 nov. 2026 & Le TPL-ADD-v2 au dictionnaire de domaine versionné (OPT-15) \\
-D243 & 21 nov. 2026 & L'édition v0.22.0 : les corrections (a)-(f) portées, le linter v220 à tout token numérique \\
+D240 & 21 nov. 2026 & Les six kits pré-enregistrés des lignes « awaiting » sans résultat (la règle des kits) \\
+D241 & 21 nov. 2026 & La prose saisie aux trois opérations : le gabarit versionné, le localisateur hiérarchique, l'ajout par squelette (OPT-14) \\
+D242 & 21 nov. 2026 & Le durcissement du coffre sur copies de laboratoire, le modèle z3 aux invariants \\
+D243 & 21 nov. 2026 & L'édition v0.22.0 née : les corrections (a)-(f) portées, le linter v220 à tout token numérique \\
 D244 & 21 nov. 2026 & La recomposabilité des ratios publiés : les canons non arrondis exigés, le census 559 sommé par code \\
 D245 & 21 nov. 2026 & L'erratum de la purge D81 nommé : la purge au périmètre sémantique exacte \\
 D246 & 21 nov. 2026 & La machinery générative : 30\,000 traces à zéro divergence, aucun résultat produit \\
 D247 & 21 nov. 2026 & Le double moteur généralisé : la divergence zéro aux trois moteurs \\
-D248 & 21 nov. 2026 & Le coffre durci : les sept gestes sur copies de laboratoire, le modèle z3 aux invariants \\
+D248 & 21 nov. 2026 & Le TPL-ADD-v2 au dictionnaire de domaine versionné, la cible pré-enregistrée manquée nommée (OPT-15) \\
 D249 & 21 nov. 2026 & La marge vierge consacrée : les variantes aux marges ne touchent jamais les scellés \\
 D250 & 21 nov. 2026 & La release v0.22.1 : la corrective de l'édition v0.22.0, le concept Zenodo résolvant \\
+D251 & 22 nov. 2026 & L'édition v0.23.0 née : les écarts (a)-(f) portés aux pièces, la voix « présent édition » unique, le changelog gelé, les abstracts alignés aux mêmes canons \\
 \end{longtable}

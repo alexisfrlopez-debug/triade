@@ -1,0 +1,138 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION v0.23.0 (la vague 13)
+=========================================================
+(l'exécution des six instructions : 0g3400vql, q8kugkpdu, 5nwnwoceo,
+ay6zuzm8o, ylrzmlbn8, h66o54pjd ; les plans gelés AVANT toute mesure,
+le commit b2fbcf8 précédant la première donnée, les empreintes sha256
+des six plans consignées à EMPREINTES-PLANS-VAGUE13.txt ; la génération
+v0.23.0 REPRISE après la mort de la session au recyclage du bac — les
+cinq ateliers committés aux rapports verts, la génération achevée à la
+reprise aux gestes ancrés nommés au présent rapport)
+
+V1 — LE LINTER v230 AUX CINQ PIÈCES : 71 VERT, 0 ROUGE.
+     L'EXTRACTION INTÉGRALE : 4 993 tokens numériques extraits des cinq
+     pièces (manuscrit 1 817 · spécification 1 646 · Livre 566 · preuves
+     812 · présentation 152), CHACUN confronté aux QUATRE classes
+     nommées — (1) LES CANONS BRUTS (2 516 valeurs relues des CSV/JSONL/
+     registres/rapports des ateliers, les vagues 9 à 13) ; (2) LES
+     ARITHMÉTIQUES DÉRIVÉES (242 valeurs recalculées par code : les
+     sommes, les médianes par poste, les ratios, LES COMPTES DES
+     JOURNAUX VIVANTS recalculés des fichiers mêmes) ; (3) LES
+     HISTORIQUES DATÉS (589 valeurs, chaque liste datée de son édition) ;
+     (4) LA CLASSE STRUCTURELLE (les identifiants D/OPT/RQ/H/CF, les
+     blocs, les dates, les versions, les graines, les normes, les DOI
+     Zenodo, LES NUMÉROS D'ENTRÉE DU WORKLOG, LES ISBN BIBLIOGRAPHIQUES).
+     L'AMBIGUÏTÉ FR/EN TRANCHÉE PAR LA LANGUE DE LA PIÈCE (la virgule
+     millier au manuscrit anglais, décimale aux pièces françaises —
+     chaque token UNE lecture). LE CORRECTIF D'ALIGNEMENT DES CONTEXTES
+     (la reprise) : chaque étage de tokenisation tranche SON contexte de
+     SA chaîne propre — les tranches antérieures, prises du texte
+     original aux positions du texte substitué, DÉRIVAIENT : la règle
+     structurelle voyait la fenêtre d'un autre token (le vécu : le
+     « 383 » des Entrées privé de son « Entrées » ; l'ISBN de la
+     bibliographie admis au « O3 » d'un gcc -O3 étranger — LA FAUSSE
+     ADMISSION nommée, jamais une couverture). LES VERSIONS CROISÉES
+     (v0.23.0 ↔ spec v0.15.8 ↔ Livre v1.7), les DOI (le 24420007 au jour
+     de la rédaction, les dépôts antérieurs datés), LES CORRECTIONS
+     (a)-(f) aux marqueurs nommés, LES CANONS DE LA VAGUE 13 (le GHASH
+     PCLMULQDQ, la requalification des gardes et des exclusions, la
+     ventilation quatre bras, TPL-ADD-v3, la purge v13), LE CONTRÔLE D81
+     (le motif aux contextes historiques admis à la table nommée), LES
+     EMPREINTES SHA-256 RECALCULÉES et confrontées (les quatre à la
+     présentation, les trois aux preuves, les cinq au manifeste).
+
+V2 — LE CONTRÔLE NÉGATIF du linter : LES divergences volontaires
+     injectées — la somme mémoire mutée « 2,098 » → « 2,198 » au
+     MANUSCRIT, le compte médiés muté « MÉDIÉS 348 » → « MÉDIÉS 338 »
+     aux PREUVES ET le ratio ajouter muté « −28.4 » → « −28.5 » —
+     REFUSÉES au premier nom (l'extraction intégrale : 2198 et 338 hors
+     les quatre classes ; l'exige : « MÉDIÉS 348 » absent ; le ratio :
+     recalcul −28.44 contre le publié muté) ; après retrait, le build
+     admis (71 VERT 0 ROUGE).
+
+V3 — LES EMPREINTES DES ARTEFACTS SCELLÉS : INTACTES (la garde du sceau
+     14/14 re-vérifiée avant et après la génération — les quatorze
+     arbres VERTS, les quatre pièces scellées aux ancres R7 : loupe.exe
+     c1115105… · proxy.exe 446279f3… · selftest.exe 8038585b… ·
+     demo.exe df8f2e50…).
+
+V4 — LA PARTITION EXACTE DE LA BATTERIE 559 (la correction (a)) : la
+     décomposition « 16 queue-16 + 3 queue-fin + 4 chevauchants +
+     13 longueurs + 3 pages + 8 multi + 512 property-based = 559
+     EXACTEMENT » publiée aux pièces, la coquille « 64+3 » de la v0.22.0
+     (qui sommait à 607) corrigée, la liste nominale des longueurs
+     (1,2,3,4,15,16,17,18,19,20,31,32,33) publiée une fois — les
+     « 13 longueurs » et « 1–33 » exacts ENSEMBLE ; l'erratum
+     append-only au texte des preuves v0.23.0, le rapport fnvan0zes
+     demeuré verbatim.
+
+V5 — LES CORRECTIONS (c)-(f) PORTÉES : (c) LES OPÉRANDES NON ARRONDIS
+     de chaque ratio (le « −28,5 % » corrigé en −28,4 % partout, les
+     macros d'opérandes 3 073,5 → 2 199,5 · 1 053 → 627 · 1 106 → 674 ;
+     LE CANON DU CACHE RECOMPOSÉ AU CORPS : 285.725 → 0.418 ms =
+     ×683.6 — la ligne v0.22.0 « 283.7 → 0.4, ×680.6 » laissait le
+     lecteur à ×709) ; (d) LES ABSTRACTS EN ET FR DEPUIS LES MÊMES
+     MACROS (le résumé FR ne titre plus les valeurs d'époque, l'abstract
+     EN — demeuré à l'état v0.22.0 par la passe morte — aligné à la
+     reprise : la médiane titrée 627, la faisabilité 3/18 puis 6/18, la
+     table canonique aux deux langues) ; (e) LA TABLE CANONIQUE DES
+     BUDGETS ADOPTÉS (chaque valeur à ID de décision, périmètre et
+     statut ; le dashboard de la spec — Tableau 19 — ALIGNÉ, les
+     budgets M1 historiques datés) ; (f) « SETTLED » SCOPÉ (la dérivation
+     outillée zéro divergence, la récitation pure 0/64 le gap de
+     capacité nommé).
+
+V6 — LA REPRISE DE LA SESSION MORTE (les constats nommés, les gestes
+     ancrés) : les en-têtes pdftitle/running-header périmés v0.22.0
+     portés à v0.23.0 ; LA COQUILLE « 599 » corrigée (la batterie est
+     559 — le faux chiffre passait inaperçu au linter par couverture
+     fortuite d'un canon brut) ; LA CLAUSE DUPLIQUÉE du résumé FR
+     fusionnée (le recouvrement des remplacements (c-FR)/(d)) ; les
+     plages d'Entrées portées à 305–383 ; la disponibilité des données à
+     v0.22.1 au jour de la rédaction (le DOI 24420007, les dépôts
+     antérieurs datés, les archives aux noms v0.23.0) ; L'ANNEXE B DE LA
+     SPEC RÉALIGNÉE sur le journal des décisions (la passe morte
+     h66o54pjd avait posé les rangées D229–D250 aux contenus décalés —
+     chaque rangée réécrite à SA décision, la rangée D251 ajoutée, le
+     titre à D75–D251) ; la faisabilité de l'ajout au corps aux trois
+     passes (3 → 5 → 6, le gap DÉPLACÉ nommé par classe).
+
+V7 — LES RÉSULTATS DE LA VAGUE 13 AUX PIÈCES : LE COULOIR GHASH EN
+     PCLMULQDQ (karatsuba 64,04 c · schoolbook 63,39 c contre le scellé
+     806,35 c — le gain 12,6×, la cible ≤ 80 c ATTEINTE ; l'AES-GCM
+     complet face à OpenSSL EVP — 7,556 c/octet à 4096, la composition
+     1,2× devant EVP au message de 64 octets) ; LES TROIS
+     REQUALIFICATIONS (les 58 gardes conditional assumption-discharged,
+     le TCB 24+23+11, les 15 exclusions proved-argued-bounded, le
+     Tamarin v2 sans restriction) ; LA VENTILATION QUATRE BRAS AUX
+     VOLUMES ÉGALISÉS (la part notation intrinsèque 5,5 % — H-CGP3
+     TENUE, l'effet « notation » de la vague 11 était l'implémentation
+     de vérification) ; TPL-ADD-v3 (la grammaire publiée, la boucle de
+     réparation, la faisabilité 6/18, le coût 3 844 par changement
+     validé, l'édition 18/18 à 712) ; LA PURGE v13 (le Livre v1.7 et la
+     spec v0.15.8, la garde pre-commit/push par empreintes et entropie).
+
+V8 — LES ABSTRACTS EN/FR COMPARÉS CHAMP À CHAMP PAR SCRIPT
+     (comparer_abstracts_v230.py, la reprise) : 17 CHAMPS COMPARÉS, ZÉRO
+     écart de valeur (les journaux vivants, la plage décisionnelle, les
+     trois médianes adoptées, les trois ratios, les opérandes non
+     arrondis, la faisabilité, les mesures d'époque, la campagne
+     générative) ; les quatre champs de composition (la batterie de
+     mutation, les constantes de l'oracle, la récitation pure) présents
+     à une seule pièce, NOMMÉS.
+
+V9 — LE PACK TRIADE_presentation_v0.23.0.zip [12 fichiers] : les cinq
+     pièces régénérées et cohérentes (manuscrit v0.23.0, spec v0.15.8,
+     Livre v1.7, preuves v0.23.0, présentation v230) aux empreintes
+     consignées au manifeste, les descriptions, le LISEZMOI — relu
+     pièce à pièce au dézippage, chaque empreinte re-vérifiée.
+
+V10 — L'ÉDITION NÉE ET LES GAPS NOMMÉS : le manuscrit v0.23.0 à la voix
+     « présent édition » unique, le changelog gelé des vagues
+     (v0.14.0 → v0.23.0), chaque nombre via macro sourcée ; le
+     refactoring du corps à l'état courant unique. LES GAPS (jamais
+     simulés, jamais re-tirés) : la seconde machine (une seule au bac) ;
+     le plancher de débit mesuré sur la machine virtualisée (le matériel
+     nu au terrain) ; tamarin-prover absent du bac (le modèle v2 hashé,
+     aucun verdict fabriqué) ; la cible TPL-ADD-v3 (≥ 17/18) MANQUÉE à
+     6/18 — le gap résiduel nommé par classe de refus, la boucle n'a
+     converti aucun refus ; la réplication indépendante à mener.

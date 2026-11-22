@@ -1,0 +1,12 @@
+LE PACK DE PRÉSENTATION TRIADE v0.23.0 — la vague 13
+====================================================
+
+LES CINQ DOCUMENTS : le manuscrit académique v0.23.0 (la génération aux six écarts corrigés, la voix « présent édition », le changelog gelé), la spécification v0.15.8 (la purge sémantique, le dashboard aligné), le Livre du Coffre v1.7 (la purge v13), les preuves et calculs v0.23.0 (les pièces verbatim + l'erratum de la partition 559 + la table des empreintes), la présentation v230 (les points de la vague, la table des statuts, les empreintes gravées).
+
+LA CONVENTION DES EMPREINTES : aucun document ne porte son propre sha-256 ; la présentation grave les quatre autres ; le document de preuves grave les trois pièces de contenu ; CE manifeste porte les cinq.
+
+LES SIX INSTRUCTIONS DE LA VAGUE 13 exécutées aux plans gelés avant toute mesure (le commit b2fbcf8, EMPREINTES-PLANS-VAGUE13.txt) : 0g3400vql (le couloir GHASH PCLMULQDQ et l'AES-GCM complet face à OpenSSL EVP), q8kugkpdu (les trois requalifications : les 58 gardes, les 15 exclusions, le Tamarin v2), 5nwnwoceo (TPL-ADD-v3 : la grammaire et la boucle de réparation), ay6zuzm8o (H-CGP3 : la ventilation quatre bras aux volumes égalisés), ylrzmlbn8 (la génération v0.23.0 : les écarts (a)-(f), les abstracts aux mêmes macros, le refactoring), h66o54pjd (la purge v13 : le Livre v1.7, la spec v0.15.8, la garde pre-commit/push).
+
+LA REPRISE : la session morte au recyclage du bac laissa la génération inachevée — la reprise porta les en-têtes périmés, la coquille « 599 », la clause dupliquée du résumé FR, la disponibilité des données, l'annexe B de la spec désalignée, l'abstract EN resté à l'état v0.22.0 — chaque constat nommé, chaque geste ancré.
+
+LES GAPS NOMMÉS (jamais simulés) : la cible TPL-ADD-v3 (≥ 17/18) manquée à 6/18 — le gap résiduel par classe de refus ; la seconde machine (une seule au bac) ; le plancher de débit mesuré sur la machine virtualisée ; tamarin-prover absent du bac (le modèle v2 hashé, aucun verdict fabriqué) ; la réplication indépendante à mener.

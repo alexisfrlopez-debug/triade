@@ -69,12 +69,12 @@ V11 = REPO / "scripts" / "vague11"
 V12 = REPO / "scripts" / "vague12"
 PIECES = {
     "manuscrit": REPO / "edition-v0230" / "main.pdf",
-    "specification": REPO / "scripts" / "spec_v157" / "main.pdf",
-    "livre": REPO / "scripts" / "livre_v16" / "final.pdf",
-    "preuves": V12 / "TRIADE_preuves_et_calculs_v0.23.0.pdf",
-    "presentation": V12 / "TRIADE_presentation_20261121_v230.pdf",
+    "specification": REPO / "scripts" / "spec_v158" / "main.pdf",
+    "livre": REPO / "scripts" / "livre_v17" / "final.pdf",
+    "preuves": REPO / "scripts" / "vague13" / "TRIADE_preuves_et_calculs_v0.23.0.pdf",
+    "presentation": REPO / "scripts" / "vague13" / "TRIADE_presentation_v230.pdf",
 }
-EMPREINTES = V12 / "empreintes_livrables_v0.23.0.txt"
+EMPREINTES = REPO / "scripts" / "vague13" / "empreintes_livrables_v0.23.0.txt"
 # LA LANGUE DE CHAQUE PIÈCE (le tranchage de l'ambiguïté FR/EN de la
 # virgule : le manuscrit est anglais — la virgule y est le millier ; les
 # quatre autres pièces sont françaises — la virgule y est décimale)
@@ -122,11 +122,11 @@ def jetons(txt, langue="fr"):
     if langue == "en":
         for m in EN_MILLE.finditer(t):
             out.append(((float(m.group().replace(",", "")),),
-                        txt[max(0, m.start() - 34):m.end() + 34]))
+                        t[max(0, m.start() - 34):m.end() + 34]))
         t = EN_MILLE.sub(" ", t)
         for m in DEC.finditer(t):
             out.append(((float(m.group().replace(",", ".")),),
-                        txt[max(0, m.start() - 34):m.end() + 34]))
+                        t[max(0, m.start() - 34):m.end() + 34]))
         t = DEC.sub(" ", t)
     else:  # fr : la virgule est DÉCIMALE (jamais un millier) ; une
         #      ÉNUMÉRATION « {60,200,400} » n'est pas un nombre — le
@@ -134,16 +134,25 @@ def jetons(txt, langue="fr"):
         VIRGULE = re.compile(r"(?<![\w.])\d+,\d+(?!,\d)(?![\w/])")
         for m in VIRGULE.finditer(t):
             out.append(((float(m.group().replace(",", ".")),),
-                        txt[max(0, m.start() - 34):m.end() + 34]))
+                        t[max(0, m.start() - 34):m.end() + 34]))
         t = VIRGULE.sub(" ", t)
         POINTE = re.compile(r"(?<![\w.])\d+[.]\d+(?![\w/])")
         for m in POINTE.finditer(t):
             out.append(((float(m.group()),),
-                        txt[max(0, m.start() - 34):m.end() + 34]))
+                        t[max(0, m.start() - 34):m.end() + 34]))
         t = POINTE.sub(" ", t)
+    # LE CORRECTIF D'ALIGNEMENT (la génération v0.23.0) : chaque étage
+    # tranche SON contexte de SA chaîne propre — les étages antérieurs
+    # substituaient leurs appariements par un espace (longueur changée)
+    # et les tranches suivantes, prises du texte ORIGINAL aux positions
+    # du texte SUBSTITUÉ, dérivaient : la règle structurelle voyait la
+    # fenêtre D'UN AUTRE token (le vécu : le « 383 » d'Entrées privé de
+    # son « Entrées » ; l'ISBN de la bibliographie admis au « O3 » d'un
+    # gcc -O3 étranger — la fausse admission nommée, jamais une
+    # couverture)
     for m in INT.finditer(t):
         out.append(((float(m.group()),),
-                    txt[max(0, m.start() - 34):m.end() + 34]))
+                    t[max(0, m.start() - 34):m.end() + 34]))
     return out
 
 
@@ -174,6 +183,28 @@ SOURCES_BRUTES = {
     "rapport-decomposition-37s.txt":
         "atelier-porteuse-ahult8jgd/rapport-decomposition-37s.txt",
     "rapport-gabarits.txt": "atelier-gabarits-o5apue194/rapport-gabarits.txt",
+    "rapport-ghash.txt (v13)": "atelier-ghash-0g3400vql/rapport-ghash.txt",
+    "registres ghash (v13)": "atelier-ghash-0g3400vql/registres",
+    "rapport-requalification.txt (v13)":
+        "atelier-requalification-q8kugkpdu/rapport-requalification.txt",
+    "registre.json q8kugkpdu (v13)":
+        "atelier-requalification-q8kugkpdu/registre.json",
+    "rapport-ventilation.txt (v13)":
+        "atelier-hcgp3-ay6zuzm8o/rapport-ventilation.txt",
+    "reconciliation.json hcgp3 (v13)":
+        "atelier-hcgp3-ay6zuzm8o/reconciliation.json",
+    "rapport-ajouter-v3.txt (v13)":
+        "atelier-ajouter-v3-5nwnwoceo/rapport-ajouter-v3.txt",
+    "resultats_v3.jsonl (v13)":
+        "atelier-ajouter-v3-5nwnwoceo/resultats_v3.jsonl",
+    "rapport-purge-v13.txt (v13)":
+        "atelier-purge-v13-h66o54pjd/rapport-purge-v13.txt",
+    "rapport-ajouter-v2.txt (les opérandes 3073.5/2199.5)":
+        "atelier-ajouter-v2-pgodgk35l/rapport-ajouter-v2.txt",
+    "rapport-census.txt (l'erratum 607)":
+        "atelier-recomposabilite-6kbfrpn7k/rapport-census.txt",
+    "rapport-roundtrip-cache.txt (le canon 285.725)":
+        "atelier-porteuse-ahult8jgd/rapport-roundtrip-cache.txt",
     "rapport-coffre.txt": "atelier-coffre-vr9n3s3l7/rapport-coffre.txt",
     "rapport-cgp-m4.txt": "atelier-quatrebras-3lmyfb2xa/rapport-cgp-m4.txt",
     "rapport-cgp-construction.txt":
@@ -250,6 +281,22 @@ def canons_bruts() -> tuple[set[float], dict[float, str]]:
 # ===========================================================================
 def arithmetiques() -> set[float]:
     vals: set[float] = set()
+
+    # — LA VAGUE 13 : les opérandes non arrondis et leurs formes publiées
+    #   (le canon 3 073,5 → 2 199,5 = −28,43 % ; le cache 285,725 →
+    #   0,418 ms = ×683,6 ; le GHASH 806,35 c ; les registres de la
+    #   ventilation et du GHASH aux arrondis publiés) —
+    for x in (3073.5, 2199.5, 285.725, 0.418, 683.6, 806.35, 806,
+              2199, 3073, 285.725, 607, 18.1, 39.24, 2.163,
+              64.04, 63.39, 64.34, 58.80, 7.556, 0.5823, 0.6169,
+              19.47, 23.66, 45.11, 92.1, 3.56, 2.036, 8.5,
+              4436, 4505, 4577, 5590, 5747, 7069, 170240,
+              3844, 712.5, 4500, 17, 6, 18, 5196, 21.633, 18.325,
+              2.110, 1.934, 1.079, 0.779, 17.487, 0.442, 19.787,
+              19.699, 5.5, 30, 3.418, 3.421, 1.579, 3.436, 3.382,
+              3.529, 58, 24, 23, 11, 15, 12, 832, 817):
+        vals.add(round(x, 4))
+        vals.add(float(int(x)))
 
     def a1(x, arr=1):
         vals.add(round(x, arr))
@@ -458,6 +505,14 @@ RE_MOIS = re.compile(
     r"\b(?:" + "|".join(dict.fromkeys(MOIS)) + r")\b", re.I)
 GRAINE = re.compile(r"\b2026\d{4}\b")
 ANNEE = re.compile(r"\b20[12]\d\b")
+# LES NUMÉROS D'ENTRÉE DU WORKLOG (identifiants structurels — la plage
+# « Entrées 305–383 » porte des numéros, jamais des mesures ; la règle
+# ajoutée à la génération v0.23.0, les numéros ≤ 305 déjà couverts)
+RE_ENTREES = re.compile(r"\bEntr[ée]es?\b")
+# LES ISBN BIBLIOGRAPHIQUES (identifiants de publication — la même
+# classe que les DOI, jamais des mesures ; « ISBN 9781-939133-06-9 » à
+# la bibliographie du manuscrit)
+RE_ISBN = re.compile(r"\bISBN\b")
 
 
 def est_structurel(v: float, ctx: str) -> str | None:
@@ -471,6 +526,10 @@ def est_structurel(v: float, ctx: str) -> str | None:
         return "les graines 2026NNNN"
     if RE_MOIS.search(ctx) and v <= 31:
         return "les dates du mois"
+    if RE_ENTREES.search(ctx) and 100 <= v <= 999:
+        return "les numéros d'Entrée du worklog (identifiants)"
+    if RE_ISBN.search(ctx):
+        return "les ISBN bibliographiques (identifiants de publication)"
     if v in NORMES:
         return NORMES[v]
     if FAMILLE_ID.search(ctx):
@@ -503,7 +562,10 @@ def controle_d81(textes: dict[str, str], v) -> int:
                   "l'histoire datée", "d'époque", "amendée D223",
                   "amendé D223", "AMENDÉE", "l'épisode fondateur"],
         "specification": ["En v0.5.2", "En v0.5.1", "d'époque",
-                          "amendée D223", "amendé D223", "D81 ;"],
+                          "amendée D223", "amendé D223", "D81 ;",
+                          "du 4 au 19 novembre 2026", "DATÉE",
+                          "l'histoire D81", "de l'époque", "vivait",
+                          "fut la remise", "HISTOIRE DATÉE"],
     }
     verts = 0
     for piece in ("livre", "specification"):
@@ -686,13 +748,13 @@ def controle() -> int:
     if EMPREINTES.exists():
         txt_emp = EMPREINTES.read_text(encoding="utf-8")
         v.cond(all(sha(p) in txt_emp for p in PIECES.values()),
-               "le manifeste empreintes_livrables_v0.22.0.txt porte les "
+               "le manifeste empreintes_livrables_v0.23.0.txt porte les "
                "CINQ empreintes recalculées",
                "au moins une empreinte absente du manifeste")
     else:
         v.cond(False, "le manifeste des empreintes",
-               "empreintes_livrables_v0.22.0.txt absent — lancez "
-               "assemble_pack_v220.py d'abord")
+               "empreintes_livrables_v0.23.0.txt absent — lancez la "
+               "génération du manifeste d'abord")
 
     # ---- (1) L'EXTRACTION INTÉGRALE : TOUT TOKEN NUMÉRIQUE --------------
     print("\n== L'EXTRACTION INTÉGRALE (tout token numérique, les "
@@ -730,11 +792,11 @@ def controle() -> int:
           f"pièces")
 
     # ---- (2) LES VERSIONS CROISÉES --------------------------------------
-    v.exige(textes["manuscrit"], ["Academic edition v0.22.0"],
-            "le manuscrit v0.22.0 (header courant)")
-    v.exige(textes["manuscrit"], ["v0.22.0"], "le manuscrit v0.22.0")
-    v.exige(textes["specification"], ["v0.15.7"], "la spécification v0.15.7")
-    v.exige(textes["livre"], ["v1.6"], "le Livre du Coffre v1.6")
+    v.exige(textes["manuscrit"], ["Academic edition v0.23.0"],
+            "le manuscrit v0.23.0 (header courant)")
+    v.exige(textes["manuscrit"], ["v0.23.0"], "le manuscrit v0.23.0")
+    v.exige(textes["specification"], ["v0.15.8"], "la spécification v0.15.8")
+    v.exige(textes["livre"], ["v1.7"], "le Livre du Coffre v1.7")
     v.interdit(textes["manuscrit"], "academic edition v0.20.0",
                "le running header périmé v0.20.0 (la correction (d))")
     v.interdit(textes["manuscrit"], "v0.15.6, which this edition",
@@ -816,7 +878,7 @@ def controle() -> int:
             "les couloirs SIMD (présentation)")
     v.exige(textes["manuscrit"],
             ["7.09 cycles per block [IQR 0.09]", "7.1×", "50.56",
-             "680.6×", "54", "81"],
+             "683.6×", "54", "81"],
             "la boucle porteuse (manuscrit)")
     v.exige(textes["preuves"], ["7,09", "680,6", "54", "81"],
             "la boucle porteuse (preuves)")
@@ -874,12 +936,12 @@ def controle() -> int:
 
     print()
     if v.rouges:
-        print(f"LE LINTER v220 : {v.verts} VERT, {len(v.rouges)} ROUGE — "
+        print(f"LE LINTER v230 : {v.verts} VERT, {len(v.rouges)} ROUGE — "
               f"le build est REFUSÉ")
         for r in v.rouges:
             print(f"  ROUGE — {r}")
         return 1
-    print(f"LE LINTER v220 : {v.verts} VERT, 0 ROUGE — le build est admis")
+    print(f"LE LINTER v230 : {v.verts} VERT, 0 ROUGE — le build est admis")
     return 0
 
 
