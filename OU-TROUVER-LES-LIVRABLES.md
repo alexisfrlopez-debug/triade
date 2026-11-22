@@ -51,6 +51,13 @@ vit à la racine du coffre Drive, au miroir `TRIADE-sauvegarde-git/` et
 au bac de la session — il est tenu par `scripts/drive_sync.py`
 (ROOT_PUSH).*
 
+## L'état (Entrée 386) — LA VAGUE 15 PARTIELLE : quatre ateliers exécutés, treize instructions au commandement du maître
+- `atelier-cf3-verdict-qa3k5putf/` — CF3-v3.spthy (les trois amendements v14 : parts fraîches, !PartAdverse/PartTenue, le lemme reformulé aux deux étages) + CF3-v3b (l'équation sdc éliminée, l'argument de la morte) + CF3-v3-negatif (la part publique transposée) + CF3-v3.pv (le port ProVerif aux six requêtes, les six écarts nommés) + le registre (les 36 avertissements par familles, les budgets/verdicts : L3 VERIFIED 1 122 pas ; L1/L2/T1/T2/T3 INCOMPLETE au mur 4 Go, LA VOIE nommée pour le poste réel) + la table des statuts
+- `atelier-entrelacement-2sown2h3z/` — LA MESURE DE COMPOSITION : le couloir ctr-v4i-ghash-agrege4.asm (0xF800) + le pilot (320 vecteurs ZÉRO ÉCART, mutant, repli 32/32, trace-hash, la table dérivée par le scellé) + le rig natif + LA MESURE 0,7271 c/octet@4096 (cible ≤2,0 TENUE ; OpenSSL EVP 0,5757 ; le repli 49,94) + KIT-METAL-NU.txt (le protocole ≥2 machines pré-enregistré)
+- `atelier-feedback-witgt6qta/` — L'OUTIL `triade feedback` : TRIADE-FEEDBACK-v1.schema.json (gelé par empreinte) + triade_feedback.py (la part measured extraite mécaniquement, les portes fail-closed, le gabarit d'issue, OFFLINE) + tests_feedback.py (les 7 contrôles vécus) + DOC-FEEDBACK.md (la consigne agent)
+- `atelier-triage-e1lr9i8ts/` — LE PIPELINE DE TRIAGE + LE DIGEST PAR RELEASE : triage_rapports.py (validation fail-closed par version de schéma, clustering mécanique, les décisions PROPOSÉES Dxxx jamais appliquées, le digest recomputable zéro divergence) + tests_triage.py (les 7 contrôles vécus)
+- LES DIX-SEPT PLANS de la vague 15 : PLAN-*.md + EMPREINTES-PLANS-VAGUE15.txt (gelés AVANT toute donnée, le commit 586edc9)
+
 ## La réponse courte — les livrables récents ( Entrées 251-279 )
 
 | Livrable | Bac de la session | Coffre /test | Miroir git |

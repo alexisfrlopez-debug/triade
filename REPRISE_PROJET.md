@@ -43,18 +43,25 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : la vague 14 est CLOSE (Entrée 384) ET LA GÉNÉRATION
-CORRECTIVE **v0.23.2** CLOSE (Entrée 385, 22/11/2026) — la session
-promise à l'Entrée 384 soldée : les CINQ pièces régénérées aux sources
-corrigées (io13olvxz), LE LINTER v232 étendu aux quatre règles nouvelles
-(153 VERT 0 ROUGE), LES TROIS PACKS à la version courante (la soumission
-ET LA PRÉSENTATION portées — la commande du maître « je n'ai pas la
-version presentation et soumission du pack dans zenodo » honorée), la
-version v0.23.2 PUBLIÉE au concept (record 24442951), la livraison au
-coffre ET les miroirs tenus. **LA VAGUE 15 attend ses instructions au
-commandement du maître.** La dernière vague close entièrement : six
-ateliers + release ; détail au worklog (Entrée 383 = vague 13, 384 =
-vague 14, 385 = la génération v0.23.2).
+**L'ÉTAT PRÉSENT** : la vague 15 EST PARTIELLE (Entrée 386, 22/11/2026) —
+les DIX-SEPT instructions déposées au coffre le 22/11 (la vague la plus
+large du projet) ; LES DIX-SEPT PLANS GELÉS + EMPREINTES-PLANS-VAGUE15
+(commit 586edc9 AVANT toute donnée) ; QUATRE ATELIERS EXÉCUTÉS aux
+sceaux 14/14 avant/après : qa3k5putf (CF3-v3 : L3 VERIFIED 1 122 pas ;
+L1/L2/T1/T2/T3 INCOMPLETE au mur mémoire 4 Go — LA VOIE pour le poste
+réel : --partial-evaluation + le temps ; le port ProVerif livré au run
+du poste réel), 2sown2h3z (LA MESURE SUIVANTE VÉCUE : 0,7271
+c/octet@4096 contre la cible pré-enregistrée ≤ 2,0 — TENUE au 36 % ;
+OpenSSL EVP 0,5757 en baseline ; le kit métal nu pré-enregistré),
+witgt6qta (l'outil `triade feedback` + le schéma TRIADE-FEEDBACK-v1
+gelé, les 7 contrôles vécus, DOC-FEEDBACK), e1lr9i8ts (le pipeline de
+triage + le digest par release recomputable, les 7 contrôles vécus).
+TREIZE INSTRUCTIONS DEMEURENT au coffre /instructions (k69mvt43j,
+8hguph5ee, yfkpml1j2, ab2vh5c2m, 0i4pkzbyr, 2i7iy3xmg, 3x9cf4e5d,
+vpcr7mh3t, zd316de39, m8qc10sxg, v2n6v8rao, gzxvze3py, vxf37231r) —
+LES PLANS SONT GELÉS à l'EMPREINTE, l'ordre exécutable tel quel, la
+vague NON CLOSE (on n'archive qu'exécuté), le /instructions DEMEURE
+CHARGÉ au commandement du maître. Détail au worklog (Entrée 386).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
