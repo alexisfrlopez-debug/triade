@@ -1,0 +1,226 @@
+{
+ "reconciliation": {
+  "T": {
+   "ecarts_max": 0.030999999999998806,
+   "runs": [
+    {
+     "run": 1,
+     "total": 22.137,
+     "somme": 22.118
+    },
+    {
+     "run": 2,
+     "total": 21.619,
+     "somme": 21.588
+    },
+    {
+     "run": 3,
+     "total": 21.323,
+     "somme": 21.304
+    },
+    {
+     "run": 4,
+     "total": 44.88,
+     "somme": 44.86
+    },
+    {
+     "run": 5,
+     "total": 21.646,
+     "somme": 21.628
+    }
+   ]
+  },
+  "C+G+": {
+   "ecarts_max": 0.04299999999999926,
+   "runs": [
+    {
+     "run": 1,
+     "total": 18.24,
+     "somme": 18.222
+    },
+    {
+     "run": 2,
+     "total": 18.183,
+     "somme": 18.166
+    },
+    {
+     "run": 3,
+     "total": 18.651,
+     "somme": 18.634
+    },
+    {
+     "run": 4,
+     "total": 18.514,
+     "somme": 18.496
+    },
+    {
+     "run": 5,
+     "total": 18.325,
+     "somme": 18.282
+    }
+   ]
+  },
+  "C+G": {
+   "ecarts_max": 0.002000000000000224,
+   "runs": [
+    {
+     "run": 1,
+     "total": 2.08,
+     "somme": 2.08
+    },
+    {
+     "run": 2,
+     "total": 2.181,
+     "somme": 2.181
+    },
+    {
+     "run": 3,
+     "total": 2.11,
+     "somme": 2.11
+    },
+    {
+     "run": 4,
+     "total": 2.094,
+     "somme": 2.092
+    },
+    {
+     "run": 5,
+     "total": 2.129,
+     "somme": 2.127
+    }
+   ]
+  },
+  "C": {
+   "ecarts_max": 0.001000000000000112,
+   "runs": [
+    {
+     "run": 1,
+     "total": 1.938,
+     "somme": 1.937
+    },
+    {
+     "run": 2,
+     "total": 1.871,
+     "somme": 1.872
+    },
+    {
+     "run": 3,
+     "total": 1.852,
+     "somme": 1.851
+    },
+    {
+     "run": 4,
+     "total": 1.934,
+     "somme": 1.933
+    },
+    {
+     "run": 5,
+     "total": 1.945,
+     "somme": 1.944
+    }
+   ]
+  }
+ },
+ "medianes": {
+  "T": {
+   "medianne": 21.633,
+   "regime_n": 4,
+   "audit_runs": [
+    4
+   ],
+   "tous": [
+    21.323,
+    21.619,
+    21.646,
+    22.137,
+    44.88
+   ]
+  },
+  "C+G+": {
+   "medianne": 18.325,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    18.183,
+    18.24,
+    18.325,
+    18.514,
+    18.651
+   ]
+  },
+  "C+G": {
+   "medianne": 2.11,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    2.08,
+    2.094,
+    2.11,
+    2.129,
+    2.181
+   ]
+  },
+  "C": {
+   "medianne": 1.934,
+   "regime_n": 5,
+   "audit_runs": [],
+   "tous": [
+    1.852,
+    1.871,
+    1.934,
+    1.938,
+    1.945
+   ]
+  }
+ },
+ "postes": {
+  "T": {
+   "gouvernance": 0.442,
+   "implémentation de vérification": 1.348,
+   "notation intrinsèque": 1.079,
+   "régime": 18.838
+  },
+  "C+G+": {
+   "gouvernance": 0.227,
+   "implémentation de vérification": 0.629,
+   "régime": 17.422
+  },
+  "C+G": {
+   "gouvernance": 0.225,
+   "implémentation de vérification": 0.558,
+   "régime": 1.32
+  },
+  "C": {
+   "implémentation de vérification": 0.569,
+   "régime": 1.351
+  }
+ },
+ "ventilation_T_C": {
+  "notation intrinsèque": 1.079,
+  "implémentation de vérification": 0.779,
+  "régime": 17.487,
+  "gouvernance": 0.442
+ },
+ "somme_ventilation": 19.787,
+ "T_minus_C_ventilation": 19.787,
+ "T_minus_C_medianes_totaux": 19.699,
+ "ecart_sommation_medianes": 0.088,
+ "part_notation_intrinseque": 0.0545,
+ "verdict_hcgp3": "H-CGP3 TENUE — la part de l'effet notation intrinsèque (1.079 s / 19.787 s = 5.5 %) est ≤ 30 % : le coût dominant de la vague 11 étiqueté « notation » était l'effet IMPLÉMENTATION DE VÉRIFICATION (les oracles, l'émulation vs le natif)",
+ "table_rebuilds_par_unite": {
+  "loupe-01": 3.473,
+  "loupe-02": 3.421,
+  "loupe-05": 1.579,
+  "loupe-08": 3.436,
+  "loupe-13": 3.382,
+  "loupe-16": 3.529
+ },
+ "tolerances": {
+  "T": 0.15,
+  "C+G+": 0.1,
+  "C+G": 0.05,
+  "C": 0.05
+ },
+ "graine_ordre": 20261122,
+ "n": 5
+}

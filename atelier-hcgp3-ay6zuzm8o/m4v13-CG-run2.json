@@ -1,0 +1,82 @@
+{
+ "bras": "C+G",
+ "run": 2,
+ "total_s": 2.181,
+ "etapes": [
+  {
+   "etape": "garde-intentions-signees (g1)",
+   "secondes": 0.079,
+   "code": 0,
+   "console": "[garde] les intentions signées : 6 VERT, 0 refus\n",
+   "stderr": ""
+  },
+  {
+   "etape": "build-gcc-O2-loupe-01",
+   "secondes": 0.687,
+   "code": 0,
+   "console": "",
+   "stderr": ""
+  },
+  {
+   "etape": "suite-tests-c-hash",
+   "secondes": 0.278,
+   "code": 0,
+   "console": "[VERT] le testeur compile (gcc -O2, le POSIX du labo)\n[éprouvées] 32 VERT, 0 ROUGE (les frontières du rembourrage, l'incrémentalité irrégulière)\n",
+   "stderr": ""
+  },
+  {
+   "etape": "suite-tests-c-contrat",
+   "secondes": 0.016,
+   "code": 1,
+   "console": "",
+   "stderr": "epreuve_posix.c:25:10: fatal error: loupe-01-c.c: No such file or directory\n   25 | #include \"loupe-01-c.c\"\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\n"
+  },
+  {
+   "etape": "controles-binaires-loupe-01",
+   "secondes": 0.012,
+   "code": 2,
+   "console": "",
+   "stderr": "python3: can't open file '/home/z/my-project/depot/scripts/campagne_d204/unite-01-C/controles_binaires.py': [Errno 2] No such file or directory\n"
+  },
+  {
+   "etape": "build-gcc-O2-loupe-02",
+   "secondes": 0.697,
+   "code": 0,
+   "console": "",
+   "stderr": ""
+  },
+  {
+   "etape": "epreuve-contrat-posix-loupe-02",
+   "secondes": 0.221,
+   "code": 0,
+   "console": "[VERT] V1:temoin-1.bin-l-ouverture — rax=0, remplissage 1 == min(384, 1)\n[VERT] V1:temoin-1.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-384.bin-l-ouverture — rax=0, remplissage 384 == min(384, 384)\n[VERT] V1:temoin-384.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:temoin-3f.bin-l-ouverture — rax=0, remplissage 384 == min(384, 196609)\n[VERT] V1:temoin-3f.bin-la-fenetre-nee — la première fenêtre lue INLINE au bloC session (l'écart nommé du bras C : le loupe-01 du plan APPELLE loupe-02, la pièce C l'incline dans son ouvrir) — le tampon == la découpe\n[VERT] V1:les-frontieres — 9 décalages frontière (0, la dernière valide, la dernière pleine, les fenêtres de la zone 65536) : le tampon == la découpe, remplissage == min(384, taille − décalage), la vue et le curseur INTACTS\n[VERT] V1:vide.bin-l-ouverture — le vide s'ouvre, remplissage 0 (la fenêtre née est vide)\n[VERT] V1:vide.bin-aucune-fenetre-valide — rax=-3 (décalage 0 ≥ taille 0 → -3 HORS-BORNES), rien lu\n[VERT] V2:les-bords-de-fenetre — le premier (0xAA) et le dernier (0xBB) recouverts ; l'avant et l'après IGNORÉS — l'édition survit au défilement\n[VERT] V2:le-journal-intact — loupe-02 n'écrit JAMAIS au journal (I2)\n[VERT] V2:cinq-entrees-dont-une-non-alignee — cinq entrées dedans (fen+5 NON ALIGNÉE comprise) — le tampon == le modèle indépendant\n[VERT] V3:sans-session — rax=-4 (attendu -4 SESSION, rien lu)\n[VERT] V3:non-aligne — rax=-5 (attendu -5), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:a-la-taille — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:au-dela — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V3:immense — rax=-3 (attendu -3), remplissage 48879 == 0xBEEF INTACT, le tampon empoisonné INTACT (rien lu)\n[VERT] V4:l-echec-readfile — rax=-6 (le tiroir a refusé → -6 SYSTÈME), remplissage 0 == 0 (fail-closed), le tampon empoisonné INTACT — jamais un octet non lu\n[VERT] V4:la-session-survit — l'échec ne clôt PAS la session : la lecture suivante est verte, le tampon == le témoin entier\n[VERT] V5:l-octet-mute-l-etat-lu-diverge — la lecture d'abord VERT (le tampon == le témoin), l'octet 3 muté 0x90 → 0xff : l'état lu DIVERGE du modèle — la falsification est DÉTECTABLE\n\nLE JUGE : 20 VERT, 0 ROUGE — VERT\n",
+   "stderr": ""
+  },
+  {
+   "etape": "controles-binaires-loupe-02",
+   "secondes": 0.04,
+   "code": 0,
+   "console": "  VERT format:PE32+-DLL — PE32+ executable for MS Windows 5.02 (DLL), x86-64, 19 sections\n  VERT exports:loupe_01_ouvrir — à la table (6 exports)\n  VERT exports:loupe_02_lire — à la table (6 exports)\n  VERT exports:loupe_03_fermer — à la table (6 exports)\n  VERT exports:cadre — à la table (6 exports)\n  VERT exports:journal — à la table (6 exports)\n  VERT exports:panneau — à la table (6 exports)\n  VERT exports:donnees-en-.data — cadre @0x9080, journal @0x8020, panneau @0x9040 — les DONNÉES en .data ; les TROIS fonctions en .text\n  VERT imports:CreateFileW — résolue par le scénario à l'IAT réelle\n  VERT imports:GetFileSizeEx — résolue par le scénario à l'IAT réelle\n  VERT imports:SetFilePointerEx — résolue par le scénario à l'IAT réelle\n  VERT imports:ReadFile — résolue par le scénario à l'IAT réelle\n  VERT imports:CloseHandle — résolue par le scénario à l'IAT réelle\n  VERT imports:GetLastError — résolue par le scénario à l'IAT réelle\n  VERT imports:le-CRT-du-lanceur-nomme — les imports du CRT de lancement mingw (jamais appelées sous DONT_RESOLVE : aucun point d'entrée ne court) — nommé\n  VERT audit:cloture-des-fonctions — 8 fonctions dans la clôture de loupe_01_ouvrir/loupe_02_lire/loupe_03_fermer (les fonctions, leurs appelés, les thunks)\n  VERT audit:aucun-appel-CRT — les __imp_ référencés : ['__imp_CreateFileW', '__imp_GetFileSizeEx', '__imp_GetLastError', '__imp_ReadFile', '__imp_SetFilePointerEx'] ; les appels directs par l'IAT : 6, tous aux slots kernel32 — QUE les feuilles kernel32 de la pièce\n  VERT relocations:présentes — l'image peut être rebasée par le chargeur\n\n=== CONTRÔLES BINAIRES : 18 VERT, 0 ROUGE ===\n",
+   "stderr": ""
+  },
+  {
+   "etape": "chaine-cristallisation (g2)",
+   "secondes": 0.078,
+   "code": 0,
+   "console": "[cristallisation] 6/6 empreintes recoupées ; la signature finale VÉRIFIÉE\n",
+   "stderr": ""
+  },
+  {
+   "etape": "assemblage-kit (g4)",
+   "secondes": 0.073,
+   "code": 0,
+   "console": "[kit] 12 pièces au gabarit (le terrain au geste du maître)\n",
+   "stderr": ""
+  }
+ ],
+ "code": 3,
+ "fautes_consignees": [
+  "suite-tests-c-contrat",
+  "controles-binaires-loupe-01"
+ ]
+}

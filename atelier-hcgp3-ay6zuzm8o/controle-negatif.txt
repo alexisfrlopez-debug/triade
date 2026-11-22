@@ -1,0 +1,15 @@
+LE CONTRÔLE NÉGATIF DOUBLE FENÊTRE — ay6zuzm8o (la vague 13)
+==========================================================================
+
+LE BRAS T — le run d'AUDIT [4] NOMMÉ ET EXCLU (l'oracle-02 re-exécuté vivant au 10ᵉ scellement — le prix de la preuve)
+LE BRAS T — la médiane des runs honnêtes (le régime) 21.633 s
+  la spécificité : 0 faux positif(s) sur 4 runs honnêtes VERT
+  (a) l'inter-étapes (+500 ms factices à « recomposition-loupe-02 ») : ATTRAPÉ — la comptabilité déviée : total 22.137 vs somme 22.618 (écart -0.481 s > tolérance 0.15)
+  (b) l'in-étape (+500 ms à « recomposition-loupe-02 ») : ATTRAPÉ AU PREMIER NOM — l'étape « recomposition-loupe-02 » à 0.985 s (médiane 0.464, déviation normalisée +0.511 s, valeur 2.12× la médiane)
+
+LE BRAS C+G+ — la médiane des runs honnêtes (le régime) 18.325 s
+  la spécificité : 0 faux positif(s) sur 5 runs honnêtes VERT
+  (a) l'inter-étapes (+500 ms factices à « chaine-cristallisation (g2) ») : ATTRAPÉ — la comptabilité déviée : total 18.240 vs somme 18.722 (écart -0.482 s > tolérance 0.1)
+  (b) l'in-étape (+500 ms à « chaine-cristallisation (g2) ») : ATTRAPÉ AU PREMIER NOM — l'étape « chaine-cristallisation (g2) » à 0.575 s (médiane 0.075, déviation normalisée +0.499 s, valeur 7.67× la médiane)
+
+LE VERDICT : VERT — le +500 ms attrapé aux DEUX fenêtres et attribué au premier nom, zéro faux positif sur les honnêtes

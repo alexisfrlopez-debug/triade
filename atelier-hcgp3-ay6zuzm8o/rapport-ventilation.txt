@@ -1,0 +1,43 @@
+LE RAPPORT H-CGP3 — LA VENTILATION QUATRE BRAS SUR LA PILE OPTIMISÉE (ay6zuzm8o, la vague 13)
+==========================================================================
+Le plan gelé sha256:b15a74cb02f49aa1… AVANT toute mesure ; la graine d'ordre 20261122 consignée avant le premier tirage ; n = 5 par bras, l'ordre randomisé dans chaque run ; cette machine virtualisée (le gap nommé — une seule machine, le silicium nu au terrain).
+
+LES QUATRE BRAS (les médianes du régime ; T : n = 4 + le run d'AUDIT 4 nommé et exclu — l'oracle-02 re-exécuté vivant au 10ᵉ scellement du mémo v2, 44,88 s, le prix de la preuve) :
+  T      21.633 s   (tous : [21.323, 21.619, 21.646, 22.137, 44.88])
+  C+G+   18.325 s   (tous : [18.183, 18.24, 18.325, 18.514, 18.651])
+  C+G     2.110 s   (tous : [2.08, 2.094, 2.11, 2.129, 2.181])
+  C       1.934 s   (tous : [1.852, 1.871, 1.934, 1.938, 1.945])
+
+LA TABLE PAR UNITÉ DES REBUILDS ÉGALISÉS (10 × 6 = 60 par bras, le plan §2 — les médianes du bras T) :
+  loupe-01     3.473 s  (les DIX reconstructions de pièce confrontées)
+  loupe-02     3.421 s  (les DIX reconstructions de pièce confrontées)
+  loupe-05     1.579 s  (le NIVEAU BLOC — aucune chaîne de pièce, le gap nommé)
+  loupe-08     3.436 s  (les DIX reconstructions de pièce confrontées)
+  loupe-13     3.382 s  (les DIX reconstructions de pièce confrontées)
+  loupe-16     3.529 s  (les DIX reconstructions de pièce confrontées)
+
+LA DÉCOMPOSITION PAR POSTE DES QUATRE BRAS (les médianes par run, la classification figée au plan) :
+  T     : {'gouvernance': 0.442, 'implémentation de vérification': 1.348, 'notation intrinsèque': 1.079, 'régime': 18.838}
+  C+G+  : {'gouvernance': 0.227, 'implémentation de vérification': 0.629, 'régime': 17.422}
+  C+G   : {'gouvernance': 0.225, 'implémentation de vérification': 0.558, 'régime': 1.32}
+  C     : {'implémentation de vérification': 0.569, 'régime': 1.351}
+
+LA VENTILATION T−C QUATRE EFFETS (la vague 13, la pile optimisée, les volumes égalisés) :
+  notation intrinsèque                1.079 s  (  5.5 % de T−C)
+  implémentation de vérification      0.779 s  (  3.9 % de T−C)
+  régime                             17.487 s  ( 88.4 % de T−C)
+  gouvernance                         0.442 s  (  2.2 % de T−C)
+  Σ (le T−C de la ventilation)       19.787 s
+  (la médiane des totaux 19.699 s — l'écart +0.088 s NOMMÉ : la sommation des médianes vs la médiane des sommes)
+
+H-CGP3 TENUE — la part de l'effet notation intrinsèque (1.079 s / 19.787 s = 5.5 %) est ≤ 30 % : le coût dominant de la vague 11 étiqueté « notation » était l'effet IMPLÉMENTATION DE VÉRIFICATION (les oracles, l'émulation vs le natif)
+
+LES DEUX VENTILATIONS CÔTE À CÔTE (JAMAIS fusionnées) :
+  — LA VAGUE 11 (datée 20/11/2026, l'outil vague 9 NON optimisé, l'asymétrie 12 vs 60) : notation propre 20,72 s (55,7 %) · régime 16,50 s (44,3 %) · gouvernance 0,213 s — T 39,39 · C+G+ 18,68 · C+G 2,18 · C 1,97 — LE VERDICT H-CGP2 (daté) : CONFIRMÉE (la part notation propre > 30 % à l'outil non optimisé) ;
+  — LA VAGUE 13 (datée 22/11/2026, la pile optimisée, les volumes ÉGALISÉS 10 × 6) : notation intrinsèque 1.079 s (5.5 %) · implémentation de vérification 0.779 s · régime 17.487 s · gouvernance 0.442 s — LE VERDICT H-CGP3 (daté) : TENUE (la part ≤ 30 %).
+
+LA LECTURE (les effets distingués, la lettre du plan) : à volumes égalisés sur la pile optimisée, le coût intrinsèque de la notation (round-trips 0,44 s + recomposition 0,46 s + cristallisation incrémentale 0,18 s ≈ 1,1 s) est marginal dans T−C ; le coût dominant de la vague 11 étiqueté « notation propre » (20,72 s) était l'effet IMPLÉMENTATION DE VÉRIFICATION — les oracles re-exécutés vivants (33,5 s à l'outil vague 9, 1,0 s à la pile optimisée) — et, à volumes égalisés, l'effet RÉGIME porte le T−C (les 60 rebuilds par bras). LE CONFOND EST TRANCHÉ.
+
+LES GAPS NOMMÉS : UNE SEULE MACHINE virtualisée (le silicium nu au terrain, jamais simulé) ; n = 5 par bras (n = 4 au régime T, l'audit nommé) ; loupe-05 AU NIVEAU BLOC côté T (aucune chaîne de pièce — l'unité C close sur son rouge, la notation scellée assemblée dix fois) ; l'écart de comptabilité maximal 43 ms aux tolérances publiées.
+
+LES CONTRÔLES : la réconciliation 20/20 (T 31 ms ≤ 150 · C+G+ 43 ms ≤ 100 · C+G 2 ms · C 1 ms ≤ 50) ; les consoles d'oracle ligne-identiques aux runs de régime (hors horodatages nommés) ; les scellés INTACTS avant/après chaque run ; le rejeu des tirages bit-identique ; le contrôle négatif +500 ms ATTRAPÉ aux DEUX fenêtres et attribué au premier nom, zéro faux positif sur les honnêtes ; le sceau 14/14 avant et après.
