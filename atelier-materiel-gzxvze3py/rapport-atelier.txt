@@ -1,0 +1,27 @@
+RAPPORT D'ATELIER — gzxvze3py (la vague 15) : LES PROTOCOLES MATÉRIELS
+PRÉ-ENREGISTRÉS — LE LABORATOIRE PRÉPARE ET VÉRIFIE, NE SIMULE JAMAIS
+============================================================================
+(23/11/2026, le plan gelé PLAN-GZXVZE3PY.md sha256 9ba7608848881e8d… AVANT
+toute donnée ; AUCUN chiffre matériel fabriqué)
+(1) DUEDECT : le protocole pré-enregistré — n≥10 exécutions indépendantes
+par N∈{60,200,400}, ≥2 MACHINES (l'empreinte CPU + l'état de fréquence
+consignés), l'affinité de cœur fixe ; L'INVESTIGATION DES PICS
+tls13-02/tls13-13 à N=200 pré-enregistrée (bruit d'horloge / interruption
+cœur partagé / gap réel — LE CRITÈRE DE MÉDIANE TRANCHE, aucune cause
+élue d'avance) ; la revendication « constant time proven » INTERDITE (le
+scope : l'échantillon, la machine, les runs).
+(2) FENCE.I : le scénario M7 retargeté sur carte RV64 physique — C1 la
+bascule vue par le cœur, C2 l'invalidation prouvée au témoin, C3 la
+cohérence du plan, C4 le scellé au silicium, C5 zéro régression — la
+carte AU GESTE du développeur.
+(3) LA LOUPE TIERS : T0→T7+S0 intégral + la vitrine [4/4] deux codes 0,
+les empreintes avant/après INCHANGÉES (aucune pièce scellée ne bouge).
+L'AGRÉGATEUR FAIL-CLOSED (agregateur_materiel.py) : UN RUN MANQUANT =
+REFUS (exit 2 — le refus VÉCU au banc : le fichier des témoins absent),
+JAMAIS un verdict partiel ; les témoins signés recoupés AVANT tout
+mouvement de la table des statuts ; les autotests 57/57 du dépôt
+re-verts au sceau (le sceau-I 14/14 avant/après).
+LES RUNS APPARTIENNENT AU DÉVELOPPEUR — la machine unique virtualisée du
+bac ne peut NI les n≥10 sur ≥2 machines, NI la carte RV64, NI le
+silicium : les protocoles sont PRÉ-ENREGISTRÉS, l'agrégateur prêt.
+LA GARDE : le sceau-I 14/14 ; entrée append-only.
