@@ -1,0 +1,7 @@
+{
+  "cible": "la faisabilité ≥ 15/18 aux tâches held-out à ≤ 4 500 tokens par changement validé",
+  "protocole": "avant/après entraînement SUR LES TÂCHES HELD-OUT (le split TEST du corpus — AUCUNE dorée), les MÊMES graines et les MÊMES juges, les opérandes non arrondis publiés ; la lecture défavorable consignée si la cible est manquée",
+  "recettes": "SFT (les triples VERTS du TRAIN) ; DPO (les paires vert vs refus au MÊME contrat) ; RLVR (la récompense typée ci-présente — le verdict du juge)",
+  "compute": "le geste développeur (les adapters de référence aux versions majeures ≥ 2 familles SI compute, sinon LE GAP NOMMÉ)",
+  "anti_gaming": "les contrôles de falsification de P2 À LA RÉCOMPENSE : la réponse qui joue le juge (la notation mutée) est REFUSÉE au niveau mutation — jamais un gain"
+}

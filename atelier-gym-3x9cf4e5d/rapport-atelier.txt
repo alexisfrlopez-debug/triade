@@ -1,0 +1,48 @@
+RAPPORT D'ATELIER — 3x9cf4e5d (la vague 15) : TRIADE-GYM —
+L'ENVIRONNEMENT D'ENTRAÎNEMENT ET LA MESURE HEADLINE PRÉ-ENREGISTRÉE
+============================================================================
+(23/11/2026, la session de la vague 15 — le plan gelé PLAN-3X9CF4E5D.md,
+sha256 db11078590747b7b… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée)
+
+TRIADE-GYM (triade_gym.py) : observer un fragment de carte → émettre une
+notation → LA RÉCOMPENSE TYPÉE MULTI-NIVEAUX (syntaxe → expansion →
+round-trip → oracle → mutation) — CUMULATIVE ET STRICTE (un niveau ne
+s'ouvre que si le précédent est vert) ; LA RÉCOMPENSE = LE VERDICT DU
+JUGE À CHAQUE ÉTAGE (les validateurs v3 pour la syntaxe, LA CHAÎNE v2
+INTÉGRALEMENT pour l'expansion/le round-trip/l'oracle — assembler_v3 EST
+le juge, AUCUN juge affaibli), JAMAIS la similarité à une référence
+(anti-récitation PAR CONSTRUCTION) ; le niveau MUTATION = LE CHECK
+ANTI-HACKING DE P2 À LA RÉCOMPENSE (la notation mutée refusée par la
+chaîne de juges du dépôt — le jeu du juge PERDU, jamais un gain) ; le
+rung terrain JAMAIS une récompense barato (le geste développeur).
+
+L'ÉPISODE VÉCU AU BANC : la notation d'essai (quatre lignes saines + une
+étiquette fautive) — le niveau syntaxe VERT (1,0), le niveau expansion
+REFUSÉ NOMMÉ (« étiquette inconnue : propre_ » — le verdict DU JUGE, la
+récompense totale 1,0) : la mécanique typée vécue.
+
+LES PAIRES DPO : extraites MÉCANIQUEMENT du corpus (la notation VERTE vs
+le REFUS au MÊME contrat — la logique de campagne : les tentatives
+antérieures d'une tâche verte étaient refusées PAR CONSTRUCTION, le
+budget consigné) — LES DEUX paires du corpus actuel (les tâches vertes à
+la 2e tentative) ; la première passe (la correspondance par verdict de
+tâche) donnait 0 paire — L'ÉCART NOMMÉ, la logique corrigée.
+
+LE PLAN HEADLINE PRÉ-ENREGISTRÉ : sha256
+3bd5457dadb99c30c1d7d9db845f32b86ebb68ff1a28243df9301cc2f11f6103 GELÉ
+AVANT TOUTE MESURE (registres/plan-headline-gele.json) : la faisabilité
+≥ 15/18 aux tâches held-out (le split TEST du corpus — AUCUNE dorée) à
+≤ 4 500 tokens par changement validé, les MÊMES graines et les MÊMES
+juges, les opérandes non arrondis publiés, LA LECTURE DÉFAVORABLE
+CONSIGNÉE SI LA CIBLE EST MANQUÉE ; le compute AU GESTE DÉVELOPPEUR
+(les adapters ≥ 2 familles SI compute, SINON LE GAP NOMMÉ — aucun
+chiffre fabriqué).
+
+LES RECETTES SFT/DPO/RLVR (RECETTES.md) : agnostiques en famille (le
+format des données, les hyperparams, le budget compute consigné) ; les
+cas difficiles des rapports adopteurs AU CURRICULUM (la boucle
+feedback → triage → corpus).
+
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel touché ;
+entrée append-only au journal.
