@@ -1,0 +1,25 @@
+EMPREINTES DES PLANS — LA VAGUE 15 (les dix-sept instructions du 22/11/2026)
+Gelees AVANT toute donnee ; le present commit precede la premiere donnee.
+La vague la plus large du projet : dix-sept instructions, l'ordre d'execution gele
+ci-dessous (thematique, les dependances amont nommees) — JAMAIS re-tire.
+
+PLAN-QA3K5PUTF.md      sha256:ff971f0c6c3369d8…  (qa3k5putf — la preuve formelle : CF3-v2-amende a verdict complet sous Tamarin 1.12.0/Maude 3.4, les 36 wellformedness, les six lemmes, le negatif, le port ProVerif)
+PLAN-2SOWN2H3Z.md      sha256:8873ce5f445c385f…  (2sown2h3z — la mesure suivante nommee a l'Entree 385 : l'entrelacement CTR v4i x GHASH agrege-4, la projection ~1,6 c/octet@4096 devenue mesure, cible <=2,0 pre-enregistree)
+PLAN-K69MVT43J.md      sha256:919c633fa0604cf9…  (k69mvt43j — les gardes vivantes : les 58 gardes de frontiere dans l'artefact scelle, le TCB reduit 58->34->11 (24 UNSAT z3 + negatifs SAT, 23 a la composition, 11 OS nommees))
+PLAN-8HGUPH5EE.md      sha256:f8aedc6d7837b3e0…  (8hguph5ee — le moteur natif d'execution des oracles (le gap nomme deux fois) : jumeau Unicorn, memo content-addressed, audit vivant 1-sur-10 chaine, la composition -89,4/-54)
+PLAN-YFKPML1J2.md      sha256:59eb1f768071fbc6…  (yfkpml1j2 — la campagne TPL-ADD-v5 : AJOUTER 7/18 -> >=15/18 a <=4 500 tokens, la reparation par DIFF D'EXPANSION STRUCTURE, les 18 taches aux graines 20261117 reconduites)
+PLAN-AB2VH5C2M.md      sha256:74f8180621bb63a8…  (ab2vh5c2m — les trois gaps de validite externe : H7 servie aux 28 unites (table 2de7d488 re-execution bit-identique), le second annotateur F/L (kappa>=0,61 sur n>=50), l'independance inter-familles)
+PLAN-0I4PKZBYR.md      sha256:aaf84f1f52ec232e…  (0i4pkzbyr — le dataset de replication adopteurs : l'outil rapport (trio D122), le codage F/L (grille D203, huit exemples E1-E8, kappa), l'outillage H7 generalise, le format de soumission)
+PLAN-2I7IY3XMG.md      sha256:3dc1832f77c7cb09…  (2i7iy3xmg — le corpus d'entrainement : l'extraction mecanique des journaux append-only en triples JSONL, les splits etanches SANS doree au TEST, le canari, la sonde de contamination, la porte de scrub)
+PLAN-3X9CF4E5D.md      sha256:db11078590747b7b…  (3x9cf4e5d — triade-gym : l'environnement d'entrainement a recompense TYPEE multi-niveaux (le verdict du juge, jamais la similarite), les recettes SFT/DPO/RLVR, la mesure headline pre-enregistree)
+PLAN-VPCR7MH3T.md      sha256:bb65164c8f7d31be…  (vpcr7mh3t — l'eval mecanique re-jouable : les juges en harnais runnable, la capability ladder 0-6, le generateur procedural anti-contamination, la matrice de compatibilite fail-closed)
+PLAN-ZD316DE39.md      sha256:0686cebf35c0479f…  (zd316de39 — le guide d'agent independant du modele : les 11 regles, la boucle 7 etapes, la sonde de capacite AVANT investissement (128 constantes + smoke), le bench pre-enregistre embarque)
+PLAN-WITGT6QTA.md      sha256:07515122a9230bc3…  (witgt6qta — l'outil triade feedback : le schema TRIADE-FEEDBACK-v1 gele par empreinte, la part measured extraite mecaniquement, les portes fail-closed, le gabarit d'issue)
+PLAN-E1LR9I8TS.md      sha256:e16d8517badafa68…  (e1lr9i8ts — le pipeline de triage des rapports adopteurs : validation d'entree fail-closed, clustering mecanique, decisions PROPOSEES (jamais auto-appliquees), le digest par release)
+PLAN-M8QC10SXG.md      sha256:8a1ac823e8760022…  (m8qc10sxg — la documentation du kit en anglais canonique : deux audiences, fragmentee comme la carte, les tables numeriques generees des canons, les budgets de fragments au tokenizer natif)
+PLAN-V2N6V8RAO.md      sha256:67475ee9042c0dee…  (v2n6v8rao — le kit developpeur PAR CONSTRUCTION (D130 : git ls-files) : M0-in-a-box, le generateur d'oracle depuis I, les portes R1-R11, l'archive deterministe 10x, aucune ancre expediae)
+PLAN-GZXVZE3PY.md      sha256:9ba7608848881e8d…  (gzxvze3py — les protocoles materiels pre-enregistres : les kits dudect (n>=10, >=2 machines, l'investigation des pics N=200), fence.i RV64, la Loupe tiers — le laboratoire prepare, ne simule jamais)
+PLAN-VXF37231R.md      sha256:b76f9d2994e0e547…  (vxf37231r — les extensions documentees-non-appliquees et la coherence inter-pieces : l'ancrage Rekor/RFC3161, la sentinelle Windows SACL/ETW, le linter v2 (les cinq classes), les packs regeneres)
+
+La regle reconduite des vagues 8-14 : le plan gele, l'empreinte consignee,
+le commit AVANT la premiere donnee ; tout ecart au plan nomme au rapport.
