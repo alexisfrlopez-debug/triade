@@ -1,0 +1,612 @@
+{
+  "rejeu": {
+    "decharges_unsat": 0,
+    "mutations_sat": 0,
+    "ecarts": [
+      {
+        "fichier": "decharge-loupe-02-17185.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18463.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18466.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18470.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18474.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18614.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18651.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18654.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18658.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-06-18662.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-08-18967.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-08-19064.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-08-19074.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-09-23583.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-09-23593.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-09-23611.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-09-23629.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-10-20375.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-10-20385.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-16-25497.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-16-25500.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-16-25506.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-16-25514.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-loupe-16-25535.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41073.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41086.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41130.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41138.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41149.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41203.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41216.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41226.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41239.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41247.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-sys-02-41255.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-03-49786.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-03-49834.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-04-49942.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-04-49964.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-07-50938.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-07-50944.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-07-50952.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-07-50960.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-07-51086.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-18-57907.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-18-58057.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-18-58262.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-18-58501.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-18-58504.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-19-59018.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-19-59501.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-19-59707.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-20-60091.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-20-60098.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-20-60106.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-20-60114.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-20-60122.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "decharge-tls13-21-60510.smt2",
+        "verdict": "",
+        "attendu": "unsat"
+      },
+      {
+        "fichier": "mutation-loupe-02-17185.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18463.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18466.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18470.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18474.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18614.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18651.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18654.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18658.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-06-18662.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-08-18967.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-08-19064.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-08-19074.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-09-23583.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-09-23593.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-09-23611.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-09-23629.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-10-20375.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-10-20385.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-16-25497.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-16-25500.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-16-25506.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-16-25514.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-loupe-16-25535.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41073.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41086.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41130.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41138.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41149.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41203.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41216.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41226.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41239.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41247.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-sys-02-41255.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-03-49786.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-03-49834.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-04-49942.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-04-49964.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-07-50938.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-07-50944.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-07-50952.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-07-50960.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-07-51086.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-18-57907.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-18-58057.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-18-58262.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-18-58501.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-18-58504.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-19-59018.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-19-59501.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-19-59707.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-20-60091.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-20-60098.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-20-60106.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-20-60114.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-20-60122.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      },
+      {
+        "fichier": "mutation-tls13-21-60510.smt2",
+        "verdict": "",
+        "attendu": "sat"
+      }
+    ]
+  },
+  "registre_tcb": true,
+  "corridor": {
+    "octets": 424,
+    "round_trip": true,
+    "rva": 64512
+  },
+  "harnais": {
+    "verts": 36,
+    "total": 36
+  },
+  "couts": [
+    12,
+    14,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32
+  ],
+  "sha256": "c0aea432b03570675ad3dabdc741062653c9b364a33b0a3bb36569bc93dbe247"
+}

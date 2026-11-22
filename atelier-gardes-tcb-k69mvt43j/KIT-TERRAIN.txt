@@ -1,0 +1,27 @@
+KIT TERRAIN — LA CIBLE ≤ 1 % (k69mvt43j, la vague 15 — le protocole
+pré-enregistré pour le geste développeur : les VRAIS appels système)
+================================================================================
+L'OBJET : la mesure du coût des gardes AU TERRAIN (le vrai appel système,
+le vrai noyau), la cible pré-enregistrée ≤ 1 % du temps du bloc gardé.
+LA MESURE DU BAC (le harnais émulé) : la médiane 22 instr/appel au
+corridor (l'enveloppe comprise — le dispatch en table), CONTRE la garde
+inline v14 7 instr — LE PRIX DU DISPATCH nommé : +15 instr (le champ
+unique, les onze fenêtres) ; le harnais NOMME son écart : l'émulateur ne
+porte ni les caches ni la prédiction de branchement — le terrain départage.
+LE PROTOCOLE (pré-enregistré AVANT le geste) :
+1. LA MACHINE nommée (l'empreinte CPU, le noyau, l'état de fréquence, la
+   charge) ; la pièce témoin RDTSCP à vide.
+2. LE CORRIDOR : notation/corridor-onze-os.asm (0xFC00, 424 o, round-trip
+   VERT, le harnais 36/36) ; les VRAIS appels système aux ONZE contrats
+   (chaque garde son appel : le tampon de l'appel système à la zone OS).
+3. LA MESURE : n≥20 par garde, l'horloge monotone (clock_gettime
+   CLOCK_MONOTONIC), la médiane non arrondie + l'IQR ; LE DÉNOMINATEUR :
+   le temps du bloc gardé mesuré AU MÊME protocole ; LE RAPPORT
+   coût/dénominateur aux opérandes publiées ; la cible ≤ 1 %.
+4. L'AGRÉGATEUR fail-closed : une mesure manquante = REFUS (exit 2,
+   JAMAIS un verdict partiel) ; chaque écart nommé (la fréquence, le
+   partage, la migration du noyau).
+5. LA CONSIGNE : le registre JSON par machine, l'entrée append-only, les
+   empreintes confrontées (corridor-onze-os.bin sha256 au registre).
+LA GARDE : le coffre réel JAMAIS touché au laboratoire (D105) ; les
+scellés intacts ; le sceau-I 14/14 avant et après le geste.
