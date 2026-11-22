@@ -1,0 +1,15 @@
+{
+  "graine": 20261124,
+  "corridor": 1295,
+  "round_trip": true,
+  "fips_c1": true,
+  "differentielle": {
+    "aleatoires": 256,
+    "ecarts_aleatoires": 0,
+    "structure": 64,
+    "ecarts_structure": 0
+  },
+  "mutant_attrape": true,
+  "repli": "32/32",
+  "sha256_couloir": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc"
+}

@@ -1,0 +1,99 @@
+RAPPORT D'ATELIER — 2sown2h3z (la vague 15) : LA MESURE DE COMPOSITION
+ENTRELACÉE CTR v4i × GHASH AGRÉGÉ-4 — LA PROJECTION DEVENUE MESURE
+============================================================================
+(22/11/2026, la session de la vague 15 — le plan gelé PLAN-2SOWN2H3Z.md,
+sha256 8873ce5f445c385f… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute mesure ; la cible pré-enregistrée ≤ 2,0 c/octet@4096)
+
+LA MESURE (LA TÊTE DU RAPPORT) :
+— LE COULOIR ctr-v4i-ghash-agrege4 (la marge vierge 0xF800, 1 295 o
+  assemblés, 274 instructions, round-trip keystone==capstone==keystone
+  VERT) : **0,7271 c/octet@4096** — la médiane 2 978,2 c [IQR 5,6]
+  par appel de 4 096 octets, n=20, le cœur épinglé CPU 1, la machine
+  virtualisée NOMMÉE (Intel Xeon 3200 MHz, aes/avx2/pclmulqdq/rdtscp).
+  LA CIBLE PRÉ-ENREGISTRÉE ≤ 2,0 c/octet@4096 **TENUE** — la mesure au
+  36 % de la cible (0,727/2,0) ;
+— LA BASELINE OpenSSL EVP AES-128-GCM (même machine, même heure, la
+  MÊME entrée — le clair du rig, la clé et l'IV aux mêmes valeurs) :
+  **0,5757 c/octet@4096** (la médiane 2 357,9 c [IQR 19,3]) — le couloir
+  à 1,26× de la bibliothèque réglée au même silicium ;
+— LE REPLI (la chaîne scellée par bloc — l'AES scellé 0xDF00 + le GHASH
+  scellé 0xDFC0 chaîné, mesuré au même rig) : **49,9376 c/octet@4096**
+  (la médiane 204 544,5 c [IQR 7 223,5]) — LE COULOIR 68,7× DEVANT LA
+  CHAÎNE SCELLÉE, AUCUN contrôle retiré ;
+— LA PARITÉ AU RIG MÊME : le couloir et le repli produisent les MÊMES
+  4 112 octets (chiffré + tag) sur l'entrée du rig — la garde VERTE
+  avant la mesure (le rig la vérifie et REFUSE la mesure sinon).
+
+LA LECTURE HONNÊTE (les opérandes) : 0,7271 c/octet@4096 = 11,63
+c/bloc ; la décomposition aux côtés publiés des vagues 13-14 — le CTR
+v4i seul 4,76 c/bloc (D249, ent8@256 4,844 vécu au même bac) ; le GHASH
+agrégé seul 19,66 c/mult = 4,92 c/bloc (h1mz2sr8s) — la composition
+4,76 + 4,92 + 1,95 c/bloc de frais de jointure (les chargements des
+compteurs et du clair, les stores du chiffré, l'aiguillage de fenêtre).
+LA PROJECTION v14 (~1,6 c/octet@4096) ÉTAIT PRUDENTE : elle comptait le
+CTR au 5,7 c/bloc de la mesure v13@64 et SOMMAIT les deux couloirs
+isolés ; la composition vécue fait MIEUX que la somme — les chargements
+partagés et la fenêtre du désordre du CPU (les produits clmul du groupe
+g chevauchent les aesenc du groupe g+1 — aucune dépendance de données
+entre eux, les compteurs sont des entrées préchargées) — l'écart
+nommé : la projection 1,6 est DÉPASSÉE par la mesure 0,73, la cible
+reste la cible (≤ 2,0), AUCUNE projection présentée comme mesure.
+
+LA STRUCTURE DU COULOIR (la notation explicite :
+notation/ctr-v4i-ghash-agrege4.asm) :
+— LE CTR v4i : les QUATRE courants de bloc ENTRELACÉS, LE calendrier de
+  clés PARTAGÉ (la lecture rk UNE fois par tour, aesenc ×4 — la leçon
+  D249 : les lectures partagées demeurent devant l'indépendance) ;
+— LA FENÊTRE GHASH AGRÉGÉE : les QUATRE produits C_j ⊗ table[j] (la
+  table du juge, UNE entrée par bloc — l'entrée i porte H^{N-i},
+  0-based, DÉRIVÉE PAR LE SCELLÉ : 255 appels chaînés tls13-17, jamais
+  devinée — le recoupement algébrique VERT au pilot), chaque terme
+  TWISTÉ comme le scellé twiste son entrée (le miroir exact de
+  h1mz2sr8s), l'accumulation 256 bits PAR XOR, LA RÉDUCTION alg9 UNIQUE
+  À LA FIN DU MESSAGE (la linéarité de la réduction — la généralisation
+  de la fenêtre v14 : la somme NON réduite des N produits se réduit UNE
+  fois, l'argument au registre) ;
+— LA FILE (N mod 4) au produit simple, le même accumulateur ;
+— LA BORNE N ≤ 256 fail-closed (rax = -2 vécu au pilot, N = 0 et N = 257
+  refusés) ;
+— LE REPLI r10 = 0 : LA CHAÎNE SCELLÉE PAR BLOC (l'AES scellé + le
+  GHASH scellé chaîné) — 32/32 au pilot, JAMAIS un chemin mort.
+
+LES PORTES (toutes VERTES au pilot, la graine 20261124 consignée AVANT
+le premier tirage) :
+— round-trip keystone==capstone==keystone : VERT (1 295 o, 274 instr) ;
+— LA DIFFÉRENTIELLE : **320/320 — ZÉRO ÉCART** (256 aléatoires aux
+  tailles 4·8·16·64·256·5·6·7·12·13 — les files vécues — + 64
+  structurés) contre LA CHAÎNE SCELLÉE (l'AES scellé par bloc de
+  compteur + le GHASH scellé chaîné par bloc, octet pour octet : le
+  chiffré ET le tag ET rax) ;
+— LE FIPS 197 C.1 PAR LE COULOIR : VERT (le clair nul, ct[0] =
+  69c4e0d86a7b0430d8cdb78070b4c55a — la composition blanche) ;
+— LE MUTANT imm8 (l'octet du premier pclmulqdq muté) : **ATTRAPÉ au
+  premier vecteur** ;
+— LE REPLI : **32/32** ;
+— LES BORNES fail-closed : N = 0 et N = 257 REFUSÉS (rax = -2 vécu) ;
+— LE TRACE-HASH TEMPS-CONSTANT STRUCTUREL : **UNE empreinte par classe**
+  (8 mesures aléatoires → 1 empreinte ; 8 structurées → 1 empreinte ;
+  l'empreinte = sha256 des (adresse, taille) SEULES — les valeurs
+  jamais, miroir v13/v14) ;
+— LA TABLE dérivée par le scellé : VERT (l'entrée N-2 == scellé(H,H)).
+
+LA GARDE : le sceau-I 14/14 AVANT et APRÈS l'atelier (aucune pièce
+scellée touchée — le couloir vit à la marge VIERGE 0xF800, les scellés
+0xDF00/0xDFC0 et les couloirs v13/v14 0xE200-0xEA00/0xF300 INTACTS) ;
+le verbatim historique demeure (les notations v13/v14 inchangées).
+
+L'ÉCART VM/MÉTAL NU NOMMÉ : la mesure ci-dessus estVIRTUALISÉE (la
+machine partage le silicium de l'hôte) ; LE KIT MÉTAL NU pré-enregistré
+(KIT-METAL-NU.txt — les ≥2 machines, l'empreinte CPU, l'état de
+fréquence, la même entrée, l'agrégateur fail-closed) attend le geste du
+développeur ; le laboratoire a préparé et vérifié, il ne simule jamais.
+
+LES LIVRABLES : notation/ctr-v4i-ghash-agrege4.asm · piloter_entrelacement.py
+(320 vecteurs + les portes, registres/differentielle.json,
+rapport-differentielle.txt) · generer_rig_mesure.py · native/
+(mesurer_entrelacement.c, mesurer_openssl.c, donnees_rig.h,
+rig_octets.h, les binaires) · registres/mesure-entrelacement.json ·
+KIT-METAL-NU.txt · le présent rapport.

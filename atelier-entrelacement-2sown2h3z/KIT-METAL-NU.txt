@@ -1,0 +1,56 @@
+KIT MÉTAL NU — LA MESURE DE COMPOSITION ENTRELACÉE CTR v4i × GHASH AGRÉGÉ-4
+(2sown2h3z, la vague 15 — le protocole pré-enregistré pour le geste développeur)
+================================================================================
+
+L'OBJET : la mesure de composition au SILICIUM NU (≥2 machines), la
+contre-partie métallique de la mesure virtualisée du bac (0,7271
+c/octet@4096, la machine virtuelle Xeon 3200 MHz nommée au registre).
+L'ÉCART VM/MÉTAL NU NOMMÉ : la machine virtualisée partage le port
+pclmulqdq et l'unité AES avec l'hôte — la mesure métal nu départage le
+partage réel ; AUCUNE projection de l'une sur l'autre, jamais la VM
+maquillée en métal.
+
+LE PROTOCOLE (pré-enregistré AVANT le geste — la reprise idempotente) :
+
+1. LES DEUX MACHINES (≥2) : pour chacune — l'empreinte CPU complète
+   (cat /proc/cpuinfo | grep -m1 "model name" + les drapeaux
+   aes/pclmulqdq/rdtscp/avx2), l'état de fréquence consigné (le
+   gouverneur FIXED si possible : cpupower frequency-set -g performance,
+   sinon l'état vécu nommé), le noyau, la charge (uptime), la pièce
+   RDTSCP témoin (100 mesures à vide : l'overhead lu et publié).
+
+2. LE RIG : atelier-entrelacement-2sown2h3z/native/ — mesurer_entrelacement.c
+   (le couloir 0xF800 + le repli) et mesurer_openssl.c (la baseline EVP) ;
+   les données de donnees_rig.h (la graine 20261124, la table des
+   puissances DÉRIVÉE PAR LE SCELLÉ — régénérée par
+   generer_rig_mesure.py, JAMAIS retapée) ; la compilation : gcc -O2.
+   LE GARDE AU RIG MÊME : la parité couloir/repli doit être VERT avant
+   toute mesure (le rig la vérifie et REFUSE la mesure sinon).
+
+3. LA MESURE : n=20 fenêtres de 10 appels, le cœur épinglé (taskset -c 1),
+   la médiane NON ARRONDIE + l'IQR publiés aux opérandes (c/fenêtre,
+   c/appel, c/octet@4096) ; la baseline OpenSSL EVP la même heure, la
+   même machine, la MÊME entrée (le clair du rig) ; le repli mesuré
+   (la chaîne scellée par bloc) — les TROIS pièces par machine.
+
+4. L'AGRÉGATION fail-closed : une machine manquante = REFUS (jamais un
+   verdict partiel) ; chaque écart entre machines NOMMÉ (la fréquence,
+   le partage de port, le silicium) ; le tableau final aux SIX colonnes
+   (machine × {couloir, EVP, repli}) aux opérandes non arrondies.
+
+5. LA CONSIGNE : le registre JSON par machine + le rapport croisé ;
+   l'entrée append-only au worklog ; les empreintes sha256 des pièces
+   du kit confrontées au présent fichier.
+
+LA CIBLE pré-enregistrée : ≤ 2,0 c/octet@4096 — la mesure virtualisée
+la TIENT (0,7271) ; la mesure métal nu la confirme ou la nomme en écart
+— AUCUNE des deux n'est maquillée en l'autre.
+
+LES PIÈCES DU KIT (empreintes au moment du gel) :
+  notation/ctr-v4i-ghash-agrege4.asm    le couloir (1 295 o assemblés)
+  piloter_entrelacement.py              la différentielle 320 + les portes
+  generer_rig_mesure.py                 les données du rig (le juge)
+  native/mesurer_entrelacement.c        le rig de mesure
+  native/mesurer_openssl.c              la baseline EVP
+  native/donnees_rig.h                  les données (la graine 20261124)
+  native/rig_octets.h                   les octets assemblés

@@ -1,0 +1,15 @@
+=== l'assemblage (marge 0xF800) ===
+scellé tls13-16 : 129 o ; scellé tls13-17 : 162 o ; couloir : 1295 o
+round-trip keystone==capstone==keystone : VERT (1295 o, 274 instr)
+FIPS 197 C.1 par le couloir (N=4, clair nul) : VERT (ct[0]=69c4e0d86a7b0430d8cdb78070b4c55a)
+=== la différentielle contre la chaîne scellée ===
+256 aléatoires : ZÉRO ÉCART
+64 structurés : ZÉRO ÉCART
+LA DIFFÉRENTIELLE : 320 vecteurs, ZÉRO ÉCART (graine 20261124 consignée)
+LE MUTANT imm8 (l'octet 1223 du premier pclmulqdq) : ATTRAPÉ au premier vecteur
+LE REPLI (r10 = 0, la chaîne scellée interne) : 32/32 — jamais un chemin mort
+LA BORNE N ≤ 256 fail-closed : rax = 18446744073709551614 (le refus -2 VÉCU)
+LA BORNE N = 0 fail-closed : rax = 18446744073709551614 (le refus -2 VÉCU)
+LA TRACE-HASH classe aleatoire (8 mesures, N=8) : 1 empreinte(s) — UNE par classe
+LA TRACE-HASH classe structure (8 mesures, N=8) : 1 empreinte(s) — UNE par classe
+LA TABLE dérivée par le scellé (entrée N-2 == scellé(H,H)) : VERT

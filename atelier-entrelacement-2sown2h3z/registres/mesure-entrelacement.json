@@ -1,0 +1,52 @@
+{
+  "mesure": {
+    "corridor_c_octet_4096": 0.7271,
+    "corridor_mediane_cycles": 2978.2,
+    "corridor_iqr_cycles": 5.6,
+    "corridor_mediane_source": "2978.2 c [IQR 5.6] par appel 4096 o (n=20, 10 appels/fenetre, coeur epingle CPU 1)",
+    "openssl_evp_c_octet_4096": 0.5757,
+    "openssl_mediane_cycles": 2357.9,
+    "repli_c_octet_4096": 49.9376,
+    "repli_mediane_cycles": 204544.5,
+    "machine": "Intel(R) Xeon(R) Processor 3200 MHz (machine virtualisee, aes/avx2/pclmulqdq/rdtscp)",
+    "cible_pre_enregistree": 2.0,
+    "verdict": "CIBLE TENUE (0,7271 <= 2,0) — la mesure au 36% de la cible",
+    "decomposition": "11,63 c/bloc = CTR v4i 4,76 + GHASH agrege 4,92 + jointure 1,95 (les cotes publiques v13/v14)"
+  },
+  "differentielle": {
+    "graine": 20261124,
+    "corridor": 1295,
+    "round_trip": true,
+    "fips_c1": true,
+    "differentielle": {
+      "aleatoires": 256,
+      "ecarts_aleatoires": 0,
+      "structure": 64,
+      "ecarts_structure": 0
+    },
+    "mutant_attrape": true,
+    "repli": "32/32",
+    "sha256_couloir": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc"
+  },
+  "garde": {
+    "sceau_avant": "14 arbres VERTS",
+    "sceau_apres": "a verifier au commit (14 attendus)"
+  },
+  "empreintes": {
+    "KIT-METAL-NU.txt": "8181fc36f8bc9e1c",
+    "generer_rig_mesure.py": "354d7db87726b1ae",
+    "native/debug_rig": "0f2fcd42b6329a2c",
+    "native/debug_rig.c": "68913ce21b59a2c5",
+    "native/donnees_rig.h": "4d456c898b20b45e",
+    "native/mesurer_entrelacement": "9ada2dba30bad65b",
+    "native/mesurer_entrelacement.c": "32211f1019519284",
+    "native/mesurer_openssl": "5c17637223ed649b",
+    "native/mesurer_openssl.c": "ce5db9c4c4caa658",
+    "native/rig_octets.h": "42ffa2b0f1df50ba",
+    "notation/ctr-v4i-ghash-agrege4.asm": "1f89116583dc88d7",
+    "piloter_entrelacement.py": "26d92fbe95bf3479",
+    "rapport-differentielle.txt": "b5317a8b2dfa4810",
+    "rapport-entrelacement.txt": "66cbe5f8569077e0",
+    "registres/differentielle.json": "98ab9da664117807"
+  }
+}
