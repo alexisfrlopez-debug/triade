@@ -1,0 +1,29 @@
+LE KIT SECOND ANNOTATEUR — SERVI (ab2vh5c2m, la vague 15)
+================================================================
+LE KIT (l4nnwqlld, la pièce pré-enregistrée RECONDUITE TEL QUEL) :
+  atelier-preregistre-l4nnwqlld/kit-annotateur-fl/
+    — grille-fl.csv              LA GRILLE D203 (la correspondance
+                                  un-pour-un T/X → F/L)
+    — consignes-annotation.txt   LES CONSIGNES + LES HUIT EXEMPLES
+                                  ÉTALONNÉS E1-E8
+    — calculateur_kappa.py       LE CALCULATEUR κ (l'autotest aux QUATRE
+                                  fixtures re-vert à la présente : accord
+                                  parfait +1 ; désaccord total < 0 ;
+                                  accord partiel +0,40 ; le cas n=50
+                                  construit +0,64 — la règle D189
+                                  κ ≥ 0,61 SUR n ≥ 50, les DEUX conditions
+                                  CONJOINTES ; la garde de taille : κ=0,9 à
+                                  n=10 → LA RÈGLE NE SE REND PAS)
+    — LISEZMOI-RECRUTEMENT.txt   le recrutement du second annotateur
+    — REGLE-ACCEPTATION.txt      la règle d'acceptation pré-enregistrée
+LE PROTOCOLE D'ARBITRAGE EN CINQ POINTS (consigné au kit) :
+  1. les DEUX jeux INTACTS (jamais retouchés — le κ officiel s'y calcule) ;
+  2. le κ sur les n ≥ 50 doubles (les deux conditions conjointes) ;
+  3. les désaccords LISTÉS par la mécanique (le calculateur) ;
+  4. LA TROISIÈME LECTURE AU GESTE (l'arbitre — le développeur ou le
+     tiers désigné ; jamais le laboratoire) ;
+  5. le κ officiel SUR LES DEUX JEUX INTACTS consigné au registre —
+     l'arbitrage ne RÉÉCRIT jamais les jeux.
+LA PRÉSENTE SESSION : le kit SERVI (la pièce l4nnwqlld demeure la
+source), l'autotest du calculateur RE-VERT ci-dessus, les livraisons
+d'annotation AU GESTE DU DÉVELOPPEUR.

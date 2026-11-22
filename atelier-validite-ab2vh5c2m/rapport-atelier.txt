@@ -1,0 +1,52 @@
+RAPPORT D'ATELIER — ab2vh5c2m (la vague 15) : LES TROIS GAPS DE VALIDITÉ
+EXTERNE — LA CAMPAGNE H7 SERVIE, LE SECOND ANNOTATEUR SERVI,
+L'INDÉPENDANCE NOMMÉE
+============================================================================
+(23/11/2026, la session de la vague 15 — le plan gelé PLAN-AB2VH5C2M.md,
+sha256 74f8180621bb63a8… consigné à EMPREINTES-PLANS-VAGUE15.txt AVANT
+toute donnée ; AUCUNE annotation fabriquée, AUCUN verdict H7 sans
+livraisons recoupées — la présente ne produit AUCUN chiffre terrain)
+
+(1) H7 SERVIE AUX 28 UNITÉS :
+— LA RE-EXÉCUTION BIT-IDENTIQUE vécue : le générateur à la graine
+  20261120 rend LE SHA CANONIQUE 2de7d488… par sa propre sortie ET les
+  14 lignes de strates BIT-IDENTIQUES aux officielles (la preuve de
+  non-rétropédalage — agregateur_h7.py verif-tirage, VERT) ;
+— L'AGRÉGATEUR FAIL-CLOSED livré (agregateur_h7.py) : les règles d'arrêt
+  D207 éprouvées au jeu d'essai (QUATRE livraisons à une unité → REFUS
+  exit 2 « 4 livraisons > le plafond D207 de 3 » — jamais un verdict
+  partiel ; < 10 strates complètes → H7 NON TESTÉE, exit 2) ; la règle
+  de jugement consignée au code (β̂_s par strate, le t apparié
+  t_{0,975;13} = 2,160 bilatéral, les QUATRE métriques M1-M4 sans
+  correction de multiplicité nommée) ;
+— LES LIVRAISONS APPARTIENNENT AU DÉVELOPPEUR (le geste terrain — les
+  28 unités demeurent OUVERTES au registre v14, la table des statuts au
+  fichier des livraisons).
+
+(2) LE SECOND ANNOTATEUR — LE KIT SERVI :
+— la pièce pré-enregistrée l4nnwqlld RECONDUITE TELLE QUELLE (la grille
+  D203, les consignes + les HUIT exemples étalonnés E1-E8, le
+  recrutement, la règle d'acceptation) ;
+— LE CALCULATEUR κ RE-AUTOTESTÉ VERT à la présente (les QUATRE
+  fixtures : l'accord parfait +1 ; le désaccord total < 0 ; l'accord
+  partiel +0,40 ; le cas n=50 construit +0,64 — LA RÈGLE κ ≥ 0,61 SUR
+  n ≥ 50, les DEUX conditions CONJOINTES ; la garde de taille : κ = 0,9
+  à n = 10 → LA RÈGLE NE SE REND PAS) ;
+— LE PROTOCOLE D'ARBITRAGE EN CINQ POINTS consigné au kit
+  (KIT-SECOND-ANNOTATEUR.txt) : les deux jeux INTACTS, le κ officiel sur
+  les jeux intacts, les désaccords listés par la mécanique, la troisième
+  lecture AU GESTE, jamais de réécriture.
+
+(3) L'INDÉPENDANCE INTER-FAMILLES — LE CONFOUND NOMMÉ, LE KIT PRÊT :
+— LE CONFOUND capacité du 1.5B NOMMÉ : le finding 0/64 (la seconde
+  famille LOCALE est SOUS la frontière — la décharge d'indépendance
+  exige une seconde famille CAPABLE ≥ 30B ou un autre vendor API) ;
+— LE KIT (KIT-INDEPENDANCE.txt) : la dérivation des 128 constantes
+  depuis les définitions mathématiques seules + l'échantillon de tâches
+  de notation + LA CONFRONTATION MÉCANIQUE (la chaîne de juges du dépôt
+  INTACTE — zéro divergence exigé, tout écart nommé) ;
+— LE GESTE au développeur : l'endpoint de la seconde famille — le gap
+  NOMMÉ sans aucun chiffre fabriqué.
+
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel ni
+phrase réelle touchés ; entrée append-only au journal.
