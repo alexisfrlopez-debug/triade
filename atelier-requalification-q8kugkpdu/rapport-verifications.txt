@@ -1,0 +1,6 @@
+LA VÉRIFICATION APRÈS MODIFICATIONS — q8kugkpdu (la vague 13)
+==========================================================================
+LES CONTRÔLES : 20/20 VERT
+LE SCEAU : 14/14 arbres VERTS après l'atelier
+EMPREINTES : CF3-v2.spthy sha256 f9a79efc4522c60a51bc94aa4bffe6e5944b70d2e59779943f3ffa09cf91971a
+             edition-v0220/main.tex (le verbatim historique) sha256 b5ca9adb4892ac96…

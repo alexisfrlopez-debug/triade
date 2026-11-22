@@ -1,0 +1,26 @@
+{
+  "gardes": {
+    "familles": {
+      "champ du plan": 24,
+      "l'OS": 11,
+      "contrat de l'appelant": 23
+    },
+    "certificats_unsat": "58/58"
+  },
+  "exclusions": {
+    "arguments": 12,
+    "sweeps": 3,
+    "survivants": 6,
+    "familles_6": {
+      "shim aveugle": 3,
+      "voie de l'échec jamais servie": 2,
+      "code 3 jamais servi": 1
+    },
+    "recomposition": "811+15+6=832"
+  },
+  "tamarin": {
+    "empreinte_v2": "f9a79efc4522c60a51bc94aa4bffe6e5944b70d2e59779943f3ffa09cf91971a",
+    "empreinte_v1": "2622354afe23c75b646e9249070d0784e69a4f0ccab2b04d9ee5406b5dcaa4a4",
+    "tamarin_absent": true
+  }
+}

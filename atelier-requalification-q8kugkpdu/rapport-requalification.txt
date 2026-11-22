@@ -1,0 +1,108 @@
+LE RAPPORT DE LA REQUALIFICATION — q8kugkpdu (la vague 13)
+============================================================
+Le plan gelé sha256:b1b7e6751aa7e4e9… AVANT toute modification ; les
+pièces brutes relues, jamais déclarées ; le verbatim historique demeuré
+octet pour octet.
+
+(1) LE STATUT EXACT DES 58 GARDES
+----------------------------------
+LE VERDICT PUBLIÉ : sur l'ARTEFACT SCELLÉ, les 58 déréférences sont
+« conditional (assumption-discharged) » — des OBLIGATIONS DE PREUVE
+CONDITIONNELLES aux invariants externes. Les gardes NE SONT PAS ÉMISES
+dans le binaire scellé : elles SONT ÉMISES en COPIES DE LABORATOIRE à
+la marge 0x10000 (le modèle OPT-01), où l'émission runtime fail-closed
+est DÉMONTRÉE par garde.
+
+LE TCB EN LISTE EXHAUSTIVE (généré du gardes_v210.csv, la somme
+contrôlée par code : 24 + 23 + 11 = 58 EXACT) :
+  — 24× champ du plan (le CADRE, 960 o — le layout) ;
+  — 23× contrat de l'appelant (le contexte AEAD) ;
+  — 11× l'OS (le tampon de l'appel système).
+
+LES 58 CERTIFICATS RE-VÉRIFIÉS à la présente session : z3 re-roulé sur
+CHAQUE gardes_smt/*.smt2 de la pièce ifqm1d1i4 — 58/58 UNSAT (les
+preuves deux côtés) ; la falsification par garde vécue à la vague 10
+(l'invariant violé REFUSÉ aux deux bornes et à la face d'index,
+l'adresse honnête ADMISE). La liste exhaustive : registre-58-gardes.txt.
+
+(2) LA MÉTHODE ET LES BORNES DES 15 EXCLUSIONS
+-----------------------------------------------
+L'ANCIEN TEXTE disait « mechanically proved equivalent » — LA
+REQUALIFICATION : ces preuves NE SONT PAS des preuves mécaniques non
+bornées. Le statut exact :
+  — DOUZE par ARGUMENT SÉMANTIQUE sur la notation (peap6ws09, la vague
+    8 ; chacun nommé : l'ensemble de lecture vide de l'état mourant ×6,
+    le sentinel adjacent ×2, la convergence des gardes ×1, le site hors
+    table inatteignable ×1, RBP jamais relu ×1, le champ au-delà du
+    motif ×1 — la cible détournée retombant ×1) ;
+  — TROIS par SWEEP BORNÉ (bk79jvzbm, la vague 9) : la classe nommée
+    entière balayée — 3 cellules du bord × 10 défilements = 30
+    scénarios, zéro écart sur l'observable complet ; la cause : [INLINE:L'absorption
+    par le clamp] (l'intermédiaire divergent, l'état final identique).
+
+LES DÉNOMINATEURS RECOMPOSÉS PAR CODE : 811 tués + 15 exclus + 6
+survivants = 832 EXACT — publiés côte à côte : LE BRUT 811/832
+(97,5 %) · L'AJUSTÉ 811/817 (99,3 %, le statut des 15 :
+prouvé-argumenté borné, JAMAIS mécanique non borné).
+
+LES 6 SURVIVANTS NON ÉQUIVALENTS NOMMÉS PAR FAMILLE : shim aveugle ×3
+(loupe-11@0x1df, loupe-12@0x27b, loupe-16@0x238) · voie de l'échec
+jamais servie ×2 (loupe-15@0x1b, loupe-17@0x207) · code 3 jamais
+servi ×1 (loupe-15@0xfb). La table : table-15-exclusions.txt.
+
+(3) LE MODÈLE TAMARIN CF3 v2
+------------------------------
+LA REFORMULATION : la restriction LAttaquantDolevYaoAuSeuilDesParts
+RETIRÉE (elle ASSUMAIT le seuil au lieu de le montrer — une restriction
+PORTANTE qui excluait l'adversaire à 3 parts du discours). LES TROIS
+GESTES : (a) le lemme d'IMPLICATION ajouté — « secret appris ⇒
+l'adversaire a détenu ≥3 parts » : All p #i. K(p) @ #i ==> Ex #j.
+ReconstitutionIllicite(p) @ #j & #j < #i ; (b) les lemmes de
+NON-VACUITÉ maintenus (le témoin falsification/destruction, la chaîne
+vivante) ; (c) le TÉMOIN D'ATTEIGNABILITÉ DU SEUIL ajouté — la trace
+où l'adversaire à 3 parts APPREND : le seuil MONTRÉ, jamais supposé.
+
+L'EMPREINTE : CF3-v2.spthy sha256 f9a79efc4522c60a… (consignée au
+registre et au protocole-verification-tamarin.txt).
+
+LE GAP NOMMÉ : tamarin-prover ABSENT du bac (constaté au geste même) —
+AUCUN VERDICT FABRIQUÉ : les lemmas sont des ÉNONCÉS à vérifier au
+geste du maître au poste réel (les commandes et les bornes au
+protocole). Le compteur de parts demeure comme INSTRUMENT
+OBSERVATIONNEL (le retrait de la restriction est total).
+
+(4) LA TABLE DES STATUTS ET LE MANUSCRIT ALIGNÉS
+--------------------------------------------------
+LES CINQ REQUALIFICATIONS du manuscrit (edition-v0230, le patcher
+ancré — REFUS si une ancre manque, zéro refus vécu) : (a) l'abstract
+EN — « mechanically proved equivalent » REMPLACÉ par le statut exact
+(12 arguments nommés + 3 sweeps bornés, proved-argued-bounded, les 6
+survivants par famille) ; (b) le §floor mémoire — « each carry a
+runtime guard » REMPLACÉ par « conditional (assumption-discharged) on
+the sealed artifact », le TCB en liste exhaustive (24 · 23 · 11),
+l'émission en copies de laboratoire à la marge 0x10000 NOMMÉE ; (c) le
+§floor des scores — « the 15 proven equivalents » → le statut des 15 ;
+(d) le §limits — « the Tamarin/ProVerif line remains untried » → le
+Tamarin ESSAYÉ au niveau du modèle (v2 livrée), l'exécution du prover
+au geste du maître, ProVerif demeurant inessayé ; (e) le §kits — le
+kit Tamarin porte la v2 reformulée.
+
+LE RÉSUMÉ FR ALIGNÉ : le résumé ne porte NI le score, NI les gardes
+(le désalignement nommé par l'instruction) — l'alignement des valeurs
+appartient à la génération v0.23.0 (ylrzmlbn8, les abstracts depuis
+les MÊMES macros).
+
+LA TABLE DES STATUTS étendue : statuts_v230.tex porte les TROIS
+lignes nouvelles (Memory-safety guards 58 → conditional
+(assumption-discharged) · Mutation exclusions 15 → proved-argued-
+bounded · CF3 Tamarin model → stated (v2), unproven in the sandbox).
+
+(5) LA RELECTURE INTÉGRALE des paragraphes modifiés vécue (pas de
+grep seul) : chaque remplacement relu dans son paragraphe entier —
+zéro phrase tronquée, zéro splice ancien/nouveau.
+
+LA VÉRIFICATION (verifier_q8kugkpdu.py) : 20/20 VERT — le TCB somme à
+58, la table des 15 recompose 811+15+6=832, la restriction ABSENTE par
+grep par code, le lemme d'implication PRÉSENT, l'empreinte consignée,
+les CINQ requalifications présentes, le verbatim historique intact,
+le sceau 14/14 APRÈS l'atelier.
