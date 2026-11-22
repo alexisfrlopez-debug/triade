@@ -1,0 +1,12 @@
+EMPREINTES DES PLANS — LA VAGUE 14 (les six instructions du 22/11/2026)
+Gelées AVANT toute mesure ; le présent commit précède la première donnée.
+
+PLAN-TCB7TPF9Q.md      sha256:f55c5fdc59805f12…  (tcb7tpf9q — la validité externe : H7 au geste --tirer, le second annotateur, l'intégrité des trois kits, l'état de l'art 2026)
+PLAN-S2P9BM3ZD.md      sha256:7c0475aaf924cef1…  (s2p9bm3zd — H-CGP4 la mémoïsation content-addressée du régime, l'oracle natif OPT-07, la ventilation quatre bras aux volumes égalisés)
+PLAN-F3UZNUI3L.md      sha256:0d718aa3559d0a26…  (f3uznui3l — la fermeture sécurité : Tamarin CF3 v2, le kit de cérémonie des sept gestes, les gardes de frontière composées z3, le dudect)
+PLAN-H1MZ2SR8S.md      sha256:2e0f01049a486663…  (h1mz2sr8s — la performance pré-enregistrée : le GHASH agrégé 4 blocs à réduction différée, l'AES-CTR entrelacé, le dispatch hissé)
+PLAN-842VQYY1K.md      sha256:4184dc00a9bdf58f…  (842vqyy1k — TPL-ADD-v4 : la grammaire au décodage, le squelette à trous typés, la réparation par contre-exemple, l'exemplaire par proche contrat)
+PLAN-IO13OLVXZ.md      sha256:e291715563325830…  (io13olvxz — la cohérence inter-pièces : les dix corrections sourcées, le linter étendu, la génération v0.24.0)
+
+La règle reconduite des vagues 8-13 : le plan gelé, l'empreinte consignée,
+le commit AVANT la première donnée ; tout écart au plan nommé au rapport.
