@@ -1,0 +1,80 @@
+=== LE RAPPORT DE LA SUITE DE LA VAGUE 16 (23/11/2026, l'Entrée 395) ===
+la commande du maître : « tu feras le dépôt zenodo quand toutes les instructions de la
+vague seront exécutées. enchaîne sur ce qui reste » — la présente enchaîne.
+le premier rapport : rapport-vague16-20261123.txt (l'Entrée 394).
+
+=== CE QUE LA SUITE A EXÉCUTÉ ===
+
+(1) IO3UH37CJ — LES COULOIRS DE PERFORMANCE SCELLÉS (atelier-couloirs-scelles-io3uh37cj)
+    LA CHAÎNE REPRODUITE À L'OCTET : l'aller-retour keystone → capstone → keystone
+    IDENTIQUE (1 295 octets, 274 instructions) ; LA DIFFÉRENTIELLE contre la chaîne
+    scellée ZÉRO ÉCART (ddedc26c… reconstruit à la source == le registre de la vague 15) ;
+    10/10 rebuilds BIT-IDENTIQUES ; le temps-constant trace-hash une empreinte par classe ;
+    les bornes N=0 et N=257 REFUSÉES ; la variante de marge à RVA 0xF7C0.
+    LE KIT MÉTAL NU : l'agrégateur qui REFUSE (le jeu complet VERT, le jeu incomplet
+    REFUSÉ exit 2 — jamais un verdict partiel).
+    LE DISPATCH CPUID : le silicium lu (GenuineIntel Skylake, VAES/VPCLMULQDQ présents),
+    LE CONTRÔLE 32/32 — jamais un chemin mort ; deux bogues de construction nommés.
+    LE SURCOÛT TOKEN DE GOUVERNANCE MESURÉ : 34 663 tokens par changement contre les
+    budgets 627/674/2 200 — 15 à 55 fois le changement protégé ; la forme compressée
+    732 tokens (-97,9 %).
+
+(2) 0J7YWZA2H — L'INSTRUMENT DU DÉCODAGE CONTRAINT ET L'ÉCART DE RÈGLE (atelier-campagne-v6-0j7ywza2h)
+    La grammaire canonique TPL-ADD rendue EXÉCUTABLE (la source GBNF + le validateur
+    déterministe) — l'autotest 8/8. LA TROUVAILLE : les 24 complétions VERT du corpus v2
+    soumises à la grammaire → 3/24 ACCEPTÉES, 21/24 REFUSÉES (17 définissent « LBL-xxx : »
+    que le contrat INTERDIT explicitement) — LE JUGE EST PLUS PERMISSIF QUE LA GRAMMAIRE
+    QU'IL ÉNONCE : un décodeur contraint CHANGERAIT l'ensemble d'acceptation, pas seulement
+    la classe HORS-FORMAT. La campagne v6 NON COURUE (aucun serving à grammaire au poste :
+    xgrammar sans roue Windows — l'écart nommé).
+
+(3) 0PLJBN96B — LE KIT DE CLÔTURE Tamarin / ProVerif (atelier-cloture-tamarin-0pljbn96b)
+    La lettre de l'instruction EST la préparation du kit : LIVRÉ — les commandes exactes
+    copiables au poste réel (RAM ≥ 16 Go), les budgets NOMMÉS DANS LA COMMANDE (ulimit -v
+    16 Gio · timeout 10 min/4 h/2 h/1 h), L'ORDRE OBLIGÉ (le négatif d'abord, l'attendu
+    FALSIFIÉ), les cinq lemmes (L1 + les cinq heuristiques S/I/i/c/C · L2 · T1/T2/T3 à la
+    trace DFS bornée 12), le port ProVerif aux six requêtes actives. L'AUTOTEST 6/6 — dont
+    « --executer au bac : REFUSÉ exit 2 » (jamais un run simulé).
+
+(4) 86D3USHRR — LE LINTER v2 ÉTENDU ET DEUX RÉSIDUS TRANCHÉS (scripts/vague16/linter_v233.py)
+    TROIS classes nouvelles (C' ratio recalculé, B' plage contre la table locale, D'
+    cible-périmètre) — LE CONTRÔLE NÉGATIF aux divergences plantées ATTRAPÉES.
+    (A) CONFIRMÉ PAR LA MACHINE : le ratio publié 3,23 NE SE RECALCULE PAS (63,39/19,66
+    = 3,2243 → 3,22 — la divergence d'un centième, les six autres ratios se recomputent) ;
+    (B') la plage D1–D251 porte 43 trous NOMMÉS (D51–D62…) — la liste mécanique pour
+    compléter la table ; (D') la cible ≥ 15/18 contre le TEST réel de TOUTES les versions
+    (v1 4 · v2 6 · v2.1 corrigé 2) — la cible RE-SCOPÉE au TEST corrigé.
+
+=== L'ÉTAT DE LA VAGUE (l'honnêteté, pas le catalogue) ===
+SIX instructions, SIX ateliers livrés. CE QUI EST EXÉCUTÉ au poste : l'audit d'étanchéité
+(la fuite fermée, am9d6o2th) ; l'ancrage offline et la garde RAM (ru2rfjl2g) ; le couloir
+prouvé, le kit métal nu, le dispatch, le surcoût gouvernance (io3uh37cj) ; l'instrument
+contraint et l'écart de règle nommé (0j7ywza2h) ; le kit de clôture (0pljbn96b — la lettre
+de l'instruction) ; le linter v233 et les résidus tranchés (86d3ushrr).
+
+CE QUI ATTEND (nommé sur pièces, jamais maquillé) :
+  · LA CAMPAGNE v6 ET LES PAIRES DPO (0j7ywza2h) : l'instrument de serving à grammaire —
+    xgrammar/outlines sans roue Windows au poste ; le compute au développeur ;
+  · LA RÉGÉNÉRATION DES CINQ PIÈCES (86d3ushrr A/D/E) : tectonic + weasyprint absents —
+    le linter v233 est PRÊT à contrôler la régénération dès qu'elle court ;
+  · LA MESURE DES CYCLES AU MÉTAL NU (io3uh37cj) : ≥ 2 machines, le RIG C compilé sur
+    place — le kit est prêt, l'agrégateur refuse le partiel ;
+  · LES RUNS TAMARIN/PROVERIF (0pljbn96b) : le poste Linux à RAM ≥ 16 Go — les commandes
+    sont rendues, l'ordre est géle ;
+  · LA SENTINELLE WINDOWS SACL/4663 ET LE FIDO2 (ru2rfjl2g) : la politique d'audit, le
+    jeton physique ;
+  · LA CÉRÉMONIE D'ÈRE DU SCEAU (io3uh37cj) : la clé hors-ligne du maître.
+
+L'ARCHIVAGE : am9d6o2th et ru2rfjl2g archivées à l'Entrée 394 ; 0pljbn96b archivée à la
+présente (la lettre de l'instruction — « prépare le kit » — est satisfaite). TROIS
+demeurent au /instructions (0j7ywza2h, io3uh37cj, 86d3ushrr) : leur cœur attend le poste
+réel ou le geste du maître — les archiver maintenant les cacherait.
+
+LE DÉPÔT ZENODO : À LA COMMANDE DU MAÎTRE quand toutes les instructions seront exécutées
+(la sienne, la présente : la doctrine « jamais mintés sans commande » honorée en sa lettre).
+
+=== LA GARDE ===
+aucun secret affiché ni committé (la garde h66o54pjd : 0 détection à chaque commit) ;
+aucun coffre réel touché hors la lecture du /instructions, du /Tokens et la livraison au
+/test ; le verbatim des Entrées 389-394 demeuré octet pour octet ; les graines et l'ordre
+JAMAIS re-tirés ; le sceau-I 14/14 avant et après chaque geste.
