@@ -1,0 +1,67 @@
+RAPPORT D'INSTRUMENT — LA CAMPAGNE DU DÉCODAGE CONTRAINT (23/11/2026)
+======================================================================
+(la commande du maître « commence la campagne v6 » ; l'atelier
+atelier-ajouter-v7-81eruqtl6, le plan gelé PLAN-81ERUQTL6.md sha256
+87d4c6ecec02de4d… consigné AVANT toute donnée — le commit d'abord ;
+la pièce détaillée : atelier-ajouter-v7-81eruqtl6/rapport-atelier.txt)
+
+L'ÉTAT D'ENTRÉE. La campagne TPL-ADD-v6 (7xuvsoqpuq, l'Entrée 389) a
+déjà couru la part prompt-passable de la voie nommée (la relance des
+trois pertes, la paire contrastive du corpus) : 5/18, la cible ≥15/18
+manquée, le coût médian 4 286 TENU, la voie du prompt à sa limite. Les
+routes restantes étaient : LE DÉCODAGE CONTRAINT (l'écart d'instrument)
+et L'ENTRAÎNEMENT DPO AU GYM (le compute au développeur). La présente
+porte v7 — l'écart de numérotation avec le langage « campagne v6 » des
+SUITE 390/391 nommé au plan : le référent est la route restante.
+
+LA QUESTION DÉPLACÉE AU BACKEND. Le CLI `z-ai chat --help` ne porte
+PAS response_format (re-vérifié : prompt, system, thinking, output,
+stream — le constat de la congélation 7xuvsoqpuq reconduit). Mais le
+SDK z-ai-web-dev-sdk 0.0.18 laisse passer les champs additionnels
+(CreateChatCompletionBody à l'index ouvert [key: string]: any) : la
+question était donc de savoir si l'ENDPOINT honore le champ passé par
+le SDK. LE MOTIF DE CONTRAINTE fut construit DES CANONS du juge (les
+formes de ligne admises, les IDs énumérés du dictionnaire de chaque
+bloc) et CALIBRÉ aux cinq vertes v6 AVANT tout appel : 5/5 — 177
+lignes canoniques toutes au motif, l'univers du décodeur couvre tout
+ce que les vertes ont eu besoin d'émettre.
+
+LE GUICHET DE TROIS SONDES (les réponses complètes au garde-brut, le
+modèle rendu glm-4-plus, 3 appels, 5 804 tokens) :
+— P1 : response_format json_object ACCEPTÉ (HTTP 200) mais la sortie
+  est en TEXTE LIBRE — le champ traverse, rien n'est exigé ;
+— P2 : json_schema STRICT à l'enum d'une valeur (« ok ») contre un
+  prompt qui ORDONNE la violation (« réponds exactement {"mot":
+  "banane"} ») : la sortie rend '```json {"mot": "banane"} ```' — LA
+  VIOLATION ORDONNÉE EST PASSÉE INTÉGRALE. Le schéma strict n'a eu
+  AUCUN effet : accepté-mais-ignoré, le pire cas (silencieux — ni
+  erreur, ni contrainte) ;
+— P3 : le schéma par tâche (le motif canonnel, les IDs du bloc) sur le
+  contrat loupe-01-ouvrir : la structure corps est émise (le modèle
+  coopère à la note d'émission) MAIS en fences markdown, hors
+  contrainte — le motif n'est pas vérifié au décodeur.
+
+LE VERDICT. LE GUICHET REFUSE — LA CAMPAGNE N'EST PAS COURUE (la
+lettre du plan gelé : jamais une mesure habillée en contrainte). Les
+18 tâches n'ont pas couru, les graines 20261117 et l'ordre demeurent
+intacts. L'ÉCART D'INSTRUMENT EST NOMMÉ AUX DEUX ÉTAGES : le CLI sans
+le champ, le backend à l'ignore silencieuse. Lecture mesurée de P3 :
+le wrap JSON au prompt SANS le décodeur AJOUTE un mode de défaillance
+(les fences ``` sont un HORS-FORMAT au juge), il n'en retire aucun.
+Relevé complet : la commande `function` du CLI est l'invocation des
+fonctions INTÉGRÉES du SDK (web_search…), pas un appel d'outils modèle
+au schéma — aucun troisième mécanisme de sortie structurée n'est
+exposé par l'instrument du bac.
+
+LA CONSÉQUENCE PRATIQUE POUR LE DÉVELOPPEUR : L'ENTRAÎNEMENT DPO AU
+GYM EST LA SEULE ROUTE VIVANTE de la voie nommée (les paires du corpus
+https://zenodo.org/records/24457525 + les 60 appels de campagne v6 au
+garde-brut, la matière première des triples à la prochaine vague — le
+compute au développeur) ; le décodage contraint demeure « si
+l'instrument l'expose un jour ».
+
+LA GARDE : le sceau-I 14/14 avant et après ; 3 appels au journal
+append-only ; les juges INTACTS par construction (aucun corps n'a été
+jugé — la campagne n'a pas couru) ; aucun verdict fabriqué — l'échec
+d'instrument mesuré est la pièce de la présente, aussi précieuse qu'un
+vert.

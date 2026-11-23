@@ -1,0 +1,7 @@
+LE GUICHET D'INSTRUMENT — 81eruqtl6 (les sondes AVANT la campagne, jamais une mesure habillée en contrainte)
+
+P1 ACCEPTÉ : courue (voir probes-instrument.jsonl)
+P2 CONTRAINTE RÉELLE : courue (voir probes-instrument.jsonl)
+P3 LA FORME TPL-ADD : courue (voir probes-instrument.jsonl)
+
+LE TRANCHÉ : P2 OU P3 ROUGE — LA CAMPAGNE N'EST PAS COURUE, l'écart d'instrument nommé (le CLI ET le SDK/backend), aucune donnée de campagne

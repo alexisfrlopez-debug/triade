@@ -74,14 +74,26 @@ les 18 VERT du bord anonyme rejoués ; la ligne de pack du bundle
 nommée — les octets du pack diffèrent à contenu identique selon la
 lignée du bac — ET L'ÉQUIVALENCE PROUVÉE : les cinq refs et l'univers
 des 12 569 objets identiques, la tête 4824215 ; le miroir re-syncé,
-les trois bords re-vérifiés, le sceau-I 14/14). LES GESTES AU
-DÉVELOPPEUR restants : le poste réel (les lemmas Tamarin + le run
-ProVerif), le métal nu (≥ 2 machines), les 28 livraisons H7,
-l'annotateur, l'endpoint de la seconde famille — LES DÉPÔTS ZENODO DU
-KIT ET DU CORPUS SOLDÉS ET CONSIGNÉS ; la campagne v6 à la commande
-(le décodage contraint si l'instrument l'expose, l'entraînement DPO au
-gym — les paires du corpus, le compute au développeur). Détail au
-worklog (Entrées 385-391).
+les trois bords re-vérifiés, le sceau-I 14/14). LA CAMPAGNE DU DÉCODAGE
+CONTRAINT OUVERTE AU GUICHET ET REFUSÉE SUR PIÈCES (l'Entrée 392,
+l'atelier 81eruqtl6 [TPL-ADD-v7 — l'écart de numérotation avec le
+langage « campagne v6 » des SUITE 390/391 nommé au plan], la commande
+du maître « commence la campagne v6 ») : le CLI SANS response_format
+re-vérifié, le SDK laisse passer le champ, LE BACKEND L'IGNORE —
+response_format accepté-mais-ignoré (P1 la sortie en texte libre ; P2
+la violation ordonnée passée INTÉGRALE sous json_schema strict à
+l'enum ; P3 la structure corps émise mais en fences markdown hors
+contrainte) ; LE GUICHET REFUS, la campagne NON courue (jamais une
+mesure habillée en contrainte), le motif canonnel calibré 5/5 aux
+vertes v6 demeurant PRÊT AU DÉCODEUR (« si l'instrument l'expose un
+jour ») ; le rapport-instrument-20261123.txt à la racine et au /test.
+LES GESTES AU DÉVELOPPEUR restants : le poste réel (les lemmas
+Tamarin + le run ProVerif), le métal nu (≥ 2 machines), les 28
+livraisons H7, l'annotateur, l'endpoint de la seconde famille — LES
+DÉPÔTS ZENODO DU KIT ET DU CORPUS SOLDÉS ET CONSIGNÉS ; l'entraînement
+DPO au gym LA SEULE ROUTE VIVANTE de la voie nommée (les paires du
+corpus + les 60 appels v6 au garde-brut au corpus à la prochaine
+vague, le compute au développeur). Détail au worklog (Entrées 385-392).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 

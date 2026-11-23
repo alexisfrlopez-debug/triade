@@ -1,0 +1,84 @@
+RAPPORT D'ATELIER — 81eruqtl6 (la campagne du DÉCODAGE CONTRAINT, la
+route restante de la voie nommée — dite « campagne v6 à la commande »
+aux SUITE 390/391) : LE GUICHET REFUSÉ — L'ÉCART D'INSTRUMENT NOMMÉ AU
+CLI ET AU BACKEND, LA CAMPAGNE NON COURUE
+============================================================================
+(23/11/2026, la commande du maître « commence la campagne v6 » ; le plan
+gelé PLAN-81ERUQTL6.md sha256 87d4c6ecec02de4d… consigné à
+registres/empreinte-plan.txt AVANT toute donnée — LE COMMIT D'ABORD ;
+la présente exécute la lettre du plan : le guichet d'instrument tranche
+AVANT la campagne, jamais une mesure habillée en contrainte)
+
+(0) L'ÉTAT D'ENTRÉE : la campagne TPL-ADD-v6 (7xuvsoqpuq, l'Entrée 389)
+A DÉJÀ COURU sa part prompt-passable (la relance des trois pertes, la
+paire contrastive du corpus) — 5/18, la cible ≥15/18 manquée, le coût
+médian 4 286 TENU, la voie du prompt à sa limite nommée ; les routes
+restantes de la voie nommée : LE DÉCODAGE CONTRAINT (l'écart
+d'instrument) et L'ENTRAÎNEMENT DPO AU GYM (le compute au développeur).
+LA PRÉSENTE PORTE v7 (la série des ateliers v4→v5→v6→v7) — l'écart de
+numérotation avec le langage « campagne v6 » des SUITE 390/391 NOMMÉ au
+plan : le référent est la route restante, jamais un second v6.
+
+(1) L'INSTRUMENT RE-VÉRIFIÉ (la question déplacée) : le CLI `z-ai chat
+--help` NE PORTE PAS response_format (options : prompt, system,
+thinking, output, stream — le constat de la congélation 7xuvsoqpuq
+reconduit) ; MAIS le SDK z-ai-web-dev-sdk 0.0.18 laisse passer les
+champs additionnels (CreateChatCompletionBody à l'index ouvert
+[key: string]: any — le seul response_format typé du SDK est celui du
+TTS audio) : LA QUESTION ÉTAIT DÉPLACÉE AU BACKEND — l'endpoint
+honore-t-il le champ passé par le SDK ?
+
+(2) LE MOTIF CONSTRUIT DEPUIS LES CANONS, CALIBRÉ AVANT (aucune donnée
+neuve) : le motif de ligne = l'UNION DES FORMES ADMISES du juge
+assembler_v2 (MON_INSTRUCTION l'inventaire canonnel des mnémoniques,
+RE_DEF_ETIQ, RE_LIGNE_ID, la forme opérande-ID, la définition LBL), les
+IDs ÉNUMÉRÉS du dictionnaire du bloc (construire_dictionnaire) —
+HORS-FORMAT (repne, db, la prose, les artefacts ```) et ID-INCONNU
+IMPOSSIBLES AU DÉCODEUR ; LA CALIBRATION aux CINQ VERTES v6 (la donnée
+COMMISE de 7xuvsoqpuq) : 5/5 VERTES — 177 lignes canoniques TOUTES au
+motif (registres/calibration-vertes-v6.txt) — l'univers du décodeur
+couvre tout ce que les vertes ont eu besoin d'émettre.
+
+(3) LES TROIS SONDES (registres/probes-instrument.jsonl, les réponses
+complètes au garde-brut-v7.jsonl, le modèle rendu glm-4-plus) :
+— P1 ACCEPTÉ (json_object, 114 tokens, id 20261123181905974…) : HTTP
+  200 MAIS la sortie en TEXTE LIBRE (« La mer est un vaste… ») — le
+  champ TRAVERSE, rien n'est exigé ;
+— P2 CONTRAINTE RÉELLE (json_schema STRICT à l'enum d'une valeur « ok »
+  contre un prompt qui ORDONNE la violation « {"mot": "banane"} », 48
+  tokens, id 20261123181906…) : la sortie rend '```json {"mot":
+  "banane"} ```' — LA VIOLATION ORDONNÉE EST PASSÉE INTÉGRALE : le
+  schéma strict n'a eu AUCUN effet — ACCEPTÉ-MAIS-IGNORÉ, le pire cas
+  NOMMÉ AU PLAN (silencieux : ni erreur, ni contrainte) ;
+— P3 LA FORME TPL-ADD (le schéma par tâche au motif canonnel, le
+  contrat loupe-01-ouvrir, 5 642 tokens, id 20261123181907…) : la
+  structure corps émise (le modèle COOPÈRE à la note d'émission : le
+  tableau des lignes « cmp qword ptr [rbx + 528], -1 », « je LBL-006 »,
+  « call CST-001 »…) MAIS en fences markdown, HORS contrainte — le
+  motif n'est pas vérifié au décodeur.
+
+(4) LE TRANCHÉ : REFUS — P2 ET P3 ROUGES, LA CAMPAGNE N'EST PAS COURUE
+(la règle du plan gelé tenue) : les 18 tâches NON courues, les graines
+20261117 et l'ordre INTACTS (rien à re-tirer — jamais un chiffre de
+campagne fabriqué) ; LA LECTURE MÉSURÉE de P3 : le wrap JSON au prompt
+SANS le décodeur AJOUTE un mode de défaillance (les fences ``` sont un
+HORS-FORMAT au juge — la ligne 296 de client_v2 le refuse), il n'en
+retire AUCUN — le levier d'émission sans contrainte est À CONTRE-EMPLOI.
+
+(5) LES ROUTES RESTANTES DE LA VOIE NOMMÉE : L'ENTRAÎNEMENT DPO AU GYM
+demeure LA SEULE ROUTE VIVANTE (les paires extraites du corpus 2i7iy3xmg
++ les 60 appels v6 au garde-brut au corpus à la prochaine vague — le
+compute AU DÉVELOPPEUR) ; le décodage contraint VERROUILLÉ AUX DEUX
+ÉTAGES (le CLI sans le champ, le backend à l'ignore silencieuse — « si
+l'instrument l'expose un jour » reconduit) ; le relevé complet : la
+commande `function` du CLI est l'invocation des FONCTIONS INTÉGRÉES du
+SDK (web_search…), PAS un appel d'outils modèle au schéma — aucun
+troisième mécanisme de sortie structurée n'est exposé par l'instrument
+du bac.
+
+LA GARDE : le sceau-I 14/14 avant et après ; 3 appels au journal (la
+sonde P1-P3, 5 804 tokens cumulés, la source log-api), le garde-brut et
+le garde-prompts archivés ; les juges INTACTS PAR CONSTRUCTION (aucun
+corps n'a été jugé — la campagne n'a pas couru) ; aucun verdict fabriqué
+— l'échec d'instrument mesuré est la pièce de la présente, aussi
+précieuse qu'un vert ; entrée append-only au journal.
