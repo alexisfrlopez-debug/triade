@@ -118,6 +118,8 @@ bords, le sceau-I 14/14) ; l'entraînement DPO au gym la route vivante
 (les paires du corpus v2, le compute au développeur). Détail au
 worklog (Entrées 385-393).
 
+**L'ÉTAT PRÉSENT (Entrée 394, 23/11/2026) — LA VAGUE 16 OUVERTE ET NON CLOSE** : SIX INSTRUCTIONS du 23/11 reçues au \/instructions\ (0j7ywza2h la campagne TPL-ADD-v6, 0pljbn96b le kit Tamarin/ProVerif, 86d3ushrr les six résidus, am9d6o2th l'audit d'étanchéité, io3uh37cj les couloirs scellés, ru2rfjl2g l'ancrage/sentinelle/garde RAM) — LES SIX PLANS GELÉS (EMPREINTES-PLANS-VAGUE16.txt, le commit 71647ea d'abord). **AM9D6O2TH EXÉCUTÉ** : la fuite par contrat CONSTATÉE (dix contrats partagés, le TEST v2 contaminé par construction) et RÉPARÉE par groupe-de-contrat à la graine 20261126 (TRAIN 14 · DEV 2 · TEST 2, le TEST nu, le canari unique au TRAIN) — l'audit rejoué ÉTANCHE, les dix rebuilds bit-identiques (commit 2e18c73). **RU2RFJL2G PARTIEL** : le témoin d'époque et son vérificateur OFFLINE (6/6), la garde RAM native (5/5), les deux écarts nommés (commit 8e2a857). **86D3USHRR PARTIEL** : le recompte (delta 12, non 13) et le périmètre re-scopé. **QUATRE ATELIERS BLOQUÉS AU POSTE** (Tamarin/Maude, tectonic/weasyprint, keystone/capstone et le métal nu, l'instrument du décodage contraint) — nommés sur pièces. LE \/instructions\ LAISSÉ EN PLACE (la vague n'est pas close) ; les six instructions copiées au dépôt ARCHIVE/instructions_vague16_20261123/ ; la version Zenodo du corpus corrigé À LA COMMANDE du maître.
+
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
 ```

@@ -1,0 +1,60 @@
+=== LE RAPPORT DE LA VAGUE 16 (23/11/2026) ===
+les six instructions du /instructions du coffre Drive — exécutées et archivées là où le poste le permet
+les plans gelés : EMPREINTES-PLANS-VAGUE16.txt (le plan AVANT la donnée, le commit 71647ea)
+le worklog : l'Entrée 394
+
+=== CE QUI FUT EXÉCUTÉ ===
+
+(1) AM9D6O2TH — L'AUDIT D'ÉTANCHÉITÉ DES SPLITS — EXECUTÉ EN ENTIER (commit 2e18c73)
+    LA FUITE EST RÉELLE : dix contrats partagés entre TRAIN et DEV/TEST (loupe-02, -04, -06,
+    -07, -08, -10, -11, -13, -14, -17) — TRAIN ∩ DEV 6 · TRAIN ∩ TEST 6 · DEV ∩ TEST 2.
+    La cause : les splits furent tirés PAR INSTANCE DE TÂCHE ; or v3, v4 et v6 portent LE MÊME
+    contrat — l'identifiant de contrat est l'unité d'étanchéité, et il était invisible à la
+    règle de tirage. Le TEST du corpus v2 (DOI 10.5281/zenodo.24463681) est donc CONTAMINÉ PAR
+    CONSTRUCTION : six des six contrats du TEST déjà lus au TRAIN sous une autre campagne.
+    LA RÉPARATION : les splits par GROUPE-DE-CONTRAT à la graine consignée 20261126 (jamais
+    re-tirée) — 18 contrats → TRAIN 14 · DEV 2 · TEST 2 ; le TEST reste NU (validateurs seuls),
+    le canari UNIQUE au TRAIN.
+    LA PREUVE : l'audit rejoué rend ÉTANCHE (rc 0) ; LES DIX REBUILDS BIT-IDENTIQUES.
+    LE PRIX NOMMÉ : le TEST passe de 21 lignes / 6 contrats à 19 lignes / 2 contrats — la cible
+    headline doit être re-scopée (l'objet du résidu (C) de 86d3ushrr).
+
+(2) RU2RFJL2G — L'ANCRAGE ET LA GARDE RAM — EXECUTÉ EN PARTIE (commit 8e2a857)
+    Le témoin d'époque TRIADE-TEMOIN-EPOQUE-v1 et son vérificateur OFFLINE fail-closed :
+    6/6 contrôles (le valide VERT ; le muté, la signature tronquée, la clé substituée, la clé
+    absente et --reseau REFUSÉS nommés — R10, l'absence réseau est l'état NORMAL).
+    La garde RAM native : 5/5 (VirtualLock + la zéroïsation RELUE octet pour octet, le contrôle
+    négatif SANS verrou rendu).
+    LE DELTA AU MODÈLE DE MENACE AUX DEUX BORDS livré : ce que l'ancrage ajoute contre le
+    roll-back administratif, ce qu'il n'ajoute pas.
+    LES DEUX ÉCARTS NOMMÉS : RtlSecureZeroMemory est un intrinsèque non exporté (la substitution
+    msvcrt nommée à l'exécution, la relecture prouve le résultat) ; le « drapeau dumpable » est
+    POSIX — Windows n'a pas d'équivalent par drapeau.
+
+(3) 86D3USHRR — LES SIX RÉSIDUS — EXECUTÉ EN PARTIE (les décisions (B) et (C))
+    (B) LE RECOMPTE DEPUIS LES FICHIERS : 57 (v3) + 52 (v4) = 109, la première passe 97 —
+    LE DELTA RÉEL EST 12, NON 13 : le « +13 » du récit surestime d'une unité.
+    (C) LE PÉRIMÈTRE : la cible ≥ 15/18 re-scopée au TEST corrigé (19 lignes / 2 contrats).
+
+=== CE QUI FUT BLOQUÉ, NOMMÉ SUR PIÈCES ===
+jamais un verdict fabriqué — un échec mesuré est une pièce aussi précieuse qu'un vert.
+
+0PLJBN96B — le kit de clôture Tamarin/ProVerif : Tamarin 1.12.0, Maude 3.4, ProVerif et le poste
+    à RAM ≥ 16 Go sont ABSENTS du poste Windows. Le kit reste à écrire au poste réel.
+0J7YWZA2H — la campagne TPL-ADD-v6 : l'instrument du décodage contraint est VERROUILLÉ AUX DEUX
+    ÉTAGES (le constat de l'Entrée 392 reconduit) — aucun serving à grammaire au poste. La
+    campagne N'EST PAS courue ; la règle du plan tenue.
+IO3UH37CJ — les couloirs de performance scellés : keystone/capstone et la chaîne du laboratoire
+    absents ; le métal nu (≥ 2 machines) absent.
+86D3USHRR (A)(D)(E)(F) — la régénération des cinq pièces exige tectonic + weasyprint : absents.
+
+=== L'ARCHIVAGE ===
+les six instructions COPIÉES au dépôt ARCHIVE/instructions_vague16_20261123/ (byte-byte, aux noms
+d'origine). LE /instructions DU COFFRE LAISSÉ EN PLACE : la vague n'est pas close — archiver des
+instructions non exécutées les cacherait. Le geste d'archivage au coffre attend la clôture.
+
+=== LA GARDE ===
+aucun secret affiché ni committé (la garde h66o54pjd : 0 détection à chaque commit) ; aucun coffre
+réel touché hors la lecture du /instructions et du /Tokens ; le verbatim des Entrées 389-393
+demeuré octet pour octet ; les graines et l'ordre JAMAIS re-tirés ; le sceau-I 14/14 avant et après
+chaque geste.
