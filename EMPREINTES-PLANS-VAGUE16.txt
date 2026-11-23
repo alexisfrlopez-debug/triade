@@ -1,0 +1,14 @@
+EMPREINTES DES PLANS — LA VAGUE 16 (les six instructions du 23/11/2026)
+Gelées AVANT toute donnée ; le présent commit précède la première donnée.
+Six instructions, l'ordre d'exécution gelé ci-dessous (thématique, les
+dépendances amont nommées) — JAMAIS re-tiré.
+
+PLAN-AM9D6O2TH.md      sha256:f6d7a438d896e60f…  (am9d6o2th — l'audit d'étanchéité des splits du corpus : l'identifiant de contrat comme unité, v3 et v4 confondus, la réparation par groupe-de-contrat si fuite, le canari unique au TRAIN, aucune dorée au TEST)
+PLAN-86D3USHRR.md      sha256:8457bfb425b22958…  (86d3ushrr — les six résidus des cinq pièces v0.23.3 : les médianes GHASH non arrondies, le recompte des triples depuis les fichiers, le périmètre de la cible headline, le Livre du Coffre D75–D137, la spécification § 1.19–1.21, le linter v2 étendu aux classes B/C/D — DÉPEND de am9d6o2th pour le recompte)
+PLAN-RU2RFJL2G.md      sha256:f316c34c0b84687d…  (ru2rfjl2g — l'ancrage de transparence du témoin d'époque (Rekor/RFC 3161), le vérificateur OFFLINE fail-closed, la sentinelle Windows SACL/4663, la garde RAM native mlock + SecureZeroMemory, le prototype FIDO2)
+PLAN-IO3UH37CJ.md      sha256:f46089402a2e2db3…  (io3uh37cj — les couloirs de performance scellés : la cristallisation 10×, le round-trip keystone == capstone, la différentielle, le temps-constant, le kit métal nu à agrégateur refusant, VAES/VPCLMULQDQ, le surcoût token de gouvernance)
+PLAN-0PLJBN96B.md      sha256:b3ac22e8022fb198…  (0pljbn96b — le kit de clôture idempotent Tamarin 1.12.0 / Maude 3.4 / ProVerif : le négatif d'abord, les cinq lemmes, le port .pv, la table des statuts)
+PLAN-0J7YWZA2H.md      sha256:04aa6f973320c5ff…  (0j7ywza2h — la campagne TPL-ADD-v6 : le décodage contraint par la grammaire canonique, les paires DPO par rejection sampling dans TRIADE-GYM, la cible ≥ 15/18 à ≤ 4 500 tokens pré-enregistrée)
+
+La règle reconduite des vagues 8-15 : le plan gelé, l'empreinte consignée,
+le commit AVANT la première donnée ; tout écart au plan nommé au rapport.
