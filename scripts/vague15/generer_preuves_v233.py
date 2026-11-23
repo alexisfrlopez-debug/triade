@@ -211,7 +211,7 @@ body { font-family: 'Liberation Serif', serif; margin: 0; }
      font-size: 12px; color: #666; border-top: 1px solid #999;
      padding-top: 10px; }</style></head><body><div class="c">
 <div class="t">TRIADE<br/>preuves et calculs</div>
-<div class="s">La quinz&egrave;i&egrave;me vague — la release
+<div class="s">La quinzi&egrave;me vague — la release
 v0.23.3 : la composition 0,7271 c/octet@4096 (la cible tenue au
 36&nbsp;%), le TCB r&eacute;duit 58&rarr;34&rarr;11, le moteur
 d'oracles natif &agrave; 5189&times;, la campagne v5 (nov.&nbsp;2026)
