@@ -23,3 +23,4 @@ PLAN-VXF37231R.md      sha256:b76f9d2994e0e547…  (vxf37231r — les extensions
 
 La regle reconduite des vagues 8-14 : le plan gele, l'empreinte consignee,
 le commit AVANT la premiere donnee ; tout ecart au plan nomme au rapport.
+PLAN-AVMWTF5W.md      sha256:b68266faf1582429…  (avmwtf5w — le corpus v2 à la commande du maître « ajoute les 60 appels v6 au corpus » : les 60 appels de campagne v6 en triples [les 18 tâches, la correspondance PAR ID], les splits CONTINUS [les 36 tâches v3/v4 gèlent leur affectation v1, la règle à la graine 20261126], les exclusions nommées [les 11 relance et les 60 appels v5 hors commande], la nouvelle version Zenodo au concept corpus, le kit v1.0.0 vérifié intact — aucune mise à jour nécessaire)
