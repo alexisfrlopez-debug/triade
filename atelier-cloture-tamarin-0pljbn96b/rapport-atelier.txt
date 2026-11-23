@@ -1,0 +1,49 @@
+=== L'ATELIER 0PLJBN96B — LE KIT DE CLÔTURE IDEMPOTENT Tamarin / ProVerif (la vague 16) ===
+le plan gelé : PLAN-0PLJBN96B.md — l'empreinte consignée à EMPREINTES-PLANS-VAGUE16.txt
+la lettre de l'instruction : « PRÉPARE le kit de clôture idempotent pour mener CF3-v3b.spthy
+à verdict complet sous Tamarin 1.12.0/Maude 3.4 et ProVerif au poste réel (RAM ≥ 16 Go) » —
+le kit est l'objet de l'instruction ; le run est le geste du poste réel, NOMMÉ comme tel.
+
+=== CE QUI EST LIVRÉ ===
+`tamarin_cloture.py` — le kit : les commandes EXACTES, copiables telles quelles au poste réel.
+LES BUDGETS NOMMÉS DANS LA COMMANDE (jamais implicites) :
+  la mémoire par `ulimit -v 16777216` (16 Gio — la borne du poste) ;
+  le temps par `timeout` : 10 min le négatif · 4 h le L1 (la convergence lente constatée au bac)
+  · 2 h les lemmes · 1 h par heuristique · 1 h le port ProVerif.
+LES COMMANDES (l'ordre est OBLIGÉ) :
+  [0] LE NÉGATIF D'ABORD — CF3-v3-negatif.spthy, --stop-on-trace=DFS --bound=8 :
+      l'attendu est FALSIFIÉ (la falsification sur le second étage de L1 — le secret appris
+      sans trois parts fuitées) ; un « verified » au négatif est un DÉFAUT D'INSTRUMENT.
+  [1] L1 implication_secret_appris_reconstitution_illicite — --partial-evaluation=SUMMARY,
+      16 Gio, 4 h ; PLUS les CINQ heuristiques éprouvées au bac (S/I/i/c/C, 1 h chacune) :
+      la variante consignée, le mur de mémoire se déplace — pas se dissipe.
+  [2] L2 conservation_de_la_cle_utilisateur — SUMMARY, 16 Gio, 2 h.
+  [3] T1 temoin_falsification_et_destruction — --stop-on-trace=DFS --bound=12 (le témoin
+      à ~9 pas : la trace bornée doit l'atteindre).
+  [4] T2 temoin_la_chaine_vivante — DFS borné 12 (la frontière BFS explosait au bac).
+  [5] T3 temoin_atteignabilite_du_seuil — DFS borné 12 (création → migration → 3 fuites →
+      reconstitution → KU).
+  [6] LE PORT PROVERIF — CF3-v3.pv, 1 h, les six requêtes actives + LES SIX ÉCARTS DE
+      SÉMANTIQUE nommés (ECARTS-SEMANTIQUES-TAMARIN-PROVERIF.txt).
+L3 absence_de_destruction_par_corruption N'EST PAS RE-DEMANDÉ : VERIFIED (1 122 pas, 29,4 s,
+v3 et v3b identiques — la table des statuts de la vague 15).
+
+=== L'AUTOTEST : 6/6 ===
+  [1] le négatif est PREMIER de l'ordre            : OUI
+  [2] chaque commande porte son budget (timeout)   : OUI
+  [3] L1, L2, T1, T2, T3 rendus                    : OUI
+  [4] les trois modèles existent au dépôt          : OUI (CF3-v3b.spthy, CF3-v3-negatif.spthy, CF3-v3.pv)
+  [5] --executer au bac                            : REFUSÉ exit 2 (tamarin-prover et proverif
+      absents du PATH — jamais un run simulé)
+  [6] la construction est IDEMPOTENTE              : OUI (deux constructions identiques)
+
+=== LA TABLE DES STATUTS (depuis les pièces, jamais depuis l'intention) ===
+l'état hérité de la vague 15 : L3 VERIFIED · L1, L2, T1, T2, T3 INCOMPLETE (le mur de mémoire
+du bac 4 Go — la décomposition du but K(p)) · le négatif PRÊT À ROULER (OOM au bac) · le port
+ProVerif LIVRÉ. LA VOIE NOMMÉE pour le poste réel : --partial-evaluation + le temps + 16 Go.
+la présente : le kit rendu — la table sera mise à jour DEPUIS LES PIÈCES au geste.
+
+=== LES REFUS TENUS ===
+jamais un run simulé au laboratoire (l'autotest [5] le prouve) ; jamais un lemme rapporté
+PROUVÉ quand il est INCOMPLETE ; jamais le négatif « vérifié » (il doit être falsifié) ;
+jamais un budget implicite ; jamais une pièce scellée touchée ; le sceau-I 14/14 avant et après.

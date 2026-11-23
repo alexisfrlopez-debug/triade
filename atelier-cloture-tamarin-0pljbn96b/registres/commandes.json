@@ -1,0 +1,85 @@
+{
+  "schema": "TRIADE-KIT-TAMARIN-CLOTURE-v1",
+  "commandes": [
+    {
+      "rang": 0,
+      "id": "NEGATIF (la part publique transposée)",
+      "commande": "( : ; timeout 600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3-negatif.spthy --stop-on-trace=DFS --bound=8 )",
+      "attendu": "FALSIFIÉ — la falsification attendue sur le second étage de L1 (le secret appris sans trois parts fuitées) ; un « verified » au négatif est un DÉFAUT D'INSTRUMENT, jamais un succès"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite",
+      "commande": "( ulimit -v 16777216 ; timeout 14400 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --partial-evaluation=SUMMARY )",
+      "attendu": "VERIFIED ou INCOMPLETE nommé (la décomposition du but K(p) contre la profondeur — jamais un verdict fabriqué)"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite — heuristique S",
+      "commande": "( ulimit -v 16777216 ; timeout 3600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --heuristic=S --partial-evaluation=SUMMARY )",
+      "attendu": "la variante consignée : le mur de mémoire se déplace, pas se dissipe"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite — heuristique I",
+      "commande": "( ulimit -v 16777216 ; timeout 3600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --heuristic=I --partial-evaluation=SUMMARY )",
+      "attendu": "la variante consignée : le mur de mémoire se déplace, pas se dissipe"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite — heuristique i",
+      "commande": "( ulimit -v 16777216 ; timeout 3600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --heuristic=i --partial-evaluation=SUMMARY )",
+      "attendu": "la variante consignée : le mur de mémoire se déplace, pas se dissipe"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite — heuristique c",
+      "commande": "( ulimit -v 16777216 ; timeout 3600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --heuristic=c --partial-evaluation=SUMMARY )",
+      "attendu": "la variante consignée : le mur de mémoire se déplace, pas se dissipe"
+    },
+    {
+      "rang": 1,
+      "id": "L1 implication_secret_appris_reconstitution_illicite — heuristique C",
+      "commande": "( ulimit -v 16777216 ; timeout 3600 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=implication_secret_appris_reconstitution_illicite --heuristic=C --partial-evaluation=SUMMARY )",
+      "attendu": "la variante consignée : le mur de mémoire se déplace, pas se dissipe"
+    },
+    {
+      "rang": 2,
+      "id": "L2 conservation_de_la_cle_utilisateur",
+      "commande": "( ulimit -v 16777216 ; timeout 7200 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=conservation_de_la_cle_utilisateur --partial-evaluation=SUMMARY )",
+      "attendu": "VERIFIED ou INCOMPLETE nommé (l'OOM du bac ne préjuge pas du poste 16 Go)"
+    },
+    {
+      "rang": 3,
+      "id": "T1 temoin_falsification_et_destruction",
+      "commande": "( ulimit -v 16777216 ; timeout 7200 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=temoin_falsification_et_destruction --stop-on-trace=DFS --bound=12 )",
+      "attendu": "VERIFIED (le témoin à ~9 pas : la trace bornée doit l'atteindre)"
+    },
+    {
+      "rang": 4,
+      "id": "T2 temoin_la_chaine_vivante",
+      "commande": "( ulimit -v 16777216 ; timeout 7200 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=temoin_la_chaine_vivante --stop-on-trace=DFS --bound=12 )",
+      "attendu": "VERIFIED (le témoin à ~9 pas — la frontière BFS explosait au bac)"
+    },
+    {
+      "rang": 5,
+      "id": "T3 temoin_atteignabilite_du_seuil",
+      "commande": "( ulimit -v 16777216 ; timeout 7200 tamarin-prover atelier-cf3-verdict-qa3k5putf/CF3-v3b.spthy --prove=temoin_atteignabilite_du_seuil --stop-on-trace=DFS --bound=12 )",
+      "attendu": "VERIFIED (le témoin : création → migration → 3 fuites → reconstitution → KU)"
+    },
+    {
+      "rang": 6,
+      "id": "PROVERIF (le port CF3-v3.pv)",
+      "commande": "( timeout 3600 proverif atelier-cf3-verdict-qa3k5putf/CF3-v3.pv )",
+      "attendu": "les six requêtes actives + LES SIX ÉCARTS DE SÉMANTIQUE nommés (ECARTS-SEMANTIQUES-TAMARIN-PROVERIF.txt)"
+    }
+  ],
+  "budgets": {
+    "memoire_kio": 16777216,
+    "l1_s": 14400,
+    "lemme_s": 7200,
+    "heuristique_s": 3600,
+    "negatif_s": 600,
+    "proverif_s": 3600
+  }
+}
