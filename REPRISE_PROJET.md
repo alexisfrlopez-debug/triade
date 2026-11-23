@@ -15,9 +15,13 @@ B). Trois couches indissociables ; priorités lexicographiques
 **Sécurité > Performance > Optimisation > Coût en tokens**. Le dossier
 publie des ÉDITIONS académiques (manuscrit, spécification, Livre du
 Coffre, preuves, présentation) au DOI Zenodo
-**10.5281/zenodo.24367343** (concept ; v0.23.2 = record 24442951 —
+**10.5281/zenodo.24367343** (concept ; v0.23.3 = record 24450872 —
 la version courante, les TROIS packs ; les records datés : 24420007 =
-v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1).
+v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2).
+LES DEUX ŒUVRES SÉPARÉES du protocole : le kit développeur v1.0.0 au
+DOI 10.5281/zenodo.24457515 (concept 10.5281/zenodo.24457514) et le
+corpus TRIADE-CORPUS-v1 au DOI 10.5281/zenodo.24457525 (concept
+10.5281/zenodo.24457524).
 
 ## 2. LE RYTHME : LES VAGUES D'INSTRUCTIONS (le cœur de la reprise)
 
@@ -106,7 +110,7 @@ verifier` (14 arbres VERTS).
 | `/home/z/my-project/depot` | LA SOURCE DE VÉRITÉ : le dépôt git complet (l'historique par le bundle ; l'arborescence § 6) |
 | Coffre Drive (dossier racine « Triade ») | le `/instructions` (les vagues en attente), `ARCHIVE/` (les instructions exécutées, les packs supersédés), `/livrables` (les packs courants), `/test` (les constats du développeur), `TRIADE-sauvegarde-git/` (LE MIROIR du dépôt + triade-history.bundle + worklog + OU-TROUVER + les ateliers), `/Tokens`, `coffre_fort.bin` + `PHRASE-CONTROLE-COFFRE.txt` (garde durable D81), le conteneur de continuité |
 | GitHub `alexisfrlopez-debug/triade` | le miroir distant (push à chaque release, vérifié anonymement ls-remote) |
-| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, **24442951 = v0.23.2 — la version courante, les trois packs**) |
+| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2, **24450872 = v0.23.3 — la version courante, les trois packs**) ; LES ŒUVRES SÉPARÉES : le kit développeur v1.0.0 (concept 10.5281/zenodo.24457514 → record 24457515), le corpus TRIADE-CORPUS-v1 (concept 10.5281/zenodo.24457524 → record 24457525) |
 | `/home/z/my-project/download/` | les livrables du bac (miroir des pièces terrain) |
 
 **Les jetons NE SONT JAMAIS committés** (la garde pre-commit h66o54pjd :
@@ -155,8 +159,8 @@ depot/
 │   │   vague14/                 LA CHAÎNE v232 (linter étendu, assemble,
 │   │                            publier, livrer — les patrons courants)
 │   ├── spec_v158/ livre_v17/       les sources spec + Livre (tectonic/cover)
-├── edition-v0232/                  L'ÉDITION courante (les sources v0.23.2)
-├── depot-zenodo-v0232/             les packs v0.23.2 (soumission + présentation + complet)
+├── scripts/vague15/pack-v233/      L'ÉDITION courante (les sources v0.23.3)
+├── depot-zenodo-v0233/             les packs v0.23.3 (soumission + complet ; la présentation à la racine)
 ├── atelier-*/                      LES ATELIERS par vague (un dossier par
 │                                   instruction : rapport + outils + registres)
 ├── ARCHIVE/                        les instructions exécutées par vague

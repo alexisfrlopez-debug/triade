@@ -1,0 +1,106 @@
+RAPPORT D'EXÉCUTION — LES DÉPÔTS ZENODO DU KIT ET DU CORPUS
+(23/11/2026, la commande du maître « fais les depots zenodo » — les deux
+gestes nommés aux Entrées 388/389 SUITE : « les dépôts Zenodo du kit et du
+corpus — jamais mintés sans commande » ; la voie éprouvée des patrons
+v230/v232/v233 : le brouillon → le bucket → les métadonnées → PUBLISH, la
+reprise idempotente aux 500, le recoup md5 byte-byte au bord anonyme)
+================================================================================
+
+LES DEUX DÉPÔTS — DEUX CONCEPTS NOUVEAUX (l'édition académique vit au
+concept 10.5281/zenodo.24367343, résolvant sur v0.23.3 au record 24450872 ;
+le kit et le corpus sont des ŒUVRES SÉPARÉES — chacun son concept, la
+pratique Zenodo pour les dépôts de logiciel et de données)
+
+(1) LE KIT DÉVELOPPEUR v1.0.0 — DOI 10.5281/zenodo.24457515
+    https://zenodo.org/records/24457515
+    LE CONCEPT 10.5281/zenodo.24457514 résolvant sur v1.0.0
+    LE FICHIER : TRIADE_kit_developpeur_v1.0.0.zip
+    [415 890 o, md5 bd751c0460208556804da0b8935ad997,
+    sha256 22bf9561541b43075ebb514f6b6c4853c08a96f3a9889d6f9ea3c02a4644f190]
+    — LES 158 ENTRÉES : les 156 pièces DU MANIFESTE (la notation+round-trip
+    [la chaîne v2 + les validateurs v3], la carte+expandeur pointeur-seul,
+    le générateur d'oracle depuis I, les guides, l'eval ladder, le gym, le
+    feedback [l'outil + le schéma + la doc], le rapport, le triage) + le
+    MANIFESTE.txt (sha256 par fichier, le vecteur kit v1.0.0 ↔ protocole
+    v0.23.2 ↔ profil x86-64-win11-pe) + le template de journal append-only.
+    L'ARCHIVE DÉTERMINISTE : entrées triées, timestamps normalisés au
+    23/11/2026 — la doctrine de cristallisation du générateur ; le
+    dézippage de contrôle 158/158 OCTET-IDENTIQUES.
+    LA SOURCE : le dossier TRIADE_kit_developpeur du coffre Drive
+    (atelier-kit-v2n6v8rao) — LES 156/156 EMPREINTES du manifeste
+    RECOUPÉES sha256 BYTE-BYTE AVANT l'envoi (zéro divergence) ; les
+    ANCRES EXPÉDIÉES : AUCUNE (la genèse air-gap au geste de l'adopteur,
+    le sceau LOCAL — la dette kit nommée à la naissance).
+    LES MÉTADONNÉES : upload_type software, licence busl-1.1 (BSL 1.1 +
+    le grant D209), l'accès open, Lopez Alexis — Independent researcher,
+    la version v1.0.0, la date 2026-11-23, la description anglaise au
+    patron v233 (le M0-in-a-box par construction D130, jamais de liste
+    retapée).
+
+(2) LE CORPUS TRIADE-CORPUS-v1 — DOI 10.5281/zenodo.24457525
+    https://zenodo.org/records/24457525
+    LE CONCEPT 10.5281/zenodo.24457524 résolvant sur v1
+    LES SEPT FICHIERS posés INDIVIDUELLEMENT (les splits téléchargeables
+    séparément, la pratique dataset) :
+      - train.jsonl    [1 538 816 o]  78 lignes : 77 triples BSL-1.1 +
+                                         la ligne CANARI CC-BY-4.0
+      - dev.jsonl      [  281 445 o]  16 triples
+      - test.jsonl     [  282 092 o]  16 triples SANS notation dorée
+                                         (les validateurs seuls)
+      - permissif-ccby.jsonl [1 o]    le marqueur du sous-ensemble
+                                         permissif (le canari CC-BY-4.0
+                                         au corpus réel — le reste BSL)
+      - sonde-contamination.json [585 o]  la sonde AU POSTE (les 128
+                                         constantes, le canari, les
+                                         8-grammes)
+      - MANIFESTE.json [  1 361 o]   sha256 par fichier, le vecteur
+                                         protocole v0.23.2 / campagnes
+                                         v2-v3-v4 / graine 20261126
+      - DATASET-CARD.json [645 o]    la carte (les splits 28/4/4 tâches,
+                                         77/16/16 triples = 109, le
+                                         dual-use exclu par construction)
+    LA SOURCE : le dossier dataset de l'atelier-corpus-2i7iy3xmg au coffre
+    Drive — les empreintes du MANIFESTE.json RECOUPÉES sha256 BYTE-BYTE
+    AVANT l'envoi (6/6 fichiers vérifiables VERTS ; la ligne du
+    MANIFESTE.json lui-même : un fichier ne porte pas son propre
+    condensé — l'entrée consignée à la génération, l'écart nominal) ;
+    les fichiers livrés OCTET POUR OCTET ceux du coffre (la recomposition
+    28/4/4 · 77/16/16 = 109 — l'erratum de l'Entrée 388).
+    LES MÉTADONNÉES : upload_type dataset, licence busl-1.1 (le corpus ;
+    le sous-ensemble CC-BY-4.0 nommé à la description), l'accès open,
+    Lopez Alexis — Independent researcher, la version v1, la date
+    2026-11-23, la description anglaise (l'extraction mécanique jamais
+    retapée, la porte de scrub fail-closed, les splits étanches à la
+    graine consignée, le canari, la sonde AU POSTE, les juges INTACTS).
+
+LA CHAÎNE VÉCUE (la voie des patrons, en deux sessions de dépôt) :
+le brouillon né (24457515 puis 24457525) → le fichier posé au bucket
+(HTTP 201) → les métadonnées (HTTP 200) → LA VOIE RE-VÉRIFIÉE AVANT LE
+GESTE (l'état unsubmitted, la version, le md5 du brouillon == le md5
+local) → PUBLISH (HTTP 202 — LE DOI MINTÉ, jamais inventé) → LA
+VÉRIFICATION FRAÎCHE AU BORD ANONYME : records/24457515 1/1 md5 VERT ;
+records/24457525 7/7 md5 VERTS ; les DEUX CONCEPTS résolvant sur leurs
+versions ; les DEUX DOI résolvant chez doi.org. LE JETON du /Tokens
+jamais affiché (D12/D27).
+
+LA GARDE : aucun coffre réel touché (les pièces LUES, jamais déplacées) ;
+aucune pièce modifiée (les octets du coffre == les octets déposés, la
+preuve par les empreintes) ; les deux dépôts mintés À LA COMMANDE DU
+MAÎTRE (la doctrine « jamais mintés sans commande » honorée en sa
+lettre).
+
+SUITE : le présent rapport LIVRÉ AU BAC (download/) — LA LIVRAISON AU
+COFFRE /test DIFFÉRÉE ET NOMMÉE : le SA physichong couvre LA LECTURE
+seule du coffre (403 insufficientParentPermissions au geste — la doctrine
+§ 3 de REPRISE le dit : « le refresh token d'upload peut mourir : le SA
+couvre la LECTURE »), le jeton OAuth propriétaire EXPIRÉ (invalid_grant à
+la présente — la ré-autorisation interactive à prévoir, la note du
+oauth_token_relais.json) ; la consignation canonique (l'Entrée au
+worklog, l'OU-TROUVER, le commit + le push + la sync du miroir — la
+chaîne § 5.5 de REPRISE, la livraison du présent rapport au /test avec
+elle) au geste de la prochaine session de release ; les gestes au
+développeur restants INCHANGÉS (le poste réel Tamarin + ProVerif ; le
+métal nu ≥ 2 machines ; les 28 livraisons H7 et l'annotateur ;
+l'endpoint de la seconde famille) ; les routes restantes de la voie
+nommée (le décodage contraint si l'instrument l'expose ; l'entraînement
+DPO au gym — les paires du corpus, le compute au développeur).
