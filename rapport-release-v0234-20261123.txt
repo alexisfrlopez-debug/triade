@@ -1,0 +1,78 @@
+=== LE RAPPORT DE LA RELEASE CORRECTIVE v0.23.4 (23/11/2026, la vague 16) ===
+la commande du maître : « fais une mise à jour des kits soumission/présentation et
+complet sur les dépôts git/drive et zenodo si besoin en fonction de ce qui a été fait
+depuis les dernières versions ».
+
+=== LE CONSTAT QUI DÉCIDE TOUT ===
+LES CINQ PIÈCES N'ONT PAS BOUGÉ. Leurs cinq sha256 sont BYTE-BYTE ceux consignés à
+v0.23.3 (empreintes_livrables_v0.23.3.txt) :
+  manuscrit     a2835461edb30f15a212dbe06eb2420c4452f6054110363c287af63c5a020c08
+  spécification 06171f7ff2fb462abe8bffea9584cfe343d9631ef5d08c56b19b9f84be7b9c95
+  Livre         5930539839b2e49469b5af7797e1cd2e1a7102c1622fbe4b7fdaac570afb1c82
+  preuves       69a0b4c30acdd579306ae38b82a634b2f55f172ebe72cf8f8f5af3ea83337bf0
+  présentation  0b5e843b94598dca0c79d5cb886ff090c58486eea4a3ef9c29103c947cccc674
+DONC : la SOUMISSION et la PRÉSENTATION sont RECONDUITES OCTET POUR OCTET sous leur
+nom d'origine (le PRÉCÉDENT de la release corrective v0.23.1 : le record 24442241
+porte TRIADE_soumission_v0.23.0.zip et TRIADE_presentation_v0.23.0.zip byte-byte à
+côté du complet régénéré). « Si besoin » : la soumission et la présentation NON —
+elles porteraient les mêmes octets sous un nom neuf. LE COMPLET OUI — il porte une
+matière que le v0.23.3 n'avait pas.
+
+=== LES TROIS ARCHIVES ===
+TRIADE_complet_v0.23.4.zip     8 565 449 o · 758 entrées · sha256 f943e38f4f7325ec4a455e7663a24be72e94d86c3d5b28924db380a786a28f1a
+TRIADE_soumission_v0.23.3.zip    300 682 o · sha256 95531368b1ef98c1591a24657533570711fcac6b2b1b5265c9e14d34dfab5e33
+TRIADE_presentation_v0.23.3.zip 2 223 923 o · sha256 b358bb22ad06a2793478fe1c2c60b433abc0e71fd71b855e1b9bfe85dad8df29
+LE COMPLET : les entrées du complet v0.23.3 RECONDUITES OCTET POUR OCTET (README
+excepté, réécrit) PLUS — les HUIT ateliers de la vague 15 continuée et de la vague 16
+(ajouter-v7, corpusv2, campagne-v6, ancrage-sentinelle, couloirs-scellés,
+clôture-tamarin, audit-splits, résidus) · les SIX plans gelés de la vague 16 et leur
+table d'empreintes (plus les deux de la vague 15 continuée) · les scripts de la
+vague 16 (le linter des résidus v233, l'assembleur et les publishers) · les SIX
+rapports de la vague 16 · le worklog et le REPRISE à l'état de la clôture.
+
+=== LES DEUX PORTES ===
+(A) LES PIÈCES BYTE-BYTE — les cinq sha256 confrontés aux empreintes consignées :
+    LES CINQ ✓ (un écart REFUSE l'assemblage, la porte du script).
+(B) LE LINTER D'ÉDITION v233 RE-JOUÉ — **222 VERT, 1 ROUGE NOMMÉ** : la classe
+    d'extraction (« l'extraction intégrale (manuscrit) : 1991 tokens contrôlés,
+    3 NON COUVERTS »). Le script REFUSE l'assemblage si le rouge sort de cette
+    classe ou s'il y en a plus d'un ; il poursuit et le DIT. Les pièces étant
+    BYTE-BYTE celles de l'édition, le verdict d'édition (223 VERT au poste de la
+    vague 15) demeure : la dérive est de l'EXTRACTEUR, jamais des pièces.
+
+=== LES DEUX DÉFAUTS DE REPRODUCTIBILITÉ NOMMÉS (à corriger à la prochaine génération) ===
+(1) LE LINTER D'ÉDITION DÉPEND D'UN FICHIER GITIGNORÉ. `campagne-v5.log` vit à
+    l'atelier yfkpml1j2 mais `*.log` est au .gitignore — il n'a JAMAIS été committé :
+    la porte n'est PAS re-jouable depuis le dépôt public. LA RECONSTRUCTION depuis
+    les JSONL committés reproduit EXACTEMENT ses constantes (60 appels, 18 tâches,
+    5 VERT, médiane 4 604 == la constante du linter) — le log est REDONDANT, mais
+    la dépendance est une fragilité : le linter devrait lire le JSONL, ou le log
+    devrait être committé.
+(2) LE VERDICT DÉPEND DE LA VERSION DE pdftotext. Re-joué avec pdftotext 26.09.0 sur
+    les pièces BYTE-BYTE identiques : 222 VERT + 1 ROUGE (3 tokens numériques de
+    plus à l'extraction du manuscrit, 1991 contrôlés). L'édition avait rendu 223
+    VERT avec l'extracteur de son poste. Le linter devrait ÉPINGLER l'extracteur
+    (la version consignée) ou PORTER l'extraction (le texte extrait archivé) — la
+    leçon est la même que celle de l'instrument 392 : un verdict qui dépend d'un
+    outil non épinglé n'est pas re-jouable.
+
+=== LA PUBLICATION ===
+LE DOI DE VERSION **10.5281/zenodo.24480415** MINTÉ (record 24480415, v0.23.4) ;
+LE CONCEPT 10.5281/zenodo.24367343 RÉSOLVANT SUR v0.23.4 ; la voie des patrons v230/
+v232/v233 (les trois anciens retirés, les trois posés au bucket, les métadonnées, LA
+RE-VÉRIFICATION des 3/3 md5 byte-byte AVANT le geste, PUBLISH HTTP 202) ; LA
+VÉRIFICATION FRAÎCHE AU BORD ANONYME : records/24480415 v0.23.4, LES 3/3 md5 ÉGAUX,
+le concept résolvant sur v0.23.4 ; les deux DOI chez doi.org (HTTP 200).
+
+=== LA LIVRAISON AU COFFRE ===
+les trois archives au /livrables (le complet v0.23.4 posé ; la soumission et la
+présentation v0.23.3 vérifiées byte-byte sur place — mêmes octets, mêmes noms) ;
+le pack v0.23.3 supersédé au lot ARCHIVE ; le présent rapport à la racine et au /test.
+
+=== CE QUI N'EST PAS FAIT, NOMMÉ ===
+la RÉGÉNÉRATION des cinq pièces (les résidus (A)(D)(E) de l'instruction 86d3ushrr :
+le ratio 3,23 non recomputable, les 43 trous de la plage, la plage du Livre, les
+sections de la spécification) — elle exige tectonic + weasyprint, absents du poste ;
+le linter des résidus v233 est PRÊT à la contrôler dès qu'elle courra. Cette release
+est une CORRECTIVE (le dépôt et le corpus), pas une GÉNÉRATION (les pièces) — les
+deux ne se confondent pas, et le README du complet le dit.
