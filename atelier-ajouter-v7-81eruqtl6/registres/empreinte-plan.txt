@@ -1,0 +1,2 @@
+87d4c6ecec02de4d5c6394a8503171d2194cc85db0ede737715cce6f11db54f2  PLAN-81ERUQTL6.md
+(gelé AVANT toute donnée — le commit d'abord, la règle reconduite)
