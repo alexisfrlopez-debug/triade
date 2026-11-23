@@ -47,8 +47,11 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : LES DÉPÔTS ZENODO DU KIT ET DU CORPUS MINTÉS
-ET CONSIGNÉS (Entrées 390-391, 23/11/2026 — la commande du maître « fais
+**L'ÉTAT PRÉSENT** : LE CORPUS v2 MINTÉ AU CONCEPT — LES 60 APPELS
+v6 AJOUTÉS (Entrée 393, 23/11/2026 — la commande du maître « ajoute les
+60 appels v6 au corpus et mets a jour tous les kits dans les depots git
+drive et zenodo si necessaire » ; l'état déposé des Entrées 390-391
+demeure — la commande du maître « fais
 les depots zenodo », les deux gestes nommés aux Entrées 388/389 SUITE :
 la doctrine « jamais mintés sans commande » honorée). LE KIT DÉVELOPPEUR
 v1.0.0 au DOI 10.5281/zenodo.24457515 (LE CONCEPT 10.5281/zenodo.24457514
@@ -93,7 +96,27 @@ livraisons H7, l'annotateur, l'endpoint de la seconde famille — LES
 DÉPÔTS ZENODO DU KIT ET DU CORPUS SOLDÉS ET CONSIGNÉS ; l'entraînement
 DPO au gym LA SEULE ROUTE VIVANTE de la voie nommée (les paires du
 corpus + les 60 appels v6 au garde-brut au corpus à la prochaine
-vague, le compute au développeur). Détail au worklog (Entrées 385-392).
+vague, le compute au développeur).
+LE CORPUS v2 MINTÉ (l'Entrée 393) : l'atelier avmwtf5w — LES 60 APPELS
+DE CAMPAGNE v6 extraits mécaniquement (les 18 tâches, 5 VERT / 13
+REFUS, la correspondance PAR ID, le code v1 reconduit octet pour
+octet), LA PREUVE v1 AVANT TOUT AJOUT (les 36 tâches v3/v4 à leur
+affectation v1 EXACTE, les 109/109 lignes reproduites byte-byte —
+l'étanchéité v1 préservée), LES SPLITS CONTINUS à la même règle (la
+graine 20261126 : TRAIN 42 tâches / 129 lignes + le canari unique ·
+DEV 6/20 · TEST 6/21 SANS dorée), la porte de scrub 169/169 admis au
+contrôle négatif vécu, la cristallisation 10×, les exclusions nommées
+(les 11 relance v6 et les 60 appels v5 hors commande, les tentatives
+v2 toujours sans contrats) ; LE DOI 10.5281/zenodo.24463681 MINTÉ au
+concept 10.5281/zenodo.24457524 résolvant sur v2 (la v1 au record
+24457525 demeurée immuable), les 7/7 md5 recoupés byte-byte au bord
+anonyme, le DOI chez doi.org ; LE KIT v1.0.0 VÉRIFIÉ INTACT (le record
+24457515, 1/1 md5 — AUCUNE mise à jour nécessaire : aucune des 158
+pièces ne bouge) ; les kits des dépôts git/Drive/Zenodo tenus (le
+commit, le push, la sync du miroir, le rapport au /test, les trois
+bords, le sceau-I 14/14) ; l'entraînement DPO au gym la route vivante
+(les paires du corpus v2, le compute au développeur). Détail au
+worklog (Entrées 385-393).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
@@ -129,7 +152,7 @@ verifier` (14 arbres VERTS).
 | `/home/z/my-project/depot` | LA SOURCE DE VÉRITÉ : le dépôt git complet (l'historique par le bundle ; l'arborescence § 6) |
 | Coffre Drive (dossier racine « Triade ») | le `/instructions` (les vagues en attente), `ARCHIVE/` (les instructions exécutées, les packs supersédés), `/livrables` (les packs courants), `/test` (les constats du développeur), `TRIADE-sauvegarde-git/` (LE MIROIR du dépôt + triade-history.bundle + worklog + OU-TROUVER + les ateliers), `/Tokens`, `coffre_fort.bin` + `PHRASE-CONTROLE-COFFRE.txt` (garde durable D81), le conteneur de continuité |
 | GitHub `alexisfrlopez-debug/triade` | le miroir distant (push à chaque release, vérifié anonymement ls-remote) |
-| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2, **24450872 = v0.23.3 — la version courante, les trois packs**) ; LES ŒUVRES SÉPARÉES : le kit développeur v1.0.0 (concept 10.5281/zenodo.24457514 → record 24457515), le corpus TRIADE-CORPUS-v1 (concept 10.5281/zenodo.24457524 → record 24457525) |
+| Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2, **24450872 = v0.23.3 — la version courante, les trois packs**) ; LES ŒUVRES SÉPARÉES : le kit développeur v1.0.0 (concept 10.5281/zenodo.24457514 → record 24457515), le corpus TRIADE-CORPUS (concept 10.5281/zenodo.24457524 : …24457525 = v1, **24463681 = v2 — la version courante, les 60 appels v6 ajoutés, les 169 triples**) |
 | `/home/z/my-project/download/` | les livrables du bac (miroir des pièces terrain) |
 
 **Les jetons NE SONT JAMAIS committés** (la garde pre-commit h66o54pjd :

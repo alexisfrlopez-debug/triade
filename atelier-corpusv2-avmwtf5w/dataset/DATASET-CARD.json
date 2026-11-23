@@ -1,0 +1,20 @@
+{
+  "nom": "TRIADE-CORPUS-v2",
+  "provenance": "les journaux append-only et les campagnes ajouter v2/v3/v4 + LES 60 APPELS DE CAMPAGNE v6 (les décisions D1-D251 au fil)",
+  "licence": "BSL-1.1 (le dépôt) ; le sous-ensemble permissif CC-BY-4.0 séparé",
+  "splits": {
+    "TRAIN": 42,
+    "DEV": 6,
+    "TEST": 6
+  },
+  "continuite": "les 36 tâches v3/v4 gèlent leur affectation v1 — le TEST v1 demeure évaluable tel quel",
+  "canari": "la phrase unique au TRAIN (la sonde)",
+  "gaps_nommes": [
+    "la sonde AU POSTE",
+    "le dual-use exclu par construction (aucun binaire intercepteur au corpus)",
+    "les 11 appels de relance v6 EXCLUS (la commande nomme les 60 appels de campagne — les journaux demeurent au garde-brut)",
+    "les 60 appels v5 HORS commande (l'atelier yfkpml1j2, la matière demeure disponible — l'écart nommé)",
+    "les 18 tentatives v2 toujours sans contrats archivés (l'écart reconduit de la v1)"
+  ],
+  "dual_usage": "aucun : les tâches de notation d'un éditeur de texte natif — aucune cible d'interception"
+}

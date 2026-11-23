@@ -1,0 +1,23 @@
+=== L'EXTRACTION MÉCANIQUE (v2/v3/v4 reconduits + LA V6) ===
+les triples extraits : 169 v2 0 · v3 57 · v4 52 · v6 60
+=== LA PORTE DE SCRUB fail-closed (le contrôle négatif vécu) ===
+le contrôle négatif (le jeton planté) : ATTRAPÉ — le triple refusé à la porte
+les triples à la porte : 169/169 admis (aucun secret détecté au corpus réel)
+=== LES SPLITS CONTINUS (la preuve v1 AVANT tout ajout) ===
+la preuve v1 : les 36 tâches v3/v4 à leur affectation v1 EXACTE (le re-jeu de la règle à la graine 20261126 == le gel 2i7iy3xmg, split par split) — l'étanchéité v1 préservée
+les 18 tâches v6 affectées par LA MÊME RÈGLE (80/10/10, la graine 20261126 consignée au manifeste) : TRAIN 14 · DEV 2 · TEST 2
+les tâches : TRAIN 42 · DEV 6 · TEST 6 (36 anciennes gelées + 18 nouvelles)
+la preuve byte-byte : 109/109 lignes v1 reproduites octet pour octet aux mêmes splits
+=== L'ÉCRITURE DU DATASET (le canari unique, le TEST nu) ===
+  TRAIN : 129 lignes -> train.jsonl (le canari unique embarqué)
+  DEV : 20 lignes -> dev.jsonl
+  TEST : 21 lignes -> test.jsonl (AUCUNE dorée — les validateurs seuls)
+le canari : UNIQUE — dans TRAIN seul
+=== LA SONDE DE CONTAMINATION (reconduite) ===
+la sonde livrée (128 constantes + le canari + l'overlap n-gram) — AU POSTE, jamais au bac
+=== LE SOUS-ENSEMBLE PERMISSIF (reconduit) ===
+le sous-ensemble permissif (CC-BY) : 0 — le canari seul au corpus réel (le reste BSL-1.1, séparé)
+=== LA CRISTALLISATION (10 rebuilds bit-identiques) ===
+les 10 rebuilds : BIT-IDENTIQUES (la graine et l'extraction déterministes)
+=== LE MANIFESTE v2 + LA DATASET-CARD v2 ===
+le manifeste v2 + la dataset card v2 livrés (sha256 par fichier, le vecteur campagnes v2/v3/v4/v6, les graines, les gaps nommés — le gap du dépôt Zenodo SOLDÉ à la présente)

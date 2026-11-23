@@ -1,0 +1,118 @@
+RAPPORT D'EXÉCUTION — LE CORPUS v2 : LES 60 APPELS v6 AJOUTÉS, LA NOUVELLE
+VERSION ZENODO AU CONCEPT, LES KITS DES DÉPÔTS TENUS
+(23/11/2026, la commande du maître « ajoute les 60 appels v6 au corpus et
+mets a jour tous les kits dans les depots git drive et zenodo si
+necessaire » — le geste nommé aux SUITE 389/392 : « les 60 appels v6 au
+garde-brut au corpus à la prochaine vague » ; le plan gelé
+PLAN-AVMWTF5W.md sha256 b68266faf1582429… consigné à
+EMPREINTES-PLANS-VAGUE15.txt AVANT toute donnée, le commit 220010e
+d'abord ; les patrons reconduits : l'extraction 2i7iy3xmg, la newversion
+v232, la sync v233)
+================================================================================
+
+(1) L'ATELIER DU CORPUS v2 (atelier-corpusv2-avmwtf5w) — LES 169 TRIPLES :
+    LES 60 APPELS DE CAMPAGNE v6 de l'atelier 7xuvsoqpuq (LES 18 TÂCHES
+    ajouter-v6-i26111701…18, 5 VERT / 13 REFUS — ID-INCONNU 4 ·
+    EXPANSION-DIVERGENTE 6 · HORS-FORMAT 3, la lecture défavorable déjà
+    consignée à l'Entrée 389) extraits MÉCANIQUEMENT — la correspondance
+    PAR ID journal ↔ garde-brut ↔ garde-prompts ↔ resultats, JAMAIS
+    retapé — par le code v1 reconduit octet pour octet (la même boucle,
+    le même motif (ajouter-\w+-i\d+)-t\d+ qui EXCLUT DE FAIT les appels de
+    relance) ; les 109 triples v3/v4 du corpus v1 REPRODUITS À
+    L'IDENTIQUE : LA PREUVE AVANT TOUT AJOUT — les 36 tâches v3/v4 à leur
+    affectation v1 EXACTE (le re-jeu de la règle à la graine 20261126 ==
+    le gel 2i7iy3xmg, split par split) ET les 109/109 LIGNES v1
+    reproduites octet pour octet aux mêmes splits — L'ÉTANCHÉITÉ v1
+    PRÉSERVÉE : quiconque a validé sur le TEST v1 peut continuer.
+    LES SPLITS CONTINUS : les 18 tâches v6 affectées par LA MÊME RÈGLE
+    (80/10/10 par tâche, la même graine 20261126 consignée au manifeste :
+    « splits » pour les anciennes, « splits_v6 » pour les nouvelles) —
+    TRAIN 42 tâches / 129 lignes (128 triples + LE CANARI unique) ·
+    DEV 6 tâches / 20 lignes · TEST 6 tâches / 21 lignes SANS NOTATION
+    DORÉE (les validateurs seuls) ; LE CANARI UNIQUE dans TRAIN seul,
+    vérifié.
+    LA PORTE DE SCRUB fail-closed reconduite : LE CONTRÔLE NÉGATIF VÉCU
+    (le jeton planté ATTRAPÉ — le triple refusé à la porte), 169/169
+    triples admis, aucun secret au corpus réel ; LA CRISTALLISATION :
+    les 10 rebuilds BIT-IDENTIQUES (la graine et l'extraction
+    déterministes) ; LES JUGES INTACTS (la chaîne v2 + les validateurs
+    v3, AUCUN juge affaibli).
+    LES EXCLUSIONS NOMMÉES (les gaps au manifeste et à la dataset card) :
+    les 11 appels de relance v6 (relance-ajouter-v5-* — la commande nomme
+    LES 60 APPELS DE CAMPAGNE, les journaux demeurent au garde-brut) ;
+    les 60 appels v5 de l'atelier yfkpml1j2 (HORS commande — non
+    demandés, la matière demeure disponible) ; les 18 tentatives v2
+    toujours sans contrats archivés (l'écart reconduit de la v1).
+    LE MANIFESTE v2 + LA DATASET-CARD v2 : sha256 par fichier, le vecteur
+    de versions (protocole v0.23.2, campagnes v2/v3/v4/v6, graine
+    20261126), la continuité énoncée, les graines doubles, le canari
+    haché, les gaps nommés — le gap « le dépôt Zenodo/HF demeure le geste
+    du développeur » SOLDÉ à la présente (la commande du maître).
+
+(2) LA NOUVELLE VERSION ZENODO — DOI 10.5281/zenodo.24463681
+    https://zenodo.org/records/24463681
+    LE CONCEPT 10.5281/zenodo.24457524 RÉSOLVANT SUR v2 (la v1 au record
+    24457525 demeurée immuable — la pratique Zenodo : un record publié ne
+    bouge jamais, la version suivante au même concept) ; LA VOIE DES
+    PATRONS newversion : le record v1 vérifié (état done, version v1, le
+    concept recoupé) → le brouillon de version → les sept anciens fichiers
+    retirés, LES SEPT v2 POSÉS → les métadonnées v2 → LA RE-VÉRIFICATION
+    AVANT LE GESTE (l'état unsubmitted, la version v2, les 7/7 md5 du
+    brouillon == les locaux) → PUBLISH (HTTP 202 — LE DOI MINTÉ, jamais
+    inventé) ; LA VÉRIFICATION FRAÎCHE AU BORD ANONYME : records/24463681
+    v2 PUBLIÉ, LES 7/7 md5 RECOUPÉS byte-byte, le concept résolvant sur
+    la v2, le DOI résolvant chez doi.org (HTTP 200) ; le 404 passager de
+    doi.org aux premières secondes de propagation nommé (le geste était
+    déjà fait — l'incident sans effet, la vérification re-jouée à la
+    présente).
+    LES SEPT FICHIERS v2 posés individuellement (les splits
+    téléchargeables séparément) :
+      - train.jsonl    [2 609 857 o]  129 lignes : 128 triples BSL-1.1 +
+                                         la ligne CANARI CC-BY-4.0
+      - dev.jsonl      [  349 374 o]  20 triples
+      - test.jsonl     [  352 722 o]  21 triples SANS notation dorée
+                                         (les validateurs seuls)
+      - permissif-ccby.jsonl [1 o]    le marqueur du sous-ensemble
+                                         permissif (le canari seul au
+                                         corpus réel)
+      - sonde-contamination.json [585 o]  la sonde AU POSTE
+      - MANIFESTE.json [1 488 o]     le manifeste v2
+      - DATASET-CARD.json [1 058 o]  la carte du dataset v2
+    LES MÉTADONNÉES : upload_type dataset, licence busl-1.1 (BSL 1.1, le
+    sous-ensemble CC-BY-4.0 nommé à la description), l'accès open, Lopez
+    Alexis — Independent researcher, la version v2, la date 2026-11-23,
+    la description anglaise au patron v1 (l'extension, la continuité des
+    splits, la porte de scrub, les exclusions nommées, les juges intacts).
+
+(3) LE KIT DÉVELOPPEUR — LA VÉRIFICATION, PAS LA MISE À JOUR : le kit
+    v1.0.0 (concept 10.5281/zenodo.24457514, record 24457515) N'EST PAS
+    TOUCHÉ par l'extension du corpus — aucune des 158 entrées ne bouge,
+    AUCUNE nouvelle version nécessaire (la lettre de la commande « si
+    necessaire » : elle ne l'est pas) ; VÉRIFIÉ au bord anonyme à la
+    présente : le record 24457515 PUBLIÉ v1.0.0, le zip 1/1 md5
+    bd751c0460208556804da0b8935ad997 == le local, le concept 24457514
+    résolvant sur v1.0.0 — INTACT.
+
+(4) GIT ET DRIVE — LES KITS DES DÉPÔTS TENUS : LE DÉPÔT GIT porte
+    l'atelier du corpus v2, le plan gelé, l'Entrée 393, l'OU-TROUVER à
+    l'état 393, REPRISE § 2/§ 4 portés, le présent rapport à la racine —
+    le commit à la garde h66o54pjd, le push GitHub vérifié anonymement ;
+    LE COFFRE DRIVE : la sync du miroir (le bundle régénéré, le worklog,
+    l'OU-TROUVER, REPRISE — la copie D264 à la racine), le présent
+    rapport LIVRÉ AU /test et recoupé byte-byte ; LES TROIS BORDS
+    re-vérifiés (verifier_trois_bords_v233 : les 22 attendus VERT), le
+    record corpus v2 ET le kit recoupés à la chaîne de vérification.
+
+LA GARDE : aucun coffre réel touché hors le /test (le rapport livré,
+recoupé) ; aucun secret affiché ni committé (la garde h66o54pjd, le
+jeton Zenodo jamais affiché) ; le verbatim des Entrées 389-392 demeuré
+octet pour octet (l'append-only) ; le sceau-I 14/14 AVANT le geste et
+APRÈS.
+
+SUITE : l'entraînement DPO au gym LA ROUTE VIVANTE (les paires du corpus
+v2 + le compute au développeur — la matière première ÉTENDUE aux 60
+appels v6) ; les 60 appels v5 et les 11 relance v6 demeurent la matière
+disponible hors commande ; les gestes au développeur INCHANGÉS (le poste
+réel Tamarin + ProVerif ; le métal nu ≥ 2 machines ; les 28 livraisons
+H7 et l'annotateur ; l'endpoint de la seconde famille) ; le décodage
+contraint VERROUILLÉ (« si l'instrument l'expose un jour » reconduit).

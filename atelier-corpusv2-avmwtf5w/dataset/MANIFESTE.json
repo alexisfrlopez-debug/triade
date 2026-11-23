@@ -1,0 +1,37 @@
+{
+  "commit": "la tête au moment du gel (la chaîne git fait foi)",
+  "schema": "TRIADE-CORPUS-v2",
+  "fichiers": {
+    "dev.jsonl": "900de09da90bb8ab19a1b24a9852899e6ea61a5429b4ab5baf9fa35699d7e12e",
+    "permissif-ccby.jsonl": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "sonde-contamination.json": "a483c08394a362944080aba8d44887c429cac6063008560a94c7aaa253b2d2c0",
+    "test.jsonl": "116fe198c0e01bbf6416e3a0a8dc5570705e7499174ec30add5c9193994fbf70",
+    "train.jsonl": "7ba13a85a84b65b2e5c82d37a24b26f06d0761fe651a234a3dd54ba7de71f587"
+  },
+  "vecteur_de_versions": {
+    "protocole": "v0.23.2",
+    "campagnes": [
+      "v2",
+      "v3",
+      "v4",
+      "v6"
+    ],
+    "graine": 20261126
+  },
+  "empreintes_des_juges": {
+    "assembler_v3": "la chaîne v2 INTACTE (aucun juge affaibli)",
+    "validateurs": "les quatre interdits v3"
+  },
+  "graines": {
+    "splits": 20261126,
+    "splits_v6": 20261126
+  },
+  "canari": "ef0f417edf691dfbf6bff5acd29be50eec058a375c88c9e24419bd9a11d1ef9d",
+  "gaps_nommes": [
+    "la sonde AU POSTE",
+    "le dual-use exclu par construction (aucun binaire intercepteur au corpus)",
+    "les 11 appels de relance v6 EXCLUS (la commande nomme les 60 appels de campagne — les journaux demeurent au garde-brut)",
+    "les 60 appels v5 HORS commande (l'atelier yfkpml1j2, la matière demeure disponible — l'écart nommé)",
+    "les 18 tentatives v2 toujours sans contrats archivés (l'écart reconduit de la v1)"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "triples": 169,
+  "admis": 169,
+  "par_vague": {
+    "v2": 0,
+    "v3": 57,
+    "v4": 52,
+    "v6": 60
+  },
+  "taches_anciennes": 36,
+  "taches_v6": 18,
+  "splits": {
+    "TRAIN": 42,
+    "DEV": 6,
+    "TEST": 6
+  },
+  "splits_v6": {
+    "TRAIN": 14,
+    "DEV": 2,
+    "TEST": 2
+  },
+  "lignes_v1_reproduites": 109,
+  "cristallisation_10x": true,
+  "graine": 20261126
+}
