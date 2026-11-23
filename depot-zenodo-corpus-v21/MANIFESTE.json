@@ -1,0 +1,42 @@
+{
+  "schema": "TRIADE-CORPUS-v2.1",
+  "correction": "les splits par GROUPE-DE-CONTRAT (l unite : l identifiant de contrat) — la fuite de dix contrats du v2 fermee",
+  "graine": 20261126,
+  "proportion_contrats": {
+    "train": 14,
+    "dev": 2,
+    "test": 2
+  },
+  "fichiers": {
+    "train.jsonl": "c6f416cf26669e95aad9408ed138373c4b3533d592a9259518a7201c0e5406e7",
+    "dev.jsonl": "38da09a358cef7087efb84fc8aff963e6e49e75f70e4065f3f769c46eaa37930",
+    "test.jsonl": "9c6ce7db17be910cf1f2ced49bf767577e579e12b85891c8a94ceff08fc7a3eb",
+    "permissif-ccby.jsonl": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "sonde-contamination.json": "a170d9e23ef090ce1f4a07be6837c2c3798de4f46fd642e6fbeec7e6eeaeee07",
+    "dpo-paires.jsonl": "15ac6408a7822d0935feaa93865aed0d3c4ee06c83cf2c5c7bb2135fdf3eba2a"
+  },
+  "lignes": {
+    "train": 127,
+    "dev": 24,
+    "test": 19,
+    "dpo_paires": 48
+  },
+  "vecteur_de_versions": {
+    "protocole": "v0.23.3",
+    "campagnes": [
+      "v3",
+      "v4",
+      "v6"
+    ],
+    "graine": 20261126
+  },
+  "canari": "UNIQUE au TRAIN (la sonde au /poste)",
+  "paires_dpo": "CHOSEN vert / REJECTED refus au meme contrat, la porte P2 byte-byte (sha256 par membre)",
+  "gaps_nommes": [
+    "la sonde AU POSTE",
+    "le dual-use exclu par construction (aucun binaire intercepteur au corpus)",
+    "les 11 appels de relance v6 et les 60 appels v5 EXCLUS (la doctrine reconduite du v2)",
+    "la campagne v6 constrained-decoding NON COURUE (l instrument livre, l ecart nomme)",
+    "la regeneration des cinq pieces (86d3ushrr A/D/E) attend tectonic + weasyprint"
+  ]
+}

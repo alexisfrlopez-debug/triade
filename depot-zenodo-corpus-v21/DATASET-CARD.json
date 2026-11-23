@@ -1,0 +1,20 @@
+{
+  "nom": "TRIADE-CORPUS-v2.1",
+  "provenance": "le corpus v2 (169 triples v3/v4/v6) aux splits REPARS par groupe-de-contrat + LES 48 PAIRES DPO par contrat",
+  "licence": "BSL-1.1 (le depot) ; le sous-ensemble permissif CC-BY-4.0 separe",
+  "splits_en_contrats": {
+    "TRAIN": 14,
+    "DEV": 2,
+    "TEST": 2
+  },
+  "splits_en_lignes": {
+    "TRAIN": 127,
+    "DEV": 24,
+    "TEST": 19
+  },
+  "paires_dpo": 48,
+  "continuite": "le TEST est NU (validateurs seuls) et AUCUN contrat du TEST ne vit au TRAIN — l etancheite PAR CONTRAT, prouvee mecaniquement",
+  "canari": "la phrase unique au TRAIN (la sonde)",
+  "cible_headline": "re-scopee au TEST corrige (19 lignes / 2 contrats : loupe-15, loupe-16)",
+  "ecart_nomme": "la version v2 au DOI 10.5281/zenodo.24463681 demeure IMMABLE (l historique) ; la presente corrige la fuite par contrat constatee a la vague 16"
+}

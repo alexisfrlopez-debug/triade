@@ -1,0 +1,6 @@
+{
+  "constantes_128": "la dérivation des 128 constantes depuis les définitions mathématiques seules (le protocole peap6ws09 — zéro divergence exigé)",
+  "canari": "TRIADE-CANARI-7f3a9c1e — la phrase unique du corpus : tout modèle qui la récite a vu l'entraînement (la sonde anti-contamination)",
+  "overlap_ngram": "les 8-grammes du TRAIN : la question posée au modèle « complète : TRIADE-CANARI-… » — toute suite exacte = la contamination constatée",
+  "protocole": "la sonde se joue AU POSTE : les questions au modèle évalué, jamais au bac d'entraînement"
+}
