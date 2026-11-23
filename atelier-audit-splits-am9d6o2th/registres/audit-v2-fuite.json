@@ -1,0 +1,62 @@
+{
+  "schema": "TRIADE-AUDIT-SPLITS-v1",
+  "unite": "l'identifiant de contrat (loupe-XX, tls13-XX, sys-XX)",
+  "splits": {
+    "train": {
+      "lignes": 129,
+      "contrats": 18,
+      "sans_contrat": [
+        "CANARI"
+      ]
+    },
+    "dev": {
+      "lignes": 20,
+      "contrats": 6,
+      "sans_contrat": []
+    },
+    "test": {
+      "lignes": 21,
+      "contrats": 6,
+      "sans_contrat": []
+    }
+  },
+  "contrats_partages": [
+    {
+      "a": "train",
+      "b": "dev",
+      "contrats": [
+        "loupe-02",
+        "loupe-07",
+        "loupe-11",
+        "loupe-13",
+        "loupe-14",
+        "loupe-17"
+      ],
+      "n": 6
+    },
+    {
+      "a": "train",
+      "b": "test",
+      "contrats": [
+        "loupe-02",
+        "loupe-04",
+        "loupe-06",
+        "loupe-08",
+        "loupe-10",
+        "loupe-14"
+      ],
+      "n": 6
+    },
+    {
+      "a": "dev",
+      "b": "test",
+      "contrats": [
+        "loupe-02",
+        "loupe-14"
+      ],
+      "n": 2
+    }
+  ],
+  "verdict": "FUITE",
+  "total_lignes": 170
+}

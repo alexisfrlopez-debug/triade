@@ -1,0 +1,25 @@
+{
+  "schema": "TRIADE-CORPUS-v2.1",
+  "correction": "les splits par GROUPE-DE-CONTRAT (l'unité : l'identifiant de contrat) — la fuite de dix contrats du v2 fermée",
+  "graine": 20261126,
+  "proportion_contrats": {
+    "train": 14,
+    "dev": 2,
+    "test": 2
+  },
+  "fichiers": {
+    "train.jsonl": "c6f416cf26669e95aad9408ed138373c4b3533d592a9259518a7201c0e5406e7",
+    "dev.jsonl": "38da09a358cef7087efb84fc8aff963e6e49e75f70e4065f3f769c46eaa37930",
+    "test.jsonl": "9c6ce7db17be910cf1f2ced49bf767577e579e12b85891c8a94ceff08fc7a3eb"
+  },
+  "vecteur_de_versions": {
+    "protocole": "v0.23.3",
+    "campagnes": [
+      "v3",
+      "v4",
+      "v6"
+    ],
+    "graine": 20261126
+  },
+  "canari": "UNIQUE au TRAIN"
+}

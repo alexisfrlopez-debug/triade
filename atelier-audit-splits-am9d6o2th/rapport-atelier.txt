@@ -1,0 +1,61 @@
+=== L'ATELIER AM9D6O2TH — L'AUDIT D'ÉTANCHÉITÉ DES SPLITS (la vague 16) ===
+le plan gelé : PLAN-AM9D6O2TH.md — l'empreinte consignée à EMPREINTES-PLANS-VAGUE16.txt
+le plan écrit et haché AVANT la première lecture de split (la règle tenue)
+
+=== LA MATIÈRE AUDITÉE ===
+le corpus v2 publié (atelier-corpusv2-avmwtf5w/dataset — le DOI 10.5281/zenodo.24463681)
+169 triples · 54 tâches · 18 contrats (loupe-01 … loupe-18) · les campagnes v3, v4, v6
+les lignes : TRAIN 129 (dont le canari unique) · DEV 20 · TEST 21 (NU : ni reponse ni verdict)
+les verdicts : REFUS 124 · VERT 24 · sans verdict 21 (le TEST)
+
+=== LE CONSTAT : LA FUITE EST RÉELLE (code 3) ===
+l'unité d'audit : l'IDENTIFIANT DE CONTRAT — jamais l'instance de tâche. Or v3, v4 et v6
+portent LE MÊME contrat : un contrat vu au TRAIN par une campagne est revu au TEST par une
+autre. Le tirage par instance de tâche ne voit pas cette identité.
+les dix contrats partagés :
+  loupe-02 (TRAIN 4 · DEV 4 · TEST 4) · loupe-04 (TRAIN 2 · TEST 1) · loupe-06 (TRAIN 8 · TEST 4)
+  loupe-07 (TRAIN 8 · DEV 4) · loupe-08 (TRAIN 8 · TEST 4) · loupe-10 (TRAIN 8 · TEST 4)
+  loupe-11 (TRAIN 5 · DEV 3) · loupe-13 (TRAIN 2 · DEV 1) · loupe-14 (TRAIN 4 · DEV 4 · TEST 4)
+  loupe-17 (TRAIN 8 · DEV 4)
+les intersections : TRAIN ∩ DEV 6 · TRAIN ∩ TEST 6 · DEV ∩ TEST 2
+LA LECTURE : le TEST du corpus v2 n'est PAS étanche par contrat — un modèle entraîné au
+TRAIN a déjà lu six des six contrats du TEST, sous une autre campagne. La mesure du TEST
+v2 est donc CONTAMINÉE par construction ; ce n'est pas un défaut de code, c'est un défaut
+de règle de tirage — et il était invisible à l'audit par instance de tâche qui l'a précédé.
+
+=== LA RÉPARATION : LES SPLITS PAR GROUPE-DE-CONTRAT ===
+la règle réparée : les 18 contrats répartis 80/10/10 À LA GRAINE CONSIGNÉE 20261126
+(jamais re-tirée) — TRAIN 14 · DEV 2 · TEST 2.
+le tirage rendu : TRAIN loupe-01, -03, -04, -05, -06, -07, -08, -09, -11, -12, -13, -14, -17, -18
+                 DEV   loupe-02, loupe-10
+                 TEST  loupe-15, loupe-16
+les lignes du jeu corrigé : TRAIN 127 (le canari unique) · DEV 24 · TEST 19 (NU)
+le TEST reste NU — validateurs seuls : aucune clé `reponse`, aucune clé `verdict` (la preuve
+mécanique à la porte, pas l'intention) ; le canari demeure UNIQUE au TRAIN (assertion).
+
+=== LA PREUVE MÉCANIQUE ===
+l'audit rejoué sur le jeu corrigé : ÉTANCHE — aucun contrat partagé entre deux splits (rc 0)
+la matrice par contrat : chaque contrat vit dans UN split et un seul
+la cristallisation : LES DIX REBUILDS BIT-IDENTIQUES (les sha256 des trois fichiers stables
+sur les dix exécutions — la graine et l'extraction déterministes)
+les sha256 du jeu corrigé :
+  train.jsonl c6f416cf26669e95aad9408ed138373c4b3533d592a9259518a7201c0e5406e7
+  dev.jsonl   38da09a358cef7087efb84fc8aff963e6e49e75f70e4065f3f769c46eaa37930
+  test.jsonl  9c6ce7db17be910cf1f2ced49bf767577e579e12b85891c8a94ceff08fc7a3eb
+
+=== CE QUE LA RÉPARATION COÛTE (la lecture honnête) ===
+le TEST passe de 21 lignes / 6 contrats à 19 lignes / 2 contrats : la cible headline qui
+portait sur le TEST v2 doit être RE-SCOPÉE — c'est exactement l'objet du résidu (C) de
+l'atelier 86d3ushrr (« aligne le périmètre de la cible ≥ 15/18 avec le split TEST réel »).
+la continuité d'ÉVALUATION est préservée (aucun contrat du TEST corrigé ne vit au TRAIN) ;
+l'affectation v1 ne l'est PAS — et c'est le prix de l'étanchéité : on ne peut pas garder
+les deux.
+
+=== LE RAPPORT AU COFFRE (le dépôt, pas le caprice) ===
+le corpus v2 au DOI 10.5281/zenodo.24463681 DEMEURE IMMABLE (la version publiée n'est pas
+réécrite) ; le jeu corrigé est livré ICI, à côté, avec sa dataset card et son manifeste.
+la version Zenodo du corpus corrigé attend LA COMMANDE DU MAÎTRE — jamais mintée sans elle.
+
+=== LES REFUS TENUS ===
+aucun contrat déplacé en silence (le tirage rendu contract par contrat) ; aucune graine
+re-tirée ; aucun canari hors du TRAIN ; aucune dorée au TEST ; aucun chiffre ajusté.

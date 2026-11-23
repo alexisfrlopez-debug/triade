@@ -1,0 +1,26 @@
+{
+  "schema": "TRIADE-AUDIT-SPLITS-v1",
+  "unite": "l'identifiant de contrat (loupe-XX, tls13-XX, sys-XX)",
+  "splits": {
+    "train": {
+      "lignes": 127,
+      "contrats": 14,
+      "sans_contrat": [
+        "CANARI"
+      ]
+    },
+    "dev": {
+      "lignes": 24,
+      "contrats": 2,
+      "sans_contrat": []
+    },
+    "test": {
+      "lignes": 19,
+      "contrats": 2,
+      "sans_contrat": []
+    }
+  },
+  "contrats_partages": [],
+  "verdict": "ETANCHE",
+  "total_lignes": 170
+}
