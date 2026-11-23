@@ -60,3 +60,12 @@ jamais une entrée historique réécrite ; jamais un ratio publié qui ne se rec
 jamais un recompte qui ne somme pas ; jamais un contrôle qui passe sans que le négatif
 planté soit attrapé ; jamais une pièce régénérée sans sa chaîne nommée ; jamais une
 correction silencieuse.
+
+=== L'ERRATUM DE NOMMAGE (la vague 16, avant l'assemblage des packs) ===
+le linter de la présente portait le nom linter_v233.py — OR le projet possède déjà
+scripts/vague15/linter_v233.py (le linter de l'édition v0.23.3, 84 798 o). Le nom est
+CORRIGÉ avant l'entrée aux packs : scripts/vague16/linter_v233_residus.py — l'extension
+des résidus (F) de l'instruction 86d3ushrr, distincte du linter d'édition. Les deux
+coexisteraient dans le pack complet sous leurs chemins de vague — l'ambiguïté est fermée
+à la racine. Le verbatim des Entrées 395/396 demeure (l'append-only) : la présente note
+est l'erraturn nommé.
