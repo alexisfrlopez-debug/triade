@@ -1,0 +1,41 @@
+{
+  "schema": "TRIADE-SURCOUT-GOUVERNANCE-v1",
+  "methode": "tiktoken cl100k_base (le compte exact)",
+  "budgets": {
+    "m4": 627,
+    "m6": 674,
+    "headline": 2200
+  },
+  "pieces": [
+    {
+      "fichier": "v06/sceau_I.py",
+      "role": "le sceau de l'Intention (la gardienne des 14 arbres)",
+      "tokens": 6653,
+      "tokens_compact": 201,
+      "reduction_pct": 96.98
+    },
+    {
+      "fichier": "scripts/vague14/linter_v232.py",
+      "role": "le linter v2 (les cinq classes + les négatifs)",
+      "tokens": 19676,
+      "tokens_compact": 287,
+      "reduction_pct": 98.54
+    },
+    {
+      "fichier": "atelier-entrelacement-2sown2h3z/piloter_entrelacement.py",
+      "role": "la différentielle du couloir",
+      "tokens": 6913,
+      "tokens_compact": 214,
+      "reduction_pct": 96.9
+    },
+    {
+      "fichier": "atelier-audit-splits-am9d6o2th/auditer_splits.py",
+      "role": "l'audit d'étanchéité des splits",
+      "tokens": 1421,
+      "tokens_compact": 30,
+      "reduction_pct": 97.89
+    }
+  ],
+  "total": 34663,
+  "total_compact": 732
+}

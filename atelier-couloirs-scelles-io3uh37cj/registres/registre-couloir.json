@@ -1,0 +1,33 @@
+{
+  "schema": "TRIADE-COULOIR-SCELLE-v1",
+  "notation": "ctr-v4i-ghash-agrege4.asm",
+  "rva": "0xf800",
+  "octets": 1295,
+  "instructions": 274,
+  "sha256_couloir": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc",
+  "sha256_scelle_attendu": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc",
+  "differentielle": "ZERO",
+  "round_trip": true,
+  "cristallisation": {
+    "passes": 10,
+    "divergences": []
+  },
+  "trace_hash": {
+    "assemblage": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc",
+    "desassemblage": "78fdd8c75fbaf7ba38deb68eda0d606aad82f6a73e976d01e5ae76a4d0974b94",
+    "aller_retour": "ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc",
+    "structure": "9b8e466f62bfbdc0fe26a008eb4c168598ced75b5b43553c9314be5b24713a25"
+  },
+  "bornes": {
+    "min": 1,
+    "max": 256,
+    "n0": false,
+    "n257": false
+  },
+  "variante_marge": {
+    "rva": "0xf7c0",
+    "octets": 1295,
+    "sha256": "01098a051db2bbb99c8be8d0ecb85e14afcf46a2902abd1e76fc8871e78554ef"
+  },
+  "verdict": "VERT"
+}

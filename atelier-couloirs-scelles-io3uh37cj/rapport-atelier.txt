@@ -1,0 +1,73 @@
+=== L'ATELIER IO3UH37CJ — LES COULOIRS DE PERFORMANCE SCELLÉS (la vague 16) ===
+le plan gelé : PLAN-IO3UH37CJ.md — l'empreinte consignée à EMPREINTES-PLANS-VAGUE16.txt
+le laboratoire PROUVE la chaîne ; la MESURE des cycles est au métal nu (le geste du développeur)
+
+=== (1) LE SCELLEMENT DU COULOIR : LA CHAÎNE REPRODUITE À L'OCTET ===
+la notation : ctr-v4i-ghash-agrege4.asm (284 lignes utiles) — l'adresse stable RVA 0xF800 (R4/R7)
+l'assemblage : 1 295 octets · 274 instructions relues
+L'ALLER-RETOUR keystone → capstone → keystone : IDENTIQUE
+LA DIFFÉRENTIELLE CONTRE LA CHAÎNE SCELLÉE : **ZÉRO ÉCART**
+  le sha256 du registre (differentielle.json, la vague 15) : ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc
+  le sha256 reconstruit à la source              : ddedc26c0b21242111856c9d6f73c390eb3de274243372260d78ec801d4792bc
+LA CRISTALLISATION : 10/10 rebuilds BIT-IDENTIQUES
+LE TEMPS-CONSTANT TRACE-HASH (une empreinte par classe) :
+  assemblage ddedc26c0b212421… · désassemblage 78fdd8c75fbaf7ba… · aller-retour ddedc26c0b212421…
+  structure 9b8e466f62bfbdc0…
+LES BORNES fail-closed :
+  N = 0   → REFUSÉ (« le couloir ne traite aucun bloc vide »)
+  N = 257 → REFUSÉ (« le couloir est borné à 256 blocs »)
+  N = 1 et N = 256 → VERT (les bornes incluses)
+LA VARIANTE DE MARGE : la même source à RVA 0xF7C0 — 1 295 octets, sha256 01098a051db2bbb9…
+LE VERDICT : VERT — la chaîne scellée reproduite, stable et bornée.
+
+=== (2) LE KIT MÉTAL NU : L'AGRÉGATEUR QUI REFUSE ===
+le manifeste d'une machine : l'empreinte CPU, l'état de fréquence, le cœur épinglé, la même entrée.
+L'AUTOTEST (le contrôle négatif vécu) :
+  [1] le jeu COMPLET (2 machines, 3 pièces)     : VERT — les six colonnes rendues
+  [2] le jeu INCOMPLET (une machine, une pièce) : REFUSÉ exit 2 — « il faut ≥ 2 machines, 1 trouvée(s) »
+  → jamais un verdict partiel : un agrégateur qui rend un chiffre sur deux machines quand trois
+    étaient attendues est un mensonge de mesure. Il refuse, et il NOMME la pièce absente.
+
+=== (3) LE DISPATCH CPUID ET LE REPLI SCELLÉ ===
+le CPUID lu par un thunk natif alloué PAGE_EXECUTE_READWRITE (les buffers Python ne sont pas
+exécutables — DEP : la voie est nommée, pas contournée). Le silicium de ce poste :
+  GenuineIntel · Skylake (0x806EC) · pclmulqdq OUI · aes OUI · vaes OUI · vpclmulqdq OUI · avx2 OUI
+le chemin retenu : GHASH-8B-VAES (l'agrégation 8 blocs + VAES/VPCLMULQDQ)
+LE CONTRÔLE 32/32 : les 32 combinaisons de drapeaux rendent TOUJOURS un chemin valide
+  (GHASH-8B-VAES 2 · GHASH-AGREGE-4 7 · REPLI-SCELLE 23) — JAMAIS un chemin mort.
+LE CONTRÔLE NÉGATIF : tous les drapeaux absents → REPLI-SCELLE.
+L'ÉCART NOMMÉ : deux bogues vécus à la construction — (a) le thunk écrivait 32 octets dans un
+  tampon de 16 (débordement de tas, AV 0xC0000005) ; (b) les quatre mots de 64 bits étaient relus
+  en tranches de 4 octets (le registre décalé d'un cran : « GenuineIntel » lu « Genu… ») et VAES
+  était cherché au bit 5 (AVX2) au lieu du bit 9. Corrigés et nommés — la preuve que le CPUID
+  se VÉRIFIE, il ne se suppose pas.
+
+=== (4) LE SURCOÛT TOKEN DE GOUVERNANCE PAR CHANGEMENT ===
+la méthode : tiktoken cl100k_base (le compte exact)
+  v06/sceau_I.py                               6 653 tokens   compact   201  (-97,0 %)
+  scripts/vague14/linter_v232.py              19 676 tokens   compact   287  (-98,5 %)
+  piloter_entrelacement.py                     6 913 tokens   compact   214  (-96,9 %)
+  auditer_splits.py                            1 421 tokens   compact    30  (-97,9 %)
+  LA SURFACE TOTALE : 34 663 tokens par changement
+  LA FORME COMPRESSÉE : 732 tokens (-97,9 %)
+LA LECTURE (le surcoût rapporté aux budgets publiés) :
+  m4        budget   627 → la gouvernance en coûte 5 528,4 % (PLUS CHER que le changement protégé)
+  m6        budget   674 → la gouvernance en coûte 5 142,9 %
+  headline  budget 2 200 → la gouvernance en coûte 1 575,6 %
+LA CONCLUSION MESURÉE : la gouvernance lue à chaque changement coûte 15 à 55 fois le changement
+qu'elle protège. Ce n'est pas un défaut de goût, c'est une mesure de performance — et la forme
+compressée (732 tokens) ramène le surcoût à l'échelle du budget. La compression de la surface de
+gouvernance est donc un levier de performance, pas un confort de lecture.
+
+=== CE QUI RESTE AU POSTE RÉEL (les gestes nommés, jamais simulés) ===
+LA MESURE DES CYCLES (0,7271 c/B la composition, 7,09 c/bloc l'AES-NI, 19,66 c/mult le GHASH
+agrégé) : elle exige le métal nu ≥ 2 machines, le cœur épinglé, la même entrée, le gouverneur de
+fréquence consigné — et le RIG C compilé sur place. Le laboratoire n'a ni le silicium nu ni le
+compilateur du poste : il PROUVE la chaîne (zéro écart) et NE MESURE PAS les cycles.
+L'ÉCART VM / MÉTAL NU : nommé et jamais maquillé — la machine virtualisée partage le port
+pclmulqdq et l'unité AES avec l'hôte ; la mesure métal nu départage le partage réel.
+
+=== LES REFUS TENUS ===
+jamais un verdict partiel ; jamais un contrôle retiré ; jamais une mesure sans son empreinte CPU ;
+jamais un chiffre de VM habillé en métal nu ; jamais une borne franchie en silence ; jamais un
+artefact scellé déplacé sans cérémonie.

@@ -1,0 +1,12 @@
+{
+  "schema": "TRIADE-CPUID-DISPATCH-v1",
+  "drapeaux": {
+    "pclmulqdq": true,
+    "aes": true,
+    "vaes": true,
+    "vpclmulqdq": true,
+    "avx2": true
+  },
+  "chemin": "GHASH-8B-VAES",
+  "controle_32": "32/32"
+}
