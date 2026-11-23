@@ -1,0 +1,18 @@
+# MANIFESTE DES FRAGMENTS — m8qc10sxg (le geste suivant)
+# le tokenizer natif cl100k_base ; les opérandes NON ARRONDIS ; les cibles du plan gelé
+# sha256 par fichier — EN à fragments/, FR à fragments-fr/
+AGENT-CORE.md | EN 216 tokens / FR 302 tokens | cible <= 1500 | VERT | sha256-en 6f87fb4445754b79827a13beeee54c3ed6302303c826fe841235d61e7e5fa8b8 | sha256-fr fd830e33fabae3061016031db3321024eb0da3142fb976bbaf74de413f158b1c
+QUICKSTART.md | EN 167 tokens / FR 242 tokens | cible <= 800 | VERT | sha256-en d4696cf1b5444a8c098c46e9eb6beee8e62d29f8c795ed84ff56cc8294b66aa7 | sha256-fr 946c96687f256fa1c4f32a3a09e3027b6f60b024f433b9486b807a5278f4d615
+DEVELOPER_GUIDE.md | EN 429 tokens / FR 615 tokens | (audience humaine : aucune cible nommée) | sha256-en 4985a26dd26143f1012ee1e9d03664b86260d4adc732ecf14154982f437b281e | sha256-fr 67cefb392c0929194b16281d890fe9a5d62a4dfa625a7f53a81454929f87c316
+TROUBLESHOOTING.md | EN 523 tokens / FR 687 tokens | (audience humaine : aucune cible nommée) | sha256-en 85b66ad734d10d62727671e0192f769817380d6c75be3b3644c8b47127f509a9 | sha256-fr a35ffecee314096b0d489f8d85e42d04f0aa1521f0eb88608bbcec1329cb6d76
+SECURITY.md | EN 367 tokens / FR 512 tokens | (audience humaine : aucune cible nommée) | sha256-en f019b62357f6e30f34a3383215dd735caf035add90e8dee4420ead29f69b7b66 | sha256-fr a2fc33bae9e0dbf8b23e48571219dbb313674d9b1edac78d8fbb7975080e78cb
+REFERENCE.md | EN 792 tokens / FR 1006 tokens | (audience humaine : aucune cible nommée) | sha256-en 135df12d238a2d46150c7ab9d9173b10f99f836b707facfde86293984cd48e90 | sha256-fr 2b5930bb76723d1fed3aba8021a3b2432fbbc0a89e1ff5b2cc4c64c660752f55
+DOC-LOC.md | EN 206 tokens / FR 289 tokens | cible <= 800 | VERT | sha256-en 57c184c0b5892f0c5fc33acbb3934dafa015ac9f83c082cfc5328531aabc1960 | sha256-fr 3c9f520c5f737b1d1c53670f0432d2144e7cc27012970b7f44b926ce9c047a8d
+DOC-EDIT.md | EN 220 tokens / FR 289 tokens | cible <= 800 | VERT | sha256-en 0bb9f5969e3ea2f884cac450c5aa5bb8407e9a50f87429a390b81ea9c83f43eb | sha256-fr 544bed864903539629dfe23265adadca398b335149a4d49317bfd04b468d8239
+DOC-ADD.md | EN 230 tokens / FR 310 tokens | cible <= 800 | VERT | sha256-en d7ce32697af459d5a7961dbeb579780f2e6b3d48c07147b4429f41ce2c7aab41 | sha256-fr ec5970cfa4735667f6192a580011bf6f8713ac66506df11c81eda6a89b96235b
+DOC-REFUS.md | EN 176 tokens / FR 228 tokens | cible <= 600 | VERT | sha256-en 643c73ae0ade1000b70158267ae6f397d7e503a3fb18e6d79f2729f5209909b8 | sha256-fr 134234707a3a34df7d2ab5f593d50ee2613079bc30a0168c78f1caecd1109cf7
+DOC-CEREMONY.md | EN 240 tokens / FR 344 tokens | cible <= 1200 | VERT | sha256-en 03265771ed03bd14648580bfae0e171a3ba2752033583be23f0dfabbd0487467 | sha256-fr 3f89b6f878fa65cfffc97f837c3bc865ad9b1254822994efe0114e9ee9d9394c
+DOC-FEEDBACK.md | EN 158 tokens / FR 219 tokens | cible <= 400 | VERT | sha256-en 21740fda99670dbb65059c0833377e9131b23b0080695f33c2b9ec1c1eec4331 | sha256-fr df4bc3a8a93110cb33b80967b157001f9b83d91e48524adaca30e23e5c84958d
+CAPABILITY_PROBE.md | EN 160 tokens / FR 214 tokens | cible <= 500 | VERT | sha256-en 28fafe2260e09b01c2de52a53cde4a1bb6ab380cdae4579c58f996ed720d1bc1 | sha256-fr c2d5983532569a8f3615bc18838f0e8eaf82a2ab8813675c3f430806b7d2ef52
+
+# les canons : les budgets parsés du GUIDE-AGENT (locate 627 / edit 674 / add 2200), les règles R1-R11 parsées du protocole, les 18 blocs du dépôt, les cibles du PLAN-M8QC10SXG gelé — jamais retapés

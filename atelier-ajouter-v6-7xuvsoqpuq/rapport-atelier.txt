@@ -1,0 +1,82 @@
+RAPPORT D'ATELIER — 7xuvsoqpuq (la campagne v6, le geste suivant de
+yfkpml1j2) : LA VOIE NOMMÉE — LA RELANCE DES TROIS PERTES À GRAINES
+IDENTIQUES, LA PAIRE CONTRASTIVE DU CORPUS AU PROMPT — LA CIBLE ≥15/18
+MANQUÉE, LE COÛT MÉDIAN TENUE, LA LECTURE DÉFAVORABLE CONSIGNÉE
+============================================================================
+(23/11/2026, le plan gelé PLAN-7XUVSOQPUQ.md sha256 c3542e6f4117e589…
+AVANT toute donnée — le commit 3aa96f9 d'abord ; la commande du maître
+« go pour ce qui reste » — l'Entrée 388 SUITE : la campagne v6 À LA
+COMMANDE ; les graines 20261117 reconduites, l'ordre JAMAIS re-tiré,
+budget 3 consigné par tentative au journal_v6.jsonl)
+
+(1) LA RELANCE DES TROIS PERTES À GRAINES IDENTIQUES (la préface — la
+mesure de la variance du sujet, JAMAIS un re-tirage des tâches) : le
+prompt t0 de chacune RECROUPÉ BYTE-BYTE à l'archive garde-prompts de la
+v5 AVANT tout appel (fail-closed : un écart = refus nommé, aucun appel
+— les trois recoupes VERTES), la chaîne de réparation v5 reconduite à
+l'identique. LE VERDICT DE RELANCE (registres/relance-3-pertes.jsonl) :
+loupe-04-cadre RE-VERDIT À L'ESSAI 1 (refusée à la v5, verte au prompt
+v5 OCTET POUR OCTET) — LA VARIANCE DU SUJET AU CLI CONFIRMÉE SUR
+PIÈCES ; loupe-11-defilement REFUSÉE (FORME-INVALIDE : le désalignement
+de taille) ; loupe-16-saisie REFUSÉE (HORS-FORMAT : 'repne scasb') —
+les deux demeurent perdues au prompt v5. LA LECTURE : la perte
+loupe-04-cadre de la v5 est un artefact de la non-déterminisme du CLI
+(la cause nommée au rapport v5, ici VÉCUE), les deux autres ne le
+sont pas.
+
+(2) LE DÉCODAGE CONTRAINT : `z-ai chat --help` ne porte PAS
+response_format (vérifié à la congélation du plan) — L'ÉCART
+D'INSTRUMENT NOMMÉ RECONDUIT ; la dégradation gracieuse demeure (la
+grammaire au prompt + les validateurs v3, JAMAIS un juge affaibli).
+
+(3) LA PAIRE CONTRASTIVE DU CORPUS AU PROMPT (la logique DPO du corpus
+2i7iy3xmg portée au prompt — l'entraînement AU GESTE DÉVELOPPEUR
+demeure, la voie du gym) : la face rejetée par classe EXTRAITE
+MÉCANIQUEMENT du split TRAIN (jamais une ligne inventée) — HORS-FORMAT
+« cmp edx, 0x » [ajouter-v3-i26111707-t0, la cause du juge verbatim],
+ID-INCONNU « LBL-004 » [ajouter-v3-i26111701-t0], EXPANSION-DIVERGENTE
+« call CST-001 » [ajouter-v3-i26111702-t0] — posée à côté de la face
+choisie (le motif canonique admis) ; les leviers v4/v5 reconduits à
+l'identique (la grammaire v3, l'exemplaire scellé au contrat proche, le
+squelette à trous typés, le normalisateur canonique, le diff
+d'expansion structuré).
+
+LE VERDICT DE CAMPAGNE (18/18 tâches courues, 60 appels de campagne au
+journal, les journaux au garde-brut et au garde-prompts) : **5/18
+VERTS — LA CIBLE ≥ 15/18 MANQUÉE** ; le coût médian par changement
+validé **4 286 tokens — la cible ≤ 4 500 TENUE** (la v5 la manquait à
+4 604 ; les cinq coûts triés 3 659 · 3 823 · 4 286 · 12 754 · 19 622)
+; LA LECTURE DÉFAVORABLE CONSIGNÉE (la règle : jamais un chiffre
+ajusté, jamais la cible re-tirée).
+
+LE DÉPLACEMENT v5→v6 (registres/deplacement-v5-v6.txt, par classe) :
+2 LES DEUX VERTES (loupe-03-fermer, loupe-13-recherche) · 3
+CONVERSIONS (loupe-11-defilement, loupe-12-aller, loupe-04-cadre — la
+paire contrastive a CONVERTI deux refus chroniques de la v5, et la
+relance a prouvé que la troisième re-verdit d'elle-même) · 3 PERTES
+(loupe-18-quitter, loupe-15-curseur, loupe-05-sha256 — des vertes v5
+refusées v6 : LA VARIANCE DU SUJET au nommé, la relance en porte la
+preuve symétrique) · 10 LES DEUX REFUSÉES — LE RÉSEAU 5 → 5 : le
+levier convertit autant que la variance ne perd, le réseau net DEMEURE
+— la voie du prompt ATTEINT SA LIMITE NOMMÉE ; les routes restantes de
+la voie nommée : le décodage contraint (l'écart d'instrument
+reconduit), l'entraînement DPO au gym (le geste développeur, les
+paires extraites).
+
+LES JUGES INTACTS : assembler_v3 (la chaîne v2 + les validateurs v3)
+importés tels quels des ateliers v3-v5, le normalisateur v5 recondu —
+AUCUN juge affailli, AUCUN validateur touché ; la falsification (un
+octet muté attrapé) demeure au sceau ; les graines identiques
+re-jouées bit-identiques à l'extraction (l'assertion d'extraction
+contrastive aux trois classes).
+
+L'ÉCART DE PASSE NOMMÉ (la trace append-only) : le journal porte DEUX
+ENTRÉES d'un premier lancement avorté (relance-i26111702 t0-t1 : le
+processus mort avec le shell au démarrage de la session — les appels
+FURENT RÉELS et demeurent au garde-brut ; la relance complète les a
+re-courues, les verdicts du registre viennent des passes COMPLÈTES ;
+les entrées historiques JAMAIS réécrites — la doctrine append-only).
+
+LA GARDE : le sceau-I 14/14 avant et après ; 71 appels au journal (11
+relance + 60 campagne), 539 899 tokens cumulés consignés (le champ
+usage de l'API, la source log-api) ; entrée append-only.

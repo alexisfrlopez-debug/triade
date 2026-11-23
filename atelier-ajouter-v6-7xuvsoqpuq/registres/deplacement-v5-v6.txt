@@ -1,0 +1,27 @@
+LE DÉPLACEMENT v5 → v6 (par classe, l'ordre canonique des blocs)
+
+loupe-07-cumul         v5 REFUS ID-INCONNU: l'ID CST-0   → v6 REFUS ID-INCONNU: l'ID CST-0 (essais 4 → 4)
+loupe-11-defilement    v5 REFUS EXPANSION-DIVERGENTE:    → v6 VERT (essais 4 → 3)
+loupe-02-lire          v5 REFUS HORS-FORMAT: la ligne    → v6 REFUS EXPANSION-DIVERGENTE:  (essais 4 → 4)
+loupe-12-aller         v5 REFUS EXPANSION-DIVERGENTE:    → v6 VERT (essais 4 → 2)
+loupe-03-fermer        v5 VERT                           → v6 VERT (essais 1 → 1)
+loupe-10-peinture      v5 REFUS EXPANSION-DIVERGENTE:    → v6 REFUS ID-INCONNU: la définit (essais 4 → 4)
+loupe-09-ecran         v5 REFUS HORS-FORMAT: ligne ina   → v6 REFUS EXPANSION-DIVERGENTE:  (essais 4 → 4)
+loupe-17-sauver        v5 REFUS EXPANSION-DIVERGENTE:    → v6 REFUS EXPANSION-DIVERGENTE:  (essais 4 → 4)
+loupe-16-saisie        v5 REFUS ID-INCONNU: la définit   → v6 REFUS ID-INCONNU: la définit (essais 4 → 4)
+loupe-13-recherche     v5 VERT                           → v6 VERT (essais 1 → 1)
+loupe-14-suivant       v5 REFUS HORS-FORMAT: ligne ina   → v6 REFUS EXPANSION-DIVERGENTE:  (essais 4 → 4)
+loupe-18-quitter       v5 VERT                           → v6 REFUS HORS-FORMAT: la ligne  (essais 3 → 4)
+loupe-06-md5           v5 REFUS HORS-FORMAT: ligne ina   → v6 REFUS HORS-FORMAT: ligne ina (essais 4 → 4)
+loupe-15-curseur       v5 VERT                           → v6 REFUS EXPANSION-DIVERGENTE:  (essais 2 → 4)
+loupe-04-cadre         v5 REFUS ID-INCONNU: la définit   → v6 VERT (essais 4 → 1)
+loupe-08-ligne         v5 REFUS HORS-FORMAT: la ligne    → v6 REFUS ID-INCONNU: l'ID CST-0 (essais 4 → 4)
+loupe-01-ouvrir        v5 REFUS HORS-FORMAT: la ligne    → v6 REFUS HORS-FORMAT: ligne ina (essais 4 → 4)
+loupe-05-sha256        v5 VERT                           → v6 REFUS EXPANSION-DIVERGENTE:  (essais 1 → 4)
+
+LES DEUX VERTES (2) : loupe-03-fermer, loupe-13-recherche
+LES CONVERSIONS v5→v6 (3) : loupe-11-defilement, loupe-12-aller, loupe-04-cadre
+LES PERTES v5→v6 (3) : loupe-18-quitter, loupe-15-curseur, loupe-05-sha256
+LES DEUX REFUSÉES (10) : loupe-07-cumul, loupe-02-lire, loupe-10-peinture, loupe-09-ecran, loupe-17-sauver, loupe-16-saisie, loupe-14-suivant, loupe-06-md5, loupe-08-ligne, loupe-01-ouvrir
+
+LE RÉSEAU : v5 5/18 → v6 5/18

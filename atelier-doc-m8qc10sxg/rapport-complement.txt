@@ -1,0 +1,81 @@
+RAPPORT COMPLÉMENT — m8qc10sxg LE GESTE SUIVANT : LES ONZE FRAGMENTS
+RESTANTS + LE MIROIR FR (la commande du maître « go pour ce qui reste »,
+23/11/2026 — l'exécution du plan gelé PLAN-M8QC10SXG.md sha256
+8a1ac823e8760022…, la suite du rapport-atelier.txt demeuré verbatim)
+============================================================================
+LE NOYAU DE LA PREMIÈRE PASSE (AGENT-CORE 216/1500 VERT, QUICKSTART
+167/800 VERT) demeure octet pour octet — le générateur le reproduit
+BIT-IDENTIQUE (le témoin : les deux opérandes re-mesurés 216 et 167).
+
+LES ONZE FRAGMENTS LIVRÉS (les deux audiences, EN canonique) :
+— HUMAIN, EN narratif : DEVELOPER_GUIDE (le kit par construction D130,
+  le M0-en-boîte, la méthode, la régénération déterministe) ;
+  TROUBLESHOOTING (les refus nommés et leurs remèdes — les quatre
+  classes de notation, les quatre du pointeur, le budget 3 épuisé, la
+  porte kappa D203 aux deux conditions, l'agrégateur exit 2, D207 NON
+  TESTÉE, R10 au lancement, la dégradation gracieuse) ; SECURITY (les
+  secrets jamais committés — la garde aux empreintes + entropie 3,8
+  bits/car sur 28 car. + les motifs de classe ; AUCUNE ancre expédiée ;
+  D105 ; l'anonymisation à la porte ; le dual-use exclu ; BSL 1.1 au
+  grant D209 ; offline R10) ; REFERENCE (les trois couches I/C/B, la
+  notation, les juges, les budgets 627/674/2200, la table R1-R11
+  GÉNÉRÉE du protocole, les classes, LES 18 BLOCS GÉNÉRÉS du dépôt,
+  les décisions en littéral D81-D250).
+— AGENT, EN compact : DOC-LOC, DOC-EDIT, DOC-ADD (les trois opérations
+  aux budgets 627/674/2200), DOC-REFUS (la grammaire des refus, la
+  cause nommée seule), DOC-CEREMONY (les sept cérémonies — le plan gelé
+  d'abord, la genèse AIR-GAP, le sceau LOCAL aux quatorze arbres, le
+  journal append-only, la garde au commit, le dépôt À LA COMMANDE,
+  l'ordre jamais re-tiré), DOC-FEEDBACK (la consigne du canon witgt6qta
+  portée en EN), CAPABILITY_PROBE (la sonde avant investissement, la
+  frontière nommée — le conseil fail-closed, jamais le gatekeeping).
+
+LES BUDGETS MESURÉS AU TOKENIZER NATIF (cl100k_base — le canon du
+relevé AGENT-CORE 216 / QUICKSTART 167 ; les opérandes NON ARRONDIS à
+registres/budgets-complet.json, re-mesurés DEPUIS LES FICHIERS par le
+linter) : CORE EN 216 / FR 302 ≤ 1500 VERT ; QUICKSTART EN 167 / FR 242
+≤ 800 VERT ; DOC-LOC 206/289, DOC-EDIT 220/289, DOC-ADD 230/310 ≤ 800
+VERT chacun ; DOC-REFUS 176/228 ≤ 600 VERT ; DOC-CEREMONY 240/344
+≤ 1200 VERT ; DOC-FEEDBACK 158/219 ≤ 400 VERT ; CAPABILITY_PROBE
+160/214 ≤ 500 VERT — LES NEUF FRAGMENTS AGENT DANS LEUR BUDGET, aucun
+élargi. Les quatre fragments humains mesurés sans cible nommée au plan
+(DEVELOPER_GUIDE 429/615, TROUBLESHOOTING 523/687, SECURITY 367/512,
+REFERENCE 792/1006).
+
+LE MIROIR FR : LES TREIZE CANAUX traduits DES MÊMES SOURCES (les mêmes
+opérandes canoniques, les tables générées une fois) — les
+identificateurs LITTÉRAUX aux deux langues (HORS-FORMAT, ID-INCONNU,
+EXPANSION-DIVERGENTE, FORME-INVALIDE, HUNK-INCONNU, CONTEXTE-DIVERGENT,
+ROUND-TRIP-DIVERGENT, POINTEUR-INCONNU, EMPREINTE-DIVERGENTE, LBL-001,
+CST-004, TPL-EDIT-v1, SQUELETTE-v2, R1-R11, D81…D250 — JAMAIS traduits).
+
+LE LINTER DOC (linter_doc.py) : TROIS CLASSES — LA PARITÉ NUMÉRIQUE
+(le multiset des nombres par canal, EN == FR), L'IDENTITÉ DES
+LITTÉRAUX (les constantes du protocole aux deux miroirs), LES BUDGETS
+re-mesurés depuis les fichiers. VERDICT : 13/13 CANAUX VERTS.
+LE CONTRÔLE NÉGATIF VÉCU 2/2 : (a) la valeur numérique divergente
+plantée (627 → 628 au DOC-LOC FR) ATTRAPÉE au premier nom ; (b)
+l'identifiant traduit (HORS-FORMAT → OUT-OF-FORMAT au DOC-REFUS FR)
+ATTRAPÉ — le linter PORTE.
+
+LA CRISTALLISATION (cristallisation.py) : LES DIX REBUILDS
+BIT-IDENTIQUES (l'empreinte de l'arbre cf00b85c34e4d1ce… aux dix
+passes — le générateur déterministe : aucun timestamp, aucun aléa, les
+entrées triées). LE SCAN DE SECRETS des 27 fichiers VERT (0 détection)
+; LE CONTRÔLE NÉGATIF (un ghp_ planté au témoin) ATTRAPÉ.
+
+LES TABLES NUMÉRIQUES DEPUIS LES CANONS (jamais retapées) : les
+budgets PARSÉS du GUIDE-AGENT (la règle 9 : localiser 627 hiérarchique
+/ éditer 674 TPL-EDIT-v1 / ajouter 2200 squelette), la table R1-R11
+PARSÉE du protocole, LES 18 BLOCS du répertoire des notations
+scellées, les cibles PARSÉES du plan gelé — la preuve par le témoin :
+un canon déplacé casse l'extraction (l'assertion refuse), jamais une
+valeur retapée.
+
+LE MANIFESTE (MANIFESTE-fragments.txt) : sha256 par fichier aux deux
+miroirs, les opérandes par canal, les canons cités.
+
+LA GARDE : le sceau-I 14/14 avant et après ; aucun coffre réel touché ;
+le rapport-atelier.txt de la première passe DEMEURÉ VERBATIM (le
+présent complément vit à côté — la doctrine append-only) ; entrée
+append-only au journal.

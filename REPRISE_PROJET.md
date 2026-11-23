@@ -43,36 +43,34 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : LA RELEASE v0.23.3 PUBLIÉE (Entrée 388, 23/11/2026
-— la commande du maître « ok pour la suite (release de la vague etc…) »)
-: LES CINQ PIÈCES RÉGÉNÉRÉES sous le linter v2 de vxf37231r (LES CINQ
-CLASSES INTÉGRÉES à la chaîne `scripts/vague15/linter_v233.py` : 223
-VERT 0 ROUGE, le contrôle négatif aux onze refus — la phrase
-sémantique retirée de la spec §1 [le compilateur N'EST JAMAIS LIVRÉ, la
-notation scellée l'est], les faisabilités n/18 datées partout, la
-campagne v5 nommée à part à 5/18 LA CIBLE MANQUÉE, le claim de version
-à la v0.23.2 courante, les gallicismes guéris) ; LA VAGUE 15 AU CORPS
-(la composition 0,7271 c/octet@4096 — la cible ≤2,0 TENUE au 36 %,
-OpenSSL EVP à 1,26×, la chaîne scellée 68,7× derrière — ; le TCB
-58→34→11 et le corridor des onze ; le moteur d'oracles natif 5189× ;
-TPL-ADD-v5 à sa cible manquée consignée ; H7 servie ; CF3-v3 au verdict
-machine ; l'écosystème d'adoption : le corpus 109, le gym, la ladder,
-le guide, la doc EN, le kit 156) ; LES DEUX ERRATA DE PASSE nommés (le
-rejeu TCB à l'invocation corrigée — 58 UNSAT + 58 SAT, append-only —,
-les splits du corpus recomptés 28/4/4 · 77/16/16 = 109) ; LES TROIS
-PACKS assemblés au linter vert exigé ; LA PUBLICATION ZENODO au record
-24450872 (le concept 10.5281/zenodo.24367343 résout sur v0.23.3, les
-md5 recoupés byte-byte) ; LA LIVRAISON AU COFFRE (les trois packs au
-/livrables, le rapport et le manifeste à la racine et au /test, les
-v0.23.2 supersédés aux lots ARCHIVE, le /instructions vide) ; LES
-MIROIRS et la consignation (l'Entrée 388, l'OU-TROUVER, le présent
-fichier, la vérification des trois bords). LES GESTES AU DÉVELOPPEUR
+**L'ÉTAT PRÉSENT** : CE QUI RESTE PORTÉ (Entrée 389, 23/11/2026 — la
+commande du maître « go pour ce qui reste » sur l'Entrée 388 SUITE).
+DEUX GESTES PORTÉS : (1) LA CAMPAGNE v6 (atelier-ajouter-v6-7xuvsoqpuq,
+le plan gelé PLAN-7XUVSOQPUQ.md sha256 c3542e6f… AVANT toute donnée) :
+LA RELANCE DES TROIS PERTES à graines identiques (le prompt t0 recoupé
+byte-byte à l'archive v5 AVANT l'appel — loupe-04-cadre RE-VERDIT à
+l'essai 1 : LA VARIANCE DU SUJET AU CLI confirmée sur pièces ; les deux
+autres demeurent refusées) ; LA PAIRE CONTRASTIVE du corpus au prompt
+(la face rejetée par classe extraite mécaniquement du TRAIN, la face
+choisie le motif canonique) ; LE VERDICT 5/18 — la cible ≥15/18
+MANQUÉE, la lecture défavorable consignée — le coût médian 4 286 — la
+cible ≤4 500 TENUE (la v5 la manquait à 4 604) ; le déplacement
+v5→v6 : 2 deux-vertes · 3 conversions · 3 pertes · 10 deux-refusées —
+LE RÉSEAU 5→5, LA VOIE DU PROMPT À SA LIMITE NOMMÉE ; le décodage
+contraint VÉRIFIÉ AU CLI (l'écart d'instrument nommé reconduit) ;
+(2) LA DOC (atelier-doc-m8qc10sxg, le geste suivant du plan gelé) : LES
+ONZE FRAGMENTS EN restants + LE MIROIR FR des treize livrés (le noyau
+reproduit bit-identique), LES BUDGETS mesurés au tokenizer natif (les
+neuf fragments agent dans leur budget, aucun élargi), LE LINTER 13/13
+VERTS au contrôle négatif 2/2 VÉCU, LA CRISTALLISATION 10 rebuilds
+bit-identiques, LE SCAN DE SECRETS vert au négatif planté ATTRAPÉ, les
+tables DEPUIS LES CANONS jamais retapées. LES GESTES AU DÉVELOPPEUR
 demeurent : le poste réel (les lemmas Tamarin + le run ProVerif), le
 métal nu (≥2 machines), les 28 livraisons H7, l'annotateur, la seconde
-famille, les dépôts Zenodo (kit + corpus) ; LA CAMPAGNE v6 à la
-commande (LA VOIE NOMMÉE : le décodage contraint, les paires DPO, la
-relance des trois pertes à graines identiques). Détail au worklog
-(Entrées 385-388).
+famille, les dépôts Zenodo (kit + corpus) ; LES ROUTES RESTANTES de la
+voie nommée : le décodage contraint (si l'instrument l'expose un jour)
+et l'entraînement DPO au gym (les paires extraites, le compute au
+développeur). Détail au worklog (Entrées 385-389).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 

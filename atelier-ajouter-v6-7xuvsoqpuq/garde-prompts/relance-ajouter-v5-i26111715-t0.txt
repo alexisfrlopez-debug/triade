@@ -1,0 +1,192 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-04 · le cadre : la structure unique de session, posée vierge · révision 1
+Intention : LA STRUCTURE UNIQUE que les dix-sept autres blocs partagent —
+la disposition déclarée UNE FOIS ici (chaque champ à son offset, la
+source unique : les autres blocs y RENVOIENT, aucune connaissance
+dupliquée), et le geste de la poser VIERGE : tout à zéro, la poignée à
+INVALIDE. Le cadre naît à l'ouverture (loupe-01 l'appelle) et re-naît à
+la fermeture (loupe-03 l'appelle) — entre les deux, il est LA vérité de
+la session.
+Contrat :
+  pre  : P1 AUCUNE précondition — le geste de naissance/mort ne dépend
+             de rien (la zone est À L'IMAGE, déclarée au plan
+             d'adressage : 960 o, alignée 16).
+  post : Q1 le cadre VIERGE : chemin (520 o UTF-16) à zéro, taille = 0,
+             poignée = INVALIDE (0xFFFF…FFFF), vue = 0, curseur = 0,
+             remplissage = 0, sale = 0, refus_quitter = 0, réservé = 0,
+             le tampon (384 o) à zéro ;
+         Q2 la mise à zéro par libc-07 (memset) HÉRITÉ PAR LA CARTE —
+             le bloc scellé M1, byte-identique, JAMAIS une boucle
+             réécrite ; puis la poignée posée à INVALIDE ;
+         Q3 rax = 0.
+  inv  : I1 LA DISPOSITION (la source unique, D161 — les offsets du
+             plan d'adressage) : chemin UTF-16[260] @ +0 (520 o) ·
+             taille u64 @ +520 · poignée u64 @ +528 · vue u64 @ +536
+             (multiple de 16, INVARIANT) · curseur u64 @ +544 (borné
+             [0, taille−1], INVARIANT) · remplissage u32 @ +552 ·
+             sale u32 @ +556 · refus_quitter u32 @ +560 · réservé u32
+             @ +564 · tampon[384] @ +568 — total 952, la zone 960
+             (alignée 16) ;
+         I2 AUCUNE entrée IAT, AUCUN site syscall (le memset passe PAR
+             LA CARTE — le miroir exact des feuilles pures tls13,
+             charte § 9) ;
+         I3 le bloc ne détient AUCUN autre état : rien hors la zone
+             pointée, rien en pile qui survive au retour ;
+         I4 aucun registre non volatil détruit ; la croissance du slot
+             est NOP, 0x90 (charte § 9).
+Échecs :
+  E1 : AUCUN — la zone est à l'image (D161 : déclarée avant la
+       notation), le geste ne peut pas échouer ; l'oracle le constate
+       par le cadre vierge (justification au champ Intention : le
+       gabarit l'exige, le domaine la nomme).
+Vecteurs :
+  V1 : différentiel — après le geste : les 960 octets comparés au
+       modèle (zéros partout sauf la poignée INVALIDE aux octets
+       +528..+535) (couvre Q1, Q2, Q3).
+  V2 : scénario — la chaîne complète : loupe-01 (le cadre rempli) PUIS
+       loupe-04 direct : le cadre revient VIERGE — l'ouverture
+       re-démarre propre (couvre Q1).
+  V3 : falsification — un octet hors zéro au modèle : le
+       différentiel échoue (l'état neuf est une exigence, pas un
+       espoir).
+Fixtures    : néant (le cadre est l'état, pas un contrat externe).
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161 (la disposition arrêtée avant la notation),
+              D7 (l'héritage minilibc PAR LA CARTE).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-04 · le cadre : la structure unique de session, posée vierge · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; les appelés directs (le plan — la liste fermée) :
+;   libc-07 @ 0x13c0 — memset (dst, octet, n)
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  CST-001 = l'appel direct libc-07 — memset (dst, octet, n)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire a64e22b01c728c76… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-05-sha256, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0xc0
+lea rbx, [rip + 0x9ba9]
+cmp qword ptr [rbx + 528], -1
+je 0x4546
+mov rax, rcx
+add rax, rdx
+jc 0x454d
+cmp rax, qword ptr [rbx + 520]
+ja 0x454d
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret

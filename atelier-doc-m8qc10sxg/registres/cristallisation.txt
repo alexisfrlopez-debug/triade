@@ -1,0 +1,16 @@
+LA CRISTALLISATION — m8qc10sxg (le geste suivant) : DIX REBUILDS bit-identiques
+
+passe  1 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  2 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  3 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  4 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  5 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  6 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  7 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  8 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe  9 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+passe 10 : cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea
+
+VERDICT : LES DIX PASSES BIT-IDENTIQUES (cf00b85c34e4d1ce31c72451152648a51de47e78664f9aec8f378ff5dcc557ea) — l'archive est déterministe
+LE SCAN DE SECRETS (scan_secrets.py, 27 fichiers) : VERT
+LE CONTRÔLE NÉGATIF (un ghp_ planté au témoin) : ATTRAPÉ

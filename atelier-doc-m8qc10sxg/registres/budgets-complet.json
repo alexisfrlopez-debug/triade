@@ -1,0 +1,72 @@
+{
+ "AGENT-CORE": {
+  "tokens_en": 216,
+  "tokens_fr": 302,
+  "cible": 1500,
+  "verdict": "VERT"
+ },
+ "QUICKSTART": {
+  "tokens_en": 167,
+  "tokens_fr": 242,
+  "cible": 800,
+  "verdict": "VERT"
+ },
+ "DEVELOPER_GUIDE": {
+  "tokens_en": 429,
+  "tokens_fr": 615
+ },
+ "TROUBLESHOOTING": {
+  "tokens_en": 523,
+  "tokens_fr": 687
+ },
+ "SECURITY": {
+  "tokens_en": 367,
+  "tokens_fr": 512
+ },
+ "REFERENCE": {
+  "tokens_en": 792,
+  "tokens_fr": 1006
+ },
+ "DOC-LOC": {
+  "tokens_en": 206,
+  "tokens_fr": 289,
+  "cible": 800,
+  "verdict": "VERT"
+ },
+ "DOC-EDIT": {
+  "tokens_en": 220,
+  "tokens_fr": 289,
+  "cible": 800,
+  "verdict": "VERT"
+ },
+ "DOC-ADD": {
+  "tokens_en": 230,
+  "tokens_fr": 310,
+  "cible": 800,
+  "verdict": "VERT"
+ },
+ "DOC-REFUS": {
+  "tokens_en": 176,
+  "tokens_fr": 228,
+  "cible": 600,
+  "verdict": "VERT"
+ },
+ "DOC-CEREMONY": {
+  "tokens_en": 240,
+  "tokens_fr": 344,
+  "cible": 1200,
+  "verdict": "VERT"
+ },
+ "DOC-FEEDBACK": {
+  "tokens_en": 158,
+  "tokens_fr": 219,
+  "cible": 400,
+  "verdict": "VERT"
+ },
+ "CAPABILITY_PROBE": {
+  "tokens_en": 160,
+  "tokens_fr": 214,
+  "cible": 500,
+  "verdict": "VERT"
+ }
+}

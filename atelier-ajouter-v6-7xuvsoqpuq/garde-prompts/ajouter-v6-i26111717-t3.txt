@@ -1,0 +1,355 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : HORS-FORMAT: ligne inassemblable : 'je refus_session_' (HORS-FORMAT: étiquette inconnue : refus_session_)
+LA CAUSE EXACTE : 
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+fixtures — la taille de la pièce ; r3 : LE VIDE — le fichier de taille zéro
+est un fichier réel du quotidien que l'éditeur DOIT ouvrir : la fenêtre
+n'existe pas pour lui [loupe-02 P3 : tout décalage ≥ taille 0], le
+remplissage demeure 0 et LE PANNEAU DU VIDE EXISTE — d41d8cd9… +
+e3b0c442…, la session née entière sans la fenêtre ; la découverte du
+geste (b), la couche I n'avait pas vu le vide)
+Intention : ouvrir le fichier désigné par le chemin (l'argument de la ligne
+de commande, donné à WinMain), rendre la poignée et la taille AU CADRE, et
+faire naître la session ENTIÈRE : le cadre posé (loupe-04), la première
+fenêtre lue (loupe-02), le panneau d'empreintes calculé (loupe-07). Les
+refus sont NOMMÉS (absent, verrouillé, hors périmètre) — la barre les
+porte, jamais un silence. Loupe vit de ses pièces : tout fichier du projet
+s'ouvre à l'œil.
+Contrat :
+  pre  : P1 rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+             la capacité du cadre, MAX_PATH) ; P2 la session n'est pas
+             déjà ouverte (la poignée du cadre = INVALIDE — sinon le
+             refus -5 : un fichier à la fois, le périmètre 0.1.0) ;
+         P3 l'IAT kernel32 résolue (D7/D35) ; P4 la pile alignée 16.
+  post : Q1 CreateFileW(GENERIC_LECTURE|GENERIC_ECRITURE, PARTAGE_LECTURE,
+             OUVRIR_EXISTANT) — succès : la poignée au cadre (+528), la
+             taille par GetFileSizeEx au cadre (+520) ;
+         Q2 la BORNE NOMMÉE : taille > BORNE_TAILLE (2 Gio) → verdict -3,
+             la poignée FERMÉE AVANT le retour (jamais une poignée
+             pendante), la barre porte « hors périmètre 0.1.0 : 2 Gio » ;
+         Q3 le chemin COPIÉ au cadre (+0, libc-01 hérité PAR LA CARTE —
+             jamais octet par octet réécrit), la vue = 0, le curseur = 0
+             (loupe-04 a posé le vierge) ;
+         Q4 la session NÉE ENTIÈRE : loupe-02 (la fenêtre à la vue 0)
+             SEULEMENT SI la taille > 0 — le vide n'a PAS de fenêtre
+             (révision 3 : le remplissage 0 posé, la grille vide est un
+             état légitime) — puis loupe-07 (les empreintes du fichier
+             entier au panneau, LE VIDE AUSSI : son panneau est défini) ;
+             la vitrine s'ouvre VRAIE : le contenu ET ses empreintes ;
+         Q5 rax = 0 (la table des verdicts, charte § 9).
+  inv  : I1 l'ouverture est EXCLUSIVE du fichier (FILE_SHARE_READ offert
+             aux autres, jamais reçu : Loupe est seul maître des octets
+             qu'il montrera modifiables) ;
+         I2 AUCUNE écriture au fichier à l'ouverture (lecture seule —
+             l'écriture vivra à loupe-17) ;
+         I3 le coût de Q4 est NOMMÉ : le panneau d'un fichier de 2 Gio
+             prend le temps de ses empreintes (deux passages) — la
+             vitrine née vraie, jamais un panneau mensonger ;
+         I4 tout refus d'OS est TRADUIT par la table (gle consigné au
+             journal du labo par le harnais) : jamais un code brut à
+             la barre ;
+         I5 l'IAT déclarée au plan (D161) : CreateFileW, GetFileSizeEx,
+             CloseHandle, GetLastError — la liste est fermée pour ce
+             bloc ; aucun registre non volatil détruit ; NOP, 0x90.
+Échecs :
+  E1 : ERROR_FILE_NOT_FOUND ou ERROR_PATH_NOT_FOUND → verdict -2 ABSENT
+       (le chemin ne désigne rien) — la barre le nomme, rax = -2.
+  E2 : ERROR_SHARING_VIOLATION → verdict -7 VERROUILLÉ (le partage
+       refuse : un autre détenteur tient le fichier) — la barre le
+       nomme, rax = -7.
+  E3 : tout autre refus d'OS (accès refusé, lecteur absent…) → verdict
+       -6 SYSTÈME, le code GetLastError consigné — rax = -6.
+  E4 : la session déjà ouverte (P2) → verdict -5, RIEN TOUCHÉ (le
+       fichier courant demeure) — un fichier à la fois, le nommé.
+Vecteurs :
+  V1 : scénario — le témoin du kit ouvert : le cadre lu champ à champ
+       (chemin, taille, vue 0, curseur 0, remplissage = min(384,
+       taille)), l'écran attendu composé octet par octet (couvre Q1,
+       Q3, Q4, Q5).
+  V2 : rejet — un chemin absent, un fichier tenu par un autre
+       détenteur, un fichier de 2 Gio + 1 : les TROIS verdicts nommés
+       à la barre, la poignée refermée dans le second cas (couvre Q2,
+       E1, E2, E3).
+  V3 : rejet — l'ouverture sur session ouverte : verdict -5, l'ancien
+       fichier INTACT (le tampon inchangé, l'oracle différentiel le
+       constate octet par octet) (couvre E4).
+  V4 : falsification — la taille mutée d'un octet au cadre après
+       l'ouverture : l'écran attendu diverge, l'oracle à scénarios
+       échoue (la falsification DEMANDÉE, charte § 3).
+Fixtures    : les témoins du kit (le fichier de 1 o, le fichier de
+              384 o exactement, le fichier de 3 × 64 Kio + 1 — les trois
+              formes du remplissage) + proxy.exe scellé (sha256
+              446279f3…, 65 024 o — la pièce de l'ère [erratum r2 :
+              la taille fautive 44 544 o était celle du scellé 0.9.0],
+              ouverte par l'application qui la juge).
+Provenance  : écrite-avant-code.
+Décisions   : D171 (le domaine fondé), D161 (les budgets avant la
+              notation), D7/D35 (l'IAT), D137 (la lignée de balises —
+              un projet de développement).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-01 · ouvrir : le fichier donné à la session · révision 3 (r2 : erratum
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : rcx = le chemin UTF-16 NUL-terminé (au plus 259 caractères —
+; verdicts nommés : -2 ABSENT · -7 VERROUILLÉ · -6 SYSTÈME
+; les appelés directs (le plan — la liste fermée) :
+;   libc-01 @ 0x1100 — memcpy (dst, src, n)
+; IAT déclarée (la liste fermée) : CreateFileW, GetFileSizeEx, CloseHandle, GetLastError — les appels : call qword ptr [rip ± 0x…]
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette taille_ok (cible de saut)
+  LBL-002 = l'étiquette mesure (cible de saut)
+  LBL-003 = l'étiquette mesure_fin (cible de saut)
+  LBL-004 = l'étiquette panneau (cible de saut)
+  LBL-005 = l'étiquette propage (cible de saut)
+  LBL-006 = l'étiquette refus_session (cible de saut)
+  LBL-007 = l'étiquette refus_os (cible de saut)
+  LBL-008 = l'étiquette absent (cible de saut)
+  LBL-009 = l'étiquette verrouille (cible de saut)
+  LBL-010 = l'étiquette refus_taille_os (cible de saut)
+  LBL-011 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = l'appel direct libc-01 — memcpy (dst, src, n)
+  CST-006 = la constante immédiat-0x104 (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 562e844b9003ad2f… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-02-lire, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+push r13
+push r14
+sub rsp, 0x28
+lea rbx, [rip + 0x9dae]
+cmp qword ptr [rbx + 528], -1
+je 0x4330
+test rcx, 0xf
+jne 0x4337
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae 0x433e
+mov r13, qword ptr [rbx + 520]
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+
+LA PAIRE CONTRASTIVE DU CORPUS (des lignes RÉELLEMENT REFUSÉES au corpus — la face rejetée avec LA CAUSE NOMMÉE du juge, la face choisie le motif canonique ; l'entraînement demeure au gym, jamais ici) :
+— REFUSÉE (HORS-FORMAT) : « cmp edx, 0x » — le juge : « HORS-FORMAT: ligne inassemblable : 'cmp edx, 0x' » → ADMISE : une instruction par ligne, la forme « mnémonique opérande, opérande » aux trous typés — le littéral COMPLET (jamais tronqué), pas de préfixe de chaîne REP, pas d'étiquette accolée
+— REFUSÉE (ID-INCONNU) : « LBL-004 » — le juge : « ID-INCONNU: la définition LBL-004 n'est pas au dictionnaire » → ADMISE : les IDs vivent au DICTIONNAIRE du bloc (CST-001..NNN, LBL-001..NNN — l'énumération du prompt), jamais un symbole en clair
+— REFUSÉE (EXPANSION-DIVERGENTE) : « call CST-001 » — le juge : « EXPANSION-DIVERGENTE: l'ID CST-001 n'est pas une opérande expandable » → ADMISE : « mov reg, CST-001 » pour une constante ; « call CST-004 » pour l'IAT ; « jcc LBL-001 » pour un saut interne — l'ID au trou typé
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp qword ptr [rbx + 528], -1
+je LBL-006
+mov r12, rcx
+call CST-001
+mov qword ptr [rbx], rax
+test rax, rax
+jz LBL-007
+mov r13, rax
+cmp r13, CST-006
+ja LBL-010
+call CST-002
+mov qword ptr [rbx + 520], rax
+cmp rax, 0
+jne LBL-001
+mov qword ptr [rbx + 524], 0
+mov qword ptr [rbx + 528], r12
+jmp LBL-004
+lbl_001 :
+call CST-005
+mov r14, 384
+cmp r13, 384
+cmovae r14, r13
+lea rdi, [rbx + 528]
+mov rsi, r12
+mov rdx, r14
+call CST-005
+mov qword ptr [rbx + 524], r14
+mov qword ptr [rbx + 528], r12
+jmp LBL-004
+LBL-004 :
+call CST-003
+LBL-002 :
+call CST-004
+cmp eax, 2
+jne LBL-005
+mov rax, -3
+jmp LBL-011
+LBL-005 :
+mov rax, 0
+jmp LBL-011
+LBL-007 :
+mov rax, -2
+jmp LBL-011
+LBL-008 :
+mov rax, -7
+jmp LBL-011
+LBL-010 :
+mov rax, -3
+jmp LBL-011
+LBL-011 :
+test rax, rax
+jns sortie
+call CST-003
+cmp eax, 3
+je LBL-009
+cmp eax, 5
+je LBL-006
+cmp eax, 32
+je LBL-008
+jmp LBL-010
+LBL-009 :
+mov rax, -6
+jmp LBL-011
+sortie:
+xor rax, rax
+ret
+=== FIN (tentative de réparation 3 sur le budget 3) ===
+
+LE DIFF D'EXPANSION STRUCTURÉ (au niveau opcode/opérande/offset — TELLE QU'ÉCRITE / CE QUE L'EXPANDEUR EN FAIT / LE MOTIF ADMIS) :
+  ÉCRIT    : cmp qword ptr [rbx + 528], -1
+  EXPANSION: cmp qword ptr [rbx + 528], -1   [l'expandeur l'admet]
+  ÉCRIT    : je LBL-006
+  EXPANSION: je refus_session_   [l'expandeur l'admet]
+  ÉCRIT    : mov r12, rcx
+  EXPANSION: mov r12, rcx   [l'expandeur l'admet]
+  ÉCRIT    : call CST-001
+  EXPANSION: call qword ptr [rip - 0xcf07]   [l'expandeur l'admet]
+  ÉCRIT    : mov qword ptr [rbx], rax
+  EXPANSION: mov qword ptr [rbx], rax   [l'expandeur l'admet]
+  ÉCRIT    : test rax, rax
+  EXPANSION: test rax, rax   [l'expandeur l'admet]
+  ÉCRIT    : jz LBL-007
+  EXPANSION: jz refus_os_   [l'expandeur l'admet]
+  ÉCRIT    : mov r13, rax
+  EXPANSION: mov r13, rax   [l'expandeur l'admet]
+
+LE CONTRE-EXEMPLE (les motifs fautifs et leurs corrections canoniques) :
+  FAUTIF   : call CST-004            jamais : un IAT en opérande cmp
+  ADMIS    : call CST-004            (l'IAT s'appelle en call)
+  FAUTIF   : cmp qword ptr [rax], qword ptr [rbx]
+  ADMIS    : mov rax, qword ptr [rbx]  puis  cmp rax, CST-001
+  FAUTIF   : movzx rax, rcx
+  ADMIS    : movzx rax, ecx        (la source 32 bits ou moins)
+  FAUTIF   : cmp eax, WM_PAINT
+  ADMIS    : cmp eax, CST-002      (un ID du dictionnaire, jamais un symbole en clair)

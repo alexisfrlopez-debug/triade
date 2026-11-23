@@ -1,0 +1,680 @@
+RÉPARATION CIBLÉE (la boucle « assemble → refus nommé → réparation »).
+
+TA RÉPONSE PRÉCÉDENTE A ÉTÉ REFUSÉE : ID-INCONNU: la définition LBL-045 n'est pas au dictionnaire
+LA CAUSE EXACTE : 
+
+TA TÂCHE : rends la logique RÉPARÉE — UNIQUEMENT la cause nommée
+change (la ligne fautive corrigée ; toute ligne saine demeure
+OCTET POUR OCTET) ; la même forme que la grammaire exige ; la
+réponse entière remplace la précédente (le squelette et le
+dictionnaire demeurent ceux du prompt d'origine, rappelés
+ci-dessous).
+
+=== LE PROMPT D'ORIGINE (le squelette, le dictionnaire, la grammaire) ===
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-10 · peinture : WM_PAINT, l'unique peintre · révision 1
+Intention : dessiner la fenêtre visible — composer l'écran (l'entête,
+les lignes par loupe-08, la barre d'état avec le PANNEAU
+D'EMPREINTES) puis le peindre (BeginPaint, la police à chasse fixe,
+TextOutW ligne à ligne, la cellule active en inverse, EndPaint). La
+mesure de la police a lieu UNE fois. L'expansion latin-1 octet→mot
+est exacte. L'oracle à scénarios compare l'écran attendu OCTET PAR
+OCTET — la peinture est la preuve visible du domaine.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_PAINT —
+             jamais ailleurs ; P2 la session peut être VIDE (la
+             vitrine sans fichier peint l'usage : P2 n'est PAS une
+             précondition d'état) ; P3 l'IAT gdi32/user32 du bloc
+             résolue.
+  post : Q1 LA COMPOSITION (l'ECRAIN, 2320 o) : l'entête posée (la
+             chaîne .rdata, 65 o utiles) ; la grille : pour chaque
+             ligne visible i de 0 à min(lignes_affichables − 1,
+             remplissage/16 arrondi) : loupe-08(tampon + 16·i, min(16,
+             remplissage − 16·i), grille + 80·i, vue + 16·i) — les
+             lignes au-delà de la fin restent VIERGES (jamais une
+             ligne fantôme) ; la barre ligne 1 : « Loupe 0.1.0-dev.1 —
+             <chemin> · <taille> o · curseur 0xNNNNNNNN · MODIFIÉ »
+             (ou l'usage si session vide) ; la barre ligne 2 (LE
+             PANNEAU) : « md5 <32 hex> · sha256 <64 hex> » (ou « — »)
+             — l'astérisque si la marque sale est posée (les
+             empreintes du DISQUE, la divergence nommée) ;
+         Q2 LA PEINTURE : BeginPaint (la PAINTSTRUCT sur la pile) ; la
+             police ANSI_FIXED_FONT sélectionnée (GetStockObject +
+             SelectObject), mesurée UNE fois (GetTextMetricsW →
+             METRIQUES : char_w, ligne_h, lignes_visibles — jamais
+             re-mesurée tant que la fenêtre vit) ; chaque ligne de
+             l'ECRAIN expansée latin-1 octet→mot (le tampon pile de
+             80 mots) puis TextOutW à (MARGE_X, MARGE_Y + ligne ·
+             ligne_h) ; EndPaint ;
+         Q3 LA CELLULE ACTIVE : la colonne du groupe hexa du curseur
+             repeinte en INVERSE (SetTextColor/SetBkColor échangés
+             autour de CE groupe seul, à l'abscisse exacte
+             MARGE_X + (10 + 3·colonne + (colonne ≥ 8 ? 1 : 0)) ·
+             char_w) — la surbrillance vit à la peinture, la position
+             au cadre (loupe-15 ne peint RIEN) ;
+         Q4 rax = 0.
+  inv  : I1 L'UNIQUE PEINTRE : aucune goutte hors WM_PAINT, aucun
+             autre bloc ne déclare TextOutW (la liste IAT fermée du
+             plan — la contrebande de peinture est un refus de build) ;
+         I2 le CLIPPING par lignes affichables : jamais un TextOutW
+             au-delà du client (GetClientRect lu à CHAQUE peinture —
+             la fenêtre peut rétrécir) ;
+         I3 la police À CHASSE FIXE est une EXIGENCE (ANSI_FIXED_FONT
+             — les colonnes hexa sinon se disloquent : le refus de la
+             police proportionnelle est un choix de domaine) ;
+         I4 l'expansion latin-1 EXACTE : chaque octet de l'ECRAIN →
+             le mot UTF-16 de même valeur (0x00–0xFF → U+0000–U+00FF,
+             la table est l'identité) — jamais un octet signé ;
+         I5 la composition ne MODIFIE RIEN : le cadre, le journal, les
+             empreintes LUS seuls (la peinture est pure lecture
+             d'état) ; registres non volatils rendus ; NOP, 0x90.
+Échecs :
+  E1 : BeginPaint rend un DC nul → verdict -6 SYSTÈME (le code
+       GetLastError consigné), RIEN peint, rax = -6 (jamais un
+       dessin sur un contexte mort).
+  E2 : GetStockObject ou GetTextMetricsW en échec (0 / le tm nul) →
+       verdict -6 SYSTÈME, la peinture AVORTÉE proprement (EndPaint
+       appelé quand même — le contexte se rend TOUJOURS).
+Vecteurs :
+  V1 : scénario — la vitrine sans session : l'ECRAIN composé (l'usage
+       à la barre 1, les « — » au panneau) puis peint : l'écran
+       attendu octet par octet (couvre Q1, Q2, Q4).
+  V2 : scénario — le témoin ouvert (vue 0, curseur 0x22) : les 24
+       lignes ou moins (le remplissage borne), la cellule active
+       inversée à la colonne exacte, le panneau aux empreintes du
+       disque — l'attendu intégral (couvre Q1, Q2, Q3).
+  V3 : scénario — la marque sale : l'astérisque au panneau, « MODIFIÉ
+       » à la barre 1 (la divergence nommée) (couvre Q1).
+  V4 : rejet — le shim BeginPaint à 0 : verdict -6, rien peint,
+       EndPaint déménagé jamais appelé sur DC nul — l'état demeure
+       propre (couvre E1) ; le shim GetTextMetricsW muet : la
+       peinture avortée proprement (couvre E2).
+  V5 : falsification — une ligne de la grille mutée d'un octet dans
+       l'ECRAIN : l'attendu diverge — l'oracle échoue (la
+       falsification DEMANDÉE, charte § 3).
+Fixtures    : les écrans attendus du kit (la vitrine vide, le témoin à
+              la vue 0, la ligne finale incomplète, la marque sale) —
+              les fixtures du dépôt, consignées au harnais.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7/D35 (l'IAT), D134 (la balise peinte),
+              D137 (la lignée).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-10 · peinture : WM_PAINT, l'unique peintre · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; verdicts nommés : -6 SYSTÈME
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette police_la (cible de saut)
+  LBL-002 = l'étiquette client_zero (cible de saut)
+  LBL-003 = l'étiquette client_div (cible de saut)
+  LBL-004 = l'étiquette raz (cible de saut)
+  LBL-005 = l'étiquette entete_copie (cible de saut)
+  LBL-006 = l'étiquette grille_remplie (cible de saut)
+  LBL-007 = l'étiquette grille_zero (cible de saut)
+  LBL-008 = l'étiquette grille_G (cible de saut)
+  LBL-009 = l'étiquette grille_boucle (cible de saut)
+  LBL-010 = l'étiquette grille_len (cible de saut)
+  LBL-011 = l'étiquette grille_fin (cible de saut)
+  LBL-012 = l'étiquette barre_usage (cible de saut)
+  LBL-013 = l'étiquette barre_message (cible de saut)
+  LBL-014 = l'étiquette barre_aller (cible de saut)
+  LBL-015 = l'étiquette barre_chercher (cible de saut)
+  LBL-016 = l'étiquette barre1_fin (cible de saut)
+  LBL-017 = l'étiquette panneau_vide (cible de saut)
+  LBL-018 = l'étiquette panneau_fin (cible de saut)
+  LBL-019 = l'étiquette peint_grille (cible de saut)
+  LBL-020 = l'étiquette peint_grille_suivant (cible de saut)
+  LBL-021 = l'étiquette peint_grille_fin (cible de saut)
+  LBL-022 = l'étiquette barre_saute (cible de saut)
+  LBL-023 = l'étiquette cellule_col (cible de saut)
+  LBL-024 = l'étiquette cellule_pos (cible de saut)
+  LBL-025 = l'étiquette cellule_fin (cible de saut)
+  LBL-026 = l'étiquette refus_begin (cible de saut)
+  LBL-027 = l'étiquette avorte_police (cible de saut)
+  LBL-028 = l'étiquette sortie (cible de saut)
+  LBL-029 = l'étiquette chaine (cible de saut)
+  LBL-030 = l'étiquette chaine_fin (cible de saut)
+  LBL-031 = l'étiquette chemin16 (cible de saut)
+  LBL-032 = l'étiquette chemin16_point (cible de saut)
+  LBL-033 = l'étiquette chemin16_poser (cible de saut)
+  LBL-034 = l'étiquette chemin16_fin (cible de saut)
+  LBL-035 = l'étiquette hex8 (cible de saut)
+  LBL-036 = l'étiquette hex8_boucle (cible de saut)
+  LBL-037 = l'étiquette hex_octets (cible de saut)
+  LBL-038 = l'étiquette dec (cible de saut)
+  LBL-039 = l'étiquette dec_boucle (cible de saut)
+  LBL-040 = l'étiquette dec_copie (cible de saut)
+  LBL-041 = l'étiquette peindre (cible de saut)
+  LBL-042 = l'étiquette peindre_compte (cible de saut)
+  LBL-043 = l'étiquette peindre_expanse (cible de saut)
+  LBL-044 = l'étiquette peindre_goutte (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+  CST-002 = l'appel IAT au slot du plan (« call CST-002 »)
+  CST-003 = l'appel IAT au slot du plan (« call CST-003 »)
+  CST-004 = l'appel IAT au slot du plan (« call CST-004 »)
+  CST-005 = l'appel IAT au slot du plan (« call CST-005 »)
+  CST-006 = l'appel IAT au slot du plan (« call CST-006 »)
+  CST-007 = la constante immédiat-0x910 (la borne nommée)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire bc9d47f3e3fbd223… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-11-defilement, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x40
+mov r14, rcx
+lea rbx, [rip + 0x8e69]
+cmp qword ptr [rbx + 528], -1
+je 0x539b
+mov r15, rdx
+mov rax, qword ptr [rbx + 520]
+sub rax, 384
+jbe 0x51c1
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+
+LA PAIRE CONTRASTIVE DU CORPUS (des lignes RÉELLEMENT REFUSÉES au corpus — la face rejetée avec LA CAUSE NOMMÉE du juge, la face choisie le motif canonique ; l'entraînement demeure au gym, jamais ici) :
+— REFUSÉE (HORS-FORMAT) : « cmp edx, 0x » — le juge : « HORS-FORMAT: ligne inassemblable : 'cmp edx, 0x' » → ADMISE : une instruction par ligne, la forme « mnémonique opérande, opérande » aux trous typés — le littéral COMPLET (jamais tronqué), pas de préfixe de chaîne REP, pas d'étiquette accolée
+— REFUSÉE (ID-INCONNU) : « LBL-004 » — le juge : « ID-INCONNU: la définition LBL-004 n'est pas au dictionnaire » → ADMISE : les IDs vivent au DICTIONNAIRE du bloc (CST-001..NNN, LBL-001..NNN — l'énumération du prompt), jamais un symbole en clair
+— REFUSÉE (EXPANSION-DIVERGENTE) : « call CST-001 » — le juge : « EXPANSION-DIVERGENTE: l'ID CST-001 n'est pas une opérande expandable » → ADMISE : « mov reg, CST-001 » pour une constante ; « call CST-004 » pour l'IAT ; « jcc LBL-001 » pour un saut interne — l'ID au trou typé
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
+
+=== TA RÉPONSE FAUTIVE (à réparer) ===
+cmp qword ptr [rbx + 528], -1
+je LBL-002
+mov r15, rdx
+mov rax, qword ptr [rbx + 520]
+sub rax, 384
+jbe LBL-007
+call CST-001
+test rax, rax
+jz LBL-026
+mov rax, CST-003
+mov qword ptr [rsp], rax
+mov rax, CST-004
+mov qword ptr [rsp + 8], rax
+call CST-005
+test eax, eax
+jz LBL-027
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov r14, rax
+mov qword ptr [rsp], rax
+call CST-005
+test eax, eax
+jz LBL-027
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov r13, rax
+mov r12, rax
+mov rax, qword ptr [rbx + 528]
+xor rdx, rdx
+div qword ptr [rbx + 536]
+mov r8, rax
+mov r9, rdx
+cmp r8, 0
+je LBL-009
+jmp LBL-008
+LBL-008 :
+cmp r9, 0
+je LBL-010
+jmp LBL-009
+LBL-010 :
+cmp r8, qword ptr [rbx + 520]
+ja LBL-009
+jmp LBL-006
+LBL-009 :
+cmp r8, qword ptr [rbx + 520]
+ja LBL-007
+jmp LBL-006
+LBL-006 :
+mov rax, qword ptr [rbx + 528]
+cmp rax, 0
+je LBL-012
+jmp LBL-005
+LBL-005 :
+mov rax, qword ptr [rbx + 528]
+cmp rax, 0
+jne LBL-013
+jmp LBL-012
+LBL-013 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-015
+LBL-012 :
+jmp LBL-017
+LBL-015 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-017
+LBL-017 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-019
+LBL-019 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-021
+LBL-021 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-023
+LBL-023 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-025
+LBL-025 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-027
+LBL-027 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-029
+LBL-029 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-031
+LBL-031 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-033
+LBL-033 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-035
+LBL-035 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-037
+LBL-037 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-039
+LBL-039 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-041
+LBL-041 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-043
+LBL-043 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 8], rax
+call CST-006
+mov qword ptr [rsp + 0x10], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x18], rax
+call CST-006
+mov qword ptr [rsp + 0x20], rax
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp + 0x28], rax
+mov rax, qword ptr [rbx + 536]
+mov qword ptr [rsp + 0x30], rax
+call CST-006
+mov qword ptr [rsp + 0x38], rax
+jmp LBL-045
+LBL-045 :
+mov rax, qword ptr [rbx + 528]
+mov qword ptr [rsp], rax
+mov rax, q
+=== FIN (tentative de réparation 3 sur le budget 3) ===
+
+LE DIFF D'EXPANSION STRUCTURÉ (au niveau opcode/opérande/offset — TELLE QU'ÉCRITE / CE QUE L'EXPANDEUR EN FAIT / LE MOTIF ADMIS) :
+  ÉCRIT    : cmp qword ptr [rbx + 528], -1
+  EXPANSION: cmp qword ptr [rbx + 528], -1   [l'expandeur l'admet]
+  ÉCRIT    : je LBL-002
+  EXPANSION: je client_zero_   [l'expandeur l'admet]
+  ÉCRIT    : mov r15, rdx
+  EXPANSION: mov r15, rdx   [l'expandeur l'admet]
+  ÉCRIT    : mov rax, qword ptr [rbx + 520]
+  EXPANSION: mov rax, qword ptr [rbx + 520]   [l'expandeur l'admet]
+  ÉCRIT    : sub rax, 384
+  EXPANSION: sub rax, 384   [l'expandeur l'admet]
+  ÉCRIT    : jbe LBL-007
+  EXPANSION: jbe grille_zero_   [l'expandeur l'admet]
+  ÉCRIT    : call CST-001
+  EXPANSION: call qword ptr [rip - 0xcea7]   [l'expandeur l'admet]
+  ÉCRIT    : test rax, rax
+  EXPANSION: test rax, rax   [l'expandeur l'admet]
+
+LE CONTRE-EXEMPLE (les motifs fautifs et leurs corrections canoniques) :
+  FAUTIF   : call CST-004            jamais : un IAT en opérande cmp
+  ADMIS    : call CST-004            (l'IAT s'appelle en call)
+  FAUTIF   : cmp qword ptr [rax], qword ptr [rbx]
+  ADMIS    : mov rax, qword ptr [rbx]  puis  cmp rax, CST-001
+  FAUTIF   : movzx rax, rcx
+  ADMIS    : movzx rax, ecx        (la source 32 bits ou moins)
+  FAUTIF   : cmp eax, WM_PAINT
+  ADMIS    : cmp eax, CST-002      (un ID du dictionnaire, jamais un symbole en clair)

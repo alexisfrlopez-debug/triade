@@ -1,0 +1,236 @@
+L'OPÉRATION AJOUTER DE LA CARTE TRIADE (le mode SQUELETTE-v2 — le
+cadre ABI, les types et la signature dérivés de la couche I par le
+client ; le DICTIONNAIRE DE DOMAINE versionné porte les étiquettes
+et les constantes admissibles du bloc : tu émets des IDs, le client
+expande).
+
+LE CONTRAT DE COUCHE I (mot pour mot) :
+loupe-15 · curseur : la cellule active, jamais perdue hors écran · révision 1
+Intention : la cellule active du curseur — le déplacement clavier
+(flèches, page, début et fin de ligne) BORNÉ au fichier réel, et LA VUE
+SUIT : le curseur ne sort JAMAIS de l'écran sans que la fenêtre ne le
+rattrape (l'invariant du README). Les bords sont des arrêts NOMMÉS (le
+clamp, jamais un rebond) ; la surbrillance, elle, vit à la peinture
+(loupe-10 Q3) — 15 ne peint RIEN, la séparation
+navigation/peinture est un invariant.
+Contrat :
+  pre  : P1 appelée par la procédure (loupe-09 Q3) sur WM_KEYDOWN des
+             flèches/PgUp/PgDn/Home/End (hors mode saisie — la table
+             de routage en décide) ; P2 la session peut être vide (le
+             repli nommé).
+  post : Q1 LE PAS : VK_GAUCHE/DROITE = ±1 ; VK_HAUT/BAS = ±16 (une
+             ligne) ; VK_PRECEDENT/SUIVANT = ±(GRILLE_LIGNES − 2)
+             lignes = ±352 (la page, la même unité que loupe-11) ;
+             VK_DEBUT = l'aligne16_inf du curseur (le début de
+             ligne) ; VK_FIN = min(aligne16_inf + 15, taille − 1)
+             (la fin de ligne réelle) ;
+         Q2 LA BORNE : curseur' = clamp(curseur ± pas, 0, taille − 1)
+             — les bords SONT DES ARRÊTS (à 0, VK_GAUCHE reste à 0 ;
+             à taille−1, VK_DROITE/BAS restent : le clamp nommé,
+             rax = 0 QUAND MÊME — le bord n'est pas un échec) ;
+         Q3 LA VUE SUIT : si le curseur' sort de [vue, vue + lignes
+             visibles × 16) : vue = min(recadre(curseur'), vue_max)
+             (la règle de recadrage de loupe-12 Q3 — renvoi, la source
+             unique) et loupe-02 (la fenêtre relue) + InvalidateRect —
+             le curseur JAMAIS perdu hors écran ;
+         Q4 rax = 0 ; sans session (P2) : rax = 0 SANS effet (les
+             flèches dans la vitrine vide ne bougent rien — le
+             repli documenté, rendu à DefWindowProcW).
+  inv  : I1 le curseur TOUJOURS dans [0, taille − 1] (l'invariant dur
+             du cadre — le clamp PRÉCÈDE tout, la borne est lue au
+             cadre, jamais crue de l'appelant) ;
+         I2 la vue ne bouge QUE POUR SUIVRE (jamais un défilement
+             spontané : curseur dans la fenêtre → la vue est INTACTE
+             — le harnais compte les lectures) ;
+         I3 le bloc ne peint RIEN, ne touche NI le journal NI les
+             empreintes NI le tampon (la navigation est pure
+             position) ;
+         I4 AUCUNE entrée IAT propre (le recadrage compose loupe-02 —
+             la liste fermée du plan) ; registres non volatils
+             rendus ; NOP, 0x90.
+Échecs :
+  E1 : AUCUN échec dur — les bords sont des REPLIS NOMMÉS (le clamp
+       de Q2, l'invariant de l'arrêt) ; la justification vit au
+       champ Intention : la navigation ne peut pas échouer, elle
+       peut S'ARRÊTER — et l'oracle constate l'arrêt.
+Vecteurs :
+  V1 : différentiel — le modèle Python (pas + clamp + recadrage)
+       rejoué sur 10 000 séquences aléatoires de touches : la
+       position ET la vue à l'identique (couvre Q1, Q2, Q3, Q4).
+  V2 : scénario — le curseur au bord de la fenêtre visible, VK_BAS :
+       la vue suit (la ligne active au recadrage), l'écran attendu
+       octet par octet ; VK_HAUT en retour : la vue re-suit (couvre
+       Q3).
+  V3 : scénario — les bords du fichier : à 0 et à taille−1, les pas
+       dehors restent (le clamp), rax = 0, la vue INTACTE (aucune
+       lecture — les appels comptés) (couvre Q2).
+  V4 : scénario — VK_DEBUT/VK_FIN à la ligne finale incomplète : la
+       fin de ligne RÉELLE (min(aligne16 + 15, taille−1) — jamais un
+       curseur sur un octet qui n'existe pas) (couvre Q1).
+  V5 : falsification — la règle de suivi mutée (la vue ne suit pas) :
+       le curseur sort de l'écran attendu — l'oracle à scénarios
+       échoue (JAMAIS PERDU HORS ÉCRAN est une exigence, pas un
+       espoir).
+Fixtures    : le témoin de 3 × 64 Kio + 1 (la ligne finale
+              incomplète — le cas VK_FIN) + proxy.exe scellé.
+Provenance  : écrite-avant-code.
+Décisions   : D171, D161, D7 (aucune IAT propre — la composition
+              seule).
+
+
+LE SQUELETTE (généré par le client — NE LE RENDS PAS) :
+; loupe-15 · curseur : la cellule active, jamais perdue hors écran · révision 1
+; LE SQUELETTE DÉTERMINISTE TPL-AJOUT-v1 — dérivé de la couche I
+; par le client (zéro token LLM) : le cadre, les types, la
+; signature ; l'agent ne remplit que LA LOGIQUE entre les balises.
+; cadre ABI msx64 : non-volatils rbx, r12, r13, r14, r15 sauvés · l'ombre 0x20 à l'appelant · le cadre aligné 16
+; signature : —
+; LA NOTATION DU DOMAINE (le format des lignes de la logique) :
+; une instruction par ligne, Intel EXPLICITE — la taille de la
+; mémoire TOUJOURS nommée : « mov r12, [rsp+0x28] » INTERDIT →
+; « mov r12, qword ptr [rsp + 0x28] » (qword/dword/word/byte ptr) —
+; les cibles de saut : des ADRESSES ABSOLUES 0x… OU des étiquettes
+; locales « nom : » (la définition seule en ligne, l'opérande
+; « jz nom » / « call nom » / « lea rax, [nom] » — le client les
+; RÉSOUT aux adresses absolues du slot, la discipline du brouillon)
+; — les appels directs call 0x… (les adresses au squelette) —
+; AUCUNE directive NASM, AUCUN commentaire dans la logique.
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+; >>> DEBUT-LOGIQUE (le corps du bloc — l'agent remplit ici)
+; <<< FIN-LOGIQUE
+pop r15
+pop r14
+pop r13
+pop r12
+pop rbx
+ret
+
+
+LE DICTIONNAIRE DU DOMAINE (versionné) — tu n'écris JAMAIS une étiquette ni une constante en clair : tu émets l'ID, le client expande :
+  LBL-001 = l'étiquette debut (cible de saut)
+  LBL-002 = l'étiquette fin (cible de saut)
+  LBL-003 = l'étiquette fin_pos (cible de saut)
+  LBL-004 = l'étiquette gauche (cible de saut)
+  LBL-005 = l'étiquette droite (cible de saut)
+  LBL-006 = l'étiquette haut (cible de saut)
+  LBL-007 = l'étiquette bas (cible de saut)
+  LBL-008 = l'étiquette precedent (cible de saut)
+  LBL-009 = l'étiquette suivant (cible de saut)
+  LBL-010 = l'étiquette borne (cible de saut)
+  LBL-011 = l'étiquette borne_haute (cible de saut)
+  LBL-012 = l'étiquette pas_faite (cible de saut)
+  LBL-013 = l'étiquette vis_pos (cible de saut)
+  LBL-014 = l'étiquette vis_cap (cible de saut)
+  LBL-015 = l'étiquette recadre (cible de saut)
+  LBL-016 = l'étiquette recadre_pos (cible de saut)
+  LBL-017 = l'étiquette recadre_vmax_zero (cible de saut)
+  LBL-018 = l'étiquette recadre_vmax_fin (cible de saut)
+  LBL-019 = l'étiquette recadre_fin (cible de saut)
+  LBL-020 = l'étiquette visible (cible de saut)
+  LBL-021 = l'étiquette rien (cible de saut)
+  LBL-022 = l'étiquette refus (cible de saut)
+  LBL-023 = l'étiquette sortie (cible de saut)
+  CST-001 = l'appel IAT au slot du plan (« call CST-001 »)
+
+LES EMPREINTES GRAVÉES : gabarit sha256… | dictionnaire 1a6f93389b500090… — TOUT écart du dictionnaire = EXPANSION REFUSÉE (fail-closed).
+
+
+TPL-ADD-GRAMMAIRE-v1 — LA GRAMMAIRE EBNF DU CORPS (ce que tu émets) :
+
+  corps        = { ligne } ;
+  ligne        = definition | instruction ;
+  definition   = etiquette_locale ":" ;
+  etiquette_locale = lettre_minuscule { lettre_minuscule | chiffre | "_" } ;
+  instruction  = mnemonique [ operande [ "," operande ] ] ;
+  operande     = registre | immediat | adresse_memoire | ID | etiquette_locale ;
+  registre     = "rax" | "rbx" | "rcx" | "rdx" | "rsi" | "rdi" | "rbp"
+               | "rsp" | "r8".."r15" | "eax".."r15d" | "al".."r15b"
+               | "xmm0".."xmm15" ;
+  immediat     = [ "-" ] ( chiffre { chiffre } | "0x" hexa { hexa } ) ;
+  adresse_memoire = "[" registre [ ("+" | "-") ( registre [ "*" ("2"|"4"|"8")
+                   | immediat ) ] ] [ ("+" | "-") immediat ] "]" ;
+  ID           = ( "LBL" | "CST" ) "-" chiffre chiffre chiffre ;
+  saut         = ( "jmp" | "je" | "jne" | "jz" | "jnz" | "ja" | "jae" | "jb"
+                 | "jbe" | "jg" | "jge" | "jl" | "jle" | "js" | "jns" )
+                 ( ID | etiquette_locale ) ;
+  appel        = "call" ( ID | immediat ) ;
+
+LES QUATRE INTERDITS DE FORME (le client REFUSE au nom de la cause, à la
+ligne près — AVANT l'assemblage) :
+  (a) AUCUN « cmp » mémoire-à-mémoire (un opérande mémoire AU PLUS par
+      cmp/test — l'autre est un registre ou un immédiat) ;
+  (b) AUCUN « movzx » registre-64 vers registre-64 (la source de movzx
+      est 32 bits ou moins : « movzx rax, ecx » admis, « movzx rax, rcx »
+      REFUSÉ) ;
+  (c) AUCUN désalignement de taille entre destination et source d'un mov
+      (« mov eax, rbx » REFUSÉ — 32 vers 64 : les tailles s'accordent) ;
+  (d) AUCUN symbole en clair (WM_PAINT, ANSI_FIXED_FONT, MB_OK…) : la
+      VALEUR NUMÉRIQUE littérale ou l'ID du dictionnaire, RIEN D'AUTRE.
+
+L'EMPREINTE DE LA GRAMMAIRE : sha256:5808a6414b3a9da4… (gravée au matériau — tout écart de forme est refusé au nom de la cause, la réparation ciblée suit).
+
+
+UN EXEMPLAIRE SCELLÉ AU CONTRAT PROCHE (loupe-16-saisie, la référence littérale du dépôt — les formes admises y vivent, tout écart à la grammaire reste refusé) :
+push rbx
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x20
+mov r12, rcx
+lea rbx, [rip + 0x7da9]
+lea r13, [rip + 0x81a2]
+cmp qword ptr [rbx + 528], -1
+jne 0x627e
+lea rsi, [rip - 0x3ed4]
+call 0x64ab
+push -4
+LE SQUELETTE À TROUS TYPÉS : écris la logique en COURTES lignes dont chaque trou est un TYTPE connu (registre, offset, cible LBL/CST) — une instruction par ligne, jamais d'expansion multiple par ligne, jamais d'opérande mémoire double.
+
+
+LA FORME CANONIQUE (ta sortie est normalisée avant le juge — les commentaires après « ; » jetés, les espaces réduits, les étiquettes en MAJUSCULES « LBL-001 : ») : écris DÉJÀ la forme canonique ; le normalisateur ne corrigera JAMAIS une forme interdite (donc : pas de « db », pas de préfixe de chaîne REP, pas d'étiquette minuscule accolée à une instruction).
+
+
+LA PAIRE CONTRASTIVE DU CORPUS (des lignes RÉELLEMENT REFUSÉES au corpus — la face rejetée avec LA CAUSE NOMMÉE du juge, la face choisie le motif canonique ; l'entraînement demeure au gym, jamais ici) :
+— REFUSÉE (HORS-FORMAT) : « cmp edx, 0x » — le juge : « HORS-FORMAT: ligne inassemblable : 'cmp edx, 0x' » → ADMISE : une instruction par ligne, la forme « mnémonique opérande, opérande » aux trous typés — le littéral COMPLET (jamais tronqué), pas de préfixe de chaîne REP, pas d'étiquette accolée
+— REFUSÉE (ID-INCONNU) : « LBL-004 » — le juge : « ID-INCONNU: la définition LBL-004 n'est pas au dictionnaire » → ADMISE : les IDs vivent au DICTIONNAIRE du bloc (CST-001..NNN, LBL-001..NNN — l'énumération du prompt), jamais un symbole en clair
+— REFUSÉE (EXPANSION-DIVERGENTE) : « call CST-001 » — le juge : « EXPANSION-DIVERGENTE: l'ID CST-001 n'est pas une opérande expandable » → ADMISE : « mov reg, CST-001 » pour une constante ; « call CST-004 » pour l'IAT ; « jcc LBL-001 » pour un saut interne — l'ID au trou typé
+
+REQUÊTE : écris UNIQUEMENT LES LIGNES DE LA LOGIQUE — le corps du
+bloc qui vivra entre les balises du squelette. LES RÈGLES : (1)
+toute étiquette de saut DU BLOC se note par SON ID (ex. « je
+LBL-005 »), jamais en clair ; (2) tout appel IAT ou direct se
+note par SON ID (ex. « call CST-002 ») ; (3) toute constante se
+note par SON ID si elle y vit, SINON par sa VALEUR NUMÉRIQUE
+littérale (ex. « cmp r13, CST-001 » ou « cmp eax, 15 ») — JAMAIS
+un nom de symbole en clair (WM_PAINT, ANSI_FIXED_FONT : la valeur
+ou l'ID, rien d'autre) ; (4) tes étiquettes LOCALES à TOI se
+définissent « nom : » (un nom court, minuscule : « boucle : »,
+« fin : ») et se référent « boucle »/« fin » — N'ÉCRIS JAMAIS
+« LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du
+plan, elles ne se définissent pas ; (5) les instructions du
+domaine seulement. La PREMIÈRE ligne de ta réponse est la première
+instruction, la DERNIÈRE la dernière — aucune balise, aucun
+texte d'explication (les commentaires « ; » en fin de ligne sont
+admis).
+
+EXEMPLE DE FORME (l'extrait d'un bloc — LA FORME, pas ton bloc) :
+cmp qword ptr [rbx + 528], -1
+je LBL-005
+test rcx, 0xf
+jne LBL-006
+mov r12, rcx
+cmp r12, qword ptr [rbx + 520]
+jae LBL-007
+cmp r13, CST-001
+jbe boucle
+boucle:
+call CST-002
+test eax, eax
+jz LBL-008
+ret
