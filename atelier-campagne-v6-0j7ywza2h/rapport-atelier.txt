@@ -1,0 +1,70 @@
+=== L'ATELIER 0J7YWZA2H — LA CAMPAGNE TPL-ADD-v6 ET L'INSTRUMENT CONTRAINT (la vague 16) ===
+le plan gelé : PLAN-0J7YWZA2H.md — l'empreinte consignée à EMPREINTES-PLANS-VAGUE16.txt
+
+=== LE CONTEXTE RECONDUIT (l'Entrée 392) ===
+le backend expose `response_format` mais L'IGNORE : accepté-mais-ignoré aux deux étages. La
+contrainte n'existe PAS au décodeur. L'instrument livré ici est donc la moitié qui ne dépend
+d'aucun fournisseur : LA GRAMMAIRE, rendue exécutable et vérifiable mécaniquement.
+
+=== (1) L'INSTRUMENT LIVRÉ : LA GRAMMAIRE RENDUE EXÉCUTABLE ===
+DEUX LIVRAISONS :
+  - `GRAMMAIRE_GBNF` : la source GBNF de la notation TPL-ADD, prête pour un serving local qui
+    la supporte (llama.cpp, outlines, xgrammar) — la notation devient un LANGAGE DU DÉCODEUR ;
+  - `valider_corps` : la MÊME grammaire en validateur déterministe — ce que le serving
+    refuserait au décodage, le laboratoire le refuse à la lecture.
+L'AUTOTEST : 8/8 contrôles —
+  [1] le corps VALIDE (7 lignes) → VERT
+  [2] « mov r12, [rsp+0x28] » → REFUSÉ (la mémoire NUE : la taille doit être nommée)
+  [3] « movzx rax, rcx » → REFUSÉ (INTERDIT (b))
+  [4] « mov eax, rbx » → REFUSÉ (INTERDIT (c) : 32 vs 64)
+  [5] « cmp qword ptr […], qword ptr […] » → REFUSÉ (INTERDIT (a))
+  [6] « mov rax, WM_PAINT » → REFUSÉ (ni registre, ni mémoire, ni immédiat, ni ID)
+  [7] « jmp rax » → REFUSÉ (un saut ne prend pas un registre)
+  [8] « LBL-004: » → REFUSÉ (un ID ne se définit pas)
+
+=== (2) LE CONTRÔLE DE PÉRIMÈTRE : L'INSTRUMENT NE ACCEPTE PAS TOUT ===
+la notation du couloir (ctr-v4i-ghash-agrege4.asm) soumise à la grammaire : REFUSÉE — à juste
+titre, elle n'est PAS de la notation TPL-ADD (labels `.refus`/`.repli`, `movabs`, `movdqu`).
+L'instrument distingue les deux dialectes au lieu d'accepter silencieusement.
+
+=== (3) LA TROUVAILLE : LE JUGE EST PLUS PERMISSIF QUE LA GRAMMAIRE QU'IL ÉNONCE ===
+les 24 complétions VERT du corpus v2 soumises à la grammaire canonique :
+  ACCEPTÉES : 3/24
+  REFUSÉES  : 21/24 — dont :
+    · 17 définissent « LBL-xxx : » — que le contrat INTERDIT explicitement (« N'ÉCRIS JAMAIS
+      « LBL-xxx : » : les LBL-xxx sont des cibles DÉJÀ RÉSOLUES du plan, elles ne se
+      définissent pas ») ;
+    · 3  écrivent une mémoire NUE sans taille (« [rcx + r13] » au lieu de « qword ptr […] ») ;
+    · 1  emploie « jc », absent de l'énumération des mnémoniques du validateur.
+les 124 complétions REFUS : 16/124 acceptées par la grammaire — les 108 autres sont des refus
+du JUGE (ID-INCONNU, hors format, logique), pas de la forme.
+
+LA LECTURE (celle qui compte) : LA GRAMMAIRE DU CONTRAT ET LE JUGE NE SONT PAS LE MÊME
+ENSEMBLE D'ACCEPTATION. Dix-sept complétions que le juge a marquées VERT violent une
+interdiction que le contrat énonce en toutes lettres. Ce n'est pas un défaut du modèle : c'est
+un écart de règle, et il est INVISIBLE tant que la grammaire n'est pas exécutable.
+
+LA CONSÉQUENCE POUR LA CAMPAGNE v6 : un décodeur contraint qui appliquerait la grammaire
+canonique REFUSERAIT 21 des 24 complétions que le juge actuel accepte — la contrainte ne se
+contenterait pas d'éliminer la classe HORS-FORMAT, elle CHANGERAIT l'ensemble d'acceptation.
+Toute campagne v6 mesurée « avec contrainte » sans nommer cet écart mesurerait un changement
+de règle, pas un gain de modèle. L'écart est consigné ICI, avant la campagne.
+
+=== (4) LA CAMPAGNE v6 : NON COURUE ===
+l'instrument est livré ; la campagne N'EST PAS courue. Le serving à grammaire est absent du
+poste : xgrammar n'a pas de roue Windows (la compilation source a été interrompue à 400 s),
+outlines et llguidance non plus. La règle du plan tenue : jamais une mesure habillée en
+contrainte. Les 18 tâches, les graines 20261117 et l'ordre demeurent INTACTS.
+
+=== LES LIMITES DE L'INSTRUMENT, NOMMÉES ===
+  - l'énumération des mnémoniques du validateur est UNE LISTE, pas celle du contrat : « jc »
+    y manque. Un complétion refusée pour un mnémonique absent est un refus de L'INSTRUMENT,
+    pas du contrat — et il est compté à part ;
+  - la règle « la taille doit être nommée » vit au paragraphe des règles du domaine, pas dans
+    l'EBNF du contrat : le validateur l'applique et le DIT ;
+  - l'ID protégé du découpage : « CST-002 » est UN ID (un faux positif de la première passe,
+    corrigé et nommé).
+
+=== LES REFUS TENUS ===
+jamais une mesure habillée en contrainte ; jamais un juge affaibli ; jamais la similarité
+comme récompense ; jamais une cible re-tirée ; jamais une paire DPO tirée d'un refus scrubbeux.
