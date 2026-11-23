@@ -1,0 +1,66 @@
+=== L'ATELIER RU2RFJL2G — L'ANCRAGE DE TRANSPARENCE, LA SENTINELLE, LA GARDE RAM (la vague 16) ===
+le plan gelé : PLAN-RU2RFJL2G.md — l'empreinte consignée à EMPREINTES-PLANS-VAGUE16.txt
+le laboratoire prépare et vérifie sur copies de laboratoire (D105) — JAMAIS le coffre réel.
+
+=== CE QUI EST LIVRÉ (1) : LE TÉMOIN D'ÉPOQUE ET SON VÉRIFICATEUR OFFLINE ===
+le format : TRIADE-TEMOIN-EPOQUE-v1 — un objet JSON canonique (clés triées, compact, UTF-8)
+portant l'époque, l'horodatage, le condensé de l'état CF3 de l'ère et le condensat du témoin
+précédent (la chaîne), signé Ed25519 détaché. L'octet signé est l'octet vérifié.
+la règle R10 : AUCUNE dépendance réseau au chargement — ni import conditionnel, ni repli
+silencieux. Le drapeau --reseau est REFUSÉ À L'ENTRÉE : l'absence réseau n'est pas un état
+dégradé, c'est l'état NORMAL du vérificateur. La clé vient d'UN FICHIER LOCAL ; une clé
+absente est un refus NOMMÉ, jamais une récupération.
+l'autotest : 6/6 contrôles rendus —
+  [1] témoin valide → VERT
+  [2] témoin muté (1 octet du corps) → REFUSÉ « signature INVALIDE »
+  [3] signature tronquée → REFUSÉ « signature INVALIDE »
+  [4] clé substituée (une autre clé, la même signature) → REFUSÉ « signature INVALIDE »
+  [5] clé absente du disque (l'absence réseau simulée) → REFUSÉ propre, nommé
+  [6] --reseau demandé → REFUSÉ « --reseau est interdit — le vérificateur est OFFLINE (R10) »
+
+=== LE DELTA AU MODÈLE DE MENACE, AUX DEUX BORDS ===
+CE QUE L'ANCRAGE AJOUTE : un tiers peut vérifier, SANS le développeur et SANS le réseau, qu'un
+témoin d'époque donné a bien été publié — le roll-back administratif (republier une ère plus
+ancienne comme si elle était courante) laisse une trace VÉRIFIABLE par quiconque détient la
+chaîne : deux témoins de la même époque aux horodatages incompatibles sont une contradiction
+publique, pas une dispute.
+CE QU'IL N'AJOUTE PAS : il ne prouve pas que l'état scellé est BON — seulement qu'il a été
+PUBLIÉ ; il ne protège pas contre un développeur qui publie deux chaînes divergentes à deux
+publics (la réconciliation exige un tiers de confiance) ; il ne remplace pas la clé hors-ligne
+de la cérémonie (D87) — l'ancrage atteste la publication, la cérémonie atteste l'intention.
+
+=== CE QUI EST LIVRÉ (2) : LA GARDE RAM NATIVE ===
+le secret naît dans une page VERROUUILLÉE (VirtualLock — l'analogue Windows de mlock : la page
+ne peut pas être évincée vers le swap) et meurt par une zéroïsation dont la relecture prouve le
+résultat, pas l'intention.
+l'autotest : 5/5 contrôles rendus —
+  [1] le secret écrit : OUI (son sha256 rendu, jamais le secret)
+  [2] la page verrouillée (VirtualLock) : OUI
+  [3] la zéroïsation effective : OUI (64 octets relus nuls)
+  [4] le contrôle négatif — zéroïsation SANS verrou : OUI (la mort ne dépend pas du verrou)
+  [5] la page rendue (VirtualFree) : OUI
+
+=== L'ÉCART NOMMÉ (l'honnêteté, pas la commodité) ===
+(1) `RtlSecureZeroMemory` est un INTRINSÈQUE de winnt.h, PAS une fonction exportée : ntdll ne
+l'expose pas sur ce poste (AttributeError constaté). La substitution est nommée à l'exécution :
+ctypes.memset entre dans msvcrt — une AUTRE unité de compilation que le lecteur — donc le
+compilateur n'a pas la visibilité requise pour supprimer l'écriture ; et la relecture qui suit
+prouve le résultat. Ce n'est PAS l'intrinsèque, et le module le DIT.
+(2) le « drapeau dumpable » de l'instruction est un concept POSIX (PR_SET_DUMPABLE) : Windows
+n'a pas d'équivalent par drapeau. La politique de dump (WER / MiniDump) est un AUTRE levier,
+qui ne se règle pas de la même façon. La garde livre ce qui existe et NOMME ce qui n'existe pas.
+
+=== CE QUI RESTE AU DÉVELOPPEUR (les gestes nommés, jamais simulés) ===
+- LA SENTINELLE WINDOWS DE PRODUCTION (SACL + journal 4663 ou ETW) : elle exige la politique
+  d'audit de la machine (privilege SeSecurityPrivilege, `auditpol /set`) et les droits
+  d'administration — le laboratoire ne les a pas et ne les simule pas. Le harnais (lecture non
+  blanchie → destruction + PV, zéro fausse alerte en nominal, latence bornée assertée) est
+  décrit au plan et attend le poste réel.
+- LE PROTOTYPE FIDO2 du média piège : il exige un jeton physique — aucun n'est au laboratoire.
+- LE GESTE D'ANCRAGE RÉSEAU (Rekor/Sigstore ou RFC 3161) : il est au développeur par
+  construction ; le vérificateur OFFLINE livré ici est la moitié qui ne dépend de personne.
+
+=== LES REFUS TENUS ===
+jamais le coffre réel ; jamais un appel réseau au chargement ; jamais un refus silencieux ;
+jamais un PV sans la destruction ; jamais le jeton physique au laboratoire ; jamais une fausse
+alerte comptée pour une alerte ; jamais le modèle de menace écrit d'un seul bord.
