@@ -47,34 +47,41 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
-**L'ÉTAT PRÉSENT** : CE QUI RESTE PORTÉ (Entrée 389, 23/11/2026 — la
-commande du maître « go pour ce qui reste » sur l'Entrée 388 SUITE).
-DEUX GESTES PORTÉS : (1) LA CAMPAGNE v6 (atelier-ajouter-v6-7xuvsoqpuq,
-le plan gelé PLAN-7XUVSOQPUQ.md sha256 c3542e6f… AVANT toute donnée) :
-LA RELANCE DES TROIS PERTES à graines identiques (le prompt t0 recoupé
-byte-byte à l'archive v5 AVANT l'appel — loupe-04-cadre RE-VERDIT à
-l'essai 1 : LA VARIANCE DU SUJET AU CLI confirmée sur pièces ; les deux
-autres demeurent refusées) ; LA PAIRE CONTRASTIVE du corpus au prompt
-(la face rejetée par classe extraite mécaniquement du TRAIN, la face
-choisie le motif canonique) ; LE VERDICT 5/18 — la cible ≥15/18
-MANQUÉE, la lecture défavorable consignée — le coût médian 4 286 — la
-cible ≤4 500 TENUE (la v5 la manquait à 4 604) ; le déplacement
-v5→v6 : 2 deux-vertes · 3 conversions · 3 pertes · 10 deux-refusées —
-LE RÉSEAU 5→5, LA VOIE DU PROMPT À SA LIMITE NOMMÉE ; le décodage
-contraint VÉRIFIÉ AU CLI (l'écart d'instrument nommé reconduit) ;
-(2) LA DOC (atelier-doc-m8qc10sxg, le geste suivant du plan gelé) : LES
-ONZE FRAGMENTS EN restants + LE MIROIR FR des treize livrés (le noyau
-reproduit bit-identique), LES BUDGETS mesurés au tokenizer natif (les
-neuf fragments agent dans leur budget, aucun élargi), LE LINTER 13/13
-VERTS au contrôle négatif 2/2 VÉCU, LA CRISTALLISATION 10 rebuilds
-bit-identiques, LE SCAN DE SECRETS vert au négatif planté ATTRAPÉ, les
-tables DEPUIS LES CANONS jamais retapées. LES GESTES AU DÉVELOPPEUR
-demeurent : le poste réel (les lemmas Tamarin + le run ProVerif), le
-métal nu (≥2 machines), les 28 livraisons H7, l'annotateur, la seconde
-famille, les dépôts Zenodo (kit + corpus) ; LES ROUTES RESTANTES de la
-voie nommée : le décodage contraint (si l'instrument l'expose un jour)
-et l'entraînement DPO au gym (les paires extraites, le compute au
-développeur). Détail au worklog (Entrées 385-389).
+**L'ÉTAT PRÉSENT** : LES DÉPÔTS ZENODO DU KIT ET DU CORPUS MINTÉS
+ET CONSIGNÉS (Entrées 390-391, 23/11/2026 — la commande du maître « fais
+les depots zenodo », les deux gestes nommés aux Entrées 388/389 SUITE :
+la doctrine « jamais mintés sans commande » honorée). LE KIT DÉVELOPPEUR
+v1.0.0 au DOI 10.5281/zenodo.24457515 (LE CONCEPT 10.5281/zenodo.24457514
+— une ŒUVRE SÉPARÉE : le zip 415 890 o, md5 bd751c04…, les 158 entrées,
+licence BSL-1.1, upload_type software) ; LE CORPUS TRIADE-CORPUS-v1 au
+DOI 10.5281/zenodo.24457525 (LE CONCEPT 10.5281/zenodo.24457524 : les
+sept fichiers posés individuellement, 109 triples, BSL-1.1 + le canari
+CC-BY-4.0, upload_type dataset) — chacun par LA VOIE DES PATRONS
+(brouillon → bucket → métadonnées → PUBLISH), les md5 recoupés
+byte-byte au bord anonyme (1/1 + 7/7 VERTS, les 18 VERT re-preuvés à
+l'Entrée 391), les deux DOI résolvant chez doi.org ; L'ÉDITION du
+protocole demeure v0.23.3 (LE RECORD 24450872, le concept
+10.5281/zenodo.24367343). LE JETON RELAIS OAuth RENOUVELÉ (la
+ré-autorisation interactive du maître — le refresh_token du 23/11,
+11/11 copies Drive à jour, le SA physichong en repli lecture D263).
+LA CONSIGNATION CLOSE EN DEUX GESTES : l'Entrée 390 au commit 4824215
+(le worklog, l'OU-TROUVER, les § 1/§ 4/§ 6 du présent fichier, le
+rapport à la racine du dépôt, le push GitHub, la première sync du
+miroir) PUIS L'ACHÈVEMENT à l'Entrée 391 (la section ÉTAT PRÉSENT du
+présent fichier demeurée à l'état 389 au 4824215 — l'écart nommé,
+portée ; le rapport LIVRÉ AU /test du coffre et recoupé byte-byte ;
+les 18 VERT du bord anonyme rejoués ; la ligne de pack du bundle
+nommée — les octets du pack diffèrent à contenu identique selon la
+lignée du bac — ET L'ÉQUIVALENCE PROUVÉE : les cinq refs et l'univers
+des 12 569 objets identiques, la tête 4824215 ; le miroir re-syncé,
+les trois bords re-vérifiés, le sceau-I 14/14). LES GESTES AU
+DÉVELOPPEUR restants : le poste réel (les lemmas Tamarin + le run
+ProVerif), le métal nu (≥ 2 machines), les 28 livraisons H7,
+l'annotateur, l'endpoint de la seconde famille — LES DÉPÔTS ZENODO DU
+KIT ET DU CORPUS SOLDÉS ET CONSIGNÉS ; la campagne v6 à la commande
+(le décodage contraint si l'instrument l'expose, l'entraînement DPO au
+gym — les paires du corpus, le compute au développeur). Détail au
+worklog (Entrées 385-391).
 
 ## 3. RESTAURER LE BAC NEUF (le pas à pas éprouvé à la vague 14)
 
