@@ -1,0 +1,64 @@
+=== LE RAPPORT DE CLÔTURE DE LA VAGUE 16 (23/11/2026, l'Entrée 396) ===
+la commande du maître : « termine tout et fais le dépôt sur zenodo » — la présente clôture.
+
+=== LE DÉPÔT ZENODO : LE CORPUS v2.1 PUBLIÉ ===
+LE DOI DE VERSION : **10.5281/zenodo.24479882** — MINTÉ, le concept 10.5281/zenodo.24457524
+résolvant sur v2.1. Les versions du concept : v1 [24457525] · v2 [24463681, demeuré immuable] ·
+**v2.1 [24479882]**. Les deux DOI résolvant chez doi.org (HTTP 200).
+LA VOIE des patrons v230/v232 : le record v2 vérifié vivant → le brouillon de version → les
+sept anciens retirés, les NEUF posés au bucket → les métadonnées → LA RE-VÉRIFICATION (les
+9/9 md5 == les locaux byte-byte, l'état, la version) → PUBLISH (HTTP 202) → le bord anonyme
+(les 9/9 md5 ÉGAUX, le concept résolvant).
+LES NEUF PIÈCES : train.jsonl [127 lignes : 126 triples + le canari] · dev.jsonl [24] ·
+test.jsonl [19, NU — validateurs seuls] · permissif-ccby.jsonl · sonde-contamination.json ·
+dpo-paires.jsonl [48 paires au verdict du juge] · MANIFESTE.json [sha256 par fichier] ·
+DATASET-CARD.json · RECETTES-SFT-DPO-RLVR.md [les recettes agnostiques, le budget consigné].
+
+=== CE QUE LE DÉPÔT RÉPARE ===
+LA FUITE PAR CONTRAT du corpus v2 : dix contrats partagés entre TRAIN et DEV/TEST — le TEST
+v2 était contaminé PAR CONSTRUCTION (six de ses six contrats déjà lus au TRAIN sous une autre
+campagne ; la cause : le tirage par instance de tâche ne voit pas que v3, v4 et v6 portent LE
+MÊME contrat). LA RÉPARATION : les splits par GROUPE-DE-CONTRAT à la graine consignée
+20261126 (18 contrats → TRAIN 14 · DEV 2 · TEST 2), le TEST nu, le canari unique au TRAIN,
+l'audit rejoué ÉTANCHE (rc 0) et les DIX REBUILDS BIT-IDENTIQUES. Le prix nommé : le TEST
+passe de 21 lignes / 6 contrats à 19 lignes / 2 contrats — la cible headline re-scopée.
+
+=== L'ACHÈVEMENT DE 0J7YWZA2H : LES PAIRES DPO ET LES RECETTES ===
+LES 48 PAIRES : CHOSEN une complétion VERTE du juge, REJECTED une complétion REFUS au MÊME
+contrat (la récompense = LE VERDICT, jamais la similarité) ; du TRAIN seul — l'étanchéité par
+contrat rend la fuite impossible PAR CONSTRUCTION ; quatre contrats porteurs (loupe-05, -11,
+-12, -18) ; LA PORTE P2 byte-byte (chaque paire porte ses deux sha256 ; la notation mutée
+REFUSÉE — l'autotest 2/2).
+LES RECETTES SFT/DPO/RLVR agnostiques en famille et le budget compute consigné (SFT 1,2 M
+tokens · DPO 1,0 M · le RLVR dont le coût domine au juge CPU) — les interdits reconduits.
+
+=== LA CLÔTURE DE LA VAGUE ===
+LES SIX INSTRUCTIONS exécutées à l'étendue du poste, les six ATELERS livrés, le dépôt vécu.
+LE /instructions LAISSÉ VIDE (vérifié : 0 restant) — les six archivées au coffre
+(ARCHIVE/instructions_vague16_20261123) et au dépôt.
+LES GESTES AU-DELÀ DU POSTE, NOMMÉS (jamais maquillés) : la campagne v6 courue (l'instrument
+de serving à grammaire — livré ; l'écart de règle nommé : 21 des 24 VERT refusées par la
+grammaire canonique) ; la mesure des cycles au métal nu (≥ 2 machines — le kit prêt,
+l'agrégateur refusant le partiel) ; la régénération des cinq pièces v0.23.3 (tectonic +
+weasyprint — le linter v233 prêt à la contrôler) ; les runs Tamarin/ProVerif (le poste Linux
+à 16 Go — les commandes rendues, le négatif d'abord) ; la sentinelle SACL/4663 et le FIDO2 ;
+la cérémonie d'ère du sceau (la clé hors-ligne du maître).
+
+=== LES TROUVAILLES DE LA VAGUE (ce que la vague a appris) ===
+(1) LA FUITE PAR CONTRAT — le défaut de règle invisible à l'audit par instance de tâche.
+(2) LE JUGE PLUS PERMISSIF QUE LA GRAMMAIRE QU'IL ÉNONCE — 17 complétions VERT définissent
+des « LBL-xxx : » que le contrat interdit explicitement : un décodeur contraint changerait
+l'ensemble d'acceptation, pas seulement la classe hors-format.
+(3) LE RATIO 3,23 NE SE RECALCULE PAS (63,39/19,66 = 3,22) — le résidu (A) confirmé par la
+machine, la règle rendue exécutable au linter v233.
+(4) LA SURFACE DE GOUVERNANCE COÛTE 34 663 TOKENS PAR CHANGEMENT (15 à 55 fois le changement
+protégé ; 732 une fois compressée).
+(5) LA CHAÎNE SCELLÉE SE REPRODUIT À L'OCTET (ddedc26c… reconstruit à la source : la
+différentielle zéro, 10/10 rebuilds).
+
+=== LA GARDE ===
+aucun secret affiché ni committé (la garde h66o54pjd : 0 détection à chaque commit ; le jeton
+Zenodo jamais affiché) ; aucun coffre réel touché hors la lecture du /instructions et la
+livraison au /test ; le verbatim des Entrées 389-395 demeuré octet pour octet ; les graines
+et l'ordre JAMAIS re-tirés ; le sceau-I 14/14 avant et après chaque geste ; le record v2
+DEMEURÉ IMMABLE.
