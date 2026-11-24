@@ -1,0 +1,103 @@
+LISEZMOI — SURVEILLANT-CPU, LE COCKPIT DU POSTE DE TEST (v1.0.0, 25/11/2026)
+==============================================================================
+
+LA COMMANDE (le développeur, 25/11/2026) : « concernant les états
+processeurs du pc de test, tu n'as pas moyen d'englober les tests dans
+une GUI qui affiche et log les valeurs de fréquence cpu etc... en temps
+réel (type cpu-z) mais durant les tests ? » — OUI. Ce cockpit EST cette
+GUI.
+
+POURQUOI IL EXISTE (la cause, lue sur pièces) : le premier run terrain
+du kit-2 (le 24/11 au soir, i7-3667U Ivy Bridge 2 cœurs, Windows 10)
+rendit TROIS divergences |t|>5 (tls13-02 : t=-10,64 ; tls13-13 :
+t=+9,65 ; tls13-16 : t=+9,19) sur une fenêtre de mesure TOTALE de
+92 millisecondes, avec les classes SÉQUENTIELLES du protocole kit-2
+(tout le secret-fixe, puis tout le secret-aléatoire). Le csv re-calculé
+au labo le dit : la classe aléatoire de tls13-02 dérive de +10,8 % en
+son sein, la classe fixe de tls13-13 de -7,9 % — la signature d'un
+silicium qui change de fréquence PENDANT la mesure (DVFS/turbo/thermale).
+Le t de Welch, là, mesure la classe ET le temps. Ce cockpit ne maquille
+rien : il CONSIGNE la fréquence vécue pour que la lecture des
+divergences se fasse sur pièces, pas sur supputation.
+
+CE QU'IL FAIT :
+  — L'OBSERVATOIRE (type cpu-z) : la fréquence effective de CHAQUE cœur
+    (le compteur Processor Information de Windows — ProcessorFrequency
+    en MHz ; sinon base × %ProcessorPerformance), la charge par cœur, la
+    charge totale, la température (MSAcpi_ThermalZoneTemperature, la
+    zone thermique que Windows expose sans pilote — si elle est
+    illisible : « ABSENT (nommé) », jamais un chiffre inventé). Trois
+    grandes lectures, la grille par cœur, la courbe qui défile (fréquence
+    en bleu, charge en vert, la base en pointillés orange) ;
+  — LE JOURNAL : chaque seconde (500 ms pendant un run), une ligne csv :
+    horodatage, événement, fréquence totale, charge, température,
+    fréquences par cœur, charges par cœur — journal-surveillant-<date>.csv ;
+  — L'ENVELOPPE : les boutons lancent les kits EUX-MÊMES (leurs .bat
+    éprouvés, jamais réécrits) — RUN N60 / N200 / N400, la BATTERIE
+    60→200→400 dans l'ordre du LISEZMOI (elle S'ARRÊTE si un run rend un
+    code non nul : fail-closed), KIT-3 LOUPE, KIT-1 SHANI. Chaque
+    lancement MARQUE le journal (DEBUT-RUN-… / FIN-RUN-… code=N) ; le
+    temoin-dudect-BROUILLON.txt du kit-2 est RENOMMÉ automatiquement en
+    temoin-dudect-N<n>.txt (le geste que le LISEZMOI-dudect demandait à
+    la main) ; le journal csv du run est nommé ; les dernières lignes de
+    sortie-run.txt sont montées au cockpit ;
+  — LE TÉMOIN : à la fermeture (ou au bouton), temoin-surveillant-<date>
+    .txt se compose tout seul : machine, silicium, base, sources, stats
+    globales, ET PAR RUN la fréquence min/méd/max, la charge, la
+    température DANS LA FENÊTRE du run — et LA PREUVE DU TURBO (combien
+    d'échantillons vécurent au-dessus de la base ; combien en dessous).
+    C'est la réponse AUTOMATIQUE aux champs « état EFFECTIF du turbo /
+    fréquence réelle pendant le run » que le témoin dudect demande à
+    votre main.
+
+L'INSTALLATION (un geste) : extrayez les quatre fichiers de ce paquet
+AU RACINE du kit terrain (le dossier qui contient COMMENCER-ICI.bat —
+c'est là que le cockpit trouve pc-windows\kit-2-dudect\ et ses frères).
+Puis double-cliquez SURVEILLANT-CPU.bat. PowerShell 5.1 fait tout
+(livré avec Windows 10 et 11 : AUCUNE installation, AUCUN droit
+particulier).
+
+LE MODE SURVEILLANT SEUL : si vous préférez lancer les kits vous-mêmes
+(comme le 24/11), laissez le cockpit tourner à côté et MARQUEZ les
+instants dans la zone de texte (chaque marqueur vit au journal avec son
+horodatage). Le cockpit n'exige rien : il enveloppe OU il observe.
+
+LES REFUS NOMMÉS (fail-closed, comme tout le kit) : compteur illisible →
+l'écart est nommé, les colonnes restent vides, le cockpit continue ;
+.bat introuvable → le bout refuse et le dit ; run en échec → la batterie
+s'arrête ; température absente → dit tel quel.
+
+LA MESURE D'OBSERVATEUR (dite honnêtement) : lire les compteurs ajoute
+une légère charge (~2 requêtes WMI par seconde ; les runs dudect
+épinglent le cœur 0 par eux-mêmes, les compteurs vivent ailleurs). La
+granularité du compteur Windows est ~1 s : le journal dessine le CADRE
+de fréquence du run (le régime turbo ou throttle), pas l'instant
+intra-run — le run dudect du 24/11 ne mesura que 92 ms au total. Pour
+attribuer une divergence à la fréquence, c'est le régime autour et
+pendant les classes qui fait foi.
+
+L'ÉPROUVAGE (ce que le labo a vécu AVANT de livrer) : la LOGIQUE (les
+échantillons, le csv, les fenêtres de run, le témoin, les refus
+nommés) est éprouvée au laboratoire par l'AUTOTEST — douze échantillons
+simulés dont une rampe de throttle, deux fenêtres de run dont un refus
+fail-closed, un marqueur manuel ; le csv et le témoin composés et
+vérifiés (17 lignes, 2 fenêtres ; pièces jointes à preuves-labo/ ;
+PowerShell 7.4.6 sous Linux pour l'autotest, la syntaxe des deux pièces
+passée au parseur). LA GUI, elle, ne put être vécue au labo (aucun
+Windows au laboratoire) : elle vit par Windows PowerShell 5.1 et votre
+run en est le premier témoin — l'écart est nommé, D189. La séparation
+en deux pièces (surveillant-cpu.ps1 la logique ; surveillant-cpu-gui.ps1
+la fenêtre, dot-sourcée) a une cause nommée : les types Drawing/WinForms
+n'ont pas à charger pour l'autotest de la logique.
+
+LA CONDUITE À TENIR AU RETOUR : renvoyez au coffre /test (dossier Drive
+« Triade » → « test ») le dossier ENTIER du kit avec, EN PLUS du run :
+journal-surveillant-*.csv et temoin-surveillant-*.txt (datés et signés
+de votre main comme les autres témoins). Le labo recroisera : le csv
+dudect DU run, le csv SURVEILLANT de la même fenêtre, le témoin — les
+trois pièces d'un même geste.
+
+LA GARDE : ce cockpit ne mesure AUCUN temps d'exécution (le mesureur du
+kit-2 fait cela, sur ses pièces scellées) ; il ne touche à AUCUNE pièce
+scellée ; aucun réseau ; aucun droit. Le périmètre v0.15.0 demeure
+intact — l'observatoire s'ajoute, il ne remplace rien.

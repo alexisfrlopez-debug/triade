@@ -1,0 +1,28 @@
+===================================================================
+ LE DIAGNOSTIC DE LA MACHINE — le paquet multimachines MISE À JOUR
+ Il constate : la machine, le silicium, ce qui vit, quels kits y
+ sont vivables. Il ne mesure rien, ne fabrique aucun chiffre.
+===================================================================
+
+[machine] l'OS      : Windows-10
+[machine] l'arche   : AMD64  (Python 64 bits)
+[machine] le CPU   : Intel64 Family 6 Model 58 Stepping 9, GenuineIntel (PROCESSOR_IDENTIFIER)
+[silicium] CPUID   : « GenuineIntel » · famille 6 · modèle 58 · pas 9
+[silicium] SHA-NI  : ABSENT  (CPUID feuille 7, EBX bit 29)
+[outils]   Python   : 3.14.10, 64 bits  (64 bits : le kit-3 y vit)
+[outils]   compil.  : AUCUN de cl/gcc/clang — les exe précompilés du kit-2 courent
+[outils]   WSL2     : wsl.exe VU — les voies QEMU partent du menu
+
+===================================================================
+ LE VERDICT (les kits vivables SUR CETTE MACHINE — l'état complet
+ du projet vit dans CE-QUI-RESTE-A-FAIRE.txt)
+===================================================================
+ kit-1 shani     : REFUS ATTENDU — SHA-NI absent : le kit refusera de lui-même au T0 (un RÉSULTAT, pas une panne — ALEKPC l'a déjà vécu deux fois, le rejeu n'est pas requis)
+ kit-2 dudect    : VIVABLE — tout Windows x86-64 y vit (aucun Python, aucun compilateur requis : les exe précompilés courent). C'est LA MESURE JAMAIS ENCORE COURUE du paquet.
+ kit-3 loupe     : VIVABLE — Python 64 bits (déjà vécu VERT sur la machine Windows 11 : le rejeu n'est pas requis)
+ voies QEMU      : VIVABLES par le menu (WSL2 vu)
+ kit-constat-arm : cette machine n'est pas le téléphone — le kit vit sur Android + Termux (telephone-arm\kit-constat-arm\)
+
+ A VOTRE MAIN (inchangé) : la signature des témoins, l'état EFFECTIF du turbo (kit-2), le témoin vitrine (kit-3), le renvoi
+ des preuves au coffre /test (dossier Drive « Triade » → « test »).
+===================================================================

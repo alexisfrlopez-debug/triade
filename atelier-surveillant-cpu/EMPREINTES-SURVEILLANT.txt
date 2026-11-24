@@ -1,0 +1,6 @@
+# EMPREINTES-SURVEILLANT.txt — la table des pieces (v1.0.0, 25/11/2026)
+# (posee par le labo a l'assemblage ; recoup : sha256sum -c ou CertUtil)
+5091afc1d93a63b22bceb9ad0caadfe44e985bd040dbce92319cb030db4f65d3  SURVEILLANT-CPU.bat
+dc0082515c9f94a6f4986cb29ccae652944d953655fd9332735e23689f9dbbc8  surveillant-cpu.ps1
+11507001c9b88a424ffa700789a60656ff9dabddd1c9e05a5c2355612b5fdd76  surveillant-cpu-gui.ps1
+56eba64d2b6e229ef3f99ec8a68e330a5c3b44cd1abe6b20d8f3dce9e5853f58  LISEZMOI-surveillant.txt

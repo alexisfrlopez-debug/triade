@@ -1,0 +1,81 @@
+RAPPORT-SURVEILLANT-CPU.txt — LE COCKPIT DU POSTE DE TEST, LIVRÉ (v1.0.0)
+==========================================================================
+(le labo, 25/11/2026 — la commande du maître : « concernant les états
+processeurs du pc de test, tu n'as pas moyen d'englober les tests dans une
+GUI qui affiche et log les valeurs de fréquence cpu etc... en temps réel
+(type cpu-z) mais durant les tests ? »)
+
+LE FAIT. Le cockpit SURVEILLANT-CPU est livré : une GUI WinForms qui
+AFFICHE en temps réel la fréquence effective par cœur (le compteur
+Processor Information de Windows — ProcessorFrequency en MHz, sinon base ×
+%ProcessorPerformance), la charge par cœur, la charge totale, la
+température (MSAcpi_ThermalZoneTemperature, la zone thermique lisible
+sans pilote), la courbe qui défile (fréquence, charge, la base en
+pointillés) — ET JOURNALISE tout (csv horodaté, événements compris), ET
+ENVELOPPE les tests : ses boutons lancent les .bat ÉPROUVÉS des kits
+(RUN N60 / N200 / N400, la BATTERIE 60→200→400 dans l'ordre du LISEZMOI —
+fail-closed : elle s'arrête au premier code non nul —, KIT-3 LOUPE,
+KIT-1 SHANI), marquent DEBUT-RUN/FIN-RUN au journal, renomment
+eux-mêmes le temoin-dudect-BROUILLON.txt en temoin-dudect-N<n>.txt (le
+geste demandé à la main au LISEZMOI), nomment le journal csv du run et
+montrent les dernières lignes de sortie-run.txt. Le témoin
+surveillant se compose tout seul à la fermeture : machine, silicium,
+base, sources, stats globales, ET PAR RUN la fréquence min/méd/max, la
+charge et la température DANS LA FENÊTRE — plus LA PREUVE DU TURBO
+(les échantillons au-dessus/en-dessous de la base). C'est la réponse
+automatique aux champs « état EFFECTIF du turbo / fréquence réelle
+pendant le run » que le témoin dudect laisse à la main du maître.
+
+LA CAUSE (pourquoi maintenant). Le premier run dudect terrain (Entrée
+416 : trois divergences |t|>5, 92 ms de fenêtre totale, classes
+séquentielles, dérive DVFS lue aux quartiles du csv) ne peut être
+interprété qu'avec le contexte de fréquence qui manquait. Le cockpit
+est l'instrument de ce contexte ; le langage du kit-2 demeure la loi et
+le cockpit ne mesure AUCUN temps d'exécution.
+
+L'ÉPROUVAGE DU LABORATOIRE (l'honnêteté d'usage). LA LOGIQUE est prouvée
+par l'AUTOTEST (-TestMode : douze échantillons simulés dont une rampe de
+throttle 2500→2140 MHz, deux fenêtres de run dont un refus fail-closed
+code 2, un marqueur manuel ; 17 lignes csv, 2 fenêtres, le témoin et le
+csv composés et vérifiés — les pièces jointes à preuves-labo/ ;
+l'autotest vécu sous PowerShell 7.4.6 Linux, la syntaxe des deux pièces
+passée au parseur SANS erreur). LA GUI ne put être vécue au labo (aucun
+Windows au laboratoire) : elle vit par Windows PowerShell 5.1 d'origine
+(AUCUNE installation, AUCUN droit) — le run du maître en est le premier
+témoin, l'écart est nommé (D189). DEUX ÉCARTS D'INGÉNIERIE NOMMÉS AU
+COURS DE LA CONSTRUCTION : (1) sous pwsh Linux, la création du pipeline
+d'un fichier portant des littéraux de types Drawing échoue (résolution
+à la compilation — l'artefact Gdip du labo, PAS du terrain) — la GUI
+vit donc dans SA PIÈCE SÉPARÉE (surveillant-cpu-gui.ps1, dot-sourcée :
+même portée script, comportement identique) et l'autotest ne charge
+jamais les types Drawing ; (2) la granularité du compteur Windows (~1 s)
+délaisse l'instant intra-run (le run dudect du 24/11 ne mesura que
+92 ms) : le journal dessine le CADRE de fréquence du run — dit au
+LISEZMOI, jamais maquillé. La mesure d'observateur (~2 requêtes WMI/s)
+est dite pareillement.
+
+LE PAQUET. TRIADE_surveillant_CPU_v100.zip — 7 pièces, sha256
+763c645ffc1d1fada3b8ff08dee867c04209f30d786c6d9a4b1184dd4f1abb63 :
+SURVEILLANT-CPU.bat (le lanceur, ASCII CRLF canonique),
+surveillant-cpu.ps1 (la logique + l'autotest, BOM UTF-8),
+surveillant-cpu-gui.ps1 (la fenêtre, dot-sourcée, BOM UTF-8),
+LISEZMOI-surveillant.txt (le mode d'emploi et les causes),
+EMPREINTES-SURVEILLANT.txt (la table des quatre pièces), preuves-labo/
+(l'autotest vécu : console + csv + témoin). L'INSTALLATION : extraire
+au RACINE du kit terrain (à côté de COMMENCER-ICI.bat — c'est là que le
+cockpit trouve pc-windows\kit-*), double-cliquer SURVEILLANT-CPU.bat.
+
+LA LIVRAISON. Le zip au /livrables du coffre (recoupé byte-byte par
+re-téléchargement) ; la section SURVEILLANT ajoutée au
+LISEZMOI-KITS-TERRAIN-2026-11-24.txt du coffre ; le présent atelier au
+dépôt (atelier-surveillant-cpu/) ; worklog Entrée 417, OU-TROUVER à
+l'état 417.
+
+LA GARDE. Aucune pièce scellée touchée (le cockpit lance les .bat
+existants, ne réécrit rien) ; aucun réseau ; aucun droit ; aucun
+chiffre fabriqué (température absente = dite absente) ; le périmètre
+v0.15.0 intact — l'observatoire s'ajoute, il ne remplace rien.
+
+LA SUITE. Au geste du maître : les runs N=60/N=400 PAR LE COCKPIT (le
+cadre de fréquence naîtra avec eux) ; la vitrine du kit-3 ; les runs du
+kit téléphone ; P4/P5/P6 au poste réel.

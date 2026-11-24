@@ -1,0 +1,97 @@
+RAPPORT-TEMOINS-PC-20261124.txt — LE PREMIER RUN DUDECT TERRAIN, RECROUPÉ SUR PIÈCES
+=====================================================================================
+(le labo, 25/11/2026 — la nouvelle du maître : « le dossier kit test avec les
+témoins est dans /livrables du drive »)
+
+LE FAIT. Le dossier TRIADE_kits_terrain_Windows_v0150/ déposé au /livrables
+porte les témoins du passage terrain du 24/11 au soir (23:20-23:24, heure de
+Paris) : LE KIT-2 DUDECT A VÉCU SON PREMIER RUN TERRAIN — la mesure jamais
+encore courue du paquet (Entrée 413). Sept pièces rapatriées telles quelles
+(le verbatim du terrain ne se retouche jamais) et recoupées.
+
+LA MACHINE (dite par le terrain, elle corrige le labo) : Intel Core
+i7-3667U — Ivy Bridge (GenuineIntel famille 6 modèle 58 pas 9), 2 cœurs /
+4 fils, Windows 10 19045 (22H2), Python 3.14.10, AUCUN compilateur (les exe
+précompilés du kit ont couru). LE LABO AVAIT ASSUMÉ un i7-8665U Whiskey
+Lake dans le LISEZMOI-KITS-TERRAIN : l'assumption était FAUSSE, le terrain
+la corrige — la conclusion VAES inchangée (absent sur les deux siliciums),
+l'erreur nommée. C'est une machine n° 1 nouvelle du campagne dudect (ALEKPC,
+l'i7-8665U modèle 142, n'avait vécu que le kit-shani).
+
+LES TROIS VERDICTS, RECROUPÉS :
+  KIT-1 SHANI   : ÉCHEC NOMMÉ — le kit a refusé de mesurer au T0, SHA-NI
+                  ABSENT (CPUID feuille 7, EBX bit 29 = 0) : exactement le
+                  geste conçu, le verdict auto-portant porte le constat
+                  CPUID du silicium (famille 6, modèle 58). Un résultat,
+                  pas une panne ;
+  KIT-2 DUDECT  : LE RUN A VÉCU — code 0, N=200/classe, image scellée
+                  recoupée par le mesureur lui-même, l'exe exécuté EST la
+                  pièce du labo (sha256 98d96136…3371673, recoupé byte-byte
+                  contre l'exemplaire du bac) ;
+  KIT-3 LOUPE   : VERT SUR PIÈCES — la cérémonie M10-(e) entière (session,
+                  panneau — la pièce de l'ère jugée par sa propre
+                  application sur son ombre byte-byte, sha256 == l'asserté
+                  c1115105… — lignes, recherche, édition à l'octet, les
+                  rejets nommés, T7 la pièce relue inchangée, la sonde
+                  S0/Entrée 205 : le VRAI chargeur refuse le trou
+                  reconstitué et la géométrie dev.2).
+
+LE WELCH RE-CALCULÉ DU CSV BRUT (le recoup du labo — aucun chiffre repris
+sans son témoin) — 1 600 lignes, quatre cibles, les quatre t RECOUPÉS
+EXACTEMENT contre l'imprimé du run :
+    tls13-02 (SHA-256)   t = -10,64  DIVERGENCE   moyF 1131,5 / moyA 1310,3 (A +15,8 %)
+    tls13-13 (X25519)    t =  +9,65  DIVERGENCE   moyF 586 503 / moyA 552 963 (A -5,7 %)
+    tls13-16 (AES-128)   t =  +9,19  DIVERGENCE   moyF 51,4 / moyA 43,0 (A -16,4 %)
+    tls13-17 (GHASH)     t =  +1,05  aucune divergence au seuil
+
+LA LECTURE DU LABO (sur pièces, la prudence d'usage) : la fenêtre de mesure
+TOTALE du run est de 92 millisecondes (somme des secondes mesurées du csv) ;
+les classes du protocole kit-2 sont SÉQUENTIELLES (tout le secret-fixe,
+puis tout le secret-aléatoire par cible). Le csv porte la signature d'un
+silicium qui change de régime PENDANT la mesure : la classe aléatoire de
+tls13-02 dérive de +10,8 % en son sein (quartiles 1225→1417), la classe
+fixe de tls13-13 de -7,9 % (603 300→555 838) ; les directions S'INVERSENT
+d'une cible à l'autre — l'oscillation DVFS (turbo/thermale) d'un portable
+2 cœurs à froid, pas une dérive thermique unidirectionnelle. LE T DE WELCH,
+LÀ, MESURE LA CLASSE ET LE TEMPS. Le langage du kit demeure la loi :
+|t|>5 = dépendance AU SEUIL sur CET échantillon, consignée TELLE QUELLE —
+ni « fuite prouvée » (rien ne le permet : les quatre familles sont
+constantes par construction), ni « temps constant prouvé » (rien ne le
+permet non plus). Ce run ne pourra être INTERPRÉTÉ qu'avec le contexte de
+fréquence — qui manquait (les champs turbo/fréquence du témoin restent à
+la main du maître). D'OÙ LA RÉPONSE DU LABO : le cockpit SURVEILLANT-CPU
+(Entrée 417) qui affiche, journalise et enveloppe — et, pour mémoire, le
+protocole TELEPHONE-ARM-1 (Entrée 415) a déjà adopté les échantillons
+ENTRELACÉS, la structure qui sépare la classe du temps ; un futur kit PC
+hors périmètre scellé pourra s'en inspirer.
+
+LES ÉCARTS NOMMÉS DU PASSAGE (des résultats, pas des fautes — D189) :
+  (a) la BATTERIE est PARTIELLE : un run N=200 a vécu, les N=60 et N=400
+      du LISEZMOI pas encore ;
+  (b) temoin-dudect-BROUILLON.txt demeure sous son nom de BROUILLON (le
+      LISEZMOI demandait le renommage en temoin-dudect-N200.txt) — la
+      signature et la date y sont, l'essentiel vit ; le cockpit le renomme
+      désormais LUI-MÊME ;
+  (c) l'épreuve d'appel PASSÉE (test_appel.exe absent de l'édition —
+      l'écart était nommé à l'Entrée 413 ; le run a vécu quand même, comme
+      conçu) ;
+  (d) la VITRINE du kit-3 (temoin-vitrine.bat, les deux fenêtres et leurs
+      codes) n'a pas encore été vécue — le témoin loupe lui-même la
+      demande ;
+  (e) le LISEZMOI-KITS-TERRAIN nommait le mauvais silicium (i7-8665U
+      assumé, i7-3667U réel) — corrigé par le terrain, à corriger au
+      document à la prochaine édition ;
+  (f) la réception se fit au /livrables (la zone de réception demeure le
+      /test — les pièces furent recoupées là où elles vivent, aucun
+      préjudice).
+
+CE QUE LE LABO EN RETIENT : la campagne dudect a sa machine n° 1 et son
+premier témoin signé (Alexis Lopez, 24/11) ; trois divergences consignées
+telles quelles avec leur cause probable nommée (DVFS, classes
+séquentielles, 92 ms) ; le kit-3 VERT sur pièces pour la deuxième fois ;
+le kit-1 refusant exactement comme conçu sur un second silicium.
+
+LA SUITE (au geste du maître) : les runs N=60 et N=400 — idéalement PAR LE
+COCKPIT SURVEILLANT-CPU, qui donnera le cadre de fréquence manquant ; la
+vitrine du kit-3 ; les runs du kit téléphone (Entrée 415) ; la machine
+n° 2 ; P4/P5/P6 au poste réel.
