@@ -20,3 +20,8 @@ que les mesures de la vague 20 commandent.
 
 RÉSULTAT : porte V1..V7 + L1..L16, zéro rouge ; NEUF mutations refusées nommément (les huit
 de la vague 20 + C16).
+
+5. JOURNAL D'ANCRAGE APPEND-ONLY. Un ré-ancrage écrasait le reçu précédent : l'histoire de
+   ce qui avait été ancré, quand et par quelle autorité se perdait. Chaque ancrage est
+   désormais ajouté à `atelier-w20-sec/ancrage-journal.jsonl` (une ligne par ancrage :
+   TSA, empreinte du témoin, empreinte du jeton, edition, horodatage de vérification).

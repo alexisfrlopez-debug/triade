@@ -90,6 +90,8 @@ def preuves():
     pieces = [(f"Le manuscrit académique {EDITION}", p1), (f"La spécification {SPECVER}", p2),
               (f"Le Livre du Coffre {BOOKVER}", p3)]
     ateliers = [
+        ("W21IMPR — les quatre améliorations issues de la vague 20 (D271)",
+         REPO / "atelier-w21-impr.rapport.txt"),
         ("W20LINT — le linter v4 à quinze classes, les quatre résidus soldés",
          REPO / "atelier-w20-lint.rapport.txt"),
         ("W20ORAC — les vecteurs d'oracle des 50 blocs dérivés de la couche I",
@@ -125,7 +127,8 @@ def preuves():
     h.append(t)
     h.append(Paragraph(f"2. Ce que porte l'édition {EDITION}", H2))
     h.append(Paragraph(
-        "Le linter d'édition passe de onze à <b>quinze classes</b> : VERSION-PROSE (toute "
+        "Le linter d'édition passe à <b>seize classes</b> (la seizième, C16, recompose le "
+        "registre unique des statuts) : VERSION-PROSE (toute "
         "mention « édition courante vX » ou « révision vX » dans les cinq pièces confrontée "
         "au manifeste — le trou de couverture qui laissait le Livre annoncer v0.15.10 et la "
         "révision v1.9), WAVE-CONTINUITY (toute « vague N » renvoie à une entrée datée du "
@@ -135,7 +138,9 @@ def preuves():
         "présentation (vague 15, les campagnes linguistiques ; la vague 16 est la vague "
         "corpus et kit, sans édition donc sans entrée au changelog), le −35,7 % annoté de "
         "ses opérandes entiers (611/1 714 = 35,653 %) et épinglé au registre de provenance, "
-        "et le test du lecteur décomposé. <b>Aucune valeur mesurée n'est modifiée ; aucun "
+        "et le test du lecteur décomposé ; la vague 21 ajoute l'audit oracle tiré par le "
+        "contenu, le résumé anglais à 235 mots, le registre des statuts et le ré-ancrage "
+        "RFC 3161 automatique (D271). <b>Aucune valeur mesurée n'est modifiée ; aucun "
         "artefact scellé n'est touché.</b>", BODY))
     h.append(PageBreak())
     for titre, p in ateliers:
@@ -172,7 +177,7 @@ def preuves():
                        "Windows (SACL/4663) et IMA/Authenticode configurés restent au poste réel ; "
                        "les outils Tamarin/ProVerif sont absents du bac, les lemmes gardent leur "
                        "statut « prouvés sous hypothèses » ; l'ancrage de transparence est adopté, "
-                       "outillé et NON DÉPLOYÉ (D267). La porte de génération couvre quinze classes ; "
+                       "outillé et NON DÉPLOYÉ (D267). La porte de génération couvre seize classes ; "
                        "elle ne rejoue pas les 1 991 tokens de l'ancienne extraction — l'extraction "
                        "est remplacée par les classes et le test du lecteur, et le rapport le dit.", BODY))
     construire(PACK / "4-preuves-calculs" / f"TRIADE_preuves_et_calculs_{EDITION}.pdf",

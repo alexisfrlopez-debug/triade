@@ -84,6 +84,10 @@ def ancrer(t, tsas=None, cafile=None):
                 "verifie_le": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "verification": "openssl ts -verify : OK", "imprint_sha256": sha(tf)}
         (DOSSIER / "ancrage-recu.json").write_text(json.dumps(recu, indent=1) + "\n", encoding="utf-8")
+        # JOURNAL APPEND-ONLY (D271) : un ré-ancrage n'EFFACE pas l'histoire des ancrages
+        journal = DOSSIER / "ancrage-journal.jsonl"
+        with journal.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(recu, ensure_ascii=False, sort_keys=True) + "\n")
         return recu
     raise Refus("ANCRE-INDISPONIBLE", "aucune autorité d'horodatage joignable")
 

@@ -14270,4 +14270,5 @@ Work Log:
 - Le résumé anglais passe à 235 mots (français = traduction) ; C14 le mesure (métadonnées exclues) et refuse au-delà de 250.
 - `STATUTS-EN-ATTENTE.md` : dix chantiers, vocabulaire fermé, geste et décision par entrée ; C16 recompose le compte annoncé (mutation 11≠10 refusée).
 - La génération RÉ-ANCRE le témoin RFC 3161 à chaque passe ; V6 a refusé un témoin périmé en vraie grandeur avant de passer après ré-ancrage.
+- Cinquième geste : un JOURNAL APPEND-ONLY des ancrages (`ancrage-journal.jsonl`) — un ré-ancrage n'efface plus l'histoire (TSA, empreinte du témoin, empreinte du jeton, date).
 - Porte : **L1..L16, zéro rouge, 9/9 mutations**.
