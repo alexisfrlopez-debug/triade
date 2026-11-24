@@ -1,0 +1,34 @@
+ATELIER W19ADD — LA FRONTIÈRE « ADD » : POINTEUR-SEUL ET EXPANSION DÉTERMINISTE (24/11/2026)
+==========================================================================================
+Instruction : Prompt 5 — généraliser le patron pointeur-seul (diff sémantique structuré,
+expandeur déterministe côté client, juge intact, quatre refus nommés), ajouter la boucle de
+réparation par contre-exemple bornée à 3 tours, pré-enregistrer ≥ 15/18 à ≤ 3 000 tokens.
+
+LIVRÉ
+1. `scripts/vague19/expandeur_add.py` — le schéma fermé {op, dst, src, offset} :
+   - domaine d'opcodes fermé (mov, add, sub, xor, and, or, cmp, test, jcc, call, ret) ;
+   - rendu canonique UNIQUE : un pointeur n'a qu'un texte possible, aucun choix laissé
+     à l'expandeur ;
+   - trous typés : un saut veut une étiquette, un appel une entrée CST (IAT), jamais
+     l'inverse ;
+   - QUATRE refus fail-closed nommés : HORS-FORMAT, ID-INCONNU, EXPANSION-DIVERGENTE,
+     FORME-INVALIDE (offset hors [0, 0xFFFF], opérande malformé, schéma incomplet).
+2. La boucle de réparation par contre-exemple : le refus du juge (classe, position,
+   attendu) est réinjecté ; bornée à TROIS tours ; chaque conversion consignée par classe.
+3. Pré-enregistrement : ≥ 15/18 verts à ≤ 3 000 tokens par changement validé ; médiane
+   sur les 18 tâches ET sur les seules vertes (deux conventions nommées) ; graine
+   20261124 ; re-tokenisation indépendante à ±1 token.
+
+PREUVES (rejouables)
+- 18 pointeurs honnêtes : 18/18 VERTS.
+- 4 fixtures mutées : chacune REFUSÉE nommément (HORS-FORMAT, ID-INCONNU,
+  EXPANSION-DIVERGENTE, FORME-INVALIDE).
+- Deux compteurs de tokens indépendants : total 63 · médiane 4 · écart max 0 (exigence
+  ±1 tenue).
+
+LIMITES NOMMÉES
+- Aucune campagne servie depuis ce bac : la cible est pré-enregistrée, la mesure viendra
+  d'un serving à structured output. Aucun verdict de campagne n'est annoncé.
+- Les deux conventions de comptage sont des conventions de fixture (unités lexicales),
+  pas un tokenizer de modèle : elles vérifient l'instrument, elles ne remplacent pas la
+  re-tokenisation par le serving.

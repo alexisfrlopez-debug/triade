@@ -1,0 +1,59 @@
+ATELIER W19LINT — LA PORTE DE GÉNÉRATION PORTE LE LINTER, ONZE CLASSES (24/11/2026)
+====================================================================================
+Instruction : Prompt 1 — porter le linter d'édition v2 à la porte de génération du pack,
+l'étendre de six classes fail-closed (VERSION-TABLE, DECISION-RANGE, CHANGELOG-ORDER,
+NUMEROTATION, BENCH-COUNT, SEMANTIC-THREAT), corriger les six résidus, régénérer les cinq
+pièces ; append-only, aucune valeur mesurée modifiée, aucun artefact scellé touché.
+
+LIVRÉ
+1. `scripts/vague19/linter_v260.py` — le linter d'édition v3, onze classes falsifiables :
+   C1 phrases sémantiques, C2 plages de décisions, C3 revendications de version,
+   C4 gallicismes anglais, C5 numéraux de la prose (les cinq classes portées de v0.25.0),
+   plus C6 VERSION-TABLE (le tableau §10 de la présentation confronté au manifeste),
+   C7 DECISION-RANGE (tout ID cité ⊆ [D1, D268], toute plage cohérente),
+   C8 CHANGELOG-ORDER (dates strictement croissantes), C9 NUMEROTATION (convention unique
+   « spec § x.y », §8.6 interdit), C10 BENCH-COUNT (compte recomposé depuis les cas du
+   kit), C11 SEMANTIC-THREAT (chaque ligne « détecté — … » du §15.1 qualifiée par classe
+   d'adversaire ADV-* et par bord EN-LIGNE/HORS-LIGNE/LES-DEUX ; plus de « toutes
+   neutralisées » ; renvoi à D254/D267).
+2. `scripts/vague19/porte_generation_v260.py` — la porte V1..V7 + L1..L11 : le linter EST
+   la porte ; plus rien ne passe seulement parce que la génération l'a produit.
+3. Les SIX RÉSIDUS soldés à la source :
+   (1) présentation : le tableau §10 porte les versions courantes (v0.26.0 / v0.15.11 /
+       v1.10) et le titre nomme la vague 19, plus « la vague 17 » ;
+   (2) §15.1 : chaque ligne « détecté — … » porte sa classe d'adversaire et son bord ; la
+       clôture ne revendique plus une neutralisation uniforme (D254, D267) ;
+   (3) D262–D264 : portées à la spécification (§ spec 7.8, 7.9, 7.10) et au journal ;
+   (4) banc 16/16 : décomposé et nommé — 7 cas de transaction + 1 rendez-vous nominal +
+       5 aléas D261 + 3 invariants (recompté depuis le kit, écart zéro) ;
+   (5) changelog : ordre chronologique strict rétabli, entrée v0.26.0 ajoutée ;
+   (6) Preuves §2 : numérotation mixte remplacée par la convention unique « spec § x.y ».
+4. Les cinq pièces régénérées : manuscrit v0.26.0, spécification v0.15.11, Livre v1.10,
+   preuves v0.26.0, présentation v0.26.0.
+
+PREUVES
+- Porte complète : V1..V7 + L1..L11, zéro rouge (détail au rapport de porte ci-dessous).
+- Contrôles négatifs : quatre mutations, quatre refus nommés (libellé de version, ID hors
+  plage, ligne de menace non qualifiée, compte de banc muté).
+- Test du lecteur : les numéraux des cinq pièces recomposés depuis leurs opérandes.
+
+LIMITES NOMMÉES
+- La porte lit le texte extrait par pdftotext : un verdict dépend de la version de
+  l'extracteur (défaut nommé depuis l'Entrée 397).
+- Les 1 991 tokens de l'ancienne extraction ne sont pas rejoués : les onze classes et le
+  test du lecteur les remplacent, et le rapport le dit.
+
+PREUVES (porte complète, exécutée APRÈS régénération)
+- Porte de génération v0.26.0 : V1 empreintes, V2 versions, V3 ratio, V4 provenance
+  (12 lignes), V5 aucun secret, V7 tableau à diff nul — VERTS ; V6 témoin hors machine
+  EN ATTENTE (aucun témoin consigné, D259) ; L1..L11 : ONZE CLASSES, ZÉRO RÉSIDU.
+- Contrôles négatifs : 4/4 — libellé de version muté (C6 : « §10 Manuscrit = v0.24.0 ≠
+  manifeste v0.26.0 »), ID hors plage (C7 : « un ID au-delà de D268 »), ligne de menace non
+  qualifiée (C11 : six lignes nommées), compte de banc muté (C10 : « 16/16 n'est pas
+  publié »).
+- Test du lecteur (numéraux recomposés depuis leurs opérandes imprimés) : 7/7 —
+  3,22 = 63,39/19,66 (manuscrit) ; 12,7 = 806,35/63,39 et 41,0 = 806,35/19,66
+  (présentation) ; 1,055 = 4,844/4,59 (spécification) ; 49,12 = 78 888/1 606,
+  37,425 = 20,715+16,497+0,213 et 712,5 (preuves) ; 811/832 = 97,5 % (manuscrit et
+  preuves) ; 16/16 = 7 + 1 + 5 + 3 (présentation).
+- Scellés v0.25.0 : les cinq PDF du pack v250 INTACTS (empreintes recoupées avant/après).

@@ -1,0 +1,35 @@
+ATELIER W19ORAC — LE MOTEUR D'ORACLE NATIF ÉTENDU AUX 52 BLOCS (24/11/2026)
+============================================================================
+Instruction : Prompt 4 — étendre le moteur d'oracle natif aux 52 blocs scellés sans retirer
+aucun contrôle : même plan d'adresses, mêmes octets scellés, audit jumeau ligne-identique
+par bloc, audit chaîné 1-sur-10 conservé, mémo content-addressed lié au bloc + config +
+graine, dédup des rebuilds ; pré-enregistrer la cible T < 10 s.
+
+LIVRÉ
+1. `scripts/vague19/moteur_oracle_etendu.py` — le manifeste des 52 descripteurs :
+   chaque bloc assemblé depuis sa notation puis confronté OCTET POUR OCTET à son image
+   scellée de laboratoire. Résultat : 50/52 BYTE-IDENTIQUES (proxy, echo, selftest,
+   hello) ; 2 non résolus et NOMMÉS (c30012, c30014 — aucune image du bac ne porte leurs
+   octets). Aucun octet scellé n'est déplacé.
+2. Mémo content-addressed : clé = sha256(bloc ‖ config ‖ graine) ; un octet changé, une
+   configuration changée ou une graine changée sont des MISS (4/4 vérifiés). La
+   cristallisation incrémentale est généralisée par dédup des rebuilds : le manifeste
+   recense les contenus distincts, et un rebuild de contenu identique réutilise l'entrée.
+3. Audit chaîné 1-sur-10 conservé : 6 blocs rejoués (indices 0, 10, 20, 30, 40, 50),
+   confrontés champ par champ (sha256, RVA, taille) : 6/6 VERTS.
+4. Re-capture des consoles du jumeau : 128/128 lignes IDENTIQUES (rax + digeste) au
+   jumeau original de `atelier-oracles-8hguph5ee/registres/console-mesure.json`.
+5. `atelier-w19-oracle/preregistrement.json` — cible T < 10 s à volumes d'oracle égalisés,
+   liste de commandes fixe, chronomètre monotone, n ≥ 5, graine 20261125.
+
+LIMITES NOMMÉES (aucun chiffre fabriqué)
+- Le moteur NATIF n'est pas rejouable dans ce bac : il exige mmap à 0xC000, refusé par
+  vm.mmap_min_addr = 65536. La re-exécution native est donc impossible ici, et le dit ;
+  le jumeau Unicorn rejoue les vecteurs et rend la console.
+- Les 50 blocs hors des deux corps cryptographiques n'ont AUCUN vecteur d'oracle au
+  dépôt : leur exécution à volume est EN ATTENTE. L'extension porte le manifeste, le mémo,
+  la dédup et l'audit — pas une mesure inventée.
+- La « console identique ligne pour ligne aux originales » est vérifiée sur les 128 lignes
+  du jumeau présentes au dépôt ; aucune série de 24 consoles distinctes n'existe dans le
+  bac, et ce compte n'est donc pas revendiqué.
+- Aucune mesure de performance n'est publiée : la cible est pré-enregistrée, pas mesurée.

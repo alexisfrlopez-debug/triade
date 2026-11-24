@@ -1,0 +1,39 @@
+ATELIER W19METAL — LE KIT MÉTAL DE BASCULE CONCURRENTE, PRÉ-ENREGISTRÉ (24/11/2026)
+====================================================================================
+Instruction : Prompt 3 — préparer et pré-enregistrer le run métal de la transaction D253
+sur ≥ 2 machines : CPUID et fréquence effective par machine, cœur épinglé, N ≥ 30 par
+configuration, interruption aux sept états (0–6), rollback sous trafic, les cinq aléas
+D261 exercés ; livrer l'agrégateur fail-closed. AUCUN RÉSULTAT FABRIQUÉ.
+
+LIVRÉ
+1. `scripts/vague19/kit_metal_bascule.py` — le protocole complet :
+   - machines ≥ 2 (M1, M2), CPUID consigné (vendor/family/model/stepping, drapeau
+     cmpxchg16b), fréquence effective mesurée, cœur épinglé (affinité) ;
+   - N = 30 exécutions par configuration, graine 20261124, ordre consigné ;
+   - les SEPT états (0 à 6) injectés un par un ;
+   - rollback sous trafic depuis publication / invalidation / vérification ;
+   - les CINQ aléas D261 : thread créé pendant le rendez-vous, retour de pile dans la
+     plage, rel32 hors portée ±2 GiB, slot de 16 octets non réservé, verrou détenu.
+   Total de cas attendus : 2 machines × (7 états + 5 aléas + 3 rollbacks) = 30.
+2. `scripts/vague19/agregeur_metal.py` est porté DANS le kit (fonction `agrege`) :
+   - run manquant = REFUS MANQUANT nommé (machine/cas/variante) ;
+   - run corrompu = REFUS CORROMPU nommé (schéma, graine, n, CPUID, fréquence, état,
+     état partiel exécutable) ;
+   - jamais de verdict partiel : le refus liste TOUS les motifs, triés.
+3. `atelier-w19-metal/preregistrement.json` — gelé AVANT tout run ; sha256
+   162a29e4cb6f778e018612d14792a0dd2c4ff1990169fb332181bd3b9d6ab2bc ; il nomme la
+   commande, la graine, la convention d'agrégation et le statut EN ATTENTE.
+
+PREUVES (autotest, 4/4)
+- jeu complet → VERT ; run manquant → REFUS MANQUANT ; run corrompu → REFUS CORROMPU ;
+  rejeu bit-identique deux fois à graine consignée (sorties identiques).
+- 30 runs synthétiques, 30 cas attendus : l'agrégateur ne rend VERT qu'au complet.
+
+LIMITES NOMMÉES
+- Aucun run matériel n'existe : le statut est EN ATTENTE, et aucun chiffre de fréquence,
+  de cycles ou d'atomicité n'est publié.
+- L'agrégateur valide la forme et la complétude des journaux ; il ne prouve pas que la
+  machine a réellement exécuté le protocole (la signature du journal et le recoupement
+  sur pièces restent au développeur).
+- Les empreintes des journaux bruts sont exigées AVANT l'agrégat (champ journal_sha256) :
+  un agrégat sans empreinte est REFUSÉ.
