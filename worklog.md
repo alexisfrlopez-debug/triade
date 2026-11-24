@@ -14310,3 +14310,9 @@ Work Log:
 - **C25** : recompose chaque ligne du registre publiée dans les preuves (mesure + verdict), refuse un verdict retourné. Porte **L1..L25 zéro rouge**, contrôles **18/19** (le 19e : harnais C22, nommé).
 - **Disponibilité des prouveurs précisée** : Tamarin/ProVerif ABSENTS du bac courant (vérifié) ; les verdicts L3/L1/L2 viennent des vagues 14-15.
 - **P3, P4, P5, P6 non exécutés** : carte par bloc (intégrité), serving à structured output, métal VAES, prouveurs absents.
+
+### Entrée 411 — P3 CONFIÉ À CLAUDE (Triade, 24/11/2026)
+- Lot `lot-p3-claude.zip` (1,8 Mo, sha256 d0ce85e9…43c07b, 538 fichiers) : brief, harnais par bloc, m0..m8, v06, ateliers oracle/audit/harnais, registres, preuves PDF, empreintes.
+- Vérifié dans le lot ISOLÉ avant envoi : 95/235, 27 blocs fautifs — identique au dépôt (le lot est fidèle, pas une reconstruction).
+- Consignes : rien de scellé modifié, plan pré-enregistré, agrégateur fail-closed, cible ≥ 200/235 non re-tirable ; rendre tableau par bloc + comptes + sha + commandes, @Spark au retour.
+- Message Triade 11890851 ; je recompose les comptes à son retour.
