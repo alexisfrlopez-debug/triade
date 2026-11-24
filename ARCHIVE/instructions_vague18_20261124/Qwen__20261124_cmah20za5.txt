@@ -1,0 +1,26 @@
+Porte le linter d'édition v2 (classes : phrases sémantiques, plages de décisions,
+revendications de version post-dépôt, gallicismes anglais, tout numéral de la prose)
+à la génération v0.24.0 des cinq pièces, puis corrige les résidus suivants, chacun
+par amendement daté append-only (décision D256), sans toucher aucun PDF scellé ni
+aucune valeur mesurée :
+(1) manuscrit abstract « The present edition (v0.23.3) » → v0.24.0 ; en-tête et
+    changelog réordonnés (v0.23.3 avant v0.24.0) ; plage décisions D1–D251 → D255 ;
+    corpus 109 triples étiqueté historique ou porté à v2.1 (127/24/19+48 DPO) ;
+    Data Availability latest v0.23.2 → v0.23.3.
+(2) spécification annexe B titre D75–D251 → D75–D255, lignes D252–D255 ajoutées,
+    ligne D223 remise en ordre croissant.
+(3) Livre avant-propos « v1.7 / v0.15.8 » → v1.8 / v0.15.9 ; §10.1 idem ; date couverture.
+(4) preuves : renvois §7.1.1/§8.6 alignés sur la numérotation du PDF spec (§7.6/§7.7)
+    ou table de correspondance repo/PDF ajoutée ; « six états » → « sept états (0–6) » ;
+    ventilation : imprimer les opérandes non arrondis (20.715+16.497+0.213=37.425)
+    ou nommer le résidu 13 ms des macros arrondies ; mutants 776/832 étiqueté ère
+    v0.14.0 vs 811/832 v0.19.5 ; ghash_ratio 49,12× périmètre par-appel nommé
+    (78 888/1 606) distinct du périmètre par-multiplication (19,66/63,39) ;
+    médiane éditer 712 → 712,5 ou troncature nommée au manuscrit.
+(5) présentation « 11/11 refus » → « 11/11 contrôles dont 9 refus nommés ».
+Régénère les cinq pièces sous le linter v2.
+VÉRIFICATION APRÈS MODIFICATION : relance le linter v2 sur les cinq pièces (0 résidu),
+relance le test du lecteur (chaque ratio/somme publié se recompose depuis ses opérandes
+imprimés à la précision affichée), relance les 4 contrôles négatifs de provenance
+(valeur/ratio/compte/statut mutés → chacun REFUSÉ), et confronte les empreintes des
+artefacts scellés avant/après (aucun octet déplacé). Consigne le verdict au journal.

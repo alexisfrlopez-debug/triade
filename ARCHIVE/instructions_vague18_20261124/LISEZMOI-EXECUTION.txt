@@ -1,0 +1,13 @@
+INSTRUCTIONS DE LA VAGUE 18 — ARCHIVE D'EXÉCUTION (24/11/2026)
+==============================================================
+Cinq instructions déposées le 24/11/2026, toutes EXÉCUTÉES, chacune avec son plan
+gelé (commit f25742b, EMPREINTES-PLANS-VAGUE18.txt) et son atelier commité seul :
+
+  Qwen__20261124_bhqg73gzh.txt -> atelier des aléas du rendez-vous (D261, kit 16/16)
+  Qwen__20261124_jeewkx9g8.txt -> liste blanche du prescriptif (D262, scan 0)
+  Qwen__20261124_hetetznth.txt -> compteur NV TPM 2.0 (D263, simulateur 12/12)
+  Qwen__20261124_lsv9itvng.txt -> expansion structurée (D264, 9/9, campagne EN ATTENTE)
+  Qwen__20261124_cmah20za5.txt -> linter v2 porté et résidus soldés (D265, édition v0.25.0)
+
+Fichiers ORIGINAUX, octet pour octet (comparés par sha256 à leurs copies ARCHIVE du
+coffre). Aucun secret n'y figure.

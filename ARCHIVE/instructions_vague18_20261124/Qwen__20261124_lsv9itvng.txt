@@ -1,0 +1,14 @@
+Attaque la classe HORS-FORMAT de l'opération ajouter (campagne v5 : 5/18 verts,
+cible ≥15/18 manquée, cause nommée : variance CLI du sujet). Remplace l'expansion
+en texte libre par une expansion sous contrainte de grammaire : schéma structuré
+opcode/opérande/offset validé à la génération (structured output), le juge d'expansion
+inchangé. Ajoute la boucle de réparation par contre-exemple (le premier refus honnête
+fournit le contre-exemple minimal, ddmin) bornée à 3 tours. Pré-enregistre la cible
+de faisabilité et le périmètre AVANT mesure ; mêmes 18 tâches, même graine consignée,
+juges intacts, aucun octet scellé touché. Mesure la médiane par changement validé
+et le taux de verts ; consigne la lecture défavorable si la cible est manquée.
+VÉRIFICATION APRÈS MODIFICATION : zéro HORS-FORMAT sur les verts ; les juges
+(expansion, round-trip, oracle, mutation) rendent les mêmes verdicts sur les tâches
+vertes de référence qu'avant modification (aucun juge affaibli) ; re-tokenisation
+indépendante à ±1 token ; empreintes des artefacts scellés intactes avant/après.
+Consigne distributions complètes et statut mesuré/émulé.

@@ -1,0 +1,19 @@
+Étends kit_bascule.py et la spécification §7.6 pour nommer et garder les aléas résiduels
+du rendez-vous de quiescence, sans rien revendiquer du silicium :
+(1) fenêtre de création de thread pendant le rendez-vous → gel de création ou
+    ré-énumération atomique, refus si un thread non vérifié apparaît ;
+(2) adresses de retour pile pointant dans la plage remplacée → inspection pile,
+    refus ou avance hors plage (l'atomicité du magasin ne protège pas un retour) ;
+(3) portée ±2 GiB du rel32 de la forme courte → refus nommé HORS-PORTEE si la zone
+    de croissance est au-delà ;
+(4) réservation du slot 16 octets aligné à la build (granularité R7), jamais improvisé
+    au patch ;
+(5) deadlock SuspendThread (thread suspendu tenant un lock requis par le patcheur)
+    → ordre d'acquisition nommé, refus si lock détenu.
+Chaque aléa = un cas de refus nommé + un invariant d'état. Le métal reste EN ATTENTE
+(≥2 machines), aucun résultat annoncé.
+VÉRIFICATION APRÈS MODIFICATION : autotest 10/10 existant reproduit à l'identique,
+plus les nouveaux cas (thread créé pendant rendez-vous refusé ; retour pile dans plage
+refusé ; rel32 hors portée refusé ; slot non réservé refusé ; lock détenu refusé) ;
+contrôles négatifs : chaque invariant violé → rollback, aucun état partiel exécutable.
+Consigne « banc vert, métal EN ATTENTE ».

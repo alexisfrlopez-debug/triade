@@ -15,13 +15,13 @@ B). Trois couches indissociables ; priorités lexicographiques
 **Sécurité > Performance > Optimisation > Coût en tokens**. Le dossier
 publie des ÉDITIONS académiques (manuscrit, spécification, Livre du
 Coffre, preuves, présentation) au DOI Zenodo
-**10.5281/zenodo.24367343** (concept ; **v0.24.1 = record 24495647 —
-la version courante (corrective : les cinq pièces byte-identiques à v0.24.0,
-record 24494615, le complet régénéré à l'état de reprise), les TROIS packs** ; les records datés : 24480415 =
+**10.5281/zenodo.24367343** (concept ; **v0.25.0 = record 24497211 —
+la version courante (les cinq pièces régénérées : manuscrit v0.25.0, spec v0.15.10,
+Livre v1.9, preuves et présentation v0.25.0), les TROIS packs** ; les records datés : 24480415 =
 v0.23.4, 24450872 = v0.23.3, 24442951 = v0.23.2, 24442241 = v0.23.1,
 24438614 = v0.23.0, 24420007 = v0.22.1).
-LES TROIS ŒUVRES SÉPARÉES du protocole : le kit développeur **v1.1.0** au
-DOI 10.5281/zenodo.24495696 (concept 10.5281/zenodo.24457514 ; v1.0.0 = 24457515) ; le
+LES TROIS ŒUVRES SÉPARÉES du protocole : le kit développeur **v1.2.0** au
+DOI 10.5281/zenodo.24497290 (concept 10.5281/zenodo.24457514 ; v1.0.0 = 24457515, v1.1.0 = 24495696) ; le
 corpus TRIADE-CORPUS-v2.1 au DOI 10.5281/zenodo.24479882 (concept
 10.5281/zenodo.24457524) ; **le pack d'entraînement LLM TRIADE-TRAIN
 v1.0.0 au DOI 10.5281/zenodo.24495492** (recettes SFT/DPO/RLVR, les 48

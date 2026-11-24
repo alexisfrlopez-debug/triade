@@ -369,3 +369,14 @@ Entrées 251-304) et au worklog (`worklog.md`, Tasks 158-211).*
 - **AU COFFRE** : les livrables au `/livrables` (cinq PDF + trois packs + empreintes + rapport) ; les anciennes archives COPIÉES au dossier ARCHIVE (la corbeille des originaux du /livrables attend la confirmation de la carte d'approbation) ; les instructions de la vague 17 à `ARCHIVE/instructions_vague17_20261124/` (dépôt) et au dossier ARCHIVE du coffre ; le rapport de release `rapport-release-v0240-20261124.txt` à la racine du coffre et au `/test`.
 - **AU DÉPÔT** : les quatre ateliers `atelier-w17-*/`, `replication-v17/`, `scripts/vague17/` (provenance, porte d'édition, générateur des pièces), `docs/DECISIONS.md` D252–D255, `worklog.md` Entrée 398.
 - **LA REPRISE** : ce fichier (§ 1) porte les DOIs courants ; le prochain chantier nommé est le port du linter d'édition v2 sur v0.24.0, puis les propositions d'amélioration du protocole (sécurité, performance, coût en tokens).
+
+## Mise à jour 400 (24/11/2026) — L'ÉDITION v0.25.0 ET LE PACK DE PARTICIPATION
+
+- **PROTOCOLE v0.25.0** : DOI de version **10.5281/zenodo.24497211**, concept 10.5281/zenodo.24367343 — `TRIADE_soumission_v0.25.0.zip`, `TRIADE_presentation_v0.25.0.zip`, `TRIADE_complet_v0.25.0.zip`.
+- **LES CINQ PIÈCES** : manuscrit v0.25.0, spécification v0.15.10, Livre du Coffre v1.9, preuves v0.25.0, présentation v0.25.0 (`pack-v250/`, empreintes et rapport de vérification à côté).
+- **LE KIT DÉVELOPPEUR v1.2.0** : **10.5281/zenodo.24497290** (liste blanche du prescriptif).
+- **LE PACK DE PARTICIPATION v1.0.0** : **10.5281/zenodo.24497300** — les quatre kits + CONTRIBUTING + EVALUATION + INDEX-DOI ; `TRIADE_participer_v1.0.0.zip` au /livrables.
+- **CORPUS** : v2.1 inchangé, 10.5281/zenodo.24479882 (non minté) ; **entraînement** v1.0.0, 10.5281/zenodo.24495492.
+- **AU COFFRE** : les pièces, les packs, le kit et le pack de participation au `/livrables` ; les instructions de la vague 18 au dossier ARCHIVE ; le retrait du /instructions attend les cinq autorisations par fichier.
+- **AU DÉPÔT** : ateliers `atelier-w18-*.rapport.txt`, `scripts/vague18/`, `plans-vague18/`, `EMPREINTES-PLANS-VAGUE18.txt`, `SOURCES-PRESCRIPTIVES.txt`, `pack-v250/`, `depot-zenodo-v0250/`, `participation-v1/`, D261–D265, worklog Entrée 400.
+

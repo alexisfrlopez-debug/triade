@@ -1,0 +1,35 @@
+{
+  "projet": "nom-du-projet",
+  "protocole_triade": "1.0",
+  "git": {
+    "remote": "https://exemple.fr/nom-du-projet.git",
+    "branche_principale": "main"
+  },
+  "drive": {
+    "dossier_racine_id": "IDENTIFIANT-DOSSIER-RACINE",
+    "dossier_documents_id": "IDENTIFIANT-DOSSIER-DOCUMENTS",
+    "dossier_packs_id": "IDENTIFIANT-DOSSIER-PACKS",
+    "dossier_coffre_id": "IDENTIFIANT-DOSSIER-COFFRE"
+  },
+  "zenodo": {
+    "deposit_id": "IDENTIFIANT-DEPOT-ZENODO",
+    "doi_public": ""
+  },
+  "pack": {
+    "version": "0.1.0",
+    "documents": [
+      "manuscrit",
+      "presentation",
+      "soumission",
+      "pack_complet",
+      "rapport_verification"
+    ],
+    "note_composition": "Lister ici les documents composant le pack. La composition est propre a chaque projet ; l'exemple ci-dessus correspond au canon de cinq documents."
+  },
+  "rotation_jetons": {
+    "cadence_jours": 90,
+    "derniere_rotation": "",
+    "prochaine_echeance": ""
+  },
+  "_note": "Identifiants et metadonnees seulement - jamais de jeton dans ce fichier. Copier vers config.json (ignore par git via .gitignore.triade) puis remplacer les valeurs d'exemple. Les valeurs secretes vont dans .env."
+}

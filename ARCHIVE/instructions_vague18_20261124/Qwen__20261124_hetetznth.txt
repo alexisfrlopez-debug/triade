@@ -1,0 +1,14 @@
+Pré-enregistre (plan hashé et consigné AVANT toute mesure) un kit anti-rollback R10
+adossé à un compteur monotone NV TPM 2.0 : le plancher de version devient un compteur
+NV incrémenté à chaque scellage, lu au chargement avant toute entrée dans le chemin
+d'exécution ; toute version sous le compteur → refus nommé RETOUR-EN-ARRIERE ;
+compteur absent/inaccessible → fail-closed ; TPM clear/ownership-takeover → refus nommé
+ANCRE-PERDUE (jamais de récupération silencieuse). Aucun appel réseau. Le kit tourne
+sur simulateur TPM au laboratoire (autotest du mécanisme) ; le run matériel est le
+geste du développeur, EN ATTENTE, aucun chiffre fabriqué. Livre l'agrégateur fail-closed
+qui refuse tout run manquant.
+VÉRIFICATION APRÈS MODIFICATION : autotest simulateur — nominal vert ; rollback binaire
+seul refusé ; restauration cohérente binaire+état sous compteur refusée (le compteur NV
+survit à la restauration) ; compteur absent refusé ; TPM clear refusé nommément ;
+incrément non monotone refusé. Contrôles négatifs : chaque garde falsifiée → refus.
+Consigne le statut « mécanisme éprouvé sur simulateur, run matériel EN ATTENTE ».

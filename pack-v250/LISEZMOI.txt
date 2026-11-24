@@ -1,0 +1,21 @@
+TRIADE — LE PACK DE L'ÉDITION v0.25.0 (la vague 18, 24 novembre 2026)
+=====================================================================
+Les cinq pièces, régénérées sous le linter d'édition v2 porté :
+  manuscrit v0.25.0 · spécification v0.15.10 · Livre du Coffre v1.9 ·
+  preuves et calculs v0.25.0 · présentation v0.25.0.
+
+CE QUE PORTE LA VAGUE 18
+- les cinq aléas résiduels du rendez-vous de quiescence (D261 : thread créé pendant
+  le rendez-vous, retour de pile dans la plage, rel32 hors portée, slot non réservé,
+  verrou détenu) ; kit 16/16 ;
+- la liste blanche fermée du prescriptif (D262) : SOURCES-PRESCRIPTIVES.txt, règle
+  SOURCE-NON-PRESCRIPTIVE, garde au pre-commit ;
+- le compteur NV TPM 2.0 comme plancher R10 (D263), éprouvé sur simulateur, run
+  matériel EN ATTENTE ;
+- l'expansion structurée et la boucle de réparation bornée à 3 tours (D264),
+  campagne EN ATTENTE d'un serving à structured output ;
+- les résidus d'édition soldés (D265) : 0 résidu au linter v2, 5/5 contrôles négatifs,
+  7/7 au test du lecteur, scellés v0.24.0 intacts.
+Limites nommées : métal nu, TPM réel, campagne structurée et linter intégral (1 991
+tokens) restent hors de cette génération.
+Empreintes : empreintes_livrables_v0.25.0.txt. Vérification : rapport_verification_v0.25.0.txt.
