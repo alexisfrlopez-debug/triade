@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""HARNAIS PAR BLOC v2 — L'IMAGE ENTIÈRE À SA VRAIE BASE (P3, 25/11/2026).
+"""HARNAIS PAR BLOC v3 — L'IMAGE SCELLÉE POUR CONTEXTE, LA NOTATION POUR LE CODE (P3).
 
-Conforme au plan gelé atelier-p3-exec/PLAN-HARNAIS-IMAGE.txt
-(sha256 5cc5da3985838fc2905ab131ba22f3f1b28b23f6193a82ce43daecd77da31da6) :
-  H1 image à B = 0x140000000 (L.IMAGE_BASE) ;
-  H2 moitié code [B+0x1000,B+0x2000)∪[B+0x4000,B+0xA000) pré-remplie du
-     motif de stub « xor eax,eax ; ret », chaque bloc écrit à B+son RVA ;
-  H3 les quatre IAT de la carte (kernel32 0x20B0, ws2_32 0x2300,
-     secur32 0x2A00, M5 0x2E30) pointent au stub B+0x20000 ; la moitié
-     données [B+0x2000,B+0x4000) reste à zéro (lecture froide) ;
-  H4 convention d'arguments de v1 reconduite à l'identique ;
-  H5 mêmes vecteurs (atelier-w20-orac), type rejet exclu, msx64 puis sysv.
-
-AUCUN fichier scellé n'est modifié : les notations sont assemblées en mémoire
-par les builders du dépôt, exactement comme au build.
+Plan gelé PLAN-HARNAIS-IMAGE.txt (sha256 5cc5da39…31da6) + AMENDEMENT-V3.txt
+(sha256 141192d2…9e2356) :
+  H1  image à B = 0x140000000 (L.IMAGE_BASE) ;
+  V3-1 les sections du binaire scellé m5/proxy.exe sont chargées à leur RVA
+      (LECTURE SEULE — le fichier n'est jamais ouvert en écriture) ;
+      le bloc mesuré est écrit à B+son RVA depuis SA NOTATION ASSEMBLÉE
+      (le moteur de v1/v2 demeure ; corrige la collision des slots partagés) ;
+  V3-2 le slot kernel32 0x20C0 (ExitProcess) reçoit un TERMINATEUR
+      (mov rax, 0x60000 ; jmp rax) — ExitProcess ne rend jamais la main,
+      le ud2 défensif qui suit demeure inatteignable ; tous les autres
+      slots des quatre IAT demeurent au stub retour zéro ;
+  H4  convention d'arguments de v1 reconduite à l'identique ;
+  H5  mêmes vecteurs (atelier-w20-orac), type rejet exclu, msx64 puis sysv.
 """
 import importlib.util
 import json
@@ -25,17 +25,19 @@ import sys
 R = pathlib.Path(__file__).resolve().parents[1]
 ENTREE = R / "atelier-w20-orac"
 SORTIE = R / "atelier-p3-exec"
+EXE_SCELLE = R / "m5/proxy.exe"       # lecture seule (V3-1)
 
-B = 0x140000000                  # L.IMAGE_BASE (m3/layout.py:62)
-PAGE_STUB = B + 0x20000          # page de stubs IAT (H3)
-MOTIF = b"\x31\xc0\xc3" + b"\x90" * 13   # xor eax,eax ; ret — le stub de v1
+B = 0x140000000                       # L.IMAGE_BASE
+PAGE_STUB = B + 0x20000
+TERMINATEUR = PAGE_STUB + 0x800       # V3-2
+MOTIF = b"\x31\xc0\xc3" + b"\x90" * 13
+SLOT_EXIT = 0x20C0                    # ExitProcess (ordre GSH/WF/EP figé)
 
-# Les quatre IAT déclarées de la carte (H3) — [premier slot, dernier slot]
 IATS = [
-    (0x20B0, 0x2108, "kernel32"),   # R_IAT (m3/layout.py:162), jusqu'à l'INT 0x2110
-    (0x2300, 0x2360, "ws2_32"),     # R_IAT_WS2 (m3/layout.py:172), 13 entrées
-    (0x2A00, 0x2A30, "secur32"),    # R_IAT_SEC32 (m4/layout.py:408), 7 slots
-    (0x2E30, 0x2E30, "m5"),         # R_IAT_M5 (m5/layout.py:177), 1 slot
+    (0x20B0, 0x2108, "kernel32"),    # R_IAT (m3/layout.py:162)
+    (0x2300, 0x2360, "ws2_32"),      # R_IAT_WS2
+    (0x2A00, 0x2A30, "secur32"),     # R_IAT_SEC32 (m4/layout.py:408)
+    (0x2E30, 0x2E30, "m5"),          # R_IAT_M5 (m5/layout.py:177)
 ]
 
 
@@ -47,47 +49,47 @@ def _charger_m5():
     return m
 
 
-def assembler_tous(m, ks):
-    """Assemble chaque bloc de la carte à son RVA (H1) — en mémoire uniquement."""
-    octets_par_bloc = {}
-    refuses = []
-    for bid, rva in sorted(m.RVA_PAR_BLOC.items()):
-        try:
-            octets, _ = m.assembler_bloc(ks, m._chemin_notation_bid(bid), rva, rva + 0x2000)
-            octets_par_bloc[bid] = (rva, octets)
-        except Exception as e:
-            refuses.append((bid, str(e)[:120]))
-    return octets_par_bloc, refuses
+def _sections_exe():
+    """Les sections du binaire scellé : [(rva, octets, taille_virtuelle)]."""
+    import pefile
+    data = EXE_SCELLE.read_bytes()
+    pe = pefile.PE(data=data, fast_load=True)
+    assert pe.OPTIONAL_HEADER.ImageBase == B
+    sections = []
+    for s in pe.sections:
+        brut = data[s.PointerToRawData:s.PointerToRawData + s.SizeOfRawData]
+        virt = s.Misc_VirtualSize
+        sections.append((s.VirtualAddress, brut, virt))
+    return sections
 
 
-def _motif(taille):
-    n = (taille + 15) // 16
-    return (MOTIF * n)[:taille]
+def _terminateur():
+    """mov rax, 0x60000 ; jmp rax — arrêt propre sur la sentinelle (V3-2)."""
+    return b"\x48\xb8" + struct.pack("<Q", 0x60000) + b"\xff\xe0"
 
 
-def _exec(octets_par_bloc, rva, entree, abi, calendrier):
-    """Une émulation : l'image entière, le bloc à B+rva (H4 = convention v1)."""
+def _exec(sections, rva, octets_bloc, entree, abi, calendrier):
     from unicorn import Uc, UC_ARCH_X86, UC_MODE_64
     from unicorn.x86_const import (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8,
                                    UC_X86_REG_R9, UC_X86_REG_R10, UC_X86_REG_RDI,
                                    UC_X86_REG_RSI, UC_X86_REG_RSP)
     uc = Uc(UC_ARCH_X86, UC_MODE_64)
-    # H1/H2 : l'image — moitié code en motif de stub, moitié données à zéro
-    uc.mem_map(B + 0x1000, 0x1000)
-    uc.mem_map(B + 0x2000, 0x2000)
-    uc.mem_map(B + 0x4000, 0x6000)
-    uc.mem_write(B + 0x1000, _motif(0x1000))
-    uc.mem_write(B + 0x4000, _motif(0x6000))
-    # H2 : chaque bloc de la carte à son RVA
-    for _bid, (brva, octets) in octets_par_bloc.items():
-        uc.mem_write(B + brva, octets)
-    # H3 : chaque slot d'IAT pointe au stub
-    for lo, hi, _nom in IATS:
-        for a in range(lo, hi + 1, 8):
-            uc.mem_write(B + a, struct.pack("<Q", PAGE_STUB))
-    # H3 : la page de stub
+    # V3-1 : les sections du binaire scellé à leur RVA (une carte par section,
+    # arrondie à la page ; le flanc virtuel au-delà du brut est à zéro)
+    for va, brut, virt in sections:
+        taille = max((virt + 0xFFF) & ~0xFFF, (len(brut) + 0xFFF) & ~0xFFF)
+        uc.mem_map(B + va, taille)
+        uc.mem_write(B + va, brut)
+    # V3-1 : le bloc mesuré, depuis SA notation assemblée
+    uc.mem_write(B + rva, octets_bloc)
+    # H3/V3-2 : les quatre IAT — stub retour zéro, sauf ExitProcess terminateur
     uc.mem_map(PAGE_STUB, 0x1000)
     uc.mem_write(PAGE_STUB, MOTIF * 256)
+    uc.mem_write(TERMINATEUR, _terminateur())
+    for lo, hi, _nom in IATS:
+        for a in range(lo, hi + 1, 8):
+            cible = TERMINATEUR if a == SLOT_EXIT else PAGE_STUB
+            uc.mem_write(B + a, struct.pack("<Q", cible))
     # H4 : la convention d'arguments de v1, à l'identique
     uc.mem_map(0x500000, 0x21000)
     uc.mem_map(0x70000, 0x10000)
@@ -115,18 +117,20 @@ def mesurer():
     m = _charger_m5()
     ks = m.Ks(m.KS_ARCH_X86, m.KS_MODE_64)
     calendrier = (R / "atelier-oracles-8hguph5ee/registres/calendrier.bin").read_bytes()
-    octets_par_bloc, refuses = assembler_tous(m, ks)
-    if refuses:
-        print(f"[harnais] ATTENTION : {len(refuses)} blocs non assemblables (zones à stub) :")
-        for bid, msg in refuses:
-            print(f"  {bid}: {msg}")
-    SORTIE.mkdir(exist_ok=True)
+    sections = _sections_exe()
+    print(f"[harnais-v3] binaire scellé : {len(sections)} sections chargées "
+          f"(lecture seule, sha256 enregistré par l'agrégateur)")
+    import hashlib
+    sha_exe = hashlib.sha256(EXE_SCELLE.read_bytes()).hexdigest()
+    print(f"[harnais-v3] m5/proxy.exe sha256 {sha_exe[:16]}…")
 
     detail = {}
     for f in sorted(ENTREE.glob("vecteurs-*.json")):
         d = json.loads(f.read_text())
         bid = d["id"]
         rva = m.RVA_PAR_BLOC[bid]
+        # le bloc mesuré est assemblé depuis sa notation (V3-1)
+        octets_bloc, _ = m.assembler_bloc(ks, m._chemin_notation_bid(bid), rva, rva + 0x2000)
         vecteurs = []
         for v in d["vecteurs"]:
             if v.get("type") == "rejet":
@@ -134,7 +138,7 @@ def mesurer():
             statut, motif, abi_ok = "FAULT", "", None
             for abi in ("msx64", "sysv"):
                 try:
-                    _exec(octets_par_bloc, rva, v["entree"], abi, calendrier)
+                    _exec(sections, rva, octets_bloc, v["entree"], abi, calendrier)
                     statut, abi_ok = "OK", abi
                     break
                 except Exception as e:
@@ -143,13 +147,13 @@ def mesurer():
                              "abi": abi_ok, "motif": motif if statut == "FAULT" else ""})
         detail[bid] = {"rva": rva, "vecteurs": vecteurs}
 
-    # le compte est écrit BRUT ; la recomposition se fait par l'agrégateur
     (SORTIE / "resultat-image.json").write_text(
-        json.dumps(detail, ensure_ascii=False, indent=1), encoding="utf-8")
+        json.dumps({"sha_proxy_exe": sha_exe, "blocs": detail},
+                   ensure_ascii=False, indent=1), encoding="utf-8")
     ok = sum(1 for b in detail.values() for v in b["vecteurs"] if v["statut"] == "OK")
     tot = sum(len(b["vecteurs"]) for b in detail.values())
-    print(f"[harnais-v2] resultat-image.json écrit — brute {ok}/{tot} "
-          f"(recomposition fail-closed par aggregateur_image.py)")
+    print(f"[harnais-v3] resultat-image.json écrit — brute {ok}/{tot} "
+          f"(recomposition fail-closed par agregateur_image.py)")
 
 
 if __name__ == "__main__":

@@ -28,7 +28,8 @@ CAUSES = {
 
 def principal():
     refus = []
-    detail = json.loads((ICI / "resultat-image.json").read_text())
+    doc_brut = json.loads((ICI / "resultat-image.json").read_text())
+    detail = doc_brut["blocs"] if "blocs" in doc_brut else doc_brut
     avant = json.loads(AVANT.read_text())
 
     # A1 — recomposition

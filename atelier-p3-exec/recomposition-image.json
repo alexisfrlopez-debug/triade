@@ -1,10 +1,10 @@
 {
  "total_vecteurs": 235,
- "executes_ok": 161,
- "fault": 74,
+ "executes_ok": 186,
+ "fault": 49,
  "avant_executes_ok": 95,
- "delta": 66,
- "sans_execution": 13,
+ "delta": 91,
+ "sans_execution": 8,
  "partiels": 2,
  "cible": 200,
  "cible_tenue": false,
@@ -14,35 +14,33 @@
   "a10001": {
    "rva": 4096,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Invalid instruction "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -82,35 +80,33 @@
   "a10003": {
    "rva": 4224,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Invalid instruction "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -351,32 +347,32 @@
    "executes": 0,
    "fautes": 4,
    "causes": [
-    "Invalid instruction "
+    "Unhandled CPU exception "
    ],
    "par_vecteur": [
     {
      "exigence": "pre:0",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "motif": "sysv:UcError:Unhandled CPU exception "
     },
     {
      "exigence": "post:1",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "motif": "sysv:UcError:Unhandled CPU exception "
     },
     {
      "exigence": "inv:2",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "motif": "sysv:UcError:Unhandled CPU exception "
     },
     {
      "exigence": "echec:3",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "motif": "sysv:UcError:Unhandled CPU exception "
     }
    ]
   },
@@ -760,41 +756,39 @@
   "c30013": {
    "rva": 6144,
    "vecteurs": 5,
-   "executes": 0,
-   "fautes": 5,
-   "causes": [
-    "Invalid instruction "
-   ],
+   "executes": 5,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -1214,47 +1208,45 @@
   "e50012": {
    "rva": 6144,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid instruction "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid instruction "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -1730,47 +1722,45 @@
   "g70011": {
    "rva": 32192,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid memory fetch "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -1860,44 +1850,44 @@
    "executes": 0,
    "fautes": 6,
    "causes": [
-    "Invalid memory fetch "
+    "Invalid memory read "
    ],
    "par_vecteur": [
     {
      "exigence": "pre:0",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     },
     {
      "exigence": "post:1",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     },
     {
      "exigence": "inv:2",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     },
     {
      "exigence": "echec:3",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     },
     {
      "exigence": "echec:4",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     },
     {
      "exigence": "echec:5",
      "statut": "FAULT",
      "abi": null,
-     "motif": "sysv:UcError:Invalid memory fetch "
+     "motif": "sysv:UcError:Invalid memory read "
     }
    ]
   }

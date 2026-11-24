@@ -1,0 +1,70 @@
+AMENDEMENT V4 DU PLAN DU HARNAIS IMAGE (append-only, 25/11/2026)
+Suite de PLAN-HARNAIS-IMAGE.txt (v2) et AMENDEMENT-V3.txt (v3). Résultat v3
+consigné : 186/235 exécutés, zéro régression, 8 blocs sans exécution, 2
+partiels. Quatre dispositions nouvelles, chacune tirée d'une spécification I
+ou d'un fait de carte NOMMÉ — jamais d'adaptation silencieuse.
+
+V4-1  LA PILE COUVRE LE PROBING DE http-10 (spec http-10:R1 P3/Q0)
+  Cause : g70010 (http-10:R2) et g80002 (http-10:R3) ouvrent par la boucle
+  de probing de Q0 — « le cadre de session doit être étendu page par page
+  par le probing de Q0 avant toute écriture » : la boucle lit [rsp+r10]
+  pour r10 descendant de 0 à -0x13000. La pile de v1/v3 (0x70000-0x80000,
+  rsp=0x78000) ne couvrait que 0x8000 sous rsp → READ_UNMAPPED.
+  Disposition : la pile est mapée [0x60000, 0x80000) (0x20000 — 128 Kio,
+  rsp=0x78000 inchangé, sentinelle [rsp]=0x60000 inchangée) : 0x18000
+  lisibles sous rsp, le probing de 0x13000 passe. Élargir une page
+  mappée ne peut retirer AUCUNE exécution acquise (A2 monotone).
+
+V4-2  GetCommandLineW RETOURNE UNE LIGNE DE COMMANDE (spec http-12:R3)
+  Cause : g80003 (http-12:R3 — le point d'entrée PE) appelle
+  GetCommandLineW (IAT M5, slot 0x2E30 — l'entrée NOUVELLE) puis
+  dereference le pointeur rendu : le stub retour-zéro livrait 0 →
+  READ_UNMAPPED à 0x0. La spécification NOMME ce que le bloc attend :
+  une ligne de commande à parser.
+  Disposition : le slot 0x2E30 reçoit un stub sémantique à
+  PAGE_STUB+0x900 — « mov rax, 0x630000 ; ret » — et la page 0x630000
+  porte la chaîne large L"proxy.exe" (le lancement nu de l'exécutable —
+  le contenu le plus neutre et le plus fidèle : aucun argument). Les
+  AUTRES slots demeurent au retour zéro ; ExitProcess demeure au
+  terminateur (V3-2).
+
+V4-3  L'IMAGE DE CONTEXTE VIENT DE L'EXÉCUTABLE QUI PORTE LE BLOC
+  Cause : b20008 (libc-08:R2) appelle libc-05/libc-06 aux slots
+  0x1300/0x1380 — INT3 dans m5/proxy.exe : la colonne exe de la carte
+  (EXE_PAR_BLOC) dit que ces blocs vivent dans selftest.exe, pas dans
+  proxy. Le contexte du bloc est l'image DE SON exécutable.
+  Disposition : l'image de contexte de chaque bloc mesuré est
+  l'exécutable nommé par EXE_PAR_BLOC qui contient le bloc — proxy.exe
+  pour quarante-neuf blocs, m1/selftest.exe pour b20008 (lecture seule
+  dans tous les cas). Les plages d'IAT ne sont patchées que si elles
+  tombent dans une section mapée de CETTE image (garde explicite).
+
+V4-4  LES ARGUMENTS DE LA SPÉCIFICATION, EN SECONDE TENTATIVE PAR BLOC
+  Cause : cinq blocs fautent parce que la convention fixe de v1 donne à
+  un argument de LONGUEUR un pointeur (5 Mio) : tcp-11 (rdx = longueur
+  du préfixe), http-02 (rdx = longueur de ligne), http-04 (rdx longueur
+  du bloc, r9 longueur du nom), http-06 (rdx = remplissage utile),
+  http-07 (rdx = longueur du span). La spécification I nomme la
+  sémantique de CHAQUE argument : le harnais par bloc la met en œuvre.
+  Disposition : pour les blocs nommés ci-dessous, après la convention
+  fixe de v1 (tentée d'abord — A2 demeure monotone : aucune exécution
+  acquise ne peut être perdue), le moteur tente la convention TIRÉE DE
+  LA SPÉCIFICATION :
+    tcp-11   (c30011) : rcx=0x500200 (préfixe), rdx=8, r8d=42 (champ
+              numérique), r9=0x500A00 (suffixe), [rsp+0x20]=4 ;
+    http-02  (e50002) : rcx=0x500200 (ligne), rdx=16, r8=0x503000
+              (zone 56 o) ;
+    http-04  (e50004) : rcx=0x500200 (en-têtes), rdx=32,
+              r8=0x500A00 (nom), r9=4, [rsp+0x20]=0x503000 (zone) ;
+    http-06  (e50006) : rcx=0x500200 (tampon), rdx=16 (remplissage) ;
+    http-07  (e50007) : rcx=0x500200 (span), rdx=16, r8d=80 (port par
+              défaut), r9=0x503000 (zone 24 o) ;
+    tls-06   (g70006) : rcx=0x620000 (cadre de session — page de
+              données), rdx=0x500A00 (span clair), r8=16 (longueur) ;
+    http-10  (g70010, g80002) : rcx=0x10 (socket cliente — P1) ;
+    http-12  (g80003) : point d'entrée — la convention fixe demeure.
+  La variante sysv met les mêmes valeurs en rdi/rsi/rdx/rcx. Le résultat
+  CONSIGNE la convention qui a exécuté chaque vecteur (jamais dissimulée).
+
+Rien d'autre ne change : mêmes vecteurs, même timeout, même agrégateur
+fail-closed, même cible ≥ 200/235 non re-tirable, mêmes interdits.
