@@ -1,0 +1,28 @@
+ATELIER LSV9ITVNG — L'EXPANSION SOUS CONTRAINTE DE GRAMMAIRE (D264)
+====================================================================
+Instruction : remplacer l'expansion en texte libre de l'opération « ajouter » par
+une expansion sous schéma structuré (opcode/opérande/offset), ajouter la boucle de
+réparation par contre-exemple minimal (ddmin, ≤ 3 tours), pré-enregistrer la cible
+AVANT mesure, mêmes 18 tâches, juges intacts.
+
+PRÉ-ENREGISTREMENT (consigné AVANT toute mesure) : cible ≥ 15/18 ; périmètre 18
+tâches TPL-ADD, graines des campagnes v2–v5 jamais re-tirées, quatre juges
+inchangés ; métrique principale verts/18, secondaire médiane de tokens ; lecture
+défavorable imposée si la cible est manquée (plans-vague18/PRE-ENREGISTREMENT-LSV9ITVNG.json).
+
+LIVRÉ
+- `valide_schema` : schéma fermé (opcode dans l'énumération, forme d'opérande dans
+  {reg, reg_mem_taille, imm, label}, offset |x| ≤ 2^31−1) ; refus nommés
+  SCHEMA-INCOMPLET, OPCODE-HORS-ENUMERATION, FORME-D-OPERANDE-INCONNUE,
+  OFFSET-HORS-BORNES ;
+- `rendre` : le formateur UNIQUE du schéma vers la notation canonique ;
+- `ddmin` : le contre-exemple minimal qui échoue encore ;
+- `boucle_reparation` : trois tours au plus, le contre-exemple consommé par le
+  modèle ; au troisième refus, REFUS-APRES-3-TOURS (jamais un 4e tour).
+
+PREUVES (9/9) : cinq cas de schéma, rendu canonique, ddmin, boucle convergente au
+tour 2, boucle bornée refusée au tour 3.
+
+STATUT : instrument livré ; **CAMPAGNE EN ATTENTE d'un serving qui expose le
+structured output** — aucun chiffre de campagne n'est produit, la cible de 15/18
+n'est ni atteinte ni manquée à ce jour.

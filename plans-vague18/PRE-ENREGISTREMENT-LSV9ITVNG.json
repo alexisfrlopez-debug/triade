@@ -1,0 +1,13 @@
+{
+  "plan": "LSV9ITVNG",
+  "date": "2026-11-24",
+  "enregistre_avant_mesure": true,
+  "cible_de_faisabilite": {"verts_sur_18": 15},
+  "cible_precedente": {"campagne": "v5", "verts_sur_18": 5, "statut": "manquee"},
+  "perimetre": {"taches": 18, "grammaire": "TPL-ADD-v1", "juges": ["expansion", "round-trip", "oracle", "mutation"]},
+  "graines": "les graines consignées des campagnes v2–v5, jamais re-tirées",
+  "metrique_principale": "verts/18 sous expansion structurée + boucle de réparation bornée à 3 tours",
+  "metrique_secondaire": "médiane de tokens par changement validé (deux conventions nommées)",
+  "lecture_defavorable_imposee": "si la cible est manquée, la lecture défavorable est consignée, jamais lissée",
+  "statut": "instrument livré ; campagne EN ATTENTE d'un serving à structured output"
+}
