@@ -1,0 +1,12 @@
+{
+  "objet": "frontière add — expansion déterministe côté client, pointeur-seul",
+  "cible": "≥ 15/18 verts à ≤ 3 000 tokens par changement validé",
+  "mediane": [
+    "sur les 18 tâches",
+    "sur les seules vertes (deux conventions nommées)"
+  ],
+  "graine": 20261124,
+  "reparation": "borne 3 tours, contre-exemple réinjecté",
+  "tokenisation": "convention 1 = unités lexicales ; convention 2 = découpage indépendant ; écart exigé ≤ 1 token",
+  "statut": "EN ATTENTE — aucune campagne servie dans ce bac ; l'instrument et ses fixtures sont verts, la mesure viendra d'un serving à structured output"
+}
