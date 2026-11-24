@@ -30,4 +30,23 @@ if [ $RC -ne 0 ]; then
     echo "silence."
     exit 1
 fi
+# ---------------------------------------------------------------------------
+# LA GARDE DU PRESCRIPTIF (JEEWKX9G8, D262) — la liste blanche fermée, en
+# PREMIÈRE ligne ; le linter heuristique reste en seconde ligne (défense en
+# profondeur). Un manifeste périmé ou une consigne active hors liste REFUSE.
+# ---------------------------------------------------------------------------
+if [ -f SOURCES-PRESCRIPTIVES.txt ] && command -v python3 >/dev/null 2>&1; then
+    if ! python3 scripts/vague18/garde_prescriptif.py --verifie >/tmp/triade_prescriptif.log 2>&1; then
+        cat /tmp/triade_prescriptif.log
+        echo "[pre-commit] REFUS : une source prescriptive a changé — régénère le manifeste"
+        echo "  (python3 scripts/vague18/garde_prescriptif.py --regenere) — acte délibéré."
+        exit 1
+    fi
+    if ! python3 scripts/vague18/garde_prescriptif.py --scan >/tmp/triade_scan.log 2>&1; then
+        tail -12 /tmp/triade_scan.log
+        echo "[pre-commit] REFUS : consigne active hors liste (SOURCE-NON-PRESCRIPTIVE)."
+        exit 1
+    fi
+fi
+
 exit 0

@@ -1,0 +1,26 @@
+ATELIER JEEWKX9G8 — LA LISTE BLANCHE FERMÉE DU PRESCRIPTIF (24/11/2026)
+========================================================================
+Instruction : remplacer la détection heuristique du prescriptif par une liste
+blanche fermée, avec règle fail-closed dans le guide agent et garde au pre-commit.
+
+LIVRÉ
+1. `SOURCES-PRESCRIPTIVES.txt` — le manifeste racine : les SEULS fichiers autorisés
+   à prescrire, chemin + sha256 (64 sources : reprise, plans gelés, documents
+   normatifs, kit). Régénéré par un acte délibéré (`--regenere`), jamais à la volée.
+2. `scripts/vague18/garde_prescriptif.py` — la classification par le CHEMIN
+   (prescriptive / historique / lecture-seule), le refus `SOURCE-NON-PRESCRIPTIVE`
+   indépendant des mots-clés, le scan de tout l'arbre, les modes --verifie/--scan.
+3. La garde branchée au pre-commit (modèle `git-hooks/pre-commit` ET hook installé),
+   AVANT la garde de secrets ; le linter heuristique v234 reste en seconde ligne.
+4. La règle écrite : REPRISE § 7 et le guide agent du kit.
+
+VÉRIFICATION (autotest à fixtures, 4/4)
+(a) consigne hors liste → REFUSÉE ; (b) consigne dans la liste → ADMISE ;
+(c) reformulation inédite hors liste → REFUSÉE par la liste blanche (indépendante
+du mot-clé) ; (d) fichier historique daté → ADMIS en lecture, jamais prescriptif.
+
+SCAN COMPLET : 0 consigne active hors liste · 64 sources autorisées · manifeste intact.
+Le journal porte les comptes et les empreintes, jamais le contenu d'une ligne.
+
+LIMITE NOMMÉE : la liste blanche est un acte de curation humaine — son contenu
+(quels fichiers prescrivent) est un arbitrage, pas une mesure.
