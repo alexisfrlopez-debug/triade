@@ -1,0 +1,2886 @@
+[
+ {
+  "source": "racine",
+  "nom": "TRIADE_complet_v0.24.0.zip",
+  "id": "1DXdy6C9PbIjzp5DbyL5BHqab-8SuFwBr",
+  "md5": "e01b35e582544c9b841e974da9f68df6",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:25"
+ },
+ {
+  "source": "racine",
+  "nom": "TRIADE_complet_v0.24.0.zip",
+  "id": "1Fc6k9IcdV9o3-NzB5qyqSMJ-d1waopM9",
+  "md5": "e01b35e582544c9b841e974da9f68df6",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:27"
+ },
+ {
+  "source": "racine",
+  "nom": "rapport-release-v0240-20261124.txt",
+  "id": "1M7cf4QMrxoQinwYFbJd1fgniJAmr4NA4",
+  "md5": "c3efadef9104e1260a8deb62829060fc",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:28"
+ },
+ {
+  "source": "racine",
+  "nom": "rapport-release-v0234-20261123.txt",
+  "id": "1Nc7eAUlfmxe44JNR5FyBarXy_zmKmN--",
+  "md5": "b042a10ba32db9fdee75aac56339c9f4",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:29"
+ },
+ {
+  "source": "racine",
+  "nom": "empreintes_livrables_v0.23.3.txt",
+  "id": "1VZqZyTCNXxJFLEUff1BHeKs5V8sJ4-DE",
+  "md5": "dc22e37eed59af0c108ad1f7872109eb",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:29"
+ },
+ {
+  "source": "racine",
+  "nom": "rapport_verification_v0.23.3.txt",
+  "id": "1-JeK-IIHu_WwtCUda3RNqNVD1YNoaEZx",
+  "md5": "a5767ea3736a8bc18255986fff2a1196",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:30"
+ },
+ {
+  "source": "racine",
+  "nom": "TRIADE_complet_v0.23.3.zip",
+  "id": "1Zu1d-Nd3oQqg6RCNIkRVOHnYu5Sr_u0Z",
+  "md5": "dea007203a998b3aa2602b5d4816c4f2",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:32"
+ },
+ {
+  "source": "racine",
+  "nom": "JOURNAL-OPTIMISATION-TOKENS.txt",
+  "id": "1XRGsar630erAnn5c0-U6UROn7aXryAU5",
+  "md5": "20bdbfe9f7b591d39b91ffb1c1b631a3",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:33"
+ },
+ {
+  "source": "racine",
+  "nom": "RAPPORT-fkkqc7v8t.txt",
+  "id": "1nOjQiNYvlzvSyFwLnNFXwYV2tdjLcblu",
+  "md5": "20d899960793242b014b8e39d35fa75c",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:34"
+ },
+ {
+  "source": "racine",
+  "nom": "RAPPORT-89488hblm.txt",
+  "id": "1qpteh5RpOVSWrCNA9NAiPZfgVaoGOBza",
+  "md5": "e5f84bc4c52cc0d9b8c73d0f532984fe",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:35"
+ },
+ {
+  "source": "racine",
+  "nom": "RAPPORT-M4-vljfs6pcj.txt",
+  "id": "1PKGL_AFR733UzbBhFsKiGsJYFg6M7BRc",
+  "md5": "7a3e570fdc79569e1fae132f745c4b7b",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:36"
+ },
+ {
+  "source": "racine",
+  "nom": "rapport-execution-vague6.txt",
+  "id": "1eNxdNbus1yeAhqNtItYVwEidraT898IO",
+  "md5": "c55fb894a764bac24efb11cfc04fdeb4",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:37"
+ },
+ {
+  "source": "racine",
+  "nom": "CHANTIER-OPTIMISATION-TOKENS-v1.md",
+  "id": "1x6WKI34yuZU4K-vX7msvBz6vppIMePj3",
+  "md5": "f84f04a1ad86937677a4609ebd046a72",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:38"
+ },
+ {
+  "source": "racine",
+  "nom": "OU-TROUVER-LES-LIVRABLES.md",
+  "id": "1tcumyuCxXGGq5IkXSY5y9CL0fCPdvQBu",
+  "md5": "10366feb81ac5cf8eb8c33231733fdd6",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:39"
+ },
+ {
+  "source": "racine",
+  "nom": "REPRISE_PROJET.md",
+  "id": "11OrJS9X-jZxQoAtaN_6587oJ5lVkVDtu",
+  "md5": "d15344763947cd7d72802b556e29ff69",
+  "ok": false,
+  "detail": {
+   "erreur": "cannot unpack non-iterable bool object"
+  },
+  "dest": "14v0g7LWSpJ_-23uoxcdau4Ys51_osndj",
+  "heure": "21:23:40"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.30.0.zip",
+  "id": "1sD256iihF9dlTGxOSvtooM6NVQ0Xhb4o",
+  "md5": "52c5fdd31776c57bdfd658fc9bd7e839",
+  "ok": true,
+  "detail": {
+   "id": "1sD256iihF9dlTGxOSvtooM6NVQ0Xhb4o",
+   "nom": "TRIADE_complet_v0.30.0.zip",
+   "md5": "52c5fdd31776c57bdfd658fc9bd7e839",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:03"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.30.0.txt",
+  "id": "1LJELnQ-6XeGlPV1zXMrKwO9kKthqHPhx",
+  "md5": "13480c8fe09aab6f0606ec09ec4b6c46",
+  "ok": true,
+  "detail": {
+   "id": "1LJELnQ-6XeGlPV1zXMrKwO9kKthqHPhx",
+   "nom": "LISEZMOI-livrables-v0.30.0.txt",
+   "md5": "13480c8fe09aab6f0606ec09ec4b6c46",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:04"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.30.0.zip",
+  "id": "1vF3Ijbt1iIuIWqfDJPGN1KqRukRjfW_s",
+  "md5": "00f713982841822159295aca39888883",
+  "ok": true,
+  "detail": {
+   "id": "1vF3Ijbt1iIuIWqfDJPGN1KqRukRjfW_s",
+   "nom": "TRIADE_presentation_v0.30.0.zip",
+   "md5": "00f713982841822159295aca39888883",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:05"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.30.0.zip",
+  "id": "1E8vp8iDb3VrnsK9B6hjg9sJq0x1-VuSg",
+  "md5": "62689506874b4e64267b87144d02b46b",
+  "ok": true,
+  "detail": {
+   "id": "1E8vp8iDb3VrnsK9B6hjg9sJq0x1-VuSg",
+   "nom": "TRIADE_soumission_v0.30.0.zip",
+   "md5": "62689506874b4e64267b87144d02b46b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:06"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.30.0.txt",
+  "id": "1sjeYN47lc_hcAbWGixKYc9GQ15lmXrJ8",
+  "md5": "a0032def4f4303c98ee21a20331f7337",
+  "ok": true,
+  "detail": {
+   "id": "1sjeYN47lc_hcAbWGixKYc9GQ15lmXrJ8",
+   "nom": "rapport_verification_v0.30.0.txt",
+   "md5": "a0032def4f4303c98ee21a20331f7337",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:07"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.30.0.txt",
+  "id": "1CTAcRC2I5JVsCQ4JgPajAD0M5IL2tJ1z",
+  "md5": "d055dafc0f28c5c6bb7f53938162c7e3",
+  "ok": true,
+  "detail": {
+   "id": "1CTAcRC2I5JVsCQ4JgPajAD0M5IL2tJ1z",
+   "nom": "empreintes_livrables_v0.30.0.txt",
+   "md5": "d055dafc0f28c5c6bb7f53938162c7e3",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:08"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0300.pdf",
+  "id": "14YuARJgclfpblYehZLN6LjVTJsKOEBTG",
+  "md5": "37569cb837ee26d433a5dadb84ac77cc",
+  "ok": true,
+  "detail": {
+   "id": "14YuARJgclfpblYehZLN6LjVTJsKOEBTG",
+   "nom": "TRIADE_presentation_v0300.pdf",
+   "md5": "37569cb837ee26d433a5dadb84ac77cc",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:09"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.30.0.pdf",
+  "id": "1iF6lSYzqxh8wTRAKGq2XFr01-2rFE2jO",
+  "md5": "287d6e51a37a05b92a9938f9faa4ce8c",
+  "ok": true,
+  "detail": {
+   "id": "1iF6lSYzqxh8wTRAKGq2XFr01-2rFE2jO",
+   "nom": "TRIADE_preuves_et_calculs_v0.30.0.pdf",
+   "md5": "287d6e51a37a05b92a9938f9faa4ce8c",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:10"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.14.pdf",
+  "id": "1VyQ2mrW9XjiY-u10ICWk_mbiX78jsiyh",
+  "md5": "4cf70277ce5cf57e9e28e20b5899fb8b",
+  "ok": true,
+  "detail": {
+   "id": "1VyQ2mrW9XjiY-u10ICWk_mbiX78jsiyh",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.14.pdf",
+   "md5": "4cf70277ce5cf57e9e28e20b5899fb8b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:11"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.15_Specification.pdf",
+  "id": "1-YkOat6tm4B0BTwg1UEO765-z0G2FKyb",
+  "md5": "c3a398b3b4bd235d85089d9151095169",
+  "ok": true,
+  "detail": {
+   "id": "1-YkOat6tm4B0BTwg1UEO765-z0G2FKyb",
+   "nom": "Protocole_TRIADE_v0.15.15_Specification.pdf",
+   "md5": "c3a398b3b4bd235d85089d9151095169",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:12"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.30.0.pdf",
+  "id": "1n-kZ1cLYR35Y2mm6cDTyMNaRdRcIEaik",
+  "md5": "672b862cd81c7387ae5b374503a52f65",
+  "ok": true,
+  "detail": {
+   "id": "1n-kZ1cLYR35Y2mm6cDTyMNaRdRcIEaik",
+   "nom": "TRIADE_manuscrit_v0.30.0.pdf",
+   "md5": "672b862cd81c7387ae5b374503a52f65",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:13"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.29.0.zip",
+  "id": "12oDfqsFMzQzHqTYb9uOPTm9RjSdvLcs3",
+  "md5": "0db450d867aa190532e8d21e145560f9",
+  "ok": true,
+  "detail": {
+   "id": "12oDfqsFMzQzHqTYb9uOPTm9RjSdvLcs3",
+   "nom": "TRIADE_complet_v0.29.0.zip",
+   "md5": "0db450d867aa190532e8d21e145560f9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:15"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.29.0.txt",
+  "id": "14hJ7LBmD1YJBgTRba2At3EjxB5VtePrZ",
+  "md5": "3071a15d6cf0b8206cf0856e6f5054d5",
+  "ok": true,
+  "detail": {
+   "id": "14hJ7LBmD1YJBgTRba2At3EjxB5VtePrZ",
+   "nom": "LISEZMOI-livrables-v0.29.0.txt",
+   "md5": "3071a15d6cf0b8206cf0856e6f5054d5",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:16"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.29.0.zip",
+  "id": "14IKUv4BEc2FMUeBDhmOIfajhvNgYviZM",
+  "md5": "65a1ba9a40cf3dd1157ef56d80654da9",
+  "ok": true,
+  "detail": {
+   "id": "14IKUv4BEc2FMUeBDhmOIfajhvNgYviZM",
+   "nom": "TRIADE_presentation_v0.29.0.zip",
+   "md5": "65a1ba9a40cf3dd1157ef56d80654da9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:17"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.29.0.zip",
+  "id": "1StqBu2fFGrLoeEEO7VumdSJ8CFX6RIWx",
+  "md5": "99ae6f75cdb8c551662416a85f66dba9",
+  "ok": true,
+  "detail": {
+   "id": "1StqBu2fFGrLoeEEO7VumdSJ8CFX6RIWx",
+   "nom": "TRIADE_soumission_v0.29.0.zip",
+   "md5": "99ae6f75cdb8c551662416a85f66dba9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:19"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.29.0.txt",
+  "id": "1IPQl2r6-qPu9hmZ7FpFvAxP6YvlwqfYd",
+  "md5": "53a2ba27379d7cfc41e4e8da9b103f3c",
+  "ok": true,
+  "detail": {
+   "id": "1IPQl2r6-qPu9hmZ7FpFvAxP6YvlwqfYd",
+   "nom": "rapport_verification_v0.29.0.txt",
+   "md5": "53a2ba27379d7cfc41e4e8da9b103f3c",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:20"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.29.0.txt",
+  "id": "1Fs59tBLw1AThAmuf2WKQsjqym-tlB4gk",
+  "md5": "344817263ca4415fd973e3d40ca8c521",
+  "ok": true,
+  "detail": {
+   "id": "1Fs59tBLw1AThAmuf2WKQsjqym-tlB4gk",
+   "nom": "empreintes_livrables_v0.29.0.txt",
+   "md5": "344817263ca4415fd973e3d40ca8c521",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:21"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0290.pdf",
+  "id": "1elI8Nik0GLuPync6OT_y88wuUUsK71mH",
+  "md5": "2745d7234bc05c9478c1a58ed0d80b32",
+  "ok": true,
+  "detail": {
+   "id": "1elI8Nik0GLuPync6OT_y88wuUUsK71mH",
+   "nom": "TRIADE_presentation_v0290.pdf",
+   "md5": "2745d7234bc05c9478c1a58ed0d80b32",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:22"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.29.0.pdf",
+  "id": "1b7C5QvptwNtS6HJwnr1NwrR23NDczpTp",
+  "md5": "88f4d4f0c1b677a33750d41820a02bde",
+  "ok": true,
+  "detail": {
+   "id": "1b7C5QvptwNtS6HJwnr1NwrR23NDczpTp",
+   "nom": "TRIADE_preuves_et_calculs_v0.29.0.pdf",
+   "md5": "88f4d4f0c1b677a33750d41820a02bde",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:23"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.13.pdf",
+  "id": "1ZQKW4zKD-BjwulpOJ1OJQMijpsPUiYny",
+  "md5": "8e70de41dc48d5c9e9782c82e396e15f",
+  "ok": true,
+  "detail": {
+   "id": "1ZQKW4zKD-BjwulpOJ1OJQMijpsPUiYny",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.13.pdf",
+   "md5": "8e70de41dc48d5c9e9782c82e396e15f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:24"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.14_Specification.pdf",
+  "id": "1FoPXLScdLvw5pUee_nVG--5gZmPdEtx1",
+  "md5": "9809ff8c70b35509ba7a7375b34ff82c",
+  "ok": true,
+  "detail": {
+   "id": "1FoPXLScdLvw5pUee_nVG--5gZmPdEtx1",
+   "nom": "Protocole_TRIADE_v0.15.14_Specification.pdf",
+   "md5": "9809ff8c70b35509ba7a7375b34ff82c",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:25"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.29.0.pdf",
+  "id": "1RNBDsjZTPtJBpnkgbJt3rLuP2-WeHUQ_",
+  "md5": "64ee2c02851434614954924267e64627",
+  "ok": true,
+  "detail": {
+   "id": "1RNBDsjZTPtJBpnkgbJt3rLuP2-WeHUQ_",
+   "nom": "TRIADE_manuscrit_v0.29.0.pdf",
+   "md5": "64ee2c02851434614954924267e64627",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:27"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.28.0.zip",
+  "id": "1lWKFjob9xuoZpQa-y2-Hl8ilQr1vVpAT",
+  "md5": "9c4589992f489b1c7357c9fa86fe7e54",
+  "ok": true,
+  "detail": {
+   "id": "1lWKFjob9xuoZpQa-y2-Hl8ilQr1vVpAT",
+   "nom": "TRIADE_complet_v0.28.0.zip",
+   "md5": "9c4589992f489b1c7357c9fa86fe7e54",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:28"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.28.0.txt",
+  "id": "1Cb9KJmYZ7Xq0PZhvC91GkufA8Iy6HFKJ",
+  "md5": "a7532b8548a0cfc8c084927b67c23169",
+  "ok": true,
+  "detail": {
+   "id": "1Cb9KJmYZ7Xq0PZhvC91GkufA8Iy6HFKJ",
+   "nom": "LISEZMOI-livrables-v0.28.0.txt",
+   "md5": "a7532b8548a0cfc8c084927b67c23169",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:29"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.28.0.zip",
+  "id": "1fV0O1e5Lmamb68RWPYfr10MArzUbNK3B",
+  "md5": "44bded123e84776893e67a3d67f4ff77",
+  "ok": true,
+  "detail": {
+   "id": "1fV0O1e5Lmamb68RWPYfr10MArzUbNK3B",
+   "nom": "TRIADE_presentation_v0.28.0.zip",
+   "md5": "44bded123e84776893e67a3d67f4ff77",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:31"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.28.0.zip",
+  "id": "1tMnYqoD4ApNG6NC8bV7qdThBnrsKqrcp",
+  "md5": "e1d40b973b5b0c1586472a3bcf2a0c3a",
+  "ok": true,
+  "detail": {
+   "id": "1tMnYqoD4ApNG6NC8bV7qdThBnrsKqrcp",
+   "nom": "TRIADE_soumission_v0.28.0.zip",
+   "md5": "e1d40b973b5b0c1586472a3bcf2a0c3a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:32"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.28.0.txt",
+  "id": "1j8gG2FKh9yXY3ieqiw83NOS3bdl4hUdm",
+  "md5": "912ee925217f16b246cfb8ebadae57f6",
+  "ok": true,
+  "detail": {
+   "id": "1j8gG2FKh9yXY3ieqiw83NOS3bdl4hUdm",
+   "nom": "rapport_verification_v0.28.0.txt",
+   "md5": "912ee925217f16b246cfb8ebadae57f6",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:33"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.28.0.txt",
+  "id": "15iGe-bxbUVFADUbTMeCDuRsdeBQGnZEQ",
+  "md5": "2d7046fea38d3e2c242a8f7f77ac6aeb",
+  "ok": true,
+  "detail": {
+   "id": "15iGe-bxbUVFADUbTMeCDuRsdeBQGnZEQ",
+   "nom": "empreintes_livrables_v0.28.0.txt",
+   "md5": "2d7046fea38d3e2c242a8f7f77ac6aeb",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:33"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0280.pdf",
+  "id": "1Q-iO10DgbAJ6eo3Ms14qnOVH9SyL-C_Y",
+  "md5": "d85ba409446472c50d3d3238fd203198",
+  "ok": true,
+  "detail": {
+   "id": "1Q-iO10DgbAJ6eo3Ms14qnOVH9SyL-C_Y",
+   "nom": "TRIADE_presentation_v0280.pdf",
+   "md5": "d85ba409446472c50d3d3238fd203198",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:34"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.28.0.pdf",
+  "id": "1UgumyQXaTJnbwM6tiuN66SOI4xCzdC1I",
+  "md5": "f0c51806ed3b1164a7fa1b8eb5a8924a",
+  "ok": true,
+  "detail": {
+   "id": "1UgumyQXaTJnbwM6tiuN66SOI4xCzdC1I",
+   "nom": "TRIADE_preuves_et_calculs_v0.28.0.pdf",
+   "md5": "f0c51806ed3b1164a7fa1b8eb5a8924a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:35"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.12.pdf",
+  "id": "1_N4cNWwilOoef2yliz23tXzlJptOgG6C",
+  "md5": "46422fec7670bbb9d4e7d1b3f1e566b9",
+  "ok": true,
+  "detail": {
+   "id": "1_N4cNWwilOoef2yliz23tXzlJptOgG6C",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.12.pdf",
+   "md5": "46422fec7670bbb9d4e7d1b3f1e566b9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:36"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.13_Specification.pdf",
+  "id": "1TM1xgsHY-QBgErRZ9ijPVgNkY0NybaEw",
+  "md5": "b127a20461e21fd30653d45a1ce165ed",
+  "ok": true,
+  "detail": {
+   "id": "1TM1xgsHY-QBgErRZ9ijPVgNkY0NybaEw",
+   "nom": "Protocole_TRIADE_v0.15.13_Specification.pdf",
+   "md5": "b127a20461e21fd30653d45a1ce165ed",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:38"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.28.0.pdf",
+  "id": "1WKHt8WFgryQR3EfO4WOKLoUPFrQqmqk3",
+  "md5": "0bf8b0cad5bfb10f7f1acf9c20da8fa2",
+  "ok": true,
+  "detail": {
+   "id": "1WKHt8WFgryQR3EfO4WOKLoUPFrQqmqk3",
+   "nom": "TRIADE_manuscrit_v0.28.0.pdf",
+   "md5": "0bf8b0cad5bfb10f7f1acf9c20da8fa2",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:39"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.26.0.txt",
+  "id": "18Q2KbxBF3Tvi1CyA1xanoWBCI3t1FNA-",
+  "md5": "61fecf4a8687a221ad21af1579095265",
+  "ok": true,
+  "detail": {
+   "id": "18Q2KbxBF3Tvi1CyA1xanoWBCI3t1FNA-",
+   "nom": "LISEZMOI-livrables-v0.26.0.txt",
+   "md5": "61fecf4a8687a221ad21af1579095265",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:40"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.26.0.zip",
+  "id": "18YvtG3VmAj5GWplBgRcqOjuGzM1wAQ8C",
+  "md5": "edd0b3207a201950efae9022dac1df7b",
+  "ok": true,
+  "detail": {
+   "id": "18YvtG3VmAj5GWplBgRcqOjuGzM1wAQ8C",
+   "nom": "TRIADE_complet_v0.26.0.zip",
+   "md5": "edd0b3207a201950efae9022dac1df7b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:41"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.26.0.zip",
+  "id": "1S9UXVBJLWk7JZUywS35bhui8tItjWiKF",
+  "md5": "61d5442e189f3f8835753e36f76b046f",
+  "ok": true,
+  "detail": {
+   "id": "1S9UXVBJLWk7JZUywS35bhui8tItjWiKF",
+   "nom": "TRIADE_presentation_v0.26.0.zip",
+   "md5": "61d5442e189f3f8835753e36f76b046f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:43"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.26.0.zip",
+  "id": "1qz6INLqbIfYWLnBKG7Gyo3wYt4NV6mlj",
+  "md5": "b43648f611ec1eb0acc1bb8e6d295efd",
+  "ok": true,
+  "detail": {
+   "id": "1qz6INLqbIfYWLnBKG7Gyo3wYt4NV6mlj",
+   "nom": "TRIADE_soumission_v0.26.0.zip",
+   "md5": "b43648f611ec1eb0acc1bb8e6d295efd",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:44"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.26.0.txt",
+  "id": "1G2RGUxzsbC7GRMmLeFZniNW-I6MnJlrv",
+  "md5": "d1a1032c31cc0b5a16aecf8c584acae0",
+  "ok": true,
+  "detail": {
+   "id": "1G2RGUxzsbC7GRMmLeFZniNW-I6MnJlrv",
+   "nom": "rapport_verification_v0.26.0.txt",
+   "md5": "d1a1032c31cc0b5a16aecf8c584acae0",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:45"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.26.0.txt",
+  "id": "1WwsP0kH9FT-o-oeSmwmetfjU0sqvwIzu",
+  "md5": "4d95caec462bd5844de90d1d4bd6a597",
+  "ok": true,
+  "detail": {
+   "id": "1WwsP0kH9FT-o-oeSmwmetfjU0sqvwIzu",
+   "nom": "empreintes_livrables_v0.26.0.txt",
+   "md5": "4d95caec462bd5844de90d1d4bd6a597",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:46"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0260.pdf",
+  "id": "1_UoyIZYZro9aOUmj5LTI9DpdxWAk5dio",
+  "md5": "0058ca04a79e7d8e82dfad6e0d09b3b6",
+  "ok": true,
+  "detail": {
+   "id": "1_UoyIZYZro9aOUmj5LTI9DpdxWAk5dio",
+   "nom": "TRIADE_presentation_v0260.pdf",
+   "md5": "0058ca04a79e7d8e82dfad6e0d09b3b6",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:47"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.26.0.pdf",
+  "id": "1by0s9cAqYX2Fpu2NoU_Z3IbaXhKSIUog",
+  "md5": "9ba8f444638308bb97cf9060b705cb17",
+  "ok": true,
+  "detail": {
+   "id": "1by0s9cAqYX2Fpu2NoU_Z3IbaXhKSIUog",
+   "nom": "TRIADE_preuves_et_calculs_v0.26.0.pdf",
+   "md5": "9ba8f444638308bb97cf9060b705cb17",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:48"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.10.pdf",
+  "id": "1XSn9f_8gk7lNq0oaYOumi5oIRDHbLu95",
+  "md5": "320182aeaba852325b0f96aa291f2544",
+  "ok": true,
+  "detail": {
+   "id": "1XSn9f_8gk7lNq0oaYOumi5oIRDHbLu95",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.10.pdf",
+   "md5": "320182aeaba852325b0f96aa291f2544",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:49"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.11_Specification.pdf",
+  "id": "1iUvGIvZ3KmEPwjrI2rhW5eTyfHbbRVZG",
+  "md5": "4835719deae2f8d39d4adab4bfe14a31",
+  "ok": true,
+  "detail": {
+   "id": "1iUvGIvZ3KmEPwjrI2rhW5eTyfHbbRVZG",
+   "nom": "Protocole_TRIADE_v0.15.11_Specification.pdf",
+   "md5": "4835719deae2f8d39d4adab4bfe14a31",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:50"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.26.0.pdf",
+  "id": "1y4CYWDmfVh8zWIs7TaAWuku8AhB82sY0",
+  "md5": "b4c53652566c767fa45154f7eda55175",
+  "ok": true,
+  "detail": {
+   "id": "1y4CYWDmfVh8zWIs7TaAWuku8AhB82sY0",
+   "nom": "TRIADE_manuscrit_v0.26.0.pdf",
+   "md5": "b4c53652566c767fa45154f7eda55175",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:51"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.25.0.txt",
+  "id": "1l9yXGxQMP6UkGlrqw-_KwaSvaLDriMC6",
+  "md5": "71f285b1c2dae98120ef831e836f4343",
+  "ok": true,
+  "detail": {
+   "id": "1l9yXGxQMP6UkGlrqw-_KwaSvaLDriMC6",
+   "nom": "LISEZMOI-livrables-v0.25.0.txt",
+   "md5": "71f285b1c2dae98120ef831e836f4343",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:52"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_participer_v1.0.0.zip",
+  "id": "1ondTQRpX17TuBfNo9HBVRQdQ8E5swX-6",
+  "md5": "0e8a2d9c3bbfde43006fac618fd13b65",
+  "ok": true,
+  "detail": {
+   "id": "1ondTQRpX17TuBfNo9HBVRQdQ8E5swX-6",
+   "nom": "TRIADE_participer_v1.0.0.zip",
+   "md5": "0e8a2d9c3bbfde43006fac618fd13b65",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:53"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.25.0.zip",
+  "id": "14EU69gI7LVFyGKFxpPHTw8dmxwiHG3e1",
+  "md5": "c47d479df3fbdde49ec8040b8d395d23",
+  "ok": true,
+  "detail": {
+   "id": "14EU69gI7LVFyGKFxpPHTw8dmxwiHG3e1",
+   "nom": "TRIADE_complet_v0.25.0.zip",
+   "md5": "c47d479df3fbdde49ec8040b8d395d23",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:55"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.25.0.txt",
+  "id": "1RAOETSDX2EXzWMmkrwWCeYLQ2SxFgvYu",
+  "md5": "4670791a1447f0ecacc811f0f505e0b1",
+  "ok": true,
+  "detail": {
+   "id": "1RAOETSDX2EXzWMmkrwWCeYLQ2SxFgvYu",
+   "nom": "rapport_verification_v0.25.0.txt",
+   "md5": "4670791a1447f0ecacc811f0f505e0b1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:56"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.25.0.txt",
+  "id": "1isN9q1wXfwQNc7SKLoJntu0Y_RVZlNb_",
+  "md5": "f8ac65ac11a2bca718c8ac9b8159f957",
+  "ok": true,
+  "detail": {
+   "id": "1isN9q1wXfwQNc7SKLoJntu0Y_RVZlNb_",
+   "nom": "empreintes_livrables_v0.25.0.txt",
+   "md5": "f8ac65ac11a2bca718c8ac9b8159f957",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:57"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_participer_v1.0.0.zip",
+  "id": "1Tby7bbtwftnDnClzLx948_r1Oi7k8kYL",
+  "md5": "0e8a2d9c3bbfde43006fac618fd13b65",
+  "ok": true,
+  "detail": {
+   "id": "1Tby7bbtwftnDnClzLx948_r1Oi7k8kYL",
+   "nom": "TRIADE_participer_v1.0.0.zip",
+   "md5": "0e8a2d9c3bbfde43006fac618fd13b65",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:58"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_kit_developpement_v1.2.0.zip",
+  "id": "1Y0MnCW0_nEStuLDa5VzJJYMy9wS3Lr5e",
+  "md5": "99f96fdc0aab3ecc066f6814335b4b6b",
+  "ok": true,
+  "detail": {
+   "id": "1Y0MnCW0_nEStuLDa5VzJJYMy9wS3Lr5e",
+   "nom": "TRIADE_kit_developpement_v1.2.0.zip",
+   "md5": "99f96fdc0aab3ecc066f6814335b4b6b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:25:59"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.25.0.zip",
+  "id": "1P4uyMmEY38r3bGuadSrzUJepDz2OGJUh",
+  "md5": "c47d479df3fbdde49ec8040b8d395d23",
+  "ok": true,
+  "detail": {
+   "id": "1P4uyMmEY38r3bGuadSrzUJepDz2OGJUh",
+   "nom": "TRIADE_complet_v0.25.0.zip",
+   "md5": "c47d479df3fbdde49ec8040b8d395d23",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:00"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.25.0.zip",
+  "id": "1gq34ERBr0HTN2vREoIg2N09VV59zXeK4",
+  "md5": "27e968d3483dd0c625b6912a8e320b4e",
+  "ok": true,
+  "detail": {
+   "id": "1gq34ERBr0HTN2vREoIg2N09VV59zXeK4",
+   "nom": "TRIADE_presentation_v0.25.0.zip",
+   "md5": "27e968d3483dd0c625b6912a8e320b4e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:02"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.25.0.zip",
+  "id": "1k_9qT4fc6jg-IKRW4dlzzhwEchXQwQnh",
+  "md5": "8b3b7739dcdbed54544f7004c18f38d1",
+  "ok": true,
+  "detail": {
+   "id": "1k_9qT4fc6jg-IKRW4dlzzhwEchXQwQnh",
+   "nom": "TRIADE_soumission_v0.25.0.zip",
+   "md5": "8b3b7739dcdbed54544f7004c18f38d1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:03"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0250.pdf",
+  "id": "1gmFzhCl_5Cko1asQTgaln6J5fOJE7F_k",
+  "md5": "e0edbaf6064f3306e2bb69c46a4993f7",
+  "ok": true,
+  "detail": {
+   "id": "1gmFzhCl_5Cko1asQTgaln6J5fOJE7F_k",
+   "nom": "TRIADE_presentation_v0250.pdf",
+   "md5": "e0edbaf6064f3306e2bb69c46a4993f7",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:04"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.25.0.pdf",
+  "id": "165wyv2HiYSsTKBKbqnd_yZr7V529FwAL",
+  "md5": "4d156a27a4eaa8a5cc760c97414cf415",
+  "ok": true,
+  "detail": {
+   "id": "165wyv2HiYSsTKBKbqnd_yZr7V529FwAL",
+   "nom": "TRIADE_preuves_et_calculs_v0.25.0.pdf",
+   "md5": "4d156a27a4eaa8a5cc760c97414cf415",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:05"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.9.pdf",
+  "id": "1GApZwY3uZ6cm8WoP2RR194GsKEi4Ktsw",
+  "md5": "ff4edd106534121b729581f5dd908f79",
+  "ok": true,
+  "detail": {
+   "id": "1GApZwY3uZ6cm8WoP2RR194GsKEi4Ktsw",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.9.pdf",
+   "md5": "ff4edd106534121b729581f5dd908f79",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:06"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.10_Specification.pdf",
+  "id": "1_QzeqP7J5baqH-s-iWmpYHzdYcwuFjxV",
+  "md5": "440cefb2603d538d03dcc477c3caf64b",
+  "ok": true,
+  "detail": {
+   "id": "1_QzeqP7J5baqH-s-iWmpYHzdYcwuFjxV",
+   "nom": "Protocole_TRIADE_v0.15.10_Specification.pdf",
+   "md5": "440cefb2603d538d03dcc477c3caf64b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:07"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.25.0.pdf",
+  "id": "1R6bXbTEUTb-sxFV85ovEKZ3JIrLRSfhN",
+  "md5": "93cb8dc54e9dbf4276d6e49871664f8e",
+  "ok": true,
+  "detail": {
+   "id": "1R6bXbTEUTb-sxFV85ovEKZ3JIrLRSfhN",
+   "nom": "TRIADE_manuscrit_v0.25.0.pdf",
+   "md5": "93cb8dc54e9dbf4276d6e49871664f8e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:08"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.24.1.txt",
+  "id": "1N8pZ8oMjMg5_W20q-lMreNQmLCZh2flV",
+  "md5": "d90e75877c5bc10b5db4576d61111482",
+  "ok": true,
+  "detail": {
+   "id": "1N8pZ8oMjMg5_W20q-lMreNQmLCZh2flV",
+   "nom": "LISEZMOI-livrables-v0.24.1.txt",
+   "md5": "d90e75877c5bc10b5db4576d61111482",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:09"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_kit_developpement_v1.1.0.zip",
+  "id": "15bpIQWCSDBHPgGtCNAXBEBWIsKrqtQCj",
+  "md5": "a0d0bbc2aa82356026d0c6fb7dc01b68",
+  "ok": true,
+  "detail": {
+   "id": "15bpIQWCSDBHPgGtCNAXBEBWIsKrqtQCj",
+   "nom": "TRIADE_kit_developpement_v1.1.0.zip",
+   "md5": "a0d0bbc2aa82356026d0c6fb7dc01b68",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:10"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.24.1.zip",
+  "id": "1733QIpHL42T6KnVbHTL8u4k4PV251qqZ",
+  "md5": "e1494de27e08cd0f162de9ed3414fb4a",
+  "ok": true,
+  "detail": {
+   "id": "1733QIpHL42T6KnVbHTL8u4k4PV251qqZ",
+   "nom": "TRIADE_complet_v0.24.1.zip",
+   "md5": "e1494de27e08cd0f162de9ed3414fb4a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:11"
+ },
+ {
+  "source": "livrables",
+  "nom": "LISEZMOI-livrables-v0.24.0.txt",
+  "id": "1t_tkN4dknptD3WrbsESmIrs6A3Pi9KRg",
+  "md5": "6dcdb740c6661b67a58f718dff778a16",
+  "ok": true,
+  "detail": {
+   "id": "1t_tkN4dknptD3WrbsESmIrs6A3Pi9KRg",
+   "nom": "LISEZMOI-livrables-v0.24.0.txt",
+   "md5": "6dcdb740c6661b67a58f718dff778a16",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:12"
+ },
+ {
+  "source": "livrables",
+  "nom": "rapport_verification_v0.24.0.txt",
+  "id": "1v4aIe6CwqzFVPgl1z-Hyx5LF5YLV_DaZ",
+  "md5": "9ed826e09781c6e093d71ae99a61bdfb",
+  "ok": true,
+  "detail": {
+   "id": "1v4aIe6CwqzFVPgl1z-Hyx5LF5YLV_DaZ",
+   "nom": "rapport_verification_v0.24.0.txt",
+   "md5": "9ed826e09781c6e093d71ae99a61bdfb",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:13"
+ },
+ {
+  "source": "livrables",
+  "nom": "empreintes_livrables_v0.24.0.txt",
+  "id": "1TvoHHkTccCJV4UbGMJEHUl0iHY0eZT4o",
+  "md5": "04335585fbe8d096eeb50d2aa0936a65",
+  "ok": true,
+  "detail": {
+   "id": "1TvoHHkTccCJV4UbGMJEHUl0iHY0eZT4o",
+   "nom": "empreintes_livrables_v0.24.0.txt",
+   "md5": "04335585fbe8d096eeb50d2aa0936a65",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:14"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.24.0.zip",
+  "id": "17pJRQ0NkpX41Z5kniCRnhVPUHm-B2WEe",
+  "md5": "dcf6df62a3b6266289356e8afe02785d",
+  "ok": true,
+  "detail": {
+   "id": "17pJRQ0NkpX41Z5kniCRnhVPUHm-B2WEe",
+   "nom": "TRIADE_presentation_v0.24.0.zip",
+   "md5": "dcf6df62a3b6266289356e8afe02785d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:16"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.24.0.zip",
+  "id": "1l1nNO-rQ5Eol88KLSdg2FrkdNWFS7sAa",
+  "md5": "47b18506d2f17e7c285bd75659d47781",
+  "ok": true,
+  "detail": {
+   "id": "1l1nNO-rQ5Eol88KLSdg2FrkdNWFS7sAa",
+   "nom": "TRIADE_soumission_v0.24.0.zip",
+   "md5": "47b18506d2f17e7c285bd75659d47781",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:17"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v240.pdf",
+  "id": "1eZfMAHJIJm-11Uj-S9QVbcVRp5Xrhrf1",
+  "md5": "7511c7bd5214c76d17184f97cdebbcd7",
+  "ok": true,
+  "detail": {
+   "id": "1eZfMAHJIJm-11Uj-S9QVbcVRp5Xrhrf1",
+   "nom": "TRIADE_presentation_v240.pdf",
+   "md5": "7511c7bd5214c76d17184f97cdebbcd7",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:18"
+ },
+ {
+  "source": "livrables",
+  "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf",
+  "id": "1_1heysEo7pdtoZD3zDkbnw3doM1G7F-y",
+  "md5": "0cb779d2f1c449c6afc22110f23c3a9d",
+  "ok": true,
+  "detail": {
+   "id": "1_1heysEo7pdtoZD3zDkbnw3doM1G7F-y",
+   "nom": "Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf",
+   "md5": "0cb779d2f1c449c6afc22110f23c3a9d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:19"
+ },
+ {
+  "source": "livrables",
+  "nom": "Protocole_TRIADE_v0.15.9_Specification.pdf",
+  "id": "1STwd59FuziETEFhv0YpZNNdjJWz7vYKv",
+  "md5": "5934789b08f584de636bb080f6711825",
+  "ok": true,
+  "detail": {
+   "id": "1STwd59FuziETEFhv0YpZNNdjJWz7vYKv",
+   "nom": "Protocole_TRIADE_v0.15.9_Specification.pdf",
+   "md5": "5934789b08f584de636bb080f6711825",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:20"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_manuscrit_v0.24.0.pdf",
+  "id": "1jWUKKqeN8W1a1qLo76REbr9MbVfJC43D",
+  "md5": "c8a8eaa36ec59d4741241e224e11769e",
+  "ok": true,
+  "detail": {
+   "id": "1jWUKKqeN8W1a1qLo76REbr9MbVfJC43D",
+   "nom": "TRIADE_manuscrit_v0.24.0.pdf",
+   "md5": "c8a8eaa36ec59d4741241e224e11769e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:21"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_preuves_et_calculs_v0.24.0.pdf",
+  "id": "10GuktCb-Uuix0qt0y9k4GUt2D2U1UU0A",
+  "md5": "70d9587025b9c4ac5b2a8ab4307b6e12",
+  "ok": true,
+  "detail": {
+   "id": "10GuktCb-Uuix0qt0y9k4GUt2D2U1UU0A",
+   "nom": "TRIADE_preuves_et_calculs_v0.24.0.pdf",
+   "md5": "70d9587025b9c4ac5b2a8ab4307b6e12",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:22"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_complet_v0.23.4.zip",
+  "id": "1RG6ozcgmdJhofo-ELcASKvQ586jxAzPZ",
+  "md5": "c94748f87d348d7726f072e88f0dcdf3",
+  "ok": true,
+  "detail": {
+   "id": "1RG6ozcgmdJhofo-ELcASKvQ586jxAzPZ",
+   "nom": "TRIADE_complet_v0.23.4.zip",
+   "md5": "c94748f87d348d7726f072e88f0dcdf3",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:24"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_presentation_v0.23.3.zip",
+  "id": "1x4gGLlpB9O4_M1hvLS0mSH5etHdsN9sG",
+  "md5": "f8e6ad0ac0bf09c009ea6b11d01c3242",
+  "ok": true,
+  "detail": {
+   "id": "1x4gGLlpB9O4_M1hvLS0mSH5etHdsN9sG",
+   "nom": "TRIADE_presentation_v0.23.3.zip",
+   "md5": "f8e6ad0ac0bf09c009ea6b11d01c3242",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:25"
+ },
+ {
+  "source": "livrables",
+  "nom": "TRIADE_soumission_v0.23.3.zip",
+  "id": "1BwLObYvhRHqKOe8dehhZ0qKVMZ5E-RRG",
+  "md5": "60e1fac77b601fd423c457f71be3d282",
+  "ok": true,
+  "detail": {
+   "id": "1BwLObYvhRHqKOe8dehhZ0qKVMZ5E-RRG",
+   "nom": "TRIADE_soumission_v0.23.3.zip",
+   "md5": "60e1fac77b601fd423c457f71be3d282",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1CSCdJj-kiKf2LF9Z9D0tQRKRWB8sjxzL",
+  "heure": "21:26:27"
+ },
+ {
+  "source": "test",
+  "nom": "vague17-atelier-w17-performance-replication.txt",
+  "id": "1mK_Xcj01DDnZeP4fRB6wtkVRplpfBaoe",
+  "md5": "167403de46e78fca57ade7c9da43cc9d",
+  "ok": true,
+  "detail": {
+   "id": "1mK_Xcj01DDnZeP4fRB6wtkVRplpfBaoe",
+   "nom": "vague17-atelier-w17-performance-replication.txt",
+   "md5": "167403de46e78fca57ade7c9da43cc9d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:41"
+ },
+ {
+  "source": "test",
+  "nom": "vague17-atelier-w17-r10-confiance.txt",
+  "id": "1ictDPUCqm7rSFH4SSQjDQ8fc4Bw-TkRm",
+  "md5": "42302d8dd196180752a836f325a2dfa5",
+  "ok": true,
+  "detail": {
+   "id": "1ictDPUCqm7rSFH4SSQjDQ8fc4Bw-TkRm",
+   "nom": "vague17-atelier-w17-r10-confiance.txt",
+   "md5": "42302d8dd196180752a836f325a2dfa5",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:42"
+ },
+ {
+  "source": "test",
+  "nom": "vague17-atelier-w17-patch-a-chaud.txt",
+  "id": "170EEgun9UDHLugo9yiYp-0Io3-5cTtIN",
+  "md5": "12ea4754947f5ec6c105c87e29a403dd",
+  "ok": true,
+  "detail": {
+   "id": "170EEgun9UDHLugo9yiYp-0Io3-5cTtIN",
+   "nom": "vague17-atelier-w17-patch-a-chaud.txt",
+   "md5": "12ea4754947f5ec6c105c87e29a403dd",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:43"
+ },
+ {
+  "source": "test",
+  "nom": "vague17-atelier-w17-d81-d223.txt",
+  "id": "1-JDQvTkLflB-hBTR59SeU06mR5CFcz5w",
+  "md5": "95875cd5b6fe7d26a509a65e5b3e3bfb",
+  "ok": true,
+  "detail": {
+   "id": "1-JDQvTkLflB-hBTR59SeU06mR5CFcz5w",
+   "nom": "vague17-atelier-w17-d81-d223.txt",
+   "md5": "95875cd5b6fe7d26a509a65e5b3e3bfb",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:43"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-release-v0240-20261124.txt",
+  "id": "1TOoSockpoGFBmvRxjMflxklc_svbKyFl",
+  "md5": "c3efadef9104e1260a8deb62829060fc",
+  "ok": true,
+  "detail": {
+   "id": "1TOoSockpoGFBmvRxjMflxklc_svbKyFl",
+   "nom": "rapport-release-v0240-20261124.txt",
+   "md5": "c3efadef9104e1260a8deb62829060fc",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:44"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-release-v0234-20261123.txt",
+  "id": "1aSQ4Lt_fmAL92roIhlyuoom_368rgixb",
+  "md5": "b042a10ba32db9fdee75aac56339c9f4",
+  "ok": true,
+  "detail": {
+   "id": "1aSQ4Lt_fmAL92roIhlyuoom_368rgixb",
+   "nom": "rapport-release-v0234-20261123.txt",
+   "md5": "b042a10ba32db9fdee75aac56339c9f4",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:45"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-vague16-cloture-20261123.txt",
+  "id": "15DdnrfUSNMiC6Hq8WdXVqHqpfzvp9iuH",
+  "md5": "a103ff4250619d5fa001e1b9044f3db1",
+  "ok": true,
+  "detail": {
+   "id": "15DdnrfUSNMiC6Hq8WdXVqHqpfzvp9iuH",
+   "nom": "rapport-vague16-cloture-20261123.txt",
+   "md5": "a103ff4250619d5fa001e1b9044f3db1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:46"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-vague16-suite-20261123.txt",
+  "id": "1sS2tUgRfv_kdomuiK_rIWkb9RIAlg4hz",
+  "md5": "62854e9e168a793737d35826578a1206",
+  "ok": true,
+  "detail": {
+   "id": "1sS2tUgRfv_kdomuiK_rIWkb9RIAlg4hz",
+   "nom": "rapport-vague16-suite-20261123.txt",
+   "md5": "62854e9e168a793737d35826578a1206",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:47"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-vague16-20261123.txt",
+  "id": "197DeC6la5DE35t_8abi9TKaD_lZ2xs3A",
+  "md5": "a54678568c02600ba2fcf2d8a7f6fc1d",
+  "ok": true,
+  "detail": {
+   "id": "197DeC6la5DE35t_8abi9TKaD_lZ2xs3A",
+   "nom": "rapport-vague16-20261123.txt",
+   "md5": "a54678568c02600ba2fcf2d8a7f6fc1d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:48"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-corpus-v2-20261123.txt",
+  "id": "176G3HlDvz-45JR9yfB-_tonJQYzJat0e",
+  "md5": "dfa6bc301e896df52326af6aa9e32882",
+  "ok": true,
+  "detail": {
+   "id": "176G3HlDvz-45JR9yfB-_tonJQYzJat0e",
+   "nom": "rapport-corpus-v2-20261123.txt",
+   "md5": "dfa6bc301e896df52326af6aa9e32882",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:49"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-instrument-20261123.txt",
+  "id": "16bwDuCFSVSkaESvqD0FHvXYxyd7cNAxR",
+  "md5": "4e77624b1567e3996accae544f72d822",
+  "ok": true,
+  "detail": {
+   "id": "16bwDuCFSVSkaESvqD0FHvXYxyd7cNAxR",
+   "nom": "rapport-instrument-20261123.txt",
+   "md5": "4e77624b1567e3996accae544f72d822",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:50"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-depots-zenodo-20261123.txt",
+  "id": "15eUye-Q8H39j3bQCP_dB8Ds3xewp2AgU",
+  "md5": "e4737b4094ca445652cc78f40adc277f",
+  "ok": true,
+  "detail": {
+   "id": "15eUye-Q8H39j3bQCP_dB8Ds3xewp2AgU",
+   "nom": "rapport-depots-zenodo-20261123.txt",
+   "md5": "e4737b4094ca445652cc78f40adc277f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:51"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-DEPOTS-ZENODO-KIT-CORPUS-20261123.txt",
+  "id": "1cgBqNKBsU3AvdDdP9ogNFaRHHjQL6vAy",
+  "md5": "e4737b4094ca445652cc78f40adc277f",
+  "ok": true,
+  "detail": {
+   "id": "1cgBqNKBsU3AvdDdP9ogNFaRHHjQL6vAy",
+   "nom": "RAPPORT-DEPOTS-ZENODO-KIT-CORPUS-20261123.txt",
+   "md5": "e4737b4094ca445652cc78f40adc277f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:52"
+ },
+ {
+  "source": "test",
+  "nom": "empreintes_livrables_v0.23.3.txt",
+  "id": "1x9RW5PSXs7xONoB6IJDSsCNYjj20Sj00",
+  "md5": "dc22e37eed59af0c108ad1f7872109eb",
+  "ok": true,
+  "detail": {
+   "id": "1x9RW5PSXs7xONoB6IJDSsCNYjj20Sj00",
+   "nom": "empreintes_livrables_v0.23.3.txt",
+   "md5": "dc22e37eed59af0c108ad1f7872109eb",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:52"
+ },
+ {
+  "source": "test",
+  "nom": "rapport_verification_v0.23.3.txt",
+  "id": "1GsZG0fZoZSe38TtanAGfxthZX8krqKiP",
+  "md5": "a5767ea3736a8bc18255986fff2a1196",
+  "ok": true,
+  "detail": {
+   "id": "1GsZG0fZoZSe38TtanAGfxthZX8krqKiP",
+   "nom": "rapport_verification_v0.23.3.txt",
+   "md5": "a5767ea3736a8bc18255986fff2a1196",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:53"
+ },
+ {
+  "source": "test",
+  "nom": "empreintes_livrables_v0.23.2.txt",
+  "id": "1h4H4q6DP2lRJAghi72kROJXJoWsvdEG-",
+  "md5": "bddbbdc94984c985fd2dac827fe72956",
+  "ok": true,
+  "detail": {
+   "id": "1h4H4q6DP2lRJAghi72kROJXJoWsvdEG-",
+   "nom": "empreintes_livrables_v0.23.2.txt",
+   "md5": "bddbbdc94984c985fd2dac827fe72956",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:54"
+ },
+ {
+  "source": "test",
+  "nom": "rapport_verification_v0.23.2.txt",
+  "id": "134RSlUZ_KU9YTdPoKVQvAFYBZm18RKrr",
+  "md5": "b6c706bc0e9840c8fdfc86e4536c0a2d",
+  "ok": true,
+  "detail": {
+   "id": "134RSlUZ_KU9YTdPoKVQvAFYBZm18RKrr",
+   "nom": "rapport_verification_v0.23.2.txt",
+   "md5": "b6c706bc0e9840c8fdfc86e4536c0a2d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:55"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-generation.txt",
+  "id": "1LvSj_LHG5LyYH7zn6dBQYzseZjRspqCZ",
+  "md5": "c804a1334c2bc2c215f76b55ebcf8a2d",
+  "ok": true,
+  "detail": {
+   "id": "1LvSj_LHG5LyYH7zn6dBQYzseZjRspqCZ",
+   "nom": "rapport-generation.txt",
+   "md5": "c804a1334c2bc2c215f76b55ebcf8a2d",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:56"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-purge-v13.txt",
+  "id": "1rTPyOxXTeQnorpZAymbt75IYgkdiAm1Z",
+  "md5": "70d9d8c4bf0ecc7f34c4bc55f9db143f",
+  "ok": true,
+  "detail": {
+   "id": "1rTPyOxXTeQnorpZAymbt75IYgkdiAm1Z",
+   "nom": "rapport-purge-v13.txt",
+   "md5": "70d9d8c4bf0ecc7f34c4bc55f9db143f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:57"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-ajouter-v3.txt",
+  "id": "11yvPlaGq4l7QoShSicU7SUyYPhYHDXYJ",
+  "md5": "82f587016a0f5470fe347fc82c8adfe9",
+  "ok": true,
+  "detail": {
+   "id": "11yvPlaGq4l7QoShSicU7SUyYPhYHDXYJ",
+   "nom": "rapport-ajouter-v3.txt",
+   "md5": "82f587016a0f5470fe347fc82c8adfe9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:58"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-ventilation.txt",
+  "id": "1x_LjF6YVS8CVRPIfnmE8DX0S3RpnbHpU",
+  "md5": "38eb5b351f64f941d5512b44b1f32c75",
+  "ok": true,
+  "detail": {
+   "id": "1x_LjF6YVS8CVRPIfnmE8DX0S3RpnbHpU",
+   "nom": "rapport-ventilation.txt",
+   "md5": "38eb5b351f64f941d5512b44b1f32c75",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:26:59"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-requalification.txt",
+  "id": "1zRoaWvoU5GXNuiNthNWVLYDt_rFyYtAh",
+  "md5": "54a49ff36d364933818e941b9088590e",
+  "ok": true,
+  "detail": {
+   "id": "1zRoaWvoU5GXNuiNthNWVLYDt_rFyYtAh",
+   "nom": "rapport-requalification.txt",
+   "md5": "54a49ff36d364933818e941b9088590e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:00"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-ghash.txt",
+  "id": "1jwahe9ojy1Nz8zzpPYwB0ZoSpQNmL8JJ",
+  "md5": "e587160ad37771f82b26dae18704ca6e",
+  "ok": true,
+  "detail": {
+   "id": "1jwahe9ojy1Nz8zzpPYwB0ZoSpQNmL8JJ",
+   "nom": "rapport-ghash.txt",
+   "md5": "e587160ad37771f82b26dae18704ca6e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:00"
+ },
+ {
+  "source": "test",
+  "nom": "empreintes_livrables_v0.23.0.txt",
+  "id": "1DzrxOh-YVIbSaglNI-nedX7w9kMQc2RQ",
+  "md5": "0ae86d9f9dfa702f81bcc5609aba8a5b",
+  "ok": true,
+  "detail": {
+   "id": "1DzrxOh-YVIbSaglNI-nedX7w9kMQc2RQ",
+   "nom": "empreintes_livrables_v0.23.0.txt",
+   "md5": "0ae86d9f9dfa702f81bcc5609aba8a5b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:01"
+ },
+ {
+  "source": "test",
+  "nom": "rapport_verification_v0.23.0.txt",
+  "id": "1k1i2pRjyiZ9oON_EjHsMVCZvXivUfG2R",
+  "md5": "bb57b62c4a603ba6f17a802e140247df",
+  "ok": true,
+  "detail": {
+   "id": "1k1i2pRjyiZ9oON_EjHsMVCZvXivUfG2R",
+   "nom": "rapport_verification_v0.23.0.txt",
+   "md5": "bb57b62c4a603ba6f17a802e140247df",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:02"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-marge-vierge.txt",
+  "id": "11VMX5O903HP49rf0pLBPTCFsGsnDKUzb",
+  "md5": "c4e7cc23c7d26d041b0060b1f130f6d9",
+  "ok": true,
+  "detail": {
+   "id": "11VMX5O903HP49rf0pLBPTCFsGsnDKUzb",
+   "nom": "rapport-marge-vierge.txt",
+   "md5": "c4e7cc23c7d26d041b0060b1f130f6d9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:03"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-campagne-v2.txt",
+  "id": "1o_Isu0EvqxP1pDY9ub7pH140YDCCcO1L",
+  "md5": "d4bd651c942a1ca569815fba9d3aa408",
+  "ok": true,
+  "detail": {
+   "id": "1o_Isu0EvqxP1pDY9ub7pH140YDCCcO1L",
+   "nom": "rapport-campagne-v2.txt",
+   "md5": "d4bd651c942a1ca569815fba9d3aa408",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:04"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-ajouter-v2.txt",
+  "id": "1Tc46P3BAdkoW82EwZvcHxgey2yyNdYyG",
+  "md5": "f3c89f9aa862cf550b3f28d88191d8d4",
+  "ok": true,
+  "detail": {
+   "id": "1Tc46P3BAdkoW82EwZvcHxgey2yyNdYyG",
+   "nom": "rapport-ajouter-v2.txt",
+   "md5": "f3c89f9aa862cf550b3f28d88191d8d4",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:05"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-menace-cache.txt",
+  "id": "1y6-3mJdxc3xdC_P765xyUDWbkuIWXQBy",
+  "md5": "65b838045bfd10ba25832746bb3966a9",
+  "ok": true,
+  "detail": {
+   "id": "1y6-3mJdxc3xdC_P765xyUDWbkuIWXQBy",
+   "nom": "rapport-menace-cache.txt",
+   "md5": "65b838045bfd10ba25832746bb3966a9",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:06"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-generalisateur.txt",
+  "id": "1OfyJpvLRDYPPgxVXvBcFiwr1eHC1GGc4",
+  "md5": "0b64893cec99ecfca77cd2fb7ea8d553",
+  "ok": true,
+  "detail": {
+   "id": "1OfyJpvLRDYPPgxVXvBcFiwr1eHC1GGc4",
+   "nom": "rapport-generalisateur.txt",
+   "md5": "0b64893cec99ecfca77cd2fb7ea8d553",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:06"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-budget-risque.txt",
+  "id": "1DmIYnPgoVLDyiKVA1-Tm2gCaXmjx632z",
+  "md5": "fafc65fc5969a4ff48aeb530c9b6388e",
+  "ok": true,
+  "detail": {
+   "id": "1DmIYnPgoVLDyiKVA1-Tm2gCaXmjx632z",
+   "nom": "rapport-budget-risque.txt",
+   "md5": "fafc65fc5969a4ff48aeb530c9b6388e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:07"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-double-moteur.txt",
+  "id": "1WycwvPtMGDf8LvF73OQK81wPKoYY2FzK",
+  "md5": "9b7fe3a126932b5bba6ac6d18661fa60",
+  "ok": true,
+  "detail": {
+   "id": "1WycwvPtMGDf8LvF73OQK81wPKoYY2FzK",
+   "nom": "rapport-double-moteur.txt",
+   "md5": "9b7fe3a126932b5bba6ac6d18661fa60",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:08"
+ },
+ {
+  "source": "test",
+  "nom": "grille-reception-autotests.txt",
+  "id": "113V4XKj2-MbBS_wNBHc4qvJftrPk2bd5",
+  "md5": "1f4b0cc01c9e5a24d9766dd9a3026111",
+  "ok": true,
+  "detail": {
+   "id": "113V4XKj2-MbBS_wNBHc4qvJftrPk2bd5",
+   "nom": "grille-reception-autotests.txt",
+   "md5": "1f4b0cc01c9e5a24d9766dd9a3026111",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:09"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-generatif.txt",
+  "id": "1FrvYmOv7oB7lXrlWabRM4SMGE5B4RH9y",
+  "md5": "ddedc7c827b8b3139c25954d2ab16cf4",
+  "ok": true,
+  "detail": {
+   "id": "1FrvYmOv7oB7lXrlWabRM4SMGE5B4RH9y",
+   "nom": "rapport-generatif.txt",
+   "md5": "ddedc7c827b8b3139c25954d2ab16cf4",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:10"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-conformite.txt",
+  "id": "1KSaQLvbYw0Agssbslur2alyP97RZSklD",
+  "md5": "d1a06b540114d9d251c119f4bc07e4ee",
+  "ok": true,
+  "detail": {
+   "id": "1KSaQLvbYw0Agssbslur2alyP97RZSklD",
+   "nom": "rapport-conformite.txt",
+   "md5": "d1a06b540114d9d251c119f4bc07e4ee",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:11"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-verification-purge.txt",
+  "id": "1Av1z8C6WNBG-yxc8sNZWSs1ZrYwNeXZy",
+  "md5": "1950ab321fd14382169860d6d878eb45",
+  "ok": true,
+  "detail": {
+   "id": "1Av1z8C6WNBG-yxc8sNZWSs1ZrYwNeXZy",
+   "nom": "rapport-verification-purge.txt",
+   "md5": "1950ab321fd14382169860d6d878eb45",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:12"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-purge-semantique.txt",
+  "id": "1o9X4HzrG8UhPedByao6vHx11QijtSrNO",
+  "md5": "6edbbafedce256bfcb6bec01d5f0890b",
+  "ok": true,
+  "detail": {
+   "id": "1o9X4HzrG8UhPedByao6vHx11QijtSrNO",
+   "nom": "rapport-purge-semantique.txt",
+   "md5": "6edbbafedce256bfcb6bec01d5f0890b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:12"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-census.txt",
+  "id": "11r_L3JhYyZvMOnc3eAGktLeFjdapclm6",
+  "md5": "2986b36cd214ba38022fd0160d9ab9b2",
+  "ok": true,
+  "detail": {
+   "id": "11r_L3JhYyZvMOnc3eAGktLeFjdapclm6",
+   "nom": "rapport-census.txt",
+   "md5": "2986b36cd214ba38022fd0160d9ab9b2",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:13"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-audit-ratios.txt",
+  "id": "1EieT6g2ZThGaDwKrzuZJFgNx6OTs7Myi",
+  "md5": "678d17bbe384de350b0bf8d6a73ad71b",
+  "ok": true,
+  "detail": {
+   "id": "1EieT6g2ZThGaDwKrzuZJFgNx6OTs7Myi",
+   "nom": "rapport-audit-ratios.txt",
+   "md5": "678d17bbe384de350b0bf8d6a73ad71b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:14"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-recomposabilite.txt",
+  "id": "16iI8OAgkfrfXDDJccyItPmrqigGzU34Z",
+  "md5": "f39e9d12761637a10a9dc2034997e8a5",
+  "ok": true,
+  "detail": {
+   "id": "16iI8OAgkfrfXDDJccyItPmrqigGzU34Z",
+   "nom": "rapport-recomposabilite.txt",
+   "md5": "f39e9d12761637a10a9dc2034997e8a5",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:15"
+ },
+ {
+  "source": "test",
+  "nom": "empreintes_livrables_v0.22.1.txt",
+  "id": "1PexluPiqsu5XgtRmxaU-yprJaf-kQtA0",
+  "md5": "46495c3572c739a326f8020832742b54",
+  "ok": true,
+  "detail": {
+   "id": "1PexluPiqsu5XgtRmxaU-yprJaf-kQtA0",
+   "nom": "empreintes_livrables_v0.22.1.txt",
+   "md5": "46495c3572c739a326f8020832742b54",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:16"
+ },
+ {
+  "source": "test",
+  "nom": "rapport_verification_v0.22.1.txt",
+  "id": "1fMVLUglqfS_shxH2LUGfP8p9dHNDtBXu",
+  "md5": "d87337527c198e0723a85cd60a642ff3",
+  "ok": true,
+  "detail": {
+   "id": "1fMVLUglqfS_shxH2LUGfP8p9dHNDtBXu",
+   "nom": "rapport_verification_v0.22.1.txt",
+   "md5": "d87337527c198e0723a85cd60a642ff3",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:17"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-recompte.txt",
+  "id": "1PLSjepLY7A2SowgcH_rr_zPr9HTyC0LL",
+  "md5": "45d02b2a13877635fd395232a37d977a",
+  "ok": true,
+  "detail": {
+   "id": "1PLSjepLY7A2SowgcH_rr_zPr9HTyC0LL",
+   "nom": "rapport-recompte.txt",
+   "md5": "45d02b2a13877635fd395232a37d977a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:18"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-plancher-natif.txt",
+  "id": "1duwmj67fPO-CPwVMRAtZ8vHwcRd4Mp7t",
+  "md5": "2cc8798a83a8228a923c9196e4071843",
+  "ok": true,
+  "detail": {
+   "id": "1duwmj67fPO-CPwVMRAtZ8vHwcRd4Mp7t",
+   "nom": "rapport-plancher-natif.txt",
+   "md5": "2cc8798a83a8228a923c9196e4071843",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:18"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-lifter.txt",
+  "id": "1tRQV6bvWbbf7pl4XjSxGYzZ_nY98d_L8",
+  "md5": "9c0098a25df9c979becbfe88d21a7072",
+  "ok": true,
+  "detail": {
+   "id": "1tRQV6bvWbbf7pl4XjSxGYzZ_nY98d_L8",
+   "nom": "rapport-lifter.txt",
+   "md5": "9c0098a25df9c979becbfe88d21a7072",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:20"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-preregistre.txt",
+  "id": "1mHzfoigX4KYh3IQuarh0365oZUFAfzUC",
+  "md5": "aa6dfaf67430e3f9d6e695c51ee328ca",
+  "ok": true,
+  "detail": {
+   "id": "1mHzfoigX4KYh3IQuarh0365oZUFAfzUC",
+   "nom": "rapport-preregistre.txt",
+   "md5": "aa6dfaf67430e3f9d6e695c51ee328ca",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:20"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-cgp-m4.txt",
+  "id": "10XQRpma1lqMX0O2XpfiJsuWo19c6tVlr",
+  "md5": "dc2a6f3e89b63c65684e86fc2b2c4064",
+  "ok": true,
+  "detail": {
+   "id": "10XQRpma1lqMX0O2XpfiJsuWo19c6tVlr",
+   "nom": "rapport-cgp-m4.txt",
+   "md5": "dc2a6f3e89b63c65684e86fc2b2c4064",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:21"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-coffre.txt",
+  "id": "1fTzIqH5Xn8m8PWt3xa6ffp1gt4lSrVz8",
+  "md5": "f066ab12afe41377d261aef0ce45ad2e",
+  "ok": true,
+  "detail": {
+   "id": "1fTzIqH5Xn8m8PWt3xa6ffp1gt4lSrVz8",
+   "nom": "rapport-coffre.txt",
+   "md5": "f066ab12afe41377d261aef0ce45ad2e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:22"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-gabarits.txt",
+  "id": "1Iufv9mhBHAz_pkD2kfaycS6MTm_SAdvB",
+  "md5": "744e9af8b29bc948d459678981f43d03",
+  "ok": true,
+  "detail": {
+   "id": "1Iufv9mhBHAz_pkD2kfaycS6MTm_SAdvB",
+   "nom": "rapport-gabarits.txt",
+   "md5": "744e9af8b29bc948d459678981f43d03",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:23"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-porteuse.txt",
+  "id": "1DuhbKIONxFcXc6EPpq-uRWURxZvd9lbs",
+  "md5": "1c6a63e031c30cd67dbff507ee2b84db",
+  "ok": true,
+  "detail": {
+   "id": "1DuhbKIONxFcXc6EPpq-uRWURxZvd9lbs",
+   "nom": "rapport-porteuse.txt",
+   "md5": "1c6a63e031c30cd67dbff507ee2b84db",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:24"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-temps-reel-corridors.txt",
+  "id": "12sdM7RRp144Tr6Vo7edCbsMAxdTS1oO4",
+  "md5": "bfb736506ec1fb8a8ea5db94eced251e",
+  "ok": true,
+  "detail": {
+   "id": "12sdM7RRp144Tr6Vo7edCbsMAxdTS1oO4",
+   "nom": "rapport-temps-reel-corridors.txt",
+   "md5": "bfb736506ec1fb8a8ea5db94eced251e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:25"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-corridors.txt",
+  "id": "1ZJUFJXgMVizoBOb6uTzIepYaqRRRz3op",
+  "md5": "9bef0ccd2286347cef4a003666abac0b",
+  "ok": true,
+  "detail": {
+   "id": "1ZJUFJXgMVizoBOb6uTzIepYaqRRRz3op",
+   "nom": "rapport-corridors.txt",
+   "md5": "9bef0ccd2286347cef4a003666abac0b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:26"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-purge.txt",
+  "id": "1RiR0G30kfoMpz3PEPu0U-l0DUVXv48Pe",
+  "md5": "e8d4748e0ed47d8ca248b20be9958ab6",
+  "ok": true,
+  "detail": {
+   "id": "1RiR0G30kfoMpz3PEPu0U-l0DUVXv48Pe",
+   "nom": "rapport-purge.txt",
+   "md5": "e8d4748e0ed47d8ca248b20be9958ab6",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:27"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-TROIS-BORDS-V0210-20261120.txt",
+  "id": "1HTeHpSR0brcV2iS1ETpVLMc30hSV3BQZ",
+  "md5": "1058db610b32c7cf54c788b352fbbd25",
+  "ok": true,
+  "detail": {
+   "id": "1HTeHpSR0brcV2iS1ETpVLMc30hSV3BQZ",
+   "nom": "RAPPORT-TROIS-BORDS-V0210-20261120.txt",
+   "md5": "1058db610b32c7cf54c788b352fbbd25",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:28"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-non-interference-v210.txt",
+  "id": "15Tbaawi7q_H1M3y3fRyMSBr_ftb0mb1L",
+  "md5": "d84d31c6fd4fca642968aefd90ffba96",
+  "ok": true,
+  "detail": {
+   "id": "15Tbaawi7q_H1M3y3fRyMSBr_ftb0mb1L",
+   "nom": "rapport-non-interference-v210.txt",
+   "md5": "d84d31c6fd4fca642968aefd90ffba96",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:28"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-fenetre.txt",
+  "id": "1D7Hfh7Z2valUBCteAPKtqexEXzoUi69V",
+  "md5": "57248020ef58d0d53b4f964afdcac19c",
+  "ok": true,
+  "detail": {
+   "id": "1D7Hfh7Z2valUBCteAPKtqexEXzoUi69V",
+   "nom": "rapport-fenetre.txt",
+   "md5": "57248020ef58d0d53b4f964afdcac19c",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:29"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-temps-reel.txt",
+  "id": "1NVhmGBWP0uxXZil_2C1toXWr90Wi81b9",
+  "md5": "c38919ec2f11d8c278469d7d0183da46",
+  "ok": true,
+  "detail": {
+   "id": "1NVhmGBWP0uxXZil_2C1toXWr90Wi81b9",
+   "nom": "rapport-temps-reel.txt",
+   "md5": "c38919ec2f11d8c278469d7d0183da46",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:30"
+ },
+ {
+  "source": "test",
+  "nom": "rapport-cg-reconciliation.txt",
+  "id": "1gBnXn8gLt4d-j01I6jj2oXb-fSMHVHDI",
+  "md5": "3e9bc27a6a34219e1e0a3da4786dc125",
+  "ok": true,
+  "detail": {
+   "id": "1gBnXn8gLt4d-j01I6jj2oXb-fSMHVHDI",
+   "nom": "rapport-cg-reconciliation.txt",
+   "md5": "3e9bc27a6a34219e1e0a3da4786dc125",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:31"
+ },
+ {
+  "source": "test",
+  "nom": "tableau-bord-quatre-axes.txt",
+  "id": "1F-zf4PdgA1SI1Co2DnVk4M94XOEzABGK",
+  "md5": "a9bf34ee483c14fc538d6d8e6195fbbc",
+  "ok": true,
+  "detail": {
+   "id": "1F-zf4PdgA1SI1Co2DnVk4M94XOEzABGK",
+   "nom": "tableau-bord-quatre-axes.txt",
+   "md5": "a9bf34ee483c14fc538d6d8e6195fbbc",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:32"
+ },
+ {
+  "source": "test",
+  "nom": "surete_memoire_v200_rapport.txt",
+  "id": "1_pnrECf5pT0So7T8dBCC15z5ALlnVLKJ",
+  "md5": "965fd0edb2ad9a379b6dfb6c2dd9ffa1",
+  "ok": true,
+  "detail": {
+   "id": "1_pnrECf5pT0So7T8dBCC15z5ALlnVLKJ",
+   "nom": "surete_memoire_v200_rapport.txt",
+   "md5": "965fd0edb2ad9a379b6dfb6c2dd9ffa1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:33"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-PEAP6WS09.txt",
+  "id": "10P_r-Ym_wMIhLpwTNz0tGIvRCJQKy-c3",
+  "md5": "bf52810e1589afa41d47ab95b5e317ac",
+  "ok": true,
+  "detail": {
+   "id": "10P_r-Ym_wMIhLpwTNz0tGIvRCJQKy-c3",
+   "nom": "RAPPORT-PEAP6WS09.txt",
+   "md5": "bf52810e1589afa41d47ab95b5e317ac",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:34"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-OPT05.txt",
+  "id": "1tQxcOAKRUjHbKAokqC_pGDGAiLIX-Bc9",
+  "md5": "6f0fa3d01e8a356609fae1d3a11fcb4f",
+  "ok": true,
+  "detail": {
+   "id": "1tQxcOAKRUjHbKAokqC_pGDGAiLIX-Bc9",
+   "nom": "RAPPORT-OPT05.txt",
+   "md5": "6f0fa3d01e8a356609fae1d3a11fcb4f",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:35"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-KIT-DEV-V100-20261120.txt",
+  "id": "16Eqn4ClJgHGzVHFgF3NcwBiUc1H6M1iv",
+  "md5": "b5d904ec574ef93c29dc8b477f2681d1",
+  "ok": true,
+  "detail": {
+   "id": "16Eqn4ClJgHGzVHFgF3NcwBiUc1H6M1iv",
+   "nom": "RAPPORT-KIT-DEV-V100-20261120.txt",
+   "md5": "b5d904ec574ef93c29dc8b477f2681d1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:36"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-REJEU-FAUTES-1C4SOKPII.txt",
+  "id": "1paEkAwZ6lQyv35R11TBUFPbansA9ZiFC",
+  "md5": "b9540a43d78c44d45737e145c04ebdd7",
+  "ok": true,
+  "detail": {
+   "id": "1paEkAwZ6lQyv35R11TBUFPbansA9ZiFC",
+   "nom": "RAPPORT-REJEU-FAUTES-1C4SOKPII.txt",
+   "md5": "b9540a43d78c44d45737e145c04ebdd7",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:37"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-INDEPENDANCE-FAMILLES.txt",
+  "id": "1iFofMSEVdHmO4z-KjIKGeZ4ERdSX4rU1",
+  "md5": "d5262e4d95d8c078333fb6e731741b4b",
+  "ok": true,
+  "detail": {
+   "id": "1iFofMSEVdHmO4z-KjIKGeZ4ERdSX4rU1",
+   "nom": "RAPPORT-INDEPENDANCE-FAMILLES.txt",
+   "md5": "d5262e4d95d8c078333fb6e731741b4b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:37"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-1C4SOKPII.txt",
+  "id": "18_sX2IU7NiON1Z0eLVPwDB7IGD5n-ncX",
+  "md5": "a694a9a339b73417b437f8e9fc7a52fa",
+  "ok": true,
+  "detail": {
+   "id": "18_sX2IU7NiON1Z0eLVPwDB7IGD5n-ncX",
+   "nom": "RAPPORT-1C4SOKPII.txt",
+   "md5": "a694a9a339b73417b437f8e9fc7a52fa",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:38"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-ZENODO-V0194-20261120.txt",
+  "id": "1OiBzrc_-F4WPyx5VPmjx78yMzeWawtiZ",
+  "md5": "45a6f7817ab61f9d928cc86423db7aca",
+  "ok": true,
+  "detail": {
+   "id": "1OiBzrc_-F4WPyx5VPmjx78yMzeWawtiZ",
+   "nom": "RAPPORT-ZENODO-V0194-20261120.txt",
+   "md5": "45a6f7817ab61f9d928cc86423db7aca",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:39"
+ },
+ {
+  "source": "test",
+  "nom": "controle-negatif-v2.txt",
+  "id": "1HesQRt5BrPdZ1Iu1UzxYHJ0pAF94qORC",
+  "md5": "01f70daa39a85b639600c162aaa38faf",
+  "ok": true,
+  "detail": {
+   "id": "1HesQRt5BrPdZ1Iu1UzxYHJ0pAF94qORC",
+   "nom": "controle-negatif-v2.txt",
+   "md5": "01f70daa39a85b639600c162aaa38faf",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:40"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-cq01qv1za-POINTEUR.txt",
+  "id": "1M8krFSEo22jvtrR5G2spjzjLTJ_qPvC6",
+  "md5": "d9887eea2d67b12f85ec7944432f634c",
+  "ok": true,
+  "detail": {
+   "id": "1M8krFSEo22jvtrR5G2spjzjLTJ_qPvC6",
+   "nom": "RAPPORT-cq01qv1za-POINTEUR.txt",
+   "md5": "d9887eea2d67b12f85ec7944432f634c",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:41"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-cq01qv1za-M4.txt",
+  "id": "1pFUs9mCTG8YmKChYpc6ck157U111IQKS",
+  "md5": "ba8b1d6a5c11c725b4160e35d8b58155",
+  "ok": true,
+  "detail": {
+   "id": "1pFUs9mCTG8YmKChYpc6ck157U111IQKS",
+   "nom": "RAPPORT-cq01qv1za-M4.txt",
+   "md5": "ba8b1d6a5c11c725b4160e35d8b58155",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:42"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-TRACES-HASH-V190.txt",
+  "id": "1xjlsUdoy7giP6FLIn125iH4EmMYbOB42",
+  "md5": "3d002c16be7639b1e014fe56ae565a36",
+  "ok": true,
+  "detail": {
+   "id": "1xjlsUdoy7giP6FLIn125iH4EmMYbOB42",
+   "nom": "RAPPORT-TRACES-HASH-V190.txt",
+   "md5": "3d002c16be7639b1e014fe56ae565a36",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:43"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-CAMPAGNE-PBT-5EY7GMJRA.txt",
+  "id": "1JwSNgSyXG0uQEPl1UlI2fcHuxPSKeJ3P",
+  "md5": "9da6897dbd698b27ce24cece8eefd502",
+  "ok": true,
+  "detail": {
+   "id": "1JwSNgSyXG0uQEPl1UlI2fcHuxPSKeJ3P",
+   "nom": "RAPPORT-CAMPAGNE-PBT-5EY7GMJRA.txt",
+   "md5": "9da6897dbd698b27ce24cece8eefd502",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:43"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-BATTERIE-5EY7GMJRA.txt",
+  "id": "18W55nPi4DsHS4c-JAzAKjyTxKTI4eEfX",
+  "md5": "f74fd9a062599bb15e6f8a9810a5aefe",
+  "ok": true,
+  "detail": {
+   "id": "18W55nPi4DsHS4c-JAzAKjyTxKTI4eEfX",
+   "nom": "RAPPORT-BATTERIE-5EY7GMJRA.txt",
+   "md5": "f74fd9a062599bb15e6f8a9810a5aefe",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:44"
+ },
+ {
+  "source": "test",
+  "nom": "console-scan-tous-refs-20261119.txt",
+  "id": "1PkOAXM6J5buXVW0R87dyUxkUswyELvih",
+  "md5": "6fb2fd54f1a62b4a4f2522bf972a7f67",
+  "ok": true,
+  "detail": {
+   "id": "1PkOAXM6J5buXVW0R87dyUxkUswyELvih",
+   "nom": "console-scan-tous-refs-20261119.txt",
+   "md5": "6fb2fd54f1a62b4a4f2522bf972a7f67",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:45"
+ },
+ {
+  "source": "test",
+  "nom": "console-verification-public-20261119.txt",
+  "id": "1gxech1BaFW6HWG7Kf5rRTdP9M8RNj7Nl",
+  "md5": "db09c6101b50aa1dfd9970d7eb6251c4",
+  "ok": true,
+  "detail": {
+   "id": "1gxech1BaFW6HWG7Kf5rRTdP9M8RNj7Nl",
+   "nom": "console-verification-public-20261119.txt",
+   "md5": "db09c6101b50aa1dfd9970d7eb6251c4",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:46"
+ },
+ {
+  "source": "test",
+  "nom": "console-passage-public-20261119.txt",
+  "id": "1oMnSKuBYbSAaj7h9-4MERZA5JBuTC_Oj",
+  "md5": "374cde911f793efaed709db2f962325a",
+  "ok": true,
+  "detail": {
+   "id": "1oMnSKuBYbSAaj7h9-4MERZA5JBuTC_Oj",
+   "nom": "console-passage-public-20261119.txt",
+   "md5": "374cde911f793efaed709db2f962325a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:47"
+ },
+ {
+  "source": "test",
+  "nom": "console-avant-le-geste-20261119.txt",
+  "id": "140UWXCFculjbdGZFkEZwJkCPqkOrp38P",
+  "md5": "d47aa2c2ff9e4e22c07f20f33fa638a6",
+  "ok": true,
+  "detail": {
+   "id": "140UWXCFculjbdGZFkEZwJkCPqkOrp38P",
+   "nom": "console-avant-le-geste-20261119.txt",
+   "md5": "d47aa2c2ff9e4e22c07f20f33fa638a6",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:48"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-PASSAGE-PUBLIC-D220-369-20261119.txt",
+  "id": "1Ig1bWWxSNvacakBumUd8Td-z8jSoSwvn",
+  "md5": "0a1956fc6a63ce8d73f118692655eb86",
+  "ok": true,
+  "detail": {
+   "id": "1Ig1bWWxSNvacakBumUd8Td-z8jSoSwvn",
+   "nom": "RAPPORT-PASSAGE-PUBLIC-D220-369-20261119.txt",
+   "md5": "0a1956fc6a63ce8d73f118692655eb86",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:48"
+ },
+ {
+  "source": "test",
+  "nom": "console-rescan-depot-reel-20261119.txt",
+  "id": "1qd6h7UeBAyJOonbrEklWEFIRXktv33WX",
+  "md5": "b24f523a49e36ed2ec1d831a4149b046",
+  "ok": true,
+  "detail": {
+   "id": "1qd6h7UeBAyJOonbrEklWEFIRXktv33WX",
+   "nom": "console-rescan-depot-reel-20261119.txt",
+   "md5": "b24f523a49e36ed2ec1d831a4149b046",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:49"
+ },
+ {
+  "source": "test",
+  "nom": "console-recompte-drive-20261119.txt",
+  "id": "1D_7NA0U2UVpjE7K9NLrssTqTGwTp-N24",
+  "md5": "8b768709fd059a8c3b93348acbe63f77",
+  "ok": true,
+  "detail": {
+   "id": "1D_7NA0U2UVpjE7K9NLrssTqTGwTp-N24",
+   "nom": "console-recompte-drive-20261119.txt",
+   "md5": "8b768709fd059a8c3b93348acbe63f77",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:50"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-RESCAN-TRIE-D183-368-20261119.txt",
+  "id": "1rhOwyA11a3VF1AIQ3u6ncwJgLNc_B26q",
+  "md5": "cf34860a9cf8b1c685f25eb3948c5628",
+  "ok": true,
+  "detail": {
+   "id": "1rhOwyA11a3VF1AIQ3u6ncwJgLNc_B26q",
+   "nom": "RAPPORT-RESCAN-TRIE-D183-368-20261119.txt",
+   "md5": "cf34860a9cf8b1c685f25eb3948c5628",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:51"
+ },
+ {
+  "source": "test",
+  "nom": "kit_ceremonie_d183_v0192_avec_gui.zip",
+  "id": "1wgkO_6JmZlEIqq0XS0NahL6vmEg61EeE",
+  "md5": "b8533faa3a42e196dbd4e6df13576837",
+  "ok": true,
+  "detail": {
+   "id": "1wgkO_6JmZlEIqq0XS0NahL6vmEg61EeE",
+   "nom": "kit_ceremonie_d183_v0192_avec_gui.zip",
+   "md5": "b8533faa3a42e196dbd4e6df13576837",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:53"
+ },
+ {
+  "source": "test",
+  "nom": "rappel-reconstitution-sequestre.ics",
+  "id": "1cLmTcsHmLhaS5WOxwzFLkb6KCGYULdNw",
+  "md5": "eb8565b3477c643f610401c96beca242",
+  "ok": true,
+  "detail": {
+   "id": "1cLmTcsHmLhaS5WOxwzFLkb6KCGYULdNw",
+   "nom": "rappel-reconstitution-sequestre.ics",
+   "md5": "eb8565b3477c643f610401c96beca242",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:54"
+ },
+ {
+  "source": "test",
+  "nom": "BROUILLON-ENTREE-JOURNAL.txt",
+  "id": "1aQoNfFlR9NmGv1y0qB9ry8AW9EudcIp0",
+  "md5": "0caf1ecb1f1650765e5b9eaa7b0f73f8",
+  "ok": true,
+  "detail": {
+   "id": "1aQoNfFlR9NmGv1y0qB9ry8AW9EudcIp0",
+   "nom": "BROUILLON-ENTREE-JOURNAL.txt",
+   "md5": "0caf1ecb1f1650765e5b9eaa7b0f73f8",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:55"
+ },
+ {
+  "source": "test",
+  "nom": "kit_ceremonie_d183_v0192_complet.zip",
+  "id": "1bE0AjYgwSGKU5Wmh8uKhdFYTfmuawE-D",
+  "md5": "c4f144441b94f9bd1ae30c1f015c5e3b",
+  "ok": true,
+  "detail": {
+   "id": "1bE0AjYgwSGKU5Wmh8uKhdFYTfmuawE-D",
+   "nom": "kit_ceremonie_d183_v0192_complet.zip",
+   "md5": "c4f144441b94f9bd1ae30c1f015c5e3b",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:56"
+ },
+ {
+  "source": "test",
+  "nom": "kit_ceremonie_d183_v0192",
+  "id": "1NZ7RQVhIgVqI6R8waAjvNsQ3aEkElAN1",
+  "md5": "",
+  "ok": true,
+  "detail": {
+   "id": "1NZ7RQVhIgVqI6R8waAjvNsQ3aEkElAN1",
+   "nom": "kit_ceremonie_d183_v0192",
+   "md5": "",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:57"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-ANALYSES-VAGUE7-20261119.txt",
+  "id": "1rmIK04M7KfhDM_OTvFaEt0mpHQMaCUaV",
+  "md5": "c1b390126b587a01e362dcbad908677e",
+  "ok": true,
+  "detail": {
+   "id": "1rmIK04M7KfhDM_OTvFaEt0mpHQMaCUaV",
+   "nom": "RAPPORT-ANALYSES-VAGUE7-20261119.txt",
+   "md5": "c1b390126b587a01e362dcbad908677e",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:58"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-RECEPTION-CARNET-M3-D210-357-20261119.txt",
+  "id": "1EMa6ti5LEyGiC1BoL1UakikNpx88D0Af",
+  "md5": "85c2e0fa5077a10800ed549a8db77704",
+  "ok": true,
+  "detail": {
+   "id": "1EMa6ti5LEyGiC1BoL1UakikNpx88D0Af",
+   "nom": "RAPPORT-RECEPTION-CARNET-M3-D210-357-20261119.txt",
+   "md5": "85c2e0fa5077a10800ed549a8db77704",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:27:59"
+ },
+ {
+  "source": "test",
+  "nom": "atelier-campagne-d204-20261114-013520",
+  "id": "1U7ZPEvETn6MwBEq5cDUbEsVQ8Lx7Jn2k",
+  "md5": "",
+  "ok": true,
+  "detail": {
+   "id": "1U7ZPEvETn6MwBEq5cDUbEsVQ8Lx7Jn2k",
+   "nom": "atelier-campagne-d204-20261114-013520",
+   "md5": "",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:00"
+ },
+ {
+  "source": "test",
+  "nom": "LISEZMOI-NETTOYAGE-TEST-20261119.txt",
+  "id": "16PnfZuCo3LHAJZ8MHASnXMoy2gmoLW9Q",
+  "md5": "cd43850627c6c2a7cd34116796c99844",
+  "ok": true,
+  "detail": {
+   "id": "16PnfZuCo3LHAJZ8MHASnXMoy2gmoLW9Q",
+   "nom": "LISEZMOI-NETTOYAGE-TEST-20261119.txt",
+   "md5": "cd43850627c6c2a7cd34116796c99844",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:01"
+ },
+ {
+  "source": "test",
+  "nom": "RAPPORT-RECEPTION-LIGNES-LIVRE-D210-355-20261119.txt",
+  "id": "1-_3_uNJtxXV4ZMaFBi1aA_7SOGrGNYz5",
+  "md5": "31d1b10ac9d57b78c28155b8118bfc1a",
+  "ok": true,
+  "detail": {
+   "id": "1-_3_uNJtxXV4ZMaFBi1aA_7SOGrGNYz5",
+   "nom": "RAPPORT-RECEPTION-LIGNES-LIVRE-D210-355-20261119.txt",
+   "md5": "31d1b10ac9d57b78c28155b8118bfc1a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:02"
+ },
+ {
+  "source": "test",
+  "nom": "GUIDE-CORRECTIONS-LIVRE-354-20261118.txt",
+  "id": "1-majayvX5JhqFSrb2J88b_gf80znuJEJ",
+  "md5": "081e6b03b8e3e1bcf2f99dd75fbeaca1",
+  "ok": true,
+  "detail": {
+   "id": "1-majayvX5JhqFSrb2J88b_gf80znuJEJ",
+   "nom": "GUIDE-CORRECTIONS-LIVRE-354-20261118.txt",
+   "md5": "081e6b03b8e3e1bcf2f99dd75fbeaca1",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:03"
+ },
+ {
+  "source": "test",
+  "nom": "GUIDE-LIGNE-CARNET-ET-SUITE-20261118.txt",
+  "id": "1Ni6-U17I71zisZKyRX3J9-IM0HqZxbCU",
+  "md5": "9ca9741c4d7d0333069de7a4db6e570a",
+  "ok": true,
+  "detail": {
+   "id": "1Ni6-U17I71zisZKyRX3J9-IM0HqZxbCU",
+   "nom": "GUIDE-LIGNE-CARNET-ET-SUITE-20261118.txt",
+   "md5": "9ca9741c4d7d0333069de7a4db6e570a",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:04"
+ },
+ {
+  "source": "test",
+  "nom": "LISEZMOI-KITS-UNITES-D204.txt",
+  "id": "1ioXYPnnVy19M6ufAERx8zYgZAloKuxHy",
+  "md5": "298ba4d03f565919b53b6abcd2c91576",
+  "ok": true,
+  "detail": {
+   "id": "1ioXYPnnVy19M6ufAERx8zYgZAloKuxHy",
+   "nom": "LISEZMOI-KITS-UNITES-D204.txt",
+   "md5": "298ba4d03f565919b53b6abcd2c91576",
+   "parents_ok": true,
+   "md5_ok": true
+  },
+  "dest": "1xA80CFnMQKT8M-fldQ6jDLqWFUI9cNtO",
+  "heure": "21:28:05"
+ }
+]
