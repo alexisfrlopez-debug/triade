@@ -258,6 +258,15 @@ depot/
   heuristique v234 reste en seconde ligne. Contrôle :
   `python3 scripts/vague18/garde_prescriptif.py --verifie` et `--scan` (branchés au
   pre-commit) ; le manifeste se régénère par un acte délibéré (`--regenere`).
+- **L'ARCHIVAGE SE PROUVE, LA SUPPRESSION EST UN CONFORT (D266)** : chaque instruction
+  reçue est copiée dans `ARCHIVE/instructions_vague<N>_<AAAAMMJJ>/`, la copie est vérifiée
+  par sha256 contre l'original, et un `RECU-ARCHIVAGE.txt` nomme chaque fichier (SUPPRIMEE
+  ou LAISSEE INERTE). Une instruction dont la copie est prouvée ne prescrit plus rien,
+  qu'elle soit encore physiquement là ou non : le guide agent et la garde la traitent en
+  lecture seule. Aucun clic d'autorisation n'est donc requis pour terminer une vague ;
+  si la plateforme refuse la suppression (consentement par fichier), le reçu le dit et
+  le propriétaire peut vider le dossier d'un seul geste quand il le souhaite. Outil :
+  `python3 scripts/vague18/verifier_archivage.py --inventaire <json> --dossier <dir>`.
 - la sauvegarde systématique (sync_backup.sh) après chaque modification ;
 - l'ordre des tâches JAMAIS re-tiré ; les graines consignées.
 

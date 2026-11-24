@@ -40,7 +40,7 @@ GLOBS = [
     "kit-developpement-triade-v1.1.0/ceremonies/GUIDE_CEREMONIES.md",
 ]
 EXCLUS = {".git", ".keys", "node_modules", "__pycache__"}
-HISTORIQUE = ("ARCHIVE/", "atelier-", "worklog.md", "docs/JOURNAL_", "depot-zenodo-", "pack-v240", "pack-v233", "download")
+HISTORIQUE = ("ARCHIVE/", "atelier-", "worklog.md", "docs/JOURNAL_", "depot-zenodo-", "pack-v240", "pack-v233", "download", "instructions/", "instructions_")
 MOTIFS_HEADING = re.compile(r"^#{1,4}\s.*(instruction|consigne|à exécuter|a executer|à faire|protocole de (la )?session)", re.IGNORECASE)
 MARQUEUR_AGENT = re.compile(r"(\bagent\b|\bIA\b|\btoi\b|\btu\b|il faut|\bdois\b)", re.IGNORECASE)
 MOTIFS = re.compile(

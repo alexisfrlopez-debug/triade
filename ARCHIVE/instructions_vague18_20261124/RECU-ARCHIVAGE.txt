@@ -1,0 +1,9 @@
+REÇU D'ARCHIVAGE — l'empreinte prouve, la suppression est un confort
+
+7d531d8067010f0048533e691f494770bc3700f589d1eb0bf4032ec67a599815  Qwen__20261124_bhqg73gzh.txt  SUPPRIMEE
+d797d1f491546616516ceb50103a7b4675bfad8b0853589329e7225961ca2869  Qwen__20261124_cmah20za5.txt  LAISSEE INERTE (copie prouvée)
+ef5693ebb7e33fa4b1feb0e8fc13484165d46d4e8a093c395ed690c67ac67b6c  Qwen__20261124_hetetznth.txt  SUPPRIMEE
+2e0693b2fffc360e323be7b69b6f666fe6cf88f17d5ee5dc77e73a51d09b8510  Qwen__20261124_jeewkx9g8.txt  LAISSEE INERTE (copie prouvée)
+41908bcdb989af807e9fbfead0f317449448a04cb81481de7be0b6b06eb9cf95  Qwen__20261124_lsv9itvng.txt  SUPPRIMEE
+
+5 fichier(s) : copie identique à l'original. Les originaux restants sont INERTES (lecture seule, jamais prescriptifs).

@@ -4936,3 +4936,15 @@ originales, les cinq contrôles négatifs attrapés, le linter v194 16/16.
 **Les preuves.** Registre 12/12 VERT, 4/4 refus mutants, tableau descendant identique au registre ; porte d'édition V7 verte.
 
 **Les limites.** La distance au plancher n'est mesurée que sur les données d'époque (VM) ; les tableaux du manuscrit publié ne sont pas encore engendrés depuis le registre — c'est un geste d'édition.
+
+## D266 — L'ARCHIVAGE SE PROUVE, IL NE SE SUPPOSE PAS : LA SUPPRESSION N'EST PLUS UNE CONDITION DE FIN DE VAGUE (le 24/11/2026, la demande du maître « fais en sorte que je n'aie plus à cliquer »)
+
+**Le constat.** La plateforme n'autorise un agent à supprimer un fichier que si l'agent l'a créé ou si le propriétaire l'autorise fichier par fichier (le périmètre `drive.file`). Une vague de cinq instructions produisait donc cinq cartes d'autorisation — une friction qui ne contrôlait rien : la sûreté vient de la PREUVE d'archivage, pas du geste de suppression.
+
+**Le geste.** L'archivage devient vérifiable et suffisant : (1) copie de chaque instruction dans `ARCHIVE/instructions_vague<N>_<AAAAMMJJ>/` ; (2) vérification sha256 de la copie contre l'original ; (3) reçu `RECU-ARCHIVAGE.txt` nommant chaque fichier, son empreinte et son état (SUPPRIMEE ou LAISSEE INERTE (copie prouvée)) ; (4) une instruction dont la copie est prouvée ne prescrit plus rien, qu'elle soit encore physiquement là ou non — la garde du prescriptif la classe en lecture seule.
+
+**Les preuves.** `scripts/vague18/verifier_archivage.py` : 5/5 (copies identiques → ARCHIVAGE-PROUVE ; empreinte divergente → REFUS ; copie absente → REFUS ; original laissé → INERTE nommé ; reçu écrit). Appliqué à la vague 18 : cinq copies identiques, trois supprimées, deux laissées inertes, reçu au dossier ARCHIVE du dépôt et du coffre.
+
+**Les limites.** Un fichier laissé inerte demeure physiquement dans le dossier d'instructions ; le propriétaire peut le supprimer d'un seul geste dans son Drive (sélection multiple), sans carte ni clic par fichier. La preuve d'archivage ne protège pas d'une divergence FUTURE : si l'original est modifié après la copie, l'empreinte du reçu ne le couvre plus — le reçu porte l'empreinte du moment.
+
+**Alternatives rejetées.** Continuer à demander une carte par fichier (la friction sans gain de sûreté) ; supprimer sans preuve (une perte irréversible déguisée en rangement) ; élire le dossier d'instructions comme « prescriptif » (il prescrirait encore après archivage).

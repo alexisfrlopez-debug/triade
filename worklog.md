@@ -14234,3 +14234,9 @@ Work Log:
 - **LE COFFRE** : les cinq pièces, les trois packs, le kit, le pack de participation, les empreintes et le rapport au /livrables ; les instructions de la vague 18 copiées au dossier ARCHIVE (octets identiques) — leur retrait du /instructions demande les cinq autorisations par fichier ; les trois anciennes archives (v0.23.3/v0.23.4) restent au /livrables, SUPERSÉDÉES et marquées au LISEZMOI (l'outil refuse leur retrait, fichiers antérieurs à la session).
 - LA GARDE : sceau-I 14/14 ; aucun secret ; les cinq plans gelés avant les données ; la garde du prescriptif passe à chaque commit ; le verbatim des Entrées 389–399 demeuré octet pour octet.
 - SUITE : confirmer les cinq retraits d'instructions ; le run matériel TPM et la campagne structurée au poste réel ; le linter intégral (1 991 tokens) non rejoué — nommé.
+
+### Entrée 401 — L'ARCHIVAGE PROUVÉ (D266) : PLUS AUCUNE CARTE À CLIQUER POUR CLORE UNE VAGUE (24/11/2026)
+- Les cinq instructions de la vague 18 comparées à leurs copies d'ARCHIVE : **cinq empreintes identiques**. Trois retirées (autorisées par le maître), deux (jeewkx9g8, cmah20za5) laissées INERTES faute de consentement par fichier.
+- `scripts/vague18/verifier_archivage.py` (D266) : la copie vérifiée par sha256 + le reçu d'archivage remplacent la suppression comme condition de clôture ; autotest 5/5 ; le reçu de la vague 18 est au dépôt (`ARCHIVE/instructions_vague18_20261124/RECU-ARCHIVAGE.txt`) et au coffre (`RECU-ARCHIVAGE-vague18.txt`).
+- La garde du prescriptif classe désormais tout chemin `instructions/` en lecture seule : un original laissé ne prescrit plus rien, archivé ou non.
+- La règle est écrite à REPRISE § 7 ; le maître peut vider le dossier d'un seul geste quand il veut, ce n'est plus une condition.
