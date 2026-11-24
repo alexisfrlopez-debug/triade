@@ -1,0 +1,43 @@
+{
+  "objet": "run métal de la transaction D253 (publication de bascule concurrente)",
+  "graine": 20261124,
+  "n_par_configuration": 30,
+  "machines_attendues": [
+    "M1",
+    "M2"
+  ],
+  "etats": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "aleas_d261": [
+    "thread-cree-pendant-rendez-vous",
+    "retour-pile-dans-plage",
+    "hors-portee-rel32",
+    "slot-non-reserve",
+    "verrou-detenu"
+  ],
+  "rollback_depuis": [
+    "publication",
+    "invalidation",
+    "verification"
+  ],
+  "chronometre": "monotone (clock_gettime CLOCK_MONOTONIC)",
+  "coeur_epingle": "affinite obligatoire, consignee par machine",
+  "cpuid_consigne": [
+    "vendor",
+    "family",
+    "model",
+    "stepping",
+    "flags(cmpxchg16b)"
+  ],
+  "frequence_consignee": "fréquence effective mesurée pendant le run (kHz)",
+  "commande": "scripts/vague19/kit_metal_bascule.py --run --machine <ID> --sortie <JSON>",
+  "convention": "un run = (machine, etat, alea|nominal, rollback_depuis|aucun) ; l'agrégat ne vaut que si les DEUX machines portent TOUS les cas",
+  "statut": "EN ATTENTE — aucun run matériel n'existe à la consignation"
+}
