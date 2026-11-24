@@ -1,13 +1,13 @@
 {
  "total_vecteurs": 235,
- "executes_ok": 186,
- "fault": 49,
+ "executes_ok": 235,
+ "fault": 0,
  "avant_executes_ok": 95,
- "delta": 91,
- "sans_execution": 8,
- "partiels": 2,
+ "delta": 140,
+ "sans_execution": 0,
+ "partiels": 0,
  "cible": 200,
- "cible_tenue": false,
+ "cible_tenue": true,
  "regressions": [],
  "refus": [],
  "par_bloc": {
@@ -344,35 +344,33 @@
   "b20008": {
    "rva": 6144,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Unhandled CPU exception "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Unhandled CPU exception "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Unhandled CPU exception "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Unhandled CPU exception "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Unhandled CPU exception "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -721,35 +719,33 @@
   "c30011": {
    "rva": 19200,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -828,29 +824,27 @@
   "e50002": {
    "rva": 19584,
    "vecteurs": 7,
-   "executes": 2,
-   "fautes": 5,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 7,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
@@ -860,15 +854,15 @@
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:6",
@@ -920,35 +914,33 @@
   "e50004": {
    "rva": 20288,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -988,29 +980,27 @@
   "e50006": {
    "rva": 20800,
    "vecteurs": 5,
-   "executes": 1,
-   "fautes": 4,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 5,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
@@ -1020,44 +1010,42 @@
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
   "e50007": {
    "rva": 20992,
    "vecteurs": 4,
-   "executes": 0,
-   "fautes": 4,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 4,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -1493,47 +1481,45 @@
   "g70006": {
    "rva": 26432,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "sysv",
+     "motif": ""
     }
    ]
   },
@@ -1675,47 +1661,45 @@
   "g70010": {
    "rva": 29888,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
@@ -1800,94 +1784,90 @@
   "g80002": {
    "rva": 33216,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   },
   "g80003": {
    "rva": 35968,
    "vecteurs": 6,
-   "executes": 0,
-   "fautes": 6,
-   "causes": [
-    "Invalid memory read "
-   ],
+   "executes": 6,
+   "fautes": 0,
+   "causes": [],
    "par_vecteur": [
     {
      "exigence": "pre:0",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "post:1",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "inv:2",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:3",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:4",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     },
     {
      "exigence": "echec:5",
-     "statut": "FAULT",
-     "abi": null,
-     "motif": "sysv:UcError:Invalid memory read "
+     "statut": "OK",
+     "abi": "msx64",
+     "motif": ""
     }
    ]
   }

@@ -83,7 +83,7 @@ def principal():
 
     # le tableau par bloc (rendu exigé par le brief)
     lignes = [
-        "# TABLEAU PAR BLOC — harnais image v2 (P3, 25/11/2026)",
+        "# TABLEAU PAR BLOC — harnais image v4 (P3, 25/11/2026)",
         f"# recomposé depuis resultat-image.json · total {total} · exécutés {ok} "
         f"· fautes {total - ok} · delta contre 95 : {delta:+d}",
         f"# cible ≥ 200/235 : {'TENUE' if cible_tenue else 'MANQUÉE'}"

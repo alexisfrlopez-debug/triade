@@ -1,0 +1,18 @@
+# MANIFESTE P3 — sha256 des fichiers produits (25/11/2026)
+
+141192d237497bf98ca1ae7a819a8532dafaa7db6882817fa55ed2e63d9e2356  AMENDEMENT-V3.txt  (3386 o)
+40171f808ca86ff4bc3e0d69c4d7c3495955782c57562997174bdc88b2dbfc7a  AMENDEMENT-V4.txt  (4377 o)
+b75083812a81419110977b05e504c535f5be83b945a075b3d35137a8ed310435  EMPREINTES.txt  (305 o)
+5cc5da3985838fc2905ab131ba22f3f1b28b23f6193a82ce43daecd77da31da6  PLAN-HARNAIS-IMAGE.txt  (5146 o)
+9fc83eabdb79cb5e39736fd1f63071d0c9751da1ab942c73fd254ec4aa4ebe85  RAPPORT-P3-EXECUTION.txt  (3541 o)
+7c1f8da35e6a2d129f800fedac3d27a314ac0427ce7fe012eae195a49686e1ef  agregateur_image.py  (4719 o)
+aee2e9d23a86501b7591b90978e5901ce028fb307ee984775cdc33c7b19a2500  harnais_image.py  (9125 o)
+075d9a235dbc9e291069c8b432366841074824415e621710b7a0f05be09efef9  recomposition-image.json  (29897 o)
+a20314bb9c10c1ce780dc0ae5be38305ed288962fadd1bcccca4315177da989c  resultat-image.json  (33743 o)
+90de36158a170f6cf969c43f3807889a79f26de93f39e1df3497c33baed9f470  tableau-image.txt  (2162 o)
+c1e46fb0b857b6f33c67aa7f26a1db3064f2e3adbd528414116b497220b6a20c  m5/proxy.exe  (CONTEXTE, lecture seule)
+8038585b7af83c9fe5e6fdccd197e67888b9e5fb09d8d6c84cb998c684bff3c0  m1/selftest.exe  (CONTEXTE, lecture seule)
+da4a6ca299339567be59ba5c48b1ad3de384bdc316c5a523ebd272b307d3fdb2  m2/echo.exe  (CONTEXTE, lecture seule)
+c89e330cd16f3fd48558ed4fdb6708fb671e6d907547d5c1ee28075ffd6507f2  m0/hello.exe  (CONTEXTE, lecture seule)
+
+Commandes : python3 atelier-p3-exec/harnais_image.py ; python3 atelier-p3-exec/agregateur_image.py ; python3 v06/sceau_I.py verifier

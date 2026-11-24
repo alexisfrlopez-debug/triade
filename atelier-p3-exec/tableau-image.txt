@@ -1,6 +1,6 @@
-# TABLEAU PAR BLOC — harnais image v2 (P3, 25/11/2026)
-# recomposé depuis resultat-image.json · total 235 · exécutés 186 · fautes 49 · delta contre 95 : +91
-# cible ≥ 200/235 : MANQUÉE · régressions : 0
+# TABLEAU PAR BLOC — harnais image v4 (P3, 25/11/2026)
+# recomposé depuis resultat-image.json · total 235 · exécutés 235 · fautes 0 · delta contre 95 : +140
+# cible ≥ 200/235 : TENUE · régressions : 0
 
 bloc         rva vect  exé faut  causes
 a10001    0x1000    4    4    0  —
@@ -13,7 +13,7 @@ b20004    0x1280    4    4    0  —
 b20005    0x1300    4    4    0  —
 b20006    0x1380    4    4    0  —
 b20007    0x13c0    4    4    0  —
-b20008    0x1800    4    0    4  Unhandled CPU exception 
+b20008    0x1800    4    4    0  —
 c30001    0x4000    4    4    0  —
 c30002    0x4100    4    4    0  —
 c30003    0x4140    4    4    0  —
@@ -24,15 +24,15 @@ c30007    0x4400    5    5    0  —
 c30008    0x4600    4    4    0  —
 c30009    0x4800    4    4    0  —
 c30010    0x4980    5    5    0  —
-c30011    0x4b00    4    0    4  Invalid memory read 
+c30011    0x4b00    4    4    0  —
 c30013    0x1800    5    5    0  —
 e50001    0x4c00    4    4    0  —
-e50002    0x4c80    7    2    5  Invalid memory read 
+e50002    0x4c80    7    7    0  —
 e50003    0x4e80    5    5    0  —
-e50004    0x4f40    4    0    4  Invalid memory read 
+e50004    0x4f40    4    4    0  —
 e50005    0x5080    4    4    0  —
-e50006    0x5140    5    1    4  Invalid memory read 
-e50007    0x5200    4    0    4  Invalid memory read 
+e50006    0x5140    5    5    0  —
+e50007    0x5200    4    4    0  —
 e50008    0x5380    4    4    0  —
 e50009    0x54c0    4    4    0  —
 e50010    0x5580    6    6    0  —
@@ -44,14 +44,14 @@ g70002    0x6080    4    4    0  —
 g70003    0x6180    5    5    0  —
 g70004    0x62c0    8    8    0  —
 g70005    0x65c0    5    5    0  —
-g70006    0x6740    6    0    6  Invalid memory read 
+g70006    0x6740    6    6    0  —
 g70007    0x6a40    7    7    0  —
 g70008    0x6d40    7    7    0  —
 g70009    0x7340    4    4    0  —
-g70010    0x74c0    6    0    6  Invalid memory read 
+g70010    0x74c0    6    6    0  —
 g70011    0x7dc0    6    6    0  —
 g80001    0x8000    4    4    0  —
-g80002    0x81c0    6    0    6  Invalid memory read 
-g80003    0x8c80    6    0    6  Invalid memory read 
+g80002    0x81c0    6    6    0  —
+g80003    0x8c80    6    6    0  —
 
-blocs sans aucune exécution : 8 · blocs partiels : 2
+blocs sans aucune exécution : 0 · blocs partiels : 0
