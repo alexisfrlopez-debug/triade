@@ -1,0 +1,1 @@
+La présentation v0.24.0 — dix diapositives : la promesse de bascule corrigée, la transaction et ses refus, la racine de confiance et ce qu'elle ne garantit pas, la provenance et ses quatre refus, le ratio trouvé sur pièces, le paquet de réplication, le corpus et l'entraînement, ce qui reste au poste réel, l'édition et ses empreintes.

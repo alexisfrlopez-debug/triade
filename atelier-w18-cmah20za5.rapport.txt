@@ -1,0 +1,41 @@
+ATELIER CMAH20ZA5 — LE LINTER v2 PORTÉ À v0.25.0 ET LES RÉSIDUS SOLDÉS (D265)
+=============================================================================
+Instruction : porter le linter d'édition v2 (cinq classes) à la génération, corriger
+les résidus par amendements datés append-only, régénérer les cinq pièces, tout
+re-vérifier, sans toucher un PDF scellé ni une valeur mesurée.
+
+LIVRÉ
+1. `scripts/vague18/linter_v250.py` — cinq classes falsifiables : C1 phrases
+   sémantiques, C2 plages de décisions, C3 revendications de version, C4 gallicismes
+   anglais, C5 numéraux de la prose. 5/5 contrôles négatifs (une mutation par classe,
+   chacune REFUSÉE).
+2. Les résidus soldés :
+   (1) manuscrit : abstract v0.23.3 → v0.25.0 ; changelog réordonné (v0.23.3 avant
+       v0.25.0) ; plage des décisions D1–D255 (la macro du manuscrit) ; « 109 triples »
+       étiqueté historique (v2 ; v2.1 : 127/24/19 + 48 DPO) ; Data Availability portée
+       à la version courante.
+   (2) spécification : annexe B D75–D255, lignes D252–D255 ajoutées, la ligne D223
+       RETIRÉE de l'annexe A (où elle vivait par erreur) et remise en ordre dans
+       l'annexe B.
+   (3) Livre : avant-propos v1.9 / v0.15.10, §10 renvois alignés, couverture au
+       24 novembre 2026, version 1.9.
+   (4) preuves : renvois §7.6 / §7.7 (numérotation du PDF), « sept états (0 à 6) »,
+       ventilation aux opérandes non arrondis (20,715 + 16,497 + 0,213 = 37,425 s ;
+       le résidu de 13 ms nommé), mutants 776/832 (ère v0.14.0) vs 811/832 (v0.19.5),
+       GHASH 49,12× par appel (78 888/1 606) distinct du par-multiplication, médiane
+       éditer 712,5 (le 712 = troncature nommée).
+   (5) présentation : « 11/11 contrôles dont 9 refus nommés ».
+3. Les cinq pièces RÉGÉNÉRÉES : manuscrit v0.25.0, spécification v0.15.10, Livre v1.9,
+   preuves v0.25.0, présentation v0.25.0.
+
+PREUVES
+- linter v2 : 0 résidu sur les cinq pièces ; contrôles négatifs 5/5 ;
+- test du lecteur : 7/7 (3,22 ; 12,7 ; 41,0 ; 712,5 ; 37,425 ; 49,12 ; 811/832) ;
+- provenance : registre conforme, 4/4 refus mutants ;
+- scellés : les cinq pièces v0.24.0 AUCUNE empreinte déplacée ;
+- sceau-I 14/14.
+
+LIMITE NOMMÉE : le linter v2 est porté sur les règles UTILES à cette génération
+(cinq classes, une par résidu et par invariant) ; il ne rejoue pas les 1 991 tokens de
+l'extraction intégrale de l'ancien linter — l'extraction est remplacée par les tests
+ciblés du lecteur.

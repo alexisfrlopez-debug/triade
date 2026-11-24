@@ -1,0 +1,1 @@
+La spécification v0.15.9 — §7.1.1 (la primitive de publication réelle : 8 octets naturels, LOCK CMPXCHG16B pour 16, quiescence des threads) et §8.6 (la racine de confiance : l'ancre par profil, ses limites, la restauration cohérente binaire+état invisible aux ancres locales), plus la correction du §7.1 et la section de version v0.15.9.

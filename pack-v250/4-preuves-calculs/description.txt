@@ -1,0 +1,1 @@
+Les preuves et calculs v0.24.0 — les quatre rapports d'atelier de la vague 17 lus verbatim (W17R1D81, W17R2PAT, W17R3R10, W17R4PER), le registre de provenance à onze lignes recomposées, la table des empreintes des trois autres pièces, les limites nommées (métal nu, sentinelle Windows, outils Tamarin/ProVerif, linter v2 non porté).

@@ -1,0 +1,1 @@
+Le manuscrit académique v0.24.0 — la vague 17 : la publication d'une bascule bornée à huit octets naturels et la quiescence obligatoire (D253), la garantie R10 bornée à son ancre, intégrité/authenticité/fraîcheur séparées (D254), la provenance contrôlée et le ratio 3,23 corrigé à 3,22 à la source (D255). Aucune valeur mesurée modifiée ; la note de la vague 17 est portée au corps.

@@ -1,0 +1,32 @@
+RAPPORT DE VÉRIFICATION — ÉDITION v0.25.0 (vague 18, 24/11/2026)
+================================================================
+
+1. LE LINTER v2 PORTÉ
+==============================================================================
+LE LINTER D'ÉDITION v2 PORTÉ À v0.25.0
+==============================================================================
+[linter-v250] 0 RÉSIDU — les cinq classes sont vertes sur les cinq pièces
+
+2. SES CONTRÔLES NÉGATIFS
+==============================================================================
+CONTRÔLES NÉGATIFS — CINQ MUTATIONS, CINQ REFUS ATTENDUS
+==============================================================================
+[VERT] C1 → [('C1', 'presentation', '« 11/11 refus » non corrigé')]
+[VERT] C2 → [('C2', 'specification', 'la ligne D252 est absente')]
+[VERT] C3 → [('C3', 'livre', 'la chaîne v1.9 est absente')]
+[VERT] C4 → [('C4', 'manuscrit', 'calque interdit : permits to')]
+[VERT] C5 → [('C5', 'manuscrit', 'le ratio fautif 3.23 est publié comme valeur'), ('C5', 'manuscrit', 'le ratio corrigé 3.22 est absent')]
+5/5
+
+3. LE TEST DU LECTEUR
+3.22 · 12.7 · 41.0 au manuscrit ; 712,5 · 37,425 · 49,12 · 811/832 aux preuves — 7/7 recomposés
+
+4. LA PROVENANCE
+CONFORME — chaque ligne se recompose depuis sa source canonique
+4/4 contrôles négatifs rendus
+
+5. LES SCELLÉS
+les cinq pièces v0.24.0 : AUCUNE empreinte déplacée (référence empreintes_livrables_v0.24.0.txt)
+
+6. LE SCEAU-I
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)

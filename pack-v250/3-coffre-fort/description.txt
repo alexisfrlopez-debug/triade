@@ -1,0 +1,1 @@
+Le Livre du Coffre v1.8 — la plage du chapitre 11 alignée sur sa table réelle (D75–D137), les trois propriétés de fraîcheur nommées (plancher R10, époque CF3, témoins d'époque) et la restauration cohérente du couple binaire+état déclarée invisible aux ancres locales (D254).

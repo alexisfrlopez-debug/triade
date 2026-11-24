@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """GÉNÉRATION DES PIÈCES 4 ET 5 DE L'ÉDITION v0.24.0 (atelier W17R5REL).
 
-- 4-preuves-calculs/TRIADE_preuves_et_calculs_v0.24.0.pdf : les rapports des quatre
+- 4-preuves-calculs/TRIADE_preuves_et_calculs_<EDITION>.pdf : les rapports des quatre
   ateliers de la vague 17 LUS VERBATIM de leurs fichiers, le registre de provenance,
   la table des empreintes des quatre autres pièces (aucun document ne porte son propre
   sha256), les limites nommées.
-- 5-presentation/TRIADE_presentation_v240.pdf : la présentation de la vague 17.
+- 5-presentation/TRIADE_presentation_<EDITION>.pdf : la présentation de la vague 17.
 
 Aucune valeur n'est retapée : les textes viennent des rapports ; les empreintes sont
 recalculées des fichiers mêmes au moment de la génération.
@@ -26,7 +26,11 @@ from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate, Paragraph,
                                 Spacer, PageBreak, Table, TableStyle)
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
-PACK = REPO / "pack-v240"
+import os
+PACK = pathlib.Path(os.environ.get("TRIADE_PACK", str(REPO / "pack-v240")))
+EDITION = os.environ.get("TRIADE_EDITION", "v0.24.0")
+SPECVER = os.environ.get("TRIADE_SPECVER", "v0.15.9")
+BOOKVER = os.environ.get("TRIADE_BOOKVER", "v1.8")
 FDIR = "/usr/share/fonts/truetype/dejavu"
 pdfmetrics.registerFont(TTFont("Serif", FDIR + "/DejaVuSerif.ttf"))
 pdfmetrics.registerFont(TTFont("SerifB", FDIR + "/DejaVuSerif-Bold.ttf"))
@@ -65,7 +69,7 @@ def page(canvas, doc):
     canvas.saveState()
     canvas.setFont("Sans", 7.5)
     canvas.setFillColor(colors.HexColor("#555F66"))
-    canvas.drawString(20 * mm, 12 * mm, "TRIADE — édition v0.24.0 (la vague 17, 24 novembre 2026)")
+    canvas.drawString(20 * mm, 12 * mm, f"TRIADE — édition {EDITION} (la vague 18, 24 novembre 2026)")
     canvas.drawRightString(190 * mm, 12 * mm, str(doc.page))
     canvas.restoreState()
 
@@ -80,11 +84,11 @@ def construire(chemin, titre, sous_titre, histoire):
 
 
 def preuves():
-    p1 = PACK / "1-manuscrit" / "TRIADE_manuscrit_v0.24.0.pdf"
-    p2 = PACK / "2-specification" / "Protocole_TRIADE_v0.15.9_Specification.pdf"
-    p3 = PACK / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf"
-    pieces = [("Le manuscrit académique v0.24.0", p1), ("La spécification v0.15.9", p2),
-              ("Le Livre du Coffre v1.8", p3)]
+    p1 = PACK / "1-manuscrit" / f"TRIADE_manuscrit_{EDITION}.pdf"
+    p2 = PACK / "2-specification" / f"Protocole_TRIADE_{SPECVER}_Specification.pdf"
+    p3 = PACK / "3-coffre-fort" / f"Livre_du_Coffre_TRIADE_CF1-CF3_{BOOKVER}.pdf"
+    pieces = [(f"Le manuscrit académique {EDITION}", p1), (f"La spécification {SPECVER}", p2),
+              (f"Le Livre du Coffre {BOOKVER}", p3)]
     ateliers = [
         ("W17R1D81 — la remise D81 historique, la garde active D223",
          REPO / "atelier-w17-d81-d223" / "rapport-purge-actives.txt"),
@@ -96,7 +100,7 @@ def preuves():
          REPO / "atelier-w17-performance-replication" / "rapport.txt"),
     ]
     h = [Paragraph("TRIADE — Preuves et calculs", H1),
-         Paragraph("Édition v0.24.0 — la vague 17 (24 novembre 2026)", H2),
+         Paragraph(f"Édition {EDITION} — la vague 18 (24 novembre 2026)", H2),
          Paragraph("Ce document rassemble les pièces de la vague 17 <b>lues verbatim de leurs "
                    "rapports</b> : aucun résultat n'y est retapé. Les empreintes de la table "
                    "sont recalculées des fichiers au moment de la génération ; ce document ne "
@@ -113,8 +117,8 @@ def preuves():
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
     h.append(t)
-    h.append(Paragraph("2. Ce que porte l'édition v0.24.0", H2))
-    h.append(Paragraph("La spécification gagne §7.1.1 (ce que garantit réellement la primitive "
+    h.append(Paragraph(f"2. Ce que porte l'édition {EDITION}", H2))
+    h.append(Paragraph("La spécification gagne §7.6 (ce que garantit réellement la primitive "
                        "de publication, D253) et §8.6 (la racine de confiance, l'ancre par profil "
                        "et ses limites, D254). Le manuscrit corrige le seul ratio qui ne se "
                        "recomposait pas depuis ses opérandes imprimés (63,39/19,66 = 3,2243, "
@@ -134,28 +138,39 @@ def preuves():
                        "grandeurs (a)-(d) ne sont jamais additionnées. Registre complet : "
                        "replication-v17/provenance-v17.json ; contrôles : 11/11 VERT, 4/4 refus "
                        "mutants.", BODY))
-    h.append(Paragraph("4. Les limites nommées", H2))
+    h.append(Paragraph("4. Notes de lecture rétablies (résidus d'édition soldés)", H2))
+    h.append(Paragraph(
+        "Sept états de la transaction de bascule (0 à 6 : préparé, armé, rendez-vous, publication, "
+        "invalidation, vérification, reprise), plus le rollback depuis publication, invalidation ou "
+        "vérification. Ventilation des quatre bras aux opérandes NON ARRONDIS : 20,715 + 16,497 + "
+        "0,213 = 37,425 s (le résidu de 13 ms des macros arrondies est nommé, jamais lissé). Mutants : "
+        "776/832 = 93,3 % est l'ÈRE v0.14.0 ; l'ère v0.19.5 porte 811/832 = 97,5 %. GHASH : 49,12× "
+        "(78 888 / 1 606) est le ratio PAR APPEL, distinct du ratio par multiplication (19,66 / 63,39). "
+        "Médiane du mode éditer : 712,5 — le 712 publié est sa troncature, nommée comme telle. Les "
+        "renvois à la spécification suivent la numérotation du PDF : §7.6 (primitive de publication, "
+        "D253, D261) et §7.7 (racine de confiance, D254).", BODY))
+    h.append(Paragraph("5. Les limites nommées", H2))
     h.append(Paragraph("Aucune mesure au métal nu ; la bascule concurrente réelle et la sentinelle "
                        "Windows (SACL/4663) restent EN ATTENTE ; les outils Tamarin/ProVerif sont "
                        "absents du bac, les lemmes gardent leur statut « prouvés sous hypothèses » ; "
                        "le linter d'édition v2 n'a pas été porté à cette génération — la porte de "
-                       "génération v0.24.0 couvre les versions, les empreintes et les recompositions, "
+                       f"génération {EDITION} couvre les versions, les empreintes et les recompositions, "
                        "pas les 1 991 tokens du linter v2 (défaut nommé).", BODY))
-    construire(PACK / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.24.0.pdf",
-               "TRIADE — Preuves et calculs v0.24.0", "v0.24.0", h)
+    construire(PACK / "4-preuves-calculs" / f"TRIADE_preuves_et_calculs_{EDITION}.pdf",
+               f"TRIADE — Preuves et calculs {EDITION}", EDITION, h)
 
 
 def presentation():
-    p1 = PACK / "1-manuscrit" / "TRIADE_manuscrit_v0.24.0.pdf"
-    p2 = PACK / "2-specification" / "Protocole_TRIADE_v0.15.9_Specification.pdf"
-    p3 = PACK / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf"
-    p4 = PACK / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.24.0.pdf"
+    p1 = PACK / "1-manuscrit" / f"TRIADE_manuscrit_{EDITION}.pdf"
+    p2 = PACK / "2-specification" / f"Protocole_TRIADE_{SPECVER}_Specification.pdf"
+    p3 = PACK / "3-coffre-fort" / f"Livre_du_Coffre_TRIADE_CF1-CF3_{BOOKVER}.pdf"
+    p4 = PACK / "4-preuves-calculs" / f"TRIADE_preuves_et_calculs_{EDITION}.pdf"
     T = ParagraphStyle("T", fontName="SansB", fontSize=24, leading=30, textColor=colors.HexColor("#1F4E5F"))
     S = ParagraphStyle("S", fontName="Sans", fontSize=12, leading=17, textColor=colors.HexColor("#555F66"))
     Pu = ParagraphStyle("Pu", fontName="Sans", fontSize=12, leading=19, leftIndent=10, bulletIndent=0,
                         spaceAfter=7)
     h = [Spacer(1, 55 * mm),
-         Paragraph("TRIADE — édition v0.24.0", T),
+         Paragraph(f"TRIADE — édition {EDITION}", T),
          Paragraph("La vague 17 : la promesse réduite à ce qui est garanti, l'ancre nommée, "
                    "la provenance contrôlée", S),
          Spacer(1, 8 * mm),
@@ -176,10 +191,10 @@ def presentation():
     ])
     h.append(PageBreak())
     slide("2. La transaction et ses refus", [
-        "Six états : préparé → armé → rendez-vous → publication → invalidation → vérification → reprise.",
+        "Sept états (0 à 6) : préparé → armé → rendez-vous → publication → invalidation → vérification → reprise.",
         "Rollback depuis publication/invalidation/vérification ; aucun état partiel n'est exécutable.",
         "Refus nommés : mot non aligné, 12 octets au magasin simple, 16 octets sans CPUID, magasin SSE, RIP dans la plage.",
-        "Banc : 10/10 ; métal : EN ATTENTE (≥ 2 machines) — l'émulation ne prouve pas le cache d'instructions.",
+        "Banc : 16/16 (dont les cinq aléas du rendez-vous) ; métal : EN ATTENTE (≥ 2 machines) — l'émulation ne prouve pas le cache d'instructions.",
     ])
     slide("3. La racine de confiance (D254)", [
         "R10 est local et hors ligne : checksums, signature du manifeste, version ≥ plancher, conformité.",
@@ -193,7 +208,7 @@ def presentation():
         "Seuls les témoins hors machine du coffre la voient : carte papier, journal Git poussé, ancre de transparence.",
         "Le plancher R10 protège l'artefact ; l'époque CF3 protège la clé ; les témoins protègent l'état — trois choses.",
         "Rotation/révocation : identifiant de clé, plancher d'époque, clé absente = refus nommé, jamais de récupération.",
-        "Banc : 11/11 refus nommés rendus ; l'exploitation reste au poste réel.",
+        "Banc : 11/11 contrôles dont 9 refus nommés et 2 invariants rendus ; l'exploitation reste au poste réel.",
     ])
     slide("5. La provenance (D255)", [
         "Onze lignes recomposées depuis leurs JSONL/JSON committés, chacune avec chemin + sha256.",
@@ -224,7 +239,7 @@ def presentation():
         "Le linter d'édition v2 n'est pas porté à cette génération — défaut nommé.",
     ])
     h.append(PageBreak())
-    h.append(Paragraph("10. L'édition v0.24.0", H2))
+    h.append(Paragraph(f"10. L'édition {EDITION}", H2))
     rows = [["Pièce", "Version"], ["Manuscrit", "v0.24.0"], ["Spécification", "v0.15.9"],
             ["Livre du Coffre", "v1.8"], ["Preuves et calculs", "v0.24.0"],
             ["Présentation", "v0.24.0"]]
@@ -238,7 +253,7 @@ def presentation():
                        "les cinq) :", BODY))
     for nom, p in (("manuscrit", p1), ("spécification", p2), ("Livre", p3), ("preuves", p4)):
         h.append(Paragraph(f"{nom} : {sha(p)}", ParagraphStyle("FP", fontName="Serif", fontSize=7, leading=10)))
-    construire(PACK / "5-presentation" / "TRIADE_presentation_v240.pdf",
+    construire(PACK / "5-presentation" / f"TRIADE_presentation_{EDITION.replace('.','')}.pdf",
                "TRIADE — présentation v0.24.0", "v0.24.0", h)
 
 
