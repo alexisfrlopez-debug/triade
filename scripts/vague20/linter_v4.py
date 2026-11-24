@@ -30,7 +30,7 @@ import sys
 
 RACINE = pathlib.Path(__file__).resolve().parents[2]
 PACK_DEFAUT = RACINE / "pack-v270"
-DERNIERE_DECISION = 271          # la dernière décision réelle (D268, journal)
+DERNIERE_DECISION = 272          # la dernière décision réelle (D268, journal)
 CLASSES_ADV = ("ADV-LOCAL", "ADV-ADMIN", "ADV-MEDIA", "ADV-DISTANT")
 BORDS = ("EN-LIGNE", "HORS-LIGNE", "LES-DEUX")
 

@@ -1,12 +1,12 @@
 {
  "tsa": "https://freetsa.org/tsr",
  "tsr": "temoin-epoch-v0.27.0.tsr",
- "tsr_sha256": "99b8b8a9e73f21c1d46c6cdffc4f83fc744b1dedba0e2fda5154dc144114ef68",
+ "tsr_sha256": "4f97c31fa30dc1d211a4c9ea7f71da15bc00b183d23db14d9ac51518152f151c",
  "tsq": "temoin-epoch-v0.27.0.tsq",
  "temoin": "temoin-epoch-v0.27.0.json",
- "temoin_sha256": "5d15d7e2f29805011b3a300b8ecf152d1c2daf963688057809c969ff69155ad4",
+ "temoin_sha256": "4f6416bd8669ee251c9b4de25cfb47221b4e4084b9461c9c608282fb31bdcbde",
  "edition": "v0.27.0",
- "verifie_le": "2026-11-24T13:13:30Z",
+ "verifie_le": "2026-11-24T13:13:40Z",
  "verification": "openssl ts -verify : OK",
- "imprint_sha256": "5d15d7e2f29805011b3a300b8ecf152d1c2daf963688057809c969ff69155ad4"
+ "imprint_sha256": "4f6416bd8669ee251c9b4de25cfb47221b4e4084b9461c9c608282fb31bdcbde"
 }
