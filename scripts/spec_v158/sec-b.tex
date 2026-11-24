@@ -307,13 +307,24 @@ RISC-V & magasin de 4 octets aligné, puis \texttt{fence.i} & synchronisation ex
 \end{tabularx}
 \end{table}
 
-La transaction a six états — préparé, armé, rendez-vous, publication, invalidation, vérification,
+La transaction a sept états (0 à 6) — préparé, armé, rendez-vous, publication, invalidation, vérification,
 reprise — plus un rollback depuis publication/invalidation/vérification ; \textbf{aucun état partiel
 n’est exécutable}. Un échec en invalidation ou en vérification est « publié-mais-non-vérifié » :
 rollbacké, jamais toléré. Le rendez-vous de quiescence est obligatoire : suspension et lecture de RIP
 (Windows) ou arrêt par signal / \texttt{ptrace} (Linux), avec refus si un thread est immobilisé dans la
 plage. Les preuves sont séparées — banc, émulation, métal — et la bascule concurrente au métal nu reste
 \emph{en attente} : l’émulation ne valide pas la cohérence du cache d’instructions.
+
+\paragraph{Les cinq aléas résiduels du rendez-vous (D261).} Le rendez-vous de quiescence ne vaut que si
+cinq aléas sont nommés, chacun avec son refus et son invariant d’état : (1) la création d’un thread pendant
+le rendez-vous — gel de création ou ré-énumération atomique, refus \texttt{THREAD-CREE-PENDANT-RENDEZ-VOUS}
+si un thread non vérifié apparaît ; (2) les adresses de retour de pile pointant dans la plage remplacée —
+inspection de la pile, refus \texttt{RETOUR-PILE-DANS-PLAGE}, car l’atomicité du magasin ne protège pas un
+retour ; (3) la portée $\pm 2$~GiB du rel32 de la forme courte — refus \texttt{HORS-PORTEE-REL32} si la zone de
+croissance est au-delà ; (4) la réservation du slot de 16 octets aligné à la build (granularité R7) — refus
+\texttt{SLOT-NON-RESERVE} si elle est improvisée au patch ; (5) le deadlock de \texttt{SuspendThread} — ordre
+d’acquisition nommé, refus \texttt{LOCK-DETENU} si un thread suspendu détient un verrou requis par le patcheur.
+Le kit falsifiable rend ces cinq refus (16/16 au banc) ; le métal nu reste \emph{en attente}.
 
 \subsection{La racine de confiance au chargement — ce que R10 garantit, et ce qu’il ne garantit pas (D254)}\label{sec:racine}
 
