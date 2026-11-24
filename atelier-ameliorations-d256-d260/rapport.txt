@@ -1,0 +1,27 @@
+ATELIER DES CINQ AMÉLIORATIONS (D256–D260) — 24/11/2026
+========================================================
+Commande du maître : « ok pour tes 5 suggestions ».
+
+1. GOUVERNANCE COMPRESSÉE (D256) — format canonique signé ; intention d'épreuve
+   108 o contre 154 o (JSON signé) ; autotest 5/5 ; repère d'époque 34 663 → 732
+   tokens (-97,9 %), cité, non re-mesuré.
+2. UN SEUL JUGE (D257) — MESURE RÉELLE sur le corpus v2.1 : 21 vertes du juge,
+   3 acceptées par la grammaire, 18 refusées (13 étiquettes LBL-xxx, 3 mémoires
+   nues, 1 mnémonique hors domaine, 1 autre étiquette) ; le script rend ÉCART.
+3. TRAMPOLINE 8 OCTETS (D258) — vérificateur au build, 7/7 (non aligné,
+   remplissage non-NOP, forme absolue sans CMPXCHG16B, 16 octets refusés).
+4. TÉMOIN HORS MACHINE (D259) — vérificateur 6/6 ; branché à la porte en V6,
+   déclaré EN ATTENTE tant qu'aucun témoin n'est consigné.
+5. DISTANCE AU PLANCHER + TABLEAUX ENGENDRÉS (D260) — 4,844 ÷ 4,59 = 1,055× le
+   plancher AES ; registre à 12 lignes (12/12 VERT, 4/4 refus mutants) ; tableau
+   descendant identique au registre (diff nul) ; porte V7 verte.
+
+CE QUI N'EST PAS FAIT, NOMMÉ : le port du format et de la règle du juge unique à
+la SPÉCIFICATION publiée, l'arbitrage éditorial des 18 complétions, la première
+consignation d'un témoin hors machine, la génération des tableaux DU MANUSCRIT
+depuis le registre — les quatre gestes de la prochaine édition.
+
+LES REFUS TENUS : aucun vert de complaisance sur V6 (EN ATTENTE, pas VERT) ;
+la mesure de l'écart n'est pas corrigée par le script ; aucune valeur re-mesurée
+n'est présentée comme nouvelle ; le format compressé ne se substitue pas à la
+signature sur les octets canoniques.

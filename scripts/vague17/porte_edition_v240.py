@@ -91,6 +91,22 @@ def verifier(pieces=None, empreintes=None):
                         "--verifier"], capture_output=True, text=True)
     if r.returncode != 0:
         refus.append(("V4", "provenance", "le registre ne se recompose pas"))
+    # V6 : le témoin hors machine (D259) — optionnel, nommé s'il manque
+    temoin = REPO / "replication-v17" / "temoin-fraicheur.json"
+    if temoin.exists():
+        import subprocess as _sp
+        r6 = _sp.run([sys.executable, str(REPO / "scripts/vague17/temoin_fraicheur.py"),
+                      str(temoin), str(REPO / "replication-v17" / "etat-fraicheur.json")],
+                     capture_output=True, text=True)
+        if r6.returncode != 0:
+            refus.append(("V6", "temoin", (r6.stdout or r6.stderr).strip()[:120]))
+    else:
+        print("[V6] EN ATTENTE — aucun témoin hors machine consigné (D259 : la porte l'exigera à la prochaine release)")
+    # V7 : le tableau descendant est engendré, à diff nul (D260)
+    r7 = subprocess.run([sys.executable, str(REPO / "scripts/vague17/provenance_tableaux.py"),
+                         "--tableaux-verifier"], capture_output=True, text=True)
+    if r7.returncode != 0:
+        refus.append(("V7", "tableau-descendant", (r7.stdout or "").strip()[:120]))
     # V5 : aucun secret (motif de classe, jamais une valeur)
     for cle, (p, _) in pieces.items():
         if pathlib.Path(p).exists() and b"PRIVATE KEY" in pathlib.Path(p).read_bytes():
@@ -112,7 +128,7 @@ def rapport(refus):
         for classe, cle, motif in refus:
             print(f"[REFUS] {classe} {cle} — {motif}")
         return 2
-    print("[VERT] V1 empreintes · V2 chaînes de version · V3 ratio recomposé · V4 provenance · V5 aucun secret")
+    print("[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · V6 témoin (EN ATTENTE si absent) · V7 tableau descendant")
     return 0
 
 

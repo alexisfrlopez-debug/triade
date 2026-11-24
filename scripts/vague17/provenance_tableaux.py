@@ -168,6 +168,18 @@ def construire():
         "source": {"chemin": "depot-zenodo-corpus-v21/dpo-paires.jsonl",
                    "sha256": sha256(os.path.join(RACINE, "depot-zenodo-corpus-v21", "dpo-paires.jsonl"))},
     })
+    reg.append({
+        "id": "aes_distance_plancher",
+        "grandeur": "(b) performance d'exécution — distance au plancher mesuré de l'unité AES",
+        "unite": "× (cycles/bloc mesurés ÷ cycles/bloc au plancher ; médianes non arrondies)",
+        "n": None,
+        "valeur": {"plancher_c_aesenc": 0.459, "c_bloc_plancher": 4.59,
+                   "c_bloc_ent8_256": 4.844,
+                   "distance_au_plancher": 4.844 / 4.59},
+        "statut": "documenté (journal OPT-16, mesures du 15/11/2026 ; VM, pas métal nu)",
+        "source": {"chemin": "docs/JOURNAL_OPTIMISATION.md",
+                   "sha256": sha256(os.path.join(RACINE, "docs/JOURNAL_OPTIMISATION.md"))},
+    })
     gh = ghash()
     reg.append({
         "id": "ghash_ratio",
@@ -180,6 +192,41 @@ def construire():
         "source": {"chemin": gh["source"], "sha256": sha256(os.path.join(RACINE, gh["source"]))},
     })
     return {"version": "vague17", "registre": reg}
+
+
+def tableau_markdown(reg):
+    """LE TABLEAU DESCENDANT — engendré du registre, jamais édité à la main."""
+    lignes = ["# Tableau descendant du registre (généré — ne pas éditer)",
+              "",
+              "| Id | Grandeur | n | Valeur | Statut | Source |",
+              "|---|---|---|---|---|---|"]
+    for r in reg["registre"]:
+        v = r["valeur"]
+        if isinstance(v, dict):
+            v = " · ".join(f"{k}={val}" for k, val in v.items())
+        lignes.append(f"| {r['id']} | {r['grandeur']} | {r['n']} | {v} | {r['statut']} | "
+                      f"`{r['source']['chemin']}` |")
+    lignes.append("")
+    lignes.append(f"*{len(reg['registre'])} lignes — quatre grandeurs (a)-(d) jamais additionnées.*")
+    return "\n".join(lignes) + "\n"
+
+
+def ecrire_tableau(reg, verifier_seulement=False):
+    chemin = os.path.join(RACINE, "replication-v17", "TABLEAU-DESCENDANT.md")
+    contenu = tableau_markdown(reg)
+    if verifier_seulement:
+        if not os.path.exists(chemin):
+            print("REFUS — tableau descendant absent : lancer --tableaux")
+            return 2
+        actuel = open(chemin, encoding="utf-8").read()
+        if actuel != contenu:
+            print("REFUS — le tableau descendant a DIVERGÉ du registre (diff non nul)")
+            return 2
+        print("CONFORME — le tableau descendant est identique au registre (diff nul)")
+        return 0
+    open(chemin, "w", encoding="utf-8").write(contenu)
+    print(f"écrit : replication-v17/TABLEAU-DESCENDANT.md ({len(contenu)} o)")
+    return 0
 
 
 def verifier(reg, attendu):
@@ -250,6 +297,9 @@ def main():
     ap.add_argument("--ecrire", action="store_true")
     ap.add_argument("--verifier", action="store_true")
     ap.add_argument("--controle-negatif", action="store_true")
+    ap.add_argument("--distance-plancher", action="store_true")
+    ap.add_argument("--tableaux", action="store_true")
+    ap.add_argument("--tableaux-verifier", action="store_true")
     a = ap.parse_args()
     reg = construire()
     if a.ecrire:
@@ -274,6 +324,15 @@ def main():
         return 0
     if a.controle_negatif:
         return controle_negatif()
+    if a.tableaux:
+        return ecrire_tableau(reg)
+    if a.tableaux_verifier:
+        return ecrire_tableau(reg, verifier_seulement=True)
+    if a.distance_plancher:
+        e = next(x for x in reg["registre"] if x["id"] == "aes_distance_plancher")["valeur"]
+        print(f"[plancher] {e['c_bloc_ent8_256']} c/bloc mesurés ÷ {e['c_bloc_plancher']} c/bloc au plancher "
+              f"= {e['distance_au_plancher']:.3f}× le plancher de l'unité (0,459 c/aesenc)")
+        return 0
     afficher(reg)
     return 0
 

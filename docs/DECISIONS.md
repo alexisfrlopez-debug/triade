@@ -4892,3 +4892,47 @@ originales, les cinq contrôles négatifs attrapés, le linter v194 16/16.
 **Les limites nommées.** Le registre ne prouve aucune mesure au métal nu (statut mesuré = VM ou émulation) ; `resultats_opt05.jsonl` porte des verdicts en texte libre et n'entre pas au registre faute de champ structuré — l'absence est nommée, jamais comblée ; cinq nombres du manuscrit (5,5 % de part intrinsèque, −89,4 % de mémoïsation, 24,163 → 2,555 s) n'impriment pas leurs opérandes à côté et restent NON COUVERTS par le test du lecteur — ils vivent aux ateliers cités, et la limite est écrite au constat.
 
 **Alternatives rejetées.** Retaper les valeurs dans le registre (l'envers de la provenance — la valeur se LIT de la source) ; un registre sans empreinte (une source modifiée passerait en silence) ; corriger le PDF publié v0.23.3 (violerait l'immuabilité de la balise) ; ignorer le rouge du manuscrit parce qu'il est « à une décimale » (c'est exactement la classe RATIOS que le plan exige de refuser) ; additionner ou comparer les quatre grandeurs (une propriété d'architecture n'est pas une vitesse).
+
+## D256 — LA GOUVERNANCE COMPRESSÉE PAR DÉFAUT : UN FORMAT CANONIQUE SIGNÉ, 108 OCTETS CONTRE 154 (l'amélioration 1, le 24/11/2026)
+
+**Le constat.** Le surcoût mesuré de la gouvernance est 34 663 tokens par changement contre des budgets de 627/674/2 200 ; la forme compressée mesurait déjà 732 tokens (−97,9 %) — atelier `couloirs-scelles-io3uh37cj`.
+
+**Le geste.** Le format canonique de l'intention signée est fixé : version (1 o), opcode (1 o), empreinte du contrat (8 o), longueur (1 o), corps, puis 64 octets de signature Ed25519 sur les octets canoniques. Sur l'intention d'épreuve, 108 octets contre 154 pour l'équivalent JSON signé.
+
+**Les preuves.** `scripts/vague17/gouvernance_compressee.py` : aller-retour, signature vérifiée, corps muté REFUSÉ, autre clé REFUSÉE, opcode inconnu REFUSÉ — 5/5.
+
+**Les limites.** Le format n'est pas encore porté à la spécification publiée ; le gain de tokens au niveau du changement (732) est un chiffre d'époque, pas une re-mesure de cette vague.
+
+**Alternatives rejetées.** Un format binaire opaque non signé sur les octets canoniques (une représentation réécrite ruinerait la vérification) ; un format JSON compressé (l'en-tête reste payé à chaque intention).
+
+## D257 — UN SEUL JUGE : LA GRAMMAIRE EST LA RÈGLE PUBLIÉE ; L'ÉCART SE MESURE (l'amélioration 2, le 24/11/2026)
+
+**Le constat mesuré, sur pièces.** Sur le corpus v2.1, le juge déclare **21** complétions vertes ; la grammaire canonique TPL-ADD n'en accepte que **3** — 18 refus : 13 étiquettes `LBL-xxx` interdites par le contrat, 3 mémoires nues sans taille, 1 mnémonique hors domaine, 1 autre étiquette. Une campagne « contrainte » qui ignore cet écart mesure un changement de règle, pas un gain de modèle.
+
+**Le geste.** Toute campagne publie les DEUX verdicts (juge et grammaire) et l'écart. `scripts/vague17/juge_grammaire.py` rejoue la grammaire importée de l'instrument de la vague 16 (jamais recopiée) sur les vertes du corpus et rend `ÉCART NOMMÉ` tant qu'il subsiste.
+
+**Les limites.** Le choix de corriger le corpus ou la grammaire est éditorial et n'est PAS tranché ici ; le script mesure, il ne corrige pas.
+
+## D258 — LE TRAMPOLINE DE HUIT OCTETS VÉRIFIÉ AU BUILD (l'amélioration 3, le 24/11/2026)
+
+**Le geste.** La forme courte (E9 rel32 + NOP, alignée 8) est la norme ; la forme absolue de 12 octets n'est admise qu'avec `LOCK CMPXCHG16B` (CPUID) et un emplacement aligné 16 ; tout autre cas est refusé, nommé.
+
+**Les preuves.** `scripts/vague17/verifier_trampoline.py` — 7/7, dont le mot non aligné, le remplissage non-NOP, la forme absolue sans CMPXCHG16B et les 16 octets quelconques.
+
+**Les limites.** C'est une règle de build sur les octets ; la publication concurrente réelle reste EN ATTENTE du métal nu (D253).
+
+## D259 — LE TÉMOIN HORS MACHINE COMME PORTE DE RELEASE (l'amélioration 4, le 24/11/2026)
+
+**Le constat.** D254 : la restauration cohérente d'un couple binaire + état échappe à toute ancre locale.
+
+**Le geste.** Avant toute release, un témoin consigné (carte papier, journal Git poussé, ancre de transparence) doit attester même édition, même empreinte, époque ≥ l'état, date non future. `scripts/vague17/temoin_fraicheur.py` vérifie (6/6 refus nommés) ; la porte d'édition le branche en V6 et le déclare **EN ATTENTE** tant qu'aucun témoin n'est consigné.
+
+**Les limites.** Aucun témoin n'est encore consigné : V6 ne peut pas être verte aujourd'hui, et la porte le DIT au lieu de la simuler.
+
+## D260 — LA PERFORMANCE EN DISTANCE AU PLANCHER, LES TABLEAUX ENGENDRÉS (l'amélioration 5, le 24/11/2026)
+
+**Le geste.** Toute performance se publie en distance au plancher mesuré de l'unité, à côté des cycles : 4,844 c/bloc ÷ 4,59 c/bloc = **1,055×** le plancher AES (0,459 c/aesenc). Et les tableaux se engendrent du registre de provenance (12 lignes), à diff nul : `provenance_tableaux.py --tableaux` écrit `replication-v17/TABLEAU-DESCENDANT.md`, `--tableaux-verifier` refuse toute divergence.
+
+**Les preuves.** Registre 12/12 VERT, 4/4 refus mutants, tableau descendant identique au registre ; porte d'édition V7 verte.
+
+**Les limites.** La distance au plancher n'est mesurée que sur les données d'époque (VM) ; les tableaux du manuscrit publié ne sont pas encore engendrés depuis le registre — c'est un geste d'édition.

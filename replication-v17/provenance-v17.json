@@ -143,6 +143,23 @@
    "valeur": 48
   },
   {
+   "grandeur": "(b) performance d'exécution — distance au plancher mesuré de l'unité AES",
+   "id": "aes_distance_plancher",
+   "n": null,
+   "source": {
+    "chemin": "docs/JOURNAL_OPTIMISATION.md",
+    "sha256": "dffe4c1225d21e91fe8509ef65faedc85676d90b4eefbf993822906a2387dd8b"
+   },
+   "statut": "documenté (journal OPT-16, mesures du 15/11/2026 ; VM, pas métal nu)",
+   "unite": "× (cycles/bloc mesurés ÷ cycles/bloc au plancher ; médianes non arrondies)",
+   "valeur": {
+    "c_bloc_ent8_256": 4.844,
+    "c_bloc_plancher": 4.59,
+    "distance_au_plancher": 1.0553376906318084,
+    "plancher_c_aesenc": 0.459
+   }
+  },
+  {
    "grandeur": "(b) performance d'exécution — ratio GHASH agrégé / scellé",
    "id": "ghash_ratio",
    "n": null,
