@@ -5171,3 +5171,28 @@ depuis N vagues » et C16 refuse au-delà de deux vagues sans justification.
 **Les limites.** Le contexte générique ne remplace pas un harnais par bloc : les 27 blocs qui
 fautent demandent leurs globals et leur IAT nommée — c'est porté au registre. La cible
 relative dépend du memchr de la plateforme : elle mesure un écart, pas une vitesse absolue.
+
+## D273 — LA BORNE DÉRIVÉE DU JOURNAL, LES HARNAIS PAR BLOC, LES CIBLES RELATIVES (la vague 23, 24/11/2026 ; atelier W23PROP)
+
+**Le constat, tiré de l'audit de la vague 22.** (1) La borne de DECISION-RANGE était une
+constante : le commit de la vague 22 est passé rouge (D272 > D271) parce que la constante
+n'avait pas suivi le journal — une classe censée garder la dérive en produisait une. (2) La
+cible ≥ 200 vecteurs exécutés supposait qu'un contexte générique suffirait. (3) Deux cibles
+absolues (0,6 c/octet, 3 000 tokens) ne discriminaient plus.
+
+**Le geste.** (1) La borne se LIT dans `docs/DECISIONS.md` (plus grand D consigné) ; la classe
+suit le journal sans qu'on la touche. (2) Un harnais générique par bloc est synthétisé depuis
+la spécification I (IAT citée, page de données large, cadre d'arguments, deux ABI, voisinage
+amorcé) : **95/235 vecteurs** exécutés — inchangé — et les **27 blocs** fautifs sont nommés
+avec leur cause (`READ_UNMAPPED`, `FETCH_UNMAPPED`) ; la cible ≥ 200 est MANQUÉE et le dit : la couverture réelle demande un
+harnais par bloc construit sur sa carte d'adresses. (3) AES-GCM passe à une cible relative
+(≤ 1,05 × OpenSSL EVP ; EVP mesuré 0,685 c/octet au bac, côté TRIADE ABSENT-MESURE) et
+l'ajouter à un rapport ≤ 3,0 sur le budget d'édition adopté (mesuré **3,264 → manquée**) ; la
+cible « ≤ 1,0 × le bras C » n'est pas calculable et n'est pas inventée.
+
+**Les preuves.** Porte L1..L17, zéro rouge sur l'édition v0.28.0 ; la borne dérivée vaut 273
+et accepte D273 ; dix mutations refusées.
+
+**Les limites.** Le harnais générique ne couvre pas la moitié des blocs : la couverture réelle
+demande un travail par bloc. La cible relative d'ajouter repose sur le budget adopté, pas sur
+une mesure du bras C qui n'existe pas au dépôt.

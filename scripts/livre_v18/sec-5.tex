@@ -136,13 +136,13 @@ v0.9.0 : la même méthode, l'empreinte longue) et les manifestes de kit à sha-
 depuis D187 ; md5 demeure côté application une fonctionnalité d'affichage de
 Loupe (le panneau d'empreintes) et les preuves historiques gardent leurs md5 —
 les preuves ne se réécrivent jamais. Le tableau ci-dessous est la référence
-sha-256 des modules, alignée sur l'annexe A de la spécification v0.15.12
+sha-256 des modules, alignée sur l'annexe A de la spécification v0.15.13
 (contenu canonique LF du dépôt).
 
 \begin{table}[htbp]
 \centering\footnotesize
 \caption{Empreintes sha-256 des modules v06 — référence D184/D187, alignée sur
-l'annexe A de la spécification v0.15.12 (contenu canonique LF du dépôt).}
+l'annexe A de la spécification v0.15.13 (contenu canonique LF du dépôt).}
 \label{tab:empreintslivre}
 \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}p{5.6cm} Y@{}}
 \toprule
@@ -329,7 +329,7 @@ explicitement invalidée ; la migration demeure disponible ; le coffre réel res
 ce livre passe à v1.1. \\
 \end{longtable}
 
-\paragraph{Trois propriétés de fraîcheur, jamais confondues (D254, v1.11).} Le plancher de
+\paragraph{Trois propriétés de fraîcheur, jamais confondues (D254, v1.12).} Le plancher de
 version de R10 protège l'artefact (le binaire), l'époque CF3 protège la clé du coffre,
 et les témoins d'époque — le journal local, la carte papier du sachet, le journal Git
 poussé, l'ancre de transparence — protègent la fraîcheur de l'état. Aucun ne remplace
@@ -337,7 +337,7 @@ l'autre : un plancher à jour ne dit rien de l'état du coffre, et une époque �
 dit rien de la version du binaire. La restauration cohérente d'un couple binaire + état
 échappe à toute ancre locale : seuls les témoins hors machine la rendent visible.
 
-\paragraph{Le compteur NV comme plancher de fraîcheur par profil (D263, v1.11).} Le plancher
+\paragraph{Le compteur NV comme plancher de fraîcheur par profil (D263, v1.12).} Le plancher
 de version vit dans le manifeste signé ; le compteur NV monotone — TPM 2.0 lorsque le profil
 en dispose, RPMB sinon — donne la preuve qu'aucune version antérieure n'a été chargée. La
 porte de chargement est fail-closed : \code{ANCRE-PERDUE}, \code{SCELAGE-NON-ENREGISTRE},
@@ -347,7 +347,7 @@ média remet le compteur à zéro et exige une cérémonie de ré-enregistrement
 virtualisé ne prouve rien du silicium ; le compteur prouve un plancher, pas l'identité de la
 version fraîche. Le simulateur du kit rend 12/12 ; le run matériel est EN ATTENTE.
 
-\paragraph{L'ancrage de transparence, à son statut appliqué (D267, v1.11).} Un témoin
+\paragraph{L'ancrage de transparence, à son statut appliqué (D267, v1.12).} Un témoin
 d'époque (édition, empreinte de l'artefact, empreinte de l'état, date) peut être ancré hors
 de la machine : une entrée de journal de transparence (Rekor) ou un horodatage qualifié
 (RFC 3161). La règle est adoptée et outillée, le déploiement n'est pas fait : aucun témoin

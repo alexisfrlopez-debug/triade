@@ -1,0 +1,1 @@
+Tables engendrées : voir replication-v17/TABLEAU-DESCENDANT.md (provenance à diff nul, D260).

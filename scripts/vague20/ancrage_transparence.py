@@ -19,13 +19,33 @@ import hashlib, json, pathlib, subprocess, sys, tempfile, time, urllib.error, ur
 
 R = pathlib.Path(__file__).resolve().parents[2]
 DOSSIER = R / "atelier-w20-sec"
-EDITION = "v0.27.0"
+import os
+# le pack courant se lit dans l'environnement (défaut : le plus récent pack-v2*)
+def _pack():
+    if os.environ.get("TRIADE_PACK"):
+        return pathlib.Path(os.environ["TRIADE_PACK"])
+    def _num(p):
+        import re as _re
+        m = _re.search(r"pack-v(\d+)", p.name)
+        return int(m.group(1)) if m else 0
+    return sorted([p for p in R.glob("pack-v*") if p.is_dir()], key=_num)[-1]
+
+
+PACK = _pack()
+import re as _re
+_m = _re.search(r"TRIADE_manuscrit_(v\d+\.\d+\.\d+)\.pdf", (PACK / "1-manuscrit").as_posix())
+_m2 = next((x for x in (PACK / "1-manuscrit").glob("TRIADE_manuscrit_v*.pdf")), None)
+EDITION = os.environ.get("TRIADE_EDITION") or (
+    _re.search(r"TRIADE_manuscrit_(v[0-9.]+)\.pdf", _m2.name).group(1) if _m2 else "v0.0.0")
+def _piece(dossier, motif):
+    return next(iter(sorted((PACK / dossier).glob(motif))), PACK / dossier / "absent.pdf")
+
 PIECES = {
-    "manuscrit": R / "pack-v270/1-manuscrit/TRIADE_manuscrit_v0.27.0.pdf",
-    "specification": R / "pack-v270/2-specification/Protocole_TRIADE_v0.15.12_Specification.pdf",
-    "livre": R / "pack-v270/3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.11.pdf",
-    "preuves": R / "pack-v270/4-preuves-calculs/TRIADE_preuves_et_calculs_v0.27.0.pdf",
-    "presentation": R / "pack-v270/5-presentation/TRIADE_presentation_v0270.pdf",
+    "manuscrit": _piece("1-manuscrit", "TRIADE_manuscrit_v*.pdf"),
+    "specification": _piece("2-specification", "Protocole_TRIADE_v*_Specification.pdf"),
+    "livre": _piece("3-coffre-fort", "Livre_du_Coffre_*.pdf"),
+    "preuves": _piece("4-preuves-calculs", "TRIADE_preuves_et_calculs_v*.pdf"),
+    "presentation": _piece("5-presentation", "TRIADE_presentation_v*.pdf"),
 }
 TSAS = ["https://freetsa.org/tsr"]
 CA = "https://freetsa.org/files/cacert.pem"

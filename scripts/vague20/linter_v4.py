@@ -29,19 +29,38 @@ import subprocess
 import sys
 
 RACINE = pathlib.Path(__file__).resolve().parents[2]
-PACK_DEFAUT = RACINE / "pack-v270"
-DERNIERE_DECISION = 272          # la dernière décision réelle (D268, journal)
+def _pack_defaut():
+    def _num(d):
+        m = re.search(r"pack-v(\d+)", d.name)
+        return int(m.group(1)) if m else 0
+    return sorted([d for d in RACINE.glob("pack-v*") if d.is_dir()], key=_num)[-1]
+
+
+PACK_DEFAUT = _pack_defaut()
+def _derniere_decision():
+    """La borne de DECISION-RANGE est DÉRIVÉE du journal (D273), plus une constante :
+    une décision ajoutée au journal relève la borne sans qu'on touche au linter."""
+    j = RACINE / "docs/DECISIONS.md"
+    ids = [int(x) for x in re.findall(r"^## D(\d{1,3})\b", j.read_text(encoding="utf-8"), re.M)]
+    return max(ids) if ids else 0
+
+
+DERNIERE_DECISION = _derniere_decision()
 CLASSES_ADV = ("ADV-LOCAL", "ADV-ADMIN", "ADV-MEDIA", "ADV-DISTANT")
 BORDS = ("EN-LIGNE", "HORS-LIGNE", "LES-DEUX")
 
 
 def pieces(pack):
+    """Les cinq pièces se lisent par MOTIF : le linter suit l'édition, il ne la code pas."""
+    def _un(dossier, motif):
+        c = sorted((pathlib.Path(pack) / dossier).glob(motif))
+        return c[-1] if c else pathlib.Path(pack) / dossier / "absent.pdf"
     return {
-        "manuscrit": pack / "1-manuscrit" / "TRIADE_manuscrit_v0.27.0.pdf",
-        "specification": pack / "2-specification" / "Protocole_TRIADE_v0.15.12_Specification.pdf",
-        "livre": pack / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.11.pdf",
-        "preuves": pack / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.27.0.pdf",
-        "presentation": pack / "5-presentation" / "TRIADE_presentation_v0270.pdf",
+        "manuscrit": _un("1-manuscrit", "TRIADE_manuscrit_v*.pdf"),
+        "specification": _un("2-specification", "Protocole_TRIADE_v*_Specification.pdf"),
+        "livre": _un("3-coffre-fort", "Livre_du_Coffre_*.pdf"),
+        "preuves": _un("4-preuves-calculs", "TRIADE_preuves_et_calculs_v*.pdf"),
+        "presentation": _un("5-presentation", "TRIADE_presentation_v*.pdf"),
     }
 
 
@@ -76,8 +95,24 @@ def recompte_banc():
     return json.loads(r.stdout)
 
 
-def verifie(t, manifeste=None, recompte=None):
+def _versions(pack):
+    """Les versions attendues se lisent des noms de fichiers du pack (le linter suit l'édition)."""
+    noms = [f.name for f in pathlib.Path(pack).rglob("*.pdf")]
+    def v(motif):
+        for n in noms:
+            m = re.search(motif, n)
+            if m:
+                return m.group(1)
+        return ""
+    return (v(r"TRIADE_manuscrit_(v[0-9.]+)\.pdf"),
+            v(r"Protocole_TRIADE_(v[0-9.]+)_Specification"),
+            v(r"CF1-CF3_(v[0-9.]+)\.pdf"))
+
+
+def verifie(t, manifeste=None, recompte=None, pack=None):
+    pack = pathlib.Path(pack or PACK_DEFAUT)
     refus = []
+    ED, SP, BK = _versions(pack)
 
     # C1 — phrases sémantiques
     if re.search(r"edition \(v0\.2[0-4]\.\d+\) restates", t["manuscrit"]):
@@ -97,8 +132,8 @@ def verifie(t, manifeste=None, recompte=None):
         refus.append(("C2", "manuscrit", "le manuscrit annonce encore D251"))
 
     # C3 — revendications de version
-    attendu = {"manuscrit": "v0.27.0", "specification": "v0.15.12", "livre": "v1.11",
-               "preuves": "v0.27.0", "presentation": "v0.27.0"}
+    attendu = {"manuscrit": ED, "specification": SP, "livre": BK,
+               "preuves": ED, "presentation": ED}
     for piece, ver in attendu.items():
         if ver not in t[piece]:
             refus.append(("C3", piece, f"la chaîne {ver} est absente"))
@@ -119,8 +154,8 @@ def verifie(t, manifeste=None, recompte=None):
             refus.append(("C5", "preuves", f"le numéral {attendu_txt} est absent"))
 
     # C6 — VERSION-TABLE : le tableau §10 == le manifeste
-    versions = {"Manuscrit": "v0.27.0", "Spécification": "v0.15.12", "Livre du Coffre": "v1.11",
-                "Preuves et calculs": "v0.27.0", "Présentation": "v0.27.0"}
+    versions = {"Manuscrit": ED, "Spécification": SP, "Livre du Coffre": BK,
+                "Preuves et calculs": ED, "Présentation": ED}
     pres = t["presentation"]
     for libelle, ver in versions.items():
         m = re.search(re.escape(libelle) + r"\s*\n?\s*(v?\d+\.\d+(?:\.\d+)?)", pres)
@@ -167,7 +202,7 @@ def verifie(t, manifeste=None, recompte=None):
 
     # C9 — NUMEROTATION : une seule convention, sur la PARTIE NARRATIVE des preuves
     # (les rapports d'atelier sont lus verbatim : ils peuvent citer une règle du linter)
-    narratif = t["preuves"].split("W20LINT —")[0]
+    narratif = t["preuves"].split("W23PROP —")[0]
     fautifs = [m for m in re.finditer(r"§\s*(?!spec\b)\d+\.\d+", narratif)
                if "de la spécification" not in narratif[m.end():m.end() + 60]
                and "de la spec" not in narratif[m.end():m.end() + 60]]
@@ -227,15 +262,13 @@ def verifie(t, manifeste=None, recompte=None):
             refus.append(("C11", "specification", "le §15.1 ne renvoie ni à D254 ni à D267"))
 
     # C12 — VERSION-PROSE : toute mention de prose confrontée au manifeste
-    ED, SP, BK = "v0.27.0", "v0.15.12", "v1.11"
-    prose = [("manuscrit", t["manuscrit"]), ("specification", t["specification"]),
-             ("livre", t["livre"]), ("preuves", t["preuves"]), ("presentation", t["presentation"])]
+    prose = [(k, t[k]) for k in ("manuscrit", "specification", "livre", "preuves", "presentation")]
     for piece, texte in prose:
         # dans le Livre, « l'édition courante » désigne la SPÉCIFICATION qu'il accompagne
         attendu_ed = SP if piece == "livre" else ED
         # les rapports d'atelier sont lus verbatim : ils peuvent citer un résidu soldé
         if piece == "preuves":
-            texte = texte.split("W20LINT —")[0]
+            texte = texte.split("W23PROP —")[0]
         for m in re.finditer(r"(?:édition courante|Édition courante|current edition)\s+(v\d+\.\d+(?:\.\d+)?)", texte):
             if m.group(1) != attendu_ed:
                 refus.append(("C12", piece, f"« édition courante {m.group(1)} » ≠ {attendu_ed}"))
@@ -255,9 +288,10 @@ def verifie(t, manifeste=None, recompte=None):
     mots = {"quinzième": 15, "seizième": 16, "dix-septième": 17, "dix-huitième": 18,
             "dix-neuvième": 19, "vingtième": 20}
     entrees = set()
-    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth) wave", t["manuscrit"]):
+    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second) wave", t["manuscrit"]):
         entrees.add({"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
-                     "nineteenth": 19, "twentieth": 20}[m.group(1)])
+                     "nineteenth": 19, "twentieth": 20, "twenty-first": 21,
+                     "twenty-second": 22}[m.group(1)])
     for piece, texte in [("presentation", t["presentation"])]:
         for m in re.finditer(r"vague\s+(\d{1,2})", texte):
             n = int(m.group(1))

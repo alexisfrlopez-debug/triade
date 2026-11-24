@@ -1,0 +1,15 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.28.0 (vague 21 de l'édition, 24 novembre 2026)
+====================================================================================
+COURANTS
+- TRIADE_manuscrit_v0.28.0.pdf · Protocole_TRIADE_v0.15.13_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.12.pdf · TRIADE_preuves_et_calculs_v0.28.0.pdf
+- TRIADE_presentation_v0280.pdf
+- TRIADE_soumission_v0.28.0.zip · TRIADE_presentation_v0.28.0.zip · TRIADE_complet_v0.28.0.zip
+- empreintes_livrables_v0.28.0.txt · rapport_verification_v0.28.0.txt
+CE QUE PORTE CETTE ÉDITION (aucune vitesse ni coût nouveaux)
+- borne DECISION-RANGE DÉRIVÉE du journal (la dérive de la vague 22 ne peut plus se reproduire) ;
+- harnais par bloc : 95/235 vecteurs exécutés, 27 blocs nommés avec leur cause ;
+- cibles RELATIVES : AES-GCM ≤ 1,05× OpenSSL EVP (côté TRIADE absent, aucun gain) ; ajouter
+  rapport ≤ 3,0 sur le budget d'édition (mesuré 3,264, manqué et publié comme tel).
+STATUT : NON PUBLIÉES (évaluation du maître d'abord). SUPERSÉDÉES : v0.27.0 (non publiée),
+v0.26.0 et antérieures (publiées).

@@ -1,0 +1,33 @@
+ATELIER W23PROP — BORNE DÉRIVÉE, HARNAIS PAR BLOC, CIBLES RELATIVES (24/11/2026)
+================================================================================
+Instruction : les quatre propositions de l'audit de la vague 22, puis édition et dépôt.
+
+1. LA BORNE DE DÉCISION EST DÉRIVÉE DU JOURNAL (D273). La classe C7 ne porte plus de
+   constante : elle lit le plus grand D consigné dans `docs/DECISIONS.md` (272 à l'ouverture,
+   273 après cette entrée). Une décision citée au-delà est refusée ; ajouter une décision au
+   journal relève la borne sans toucher au linter — la dérive constatée à la vague 22 (D272
+   hors plage) ne peut plus se reproduire.
+
+2. LES HARNAIS PAR BLOC — MESURÉS, DELTA NUL, CAUSE NOMMÉE. Un harnais générique est
+   synthétisé depuis les spécifications I : entrées d'IAT citées (kernel32!/ws2_32!), page de
+   données large, cadre d'arguments à zéro (politique absente), deux ABI, voisinage de code
+   amorcé par des stubs. Résultat : **95 des 235 vecteurs exécutés — inchangé** ; les
+   **27 blocs** qui fautent sont nommés avec leur cause (lecture ou saut hors des pages
+   cartographiées : `UC_ERR_READ_UNMAPPED`, `UC_ERR_FETCH_UNMAPPED`). La cible ≥ 200 est
+   MANQUÉE et le dit : il faut un harnais PAR BLOC construit sur sa carte d'adresses, pas un
+   contexte générique. Porté au registre.
+
+3. AES-GCM EN CIBLE RELATIVE. Cible ≤ 1,05 × OpenSSL EVP au même volume ; référentiel EVP
+   mesuré ici : 1 002 ns pour 4 Kio (IQR 53) ≈ 0,685 c/octet, machine virtuelle nommée. Côté
+   TRIADE : **ABSENT-MESURE** — aucun code VAES écrit dans le bac, aucun gain revendiqué.
+
+4. AJOUTER EN CIBLE RELATIVE. La cible « ≤ 1,0 × le bras C compilé » n'est PAS calculable :
+   le dépôt ne publie pas de coût « ajouter » pour ce bras. On ne l'invente pas : la cible
+   retenue est le rapport ajouter/éditer ≤ 3,0 sur le budget adopté (674 / 2 200), mesuré
+   **3,264 → MANQUÉE** (écart +0,264), et l'absence du coût du bras C est nommée comme la
+   mesure à faire.
+
+AUDIT PAR OBJECTIF : sécurité inchangée (ancrage ré-ancré, V6 vert) ; performance — aucun gain
+nouveau, deux cibles rendues relatives donc honnêtes ; optimisation — borne et harnais
+réduisent la dérive documentaire et l'angle mort d'exécution ; tokens — ratio 3,264 publié
+manqué, la campagne add reste EN ATTENTE.

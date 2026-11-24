@@ -1,0 +1,22 @@
+{
+ "aes_gcm": {
+  "cible": "≤ 1.05 × OpenSSL EVP au même volume (4 Kio)",
+  "reference_evp": {
+   "n": 20,
+   "mediane_ns_4kio": 1001.5,
+   "iqr_ns": 53.0,
+   "cycles_par_octet_estimes": 0.684619140625
+  },
+  "notre_cote": "ABSENT-MESURE",
+  "refus": "COULOIR-NON-MESURE — aucun code VAES écrit dans ce bac ; aucun gain revendiqué"
+ },
+ "ajouter": {
+  "budget_editer": 674,
+  "budget_ajouter": 2200,
+  "ratio_actuel": 3.264,
+  "cible_ratio": 3.0,
+  "cible": "ratio ajouter/éditer ≤ 3.0",
+  "ecart": 0.264,
+  "note": "la cible relative au BRAS C n'est pas calculable : le coût « ajouter » du bras compilé n'est pas publié — c'est la mesure à faire, nommée plutôt qu'inventée"
+ }
+}

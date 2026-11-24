@@ -14280,3 +14280,10 @@ Work Log:
 - (d) **Péremption du registre** : colonne « inchangée depuis N vagues », C16 refuse > 2 sans justification.
 - Porte **L1..L17, zéro rouge, 10/10 mutations** ; témoin ré-ancré automatiquement.
 - RÈGLE PERMANENTE consignée (commande du maître) : audit après chaque vague, améliorations vers sécurité/optimisation/performance/tokens.
+
+### Entrée 407 — LA VAGUE 23 : BORNE DÉRIVÉE DU JOURNAL, HARNAIS PAR BLOC (DELTA NUL, CAUSE NOMMÉE), CIBLES RELATIVES ; ÉDITION v0.28.0 DÉPOSÉE POUR ÉVALUATION (24/11/2026 ; plan b07687e)
+- **Borne dérivée (D273)** : la classe C7 lit le plus grand D du journal — la dérive qui avait fait passer rouge le commit de la vague 22 (D272 > D271) est structurellement impossible ; le linter lit aussi les VERSIONS attendues et les PIÈCES par motif (il suit l'édition).
+- **Harnais par bloc** : contexte générique (IAT citée, page de données large, cadre d'arguments, deux ABI, voisinage amorcé) → **95/235 vecteurs**, inchangé ; **27 blocs** nommés avec leur cause (READ_UNMAPPED, FETCH_UNMAPPED) ; cible ≥ 200 **MANQUÉE** et publiée comme telle.
+- **Cibles relatives** : AES-GCM ≤ 1,05× OpenSSL EVP (EVP mesuré 0,685 c/octet au bac ; côté TRIADE **ABSENT-MESURE**) ; ajouter rapport ≤ 3,0 sur le budget d'édition (mesuré **3,264 → manquée**, écart +0,264) ; la cible « ≤ 1,0× bras C » n'est pas calculable et n'est pas inventée.
+- **Édition v0.28.0** (spec v0.15.13, Livre v1.12) générée, porte **L1..L17 zéro rouge**, **10/10 mutations**, témoin RFC 3161 ré-ancré sur le pack v280.
+- **DÉPÔT /livrables POUR ÉVALUATION** (aucune publication Zenodo) : cinq pièces, empreintes, rapport de vérification, soumission/présentation/complet, LISEZMOI.
