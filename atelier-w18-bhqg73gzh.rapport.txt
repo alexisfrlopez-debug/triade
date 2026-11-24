@@ -1,0 +1,22 @@
+ATELIER BHQG73GZH — LES CINQ ALÉAS RÉSIDUELS DU RENDEZ-VOUS (24/11/2026)
+=========================================================================
+Instruction : nommer et garder les cinq aléas résiduels du rendez-vous de
+quiescence, sans rien revendiquer du silicium.
+
+LIVRÉ
+1. kit_bascule.py étendu : `aleas_rendez_vous(contexte)` rend un refus NOMMÉ et
+   un invariant d'état pour chacun des cinq aléas — thread créé pendant le
+   rendez-vous, retour de pile dans la plage, rel32 hors portée ±2 GiB, slot de
+   16 octets non réservé, verrou du patcheur détenu (deadlock SuspendThread).
+2. Spec § 7.6 (PDF) : le paragraphe D261 nomme les cinq aléas, leurs refus et
+   leurs invariants.
+3. Autotest : 16/16 — les DIX cas existants reproduits à l'identique (7 CAS +
+   3 invariants) et les SIX nouveaux (nominal + 5 refus).
+
+CONTRÔLES NÉGATIFS VÉCUS
+- chaque refus laisse l'état à 0 (aucun état partiel exécutable : l'invariant est
+  rendu avec le refus) ;
+- le nominal rend « aucun thread non énuméré, pile hors plage, delta porté, slot
+  réservé, aucun verrou ».
+
+STATUT : banc vert ; métal EN ATTENTE (≥ 2 machines) ; aucun chiffre matériel.
