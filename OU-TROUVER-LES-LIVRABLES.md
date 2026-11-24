@@ -380,3 +380,11 @@ Entrées 251-304) et au worklog (`worklog.md`, Tasks 158-211).*
 - **AU COFFRE** : les pièces, les packs, le kit et le pack de participation au `/livrables` ; les instructions de la vague 18 au dossier ARCHIVE ; le retrait du /instructions attend les cinq autorisations par fichier.
 - **AU DÉPÔT** : ateliers `atelier-w18-*.rapport.txt`, `scripts/vague18/`, `plans-vague18/`, `EMPREINTES-PLANS-VAGUE18.txt`, `SOURCES-PRESCRIPTIVES.txt`, `pack-v250/`, `depot-zenodo-v0250/`, `participation-v1/`, D261–D265, worklog Entrée 400.
 
+
+## Mise à jour 412 (25/11/2026) — P3 EXÉCUTÉ AU BAC : 235/235, LA CIBLE ≥ 200 TENUE
+
+- **LE FAIT** : les 235 vecteurs exécutables du moteur d'oracle s'exécutent TOUS au harnais par bloc v4 (avant : 95 — vague 23) ; **zéro régression**, cible pré-enregistrée **≥ 200/235 non re-tirée, TENUE à 235**, delta +140.
+- **AU DÉPÔT** : `atelier-p3-exec/` — `PLAN-HARNAIS-IMAGE.txt` (gelé avant mesure, commit 1782105), `AMENDEMENT-V3.txt`/`AMENDEMENT-V4.txt` (gelés avant leurs mesures), `harnais_image.py` (le moteur), `agregateur_image.py` (fail-closed A1/A2/A3), `resultat-image.json` (par vecteur : statut, ABI, CONVENTION), `recomposition-image.json`, `tableau-image.txt` (le rendu par bloc), `RAPPORT-P3-EXECUTION.txt`, `MANIFESTE-P3.txt` (sha256 + commandes) ; worklog Entrée 412.
+- **LA MÉTHODE (chaque pas nommé)** : l'image à la base réelle 0x140000000, les sections du binaire scellé en contexte LECTURE SEULE, le bloc mesuré écrit à son slot depuis sa notation assemblée ; ExitProcess en terminateur (le ud2 défensif demeure inatteignable) ; GetCommandLineW rendant L"proxy.exe" ; la pile couvrant le probing de http-10:R1/Q0 ; l'image de contexte par EXE_PAR_BLOC (b20008 dans selftest.exe) ; les arguments tirés de la spécification I en seconde tentative, consignés PAR VECTEUR.
+- **LA GARDE** : sceau-I 14/14 avant et après ; aucun fichier scellé modifié (git status propre hors atelier) ; les 85 vecteurs de rejet hors compte par construction ; c30012/c30014 toujours sans vecteurs.
+- **CE QUE CELA N'EST PAS** : pas une mesure de performance ni de métal nu — P4/P5/P6 restent au poste réel, inchangés.
