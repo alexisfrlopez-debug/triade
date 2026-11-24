@@ -1,0 +1,31 @@
+ATELIER W24AUDT — LES SIX RÉSIDUS, LE LINTER v5, LA FORME (24/11/2026)
+======================================================================
+Évaluation de v0.28.0. Aucune valeur mesurée modifiée ; aucune cible re-tirée.
+
+1. STATUT D'ANCRAGE DÉRIVÉ (D274). « NON DÉPLOYÉ » traversait trois pièces alors que l'ancrage
+   était déployé depuis la vague 20. Le statut se DÉRIVE désormais du journal append-only
+   (`scripts/vague24/statut_ancrage.py`) : DÉPLOYÉ si une entrée vérifiée recouvre les pièces de
+   l'édition courante, EN ATTENTE sinon. Spécification § 7.11, présentation § 4 et preuves § 5
+   portent le statut dérivé ; la classe C20 refuse toute pièce qui le contredit — dans les deux
+   sens.
+2. SOUS-TITRE DE LA PRÉSENTATION : la vague est celle de l'édition (dérivée du changelog gelé),
+   plus « la vague 19 ».
+3. LIVRE DU COFFRE : en-tête « Version 1.12 » → 1.13 ; avant-propos « l'édition courante est la
+   v0.15.11 » → v0.15.14.
+4. COMPTE DE CLASSES : « seize classes » → recomposé du source du linter (vingt à cette
+   édition), et la classe C18 refuse tout écart.
+5. MANUSCRIT § 2.1 : la v0.15.8 devient une référence DATÉE (purge D81), l'édition accompagnée
+   est v0.15.14.
+6. RATIO PAR MULTIPLICATION : opérandes remis dans l'ordre canonique (63,39/19,66). Partition
+   des vecteurs annoncée : 320 produits = 235 exécutables + 85 tests de rejet.
+
+LINTER v5 : trois classes ajoutées — C18 LINTER-COUNT, C19 TITLE-WAVE, C20 STATUS-RECOMPOSITION —
+et une NORMALISATION typographique (NFKC, capitales espacées « V E R S I O N 1. 1 0 », variantes
+« est la vX ») partagée par C12 et C19. Chaque classe garde son contrôle négatif.
+
+FORME : la note de release sort du titre (elle vit au changelog), une seule ligne de mots-clés par
+langue, résumé français ramené à 233 mots (anglais 234).
+
+HORS BAC, nommé : le couloir VAES (aucun code VAES écrit), la campagne add servie (aucun serving
+à structured output), les 27 harnais par bloc (delta mesuré nul au contexte générique ; la cause
+READ/FETCH_UNMAPPED reste).

@@ -408,9 +408,12 @@ Un témoin d'époque consigne l'édition, l'empreinte de l'artefact, l'empreinte
 la date. L'ancrage de transparence le rend \textbf{public et horodaté hors de la machine} :
 une entrée dans un journal de transparence (Rekor) ou un horodatage qualifié (RFC 3161)
 reliant l'empreinte du témoin à un temps vérifiable. \textbf{Statut appliqué} : la règle est
-adoptée et outillée (D267), le déploiement est \textbf{non effectué} — aucun témoin ancré
-n'est consigné à cette édition, et la porte de release le déclare EN ATTENTE au lieu de le
-simuler. Les refus sont nommés : \code{ANCRE-INDISPONIBLE} (ancrage configuré, service
+adoptée et outillée (D267), et le déploiement est \textbf{effectué} : le témoin d'époque est
+ancré par horodatage RFC 3161, le jeton est vérifié hors ligne, et le journal d'ancrage est
+append-only — un ré-ancrage n'efface jamais l'histoire. \textbf{Le statut ne se tape pas : il
+se dérive} du journal (D274) — \emph{déployé} tant qu'une entrée vérifiée recouvre les pièces de
+l'édition courante, \emph{en attente} sinon,
+ Les refus sont nommés : \code{ANCRE-INDISPONIBLE} (ancrage configuré, service
 injoignable — la release est refusée, jamais poursuivie en silence), \code{TEMOIN-SANS-ANCHE}
 (un témoin non ancré reste marqué non ancré, jamais promu), \code{ANCRE-INCOHERENTE}
 (l'empreinte ancrée ne recoupe pas le témoin). \textbf{Delta au modèle de menace, aux deux

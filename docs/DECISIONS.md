@@ -5196,3 +5196,28 @@ et accepte D273 ; dix mutations refusées.
 **Les limites.** Le harnais générique ne couvre pas la moitié des blocs : la couverture réelle
 demande un travail par bloc. La cible relative d'ajouter repose sur le budget adopté, pas sur
 une mesure du bras C qui n'existe pas au dépôt.
+
+## D274 — LE STATUT SE DÉRIVE, LE COMPTE SE RECOMPOSE, LE TITRE S'ALIGNE (la vague 24, 24/11/2026 ; atelier W24AUDT)
+
+**Le constat.** L'évaluation de v0.28.0 a trouvé une contradiction franche : trois pièces
+annonçaient l'ancrage « NON DÉPLOYÉ » alors qu'il était déployé depuis la vague 20, et le
+linter ne pouvait pas la voir — le statut était de la prose. Elle a trouvé aussi trois trous
+démontrables : le compte de classes annoncé n'était pas recomposé, la vague du titre n'était
+pas confrontée à l'édition, et deux formes typographiques (capitales espacées, « est la vX »)
+échappaient à C12.
+
+**Le geste.** (1) Le statut d'ancrage se DÉRIVE du journal append-only
+(`scripts/vague24/statut_ancrage.py`) : déployé si une entrée vérifiée recouvre les pièces de
+l'édition courante, en attente sinon ; trois pièces le portent, la classe **C20** refuse tout
+écart dans les deux sens. (2) **C18** recompose le compte de classes depuis le source du linter
+(vingt à cette édition) ; **C19** confronte la vague du titre à celle de l'édition ; une
+**normalisation typographique** (NFKC, capitales espacées, variantes) sert C12 et C19.
+(3) Les six résidus sont soldés à la source (sous-titre, en-tête et avant-propos du Livre,
+§ 2.1 du manuscrit, ratio 63,39/19,66, partition 320 = 235 + 85).
+
+**Les preuves.** Porte L1..L20, zéro rouge ; treize mutations refusées nommément (dont une par
+nouvelle classe) ; statut dérivé DÉPLOYÉ (jeton RFC 3161 vérifié, journal append-only).
+
+**Les limites.** Le statut dérivé vaut ce que vaut l'autorité d'horodatage ; le compte de classes
+compte les classes DÉCLARÉES dans le source — une classe écrite mais jamais exécutée serait
+comptée (défaut nommé, non couvert).

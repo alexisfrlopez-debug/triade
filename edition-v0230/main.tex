@@ -115,11 +115,11 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
             urlcolor=liaison, unicode=true,
-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.28.0)},
+            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.29.0)},
             pdfauthor={Alexis Lopez}]{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.28.0}
+\fancyhead[L]{\small\itshape TRIADE — academic edition v0.29.0}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 
@@ -136,37 +136,7 @@ Under Signed-Intent Governance\\
 fourteen-unit two-arm field campaign, and two sealed applications}}
 \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
 Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
-\date{24 November 2026 — Academic edition v0.28.0 (the present edition states the current state of the programme in one voice; the wave-by-wave changes live in the frozen edition changelog below; the release of
-the fifteenth wave: the interleaved CTR$\times$GHASH composition
-measured at 0.7271 cycles per byte at 4\,KiB (the median 2{,}978.2
-cycles per 4{,}096-byte call; the pre-registered target of 2.0 held
-at 36 per cent; OpenSSL EVP at 0.5757 --- 2{,}357.9 cycles --- on the
-same silicon, the corridor within $1.26\times$ of the tuned library;
-the sealed per-block chain $68.7\times$ behind --- 204{,}544.5
-against 2{,}978.2 cycles --- no control removed); the
-guard TCB reduced $58\to34\to11$ (the eleven OS assumptions named,
-the eleven-guard corridor emitted at the virgin margin 0xFC00 --- 424
-bytes, the falsified guard refused at both boundaries and on the index
-face, the harness 36/36; the rejeu of the 116 certificates consigned at
-its corrected invocation, the first-pass invocation bug named in an
-append-only erratum); the native oracle engine line-identical to the
-Unicorn twin on both sealed crypto bodies (the content-addressed memo,
-the gate, the chained 1-in-10 audit; the medians 0.960\,ms $\to$
-0.000185\,ms at the hit, a $5189\times$ gain at the unrounded
-operands, the mechanisms orthogonal to the regime memoisation); the
-Nov 2026 TPL-ADD-v5 campaign (the structured expansion diff) at
-5/18 greens --- the Nov 2026 pre-registered target of
-$\ge$15/18 missed, the unfavourable reading
-consigned (the subject's CLI variance named, the judges intact); the
-adoption-side ecosystem assembled by construction (the training corpus
-of 109 triples (the v2 corpus, historical; v2.1 carries 127/24/19 triples and 48 preference pairs) with sealed splits, the typed-reward training
-environment, the re-playable capability ladder, the model-independent
-agent guide, the canonical-English documentation core, the 156-piece
-developer kit with no trust anchor shipped); and the cross-piece
-linter extended to the five new classes (the semantic phrases, the
-decision ranges, the dated feasibility sequences, the post-deposit
-version claims, the English gallicisms) --- the five documents
-regenerated under it)}
+\date{24 November 2026 $\cdot$ Academic edition v0.29.0}
 
 \begin{document}
 \maketitle
@@ -204,77 +174,28 @@ oracle and terrain evidence; edition linter.\vspace{3mm}
 \vspace{-2mm}
 \noindent\textbf{Mots-clés :} code natif écrit par agent ; gouvernance à intention
 signée ; preuve d'oracle et de terrain ; linter d'édition.\vspace{3mm}
-\vspace{-2mm}
-\noindent\textbf{Keywords:} agent-written native code; signed-intent governance;
-oracle and terrain evidence; edition linter.\vspace{3mm}
+
 
 \begin{otherlanguage}{french}
 \begin{abstract}
-\noindent Les agents de modèles de langage produisent aujourd'hui du code
-natif en générant du source de haut niveau délégué à une chaîne de
-compilation ; la traduction de l'intention vers le code machine traverse
-des couches que l'agent n'écrit ni ne vérifie. Nous rapportons TRIADE, un
-protocole de développement dans lequel un agent écrit du code natif
-x86-64, RISC-V et TLS~1.3 \emph{directement en notation d'assemblage},
-gouverné par des spécifications signées (couche I), une carte chiffrée et
-fragmentée qui relie les intentions aux plages d'octets, et une
-épistémologie qui sépare la preuve d'\emph{oracle} (émulation
-différentielle au laboratoire) de la preuve de \emph{terrain} (exécution
-sur la machine réelle du développeur). Nous présentons une étude de cas
-unique longitudinale du programme de validation : onze jalons (M0--M10, du
-26 octobre au 11 novembre 2026), culminant avec « Loupe », une véritable
-application Windows (éditeur hexadécimal) écrite entièrement sous le
-protocole et livrée à son utilisateur — et, pour clore l'étude, une
-campagne terrain pré-enregistrée à deux bras (D204, 12--16 novembre 2026)
-où le même agent a livré chaque unité deux fois sur un contrat de
-couche I partagé : une fois en notation scellée à la main (bras T), une
-fois en C compilé (bras C) — six blocs contrôlés puis une seconde
-application réelle (« Passeur », un intercepteur pour le pentest
-autorisé du développeur), close verte et signée aux deux bras. Nous quantifions quatre questions
-de recherche sur des données tirées d'un journal d'ingénierie append-only
-de \nbLignesJournal{} lignes (Entrées consignées jusqu'à 304 ; les clôtures
-de campagne, l'extension et les vagues d'instructions, Entrées 305--387, portées par le journal de tâches
-compagnon de \nbLignesWorklog{} lignes et le journal de campagne) et d'un
-journal de décisions append-only de \nbLignesDecisions{} lignes
-(\plageDecisions) : (RQ1) le taux de défauts échappés des changements ayant
-passé tous les contrôles de laboratoire — onze itérations de terrain sur
-douze ont révélé au moins un défaut échappé, chacun nommé par classe et
-mécanisme avant toute correction ; la campagne de clôture ajoute 22
-livraisons témoignées dont zéro échappé imputable à la notation
-scellée elle-même (six échappés côté kit nommés — la classe de la
-feuille jamais liée récidivant deux fois au même slot —, un artefact
-du juge pré-nommé) ; (RQ2) le coût mesuré en tokens par
-changement validé — aux formats adoptés, une médiane de
-\gabaritLocaliserApres{} natifs pour localiser (le localisateur hiérarchique adopté, −40,5 \gabaritLocaliserOp{} ; les mesures d'époque 1~714 puis 1~103 au pointeur seul demeurent historiques étiquetées), \gabaritEditerApres{} pour éditer (le gabarit versionné TPL-EDIT-v1 adopté, −39,1 \gabaritEditerOp{}, la prose de prescription −57 \%), \gabaritAjouterApres{} pour ajouter (le squelette, −28,4 \gabaritAjouterOp{}, la faisabilité 2026 : 3/18 aux vagues 11-12, 6/18 à la treizième (2026), puis 7/18 à la quatorzième (la boucle de contre-exemple convertit son premier refus honnête) ; la campagne v5 (nov. 2026) à 5/18 — la cible manquée, la lecture défavorable consignée — l'écart nommé par classe de refus), chaque périmètre étiqueté — CHAQUE valeur portant ID de décision, périmètre et statut à la TABLE CANONIQUE des budgets adoptés ; l'édition v0.19.4 adopte le POINTEUR SEUL au
-format de réponse de localiser (OPT-04 : l'agent rend l'identifiant
-d'entrée et l'empreinte de la notation — deux champs littéraux, jamais un
-calcul — le client expande le pointeur auprès de la carte et confronte,
-quatre refus nommés fail-closed ; la mesure à la même graine sur 18
-appels réels au tokenizer natif : le total 1~714 → 1~103 natifs
-(−35,7 %, soit 611/1~714 = 35,653 % arrondi au dixième — les opérandes
-entiers sont épinglés au registre de provenance), la réponse 770 → 52 (−93,3 %), zéro divergence, la
-re-tokenisation indépendante confirmant l'instrument à ±1 token) ;
-l'unique unité à deux
-bras entièrement instrumentée de la campagne lit 53~158 tokens pour le
-bras notation contre 67~475 pour le bras compilé (×1,27, la direction
-opposée à l'attente pré-enregistrée), la spirale corrective dominant les
-deux bras (61,4 % / 58,1 % des totaux) ;
-(RQ3) les classes de défauts structurellement invisibles à l'émulation,
-énumérées avec leurs preuves (sémantique du chargeur et du format PE,
-espace d'ombre et alignement SSE de l'ABI, conventions de codes d'erreur
-Windows, hypothèses incrustées dans le harnais) ; et (RQ4) la sûreté du
-patch à chaud de code scellé — zéro régression post-patch sur les
-campagnes de jalons, avec monotonie de version signée et anti-rollback
-armé. Les quatre propriétés de sûreté du coffre (secret sous le seuil, refus du retour en arrière, aucune destruction sur phrase erronée, rayon borné à une époque) sont désormais prouvées NON BORNÉES en époques par un invariant inductif préservé par chaque règle de la sémantique opérationnelle, et l'implémentation est testée contre le modèle par une campagne générative de conformité de 30~000 traces aux trois graines (tout chemin d'échec couvert, ZÉRO divergence, le rejeu bit-identique deux fois — la classe d'écart unique de la campagne d'origine, trouvée, réduite et analysée à l'époque, demeure l'histoire datée du modèle d'avant extension) ; un lemme de couverture — tout état concret atteignable est représenté par l'une des 288 formes d'état abstraites — est énoncé et déchargé mécaniquement (SMT sur entiers non bornés, contrôles négatifs compris) ; chaque affirmation porte un statut systématique — prouvé non borné, prouvé borné, mesuré, ou en attente de run matériel — et aucune revendication matérielle n'est faite au-delà de ce que les runs signés du développeur consignent. L'étude est un cas unique (N=1), son oracle dérive des mêmes
-spécifications qu'il vérifie, et la comparaison au compilateur de référence
-partage le harnais du laboratoire ; la réplication indépendante (un second
-développeur, un second domaine) demeure à mener. Ces limites sont
-énoncées explicitement. Nous
-revendiquons comme contribution l'\emph{intégration} — notation à
-contrats d'abord, gouvernance à manifestes signés, vérification
-oracle/terrain — en un seul pipeline pour le développement piloté par
-agent, et non les primitives cryptographiques ou de test sous-jacentes,
-qui sont standards.
+\noindent Les agents de modèles de langage produisent du code natif en générant du source de
+haut niveau délégué à un compilateur ; les couches entre l'intention et le code machine ne
+sont ni écrites ni vérifiées par l'agent. TRIADE est un protocole où l'agent écrit
+\emph{directement} la notation d'assemblage x86-64, RISC-V et TLS~1.3, gouverné par des
+spécifications signées (couche I), une carte chiffrée fragmentée liant les intentions aux
+plages d'octets, et une épistémologie séparant la preuve d'\emph{oracle} (émulation
+différentielle) de la preuve de \emph{terrain} (exécution sur la machine du développeur). Une
+étude de cas unique couvre onze jalons, un éditeur hexadécimal Windows écrit sous le protocole,
+et une campagne pré-enregistrée à deux bras où le même agent livre chaque unité deux fois, en
+notation scellée et en C compilé, les deux bras clos verts, tout échappé compté attribué au kit
+partagé. Sur une base append-only : les défauts échappés (onze itérations sur douze en
+produisent, chacun nommé avant tout correctif ; les vingt-neuf livraisons témoins de clôture
+n'en produisent aucun imputable à la notation) ; le coût en tokens par changement validé
+(localiser et éditer à $-40,5$\,\% et $-39,1$\,\%, ajouter à $-28,4$\,\% avec la cible
+manquée à 5/18, publiée comme manquée) ; les limites des garanties locales (la restauration
+cohérente binaire + état échappe à toute ancre locale, seuls les témoins hors machine la
+voient). Les invariants formels sont prouvés non bornés sous hypothèses énoncées ; la
+publication concurrente est atomique à huit octets et exige la quiescence. L'étude est $N=1$.
 \end{abstract}
 \end{otherlanguage}
 
@@ -2209,7 +2130,7 @@ gesture).
 \item v0.25.0 (24 Nov 2026) --- the eighteenth wave: the five documents regenerated under the ported five-class linter; the residues closed (abstract and changelog order, the decision range, the corpus named historical, the data availability); the specification gains the five residual hazards of the rendezvous (D261), the closed prescriptive whitelist (D262), the NV TPM counter (D263) and the structured expansion (D264). No measured value changed.
 \item v0.26.0 (24 Nov 2026) --- the nineteenth wave: the pack generation gate now runs the ported five-class linter plus six fail-closed classes (version table, decision range, changelog order, numbering, bench count, semantic threat), and the six residues named by the review are closed (the presentation's stale version table, the unqualified threat rows, the decisions D262--D264 absent from the specification, the +1 of the 16/16 bench, the changelog order, the mixed numbering of the proofs' section 2); the decision chain D261--D267 enters the journal and the specification (prescriptive whitelist, NV counter, structured expansion, transparency anchoring). No measured value changed.
 \item v0.27.0 (24 Nov 2026) --- the twentieth wave: the edition linter passes from eleven to fifteen classes (version prose, wave continuity, abstract length, reader-test count) and the four residues found by the review are closed at the source (the Book's prose version references, the presentation's wave number, the -35.7% operands pinned to the provenance register, the reader test decomposed one line per case). No measured value changed.
-\item v0.28.0 (24 Nov 2026) --- the present edition, the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\end{itemize}
+\item v0.28.0 (24 Nov 2026) --- the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\item v0.29.0 (24 Nov 2026) --- the present edition, the twenty-second wave: the six residues of the review are closed at the source (the anchoring status derived from the append-only journal, the presentation's wave title, the Book's guard header and foreword, the class count, the companion specification, the multiplication ratio), the edition linter gains three classes that close the holes demonstrated (count, title wave, status recomposition) with a typographic normalisation, and the manuscript's form is cleaned (release note out of the title, one keyword line per language, French abstract aligned to 233 words). No measured value changed.\end{itemize}
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -2339,7 +2260,7 @@ in the decision log.
 repository (append-only journal, decision log, evidence vault indexes,
 extraction script, generated tables) and in the versioned archival
 snapshots at the concept DOI \doiConcept{} --- resolving to the latest
-archived version (v0.28.0 at this writing, version DOI
+archived version (v0.29.0 at this writing, version DOI
 \doiVersionCourante{}; the earlier deposits 10.5281/zenodo.24367344,
 10.5281/zenodo.24379173, 10.5281/zenodo.24382460, 10.5281/zenodo.24397623,
 10.5281/zenodo.24407701, 10.5281/zenodo.24420007, 10.5281/zenodo.24438614,
@@ -2350,8 +2271,8 @@ the concept DOI is the citable reference, the version DOIs the dated
 records). This edition's own snapshot follows the developer's deposit
 gesture --- never minted without an explicit command. The two
 submission archives of the current deposit
-(\code{TRIADE\_soumission\_v0.28.0.zip} and
-\code{TRIADE\_complet\_v0.28.0.zip}) contain respectively the
+(\code{TRIADE\_soumission\_v0.29.0.zip} and
+\code{TRIADE\_complet\_v0.29.0.zip}) contain respectively the
 manuscript with its data tables, and the complete sources with raw
 extracts and fingerprints; every artifact of the claims tables was
 re-verified byte for byte against the regenerated archives (zero
@@ -2439,6 +2360,20 @@ unmapped read of a global). And the two absolute targets that had stopped discri
 become relative: AES-GCM is targeted at 1.05 times OpenSSL EVP measured on the same volume
 (our side absent from this sandbox, so no gain is claimed), and add is targeted at a ratio of
 3.0 against the adopted edit budget --- today 3.264, published as missed.
+
+
+\subsection{Post-edition note (v0.29.0): the status is derived, not typed}
+
+This edition carries no new measurement. The anchoring status no longer appears as prose: it is
+read from the append-only anchor journal, and the linter refuses any piece whose status
+contradicts the journal --- the contradiction that ran through three pieces in v0.28.0 cannot
+recur. Three classes join the gate: the announced class count must recompose from the linter
+source, the title's wave must equal the edition's wave, and the semantic statuses must recompose
+from their registers; a typographic normalisation catches spaced capitals and the ``est la vX''
+variants. The Book's guard header and foreword, the presentation's wave title, the companion
+specification reference and the multiplication ratio are corrected at the source. Form: the
+release note leaves the title, one keyword line per language, and the French abstract is
+aligned to 233 words.
 
 % ------------------------------------------------------------------
 \bibliography{refs}

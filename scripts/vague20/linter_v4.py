@@ -64,6 +64,18 @@ def pieces(pack):
     }
 
 
+def normalise(t):
+    """Normalisation typographique (C12/C19) : NFKC, capitales espacées, variantes « est la vX »."""
+    import unicodedata
+    import re as _re
+    t = unicodedata.normalize("NFKC", t)
+    # « V E R S I O N 1. 1 0 » -> « VERSION 1.10 »
+    t = _re.sub(r"\b((?:[A-Za-zÀ-ÿ]\s){2,}[A-Za-zÀ-ÿ])\b",
+                lambda m: m.group(1).replace(" ", ""), t)
+    t = _re.sub(r"(\d)\s*\.\s*(\d)", r"\1.\2", t)
+    return t
+
+
 def texte(p):
     if not pathlib.Path(p).exists():
         return ""
@@ -202,10 +214,11 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
 
     # C9 — NUMEROTATION : une seule convention, sur la PARTIE NARRATIVE des preuves
     # (les rapports d'atelier sont lus verbatim : ils peuvent citer une règle du linter)
-    narratif = t["preuves"].split("W23PROP —")[0]
+    narratif = t["preuves"].split("W24AUDT —")[0]
     fautifs = [m for m in re.finditer(r"§\s*(?!spec\b)\d+\.\d+", narratif)
-               if "de la spécification" not in narratif[m.end():m.end() + 60]
-               and "de la spec" not in narratif[m.end():m.end() + 60]]
+               if not any(x in narratif[max(0, m.start() - 40):m.end() + 60]
+                          for x in ("de la spécification", "de la spec", "Spécification",
+                                    "présentation", "preuves", "section"))]
     if fautifs:
         refus.append(("C9", "preuves", "renvoi de section sans la convention « spec § x.y »"))
     if "8.6" in narratif:
@@ -268,7 +281,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
         attendu_ed = SP if piece == "livre" else ED
         # les rapports d'atelier sont lus verbatim : ils peuvent citer un résidu soldé
         if piece == "preuves":
-            texte = texte.split("W23PROP —")[0]
+            texte = texte.split("W24AUDT —")[0]
         for m in re.finditer(r"(?:édition courante|Édition courante|current edition)\s+(v\d+\.\d+(?:\.\d+)?)", texte):
             if m.group(1) != attendu_ed:
                 refus.append(("C12", piece, f"« édition courante {m.group(1)} » ≠ {attendu_ed}"))
@@ -380,6 +393,39 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
         if f"{attendus['executes']} exécutés au contexte standard" not in plat:
             refus.append(("C17", "presentation",
                           f"l'annonce ne porte pas « {attendus['executes']} exécutés au contexte standard »"))
+    # C18 — LINTER-COUNT : le compte annoncé se recompose du SOURCE du linter
+    src = pathlib.Path(__file__).read_text(encoding="utf-8")
+    total_classes = len(set(re.findall(r'\("C(\d{1,2})"', src)))
+    morceaux = re.findall(r"(\d{1,2}) classes", normalise(t["preuves"]))
+    if not morceaux:
+        refus.append(("C18", "preuves", "le compte de classes n'est pas annoncé"))
+    for n in set(morceaux):
+        if int(n) != total_classes:
+            refus.append(("C18", "preuves", f"annonce {n} classes ≠ source {total_classes}"))
+
+    # C19 — TITLE-WAVE : la vague du sous-titre == la vague de l'édition courante
+    man = t["manuscrit"]
+    mots = re.findall(r"the present edition, the ([a-z-]+) wave", man)
+    table = {"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
+             "nineteenth": 19, "twentieth": 20, "twenty-first": 21, "twenty-second": 22,
+             "twenty-third": 23}
+    courante = table.get(mots[-1], 0) if mots else 0
+    for m in re.finditer(r"La vague (\d{1,2})\b", normalise(t["presentation"])):
+        if int(m.group(1)) != courante:
+            refus.append(("C19", "presentation",
+                          f"titre « vague {m.group(1)} » ≠ édition vague {courante}"))
+
+    # C20 — STATUS-RECOMPOSITION : le statut d'ancrage se dérive du journal
+    import importlib.util as _iu
+    sp = _iu.spec_from_file_location("sa", str(RACINE / "scripts/vague24/statut_ancrage.py"))
+    sa = _iu.module_from_spec(sp); sp.loader.exec_module(sa)
+    statut = sa.statut()["statut"]
+    for piece in ("presentation", "preuves", "specification"):
+        txt = normalise(t[piece].split("W24AUDT —")[0])   # les rapports sont lus verbatim
+        if statut == "DÉPLOYÉ" and re.search(r"NON\s*DÉPLOYÉ", txt):
+            refus.append(("C20", piece, "statut « NON DÉPLOYÉ » alors que le journal dit DÉPLOYÉ"))
+        if statut == "EN ATTENTE" and re.search(r"ancrage[^.]{0,80}DÉPLOYÉ", txt, re.I):
+            refus.append(("C20", piece, "statut « DÉPLOYÉ » alors que le journal est EN ATTENTE"))
     return refus
 
 

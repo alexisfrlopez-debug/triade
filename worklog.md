@@ -14287,3 +14287,12 @@ Work Log:
 - **Cibles relatives** : AES-GCM ≤ 1,05× OpenSSL EVP (EVP mesuré 0,685 c/octet au bac ; côté TRIADE **ABSENT-MESURE**) ; ajouter rapport ≤ 3,0 sur le budget d'édition (mesuré **3,264 → manquée**, écart +0,264) ; la cible « ≤ 1,0× bras C » n'est pas calculable et n'est pas inventée.
 - **Édition v0.28.0** (spec v0.15.13, Livre v1.12) générée, porte **L1..L17 zéro rouge**, **10/10 mutations**, témoin RFC 3161 ré-ancré sur le pack v280.
 - **DÉPÔT /livrables POUR ÉVALUATION** (aucune publication Zenodo) : cinq pièces, empreintes, rapport de vérification, soumission/présentation/complet, LISEZMOI.
+
+### Entrée 408 — LA VAGUE 24 : LES SIX RÉSIDUS SOLDÉS, LE STATUT DÉRIVÉ (D274), LE LINTER À VINGT CLASSES ; v0.29.0 DÉPOSÉE POUR ÉVALUATION (24/11/2026 ; plan 08f494e)
+- **D267 en tête** : trois pièces disaient « NON DÉPLOYÉ » alors que l'ancrage était déployé. Le statut se DÉRIVE du journal append-only (`scripts/vague24/statut_ancrage.py`, mode édition pour la génération, mode strict pour V6) ; la classe **C20** refuse tout écart dans les deux sens.
+- **Trois classes** : **C18** compte de classes recomposé du source (20), **C19** vague du titre == vague de l'édition, **C20** statuts dérivés ; **normalisation** NFKC + capitales espacées + variantes « est la vX » pour C12/C19.
+- **Six résidus** : sous-titre (vague courante), Livre (en-tête 1.13, avant-propos v0.15.14), § 2.1 (v0.15.8 datée, édition accompagnée v0.15.14), compte de classes, ratio 63,39/19,66, partition 320 = 235 + 85.
+- **Forme** : note de release hors du titre (−2 220 caractères), une ligne de mots-clés par langue, résumé français 853 → 233 mots.
+- **Édition v0.29.0** (spec v0.15.14, Livre v1.13) : porte **L1..L20 zéro rouge**, **13/13 mutations**, témoin RFC 3161 ré-ancré deux passes.
+- **/livrables** : 11 fichiers déposés (aucune publication Zenodo).
+- HORS BAC, nommé : VAES (aucun code écrit), campagne add servie (aucun serving), 27 harnais par bloc (delta nul, cause READ/FETCH_UNMAPPED).

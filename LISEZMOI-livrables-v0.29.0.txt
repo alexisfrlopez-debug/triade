@@ -1,0 +1,16 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.29.0 (vague 22 de l'édition, 24 novembre 2026)
+====================================================================================
+COURANTS
+- TRIADE_manuscrit_v0.29.0.pdf · Protocole_TRIADE_v0.15.14_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.13.pdf · TRIADE_preuves_et_calculs_v0.29.0.pdf
+- TRIADE_presentation_v0290.pdf
+- TRIADE_soumission_v0.29.0.zip · TRIADE_presentation_v0.29.0.zip · TRIADE_complet_v0.29.0.zip
+- empreintes_livrables_v0.29.0.txt · rapport_verification_v0.29.0.txt
+CE QUE PORTE CETTE ÉDITION
+- statut d'ancrage DÉRIVÉ du journal append-only (D274) : plus de « NON DÉPLOYÉ » en prose ;
+- linter à 20 classes (C18 compte, C19 vague du titre, C20 statuts) + normalisation typographique ;
+- six résidus soldés : sous-titre, Livre (en-tête et avant-propos), § 2.1, compte de classes,
+  ratio 63,39/19,66, partition 320 = 235 + 85 ;
+- forme : note de release hors du titre, une ligne de mots-clés par langue, résumé FR 233 mots.
+Aucune valeur mesurée modifiée ; aucune cible re-tirée.
+STATUT : NON PUBLIÉES (évaluation du maître d'abord). SUPERSÉDÉES : v0.28.0 et antérieures.
