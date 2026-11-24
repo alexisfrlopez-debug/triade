@@ -1,0 +1,25 @@
+ATELIER HETETZNTH — LE COMPTEUR NV TPM 2.0 COMME PLANCHER R10 (D263)
+=====================================================================
+Instruction : pré-enregistrer un kit anti-rollback R10 adossé à un compteur
+monotone NV TPM 2.0, avec refus nommés, simulateur au laboratoire, run matériel
+EN ATTENTE, agrégateur fail-closed.
+
+LIVRÉ (scripts/vague18/kit_tpm_r10.py)
+- `SimulateurNV` : présence, valeur, effacement (TPM clear), journal ; l'incrément
+  exige delta = 1 (INCREMENT-NON-MONOTONE sinon) ;
+- `porte_chargement(version_scellee, nv)` : lit le compteur AVANT toute exécution ;
+  RETOUR-EN-ARRIERE si l'artefact est sous le compteur, SCELAGE-NON-ENREGISTRE
+  s'il est au-dessus, ANCRE-PERDUE si le compteur est absent, inaccessible ou
+  effacé (fail-closed, jamais de récupération silencieuse) ;
+- `agrege(runs, attendus)` : REFUSE tout run manquant (RUN-MANQUANT), un ROUGE
+  n'est jamais noyé.
+
+PREUVES (12/12) : nominal ; rejeu binaire ancien ; restauration cohérente
+binaire+état (le NV survit) ; compteur absent ; TPM clear ; incrément non
+monotone ; artefact plus récent ; compteur remis à zéro non déclaré ; scellage
+puis chargement ; agrégateur complet ; agrégateur partiel refusé ; agrégateur
+avec un ROUGE.
+
+STATUT : « mécanisme éprouvé sur SIMULATEUR, run matériel EN ATTENTE » — aucun
+chiffre matériel, aucun chiffre fabriqué. L'ancre réelle (TPM 2.0 du poste, NV
+index consigné) reste le geste du maître.
