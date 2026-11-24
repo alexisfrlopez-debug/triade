@@ -1,3 +1,35 @@
+================================================================================
+AMENDEMENT DATÉ — 24/11/2026, VAGUE 17, ATELIER W17R1D81
+CE FICHIER EST HISTORIQUE. SES ÉTAPES NE SONT PLUS DES CONSIGNES ACTIVES.
+================================================================================
+La garde active de la phrase de contrôle est le SÉQUESTRE À SEUIL 5/3 (D183
+amendée par D223, purgée par D236) : la phrase est répartie en CINQ parts à
+seuil TROIS, AUCUNE phrase en clair ne vit au dépôt git, dans les packs, dans
+les rapports, ni au coffre Drive. La survie passe par la CÉRÉMONIE DE
+RECONSTITUTION À FROID de trois parts, hors ligne.
+
+CE QUI EST ABROGÉ CI-DESSOUS (le corps reste verbatim, à titre historique) :
+  - l'étape « ELLE EST SAUVEGARDÉE ICI (git + push GitHub + miroir Drive +
+    racine Drive) AVANT TOUTE AUTRE ACTION » ;
+  - l'étape « à la rotation suivante, le fichier est REMPLACÉ » ;
+  - le paragraphe D110 « commit AVANT TOUT → push git + racine Drive ».
+
+POURQUOI : le dépôt est PUBLIC depuis D220. Exécuter ces étapes publierait la
+phrase et ouvrirait le coffre à quiconque — la faille nommée par D236. Une
+phrase entrée dans l'historique git y demeure à vie : la rotation reste le
+seul remède, jamais le dépôt.
+
+CE QUI RESTE VRAI : la phrase n'est jamais affichée qu'à la cérémonie, la
+graine Ed25519 ne vit pas au coffre (D30), et le coffre_fort.bin se restaure
+par la cérémonie sous séquestre — les commandes `--phrase-fichier` du corps
+servent à CETTE reconstitution, jamais à une remise au dépôt.
+
+Contrôle : python3 scripts/vague17/linter_v234.py (une consigne active de
+remise D81 non datée est REFUSÉE ; une mention datée est ADMISE).
+================================================================================
+FIN DE L'AMENDEMENT — le corps ci-dessous est le verbatim du 28/10/2026,
+conservé intact (les phrases ci-dessus le bornent, elles ne le réécrivent pas).
+
 PHRASE-CONTROLE-COFFRE.txt — la phrase de contrôle du coffre-fort TRIADE
 =========================================================================
 

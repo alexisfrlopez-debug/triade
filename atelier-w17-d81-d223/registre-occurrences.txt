@@ -1,0 +1,19 @@
+[linter-v234] ADMIS   REPRISE_PROJET.md:161  HISTORIQUE-DATEE
+[linter-v234] ADMIS   OU-TROUVER-LES-LIVRABLES.md:24  HISTORIQUE-DATEE
+[linter-v234] ADMIS   LISEZMOI-PHRASE-CONTROLE.txt:122  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/PROTOCOLE_TRIADE.md:168  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/PROTOCOLE_TRIADE.md:300  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/PROTOCOLE_TRIADE.md:1715  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/PROTOCOLE_TRIADE.md:1851  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/PROTOCOLE_TRIADE.md:2146  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4438  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4752  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4753  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4818  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4836  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4852  HISTORIQUE-DATEE
+[linter-v234] ADMIS   docs/DECISIONS.md:4854  HISTORIQUE-DATEE
+[linter-v234] 15 mention(s) historique(s) admise(s), 0 consigne(s) active(s) refusée(s)
+[linter-v234] autotest 1/2 : la consigne ACTIVE est REFUSÉE — vert
+[linter-v234] autotest 2/2 : la mention DATÉE est ADMISE — vert
+[linter-v234] contrôle négatif : 2/2

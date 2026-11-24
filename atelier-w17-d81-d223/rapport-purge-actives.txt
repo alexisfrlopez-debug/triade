@@ -1,0 +1,88 @@
+ATELIER W17R1D81 — RÉCONCILIER D81 / D223 ET LES CONSIGNES ACTIVES
+(la vague 17, le 24/11/2026 ; le plan gelé au commit 8853bcf, la vérification AVANT le geste)
+================================================================================
+
+1. LA RÈGLE OPÉRATIONNELLE COURANTE, ÉTABLIE SUR PIÈCES
+--------------------------------------------------------
+La garde ACTIVE de la phrase de contrôle est le SÉQUESTRE À SEUIL 5/3 : cinq parts,
+seuil trois, reconstitution à froid par la cérémonie hors ligne. AUCUNE phrase en
+clair au dépôt git, dans les packs, les manifestes, les rapports, ni au coffre
+Drive. D183 (proposition, 11/11) est ACTIVE par D223 (19/11, la cérémonie vécue) et
+PURGÉE des consignes opératoires par D236 (la vague 8 : le Livre v1.6, la spec
+v0.15.7, onze remplacements ancrés, le grep exhaustif « une occurrence par pièce,
+chacune HISTORIQUE-DATÉE, zéro prescriptive », le runbook § 8 rejoué au clone de
+test, le geste piège REFUSÉ au premier nom, les 513 commits scannés).
+Le statut de D81 est HISTORIQUE et DATÉ : du 4 au 19 novembre 2026.
+
+2. CE QUI A ÉTÉ VÉRIFIÉ (et ce qui tenait déjà)
+------------------------------------------------
+- docs/PROTOCOLE_TRIADE.md : la règle courante est énoncée en § 1.6, la ligne du
+  journal des versions est datée, les tables § 15.1 / § 17.3 nomment D81 comme
+  histoire bornée — CONFORME (cinq mentions, toutes admises par le contrôle).
+- docs/DECISIONS.md : D183, D223, D236 décrivent D81 au passé, sans consigne active
+  — CONFORME (quatre mentions admises).
+- docs/FORMAT_CARTE.md § 11 : la voie de reconstitution est le séquestre — CONFORME.
+- REPRISE_PROJET.md : la table des emplacements présentait encore
+  « PHRASE-CONTROLE-COFFRE.txt (garde durable D81) » comme une garde courante, et
+  le § 7 ne nommait que « aucun secret commité » sans la règle du séquestre —
+  CORRIGÉ (voir § 3).
+
+3. LA FAILLE TROUVÉE, ET SA CORRECTION (append-only)
+-----------------------------------------------------
+LISEZMOI-PHRASE-CONTROLE.txt — 103 lignes À LA RACINE DU DÉPÔT PUBLIC (D220) —
+prescrivait encore, sans aucune datation :
+  « 2. ELLE EST SAUVEGARDÉE ICI (git + push GitHub + miroir Drive + racine Drive)
+    AVANT TOUTE AUTRE ACTION de la session » ;
+  « 4. à la rotation suivante, le fichier est REMPLACÉ » ;
+  « D110 — … produite → remplacée ici → commit « AVANT TOUT » → push git +
+    racine Drive ».
+Un agent ou un lecteur suivant ce fichier publiait la phrase de contrôle : la faille
+nommée par D236, demeurée ouverte dans un fichier de racine que la purge de la vague
+8 n'avait pas couvert.
+CORRECTION : un AMENDEMENT DATÉ (24/11/2026) en tête abroge nommément ces trois
+étapes, énonce la règle active (séquestre 5/3, zéro phrase en clair, la rotation par
+la cérémonie), et rappelle ce qui reste vrai (l'affichage unique, la graine Ed25519
+hors coffre D30, les commandes --phrase-fichier pour la SEULE reconstitution).
+Le corps du 28/10/2026 est conservé VERBATIM — vérifié par comparaison binaire :
+1 973 octets ajoutés en tête, zéro octet du corps modifié.
+
+4. LE CONTRÔLE, DÉSORMAIS MÉCANIQUE
+------------------------------------
+scripts/vague17/linter_v234.py — deux classes :
+  ACTIVE-PRESCRIPTIVE : une ligne qui demande un geste (commit, push, dépôt,
+    téléversement, sauvegarde, remplacement, restauration) sur la phrase de
+    contrôle SANS marqueur historique → REFUS (sortie 2) ;
+  HISTORIQUE-DATEE : la même mention portée par un marqueur (HISTORIQUE, DATÉE,
+    plage de dates, « non appliquée », « documentée ») → ADMIS.
+Marqueurs cherchés dans une fenêtre de cinq lignes avant et deux après, ou dans
+l'en-tête du fichier ; le linter n'imprime JAMAIS le contenu de la ligne, seulement
+le chemin, la classe et le motif.
+Résultat sur les consignes actives : 15 mentions historiques ADMISES, 0 consigne
+active REFUSÉE. Contrôle négatif vécu 2/2 : la fixture prescriptive est refusée, la
+fixture datée est admise (voir registre-occurrences.txt).
+
+5. LIMITES NOMMÉES (jamais maquillées)
+---------------------------------------
+- Le linter est heuristique : il attrape la consigne rédigée, pas une reformulation
+  inédite ; la revue humaine reste la garde de dernier rang.
+- Le balayage ne couvre pas worklog.md, les ateliers, ARCHIVE/ ni download/ : ces
+  pièces sont historiques par nature et le verbatim y est protégé.
+- Aucun geste de cérémonie n'a été tenté : la clé physique et les parts appartiennent
+  au maître ; aucun mécanisme n'est activé sur le coffre réel (D105).
+- Aucun scan n'a imprimé de valeur : le registre ne porte que chemins, classes et
+  résultats expurgés.
+
+6. FICHIERS TOUCHÉS PAR CET ATELIER
+------------------------------------
+  LISEZMOI-PHRASE-CONTROLE.txt        (amendement daté en tête, corps verbatim)
+  REPRISE_PROJET.md                   (§ 7 la règle du séquestre ; table datée)
+  docs/DECISIONS.md                   (D252, append-only)
+  scripts/vague17/linter_v234.py      (nouveau — les deux classes et l'autotest)
+  atelier-w17-d81-d223/               (ce rapport, le registre des occurrences)
+
+7. ÉTAT DES GARDES
+-------------------
+  sceau-I : 14 arbres VERTS (le compte vient du manifeste vivant : 14 manifestes
+  déposés), vérifié avant et après le geste.
+  Garde pre-commit h66o54pjd : 0 détection aux commits de l'atelier.
+  Aucune instruction archivée, aucune release : l'archivage appartient à W17R5REL.

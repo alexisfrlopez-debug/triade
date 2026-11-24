@@ -158,7 +158,7 @@ verifier` (14 arbres VERTS).
 | Emplacement | Contenu |
 |---|---|
 | `/home/z/my-project/depot` | LA SOURCE DE VÉRITÉ : le dépôt git complet (l'historique par le bundle ; l'arborescence § 6) |
-| Coffre Drive (dossier racine « Triade ») | le `/instructions` (les vagues en attente), `ARCHIVE/` (les instructions exécutées, les packs supersédés), `/livrables` (les packs courants), `/test` (les constats du développeur), `TRIADE-sauvegarde-git/` (LE MIROIR du dépôt + triade-history.bundle + worklog + OU-TROUVER + les ateliers), `/Tokens`, `coffre_fort.bin` + `PHRASE-CONTROLE-COFFRE.txt` (garde durable D81), le conteneur de continuité |
+| Coffre Drive (dossier racine « Triade ») | le `/instructions` (les vagues en attente), `ARCHIVE/` (les instructions exécutées, les packs supersédés), `/livrables` (les packs courants), `/test` (les constats du développeur), `TRIADE-sauvegarde-git/` (LE MIROIR du dépôt + triade-history.bundle + worklog + OU-TROUVER + les ateliers), `/Tokens`, `coffre_fort.bin` + `PHRASE-CONTROLE-COFFRE.txt` (garde HISTORIQUE D81, du 4 au 19 novembre 2026 — remplacée par le séquestre 5/3, D223/D236 : aucune phrase en clair n'est plus lue ni écrite là), le conteneur de continuité |
 | GitHub `alexisfrlopez-debug/triade` | le miroir distant (push à chaque release, vérifié anonymement ls-remote) |
 | Zenodo | le concept 10.5281/zenodo.24367343 (les versions : …24420007 = v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2, **24450872 = v0.23.3 — la version courante, les trois packs**) ; LES ŒUVRES SÉPARÉES : le kit développeur v1.0.0 (concept 10.5281/zenodo.24457514 → record 24457515), le corpus TRIADE-CORPUS (concept 10.5281/zenodo.24457524 : …24457525 = v1, **24463681 = v2 — la version courante, les 60 appels v6 ajoutés, les 169 triples**) |
 | `/home/z/my-project/download/` | les livrables du bac (miroir des pièces terrain) |
@@ -230,6 +230,14 @@ depot/
 - **aucun secret commité** (la garde h66o54pjd), le coffre réel jamais
   touché au laboratoire (D105), les scellés intacts (le sceau-I avant et
   après chaque geste) ;
+- **LA PHRASE DE CONTRÔLE : SÉQUESTRE 5/3, JAMAIS DE PHRASE EN CLAIR** —
+  la garde active est le séquestre à seuil (D183 amendée par D223, purgée
+  par D236) : cinq parts, seuil trois, reconstitution à froid par la
+  cérémonie. Aucune phrase n'est écrite, commitée, poussée, téléversée ni
+  copiée au coffre Drive ; l'ancienne remise `PHRASE-CONTROLE-COFFRE.txt`
+  (D81) est HISTORIQUE et datée du 4 au 19 novembre 2026. Contrôle :
+  `python3 scripts/vague17/linter_v234.py` (une consigne active de remise
+  D81 non datée est REFUSÉE) ;
 - la sauvegarde systématique (sync_backup.sh) après chaque modification ;
 - l'ordre des tâches JAMAIS re-tiré ; les graines consignées.
 
