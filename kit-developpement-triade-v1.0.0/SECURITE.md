@@ -103,3 +103,22 @@ Avant tout passage public (C5), trois barrières successives :
 - Ne jamais « contourner » un secret détecté : le retirer et faire une
   rotation si nécessaire.
 - Les tags de version sont créés uniquement lors de la cérémonie C3.
+
+## 11. Garanties de chargement et de bascule (v1.1)
+
+Le protocole distingue trois propriétés — **intégrité, authenticité, fraîcheur** —
+et borne ce que la vérification locale peut promettre :
+
+- **Bascule** : un magasin simple est atomique jusqu'à huit octets naturels au
+  plus ; seize octets exigent un unique `LOCK CMPXCHG16B` ; l'atomicité ne protège
+  pas un thread dont le pointeur d'instruction est dans la plage remplacée — la
+  quiescence est obligatoire.
+- **Chargement (R10)** : la garantie vaut ce que vaut l'ancre (Authenticode, IMA
+  ou signature de paquet, chaîne de boot signée). Si l'ancre est modifiable avec
+  l'artefact, R10 ne détecte pas un administrateur local ; la restauration
+  cohérente d'un couple binaire + état échappe à toute ancre locale.
+- **Témoins hors machine** : journal Git poussé, carte papier, journal de
+  transparence — ce sont eux qui rendent visible un retour en arrière cohérent.
+
+Le détail, les refus nommés et les limites sont dans `docs/GARANTIES.md`. Ne
+publiez jamais « R10 garantit la version » sans nommer l'ancre et son propriétaire.

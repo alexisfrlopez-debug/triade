@@ -1,4 +1,4 @@
-# Kit de Développement Triade — v1.0.0
+# Kit de Développement Triade — v1.1.0
 
 Kit complet destiné à un **développeur et à son agent IA** pour conduire un projet
 selon le **protocole Triade** : une méthode de développement et de publication
@@ -18,7 +18,8 @@ propres accès au moment de l'exécution (voir « Démarrage rapide »).
 | Manuel du développeur | `docs/MANUEL_DEVELOPPEUR.docx` (+ `.pdf`) | Référence complète pour l'humain : architecture, installation, sécurité, cérémonies, versionnage, passage public, FAQ, glossaire. |
 | Guide des cérémonies | `ceremonies/GUIDE_CEREMONIES.md` | Déroulés détaillés et checklists des six cérémonies C0 à C5. |
 | GUI 1-clic des cérémonies | `ceremonies/gui/` | TriadeKit : interface graphique autonome (un fichier, zéro dépendance) qui déroule les cérémonies Git / Drive / Zenodo en un clic — vérification, rotation des jetons, synchronisation, passage public, cycle complet. Modes simulation et démonstration. Lanceurs Windows/macOS/Linux. Détails : `ceremonies/gui/LISEZMOI.md`. |
-| Politique de sécurité | `SECURITE.md` | Coffre de jetons, externalisation, rotation, réponse aux fuites. |
+| Politique de sécurité | `SECURITE.md` | Coffre de jetons, externalisation, rotation, réponse aux fuites, garanties de chargement et de bascule (§ 11). |
+| Garanties et limites | `docs/GARANTIES.md` | Ce que le protocole garantit — intégrité, authenticité, fraîcheur, atomicité de bascule — et ce qu'il ne garantit pas. À lire avant toute promesse publique. |
 | Modèles | `templates/` | Configuration, jetons, résumés de session, état projet, manifeste de pack, changelog, fiche de cérémonie, phrase de contrôle, `.gitignore`. |
 | Outils | `scripts/` | `triade_hygiene.py` (scanner de fuites avant publication) et `triade_ceremonie.py` (exécuteur de cérémonies en une commande). |
 
@@ -83,3 +84,13 @@ l'ajouter à la racine dans un fichier `LICENSE`.
 
 Kit de Développement Triade v1.0.0 — version indépendante de la version du pack
 de votre projet (voir `templates/PACK_MANIFEST.md` pour la version des livrables).
+
+## Nouveautés v1.1.0 (24 novembre 2026)
+
+- `docs/GARANTIES.md` : la synthèse des décisions D253 (publication bornée à huit
+  octets naturels, `LOCK CMPXCHG16B` pour seize, quiescence obligatoire) et D254
+  (R10 borné à son ancre, trois propriétés distinctes, rollback cohérent invisible
+  aux ancres locales).
+- `SECURITE.md` § 11 : les mêmes bornes dans la politique de sécurité.
+- Le manuel (`docs/MANUEL_DEVELOPPEUR.*`) est inchangé : sa régénération passe par
+  son atelier documentaire, pas par ce kit.
