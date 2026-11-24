@@ -1,0 +1,166 @@
+{
+ "registre": [
+  {
+   "grandeur": "(c) coût d'édition — TPL-ADD-v2",
+   "id": "tpl_v2",
+   "n": 18,
+   "source": {
+    "chemin": "atelier-ajouter-v2-pgodgk35l/resultats_v2.jsonl",
+    "sha256": "6a58500bea1d2aeae5fcd3b5edf7f335a0d58ab2d9ecfc71656d95417c49575d"
+   },
+   "statut": "mesuré (VM, glm-4-plus, graines consignées, 18 tâches — ordre jamais re-tiré)",
+   "unite": "tâches (n), greens, tokens/changement validé (deux conventions de médiane nommées)",
+   "valeur": {
+    "mediane_tokens_toutes_taches": 3718.5,
+    "mediane_tokens_verts": 2959,
+    "verts": 5
+   }
+  },
+  {
+   "grandeur": "(c) coût d'édition — TPL-ADD-v3, mode ajouter",
+   "id": "tpl_v3_ajouter",
+   "n": 18,
+   "source": {
+    "chemin": "atelier-ajouter-v3-5nwnwoceo/resultats_v3.jsonl",
+    "sha256": "4b8ab37031ae84e67d53ac60a2b034d647eafada6bf18a1cf18e92fb28c50639"
+   },
+   "statut": "mesuré (VM, glm-4-plus, graines consignées, 18 tâches — ordre jamais re-tiré)",
+   "unite": "tâches (n), greens, tokens/changement validé (deux conventions de médiane nommées)",
+   "valeur": {
+    "mediane_tokens_toutes_taches": 5545.0,
+    "mediane_tokens_verts": 3844.0,
+    "verts": 6
+   }
+  },
+  {
+   "grandeur": "(c) coût d'édition — TPL-ADD-v3, mode éditer",
+   "id": "tpl_v3_editer",
+   "n": 18,
+   "source": {
+    "chemin": "atelier-ajouter-v3-5nwnwoceo/resultats_v3.jsonl",
+    "sha256": "4b8ab37031ae84e67d53ac60a2b034d647eafada6bf18a1cf18e92fb28c50639"
+   },
+   "statut": "mesuré (VM, glm-4-plus, graines consignées, 18 tâches — ordre jamais re-tiré)",
+   "unite": "tâches (n), greens, tokens/changement validé (deux conventions de médiane nommées)",
+   "valeur": {
+    "mediane_tokens_toutes_taches": 712.5,
+    "mediane_tokens_verts": 712.5,
+    "verts": 18
+   }
+  },
+  {
+   "grandeur": "(c) coût d'édition — TPL-ADD-v4",
+   "id": "tpl_v4",
+   "n": 18,
+   "source": {
+    "chemin": "atelier-ajouter-v4-842vqyy1k/resultats_v4.jsonl",
+    "sha256": "5d80a55550500285943b865779fa0afb6dccbdda059a13bbce3527de37ec35d7"
+   },
+   "statut": "mesuré (VM, glm-4-plus, graines consignées, 18 tâches — ordre jamais re-tiré)",
+   "unite": "tâches (n), greens, tokens/changement validé (deux conventions de médiane nommées)",
+   "valeur": {
+    "mediane_tokens_toutes_taches": 5601.0,
+    "mediane_tokens_verts": 3990,
+    "verts": 7
+   }
+  },
+  {
+   "grandeur": "(c) coût d'édition — TPL-ADD-v5",
+   "id": "tpl_v5",
+   "n": 18,
+   "source": {
+    "chemin": "atelier-ajouter-v5-yfkpml1j2/resultats_v5.jsonl",
+    "sha256": "16252df75c8e47038aebd151ab0ae2ee26ed21af865320a80ac0f107aa86cc7e"
+   },
+   "statut": "mesuré (VM, glm-4-plus, graines consignées, 18 tâches — ordre jamais re-tiré)",
+   "unite": "tâches (n), greens, tokens/changement validé (deux conventions de médiane nommées)",
+   "valeur": {
+    "mediane_tokens_toutes_taches": 6462.5,
+    "mediane_tokens_verts": 4604,
+    "verts": 5
+   }
+  },
+  {
+   "grandeur": "(c) coût d'édition — gabarits versionnés",
+   "id": "gabarits",
+   "n": 108,
+   "source": {
+    "chemin": "atelier-gabarits-o5apue194/resultats_gabarits.jsonl",
+    "sha256": "f7f8728a89ef743f98c559e1ef1b8ddaafab1b7117259c2c707de57577d952e4"
+   },
+   "statut": "mesuré (VM, gabarits versionnés)",
+   "unite": "essais (n), verts",
+   "valeur": {
+    "verts": 73
+   }
+  },
+  {
+   "grandeur": "(d) sûreté et couverture — corpus v2.1, split train",
+   "id": "corpus_train",
+   "n": 127,
+   "source": {
+    "chemin": "depot-zenodo-corpus-v21/train.jsonl",
+    "sha256": "c6f416cf26669e95aad9408ed138373c4b3533d592a9259518a7201c0e5406e7"
+   },
+   "statut": "mesuré (fichiers livrés, recomptés)",
+   "unite": "triples (lignes JSONL)",
+   "valeur": 127
+  },
+  {
+   "grandeur": "(d) sûreté et couverture — corpus v2.1, split dev",
+   "id": "corpus_dev",
+   "n": 24,
+   "source": {
+    "chemin": "depot-zenodo-corpus-v21/dev.jsonl",
+    "sha256": "38da09a358cef7087efb84fc8aff963e6e49e75f70e4065f3f769c46eaa37930"
+   },
+   "statut": "mesuré (fichiers livrés, recomptés)",
+   "unite": "triples (lignes JSONL)",
+   "valeur": 24
+  },
+  {
+   "grandeur": "(d) sûreté et couverture — corpus v2.1, split test",
+   "id": "corpus_test",
+   "n": 19,
+   "source": {
+    "chemin": "depot-zenodo-corpus-v21/test.jsonl",
+    "sha256": "9c6ce7db17be910cf1f2ced49bf767577e579e12b85891c8a94ceff08fc7a3eb"
+   },
+   "statut": "mesuré (fichiers livrés, recomptés)",
+   "unite": "triples (lignes JSONL)",
+   "valeur": 19
+  },
+  {
+   "grandeur": "(d) sûreté et couverture — paires DPO v2.1",
+   "id": "corpus_dpo",
+   "n": 48,
+   "source": {
+    "chemin": "depot-zenodo-corpus-v21/dpo-paires.jsonl",
+    "sha256": "15ac6408a7822d0935feaa93865aed0d3c4ee06c83cf2c5c7bb2135fdf3eba2a"
+   },
+   "statut": "mesuré (fichier livré, recompté)",
+   "unite": "paires",
+   "valeur": 48
+  },
+  {
+   "grandeur": "(b) performance d'exécution — ratio GHASH agrégé / scellé",
+   "id": "ghash_ratio",
+   "n": null,
+   "source": {
+    "chemin": "atelier-ghash-agrege-h1mz2sr8s/registres/ghash-agrege.json",
+    "sha256": "67e13552cb304b7df6d8c450f713f1f34c3ecba087c20241924e33e404fc633e"
+   },
+   "statut": "mesuré (émulation Unicorn + natif, même machine ; pas de métal nu)",
+   "unite": "× (cycles médians, opérandes non arrondis)",
+   "valeur": {
+    "operandes": [
+     78888,
+     1606
+    ],
+    "publie_2_dec": 49.12,
+    "ratio_non_arrondi": 49.12079701120797
+   }
+  }
+ ],
+ "version": "vague17"
+}

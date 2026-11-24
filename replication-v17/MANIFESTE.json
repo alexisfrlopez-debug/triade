@@ -1,0 +1,77 @@
+{
+ "version": "vague17",
+ "paquet": "replication-v17",
+ "note": "Paquet PUBLIC expurgé — ni couche I, ni carte C, ni secret, ni donnée personnelle.",
+ "pieces": [
+  {
+   "chemin": "replication-v17/README-AUDIT.md",
+   "sha256": "86d57d351caaebafb8b9d5c8ee3d83cabbd67f9021f104ce399359ecd5985c9e",
+   "octets": 3874
+  },
+  {
+   "chemin": "replication-v17/CONSTAT-MANUSCRIT.txt",
+   "sha256": "3bc00ae75d442652dde83a82dc83c147203c03b49c5822b6b6412180763109f2",
+   "octets": 2687
+  },
+  {
+   "chemin": "replication-v17/provenance-v17.json",
+   "sha256": "faaacb6c46f661c601b4937149fd147949b0c7c11fa943d9172d0c5a6fa5fe44",
+   "octets": 5465
+  },
+  {
+   "chemin": "scripts/vague17/provenance_tableaux.py",
+   "sha256": "0cb124b4ecf326f9883fca6ad8947bfc00f74c2a12bdc62d5c2e88f93b9e61b7",
+   "octets": 11809
+  },
+  {
+   "chemin": "scripts/vague17/linter_v234.py",
+   "sha256": "d230d2229b7404f8adac662e040d036ab54ac2d08eb0f8925e1b283b5b4e4e2c",
+   "octets": 10525
+  },
+  {
+   "chemin": "atelier-w17-r10-confiance/MATRICE-R10.md",
+   "sha256": "5440aebdddfcd356e4807d2cb3a945e11ac179ff231d1ba157b6e2894b20d4b6",
+   "octets": 10092
+  },
+  {
+   "chemin": "atelier-w17-r10-confiance/controles_fail_closed.py",
+   "sha256": "8f5d50a7622ce78fe9c3437b488422185f7c7b7b34e9c67d7a0e9e70a3a1fd45",
+   "octets": 9516
+  },
+  {
+   "chemin": "atelier-w17-r10-confiance/rapport.txt",
+   "sha256": "6bcfa7c330b813fe450fd28934e42b5ce0ab8285af66bf385d96b32a21767bda",
+   "octets": 5378
+  },
+  {
+   "chemin": "atelier-w17-performance-replication/rapport.txt",
+   "sha256": "dd25d7ff737c684139be7f2111f628227d6eb5e42c7401ef6bce6efdf0fdce82",
+   "octets": 6661
+  },
+  {
+   "chemin": "atelier-w17-patch-a-chaud/kit_bascule.py",
+   "sha256": "a5352fdbc9ec14036546dd164cb84dfe3d7509295e317ff1f577a82e02ac1a56",
+   "octets": 5905
+  },
+  {
+   "chemin": "atelier-w17-patch-a-chaud/rapport.txt",
+   "sha256": "9deeef18da1003a154431efbc5afe6ab08a6afb4da1a73beb1af2b951fd382eb",
+   "octets": 5356
+  },
+  {
+   "chemin": "atelier-w17-d81-d223/rapport-purge-actives.txt",
+   "sha256": "af82a99b5b58faccfcc85ba2d767c7b4fbe06ce4f6f357d98b6587e78de25497",
+   "octets": 5533
+  },
+  {
+   "chemin": "depot-zenodo-corpus-v21/MANIFESTE.json",
+   "sha256": "3c05cf468e48b06fb2d63ebeddbd8dcb3dcd384ea89fd24891894dbbc4e3bca7",
+   "octets": 1622
+  },
+  {
+   "chemin": "depot-zenodo-corpus-v21/DATASET-CARD.json",
+   "sha256": "b4263997f74d1ff4bfa12970da7989faf15bbd8dfaefbeed9b55fa34dbea3025",
+   "octets": 871
+  }
+ ]
+}

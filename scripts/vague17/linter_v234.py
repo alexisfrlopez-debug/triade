@@ -145,13 +145,122 @@ def controle_negatif():
     return 0 if ok == 2 else 2
 
 
+# ---------------------------------------------------------------------------
+# LES TROIS CLASSES DE PROVENANCE (atelier W17R4PER) : ratios, comptes, statuts.
+# Le registre est celui de scripts/vague17/provenance_tableaux.py ; le contrôle
+# se fait SUR LA SOURCE, jamais sur un rapport.
+# ---------------------------------------------------------------------------
+REGISTRE = os.path.join(RACINE, "replication-v17", "provenance-v17.json")
+STATUTS_ADMIS = ("mesuré", "émulé", "documenté", "en attente")
+
+
+def _charge_registre():
+    import json
+    with open(REGISTRE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _compte_lignes(chemin):
+    with open(chemin, "r", encoding="utf-8") as f:
+        return sum(1 for l in f if l.strip())
+
+
+def _classe_ratios(reg):
+    refus = []
+    for r in reg["registre"]:
+        v = r.get("valeur")
+        if not isinstance(v, dict) or "ratio_non_arrondi" not in v:
+            continue
+        a, b = v["operandes"]
+        recalcule = a / b
+        if abs(recalcule - v["ratio_non_arrondi"]) > 1e-9:
+            refus.append(("RATIO", r["id"], "ratio != operandes non arrondis"))
+        if round(recalcule, 2) != v["publie_2_dec"]:
+            refus.append(("RATIO", r["id"], "valeur publiee != ratio recalcule a la precision affichee"))
+    return refus
+
+
+def _classe_comptes(reg):
+    refus = []
+    for r in reg["registre"]:
+        if not r["id"].startswith("corpus_"):
+            continue
+        chemin = os.path.join(RACINE, r["source"]["chemin"])
+        reel = _compte_lignes(chemin)
+        if reel != r["n"] or reel != r["valeur"]:
+            refus.append(("COMPTE", r["id"], f"source {reel} != annonce {r['n']}/{r['valeur']}"))
+    return refus
+
+
+def _classe_statuts(reg):
+    refus = []
+    for r in reg["registre"]:
+        if not r["statut"].startswith(STATUTS_ADMIS):
+            refus.append(("STATUT", r["id"], "statut hors vocabulaire (mesuré/émulé/documenté/en attente)"))
+    return refus
+
+
+def provenance(reg=None):
+    reg = reg or _charge_registre()
+    refus = _classe_ratios(reg) + _classe_comptes(reg) + _classe_statuts(reg)
+    verts = len(reg["registre"]) - len({x[1] for x in refus})
+    print(f"[linter-v234] provenance : {verts}/{len(reg['registre'])} lignes VERTES")
+    for classe, ident, motif in refus:
+        print(f"[linter-v234] REFUSÉ  {classe} {ident} — {motif}")
+    return 0 if not refus else 2
+
+
+def provenance_controle_negatif():
+    """Quatre mutations sur une COPIE du registre : valeur, ratio, compte, statut."""
+    import copy
+    base = _charge_registre()
+    essais = []
+
+    def essai(classe, fn):
+        reg = copy.deepcopy(base)
+        fn(reg)
+        refus = _classe_ratios(reg) + _classe_comptes(reg) + _classe_statuts(reg)
+        essais.append((classe, refus))
+
+    def mut_valeur(reg):
+        next(x for x in reg["registre"] if x["id"] == "corpus_train")["valeur"] = 128
+
+    def mut_ratio(reg):
+        v = next(x for x in reg["registre"] if x["id"] == "ghash_ratio")["valeur"]
+        v["publie_2_dec"] = 50.0
+
+    def mut_compte(reg):
+        next(x for x in reg["registre"] if x["id"] == "corpus_dpo")["n"] = 49
+
+    def mut_statut(reg):
+        next(x for x in reg["registre"] if x["id"] == "tpl_v5")["statut"] = "courant"
+
+    essai("VALEUR/COMPTE", mut_valeur)
+    essai("RATIO", mut_ratio)
+    essai("COMPTE", mut_compte)
+    essai("STATUT", mut_statut)
+    ok = 0
+    for classe, refus in essais:
+        bon = bool(refus)
+        ok += 1 if bon else 0
+        print(f"[linter-v234] provenance autotest {classe} : {'REFUSÉ — vert' if bon else 'NON REFUSÉ — ÉCHEC'} {refus}")
+    print(f"[linter-v234] provenance, contrôle négatif : {ok}/4")
+    return 0 if ok == 4 else 2
+
+
 def main():
-    p = argparse.ArgumentParser(description="Garde des consignes actives D81/D223")
+    p = argparse.ArgumentParser(description="Garde des consignes actives D81/D223 et provenance des tableaux")
     p.add_argument("--controle-negatif", action="store_true", help="autotest 2/2 des deux classes")
+    p.add_argument("--provenance", action="store_true", help="les trois classes ratios/comptes/statuts")
+    p.add_argument("--provenance-negatif", action="store_true", help="autotest 4/4 de la provenance")
     p.add_argument("--fichier", action="append", default=None, help="chemin à balayer (répétable)")
     a = p.parse_args()
     if a.controle_negatif:
         sys.exit(controle_negatif())
+    if a.provenance:
+        sys.exit(provenance())
+    if a.provenance_negatif:
+        sys.exit(provenance_controle_negatif())
     cibles = a.fichier or CIBLES
     viol, admis, absents = balayer(cibles)
     sys.exit(rapport(viol, admis, absents))

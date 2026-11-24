@@ -300,3 +300,48 @@ OPT-15 — TPL-ADD-v2 (pgodgk35l) : LE DICTIONNAIRE DE DOMAINE VERSIONNÉ — la
 **Les contrôles.** La parité TRIPLE 25/25 : rig-GCM(couloir) == rig-GCM(scellé 17) == LE SCELLÉ tls13-18 == OpenSSL EVP (ct et étiquette octet pour octet) ; SHA : couloir == scellé 02 == EVP. La différentielle 320/320 zéro divergence contre le scellé (les deux variantes), les cas punitifs 7/7, la commutativité et X/Y intacts 32/32, le repli 32/32, le mutant (l'imm8 du premier clmul muté) ATTRAPÉ au premier vecteur, le round-trip 9/9. Le temps-constant STRUCTUREL : UNE empreinte de trace par classe (60 mesures, adresses et tailles seules hachées), AUCUNE instruction à latence variable sur le chemin (div/idiv/cpuid/rdtsc absents du corridor — le sondage VIT à l'appelant, PUBLIC), le seul jcc sur r10 public. Les scellés 14/14 avant et après (la garde du sceau-I), les quatre pièces aux ancres R7 recoupées.
 
 **Les limites nommées.** LE BAC VIRTUALISÉ — les cycles sont LES CYCLES DE CETTE MACHINE (le cpuid y coûte ~2 660 c ; le silicium nu au geste du développeur au terrain) ; UNE SEULE machine ; le corridor SHA-NI d'époque RECONDUIT avec son dispatch par appel (le coût mesuré 92,1 % du total — la renotation hissée nommée geste suivant) ; la composition par blocs contre l'agrégation d'OpenSSL (l'écart @4096 structurel, jamais maquillé).
+
+## PROVENANCE DES TABLEAUX — LE REGISTRE DE LA VAGUE 17 (atelier W17R4PER, D255)
+
+> Toute valeur citée dans les tableaux est désormais recomposée depuis une **source
+> canonique committée** (JSONL/JSON), avec son empreinte. Le registre vit à
+> `replication-v17/provenance-v17.json`, généré par `scripts/vague17/provenance_tableaux.py`
+> et gardé par les trois classes de provenance du linter (`--provenance`).
+
+### Les quatre grandeurs, jamais additionnées ni comparées
+
+| Grandeur | Objet | Unité | Ce qu'elle n'est pas |
+|---|---|---|---|
+| (a) contrainte d'artefact natif | l'absence de compilateur | propriété booléenne par artefact | une mesure de vitesse |
+| (b) performance d'exécution | latence, débit, mémoire, taille | cycles, c/octet, c/bloc | un coût d'édition |
+| (c) coût d'édition et de validation | tokens, temps, calcul | tokens par changement validé | une performance d'exécution |
+| (d) sûreté et couverture | mutants, corpus, preuves | comptes, pourcentages | une vitesse |
+
+### Le registre (11 lignes, recomposées le 24/11/2026)
+
+| Id | Grandeur | n | Valeur recomposée | Statut | Source |
+|---|---|---|---|---|---|
+| tpl_v2 | (c) TPL-ADD-v2 | 18 | 5 verts · médiane 3 718,5 sur les 18 tâches · 2 959 sur les vertes | mesuré (VM, glm-4-plus) | `atelier-ajouter-v2-pgodgk35l/resultats_v2.jsonl` |
+| tpl_v3_ajouter | (c) TPL-ADD-v3, mode ajouter | 18 | 6 verts · médiane 5 545 sur 18 · 3 844 sur les vertes | mesuré (VM, glm-4-plus) | `atelier-ajouter-v3-5nwnwoceo/resultats_v3.jsonl` |
+| tpl_v3_editer | (c) TPL-ADD-v3, mode éditer | 18 | 18 verts · médiane 712,5 | mesuré (VM, glm-4-plus) | même fichier, mode `editer-v3` |
+| tpl_v4 | (c) TPL-ADD-v4 | 18 | 7 verts · médiane 5 601 sur 18 · 3 990 sur les vertes | mesuré (VM, glm-4-plus) | `atelier-ajouter-v4-842vqyy1k/resultats_v4.jsonl` |
+| tpl_v5 | (c) TPL-ADD-v5 | 18 | 5 verts · médiane 6 462,5 sur 18 · 4 604 sur les vertes | mesuré (VM, glm-4-plus) | `atelier-ajouter-v5-yfkpml1j2/resultats_v5.jsonl` |
+| gabarits | (c) gabarits versionnés | 108 | 73 verts | mesuré (VM) | `atelier-gabarits-o5apue194/resultats_gabarits.jsonl` |
+| corpus_train | (d) corpus v2.1 | 127 | 127 triples | mesuré (fichier livré) | `depot-zenodo-corpus-v21/train.jsonl` |
+| corpus_dev | (d) corpus v2.1 | 24 | 24 triples | mesuré (fichier livré) | `depot-zenodo-corpus-v21/dev.jsonl` |
+| corpus_test | (d) corpus v2.1 | 19 | 19 triples | mesuré (fichier livré) | `depot-zenodo-corpus-v21/test.jsonl` |
+| corpus_dpo | (d) corpus v2.1 | 48 | 48 paires | mesuré (fichier livré) | `depot-zenodo-corpus-v21/dpo-paires.jsonl` |
+| ghash_ratio | (b) GHASH agrégé / scellé | — | 78 888 / 1 606 = **49,12×** | mesuré (émulation + natif, même machine) | `atelier-ghash-agrege-h1mz2sr8s/registres/ghash-agrege.json` |
+
+**Les deux conventions de médiane sont nommées, jamais confondues** : celle des 18 tâches
+(refus compris — c'est elle que le manuscrit publie : 3 718 pour v2, 4 604 pour v5) et
+celle des seules tâches vertes. Le fichier v3 porte DEUX modes de 18 tâches chacun
+(`ajouter-v3` 6/18, `editer-v3` 18/18 à 712,5 — le 712 publié est la troncature de 712,5,
+la convention de publication d'une décimale) ; les confondre donnerait 24/36, un compte
+sans signification. L'écart de 0,5 est un arrondi de publication, nommé.
+
+**Les contrôles vécus** : `--verifier` → `CONFORME` (10/10) ; `--controle-negatif` →
+4/4 (valeur, ratio, compte, statut), chacun refusé au premier nom. **Ce que le registre
+ne prouve pas** : aucune mesure au métal nu (statut « mesuré » = VM ou émulation, jamais
+silicium), et l'opt05 n'entre pas au registre faute de champ structuré — l'absence est
+nommée.

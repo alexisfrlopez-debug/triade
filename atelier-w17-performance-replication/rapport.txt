@@ -1,0 +1,105 @@
+ATELIER W17R4PER — PERFORMANCE, COÛT DE MÉTHODE ET RÉPLICATION
+(la vague 17, le 24/11/2026 ; le plan gelé au commit 8853bcf, la décision D255)
+================================================================================
+
+1. LA QUESTION POSÉE
+---------------------
+L'instruction 04 demande de ne plus confondre la contrainte d'architecture avec une
+mesure de vitesse, de rendre chaque nombre du dossier traçable à une source canonique,
+et de livrer un paquet de réplication qui protège la carte privée.
+
+2. CE QUI EST REPRIS ET VÉRIFIÉ, LIGNE À LIGNE
+-----------------------------------------------
+Onze lignes au registre (`replication-v17/provenance-v17.json`), chacune avec sa source
+(chemin + sha256), son n, son unité, sa distribution et son statut :
+
+  tpl_v2        n=18 · 5 verts · médiane 3 718,5 sur les 18 tâches (2 959 sur les vertes)
+  tpl_v3_ajouter n=18 · 6 verts · médiane 5 545 sur 18 (3 844 sur les vertes)
+  tpl_v3_editer  n=18 · 18 verts · médiane 712,5 (le 712 publié = troncature)
+  tpl_v4        n=18 · 7 verts · médiane 5 601 sur 18 (3 990 sur les vertes)
+  tpl_v5        n=18 · 5 verts · médiane 6 462,5 sur 18 (4 604 sur les vertes)
+  gabarits      n=108 · 73 verts
+  corpus v2.1   train 127 · dev 24 · test 19 · DPO 48
+  ghash_ratio   78 888 / 1 606 = 49,12× (médianes non arrondies)
+
+DEUX DÉFAUTS DE LECTURE SONT FERMÉS. (1) Le fichier `resultats_v3.jsonl` porte DEUX
+modes de 18 tâches (`ajouter-v3` 6/18, `editer-v3` 18/18) : les sommer donnerait 24/36,
+un compte sans signification — le registre les sépare. (2) Deux conventions de médiane
+coexistaient sans être nommées : la médiane des 18 tâches (refus compris — celle que le
+manuscrit publie) et celle des seules tâches vertes ; les deux sont désormais portées
+par chaque ligne.
+
+3. LES QUATRE GRANDEURS, SÉPARÉES
+---------------------------------
+(a) contrainte d'artefact natif sans compilateur — propriété booléenne par artefact ;
+(b) performance d'exécution — cycles, c/octet, c/bloc (GHASH agrégé 19,66 c/mult,
+    couloir 63,39 c/mult, ratio 49,12× sur le scellé mesuré à 78 888 cycles) ;
+(c) coût d'édition et de validation — tokens par changement validé (2 959 à 6 462 selon
+    la convention et la campagne), temps de cérémonie ;
+(d) sûreté et couverture — mutants (776/832 = 93,3 %), corpus (127/24/19 + 48 DPO).
+Aucune n'est additionnée ni comparée à une autre : une propriété d'architecture n'est
+pas une mesure de vitesse.
+
+4. LES QUATRE BRAS ET LE RÉGIME DE GOUVERNANCE (rappel des mesures consignées)
+-------------------------------------------------------------------------------
+  T     la discipline TRIADE complète (notation à la main, round-trip, carte, oracles,
+        cristallisation, garde, kit)                                   39,39 s
+  C+G+  le C gcc -O2 recevant la gouvernance ET le régime complet       18,68 s
+  C+G   le C recevant la gouvernance seule (les intentions signées, la
+        cristallisation chaînée, l'oracle dérivé de I, le kit)            2,18 s
+  C     le C gcc -O2 nu                                                 1,97 s
+La ventilation trois-effets publiée : notation propre 20,72 s / régime de vérification
+16,50 s / gouvernance 0,213 s (somme exacte à T−C). Le coût est attribué au régime et à
+la notation, jamais au seul nombre de lignes écrites. Ces valeurs restent des mesures de
+LABORATOIRE (VM), pas de métal nu.
+
+5. LA PROVENANCE AUTOMATISÉE (ce qui est réellement exécuté)
+------------------------------------------------------------
+- `python3 scripts/vague17/provenance_tableaux.py --verifier`
+    → CONFORME — 11 lignes, chacune recomposée depuis sa source canonique.
+- `--controle-negatif` → 4/4 : valeur, ratio, compte et statut mutés, chacun REFUSÉ.
+- `python3 scripts/vague17/linter_v234.py --provenance` → 11/11 lignes VERTES
+  (classes RATIOS : un ratio publié se recalcule depuis ses opérandes non arrondis à la
+  précision affichée ; COMPTES : le n annoncé égale le compte lu du fichier livré ;
+  STATUTS : vocabulaire fermé mesuré/émulé/documenté/en attente).
+- `--provenance-negatif` → 4/4.
+- Les empreintes de source sont contrôlées : une source modifiée est REFUSÉE
+  (classe EMPREINTE-SOURCE).
+
+6. LE TEST DU LECTEUR SUR LE MANUSCRIT PUBLIÉ (un ROUGE réel trouvé)
+---------------------------------------------------------------------
+`replication-v17/CONSTAT-MANUSCRIT.txt` : chaque nombre du manuscrit v0.23.3 recalculé
+depuis les opérandes imprimés à côté de lui, à la précision affichée.
+  VERT  806,35/63,39 = 12,7206 → « 12.7× »
+  VERT  806,35/19,66 = 41,0140 → « 41.0× »
+  ROUGE 63,39/19,66  = 3,2243  → publié « 3.23× » ; la valeur à deux décimales est 3,22
+  VERT  776/832 = 93,3 % ; 694/832 = 83,4 %
+  NON COUVERT : 5,5 %, −89,4 %, 24,163 → 2,555 s (opérandes non imprimés à côté)
+La correction est portée À LA SOURCE de l'édition (`edition-v0230/main.tex`,
+`$3.23\times$` → `$3.22\times$`, commentaire d'erratum daté D255). Le PDF v0.23.3 publié
+n'est PAS touché : la balise est immuable, l'erratum passera à l'édition suivante.
+
+7. LE PAQUET DE RÉPLICATION PUBLIC
+----------------------------------
+`replication-v17/` : README-AUDIT.md (commandes, sorties attendues, procédure d'audit
+tiers), provenance-v17.json (11 lignes), MANIFESTE.json (11 pièces et leurs sha256),
+CONSTAT-MANUSCRIT.txt. EXCLUS explicitement : couche I signée, carte C, secrets, données
+personnelles — aucun de ces éléments n'est lu ni copié par les contrôles.
+
+8. LES LIMITES NOMMÉES
+----------------------
+- Aucune mesure au métal nu : le statut « mesuré » signifie VM ou émulation, jamais
+  silicium ; le kit métal (≥ 2 machines, empreinte CPU, fréquence, cœur épinglé) reste
+  EN ATTENTE du poste réel.
+- `resultats_opt05.jsonl` porte des verdicts en texte libre : il n'entre pas au registre
+  faute de champ structuré — l'absence est nommée, pas comblée.
+- Cinq nombres du manuscrit restent non couverts par le test du lecteur (pas d'opérandes
+  imprimés à côté) ; ils vivent aux ateliers cités.
+- Le paquet ne prouve aucune exécution matérielle, ni Tamarin/ProVerif (outils absents).
+
+9. LES REFUS TENUS
+------------------
+Jamais une valeur retapée dans le registre ; jamais deux conventions de médiane confondues ;
+jamais 24/36 ; jamais un ratio publié non recomposé laissé vert ; jamais le PDF scellé
+modifié ; jamais une grandeur (a)-(d) additionnée ; jamais un statut « courant » sur une
+mesure d'époque ; jamais un résultat matériel annoncé sans matériel.

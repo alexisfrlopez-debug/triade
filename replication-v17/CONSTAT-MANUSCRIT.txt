@@ -1,0 +1,43 @@
+CONSTAT DE RECOMPOSITION — LES NOMBRES DU MANUSCRIT v0.23.3
+(atelier W17R4PER, 24/11/2026 — le test du lecteur, à la précision affichée)
+================================================================================
+
+MÉTHODE
+-------
+Chaque nombre cité au manuscrit publié (`scripts/vague15/pack-v233/1-manuscrit/
+TRIADE_manuscrit_v0.23.3.pdf`, extrait par pdftotext) est RECALCULÉ depuis les
+opérandes IMPRIMÉS À CÔTÉ de lui, à la précision affichée. La source de l'édition
+(`edition-v0230/main.tex`) est confrontée au même test. Un nombre sans opérandes
+imprimés n'est pas testable par cette méthode : il est NOMMÉ « non couvert », jamais
+présumé vert.
+
+RÉSULTATS
+---------
+[VERT]  806,35 / 63,39 = 12,7206 → publié « 12.7× » (le gain schoolbook sur le scellé)
+[VERT]  806,35 / 19,66 = 41,0140 → publié « 41.0× » (le gain de l'agrégé sur le scellé)
+[ROUGE] 63,39 / 19,66  = 3,2243  → publié « 3.23× » — la valeur publiée à deux décimales
+        est 3,22 ; le 3,23 est une erreur d'arrondi (3,2243 < 3,225)
+[VERT]  776 / 832 = 0,932692 → publié « 93.3 % » (mutants tués par les composition-killers)
+[VERT]  694 / 832 = 0,834135 → publié « 83.4 % » (la campagne d'origine)
+[VERT]  7/18 et 5/18 — les comptes de tâches vertes se recomposent des JSONL de campagne
+        sous la convention nommée (verts/tâches) ; le registre de provenance les porte.
+[NON COUVERT] 5,5 % de part intrinsèque de la notation, −89,4 % de mémoïsation,
+        24,163 → 2,555 s : les opérandes ne sont pas imprimés à côté de la valeur dans
+        le passage ; ils vivent aux ateliers cités (quatre bras, mémoïsation). Le test
+        du lecteur ne peut pas les recomposer DEPUIS LE MANUSCRIT — la limite est nommée.
+
+CE QUI A ÉTÉ FAIT
+-----------------
+1. Le ROUGE est corrigé DANS LA SOURCE de l'édition (`edition-v0230/main.tex`) :
+   `$3.23\times$` → `$3.22\times$`, avec un commentaire d'erratum data et signé D255.
+2. Le PDF v0.23.3 PUBLIÉ n'est PAS touché : la balise est immuable, l'erratum vit à la
+   source et passera à la prochaine édition (l'append-only du projet).
+3. Le registre `replication-v17/provenance-v17.json` ne contient que des nombres
+   recomposés depuis des sources canoniques ; le présent constat porte les nombres du
+   manuscrit et leurs écarts, il ne les remplace pas.
+
+CE QUE LE CONSTAT N'EST PAS
+---------------------------
+Il ne prouve pas l'exactitude des mesures elles-mêmes (elles restent VM/émulation) ; il
+ne teste que la RECOMPOSITION arithmétique des valeurs publiées depuis leurs opérandes —
+la règle D244, appliquée au manuscrit comme aux tableaux.
