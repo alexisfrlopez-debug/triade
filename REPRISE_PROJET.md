@@ -60,6 +60,22 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 25/11/2026 (P3 EXÉCUTÉ AU BAC)** : la commande du maître
+« P3 n'a finalement pas pu être exécuté par Claude, il faudra que tu t'en
+occupes » — **235/235 VECTEURS EXÉCUTÉS au harnais par bloc v4** (avant 95,
+delta +140, **cible ≥ 200/235 pré-enregistrée TENUE, zéro régression**,
+agrégateur fail-closed AUCUN REFUS ; Entrée 412, atelier-p3-exec/). La
+méthode, chaque pas GELÉ AVANT SA MESURE : l'image à la base réelle
+0x140000000, les sections du binaire scellé en contexte LECTURE SEULE, le
+bloc mesuré écrit à son slot depuis sa notation assemblée ; ExitProcess en
+terminateur ; GetCommandLineW rendant L"proxy.exe" ; la pile couvrant le
+probing http-10:R1/Q0 ; l'image de contexte par EXE_PAR_BLOC (b20008 dans
+selftest.exe) ; les arguments tirés de la spécification I en seconde
+tentative, CONSIGNÉS PAR VECTEUR. Sceau-I 14/14 avant/après, aucun scellé
+touché. Restent au poste réel : P4 (serving structured output), P5 (métal
+VAES), P6 (Tamarin/ProVerif) ; la publication Zenodo de v0.31.0 attend la
+commande du maître.
+
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 26)** : édition **v0.31.0** (spec v0.15.16, Livre v1.15) au /livrables ; **CIBLES.md** (onze cibles, verdicts portés, sujet AES nommé), classe C25, linter 25 classes, porte L1..L25, 18/19. P3-P6 non exécutés (gated hors bac).
 
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 25)** : édition **v0.30.0** (spec v0.15.15, Livre v1.14) déposée au /livrables ; prose de statut DÉRIVÉE des registres DEPOTS.jsonl et PREUVES-STATUTS.json (D275) ; linter à **vingt-quatre classes** (C21-C24) ; porte L1..L24, 16/17 contrôles. Reste : P2 cibles, P3 harnais par bloc, P4 add contraint, P5 VAES métal, P6 Tamarin/métal.
