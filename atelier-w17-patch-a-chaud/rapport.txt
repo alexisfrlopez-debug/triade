@@ -1,0 +1,85 @@
+ATELIER W17R2PAT — SÛRETÉ DU PATCH À CHAUD (x86-64, exécution concurrente)
+(la vague 17, le 24/11/2026 ; le plan gelé au commit 8853bcf, la décision D253)
+================================================================================
+
+1. LA QUESTION POSÉE
+---------------------
+La spécification annonçait un trampoline de 12 à 16 octets « basculé par une écriture
+alignée unique, atomique pour le processeur ». Question de l'instruction : ce que la
+primitive RÉELLE du profil garantit, en distinguant alignement, atomicité de l'accès
+mémoire, cohérence des instructions et état des threads.
+
+2. CE QUE L'ARCHITECTURE GARANTIT (sources primaires)
+------------------------------------------------------
+- Une écriture simple est atomique si elle est NATURELLE et d'au plus HUIT octets
+  (Intel SDM vol. 3 § 8.1.1). Au-delà, aucune garantie, alignement sur 16 compris.
+- Les magasins SSE/AVX de 16 octets ne sont PAS architecturalement atomiques.
+- Seule une opération verrouillée LOCK CMPXCHG16B publie 16 octets atomiquement, et
+  elle exige CPUID.CMPXCHG16B (absent de certains profils anciens) ; c'est une
+  lecture-modification-écriture verrouillée, pas un magasin.
+- Cohérence des instructions : sur x86-64 elle est matérielle pour le cœur qui écrit,
+  mais pour du code CROSS-MODIFIANT (un autre cœur exécutant la zone) le SDM exige
+  une synchronisation explicite de ce processeur (drapeau/sémaphore, IPI).
+- RISC-V : magasin de 4 octets aligné atomique, `fence.i` sur le hart modifiant,
+  et synchronisation explicite des autres harts — aucune cohérence I/D implicite.
+
+CONSÉQUENCE : la promesse « 12 à 16 octets en une écriture alignée unique » est FAUSSE
+telle qu'écrite. Elle est réduite dans la spécification (§ 7.1, § 7.1.1) et dans la
+fiche du profil x86-64.
+
+3. LE MÉCANISME RETENU, PAR PROFIL
+-----------------------------------
+  x86-64 : la forme courte `E9 rel32` + trois `NOP` = UN MOT DE 8 OCTETS aligné sur 8,
+           publié par un magasin simple naturel ; la forme absolue `48 B8 <addr64>` +
+           `FF E0` (12 octets) n'est écrite que dans un emplacement 16 octets aligné,
+           publié par un unique LOCK CMPXCHG16B. Pages en écriture PUIS exécution
+           (jamais RWX) ; FlushInstructionCache (Windows) / __builtin___clear_cache
+           (Linux) après l'écriture ; cible enregistrée au CFG, IBT/shadow-stack de
+           CET vérifiés avant de trampoliner un prologue.
+  RISC-V : magasin de 4 octets aligné, `fence.i`, puis synchronisation des harts.
+  Partout : rendez-vous de quiescence obligatoire.
+
+4. L'ÉTAT DES THREADS — LE REFUS QUI COMPTE
+---------------------------------------------
+Un thread dont RIP tombe dans les octets remplacés peut décoder un mélange de l'ancien
+et du nouveau flux : l'atomicité du magasin ne le protège pas. La publication est donc
+conditionnée à un rendez-vous (Windows : suspension + GetThreadContext, refus si RIP
+dans la plage ; Linux : arrêt par signal + ucontext, ou ptrace), avec avance hors de la
+plage (single-step) ou refus.
+
+États de la transaction, aucun état partiel exécutable :
+  0 préparé → 1 armé → 2 rendez-vous → 3 publication → 4 invalidation →
+  5 vérification → 6 reprise ; R rollback depuis 3/4/5 (republication de l'ancien
+  trampoline). Un échec en 4 ou 5 est « publié-mais-non-vérifié » : rollbacké, jamais
+  toléré.
+
+5. PREUVES ET STATUT (séparés, jamais confondus)
+--------------------------------------------------
+  BANC : atelier-w17-patch-a-chaud/kit_bascule.py, autotest 10/10 — sept cas (mot de
+  8 octets aligné admis ; non aligné refusé ; trampoline de 12 octets au magasin simple
+  refusé ; 16 octets par CMPXCHG16B admis ; le même sans CPUID refusé ; magasin SSE
+  refusé ; RIP dans la plage refusé) plus trois invariants d'états (refus sans
+  publication, succès jusqu'à la reprise, publié-mais-non-vérifié rollbacké).
+  ÉMULATION : la logique d'états est vérifiable ; elle NE VALIDE PAS la cohérence du
+  cache d'instructions, propriété qui n'existe pas dans un émulateur.
+  MÉTAL : la bascule concurrente réelle (plusieurs threads, mises à jour concurrentes,
+  rollback, interruption à chaque étape, bornes de taille et d'alignement) est
+  **EN ATTENTE DE RUN MATÉRIEL** (≥ 2 machines). AUCUN RÉSULTAT N'EST ANNONCÉ.
+
+6. LIMITES NOMMÉES
+-------------------
+- Le kit prouve des règles et des refus, pas le silicium.
+- Le rendu Windows (CFG, CET/shadow stack, SuspendThread) n'est pas exerçable ici : il
+  est spécifié, non mesuré.
+- Les lignes de jalons historiques qui portent encore la formule « écriture alignée
+  atomique » (docs/PLAN_MILESTONES.md, docs/PROFIL_riscv64-linux-elf64.md § tableau,
+  docs/JOURNAL_TRAVAIL.md) sont des PIÈCES DE VERBATIM : elles ne sont pas réécrites ;
+  la correction vit dans la spécification, la fiche de profil, le tableau comparatif
+  et D253, qui les bornent explicitement.
+
+7. FICHIERS TOUCHÉS
+--------------------
+  docs/PROTOCOLE_TRIADE.md            § 7.1 corrigé + § 7.1.1 nouveau ; tableau des profils
+  docs/PROFIL_x86-64-linux-elf64.md   § 5 (bascule, invalidation, réserve cross-modifiant)
+  docs/DECISIONS.md                   D253 (append-only)
+  atelier-w17-patch-a-chaud/          kit_bascule.py, autotest.json, ce rapport

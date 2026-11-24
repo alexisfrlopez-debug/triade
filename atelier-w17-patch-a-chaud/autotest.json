@@ -1,0 +1,61 @@
+{
+ "resultats": [
+  {
+   "cas": "mot de 8 octets aligné (E9 rel32 + 3 NOP)",
+   "attendu": true,
+   "obtenu": true,
+   "motif": "magasin simple naturel atomique",
+   "vert": true
+  },
+  {
+   "cas": "mot de 8 octets NON aligné",
+   "attendu": false,
+   "obtenu": false,
+   "motif": "refus: adresse non alignée sur la taille du mot (alignement naturel requis)",
+   "vert": true
+  },
+  {
+   "cas": "trampoline de 12 octets au magasin simple (la promesse v0.15.x)",
+   "attendu": false,
+   "obtenu": false,
+   "motif": "refus: un magasin simple n'est pas atomique au-delà de 8 octets naturels",
+   "vert": true
+  },
+  {
+   "cas": "trampoline de 16 octets par LOCK CMPXCHG16B, CPUID présent",
+   "attendu": true,
+   "obtenu": true,
+   "motif": "LOCK CMPXCHG16B sur emplacement 16 octets aligné",
+   "vert": true
+  },
+  {
+   "cas": "le même sans CPUID.CMPXCHG16B",
+   "attendu": false,
+   "obtenu": false,
+   "motif": "refus: CPUID.CMPXCHG16B absent sur ce profil",
+   "vert": true
+  },
+  {
+   "cas": "magasin SSE de 16 octets",
+   "attendu": false,
+   "obtenu": false,
+   "motif": "refus: un magasin SSE/AVX de 16 octets n'est pas architecturalement atomique",
+   "vert": true
+  },
+  {
+   "cas": "publication avec RIP d'un thread dans la plage",
+   "attendu": false,
+   "obtenu": false,
+   "motif": "refus: RIP d'un thread dans la plage remplacée (atomicité sans effet sur le décodeur)",
+   "vert": true
+  }
+ ],
+ "invariants": {
+  "refus sans publication": true,
+  "succès jusqu'à la reprise": true,
+  "publié-mais-non-vérifié rollbacké": true
+ },
+ "ok": 10,
+ "total": 10,
+ "materiel": "EN ATTENTE DE RUN MATÉRIEL (≥ 2 machines) — aucun résultat annoncé"
+}

@@ -965,9 +965,12 @@ profil de cible** (taille minimale de bascule atomique, procédure d'invalidatio
 d'instructions) ; ce paragraphe décrit l'instanciation du profil primaire x86-64. La
 méthode contourne la cohérence du cache d'instructions et l'atomicité de la bascule en
 n'écrivant jamais un bloc pendant qu'il s'exécute : le nouveau bloc est d'abord écrit dans
-une zone de croissance libre ; ensuite, et seulement ensuite, un trampoline de 12 à 16
-octets est installé à l'ancien point d'entrée et basculé par une écriture alignée unique,
-atomique pour le processeur.
+une zone de croissance libre ; ensuite, et seulement ensuite, un trampoline est installé à
+l'ancien point d'entrée et PUBLIÉ ATOMIQUEMENT — au sens borné que fixe le § 7.1.1 : une
+seule écriture alignée de HUIT octets au plus, ou un unique `LOCK CMPXCHG16B` là où le
+processeur l'expose. La formulation antérieure (« trampoline de 12 à 16 octets, écriture
+alignée unique atomique pour le processeur ») est CORRIGÉE : aucune écriture simple de 12
+ni de 16 octets n'est atomique au sens de l'architecture (§ 7.1.1, D253).
 
 ```
 ; trampoline de bascule atomique (aligné sur 16 octets)
@@ -986,6 +989,66 @@ susceptibles d'être trampolinés, et la table de ces points est close et vérif
 verrou croisé. Le critère de sortie du jalon M2 est précisément ce scénario : remplacer le
 bloc d'écho d'un serveur TCP pendant qu'il traite des connexions, sans interruption de
 service et avec rollback démontré.
+
+### 7.1.1 Ce que garantit réellement la primitive de publication (D253)
+
+**La distinction qui fonde tout le mécanisme.** Quatre propriétés sont distinctes et ne
+s'impliquent pas l'une l'autre : l'**alignement** (l'adresse est un multiple de la taille),
+l'**atomicité de l'accès mémoire** (aucun observateur ne voit un état intermédiaire),
+la **cohérence des instructions** (le cœur qui exécute voit les octets neufs) et l'**état
+des threads** (un thread peut avoir RIP dans la zone remplacée).
+
+**Ce que l'architecture garantit (x86-64, sources primaires).** Une écriture simple n'est
+atomique que si elle est naturelle et d'au plus HUIT octets (Intel SDM vol. 3 § 8.1.1) ;
+au-delà, aucune garantie d'atomicité n'existe, quand bien même l'adresse serait alignée sur
+16. Les seules publications de 16 octets atomiques sont les opérations verrouillées
+`LOCK CMPXCHG16B`, disponibles sous CPUID.CMPXCHG16B (absent de certains profils anciens) ;
+elles sont des lectures-modifications-écritures verrouillées, pas des magasins. Les magasins
+SSE/AVX de 16 octets ne sont PAS architecturalement atomiques. **Conséquence : la
+publication doit se faire par un mot de HUIT octets aligné, ou par un `LOCK CMPXCHG16B`
+quand il est présent — jamais par l'écriture d'un trampoline de 12 octets « d'un seul
+coup ».**
+
+**Le mécanisme retenu, par profil.**
+
+| Profil | Forme publiée | Primitive | Exigences |
+|---|---|---|---|
+| x86-64 (Windows PE, Linux ELF) | `E9 rel32` + trois `NOP` = un mot de 8 octets aligné sur 8 ; la cible absolue (`48 B8 … FF E0`, 12 octets) n'est écrite QUE dans un emplacement 16 octets aligné publié par `LOCK CMPXCHG16B` | magasin 8 octets naturel, ou `LOCK CMPXCHG16B` | pages en écriture puis exécution (jamais RWX simultané) ; `FlushInstructionCache` (Windows) ou `__builtin___clear_cache` (Linux) après l'écriture ; cible enregistrée au CFG, et IBT/shadow-stack de CET vérifiés avant de trampoliner un prologue |
+| RISC-V 64 | instruction de 4 octets alignée sur 4 (ou 2 octets compressé aligné) | magasin 4 octets naturel | `fence.i` sur le hart modifiant ; synchronisation explicite des autres harts (IPI) — aucune cohérence I/D implicite |
+| Tout profil | — | — | **quiescence** : aucun thread ne doit avoir RIP dans la plage remplacée au moment de la publication (voir ci-dessous) |
+
+**L'état des threads n'est pas couvert par l'atomicité.** Un thread dont RIP tombe dans
+les octets remplacés peut décoder un mélange de l'ancien et du nouveau flux : l'atomicité
+du magasin ne le protège pas. La publication est donc conditionnée à un **rendez-vous** :
+sur Windows, suspension des threads du processus et lecture de `RIP` par `GetThreadContext`
+(refus si l'un tombe dans la plage) ; sur Linux, arrêt par signal et lecture de `RIP` dans
+`ucontext` (ou `ptrace` sur un processus fils), avec la même condition de refus. Un thread
+immobilisé DANS la plage n'est jamais relancé sur des octets mixtes : il est soit avancé
+au-delà (single-step hors de la plage), soit la publication est refusée.
+
+**Les états de la transaction** (aucun état partiellement publié n'est exécutable) :
+`0 préparé` (nouveau bloc écrit dans la zone de croissance, hors ligne d'exécution) →
+`1 armé` (page de la zone passée en exécution, contenu vérifié par relecture) →
+`2 rendez-vous` (threads immobilisés, aucun RIP dans la plage, sinon refus et retour à 0) →
+`3 publication` (mot de 8 octets ou `LOCK CMPXCHG16B` unique) →
+`4 invalidation` (flush du cache d'instructions, barrière) →
+`5 vérification` (relecture des octets publiés, comparaison à l'attendu) →
+`6 reprise` (threads relancés) ; `R rollback` depuis 3, 4 ou 5 : republication de l'ancien
+trampoline par la même primitive, puis retour à 1. Un échec en 4 ou 5 est un état
+**publié-mais-non-vérifié** : il est rollbacké, jamais toléré.
+
+**Cas de refus explicites.** Taille de bascule supérieure au mot atomique disponible sur le
+profil ; adresse non alignée sur la taille du mot ; absence de CPUID.CMPXCHG16B quand la
+forme longue est demandée ; RIP d'un thread dans la plage et avance impossible ; page non
+inscriptible (protection refusée par l'OS) ; cible non enregistrée au CFG sur un processus
+protégé ; cache d'instructions non invalidable.
+
+**Statut des preuves.** Les états, les refus et les bornes sont **prouvés au banc**
+(`atelier-w17-patch-a-chaud/kit_bascule.py`, autotest incluant les contrôles négatifs) et en
+émulation pour la logique d'états — l'émulation NE VALIDE PAS la cohérence du cache
+d'instructions, qui n'existe pas dans un émulateur. La bascule concurrente sur matériel réel
+(multi-threads, mises à jour concurrentes, rollback, interruption à chaque étape) est
+**EN ATTENTE DE RUN MATÉRIEL** (≥ 2 machines) : aucun résultat n'est annoncé.
 
 ## 8. Stratégie de vérification
 
@@ -1623,7 +1686,7 @@ alloue son cadre avant d'y toucher. Ces règles internes sont portées par frag-
 | ABI | msx64 : RCX RDX R8 R9 ; shadow space 32 o. | SysV : RDI RSI RDX RCX R8 R9 ; zone rouge 128 o. | psABI RISC-V : a0-a7 |
 | Format | PE32+ : DYNAMICBASE, HIGH_ENTROPY_VA, NX | ELF64 : PIE, RELRO, NX | ELF64 : PIE, RELRO, NX |
 | Interface | IAT : kernel32, ws2_32, Schannel | syscalls + libc | syscalls + libc |
-| Patch à chaud | trampoline 5/12 o., écriture alignée atomique | identique x86-64 | instructions de taille fixe : bascule par registre scratch + `fence.i` |
+| Patch à chaud | publication atomique d'un mot de **8 o. aligné** (`E9 rel32` + trois `NOP`), ou `LOCK CMPXCHG16B` pour la forme absolue ; quiescence obligatoire (§ 7.1.1, D253) | identique x86-64 | magasin de **4 o.** aligné, `fence.i` puis synchronisation des autres harts (aucune cohérence I/D implicite) |
 | Notation | keystone / capstone x86-64 | keystone / capstone x86-64 | keystone / capstone RISC-V |
 
 Deux transitions méritent une vigilance documentée. Le passage Windows → Linux **inverse**

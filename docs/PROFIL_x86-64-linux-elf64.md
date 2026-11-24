@@ -92,15 +92,23 @@ est donc désappris sélectivement, jamais globalement.
 
 ## 5. Patch à chaud
 
-- **Bascule** : identique x86-64 — trampoline court `E9 rel32` ou forme longue
-  `48 B8 <addr64>` + `FF E0`, **écriture alignée unique atomique**, ancien trampoline
-  conservé pour le rollback (manuel § 7.4 inchangé).
+- **Bascule** : identique x86-64 — trampoline court `E9 rel32` + trois `NOP`
+  (**un mot de 8 octets aligné, publication atomique**) ou forme longue `48 B8 <addr64>`
+  + `FF E0` (12 octets, publiée seulement par `LOCK CMPXCHG16B` dans un emplacement
+  16 octets aligné) ; ancien trampoline conservé pour le rollback (manuel § 7.4
+  inchangé). LA CORRECTION D253 : « écriture alignée unique atomique » ne vaut QUE
+  jusqu'à 8 octets naturels (Intel SDM vol. 3 § 8.1.1).
 - **Changement de protection** : `mprotect(10)` — adresse alignée page, drapeaux
   PROT_READ|PROT_EXEC ↔ +PROT_WRITE ; jamais une page laissée RWX après le geste.
-- **Invalidation du cache d'instructions : AUCUNE barrière requise** — la cohérence
-  cache I/D est matérielle sur x86-64 (Intel SDM vol. 3 § 8.1.3) ; le trampoline
-  exécuté après l'écriture alignée fait foi. C'est l'écart documenté avec RISC-V
-  (`fence.i`, fiche `riscv64`).
+- **Invalidation du cache d'instructions** — cohérence I/D matérielle sur x86-64
+  (Intel SDM vol. 3 § 8.1.3) : aucune barrière n'est requise pour le cœur qui écrit ;
+  `__builtin___clear_cache()` (Linux) / `FlushInstructionCache()` (Windows) sont
+  appelés sans condition, par portabilité et pour la même raison qui les rend
+  nécessaires ailleurs. Réserve nommée (D253) : pour du code CROSS-MODIFIANT — un
+  autre cœur exécutant la zone — le SDM EXIGE une synchronisation explicite de l'autre
+  processeur (protocole drapeau/sémaphore, IPI) ; TRIADE la fournit par le RENDEZ-VOUS
+  de quiescence du § 7.1.1, jamais par l'atomicité seule. Écart documenté avec RISC-V
+  (`fence.i` + synchronisation des harts, fiche `riscv64`).
 - **ACQUIS PAR LE CHANTIER M6-(d) (05/11/2026, Entrée 148)** : la démonstration
   en exécution est LIVRÉE — `unix/demo_patch.py`, VERT sur pièces sur l'artefact
   scellé 0.7.0-rc.1 relu (sha dd14195c…, le fichier jamais touché : le patch
@@ -187,7 +195,7 @@ est donc désappris sélectivement, jamais globalement.
 | 2 | ABI d'appel | appels et retours conformes SysV ; volatilité ; zone rouge absente des blocs appelants (frag-con) ; alignement 16 aux points d'appel |
 | 3 | Format | ET_DYN constaté, trois segments R/RX/RW, PT_GNU_STACK sans X (NX), W^X vérifié depuis les phdr |
 | 4 | Interface système | numéros de syscall autorisés PAR BLOC ; contrat d'erreurs ERRNOS (succès exact, continuations nommées, VERDICT_FATAL) |
-| 5 | Patch à chaud | mprotect + trampoline + écriture alignée atomique démontrés EN EXÉCUTION, rollback vivant |
+| 5 | Patch à chaud | mprotect + trampoline + publication atomique d'un mot de 8 o. démontrés EN EXÉCUTION, rollback vivant |
 | 6 | Notation | round-trip 100 % sur le corpus du jalon (keystone/capstone x86-64) |
 | 7 | Granularité et padding | adresses stables après patch (R7), slots et réserves constatés |
 
