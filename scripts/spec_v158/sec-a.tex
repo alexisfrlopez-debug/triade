@@ -808,14 +808,25 @@ le budget d'édition adopté, mesuré 3,264, manqué et publié comme tel). Aucu
 n'est modifiée.
 
 
-\subsection{Ce que change la v0.15.14}\label{sec:nouveautes1514}
+\subsection{Ce que change la v0.15.15}\label{sec:nouveautes1514}
 
-La v0.15.14 porte les six résidus de l'évaluation de v0.28.0 (D274). Le statut de l'ancrage de
+La v0.15.15 porte les six résidus de l'évaluation de v0.28.0 (D274). Le statut de l'ancrage de
 transparence ne s'écrit plus : il se \textbf{dérive du journal append-only} — déployé tant qu'une
 entrée vérifiée recouvre les pièces de l'édition courante, en attente sinon ; le §\ref{sec:transparence}
 le dit ainsi, et le linter refuse toute pièce qui le contredit. Le compte de classes annoncé se
 recompose du source du linter ; la vague du titre égale celle de l'édition ; le ratio par
 multiplication s'écrit 63,39/19,66. Aucune valeur mesurée n'est modifiée.
+
+
+\subsection{Ce que change la v0.15.15}\label{sec:nouveautes1515}
+
+La v0.15.15 applique à la prose de statut la règle que D274 avait posée pour l'ancrage (D275) : le
+paragraphe de disponibilité des données se dérive du registre de dépôt (\code{DEPOTS.jsonl}, douze
+dépôts, dernier publié v0.26.0, édition courante non mintée), les verdicts symboliques se dérivent
+du registre de preuve (\code{PREUVES-STATUTS.json} : Tamarin L3 vérifié, L1/L2 incomplets au mur
+mémoire, ProVerif livré et non exécuté), l'édition accompagnée du § 2.1 du manuscrit est la
+v0.15.15, le ratio par multiplication s'écrit dans l'ordre canonique et le titre de l'annexe B se
+recompose du contenu de sa table. Quatre classes de linter les vérifient : C21, C22, C23, C24.
 
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 

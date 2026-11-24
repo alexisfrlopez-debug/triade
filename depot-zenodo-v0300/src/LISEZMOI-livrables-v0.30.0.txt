@@ -1,0 +1,19 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.30.0 (vague 23 de l'édition, 24 novembre 2026)
+====================================================================================
+COURANTS
+- TRIADE_manuscrit_v0.30.0.pdf · Protocole_TRIADE_v0.15.15_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.14.pdf · TRIADE_preuves_et_calculs_v0.30.0.pdf
+- TRIADE_presentation_v0300.pdf
+- TRIADE_soumission_v0.30.0.zip · TRIADE_presentation_v0.30.0.zip · TRIADE_complet_v0.30.0.zip
+- empreintes_livrables_v0.30.0.txt · rapport_verification_v0.30.0.txt
+CE QUE PORTE CETTE ÉDITION (D275) — la prose de statut se DÉRIVE
+- Data availability dérivée de DEPOTS.jsonl : dernier dépôt publié v0.26.0
+  (10.5281/zenodo.24499428) ; l'édition courante explicitement NON mintée, aucun DOI courant cité.
+- Statut Tamarin/ProVerif dérivé de PREUVES-STATUTS.json : L3 vérifié (1 122 pas), L1/L2
+  incomplets au mur 4 Gio, port ProVerif livré et non exécuté.
+- § 2.1 : v0.15.15 accompagnée, v0.15.8 référence datée ; ratio par multiplication 63,39/19,66 ;
+  titre de l'annexe B recomposé de sa table.
+- Linter v6 : C21 DOI, C22 prose anglaise, C23 statut de preuve, C24 ordre des opérandes.
+- Porte L1..L24 zéro rouge ; contrôles négatifs 16/17 (le 17e est un défaut du harnais, nommé).
+Aucune valeur mesurée modifiée ; aucune cible re-tirée.
+STATUT : NON PUBLIÉES (évaluation d'abord). SUPERSÉDÉES : v0.29.0 et antérieures.

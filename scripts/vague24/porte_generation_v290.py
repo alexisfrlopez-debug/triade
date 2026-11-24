@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""LA PORTE DE GÉNÉRATION v0.29.0 (W19LINT) — le linter EST la porte.
+"""LA PORTE DE GÉNÉRATION v0.30.0 (W19LINT) — le linter EST la porte.
 
 Ce que la porte vérifie, sur les fichiers du pack :
   V1  les cinq pièces existent et leurs empreintes égalent le manifeste ;
@@ -10,7 +10,7 @@ Ce que la porte vérifie, sur les fichiers du pack :
   V5  aucun secret : aucun fichier du pack ne porte de motif de clé privée ;
   V6  le témoin hors machine (D259) — EN ATTENTE nommé s'il manque ;
   V7  le tableau descendant est engendré, à diff nul (D260) ;
-  L1..L20  les quinze classes du linter v3 (dont C6 VERSION-TABLE, C7 DECISION-RANGE,
+  L1..L24  les quinze classes du linter v3 (dont C6 VERSION-TABLE, C7 DECISION-RANGE,
            C8 CHANGELOG-ORDER, C9 NUMEROTATION, C10 BENCH-COUNT, C11 SEMANTIC-THREAT).
 
 Contrôles négatifs : QUATRE mutations (libellé de version, ID hors plage, ligne de
@@ -29,15 +29,15 @@ import sys
 import tempfile
 
 RACINE = pathlib.Path(__file__).resolve().parents[2]
-PACK = RACINE / "pack-v290"
-MANIFESTE = PACK / "empreintes_livrables_v0.29.0.txt"
+PACK = RACINE / "pack-v300"
+MANIFESTE = PACK / "empreintes_livrables_v0.30.0.txt"
 
 PIECES = {
-    "manuscrit": (PACK / "1-manuscrit" / "TRIADE_manuscrit_v0.29.0.pdf", "v0.29.0"),
-    "specification": (PACK / "2-specification" / "Protocole_TRIADE_v0.15.14_Specification.pdf", "v0.15.14"),
-    "livre": (PACK / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.13.pdf", "v1.13"),
-    "preuves": (PACK / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.29.0.pdf", "v0.29.0"),
-    "presentation": (PACK / "5-presentation" / "TRIADE_presentation_v0290.pdf", "v0.29.0"),
+    "manuscrit": (PACK / "1-manuscrit" / "TRIADE_manuscrit_v0.30.0.pdf", "v0.30.0"),
+    "specification": (PACK / "2-specification" / "Protocole_TRIADE_v0.15.15_Specification.pdf", "v0.15.15"),
+    "livre": (PACK / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.14.pdf", "v1.14"),
+    "preuves": (PACK / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.30.0.pdf", "v0.30.0"),
+    "presentation": (PACK / "5-presentation" / "TRIADE_presentation_v0300.pdf", "v0.30.0"),
 }
 
 
@@ -125,7 +125,7 @@ def verifier(pieces=None, manifeste=None):
                          "--tableaux-verifier"], capture_output=True, text=True)
     if r7.returncode != 0:
         refus.append(("V7", "tableau-descendant", (r7.stdout or "").strip()[:120]))
-    # L1..L20 — le linter est la porte
+    # L1..L24 — le linter est la porte
     L = _linter()
     pack = pathlib.Path(list(pieces.values())[0][0]).parents[1]
     textes = L.charge(pack)
@@ -135,7 +135,7 @@ def verifier(pieces=None, manifeste=None):
 
 def rapport(refus):
     print("=" * 78)
-    print("PORTE DE GÉNÉRATION v0.29.0 — V1..V7 + L1..L20 (le linter est la porte)")
+    print("PORTE DE GÉNÉRATION v0.30.0 — V1..V7 + L1..L24 (le linter est la porte)")
     print("=" * 78)
     for cle, (p, ver) in PIECES.items():
         print(f"[{'VERT' if pathlib.Path(p).exists() else 'ROUGE'}] {cle:<14} "
@@ -147,7 +147,7 @@ def rapport(refus):
         return 2
     print("[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · "
           "V6 témoin (EN ATTENTE si absent) · V7 tableau")
-    print("[VERT] L1..L20 — vingt classes, zéro résidu")
+    print("[VERT] L1..L24 — vingt-quatre classes, zéro résidu")
     return 0
 
 
@@ -164,7 +164,7 @@ def controle_negatif():
         essais.append((nom, classe, any(c == classe for c, _, _ in r), r))
 
     essai("libellé de version muté", "C6", lambda t: t.__setitem__(
-        "presentation", t["presentation"].replace("Manuscrit\n\nv0.29.0", "Manuscrit\n\nv0.24.0")))
+        "presentation", t["presentation"].replace("Manuscrit\n\nv0.30.0", "Manuscrit\n\nv0.24.0")))
     essai("ID hors plage", "C7", lambda t: t.__setitem__(
         "preuves", t["preuves"] + "\nla décision D299 tranche."))
     essai("ligne de menace non qualifiée", "C11", lambda t: t.__setitem__(
@@ -172,7 +172,7 @@ def controle_negatif():
     essai("compte de banc muté", "C10", lambda t: t.__setitem__(
         "presentation", t["presentation"].replace("16/16", "15/15")))
     essai("version de prose mutée (Livre)", "C12", lambda t: t.__setitem__(
-        "livre", t["livre"].replace("v1.13", "v1.9")))
+        "livre", t["livre"].replace("v1.14", "v1.9")))
     essai("vague inconnue", "C13", lambda t: t.__setitem__(
         "presentation", t["presentation"].replace("vague 15", "vague 16")))
     essai("résumé trop long", "C14", lambda t: t.__setitem__(
@@ -187,6 +187,14 @@ def controle_negatif():
         "preuves", t["preuves"].replace("20 classes", "17 classes")))
     essai("vague de titre périmée", "C19", lambda t: t.__setitem__(
         "presentation", t["presentation"].replace("La vague 22", "La vague 19")))
+    essai("DOI dupliqué", "C21", lambda t: t.__setitem__(
+        "manuscrit", t["manuscrit"].replace("the latest MINTED version is", "the latest MINTED version is 10.5281/zenodo.99999999 of") ))
+    essai("version anglaise périmée", "C22", lambda t: t.__setitem__(
+        "manuscrit", t["manuscrit"].replace("the edition accompanied here is v0.15.15", "the edition accompanied here is v0.15.8 which this edition accompanies") ))
+    essai("statut Tamarin contredit", "C23", lambda t: t.__setitem__(
+        "presentation", t["presentation"].replace("Tamarin tamarin-prover", "Tamarin/ProVerif/Maude : outils absents ; tamarin-prover") ))
+    essai("opérandes inversés", "C24", lambda t: t.__setitem__(
+        "preuves", t["preuves"].replace("(63,39 / 19,66)", "(19,66 / 63,39)") ))
     essai("statut d'ancrage contredit", "C20", lambda t: t.__setitem__(
         "presentation", t["presentation"].replace("l'ancrage de transparence est DÉPLOYÉ",
                                                   "l'ancrage de transparence est NON DÉPLOYÉ")))
@@ -199,8 +207,8 @@ def controle_negatif():
         verts += 1 if ok else 0
         detail = [x for x in r if x[0] == classe]
         print(f"[{'VERT' if ok else 'ROUGE'}] {nom} → attendu {classe} : {detail}")
-    print(f"{verts}/13")
-    return 0 if verts == 13 else 3
+    print(f"{verts}/17")
+    return 0 if verts == 17 else 3
 
 
 def main():

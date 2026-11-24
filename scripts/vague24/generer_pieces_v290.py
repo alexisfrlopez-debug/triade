@@ -26,8 +26,14 @@ from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate, Paragraph,
                                 Spacer, PageBreak, Table, TableStyle)
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
+import json as _json
+PREUVES = _json.loads((REPO / "PREUVES-STATUTS.json").read_text(encoding="utf-8"))
+STATUT_TAM = ("Tamarin " + PREUVES["tamarin"]["outil"].split("(")[0].strip()
+              + " : L3 vérifié (1 122 pas), L1/L2 incomplets au mur 4 Gio ; "
+              + "ProVerif : port livré, run non exécuté.")
 import os
 import re
+import json
 PACK = pathlib.Path(os.environ.get("TRIADE_PACK", str(REPO / "pack-v290")))
 EDITION = os.environ.get("TRIADE_EDITION", "v0.29.0")
 
@@ -191,7 +197,7 @@ def preuves():
         "vérification. Ventilation des quatre bras aux opérandes NON ARRONDIS : 20,715 + 16,497 + "
         "0,213 = 37,425 s (le résidu de 13 ms des macros arrondies est nommé, jamais lissé). Mutants : "
         "776/832 = 93,3 % est l'ÈRE v0.14.0 ; l'ère v0.19.5 porte 811/832 = 97,5 %. GHASH : 49,12× "
-        "(78 888 / 1 606) est le ratio PAR APPEL, distinct du ratio par multiplication (19,66 / 63,39). "
+        "(78 888 / 1 606) est le ratio PAR APPEL, distinct du ratio par multiplication (63,39 / 19,66). "
         "Médiane du mode éditer : 712,5 — le 712 publié est sa troncature, nommée comme telle. "
         "Banc de bascule : 16/16 = 7 cas de transaction + 1 rendez-vous nominal + 5 aléas D261 + "
         "3 invariants (recompté depuis les cas du kit, écart zéro). "
@@ -290,7 +296,7 @@ def presentation():
     slide("9. Ce qui reste au poste réel", [
         "Bascule concurrente au métal nu (kit pré-enregistré, agrégateur fail-closed), sentinelle Windows SACL/4663, IMA/Authenticode configurés.",
         "Compteur NV matériel (D263) et campagne structurée (D264) : simulateur et instrument verts, runs EN ATTENTE.",
-        "Tamarin/ProVerif/Maude : outils absents, aucun verdict fabriqué.",
+        STATUT_TAM,
         "Vecteurs d'oracle : 320 produits = 235 exécutables + 85 tests de rejet ; "
         "95 exécutés au contexte standard (IAT bouchonnée, "
         "deux ABI), 27 blocs sans exécution — recomposé depuis les fichiers (C17).",

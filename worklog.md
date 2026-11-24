@@ -14296,3 +14296,10 @@ Work Log:
 - **Édition v0.29.0** (spec v0.15.14, Livre v1.13) : porte **L1..L20 zéro rouge**, **13/13 mutations**, témoin RFC 3161 ré-ancré deux passes.
 - **/livrables** : 11 fichiers déposés (aucune publication Zenodo).
 - HORS BAC, nommé : VAES (aucun code écrit), campagne add servie (aucun serving), 27 harnais par bloc (delta nul, cause READ/FETCH_UNMAPPED).
+
+### Entrée 409 — LA VAGUE 25 : LA PROSE DE STATUT SE DÉRIVE (D275) ; v0.30.0 DÉPOSÉE (24/11/2026)
+- **Quatre résidus de l'évaluation de v0.29.0**, tous de la même classe : un statut tapé. Deux étaient des correctifs que j'avais ANNONCÉS sans les vérifier (chaîne de remplacement sans correspondance, aucun échec signalé) — aveu consigné, méthode durcie (assertions de relecture + compilation du fichier patché).
+- **Registres** : `DEPOTS.jsonl` (douze dépôts, DOI unique, dernier publié v0.26.0) ; `PREUVES-STATUTS.json` (six familles : Tamarin partiel L3 vérifié, ProVerif livré non exécuté, NV/métal/dudect en attente, ancrage déployé). Data availability et statuts de preuve DÉRIVÉS.
+- **Linter v6** : C21 DOI, C22 prose anglaise, C23 statut de preuve, C24 ordre des opérandes ; annexe B recomposée de sa table. Porte **L1..L24 zéro rouge**, contrôles négatifs **16/17** (le 17e : la chaîne de mutation C22 ne s'applique pas à la couche texte du PDF — défaut du harnais, la classe a mordu en vrai pendant la construction).
+- **Édition v0.30.0** (spec v0.15.15, Livre v1.14) déposée au /livrables ; ZIP absent du dépôt (16,9 Mio > 10 Mio) — présent dans les livrables Drive.
+- **Non commencé, nommé** : P2 (registre CIBLES.md + classe), P3 (harnais par bloc), P4 (add décodage contraint), P5 (VAES métal), P6 (Tamarin/ProVerif/métal) — gated hors bac ou nécessitant une vague dédiée.

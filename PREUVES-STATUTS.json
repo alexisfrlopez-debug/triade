@@ -1,0 +1,13 @@
+{
+  "tamarin": {"outil": "tamarin-prover 1.12.0 + Maude 3.4 (installés à la vague 14)", "modele": "CF3-v3",
+              "verdicts": {"L3": "VERIFIED (1 122 pas, 29,4 s)",
+                           "L1": "INCOMPLETE au mur mémoire 4 Gio (cause : décomposition du goal de connaissance)",
+                           "L2": "INCOMPLETE au mur mémoire 4 Gio"},
+              "statut": "partiel — L3 vérifié, L1/L2 incomplets", "source": "atelier-qa3k5putf"},
+  "proverif": {"outil": "port livré (CF3-v3.pv, six requêtes, six écarts de sémantique nommés)",
+               "statut": "run NON exécuté", "source": "atelier-qa3k5putf"},
+  "nv": {"statut": "simulateur 12/12, run matériel EN ATTENTE", "source": "atelier-w18-hetetznth"},
+  "metal": {"statut": "kit pré-enregistré, run EN ATTENTE (≥ 2 machines)", "source": "atelier-w19-metal"},
+  "dudect": {"statut": "2 runs, 1 machine — n≥10 × ≥2 machines EN ATTENTE", "source": "worklog"},
+  "ancrage": {"statut": "DÉPLOYÉ (RFC 3161, journal append-only)", "source": "atelier-w20-sec"}
+}

@@ -1,0 +1,18 @@
+[V6] ancrage vérifié — témoin d'époque RFC 3161 recoupé
+==============================================================================
+PORTE DE GÉNÉRATION v0.30.0 — V1..V7 + L1..L24 (le linter est la porte)
+==============================================================================
+[VERT] manuscrit      TRIADE_manuscrit_v0.30.0.pdf
+[VERT] specification  Protocole_TRIADE_v0.15.15_Specification.pdf
+[VERT] livre          Livre_du_Coffre_TRIADE_CF1-CF3_v1.14.pdf
+[VERT] preuves        TRIADE_preuves_et_calculs_v0.30.0.pdf
+[VERT] presentation   TRIADE_presentation_v0300.pdf
+------------------------------------------------------------------------------
+[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · V6 témoin (EN ATTENTE si absent) · V7 tableau
+[VERT] L1..L24 — vingt-quatre classes, zéro résidu
+=== 16/17 consigné ===
+CONTRÔLES NÉGATIFS : 16/17. Le contrôle de C22 (version anglaise périmée) ne s'APPLIQUE pas —
+la chaîne de mutation ne se retrouve pas dans la couche texte du PDF (césure). La classe, elle, a
+mordu en vrai : pendant la construction, la porte a refusé « specification v0.15.15 … accompanies
+≠ v0.15.15 » tant que le § 2.1 portait v0.15.14. Défaut du harnais, pas de la classe — nommé,
+non maquillé.

@@ -5221,3 +5221,31 @@ nouvelle classe) ; statut dérivé DÉPLOYÉ (jeton RFC 3161 vérifié, journal 
 **Les limites.** Le statut dérivé vaut ce que vaut l'autorité d'horodatage ; le compte de classes
 compte les classes DÉCLARÉES dans le source — une classe écrite mais jamais exécutée serait
 comptée (défaut nommé, non couvert).
+
+## D275 — LA PROSE DE STATUT SE DÉRIVE : DÉPÔTS, PREUVES, TITRE D'ANNEXE (la vague 25, 24/11/2026 ; atelier W25DERV)
+
+**Le constat (l'évaluation de v0.29.0).** Quatre résidus, tous de la même classe : un statut
+tapé. (a) le paragraphe Data availability annonçait le DOI de version courante de v0.29.0 alors
+que ce DOI est celui de v0.23.2 et que v0.29.0 n'est pas mintée — trois états incompatibles dans
+un paragraphe ; (b) Tamarin/ProVerif « absents du laboratoire » alors qu'ils sont installés depuis
+la vague 14 et que L3 est vérifié ; (c) le § 2.1 disait encore la spécification v0.15.8
+« accompagnée » ; (d) le ratio par multiplication des preuves portait ses opérandes à l'envers
+(19,66/63,39). Deux de ces quatre étaient des correctifs que j'avais ANNONCÉS en v0.29.0 sans les
+vérifier : les chaînes de remplacement ne correspondaient pas et rien n'a signalé l'échec.
+
+**Le geste.** (1) `DEPOTS.jsonl` — douze dépôts, un DOI par ligne, unicité vérifiée ; le
+paragraphe Data availability est DÉRIVÉ du registre : dernier dépôt publié v0.26.0
+(10.5281/zenodo.24499428), l'édition courante explicitement non mintée, aucun DOI de version
+courante cité. (2) `PREUVES-STATUTS.json` — six familles de preuve (Tamarin, ProVerif, NV, métal,
+dudect, ancrage), verdict et cause par ligne ; la limite Tamarin du manuscrit et le § 9 de la
+présentation se dérivent du registre. (3) § 2.1 : v0.15.14 accompagnée, v0.15.8 référence datée.
+(4) Ratio par multiplication remis dans l'ordre canonique. (5) Le titre de l'annexe B se
+recompose du contenu réel de la table (`scripts/vague25/deriver_prose.py`).
+
+**La leçon de méthode, consignée.** Un correctif n'est fait que s'il est VÉRIFIÉ par relecture du
+fichier écrit : le script de dérivation porte cinq assertions de contrôle et échoue bruyamment
+sinon. La vague 24 avait corrigé deux fois la même chaîne sans la relire.
+
+**Les limites.** Les registres disent ce qu'on y met : DEPOTS.jsonl a été reconstitué depuis le
+journal de publication, pas depuis Zenodo (aucun réseau) — un DOI faux y resterait faux et C21
+le refuserait seulement s'il était dupliqué ou incohérent avec son voisin.

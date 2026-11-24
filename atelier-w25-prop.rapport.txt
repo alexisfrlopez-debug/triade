@@ -1,0 +1,25 @@
+ATELIER W25DERV — LA PROSE DE STATUT SE DÉRIVE : QUATRE RÉSIDUS, QUATRE CLASSES (24/11/2026)
+============================================================================================
+Évaluation de v0.29.0. Aucune valeur mesurée modifiée.
+
+1. DOI ATTRIBUÉ DEUX FOIS (manuscrit, Data availability). Le paragraphe annonçait le DOI de
+   version de v0.29.0 alors que ce DOI est celui de v0.23.2 ET que v0.29.0 n'est pas mintée —
+   trois états incompatibles. Créé `DEPOTS.jsonl` (douze dépôts, un DOI par ligne, unicité
+   vérifiée) ; le paragraphe se DÉRIVE du registre : dernier publié v0.26.0
+   (10.5281/zenodo.24499428), édition courante explicitement non mintée, aucun DOI de version
+   courante cité. Classe C21.
+2. STATUT TAMARIN PÉRIMÉ (manuscrit, présentation). « Tamarin/ProVerif absents du laboratoire »
+   alors qu'ils sont installés depuis la vague 14 et que L3 est vérifié (1 122 pas), L1/L2
+   incomplets au mur 4 Gio, port ProVerif livré et non exécuté. Créé `PREUVES-STATUTS.json` (six
+   familles) ; les deux prose se dérivent du registre. Classe C23.
+3. § 2.1, RÉFÉRENCE ACCOMPAGNÉE. « specification v0.15.8 … which this edition accompanies » :
+   C12 ne scannait que la prose FRANÇAISE. Corrigé à la source (v0.15.15 accompagnée, v0.15.8
+   référence datée) et couvert. Classe C22.
+4. ORDRE DES OPÉRANDES (preuves § 4). « (19,66/63,39) » remis en ordre canonique (63,39/19,66) ;
+   la classe de recomposition des ratios ne mordait pas parce qu'aucune valeur n'était imprimée
+   à côté de la paire. Classe C24.
+5. ANNEXE B : le titre (D75–D268) se recompose du contenu réel de la table.
+6. AVEU DE MÉTHODE. Les points 3 et 4 étaient des correctifs ANNONCÉS en v0.29.0 dont la chaîne
+   de remplacement ne correspondait pas : rien ne l'a signalé. Le script de dérivation porte
+   désormais cinq assertions de contrôle et échoue bruyamment — un correctif non vérifié par
+   relecture du fichier écrit n'est pas un correctif.

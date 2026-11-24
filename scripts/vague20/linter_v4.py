@@ -214,7 +214,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
 
     # C9 — NUMEROTATION : une seule convention, sur la PARTIE NARRATIVE des preuves
     # (les rapports d'atelier sont lus verbatim : ils peuvent citer une règle du linter)
-    narratif = t["preuves"].split("W24AUDT —")[0]
+    narratif = t["preuves"].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0]
     fautifs = [m for m in re.finditer(r"§\s*(?!spec\b)\d+\.\d+", narratif)
                if not any(x in narratif[max(0, m.start() - 40):m.end() + 60]
                           for x in ("de la spécification", "de la spec", "Spécification",
@@ -281,7 +281,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
         attendu_ed = SP if piece == "livre" else ED
         # les rapports d'atelier sont lus verbatim : ils peuvent citer un résidu soldé
         if piece == "preuves":
-            texte = texte.split("W24AUDT —")[0]
+            texte = texte.split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0]
         for m in re.finditer(r"(?:édition courante|Édition courante|current edition)\s+(v\d+\.\d+(?:\.\d+)?)", texte):
             if m.group(1) != attendu_ed:
                 refus.append(("C12", piece, f"« édition courante {m.group(1)} » ≠ {attendu_ed}"))
@@ -301,10 +301,10 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     mots = {"quinzième": 15, "seizième": 16, "dix-septième": 17, "dix-huitième": 18,
             "dix-neuvième": 19, "vingtième": 20}
     entrees = set()
-    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second) wave", t["manuscrit"]):
+    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth) wave", t["manuscrit"]):
         entrees.add({"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
                      "nineteenth": 19, "twentieth": 20, "twenty-first": 21,
-                     "twenty-second": 22}[m.group(1)])
+                     "twenty-second": 22, "twenty-third": 23, "twenty-fourth": 24}[m.group(1)])
     for piece, texte in [("presentation", t["presentation"])]:
         for m in re.finditer(r"vague\s+(\d{1,2})", texte):
             n = int(m.group(1))
@@ -421,7 +421,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     sa = _iu.module_from_spec(sp); sp.loader.exec_module(sa)
     statut = sa.statut()["statut"]
     for piece in ("presentation", "preuves", "specification"):
-        txt = normalise(t[piece].split("W24AUDT —")[0])   # les rapports sont lus verbatim
+        txt = normalise(t[piece].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0])   # les rapports sont lus verbatim
         if statut == "DÉPLOYÉ" and re.search(r"NON\s*DÉPLOYÉ", txt):
             refus.append(("C20", piece, "statut « NON DÉPLOYÉ » alors que le journal dit DÉPLOYÉ"))
         if statut == "EN ATTENTE" and re.search(r"ancrage[^.]{0,80}DÉPLOYÉ", txt, re.I):
@@ -491,3 +491,75 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# ==========================================================================
+# C21 DOI-VERSION · C22 VERSION-PROSE-EN · C23 PROOF-STATUS · C24 RATIO-ORDER
+# (la vague 25, D275) — chaque statut se recompose de son registre.
+# ==========================================================================
+CONCEPT_DOI = "10.5281/zenodo.24367343"
+
+
+def _registres(racine):
+    import json
+    depots = [json.loads(l) for l in (racine / "DEPOTS.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    preuves = json.loads((racine / "PREUVES-STATUTS.json").read_text(encoding="utf-8"))
+    return depots, preuves
+
+
+def controles_w25(t, racine, version_edition, version_spec):
+    """C21, C22, C23, C24 — les trous de couverture démontrés par l'évaluation de v0.29.0."""
+    depots, preuves = _registres(racine)
+    refus = []
+    corps = {k: t[k] for k in ("manuscrit", "preuves", "presentation", "specification") if k in t}
+
+    # --- C21 : tout DOI cité vient du registre, et le « courant » est le dernier publié ---
+    dois = {d["doi_version"]: d for d in depots}
+    dois[CONCEPT_DOI] = {"version": "concept", "statut": "concept"}
+    publies = [d for d in depots if d["statut"] == "publie"]
+    dernier = publies[0]
+    for piece, texte in corps.items():
+        for m in re.finditer(r"10\.5281/zenodo\.(\d+)", texte):
+            if m.group(0) not in dois:
+                refus.append(("C21", piece, f"DOI inconnu du registre : {m.group(0)}"))
+        if "at this writing, version DOI" in texte:
+            m = re.search(r"at this writing, version DOI\s*10\.5281/zenodo\.(\d+)", texte)
+            if m and m.group(0).split()[-1] != dernier["doi_version"]:
+                refus.append(("C21", piece, "DOI « courant » ≠ dernier dépôt publié"))
+            if not re.search(r"v(\d+\.\d+\.\d+)", texte.split("at this writing")[0][-80:]):
+                refus.append(("C21", piece, "« at this writing » sans version identifiable"))
+    # la version dite « courante » doit être celle du dernier dépôt si un DOI est cité
+    cur = re.search(r"archived version \(v(\d+\.\d+\.\d+) at this writing", t.get("manuscrit", ""))
+    if cur and "v" + cur.group(1) != dernier["version"]:
+        refus.append(("C21", "manuscrit", f"version citée v{cur.group(1)} ≠ dernier dépôt {dernier['version']}"))
+
+    # --- C22 : la prose ANGLAISE du manuscrit, « specification vX … which this edition accompanies » ---
+    for m in re.finditer(r"v(\d+\.\d+\.\d+)[^.]{0,200}?(?:this edition )?accompanies", t.get("manuscrit", ""), re.S):
+        if "v" + m.group(1) != version_spec.lstrip("v") and m.group(1) != version_spec.lstrip("v"):
+            refus.append(("C22", "manuscrit", f"« specification v{m.group(1)} … accompanies » ≠ {version_spec}"))
+
+    # --- C23 : le statut de preuve publié se recompose du registre ---
+    tam = preuves["tamarin"]
+    _man = t.get("manuscrit", "").split("W25DERV —")[0].split("W24AUDT —")[0]
+    t = dict(t)
+    t["manuscrit"] = _man
+    if "absent" in t.get("manuscrit", "").lower() and "Tamarin" in t.get("manuscrit", ""):
+        if re.search(r"(?:Tamarin|tamarin-prover).{0,60}?(?:est|sont|is|are)\s+absent", t["manuscrit"], re.S):
+            refus.append(("C23", "manuscrit", "Tamarin dit « absent » alors que le registre porte un verdict partiel"))
+    if re.search(r"Tamarin.{0,160}?outils absents", t.get("presentation", ""), re.S):
+        refus.append(("C23", "presentation", "statut Tamarin contradictoire avec le registre"))
+    if "1 122" not in t.get("manuscrit", "") and tam["verdicts"]["L3"].startswith("VERIFIED"):
+        refus.append(("C23", "manuscrit", "le verdict L3 vérifié (1 122 pas) n'est pas publié"))
+
+    # --- C24 : ordre canonique des opérandes du ratio par multiplication ---
+    CANON = {63.39, 19.66}
+    for piece, texte in corps.items():
+        for m in re.finditer(r"\((\d{1,3},\d{2})\s*/\s*(\d{1,3},\d{2})\)", texte):
+            a, b = m.group(1), m.group(2)
+            va = float(a.replace(",", ".")); vb = float(b.replace(",", "."))
+            avant = texte[max(0, m.start() - 60):m.start()]
+            if ("«" in avant and "»" not in avant) or "remis en ordre canonique" in avant:
+                continue                            # la citation d'un défaut n'est pas le défaut
+            if {va, vb} == CANON and va < vb:      # seule la paire du ratio par multiplication
+                refus.append(("C24", piece, f"opérandes inversés ({a}/{b}) — ordre canonique attendu"))
+    return refus

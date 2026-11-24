@@ -115,11 +115,11 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
             urlcolor=liaison, unicode=true,
-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.29.0)},
+            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.30.0)},
             pdfauthor={Alexis Lopez}]{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.29.0}
+\fancyhead[L]{\small\itshape TRIADE — academic edition v0.30.0}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 
@@ -136,7 +136,7 @@ Under Signed-Intent Governance\\
 fourteen-unit two-arm field campaign, and two sealed applications}}
 \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
 Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
-\date{24 November 2026 $\cdot$ Academic edition v0.29.0}
+\date{24 November 2026 $\cdot$ Academic edition v0.30.0}
 
 \begin{document}
 \maketitle
@@ -299,8 +299,7 @@ optimization without measurement).
 
 The development loop itself (update an intention, re-derive the oracle,
 edit the notation, rebuild, verify, seal) and the seal ceremony model are
-described in the protocol specification v0.15.8 (the D81 purge edition: the five-share threshold-three Shamir escrow is the active guard, the delivery instructions retired from the operational text), which this edition
-accompanies; we summarise only what the evaluation needs.
+described in the protocol specification (the edition accompanied here is v0.15.15, which this edition accompanies; v0.15.8 remains a \emph{dated} reference, its D81 purge edition, whose five-share threshold-three Shamir escrow is the active guard and whose delivery instructions are retired from the operational text); we summarise only what the evaluation needs.
 
 \paragraph{Governance: signed intent and append-only records.}
 Every layer-I tree is condensed and signed with an Ed25519 key kept
@@ -1382,9 +1381,10 @@ report); the trap media is the \emph{witness}, never the accused, and
 the CF2 fragments coexist: \emph{proved in the model} (0 violations).
 \end{itemize}
 
-The limits are named: the checker is an explicit-state explorer
-(Tamarin/ProVerif absent from the laboratory --- the deviation is
-consigned); this v0.12.0 account was bounded to three epochs, and
+The limits are named: the checker is an explicit-state explorer, and the symbolic
+side is a partial verdict --- tamarin-prover 1.12.0 + Maude 3.4 (installés à la vague 14), model CF3-v3: VERIFIED (1 122 pas, 29,4 s),
+INCOMPLETE au mur mémoire 4 Gio and L2 incomplete at the memory wall (the named
+cause: proof-goal decomposition); the ProVerif port is delivered, run non exécuté; this v0.12.0 account was bounded to three epochs, and
 the v0.15.0 programme (Section~\ref{sec:v150}) has since lifted the
 bound by an inductive invariant, upgrading all four statuses to
 \emph{proved unbounded}; side channels, implementation flaws (RAM
@@ -2130,7 +2130,7 @@ gesture).
 \item v0.25.0 (24 Nov 2026) --- the eighteenth wave: the five documents regenerated under the ported five-class linter; the residues closed (abstract and changelog order, the decision range, the corpus named historical, the data availability); the specification gains the five residual hazards of the rendezvous (D261), the closed prescriptive whitelist (D262), the NV TPM counter (D263) and the structured expansion (D264). No measured value changed.
 \item v0.26.0 (24 Nov 2026) --- the nineteenth wave: the pack generation gate now runs the ported five-class linter plus six fail-closed classes (version table, decision range, changelog order, numbering, bench count, semantic threat), and the six residues named by the review are closed (the presentation's stale version table, the unqualified threat rows, the decisions D262--D264 absent from the specification, the +1 of the 16/16 bench, the changelog order, the mixed numbering of the proofs' section 2); the decision chain D261--D267 enters the journal and the specification (prescriptive whitelist, NV counter, structured expansion, transparency anchoring). No measured value changed.
 \item v0.27.0 (24 Nov 2026) --- the twentieth wave: the edition linter passes from eleven to fifteen classes (version prose, wave continuity, abstract length, reader-test count) and the four residues found by the review are closed at the source (the Book's prose version references, the presentation's wave number, the -35.7% operands pinned to the provenance register, the reader test decomposed one line per case). No measured value changed.
-\item v0.28.0 (24 Nov 2026) --- the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\item v0.29.0 (24 Nov 2026) --- the present edition, the twenty-second wave: the six residues of the review are closed at the source (the anchoring status derived from the append-only journal, the presentation's wave title, the Book's guard header and foreword, the class count, the companion specification, the multiplication ratio), the edition linter gains three classes that close the holes demonstrated (count, title wave, status recomposition) with a typographic normalisation, and the manuscript's form is cleaned (release note out of the title, one keyword line per language, French abstract aligned to 233 words). No measured value changed.\end{itemize}
+\item v0.28.0 (24 Nov 2026) --- the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\item v0.29.0 (24 Nov 2026) --- the twenty-second wave: the six residues of the review are closed at the source (the anchoring status derived from the append-only journal, the presentation's wave title, the Book's guard header and foreword, the class count, the companion specification, the multiplication ratio), the edition linter gains three classes that close the holes demonstrated (count, title wave, status recomposition) with a typographic normalisation, and the manuscript's form is cleaned (release note out of the title, one keyword line per language, French abstract aligned to 233 words). No measured value changed.\item v0.30.0 (24 Nov 2026) --- the present edition, the twenty-third wave: the prose of status is derived, not typed (D275) --- the Data availability paragraph from the deposit registry (the latest minted version is v0.26.0; this edition is explicitly unminted), the Tamarin/ProVerif status from the proof-status registry (L3 verified, L1/L2 incomplete at the memory wall, ProVerif port delivered), the specification accompanied in Section 2.1 pinned to v0.15.15, the multiplication ratio in canonical operand order, and the vault appendix title recomposed from the table itself; four linter classes close the holes shown (C21 DOI, C22 English version prose, C23 proof status, C24 operand order). No measured value changed.\end{itemize}
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -2259,25 +2259,15 @@ in the decision log.
 \paragraph{Data availability.} All primary data is public in the project
 repository (append-only journal, decision log, evidence vault indexes,
 extraction script, generated tables) and in the versioned archival
-snapshots at the concept DOI \doiConcept{} --- resolving to the latest
-archived version (v0.29.0 at this writing, version DOI
-\doiVersionCourante{}; the earlier deposits 10.5281/zenodo.24367344,
-10.5281/zenodo.24379173, 10.5281/zenodo.24382460, 10.5281/zenodo.24397623,
-10.5281/zenodo.24407701, 10.5281/zenodo.24420007, 10.5281/zenodo.24438614,
-10.5281/zenodo.24442241 and 10.5281/zenodo.24442951 are the dated
-v0.19.0, v0.19.4, v0.19.5, v0.21.0, v0.22.0, v0.22.1, v0.23.0, v0.23.1
-and v0.23.2 archives (the latter historical); the distinction is consigned:
-the concept DOI is the citable reference, the version DOIs the dated
-records). This edition's own snapshot follows the developer's deposit
-gesture --- never minted without an explicit command. The two
-submission archives of the current deposit
-(\code{TRIADE\_soumission\_v0.29.0.zip} and
-\code{TRIADE\_complet\_v0.29.0.zip}) contain respectively the
-manuscript with its data tables, and the complete sources with raw
-extracts and fingerprints; every artifact of the claims tables was
-re-verified byte for byte against the regenerated archives (zero
-divergence).
-
+snapshots at the concept DOI \doiConcept{} --- the latest MINTED version is
+v0.26.0 (2026-11-24, version DOI 10.5281/zenodo.24499428).
+The deposits are recorded one line each in the deposit registry
+(\code{DEPOTS.jsonl}) and this paragraph is derived from it: the dated
+version DOIs are 10.5281/zenodo.24499428, 10.5281/zenodo.24497211, 10.5281/zenodo.24450872, 10.5281/zenodo.24442951, 10.5281/zenodo.24442241, 10.5281/zenodo.24438614, 10.5281/zenodo.24420007, 10.5281/zenodo.24407701, 10.5281/zenodo.24397623, 10.5281/zenodo.24382460, 10.5281/zenodo.24379173, 10.5281/zenodo.24367344
+for v0.26.0, v0.25.0, v0.23.3, v0.23.2, v0.23.1, v0.23.0, v0.22.1, v0.22.0, v0.21.0, v0.19.5, v0.19.4, v0.19.0 respectively. This edition (v0.30.0) is \emph{not}
+minted: the developer's deposit gesture is an explicit command, and until
+it is given the current snapshot has no version DOI of its own, which is
+why none is cited here. The two
 \paragraph{Use of AI in this work.} An LLM agent (Z.ai GLM family)
 executed the laboratory work of the project under the developer's
 instruction, and drafted editorial material under the developer's
@@ -2374,6 +2364,19 @@ variants. The Book's guard header and foreword, the presentation's wave title, t
 specification reference and the multiplication ratio are corrected at the source. Form: the
 release note leaves the title, one keyword line per language, and the French abstract is
 aligned to 233 words.
+
+
+\subsection{Post-edition note (v0.30.0): four statuses that were typed, now derived}
+
+The review of v0.29.0 found four residues, all of one class --- a status written by hand. Data
+availability announced a version DOI that belongs to v0.23.2 while this edition is unminted; the
+Tamarin/ProVerif line still said absent though both are installed; Section~2.1 still accompanied
+v0.15.8; the multiplication ratio in the proofs carried its operands reversed. Two of them were
+corrections announced in v0.29.0 whose replacement never matched the text. Each now derives from
+a registry: \code{DEPOTS.jsonl} (twelve deposits, one DOI per line) for the archival paragraph,
+\code{PREUVES-STATUTS.json} for the symbolic verdicts, the table itself for the appendix title.
+Four classes join the gate with their negative controls: C21 (cited DOI), C22 (English version
+prose), C23 (proof status), C24 (operand order).
 
 % ------------------------------------------------------------------
 \bibliography{refs}
